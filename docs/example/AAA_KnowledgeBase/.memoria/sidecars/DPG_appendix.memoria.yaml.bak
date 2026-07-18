@@ -1,0 +1,31 @@
+schema_version: 1
+file: DPG_appendix.md
+knowledge_points:
+- id: DPG-appendix1
+  name: DPG补充1
+  range:
+    start:
+      snippet: '## 1.2 $\rho^{\pi}(s)$ 到底是什么（关键！）'
+      line_hint: 19
+    end:
+      snippet: $$
+      line_hint: 37
+- id: DPG-appendix2
+  name: DPG补充2
+  range:
+    start:
+      snippet: '## 一、问题的核心：算子范数的定义'
+      line_hint: 47
+    end:
+      snippet: \]
+      line_hint: 157
+  description: 证明算子为什么范数小于1
+- id: DPG-appendix3
+  name: DPG补充3
+  range:
+    start:
+      snippet: 问的是：**为什么满足 \(\|T\| < 1\) 后，\((I - T)^{-1}\) 就等于 Neumann 级数 \(\sum_{k=0}^{\infty
+      line_hint: 160
+    end:
+      snippet: '---'
+      line_hint: 260

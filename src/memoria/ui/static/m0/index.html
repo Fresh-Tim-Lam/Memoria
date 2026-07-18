@@ -27,6 +27,7 @@
     };
   </script>
   <script defer src="/vendor/marked.min.js"></script>
+  <script defer src="/m0/vendor/mermaid.min.js"></script>
   <script defer src="/vendor/mathjax/es5/tex-chtml-full.js"></script>
 </head>
 <body>
@@ -141,6 +142,33 @@
             <div id="editor-header">
               <span id="file-title"></span>
               <span id="file-meta" class="m0-muted"></span>
+              <div class="m0-format-bar" role="toolbar" aria-label="格式工具">
+                <button type="button" class="m0-fmt-btn" data-fmt="bold" title="粗体 (Ctrl+B)"><strong>B</strong></button>
+                <button type="button" class="m0-fmt-btn" data-fmt="italic" title="斜体 (Ctrl+I)"><em>I</em></button>
+                <span class="m0-fmt-sep"></span>
+                <span class="m0-fmt-dropdown">
+                  <button type="button" class="m0-fmt-btn" data-fmt="highlight" title="荧光笔">H▾</button>
+                  <div class="m0-fmt-dropdown-menu m0-hl-colors">
+                    <button type="button" data-hl-color="yellow" class="m0-hl-swatch m0-hl-yellow" title="黄色">黄</button>
+                    <button type="button" data-hl-color="green" class="m0-hl-swatch m0-hl-green" title="绿色">绿</button>
+                    <button type="button" data-hl-color="red" class="m0-hl-swatch m0-hl-red" title="红色">红</button>
+                    <button type="button" data-hl-color="blue" class="m0-hl-swatch m0-hl-blue" title="蓝色">蓝</button>
+                    <button type="button" data-hl-color="orange" class="m0-hl-swatch m0-hl-orange" title="橙色">橙</button>
+                  </div>
+                </span>
+                <span class="m0-fmt-dropdown">
+                  <button type="button" class="m0-fmt-btn" data-fmt="fontcolor" title="字体颜色">色▾</button>
+                  <div class="m0-fmt-dropdown-menu m0-fc-colors">
+                    <button type="button" data-fc-color="red" class="m0-fc-swatch m0-fc-red" title="红色">红</button>
+                    <button type="button" data-fc-color="orange" class="m0-fc-swatch m0-fc-orange" title="橙色">橙</button>
+                    <button type="button" data-fc-color="yellow" class="m0-fc-swatch m0-fc-yellow" title="黄色">黄</button>
+                    <button type="button" data-fc-color="green" class="m0-fc-swatch m0-fc-green" title="绿色">绿</button>
+                    <button type="button" data-fc-color="blue" class="m0-fc-swatch m0-fc-blue" title="蓝色">蓝</button>
+                    <button type="button" data-fc-color="purple" class="m0-fc-swatch m0-fc-purple" title="紫色">紫</button>
+                    <button type="button" data-fc-color="gray" class="m0-fc-swatch m0-fc-gray" title="灰色">灰</button>
+                  </div>
+                </span>
+              </div>
               <div class="m0-view-toggle" role="tablist" aria-label="视图模式">
                 <button type="button" class="m0-view-btn active" data-view="source" title="源码">源码</button>
                 <button type="button" class="m0-view-btn" data-view="preview" title="Markdown 预览">预览</button>

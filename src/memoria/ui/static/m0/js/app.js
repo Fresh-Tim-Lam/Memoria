@@ -256,6 +256,9 @@
   async function initKb() {
     try {
       state.kbPath = await resolveStartupKbPath();
+      if (window.MemoriaMarkdownPreview?.setKbRootForImages) {
+        MemoriaMarkdownPreview.setKbRootForImages(state.kbPath);
+      }
       if (window.MemoriaCheckSettings?.hydrateFromDisk) {
         await MemoriaCheckSettings.hydrateFromDisk();
       }
@@ -349,6 +352,9 @@
     if (!path) return;
     resetOpenDocumentUi();
     state.kbPath = path;
+    if (window.MemoriaMarkdownPreview?.setKbRootForImages) {
+      MemoriaMarkdownPreview.setKbRootForImages(path);
+    }
     showKbIndicator(path);
     if (window.MemoriaNavStack) MemoriaNavStack.clear();
     state.openTabs = [];
@@ -1849,6 +1855,12 @@
 
   async function renderPreview(doc) {
     if (!doc || state.viewMode === "source") return;
+    // Set current file directory for local image path resolution
+    if (window.MemoriaMarkdownPreview?.setCurrentFileDir && state.currentPath) {
+      const parts = state.currentPath.replace(/\\/g, "/").split("/");
+      const dir = parts.length > 1 ? parts.slice(0, -1).join("/") + "/" : "";
+      MemoriaMarkdownPreview.setCurrentFileDir(dir);
+    }
     clearGraphLinkHighlight();
     const preview = $("#preview");
     const statusEl = $("#preview-status");

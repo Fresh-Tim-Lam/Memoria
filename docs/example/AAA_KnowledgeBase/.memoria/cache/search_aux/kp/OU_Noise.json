@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "OU_Noise",
+  "source_fingerprint": "19b9e48e6d52b0d90610abccec0be7c5",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "ornstein",
+    "uhlenbeck",
+    "过程",
+    "定义",
+    "随机",
+    "微分方程",
+    "sde",
+    "形式"
+  ],
+  "summary_1l": "2.",
+  "query_hits": [],
+  "embed_text": "OU_Noise OU_Noise ornstein uhlenbeck 过程 定义 随机 微分方程 sde 形式 2. 2. Ornstein-Uhlenbeck 过程的定义 **随机微分方程（SDE）形式** 其中： ：均值回归速度（strength of mean reversion） ：长期均值（long-term mean） ：波动率（volatility） ：维纳过程增量（标准布朗运动） 3. SDE 的解析解推导 **Step 1: 齐次方程解** 考虑齐次方程 （设 ）： **Step 2: 常数变易法** 令 ，则： 代入原 SDE ： **Step 3: 积分求解** 计算积分 ，代入 ： **Step 4: 最终解析解** 4. OU 过程的统计性质 4.1 期望 **推导：** 由解析解： 对两边取期望。由于维纳积分 是鞅，其期望为 0： 因此： 若 是确定性初始值，则 ，即得上述公式。 **极限：** 4.2 方差 **推导（利用 Itô 等距）：** 由解析解，确定性部分对方差无贡献，因此： **Itô 等距（Itô Isometry）**：对于确定性被积函数 ， 这是 Itô 积分的基本性质，来源于维纳过程的独立增量性和二次变差。 应用 Itô 等距，取 ： **极限：** 4.3 协方差（平稳状态） **推导：** 对于 ，利用解析解和 Itô 等距可得上述指数衰减的相关性。这表明 OU 过程的记忆随时间指数衰减，是短期记忆过程。 5. 离散化（用于数值实现） 5.1 Euler-Maruyama 离散化 5.2 简化形式（设 ） 5.3 向量形式（多维度，各维度独立）",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-17T04:09:55.212704+00:00"
+}

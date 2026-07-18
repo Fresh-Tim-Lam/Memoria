@@ -1,0 +1,83 @@
+schema_version: 1
+file: DPG.md
+knowledge_points:
+- id: DPG
+  name: 策略梯度定理
+  range:
+    start:
+      snippet: '# 策略梯度定理完整推导汇报'
+      line_hint: 1
+    end:
+      snippet: '| (26) | $\nabla_\theta J = \mathbb{E}_{s \sim \rho^\mu} [\nabla_\theta
+        \mu(s) \'
+      line_hint: 387
+- id: RL Target Function
+  name: 强化学习目标函数
+  range:
+    start:
+      snippet: '## 2. 目标函数的定义'
+      line_hint: 34
+    end:
+      snippet: '> **说明**：本报告使用定义一 $J(\theta) = \mathbb{E}_{s_0 \sim d_0}[V^{\pi_\theta}(s_0)]$，这'
+      line_hint: 58
+links:
+- anchor_text: 原因
+  occurrence: 0
+  targets:
+  - DPG-appendix2
+  edge_type: reference
+  target_edges:
+    DPG-appendix2:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - DPG-appendix2
+  instances:
+  - line: 182
+    wrapped: true
+- anchor_text: 基于折扣状态分布
+  occurrence: 0
+  targets:
+  - DPG-appendix1
+  edge_type: reference
+  target_edges:
+    DPG-appendix1:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 46
+    wrapped: true
+  pool:
+  - DPG-appendix1
+  source_id: DPG_appendix
+- anchor_text: 可逆
+  occurrence: 0
+  targets:
+  - DPG-appendix3
+  edge_type: reference
+  target_edges:
+    DPG-appendix3:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - DPG-appendix3
+  instances:
+  - line: 182
+    wrapped: true
+  excluded: []
+- anchor_text: DDPG 算法
+  occurrence: 0
+  targets:
+  - DDPG
+  edge_type: extend
+  target_edges:
+    DDPG:
+      edge_type: extend
+      relevance: 0.6
+  pool:
+  - DDPG
+  instances:
+  - line: 320
+    wrapped: true
+  excluded: []
+edges: []

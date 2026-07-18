@@ -100,6 +100,13 @@ window.MemoriaMarkdownPreview = (function () {
     );
     out = out.replace(/\\\[([\s\S]+?)\\\]/g, (m) => stashBlock(allBlocks, m));
     out = out.replace(/\\\(([\s\S]+?)\\\)/g, (m) => stashInline(allBlocks, m));
+    // Single-line display math: $$...$$ on one line (not $$ on its own line,
+    // which is already handled by protectDisplayBlocks). Must come before
+    // the inline $...$ regex to prevent the inner $P(...)$ from being matched
+    // as inline math and wrongly converted to \(...\).
+    out = out.replace(/\$\$((?:\\.|[^\$\n\\])+?)\$\$/g, (m) =>
+      stashBlock(allBlocks, m)
+    );
     // Inline math: $...$ where the $ is not part of $$ (block).
     // Match only within a single line to prevent swallowing ** or other
     // markdown delimiters across lines when stray $ signs exist in the text.
@@ -147,6 +154,356 @@ window.MemoriaMarkdownPreview = (function () {
       }
     );
     return fixLoneInlineMathParagraphs(html);
+  }
+
+  // ── Mermaid rendering ──
+  let mermaidInited = false;
+  function initMermaid() {
+    if (mermaidInited) return;
+    if (!window.mermaid) return;
+    window.mermaid.initialize({
+      startOnLoad: false,
+      theme: "default",
+      securityLevel: "loose",
+      fontFamily: "inherit",
+    });
+    mermaidInited = true;
+  }
+
+  async function renderMermaidBlocks(container) {
+    initMermaid();
+    if (!window.mermaid?.render) return;
+    const els = container.querySelectorAll("code.language-mermaid");
+    for (const el of els) {
+      const pre = el.parentElement;
+      if (!pre) continue;
+      const src = el.textContent || "";
+      const id = "mermaid-" + Math.random().toString(36).slice(2, 10);
+      try {
+        const { svg } = await window.mermaid.render(id, src);
+        const div = document.createElement("div");
+        div.className = "m0-mermaid-container";
+        div.innerHTML = svg;
+        pre.replaceWith(div);
+      } catch (e) {
+        const div = document.createElement("div");
+        div.className = "m0-mermaid-error";
+        div.textContent = "Mermaid 渲染失败: " + (e.message || e);
+        pre.replaceWith(div);
+      }
+    }
+  }
+
+  // ── Highlighter [[\h|text]] and format [[\c|...]], [[\b|...]], [[\i|...]] ──
+  const HL_COLORS = ["yellow", "green", "red", "blue", "orange"];
+  const HL_DEFAULT = "yellow";
+
+  const HL_COLOR_MAP = {
+    yellow: "#fff3cd",
+    green: "#d4edda",
+    red: "#f8d7da",
+    blue: "#cce5ff",
+    orange: "#ffe8cc"
+  };
+
+  const FC_COLOR_MAP = {
+    red: "#dc3545",
+    green: "#28a745",
+    blue: "#007bff",
+    orange: "#fd7e14",
+    yellow: "#ffc107",
+    purple: "#6f42c1",
+    gray: "#6c757d"
+  };
+
+  const FC_COLORS = Object.keys(FC_COLOR_MAP);
+
+  /**
+   * Stack-based parser for [[\...]] syntax.
+   * Handles nested [[...]] inside format commands by tracking bracket depth.
+   *
+   * Supported:
+   *   [[\h|text]]              → yellow highlight
+   *   [[\h:color|text]]        → colored highlight
+   *   [[\h:bg:fg|text]]        → bg + fg highlight
+   *   [[\h:id|text]]           → named highlight
+   *   [[\h:id:color|text]]     → named + colored
+   *   [[\h:id:bg:fg|text]]     → named + bg + fg (3 params after \h)
+   *   [[\c:color|text]]        → font color
+   *   [[\b|text]]              → bold
+   *   [[\i|text]]              → italic
+   */
+  function renderHighlightSyntax(html) {
+    const len = html.length;
+    const result = [];
+    let i = 0;
+
+    while (i < len) {
+      // Check for [[\ at current position
+      if (i + 2 < len && html[i] === "[" && html[i + 1] === "[" && html[i + 2] === "\\") {
+        // Try to parse a format command
+        const parsed = tryParseFormatCmd(html, i);
+        if (parsed) {
+          // Find matching ]] by counting bracket depth
+          const contentStart = parsed.pipeEnd + 1; // after the |
+          let depth = 1;
+          let j = contentStart;
+          while (j < len && depth > 0) {
+            if (j + 1 < len && html[j] === "[" && html[j + 1] === "[") {
+              depth++;
+              j += 2;
+            } else if (j + 1 < len && html[j] === "]" && html[j + 1] === "]") {
+              depth--;
+              if (depth === 0) break;
+              j += 2;
+            } else {
+              j++;
+            }
+          }
+          if (depth === 0) {
+            // Found matching ]]
+            const innerText = html.substring(contentStart, j);
+            const rendered = renderCommand(parsed.cmd, parsed.params, innerText);
+            result.push(rendered);
+            i = j + 2; // skip past the closing ]]
+            continue;
+          }
+          // No matching ]] found — treat as plain text
+        }
+      }
+      result.push(html[i]);
+      i++;
+    }
+    return result.join("");
+  }
+
+  /**
+   * Try to parse a format command starting at position `start`.
+   * Returns { cmd, params, pipeEnd } or null.
+   * `pipeEnd` is the index of the `|` character.
+   */
+  function tryParseFormatCmd(html, start) {
+    // html[start..start+2] === "[[\"
+    const cmdStart = start + 3; // after "[[\"
+    if (cmdStart >= html.length) return null;
+
+    const cmdChar = html[cmdStart];
+    if (cmdChar === "h") {
+      return parseHParams(html, start, cmdStart);
+    } else if (cmdChar === "c") {
+      return parseSimpleParams(html, start, cmdStart, "c", true);
+    } else if (cmdChar === "b") {
+      return parseSimpleParams(html, start, cmdStart, "b", false);
+    } else if (cmdChar === "i") {
+      return parseSimpleParams(html, start, cmdStart, "i", false);
+    }
+    return null;
+  }
+
+  /**
+   * Parse [[\h:...|  — collect all colon-separated tokens before |
+   */
+  function parseHParams(html, start, cmdStart) {
+    // cmdStart points to 'h'
+    let pos = cmdStart + 1; // after 'h'
+    const tokens = [];
+    // Read optional :token:token:token|
+    while (pos < html.length && html[pos] === ":") {
+      pos++; // skip ':'
+      const tokStart = pos;
+      while (pos < html.length && html[pos] !== ":" && html[pos] !== "|") {
+        pos++;
+      }
+      if (pos === tokStart) return null; // empty token
+      tokens.push(html.substring(tokStart, pos));
+    }
+    if (pos >= html.length || html[pos] !== "|") return null;
+    // Classify tokens for \h
+    const params = classifyHParams(tokens);
+    return { cmd: "h", params, pipeEnd: pos };
+  }
+
+  /**
+   * Classify \h params:
+   *  0 tokens → default yellow, no id
+   *  1 token  → color (if known) or id
+   *  2 tokens → could be id:color, color:fg, or bg:fg
+   *  3 tokens → id:bg:fg
+   */
+  function classifyHParams(tokens) {
+    const result = { bg: HL_DEFAULT, fg: null, id: null };
+
+    if (tokens.length === 0) return result;
+
+    if (tokens.length === 1) {
+      const t = tokens[0];
+      if (HL_COLORS.includes(t)) {
+        result.bg = t;
+      } else {
+        result.id = t;
+      }
+      return result;
+    }
+
+    if (tokens.length === 2) {
+      const t0 = tokens[0];
+      const t1 = tokens[1];
+      // Both are colors → bg:fg
+      if (HL_COLORS.includes(t0) && HL_COLORS.includes(t1)) {
+        result.bg = t0;
+        result.fg = t1;
+      }
+      // t0 is id, t1 is color
+      else if (!HL_COLORS.includes(t0) && HL_COLORS.includes(t1)) {
+        result.id = t0;
+        result.bg = t1;
+      }
+      // t0 is color, t1 is fg
+      else if (HL_COLORS.includes(t0) && !HL_COLORS.includes(t1)) {
+        result.bg = t0;
+        result.fg = t1;
+      }
+      // Neither is a known color → id:fg (t1 is fg color value)
+      else {
+        result.id = t0;
+        result.fg = t1;
+      }
+      return result;
+    }
+
+    if (tokens.length === 3) {
+      // id:bg:fg
+      result.id = tokens[0];
+      result.bg = tokens[1];
+      result.fg = tokens[2];
+      return result;
+    }
+
+    return result;
+  }
+
+  /**
+   * Parse [[\c:color|, [[\b|, [[\i|
+   */
+  function parseSimpleParams(html, start, cmdStart, cmd, needsParam) {
+    let pos = cmdStart + 1; // after cmd letter
+    const tokens = [];
+    while (pos < html.length && html[pos] === ":") {
+      pos++; // skip ':'
+      const tokStart = pos;
+      while (pos < html.length && html[pos] !== ":" && html[pos] !== "|") {
+        pos++;
+      }
+      if (pos === tokStart) return null;
+      tokens.push(html.substring(tokStart, pos));
+    }
+    if (pos >= html.length || html[pos] !== "|") return null;
+    if (needsParam && tokens.length === 0) return null;
+    return { cmd, params: { color: tokens[0] || null }, pipeEnd: pos };
+  }
+
+  /**
+   * Render a parsed command into HTML.
+   */
+  function renderCommand(cmd, params, innerText) {
+    if (cmd === "h") return renderHighlight(params, innerText);
+    if (cmd === "c") return renderFontColor(params, innerText);
+    if (cmd === "b") return `<strong class="m0-fmt-b">${innerText}</strong>`;
+    if (cmd === "i") return `<em class="m0-fmt-i">${innerText}</em>`;
+    return innerText;
+  }
+
+  /**
+   * Render \h → <mark ...>text</mark>
+   */
+  function renderHighlight(params, innerText) {
+    const attrs = [];
+
+    // Background: use CSS class if named, otherwise inline style
+    if (params.bg && params.bg !== HL_DEFAULT) {
+      if (HL_COLORS.includes(params.bg)) {
+        attrs.push(`class="hl-${params.bg}"`);
+      } else {
+        attrs.push(`style="background:${escAttr(params.bg)}"`);
+      }
+    }
+
+    // Foreground: always inline style
+    if (params.fg) {
+      const fgValue = FC_COLOR_MAP[params.fg] || params.fg;
+      const fgAttr = `color:${escAttr(fgValue)}`;
+      const existing = attrs.findIndex(a => a.startsWith("style="));
+      if (existing >= 0) {
+        attrs[existing] = attrs[existing].replace(/"$/, `;${fgAttr}"`);
+      } else {
+        attrs.push(`style="${fgAttr}"`);
+      }
+    }
+
+    // Named id
+    if (params.id) {
+      attrs.push(`data-hl-id="${escAttr(params.id)}"`);
+    }
+
+    const attrStr = attrs.length > 0 ? " " + attrs.join(" ") : "";
+    return `<mark${attrStr}>${innerText}</mark>`;
+  }
+
+  /**
+   * Render \c:color → <span class="m0-fc-color"> or <span style="color:...">
+   */
+  function renderFontColor(params, innerText) {
+    const color = params.color;
+    if (!color) return innerText;
+    if (FC_COLORS.includes(color)) {
+      return `<span class="m0-fc-${escAttr(color)}">${innerText}</span>`;
+    }
+    return `<span style="color:${escAttr(color)}">${innerText}</span>`;
+  }
+
+  // ── Image Lightbox ──
+  function attachImageLightbox(container) {
+    container.querySelectorAll("img").forEach((img) => {
+      if (img.closest(".m0-lightbox-overlay")) return;
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", () => {
+        const overlay = document.createElement("div");
+        overlay.className = "m0-lightbox-overlay";
+        const bigImg = document.createElement("img");
+        bigImg.src = img.src;
+        bigImg.className = "m0-lightbox-image";
+        overlay.appendChild(bigImg);
+        overlay.addEventListener("click", () => overlay.remove());
+        document.body.appendChild(overlay);
+      });
+    });
+  }
+
+  // ── Local image path rewriting ──
+  let _kbRootForImages = null;
+  let _currentFileDir = ""; // relative dir of current file within KB (e.g. "subdir/" or "")
+  function setKbRootForImages(root) { _kbRootForImages = root; }
+  function setCurrentFileDir(dir) { _currentFileDir = dir; }
+  function rewriteLocalImagePaths(html) {
+    if (!_kbRootForImages) return html;
+    // Match any <img src="..."> and rewrite relative paths.
+    return html.replace(
+      /(<img\s[^>]*src=")([^"]+)"/g,
+      (_, prefix, src) => {
+        // Skip absolute URLs and data URIs
+        if (/^(https?:|data:|\/)/i.test(src)) return prefix + src + '"';
+        // Normalize: remove leading ./
+        const clean = src.replace(/^\.\//, "");
+        // Resolve relative to current file's directory within KB
+        const relPath = _currentFileDir + clean;
+        // Encode each path segment so / remains as separator
+        const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
+        const apiBase = window.MemoriaBridge?.apiBase || "";
+        const url = apiBase + "/files/" + encoded;
+        console.log("[img-rewrite]", src, "→", url);
+        return prefix + url + '"';
+      }
+    );
   }
 
   function postProcessMemoriaLinks(html, knownTargets, linkOverrides, blockStartLine, blockMarkdown) {
@@ -556,6 +913,8 @@ window.MemoriaMarkdownPreview = (function () {
     const { text, blocks } = protectMath(markdown);
     let html = marked.parse(text, { gfm: true, breaks: true });
     html = restoreMath(html, blocks);
+    html = renderHighlightSyntax(html);
+    html = rewriteLocalImagePaths(html);
     html = postProcessMemoriaLinks(
       html,
       knownTargets,
@@ -676,6 +1035,10 @@ window.MemoriaMarkdownPreview = (function () {
       report.messages = [String(e.message || e)];
       console.warn("MathJax typeset:", e);
     }
+    // Post-render: Mermaid diagrams
+    await renderMermaidBlocks(container);
+    // Post-render: Image lightbox
+    attachImageLightbox(container);
     container.dataset.previewOk = report.ok ? "1" : "0";
     return report;
   }
@@ -687,5 +1050,10 @@ window.MemoriaMarkdownPreview = (function () {
     normalizeBody,
     diagnose,
     countExpectedMathBlocks,
+    renderMermaidBlocks,
+    attachImageLightbox,
+    renderHighlightSyntax,
+    setKbRootForImages,
+    setCurrentFileDir,
   };
 })();

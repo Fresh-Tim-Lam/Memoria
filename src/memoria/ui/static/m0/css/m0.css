@@ -2982,6 +2982,84 @@ body.m0-win-resizing {
     color: #fff;
 }
 
+/* ── Format toolbar ── */
+.m0-format-bar {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-shrink: 0;
+}
+.m0-fmt-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 3px 7px;
+    border-radius: 2px;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+}
+.m0-fmt-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+.m0-fmt-sep {
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+    margin: 0 4px;
+    flex-shrink: 0;
+}
+.m0-fmt-dropdown {
+    position: relative;
+}
+.m0-fmt-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    flex-direction: row;
+    gap: 2px;
+}
+.m0-fmt-dropdown.open .m0-fmt-dropdown-menu {
+    display: flex;
+}
+.m0-hl-swatch,
+.m0-fc-swatch {
+    border: none;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 600;
+}
+.m0-hl-swatch:hover,
+.m0-fc-swatch:hover {
+    opacity: .85;
+}
+/* highlight swatch colors */
+.m0-hl-yellow { background: #fef3ac; }
+.m0-hl-green  { background: #d0f0c0; }
+.m0-hl-red    { background: #fdb8c0; }
+.m0-hl-blue   { background: #c0e0f8; }
+.m0-hl-orange { background: #fde0b0; }
+/* font color swatch colors */
+.m0-fc-red    { background: #ef4444; color: #fff; }
+.m0-fc-orange { background: #f97316; color: #fff; }
+.m0-fc-yellow { background: #eab308; color: #000; }
+.m0-fc-green  { background: #22c55e; color: #fff; }
+.m0-fc-blue   { background: #3b82f6; color: #fff; }
+.m0-fc-purple { background: #8b5cf6; color: #fff; }
+.m0-fc-gray   { background: #6b7280; color: #fff; }
+
 #editor-split {
     flex: 1;
     display: flex;
@@ -3182,6 +3260,88 @@ body.m0-win-resizing {
     padding: 6px 16px;
     font-size: 11px;
     border-bottom: 1px solid var(--border);
+}
+
+/* ── Highlighter (荧光笔) ── */
+mark {
+    background: #fff3cd;
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+mark.hl-yellow { background: #fff3cd; }
+mark.hl-green  { background: #d4edda; }
+mark.hl-red    { background: #f8d7da; }
+mark.hl-blue   { background: #cce5ff; }
+mark.hl-orange { background: #ffe8cc; }
+
+/* Foreground (font) color */
+span.m0-fc-red    { color: #dc3545; }
+span.m0-fc-green  { color: #28a745; }
+span.m0-fc-blue   { color: #007bff; }
+span.m0-fc-orange { color: #fd7e14; }
+span.m0-fc-yellow { color: #b8860b; }
+span.m0-fc-purple { color: #6f42c1; }
+span.m0-fc-gray   { color: #6c757d; }
+
+/* Bold / Italic format markers */
+strong.m0-fmt-b { /* inherits bold from <strong> */ }
+em.m0-fmt-i     { /* inherits italic from <em> */ }
+
+/* Foreground color on mark (when \h:bg:fg used) */
+mark[style*="color:"] { /* fg color set via inline style */ }
+
+/* ── Image sizing in preview ── */
+.m0-preview img {
+    max-width: 35%;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* ── Image Lightbox ── */
+.m0-lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+}
+.m0-lightbox-image {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Mermaid Container ── */
+.m0-mermaid-container {
+    margin: 12px 0;
+    text-align: center;
+    overflow-x: auto;
+    padding: 8px;
+    background: var(--bg-secondary, #f8f9fa);
+    border-radius: 4px;
+    border: 1px solid var(--border, #dee2e6);
+}
+.m0-mermaid-container svg {
+    max-width: 100%;
+    height: auto;
+}
+.m0-mermaid-error {
+    margin: 12px 0;
+    padding: 8px 12px;
+    color: var(--error, #dc3545);
+    background: var(--bg-secondary, #f8f9fa);
+    border: 1px solid var(--error, #dc3545);
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+/* ── preview-status children ── */
+#preview-status .flex-shrink {
     flex-shrink: 0;
     background: var(--bg-tertiary);
 }

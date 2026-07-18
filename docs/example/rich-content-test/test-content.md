@@ -1,108 +1,210 @@
 ---
-description: 富内容测试文件，涵盖图片、图表、公式、荧光笔等。
+description: R08/R15 渲染效果测试文件
 concepts:
-  - id: image-test
+  - id: test-images
     name: 图片渲染测试
     weight: 1.0
-    tags: [测试, 图片]
-  - id: chart-test
-    name: 图表渲染测试
+    tags: [测试, R08]
+  - id: test-mermaid
+    name: Mermaid图表测试
     weight: 1.0
-    tags: [测试, 图表, mermaid]
-  - id: formula-test
-    name: 公式渲染测试
-    weight: 1.0
-    tags: [测试, 公式, LaTeX]
-  - id: highlight-test
+    tags: [测试, R08]
+  - id: test-highlight
     name: 荧光笔测试
     weight: 1.0
-    tags: [测试, 高亮, 荧光笔]
+    tags: [测试, R15]
+  - id: test-math
+    name: 公式测试
+    weight: 1.0
+    tags: [测试, R15]
+  - id: test-font-color
+    name: 字体颜色测试
+    weight: 1.0
+    tags: [测试, R15]
+  - id: test-format
+    name: 格式标记测试
+    weight: 1.0
+    tags: [测试, R15]
+  - id: test-mixed
+    name: 混合格式测试
+    weight: 1.0
+    tags: [测试, R15]
 ---
 
 ## 图片渲染测试
 
 ### 网络图片
 
-![Memoria Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/208px-Markdown-mark.svg.png)
+![网络图片-小](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=blue%20abstract%20technology%20background%20with%20text%20Memoria&image_size=landscape_4_3)
+
+![网络图片-大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=red%20gradient%20banner%20with%20geometric%20patterns&image_size=landscape_16_9)
 
 ### 本地相对路径图片
 
-![本地图片](./images/sample.png)
+![本地图片](./images/test-image.png)
 
-### 带标题的图片
+### 图片点击放大（Lightbox）
 
-![带标题](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/208px-Markdown-mark.svg.png "Markdown Logo")
+> 点击下方图片应弹出放大覆盖层
 
-## 图表渲染测试
+![可点击放大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=green%20nature%20landscape%20with%20mountains&image_size=landscape_16_9)
 
-### 流程图（Mermaid 语法）
+## Mermaid 图表测试
+
+### 流程图
 
 ```mermaid
 graph TD
-    A[行政主体] --> B[行政行为]
-    B --> C[行政处罚]
-    B --> D[行政许可]
-    B --> E[行政强制]
-    C --> F[行政处罚的设定]
-    D --> G[行政许可的设定]
+    A[开始] --> B{判断条件}
+    B -->|是| C[执行操作1]
+    B -->|否| D[执行操作2]
+    C --> E[结束]
+    D --> E
 ```
 
 ### 序列图
 
 ```mermaid
 sequenceDiagram
-    participant 申请人
-    participant 行政机关
-    participant 复议机关
-    申请人->>行政机关: 提出许可申请
-    行政机关->>申请人: 作出许可决定
-    申请人->>复议机关: 不服，申请复议
-    复议机关->>行政机关: 审查
-    复议机关->>申请人: 复议决定
+    participant 用户
+    participant 前端
+    participant 后端
+    用户->>前端: 点击导入
+    前端->>后端: pre_scan_import
+    后端-->>前端: 冲突列表
+    前端->>后端: execute_import
+    后端-->>前端: 导入结果
 ```
 
-### 甘特图
+### 知识图谱结构
 
 ```mermaid
-gantt
-    title 行政复议时间线
-    dateFormat  YYYY-MM-DD
-    section 申请
-    提交申请     :a1, 2024-01-01, 60d
-    section 审理
-    书面审理     :a2, after a1, 30d
-    section 决定
-    作出决定     :a3, after a2, 15d
+graph LR
+    MDP[[马尔可夫决策过程]] --> BE[[贝尔曼方程]]
+    MDP --> QL[[Q-Learning]]
+    QL --> PG[[策略梯度]]
+    BE --> DQN[[DQN]]
 ```
 
-## 公式渲染测试
+## 荧光笔测试
+
+### 基础荧光笔
+
+这是一段普通文本，[[\h|这里是默认黄色荧光笔]]，后面是普通文本。
+
+### 带颜色荧光笔
+
+- 默认（黄）：[[\h|一般重点内容]]
+- 红色：[[\h:red|需注意/待核实内容]]
+- 绿色：[[\h:green|已掌握/确认内容]]
+- 蓝色：[[\h:blue|定义/术语内容]]
+- 橙色：[[\h:orange|待复习内容]]
+
+### 命名荧光笔
+
+[[\h:hl-exam|考试必考知识点]]（sidecar 中可存 note="2024年真题"）
+
+[[\h:hl-def:blue|核心定义]]（命名+颜色）
+
+### 荧光笔嵌套链接
+
+参见 [[\h:green|马尔可夫决策过程 [[mdp]] 的核心性质]]——荧光笔内含链接。
+
+### 双色荧光笔（背景+前景）
+
+- [[\h:yellow:red|黄底红字]] — 黄色背景配红色前景
+- [[\h:green:blue|绿底蓝字]] — 绿色背景配蓝色前景
+- [[\h:blue:red|蓝底红字]] — 蓝色背景配红色前景
+- [[\h:hl-exam:red|命名+红色前景]] — 命名荧光笔+前景色
+
+## 字体颜色测试
+
+- [[\c:red|红色字体]]
+- [[\c:blue|蓝色字体]]
+- [[\c:green|绿色字体]]
+- [[\c:orange|橙色字体]]
+- [[\c:purple|紫色字体]]
+- [[\c:gray|灰色字体]]
+- [[\c:#e91e63|自定义粉色字体]]
+
+## 格式标记测试
+
+### 粗体和斜体
+
+- [[\b|粗体文本]]
+- [[\i|斜体文本]]
+- [[\b|粗体中含 [[mdp]] 链接]]
+
+## 混合格式测试
+
+### 荧光笔 + Markdown 格式
+
+- [[\h|**黄底粗体**]] — 荧光笔+markdown粗体
+- [[\h:green|*绿底斜体*]] — 荧光笔+markdown斜体
+- [[\h:yellow:red|黄底红字]] — 双色荧光笔
+- [[\h:yellow:red|***黄底红字粗斜体***]] — 三重混合
+- [[\c:red|**红色粗体**]] — 字体色+markdown粗体
+- [[\h:blue|参见 [[mdp]] 核心定义]] — 荧光笔内嵌链接（栈式解析关键测试）
+
+### 与 C++ 等号运算符共存
+
+以下 `==` 不应被解析为荧光笔：
+
+- C++ 判断：`if (a == b)`
+- Python 判断：`x == y`
+- 数学等价：$A \iff B$
+
+## 公式测试
 
 ### 行内公式
 
-贝叶斯公式：$P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)}$
+爱因斯坦质能方程 $E = mc^2$ 是物理学最著名的公式之一。
 
-欧拉恒等式：$e^{i\pi} + 1 = 0$
+欧拉公式 $e^{i\pi} + 1 = 0$ 被誉为最美的数学公式。
+
+贝叶斯定理：$P(A|B) = \frac{P(B|A) P(A)}{P(B)}$
 
 ### 块级公式
 
 $$
-\mathcal{L}(\theta) = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log h_\theta(x_i) + (1 - y_i) \log(1 - h_\theta(x_i)) \right]
+\mathcal{L}(\theta) = \mathbb{E}_{(s,a) \sim \mathcal{D}} \left[ \left( r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s, a; \theta) \right)^2 \right]
 $$
 
 $$
-\nabla_\theta J(\theta) = \frac{1}{m} \sum_{i=1}^{m} \left( h_\theta(x^{(i)}) - y^{(i)} \right) x^{(i)}
+\nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) \cdot Q^{\pi_\theta}(s, a) \right]
 $$
 
-### 矩阵
+### 混合：公式 + 荧光笔
+
+[[\h:red|注意力机制的核心公式]]：
 
 $$
-\mathbf{A} = \begin{pmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{pmatrix}
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) V
 $$
 
-## 荧光笔测试
+## 混合场景测试
 
-这是一段普通文本，其中==重要内容应该被高亮显示==，而普通文本保持不变。
+### 图片 + 公式 + 荧光笔
 
-行政法的六大原则：==依法行政==、==合理行政==、==程序正当==、==诚实信用==、==高效便民==、==权责统一==。
+[[\h:blue|马尔可夫性质]]：对于马尔可夫链，未来状态只依赖当前状态：
 
-==整段高亮测试：这段话全部应该被荧光笔标记。==
+$$P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} | s_t)$$
+
+### 表格 + 荧光笔
+
+| 项目 | 状态 | 备注 |
+|------|------|------|
+| 图片渲染 | [[\h:green|已实现]] | 网络+本地 |
+| Mermaid | [[\h:orange|待实现]] | 需引入 mermaid.js |
+| 荧光笔 | [[\h:red|待实现]] | 语法已设计 |
+| 公式面板 | [[\h:orange|待实现]] | V2 阶段 |
+
+### 代码块 + 荧光笔共存
+
+```python
+# Python 代码中的 == 不应被解析为荧光笔
+if result == expected:
+    print("测试通过")
+```
+
+代码外的 [[\h|荧光笔]] 正常渲染。

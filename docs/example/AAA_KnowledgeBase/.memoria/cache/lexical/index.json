@@ -1,8 +1,8 @@
 {
   "schema_version": 4,
-  "built_at": "2026-07-15T05:19:07.560977+00:00",
-  "record_count": 4,
-  "token_count": 452,
+  "built_at": "2026-07-18T06:11:58.127581+00:00",
+  "record_count": 11,
+  "token_count": 956,
   "records": [
     {
       "kp_id": "eigen-face",
@@ -107,6 +107,184 @@
       ],
       "summary_1l": "第四层：引入SVD——改变分解对象 **【条件】** SVD可以对任意矩阵 （ ）分解为： **【推导】** 计算 ： 因为 。",
       "query_hits": []
+    },
+    {
+      "kp_id": "DDPG",
+      "file": "ReinforcementLearning/DDPG/DDPG.md",
+      "name": "DDPG",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "## 3. DDPG 算法\n\n### 3.1 核心挑战与解决方案\n\n| 挑战 | DQN 的解决方案 | DDPG 的适配方案 |\n|------|---------------|----------------|\n| 样本非独立同分布 | Replay Buffer | 同样使用 Replay Buffer |\n| TD 目标不稳定 | Target Network（硬更新） | Target Network（**软更新**，$\\tau \\ll 1$） |\n| 连续动作空间的贪婪策略 | 不适用 | **Actor-Critic** 架构：Actor 直接输出最优动作 |\n| 不同特征的尺度差异 | — | **Batch Normalization** |\n\n### 3.2 Actor-Critic 架构\n\nDDPG 维护四个网络：\n\n| 网络 | 符号 | 角色 |\n|------|------|------|\n| **Actor (策略网络)** | $\\mu(s|\\theta^\\mu)$ | 确定性策略：$s \\mapsto a$ |\n| **Critic (Q 网络)** | $Q(s,a|\\theta^Q)$ | 动作价值函数：$(s,a) \\mapsto \\mathbb{R}$ |\n| **Target Actor** | $\\mu'(s|\\theta^{\\mu'})$ | 软更新副本，用于计算稳定目标 |\n| **Target Critic** | $Q'(s,a|\\theta^{Q'})$ | 软更新副本，用于计算稳定目标 |\n\n### 3.3 Critic 更新（Q-Learning）\n\n从 replay buffer $\\mathcal{R}$ 中采样一个大小为 $N$ 的 minibatch $(s_i, a_i, r_i, s_{i+1})$。\n\n**TD 目标**（使用目标网络）：\n\n$$y_i = r_i + \\gamma Q'(s_{i+1}, \\mu'(s_{i+1} | \\theta^{\\mu'}) | \\theta^{Q'})$$\n\n**Critic 损失**（均方贝尔曼误差）：\n\n$$L = \\frac{1}{N} \\sum_{i=1}^{N} \\left( y_i - Q(s_i, a_i | \\theta^Q) \\right)^2$$\n\n**梯度**：\n\n$$\\nabla_{\\theta^Q} L = \\frac{1}{N} \\sum_{i=1}^{N} \\left[ -2 \\left( y_i - Q(s_i, a_i | \\theta^Q) \\right) \\nabla_{\\theta^Q} Q(s_i, a_i | \\theta^Q) \\right]$$\n\n### 3.4 Actor 更新（确定性策略梯度）\n\n目标：最大化 $J = \\mathbb{E}_{s \\sim \\rho^\\mu} [Q(s, \\mu(s|\\theta^\\mu) | \\theta^Q)]$。\n\n**确定性策略梯度定理** (Silver et al., 2014)：\n\n$$\\nabla_{\\theta^\\mu} J \\approx \\mathbb{E}_{s_t \\sim \\rho^\\beta} \\left[ \\nabla_{\\theta^\\mu} Q(s, a | \\theta^Q) \\big|_{s=s_t, a=\\mu(s_t)} \\right] \\tag{6}$$\n\n应用链式法则：\n\n$$\\nabla_{\\theta^\\mu} J \\approx \\mathbb{E}_{s_t \\sim \\rho^\\beta} \\left[ \\nabla_a Q(s, a | \\theta^Q) \\big|_{s=s_t, a=\\mu(s_t)} \\cdot \\nabla_{\\theta^\\mu} \\mu(s | \\theta^\\mu) \\big|_{s=s_t} \\right] \\tag{6}$$\n\n**采样近似**：\n\n$$\\nabla_{\\theta^\\mu} J \\approx \\frac{1}{N} \\sum_{i=1}^{N} \\left[ \\nabla_a Q(s, a | \\theta^Q) \\big|_{s=s_i, a=\\mu(s_i)} \\cdot \\nabla_{\\theta^\\mu} \\mu(s | \\theta^\\mu) \\big|_{s=s_i} \\right]$$\n\n> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic 的输出回传到 Actor 的输入，再回传到 Actor 的参数 $\\theta^\\mu$。\n\n### 3.5 目标网络的软更新\n\n与 DQN 每隔若干步硬拷贝权重不同，DDPG 使用 **软更新 (soft update)**：\n\n$$\\theta^{Q'} \\leftarrow \\tau \\theta^Q + (1 - \\tau) \\theta^{Q'}$$\n\n$$\\theta^{\\mu'} \\leftarrow \\tau \\theta^\\mu + (1 - \\tau) \\theta^{\\mu'}$$\n\n其中 $\\tau \\ll 1$（通常 $\\tau = 10^{-3}$）。\n\n> **优势**：目标网络缓慢变化，极大提高了学习的稳定性，使 TD 误差的优化更接近监督学习。\n\n### 3.6 探索策略\n\nDDPG 是异策略算法，可以将探索与学习解耦。构造探索策略：\n\n$$\\mu'(s_t) = \\mu(s_t | \\theta_t^\\mu) + \\mat",
+      "auto_tags": [],
+      "aliases": [],
+      "key_phrases": [
+        "ddpg",
+        "算法",
+        "3.1",
+        "核心",
+        "挑战",
+        "解决方案",
+        "dqn",
+        "适配"
+      ],
+      "summary_1l": "3.",
+      "query_hits": []
+    },
+    {
+      "kp_id": "DPG",
+      "file": "ReinforcementLearning/DPG.md",
+      "name": "策略梯度定理",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "# 策略梯度定理完整推导汇报\n\n## 0. 摘要\n\n本报告系统推导**策略梯度定理 (Policy Gradient Theorem)**，该定理是深度强化学习中所有策略梯度方法（REINFORCE、Actor-Critic、PPO、TRPO、DDPG 等）的数学基石。我们从策略梯度定理的原始形式出发，给出从目标函数定义到最终定理形式的完整、逐行、无跳步的数学推导。\n\n**核心结论**：\n\n$$\n\\boxed{\\nabla_\\theta J(\\pi_\\theta) = \\mathbb{E}_{s \\sim \\rho^\\pi, a \\sim \\pi_\\theta} \\left[ \\nabla_\\theta \\log \\pi_\\theta(a|s) \\cdot Q^\\pi(s,a) \\right]}\n$$\n\n---\n\n## 1. 符号与设定\n\n| 符号 | 含义 |\n|------|------|\n| $\\mathcal{S}$ | 状态空间 |\n| $\\mathcal{A}$ | 动作空间（离散或连续） |\n| $\\pi_\\theta(a \\mid s)$ | 参数为 $\\theta$ 的随机策略 |\n| $\\gamma \\in [0,1)$ | 折扣因子 |\n| $P(s' \\mid s, a)$ | 状态转移概率 |\n| $R(s, a)$ | 即时奖励函数 |\n| $d_0(s)$ | 初始状态分布 |\n| $\\rho^\\pi(s)$ | 折扣状态分布：$\\sum_{t=0}^{\\infty} \\gamma^t \\Pr(s_t = s \\mid \\pi)$ |\n| $Q^\\pi(s, a)$ | 动作价值函数 |\n| $V^\\pi(s)$ | 状态价值函数 |\n| $A^\\pi(s, a) = Q^\\pi(s,a) - V^\\pi(s)$ | 优势函数 |\n| $\\eta(\\pi)$ 或 $J(\\pi_\\theta)$ | 策略性能目标 |\n\n---\n\n## 2. 目标函数的定义\n\n### 2.1 三种等价定义\n\n强化学习的目标是最大化期望累积折扣回报。以下三种定义在文献中均被使用，它们本质等价：\n\n**定义一（基于初始状态分布）**：\n\n$$\nJ_1(\\theta) = \\mathbb{E}_{s_0 \\sim d_0} \\left[ V^{\\pi_\\theta}(s_0) \\right] = \\int_{\\mathcal{S}} d_0(s) V^{\\pi_\\theta}(s) ds \\tag{1}\n$$\n\n**定义二（[[基于折扣状态分布]]）**：\n\n$$\nJ_2(\\theta) = \\mathbb{E}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ R(s,a) \\right] = \\int_{\\mathcal{S}} \\rho^{\\pi_\\theta}(s) \\int_{\\mathcal{A}} \\pi_\\theta(a|s) R(s,a) \\, da \\, ds \\tag{2}\n$$\n\n**定义三（基于平均回报，适用于无折扣情形）**：\n\n$$\nJ_3(\\theta) = \\lim_{T \\to \\infty} \\frac{1}{T} \\mathbb{E} \\left[ \\sum_{t=0}^{T-1} R(s_t, a_t) \\right] \\tag{3}\n$$\n\n> **说明**：本报告使用定义一 $J(\\theta) = \\mathbb{E}_{s_0 \\sim d_0}[V^{\\pi_\\theta}(s_0)]$，这是 Sutton 等人在原始策略梯度定理论文中使用的形式，也是后续推导中最方便的形式。\n\n---\n\n## 3. 预备知识\n\n### 3.1 策略梯度的链式结构\n\n策略梯度方法的核心思想是：**直接对策略参数 $\\theta$ 求梯度，而不是对价值函数求梯度**。\n\n目标函数 $J(\\theta)$ 对 $\\theta$ 的依赖关系是一个复杂的递归结构：\n\n$$\nJ(\\theta) = \\mathbb{E}_{s_0 \\sim d_0} \\left[ \\underbrace{\\mathbb{E}_{a_0 \\sim \\pi_\\theta(\\cdot|s_0)} \\left[ R(s_0, a_0) + \\gamma \\underbrace{\\mathbb{E}_{s_1 \\sim P(\\cdot|s_0,a_0)} \\left[ V^{\\pi_\\theta}(s_1) \\right]}_{依赖于\\theta} \\right]}_{依赖于\\theta} \\right]\n$$\n\n**核心难点**：$V^{\\pi_\\theta}(s)$ 本身通过贝尔曼方程隐式依赖于 $\\theta$，且这种依赖通过未来的所有时间步递归传播。策略梯度定理的作用就是**消除这种递归依赖**，将梯度表示为一个简洁的期望形式。\n\n---\n\n## 4. 策略梯度定理：原始形式与证明\n\n### 4.1 定理陈述\n\n**策略梯度定理 (Sutton et al., 2000)**：\n\n对于可微分的策略 $\\pi_\\theta(a|s)$，目标函数 $J(\\theta) = \\mathbb{E}_{s_0 \\sim d_0}[V^{\\pi_\\theta}(s_0)]$ 的梯度为：\n\n$$\n\\boxed{\\nabla_\\theta J(\\theta) = \\mathbb{E}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ \\nabla_\\theta \\log \\pi_\\theta(a|s) \\cd",
+      "auto_tags": [],
+      "aliases": [
+        "DPG"
+      ],
+      "key_phrases": [
+        "策略",
+        "梯度",
+        "定理",
+        "完整",
+        "推导",
+        "汇报",
+        "摘要",
+        "报告"
+      ],
+      "summary_1l": "完整推导汇报 0.",
+      "query_hits": []
+    },
+    {
+      "kp_id": "RL Target Function",
+      "file": "ReinforcementLearning/DPG.md",
+      "name": "强化学习目标函数",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "## 2. 目标函数的定义\n\n### 2.1 三种等价定义\n\n强化学习的目标是最大化期望累积折扣回报。以下三种定义在文献中均被使用，它们本质等价：\n\n**定义一（基于初始状态分布）**：\n\n$$\nJ_1(\\theta) = \\mathbb{E}_{s_0 \\sim d_0} \\left[ V^{\\pi_\\theta}(s_0) \\right] = \\int_{\\mathcal{S}} d_0(s) V^{\\pi_\\theta}(s) ds \\tag{1}\n$$\n\n**定义二（[[基于折扣状态分布]]）**：\n\n$$\nJ_2(\\theta) = \\mathbb{E}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ R(s,a) \\right] = \\int_{\\mathcal{S}} \\rho^{\\pi_\\theta}(s) \\int_{\\mathcal{A}} \\pi_\\theta(a|s) R(s,a) \\, da \\, ds \\tag{2}\n$$\n\n**定义三（基于平均回报，适用于无折扣情形）**：\n\n$$\nJ_3(\\theta) = \\lim_{T \\to \\infty} \\frac{1}{T} \\mathbb{E} \\left[ \\sum_{t=0}^{T-1} R(s_t, a_t) \\right] \\tag{3}\n$$\n\n> **说明**：本报告使用定义一 $J(\\theta) = \\mathbb{E}_{s_0 \\sim d_0}[V^{\\pi_\\theta}(s_0)]$，这是 Sutton 等人在原始策略梯度定理论文中使用的形式，也是后续推导中最方便的形式。",
+      "auto_tags": [],
+      "aliases": [
+        "RL Target Function"
+      ],
+      "key_phrases": [
+        "目标",
+        "函数",
+        "定义",
+        "2.1",
+        "三种",
+        "等价",
+        "强化",
+        "学习"
+      ],
+      "summary_1l": "2.",
+      "query_hits": []
+    },
+    {
+      "kp_id": "DPG-appendix1",
+      "file": "ReinforcementLearning/DPG_appendix.md",
+      "name": "DPG补充1",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "## 1.2 $\\rho^{\\pi}(s)$ 到底是什么（关键！）\n**折扣占用度量（discounted occupancy measure）定义：**\n$$\n\\rho^{\\pi}(s) \\triangleq \\sum_{t=0}^{\\infty}\\gamma^t \\mathbb{P}(s_t=s\\mid\\pi,d_0)\n$$\n含义：\n从初始分布 $d_0$ 出发，遵循策略 $\\pi$，**所有时刻带折扣权重下访问状态 $s$ 的总概率**。\n它天然已经对 $t=0,1,2,\\dots,\\infty$ 做了求和。\n\n把期望展开交换求和与期望顺序：\n$$\n\\begin{aligned}\nJ_1\n&=\\mathbb{E}\\left[\\sum_{t=0}^\\infty \\gamma^t R(s_t,a_t)\\right]\\\\\n&=\\sum_{t=0}^\\infty \\gamma^t \\iint \\mathbb{P}(s_t=s)\\,\\pi(a|s)\\,R(s,a)\\,da\\,ds\\\\\n&=\\iint \\underbrace{\\left(\\sum_{t=0}^\\infty\\gamma^t\\mathbb{P}(s_t=s)\\right)}_{\\rho^\\pi(s)} \\pi(a|s)R(s,a)\\,da\\,ds\\\\\n&=\\mathbb{E}_{s\\sim\\rho^\\pi,a\\sim\\pi(\\cdot|s)}[R(s,a)] = J_2\n\\end{aligned}\n$$",
+      "auto_tags": [],
+      "aliases": [
+        "DPG-appendix1"
+      ],
+      "key_phrases": [
+        "1.2",
+        "到底",
+        "什么",
+        "关键",
+        "折扣",
+        "占用",
+        "度量",
+        "discounted"
+      ],
+      "summary_1l": "1.",
+      "query_hits": []
+    },
+    {
+      "kp_id": "DPG-appendix2",
+      "file": "ReinforcementLearning/DPG_appendix.md",
+      "name": "DPG补充2",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "证明算子为什么范数小于1",
+      "file_description": "",
+      "body_excerpt": "## 2.1 问题的核心：算子范数的定义\n\n### 2.1.1 什么是 \\(\\|\\cdot\\|_\\infty\\) 范数？\n\n对于作用于函数空间 \\(\\mathcal{B}(\\mathcal{S})\\)（有界实值函数）上的线性算子 \\(T\\)，其**诱导上确界范数**定义为：\n\n\\[\n\\|T\\|_\\infty \\triangleq \\sup_{\\|f\\|_\\infty \\leq 1} \\|T f\\|_\\infty\n\\]\n\n其中对函数 \\(f: \\mathcal{S} \\to \\mathbb{R}\\)，\\(\\|f\\|_\\infty = \\sup_{s \\in \\mathcal{S}} |f(s)|\\)。\n\n**通俗理解**：\\(\\|T\\|_\\infty\\) 表示算子 \\(T\\) 能将任意有界函数放大多少倍（最坏情况）。\n\n\n\n## 2.2 证明 \\(\\|\\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq 1\\)\n\n### 2.2.1 转移算子的定义\n\n\\[\n(\\mathcal{P}^{\\mu_\\theta} f)(s) = \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds'\n\\]\n\n即：从状态 \\(s\\) 出发，按确定性策略 \\(\\mu_\\theta\\) 选择动作，转移到下一状态后，取函数 \\(f\\) 在该状态的期望值。\n\n\n\n### 2.2.2 范数上界\n\n对于**任意**有界函数 \\(f\\)（\\(\\|f\\|_\\infty \\leq 1\\)），在**任意**状态 \\(s\\) 下：\n\n\\[\n|(\\mathcal{P}^{\\mu_\\theta} f)(s)| = \\left| \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds' \\right|\n\\]\n\n利用绝对值不等式（三角不等式）：\n\n\\[\n|(\\mathcal{P}^{\\mu_\\theta} f)(s)| \\leq \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) \\, |f(s')| \\, ds'\n\\]\n\n由于 \\(|f(s')| \\leq \\|f\\|_\\infty\\) 对所有 \\(s'\\) 成立：\n\n\\[\n|(\\mathcal{P}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) \\, ds'\n\\]\n\n因为 \\(\\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) \\, ds' = 1\\)（概率测度归一化）：\n\n\\[\n|(\\mathcal{P}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty\n\\]\n\n**对所有 \\(s\\) 取上确界**：\n\n\\[\n\\|\\mathcal{P}^{\\mu_\\theta} f\\|_\\infty = \\sup_s |(\\mathcal{P}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty\n\\]\n\n**对所有 \\(\\|f\\|_\\infty \\leq 1\\) 的函数取上确界**：\n\n\\[\n\\|\\mathcal{P}^{\\mu_\\theta}\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} \\|\\mathcal{P}^{\\mu_\\theta} f\\|_\\infty \\leq 1\n\\]\n\n因此：\n\n\\[\n\\boxed{\\|\\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq 1} \\tag{1}\n\\]\n\n\n## 2.3 证明 \\(\\|\\gamma \\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma < 1\\)\n\n### 2.3.1 缩放性质\n\n对于任意线性算子 \\(T\\) 和标量 \\(c\\)：\n\n\\[\n\\|c T\\|_\\infty = |c| \\cdot \\|T\\|_\\infty\n\\]\n\n这个性质来源于范数的齐次性：\n\n\\[\n\\|c T\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} \\|c T f\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} |c| \\|T f\\|_\\infty = |c| \\|T\\|_\\infty\n\\]\n\n\n### 2.3.2 应用到我们的算子\n\n令 \\(T = \\mathcal{P}^{\\mu_\\theta}\\)，标量 \\(c = \\gamma\\)。\n\n\\[\n\\|\\gamma \\mathcal{P}^{\\mu_\\theta}\\|_\\infty = \\gamma \\|\\mathcal{P}^{\\mu_\\theta}\\|_\\infty\n\\]\n\n代入 (1)：\n\n\\[\n\\|\\gamma \\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma \\cdot 1 = \\gamma\n\\]\n\n由于 \\(\\gamma \\in [0, 1)\\)（折扣因子的定义）：\n\n\\[\n\\boxed{\\|\\gamma \\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma < 1} \\tag{2}\n\\]\n\n---",
+      "auto_tags": [],
+      "aliases": [
+        "DPG-appendix2"
+      ],
+      "key_phrases": [
+        "2.1",
+        "问题",
+        "核心",
+        "算子",
+        "范数",
+        "定义",
+        "什么",
+        "cdot"
+      ],
+      "summary_1l": "2.",
+      "query_hits": []
+    },
+    {
+      "kp_id": "DPG-appendix3",
+      "file": "ReinforcementLearning/DPG_appendix.md",
+      "name": "DPG补充3",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "问的是：**为什么满足 \\(\\|T\\| < 1\\) 后，\\((I - T)^{-1}\\) 就等于 Neumann 级数 \\(\\sum_{k=0}^{\\infty} T^k\\)？**\n\n这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。\n\n## 3.1 代数证明（最严谨）\n\n### 3.1.1 定义部分和\n\n令 Neumann 级数的前 \\(n+1\\) 项部分和为：\n\n\\[\nS_n \\triangleq I + T + T^2 + \\cdots + T^n = \\sum_{k=0}^{n} T^k\n\\]\n\n### 3.1.2 计算 \\((I - T)S_n\\)\n\n展开：\n\n\\[\n(I - T)S_n = (I - T)(I + T + T^2 + \\cdots + T^n)\n\\]\n\n逐项相乘：\n\n\\[\n= I + T + T^2 + \\cdots + T^n - T - T^2 - T^3 - \\cdots - T^{n+1}\n\\]\n\n中间的 \\(T, T^2, \\ldots, T^n\\) 全部抵消，只剩下：\n\n\\[\n(I - T)S_n = I - T^{n+1} \\tag{1}\n\\]\n\n\n\n### 3.1.3 取极限 \\(n \\to \\infty\\)\n\n如果 \\(\\|T\\| < 1\\)，那么：\n\n\\[\n\\|T^{n+1}\\| \\le \\|T\\|^{n+1} \\xrightarrow{n \\to \\infty} 0\n\\]\n\n因此 \\(T^{n+1} \\to 0\\)（零算子）。于是：\n\n\\[\n\\lim_{n \\to \\infty} (I - T)S_n = I - \\lim_{n \\to \\infty} T^{n+1} = I\n\\]\n\n即：\n\n\\[\n(I - T) \\lim_{n \\to \\infty} S_n = I\n\\]\n\n\n\n### 3.1.4 同样地，验证右逆\n\n同理：\n\n\\[\nS_n(I - T) = I - T^{n+1}\n\\]\n\n取极限：\n\n\\[\n\\lim_{n \\to \\infty} S_n (I - T) = I\n\\]\n\n因此 \\(\\lim_{n \\to \\infty} S_n\\) 既是 \\(I - T\\) 的左逆，也是右逆。\n\n\n\n### 3.1.5 结论\n\n\\[\n\\boxed{(I - T)^{-1} = \\sum_{k=0}^{\\infty} T^k}\n\\]\n\n**证毕。**\n\n\n\n## 3.2 为什么 \\(\\|T\\| < 1\\) 保证了 \\(T^{n+1} \\to 0\\)？\n\n这是算子范数的一个重要性质：\n\n\\[\n\\|T^{n+1}\\| \\le \\|T\\|^{n+1}\n\\]\n\n如果 \\(\\|T\\| < 1\\)，右边的 \\(\\|T\\|^{n+1} \\to 0\\)，所以 \\(\\|T^{n+1}\\| \\to 0\\)。\n\n在 Banach 空间中，范数趋向于 0 意味着算子本身趋向于零算子。\n\n> **类比**：实数中，如果 \\(|x| < 1\\)，那么 \\(x^n \\to 0\\)。\\(\\|T\\| < 1\\) 就是这个条件的算子版本。\n\n---",
+      "auto_tags": [],
+      "aliases": [
+        "DPG-appendix3"
+      ],
+      "key_phrases": [
+        "为什么",
+        "满足",
+        "等于",
+        "neumann",
+        "级数",
+        "sum",
+        "infty",
+        "本质"
+      ],
+      "summary_1l": "问的是：**为什么满足 \\(\\|T\\| < 1\\) 后，\\((I - T)^{-1}\\) 就等于 Neumann 级数 \\(\\sum_{k=0}^{\\infty} T^k\\)？",
+      "query_hits": []
+    },
+    {
+      "kp_id": "OU_Noise",
+      "file": "ReinforcementLearning/OU_Noise.md",
+      "name": "OU_Noise",
+      "tags": [],
+      "aliases_explicit": [],
+      "kp_description": "",
+      "file_description": "",
+      "body_excerpt": "## 2. Ornstein-Uhlenbeck 过程的定义\n\n**随机微分方程（SDE）形式**\n\n$$\ndx_t = \\theta (\\mu - x_t) dt + \\sigma dW_t\n$$\n\n其中：\n- $ \\theta > 0 $：均值回归速度（strength of mean reversion）\n- $ \\mu $：长期均值（long-term mean）\n- $ \\sigma > 0 $：波动率（volatility）\n- $ dW_t $：维纳过程增量（标准布朗运动）\n\n\n## 3. SDE 的解析解推导\n\n**Step 1: 齐次方程解**\n\n考虑齐次方程 $ dx_t = -\\theta x_t dt $（设 $ \\mu = 0 $）：\n\n$$\n\\frac{dx_t}{x_t} = -\\theta dt \\quad \\Rightarrow \\quad \\ln x_t = -\\theta t + C \\quad \\Rightarrow \\quad x_t = x_0 e^{-\\theta t}\n$$\n\n**Step 2: 常数变易法**\n\n令 $ y_t = x_t e^{\\theta t} $，则：\n\n$$\ndy_t = e^{\\theta t} dx_t + \\theta e^{\\theta t} x_t dt\n$$\n\n代入原 SDE $ dx_t = \\theta (\\mu - x_t) dt + \\sigma dW_t $：\n\n$$\n\\begin{aligned}\ndy_t &= e^{\\theta t} [\\theta (\\mu - x_t) dt + \\sigma dW_t] + \\theta e^{\\theta t} x_t dt \\\\\n&= e^{\\theta t} \\theta \\mu dt + e^{\\theta t} \\sigma dW_t\n\\end{aligned}\n$$\n\n**Step 3: 积分求解**\n\n$$\ny_t = y_0 + \\theta \\mu \\int_0^t e^{\\theta s} ds + \\sigma \\int_0^t e^{\\theta s} dW_s\n$$\n\n计算积分 $ \\int_0^t e^{\\theta s} ds = \\frac{e^{\\theta t} - 1}{\\theta} $，代入 $ y_0 = x_0 $：\n\n$$\nx_t e^{\\theta t} = x_0 + \\mu (e^{\\theta t} - 1) + \\sigma \\int_0^t e^{\\theta s} dW_s\n$$\n\n**Step 4: 最终解析解**\n\n$$\nx_t = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t}) + \\sigma \\int_0^t e^{-\\theta (t-s)} dW_s\n$$\n\n\n## 4. OU 过程的统计性质\n\n### 4.1 期望\n\n$$\n\\mathbb{E}[x_t] = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t})\n$$\n\n**推导：**\n\n由解析解：\n\n$$\nx_t = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t}) + \\sigma \\int_0^t e^{-\\theta (t-s)} dW_s\n$$\n\n对两边取期望。由于维纳积分 $ \\int_0^t e^{-\\theta (t-s)} dW_s $ 是鞅，其期望为 0：\n\n$$\n\\mathbb{E}\\left[ \\sigma \\int_0^t e^{-\\theta (t-s)} dW_s \\right] = 0\n$$\n\n因此：\n\n$$\n\\mathbb{E}[x_t] = \\mathbb{E}[x_0] e^{-\\theta t} + \\mu (1 - e^{-\\theta t})\n$$\n\n若 $ x_0 $ 是确定性初始值，则 $ \\mathbb{E}[x_0] = x_0 $，即得上述公式。\n\n**极限：** $ \\lim_{t \\to \\infty} \\mathbb{E}[x_t] = \\mu $\n\n### 4.2 方差\n\n$$\n\\text{Var}(x_t) = \\frac{\\sigma^2}{2\\theta} (1 - e^{-2\\theta t})\n$$\n\n**推导（利用 Itô 等距）：**\n\n由解析解，确定性部分对方差无贡献，因此：\n\n$$\n\\text{Var}(x_t) = \\mathbb{E}\\left[ \\left( \\sigma \\int_0^t e^{-\\theta (t-s)} dW_s \\right)^2 \\right]\n$$\n\n**Itô 等距（Itô Isometry）**：对于确定性被积函数 $ f(t) $，\n\n$$\n\\mathbb{E}\\left[ \\left( \\int_0^t f(s) dW_s \\right)^2 \\right] = \\int_0^t f(s)^2 ds\n$$\n\n这是 Itô 积分的基本性质，来源于维纳过程的独立增量性和二次变差。\n\n应用 Itô 等距，取 $ f(s) = \\sigma e^{-\\theta (t-s)} $：\n\n$$\n\\begin{aligned}\n\\text{Var}(x_t) &= \\int_0^t \\sigma^2 e^{-2\\theta (t-s)} ds \\\\\n&= \\sigma^2 \\int_0^t e^{-2\\theta u} du \\quad (u = t-s) \\\\\n&= \\sigma^2 \\cdot \\frac{1 - e^{-2\\",
+      "auto_tags": [],
+      "aliases": [],
+      "key_phrases": [
+        "ornstein",
+        "uhlenbeck",
+        "过程",
+        "定义",
+        "随机",
+        "微分方程",
+        "sde",
+        "形式"
+      ],
+      "summary_1l": "2.",
+      "query_hits": []
     }
   ],
   "inverted": {
@@ -184,6 +362,38 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "特征": [
@@ -217,6 +427,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
         "f": "body"
       }
     ],
@@ -261,6 +475,38 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -308,6 +554,10 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
       }
     ],
     "降维": [
@@ -358,12 +608,48 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "用于": [
       {
         "r": 0,
         "f": "kp_description"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "区分": [
@@ -376,6 +662,14 @@
       {
         "r": 0,
         "f": "kp_description"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
       }
     ],
     "barenlianjiangweitiqutezhengyongyuqufenrenliandeng": [
@@ -394,6 +688,10 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "##": [
@@ -411,6 +709,34 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -472,6 +798,38 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "问题": [
@@ -502,6 +860,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
       }
     ],
     "定义": [
@@ -516,6 +882,42 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
       }
     ],
     "*": [
@@ -550,6 +952,38 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "【": [
@@ -634,6 +1068,10 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "】": [
@@ -690,6 +1128,42 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "alias"
+      },
+      {
+        "r": 8,
+        "f": "alias"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "alias"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "有": [
@@ -716,6 +1190,10 @@
       {
         "r": 2,
         "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "$": [
@@ -734,6 +1212,26 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "n": [
@@ -751,6 +1249,14 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -832,6 +1338,18 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
       }
     ],
     "\\": [
@@ -849,6 +1367,38 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -882,6 +1432,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "^": [
@@ -900,6 +1458,38 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "2": [
@@ -914,6 +1504,62 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "name"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "summary"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "summary"
       }
     ],
     "个": [
@@ -986,6 +1632,22 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "_": [
@@ -1004,6 +1666,42 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "name"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "i": [
@@ -1018,6 +1716,18 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
       }
     ],
     "（": [
@@ -1052,6 +1762,34 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "1": [
@@ -1069,6 +1807,66 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 7,
+        "f": "name"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      },
+      {
+        "r": 7,
+        "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "kp_description"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -1104,6 +1902,34 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "=": [
@@ -1122,6 +1948,38 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     ",": [
@@ -1131,6 +1989,30 @@
       },
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -1214,6 +2096,38 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "是": [
@@ -1243,6 +2157,38 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -1302,6 +2248,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "比": [
@@ -1342,6 +2296,22 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "太慢": [
@@ -1362,6 +2332,10 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "太": [
@@ -1436,6 +2410,30 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "summary"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "需要": [
@@ -1548,6 +2546,18 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "量": [
@@ -1596,6 +2606,14 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
       }
     ],
     "在": [
@@ -1622,6 +2640,22 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "不同": [
@@ -1632,6 +2666,10 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "光线": [
@@ -1652,6 +2690,14 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "值": [
@@ -1680,6 +2726,10 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "可能": [
@@ -1812,6 +2862,14 @@
       {
         "r": 0,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
       }
     ],
     "模式": [
@@ -1858,6 +2916,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "结论": [
@@ -1880,6 +2942,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "一个": [
@@ -1894,11 +2964,27 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "方法": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 5,
         "f": "body"
       }
     ],
@@ -1919,6 +3005,22 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
         "f": "body"
       }
     ],
@@ -1962,6 +3064,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
       }
     ],
     "ll": [
@@ -1975,6 +3085,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
         "f": "body"
       }
     ],
@@ -1991,6 +3105,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 8,
         "f": "body"
       }
     ],
@@ -2039,6 +3157,10 @@
     "只": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -2104,6 +3226,14 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
       }
     ],
     "和": [
@@ -2122,6 +3252,18 @@
       {
         "r": 2,
         "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "中心化": [
@@ -2137,6 +3279,18 @@
     "所有": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
         "f": "body"
       }
     ],
@@ -2162,6 +3316,22 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "{": [
@@ -2179,6 +3349,38 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -2198,12 +3400,72 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "sum": [
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
       }
     ],
     "减去": [
@@ -2253,6 +3515,10 @@
       },
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -2308,17 +3574,77 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "dots": [
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
       }
     ],
     "]": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -2342,6 +3668,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "所有人": [
@@ -2360,6 +3690,14 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "后": [
@@ -2373,6 +3711,18 @@
       },
       {
         "r": 1,
+        "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "summary"
       }
     ],
@@ -2412,6 +3762,18 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "后面": [
@@ -2423,6 +3785,10 @@
     "分析": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -2600,6 +3966,10 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "投影": [
@@ -2632,6 +4002,10 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "最大": [
@@ -2678,6 +4052,26 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "c": [
@@ -2695,6 +4089,14 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -2714,6 +4116,38 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "text": [
@@ -2723,6 +4157,10 @@
       },
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -2748,6 +4186,22 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
       }
     ],
     "×": [
@@ -2772,6 +4226,10 @@
       {
         "r": 2,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
       }
     ],
     "做": [
@@ -2797,6 +4255,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 7,
         "f": "body"
       }
     ],
@@ -2998,6 +4460,26 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
       }
     ],
     "维度": [
@@ -3072,17 +4554,29 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "不是": [
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "考虑": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3116,6 +4610,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
       }
     ],
     "lambda": [
@@ -3131,6 +4633,18 @@
     "其中": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3162,6 +4676,34 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "两边": [
@@ -3171,6 +4713,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3187,6 +4733,14 @@
     "说明": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
         "f": "body"
       }
     ],
@@ -3226,6 +4780,10 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "就": [
@@ -3236,11 +4794,31 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
       }
     ],
     "了": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -3256,6 +4834,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "|": [
@@ -3266,11 +4848,47 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
       }
     ],
     "原始": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
         "f": "body"
       }
     ],
@@ -3296,17 +4914,33 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "零": [
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "它们": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
         "f": "body"
       }
     ],
@@ -3319,6 +4953,22 @@
     "空间": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -3352,6 +5002,10 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "到": [
@@ -3366,6 +5020,14 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "新": [
@@ -3383,6 +5045,10 @@
     "le": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -3426,6 +5092,14 @@
       {
         "r": 0,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "这张": [
@@ -3437,6 +5111,18 @@
     "与": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
         "f": "body"
       }
     ],
@@ -3479,6 +5165,10 @@
     "！": [
       {
         "r": 0,
+        "f": "body"
+      },
+      {
+        "r": 7,
         "f": "body"
       }
     ],
@@ -3666,11 +5356,27 @@
       {
         "r": 1,
         "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
       }
     ],
     "dingyi": [
       {
         "r": 0,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 10,
         "f": "key_phrase"
       }
     ],
@@ -3734,6 +5440,22 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
       }
     ],
     "样本": [
@@ -3748,6 +5470,10 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "x": [
@@ -3761,6 +5487,14 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3816,6 +5550,10 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "度量": [
@@ -3826,6 +5564,14 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
       }
     ],
     "→": [
@@ -3836,6 +5582,10 @@
       {
         "r": 1,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "分散": [
@@ -3910,11 +5660,27 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "y": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3928,17 +5694,69 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "left": [
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "right": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -3954,6 +5772,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "所以": [
@@ -3964,11 +5786,27 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "最大化": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
         "f": "body"
       }
     ],
@@ -3982,11 +5820,23 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "就是": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -4000,12 +5850,88 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     ".": [
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "summary"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "summary"
+      },
+      {
+        "r": 7,
+        "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "summary"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "summary"
       }
     ],
     "拉格朗": [
@@ -4030,6 +5956,10 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "约束": [
@@ -4046,11 +5976,43 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "函数": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -4058,11 +6020,31 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "l": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 4,
         "f": "body"
       }
     ],
@@ -4073,6 +6055,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 5,
         "f": "body"
       }
     ],
@@ -4092,11 +6078,55 @@
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "0": [
       {
         "r": 1,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "summary"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -4114,12 +6144,40 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "目标": [
       {
         "r": 1,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
       }
     ],
     "选前": [
@@ -4254,6 +6312,42 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 4,
+        "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "name"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "10": [
@@ -4263,6 +6357,10 @@
       },
       {
         "r": 2,
+        "f": "body"
+      },
+      {
+        "r": 4,
         "f": "body"
       }
     ],
@@ -4302,6 +6400,10 @@
       {
         "r": 2,
         "f": "summary"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "不可": [
@@ -4384,6 +6486,10 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "任意": [
@@ -4398,6 +6504,10 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "因为": [
@@ -4412,6 +6522,10 @@
       {
         "r": 3,
         "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "begin": [
@@ -4421,6 +6535,14 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -4442,6 +6564,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "ddots": [
@@ -4462,6 +6592,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "右": [
@@ -4471,6 +6609,10 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -4560,6 +6702,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "还是": [
@@ -4600,6 +6746,18 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
       }
     ],
     "同样": [
@@ -4609,6 +6767,14 @@
       },
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -4670,6 +6836,10 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "kp_description"
       }
     ],
     "max_w": [
@@ -4744,6 +6914,14 @@
       {
         "r": 1,
         "f": "key_phrase"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
       }
     ],
     "yangben": [
@@ -4800,6 +6978,14 @@
       {
         "r": 2,
         "f": "kp_description"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
       }
     ],
     "suanfazhijiejisuandepingjing": [
@@ -4840,6 +7026,10 @@
       {
         "r": 2,
         "f": "alias"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "disanceng": [
@@ -4944,6 +7134,14 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "关卡": [
@@ -4967,6 +7165,18 @@
     "取": [
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -4992,6 +7202,18 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "只要": [
@@ -5010,17 +7232,29 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
       }
     ],
     "再": [
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
       }
     ],
     "公式": [
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -5040,6 +7274,18 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "summary"
       }
     ],
     "逻辑": [
@@ -5070,17 +7316,57 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "---": [
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "to": [
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -5100,11 +7386,51 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
       }
     ],
     "cdot": [
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 10,
         "f": "body"
       }
     ],
@@ -5112,11 +7438,23 @@
       {
         "r": 3,
         "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
       }
     ],
     "前": [
       {
         "r": 3,
+        "f": "body"
+      },
+      {
+        "r": 9,
         "f": "body"
       }
     ],
@@ -5184,6 +7522,4282 @@
       {
         "r": 3,
         "f": "summary"
+      }
+    ],
+    "ddpg": [
+      {
+        "r": 4,
+        "f": "id"
+      },
+      {
+        "r": 4,
+        "f": "name"
+      },
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "###": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "3.1": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "挑战": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "解决方案": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "dqn": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "适配": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "方案": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "------": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "---------------": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "----------------": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "独立": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "同": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "分布": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "replay": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "buffer": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "使用": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "td": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "稳定": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "target": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "alias"
+      }
+    ],
+    "network": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "硬": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "更新": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "软": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "tau": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "连续": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "动作": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "贪婪": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "策略": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "适用": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "actor": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "critic": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "架构": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "输出": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "最优": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "尺度": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "batch": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "normalization": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "3.2": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "维护": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "四个": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "网络": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "符号": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "角色": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "mu": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "theta": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "确定性": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "mapsto": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "a": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "q": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "价值": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "mathbb": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "r": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "'": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "副本": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "3.3": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "learning": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "中": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "采样": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "minibatch": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "+": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "损失": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "均方": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "贝尔曼": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "误差": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "梯度": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "nabla": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "3.4": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "j": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "e": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "sim": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "rho": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "定理": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "silver": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "et": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "al": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "2014": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "approx": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "beta": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "big": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "tag": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "6": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "应用": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "链式法则": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "近似": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    ">": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "流向": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "`": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "loss": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "states": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "mean": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "回": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "传到": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "输入": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "参数": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "3.5": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "每隔": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "若干": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "步": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "硬拷贝": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "权重": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "soft": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "update": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "leftarrow": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "通常": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "优势": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "缓慢": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "变化": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "极大": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "提高": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "学习": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "稳定性": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "更": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "接近": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "监督": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "3.6": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "探索": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "异": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "将": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "解": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "耦": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "mat": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "actor-critic": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "q-learning": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "s_i": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "a_i": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "r_i": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "y_i": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "s_t": [
+      {
+        "r": 4,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "nabla_a": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "actor_loss": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "theta_t": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "suanfahexintiaozhanyujiejuefangantiaozhandejiejuefangandeshipeifanganyangbenfeidulitongfenbutongyangshiyongmubiaobuwendingyinggengxinruangengxinlianxudongzuokongjiandetanlancelvebushiyongjiagouzhijieshuchuzuiyoudongzuobutongtezhengdechiduchayijiagouweihusigewangluowangluofuhaojuesecelvewangluoquedingxingcelvewangluodongzuojiazhihanshuruangengxinfubenyongyujisuanwendingmubiaoruangengxinfubenyongyujisuanwendingmubiaogengxincongzhongcaiyangyigedaxiaoweidemubiaoshiyongmubiaowangluosunshijunfangbeiermanwuchatidugengxinquedingxingcelvetidumubiaozuidahuaquedingxingcelvetidudingliyingyonglianshifazecaiyangjinsitiduliuxiangtiducongdeshuchuhuichuandaodeshuruzaihuichuandaodecanshumubiaowangluoderuangengxinyumeigeruoganbuyingkaobeiquanzhongbutongshiyongruangengxinqizhongtongchangyoushimubiaowangluohuanmanbianhuajidatigaolexuexidewendingxingshiwuchadeyouhuagengjiejinjianduxuexitansuocelveshiyicelvesuanfakeyijiangtansuoyuxuexijieougouzaotansuocelve": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "## 3. ddpg 算法\n\n### 3.1 核心挑战与解决方案\n\n| 挑战 | dqn 的解决方案 | ddpg 的适配方案 |\n|------|---------------|----------------|\n| 样本非独立同分布 | replay buffer | 同样使用 replay buffer |\n| td 目标不稳定 | target network（硬更新） | target network（**软更新**，$\\tau \\ll 1$） |\n| 连续动作空间的贪婪策略 | 不适用 | **actor-critic** 架构：actor 直接输出最优动作 |\n| 不同特征的尺度差异 | — | **batch normalization** |\n\n### 3.2 actor-critic 架构\n\nddpg 维护四个网络：\n\n| 网络 | 符号 | 角色 |\n|------|------|------|\n| **actor (策略网络)** | $\\mu(s|\\theta^\\mu)$ | 确定性策略：$s \\mapsto a$ |\n| **critic (q 网络)** | $q(s,a|\\theta^q)$ | 动作价值函数：$(s,a) \\mapsto \\mathbb{r}$ |\n| **target actor** | $\\mu'(s|\\theta^{\\mu'})$ | 软更新副本，用于计算稳定目标 |\n| **target critic** | $q'(s,a|\\theta^{q'})$ | 软更新副本，用于计算稳定目标 |\n\n### 3.3 critic 更新（q-learning）\n\n从 replay buffer $\\mathcal{r}$ 中采样一个大小为 $n$ 的 minibatch $(s_i, a_i, r_i, s_{i+1})$。\n\n**td 目标**（使用目标网络）：\n\n$$y_i = r_i + \\gamma q'(s_{i+1}, \\mu'(s_{i+1} | \\theta^{\\mu'}) | \\theta^{q'})$$\n\n**critic 损失**（均方贝尔曼误差）：\n\n$$l = \\frac{1}{n} \\sum_{i=1}^{n} \\left( y_i - q(s_i, a_i | \\theta^q) \\right)^2$$\n\n**梯度**：\n\n$$\\nabla_{\\theta^q} l = \\frac{1}{n} \\sum_{i=1}^{n} \\left[ -2 \\left( y_i - q(s_i, a_i | \\theta^q) \\right) \\nabla_{\\theta^q} q(s_i, a_i | \\theta^q) \\right]$$\n\n### 3.4 actor 更新（确定性策略梯度）\n\n目标：最大化 $j = \\mathbb{e}_{s \\sim \\rho^\\mu} [q(s, \\mu(s|\\theta^\\mu) | \\theta^q)]$。\n\n**确定性策略梯度定理** (silver et al., 2014)：\n\n$$\\nabla_{\\theta^\\mu} j \\approx \\mathbb{e}_{s_t \\sim \\rho^\\beta} \\left[ \\nabla_{\\theta^\\mu} q(s, a | \\theta^q) \\big|_{s=s_t, a=\\mu(s_t)} \\right] \\tag{6}$$\n\n应用链式法则：\n\n$$\\nabla_{\\theta^\\mu} j \\approx \\mathbb{e}_{s_t \\sim \\rho^\\beta} \\left[ \\nabla_a q(s, a | \\theta^q) \\big|_{s=s_t, a=\\mu(s_t)} \\cdot \\nabla_{\\theta^\\mu} \\mu(s | \\theta^\\mu) \\big|_{s=s_t} \\right] \\tag{6}$$\n\n**采样近似**：\n\n$$\\nabla_{\\theta^\\mu} j \\approx \\frac{1}{n} \\sum_{i=1}^{n} \\left[ \\nabla_a q(s, a | \\theta^q) \\big|_{s=s_i, a=\\mu(s_i)} \\cdot \\nabla_{\\theta^\\mu} \\mu(s | \\theta^\\mu) \\big|_{s=s_i} \\right]$$\n\n> **梯度流向**：`actor_loss = -q(states, actor(states)).mean()` → 梯度从 critic 的输出回传到 actor 的输入，再回传到 actor 的参数 $\\theta^\\mu$。\n\n### 3.5 目标网络的软更新\n\n与 dqn 每隔若干步硬拷贝权重不同，ddpg 使用 **软更新 (soft update)**：\n\n$$\\theta^{q'} \\leftarrow \\tau \\theta^q + (1 - \\tau) \\theta^{q'}$$\n\n$$\\theta^{\\mu'} \\leftarrow \\tau \\theta^\\mu + (1 - \\tau) \\theta^{\\mu'}$$\n\n其中 $\\tau \\ll 1$（通常 $\\tau = 10^{-3}$）。\n\n> **优势**：目标网络缓慢变化，极大提高了学习的稳定性，使 td 误差的优化更接近监督学习。\n\n### 3.6 探索策略\n\nddpg 是异策略算法，可以将探索与学习解耦。构造探索策略：\n\n$$\\mu'(s_t) = \\mu(s_t | \\theta_t^\\mu) + \\mat": [
+      {
+        "r": 4,
+        "f": "body"
+      }
+    ],
+    "suanfa": [
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "hexin": [
+      {
+        "r": 4,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      }
+    ],
+    "tiaozhan": [
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "jiejuefangan": [
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "shipei": [
+      {
+        "r": 4,
+        "f": "key_phrase"
+      }
+    ],
+    "3.": [
+      {
+        "r": 4,
+        "f": "summary"
+      }
+    ],
+    "dpg": [
+      {
+        "r": 5,
+        "f": "id"
+      },
+      {
+        "r": 5,
+        "f": "alias"
+      },
+      {
+        "r": 7,
+        "f": "id"
+      },
+      {
+        "r": 7,
+        "f": "name"
+      },
+      {
+        "r": 7,
+        "f": "alias"
+      },
+      {
+        "r": 8,
+        "f": "id"
+      },
+      {
+        "r": 8,
+        "f": "name"
+      },
+      {
+        "r": 8,
+        "f": "alias"
+      },
+      {
+        "r": 9,
+        "f": "id"
+      },
+      {
+        "r": 9,
+        "f": "name"
+      },
+      {
+        "r": 9,
+        "f": "alias"
+      }
+    ],
+    "celvetidudingli": [
+      {
+        "r": 5,
+        "f": "name"
+      },
+      {
+        "r": 5,
+        "f": "pinyin_name"
+      }
+    ],
+    "策略梯度定理": [
+      {
+        "r": 5,
+        "f": "name"
+      }
+    ],
+    "汇报": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 5,
+        "f": "summary"
+      }
+    ],
+    "摘要": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "本": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "报告": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 5,
+        "f": "key_phrase"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "系统": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "policy": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "gradient": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "theorem": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "该": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "深度": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "强化": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "reinforce": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "ppo": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "trpo": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "数学": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "基石": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "我们": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "给出": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "逐行": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "无": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "跳步": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "pi": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "log": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "设定": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "含义": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "状态": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "离散": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "或": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "mid": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "随机": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "in": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "折扣": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "因子": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "p": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "转移": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "概率": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "即时": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "奖励": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "初始状态": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "infty": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "pr": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "eta": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "性能": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "2.1": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      }
+    ],
+    "三种": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "等价": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "期望": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "累积": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "回报": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "以下": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "文献": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "中均": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "被": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "本质": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "一": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "基于": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "int": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "ds": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "二": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "da": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "三": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "情形": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "lim": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "这是": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "sutton": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "论文": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "也": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "后续": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "最": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "方便": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "预备": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "知识": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "链式": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "结构": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "核心思想": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "依赖": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "关系": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "复杂": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "递归结构": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "underbrace": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "依赖于": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "难点": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "本身": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "方程": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "隐式": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "且": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "这种": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "未来": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "递归": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "传播": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "作用": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "消除": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "简洁": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "证明": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "kp_description"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "4.1": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "陈述": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "2000": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "对于": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "可": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "微分": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "cd": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "d_0": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "j_1": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "s_0": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "j_2": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "j_3": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "t-1": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "a_t": [
+      {
+        "r": 5,
+        "f": "body"
+      },
+      {
+        "r": 6,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "a_0": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "s_1": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "celvetidudingliwanzhengtuidaohuibaozhaiyaobenbaogaoxitongtuidaocelvetidudingligaidinglishishenduqianghuaxuexizhongsuoyoucelvetidufangfadengdeshuxuejishiwomencongcelvetidudinglideyuanshixingshichufageichucongmubiaohanshudingyidaozuizhongdinglixingshidewanzhengzhuxingwutiaobudeshuxuetuidaohexinjielunfuhaoyushedingfuhaohanyizhuangtaikongjiandongzuokongjianlisanhuolianxucanshuweidesuijicelvezhekouyinzizhuangtaizhuanyigailvjishijianglihanshuchushizhuangtaifenbuzhekouzhuangtaifenbudongzuojiazhihanshuzhuangtaijiazhihanshuyoushihanshuhuocelvexingnengmubiaomubiaohanshudedingyisanzhongdengjiadingyiqianghuaxuexidemubiaoshizuidahuaqiwangleijizhekouhuibaoyixiasanzhongdingyizaiwenxianzhongjunbeishiyongtamenbenzhidengjiadingyiyijiyuchushizhuangtaifenbudingyierjiyuzhekouzhuangtaifenbudingyisanjiyupingjunhuibaoshiyongyuwuzhekouqingxingshuomingbenbaogaoshiyongdingyiyizheshidengrenzaiyuanshicelvetidudinglilunwenzhongshiyongdexingshiyeshihouxutuidaozhongzuifangbiandexingshiyubeizhishicelvetidudelianshijiegoucelvetidufangfadehexinsixiangshizhijieduicelvecanshuqiutiduerbushiduijiazhihanshuqiutidumubiaohanshuduideyilaiguanxishiyigefuzadediguijiegouyilaiyuyilaiyuhexinnandianbenshentongguobeiermanfangchengyinshiyilaiyuqiezhezhongyilaitongguoweilaidesuoyoushijianbudiguichuanbocelvetidudinglidezuoyongjiushixiaochuzhezhongdiguiyilaijiangtidubiaoshiweiyigejianjiedeqiwangxingshicelvetidudingliyuanshixingshiyuzhengmingdinglichenshucelvetidudingliduiyukeweifendecelvemubiaohanshudetiduwei": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "# 策略梯度定理完整推导汇报\n\n## 0. 摘要\n\n本报告系统推导**策略梯度定理 (policy gradient theorem)**，该定理是深度强化学习中所有策略梯度方法（reinforce、actor-critic、ppo、trpo、ddpg 等）的数学基石。我们从策略梯度定理的原始形式出发，给出从目标函数定义到最终定理形式的完整、逐行、无跳步的数学推导。\n\n**核心结论**：\n\n$$\n\\boxed{\\nabla_\\theta j(\\pi_\\theta) = \\mathbb{e}_{s \\sim \\rho^\\pi, a \\sim \\pi_\\theta} \\left[ \\nabla_\\theta \\log \\pi_\\theta(a|s) \\cdot q^\\pi(s,a) \\right]}\n$$\n\n---\n\n## 1. 符号与设定\n\n| 符号 | 含义 |\n|------|------|\n| $\\mathcal{s}$ | 状态空间 |\n| $\\mathcal{a}$ | 动作空间（离散或连续） |\n| $\\pi_\\theta(a \\mid s)$ | 参数为 $\\theta$ 的随机策略 |\n| $\\gamma \\in [0,1)$ | 折扣因子 |\n| $p(s' \\mid s, a)$ | 状态转移概率 |\n| $r(s, a)$ | 即时奖励函数 |\n| $d_0(s)$ | 初始状态分布 |\n| $\\rho^\\pi(s)$ | 折扣状态分布：$\\sum_{t=0}^{\\infty} \\gamma^t \\pr(s_t = s \\mid \\pi)$ |\n| $q^\\pi(s, a)$ | 动作价值函数 |\n| $v^\\pi(s)$ | 状态价值函数 |\n| $a^\\pi(s, a) = q^\\pi(s,a) - v^\\pi(s)$ | 优势函数 |\n| $\\eta(\\pi)$ 或 $j(\\pi_\\theta)$ | 策略性能目标 |\n\n---\n\n## 2. 目标函数的定义\n\n### 2.1 三种等价定义\n\n强化学习的目标是最大化期望累积折扣回报。以下三种定义在文献中均被使用，它们本质等价：\n\n**定义一（基于初始状态分布）**：\n\n$$\nj_1(\\theta) = \\mathbb{e}_{s_0 \\sim d_0} \\left[ v^{\\pi_\\theta}(s_0) \\right] = \\int_{\\mathcal{s}} d_0(s) v^{\\pi_\\theta}(s) ds \\tag{1}\n$$\n\n**定义二（[[基于折扣状态分布]]）**：\n\n$$\nj_2(\\theta) = \\mathbb{e}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ r(s,a) \\right] = \\int_{\\mathcal{s}} \\rho^{\\pi_\\theta}(s) \\int_{\\mathcal{a}} \\pi_\\theta(a|s) r(s,a) \\, da \\, ds \\tag{2}\n$$\n\n**定义三（基于平均回报，适用于无折扣情形）**：\n\n$$\nj_3(\\theta) = \\lim_{t \\to \\infty} \\frac{1}{t} \\mathbb{e} \\left[ \\sum_{t=0}^{t-1} r(s_t, a_t) \\right] \\tag{3}\n$$\n\n> **说明**：本报告使用定义一 $j(\\theta) = \\mathbb{e}_{s_0 \\sim d_0}[v^{\\pi_\\theta}(s_0)]$，这是 sutton 等人在原始策略梯度定理论文中使用的形式，也是后续推导中最方便的形式。\n\n---\n\n## 3. 预备知识\n\n### 3.1 策略梯度的链式结构\n\n策略梯度方法的核心思想是：**直接对策略参数 $\\theta$ 求梯度，而不是对价值函数求梯度**。\n\n目标函数 $j(\\theta)$ 对 $\\theta$ 的依赖关系是一个复杂的递归结构：\n\n$$\nj(\\theta) = \\mathbb{e}_{s_0 \\sim d_0} \\left[ \\underbrace{\\mathbb{e}_{a_0 \\sim \\pi_\\theta(\\cdot|s_0)} \\left[ r(s_0, a_0) + \\gamma \\underbrace{\\mathbb{e}_{s_1 \\sim p(\\cdot|s_0,a_0)} \\left[ v^{\\pi_\\theta}(s_1) \\right]}_{依赖于\\theta} \\right]}_{依赖于\\theta} \\right]\n$$\n\n**核心难点**：$v^{\\pi_\\theta}(s)$ 本身通过贝尔曼方程隐式依赖于 $\\theta$，且这种依赖通过未来的所有时间步递归传播。策略梯度定理的作用就是**消除这种递归依赖**，将梯度表示为一个简洁的期望形式。\n\n---\n\n## 4. 策略梯度定理：原始形式与证明\n\n### 4.1 定理陈述\n\n**策略梯度定理 (sutton et al., 2000)**：\n\n对于可微分的策略 $\\pi_\\theta(a|s)$，目标函数 $j(\\theta) = \\mathbb{e}_{s_0 \\sim d_0}[v^{\\pi_\\theta}(s_0)]$ 的梯度为：\n\n$$\n\\boxed{\\nabla_\\theta j(\\theta) = \\mathbb{e}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ \\nabla_\\theta \\log \\pi_\\theta(a|s) \\cd": [
+      {
+        "r": 5,
+        "f": "body"
+      }
+    ],
+    "celve": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "tidu": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "dingli": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "wanzheng": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "tuidao": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "huibao": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "zhaiyao": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "baogao": [
+      {
+        "r": 5,
+        "f": "key_phrase"
+      }
+    ],
+    "wanzhengtuidaohuibao": [
+      {
+        "r": 5,
+        "f": "summary"
+      }
+    ],
+    "完整推导汇报 0.": [
+      {
+        "r": 5,
+        "f": "summary"
+      }
+    ],
+    "rl target function": [
+      {
+        "r": 6,
+        "f": "id"
+      },
+      {
+        "r": 6,
+        "f": "alias"
+      }
+    ],
+    "qianghuaxueximubiaohanshu": [
+      {
+        "r": 6,
+        "f": "name"
+      },
+      {
+        "r": 6,
+        "f": "pinyin_name"
+      }
+    ],
+    "强化学习目标函数": [
+      {
+        "r": 6,
+        "f": "name"
+      }
+    ],
+    "mubiaohanshudedingyisanzhongdengjiadingyiqianghuaxuexidemubiaoshizuidahuaqiwangleijizhekouhuibaoyixiasanzhongdingyizaiwenxianzhongjunbeishiyongtamenbenzhidengjiadingyiyijiyuchushizhuangtaifenbudingyierjiyuzhekouzhuangtaifenbudingyisanjiyupingjunhuibaoshiyongyuwuzhekouqingxingshuomingbenbaogaoshiyongdingyiyizheshidengrenzaiyuanshicelvetidudinglilunwenzhongshiyongdexingshiyeshihouxutuidaozhongzuifangbiandexingshi": [
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "## 2. 目标函数的定义\n\n### 2.1 三种等价定义\n\n强化学习的目标是最大化期望累积折扣回报。以下三种定义在文献中均被使用，它们本质等价：\n\n**定义一（基于初始状态分布）**：\n\n$$\nj_1(\\theta) = \\mathbb{e}_{s_0 \\sim d_0} \\left[ v^{\\pi_\\theta}(s_0) \\right] = \\int_{\\mathcal{s}} d_0(s) v^{\\pi_\\theta}(s) ds \\tag{1}\n$$\n\n**定义二（[[基于折扣状态分布]]）**：\n\n$$\nj_2(\\theta) = \\mathbb{e}_{s \\sim \\rho^{\\pi_\\theta}, a \\sim \\pi_\\theta} \\left[ r(s,a) \\right] = \\int_{\\mathcal{s}} \\rho^{\\pi_\\theta}(s) \\int_{\\mathcal{a}} \\pi_\\theta(a|s) r(s,a) \\, da \\, ds \\tag{2}\n$$\n\n**定义三（基于平均回报，适用于无折扣情形）**：\n\n$$\nj_3(\\theta) = \\lim_{t \\to \\infty} \\frac{1}{t} \\mathbb{e} \\left[ \\sum_{t=0}^{t-1} r(s_t, a_t) \\right] \\tag{3}\n$$\n\n> **说明**：本报告使用定义一 $j(\\theta) = \\mathbb{e}_{s_0 \\sim d_0}[v^{\\pi_\\theta}(s_0)]$，这是 sutton 等人在原始策略梯度定理论文中使用的形式，也是后续推导中最方便的形式。": [
+      {
+        "r": 6,
+        "f": "body"
+      }
+    ],
+    "rl": [
+      {
+        "r": 6,
+        "f": "alias"
+      }
+    ],
+    "function": [
+      {
+        "r": 6,
+        "f": "alias"
+      }
+    ],
+    "mubiao": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "hanshu": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "sanzhong": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "dengjia": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "qianghua": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "xuexi": [
+      {
+        "r": 6,
+        "f": "key_phrase"
+      }
+    ],
+    "2.": [
+      {
+        "r": 6,
+        "f": "summary"
+      },
+      {
+        "r": 8,
+        "f": "summary"
+      },
+      {
+        "r": 10,
+        "f": "summary"
+      }
+    ],
+    "dpg-appendix1": [
+      {
+        "r": 7,
+        "f": "id"
+      },
+      {
+        "r": 7,
+        "f": "alias"
+      }
+    ],
+    "appendix1": [
+      {
+        "r": 7,
+        "f": "id"
+      },
+      {
+        "r": 7,
+        "f": "alias"
+      }
+    ],
+    "补充": [
+      {
+        "r": 7,
+        "f": "name"
+      },
+      {
+        "r": 8,
+        "f": "name"
+      },
+      {
+        "r": 9,
+        "f": "name"
+      }
+    ],
+    "buchong": [
+      {
+        "r": 7,
+        "f": "name"
+      },
+      {
+        "r": 7,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 8,
+        "f": "name"
+      },
+      {
+        "r": 8,
+        "f": "pinyin_name"
+      },
+      {
+        "r": 9,
+        "f": "name"
+      },
+      {
+        "r": 9,
+        "f": "pinyin_name"
+      }
+    ],
+    "dpg补充1": [
+      {
+        "r": 7,
+        "f": "name"
+      }
+    ],
+    "1.2": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "到底": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "占用": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "discounted": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "occupancy": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "measure": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "triangleq": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "初始": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "遵循": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "时刻": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "带": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "访问": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "总": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "天然": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "已经": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "求和": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "展开": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "交换": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "顺序": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "aligned": [
+      {
+        "r": 7,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "iint": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "daodishishenmeguanjianzhekouzhanyongduliangdingyihanyicongchushifenbuchufazunxuncelvesuoyoushikedaizhekouquanzhongxiafangwenzhuangtaidezonggailvtatianranyijingduizuoleqiuhebaqiwangzhankaijiaohuanqiuheyuqiwangshunxu": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "## 1.2 $\\rho^{\\pi}(s)$ 到底是什么（关键！）\n**折扣占用度量（discounted occupancy measure）定义：**\n$$\n\\rho^{\\pi}(s) \\triangleq \\sum_{t=0}^{\\infty}\\gamma^t \\mathbb{p}(s_t=s\\mid\\pi,d_0)\n$$\n含义：\n从初始分布 $d_0$ 出发，遵循策略 $\\pi$，**所有时刻带折扣权重下访问状态 $s$ 的总概率**。\n它天然已经对 $t=0,1,2,\\dots,\\infty$ 做了求和。\n\n把期望展开交换求和与期望顺序：\n$$\n\\begin{aligned}\nj_1\n&=\\mathbb{e}\\left[\\sum_{t=0}^\\infty \\gamma^t r(s_t,a_t)\\right]\\\\\n&=\\sum_{t=0}^\\infty \\gamma^t \\iint \\mathbb{p}(s_t=s)\\,\\pi(a|s)\\,r(s,a)\\,da\\,ds\\\\\n&=\\iint \\underbrace{\\left(\\sum_{t=0}^\\infty\\gamma^t\\mathbb{p}(s_t=s)\\right)}_{\\rho^\\pi(s)} \\pi(a|s)r(s,a)\\,da\\,ds\\\\\n&=\\mathbb{e}_{s\\sim\\rho^\\pi,a\\sim\\pi(\\cdot|s)}[r(s,a)] = j_2\n\\end{aligned}\n$$": [
+      {
+        "r": 7,
+        "f": "body"
+      }
+    ],
+    "daodi": [
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "guanjian": [
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "zhekou": [
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "zhanyong": [
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "duliang": [
+      {
+        "r": 7,
+        "f": "key_phrase"
+      }
+    ],
+    "1.": [
+      {
+        "r": 7,
+        "f": "summary"
+      }
+    ],
+    "dpg-appendix2": [
+      {
+        "r": 8,
+        "f": "id"
+      },
+      {
+        "r": 8,
+        "f": "alias"
+      }
+    ],
+    "appendix2": [
+      {
+        "r": 8,
+        "f": "id"
+      },
+      {
+        "r": 8,
+        "f": "alias"
+      }
+    ],
+    "dpg补充2": [
+      {
+        "r": 8,
+        "f": "name"
+      }
+    ],
+    "算子": [
+      {
+        "r": 8,
+        "f": "kp_description"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "为什么": [
+      {
+        "r": 8,
+        "f": "kp_description"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "范数": [
+      {
+        "r": 8,
+        "f": "kp_description"
+      },
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 8,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "zhengmingsuanziweishenmefanshuxiaoyu": [
+      {
+        "r": 8,
+        "f": "kp_description"
+      }
+    ],
+    "证明算子为什么范数小于1": [
+      {
+        "r": 8,
+        "f": "kp_description"
+      }
+    ],
+    "？": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "b": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "有界": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "实值": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "线性": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "其": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "诱导": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "确界": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "sup": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "f": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "leq": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "通俗": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "理解": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "界": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "放大": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "多少倍": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "最坏": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "情况": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "2.2": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "按": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "选择": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "期望值": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "利用": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "绝对值": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "不等式": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "三角": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "由于": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "成立": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "测度": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "取上": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "因此": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "2.3": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "<": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "缩放": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "性质": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "标量": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "这个": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "来源于": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "齐次": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "性": [
+      {
+        "r": 8,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "sup_s": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "wentidehexinsuanzifanshudedingyishenmeshifanshuduiyuzuoyongyuhanshukongjianyoujieshizhihanshushangdexianxingsuanziqiyoudaoshangquejiefanshudingyiweiqizhongduihanshutongsulijiebiaoshisuanzinengjiangrenyiyoujiehanshufangdaduoshaobeizuihuaiqingkuangzhengmingzhuanyisuanzidedingyijicongzhuangtaichufaanquedingxingcelvexuanzedongzuozhuanyidaoxiayizhuangtaihouquhanshuzaigaizhuangtaideqiwangzhifanshushangjieduiyurenyiyoujiehanshuzairenyizhuangtaixialiyongjueduizhibudengshisanjiaobudengshiyouyuduisuoyouchengliyinweigailvceduoguiyihuaduisuoyouqushangquejieduisuoyoudehanshuqushangquejieyincizhengmingsuofangxingzhiduiyurenyixianxingsuanzihebiaoliangzhegexingzhilaiyuanyufanshudeqicixingyingyongdaowomendesuanzilingbiaoliangdairuyouyuzhekouyinzidedingyi": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "## 2.1 问题的核心：算子范数的定义\n\n### 2.1.1 什么是 \\(\\|\\cdot\\|_\\infty\\) 范数？\n\n对于作用于函数空间 \\(\\mathcal{b}(\\mathcal{s})\\)（有界实值函数）上的线性算子 \\(t\\)，其**诱导上确界范数**定义为：\n\n\\[\n\\|t\\|_\\infty \\triangleq \\sup_{\\|f\\|_\\infty \\leq 1} \\|t f\\|_\\infty\n\\]\n\n其中对函数 \\(f: \\mathcal{s} \\to \\mathbb{r}\\)，\\(\\|f\\|_\\infty = \\sup_{s \\in \\mathcal{s}} |f(s)|\\)。\n\n**通俗理解**：\\(\\|t\\|_\\infty\\) 表示算子 \\(t\\) 能将任意有界函数放大多少倍（最坏情况）。\n\n\n\n## 2.2 证明 \\(\\|\\mathcal{p}^{\\mu_\\theta}\\|_\\infty \\leq 1\\)\n\n### 2.2.1 转移算子的定义\n\n\\[\n(\\mathcal{p}^{\\mu_\\theta} f)(s) = \\int_{\\mathcal{s}} p(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds'\n\\]\n\n即：从状态 \\(s\\) 出发，按确定性策略 \\(\\mu_\\theta\\) 选择动作，转移到下一状态后，取函数 \\(f\\) 在该状态的期望值。\n\n\n\n### 2.2.2 范数上界\n\n对于**任意**有界函数 \\(f\\)（\\(\\|f\\|_\\infty \\leq 1\\)），在**任意**状态 \\(s\\) 下：\n\n\\[\n|(\\mathcal{p}^{\\mu_\\theta} f)(s)| = \\left| \\int_{\\mathcal{s}} p(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds' \\right|\n\\]\n\n利用绝对值不等式（三角不等式）：\n\n\\[\n|(\\mathcal{p}^{\\mu_\\theta} f)(s)| \\leq \\int_{\\mathcal{s}} p(s' \\mid s, \\mu_\\theta(s)) \\, |f(s')| \\, ds'\n\\]\n\n由于 \\(|f(s')| \\leq \\|f\\|_\\infty\\) 对所有 \\(s'\\) 成立：\n\n\\[\n|(\\mathcal{p}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty \\int_{\\mathcal{s}} p(s' \\mid s, \\mu_\\theta(s)) \\, ds'\n\\]\n\n因为 \\(\\int_{\\mathcal{s}} p(s' \\mid s, \\mu_\\theta(s)) \\, ds' = 1\\)（概率测度归一化）：\n\n\\[\n|(\\mathcal{p}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty\n\\]\n\n**对所有 \\(s\\) 取上确界**：\n\n\\[\n\\|\\mathcal{p}^{\\mu_\\theta} f\\|_\\infty = \\sup_s |(\\mathcal{p}^{\\mu_\\theta} f)(s)| \\leq \\|f\\|_\\infty\n\\]\n\n**对所有 \\(\\|f\\|_\\infty \\leq 1\\) 的函数取上确界**：\n\n\\[\n\\|\\mathcal{p}^{\\mu_\\theta}\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} \\|\\mathcal{p}^{\\mu_\\theta} f\\|_\\infty \\leq 1\n\\]\n\n因此：\n\n\\[\n\\boxed{\\|\\mathcal{p}^{\\mu_\\theta}\\|_\\infty \\leq 1} \\tag{1}\n\\]\n\n\n## 2.3 证明 \\(\\|\\gamma \\mathcal{p}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma < 1\\)\n\n### 2.3.1 缩放性质\n\n对于任意线性算子 \\(t\\) 和标量 \\(c\\)：\n\n\\[\n\\|c t\\|_\\infty = |c| \\cdot \\|t\\|_\\infty\n\\]\n\n这个性质来源于范数的齐次性：\n\n\\[\n\\|c t\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} \\|c t f\\|_\\infty = \\sup_{\\|f\\|_\\infty \\leq 1} |c| \\|t f\\|_\\infty = |c| \\|t\\|_\\infty\n\\]\n\n\n### 2.3.2 应用到我们的算子\n\n令 \\(t = \\mathcal{p}^{\\mu_\\theta}\\)，标量 \\(c = \\gamma\\)。\n\n\\[\n\\|\\gamma \\mathcal{p}^{\\mu_\\theta}\\|_\\infty = \\gamma \\|\\mathcal{p}^{\\mu_\\theta}\\|_\\infty\n\\]\n\n代入 (1)：\n\n\\[\n\\|\\gamma \\mathcal{p}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma \\cdot 1 = \\gamma\n\\]\n\n由于 \\(\\gamma \\in [0, 1)\\)（折扣因子的定义）：\n\n\\[\n\\boxed{\\|\\gamma \\mathcal{p}^{\\mu_\\theta}\\|_\\infty \\leq \\gamma < 1} \\tag{2}\n\\]\n\n---": [
+      {
+        "r": 8,
+        "f": "body"
+      }
+    ],
+    "suanzi": [
+      {
+        "r": 8,
+        "f": "key_phrase"
+      }
+    ],
+    "fanshu": [
+      {
+        "r": 8,
+        "f": "key_phrase"
+      }
+    ],
+    "dpg-appendix3": [
+      {
+        "r": 9,
+        "f": "id"
+      },
+      {
+        "r": 9,
+        "f": "alias"
+      }
+    ],
+    "appendix3": [
+      {
+        "r": 9,
+        "f": "id"
+      },
+      {
+        "r": 9,
+        "f": "alias"
+      }
+    ],
+    "dpg补充3": [
+      {
+        "r": 9,
+        "f": "name"
+      }
+    ],
+    "问": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "满足": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "等于": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "neumann": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "级数": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 9,
+        "f": "key_phrase"
+      },
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "这": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "泛函": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "经典": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "下面": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "我用": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "纯": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "代数": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "几何": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "直观": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "两种": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "方式": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "解释": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "严谨": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "项": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "cdots": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "逐项": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "相乘": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "中间": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "ldots": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "全部": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "抵消": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "剩下": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "极限": [
+      {
+        "r": 9,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "那么": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "xrightarrow": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "于是": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "地": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "验证": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "右逆": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "同理": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "既": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "左": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "逆": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "证毕": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "保证": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "重要": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "右边": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "banach": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "趋向于": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "意味着": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "类比": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "实数": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "版本": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "s_n": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "wendeshiweishenmemanzuhoujiudengyujishuzhebenzhishangshiyigefanhanfenxizhongdejingdianjielunxiamianwoyongchundaishutuidaohejihezhiguanliangzhongfangshilaijieshidaishuzhengmingzuiyanjindingyibufenhelingjishudeqianxiangbufenheweijisuanzhankaizhuxiangxiangchengzhongjiandequanbudixiaozhishengxiaqujixianruguonameyincilingsuanziyushijitongyangdiyanzhengyounitongliqujixianyincijishidezuoniyeshiyounijielunzhengbiweishenmebaozhenglezheshisuanzifanshudeyigezhongyaoxingzhiruguoyoubiandesuoyizaikongjianzhongfanshuquxiangyuyiweizhesuanzibenshenquxiangyulingsuanzileibishishuzhongruguonamejiushizhegetiaojiandesuanzibanben": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "问的是：**为什么满足 \\(\\|t\\| < 1\\) 后，\\((i - t)^{-1}\\) 就等于 neumann 级数 \\(\\sum_{k=0}^{\\infty} t^k\\)？**\n\n这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。\n\n## 3.1 代数证明（最严谨）\n\n### 3.1.1 定义部分和\n\n令 neumann 级数的前 \\(n+1\\) 项部分和为：\n\n\\[\ns_n \\triangleq i + t + t^2 + \\cdots + t^n = \\sum_{k=0}^{n} t^k\n\\]\n\n### 3.1.2 计算 \\((i - t)s_n\\)\n\n展开：\n\n\\[\n(i - t)s_n = (i - t)(i + t + t^2 + \\cdots + t^n)\n\\]\n\n逐项相乘：\n\n\\[\n= i + t + t^2 + \\cdots + t^n - t - t^2 - t^3 - \\cdots - t^{n+1}\n\\]\n\n中间的 \\(t, t^2, \\ldots, t^n\\) 全部抵消，只剩下：\n\n\\[\n(i - t)s_n = i - t^{n+1} \\tag{1}\n\\]\n\n\n\n### 3.1.3 取极限 \\(n \\to \\infty\\)\n\n如果 \\(\\|t\\| < 1\\)，那么：\n\n\\[\n\\|t^{n+1}\\| \\le \\|t\\|^{n+1} \\xrightarrow{n \\to \\infty} 0\n\\]\n\n因此 \\(t^{n+1} \\to 0\\)（零算子）。于是：\n\n\\[\n\\lim_{n \\to \\infty} (i - t)s_n = i - \\lim_{n \\to \\infty} t^{n+1} = i\n\\]\n\n即：\n\n\\[\n(i - t) \\lim_{n \\to \\infty} s_n = i\n\\]\n\n\n\n### 3.1.4 同样地，验证右逆\n\n同理：\n\n\\[\ns_n(i - t) = i - t^{n+1}\n\\]\n\n取极限：\n\n\\[\n\\lim_{n \\to \\infty} s_n (i - t) = i\n\\]\n\n因此 \\(\\lim_{n \\to \\infty} s_n\\) 既是 \\(i - t\\) 的左逆，也是右逆。\n\n\n\n### 3.1.5 结论\n\n\\[\n\\boxed{(i - t)^{-1} = \\sum_{k=0}^{\\infty} t^k}\n\\]\n\n**证毕。**\n\n\n\n## 3.2 为什么 \\(\\|t\\| < 1\\) 保证了 \\(t^{n+1} \\to 0\\)？\n\n这是算子范数的一个重要性质：\n\n\\[\n\\|t^{n+1}\\| \\le \\|t\\|^{n+1}\n\\]\n\n如果 \\(\\|t\\| < 1\\)，右边的 \\(\\|t\\|^{n+1} \\to 0\\)，所以 \\(\\|t^{n+1}\\| \\to 0\\)。\n\n在 banach 空间中，范数趋向于 0 意味着算子本身趋向于零算子。\n\n> **类比**：实数中，如果 \\(|x| < 1\\)，那么 \\(x^n \\to 0\\)。\\(\\|t\\| < 1\\) 就是这个条件的算子版本。\n\n---": [
+      {
+        "r": 9,
+        "f": "body"
+      }
+    ],
+    "weishenme": [
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "manzu": [
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "dengyu": [
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "jishu": [
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "benzhi": [
+      {
+        "r": 9,
+        "f": "key_phrase"
+      }
+    ],
+    "wendeshiweishenmemanzuhoujiudengyujishu": [
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "问的是：**为什么满足 \\(\\|t\\| < 1\\) 后，\\((i - t)^{-1}\\) 就等于 neumann 级数 \\(\\sum_{k=0}^{\\infty} t^k\\)？": [
+      {
+        "r": 9,
+        "f": "summary"
+      }
+    ],
+    "ou_noise": [
+      {
+        "r": 10,
+        "f": "id"
+      },
+      {
+        "r": 10,
+        "f": "name"
+      }
+    ],
+    "ou": [
+      {
+        "r": 10,
+        "f": "id"
+      },
+      {
+        "r": 10,
+        "f": "name"
+      },
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "noise": [
+      {
+        "r": 10,
+        "f": "id"
+      },
+      {
+        "r": 10,
+        "f": "name"
+      }
+    ],
+    "ornstein": [
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "uhlenbeck": [
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "过程": [
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "微分方程": [
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "sde": [
+      {
+        "r": 10,
+        "f": "body"
+      },
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "dx": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dt": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dw": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "均值": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "回归": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "速度": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "strength": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "reversion": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "长期": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "long": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "term": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "波动": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "率": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "volatility": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "维纳": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "增量": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "标准": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "布朗运动": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "解析": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "step": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "方程解": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "设": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "rightarrow": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "ln": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "常数": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "变易": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "法": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "则": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dy": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "原": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "积分": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "统计": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "由": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "鞅": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "若": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "初始值": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "即得": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "上述": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "4.2": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "it": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "ô": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "等距": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "对方": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "差": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "贡献": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "isometry": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "被积": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "基本": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "二次": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "变差": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "du": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "ornstein-uhlenbeck": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dx_t": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "x_t": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dw_t": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "long-term": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "x_0": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "y_t": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dy_t": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "y_0": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "int_0": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "dw_s": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "t-s": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "guochengdedingyisuijiweifenfangchengxingshiqizhongjunzhihuiguisuduchangqijunzhibodonglvweinaguochengzengliangbiaozhunbulangyundongdejiexijietuidaoqicifangchengjiekaolvqicifangchengshechangshubianyifalingzedairuyuanjifenqiujiejisuanjifendairuzuizhongjiexijieguochengdetongjixingzhiqiwangtuidaoyoujiexijieduiliangbianquqiwangyouyuweinajifenshiyangqiqiwangweiyinciruoshiquedingxingchushizhizejideshangshugongshijixianfangchatuidaoliyongdengjuyoujiexijiequedingxingbufenduifangchawugongxianyincidengjuduiyuquedingxingbeijihanshuzheshijifendejibenxingzhilaiyuanyuweinaguochengdedulizengliangxingheercibianchayingyongdengjuqu": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "## 2. ornstein-uhlenbeck 过程的定义\n\n**随机微分方程（sde）形式**\n\n$$\ndx_t = \\theta (\\mu - x_t) dt + \\sigma dw_t\n$$\n\n其中：\n- $ \\theta > 0 $：均值回归速度（strength of mean reversion）\n- $ \\mu $：长期均值（long-term mean）\n- $ \\sigma > 0 $：波动率（volatility）\n- $ dw_t $：维纳过程增量（标准布朗运动）\n\n\n## 3. sde 的解析解推导\n\n**step 1: 齐次方程解**\n\n考虑齐次方程 $ dx_t = -\\theta x_t dt $（设 $ \\mu = 0 $）：\n\n$$\n\\frac{dx_t}{x_t} = -\\theta dt \\quad \\rightarrow \\quad \\ln x_t = -\\theta t + c \\quad \\rightarrow \\quad x_t = x_0 e^{-\\theta t}\n$$\n\n**step 2: 常数变易法**\n\n令 $ y_t = x_t e^{\\theta t} $，则：\n\n$$\ndy_t = e^{\\theta t} dx_t + \\theta e^{\\theta t} x_t dt\n$$\n\n代入原 sde $ dx_t = \\theta (\\mu - x_t) dt + \\sigma dw_t $：\n\n$$\n\\begin{aligned}\ndy_t &= e^{\\theta t} [\\theta (\\mu - x_t) dt + \\sigma dw_t] + \\theta e^{\\theta t} x_t dt \\\\\n&= e^{\\theta t} \\theta \\mu dt + e^{\\theta t} \\sigma dw_t\n\\end{aligned}\n$$\n\n**step 3: 积分求解**\n\n$$\ny_t = y_0 + \\theta \\mu \\int_0^t e^{\\theta s} ds + \\sigma \\int_0^t e^{\\theta s} dw_s\n$$\n\n计算积分 $ \\int_0^t e^{\\theta s} ds = \\frac{e^{\\theta t} - 1}{\\theta} $，代入 $ y_0 = x_0 $：\n\n$$\nx_t e^{\\theta t} = x_0 + \\mu (e^{\\theta t} - 1) + \\sigma \\int_0^t e^{\\theta s} dw_s\n$$\n\n**step 4: 最终解析解**\n\n$$\nx_t = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t}) + \\sigma \\int_0^t e^{-\\theta (t-s)} dw_s\n$$\n\n\n## 4. ou 过程的统计性质\n\n### 4.1 期望\n\n$$\n\\mathbb{e}[x_t] = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t})\n$$\n\n**推导：**\n\n由解析解：\n\n$$\nx_t = x_0 e^{-\\theta t} + \\mu (1 - e^{-\\theta t}) + \\sigma \\int_0^t e^{-\\theta (t-s)} dw_s\n$$\n\n对两边取期望。由于维纳积分 $ \\int_0^t e^{-\\theta (t-s)} dw_s $ 是鞅，其期望为 0：\n\n$$\n\\mathbb{e}\\left[ \\sigma \\int_0^t e^{-\\theta (t-s)} dw_s \\right] = 0\n$$\n\n因此：\n\n$$\n\\mathbb{e}[x_t] = \\mathbb{e}[x_0] e^{-\\theta t} + \\mu (1 - e^{-\\theta t})\n$$\n\n若 $ x_0 $ 是确定性初始值，则 $ \\mathbb{e}[x_0] = x_0 $，即得上述公式。\n\n**极限：** $ \\lim_{t \\to \\infty} \\mathbb{e}[x_t] = \\mu $\n\n### 4.2 方差\n\n$$\n\\text{var}(x_t) = \\frac{\\sigma^2}{2\\theta} (1 - e^{-2\\theta t})\n$$\n\n**推导（利用 itô 等距）：**\n\n由解析解，确定性部分对方差无贡献，因此：\n\n$$\n\\text{var}(x_t) = \\mathbb{e}\\left[ \\left( \\sigma \\int_0^t e^{-\\theta (t-s)} dw_s \\right)^2 \\right]\n$$\n\n**itô 等距（itô isometry）**：对于确定性被积函数 $ f(t) $，\n\n$$\n\\mathbb{e}\\left[ \\left( \\int_0^t f(s) dw_s \\right)^2 \\right] = \\int_0^t f(s)^2 ds\n$$\n\n这是 itô 积分的基本性质，来源于维纳过程的独立增量性和二次变差。\n\n应用 itô 等距，取 $ f(s) = \\sigma e^{-\\theta (t-s)} $：\n\n$$\n\\begin{aligned}\n\\text{var}(x_t) &= \\int_0^t \\sigma^2 e^{-2\\theta (t-s)} ds \\\\\n&= \\sigma^2 \\int_0^t e^{-2\\theta u} du \\quad (u = t-s) \\\\\n&= \\sigma^2 \\cdot \\frac{1 - e^{-2\\": [
+      {
+        "r": 10,
+        "f": "body"
+      }
+    ],
+    "guocheng": [
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "suiji": [
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "weifenfangcheng": [
+      {
+        "r": 10,
+        "f": "key_phrase"
+      }
+    ],
+    "xingshi": [
+      {
+        "r": 10,
+        "f": "key_phrase"
       }
     ]
   }

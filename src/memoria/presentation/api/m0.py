@@ -51,12 +51,16 @@ class M0API:
         path = self._host.pick_directory()
         if path:
             self._svc.set_kb_path(path)
+            from memoria.presentation.static_server import set_kb_root
+            set_kb_root(path)
             return path
         return ""
 
     def set_kb_path(self, path: str) -> dict:
         try:
             self._svc.set_kb_path(path)
+            from memoria.presentation.static_server import set_kb_root
+            set_kb_root(path)
             return {"status": "ok", "path": path}
         except FileNotFoundError as e:
             return {"status": "error", "message": str(e)}
@@ -387,6 +391,22 @@ class M0API:
     ) -> dict:
         try:
             return self._svc.detach_link_instance(rel_path, anchor_text, line_number)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def format_text(
+        self,
+        rel_path: str,
+        line_number: int,
+        start_col: int,
+        end_col: int,
+        format_type: str,
+        color: str | None = None,
+    ) -> dict:
+        try:
+            return self._svc.format_text(
+                rel_path, line_number, start_col, end_col, format_type, color
+            )
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 

@@ -167,7 +167,7 @@ $$\mu'(s_t) = \mu(s_t | \theta_t^\mu) + \mathcal{N}_t \tag{7}$$
 
 其中 $\mathcal{N}$ 是一个噪声过程。
 
-**为什么使用 Ornstein-Uhlenbeck 噪声？**
+**为什么使用 [[Ornstein-Uhlenbeck 噪声]]？**
 
 - 物理控制任务（如机器人）具有**惯性**和**动量**
 - 时间相关的有色噪声（OU 过程）比独立高斯噪声更适合这类系统

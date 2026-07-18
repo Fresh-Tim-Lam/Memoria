@@ -1,676 +1,8 @@
 schema_version: 1
-updated_at: '2026-07-16T06:19:28.165572+00:00'
+updated_at: '2026-07-18T06:07:50.728789+00:00'
 items:
-- pending_id: 631bcc2b72236a85
-  file: BellmanFunc.md
-  kind: heading
-  name: 符号约定
-  range:
-    start:
-      snippet: '## 符号约定'
-      line_hint: 5
-    end:
-      snippet: '---'
-      line_hint: 19
-  status: pending
-- pending_id: 81bba1c9bb0ed5b0
-  file: BellmanFunc.md
-  kind: heading
-  name: 第一部分：折扣回报的递归结构
-  range:
-    start:
-      snippet: '## 第一部分：折扣回报的递归结构'
-      line_hint: 21
-    end:
-      snippet: '---'
-      line_hint: 47
-  status: pending
-- pending_id: 45a79028f74c85bf
-  file: BellmanFunc.md
-  kind: heading
-  name: 定义
-  range:
-    start:
-      snippet: '### 定义'
-      line_hint: 23
-    end:
-      snippet: $$
-      line_hint: 29
-  status: pending
-- pending_id: 85a6968e41d4aab3
-  file: BellmanFunc.md
-  kind: heading
-  name: 递归性质
-  range:
-    start:
-      snippet: '### 递归性质'
-      line_hint: 31
-    end:
-      snippet: '---'
-      line_hint: 47
-  status: pending
-- pending_id: 4b97ac4a8c0df4dd
-  file: BellmanFunc.md
-  kind: heading
-  name: 第二部分：状态价值函数 V^π(s) 的贝尔曼方程
-  range:
-    start:
-      snippet: '## 第二部分：状态价值函数 V^π(s) 的贝尔曼方程'
-      line_hint: 49
-    end:
-      snippet: '---'
-      line_hint: 128
-  status: pending
-- pending_id: 8cf024b32717f3a9
-  file: BellmanFunc.md
-  kind: heading
-  name: 定义
-  range:
-    start:
-      snippet: '### 定义'
-      line_hint: 51
-    end:
-      snippet: $$
-      line_hint: 57
-  status: pending
-- pending_id: 2bef1c8c1a77b57a
-  file: BellmanFunc.md
-  kind: heading
-  name: 推导
-  range:
-    start:
-      snippet: '### 推导'
-      line_hint: 59
-    end:
-      snippet: $$
-      line_hint: 71
-  status: pending
-- pending_id: bb42cb06fe096cb4
-  file: BellmanFunc.md
-  kind: heading
-  name: 处理第一项：E_pi[R_{t+1} | S_t = s]
-  range:
-    start:
-      snippet: '### 处理第一项：E_pi[R_{t+1} | S_t = s]'
-      line_hint: 73
-    end:
-      snippet: $$
-      line_hint: 85
-  status: pending
-- pending_id: 3489b599cb5df00b
-  file: BellmanFunc.md
-  kind: heading
-  name: 处理第二项：E_pi[G_{t+1} | S_t = s]
-  range:
-    start:
-      snippet: '### 处理第二项：E_pi[G_{t+1} | S_t = s]'
-      line_hint: 87
-    end:
-      snippet: $$
-      line_hint: 104
-  status: pending
-- pending_id: 0fa4f1814f21821c
-  file: BellmanFunc.md
-  kind: heading
-  name: 合并 (3)(4)(5)
-  range:
-    start:
-      snippet: '### 合并 (3)(4)(5)'
-      line_hint: 106
-    end:
-      snippet: $$
-      line_hint: 112
-  status: pending
-- pending_id: f9ea28b6ce8a8e91
-  file: BellmanFunc.md
-  kind: heading
-  name: 算子形式
-  range:
-    start:
-      snippet: '### 算子形式'
-      line_hint: 114
-    end:
-      snippet: '---'
-      line_hint: 128
-  status: pending
-- pending_id: ed35dc84cfe1fbc7
-  file: BellmanFunc.md
-  kind: heading
-  name: 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程
-  range:
-    start:
-      snippet: '## 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程'
-      line_hint: 130
-    end:
-      snippet: '---'
-      line_hint: 198
-  status: pending
-- pending_id: 489a26d6a3230ba8
-  file: BellmanFunc.md
-  kind: heading
-  name: 定义
-  range:
-    start:
-      snippet: '### 定义'
-      line_hint: 132
-    end:
-      snippet: $$
-      line_hint: 138
-  status: pending
-- pending_id: 1c2d588ac927d0e0
-  file: BellmanFunc.md
-  kind: heading
-  name: 推导
-  range:
-    start:
-      snippet: '### 推导'
-      line_hint: 140
-    end:
-      snippet: $$
-      line_hint: 150
-  status: pending
-- pending_id: 97f56fb6b9678dad
-  file: BellmanFunc.md
-  kind: heading
-  name: 处理第一项
-  range:
-    start:
-      snippet: '### 处理第一项'
-      line_hint: 152
-    end:
-      snippet: $$
-      line_hint: 158
-  status: pending
-- pending_id: 667c44bcda533d94
-  file: BellmanFunc.md
-  kind: heading
-  name: 处理第二项
-  range:
-    start:
-      snippet: '### 处理第二项'
-      line_hint: 160
-    end:
-      snippet: $$
-      line_hint: 178
-  status: pending
-- pending_id: e65edde863e1db83
-  file: BellmanFunc.md
-  kind: heading
-  name: 合并 (10)(11)(12)
-  range:
-    start:
-      snippet: '### 合并 (10)(11)(12)'
-      line_hint: 180
-    end:
-      snippet: $$
-      line_hint: 184
-  status: pending
-- pending_id: efd8be722265bb19
-  file: BellmanFunc.md
-  kind: heading
-  name: 用 Q^π 表达 V^π
-  range:
-    start:
-      snippet: '### 用 Q^π 表达 V^π'
-      line_hint: 186
-    end:
-      snippet: $$
-      line_hint: 190
-  status: pending
-- pending_id: dc169021cbd89e13
-  file: BellmanFunc.md
-  kind: heading
-  name: 将 (14) 代入 (13)
-  range:
-    start:
-      snippet: '### 将 (14) 代入 (13)'
-      line_hint: 192
-    end:
-      snippet: '---'
-      line_hint: 198
-  status: pending
-- pending_id: febaf676100cd92b
-  file: BellmanFunc.md
-  kind: heading
-  name: 第四部分：V^π 与 Q^π 的贝尔曼方程对比
-  range:
-    start:
-      snippet: '## 第四部分：V^π 与 Q^π 的贝尔曼方程对比'
-      line_hint: 200
-    end:
-      snippet: '---'
-      line_hint: 211
-  status: pending
-- pending_id: 9e839d08f4f795ae
-  file: BellmanFunc.md
-  kind: heading
-  name: 第五部分：确定性策略的贝尔曼方程
-  range:
-    start:
-      snippet: '## 第五部分：确定性策略的贝尔曼方程'
-      line_hint: 213
-    end:
-      snippet: '---'
-      line_hint: 231
-  status: pending
-- pending_id: cbb0689ee519813a
-  file: BellmanFunc.md
-  kind: heading
-  name: 状态价值函数
-  range:
-    start:
-      snippet: '### 状态价值函数'
-      line_hint: 217
-    end:
-      snippet: $$
-      line_hint: 221
-  status: pending
-- pending_id: 40341d26335078ab
-  file: BellmanFunc.md
-  kind: heading
-  name: 动作价值函数
-  range:
-    start:
-      snippet: '### 动作价值函数'
-      line_hint: 223
-    end:
-      snippet: '---'
-      line_hint: 231
-  status: pending
-- pending_id: 14c472b2b482ee9f
-  file: BellmanFunc.md
-  kind: heading
-  name: 第六部分：最优贝尔曼方程
-  range:
-    start:
-      snippet: '## 第六部分：最优贝尔曼方程'
-      line_hint: 233
-    end:
-      snippet: '---'
-      line_hint: 267
-  status: pending
-- pending_id: cc33898e7c249c9b
-  file: BellmanFunc.md
-  kind: heading
-  name: 最优状态价值函数
-  range:
-    start:
-      snippet: '### 最优状态价值函数'
-      line_hint: 235
-    end:
-      snippet: $$
-      line_hint: 243
-  status: pending
-- pending_id: d58ca3794bf845d5
-  file: BellmanFunc.md
-  kind: heading
-  name: 最优动作价值函数
-  range:
-    start:
-      snippet: '### 最优动作价值函数'
-      line_hint: 245
-    end:
-      snippet: '> (19) 是 DQN 算法试图逼近的目标。'
-      line_hint: 255
-  status: pending
-- pending_id: c5187053eede0457
-  file: BellmanFunc.md
-  kind: heading
-  name: V^* 与 Q^* 的关系
-  range:
-    start:
-      snippet: '### V^* 与 Q^* 的关系'
-      line_hint: 257
-    end:
-      snippet: '---'
-      line_hint: 267
-  status: pending
-- pending_id: 943c3e571f8c4937
-  file: BellmanFunc.md
-  kind: heading
-  name: 第七部分：压缩映射证明
-  range:
-    start:
-      snippet: '## 第七部分：压缩映射证明'
-      line_hint: 269
-    end:
-      snippet: '---'
-      line_hint: 338
-  status: pending
-- pending_id: 220fb2ebb3c79f4e
-  file: BellmanFunc.md
-  kind: heading
-  name: Bellman 算子定义
-  range:
-    start:
-      snippet: '### Bellman 算子定义'
-      line_hint: 271
-    end:
-      snippet: 其中 B(S) 是 S 上的有界实值函数空间，配备 sup 范数 ||V||_∞ = sup_s |V(s)|。
-      line_hint: 279
-  status: pending
-- pending_id: b20ba6553b6b101f
-  file: BellmanFunc.md
-  kind: heading
-  name: gamma-收缩性
-  range:
-    start:
-      snippet: '### gamma-收缩性'
-      line_hint: 281
-    end:
-      snippet: $$
-      line_hint: 317
-  status: pending
-- pending_id: a3ff9536846c9761
-  file: BellmanFunc.md
-  kind: heading
-  name: 结论
-  range:
-    start:
-      snippet: '### 结论'
-      line_hint: 319
-    end:
-      snippet: 2. 从任意 V_0 in B(S) 出发，迭代 V_{k+1} = T^π V_k 都会收敛到 V^π
-      line_hint: 326
-  status: pending
-- pending_id: 948c5942fdc2f134
-  file: BellmanFunc.md
-  kind: heading
-  name: 收敛速度
-  range:
-    start:
-      snippet: '### 收敛速度'
-      line_hint: 328
-    end:
-      snippet: '---'
-      line_hint: 338
-  status: pending
-- pending_id: dd50c8ca6eaef624
-  file: BellmanFunc.md
-  kind: heading
-  name: 第八部分：完整公式汇总表
-  range:
-    start:
-      snippet: '## 第八部分：完整公式汇总表'
-      line_hint: 340
-    end:
-      snippet: '---'
-      line_hint: 356
-  status: pending
-- pending_id: 3421d2b72f3e7c4d
-  file: BellmanFunc.md
-  kind: heading
-  name: 第九部分：在 DDPG 中的具体应用
-  range:
-    start:
-      snippet: '## 第九部分：在 DDPG 中的具体应用'
-      line_hint: 358
-    end:
-      snippet: 这等价于对最优贝尔曼方程 (19) 的近似求解。
-      line_hint: 378
-  status: pending
-- pending_id: 0fa4caae576fe3ae
-  file: BellmanFunc.md
-  kind: definition
-  name: Pr
-  range:
-    start:
-      snippet: '| P(s'' | s, a) | 状态转移概率：Pr(S_{t+1}=s'' | S_t=s, A_t=a) |'
-      line_hint: 13
-    end:
-      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
-      line_hint: 17
-  status: pending
-- pending_id: 518b4ca050305392
-  file: BellmanFunc.md
-  kind: definition
-  name: pi
-  range:
-    start:
-      snippet: '| pi(a | s) | 策略：在状态 s 下选择动作 a 的概率 |'
-      line_hint: 14
-    end:
-      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
-      line_hint: 17
-  status: pending
-- pending_id: b482493b9393a845
-  file: BellmanFunc.md
-  kind: definition
-  name: 折扣累积回报
-  range:
-    start:
-      snippet: 折扣累积回报（return）是从时间步 t 开始，未来所有折扣奖励的总和：
-      line_hint: 25
-    end:
-      snippet: ''
-      line_hint: 30
-  status: pending
-- pending_id: fe5e5d9ebc413d5e
-  file: BellmanFunc.md
-  kind: definition
-  name: 这个递归关系
-  range:
-    start:
-      snippet: '> 这个递归关系是确定性的恒等式，不涉及任何期望或策略。'
-      line_hint: 45
-    end:
-      snippet: ''
-      line_hint: 48
-  status: pending
-- pending_id: 8996a525d82511ea
-  file: BellmanFunc.md
-  kind: definition
-  name: \pi
-  range:
-    start:
-      snippet: \mathbb{E}_\pi \left[ R_{t+1} \mid S_t = s \right] = \sum_{a} \pi(a
-        \mid s) \cdo
-      line_hint: 78
-    end:
-      snippet: $$
-      line_hint: 79
-  status: pending
-- pending_id: e1b78c38d9d58be0
-  file: BellmanFunc.md
-  kind: definition
-  name: 给定
-  range:
-    start:
-      snippet: 给定 (S_t, A_t) = (s, a)，即时奖励由 R(s, a) 决定：
-      line_hint: 81
-    end:
-      snippet: ''
-      line_hint: 86
-  status: pending
-- pending_id: 63cc42e73d4c3066
-  file: BellmanFunc.md
-  kind: definition
-  name: \Pr
-  range:
-    start:
-      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_t = s \right] = \sum_{s'} \Pr(S_{t+1}=s'
-        \m
-      line_hint: 92
-    end:
-      snippet: $$
-      line_hint: 93
-  status: pending
-- pending_id: 02cf97b52a8042be
-  file: BellmanFunc.md
-  kind: definition
-  name: V^π
-  range:
-    start:
-      snippet: '- E_pi[G_{t+1} | S_{t+1}=s''] = V^π(s'')'
-      line_hint: 98
-    end:
-      snippet: ''
-      line_hint: 105
-  status: pending
-- pending_id: 5879f38b77de7042
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^π
-  range:
-    start:
-      snippet: 动作价值函数 Q^π(s,a) 表示：从状态 s 出发，强制执行动作 a（不一定由策略 π 选择），此后一直遵循策略 π，所获得的期望折扣累积回报。
-      line_hint: 134
-    end:
-      snippet: ''
-      line_hint: 139
-  status: pending
-- pending_id: 5d640a38e5d4a7ad
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^\pi
-  range:
-    start:
-      snippet: Q^\pi(s, a) = \mathbb{E}_\pi \left[ G_t \mid S_t = s, A_t = a \right]
-        \tag{8}
-      line_hint: 137
-    end:
-      snippet: $$
-      line_hint: 138
-  status: pending
-- pending_id: f765542d0a5414c4
-  file: BellmanFunc.md
-  kind: definition
-  name: V^\pi
-  range:
-    start:
-      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_{t+1} = s' \right] = V^\pi(s')
-      line_hint: 171
-    end:
-      snippet: $$
-      line_hint: 172
-  status: pending
-- pending_id: 7a1ba4f4b278099c
-  file: BellmanFunc.md
-  kind: definition
-  name: V^\mu
-  range:
-    start:
-      snippet: V^\mu(s) = \sum_{s'} P(s' \mid s, \mu(s)) \left[ R(s, \mu(s)) + \gamma
-        V^\mu(s')
-      line_hint: 220
-    end:
-      snippet: $$
-      line_hint: 221
-  status: pending
-- pending_id: bee60a527d14aad0
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^\mu
-  range:
-    start:
-      snippet: \boxed{Q^\mu(s, a) = \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
-        Q^\mu(s',
-      line_hint: 226
-    end:
-      snippet: $$
-      line_hint: 227
-  status: pending
-- pending_id: 6bac955aeaebf97e
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^mu
-  range:
-    start:
-      snippet: '> (17) 正是 DDPG 论文中的公式 (3)。关键洞察：目标值 R(s,a) + gamma Q^mu(s'', mu(s''))
-        的期望只对环境动态 P 取'
-      line_hint: 229
-    end:
-      snippet: ''
-      line_hint: 232
-  status: pending
-- pending_id: 8145def28d7e8939
-  file: BellmanFunc.md
-  kind: definition
-  name: V^*
-  range:
-    start:
-      snippet: \boxed{V^*(s) = \max_a \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
-        V^*(s')
-      line_hint: 242
-    end:
-      snippet: $$
-      line_hint: 243
-  status: pending
-- pending_id: 46b1310332ace927
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^*
-  range:
-    start:
-      snippet: Q^*(s, a) = \max_\pi Q^\pi(s, a)
-      line_hint: 248
-    end:
-      snippet: $$
-      line_hint: 249
-  status: pending
-- pending_id: 6f5447a3f6e2c553
-  file: BellmanFunc.md
-  kind: definition
-  name: '|V_1'
-  range:
-    start:
-      snippet: 由于 |V_1(s') - V_2(s')| ≤ ||V_1 - V_2||_∞ 对所有 s' 成立：
-      line_hint: 301
-    end:
-      snippet: ''
-      line_hint: 318
-  status: pending
-- pending_id: a0c010570c06ad1c
-  file: BellmanFunc.md
-  kind: definition
-  name: 上的压缩映射
-  range:
-    start:
-      snippet: 由于 gamma < 1，T^π 是 B(S) 上的压缩映射 (contraction mapping)。
-      line_hint: 321
-    end:
-      snippet: ''
-      line_hint: 327
-  status: pending
-- pending_id: 6cfb9df94448ba11
-  file: BellmanFunc.md
-  kind: definition
-  name: 不动点定理
-  range:
-    start:
-      snippet: 根据 Banach 不动点定理 (Banach Fixed-Point Theorem)：
-      line_hint: 323
-    end:
-      snippet: ''
-      line_hint: 327
-  status: pending
-- pending_id: 47fe900164701c7c
-  file: BellmanFunc.md
-  kind: definition
-  name: Q^μ
-  range:
-    start:
-      snippet: '| 确定性 Q 贝尔曼方程 | Q^μ(s,a) = sum_{s''} P(s''|s,a) [R(s,a) + γ Q^μ(s'',
-        μ(s''))] | (17)'
-      line_hint: 351
-    end:
-      snippet: '| 压缩映射 | ||T^π V_1 - T^π V_2||_∞ ≤ γ ||V_1 - V_2||_∞ | (20) |'
-      line_hint: 354
-  status: pending
-- pending_id: 5cff754ae5b5cb30
-  file: BellmanFunc.md
-  kind: definition
-  name: a=\mu
-  range:
-    start:
-      snippet: \nabla_{\theta^\mu} J \approx \frac{1}{N} \sum_i \nabla_a Q(s,a) \big|_{a=\mu(s_
-      line_hint: 375
-    end:
-      snippet: $$
-      line_hint: 376
-  status: pending
-- pending_id: aecabb8facce68f5
-  file: DDPG/DDPG.md
+- pending_id: ba86176a628ce270
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 0. 论文来源
   range:
@@ -681,685 +13,8 @@ items:
       snippet: '---'
       line_hint: 14
   status: pending
-- pending_id: cc083dc1168d6857
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 1. 算法概述
-  range:
-    start:
-      snippet: '## 1. 算法概述'
-      line_hint: 16
-    end:
-      snippet: '---'
-      line_hint: 37
-  status: pending
-- pending_id: 06f8c6236f1603ee
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 1.1 一句话定位
-  range:
-    start:
-      snippet: '### 1.1 一句话定位'
-      line_hint: 18
-    end:
-      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
-        (off-po'
-      line_hint: 20
-  status: pending
-- pending_id: 7458bfdaa905c55f
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 1.2 设计动机（Why）
-  range:
-    start:
-      snippet: '### 1.2 设计动机（Why）'
-      line_hint: 22
-    end:
-      snippet: '---'
-      line_hint: 37
-  status: pending
-- pending_id: 295b701be668b047
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 2. 数学基础
-  range:
-    start:
-      snippet: '## 2. 数学基础'
-      line_hint: 39
-    end:
-      snippet: '---'
-      line_hint: 92
-  status: pending
-- pending_id: 04456cd3dd1a6242
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 2.1 强化学习基本框架
-  range:
-    start:
-      snippet: '### 2.1 强化学习基本框架'
-      line_hint: 41
-    end:
-      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
-        > t} \sim \p
-      line_hint: 66
-  status: pending
-- pending_id: 2c7c86ee5df96518
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 2.2 贝尔曼方程
-  range:
-    start:
-      snippet: '### 2.2 贝尔曼方程'
-      line_hint: 68
-    end:
-      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
-        学习成为可能——我们可以'
-      line_hint: 78
-  status: pending
-- pending_id: f1921d764df832b3
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 2.3 Q-Learning 的损失函数
-  range:
-    start:
-      snippet: '### 2.3 Q-Learning 的损失函数'
-      line_hint: 80
-    end:
-      snippet: '---'
-      line_hint: 92
-  status: pending
-- pending_id: 71249a748bd2dc2e
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3. DDPG 算法
-  range:
-    start:
-      snippet: '## 3. DDPG 算法'
-      line_hint: 94
-    end:
-      snippet: '---'
-      line_hint: 200
-  status: pending
-- pending_id: 7525777e7764834b
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.1 核心挑战与解决方案
-  range:
-    start:
-      snippet: '### 3.1 核心挑战与解决方案'
-      line_hint: 96
-    end:
-      snippet: '| 不同特征的尺度差异 | — | **Batch Normalization** |'
-      line_hint: 103
-  status: pending
-- pending_id: d5ff04e06ada3109
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.2 Actor-Critic 架构
-  range:
-    start:
-      snippet: '### 3.2 Actor-Critic 架构'
-      line_hint: 105
-    end:
-      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
-      line_hint: 114
-  status: pending
-- pending_id: 6a90797af039ea73
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.3 Critic 更新（Q-Learning）
-  range:
-    start:
-      snippet: '### 3.3 Critic 更新（Q-Learning）'
-      line_hint: 116
-    end:
-      snippet: $$\nabla_{\theta^Q} L = \frac{1}{N} \sum_{i=1}^{N} \left[ -2 \left(
-        y_i - Q(s_i,
-      line_hint: 130
-  status: pending
-- pending_id: e44cf6df2463bdb7
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.4 Actor 更新（确定性策略梯度）
-  range:
-    start:
-      snippet: '### 3.4 Actor 更新（确定性策略梯度）'
-      line_hint: 132
-    end:
-      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
-        的输出回传到 A'
-      line_hint: 148
-  status: pending
-- pending_id: 3be000713b1fe8b2
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.5 目标网络的软更新
-  range:
-    start:
-      snippet: '### 3.5 目标网络的软更新'
-      line_hint: 150
-    end:
-      snippet: '> **优势**：目标网络缓慢变化，极大提高了学习的稳定性，使 TD 误差的优化更接近监督学习。'
-      line_hint: 160
-  status: pending
-- pending_id: f06532e1e4d89a59
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.6 探索策略
-  range:
-    start:
-      snippet: '### 3.6 探索策略'
-      line_hint: 162
-    end:
-      snippet: '**DDPG 中使用的参数**：$\theta = 0.15$，$\sigma = 0.2$。'
-      line_hint: 182
-  status: pending
-- pending_id: 783346f298ab173e
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 3.7 Batch Normalization
-  range:
-    start:
-      snippet: '### 3.7 Batch Normalization'
-      line_hint: 184
-    end:
-      snippet: '---'
-      line_hint: 200
-  status: pending
-- pending_id: c40d2474ae69ec92
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 4. 算法伪代码
-  range:
-    start:
-      snippet: '## 4. 算法伪代码'
-      line_hint: 202
-    end:
-      snippet: '---'
-      line_hint: 232
-  status: pending
-- pending_id: b5833b8dadf514ad
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 5. 网络架构
-  range:
-    start:
-      snippet: '## 5. 网络架构'
-      line_hint: 234
-    end:
-      snippet: '---'
-      line_hint: 345
-  status: pending
-- pending_id: 1e9720156ea6b160
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 5.1 低维观测的架构
-  range:
-    start:
-      snippet: '### 5.1 低维观测的架构'
-      line_hint: 236
-    end:
-      snippet: '```'
-      line_hint: 317
-  status: pending
-- pending_id: 4c29ec8628607ea7
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 5.2 像素观测的架构
-  range:
-    start:
-      snippet: '### 5.2 像素观测的架构'
-      line_hint: 319
-    end:
-      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
-      line_hint: 332
-  status: pending
-- pending_id: ad09a505273c26a5
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 5.3 权重初始化
-  range:
-    start:
-      snippet: '### 5.3 权重初始化'
-      line_hint: 334
-    end:
-      snippet: '---'
-      line_hint: 345
-  status: pending
-- pending_id: 5a51efab0914402d
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 6. 超参数
-  range:
-    start:
-      snippet: '## 6. 超参数'
-      line_hint: 347
-    end:
-      snippet: '---'
-      line_hint: 386
-  status: pending
-- pending_id: cc3104abb47e2a88
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 6.1 完整超参数表
-  range:
-    start:
-      snippet: '### 6.1 完整超参数表'
-      line_hint: 349
-    end:
-      snippet: '| Actor 输出激活 | — | tanh | 输出到 $[-1,1]$ |'
-      line_hint: 362
-  status: pending
-- pending_id: 7eb3d9b6dcfd84e0
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 6.2 OU 噪声参数
-  range:
-    start:
-      snippet: '### 6.2 OU 噪声参数'
-      line_hint: 364
-    end:
-      snippet: '| $\sigma$ | 0.2 | 波动率（噪声强度） |'
-      line_hint: 369
-  status: pending
-- pending_id: 629e64c931ed89ac
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 6.3 各任务维度信息
-  range:
-    start:
-      snippet: '### 6.3 各任务维度信息'
-      line_hint: 371
-    end:
-      snippet: '---'
-      line_hint: 386
-  status: pending
-- pending_id: bdd081adfb788059
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 7. 实验与结果
-  range:
-    start:
-      snippet: '## 7. 实验与结果'
-      line_hint: 388
-    end:
-      snippet: '---'
-      line_hint: 414
-  status: pending
-- pending_id: 620e38fd2dcdd6c3
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 7.1 评估协议
-  range:
-    start:
-      snippet: '### 7.1 评估协议'
-      line_hint: 390
-    end:
-      snippet: '- 归一化分数：随机策略 = 0，iLQG 规划器 = 1'
-      line_hint: 394
-  status: pending
-- pending_id: c02e28b997fb39d8
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 7.2 关键发现
-  range:
-    start:
-      snippet: '### 7.2 关键发现'
-      line_hint: 396
-    end:
-      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
-      line_hint: 408
-  status: pending
-- pending_id: e01c222cb1fcc945
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 7.3 与 iLQG 规划器的比较
-  range:
-    start:
-      snippet: '### 7.3 与 iLQG 规划器的比较'
-      line_hint: 410
-    end:
-      snippet: '---'
-      line_hint: 414
-  status: pending
-- pending_id: 7154001de206870f
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 8. 与 ERL 报告的关联
-  range:
-    start:
-      snippet: '## 8. 与 ERL 报告的关联'
-      line_hint: 416
-    end:
-      snippet: '---'
-      line_hint: 435
-  status: pending
-- pending_id: a404217afe670c98
-  file: DDPG/DDPG.md
-  kind: heading
-  name: 9. 参考文献
-  range:
-    start:
-      snippet: '## 9. 参考文献'
-      line_hint: 437
-    end:
-      snippet: '[10] Glorot, X., Bordes, A., & Bengio, Y. (2011). *Deep Sparse Rectifier
-        Network'
-      line_hint: 457
-  status: pending
-- pending_id: cd00b91da6d5a90d
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 的成功经验
-  range:
-    start:
-      snippet: '| **核心贡献** | 将 DQN 的成功经验（replay buffer + target network）推广到连续动作空间，提出
-        DDPG 算法 |'
-      line_hint: 12
-    end:
-      snippet: ''
-      line_hint: 15
-  status: pending
-- pending_id: 7c716cd15cc71fb0
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**DDPG'
-  range:
-    start:
-      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
-        (off-po'
-      line_hint: 20
-    end:
-      snippet: ''
-      line_hint: 21
-  status: pending
-- pending_id: 40c01d73717ee0e7
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 的核心操作
-  range:
-    start:
-      snippet: '- DQN 的核心操作是 $a^* = \arg\max_a Q(s,a)$'
-      line_hint: 26
-    end:
-      snippet: '- 在连续动作空间中，每一步都需要求解一个非凸优化问题，计算代价过高'
-      line_hint: 27
-  status: pending
-- pending_id: 5f9f4e5594b761c0
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 的两大创新
-  range:
-    start:
-      snippet: '**DDPG 的核心思想**：将 DQN 的两大创新（replay buffer + target network）嫁接到 **DPG
-        (Determinist'
-      line_hint: 35
-    end:
-      snippet: ''
-      line_hint: 38
-  status: pending
-- pending_id: 4a98f7bdaad67fee
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**动作价值函数**'
-  range:
-    start:
-      snippet: '**动作价值函数**（Q 函数）：'
-      line_hint: 64
-    end:
-      snippet: ''
-      line_hint: 67
-  status: pending
-- pending_id: b199dee613c72b2d
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $$Q^\pi
-  range:
-    start:
-      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
-        > t} \sim \p
-      line_hint: 66
-    end:
-      snippet: ''
-      line_hint: 67
-  status: pending
-- pending_id: 53a4d1c9d4e0103e
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $$Q^\mu
-  range:
-    start:
-      snippet: $$Q^\mu(s_t, a_t) = \mathbb{E}_{r_t, s_{t+1} \sim E} \left[ r(s_t,
-        a_t) + \gamma
-      line_hint: 76
-    end:
-      snippet: ''
-      line_hint: 79
-  status: pending
-- pending_id: 2078d099a8861ea2
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**异策略'
-  range:
-    start:
-      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
-        学习成为可能——我们可以'
-      line_hint: 78
-    end:
-      snippet: ''
-      line_hint: 79
-  status: pending
-- pending_id: 3f378e193b7ce7cc
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $Q
-  range:
-    start:
-      snippet: 使用函数近似器 $Q(s,a|\theta^Q)$，最小化 Bellman 残差：
-      line_hint: 82
-    end:
-      snippet: ''
-      line_hint: 93
-  status: pending
-- pending_id: 55fac08dcb1b609b
-  file: DDPG/DDPG.md
-  kind: definition
-  name: \mu
-  range:
-    start:
-      snippet: $$y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \mu(s_{t+1}) | \theta^Q) \tag{5}$$
-      line_hint: 88
-    end:
-      snippet: ''
-      line_hint: 93
-  status: pending
-- pending_id: 6c229ed5d29f0cdd
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $\mu
-  range:
-    start:
-      snippet: '| **Actor (策略网络)** | $\mu(s|\theta^\mu)$ | 确定性策略：$s \mapsto a$ |'
-      line_hint: 111
-    end:
-      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
-      line_hint: 114
-  status: pending
-- pending_id: 2230af529429a50f
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**Critic'
-  range:
-    start:
-      snippet: '| **Critic (Q 网络)** | $Q(s,a|\theta^Q)$ | 动作价值函数：$(s,a) \mapsto \mathbb{R}$
-        |'
-      line_hint: 112
-    end:
-      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
-      line_hint: 114
-  status: pending
-- pending_id: 0a8585cfe7a87a9a
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**确定性策略梯度定理**'
-  range:
-    start:
-      snippet: '**确定性策略梯度定理** (Silver et al., 2014)：'
-      line_hint: 136
-    end:
-      snippet: ''
-      line_hint: 149
-  status: pending
-- pending_id: 40ef13f669dff22a
-  file: DDPG/DDPG.md
-  kind: definition
-  name: a=\mu
-  range:
-    start:
-      snippet: $$\nabla_{\theta^\mu} J \approx \mathbb{E}_{s_t \sim \rho^\beta} \left[
-        \nabla_{
-      line_hint: 138
-    end:
-      snippet: ''
-      line_hint: 149
-  status: pending
-- pending_id: 12eefd1999d6cf36
-  file: DDPG/DDPG.md
-  kind: definition
-  name: -Q
-  range:
-    start:
-      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
-        的输出回传到 A'
-      line_hint: 148
-    end:
-      snippet: ''
-      line_hint: 149
-  status: pending
-- pending_id: 09bf2d14adf770f3
-  file: DDPG/DDPG.md
-  kind: definition
-  name: '**软更新'
-  range:
-    start:
-      snippet: 与 DQN 每隔若干步硬拷贝权重不同，DDPG 使用 **软更新 (soft update)**：
-      line_hint: 152
-    end:
-      snippet: ''
-      line_hint: 161
-  status: pending
-- pending_id: 1df28d2754c7a75f
-  file: DDPG/DDPG.md
-  kind: definition
-  name: DDPG
-  range:
-    start:
-      snippet: DDPG 是异策略算法，可以将探索与学习解耦。构造探索策略：
-      line_hint: 164
-    end:
-      snippet: ''
-      line_hint: 183
-  status: pending
-- pending_id: 8c08684e6d104571
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 时间相关的有色噪声
-  range:
-    start:
-      snippet: '- 时间相关的有色噪声（OU 过程）比独立高斯噪声更适合这类系统'
-      line_hint: 173
-    end:
-      snippet: '- OU 过程模拟了带摩擦的布朗运动，产生围绕 0 的时间相关值'
-      line_hint: 174
-  status: pending
-- pending_id: 1cfad65edf12632a
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $dW_t$
-  range:
-    start:
-      snippet: 其中 $dW_t$ 是维纳过程，$\theta$ 是均值回归系数，$\mu$ 是均值，$\sigma$ 是波动率。
-      line_hint: 180
-    end:
-      snippet: ''
-      line_hint: 183
-  status: pending
-- pending_id: c482eb88a10c718b
-  file: DDPG/DDPG.md
-  kind: definition
-  name: $\sigma_B^2$
-  range:
-    start:
-      snippet: 其中 $\mu_B$ 和 $\sigma_B^2$ 是 minibatch 的均值和方差，$\gamma$ 和 $\beta$ 是可学习的缩放和平移参数。
-      line_hint: 196
-    end:
-      snippet: ''
-      line_hint: 201
-  status: pending
-- pending_id: 24af31d0368338ae
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 个模拟时间步执行一次动作
-  range:
-    start:
-      snippet: '- 每 3 个模拟时间步执行一次动作（action repeat）'
-      line_hint: 329
-    end:
-      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
-      line_hint: 332
-  status: pending
-- pending_id: 8cac38dbdad83c8f
-  file: DDPG/DDPG.md
-  kind: definition
-  name: 在简单任务
-  range:
-    start:
-      snippet: '- 在简单任务（pendulum, cartpole）上，Q 值估计非常准确'
-      line_hint: 405
-    end:
-      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
-      line_hint: 408
-  status: pending
-- pending_id: 0c65f5a376cabb0c
-  file: DDPG/DDPG.md
-  kind: definition
-  name: iLQG
-  range:
-    start:
-      snippet: iLQG 是一个有完整模型访问权限的规划器，在所有任务上均达到 1 的归一化分数。DDPG 在许多任务上达到了可比甚至超越 iLQG
-        的性能，甚至在从像素学习时
-      line_hint: 412
-    end:
-      snippet: ''
-      line_hint: 415
-  status: pending
-- pending_id: b3595dc9ea5ccd33
-  file: DDPG/DDPG.md
-  kind: definition
-  name: ERL
-  range:
-    start:
-      snippet: ERL（Evolution-Guided Policy Gradient）以 DDPG 作为其 RL 核心组件。理解 DDPG 是理解
-        ERL 的前提：
-      line_hint: 418
-    end:
-      snippet: ''
-      line_hint: 436
-  status: pending
-- pending_id: 4df011fc10095e34
-  file: ERL/ERL.md
-  kind: heading
-  name: 0. 论文来源
-  range:
-    start:
-      snippet: '## 0. 论文来源'
-      line_hint: 3
-    end:
-      snippet: '---'
-      line_hint: 14
-  status: pending
-- pending_id: cc2f632473abcf41
-  file: ERL/ERL.md
+- pending_id: 9b7014ceea4e0a79
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 1. 算法概述
   range:
@@ -1370,8 +25,8 @@ items:
       snippet: '---'
       line_hint: 49
   status: pending
-- pending_id: cbc6eba6e05a0272
-  file: ERL/ERL.md
+- pending_id: 1235a0068a8a36ae
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 1.1 一句话定位
   range:
@@ -1383,8 +38,8 @@ items:
         的样本级梯度优'
       line_hint: 20
   status: pending
-- pending_id: 58ffada37b9ffc7e
-  file: ERL/ERL.md
+- pending_id: dd11b12585c07a9e
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 1.2 设计动机（Why）
   range:
@@ -1395,8 +50,8 @@ items:
       snippet: 3. **episode-级 fitness** 对稀疏 / 欺骗性奖励更鲁棒；种群冗余降低单一策略崩溃的风险。
       line_hint: 40
   status: pending
-- pending_id: 7a4bf002a266e729
-  file: ERL/ERL.md
+- pending_id: cb973387a1c69789
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 1.3 核心实验结论（论文主张）
   range:
@@ -1407,8 +62,8 @@ items:
       snippet: '---'
       line_hint: 49
   status: pending
-- pending_id: e7fb5815b5dda4eb
-  file: ERL/ERL.md
+- pending_id: 15bd1f271c99b428
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2. 数学基础
   range:
@@ -1419,8 +74,8 @@ items:
       snippet: '---'
       line_hint: 209
   status: pending
-- pending_id: c3243ada8c66065b
-  file: ERL/ERL.md
+- pending_id: e0765d6669fe7c3a
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.1 强化学习背景
   range:
@@ -1432,8 +87,8 @@ items:
         r_t
       line_hint: 62
   status: pending
-- pending_id: 23031f0756c44f18
-  file: ERL/ERL.md
+- pending_id: aa2d7ec9bbce21b1
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.2 DDPG（论文 §2.1）
   range:
@@ -1445,8 +100,8 @@ items:
         级 buffer '
       line_hint: 162
   status: pending
-- pending_id: 368c77c273277bfd
-  file: ERL/ERL.md
+- pending_id: 9c8aa3ab2556e82b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.2.1 梯度计算详解与代码映射
   range:
@@ -1458,8 +113,8 @@ items:
         级 buffer '
       line_hint: 162
   status: pending
-- pending_id: bdd55456ed253c6a
-  file: ERL/ERL.md
+- pending_id: bfa7891a928d2689
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3 进化算法组件
   range:
@@ -1470,8 +125,8 @@ items:
       snippet: $$\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}$$
       line_hint: 198
   status: pending
-- pending_id: dc6ea25254e0679b
-  file: ERL/ERL.md
+- pending_id: 4394184c528c9073
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3.1 适应度（Algorithm 2 / Evaluate）
   range:
@@ -1483,8 +138,8 @@ items:
         DDPG 的折扣回报不同——'
       line_hint: 172
   status: pending
-- pending_id: 9eef385073ef8bad
-  file: ERL/ERL.md
+- pending_id: c8053baf47ef85b2
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3.2 锦标赛选择（Tournament Selection）
   range:
@@ -1495,8 +150,8 @@ items:
       snippet: $$\text{parent} = \arg\max_{i\in\text{tournament}}\text{fitness}_i$$
       line_hint: 178
   status: pending
-- pending_id: b623e0afca8a660f
-  file: ERL/ERL.md
+- pending_id: 9486601d744849c2
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3.3 交叉（Probabilistic Crossover）
   range:
@@ -1508,8 +163,8 @@ items:
         \thet
       line_hint: 184
   status: pending
-- pending_id: 00ab2a3b3e3d9b74
-  file: ERL/ERL.md
+- pending_id: 615a56d7c11633a7
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3.4 变异（Algorithm 3 / Mutate）
   range:
@@ -1521,8 +176,8 @@ items:
         \te
       line_hint: 192
   status: pending
-- pending_id: f4792c0cb02532af
-  file: ERL/ERL.md
+- pending_id: c02392263eae9296
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.3.5 精英保留
   range:
@@ -1533,8 +188,8 @@ items:
       snippet: $$\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}$$
       line_hint: 198
   status: pending
-- pending_id: de412c316339dc43
-  file: ERL/ERL.md
+- pending_id: e7aaa55e0616be12
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 2.4 混合机制（RL ↔ EA）
   range:
@@ -1545,8 +200,8 @@ items:
       snippet: '---'
       line_hint: 209
   status: pending
-- pending_id: 4b8ebecb6bc7c60c
-  file: ERL/ERL.md
+- pending_id: 05af8efb76d6705b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3. 网络架构
   range:
@@ -1557,8 +212,8 @@ items:
       snippet: '---'
       line_hint: 373
   status: pending
-- pending_id: 4846ef84e048fabb
-  file: ERL/ERL.md
+- pending_id: 91574abd7739fcfc
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.1 Actor 网络（确定性策略 $\mu_\theta(s)$）
   range:
@@ -1569,8 +224,8 @@ items:
       snippet: '---'
       line_hint: 273
   status: pending
-- pending_id: ce6cb41335d1e6a6
-  file: ERL/ERL.md
+- pending_id: ec3253ee00de243a
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.1.1 网络结构
   range:
@@ -1582,8 +237,8 @@ items:
         \varepsilon}} '
       line_hint: 258
   status: pending
-- pending_id: 99efc298cba50960
-  file: ERL/ERL.md
+- pending_id: 3b73af4a29e052bb
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: '3.1.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
   range:
@@ -1594,8 +249,8 @@ items:
       snippet: '---'
       line_hint: 273
   status: pending
-- pending_id: e4d3bfcd8a6c6f20
-  file: ERL/ERL.md
+- pending_id: 82caf1624bcfce13
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.2 Critic 网络（Q 值函数 $Q_\phi(s,a)$）
   range:
@@ -1606,8 +261,8 @@ items:
       snippet: '---'
       line_hint: 336
   status: pending
-- pending_id: 27fc00894469649a
-  file: ERL/ERL.md
+- pending_id: d10cfba2105f69fd
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.2.1 网络结构
   range:
@@ -1618,8 +273,8 @@ items:
       snippet: '> **设计原理**：状态和动作分两路映射的原因是状态维度和动作维度在物理意义上分属不同空间（状态描述系统配置，动作描述控制输入），独立编码后再拼接可以让网络更'
       line_hint: 320
   status: pending
-- pending_id: 7ff3ebf18c9e81a9
-  file: ERL/ERL.md
+- pending_id: 49470b0c86ec0c95
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: '3.2.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）'
   range:
@@ -1630,8 +285,8 @@ items:
       snippet: '---'
       line_hint: 336
   status: pending
-- pending_id: 2019e2cdba89dd97
-  file: ERL/ERL.md
+- pending_id: 14e3918baea78dc8
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.3 权重初始化策略
   range:
@@ -1642,8 +297,8 @@ items:
       snippet: '---'
       line_hint: 353
   status: pending
-- pending_id: bfe2a405f7840817
-  file: ERL/ERL.md
+- pending_id: 897075832c401a2e
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.4 激活函数对比
   range:
@@ -1654,8 +309,8 @@ items:
       snippet: '---'
       line_hint: 362
   status: pending
-- pending_id: 424898f97f80800f
-  file: ERL/ERL.md
+- pending_id: 4168705744b26b76
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 3.5 经验回放缓冲区
   range:
@@ -1666,8 +321,8 @@ items:
       snippet: '---'
       line_hint: 373
   status: pending
-- pending_id: 97e0372d90ae1286
-  file: ERL/ERL.md
+- pending_id: c64f3bcce1906210
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 4. 算法伪代码
   range:
@@ -1678,8 +333,8 @@ items:
       snippet: '---'
       line_hint: 455
   status: pending
-- pending_id: 66539da37d7ac4a2
-  file: ERL/ERL.md
+- pending_id: 526e011e0afb6f9f
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 4.1 Algorithm 1：主循环（按论文逐行还原）
   range:
@@ -1690,8 +345,8 @@ items:
       snippet: '```'
       line_hint: 412
   status: pending
-- pending_id: fca67e57e9c35950
-  file: ERL/ERL.md
+- pending_id: a8d87e344c9da442
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 4.2 Algorithm 2：Evaluate（适应度评估子过程）
   range:
@@ -1702,8 +357,8 @@ items:
       snippet: '```'
       line_hint: 432
   status: pending
-- pending_id: e170ac909e46a4ac
-  file: ERL/ERL.md
+- pending_id: ee26d268d5c7e6bd
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 4.3 Algorithm 3：Mutate（变异子过程）
   range:
@@ -1714,8 +369,8 @@ items:
       snippet: '---'
       line_hint: 455
   status: pending
-- pending_id: f29bdbb5f2bf5bc9
-  file: ERL/ERL.md
+- pending_id: dce941de0b850dda
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 5. 超参数
   range:
@@ -1726,8 +381,8 @@ items:
       snippet: '---'
       line_hint: 494
   status: pending
-- pending_id: 13dde535ebf53891
-  file: ERL/ERL.md
+- pending_id: fd45b57d6a9c840a
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 5.1 通用超参（论文 Appendix A，全任务相同）
   range:
@@ -1739,8 +394,8 @@ items:
         |'
       line_hint: 475
   status: pending
-- pending_id: c429a6444ef61558
-  file: ERL/ERL.md
+- pending_id: 508f58652288122a
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 5.2 逐环境超参（论文 Table 2）
   range:
@@ -1751,8 +406,8 @@ items:
       snippet: '---'
       line_hint: 494
   status: pending
-- pending_id: 5a4497c27dac25e2
-  file: ERL/ERL.md
+- pending_id: 054b41df38345d35
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 6. 实验设置
   range:
@@ -1763,8 +418,8 @@ items:
       snippet: '- **种子**：5 个随机种子'
       line_hint: 504
   status: pending
-- pending_id: 52ac4c4cff1d01ef
-  file: ERL/ERL.md
+- pending_id: 25f1db96cc398817
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: heading
   name: 6.1 环境与协议
   range:
@@ -1775,8 +430,8 @@ items:
       snippet: '- **种子**：5 个随机种子'
       line_hint: 504
   status: pending
-- pending_id: 505b44dad6db9d07
-  file: ERL/ERL.md
+- pending_id: d71e53c1fba0ffb7
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: '2018'
   range:
@@ -1787,8 +442,8 @@ items:
       snippet: '| **代码** | https://github.com/ShawK91/erl_paper_nips18 |'
       line_hint: 12
   status: pending
-- pending_id: 6e76472150b7318a
-  file: ERL/ERL.md
+- pending_id: f1325c3e07e0a6fc
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: '**进化算法'
   range:
@@ -1800,8 +455,8 @@ items:
       snippet: ''
       line_hint: 21
   status: pending
-- pending_id: c3d30c4c29aec95d
-  file: ERL/ERL.md
+- pending_id: 566ea8d7a47881c5
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 特别
   range:
@@ -1812,8 +467,8 @@ items:
       snippet: ''
       line_hint: 41
   status: pending
-- pending_id: 85d1450f3359fd62
-  file: ERL/ERL.md
+- pending_id: 73754a92ab816db1
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: DDPG**
   range:
@@ -1824,8 +479,8 @@ items:
       snippet: '- 运行时间相对 DDPG **仅多约 3%**（变异为额外开销，未做并行）。'
       line_hint: 47
   status: pending
-- pending_id: e3a3d752f927ca32
-  file: ERL/ERL.md
+- pending_id: 8aa60456d5d327ae
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: '**去掉选择算子**'
   range:
@@ -1836,8 +491,8 @@ items:
       snippet: '- 运行时间相对 DDPG **仅多约 3%**（变异为额外开销，未做并行）。'
       line_hint: 47
   status: pending
-- pending_id: ac17abcc49daaa68
-  file: ERL/ERL.md
+- pending_id: 11a77fdca700963b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: $P
   range:
@@ -1848,8 +503,8 @@ items:
       snippet: ''
       line_hint: 63
   status: pending
-- pending_id: 0405489c632f531d
-  file: ERL/ERL.md
+- pending_id: d1f8e5734433aecf
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 目标
   range:
@@ -1860,8 +515,8 @@ items:
       snippet: ''
       line_hint: 63
   status: pending
-- pending_id: dea6efbdc5139057
-  file: ERL/ERL.md
+- pending_id: 7fe93160f45d2c0b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 目标**
   range:
@@ -1872,8 +527,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 292ceb0471e82dd7
-  file: ERL/ERL.md
+- pending_id: 0d853726bef108b8
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: \bigl
   range:
@@ -1884,8 +539,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 6404bc5253df9c57
-  file: ERL/ERL.md
+- pending_id: 40c456b3cb9eb083
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 损失**
   range:
@@ -1896,8 +551,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 801f986ab6e31f96
-  file: ERL/ERL.md
+- pending_id: 4e194d8a1439cf18
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: '**Ornstein-Uhlenbeck'
   range:
@@ -1908,8 +563,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: f39b747b4c1de2e9
-  file: ERL/ERL.md
+- pending_id: b95f0efc20f47812
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 的两路梯度更新
   range:
@@ -1921,8 +576,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 343075d9e074a358
-  file: ERL/ERL.md
+- pending_id: 6afbc56af7707246
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 梯度
   range:
@@ -1933,8 +588,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: a4b60f758282a5bb
-  file: ERL/ERL.md
+- pending_id: 1b90e3bc3837520b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: a=\mu
   range:
@@ -1945,8 +600,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 8d09593234e4c5b5
-  file: ERL/ERL.md
+- pending_id: 61dc493256976a8b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: \cdot\tanh
   range:
@@ -1958,8 +613,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: 1a85253291b96148
-  file: ERL/ERL.md
+- pending_id: b86f8247d5bc7efd
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 因子
   range:
@@ -1971,8 +626,8 @@ items:
       snippet: ''
       line_hint: 163
   status: pending
-- pending_id: dca370206661564e
-  file: ERL/ERL.md
+- pending_id: 9075de37a0197840
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: critic
   range:
@@ -1983,8 +638,8 @@ items:
       snippet: '| $\theta_\pi \leftarrow \theta_\pi - \alpha_\pi \cdot \partial \mathcal{L}/\par'
       line_hint: 146
   status: pending
-- pending_id: 0206fc6051eaf4c2
-  file: ERL/ERL.md
+- pending_id: e74a98def5a9bdac
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 评估的
   range:
@@ -1996,8 +651,8 @@ items:
       snippet: ''
       line_hint: 173
   status: pending
-- pending_id: 2fe403f73cd0a68c
-  file: ERL/ERL.md
+- pending_id: e238ce9784496e28
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: \tanh
   range:
@@ -2009,8 +664,8 @@ items:
       snippet: ''
       line_hint: 259
   status: pending
-- pending_id: 6b201316b94669eb
-  file: ERL/ERL.md
+- pending_id: ad88493f01be9922
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: LayerNorm
   range:
@@ -2021,8 +676,8 @@ items:
       snippet: ''
       line_hint: 259
   status: pending
-- pending_id: a04b52dab33d9cdf
-  file: ERL/ERL.md
+- pending_id: a4fd86b862a1f4ca
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 而不
   range:
@@ -2033,8 +688,8 @@ items:
       snippet: ''
       line_hint: 321
   status: pending
-- pending_id: 981a900ac89c8f31
-  file: ERL/ERL.md
+- pending_id: ee02baa9030f80fe
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: _2
   range:
@@ -2046,8 +701,8 @@ items:
       snippet: ''
       line_hint: 321
   status: pending
-- pending_id: c44080bec54d0964
-  file: ERL/ERL.md
+- pending_id: d720d7f5cbd9586b
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 状态和动作分两路映射的原因
   range:
@@ -2058,8 +713,8 @@ items:
       snippet: ''
       line_hint: 321
   status: pending
-- pending_id: 1e8e9b3eddcb8f33
-  file: ERL/ERL.md
+- pending_id: 215dd8f9302784cf
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: Sub
   range:
@@ -2071,8 +726,8 @@ items:
       snippet: '| **总计** | | | **127,001** |'
       line_hint: 332
   status: pending
-- pending_id: 6945033e6d1f3dc2
-  file: ERL/ERL.md
+- pending_id: 3493fa9a34535cb2
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: 300$
   range:
@@ -2083,8 +738,8 @@ items:
       snippet: ''
       line_hint: 337
   status: pending
-- pending_id: 0c55e9057e3ef490
-  file: ERL/ERL.md
+- pending_id: 1bf1f7adce230761
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: Uniform**
   range:
@@ -2095,8 +750,8 @@ items:
       snippet: ''
       line_hint: 354
   status: pending
-- pending_id: d3c8b651ae265f67
-  file: ERL/ERL.md
+- pending_id: 835a795be8aba968
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: $10^6$
   range:
@@ -2108,8 +763,8 @@ items:
         $done_t$ 标志 '
       line_hint: 371
   status: pending
-- pending_id: f597a93aa133a227
-  file: ERL/ERL.md
+- pending_id: 5cd6e6e8590fed18
+  file: EvolutionaryReforcementLearning/ERL.md
   kind: definition
   name: transition
   range:
@@ -2551,4 +1206,2915 @@ items:
     end:
       snippet: 应用型格式：问题，选择以及原因，结果
       line_hint: 6
+  status: pending
+- pending_id: 339226b1e1ab7f0f
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 符号约定
+  range:
+    start:
+      snippet: '## 符号约定'
+      line_hint: 5
+    end:
+      snippet: '---'
+      line_hint: 19
+  status: pending
+- pending_id: 2e33de6d8b3b4c44
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第一部分：折扣回报的递归结构
+  range:
+    start:
+      snippet: '## 第一部分：折扣回报的递归结构'
+      line_hint: 21
+    end:
+      snippet: '---'
+      line_hint: 47
+  status: pending
+- pending_id: 603fedfd13319e2a
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 23
+    end:
+      snippet: $$
+      line_hint: 29
+  status: pending
+- pending_id: d80eae7e7ccba0ca
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 递归性质
+  range:
+    start:
+      snippet: '### 递归性质'
+      line_hint: 31
+    end:
+      snippet: '---'
+      line_hint: 47
+  status: pending
+- pending_id: b72cb4d6064cb647
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第二部分：状态价值函数 V^π(s) 的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第二部分：状态价值函数 V^π(s) 的贝尔曼方程'
+      line_hint: 49
+    end:
+      snippet: '---'
+      line_hint: 128
+  status: pending
+- pending_id: 757438907c176315
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 51
+    end:
+      snippet: $$
+      line_hint: 57
+  status: pending
+- pending_id: 3107ce625e93ffd6
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 推导
+  range:
+    start:
+      snippet: '### 推导'
+      line_hint: 59
+    end:
+      snippet: $$
+      line_hint: 71
+  status: pending
+- pending_id: c918098849f4578a
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 处理第一项：E_pi[R_{t+1} | S_t = s]
+  range:
+    start:
+      snippet: '### 处理第一项：E_pi[R_{t+1} | S_t = s]'
+      line_hint: 73
+    end:
+      snippet: $$
+      line_hint: 85
+  status: pending
+- pending_id: e49e69a73110f0d6
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 处理第二项：E_pi[G_{t+1} | S_t = s]
+  range:
+    start:
+      snippet: '### 处理第二项：E_pi[G_{t+1} | S_t = s]'
+      line_hint: 87
+    end:
+      snippet: $$
+      line_hint: 104
+  status: pending
+- pending_id: a99157bf3e61e04a
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 合并 (3)(4)(5)
+  range:
+    start:
+      snippet: '### 合并 (3)(4)(5)'
+      line_hint: 106
+    end:
+      snippet: $$
+      line_hint: 112
+  status: pending
+- pending_id: 7bad0786817a490c
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 算子形式
+  range:
+    start:
+      snippet: '### 算子形式'
+      line_hint: 114
+    end:
+      snippet: '---'
+      line_hint: 128
+  status: pending
+- pending_id: 32dae7df861c6a09
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第三部分：动作价值函数 Q^π(s,a) 的贝尔曼方程'
+      line_hint: 130
+    end:
+      snippet: '---'
+      line_hint: 198
+  status: pending
+- pending_id: 1b4a5b3ec8d5ef80
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 定义
+  range:
+    start:
+      snippet: '### 定义'
+      line_hint: 132
+    end:
+      snippet: $$
+      line_hint: 138
+  status: pending
+- pending_id: d6f482e6802a3076
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 推导
+  range:
+    start:
+      snippet: '### 推导'
+      line_hint: 140
+    end:
+      snippet: $$
+      line_hint: 150
+  status: pending
+- pending_id: 8bbc7fb974076a73
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 处理第一项
+  range:
+    start:
+      snippet: '### 处理第一项'
+      line_hint: 152
+    end:
+      snippet: $$
+      line_hint: 158
+  status: pending
+- pending_id: d9d1ee073eb0f2f4
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 处理第二项
+  range:
+    start:
+      snippet: '### 处理第二项'
+      line_hint: 160
+    end:
+      snippet: $$
+      line_hint: 178
+  status: pending
+- pending_id: 97ed3ad4f590161b
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 合并 (10)(11)(12)
+  range:
+    start:
+      snippet: '### 合并 (10)(11)(12)'
+      line_hint: 180
+    end:
+      snippet: $$
+      line_hint: 184
+  status: pending
+- pending_id: 9f571693f785c2ae
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 用 Q^π 表达 V^π
+  range:
+    start:
+      snippet: '### 用 Q^π 表达 V^π'
+      line_hint: 186
+    end:
+      snippet: $$
+      line_hint: 190
+  status: pending
+- pending_id: 2e2877c4a8d21325
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 将 (14) 代入 (13)
+  range:
+    start:
+      snippet: '### 将 (14) 代入 (13)'
+      line_hint: 192
+    end:
+      snippet: '---'
+      line_hint: 198
+  status: pending
+- pending_id: 626f4e412373467f
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第四部分：V^π 与 Q^π 的贝尔曼方程对比
+  range:
+    start:
+      snippet: '## 第四部分：V^π 与 Q^π 的贝尔曼方程对比'
+      line_hint: 200
+    end:
+      snippet: '---'
+      line_hint: 211
+  status: pending
+- pending_id: 26c74575b4da0cfd
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第五部分：确定性策略的贝尔曼方程
+  range:
+    start:
+      snippet: '## 第五部分：确定性策略的贝尔曼方程'
+      line_hint: 213
+    end:
+      snippet: '---'
+      line_hint: 231
+  status: pending
+- pending_id: 0ae4370415fe1e92
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 状态价值函数
+  range:
+    start:
+      snippet: '### 状态价值函数'
+      line_hint: 217
+    end:
+      snippet: $$
+      line_hint: 221
+  status: pending
+- pending_id: f045fa3d4d3a660d
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 动作价值函数
+  range:
+    start:
+      snippet: '### 动作价值函数'
+      line_hint: 223
+    end:
+      snippet: '---'
+      line_hint: 231
+  status: pending
+- pending_id: bbd30bf6ef8fd620
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第六部分：最优贝尔曼方程
+  range:
+    start:
+      snippet: '## 第六部分：最优贝尔曼方程'
+      line_hint: 233
+    end:
+      snippet: '---'
+      line_hint: 267
+  status: pending
+- pending_id: e948b26028035788
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 最优状态价值函数
+  range:
+    start:
+      snippet: '### 最优状态价值函数'
+      line_hint: 235
+    end:
+      snippet: $$
+      line_hint: 243
+  status: pending
+- pending_id: 62d385e05077c56d
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 最优动作价值函数
+  range:
+    start:
+      snippet: '### 最优动作价值函数'
+      line_hint: 245
+    end:
+      snippet: '> (19) 是 DQN 算法试图逼近的目标。'
+      line_hint: 255
+  status: pending
+- pending_id: a201e45c119afe89
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: V^* 与 Q^* 的关系
+  range:
+    start:
+      snippet: '### V^* 与 Q^* 的关系'
+      line_hint: 257
+    end:
+      snippet: '---'
+      line_hint: 267
+  status: pending
+- pending_id: 3a7dc25086b5d955
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第七部分：压缩映射证明
+  range:
+    start:
+      snippet: '## 第七部分：压缩映射证明'
+      line_hint: 269
+    end:
+      snippet: '---'
+      line_hint: 338
+  status: pending
+- pending_id: 286a442851053802
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: Bellman 算子定义
+  range:
+    start:
+      snippet: '### Bellman 算子定义'
+      line_hint: 271
+    end:
+      snippet: 其中 B(S) 是 S 上的有界实值函数空间，配备 sup 范数 ||V||_∞ = sup_s |V(s)|。
+      line_hint: 279
+  status: pending
+- pending_id: 5d034a75fc45bcce
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: gamma-收缩性
+  range:
+    start:
+      snippet: '### gamma-收缩性'
+      line_hint: 281
+    end:
+      snippet: $$
+      line_hint: 317
+  status: pending
+- pending_id: 7adfbd7514febc51
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 结论
+  range:
+    start:
+      snippet: '### 结论'
+      line_hint: 319
+    end:
+      snippet: 2. 从任意 V_0 in B(S) 出发，迭代 V_{k+1} = T^π V_k 都会收敛到 V^π
+      line_hint: 326
+  status: pending
+- pending_id: f77977e058728532
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 收敛速度
+  range:
+    start:
+      snippet: '### 收敛速度'
+      line_hint: 328
+    end:
+      snippet: '---'
+      line_hint: 338
+  status: pending
+- pending_id: 7918118dff1328e0
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第八部分：完整公式汇总表
+  range:
+    start:
+      snippet: '## 第八部分：完整公式汇总表'
+      line_hint: 340
+    end:
+      snippet: '---'
+      line_hint: 356
+  status: pending
+- pending_id: f38aabe6ecc9967d
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: heading
+  name: 第九部分：在 DDPG 中的具体应用
+  range:
+    start:
+      snippet: '## 第九部分：在 DDPG 中的具体应用'
+      line_hint: 358
+    end:
+      snippet: 这等价于对最优贝尔曼方程 (19) 的近似求解。
+      line_hint: 378
+  status: pending
+- pending_id: 9f179f4d4203223b
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Pr
+  range:
+    start:
+      snippet: '| P(s'' | s, a) | 状态转移概率：Pr(S_{t+1}=s'' | S_t=s, A_t=a) |'
+      line_hint: 13
+    end:
+      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
+      line_hint: 17
+  status: pending
+- pending_id: 553fd4ae2e7197f6
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: pi
+  range:
+    start:
+      snippet: '| pi(a | s) | 策略：在状态 s 下选择动作 a 的概率 |'
+      line_hint: 14
+    end:
+      snippet: '| E_pi[·] | 在策略 pi 和环境动态下的期望 |'
+      line_hint: 17
+  status: pending
+- pending_id: db4a2a5394902074
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: 折扣累积回报
+  range:
+    start:
+      snippet: 折扣累积回报（return）是从时间步 t 开始，未来所有折扣奖励的总和：
+      line_hint: 25
+    end:
+      snippet: ''
+      line_hint: 30
+  status: pending
+- pending_id: 3b8ce2d932397ed5
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: 这个递归关系
+  range:
+    start:
+      snippet: '> 这个递归关系是确定性的恒等式，不涉及任何期望或策略。'
+      line_hint: 45
+    end:
+      snippet: ''
+      line_hint: 48
+  status: pending
+- pending_id: c37a58939b5f7ed9
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: \pi
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ R_{t+1} \mid S_t = s \right] = \sum_{a} \pi(a
+        \mid s) \cdo
+      line_hint: 78
+    end:
+      snippet: $$
+      line_hint: 79
+  status: pending
+- pending_id: 53b5627bc6032071
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: 给定
+  range:
+    start:
+      snippet: 给定 (S_t, A_t) = (s, a)，即时奖励由 R(s, a) 决定：
+      line_hint: 81
+    end:
+      snippet: ''
+      line_hint: 86
+  status: pending
+- pending_id: 9c7252dbe8cfd78e
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: \Pr
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_t = s \right] = \sum_{s'} \Pr(S_{t+1}=s'
+        \m
+      line_hint: 92
+    end:
+      snippet: $$
+      line_hint: 93
+  status: pending
+- pending_id: 45ec0a9b9cc3be89
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: V^π
+  range:
+    start:
+      snippet: '- E_pi[G_{t+1} | S_{t+1}=s''] = V^π(s'')'
+      line_hint: 98
+    end:
+      snippet: ''
+      line_hint: 105
+  status: pending
+- pending_id: ae335ddb94354558
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^π
+  range:
+    start:
+      snippet: 动作价值函数 Q^π(s,a) 表示：从状态 s 出发，强制执行动作 a（不一定由策略 π 选择），此后一直遵循策略 π，所获得的期望折扣累积回报。
+      line_hint: 134
+    end:
+      snippet: ''
+      line_hint: 139
+  status: pending
+- pending_id: 9441d9a6a00f42c1
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^\pi
+  range:
+    start:
+      snippet: Q^\pi(s, a) = \mathbb{E}_\pi \left[ G_t \mid S_t = s, A_t = a \right]
+        \tag{8}
+      line_hint: 137
+    end:
+      snippet: $$
+      line_hint: 138
+  status: pending
+- pending_id: 4ca849f6e3135a90
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: V^\pi
+  range:
+    start:
+      snippet: \mathbb{E}_\pi \left[ G_{t+1} \mid S_{t+1} = s' \right] = V^\pi(s')
+      line_hint: 171
+    end:
+      snippet: $$
+      line_hint: 172
+  status: pending
+- pending_id: f25530bd94760277
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: V^\mu
+  range:
+    start:
+      snippet: V^\mu(s) = \sum_{s'} P(s' \mid s, \mu(s)) \left[ R(s, \mu(s)) + \gamma
+        V^\mu(s')
+      line_hint: 220
+    end:
+      snippet: $$
+      line_hint: 221
+  status: pending
+- pending_id: 5876c98866259308
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^\mu
+  range:
+    start:
+      snippet: \boxed{Q^\mu(s, a) = \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
+        Q^\mu(s',
+      line_hint: 226
+    end:
+      snippet: $$
+      line_hint: 227
+  status: pending
+- pending_id: 0dd2ce51989b1468
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^mu
+  range:
+    start:
+      snippet: '> (17) 正是 DDPG 论文中的公式 (3)。关键洞察：目标值 R(s,a) + gamma Q^mu(s'', mu(s''))
+        的期望只对环境动态 P 取'
+      line_hint: 229
+    end:
+      snippet: ''
+      line_hint: 232
+  status: pending
+- pending_id: e29640d10388ea36
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: V^*
+  range:
+    start:
+      snippet: \boxed{V^*(s) = \max_a \sum_{s'} P(s' \mid s, a) \left[ R(s, a) + \gamma
+        V^*(s')
+      line_hint: 242
+    end:
+      snippet: $$
+      line_hint: 243
+  status: pending
+- pending_id: 5bf5cadab152cb2d
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^*
+  range:
+    start:
+      snippet: Q^*(s, a) = \max_\pi Q^\pi(s, a)
+      line_hint: 248
+    end:
+      snippet: $$
+      line_hint: 249
+  status: pending
+- pending_id: 745132bf3c738839
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: '|V_1'
+  range:
+    start:
+      snippet: 由于 |V_1(s') - V_2(s')| ≤ ||V_1 - V_2||_∞ 对所有 s' 成立：
+      line_hint: 301
+    end:
+      snippet: ''
+      line_hint: 318
+  status: pending
+- pending_id: 180dd9cfe8711494
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: 上的压缩映射
+  range:
+    start:
+      snippet: 由于 gamma < 1，T^π 是 B(S) 上的压缩映射 (contraction mapping)。
+      line_hint: 321
+    end:
+      snippet: ''
+      line_hint: 327
+  status: pending
+- pending_id: 25823410ab7bb410
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: 不动点定理
+  range:
+    start:
+      snippet: 根据 Banach 不动点定理 (Banach Fixed-Point Theorem)：
+      line_hint: 323
+    end:
+      snippet: ''
+      line_hint: 327
+  status: pending
+- pending_id: d1c3ce31197c10c4
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: Q^μ
+  range:
+    start:
+      snippet: '| 确定性 Q 贝尔曼方程 | Q^μ(s,a) = sum_{s''} P(s''|s,a) [R(s,a) + γ Q^μ(s'',
+        μ(s''))] | (17)'
+      line_hint: 351
+    end:
+      snippet: '| 压缩映射 | ||T^π V_1 - T^π V_2||_∞ ≤ γ ||V_1 - V_2||_∞ | (20) |'
+      line_hint: 354
+  status: pending
+- pending_id: f865bb3b1f5da42e
+  file: ReinforcementLearning/BellmanFunc.md
+  kind: definition
+  name: a=\mu
+  range:
+    start:
+      snippet: \nabla_{\theta^\mu} J \approx \frac{1}{N} \sum_i \nabla_a Q(s,a) \big|_{a=\mu(s_
+      line_hint: 375
+    end:
+      snippet: $$
+      line_hint: 376
+  status: pending
+- pending_id: fca63d04726a1d90
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 0. 论文来源
+  range:
+    start:
+      snippet: '## 0. 论文来源'
+      line_hint: 3
+    end:
+      snippet: '---'
+      line_hint: 14
+  status: pending
+- pending_id: d5b9d214a1b6dfdb
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 1. 算法概述
+  range:
+    start:
+      snippet: '## 1. 算法概述'
+      line_hint: 16
+    end:
+      snippet: '---'
+      line_hint: 37
+  status: pending
+- pending_id: a8b329f5d8c20446
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 1.1 一句话定位
+  range:
+    start:
+      snippet: '### 1.1 一句话定位'
+      line_hint: 18
+    end:
+      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
+        (off-po'
+      line_hint: 20
+  status: pending
+- pending_id: d2d49ad4ff0aeb02
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 1.2 设计动机（Why）
+  range:
+    start:
+      snippet: '### 1.2 设计动机（Why）'
+      line_hint: 22
+    end:
+      snippet: '---'
+      line_hint: 37
+  status: pending
+- pending_id: ddb34213de3a2984
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 2. 数学基础
+  range:
+    start:
+      snippet: '## 2. 数学基础'
+      line_hint: 39
+    end:
+      snippet: '---'
+      line_hint: 92
+  status: pending
+- pending_id: cbfe1e1c735a20b2
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 2.1 强化学习基本框架
+  range:
+    start:
+      snippet: '### 2.1 强化学习基本框架'
+      line_hint: 41
+    end:
+      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
+        > t} \sim \p
+      line_hint: 66
+  status: pending
+- pending_id: 235cc3ed9c32e020
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 2.2 贝尔曼方程
+  range:
+    start:
+      snippet: '### 2.2 贝尔曼方程'
+      line_hint: 68
+    end:
+      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
+        学习成为可能——我们可以'
+      line_hint: 78
+  status: pending
+- pending_id: 093ae0ab8db01a4e
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 2.3 Q-Learning 的损失函数
+  range:
+    start:
+      snippet: '### 2.3 Q-Learning 的损失函数'
+      line_hint: 80
+    end:
+      snippet: '---'
+      line_hint: 92
+  status: pending
+- pending_id: 21054f31dd1c0cc7
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3. DDPG 算法
+  range:
+    start:
+      snippet: '## 3. DDPG 算法'
+      line_hint: 94
+    end:
+      snippet: '---'
+      line_hint: 200
+  status: pending
+- pending_id: 5b1fe0ea3ab1e60a
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.1 核心挑战与解决方案
+  range:
+    start:
+      snippet: '### 3.1 核心挑战与解决方案'
+      line_hint: 96
+    end:
+      snippet: '| 不同特征的尺度差异 | — | **Batch Normalization** |'
+      line_hint: 103
+  status: pending
+- pending_id: be82fca3fd0f8fd4
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.2 Actor-Critic 架构
+  range:
+    start:
+      snippet: '### 3.2 Actor-Critic 架构'
+      line_hint: 105
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: f3c5fe0c914aca82
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.3 Critic 更新（Q-Learning）
+  range:
+    start:
+      snippet: '### 3.3 Critic 更新（Q-Learning）'
+      line_hint: 116
+    end:
+      snippet: $$\nabla_{\theta^Q} L = \frac{1}{N} \sum_{i=1}^{N} \left[ -2 \left(
+        y_i - Q(s_i,
+      line_hint: 130
+  status: pending
+- pending_id: 7f67b0cf5b22d677
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.4 Actor 更新（确定性策略梯度）
+  range:
+    start:
+      snippet: '### 3.4 Actor 更新（确定性策略梯度）'
+      line_hint: 132
+    end:
+      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
+        的输出回传到 A'
+      line_hint: 148
+  status: pending
+- pending_id: c784cca6147a8e50
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.5 目标网络的软更新
+  range:
+    start:
+      snippet: '### 3.5 目标网络的软更新'
+      line_hint: 150
+    end:
+      snippet: '> **优势**：目标网络缓慢变化，极大提高了学习的稳定性，使 TD 误差的优化更接近监督学习。'
+      line_hint: 160
+  status: pending
+- pending_id: 789f4673dba005b8
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.6 探索策略
+  range:
+    start:
+      snippet: '### 3.6 探索策略'
+      line_hint: 162
+    end:
+      snippet: '**DDPG 中使用的参数**：$\theta = 0.15$，$\sigma = 0.2$。'
+      line_hint: 182
+  status: pending
+- pending_id: 3029cd8d09895bfe
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 3.7 Batch Normalization
+  range:
+    start:
+      snippet: '### 3.7 Batch Normalization'
+      line_hint: 184
+    end:
+      snippet: '---'
+      line_hint: 200
+  status: pending
+- pending_id: fa400b8b31f350ee
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 4. 算法伪代码
+  range:
+    start:
+      snippet: '## 4. 算法伪代码'
+      line_hint: 202
+    end:
+      snippet: '---'
+      line_hint: 232
+  status: pending
+- pending_id: fc1219f851bb2928
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 5. 网络架构
+  range:
+    start:
+      snippet: '## 5. 网络架构'
+      line_hint: 234
+    end:
+      snippet: '---'
+      line_hint: 345
+  status: pending
+- pending_id: 1c068cfb1f3b8cf9
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 5.1 低维观测的架构
+  range:
+    start:
+      snippet: '### 5.1 低维观测的架构'
+      line_hint: 236
+    end:
+      snippet: '```'
+      line_hint: 317
+  status: pending
+- pending_id: 2a567730eeaad803
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 5.2 像素观测的架构
+  range:
+    start:
+      snippet: '### 5.2 像素观测的架构'
+      line_hint: 319
+    end:
+      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
+      line_hint: 332
+  status: pending
+- pending_id: 9c1f1541d1681f83
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 5.3 权重初始化
+  range:
+    start:
+      snippet: '### 5.3 权重初始化'
+      line_hint: 334
+    end:
+      snippet: '---'
+      line_hint: 345
+  status: pending
+- pending_id: e1bd19134bdbf7df
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 6. 超参数
+  range:
+    start:
+      snippet: '## 6. 超参数'
+      line_hint: 347
+    end:
+      snippet: '---'
+      line_hint: 386
+  status: pending
+- pending_id: 9bf72f23b62994eb
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 6.1 完整超参数表
+  range:
+    start:
+      snippet: '### 6.1 完整超参数表'
+      line_hint: 349
+    end:
+      snippet: '| Actor 输出激活 | — | tanh | 输出到 $[-1,1]$ |'
+      line_hint: 362
+  status: pending
+- pending_id: 5ac1c4f9b9e34ac5
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 6.2 OU 噪声参数
+  range:
+    start:
+      snippet: '### 6.2 OU 噪声参数'
+      line_hint: 364
+    end:
+      snippet: '| $\sigma$ | 0.2 | 波动率（噪声强度） |'
+      line_hint: 369
+  status: pending
+- pending_id: 2c33c81ceb61a02b
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 6.3 各任务维度信息
+  range:
+    start:
+      snippet: '### 6.3 各任务维度信息'
+      line_hint: 371
+    end:
+      snippet: '---'
+      line_hint: 386
+  status: pending
+- pending_id: 8ea1c62d0dc5c255
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 7. 实验与结果
+  range:
+    start:
+      snippet: '## 7. 实验与结果'
+      line_hint: 388
+    end:
+      snippet: '---'
+      line_hint: 414
+  status: pending
+- pending_id: 164c2aa2384e84dc
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 7.1 评估协议
+  range:
+    start:
+      snippet: '### 7.1 评估协议'
+      line_hint: 390
+    end:
+      snippet: '- 归一化分数：随机策略 = 0，iLQG 规划器 = 1'
+      line_hint: 394
+  status: pending
+- pending_id: 10e406775d851b97
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 7.2 关键发现
+  range:
+    start:
+      snippet: '### 7.2 关键发现'
+      line_hint: 396
+    end:
+      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
+      line_hint: 408
+  status: pending
+- pending_id: 0ddf11a4d7dda71b
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 7.3 与 iLQG 规划器的比较
+  range:
+    start:
+      snippet: '### 7.3 与 iLQG 规划器的比较'
+      line_hint: 410
+    end:
+      snippet: '---'
+      line_hint: 414
+  status: pending
+- pending_id: f2a2e2be95f02e2d
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 8. 与 ERL 报告的关联
+  range:
+    start:
+      snippet: '## 8. 与 ERL 报告的关联'
+      line_hint: 416
+    end:
+      snippet: '---'
+      line_hint: 435
+  status: pending
+- pending_id: 22ca64567cbae036
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: heading
+  name: 9. 参考文献
+  range:
+    start:
+      snippet: '## 9. 参考文献'
+      line_hint: 437
+    end:
+      snippet: '[10] Glorot, X., Bordes, A., & Bengio, Y. (2011). *Deep Sparse Rectifier
+        Network'
+      line_hint: 457
+  status: pending
+- pending_id: 563eb473404ff333
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 的成功经验
+  range:
+    start:
+      snippet: '| **核心贡献** | 将 DQN 的成功经验（replay buffer + target network）推广到连续动作空间，提出
+        DDPG 算法 |'
+      line_hint: 12
+    end:
+      snippet: ''
+      line_hint: 15
+  status: pending
+- pending_id: b276cb8077428e1d
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**DDPG'
+  range:
+    start:
+      snippet: '**DDPG (Deep Deterministic Policy Gradient)** 是一种 **无模型 (model-free)、异策略
+        (off-po'
+      line_hint: 20
+    end:
+      snippet: ''
+      line_hint: 21
+  status: pending
+- pending_id: 09d6f07999017781
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 的核心操作
+  range:
+    start:
+      snippet: '- DQN 的核心操作是 $a^* = \arg\max_a Q(s,a)$'
+      line_hint: 26
+    end:
+      snippet: '- 在连续动作空间中，每一步都需要求解一个非凸优化问题，计算代价过高'
+      line_hint: 27
+  status: pending
+- pending_id: ba1e3479cc50faee
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 的两大创新
+  range:
+    start:
+      snippet: '**DDPG 的核心思想**：将 DQN 的两大创新（replay buffer + target network）嫁接到 **DPG
+        (Determinist'
+      line_hint: 35
+    end:
+      snippet: ''
+      line_hint: 38
+  status: pending
+- pending_id: 1f5540c130950d15
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**动作价值函数**'
+  range:
+    start:
+      snippet: '**动作价值函数**（Q 函数）：'
+      line_hint: 64
+    end:
+      snippet: ''
+      line_hint: 67
+  status: pending
+- pending_id: 4d4e44ef595854a6
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $$Q^\pi
+  range:
+    start:
+      snippet: $$Q^\pi(s_t, a_t) = \mathbb{E}_{r_{i \ge t}, s_{i > t} \sim E, a_{i
+        > t} \sim \p
+      line_hint: 66
+    end:
+      snippet: ''
+      line_hint: 67
+  status: pending
+- pending_id: 01cd557e907fd19e
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $$Q^\mu
+  range:
+    start:
+      snippet: $$Q^\mu(s_t, a_t) = \mathbb{E}_{r_t, s_{t+1} \sim E} \left[ r(s_t,
+        a_t) + \gamma
+      line_hint: 76
+    end:
+      snippet: ''
+      line_hint: 79
+  status: pending
+- pending_id: 9adf11ffcb1429e9
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**异策略'
+  range:
+    start:
+      snippet: '> **关键洞察**：在确定性策略下，目标值的计算只依赖于环境动态，不依赖于策略分布。这使得 **异策略 (off-policy)**
+        学习成为可能——我们可以'
+      line_hint: 78
+    end:
+      snippet: ''
+      line_hint: 79
+  status: pending
+- pending_id: 880407ba4d2043fa
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $Q
+  range:
+    start:
+      snippet: 使用函数近似器 $Q(s,a|\theta^Q)$，最小化 Bellman 残差：
+      line_hint: 82
+    end:
+      snippet: ''
+      line_hint: 93
+  status: pending
+- pending_id: b242e94e0716a51b
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: \mu
+  range:
+    start:
+      snippet: $$y_t = r(s_t, a_t) + \gamma Q(s_{t+1}, \mu(s_{t+1}) | \theta^Q) \tag{5}$$
+      line_hint: 88
+    end:
+      snippet: ''
+      line_hint: 93
+  status: pending
+- pending_id: 7413c5d309f49caf
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $\mu
+  range:
+    start:
+      snippet: '| **Actor (策略网络)** | $\mu(s|\theta^\mu)$ | 确定性策略：$s \mapsto a$ |'
+      line_hint: 111
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: 93ce68d5184cc83d
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**Critic'
+  range:
+    start:
+      snippet: '| **Critic (Q 网络)** | $Q(s,a|\theta^Q)$ | 动作价值函数：$(s,a) \mapsto \mathbb{R}$
+        |'
+      line_hint: 112
+    end:
+      snippet: '| **Target Critic** | $Q''(s,a|\theta^{Q''})$ | 软更新副本，用于计算稳定目标 |'
+      line_hint: 114
+  status: pending
+- pending_id: 738601ebdb3d7b26
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**确定性策略梯度定理**'
+  range:
+    start:
+      snippet: '**确定性策略梯度定理** (Silver et al., 2014)：'
+      line_hint: 136
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: 570b2294191635af
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: a=\mu
+  range:
+    start:
+      snippet: $$\nabla_{\theta^\mu} J \approx \mathbb{E}_{s_t \sim \rho^\beta} \left[
+        \nabla_{
+      line_hint: 138
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: 743dd0b7e8d5aded
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: -Q
+  range:
+    start:
+      snippet: '> **梯度流向**：`actor_loss = -Q(states, actor(states)).mean()` → 梯度从 Critic
+        的输出回传到 A'
+      line_hint: 148
+    end:
+      snippet: ''
+      line_hint: 149
+  status: pending
+- pending_id: c029291763612924
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: '**软更新'
+  range:
+    start:
+      snippet: 与 DQN 每隔若干步硬拷贝权重不同，DDPG 使用 **软更新 (soft update)**：
+      line_hint: 152
+    end:
+      snippet: ''
+      line_hint: 161
+  status: pending
+- pending_id: edb9a076d882c1dc
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 时间相关的有色噪声
+  range:
+    start:
+      snippet: '- 时间相关的有色噪声（OU 过程）比独立高斯噪声更适合这类系统'
+      line_hint: 173
+    end:
+      snippet: '- OU 过程模拟了带摩擦的布朗运动，产生围绕 0 的时间相关值'
+      line_hint: 174
+  status: pending
+- pending_id: e1765d02089633d0
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $dW_t$
+  range:
+    start:
+      snippet: 其中 $dW_t$ 是维纳过程，$\theta$ 是均值回归系数，$\mu$ 是均值，$\sigma$ 是波动率。
+      line_hint: 180
+    end:
+      snippet: ''
+      line_hint: 183
+  status: pending
+- pending_id: 8acdcddfc157ebd3
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: $\sigma_B^2$
+  range:
+    start:
+      snippet: 其中 $\mu_B$ 和 $\sigma_B^2$ 是 minibatch 的均值和方差，$\gamma$ 和 $\beta$ 是可学习的缩放和平移参数。
+      line_hint: 196
+    end:
+      snippet: ''
+      line_hint: 201
+  status: pending
+- pending_id: 63ae4ed3c2363dd9
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 个模拟时间步执行一次动作
+  range:
+    start:
+      snippet: '- 每 3 个模拟时间步执行一次动作（action repeat）'
+      line_hint: 329
+    end:
+      snippet: '- RGB 值转换为浮点数并缩放到 $[0, 1]$'
+      line_hint: 332
+  status: pending
+- pending_id: 45dacdfcfad3671d
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: 在简单任务
+  range:
+    start:
+      snippet: '- 在简单任务（pendulum, cartpole）上，Q 值估计非常准确'
+      line_hint: 405
+    end:
+      snippet: 5. **数据效率**：所有任务在 250 万步经验内解决，比 DQN 在 Atari 上的样本效率高约 20 倍
+      line_hint: 408
+  status: pending
+- pending_id: 55972b5bb97b515f
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: iLQG
+  range:
+    start:
+      snippet: iLQG 是一个有完整模型访问权限的规划器，在所有任务上均达到 1 的归一化分数。DDPG 在许多任务上达到了可比甚至超越 iLQG
+        的性能，甚至在从像素学习时
+      line_hint: 412
+    end:
+      snippet: ''
+      line_hint: 415
+  status: pending
+- pending_id: 295220c058639190
+  file: ReinforcementLearning/DDPG/DDPG.md
+  kind: definition
+  name: ERL
+  range:
+    start:
+      snippet: ERL（Evolution-Guided Policy Gradient）以 DDPG 作为其 RL 核心组件。理解 DDPG 是理解
+        ERL 的前提：
+      line_hint: 418
+    end:
+      snippet: ''
+      line_hint: 436
+  status: pending
+- pending_id: 8fea2940220fe959
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 0. 摘要
+  range:
+    start:
+      snippet: '## 0. 摘要'
+      line_hint: 3
+    end:
+      snippet: '---'
+      line_hint: 13
+  status: pending
+- pending_id: 7f34ebd36b5eae70
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 1. 符号与设定
+  range:
+    start:
+      snippet: '## 1. 符号与设定'
+      line_hint: 15
+    end:
+      snippet: '---'
+      line_hint: 32
+  status: pending
+- pending_id: 60811cacb9bf3963
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 2. 目标函数的定义
+  range:
+    start:
+      snippet: '## 2. 目标函数的定义'
+      line_hint: 34
+    end:
+      snippet: '---'
+      line_hint: 60
+  status: pending
+- pending_id: 54f24a2dc1c81871
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 2.1 三种等价定义
+  range:
+    start:
+      snippet: '### 2.1 三种等价定义'
+      line_hint: 36
+    end:
+      snippet: '---'
+      line_hint: 60
+  status: pending
+- pending_id: e2e3277f9795dd0d
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 3. 预备知识
+  range:
+    start:
+      snippet: '## 3. 预备知识'
+      line_hint: 62
+    end:
+      snippet: '---'
+      line_hint: 76
+  status: pending
+- pending_id: ec33213d4541e3e8
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 3.1 策略梯度的链式结构
+  range:
+    start:
+      snippet: '### 3.1 策略梯度的链式结构'
+      line_hint: 64
+    end:
+      snippet: '---'
+      line_hint: 76
+  status: pending
+- pending_id: 4c96352fbbfc508e
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 4. 策略梯度定理：原始形式与证明
+  range:
+    start:
+      snippet: '## 4. 策略梯度定理：原始形式与证明'
+      line_hint: 78
+    end:
+      snippet: '---'
+      line_hint: 250
+  status: pending
+- pending_id: 033200109f6abf2f
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 4.1 定理陈述
+  range:
+    start:
+      snippet: '### 4.1 定理陈述'
+      line_hint: 80
+    end:
+      snippet: '---'
+      line_hint: 92
+  status: pending
+- pending_id: f4eb6a3e2c0d6b52
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 4.2 证明：逐行推导
+  range:
+    start:
+      snippet: '### 4.2 证明：逐行推导'
+      line_hint: 94
+    end:
+      snippet: '---'
+      line_hint: 250
+  status: pending
+- pending_id: 6455f8e8c1dc5acd
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 1：定义性能目标
+  range:
+    start:
+      snippet: '#### Step 1：定义性能目标'
+      line_hint: 96
+    end:
+      snippet: '---'
+      line_hint: 110
+  status: pending
+- pending_id: ee048524cd0efa34
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 2：对 $V^{\pi_\theta}(s)$ 求梯度——第一步展开
+  range:
+    start:
+      snippet: '#### Step 2：对 $V^{\pi_\theta}(s)$ 求梯度——第一步展开'
+      line_hint: 112
+    end:
+      snippet: '---'
+      line_hint: 126
+  status: pending
+- pending_id: b95ab232d20d84e3
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 3：展开 $\nabla_\theta Q^{\pi_\theta}(s,a)$
+  range:
+    start:
+      snippet: '#### Step 3：展开 $\nabla_\theta Q^{\pi_\theta}(s,a)$'
+      line_hint: 128
+    end:
+      snippet: '---'
+      line_hint: 142
+  status: pending
+- pending_id: 023be156cbac704a
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 4：代回 (8)
+  range:
+    start:
+      snippet: '#### Step 4：代回 (8)'
+      line_hint: 144
+    end:
+      snippet: '---'
+      line_hint: 150
+  status: pending
+- pending_id: 0cc2e71db60fa237
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 5：定义算子 $\mathcal{P}^{\pi_\theta}$
+  range:
+    start:
+      snippet: '#### Step 5：定义算子 $\mathcal{P}^{\pi_\theta}$'
+      line_hint: 152
+    end:
+      snippet: '---'
+      line_hint: 172
+  status: pending
+- pending_id: 909318a5f4de8249
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 6：求解算子方程
+  range:
+    start:
+      snippet: '#### Step 6：求解算子方程'
+      line_hint: 174
+    end:
+      snippet: '---'
+      line_hint: 188
+  status: pending
+- pending_id: 3cf49b4f03d1a15c
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 7：展开 $\psi$ 的定义
+  range:
+    start:
+      snippet: '#### Step 7：展开 $\psi$ 的定义'
+      line_hint: 190
+    end:
+      snippet: '---'
+      line_hint: 198
+  status: pending
+- pending_id: b56172b59e234543
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 8：代入目标函数的梯度 (6)
+  range:
+    start:
+      snippet: '#### Step 8：代入目标函数的梯度 (6)'
+      line_hint: 200
+    end:
+      snippet: '---'
+      line_hint: 212
+  status: pending
+- pending_id: d90b9a202118e426
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 9：识别折扣状态分布
+  range:
+    start:
+      snippet: '#### Step 9：识别折扣状态分布'
+      line_hint: 214
+    end:
+      snippet: '---'
+      line_hint: 228
+  status: pending
+- pending_id: adee391e424e61b8
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 10：对数导数技巧（核心步骤）
+  range:
+    start:
+      snippet: '#### Step 10：对数导数技巧（核心步骤）'
+      line_hint: 230
+    end:
+      snippet: '---'
+      line_hint: 238
+  status: pending
+- pending_id: bbc134bbcad91b47
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: Step 11：写成期望形式
+  range:
+    start:
+      snippet: '#### Step 11：写成期望形式'
+      line_hint: 240
+    end:
+      snippet: '---'
+      line_hint: 250
+  status: pending
+- pending_id: e99b9326f414cac5
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 5. 关键步骤详解
+  range:
+    start:
+      snippet: '## 5. 关键步骤详解'
+      line_hint: 252
+    end:
+      snippet: '---'
+      line_hint: 286
+  status: pending
+- pending_id: 2fa4aebd69220531
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 5.1 为什么 $\|\gamma \mathcal{P}^{\pi_\theta}\|_\infty < 1$？
+  range:
+    start:
+      snippet: '### 5.1 为什么 $\|\gamma \mathcal{P}^{\pi_\theta}\|_\infty < 1$？'
+      line_hint: 254
+    end:
+      snippet: 因此 $\|\gamma \mathcal{P}^{\pi_\theta}\|_\infty \le \gamma < 1$。这保证了
+        Neumann 级数收敛
+      line_hint: 262
+  status: pending
+- pending_id: dd86015ab1fb0a53
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 5.2 交换求和与积分的合法性
+  range:
+    start:
+      snippet: '### 5.2 交换求和与积分的合法性'
+      line_hint: 264
+    end:
+      snippet: (18) 到 (19) 的步骤涉及交换 $\sum_{k=0}^{\infty}$ 与 $\int_{\mathcal{S}}$。对于有限状态空间或满足适当可积
+      line_hint: 266
+  status: pending
+- pending_id: 698683316ca65160
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 5.3 对数导数技巧的几何意义
+  range:
+    start:
+      snippet: '### 5.3 对数导数技巧的几何意义'
+      line_hint: 268
+    end:
+      snippet: 这个技巧将策略梯度从“绝对变化量”转化为“相对变化量”（即得分函数），消除了 $\pi_\theta(a|s)$ 在分母中可能为零的问题（在支撑集内
+        $\pi_
+      line_hint: 274
+  status: pending
+- pending_id: 3347168a9310107c
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 5.4 与有限差分梯度的关系
+  range:
+    start:
+      snippet: '### 5.4 与有限差分梯度的关系'
+      line_hint: 276
+    end:
+      snippet: '---'
+      line_hint: 286
+  status: pending
+- pending_id: 29b4c5b422ed82da
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 6. 策略梯度定理的变体
+  range:
+    start:
+      snippet: '## 6. 策略梯度定理的变体'
+      line_hint: 288
+    end:
+      snippet: '---'
+      line_hint: 322
+  status: pending
+- pending_id: b1348fbf226c5ef1
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 6.1 使用优势函数的等价形式
+  range:
+    start:
+      snippet: '### 6.1 使用优势函数的等价形式'
+      line_hint: 290
+    end:
+      snippet: '> 使用优势函数可以显著降低梯度估计的方差，是 Actor-Critic 方法中常用的技巧。'
+      line_hint: 300
+  status: pending
+- pending_id: 5acea94ccea8eade
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 6.2 添加基线的通用形式
+  range:
+    start:
+      snippet: '### 6.2 添加基线的通用形式'
+      line_hint: 302
+    end:
+      snippet: 其中 $b(s)$ 可以是任意函数或随机变量，只要不依赖于动作 $a$。
+      line_hint: 310
+  status: pending
+- pending_id: 32b7c1c6dda881bf
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 6.3 确定性策略梯度 (DPG)
+  range:
+    start:
+      snippet: '### 6.3 确定性策略梯度 (DPG)'
+      line_hint: 312
+    end:
+      snippet: '---'
+      line_hint: 322
+  status: pending
+- pending_id: 01aee9a8e398900b
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 7. 从定理到算法：梯度估计
+  range:
+    start:
+      snippet: '## 7. 从定理到算法：梯度估计'
+      line_hint: 324
+    end:
+      snippet: '---'
+      line_hint: 352
+  status: pending
+- pending_id: 2fa145e376c65713
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 7.1 蒙特卡洛估计（REINFORCE）
+  range:
+    start:
+      snippet: '### 7.1 蒙特卡洛估计（REINFORCE）'
+      line_hint: 326
+    end:
+      snippet: $$
+      line_hint: 340
+  status: pending
+- pending_id: af214777f9e599c4
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 7.2 Actor-Critic 估计
+  range:
+    start:
+      snippet: '### 7.2 Actor-Critic 估计'
+      line_hint: 342
+    end:
+      snippet: '---'
+      line_hint: 352
+  status: pending
+- pending_id: 678a693d5f15f66b
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 8. 定理的应用条件与局限性
+  range:
+    start:
+      snippet: '## 8. 定理的应用条件与局限性'
+      line_hint: 354
+    end:
+      snippet: '---'
+      line_hint: 376
+  status: pending
+- pending_id: 793a118660856e8b
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 8.1 应用条件
+  range:
+    start:
+      snippet: '### 8.1 应用条件'
+      line_hint: 356
+    end:
+      snippet: '| $\gamma < 1$ | 保证折扣状态分布 $\rho^\pi$ 有定义且可归一化 |'
+      line_hint: 362
+  status: pending
+- pending_id: 89c487754e8024f8
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 8.2 注意事项
+  range:
+    start:
+      snippet: '### 8.2 注意事项'
+      line_hint: 364
+    end:
+      snippet: '---'
+      line_hint: 376
+  status: pending
+- pending_id: f2f3048dfeb02096
+  file: ReinforcementLearning/DPG.md
+  kind: heading
+  name: 9. 完整公式汇总
+  range:
+    start:
+      snippet: '## 9. 完整公式汇总'
+      line_hint: 378
+    end:
+      snippet: '| (26) | $\nabla_\theta J = \mathbb{E}_{s \sim \rho^\mu} [\nabla_\theta
+        \mu(s) \'
+      line_hint: 387
+  status: pending
+- pending_id: 2715da1c04002e1b
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 本报告系统推导**策略梯度定理
+  range:
+    start:
+      snippet: 本报告系统推导**策略梯度定理 (Policy Gradient Theorem)**，该定理是深度强化学习中所有策略梯度方法（REINFORCE、Actor-
+      line_hint: 5
+    end:
+      snippet: ''
+      line_hint: 14
+  status: pending
+- pending_id: 5c451cd7261ea4be
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: \pi_\theta
+  range:
+    start:
+      snippet: \boxed{\nabla_\theta J(\pi_\theta) = \mathbb{E}_{s \sim \rho^\pi, a
+        \sim \pi_\th
+      line_hint: 10
+    end:
+      snippet: $$
+      line_hint: 11
+  status: pending
+- pending_id: 46b5daf190c66978
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $\pi_\theta
+  range:
+    start:
+      snippet: '| $\pi_\theta(a \mid s)$ | 参数为 $\theta$ 的随机策略 |'
+      line_hint: 21
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: d001176e2df32891
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $P
+  range:
+    start:
+      snippet: '| $P(s'' \mid s, a)$ | 状态转移概率 |'
+      line_hint: 23
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: 14e40e35a2873f95
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $R
+  range:
+    start:
+      snippet: '| $R(s, a)$ | 即时奖励函数 |'
+      line_hint: 24
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: 704612bec8dd5d3e
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: \Pr
+  range:
+    start:
+      snippet: '| $\rho^\pi(s)$ | 折扣状态分布：$\sum_{t=0}^{\infty} \gamma^t \Pr(s_t = s
+        \mid \pi)$ |'
+      line_hint: 26
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: d42559656b9169c5
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $Q^\pi
+  range:
+    start:
+      snippet: '| $Q^\pi(s, a)$ | 动作价值函数 |'
+      line_hint: 27
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: 19b8011fa4396780
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $A^\pi
+  range:
+    start:
+      snippet: '| $A^\pi(s, a) = Q^\pi(s,a) - V^\pi(s)$ | 优势函数 |'
+      line_hint: 29
+    end:
+      snippet: '| $\eta(\pi)$ 或 $J(\pi_\theta)$ | 策略性能目标 |'
+      line_hint: 30
+  status: pending
+- pending_id: 877fa3bd82ac64d2
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 强化学习的目标
+  range:
+    start:
+      snippet: 强化学习的目标是最大化期望累积折扣回报。以下三种定义在文献中均被使用，它们本质等价：
+      line_hint: 38
+    end:
+      snippet: ''
+      line_hint: 61
+  status: pending
+- pending_id: 24fb4361059057c1
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 策略梯度方法的核心思想
+  range:
+    start:
+      snippet: 策略梯度方法的核心思想是：**直接对策略参数 $\theta$ 求梯度，而不是对价值函数求梯度**。
+      line_hint: 66
+    end:
+      snippet: ''
+      line_hint: 77
+  status: pending
+- pending_id: e628dcf619057bc0
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 的依赖关系
+  range:
+    start:
+      snippet: 目标函数 $J(\theta)$ 对 $\theta$ 的依赖关系是一个复杂的递归结构：
+      line_hint: 68
+    end:
+      snippet: ''
+      line_hint: 77
+  status: pending
+- pending_id: 07008537cbe2f689
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 策略梯度定理的作用就
+  range:
+    start:
+      snippet: '**核心难点**：$V^{\pi_\theta}(s)$ 本身通过贝尔曼方程隐式依赖于 $\theta$，且这种依赖通过未来的所有时间步递归传播。策略梯度定理的'
+      line_hint: 74
+    end:
+      snippet: ''
+      line_hint: 77
+  status: pending
+- pending_id: 9b7c65baefe5b970
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: '**策略梯度定理'
+  range:
+    start:
+      snippet: '**策略梯度定理 (Sutton et al., 2000)**：'
+      line_hint: 82
+    end:
+      snippet: ''
+      line_hint: 93
+  status: pending
+- pending_id: b256da6c351ec37b
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: '|f'
+  range:
+    start:
+      snippet: '|(\gamma \mathcal{P}^{\pi_\theta} f)(s)| = \gamma \left| \mathbb{E}_{a
+        \sim \pi_'
+      line_hint: 259
+    end:
+      snippet: $$
+      line_hint: 260
+  status: pending
+- pending_id: 4f54658911822c8b
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: \pi
+  range:
+    start:
+      snippet: '**证明**：$\mathbb{E}_{a \sim \pi}[\nabla_\theta \log \pi(a|s)] \cdot
+        V^\pi(s) = V^'
+      line_hint: 298
+    end:
+      snippet: ''
+      line_hint: 301
+  status: pending
+- pending_id: d7f41b49a7acec6d
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 可以
+  range:
+    start:
+      snippet: 其中 $b(s)$ 可以是任意函数或随机变量，只要不依赖于动作 $a$。
+      line_hint: 310
+    end:
+      snippet: ''
+      line_hint: 311
+  status: pending
+- pending_id: 4ac5179607679658
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 的理论基础
+  range:
+    start:
+      snippet: 这是 [[DDPG 算法]]的理论基础（Silver et al., 2014）。
+      line_hint: 320
+    end:
+      snippet: ''
+      line_hint: 323
+  status: pending
+- pending_id: 5d7b8c04cbad33e5
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $G_i$
+  range:
+    start:
+      snippet: 其中 $G_i$ 是从 $(s_i, a_i)$ 开始的实际累积回报（使用 $Q^\pi$ 的无偏样本估计）。
+      line_hint: 334
+    end:
+      snippet: ''
+      line_hint: 341
+  status: pending
+- pending_id: 81866bfb47ab9114
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: $Q_w
+  range:
+    start:
+      snippet: 使用参数化的 Critic $Q_w(s,a)$ 来近似 $Q^\pi(s,a)$：
+      line_hint: 344
+    end:
+      snippet: ''
+      line_hint: 353
+  status: pending
+- pending_id: b73a5d919d39085a
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 积分与求导可交换
+  range:
+    start:
+      snippet: '| 适当正则性 | 积分与求导可交换（Sutton 等人在原始证明中假设了这一点） |'
+      line_hint: 361
+    end:
+      snippet: '| $\gamma < 1$ | 保证折扣状态分布 $\rho^\pi$ 有定义且可归一化 |'
+      line_hint: 362
+  status: pending
+- pending_id: 93d011380c0396ee
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: 这正
+  range:
+    start:
+      snippet: '**状态分布的 $\theta$ 依赖性消失**：这是策略梯度定理最令人惊讶的结论——尽管状态分布 $\rho^{\pi_\theta}$
+        本身依赖于 $\th'
+      line_hint: 366
+    end:
+      snippet: ''
+      line_hint: 377
+  status: pending
+- pending_id: 59e7fb9a5d6960c6
+  file: ReinforcementLearning/DPG.md
+  kind: definition
+  name: Q^\mu
+  range:
+    start:
+      snippet: '| (26) | $\nabla_\theta J = \mathbb{E}_{s \sim \rho^\mu} [\nabla_\theta
+        \mu(s) \'
+      line_hint: 387
+    end:
+      snippet: ''
+      line_hint: 388
+  status: pending
+- pending_id: b8197f9d5093e2f2
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 1.1 先写出标准时序目标（大家熟悉的形式）
+  range:
+    start:
+      snippet: '## 1.1 先写出标准时序目标（大家熟悉的形式）'
+      line_hint: 8
+    end:
+      snippet: $$
+      line_hint: 17
+  status: pending
+- pending_id: b59825a8b3e8140c
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 1.2 $\rho^{\pi}(s)$ 到底是什么（关键！）
+  range:
+    start:
+      snippet: '## 1.2 $\rho^{\pi}(s)$ 到底是什么（关键！）'
+      line_hint: 19
+    end:
+      snippet: '---'
+      line_hint: 45
+  status: pending
+- pending_id: 16a8e894520fa90a
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.1 问题的核心：算子范数的定义
+  range:
+    start:
+      snippet: '## 2.1 问题的核心：算子范数的定义'
+      line_hint: 47
+    end:
+      snippet: '**通俗理解**：\(\|T\|_\infty\) 表示算子 \(T\) 能将任意有界函数放大多少倍（最坏情况）。'
+      line_hint: 59
+  status: pending
+- pending_id: e29050614aac0dcb
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.1.1 什么是 \(\|\cdot\|_\infty\) 范数？
+  range:
+    start:
+      snippet: '### 2.1.1 什么是 \(\|\cdot\|_\infty\) 范数？'
+      line_hint: 49
+    end:
+      snippet: '**通俗理解**：\(\|T\|_\infty\) 表示算子 \(T\) 能将任意有界函数放大多少倍（最坏情况）。'
+      line_hint: 59
+  status: pending
+- pending_id: b23f1ef23a9ad909
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.2 证明 \(\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1\)
+  range:
+    start:
+      snippet: '## 2.2 证明 \(\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1\)'
+      line_hint: 63
+    end:
+      snippet: \]
+      line_hint: 117
+  status: pending
+- pending_id: 7e7f11b08842b891
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.2.1 转移算子的定义
+  range:
+    start:
+      snippet: '### 2.2.1 转移算子的定义'
+      line_hint: 65
+    end:
+      snippet: 即：从状态 \(s\) 出发，按确定性策略 \(\mu_\theta\) 选择动作，转移到下一状态后，取函数 \(f\) 在该状态的期望值。
+      line_hint: 71
+  status: pending
+- pending_id: f5c1007415b25318
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.2.2 范数上界
+  range:
+    start:
+      snippet: '### 2.2.2 范数上界'
+      line_hint: 75
+    end:
+      snippet: \]
+      line_hint: 117
+  status: pending
+- pending_id: f2c5ccddd9306774
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.3 证明 \(\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma < 1\)
+  range:
+    start:
+      snippet: '## 2.3 证明 \(\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma
+        < 1\)'
+      line_hint: 120
+    end:
+      snippet: 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。
+      line_hint: 162
+  status: pending
+- pending_id: 50aef0f142e3c6d6
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.3.1 缩放性质
+  range:
+    start:
+      snippet: '### 2.3.1 缩放性质'
+      line_hint: 122
+    end:
+      snippet: \]
+      line_hint: 134
+  status: pending
+- pending_id: e61cd64615d8a6ed
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 2.3.2 应用到我们的算子
+  range:
+    start:
+      snippet: '### 2.3.2 应用到我们的算子'
+      line_hint: 137
+    end:
+      snippet: 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。
+      line_hint: 162
+  status: pending
+- pending_id: 16df03eee9e060c1
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1 代数证明（最严谨）
+  range:
+    start:
+      snippet: '## 3.1 代数证明（最严谨）'
+      line_hint: 164
+    end:
+      snippet: '**证毕。**'
+      line_hint: 242
+  status: pending
+- pending_id: 49e851cb3693ce70
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1.1 定义部分和
+  range:
+    start:
+      snippet: '### 3.1.1 定义部分和'
+      line_hint: 166
+    end:
+      snippet: \]
+      line_hint: 172
+  status: pending
+- pending_id: 3a045544f3865d08
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1.2 计算 \((I - T)S_n\)
+  range:
+    start:
+      snippet: '### 3.1.2 计算 \((I - T)S_n\)'
+      line_hint: 174
+    end:
+      snippet: \]
+      line_hint: 192
+  status: pending
+- pending_id: 188baabab0f60068
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1.3 取极限 \(n \to \infty\)
+  range:
+    start:
+      snippet: '### 3.1.3 取极限 \(n \to \infty\)'
+      line_hint: 196
+    end:
+      snippet: \]
+      line_hint: 214
+  status: pending
+- pending_id: fa7f4aa7d2151710
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1.4 同样地，验证右逆
+  range:
+    start:
+      snippet: '### 3.1.4 同样地，验证右逆'
+      line_hint: 218
+    end:
+      snippet: 因此 \(\lim_{n \to \infty} S_n\) 既是 \(I - T\) 的左逆，也是右逆。
+      line_hint: 232
+  status: pending
+- pending_id: 79cd2e7e12972979
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.1.5 结论
+  range:
+    start:
+      snippet: '### 3.1.5 结论'
+      line_hint: 236
+    end:
+      snippet: '**证毕。**'
+      line_hint: 242
+  status: pending
+- pending_id: 10987cb3e65ab2ef
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: heading
+  name: 3.2 为什么 \(\|T\| < 1\) 保证了 \(T^{n+1} \to 0\)？
+  range:
+    start:
+      snippet: '## 3.2 为什么 \(\|T\| < 1\) 保证了 \(T^{n+1} \to 0\)？'
+      line_hint: 246
+    end:
+      snippet: '---'
+      line_hint: 260
+  status: pending
+- pending_id: 0861048d9cff4856
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: V^\pi
+  range:
+    start:
+      snippet: V^\pi(s_0)=\mathbb{E}_\pi\left[\sum_{t=0}^{\infty}\gamma^t R(s_t,a_t)\,\bigg|\,s
+      line_hint: 11
+    end:
+      snippet: $$
+      line_hint: 17
+  status: pending
+- pending_id: e4161ba0bbceae98
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: $d_0
+  range:
+    start:
+      snippet: 定义一：对初始分布 $d_0(s_0)$ 求期望
+      line_hint: 13
+    end:
+      snippet: $$
+      line_hint: 17
+  status: pending
+- pending_id: 514fe0757cf1ebb3
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: '**折扣占用度量'
+  range:
+    start:
+      snippet: '**折扣占用度量（discounted occupancy measure）定义：**'
+      line_hint: 20
+    end:
+      snippet: 它天然已经对 $t=0,1,2,\dots,\infty$ 做了求和。
+      line_hint: 26
+  status: pending
+- pending_id: 184627e0a21535f2
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: \pi
+  range:
+    start:
+      snippet: '&=\sum_{t=0}^\infty \gamma^t \iint \mathbb{P}(s_t=s)\,\pi(a|s)\,R(s,a)\,da\,ds\\'
+      line_hint: 33
+    end:
+      snippet: $$
+      line_hint: 37
+  status: pending
+- pending_id: f362c47926a1d685
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: 其**诱导上确界范数**
+  range:
+    start:
+      snippet: 对于作用于函数空间 \(\mathcal{B}(\mathcal{S})\)（有界实值函数）上的线性算子 \(T\)，其**诱导上确界范数**定义为：
+      line_hint: 51
+    end:
+      snippet: ''
+      line_hint: 62
+  status: pending
+- pending_id: 76e3741a54f51525
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: '|f'
+  range:
+    start:
+      snippet: '|(\mathcal{P}^{\mu_\theta} f)(s)| \leq \int_{\mathcal{S}} P(s'' \mid
+        s, \mu_\thet'
+      line_hint: 86
+    end:
+      snippet: \]
+      line_hint: 87
+  status: pending
+- pending_id: 650d6ee89c652b21
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: 问的
+  range:
+    start:
+      snippet: 问的是：**为什么满足 \(\|T\| < 1\) 后，\((I - T)^{-1}\) 就等于 Neumann 级数 \(\sum_{k=0}^{\infty
+      line_hint: 160
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 4904b007e6c6bbb1
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: 这本质上
+  range:
+    start:
+      snippet: 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。
+      line_hint: 162
+    end:
+      snippet: ''
+      line_hint: 163
+  status: pending
+- pending_id: 189b9b4c61f8da7b
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: S_n
+  range:
+    start:
+      snippet: S_n(I - T) = I - T^{n+1}
+      line_hint: 223
+    end:
+      snippet: \]
+      line_hint: 224
+  status: pending
+- pending_id: 440086e726ae27a1
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 0. 📚 Ornstein-Uhlenbeck 过程的来源与背景
+  range:
+    start:
+      snippet: '## 0. 📚 Ornstein-Uhlenbeck 过程的来源与背景'
+      line_hint: 6
+    end:
+      snippet: '| 后续 | 被 Kolmogorov 等数学家完善，成为随机过程的经典模型 |'
+      line_hint: 44
+  status: pending
+- pending_id: c4edb68ffbd33ecc
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 0.1 起源与命名
+  range:
+    start:
+      snippet: '### 0.1 起源与命名'
+      line_hint: 8
+    end:
+      snippet: 它的诞生是为了解决早期布朗运动理论的局限性：爱因斯坦的经典模型只描述了粒子位置的扩散，而忽略了**速度的衰减（摩擦效应）**。Ornstein
+        和 Uhlenb
+      line_hint: 12
+  status: pending
+- pending_id: 4a4ca6a547d897b2
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 0.2 物理背景：从朗之万方程到 OU 过程
+  range:
+    start:
+      snippet: '### 0.2 物理背景：从朗之万方程到 OU 过程'
+      line_hint: 14
+    end:
+      snippet: 其物理意义是：粒子在粘性介质中运动时，一方面会因摩擦而减速、向平均速度回归，另一方面又会被周围分子的热运动随机推动。
+      line_hint: 21
+  status: pending
+- pending_id: 70123493856d3a35
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 0.3 数学性质与后续影响
+  range:
+    start:
+      snippet: '### 0.3 数学性质与后续影响'
+      line_hint: 23
+    end:
+      snippet: '- **时间序列分析**：构建平稳的均值回归序列模型'
+      line_hint: 35
+  status: pending
+- pending_id: 18458c08aca171dd
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 0.4 关键历史节点
+  range:
+    start:
+      snippet: '### 0.4 关键历史节点'
+      line_hint: 37
+    end:
+      snippet: '| 后续 | 被 Kolmogorov 等数学家完善，成为随机过程的经典模型 |'
+      line_hint: 44
+  status: pending
+- pending_id: 79ef34bb88b98f37
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 1. 📋 符号总表
+  range:
+    start:
+      snippet: '## 1. 📋 符号总表'
+      line_hint: 47
+    end:
+      snippet: '| $ \Delta t $ | 离散时间步长 | 0.01 |'
+      line_hint: 56
+  status: pending
+- pending_id: 61c01b538b34ab06
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 2. Ornstein-Uhlenbeck 过程的定义
+  range:
+    start:
+      snippet: '## 2. Ornstein-Uhlenbeck 过程的定义'
+      line_hint: 59
+    end:
+      snippet: '- $ dW_t $：维纳过程增量（标准布朗运动）'
+      line_hint: 71
+  status: pending
+- pending_id: 9c5c088892fb7a34
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 3. SDE 的解析解推导
+  range:
+    start:
+      snippet: '## 3. SDE 的解析解推导'
+      line_hint: 74
+    end:
+      snippet: $$
+      line_hint: 117
+  status: pending
+- pending_id: f5f4cd8fffd69852
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 4. OU 过程的统计性质
+  range:
+    start:
+      snippet: '## 4. OU 过程的统计性质'
+      line_hint: 120
+    end:
+      snippet: 对于 $ s < t $，利用解析解和 Itô 等距可得上述指数衰减的相关性。这表明 OU 过程的记忆随时间指数衰减，是短期记忆过程。
+      line_hint: 195
+  status: pending
+- pending_id: 6207ee840a7521da
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 4.1 期望
+  range:
+    start:
+      snippet: '### 4.1 期望'
+      line_hint: 122
+    end:
+      snippet: '**极限：** $ \lim_{t \to \infty} \mathbb{E}[x_t] = \mu $'
+      line_hint: 150
+  status: pending
+- pending_id: 134f6bb44b86fe67
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 4.2 方差
+  range:
+    start:
+      snippet: '### 4.2 方差'
+      line_hint: 152
+    end:
+      snippet: '**极限：** $ \lim_{t \to \infty} \text{Var}(x_t) = \frac{\sigma^2}{2\theta}
+        $'
+      line_hint: 185
+  status: pending
+- pending_id: 64789e6a1f7447bb
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 4.3 协方差（平稳状态）
+  range:
+    start:
+      snippet: '### 4.3 协方差（平稳状态）'
+      line_hint: 187
+    end:
+      snippet: 对于 $ s < t $，利用解析解和 Itô 等距可得上述指数衰减的相关性。这表明 OU 过程的记忆随时间指数衰减，是短期记忆过程。
+      line_hint: 195
+  status: pending
+- pending_id: e82df91aa373edd2
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 5. 离散化（用于数值实现）
+  range:
+    start:
+      snippet: '## 5. 离散化（用于数值实现）'
+      line_hint: 198
+    end:
+      snippet: $$
+      line_hint: 216
+  status: pending
+- pending_id: 767337b16e6b64d0
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 5.1 Euler-Maruyama 离散化
+  range:
+    start:
+      snippet: '### 5.1 Euler-Maruyama 离散化'
+      line_hint: 200
+    end:
+      snippet: $$
+      line_hint: 204
+  status: pending
+- pending_id: 7f7579c5305c83a0
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 5.2 简化形式（设 $ \mu = 0 $）
+  range:
+    start:
+      snippet: '### 5.2 简化形式（设 $ \mu = 0 $）'
+      line_hint: 206
+    end:
+      snippet: $$
+      line_hint: 210
+  status: pending
+- pending_id: beb1e96a45b82c33
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 5.3 向量形式（多维度，各维度独立）
+  range:
+    start:
+      snippet: '### 5.3 向量形式（多维度，各维度独立）'
+      line_hint: 212
+    end:
+      snippet: $$
+      line_hint: 216
+  status: pending
+- pending_id: 546775dffcd73f24
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 6. Python 代码实现
+  range:
+    start:
+      snippet: '## 6. Python 代码实现'
+      line_hint: 219
+    end:
+      snippet: '```'
+      line_hint: 254
+  status: pending
+- pending_id: bc3a64f37fb35112
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 7. 数值稳定条件
+  range:
+    start:
+      snippet: '## 7. 数值稳定条件'
+      line_hint: 257
+    end:
+      snippet: 典型取值：$ \theta = 0.15 $，$ \Delta t = 0.01 $，则 $ \theta \Delta t = 0.0015
+        \ll 1 $。
+      line_hint: 265
+  status: pending
+- pending_id: 4eccdd4f08ec168e
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 8. 与高斯白噪声的对比
+  range:
+    start:
+      snippet: '## 8. 与高斯白噪声的对比'
+      line_hint: 268
+    end:
+      snippet: '| 适用场景 | 无惯性系统 | 物理控制系统（机器人） |'
+      line_hint: 275
+  status: pending
+- pending_id: cd37e50118536248
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 9. 在强化学习中的应用
+  range:
+    start:
+      snippet: '## 9. 在强化学习中的应用'
+      line_hint: 278
+    end:
+      snippet: '- ERL 需要动作噪声的原因是：ERL 的 GA 种群易收敛到单一个体，多样性不足'
+      line_hint: 303
+  status: pending
+- pending_id: 2141c8cf06c55740
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 9.1 DDPG 中的使用
+  range:
+    start:
+      snippet: '### 9.1 DDPG 中的使用'
+      line_hint: 280
+    end:
+      snippet: OU 噪声提供**时间上相关的探索**，使连续动作变化更平滑，符合物理系统的惯性特性。
+      line_hint: 288
+  status: pending
+- pending_id: e88e945a8fcfc1e0
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 9.2 ERL 中的使用
+  range:
+    start:
+      snippet: '### 9.2 ERL 中的使用'
+      line_hint: 290
+    end:
+      snippet: '- **RL actor**（rl_actor）：通过 OU 噪声在动作空间探索'
+      line_hint: 295
+  status: pending
+- pending_id: 21134bed9d564544
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 9.3 CEM-RL 中的发现
+  range:
+    start:
+      snippet: '### 9.3 CEM-RL 中的发现'
+      line_hint: 297
+    end:
+      snippet: '- ERL 需要动作噪声的原因是：ERL 的 GA 种群易收敛到单一个体，多样性不足'
+      line_hint: 303
+  status: pending
+- pending_id: b7cf92e7435690a9
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 10. 参数选择建议
+  range:
+    start:
+      snippet: '## 10. 参数选择建议'
+      line_hint: 306
+    end:
+      snippet: '| $ \mu $（长期均值） | 0 | 通常设为 0，噪声围绕 0 均值回归 |'
+      line_hint: 313
+  status: pending
+- pending_id: 30857be4d9757f46
+  file: ReinforcementLearning/OU_Noise.md
+  kind: heading
+  name: 11. 总结
+  range:
+    start:
+      snippet: '## 11. 总结'
+      line_hint: 316
+    end:
+      snippet: '📄 本报告基于 OU 过程数学定义、DDPG 原始论文 (Lillicrap et al., 2015)、ERL (Khadka &
+        Tumer, 2018) '
+      line_hint: 325
+  status: pending
+- pending_id: 4c5e03fd11149432
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 它的诞生
+  range:
+    start:
+      snippet: 它的诞生是为了解决早期布朗运动理论的局限性：爱因斯坦的经典模型只描述了粒子位置的扩散，而忽略了**速度的衰减（摩擦效应）**。Ornstein
+        和 Uhlenb
+      line_hint: 12
+    end:
+      snippet: ''
+      line_hint: 13
+  status: pending
+- pending_id: b365a2024ffc209e
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 它本质上是**朗之万方程
+  range:
+    start:
+      snippet: 它本质上是**朗之万方程（Langevin Equation）**的线性形式，描述了在粘性介质中受随机力作用的粒子运动：
+      line_hint: 16
+    end:
+      snippet: ''
+      line_hint: 22
+  status: pending
+- pending_id: 53968a37eeeb39fa
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 其物理意义
+  range:
+    start:
+      snippet: 其物理意义是：粒子在粘性介质中运动时，一方面会因摩擦而减速、向平均速度回归，另一方面又会被周围分子的热运动随机推动。
+      line_hint: 21
+    end:
+      snippet: ''
+      line_hint: 22
+  status: pending
+- pending_id: 7ee2ed46ddb6d796
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 过程
+  range:
+    start:
+      snippet: OU 过程是唯一同时满足以下条件的非平凡随机过程：
+      line_hint: 25
+    end:
+      snippet: ''
+      line_hint: 36
+  status: pending
+- pending_id: e1de55c367fd9e91
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 所有有限维分布都
+  range:
+    start:
+      snippet: '- **高斯过程**：所有有限维分布都是正态分布'
+      line_hint: 27
+    end:
+      snippet: '- **平稳过程**：统计特性不随时间变化'
+      line_hint: 29
+  status: pending
+- pending_id: cdc329d86097bd4a
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 利率模型就
+  range:
+    start:
+      snippet: '- **金融领域**：用于利率、汇率、商品价格的均值回归建模（如 Vasicek 利率模型就是 OU 过程的直接应用）'
+      line_hint: 33
+    end:
+      snippet: '- **时间序列分析**：构建平稳的均值回归序列模型'
+      line_hint: 35
+  status: pending
+- pending_id: 752ae462e439dee2
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: '**随机微分方程'
+  range:
+    start:
+      snippet: '**随机微分方程（SDE）形式**'
+      line_hint: 61
+    end:
+      snippet: ''
+      line_hint: 73
+  status: pending
+- pending_id: 060df8988ce9f8af
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 均值回归速度
+  range:
+    start:
+      snippet: '- $ \theta > 0 $：均值回归速度（strength of mean reversion）'
+      line_hint: 68
+    end:
+      snippet: '- $ dW_t $：维纳过程增量（标准布朗运动）'
+      line_hint: 71
+  status: pending
+- pending_id: 705d8e73feb0d331
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 长期均值
+  range:
+    start:
+      snippet: '- $ \mu $：长期均值（long-term mean）'
+      line_hint: 69
+    end:
+      snippet: '- $ dW_t $：维纳过程增量（标准布朗运动）'
+      line_hint: 71
+  status: pending
+- pending_id: f55d7cd4118985ba
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 波动率
+  range:
+    start:
+      snippet: '- $ \sigma > 0 $：波动率（volatility）'
+      line_hint: 70
+    end:
+      snippet: '- $ dW_t $：维纳过程增量（标准布朗运动）'
+      line_hint: 71
+  status: pending
+- pending_id: 1eef45aeb9159ac2
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: \mu
+  range:
+    start:
+      snippet: x_t e^{\theta t} = x_0 + \mu (e^{\theta t} - 1) + \sigma \int_0^t e^{\theta
+        s} d
+      line_hint: 110
+    end:
+      snippet: $$
+      line_hint: 111
+  status: pending
+- pending_id: cce508a8f1abc4b6
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: -\theta
+  range:
+    start:
+      snippet: x_t = x_0 e^{-\theta t} + \mu (1 - e^{-\theta t}) + \sigma \int_0^t
+        e^{-\theta (
+      line_hint: 116
+    end:
+      snippet: $$
+      line_hint: 117
+  status: pending
+- pending_id: fc0813392a23d4da
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 等距
+  range:
+    start:
+      snippet: '**Itô 等距（Itô Isometry）**：对于确定性被积函数 $ f(t) $，'
+      line_hint: 166
+    end:
+      snippet: ''
+      line_hint: 186
+  status: pending
+- pending_id: 590a29992b8e298a
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: -2\theta
+  range:
+    start:
+      snippet: \text{Var}(x_t) &= \int_0^t \sigma^2 e^{-2\theta (t-s)} ds \\
+      line_hint: 178
+    end:
+      snippet: $$
+      line_hint: 183
+  status: pending
+- pending_id: a59264ff749ddb91
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: \quad
+  range:
+    start:
+      snippet: '&= \sigma^2 \int_0^t e^{-2\theta u} du \quad (u = t-s) \\'
+      line_hint: 179
+    end:
+      snippet: $$
+      line_hint: 183
+  status: pending
+- pending_id: 4edc1539a85c4f8c
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 原始论文
+  range:
+    start:
+      snippet: DDPG 原始论文（Lillicrap et al., 2015）使用 OU 噪声进行动作空间探索：
+      line_hint: 282
+    end:
+      snippet: ''
+      line_hint: 289
+  status: pending
+- pending_id: f1555621c3b73f98
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: \mu_\theta
+  range:
+    start:
+      snippet: a_t = \mu_\theta(s_t) + \mathcal{N}_t^{\text{OU}}
+      line_hint: 285
+    end:
+      snippet: $$
+      line_hint: 286
+  status: pending
+- pending_id: 3e262cc1769e216d
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: ERL
+  range:
+    start:
+      snippet: 原始 ERL（Khadka & Tumer, 2018）中：
+      line_hint: 292
+    end:
+      snippet: ''
+      line_hint: 296
+  status: pending
+- pending_id: 2c3ddb3fe7ca341c
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: actor**
+  range:
+    start:
+      snippet: '- **RL actor**（rl_actor）：通过 OU 噪声在动作空间探索'
+      line_hint: 295
+    end:
+      snippet: ''
+      line_hint: 296
+  status: pending
+- pending_id: 0222de343e51864d
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: CEM-RL
+  range:
+    start:
+      snippet: CEM-RL（Pourchot & Sigaud, 2019）论文 Appendix C 指出：
+      line_hint: 299
+    end:
+      snippet: ''
+      line_hint: 305
+  status: pending
+- pending_id: 0ce5d2faa314396c
+  file: ReinforcementLearning/OU_Noise.md
+  kind: definition
+  name: 需要动作噪声的原因
+  range:
+    start:
+      snippet: '- ERL 需要动作噪声的原因是：ERL 的 GA 种群易收敛到单一个体，多样性不足'
+      line_hint: 303
+    end:
+      snippet: ''
+      line_hint: 305
   status: pending

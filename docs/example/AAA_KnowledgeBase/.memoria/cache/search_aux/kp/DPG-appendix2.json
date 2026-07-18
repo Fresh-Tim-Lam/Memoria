@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kp_id": "DPG-appendix2",
+  "source_fingerprint": "1b6b1d9e4aee6c9897e3c5768a4c92e1",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "DPG-appendix2"
+  ],
+  "key_phrases": [
+    "2.1",
+    "问题",
+    "核心",
+    "算子",
+    "范数",
+    "定义",
+    "什么",
+    "cdot"
+  ],
+  "summary_1l": "2.",
+  "query_hits": [],
+  "embed_text": "DPG-appendix2 DPG补充2 证明算子为什么范数小于1 DPG-appendix2 2.1 问题 核心 算子 范数 定义 什么 cdot 2. 2.1 问题的核心：算子范数的定义 2.1.1 什么是 \\(\\|\\cdot\\|_\\infty\\) 范数？ 对于作用于函数空间 \\(\\mathcal{B}(\\mathcal{S})\\)（有界实值函数）上的线性算子 \\(T\\)，其**诱导上确界范数**定义为： \\[ \\|T\\|_\\infty \\triangleq \\sup_{\\|f\\|_\\infty \\leq 1} \\|T f\\|_\\infty \\] 其中对函数 \\(f: \\mathcal{S} \\to \\mathbb{R}\\)，\\(\\|f\\|_\\infty = \\sup_{s \\in \\mathcal{S}} |f(s)|\\)。 **通俗理解**：\\(\\|T\\|_\\infty\\) 表示算子 \\(T\\) 能将任意有界函数放大多少倍（最坏情况）。 2.2 证明 \\(\\|\\mathcal{P}^{\\mu_\\theta}\\|_\\infty \\leq 1\\) 2.2.1 转移算子的定义 \\[ (\\mathcal{P}^{\\mu_\\theta} f)(s) = \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds' \\] 即：从状态 \\(s\\) 出发，按确定性策略 \\(\\mu_\\theta\\) 选择动作，转移到下一状态后，取函数 \\(f\\) 在该状态的期望值。 2.2.2 范数上界 对于**任意**有界函数 \\(f\\)（\\(\\|f\\|_\\infty \\leq 1\\)），在**任意**状态 \\(s\\) 下： \\[ |(\\mathcal{P}^{\\mu_\\theta} f)(s)| = \\left| \\int_{\\mathcal{S}} P(s' \\mid s, \\mu_\\theta(s)) f(s') \\, ds' \\right| \\] 利用绝对值不等式（三角不等式）： \\[",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-16T13:02:45.449810+00:00"
+}
