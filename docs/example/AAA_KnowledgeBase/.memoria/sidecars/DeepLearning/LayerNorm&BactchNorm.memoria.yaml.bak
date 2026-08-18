@@ -1,0 +1,12 @@
+schema_version: 1
+file: DeepLearning/LayerNorm&BactchNorm.md
+knowledge_points:
+- id: LayerNorm
+  name: LayerNorm
+  range:
+    start:
+      snippet: '### 2.2 Layer Normalization 的数学定义'
+      line_hint: 60
+    end:
+      snippet: '**训练和推理**：LayerNorm 使用**当前样本**的均值和方差，训练和推理完全一致。'
+      line_hint: 88

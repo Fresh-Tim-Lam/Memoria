@@ -82,7 +82,22 @@ window.MemoriaMarkdownPreview = (function () {
   }
 
   function wrapBlockMath(b) {
-    return b?.tex ?? "";
+    if (!b) return "";
+    let tex = b.tex.trim();
+    // Strip outer $$ delimiters
+    if (tex.startsWith("$$")) tex = tex.slice(2);
+    if (tex.endsWith("$$")) tex = tex.slice(0, -2);
+    // Strip outer \[ \] delimiters
+    if (tex.startsWith("\\[")) tex = tex.slice(2);
+    if (tex.endsWith("\\]")) tex = tex.slice(0, -2);
+    tex = tex.trim();
+    // HTML-escape so &, <, > survive innerHTML parsing;
+    // MathJax reads textContent, which decodes entities back.
+    const escaped = tex
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    return "\\[" + escaped + "\\]";
   }
 
   function stashInline(allBlocks, tex) {
@@ -95,18 +110,22 @@ window.MemoriaMarkdownPreview = (function () {
     const allBlocks = [];
     let out = protectDisplayBlocks(text, allBlocks);
 
+    // Single-line display math: $$...$$ on one line (not $$ on its own line,
+    // which is already handled by protectDisplayBlocks). Must come BEFORE
+    // \begin{...}...\end{...} so that \begin{cases} etc. inside $$...$$
+    // are captured as part of the $$ block rather than stashed separately
+    // (which would insert newlines that break the single-line $$ regex).
+    // Also must come before inline $...$ to prevent inner $ from being
+    // matched as inline math and wrongly converted to \(...\).
+    out = out.replace(/\$\$((?:\\.|[^\$\n\\])+?)\$\$/g, (m) =>
+      stashBlock(allBlocks, m)
+    );
+    // Standalone \begin{...}...\end{...} environments NOT inside $$...$$
     out = out.replace(/\\begin\{([a-zA-Z*]+)\*?\}[\s\S]+?\\end\{\1\*?\}/g, (m) =>
       stashBlock(allBlocks, m)
     );
     out = out.replace(/\\\[([\s\S]+?)\\\]/g, (m) => stashBlock(allBlocks, m));
     out = out.replace(/\\\(([\s\S]+?)\\\)/g, (m) => stashInline(allBlocks, m));
-    // Single-line display math: $$...$$ on one line (not $$ on its own line,
-    // which is already handled by protectDisplayBlocks). Must come before
-    // the inline $...$ regex to prevent the inner $P(...)$ from being matched
-    // as inline math and wrongly converted to \(...\).
-    out = out.replace(/\$\$((?:\\.|[^\$\n\\])+?)\$\$/g, (m) =>
-      stashBlock(allBlocks, m)
-    );
     // Inline math: $...$ where the $ is not part of $$ (block).
     // Match only within a single line to prevent swallowing ** or other
     // markdown delimiters across lines when stray $ signs exist in the text.
@@ -183,11 +202,20 @@ window.MemoriaMarkdownPreview = (function () {
         const { svg } = await window.mermaid.render(id, src);
         const div = document.createElement("div");
         div.className = "m0-mermaid-container";
+        // 保留 m0-src-block 和 data-m0-block-index 以便双击编辑
+        if (pre.classList.contains("m0-src-block")) {
+          div.classList.add("m0-src-block");
+          div.setAttribute("data-m0-block-index", pre.getAttribute("data-m0-block-index") || "");
+        }
         div.innerHTML = svg;
         pre.replaceWith(div);
       } catch (e) {
         const div = document.createElement("div");
         div.className = "m0-mermaid-error";
+        if (pre.classList.contains("m0-src-block")) {
+          div.classList.add("m0-src-block");
+          div.setAttribute("data-m0-block-index", pre.getAttribute("data-m0-block-index") || "");
+        }
         div.textContent = "Mermaid 渲染失败: " + (e.message || e);
         pre.replaceWith(div);
       }
@@ -466,6 +494,10 @@ window.MemoriaMarkdownPreview = (function () {
     container.querySelectorAll("img").forEach((img) => {
       if (img.closest(".m0-lightbox-overlay")) return;
       img.style.cursor = "zoom-in";
+      // 诊断：检查图片加载状态
+      console.log("[img-debug] src:", img.src, "naturalWidth:", img.naturalWidth, "complete:", img.complete, "display:", getComputedStyle(img).display, "width:", getComputedStyle(img).width, "height:", getComputedStyle(img).height, "maxWidth:", getComputedStyle(img).maxWidth);
+      img.addEventListener("error", () => console.error("[img-debug] LOAD ERROR:", img.src));
+      img.addEventListener("load", () => console.log("[img-debug] LOAD OK:", img.src, "naturalWidth:", img.naturalWidth));
       img.addEventListener("click", () => {
         const overlay = document.createElement("div");
         overlay.className = "m0-lightbox-overlay";
@@ -485,7 +517,8 @@ window.MemoriaMarkdownPreview = (function () {
   function setKbRootForImages(root) { _kbRootForImages = root; }
   function setCurrentFileDir(dir) { _currentFileDir = dir; }
   function rewriteLocalImagePaths(html) {
-    if (!_kbRootForImages) return html;
+    if (!_kbRootForImages) { console.log("[img-rewrite] SKIP: _kbRootForImages 未设置"); return html; }
+    console.log("[img-rewrite] _kbRootForImages=" + _kbRootForImages + " _currentFileDir=" + (_currentFileDir || "(root)"));
     // Match any <img src="..."> and rewrite relative paths.
     return html.replace(
       /(<img\s[^>]*src=")([^"]+)"/g,
@@ -500,7 +533,7 @@ window.MemoriaMarkdownPreview = (function () {
         const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
         const apiBase = window.MemoriaBridge?.apiBase || "";
         const url = apiBase + "/files/" + encoded;
-        console.log("[img-rewrite]", src, "→", url);
+        console.log("[img-rewrite]", src, "→", url, "(relPath=" + relPath + ")");
         return prefix + url + '"';
       }
     );
@@ -678,6 +711,13 @@ window.MemoriaMarkdownPreview = (function () {
 
     while (i < lines.length) {
       if (isBlankLine(lines[i])) {
+        // 每个空行一个独立 block，允许在预览区域逐行定位和编辑
+        blocks.push({
+          kind: "blank",
+          startLine: i + 1,
+          endLine: i + 1,
+          markdown: "",
+        });
         i += 1;
         continue;
       }
@@ -842,7 +882,21 @@ window.MemoriaMarkdownPreview = (function () {
   }
 
   function renderDisplayMathBlock(block) {
-    return attachLineAttrs(block.markdown, block);
+    // Strip $$ delimiters and use \[...\] instead, with HTML-escaping.
+    // Raw $$...$$ as innerHTML is unreliable: the browser's HTML parser may
+    // misinterpret LaTeX special chars (e.g. &= in aligned environments),
+    // and MathJax's delimiter scanning can miss $$ in certain DOM contexts.
+    let tex = block.markdown.trim();
+    if (tex.startsWith("$$")) tex = tex.slice(2);
+    if (tex.endsWith("$$")) tex = tex.slice(0, -2);
+    tex = tex.trim();
+    // HTML-escape so &, <, > survive innerHTML parsing intact;
+    // MathJax reads textContent, which decodes entities back to the originals.
+    const escaped = tex
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    return attachLineAttrs(`\\[${escaped}\\]`, block);
   }
 
   function splitByWikilinks(body) {
@@ -908,6 +962,296 @@ window.MemoriaMarkdownPreview = (function () {
       .join("");
   }
 
+  // ── Source-Preview Position Mapping (Segment Annotation) ──
+
+  /**
+   * Parse a source line to identify inline markdown tokens and their positions.
+   * Returns an ordered array of segments, each with source column info.
+   *
+   * Example: "## Hello **world** and *foo*"
+   * → [
+   *     { type: "text",   srcCol: 3,  srcEnd: 9,  text: "Hello " },
+   *     { type: "bold",   srcCol: 11, srcEnd: 16, text: "world", prefix: "**", suffix: "**" },
+   *     { type: "text",   srcCol: 18, srcEnd: 23, text: " and " },
+   *     { type: "italic", srcCol: 24, srcEnd: 27, text: "foo",   prefix: "*",  suffix: "*" },
+   *   ]
+   */
+  function parseInlineTokens(sourceLine) {
+    const tokens = [];
+    const len = sourceLine.length;
+    let i = 0;
+
+    // Skip leading whitespace / markdown prefix (##, -, >, |, 1., etc.)
+    // The prefix is not part of any inline token — it's block-level structure.
+    const prefixMatch = sourceLine.match(/^(\s*(?:#{1,6}\s|[-*+]\s+|>\s?|\|\s?|\d+\.\s+)?)/);
+    if (prefixMatch) {
+      i = prefixMatch[1].length;
+    }
+
+    while (i < len) {
+      // ── Bold: **...** or __...__ (单行匹配，不跨行) ──
+      let m;
+      if ((m = sourceLine.slice(i).match(/^(\*\*|__)([^\n]+?)\1/))) {
+        const fullLen = m[0].length;
+        const contentStart = i + m[1].length; // after opening delimiter
+        tokens.push({
+          type: "bold", srcCol: contentStart, srcEnd: contentStart + m[2].length,
+          text: m[2], prefix: m[1], suffix: m[1],
+        });
+        i += fullLen;
+        continue;
+      }
+
+      // ── Italic: *...* or _..._ (单行匹配，不跨行) ──
+      if ((m = sourceLine.slice(i).match(/^(\*|_)(?!\1)([^\n]+?)\1/))) {
+        const fullLen = m[0].length;
+        const contentStart = i + m[1].length;
+        tokens.push({
+          type: "italic", srcCol: contentStart, srcEnd: contentStart + m[2].length,
+          text: m[2], prefix: m[1], suffix: m[1],
+        });
+        i += fullLen;
+        continue;
+      }
+
+      // ── Strikethrough: ~~...~~ (单行匹配) ──
+      if ((m = sourceLine.slice(i).match(/^(~~)([^\n]+?)\1/))) {
+        const fullLen = m[0].length;
+        const contentStart = i + m[1].length;
+        tokens.push({
+          type: "strike", srcCol: contentStart, srcEnd: contentStart + m[2].length,
+          text: m[2], prefix: m[1], suffix: m[1],
+        });
+        i += fullLen;
+        continue;
+      }
+
+      // ── Inline code: `...` ──
+      if ((m = sourceLine.slice(i).match(/^`([^`]+)`/))) {
+        const fullLen = m[0].length;
+        const contentStart = i + 1;
+        tokens.push({
+          type: "code", srcCol: contentStart, srcEnd: contentStart + m[1].length,
+          text: m[1], prefix: "`", suffix: "`",
+        });
+        i += fullLen;
+        continue;
+      }
+
+      // ── Highlight: [[\h:...|text]] or [[\h|text]] (单行匹配) ──
+      if ((m = sourceLine.slice(i).match(/^\[\[\\h(?::[^|]*)?\|([^\n]+?)\]\]/))) {
+        const fullMatch = m[0];
+        const innerText = m[1];
+        const contentStart = i + fullMatch.indexOf(innerText);
+        tokens.push({
+          type: "highlight", srcCol: contentStart, srcEnd: contentStart + innerText.length,
+          text: innerText, prefix: fullMatch.slice(0, fullMatch.indexOf(innerText)),
+          suffix: "]]",
+        });
+        i += fullMatch.length;
+        continue;
+      }
+
+      // ── Font color: [[\c:color|text]] (单行匹配) ──
+      if ((m = sourceLine.slice(i).match(/^\[\[\\c:[^|]+\|([^\n]+?)\]\]/))) {
+        const fullMatch = m[0];
+        const innerText = m[1];
+        const contentStart = i + fullMatch.indexOf(innerText);
+        tokens.push({
+          type: "fontcolor", srcCol: contentStart, srcEnd: contentStart + innerText.length,
+          text: innerText, prefix: fullMatch.slice(0, fullMatch.indexOf(innerText)),
+          suffix: "]]",
+        });
+        i += fullMatch.length;
+        continue;
+      }
+
+      // ── Wikilink: [[target]] or [[target|display]] ──
+      if ((m = sourceLine.slice(i).match(/^\[\[([^\]|]+?)(?:\|([^\]]+?))?\]\]/))) {
+        const fullMatch = m[0];
+        const displayText = m[2] || m[1]; // display text or target
+        const contentStart = i + fullMatch.indexOf(displayText);
+        tokens.push({
+          type: "wikilink", srcCol: contentStart, srcEnd: contentStart + displayText.length,
+          text: displayText, prefix: "[[", suffix: "]]",
+        });
+        i += fullMatch.length;
+        continue;
+      }
+
+      // ── Link: [text](url) ──
+      if ((m = sourceLine.slice(i).match(/^\[([^\]]+)\]\([^)]+\)/))) {
+        const fullMatch = m[0];
+        const linkText = m[1];
+        const contentStart = i + 1; // after the opening [
+        tokens.push({
+          type: "link", srcCol: contentStart, srcEnd: contentStart + linkText.length,
+          text: linkText, prefix: "[", suffix: "](" + fullMatch.slice(fullMatch.indexOf("](") + 2),
+        });
+        i += fullMatch.length;
+        continue;
+      }
+
+      // ── Inline math: $...$ (single dollar, not $$) ──
+      if ((m = sourceLine.slice(i).match(/^\$((?:\\.|[^$\n\\])+?)\$/))) {
+        const fullLen = m[0].length;
+        const contentStart = i + 1;
+        tokens.push({
+          type: "math", srcCol: contentStart, srcEnd: contentStart + m[1].length,
+          text: m[1], prefix: "$", suffix: "$",
+        });
+        i += fullLen;
+        continue;
+      }
+
+      // ── Plain text: accumulate until next token or end ──
+      let textStart = i;
+      let textEnd = i;
+      while (textEnd < len) {
+        const rest = sourceLine.slice(textEnd);
+        // Check if any inline token starts here
+        if (/^(\*\*|__|\*|_|~~|`|\[\[\\|\[\[|\[[^[]|\$)/.test(rest)) break;
+        textEnd++;
+      }
+      if (textEnd > textStart) {
+        tokens.push({
+          type: "text", srcCol: textStart, srcEnd: textEnd,
+          text: sourceLine.slice(textStart, textEnd), prefix: "", suffix: "",
+        });
+      }
+      i = textEnd;
+    }
+
+    return tokens;
+  }
+
+  /**
+   * Post-process rendered HTML to annotate text nodes with source position data.
+   * Wraps each text segment in <span class="m0-seg" data-line="L" data-col="C">.
+   *
+   * Strategy: for each m0-src-block, align rendered DOM text nodes
+   * with parseInlineTokens output, then wrap with position spans.
+   */
+  function annotateSegments(html, sourceLines, startLine) {
+    if (!html || !sourceLines) return html;
+
+    // For single-line blocks, parse inline tokens from the source line
+    // and align them with the rendered HTML text content.
+    // We work on the HTML string directly by walking text nodes after
+    // setting innerHTML on a temporary container.
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+
+    // For each m0-src-block element (or the root if single element)
+    const rootEl = tmp.firstElementChild;
+    if (!rootEl) return html;
+
+    const lineNum = startLine;
+    const srcLine = sourceLines[lineNum - 1] || "";
+    const tokens = parseInlineTokens(srcLine);
+
+    if (!tokens.length) return html;
+
+    // Walk all text nodes in the rendered block, aligning with tokens
+    const walker = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let n;
+    while ((n = walker.nextNode())) {
+      // Skip text inside non-editable containers (mjx-container, pre, code, etc.)
+      const parent = n.parentElement;
+      if (parent && parent.closest('mjx-container, pre, code, .m0-mermaid-container')) continue;
+      const txt = n.textContent;
+      if (txt) textNodes.push({ node: n, text: txt });
+    }
+
+    if (!textNodes.length) return html;
+
+    // Build the rendered text content (what user sees) for alignment
+    const renderedText = textNodes.map(t => t.text).join("");
+
+    // Build token text content (what the tokens produce)
+    const tokenText = tokens.map(t => t.text).join("");
+
+    // Simple alignment: try to match rendered text with token text.
+    // They may differ slightly due to rendering (e.g., math → rendered symbols),
+    // but for common inline formats (bold, italic, links, highlights) they match.
+    // We use a greedy left-to-right alignment.
+    let tokenIdx = 0;
+    let tokenCharIdx = 0; // position within current token's text
+    const segments = []; // { node, nodeOffset, nodeLen, line, col }
+
+    for (const tn of textNodes) {
+      let pos = 0;
+      while (pos < tn.text.length && tokenIdx < tokens.length) {
+        const tok = tokens[tokenIdx];
+        const remaining = tok.text.length - tokenCharIdx;
+        const avail = tn.text.length - pos;
+
+        if (remaining <= avail) {
+          // Current token ends within this text node
+          segments.push({
+            node: tn.node,
+            start: pos,
+            end: pos + remaining,
+            line: lineNum,
+            col: tok.srcCol + tokenCharIdx,
+          });
+          pos += remaining;
+          tokenIdx++;
+          tokenCharIdx = 0;
+        } else {
+          // Current token spans beyond this text node
+          segments.push({
+            node: tn.node,
+            start: pos,
+            end: tn.text.length,
+            line: lineNum,
+            col: tok.srcCol + tokenCharIdx,
+          });
+          tokenCharIdx += avail;
+          pos = tn.text.length;
+        }
+      }
+    }
+
+    // Now wrap each segment's portion of its text node in a span.
+    // We process segments in reverse order to avoid offset shifts.
+    for (let s = segments.length - 1; s >= 0; s--) {
+      const seg = segments[s];
+      const textNode = seg.node;
+      const fullText = textNode.textContent;
+
+      if (seg.start === 0 && seg.end === fullText.length) {
+        // Entire text node becomes one segment span
+        const span = document.createElement("span");
+        span.className = "m0-seg";
+        span.dataset.line = String(seg.line);
+        span.dataset.col = String(seg.col);
+        textNode.parentNode.replaceChild(span, textNode);
+        span.textContent = fullText;
+      } else {
+        // Partial text node — split and wrap
+        const before = fullText.slice(0, seg.start);
+        const segText = fullText.slice(seg.start, seg.end);
+        const after = fullText.slice(seg.end);
+        const parent = textNode.parentNode;
+        const span = document.createElement("span");
+        span.className = "m0-seg";
+        span.dataset.line = String(seg.line);
+        span.dataset.col = String(seg.col);
+        span.textContent = segText;
+
+        const frag = document.createDocumentFragment();
+        if (before) frag.appendChild(document.createTextNode(before));
+        frag.appendChild(span);
+        if (after) frag.appendChild(document.createTextNode(after));
+        parent.replaceChild(frag, textNode);
+      }
+    }
+
+    return tmp.innerHTML;
+  }
+
   function renderMarkdownBlock(block, knownTargets, linkOverrides, sidecarLinks) {
     let markdown = injectSidecarPlainLinks(block.markdown, sidecarLinks);
     const { text, blocks } = protectMath(markdown);
@@ -922,7 +1266,8 @@ window.MemoriaMarkdownPreview = (function () {
       block.startLine,
       markdown
     );
-    return attachLineAttrs(html, block);
+    html = attachLineAttrs(html, block);
+    return html;
   }
 
   function countExpectedMathBlocks(body) {
@@ -995,6 +1340,11 @@ window.MemoriaMarkdownPreview = (function () {
     const normalized = normalizeBody(body);
     return splitSourceBlocks(normalized)
       .map((block) => {
+        if (block.kind === "blank") {
+          // 空行占位 block：生成可选中、可定位的空行元素
+          const lineAttr = `data-m0-src-line="${block.startLine}" data-m0-src-line-end="${block.endLine}"`;
+          return `<div class="m0-src-block m0-blank-block" ${lineAttr}><br></div>`;
+        }
         if (block.kind === "display-math") {
           return renderDisplayMathBlock(block);
         }
@@ -1006,6 +1356,10 @@ window.MemoriaMarkdownPreview = (function () {
 
   async function renderToElement(container, body, options) {
     container.innerHTML = renderHtml(body, options);
+    // innerHTML 已同步设置完毕，执行回调（用于光标恢复等需要即时操作的场合）
+    if (options?.afterSync) {
+      try { options.afterSync(); } catch (_) {}
+    }
     const report = {
       ok: false,
       mathExpected: countExpectedMathBlocks(body || ""),
@@ -1039,8 +1393,18 @@ window.MemoriaMarkdownPreview = (function () {
     await renderMermaidBlocks(container);
     // Post-render: Image lightbox
     attachImageLightbox(container);
+    // Post-render: enable editing in preview
+    enableEditing(container);
     container.dataset.previewOk = report.ok ? "1" : "0";
     return report;
+  }
+
+  // ── Preview cursor mapping (click → focus source editor) ──
+  function enableEditing(container) {
+    const preview = container.closest(".m0-preview") || container;
+    if (!preview.classList.contains("m0-preview")) return;
+    // 预览区域不设 contenteditable — 点击映射到源码编辑器
+    // 光标由 CSS cursor: text 提供
   }
 
   return {
@@ -1055,5 +1419,8 @@ window.MemoriaMarkdownPreview = (function () {
     renderHighlightSyntax,
     setKbRootForImages,
     setCurrentFileDir,
+    rewriteLocalImagePaths,
+    parseInlineTokens,
+    annotateSegments,
   };
 })();

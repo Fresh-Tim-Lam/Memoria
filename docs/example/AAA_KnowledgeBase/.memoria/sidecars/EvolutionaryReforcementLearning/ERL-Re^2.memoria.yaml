@@ -1,0 +1,44 @@
+schema_version: 1
+file: EvolutionaryReforcementLearning/ERL-Re^2.md
+knowledge_points:
+- id: ERL-Re^2 PseudoCode
+  name: ERL-Re²伪代码
+  range:
+    start:
+      snippet: '## 4. 算法伪代码'
+      line_hint: 264
+    end:
+      snippet: ERL-Re² 也可用 **CEM** 替换 Algorithm 2 的种群生成：维护 $(\mu,\Sigma)$，每代从 $\mathcal{N}(\mu,
+      line_hint: 348
+links:
+- anchor_text: PeVFA
+  occurrence: 0
+  targets:
+  - PeVFA
+  edge_type: reference
+  target_edges:
+    PeVFA:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 194
+    wrapped: true
+  source_id: ERL-Re^2 PseudoCode
+  pool:
+  - PeVFA
+  excluded: []
+- anchor_text: '**PeVFA 损失**'
+  occurrence: 0
+  targets:
+  - PeVFA
+  edge_type: reference
+  target_edges:
+    PeVFA:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - PeVFA
+  instances:
+  - line: 182
+    wrapped: true
+  excluded: []

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kp_id": "LayerNorm",
+  "source_fingerprint": "f99151e1fd6a1e746717265720ddfb8c",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "2.2",
+    "layer",
+    "normalization",
+    "数学",
+    "定义",
+    "对于",
+    "单个",
+    "样本"
+  ],
+  "summary_1l": "2.",
+  "query_hits": [],
+  "embed_text": "LayerNorm LayerNorm 2.2 layer normalization 数学 定义 对于 单个 样本 2. 2.2 Layer Normalization 的数学定义 对于单个样本 ： **Step 1: 计算样本内均值和方差**（沿特征维度 ） **Step 2: 归一化** **Step 3: 缩放和平移**（可学习参数） 其中 和 是每个特征维度独立学习的参数，与 BatchNorm 相同。 **训练和推理**：LayerNorm 使用**当前样本**的均值和方差，训练和推理完全一致。",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-07-18T13:23:17.645921+00:00"
+}

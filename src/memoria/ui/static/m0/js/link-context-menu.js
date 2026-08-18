@@ -169,6 +169,19 @@ window.MemoriaLinkContextMenu = (function () {
         hint: "复制选中文本",
         action: () => copyText(sel, ctx.onStatus),
       },
+    ];
+
+    if (ctx.onApplyStyle) {
+      items.push(
+        { divider: true },
+        { label: "加粗", action: () => ctx.onApplyStyle("bold") },
+        { label: "斜体", action: () => ctx.onApplyStyle("italic") },
+        { label: "高亮", action: () => ctx.onApplyStyle("highlight", "yellow") },
+        { label: "字体颜色", action: () => ctx.onApplyStyle("fontcolor", "red") },
+      );
+    }
+
+    items.push(
       { divider: true },
       {
         label: "创建链接…",
@@ -178,7 +191,7 @@ window.MemoriaLinkContextMenu = (function () {
         label: "设为知识点…",
         action: () => ctx.onCreateKp?.({ text: sel, lines: ctx.lines }),
       },
-    ];
+    );
 
     if (ctx.markdown) {
       items.push({
@@ -191,11 +204,32 @@ window.MemoriaLinkContextMenu = (function () {
     buildMenu(items, e.clientX, e.clientY);
   }
 
+  function showForCursor(e, ctx) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const items = [
+      {
+        label: `<span class="m0-ctx-head">光标位置</span>`,
+        disabled: true,
+        action: () => {},
+      },
+      { divider: true },
+      {
+        label: "粘贴",
+        hint: "将剪贴板内容插入到光标位置",
+        action: () => ctx.onPaste?.(),
+      },
+    ];
+
+    buildMenu(items, e.clientX, e.clientY);
+  }
+
   document.addEventListener("click", hide);
   document.addEventListener("scroll", hide, true);
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") hide();
   });
 
-  return { showForLink, showForSelection, hide };
+  return { showForLink, showForSelection, showForCursor, hide };
 })();

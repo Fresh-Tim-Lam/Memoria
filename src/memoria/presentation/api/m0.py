@@ -29,6 +29,9 @@ class M0API:
     ) -> None:
         self._svc = DocumentService(kb_path=kb_path)
         self._host = host
+        if kb_path:
+            from memoria.presentation.static_server import set_kb_root
+            set_kb_root(kb_path)
 
     @property
     def kb_path(self) -> str | None:
@@ -65,6 +68,12 @@ class M0API:
         except FileNotFoundError as e:
             return {"status": "error", "message": str(e)}
 
+    def ensure_kb_root(self, path: str) -> dict:
+        """仅同步服务端 _kb_root，不触发其他副作用（如重载 KB）"""
+        from memoria.presentation.static_server import set_kb_root
+        set_kb_root(path)
+        return {"status": "ok"}
+
     def get_kb_path(self) -> str:
         return self._svc.kb_path or ""
 
@@ -76,6 +85,8 @@ class M0API:
 
     def close_kb(self) -> dict:
         self._svc.close_kb()
+        from memoria.presentation.static_server import set_kb_root
+        set_kb_root(None)
         return {"status": "ok"}
 
     def list_files(self) -> dict:
@@ -87,6 +98,39 @@ class M0API:
     def load_document(self, rel_path: str) -> dict:
         try:
             return self._svc.load_document(rel_path)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def write_map_log(self, rel_path: str, body: str) -> dict:
+        """写入映射调试日志到文件（追加模式）。"""
+        import os
+        if not self._svc.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        full = os.path.join(self._svc.kb_path, rel_path)
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        try:
+            with open(full, "a", encoding="utf-8") as f:
+                f.write(body)
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def write_debug_log(self, filename: str, body: str) -> dict:
+        """写入调试日志到 d:\\AAA_Jupyter\\Memoria\\logs\\ 目录（追加模式）。"""
+        import os
+        logs_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))), "logs")
+        os.makedirs(logs_dir, exist_ok=True)
+        full = os.path.join(logs_dir, filename)
+        try:
+            with open(full, "a", encoding="utf-8") as f:
+                f.write(body)
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    def save_document(self, rel_path: str, body: str) -> dict:
+        try:
+            return self._svc.save_document(rel_path, body)
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 

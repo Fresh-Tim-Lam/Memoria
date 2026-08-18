@@ -1,50 +1,85 @@
 ---
 description: R08/R15 渲染效果测试文件
 concepts:
-  - id: test-images
-    name: 图片渲染测试
-    weight: 1.0
-    tags: [测试, R08]
-  - id: test-mermaid
-    name: Mermaid图表测试
-    weight: 1.0
-    tags: [测试, R08]
-  - id: test-highlight
-    name: 荧光笔测试
-    weight: 1.0
-    tags: [测试, R15]
-  - id: test-math
-    name: 公式测试
-    weight: 1.0
-    tags: [测试, R15]
-  - id: test-font-color
-    name: 字体颜色测试
-    weight: 1.0
-    tags: [测试, R15]
-  - id: test-format
-    name: 格式标记测试
-    weight: 1.0
-    tags: [测试, R15]
-  - id: test-mixed
-    name: 混合格式测试
-    weight: 1.0
-    tags: [测试, R15]
+- id: test-images
+  name: 图片渲染测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R08
+- id: test-mermaid
+  name: Mermaid图表测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R08
+- id: test-highlight
+  name: 荧光笔测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R15
+- id: test-math
+  name: 公式测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R15
+- id: test-font-color
+  name: 字体颜色测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R15
+- id: test-format
+  name: 格式标记测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R15
+- id: test-mixed
+  name: 混合格式测试
+  weight: 1.0
+  tags:
+  - 测试
+  - R15
 ---
+## 图片渲染测试|
+# 小屁[[\h:yellow|[[\c:red|是]]]][[\h:green|[[\c:red|艾]][[\c:orange|斯]]]][[\c:orange|[[\h:yellow|比吗]]]]
 
-## 图片渲染测试
 
-### 网络图片
 
-![网络图片-小](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=blue%20abstract%20technology%20background%20with%20text%20Memoria&image_size=landscape_4_3)
 
-![网络图片-大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=red%20gradient%20banner%20with%20geometric%20patterns&image_size=landscape_16_9)
+
+### 图片
+
+sada撒大苏打啊啊是大[[\h:blue|da是adsad dadasd]]
+[[\h:blue|**啊实**]][[\h:blue:purple|**打实a|**]]
+[[\h:blue:purple|sss]]
+[[\h:blue:purple|*撒旦a的撒*]]
+
+[[\h:blue:purple|*是****的***]]
+
+
+[[\h:blue:yellow|***撒旦飒飒的撒打算撒的撒大是***]]
+[[\h:blue:yellow|***撒打算***]]
+
+
+
+
+
+
+
+
+![网络图片-小](https://am.zdmimg.com/202504/30/68116f1fe214c5947.jpg_e1080.jpg)
+
+![网络图片-大](https://pic.nximg.cn/file/20221111/12398452_112256442122_2.jpg)
 
 ### 本地相对路径图片
 
 ![本地图片](./images/test-image.png)
 
 ### 图片点击放大（Lightbox）
-
 > 点击下方图片应弹出放大覆盖层
 
 ![可点击放大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=green%20nature%20landscape%20with%20mountains&image_size=landscape_16_9)
@@ -92,6 +127,7 @@ graph LR
 
 这是一段普通文本，[[\h|这里是默认黄色荧光笔]]，后面是普通文本。
 
+
 ### 带颜色荧光笔
 
 - 默认（黄）：[[\h|一般重点内容]]
@@ -100,7 +136,9 @@ graph LR
 - 蓝色：[[\h:blue|定义/术语内容]]
 - 橙色：[[\h:orange|待复习内容]]
 
+
 ### 命名荧光笔
+
 
 [[\h:hl-exam|考试必考知识点]]（sidecar 中可存 note="2024年真题"）
 
@@ -112,10 +150,10 @@ graph LR
 
 ### 双色荧光笔（背景+前景）
 
-- [[\h:yellow:red|黄底红字]] — 黄色背景配红色前景
-- [[\h:green:blue|绿底蓝字]] — 绿色背景配蓝色前景
-- [[\h:blue:red|蓝底红字]] — 蓝色背景配红色前景
-- [[\h:hl-exam:red|命名+红色前景]] — 命名荧光笔+前景色
+- [[\h:yellow|黄底红字]] — 黄色背景配红色前景
+- [[\h:green|绿底蓝字]] — 绿色背景配蓝色前景
+- [[\h:blue|蓝底红字]] — 蓝色背景配红色前景
+- [[\h:hl-exam|命名+红色前景]] — 命名荧光笔+前景色
 
 ## 字体颜色测试
 
@@ -125,7 +163,12 @@ graph LR
 - [[\c:orange|橙色字体]]
 - [[\c:purple|紫色字体]]
 - [[\c:gray|灰色字体]]
-- [[\c:#e91e63|自定义粉色字体]]
+- [[\c:#e91e63|自定义]][[\c:#e91e63|粉色字体]]
+- [[\h:#ff0000|自定义红底]]
+- [[\h:#ff5500:#000000|**?** *底* ***黑字*** ]]        ← 背景 + 前景都自定义
+- [[\c:#ff8800|自定义橙色文字]]          ← 本来已支持
+- [[\h:pink|粉色底]]                     ← 任意 CSS 颜色名
+
 
 ## 格式标记测试
 
@@ -135,16 +178,16 @@ graph LR
 - [[\i|斜体文本]]
 - [[\b|粗体中含 [[mdp]] 链接]]
 
-## 混合格式测试
+## 混合格式测试|
 
 ### 荧光笔 + Markdown 格式
 
 - [[\h|**黄底粗体**]] — 荧光笔+markdown粗体
 - [[\h:green|*绿底斜体*]] — 荧光笔+markdown斜体
-- [[\h:yellow:red|黄底红字]] — 双色荧光笔
+- [[\h:yellow|[[\c:red|黄底红字]]]]   — 双色荧光笔
 - [[\h:yellow:red|***黄底红字粗斜体***]] — 三重混合
 - [[\c:red|**红色粗体**]] — 字体色+markdown粗体
-- [[\h:blue|参见 [[mdp]] 核心定义]] — 荧光笔内嵌链接（栈式解析关键测试）
+- [[\h:blue|参见[[mdp]]核心定义]]  荧光笔内嵌链接（栈式解析关键测试）
 
 ### 与 C++ 等号运算符共存
 
@@ -187,9 +230,9 @@ $$
 ### 图片 + 公式 + 荧光笔
 
 [[\h:blue|马尔可夫性质]]：对于马尔可夫链，未来状态只依赖当前状态：
-
-$$P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} | s_t)$$
-
+$$
+P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} | s_t)
+$$
 ### 表格 + 荧光笔
 
 | 项目 | 状态 | 备注 |
@@ -206,5 +249,4 @@ $$P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} | s_t)$$
 if result == expected:
     print("测试通过")
 ```
-
 代码外的 [[\h|荧光笔]] 正常渲染。

@@ -226,6 +226,30 @@ class DocumentService:
             return (line, str(kp.get("id") or ""))
         sidecar["knowledge_points"] = sorted(kps, key=sort_key)
 
+    def save_document(self, rel_path: str, body: str) -> dict:
+        """将编辑后的正文写回 .md 文件（保留原有 frontmatter）。"""
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        rel_norm = rel_path.replace("\\", "/")
+        if not rel_norm.lower().endswith(".md"):
+            return {"status": "error", "message": "只允许保存 .md 文件"}
+        full = os.path.join(self.kb_path, rel_norm)
+        if not os.path.isfile(full):
+            return {"status": "error", "message": "文件不存在"}
+        # 读取原始文件以保留 frontmatter
+        with open(full, "r", encoding="utf-8") as f:
+            raw = f.read()
+        from memoria.storage.markdown import strip_frontmatter, compose_markdown
+
+        _, fm = strip_frontmatter(raw)
+        new_content = compose_markdown(body, fm)
+        with open(full, "w", encoding="utf-8") as f:
+            f.write(new_content)
+        # 清除缓存，下次 load 时重新解析
+        self._cache.pop(rel_norm, None)
+        touch_manifest_entry(self.kb_path, rel_norm)
+        return {"status": "ok"}
+
     def close_kb(self) -> None:
         kb = self.kb_path
         self.kb_path = None
@@ -981,6 +1005,48 @@ class DocumentService:
         os.replace(tmp, full)
         touch_manifest_entry(self.kb_path, rel_path.replace("\\", "/"))
         self._rebuild_lexical_index()
+
+    def format_text(
+        self,
+        rel_path: str,
+        line_number: int,
+        start_col: int,
+        end_col: int,
+        format_type: str,
+        color: str | None = None,
+    ) -> dict:
+        """在源码指定行、列范围包裹格式语法，写回文件，返回更新后的文档。"""
+        body, fm, lines = self._read_body(rel_path)
+        idx = line_number - 1
+        if idx < 0 or idx >= len(lines):
+            return {"status": "error", "message": f"行号 {line_number} 超出范围"}
+        line = lines[idx]
+        if start_col < 0 or end_col > len(line) or start_col > end_col:
+            return {"status": "error", "message": f"列范围 [{start_col},{end_col}) 无效 (行长 {len(line)})"}
+
+        selected = line[start_col:end_col]
+
+        if format_type == "bold":
+            prefix, suffix = "**", "**"
+        elif format_type == "italic":
+            prefix, suffix = "*", "*"
+        elif format_type == "highlight":
+            c = color or "yellow"
+            if c == "yellow":
+                prefix, suffix = "[[\\h|", "]]"
+            else:
+                prefix, suffix = f"[[\\h:{c}|", "]]"
+        elif format_type == "fontcolor":
+            c = color or "red"
+            prefix, suffix = f"[[\\c:{c}|", "]]"
+        else:
+            return {"status": "error", "message": f"未知格式类型: {format_type}"}
+
+        new_line = line[:start_col] + prefix + selected + suffix + line[end_col:]
+        lines[idx] = new_line
+        new_body = "\n".join(lines)
+        self._write_body(rel_path, new_body, fm)
+        return self.load_document(rel_path)
 
     def sync_manifest(self) -> dict:
         if not self.kb_path:

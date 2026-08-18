@@ -140,7 +140,6 @@
           </div>
           <div id="editor-wrap" class="hidden">
             <div id="editor-header">
-              <span id="file-title"></span>
               <span id="file-meta" class="m0-muted"></span>
               <div class="m0-format-bar" role="toolbar" aria-label="格式工具">
                 <button type="button" class="m0-fmt-btn" data-fmt="bold" title="粗体 (Ctrl+B)"><strong>B</strong></button>
@@ -154,6 +153,8 @@
                     <button type="button" data-hl-color="red" class="m0-hl-swatch m0-hl-red" title="红色">红</button>
                     <button type="button" data-hl-color="blue" class="m0-hl-swatch m0-hl-blue" title="蓝色">蓝</button>
                     <button type="button" data-hl-color="orange" class="m0-hl-swatch m0-hl-orange" title="橙色">橙</button>
+                    <button type="button" class="m0-hl-option m0-hl-none" data-hl-none="1" title="移除高亮">无色</button>
+                    <button type="button" class="m0-hl-option m0-hl-custom" data-hl-custom="1" title="自定义颜色">自定义</button>
                   </div>
                 </span>
                 <span class="m0-fmt-dropdown">
@@ -166,13 +167,23 @@
                     <button type="button" data-fc-color="blue" class="m0-fc-swatch m0-fc-blue" title="蓝色">蓝</button>
                     <button type="button" data-fc-color="purple" class="m0-fc-swatch m0-fc-purple" title="紫色">紫</button>
                     <button type="button" data-fc-color="gray" class="m0-fc-swatch m0-fc-gray" title="灰色">灰</button>
+                    <button type="button" class="m0-fc-option m0-fc-none" data-fc-none="1" title="移除字体色">无色</button>
+                    <button type="button" class="m0-fc-option m0-fc-custom" data-fc-custom="1" title="自定义颜色">自定义</button>
                   </div>
                 </span>
+              </div>
+              <div id="block-edit-bar" class="m0-block-edit-bar hidden" role="toolbar" aria-label="块编辑工具">
+                <span id="block-edit-label" class="m0-block-edit-label"></span>
+                <span class="m0-block-edit-tools" id="block-edit-tools"></span>
+                <button type="button" id="block-edit-done" class="m0-fmt-btn" title="完成编辑 (Esc)">完成</button>
               </div>
               <div class="m0-view-toggle" role="tablist" aria-label="视图模式">
                 <button type="button" class="m0-view-btn active" data-view="source" title="源码">源码</button>
                 <button type="button" class="m0-view-btn" data-view="preview" title="Markdown 预览">预览</button>
                 <button type="button" class="m0-view-btn" data-view="split" title="分栏">分栏</button>
+              </div>
+              <div id="edit-mode-toggle" class="m0-toolbar-search-scope edit-mode-toggle" role="switch" tabindex="0" aria-label="编辑模式" title="编辑模式：点击定位光标（再次点击关闭）">
+                <button type="button" id="btn-edit-mode" class="m0-toolbar-search-scope-btn active">编辑</button>
               </div>
             </div>
             <div id="preview-status" class="hidden"></div>
@@ -348,6 +359,14 @@
   <script src="/m0/js/math-normalize.js"></script>
   <script src="/m0/js/nav-stack.js"></script>
   <script src="/m0/js/markdown-preview.js"></script>
+  <!-- AST-based editing pipeline -->
+  <script src="/m0/js/ast.js"></script>
+  <script src="/m0/js/lexer.js"></script>
+  <script src="/m0/js/parser.js"></script>
+  <script src="/m0/js/source-gen.js"></script>
+  <script src="/m0/js/mapper.js"></script>
+  <script src="/m0/js/renderer.js"></script>
+  <script src="/m0/js/edit-handler.js"></script>
   <script src="/m0/js/link-context-menu.js"></script>
   <script src="/m0/js/kp-context-menu.js"></script>
   <script src="/m0/js/app.js"></script>

@@ -1,0 +1,30 @@
+schema_version: 1
+file: EvolutionaryReforcementLearning/ERL.md
+knowledge_points:
+- id: ERL-PseudoCode
+  name: ERL算法伪代码
+  range:
+    start:
+      snippet: '## 4. 算法伪代码'
+      line_hint: 392
+    end:
+      snippet: '```'
+      line_hint: 453
+links:
+- anchor_text: LayerNorm
+  occurrence: 0
+  targets:
+  - LayerNorm
+  edge_type: reference
+  target_edges:
+    LayerNorm:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - LayerNorm
+  instances:
+  - line: 262
+    wrapped: true
+  - line: 336
+    wrapped: true
+  excluded: []

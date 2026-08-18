@@ -1911,6 +1911,10 @@ body.m0-win-resizing {
     cursor: not-allowed;
 }
 
+.edit-mode-toggle {
+    margin-left: 12px;
+}
+
 .toolbar-search-wrap .m0-toolbar-search {
     width: 100%;
 }
@@ -2944,16 +2948,9 @@ body.m0-win-resizing {
     user-select: none;
     -webkit-user-select: none;
 }
-#file-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-bright);
+#file-meta {
     flex: 1;
     min-width: 0;
-    user-select: none;
-    -webkit-user-select: none;
-}
-#file-meta {
     user-select: none;
     -webkit-user-select: none;
 }
@@ -3004,6 +3001,10 @@ body.m0-win-resizing {
     color: var(--text-primary);
     background: var(--bg-hover);
 }
+.m0-fmt-btn.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
 .m0-fmt-sep {
     width: 1px;
     height: 14px;
@@ -3018,7 +3019,8 @@ body.m0-win-resizing {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    left: auto;
+    right: 0;
     z-index: 100;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
@@ -3026,7 +3028,9 @@ body.m0-win-resizing {
     padding: 4px;
     box-shadow: 0 4px 12px rgba(0,0,0,.3);
     flex-direction: row;
+    flex-wrap: nowrap;
     gap: 2px;
+    white-space: nowrap;
 }
 .m0-fmt-dropdown.open .m0-fmt-dropdown-menu {
     display: flex;
@@ -3035,7 +3039,7 @@ body.m0-win-resizing {
 .m0-fc-swatch {
     border: none;
     font-size: 11px;
-    padding: 3px 8px;
+    padding: 3px 6px;
     border-radius: 2px;
     cursor: pointer;
     color: #000;
@@ -3044,6 +3048,11 @@ body.m0-win-resizing {
 .m0-hl-swatch:hover,
 .m0-fc-swatch:hover {
     opacity: .85;
+}
+.m0-hl-swatch.active,
+.m0-fc-swatch.active {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
 }
 /* highlight swatch colors */
 .m0-hl-yellow { background: #fef3ac; }
@@ -3059,6 +3068,39 @@ body.m0-win-resizing {
 .m0-fc-blue   { background: #3b82f6; color: #fff; }
 .m0-fc-purple { background: #8b5cf6; color: #fff; }
 .m0-fc-gray   { background: #6b7280; color: #fff; }
+/* 无色 / 自定义 选项 */
+.m0-hl-option,
+.m0-fc-option {
+    border: 1px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-size: 10px;
+    padding: 3px 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: 600;
+}
+.m0-hl-option:hover,
+.m0-fc-option:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-light);
+}
+.m0-hl-none,
+.m0-fc-none {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+.m0-hl-custom,
+.m0-fc-custom {
+    background: linear-gradient(90deg, #ef4444, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6);
+    color: #fff;
+    border-color: transparent;
+}
+.m0-hl-custom:hover,
+.m0-fc-custom:hover {
+    opacity: .9;
+}
 
 #editor-split {
     flex: 1;
@@ -3099,12 +3141,66 @@ body.m0-win-resizing {
     min-height: 100%;
     background: var(--bg-primary);
     -webkit-app-region: no-drag;
+    cursor: text;
+    caret-color: var(--text-primary, #d4d4d4);
+    outline: none;
+    line-height: 1.6;
 }
+/* 段落间距紧凑化，避免源码空行导致预览过稀疏 */
+/* ── 预览区 block 间距：所有间距由真实源码空行块（.m0-blank-block）提供 ── */
 .m0-preview .m0-src-block {
+    margin: 0;
     user-select: text;
     -webkit-user-select: text;
     cursor: text;
     border-radius: 2px;
+}
+/* 所有 block 内元素 margin 归零，避免"虚假空行"光标 */
+.m0-preview .m0-src-block > p {
+    margin: 0;
+}
+.m0-preview .m0-src-block > h1,
+.m0-preview .m0-src-block > h2,
+.m0-preview .m0-src-block > h3,
+.m0-preview .m0-src-block > h4,
+.m0-preview .m0-src-block > h5,
+.m0-preview .m0-src-block > h6 {
+    margin: 0;
+}
+.m0-preview .m0-src-block > ul,
+.m0-preview .m0-src-block > ol {
+    margin: 0;
+    padding-left: 1.8em;
+}
+.m0-preview .m0-src-block > blockquote {
+    margin: 0;
+    padding: 0.3em 1em;
+    border-left: 3px solid var(--border);
+}
+.m0-preview .m0-src-block > pre {
+    margin: 0;
+}
+.m0-preview .m0-src-block > hr {
+    margin: 0;
+    border: none;
+    border-top: 1px solid var(--border);
+}
+/* 空行占位 block：紧凑、可选中，是唯一的纵向间距来源 */
+.m0-preview .m0-blank-block {
+    min-height: 0.6em;
+    line-height: 1.6;
+}
+.m0-preview:focus {
+    outline: none;
+}
+.m0-preview[contenteditable="false"],
+.m0-preview[contenteditable="false"] .m0-src-block {
+    cursor: default;
+}
+.m0-preview[contenteditable="false"] a,
+.m0-preview[contenteditable="false"] .m0-wikilink,
+.m0-preview[contenteditable="false"] .memoria-link {
+    cursor: pointer;
 }
 .m0-preview .m0-src-block.is-drag-select {
     background: rgba(0, 122, 204, 0.12);
@@ -3289,6 +3385,96 @@ em.m0-fmt-i     { /* inherits italic from <em> */ }
 
 /* Foreground color on mark (when \h:bg:fg used) */
 mark[style*="color:"] { /* fg color set via inline style */ }
+
+/* ── Sync cursor (fake cursor in source area for split-mode verification) ── */
+.m0-sync-cursor {
+    display: inline;
+    color: #2563eb;
+    font-weight: bold;
+    animation: m0-cursor-blink 0.6s step-end infinite;
+    pointer-events: none;
+    user-select: none;
+}
+@keyframes m0-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ── Preview cursor indicator (source→preview direction, split mode) ── */
+.m0-preview-cursor {
+    box-shadow: inset 3px 0 0 #2563eb;
+    background-color: rgba(37, 99, 235, 0.06);
+}
+
+/* ── Block edit mode ── */
+.m0-block-edit-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+}
+.m0-block-edit-bar.hidden { display: none; }
+.m0-block-edit-label {
+    font-size: 13px;
+    color: #2563eb;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.m0-block-edit-tools {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+.m0-block-edit-hint {
+    font-size: 12px;
+    color: #666;
+    margin-right: 2px;
+}
+.m0-block-lang-sel {
+    font-size: 12px;
+    padding: 2px 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+}
+.m0-math-sym-btn {
+    font-size: 13px;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 4px;
+    border: 1px solid #d0d5dd;
+    border-radius: 3px;
+    background: #fff;
+    cursor: pointer;
+    line-height: 1;
+}
+.m0-math-sym-btn:hover {
+    background: #f0f4ff;
+    border-color: #2563eb;
+}
+.m0-src-block.m0-block-editing {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    background-color: rgba(37, 99, 235, 0.03);
+}
+.m0-src-block.m0-block-editing pre,
+.m0-src-block.m0-block-editing code,
+.m0-src-block.m0-block-editing svg,
+.m0-src-block.m0-block-editing mjx-container {
+    contenteditable: true !important;
+    cursor: text !important;
+}
+
+/* ── AST-rendered highlight / font-color ── */
+/* 颜色由 renderer 的 inline style 决定（支持 #RRGGBB / CSS 颜色名），此处仅作 fallback */
+.m0-hl { background-color: #fff3cd; }                       /* 默认黄底 */
+.m0-hl-red { background-color: #f8d7da; }                   /* 红底 */
+.m0-hl-green { background-color: #d4edda; }                 /* 绿底 */
+.m0-hl-blue { background-color: #cce5ff; }                  /* 蓝底 */
+.m0-hl-orange { background-color: #ffe8cc; }                /* 橙底 */
+.m0-hl-yellow { background-color: #fef3ac; }                /* 亮黄 */
 
 /* ── Image sizing in preview ── */
 .m0-preview img {

@@ -7,9 +7,9 @@
 | **标题** | Evolution-Guided Policy Gradient in Reinforcement Learning |
 | **作者** | Shauharda Khadka, Kagan Tumer |
 | **机构** | Collaborative Robotics and Intelligent Systems Institute, Oregon State University |
-| **会议** | NeurIPS 2018（arXiv 首页标 "Preprint. Work in progress."） |
+| **会议** | NeurIPS 2018（arXiv 首页标 "Preprint. Work in progress."）|
 | **arXiv** | arXiv:1805.07917v2，2018-10-27 |
-| **代码** | https://github.com/ShawK91/erl_paper_nips18 |
+| **代码** | <https://github.com/ShawK91/erl_paper_nips18> |
 
 ---
 
@@ -23,21 +23,18 @@
 
 作者列出 RL 与 EA 各自的硬约束：
 
-**RL 痛点（特别是 off-policy DDPG）**
+- **RL 痛点（特别是 off-policy DDPG）**
+    1. **时间信用分配**：稀疏奖励 / 长 horizon 下，TD bootstrapping 难以把回报传到早期动作；多步回报在 off-policy 下需重要性采样、Retrace、V-trace 等附加机制。
+    2. **探索不足**：高维状态/动作空间中，朴素 ε-greedy 或动作扰动不足以覆盖好策略。
+    3. **超参敏感、收敛脆弱**：replay buffer + bootstrapping + 深度非线性近似器三者组合下，DDPG 对学习率、批大小、噪声尺度等极敏感。
 
-1. **时间信用分配**：稀疏奖励 / 长 horizon 下，TD bootstrapping 难以把回报传到早期动作；多步回报在 off-policy 下需重要性采样、Retrace、V-trace 等附加机制。
-2. **探索不足**：高维状态/动作空间中，朴素 ε-greedy 或动作扰动不足以覆盖好策略。
-3. **超参敏感、收敛脆弱**：replay buffer + bootstrapping + 深度非线性近似器三者组合下，DDPG 对学习率、批大小、噪声尺度等极敏感。
+- **EA 痛点**
+    - 不利用梯度信息，**样本复杂度高**；难以优化数百万级参数的深度网络。
 
-**EA 痛点**
-
-- 不利用梯度信息，**样本复杂度高**；难以优化数百万级参数的深度网络。
-
-**混合带来的收益**
-
-1. **EA → RL**：种群产生**多样轨迹**全部写入 replay → DDPG 在更广分布上做梯度更新（样本效率↑）。
-2. **RL → EA**：周期性地把 `rl_actor` **拷入种群**最差个体 → 把梯度信息注入进化搜索（避免 EA 长期盲搜）。
-3. **episode-级 fitness** 对稀疏 / 欺骗性奖励更鲁棒；种群冗余降低单一策略崩溃的风险。
+- **混合带来的收益**
+    1. **EA → RL**：种群产生**多样轨迹**全部写入 replay → DDPG 在更广分布上做梯度更新（样本效率↑）。
+    2. **RL → EA**：周期性地把 `rl_actor` **拷入种群**最差个体 → 把梯度信息注入进化搜索（避免 EA 长期盲搜）。
+    3. **episode-级 fitness**对稀疏 / 欺骗性奖励更鲁棒；种群冗余降低单一策略崩溃的风险。
 
 ### 1.3 核心实验结论（论文主张）
 
@@ -59,7 +56,9 @@
 
 目标是最大化期望回报：
 
-$$J(\pi_\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{\infty}\gamma^t r_t\right],\qquad R_t = \sum_{n=0}^{\infty}\gamma^n r_{t+n}$$
+$$
+J(\pi_\theta) = \mathbb{E}_{\pi_\theta}\!\left[\sum_{t=0}^{\infty}\gamma^t r_t\right],\qquad R_t = \sum_{n=0}^{\infty}\gamma^n r_{t+n}
+$$
 
 ### 2.2 DDPG（论文 §2.1）
 
@@ -74,25 +73,38 @@ DDPG 维护四个网络：
 
 **TD 目标**（one-step bootstrap）：
 
-$$y_i = r_i + \gamma\,Q_{\theta_{Q'}}\!\bigl(s_{i+1},\,\mu_{\theta_{\pi'}}(s_{i+1})\bigr)$$
+$$
+y_i = r_i + \gamma\,Q_{\theta_{Q'}}\!\bigl(s_{i+1},\,\mu_{\theta_{\pi'}}(s_{i+1})\bigr)
+$$
 
 **Critic 损失**（MSBE，对 batch $T$ 个 transition 求平均）：
 
-$$L(\theta_Q) = \frac{1}{T}\sum_{i=1}^{T}\bigl(y_i - Q_{\theta_Q}(s_i,a_i)\bigr)^2$$
+$$
+L(\theta_Q) = \frac{1}{T}\sum_{i=1}^{T}\bigl(y_i - Q_{\theta_Q}(s_i,a_i)\bigr)^2
+$$
 
 **Actor 梯度**（确定性策略梯度定理，Silver et al. 2014）：
 
-$$\nabla_{\theta_\pi} J \;\approx\; \frac{1}{T}\sum_{i=1}^{T} \nabla_a Q_{\theta_Q}(s,a)\Big|_{\substack{s=s_i\\a=\mu_{\theta_\pi}(s_i)}}\, \nabla_{\theta_\pi}\mu_{\theta_\pi}(s)\Big|_{s=s_i}$$
+$$
+\nabla_{\theta_\pi} J \;\approx\; \frac{1}{T}\sum_{i=1}^{T}
+\nabla_a Q_{\theta_Q}(s,a)\Big|_{\substack{s=s_i\\a=\mu_{\theta_\pi}(s_i)}}\,
+\nabla_{\theta_\pi}\mu_{\theta_\pi}(s)\Big|_{s=s_i}
+$$
 
 **推导关键步**：由链式法则，$\nabla_{\theta_\pi}Q(s,\mu_{\theta_\pi}(s)) = \nabla_a Q(s,a)|_{a=\mu(s)}\,\nabla_{\theta_\pi}\mu_{\theta_\pi}(s)$；对该项在 buffer 分布下求期望即得到上式。
 
 **目标网络软更新**（$\tau\ll 1$）：
 
-$$\theta_{\pi'} \leftarrow \tau\theta_\pi + (1-\tau)\theta_{\pi'},\quad \theta_{Q'} \leftarrow \tau\theta_Q + (1-\tau)\theta_{Q'}$$
+$$
+\theta_{\pi'} \leftarrow \tau\theta_\pi + (1-\tau)\theta_{\pi'},\quad
+\theta_{Q'} \leftarrow \tau\theta_Q + (1-\tau)\theta_{Q'}
+$$
 
 **行为策略探索**：动作上叠加 **Ornstein-Uhlenbeck (OU) 噪声**（时间相关的色噪声，比独立高斯在惯性系统上探索更高效）：
 
-$$dx_t = \theta(\mu-x_t)\,dt + \sigma\,dW_t,\quad a_t = \mu_{\theta_\pi}(s_t) + x_t$$
+$$
+dx_t = \theta(\mu-x_t)\,dt + \sigma\,dW_t,\quad a_t = \mu_{\theta_\pi}(s_t) + x_t
+$$
 
 #### 2.2.1 梯度计算详解与代码映射
 
@@ -100,46 +112,78 @@ DDPG 的两路梯度更新（Critic 和 Actor）在代码中分别对应两个 o
 
 **Critic 梯度（TD 误差反向传播）**
 
-$$\nabla_{\theta_Q} L = \nabla_{\theta_Q} \frac{1}{T} \sum_{i=1}^{T} \bigl(y_i - Q_{\theta_Q}(s_i, a_i)\bigr)^2$$
+$$
+\nabla_{\theta_Q} L = \nabla_{\theta_Q} \frac{1}{T} \sum_{i=1}^{T} \bigl(y_i - Q_{\theta_Q}(s_i, a_i)\bigr)^2
+$$
 
 链式展开（以单个样本为例，省略求和与 $1/T$）：
 
-$$\frac{\partial L}{\partial \theta_Q} = -2\,(y - Q(s,a)) \cdot \frac{\partial Q(s,a)}{\partial \theta_Q}$$
+$$
+\frac{\partial L}{\partial \theta_Q} = -2\,(y - Q(s,a)) \cdot \frac{\partial Q(s,a)}{\partial \theta_Q}
+$$
 
-其中 $\partial Q(s,a)/\partial \theta_Q$ 进一步沿 Critic 网络逐层分解。状态和动作子网络分别求导：
+其中 $\partial Q(s,a)/\partial \theta_Q$ 进一步沿 Critic 网络逐层分解：
 
-$$\frac{\partial Q}{\partial W_s} = \frac{\partial Q}{\partial W_3} \cdot \frac{\partial \text{ELU}}{\partial h_2} \cdot \frac{\partial h_2}{\partial h_1} \cdot \frac{\partial h_1}{\partial f_s} \cdot \frac{\partial f_s}{\partial W_s}$$
+$$
+\frac{\partial Q}{\partial \theta_Q} =
+\frac{\partial Q}{\partial W_3} \cdot 
+\frac{\partial \text{ELU}}{\partial h_2} \cdot 
+\frac{\partial h_2}{\partial W_2} \cdot 
+\frac{\partial \text{ELU}}{\partial h_1} \cdot 
+\frac{\partial h_1}{\partial [W_s, W_a]}
+$$
 
-$$\frac{\partial Q}{\partial W_a} = \frac{\partial Q}{\partial W_3} \cdot \frac{\partial \text{ELU}}{\partial h_2} \cdot \frac{\partial h_2}{\partial h_1} \cdot \frac{\partial h_1}{\partial f_a} \cdot \frac{\partial f_a}{\partial W_a}$$
-
-其中 $h_1 = [f_s; f_a]$，$f_s = W_s s + b_s$，$f_a = W_a a + b_a$，$h_2 = \text{LN}(W_2 h_1 + b_2)$，$Q = W_3 h_2 + b_3$。代码对应：
+其中 $h_1 = [f_s; f_a]$ 是状态/动作子层拼接，$h_2$ = LN$(W_2 h_1 + b_2)$，$Q = W_3 h_3 + b_3$。代码对应：
 
 | 数学项 | 代码行 |
-|--------|--------|
+|---|---|
 | $L = \text{MSE}(Q, y)$ | `loss = nn.MSELoss()(current_q, target_q)` |
 | $\partial L/\partial \theta_Q$ | `loss.backward()`（自动链式求导） |
 | $\theta_Q \leftarrow \theta_Q - \alpha_Q \cdot \partial L/\partial \theta_Q$ | `self.critic_optimizer.step()` |
 
 **Actor 梯度（确定性策略梯度）**
 
-$$\nabla_{\theta_\pi} J \approx \frac{1}{T}\sum_{i=1}^{T} \nabla_a Q_{\theta_Q}(s,a)\Big|_{\substack{s=s_i\\a=\mu_{\theta_\pi}(s_i)}}\, \nabla_{\theta_\pi}\mu_{\theta_\pi}(s)\Big|_{s=s_i}$$
+$$
+\nabla_{\theta_\pi} J \approx \frac{1}{T}\sum_{i=1}^{T}
+\nabla_a Q_{\theta_Q}(s,a)\Big|_{\substack{s=s_i\\a=\mu_{\theta_\pi}(s_i)}}\,
+\nabla_{\theta_\pi}\mu_{\theta_\pi}(s)\Big|_{s=s_i}
+$$
 
 链式展开（从 loss 定义 $\mathcal{L} = -\frac{1}{T}\sum Q(s,\mu(s))$ 出发）：
 
-$$\frac{\partial \mathcal{L}}{\partial \theta_\pi} = -\frac{1}{T}\sum_{i=1}^{T} \underbrace{\frac{\partial Q(s_i,a)}{\partial a}\Big|_{a=\mu(s_i)}}_{\text{通过 Critic 回传}} \cdot \underbrace{\frac{\partial \mu(s_i)}{\partial \theta_\pi}}_{\text{Actor 内部链式法则}}$$
+$$
+\frac{\partial \mathcal{L}}{\partial \theta_\pi}
+= -\frac{1}{T}\sum_{i=1}^{T}
+\underbrace{\frac{\partial Q(s_i,a)}{\partial a}\Big|_{a=\mu(s_i)}}_{\text{通过 Critic 回传}}
+\cdot
+\underbrace{\frac{\partial \mu(s_i)}{\partial \theta_\pi}}_{\text{Actor 内部链式法则}}
+$$
 
 其中 Actor 内部 $\partial \mu/\partial \theta_\pi$ 沿网络展开（令 $x_0 = s$）：
 
-$$\frac{\partial \mu}{\partial \theta_\pi} = \frac{\partial}{\partial \theta_\pi}\bigl[\text{max\_action}\cdot\tanh(W_3 x_2 + b_3)\bigr] \cdot \frac{\partial x_2}{\partial \theta_\pi}$$
+$$
+\frac{\partial \mu}{\partial \theta_\pi} = 
+\frac{\partial}{\partial \theta_\pi}\bigl[\text{max\_action}\cdot\tanh(W_3 x_2 + b_3)\bigr]
+\cdot
+\frac{\partial x_2}{\partial \theta_\pi}
+$$
 
-$$\frac{\partial x_2}{\partial \theta_\pi} = \frac{\partial}{\partial \theta_\pi}\bigl[\tanh(\text{LN}(W_2 x_1 + b_2))\bigr] \cdot \frac{\partial x_1}{\partial \theta_\pi}$$
+$$
+\frac{\partial x_2}{\partial \theta_\pi} = 
+\frac{\partial}{\partial \theta_\pi}\bigl[\tanh(\text{LN}(W_2 x_1 + b_2))\bigr]
+\cdot
+\frac{\partial x_1}{\partial \theta_\pi}
+$$
 
-$$\frac{\partial x_1}{\partial \theta_\pi} = \frac{\partial}{\partial \theta_\pi}\bigl[\tanh(\text{LN}(W_1 x_0 + b_1))\bigr]$$
+$$
+\frac{\partial x_1}{\partial \theta_\pi} = 
+\frac{\partial}{\partial \theta_\pi}\bigl[\tanh(\text{LN}(W_1 x_0 + b_1))\bigr]
+$$
 
 三层 tanh 各贡献一个 $\text{sech}^2$ 因子（tanh 的导数：$\frac{d}{dx}\tanh(x) = 1 - \tanh^2(x) = \text{sech}^2(x)$），LayerNorm 贡献归一化统计量的偏导，所有因子通过链式连乘。代码对应：
 
 | 数学项 | 代码行 |
-|--------|--------|
+|---|---|
 | $\mathcal{L} = -\frac{1}{T}\sum Q(s,\mu(s))$ | `actor_loss = -self.critic(states, self.actor(states)).mean()` |
 | $\partial \mathcal{L}/\partial \theta_\pi$ | `actor_loss.backward()` |
 | Critic 端的 $\partial Q/\partial a$ 传入 | PyTorch autograd 自动沿 $Q \to a \to \mu$ 追溯 |
@@ -147,7 +191,7 @@ $$\frac{\partial x_1}{\partial \theta_\pi} = \frac{\partial}{\partial \theta_\pi
 
 **梯度隔离原理**：Actor 和 Critic 各用独立 optimizer，$Q$ 值本应对 Actor 求导指导更新，但不希望这个梯度信号反传到 Critic 自己的参数。PyTorch 的 optimizer 机制天然保证这一点——`self.critic(states, actions)` 的计算图虽相连，但 `self.critic_optimizer.step()` 只更新 Critic 参数，`self.actor_optimizer.step()` 只更新 Actor 参数：
 
-```
+```text
                         ┌──────────────────┐
 states ──► Actor ──► a ──► Critic ──► Q ──► actor_loss = -Q.mean()
                │              │                    │
@@ -167,7 +211,9 @@ states ──► Actor ──► a ──► Critic ──► Q ──► actor_
 
 对个体 $\pi$，做 $\xi$ 次完整 episode（不加变异，不加 OU），fitness 取 **未折扣**累积奖励的平均：
 
-$$\text{fitness}(\pi) = \frac{1}{\xi}\sum_{j=1}^{\xi}\sum_{t=0}^{T_j} r_t^{(j)}$$
+$$
+\text{fitness}(\pi) = \frac{1}{\xi}\sum_{j=1}^{\xi}\sum_{t=0}^{T_j} r_t^{(j)}
+$$
 
 > 注：论文 Algorithm 2 内层用 `fitness ← fitness + r_t`（不乘 $\gamma^t$），与 DDPG 的折扣回报不同——EA 评估的是真实 episode return，不带 RL 折扣。
 
@@ -175,34 +221,53 @@ $$\text{fitness}(\pi) = \frac{1}{\xi}\sum_{j=1}^{\xi}\sum_{t=0}^{T_j} r_t^{(j)}$
 
 从非精英中**有放回**抽取若干个体，取 fitness 最高者作为父代。论文未写死锦标赛规模 $k_{\text{tour}}$（实现一般取 3）：
 
-$$\text{parent} = \arg\max_{i\in\text{tournament}}\text{fitness}_i$$
+$$
+\text{parent} = \arg\max_{i\in\text{tournament}}\text{fitness}_i
+$$
 
 #### 2.3.3 交叉（Probabilistic Crossover）
 
 从 **精英集合** 与 **选择得到的集合 $S$** 各取一个 $\pi$ 做交叉（论文未在 Algorithm 1 展开具体算子；实现上常用 **k-point** 或 **均匀交叉**）。一种典型形式：
 
-$$\theta_{\text{child}}^{(j)} = \begin{cases} \theta_1^{(j)} & m^{(j)}=0\\ \theta_2^{(j)} & m^{(j)}=1 \end{cases},\quad m^{(j)}\sim\text{Bernoulli}(0.5)$$
+$$
+\theta_{\text{child}}^{(j)} = \begin{cases}
+\theta_1^{(j)} & m^{(j)}=0\\
+\theta_2^{(j)} & m^{(j)}=1
+\end{cases},\quad m^{(j)}\sim\text{Bernoulli}(0.5)
+$$
 
 #### 2.3.4 变异（Algorithm 3 / Mutate）
 
 对每个权重矩阵 $M\in\theta_\pi$，随机选取 $\lceil\text{mutfrac}\cdot|M|\rceil$ 个元素位置 $(i,j)$，每个位置按以下三选一模式扰动：
 
-$$M_{ij} \leftarrow \begin{cases} M_{ij}\cdot\mathcal{N}(0,\,100\cdot\text{mutstrength}) & r()<\text{supermutprob}\quad(\text{super mutation})\\[4pt] \mathcal{N}(0,\,1) & \text{else if } r()<\text{resetprob}\quad(\text{reset})\\[4pt] M_{ij}\cdot\mathcal{N}(0,\,\text{mutstrength}) & \text{otherwise}\quad(\text{small mutation}) \end{cases}$$
+$$
+M_{ij} \leftarrow \begin{cases}
+M_{ij}\cdot\mathcal{N}(0,\,100\cdot\text{mutstrength}) & r()<\text{supermutprob}\quad(\text{super mutation})\\[4pt]
+\mathcal{N}(0,\,1) & \text{else if } r()<\text{resetprob}\quad(\text{reset})\\[4pt]
+M_{ij}\cdot\mathcal{N}(0,\,\text{mutstrength}) & \text{otherwise}\quad(\text{small mutation})
+\end{cases}
+$$
 
-默认 $\text{mutfrac}=0.1,\ \text{mutstrength}=0.1,\ \text{supermutprob}=0.05,\ \text{resetprob}=0.05$。
+默认 $\text{mutfrac}=0.1,\ \text{mutstrength}=0.1,\ \text{supermutprob}=0.05,\ \text{resetprob}=0.07$。
+
+> **注**：由 Algorithm 3 的 `else if` 结构可知，$\text{resetprob}$ 必须大于 $\text{supermutprob}$，否则 reset 分支永远不会执行。源代码取 $\text{resetprob} = \text{supermutprob} + 0.02 = 0.07$。
 
 #### 2.3.5 精英保留
 
 按 fitness 降序排序，前 $e=\lfloor\psi k\rfloor$ 个体作为精英 **直接进入下一代**且 **不参与变异**：
 
-$$\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}$$
+$$
+\text{Elites} = \{\pi_{(1)},\pi_{(2)},\ldots,\pi_{(e)}\}
+$$
 
 ### 2.4 混合机制（RL ↔ EA）
 
 - **EA → RL（隐式 / 数据通路）**：所有种群个体 + `rl_actor` 与环境交互产生的 $(s_t,a_t,r_t,s_{t+1})$ 全部写入**同一个 cyclic replay buffer** $\mathcal{D}$（容量 $10^6$，FIFO）。`rl_actor`/`rl_critic` 从中均匀采样训练。
 - **RL → EA（显式 / 参数注入）**：每 $\omega$ 代，把 `rl_actor` 的权重**复制到当前种群 fitness 最差个体**上：
 
-$$\text{generation}\bmod\omega=0\;\Rightarrow\;\theta_{\pi_{\text{worst}}}\leftarrow\theta_{\pi_{rl}}$$
+$$
+\text{generation}\bmod\omega=0\;\Rightarrow\;\theta_{\pi_{\text{worst}}}\leftarrow\theta_{\pi_{rl}}
+$$
 
 若 `rl_actor` 实际较差，下一代选择自然把它淘汰；若较好，其基因通过交叉扩散到整个种群。
 
@@ -211,7 +276,6 @@ $$\text{generation}\bmod\omega=0\;\Rightarrow\;\theta_{\pi_{\text{worst}}}\lefta
 ## 3. 网络架构
 
 ERL 同时维护两组神经网络：
-
 1. **RL Actor / Critic**（及对应的 target 网络）—— 用于梯度更新的 DDPG 主网络
 2. **种群 Actors** —— EA 维护的 $k$ 个 $\pi$ 个体，架构与 RL Actor **完全相同**
 
@@ -251,22 +315,33 @@ ERL 同时维护两组神经网络：
 
 完整的数学表达式（逐层计算，$x_0 = s$）：
 
-$$ \begin{aligned} x_1 &= \tanh\!\bigl(\text{LN}(W_1 x_0 + b_1)\bigr) \\ x_2 &= \tanh\!\bigl(\text{LN}(W_2 x_1 + b_2)\bigr) \\ \mu_\theta(s) &= \text{max_action} \cdot \tanh(W_3 x_2 + b_3) \end{aligned} $$
+$$
+\begin{aligned}
+x_1 &= \tanh\!\bigl(\text{LN}(W_1 x_0 + b_1)\bigr) \\
+x_2 &= \tanh\!\bigl(\text{LN}(W_2 x_1 + b_2)\bigr) \\
+\mu_\theta(s) &= \text{max\_action} \cdot \tanh(W_3 x_2 + b_3)
+\end{aligned}
+$$
+
 
 其中 LayerNorm 定义为：
 
-$$\text{LN}(x) = \gamma \odot \frac{x - \mu_x}{\sqrt{\sigma_x^2 + \varepsilon}} + \beta,\quad \mu_x = \frac{1}{128}\sum_{i=1}^{128} x_i,\quad \sigma_x^2 = \frac{1}{128}\sum_{i=1}^{128} (x_i - \mu_x)^2$$
+$$
+\text{LN}(x) = \gamma \odot \frac{x - \mu_x}{\sqrt{\sigma_x^2 + \varepsilon}} + \beta,\quad
+\mu_x = \frac{1}{128}\sum_{i=1}^{128} x_i,\quad
+\sigma_x^2 = \frac{1}{128}\sum_{i=1}^{128} (x_i - \mu_x)^2
+$$
 
 #### 3.1.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）
 
 | 层 | 权重形状 | 偏置形状 | 参数量 |
-|----|----------|----------|--------|
+|---|---|---|---|
 | Linear₁ | [128, 17] | [128] | $128 \times 17 + 128 = 2{,}304$ |
 | LayerNorm₁ | [128] | [128] | $128 + 128 = 256$ |
 | Linear₂ | [128, 128] | [128] | $128 \times 128 + 128 = 16{,}512$ |
 | LayerNorm₂ | [128] | [128] | $128 + 128 = 256$ |
 | Linear₃ | [6, 128] | [6] | $6 \times 128 + 6 = 774$ |
-| **总计** | | | **20,102** |
+| **总计** | | | $\mathbf{20{,}102}$ |
 
 > 参数量不依赖 $d_s, d_a$ 之外的环境维度。对于 Ant ($d_s=105, d_a=8$)：Linear₁ → $128 \times 105 + 128 = 13{,}568$，Linear₃ → $8 \times 128 + 8 = 1{,}032$，总计约 $15{,}384$（总参数量随状态维增加而增长）。
 
@@ -315,21 +390,29 @@ Critic 与 Actor 的关键区别：**状态和动作通过独立的子网络处�
 
 完整的数学表达式：
 
-$$ \begin{aligned} f_s &= W_s s + b_s \quad (\text{状态子网络}) \\ f_a &= W_a a + b_a \quad (\text{动作子网络}) \\ x_1 &= \text{ELU}\bigl(\text{LN}_1([f_s; f_a])\bigr) \\ x_2 &= \text{ELU}\bigl(\text{LN}_2(W_2 x_1 + b_2)\bigr) \\ Q_\phi(s,a) &= W_3 x_2 + b_3 \end{aligned} $$
+$$
+\begin{aligned}
+f_s &= W_s s + b_s \quad (\text{状态子网络}) \\
+f_a &= W_a a + b_a \quad (\text{动作子网络}) \\
+x_1 &= \text{ELU}\bigl(\text{LN}_1([f_s; f_a])\bigr) \\
+x_2 &= \text{ELU}\bigl(\text{LN}_2(W_2 x_1 + b_2)\bigr) \\
+Q_\phi(s,a) &= W_3 x_2 + b_3
+\end{aligned}
+$$
 
 > **设计原理**：状态和动作分两路映射的原因是状态维度和动作维度在物理意义上分属不同空间（状态描述系统配置，动作描述控制输入），独立编码后再拼接可以让网络更灵活地学习两者的交互关系。
 
 #### 3.2.2 参数量计算（以 HalfCheetah: $d_s=17, d_a=6$ 为例）
 
 | 层 | 权重形状 | 偏置形状 | 参数量 |
-|----|----------|----------|--------|
+|---|---|---|---|
 | State Sub (Linear) | [200, 17] | [200] | $200 \times 17 + 200 = 3{,}600$ |
 | Action Sub (Linear) | [200, 6] | [200] | $200 \times 6 + 200 = 1{,}400$ |
 | LayerNorm₁ | [400] | [400] | $400 + 400 = 800$ |
 | Linear₂ | [300, 400] | [300] | $300 \times 400 + 300 = 120{,}300$ |
 | LayerNorm₂ | [300] | [300] | $300 + 300 = 600$ |
 | Linear₃ (输出) | [1, 300] | [1] | $1 \times 300 + 1 = 301$ |
-| **总计** | | | **127,001** |
+| **总计** | | | $\mathbf{127{,}001}$ |
 
 > Critic 参数量远大于 Actor（约 6.3 倍），因为拼接层 $400 \to 300$ 是主要的参数量瓶颈。
 
@@ -340,7 +423,7 @@ $$ \begin{aligned} f_s &= W_s s + b_s \quad (\text{状态子网络}) \\ f_a &= W
 所有层统一使用 **Xavier Uniform**（Glorot 初始化），输出层额外缩小：
 
 | 层类型 | 初始化方法 | 公式 |
-|--------|------------|------|
+|---|---|---|
 | 隐藏层权重 | `xavier_uniform_` | $W \sim U\!\bigl(-\sqrt{6/(\text{fan\_in} + \text{fan\_out})},\ +\sqrt{6/(\text{fan\_in} + \text{fan\_out})}\bigr)$ |
 | 隐藏层偏置 | `zeros_` | $b = 0$ |
 | 输出层权重 | `uniform_(-3e-3, 3e-3)` | $W_{\text{out}} \sim U(-3\times 10^{-3},\ 3\times 10^{-3})$ |
@@ -355,7 +438,7 @@ $$ \begin{aligned} f_s &= W_s s + b_s \quad (\text{状态子网络}) \\ f_a &= W
 ### 3.4 激活函数对比
 
 | 网络 | 隐藏层激活 | 输出层激活 | 选择理由 |
-|------|------------|------------|----------|
+|---|---|---|---|
 | **Actor** | tanh | tanh | tanh 输出范围 $(-1, 1)$，与动作空间匹配；梯度平滑，适合策略网络 |
 | **Critic** | ELU | 线性（无激活） | ELU 在负半轴有软饱和，比 ReLU 更稳定；线性输出层不限制 Q 值范围 |
 
@@ -363,7 +446,9 @@ $$ \begin{aligned} f_s &= W_s s + b_s \quad (\text{状态子网络}) \\ f_a &= W
 
 ### 3.5 经验回放缓冲区
 
-$$\mathcal{D} = \{(s_t,a_t,r_t,s_{t+1}, done_t)\}$$
+$$
+\mathcal{D} = \{(s_t,a_t,r_t,s_{t+1}, done_t)\}
+$$
 
 - 容量 $10^6$（cyclic / FIFO）
 - 采样批量 $T=128$
@@ -376,7 +461,7 @@ $$\mathcal{D} = \{(s_t,a_t,r_t,s_{t+1}, done_t)\}$$
 
 ### 4.1 Algorithm 1：主循环（按论文逐行还原）
 
-```
+```text
 Algorithm 1 Evolutionary Reinforcement Learning
 
  1: Initialize actor πrl and critic Qrl with weights θπ and θQ, respectively
@@ -413,7 +498,7 @@ Algorithm 1 Evolutionary Reinforcement Learning
 
 ### 4.2 Algorithm 2：Evaluate（适应度评估子过程）
 
-```
+```text
 Algorithm 2 Function Evaluate
 
  1: procedure EVALUATE(π, R, noise, ξ)
@@ -433,7 +518,7 @@ Algorithm 2 Function Evaluate
 
 ### 4.3 Algorithm 3：Mutate（变异子过程）
 
-```
+```text
 Algorithm 3 Function Mutate
 
  1: procedure MUTATE(θπ)
@@ -472,18 +557,18 @@ Algorithm 3 Function Mutate
 | 变异元素比例 | $\text{mutfrac}$ | 0.1 | 单矩阵中扰动比例 |
 | 变异强度 | $\text{mutstrength}$ | 0.1 | 普通乘性扰动 $\sigma$ |
 | Super-mut 概率 | $\text{supermutprob}$ | 0.05 | 大幅扰动分支 |
-| Reset 概率 | $\text{resetprob}$ | 0.05 | 重置到 $\mathcal{N}(0,1)$ 分支 |
+| Reset 概率 | $\text{resetprob}$ | 0.07 | 重置到 $\mathcal{N}(0,1)$ 分支 |
 
 ### 5.2 逐环境超参（论文 Table 2）
 
-| 环境 | 精英比例 $\psi$ | Trials $\xi$ | 同步周期 $\omega$ | 调参直觉 |
-|------|----------------|--------------|------------------|----------|
-| HalfCheetah-v2 | 0.1 | 1 | 10 | 低随机性，单次评估足够 |
-| Swimmer-v2 | 0.1 | 1 | 10 | 低随机性，单次评估足够 |
-| Reacher-v2 | 0.2 | 5 | 10 | 中等随机性，多次评估降方差 |
-| Ant-v2 | 0.3 | 1 | 1 | 高接触点 → 高 fitness 方差 → 高精英比例；同步频繁 |
-| Hopper-v2 | 0.3 | 5 | 1 | 高接触点 → 高精英比例；多次评估 |
-| Walker2d-v2 | 0.2 | 3 | 10 | 中等接触点，三次评估降方差 |
+| 环境 | 精英比例 $\psi$ | Trials $\xi$ | 同步周期 $\omega$ |
+|------|----------------|--------------|------------------|
+| HalfCheetah-v2 | 0.1 | 1 | 10 |
+| Swimmer-v2 | 0.1 | 1 | 10 |
+| Reacher-v2 | 0.2 | 5 | 10 |
+| Ant-v2 | 0.3 | 1 | 1 |
+| Hopper-v2 | 0.3 | 5 | 1 |
+| Walker2d-v2 | 0.2 | 3 | 10 |
 
 **调参直觉**（论文给出的解释）：
 
@@ -501,4 +586,97 @@ Algorithm 3 Function Mutate
 - **Episode 长度**：HalfCheetah 1000 步（其它使用 Gym 默认 horizon）
 - **横轴**：environment steps（种群中所有个体的步数累加）
 - **评估**：每代取 fitness 最高的 champion，做 5 个独立 rollout 取均值；与 baselines 比较时同样去掉探索噪声
-- **种子**：5 个随机种子
+- **种子**：5 个随机种子，报告均值 ± 标准差
+
+### 6.2 基线
+
+- **EA**：标准 neuroevolution（Algorithm 1 去掉 RL 部分）
+- **DDPG**：OpenAI Baselines 官方实现（仅把 batch size 改为 128）
+- **PPO**：OpenAI Baselines 官方实现（建立在 TRPO 之上）
+
+### 6.3 关键观察（Table 1 / Figure 3 / Figure 4）
+
+| 环境 | rl_actor 进入精英的比例 | 备注 |
+|------|------------------------|------|
+| HalfCheetah | 83.8% | RL 主导，但 EA 关键时刻拉出梯度陷阱 |
+| Swimmer | 4.0% | EA 主导（密集稀疏奖励的中间区域） |
+
+- **No-Selection ablation**（去掉 EA 选择算子）：性能下降约 80% → 选择压不可省
+- **运行时间**：ERL 相对 DDPG 多 ~3%（变异为主要额外开销，未并行）
+
+---
+
+## 7. 设计要点理论分析
+
+### 7.1 探索-利用平衡
+
+ERL 通过三种正交机制实现：
+
+1. **参数空间探索**：EA 的 `Mutate` 在网络权重上施加高斯/重置扰动
+2. **动作空间探索**：RL Actor 在动作上叠加 OU 噪声
+3. **梯度利用**：DDPG 通过 DPG 直接利用 $Q$ 函数提升策略
+
+### 7.2 稀疏奖励的鲁棒性
+
+EA 评估 fitness 时使用 **整个 episode 的累积奖励**，不依赖密集 reward shaping；这与 RL 的 TD bootstrap 形成互补：
+
+- TD 在稀疏奖励下"找不到目标信号"
+- EA 直接看 episode 终点，对稀疏 / 长 horizon 更鲁棒
+
+### 7.3 收敛性的非正式论证
+
+- **EA 部分**：种群冗余 + 选择压保证不会陷入单一坏局部最优
+- **RL 部分**：DDPG 在连续控制上的收敛性已有大量经验证据
+- **同步耦合**：周期 $\omega$ 控制两者的"信息熵交换速度"，过快则 EA 退化为 RL 的拷贝，过慢则信息不流通
+
+---
+
+## 8. 实现细节
+
+### 8.1 权重初始化
+
+- Actor / Critic 使用 **Xavier 初始化**
+- 论文 Appendix A 未明示输出层缩放；常见实现（参考 DDPG 原文与官方代码仓库）采用 **最后一层缩放 $10^{-3}$** 以保证初始策略接近零均值动作
+
+### 8.2 噪声策略
+
+- **OU 噪声**（动作空间，仅 `rl_actor`）：
+
+$$
+dx_t = \theta(\mu - x_t)\,dt + \sigma\,dW_t
+$$
+
+- **高斯变异**（参数空间，仅种群非精英个体）：见 Algorithm 3
+
+### 8.3 工程并行化
+
+- 论文未做种群级并行（运行时与 DDPG 相当）
+- 自然并行点：种群评估、经验收集、梯度计算
+
+---
+
+## 9. 参考文献
+
+[1] Khadka, S., & Tumer, K. (2018). *Evolution-Guided Policy Gradient in Reinforcement Learning*. NeurIPS 2018. arXiv:1805.07917.
+
+[2] Lillicrap, T. P., Hunt, J. J., Pritzel, A., et al. (2016). *Continuous control with deep reinforcement learning* (DDPG). ICLR 2016. arXiv:1509.02971.
+
+[3] Silver, D., Lever, G., Heess, N., et al. (2014). *Deterministic Policy Gradient Algorithms*. ICML 2014.
+
+[4] Schulman, J., Wolski, F., Dhariwal, P., Radford, A., & Klimov, O. (2017). *Proximal Policy Optimization Algorithms* (PPO). arXiv:1707.06347.
+
+[5] Schulman, J., Levine, S., Moritz, P., Jordan, M. I., & Abbeel, P. (2015). *Trust Region Policy Optimization* (TRPO). ICML 2015.
+
+[6] Salimans, T., Ho, J., Chen, X., Sidor, S., & Sutskever, I. (2017). *Evolution Strategies as a Scalable Alternative to Reinforcement Learning*. arXiv:1703.03864.
+
+[7] Stanley, K. O., & Miikkulainen, R. (2002). *Evolving Neural Networks through Augmenting Topologies* (NEAT). Evolutionary Computation, 10(2).
+
+[8] Such, F. P., Madhavan, V., Conti, E., et al. (2017). *Deep Neuroevolution: Genetic Algorithms are a Competitive Alternative for Training Deep Neural Networks for Reinforcement Learning*. arXiv:1712.06567.
+
+[9] Ba, J. L., Kiros, J. R., & Hinton, G. E. (2016). *Layer Normalization*. arXiv:1607.06450.
+
+[10] Clevert, D. A., Unterthiner, T., & Hochreiter, S. (2016). *Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)*. ICLR 2016.
+
+[11] Brockman, G., Cheung, V., Pettersson, L., et al. (2016). *OpenAI Gym*. arXiv:1606.01540.
+
+[12] Todorov, E., Erez, T., & Tassa, Y. (2012). *MuJoCo: A Physics Engine for Model-Based Control*. IROS 2012.

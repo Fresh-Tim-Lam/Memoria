@@ -29,9 +29,10 @@ _IMG_MIME = {
 _kb_root: str | None = None
 
 
-def set_kb_root(path: str | None) -> None:
+def set_kb_root(path: str) -> None:
     global _kb_root
     _kb_root = path
+    print(f"[STATIC] set_kb_root: _kb_root 设为 {path}")
 
 
 def get_kb_root() -> str | None:
@@ -42,14 +43,13 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
     """Try to serve a KB file. Returns None if not applicable."""
     kb = _kb_root
     if not kb:
-        print(f"[files] no KB root set")
+        print(f"[STATIC] _serve_kb_file: _kb_root 为 None，无法提供 /files/{filepath}")
         return None
     # Decode each path segment individually (since / was not encoded)
     decoded = "/".join(urllib.parse.unquote(s) for s in filepath.split("/"))
     # Resolve relative to KB root
     full = os.path.normpath(os.path.join(kb, decoded))
     kb_norm = os.path.normpath(kb)
-    print(f"[files] kb_root={kb!r}, filepath={filepath!r}, decoded={decoded!r}, full={full!r}")
     # On Windows, normalize case for comparison
     if os.name == "nt":
         full_cmp = full.lower()
@@ -58,15 +58,18 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
         full_cmp = full
         kb_cmp = kb_norm
     if not full_cmp.startswith(kb_cmp):
-        print(f"[files] access denied: full={full_cmp!r} not under kb={kb_cmp!r}")
+        print(f"[STATIC] _serve_kb_file: 路径逃逸 {full} 不在 {kb_norm} 下")
         return None
     if not os.path.isfile(full):
-        print(f"[files] file not found: {full!r}")
+        print(f"[STATIC] _serve_kb_file: 文件不存在 {full} (请求: /files/{filepath})")
         return None
     ext = os.path.splitext(full)[1].lower()
     mime = _IMG_MIME.get(ext, "application/octet-stream")
-    print(f"[files] serving: {full!r} mime={mime}")
-    return bottle.static_file(os.path.basename(full), root=os.path.dirname(full), mimetype=mime)
+    fsize = os.path.getsize(full)
+    print(f"[STATIC] _serve_kb_file: 提供文件 {full} (MIME: {mime}, {fsize} bytes)")
+    with open(full, "rb") as f:
+        data = f.read()
+    return bottle.HTTPResponse(status=200, body=data, headers={"Content-Type": mime, "Content-Length": str(len(data))})
 
 
 def create_app() -> bottle.Bottle:
@@ -86,6 +89,9 @@ def create_app() -> bottle.Bottle:
             if result is not None:
                 return result
             return bottle.HTTPResponse(status=404, body="File not found in KB")
+        # Diagnostic: check KB root
+        if path == "_kb_root_diag":
+            return {"kb_root": _kb_root}
         # Static asset serving
         ext = os.path.splitext(path)[1].lower()
         mime = _JS_MIME.get(ext)

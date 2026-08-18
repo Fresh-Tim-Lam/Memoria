@@ -1,0 +1,19 @@
+schema_version: 1
+file: test-content.md
+knowledge_points: []
+links:
+- anchor_text: 解析
+  occurrence: 0
+  targets:
+  - ？
+  edge_type: reference
+  target_edges:
+    ？:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - ？
+  instances:
+  - line: 121
+    wrapped: true
+  excluded: []
