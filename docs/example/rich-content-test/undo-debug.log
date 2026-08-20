@@ -7002,3 +7002,36 @@
 [23:52:49.015] [UNDO] recordUndo push pre=bi=16 path=[0,0,0] off=0 | L17:3 [[[\|c|:yellow|] bodyLen=548 | undo=8 redo=0
 [23:52:49.015] [UNDO] commitSelection bi=16 start=bi=16 path=[0,0] off=0 | L17:3 [[[\|c|:yellow|] end=bi=16 path=[1] off=30 | L17:44 [frac{P(B|||A)P(A)}{]
 [23:52:49.022] [UNDO] recordGroup kind=format post=bi=16 path=[1] off=30 | L17:44 [(A)}{P(B|)|}$]
+[00:13:25.761] [UNDO] resetHistory undo=0 redo=0
+[00:13:32.587] [UNDO] resetHistory undo=0 redo=0
+[00:27:40.961] [UNDO] resetHistory undo=0 redo=0
+[00:27:44.562] [UNDO] resetHistory undo=0 redo=0
+[00:28:34.359] [UNDO] currentSnapshot cursor=bi=8 path=[0] off=6 | L9:9 [# 2. 公式在|字|体颜色内] | undo=0 redo=0
+[00:28:34.359] [UNDO] beginUndoGroup snapshot cursor=bi=8 path=[0] off=6 | L9:9 [# 2. 公式在|字|体颜色内] | undo=0 redo=0
+[00:28:34.368] [UNDO] endUndoGroup pushed cursor=bi=8 path=[0] off=6 | L9:9 [# 2. 公式在|字|体颜色内] | undo=1 redo=0
+[00:37:24.122] [UNDO] resetHistory undo=0 redo=0
+[00:37:28.847] [UNDO] resetHistory undo=0 redo=0
+[00:37:29.143] [UNDO] resetHistory undo=0 redo=0
+[00:37:54.933] [UNDO] beginUndo kind=format force=true pre=bi=12 path=[4,0] off=0 | L13:80 [purple|$|a|^2 + b^2] coalesce=false | undo=0 redo=0
+[00:37:54.933] [UNDO] recordUndo push pre=bi=12 path=[4,0] off=0 | L13:80 [purple|$|a|^2 + b^2] bodyLen=534 | undo=1 redo=0
+[00:37:54.933] [UNDO] commitSelection bi=12 start=bi=12 path=[3,0,0] off=2 | L13:63 [ed0|**理 |*|*]][[\c:] end=bi=12 path=[4,0] off=15 | L13:95 [^2 = c^2|$|]]]
+[00:37:54.940] [UNDO] recordGroup kind=format post=bi=12 path=[4,0] off=15 | L13:95 [^2 = c^2|$|]]]
+[00:37:58.682] [UNDO] beginUndo kind=format force=true pre=bi=12 path=[4,0] off=0 | L13:68 [*理 **]][|[|\c:purpl] coalesce=false | undo=1 redo=0
+[00:37:58.682] [UNDO] recordUndo push pre=bi=12 path=[4,0] off=0 | L13:68 [*理 **]][|[|\c:purpl] bodyLen=534 | undo=2 redo=0
+[00:37:58.682] [UNDO] commitSelection bi=12 start=bi=12 path=[3,0,0] off=2 | L13:63 [ed0|**理 |*|*]][[\c:] end=bi=12 path=[4] off=15 | L13:83 [ple|$a^2| |+ b^2 = ]
+[00:37:58.686] [UNDO] recordGroup kind=format post=bi=12 path=[4] off=15 | L13:83 [^2 = c^2|$|]
+[00:38:07.807] [UNDO] currentSnapshot cursor=bi=14 path=[1,0] off=2 | L15:20 [ellow|嵌套|组|合]]] | undo=2 redo=0
+[00:38:07.807] [UNDO] beginUndoGroup snapshot cursor=bi=14 path=[1,0] off=2 | L15:20 [ellow|嵌套|组|合]]] | undo=2 redo=0
+[00:38:07.811] [UNDO] endUndoGroup pushed cursor=bi=14 path=[1,0] off=2 | L15:51 [ellow|组合|]|]] | undo=3 redo=0
+[00:38:11.124] [UNDO] currentSnapshot cursor=bi=14 path=[0,1,0] off=2 | L15:33 [ellow|嵌套|]|]]][[\c:] | undo=3 redo=0
+[00:38:11.124] [UNDO] beginUndoGroup snapshot cursor=bi=14 path=[0,1,0] off=2 | L15:33 [ellow|嵌套|]|]]][[\c:] | undo=3 redo=0
+[00:38:11.127] [UNDO] endUndoGroup pushed cursor=bi=14 path=[0,1,0] off=2 | L15:26 [a6ed0|3.| |嵌套]][[\c] | undo=4 redo=0
+[00:38:16.011] [UNDO] currentSnapshot cursor=bi=14 path=[1,0] off=2 | L15:45 [ellow|组合|]|]] | undo=4 redo=0
+[00:38:16.011] [UNDO] beginUndoGroup snapshot cursor=bi=14 path=[1,0] off=2 | L15:45 [ellow|组合|]|]] | undo=4 redo=0
+[00:38:16.015] [UNDO] endUndoGroup pushed cursor=bi=14 path=[1,0] off=2 | L15:33 [. 嵌套]]组合|·|] | undo=5 redo=0
+[00:38:17.827] [UNDO] currentSnapshot cursor=bi=14 path=[1] off=2 | L15:33 [. 嵌套]]组合|·|] | undo=5 redo=0
+[00:38:17.827] [UNDO] beginUndoGroup snapshot cursor=bi=14 path=[1] off=2 | L15:33 [. 嵌套]]组合|·|] | undo=5 redo=0
+[00:38:17.831] [UNDO] endUndoGroup pushed cursor=bi=14 path=[1] off=2 | L15:25 [. 嵌套]]组合|·|] | undo=6 redo=0
+[00:38:22.336] [UNDO] currentSnapshot cursor=bi=14 path=[1] off=2 | L15:25 [. 嵌套]]组合|·|] | undo=6 redo=0
+[00:38:22.336] [UNDO] beginUndoGroup snapshot cursor=bi=14 path=[1] off=2 | L15:25 [. 嵌套]]组合|·|] | undo=6 redo=0
+[00:38:22.341] [UNDO] endUndoGroup pushed cursor=bi=14 path=[1] off=2 | L15:0 [|#|# 3. 嵌套组] | undo=7 redo=0

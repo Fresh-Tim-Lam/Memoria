@@ -9035,9 +9035,64 @@
     if (_fmtStateRaf) return;
     _fmtStateRaf = requestAnimationFrame(() => {
       _fmtStateRaf = null;
-      updateFormatToolbarState();
+      try { updateFormatToolbarState(); } catch (err) { log("MAP", "sel toolbar ERR " + err); }
+      try { _updateAtomicSelectionHighlight(); } catch (err) { log("MAP", "sel highlight ERR " + err); }
     });
   });
+
+  // contentEditable=false 原子块（行内公式 .m0-math 等）浏览器不渲染原生
+  // 选区高亮；检测选区是否覆盖这些原子块，动态加 .m0-sel-covered 高亮，
+  // 让用户涂抹时能看到公式也被选中。
+  function _updateAtomicSelectionHighlight() {
+    const preview = $("#preview");
+    if (!preview) return;
+    const atoms = preview.querySelectorAll(".m0-math");
+    if (!atoms.length) return;
+    const sel = window.getSelection();
+    let r = null;
+    let domDesc = "none";
+    if (sel && sel.rangeCount && !sel.isCollapsed) {
+      const rr = sel.getRangeAt(0);
+      if (preview.contains(rr.startContainer) && preview.contains(rr.endContainer)) {
+        r = rr;
+        domDesc = describeRange(rr);
+      }
+    }
+    let covered = 0;
+    for (let i = 0; i < atoms.length; i++) {
+      const el = atoms[i];
+      let isCovered = false;
+      if (r) {
+        try {
+          const er = document.createRange();
+          er.selectNode(el);
+          // 相交：选区的 END 在原子块 START 之后 且 选区的 START 在原子块 END 之前
+          const c1 = r.compareBoundaryPoints(Range.END_TO_START, er);
+          const c2 = r.compareBoundaryPoints(Range.START_TO_END, er);
+          isCovered = c1 > 0 && c2 < 0;
+          // 兜底：选区边界直接落在公式元素上（点击公式整体选中时，
+          // Range 为 [el,0]→[el,1]，边界节点就是公式本身，按节点关系判定）
+          if (!isCovered && (r.startContainer === el || r.endContainer === el)) {
+            isCovered = true;
+          }
+          if (isCovered) {
+            log("MAP", "selHit cmp=(" + c1 + "," + c2 + ") el=#" + (el.textContent || "").slice(0, 12) + " startIsEl=" + (r.startContainer === el) + " endIsEl=" + (r.endContainer === el));
+          }
+        } catch (err) { log("MAP", "selHit ERR " + err); }
+      }
+      el.classList.toggle("m0-sel-covered", isCovered);
+      if (isCovered) covered++;
+    }
+    log("MAP", "selHighlight sel=" + domDesc + " mathTotal=" + atoms.length + " covered=" + covered);
+  }
+
+  /** 选区 Range 简要描述（用于 MAP 日志） */
+  function describeRange(r) {
+    if (!r) return "null";
+    const s = (r.startContainer.nodeType === 3 ? "text#" + (r.startContainer.textContent || "").slice(0, 12) : (r.startContainer.tagName || "?") + "." + (r.startContainer.className || "")) + "@" + r.startOffset;
+    const e = (r.endContainer.nodeType === 3 ? "text#" + (r.endContainer.textContent || "").slice(0, 12) : (r.endContainer.tagName || "?") + "." + (r.endContainer.className || "")) + "@" + r.endOffset;
+    return "[" + s + " -> " + e + "]";
+  }
 
   function bindFormatToolbar() {
     // 捕获阶段记录预览区选区，避免点击按钮后选区丢失

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-08-20T15:51:39.527157+00:00'
+updated_at: '2026-08-20T16:37:22.615388+00:00'
 items:
 - pending_id: 3e2681a94aec3fdd
   file: _image-edit-test.md
@@ -94,29 +94,28 @@ items:
       snippet: '## 2. 公式在字体颜色内'
       line_hint: 9
     end:
-      snippet: '[[\c:purple|勾股定]][[\c:#9a6ed0|**理 **]][[\c:purple|$a^2 + b^2 = c^2$]]'
+      snippet: '[[\c:purple|勾]][[\c:#9a6ed0|股]][[\c:yellow|定]][[\c:#9a6ed0|**理 **]][[\c:purple|$'
       line_hint: 13
   status: pending
-- pending_id: 19dc85ec6fe68fc6
+- pending_id: da22639f5931d6ae
   file: _math-style-test.md
   kind: heading
-  name: 3. 嵌套组合
+  name: 3. [[\c:yellow|嵌套组合]]
   range:
     start:
-      snippet: '## 3. 嵌套组合'
+      snippet: '## 3. [[\c:yellow|嵌套组合]]'
       line_hint: 15
     end:
-      snippet: '[[\h:green|**$E=mc^2$**]][[\h:green:#9a6ed0|** 和**]][[\h:green|**
-        **$P(A|B)=\fra'
+      snippet: '**$E=mc^2$ 和 **$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$'
       line_hint: 17
   status: pending
-- pending_id: 2596b10b8e92bf0a
+- pending_id: f89ad0b5ed5d1f18
   file: _math-style-test.md
   kind: heading
-  name: 4. 多公式[[\c:#9a6ed0|**单容器**]]
+  name: '[[\c:yellow|4. 多]]公式[[\c:#9a6ed0|**单**]][[\c:yellow|**容器**]]'
   range:
     start:
-      snippet: '## 4. 多公式[[\c:#9a6ed0|**单容器**]]'
+      snippet: '## [[\c:yellow|4. 多]]公式[[\c:#9a6ed0|**单**]][[\c:yellow|**容器**]]'
       line_hint: 19
     end:
       snippet: '[[\h:blue|$a+b$ 与 $c+d$]]'
@@ -164,8 +163,7 @@ items:
   name: '**$P'
   range:
     start:
-      snippet: '[[\h:green|**$E=mc^2$**]][[\h:green:#9a6ed0|** 和**]][[\h:green|**
-        **$P(A|B)=\fra'
+      snippet: '**$E=mc^2$ 和 **$P(A|B)=\frac{P(B|A)P(A)}{P(B)}$'
       line_hint: 17
     end:
       snippet: ''

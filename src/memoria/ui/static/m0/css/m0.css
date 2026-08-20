@@ -3658,6 +3658,15 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .m0-hl-orange { background-color: #ffe8cc; }                /* 橙底 */
 .m0-hl-yellow { background-color: #fef3ac; }                /* 亮黄 */
 
+/* ── 原子块选区覆盖高亮 ── */
+/* contentEditable=false 元素（行内公式 .m0-math 等）浏览器不渲染原生选区
+   高亮，用户看不到选中范围；JS 在 selectionchange 中检测选区覆盖并加此 class */
+.m0-math.m0-sel-covered {
+    background-color: rgba(37, 99, 235, 0.25);
+    border-radius: 4px;
+    box-shadow: 0 0 0 1.5px rgba(37, 99, 235, 0.5);
+}
+
 /* ── Image sizing in preview ── */
 .m0-preview img {
     max-width: 35%;
