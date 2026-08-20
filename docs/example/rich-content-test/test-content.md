@@ -53,16 +53,16 @@ concepts:
 
 ### 图片
 
-sada撒大苏打啊啊是大[[\h:blue|da是adsad dadasd]]
-[[\h:blue|**啊实**]][[\h:blue:purple|**打实a|**]]
-[[\h:blue:purple|sss]]
-[[\h:blue:purple|*撒旦a的撒*]]
+sad[[\h:#d2986f:#9a6ed0|**a撒*****大***]][[\h:green:gray|***苏打***]][[\h:#00cc00:#7721e0|***啊啊是大***]][[\h:green:gray|***da是adsad dadasd***]]
+[[\h:#d2986f:#9a6ed0|***啊实打实a|***]]
+[[\h:green:purple|***|sss***]]
+[[\h:green:gray|***撒旦a的撒***]]
 
 [[\h:blue:purple|*是****的***]]
 
 
-[[\h:blue:yellow|***撒旦飒飒的撒打算撒的撒大是***]]
-[[\h:blue:yellow|***撒打算***]]
+[[\h:#d2986f:#9a6ed0|***撒旦飒飒的撒打算撒的撒大是***]]
+[[\h:#d2986f:#9a6ed0|***撒打算***]]
 
 
 
@@ -197,17 +197,17 @@ graph LR
 - Python 判断：`x == y`
 - 数学等价：$A \iff B$
 
-## 公式测试
+## 公式测试|
 
 ### 行内公式
 
-爱因斯坦质能方程 $E = mc^2$ 是物理学最著名的公式之一。
+爱因斯坦质能方程* ****$E = mc^2$*** 是物理学最著名的公式之一。
 
 欧拉公式 $e^{i\pi} + 1 = 0$ 被誉为最美的数学公式。
 
-贝叶斯定理：$P(A|B) = \frac{P(B|A) P(A)}{P(B)}$
+贝叶斯定理[[\h:#ad4d09|：**$P(A|B) = frac{P(B|A) P(A)}{P(B)}$**]]
 
-### 块级公式
+### 块[[\h:#ad4d09|级公式]]
 
 $$
 \mathcal{L}(\theta) = \mathbb{E}_{(s,a) \sim \mathcal{D}} \left[ \left( r + \gamma \max_{a'} Q(s', a'; \theta^-) - Q(s, a; \theta) \right)^2 \right]
@@ -217,9 +217,9 @@ $$
 \nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta \log \pi_\theta(a|s) \cdot Q^{\pi_\theta}(s, a) \right]
 $$
 
-### 混合：公式 + 荧光笔
+### 混合：**公式 +** 荧光笔
 
-[[\h:red|注意力机制的核心公式]]：
+[[\h:#ad4d09:#9a6ed0|*注意力机制的核心公式*]]：
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right) V
@@ -235,8 +235,8 @@ P(s_{t+1} | s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} | s_t)
 $$
 ### 表格 + 荧光笔
 
-| 项目 | 状态 | 备注 |
-|------|------|------|
+| 项目 | 状态 | 备注 | |
+|------|------|------|-|
 | 图片渲染 | [[\h:green|已实现]] | 网络+本地 |
 | Mermaid | [[\h:orange|待实现]] | 需引入 mermaid.js |
 | 荧光笔 | [[\h:red|待实现]] | 语法已设计 |

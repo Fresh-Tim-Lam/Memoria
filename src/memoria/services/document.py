@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import logging
 import os
 from dataclasses import dataclass, field
 
 from memoria.range.constants import SNIPPET_MAX_LEN
 from memoria.graph.edge_types import normalize_link_edge_type, normalize_link_relevance, normalize_target_edges
+
+logger = logging.getLogger(__name__)
 from memoria.services.check_report import summarize_check_counts
 from memoria.services.kp_index import build_kp_index
 from memoria.services.kp_resolver import resolve_knowledge_points
@@ -188,8 +191,16 @@ class DocumentService:
         self.kb_path = path
         self._cache.clear()
         remember_last_kb_path(path)
-        ensure_manifest_baseline(path)
-        sync_kb_pending(path)
+        # manifest 基线 / pending 同步为启动辅助动作：失败降级（记录日志），
+        # 不应阻断应用启动（此前 .bak 备份 PermissionError 会让发布态启动崩溃）
+        try:
+            ensure_manifest_baseline(path)
+        except Exception:  # noqa: BLE001
+            logger.warning("ensure_manifest_baseline failed for %s", path, exc_info=True)
+        try:
+            sync_kb_pending(path)
+        except Exception:  # noqa: BLE001
+            logger.warning("sync_kb_pending failed for %s", path, exc_info=True)
         try:
             from memoria.services.embedding_provider import warmup_embedding
 

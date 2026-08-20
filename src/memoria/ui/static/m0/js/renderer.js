@@ -103,8 +103,15 @@ window.MemoriaRenderer = (function () {
         el.className = "m0-src-block";
         el.setAttribute("data-m0-block-index", blockIndex);
         if (block.children) {
+          // 内层段落渲染为普通 <p>（不带 m0-src-block / block-index），
+          // 否则 domToAst 会定位到内层段落且多段落索引相同，导致映射错乱
           for (var qi = 0; qi < block.children.length; qi++) {
-            var qEl = renderBlock(block.children[qi], blockIndex);
+            var inner = block.children[qi];
+            if (!inner) continue;
+            var qEl = document.createElement("p");
+            renderInlineList(inner.children, qEl);
+            // 空引用段落补 <br> 占位
+            if (!inner.children || inner.children.length === 0) qEl.innerHTML = "<br>";
             el.appendChild(qEl);
           }
         }

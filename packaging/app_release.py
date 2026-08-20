@@ -6,7 +6,7 @@ import os
 import sys
 from pathlib import Path
 
-os.environ.setdefault("MEMORIA_SHELL", "pyqt6")
+os.environ.setdefault("MEMORIA_SHELL", "pywebview")
 os.environ.setdefault("MEMORIA_MODE", "release")
 
 _root = Path(__file__).resolve().parents[1]
@@ -16,5 +16,24 @@ if _src.is_dir() and str(_src) not in sys.path:
 
 from memoria.app.desktop import main
 
+
+def _dump_crash_log() -> None:
+    """windowed 模式 stderr 不可见，异常写入 exe 同目录 crash.log 便于定位。"""
+    import traceback
+
+    try:
+        target = os.path.join(
+            os.path.dirname(os.path.abspath(sys.executable)), "crash.log"
+        )
+        with open(target, "w", encoding="utf-8") as f:
+            traceback.print_exc(file=f)
+    except Exception:
+        pass
+
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except BaseException:
+        _dump_crash_log()
+        raise

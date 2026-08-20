@@ -34,6 +34,20 @@ window.MemoriaLexer = (function () {
   }
 
   /**
+   * 返回 tokens 中某个 open 类型的未匹配深度（>0 表示挂起）
+   */
+  function _unmatchedDepth(tokens, openType) {
+    var closeType = _PAIR_CLOSE[openType];
+    if (!closeType) return 0;
+    var depth = 0;
+    for (var k = 0; k < tokens.length; k++) {
+      if (tokens[k].type === openType) depth++;
+      else if (tokens[k].type === closeType) depth--;
+    }
+    return depth > 0 ? depth : 0;
+  }
+
+  /**
    * 将单行源码解析为 Token 数组
    * @param {string} sourceLine — 一行源码
    * @param {number} [srcOffset=0] — 该行第一个字符在整个文档中的列偏移
@@ -113,27 +127,47 @@ window.MemoriaLexer = (function () {
         }
       }
 
-      // ── 粗斜体 *** ──
-      if (ch === "*" && rem >= 3 && sourceLine[i + 1] === "*" && sourceLine[i + 2] === "*") {
-        var biType = _hasUnmatched(tokens, "bold_italic_open") ? "bold_italic_close" : "bold_italic_open";
-        tokens.push(make(biType, "***", i, srcOffset));
-        i += 3;
-        continue;
-      }
-
-      // ── 粗体 ** ──
-      if (ch === "*" && rem >= 2 && sourceLine[i + 1] === "*") {
-        var bType = _hasUnmatched(tokens, "bold_open") ? "bold_close" : "bold_open";
-        tokens.push(make(bType, "**", i, srcOffset));
-        i += 2;
-        continue;
-      }
-
-      // ── 斜体 * ──
+      // ── 粗斜体/粗体/斜体：整段星号统一分配 ──
+      // 旧逻辑按 *** → ** → * 贪心消费：遇到斜体未闭合的星号串时，
+      // 会把 *** 当作 open 而把斜体的 close 挤到后面，产生字面 *** 泄漏。
+      // 新逻辑：先按 LIFO（bi ⊂ b ⊂ i，最内层先关）闭合挂起的 open，
+      // 再用剩余星号打开新分隔符。
       if (ch === "*") {
-        var itType = _hasUnmatched(tokens, "italic_open") ? "italic_close" : "italic_open";
-        tokens.push(make(itType, "*", i, srcOffset));
-        i += 1;
+        var runLen = 1;
+        while (i + runLen < len && sourceLine[i + runLen] === "*") runLen++;
+        var rest = runLen;
+        var runPos = i;
+        var dBI = _unmatchedDepth(tokens, "bold_italic_open");
+        var dB = _unmatchedDepth(tokens, "bold_open");
+        var dI = _unmatchedDepth(tokens, "italic_open");
+        // 闭合阶段：斜体仅在剩余星号能构成新分隔符（>=3）或仅剩单星时闭合，
+        // 避免把 ** 误当斜体闭合（如 *a**b**c* 应保持嵌套 bold）
+        if (dBI > 0 && rest >= 3) {
+          tokens.push(make("bold_italic_close", "***", runPos, srcOffset));
+          runPos += 3; rest -= 3;
+        }
+        if (dB > 0 && rest >= 2) {
+          tokens.push(make("bold_close", "**", runPos, srcOffset));
+          runPos += 2; rest -= 2;
+        }
+        if (dI > 0 && rest >= 1 && (rest === 1 || rest >= 3)) {
+          tokens.push(make("italic_close", "*", runPos, srcOffset));
+          runPos += 1; rest -= 1;
+        }
+        // 打开阶段：剩余星号优先形成最长分隔符
+        if (rest >= 3) {
+          tokens.push(make("bold_italic_open", "***", runPos, srcOffset));
+          runPos += 3; rest -= 3;
+        }
+        if (rest >= 2) {
+          tokens.push(make("bold_open", "**", runPos, srcOffset));
+          runPos += 2; rest -= 2;
+        }
+        if (rest >= 1) {
+          tokens.push(make("italic_open", "*", runPos, srcOffset));
+          runPos += 1; rest -= 1;
+        }
+        i += runLen;
         continue;
       }
 

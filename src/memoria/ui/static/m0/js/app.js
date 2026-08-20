@@ -51,6 +51,16 @@
 
   window.state = state;  // 导出给 edit-handler.js 等外部模块使用
 
+  // 块编辑退出后刷新预览/写盘的钩子（edit-handler.js 依赖，原为未定义引用）
+  function _scheduleRenderHook() {
+    scheduleRenderSync();
+  }
+  function _markDirtyHook() {
+    markDirty();
+  }
+  window._scheduleRender = _scheduleRenderHook;
+  window._markDirty = _markDirtyHook;
+
   // ── Document sync (in-memory + disk) ──
   const RENDER_DEBOUNCE_MS = 80;   // 停止编辑 80ms 后同步预览（纯内存，接近零延迟）
   const SAVE_DEBOUNCE_MS  = 1500;  // 停止编辑 1.5s 后写盘
@@ -6060,6 +6070,7 @@
   }
 
   async function onMemoriaLinkClick(el) {
+    if (_brush) return; // 画笔模式下不跳转，避免涂抹时误触链接
     const target = el.dataset.linkTarget;
     const type = el.dataset.linkType || "";
     if (!target) return;
@@ -7103,6 +7114,11 @@
       var container = preview.querySelector(".m0-preview-content") || preview;
       R.renderRange(_doc, blockIndex, blockIndex + 1, container);
       stampBlockLines(preview, _doc);
+      // 增量渲染替换了 block DOM：.m0-math span 是新节点，需重新触发 MathJax 排版，
+      // 否则行内公式会以裸文本显示（样式应用/笔刷后“公式预览失败”，全量刷新才恢复）
+      if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+        try { window.MathJax.typesetPromise([container]); } catch (e) { }
+      }
       // 增量渲染出的新 block 里可能有 wikilink，需重新做后处理并绑定跳转事件
       postProcessWikilinks();
       bindPreviewLinks();
@@ -7253,14 +7269,24 @@
 
       // 叶节点（TEXT）直接切分
       if (nodePath.length === 1) {
-        if (node.type !== "text") return null;
-        var lText = node.content.slice(0, offset);
-        var rText = node.content.slice(offset);
-        var left = before.slice();
-        var right = after.slice();
-        if (lText) left.push(A.text(lText));
-        if (rText) right.unshift(A.text(rText));
-        return { left: left, right: right };
+        if (node.type === "text") {
+          var lText = node.content.slice(0, offset);
+          var rText = node.content.slice(offset);
+          var left = before.slice();
+          var right = after.slice();
+          if (lText) left.push(A.text(lText));
+          if (rText) right.unshift(A.text(rText));
+          return { left: left, right: right };
+        }
+        // 原子叶子（行内公式/链接等 contentEditable=false，不可从中间拆分）：
+        // 光标/选区边界在叶子开头（offset<=0）→ 整体归右侧；在叶子内部/末尾 → 整体归左侧
+        var atomic = (node.type === "math_inline" || node.type === "wiki_link" || node.type === "link");
+        if (!atomic) return null;
+        var left2 = before.slice();
+        var right2 = after.slice();
+        if (offset > 0) left2.push(node);
+        else right2.unshift(node);
+        return { left: left2, right: right2 };
       }
 
       // 嵌套容器节点：递归拆分内部，再把容器节点复制到左右两侧
@@ -8438,7 +8464,8 @@
       if (!block) return null;
 
       var isList = block.type === "list";
-      var root, startPath, endPath, itemIdx;
+      var isQuote = block.type === "blockquote";
+      var root, startPath, endPath, itemIdx, quoteIdx;
       if (isList) {
         if (!start.nodePath || !end.nodePath || !start.nodePath.length || !end.nodePath.length) return null;
         itemIdx = start.nodePath[0];
@@ -8448,8 +8475,24 @@
         root = item.children || [];
         startPath = start.nodePath.slice(1);
         endPath = end.nodePath.slice(1);
+      } else if (isQuote) {
+        // 引用块：block.children 是块级段落，需下钻到光标所在段落的 inline 树，
+        // 否则会把段落节点当作内联节点处理，导致 AST 非法嵌套、文本丢失
+        if (!start.nodePath || !end.nodePath || !start.nodePath.length || !end.nodePath.length) return null;
+        quoteIdx = start.nodePath[0];
+        if (quoteIdx !== end.nodePath[0]) { log("STYLE", "_extract FAIL: 跨引用段"); return null; }
+        var innerBlock = block.children && block.children[quoteIdx];
+        if (!innerBlock || !innerBlock.children || !innerBlock.children.length) {
+          log("STYLE", "_extract FAIL: 引用段为空/无效");
+          return null;
+        }
+        if (NON_EDITABLE[innerBlock.type]) { log("STYLE", "_extract FAIL: 引用段不可编辑"); return null; }
+        root = innerBlock.children;
+        startPath = start.nodePath.slice(1);
+        endPath = end.nodePath.slice(1);
       } else {
         itemIdx = 0;
+        quoteIdx = 0;
         root = block.children || [];
         startPath = start.nodePath || [];
         endPath = end.nodePath || [];
@@ -8469,7 +8512,9 @@
         blockIndex: start.blockIndex,
         block: block,
         isList: isList,
+        isQuote: isQuote,
         itemIdx: itemIdx,
+        quoteIdx: quoteIdx,
         before: splitStart.left,
         middle: splitStart.right,
         after: splitEnd.right,
@@ -8499,19 +8544,29 @@
 
     /** 对单个选区上下文应用样式并写回 AST；返回选区起止绝对坐标（不 commit、不恢复选区） */
     function _applyStyleToBlock(ctx, formatType, color, forceMode) {
+      // 必须先于 mergeAdjacentInline 计算 before/middle 的渲染长度！
+      // mergeAdjacentInline 会原地把相邻样式节点合并进第一个节点（共享对象引用），
+      // 合并后再读 ctx.before/ctx.middle 会得到被污染的整块长度，
+      // 导致 selStart/selEnd 错位 → restoreSelection 恢复的选区偏移错误 →
+      // 笔刷链（_applyBrushToRange 逐样式重取选区）后续样式应用到错误范围（"刷覆盖不了"）。
+      var selStartRendered = renderedLenOfNodes(ctx.before);
+      var selEndRendered = selStartRendered + renderedLenOfNodes(ctx.middle);
       var transformed = _transformMiddle(formatType, color, ctx.middle, forceMode);
       var merged = mergeAdjacentInline(ctx.before.concat(transformed).concat(ctx.after));
       if (ctx.isList) ctx.block.items[ctx.itemIdx].children = merged;
+      else if (ctx.isQuote) ctx.block.children[ctx.quoteIdx].children = merged;
       else ctx.block.children = merged;
 
-      var selStartRendered = renderedLenOfNodes(ctx.before);
-      var selEndRendered = selStartRendered + renderedLenOfNodes(ctx.middle);
       var selStart = renderedOffsetToPath(merged, selStartRendered);
       var selEnd = renderedOffsetToPath(merged, selEndRendered);
-      if (!selEnd) selEnd = lastTextPath(merged);
+      if (!selEnd) {
+        // lastTextPath 返回 {path, offset}，需归一化后再使用（不能直接读 .nodePath）
+        var lp = lastTextPath(merged);
+        selEnd = lp ? { nodePath: lp.path, offset: lp.offset } : null;
+      }
       if (!selStart) selStart = selEnd;
 
-      var prefix = ctx.isList ? [ctx.itemIdx] : [];
+      var prefix = ctx.isList ? [ctx.itemIdx] : (ctx.isQuote ? [ctx.quoteIdx] : []);
       return {
         selStart: { nodePath: prefix.concat(selStart.nodePath), offset: selStart.offset },
         selEnd: { nodePath: prefix.concat(selEnd.nodePath), offset: selEnd.offset },
@@ -8519,11 +8574,11 @@
     }
 
     /** 单 block 样式应用：变换 + commit + 恢复选区 */
-    function _commitSingleStyle(ctx, formatType, color) {
+    function _commitSingleStyle(ctx, formatType, color, forceApply) {
       if (NON_EDITABLE[ctx.block.type]) return { ok: false, message: "该内容不可编辑" };
       var preCursor = cloneCursor(ctx.start);
       log("STYLE", "single before=[" + _fmtNodes(ctx.before) + "] middle=[" + _fmtNodes(ctx.middle) + "] after=[" + _fmtNodes(ctx.after) + "]");
-      var sel = _applyStyleToBlock(ctx, formatType, color);
+      var sel = _applyStyleToBlock(ctx, formatType, color, forceApply ? "apply" : undefined);
       log("STYLE", "single selStart=" + _fmtCursor(sel.selStart) + " selEnd=" + _fmtCursor(sel.selEnd));
       beginUndo("format", preCursor, true);
       var ok = commitSelection(ctx.block, ctx.blockIndex, sel.selStart, sel.selEnd);
@@ -8533,9 +8588,10 @@
     }
 
     /** 跨 block 样式应用：逐块变换，作为一个撤销单元提交，最后恢复跨块选区 */
-    function _commitMultiStyle(formatType, color, range) {
+    function _commitMultiStyle(formatType, color, range, forceApply) {
       var start = M.domToAst(range.startContainer, range.startOffset);
       var end = M.domToAst(range.endContainer, range.endOffset);
+      log("STYLE", "multi domToAst start=" + (start ? JSON.stringify(start) : "null") + " end=" + (end ? JSON.stringify(end) : "null"));
       if (!start || !end || start.blockIndex >= end.blockIndex) {
         return { ok: false, message: "选区边界包含不可拆分元素或跨段落" };
       }
@@ -8546,16 +8602,29 @@
         if (!block) return { ok: false, message: "选区包含无效块" };
         if (NON_EDITABLE[block.type]) return { ok: false, message: "选区包含不可编辑内容（表格/代码/公式等）" };
         if (block.type === "list") return { ok: false, message: "暂不支持跨列表选区的样式应用" };
+        if (block.type === "blockquote") return { ok: false, message: "暂不支持跨引用块边界的样式应用" };
 
         var before = [], middle = [], after = [];
         if (bi === start.blockIndex) {
-          var sp = splitInlineAt(block.children || [], start.nodePath || [], start.offset);
-          if (!sp) return { ok: false, message: "选区边界不可拆分" };
-          before = sp.left; middle = sp.right; after = [];
+          var startChildren = block.children || [];
+          if (!startChildren.length) {
+            // 起点块是空行（nodePath=[] off=0）：无内容可拆，middle 为空
+            before = []; middle = []; after = [];
+          } else {
+            var sp = splitInlineAt(startChildren, start.nodePath || [], start.offset);
+            if (!sp) return { ok: false, message: "选区边界不可拆分" };
+            before = sp.left; middle = sp.right; after = [];
+          }
         } else if (bi === end.blockIndex) {
-          var ep = splitInlineAt(block.children || [], end.nodePath || [], end.offset);
-          if (!ep) return { ok: false, message: "选区边界不可拆分" };
-          before = []; middle = ep.left; after = ep.right;
+          var endChildren = block.children || [];
+          if (!endChildren.length) {
+            // 终点块是空行（nodePath=[] off=0）：选区延伸到行尾，无内容可拆
+            before = []; middle = []; after = [];
+          } else {
+            var ep = splitInlineAt(endChildren, end.nodePath || [], end.offset);
+            if (!ep) return { ok: false, message: "选区边界不可拆分" };
+            before = []; middle = ep.left; after = ep.right;
+          }
         } else {
           middle = (block.children || []).slice();
         }
@@ -8571,8 +8640,13 @@
         if (infos[m].middle.length) allMiddle = allMiddle.concat(infos[m].middle);
       }
       var forceMode = null;
-      if (formatType === "bold") forceMode = _everyLeafHasStyle(allMiddle, _isBoldNode, false) ? "remove" : "apply";
-      else if (formatType === "italic") forceMode = _everyLeafHasStyle(allMiddle, _isItalicNode, false) ? "remove" : "apply";
+      if (forceApply) {
+        forceMode = "apply";
+      } else if (formatType === "bold") {
+        forceMode = _everyLeafHasStyle(allMiddle, _isBoldNode, false) ? "remove" : "apply";
+      } else if (formatType === "italic") {
+        forceMode = _everyLeafHasStyle(allMiddle, _isItalicNode, false) ? "remove" : "apply";
+      }
 
       beginUndoGroup();
       var firstSel = null, firstSelBlock = -1, lastSel = null, lastSelBlock = -1, touched = 0;
@@ -8598,16 +8672,20 @@
     }
 
     /**
-     * 对预览区选中的文字应用样式（加粗/斜体切换；高亮/字体颜色重着色并合并）。
+     * 对预览区选中的文字应用样式（加粗/斜体默认切换，高亮/字体颜色重着色并合并）。
      * 支持同一 block 及跨 block（列表跨 block 暂不支持）。
+     * @param {string} formatType
+     * @param {string|null} color
+     * @param {Range} range
+     * @param {boolean} [forceApply] — 强制「应用」而非切换（画笔涂抹使用，已有同样式文字保持不取消）
      */
-    function applyStyle(formatType, color, range) {
+    function applyStyle(formatType, color, range, forceApply) {
       if (!_isSupportedFormat(formatType)) return { ok: false, message: "不支持的样式类型" };
-      log("STYLE", "applyStyle fmt=" + formatType + " color=" + (color || "null"));
+      log("STYLE", "applyStyle fmt=" + formatType + " color=" + (color || "null") + (forceApply ? " force=apply" : ""));
 
       var single = _extractSelectionMiddle(range);
-      if (single) return _commitSingleStyle(single, formatType, color);
-      return _commitMultiStyle(formatType, color, range);
+      if (single) return _commitSingleStyle(single, formatType, color, forceApply);
+      return _commitMultiStyle(formatType, color, range, forceApply);
     }
 
     /**
@@ -8629,13 +8707,17 @@
       var preCursor = cloneCursor(ctx.start);
       var merged = mergeAdjacentInline(ctx.before.concat(ctx.after));
       if (ctx.isList) ctx.block.items[ctx.itemIdx].children = merged;
+      else if (ctx.isQuote) ctx.block.children[ctx.quoteIdx].children = merged;
       else ctx.block.children = merged;
 
       // 光标恢复到删除位置（选区起点 = before 末尾）
       var selRendered = renderedLenOfNodes(ctx.before);
       var cursorRel = renderedOffsetToPath(merged, selRendered);
-      if (!cursorRel) cursorRel = lastTextPath(merged) || { nodePath: [], offset: 0 };
-      var prefix = ctx.isList ? [ctx.itemIdx] : [];
+      if (!cursorRel) {
+        var lp = lastTextPath(merged);
+        cursorRel = lp ? { nodePath: lp.path, offset: lp.offset } : { nodePath: [], offset: 0 };
+      }
+      var prefix = ctx.isList ? [ctx.itemIdx] : (ctx.isQuote ? [ctx.quoteIdx] : []);
       var cursor = {
         blockIndex: ctx.blockIndex,
         nodePath: prefix.concat(cursorRel.nodePath || []),
@@ -8664,6 +8746,7 @@
         if (!blk) return false;
         if (NON_EDITABLE[blk.type]) return false;
         if (blk.type === "list") return false;
+        if (blk.type === "blockquote") return false;
       }
 
       var startBlock = _doc.blocks[start.blockIndex];
@@ -8913,6 +8996,18 @@
 
   /** 根据预览区实时选区刷新工具栏 active 指示 */
   function updateFormatToolbarState() {
+    // 画笔激活：工具栏显示画笔已选样式（B/I 高亮 + 对应色块加框标识）。
+    // 高亮 / 文字颜色两个色板、B/I 各自独立显示选中状态，右键可单独取消。
+    if (_brush) {
+      const b = document.querySelector('.m0-fmt-btn[data-fmt="bold"]');
+      const i = document.querySelector('.m0-fmt-btn[data-fmt="italic"]');
+      if (b) b.classList.toggle("active", !!_brush.bold);
+      if (i) i.classList.toggle("active", !!_brush.italic);
+      _setSwatchActive(".m0-hl-swatch", "data-hl-color", _brush.highlight);
+      _setSwatchActive(".m0-fc-swatch", "data-fc-color", _brush.fontcolor);
+      _syncBrushArmed();
+      return;
+    }
     const EditSync = window.MemoriaEditSync;
     if (!EditSync || typeof EditSync.getSelectionStyles !== "function") { _resetFormatToolbarState(); return; }
     const preview = $("#preview");
@@ -8951,10 +9046,18 @@
       fmtBar.dataset.selectionGuardBound = "1";
       fmtBar.addEventListener("mousedown", capturePreviewSelection, true);
     }
-    // B and I buttons
+    // B and I buttons（已有选区→应用/切换；无选区→进入画笔模式）
     document.querySelectorAll(".m0-fmt-btn[data-fmt]").forEach((btn) => {
       if (btn.dataset.fmt === "highlight" || btn.dataset.fmt === "fontcolor") return; // handled by dropdown
-      btn.addEventListener("click", () => applyFormat(btn.dataset.fmt));
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const fmt = btn.dataset.fmt;
+        if (hasExistingSelection()) {
+          applyFormat(fmt);
+        } else {
+          armBrush(fmt, null);
+        }
+      });
     });
     // Dropdown toggle
     document.querySelectorAll(".m0-fmt-dropdown > .m0-fmt-btn").forEach((btn) => {
@@ -8969,22 +9072,30 @@
         }
       });
     });
-    // Highlight color swatches
+    // Highlight color swatches（已有选区→直接应用；无选区→进入画笔模式）
     document.querySelectorAll(".m0-hl-swatch").forEach((sw) => {
       sw.addEventListener("click", (e) => {
         e.stopPropagation();
         const color = sw.dataset.hlColor;
-        applyFormat("highlight", color);
-        closeAllDropdowns();
+        if (hasExistingSelection()) {
+          applyFormat("highlight", color);
+          closeAllDropdowns();
+        } else {
+          armBrush("highlight", color);
+        }
       });
     });
-    // Font color swatches
+    // Font color swatches（已有选区→直接应用；无选区→进入画笔模式）
     document.querySelectorAll(".m0-fc-swatch").forEach((sw) => {
       sw.addEventListener("click", (e) => {
         e.stopPropagation();
         const color = sw.dataset.fcColor;
-        applyFormat("fontcolor", color);
-        closeAllDropdowns();
+        if (hasExistingSelection()) {
+          applyFormat("fontcolor", color);
+          closeAllDropdowns();
+        } else {
+          armBrush("fontcolor", color);
+        }
       });
     });
     // 移除样式（无色）
@@ -9002,19 +9113,22 @@
         closeAllDropdowns();
       });
     });
-    // 自定义颜色
+    // 添加颜色（选定后追加到色板，不直接应用）
     document.querySelectorAll("[data-hl-custom]").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        openCustomColor("highlight");
+        addCustomColor("highlight");
       });
     });
     document.querySelectorAll("[data-fc-custom]").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        openCustomColor("fontcolor");
+        addCustomColor("fontcolor");
       });
     });
+    // 渲染已保存的自定义颜色
+    renderCustomSwatches("highlight");
+    renderCustomSwatches("fontcolor");
     // Close dropdowns on outside click
     document.addEventListener("click", () => closeAllDropdowns());
     // 窗口尺寸变化时重新定位已打开的下拉菜单
@@ -9026,36 +9140,597 @@
     }
   }
 
-  let _customColorInput = null;
-  function ensureCustomColorInput() {
-    if (_customColorInput) return _customColorInput;
-    const inp = document.createElement("input");
-    inp.type = "color";
-    inp.value = "#ff0000";
-    inp.style.cssText = "position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0;";
-    document.body.appendChild(inp);
-    _customColorInput = inp;
-    return inp;
+  // ---- 应用内颜色选择器（弹层固定在程序窗口内，含确定/取消）----
+  let _cp = null;       // 面板 DOM 引用
+  let _cpCb = null;     // 完成回调（hex 或 null=取消）
+  let _cpH = 0, _cpS = 1, _cpL = 0.5;  // 当前 HSL 状态
+  let _cpDrag = false;
+
+  function _hslToHex(h, s, l) {
+    s = Math.max(0, Math.min(1, s));
+    l = Math.max(0, Math.min(1, l));
+    h = ((h % 360) + 360) % 360;
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    const m = l - c / 2;
+    let r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; }
+    else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; b = x; }
+    else if (h < 240) { g = x; b = c; }
+    else if (h < 300) { r = x; b = c; }
+    else { r = c; b = x; }
+    const to2 = (v) => Math.round((v + m) * 255).toString(16).padStart(2, "0");
+    return "#" + to2(r) + to2(g) + to2(b);
   }
 
-  function openCustomColor(formatType) {
-    const inp = ensureCustomColorInput();
-    closeAllDropdowns();
-    inp.oninput = null;
-    inp.onchange = () => {
-      const c = inp.value;
-      inp.onchange = null;
-      if (c) applyFormat(formatType, c);
+  function _hexToHsl(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    const r = ((n >> 16) & 255) / 255, g = ((n >> 8) & 255) / 255, b = (n & 255) / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h = 0, s = 0;
+    const l = (max + min) / 2;
+    const d = max - min;
+    if (d !== 0) {
+      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) * 60;
+      else if (max === g) h = ((b - r) / d + 2) * 60;
+      else h = ((r - g) / d + 4) * 60;
+    }
+    return { h, s, l };
+  }
+
+  const _CP_PRESETS = ["#ff0000", "#ff8800", "#ffcc00", "#00cc00", "#00aacc", "#3366ff", "#9900ff", "#ff3399", "#8b4513", "#444444", "#888888", "#ffffff"];
+
+  function ensureColorPicker() {
+    if (_cp) return _cp;
+    const mask = document.createElement("div");
+    mask.className = "m0-color-picker-mask";
+    mask.style.display = "none";
+    mask.innerHTML =
+      '<div class="m0-color-picker">' +
+      '  <div class="m0-cp-title">添加自定义颜色</div>' +
+      '  <div class="m0-cp-preview"></div>' +
+      '  <div class="m0-cp-sv"><div class="m0-cp-cursor"></div></div>' +
+      '  <input type="range" class="m0-cp-hue" min="0" max="360" step="1" value="0">' +
+      '  <div class="m0-cp-presets"></div>' +
+      '  <div class="m0-cp-row">' +
+      '    <input type="text" class="m0-cp-hex" value="#ff0000" spellcheck="false" maxlength="7">' +
+      '    <button type="button" class="m0-cp-cancel">取消</button>' +
+      '    <button type="button" class="m0-cp-ok">确定</button>' +
+      "  </div>" +
+      "</div>";
+    document.body.appendChild(mask);
+    const box = mask.firstElementChild;
+    const cp = {
+      mask, box,
+      title: box.querySelector(".m0-cp-title"),
+      preview: box.querySelector(".m0-cp-preview"),
+      sv: box.querySelector(".m0-cp-sv"),
+      cursor: box.querySelector(".m0-cp-cursor"),
+      hue: box.querySelector(".m0-cp-hue"),
+      presets: box.querySelector(".m0-cp-presets"),
+      hex: box.querySelector(".m0-cp-hex"),
+      ok: box.querySelector(".m0-cp-ok"),
+      cancel: box.querySelector(".m0-cp-cancel")
     };
-    inp.click();
+    // 常用色快捷条
+    _CP_PRESETS.forEach((c) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.style.background = c;
+      b.title = c;
+      b.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const h = normalizeHex(c);
+        if (!h) return;
+        const { h: hh, s: ss, l: ll } = _hexToHsl(h);
+        _cpH = hh; _cpS = ss; _cpL = ll;
+        _cpUpdate(true);
+      });
+      cp.presets.appendChild(b);
+    });
+
+    function _cpUpdate(updateHex) {
+      const hex = _hslToHex(_cpH, _cpS, _cpL);
+      cp.sv.style.background =
+        "linear-gradient(to top, #000, rgba(0,0,0,0)), linear-gradient(to right, #fff, hsl(" + _cpH + ",100%,50%))";
+      cp.cursor.style.left = (_cpS * 100) + "%";
+      cp.cursor.style.top = ((1 - _cpL) * 100) + "%";
+      if (String(Math.round(_cpH)) !== cp.hue.value) cp.hue.value = String(Math.round(_cpH));
+      cp.hue.style.setProperty("--m0-cp-hue-thumb", "hsl(" + Math.round(_cpH) + ", 100%, 50%)");
+      cp.preview.style.background = hex;
+      if (updateHex && document.activeElement !== cp.hex) cp.hex.value = hex;
+    }
+
+    function _cpSetFromPointer(ev) {
+      const rect = cp.sv.getBoundingClientRect();
+      let x = (ev.clientX - rect.left) / rect.width;
+      let y = (ev.clientY - rect.top) / rect.height;
+      x = Math.max(0, Math.min(1, x));
+      y = Math.max(0, Math.min(1, y));
+      _cpS = x;
+      _cpL = 1 - y;
+      _cpUpdate(true);
+    }
+
+    function _cpClose(result) {
+      if (_cpDrag) { _cpDrag = false; document.removeEventListener("mousemove", _cpOnMove); document.removeEventListener("mouseup", _cpOnUp); }
+      cp.mask.style.display = "none";
+      const cb = _cpCb;
+      _cpCb = null;
+      if (cb) cb(result);
+    }
+
+    function _cpOnMove(ev) { if (_cpDrag) _cpSetFromPointer(ev); }
+    function _cpOnUp() {
+      if (!_cpDrag) return;
+      _cpDrag = false;
+      document.removeEventListener("mousemove", _cpOnMove);
+      document.removeEventListener("mouseup", _cpOnUp);
+    }
+
+    cp.sv.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      _cpSetFromPointer(e);
+      _cpDrag = true;
+      document.addEventListener("mousemove", _cpOnMove);
+      document.addEventListener("mouseup", _cpOnUp);
+    });
+    cp.hue.addEventListener("input", () => {
+      _cpH = parseFloat(cp.hue.value) || 0;
+      _cpUpdate(true);
+    });
+    cp.hex.addEventListener("input", () => {
+      const h = normalizeHex(cp.hex.value);
+      if (h) {
+        const { h: hh, s: ss, l: ll } = _hexToHsl(h);
+        _cpH = hh; _cpS = ss; _cpL = ll;
+        _cpUpdate(false);
+      }
+    });
+    cp.hex.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); cp.ok.click(); }
+    });
+    cp.ok.addEventListener("click", (e) => {
+      e.stopPropagation();
+      _cpClose(normalizeHex(cp.hex.value));
+    });
+    cp.cancel.addEventListener("click", (e) => {
+      e.stopPropagation();
+      _cpClose(null);
+    });
+    mask.addEventListener("mousedown", (e) => {
+      if (e.target === mask) _cpClose(null);
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && _cp && _cp.mask.style.display !== "none") {
+        e.preventDefault();
+        _cpClose(null);
+      }
+    });
+    cp._update = _cpUpdate;
+    _cp = cp;
+    return cp;
+  }
+
+  /** 打开应用内取色面板；确定→onDone(hex)，取消/关闭→onDone(null)。可反复打开 */
+  function openColorPicker(title, onDone) {
+    const cp = ensureColorPicker();
+    closeAllDropdowns();
+    _cpCb = onDone;
+    cp.title.textContent = title;
+    // 初始色：已保存的自定义色最后一个，否则红色
+    const first = getCustomColors("fontcolor").concat(getCustomColors("highlight"))[0] || "#ff0000";
+    const { h, s, l } = _hexToHsl(first);
+    _cpH = h; _cpS = s; _cpL = l;
+    cp.mask.style.display = "flex";
+    cp.hex.value = first;
+    cp._update(true);
+    // 不自动聚焦 hex：保持 activeElement 不在 hex 上，SV/色相/常用色操作时 hex 才能实时刷新当前色
+  }
+
+  // ---- 自定义颜色管理（添加 / 右键删除 / localStorage 持久化）----
+  const HL_CUSTOM_KEY = "m0-hl-custom-colors";
+  const FC_CUSTOM_KEY = "m0-fc-custom-colors";
+
+  function _customColorKey(kind) {
+    return kind === "highlight" ? HL_CUSTOM_KEY : FC_CUSTOM_KEY;
+  }
+
+  /** 归一化颜色为 #rrggbb 小写；非法输入返回 null */
+  function normalizeHex(c) {
+    c = String(c || "").trim().toLowerCase();
+    if (/^#[0-9a-f]{6}$/.test(c)) return c;
+    if (/^#[0-9a-f]{3}$/.test(c)) {
+      return "#" + c[1] + c[1] + c[2] + c[2] + c[3] + c[3];
+    }
+    return null;
+  }
+
+  function getCustomColors(kind) {
+    try {
+      const raw = JSON.parse(localStorage.getItem(_customColorKey(kind)) || "[]");
+      if (!Array.isArray(raw)) return [];
+      const out = [];
+      raw.forEach((c) => {
+        const hex = normalizeHex(c);
+        if (hex && out.indexOf(hex) === -1) out.push(hex);
+      });
+      return out;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  /** 写入本地缓存 + 程序配置（ui-settings.json 的 customColors 键，磁盘为权威源） */
+  function saveCustomColors(kind, colors) {
+    try {
+      localStorage.setItem(_customColorKey(kind), JSON.stringify(colors));
+    } catch (e) { /* ignore */ }
+    const next = {};
+    ["highlight", "fontcolor"].forEach((k) => {
+      next[k] = k === kind ? colors : getCustomColors(k);
+    });
+    call("save_ui_settings", { customColors: next }).catch(() => {});
+  }
+
+  /** 启动时从程序配置同步自定义颜色（磁盘优先，覆盖本地缓存）；并重建色板 */
+  async function hydrateCustomColorsFromDisk() {
+    try {
+      const res = await call("get_ui_settings");
+      const cc = res && res.status === "ok" && res.settings && res.settings.customColors;
+      if (!cc || typeof cc !== "object") return;
+      ["highlight", "fontcolor"].forEach((k) => {
+        const list = cc[k];
+        if (!Array.isArray(list)) return;
+        const clean = [];
+        list.forEach((c) => {
+          const hex = normalizeHex(c);
+          if (hex && clean.indexOf(hex) === -1) clean.push(hex);
+        });
+        try { localStorage.setItem(_customColorKey(k), JSON.stringify(clean)); } catch (e) { /* ignore */ }
+      });
+      renderCustomSwatches("highlight");
+      renderCustomSwatches("fontcolor");
+    } catch (_) { /* 非桌面环境忽略 */ }
+  }
+
+  /** 根据背景亮度决定色块文字颜色（黑/白） */
+  function swatchTextColor(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+    return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#000" : "#fff";
+  }
+
+  // ---- 自定义色块右键菜单（含删除）----
+  let _swatchCtxMenu = null;
+
+  function hideSwatchCtxMenu() {
+    if (_swatchCtxMenu) {
+      _swatchCtxMenu.remove();
+      _swatchCtxMenu = null;
+    }
+  }
+
+  /** 在鼠标位置显示色块右键菜单；点击「删除该颜色」执行删除 */
+  function showSwatchCtxMenu(e, hex, kind) {
+    hideSwatchCtxMenu();
+    const menu = document.createElement("div");
+    menu.className = "m0-context-menu";
+    menu.setAttribute("role", "menu");
+
+    const head = document.createElement("button");
+    head.type = "button";
+    head.className = "m0-ctx-item disabled";
+    head.setAttribute("role", "menuitem");
+    head.innerHTML = '<span class="m0-ctx-head">自定义颜色 ' + hex + "</span>";
+    menu.appendChild(head);
+
+    const div = document.createElement("div");
+    div.className = "m0-ctx-divider";
+    menu.appendChild(div);
+
+    const del = document.createElement("button");
+    del.type = "button";
+    del.className = "m0-ctx-item danger";
+    del.setAttribute("role", "menuitem");
+    del.textContent = "删除该颜色";
+    del.addEventListener("click", (ev) => {
+      ev.stopPropagation();
+      hideSwatchCtxMenu();
+      saveCustomColors(kind, getCustomColors(kind).filter((c) => c !== hex));
+      renderCustomSwatches(kind);
+      setStatus("已删除自定义颜色 " + hex);
+    });
+    menu.appendChild(del);
+
+    document.body.appendChild(menu);
+    // 定位并防止越界
+    menu.style.left = e.clientX + "px";
+    menu.style.top = e.clientY + "px";
+    const rect = menu.getBoundingClientRect();
+    let nx = e.clientX, ny = e.clientY;
+    if (nx + rect.width > window.innerWidth) nx = window.innerWidth - rect.width - 4;
+    if (ny + rect.height > window.innerHeight) ny = window.innerHeight - rect.height - 4;
+    menu.style.left = Math.max(4, nx) + "px";
+    menu.style.top = Math.max(4, ny) + "px";
+    _swatchCtxMenu = menu;
+  }
+
+  // 任意左键点击 / Esc 关闭色块右键菜单（捕获阶段，避免被子元素 stopPropagation 拦截）
+  document.addEventListener("click", hideSwatchCtxMenu, true);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") hideSwatchCtxMenu();
+  });
+
+  /** 重建色板中的自定义颜色块（幂等：先清后建），并绑定 点击=应用 / 右键=菜单 */
+  function renderCustomSwatches(kind) {
+    const menu = document.querySelector(kind === "highlight" ? ".m0-hl-colors" : ".m0-fc-colors");
+    if (!menu) return;
+    menu.querySelectorAll(".m0-custom-swatch").forEach((el) => el.remove());
+    const noneBtn = menu.querySelector(kind === "highlight" ? "[data-hl-none]" : "[data-fc-none]");
+    const dataAttr = kind === "highlight" ? "data-hl-color" : "data-fc-color";
+    const fmt = kind === "highlight" ? "highlight" : "fontcolor";
+    const colors = getCustomColors(kind);
+    colors.forEach((hex) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = (kind === "highlight" ? "m0-hl-swatch" : "m0-fc-swatch") + " m0-custom-swatch";
+      btn.setAttribute(dataAttr, hex);
+      btn.title = "自定义颜色 " + hex + "（右键菜单可删除）";
+      btn.style.backgroundColor = hex;
+      btn.style.color = swatchTextColor(hex);
+      btn.textContent = "●";
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (hasExistingSelection()) {
+          applyFormat(fmt, hex);
+          closeAllDropdowns();
+        } else {
+          armBrush(fmt, hex);
+        }
+      });
+      btn.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showSwatchCtxMenu(e, hex, kind);
+      });
+      menu.insertBefore(btn, noneBtn);
+    });
+  }
+
+  /** 打开应用内取色面板；确定后将颜色追加到色板（不直接应用），并进入画笔模式 */
+  function addCustomColor(kind) {
+    openColorPicker("添加自定义颜色", (hex) => {
+      if (!hex) return; // 取消
+      const colors = getCustomColors(kind);
+      if (colors.indexOf(hex) !== -1) {
+        setStatus("颜色 " + hex + " 已在色板中");
+        armBrush(kind === "highlight" ? "highlight" : "fontcolor", hex);
+        return;
+      }
+      colors.push(hex);
+      saveCustomColors(kind, colors);
+      renderCustomSwatches(kind);
+      setStatus("已添加自定义颜色 " + hex);
+      // 添加成功即进入画笔模式，拖动即可涂抹新颜色
+      armBrush(kind === "highlight" ? "highlight" : "fontcolor", hex);
+    });
   }
 
   function closeAllDropdowns() {
     document.querySelectorAll(".m0-fmt-dropdown.open").forEach((d) => d.classList.remove("open"));
   }
 
+  // ═══════════════════════════════════════════════════════════════
+  //  画笔模式：点击颜色后鼠标变画笔，在预览/源码区拖动选择文字即应用目标样式
+  // ═══════════════════════════════════════════════════════════════
+  let _brush = null; // 多槽位画笔：{ bold: bool, italic: bool, highlight: color|null, fontcolor: color|null }
+
+  /** 画笔样式的中文名 */
+  function _brushLabel(fmt) {
+    return fmt === "highlight" ? "高亮" :
+      fmt === "fontcolor" ? "字体颜色" :
+      fmt === "bold" ? "加粗" : "斜体";
+  }
+
+  /** 鼠标目标对应的样式类型（B/I/H▾/色▾/对应色块，含自定义色块），否则 null */
+  function _targetStyleFmt(t) {
+    if (!t || !t.closest) return null;
+    if (t.closest('.m0-fmt-btn[data-fmt="bold"]')) return "bold";
+    if (t.closest('.m0-fmt-btn[data-fmt="italic"]')) return "italic";
+    if (t.closest('.m0-fmt-btn[data-fmt="highlight"], .m0-hl-swatch')) return "highlight";
+    if (t.closest('.m0-fmt-btn[data-fmt="fontcolor"], .m0-fc-swatch')) return "fontcolor";
+    return null;
+  }
+
+  /** 该样式是否已被画笔选中 */
+  function _isStyleSelected(fmt) {
+    if (!_brush) return false;
+    if (fmt === "bold") return !!_brush.bold;
+    if (fmt === "italic") return !!_brush.italic;
+    if (fmt === "highlight") return !!_brush.highlight;
+    if (fmt === "fontcolor") return !!_brush.fontcolor;
+    return false;
+  }
+
+  /** 画笔中所有已选样式（固定应用顺序：加粗 → 斜体 → 高亮 → 字体颜色） */
+  function _brushStyleList() {
+    if (!_brush) return [];
+    const out = [];
+    if (_brush.bold) out.push({ fmt: "bold", color: null });
+    if (_brush.italic) out.push({ fmt: "italic", color: null });
+    if (_brush.highlight) out.push({ fmt: "highlight", color: _brush.highlight });
+    if (_brush.fontcolor) out.push({ fmt: "fontcolor", color: _brush.fontcolor });
+    return out;
+  }
+
+  /** 已选样式的中文列表（用于状态栏提示） */
+  function _brushListLabel() {
+    return _brushStyleList().map((s) => _brushLabel(s.fmt)).join("+");
+  }
+
+  /** 同步 brush-armed 标识（给每个已选样式对应的格式按钮加高亮） */
+  function _syncBrushArmed() {
+    document.querySelectorAll(".m0-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
+    if (!_brush) return;
+    ["bold", "italic", "highlight", "fontcolor"].forEach((fmt) => {
+      if (_isStyleSelected(fmt)) {
+        const el = document.querySelector('.m0-fmt-btn[data-fmt="' + fmt + '"]');
+        if (el) el.classList.add("brush-armed");
+      }
+    });
+  }
+
+  /** 进入画笔模式：选中（或切换）某个样式的槽位，其余已选样式保留 */
+  function armBrush(fmt, color) {
+    if (!_brush) _brush = { bold: false, italic: false, highlight: null, fontcolor: null };
+    if (fmt === "bold") _brush.bold = true;
+    else if (fmt === "italic") _brush.italic = true;
+    else if (fmt === "highlight") _brush.highlight = color;
+    else if (fmt === "fontcolor") _brush.fontcolor = color;
+    closeAllDropdowns();
+    document.body.classList.add("m0-brush-active");
+    updateFormatToolbarState();
+    setStatus("画笔已就绪：可继续点选其他样式，左键拖动涂抹一并应用；右键点击已选样式单独取消");
+  }
+
+  /** 全部退出画笔模式（Esc / 右键取消最后一个样式时） */
+  function cancelBrush() {
+    if (!_brush) return;
+    _brush = null;
+    document.body.classList.remove("m0-brush-active");
+    document.querySelectorAll(".m0-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
+    updateFormatToolbarState();
+  }
+
+  /** 右键取消「点到的样式」：只清该槽位，其余已选样式保留；全部清空则退出画笔 */
+  function unselectBrushStyle(fmt) {
+    if (!_brush) return;
+    if (fmt === "bold") _brush.bold = false;
+    else if (fmt === "italic") _brush.italic = false;
+    else if (fmt === "highlight") _brush.highlight = null;
+    else if (fmt === "fontcolor") _brush.fontcolor = null;
+    if (!_brush.bold && !_brush.italic && !_brush.highlight && !_brush.fontcolor) {
+      cancelBrush();
+      setStatus("已取消画笔");
+      return;
+    }
+    updateFormatToolbarState();
+    setStatus("已取消" + _brushLabel(fmt) + "，其余样式保留");
+  }
+
+  /** 是否已存在可应用样式的非折叠选区（预览区实时/捕获选区，或源码编辑器） */
+  function hasExistingSelection() {
+    if (getPreviewSelectionRange()) return true;
+    const sel = window.getSelection();
+    const editor = $("#editor");
+    if (sel && sel.rangeCount && !sel.getRangeAt(0).collapsed) {
+      const r = sel.getRangeAt(0);
+      if (editor && editor.contains(r.startContainer) && editor.contains(r.endContainer)) return true;
+    }
+    return false;
+  }
+
+  /** 依次应用画笔中所有已选样式（forceApply：笔刷为「应用」语义，已有同样式不 toggle 取消）；
+   *  每次应用后重取实时选区（edit-sync 会恢复选区到新位置） */
+  function _applyBrushToRange(ES, firstRange) {
+    const styles = _brushStyleList();
+    if (!styles.length) return { ok: false, message: "未选择任何样式，请先点击样式按钮或色块" };
+    let curRange = firstRange;
+    let applied = 0;
+    for (let k = 0; k < styles.length; k++) {
+      const st = styles[k];
+      const res = ES.applyStyle(st.fmt, st.color, curRange, true);
+      log("BRUSH", "apply fmt=" + st.fmt + " color=" + st.color + " res=" + JSON.stringify(res));
+      if (!res || !res.ok) {
+        if (res && res.message) return { ok: applied > 0, message: res.message, applied };
+        break;
+      }
+      applied++;
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) break;
+      curRange = sel.getRangeAt(0);
+    }
+    return { ok: applied > 0, message: applied > 0 ? "" : "样式应用失败", applied };
+  }
+
+  /** 画笔 mouseup：预览区内拖动结束 → 应用目标样式（保持画笔可连续涂抹）；右键取消由 contextmenu 捕获阶段处理 */
+  function _brushOnMouseUp(e) {
+    if (!_brush) return;
+    if (e.button !== 0) return;
+    if (!e.target || !e.target.closest) return;
+    // 色块 / 下拉开关 / 添加颜色 / 取色面板 / 右键菜单：交给各自的 click 处理（重新武装或保持）
+    if (e.target.closest(".m0-hl-swatch, .m0-fc-swatch, .m0-hl-custom, .m0-fc-custom, .m0-fmt-dropdown > .m0-fmt-btn, .m0-color-picker-mask, .m0-context-menu")) return;
+    // 工具栏按钮 / 文档区域之外点击：保持画笔（不取消），可继续回来涂抹；
+    // 画笔类型切换由各按钮自身的 click（armBrush 覆盖）负责
+    if (e.target.closest(".m0-fmt-btn, .m0-view-btn, #block-edit-bar, .m0-kp-toolbar")) return;
+    // 笔刷仅作用于预览区：源码编辑器内涂抹不应用样式（笔刷保持武装，可回到预览继续涂）
+    if (!e.target.closest("#preview")) return;
+
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) {
+      setStatus("画笔就绪：左键拖动涂抹应用" + _brushListLabel() + "，右键点击已选样式取消");
+      return;
+    }
+    const r = sel.getRangeAt(0);
+    const preview = $("#preview");
+    const ES = window.MemoriaEditSync;
+    if (preview && preview.contains(r.startContainer) && preview.contains(r.endContainer)) {
+      if (ES && typeof ES.applyStyle === "function") {
+        const res = _applyBrushToRange(ES, r);
+        if (res.ok) {
+          setStatus("已应用" + _brushListLabel() + "，继续拖动涂抹或按 Esc 退出");
+        } else if (res.message) {
+          setStatus(res.message);
+        }
+      }
+    }
+  }
+
+  document.addEventListener("mouseup", _brushOnMouseUp);
+  // 画笔模式下右键：只取消「右键点到的样式」（已选中的样式槽位），其余已选样式保留；
+  // 其他区域右键只屏蔽原生菜单、不取消画笔；自定义色块保留其删除菜单。
+  document.addEventListener("contextmenu", (e) => {
+    if (!_brush) return;
+    const t = e.target;
+    if (!t || !t.closest) return;
+    // 自定义色块：保留定制删除菜单（画笔不取消，自身 handler 会 preventDefault）
+    if (t.closest(".m0-custom-swatch")) return;
+    // 屏蔽原生/其他右键菜单（预览区、工具栏等）
+    e.preventDefault();
+    e.stopPropagation();
+    // 右键点到的样式若已被画笔选中 → 只取消该样式
+    const fmt = _targetStyleFmt(t);
+    if (fmt && _isStyleSelected(fmt)) {
+      unselectBrushStyle(fmt);
+    }
+  }, true);
+  // 格式工具栏 / 取色面板等工具 UI 上右键：屏蔽网页原生右键菜单。
+  // 自定义色块（.m0-custom-swatch）保留其定制删除菜单（自身 handler 会 preventDefault），此处跳过。
+  // 源码编辑器 / 预览区：仅 preventDefault 屏蔽原生菜单，不中断传播，
+  // 以便选中文本右键的自定义菜单（创建链接/KP 等）照常弹出。
+  document.addEventListener("contextmenu", (e) => {
+    const t = e.target;
+    if (!t || !t.closest) return;
+    if (t.closest(".m0-custom-swatch")) return;
+    if (t.closest(".m0-format-bar, .m0-color-picker-mask, .m0-context-menu")) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    if (t.closest("#editor, #preview")) {
+      e.preventDefault();
+    }
+  }, true);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && _brush) cancelBrush();
+  });
+
   /**
    * 动态定位下拉菜单，保证完整显示在窗口可视区域内。
+   * 使用视口坐标 + position:fixed，脱离 #viewer 的 overflow 裁剪，避免被左侧文件树遮挡。
    * 水平：优先向右展开（左对齐按钮），越界则向左展开（右对齐按钮）；
    * 垂直：优先向下展开，越界则向上展开。
    */
@@ -9068,24 +9743,21 @@
     const btnRect = btn.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
+    const mw = menuRect.width;
+    const mh = menuRect.height;
 
-    // 水平
-    if (btnRect.left + menuRect.width <= vw) {
-      menu.style.left = "0";
-      menu.style.right = "auto";
-    } else {
-      menu.style.left = "auto";
-      menu.style.right = "0";
-    }
+    // 水平：优先右对齐按钮左缘展开；放不下则左对齐按钮右缘展开
+    let left = btnRect.left;
+    if (left + mw > vw) left = Math.max(4, btnRect.right - mw);
+    // 垂直：优先在按钮下方展开；放不下则在按钮上方展开
+    let top = btnRect.bottom;
+    if (top + mh > vh) top = Math.max(4, btnRect.top - mh);
 
-    // 垂直
-    if (btnRect.bottom + menuRect.height <= vh) {
-      menu.style.top = "100%";
-      menu.style.bottom = "auto";
-    } else {
-      menu.style.top = "auto";
-      menu.style.bottom = "100%";
-    }
+    menu.style.position = "fixed";
+    menu.style.left = left + "px";
+    menu.style.right = "auto";
+    menu.style.top = top + "px";
+    menu.style.bottom = "auto";
   }
 
   function getEditorSelectionInfo() {
@@ -10802,7 +11474,99 @@
       });
     }
     bindPreviewSelectionMenu();
+    bindFormulaDragSelect();
     bindModalDrag();
+  }
+
+  // ════════════════════════════════════════════════════════════
+  // 行内公式拖拽选择：contenteditable=false 的公式无法被浏览器原生拖拽选中
+  // （按下不产生选区、跨过被跳过）。编辑模式下把 .m0-math 当作“原子字符”参与选择：
+  // 在公式上按下 → 整体选中公式，继续拖动可扩展选区到前后文本；双击仍放行进入公式编辑。
+  // ════════════════════════════════════════════════════════════
+  let _mathDrag = null;       // 拖拽态 { el, anchorRange }
+  let _mathLastDown = null;   // 双击检测 { el, t }
+  let _mathDragRaf = null;
+  const _MATH_DBL_MS = 350;
+
+  /** 将选区设为整个公式（原子块） */
+  function _selectFormulaRange(mathEl) {
+    const r = document.createRange();
+    r.setStart(mathEl, 0);
+    r.setEnd(mathEl, 1);
+    const sel = window.getSelection();
+    if (sel) { sel.removeAllRanges(); sel.addRange(r); }
+    return r;
+  }
+
+  /** 计算拖拽终点对应的选区端点（方向感知：相对锚点公式在前/在后） */
+  function _mathDragEndPoint(clientX, clientY, anchorEl, anchorRange) {
+    // 终点落在公式上：公式整体参与（与锚点比较文档位置决定方向）
+    const under = document.elementFromPoint(clientX, clientY);
+    const math2 = under && under.closest ? under.closest(".m0-math") : null;
+    if (math2) {
+      if (math2 === anchorEl) {
+        return { sc: anchorRange.startContainer, so: anchorRange.startOffset, ec: anchorRange.endContainer, eo: anchorRange.endOffset };
+      }
+      const cmp = anchorEl.compareDocumentPosition(math2);
+      if (cmp & Node.DOCUMENT_POSITION_FOLLOWING) {
+        return { sc: anchorRange.startContainer, so: anchorRange.startOffset, ec: math2, eo: 1 };
+      }
+      return { sc: math2, so: 0, ec: anchorRange.endContainer, eo: anchorRange.endOffset };
+    }
+    // 终点在文本上：caretRangeFromPoint 取精确点，与锚点公式比较方向
+    let pt = null;
+    try { pt = document.caretRangeFromPoint ? document.caretRangeFromPoint(clientX, clientY) : null; } catch (err) { pt = null; }
+    if (!pt || !pt.startContainer) return null;
+    const before = pt.compareBoundaryPoints(Range.END_TO_START, anchorRange) <= 0;
+    if (before) return { sc: pt.startContainer, so: pt.startOffset, ec: anchorRange.endContainer, eo: anchorRange.endOffset };
+    return { sc: anchorRange.startContainer, so: anchorRange.startOffset, ec: pt.startContainer, eo: pt.startOffset };
+  }
+
+  /** 预览区 mousedown：编辑模式下按下公式 → 整体选中并可拖动扩展（双击放行进公式编辑） */
+  function _onFormulaMousedown(e) {
+    if (e.button !== 0) return;
+    const EH = window.MemoriaEditHandler;
+    if (!EH || !EH.editMode) return;
+    const preview = $("#preview");
+    const t = e.target;
+    if (!preview || !t || !t.closest) return;
+    if (!preview.contains(t)) return;
+    const mathEl = t.closest(".m0-math");
+    if (!mathEl) return;
+    const now = Date.now();
+    const isDbl = _mathLastDown && _mathLastDown.el === mathEl && now - _mathLastDown.t < _MATH_DBL_MS;
+    _mathLastDown = { el: mathEl, t: now };
+    if (isDbl) { _mathDrag = null; return; } // 双击：放行，dblclick 进入公式编辑
+    e.preventDefault(); // 阻止浏览器把公式“跳过”的原生选择
+    const anchorRange = _selectFormulaRange(mathEl);
+    _mathDrag = { el: mathEl, anchorRange };
+  }
+
+  function _onFormulaDragMove(e) {
+    if (!_mathDrag || _mathDragRaf) return;
+    const x = e.clientX, y = e.clientY;
+    _mathDragRaf = requestAnimationFrame(() => {
+      _mathDragRaf = null;
+      if (!_mathDrag) return;
+      const ep = _mathDragEndPoint(x, y, _mathDrag.el, _mathDrag.anchorRange);
+      if (!ep) return;
+      const r = document.createRange();
+      r.setStart(ep.sc, ep.so);
+      r.setEnd(ep.ec, ep.eo);
+      const sel = window.getSelection();
+      if (sel) { sel.removeAllRanges(); sel.addRange(r); }
+    });
+  }
+
+  function _onFormulaDragUp() {
+    _mathDrag = null;
+  }
+
+  /** 绑定公式拖拽选择（需在 MemoriaEditHandler.bindPreviewClick 之后调用） */
+  function bindFormulaDragSelect() {
+    document.addEventListener("mousedown", _onFormulaMousedown, true);
+    document.addEventListener("mousemove", _onFormulaDragMove);
+    document.addEventListener("mouseup", _onFormulaDragUp);
   }
 
   /** 模态框标题栏拖拽：mousedown 在 header（排除交互元素）→ 移动整个 .m0-modal-box */
@@ -10876,6 +11640,7 @@
   window.MemoriaBridge?.onReady?.(() => {
     bindEvents();
     initKb();
+    hydrateCustomColorsFromDisk();
     window.MemoriaWindowChrome?.initWindowChrome?.();
   });
 

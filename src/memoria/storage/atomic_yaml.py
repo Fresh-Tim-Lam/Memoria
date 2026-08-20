@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import logging
 import os
 import shutil
+import stat
 from pathlib import Path
 
 import yaml
+
+logger = logging.getLogger(__name__)
 
 BACKUP_SUFFIX = ".bak"
 
@@ -16,12 +20,27 @@ def backup_path(path: Path) -> Path:
 
 
 def write_backup(path: Path) -> Path | None:
-    """若目标已存在，复制为同目录 `.bak`（仅保留最新一版）。"""
+    """若目标已存在，复制为同目录 `.bak`（仅保留最新一版）。
+
+    备份是尽力而为的冗余操作：目标被占用 / 置为只读 / 权限受限时降级跳过
+    并记录日志，不阻断主写入（此前该处 PermissionError 会让发布态首次启动
+    直接崩溃）。
+    """
     if not path.is_file():
         return None
     bak = backup_path(path)
-    shutil.copy2(path, bak)
-    return bak
+    try:
+        if bak.is_file():
+            # 解除可能存在的只读属性（杀毒 / 同步工具可能置位）
+            try:
+                bak.chmod(bak.stat().st_mode | stat.S_IWRITE)
+            except OSError:
+                pass
+        shutil.copy2(path, bak)
+        return bak
+    except OSError as exc:
+        logger.warning("write_backup skipped %s: %s", bak, exc)
+        return None
 
 
 def atomic_write_yaml(path: str | Path, data: dict) -> None:

@@ -1,3 +1,4 @@
+LICENSE
 README.md
 pyproject.toml
 src/memoria/__init__.py
@@ -15,6 +16,7 @@ src/memoria/app/runtime.py
 src/memoria/app/window_win32.py
 src/memoria/app/shell/__init__.py
 src/memoria/app/shell/api_rpc.py
+src/memoria/app/shell/app_icon.py
 src/memoria/app/shell/host.py
 src/memoria/app/shell/pyqt6.py
 src/memoria/app/shell/pyqt6_hidden_chrome.py
@@ -50,6 +52,7 @@ src/memoria/services/definition_proposals.py
 src/memoria/services/document.py
 src/memoria/services/embedding_provider.py
 src/memoria/services/heading_proposals.py
+src/memoria/services/import_engine.py
 src/memoria/services/kp_index.py
 src/memoria/services/kp_rename.py
 src/memoria/services/kp_resolver.py
@@ -61,7 +64,12 @@ src/memoria/services/link_relevance.py
 src/memoria/services/link_resolver.py
 src/memoria/services/link_text_search.py
 src/memoria/services/mention_proposals.py
+src/memoria/services/model_router.py
+src/memoria/services/proposals.py
 src/memoria/services/range_proposals.py
+src/memoria/services/rerank_provider.py
+src/memoria/services/retrieval_fusion.py
+src/memoria/services/search_aux.py
 src/memoria/services/search_kernel.py
 src/memoria/services/suggest_metadata.py
 src/memoria/services/text_normalize.py

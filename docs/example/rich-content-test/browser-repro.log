@@ -1,0 +1,66 @@
+[14:34:23.463] [UNDO] resetHistory undo=0 redo=0
+[14:34:23.481] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:34:23.484] [STAMP] mapped 22 blocks from 24 source lines
+[14:34:23.484] [F1] rendered 22 blocks in 2.3ms
+[14:34:23.486] [render] skip: already rendering
+[14:34:23.665] [UNDO] resetHistory undo=0 redo=0
+[14:34:23.700] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:34:23.705] [STAMP] mapped 22 blocks from 24 source lines
+[14:34:23.705] [F1] rendered 22 blocks in 4.9ms
+[14:34:23.710] [render] skip: already rendering
+[14:34:28.103] [UNDO] resetHistory undo=0 redo=0
+[14:34:28.104] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:34:28.105] [STAMP] mapped 22 blocks from 24 source lines
+[14:34:28.105] [F1] rendered 22 blocks in 0.6ms
+[14:34:28.105] [render] skip: already rendering
+[14:34:29.298] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:34:29.299] [STAMP] mapped 22 blocks from 24 source lines
+[14:34:29.299] [F1] rendered 22 blocks in 0.7ms
+[14:34:47.036] #1 [DBL] ─── dblclick fired ───
+[14:34:47.036] #2 [DBL] target=IMG class=m0-preview-image
+[14:34:47.036] #3 [DBL] found .m0-src-block bi=4 tag=P ce=inherit
+[14:34:47.036] #4 [NED] isNonEditableBlock(4) type=image → true
+[14:34:47.036] #5 [DBL] isNonEditableBlock(4)=true
+[14:34:47.036] #6 [DBL] → enterBlockEditMode(4)
+[14:34:47.039] [EH] enterBlockEditMode: block 4 type=image lines 5-5
+[14:34:47.040] [STYLE] _extract range=sel
+[14:34:47.040] [STYLE] _extract start=bi=4 path=[] off=0 | L5:0 [|!|[本地测试图](]  end=bi=4 path=[] off=1 | L5:38 [ng)|·|]
+[14:34:47.040] [STYLE] _extract FAIL splitEnd
+[14:34:58.908] [EH] exitBlockEditMode: block 4 type=image
+[14:34:59.000] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:34:59.001] [STAMP] mapped 21 blocks from 23 source lines
+[14:34:59.001] [F1] rendered 21 blocks in 0.7ms
+[14:35:22.493] #7 [DBL] ─── dblclick fired ───
+[14:35:22.493] #8 [DBL] target=PRE class=m0-src-block m0-code-block
+[14:35:22.493] #9 [DBL] found .m0-src-block bi=20 tag=PRE ce=false
+[14:35:22.493] #10 [NED] isNonEditableBlock(20) type=code_block → true
+[14:35:22.493] #11 [DBL] isNonEditableBlock(20)=true
+[14:35:22.493] #12 [DBL] → enterBlockEditMode(20)
+[14:35:22.495] [EH] enterBlockEditMode: block 20 type=code_block lines 21-23
+[14:35:22.496] [STYLE] _extract range=sel
+[14:35:22.496] [STYLE] _extract start=bi=20 path=[] off=0 | L21:0 [|`|``python]  end=bi=20 path=[] off=1 | L21:0 [|`|``python]
+[14:35:22.496] [STYLE] _extract FAIL splitEnd
+[14:35:22.897] [EH] exitBlockEditMode: block 20 type=code_block
+[14:35:22.992] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:35:22.993] [STAMP] mapped 21 blocks from 23 source lines
+[14:35:22.993] [F1] rendered 21 blocks in 0.7ms
+[14:35:23.802] #13 [DBL] ─── dblclick fired ───
+[14:35:23.802] #14 [DBL] target=P class=m0-src-block
+[14:35:23.802] #15 [DBL] found .m0-src-block bi=16 tag=P ce=inherit
+[14:35:23.802] #16 [NED] isNonEditableBlock(16) type=paragraph → false
+[14:35:23.802] #17 [DBL] isNonEditableBlock(16)=false
+[14:35:23.802] #18 [DBL] editable block → return
+[14:35:35.190] #19 [DBL] ─── dblclick fired ───
+[14:35:35.190] #20 [DBL] target=IMG class=m0-preview-image
+[14:35:35.190] #21 [DBL] found .m0-src-block bi=8 tag=P ce=inherit
+[14:35:35.190] #22 [NED] isNonEditableBlock(8) type=image → true
+[14:35:35.190] #23 [DBL] isNonEditableBlock(8)=true
+[14:35:35.190] #24 [DBL] → enterBlockEditMode(8)
+[14:35:35.190] [EH] enterBlockEditMode: block 8 type=image lines 9-9
+[14:35:35.195] [STYLE] _extract range=sel
+[14:35:35.196] [STYLE] _extract start=bi=8 path=[] off=0 | L9:0 [|!|[API图](/]  end=bi=8 path=[] off=1 | L9:37 [age.png)|·|]
+[14:35:35.196] [STYLE] _extract FAIL splitEnd
+[14:35:35.603] [EH] exitBlockEditMode: block 8 type=image
+[14:35:35.685] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[14:35:35.685] [STAMP] mapped 21 blocks from 23 source lines
+[14:35:35.686] [F1] rendered 21 blocks in 0.5ms

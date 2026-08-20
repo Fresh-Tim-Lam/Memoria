@@ -335,6 +335,36 @@ window.MemoriaMapper = (function () {
       return { blockIndex: blockIndex, nodePath: [], offset: col };
     }
 
+    // BLOCKQUOTE block: block.children 是块级段落（每行一个），nodePath[0] 为段落索引
+    if (block.type === T.BLOCKQUOTE) {
+      var qLineIdx = line - lineCount; // 该行在 block 内的偏移（block 起始行 = lineCount）
+      if (qLineIdx < 0 || qLineIdx >= (block.children || []).length) {
+        return { blockIndex: blockIndex, nodePath: [], offset: 0 };
+      }
+      var qBlock = block.children[qLineIdx];
+      var qInline = (qBlock && qBlock.children) || [];
+      if (!qInline.length) {
+        return { blockIndex: blockIndex, nodePath: [qLineIdx], offset: 0 };
+      }
+      var qSrcCol = col - blockPrefixLen(block); // 去掉 "> " 前缀
+      if (qSrcCol < 0) qSrcCol = 0;
+      var qpos = 0;
+      for (var qj = 0; qj < qInline.length; qj++) {
+        var qnode = qInline[qj];
+        var qlen = inlineSourceLen(qnode);
+        if (qSrcCol >= qpos && qSrcCol < qpos + qlen) {
+          var qinner = findInlineAtSrcCol(qnode, qSrcCol - qpos, [qLineIdx].concat(qj));
+          if (qinner) {
+            qinner.blockIndex = blockIndex;
+            return qinner;
+          }
+          return { blockIndex: blockIndex, nodePath: [qLineIdx].concat(qj), offset: 0 };
+        }
+        qpos += qlen;
+      }
+      return { blockIndex: blockIndex, nodePath: [qLineIdx, qInline.length - 1], offset: 0 };
+    }
+
     var srcCol = col;
 
     // 在 inline 节点中查找
@@ -443,6 +473,35 @@ window.MemoriaMapper = (function () {
       return { line: line, col: liCol };
     }
 
+    // BLOCKQUOTE block: nodePath[0] 为段落索引，每个段落占一行（前缀 "> "）
+    if (block.type === T.BLOCKQUOTE) {
+      if (!nodePath || nodePath.length === 0) {
+        return { line: line, col: 2 };
+      }
+      var qIdx = nodePath[0];
+      if (qIdx >= (block.children || []).length) return { line: line, col: 2 };
+      line += qIdx;
+      var qBlock = block.children[qIdx];
+      var qInline = (qBlock && qBlock.children) || [];
+      if (nodePath.length === 1) {
+        return { line: line, col: 2 + offset };
+      }
+      var qNode = qInline[nodePath[1]];
+      if (!qNode) return { line: line, col: 2 };
+      var qCol = 2;
+      for (var qp = 0; qp < nodePath[1]; qp++) qCol += inlineSourceLen(qInline[qp]);
+      qCol += inlinePrefixLen(qNode);
+      for (var qj2 = 2; qj2 < nodePath.length; qj2++) {
+        var qidx = nodePath[qj2];
+        if (!qNode.children || qidx >= qNode.children.length) break;
+        for (var qk = 0; qk < qidx; qk++) qCol += inlineSourceLen(qNode.children[qk]);
+        qNode = qNode.children[qidx];
+        qCol += inlinePrefixLen(qNode);
+      }
+      qCol += offset;
+      return { line: line, col: qCol };
+    }
+
     // 计算 col (非 LIST block)
     var prefix = blockPrefixLen(block);
     var col = prefix;
@@ -512,6 +571,9 @@ window.MemoriaMapper = (function () {
     if (isNaN(blockIndex) || blockIndex >= doc.blocks.length) return null;
 
     var block = doc.blocks[blockIndex];
+    var mapSeg = [];
+
+    function _seg(label, len) { mapSeg.push(label + ":" + len); }
 
     // LIST block: 需要找到光标在哪个 <li> 中
     if (block.type === T.LIST) {
@@ -540,16 +602,34 @@ window.MemoriaMapper = (function () {
       var liTextNodes = [];
       collectTextNodes(liEl, liTextNodes);
       var liRenderedOffset = 0;
-      var liFound = false;
-      for (var li2 = 0; li2 < liTextNodes.length; li2++) {
-        if (liTextNodes[li2] === domNode) {
-          liRenderedOffset += domOffset;
-          liFound = true;
-          break;
+      if (domNode.nodeType === 3) {
+        var liFound = false;
+        for (var li2 = 0; li2 < liTextNodes.length; li2++) {
+          if (liTextNodes[li2] === domNode) {
+            liRenderedOffset += domOffset;
+            liFound = true;
+            _seg("hit", domOffset);
+            break;
+          }
+          var liLen = renderLenOfTextNode(liTextNodes[li2]);
+          _seg(textNodeLabel(liTextNodes[li2]), liLen);
+          liRenderedOffset += liLen;
         }
-        liRenderedOffset += liTextNodes[li2].textContent.length;
+        if (!liFound) liRenderedOffset = 0;
+      } else {
+        // 元素节点边界（光标停在 <li> 内元素上）：累加该元素之前的文本 + 内部前 offset 个子节点文本
+        for (var li3 = 0; li3 < liTextNodes.length; li3++) {
+          var lj = liTextNodes[li3];
+          if (domNode.contains(lj)) break;
+          var liLen2 = renderLenOfTextNode(lj);
+          _seg(textNodeLabel(lj), liLen2);
+          liRenderedOffset += liLen2;
+        }
+        var liChildCount = domNode.childNodes ? domNode.childNodes.length : 0;
+        for (var li4 = 0; li4 < domOffset && li4 < liChildCount; li4++) {
+          liRenderedOffset += nodeTextLen(domNode.childNodes[li4]);
+        }
       }
-      if (!liFound) liRenderedOffset = 0;
       // 在 item.children 中映射
       var item = block.items[itemIndex];
       if (!item.children || item.children.length === 0) {
@@ -557,6 +637,7 @@ window.MemoriaMapper = (function () {
       }
       var liPreferEnd = (domOffset > 0);
       var liResult = renderedToSrcCol({ children: item.children }, liRenderedOffset, liPreferEnd);
+      if (window.log) window.log("MAP", "domToAst block=" + blockIndex + " item=" + itemIndex + " dom=" + describeDomNode(domNode, domOffset) + " seg=[" + mapSeg.join(",") + "] renderedOffset=" + liRenderedOffset + " -> " + (liResult ? JSON.stringify(liResult.targetNode && liResult.targetNode.type) : "null"));
       var liPath = findNodePathInList(item.children, liResult.targetNode);
       return {
         blockIndex: blockIndex,
@@ -576,19 +657,52 @@ window.MemoriaMapper = (function () {
     var textNodes = [];
     collectTextNodes(blockEl, textNodes);
 
+    // 计算光标对应的「渲染文本偏移」。domNode 可能是文本节点（直接命中），
+    // 也可能是元素节点（选区边界停在元素上，如 span.m0-hl 的 offset=0 /
+    // offset=子节点数）。元素节点必须按「元素之前的文本长度 + 元素内部前
+    // offset 个子节点的文本长度」计算，否则会累加成整块总长，导致跨样式
+    // 边界选区的样式应用错位甚至失败（颜色完全没变）。
     var renderedOffset = 0;
-    for (var i = 0; i < textNodes.length; i++) {
-      var tn = textNodes[i];
-      if (tn === domNode) {
-        renderedOffset += domOffset;
-        break;
+    if (domNode.nodeType === 3) {
+      var found = false;
+      for (var i = 0; i < textNodes.length; i++) {
+        var tn = textNodes[i];
+        if (tn === domNode) {
+          renderedOffset += domOffset;
+          _seg("hit", domOffset);
+          found = true;
+          break;
+        }
+        var tnLen = renderLenOfTextNode(tn);
+        _seg(textNodeLabel(tn), tnLen);
+        renderedOffset += tnLen;
       }
-      renderedOffset += tn.textContent.length;
+      if (!found) renderedOffset = 0;
+    } else {
+      for (var j = 0; j < textNodes.length; j++) {
+        var tj = textNodes[j];
+        if (domNode.contains(tj)) break;
+        var tjLen = renderLenOfTextNode(tj);
+        _seg(textNodeLabel(tj), tjLen);
+        renderedOffset += tjLen;
+      }
+      // 行内公式（contentEditable=false 原子块）：其内部文本（MathJax CHTML）不可作为
+      // 渲染偏移依据；domOffset>0 视为位于公式之后，+1 哨兵落入其区间末端，
+      // 由 renderedToSrcCol/splitInlineAt 将整个公式归入选区一侧
+      if (domNode.classList && domNode.classList.contains("m0-math")) {
+        if (domOffset > 0) renderedOffset += 1;
+      } else {
+        var childCount = domNode.childNodes ? domNode.childNodes.length : 0;
+        for (var c = 0; c < domOffset && c < childCount; c++) {
+          renderedOffset += nodeTextLen(domNode.childNodes[c]);
+        }
+      }
     }
 
     // 渲染偏移 → AST 坐标
     var preferEnd = (domOffset > 0);
     var result = renderedToSrcCol({ children: block.children }, renderedOffset, preferEnd);
+    if (window.log) window.log("MAP", "domToAst block=" + blockIndex + " dom=" + describeDomNode(domNode, domOffset) + " seg=[" + mapSeg.join(",") + "] renderedOffset=" + renderedOffset + " -> " + (result ? JSON.stringify(result.targetNode && result.targetNode.type) : "null"));
     if (!result) return { blockIndex: blockIndex, nodePath: [0], offset: 0 };
 
     // 从整个 block 的 inline 树中找到 nodePath
@@ -746,6 +860,60 @@ window.MemoriaMapper = (function () {
   }
 
   /**
+   * 计算节点（文本/元素）的渲染文本长度。
+   * 文本节点 = data.length；元素节点 = 内部所有文本长度。
+   */
+  function nodeTextLen(node) {
+    if (!node) return 0;
+    if (node.nodeType === 3) return node.data.length;
+    if (node.nodeType === 1) return node.textContent.length;
+    return 0;
+  }
+
+  /**
+   * 文本节点在「渲染偏移」中的长度。
+   * 关键修复：m0-math（contentEditable=false 原子块）的 DOM 文本是
+   * "$"+formula+"$"（比 AST 公式长度多两个 $）。若按 textContent.length
+   * 累加，公式之后的所有文本节点渲染偏移都会被多算 formula.length+2，
+   * 使公式后选区的映射错位（样式笔刷范围错乱）。这里按 AST 视角取
+   * data-formula.length，与 renderedLen(MATH_INLINE) 保持一致。
+   */
+  function renderLenOfTextNode(tn) {
+    if (!tn) return 0;
+    var p = tn.parentElement;
+    while (p && p.nodeType === 1) {
+      if (p.classList && p.classList.contains("m0-math")) {
+        var f = p.getAttribute("data-formula") || "";
+        return f.length;
+      }
+      p = p.parentElement;
+    }
+    return tn.textContent.length;
+  }
+
+  /** 文本节点的简要描述（用于 MAP 日志）：类名 + 文本前若干字符 */
+  function textNodeLabel(tn) {
+    if (!tn) return "?";
+    var p = tn.parentElement;
+    var cls = "";
+    while (p && p.nodeType === 1 && !cls) {
+      if (p.classList && p.classList.length) cls = p.className;
+      p = p.parentElement;
+    }
+    var t = (tn.textContent || "").slice(0, 16).replace(/\n/g, "\\n");
+    return (cls ? cls.split(" ")[0] + "#" : "") + t;
+  }
+
+  /** DOM 节点的简要描述（用于 MAP 日志） */
+  function describeDomNode(domNode, domOffset) {
+    if (!domNode) return "null";
+    if (domNode.nodeType === 3) {
+      return "text#" + (domNode.textContent || "").slice(0, 16).replace(/\n/g, "\\n") + "@" + domOffset;
+    }
+    return (domNode.tagName || "?").toLowerCase() + "." + (domNode.className ? String(domNode.className).split(" ")[0] : "") + "@" + domOffset;
+  }
+
+  /**
    * 收集 DOM 元素内的所有文本节点
    */
   function collectTextNodes(el, result) {
@@ -790,6 +958,8 @@ window.MemoriaMapper = (function () {
         return (block.rows || []).length + 2; // header + separator + data rows
       case T.LIST:
         return (block.items || []).length; // 每个 item 占一行
+      case T.BLOCKQUOTE:
+        return (block.children || []).length; // 每个引用行一个段落
       default:
         return 1;
     }

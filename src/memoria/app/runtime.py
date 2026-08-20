@@ -51,6 +51,6 @@ def resolve_shell_kind() -> str:
     explicit = os.environ.get("MEMORIA_SHELL", "").strip().lower()
     if explicit:
         return explicit
-    if is_frozen() or resolve_mode() == "release":
-        return "pyqt6"
+    # 发布态与开发态统一走 pywebview（WebView2）：新 Chromium 内核稳定、
+    # 支持原生窗口动画；需要 PyQt6 壳时可显式 MEMORIA_SHELL=pyqt6
     return "pywebview"

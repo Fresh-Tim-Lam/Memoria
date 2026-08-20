@@ -592,6 +592,18 @@ class M0API:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
+    def window_begin_drag(self) -> dict:
+        """前端检测到标题栏拖拽动作后调用：后端在 UI 线程发起原生
+        标题栏拖动（ReleaseCapture + WM_NCLBUTTONDOWN HTCAPTION），
+        鼠标捕获 / Aero Snap / 最大化下拉还原全部由 Windows 原生处理。"""
+        if self._host is None:
+            return {"status": "error", "message": "窗口不可用"}
+        try:
+            self._host.begin_drag()
+            return {"status": "ok"}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
+
     def window_restore_from_drag(
         self, screen_x: float, screen_y: float, ratio_x: float
     ) -> dict:

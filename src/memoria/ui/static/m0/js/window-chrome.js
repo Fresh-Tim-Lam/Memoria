@@ -154,13 +154,14 @@
   }
 
   function bindTitlebarDrag(a) {
-    document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
-      el.addEventListener(
-        "mousedown",
-        (e) => {
-          if (isNoDragTarget(e.target)) return;
-          if (e.button !== 0 || maximized) return;
-          if (shellKind === "pyqt6") {
+    if (shellKind === "pyqt6") {
+      // PyQt6：沿用系统级拖动（Qt 原生 HTCAPTION）
+      document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
+        el.addEventListener(
+          "mousedown",
+          (e) => {
+            if (isNoDragTarget(e.target)) return;
+            if (e.button !== 0 || maximized) return;
             e.preventDefault();
             e.stopPropagation();
             const bridge = global.__memoriaQtBridge;
@@ -169,12 +170,50 @@
             } else {
               a?.window_start_move?.();
             }
-            return;
-          }
-          /* pywebview：依赖 CSS -webkit-app-region */
+          },
+          true
+        );
+      });
+      return;
+    }
+
+    /* pywebview：WebView2 子窗口拦截 WM_NCHITTEST，命中测试到不了表单
+       WndProc → 不采用 NCHITTEST。顶栏拖动由 bindNativeCaptionDrag 绑定
+       mousedown → RPC window_begin_drag → 后端 PostMessage → WndProc
+       （UI 线程）发起原生标题栏拖动，见 window_win32.py。 */
+  }
+
+  function bindNativeCaptionDrag(a) {
+    // pywebview（WebView2）子窗口拦截 WM_NCHITTEST，命中测试无法到达表单
+    // WndProc → 弃用 NCHITTEST 方案。改为：顶栏 mousedown → RPC
+    // window_begin_drag → 后端 PostMessage → WndProc（UI 线程）执行
+    // ReleaseCapture + SendMessage(WM_NCLBUTTONDOWN, HTCAPTION)，进入
+    // 系统原生标题栏拖动循环（鼠标捕获 / Aero Snap 全部原生处理）。
+    // 最大化时的"下拉还原"由 bindMaximizedTitlebarDrag（JS 路径）接管。
+    document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
+      el.addEventListener(
+        "mousedown",
+        (e) => {
+          if (isNoDragTarget(e.target)) return;
+          if (e.button !== 0 || maximized) return;
+          e.preventDefault();
+          e.stopPropagation();
+          a?.window_begin_drag?.();
         },
         true
       );
+    });
+  }
+
+  function bindFocusStateSync(a, btnMax) {
+    // 原生拖动（下拉还原最大化 / Aero Snap 最大化）后，JS 侧状态可能过期：
+    // 窗口重新获得焦点时拉取真实最大化状态，刷新图标
+    global.addEventListener("focus", () => {
+      a?.get_window_chrome?.().then((res) => {
+        if (res?.status === "ok" && !!res.maximized !== maximized) {
+          onMaximizeStateChange(!!res.maximized, btnMax);
+        }
+      });
     });
   }
 
@@ -264,6 +303,10 @@
 
     if (!frameless) {
       wrap.classList.add("hidden");
+      // 原生窗口：系统标题栏负责窗口控制，禁用前端拖拽区域
+      document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
+        el.style.setProperty("-webkit-app-region", "no-drag");
+      });
       return;
     }
 
@@ -274,9 +317,41 @@
     const btnClose = document.getElementById("btn-win-close");
 
     bindResizeLayer(a);
+    if (shellKind === "pywebview") {
+      // WebView2 不（可靠地）支持 -webkit-app-region: drag：显式禁用。
+      // 窗口拖动统一走 WM_NCHITTEST→HTCAPTION 原生路径（见 window_win32.py）
+      document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
+        el.style.setProperty("-webkit-app-region", "no-drag");
+      });
+    }
     bindTitlebarDrag(a);
-    bindMaximizedTitlebarDrag(a, btnMax);
+    if (shellKind === "pywebview") {
+      // 原生拖动：mousedown → RPC window_begin_drag → WndProc 发起原生
+      // 标题栏拖动（ReleaseCapture + WM_NCLBUTTONDOWN HTCAPTION）；
+      // 最大化时的"下拉还原"走 JS 路径（bindMaximizedTitlebarDrag）
+      bindNativeCaptionDrag(a);
+      bindMaximizedTitlebarDrag(a, btnMax);
+      bindFocusStateSync(a, btnMax);
+    } else {
+      bindMaximizedTitlebarDrag(a, btnMax);
+    }
     bindToolbarDragExclusionSync();
+
+    if (shellKind === "pywebview") {
+      // 双击标题栏切换最大化/还原（原生窗口行为，标题栏被隐藏后需手动补上）
+      document.querySelectorAll(".pywebview-drag-region").forEach((el) => {
+        el.addEventListener("dblclick", (e) => {
+          if (isNoDragTarget(e.target)) return;
+          e.preventDefault();
+          e.stopPropagation();
+          a.window_toggle_maximize?.().then((res) => {
+            if (res?.status === "ok") {
+              onMaximizeStateChange(!!res.maximized, btnMax);
+            }
+          });
+        });
+      });
+    }
 
     btnMin?.addEventListener("click", () => {
       a.window_minimize?.();

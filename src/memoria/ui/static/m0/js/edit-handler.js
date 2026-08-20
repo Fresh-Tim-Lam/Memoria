@@ -335,7 +335,7 @@
     if (NON_EDITABLE) return NON_EDITABLE;
     var T = MemoriaAST.TYPES;
     NON_EDITABLE = {};
-    [T.CODE_BLOCK, T.MATH_BLOCK, T.MERMAID, T.TABLE, T.FRONTMATTER].forEach(function (t) {
+    [T.CODE_BLOCK, T.MATH_BLOCK, T.MERMAID, T.TABLE, T.FRONTMATTER, T.IMAGE].forEach(function (t) {
       NON_EDITABLE[t] = true;
     });
     return NON_EDITABLE;
@@ -623,6 +623,11 @@
 
       // 如果点击在不可编辑 block 上，不同步光标（避免转移焦点，让 dblclick 能触发）
       var clickTarget = e.target;
+      // 行内公式（contenteditable=false 原子块）：点击/拖拽用于整体选中公式，不同步光标
+      if (clickTarget.closest && clickTarget.closest(".m0-math")) {
+        flog("MOUSE", "mouseup on inline math → skip sync (keep formula selection)");
+        return;
+      }
       var walkEl = clickTarget;
       while (walkEl && !(walkEl.classList && walkEl.classList.contains("m0-src-block"))) {
         walkEl = walkEl.parentElement;
@@ -809,6 +814,12 @@
         return '<button type="button" class="m0-fmt-btn" id="blk-add-row" title="添加行">+行</button>' +
                '<button type="button" class="m0-fmt-btn" id="blk-add-col" title="添加列">+列</button>';
       }
+    },
+    image: {
+      label: "编辑图片",
+      tools: function () {
+        return '<span class="m0-block-edit-hint">修改 Markdown 图片语法&nbsp;![alt](url "title")</span>';
+      }
     }
   };
 
@@ -914,7 +925,22 @@
     var srcStart = parseInt(blockEl.getAttribute("data-m0-src-line"), 10) || 0;
     var srcEnd = parseInt(blockEl.getAttribute("data-m0-src-line-end"), 10) || srcStart;
 
-    EH.blockEditMode = { blockIndex: blockIndex, blockEl: blockEl, blockType: blockType, srcStart: srcStart, srcEnd: srcEnd };
+    // 图片块无文本内容：将 <img> 替换为可编辑的 Markdown 源文本（![alt](url "title")）
+    var originalContent = "";
+    if (blockType === "image") {
+      var editor = document.getElementById("editor");
+      if (editor && srcStart > 0) {
+        var lineEls = editor.querySelectorAll(".m0-line-content");
+        var srcLineEl = lineEls[srcStart - 1];
+        if (srcLineEl) originalContent = srcLineEl.textContent || "";
+      }
+      blockEl.textContent = originalContent;
+    } else {
+      // 其余块类型：原始可编辑内容即块内纯文本（代码/公式不含围栏）
+      originalContent = blockEl.textContent || "";
+    }
+
+    EH.blockEditMode = { blockIndex: blockIndex, blockEl: blockEl, blockType: blockType, srcStart: srcStart, srcEnd: srcEnd, originalContent: originalContent };
 
     // 切换工具栏
     var fmtBar = document.querySelector(".m0-format-bar");
@@ -1108,6 +1134,11 @@
             (line || "") + '</span></div>';
         }).join("");
       }
+    }
+
+    // 内容有变化 → 标记脏（写盘），与源码输入一致
+    if (ctx.blockType !== "table" && newContent !== ctx.originalContent && typeof window._markDirty === "function") {
+      window._markDirty();
     }
 
     // 恢复 block 不可编辑

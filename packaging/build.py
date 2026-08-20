@@ -143,7 +143,7 @@ def _stage_release(version: str) -> None:
     meta = {
         "name": "Memoria",
         "version": version,
-        "shell": "pyqt6",
+        "shell": "pywebview",
         "mode": "release",
         "built_at": datetime.now(UTC).isoformat(),
         "executable": "Memoria.exe",

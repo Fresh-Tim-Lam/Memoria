@@ -75,7 +75,11 @@ window.MemoriaParser = (function () {
       if (tok.type === "math_inline_open") {
         var mathEnd = findClose(tokens, i, "math_inline_close");
         if (mathEnd !== -1) {
-          var formula = tokens.slice(i + 1, mathEnd).map(function (t) { return t.value; }).join("");
+          var formula = tokens.slice(i + 1, mathEnd).map(function (t) {
+            // 词法器把公式内反斜杠（\frac、\nu 等）切为 escape 令牌，需还原为 "\\"+char，
+            // 否则公式源码回写（SourceGen）会丢反斜杠，公式损坏
+            return t.type === "escape" ? "\\" + t.value : t.value;
+          }).join("");
           result.push(AST.mathInline(formula));
           i = mathEnd + 1;
         } else {
@@ -380,29 +384,16 @@ window.MemoriaParser = (function () {
 
       // ── 引用 ──
       if (tokens.length > 0 && tokens[0].type === "blockquote_prefix") {
-        var qTokens = tokens.slice(1);
-        var qChildren = parseInline(qTokens);
-        // 支持连续引用行
-        var qLines = [];
-        qLines.push(lines[i]);
-        i++;
+        // 连续引用行：每行解析为一个独立段落，保留完整内联结构（高亮/加粗/颜色等）。
+        // 若按文本拼接，[[\h:...]] / ** 等标记会被当作纯文本丢失。
+        var qBlocks = [];
         while (i < endLine) {
-          var nextTokens = lexer.tokenize(lines[i]);
-          if (nextTokens.length > 0 && nextTokens[0].type === "blockquote_prefix") {
-            qLines.push(lines[i]);
-            i++;
-          } else if (lines[i].trim() === "") {
-            break;
-          } else {
-            break;
-          }
+          var qt = lexer.tokenize(lines[i]);
+          if (qt.length === 0 || qt[0].type !== "blockquote_prefix") break;
+          qBlocks.push(AST.paragraph(parseInline(qt.slice(1))));
+          i++;
         }
-        // 简单处理：合并引用行
-        var allText = qLines.map(function (l) {
-          var t = lexer.tokenize(l);
-          return t.slice(1).map(function (tk) { return tk.value; }).join("");
-        }).join("\n");
-        blocks.push(AST.blockquote([AST.paragraph([AST.text(allText)])]));
+        if (qBlocks.length) blocks.push(AST.blockquote(qBlocks));
         continue;
       }
 

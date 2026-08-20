@@ -4,18 +4,22 @@ Version: 0.1.0
 Summary: Local knowledge-graph IDE with offline retrieval
 Requires-Python: >=3.11
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: pywebview>=5.0
 Requires-Dist: PyYAML>=6.0
 Requires-Dist: jieba>=0.42
 Requires-Dist: bottle>=0.12
 Provides-Extra: dev
 Requires-Dist: pytest>=8.0; extra == "dev"
+Provides-Extra: benchmark
+Requires-Dist: certifi>=2024.0; extra == "benchmark"
 Provides-Extra: desktop
 Requires-Dist: PyQt6-WebEngine>=6.6; extra == "desktop"
 Provides-Extra: semantic
 Requires-Dist: sentence-transformers>=3.0; extra == "semantic"
 Provides-Extra: search
 Requires-Dist: pypinyin>=0.50; extra == "search"
+Dynamic: license-file
 
 # Memoria
 

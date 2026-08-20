@@ -1852,6 +1852,11 @@ body.m0-win-resizing {
     cursor: inherit;
 }
 
+body.m0-win-dragging {
+    user-select: none;
+    cursor: default;
+}
+
 .m0-toolbar-future {
     opacity: 0.72;
     border-style: dashed;
@@ -3017,11 +3022,12 @@ body.m0-win-resizing {
 }
 .m0-fmt-dropdown-menu {
     display: none;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: auto;
     left: auto;
-    right: 0;
-    z-index: 100;
+    right: auto;
+    bottom: auto;
+    z-index: 10050;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 4px;
@@ -3097,9 +3103,185 @@ body.m0-win-resizing {
     color: #fff;
     border-color: transparent;
 }
+/* 自定义颜色块（动态添加，可右键菜单删除） */
+.m0-hl-colors,
+.m0-fc-colors {
+    flex-wrap: nowrap;
+    max-width: 360px;
+    overflow-x: auto;
+}
+.m0-custom-swatch {
+    border: 1px dashed rgba(127, 127, 127, .65);
+    padding: 3px 8px;
+}
+.m0-custom-swatch:hover {
+    opacity: .85;
+    border-style: solid;
+}
+/* 应用内颜色选择器（弹层固定在程序窗口内） */
+.m0-color-picker-mask {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    background: rgba(0, 0, 0, .45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.m0-color-picker {
+    background: var(--bg-primary, #fff);
+    color: var(--text-primary, #222);
+    border: 1px solid var(--border-color, #d0d0d0);
+    border-radius: 10px;
+    padding: 16px;
+    width: 300px;
+    max-width: calc(100vw - 40px);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, .35);
+    font-size: 13px;
+    box-sizing: border-box;
+}
+.m0-color-picker *,
+.m0-color-picker *::before,
+.m0-color-picker *::after {
+    box-sizing: border-box;
+}
+.m0-cp-title {
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-align: center;
+}
+.m0-cp-preview {
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    margin-bottom: 10px;
+}
+.m0-cp-sv {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    cursor: crosshair;
+    overflow: hidden;
+    touch-action: none;
+}
+.m0-cp-cursor {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .45), 0 0 4px rgba(0, 0, 0, .55);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+.m0-cp-hue {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 16px;
+    margin: 12px 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    touch-action: none;
+}
+.m0-cp-hue:focus {
+    outline: none;
+}
+.m0-cp-hue::-webkit-slider-runnable-track {
+    height: 14px;
+    border-radius: 7px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    background: linear-gradient(90deg, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));
+}
+.m0-cp-hue::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 0 4px rgba(0, 0, 0, .5);
+    background: var(--m0-cp-hue-thumb, hsl(0, 100%, 50%));
+    margin-top: -1px;
+}
+.m0-cp-hue::-moz-range-track {
+    height: 14px;
+    border-radius: 7px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    background: linear-gradient(90deg, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));
+}
+.m0-cp-hue::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 0 4px rgba(0, 0, 0, .5);
+    background: var(--m0-cp-hue-thumb, hsl(0, 100%, 50%));
+}
+.m0-cp-presets {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+.m0-cp-presets button {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .18);
+    padding: 0;
+    cursor: pointer;
+}
+.m0-cp-presets button:hover {
+    transform: scale(1.15);
+}
+.m0-cp-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.m0-cp-hex {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 8px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    border-radius: 6px;
+    background: var(--bg-secondary, #f8f9fa);
+    color: var(--text-primary, #222);
+    font-family: Consolas, Menlo, monospace;
+}
+.m0-cp-row button {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color, #d0d0d0);
+    background: var(--bg-secondary, #f5f5f5);
+    color: var(--text-primary, #222);
+    cursor: pointer;
+}
+.m0-cp-row button:hover {
+    opacity: .85;
+}
+.m0-cp-row .m0-cp-ok {
+    background: #3b82f6;
+    color: #fff;
+    border-color: #3b82f6;
+}
 .m0-hl-custom:hover,
 .m0-fc-custom:hover {
     opacity: .9;
+}
+/* ── 画笔模式（点击颜色后进入，拖动选择文字即应用目标样式）── */
+body.m0-brush-active #preview,
+body.m0-brush-active #editor {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='24'%20height='30'%20viewBox='0%200%2024%2030'%3E%3Crect%20x='8'%20y='1'%20width='8'%20height='15'%20rx='1.5'%20fill='%23b5651d'/%3E%3Crect%20x='7'%20y='15'%20width='10'%20height='4.5'%20rx='1'%20fill='%239a9a9a'/%3E%3Cpath%20d='M5.5%2019.5%20h13%20l-2.8%208.2%20q-3.7%201.8%20-7.4%200%20z'%20fill='%232f2f2f'/%3E%3Cellipse%20cx='12'%20cy='23.6'%20rx='3.4'%20ry='2.2'%20fill='%233b82f6'/%3E%3C/svg%3E") 12 27, crosshair !important;
+}
+.m0-fmt-btn.brush-armed {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    background: var(--accent-soft);
+    color: var(--accent);
 }
 
 #editor-split {
@@ -3212,7 +3394,7 @@ body.m0-win-resizing {
     cursor: pointer;
 }
 .m0-preview mjx-container {
-    color: var(--text-primary) !important;
+    color: inherit;
     overflow-x: auto;
     overflow-y: hidden;
     max-width: 100%;

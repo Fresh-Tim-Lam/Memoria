@@ -1368,3 +1368,66 @@ def set_toolbar_drag_exclusion(window: QMainWindow, left_x: int) -> None:
 def layout_titlebar_drag_handles(window: QMainWindow) -> None:
     """兼容旧调用点；原生拖拽条已移除。"""
     return
+
+
+# ── 首帧合成强化 ──────────────────────────────────────────────
+# 现象：发布态（PyQt6 / WebEngine）首次打开窗口可见但内容冻结、点击无响应；
+# 最小化→还原（触发 refresh_web_content + refresh_window_chrome 强制 DWM 重合成）
+# 后才正常。页面其实早已加载完，问题在于 Chromium 合成器未把首帧提交到窗口表面，
+# 且 show 后没有任何强制重绘动作。对策：show / loadFinished 后多拍强制重绘，
+# 与还原路径完全对齐（同样的 refresh_web_content + refresh_window_chrome 调用）。
+
+# 每拍之后的间隔（ms）：共 1+len 拍，覆盖冷启动时 GPU 合成器就绪前的窗口期。
+_FIRST_PAINT_DELAYS_MS = (100, 200, 500, 1000, 1500)
+
+
+def schedule_first_paint_refresh(window: QMainWindow) -> None:
+    """调度多拍首帧强制重绘；重复调用会重置节奏（show 与 loadFinished 双触发去重）。"""
+    from PyQt6.QtCore import QTimer
+
+    timer = getattr(window, "_memoria_first_paint_timer", None)
+    if timer is None:
+        timer = QTimer(window)
+        timer.setSingleShot(True)
+        timer.timeout.connect(lambda: _first_paint_refresh_tick(window))
+        window._memoria_first_paint_timer = timer  # noqa: SLF001
+    window._memoria_first_paint_shot = 0  # noqa: SLF001
+    timer.start(0)
+    shell_log_window(window, "first_paint_scheduled")
+
+
+def _first_paint_refresh_tick(window: QMainWindow) -> None:
+    if window.isMinimized():
+        shell_log_window(window, "first_paint_skipped", reason="minimized")
+        return
+    shot = getattr(window, "_memoria_first_paint_shot", 0)
+    window._memoria_first_paint_shot = shot + 1  # noqa: SLF001
+    refresh_web_content(window)
+    refresh_window_chrome(window)
+    # 诊断：每拍查询前端激活/可见性/探针状态，对比"最小化还原后正常"的差异
+    view = window.centralWidget()
+    if view is not None and hasattr(view, "page"):
+        try:
+            view.page().runJavaScript(
+                "JSON.stringify({focus: document.hasFocus(), vis: document.visibilityState,"
+                " ready: document.readyState, diag: window.__m0diag || null})",
+                lambda r, s=shot: shell_log_window(
+                    window, "first_paint_frontend", shot=s, state=str(r)
+                ),
+            )
+        except Exception:  # noqa: BLE001
+            pass
+    # 最后一拍：主动激活窗口与 view 焦点（对齐"最小化还原后恢复交互"的激活机制）
+    if shot == len(_FIRST_PAINT_DELAYS_MS):
+        window.raise_()
+        window.activateWindow()
+        if view is not None:
+            try:
+                view.setFocus()
+            except Exception:  # noqa: BLE001
+                pass
+        shell_log_window(window, "first_paint_focus_applied")
+    shell_log_window(window, "first_paint_refresh", shot=shot)
+    timer = getattr(window, "_memoria_first_paint_timer", None)
+    if timer is not None and shot < len(_FIRST_PAINT_DELAYS_MS):
+        timer.start(_FIRST_PAINT_DELAYS_MS[shot])
