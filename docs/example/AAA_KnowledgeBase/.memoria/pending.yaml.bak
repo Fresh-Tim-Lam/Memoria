@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-27T07:23:26.858183+00:00'
+updated_at: '2026-07-31T03:43:15.046309+00:00'
 items:
 - pending_id: a70048884b857375
   file: DeepLearning/ELU.md
@@ -4266,504 +4266,6 @@ items:
       snippet: '> - 原始需要 $ d^2 $ 个数，现在只需要 $ k $ 个数（$ k \ll d^2 $）'
       line_hint: 158
   status: pending
-- pending_id: af19e1e92950559d
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 0. 引言
-  range:
-    start:
-      snippet: '## 0. 引言'
-      line_hint: 3
-    end:
-      snippet: '---'
-      line_hint: 21
-  status: pending
-- pending_id: 9121c008b22139a5
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 1. 为什么需要基于梯度的优化？
-  range:
-    start:
-      snippet: '## 1. 为什么需要基于梯度的优化？'
-      line_hint: 23
-    end:
-      snippet: '---'
-      line_hint: 47
-  status: pending
-- pending_id: 3ead5c6fc1c86d24
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 1.1 问题的形式化
-  range:
-    start:
-      snippet: '### 1.1 问题的形式化'
-      line_hint: 25
-    end:
-      snippet: 目标函数的**梯度** $\nabla F(w)$ 指明了函数在参数空间中**上升最快的方向**。因此，沿着负梯度方向更新参数，可以最有效地降低目标函数值。这就
-      line_hint: 35
-  status: pending
-- pending_id: 76326d697501a237
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 1.2 为什么不用高阶方法？
-  range:
-    start:
-      snippet: '### 1.2 为什么不用高阶方法？'
-      line_hint: 37
-    end:
-      snippet: '---'
-      line_hint: 47
-  status: pending
-- pending_id: c20d463191710b59
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 2. 梯度下降的收敛性：为什么有效？
-  range:
-    start:
-      snippet: '## 2. 梯度下降的收敛性：为什么有效？'
-      line_hint: 49
-    end:
-      snippet: '---'
-      line_hint: 114
-  status: pending
-- pending_id: 83a88c67e6a56c5b
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 2.1 收敛性证明的关键：Lipschitz 光滑性
-  range:
-    start:
-      snippet: '### 2.1 收敛性证明的关键：Lipschitz 光滑性'
-      line_hint: 51
-    end:
-      snippet: 2. **海森矩阵有界**：存在常数 $L>0$，使得对所有 $u,x$， $u^{\top}\nabla^2 f(x)u \leq
-        L\|u\|^2$。这相当
-      line_hint: 56
-  status: pending
-- pending_id: 53edaefaed36aaf7
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 2.2 下降引理（Descent Lemma）
-  range:
-    start:
-      snippet: '### 2.2 下降引理（Descent Lemma）'
-      line_hint: 58
-    end:
-      snippet: 这个引理通过将真实函数值 $J(w)$ 约束在一个由二次函数 $Q_{1/L}(w|p)$ 给出的上界内，为证明梯度下降的收敛性提供了关键工具。
-      line_hint: 66
-  status: pending
-- pending_id: bcf55e6fee227a80
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 2.3 SGD 的收敛性证明框架
-  range:
-    start:
-      snippet: '### 2.3 SGD 的收敛性证明框架'
-      line_hint: 68
-    end:
-      snippet: '---'
-      line_hint: 114
-  status: pending
-- pending_id: b25aac4a5bfb7e2f
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 'Step 1: 泰勒展开'
-  range:
-    start:
-      snippet: '#### Step 1: 泰勒展开'
-      line_hint: 72
-    end:
-      snippet: 其中 $L$ 是 Lipschitz 常数，$G$ 是梯度上界。注意，由于 $f_n$ 是随机选出的，中间项符号不定，单步不一定下降。
-      line_hint: 80
-  status: pending
-- pending_id: f87a729bcb8ee68e
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 'Step 2: 取期望'
-  range:
-    start:
-      snippet: '#### Step 2: 取期望'
-      line_hint: 82
-    end:
-      snippet: 这说明：虽然在期望意义下，SGD 也不能保证每步下降，但通过合适的步长选择，可以对下降的期望值进行控制。
-      line_hint: 90
-  status: pending
-- pending_id: 7a398151facd965a
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 'Step 3: 分拆与求和'
-  range:
-    start:
-      snippet: '#### Step 3: 分拆与求和'
-      line_hint: 92
-    end:
-      snippet: '---'
-      line_hint: 114
-  status: pending
-- pending_id: 293926c757e96a14
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 3. 主流梯度下降算法
-  range:
-    start:
-      snippet: '## 3. 主流梯度下降算法'
-      line_hint: 116
-    end:
-      snippet: '---'
-      line_hint: 152
-  status: pending
-- pending_id: c8792e6cd15f63b4
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 3.1 算法谱系
-  range:
-    start:
-      snippet: '### 3.1 算法谱系'
-      line_hint: 118
-    end:
-      snippet: '| **Adam** | Momentum + RMSProp | 综合优势、工业标准 | 泛化有时不及SGD | Kingma &
-        Ba (2014) |'
-      line_hint: 128
-  status: pending
-- pending_id: 8cc4bb9665f176a7
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 3.2 动量方法的数学本质
-  range:
-    start:
-      snippet: '### 3.2 动量方法的数学本质'
-      line_hint: 130
-    end:
-      snippet: '---'
-      line_hint: 152
-  status: pending
-- pending_id: ae93bd322783542e
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 4. 前沿进展
-  range:
-    start:
-      snippet: '## 4. 前沿进展'
-      line_hint: 154
-    end:
-      snippet: '---'
-      line_hint: 185
-  status: pending
-- pending_id: ce5904f9154fbf0a
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 4.1 自适应方法：Adam 的成功与争议
-  range:
-    start:
-      snippet: '### 4.1 自适应方法：Adam 的成功与争议'
-      line_hint: 156
-    end:
-      snippet: 然而，研究表明 Adam 在某些任务上的泛化性能不如 SGD，这可能与自适应方法倾向于找到更"平坦"的最小值有关。
-      line_hint: 163
-  status: pending
-- pending_id: 9177902c452afd8b
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 4.2 二阶方法的复兴
-  range:
-    start:
-      snippet: '### 4.2 二阶方法的复兴'
-      line_hint: 165
-    end:
-      snippet: '- **Adan** 等融合动量与自适应机制的新优化器也在不断涌现。'
-      line_hint: 171
-  status: pending
-- pending_id: 9eee9fa4d160eaca
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 4.3 双层优化（Bi-level Optimization）
-  range:
-    start:
-      snippet: '### 4.3 双层优化（Bi-level Optimization）'
-      line_hint: 173
-    end:
-      snippet: '- **数据蒸馏**：生成少量合成数据，使在其上训练的模型能达到完整数据集的性能'
-      line_hint: 179
-  status: pending
-- pending_id: e31b1aed226c6ef4
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 4.4 分数阶梯度下降（Fractional Gradient Descent）
-  range:
-    start:
-      snippet: '### 4.4 分数阶梯度下降（Fractional Gradient Descent）'
-      line_hint: 181
-    end:
-      snippet: '---'
-      line_hint: 185
-  status: pending
-- pending_id: 0065e31737cd9498
-  file: MachineLearning/GradientBoost.md
-  kind: heading
-  name: 5. 总结
-  range:
-    start:
-      snippet: '## 5. 总结'
-      line_hint: 187
-    end:
-      snippet: '| **实践原则** | 无免费午餐定理：没有万能优化器，需根据任务选择 |'
-      line_hint: 196
-  status: pending
-- pending_id: cacfcadc49922cb2
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: '**基于梯度的方法'
-  range:
-    start:
-      snippet: '**基于梯度的方法（Gradient-Based Methods）** 是机器学习和优化理论中最核心、应用最广泛的算法范式。它通过利用目标函数对参数的**导数信'
-      line_hint: 5
-    end:
-      snippet: ''
-      line_hint: 22
-  status: pending
-- pending_id: 302ee0ad6c82e3e7
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 优化目标
-  range:
-    start:
-      snippet: 其数学原理可以简洁地表述为：优化目标是找到一组参数，使标量目标函数最小化：
-      line_hint: 7
-    end:
-      snippet: ''
-      line_hint: 22
-  status: pending
-- pending_id: 39d3e2ca608b150b
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: $\eta$
-  range:
-    start:
-      snippet: 这里 $d^{*}$ 是精心选择的下山方向，用于降低 $f(\theta)$， $\eta$ 是步长。这种通过梯度信息指导搜索的方式，构成了本报告所有方法的基础
-      line_hint: 19
-    end:
-      snippet: ''
-      line_hint: 22
-  status: pending
-- pending_id: 7f9862eb4257d61c
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: $f
-  range:
-    start:
-      snippet: 其中 $f(w; x_i)$ 是模型在第 $i$ 个样本上的损失，$n$ 是样本总数。
-      line_hint: 33
-    end:
-      snippet: ''
-      line_hint: 36
-  status: pending
-- pending_id: c4d838ce4a4e783f
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 这就
-  range:
-    start:
-      snippet: 目标函数的**梯度** $\nabla F(w)$ 指明了函数在参数空间中**上升最快的方向**。因此，沿着负梯度方向更新参数，可以最有效地降低目标函数值。这就
-      line_hint: 35
-    end:
-      snippet: ''
-      line_hint: 36
-  status: pending
-- pending_id: 9011dabafb15c478
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: $O
-  range:
-    start:
-      snippet: '| **二阶方法** | 梯度 + 海森矩阵 $\nabla^2 f$ | $O(n^2)$ ~ $O(n^3)$ | 小规模、高精度需求
-        |'
-      line_hint: 42
-    end:
-      snippet: '| **零阶方法** | 仅函数值 | $O(n)$（但迭代次数多） | 黑盒优化、不可导问题 |'
-      line_hint: 43
-  status: pending
-- pending_id: 372299e88f3e4943
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 两个最基本的假设
-  range:
-    start:
-      snippet: 在分析梯度下降的收敛性时，数学上需要一些假设来保证优化过程不失控。两个最基本的假设是：
-      line_hint: 53
-    end:
-      snippet: ''
-      line_hint: 57
-  status: pending
-- pending_id: e8628567afe5c9e9
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 这相当于要求函数
-  range:
-    start:
-      snippet: 2. **海森矩阵有界**：存在常数 $L>0$，使得对所有 $u,x$， $u^{\top}\nabla^2 f(x)u \leq
-        L\|u\|^2$。这相当
-      line_hint: 56
-    end:
-      snippet: ''
-      line_hint: 57
-  status: pending
-- pending_id: 1aa7f3f9a49a4e8e
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 以随机梯度下降
-  range:
-    start:
-      snippet: 以随机梯度下降（SGD）为例，收敛性证明由三个主要步骤组成：
-      line_hint: 70
-    end:
-      snippet: ''
-      line_hint: 115
-  status: pending
-- pending_id: 8aa01f77b884561d
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: f_n
-  range:
-    start:
-      snippet: 将 SGD 更新 $x_{t+1} = x_t - \gamma_t \nabla f_n(x_t)$ 代入泰勒展开，得到单步误差的上界：
-      line_hint: 74
-    end:
-      snippet: ''
-      line_hint: 81
-  status: pending
-- pending_id: 92f5dffed9d80a47
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: $L$
-  range:
-    start:
-      snippet: 其中 $L$ 是 Lipschitz 常数，$G$ 是梯度上界。注意，由于 $f_n$ 是随机选出的，中间项符号不定，单步不一定下降。
-      line_hint: 80
-    end:
-      snippet: ''
-      line_hint: 81
-  status: pending
-- pending_id: d1575dfe1d1f6b2f
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 得到一系列项相消的级数
-  range:
-    start:
-      snippet: 对所有 $t=0$ 到 $T-1$ 求和，得到一系列项相消的级数（telescoping sum）：
-      line_hint: 100
-    end:
-      snippet: ''
-      line_hint: 115
-  status: pending
-- pending_id: cf2faf0d3c7d502c
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: \beta
-  range:
-    start:
-      snippet: x_{k+1}=x_{k}-s\nabla f(x_{k}) + \beta(x_k - x_{k-1})
-      line_hint: 135
-    end:
-      snippet: $$
-      line_hint: 136
-  status: pending
-- pending_id: 3d498d22fb1842b1
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: $\beta$
-  range:
-    start:
-      snippet: 其中 $\beta$ 是动量系数。它通过在更新中加入"惯性"项，让参数更新方向不仅由当前梯度决定，还参考之前的历史梯度。这类似于物理中一个有质量的球在势能面上的
-      line_hint: 138
-    end:
-      snippet: ''
-      line_hint: 153
-  status: pending
-- pending_id: 32b2979db0dc09eb
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 加速梯度
-  range:
-    start:
-      snippet: '**Nesterov 加速梯度（NAG）** ：'
-      line_hint: 140
-    end:
-      snippet: ''
-      line_hint: 153
-  status: pending
-- pending_id: dd032ebd599b2ef0
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 其中最后一项被称为**梯度校正项**
-  range:
-    start:
-      snippet: 其中最后一项被称为**梯度校正项**（Gradient Correction）。正是这一项使得 NAG 实现了比标准动量更优的收敛率（$O(1/k^2)$
-        而非
-      line_hint: 150
-    end:
-      snippet: ''
-      line_hint: 153
-  status: pending
-- pending_id: f2aa23d17ad731a9
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: '**KFAC'
-  range:
-    start:
-      snippet: '- **KFAC（Kronecker-factored Approximate Curvature）**：通过结构化近似海森矩阵，在保持计算可行性的同时利用曲率'
-      line_hint: 169
-    end:
-      snippet: '- **Adan** 等融合动量与自适应机制的新优化器也在不断涌现。'
-      line_hint: 171
-  status: pending
-- pending_id: 82709b29d729e10a
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 双层优化
-  range:
-    start:
-      snippet: 双层优化是一类特殊问题，其目标函数依赖于另一个优化问题的解。梯度方法在此领域的应用越来越广泛，主要用于：
-      line_hint: 175
-    end:
-      snippet: ''
-      line_hint: 180
-  status: pending
-- pending_id: 76d96f554f559670
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: '**元学习'
-  range:
-    start:
-      snippet: '- **元学习（Meta-learning）**：内层学习任务，外层学习跨任务的元知识'
-      line_hint: 178
-    end:
-      snippet: '- **数据蒸馏**：生成少量合成数据，使在其上训练的模型能达到完整数据集的性能'
-      line_hint: 179
-  status: pending
-- pending_id: 3692ada474530f30
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 利用整个历史信息而不仅
-  range:
-    start:
-      snippet: 分数阶梯度下降方法将整数阶导数（即传统的一阶梯度）扩展到分数阶，引入"记忆效应"，利用整个历史信息而不仅是局部信息进行优化。理论研究表明，FGD
-        在收敛速度、稳
-      line_hint: 183
-    end:
-      snippet: ''
-      line_hint: 186
-  status: pending
-- pending_id: 16ddc3bc0e14d149
-  file: MachineLearning/GradientBoost.md
-  kind: definition
-  name: 自适应
-  range:
-    start:
-      snippet: '| **发展趋势** | 自适应（Adam）、二阶近似（KFAC）、双层优化、分数阶方法 |'
-      line_hint: 195
-    end:
-      snippet: '| **实践原则** | 无免费午餐定理：没有万能优化器，需根据任务选择 |'
-      line_hint: 196
-  status: pending
 - pending_id: b40bbc2fd2ce9fc7
   file: MachineLearning/SHAP.md
   kind: heading
@@ -5655,7 +5157,8 @@ items:
       snippet: '## 0. 论文来源'
       line_hint: 3
     end:
-      snippet: '| **核心贡献** | 提出XGBoost算法，通过二阶泰勒展开、内置正则化和系统级优化，将梯度提升树的性能和效率推向极致 |'
+      snippet: '| **核心贡献** | 提出XGBoost算法，将梯度提升树（GBDT）推向极致——通过二阶泰勒展开、内置正则化和系统级优化，成为表格数据建模的工业标准
+        |'
       line_hint: 11
   status: pending
 - pending_id: 5e5ba75cb6fa3874
@@ -5667,8 +5170,8 @@ items:
       snippet: '## 1. 算法概述'
       line_hint: 14
     end:
-      snippet: 3. **系统级优化**：特征预排序+列块并行+缓存感知访问，极大提升训练速度
-      line_hint: 34
+      snippet: '| **工程效率低** | 缺乏大规模数据下的并行和缓存优化 | **系统级优化**：特征预排序 + 列块并行 + 缓存感知访问 |'
+      line_hint: 38
   status: pending
 - pending_id: 5101c0fbd6403ffb
   file: MachineLearning/XGBoost.md
@@ -5679,224 +5182,359 @@ items:
       snippet: '### 1.1 一句话定位'
       line_hint: 16
     end:
-      snippet: '**XGBoost (eXtreme Gradient Boosting)** 并非一个全新的算法，而是**梯度提升决策树（GBDT）的高效、可扩展、高度工程化'
+      snippet: '**XGBoost (eXtreme Gradient Boosting)** 是一种基于**决策树集成**的监督学习算法。它将 **“梯度提升”（Gradie'
       line_hint: 18
   status: pending
-- pending_id: e56bceeec53fdb3e
+- pending_id: 85e5d1c714c59067
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 1.2 设计动机（Why XGBoost？）
+  name: 1.2 XGBoost 名字的由来
   range:
     start:
-      snippet: '### 1.2 设计动机（Why XGBoost？）'
+      snippet: '### 1.2 XGBoost 名字的由来'
       line_hint: 20
     end:
-      snippet: 3. **系统级优化**：特征预排序+列块并行+缓存感知访问，极大提升训练速度
-      line_hint: 34
+      snippet: '> **一句话概括**：XGBoost 本质上是 GBDT 的“完全体升级版”——保留 Boosting 的串行纠错框架，将优化目标从“拟合残差”升级为“拟合负'
+      line_hint: 28
   status: pending
-- pending_id: 934f6942f67de006
+- pending_id: 016801fbe3121982
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2. 数学推导
+  name: 1.3 设计动机
   range:
     start:
-      snippet: '## 2. 数学推导'
-      line_hint: 37
+      snippet: '### 1.3 设计动机'
+      line_hint: 30
     end:
-      snippet: '- 若 Gain < 0，放弃分裂（$\gamma$ 起到预剪枝作用）'
-      line_hint: 165
+      snippet: '| **工程效率低** | 缺乏大规模数据下的并行和缓存优化 | **系统级优化**：特征预排序 + 列块并行 + 缓存感知访问 |'
+      line_hint: 38
   status: pending
-- pending_id: 4766da8d9c624c2f
+- pending_id: 418e426f51f70adb
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2.1 符号系统
+  name: 2. CART 树：XGBoost 的基础单元
   range:
     start:
-      snippet: '### 2.1 符号系统'
-      line_hint: 39
+      snippet: '## 2. CART 树：XGBoost 的基础单元'
+      line_hint: 41
     end:
-      snippet: '| $\eta$ | 学习率（shrinkage） |'
-      line_hint: 57
+      snippet: '| 输出类型 | 离散（猫/狗） | **连续（房价/温度）** |'
+      line_hint: 61
   status: pending
-- pending_id: 03d0b1ec7ea77bba
+- pending_id: 33a2cee938a8d0ab
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2.2 目标函数
+  name: 2.1 CART 树的定义
   range:
     start:
-      snippet: '### 2.2 目标函数'
-      line_hint: 59
+      snippet: '### 2.1 CART 树的定义'
+      line_hint: 43
+    end:
+      snippet: '| 输出类型 | 离散（猫/狗） | **连续（房价/温度）** |'
+      line_hint: 61
+  status: pending
+- pending_id: b276641cce747191
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 3. 数学原理
+  range:
+    start:
+      snippet: '## 3. 数学原理'
+      line_hint: 64
+    end:
+      snippet: $\text{Obj}^*$ 越小，代表树的结构越好。它是衡量树结构好坏的直接标准。
+      line_hint: 163
+  status: pending
+- pending_id: be130ee8d4ef8490
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 3.1 符号系统
+  range:
+    start:
+      snippet: '### 3.1 符号系统'
+      line_hint: 66
+    end:
+      snippet: '| $H_j = \sum_{i \in I_j} h_i$ | 叶子节点 $j$ 的二阶梯度累加和 |'
+      line_hint: 84
+  status: pending
+- pending_id: 121e59ab26a91a64
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 3.2 加法模型
+  range:
+    start:
+      snippet: '### 3.2 加法模型'
+      line_hint: 86
+    end:
+      snippet: '**最终预测**：新样本依次通过所有 $K$ 棵树，每棵树给出一个输出值，累加得到最终结果。'
+      line_hint: 96
+  status: pending
+- pending_id: 08717bf3268b8a1f
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 3.3 目标函数
+  range:
+    start:
+      snippet: '### 3.3 目标函数'
+      line_hint: 98
     end:
       snippet: '- $\frac{1}{2}\lambda \sum w_j^2$：对叶子节点权重的L2惩罚，使权重平滑，防止过拟合'
-      line_hint: 82
+      line_hint: 113
   status: pending
-- pending_id: db42982f8edee133
+- pending_id: 093586baa1856c8c
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2.3 二阶泰勒展开：XGBoost的核心改进
+  name: 3.4 二阶泰勒展开：XGBoost 的核心改进
   range:
     start:
-      snippet: '### 2.3 二阶泰勒展开：XGBoost的核心改进'
-      line_hint: 84
+      snippet: '### 3.4 二阶泰勒展开：XGBoost 的核心改进'
+      line_hint: 115
     end:
       snippet: '**优势**：二阶信息使得损失函数的近似比GBDT的一阶近似更精确，收敛速度更快。'
-      line_hint: 114
+      line_hint: 135
   status: pending
-- pending_id: 18e960dcb767570d
+- pending_id: 586794c915d86b5f
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2.4 叶子节点权重与树结构打分
+  name: 3.5 叶子节点最优权重
   range:
     start:
-      snippet: '### 2.4 叶子节点权重与树结构打分'
-      line_hint: 116
+      snippet: '### 3.5 叶子节点最优权重'
+      line_hint: 137
     end:
-      snippet: '> **含义**：$\text{Obj}^*$ 越小，代表树的结构越好。它是衡量树结构好坏的直接标准。'
-      line_hint: 142
+      snippet: '**特殊情况下**，当损失函数为平方损失（MSE）时，$g_i = \hat{y}_i - y_i$（残差），$h_i = 1$，此时
+        $w_j^*$ 实际上就'
+      line_hint: 153
   status: pending
-- pending_id: ced093ff3e6f1d9b
+- pending_id: 088ecbdf30a50a1e
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 2.5 分裂增益（Gain）
+  name: 3.6 树结构打分函数
   range:
     start:
-      snippet: '### 2.5 分裂增益（Gain）'
-      line_hint: 144
+      snippet: '### 3.6 树结构打分函数'
+      line_hint: 155
     end:
-      snippet: '- 若 Gain < 0，放弃分裂（$\gamma$ 起到预剪枝作用）'
-      line_hint: 165
+      snippet: $\text{Obj}^*$ 越小，代表树的结构越好。它是衡量树结构好坏的直接标准。
+      line_hint: 163
   status: pending
-- pending_id: 76756f2021a76ca3
+- pending_id: 24bf29ad6692867b
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 3. 算法流程
+  name: 4. 节点分裂规则
   range:
     start:
-      snippet: '## 3. 算法流程'
+      snippet: '## 4. 节点分裂规则'
+      line_hint: 166
+    end:
+      snippet: '| 分裂条件 | 直到 MSE 不再下降 | **Gain ≤ 0 时不分裂** |'
+      line_hint: 203
+  status: pending
+- pending_id: 11f629fa82520cd6
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 4.1 分裂增益公式
+  range:
+    start:
+      snippet: '### 4.1 分裂增益公式'
       line_hint: 168
     end:
-      snippet: 3. 叶子节点的样本权重和 $< min\_child\_weight$
-      line_hint: 208
+      snippet: $$
+      line_hint: 178
   status: pending
-- pending_id: 3585ec3c9c8a67d5
+- pending_id: 91fd0d6782254e86
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 3.1 宏观流程
+  name: 4.2 Gain 公式的直观理解
   range:
     start:
-      snippet: '### 3.1 宏观流程'
-      line_hint: 170
+      snippet: '### 4.2 Gain 公式的直观理解'
+      line_hint: 180
+    end:
+      snippet: '- 如果 Gain ≤ 0，分裂不划算，不分裂（**自带预剪枝**）'
+      line_hint: 193
+  status: pending
+- pending_id: 7663d6b7e31d6932
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 4.3 与标准 CART 回归树的对比
+  range:
+    start:
+      snippet: '### 4.3 与标准 CART 回归树的对比'
+      line_hint: 195
+    end:
+      snippet: '| 分裂条件 | 直到 MSE 不再下降 | **Gain ≤ 0 时不分裂** |'
+      line_hint: 203
+  status: pending
+- pending_id: da98e85d4cca723c
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 5. 梯度计算
+  range:
+    start:
+      snippet: '## 5. 梯度计算'
+      line_hint: 206
+    end:
+      snippet: '| 多分类 | 交叉熵 | 各类别概率 - 标签 | 各类别概率的协方差结构 |'
+      line_hint: 259
+  status: pending
+- pending_id: 2844570c85394f12
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 5.1 回归任务（平方损失）
+  range:
+    start:
+      snippet: '### 5.1 回归任务（平方损失）'
+      line_hint: 210
+    end:
+      snippet: '**关键洞察**：在平方损失下，负梯度 $-g_i = y_i - \hat{y}_i$ 正好就是**残差**。所以 XGBoost
+        的每一棵树本质上是在拟合残'
+      line_hint: 230
+  status: pending
+- pending_id: 44c2568e5d310c87
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 5.2 分类任务（逻辑损失 LogLoss）
+  range:
+    start:
+      snippet: '### 5.2 分类任务（逻辑损失 LogLoss）'
+      line_hint: 232
+    end:
+      snippet: $$
+      line_hint: 250
+  status: pending
+- pending_id: 31d7cdfcad831c83
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 5.3 常见损失函数的梯度对比
+  range:
+    start:
+      snippet: '### 5.3 常见损失函数的梯度对比'
+      line_hint: 252
+    end:
+      snippet: '| 多分类 | 交叉熵 | 各类别概率 - 标签 | 各类别概率的协方差结构 |'
+      line_hint: 259
+  status: pending
+- pending_id: 9c8ed83a93cd5315
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 6. 算法流程
+  range:
+    start:
+      snippet: '## 6. 算法流程'
+      line_hint: 262
+    end:
+      snippet: 一次迭代完成，进入下一轮。
+      line_hint: 349
+  status: pending
+- pending_id: b159c1b5909ab1c9
+  file: MachineLearning/XGBoost.md
+  kind: heading
+  name: 6.1 宏观流程
+  range:
+    start:
+      snippet: '### 6.1 宏观流程'
+      line_hint: 264
     end:
       snippet: '```'
-      line_hint: 185
+      line_hint: 281
   status: pending
-- pending_id: cb16dfa2cf450726
+- pending_id: bb0ba7af846aa8bd
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 3.2 寻找最佳分裂点的贪心算法
+  name: 6.2 一个完整的数值例子
   range:
     start:
-      snippet: '### 3.2 寻找最佳分裂点的贪心算法'
-      line_hint: 187
+      snippet: '### 6.2 一个完整的数值例子'
+      line_hint: 283
     end:
-      snippet: '| **并行查找** | 利用多线程并行计算每个特征的最佳分裂点 |'
-      line_hint: 202
+      snippet: 一次迭代完成，进入下一轮。
+      line_hint: 349
   status: pending
-- pending_id: 4508fad9f3ed611f
+- pending_id: 9c5a653d2a5373c6
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 3.3 树停止生长条件
+  name: 7. 系统级优化
   range:
     start:
-      snippet: '### 3.3 树停止生长条件'
-      line_hint: 204
+      snippet: '## 7. 系统级优化'
+      line_hint: 352
     end:
-      snippet: 3. 叶子节点的样本权重和 $< min\_child\_weight$
-      line_hint: 208
+      snippet: '| **稀疏感知分裂** | 自动处理缺失值和稀疏数据，学习默认分裂方向 | 无需预处理缺失值 |'
+      line_hint: 362
   status: pending
-- pending_id: 69d088f29c5d310a
+- pending_id: 8a96e243ce5e293a
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 4. XGBoost vs GBDT：核心区别
+  name: 8. XGBoost vs GBDT：核心区别
   range:
     start:
-      snippet: '## 4. XGBoost vs GBDT：核心区别'
-      line_hint: 211
+      snippet: '## 8. XGBoost vs GBDT：核心区别'
+      line_hint: 365
     end:
       snippet: '| **缺失值处理** | 需预处理 | **内置稀疏感知算法，自动学习默认方向** |'
-      line_hint: 220
+      line_hint: 374
   status: pending
-- pending_id: 0f971ccccae1a5cf
+- pending_id: f459e7e864eb5fff
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 5. 关键参数
+  name: 9. 关键超参数
   range:
     start:
-      snippet: '## 5. 关键参数'
-      line_hint: 223
+      snippet: '## 9. 关键超参数'
+      line_hint: 377
     end:
       snippet: 4. **行列采样 + 正则化**：最后微调泛化能力
-      line_hint: 245
+      line_hint: 399
   status: pending
-- pending_id: ccaa569ea1a9c515
+- pending_id: ebfc7fc8ce229a6b
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 5.1 Booster参数
+  name: 9.1 Booster参数
   range:
     start:
-      snippet: '### 5.1 Booster参数'
-      line_hint: 225
+      snippet: '### 9.1 Booster参数'
+      line_hint: 379
     end:
       snippet: '| `alpha` | L1正则化系数 | 0-10 | 特征选择，值越大越稀疏 |'
-      line_hint: 236
+      line_hint: 390
   status: pending
-- pending_id: 9cfd624c1a89fdc5
+- pending_id: 481feada69bd9bd4
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 5.2 调参策略
+  name: 9.2 调参策略
   range:
     start:
-      snippet: '### 5.2 调参策略'
-      line_hint: 238
+      snippet: '### 9.2 调参策略'
+      line_hint: 392
     end:
       snippet: 4. **行列采样 + 正则化**：最后微调泛化能力
-      line_hint: 245
+      line_hint: 399
   status: pending
-- pending_id: e45bbde38fa77569
+- pending_id: a4ebb4dab4d400dc
   file: MachineLearning/XGBoost.md
   kind: heading
-  name: 6. 系统级优化：为什么叫"eXtreme"？
+  name: 10. 总结
   range:
     start:
-      snippet: '## 6. 系统级优化：为什么叫"eXtreme"？'
-      line_hint: 248
+      snippet: '## 10. 总结'
+      line_hint: 402
     end:
-      snippet: 4. **近似分位数算法**：对大规模数据使用加权分位数，减少候选分裂点，大幅提升效率
-      line_hint: 255
+      snippet: '| **主要局限** | 对超高维数据（如图像、文本）不如深度学习；调参空间较大；数据分布依赖性强 |'
+      line_hint: 413
   status: pending
-- pending_id: 4c0119c78012f70f
+- pending_id: 5e598d27f8318796
   file: MachineLearning/XGBoost.md
-  kind: heading
-  name: 7. 应用场景
+  kind: definition
+  name: 将梯度提升树
   range:
     start:
-      snippet: '## 7. 应用场景'
-      line_hint: 258
+      snippet: '| **核心贡献** | 提出XGBoost算法，将梯度提升树（GBDT）推向极致——通过二阶泰勒展开、内置正则化和系统级优化，成为表格数据建模的工业标准
+        |'
+      line_hint: 11
     end:
-      snippet: '| **大规模数据** | 通过分块和并行，可处理超出单机内存的数据集 |'
-      line_hint: 265
-  status: pending
-- pending_id: 25037a9e2c61d213
-  file: MachineLearning/XGBoost.md
-  kind: heading
-  name: 8. 总结
-  range:
-    start:
-      snippet: '## 8. 总结'
-      line_hint: 268
-    end:
-      snippet: 📄 本报告基于 XGBoost 原始论文 (Chen & Guestrin, KDD 2016) 及多篇技术解读整理。包含完整目标函数推导、分裂增益公式、与GB
-      line_hint: 279
+      snippet: ''
+      line_hint: 13
   status: pending
 - pending_id: 52d28039b3e8a0b6
   file: MachineLearning/XGBoost.md
@@ -5904,180 +5542,280 @@ items:
   name: '**XGBoost'
   range:
     start:
-      snippet: '**XGBoost (eXtreme Gradient Boosting)** 并非一个全新的算法，而是**梯度提升决策树（GBDT）的高效、可扩展、高度工程化'
+      snippet: '**XGBoost (eXtreme Gradient Boosting)** 是一种基于**决策树集成**的监督学习算法。它将 **“梯度提升”（Gradie'
       line_hint: 18
     end:
       snippet: ''
       line_hint: 19
   status: pending
-- pending_id: c5bcd0b05dcd1f5f
+- pending_id: 15ad0cfaa2cae513
   file: MachineLearning/XGBoost.md
   kind: definition
-  name: 叶子节点数量的惩罚系数
+  name: 每一棵新树拟合的目标
   range:
     start:
-      snippet: '| $\gamma$ | 叶子节点数量的惩罚系数（L1正则） |'
-      line_hint: 55
+      snippet: '| **Gradient** | 梯度方向 | 每一棵新树拟合的目标是**损失函数在当前预测处的负梯度方向**，而不是原始标签 |'
+      line_hint: 25
     end:
-      snippet: '| $\eta$ | 学习率（shrinkage） |'
-      line_hint: 57
+      snippet: '| **X (eXtreme)** | 极致优化 | 在GBDT基础上引入了**二阶导数信息、正则化、并行计算、缓存优化**等极致工程优化
+        |'
+      line_hint: 26
   status: pending
-- pending_id: 059fb25b7b87397d
+- pending_id: fae4fb57102a89e2
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: '**X'
+  range:
+    start:
+      snippet: '| **X (eXtreme)** | 极致优化 | 在GBDT基础上引入了**二阶导数信息、正则化、并行计算、缓存优化**等极致工程优化
+        |'
+      line_hint: 26
+    end:
+      snippet: ''
+      line_hint: 29
+  status: pending
+- pending_id: 6c682ad5d93fdc4e
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: 本质上
+  range:
+    start:
+      snippet: '> **一句话概括**：XGBoost 本质上是 GBDT 的“完全体升级版”——保留 Boosting 的串行纠错框架，将优化目标从“拟合残差”升级为“拟合负'
+      line_hint: 28
+    end:
+      snippet: ''
+      line_hint: 29
+  status: pending
+- pending_id: a7340c1ec7531f3a
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: '**CART'
+  range:
+    start:
+      snippet: '**CART (Classification And Regression Tree)** 是 XGBoost 的基本组成单元。它是一棵**二叉树**，每个内部'
+      line_hint: 45
+    end:
+      snippet: ''
+      line_hint: 63
+  status: pending
+- pending_id: f93755e1eafd0f15
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: $T$
+  range:
+    start:
+      snippet: 其中 $T$ 是叶子节点数量，$R_j$ 是第 $j$ 个叶子节点对应的特征空间区域，$w_j$ 是该叶子节点的输出值。
+      line_hint: 53
+    end:
+      snippet: ''
+      line_hint: 63
+  status: pending
+- pending_id: 6530ce8c5f7cd41d
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: '**均方误差'
+  range:
+    start:
+      snippet: '| 分裂标准 | 基尼系数 / 信息增益 | **均方误差（MSE）** / **Gain** |'
+      line_hint: 60
+    end:
+      snippet: '| 输出类型 | 离散（猫/狗） | **连续（房价/温度）** |'
+      line_hint: 61
+  status: pending
+- pending_id: de589b441219e73b
   file: MachineLearning/XGBoost.md
   kind: definition
   name: 学习率
   range:
     start:
       snippet: '| $\eta$ | 学习率（shrinkage） |'
-      line_hint: 57
+      line_hint: 78
     end:
-      snippet: ''
-      line_hint: 58
+      snippet: '| $H_j = \sum_{i \in I_j} h_i$ | 叶子节点 $j$ 的二阶梯度累加和 |'
+      line_hint: 84
   status: pending
-- pending_id: f2122a343e3958c2
-  file: MachineLearning/XGBoost.md
-  kind: definition
-  name: \Omega
-  range:
-    start:
-      snippet: \text{Obj} = \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)
-      line_hint: 64
-    end:
-      snippet: $$
-      line_hint: 65
-  status: pending
-- pending_id: 03f42ecdb5c35b4d
+- pending_id: 9c33d0b01c0975b8
   file: MachineLearning/XGBoost.md
   kind: definition
   name: f_k
   range:
     start:
       snippet: \hat{y}_i = \sum_{k=1}^{K} f_k(x_i), \quad f_k \in \mathcal{F}
-      line_hint: 70
+      line_hint: 91
     end:
       snippet: $$
-      line_hint: 71
+      line_hint: 92
   status: pending
-- pending_id: 75e0e25554bcf84e
+- pending_id: cd23cb947fc6e7c9
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: \Omega
+  range:
+    start:
+      snippet: \text{Obj} = \sum_{i=1}^{n} L(y_i, \hat{y}_i) + \sum_{k=1}^{K} \Omega(f_k)
+      line_hint: 103
+    end:
+      snippet: $$
+      line_hint: 104
+  status: pending
+- pending_id: 7d7f44f84f8c7cfa
   file: MachineLearning/XGBoost.md
   kind: definition
   name: f_t
   range:
     start:
-      snippet: \text{Obj}^{(t)} = \sum_{i=1}^{n} l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i))
+      snippet: \text{Obj}^{(t)} = \sum_{i=1}^{n} L(y_i, \hat{y}_i^{(t-1)} + f_t(x_i))
         + \Omega(
-      line_hint: 89
+      line_hint: 120
     end:
       snippet: $$
-      line_hint: 90
+      line_hint: 121
   status: pending
-- pending_id: e9991ca262c0d6a5
+- pending_id: 535363ab9e95209e
   file: MachineLearning/XGBoost.md
   kind: definition
-  name: $l
+  name: $L
   range:
     start:
-      snippet: 去掉常数项 $l(y_i, \hat{y}_i^{(t-1)})$，第 $t$ 轮的目标函数简化为：
-      line_hint: 108
+      snippet: 去掉常数项 $L(y_i, \hat{y}_i^{(t-1)})$，第 $t$ 轮的目标函数简化为：
+      line_hint: 129
     end:
       snippet: ''
-      line_hint: 115
+      line_hint: 136
   status: pending
-- pending_id: 2c009d195262969c
+- pending_id: 1ec052373f698c50
   file: MachineLearning/XGBoost.md
   kind: definition
   name: $f_t
   range:
     start:
-      snippet: 将 $f_t(x_i) = w_{q(x_i)}$（每个样本落入对应叶子节点，取该节点的权重）代入，并按叶子节点归组：
-      line_hint: 118
+      snippet: 将 $f_t(x_i) = w_{q(x_i)}$ 代入，并按叶子节点归组：
+      line_hint: 139
     end:
       snippet: ''
-      line_hint: 143
+      line_hint: 154
   status: pending
-- pending_id: 1057209c20d78d2f
+- pending_id: de6c010a667527c7
   file: MachineLearning/XGBoost.md
   kind: definition
-  name: 我们需要一个指标来判断分裂
+  name: 当损失函数为平方损失
   range:
     start:
-      snippet: 在树节点分裂时，我们需要一个指标来判断分裂是否值得。将分裂前后的目标函数值相减：
-      line_hint: 146
+      snippet: '**特殊情况下**，当损失函数为平方损失（MSE）时，$g_i = \hat{y}_i - y_i$（残差），$h_i = 1$，此时
+        $w_j^*$ 实际上就'
+      line_hint: 153
     end:
       snippet: ''
-      line_hint: 167
+      line_hint: 154
   status: pending
-- pending_id: f52edb56fa949dff
+- pending_id: 0f5e26c84edd4908
   file: MachineLearning/XGBoost.md
   kind: definition
-  name: 分裂
+  name: '**分裂增益'
   range:
     start:
-      snippet: '- 若 Gain > 0，分裂后目标函数下降，分裂是有益的'
-      line_hint: 164
+      snippet: '**分裂增益（Gain）**：'
+      line_hint: 174
     end:
-      snippet: '- 若 Gain < 0，放弃分裂（$\gamma$ 起到预剪枝作用）'
-      line_hint: 165
+      snippet: ''
+      line_hint: 179
   status: pending
-- pending_id: b5f2428bb30dde23
+- pending_id: 3dc409bbbe84f22e
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: 正好就
+  range:
+    start:
+      snippet: '**关键洞察**：在平方损失下，负梯度 $-g_i = y_i - \hat{y}_i$ 正好就是**残差**。所以 XGBoost
+        的每一棵树本质上是在拟合残'
+      line_hint: 230
+    end:
+      snippet: ''
+      line_hint: 231
+  status: pending
+- pending_id: bee51a00ec9be0ec
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: 回归
+  range:
+    start:
+      snippet: '| 回归（MSE） | $\frac{1}{2}(y - \hat{y})^2$ | $\hat{y} - y$ | 1 |'
+      line_hint: 256
+    end:
+      snippet: '| 多分类 | 交叉熵 | 各类别概率 - 标签 | 各类别概率的协方差结构 |'
+      line_hint: 259
+  status: pending
+- pending_id: ca4fa4096266027c
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: 二分类
+  range:
+    start:
+      snippet: '| 二分类（LogLoss） | $-y\log p - (1-y)\log(1-p)$ | $\hat{p} - y$ | $\hat{p}(1-\hat{p'
+      line_hint: 258
+    end:
+      snippet: '| 多分类 | 交叉熵 | 各类别概率 - 标签 | 各类别概率的协方差结构 |'
+      line_hint: 259
+  status: pending
+- pending_id: abd4010629f9012b
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: 特征
+  range:
+    start:
+      snippet: 假设我们要用 XGBoost 预测房价，有 5 个样本，特征是“面积”，目标是对平方损失做一轮训练。
+      line_hint: 285
+    end:
+      snippet: ''
+      line_hint: 351
+  status: pending
+- pending_id: f6313b761ef836bd
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: -G_L/
+  range:
+    start:
+      snippet: 左叶子：$w_L = -G_L/(H_L+\lambda) = -(-15)/(2+1) = 5$
+      line_hint: 337
+    end:
+      snippet: 右叶子：$w_R = -G_R/(H_R+\lambda) = -(17)/(3+1) = -4.25$
+      line_hint: 338
+  status: pending
+- pending_id: 8966d4be7a9e5ea4
+  file: MachineLearning/XGBoost.md
+  kind: definition
+  name: -G_R/
+  range:
+    start:
+      snippet: 右叶子：$w_R = -G_R/(H_R+\lambda) = -(17)/(3+1) = -4.25$
+      line_hint: 338
+    end:
+      snippet: ''
+      line_hint: 351
+  status: pending
+- pending_id: bdb079c51ab4ec39
   file: MachineLearning/XGBoost.md
   kind: definition
   name: '**特征级并行**'
   range:
     start:
       snippet: '| **并行能力** | 弱 | **特征级并行**（Block结构+多线程） |'
-      line_hint: 219
+      line_hint: 373
     end:
       snippet: '| **缺失值处理** | 需预处理 | **内置稀疏感知算法，自动学习默认方向** |'
-      line_hint: 220
+      line_hint: 374
   status: pending
-- pending_id: 9ede0d180d18a4fe
+- pending_id: cf72fb86fd904d5b
   file: MachineLearning/XGBoost.md
   kind: definition
-  name: '**列块并行'
+  name: -G_j/
   range:
     start:
-      snippet: 1. **列块并行（Column Block）**：将特征预排序后存储为Block，各特征可并行计算最佳分裂点
-      line_hint: 252
+      snippet: '| **叶子权重** | $w_j^* = -G_j/(H_j+\lambda)$ |'
+      line_hint: 412
     end:
-      snippet: 4. **近似分位数算法**：对大规模数据使用加权分位数，减少候选分裂点，大幅提升效率
-      line_hint: 255
-  status: pending
-- pending_id: 7406f1fa8fa59ea0
-  file: MachineLearning/XGBoost.md
-  kind: definition
-  name: '**缓存感知访问'
-  range:
-    start:
-      snippet: 2. **缓存感知访问（Cache-aware Access）**：优化内存布局，提高CPU缓存命中率
-      line_hint: 253
-    end:
-      snippet: 4. **近似分位数算法**：对大规模数据使用加权分位数，减少候选分裂点，大幅提升效率
-      line_hint: 255
-  status: pending
-- pending_id: 69d9a729de3b4a25
-  file: MachineLearning/XGBoost.md
-  kind: definition
-  name: 结构化/表格数据
-  range:
-    start:
-      snippet: '| **表格数据** | 结构化/表格数据（Tabular Data）的首选模型之一 |'
-      line_hint: 262
-    end:
-      snippet: '| **大规模数据** | 通过分块和并行，可处理超出单机内存的数据集 |'
-      line_hint: 265
-  status: pending
-- pending_id: 885fa89eb623558c
-  file: MachineLearning/XGBoost.md
-  kind: definition
-  name: 原始论文
-  range:
-    start:
-      snippet: 📄 本报告基于 XGBoost 原始论文 (Chen & Guestrin, KDD 2016) 及多篇技术解读整理。包含完整目标函数推导、分裂增益公式、与GB
-      line_hint: 279
-    end:
-      snippet: 📄 本报告基于 XGBoost 原始论文 (Chen & Guestrin, KDD 2016) 及多篇技术解读整理。包含完整目标函数推导、分裂增益公式、与GB
-      line_hint: 279
+      snippet: '| **主要局限** | 对超高维数据（如图像、文本）不如深度学习；调参空间较大；数据分布依赖性强 |'
+      line_hint: 413
   status: pending
 - pending_id: e9d5e226bcaf992e
   file: Mathemetical_Modeling/1_A/modeling_solutions.md

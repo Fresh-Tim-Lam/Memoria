@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "shared-dup-id",
+  "source_fingerprint": "c4315e056692c6fe2da15fc9a01ef197",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "shared-dup-id"
+  ],
+  "key_phrases": [
+    "重复",
+    "id",
+    "重复 id b"
+  ],
+  "summary_1l": "重复 ID B",
+  "query_hits": [],
+  "embed_text": "shared-dup-id 重复 B shared-dup-id 重复 id 重复 id b 重复 ID B 重复 ID B",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-21T05:04:09.866696+00:00"
+}

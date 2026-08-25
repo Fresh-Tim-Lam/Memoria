@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""浏览器复现 harness：bottle 静态服务 + M0API over HTTP(/rpc) + 注入 pywebview 桥。
+"""浏览器复现 harness：bottle 静态服务 + UIAPI over HTTP(/rpc) + 注入 pywebview 桥。
 用法: python _harness.py  →  http://127.0.0.1:8642/
 """
 import sys
@@ -11,14 +11,14 @@ sys.path.insert(0, r"d:\AAA_Jupyter\Memoria\src")
 
 import bottle
 
-from memoria.presentation.api.m0 import M0API
+from memoria.presentation.api.ui import UIAPI
 from memoria.presentation import static_server
-from memoria.presentation.paths import UI_STATIC_ROOT, UI_M0_INDEX
+from memoria.presentation.paths import UI_STATIC_ROOT, UI_APP_INDEX
 
 KB = r"d:\AAA_Jupyter\Memoria\docs\example\rich-content-test"
 PORT = 8642
 
-api = M0API(kb_path=KB)
+api = UIAPI(host=None, kb_path=KB)
 
 # 把写日志 API 重定向到独立文件，避免污染 mapping-debug.log
 REPRO_LOG = os.path.join(KB, "browser-repro.log")
@@ -83,7 +83,7 @@ def rpc():
 
 @app.get("/")
 def root():
-    with open(UI_M0_INDEX, encoding="utf-8") as f:
+    with open(UI_APP_INDEX, encoding="utf-8") as f:
         html = f.read()
     if "</head>" in html:
         html = html.replace("</head>", BRIDGE_SCRIPT + "</head>")

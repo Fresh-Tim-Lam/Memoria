@@ -1,4 +1,4 @@
-"""QWebChannel RPC：将 M0API 方法暴露给 PyQt6 WebEngine。"""
+"""QWebChannel RPC：将 UIAPI 方法暴露给 PyQt6 WebEngine。"""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from PyQt6.QtCore import QObject, pyqtSlot
 from memoria.app.shell.shell_log import shell_log
 
 
-class M0APIRpc(QObject):
+class UIAPIRpc(QObject):
     """单槽 RPC 包装，避免为每个 API 方法单独声明 pyqtSlot。"""
 
     def __init__(self, api: Any) -> None:

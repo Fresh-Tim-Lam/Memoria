@@ -8,9 +8,10 @@ import time
 
 import webview
 
+from memoria import __version__
 from memoria.app.shell.pywebview_host import PyWebViewHost
-from memoria.presentation.api.m0 import M0API
-from memoria.presentation.paths import UI_M0_INDEX
+from memoria.presentation.api.ui import UIAPI
+from memoria.presentation.paths import UI_APP_INDEX
 from memoria.presentation.static_server import create_app
 from memoria.storage.ui_settings import resolve_last_kb_path
 
@@ -166,13 +167,12 @@ def run() -> None:
     frameless = _frameless_enabled()
     host = PyWebViewHost(frameless=frameless)
     startup_kb = _startup_kb_path()
-    api = M0API(host=host, kb_path=startup_kb)
-
-    if not UI_M0_INDEX.is_file():
-        raise FileNotFoundError(f"UI 入口不存在: {UI_M0_INDEX}")
+    api = UIAPI(host=host, kb_path=startup_kb)
+    if not UI_APP_INDEX.is_file():
+        raise FileNotFoundError(f"UI 入口不存在: {UI_APP_INDEX}")
 
     window = webview.create_window(
-        title="Memoria M1",
+        title=f"Memoria v{__version__}",
         url=create_app(),
         js_api=api,
         width=1280,

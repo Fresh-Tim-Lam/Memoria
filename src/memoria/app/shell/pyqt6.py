@@ -8,6 +8,7 @@ import sys
 import time
 from pathlib import Path
 
+from memoria import __version__
 from memoria.app.shell.pyqt6_hidden_chrome import (
     create_main_window,
     finalize_frameless_chrome,
@@ -17,9 +18,9 @@ from memoria.app.shell.pyqt6_hidden_chrome import (
 )
 from memoria.app.shell.pyqt6_host import PyQt6Host
 from memoria.app.shell.static_server_thread import StaticServerThread
-from memoria.presentation.api.m0 import M0API
+from memoria.presentation.api.ui import UIAPI
 from memoria.storage.ui_settings import resolve_last_kb_path
-from memoria.presentation.paths import UI_M0_INDEX
+from memoria.presentation.paths import UI_APP_INDEX
 
 
 def _startup_kb_path() -> str | None:
@@ -134,8 +135,8 @@ def _require_pyqt6():
 
 
 def run() -> None:
-    if not UI_M0_INDEX.is_file():
-        raise FileNotFoundError(f"UI 入口不存在: {UI_M0_INDEX}")
+    if not UI_APP_INDEX.is_file():
+        raise FileNotFoundError(f"UI 入口不存在: {UI_APP_INDEX}")
 
     _configure_qtwebengine_env()
     from memoria.app.shell.app_icon import (
@@ -157,7 +158,7 @@ def run() -> None:
         QWebEngineView,
     ) = _require_pyqt6()
     from PyQt6.QtCore import QEvent, QObject, Qt, QTimer
-    from memoria.app.shell.api_rpc import M0APIRpc
+    from memoria.app.shell.api_rpc import UIAPIRpc
     from memoria.app.shell.shell_log import shell_log, shell_log_banner, shell_log_enabled
 
     class _DiagEventFilter(QObject):
@@ -224,7 +225,7 @@ def run() -> None:
     url = server.start()
 
     window = create_main_window(frameless=frameless)
-    window.setWindowTitle("Memoria M1")
+    window.setWindowTitle(f"Memoria v{__version__}")
     if app_icon is not None and icon_path is not None:
         apply_app_window_icons(app, window, icon_path, app_icon)
     window.resize(1280, 860)
@@ -232,7 +233,7 @@ def run() -> None:
 
     host = PyQt6Host(window, frameless=frameless)
     startup_kb = _startup_kb_path()
-    api = M0API(host=host, kb_path=startup_kb)
+    api = UIAPI(host=host, kb_path=startup_kb)
 
     profile = QWebEngineProfile.defaultProfile()
     settings = profile.settings()
@@ -266,7 +267,7 @@ def run() -> None:
 
     channel = QWebChannel()
     page.setWebChannel(channel)
-    rpc = M0APIRpc(api)
+    rpc = UIAPIRpc(api)
     rpc.setParent(window)
     channel.registerObject("bridge", rpc)
     window._memoria_api_rpc = rpc  # 防止 Python GC 回收 bridge

@@ -25,7 +25,7 @@ _IMG_MIME = {
     ".ico": "image/x-icon",
 }
 
-# Current KB root path (set by M0API when KB is opened)
+# Current KB root path (set by UIAPI when KB is opened)
 _kb_root: str | None = None
 
 
@@ -73,12 +73,12 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
 
 
 def create_app() -> bottle.Bottle:
-    """以 ui/static/ 为根目录，使 m0/ 与 theme/ 均可访问。"""
+    """以 ui/static/ 为根目录，使 app/ 与 theme/ 均可访问。"""
     app = bottle.Bottle()
 
     @app.get("/")
     def root() -> bottle.HTTPResponse:
-        return bottle.static_file("m0/index.html", root=_STATIC_ROOT)
+        return bottle.static_file("app/index.html", root=_STATIC_ROOT)
 
     @app.get("/<path:path>")
     def asset(path: str) -> bottle.HTTPResponse:

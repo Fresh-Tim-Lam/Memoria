@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "range-broken-kp",
+  "source_fingerprint": "d4db6028c83c7c5c9090f7677cfc77fe",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "range-broken-kp"
+  ],
+  "key_phrases": [
+    "range",
+    "已改",
+    "range 已改"
+  ],
+  "summary_1l": "Range 已改",
+  "query_hits": [],
+  "embed_text": "range-broken-kp Range 失效 range-broken-kp range 已改 range 已改 Range 已改 Range 已改",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-21T05:04:09.893402+00:00"
+}

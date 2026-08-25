@@ -89,6 +89,7 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     contents_directory="lib",
+    manifest=str(PKG / "memoria.manifest"),
     icon=str(ICON) if ICON.is_file() else None,
 )
 

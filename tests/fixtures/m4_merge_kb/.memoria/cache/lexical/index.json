@@ -1,14 +1,15 @@
 {
   "schema_version": 4,
-  "built_at": "2026-07-10T03:23:45.447153+00:00",
+  "built_at": "2026-08-21T05:04:40.197769+00:00",
   "record_count": 13,
-  "token_count": 220,
+  "token_count": 163,
   "records": [
     {
       "kp_id": "attention-en",
       "file": "en-zh-a.md",
       "name": "Attention",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# Attention\n\nEnglish concept name.",
@@ -31,6 +32,7 @@
       "file": "en-zh-b.md",
       "name": "注意力机制",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 注意力机制\n\n中文概念名，独立表述无英文对照词。",
@@ -56,6 +58,7 @@
       "file": "id-prefix.md",
       "name": "马尔可夫决策过程",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# MDP\n\nid 前缀相关，名称不同。",
@@ -81,6 +84,7 @@
       "file": "mdp-intro.md",
       "name": "概率规划概览",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 概率规划概览\n\n独立主题：随机最短路径，与 MDP 公式无共享关键词。",
@@ -106,6 +110,7 @@
       "file": "name-variant.md",
       "name": "策略梯度",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 策略梯度\n\n名称变体：短名 vs 带后缀。",
@@ -131,6 +136,7 @@
       "file": "name-variant.md",
       "name": "策略梯度法",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 策略梯度\n\n名称变体：短名 vs 带后缀。",
@@ -156,6 +162,7 @@
       "file": "same-name-a.md",
       "name": "强化学习导论",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 强化学习导论 A\n\n同名跨文件场景。",
@@ -181,6 +188,7 @@
       "file": "same-name-b.md",
       "name": "强化学习导论",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 强化学习导论 B\n\n另一文件的同名 KP。",
@@ -208,6 +216,7 @@
       "tags": [
         "ddpg-family"
       ],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# DDPG\n\n仅 tag 桥接，名称不同。",
@@ -234,6 +243,7 @@
       "tags": [
         "dqn-family"
       ],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# DQN\n\n离散控制算法，与连续控制无关。",
@@ -259,6 +269,7 @@
       "file": "typo-pair.md",
       "name": "注意力机制",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "## 注意力机制\n\n标准写法。",
@@ -282,6 +293,7 @@
       "file": "typo-pair.md",
       "name": "注意力机制",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "## 注意力机制\n\n常见笔误写法。",
@@ -306,6 +318,7 @@
       "file": "unrelated.md",
       "name": "烹饪技巧",
       "tags": [],
+      "aliases_explicit": [],
       "kp_description": "",
       "file_description": "",
       "body_excerpt": "# 烹饪\n\n无关对照组。",
@@ -577,18 +590,6 @@
       {
         "r": 1,
         "f": "alias"
-      },
-      {
-        "r": 1,
-        "f": "key_phrase"
-      },
-      {
-        "r": 10,
-        "f": "key_phrase"
-      },
-      {
-        "r": 11,
-        "f": "key_phrase"
       }
     ],
     "注意力": [
@@ -681,32 +682,6 @@
       {
         "r": 11,
         "f": "summary"
-      }
-    ],
-    "zhuyilijizhi": [
-      {
-        "r": 1,
-        "f": "name"
-      },
-      {
-        "r": 1,
-        "f": "pinyin_name"
-      },
-      {
-        "r": 10,
-        "f": "name"
-      },
-      {
-        "r": 10,
-        "f": "pinyin_name"
-      },
-      {
-        "r": 11,
-        "f": "name"
-      },
-      {
-        "r": 11,
-        "f": "pinyin_name"
       }
     ],
     "注意力机制": [
@@ -1041,76 +1016,10 @@
         "f": "summary"
       }
     ],
-    "zhuyilijizhizhongwengainianmingdulibiaoshuwuyingwenduizhaoci": [
-      {
-        "r": 1,
-        "f": "body"
-      }
-    ],
     "# 注意力机制\n\n中文概念名，独立表述无英文对照词。": [
       {
         "r": 1,
         "f": "body"
-      }
-    ],
-    "zhuyili": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      },
-      {
-        "r": 10,
-        "f": "key_phrase"
-      },
-      {
-        "r": 11,
-        "f": "key_phrase"
-      }
-    ],
-    "zhongwen": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      }
-    ],
-    "gainian": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      }
-    ],
-    "duli": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      },
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "biaoshu": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      }
-    ],
-    "yingwen": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      }
-    ],
-    "duizhao": [
-      {
-        "r": 1,
-        "f": "key_phrase"
-      }
-    ],
-    "zhongwengainianmingdulibiaoshuwuyingwenduizhaoci": [
-      {
-        "r": 1,
-        "f": "summary"
       }
     ],
     "中文概念名，独立表述无英文对照词。": [
@@ -1193,16 +1102,6 @@
       {
         "r": 2,
         "f": "name"
-      }
-    ],
-    "maerkefujueceguocheng": [
-      {
-        "r": 2,
-        "f": "name"
-      },
-      {
-        "r": 2,
-        "f": "pinyin_name"
       }
     ],
     "马尔可夫决策过程": [
@@ -1329,63 +1228,15 @@
         "f": "summary"
       }
     ],
-    "qianzhuixiangguanmingchengbutong": [
-      {
-        "r": 2,
-        "f": "body"
-      },
-      {
-        "r": 2,
-        "f": "key_phrase"
-      },
-      {
-        "r": 2,
-        "f": "summary"
-      }
-    ],
     "# mdp\n\nid 前缀相关，名称不同。": [
       {
         "r": 2,
         "f": "body"
       }
     ],
-    "qianzhui": [
+    "qianzhuixiangguanmingchengbutong": [
       {
         "r": 2,
-        "f": "key_phrase"
-      }
-    ],
-    "xiangguan": [
-      {
-        "r": 2,
-        "f": "key_phrase"
-      }
-    ],
-    "mingcheng": [
-      {
-        "r": 2,
-        "f": "key_phrase"
-      },
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      },
-      {
-        "r": 8,
-        "f": "key_phrase"
-      }
-    ],
-    "butong": [
-      {
-        "r": 2,
-        "f": "key_phrase"
-      },
-      {
-        "r": 8,
         "f": "key_phrase"
       }
     ],
@@ -1475,16 +1326,6 @@
       {
         "r": 3,
         "f": "key_phrase"
-      }
-    ],
-    "gailvguihuagailan": [
-      {
-        "r": 3,
-        "f": "name"
-      },
-      {
-        "r": 3,
-        "f": "pinyin_name"
       }
     ],
     "概率规划概览": [
@@ -1627,64 +1468,10 @@
         "f": "summary"
       }
     ],
-    "gailvguihuagailandulizhutisuijizuiduanlujingyugongshiwugongxiangguanjianci": [
-      {
-        "r": 3,
-        "f": "body"
-      }
-    ],
     "# 概率规划概览\n\n独立主题：随机最短路径，与 mdp 公式无共享关键词。": [
       {
         "r": 3,
         "f": "body"
-      }
-    ],
-    "gailv": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "guihua": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "gailan": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "zhuti": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "suiji": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "zuiduan": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "lujing": [
-      {
-        "r": 3,
-        "f": "key_phrase"
-      }
-    ],
-    "dulizhutisuijizuiduanlujingyugongshiwugongxiangguanjianci": [
-      {
-        "r": 3,
-        "f": "summary"
       }
     ],
     "独立主题：随机最短路径，与 mdp 公式无共享关键词。": [
@@ -1797,16 +1584,6 @@
       {
         "r": 5,
         "f": "summary"
-      }
-    ],
-    "celvetidu": [
-      {
-        "r": 4,
-        "f": "name"
-      },
-      {
-        "r": 4,
-        "f": "pinyin_name"
       }
     ],
     "策略梯度": [
@@ -1937,28 +1714,6 @@
         "f": "summary"
       }
     ],
-    "celvetidumingchengbiantiduanmingdaihouzhui": [
-      {
-        "r": 4,
-        "f": "body"
-      },
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "body"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "summary"
-      }
-    ],
     "# 策略梯度\n\n名称变体：短名 vs 带后缀。": [
       {
         "r": 4,
@@ -1969,7 +1724,7 @@
         "f": "body"
       }
     ],
-    "celve": [
+    "celvetidumingchengbiantiduanmingdaihouzhui": [
       {
         "r": 4,
         "f": "key_phrase"
@@ -1977,52 +1732,6 @@
       {
         "r": 5,
         "f": "key_phrase"
-      }
-    ],
-    "tidu": [
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      }
-    ],
-    "bianti": [
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      }
-    ],
-    "duanming": [
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      }
-    ],
-    "houzhui": [
-      {
-        "r": 4,
-        "f": "key_phrase"
-      },
-      {
-        "r": 5,
-        "f": "key_phrase"
-      }
-    ],
-    "mingchengbiantiduanmingdaihouzhui": [
-      {
-        "r": 4,
-        "f": "summary"
       }
     ],
     "名称变体：短名 vs 带后缀。": [
@@ -2055,16 +1764,6 @@
       {
         "r": 5,
         "f": "name"
-      }
-    ],
-    "celvetidufa": [
-      {
-        "r": 5,
-        "f": "name"
-      },
-      {
-        "r": 5,
-        "f": "pinyin_name"
       }
     ],
     "策略梯度法": [
@@ -2207,24 +1906,6 @@
         "f": "key_phrase"
       }
     ],
-    "qianghuaxuexidaolun": [
-      {
-        "r": 6,
-        "f": "name"
-      },
-      {
-        "r": 6,
-        "f": "pinyin_name"
-      },
-      {
-        "r": 7,
-        "f": "name"
-      },
-      {
-        "r": 7,
-        "f": "pinyin_name"
-      }
-    ],
     "强化学习导论": [
       {
         "r": 6,
@@ -2315,73 +1996,13 @@
         "f": "summary"
       }
     ],
-    "qianghuaxuexidaoluntongmingkuawenjianchangjing": [
-      {
-        "r": 6,
-        "f": "body"
-      },
-      {
-        "r": 6,
-        "f": "key_phrase"
-      }
-    ],
     "# 强化学习导论 a\n\n同名跨文件场景。": [
       {
         "r": 6,
         "f": "body"
       }
     ],
-    "qianghua": [
-      {
-        "r": 6,
-        "f": "key_phrase"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
-    "xuexi": [
-      {
-        "r": 6,
-        "f": "key_phrase"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
-    "daolun": [
-      {
-        "r": 6,
-        "f": "key_phrase"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
-    "tongming": [
-      {
-        "r": 6,
-        "f": "key_phrase"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
-    "wenjian": [
-      {
-        "r": 6,
-        "f": "key_phrase"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
-    "changjing": [
+    "qianghuaxuexidaoluntongmingkuawenjianchangjing": [
       {
         "r": 6,
         "f": "key_phrase"
@@ -2391,12 +2012,6 @@
       {
         "r": 6,
         "f": "key_phrase"
-      }
-    ],
-    "tongmingkuawenjianchangjing": [
-      {
-        "r": 6,
-        "f": "summary"
       }
     ],
     "a 同名跨文件场景。": [
@@ -2493,32 +2108,22 @@
         "f": "summary"
       }
     ],
-    "qianghuaxuexidaolunlingyiwenjiandetongming": [
-      {
-        "r": 7,
-        "f": "body"
-      },
-      {
-        "r": 7,
-        "f": "key_phrase"
-      }
-    ],
     "# 强化学习导论 b\n\n另一文件的同名 kp。": [
       {
         "r": 7,
         "f": "body"
       }
     ],
-    "强化学习导论 b 另一文件的同名 kp。": [
+    "qianghuaxuexidaolunlingyiwenjiandetongming": [
       {
         "r": 7,
         "f": "key_phrase"
       }
     ],
-    "lingyiwenjiandetongming": [
+    "强化学习导论 b 另一文件的同名 kp。": [
       {
         "r": 7,
-        "f": "summary"
+        "f": "key_phrase"
       }
     ],
     "b 另一文件的同名 kp。": [
@@ -2581,16 +2186,6 @@
       {
         "r": 8,
         "f": "name"
-      }
-    ],
-    "suanfa": [
-      {
-        "r": 8,
-        "f": "name"
-      },
-      {
-        "r": 8,
-        "f": "pinyin_name"
       }
     ],
     "ddpg 算法": [
@@ -2657,27 +2252,13 @@
         "f": "summary"
       }
     ],
-    "jinqiaojiemingchengbutong": [
-      {
-        "r": 8,
-        "f": "body"
-      },
-      {
-        "r": 8,
-        "f": "key_phrase"
-      },
-      {
-        "r": 8,
-        "f": "summary"
-      }
-    ],
     "# ddpg\n\n仅 tag 桥接，名称不同。": [
       {
         "r": 8,
         "f": "body"
       }
     ],
-    "qiaojie": [
+    "jinqiaojiemingchengbutong": [
       {
         "r": 8,
         "f": "key_phrase"
@@ -2755,16 +2336,6 @@
       {
         "r": 9,
         "f": "name"
-      }
-    ],
-    "shenduwangluo": [
-      {
-        "r": 9,
-        "f": "name"
-      },
-      {
-        "r": 9,
-        "f": "pinyin_name"
       }
     ],
     "深度 q 网络": [
@@ -2861,57 +2432,15 @@
         "f": "summary"
       }
     ],
-    "lisankongzhisuanfayulianxukongzhiwuguan": [
-      {
-        "r": 9,
-        "f": "body"
-      },
-      {
-        "r": 9,
-        "f": "key_phrase"
-      },
-      {
-        "r": 9,
-        "f": "summary"
-      }
-    ],
     "# dqn\n\n离散控制算法，与连续控制无关。": [
       {
         "r": 9,
         "f": "body"
       }
     ],
-    "lisan": [
+    "lisankongzhisuanfayulianxukongzhiwuguan": [
       {
         "r": 9,
-        "f": "key_phrase"
-      }
-    ],
-    "kongzhisuanfa": [
-      {
-        "r": 9,
-        "f": "key_phrase"
-      }
-    ],
-    "lianxu": [
-      {
-        "r": 9,
-        "f": "key_phrase"
-      }
-    ],
-    "kongzhi": [
-      {
-        "r": 9,
-        "f": "key_phrase"
-      }
-    ],
-    "wuguan": [
-      {
-        "r": 9,
-        "f": "key_phrase"
-      },
-      {
-        "r": 12,
         "f": "key_phrase"
       }
     ],
@@ -3013,39 +2542,15 @@
         "f": "summary"
       }
     ],
-    "zhuyilijizhibiaozhunxiefa": [
-      {
-        "r": 10,
-        "f": "body"
-      },
-      {
-        "r": 10,
-        "f": "key_phrase"
-      },
-      {
-        "r": 10,
-        "f": "summary"
-      }
-    ],
     "## 注意力机制\n\n标准写法。": [
       {
         "r": 10,
         "f": "body"
       }
     ],
-    "biaozhun": [
+    "zhuyilijizhibiaozhunxiefa": [
       {
         "r": 10,
-        "f": "key_phrase"
-      }
-    ],
-    "xiefa": [
-      {
-        "r": 10,
-        "f": "key_phrase"
-      },
-      {
-        "r": 11,
         "f": "key_phrase"
       }
     ],
@@ -3117,33 +2622,13 @@
         "f": "summary"
       }
     ],
-    "zhuyilijizhichangjianbiwuxiefa": [
-      {
-        "r": 11,
-        "f": "body"
-      },
-      {
-        "r": 11,
-        "f": "key_phrase"
-      },
-      {
-        "r": 11,
-        "f": "summary"
-      }
-    ],
     "## 注意力机制\n\n常见笔误写法。": [
       {
         "r": 11,
         "f": "body"
       }
     ],
-    "changjian": [
-      {
-        "r": 11,
-        "f": "key_phrase"
-      }
-    ],
-    "biwu": [
+    "zhuyilijizhichangjianbiwuxiefa": [
       {
         "r": 11,
         "f": "key_phrase"
@@ -3213,16 +2698,6 @@
         "f": "name"
       }
     ],
-    "pengrenjiqiao": [
-      {
-        "r": 12,
-        "f": "name"
-      },
-      {
-        "r": 12,
-        "f": "pinyin_name"
-      }
-    ],
     "烹饪技巧": [
       {
         "r": 12,
@@ -3243,33 +2718,13 @@
         "f": "summary"
       }
     ],
-    "pengrenwuguanduizhaozu": [
-      {
-        "r": 12,
-        "f": "body"
-      },
-      {
-        "r": 12,
-        "f": "key_phrase"
-      },
-      {
-        "r": 12,
-        "f": "summary"
-      }
-    ],
     "# 烹饪\n\n无关对照组。": [
       {
         "r": 12,
         "f": "body"
       }
     ],
-    "pengren": [
-      {
-        "r": 12,
-        "f": "key_phrase"
-      }
-    ],
-    "duizhaozu": [
+    "pengrenwuguanduizhaozu": [
       {
         "r": 12,
         "f": "key_phrase"

@@ -1,1 +1,0 @@
-# Memoria Python 包

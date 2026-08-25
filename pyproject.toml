@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "memoria"
-version = "0.1.0"
+version = "0.2.0"
 description = "Local knowledge-graph IDE with offline retrieval"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -18,14 +18,12 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 benchmark = ["certifi>=2024.0"]
-desktop = ["PyQt6-WebEngine>=6.6"]
 semantic = ["sentence-transformers>=3.0"]
 search = ["pypinyin>=0.50"]
 
 [project.scripts]
 memoria = "memoria.cli.main:main"
 memoria-m0 = "memoria.app.desktop:main"
-memoria-m0-release = "memoria.app.shell.pyqt6:main"
 memoria-build = "memoria.app.build:main"
 
 [tool.setuptools.packages.find]

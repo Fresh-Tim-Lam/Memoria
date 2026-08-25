@@ -1,4 +1,4 @@
-"""PyInstaller 入口：强制 PyQt6 发布壳。"""
+"""PyInstaller 入口：默认 pywebview 发布壳（WebView2）。"""
 
 from __future__ import annotations
 

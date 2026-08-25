@@ -7,7 +7,7 @@ from typing import Protocol, runtime_checkable
 
 @runtime_checkable
 class WindowHost(Protocol):
-    """窗口原生能力抽象；M0API 窗口相关方法委托给此协议。"""
+    """窗口原生能力抽象；UIAPI 窗口相关方法委托给此协议。"""
 
     kind: str
     frameless: bool

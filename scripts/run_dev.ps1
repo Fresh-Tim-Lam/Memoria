@@ -11,4 +11,4 @@ $env:MEMORIA_MODE = "dev"
 $env:MEMORIA_SHELL = "pywebview"
 if (-not $env:MEMORIA_FRAMELESS) { $env:MEMORIA_FRAMELESS = "1" }
 if (-not $env:MEMORIA_DEBUG) { $env:MEMORIA_DEBUG = "1" }
-python (Join-Path $Root "app_m0.py") @args
+python (Join-Path $Root "app.py") @args

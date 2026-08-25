@@ -1,3 +1,3 @@
-from memoria.presentation.api.m0 import M0API
+from memoria.presentation.api.ui import UIAPI
 
-__all__ = ["M0API"]
+__all__ = ["UIAPI"]

@@ -1,11 +1,11 @@
-"""桌面壳 WindowHost 与 M0API 窗口委托。"""
+"""桌面壳 WindowHost 与 UIAPI 窗口委托。"""
 
 from __future__ import annotations
 
 import sys
 
 from memoria.app.shell import resolve_shell_kind
-from memoria.presentation.api.m0 import M0API
+from memoria.presentation.api.ui import UIAPI
 
 
 class _FakeHost:
@@ -55,7 +55,7 @@ def test_resolve_shell_kind_pyqt6(monkeypatch):
     assert resolve_shell_kind() == "pyqt6"
 
 
-def test_resolve_shell_kind_frozen_defaults_pyqt6(monkeypatch):
+def test_resolve_shell_kind_frozen_defaults_pywebview(monkeypatch):
     monkeypatch.delenv("MEMORIA_SHELL", raising=False)
     monkeypatch.setattr("memoria.app.runtime.sys.frozen", True, raising=False)
     monkeypatch.setattr(
@@ -63,7 +63,7 @@ def test_resolve_shell_kind_frozen_defaults_pyqt6(monkeypatch):
         "C:/fake/_MEIPASS",
         raising=False,
     )
-    assert resolve_shell_kind() == "pyqt6"
+    assert resolve_shell_kind() == "pywebview"
 
 
 def test_runtime_mode_and_examples(tmp_path, monkeypatch):
@@ -89,10 +89,10 @@ def test_runtime_mode_and_examples(tmp_path, monkeypatch):
     assert rt.default_examples_dir() == rel
 
 
-def test_m0api_window_ops_delegate_to_host(tmp_path):
+def test_uiapi_window_ops_delegate_to_host(tmp_path):
     host = _FakeHost()
     host.pick_directory = lambda: str(tmp_path)  # type: ignore[method-assign]
-    api = M0API(host=host)
+    api = UIAPI(host=host)
 
     chrome = api.get_window_chrome()
     assert chrome["status"] == "ok"
@@ -109,8 +109,8 @@ def test_m0api_window_ops_delegate_to_host(tmp_path):
     assert path == str(tmp_path)
 
 
-def test_m0api_without_host_returns_window_error():
-    api = M0API(host=None)
+def test_uiapi_without_host_returns_window_error():
+    api = UIAPI(host=None)
     assert api.get_window_chrome()["frameless"] is False
     assert api.window_minimize()["status"] == "error"
 

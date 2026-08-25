@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "bad-target-kp",
+  "source_fingerprint": "49bb69ef0562f3276b99623c10963a95",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "bad-target-kp"
+  ],
+  "key_phrases": [
+    "错误",
+    "目标",
+    "错误目标"
+  ],
+  "summary_1l": "错误目标",
+  "query_hits": [],
+  "embed_text": "bad-target-kp 错误目标 bad-target-kp 错误 目标 错误目标 错误目标 错误目标",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-21T05:04:09.847678+00:00"
+}

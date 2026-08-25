@@ -34,9 +34,26 @@ EXAMPLES_IGNORE = shutil.ignore_patterns(
 
 
 def _read_version() -> str:
-    text = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    match = re.search(r'^version\s*=\s*"([^"]+)"', text, re.MULTILINE)
-    return match.group(1) if match else "0.0.0"
+    """版本唯一事实源：src/memoria/__version__.py。
+
+    构建产物（VERSION / manifest / README）与运行时 UI 显示的版本
+    均由此而来；pyproject.toml 的 version 必须保持一致，否则拒绝构建，
+    防止版本漂移。
+    """
+    ver_file = ROOT / "src" / "memoria" / "__version__.py"
+    match = re.search(
+        r'__version__\s*=\s*"([^"]+)"',
+        ver_file.read_text(encoding="utf-8"),
+    )
+    version = match.group(1) if match else "0.0.0"
+    pyproj = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    pymatch = re.search(r'^version\s*=\s*"([^"]+)"', pyproj, re.MULTILINE)
+    if pymatch and pymatch.group(1) != version:
+        raise SystemExit(
+            f"[memoria.build] 版本不一致：src/memoria/__version__.py={version}，"
+            f"但 pyproject.toml={pymatch.group(1)}。请先统一到 {version} 再构建。"
+        )
+    return version
 
 
 def _sync_app_icons() -> None:

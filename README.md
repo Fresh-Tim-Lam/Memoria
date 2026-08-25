@@ -26,9 +26,9 @@ _archive/            # 历史代码备份
 
 ```powershell
 pip install -e ".[dev]"
-python app_m0.py
-# 或
-memoria-m0
+.\scripts\run_dev.ps1        # 开发态（pywebview 壳 + DevTools）
+# 或直接运行源码入口
+python app.py
 pytest
 ```
 

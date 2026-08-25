@@ -45,11 +45,20 @@ from memoria.services.link_resolver import (
     resolve_link_targets,
     wikilink_label,
 )
+from memoria.services.kp_rename import (
+    migrate_sidecar_kp_refs,
+    replace_link_id_in_markdown,
+)
 from memoria.services.range_proposals import merge_range_proposals
 from memoria.storage.constants import SIDECAR_SCHEMA_VERSION
 from memoria.storage.markdown import compose_markdown, strip_frontmatter
 from memoria.storage.scanner import collect_md_files
-from memoria.storage.sidecar import load_sidecar_for_md, save_sidecar_for_md
+from memoria.storage.sidecar import (
+    legacy_sidecar_path_for,
+    load_sidecar_for_md,
+    save_sidecar_for_md,
+    sidecar_path_for,
+)
 from memoria.storage.manifest import (
     audit_manifest_diff,
     ensure_manifest_baseline,
@@ -274,10 +283,11 @@ class DocumentService:
             except Exception:
                 pass
 
-    def list_files(self) -> list[dict]:
+    def list_files(self) -> dict:
         if not self.kb_path:
             raise RuntimeError("未打开知识库")
         items: list[dict] = []
+        dirs: set[str] = set()
         for rel in collect_md_files(self.kb_path):
             full = os.path.join(self.kb_path, rel)
             sc = load_sidecar_for_md(full, self.kb_path)
@@ -286,7 +296,200 @@ class DocumentService:
                 "has_sidecar": sc is not None,
                 "description": (sc or {}).get("description", ""),
             })
-        return items
+            parts = rel.split("/")
+            for i in range(1, len(parts)):
+                dirs.add("/".join(parts[:i]))
+        # 收集磁盘上存在的目录（含空目录），保证新建的空文件夹在文件树可见；
+        # 跳过隐藏目录（.memoria/.git 等）
+        for dirpath, dirnames, _ in os.walk(self.kb_path):
+            dirnames[:] = [d for d in dirnames if not d.startswith(".")]
+            for d in dirnames:
+                rel_d = os.path.relpath(
+                    os.path.join(dirpath, d), self.kb_path
+                ).replace("\\", "/")
+                if rel_d != ".":
+                    dirs.add(rel_d)
+        return {"files": items, "dirs": sorted(dirs)}
+
+    # ── 文件树操作（重命名/删除/新建） ──────────────────────────
+
+    def _resolve_rel_path(self, rel_path: str) -> str:
+        """规范化相对路径（正斜杠）并防止目录穿越。"""
+        rel = (rel_path or "").replace("\\", "/").lstrip("/")
+        norm = os.path.normpath(rel).replace(os.sep, "/")
+        if norm == ".." or norm.startswith("../"):
+            raise RuntimeError("路径越界")
+        return norm
+
+    def _full_path(self, rel: str) -> str:
+        if not self.kb_path:
+            raise RuntimeError("未打开知识库")
+        full = os.path.abspath(os.path.join(self.kb_path, rel))
+        root = os.path.abspath(self.kb_path)
+        if full != root and not full.startswith(root + os.sep):
+            raise RuntimeError("路径越界")
+        return full
+
+    def _move_sidecar(self, old_md_full: str, new_md_full: str) -> None:
+        """重命名 md 时联动侧车（镜像布局 + 旧版同目录布局）。"""
+        pairs = (
+            (
+                legacy_sidecar_path_for(old_md_full),
+                legacy_sidecar_path_for(new_md_full),
+            ),
+            (
+                sidecar_path_for(old_md_full, self.kb_path),
+                sidecar_path_for(new_md_full, self.kb_path),
+            ),
+        )
+        for old_sc, new_sc in pairs:
+            if old_sc and new_sc and old_sc != new_sc and os.path.isfile(old_sc):
+                os.makedirs(os.path.dirname(new_sc), exist_ok=True)
+                os.rename(old_sc, new_sc)
+
+    def _remove_sidecar(self, md_full: str) -> None:
+        """删除 md 时联动删除侧车（两种布局）。"""
+        for sc in (
+            legacy_sidecar_path_for(md_full),
+            sidecar_path_for(md_full, self.kb_path),
+        ):
+            if sc and os.path.isfile(sc):
+                try:
+                    os.remove(sc)
+                except OSError:
+                    pass
+
+    def rename_file(self, old_rel: str, new_name: str) -> dict:
+        """重命名 .md 文件（仅文件名，保持所在目录），联动侧车、manifest 与全库引用。
+
+        引用同步规则：
+        - 若旧文件名不是任何 KP id（纯文件 stem 引用），把所有正文
+          [[oldStem]] / [[oldStem#type]] / [[oldStem|text]] 改写为
+          [[newStem|原文]]，并迁移各侧车中对该 stem 的链接/边目标与候选池；
+        - 若旧文件名恰是某 KP id（如 a.md 内含 id=a 的知识点），则
+          [[oldStem]] 解析到 KP 而非文件，KP id 不随文件改名变化，无需改写
+          （避免把 KP 引用降级成文件跳转）。
+        - 新文件名 stem 若已被其他文件占用 → 全局 id 唯一性冲突，拒绝。
+        """
+        old = self._resolve_rel_path(old_rel)
+        name = (new_name or "").strip().replace("\\", "/").strip("/")
+        if not name or name in (".", "..") or "/" in name:
+            return {"status": "error", "message": "文件名无效"}
+        if not name.lower().endswith(".md"):
+            name += ".md"
+        parent = old.rsplit("/", 1)[0] if "/" in old else ""
+        new_rel = f"{parent}/{name}" if parent else name
+        old_full = self._full_path(old)
+        new_full = self._full_path(new_rel)
+        if not os.path.isfile(old_full):
+            return {"status": "error", "message": "文件不存在"}
+        if os.path.exists(new_full):
+            return {"status": "error", "message": "目标文件已存在"}
+
+        old_stem = os.path.splitext(os.path.basename(old))[0]
+        new_stem = os.path.splitext(os.path.basename(name))[0]
+        index = build_kp_index(self.kb_path)
+        other = index["file_stems"].get(new_stem)
+        if other and other != old:
+            return {
+                "status": "error",
+                "message": f"重命名后文件名 id『{new_stem}』与 {other} 冲突",
+            }
+        # 旧 stem 若被某 KP id 遮蔽（[[oldStem]] 解析到知识点而非文件），
+        # 则文件重命名不影响这些引用，无需改写
+        kp_shadow = bool(index["by_id"].get(old_stem))
+
+        os.rename(old_full, new_full)
+        self._move_sidecar(old_full, new_full)
+
+        md_files: list[str] = []
+        md_replacements = 0
+        sidecar_files: list[str] = []
+        for rel in collect_md_files(self.kb_path):
+            rel_norm = rel.replace("\\", "/")
+            full = os.path.join(self.kb_path, rel)
+            touched = False
+            if not kp_shadow:
+                with open(full, "r", encoding="utf-8") as f:
+                    raw = f.read()
+                body, fm = strip_frontmatter(raw)
+                new_body, n = replace_link_id_in_markdown(body, old_stem, new_stem)
+                if n:
+                    text = compose_markdown(new_body, fm)
+                    tmp = full + ".tmp"
+                    with open(tmp, "w", encoding="utf-8") as f:
+                        f.write(text)
+                        f.flush()
+                        os.fsync(f.fileno())
+                    os.replace(tmp, full)
+                    md_replacements += n
+                    md_files.append(rel_norm)
+                    touched = True
+            sidecar = load_sidecar_for_md(full, self.kb_path)
+            if sidecar:
+                sc_changed = 0
+                if not kp_shadow:
+                    sc_changed += migrate_sidecar_kp_refs(sidecar, old_stem, new_stem)
+                if rel_norm == new_rel and str(sidecar.get("file") or "") != new_rel:
+                    sidecar["file"] = new_rel
+                    sc_changed += 1
+                if sc_changed:
+                    save_sidecar_for_md(full, self.kb_path, sidecar)
+                    sidecar_files.append(rel_norm)
+                    touched = True
+            if touched:
+                touch_manifest_entry(self.kb_path, rel_norm)
+                self._cache.pop(rel_norm, None)
+
+        self._cache.pop(old, None)
+        self._cache.pop(new_rel, None)
+        # 旧路径条目已失效 → touch 会因文件不存在而移除；再写入新路径条目
+        touch_manifest_entry(self.kb_path, old)
+        touch_manifest_entry(self.kb_path, new_rel)
+        return {
+            "status": "ok",
+            "path": new_rel,
+            "synced": bool(md_files or sidecar_files),
+            "md_replacements": md_replacements,
+            "md_files": md_files,
+            "sidecar_files": sidecar_files,
+        }
+
+    def delete_file(self, rel_path: str) -> dict:
+        """删除 .md 文件及其侧车。"""
+        rel = self._resolve_rel_path(rel_path)
+        full = self._full_path(rel)
+        if not os.path.isfile(full):
+            return {"status": "error", "message": "文件不存在"}
+        os.remove(full)
+        self._remove_sidecar(full)
+        self._cache.pop(rel, None)
+        touch_manifest_entry(self.kb_path, rel)
+        return {"status": "ok"}
+
+    def create_file(self, rel_path: str, body: str = "") -> dict:
+        """新建 .md 文件（父目录自动创建，缺 .md 后缀自动补齐），返回相对路径。"""
+        rel = self._resolve_rel_path(rel_path)
+        if not rel.lower().endswith(".md"):
+            rel += ".md"
+        full = self._full_path(rel)
+        if os.path.exists(full):
+            return {"status": "error", "message": "文件已存在"}
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        with open(full, "w", encoding="utf-8") as f:
+            f.write(body or "")
+        self._cache.pop(rel, None)
+        touch_manifest_entry(self.kb_path, rel)
+        return {"status": "ok", "path": rel}
+
+    def create_dir(self, rel_path: str) -> dict:
+        """新建文件夹（相对知识库根）。"""
+        rel = self._resolve_rel_path(rel_path)
+        full = self._full_path(rel)
+        if os.path.exists(full):
+            return {"status": "error", "message": "目录已存在"}
+        os.makedirs(full, exist_ok=True)
+        return {"status": "ok", "path": rel}
 
     def _read_body(self, rel_path: str) -> tuple[str, dict | None, list[str]]:
         if not self.kb_path:
@@ -297,7 +500,8 @@ class DocumentService:
         with open(full, "r", encoding="utf-8") as f:
             raw = f.read()
         body, fm = strip_frontmatter(raw)
-        return body, fm, body.splitlines()
+        # 空文件保证至少一行，否则前端编辑器渲染 0 行（无行号、不可编辑）
+        return body, fm, body.splitlines() or [""]
 
     def load_document(self, rel_path: str) -> dict:
         body, fm, lines = self._read_body(rel_path)

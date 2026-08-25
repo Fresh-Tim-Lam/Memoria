@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-07-31T03:43:15.046309+00:00'
+updated_at: '2026-08-22T07:37:26.986780+00:00'
 items:
 - pending_id: a70048884b857375
   file: DeepLearning/ELU.md
@@ -3714,6 +3714,433 @@ items:
         Engine for Mo'
       line_hint: 682
   status: pending
+- pending_id: 25c640cf77ff66d0
+  file: MERL/MERL.md
+  kind: heading
+  name: 0. 论文来源
+  range:
+    start:
+      snippet: '## 0. 论文来源'
+      line_hint: 3
+    end:
+      snippet: '| **核心贡献** | 将ERL框架扩展到多智能体领域，提出MERL，通过**分离优化**解决多智能体系统中**团队奖励（稀疏）**
+        与**个体奖励（稠密）*'
+      line_hint: 10
+  status: pending
+- pending_id: 3bc59128084452f2
+  file: MERL/MERL.md
+  kind: heading
+  name: 1. 算法概述
+  range:
+    start:
+      snippet: '## 1. 算法概述'
+      line_hint: 13
+    end:
+      snippet: '| **RL目标** | 最大化总回报 | 最大化**个体奖励** |'
+      line_hint: 44
+  status: pending
+- pending_id: 6de8e070e7614753
+  file: MERL/MERL.md
+  kind: heading
+  name: 1.1 一句话定位
+  range:
+    start:
+      snippet: '### 1.1 一句话定位'
+      line_hint: 15
+    end:
+      snippet: '**MERL** 是将 **ERL（进化强化学习）** 框架扩展到**多智能体（Multiagent）** 场景的算法。它通过**分离优化**的方式，让**进化'
+      line_hint: 17
+  status: pending
+- pending_id: 63c30af7a4bfc810
+  file: MERL/MERL.md
+  kind: heading
+  name: 1.2 设计动机
+  range:
+    start:
+      snippet: '### 1.2 设计动机'
+      line_hint: 19
+    end:
+      snippet: '**MERL 的核心洞察**：**不需要混合奖励**，而是让两个优化器各管各的目标，再通过经验池和权重迁移实现信息交换。'
+      line_hint: 33
+  status: pending
+- pending_id: 44e924247e482a86
+  file: MERL/MERL.md
+  kind: heading
+  name: 1.3 与 ERL 的关系
+  range:
+    start:
+      snippet: '### 1.3 与 ERL 的关系'
+      line_hint: 35
+    end:
+      snippet: '| **RL目标** | 最大化总回报 | 最大化**个体奖励** |'
+      line_hint: 44
+  status: pending
+- pending_id: 30c0038f20360cfa
+  file: MERL/MERL.md
+  kind: heading
+  name: 2. 数学框架
+  range:
+    start:
+      snippet: '## 2. 数学框架'
+      line_hint: 47
+    end:
+      snippet: 其中 \(g^{(j)}\) 是第 \(j\) 个episode的团队奖励总和。
+      line_hint: 141
+  status: pending
+- pending_id: 5a079f6f48b2b62c
+  file: MERL/MERL.md
+  kind: heading
+  name: 2.1 符号系统
+  range:
+    start:
+      snippet: '### 2.1 符号系统'
+      line_hint: 49
+    end:
+      snippet: '| \(\xi\) | 每个rollout的episode数 |'
+      line_hint: 64
+  status: pending
+- pending_id: 00452dfe1874ec6a
+  file: MERL/MERL.md
+  kind: heading
+  name: 2.2 MERL的双目标优化
+  range:
+    start:
+      snippet: '### 2.2 MERL的双目标优化'
+      line_hint: 66
+    end:
+      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 \(g\)，RL优化局部个体奖励 \(l_i\)。两者通过经验池共享和权重迁移'
+      line_hint: 82
+  status: pending
+- pending_id: 4b7144de06211275
+  file: MERL/MERL.md
+  kind: heading
+  name: 2.3 多头策略网络结构
+  range:
+    start:
+      snippet: '### 2.3 多头策略网络结构'
+      line_hint: 84
+    end:
+      snippet: '- 每个agent有独立的经验池（保持多样性）'
+      line_hint: 113
+  status: pending
+- pending_id: e16d594ed2c57640
+  file: MERL/MERL.md
+  kind: heading
+  name: 2.4 RL部分的损失函数
+  range:
+    start:
+      snippet: '### 2.4 RL部分的损失函数'
+      line_hint: 115
+    end:
+      snippet: \]
+      line_hint: 133
+  status: pending
+- pending_id: 9265c676a0d5c6c1
+  file: MERL/MERL.md
+  kind: heading
+  name: 2.5 EA部分的适应度
+  range:
+    start:
+      snippet: '### 2.5 EA部分的适应度'
+      line_hint: 135
+    end:
+      snippet: 其中 \(g^{(j)}\) 是第 \(j\) 个episode的团队奖励总和。
+      line_hint: 141
+  status: pending
+- pending_id: 966987bddb33ec1e
+  file: MERL/MERL.md
+  kind: heading
+  name: 3. 完整算法流程
+  range:
+    start:
+      snippet: '## 3. 完整算法流程'
+      line_hint: 144
+    end:
+      snippet: '```'
+      line_hint: 197
+  status: pending
+- pending_id: 883dce11b55d6012
+  file: MERL/MERL.md
+  kind: heading
+  name: Rollout子过程
+  range:
+    start:
+      snippet: '### Rollout子过程'
+      line_hint: 178
+    end:
+      snippet: '```'
+      line_hint: 197
+  status: pending
+- pending_id: 3cd70559c190cf5c
+  file: MERL/MERL.md
+  kind: heading
+  name: 4. 与ERL的对比
+  range:
+    start:
+      snippet: '## 4. 与ERL的对比'
+      line_hint: 200
+    end:
+      snippet: '| **信息复用** | EA经验 → RL | **EA经验 → RL（通过各agent独立经验池）** |'
+      line_hint: 211
+  status: pending
+- pending_id: 1d7ee2112dfe57aa
+  file: MERL/MERL.md
+  kind: heading
+  name: 5. 关键创新
+  range:
+    start:
+      snippet: '## 5. 关键创新'
+      line_hint: 214
+    end:
+      snippet: 减轻Q值过估计问题。
+      line_hint: 248
+  status: pending
+- pending_id: b5b71cd0ea609295
+  file: MERL/MERL.md
+  kind: heading
+  name: 5.1 分离优化（Split-Level Optimization）
+  range:
+    start:
+      snippet: '### 5.1 分离优化（Split-Level Optimization）'
+      line_hint: 216
+    end:
+      snippet: 这样避免了奖励塑形所需的领域知识和手工调参。
+      line_hint: 223
+  status: pending
+- pending_id: 7110eb1bab44a147
+  file: MERL/MERL.md
+  kind: heading
+  name: 5.2 独立经验池
+  range:
+    start:
+      snippet: '### 5.2 独立经验池'
+      line_hint: 225
+    end:
+      snippet: '- 保持种群多样性'
+      line_hint: 231
+  status: pending
+- pending_id: d355c77f00f9a4c0
+  file: MERL/MERL.md
+  kind: heading
+  name: 5.3 自适应信息迁移
+  range:
+    start:
+      snippet: '### 5.3 自适应信息迁移'
+      line_hint: 233
+    end:
+      snippet: '- 如果迁移的个体被选为精英的概率低 → 迁移方向差，自然被忽略'
+      line_hint: 238
+  status: pending
+- pending_id: 60ba73d1bf325c90
+  file: MERL/MERL.md
+  kind: heading
+  name: 5.4 双Q网络（TD3风格）
+  range:
+    start:
+      snippet: '### 5.4 双Q网络（TD3风格）'
+      line_hint: 240
+    end:
+      snippet: 减轻Q值过估计问题。
+      line_hint: 248
+  status: pending
+- pending_id: 185f9f4360621b1c
+  file: MERL/MERL.md
+  kind: heading
+  name: 6. 实验环境
+  range:
+    start:
+      snippet: '## 6. 实验环境'
+      line_hint: 251
+    end:
+      snippet: '| **Rover Domain** | N个智能体需同时到达POI（耦合要求1-7） | **耦合越高，协调越难**，状态空间不变
+        |'
+      line_hint: 258
+  status: pending
+- pending_id: 1b9c60748bc17e5b
+  file: MERL/MERL.md
+  kind: heading
+  name: 7. 实验结果
+  range:
+    start:
+      snippet: '## 7. 实验结果'
+      line_hint: 261
+    end:
+      snippet: '- MERL的迁移是**自适应的**——好迁移自动保留，坏迁移自动丢弃'
+      line_hint: 291
+  status: pending
+- pending_id: c6d4d9017c0333f4
+  file: MERL/MERL.md
+  kind: heading
+  name: 7.1 Rover Domain（耦合要求变化）
+  range:
+    start:
+      snippet: '### 7.1 Rover Domain（耦合要求变化）'
+      line_hint: 263
+    end:
+      snippet: '- 因为耦合增加只增加**协调难度**，不增加状态空间复杂度，证明MERL解决了协调问题'
+      line_hint: 275
+  status: pending
+- pending_id: 3c72f19031b2f797
+  file: MERL/MERL.md
+  kind: heading
+  name: 7.2 条件选择率 \(P(sel \mid mig)\)
+  range:
+    start:
+      snippet: '### 7.2 条件选择率 \(P(sel \mid mig)\)'
+      line_hint: 277
+    end:
+      snippet: '- MERL的迁移是**自适应的**——好迁移自动保留，坏迁移自动丢弃'
+      line_hint: 291
+  status: pending
+- pending_id: f6c96f288c39be79
+  file: MERL/MERL.md
+  kind: heading
+  name: 8. 总结
+  range:
+    start:
+      snippet: '## 8. 总结'
+      line_hint: 294
+    end:
+      snippet: 📄 本报告基于 MERL 原始论文 (Khadka et al., ICML 2020) 整理。包含完整算法流程、数学推导、与 ERL
+        对比及实验分析。
+      line_hint: 306
+  status: pending
+- pending_id: 7a46ef7a71851bf5
+  file: MERL/MERL.md
+  kind: definition
+  name: 框架扩展到**多智能体
+  range:
+    start:
+      snippet: '**MERL** 是将 **ERL（进化强化学习）** 框架扩展到**多智能体（Multiagent）** 场景的算法。它通过**分离优化**的方式，让**进化'
+      line_hint: 17
+    end:
+      snippet: ''
+      line_hint: 18
+  status: pending
+- pending_id: 47097d5530e822a1
+  file: MERL/MERL.md
+  kind: definition
+  name: 两个优化器优化的
+  range:
+    start:
+      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 \(g\)，RL优化局部个体奖励 \(l_i\)。两者通过经验池共享和权重迁移'
+      line_hint: 82
+    end:
+      snippet: ''
+      line_hint: 83
+  status: pending
+- pending_id: d8b2d7a0455908cc
+  file: MERL/MERL.md
+  kind: definition
+  name: '**Critic更新'
+  range:
+    start:
+      snippet: '**Critic更新（TD3风格，双Q网络）** ：'
+      line_hint: 117
+    end:
+      snippet: ''
+      line_hint: 134
+  status: pending
+- pending_id: 56787f8313cda122
+  file: MERL/MERL.md
+  kind: definition
+  name: _j
+  range:
+    start:
+      snippet: y_i = l_i + \gamma \min_{j=1,2} \mathcal{Q}'_j(o_{i+1}, a')
+      line_hint: 120
+    end:
+      snippet: \]
+      line_hint: 121
+  status: pending
+- pending_id: 99e107f1a40ece08
+  file: MERL/MERL.md
+  kind: definition
+  name: ^k
+  range:
+    start:
+      snippet: \nabla_{\theta_{pg}^\pi} J \approx \frac{1}{T} \sum_i \nabla_a \mathcal{Q}(o,
+        a)
+      line_hint: 132
+    end:
+      snippet: \]
+      line_hint: 133
+  status: pending
+- pending_id: c4da31b8577e52e7
+  file: MERL/MERL.md
+  kind: definition
+  name: '**多智能体'
+  range:
+    start:
+      snippet: '| **场景** | 单智能体 | **多智能体（Marl）** |'
+      line_hint: 204
+    end:
+      snippet: '| **信息复用** | EA经验 → RL | **EA经验 → RL（通过各agent独立经验池）** |'
+      line_hint: 211
+  status: pending
+- pending_id: 4f81179088140de7
+  file: MERL/MERL.md
+  kind: definition
+  name: '**团队奖励'
+  range:
+    start:
+      snippet: '| **奖励函数** | 单一奖励 | **团队奖励（EA）+ 个体奖励（RL）** |'
+      line_hint: 207
+    end:
+      snippet: '| **信息复用** | EA经验 → RL | **EA经验 → RL（通过各agent独立经验池）** |'
+      line_hint: 211
+  status: pending
+- pending_id: af7cf573c0ba9afb
+  file: MERL/MERL.md
+  kind: definition
+  name: MERL最核心的创新
+  range:
+    start:
+      snippet: MERL最核心的创新是**不混合奖励**，而是让EA和RL各自优化不同的奖励函数：
+      line_hint: 218
+    end:
+      snippet: ''
+      line_hint: 224
+  status: pending
+- pending_id: e8aac28a368d7b77
+  file: MERL/MERL.md
+  kind: definition
+  name: MERL的迁移
+  range:
+    start:
+      snippet: '- MERL的迁移是**自适应的**——好迁移自动保留，坏迁移自动丢弃'
+      line_hint: 291
+    end:
+      snippet: ''
+      line_hint: 293
+  status: pending
+- pending_id: abbe9f96ccc98b4c
+  file: MERL/MERL.md
+  kind: definition
+  name: 额外计算成本
+  range:
+    start:
+      snippet: '| **局限性** | 额外计算成本（EA种群）；遗传算法超参数较多 |'
+      line_hint: 303
+    end:
+      snippet: 📄 本报告基于 MERL 原始论文 (Khadka et al., ICML 2020) 整理。包含完整算法流程、数学推导、与 ERL
+        对比及实验分析。
+      line_hint: 306
+  status: pending
+- pending_id: fab03c5577b76574
+  file: MERL/MERL.md
+  kind: definition
+  name: 原始论文
+  range:
+    start:
+      snippet: 📄 本报告基于 MERL 原始论文 (Khadka et al., ICML 2020) 整理。包含完整算法流程、数学推导、与 ERL
+        对比及实验分析。
+      line_hint: 306
+    end:
+      snippet: 📄 本报告基于 MERL 原始论文 (Khadka et al., ICML 2020) 整理。包含完整算法流程、数学推导、与 ERL
+        对比及实验分析。
+      line_hint: 306
+  status: pending
 - pending_id: 3e13dc6d15304768
   file: MachineLearning/CART.md
   kind: heading
@@ -6984,6 +7411,1752 @@ items:
     end:
       snippet: ''
       line_hint: 70
+  status: pending
+- pending_id: e665b99f6675fefb
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 摘要
+  range:
+    start:
+      snippet: '## 摘要'
+      line_hint: 4
+    end:
+      snippet: 本文从**带等式约束凸优化问题**出发，严格推导拉格朗日对偶理论（强弱对偶定理），分析原始对偶上升法的致命缺陷；进而引入增广拉格朗日乘子法（ALM）解决迭代发散
+      line_hint: 5
+  status: pending
+- pending_id: df16ab5e6b9f9e5d
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 1 约束凸优化基础问题定义
+  range:
+    start:
+      snippet: '## 1 约束凸优化基础问题定义'
+      line_hint: 7
+    end:
+      snippet: 3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{\(f(x)\) \mid \(h(x)=0\)\big\}$。
+      line_hint: 18
+  status: pending
+- pending_id: 8d3a08c40ada7fee
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2 拉格朗日对偶理论（核心理论基石）
+  range:
+    start:
+      snippet: '## 2 拉格朗日对偶理论（核心理论基石）'
+      line_hint: 20
+    end:
+      snippet: 此时对偶问题最优值 = 原问题最优值，可通过求解对偶问题间接得到原问题最优解。
+      line_hint: 71
+  status: pending
+- pending_id: 36e9dcd80485dc29
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2.1 拉格朗日函数构造
+  range:
+    start:
+      snippet: '### 2.1 拉格朗日函数构造'
+      line_hint: 21
+    end:
+      snippet: '- 对偶变量 $y\in\mathbb{R}^m$：约束惩罚权重，无定义域限制。'
+      line_hint: 27
+  status: pending
+- pending_id: 2202499aec5c86e8
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2.2 对偶函数定义
+  range:
+    start:
+      snippet: '### 2.2 对偶函数定义'
+      line_hint: 29
+    end:
+      snippet: 核心性质：对偶函数 $\(q(y)\)$ 一定是**凹函数**，与原函数 $\(f(x)\)$ 的凹凸性无关。
+      line_hint: 34
+  status: pending
+- pending_id: 4eabbc3e6fff3703
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2.3 对偶问题定义
+  range:
+    start:
+      snippet: '### 2.3 对偶问题定义'
+      line_hint: 36
+    end:
+      snippet: '> 核心逻辑：原问题是「对 $x$ 求最小」，对偶问题是「对 $y$ 求最大」，优化变量完全不同，无逻辑矛盾。'
+      line_hint: 43
+  status: pending
+- pending_id: aa60a38461d1ab9e
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2.4 弱对偶定理（严格证明）
+  range:
+    start:
+      snippet: '### 2.4 弱对偶定理（严格证明）'
+      line_hint: 45
+    end:
+      snippet: '**物理意义**：所有对偶函数值都是原问题最优值的**下界**，最大化对偶函数，就是向上逼近原问题最优值。'
+      line_hint: 64
+  status: pending
+- pending_id: be6fddea992773f7
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 2.5 强对偶定理
+  range:
+    start:
+      snippet: '### 2.5 强对偶定理'
+      line_hint: 66
+    end:
+      snippet: 此时对偶问题最优值 = 原问题最优值，可通过求解对偶问题间接得到原问题最优解。
+      line_hint: 71
+  status: pending
+- pending_id: d3a166dc84894be8
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 3 对偶上升法（初代迭代算法 & 致命缺陷）
+  range:
+    start:
+      snippet: '## 3 对偶上升法（初代迭代算法 & 致命缺陷）'
+      line_hint: 73
+    end:
+      snippet: '> 本质问题：纯线性乘子项无法约束不可行解，迭代稳定性极差。'
+      line_hint: 93
+  status: pending
+- pending_id: 2c9897f8b10b6bb5
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 3.1 算法迭代逻辑
+  range:
+    start:
+      snippet: '### 3.1 算法迭代逻辑'
+      line_hint: 74
+    end:
+      snippet: $$
+      line_hint: 87
+  status: pending
+- pending_id: 41d91c02a7110f73
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 3.2 核心致命缺陷
+  range:
+    start:
+      snippet: '### 3.2 核心致命缺陷'
+      line_hint: 89
+    end:
+      snippet: '> 本质问题：纯线性乘子项无法约束不可行解，迭代稳定性极差。'
+      line_hint: 93
+  status: pending
+- pending_id: 376b6582c376fc1f
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 4 增广拉格朗日乘子法（ALM，ADMM的基础）
+  range:
+    start:
+      snippet: '## 4 增广拉格朗日乘子法（ALM，ADMM的基础）'
+      line_hint: 95
+    end:
+      snippet: 2. **致命缺点**：二次惩罚项引入**变量耦合**，复杂目标函数无法拆分，联合极小化计算成本极高，无闭式解，不适合大规模优化。
+      line_hint: 121
+  status: pending
+- pending_id: 2c0f9d399bb60601
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 4.1 增广拉格朗日函数构造
+  range:
+    start:
+      snippet: '### 4.1 增广拉格朗日函数构造'
+      line_hint: 96
+    end:
+      snippet: '- 新增二次项：强凸正则项，强制目标函数有下界，彻底解决迭代发散问题。'
+      line_hint: 102
+  status: pending
+- pending_id: 8554ba152126ac49
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 4.2 ALM标准迭代公式
+  range:
+    start:
+      snippet: '### 4.2 ALM标准迭代公式'
+      line_hint: 104
+    end:
+      snippet: $$
+      line_hint: 117
+  status: pending
+- pending_id: ede54f0a7b4abd54
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 4.3 ALM优缺点
+  range:
+    start:
+      snippet: '### 4.3 ALM优缺点'
+      line_hint: 119
+    end:
+      snippet: 2. **致命缺点**：二次惩罚项引入**变量耦合**，复杂目标函数无法拆分，联合极小化计算成本极高，无闭式解，不适合大规模优化。
+      line_hint: 121
+  status: pending
+- pending_id: 56bfb44efb593edc
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5 交替方向乘子法（ADMM，最终优化算法）
+  range:
+    start:
+      snippet: '## 5 交替方向乘子法（ADMM，最终优化算法）'
+      line_hint: 123
+    end:
+      snippet: 2. 对偶残差（变量震荡度）：$\|s^k\|_2 = \rho\|A^\top B(z^k-z^{k-1})\|_2$
+      line_hint: 185
+  status: pending
+- pending_id: 108783671c510d1f
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.1 ADMM标准拆分问题
+  range:
+    start:
+      snippet: '### 5.1 ADMM标准拆分问题'
+      line_hint: 124
+    end:
+      snippet: '- 约束 $\(Ax+Bz=c\)$ 耦合两个变量，无法单独优化。'
+      line_hint: 133
+  status: pending
+- pending_id: 07399220dc7a8bad
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.2 ADMM增广拉格朗日函数
+  range:
+    start:
+      snippet: '### 5.2 ADMM增广拉格朗日函数'
+      line_hint: 135
+    end:
+      snippet: $$
+      line_hint: 139
+  status: pending
+- pending_id: 493d49c59ba30b04
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.3 ADMM核心创新：交替极小化（关键推导）
+  range:
+    start:
+      snippet: '### 5.3 ADMM核心创新：交替极小化（关键推导）'
+      line_hint: 141
+    end:
+      snippet: $$
+      line_hint: 159
+  status: pending
+- pending_id: 75c6c057af1134ba
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.4 工程常用：缩放形式ADMM
+  range:
+    start:
+      snippet: '### 5.4 工程常用：缩放形式ADMM'
+      line_hint: 161
+    end:
+      snippet: $$
+      line_hint: 169
+  status: pending
+- pending_id: bfa7c3cfbb4b343d
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.5 ADMM收敛性严格说明
+  range:
+    start:
+      snippet: '### 5.5 ADMM收敛性严格说明'
+      line_hint: 171
+    end:
+      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      line_hint: 180
+  status: pending
+- pending_id: 435dc5e66773f43f
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 收敛前提条件
+  range:
+    start:
+      snippet: '#### 收敛前提条件'
+      line_hint: 172
+    end:
+      snippet: 2. 原问题可行，强对偶条件成立。
+      line_hint: 174
+  status: pending
+- pending_id: b776af2df5fc1d7d
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 收敛结论（Boyd标准定理）
+  range:
+    start:
+      snippet: '#### 收敛结论（Boyd标准定理）'
+      line_hint: 176
+    end:
+      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      line_hint: 180
+  status: pending
+- pending_id: be3b71d3038998af
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 5.6 收敛停机准则
+  range:
+    start:
+      snippet: '### 5.6 收敛停机准则'
+      line_hint: 182
+    end:
+      snippet: 2. 对偶残差（变量震荡度）：$\|s^k\|_2 = \rho\|A^\top B(z^k-z^{k-1})\|_2$
+      line_hint: 185
+  status: pending
+- pending_id: b8c996800168ac97
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 6 算法完整演进逻辑总结
+  range:
+    start:
+      snippet: '## 6 算法完整演进逻辑总结'
+      line_hint: 187
+    end:
+      snippet: 4. **ADMM**：拆解ALM联合优化为交替极小化，牺牲收敛速度，换取**子问题可解耦、可闭式求解、大规模高效迭代**，是机器学习、优化工程的核心算法。
+      line_hint: 191
+  status: pending
+- pending_id: 77ca8bd93bbe2245
+  file: Mathemetical_Modeling/ADMM.md
+  kind: heading
+  name: 7 结论
+  range:
+    start:
+      snippet: '## 7 结论'
+      line_hint: 193
+    end:
+      snippet: 这份报告**逻辑完全闭环、公式零省略、证明全程严谨**，直接可以交作业/结课报告。需要我帮你**补充一段Lasso-ADMM实战推导案例**，让报告更完整加分吗
+      line_hint: 197
+  status: pending
+- pending_id: 5854b7e72db51922
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: 从原问题、强弱对偶定理完整证明、对偶上升法缺陷、增广拉格朗日
+  range:
+    start:
+      snippet: 我将按照**严谨的数学递进逻辑**，从原问题、强弱对偶定理完整证明、对偶上升法缺陷、增广拉格朗日（ALM）、最终推导至ADMM算法，全程公式无省略、逻辑闭环，适
+      line_hint: 1
+    end:
+      snippet: 我将按照**严谨的数学递进逻辑**，从原问题、强弱对偶定理完整证明、对偶上升法缺陷、增广拉格朗日（ALM）、最终推导至ADMM算法，全程公式无省略、逻辑闭环，适
+      line_hint: 1
+  status: pending
+- pending_id: 79e3e649fb167c8d
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: 进而引入增广拉格朗日乘子法
+  range:
+    start:
+      snippet: 本文从**带等式约束凸优化问题**出发，严格推导拉格朗日对偶理论（强弱对偶定理），分析原始对偶上升法的致命缺陷；进而引入增广拉格朗日乘子法（ALM）解决迭代发散
+      line_hint: 5
+    end:
+      snippet: ''
+      line_hint: 6
+  status: pending
+- pending_id: bae348109810edb6
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: $\
+  range:
+    start:
+      snippet: 1. $\(f(x)\):\mathbb{R}^n\to\mathbb{R}$ 为**凸、适当、下半连续函数**；
+      line_hint: 16
+    end:
+      snippet: 3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{\(f(x)\) \mid \(h(x)=0\)\big\}$。
+      line_hint: 18
+  status: pending
+- pending_id: 2e4405775f934cfc
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: y^\top
+  range:
+    start:
+      snippet: L(x,y) = \(f(x)\) + y^\top h(x) = \(f(x)\) + y^\top(Ax-b)
+      line_hint: 24
+    end:
+      snippet: '- 对偶变量 $y\in\mathbb{R}^m$：约束惩罚权重，无定义域限制。'
+      line_hint: 27
+  status: pending
+- pending_id: ce9d67d630ea6c56
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: 原问题
+  range:
+    start:
+      snippet: '> 核心逻辑：原问题是「对 $x$ 求最小」，对偶问题是「对 $y$ 求最大」，优化变量完全不同，无逻辑矛盾。'
+      line_hint: 43
+    end:
+      snippet: ''
+      line_hint: 44
+  status: pending
+- pending_id: 3c0e1f8c049c745f
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: 所有对偶函数值都
+  range:
+    start:
+      snippet: '**物理意义**：所有对偶函数值都是原问题最优值的**下界**，最大化对偶函数，就是向上逼近原问题最优值。'
+      line_hint: 64
+    end:
+      snippet: ''
+      line_hint: 65
+  status: pending
+- pending_id: 11b56c55dc3fcd89
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: $L
+  range:
+    start:
+      snippet: 普通拉格朗日函数无二次约束，**固定 $y^k$ 时，$L(x,y^k)$ 可能无下界**：
+      line_hint: 90
+    end:
+      snippet: 存在大量场景下，$x\to\infty$ 时 $L(x,y^k)\to-\infty$，导致 $x^{k+1}$ 迭代发散、算法失效。
+      line_hint: 91
+  status: pending
+- pending_id: 53150c742c481049
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: L_\rho
+  range:
+    start:
+      snippet: L_\rho(x,y) = \(f(x)\) + y^\top h(x) + \frac{\rho}{2}\left\|h(x)\right\|_2^2,\qu
+      line_hint: 99
+    end:
+      snippet: '- 新增二次项：强凸正则项，强制目标函数有下界，彻底解决迭代发散问题。'
+      line_hint: 102
+  status: pending
+- pending_id: b2eeeb159ecce956
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: \rho\left
+  range:
+    start:
+      snippet: y^{k+1} = y^k + \rho\left(Ax^{k+1}+Bz^{k+1}-c\right)
+      line_hint: 158
+    end:
+      snippet: $$
+      line_hint: 159
+  status: pending
+- pending_id: e58ff207749d624a
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: $f
+  range:
+    start:
+      snippet: 2. 目标函数 $f(x^k)+g(z^k) \to p^*$，收敛到全局最优值；
+      line_hint: 178
+    end:
+      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      line_hint: 180
+  status: pending
+- pending_id: 73d578865e6de0b2
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第一步：我们想要什么？
+  range:
+    start:
+      snippet: '## 第一步：我们想要什么？'
+      line_hint: 5
+    end:
+      snippet: '---'
+      line_hint: 19
+  status: pending
+- pending_id: ef9f0595e116483d
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第二步：拉格朗日函数 —— 把约束"惩罚"进目标
+  range:
+    start:
+      snippet: '## 第二步：拉格朗日函数 —— 把约束"惩罚"进目标'
+      line_hint: 21
+    end:
+      snippet: '---'
+      line_hint: 46
+  status: pending
+- pending_id: 2720337d7e619a8a
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第三步：对偶函数 —— 给出一个"下界"
+  range:
+    start:
+      snippet: '## 第三步：对偶函数 —— 给出一个"下界"'
+      line_hint: 48
+    end:
+      snippet: '---'
+      line_hint: 86
+  status: pending
+- pending_id: 0d300168812a7d71
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第四步：一个具体例子
+  range:
+    start:
+      snippet: '## 第四步：一个具体例子'
+      line_hint: 88
+    end:
+      snippet: '---'
+      line_hint: 120
+  status: pending
+- pending_id: 60bf0247b544d590
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第五步：对偶问题
+  range:
+    start:
+      snippet: '## 第五步：对偶问题'
+      line_hint: 122
+    end:
+      snippet: '---'
+      line_hint: 136
+  status: pending
+- pending_id: 12c3ae94dff287a3
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第六步：弱对偶与强对偶
+  range:
+    start:
+      snippet: '## 第六步：弱对偶与强对偶'
+      line_hint: 138
+    end:
+      snippet: '---'
+      line_hint: 154
+  status: pending
+- pending_id: 3f32772e34a9d94e
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 总结：对偶函数的最简逻辑链
+  range:
+    start:
+      snippet: '## 总结：对偶函数的最简逻辑链'
+      line_hint: 155
+    end:
+      snippet: '---'
+      line_hint: 168
+  status: pending
+- pending_id: 83581ec0ef1938f5
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 下一阶段：从对偶函数到 GBD
+  range:
+    start:
+      snippet: '## 下一阶段：从对偶函数到 GBD'
+      line_hint: 170
+    end:
+      snippet: '---'
+      line_hint: 183
+  status: pending
+- pending_id: dc38bb07db7c73d7
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第七步：从对偶函数到 GBD 的最优性割
+  range:
+    start:
+      snippet: '## 第七步：从对偶函数到 GBD 的最优性割'
+      line_hint: 185
+    end:
+      snippet: '---'
+      line_hint: 263
+  status: pending
+- pending_id: 6926b06b72948091
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 7.1 GBD 的子问题是什么？
+  range:
+    start:
+      snippet: '### 7.1 GBD 的子问题是什么？'
+      line_hint: 187
+    end:
+      snippet: 其中 \( \bar{y} \) 是主问题给定的一个具体值，在这一步中是**固定的常数**。
+      line_hint: 203
+  status: pending
+- pending_id: 13de992796f7f57b
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 7.2 构造子问题的拉格朗日函数
+  range:
+    start:
+      snippet: '### 7.2 构造子问题的拉格朗日函数'
+      line_hint: 205
+    end:
+      snippet: 其中 \( u \) 是拉格朗日乘子向量。
+      line_hint: 211
+  status: pending
+- pending_id: 48761e18f125678b
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 7.3 子问题的对偶函数
+  range:
+    start:
+      snippet: '### 7.3 子问题的对偶函数'
+      line_hint: 213
+    end:
+      snippet: \]
+      line_hint: 227
+  status: pending
+- pending_id: f6acb25a09f8b15b
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 7.4 最关键的一步：推广到任意 \( y \)
+  range:
+    start:
+      snippet: '### 7.4 最关键的一步：推广到任意 \( y \)'
+      line_hint: 229
+    end:
+      snippet: \]
+      line_hint: 247
+  status: pending
+- pending_id: 254216dc1d443c5e
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 7.5 这就是最优性割！
+  range:
+    start:
+      snippet: '### 7.5 这就是最优性割！'
+      line_hint: 249
+    end:
+      snippet: '---'
+      line_hint: 263
+  status: pending
+- pending_id: 2c064df4273b6348
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第八步：可行性割
+  range:
+    start:
+      snippet: '## 第八步：可行性割'
+      line_hint: 265
+    end:
+      snippet: '---'
+      line_hint: 311
+  status: pending
+- pending_id: 6fa8b9d2e739d0cf
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 8.1 什么时候需要可行性割？
+  range:
+    start:
+      snippet: '### 8.1 什么时候需要可行性割？'
+      line_hint: 267
+    end:
+      snippet: '- 例如：主问题选择的充电站容量不够，无法满足所有EV的充电需求'
+      line_hint: 273
+  status: pending
+- pending_id: c4fe142485b84b73
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 8.2 如何处理不可行？
+  range:
+    start:
+      snippet: '### 8.2 如何处理不可行？'
+      line_hint: 275
+    end:
+      snippet: 求解后得到最优乘子 \( u^* \)。
+      line_hint: 295
+  status: pending
+- pending_id: 7bbe62f9ff1649ee
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 8.3 构造可行性割
+  range:
+    start:
+      snippet: '### 8.3 构造可行性割'
+      line_hint: 297
+    end:
+      snippet: '---'
+      line_hint: 311
+  status: pending
+- pending_id: 59050924c7a3c022
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第九步：GBD 的完整迭代过程
+  range:
+    start:
+      snippet: '## 第九步：GBD 的完整迭代过程'
+      line_hint: 313
+    end:
+      snippet: '---'
+      line_hint: 345
+  status: pending
+- pending_id: 12861fe8438b1a97
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 第十步：GBD 的收敛性
+  range:
+    start:
+      snippet: '## 第十步：GBD 的收敛性'
+      line_hint: 347
+    end:
+      snippet: '---'
+      line_hint: 359
+  status: pending
+- pending_id: c4ba3b6d327b9657
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 完整逻辑链总结
+  range:
+    start:
+      snippet: '## 完整逻辑链总结'
+      line_hint: 361
+    end:
+      snippet: '---'
+      line_hint: 381
+  status: pending
+- pending_id: 96c57d06c654e0f7
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 1. 凸函数的定义回顾
+  range:
+    start:
+      snippet: '## 1. 凸函数的定义回顾'
+      line_hint: 383
+    end:
+      snippet: '---'
+      line_hint: 393
+  status: pending
+- pending_id: b9ec4150f24b0857
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 2. 可微凸函数的一阶条件（核心）
+  range:
+    start:
+      snippet: '## 2. 可微凸函数的一阶条件（核心）'
+      line_hint: 395
+    end:
+      snippet: '---'
+      line_hint: 410
+  status: pending
+- pending_id: cf1a07a230cdfefd
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 3. 为什么这个条件是成立的？
+  range:
+    start:
+      snippet: '## 3. 为什么这个条件是成立的？'
+      line_hint: 412
+    end:
+      snippet: '---'
+      line_hint: 444
+  status: pending
+- pending_id: b4688043167dfb5e
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 4. 一个直观的例子
+  range:
+    start:
+      snippet: '## 4. 一个直观的例子'
+      line_hint: 446
+    end:
+      snippet: '---'
+      line_hint: 457
+  status: pending
+- pending_id: 5725b3eb58a22e6c
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 5. 为什么这个性质对 GBD 至关重要？
+  range:
+    start:
+      snippet: '## 5. 为什么这个性质对 GBD 至关重要？'
+      line_hint: 459
+    end:
+      snippet: '---'
+      line_hint: 477
+  status: pending
+- pending_id: df149bb75d7a22a8
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 总结
+  range:
+    start:
+      snippet: '## 总结'
+      line_hint: 479
+    end:
+      snippet: '---'
+      line_hint: 497
+  status: pending
+- pending_id: a033a0133fa67c74
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 1. 最优性割中的一阶条件
+  range:
+    start:
+      snippet: '## 1. 最优性割中的一阶条件'
+      line_hint: 499
+    end:
+      snippet: '---'
+      line_hint: 517
+  status: pending
+- pending_id: 4cf1a95f74f59f88
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 2. 可行性割中的 0
+  range:
+    start:
+      snippet: '## 2. 可行性割中的 0'
+      line_hint: 519
+    end:
+      snippet: '---'
+      line_hint: 531
+  status: pending
+- pending_id: f3bddd941af89be6
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 3. 它们的逻辑关系
+  range:
+    start:
+      snippet: '## 3. 它们的逻辑关系'
+      line_hint: 533
+    end:
+      snippet: '---'
+      line_hint: 558
+  status: pending
+- pending_id: b2c89c910bec7b8e
+  file: Mathemetical_Modeling/DBMC.md
+  kind: heading
+  name: 4. 一句话总结
+  range:
+    start:
+      snippet: '## 4. 一句话总结'
+      line_hint: 560
+    end:
+      snippet: '**最优性割用凸函数的一阶条件（切线是下界）来“托底”目标函数，可行性割用 0 来“划线”约束边界。两者都是用线性近似来处理非线性问题，但一个针对目标，一个针对'
+      line_hint: 562
+  status: pending
+- pending_id: 16664cd427328896
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: $L
+  range:
+    start:
+      snippet: 所以对任意可行 $x$，$L(x, \lambda, \mu) \leq f(x)$。
+      line_hint: 44
+    end:
+      snippet: ''
+      line_hint: 47
+  status: pending
+- pending_id: 6f38d5e3bc5410a5
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: $p^*$
+  range:
+    start:
+      snippet: 其中 $p^*$ 是原问题的最优值（最小值）。
+      line_hint: 82
+    end:
+      snippet: ''
+      line_hint: 87
+  status: pending
+- pending_id: b896961bba7adac8
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**这就'
+  range:
+    start:
+      snippet: '**这就是对偶函数给出下界的根本原因**。'
+      line_hint: 84
+    end:
+      snippet: ''
+      line_hint: 87
+  status: pending
+- pending_id: 8f86c621fc3bc6f9
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: \lambda
+  range:
+    start:
+      snippet: L(x, \lambda) = x^2 + \lambda (x - 2), \quad \lambda \geq 0
+      line_hint: 102
+    end:
+      snippet: $$
+      line_hint: 103
+  status: pending
+- pending_id: d82cf5a57ce1f1d6
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 那最紧的下界
+  range:
+    start:
+      snippet: 既然 $d(\lambda, \mu)$ 给出了原问题的下界，那最紧的下界是什么？就是最大化 $d(\lambda, \mu)$。
+      line_hint: 124
+    end:
+      snippet: ''
+      line_hint: 137
+  status: pending
+- pending_id: c1140ae8f19f0be7
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**弱对偶'
+  range:
+    start:
+      snippet: '**弱对偶 (Weak Duality)**：'
+      line_hint: 140
+    end:
+      snippet: $$
+      line_hint: 143
+  status: pending
+- pending_id: 941ff5c7065c3000
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**强对偶'
+  range:
+    start:
+      snippet: '**强对偶 (Strong Duality)**：'
+      line_hint: 147
+    end:
+      snippet: $$
+      line_hint: 150
+  status: pending
+- pending_id: 7a6e02f9c2165356
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 的核心机制**就
+  range:
+    start:
+      snippet: 现在你理解了对偶函数为什么能给出下界。**GBD 的核心机制**就是：
+      line_hint: 172
+    end:
+      snippet: 4. 最终主问题的下界（LB）和子问题的上界（UB）相等，收敛到最优解
+      line_hint: 176
+  status: pending
+- pending_id: 6c9a51a9ffd6db9d
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 最终主问题的下界
+  range:
+    start:
+      snippet: 4. 最终主问题的下界（LB）和子问题的上界（UB）相等，收敛到最优解
+      line_hint: 176
+    end:
+      snippet: ''
+      line_hint: 184
+  status: pending
+- pending_id: d70081797cba8bbf
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 接下来我要回答的
+  range:
+    start:
+      snippet: 好的，我们接续上一节。现在你已经理解了**对偶函数为什么能给出下界**，以及**强对偶为什么能让下界等于最优值**。接下来我要回答的是：**GBD
+        如何利用这个
+      line_hint: 181
+    end:
+      snippet: ''
+      line_hint: 184
+  status: pending
+- pending_id: 7e80fb47f1fdc00b
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 在这一步中
+  range:
+    start:
+      snippet: 其中 \( \bar{y} \) 是主问题给定的一个具体值，在这一步中是**固定的常数**。
+      line_hint: 203
+    end:
+      snippet: ''
+      line_hint: 204
+  status: pending
+- pending_id: ed3f5a5f54b1c948
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 如果子问题
+  range:
+    start:
+      snippet: 如果子问题是凸的，且强对偶成立，那么存在 \( u^* \) 使得：
+      line_hint: 224
+    end:
+      snippet: \]
+      line_hint: 227
+  status: pending
+- pending_id: d96788e523098ea3
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 我们现在固定的
+  range:
+    start:
+      snippet: 我们现在固定的是 \( \bar{y} \)，求得了最优解 \( x^* \) 和最优乘子 \( u^* \)。
+      line_hint: 231
+    end:
+      snippet: ''
+      line_hint: 248
+  status: pending
+- pending_id: e17704c1aed605b3
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 现在的问题
+  range:
+    start:
+      snippet: 现在的问题是：**对于其他任意的 \( y \)，我们能不能用这些信息来估计子问题的最优值？**
+      line_hint: 233
+    end:
+      snippet: ''
+      line_hint: 248
+  status: pending
+- pending_id: 803923368fe116a5
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 答案
+  range:
+    start:
+      snippet: 答案是**能**。因为拉格朗日函数对 \( y \) 也是凸的（假设原问题是凸的），所以有：
+      line_hint: 235
+    end:
+      snippet: ''
+      line_hint: 248
+  status: pending
+- pending_id: b5938ae40db8549d
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: ^T
+  range:
+    start:
+      snippet: f(x^*, y) + u^{*T} g(x^*, y) \geq f(x^*, \bar{y}) + u^{*T} g(x^*, \bar{y})
+        + \na
+      line_hint: 238
+    end:
+      snippet: \]
+      line_hint: 239
+  status: pending
+- pending_id: d9b0045598d41f67
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**这个不等式的含义'
+  range:
+    start:
+      snippet: '**这个不等式的含义是**：'
+      line_hint: 255
+    end:
+      snippet: '- 所以它给出了**一个下界**'
+      line_hint: 259
+  status: pending
+- pending_id: a27b166b618213b0
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 右边
+  range:
+    start:
+      snippet: '- 右边是一个线性函数（关于 \( y \) 的线性函数）'
+      line_hint: 257
+    end:
+      snippet: '- 所以它给出了**一个下界**'
+      line_hint: 259
+  status: pending
+- pending_id: d59a559a52d0de89
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: L_s
+  range:
+    start:
+      snippet: L_s(x, s, u) = s + u^T (g(x, \bar{y}) - s)
+      line_hint: 292
+    end:
+      snippet: \]
+      line_hint: 293
+  status: pending
+- pending_id: dcd7adc1fe90b9d4
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 这个约束
+  range:
+    start:
+      snippet: '- 这个约束是从当前不可行的 \( \bar{y} \) 推导出来的'
+      line_hint: 305
+    end:
+      snippet: '- **"切掉"** 所有会导致类似不可行性的 \( y \) 值'
+      line_hint: 306
+  status: pending
+- pending_id: ee37c2a3a02d2d28
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 主问题的可行域
+  range:
+    start:
+      snippet: 4. 主问题的可行域是**紧集**（有界闭集），且割的数目有限（或可数无限）
+      line_hint: 354
+    end:
+      snippet: 5. 当 \( LB \) 和 \( UB \) 收敛到同一值时，找到了**全局最优解**
+      line_hint: 355
+  status: pending
+- pending_id: 397b6f5e0eb0360d
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 函数图像
+  range:
+    start:
+      snippet: '**几何意义**：函数图像上任意两点之间的连线（弦），始终位于函数图像的上方。换句话说，函数图像是“向下凸”的，像一个碗。'
+      line_hint: 391
+    end:
+      snippet: ''
+      line_hint: 394
+  status: pending
+- pending_id: 0d2df5b96b9cec21
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**这个不等式的意思'
+  range:
+    start:
+      snippet: '**这个不等式的意思是**：'
+      line_hint: 403
+    end:
+      snippet: '- 也就是说，**一阶近似是原函数的一个全局下界**'
+      line_hint: 406
+  status: pending
+- pending_id: 6888c2bf8c02472a
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 也就
+  range:
+    start:
+      snippet: '- 也就是说，**一阶近似是原函数的一个全局下界**'
+      line_hint: 406
+    end:
+      snippet: ''
+      line_hint: 411
+  status: pending
+- pending_id: 227afc9c267d59b7
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: \Rightarrow
+  range:
+    start:
+      snippet: '- 对于任意 \( y \)，验证：\( y^2 \ge 2y - 1 \Rightarrow (y - 1)^2 \ge 0 \)，永远成立'
+      line_hint: 451
+    end:
+      snippet: ''
+      line_hint: 458
+  status: pending
+- pending_id: b54f7b447b07ddf0
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 保证最优性割
+  range:
+    start:
+      snippet: '| **在 GBD 中的作用** | 保证最优性割是有效的下界，不低估真实最优值 |'
+      line_hint: 486
+    end:
+      snippet: ''
+      line_hint: 498
+  status: pending
+- pending_id: c5b2939213d4ec53
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 它们的关系
+  range:
+    start:
+      snippet: 它们的关系是：**两者都是 GBD 中“用一阶近似构造线性约束”这一核心思想的体现，但应用的对象不同。**
+      line_hint: 495
+    end:
+      snippet: ''
+      line_hint: 498
+  status: pending
+- pending_id: ffadbb198c1c2941
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 最优性割的推导对象
+  range:
+    start:
+      snippet: 最优性割的推导对象是**目标函数**（或更准确地说，拉格朗日函数）：
+      line_hint: 501
+    end:
+      snippet: ''
+      line_hint: 518
+  status: pending
+- pending_id: b422697da0add895
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 因此其一阶泰勒展开
+  range:
+    start:
+      snippet: 即**拉格朗日函数（作为 y 的函数，且固定 \( x^* \) 时）是凸的，因此其一阶泰勒展开是全局下界**。这保证了最优性割的右边不会高估真实的子问题目标值
+      line_hint: 515
+    end:
+      snippet: ''
+      line_hint: 518
+  status: pending
+- pending_id: d18a2d2ab7e3ef9c
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 可行性割的推导对象
+  range:
+    start:
+      snippet: 可行性割的推导对象是**约束函数**：
+      line_hint: 521
+    end:
+      snippet: ''
+      line_hint: 532
+  status: pending
+- pending_id: 0172de24b56d99ab
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: '**这里的“0”就'
+  range:
+    start:
+      snippet: '**这里的“0”就是原约束 \( g(x,y) \le 0 \) 的右侧边界。**'
+      line_hint: 527
+    end:
+      snippet: ''
+      line_hint: 532
+  status: pending
+- pending_id: ee9d1468e00fcf6e
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 可行性割的本质
+  range:
+    start:
+      snippet: '可行性割的本质是：用约束函数的一阶近似（在不可行点处线性化），把这个近似约束强行压低到 0 以下，从而“切掉”主问题中那些会导致子问题不可行的
+        \( y \) '
+      line_hint: 529
+    end:
+      snippet: ''
+      line_hint: 532
+  status: pending
+- pending_id: dc71aed3685c96ca
+  file: Mathemetical_Modeling/DBMC.md
+  kind: definition
+  name: 切线
+  range:
+    start:
+      snippet: '**最优性割用凸函数的一阶条件（切线是下界）来“托底”目标函数，可行性割用 0 来“划线”约束边界。两者都是用线性近似来处理非线性问题，但一个针对目标，一个针对'
+      line_hint: 562
+    end:
+      snippet: '**最优性割用凸函数的一阶条件（切线是下界）来“托底”目标函数，可行性割用 0 来“划线”约束边界。两者都是用线性近似来处理非线性问题，但一个针对目标，一个针对'
+      line_hint: 562
+  status: pending
+- pending_id: 57466ec39ab13b95
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 一、OPF问题的数学定义——为什么需要这个框架？
+  range:
+    start:
+      snippet: '## 一、OPF问题的数学定义——为什么需要这个框架？'
+      line_hint: 5
+    end:
+      snippet: '---'
+      line_hint: 28
+  status: pending
+- pending_id: 5bf42ac56377aab4
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 1. 通用OPF标准型（Part I, Sec. 2.2, Eq. h）
+  range:
+    start:
+      snippet: '### 1. 通用OPF标准型（Part I, Sec. 2.2, Eq. h）'
+      line_hint: 7
+    end:
+      snippet: '---'
+      line_hint: 28
+  status: pending
+- pending_id: c63d1d3b1f3e5b3b
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 二、等式约束——潮流方程为什么长这样？
+  range:
+    start:
+      snippet: '## 二、等式约束——潮流方程为什么长这样？'
+      line_hint: 30
+    end:
+      snippet: '---'
+      line_hint: 90
+  status: pending
+- pending_id: 443d7d8a8cdba76c
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 2. 交流潮流方程——极坐标形式（Part I, Sec. 2.5, Eq. 1-2）
+  range:
+    start:
+      snippet: '### 2. 交流潮流方程——极坐标形式（Part I, Sec. 2.5, Eq. 1-2）'
+      line_hint: 32
+    end:
+      snippet: '---'
+      line_hint: 54
+  status: pending
+- pending_id: cbc6a28478b2c32e
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 3. 交流潮流方程——直角坐标形式（Part I, Sec. 2.5, Eq. 4）
+  range:
+    start:
+      snippet: '### 3. 交流潮流方程——直角坐标形式（Part I, Sec. 2.5, Eq. 4）'
+      line_hint: 56
+    end:
+      snippet: '---'
+      line_hint: 70
+  status: pending
+- pending_id: 34549c33969a3b30
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 4. 直流潮流方程——为什么可以做线性化？（Part I, Sec. 2.5, Eq. 5和Eq. 7）
+  range:
+    start:
+      snippet: '### 4. 直流潮流方程——为什么可以做线性化？（Part I, Sec. 2.5, Eq. 5和Eq. 7）'
+      line_hint: 72
+    end:
+      snippet: '---'
+      line_hint: 90
+  status: pending
+- pending_id: d9b70bb91c564f1a
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 三、目标函数的来源——为什么用二次函数？
+  range:
+    start:
+      snippet: '## 三、目标函数的来源——为什么用二次函数？'
+      line_hint: 92
+    end:
+      snippet: '---'
+      line_hint: 109
+  status: pending
+- pending_id: acb92a4a21cba94f
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 5. 发电总成本最小化（Part I, Sec. 2.4）
+  range:
+    start:
+      snippet: '### 5. 发电总成本最小化（Part I, Sec. 2.4）'
+      line_hint: 94
+    end:
+      snippet: '---'
+      line_hint: 109
+  status: pending
+- pending_id: 490fdcd2b986a52a
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 四、求解算法中的关键公式
+  range:
+    start:
+      snippet: '## 四、求解算法中的关键公式'
+      line_hint: 111
+    end:
+      snippet: '---'
+      line_hint: 161
+  status: pending
+- pending_id: 3f6981ab8ce723c7
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 6. 牛顿法搜索方向（Part I, Sec. 4.2）
+  range:
+    start:
+      snippet: '### 6. 牛顿法搜索方向（Part I, Sec. 4.2）'
+      line_hint: 113
+    end:
+      snippet: '---'
+      line_hint: 127
+  status: pending
+- pending_id: 85ff858df76792b8
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 7. 内点法的障碍函数（Part I, Sec. 4.6）
+  range:
+    start:
+      snippet: '### 7. 内点法的障碍函数（Part I, Sec. 4.6）'
+      line_hint: 129
+    end:
+      snippet: '---'
+      line_hint: 143
+  status: pending
+- pending_id: b47eb3a14cfde4b8
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 8. 内点法的KKT条件（来自引用文献）
+  range:
+    start:
+      snippet: '### 8. 内点法的KKT条件（来自引用文献）'
+      line_hint: 145
+    end:
+      snippet: '---'
+      line_hint: 161
+  status: pending
+- pending_id: 2a52682582a4f018
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 五、非确定性/启发式算法中的公式
+  range:
+    start:
+      snippet: '## 五、非确定性/启发式算法中的公式'
+      line_hint: 163
+    end:
+      snippet: '---'
+      line_hint: 244
+  status: pending
+- pending_id: 7497f0a89104f679
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 9. 粒子群优化（PSO）的速度与位置更新（Part II, Sec. 2.6）
+  range:
+    start:
+      snippet: '### 9. 粒子群优化（PSO）的速度与位置更新（Part II, Sec. 2.6）'
+      line_hint: 165
+    end:
+      snippet: '---'
+      line_hint: 189
+  status: pending
+- pending_id: a115e2ded278fb93
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 10. 模拟退火接受概率（Part II, Sec. 2.7）
+  range:
+    start:
+      snippet: '### 10. 模拟退火接受概率（Part II, Sec. 2.7）'
+      line_hint: 191
+    end:
+      snippet: '---'
+      line_hint: 203
+  status: pending
+- pending_id: 11c99c408a293c09
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 11. 差分进化（DE）的变异与交叉
+  range:
+    start:
+      snippet: '### 11. 差分进化（DE）的变异与交叉'
+      line_hint: 205
+    end:
+      snippet: '---'
+      line_hint: 232
+  status: pending
+- pending_id: 856ceab881fdb359
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 12. 遗传算法轮盘赌选择（Part II, Sec. 2.5.4）
+  range:
+    start:
+      snippet: '### 12. 遗传算法轮盘赌选择（Part II, Sec. 2.5.4）'
+      line_hint: 234
+    end:
+      snippet: '---'
+      line_hint: 244
+  status: pending
+- pending_id: 893d1bd620fadc9e
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 六、风险管理中的公式
+  range:
+    start:
+      snippet: '## 六、风险管理中的公式'
+      line_hint: 246
+    end:
+      snippet: '---'
+      line_hint: 263
+  status: pending
+- pending_id: b0d19d6e65a1578e
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 13. 条件风险价值（CVaR）
+  range:
+    start:
+      snippet: '### 13. 条件风险价值（CVaR）'
+      line_hint: 248
+    end:
+      snippet: '---'
+      line_hint: 263
+  status: pending
+- pending_id: f074ae0029b345d3
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: heading
+  name: 总结：这些公式是从哪里来的、解决什么问题的？
+  range:
+    start:
+      snippet: '## 总结：这些公式是从哪里来的、解决什么问题的？'
+      line_hint: 265
+    end:
+      snippet: 如果需要对某个公式的具体推导过程或更多引用文献做深入了解，欢迎继续提问。
+      line_hint: 280
+  status: pending
+- pending_id: 8fc3fb45933ff6a3
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 这个形式来自**非线性规划
+  range:
+    start:
+      snippet: '**公式来源**：这个形式来自**非线性规划（NLP）的通用数学表达**。1962年，法国电力公司的工程师Carpentier首次将电力系统调度问题映射到这个框'
+      line_hint: 17
+    end:
+      snippet: ''
+      line_hint: 29
+  status: pending
+- pending_id: ac8c7330f3051238
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 电力系统调度本质上
+  range:
+    start:
+      snippet: '**为什么要用这个形式？** 电力系统调度本质上是一个**有约束的最优化问题**：你要在满足物理定律（等式约束）和安全边界（不等式约束）的前提下，找到最优的操作'
+      line_hint: 19
+    end:
+      snippet: ''
+      line_hint: 29
+  status: pending
+- pending_id: 46b5041b58a6b73e
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: '`f'
+  range:
+    start:
+      snippet: '- `f(u,x)` = 目标函数（你要优化的指标：发电总成本、网损等）'
+      line_hint: 24
+    end:
+      snippet: '- `h(u,x)≤0` = 不等式约束（发电机极限、电压限值、线路容量等）'
+      line_hint: 26
+  status: pending
+- pending_id: cd5a670084f18dd0
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: '`g'
+  range:
+    start:
+      snippet: '- `g(u,x)=0` = 等式约束（核心是**潮流方程**——基尔霍夫定律的数学表达）'
+      line_hint: 25
+    end:
+      snippet: '- `h(u,x)≤0` = 不等式约束（发电机极限、电压限值、线路容量等）'
+      line_hint: 26
+  status: pending
+- pending_id: fe45422f4e98f2e3
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: '`h'
+  range:
+    start:
+      snippet: '- `h(u,x)≤0` = 不等式约束（发电机极限、电压限值、线路容量等）'
+      line_hint: 26
+    end:
+      snippet: ''
+      line_hint: 29
+  status: pending
+- pending_id: 7e11e7dc4b95933c
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 这个方程组的源头
+  range:
+    start:
+      snippet: '**公式来源**：这个方程组的源头是**基尔霍夫定律**和**复功率定义**。1960年代电力系统潮流计算的开创性工作确立了它的形式。Dommel和Tinney'
+      line_hint: 42
+    end:
+      snippet: ''
+      line_hint: 55
+  status: pending
+- pending_id: 49491914e406a810
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 这个节点的电压
+  range:
+    start:
+      snippet: '**为什么要用极坐标？** 电力系统运行人员习惯用电压幅值（标幺值）和相角（度）来监控系统，物理意义直观。你能直接从计算结果中看出"这个节点的电压是多少、相角偏'
+      line_hint: 44
+    end:
+      snippet: ''
+      line_hint: 55
+  status: pending
+- pending_id: d28653a4768994f5
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 节点`i`的电压幅值和相角——这
+  range:
+    start:
+      snippet: '- `|V_i|, δ_i` = 节点`i`的电压幅值和相角——这是要求解的**状态变量**'
+      line_hint: 48
+    end:
+      snippet: '- `|Y_ik|, θ_ik` = 节点导纳矩阵元素的幅值和相角——代表电网的**物理结构**'
+      line_hint: 50
+  status: pending
+- pending_id: fb2c11b397e8d46d
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 导致方程
+  range:
+    start:
+      snippet: '**为什么这个方程重要？** 它包含了电压乘积（`|V_i||V_k|`）和三角函数（`cos(·)`）同时存在，导致方程是**非线性的**。这就是为什么OPF'
+      line_hint: 52
+    end:
+      snippet: ''
+      line_hint: 55
+  status: pending
+- pending_id: eb7f2579fa59aeb6
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 而不
+  range:
+    start:
+      snippet: '**为什么要用直角坐标？** 这种形式**没有三角函数**，海森矩阵（二阶导数矩阵）是常数。在**内点法**中，这意味着海森矩阵只需要计算一次，而不是每次迭代都'
+      line_hint: 68
+    end:
+      snippet: ''
+      line_hint: 71
+  status: pending
+- pending_id: 25c90706ad27abec
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 交流潮流
+  range:
+    start:
+      snippet: '**为什么要用DC潮流？** 交流潮流是非线性的，求解慢。对于**电力市场出清**这类需要快速计算的场景，把非线性问题变成**线性问题**，求解速度可以提升几个'
+      line_hint: 86
+    end:
+      snippet: ''
+      line_hint: 91
+  status: pending
+- pending_id: 70e72e720e975eda
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: '**代价'
+  range:
+    start:
+      snippet: '**代价是什么？** 牺牲了精度——忽略无功功率和网损。如果用于精确分析，在某些线路上误差可能达到10%以上。'
+      line_hint: 88
+    end:
+      snippet: ''
+      line_hint: 91
+  status: pending
+- pending_id: 9078d22fa5143a70
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 这个二次函数形式来自**经济调度
+  range:
+    start:
+      snippet: '**公式来源**：这个二次函数形式来自**经济调度（Economic Dispatch）**的经典问题。每台发电机发一度电的成本不同，在接近满负荷时效率会下降、'
+      line_hint: 100
+    end:
+      snippet: ''
+      line_hint: 110
+  status: pending
+- pending_id: 98b1417fcac8d1de
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 而且**凸性**保证了优化问题有唯一最优解——这
+  range:
+    start:
+      snippet: '**为什么要用二次函数？** 它足够逼近真实的成本曲线，而且**凸性**保证了优化问题有唯一最优解——这是数学上非常理想的性质。'
+      line_hint: 102
+    end:
+      snippet: ''
+      line_hint: 110
+  status: pending
+- pending_id: 9bb476db966bc5a8
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 收敛速度
+  range:
+    start:
+      snippet: '**为什么要用牛顿法？** 它利用**二阶导数信息**（海森矩阵），收敛速度是**二次的**——一旦接近最优解，误差会以平方的速度缩小。代价是计算海森矩阵及其逆'
+      line_hint: 121
+    end:
+      snippet: ''
+      line_hint: 128
+  status: pending
+- pending_id: d6971986e7c54767
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: '`∇f'
+  range:
+    start:
+      snippet: '- `∇f(x_k)` = 目标函数在当前点的梯度（一阶导数），告诉你应该往哪个方向走才能下降最快'
+      line_hint: 124
+    end:
+      snippet: '- `H(x_k)` = 海森矩阵（二阶导数），告诉你这个方向该走多大步'
+      line_hint: 125
+  status: pending
+- pending_id: 40c2e76a8ca366f2
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: Fiacco和McCormick在1968年提出的障碍方法思想
+  range:
+    start:
+      snippet: '**公式来源**：Karmarkar在1984年开创了内点法用于线性规划的先河；Granville在1994年将其首次应用于OPF。Fiacco和McCormi'
+      line_hint: 135
+    end:
+      snippet: ''
+      line_hint: 144
+  status: pending
+- pending_id: bb92f88f620039b6
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 传统的牛顿法需要先识别哪些不等式约束
+  range:
+    start:
+      snippet: '**为什么要用内点法？** 传统的牛顿法需要先识别哪些不等式约束是"起作用"的（在最优解处恰好取等号），然后才能处理。这是一个搜索过程，效率不高。内点法通过**'
+      line_hint: 137
+    end:
+      snippet: ''
+      line_hint: 144
+  status: pending
+- pending_id: d5d8aa8ca1d2ea25
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 内点法的核心是求解KKT
+  range:
+    start:
+      snippet: 内点法的核心是求解KKT（Karush-Kuhn-Tucker）条件：
+      line_hint: 147
+    end:
+      snippet: ''
+      line_hint: 162
+  status: pending
+- pending_id: b7e3d9cdb8837ac2
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 被松弛为`diag
+  range:
+    start:
+      snippet: '**公式来源**：这是**KKT条件**——约束优化问题的最优性必要条件。在内点法中，第三个条件（互补松弛条件）被松弛为`diag(h(x))ω
+        = μ·1`，'
+      line_hint: 157
+    end:
+      snippet: ''
+      line_hint: 162
+  status: pending
+- pending_id: d112a00d3144c859
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: r_1
+  range:
+    start:
+      snippet: v_i^{k+1} = w \cdot v_i^k + c_1 r_1 (pbest_i^k - x_i^k) + c_2 r_2 (gbest^k
+        - x_i
+      line_hint: 169
+    end:
+      snippet: $$
+      line_hint: 170
+  status: pending
+- pending_id: 7d979facfee50341
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 交流OPF
+  range:
+    start:
+      snippet: '**为什么要用PSO？** 交流OPF是**非凸**的，可能存在多个局部最优解。确定性算法（如牛顿法、内点法）只能保证找到局部最优。PSO不依赖梯度信息，通过多'
+      line_hint: 179
+    end:
+      snippet: ''
+      line_hint: 190
+  status: pending
+- pending_id: b8a72572e00d61ec
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 这是遗传算法
+  range:
+    start:
+      snippet: '**公式来源**：这是遗传算法（GA）的标准选择策略。Haupt（2004）和Tang与Kwong（1999）提供了GA的理论基础。'
+      line_hint: 240
+    end:
+      snippet: ''
+      line_hint: 245
+  status: pending
+- pending_id: 5651998443cebe26
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: \max
+  range:
+    start:
+      snippet: \text{CVaR}_{\alpha} = \frac{1}{1-\alpha} \sum_{s=1}^{S} \max(l_s -
+        \text{VaR}_{
+      line_hint: 251
+    end:
+      snippet: $$
+      line_hint: 252
+  status: pending
+- pending_id: 6ef11f47fff2b0c8
+  file: Mathemetical_Modeling/SRP/ACOPF.md
+  kind: definition
+  name: 如果你的目标
+  range:
+    start:
+      snippet: '**为什么要用CVaR？** 如果你的目标是"平均成本最小"，你可能会忽视极端情况下的巨大损失。CVaR关注的是**最坏的`1-α`情形**下的平均损失，帮助你'
+      line_hint: 256
+    end:
+      snippet: ''
+      line_hint: 264
   status: pending
 - pending_id: 7682c9ad0268d22e
   file: PBT.md
