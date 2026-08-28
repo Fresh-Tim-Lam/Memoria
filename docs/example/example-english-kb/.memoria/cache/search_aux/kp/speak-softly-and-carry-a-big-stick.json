@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "speak-softly-and-carry-a-big-stick",
+  "source_fingerprint": "5765164d678170e0a156a3d95eca0364",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "speak-softly-and-carry-a-big-stick"
+  ],
+  "key_phrases": [
+    "advance",
+    "sth",
+    "in advance of sth"
+  ],
+  "summary_1l": "in advance of sth",
+  "query_hits": [],
+  "embed_text": "speak-softly-and-carry-a-big-stick speak softly and carry a big stick 英语短语 外交典故 大棒政策 speak-softly-and-carry-a-big-stick advance sth in advance of sth in advance of sth in advance of sth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:25.654684+00:00"
+}

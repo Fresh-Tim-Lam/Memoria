@@ -93,7 +93,7 @@ window.MemoriaParser = (function () {
       if (tok.type === "image_open") {
         var imgEnd = findClose(tokens, i, "image_close");
         if (imgEnd !== -1) {
-          result.push(AST.image(tok.value, tokens[imgEnd].value));
+          result.push(AST.image(tok.value, tokens[imgEnd].value, tokens[imgEnd].title));
           i = imgEnd + 1;
         } else {
           result.push(AST.text("![" + tok.value));
@@ -377,7 +377,7 @@ window.MemoriaParser = (function () {
 
       // ── 图片（单独一行） ──
       if (tokens.length === 2 && tokens[0].type === "image_open" && tokens[1].type === "image_close") {
-        blocks.push(AST.image(tokens[0].value, tokens[1].value));
+        blocks.push(AST.image(tokens[0].value, tokens[1].value, tokens[1].title));
         i++;
         continue;
       }

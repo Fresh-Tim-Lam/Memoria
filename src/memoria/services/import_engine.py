@@ -67,7 +67,10 @@ def parse_flat_file(content: str, source_name: str = "") -> list[ImportSection]:
     """将平面文件内容解析为 ImportSection 列表。
 
     使用状态机在 ``---`` 行之间切换 frontmatter / body。
+    自动剥离首/尾 Markdown 代码围栏（角色 A 手册允许用 ```text 包裹
+    平面文件内容展示；导入时若原样粘贴，围栏不应混入正文）。
     """
+    content = _normalize_flat_content(content)
     lines = content.splitlines()
     sections: list[ImportSection] = []
 
@@ -114,6 +117,91 @@ def parse_flat_file(content: str, source_name: str = "") -> list[ImportSection]:
         sections.append(_build_section(fm_lines, body_lines, source_name, seg_idx))
 
     return sections
+
+
+def _normalize_flat_content(content: str) -> str:
+    """规范化导入前的平面文件内容：
+
+    1. 提取包裹用代码围栏（``` / ```text）块并拼接——角色 A 手册允许把
+       平面文件放在代码块中输出，分批交付时每批各包一个围栏、批间夹杂
+       对话/进度标记；此时平面文件 = 所有包裹围栏块内容的拼接，围栏外的
+       总览表、批次标记、对话均为噪音。正文内部语言标记代码块（```python
+       等）不属于包裹围栏，原样保留。
+    2. 丢弃第一个独立 ``---`` 之前的全部前置内容（纯文本场景的总览表/链接表）。
+    3. 若末尾残留包裹用代码围栏收标记 `` ``` ``（``` 计数为奇数，说明它是
+       未配对的包裹围栏而非正文代码块），去掉它，避免混入最后一段 body。
+    """
+    extracted = _extract_wrapper_blocks(content)
+    if extracted is not None:
+        content = extracted
+
+    lines = content.splitlines()
+
+    # 1) 丢弃第一个 --- 之前的前置内容
+    first_sep = next(
+        (i for i, l in enumerate(lines) if l.strip() == "---"), None
+    )
+    if first_sep is not None:
+        lines = lines[first_sep:]
+
+    # 2) 末尾代码围栏收标记（奇数计数 = 包裹围栏，非正文代码块）
+    if lines and lines[-1].strip() == "```":
+        fence_count = sum(1 for l in lines if l.strip() == "```")
+        if fence_count % 2 == 1:
+            lines.pop()
+
+    return "\n".join(lines)
+
+
+def _extract_wrapper_blocks(content: str) -> str | None:
+    """若内容含包裹用代码围栏（````` 或 ```text````），返回所有包裹块的拼接。
+
+    返回 None 表示不存在包裹围栏，应整体按纯文本处理。
+    注意：包裹围栏与正文代码块存在固有歧义（正文的裸 ``` 会提前关闭
+    包裹块），约定正文代码块使用语言标记围栏（```python 等）规避。
+    """
+    lines = content.splitlines()
+    out: list[str] = []
+    in_block = False
+    saw_wrapper = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith("```"):
+            lang = stripped[3:].strip().lower()
+            if not in_block:
+                if lang in ("", "text"):
+                    in_block = True
+                    saw_wrapper = True
+                else:
+                    out.append(line)  # 正文语言代码块开标记，保留
+            else:
+                in_block = False
+        elif in_block:
+            out.append(line)
+        # 围栏外内容一律丢弃
+    if saw_wrapper:
+        return "\n".join(out)
+    return None
+
+
+def _normalize_import_path(path: str) -> str:
+    """规范化 frontmatter 的可选 `path` 字段（目标子目录，支持多级）。
+
+    - 统一正斜杠、去除首尾 `/`、压缩连续 `/`
+    - 拒绝绝对路径（盘符/UNC）与目录穿越（`..`），防止写出 KB 之外
+    """
+    raw = (path or "").strip()
+    if not raw:
+        return ""
+    if raw.startswith(("/", "\\")):  # 类 Unix 绝对路径 / 反斜杠根路径
+        raise ValueError(f"非法子目录路径: {path!r}（不允许绝对路径）")
+    raw = raw.replace("\\", "/")
+    segments = [seg for seg in raw.split("/") if seg and seg not in (".", "..")]
+    if segments != [seg for seg in raw.split("/") if seg]:
+        raise ValueError(f"非法子目录路径: {path!r}（不允许 .. 或空段）")
+    if ":" in segments[0]:  # 盘符路径（C:/...）
+        raise ValueError(f"非法子目录路径: {path!r}（不允许绝对路径）")
+    return "/".join(segments)
 
 
 def _build_section(
@@ -332,23 +420,27 @@ def execute_import(
             # 处理 body 中的 rename：替换 [[old_id]] 和 [[old_id|text]]
             body = _apply_renames_to_body(section.body, rename_map)
 
-            # 确定输出文件名
+            # 确定输出文件名（含可选子目录 path，支持多级文件夹组织）
             active_concepts = [c for c in concepts if isinstance(c, dict) and c.get("id") not in skip_ids]
             if active_concepts:
                 filename = active_concepts[0].get("id", "") + ".md"
             else:
                 filename = f"section-{section.segment_index}.md"
+            rel_dir = _normalize_import_path(section.frontmatter.get("path") or "")
+            rel_path = f"{rel_dir}/{filename}" if rel_dir else filename
 
-            # 写入 .md 文件
-            md_path = os.path.join(kb_path, filename)
-            md_content = compose_markdown(body, frontmatter)
+            # 写入 .md 文件（path 字段仅作为导入指令，不写入文档 frontmatter）
+            md_path = os.path.join(kb_path, rel_path)
+            os.makedirs(os.path.dirname(md_path), exist_ok=True)
+            out_fm = {k: v for k, v in frontmatter.items() if k != "path"}
+            md_content = compose_markdown(body, out_fm)
 
             with open(md_path, "w", encoding="utf-8") as f:
                 f.write(md_content)
             files_written += 1
 
-            # 自动生成 sidecar
-            sidecar_data = auto_generate_sidecar(filename, body, active_concepts)
+            # 自动生成 sidecar（镜像目录随 rel_path 自动落到 .memoria/sidecars/ 下）
+            sidecar_data = auto_generate_sidecar(rel_path, body, active_concepts)
             save_sidecar_for_md(md_path, kb_path, sidecar_data)
             sidecars_written += 1
 

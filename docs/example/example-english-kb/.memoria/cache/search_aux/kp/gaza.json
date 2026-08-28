@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "gaza",
+  "source_fingerprint": "4a766e27348b50581969a6ce56d4dcbd",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "cpc",
+    "ccp",
+    "辨析",
+    "cpc 与 ccp 辨析"
+  ],
+  "summary_1l": "CPC 与 CCP 辨析",
+  "query_hits": [],
+  "embed_text": "gaza Gaza 专有名词 地名 巴以地区 cpc ccp 辨析 cpc 与 ccp 辨析 CPC 与 CCP 辨析 CPC 与 CCP 辨析",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:25.223193+00:00"
+}

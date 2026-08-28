@@ -1,0 +1,92 @@
+schema_version: 1
+file: parody-account.md
+knowledge_points:
+- id: parody-account
+  name: parody account
+  range:
+    start:
+      snippet: '## parody account'
+    end:
+      snippet: 平台规则要求该类账号必须在简介中标注非官方身份，否则会被限流或封禁。
+  weight: 0.8
+  tags:
+  - 网络平台术语
+  - X平台
+  - 账号分类
+- id: commentary-account
+  name: commentary account
+  range:
+    start:
+      snippet: '## commentary account'
+    end:
+      snippet: 刷外网看到该类账号时，需注意内容为个人观点，不代表客观事实。
+  weight: 0.8
+  tags:
+  - 网络平台术语
+  - X平台
+  - 账号分类
+- id: fan-account
+  name: fan account
+  range:
+    start:
+      snippet: '## fan account'
+    end:
+      snippet: 该类账号立场偏向性强，内容以正向宣传和素材整理为主，通常不输出深度评论分析。
+  weight: 0.7
+  tags:
+  - 网络平台术语
+  - X平台
+  - 账号分类
+- id: spoof-account
+  name: spoof account
+  range:
+    start:
+      snippet: '## spoof account'
+    end:
+      snippet: 账号名称中常直接带有Spoof字样，用于提示自身非官方身份，例如截图中出现的RussianSpoof。
+  weight: 0.7
+  tags:
+  - 网络平台术语
+  - X平台
+  - 账号分类
+  - 同义术语
+links:
+- anchor_text: commentary-account
+  occurrence: 0
+  targets:
+  - commentary-account
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  source_id: parody-account
+- anchor_text: spoof-account
+  occurrence: 0
+  targets:
+  - spoof-account
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  source_id: parody-account
+- anchor_text: parody-account
+  occurrence: 0
+  targets:
+  - parody-account
+  edge_type: reference
+  instances:
+  - line: 9
+    wrapped: true
+  - line: 18
+    wrapped: true
+  source_id: commentary-account
+- anchor_text: fan-account
+  occurrence: 0
+  targets:
+  - fan-account
+  edge_type: reference
+  instances:
+  - line: 10
+    wrapped: true
+  source_id: commentary-account
+edges: []

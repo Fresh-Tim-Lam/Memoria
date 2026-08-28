@@ -122,6 +122,9 @@
         console.warn("[SYNC] 保存失败:", res.message);
       } else {
         syncLog("syncToDisk: 保存成功");
+        if (res.cleanedImages && res.cleanedImages.length) {
+          showFlashInfo(`已清理 ${res.cleanedImages.length} 张未使用图片：${res.cleanedImages.join("、")}`);
+        }
       }
     } catch (e) {
       console.warn("[SYNC] 保存异常:", e);
@@ -271,6 +274,20 @@
     el.innerHTML =
       `<div class="m0-flash-error-title">${esc(String(msg))}</div>` +
       (detail ? `<div class="m0-flash-error-detail">${esc(String(detail))}</div>` : "");
+    host.appendChild(el);
+    const fadeMs = 280;
+    const fadeTimer = window.setTimeout(() => el.classList.add("m0-flash-leaving"), duration);
+    const removeTimer = window.setTimeout(() => el.remove(), duration + fadeMs);
+    el._m0FlashTimers = [fadeTimer, removeTimer];
+  }
+
+  function showFlashInfo(msg, opts = {}) {
+    const host = $("#m0-flash-host");
+    if (!host || !msg) return;
+    const duration = opts.duration ?? 3800;
+    const el = document.createElement("div");
+    el.className = "m0-flash-info";
+    el.textContent = String(msg);
     host.appendChild(el);
     const fadeMs = 280;
     const fadeTimer = window.setTimeout(() => el.classList.add("m0-flash-leaving"), duration);
@@ -1482,6 +1499,166 @@
     setStatus("导入完成", `${result.files_written || 0} 文件 · ${kp} KP`);
   }
 
+  // ── 图片插入与管理（复制入库 .memoria/images/，阶段 D） ──────────
+
+  async function startInsertImage(insertAtLine) {
+    if (!state.kbPath) {
+      setStatus("请先打开知识库");
+      return;
+    }
+    if (!state.currentPath) {
+      setStatus("请先打开一个文档再插入图片");
+      return;
+    }
+    const local = await call("select_image_file");
+    if (!local) return;
+    const res = await call("import_image", local);
+    if (!res || res.status !== "ok") {
+      setStatusError("图片入库失败", (res && res.message) || "未知错误");
+      return;
+    }
+    const alt = String(res.name || "").replace(/\.[^.]+$/, "");
+    if (!insertSourceLine("![" + alt + "](" + res.relPath + ")", insertAtLine)) {
+      setStatusError("插入失败", "无法写入源码编辑器");
+      return;
+    }
+    setStatus("图片已入库", res.relPath);
+  }
+
+  /** 预览光标所在块的源码起始行（鼠标在预览区域编辑时定位插入点用） */
+  function previewCursorSourceLine() {
+    const preview = $("#preview");
+    const sel = window.getSelection();
+    if (!preview || !sel || !sel.rangeCount || !sel.anchorNode) return 0;
+    const node =
+      sel.anchorNode.nodeType === Node.TEXT_NODE
+        ? sel.anchorNode.parentElement
+        : sel.anchorNode;
+    const block = node && node.closest ? node.closest(".m0-src-block") : null;
+    if (!block || !preview.contains(block)) return 0;
+    return +(block.getAttribute("data-m0-src-line") || 0);
+  }
+
+  /** 在源码编辑器插入一个独占行（图片须独占一行才渲染），并入撤销栈 */
+  function insertSourceLine(text, lineNum) {
+    const editor = $("#editor");
+    if (!editor) return false;
+    const sel = window.getSelection();
+    let anchorLine = null;
+    if (sel && sel.rangeCount && sel.anchorNode) {
+      anchorLine = closestLineEl(sel.anchorNode);
+      if (!editor.contains(anchorLine)) anchorLine = null;
+    }
+    let baseLine = anchorLine;
+    // 指定行号优先（预览右键菜单已捕获的光标行）
+    if (!baseLine && lineNum > 0) baseLine = document.getElementById("line-" + lineNum);
+    // 预览光标兜底：鼠标在预览区域时，selection 锚点在预览 DOM 上
+    if (!baseLine) {
+      const pLine = previewCursorSourceLine();
+      if (pLine > 0) baseLine = document.getElementById("line-" + pLine);
+    }
+    if (!baseLine) {
+      const all = editor.querySelectorAll(".m0-line");
+      baseLine = all[all.length - 1] || null;
+    }
+    _srcPushBefore();
+    _srcCoalesceAt = 0;
+    const lastNum = baseLine ? +(baseLine.dataset.line || 0) : 0;
+    const newLineEl = document.createElement("div");
+    newLineEl.className = "m0-line";
+    newLineEl.dataset.line = String(lastNum + 1);
+    newLineEl.id = "line-" + (lastNum + 1);
+    const lineno = document.createElement("span");
+    lineno.className = "m0-lineno";
+    lineno.textContent = String(lastNum + 1);
+    const content = document.createElement("span");
+    content.className = "m0-line-content";
+    content.contentEditable = "true";
+    content.spellcheck = false;
+    content.tabIndex = -1;
+    content.textContent = text;
+    newLineEl.appendChild(lineno);
+    newLineEl.appendChild(content);
+    if (baseLine) baseLine.after(newLineEl);
+    else editor.appendChild(newLineEl);
+    renumberSourceLines();
+    _srcAfterEdit();
+    const r = document.createRange();
+    const node = content.firstChild;
+    r.setStart(node, node ? (node.nodeType === Node.TEXT_NODE ? node.textContent.length : 0) : 0);
+    r.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(r);
+    scheduleRenderSync();
+    markDirty();
+    return true;
+  }
+
+  /** 编辑光标是否真实位于预览区域（闪烁光标 = 可插入图片） */
+  function previewHasCaret() {
+    const EH = window.MemoriaEditHandler;
+    if (!EH || !EH.editMode) return false;
+    // 显式状态机（focusin / 预览区 mouseup / 模式与文件切换维护），
+    // 不依赖实时 selection 快照 —— 切换文件后 selection 可能残留旧预览位置，实时读取不可控
+    return !!EH._caretInPreview;
+  }
+
+  /** 图片插入按钮可用性：仅当文本光标位于预览区域时可点（否则灰色 disabled，不可点） */
+  function refreshImageInsertAvailability() {
+    const btn = $("#btn-insert-image");
+    if (btn) btn.disabled = !previewHasCaret();
+  }
+
+  /** 将新的行数组写回文档并重渲染（替换/删除图片用），整体入撤销栈 */
+  async function applyImageEditLines(lines) {
+    const body = lines.join("\n");
+    _srcPushBefore();
+    _srcCoalesceAt = 0;
+    state.doc.body = body;
+    state.doc.lines = lines;
+    state.doc.preview_body = null;
+    renderEditor(state.doc);
+    await renderPreview(state.doc);
+    _srcAfterEdit();
+    markDirty();
+  }
+
+  /** 预览区图片右键菜单：替换（换图保留 alt/title）/ 删除（仅删引用，磁盘文件保留） */
+  function showImageContextMenu(x, y, lineNum) {
+    showTreeContextMenu(x, y, [
+      { label: "替换图片", action: () => replaceImageAtLine(lineNum) },
+      { label: "删除图片（仅删引用）", danger: true, action: () => deleteImageAtLine(lineNum) },
+    ]);
+  }
+
+  async function replaceImageAtLine(lineNum) {
+    const local = await call("select_image_file");
+    if (!local) return;
+    const res = await call("import_image", local);
+    if (!res || res.status !== "ok") {
+      setStatusError("图片入库失败", (res && res.message) || "未知错误");
+      return;
+    }
+    const lines = (state.doc.body || "").split("\n");
+    const raw = lines[lineNum - 1] || "";
+    const m = raw.match(/^!\[([^\]]*)\]\(([^)\s]+)((?:\s+"[^"]*")?)\)/);
+    if (!m) {
+      setStatusError("替换失败", "该行不是标准图片语法");
+      return;
+    }
+    lines[lineNum - 1] = "![" + m[1] + "](" + res.relPath + (m[3] || "") + ")";
+    await applyImageEditLines(lines);
+    setStatus("图片已替换", res.relPath);
+  }
+
+  function deleteImageAtLine(lineNum) {
+    const lines = (state.doc.body || "").split("\n");
+    if (lineNum - 1 >= lines.length) return;
+    lines.splice(lineNum - 1, 1);
+    applyImageEditLines(lines);
+    setStatus("已删除图片引用（磁盘文件保留）");
+  }
+
   function renderImportConflictDialog(scanResult) {
     const body = $("#import-conflict-body");
     if (!body) return;
@@ -1972,6 +2149,9 @@
     }
     setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
+    // 切换文件：预览区是全新 DOM，旧文件的编辑光标不继承（selection 可能残留，显式清空）
+    if (window.MemoriaEditHandler) window.MemoriaEditHandler._caretInPreview = false;
+    refreshImageInsertAvailability();
     if (opts.restoreScroll) {
       // Tab switch: restore last scroll position instead of jumping to kp/line
       _restoreTabScroll();
@@ -2105,6 +2285,8 @@
     document.querySelectorAll(".m0-view-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.view === mode);
     });
+    // 视图切换后预览区可见性变化，刷新图片插入按钮的可用状态
+    refreshImageInsertAvailability();
     if (mode !== "source" && state.doc && !alreadyRendered) {
       await renderPreview(state.doc);
     }
@@ -2214,6 +2396,7 @@
   }
 
   let _renderingPreview = false;
+  let _renderPending = false;  // 全量渲染被重入保护跳过时置位，当前渲染完成后自动补一次
   var _blockLineMap = null;  // blockIndex → { startLine, endLine } (0-based)
 
   /**
@@ -2296,7 +2479,14 @@
 
   async function renderPreview(doc, options) {
     if (!doc || state.viewMode === "source") return;
-    if (_renderingPreview) { log("render", "skip: already rendering"); return; }
+    if (_renderingPreview) {
+      // 上次全量渲染未完成（含 await MathJax/Mermaid 挂起窗口）：
+      // 直接跳过会让"源码已更新但预览不刷新"（如预览区连续 Enter 拆行）。
+      // 置 pending，当前渲染完成后自动补一次渲染最新文档。
+      _renderPending = true;
+      log("render", "skip: already rendering → queue pending re-render");
+      return;
+    }
     _renderingPreview = true;
     const incremental = options?.incremental;
     const afterSync = options?.afterSync;
@@ -2391,6 +2581,12 @@
       showPreviewReport({ ok: false, messages: [String(e)] });
     }
     _renderingPreview = false;
+    // 渲染期间若有请求被重入保护跳过：补渲染一次最新文档，避免预览停留在旧内容
+    if (_renderPending) {
+      _renderPending = false;
+      log("render", "re-run queued render");
+      renderPreview(state.doc);
+    }
   }
 
   /**
@@ -2444,10 +2640,10 @@
    * 在 AST 解析前执行，确保 IMAGE block.url 是正确的服务端路径
    */
   function rewriteMdImagePaths(md) {
-    // 只处理相对路径图片 ![...](./...)
-    return md.replace(/!\[([^\]]*)\]\((\.[^\s)]+)\)/g, function (full, alt, src) {
+    // 只处理相对路径图片 ![...](./...)（可选 "title" 段）
+    return md.replace(/!\[([^\]]*)\]\((\.[^\s)]+)(\s+"[^"]*")?\)/g, function (full, alt, src, title) {
       if (typeof _rewriteImagePath === "function") {
-        return "![" + alt + "](" + _rewriteImagePath(src) + ")";
+        return "![" + alt + "](" + _rewriteImagePath(src) + (title || "") + ")";
       }
       return full;
     });
@@ -8139,6 +8335,7 @@
       hlog("applySnapshot cursor=" + _fmtCursor(snap.cursorAST) + " bodyLen=" + (snap.body ? snap.body.length : 0) + " | " + _stackDump());
       state.doc.body = snap.body;
       state.doc.lines = snap.body.split("\n");
+      state.doc.preview_body = null;  // 撤销/重做后 preview_body 缓存过期，必须清空否则渲染旧内容
       renderEditor(state.doc);
       renderPreview(state.doc).then(function () {
         hlog("applySnapshot done -> restoreCursor " + _fmtCursor(snap.cursorAST));
@@ -8296,6 +8493,7 @@
       var merged = rawLines.slice(0, startLine).concat(newLines, rawLines.slice(endLine + 1));
       state.doc.body = merged.join("\n");
       state.doc.lines = merged;
+      state.doc.preview_body = null;  // 本地编辑使 preview_body 缓存过期，必须清空否则渲染旧内容
       renderEditor(state.doc);
       renderPreview(state.doc).then(function () {
         restoreCursor(newCursor.blockIndex, newCursor.nodePath, newCursor.offset);
@@ -8543,6 +8741,54 @@
      * 拆分后全量重渲染并恢复光标到新块开头
      */
     function splitParagraph() {
+      // 图片块换行（光标停在 img 前/后）：不经过 getEditContext（图片块在
+      // NON_EDITABLE 中会被拦截），直接走专用路径——图片前→上方插空行，图片后→下方插空行
+      var EH2 = window.MemoriaEditHandler;
+      var imgCursor = (EH2 && EH2.cursorAST) || null;
+      if (imgCursor && imgCursor.blockIndex >= 0 && _doc && _doc.blocks &&
+          _doc.blocks[imgCursor.blockIndex] && _doc.blocks[imgCursor.blockIndex].type === "image" &&
+          (!imgCursor.nodePath || imgCursor.nodePath.length === 0)) {
+        var imgBlockIndex = imgCursor.blockIndex;
+        var imgBlock = _doc.blocks[imgBlockIndex];
+        var imgRange = (_blockLineMap && _blockLineMap[imgBlockIndex]) || null;
+        if (imgRange) {
+          var imgPreCursor = cloneCursor(imgCursor);
+          var imgNewLines;
+          var imgNewCursor;
+          // 用原始源码行（AST 中 image.url 已被绝对化为 /files/...，直接
+          // generateBlock 会把相对路径改写为绝对路径，污染源码）
+          var imgRawLine = (state.doc.lines && state.doc.lines[imgRange.startLine] != null)
+            ? state.doc.lines[imgRange.startLine]
+            : G.generateBlock(imgBlock);
+          if (imgCursor.offset > 0) {
+            // 图片右侧：下方插入空行，光标落空行
+            imgNewLines = [imgRawLine, ""];
+            imgNewCursor = { blockIndex: imgBlockIndex + 1, nodePath: [], offset: 0 };
+          } else {
+            // 图片左侧：上方插入空行，光标落空行（原图片块下移）
+            imgNewLines = ["", imgRawLine];
+            imgNewCursor = { blockIndex: imgBlockIndex, nodePath: [], offset: 0 };
+          }
+          hlog("splitParagraph image block pre=" + _fmtCursor(imgPreCursor) +
+            " new=" + _fmtCursor(imgNewCursor));
+          beginUndo("enter", imgPreCursor, true);
+          var imgRaw = (state.doc.body || "").split("\n");
+          var imgMerged = imgRaw.slice(0, imgRange.startLine)
+            .concat(imgNewLines, imgRaw.slice(imgRange.endLine + 1));
+          state.doc.body = imgMerged.join("\n");
+          state.doc.lines = imgMerged;
+          state.doc.preview_body = null;  // 本地编辑使 preview_body 缓存过期，必须清空否则渲染旧内容
+          renderEditor(state.doc);
+          renderPreview(state.doc).then(function () {
+            restoreCursor(imgNewCursor.blockIndex, imgNewCursor.nodePath, imgNewCursor.offset);
+          });
+          markDirty();
+          recordGroup("enter", imgNewCursor);
+          return true;
+        }
+        return false;
+      }
+
       var ctx = getEditContext();
       if (!ctx) return false;
       var block = ctx.block;
@@ -8637,6 +8883,7 @@
         .concat(newSrcLines, rawLines.slice(range.endLine + 1));
       state.doc.body = merged.join("\n");
       state.doc.lines = merged;
+      state.doc.preview_body = null;  // 本地编辑使 preview_body 缓存过期，必须清空否则渲染旧内容
       hlog("splitParagraph AFTER   cursor-line=" + (cursorLine + 1) +
         _fmtContextLines(merged, cursorLine, 4));
 
@@ -9335,13 +9582,29 @@
     const preview = $("#preview");
     if (!preview || !window.MemoriaLinkContextMenu) return;
     preview.addEventListener("contextmenu", (e) => {
+      // 图片右键：替换图片 / 删除图片（仅删引用）
+      const imgEl = e.target.closest("img.m0-preview-image");
+      if (imgEl) {
+        e.preventDefault();
+        const blockEl = imgEl.closest(".m0-image-block");
+        const lineNum = blockEl ? +(blockEl.getAttribute("data-m0-src-line") || 0) : 0;
+        if (lineNum > 0) {
+          e.stopPropagation();
+          showImageContextMenu(e.clientX, e.clientY, lineNum);
+        }
+        return;
+      }
       if (e.target.closest(".memoria-link, .m0-wikilink, a[href]")) return;
       if (!state.currentPath) return;
       const info = getSelectionInContainer(preview);
       if (!info) {
-        // 无选中文本（光标折叠）→ 提供「粘贴」
+        // 无选中文本（光标折叠）→ 提供「粘贴」「插入图片」
         if (!syncPreviewCursorForPaste()) return;
-        MemoriaLinkContextMenu.showForCursor(e, { onPaste: pasteAtCursor });
+        const insLine = previewCursorSourceLine();
+        MemoriaLinkContextMenu.showForCursor(e, {
+          onPaste: pasteAtCursor,
+          onInsertImage: () => startInsertImage(insLine || undefined),
+        });
         return;
       }
       // 捕获选区，供点击菜单项后（contenteditable 失焦）的样式编辑使用
@@ -11714,6 +11977,27 @@
     bindPointerDragHoverGuard();
     $("#btn-open").addEventListener("click", openKb);
     $("#btn-import").addEventListener("click", () => startImport());
+    $("#btn-insert-image").addEventListener("click", () => startInsertImage());
+    // 图片插入按钮：mousedown 阻止焦点从预览区转移（不触发 focusin 的禁用刷新）。
+    // 否则点击按钮的瞬间焦点离开预览区 → _caretInPreview=false → 按钮被禁用 → click 无法触发
+    // （焦点状态机下"点击即失效"的经典缺陷）。阻止聚焦后 focus 保持在预览区，
+    // 按钮保持可点，且预览区 selection 完好，插入位置定位（previewCursorSourceLine）不受影响。
+    $("#btn-insert-image").addEventListener("mousedown", (e) => {
+      if (e.button === 0) e.preventDefault();
+    });
+    // 文本光标位置变化时刷新按钮可用性（点击预览区/编辑器、方向键移动光标等都会触发）
+    document.addEventListener("selectionchange", refreshImageInsertAvailability);
+    // 焦点进入预览区 → 编辑光标真实存在于预览区（闪烁）→ 按钮可点；焦点离开（编辑器/文件树/弹窗等）→ 禁用。
+    // 以 focus 状态机驱动，不依赖 selection 快照：切换文件后 selection 残留旧位置也不会误判。
+    document.addEventListener("focusin", function (e) {
+      const EH2 = window.MemoriaEditHandler;
+      if (!EH2) return;
+      const t = e.target;
+      const inPreview = !!(t && t.nodeType === 1 && t.closest && t.closest("#preview"));
+      EH2._caretInPreview = inPreview && EH2.editMode;
+      refreshImageInsertAvailability();
+    });
+    refreshImageInsertAvailability();
     $("#btn-kb-close").addEventListener("click", () => closeKb());
     $("#btn-welcome-open").addEventListener("click", openKb);
     $("#btn-nav-back").addEventListener("click", navBack);
@@ -12022,6 +12306,8 @@
         e.preventDefault();
         e.stopPropagation();
         if (window.MemoriaEditHandler) MemoriaEditHandler.toggleEditMode();
+        // 编辑模式切换后立即刷新图片插入按钮可用性（不依赖 selectionchange 的后续触发）
+        refreshImageInsertAvailability();
       });
     }
     bindPreviewSelectionMenu();

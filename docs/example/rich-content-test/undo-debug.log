@@ -157,3 +157,1790 @@
 [15:30:28.993] [UNDO] resetHistory undo=0 redo=0
 [15:30:45.419] [UNDO] resetHistory undo=0 redo=0
 [17:28:29.774] [UNDO] resetHistory undo=0 redo=0
+[19:21:12.818] [UNDO] resetHistory undo=0 redo=0
+[19:21:44.499] [UNDO] resetHistory undo=0 redo=0
+[19:21:45.593] [UNDO] resetHistory undo=0 redo=0
+[19:21:54.413] [UNDO] resetHistory undo=0 redo=0
+[19:21:55.727] [UNDO] resetHistory undo=0 redo=0
+[19:21:56.858] [UNDO] resetHistory undo=0 redo=0
+[19:22:01.075] [UNDO] resetHistory undo=0 redo=0
+[19:22:03.139] [UNDO] resetHistory undo=0 redo=0
+[20:23:16.041] [UNDO] resetHistory undo=0 redo=0
+[21:00:08.618] [UNDO] resetHistory undo=0 redo=0
+[21:00:10.091] [UNDO] resetHistory undo=0 redo=0
+[21:00:24.107] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=6 | L1:6 [UNDO行一|#|# 图片渲染测试] new=bi=1 path=[0] off=0 | L2:0 [|U|NDO行二] srcLines=["UNDO行一", "## 图片渲染测试|"]
+[21:00:24.107] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=6 | L1:6 [UNDO行一|#|# 图片渲染测试] coalesce=false | undo=0 redo=0
+[21:00:24.107] [UNDO] recordUndo push pre=bi=0 path=[0] off=6 | L1:6 [UNDO行一|#|# 图片渲染测试] bodyLen=3882 | undo=1 redo=0
+[21:00:24.107] [UNDO] splitParagraph BEFORE  cursor-line=1
+>>> L1: "UNDO行一## 图片渲染测试|"
+    L2: "UNDO行二"
+    L3: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L4: ""
+    L5: ""
+[21:00:24.107] [UNDO] splitParagraph AFTER   cursor-line=1
+>>> L1: "UNDO行一"
+    L2: "## 图片渲染测试|"
+    L3: "UNDO行二"
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+[21:00:24.117] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|]
+[21:00:24.177] [UNDO] splitParagraph re-rendered blocks=146 block[1].type=heading items=-
+[21:00:24.177] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|]
+[21:00:24.177] [UNDO] restoreCursor bi=1 path=[0] off=0
+[11:14:21.613] [UNDO] resetHistory undo=0 redo=0
+[11:18:25.173] [UNDO] resetHistory undo=0 redo=0
+[11:18:30.057] [UNDO] undo NO-OP undo=0 redo=0
+[11:56:00.592] [UNDO] resetHistory undo=0 redo=0
+[11:56:48.192] [UNDO] resetHistory undo=0 redo=0
+[13:36:19.219] [UNDO] resetHistory undo=0 redo=0
+[15:15:07.477] [UNDO] resetHistory undo=0 redo=0
+[15:28:12.453] [UNDO] resetHistory undo=0 redo=0
+[15:29:30.333] [UNDO] resetHistory undo=0 redo=0
+[15:29:32.470] [UNDO] resetHistory undo=0 redo=0
+[15:39:18.299] [UNDO] resetHistory undo=0 redo=0
+[15:39:27.391] [UNDO] resetHistory undo=0 redo=0
+[15:39:28.555] [UNDO] resetHistory undo=0 redo=0
+[15:39:35.212] [UNDO] resetHistory undo=0 redo=0
+[15:53:57.673] [UNDO] resetHistory undo=0 redo=0
+[15:54:05.295] [UNDO] resetHistory undo=0 redo=0
+[15:54:05.981] [UNDO] resetHistory undo=0 redo=0
+[15:54:23.601] [UNDO] resetHistory undo=0 redo=0
+[15:54:24.492] [UNDO] resetHistory undo=0 redo=0
+[15:54:37.613] [UNDO] resetHistory undo=0 redo=0
+[15:54:39.458] [UNDO] resetHistory undo=0 redo=0
+[15:54:43.749] [UNDO] splitParagraph block=blank_line pre=bi=5 path=[] off=0 | L6:0 [|·|] new=bi=6 path=[] off=0 | L7:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:54:43.749] [UNDO] beginUndo kind=enter force=true pre=bi=5 path=[] off=0 | L6:0 [|·|] coalesce=false | undo=0 redo=0
+[15:54:43.749] [UNDO] recordUndo push pre=bi=5 path=[] off=0 | L6:0 [|·|] bodyLen=510 | undo=1 redo=0
+[15:54:43.749] [UNDO] splitParagraph BEFORE  cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+>>> L6: ""
+    L7: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L8: ""
+    L9: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L10: "![API图](/files/.memoria/images/test-image.png)"
+[15:54:43.749] [UNDO] splitParagraph AFTER   cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+>>> L6: ""
+    L7: ""
+    L8: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L9: ""
+    L10: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:54:43.752] [UNDO] recordGroup kind=enter post=bi=6 path=[] off=0 | L7:3 [|·|]
+[15:54:43.755] [UNDO] splitParagraph re-rendered blocks=27 block[6].type=heading items=-
+[15:54:43.755] [UNDO] splitParagraph re-rendered, restore new cursor=bi=6 path=[] off=0 | L7:3 [|·|]
+[15:54:43.755] [UNDO] restoreCursor bi=6 path=[] off=0
+[15:54:44.564] [UNDO] splitParagraph block=blank_line pre=bi=5 path=[] off=0 | L6:0 [|·|] new=bi=6 path=[] off=0 | L7:3 [|·|] srcLines=["", ""]
+[15:54:44.564] [UNDO] beginUndo kind=enter force=true pre=bi=5 path=[] off=0 | L6:0 [|·|] coalesce=false | undo=1 redo=0
+[15:54:44.564] [UNDO] recordUndo push pre=bi=5 path=[] off=0 | L6:0 [|·|] bodyLen=511 | undo=2 redo=0
+[15:54:44.564] [UNDO] splitParagraph BEFORE  cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+>>> L6: ""
+    L7: ""
+    L8: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L9: ""
+    L10: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:54:44.564] [UNDO] splitParagraph AFTER   cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+>>> L6: ""
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+[15:54:44.567] [UNDO] recordGroup kind=enter post=bi=6 path=[] off=0 | L7:3 [|·|]
+[15:54:44.569] [UNDO] splitParagraph re-rendered blocks=27 block[6].type=heading items=-
+[15:54:44.570] [UNDO] splitParagraph re-rendered, restore new cursor=bi=6 path=[] off=0 | L7:3 [|·|]
+[15:54:44.570] [UNDO] restoreCursor bi=6 path=[] off=0
+[15:54:47.194] [UNDO] resetHistory undo=2 redo=0
+[15:54:51.471] [UNDO] splitParagraph block=blank_line pre=bi=6 path=[] off=0 | L7:0 [|·|] new=bi=7 path=[] off=0 | L8:0 [|·|] srcLines=["", ""]
+[15:54:51.471] [UNDO] beginUndo kind=enter force=true pre=bi=6 path=[] off=0 | L7:0 [|·|] coalesce=false | undo=0 redo=0
+[15:54:51.471] [UNDO] recordUndo push pre=bi=6 path=[] off=0 | L7:0 [|·|] bodyLen=512 | undo=1 redo=0
+[15:54:51.471] [UNDO] splitParagraph BEFORE  cursor-line=7
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:54:51.472] [UNDO] splitParagraph AFTER   cursor-line=7
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+[15:54:51.475] [UNDO] recordGroup kind=enter post=bi=7 path=[] off=0 | L8:0 [|·|]
+[15:54:51.478] [UNDO] splitParagraph re-rendered blocks=29 block[7].type=blank_line items=-
+[15:54:51.478] [UNDO] splitParagraph re-rendered, restore new cursor=bi=7 path=[] off=0 | L8:0 [|·|]
+[15:54:51.478] [UNDO] restoreCursor bi=7 path=[] off=0
+[15:54:52.066] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [|·|] srcLines=["", ""]
+[15:54:52.067] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=1 redo=0
+[15:54:52.067] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=513 | undo=2 redo=0
+[15:54:52.067] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:54:52.067] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+[15:54:52.070] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:52.072] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[15:54:52.072] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:52.072] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:54:53.240] [UNDO] splitParagraph block=heading pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] new=bi=8 path=[] off=0 | L9:3 [|·|] srcLines=["", "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"]
+[15:54:53.240] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] coalesce=false | undo=2 redo=0
+[15:54:53.240] [UNDO] recordUndo push pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=514 | undo=3 redo=0
+[15:54:53.240] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+    L13: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:54:53.240] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+[15:54:53.243] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:53.246] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[15:54:53.246] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:53.246] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:54:54.048] [UNDO] splitParagraph block=heading pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] new=bi=8 path=[] off=0 | L9:3 [|·|] srcLines=["", "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"]
+[15:54:54.048] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] coalesce=false | undo=3 redo=0
+[15:54:54.048] [UNDO] recordUndo push pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=549 | undo=4 redo=0
+[15:54:54.048] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+[15:54:54.048] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+    L13: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+[15:54:54.051] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:54.054] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[15:54:54.054] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:54.054] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:54:54.913] [UNDO] splitParagraph block=heading pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] new=bi=8 path=[] off=0 | L9:3 [|·|] srcLines=["", "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"]
+[15:54:54.913] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] coalesce=false | undo=4 redo=0
+[15:54:54.913] [UNDO] recordUndo push pre=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=584 | undo=5 redo=0
+[15:54:54.913] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+    L13: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+[15:54:54.913] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+[15:54:54.916] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:54.918] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[15:54:54.918] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:54:54.918] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:54:56.796] [UNDO] currentSnapshot cursor=bi=8 path=[] off=0 | L9:3 [|·|] | undo=5 redo=0
+[15:54:56.796] [UNDO] undo -> apply cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=4 redo=1
+[15:54:56.796] [UNDO] applySnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=584 | undo=4 redo=1
+[15:54:56.802] [UNDO] applySnapshot done -> restoreCursor bi=8 path=[0,0] off=0 | L9:24 [|·|]
+[15:54:56.802] [UNDO] restoreCursor bi=8 path=[0,0] off=0
+[15:54:57.037] [UNDO] currentSnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=4 redo=1
+[15:54:57.037] [UNDO] undo -> apply cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=3 redo=2
+[15:54:57.037] [UNDO] applySnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=549 | undo=3 redo=2
+[15:54:57.042] [UNDO] applySnapshot done -> restoreCursor bi=8 path=[0,0] off=0 | L9:24 [|·|]
+[15:54:57.042] [UNDO] restoreCursor bi=8 path=[0,0] off=0
+[15:54:57.365] [UNDO] currentSnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=3 redo=2
+[15:54:57.366] [UNDO] undo -> apply cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=2 redo=3
+[15:54:57.366] [UNDO] applySnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] bodyLen=514 | undo=2 redo=3
+[15:54:57.371] [UNDO] applySnapshot done -> restoreCursor bi=8 path=[0,0] off=0 | L9:24 [|·|]
+[15:54:57.371] [UNDO] restoreCursor bi=8 path=[0,0] off=0
+[15:54:57.781] [UNDO] currentSnapshot cursor=bi=8 path=[0,0] off=0 | L9:24 [|·|] | undo=2 redo=3
+[15:54:57.781] [UNDO] undo -> apply cursor=bi=7 path=[] off=0 | L8:0 [|·|] | undo=1 redo=4
+[15:54:57.781] [UNDO] applySnapshot cursor=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=513 | undo=1 redo=4
+[15:54:57.786] [UNDO] applySnapshot done -> restoreCursor bi=7 path=[] off=0 | L8:0 [|·|]
+[15:54:57.786] [UNDO] restoreCursor bi=7 path=[] off=0
+[15:54:58.341] [UNDO] currentSnapshot cursor=bi=7 path=[] off=0 | L8:0 [|·|] | undo=1 redo=4
+[15:54:58.341] [UNDO] undo -> apply cursor=bi=6 path=[] off=0 | L7:0 [|·|] | undo=0 redo=5
+[15:54:58.341] [UNDO] applySnapshot cursor=bi=6 path=[] off=0 | L7:0 [|·|] bodyLen=512 | undo=0 redo=5
+[15:54:58.346] [UNDO] applySnapshot done -> restoreCursor bi=6 path=[] off=0 | L7:0 [|·|]
+[15:54:58.347] [UNDO] restoreCursor bi=6 path=[] off=0
+[15:55:01.856] [UNDO] splitParagraph block=blank_line pre=bi=9 path=[] off=0 | L10:0 [|·|] new=bi=10 path=[] off=0 | L11:0 [|!|[photomo] srcLines=["", ""]
+[15:55:01.856] [UNDO] beginUndo kind=enter force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=0 redo=5
+[15:55:01.856] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=512 | undo=1 redo=0
+[15:55:01.856] [UNDO] splitParagraph BEFORE  cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+>>> L10: ""
+    L11: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L12: "![API图](/files/.memoria/images/test-image.png)"
+    L13: ""
+    L14: "## 远程图片"
+[15:55:01.856] [UNDO] splitParagraph AFTER   cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+>>> L10: ""
+    L11: ""
+    L12: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L13: "![API图](/files/.memoria/images/test-image.png)"
+    L14: ""
+[15:55:01.859] [UNDO] recordGroup kind=enter post=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:01.862] [UNDO] splitParagraph re-rendered blocks=29 block[10].type=image items=-
+[15:55:01.862] [UNDO] splitParagraph re-rendered, restore new cursor=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:01.862] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:55:03.444] [UNDO] currentSnapshot cursor=bi=10 path=[] off=0 | L11:0 [|·|] | undo=1 redo=0
+[15:55:03.444] [UNDO] undo -> apply cursor=bi=9 path=[] off=0 | L10:0 [|·|] | undo=0 redo=1
+[15:55:03.444] [UNDO] applySnapshot cursor=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=512 | undo=0 redo=1
+[15:55:03.449] [UNDO] applySnapshot done -> restoreCursor bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:03.449] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:55:16.615] [UNDO] resetHistory undo=0 redo=1
+[15:55:16.889] [UNDO] resetHistory undo=0 redo=0
+[15:55:17.092] [UNDO] resetHistory undo=0 redo=0
+[15:55:32.766] [UNDO] splitParagraph block=blank_line pre=bi=8 path=[] off=0 | L9:0 [|·|] new=bi=9 path=[] off=0 | L10:4 [### |图|片] srcLines=["", ""]
+[15:55:32.766] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=0 redo=0
+[15:55:32.766] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=3844 | undo=1 redo=0
+[15:55:32.766] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: ""
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "### 图片"
+    L11: ""
+    L12: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L13: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+[15:55:32.766] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: ""
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: ""
+    L11: "### 图片"
+    L12: ""
+    L13: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+[15:55:32.785] [UNDO] recordGroup kind=enter post=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:32.889] [UNDO] splitParagraph re-rendered blocks=146 block[9].type=blank_line items=-
+[15:55:32.889] [UNDO] splitParagraph re-rendered, restore new cursor=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:32.889] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:55:33.411] [UNDO] splitParagraph block=blank_line pre=bi=9 path=[] off=0 | L10:0 [|·|] new=bi=10 path=[] off=0 | L11:4 [### |图|片] srcLines=["", ""]
+[15:55:33.411] [UNDO] beginUndo kind=enter force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=1 redo=0
+[15:55:33.411] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=3845 | undo=2 redo=0
+[15:55:33.412] [UNDO] splitParagraph BEFORE  cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: "### 图片"
+    L12: ""
+    L13: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L14: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+[15:55:33.412] [UNDO] splitParagraph AFTER   cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: ""
+    L12: "### 图片"
+    L13: ""
+    L14: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+[15:55:33.430] [UNDO] recordGroup kind=enter post=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:33.505] [UNDO] splitParagraph re-rendered blocks=147 block[10].type=blank_line items=-
+[15:55:33.505] [UNDO] splitParagraph re-rendered, restore new cursor=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:33.505] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:55:34.536] [UNDO] resetHistory undo=2 redo=0
+[15:55:36.316] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:36.316] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=0 redo=0
+[15:55:36.316] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=512 | undo=1 redo=0
+[15:55:36.316] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L12: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:36.316] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:36.319] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:55:36.322] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[15:55:36.322] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[15:55:36.322] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:55:43.790] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:43.790] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=1 redo=0
+[15:55:43.790] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=512 | undo=2 redo=0
+[15:55:43.790] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L12: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:43.790] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: ""
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:43.793] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:0 [|·|]
+[15:55:43.796] [UNDO] splitParagraph re-rendered blocks=30 block[8].type=blank_line items=-
+[15:55:43.796] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:0 [|·|]
+[15:55:43.796] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:55:44.195] [UNDO] splitParagraph block=blank_line pre=bi=8 path=[] off=0 | L9:0 [|·|] new=bi=9 path=[] off=0 | L10:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:44.195] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=2 redo=0
+[15:55:44.195] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=513 | undo=3 redo=0
+[15:55:44.196] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+    L12: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L13: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:44.196] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: "![改名图](.memoria/images/test-image.png)"
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+    L13: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:44.198] [UNDO] recordGroup kind=enter post=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:44.201] [UNDO] splitParagraph re-rendered blocks=31 block[9].type=blank_line items=-
+[15:55:44.201] [UNDO] splitParagraph re-rendered, restore new cursor=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:44.201] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:55:44.525] [UNDO] splitParagraph block=blank_line pre=bi=9 path=[] off=0 | L10:0 [|·|] new=bi=10 path=[] off=0 | L11:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:44.525] [UNDO] beginUndo kind=enter force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=3 redo=0
+[15:55:44.525] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=514 | undo=4 redo=0
+[15:55:44.525] [UNDO] splitParagraph BEFORE  cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+    L13: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L14: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:44.525] [UNDO] splitParagraph AFTER   cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:44.528] [UNDO] recordGroup kind=enter post=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:44.530] [UNDO] splitParagraph re-rendered blocks=32 block[10].type=blank_line items=-
+[15:55:44.530] [UNDO] splitParagraph re-rendered, restore new cursor=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:44.530] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:55:44.799] [UNDO] splitParagraph block=blank_line pre=bi=10 path=[] off=0 | L11:0 [|·|] new=bi=11 path=[] off=0 | L12:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:44.799] [UNDO] beginUndo kind=enter force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=4 redo=0
+[15:55:44.799] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=515 | undo=5 redo=0
+[15:55:44.799] [UNDO] splitParagraph BEFORE  cursor-line=11
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+>>> L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:44.799] [UNDO] splitParagraph AFTER   cursor-line=11
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+>>> L11: ""
+    L12: ""
+    L13: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:44.802] [UNDO] recordGroup kind=enter post=bi=11 path=[] off=0 | L12:0 [|·|]
+[15:55:44.804] [UNDO] splitParagraph re-rendered blocks=33 block[11].type=blank_line items=-
+[15:55:44.804] [UNDO] splitParagraph re-rendered, restore new cursor=bi=11 path=[] off=0 | L12:0 [|·|]
+[15:55:44.805] [UNDO] restoreCursor bi=11 path=[] off=0
+[15:55:45.078] [UNDO] splitParagraph block=blank_line pre=bi=11 path=[] off=0 | L12:0 [|·|] new=bi=12 path=[] off=0 | L13:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:45.078] [UNDO] beginUndo kind=enter force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=5 redo=0
+[15:55:45.078] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=516 | undo=6 redo=0
+[15:55:45.078] [UNDO] splitParagraph BEFORE  cursor-line=12
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L16: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:45.078] [UNDO] splitParagraph AFTER   cursor-line=12
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L15: ""
+    L16: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:45.082] [UNDO] recordGroup kind=enter post=bi=12 path=[] off=0 | L13:0 [|·|]
+[15:55:45.084] [UNDO] splitParagraph re-rendered blocks=34 block[12].type=blank_line items=-
+[15:55:45.084] [UNDO] splitParagraph re-rendered, restore new cursor=bi=12 path=[] off=0 | L13:0 [|·|]
+[15:55:45.084] [UNDO] restoreCursor bi=12 path=[] off=0
+[15:55:45.306] [UNDO] splitParagraph block=blank_line pre=bi=12 path=[] off=0 | L13:0 [|·|] new=bi=13 path=[] off=0 | L14:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:45.306] [UNDO] beginUndo kind=enter force=true pre=bi=12 path=[] off=0 | L13:0 [|·|] coalesce=false | undo=6 redo=0
+[15:55:45.306] [UNDO] recordUndo push pre=bi=12 path=[] off=0 | L13:0 [|·|] bodyLen=517 | undo=7 redo=0
+[15:55:45.306] [UNDO] splitParagraph BEFORE  cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+>>> L13: ""
+    L14: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L15: ""
+    L16: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L17: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:45.306] [UNDO] splitParagraph AFTER   cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+>>> L13: ""
+    L14: ""
+    L15: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L16: ""
+    L17: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:45.309] [UNDO] recordGroup kind=enter post=bi=13 path=[] off=0 | L14:0 [|·|]
+[15:55:45.312] [UNDO] splitParagraph re-rendered blocks=35 block[13].type=blank_line items=-
+[15:55:45.312] [UNDO] splitParagraph re-rendered, restore new cursor=bi=13 path=[] off=0 | L14:0 [|·|]
+[15:55:45.312] [UNDO] restoreCursor bi=13 path=[] off=0
+[15:55:45.503] [UNDO] splitParagraph block=blank_line pre=bi=13 path=[] off=0 | L14:0 [|·|] new=bi=14 path=[] off=0 | L15:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:45.503] [UNDO] beginUndo kind=enter force=true pre=bi=13 path=[] off=0 | L14:0 [|·|] coalesce=false | undo=7 redo=0
+[15:55:45.503] [UNDO] recordUndo push pre=bi=13 path=[] off=0 | L14:0 [|·|] bodyLen=518 | undo=8 redo=0
+[15:55:45.503] [UNDO] splitParagraph BEFORE  cursor-line=14
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+>>> L14: ""
+    L15: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L16: ""
+    L17: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L18: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:45.503] [UNDO] splitParagraph AFTER   cursor-line=14
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+>>> L14: ""
+    L15: ""
+    L16: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L17: ""
+    L18: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:45.506] [UNDO] recordGroup kind=enter post=bi=14 path=[] off=0 | L15:0 [|·|]
+[15:55:45.509] [UNDO] splitParagraph re-rendered blocks=36 block[14].type=blank_line items=-
+[15:55:45.509] [UNDO] splitParagraph re-rendered, restore new cursor=bi=14 path=[] off=0 | L15:0 [|·|]
+[15:55:45.509] [UNDO] restoreCursor bi=14 path=[] off=0
+[15:55:45.697] [UNDO] splitParagraph block=blank_line pre=bi=14 path=[] off=0 | L15:0 [|·|] new=bi=15 path=[] off=0 | L16:3 [## |[|[\h:#00c] srcLines=["", ""]
+[15:55:45.697] [UNDO] beginUndo kind=enter force=true pre=bi=14 path=[] off=0 | L15:0 [|·|] coalesce=false | undo=8 redo=0
+[15:55:45.697] [UNDO] recordUndo push pre=bi=14 path=[] off=0 | L15:0 [|·|] bodyLen=519 | undo=9 redo=0
+[15:55:45.697] [UNDO] splitParagraph BEFORE  cursor-line=15
+    L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L17: ""
+    L18: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L19: "![API图](/files/.memoria/images/test-image.png)"
+[15:55:45.697] [UNDO] splitParagraph AFTER   cursor-line=15
+    L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: ""
+    L17: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L18: ""
+    L19: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[15:55:45.700] [UNDO] recordGroup kind=enter post=bi=15 path=[] off=0 | L16:0 [|·|]
+[15:55:45.703] [UNDO] splitParagraph re-rendered blocks=37 block[15].type=blank_line items=-
+[15:55:45.703] [UNDO] splitParagraph re-rendered, restore new cursor=bi=15 path=[] off=0 | L16:0 [|·|]
+[15:55:45.703] [UNDO] restoreCursor bi=15 path=[] off=0
+[15:55:46.433] [UNDO] beginUndo kind=backspace force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=9 redo=0
+[15:55:46.433] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=520 | undo=10 redo=0
+[15:55:46.436] [UNDO] recordGroup kind=backspace post=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:55:46.439] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:55:46.661] [UNDO] beginUndo kind=backspace force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=10 redo=0
+[15:55:46.661] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=519 | undo=11 redo=0
+[15:55:46.664] [UNDO] recordGroup kind=backspace post=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:46.667] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:55:46.841] [UNDO] beginUndo kind=backspace force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=11 redo=0
+[15:55:46.841] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=518 | undo=12 redo=0
+[15:55:46.844] [UNDO] recordGroup kind=backspace post=bi=8 path=[] off=0 | L9:0 [|·|]
+[15:55:46.847] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:55:47.021] [UNDO] beginUndo kind=backspace force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=12 redo=0
+[15:55:47.021] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=517 | undo=13 redo=0
+[15:55:47.024] [UNDO] recordGroup kind=backspace post=bi=7 path=[] off=0 | L8:0 [|·|]
+[15:55:47.027] [UNDO] restoreCursor bi=7 path=[] off=0
+[15:55:47.193] [UNDO] beginUndo kind=backspace force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=13 redo=0
+[15:55:47.193] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=516 | undo=14 redo=0
+[15:55:47.196] [UNDO] recordGroup kind=backspace post=bi=6 path=[] off=0 | L7:0 [|·|]
+[15:55:47.199] [UNDO] restoreCursor bi=6 path=[] off=0
+[15:55:48.295] [UNDO] splitParagraph block=blank_line pre=bi=12 path=[] off=0 | L13:0 [|·|] new=bi=13 path=[] off=0 | L14:0 [|!|[photomo] srcLines=["", ""]
+[15:55:48.295] [UNDO] beginUndo kind=enter force=true pre=bi=12 path=[] off=0 | L13:0 [|·|] coalesce=false | undo=14 redo=0
+[15:55:48.296] [UNDO] recordUndo push pre=bi=12 path=[] off=0 | L13:0 [|·|] bodyLen=515 | undo=15 redo=0
+[15:55:48.296] [UNDO] splitParagraph BEFORE  cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+>>> L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+    L17: "## 远程图片"
+[15:55:48.296] [UNDO] splitParagraph AFTER   cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+>>> L13: ""
+    L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L16: "![API图](/files/.memoria/images/test-image.png)"
+    L17: ""
+[15:55:48.299] [UNDO] recordGroup kind=enter post=bi=13 path=[] off=0 | L14:0 [|·|]
+[15:55:48.301] [UNDO] splitParagraph re-rendered blocks=33 block[13].type=blank_line items=-
+[15:55:48.301] [UNDO] splitParagraph re-rendered, restore new cursor=bi=13 path=[] off=0 | L14:0 [|·|]
+[15:55:48.301] [UNDO] restoreCursor bi=13 path=[] off=0
+[15:55:48.612] [UNDO] splitParagraph block=blank_line pre=bi=13 path=[] off=0 | L14:0 [|·|] new=bi=14 path=[] off=0 | L15:0 [|!|[photomo] srcLines=["", ""]
+[15:55:48.612] [UNDO] beginUndo kind=enter force=true pre=bi=13 path=[] off=0 | L14:0 [|·|] coalesce=false | undo=15 redo=0
+[15:55:48.612] [UNDO] recordUndo push pre=bi=13 path=[] off=0 | L14:0 [|·|] bodyLen=516 | undo=16 redo=0
+[15:55:48.612] [UNDO] splitParagraph BEFORE  cursor-line=14
+    L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+>>> L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L16: "![API图](/files/.memoria/images/test-image.png)"
+    L17: ""
+    L18: "## 远程图片"
+[15:55:48.612] [UNDO] splitParagraph AFTER   cursor-line=14
+    L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+>>> L14: ""
+    L15: ""
+    L16: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L17: "![API图](/files/.memoria/images/test-image.png)"
+    L18: ""
+[15:55:48.615] [UNDO] recordGroup kind=enter post=bi=14 path=[] off=0 | L15:0 [|·|]
+[15:55:48.617] [UNDO] splitParagraph re-rendered blocks=34 block[14].type=blank_line items=-
+[15:55:48.617] [UNDO] splitParagraph re-rendered, restore new cursor=bi=14 path=[] off=0 | L15:0 [|·|]
+[15:55:48.618] [UNDO] restoreCursor bi=14 path=[] off=0
+[15:55:48.829] [UNDO] splitParagraph block=blank_line pre=bi=14 path=[] off=0 | L15:0 [|·|] new=bi=15 path=[] off=0 | L16:0 [|!|[photomo] srcLines=["", ""]
+[15:55:48.829] [UNDO] beginUndo kind=enter force=true pre=bi=14 path=[] off=0 | L15:0 [|·|] coalesce=false | undo=16 redo=0
+[15:55:48.829] [UNDO] recordUndo push pre=bi=14 path=[] off=0 | L15:0 [|·|] bodyLen=517 | undo=17 redo=0
+[15:55:48.829] [UNDO] splitParagraph BEFORE  cursor-line=15
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L17: "![API图](/files/.memoria/images/test-image.png)"
+    L18: ""
+    L19: "## 远程图片"
+[15:55:48.829] [UNDO] splitParagraph AFTER   cursor-line=15
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: ""
+    L17: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L18: "![API图](/files/.memoria/images/test-image.png)"
+    L19: ""
+[15:55:48.832] [UNDO] recordGroup kind=enter post=bi=15 path=[] off=0 | L16:0 [|·|]
+[15:55:48.834] [UNDO] splitParagraph re-rendered blocks=35 block[15].type=blank_line items=-
+[15:55:48.834] [UNDO] splitParagraph re-rendered, restore new cursor=bi=15 path=[] off=0 | L16:0 [|·|]
+[15:55:48.834] [UNDO] restoreCursor bi=15 path=[] off=0
+[15:55:49.017] [UNDO] splitParagraph block=blank_line pre=bi=15 path=[] off=0 | L16:0 [|·|] new=bi=16 path=[] off=0 | L17:0 [|!|[photomo] srcLines=["", ""]
+[15:55:49.017] [UNDO] beginUndo kind=enter force=true pre=bi=15 path=[] off=0 | L16:0 [|·|] coalesce=false | undo=17 redo=0
+[15:55:49.017] [UNDO] recordUndo push pre=bi=15 path=[] off=0 | L16:0 [|·|] bodyLen=518 | undo=18 redo=0
+[15:55:49.017] [UNDO] splitParagraph BEFORE  cursor-line=16
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: ""
+    L15: ""
+>>> L16: ""
+    L17: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L18: "![API图](/files/.memoria/images/test-image.png)"
+    L19: ""
+    L20: "## 远程图片"
+[15:55:49.017] [UNDO] splitParagraph AFTER   cursor-line=16
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: ""
+    L15: ""
+>>> L16: ""
+    L17: ""
+    L18: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L19: "![API图](/files/.memoria/images/test-image.png)"
+    L20: ""
+[15:55:49.020] [UNDO] recordGroup kind=enter post=bi=16 path=[] off=0 | L17:0 [|·|]
+[15:55:49.023] [UNDO] splitParagraph re-rendered blocks=36 block[16].type=blank_line items=-
+[15:55:49.023] [UNDO] splitParagraph re-rendered, restore new cursor=bi=16 path=[] off=0 | L17:0 [|·|]
+[15:55:49.023] [UNDO] restoreCursor bi=16 path=[] off=0
+[15:55:49.656] [UNDO] beginUndo kind=backspace force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=18 redo=0
+[15:55:49.657] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=519 | undo=19 redo=0
+[15:55:49.660] [UNDO] recordGroup kind=backspace post=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:55:49.663] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:55:49.859] [UNDO] beginUndo kind=backspace force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=19 redo=0
+[15:55:49.860] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=518 | undo=20 redo=0
+[15:55:49.863] [UNDO] recordGroup kind=backspace post=bi=8 path=[] off=0 | L9:0 [|·|]
+[15:55:49.865] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:55:50.031] [UNDO] beginUndo kind=backspace force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=20 redo=0
+[15:55:50.031] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=517 | undo=21 redo=0
+[15:55:50.034] [UNDO] recordGroup kind=backspace post=bi=7 path=[] off=0 | L8:0 [|·|]
+[15:55:50.036] [UNDO] restoreCursor bi=7 path=[] off=0
+[15:55:50.196] [UNDO] beginUndo kind=backspace force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=21 redo=0
+[15:55:50.196] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=516 | undo=22 redo=0
+[15:55:50.199] [UNDO] recordGroup kind=backspace post=bi=6 path=[] off=0 | L7:0 [|·|]
+[15:55:50.201] [UNDO] restoreCursor bi=6 path=[] off=0
+[15:55:57.084] [UNDO] splitParagraph block=blank_line pre=bi=15 path=[] off=0 | L16:0 [|·|] new=bi=16 path=[] off=0 | L17:3 [## |远|程图片] srcLines=["", ""]
+[15:55:57.084] [UNDO] beginUndo kind=enter force=true pre=bi=15 path=[] off=0 | L16:0 [|·|] coalesce=false | undo=22 redo=0
+[15:55:57.085] [UNDO] recordUndo push pre=bi=15 path=[] off=0 | L16:0 [|·|] bodyLen=515 | undo=23 redo=0
+[15:55:57.085] [UNDO] splitParagraph BEFORE  cursor-line=16
+    L12: ""
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+>>> L16: ""
+    L17: "## 远程图片"
+    L18: ""
+    L19: "![远程图](https://example.com/foo.png \"标题\")"
+    L20: ""
+[15:55:57.085] [UNDO] splitParagraph AFTER   cursor-line=16
+    L12: ""
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+>>> L16: ""
+    L17: ""
+    L18: "## 远程图片"
+    L19: ""
+    L20: "![远程图](https://example.com/foo.png \"标题\")"
+[15:55:57.088] [UNDO] recordGroup kind=enter post=bi=16 path=[] off=0 | L17:0 [|·|]
+[15:55:57.091] [UNDO] splitParagraph re-rendered blocks=33 block[16].type=blank_line items=-
+[15:55:57.091] [UNDO] splitParagraph re-rendered, restore new cursor=bi=16 path=[] off=0 | L17:0 [|·|]
+[15:55:57.091] [UNDO] restoreCursor bi=16 path=[] off=0
+[15:55:57.508] [UNDO] splitParagraph block=blank_line pre=bi=16 path=[] off=0 | L17:0 [|·|] new=bi=17 path=[] off=0 | L18:3 [## |远|程图片] srcLines=["", ""]
+[15:55:57.508] [UNDO] beginUndo kind=enter force=true pre=bi=16 path=[] off=0 | L17:0 [|·|] coalesce=false | undo=23 redo=0
+[15:55:57.508] [UNDO] recordUndo push pre=bi=16 path=[] off=0 | L17:0 [|·|] bodyLen=516 | undo=24 redo=0
+[15:55:57.508] [UNDO] splitParagraph BEFORE  cursor-line=17
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+>>> L17: ""
+    L18: "## 远程图片"
+    L19: ""
+    L20: "![远程图](https://example.com/foo.png \"标题\")"
+    L21: ""
+[15:55:57.508] [UNDO] splitParagraph AFTER   cursor-line=17
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+>>> L17: ""
+    L18: ""
+    L19: "## 远程图片"
+    L20: ""
+    L21: "![远程图](https://example.com/foo.png \"标题\")"
+[15:55:57.512] [UNDO] recordGroup kind=enter post=bi=17 path=[] off=0 | L18:0 [|·|]
+[15:55:57.515] [UNDO] splitParagraph re-rendered blocks=34 block[17].type=blank_line items=-
+[15:55:57.515] [UNDO] splitParagraph re-rendered, restore new cursor=bi=17 path=[] off=0 | L18:0 [|·|]
+[15:55:57.515] [UNDO] restoreCursor bi=17 path=[] off=0
+[15:55:57.924] [UNDO] splitParagraph block=blank_line pre=bi=17 path=[] off=0 | L18:0 [|·|] new=bi=18 path=[] off=0 | L19:3 [## |远|程图片] srcLines=["", ""]
+[15:55:57.924] [UNDO] beginUndo kind=enter force=true pre=bi=17 path=[] off=0 | L18:0 [|·|] coalesce=false | undo=24 redo=0
+[15:55:57.924] [UNDO] recordUndo push pre=bi=17 path=[] off=0 | L18:0 [|·|] bodyLen=517 | undo=25 redo=0
+[15:55:57.924] [UNDO] splitParagraph BEFORE  cursor-line=18
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+    L17: ""
+>>> L18: ""
+    L19: "## 远程图片"
+    L20: ""
+    L21: "![远程图](https://example.com/foo.png \"标题\")"
+    L22: ""
+[15:55:57.924] [UNDO] splitParagraph AFTER   cursor-line=18
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+    L17: ""
+>>> L18: ""
+    L19: ""
+    L20: "## 远程图片"
+    L21: ""
+    L22: "![远程图](https://example.com/foo.png \"标题\")"
+[15:55:57.927] [UNDO] recordGroup kind=enter post=bi=18 path=[] off=0 | L19:0 [|·|]
+[15:55:57.930] [UNDO] splitParagraph re-rendered blocks=35 block[18].type=blank_line items=-
+[15:55:57.930] [UNDO] splitParagraph re-rendered, restore new cursor=bi=18 path=[] off=0 | L19:0 [|·|]
+[15:55:57.930] [UNDO] restoreCursor bi=18 path=[] off=0
+[15:55:58.749] [UNDO] beginUndo kind=backspace force=true pre=bi=18 path=[] off=0 | L19:0 [|·|] coalesce=false | undo=25 redo=0
+[15:55:58.749] [UNDO] recordUndo push pre=bi=18 path=[] off=0 | L19:0 [|·|] bodyLen=518 | undo=26 redo=0
+[15:55:58.752] [UNDO] recordGroup kind=backspace post=bi=17 path=[] off=0 | L18:0 [|·|]
+[15:55:58.755] [UNDO] restoreCursor bi=17 path=[] off=0
+[15:55:58.991] [UNDO] beginUndo kind=backspace force=true pre=bi=17 path=[] off=0 | L18:0 [|·|] coalesce=false | undo=26 redo=0
+[15:55:58.991] [UNDO] recordUndo push pre=bi=17 path=[] off=0 | L18:0 [|·|] bodyLen=517 | undo=27 redo=0
+[15:55:58.994] [UNDO] recordGroup kind=backspace post=bi=16 path=[] off=0 | L17:0 [|·|]
+[15:55:58.997] [UNDO] restoreCursor bi=16 path=[] off=0
+[15:55:59.618] [UNDO] beginUndo kind=backspace force=true pre=bi=16 path=[] off=0 | L17:0 [|·|] coalesce=false | undo=27 redo=0
+[15:55:59.618] [UNDO] recordUndo push pre=bi=16 path=[] off=0 | L17:0 [|·|] bodyLen=516 | undo=28 redo=0
+[15:55:59.621] [UNDO] recordGroup kind=backspace post=bi=15 path=[] off=0 | L16:0 [|·|]
+[15:55:59.624] [UNDO] restoreCursor bi=15 path=[] off=0
+[15:56:00.746] [UNDO] beginUndo kind=backspace force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=28 redo=0
+[15:56:00.747] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=515 | undo=29 redo=0
+[15:56:00.750] [UNDO] recordGroup kind=backspace post=bi=10 path=[] off=0 | L11:0 [|·|]
+[15:56:00.753] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:56:00.953] [UNDO] beginUndo kind=backspace force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=29 redo=0
+[15:56:00.953] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=514 | undo=30 redo=0
+[15:56:00.956] [UNDO] recordGroup kind=backspace post=bi=9 path=[] off=0 | L10:0 [|·|]
+[15:56:00.959] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:56:05.984] [UNDO] beginUndo kind=backspace force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=30 redo=0
+[15:56:05.984] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=513 | undo=31 redo=0
+[15:56:05.987] [UNDO] recordGroup kind=backspace post=bi=8 path=[] off=0 | L9:0 [|·|]
+[15:56:05.990] [UNDO] restoreCursor bi=8 path=[] off=0
+[15:56:08.053] [UNDO] currentSnapshot cursor=bi=8 path=[] off=0 | L9:0 [|·|] | undo=31 redo=0
+[15:56:08.054] [UNDO] undo -> apply cursor=bi=9 path=[] off=0 | L10:0 [|·|] | undo=30 redo=1
+[15:56:08.054] [UNDO] applySnapshot cursor=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=513 | undo=30 redo=1
+[15:56:08.059] [UNDO] applySnapshot done -> restoreCursor bi=9 path=[] off=0 | L10:0 [|·|]
+[15:56:08.059] [UNDO] restoreCursor bi=9 path=[] off=0
+[15:56:08.734] [UNDO] currentSnapshot cursor=bi=9 path=[] off=0 | L10:0 [|·|] | undo=30 redo=1
+[15:56:08.734] [UNDO] undo -> apply cursor=bi=10 path=[] off=0 | L11:0 [|·|] | undo=29 redo=2
+[15:56:08.734] [UNDO] applySnapshot cursor=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=514 | undo=29 redo=2
+[15:56:08.740] [UNDO] applySnapshot done -> restoreCursor bi=10 path=[] off=0 | L11:0 [|·|]
+[15:56:08.740] [UNDO] restoreCursor bi=10 path=[] off=0
+[15:56:11.282] [UNDO] splitParagraph block=blank_line pre=bi=22 path=[] off=0 | L23:0 [|·|] new=bi=23 path=[] off=0 | L24:3 [## |代|[[\h:#00] srcLines=["", ""]
+[15:56:11.282] [UNDO] beginUndo kind=enter force=true pre=bi=22 path=[] off=0 | L23:0 [|·|] coalesce=false | undo=29 redo=2
+[15:56:11.282] [UNDO] recordUndo push pre=bi=22 path=[] off=0 | L23:0 [|·|] bodyLen=514 | undo=30 redo=0
+[15:56:11.282] [UNDO] splitParagraph BEFORE  cursor-line=23
+    L19: ""
+    L20: "## 对照段落"
+    L21: ""
+    L22: "下面是一段普通文字，[[\\h:#00cc00:#9a6ed0|用于对照可编辑块行为。**加粗**与*斜体*均正常。]]"
+>>> L23: ""
+    L24: "## 代[[\\h:#00cc00:#9a6ed0|码块对照]]"
+    L25: ""
+    L26: "```python"
+    L27: "print(\"hello\")"
+[15:56:11.283] [UNDO] splitParagraph AFTER   cursor-line=23
+    L19: ""
+    L20: "## 对照段落"
+    L21: ""
+    L22: "下面是一段普通文字，[[\\h:#00cc00:#9a6ed0|用于对照可编辑块行为。**加粗**与*斜体*均正常。]]"
+>>> L23: ""
+    L24: ""
+    L25: "## 代[[\\h:#00cc00:#9a6ed0|码块对照]]"
+    L26: ""
+    L27: "```python"
+[15:56:11.285] [UNDO] recordGroup kind=enter post=bi=23 path=[] off=0 | L24:0 [|·|]
+[15:56:11.288] [UNDO] splitParagraph re-rendered blocks=32 block[23].type=blank_line items=-
+[15:56:11.288] [UNDO] splitParagraph re-rendered, restore new cursor=bi=23 path=[] off=0 | L24:0 [|·|]
+[15:56:11.288] [UNDO] restoreCursor bi=23 path=[] off=0
+[15:56:20.892] [UNDO] splitParagraph block=blank_line pre=bi=11 path=[] off=0 | L12:0 [|·|] new=bi=12 path=[] off=0 | L13:0 [|!|[photomo] srcLines=["", ""]
+[15:56:20.892] [UNDO] beginUndo kind=enter force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=30 redo=0
+[15:56:20.892] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=515 | undo=31 redo=0
+[15:56:20.892] [UNDO] splitParagraph BEFORE  cursor-line=12
+    L8: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L14: "![API图](/files/.memoria/images/test-image.png)"
+    L15: ""
+    L16: "## 远程图片"
+[15:56:20.892] [UNDO] splitParagraph AFTER   cursor-line=12
+    L8: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+[15:56:20.895] [UNDO] recordGroup kind=enter post=bi=12 path=[] off=0 | L13:0 [|·|]
+[15:56:20.898] [UNDO] splitParagraph re-rendered blocks=33 block[12].type=blank_line items=-
+[15:56:20.898] [UNDO] splitParagraph re-rendered, restore new cursor=bi=12 path=[] off=0 | L13:0 [|·|]
+[15:56:20.898] [UNDO] restoreCursor bi=12 path=[] off=0
+[15:57:15.773] [UNDO] beginUndo kind=backspace force=true pre=bi=17 path=[] off=0 | L18:0 [|·|] coalesce=false | undo=31 redo=0
+[15:57:15.773] [UNDO] recordUndo push pre=bi=17 path=[] off=0 | L18:0 [|·|] bodyLen=516 | undo=32 redo=0
+[15:57:15.776] [UNDO] recordGroup kind=backspace post=bi=16 path=[0] off=4 | L17:7 [## 远程图片|·|]
+[15:57:15.779] [UNDO] restoreCursor bi=16 path=[0] off=4
+[15:57:17.194] [UNDO] splitParagraph block=heading pre=bi=16 path=[0] off=4 | L17:7 [## 远程图片|·|] new=bi=17 path=[] off=0 | L18:0 [|!|[远程图](ht] srcLines=["## 远程图片", ""]
+[15:57:17.194] [UNDO] beginUndo kind=enter force=true pre=bi=16 path=[0] off=4 | L17:7 [## 远程图片|·|] coalesce=false | undo=32 redo=0
+[15:57:17.194] [UNDO] recordUndo push pre=bi=16 path=[0] off=4 | L17:7 [## 远程图片|·|] bodyLen=515 | undo=33 redo=0
+[15:57:17.194] [UNDO] splitParagraph BEFORE  cursor-line=17
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+>>> L17: "## 远程图片"
+    L18: "![远程图](https://example.com/foo.png \"标题\")"
+    L19: ""
+    L20: "## 对照段落"
+    L21: ""
+[15:57:17.194] [UNDO] splitParagraph AFTER   cursor-line=17
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: "![API图](/files/.memoria/images/test-image.png)"
+    L16: ""
+>>> L17: "## 远程图片"
+    L18: ""
+    L19: "![远程图](https://example.com/foo.png \"标题\")"
+    L20: ""
+    L21: "## 对照段落"
+[15:57:17.197] [UNDO] recordGroup kind=enter post=bi=17 path=[] off=0 | L18:0 [|·|]
+[15:57:17.200] [UNDO] splitParagraph re-rendered blocks=33 block[17].type=blank_line items=-
+[15:57:17.201] [UNDO] splitParagraph re-rendered, restore new cursor=bi=17 path=[] off=0 | L18:0 [|·|]
+[15:57:17.201] [UNDO] restoreCursor bi=17 path=[] off=0
+[17:36:35.140] [UNDO] resetHistory undo=0 redo=0
+[17:36:38.929] [UNDO] splitParagraph image block pre=bi=4 path=[] off=1 | L5:45 [)|·|] new=bi=5 path=[] off=0 | L6:0 [|·|]
+[17:36:38.930] [UNDO] beginUndo kind=enter force=true pre=bi=4 path=[] off=1 | L5:45 [)|·|] coalesce=false | undo=0 redo=0
+[17:36:38.930] [UNDO] recordUndo push pre=bi=4 path=[] off=1 | L5:45 [)|·|] bodyLen=516 | undo=1 redo=0
+[17:36:38.933] [UNDO] recordGroup kind=enter post=bi=5 path=[] off=0 | L6:0 [|·|]
+[17:36:38.936] [UNDO] restoreCursor bi=5 path=[] off=0
+[17:36:40.961] [UNDO] splitParagraph image block pre=bi=4 path=[] off=0 | L5:0 [|!|[改名图](.m] new=bi=4 path=[] off=0 | L5:0 [|!|[改名图](.m]
+[17:36:40.961] [UNDO] beginUndo kind=enter force=true pre=bi=4 path=[] off=0 | L5:0 [|!|[改名图](.m] coalesce=false | undo=1 redo=0
+[17:36:40.961] [UNDO] recordUndo push pre=bi=4 path=[] off=0 | L5:0 [|!|[改名图](.m] bodyLen=517 | undo=2 redo=0
+[17:36:40.964] [UNDO] recordGroup kind=enter post=bi=4 path=[] off=0 | L5:0 [|·|]
+[17:36:40.967] [UNDO] restoreCursor bi=4 path=[] off=0
+[17:36:41.834] [UNDO] splitParagraph block=blank_line pre=bi=4 path=[] off=0 | L5:0 [|·|] new=bi=5 path=[] off=0 | L6:0 [|!|[改名图](.m] srcLines=["", ""]
+[17:36:41.834] [UNDO] beginUndo kind=enter force=true pre=bi=4 path=[] off=0 | L5:0 [|·|] coalesce=false | undo=2 redo=0
+[17:36:41.834] [UNDO] recordUndo push pre=bi=4 path=[] off=0 | L5:0 [|·|] bodyLen=518 | undo=3 redo=0
+[17:36:41.834] [UNDO] splitParagraph BEFORE  cursor-line=5
+    L1: "# 图片编辑模式测试"
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+>>> L5: ""
+    L6: "![改名图](.memoria/images/test-image.png)"
+    L7: ""
+    L8: ""
+    L9: ""
+[17:36:41.834] [UNDO] splitParagraph AFTER   cursor-line=5
+    L1: "# 图片编辑模式测试"
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+>>> L5: ""
+    L6: ""
+    L7: "![改名图](.memoria/images/test-image.png)"
+    L8: ""
+    L9: ""
+[17:36:41.837] [UNDO] recordGroup kind=enter post=bi=5 path=[] off=0 | L6:0 [|·|]
+[17:36:41.841] [UNDO] splitParagraph re-rendered blocks=36 block[5].type=blank_line items=-
+[17:36:41.841] [UNDO] splitParagraph re-rendered, restore new cursor=bi=5 path=[] off=0 | L6:0 [|·|]
+[17:36:41.841] [UNDO] restoreCursor bi=5 path=[] off=0
+[18:24:19.762] [UNDO] resetHistory undo=0 redo=0
+[18:24:37.929] [UNDO] resetHistory undo=0 redo=0
+[18:24:38.914] [UNDO] resetHistory undo=0 redo=0
+[18:24:45.677] [UNDO] resetHistory undo=0 redo=0
+[18:24:49.053] [UNDO] resetHistory undo=0 redo=0
+[18:46:43.872] [UNDO] resetHistory undo=0 redo=0
+[18:47:35.061] [UNDO] resetHistory undo=0 redo=0
+[18:47:37.653] [UNDO] resetHistory undo=0 redo=0
+[18:54:01.173] [UNDO] resetHistory undo=0 redo=0
+[18:54:23.405] [UNDO] beginUndo kind=backspace force=true pre=bi=13 path=[] off=0 | L14:0 [|·|] coalesce=false | undo=0 redo=0
+[18:54:23.405] [UNDO] recordUndo push pre=bi=13 path=[] off=0 | L14:0 [|·|] bodyLen=443 | undo=1 redo=0
+[18:54:23.409] [UNDO] recordGroup kind=backspace post=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:54:23.411] [UNDO] restoreCursor bi=12 path=[] off=0
+[18:54:23.985] [UNDO] beginUndo kind=backspace force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=1 redo=0
+[18:54:23.985] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=442 | undo=2 redo=0
+[18:54:23.988] [UNDO] recordGroup kind=backspace post=bi=7 path=[] off=0 | L8:0 [|·|]
+[18:54:23.990] [UNDO] restoreCursor bi=7 path=[] off=0
+[18:54:24.250] [UNDO] beginUndo kind=backspace force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=2 redo=0
+[18:54:24.250] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=441 | undo=3 redo=0
+[18:54:24.253] [UNDO] recordGroup kind=backspace post=bi=6 path=[1] off=1 | L7:1 [!|[|改名图](.me]
+[18:54:24.255] [UNDO] restoreCursor bi=6 path=[1] off=1
+[18:54:24.894] [UNDO] beginUndo kind=backspace force=false pre=bi=6 path=[1] off=1 | L7:0 [|!|[改名图](.m] coalesce=true | undo=3 redo=0
+[18:54:24.894] [UNDO] commit cursor=bi=6 path=[0] off=0 | L7:0 [|!|[改名图](.m]
+[18:54:24.896] [UNDO] restoreCursor bi=6 path=[0] off=0
+[18:54:24.898] [UNDO] recordGroup kind=backspace post=bi=6 path=[0] off=0 | L7:0 [|·|]
+[18:54:25.627] [UNDO] resetHistory undo=3 redo=0
+[18:54:28.750] [UNDO] resetHistory undo=0 redo=0
+[18:54:31.856] [UNDO] resetHistory undo=0 redo=0
+[18:54:34.857] [UNDO] splitParagraph image block pre=bi=13 path=[] off=1 | L14:82 [)|·|] new=bi=14 path=[] off=0 | L15:0 [|!|[API图](/]
+[18:54:34.857] [UNDO] beginUndo kind=enter force=true pre=bi=13 path=[] off=1 | L14:82 [)|·|] coalesce=false | undo=0 redo=0
+[18:54:34.857] [UNDO] recordUndo push pre=bi=13 path=[] off=1 | L14:82 [)|·|] bodyLen=401 | undo=1 redo=0
+[18:54:34.860] [UNDO] recordGroup kind=enter post=bi=14 path=[] off=0 | L15:0 [|·|]
+[18:54:34.862] [UNDO] restoreCursor bi=14 path=[] off=0
+[18:54:35.903] [UNDO] splitParagraph image block pre=bi=14 path=[] off=0 | L15:0 [|·|] new=bi=14 path=[] off=0 | L15:0 [|·|]
+[18:54:35.903] [UNDO] beginUndo kind=enter force=true pre=bi=14 path=[] off=0 | L15:0 [|·|] coalesce=false | undo=1 redo=0
+[18:54:35.903] [UNDO] recordUndo push pre=bi=14 path=[] off=0 | L15:0 [|·|] bodyLen=402 | undo=2 redo=0
+[18:54:35.906] [UNDO] recordGroup kind=enter post=bi=14 path=[] off=0 | L15:0 [|·|]
+[18:54:35.908] [UNDO] restoreCursor bi=14 path=[] off=0
+[18:54:38.150] [UNDO] currentSnapshot cursor=bi=14 path=[] off=0 | L15:0 [|·|] | undo=2 redo=0
+[18:54:38.150] [UNDO] undo -> apply cursor=bi=14 path=[] off=0 | L15:0 [|·|] | undo=1 redo=1
+[18:54:38.150] [UNDO] applySnapshot cursor=bi=14 path=[] off=0 | L15:0 [|·|] bodyLen=402 | undo=1 redo=1
+[18:54:38.155] [UNDO] applySnapshot done -> restoreCursor bi=14 path=[] off=0 | L15:0 [|·|]
+[18:54:38.155] [UNDO] restoreCursor bi=14 path=[] off=0
+[18:54:39.704] [UNDO] resetHistory undo=1 redo=1
+[18:54:41.181] [UNDO] splitParagraph block=blank_line pre=bi=11 path=[] off=0 | L12:0 [|·|] new=bi=12 path=[] off=0 | L13:0 [|·|] srcLines=["", ""]
+[18:54:41.181] [UNDO] beginUndo kind=enter force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=0 redo=0
+[18:54:41.181] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=403 | undo=1 redo=0
+[18:54:41.181] [UNDO] splitParagraph BEFORE  cursor-line=12
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L15: ""
+    L16: ""
+[18:54:41.181] [UNDO] splitParagraph AFTER   cursor-line=12
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L16: ""
+[18:54:41.183] [UNDO] recordGroup kind=enter post=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:54:41.185] [UNDO] splitParagraph re-rendered blocks=33 block[12].type=blank_line items=-
+[18:54:41.185] [UNDO] splitParagraph re-rendered, restore new cursor=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:54:41.185] [UNDO] restoreCursor bi=12 path=[] off=0
+[18:54:43.297] [UNDO] resetHistory undo=1 redo=0
+[18:54:48.826] [UNDO] resetHistory undo=0 redo=0
+[18:54:49.585] [UNDO] resetHistory undo=0 redo=0
+[18:54:51.054] [UNDO] resetHistory undo=0 redo=0
+[18:54:52.686] [UNDO] splitParagraph block=blank_line pre=bi=9 path=[] off=0 | L10:0 [|·|] new=bi=10 path=[] off=0 | L11:0 [|·|] srcLines=["", ""]
+[18:54:52.686] [UNDO] beginUndo kind=enter force=true pre=bi=9 path=[] off=0 | L10:0 [|·|] coalesce=false | undo=0 redo=0
+[18:54:52.686] [UNDO] recordUndo push pre=bi=9 path=[] off=0 | L10:0 [|·|] bodyLen=3846 | undo=1 redo=0
+[18:54:52.686] [UNDO] splitParagraph BEFORE  cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: ""
+    L12: "### 图片"
+    L13: ""
+    L14: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+[18:54:52.686] [UNDO] splitParagraph AFTER   cursor-line=10
+    L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+>>> L10: ""
+    L11: ""
+    L12: ""
+    L13: "### 图片"
+    L14: ""
+[18:54:52.700] [UNDO] recordGroup kind=enter post=bi=10 path=[] off=0 | L11:0 [|·|]
+[18:54:52.760] [UNDO] splitParagraph re-rendered blocks=147 block[10].type=blank_line items=-
+[18:54:52.760] [UNDO] splitParagraph re-rendered, restore new cursor=bi=10 path=[] off=0 | L11:0 [|·|]
+[18:54:52.760] [UNDO] restoreCursor bi=10 path=[] off=0
+[18:54:54.356] [UNDO] splitParagraph block=blank_line pre=bi=10 path=[] off=0 | L11:0 [|·|] new=bi=11 path=[] off=0 | L12:4 [|·|] srcLines=["", ""]
+[18:54:54.356] [UNDO] beginUndo kind=enter force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=1 redo=0
+[18:54:54.356] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=3847 | undo=2 redo=0
+[18:54:54.356] [UNDO] splitParagraph BEFORE  cursor-line=11
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+>>> L11: ""
+    L12: ""
+    L13: "### 图片"
+    L14: ""
+    L15: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+[18:54:54.356] [UNDO] splitParagraph AFTER   cursor-line=11
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+>>> L11: ""
+    L12: ""
+    L13: ""
+    L14: "### 图片"
+    L15: ""
+[18:54:54.369] [UNDO] recordGroup kind=enter post=bi=11 path=[] off=0 | L12:4 [|·|]
+[18:54:54.429] [UNDO] splitParagraph re-rendered blocks=147 block[11].type=heading items=-
+[18:54:54.429] [UNDO] splitParagraph re-rendered, restore new cursor=bi=11 path=[] off=0 | L12:4 [|·|]
+[18:54:54.429] [UNDO] restoreCursor bi=11 path=[] off=0
+[18:54:56.549] [UNDO] splitParagraph block=blank_line pre=bi=12 path=[] off=0 | L13:0 [|·|] new=bi=13 path=[] off=0 | L14:0 [|#|## 图片] srcLines=["", ""]
+[18:54:56.549] [UNDO] beginUndo kind=enter force=true pre=bi=12 path=[] off=0 | L13:0 [|·|] coalesce=false | undo=2 redo=0
+[18:54:56.549] [UNDO] recordUndo push pre=bi=12 path=[] off=0 | L13:0 [|·|] bodyLen=3848 | undo=3 redo=0
+[18:54:56.549] [UNDO] splitParagraph BEFORE  cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+>>> L13: ""
+    L14: "### 图片"
+    L15: ""
+    L16: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L17: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+[18:54:56.549] [UNDO] splitParagraph AFTER   cursor-line=13
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+>>> L13: ""
+    L14: ""
+    L15: "### 图片"
+    L16: ""
+    L17: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+[18:54:56.561] [UNDO] recordGroup kind=enter post=bi=13 path=[] off=0 | L14:0 [|·|]
+[18:54:56.623] [UNDO] splitParagraph re-rendered blocks=147 block[13].type=paragraph items=-
+[18:54:56.623] [UNDO] splitParagraph re-rendered, restore new cursor=bi=13 path=[] off=0 | L14:0 [|·|]
+[18:54:56.623] [UNDO] restoreCursor bi=13 path=[] off=0
+[18:55:43.323] [UNDO] resetHistory undo=0 redo=0
+[18:55:44.379] [UNDO] resetHistory undo=0 redo=0
+[18:55:44.925] [UNDO] resetHistory undo=0 redo=0
+[18:55:48.294] [UNDO] splitParagraph block=blank_line pre=bi=6 path=[] off=0 | L7:0 [|·|] new=bi=7 path=[] off=0 | L8:0 [|·|] srcLines=["", ""]
+[18:55:48.295] [UNDO] beginUndo kind=enter force=true pre=bi=6 path=[] off=0 | L7:0 [|·|] coalesce=false | undo=0 redo=0
+[18:55:48.295] [UNDO] recordUndo push pre=bi=6 path=[] off=0 | L7:0 [|·|] bodyLen=3849 | undo=1 redo=0
+[18:55:48.295] [UNDO] splitParagraph BEFORE  cursor-line=7
+    L3: "UNDO行二"
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+[18:55:48.295] [UNDO] splitParagraph AFTER   cursor-line=7
+    L3: "UNDO行二"
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+[18:55:48.311] [UNDO] recordGroup kind=enter post=bi=7 path=[] off=0 | L8:0 [|·|]
+[18:55:48.403] [UNDO] splitParagraph re-rendered blocks=151 block[7].type=blank_line items=-
+[18:55:48.403] [UNDO] splitParagraph re-rendered, restore new cursor=bi=7 path=[] off=0 | L8:0 [|·|]
+[18:55:48.403] [UNDO] restoreCursor bi=7 path=[] off=0
+[18:55:48.808] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:0 [|·|] srcLines=["", ""]
+[18:55:48.808] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=1 redo=0
+[18:55:48.808] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=3850 | undo=2 redo=0
+[18:55:48.808] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+[18:55:48.808] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+[18:55:48.826] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:0 [|·|]
+[18:55:48.914] [UNDO] splitParagraph re-rendered blocks=152 block[8].type=blank_line items=-
+[18:55:48.914] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:0 [|·|]
+[18:55:48.914] [UNDO] restoreCursor bi=8 path=[] off=0
+[18:55:49.133] [UNDO] splitParagraph block=blank_line pre=bi=8 path=[] off=0 | L9:0 [|·|] new=bi=9 path=[] off=0 | L10:0 [|·|] srcLines=["", ""]
+[18:55:49.133] [UNDO] beginUndo kind=enter force=true pre=bi=8 path=[] off=0 | L9:0 [|·|] coalesce=false | undo=2 redo=0
+[18:55:49.133] [UNDO] recordUndo push pre=bi=8 path=[] off=0 | L9:0 [|·|] bodyLen=3851 | undo=3 redo=0
+[18:55:49.133] [UNDO] splitParagraph BEFORE  cursor-line=9
+    L5: ""
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+[18:55:49.133] [UNDO] splitParagraph AFTER   cursor-line=9
+    L5: ""
+    L6: ""
+    L7: ""
+    L8: ""
+>>> L9: ""
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+[18:55:49.149] [UNDO] recordGroup kind=enter post=bi=9 path=[] off=0 | L10:0 [|·|]
+[18:55:49.235] [UNDO] splitParagraph re-rendered blocks=153 block[9].type=blank_line items=-
+[18:55:49.235] [UNDO] splitParagraph re-rendered, restore new cursor=bi=9 path=[] off=0 | L10:0 [|·|]
+[18:55:49.235] [UNDO] restoreCursor bi=9 path=[] off=0
+[18:55:50.075] [UNDO] resetHistory undo=3 redo=0
+[18:55:50.950] [UNDO] splitParagraph block=blank_line pre=bi=10 path=[] off=0 | L11:0 [|·|] new=bi=11 path=[] off=0 | L12:0 [|·|] srcLines=["", ""]
+[18:55:50.950] [UNDO] beginUndo kind=enter force=true pre=bi=10 path=[] off=0 | L11:0 [|·|] coalesce=false | undo=0 redo=0
+[18:55:50.950] [UNDO] recordUndo push pre=bi=10 path=[] off=0 | L11:0 [|·|] bodyLen=404 | undo=1 redo=0
+[18:55:50.950] [UNDO] splitParagraph BEFORE  cursor-line=11
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+>>> L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+    L15: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[18:55:50.951] [UNDO] splitParagraph AFTER   cursor-line=11
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+>>> L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+[18:55:50.954] [UNDO] recordGroup kind=enter post=bi=11 path=[] off=0 | L12:0 [|·|]
+[18:55:50.956] [UNDO] splitParagraph re-rendered blocks=34 block[11].type=blank_line items=-
+[18:55:50.956] [UNDO] splitParagraph re-rendered, restore new cursor=bi=11 path=[] off=0 | L12:0 [|·|]
+[18:55:50.957] [UNDO] restoreCursor bi=11 path=[] off=0
+[18:55:51.143] [UNDO] splitParagraph block=blank_line pre=bi=11 path=[] off=0 | L12:0 [|·|] new=bi=12 path=[] off=0 | L13:0 [|·|] srcLines=["", ""]
+[18:55:51.143] [UNDO] beginUndo kind=enter force=true pre=bi=11 path=[] off=0 | L12:0 [|·|] coalesce=false | undo=1 redo=0
+[18:55:51.143] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|·|] bodyLen=405 | undo=2 redo=0
+[18:55:51.143] [UNDO] splitParagraph BEFORE  cursor-line=12
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+[18:55:51.143] [UNDO] splitParagraph AFTER   cursor-line=12
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+[18:55:51.146] [UNDO] recordGroup kind=enter post=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:55:51.148] [UNDO] splitParagraph re-rendered blocks=34 block[12].type=blank_line items=-
+[18:55:51.148] [UNDO] splitParagraph re-rendered, restore new cursor=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:55:51.148] [UNDO] restoreCursor bi=12 path=[] off=0
+[18:55:51.986] [UNDO] splitParagraph block=blank_line pre=bi=5 path=[] off=0 | L6:0 [|·|] new=bi=6 path=[] off=0 | L7:0 [|·|] srcLines=["", ""]
+[18:55:51.986] [UNDO] beginUndo kind=enter force=true pre=bi=5 path=[] off=0 | L6:0 [|·|] coalesce=false | undo=2 redo=0
+[18:55:51.986] [UNDO] recordUndo push pre=bi=5 path=[] off=0 | L6:0 [|·|] bodyLen=406 | undo=3 redo=0
+[18:55:51.987] [UNDO] splitParagraph BEFORE  cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: ""
+>>> L6: ""
+    L7: ""
+    L8: ""
+    L9: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L10: ""
+[18:55:51.987] [UNDO] splitParagraph AFTER   cursor-line=6
+    L2: ""
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: ""
+>>> L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+[18:55:51.990] [UNDO] recordGroup kind=enter post=bi=6 path=[] off=0 | L7:0 [|·|]
+[18:55:51.993] [UNDO] splitParagraph re-rendered blocks=34 block[6].type=blank_line items=-
+[18:55:51.993] [UNDO] splitParagraph re-rendered, restore new cursor=bi=6 path=[] off=0 | L7:0 [|·|]
+[18:55:51.993] [UNDO] restoreCursor bi=6 path=[] off=0
+[18:55:52.184] [UNDO] splitParagraph block=blank_line pre=bi=6 path=[] off=0 | L7:0 [|·|] new=bi=7 path=[] off=0 | L8:0 [|·|] srcLines=["", ""]
+[18:55:52.184] [UNDO] beginUndo kind=enter force=true pre=bi=6 path=[] off=0 | L7:0 [|·|] coalesce=false | undo=3 redo=0
+[18:55:52.185] [UNDO] recordUndo push pre=bi=6 path=[] off=0 | L7:0 [|·|] bodyLen=407 | undo=4 redo=0
+[18:55:52.185] [UNDO] splitParagraph BEFORE  cursor-line=7
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: ""
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L11: ""
+[18:55:52.185] [UNDO] splitParagraph AFTER   cursor-line=7
+    L3: "## 本地[[\\h:#00cc00:#9a6ed0|相对路径图片]]"
+    L4: ""
+    L5: ""
+    L6: ""
+>>> L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+[18:55:52.187] [UNDO] recordGroup kind=enter post=bi=7 path=[] off=0 | L8:0 [|·|]
+[18:55:52.190] [UNDO] splitParagraph re-rendered blocks=34 block[7].type=blank_line items=-
+[18:55:52.190] [UNDO] splitParagraph re-rendered, restore new cursor=bi=7 path=[] off=0 | L8:0 [|·|]
+[18:55:52.190] [UNDO] restoreCursor bi=7 path=[] off=0
+[18:55:52.785] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [|·|] srcLines=["", ""]
+[18:55:52.785] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=4 redo=0
+[18:55:52.785] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=408 | undo=5 redo=0
+[18:55:52.785] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: ""
+    L5: ""
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: ""
+    L11: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L12: ""
+[18:55:52.785] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: ""
+    L5: ""
+    L6: ""
+    L7: ""
+>>> L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+    L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+[18:55:52.788] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:55:52.790] [UNDO] splitParagraph re-rendered blocks=34 block[8].type=heading items=-
+[18:55:52.790] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:55:52.790] [UNDO] restoreCursor bi=8 path=[] off=0
+[18:55:54.132] [UNDO] splitParagraph block=blank_line pre=bi=11 path=[] off=0 | L12:0 [|#|# [[\h:#] new=bi=12 path=[] off=0 | L13:0 [|·|] srcLines=["", ""]
+[18:55:54.132] [UNDO] beginUndo kind=enter force=true pre=bi=11 path=[] off=0 | L12:0 [|#|# [[\h:#] coalesce=false | undo=5 redo=0
+[18:55:54.132] [UNDO] recordUndo push pre=bi=11 path=[] off=0 | L12:0 [|#|# [[\h:#] bodyLen=409 | undo=6 redo=0
+[18:55:54.132] [UNDO] splitParagraph BEFORE  cursor-line=12
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: "## [[\\h:#00cc00:#9a6ed0|API 路径图]]片"
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+[18:55:54.132] [UNDO] splitParagraph AFTER   cursor-line=12
+    L8: ""
+    L9: ""
+    L10: ""
+    L11: ""
+>>> L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+[18:55:54.135] [UNDO] recordGroup kind=enter post=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:55:54.137] [UNDO] splitParagraph re-rendered blocks=34 block[12].type=blank_line items=-
+[18:55:54.137] [UNDO] splitParagraph re-rendered, restore new cursor=bi=12 path=[] off=0 | L13:0 [|·|]
+[18:55:54.137] [UNDO] restoreCursor bi=12 path=[] off=0
+[18:55:57.997] [UNDO] splitParagraph block=blank_line pre=bi=13 path=[] off=0 | L14:0 [|·|] new=bi=14 path=[] off=0 | L15:0 [|·|] srcLines=["", ""]
+[18:55:57.997] [UNDO] beginUndo kind=enter force=true pre=bi=13 path=[] off=0 | L14:0 [|·|] coalesce=false | undo=6 redo=0
+[18:55:57.997] [UNDO] recordUndo push pre=bi=13 path=[] off=0 | L14:0 [|·|] bodyLen=376 | undo=7 redo=0
+[18:55:57.997] [UNDO] splitParagraph BEFORE  cursor-line=14
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+>>> L14: ""
+    L15: ""
+    L16: ""
+    L17: ""
+    L18: ""
+[18:55:57.997] [UNDO] splitParagraph AFTER   cursor-line=14
+    L10: ""
+    L11: ""
+    L12: ""
+    L13: ""
+>>> L14: ""
+    L15: ""
+    L16: ""
+    L17: ""
+    L18: ""
+[18:55:58.000] [UNDO] recordGroup kind=enter post=bi=14 path=[] off=0 | L15:0 [|·|]
+[18:55:58.002] [UNDO] splitParagraph re-rendered blocks=34 block[14].type=image items=-
+[18:55:58.002] [UNDO] splitParagraph re-rendered, restore new cursor=bi=14 path=[] off=0 | L15:0 [|·|]
+[18:55:58.002] [UNDO] restoreCursor bi=14 path=[] off=0
+[18:55:58.726] [UNDO] splitParagraph block=blank_line pre=bi=16 path=[] off=0 | L17:0 [|·|] new=bi=17 path=[] off=0 | L18:0 [|·|] srcLines=["", ""]
+[18:55:58.726] [UNDO] beginUndo kind=enter force=true pre=bi=16 path=[] off=0 | L17:0 [|·|] coalesce=false | undo=7 redo=0
+[18:55:58.726] [UNDO] recordUndo push pre=bi=16 path=[] off=0 | L17:0 [|·|] bodyLen=377 | undo=8 redo=0
+[18:55:58.726] [UNDO] splitParagraph BEFORE  cursor-line=17
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+>>> L17: ""
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+[18:55:58.726] [UNDO] splitParagraph AFTER   cursor-line=17
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+>>> L17: ""
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+[18:55:58.729] [UNDO] recordGroup kind=enter post=bi=17 path=[] off=0 | L18:0 [|·|]
+[18:55:58.731] [UNDO] splitParagraph re-rendered blocks=34 block[17].type=image items=-
+[18:55:58.731] [UNDO] splitParagraph re-rendered, restore new cursor=bi=17 path=[] off=0 | L18:0 [|·|]
+[18:55:58.731] [UNDO] restoreCursor bi=17 path=[] off=0
+[18:56:02.050] [UNDO] resetHistory undo=8 redo=0
+[18:56:03.508] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [## |[|[\h:#00c] srcLines=["", ""]
+[18:56:03.508] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=0 redo=0
+[18:56:03.508] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=683 | undo=1 redo=0
+[18:56:03.508] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: ""
+    L5: "[[\\h:red|$E=mc^2$]] 是质能方程。"
+    L6: ""
+    L7: "[[\\h:yellow|质能方程 ]][[\\h:red:green|$E=mc^2$]][[\\h:yellow| 是基础公式]]"
+>>> L8: ""
+    L9: "## [[\\h:#00cc00|**2. 公式在字体颜色内|**]]"
+    L10: ""
+    L11: "$x^2+y^2=z^2$[[\\h:red|** 勾股定理。**]]"
+    L12: ""
+[18:56:03.508] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: ""
+    L5: "[[\\h:red|$E=mc^2$]] 是质能方程。"
+    L6: ""
+    L7: "[[\\h:yellow|质能方程 ]][[\\h:red:green|$E=mc^2$]][[\\h:yellow| 是基础公式]]"
+>>> L8: ""
+    L9: ""
+    L10: "## [[\\h:#00cc00|**2. 公式在字体颜色内|**]]"
+    L11: ""
+    L12: "$x^2+y^2=z^2$[[\\h:red|** 勾股定理。**]]"
+[18:56:03.511] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:56:03.520] [UNDO] splitParagraph re-rendered blocks=29 block[8].type=heading items=-
+[18:56:03.521] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:56:03.521] [UNDO] restoreCursor bi=8 path=[] off=0
+[18:56:05.015] [UNDO] resetHistory undo=1 redo=0
+[18:56:05.696] [UNDO] resetHistory undo=0 redo=0
+[18:56:07.109] [UNDO] splitParagraph block=blank_line pre=bi=7 path=[] off=0 | L8:0 [|·|] new=bi=8 path=[] off=0 | L9:3 [## |S|4 普通[[\h] srcLines=["", ""]
+[18:56:07.109] [UNDO] beginUndo kind=enter force=true pre=bi=7 path=[] off=0 | L8:0 [|·|] coalesce=false | undo=0 redo=0
+[18:56:07.109] [UNDO] recordUndo push pre=bi=7 path=[] off=0 | L8:0 [|·|] bodyLen=525 | undo=1 redo=0
+[18:56:07.109] [UNDO] splitParagraph BEFORE  cursor-line=8
+    L4: "S1A[[\\h:#00cc00:#9a6ed0|绿***高****亮S*]]1B"
+    L5: ""
+    L6: "## S2 双色荧光[[\\c:gray|笔换]]色"
+    L7: "[[\\h:orange:#9a6ed0|**S2A绿**]][[\\h:#00cc00:#7721e0|**底灰**]][[\\h:orange:#9a6ed0|**字S2B|**]]"
+>>> L8: ""
+    L9: "## S4 普通[[\\h:#00cc00:#7721e0|与]][[\\h:#00cc00:#9a6ed0|*高亮相*]][[\\h:#00cc00:#7721e0|邻]]"
+    L10: "[[\\h:#00cc00:#7721e0|S4**A普通高亮S**4B]]"
+    L11: ""
+    L12: "## [[\\h:#00cc00:#7721e0|S8]][[\\h:#00cc00:#9a6ed0|* *]][[\\h:#ad4d09:#9a6ed0|*混合*]][[\\h:#00cc00:#7721e0|嵌套]]"
+[18:56:07.109] [UNDO] splitParagraph AFTER   cursor-line=8
+    L4: "S1A[[\\h:#00cc00:#9a6ed0|绿***高****亮S*]]1B"
+    L5: ""
+    L6: "## S2 双色荧光[[\\c:gray|笔换]]色"
+    L7: "[[\\h:orange:#9a6ed0|**S2A绿**]][[\\h:#00cc00:#7721e0|**底灰**]][[\\h:orange:#9a6ed0|**字S2B|**]]"
+>>> L8: ""
+    L9: ""
+    L10: "## S4 普通[[\\h:#00cc00:#7721e0|与]][[\\h:#00cc00:#9a6ed0|*高亮相*]][[\\h:#00cc00:#7721e0|邻]]"
+    L11: "[[\\h:#00cc00:#7721e0|S4**A普通高亮S**4B]]"
+    L12: ""
+[18:56:07.111] [UNDO] recordGroup kind=enter post=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:56:07.112] [UNDO] splitParagraph re-rendered blocks=16 block[8].type=heading items=-
+[18:56:07.112] [UNDO] splitParagraph re-rendered, restore new cursor=bi=8 path=[] off=0 | L9:3 [|·|]
+[18:56:07.112] [UNDO] restoreCursor bi=8 path=[] off=0
+[18:56:08.319] [UNDO] resetHistory undo=1 redo=0
+[18:56:11.027] [UNDO] splitParagraph block=blank_line pre=bi=18 path=[] off=0 | L19:0 [|·|] new=bi=19 path=[] off=0 | L20:0 [|s|ad[[\h:#] srcLines=["", ""]
+[18:56:11.027] [UNDO] beginUndo kind=enter force=true pre=bi=18 path=[] off=0 | L19:0 [|·|] coalesce=false | undo=0 redo=0
+[18:56:11.027] [UNDO] recordUndo push pre=bi=18 path=[] off=0 | L19:0 [|·|] bodyLen=3852 | undo=1 redo=0
+[18:56:11.027] [UNDO] splitParagraph BEFORE  cursor-line=19
+    L15: ""
+    L16: ""
+    L17: ""
+    L18: "### 图片"
+>>> L19: ""
+    L20: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L21: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+    L22: "[[\\h:green:purple|***|sss***]]"
+    L23: "[[\\h:green:gray|***撒旦a的撒***]]"
+[18:56:11.027] [UNDO] splitParagraph AFTER   cursor-line=19
+    L15: ""
+    L16: ""
+    L17: ""
+    L18: "### 图片"
+>>> L19: ""
+    L20: ""
+    L21: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L22: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+    L23: "[[\\h:green:purple|***|sss***]]"
+[18:56:11.042] [UNDO] recordGroup kind=enter post=bi=19 path=[] off=0 | L20:0 [|·|]
+[18:56:11.125] [UNDO] splitParagraph re-rendered blocks=153 block[19].type=paragraph items=-
+[18:56:11.125] [UNDO] splitParagraph re-rendered, restore new cursor=bi=19 path=[] off=0 | L20:0 [|·|]
+[18:56:11.125] [UNDO] restoreCursor bi=19 path=[] off=0
+[18:56:44.688] [UNDO] splitParagraph block=blank_line pre=bi=5 path=[] off=0 | L6:0 [|·|] new=bi=6 path=[] off=0 | L7:0 [|·|] srcLines=["", ""]
+[18:56:44.688] [UNDO] beginUndo kind=enter force=true pre=bi=5 path=[] off=0 | L6:0 [|·|] coalesce=false | undo=1 redo=0
+[18:56:44.688] [UNDO] recordUndo push pre=bi=5 path=[] off=0 | L6:0 [|·|] bodyLen=3853 | undo=2 redo=0
+[18:56:44.689] [UNDO] splitParagraph BEFORE  cursor-line=6
+    L2: "## 图片渲染测试|"
+    L3: "UNDO行二"
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+>>> L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+[18:56:44.689] [UNDO] splitParagraph AFTER   cursor-line=6
+    L2: "## 图片渲染测试|"
+    L3: "UNDO行二"
+    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
+    L5: ""
+>>> L6: ""
+    L7: ""
+    L8: ""
+    L9: ""
+    L10: ""
+[18:56:44.708] [UNDO] recordGroup kind=enter post=bi=6 path=[] off=0 | L7:0 [|·|]
+[18:56:44.804] [UNDO] splitParagraph re-rendered blocks=153 block[6].type=blank_line items=-
+[18:56:44.805] [UNDO] splitParagraph re-rendered, restore new cursor=bi=6 path=[] off=0 | L7:0 [|·|]
+[18:56:44.805] [UNDO] restoreCursor bi=6 path=[] off=0
+[18:56:46.603] [UNDO] resetHistory undo=2 redo=0
+[18:56:47.606] [UNDO] splitParagraph block=blank_line pre=bi=14 path=[] off=0 | L15:0 [|·|] new=bi=15 path=[] off=0 | L16:0 [|·|] srcLines=["", ""]
+[18:56:47.606] [UNDO] beginUndo kind=enter force=true pre=bi=14 path=[] off=0 | L15:0 [|·|] coalesce=false | undo=0 redo=0
+[18:56:47.606] [UNDO] recordUndo push pre=bi=14 path=[] off=0 | L15:0 [|·|] bodyLen=3854 | undo=1 redo=0
+[18:56:47.606] [UNDO] splitParagraph BEFORE  cursor-line=15
+    L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: ""
+    L17: ""
+    L18: ""
+    L19: "### 图片"
+[18:56:47.606] [UNDO] splitParagraph AFTER   cursor-line=15
+    L11: ""
+    L12: ""
+    L13: ""
+    L14: ""
+>>> L15: ""
+    L16: ""
+    L17: ""
+    L18: ""
+    L19: ""
+[18:56:47.622] [UNDO] recordGroup kind=enter post=bi=15 path=[] off=0 | L16:0 [|·|]
+[18:56:47.708] [UNDO] splitParagraph re-rendered blocks=155 block[15].type=blank_line items=-
+[18:56:47.708] [UNDO] splitParagraph re-rendered, restore new cursor=bi=15 path=[] off=0 | L16:0 [|·|]
+[18:56:47.708] [UNDO] restoreCursor bi=15 path=[] off=0
+[18:56:49.041] [UNDO] splitParagraph block=blank_line pre=bi=15 path=[] off=0 | L16:0 [|·|] new=bi=16 path=[] off=0 | L17:0 [|·|] srcLines=["", ""]
+[18:56:49.041] [UNDO] beginUndo kind=enter force=true pre=bi=15 path=[] off=0 | L16:0 [|·|] coalesce=false | undo=1 redo=0
+[18:56:49.041] [UNDO] recordUndo push pre=bi=15 path=[] off=0 | L16:0 [|·|] bodyLen=3855 | undo=2 redo=0
+[18:56:49.041] [UNDO] splitParagraph BEFORE  cursor-line=16
+    L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+>>> L16: ""
+    L17: ""
+    L18: ""
+    L19: ""
+    L20: "### 图片"
+[18:56:49.041] [UNDO] splitParagraph AFTER   cursor-line=16
+    L12: ""
+    L13: ""
+    L14: ""
+    L15: ""
+>>> L16: ""
+    L17: ""
+    L18: ""
+    L19: ""
+    L20: ""
+[18:56:49.059] [UNDO] recordGroup kind=enter post=bi=16 path=[] off=0 | L17:0 [|·|]
+[18:56:49.144] [UNDO] splitParagraph re-rendered blocks=155 block[16].type=blank_line items=-
+[18:56:49.144] [UNDO] splitParagraph re-rendered, restore new cursor=bi=16 path=[] off=0 | L17:0 [|·|]
+[18:56:49.144] [UNDO] restoreCursor bi=16 path=[] off=0
+[18:56:49.813] [UNDO] splitParagraph block=blank_line pre=bi=16 path=[] off=0 | L17:0 [|·|] new=bi=17 path=[] off=0 | L18:0 [|·|] srcLines=["", ""]
+[18:56:49.814] [UNDO] beginUndo kind=enter force=true pre=bi=16 path=[] off=0 | L17:0 [|·|] coalesce=false | undo=2 redo=0
+[18:56:49.814] [UNDO] recordUndo push pre=bi=16 path=[] off=0 | L17:0 [|·|] bodyLen=3856 | undo=3 redo=0
+[18:56:49.814] [UNDO] splitParagraph BEFORE  cursor-line=17
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+>>> L17: ""
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: "### 图片"
+[18:56:49.814] [UNDO] splitParagraph AFTER   cursor-line=17
+    L13: ""
+    L14: ""
+    L15: ""
+    L16: ""
+>>> L17: ""
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+[18:56:49.829] [UNDO] recordGroup kind=enter post=bi=17 path=[] off=0 | L18:0 [|·|]
+[18:56:49.911] [UNDO] splitParagraph re-rendered blocks=155 block[17].type=blank_line items=-
+[18:56:49.912] [UNDO] splitParagraph re-rendered, restore new cursor=bi=17 path=[] off=0 | L18:0 [|·|]
+[18:56:49.912] [UNDO] restoreCursor bi=17 path=[] off=0
+[18:56:51.660] [UNDO] resetHistory undo=3 redo=0
+[21:34:54.984] [UNDO] resetHistory undo=0 redo=0
+[22:21:52.734] [UNDO] resetHistory undo=0 redo=0
+[22:21:58.935] [UNDO] resetHistory undo=0 redo=0
+[22:22:00.435] [UNDO] beginUndo kind=backspace force=true pre=bi=22 path=[] off=0 | L23:0 [|·|] coalesce=false | undo=0 redo=0
+[22:22:00.435] [UNDO] recordUndo push pre=bi=22 path=[] off=0 | L23:0 [|·|] bodyLen=3857 | undo=1 redo=0
+[22:22:00.453] [UNDO] recordGroup kind=backspace post=bi=21 path=[0] off=2 | L22:6 [### 图片|·|]
+[22:22:00.533] [UNDO] restoreCursor bi=21 path=[0] off=2
+[22:22:01.631] [UNDO] splitParagraph block=heading pre=bi=21 path=[0] off=2 | L22:6 [### 图片|·|] new=bi=22 path=[] off=0 | L23:0 [|·|] srcLines=["### 图片", ""]
+[22:22:01.631] [UNDO] beginUndo kind=enter force=true pre=bi=21 path=[0] off=2 | L22:6 [### 图片|·|] coalesce=false | undo=1 redo=0
+[22:22:01.631] [UNDO] recordUndo push pre=bi=21 path=[0] off=2 | L22:6 [### 图片|·|] bodyLen=3856 | undo=2 redo=0
+[22:22:01.631] [UNDO] splitParagraph BEFORE  cursor-line=22
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+>>> L22: "### 图片"
+    L23: ""
+    L24: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L25: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+    L26: "[[\\h:green:purple|***|sss***]]"
+[22:22:01.631] [UNDO] splitParagraph AFTER   cursor-line=22
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+>>> L22: "### 图片"
+    L23: ""
+    L24: ""
+    L25: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L26: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+[22:22:01.646] [UNDO] recordGroup kind=enter post=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:22:01.727] [UNDO] splitParagraph re-rendered blocks=158 block[22].type=blank_line items=-
+[22:22:01.727] [UNDO] splitParagraph re-rendered, restore new cursor=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:22:01.727] [UNDO] restoreCursor bi=22 path=[] off=0
+[22:22:02.001] [UNDO] splitParagraph block=blank_line pre=bi=22 path=[] off=0 | L23:0 [|·|] new=bi=23 path=[] off=0 | L24:0 [|·|] srcLines=["", ""]
+[22:22:02.001] [UNDO] beginUndo kind=enter force=true pre=bi=22 path=[] off=0 | L23:0 [|·|] coalesce=false | undo=2 redo=0
+[22:22:02.001] [UNDO] recordUndo push pre=bi=22 path=[] off=0 | L23:0 [|·|] bodyLen=3857 | undo=3 redo=0
+[22:22:02.001] [UNDO] splitParagraph BEFORE  cursor-line=23
+    L19: ""
+    L20: ""
+    L21: ""
+    L22: "### 图片"
+>>> L23: ""
+    L24: ""
+    L25: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L26: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+    L27: "[[\\h:green:purple|***|sss***]]"
+[22:22:02.001] [UNDO] splitParagraph AFTER   cursor-line=23
+    L19: ""
+    L20: ""
+    L21: ""
+    L22: "### 图片"
+>>> L23: ""
+    L24: ""
+    L25: ""
+    L26: "sad[[\\h:#d2986f:#9a6ed0|**a撒*****大***]][[\\h:green:gray|***苏打***]][[\\h:#00cc00:#7721e0|***啊啊是大***]][[\\h:green:gray|***da是adsad dadasd***]]"
+    L27: "[[\\h:#d2986f:#9a6ed0|***啊实打实a|***]]"
+[22:22:02.017] [UNDO] recordGroup kind=enter post=bi=23 path=[] off=0 | L24:0 [|·|]
+[22:22:02.094] [UNDO] splitParagraph re-rendered blocks=159 block[23].type=blank_line items=-
+[22:22:02.094] [UNDO] splitParagraph re-rendered, restore new cursor=bi=23 path=[] off=0 | L24:0 [|·|]
+[22:22:02.094] [UNDO] restoreCursor bi=23 path=[] off=0
+[22:22:24.087] [UNDO] resetHistory undo=3 redo=0
+[22:22:24.759] [UNDO] resetHistory undo=0 redo=0
+[22:22:48.110] [UNDO] resetHistory undo=0 redo=0
+[22:22:48.970] [UNDO] resetHistory undo=0 redo=0
+[22:22:49.516] [UNDO] resetHistory undo=0 redo=0
+[22:23:00.798] [UNDO] resetHistory undo=0 redo=0
+[22:23:01.190] [UNDO] resetHistory undo=0 redo=0
+[22:23:01.596] [UNDO] resetHistory undo=0 redo=0
+[22:23:05.531] [UNDO] splitParagraph image block pre=bi=24 path=[] off=1 | L25:82 [)|·|] new=bi=25 path=[] off=0 | L26:0 [|·|]
+[22:23:05.531] [UNDO] beginUndo kind=enter force=true pre=bi=24 path=[] off=1 | L25:82 [)|·|] coalesce=false | undo=0 redo=0
+[22:23:05.532] [UNDO] recordUndo push pre=bi=24 path=[] off=1 | L25:82 [)|·|] bodyLen=3934 | undo=1 redo=0
+[22:23:05.550] [UNDO] recordGroup kind=enter post=bi=25 path=[] off=0 | L26:0 [|·|]
+[22:23:05.645] [UNDO] restoreCursor bi=25 path=[] off=0
+[22:23:14.065] [UNDO] splitParagraph block=blank_line pre=bi=42 path=[] off=0 | L43:0 [|·|] new=bi=43 path=[] off=0 | L44:0 [|·|] srcLines=["", ""]
+[22:23:14.065] [UNDO] beginUndo kind=enter force=true pre=bi=42 path=[] off=0 | L43:0 [|·|] coalesce=false | undo=1 redo=0
+[22:23:14.065] [UNDO] recordUndo push pre=bi=42 path=[] off=0 | L43:0 [|·|] bodyLen=3859 | undo=2 redo=0
+[22:23:14.065] [UNDO] splitParagraph BEFORE  cursor-line=43
+    L39: ""
+    L40: ""
+    L41: ""
+    L42: ""
+>>> L43: ""
+    L44: ""
+    L45: "![网络图片-小](.memoria/images/photomode_29072025_010313.png)"
+    L46: ""
+    L47: "![网络图片-大](https://pic.nximg.cn/file/20221111/12398452_112256442122_2.jpg)"
+[22:23:14.066] [UNDO] splitParagraph AFTER   cursor-line=43
+    L39: ""
+    L40: ""
+    L41: ""
+    L42: ""
+>>> L43: ""
+    L44: ""
+    L45: ""
+    L46: "![网络图片-小](.memoria/images/photomode_29072025_010313.png)"
+    L47: ""
+[22:23:14.085] [UNDO] recordGroup kind=enter post=bi=43 path=[] off=0 | L44:0 [|·|]
+[22:23:14.169] [UNDO] splitParagraph re-rendered blocks=161 block[43].type=blank_line items=-
+[22:23:14.169] [UNDO] splitParagraph re-rendered, restore new cursor=bi=43 path=[] off=0 | L44:0 [|·|]
+[22:23:14.169] [UNDO] restoreCursor bi=43 path=[] off=0
+[22:23:15.008] [UNDO] splitParagraph image block pre=bi=45 path=[] off=1 | L46:63 [)|·|] new=bi=46 path=[] off=0 | L47:0 [|·|]
+[22:23:15.008] [UNDO] beginUndo kind=enter force=true pre=bi=45 path=[] off=1 | L46:63 [)|·|] coalesce=false | undo=2 redo=0
+[22:23:15.008] [UNDO] recordUndo push pre=bi=45 path=[] off=1 | L46:63 [)|·|] bodyLen=3860 | undo=3 redo=0
+[22:23:15.026] [UNDO] recordGroup kind=enter post=bi=46 path=[] off=0 | L47:0 [|·|]
+[22:23:15.112] [UNDO] restoreCursor bi=46 path=[] off=0
+[22:23:20.942] [UNDO] resetHistory undo=3 redo=0
+[22:23:33.191] [UNDO] splitParagraph image block pre=bi=21 path=[] off=1 | L22:82 [)|·|] new=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:23:33.191] [UNDO] beginUndo kind=enter force=true pre=bi=21 path=[] off=1 | L22:82 [)|·|] coalesce=false | undo=0 redo=0
+[22:23:33.191] [UNDO] recordUndo push pre=bi=21 path=[] off=1 | L22:82 [)|·|] bodyLen=375 | undo=1 redo=0
+[22:23:33.194] [UNDO] recordGroup kind=enter post=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:23:33.197] [UNDO] restoreCursor bi=22 path=[] off=0
+[22:23:36.169] [UNDO] splitParagraph image block pre=bi=21 path=[] off=0 | L22:0 [|!|[photomo] new=bi=21 path=[] off=0 | L22:0 [|!|[photomo]
+[22:23:36.169] [UNDO] beginUndo kind=enter force=true pre=bi=21 path=[] off=0 | L22:0 [|!|[photomo] coalesce=false | undo=1 redo=0
+[22:23:36.169] [UNDO] recordUndo push pre=bi=21 path=[] off=0 | L22:0 [|!|[photomo] bodyLen=376 | undo=2 redo=0
+[22:23:36.173] [UNDO] recordGroup kind=enter post=bi=21 path=[] off=0 | L22:0 [|·|]
+[22:23:36.176] [UNDO] restoreCursor bi=21 path=[] off=0
+[22:23:37.314] [UNDO] splitParagraph block=blank_line pre=bi=21 path=[] off=0 | L22:0 [|·|] new=bi=22 path=[] off=0 | L23:0 [|!|[photomo] srcLines=["", ""]
+[22:23:37.314] [UNDO] beginUndo kind=enter force=true pre=bi=21 path=[] off=0 | L22:0 [|·|] coalesce=false | undo=2 redo=0
+[22:23:37.314] [UNDO] recordUndo push pre=bi=21 path=[] off=0 | L22:0 [|·|] bodyLen=377 | undo=3 redo=0
+[22:23:37.315] [UNDO] splitParagraph BEFORE  cursor-line=22
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+>>> L22: ""
+    L23: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L24: ""
+    L25: ""
+    L26: ""
+[22:23:37.315] [UNDO] splitParagraph AFTER   cursor-line=22
+    L18: ""
+    L19: ""
+    L20: ""
+    L21: ""
+>>> L22: ""
+    L23: ""
+    L24: "![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)"
+    L25: ""
+    L26: ""
+[22:23:37.318] [UNDO] recordGroup kind=enter post=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:23:37.321] [UNDO] splitParagraph re-rendered blocks=42 block[22].type=blank_line items=-
+[22:23:37.321] [UNDO] splitParagraph re-rendered, restore new cursor=bi=22 path=[] off=0 | L23:0 [|·|]
+[22:23:37.321] [UNDO] restoreCursor bi=22 path=[] off=0
+[22:23:38.539] [UNDO] splitParagraph image block pre=bi=23 path=[] off=0 | L24:0 [|!|[photomo] new=bi=23 path=[] off=0 | L24:0 [|!|[photomo]
+[22:23:38.539] [UNDO] beginUndo kind=enter force=true pre=bi=23 path=[] off=0 | L24:0 [|!|[photomo] coalesce=false | undo=3 redo=0
+[22:23:38.540] [UNDO] recordUndo push pre=bi=23 path=[] off=0 | L24:0 [|!|[photomo] bodyLen=378 | undo=4 redo=0
+[22:23:38.543] [UNDO] recordGroup kind=enter post=bi=23 path=[] off=0 | L24:0 [|·|]
+[22:23:38.545] [UNDO] restoreCursor bi=23 path=[] off=0
+[22:23:39.625] [UNDO] splitParagraph image block pre=bi=24 path=[] off=1 | L25:82 [)|·|] new=bi=25 path=[] off=0 | L26:0 [|·|]
+[22:23:39.625] [UNDO] beginUndo kind=enter force=true pre=bi=24 path=[] off=1 | L25:82 [)|·|] coalesce=false | undo=4 redo=0
+[22:23:39.625] [UNDO] recordUndo push pre=bi=24 path=[] off=1 | L25:82 [)|·|] bodyLen=379 | undo=5 redo=0
+[22:23:39.628] [UNDO] recordGroup kind=enter post=bi=25 path=[] off=0 | L26:0 [|·|]
+[22:23:39.631] [UNDO] restoreCursor bi=25 path=[] off=0

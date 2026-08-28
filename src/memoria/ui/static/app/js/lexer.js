@@ -116,12 +116,14 @@ window.MemoriaLexer = (function () {
         continue;
       }
 
-      // ── 图片 ![alt](url) ──
+      // ── 图片 ![alt](url) 或 ![alt](url "title") ──
       if (ch === "!" && rem >= 2 && sourceLine[i + 1] === "[") {
         var imgMatch = matchBracketLink(sourceLine, i + 1);
         if (imgMatch) {
           tokens.push(make("image_open", imgMatch.alt, i, srcOffset));
-          tokens.push(make("image_close", imgMatch.url, i + imgMatch.fullLen, srcOffset));
+          var imgClose = make("image_close", imgMatch.url, i + imgMatch.fullLen, srcOffset);
+          imgClose.title = imgMatch.title || "";
+          tokens.push(imgClose);
           i += imgMatch.fullLen + 1; // +1 for the leading !
           continue;
         }
@@ -377,8 +379,8 @@ window.MemoriaLexer = (function () {
   }
 
   /**
-   * 匹配 [text](url) 或 ![alt](url)
-   * @returns {{alt:string, url:string, fullLen:number}|null}
+   * 匹配 [text](url) 或 ![alt](url)（可选 "title" 段）
+   * @returns {{alt:string, url:string, title:string, fullLen:number}|null}
    */
   function matchBracketLink(line, i) {
     // line[i] = '['
@@ -389,10 +391,18 @@ window.MemoriaLexer = (function () {
     var parenClose = line.indexOf(")", closeBracket + 2);
     if (parenClose === -1) return null;
 
-    var url = line.slice(closeBracket + 2, parenClose);
+    var target = line.slice(closeBracket + 2, parenClose); // url 或 url "title"
+    var title = "";
+    // 可选 title 段：空格 + 单/双引号包裹，紧贴闭合 ')'
+    var titleMatch = /^(.*?)\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/.exec(target);
+    if (titleMatch) {
+      target = titleMatch[1];
+      title = titleMatch[2].slice(1, -1); // 去外层引号
+    }
     return {
       alt: alt,
-      url: url,
+      url: target,
+      title: title,
       fullLen: parenClose + 1 - i,
     };
   }

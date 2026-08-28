@@ -1,0 +1,83 @@
+schema_version: 1
+file: cpc-and-ccp.md
+knowledge_points:
+- id: cpc-and-ccp
+  name: CPC 与 CCP 辨析
+  range:
+    start:
+      snippet: '## CPC 与 CCP 辨析'
+    end:
+      snippet: 写作提示：正式考试、国内官方文档必须使用CPC，不要写CCP。
+  weight: 0.7
+  tags:
+  - 专有名词
+  - 政治缩写
+  - 译法区别
+- id: fentanyl
+  name: fentanyl
+  range:
+    start:
+      snippet: '## fentanyl'
+    end:
+      snippet: 名词，即芬太尼，强效阿片类镇痛药物，过量使用具有成瘾性与致命性，是美国阿片危机中的核心争议物质，也是外网政治讨论中的高频话题。
+  weight: 0.7
+  tags:
+  - 专有名词
+  - 药物
+  - 阿片类
+- id: west-bank
+  name: West Bank
+  range:
+    start:
+      snippet: '## West Bank'
+    end:
+      snippet: 约旦河西岸，巴勒斯坦领土的重要组成部分，位于约旦河以西，是巴以问题中的核心领土区域之一，与[[gaza]]共同构成巴勒斯坦主要管辖范围。
+  weight: 0.8
+  tags:
+  - 专有名词
+  - 地名
+  - 巴以地区
+- id: gaza
+  name: Gaza
+  range:
+    start:
+      snippet: '## Gaza'
+    end:
+      snippet: 加沙地带，常简称加沙，位于地中海东岸，是巴勒斯坦领土的组成部分，也是巴以冲突的核心区域之一，战后重建是国际关注的重点议题，与[[west-bank]]共同构成巴勒斯坦主要管辖范围。
+  weight: 0.8
+  tags:
+  - 专有名词
+  - 地名
+  - 巴以地区
+- id: sun-tzu-strategy
+  name: Sun Tzu strategy
+  range:
+    start:
+      snippet: '## Sun Tzu strategy'
+    end:
+      snippet: 孙子兵法策略，源自中国古代军事著作《孙子兵法》，外网讨论中常用来指代谋略、战略博弈类的战术思路。
+  weight: 0.7
+  tags:
+  - 专有名词
+  - 军事典故
+  - 孙子兵法
+links:
+- anchor_text: gaza
+  occurrence: 0
+  targets:
+  - gaza
+  edge_type: reference
+  instances:
+  - line: 11
+    wrapped: true
+  source_id: west-bank
+- anchor_text: west-bank
+  occurrence: 0
+  targets:
+  - west-bank
+  edge_type: reference
+  instances:
+  - line: 14
+    wrapped: true
+  source_id: gaza
+edges: []

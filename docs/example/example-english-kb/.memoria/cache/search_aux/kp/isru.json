@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "kp_id": "isru",
+  "source_fingerprint": "dcf0f94d953979f57640c65c6164f712",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "isru",
+    "isru-(in-situ-resource-utilization)"
+  ],
+  "key_phrases": [
+    "brittle"
+  ],
+  "summary_1l": "brittle",
+  "query_hits": [],
+  "embed_text": "isru ISRU (In-Situ Resource Utilization) 科技术语 航天工程 原位资源利用 isru isru-(in-situ-resource-utilization) brittle brittle brittle",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:24.483365+00:00"
+}

@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import logging
 import os
+import re
+import shutil
 from dataclasses import dataclass, field
 
 from memoria.range.constants import SNIPPET_MAX_LEN
@@ -50,7 +53,7 @@ from memoria.services.kp_rename import (
     replace_link_id_in_markdown,
 )
 from memoria.services.range_proposals import merge_range_proposals
-from memoria.storage.constants import SIDECAR_SCHEMA_VERSION
+from memoria.storage.constants import MEMORIA_DIR, SIDECAR_SCHEMA_VERSION
 from memoria.storage.markdown import compose_markdown, strip_frontmatter
 from memoria.storage.scanner import collect_md_files
 from memoria.storage.sidecar import (
@@ -247,7 +250,11 @@ class DocumentService:
         sidecar["knowledge_points"] = sorted(kps, key=sort_key)
 
     def save_document(self, rel_path: str, body: str) -> dict:
-        """将编辑后的正文写回 .md 文件（保留原有 frontmatter）。"""
+        """将编辑后的正文写回 .md 文件（保留原有 frontmatter）。
+
+        保存成功后自动清理未引用图片资产（注册机制：全库文档无引用的图片
+        从 .memoria/images/ 删除，返回 cleanedImages 清单）。
+        """
         if not self.kb_path:
             return {"status": "error", "message": "未打开知识库"}
         rel_norm = rel_path.replace("\\", "/")
@@ -268,7 +275,17 @@ class DocumentService:
         # 清除缓存，下次 load 时重新解析
         self._cache.pop(rel_norm, None)
         touch_manifest_entry(self.kb_path, rel_norm)
-        return {"status": "ok"}
+        result = {"status": "ok"}
+        # 保存后自动清理：全库无引用的图片从 .memoria/images/ 删除
+        try:
+            cleaned = self.cleanup_unused_images()
+            deleted = cleaned.get("deleted") or []
+            if deleted:
+                result["cleanedImages"] = [d["name"] for d in deleted]
+        except Exception:  # noqa: BLE001
+            # 清理失败不影响保存结果
+            pass
+        return result
 
     def close_kb(self) -> None:
         kb = self.kb_path
@@ -490,6 +507,200 @@ class DocumentService:
             return {"status": "error", "message": "目录已存在"}
         os.makedirs(full, exist_ok=True)
         return {"status": "ok", "path": rel}
+
+    # ── 图片资产管理（.memoria/images/，文件树不可见） ──
+
+    _IMAGE_EXTENSIONS = frozenset({
+        ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".ico",
+    })
+
+    def images_dir(self) -> str:
+        """知识库图片资产目录（KB 根/.memoria/images/）。"""
+        if not self.kb_path:
+            raise RuntimeError("未打开知识库")
+        return os.path.join(self.kb_path, MEMORIA_DIR, "images")
+
+    def import_image(self, local_path: str) -> dict:
+        """把本地图片复制到 .memoria/images/（内容去重 + 重名自动追加序号）。
+
+        - 仅接受白名单扩展名，防止任意文件混入
+        - **内容去重**：若 .memoria/images/ 已存在内容完全相同（MD5 一致）的图片，
+          直接复用已有副本（返回其 relPath，`deduped=true`），不产生新副本
+        - 重名策略：x.png → x-1.png → x-2.png（不覆盖、不报错，仅在同名且内容不同时触发）
+        - 相对路径统一正斜杠：.memoria/images/x.png
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        if not local_path:
+            return {"status": "error", "message": "未选择图片"}
+        ext = os.path.splitext(local_path)[1].lower()
+        if ext not in self._IMAGE_EXTENSIONS:
+            return {"status": "error", "message": f"不支持的图片格式: {ext or '(无扩展名)'}"}
+        if not os.path.isfile(local_path):
+            return {"status": "error", "message": "源文件不存在"}
+        target_dir = self.images_dir()
+        os.makedirs(target_dir, exist_ok=True)
+        digest = self._file_md5(local_path)
+        # 内容去重：已有相同内容图片则直接复用
+        for entry in os.listdir(target_dir):
+            full = os.path.join(target_dir, entry)
+            if not os.path.isfile(full):
+                continue
+            if os.path.splitext(entry)[1].lower() not in self._IMAGE_EXTENSIONS:
+                continue
+            if self._file_md5(full) == digest:
+                rel_path = f"{MEMORIA_DIR}/images/{entry}"
+                return {
+                    "status": "ok",
+                    "relPath": rel_path,
+                    "name": entry,
+                    "deduped": True,
+                }
+        stem = os.path.splitext(os.path.basename(local_path))[0]
+        name = stem + ext
+        index = 1
+        while os.path.exists(os.path.join(target_dir, name)):
+            name = f"{stem}-{index}{ext}"
+            index += 1
+        shutil.copy2(local_path, os.path.join(target_dir, name))
+        rel_path = f"{MEMORIA_DIR}/images/{name}"
+        return {
+            "status": "ok",
+            "relPath": rel_path,
+            "name": name,
+            "deduped": False,
+        }
+
+    @staticmethod
+    def _file_md5(full: str) -> str:
+        """文件 MD5（流式读取，避免大图占满内存）；读取失败返回空串。"""
+        h = hashlib.md5()
+        try:
+            with open(full, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+        except OSError:
+            return ""
+        return h.hexdigest()
+
+    def list_images(self) -> list[dict]:
+        """列出 .memoria/images/ 全部图片（含注册状态：referenced=是否被文档引用）。"""
+        target_dir = self.images_dir()
+        if not os.path.isdir(target_dir):
+            return []
+        refs = self._scan_image_refs()
+        out = []
+        for entry in sorted(os.listdir(target_dir)):
+            full = os.path.join(target_dir, entry)
+            if not os.path.isfile(full):
+                continue
+            ext = os.path.splitext(entry)[1].lower()
+            if ext not in self._IMAGE_EXTENSIONS:
+                continue
+            out.append({
+                "name": entry,
+                "relPath": f"{MEMORIA_DIR}/images/{entry}",
+                "size": os.path.getsize(full),
+                "referenced": entry in refs,
+                "referencedBy": refs.get(entry, []),
+            })
+        return out
+
+    # 图片引用正则：![alt](url) 或 ![alt](url "title")，url 不含空格
+    _IMG_REF_RE = re.compile(r"!\[[^\]]*\]\(\s*([^)\s]+)(?:\s+\"[^\"]*\")?\s*\)")
+
+    def _scan_image_refs(self) -> dict[str, list[str]]:
+        """扫描 KB 全部 md 文档的图片引用，建立注册表。
+
+        返回 {.memoria/images 内文件名: [引用该图片的文档相对路径]}。
+        只统计规范化后指向 .memoria/images/ 的引用（源码 `.memoria/images/x.png`
+        或 API 形式 `/files/.memoria/images/x.png`）；其他相对路径（如
+        `./images/x.png` 当前文件目录语义）与远程 URL 不注册。
+        """
+        refs: dict[str, set[str]] = {}
+        if not self.kb_path:
+            return {}
+        prefix = f"{MEMORIA_DIR}/images/"
+        for rel in collect_md_files(self.kb_path):
+            full = os.path.join(self.kb_path, rel)
+            try:
+                with open(full, "r", encoding="utf-8") as f:
+                    body = f.read()
+            except (OSError, UnicodeDecodeError):
+                continue
+            for m in self._IMG_REF_RE.finditer(body):
+                url = m.group(1).strip()
+                norm = url[8:] if url.startswith("/files/") else url
+                if not norm.startswith(prefix):
+                    continue
+                name = norm[len(prefix):].split("#", 1)[0].split("?", 1)[0]
+                if not name or "/" in name or "\\" in name:
+                    continue
+                refs.setdefault(name, set()).add(rel)
+        return {k: sorted(v) for k, v in refs.items()}
+
+    def unused_images(self) -> list[dict]:
+        """返回未被任何文档引用的图片资产（未注册图片）。"""
+        target_dir = self.images_dir()
+        if not os.path.isdir(target_dir):
+            return []
+        refs = self._scan_image_refs()
+        out = []
+        for entry in sorted(os.listdir(target_dir)):
+            full = os.path.join(target_dir, entry)
+            if not os.path.isfile(full):
+                continue
+            ext = os.path.splitext(entry)[1].lower()
+            if ext not in self._IMAGE_EXTENSIONS:
+                continue
+            if entry not in refs:
+                out.append({
+                    "name": entry,
+                    "relPath": f"{MEMORIA_DIR}/images/{entry}",
+                    "size": os.path.getsize(full),
+                })
+        return out
+
+    def cleanup_unused_images(self, rel_paths: list[str] | None = None) -> dict:
+        """清理未注册（未被任何文档引用）的图片资产。
+
+        rel_paths 为 None 时清理全部未引用图片；否则仅清理列表中属于
+        未引用集合的图片（不误删已引用资产）。返回删除清单。
+        """
+        target_dir = self.images_dir()
+        if not os.path.isdir(target_dir):
+            return {"status": "ok", "deleted": []}
+        refs = self._scan_image_refs()
+        prefix = f"{MEMORIA_DIR}/images/"
+        unused = {
+            e for e in os.listdir(target_dir)
+            if os.path.isfile(os.path.join(target_dir, e))
+            and os.path.splitext(e)[1].lower() in self._IMAGE_EXTENSIONS
+            and e not in refs
+        }
+        if rel_paths:
+            names: set[str] = set()
+            for rp in rel_paths:
+                norm = (rp or "").replace("\\", "/")
+                if norm.startswith(prefix):
+                    names.add(norm[len(prefix):])
+                elif "/" not in norm and norm:
+                    names.add(norm)
+            targets = names & unused
+        else:
+            targets = unused
+        deleted = []
+        for name in sorted(targets):
+            full = os.path.join(target_dir, name)
+            try:
+                os.remove(full)
+            except OSError:
+                continue
+            deleted.append({
+                "name": name,
+                "relPath": f"{MEMORIA_DIR}/images/{name}",
+            })
+        return {"status": "ok", "deleted": deleted}
 
     def _read_body(self, rel_path: str) -> tuple[str, dict | None, list[str]]:
         if not self.kb_path:

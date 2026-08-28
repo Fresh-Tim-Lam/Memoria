@@ -38,6 +38,9 @@ window.MemoriaMathNormalize = (function () {
     if (t.startsWith("```") || t.startsWith("---")) return false;
     if (/\*\*[^*]+\*\*/.test(t)) return false;
     if (/\[\[[^\]]+\]\]/.test(t)) return false;
+    // 图片行（![alt](path)）不是公式：alt 常含下划线（如文件名 photomode_21072025_160332），
+    // 否则会被 MATH_RE 的 `_` 误判为旧式公式而包成 $$ 数学块，图片永不渲染
+    if (/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)/.test(t)) return false;
     if (hasInlineOrBlockDelimiters(t)) return false;
     if (!MATH_RE.test(t)) return false;
     if (chineseRatio(t) > 0.15) return false;

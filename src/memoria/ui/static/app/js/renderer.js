@@ -89,6 +89,7 @@ window.MemoriaRenderer = (function () {
         img.src = block.url;
         img.alt = block.alt;
         img.className = "m0-preview-image";
+        if (block.title) img.title = block.title;
         el.appendChild(img);
         return el;
 

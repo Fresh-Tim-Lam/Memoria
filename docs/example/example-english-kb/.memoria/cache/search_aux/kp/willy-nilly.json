@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "kp_id": "willy-nilly",
+  "source_fingerprint": "7760137620e2c6dce01724ee8b1b455b",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "advance",
+    "sth",
+    "in advance of sth"
+  ],
+  "summary_1l": "in advance of sth",
+  "query_hits": [],
+  "embed_text": "willy-nilly willy-nilly 英语短语 口语 状态描述 advance sth in advance of sth in advance of sth in advance of sth",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:25.596137+00:00"
+}

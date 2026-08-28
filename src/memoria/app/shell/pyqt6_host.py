@@ -66,6 +66,16 @@ class PyQt6Host:
 
         return paths or []
 
+    def pick_image_file(self) -> str | None:
+
+        from PyQt6.QtWidgets import QFileDialog
+
+        path, _ = QFileDialog.getOpenFileName(
+            self._window, "选择图片", "", "图片文件 (*.png *.jpg *.jpeg *.gif *.svg *.webp *.bmp *.ico);;所有文件 (*)"
+        )
+
+        return path or None
+
 
 
     def minimize(self) -> None:

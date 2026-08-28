@@ -44,7 +44,8 @@ concepts:
   - 测试
   - R15
 ---
-UNDO行一## 图片渲染测试|
+UNDO行一
+## 图片渲染测试|
 UNDO行二
 # 小屁[[\h:yellow|[[\c:red|是]]]][[\h:green|[[\c:red|艾]][[\c:orange|斯]]]][[\c:orange|[[\h:yellow|比吗]]]]
 
@@ -52,7 +53,22 @@ UNDO行二
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 ### 图片
+
+
+
 
 sad[[\h:#d2986f:#9a6ed0|**a撒*****大***]][[\h:green:gray|***苏打***]][[\h:#00cc00:#7721e0|***啊啊是大***]][[\h:green:gray|***da是adsad dadasd***]]
 [[\h:#d2986f:#9a6ed0|***啊实打实a|***]]
@@ -71,14 +87,20 @@ sad[[\h:#d2986f:#9a6ed0|**a撒*****大***]][[\h:green:gray|***苏打***]][[\h:#0
 
 
 
+![photomode_18092025_224424](.memoria/images/photomode_18092025_224424.png)
 
-![网络图片-小](https://am.zdmimg.com/202504/30/68116f1fe214c5947.jpg_e1080.jpg)
+
+![网络图片-小](.memoria/images/photomode_29072025_010313.png)
+
 
 ![网络图片-大](https://pic.nximg.cn/file/20221111/12398452_112256442122_2.jpg)
 
 ### 本地相对路径图片
 
-![本地图片](./images/test-image.png)
+![本地图片](.memoria/images/test-image.png)
+
+![带标题本地图片](.memoria/images/photomode_18092025_224424.png "测试标题")
+
 
 ### 图片点击放大（Lightbox）
 > 点击下方图片应弹出放大覆盖层

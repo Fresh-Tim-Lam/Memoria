@@ -754,6 +754,42 @@ class UIAPI:
                 continue
         return result
 
+    # ── 图片资产管理（复制入库 .memoria/images/） ──
+
+    def select_image_file(self) -> str:
+        """打开图片选择对话框，返回本地路径（取消返回空串）。"""
+        if self._host is None:
+            return ""
+        return self._host.pick_image_file() or ""
+
+    def import_image(self, local_path: str) -> dict:
+        """复制本地图片到 .memoria/images/（重名自动去重），返回相对路径。"""
+        try:
+            return self._svc.import_image(local_path)
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def list_images(self) -> dict:
+        """列出 .memoria/images/ 全部图片资产（含注册状态：referenced / referencedBy）。"""
+        try:
+            return {"status": "ok", "images": self._svc.list_images()}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def unused_images(self) -> dict:
+        """列出未被任何文档引用的图片资产（未注册图片）。"""
+        try:
+            return {"status": "ok", "images": self._svc.unused_images()}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def cleanup_unused_images(self, rel_paths: list[str] | None = None) -> dict:
+        """清理未注册图片；rel_paths 为空时清理全部未引用图片，返回删除清单。"""
+        try:
+            return self._svc.cleanup_unused_images(rel_paths)
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
     def pre_scan_import(self, file_contents: list[dict]) -> dict:
         """预扫描导入文件，检测 KP id 冲突。
 

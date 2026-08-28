@@ -52,6 +52,14 @@
   // ── 编辑模式（默认开启）──
   EH.editMode = true;
 
+  /**
+   * 编辑光标是否真实位于预览区（闪烁光标）
+   * 由事件驱动显式维护（focusin / 预览区 mouseup / 模式切换 / 文件切换），
+   * 不依赖实时读取 selection —— 切换文件/重渲染后 selection 可能残留旧位置，
+   * 实时快照不可控，显式状态机才可靠。
+   */
+  EH._caretInPreview = false;
+
   /** 切换编辑模式，更新按钮 UI */
   EH.toggleEditMode = function () {
     EH.editMode = !EH.editMode;
@@ -66,6 +74,17 @@
     var preview = document.getElementById("preview");
     if (preview) {
       preview.contentEditable = EH.editMode ? "true" : "false";
+    }
+    // 编辑模式关闭 → 预览区无"闪烁光标"概念，图片插入按钮必须立即禁用
+    // （selection 仍可能停留在预览区，selectionchange 不会因此触发，需在此主动禁用）
+    if (!EH.editMode) {
+      EH._caretInPreview = false;
+      var imgBtn = document.getElementById("btn-insert-image");
+      if (imgBtn) imgBtn.disabled = true;
+    } else {
+      // 开启编辑模式：焦点若已落在预览区则视为有编辑光标，否则无
+      EH._caretInPreview = !!(document.activeElement &&
+        document.activeElement.closest && document.activeElement.closest("#preview"));
     }
   };
 
@@ -354,6 +373,39 @@
     return r;
   }
 
+  /** 是否为图片块（光标可停靠在 img 前/后，但内容不可编辑） */
+  function isImageBlock(blockIndex) {
+    var M = window.MemoriaMapper;
+    var doc = M ? M.getDoc() : null;
+    if (!doc || !doc.blocks || blockIndex < 0 || blockIndex >= doc.blocks.length) return false;
+    return doc.blocks[blockIndex].type === "image";
+  }
+
+  /** 光标是否停在图片块的 img 前（0）/后（1）；非图片停靠位置返回 -1 */
+  function imageStopOffset(sel) {
+    if (!sel || !sel.anchorNode || !sel.anchorNode.classList) return -1;
+    if (!sel.anchorNode.classList.contains("m0-src-block")) return -1;
+    if (sel.anchorOffset !== 0 && sel.anchorOffset !== 1) return -1;
+    var bi = parseInt(sel.anchorNode.getAttribute("data-m0-block-index"), 10);
+    if (isNaN(bi) || !isImageBlock(bi)) return -1;
+    return sel.anchorOffset;
+  }
+
+  /** 在图片块的 img 前（side=0）/后（side=1）放置光标 */
+  function placeCursorInImageBlock(blockIndex, side) {
+    var el = document.querySelector('.m0-src-block[data-m0-block-index="' + blockIndex + '"]');
+    if (!el) return false;
+    var off = side > 0 ? (el.childNodes.length || 0) : 0;
+    var r = document.createRange();
+    r.setStart(el, Math.min(off, el.childNodes.length));
+    r.collapse(true);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+    flog("PCB", "placeCursorInImageBlock(" + blockIndex + ", side=" + side + ") off=" + off + " → OK");
+    return true;
+  }
+
   function findEditableBlockIndex(fromIndex, direction) {
     var M = window.MemoriaMapper;
     var doc = M ? M.getDoc() : null;
@@ -407,16 +459,18 @@
       if (!first) first = node;
       last = node;
     }
-    // 没有文本节点（空行 block）→ 在 block 元素上放置光标
+    // 没有文本节点（空行 block）→ 在 block 元素上放置光标（atEnd 时放元素末尾，
+    // 如图片块 img 之后）
     if (!first) {
       flog("PCB", "  no text nodes → placing on blockEl directly");
       var r0 = document.createRange();
-      r0.setStart(el, 0);
+      var offEmpty = atEnd ? (el.childNodes.length || 0) : 0;
+      r0.setStart(el, Math.min(offEmpty, el.childNodes.length));
       r0.collapse(true);
       var s0 = window.getSelection();
       s0.removeAllRanges();
       s0.addRange(r0);
-      flog("PCB", "  → OK (empty block)");
+      flog("PCB", "  → OK (empty block, off=" + offEmpty + ")");
       return true;
     }
     var target = atEnd ? last : first;
@@ -467,14 +521,15 @@
       var lastText = null;
       var n;
       while ((n = walker.nextNode())) lastText = n;
-      if (!lastText) { flog("EDGE", "isAtBlockEdge(1) → false (no lastText, empty block)"); return false; }
+      // 空块（如空行）无文本节点 → 视为边界（支持从空行进入相邻图片块的停靠）
+      if (!lastText) { flog("EDGE", "isAtBlockEdge(1) → true (empty block, treated as edge)"); return true; }
       var isLast = sel.anchorNode === lastText && sel.anchorOffset >= (lastText.textContent || "").length;
       flog("EDGE", "isAtBlockEdge(1) anchor='" + (sel.anchorNode.textContent || "").substring(0, 15) + "' off=" + sel.anchorOffset + " lastText='" + (lastText.textContent || "").substring(0, 15) + "' len=" + (lastText.textContent || "").length + " → " + isLast);
       return isLast;
     } else {
       // 开头：光标在第一个文本节点的开头
       var firstText = walker.nextNode();
-      if (!firstText) { flog("EDGE", "isAtBlockEdge(-1) → false (no firstText)"); return false; }
+      if (!firstText) { flog("EDGE", "isAtBlockEdge(-1) → true (empty block, treated as edge)"); return true; }
       var isFirst = sel.anchorNode === firstText && sel.anchorOffset === 0;
       flog("EDGE", "isAtBlockEdge(-1) anchor='" + (sel.anchorNode.textContent || "").substring(0, 15) + "' off=" + sel.anchorOffset + " firstText='" + (firstText.textContent || "").substring(0, 15) + "' → " + isFirst);
       return isFirst;
@@ -635,11 +690,26 @@
       if (walkEl) {
         var clickBi = parseInt(walkEl.getAttribute("data-m0-block-index"), 10);
         if (!isNaN(clickBi) && isNonEditableBlock(clickBi)) {
+          // 图片块：点击 img 外的空白 → 光标停靠图片前/后（点击 img 本体 → Lightbox）
+          if (isImageBlock(clickBi) && !(clickTarget.tagName === "IMG")) {
+            var sideImg = 0;
+            var imgEl = walkEl.querySelector("img.m0-preview-image");
+            if (imgEl) {
+              var ir = imgEl.getBoundingClientRect();
+              sideImg = e.clientX >= ir.left + ir.width / 2 ? 1 : 0;
+            }
+            flog("MOUSE", "mouseup on image block blank → dock cursor side=" + sideImg);
+            placeCursorInImageBlock(clickBi, sideImg);
+            EH._caretInPreview = true;  // 编辑光标真实停靠预览区图片旁
+            setTimeout(function () { syncFromSelection("click:image"); }, 0);
+            return;
+          }
           flog("MOUSE", "mouseup on non-editable block " + clickBi + " → skip sync (allow dblclick)");
           return;
         }
       }
 
+      EH._caretInPreview = true;  // 点击预览区 → 编辑光标真实位于预览区
       setTimeout(function () { syncFromSelection("click"); }, 0);
     });
 
@@ -676,8 +746,26 @@
         return;
       }
 
-      // ── Case A: 当前 block 不可编辑 → preventDefault + 跳到下一个可编辑 block ──
+      // ── Case A: 当前 block 不可编辑 ──
+      //    图片块：光标可停靠 img 前/后，按方向键在两侧间移动或离开；
+      //    其他块：跳过到下一个可编辑 block
       if (isNonEditableBlock(curBlkIdx)) {
+        var imgStop = isImageBlock(curBlkIdx) ? imageStopOffset(window.getSelection()) : -1;
+        if (imgStop >= 0) {
+          flog("CASA", "Case A: image block, imgStop=" + imgStop + " dir=" + dir + " → dock nav");
+          e.preventDefault();
+          var inside = (imgStop === 0 && dir > 0) || (imgStop === 1 && dir < 0);
+          if (inside) {
+            // 在图片两侧间移动
+            placeCursorInImageBlock(curBlkIdx, imgStop === 0 ? 1 : 0);
+          } else {
+            // 离开图片块到相邻可编辑块
+            var outIdx = findEditableBlockIndex(curBlkIdx, dir);
+            if (outIdx >= 0) placeCursorInBlock(outIdx, dir < 0);
+          }
+          syncFromSelection("arrow:" + key);
+          return;
+        }
         flog("CASA", "Case A: curBlk " + curBlkIdx + " non-editable → skip");
         e.preventDefault();
         var skipIdx = findEditableBlockIndex(curBlkIdx, dir);
@@ -689,14 +777,22 @@
       }
 
       // ── Case B: 当前 block 可编辑，检查是否在 block 边界 ──
-      //    所有方向键都做边界检查：在边界且下一 block 不可编辑 → 跳过
+      //    所有方向键都做边界检查：在边界且下一 block 不可编辑 → 图片块停靠 img 两侧，其他跳过
       var atEdge = isAtBlockEdge(dir);
       flog("CASB", "Case B: curBlk " + curBlkIdx + " atEdge(" + dir + ")=" + atEdge);
       if (atEdge) {
         var nextBlk = curBlkIdx + dir;
         flog("CASB", "  nextBlk=" + nextBlk);
-        // 下一个 block 不可编辑 → preventDefault + 跳过
+        // 下一个 block 不可编辑 → 图片块停靠 / 其他跳过
         if (nextBlk >= 0 && isNonEditableBlock(nextBlk)) {
+          if (isImageBlock(nextBlk)) {
+            // 从相邻可编辑块边界进入图片块：向右 → img 前，向左 → img 后
+            flog("CASB", "  nextBlk is image → dock at img side");
+            e.preventDefault();
+            placeCursorInImageBlock(nextBlk, dir > 0 ? 0 : 1);
+            syncFromSelection("arrow:" + key);
+            return;
+          }
           flog("CASB", "  nextBlk non-editable → preventDefault + skip");
           e.preventDefault();
           var skipIdx2 = findEditableBlockIndex(nextBlk, dir);

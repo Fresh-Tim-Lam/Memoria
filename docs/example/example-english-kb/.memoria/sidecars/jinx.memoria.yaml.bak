@@ -1,0 +1,53 @@
+schema_version: 1
+file: jinx.md
+knowledge_points:
+- id: jinx
+  name: jinx
+  range:
+    start:
+      snippet: '## jinx'
+    end:
+      snippet: 注意：属于非正式口语表达，正式场合避免使用。
+  weight: 0.6
+  tags:
+  - 英语词汇
+  - 口语俚语
+  - 迷信话题
+- id: bullshit
+  name: bullshit (bs)
+  range:
+    start:
+      snippet: '## bullshit (bs)'
+    end:
+      snippet: 语气粗俗，正式场合严禁使用，日常口语中也属于较不礼貌的表达。
+  weight: 0.6
+  tags:
+  - 英语词汇
+  - 粗俗俚语
+  - 口语
+- id: kinky-play
+  name: kinky play
+  range:
+    start:
+      snippet: '## kinky play'
+    end:
+      snippet: 相关概念：与[[vanilla-sex]]相对，后者指代常规无特殊癖好的亲密行为。
+  weight: 0.6
+  tags:
+  - 英语词汇
+  - 成人亚文化
+  - 情趣俚语
+- id: vanilla-sex
+  name: vanilla sex
+  range:
+    start:
+      snippet: '## vanilla sex'
+    end:
+      snippet: 注意：属于非正式亚文化用语，正式场合不适用。
+  weight: 0.6
+  tags:
+  - 英语词汇
+  - 成人亚文化
+  - 俚语
+links: []
+edges: []

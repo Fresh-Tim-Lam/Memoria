@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "fan-account",
+  "source_fingerprint": "6468d71fe31d175e2f29c6af459e80f0",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "fan-account"
+  ],
+  "key_phrases": [
+    "parody",
+    "account",
+    "parody account"
+  ],
+  "summary_1l": "parody account",
+  "query_hits": [],
+  "embed_text": "fan-account fan account 网络平台术语 X平台 账号分类 fan-account parody account parody account parody account parody account",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:26.416121+00:00"
+}

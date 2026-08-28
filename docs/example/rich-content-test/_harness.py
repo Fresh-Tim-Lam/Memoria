@@ -9,6 +9,13 @@ import traceback
 
 sys.path.insert(0, r"d:\AAA_Jupyter\Memoria\src")
 
+# Windows 管道 stdout 默认 cp1252，中文日志会 UnicodeEncodeError；强制 UTF-8
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")
+    except (AttributeError, OSError):
+        pass
+
 import bottle
 
 from memoria.presentation.api.ui import UIAPI

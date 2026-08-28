@@ -173,9 +173,9 @@ window.MemoriaAST = (function () {
     return { type: TYPES.MATH_BLOCK, formula: formula };
   }
 
-  /** @return {{type:"image", alt:string, url:string}} */
-  function image(alt, url) {
-    return { type: TYPES.IMAGE, alt: alt || "", url: url || "" };
+  /** @return {{type:"image", alt:string, url:string, title:string}} */
+  function image(alt, url, title) {
+    return { type: TYPES.IMAGE, alt: alt || "", url: url || "", title: title || "" };
   }
 
   /** @return {{type:"table", header:Row, rows:Row[]}} */

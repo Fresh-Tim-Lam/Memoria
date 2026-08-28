@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "kp_id": "orchestration",
+  "source_fingerprint": "c223c62e2f4a41fe5a9b312fe4145826",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [],
+  "key_phrases": [
+    "orchestra"
+  ],
+  "summary_1l": "orchestra",
+  "query_hits": [],
+  "embed_text": "orchestration orchestration 英语词汇 音乐 外交引申义 IT术语 orchestra orchestra orchestra",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:26.228142+00:00"
+}

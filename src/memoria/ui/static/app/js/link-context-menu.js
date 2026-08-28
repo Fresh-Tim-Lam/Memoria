@@ -222,6 +222,15 @@ window.MemoriaLinkContextMenu = (function () {
       },
     ];
 
+    if (ctx.onInsertImage) {
+      items.push({ divider: true });
+      items.push({
+        label: "插入图片",
+        hint: "选择图片并复制入库 .memoria/images",
+        action: () => ctx.onInsertImage(),
+      });
+    }
+
     buildMenu(items, e.clientX, e.clientY);
   }
 

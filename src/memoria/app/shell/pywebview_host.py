@@ -156,6 +156,21 @@ class PyWebViewHost:
         )
         return list(result) if result else []
 
+    def pick_image_file(self) -> str | None:
+        """单选本地图片文件（供复制入库用）。"""
+        window = self._window()
+        if window is None:
+            return None
+        result = window.create_file_dialog(
+            webview.OPEN_DIALOG,
+            allow_multiple=False,
+            file_types=(
+                "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.svg;*.webp;*.bmp;*.ico)",
+                "All Files (*.*)",
+            ),
+        )
+        return result[0] if result else None
+
     def minimize(self) -> None:
         window = self._window()
         if window is None:

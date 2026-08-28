@@ -546,8 +546,9 @@ window.MemoriaMarkdownPreview = (function () {
         if (/^(https?:|data:|\/)/i.test(src)) return prefix + src + '"';
         // Normalize: remove leading ./
         const clean = src.replace(/^\.\//, "");
-        // Resolve relative to current file's directory within KB
-        const relPath = _currentFileDir + clean;
+        // `./` 开头 → 相对当前文件目录（旧语义，兼容 ./images/x.png）；
+        // 其他相对路径（如 .memoria/images/x.png）→ 相对 KB 根（新约定）
+        const relPath = src.startsWith("./") ? _currentFileDir + clean : clean;
         // Encode each path segment so / remains as separator
         const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
         const apiBase = window.MemoriaBridge?.apiBase || "";

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "kp_id": "spoof-account",
+  "source_fingerprint": "ba38ea3d81a3e3ded36877b56ae04112",
+  "model_set_id": "memoria-v1.5a-rule",
+  "auto_tags": [],
+  "aliases": [
+    "spoof-account"
+  ],
+  "key_phrases": [
+    "parody",
+    "account",
+    "parody account"
+  ],
+  "summary_1l": "parody account",
+  "query_hits": [],
+  "embed_text": "spoof-account spoof account 网络平台术语 X平台 账号分类 同义术语 spoof-account parody account parody account parody account parody account",
+  "generated_by": [
+    {
+      "field": "auto_tags",
+      "pipeline": "suggest_tags"
+    },
+    {
+      "field": "summary_1l",
+      "pipeline": "suggest_description"
+    },
+    {
+      "field": "aliases",
+      "pipeline": "rule"
+    },
+    {
+      "field": "key_phrases",
+      "pipeline": "body_tokens"
+    }
+  ],
+  "promoted": {
+    "auto_tags": [],
+    "aliases": []
+  },
+  "updated_at": "2026-08-25T16:11:26.473583+00:00"
+}

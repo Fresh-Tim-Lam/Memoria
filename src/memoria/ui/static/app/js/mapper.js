@@ -719,6 +719,11 @@ window.MemoriaMapper = (function () {
       }
       if (!found) renderedOffset = 0;
     } else {
+      // 无 inline children 的简单块（IMAGE / HORIZONTAL_RULE / 空行）：
+      // 光标停在 blockEl 元素边界 —— offset 0 = 块首（图片前），offset ≥ 1 = 块尾（图片后）
+      if ((!block.children || block.children.length === 0) && domNode === blockEl) {
+        return { blockIndex: blockIndex, nodePath: [], offset: domOffset > 0 ? 1 : 0 };
+      }
       var pendingMath2 = null;
       for (var j = 0; j < textNodes.length; j++) {
         var tj = textNodes[j];
@@ -810,7 +815,10 @@ window.MemoriaMapper = (function () {
         r.collapse(true);
         return r;
       }
-      return _rangeInContainer(blockEl, 0);
+      // IMAGE 块：offset 0 = 图片左侧（img 前），offset > 0 = 图片右侧（img 后），
+      // 使光标可停靠在图片两侧（导航 / 换行）
+      var imgSide = offset > 0 ? 1 : 0;
+      return _rangeInContainer(blockEl, Math.min(imgSide, blockEl.childNodes.length));
     }
 
     // 计算渲染偏移（渲染文本偏移 = 前面兄弟的渲染长度之和 + 叶内偏移）

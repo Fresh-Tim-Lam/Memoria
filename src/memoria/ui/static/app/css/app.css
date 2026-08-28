@@ -2063,6 +2063,24 @@ body.m0-win-dragging {
     animation: m0-flash-error-out 0.28s ease-in forwards;
 }
 
+.m0-flash-info {
+    max-width: min(480px, 92vw);
+    padding: 10px 16px;
+    background: var(--bg-elevated, #252526);
+    border: 2px solid #26a269;
+    border-radius: 8px;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+    color: var(--text-primary, #e0e0e0);
+    font-size: 13px;
+    line-height: 1.45;
+    text-align: center;
+    animation: m0-flash-error-in 0.18s ease-out;
+}
+
+.m0-flash-info.m0-flash-leaving {
+    animation: m0-flash-error-out 0.28s ease-in forwards;
+}
+
 .m0-flash-error-title {
     font-weight: 600;
     color: #ff6b6b;
@@ -3008,6 +3026,12 @@ body.m0-win-dragging {
 .m0-fmt-btn:hover {
     color: var(--text-primary);
     background: var(--bg-hover);
+}
+.m0-fmt-btn:disabled {
+    color: var(--text-secondary);
+    opacity: 0.35;
+    cursor: not-allowed;
+    background: transparent;
 }
 .m0-fmt-btn.active {
     color: var(--accent);

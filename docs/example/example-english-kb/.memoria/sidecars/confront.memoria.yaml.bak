@@ -1,0 +1,101 @@
+schema_version: 1
+file: confront.md
+knowledge_points:
+- id: confront
+  name: confront
+  range:
+    start:
+      snippet: '## confront'
+    end:
+      snippet: 易错提醒：不存在confront to的搭配，外网常见笔误需注意区分。
+  weight: 0.9
+  tags:
+  - 外交政治术语
+  - 对抗
+  - 多义词
+- id: contain
+  name: contain
+  range:
+    start:
+      snippet: '## contain'
+    end:
+      snippet: 名词形式为containment，即遏制政策。
+  weight: 0.9
+  tags:
+  - 外交政治术语
+  - 地缘遏制
+  - 多义词
+- id: special-interests
+  name: special interests
+  range:
+    start:
+      snippet: '## special interests'
+    end:
+      snippet: 例句：Special interests are running the USA, not Trump. 掌控美国的是特殊利益集团，不是特朗普。
+  weight: 0.8
+  tags:
+  - 外交政治术语
+  - 美国政治
+  - 利益集团
+- id: diktat
+  name: diktat
+  range:
+    start:
+      snippet: '## diktat'
+    end:
+      snippet: 常用于批评外部势力干涉他国内政、强行推行规则的行为。
+  weight: 0.6
+  tags:
+  - 外交政治术语
+  - 强制命令
+  - 外来词
+- id: two-state-solution
+  name: two-state solution
+  range:
+    start:
+      snippet: '## two-state solution'
+    end:
+      snippet: 是国际社会普遍认可的巴以问题解决方向，涉及[[west-bank]]与[[gaza]]等核心领土区域。
+  weight: 1.0
+  tags:
+  - 外交政治术语
+  - 巴以问题
+  - 核心方案
+- id: humanitarianism
+  name: humanitarianism
+  range:
+    start:
+      snippet: '## humanitarianism'
+    end:
+      snippet: 国际事务中常与[[un-security-council]]的职责相关联，涉及人道援助、平民保护等内容。
+  weight: 0.8
+  tags:
+  - 外交政治术语
+  - 人道主义
+  - 国际事务
+- id: un-security-council
+  name: UN Security Council
+  range:
+    start:
+      snippet: '## UN Security Council'
+    end:
+      snippet: 在地区冲突与人道主义事务中承担核心协调与决策角色。
+  weight: 0.8
+  tags:
+  - 外交政治术语
+  - 国际组织
+  - 联合国
+- id: maga
+  name: MAGA
+  range:
+    start:
+      snippet: '## MAGA'
+    end:
+      snippet: 相关支持者群体常被称为MAGA群体。
+  weight: 0.7
+  tags:
+  - 外交政治术语
+  - 美国政治
+  - 竞选口号
+links: []
+edges: []

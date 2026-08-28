@@ -1,0 +1,48 @@
+schema_version: 1
+file: orchestra.md
+knowledge_points:
+- id: orchestra
+  name: orchestra
+  range:
+    start:
+      snippet: '## orchestra'
+    end:
+      snippet: 相关概念：[[orchestration]]
+  weight: 0.8
+  tags:
+  - 英语词汇
+  - 音乐
+  - 剧场术语
+- id: orchestration
+  name: orchestration
+  range:
+    start:
+      snippet: '## orchestration'
+    end:
+      snippet: 相关概念：[[orchestra]]
+  weight: 0.8
+  tags:
+  - 英语词汇
+  - 音乐
+  - 外交引申义
+  - IT术语
+links:
+- anchor_text: orchestration
+  occurrence: 0
+  targets:
+  - orchestration
+  edge_type: reference
+  instances:
+  - line: 10
+    wrapped: true
+  source_id: orchestra
+- anchor_text: orchestra
+  occurrence: 0
+  targets:
+  - orchestra
+  edge_type: reference
+  instances:
+  - line: 22
+    wrapped: true
+  source_id: orchestration
+edges: []

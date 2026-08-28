@@ -62,7 +62,7 @@ window.MemoriaSourceGen = (function () {
         return "$$\n" + block.formula + "\n$$";
 
       case T.IMAGE:
-        return "![" + block.alt + "](" + block.url + ")";
+        return "![" + block.alt + "](" + block.url + (block.title ? " \"" + block.title + "\"" : "") + ")";
 
       case T.HORIZONTAL_RULE:
         return "---";

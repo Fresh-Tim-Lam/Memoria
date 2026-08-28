@@ -29,10 +29,22 @@ _IMG_MIME = {
 _kb_root: str | None = None
 
 
+def _log(msg: str) -> None:
+    """带 [STATIC] 前缀的日志输出。
+
+    Windows 下管道/重定向 stdout 常为 cp1252 编码，中文路径或消息会触发
+    UnicodeEncodeError（打包态窗口应用 stdout 甚至为 None）；统一在此静默降级。
+    """
+    try:
+        print(f"[STATIC] {msg}")
+    except (UnicodeEncodeError, OSError):
+        pass
+
+
 def set_kb_root(path: str) -> None:
     global _kb_root
     _kb_root = path
-    print(f"[STATIC] set_kb_root: _kb_root 设为 {path}")
+    _log(f"set_kb_root: _kb_root 设为 {path}")
 
 
 def get_kb_root() -> str | None:
@@ -43,7 +55,7 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
     """Try to serve a KB file. Returns None if not applicable."""
     kb = _kb_root
     if not kb:
-        print(f"[STATIC] _serve_kb_file: _kb_root 为 None，无法提供 /files/{filepath}")
+        _log(f"_serve_kb_file: _kb_root 为 None，无法提供 /files/{filepath}")
         return None
     # Decode each path segment individually (since / was not encoded)
     decoded = "/".join(urllib.parse.unquote(s) for s in filepath.split("/"))
@@ -58,18 +70,26 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
         full_cmp = full
         kb_cmp = kb_norm
     if not full_cmp.startswith(kb_cmp):
-        print(f"[STATIC] _serve_kb_file: 路径逃逸 {full} 不在 {kb_norm} 下")
+        _log(f"_serve_kb_file: 路径逃逸 {full} 不在 {kb_norm} 下")
+        return None
+    # 边界校验：仅 startswith 前缀匹配会把 "C:\kb-evil" 误判为 "C:\kb" 之下；
+    # 要求 full 等于 KB 根，或严格位于 "kb + 分隔符" 之后（堵住兄弟目录前缀绕过）
+    if full_cmp != kb_cmp and not full_cmp.startswith(kb_cmp + os.sep):
+        _log(f"_serve_kb_file: 路径逃逸 {full} 不在 {kb_norm} 下（前缀边界）")
         return None
     if not os.path.isfile(full):
-        print(f"[STATIC] _serve_kb_file: 文件不存在 {full} (请求: /files/{filepath})")
+        _log(f"_serve_kb_file: 文件不存在 {full} (请求: /files/{filepath})")
         return None
     ext = os.path.splitext(full)[1].lower()
     mime = _IMG_MIME.get(ext, "application/octet-stream")
     fsize = os.path.getsize(full)
-    print(f"[STATIC] _serve_kb_file: 提供文件 {full} (MIME: {mime}, {fsize} bytes)")
+    _log(f"_serve_kb_file: 提供文件 {full} (MIME: {mime}, {fsize} bytes)")
     with open(full, "rb") as f:
         data = f.read()
     return bottle.HTTPResponse(status=200, body=data, headers={"Content-Type": mime, "Content-Length": str(len(data))})
+
+
+_NO_STORE = {"Cache-Control": "no-store, no-cache, must-revalidate", "Pragma": "no-cache"}
 
 
 def create_app() -> bottle.Bottle:
@@ -78,7 +98,11 @@ def create_app() -> bottle.Bottle:
 
     @app.get("/")
     def root() -> bottle.HTTPResponse:
-        return bottle.static_file("app/index.html", root=_STATIC_ROOT)
+        resp = bottle.static_file("app/index.html", root=_STATIC_ROOT)
+        if isinstance(resp, bottle.HTTPResponse):
+            for k, v in _NO_STORE.items():
+                resp.set_header(k, v)
+        return resp
 
     @app.get("/<path:path>")
     def asset(path: str) -> bottle.HTTPResponse:
@@ -96,7 +120,14 @@ def create_app() -> bottle.Bottle:
         ext = os.path.splitext(path)[1].lower()
         mime = _JS_MIME.get(ext)
         if mime:
-            return bottle.static_file(path, root=_STATIC_ROOT, mimetype=mime)
-        return bottle.static_file(path, root=_STATIC_ROOT)
+            resp = bottle.static_file(path, root=_STATIC_ROOT, mimetype=mime)
+        else:
+            resp = bottle.static_file(path, root=_STATIC_ROOT)
+        # 静态资源禁用缓存：开发迭代改 JS/HTML 后重启应用必须拿到最新文件，
+        # 避免 WebView2 启发式缓存旧版本（harness 同款策略）
+        if isinstance(resp, bottle.HTTPResponse):
+            for k, v in _NO_STORE.items():
+                resp.set_header(k, v)
+        return resp
 
     return app

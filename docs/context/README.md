@@ -12,6 +12,7 @@
 | 文件 | 内容 |
 |------|------|
 | [usage-agent-workflow.md](usage-agent-workflow.md) | 知识库生产流水线：内容生成 Agent → 平面文件 → 转换 Agent → 知识库文件夹（双角色规则、质量标准、自维护机制） |
+| [image-features.md](image-features.md) | 图片功能说明与内部机制（渲染链路、路径转换、Lightbox、编辑交互、静态服务、日志速查、已知待办） |
 | （待补）architecture.md | 系统架构总览：双壳（pywebview/PyQt6）、静态服务器、前端模块、数据流 |
 | （待补）glossary.md | 术语表：KP、sidecar、manifest、contain 边、虚链等 |
 | （待补）hard-constraints.md | 关键硬性约束（从项目记忆沉淀，如色板不换行、取色器禁原生 input、Package/lib 同步等） |
