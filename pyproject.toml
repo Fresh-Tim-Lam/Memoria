@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "memoria"
-version = "0.2.0"
+dynamic = ["version"]
 description = "Local knowledge-graph IDE with offline retrieval"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -28,6 +28,9 @@ memoria-build = "memoria.app.build:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "memoria.__version__.__version__"}
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

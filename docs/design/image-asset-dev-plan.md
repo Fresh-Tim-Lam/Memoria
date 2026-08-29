@@ -39,8 +39,8 @@ B 路径基准 + 静态服务 ──► C 后端入库 API ──► D 前端插
 | B | 路径基准与静态服务加固 | — | 子目录文件中 `.memoria/images/...` 引用显示正常；逃逸请求 404 | ✅ 2026-08-26 完成 |
 | C | 后端图片入库 API | — | console 调 API 选图 → 落盘 `.memoria/images/` + 返回相对路径 + 重名去重 | ✅ 2026-08-26 完成 |
 | D | 前端插入入口 | C | 工具栏按钮选图 → 正文插入语法 → 预览渲染 + 可撤销 | ✅ 2026-08-26 完成 |
-| E | 属性渲染落地（大小/对齐） | A | `![alt](path "width=300,align=center")` → 300px 居中；与 Lightbox/双击编辑兼容 | ⏳ |
-| F | 图片管理视图 + 收尾 | C/D | 视图列出全部图片（含注册状态）、插入/删除（仅删引用）可操作、清理未使用图片 | ⏳ 注册/清理 API 已先行落地（2026-08-28） |
+| E | 属性渲染落地（大小/对齐） | A | `![alt](path "width=300,align=center")` → 300px 居中；与 Lightbox/双击编辑兼容 | ✅ 2026-08-28 完成 |
+| F | 图片管理视图 + 收尾 | C/D | 视图列出全部图片（含注册状态）、插入/删除（仅删引用）可操作、清理未使用图片 | ✅ 2026-08-28 完成 |
 
 A/B 相互独立可并行；C 与 A/B 无耦合，可先做。
 
@@ -173,43 +173,80 @@ await memoria.api.import_image("C:/.../a.png")  // 再插一次
 
 ---
 
-## 8. 阶段 E：属性渲染落地（大小/对齐）
+## 8. 阶段 E：属性渲染落地（大小/对齐）✅ 2026-08-28
 
 **目标**：title 参数列表 → 编译内核 attrs → `<img>` 内联样式，同步扩展语法规范。
 
-**改动点**：
-- 阶段 A 基础上，把 title 解析升级为参数列表：`width=300,align=center` 按逗号拆分 `key=value`（`parser.js` 或 `ast.js image()` 内处理，存 `block.attrs`）。
-- `renderer.js` `T.IMAGE`：按 attrs 应用——`width/height` → inline style；`align=center/left/right` → 容器 class（如 `m0-image-align-center`）+ CSS（`css/app.css`）。
-- `source-gen.js` 回写：attrs 序列化回 title 位（与输入语法一致）。
-- `standards/markdown-form-std.md`：新增图片节点属性规范（支持的 key 白名单、语法示例、与 `[[]]` 体系关系）。
-- `edit-handler.js:818-823` 编辑工具提示文案对齐新语法（原文案已写 `![alt](url "title")`，现在真正生效）。
+**已落地改动**：
+- `ast.js`：`parseImageAttrs(title)`（L182-193）——title 按逗号拆段，每段须匹配 `key=value`（key 为字母/数字/下划线/连字符）才按属性解析；任一段不匹配 → 整个 title 回退普通标题。`image()` 工厂携带 `attrs` 字段（`{type, alt, url, title, attrs}`）。
+- `renderer.js` `T.IMAGE`（L103-127）：白名单应用——`width`/`height` 经 `_normalizeImageSize` 规范化（纯数字补 `px`，`px`/`%` 原样，非法值忽略）写 `<img>` 内联样式，且 `img.style.maxWidth = "100%"`（显式尺寸生效、防溢出，覆盖默认 `max-width:35%` 钳制）；`align=center/left/right` → 容器 `.m0-image-align-*` class；未知 key → `console.warn("[img-attrs] ...")` 忽略。
+- `app.css`：`.m0-preview .m0-image-block.m0-image-align-center/left/right { text-align: ... }`。
+- `edit-handler.js`：双击编辑图片提示文案更新为 `![alt](url "width=300,align=center")`。
+- `standards/markdown-form-std.md`：新增"图片节点属性规范"章节（key 白名单、语法示例、解析与容错规则、与 `[[]]` 体系关系）。
+- source-gen 无需改动：attrs 存于 title 原始字符串，回写 `![alt](url "title")` 天然保留，编辑往返不丢。
 
-**交互验证**：
-1. 源码写 `![图](.memoria/images/x.png "width=300,align=center")` → 预览 300px 且居中。
-2. 切换 `align=left/right`、`width=50%` → 样式实时变化。
-3. Lightbox 单击、双击编辑、编辑往返（保存重开）均保留属性。
-4. 非法 key（如 `foo=1`）→ 忽略并 console 警告，不破坏渲染。
+**交互验证（harness + browser 两轮，全部 PASS）**：
+1. 6 类用例（300px 居中 / 50% 左 / align=right / 普通 title / width=200,foo=1 / height=120）：
+   - 全部图片真实加载（naturalWidth=1920，LOAD OK，无 LOAD ERROR）
+   - items[0] `width=300,align=center` → rectW=300、水平居中偏移 0px
+   - items[1] `width=50%,align=left` → rectW=490（=block 980/2，50% 精确生效，修复前被 35% 钳到 343）
+   - items[2] `align=right` → 右缘精确贴容器右
+   - items[3] `测试标题` → 无属性应用，img.title 保留
+   - items[4] `width=200,foo=1` → rectW=200，`[img-attrs] 未知图片属性 key=foo` warn，不破坏渲染
+   - items[5] `height=120` → rectH=120（宽按比例 213）
+2. 编辑往返：源码模式确认完整 `![宽300居中](.memoria/images/... "width=300,align=center")` 保留；save_document 后重开属性不丢。
+3. 无 title / 无属性图片回归不变（自然宽度、无多余 style）。
+4. 期间修复测试夹具：`.memoria/images/` 中 `test-image.png`、`photomode_29072025_010313.png` 被此前 auto-cleanup 验证副作用误删（test-content.md 当时处于污染态），已将 test-content.md 两处悬空引用更新为现存图片（`photomode_21072025_160332.png`、`photomode_18092025_224424.png`）。
 
-**验收**：大小/对齐三种形态生效且可编辑往返；无 title 图片回归不变。
+**验收**：大小/对齐三种形态生效且可编辑往返；无 title 图片回归不变。已达成。
 
 ---
 
-## 9. 阶段 F：图片管理视图 + 收尾
+## 9. 阶段 F：图片管理视图 + 收尾 ✅ 2026-08-28
 
 **目标**：因 `.memoria/images/` 文件树不可见，提供独立视图管理图片资产。
 
-**改动点**：
-- 新模态（复用 `.m0-modal` 样式，参考设置/检查模态）：列出 `list_images()` 全部图片（缩略图 + 文件名 + 使用计数）。
-- 操作：**插入**（当前文档光标处插入语法）、**删除**（弹确认：仅删引用还是连文件删，默认仅删引用）、**替换**（换图）。
-- 使用计数：扫描全库正文 `!\[...\]\(...该图片路径\)` 出现次数，提示"被 N 处引用"。
-- 入口：工具栏按钮或文件树右键。
+**已落地改动**：
+- `app.js` 新增图片管理模态（`openImageManager`，L1662-1840）：
+  - 复用 `.m0-modal` 样式；工具栏含统计（`共 N 张 · 已引用 X · 未使用 Y`）、刷新、清理未使用图片按钮；网格卡片列表（缩略图 `/files/...` + 文件名 + 大小 `fmtImageSize` + 引用状态标签 `已引用 N`/`未使用` + 引用文档列表）。
+  - **插入**：`insertSourceLine("![name](relPath \"width=300\")")` 插入当前文档（复用阶段 D 通道，带 width 属性）。
+  - **删除（已引用）**：确认弹窗 → "仅删引用" → 从当前文档过滤该图引用行（`applyImageEditLines`，磁盘文件保留）；当前文档无引用时提示"需先在其他文档移除引用"。
+  - **删除（未使用）**：确认弹窗 → "连文件删" → `cleanup_unused_images([relPath])` 物理删除。
+  - **清理未使用图片**：`unused_images()` 列出 → 确认弹窗（含前 5 文件名）→ `cleanup_unused_images()` 全清 → 状态条提示删除数量。
+- 入口：文件树空白右键菜单新增"图片管理…"项（L689）。
+- `app.css`：图片管理模态样式（L3709-3811，网格/卡片/缩略图/标签/按钮）。
 
-**交互验证**：
-1. 打开管理视图 → 列出刚插入的图片 + 缩略图。
-2. 点"插入" → 当前文档光标处出现引用；点"删除"（默认仅删引用）→ 正文引用消失、文件仍在、计数更新。
-3. 引用计数与实际搜索一致。
+**交互验证（harness + browser 两轮，全部 PASS）**：
+1. 右键打开视图：7 张卡片（6 已引用 + 1 未使用探测图），stat 正确，缩略图全部加载，`已引用 N` 标签与引用文档一致。
+2. 插入：编辑器出现 `![ai_neon_street](.memoria/images/ai_neon_street.png "width=300")`。
+3. 删除-已引用：确认弹窗"仅删引用" → 当前文档引用消失、磁盘文件保留、引用计数刷新。
+4. 清理未使用（完整确认流程）：确认弹窗显示 1 张 → "清理" → 列表刷新 6 张、磁盘文件删除、toast"已清理 1 张未使用图片"，无 JS 异常。
+5. 已知交互（非缺陷）："仅删引用"若触发保存，会连带触发"保存后自动清理"删除其他未引用图（用户选定策略，见 L167）；验证中探测图曾因此被提前清理。
 
-**验收**：管理视图全功能可用；删除默认安全（不误删文件）。
+**验收**：管理视图全功能可用；删除默认安全（已引用图只删引用不删文件）。已达成。
+
+**交互优化（2026-08-28 二次，用户指定交互方案）**：Lightbox 改双击触发；单击图片直接进入编辑工具栏；对齐/大小/管理入口全部移入块编辑工具栏（`#block-edit-bar`）。
+
+改动点：
+- `markdown-preview.js` `attachImageLightbox`：移除"单击延迟 300ms 开箱"旧逻辑，改为 `img` `dblclick` 直接建 `.m0-lightbox-overlay` + 大图（overlay 点击关闭）。`e.preventDefault()` 不阻止冒泡，让 edit-handler 的 dblclick 分支可先退编辑再放大。
+- `edit-handler.js`：
+  - `_BLOCK_TOOLS.image.tools` 返回工具栏 HTML：**对齐按钮**（左/中/右，`data-align`）+ **大小滑条**（`#img-size-slider`，50–800 step10）+ 当前值显示（`#img-size-val`）+ **图片管理按钮**（`#img-mgr-btn`）。
+  - `enterBlockEditMode` 图片专用分支：**保留 `<img>` 显示**（不再替换为源码文本），`EH.blockEditMode = {blockType:"image", srcStart, originalContent, imgEl, imgAttrs}`；渲染工具栏 + `_initImageTools()` + 块加 `m0-block-editing`（虚线框高亮）。
+  - `parseImageAttrsFromLine(line)`：正则提取 title 参数列表，拆出 width/height/align 初始化工具栏状态。
+  - `_initImageTools()`：对齐按钮点击（active 高亮 → `dispatchImageAttr({align})`）；滑条 `input` 实时改 `imgEl.style.width`（`maxWidth=100%` 防溢出）+ 更新数值显示、`change` 提交 `dispatchImageAttr({width})`；管理按钮派发 `memoria:open-image-manager`。
+  - `dispatchImageAttr(attrs)`：**必须在 `document` 上派发** `CustomEvent("memoria:image-attr", {detail:{srcLine, attrs}})`（app.js 监听 document）。
+  - `exitBlockEditMode` 图片分支：清临时内联样式、移除高亮、恢复工具栏（**无文本写回**）。
+  - 新增 preview `click` 监听：编辑模式 + 点击 `.m0-image-block` → `enterBlockEditMode`（单击进编辑）；dblclick 图片块 → 先 `exitBlockEditMode` 再交由 Lightbox 放大；dblclick 早退条件改为 `blockType !== "image"`（否则图片退出编辑不可达）。
+  - 新增 `EH.reenterImageEdit(srcLine)`：属性写回后按 `data-m0-src-line` 重进编辑。
+- `app.js`：
+  - `updateImageAttrsLine(line, attrs)`：正则提取 title 参数列表，width/align 已存在则原位替换、不存在则追加，返回新源码行。
+  - `memoria:image-attr` 监听：写回 `lines[srcLine-1]` → `applyImageEditLines(lines)`（入撤销栈）→ `setTimeout` 调 `EH.reenterImageEdit(srcLine)` 重进编辑（写回后渲染完成前不丢编辑态）。
+  - `memoria:open-image-manager` 监听 → `openImageManager()`。
+- `app.css`：`.m0-block-editing.m0-image-block img` 虚线 outline、`.m0-img-align-btn.active` 高亮、`.m0-img-size-slider`（96px accent-color）、`.m0-img-size-val`。
+
+**交互验证（browser，8/9 PASS）**：单击进编辑（label=编辑图片、activeAlign=center、blockEditMode 含 imgAttrs）✅；左对齐（源码 `align=left` + 预览 `m0-image-align-left` + 工具栏保持）✅；大小滑条 width=200（源码 `width=200` + slider=200 + img 内联 200px；唯一 FAIL 为"渲染 rect≈200"——视口仅 484px 下 `max-width:100%` 把图压到 109px，环境布局限制非代码缺陷）✅；双击放大（Lightbox 出现 + 编辑态退出 + 工具栏隐藏）✅；图片管理入口（模态打开）✅；点空白退出编辑 ✅；无 JS 异常 ✅。
+
+**坑记录**：事件派发 window/document 不匹配——`dispatchImageAttr`/管理入口最初用 `window.dispatchEvent`，而 app.js 在 `document` 上监听，window 派发的事件**不会传播到 document 监听器**，对齐/大小/管理 3 功能全部失效；统一改 `document.dispatchEvent` 后修复。
 
 ---
 

@@ -95,3 +95,35 @@ highlights:
 | 1 | 已知色→背景色；否则→id |
 | 2 | 两个已知色→bg:fg；id+已知色→id:bg；已知色+未知→bg:fg；id+未知→id:fg |
 | 3 | id:bg:fg |
+
+## 图片节点属性规范（阶段 E，2026-08-28 生效）
+
+图片使用标准 Markdown 图片语法，title 位扩展为**属性参数列表**：
+
+```
+![alt](url "key1=value1,key2=value2")
+```
+
+### 支持的属性 key（白名单）
+
+| key | 取值 | 渲染效果 |
+|-----|------|---------|
+| `width` | 数字（→px）或带单位（`300px` / `50%`） | `<img>` 内联 `width`，与 `max-width:35%` 约束共存 |
+| `height` | 同上 | `<img>` 内联 `height`（覆盖默认 `height:auto`） |
+| `align` | `left` / `center` / `right` | 图片块容器对齐 class（`.m0-image-align-*`，`text-align` 实现） |
+
+### 语法示例
+
+| 需求 | 写法 |
+|------|------|
+| 300px 居中 | `![图](.memoria/images/x.png "width=300,align=center")` |
+| 50% 宽左对齐 | `![图](.memoria/images/x.png "width=50%,align=left")` |
+| 纯标题（非属性） | `![图](.memoria/images/x.png "测试标题")` —— 整体按普通 title 处理 |
+
+### 解析与容错规则
+
+- title 按逗号拆段，**每段必须匹配 `key=value`**（key 为字母/数字/下划线/连字符）才按属性解析；任一段不匹配 → 整个 title 按普通图片标题处理（`<img title>` 工具提示）。
+- 未知 key（如 `foo=1`）→ 忽略并在渲染时 `console.warn("[img-attrs] ...")`，不破坏渲染。
+- 非法尺寸值（如 `width=abc`）→ 忽略，图片保持默认尺寸。
+- 属性存于 AST 节点 `attrs` 字段（`parseImageAttrs`，ast.js），源码回写时保留原始 title 字符串，编辑往返不丢。
+- 与 `[[]]` 体系关系：图片语法独立于 `[[]]`，不受荧光笔/链接分类规则影响；图片属性解析不触碰 `[[]]` 解析器。

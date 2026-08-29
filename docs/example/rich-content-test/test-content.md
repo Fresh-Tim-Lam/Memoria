@@ -87,19 +87,17 @@ sad[[\h:#d2986f:#9a6ed0|**a撒*****大***]][[\h:green:gray|***苏打***]][[\h:#0
 
 
 
-![photomode_18092025_224424](.memoria/images/photomode_18092025_224424.png)
 
 
-![网络图片-小](.memoria/images/photomode_29072025_010313.png)
+![网络图片-小](.memoria/images/photomode_21072025_160332.png)
 
 
 ![网络图片-大](https://pic.nximg.cn/file/20221111/12398452_112256442122_2.jpg)
 
 ### 本地相对路径图片
 
-![本地图片](.memoria/images/test-image.png)
 
-![带标题本地图片](.memoria/images/photomode_18092025_224424.png "测试标题")
+![带标题本地图片](.memoria/images/photomode_21072025_214606.png "测试标题")
 
 
 ### 图片点击放大（Lightbox）
@@ -273,3 +271,13 @@ if result == expected:
     print("测试通过")
 ```
 代码外的 [[\h|荧光笔]] 正常渲染。
+
+### AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd-turbo）
+
+![AI 霓虹街景](.memoria/images/ai_neon_street.png "width=400,align=center")
+
+![AI 暗夜暖光](.memoria/images/ai_dark_glow.png "width=400")
+
+![AI 红光纪念碑](.memoria/images/ai_red_monument.png "width=400")
+
+![AI 暗夜暖光核心](.memoria/images/ai_warm_core.png "width=400")

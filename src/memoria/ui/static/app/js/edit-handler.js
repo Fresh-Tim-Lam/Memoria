@@ -624,6 +624,9 @@
       if (!EH.editMode) return;
       if (typeof state === "undefined" || !state) return;
       if (state.viewMode === "source") return;
+      // 图片名称编辑中：input 的 IME 由浏览器原生处理，不进 AST 编辑管线
+      // （否则 input 内的组合事件冒泡到 preview，compositionend 会把中文误插到文档 → 重渲染退出编辑）
+      if (EH._captionEditingEl) return;
 
       // 组合开始前 DOM 尚未被污染，此时同步锚点是准确的
       syncFromSelection("compositionstart");
@@ -690,6 +693,13 @@
       if (walkEl) {
         var clickBi = parseInt(walkEl.getAttribute("data-m0-block-index"), 10);
         if (!isNaN(clickBi) && isNonEditableBlock(clickBi)) {
+          // 正在编辑名称（caption）时，点击名称文字交给原生光标定位（可点文字中间），
+          // 不做图片前/后停靠，否则每次点击 selection 都被 placeCursorInImageBlock 覆盖
+          if (isImageBlock(clickBi) && EH.blockEditMode && EH.blockEditMode.blockType === "image" &&
+              clickTarget.closest && clickTarget.closest("[data-m0-image-caption]")) {
+            flog("MOUSE", "mouseup on caption while editing → skip dock (native caret)");
+            return;
+          }
           // 图片块：点击 img 外的空白 → 光标停靠图片前/后（点击 img 本体 → Lightbox）
           if (isImageBlock(clickBi) && !(clickTarget.tagName === "IMG")) {
             var sideImg = 0;
@@ -721,6 +731,8 @@
       if (state.viewMode === "source") return;
       // IME 组合期间方向键用于候选词导航，交还 IME，不做 AST 光标同步
       if (EH._composing) return;
+      // 图片名称编辑中：方向键交给 contenteditable 原生光标移动（capKeyHandler 内做边界钳制）
+      if (EH._captionEditingEl) return;
       if (!ARROW_KEYS[e.key]) return;
       var key = e.key;
       var dir = (key === "ArrowRight" || key === "ArrowDown") ? 1 : -1;
@@ -914,7 +926,18 @@
     image: {
       label: "编辑图片",
       tools: function () {
-        return '<span class="m0-block-edit-hint">修改 Markdown 图片语法&nbsp;![alt](url "title")</span>';
+        return '<span class="m0-block-edit-hint">对齐:</span>' +
+          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="left" title="左对齐">左</button>' +
+          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="center" title="居中">中</button>' +
+          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="right" title="右对齐">右</button>' +
+          '<span class="m0-block-edit-hint">大小:</span>' +
+          '<input type="range" id="img-size-slider" class="m0-img-size-slider" min="50" max="800" step="10" title="图片显示宽度">' +
+          '<span class="m0-img-size-val" id="img-size-val">300</span>' +
+          '<span class="m0-block-edit-hint">名称:</span>' +
+          '<input type="range" id="img-name-size-slider" class="m0-img-name-size-slider" min="10" max="32" step="1" title="名称字号">' +
+          '<span class="m0-img-name-val" id="img-name-val">14</span>' +
+          '<button type="button" id="img-name-toggle" class="m0-fmt-btn" title="显示/隐藏图片名称">名称:开</button>' +
+          '<button type="button" class="m0-fmt-btn" id="img-mgr-btn" title="打开图片管理">图片管理</button>';
       }
     }
   };
@@ -1021,20 +1044,56 @@
     var srcStart = parseInt(blockEl.getAttribute("data-m0-src-line"), 10) || 0;
     var srcEnd = parseInt(blockEl.getAttribute("data-m0-src-line-end"), 10) || srcStart;
 
-    // 图片块无文本内容：将 <img> 替换为可编辑的 Markdown 源文本（![alt](url "title")）
-    var originalContent = "";
+    // 图片块：保留 <img> 显示，工具栏提供对齐/大小/管理操作（单击图片触发）
     if (blockType === "image") {
-      var editor = document.getElementById("editor");
-      if (editor && srcStart > 0) {
-        var lineEls = editor.querySelectorAll(".m0-line-content");
-        var srcLineEl = lineEls[srcStart - 1];
-        if (srcLineEl) originalContent = srcLineEl.textContent || "";
+      var editorImg = document.getElementById("editor");
+      var srcLineText = "";
+      if (editorImg && srcStart > 0) {
+        var lineElsImg = editorImg.querySelectorAll(".m0-line-content");
+        var srcLineElImg = lineElsImg[srcStart - 1];
+        if (srcLineElImg) srcLineText = srcLineElImg.textContent || "";
       }
-      blockEl.textContent = originalContent;
-    } else {
-      // 其余块类型：原始可编辑内容即块内纯文本（代码/公式不含围栏）
-      originalContent = blockEl.textContent || "";
+      var imgElImg = blockEl.querySelector("img");
+      var capElImg = blockEl.querySelector("[data-m0-image-caption]");
+      EH.blockEditMode = {
+        blockIndex: blockIndex, blockEl: blockEl, blockType: "image",
+        srcStart: srcStart, srcEnd: srcStart, originalContent: srcLineText,
+        imgEl: imgElImg,
+        imgAttrs: parseImageAttrsFromLine(srcLineText),
+        // 名称（alt）编辑锚点
+        captionEl: capElImg,
+        originalCaption: capElImg ? (capElImg.textContent || "") : "",
+        // 进入编辑时的渲染内联样式（renderer 按源码 width/height 生成）；
+        // 退出时恢复它而不是删除，否则会抹掉写回后渲染的 width，
+        // 图片退回 max-width:35% 钳制的"固定大小"，需刷新才恢复
+        imgOrigStyle: {
+          width: imgElImg ? imgElImg.style.width : "",
+          maxWidth: imgElImg ? imgElImg.style.maxWidth : "",
+        },
+      };
+
+      // 切换工具栏
+      var fmtBarImg = document.querySelector(".m0-format-bar");
+      var blkBarImg = document.getElementById("block-edit-bar");
+      if (fmtBarImg) fmtBarImg.classList.add("hidden");
+      if (blkBarImg) blkBarImg.classList.remove("hidden");
+      var labelElImg = document.getElementById("block-edit-label");
+      if (labelElImg) labelElImg.textContent = "编辑图片";
+      // "编辑图片"标签置于工具栏（#editor-header）最左侧：隐藏文件名 #file-meta
+      var metaElImg = document.getElementById("file-meta");
+      if (metaElImg) metaElImg.style.display = "none";
+      var toolsElImg = document.getElementById("block-edit-tools");
+      if (toolsElImg) {
+        toolsElImg.innerHTML = toolsDef.tools(block);
+        _initImageTools();
+      }
+      blockEl.classList.add("m0-block-editing");
+      log("EH", "enterBlockEditMode: image block " + blockIndex + " line " + srcStart + " attrs=" + JSON.stringify(EH.blockEditMode.imgAttrs));
+      return;
     }
+
+    // 其余块类型：原始可编辑内容即块内纯文本（代码/公式不含围栏）
+    var originalContent = blockEl.textContent || "";
 
     EH.blockEditMode = { blockIndex: blockIndex, blockEl: blockEl, blockType: blockType, srcStart: srcStart, srcEnd: srcEnd, originalContent: originalContent };
 
@@ -1069,6 +1128,172 @@
     sel.addRange(range);
 
     log("EH", "enterBlockEditMode: block " + blockIndex + " type=" + blockType + " lines " + srcStart + "-" + srcEnd);
+  }
+
+  /**
+   * 解析图片源码行中的属性：![alt](url "width=300,align=center")
+   * @returns {object} {width?, height?, align?}
+   */
+  function parseImageAttrsFromLine(line) {
+    var m = line && line.match(/^!\[[^\]]*\]\([^)\s]+(?:\s+"([^"]*)")?\)\s*$/);
+    if (!m || !m[1]) return {};
+    var attrs = {};
+    m[1].split(",").forEach(function (kv) {
+      var eq = kv.indexOf("=");
+      if (eq > 0) {
+        var k = kv.slice(0, eq).trim();
+        var v = kv.slice(eq + 1).trim();
+        if (k === "width" || k === "height" || k === "align" || k === "name-size" || k === "name") attrs[k] = v;
+      }
+    });
+    return attrs;
+  }
+
+  /** 图片编辑工具栏：绑定对齐按钮 / 大小滑条 / 图片管理入口（单击触发） */
+  function _initImageTools() {
+    var ctx = EH.blockEditMode;
+    if (!ctx || ctx.blockType !== "image") return;
+
+    // 对齐按钮：点击 → 派发属性更新（app.js 写回源码并重进编辑）
+    var alignBtns = document.querySelectorAll("#block-edit-tools .m0-img-align-btn");
+    for (var i = 0; i < alignBtns.length; i++) {
+      (function (btn) {
+        var a = btn.getAttribute("data-align");
+        if (ctx.imgAttrs.align === a) btn.classList.add("active");
+        btn.addEventListener("click", function () {
+          var align = btn.getAttribute("data-align");
+          var btns = document.querySelectorAll("#block-edit-tools .m0-img-align-btn");
+          for (var j = 0; j < btns.length; j++) btns[j].classList.remove("active");
+          btn.classList.add("active");
+          dispatchImageAttr({ align: align });
+        });
+      })(alignBtns[i]);
+    }
+
+    // 大小滑条：拖动实时预览（临时改 img 内联样式），松手提交源码
+    var slider = document.getElementById("img-size-slider");
+    var valEl = document.getElementById("img-size-val");
+    if (slider) {
+      var curW = parseInt(ctx.imgAttrs.width, 10);
+      if (isNaN(curW)) {
+        curW = ctx.imgEl ? Math.round(ctx.imgEl.getBoundingClientRect().width) : 300;
+      }
+      slider.value = String(curW);
+      if (valEl) valEl.textContent = String(curW);
+      slider.addEventListener("input", function () {
+        if (valEl) valEl.textContent = this.value;
+        if (ctx.imgEl) {
+          ctx.imgEl.style.maxWidth = "100%";
+          ctx.imgEl.style.width = this.value + "px";
+        }
+      });
+      slider.addEventListener("change", function () {
+        dispatchImageAttr({ width: this.value });
+      });
+    }
+
+    // 图片管理入口
+    var mgrBtn = document.getElementById("img-mgr-btn");
+    if (mgrBtn) {
+      mgrBtn.addEventListener("click", function () {
+        document.dispatchEvent(new CustomEvent("memoria:open-image-manager"));
+      });
+    }
+
+    // 名称字号滑条：拖动实时改 caption 字号，松手提交 name-size
+    var nameSlider = document.getElementById("img-name-size-slider");
+    var nameValEl = document.getElementById("img-name-val");
+    if (nameSlider) {
+      var curNs = parseInt(ctx.imgAttrs["name-size"], 10);
+      if (isNaN(curNs)) {
+        curNs = (ctx.captionEl && parseFloat(getComputedStyle(ctx.captionEl).fontSize)) || 14;
+        curNs = Math.round(curNs);
+      }
+      nameSlider.value = String(curNs);
+      if (nameValEl) nameValEl.textContent = String(curNs);
+      nameSlider.addEventListener("input", function () {
+        if (nameValEl) nameValEl.textContent = this.value;
+        if (ctx.captionEl) ctx.captionEl.style.fontSize = this.value + "px";
+      });
+      nameSlider.addEventListener("change", function () {
+        dispatchImageAttr({ "name-size": this.value });
+      });
+    }
+
+    // 名称显示/隐藏开关（name=hide 隐藏；默认/name=show 显示）
+    // active（蓝色高亮）表示"开"= 名称显示中
+    var nameToggle = document.getElementById("img-name-toggle");
+    if (nameToggle) {
+      var nameHidden = ctx.imgAttrs.name === "hide";
+      nameToggle.textContent = nameHidden ? "名称:关" : "名称:开";
+      nameToggle.classList.toggle("active", !nameHidden);
+      nameToggle.addEventListener("click", function () {
+        dispatchImageAttr({ name: ctx.imgAttrs.name === "hide" ? "show" : "hide" });
+      });
+    }
+  }
+
+  /** 开始编辑图片名称（alt）文字：单击后替换为原生 <input>（单行输入框） */
+  function startCaptionEdit(capEl) {
+    if (EH._captionEditingEl === capEl) return;
+    if (EH._captionEditingEl) finishCaptionEdit();
+    EH._captionEditingEl = capEl;
+    capEl.classList.add("m0-caption-editing");
+    // 记录原文本（放弃编辑时恢复）
+    capEl.setAttribute("data-m0-caption-orig", capEl.textContent || "");
+    var input = document.createElement("input");
+    input.type = "text";
+    input.className = "m0-caption-input";
+    input.value = capEl.textContent || "";
+    // 字号跟随名称字号（renderer name-size 或默认）
+    var fs = window.getComputedStyle(capEl).fontSize;
+    if (fs) input.style.fontSize = fs;
+    capEl.textContent = "";
+    capEl.appendChild(input);
+    input.focus();
+    input.select();
+    // input 原生处理 IME / 光标（不会越出输入框）；Enter 提交；失焦提交
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        finishCaptionEdit(capEl, input.value);
+      }
+    });
+    input.addEventListener("blur", function () {
+      finishCaptionEdit(capEl, input.value);
+    }, { once: true });
+    flog("CAP", "start caption edit (input)");
+  }
+
+  /** 结束名称编辑：写回 alt 到源码行（memoria:image-caption → app.js 更新） */
+  function finishCaptionEdit(capEl, inputValue) {
+    if (EH._captionEditingEl !== capEl) return;
+    EH._captionEditingEl = null;
+    if (!capEl) return;
+    capEl.classList.remove("m0-caption-editing");
+    var newCap = (inputValue != null ? inputValue : capEl.textContent || "").trim().replace(/\s*\n\s*/g, " ");
+    // 移除 input，恢复纯文本显示（app.js 会重渲染，这里先本地更新）
+    if (capEl.querySelector("input.m0-caption-input")) {
+      capEl.textContent = newCap;
+    }
+    var ctx = EH.blockEditMode;
+    if (ctx && ctx.blockType === "image" && ctx.srcStart && newCap !== ctx.originalCaption) {
+      document.dispatchEvent(new CustomEvent("memoria:image-caption", {
+        detail: { srcLine: ctx.srcStart, caption: newCap },
+      }));
+      flog("CAP", "submit caption=" + newCap + " srcLine=" + ctx.srcStart);
+    } else {
+      flog("CAP", "caption unchanged or no ctx");
+    }
+  }
+
+  /** 派发图片属性更新事件（app.js 更新源码行 → 重写渲染 → 重进编辑） */
+  function dispatchImageAttr(attrs) {
+    var ctx = EH.blockEditMode;
+    if (!ctx || ctx.blockType !== "image") return;
+    document.dispatchEvent(new CustomEvent("memoria:image-attr", {
+      detail: { srcLine: ctx.srcStart, attrs: attrs },
+    }));
   }
 
   /**
@@ -1158,6 +1383,33 @@
 
     // ── 块级编辑退出 ──
     var blockEl = ctx.blockEl;
+
+    // 图片编辑：无文本修改；恢复进入编辑前的渲染内联样式
+    // （不能直接删除 width/max-width：写回后重渲染的 img 内联样式是 renderer
+    //   按源码属性生成的，删除会导致图片退回 max-width:35% 钳制的固定大小）
+    if (ctx.blockType === "image") {
+      // 若正在编辑名称文字则先收尾（不提交：视为放弃本次名称编辑）
+      if (EH._captionEditingEl) {
+        var capElX = EH._captionEditingEl;
+        capElX.classList.remove("m0-caption-editing");
+        if (capElX.querySelector("input.m0-caption-input")) {
+          capElX.textContent = capElX.getAttribute("data-m0-caption-orig") || "";
+        }
+        EH._captionEditingEl = null;
+      }
+      if (ctx.imgEl) {
+        ctx.imgEl.style.width = (ctx.imgOrigStyle && ctx.imgOrigStyle.width) || "";
+        ctx.imgEl.style.maxWidth = (ctx.imgOrigStyle && ctx.imgOrigStyle.maxWidth) || "";
+      }
+      if (blockEl) blockEl.classList.remove("m0-block-editing");
+      // 恢复文件名显示（进入图片编辑时隐藏了 #file-meta 使标签位于工具栏最左）
+      var metaElImg2 = document.getElementById("file-meta");
+      if (metaElImg2) metaElImg2.style.display = "";
+      _restoreToolbar();
+      EH.blockEditMode = null;
+      flog("DBL", "exit image edit mode (no content write)");
+      return;
+    }
 
     // 获取编辑后的纯文本内容
     var newContent = "";
@@ -1276,7 +1528,8 @@
       if (!EH.editMode) { flog("DBL", "editMode off → return"); return; }
       if (typeof state === "undefined" || !state) { flog("DBL", "no state → return"); return; }
       if (state.viewMode === "source") { flog("DBL", "viewMode=source → return"); return; }
-      if (EH.blockEditMode) { flog("DBL", "already in blockEditMode → return"); return; }
+      // 图片编辑模式（双击放大场景）：放行到下方图片块分支执行退出；其余编辑模式直接跳过
+      if (EH.blockEditMode && EH.blockEditMode.blockType !== "image") { flog("DBL", "already in blockEditMode → return"); return; }
 
       // ── 检查是否双击了行内公式 (.m0-math 或 mjx-container[data-m0-inline-math]) ──
       // MathJax typeset 后 .m0-math span 可能被替换为 mjx-container，
@@ -1313,15 +1566,50 @@
       flog("DBL", "isNonEditableBlock(" + bi + ")=" + ned);
       if (!ned) { flog("DBL", "editable block → return"); return; }
 
+      // 图片块：双击 = Lightbox 放大（单击已进入编辑工具栏）；若已在图片编辑模式则退出
+      if (isImageBlock(bi)) {
+        if (EH.blockEditMode && EH.blockEditMode.blockType === "image") exitBlockEditMode();
+        flog("DBL", "image block dblclick → Lightbox (skip edit mode)");
+        return;
+      }
+
       flog("DBL", "→ enterBlockEditMode(" + bi + ")");
       enterBlockEditMode(el, bi);
     });
 
-    // 完成按钮
-    var doneBtn = document.getElementById("block-edit-done");
-    if (doneBtn) {
-      doneBtn.addEventListener("click", function () { exitBlockEditMode(); });
-    }
+    // 单击图片块 → 进入图片编辑工具栏（左键单击触发）
+    preview.addEventListener("click", function (e) {
+      if (!EH.editMode) return;
+      if (typeof state === "undefined" || !state || state.viewMode === "source") return;
+      var el = e.target;
+      // 单击名称文字 → 直接编辑名称（同时进入/保持图片编辑模式，阶段 G）
+      var capT = el && el.closest ? el.closest("[data-m0-image-caption]") : null;
+      if (capT && preview.contains(capT)) {
+        if (!(EH.blockEditMode && EH.blockEditMode.blockType === "image")) {
+          var capBlock = capT.closest(".m0-image-block");
+          if (capBlock && preview.contains(capBlock)) {
+            var capBi = parseInt(capBlock.getAttribute("data-m0-block-index"), 10);
+            if (!isNaN(capBi) && isImageBlock(capBi)) {
+              enterBlockEditMode(capBlock, capBi);
+            }
+          }
+        }
+        if (EH.blockEditMode && EH.blockEditMode.blockType === "image") {
+          startCaptionEdit(capT);
+          e.preventDefault();
+          return;
+        }
+      }
+      if (EH.blockEditMode) return;
+      var imgBlock = el && el.closest ? el.closest(".m0-image-block") : null;
+      if (!imgBlock || !preview.contains(imgBlock)) return;
+      var biImg = parseInt(imgBlock.getAttribute("data-m0-block-index"), 10);
+      if (isNaN(biImg)) return;
+      if (!isImageBlock(biImg)) return;
+      flog("CLK", "single click image block bi=" + biImg + " → enterBlockEditMode");
+      enterBlockEditMode(imgBlock, biImg);
+      e.preventDefault();
+    });
 
     // Escape 退出
     document.addEventListener("keydown", function (e) {
@@ -1343,5 +1631,41 @@
       exitBlockEditMode();
     });
   }
+
+  /**
+   * 属性提交后重新进入图片编辑模式（DOM 已重建，按源码行重新定位）
+   * @param {number} srcLine — 1-based 源码行号
+   */
+  EH.reenterImageEdit = function (srcLine) {
+    var el = document.querySelector('.m0-src-block[data-m0-src-line="' + srcLine + '"]');
+    if (!el) return;
+    var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
+    if (isNaN(bi)) return;
+    var M = window.MemoriaMapper;
+    var doc = M ? M.getDoc() : null;
+    if (!doc || !doc.blocks || bi < 0 || bi >= doc.blocks.length) return;
+    if (doc.blocks[bi].type !== "image") return;
+    enterBlockEditMode(el, bi);
+  };
+
+  /**
+   * 名称（alt）提交后放置光标：定位到图片块相邻的可编辑文本（优先左侧块末尾，
+   * 否则右侧块开头），避免提交后光标残留在图片块停靠点 / 文档开头等不合理位置
+   * @param {number} srcLine — 1-based 源码行号
+   */
+  EH.placeCaretAfterNameEdit = function (srcLine) {
+    var el = document.querySelector('.m0-src-block[data-m0-src-line="' + srcLine + '"]');
+    if (!el) return;
+    var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
+    if (isNaN(bi)) return;
+    var outIdx = findEditableBlockIndex(bi, -1);
+    if (outIdx >= 0) {
+      placeCursorInBlock(outIdx, true);
+    } else {
+      outIdx = findEditableBlockIndex(bi, 1);
+      if (outIdx >= 0) placeCursorInBlock(outIdx, false);
+    }
+    setTimeout(function () { syncFromSelection("caption-submit"); }, 0);
+  };
 
 })();

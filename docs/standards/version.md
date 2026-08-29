@@ -40,9 +40,11 @@ src/memoria/__version__.py
 | 文件 | 要求 | 强制方式 |
 |------|------|---------|
 | `src/memoria/__version__.py` | 唯一事实源 | — |
-| `pyproject.toml` `[project].version` | 必须与 `__version__.py` 一致 | `packaging/build.py` 构建时校验，不一致**拒绝构建**（SystemExit） |
+| `pyproject.toml` `[project].dynamic = ["version"]` | 通过 `[tool.setuptools.dynamic] version = {attr = "memoria.__version__.__version__"}` 从 `__version__.py` **动态读取**，无需人工同步 | setuptools 打包时自动解析 |
 
-手动校验：
+> 早期版本曾硬编码 `pyproject.toml [project].version` 并由 `packaging/build.py` 校验一致性（不一致拒绝构建）。2026-08-29 起改为 dynamic version，**升级版本只需改 `__version__.py` 一处**。
+
+手动校验（读取当前版本）：
 
 ```powershell
 python -c "import sys; sys.path.insert(0,'packaging'); import build; print(build._read_version())"
@@ -72,16 +74,17 @@ __version__.py
 ### 安装元数据
 
 ```
-pyproject.toml [project].version  # pip 安装 / 打包元数据（须与 __version__.py 一致）
+__version__.py
+  └─ pyproject.toml [project].dynamic + [tool.setuptools.dynamic] attr 读取
+       └─ pip 安装 / 打包元数据（同一来源，天然一致）
 ```
 
 ## 6. 升级版本步骤
 
-1. 修改 `src/memoria/__version__.py` 为 `"x.y.z"`
-2. 同步修改 `pyproject.toml` 的 `version = "x.y.z"`
-3. 更新本文件「当前版本」与「变更记录」表
-4. 构建发布：`packaging\build_release.cmd --no-clean`（构建会校验一致性）
-5. 验证：
+1. 修改 `src/memoria/__version__.py` 为 `"x.y.z"`（唯一一处）
+2. 更新本文件「当前版本」与「变更记录」表
+3. 构建发布：`packaging\build_release.cmd --no-clean`
+4. 验证：
    - `Package\VERSION` 内容 = `x.y.z`
    - 启动发布包后顶栏 badge / 欢迎页 / 窗口标题显示 `vx.y.z`
 

@@ -498,34 +498,19 @@ window.MemoriaMarkdownPreview = (function () {
       console.log("[img-debug] src:", img.src, "naturalWidth:", img.naturalWidth, "complete:", img.complete, "display:", getComputedStyle(img).display, "width:", getComputedStyle(img).width, "height:", getComputedStyle(img).height, "maxWidth:", getComputedStyle(img).maxWidth);
       img.addEventListener("error", () => console.error("[img-debug] LOAD ERROR:", img.src));
       img.addEventListener("load", () => console.log("[img-debug] LOAD OK:", img.src, "naturalWidth:", img.naturalWidth));
-      // 双击守卫：单击延迟打开 lightbox；双击（用于进入图片编辑模式）时取消。
-      // 若单击立即打开全屏 overlay，双击的第二次点击会落在 overlay 上导致 dblclick 无法触发。
-      img.addEventListener("click", () => {
-        if (img._lbTimer) clearTimeout(img._lbTimer);
-        if (img._lbPending) {
-          // 同一图片的第二次点击 → 双击，取消 lightbox，交由 dblclick 进入编辑模式
-          img._lbPending = false;
-          img._lbTimer = null;
-          return;
-        }
-        img._lbPending = true;
-        img._lbTimer = setTimeout(() => {
-          img._lbPending = false;
-          img._lbTimer = null;
-          const overlay = document.createElement("div");
-          overlay.className = "m0-lightbox-overlay";
-          const bigImg = document.createElement("img");
-          bigImg.src = img.src;
-          bigImg.className = "m0-lightbox-image";
-          overlay.appendChild(bigImg);
-          overlay.addEventListener("click", () => overlay.remove());
-          document.body.appendChild(overlay);
-        }, 300);
-      });
-      img.addEventListener("dblclick", () => {
-        if (img._lbTimer) clearTimeout(img._lbTimer);
-        img._lbPending = false;
-        img._lbTimer = null;
+      // 双击放大（阶段 F 交互：单击进入图片编辑工具栏，双击 Lightbox 放大）
+      img.addEventListener("dblclick", (e) => {
+        const overlay = document.createElement("div");
+        overlay.className = "m0-lightbox-overlay";
+        const bigImg = document.createElement("img");
+        bigImg.src = img.src;
+        bigImg.className = "m0-lightbox-image";
+        overlay.appendChild(bigImg);
+        overlay.addEventListener("click", () => overlay.remove());
+        document.body.appendChild(overlay);
+        // 双击放大时退出已进入的图片编辑模式（由 edit-handler 的 preview dblclick 处理，
+        // 此处不 stopPropagation，让冒泡链继续）
+        e.preventDefault();
       });
     });
   }

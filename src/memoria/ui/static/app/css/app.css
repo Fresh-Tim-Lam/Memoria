@@ -3634,11 +3634,17 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     align-items: center;
     gap: 4px;
     flex: 1;
+    /* 宽度不足时整体可横向滚动，避免挤压控件/文字换行 */
+    overflow-x: auto;
+    min-width: 0;
 }
 .m0-block-edit-hint {
     font-size: 12px;
     color: #666;
     margin-right: 2px;
+    /* 防止容器宽度不足时文字按字换行被挤成竖排 */
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 .m0-block-lang-sel {
     font-size: 12px;
@@ -3699,6 +3705,184 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     max-width: 35%;
     height: auto;
     border-radius: 4px;
+}
+
+/* ── Image alignment (阶段 E 属性渲染) ── */
+.m0-preview .m0-image-block.m0-image-align-center { text-align: center; }
+.m0-preview .m0-image-block.m0-image-align-left { text-align: left; }
+.m0-preview .m0-image-block.m0-image-align-right { text-align: right; }
+
+/* ── Image manager modal (阶段 F 图片管理视图) ── */
+.m0-image-mgr-box {
+    width: min(760px, 94vw);
+    max-height: 82vh;
+    display: flex;
+    flex-direction: column;
+}
+.m0-image-mgr-close {
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding: 0 2px;
+    line-height: 1;
+}
+.m0-image-mgr-close:hover { color: var(--text-primary); }
+.m0-image-mgr-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+}
+.m0-image-mgr-stat {
+    flex: 1;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+.m0-image-mgr-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 10px;
+    align-content: start;
+}
+.m0-image-mgr-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 28px 0;
+}
+.m0-image-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+}
+.m0-image-card-thumb {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+    background: var(--bg-secondary);
+}
+.m0-image-card-info {
+    padding: 6px 8px;
+    flex: 1;
+}
+.m0-image-card-name {
+    font-size: 12px;
+    font-weight: 600;
+    word-break: break-all;
+    line-height: 1.4;
+}
+.m0-image-card-meta {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+.m0-image-card-refs {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.m0-image-card-actions {
+    display: flex;
+    gap: 6px;
+    padding: 6px 8px;
+    border-top: 1px solid var(--border);
+}
+.m0-image-card-actions .m0-btn {
+    flex: 1;
+    font-size: 11px;
+    padding: 3px 6px;
+}
+.m0-img-tag {
+    display: inline-block;
+    font-size: 10px;
+    line-height: 1.5;
+    padding: 0 6px;
+    border-radius: 8px;
+    margin-left: 5px;
+    vertical-align: 1px;
+}
+.m0-img-tag-used { background: rgba(0, 170, 90, 0.15); color: #07a05c; }
+.m0-img-tag-unused { background: rgba(255, 150, 0, 0.15); color: #c47f00; }
+
+/* ── Image edit toolbar (阶段 F：对齐/大小/管理，单击图片触发) ── */
+.m0-preview .m0-src-block.m0-block-editing.m0-image-block img {
+    outline: 2px dashed var(--accent, #409eff);
+    outline-offset: 2px;
+    cursor: pointer;
+}
+#block-edit-tools .m0-img-align-btn.active {
+    background: var(--accent, #409eff);
+    color: #fff;
+}
+.m0-img-size-slider {
+    width: 96px;
+    vertical-align: middle;
+    accent-color: var(--accent, #409eff);
+    cursor: pointer;
+}
+.m0-img-size-val {
+    display: inline-block;
+    min-width: 30px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── Image caption (阶段 G：图片名称显示在图片下方) ── */
+.m0-image-block .m0-image-caption {
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #888;
+    text-align: inherit;
+    cursor: default;
+}
+.m0-image-block .m0-image-caption.m0-caption-editing {
+    color: inherit;
+    cursor: text;
+    outline: 1px dashed var(--accent, #409eff);
+    outline-offset: 1px;
+    background: rgba(64, 158, 255, 0.06);
+}
+/* 名称编辑输入框：原生 input，光标天然无法越出，IME 支持完善 */
+.m0-image-block .m0-caption-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1px 4px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+}
+.m0-img-name-size-slider {
+    width: 72px;
+    vertical-align: middle;
+    accent-color: var(--accent, #409eff);
+    cursor: pointer;
+}
+.m0-img-name-val {
+    display: inline-block;
+    min-width: 26px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
 }
 
 /* ── Image Lightbox ── */

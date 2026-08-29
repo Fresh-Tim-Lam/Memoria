@@ -173,9 +173,29 @@ window.MemoriaAST = (function () {
     return { type: TYPES.MATH_BLOCK, formula: formula };
   }
 
-  /** @return {{type:"image", alt:string, url:string, title:string}} */
+  /**
+   * 解析图片 title 为属性表（阶段 E：width=300,align=center 逗号分隔 key=value）
+   * 任一段不匹配 key=value 则整体按普通 title 处理（如图片说明文字）
+   * @param {string} title
+   * @returns {object|null}
+   */
+  function parseImageAttrs(title) {
+    if (!title) return null;
+    var parts = String(title).split(",");
+    var attrs = null;
+    for (var i = 0; i < parts.length; i++) {
+      var m = /^\s*([A-Za-z0-9_-]+)\s*=\s*(.+?)\s*$/.exec(parts[i]);
+      if (!m) return null;
+      if (!attrs) attrs = {};
+      attrs[m[1]] = m[2];
+    }
+    return attrs;
+  }
+
+  /** @return {{type:"image", alt:string, url:string, title:string, attrs:object|null}} */
   function image(alt, url, title) {
-    return { type: TYPES.IMAGE, alt: alt || "", url: url || "", title: title || "" };
+    var t = title || "";
+    return { type: TYPES.IMAGE, alt: alt || "", url: url || "", title: t, attrs: parseImageAttrs(t) };
   }
 
   /** @return {{type:"table", header:Row, rows:Row[]}} */

@@ -11,7 +11,17 @@ window.MemoriaRenderer = (function () {
   var T = AST.TYPES;
 
   /**
-   * 全量渲染整个文档
+   * 规范化图片尺寸值：纯数字 → px；`300px`/`50%` 原样；非法返回 null
+   * @param {string} v
+   * @returns {string|null}
+   */
+  function _normalizeImageSize(v) {
+    var m = /^(\d+(?:\.\d+)?)(px|%)?$/.exec(String(v).trim());
+    if (!m) return null;
+    return m[2] ? m[0] : m[1] + "px";
+  }
+
+  /**
    * @param {object} doc — Document AST
    * @returns {HTMLElement}
    */
@@ -90,7 +100,41 @@ window.MemoriaRenderer = (function () {
         img.alt = block.alt;
         img.className = "m0-preview-image";
         if (block.title) img.title = block.title;
+        // 阶段 E 属性渲染：width/height → 内联样式；align → 容器对齐 class
+        // 阶段 G 属性：name-size（名称字号）/ name=hide（隐藏名称）
+        if (block.attrs) {
+          for (var _ak in block.attrs) {
+            if (_ak === "width" || _ak === "height") {
+              var v = _normalizeImageSize(block.attrs[_ak]);
+              if (v !== null) {
+                img.style[_ak] = v;
+                img.style.maxWidth = "100%"; // 显式尺寸生效，仅防溢出容器（覆盖默认 max-width:35% 钳制）
+              }
+            } else if (_ak === "align") {
+              var a = block.attrs.align;
+              if (a === "center" || a === "left" || a === "right") {
+                el.classList.add("m0-image-align-" + a);
+              }
+            } else if (_ak !== "name-size" && _ak !== "name") {
+              console.warn("[img-attrs] 未知图片属性 key=" + _ak + "（已忽略），支持 width/height/align/name-size/name");
+            }
+          }
+        }
         el.appendChild(img);
+        // 图片名称（alt）显示在图片下方（阶段 G）
+        var cap = document.createElement("span");
+        cap.className = "m0-image-caption";
+        cap.setAttribute("data-m0-image-caption", "1");
+        cap.textContent = block.alt || "";
+        if (block.attrs) {
+          var ns = block.attrs["name-size"];
+          if (ns) {
+            var nsv = _normalizeImageSize(ns);
+            if (nsv !== null) cap.style.fontSize = nsv;
+          }
+          if (block.attrs.name === "hide") cap.style.display = "none";
+        }
+        el.appendChild(cap);
         return el;
 
       case T.HORIZONTAL_RULE:

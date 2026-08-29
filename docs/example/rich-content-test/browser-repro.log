@@ -1,1165 +1,169 @@
-[18:59:37.112] [UNDO] resetHistory undo=0 redo=0
-[18:59:37.131] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[18:59:37.133] [STAMP] mapped 42 blocks from 44 source lines
-[18:59:37.134] [F1] rendered 42 blocks in 2.6ms
-[18:59:37.136] [render] skip: already rendering
-[18:59:38.846] [UNDO] resetHistory undo=0 redo=0
-[18:59:38.848] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[18:59:38.849] [STAMP] mapped 42 blocks from 44 source lines
-[18:59:38.850] [F1] rendered 42 blocks in 1.1ms
-[18:59:38.851] [render] skip: already rendering
-[19:00:18.773] [UNDO] resetHistory undo=0 redo=0
-[19:00:18.779] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:00:18.782] [STAMP] mapped 42 blocks from 44 source lines
-[19:00:18.782] [F1] rendered 42 blocks in 2.8ms
-[19:00:18.785] [render] skip: already rendering
-[19:01:52.531] [UNDO] resetHistory undo=0 redo=0
-[19:01:52.535] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:01:52.541] [STAMP] mapped 158 blocks from 224 source lines
-[19:01:52.544] [F1] rendered 158 blocks in 7.9ms
-[19:01:52.547] [render] skip: already rendering
-[19:16:31.982] [UNDO] resetHistory undo=0 redo=0
-[19:16:31.989] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:16:31.993] [STAMP] mapped 42 blocks from 44 source lines
-[19:16:31.994] [F1] rendered 42 blocks in 4.1ms
-[19:16:31.998] [render] skip: already rendering
-[19:17:12.803] [UNDO] resetHistory undo=0 redo=0
-[19:17:12.809] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:17:12.812] [STAMP] mapped 42 blocks from 44 source lines
-[19:17:12.813] [F1] rendered 42 blocks in 3.4ms
-[19:17:12.816] [render] skip: already rendering
-[19:18:42.157] [UNDO] resetHistory undo=0 redo=0
-[19:18:42.160] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:18:42.166] [STAMP] mapped 158 blocks from 224 source lines
-[19:18:42.168] [F1] rendered 158 blocks in 7.8ms
-[19:18:42.172] [render] skip: already rendering
-[19:18:55.585] [UNDO] resetHistory undo=0 redo=0
-[19:18:55.589] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:18:55.596] [STAMP] mapped 158 blocks from 224 source lines
-[19:18:55.599] [F1] rendered 158 blocks in 7.3ms
-[19:18:55.606] [render] skip: already rendering
-[19:19:33.786] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:19:33.794] [STAMP] mapped 158 blocks from 224 source lines
-[19:19:33.797] [F1] rendered 158 blocks in 7.2ms
-[19:19:53.620] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:19:53.627] [STAMP] mapped 158 blocks from 224 source lines
-[19:19:53.630] [F1] rendered 158 blocks in 7.2ms
-[19:20:31.824] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:20:48.448] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:20:55.771] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:20:55.778] [STAMP] mapped 158 blocks from 224 source lines
-[19:20:55.779] [F1] rendered 158 blocks in 4.1ms
-[19:21:23.738] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:21:23.746] [STAMP] mapped 158 blocks from 224 source lines
-[19:21:23.749] [F1] rendered 158 blocks in 6.9ms
-[19:21:41.849] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UN", "DO行一"]
-[19:21:41.849] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] coalesce=false | undo=0 redo=0
-[19:21:41.849] [UNDO] recordUndo push pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] bodyLen=3857 | undo=1 redo=0
-[19:21:41.849] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[19:21:41.849] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UN"
-    L2: "DO行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:21:41.866] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:0 [|D|O行一]
-[19:21:41.987] [UNDO] splitParagraph re-rendered blocks=159 block[1].type=paragraph items=-
-[19:21:41.987] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:0 [|D|O行一]
-[19:21:41.987] [UNDO] restoreCursor bi=1 path=[0] off=0
-[19:21:41.848] [MAP] domToAst block=0 dom=text#UNDO行一@2 seg=[hit:2] renderedOffset=2 -> "text"
-[19:21:41.848] [CTX] SRC L1 C2 [UN|D|O行一]
-[19:21:41.848] [CTX] PV  blk0 C2 [UN|D|O行一]
-[19:21:41.848] [EH] beforeinput: L1 C2 (block 0)
-[19:21:41.851] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:21:41.858] [STAMP] mapped 159 blocks from 225 source lines
-[19:21:41.861] [F1] rendered 159 blocks in 6.6ms
-[19:21:41.988] [MAP] rangeAt offset=0 -> text#DO行一@0
-[19:21:41.988] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#DO行一@0
-[19:21:42.023] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:25:31.086] [UNDO] resetHistory undo=0 redo=0
-[19:25:31.091] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:25:31.094] [STAMP] mapped 42 blocks from 44 source lines
-[19:25:31.095] [F1] rendered 42 blocks in 3.3ms
-[19:25:31.098] [render] skip: already rendering
-[19:25:33.841] [UNDO] resetHistory undo=0 redo=0
-[19:25:33.844] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:25:33.849] [STAMP] mapped 158 blocks from 224 source lines
-[19:25:33.852] [F1] rendered 158 blocks in 7.2ms
-[19:25:33.855] [render] skip: already rendering
-[19:26:33.767] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:26:33.774] [STAMP] mapped 158 blocks from 224 source lines
-[19:26:33.776] [F1] rendered 158 blocks in 6.2ms
-[19:26:48.591] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:26:48.598] [STAMP] mapped 158 blocks from 224 source lines
-[19:26:48.601] [F1] rendered 158 blocks in 5.9ms
-[19:26:48.843] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:26:48.850] [STAMP] mapped 158 blocks from 224 source lines
-[19:26:48.852] [F1] rendered 158 blocks in 5.9ms
-[19:27:27.964] [UNDO] beginUndo kind=insert force=false pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] coalesce=false | undo=0 redo=0
-[19:27:27.964] [UNDO] recordUndo push pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] bodyLen=3857 | undo=1 redo=0
-[19:27:27.964] [UNDO] commit cursor=bi=0 path=[0] off=3 | L1:3 [UND|O|行一]
-[19:27:27.971] [UNDO] restoreCursor bi=0 path=[0] off=3
-[19:27:27.973] [UNDO] recordGroup kind=insert post=bi=0 path=[0] off=3 | L1:3 [UNX|D|O行一]
-[19:27:27.974] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=3 | L1:3 [UNX|D|O行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UNX", "DO行一"]
-[19:27:27.974] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=3 | L1:3 [UNX|D|O行一] coalesce=false | undo=1 redo=0
-[19:27:27.974] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:3 [UNX|D|O行一] bodyLen=3858 | undo=2 redo=0
-[19:27:27.975] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNXDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[19:27:27.975] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UNX"
-    L2: "DO行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:27:27.994] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:0 [|D|O行一]
-[19:27:28.129] [UNDO] splitParagraph re-rendered blocks=159 block[1].type=paragraph items=-
-[19:27:28.129] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:0 [|D|O行一]
-[19:27:28.129] [UNDO] restoreCursor bi=1 path=[0] off=0
-[19:27:27.963] [MAP] domToAst block=0 dom=text#UNDO行一@2 seg=[hit:2] renderedOffset=2 -> "text"
-[19:27:27.963] [CTX] SRC L1 C2 [UN|D|O行一]
-[19:27:27.963] [CTX] PV  blk0 C2 [UN|D|O行一]
-[19:27:27.963] [EH] beforeinput: L1 C2 (block 0)
-[19:27:27.968] [STAMP] mapped 158 blocks from 224 source lines
-[19:27:27.972] [MAP] rangeAt offset=3 -> text#UNXDO行一@3
-[19:27:27.972] [MAP] astToDom block=0 path=[0] off=3 atomSide=null rendered=3 -> text#UNXDO行一@3
-[19:27:27.973] [MAP] domToAst block=0 dom=text#UNXDO行一@3 seg=[hit:3] renderedOffset=3 -> "text"
-[19:27:27.974] [CTX] SRC L1 C3 [UNX|D|O行一]
-[19:27:27.974] [CTX] PV  blk0 C3 [UNX|D|O行一]
-[19:27:27.974] [EH] beforeinput: L1 C3 (block 0)
-[19:27:27.976] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:27:27.985] [STAMP] mapped 159 blocks from 225 source lines
-[19:27:27.987] [F1] rendered 159 blocks in 7.0ms
-[19:27:28.129] [MAP] rangeAt offset=0 -> text#DO行一@0
-[19:27:28.129] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#DO行一@0
-[19:27:28.160] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:28:48.007] [UNDO] resetHistory undo=0 redo=0
-[19:28:48.012] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:28:48.015] [STAMP] mapped 42 blocks from 44 source lines
-[19:28:48.016] [F1] rendered 42 blocks in 3.4ms
-[19:28:48.020] [render] skip: already rendering
-[19:28:52.220] [UNDO] resetHistory undo=0 redo=0
-[19:28:52.224] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:28:52.229] [STAMP] mapped 158 blocks from 224 source lines
-[19:28:52.232] [F1] rendered 158 blocks in 7.1ms
-[19:28:52.234] [render] skip: already rendering
-[19:29:06.407] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UN", "DO行一"]
-[19:29:06.407] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] coalesce=false | undo=0 redo=0
-[19:29:06.407] [UNDO] recordUndo push pre=bi=0 path=[0] off=2 | L1:2 [UN|D|O行一] bodyLen=3857 | undo=1 redo=0
-[19:29:06.407] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[19:29:06.407] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UN"
-    L2: "DO行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:29:06.423] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [DO行|一|]
-[19:29:06.423] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=2 | L1:2 [UN|·|] new=bi=1 path=[0] off=0 | L2:3 [DO行|一|] srcLines=["UN", "DO行一"]
-[19:29:06.423] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=2 | L1:2 [UN|·|] coalesce=false | undo=1 redo=0
-[19:29:06.423] [UNDO] recordUndo push pre=bi=0 path=[0] off=2 | L1:2 [UN|·|] bodyLen=3858 | undo=2 redo=0
-[19:29:06.423] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UN"
-    L2: "DO行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:29:06.423] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UN"
-    L2: "DO行一"
-    L3: "DO行一"
-    L4: "## 图片渲染测试|"
-    L5: "UNDO行二"
-[19:29:06.425] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [DO行|一|]
-[19:29:06.425] [UNDO] splitParagraph re-rendered blocks=158 block[1].type=heading items=-
-[19:29:06.425] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [DO行|一|]
-[19:29:06.425] [UNDO] restoreCursor bi=1 path=[0] off=0
-[19:29:06.554] [UNDO] splitParagraph re-rendered blocks=158 block[1].type=heading items=-
-[19:29:06.554] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [DO行|一|]
-[19:29:06.554] [UNDO] restoreCursor bi=1 path=[0] off=0
-[19:29:06.406] [MAP] domToAst block=0 dom=text#UNDO行一@2 seg=[hit:2] renderedOffset=2 -> "text"
-[19:29:06.407] [CTX] SRC L1 C2 [UN|D|O行一]
-[19:29:06.407] [CTX] PV  blk0 C2 [UN|D|O行一]
-[19:29:06.407] [EH] beforeinput: L1 C2 (block 0)
-[19:29:06.408] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:29:06.415] [STAMP] mapped 158 blocks from 225 source lines
-[19:29:06.418] [F1] rendered 158 blocks in 6.2ms
-[19:29:06.423] [EH] domToAst: not in any valid block
-[19:29:06.423] [EH] beforeinput: not on a valid block
-[19:29:06.425] [render] skip: already rendering
-[19:29:06.426] [MAP] rangeAt offset=0 -> text#图片渲染测试|@0
-[19:29:06.426] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#图片渲染测试|@0
-[19:29:06.554] [MAP] rangeAt offset=0 -> text#图片渲染测试|@0
-[19:29:06.554] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#图片渲染测试|@0
-[19:29:06.578] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:29:46.241] [UNDO] resetHistory undo=0 redo=0
-[19:29:46.246] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:29:46.249] [STAMP] mapped 42 blocks from 44 source lines
-[19:29:46.250] [F1] rendered 42 blocks in 3.1ms
-[19:29:46.253] [render] skip: already rendering
-[19:29:49.039] [UNDO] resetHistory undo=0 redo=0
-[19:29:49.042] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:29:49.046] [STAMP] mapped 158 blocks from 224 source lines
-[19:29:49.049] [F1] rendered 158 blocks in 6.5ms
-[19:29:49.051] [render] skip: already rendering
-[19:32:01.921] [UNDO] resetHistory undo=0 redo=0
-[19:32:01.927] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:32:01.931] [STAMP] mapped 42 blocks from 44 source lines
-[19:32:01.932] [F1] rendered 42 blocks in 4.0ms
-[19:32:01.935] [render] skip: already rendering → queue pending re-render
-[19:32:01.941] [render] re-run queued render
-[19:32:01.941] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:32:01.943] [STAMP] mapped 42 blocks from 44 source lines
-[19:32:01.943] [F1] rendered 42 blocks in 1.4ms
-[19:33:30.101] [UNDO] resetHistory undo=0 redo=0
-[19:33:30.107] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:33:30.109] [STAMP] mapped 42 blocks from 44 source lines
-[19:33:30.110] [F1] rendered 42 blocks in 2.9ms
-[19:33:30.113] [render] skip: already rendering → queue pending re-render
-[19:33:30.118] [render] re-run queued render
-[19:33:30.118] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[19:33:30.120] [STAMP] mapped 42 blocks from 44 source lines
-[19:33:30.120] [F1] rendered 42 blocks in 1.5ms
-[19:33:53.868] [UNDO] resetHistory undo=0 redo=0
-[19:33:53.871] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:33:53.875] [STAMP] mapped 158 blocks from 224 source lines
-[19:33:53.878] [F1] rendered 158 blocks in 6.9ms
-[19:33:53.881] [render] skip: already rendering → queue pending re-render
-[19:33:54.070] [render] re-run queued render
-[19:33:54.070] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:33:54.075] [STAMP] mapped 158 blocks from 224 source lines
-[19:33:54.078] [F1] rendered 158 blocks in 6.1ms
-[19:37:36.343] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UND", "O行一"]
-[19:37:36.343] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] coalesce=false | undo=0 redo=0
-[19:37:36.343] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] bodyLen=3857 | undo=1 redo=0
-[19:37:36.343] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[19:37:36.343] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:37:36.360] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[19:37:36.493] [UNDO] splitParagraph re-rendered blocks=158 block[1].type=heading items=-
-[19:37:36.493] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[19:37:36.493] [UNDO] restoreCursor bi=1 path=[0] off=0
-[19:37:36.507] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [O行一|·|] new=bi=2 path=[0] off=0 | L3:0 [|#|# 图片渲染测试] srcLines=["## 图片渲", "染测试|"]
-[19:37:36.507] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [O行一|·|] coalesce=false | undo=1 redo=0
-[19:37:36.507] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [O行一|·|] bodyLen=3858 | undo=2 redo=0
-[19:37:36.507] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UND"
->>> L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[19:37:36.507] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UND"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "## 图片渲染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[19:37:36.528] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[19:37:36.661] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[19:37:36.661] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[19:37:36.661] [UNDO] restoreCursor bi=2 path=[0] off=0
-[19:37:36.342] [MAP] domToAst block=0 dom=text#UNDO行一@3 seg=[hit:3] renderedOffset=3 -> "text"
-[19:37:36.342] [CTX] SRC L1 C3 [UND|O|行一]
-[19:37:36.342] [CTX] PV  blk0 C3 [UND|O|行一]
-[19:37:36.342] [EH] beforeinput: L1 C3 (block 0)
-[19:37:36.345] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:37:36.352] [STAMP] mapped 158 blocks from 225 source lines
-[19:37:36.354] [F1] rendered 158 blocks in 6.2ms
-[19:37:36.493] [MAP] rangeAt offset=0 -> text#图片渲染测试|@0
-[19:37:36.493] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#图片渲染测试|@0
-[19:37:36.506] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[19:37:36.506] [CTX] SRC L2 C6 [O行一|·|]
-[19:37:36.506] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[19:37:36.507] [EH] beforeinput: L2 C6 (block 1)
-[19:37:36.510] [render] currentFileDir=(root)  currentPath=test-content.md
-[19:37:36.518] [STAMP] mapped 158 blocks from 226 source lines
-[19:37:36.521] [F1] rendered 158 blocks in 7.4ms
-[19:37:36.661] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[19:37:36.661] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[19:37:36.672] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[19:37:36.678] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:34:42.110] [UNDO] resetHistory undo=0 redo=0
-[20:34:42.129] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:34:42.132] [STAMP] mapped 42 blocks from 44 source lines
-[20:34:42.133] [F1] rendered 42 blocks in 2.9ms
-[20:34:42.135] [render] skip: already rendering → queue pending re-render
-[20:34:42.147] [render] re-run queued render
-[20:34:42.147] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:34:42.148] [STAMP] mapped 42 blocks from 44 source lines
-[20:34:42.148] [F1] rendered 42 blocks in 0.7ms
-[20:43:58.086] [UNDO] resetHistory undo=2 redo=0
-[20:43:58.093] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:43:58.101] [STAMP] mapped 158 blocks from 224 source lines
-[20:43:58.104] [F1] rendered 158 blocks in 6.8ms
-[20:43:58.110] [render] skip: already rendering → queue pending re-render
-[20:43:58.250] [render] re-run queued render
-[20:43:58.250] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:43:58.256] [STAMP] mapped 158 blocks from 224 source lines
-[20:43:58.259] [F1] rendered 158 blocks in 6.6ms
-[20:45:20.324] [UNDO] resetHistory undo=0 redo=0
-[20:45:20.330] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:45:20.336] [STAMP] mapped 42 blocks from 44 source lines
-[20:45:20.337] [F1] rendered 42 blocks in 6.0ms
-[20:45:20.341] [render] skip: already rendering → queue pending re-render
-[20:45:20.350] [render] re-run queued render
-[20:45:20.350] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:45:20.351] [STAMP] mapped 42 blocks from 44 source lines
-[20:45:20.352] [F1] rendered 42 blocks in 1.8ms
-[20:48:21.598] [UNDO] resetHistory undo=0 redo=0
-[20:48:21.604] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:48:21.606] [STAMP] mapped 42 blocks from 44 source lines
-[20:48:21.607] [F1] rendered 42 blocks in 3.1ms
-[20:48:21.610] [render] skip: already rendering → queue pending re-render
-[20:48:21.616] [render] re-run queued render
-[20:48:21.616] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[20:48:21.617] [STAMP] mapped 42 blocks from 44 source lines
-[20:48:21.617] [F1] rendered 42 blocks in 1.3ms
-[20:48:45.599] [UNDO] resetHistory undo=0 redo=0
-[20:48:45.602] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:48:45.608] [STAMP] mapped 158 blocks from 224 source lines
-[20:48:45.610] [F1] rendered 158 blocks in 7.5ms
-[20:48:45.614] [render] skip: already rendering → queue pending re-render
-[20:48:45.825] [render] re-run queued render
-[20:48:45.825] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:48:45.830] [STAMP] mapped 158 blocks from 224 source lines
-[20:48:45.832] [F1] rendered 158 blocks in 5.9ms
-[20:49:10.017] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UND", "O行一"]
-[20:49:10.017] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] coalesce=false | undo=0 redo=0
-[20:49:10.017] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] bodyLen=3857 | undo=1 redo=0
-[20:49:10.017] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[20:49:10.017] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[20:49:10.034] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[20:49:10.034] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=3 | L1:3 [UND|·|] new=bi=1 path=[0] off=0 | L2:3 [O行一|·|] srcLines=["UND", "O行一"]
-[20:49:10.034] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=3 | L1:3 [UND|·|] coalesce=false | undo=1 redo=0
-[20:49:10.034] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:3 [UND|·|] bodyLen=3858 | undo=2 redo=0
-[20:49:10.034] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[20:49:10.035] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "O行一"
-    L4: "## 图片渲染测试|"
-    L5: "UNDO行二"
-[20:49:10.036] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[20:49:10.037] [UNDO] splitParagraph re-rendered blocks=158 block[1].type=heading items=-
-[20:49:10.037] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[20:49:10.037] [UNDO] restoreCursor bi=1 path=[0] off=0
-[20:49:10.179] [UNDO] splitParagraph re-rendered blocks=158 block[1].type=heading items=-
-[20:49:10.179] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:3 [O行一|·|]
-[20:49:10.179] [UNDO] restoreCursor bi=1 path=[0] off=0
-[20:49:10.016] [MAP] domToAst block=0 dom=text#UNDO行一@3 seg=[hit:3] renderedOffset=3 -> "text"
-[20:49:10.016] [CTX] SRC L1 C3 [UND|O|行一]
-[20:49:10.016] [CTX] PV  blk0 C3 [UND|O|行一]
-[20:49:10.016] [EH] beforeinput: L1 C3 (block 0)
-[20:49:10.018] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:49:10.025] [STAMP] mapped 158 blocks from 225 source lines
-[20:49:10.028] [F1] rendered 158 blocks in 6.4ms
-[20:49:10.034] [EH] domToAst: not in any valid block
-[20:49:10.034] [EH] beforeinput: not on a valid block
-[20:49:10.036] [render] skip: already rendering → queue pending re-render
-[20:49:10.037] [MAP] rangeAt offset=0 -> text#图片渲染测试|@0
-[20:49:10.037] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#图片渲染测试|@0
-[20:49:10.165] [render] re-run queued render
-[20:49:10.165] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:49:10.170] [STAMP] mapped 158 blocks from 226 source lines
-[20:49:10.173] [F1] rendered 158 blocks in 6.0ms
-[20:49:10.179] [MAP] rangeAt offset=0 -> text#图片渲染测试|@0
-[20:49:10.179] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#图片渲染测试|@0
-[20:49:10.326] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:57:22.172] [UNDO] currentSnapshot cursor=bi=1 path=[0] off=0 | L2:3 [O行一|·|] | undo=2 redo=0
-[20:57:22.172] [UNDO] undo -> apply cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] | undo=1 redo=1
-[20:57:22.172] [UNDO] applySnapshot cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] bodyLen=3858 | undo=1 redo=1
-[20:57:22.316] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=3 | L1:3 [UND|·|]
-[20:57:22.316] [UNDO] restoreCursor bi=0 path=[0] off=3
-[20:57:22.174] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:57:22.181] [STAMP] mapped 158 blocks from 225 source lines
-[20:57:22.183] [F1] rendered 158 blocks in 6.4ms
-[20:57:22.316] [MAP] rangeAt offset=3 -> text#UNDO行一@3
-[20:57:22.316] [MAP] astToDom block=0 path=[0] off=3 atomSide=null rendered=3 -> text#UNDO行一@3
-[20:57:22.342] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:57:24.720] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] | undo=1 redo=1
-[20:57:24.721] [UNDO] undo -> apply cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] | undo=0 redo=2
-[20:57:24.721] [UNDO] applySnapshot cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] bodyLen=3857 | undo=0 redo=2
-[20:57:24.871] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=3 | L1:3 [UND|O|行一]
-[20:57:24.871] [UNDO] restoreCursor bi=0 path=[0] off=3
-[20:57:24.722] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:57:24.729] [STAMP] mapped 158 blocks from 224 source lines
-[20:57:24.731] [F1] rendered 158 blocks in 5.9ms
-[20:57:24.871] [MAP] rangeAt offset=3 -> text#UNDO行一@3
-[20:57:24.871] [MAP] astToDom block=0 path=[0] off=3 atomSide=null rendered=3 -> text#UNDO行一@3
-[20:57:24.887] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:57:59.992] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[20:57:59.992] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=2
-[20:57:59.992] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[20:57:59.992] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[20:57:59.992] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:58:00.008] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:00.008] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] new=bi=2 path=[0] off=0 | L3:0 [|染|测试|] srcLines=["## 图片渲", "染测试|"]
-[20:58:00.008] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] coalesce=false | undo=1 redo=0
-[20:58:00.008] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=2 redo=0
-[20:58:00.008] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:58:00.008] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[20:58:00.010] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:00.011] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:58:00.011] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:00.011] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:58:00.152] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:58:00.152] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:00.152] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:57:59.992] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[20:57:59.992] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[20:57:59.992] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[20:57:59.992] [EH] beforeinput: L2 C6 (block 1)
-[20:57:59.994] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:00.000] [STAMP] mapped 158 blocks from 225 source lines
-[20:58:00.003] [F1] rendered 158 blocks in 5.8ms
-[20:58:00.008] [EH] domToAst: not in any valid block
-[20:58:00.008] [EH] beforeinput: not on a valid block
-[20:58:00.010] [render] skip: already rendering → queue pending re-render
-[20:58:00.011] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:58:00.011] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:58:00.139] [render] re-run queued render
-[20:58:00.139] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:00.144] [STAMP] mapped 158 blocks from 226 source lines
-[20:58:00.147] [F1] rendered 158 blocks in 6.3ms
-[20:58:00.152] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:58:00.152] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:58:00.303] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:58:29.427] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=2 redo=0
-[20:58:29.427] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=1 redo=1
-[20:58:29.427] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=1 redo=1
-[20:58:29.443] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=1 redo=1
-[20:58:29.443] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=0 redo=2
-[20:58:29.443] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3857 | undo=0 redo=2
-[20:58:29.446] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[20:58:29.446] [UNDO] restoreCursor bi=1 path=[0] off=3
-[20:58:29.576] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[20:58:29.576] [UNDO] restoreCursor bi=1 path=[0] off=3
-[20:58:29.429] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:29.435] [STAMP] mapped 158 blocks from 225 source lines
-[20:58:29.438] [F1] rendered 158 blocks in 5.8ms
-[20:58:29.445] [render] skip: already rendering → queue pending re-render
-[20:58:29.446] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[20:58:29.446] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[20:58:29.564] [render] re-run queued render
-[20:58:29.564] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:29.569] [STAMP] mapped 158 blocks from 224 source lines
-[20:58:29.572] [F1] rendered 158 blocks in 5.6ms
-[20:58:29.576] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[20:58:29.577] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[20:58:29.721] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:58:34.913] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[20:58:34.913] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=2
-[20:58:34.913] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[20:58:34.913] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[20:58:34.913] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:58:34.928] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:34.929] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] new=bi=2 path=[0] off=0 | L3:0 [|染|测试|] srcLines=["## 图片渲", "染测试|"]
-[20:58:34.929] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] coalesce=false | undo=1 redo=0
-[20:58:34.929] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=2 redo=0
-[20:58:34.929] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:58:34.929] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[20:58:34.932] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:34.933] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:58:34.933] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:34.933] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:58:35.080] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:58:35.080] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:58:35.080] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:58:34.913] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[20:58:34.913] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[20:58:34.913] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[20:58:34.913] [EH] beforeinput: L2 C6 (block 1)
-[20:58:34.915] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:34.921] [STAMP] mapped 158 blocks from 225 source lines
-[20:58:34.924] [F1] rendered 158 blocks in 6.0ms
-[20:58:34.929] [EH] domToAst: not in any valid block
-[20:58:34.929] [EH] beforeinput: not on a valid block
-[20:58:34.932] [render] skip: already rendering → queue pending re-render
-[20:58:34.933] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:58:34.933] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:58:35.066] [render] re-run queued render
-[20:58:35.067] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:58:35.072] [STAMP] mapped 158 blocks from 226 source lines
-[20:58:35.075] [F1] rendered 158 blocks in 6.0ms
-[20:58:35.080] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:58:35.080] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:58:35.216] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:59:21.808] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=2 redo=0
-[20:59:21.808] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=1 redo=1
-[20:59:21.808] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=1 redo=1
-[20:59:21.823] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=1 redo=1
-[20:59:21.823] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=0 redo=2
-[20:59:21.823] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3857 | undo=0 redo=2
-[20:59:21.825] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[20:59:21.825] [UNDO] restoreCursor bi=1 path=[0] off=3
-[20:59:21.962] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[20:59:21.962] [UNDO] restoreCursor bi=1 path=[0] off=3
-[20:59:21.810] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:59:21.816] [STAMP] mapped 158 blocks from 225 source lines
-[20:59:21.818] [F1] rendered 158 blocks in 5.5ms
-[20:59:21.824] [render] skip: already rendering → queue pending re-render
-[20:59:21.825] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[20:59:21.825] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[20:59:21.948] [render] re-run queued render
-[20:59:21.948] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:59:21.955] [STAMP] mapped 158 blocks from 224 source lines
-[20:59:21.957] [F1] rendered 158 blocks in 6.4ms
-[20:59:21.962] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[20:59:21.962] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[20:59:22.106] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[20:59:27.485] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[20:59:27.485] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=2
-[20:59:27.485] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[20:59:27.485] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[20:59:27.485] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:59:27.502] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:59:27.503] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] new=bi=2 path=[0] off=0 | L3:0 [|染|测试|] srcLines=["## 图片渲", "染测试|"]
-[20:59:27.503] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] coalesce=false | undo=1 redo=0
-[20:59:27.503] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=2 redo=0
-[20:59:27.503] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[20:59:27.503] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[20:59:27.505] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:59:27.506] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:59:27.506] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:59:27.506] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:59:27.652] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[20:59:27.652] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[20:59:27.652] [UNDO] restoreCursor bi=2 path=[0] off=0
-[20:59:27.485] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[20:59:27.485] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[20:59:27.485] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[20:59:27.485] [EH] beforeinput: L2 C6 (block 1)
-[20:59:27.487] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:59:27.495] [STAMP] mapped 158 blocks from 225 source lines
-[20:59:27.498] [F1] rendered 158 blocks in 7.8ms
-[20:59:27.502] [EH] domToAst: not in any valid block
-[20:59:27.503] [EH] beforeinput: not on a valid block
-[20:59:27.505] [render] skip: already rendering → queue pending re-render
-[20:59:27.506] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:59:27.506] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:59:27.639] [render] re-run queued render
-[20:59:27.639] [render] currentFileDir=(root)  currentPath=test-content.md
-[20:59:27.645] [STAMP] mapped 158 blocks from 226 source lines
-[20:59:27.648] [F1] rendered 158 blocks in 6.0ms
-[20:59:27.652] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[20:59:27.653] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[20:59:27.791] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:00:15.646] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=2 redo=0
-[21:00:15.646] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=1 redo=1
-[21:00:15.646] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=1 redo=1
-[21:00:15.660] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=1 redo=1
-[21:00:15.660] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=0 redo=2
-[21:00:15.660] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3857 | undo=0 redo=2
-[21:00:15.662] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:00:15.662] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:00:15.803] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:00:15.803] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:00:15.647] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:15.654] [STAMP] mapped 158 blocks from 225 source lines
-[21:00:15.656] [F1] rendered 158 blocks in 5.7ms
-[21:00:15.662] [render] skip: already rendering → queue pending re-render
-[21:00:15.662] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[21:00:15.662] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[21:00:15.790] [render] re-run queued render
-[21:00:15.790] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:15.796] [STAMP] mapped 158 blocks from 224 source lines
-[21:00:15.798] [F1] rendered 158 blocks in 6.2ms
-[21:00:15.804] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[21:00:15.804] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[21:00:15.969] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:00:23.512] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[21:00:23.512] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=2
-[21:00:23.512] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[21:00:23.512] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[21:00:23.512] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:00:23.530] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:00:23.530] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] new=bi=2 path=[0] off=0 | L3:0 [|染|测试|] srcLines=["## 图片渲", "染测试|"]
-[21:00:23.530] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] coalesce=false | undo=1 redo=0
-[21:00:23.530] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=2 redo=0
-[21:00:23.530] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:00:23.531] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[21:00:23.532] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:00:23.533] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[21:00:23.533] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:00:23.533] [UNDO] restoreCursor bi=2 path=[0] off=0
-[21:00:23.678] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[21:00:23.678] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:00:23.678] [UNDO] restoreCursor bi=2 path=[0] off=0
-[21:00:23.512] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[21:00:23.512] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[21:00:23.512] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[21:00:23.512] [EH] beforeinput: L2 C6 (block 1)
-[21:00:23.514] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:23.522] [STAMP] mapped 158 blocks from 225 source lines
-[21:00:23.526] [F1] rendered 158 blocks in 8.5ms
-[21:00:23.530] [EH] domToAst: not in any valid block
-[21:00:23.530] [EH] beforeinput: not on a valid block
-[21:00:23.532] [render] skip: already rendering → queue pending re-render
-[21:00:23.533] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[21:00:23.533] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[21:00:23.664] [render] re-run queued render
-[21:00:23.664] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:23.671] [STAMP] mapped 158 blocks from 226 source lines
-[21:00:23.673] [F1] rendered 158 blocks in 6.0ms
-[21:00:23.678] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[21:00:23.678] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[21:00:23.838] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:00:59.246] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=2 redo=0
-[21:00:59.246] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=1 redo=1
-[21:00:59.246] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=1 redo=1
-[21:00:59.262] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=1 redo=1
-[21:00:59.262] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=0 redo=2
-[21:00:59.262] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3857 | undo=0 redo=2
-[21:00:59.264] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:00:59.264] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:00:59.406] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:00:59.406] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:00:59.247] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:59.254] [STAMP] mapped 158 blocks from 225 source lines
-[21:00:59.257] [F1] rendered 158 blocks in 6.4ms
-[21:00:59.264] [render] skip: already rendering → queue pending re-render
-[21:00:59.264] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[21:00:59.264] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[21:00:59.385] [render] re-run queued render
-[21:00:59.385] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:00:59.393] [STAMP] mapped 158 blocks from 224 source lines
-[21:00:59.396] [F1] rendered 158 blocks in 8.8ms
-[21:00:59.406] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[21:00:59.406] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[21:00:59.545] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:01:03.466] [UNDO] resetHistory undo=0 redo=0
-[21:01:03.473] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:01:03.478] [STAMP] mapped 42 blocks from 44 source lines
-[21:01:03.478] [F1] rendered 42 blocks in 5.0ms
-[21:01:03.482] [render] skip: already rendering → queue pending re-render
-[21:01:03.491] [render] re-run queued render
-[21:01:03.491] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:01:03.493] [STAMP] mapped 42 blocks from 44 source lines
-[21:01:03.494] [F1] rendered 42 blocks in 2.0ms
-[21:01:07.448] [UNDO] resetHistory undo=0 redo=0
-[21:01:07.452] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:01:07.456] [STAMP] mapped 158 blocks from 224 source lines
-[21:01:07.459] [F1] rendered 158 blocks in 6.8ms
-[21:01:07.462] [render] skip: already rendering → queue pending re-render
-[21:01:07.677] [render] re-run queued render
-[21:01:07.677] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:01:07.683] [STAMP] mapped 158 blocks from 224 source lines
-[21:01:07.685] [F1] rendered 158 blocks in 6.3ms
-[21:01:23.334] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[21:01:23.334] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=0
-[21:01:23.334] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[21:01:23.334] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[21:01:23.334] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:01:23.349] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:01:23.501] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[21:01:23.502] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:01:23.502] [UNDO] restoreCursor bi=2 path=[0] off=0
-[21:01:23.333] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[21:01:23.333] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[21:01:23.333] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[21:01:23.333] [EH] beforeinput: L2 C6 (block 1)
-[21:01:23.336] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:01:23.342] [STAMP] mapped 158 blocks from 225 source lines
-[21:01:23.345] [F1] rendered 158 blocks in 6.0ms
-[21:01:23.502] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[21:01:23.502] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[21:01:23.516] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:02:09.177] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:02:09.184] [STAMP] mapped 159 blocks from 225 source lines
-[21:02:09.185] [F1] rendered 159 blocks in 4.2ms
-[21:02:46.615] [UNDO] resetHistory undo=0 redo=0
-[21:02:46.620] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:02:46.623] [STAMP] mapped 42 blocks from 44 source lines
-[21:02:46.623] [F1] rendered 42 blocks in 2.7ms
-[21:02:46.626] [render] skip: already rendering → queue pending re-render
-[21:02:46.631] [render] re-run queued render
-[21:02:46.631] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:02:46.632] [STAMP] mapped 42 blocks from 44 source lines
-[21:02:46.633] [F1] rendered 42 blocks in 1.4ms
-[21:02:51.988] [UNDO] resetHistory undo=0 redo=0
-[21:02:51.992] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:02:51.996] [STAMP] mapped 159 blocks from 225 source lines
-[21:02:51.999] [F1] rendered 159 blocks in 6.8ms
-[21:02:52.001] [render] skip: already rendering → queue pending re-render
-[21:02:52.194] [render] re-run queued render
-[21:02:52.194] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:02:52.200] [STAMP] mapped 159 blocks from 225 source lines
-[21:02:52.203] [F1] rendered 159 blocks in 6.4ms
-[21:03:35.228] [UNDO] resetHistory undo=0 redo=0
-[21:03:35.235] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:03:35.238] [STAMP] mapped 42 blocks from 44 source lines
-[21:03:35.238] [F1] rendered 42 blocks in 2.8ms
-[21:03:35.241] [render] skip: already rendering → queue pending re-render
-[21:03:35.247] [render] re-run queued render
-[21:03:35.247] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:03:35.248] [STAMP] mapped 42 blocks from 44 source lines
-[21:03:35.249] [F1] rendered 42 blocks in 1.6ms
-[21:03:38.978] [UNDO] resetHistory undo=0 redo=0
-[21:03:38.981] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:03:38.985] [STAMP] mapped 158 blocks from 224 source lines
-[21:03:38.988] [F1] rendered 158 blocks in 6.3ms
-[21:03:38.991] [render] skip: already rendering → queue pending re-render
-[21:03:39.149] [render] re-run queued render
-[21:03:39.149] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:03:39.154] [STAMP] mapped 158 blocks from 224 source lines
-[21:03:39.157] [F1] rendered 158 blocks in 5.8ms
-[21:03:55.435] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[21:03:55.435] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=0
-[21:03:55.435] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[21:03:55.435] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[21:03:55.436] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:03:55.451] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:03:55.585] [UNDO] splitParagraph re-rendered blocks=158 block[2].type=paragraph items=-
-[21:03:55.585] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:03:55.585] [UNDO] restoreCursor bi=2 path=[0] off=0
-[21:03:55.435] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[21:03:55.435] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[21:03:55.435] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[21:03:55.435] [EH] beforeinput: L2 C6 (block 1)
-[21:03:55.437] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:03:55.443] [STAMP] mapped 158 blocks from 225 source lines
-[21:03:55.446] [F1] rendered 158 blocks in 6.4ms
-[21:03:55.585] [MAP] rangeAt offset=0 -> text#UNDO行二@0
-[21:03:55.585] [MAP] astToDom block=2 path=[0] off=0 atomSide=null rendered=0 -> text#UNDO行二@0
-[21:03:55.604] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:05:13.235] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:05:13.242] [STAMP] mapped 159 blocks from 225 source lines
-[21:05:13.242] [F1] rendered 159 blocks in 3.9ms
-[21:05:59.967] [UNDO] resetHistory undo=0 redo=0
-[21:05:59.972] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:05:59.975] [STAMP] mapped 42 blocks from 44 source lines
-[21:05:59.975] [F1] rendered 42 blocks in 2.9ms
-[21:05:59.978] [render] skip: already rendering → queue pending re-render
-[21:05:59.984] [render] re-run queued render
-[21:05:59.984] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:05:59.985] [STAMP] mapped 42 blocks from 44 source lines
-[21:05:59.986] [F1] rendered 42 blocks in 1.5ms
-[21:06:03.793] [UNDO] resetHistory undo=0 redo=0
-[21:06:03.796] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:03.800] [STAMP] mapped 158 blocks from 224 source lines
-[21:06:03.802] [F1] rendered 158 blocks in 6.1ms
-[21:06:03.805] [render] skip: already rendering → queue pending re-render
-[21:06:03.967] [render] re-run queued render
-[21:06:03.967] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:03.973] [STAMP] mapped 158 blocks from 224 source lines
-[21:06:03.976] [F1] rendered 158 blocks in 6.4ms
-[21:06:18.720] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] new=bi=2 path=[0] off=0 | L3:0 [|U|NDO行二] srcLines=["## 图片渲", "染测试|"]
-[21:06:18.720] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] coalesce=false | undo=0 redo=0
-[21:06:18.720] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|] bodyLen=3857 | undo=1 redo=0
-[21:06:18.720] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-    L6: ""
-[21:06:18.720] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:06:18.735] [UNDO] recordGroup kind=enter post=bi=2 path=[0] off=0 | L3:0 [|染|测试|]
-[21:06:18.736] [UNDO] splitParagraph block=heading pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] new=bi=2 path=[] off=0 | L3:0 [|染|测试|] srcLines=["## 图片渲", ""]
-[21:06:18.736] [UNDO] beginUndo kind=enter force=true pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] coalesce=false | undo=1 redo=0
-[21:06:18.736] [UNDO] recordUndo push pre=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=2 redo=0
-[21:06:18.736] [UNDO] splitParagraph BEFORE  cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: "染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L6: ""
-[21:06:18.736] [UNDO] splitParagraph AFTER   cursor-line=2
-    L1: "UNDO行一"
->>> L2: "## 图片渲"
-    L3: ""
-    L4: "染测试|"
-    L5: "UNDO行二"
-    L6: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[21:06:18.737] [UNDO] recordGroup kind=enter post=bi=2 path=[] off=0 | L3:0 [|·|]
-[21:06:18.738] [UNDO] splitParagraph re-rendered blocks=159 block[2].type=paragraph items=-
-[21:06:18.738] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[] off=0 | L3:0 [|·|]
-[21:06:18.738] [UNDO] restoreCursor bi=2 path=[] off=0
-[21:06:18.869] [UNDO] splitParagraph re-rendered blocks=160 block[2].type=blank_line items=-
-[21:06:18.869] [UNDO] splitParagraph re-rendered, restore new cursor=bi=2 path=[0] off=0 | L3:0 [|·|]
-[21:06:18.869] [UNDO] restoreCursor bi=2 path=[0] off=0
-[21:06:18.719] [MAP] domToAst block=1 dom=text#图片渲染测试|@3 seg=[hit:3] renderedOffset=3 -> "text"
-[21:06:18.720] [CTX] SRC L2 C6 [## 图片渲|染|测试|]
-[21:06:18.720] [CTX] PV  blk1 C3 [图片渲|染|测试|]
-[21:06:18.720] [EH] beforeinput: L2 C6 (block 1)
-[21:06:18.721] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:18.728] [STAMP] mapped 159 blocks from 225 source lines
-[21:06:18.731] [F1] rendered 159 blocks in 6.4ms
-[21:06:18.735] [EH] domToAst: not in any valid block
-[21:06:18.735] [EH] beforeinput: not on a valid block
-[21:06:18.737] [render] skip: already rendering → queue pending re-render
-[21:06:18.738] [MAP] rangeAt offset=0 -> text#染测试|@0
-[21:06:18.738] [MAP] astToDom block=2 path=[] off=0 atomSide=null rendered=0 -> text#染测试|@0
-[21:06:18.856] [render] re-run queued render
-[21:06:18.856] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:18.861] [STAMP] mapped 160 blocks from 226 source lines
-[21:06:18.864] [F1] rendered 160 blocks in 6.1ms
-[21:06:19.003] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:06:36.165] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|·|] | undo=2 redo=0
-[21:06:36.165] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=1 redo=1
-[21:06:36.166] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3858 | undo=1 redo=1
-[21:06:36.180] [UNDO] currentSnapshot cursor=bi=2 path=[0] off=0 | L3:0 [|染|测试|] | undo=1 redo=1
-[21:06:36.180] [UNDO] undo -> apply cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] | undo=0 redo=2
-[21:06:36.180] [UNDO] applySnapshot cursor=bi=1 path=[0] off=3 | L2:6 [## 图片渲|·|] bodyLen=3857 | undo=0 redo=2
-[21:06:36.182] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:06:36.182] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:06:36.335] [UNDO] applySnapshot done -> restoreCursor bi=1 path=[0] off=3 | L2:6 [## 图片渲|染|测试|]
-[21:06:36.335] [UNDO] restoreCursor bi=1 path=[0] off=3
-[21:06:36.167] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:36.173] [STAMP] mapped 159 blocks from 225 source lines
-[21:06:36.176] [F1] rendered 159 blocks in 5.9ms
-[21:06:36.182] [render] skip: already rendering → queue pending re-render
-[21:06:36.183] [MAP] rangeAt offset=3 -> text#图片渲@3
-[21:06:36.183] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲@3
-[21:06:36.322] [render] re-run queued render
-[21:06:36.322] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:06:36.327] [STAMP] mapped 158 blocks from 224 source lines
-[21:06:36.330] [F1] rendered 158 blocks in 5.9ms
-[21:06:36.335] [MAP] rangeAt offset=3 -> text#图片渲染测试|@3
-[21:06:36.335] [MAP] astToDom block=1 path=[0] off=3 atomSide=null rendered=3 -> text#图片渲染测试|@3
-[21:06:36.474] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:06:57.008] [UNDO] resetHistory undo=0 redo=0
-[21:06:57.014] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:06:57.016] [STAMP] mapped 42 blocks from 44 source lines
-[21:06:57.017] [F1] rendered 42 blocks in 3.1ms
-[21:06:57.020] [render] skip: already rendering → queue pending re-render
-[21:06:57.026] [render] re-run queued render
-[21:06:57.026] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:06:57.027] [STAMP] mapped 42 blocks from 44 source lines
-[21:06:57.027] [F1] rendered 42 blocks in 1.4ms
-[21:07:01.997] [UNDO] resetHistory undo=0 redo=0
-[21:07:02.000] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:07:02.004] [STAMP] mapped 158 blocks from 224 source lines
-[21:07:02.006] [F1] rendered 158 blocks in 6.0ms
-[21:07:02.008] [render] skip: already rendering → queue pending re-render
-[21:07:02.173] [render] re-run queued render
-[21:07:02.174] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:07:02.179] [STAMP] mapped 158 blocks from 224 source lines
-[21:07:02.182] [F1] rendered 158 blocks in 6.2ms
-[21:11:50.831] [UNDO] resetHistory undo=0 redo=0
-[21:11:50.837] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:11:50.841] [STAMP] mapped 42 blocks from 44 source lines
-[21:11:50.842] [F1] rendered 42 blocks in 3.7ms
-[21:11:50.845] [render] skip: already rendering → queue pending re-render
-[21:11:50.851] [render] re-run queued render
-[21:11:50.851] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:11:50.852] [STAMP] mapped 42 blocks from 44 source lines
-[21:11:50.852] [F1] rendered 42 blocks in 1.5ms
-[21:12:06.052] [UNDO] resetHistory undo=0 redo=0
-[21:12:06.057] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:12:06.059] [STAMP] mapped 42 blocks from 44 source lines
-[21:12:06.059] [F1] rendered 42 blocks in 1.7ms
-[21:12:06.062] [render] skip: already rendering → queue pending re-render
-[21:12:06.067] [render] re-run queued render
-[21:12:06.067] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:12:06.068] [STAMP] mapped 42 blocks from 44 source lines
-[21:12:06.069] [F1] rendered 42 blocks in 1.3ms
-[21:12:23.942] [UNDO] resetHistory undo=0 redo=0
-[21:12:23.946] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:12:23.950] [STAMP] mapped 158 blocks from 224 source lines
-[21:12:23.953] [F1] rendered 158 blocks in 7.1ms
-[21:12:23.955] [render] skip: already rendering → queue pending re-render
-[21:12:24.111] [render] re-run queued render
-[21:12:24.111] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:12:24.117] [STAMP] mapped 158 blocks from 224 source lines
-[21:12:24.120] [F1] rendered 158 blocks in 6.5ms
-[21:12:58.738] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] new=bi=1 path=[0] off=0 | L2:3 [## |图|片渲染测试|] srcLines=["UND", "O行一"]
-[21:12:58.738] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] coalesce=false | undo=0 redo=0
-[21:12:58.738] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:3 [UND|O|行一] bodyLen=3857 | undo=1 redo=0
-[21:12:58.738] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UNDO行一"
-    L2: "## 图片渲染测试|"
-    L3: "UNDO行二"
-    L4: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-    L5: ""
-[21:12:58.738] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[21:12:58.758] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:0 [|O|行一]
-[21:12:58.880] [UNDO] splitParagraph re-rendered blocks=159 block[1].type=paragraph items=-
-[21:12:58.880] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:0 [|O|行一]
-[21:12:58.880] [UNDO] restoreCursor bi=1 path=[0] off=0
-[21:12:58.737] [MAP] domToAst block=0 dom=text#UNDO行一@3 seg=[hit:3] renderedOffset=3 -> "text"
-[21:12:58.737] [CTX] SRC L1 C3 [UND|O|行一]
-[21:12:58.737] [CTX] PV  blk0 C3 [UND|O|行一]
-[21:12:58.737] [EH] beforeinput: L1 C3 (block 0)
-[21:12:58.740] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:12:58.749] [STAMP] mapped 159 blocks from 225 source lines
-[21:12:58.752] [F1] rendered 159 blocks in 7.1ms
-[21:12:58.880] [MAP] rangeAt offset=0 -> text#O行一@0
-[21:12:58.880] [MAP] astToDom block=1 path=[0] off=0 atomSide=null rendered=0 -> text#O行一@0
-[21:12:58.894] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:14:11.168] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=1 | L1:1 [U|N|D] new=bi=1 path=[0] off=0 | L2:0 [|O|行一] srcLines=["U", "ND"]
-[21:14:11.168] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=1 | L1:1 [U|N|D] coalesce=false | undo=1 redo=0
-[21:14:11.168] [UNDO] recordUndo push pre=bi=0 path=[0] off=1 | L1:1 [U|N|D] bodyLen=3858 | undo=2 redo=0
-[21:14:11.168] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "UND"
-    L2: "O行一"
-    L3: "## 图片渲染测试|"
-    L4: "UNDO行二"
-    L5: "# 小屁[[\\h:yellow|[[\\c:red|是]]]][[\\h:green|[[\\c:red|艾]][[\\c:orange|斯]]]][[\\c:orange|[[\\h:yellow|比吗]]]]"
-[21:14:11.169] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "U"
-    L2: "ND"
-    L3: "O行一"
-    L4: "## 图片渲染测试|"
-    L5: "UNDO行二"
-[21:14:11.183] [UNDO] recordGroup kind=enter post=bi=1 path=[0] off=0 | L2:0 [|N|D]
-[21:14:11.184] [UNDO] splitParagraph block=paragraph pre=bi=0 path=[0] off=1 | L1:1 [U|·|] new=bi=1 path=[] off=0 | L2:0 [|N|D] srcLines=["U", ""]
-[21:14:11.184] [UNDO] beginUndo kind=enter force=true pre=bi=0 path=[0] off=1 | L1:1 [U|·|] coalesce=false | undo=2 redo=0
-[21:14:11.184] [UNDO] recordUndo push pre=bi=0 path=[0] off=1 | L1:1 [U|·|] bodyLen=3859 | undo=3 redo=0
-[21:14:11.184] [UNDO] splitParagraph BEFORE  cursor-line=1
->>> L1: "U"
-    L2: "ND"
-    L3: "O行一"
-    L4: "## 图片渲染测试|"
-    L5: "UNDO行二"
-[21:14:11.184] [UNDO] splitParagraph AFTER   cursor-line=1
->>> L1: "U"
-    L2: ""
-    L3: "ND"
-    L4: "O行一"
-    L5: "## 图片渲染测试|"
-[21:14:11.185] [UNDO] recordGroup kind=enter post=bi=1 path=[] off=0 | L2:0 [|·|]
-[21:14:11.186] [UNDO] splitParagraph re-rendered blocks=160 block[1].type=paragraph items=-
-[21:14:11.186] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[] off=0 | L2:0 [|·|]
-[21:14:11.186] [UNDO] restoreCursor bi=1 path=[] off=0
-[21:14:11.321] [UNDO] splitParagraph re-rendered blocks=161 block[1].type=blank_line items=-
-[21:14:11.321] [UNDO] splitParagraph re-rendered, restore new cursor=bi=1 path=[0] off=0 | L2:0 [|·|]
-[21:14:11.321] [UNDO] restoreCursor bi=1 path=[0] off=0
-[21:14:11.168] [MAP] domToAst block=0 dom=text#UND@1 seg=[hit:1] renderedOffset=1 -> "text"
-[21:14:11.168] [CTX] SRC L1 C1 [U|N|D]
-[21:14:11.168] [CTX] PV  blk0 C1 [U|N|D]
-[21:14:11.168] [EH] beforeinput: L1 C1 (block 0)
-[21:14:11.170] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:14:11.176] [STAMP] mapped 160 blocks from 226 source lines
-[21:14:11.178] [F1] rendered 160 blocks in 5.5ms
-[21:14:11.184] [EH] domToAst: not in any valid block
-[21:14:11.184] [EH] beforeinput: not on a valid block
-[21:14:11.185] [render] skip: already rendering → queue pending re-render
-[21:14:11.186] [MAP] rangeAt offset=0 -> text#ND@0
-[21:14:11.186] [MAP] astToDom block=1 path=[] off=0 atomSide=null rendered=0 -> text#ND@0
-[21:14:11.308] [render] re-run queued render
-[21:14:11.308] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:14:11.313] [STAMP] mapped 161 blocks from 227 source lines
-[21:14:11.316] [F1] rendered 161 blocks in 6.0ms
-[21:14:11.462] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:14:34.922] [UNDO] currentSnapshot cursor=bi=1 path=[0] off=0 | L2:0 [|·|] | undo=3 redo=0
-[21:14:34.922] [UNDO] undo -> apply cursor=bi=0 path=[0] off=1 | L1:1 [U|·|] | undo=2 redo=1
-[21:14:34.922] [UNDO] applySnapshot cursor=bi=0 path=[0] off=1 | L1:1 [U|·|] bodyLen=3859 | undo=2 redo=1
-[21:14:35.070] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=1 | L1:1 [U|·|]
-[21:14:35.070] [UNDO] restoreCursor bi=0 path=[0] off=1
-[21:14:34.924] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:14:34.930] [STAMP] mapped 160 blocks from 226 source lines
-[21:14:34.933] [F1] rendered 160 blocks in 6.0ms
-[21:14:35.070] [MAP] rangeAt offset=1 -> text#U@1
-[21:14:35.070] [MAP] astToDom block=0 path=[0] off=1 atomSide=null rendered=1 -> text#U@1
-[21:14:35.089] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:14:55.358] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=1 | L1:1 [U|·|] | undo=2 redo=1
-[21:14:55.358] [UNDO] undo -> apply cursor=bi=0 path=[0] off=1 | L1:1 [U|·|] | undo=1 redo=2
-[21:14:55.358] [UNDO] applySnapshot cursor=bi=0 path=[0] off=1 | L1:1 [U|·|] bodyLen=3858 | undo=1 redo=2
-[21:14:55.499] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=1 | L1:1 [U|N|D]
-[21:14:55.499] [UNDO] restoreCursor bi=0 path=[0] off=1
-[21:14:55.360] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:14:55.367] [STAMP] mapped 159 blocks from 225 source lines
-[21:14:55.369] [F1] rendered 159 blocks in 6.5ms
-[21:14:55.499] [MAP] rangeAt offset=1 -> text#UND@1
-[21:14:55.499] [MAP] astToDom block=0 path=[0] off=1 atomSide=null rendered=1 -> text#UND@1
-[21:14:55.520] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:15:06.081] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=1 | L1:1 [U|N|D] | undo=1 redo=2
-[21:15:06.081] [UNDO] undo -> apply cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] | undo=0 redo=3
-[21:15:06.081] [UNDO] applySnapshot cursor=bi=0 path=[0] off=3 | L1:3 [UND|·|] bodyLen=3857 | undo=0 redo=3
-[21:15:06.221] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=3 | L1:3 [UND|O|行一]
-[21:15:06.221] [UNDO] restoreCursor bi=0 path=[0] off=3
-[21:15:06.083] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:15:06.090] [STAMP] mapped 158 blocks from 224 source lines
-[21:15:06.092] [F1] rendered 158 blocks in 6.2ms
-[21:15:06.221] [MAP] rangeAt offset=3 -> text#UNDO行一@3
-[21:15:06.222] [MAP] astToDom block=0 path=[0] off=3 atomSide=null rendered=3 -> text#UNDO行一@3
-[21:15:06.236] [MAP] selHighlight sel=none mathTotal=4 covered=0
-[21:16:11.131] [UNDO] resetHistory undo=0 redo=0
-[21:16:11.137] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:16:11.140] [STAMP] mapped 42 blocks from 44 source lines
-[21:16:11.140] [F1] rendered 42 blocks in 3.0ms
-[21:16:11.144] [render] skip: already rendering → queue pending re-render
-[21:16:11.149] [render] re-run queued render
-[21:16:11.149] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
-[21:16:11.150] [STAMP] mapped 42 blocks from 44 source lines
-[21:16:11.151] [F1] rendered 42 blocks in 1.3ms
-[21:16:13.610] [UNDO] resetHistory undo=0 redo=0
-[21:16:13.613] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:16:13.617] [STAMP] mapped 158 blocks from 224 source lines
-[21:16:13.619] [F1] rendered 158 blocks in 6.2ms
-[21:16:13.622] [render] skip: already rendering → queue pending re-render
-[21:16:13.810] [render] re-run queued render
-[21:16:13.810] [render] currentFileDir=(root)  currentPath=test-content.md
-[21:16:13.815] [STAMP] mapped 158 blocks from 224 source lines
-[21:16:13.818] [F1] rendered 158 blocks in 6.0ms
+[21:04:54.334] [UNDO] resetHistory undo=0 redo=0
+[21:04:54.336] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:04:54.341] [STAMP] mapped 171 blocks from 237 source lines
+[21:04:54.343] [F1] rendered 171 blocks in 4.5ms
+[21:04:54.348] [render] skip: already rendering → queue pending re-render
+[21:04:54.416] [render] re-run queued render
+[21:04:54.416] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:04:54.420] [STAMP] mapped 171 blocks from 237 source lines
+[21:04:54.422] [F1] rendered 171 blocks in 4.3ms
+[21:05:32.328] #24 [NED] isNonEditableBlock(164) type=image → true
+[21:05:32.328] #25 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:05:32.328] #26 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:05:32.328] #27 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:05:32.328] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:05:32.331] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:05:32.331] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:05:32.331] [EH] click:image: L231 C0 (block 164)
+[21:05:32.331] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:06:43.141] #28 [DBL] exit image edit mode (no content write)
+[21:06:43.145] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:06:49.932] #29 [NED] isNonEditableBlock(164) type=image → true
+[21:06:49.932] #30 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:06:49.932] #31 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:06:49.932] #32 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:06:49.933] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:06:49.935] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:06:49.935] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:06:49.935] [EH] click:image: L231 C0 (block 164)
+[21:06:49.937] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:07:12.305] #33 [CAP] start caption edit (input)
+[21:07:12.311] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:08:04.264] #34 [DBL] exit image edit mode (no content write)
+[21:08:04.264] #35 [NED] isNonEditableBlock(164) type=image → true
+[21:08:04.265] #36 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:08:04.265] #37 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:08:04.265] #38 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:08:04.266] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:08:04.268] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:08:04.268] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:08:04.268] [EH] click:image: L231 C0 (block 164)
+[21:08:04.269] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:09:21.421] #39 [NED] isNonEditableBlock(164) type=image → true
+[21:09:21.421] #40 [MOUSE] mouseup on caption while editing → skip dock (native caret)
+[21:09:21.423] #41 [CAP] start caption edit (input)
+[21:09:21.427] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:10:02.287] #42 [DBL] exit image edit mode (no content write)
+[21:10:02.287] #43 [NED] isNonEditableBlock(164) type=image → true
+[21:10:02.288] #44 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:10:02.288] #45 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:10:02.288] #46 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:10:02.289] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:10:02.291] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:10:02.291] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:10:02.291] [EH] click:image: L231 C0 (block 164)
+[21:10:02.292] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:13:32.518] #47 [DBL] exit image edit mode (no content write)
+[21:13:32.518] #48 [NED] isNonEditableBlock(164) type=image → true
+[21:13:32.519] #49 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:13:32.519] #50 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:13:32.519] #51 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:13:32.520] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:13:32.521] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:13:32.521] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:13:32.521] [EH] click:image: L231 C0 (block 164)
+[21:13:32.525] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:13:54.915] #52 [DBL] exit image edit mode (no content write)
+[21:13:54.915] #53 [NED] isNonEditableBlock(164) type=image → true
+[21:13:54.916] #54 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:13:54.916] #55 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:13:54.916] #56 [CLK] single click image block bi=164 → enterBlockEditMode
+[21:13:54.916] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:13:54.918] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:13:54.918] [CTX] PV  blk164 C7 [AI 霓虹街景|·|]
+[21:13:54.918] [EH] click:image: L231 C0 (block 164)
+[21:13:54.921] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:14:44.305] [UNDO] resetHistory undo=0 redo=0
+[21:14:44.311] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[21:14:44.315] [STAMP] mapped 53 blocks from 55 source lines
+[21:14:44.315] [F1] rendered 53 blocks in 3.3ms
+[21:14:44.318] [render] skip: already rendering → queue pending re-render
+[21:14:44.327] [render] re-run queued render
+[21:14:44.327] [render] currentFileDir=(root)  currentPath=_image-edit-test.md
+[21:14:44.329] [STAMP] mapped 53 blocks from 55 source lines
+[21:14:44.330] [F1] rendered 53 blocks in 2.3ms
+[21:15:05.196] [UNDO] resetHistory undo=0 redo=0
+[21:15:05.199] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:15:05.206] [STAMP] mapped 171 blocks from 237 source lines
+[21:15:05.209] [F1] rendered 171 blocks in 9.0ms
+[21:15:05.212] [render] skip: already rendering → queue pending re-render
+[21:15:05.404] [render] re-run queued render
+[21:15:05.404] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:15:05.411] [STAMP] mapped 171 blocks from 237 source lines
+[21:15:05.414] [F1] rendered 171 blocks in 8.9ms
+[21:15:33.841] #1 [NED] isNonEditableBlock(164) type=image → true
+[21:15:33.841] #2 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:15:33.841] #3 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:15:33.845] #4 [CAP] start caption edit (input)
+[21:15:33.843] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:15:33.849] [CTX] SRC L231 C0 [|!|[AI 霓虹街景]
+[21:15:33.849] [CTX] PV  blk164 C0 [|·|]
+[21:15:33.849] [EH] click:image: L231 C0 (block 164)
+[21:15:33.850] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:16:29.922] #5 [CAP] submit caption=中文霓虹 srcLine=231
+[21:16:30.052] #6 [NED] isNonEditableBlock(163) type=blank_line → false
+[21:16:30.052] #7 [FEI] findEditableBlockIndex(164,-1) → 163 skipped=[]
+[21:16:30.053] #8 [PCB] placeCursorInBlock(163,true) tag=DIV ce=inherit
+[21:16:30.053] #9 [PCB]   no text nodes → placing on blockEl directly
+[21:16:30.063] #10 [PCB]   → OK (empty block, off=1)
+[21:16:29.899] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:16:29.911] [STAMP] mapped 171 blocks from 237 source lines
+[21:16:29.915] [F1] rendered 171 blocks in 12.7ms
+[21:16:30.082] [CTX] SRC L230 C0 [|·|]
+[21:16:30.082] [CTX] PV  blk163 C0 [|·|]
+[21:16:30.082] [EH] caption-submit: L230 C0 (block 163)
+[21:16:30.083] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:07.835] #11 [DBL] exit image edit mode (no content write)
+[21:19:07.835] #12 [NED] isNonEditableBlock(79) type=paragraph → false
+[21:19:07.943] [UNDO] beginUndo kind=insert force=true pre=bi=79 path=[2] off=9 | L103:35 [后面是普通文本。|·|] coalesce=false | undo=0 redo=0
+[21:19:07.944] [UNDO] recordUndo push pre=bi=79 path=[2] off=9 | L103:35 [后面是普通文本。|·|] bodyLen=4124 | undo=1 redo=0
+[21:19:07.944] [UNDO] commit cursor=bi=79 path=[2] off=11 | L103:37 [是普通文本。|·|]
+[21:19:07.952] [UNDO] restoreCursor bi=79 path=[2] off=11
+[21:19:07.954] [UNDO] recordGroup kind=insert post=bi=79 path=[2] off=11 | L103:37 [是普通文本。回归|·|]
+[21:19:07.838] [MAP] domToAst block=79 dom=p.m0-src-block@3 seg=[] renderedOffset=28 -> "text"
+[21:19:07.839] [CTX] SRC L103 C35 [后面是普通文本。|·|]
+[21:19:07.839] [CTX] PV  blk79 C28 [后面是普通文本。|·|]
+[21:19:07.839] [EH] compositionstart: L103 C35 (block 79)
+[21:19:07.843] [MAP] domToAst block=79 dom=p.m0-src-block@3 seg=[] renderedOffset=28 -> "text"
+[21:19:07.843] [CTX] SRC L103 C35 [后面是普通文本。|·|]
+[21:19:07.843] [CTX] PV  blk79 C28 [后面是普通文本。|·|]
+[21:19:07.843] [EH] click: L103 C35 (block 79)
+[21:19:07.843] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:07.948] [STAMP] mapped 171 blocks from 237 source lines
+[21:19:07.952] [MAP] rangeAt offset=30 -> text#，后面是普通文本。回归@11
+[21:19:07.952] [MAP] astToDom block=79 path=[2] off=11 atomSide=null rendered=30 -> text#，后面是普通文本。回归@11
+[21:19:07.956] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:08.755] [UNDO] currentSnapshot cursor=bi=79 path=[2] off=11 | L103:37 [是普通文本。回归|·|] | undo=1 redo=0
+[21:19:08.756] [UNDO] undo -> apply cursor=bi=79 path=[2] off=9 | L103:35 [后面是普通文本。|回|归] | undo=0 redo=1
+[21:19:08.756] [UNDO] applySnapshot cursor=bi=79 path=[2] off=9 | L103:35 [后面是普通文本。|回|归] bodyLen=4124 | undo=0 redo=1
+[21:19:08.901] [UNDO] applySnapshot done -> restoreCursor bi=79 path=[2] off=9 | L103:35 [后面是普通文本。|·|]
+[21:19:08.901] [UNDO] restoreCursor bi=79 path=[2] off=9
+[21:19:08.758] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:19:08.768] [STAMP] mapped 171 blocks from 237 source lines
+[21:19:08.771] [F1] rendered 171 blocks in 9.4ms
+[21:19:08.901] [MAP] rangeAt offset=28 -> text#，后面是普通文本。@9
+[21:19:08.902] [MAP] astToDom block=79 path=[2] off=9 atomSide=null rendered=28 -> text#，后面是普通文本。@9
+[21:19:08.941] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:30.776] #13 [NED] isNonEditableBlock(164) type=image → true
+[21:19:30.776] #14 [MOUSE] mouseup on image block blank → dock cursor side=0
+[21:19:30.776] #15 [PCB] placeCursorInImageBlock(164, side=0) off=0 → OK
+[21:19:30.780] #16 [CAP] start caption edit (input)
+[21:19:30.777] [EH] enterBlockEditMode: image block 164 line 231 attrs={"width":"400","align":"center"}
+[21:19:30.784] [CTX] SRC L231 C0 [|!|[中文霓虹](.]
+[21:19:30.784] [CTX] PV  blk164 C0 [|·|]
+[21:19:30.784] [EH] click:image: L231 C0 (block 164)
+[21:19:30.784] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:31.214] #17 [CAP] submit caption=AI 霓虹街景 srcLine=231
+[21:19:31.347] #18 [NED] isNonEditableBlock(163) type=blank_line → false
+[21:19:31.347] #19 [FEI] findEditableBlockIndex(164,-1) → 163 skipped=[]
+[21:19:31.347] #20 [PCB] placeCursorInBlock(163,true) tag=DIV ce=inherit
+[21:19:31.347] #21 [PCB]   no text nodes → placing on blockEl directly
+[21:19:31.355] #22 [PCB]   → OK (empty block, off=1)
+[21:19:31.196] [render] currentFileDir=(root)  currentPath=test-content.md
+[21:19:31.205] [STAMP] mapped 171 blocks from 237 source lines
+[21:19:31.209] [F1] rendered 171 blocks in 8.8ms
+[21:19:31.373] [CTX] SRC L230 C0 [|·|]
+[21:19:31.373] [CTX] PV  blk163 C0 [|·|]
+[21:19:31.373] [EH] caption-submit: L230 C0 (block 163)
+[21:19:31.375] [MAP] selHighlight sel=none mathTotal=4 covered=0
+[21:19:33.224] #23 [DBL] exit image edit mode (no content write)

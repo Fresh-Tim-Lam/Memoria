@@ -37,8 +37,8 @@ def _read_version() -> str:
     """版本唯一事实源：src/memoria/__version__.py。
 
     构建产物（VERSION / manifest / README）与运行时 UI 显示的版本
-    均由此而来；pyproject.toml 的 version 必须保持一致，否则拒绝构建，
-    防止版本漂移。
+    均由此而来。pyproject.toml 已声明 dynamic version（attr 指向本文件），
+    无需（也无法）人工同步。
     """
     ver_file = ROOT / "src" / "memoria" / "__version__.py"
     match = re.search(

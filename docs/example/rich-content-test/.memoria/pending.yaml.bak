@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-08-28T13:34:52.699099+00:00'
+updated_at: '2026-08-29T13:04:05.040464+00:00'
 items:
 - pending_id: 0d0fe4827e338462
   file: _image-edit-test.md
@@ -11,55 +11,79 @@ items:
       line_hint: 3
     end:
       snippet: '![API图](/files/.memoria/images/test-image.png)'
-      line_hint: 26
+      line_hint: 30
   status: pending
-- pending_id: 307a55770e3249fc
+- pending_id: 41661e5c2e21889a
   file: _image-edit-test.md
   kind: heading
   name: 远程图片
   range:
     start:
       snippet: '## 远程图片'
-      line_hint: 28
+      line_hint: 32
     end:
       snippet: '![远程图](https://example.com/foo.png "标题")'
-      line_hint: 30
+      line_hint: 34
   status: pending
-- pending_id: e457c7da007c3c8b
+- pending_id: e50191a291c3b1d9
   file: _image-edit-test.md
   kind: heading
   name: 对照段落
   range:
     start:
       snippet: '## 对照段落'
-      line_hint: 32
+      line_hint: 36
     end:
       snippet: 下面是一段普通文字，[[\h:#00cc00:#9a6ed0|用于对照可编辑块行为。**加粗**与*斜体*均正常。]]
-      line_hint: 34
+      line_hint: 38
   status: pending
-- pending_id: 117e1ba500df249b
+- pending_id: c20be174fc4fc7b2
   file: _image-edit-test.md
   kind: heading
   name: 代[[\h:#00cc00:#9a6ed0|码块对照]]
   range:
     start:
       snippet: '## 代[[\h:#00cc00:#9a6ed0|码块对照]]'
-      line_hint: 37
+      line_hint: 41
     end:
       snippet: '```'
-      line_hint: 41
+      line_hint: 45
   status: pending
-- pending_id: 8d7bfbca62a3c385
+- pending_id: cc8bab9810c182a5
+  file: _image-edit-test.md
+  kind: heading
+  name: AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd -turbo）
+  range:
+    start:
+      snippet: '## AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd -turbo）'
+      line_hint: 47
+    end:
+      snippet: '![AI 暗杀杀ssss杀夜暖光搜索sss核心](/files/.memoria/images/ai_warm_core.png "width=620,alig'
+      line_hint: 55
+  status: pending
+- pending_id: 884d6c25737bba3a
   file: _image-edit-test.md
   kind: definition
   name: 下面
   range:
     start:
       snippet: 下面是一段普通文字，[[\h:#00cc00:#9a6ed0|用于对照可编辑块行为。**加粗**与*斜体*均正常。]]
-      line_hint: 34
+      line_hint: 38
     end:
       snippet: ''
-      line_hint: 36
+      line_hint: 40
+  status: pending
+- pending_id: 3888a88a74705350
+  file: _image-edit-test.md
+  kind: definition
+  name: 暗就
+  range:
+    start:
+      snippet: '![AI 暗就是上哈哈暖光](/files/.memoria/images/ai_dark_glow.png "width=400,align=right")'
+      line_hint: 51
+    end:
+      snippet: '![AI 暗杀杀ssss杀夜暖光搜索sss核心](/files/.memoria/images/ai_warm_core.png "width=620,alig'
+      line_hint: 55
   status: pending
 - pending_id: e42ea53f77c904b2
   file: _math-style-test.md
@@ -227,7 +251,7 @@ items:
       line_hint: 2
     end:
       snippet: '![可点击放大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=green%2'
-      line_hint: 57
+      line_hint: 60
   status: pending
 - pending_id: 564ddbc353e0dc44
   file: test-content.md
@@ -239,405 +263,417 @@ items:
       line_hint: 22
     end:
       snippet: '![网络图片-大](https://pic.nximg.cn/file/20221111/12398452_112256442122_2.jpg)'
-      line_hint: 45
+      line_hint: 49
   status: pending
-- pending_id: 9e235755f1689b83
+- pending_id: 0bbb1076ee85a94b
   file: test-content.md
   kind: heading
   name: 本地相对路径图片
   range:
     start:
       snippet: '### 本地相对路径图片'
-      line_hint: 47
-    end:
-      snippet: '![带标题本地图片](.memoria/images/photomode_18092025_224424.png "测试标题")'
       line_hint: 51
+    end:
+      snippet: '![带标题本地图片](.memoria/images/photomode_21072025_214606.png "测试标题")'
+      line_hint: 54
   status: pending
-- pending_id: cfb0f61668f6775a
+- pending_id: 42873f7ce043ef53
   file: test-content.md
   kind: heading
   name: 图片点击放大（Lightbox）
   range:
     start:
       snippet: '### 图片点击放大（Lightbox）'
-      line_hint: 54
+      line_hint: 57
     end:
       snippet: '![可点击放大](https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=green%2'
-      line_hint: 57
+      line_hint: 60
   status: pending
-- pending_id: 09d445cca3f32fd1
+- pending_id: f80e5bb8088048bc
   file: test-content.md
   kind: heading
   name: Mermaid 图表测试
   range:
     start:
       snippet: '## Mermaid 图表测试'
-      line_hint: 59
+      line_hint: 62
     end:
       snippet: '```'
-      line_hint: 94
+      line_hint: 97
   status: pending
-- pending_id: 168bf903e7983523
+- pending_id: 389c900c4a06741b
   file: test-content.md
   kind: heading
   name: 流程图
   range:
     start:
       snippet: '### 流程图'
-      line_hint: 61
+      line_hint: 64
     end:
       snippet: '```'
-      line_hint: 70
+      line_hint: 73
   status: pending
-- pending_id: 46e6063efe59b16e
+- pending_id: 2b6b14a297afa475
   file: test-content.md
   kind: heading
   name: 序列图
   range:
     start:
       snippet: '### 序列图'
-      line_hint: 72
+      line_hint: 75
     end:
       snippet: '```'
-      line_hint: 84
+      line_hint: 87
   status: pending
-- pending_id: c41ca4bebd423fda
+- pending_id: 56791f885b922e5e
   file: test-content.md
   kind: heading
   name: 知识图谱结构
   range:
     start:
       snippet: '### 知识图谱结构'
-      line_hint: 86
+      line_hint: 89
     end:
       snippet: '```'
-      line_hint: 94
+      line_hint: 97
   status: pending
-- pending_id: 9180a2b72bad46da
+- pending_id: 807aaf01b883e162
   file: test-content.md
   kind: heading
   name: 荧光笔测试
   range:
     start:
       snippet: '## 荧光笔测试'
-      line_hint: 96
+      line_hint: 99
     end:
       snippet: '- [[\h:hl-exam|命名+红色前景]] — 命名荧光笔+前景色'
-      line_hint: 128
+      line_hint: 131
   status: pending
-- pending_id: 322277a71fc2865f
+- pending_id: 0247626dab241a3d
   file: test-content.md
   kind: heading
   name: 基础荧光笔
   range:
     start:
       snippet: '### 基础荧光笔'
-      line_hint: 98
+      line_hint: 101
     end:
       snippet: 这是一段普通文本，[[\h|这里是默认黄色荧光笔]]，后面是普通文本。
-      line_hint: 100
+      line_hint: 103
   status: pending
-- pending_id: 54de633b94cc7a90
+- pending_id: 26cfb5dc9c590881
   file: test-content.md
   kind: heading
   name: 带颜色荧光笔
   range:
     start:
       snippet: '### 带颜色荧光笔'
-      line_hint: 103
+      line_hint: 106
     end:
       snippet: '- 橙色：[[\h:orange|待复习内容]]'
-      line_hint: 109
+      line_hint: 112
   status: pending
-- pending_id: afcd933843c5ea02
+- pending_id: ca28cbfef092f2f8
   file: test-content.md
   kind: heading
   name: 命名荧光笔
   range:
     start:
       snippet: '### 命名荧光笔'
-      line_hint: 112
+      line_hint: 115
     end:
       snippet: '[[\h:hl-def:blue|核心定义]]（命名+颜色）'
-      line_hint: 117
+      line_hint: 120
   status: pending
-- pending_id: 256fe495c6d70b98
+- pending_id: 9ba630c462979674
   file: test-content.md
   kind: heading
   name: 荧光笔嵌套链接
   range:
     start:
       snippet: '### 荧光笔嵌套链接'
-      line_hint: 119
+      line_hint: 122
     end:
       snippet: 参见 [[\h:green|马尔可夫决策过程 [[mdp]] 的核心性质]]——荧光笔内含链接。
-      line_hint: 121
+      line_hint: 124
   status: pending
-- pending_id: 156e85e918bff90d
+- pending_id: 4b921cfd7201b3e9
   file: test-content.md
   kind: heading
   name: 双色荧光笔（背景+前景）
   range:
     start:
       snippet: '### 双色荧光笔（背景+前景）'
-      line_hint: 123
+      line_hint: 126
     end:
       snippet: '- [[\h:hl-exam|命名+红色前景]] — 命名荧光笔+前景色'
-      line_hint: 128
+      line_hint: 131
   status: pending
-- pending_id: 0477423e12252565
+- pending_id: 53c19c19781bcdac
   file: test-content.md
   kind: heading
   name: 字体颜色测试
   range:
     start:
       snippet: '## 字体颜色测试'
-      line_hint: 130
+      line_hint: 133
     end:
       snippet: '- [[\h:pink|粉色底]]                     ← 任意 CSS 颜色名'
-      line_hint: 142
+      line_hint: 145
   status: pending
-- pending_id: 49c5418e4cc55958
+- pending_id: 9a862a1604a415c5
   file: test-content.md
   kind: heading
   name: 格式标记测试
   range:
     start:
       snippet: '## 格式标记测试'
-      line_hint: 145
+      line_hint: 148
     end:
       snippet: '- [[\b|粗体中含 [[mdp]] 链接]]'
-      line_hint: 151
+      line_hint: 154
   status: pending
-- pending_id: af516d0f4a3d2348
+- pending_id: 77f5f342178fc081
   file: test-content.md
   kind: heading
   name: 粗体和斜体
   range:
     start:
       snippet: '### 粗体和斜体'
-      line_hint: 147
+      line_hint: 150
     end:
       snippet: '- [[\b|粗体中含 [[mdp]] 链接]]'
-      line_hint: 151
+      line_hint: 154
   status: pending
-- pending_id: d155424d815eb652
+- pending_id: 9586ce98283e57fe
   file: test-content.md
   kind: heading
   name: 混合格式测试|
   range:
     start:
       snippet: '## 混合格式测试|'
-      line_hint: 153
+      line_hint: 156
     end:
       snippet: '- 数学等价：$A \iff B$'
-      line_hint: 170
+      line_hint: 173
   status: pending
-- pending_id: 8173d6327e70b2c6
+- pending_id: 496c5848df98d71c
   file: test-content.md
   kind: heading
   name: 荧光笔 + Markdown 格式
   range:
     start:
       snippet: '### 荧光笔 + Markdown 格式'
-      line_hint: 155
+      line_hint: 158
     end:
       snippet: '- [[\h:blue|参见[[mdp]]核心定义]]  荧光笔内嵌链接（栈式解析关键测试）'
-      line_hint: 162
+      line_hint: 165
   status: pending
-- pending_id: a3aad2adf4e99a78
+- pending_id: 0904839e0723f7b5
   file: test-content.md
   kind: heading
   name: 与 C++ 等号运算符共存
   range:
     start:
       snippet: '### 与 C++ 等号运算符共存'
-      line_hint: 164
+      line_hint: 167
     end:
       snippet: '- 数学等价：$A \iff B$'
-      line_hint: 170
+      line_hint: 173
   status: pending
-- pending_id: 761fb9d4753fe3b7
+- pending_id: 889cb19bcf5eb03b
   file: test-content.md
   kind: heading
   name: 公式测试|
   range:
     start:
       snippet: '## 公式测试|'
-      line_hint: 172
+      line_hint: 175
     end:
       snippet: $$
-      line_hint: 198
+      line_hint: 201
   status: pending
-- pending_id: e334411fc744b3c7
+- pending_id: 23f7ef671e73cc0e
   file: test-content.md
   kind: heading
   name: 行内公式
   range:
     start:
       snippet: '### 行内公式'
-      line_hint: 174
+      line_hint: 177
     end:
       snippet: 贝叶斯定理[[\h:#ad4d09|：**$P(A|B) = frac{P(B|A) P(A)}{P(B)}$**]]
-      line_hint: 180
+      line_hint: 183
   status: pending
-- pending_id: b9bc8c6707f2f1b2
+- pending_id: 509c42fb794fbee2
   file: test-content.md
   kind: heading
   name: 块[[\h:#ad4d09|级公式]]
   range:
     start:
       snippet: '### 块[[\h:#ad4d09|级公式]]'
-      line_hint: 182
+      line_hint: 185
     end:
       snippet: $$
-      line_hint: 190
+      line_hint: 193
   status: pending
-- pending_id: e528c4f455ebebd2
+- pending_id: 05179402312dd943
   file: test-content.md
   kind: heading
   name: 混合：**公式 +** 荧光笔
   range:
     start:
       snippet: '### 混合：**公式 +** 荧光笔'
-      line_hint: 192
+      line_hint: 195
     end:
       snippet: $$
-      line_hint: 198
+      line_hint: 201
   status: pending
-- pending_id: b575f481ba61c203
+- pending_id: 06c15c89703fa91e
   file: test-content.md
   kind: heading
   name: 混合场景测试
   range:
     start:
       snippet: '## 混合场景测试'
-      line_hint: 200
+      line_hint: 203
     end:
-      snippet: 代码外的 [[\h|荧光笔]] 正常渲染。
-      line_hint: 224
+      snippet: '![AI 暗夜暖光核心](.memoria/images/ai_warm_core.png "width=400")'
+      line_hint: 237
   status: pending
-- pending_id: 22482881f7df1ea4
+- pending_id: 8ea6d77d72679f95
   file: test-content.md
   kind: heading
   name: 图片 + 公式 + 荧光笔
   range:
     start:
       snippet: '### 图片 + 公式 + 荧光笔'
-      line_hint: 202
+      line_hint: 205
     end:
       snippet: $$
-      line_hint: 207
+      line_hint: 210
   status: pending
-- pending_id: fafe98f5626b1971
+- pending_id: 241c3a476d8abc9f
   file: test-content.md
   kind: heading
   name: 表格 + 荧光笔
   range:
     start:
       snippet: '### 表格 + 荧光笔'
-      line_hint: 208
+      line_hint: 211
     end:
       snippet: '| 公式面板 | [[\h:orange|待实现]] | V2 阶段 |'
-      line_hint: 215
+      line_hint: 218
   status: pending
-- pending_id: fa284312c333ba05
+- pending_id: 96ddffe6e0d19bda
   file: test-content.md
   kind: heading
   name: 代码块 + 荧光笔共存
   range:
     start:
       snippet: '### 代码块 + 荧光笔共存'
-      line_hint: 217
+      line_hint: 220
     end:
       snippet: 代码外的 [[\h|荧光笔]] 正常渲染。
-      line_hint: 224
+      line_hint: 227
   status: pending
-- pending_id: c4eee4189a300568
+- pending_id: fcfe231a754b31ec
+  file: test-content.md
+  kind: heading
+  name: AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd-turbo）
+  range:
+    start:
+      snippet: '### AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd-turbo）'
+      line_hint: 229
+    end:
+      snippet: '![AI 暗夜暖光核心](.memoria/images/ai_warm_core.png "width=400")'
+      line_hint: 237
+  status: pending
+- pending_id: a939ab9c8ed4eae5
   file: test-content.md
   kind: definition
   name: '#7721e0|***啊啊'
   range:
     start:
       snippet: sad[[\h:#d2986f:#9a6ed0|**a撒*****大***]][[\h:green:gray|***苏打***]][[\h:#00cc00:#7
-      line_hint: 25
+      line_hint: 27
     end:
       snippet: '[[\h:green:gray|***撒旦a的撒***]]'
-      line_hint: 28
+      line_hint: 30
   status: pending
-- pending_id: 405a8f36fca6b105
+- pending_id: a396d3a825af77b8
   file: test-content.md
   kind: definition
   name: purple|*
   range:
     start:
       snippet: '[[\h:blue:purple|*是****的***]]'
-      line_hint: 30
+      line_hint: 32
     end:
       snippet: ''
-      line_hint: 46
+      line_hint: 50
   status: pending
-- pending_id: 9ebc646a6f65b2b0
+- pending_id: a29d9f488d7c7157
   file: test-content.md
   kind: definition
   name: '#9a6ed0|***撒旦飒飒的撒打算撒的撒大'
   range:
     start:
       snippet: '[[\h:#d2986f:#9a6ed0|***撒旦飒飒的撒打算撒的撒大是***]]'
-      line_hint: 33
+      line_hint: 35
     end:
       snippet: '[[\h:#d2986f:#9a6ed0|***撒打算***]]'
-      line_hint: 34
+      line_hint: 36
   status: pending
-- pending_id: 86bba0b4d4a31317
+- pending_id: c031fd80e0d6829e
   file: test-content.md
   kind: definition
   name: \h|这里
   range:
     start:
       snippet: 这是一段普通文本，[[\h|这里是默认黄色荧光笔]]，后面是普通文本。
-      line_hint: 100
+      line_hint: 103
     end:
       snippet: ''
-      line_hint: 102
+      line_hint: 105
   status: pending
-- pending_id: 58e3fc339d466dfd
+- pending_id: 8fda56a9d84cde50
   file: test-content.md
   kind: definition
   name: '`if'
   range:
     start:
       snippet: '- C++ 判断：`if (a == b)`'
-      line_hint: 168
+      line_hint: 171
     end:
       snippet: '- 数学等价：$A \iff B$'
-      line_hint: 170
+      line_hint: 173
   status: pending
-- pending_id: ac2cafa105041505
+- pending_id: a8bc50b859aeda67
   file: test-content.md
   kind: definition
   name: mc^2$***
   range:
     start:
       snippet: 爱因斯坦质能方程* ****$E = mc^2$*** 是物理学最著名的公式之一。
-      line_hint: 176
+      line_hint: 179
     end:
       snippet: ''
-      line_hint: 181
+      line_hint: 184
   status: pending
-- pending_id: 4b95afd775016c98
+- pending_id: f25ec2324a5028a2
   file: test-content.md
   kind: definition
   name: '**$P'
   range:
     start:
       snippet: 贝叶斯定理[[\h:#ad4d09|：**$P(A|B) = frac{P(B|A) P(A)}{P(B)}$**]]
-      line_hint: 180
+      line_hint: 183
     end:
       snippet: ''
-      line_hint: 181
+      line_hint: 184
   status: pending
-- pending_id: 48411bac2bb1ca88
+- pending_id: 504ed679f7d57258
   file: test-content.md
   kind: definition
   name: \pi_\theta
@@ -645,8 +681,8 @@ items:
     start:
       snippet: \nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[ \nabla_\theta
         \log \pi_
-      line_hint: 189
+      line_hint: 192
     end:
       snippet: $$
-      line_hint: 190
+      line_hint: 193
   status: pending

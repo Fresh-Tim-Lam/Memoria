@@ -686,6 +686,7 @@
         showTreeContextMenu(e.clientX, e.clientY, [
           { label: "新建文件", action: () => createTreeFile("") },
           { label: "新建文件夹", action: () => createTreeDir("") },
+          { label: "图片管理…", action: () => openImageManager() },
         ]);
       }
     };
@@ -1658,6 +1659,263 @@
     applyImageEditLines(lines);
     setStatus("已删除图片引用（磁盘文件保留）");
   }
+
+  // ── 图片管理视图（阶段 F：.memoria/images/ 资产可见化管理） ────────
+
+  let _imgMgrOverlay = null;
+
+  function fmtImageSize(bytes) {
+    if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + " MB";
+    if (bytes >= 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return bytes + " B";
+  }
+
+  async function openImageManager() {
+    closeImgMgr();
+    const overlay = document.createElement("div");
+    overlay.className = "m0-modal";
+    overlay.id = "m0-image-manager";
+    overlay.innerHTML = `
+      <div class="m0-modal-backdrop"></div>
+      <div class="m0-modal-box m0-image-mgr-box">
+        <div class="m0-modal-header">
+          <span>图片管理</span>
+          <span class="m0-image-mgr-close" data-act="close" title="关闭">✕</span>
+        </div>
+        <div class="m0-image-mgr-toolbar">
+          <span class="m0-image-mgr-stat" id="imgr-stat">加载中…</span>
+          <button type="button" class="m0-btn" data-act="refresh">刷新</button>
+          <button type="button" class="m0-btn danger" data-act="cleanup">清理未使用图片</button>
+        </div>
+        <div class="m0-image-mgr-grid" id="imgr-grid"></div>
+      </div>`;
+    document.body.appendChild(overlay);
+    _imgMgrOverlay = overlay;
+    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", closeImgMgr);
+    overlay.querySelector('[data-act="close"]').addEventListener("click", closeImgMgr);
+    overlay.querySelector('[data-act="refresh"]').addEventListener("click", renderImageList);
+    overlay.querySelector('[data-act="cleanup"]').addEventListener("click", cleanupUnusedImages);
+    overlay.querySelector("#imgr-grid").addEventListener("click", onImageCardAction);
+    renderImageList();
+  }
+
+  function closeImgMgr() {
+    if (_imgMgrOverlay) {
+      _imgMgrOverlay.remove();
+      _imgMgrOverlay = null;
+    }
+  }
+
+  async function renderImageList() {
+    const grid = $("#imgr-grid");
+    const stat = $("#imgr-stat");
+    if (!grid || !stat) return;
+    grid.innerHTML = '<div class="m0-image-mgr-empty">加载中…</div>';
+    const res = await call("list_images");
+    const imgs = (res && res.images) || [];
+    const used = imgs.filter((x) => x.referenced).length;
+    stat.textContent = `共 ${imgs.length} 张图片 · 已引用 ${used} · 未使用 ${imgs.length - used}`;
+    if (!imgs.length) {
+      grid.innerHTML = '<div class="m0-image-mgr-empty">知识库暂无图片资产</div>';
+      return;
+    }
+    let html = "";
+    for (const im of imgs) {
+      const refs = im.referencedBy || [];
+      const tag = im.referenced
+        ? `<span class="m0-img-tag m0-img-tag-used">已引用 ${refs.length}</span>`
+        : `<span class="m0-img-tag m0-img-tag-unused">未使用</span>`;
+      const refTxt = im.referenced ? "被 " + refs.join("、") + " 引用" : "未被任何文档引用";
+      html += `<div class="m0-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
+        <img class="m0-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
+        <div class="m0-image-card-info">
+          <div class="m0-image-card-name" title="${esc(im.name)}">${esc(im.name)}${tag}</div>
+          <div class="m0-image-card-meta">${fmtImageSize(im.size || 0)}</div>
+          <div class="m0-image-card-refs" title="${esc(refTxt)}">${esc(refTxt)}</div>
+        </div>
+        <div class="m0-image-card-actions">
+          <button type="button" class="m0-btn" data-act="insert">插入</button>
+          <button type="button" class="m0-btn danger" data-act="delete">删除</button>
+        </div>
+      </div>`;
+    }
+    grid.innerHTML = html;
+  }
+
+  function onImageCardAction(e) {
+    const btn = e.target.closest("button[data-act]");
+    const card = e.target.closest(".m0-image-card");
+    if (!btn || !card) return;
+    const rel = card.dataset.rel;
+    const name = card.dataset.name;
+    const referenced = card.dataset.referenced === "1";
+    if (btn.dataset.act === "insert") insertImageFromManager(rel, name);
+    else if (btn.dataset.act === "delete") deleteImageFromManager(rel, name, referenced);
+  }
+
+  function insertImageFromManager(rel, name) {
+    if (!state.currentPath) {
+      setStatus("请先打开一个文档再插入图片");
+      return;
+    }
+    const alt = String(name || "").replace(/\.[^.]+$/, "");
+    if (insertSourceLine("![" + alt + "](" + rel + ' "width=300")')) {
+      setStatus("已插入图片", rel);
+    } else {
+      setStatusError("插入失败", "无法写入源码编辑器");
+    }
+  }
+
+  function deleteImageFromManager(rel, name, referenced) {
+    if (referenced) {
+      const n = (state.doc.lines || []).filter(
+        (l) => l.includes(rel) || l.includes("/files/" + rel)
+      ).length;
+      if (!n) {
+        confirmTreeAction(
+          "无法删除",
+          "该图片被其他文档引用，当前文档未引用它。\n需先在引用它的文档中移除引用，或使用“清理未使用图片”。",
+          "知道了",
+          () => {}
+        );
+        return;
+      }
+      confirmTreeAction(
+        "删除引用",
+        `该图片在当前文档有 ${n} 处引用。\n将从当前文档移除这些引用（磁盘文件保留）。`,
+        "仅删引用",
+        () => {
+          const lines = (state.doc.body || "")
+            .split("\n")
+            .filter((l) => !(l.includes(rel) || l.includes("/files/" + rel)));
+          applyImageEditLines(lines);
+          setStatus("已删除图片引用（磁盘文件保留）");
+          renderImageList();
+        }
+      );
+    } else {
+      confirmTreeAction(
+        "删除图片文件",
+        `“${name}”未被任何文档引用。\n确定从 .memoria/images/ 删除该文件吗？此操作不可恢复。`,
+        "连文件删",
+        async () => {
+          const res = await call("cleanup_unused_images", [rel]);
+          if (res && res.status === "ok" && (res.deleted || []).length) {
+            setStatus("已删除图片文件", name);
+            renderImageList();
+          } else {
+            setStatusError("删除失败", (res && res.message) || "文件不存在");
+          }
+        }
+      );
+    }
+  }
+
+  async function cleanupUnusedImages() {
+    const res = await call("unused_images");
+    const un = (res && res.images) || [];
+    if (!un.length) {
+      setStatus("没有未使用的图片");
+      renderImageList();
+      return;
+    }
+    const names = un
+      .slice(0, 5)
+      .map((x) => x.name)
+      .join("、");
+    const more = un.length > 5 ? ` 等 ${un.length} 张` : "";
+    confirmTreeAction(
+      "清理未使用图片",
+      `发现 ${un.length} 张未被任何文档引用的图片：${names}${more}\n\n确定删除这些文件吗？此操作不可恢复。`,
+      "清理",
+      async () => {
+        const r = await call("cleanup_unused_images");
+        if (r && r.status === "ok") {
+          setStatus(`已清理 ${(r.deleted || []).length} 张未使用图片`);
+          renderImageList();
+        } else {
+          setStatusError("清理失败", (r && r.message) || "未知错误");
+        }
+      }
+    );
+  }
+
+  /** 更新图片源码行属性（阶段 F 工具栏：对齐/大小滑条；阶段 G：名称字号/显隐），返回新行或 null */
+  function updateImageAttrsLine(line, attrs) {
+    const m = line.match(/^(!\[[^\]]*\]\([^)\s]+)((?:\s+"[^"]*")?)(\)\s*)$/);
+    if (!m) return null;
+    const title = m[2].replace(/^\s+"|"$/g, "");
+    const list = title ? title.split(",") : [];
+    const pending = {};
+    ["width", "align", "name-size", "name"].forEach((k) => {
+      if (attrs[k] !== undefined) pending[k] = String(attrs[k]);
+    });
+    const merged = [];
+    list.forEach((item) => {
+      const eq = item.indexOf("=");
+      const k = eq > 0 ? item.slice(0, eq).trim() : item.trim();
+      if (pending[k] !== undefined) {
+        merged.push(k + "=" + pending[k]);
+        pending[k] = undefined;
+      } else {
+        merged.push(item);
+      }
+    });
+    Object.keys(pending).forEach((k) => {
+      if (pending[k] !== undefined) merged.push(k + "=" + pending[k]);
+    });
+    const newTitle = merged.length ? ' "' + merged.join(",") + '"' : "";
+    return m[1] + newTitle + m[3];
+  }
+
+  /** 更新图片源码行的名称（alt），返回新行或 null（阶段 G：编辑模式下单击名称文字） */
+  function updateImageCaptionLine(line, caption) {
+    const m = line.match(/^(!\[)([^\]]*)(\]\([^)\s]+)((?:\s+"[^"]*")?)(\)\s*)$/);
+    if (!m) return null;
+    return m[1] + caption + m[3] + m[4] + m[5];
+  }
+
+  // 图片工具栏属性提交（阶段 F）：对齐/大小 → 更新源码行 → 重写渲染 → 重进编辑
+  // 注意：必须 await applyImageEditLines（含 renderPreview）完成后重进编辑，
+  // 否则 setTimeout(0) 捕获的是即将被重建的旧 preview DOM，imgEl 变 detached，
+  // 后续滑条/对齐操作全部作用在不可见节点上（症状：拖动/确定后图片大小不变）。
+  document.addEventListener("memoria:image-attr", async (e) => {
+    const detail = (e && e.detail) || {};
+    const srcLine = detail.srcLine;
+    const attrs = detail.attrs;
+    if (!srcLine || !attrs) return;
+    const lines = (state.doc.body || "").split("\n");
+    const line = lines[srcLine - 1];
+    if (!line) return;
+    const updated = updateImageAttrsLine(line, attrs);
+    if (updated === null) return;
+    lines[srcLine - 1] = updated;
+    await applyImageEditLines(lines);
+    const EH = window.MemoriaEditHandler;
+    if (EH && EH.reenterImageEdit) EH.reenterImageEdit(srcLine);
+  });
+
+  // 图片名称（alt）编辑提交（阶段 G）：编辑模式下单击名称文字 → 失焦/回车 → 写回源码
+  document.addEventListener("memoria:image-caption", async (e) => {
+    const detail = (e && e.detail) || {};
+    const srcLine = detail.srcLine;
+    const caption = detail.caption;
+    if (!srcLine || caption === undefined) return;
+    const lines = (state.doc.body || "").split("\n");
+    const line = lines[srcLine - 1];
+    if (!line) return;
+    const updated = updateImageCaptionLine(line, caption);
+    if (updated === null) return;
+    lines[srcLine - 1] = updated;
+    await applyImageEditLines(lines);
+    const EH = window.MemoriaEditHandler;
+    // 名称提交后：光标定位到图片相邻文本（避免残留图片块停靠点/文档开头），
+    // 不再重进编辑模式（名称是一次性文字操作；属性/滑条路径仍走 reenterImageEdit）
+    if (EH && EH.placeCaretAfterNameEdit) EH.placeCaretAfterNameEdit(srcLine);
+  });
+
+  // 图片编辑工具栏 → 打开图片管理
+  document.addEventListener("memoria:open-image-manager", () => openImageManager());
 
   function renderImportConflictDialog(scanResult) {
     const body = $("#import-conflict-body");

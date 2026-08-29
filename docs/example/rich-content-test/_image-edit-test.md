@@ -22,7 +22,7 @@
 
 
 
-![photomode_21072025_160332](.memoria/images/photomode_21072025_160332.png)
+
 
 
 
@@ -43,3 +43,13 @@
 ```python
 print("hello")
 ```
+
+## AI 生成图（img2img，基于 Cyberpunk 2077 截图 + sd -turbo）
+
+
+
+![AI 暗就sa哈哈哈光](/files/.memoria/images/ai_dark_glow.png "width=400,align=right")
+
+
+
+![AI 暗杀杀s噶那么sss核心](/files/.memoria/images/ai_warm_core.png "width=620,align=center")
