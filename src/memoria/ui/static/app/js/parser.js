@@ -375,11 +375,24 @@ window.MemoriaParser = (function () {
         continue;
       }
 
-      // ── 图片（单独一行） ──
-      if (tokens.length === 2 && tokens[0].type === "image_open" && tokens[1].type === "image_close") {
-        blocks.push(AST.image(tokens[0].value, tokens[1].value, tokens[1].title));
-        i++;
-        continue;
+      // ── 图片（单独一行，允许行尾空白） ──
+      if (tokens[0] && tokens[0].type === "image_open") {
+        var imgEndIdx = findClose(tokens, 0, "image_close");
+        if (imgEndIdx !== -1) {
+          // image_close 之后只允许空白（用户复制/粘贴常带行尾空格）
+          var imgTailBlank = true;
+          for (var _ti = imgEndIdx + 1; _ti < tokens.length; _ti++) {
+            if (tokens[_ti].type !== "text" || tokens[_ti].value.trim() !== "") {
+              imgTailBlank = false;
+              break;
+            }
+          }
+          if (imgTailBlank) {
+            blocks.push(AST.image(tokens[0].value, tokens[imgEndIdx].value, tokens[imgEndIdx].title));
+            i++;
+            continue;
+          }
+        }
       }
 
       // ── 引用 ──
@@ -401,14 +414,23 @@ window.MemoriaParser = (function () {
       if (tokens.length > 0 && tokens[0].type === "list_prefix") {
         var isOrdered = /^\d+\.$/.test(tokens[0].value);
         var items = [];
-        while (i < endLine) {
-          var lt = lexer.tokenize(lines[i]);
-          if (lt.length === 0 || lt[0].type !== "list_prefix") break;
-          var itemChildren = parseInline(lt.slice(1));
-          items.push(AST.listItem(itemChildren));
-          i++;
+        var scan = i;
+        while (scan < endLine) {
+          var lt2 = lexer.tokenize(lines[scan]);
+          // 松散列表：列表项之间的空行不中断列表（CommonMark 语义，从 PDF 复制常见）
+          if (lt2.length === 0) {
+            scan++;
+            continue;
+          }
+          if (lt2[0].type !== "list_prefix") break;
+          // 有序/无序类型变化视为新列表（如 `1. a\n\n- b`），不合并
+          if (/^\d+\.$/.test(lt2[0].value) !== isOrdered) break;
+          var itemChildren2 = parseInline(lt2.slice(1));
+          items.push(AST.listItem(itemChildren2));
+          scan++;
         }
         blocks.push(AST.list(isOrdered, items));
+        i = scan;
         continue;
       }
 

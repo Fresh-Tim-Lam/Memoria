@@ -1066,7 +1066,67 @@
     state.graphEngine.on("hover", onGraphHover);
   }
 
-  function applyGraphViewSettings(viewOpts) {
+  /** 需要整体重布局（resetSimulation）的力导向参数 */
+  const _RELAYOUT_KEYS = new Set([
+    "linkDistance",
+    "linkStrength",
+    "repulsion",
+    "centerStrength",
+    "velocityDecay",
+    "warmupTicks",
+    "spreadFactor",
+    "groupSpacing",
+    "alphaMin",
+    "alphaDecay",
+    "alphaTarget",
+    "dragReheat",
+    "dragReleaseReheat",
+  ]);
+  /** 维度专属参数；不在表内的共享参数变更视为两个维度都需要重布局 */
+  const _DIM_ONLY_KEYS = {
+    zoomMin2d: "2d",
+    zoomMax2d: "2d",
+    zoomSensitivity2d: "2d",
+    zoomMinDistance3d: "3d",
+    zoomMaxDistance3d: "3d",
+    zoomSensitivity3d: "3d",
+  };
+
+  function _anyRelayoutKeyChanged(prev, next) {
+    for (const k of _RELAYOUT_KEYS) {
+      if (prev[k] !== next[k]) return true;
+    }
+    return false;
+  }
+
+  /** 判断哪些维度需要重布局：优先按设置面板当前编辑的维度，其次按参数差异 */
+  function _dimsNeedingRelayout(sourceTab, prev, next) {
+    const dims = { "2d": false, "3d": false };
+    if (!_anyRelayoutKeyChanged(prev, next)) return dims;
+    if (sourceTab === "graph2d") {
+      dims["2d"] = true;
+      return dims;
+    }
+    if (sourceTab === "graph3d") {
+      dims["3d"] = true;
+      return dims;
+    }
+    for (const k of _RELAYOUT_KEYS) {
+      if (prev[k] === next[k]) continue;
+      const d = _DIM_ONLY_KEYS[k];
+      if (d === "2d") dims["2d"] = true;
+      else if (d === "3d") dims["3d"] = true;
+      else {
+        dims["2d"] = true;
+        dims["3d"] = true;
+      }
+    }
+    return dims;
+  }
+
+  function applyGraphViewSettings(viewOpts, sourceTab) {
+    const prev = state._prevViewOpts || {};
+    state._prevViewOpts = { ...viewOpts };
     if (state.graphEngine?.nodes?.length && window.MemoriaGraphGroups) {
       state.graphEngine.groups = window.MemoriaGraphGroups.computeGraphGroups(
         state.graphEngine.nodes,
@@ -1080,7 +1140,9 @@
     state.graphLayout3d?.applyOptions(viewOpts, { relayout: false });
     state.graphView2d?.applyOptions(viewOpts, { relayout: false });
     state.graphView3d?.applyOptions(viewOpts, { relayout: false });
-    applyGraphGroupLayout({ relayout: true });
+    const dims = _dimsNeedingRelayout(sourceTab, prev, viewOpts);
+    if (dims["2d"]) state.graphView2d?.resetSimulation?.();
+    if (dims["3d"]) state.graphView3d?.resetSimulation?.();
   }
 
   async function refreshGraphGroupLabels() {
@@ -1519,7 +1581,9 @@
       return;
     }
     const alt = String(res.name || "").replace(/\.[^.]+$/, "");
-    if (!insertSourceLine("![" + alt + "](" + res.relPath + ")", insertAtLine)) {
+    // URL 用尖括号包裹：文件名可能含中文/空格（如 Windows 截图），裸 URL 会被
+    // marked 在空格处截断导致不渲染为图片
+    if (!insertSourceLine("![" + alt + "](<" + res.relPath + ">)", insertAtLine)) {
       setStatusError("插入失败", "无法写入源码编辑器");
       return;
     }
@@ -1642,12 +1706,12 @@
     }
     const lines = (state.doc.body || "").split("\n");
     const raw = lines[lineNum - 1] || "";
-    const m = raw.match(/^!\[([^\]]*)\]\(([^)\s]+)((?:\s+"[^"]*")?)\)/);
+    const m = raw.match(/^!\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+"[^"]*")?)\)/);
     if (!m) {
       setStatusError("替换失败", "该行不是标准图片语法");
       return;
     }
-    lines[lineNum - 1] = "![" + m[1] + "](" + res.relPath + (m[3] || "") + ")";
+    lines[lineNum - 1] = "![" + m[1] + "](<" + res.relPath + ">" + (m[4] || "") + ")";
     await applyImageEditLines(lines);
     setStatus("图片已替换", res.relPath);
   }
@@ -1685,6 +1749,7 @@
         <div class="m0-image-mgr-toolbar">
           <span class="m0-image-mgr-stat" id="imgr-stat">加载中…</span>
           <button type="button" class="m0-btn" data-act="refresh">刷新</button>
+          <button type="button" class="m0-btn" data-act="diagnose">检查异常引用</button>
           <button type="button" class="m0-btn danger" data-act="cleanup">清理未使用图片</button>
         </div>
         <div class="m0-image-mgr-grid" id="imgr-grid"></div>
@@ -1694,6 +1759,7 @@
     overlay.querySelector(".m0-modal-backdrop").addEventListener("click", closeImgMgr);
     overlay.querySelector('[data-act="close"]').addEventListener("click", closeImgMgr);
     overlay.querySelector('[data-act="refresh"]').addEventListener("click", renderImageList);
+    overlay.querySelector('[data-act="diagnose"]').addEventListener("click", diagnoseImageRefs);
     overlay.querySelector('[data-act="cleanup"]').addEventListener("click", cleanupUnusedImages);
     overlay.querySelector("#imgr-grid").addEventListener("click", onImageCardAction);
     renderImageList();
@@ -1703,6 +1769,65 @@
     if (_imgMgrOverlay) {
       _imgMgrOverlay.remove();
       _imgMgrOverlay = null;
+    }
+  }
+
+  /** 检查"被文档引用但未成功注册"的图片引用（诊断入口） */
+  async function diagnoseImageRefs() {
+    const res = await call("diagnose_image_refs");
+    if (!res || res.status !== "ok") {
+      setStatusError("检查失败", (res && res.message) || "未知错误");
+      return;
+    }
+    const unreg = res.unregistered || [];
+    const missing = res.missing || [];
+    const overlay = document.createElement("div");
+    overlay.className = "m0-modal";
+    overlay.id = "m0-img-diagnose";
+    let html = `
+      <div class="m0-modal-backdrop"></div>
+      <div class="m0-modal-box m0-img-diag-box">
+        <div class="m0-modal-header">
+          <span>检查异常图片引用</span>
+          <span class="m0-image-mgr-close" data-act="close" title="关闭">✕</span>
+        </div>`;
+    if (!unreg.length && !missing.length) {
+      html += `<div class="m0-img-diag-body"><div class="m0-img-diag-ok">未发现异常引用</div></div></div>`;
+    } else {
+      if (unreg.length) {
+        html += `<div class="m0-img-diag-body">
+          <div class="m0-img-diag-title">已引用但未注册（${unreg.length}）—— 文件名含空格/中文且未用尖括号包裹，保存时会被误判为未使用而删除</div>
+          <ul class="m0-img-diag-list">` +
+          unreg.map((u) => `<li><code>${esc(u.src)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）${u.exists ? "" : " ⚠ 文件已缺失，需重新放入 images"}</span></li>`).join("") +
+          `</ul>
+          <button type="button" class="m0-btn" data-act="fix">一键修复为尖括号格式</button>
+        </div>`;
+      }
+      if (missing.length) {
+        html += `<div class="m0-img-diag-body">
+          <div class="m0-img-diag-title">引用格式正常但文件缺失（${missing.length}）</div>
+          <ul class="m0-img-diag-list">` +
+          missing.map((u) => `<li><code>${esc(u.url)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）文件不存在</span></li>`).join("") +
+          `</ul></div>`;
+      }
+      html += `</div>`;
+    }
+    overlay.innerHTML = html;
+    document.body.appendChild(overlay);
+    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", () => overlay.remove());
+    overlay.querySelector('[data-act="close"]').addEventListener("click", () => overlay.remove());
+    const fixBtn = overlay.querySelector('[data-act="fix"]');
+    if (fixBtn) {
+      fixBtn.addEventListener("click", async () => {
+        const r = await call("fix_unregistered_image_refs");
+        if (r && r.status === "ok") {
+          setStatus("修复完成", `已改写 ${r.fixed} 处引用`);
+          overlay.remove();
+          renderImageList();
+        } else {
+          setStatusError("修复失败", (r && r.message) || "未知错误");
+        }
+      });
     }
   }
 
@@ -1759,7 +1884,7 @@
       return;
     }
     const alt = String(name || "").replace(/\.[^.]+$/, "");
-    if (insertSourceLine("![" + alt + "](" + rel + ' "width=300")')) {
+    if (insertSourceLine("![" + alt + "](<" + rel + '> "width=300")')) {
       setStatus("已插入图片", rel);
     } else {
       setStatusError("插入失败", "无法写入源码编辑器");
@@ -2709,10 +2834,23 @@
           lineCount++;
       }
       // List items（含空项 "- " 等：用原始行匹配，避免 trim 丢失尾随空格导致漏算）
+      // 与 parser 松散列表语义对齐：列表项之间的空行属于同一列表块，跳过后继续收集同类型项
       else if (rawLine.match(/^\s*(\d+\.\s|[-*+]\s)/)) {
+        var isOrd = /^\s*\d+\.\s/.test(rawLine);
         lineCount = 1;
-        while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].match(/^\s*(\d+\.\s|[-*+]\s)/))
-          lineCount++;
+        var li = srcIdx + 1;
+        while (li < srcLines.length) {
+          var lst = srcLines[li];
+          if (lst.trim() === "") {
+            li++; // 列表块内部的空行：计入该块，继续找后续列表项
+            continue;
+          }
+          var lstM = lst.match(/^\s*(\d+\.\s|[-*+]\s)/);
+          if (!lstM) break;
+          if (/^\s*\d+\.\s/.test(lst) !== isOrd) break; // 有序/无序类型变化 → 新列表块
+          li++;
+        }
+        lineCount = li - srcIdx;
       }
       // Blockquote (consecutive > lines)
       else if (rawLine.trim().startsWith(">")) {
@@ -2898,13 +3036,21 @@
    * 在 AST 解析前执行，确保 IMAGE block.url 是正确的服务端路径
    */
   function rewriteMdImagePaths(md) {
-    // 只处理相对路径图片 ![...](./...)（可选 "title" 段）
-    return md.replace(/!\[([^\]]*)\]\((\.[^\s)]+)(\s+"[^"]*")?\)/g, function (full, alt, src, title) {
-      if (typeof _rewriteImagePath === "function") {
-        return "![" + alt + "](" + _rewriteImagePath(src) + (title || "") + ")";
+    // 处理相对路径图片：裸 URL `![x](.memoria/images/x.png)`（无空格，可选 "title"）
+    // 与尖括号包裹 `![x](<.memoria/images/屏幕截图 2026.png> "title")`（含空格/中文，
+    // 插入图片功能写出的格式）。统一交给 _rewriteImagePath 重写为 /files/ 编码路径。
+    return md.replace(
+      /!\[([^\]]*)\]\((?:<([^>]*)>|(\.[^\s)]+))(\s+"[^"]*")?\s*\)/g,
+      function (full, alt, angleUrl, bareUrl, title) {
+        if (typeof _rewriteImagePath === "function") {
+          const src = angleUrl !== undefined ? angleUrl : bareUrl;
+          const rewritten = _rewriteImagePath(src);
+          if (rewritten === src) return full; // 远程/绝对路径等未重写情况，保持原文
+          return "![" + alt + "](" + rewritten + (title || "") + ")";
+        }
+        return full;
       }
-      return full;
-    });
+    );
   }
 
   function _rewriteImagePath(src) {
@@ -7798,6 +7944,7 @@
 
     // 粘贴多行文本：逐行拆分插入。contenteditable 原生粘贴会把换行压成 <br>/<div>，
     // 而 input 处理器会用 textContent 压平 → 换行丢失；这里手动拆分并插入新行。
+    // 右键「粘贴」菜单也复用本函数（原生 paste 事件无法程序化构造 clipboardData）。
     editor.addEventListener("paste", (e) => {
       const t = e.target;
       const contentEl = t && t.closest ? t.closest(".m0-line-content") : null;
@@ -7807,6 +7954,16 @@
       const raw = clip.getData("text/plain");
       if (raw === null || raw === undefined) return;
       e.preventDefault();
+      applyEditorPaste(raw, contentEl);
+    });
+
+    /**
+     * 多行文本粘贴核心：读剪贴板文本 → 逐行拆分插入源码编辑器。
+     * 由原生 paste 事件与右键「粘贴」菜单共用。
+     * @param {string} raw 剪贴板纯文本
+     * @param {HTMLElement} contentEl 目标 .m0-line-content
+     */
+    function applyEditorPaste(raw, contentEl) {
       // 粘贴整体作为一个撤销单元：先入栈（正文未变），期间 input 事件不再入栈
       _srcPushBefore();
       _srcCoalesceAt = 0;
@@ -7888,6 +8045,46 @@
       }
       scheduleRenderSync();
       markDirty();
+    }
+
+    /** 右键「粘贴」：读剪贴板后复用 applyEditorPaste（合成 ClipboardEvent 的 clipboardData 只读，不可伪造） */
+    async function pasteAtSourceEditor() {
+      let text = "";
+      try {
+        text = (await navigator.clipboard.readText()) || "";
+      } catch (_) {
+        text = "";
+      }
+      if (!text) {
+        setStatus("剪贴板为空或无法读取");
+        return;
+      }
+      const sel = window.getSelection();
+      let content = null;
+      if (sel && sel.anchorNode) {
+        const an = sel.anchorNode;
+        content = an.nodeType === Node.TEXT_NODE
+          ? (an.parentElement ? an.parentElement.closest(".m0-line-content") : null)
+          : (an.closest ? an.closest(".m0-line-content") : null);
+      }
+      if (!content || !editor.contains(content)) {
+        setStatus("请先将光标置于源码编辑区");
+        return;
+      }
+      applyEditorPaste(text, content);
+    }
+
+    // 源码编辑器右键：无选中文本 → 提供「粘贴」菜单
+    // （全局捕获阶段已屏蔽原生右键菜单；有选区时交还 bindEditorSelectionMenu 弹链接/知识点菜单）
+    editor.addEventListener("contextmenu", (e) => {
+      if (!state.currentPath) return;
+      if (!(e.target && e.target.closest && e.target.closest(".m0-line-content"))) return;
+      const info = getSelectionInContainer(editor);
+      if (info) return;
+      e.preventDefault();
+      MemoriaLinkContextMenu.showForCursor(e, {
+        onPaste: pasteAtSourceEditor,
+      });
     });
 
     // IME 组合输入期间：input 事件不单独入栈，组合整体由 compositionend 后的状态兜底

@@ -41,6 +41,43 @@
     return 0xadbac7;
   }
 
+  /** 银河样式：按度数在暗星(0x8b949e)与亮星(0xf0f6fc)之间插值 */
+  function galaxyColor3D(ratio) {
+    const dim = [139, 148, 158];
+    const bright = [240, 246, 252];
+    const k = Math.max(0, Math.min(1, ratio));
+    const r = Math.round(dim[0] + (bright[0] - dim[0]) * k);
+    const g = Math.round(dim[1] + (bright[1] - dim[1]) * k);
+    const b = Math.round(dim[2] + (bright[2] - dim[2]) * k);
+    return (r << 16) | (g << 8) | b;
+  }
+
+  let _haloTexture = null;
+  /** 共享径向渐变纹理，用于节点光晕 sprite（白色，由 SpriteMaterial.color 着色） */
+  function getHaloTexture(THREE) {
+    if (_haloTexture) return _haloTexture;
+    const size = 128;
+    const canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext("2d");
+    const g = ctx.createRadialGradient(
+      size / 2,
+      size / 2,
+      0,
+      size / 2,
+      size / 2,
+      size / 2
+    );
+    g.addColorStop(0, "rgba(255,255,255,1)");
+    g.addColorStop(0.35, "rgba(255,255,255,0.55)");
+    g.addColorStop(1, "rgba(255,255,255,0)");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, size, size);
+    _haloTexture = new THREE.CanvasTexture(canvas);
+    return _haloTexture;
+  }
+
   function hexToCss(hex) {
     const h = (hex >>> 0).toString(16).padStart(6, "0").slice(-6);
     return `#${h}`;
@@ -150,10 +187,12 @@
       this._pickOctree = null;
       this._pickRadius = 10;
       this._labelSprites = new Map();
+      this._haloSprites = new Map();
       this._edgeLines = [];
       this._raycaster = new this.THREE.Raycaster();
       this._pointer = new this.THREE.Vector2(-999, -999);
       this._pendingRelayout = false;
+      this._pulse = 0;
       this._dragPlane = new this.THREE.Plane();
       this._dragIntersect = new this.THREE.Vector3();
       this._dragging = false;
@@ -194,7 +233,7 @@
     _initScene() {
       const THREE = this.THREE;
       this.scene = new THREE.Scene();
-      this.scene.background = new THREE.Color(0x161b22);
+      this._syncBackground();
 
       const w = Math.max(1, this.container.clientWidth || 320);
       const h = Math.max(1, this.container.clientHeight || 240);
@@ -230,10 +269,20 @@
       this._nodeGroup = new THREE.Group();
       this._pickGroup = new THREE.Group();
       this._labelGroup = new THREE.Group();
+      this._haloGroup = new THREE.Group();
       this.scene.add(this._edgeGroup);
       this.scene.add(this._nodeGroup);
       this.scene.add(this._pickGroup);
       this.scene.add(this._labelGroup);
+      this.scene.add(this._haloGroup);
+    }
+
+    /** 银河样式使用深空底色，其余保持默认 */
+    _syncBackground() {
+      if (!this.scene || !this.THREE) return;
+      this.scene.background = new this.THREE.Color(
+        this.opts.graphStyle === "galaxy" ? 0x0a0d13 : 0x161b22
+      );
     }
 
     _observeResize() {
@@ -287,12 +336,32 @@
         this._labelGroup.remove(sprite);
       }
       this._labelSprites.clear();
+      for (const halo of this._haloSprites.values()) {
+        halo.material?.dispose();
+        this._haloGroup.remove(halo);
+      }
+      this._haloSprites.clear();
       for (const line of this._edgeLines) {
         line.geometry?.dispose();
         line.material?.dispose();
         this._edgeGroup.remove(line);
       }
       this._edgeLines = [];
+    }
+
+    _galaxyStats() {
+      const v = this.engine.links?.length || 0;
+      if (!this._galaxyCache || this._galaxyCache.version !== v) {
+        const deg = new Map();
+        let max = 0;
+        for (const l of this.engine.links || []) {
+          if (l.source) deg.set(l.source, (deg.get(l.source) || 0) + 1);
+          if (l.target) deg.set(l.target, (deg.get(l.target) || 0) + 1);
+        }
+        for (const d of deg.values()) if (d > max) max = d;
+        this._galaxyCache = { deg, max, version: v };
+      }
+      return this._galaxyCache;
     }
 
     _rebuildGraph() {
@@ -307,19 +376,54 @@
         visible: false,
         depthWrite: false,
       });
+      const galaxy = this.opts.graphStyle === "galaxy";
+      const gStats = galaxy ? this._galaxyStats() : null;
 
       for (const n of this.layout.nodes) {
+        let baseColor = n.range_ok === false ? 0x8b949e : 0xc9d1d9;
+        let scale = 1;
+        let ratio = 0;
+        if (gStats) {
+          ratio = gStats.max ? (gStats.deg.get(n.id) || 0) / gStats.max : 0;
+          baseColor = galaxyColor3D(ratio);
+          scale = 1 + ratio * 0.4;
+        }
         const mat = new THREE.MeshStandardMaterial({
-          color: n.range_ok === false ? 0x8b949e : 0xc9d1d9,
+          color: baseColor,
           roughness: 0.55,
           metalness: 0.08,
-          emissive: 0x000000,
+          emissive: galaxy ? baseColor : 0x000000,
+          emissiveIntensity: galaxy ? 0.25 + ratio * 0.45 : 0,
         });
         const mesh = new THREE.Mesh(this._nodeGeo, mat);
         mesh.position.set(n.x, n.y, n.z);
+        mesh.scale.set(scale, scale, scale);
         mesh.userData.nodeId = n.id;
+        mesh.userData.gRatio = ratio;
         this._nodeGroup.add(mesh);
         this._nodeMeshes.set(n.id, mesh);
+
+        if (galaxy) {
+          const glow = this.opts.galaxyGlow3d ?? 0.6;
+          const hs = r * (4 + scale * 3 + glow * 2);
+          const halo = new THREE.Sprite(
+            new THREE.SpriteMaterial({
+              map: getHaloTexture(THREE),
+              color: baseColor,
+              transparent: true,
+              depthWrite: false,
+              blending: THREE.AdditiveBlending,
+              opacity: glow * (0.35 + ratio * 0.55),
+            })
+          );
+          halo.scale.set(hs, hs, 1);
+          halo.position.set(n.x, n.y, n.z);
+          halo.userData.nodeId = n.id;
+          halo.userData.baseOpacity = glow * (0.35 + ratio * 0.55);
+          halo.userData.baseScale = hs;
+          this._haloGroup.add(halo);
+          this._haloSprites.set(n.id, halo);
+        }
 
         const pick = new THREE.Mesh(this._pickGeo, pickMat);
         pick.position.set(n.x, n.y, n.z);
@@ -410,6 +514,8 @@
         if (pick) pick.position.set(n.x, n.y, n.z);
         const label = this._labelSprites.get(n.id);
         if (label) this._positionLabelSprite(label, n, r);
+        const halo = this._haloSprites.get(n.id);
+        if (halo) halo.position.set(n.x, n.y, n.z);
       }
       for (let i = 0; i < this.layout.simLinks.length; i++) {
         const link = this.layout.simLinks[i];
@@ -466,14 +572,40 @@
     applyOptions(partial, opts = {}) {
       const labelKeys = ["labelMode", "labelMaxLen", "nodeRadius"];
       const labelDirty = labelKeys.some((k) => partial && partial[k] !== undefined);
+      const styleDirty =
+        partial &&
+        partial.graphStyle !== undefined &&
+        partial.graphStyle !== this.opts.graphStyle;
+      const glowDirty =
+        partial &&
+        partial.galaxyGlow3d !== undefined &&
+        partial.galaxyGlow3d !== this.opts.galaxyGlow3d;
       Object.assign(this.opts, partial || {});
       this._applyZoomSettings();
-      if (opts.relayout) this.resetSimulation();
-      else if (labelDirty && this.layout.nodes.length) {
+      this._syncBackground();
+      if (glowDirty && this.opts.graphStyle === "galaxy") {
+        this._syncHaloGlow();
+        this._applyHighlight();
+        if (this.active) this._render();
+      } else if (opts.relayout) this.resetSimulation();
+      else if ((styleDirty || labelDirty) && this.layout.nodes.length) {
         this._rebuildGraph();
         this._applyHighlight();
         if (this.active) this._render();
       } else if (this.active) this._render();
+    }
+
+    /** 银河光晕强度变化时按当前 galaxyGlow3d 更新所有光晕 sprite（无需整体重建） */
+    _syncHaloGlow() {
+      const glow = this.opts.galaxyGlow3d ?? 0.6;
+      const r = this.opts.nodeRadius * 0.85;
+      for (const [id, halo] of this._haloSprites) {
+        const mesh = this._nodeMeshes.get(id);
+        const ratio = mesh?.userData?.gRatio || 0;
+        const scale = 1 + ratio * 0.4;
+        halo.userData.baseOpacity = glow * (0.35 + ratio * 0.55);
+        halo.userData.baseScale = r * (4 + scale * 3 + glow * 2);
+      }
     }
 
     _applyZoomSettings() {
@@ -523,10 +655,48 @@
         this._syncPositions();
         if (this._controls) this._controls.update();
         this._updateHover();
+        this._tickPulse();
         this._render();
         this._raf = requestAnimationFrame(loop);
       };
       this._raf = requestAnimationFrame(loop);
+    }
+
+    /** 银河样式：交互（悬停/焦点）期间焦点星点闪烁，空闲时静止 */
+    _tickPulse() {
+      if (this.opts.graphStyle !== "galaxy") return;
+      const hover = this._focusHoverId();
+      const ext = this.externalFocus;
+      const interacting = !!(
+        hover ||
+        (ext && (ext.sourceIds.size || ext.targetIds.size))
+      );
+      if (!interacting) {
+        if (this._pulse) {
+          this._pulse = 0;
+          this._applyHighlight();
+        }
+        return;
+      }
+      this._pulse = (this._pulse || 0) + 0.06;
+      const pulse = 0.5 + 0.5 * Math.sin(this._pulse);
+      const boost = 0.9 + 0.7 * pulse;
+      const ids = new Set(hover ? [hover] : []);
+      if (ext) {
+        for (const id of ext.sourceIds || []) ids.add(id);
+        for (const id of ext.targetIds || []) ids.add(id);
+      }
+      for (const id of ids) {
+        const mesh = this._nodeMeshes.get(id);
+        if (mesh?.material?.emissive) {
+          mesh.material.emissiveIntensity = boost;
+        }
+        const halo = this._haloSprites.get(id);
+        if (halo) {
+          halo.material.opacity = 0.55 + 0.45 * pulse;
+          halo.scale.setScalar(halo.userData.baseScale * (1.15 + 0.3 * pulse));
+        }
+      }
     }
 
     stop() {
@@ -626,6 +796,12 @@
         const isExtTarget = extActive && ext.targetIds.has(id);
         const isTarget = (outTargets && outTargets.has(id)) || isExtTarget;
         let color = 0xc9d1d9;
+        if (this.opts.graphStyle === "galaxy") {
+          const gStats = this._galaxyStats();
+          color = galaxyColor3D(
+            gStats.max ? (gStats.deg.get(id) || 0) / gStats.max : 0
+          );
+        }
         if (isHover || isExtSource) color = 0xf0f6fc;
         else if (isTarget) color = 0x79c0ff;
         else if (extActive || hover) color = 0x484f58;
@@ -635,12 +811,39 @@
         }
         mesh.material.color.setHex(color);
         if (mesh.material.emissive) {
-          if (isHover || isExtSource) {
+          if (this.opts.graphStyle === "galaxy") {
+            const ratio = mesh.userData.gRatio || 0;
+            mesh.material.emissive.setHex(color);
+            if (isHover || isExtSource) mesh.material.emissiveIntensity = 0.9;
+            else if (isTarget) mesh.material.emissiveIntensity = 0.55;
+            else if (extActive || hover) mesh.material.emissiveIntensity = 0.08;
+            else mesh.material.emissiveIntensity = 0.25 + ratio * 0.45;
+          } else if (isHover || isExtSource) {
             mesh.material.emissive.setHex(0x2f4566);
+            mesh.material.emissiveIntensity = 1;
           } else if (isTarget) {
             mesh.material.emissive.setHex(0x1a3a5c);
+            mesh.material.emissiveIntensity = 1;
           } else {
             mesh.material.emissive.setHex(0x000000);
+            mesh.material.emissiveIntensity = 0;
+          }
+        }
+        const halo = this._haloSprites.get(id);
+        if (halo) {
+          halo.material.color.setHex(color);
+          if (isHover || isExtSource) {
+            halo.material.opacity = 0.95;
+            halo.scale.setScalar(halo.userData.baseScale * 1.35);
+          } else if (isTarget) {
+            halo.material.opacity = 0.7;
+            halo.scale.setScalar(halo.userData.baseScale * 1.15);
+          } else if (extActive || hover) {
+            halo.material.opacity = 0.08;
+            halo.scale.setScalar(halo.userData.baseScale);
+          } else {
+            halo.material.opacity = halo.userData.baseOpacity;
+            halo.scale.setScalar(halo.userData.baseScale);
           }
         }
         const label = this._labelSprites.get(id);

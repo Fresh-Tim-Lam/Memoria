@@ -2,7 +2,7 @@
 
 > **用途**：图片板块（资产管理：插入 / 持久化 / 删除 / 替换 / 大小 / 对齐）的分阶段开发方案。每阶段独立可交互验证，避免大改后无法定位问题。
 > **目标读者**：维护者 / AI Agent（实施本方案时按阶段推进，每阶段完成必须跑通"可交互验证"再进下一阶段）。
-> **关联文档**：[image-features.md](../context/image-features.md)（功能说明与内部机制，§7 为设计蓝图）；[markdown-form-std.md](../standards/markdown-form-std.md)（`[[]]` 语法体系，阶段 E 需扩展）；[docs-management.md](../standards/docs-management.md)（登记）。
+> **关联文档**：[image-features.md](../reference/image-features.md)（功能说明与内部机制，§7 为设计蓝图）；[markdown-form-std.md](../conventions/markdown-form-std.md)（`[[]]` 语法体系，阶段 E 需扩展）；[docs-management.md](../conventions/docs-management.md)（登记）。
 
 ---
 
@@ -182,7 +182,7 @@ await memoria.api.import_image("C:/.../a.png")  // 再插一次
 - `renderer.js` `T.IMAGE`（L103-127）：白名单应用——`width`/`height` 经 `_normalizeImageSize` 规范化（纯数字补 `px`，`px`/`%` 原样，非法值忽略）写 `<img>` 内联样式，且 `img.style.maxWidth = "100%"`（显式尺寸生效、防溢出，覆盖默认 `max-width:35%` 钳制）；`align=center/left/right` → 容器 `.m0-image-align-*` class；未知 key → `console.warn("[img-attrs] ...")` 忽略。
 - `app.css`：`.m0-preview .m0-image-block.m0-image-align-center/left/right { text-align: ... }`。
 - `edit-handler.js`：双击编辑图片提示文案更新为 `![alt](url "width=300,align=center")`。
-- `standards/markdown-form-std.md`：新增"图片节点属性规范"章节（key 白名单、语法示例、解析与容错规则、与 `[[]]` 体系关系）。
+- `conventions/markdown-form-std.md`：新增"图片节点属性规范"章节（key 白名单、语法示例、解析与容错规则、与 `[[]]` 体系关系）。
 - source-gen 无需改动：attrs 存于 title 原始字符串，回写 `![alt](url "title")` 天然保留，编辑往返不丢。
 
 **交互验证（harness + browser 两轮，全部 PASS）**：
@@ -255,7 +255,7 @@ await memoria.api.import_image("C:/.../a.png")  // 再插一次
 - **harness**：`cd docs/example/rich-content-test && python _harness.py` → `http://127.0.0.1:8642/`。注意 `initKb` 会切到 remembered KB——需先 `await memoria.api.set_kb_path(r"d:\AAA_Jupyter\Memoria\docs\example\rich-content-test")` 再刷新。
 - **编码**：Windows 管道 stdout 默认 cp1252，Python 侧中文日志（如 `[STATIC] ... 设为 ...`）会 `UnicodeEncodeError` 崩溃。`_harness.py` 开头已加 `sys.stdout/stderr.reconfigure(encoding="utf-8")`；`static_server.py` 统一走容错 `_log()`（`print` 包 `try/except (UnicodeEncodeError, OSError)`），打包态窗口应用 stdout 为 None 也不会炸。
 - **开发态**：`python -m memoria` 直接跑，`[img-rewrite]`/`[img-debug]`/`[STATIC]` 三段日志闭环排查。
-- **每次改动后**：`docs/context/image-features.md` §7 设计蓝图标注阶段状态；`markdown-form-std.md`（阶段 E）登记语法。
+- **每次改动后**：`docs/reference/image-features.md` §7 设计蓝图标注阶段状态；`markdown-form-std.md`（阶段 E）登记语法。
 - **回归重点**：无 title / 无属性图片、相对路径旧写法、Lightbox、双击编辑、源码↔预览往返。
 
 ## 11. 风险与开放问题

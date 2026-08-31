@@ -224,7 +224,7 @@
 
   function layoutOptsForWorker(layout) {
     return {
-      ...layout.opts,
+      ...(layout.opts || {}),
       groupMode: layout._groupMode || "single",
     };
   }

@@ -200,7 +200,7 @@
         /* worker warmup + reset on ready */
       } else {
         this._warmup();
-        this.alpha = this.opts.alphaTarget ?? 0.12;
+        this.alpha = this._simOpts().alphaTarget;
         this._emit("reset", { nodes: this.nodes, links: this.simLinks });
       }
       return this;

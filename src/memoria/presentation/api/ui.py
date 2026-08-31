@@ -790,6 +790,20 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
 
+    def diagnose_image_refs(self) -> dict:
+        """诊断"被文档引用但未成功注册"的图片引用（图片管理 → 检查异常引用）。"""
+        try:
+            return self._svc.diagnose_image_refs()
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def fix_unregistered_image_refs(self) -> dict:
+        """一键修复：把格式不可注册的 .memoria/images/ 图片引用改写为尖括号形式。"""
+        try:
+            return self._svc.fix_unregistered_image_refs()
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
     def pre_scan_import(self, file_contents: list[dict]) -> dict:
         """预扫描导入文件，检测 KP id 冲突。
 

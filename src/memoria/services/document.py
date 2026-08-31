@@ -606,8 +606,12 @@ class DocumentService:
             })
         return out
 
-    # 图片引用正则：![alt](url) 或 ![alt](url "title")，url 不含空格
-    _IMG_REF_RE = re.compile(r"!\[[^\]]*\]\(\s*([^)\s]+)(?:\s+\"[^\"]*\")?\s*\)")
+    # 图片引用正则：![alt](url) 或 ![alt](url "title")；
+    # URL 可为裸路径（不含空白），也可用尖括号包裹（含中文/空格等需编码字符，如
+    # <.../屏幕截图 2026.png>），两种形式都提取 URL 供引用注册。
+    _IMG_REF_RE = re.compile(
+        r"!\[[^\]]*\]\(\s*(?:<([^>]*)>|([^)\s]+))(?:\s+\"[^\"]*\")?\s*\)"
+    )
 
     def _scan_image_refs(self) -> dict[str, list[str]]:
         """扫描 KB 全部 md 文档的图片引用，建立注册表。
@@ -629,7 +633,7 @@ class DocumentService:
             except (OSError, UnicodeDecodeError):
                 continue
             for m in self._IMG_REF_RE.finditer(body):
-                url = m.group(1).strip()
+                url = (m.group(1) or m.group(2) or "").strip()
                 norm = url[8:] if url.startswith("/files/") else url
                 if not norm.startswith(prefix):
                     continue
@@ -701,6 +705,119 @@ class DocumentService:
                 "relPath": f"{MEMORIA_DIR}/images/{name}",
             })
         return {"status": "ok", "deleted": deleted}
+
+    # ── 图片引用诊断与修复（触发入口：图片管理 → 检查异常引用） ──────
+    # 注册机制基于全库扫描 md 引用；若 md 里的引用格式无法被 _scan_image_refs
+    # 识别（典型：文件名含空格/中文的裸 URL，如 `![x](.memoria/images/屏幕截图 2026.png)`，
+    # 未用尖括号包裹），该图片即使存在也会被判为"未引用"，保存时被自动清理误删。
+    # 以下方法用于发现并修复这类"已引用但未注册"的图片引用。
+
+    @staticmethod
+    def _parse_image_ref_url(raw: str) -> tuple[str | None, bool]:
+        """解析图片引用括号内文本，返回 (意图URL, 是否可被注册规则识别)。
+
+        - `<url>` 尖括号形式：可注册（允许含空格/中文）
+        - 裸 URL：去掉尾部 `"title"` 后若仍含空白 → 不可注册（URL 在空格处被截断）
+        """
+        m = re.match(r"^<([^>]*)>", raw)
+        if m:
+            return (m.group(1).strip(), True)
+        intent = re.sub(r'\s+"[^"]*"$', "", raw).strip()
+        token = re.match(r"^([^)\s]+)", intent)
+        if not token:
+            return (None, False)
+        return (intent, token.group(1) == intent)
+
+    def diagnose_image_refs(self) -> dict:
+        """诊断"文档引用了图片但未成功注册"的情况。
+
+        - unregistered: 引用指向 .memoria/images/ 但格式不可注册（可一键修复）
+        - missing:      引用格式可注册但 .memoria/images/ 下无对应文件
+        """
+        out: dict[str, list[dict]] = {"unregistered": [], "missing": []}
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        prefix = f"{MEMORIA_DIR}/images/"
+        img_dir = self.images_dir()
+        for rel in collect_md_files(self.kb_path):
+            full = os.path.join(self.kb_path, rel)
+            try:
+                with open(full, "r", encoding="utf-8") as f:
+                    lines = f.read().splitlines()
+            except (OSError, UnicodeDecodeError):
+                continue
+            for ln, line in enumerate(lines, 1):
+                if "![" not in line:
+                    continue
+                for m in re.finditer(r"!\[[^\]]*\]\(([^)]*)\)", line):
+                    url, registrable = self._parse_image_ref_url(m.group(1).strip())
+                    if url is None:
+                        continue
+                    norm = url[8:] if url.startswith("/files/") else url
+                    if not norm.startswith(prefix):
+                        continue
+                    name = norm[len(prefix):].split("#", 1)[0].split("?", 1)[0]
+                    if not name or "/" in name or "\\" in name:
+                        continue
+                    item = {
+                        "doc": rel,
+                        "line": ln,
+                        "src": m.group(0),
+                        "url": norm,
+                        "exists": os.path.isfile(os.path.join(img_dir, name)),
+                    }
+                    if not registrable:
+                        out["unregistered"].append(item)
+                    elif not item["exists"]:
+                        out["missing"].append(item)
+        return {"status": "ok", **out}
+
+    @staticmethod
+    def _rewrite_bare_space_refs(text: str, prefix: str) -> tuple[str, int]:
+        """把指向 prefix 的"裸 URL 含空格"图片引用改写为尖括号形式。"""
+        count = 0
+
+        def repl(m: re.Match) -> str:
+            nonlocal count
+            raw = m.group(1).strip()
+            url, registrable = DocumentService._parse_image_ref_url(raw)
+            if url is None or registrable:
+                return m.group(0)
+            norm = url[8:] if url.startswith("/files/") else url
+            if not norm.startswith(prefix):
+                return m.group(0)
+            alt_m = re.match(r"!\[([^\]]*)\]", m.group(0))
+            alt = alt_m.group(1) if alt_m else ""
+            title_m = re.search(r'"[^"]*"\s*$', raw)
+            suffix = f" {title_m.group(0).strip()}" if title_m else ""
+            count += 1
+            return f"![{alt}](<{norm}>{suffix})"
+
+        new_text = re.sub(r"!\[[^\]]*\]\(([^)]*)\)", repl, text)
+        return (new_text, count)
+
+    def fix_unregistered_image_refs(self) -> dict:
+        """一键修复：把格式不可注册的 .memoria/images/ 图片引用改写为尖括号形式。"""
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        prefix = f"{MEMORIA_DIR}/images/"
+        changed: list[dict] = []
+        total = 0
+        for rel in collect_md_files(self.kb_path):
+            full = os.path.join(self.kb_path, rel)
+            try:
+                with open(full, "r", encoding="utf-8") as f:
+                    text = f.read()
+            except (OSError, UnicodeDecodeError):
+                continue
+            new_text, n = self._rewrite_bare_space_refs(text, prefix)
+            if n:
+                with open(full, "w", encoding="utf-8") as f:
+                    f.write(new_text)
+                touch_manifest_entry(self.kb_path, rel)
+                changed.append({"doc": rel, "fixed": n})
+                total += n
+        return {"status": "ok", "fixed": total, "changed": changed}
 
     def _read_body(self, rel_path: str) -> tuple[str, dict | None, list[str]]:
         if not self.kb_path:

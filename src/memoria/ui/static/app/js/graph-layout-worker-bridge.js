@@ -67,6 +67,7 @@
       this.alpha = this.opts.alphaTarget ?? 0.12;
       this._emit("reset", { nodes: this.nodes, links: this.simLinks });
       if (this.running) {
+        this.running = false;
         origStart.call(this);
       }
     };
@@ -185,6 +186,8 @@
         this._worker.postMessage({ type: "start" });
         return;
       }
+      // 基类 start() 首行 `if (this.running) return;`，须先复位再交给它真正启动 rAF 循环
+      this.running = false;
       origStart.call(this);
     };
 

@@ -89,6 +89,45 @@
     ctx.fillText(text, n.x, ly);
   }
 
+  /** 银河样式：按度数亮度插值（Hub 亮、叶子暗） */
+  function galaxyNodeColor2D(ratio) {
+    const dim = [139, 148, 158];
+    const bright = [240, 246, 252];
+    const k = Math.max(0, Math.min(1, ratio));
+    const r = Math.round(dim[0] + (bright[0] - dim[0]) * k);
+    const g = Math.round(dim[1] + (bright[1] - dim[1]) * k);
+    const b = Math.round(dim[2] + (bright[2] - dim[2]) * k);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  /** 给 css 颜色附加透明度，返回 rgba() */
+  function rgba(color, a) {
+    if (color.charAt(0) === "#") {
+      const n = parseInt(color.slice(1), 16);
+      return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    const m = /rgba?\(([\d.]+),([\d.]+),([\d.]+)/.exec(color);
+    if (m) return `rgba(${m[1]},${m[2]},${m[3]},${a})`;
+    return color;
+  }
+
+  /** 银河星点：径向渐变光晕 + 实心核心 */
+  function drawStar(ctx, x, y, r, color, halo, glow) {
+    const gr = r * (1.6 + glow * 2.4);
+    const grad = ctx.createRadialGradient(x, y, r * 0.1, x, y, gr);
+    grad.addColorStop(0, rgba(color, halo));
+    grad.addColorStop(0.55, rgba(color, halo * 0.45));
+    grad.addColorStop(1, rgba(color, 0));
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, gr, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
   class GraphView2D {
     constructor(container, engine, layout, options = {}) {
       this.container = container;
@@ -113,6 +152,7 @@
       this._resizeObs = null;
       this._pendingRelayout = false;
       this._userView = false;
+      this._pulse = 0;
 
       this._onEngineLoad = () => this.resetSimulation();
       this._onLayoutTick = () => {
@@ -464,6 +504,21 @@
       });
     }
 
+    _galaxyStats() {
+      const v = this.engine.links?.length || 0;
+      if (!this._galaxyCache || this._galaxyCache.version !== v) {
+        const deg = new Map();
+        let max = 0;
+        for (const l of this.engine.links || []) {
+          if (l.source) deg.set(l.source, (deg.get(l.source) || 0) + 1);
+          if (l.target) deg.set(l.target, (deg.get(l.target) || 0) + 1);
+        }
+        for (const d of deg.values()) if (d > max) max = d;
+        this._galaxyCache = { deg, max, version: v };
+      }
+      return this._galaxyCache;
+    }
+
     draw() {
       if (!this.active) return;
       const ctx = this.ctx;
@@ -471,8 +526,11 @@
       const h = this.viewH || 1;
       const opts = this.opts;
       ctx.save();
+      const galaxy = opts.graphStyle === "galaxy";
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = getComputedStyle(this.container).backgroundColor || "#161b22";
+      ctx.fillStyle = galaxy
+        ? "#0a0d13"
+        : getComputedStyle(this.container).backgroundColor || "#161b22";
       ctx.fillRect(0, 0, w, h);
 
       ctx.translate(this.transform.x, this.transform.y);
@@ -513,21 +571,50 @@
         );
       }
 
+      const gStats = galaxy ? this._galaxyStats() : null;
+      const glowStrength = galaxy ? opts.galaxyGlow2d ?? 0.6 : 0;
+      let pulse = 0;
+      if (galaxy) {
+        if (hover || extActive) {
+          this._pulse = (this._pulse || 0) + 0.07;
+          pulse = 0.5 + 0.5 * Math.sin(this._pulse);
+        } else {
+          this._pulse = 0;
+        }
+      }
+
       for (const n of this.simNodes) {
         const isHover = n.id === hover;
         const isExtSource = extActive && ext.sourceIds.has(n.id);
         const isExtTarget = extActive && ext.targetIds.has(n.id);
         const isTarget = (outLinks && outLinks.has(n.id)) || isExtTarget;
         const isFocus = isHover || isExtSource || isExtTarget;
-        const r = opts.nodeRadius + (isHover || isExtSource ? 3 : isExtTarget ? 2 : 0);
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-        if (isHover || isExtSource) ctx.fillStyle = "#f0f6fc";
-        else if (isTarget) ctx.fillStyle = "#79c0ff";
-        else if (extActive || hover) ctx.fillStyle = "#484f58";
-        else if (n.range_ok === false) ctx.fillStyle = "#8b949e";
-        else ctx.fillStyle = "#c9d1d9";
-        ctx.fill();
+        let ratio = 0;
+        if (gStats) ratio = gStats.max ? (gStats.deg.get(n.id) || 0) / gStats.max : 0;
+        let r = opts.nodeRadius + (isHover || isExtSource ? 3 : isExtTarget ? 2 : 0);
+        if (gStats) r = r * (1 + ratio * 0.5);
+        let fill;
+        let halo = 0;
+        if (isHover || isExtSource) fill = "#f0f6fc";
+        else if (isTarget) fill = "#79c0ff";
+        else if (extActive || hover) fill = "#3d4350";
+        else if (n.range_ok === false) fill = "#3a4152";
+        else if (gStats) fill = galaxyNodeColor2D(ratio);
+        else fill = "#c9d1d9";
+        if (galaxy) {
+          if (isHover || isExtSource) halo = 0.6;
+          else if (isTarget) halo = 0.4;
+          else if (extActive || hover) halo = 0.1;
+          else if (gStats) halo = 0.14 + ratio * 0.3;
+          else halo = 0.12;
+          if (isFocus) halo *= 0.75 + 0.5 * pulse;
+          drawStar(ctx, n.x, n.y, r, fill, halo, glowStrength);
+        } else {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+          ctx.fillStyle = fill;
+          ctx.fill();
+        }
         if (isFocus) {
           ctx.strokeStyle = isExtSource || isExtTarget ? "#a371f7" : "#58a6ff";
           ctx.lineWidth = 2;

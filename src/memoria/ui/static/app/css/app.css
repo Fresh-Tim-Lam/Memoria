@@ -593,6 +593,18 @@
     opacity: 0.55;
 }
 
+.m0-settings-fieldset {
+    margin: 2px 0 12px;
+    padding: 6px 10px 0;
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+}
+
+.m0-settings-fieldset--hidden {
+    display: none;
+}
+
 .m0-settings-placeholder {
     padding: 24px 8px;
 }

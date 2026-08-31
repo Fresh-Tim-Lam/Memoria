@@ -2,7 +2,7 @@
 
 > **用途**：知识库生产流水线中「内容生成 Agent」的**唯一完整手册**——包含可复制的任务提示词、必须严格遵守的平面文件格式规范、整理规则、分批输出规则、输出格式、自检清单与冲突处理。整合并取代原 `knowledge-organizer-prompt.md` 与散落在各处的角色 A 说明。
 > **目标读者**：用户（把本手册中「任务提示词」转发给外部 Agent 使用）；内容生成 Agent（角色 A，整体遵守本手册）。
-> **关联文档**：[standards/import-format.md](../standards/import-format.md)（平面格式**权威源**——本手册第 3 节为其面向 Agent 的内嵌版本，两者冲突以 import-format.md 为准）；[standards/markdown-form-std.md](../standards/markdown-form-std.md)（`[[]]` 语法体系）；[context/usage-agent-workflow.md](../context/usage-agent-workflow.md)（完整流水线：角色 A → 用户转贴 → 角色 B 转换）。
+> **关联文档**：[conventions/import-format.md](../conventions/import-format.md)（平面格式**权威源**——本手册第 3 节为其面向 Agent 的内嵌版本，两者冲突以 import-format.md 为准）；[conventions/markdown-form-std.md](../conventions/markdown-form-std.md)（`[[]]` 语法体系）；[guides/usage-agent-workflow.md](../guides/usage-agent-workflow.md)（完整流水线：角色 A → 用户转贴 → 角色 B 转换）。
 
 ---
 
@@ -214,7 +214,7 @@ description: ...
 
 ## 3. 平面文件格式规范（Agent 内嵌版）
 
-> 本节省略版与第 2 节提示词中的规范一致；字段定义、链接语法、边类型的**权威来源**是 [standards/import-format.md](../standards/import-format.md)。
+> 本节省略版与第 2 节提示词中的规范一致；字段定义、链接语法、边类型的**权威来源**是 [conventions/import-format.md](../conventions/import-format.md)。
 
 ### 3.1 基本结构速查
 
@@ -438,8 +438,8 @@ concepts:
 
 ## 9. 与下游的衔接
 
-1. **用户拼接**：分批输出 → 用户按序拼接为单文件（见 [usage-agent-workflow.md](../context/usage-agent-workflow.md) §3）
+1. **用户拼接**：分批输出 → 用户按序拼接为单文件（见 [usage-agent-workflow.md](../guides/usage-agent-workflow.md) §3）
 2. **两条落地路径**：
    - 路径一：用户在 Memoria UI 点「导入」选择平面文件，导入引擎自动生成 `.md` + sidecar
    - 路径二：交给角色 B（知识库转换 Agent）转换为文件组织的知识库文件夹
-3. **格式更新纪律**：若格式规范需要修改，**先改 [standards/import-format.md](../standards/import-format.md)，再同步本手册第 2/3 节**，防止双源漂移；并在 [standards/docs-management.md](../standards/docs-management.md) §4.2 登记修订。
+3. **格式更新纪律**：若格式规范需要修改，**先改 [conventions/import-format.md](../conventions/import-format.md)，再同步本手册第 2/3 节**，防止双源漂移；并在 [conventions/docs-management.md](../conventions/docs-management.md) §4.2 登记修订。

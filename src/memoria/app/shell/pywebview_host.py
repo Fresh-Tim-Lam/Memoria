@@ -16,21 +16,29 @@ from memoria.app.window_win32 import (
     start_system_drag,
 )
 
-# 文件夹对话框尺寸控制机制：Windows 按"可执行文件名"分别保存对话框的
+# 文件/文件夹对话框尺寸控制机制：Windows 按"可执行文件名"分别保存对话框的
 # 位置/大小状态（微软文档原话），打包态 Memoria.exe 曾记住"最大化"尺寸，
-# 导致每次弹出文件夹选择器都全屏。修复：SetClientGuid 指定**每次全新**的
+# 导致每次弹出文件/文件夹选择器都全屏。修复：SetClientGuid 指定**每次全新**的
 # 客户端 GUID——该 GUID 从未有过保存状态，对话框必然以系统默认尺寸打开，
-# 从机制上杜绝"按 exe 记忆的全屏状态"被套用。见 _vista_folder_picker。
-def _vista_folder_picker(parent_handle, initial_directory: str | None = None):
-    """现代文件夹选择对话框（IFileDialog）——复刻 pywebview winforms
-    OpenFolderDialog 的反射调用，并加入 SetClientGuid(Guid.NewGuid())：
+# 从机制上杜绝"按 exe 记忆的全屏状态"被套用。见 _vista_file_picker。
+def _vista_file_picker(
+    parent_handle,
+    *,
+    title: str,
+    filter_spec: str,
+    initial_directory: str | None = None,
+    multiselect: bool = False,
+    pick_folders: bool = False,
+):
+    """现代文件/文件夹选择对话框（IFileDialog）——复刻 pywebview winforms
+    OpenFileDialog 的反射调用，并加入 SetClientGuid(Guid.NewGuid())：
 
     每次弹窗分配一个全新客户端 GUID，对话框状态（位置/大小/最大化）
     不再读取按可执行文件名保存的历史状态，必然以系统默认尺寸弹出，
     彻底规避打包态"全屏"问题。
 
-    返回选中目录元组；用户取消返回 None；反射链路异常直接上抛，
-    由调用方（pick_directory）回退 pywebview 原生实现。
+    返回选中项元组；用户取消返回 None；反射链路异常直接上抛，
+    由调用方（pick_directory / pick_image_file 等）回退 pywebview 原生实现。
     """
     from System import Array, Guid, Object, UInt32  # noqa: PLC0415
     import System.Windows.Forms as WinForms  # noqa: PLC0415
@@ -48,12 +56,12 @@ def _vista_folder_picker(parent_handle, initial_directory: str | None = None):
 
     dialog = WinForms.OpenFileDialog()
     dialog.InitialDirectory = initial_directory or ""
-    dialog.Title = "选择知识库文件夹"
-    dialog.Filter = "Folders|\n"
+    dialog.Title = title
+    dialog.Filter = filter_spec
     dialog.AddExtension = False
-    dialog.CheckFileExists = False
+    dialog.CheckFileExists = not pick_folders
     dialog.DereferenceLinks = True
-    dialog.Multiselect = False
+    dialog.Multiselect = multiselect
     dialog.RestoreDirectory = True
 
     i_file_dialog = open_file_dialog_type.GetMethod(
@@ -62,17 +70,18 @@ def _vista_folder_picker(parent_handle, initial_directory: str | None = None):
     open_file_dialog_type.GetMethod(
         "OnBeforeVistaDialog", flags
     ).Invoke(dialog, [i_file_dialog])
-    options = file_dialog_type.GetMethod("GetOptions", flags).Invoke(
-        dialog, []
-    )
-    fos_pick_folders = (
-        wf_asm.GetType("System.Windows.Forms.FileDialogNative+FOS")
-        .GetField("FOS_PICKFOLDERS")
-        .GetValue(None)
-    )
-    i_file_dialog_type.GetMethod("SetOptions", flags).Invoke(
-        i_file_dialog, [options.op_BitwiseOr(fos_pick_folders)]
-    )
+    if pick_folders:
+        options = file_dialog_type.GetMethod("GetOptions", flags).Invoke(
+            dialog, []
+        )
+        fos_pick_folders = (
+            wf_asm.GetType("System.Windows.Forms.FileDialogNative+FOS")
+            .GetField("FOS_PICKFOLDERS")
+            .GetValue(None)
+        )
+        i_file_dialog_type.GetMethod("SetOptions", flags).Invoke(
+            i_file_dialog, [options.op_BitwiseOr(fos_pick_folders)]
+        )
 
     # —— 尺寸控制：全新客户端 GUID → 无任何历史保存状态 → 默认尺寸 ——
     set_client_guid = i_file_dialog_type.GetMethod("SetClientGuid", flags)
@@ -138,7 +147,12 @@ class PyWebViewHost:
             handle = getattr(native, "Handle", None) if native is not None else None
             # 自建 IFileDialog（SetClientGuid 尺寸控制）；取消返回 None 直接返回，
             # 绝不二次弹出 pywebview 原生对话框（打包态会触发全屏状态）
-            result = _vista_folder_picker(handle)
+            result = _vista_file_picker(
+                handle,
+                title="选择知识库文件夹",
+                filter_spec="Folders|\n",
+                pick_folders=True,
+            )
             return result[0] if result else None
         except Exception:  # noqa: BLE001
             # 仅反射链路异常时回退 pywebview 原生实现，保证功能可用
@@ -149,27 +163,52 @@ class PyWebViewHost:
         window = self._window()
         if window is None:
             return []
-        result = window.create_file_dialog(
-            webview.OPEN_DIALOG,
-            allow_multiple=True,
-            file_types=("Text Files (*.txt;*.md)", "All Files (*.*)"),
-        )
-        return list(result) if result else []
+        try:
+            native = getattr(window, "native", None)
+            handle = getattr(native, "Handle", None) if native is not None else None
+            result = _vista_file_picker(
+                handle,
+                title="选择要导入的文件",
+                filter_spec="Text Files (*.txt;*.md)|*.txt;*.md|All Files (*.*)|*.*",
+                multiselect=True,
+            )
+            return list(result) if result else []
+        except Exception:  # noqa: BLE001
+            result = window.create_file_dialog(
+                webview.OPEN_DIALOG,
+                allow_multiple=True,
+                file_types=("Text Files (*.txt;*.md)", "All Files (*.*)"),
+            )
+            return list(result) if result else []
 
     def pick_image_file(self) -> str | None:
         """单选本地图片文件（供复制入库用）。"""
         window = self._window()
         if window is None:
             return None
-        result = window.create_file_dialog(
-            webview.OPEN_DIALOG,
-            allow_multiple=False,
-            file_types=(
-                "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.svg;*.webp;*.bmp;*.ico)",
-                "All Files (*.*)",
-            ),
-        )
-        return result[0] if result else None
+        try:
+            native = getattr(window, "native", None)
+            handle = getattr(native, "Handle", None) if native is not None else None
+            result = _vista_file_picker(
+                handle,
+                title="选择图片文件",
+                filter_spec=(
+                    "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.svg;*.webp;*.bmp;*.ico)"
+                    "|*.png;*.jpg;*.jpeg;*.gif;*.svg;*.webp;*.bmp;*.ico"
+                    "|All Files (*.*)|*.*"
+                ),
+            )
+            return result[0] if result else None
+        except Exception:  # noqa: BLE001
+            result = window.create_file_dialog(
+                webview.OPEN_DIALOG,
+                allow_multiple=False,
+                file_types=(
+                    "Image Files (*.png;*.jpg;*.jpeg;*.gif;*.svg;*.webp;*.bmp;*.ico)",
+                    "All Files (*.*)",
+                ),
+            )
+            return result[0] if result else None
 
     def minimize(self) -> None:
         window = self._window()

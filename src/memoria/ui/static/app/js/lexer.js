@@ -393,11 +393,17 @@ window.MemoriaLexer = (function () {
 
     var target = line.slice(closeBracket + 2, parenClose); // url 或 url "title"
     var title = "";
-    // 可选 title 段：空格 + 单/双引号包裹，紧贴闭合 ')'
-    var titleMatch = /^(.*?)\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')$/.exec(target);
+    // 可选 title 段：空格 + 单/双引号包裹，允许 title 后（闭合 ')' 前）有尾随空白
+    var titleMatch = /^(.*?)\s+("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*$/.exec(target);
     if (titleMatch) {
       target = titleMatch[1];
       title = titleMatch[2].slice(1, -1); // 去外层引号
+    }
+    // URL 尾随空白清理（复制/粘贴时常见 `url  )` 写法）
+    target = target.replace(/\s+$/, "");
+    // 尖括号包裹的 URL（程序插入图片写出的格式）容错：去外层 < >
+    if (target.charAt(0) === "<" && target.charAt(target.length - 1) === ">") {
+      target = target.slice(1, -1);
     }
     return {
       alt: alt,

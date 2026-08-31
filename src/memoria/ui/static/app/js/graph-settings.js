@@ -33,6 +33,9 @@
     zoomMinDistance3d: 5,
     zoomMaxDistance3d: 3000,
     zoomSensitivity3d: 1.0,
+    graphStyle: "force",
+    galaxyGlow2d: 0.6,
+    galaxyGlow3d: 0.6,
   };
 
   const SPLIT_DEFAULTS = {
@@ -265,6 +268,9 @@
       zoomMinDistance3d: s.zoomMinDistance3d,
       zoomMaxDistance3d: s.zoomMaxDistance3d,
       zoomSensitivity3d: s.zoomSensitivity3d,
+      graphStyle: s.graphStyle,
+      galaxyGlow2d: s.galaxyGlow2d,
+      galaxyGlow3d: s.galaxyGlow3d,
     };
   }
 
@@ -275,7 +281,17 @@
   function notifyChange() {
     syncFormFromSettings();
     refreshPreview();
-    if (onChangeHandler) onChangeHandler(getViewOptions());
+    if (onChangeHandler) onChangeHandler(getViewOptions(), settingsTab);
+  }
+
+  function syncStyleVisibility(root) {
+    const r = root || document.getElementById("settings-body");
+    if (!r) return;
+    const sel = r.querySelector('[data-graph-setting="graphStyle"]');
+    const group = r.querySelector('[data-style-group="galaxy"]');
+    if (!sel || !group) return;
+    const show = sel.value === "galaxy";
+    group.classList.toggle("m0-settings-fieldset--hidden", !show);
   }
 
   function syncFormFromSettings() {
@@ -293,6 +309,7 @@
         el.value = String(s[key]);
       }
     });
+    syncStyleVisibility(root);
   }
 
   function teardownPreview() {
@@ -534,6 +551,24 @@
           </section>`;
   }
 
+  function renderStyleSection(s, is3d) {
+    const galaxyVisible = s.graphStyle === "galaxy";
+    return `<section class="m0-settings-section">
+            <h3 class="m0-settings-heading">图谱样式</h3>
+            <p class="m0-muted m0-settings-note">标准为经典渲染；银河样式把节点呈现为星空星点（亮度随连接度变化，重要节点更亮更大），布局仍为力导向，交互高亮保持不变。光晕强度 2D/3D 各自独立调节。</p>
+            <label class="m0-settings-field">
+              <span>视觉样式</span>
+              <select data-graph-setting="graphStyle">
+                <option value="force"${s.graphStyle === "force" ? " selected" : ""}>标准</option>
+                <option value="galaxy"${s.graphStyle === "galaxy" ? " selected" : ""}>银河 Galaxy</option>
+              </select>
+            </label>
+            <div class="m0-settings-fieldset${galaxyVisible ? "" : " m0-settings-fieldset--hidden"}" data-style-group="galaxy">
+              ${rangeField(is3d ? "galaxyGlow3d" : "galaxyGlow2d", "光晕强度", 0, 1, 0.05, is3d ? s.galaxyGlow3d : s.galaxyGlow2d, true, 2)}
+            </div>
+          </section>`;
+  }
+
   function renderGroupTabSection(s) {
     return `<section class="m0-settings-section">
             <h3 class="m0-settings-heading">节点群页签</h3>
@@ -586,7 +621,9 @@
   function renderSettingsBody2d() {
     const s = load();
     return renderSettingsShell(
-      renderLabelSection(s) + renderLayoutSection(s, "2D 布局", true),
+      renderLabelSection(s) +
+        renderStyleSection(s, false) +
+        renderLayoutSection(s, "2D 布局", true),
       "悬停节点查看完整信息"
     );
   }
@@ -594,7 +631,9 @@
   function renderSettingsBody3d() {
     const s = load();
     return renderSettingsShell(
-      renderLabelSection(s) + renderLayoutSection(s, "3D 布局", false),
+      renderLabelSection(s) +
+        renderStyleSection(s, true) +
+        renderLayoutSection(s, "3D 布局", false),
       "左键旋转 · 滚轮缩放 · 悬停节点查看详情"
     );
   }
@@ -788,6 +827,10 @@
       el.addEventListener("input", handler);
       el.addEventListener("change", handler);
     });
+    root
+      .querySelector('[data-graph-setting="graphStyle"]')
+      ?.addEventListener("change", () => syncStyleVisibility(root));
+    syncStyleVisibility(root);
   }
 
   function openModal() {

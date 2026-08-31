@@ -534,8 +534,19 @@ window.MemoriaMarkdownPreview = (function () {
         // `./` 开头 → 相对当前文件目录（旧语义，兼容 ./images/x.png）；
         // 其他相对路径（如 .memoria/images/x.png）→ 相对 KB 根（新约定）
         const relPath = src.startsWith("./") ? _currentFileDir + clean : clean;
-        // Encode each path segment so / remains as separator
-        const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeURIComponent).join("/");
+        // Encode each path segment so / remains as separator.
+        // marked 对 <...> 包裹的 URL 会先做一次编码（如 %E5%B1%8F），此处需先解码再
+        // 编码，避免 % 被二次编码成 %25 导致静态服务器解码后仍找不到文件。
+        const encodeSeg = (seg) => {
+          let raw = seg;
+          try {
+            raw = decodeURIComponent(seg);
+          } catch (e) {
+            /* 孤立 % 等无法解码的情况：保留原段再编码 */
+          }
+          return encodeURIComponent(raw);
+        };
+        const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeSeg).join("/");
         const apiBase = window.MemoriaBridge?.apiBase || "";
         const url = apiBase + "/files/" + encoded;
         console.log("[img-rewrite]", src, "→", url, "(relPath=" + relPath + ")");
