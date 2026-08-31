@@ -3388,12 +3388,12 @@ body.m0-brush-active #editor {
 .m0-preview .m0-src-block > h6 {
     margin: 0;
 }
-.m0-preview .m0-src-block > ul,
-.m0-preview .m0-src-block > ol {
+.m0-preview ol.m0-src-block,
+.m0-preview ul.m0-src-block {
     margin: 0;
     padding-left: 1.8em;
 }
-.m0-preview .m0-src-block > blockquote {
+.m0-preview blockquote.m0-src-block {
     margin: 0;
     padding: 0.3em 1em;
     border-left: 3px solid var(--border);
