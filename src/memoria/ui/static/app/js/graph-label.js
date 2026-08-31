@@ -45,11 +45,11 @@
     const id = node.id || "—";
     const file = node.file || "—";
     const desc = (node.description || "").trim();
-    let html = `<span class="m0-graph-hint-title">${escapeHtml(name)}</span>`;
-    html += `<span class="m0-graph-hint-meta">ID · ${escapeHtml(id)}</span>`;
-    html += `<span class="m0-graph-hint-meta">${escapeHtml(file)}</span>`;
+    let html = `<span class="-graph-hint-title">${escapeHtml(name)}</span>`;
+    html += `<span class="-graph-hint-meta">ID · ${escapeHtml(id)}</span>`;
+    html += `<span class="-graph-hint-meta">${escapeHtml(file)}</span>`;
     if (desc) {
-      html += `<span class="m0-graph-hint-desc">${escapeHtml(desc)}</span>`;
+      html += `<span class="-graph-hint-desc">${escapeHtml(desc)}</span>`;
     }
     return html;
   }

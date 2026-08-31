@@ -4,7 +4,7 @@
 window.MemoriaKpContextMenu = (function () {
   "use strict";
 
-  const MENU_ID = "m0-kp-context-menu";
+  const MENU_ID = "-kp-context-menu";
 
   function hide() {
     document.getElementById(MENU_ID)?.remove();
@@ -29,7 +29,7 @@ window.MemoriaKpContextMenu = (function () {
 
     const menu = document.createElement("div");
     menu.id = MENU_ID;
-    menu.className = "m0-context-menu";
+    menu.className = "-context-menu";
     menu.setAttribute("role", "menu");
 
     const items = [{ label: "配置", action: () => actions.configure(kpId) }];
@@ -37,13 +37,13 @@ window.MemoriaKpContextMenu = (function () {
     items.forEach((it) => {
       if (it.divider) {
         const div = document.createElement("div");
-        div.className = "m0-ctx-divider";
+        div.className = "-ctx-divider";
         menu.appendChild(div);
         return;
       }
       const row = document.createElement("button");
       row.type = "button";
-      row.className = "m0-ctx-item";
+      row.className = "-ctx-item";
       row.setAttribute("role", "menuitem");
       row.textContent = it.label;
       row.addEventListener("click", (e) => {

@@ -10,7 +10,7 @@
 
 
 
-  const STORAGE_KEY = "m0-search-settings";
+  const STORAGE_KEY = "-search-settings";
 
 
 
@@ -248,17 +248,17 @@
 
     const s = load();
 
-    return `<div class="m0-settings-layout m0-settings-layout--solo">
+    return `<div class="-settings-layout -settings-layout--solo">
 
-      <div class="m0-settings-form">
+      <div class="-settings-form">
 
-        <section class="m0-settings-section">
+        <section class="-settings-section">
 
-          <h3 class="m0-settings-heading">检索内核</h3>
+          <h3 class="-settings-heading">检索内核</h3>
 
-          <p class="m0-muted m0-settings-note">Lexical 层（倒排 + jieba）始终开启。语义搜索使用<strong>本地</strong> sentence-transformers 模型（默认缓存于 <code>~/.cache/huggingface</code>）；首次下载后离线运行。向量索引持久化在知识库 <code>.memoria/cache/embeddings/</code>，仅对变更 KP 增量编码。</p>
+          <p class="-muted -settings-note">Lexical 层（倒排 + jieba）始终开启。语义搜索使用<strong>本地</strong> sentence-transformers 模型（默认缓存于 <code>~/.cache/huggingface</code>）；首次下载后离线运行。向量索引持久化在知识库 <code>.memoria/cache/embeddings/</code>，仅对变更 KP 增量编码。</p>
 
-          <label class="m0-settings-field m0-settings-field--inline">
+          <label class="-settings-field -settings-field--inline">
 
             <input type="checkbox" data-search-setting="embeddingEnabled"${s.embeddingEnabled ? " checked" : ""}>
 
@@ -266,9 +266,9 @@
 
           </label>
 
-          <p class="m0-muted m0-settings-note">开启后工具栏搜索使用 Lexical + 语义双路合并；关闭则仅字面匹配。</p>
+          <p class="-muted -settings-note">开启后工具栏搜索使用 Lexical + 语义双路合并；关闭则仅字面匹配。</p>
 
-          <label class="m0-settings-field m0-settings-field--inline">
+          <label class="-settings-field -settings-field--inline">
 
             <input type="checkbox" data-search-setting="bodyLocateEnabled"${s.bodyLocateEnabled ? " checked" : ""}>
 
@@ -276,7 +276,7 @@
 
           </label>
 
-          <p class="m0-muted m0-settings-note">KP 结果之外，在 md 正文行内 substring 匹配并定位（非 KP 命中，分级展示）。</p>
+          <p class="-muted -settings-note">KP 结果之外，在 md 正文行内 substring 匹配并定位（非 KP 命中，分级展示）。</p>
 
         </section>
 

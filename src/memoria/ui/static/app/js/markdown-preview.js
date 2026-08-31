@@ -201,20 +201,20 @@ window.MemoriaMarkdownPreview = (function () {
       try {
         const { svg } = await window.mermaid.render(id, src);
         const div = document.createElement("div");
-        div.className = "m0-mermaid-container";
-        // 保留 m0-src-block 和 data-m0-block-index 以便双击编辑
-        if (pre.classList.contains("m0-src-block")) {
-          div.classList.add("m0-src-block");
-          div.setAttribute("data-m0-block-index", pre.getAttribute("data-m0-block-index") || "");
+        div.className = "-mermaid-container";
+        // 保留 -src-block 和 data--block-index 以便双击编辑
+        if (pre.classList.contains("-src-block")) {
+          div.classList.add("-src-block");
+          div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
         }
         div.innerHTML = svg;
         pre.replaceWith(div);
       } catch (e) {
         const div = document.createElement("div");
-        div.className = "m0-mermaid-error";
-        if (pre.classList.contains("m0-src-block")) {
-          div.classList.add("m0-src-block");
-          div.setAttribute("data-m0-block-index", pre.getAttribute("data-m0-block-index") || "");
+        div.className = "-mermaid-error";
+        if (pre.classList.contains("-src-block")) {
+          div.classList.add("-src-block");
+          div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
         }
         div.textContent = "Mermaid 渲染失败: " + (e.message || e);
         pre.replaceWith(div);
@@ -436,8 +436,8 @@ window.MemoriaMarkdownPreview = (function () {
   function renderCommand(cmd, params, innerText) {
     if (cmd === "h") return renderHighlight(params, innerText);
     if (cmd === "c") return renderFontColor(params, innerText);
-    if (cmd === "b") return `<strong class="m0-fmt-b">${innerText}</strong>`;
-    if (cmd === "i") return `<em class="m0-fmt-i">${innerText}</em>`;
+    if (cmd === "b") return `<strong class="-fmt-b">${innerText}</strong>`;
+    if (cmd === "i") return `<em class="-fmt-i">${innerText}</em>`;
     return innerText;
   }
 
@@ -478,13 +478,13 @@ window.MemoriaMarkdownPreview = (function () {
   }
 
   /**
-   * Render \c:color → <span class="m0-fc-color"> or <span style="color:...">
+   * Render \c:color → <span class="-fc-color"> or <span style="color:...">
    */
   function renderFontColor(params, innerText) {
     const color = params.color;
     if (!color) return innerText;
     if (FC_COLORS.includes(color)) {
-      return `<span class="m0-fc-${escAttr(color)}">${innerText}</span>`;
+      return `<span class="-fc-${escAttr(color)}">${innerText}</span>`;
     }
     return `<span style="color:${escAttr(color)}">${innerText}</span>`;
   }
@@ -492,7 +492,7 @@ window.MemoriaMarkdownPreview = (function () {
   // ── Image Lightbox ──
   function attachImageLightbox(container) {
     container.querySelectorAll("img").forEach((img) => {
-      if (img.closest(".m0-lightbox-overlay")) return;
+      if (img.closest(".-lightbox-overlay")) return;
       img.style.cursor = "zoom-in";
       // 诊断：检查图片加载状态
       console.log("[img-debug] src:", img.src, "naturalWidth:", img.naturalWidth, "complete:", img.complete, "display:", getComputedStyle(img).display, "width:", getComputedStyle(img).width, "height:", getComputedStyle(img).height, "maxWidth:", getComputedStyle(img).maxWidth);
@@ -501,10 +501,10 @@ window.MemoriaMarkdownPreview = (function () {
       // 双击放大（阶段 F 交互：单击进入图片编辑工具栏，双击 Lightbox 放大）
       img.addEventListener("dblclick", (e) => {
         const overlay = document.createElement("div");
-        overlay.className = "m0-lightbox-overlay";
+        overlay.className = "-lightbox-overlay";
         const bigImg = document.createElement("img");
         bigImg.src = img.src;
-        bigImg.className = "m0-lightbox-image";
+        bigImg.className = "-lightbox-image";
         overlay.appendChild(bigImg);
         overlay.addEventListener("click", () => overlay.remove());
         document.body.appendChild(overlay);
@@ -642,19 +642,19 @@ window.MemoriaMarkdownPreview = (function () {
         const label = display
           ? escAttr(display.trim())
           : safeType
-            ? `${safeId}<span class="m0-link-type">#${safeType}</span>`
+            ? `${safeId}<span class="-link-type">#${safeType}</span>`
             : safeId;
         const routeTargets = overrides?.[key];
         const resolved = isResolved(id);
         const routed = isRoutedTarget(key, routeTargets);
-        let linkCls = "m0-link-pending";
+        let linkCls = "-link-pending";
         if (resolved === true) {
-          linkCls = routed ? "m0-link-multi" : "m0-link-resolved";
+          linkCls = routed ? "-link-multi" : "-link-resolved";
         } else if (resolved === false) {
-          linkCls = "m0-link-broken memoria-broken-link";
+          linkCls = "-link-broken memoria-broken-link";
         }
         const title = linkTitle(key, routeTargets, resolved);
-        const tabIndex = linkCls.includes("m0-link-broken") ? "-1" : "0";
+        const tabIndex = linkCls.includes("-link-broken") ? "-1" : "0";
         const linkLine = lineByIndex[wlIdx] ?? baseLine;
         wlIdx += 1;
         let attrs =
@@ -872,9 +872,9 @@ window.MemoriaMarkdownPreview = (function () {
     if (!html) return "";
 
     const extraClass =
-      block.kind === "display-math" ? "m0-display-math m0-src-block" : "m0-src-block";
+      block.kind === "display-math" ? "-display-math -src-block" : "-src-block";
     const lineAttrs =
-      `data-m0-src-line="${block.startLine}" data-m0-src-line-end="${block.endLine}"`;
+      `data--src-line="${block.startLine}" data--src-line-end="${block.endLine}"`;
     const singleRoot = /^<([a-zA-Z][a-zA-Z0-9]*)([^>]*)>[\s\S]*<\/\1>$/.test(html);
     const tagMatch = singleRoot ? html.match(/^<([a-zA-Z][a-zA-Z0-9]*)([^>]*)>/) : null;
 
@@ -883,12 +883,12 @@ window.MemoriaMarkdownPreview = (function () {
       let rest = tagMatch[2];
       if (/class=/.test(rest)) {
         rest = rest.replace(/class=(["'])([^"']*)\1/, (_, q, cls) =>
-          cls.includes("m0-src-block") ? `class=${q}${cls}${q}` : `class=${q}${cls} ${extraClass}${q}`
+          cls.includes("-src-block") ? `class=${q}${cls}${q}` : `class=${q}${cls} ${extraClass}${q}`
         );
       } else {
         rest += ` class="${extraClass}"`;
       }
-      if (!/data-m0-src-line=/.test(rest)) {
+      if (!/data--src-line=/.test(rest)) {
         rest += ` ${lineAttrs}`;
       }
       return html.replace(/^<[a-zA-Z][a-zA-Z0-9]*[^>]*>/, `<${tag}${rest}>`);
@@ -1143,9 +1143,9 @@ window.MemoriaMarkdownPreview = (function () {
 
   /**
    * Post-process rendered HTML to annotate text nodes with source position data.
-   * Wraps each text segment in <span class="m0-seg" data-line="L" data-col="C">.
+   * Wraps each text segment in <span class="-seg" data-line="L" data-col="C">.
    *
-   * Strategy: for each m0-src-block, align rendered DOM text nodes
+   * Strategy: for each -src-block, align rendered DOM text nodes
    * with parseInlineTokens output, then wrap with position spans.
    */
   function annotateSegments(html, sourceLines, startLine) {
@@ -1158,7 +1158,7 @@ window.MemoriaMarkdownPreview = (function () {
     const tmp = document.createElement("div");
     tmp.innerHTML = html;
 
-    // For each m0-src-block element (or the root if single element)
+    // For each -src-block element (or the root if single element)
     const rootEl = tmp.firstElementChild;
     if (!rootEl) return html;
 
@@ -1175,7 +1175,7 @@ window.MemoriaMarkdownPreview = (function () {
     while ((n = walker.nextNode())) {
       // Skip text inside non-editable containers (mjx-container, pre, code, etc.)
       const parent = n.parentElement;
-      if (parent && parent.closest('mjx-container, pre, code, .m0-mermaid-container')) continue;
+      if (parent && parent.closest('mjx-container, pre, code, .-mermaid-container')) continue;
       const txt = n.textContent;
       if (txt) textNodes.push({ node: n, text: txt });
     }
@@ -1240,7 +1240,7 @@ window.MemoriaMarkdownPreview = (function () {
       if (seg.start === 0 && seg.end === fullText.length) {
         // Entire text node becomes one segment span
         const span = document.createElement("span");
-        span.className = "m0-seg";
+        span.className = "-seg";
         span.dataset.line = String(seg.line);
         span.dataset.col = String(seg.col);
         textNode.parentNode.replaceChild(span, textNode);
@@ -1252,7 +1252,7 @@ window.MemoriaMarkdownPreview = (function () {
         const after = fullText.slice(seg.end);
         const parent = textNode.parentNode;
         const span = document.createElement("span");
-        span.className = "m0-seg";
+        span.className = "-seg";
         span.dataset.line = String(seg.line);
         span.dataset.col = String(seg.col);
         span.textContent = segText;
@@ -1348,7 +1348,7 @@ window.MemoriaMarkdownPreview = (function () {
 
   function renderHtml(body, options) {
     if (!window.marked) {
-      return `<pre class="m0-preview-error">marked 未加载</pre>`;
+      return `<pre class="-preview-error">marked 未加载</pre>`;
     }
     const knownTargets = options?.knownTargets || null;
     const linkOverrides = options?.linkOverrides || null;
@@ -1358,8 +1358,8 @@ window.MemoriaMarkdownPreview = (function () {
       .map((block) => {
         if (block.kind === "blank") {
           // 空行占位 block：生成可选中、可定位的空行元素
-          const lineAttr = `data-m0-src-line="${block.startLine}" data-m0-src-line-end="${block.endLine}"`;
-          return `<div class="m0-src-block m0-blank-block" ${lineAttr}><br></div>`;
+          const lineAttr = `data--src-line="${block.startLine}" data--src-line-end="${block.endLine}"`;
+          return `<div class="-src-block -blank-block" ${lineAttr}><br></div>`;
         }
         if (block.kind === "display-math") {
           return renderDisplayMathBlock(block);
@@ -1417,8 +1417,8 @@ window.MemoriaMarkdownPreview = (function () {
 
   // ── Preview cursor mapping (click → focus source editor) ──
   function enableEditing(container) {
-    const preview = container.closest(".m0-preview") || container;
-    if (!preview.classList.contains("m0-preview")) return;
+    const preview = container.closest(".-preview") || container;
+    if (!preview.classList.contains("-preview")) return;
     // 预览区域不设 contenteditable — 点击映射到源码编辑器
     // 光标由 CSS cursor: text 提供
   }

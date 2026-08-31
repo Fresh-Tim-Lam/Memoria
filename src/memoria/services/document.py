@@ -1,4 +1,4 @@
-"""文档加载与侧车写入（M0 应用服务）。"""
+"""文档加载与侧车写入"""
 
 from __future__ import annotations
 

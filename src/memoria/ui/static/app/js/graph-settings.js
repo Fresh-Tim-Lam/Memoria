@@ -4,8 +4,8 @@
 (function (global) {
   "use strict";
 
-  const STORAGE_KEY = "m0-graph-settings";
-  const PREVIEW_H_KEY = "m0-settings-preview-h";
+  const STORAGE_KEY = "-graph-settings";
+  const PREVIEW_H_KEY = "-settings-preview-h";
 
   const DEFAULTS = {
     labelMode: "name_short",
@@ -44,7 +44,7 @@
     graph3d: 0.72,
   };
 
-  const LEGACY_SPLIT_KEY = "m0-graph-sidebar-nav-kp-split";
+  const LEGACY_SPLIT_KEY = "-graph-sidebar-nav-kp-split";
 
   const SAMPLE_GRAPH = {
     nodes: [
@@ -291,7 +291,7 @@
     const group = r.querySelector('[data-style-group="galaxy"]');
     if (!sel || !group) return;
     const show = sel.value === "galaxy";
-    group.classList.toggle("m0-settings-fieldset--hidden", !show);
+    group.classList.toggle("-settings-fieldset--hidden", !show);
   }
 
   function syncFormFromSettings() {
@@ -327,7 +327,7 @@
   const SPLIT_RESIZER_H = 6;
 
   function splitStorageKey(tab) {
-    return `m0-sidebar-split-${tab}`;
+    return `-sidebar-split-${tab}`;
   }
 
   function loadGraphSplit(tab) {
@@ -504,14 +504,14 @@
           `<option value="${id}"${!meta.available ? " disabled" : ""}${s.labelMode === id ? " selected" : ""}>${meta.label}</option>`
       )
       .join("");
-    return `<section class="m0-settings-section">
-            <h3 class="m0-settings-heading">节点标签</h3>
-            <p class="m0-muted m0-settings-note">画布上为<strong>短标签</strong>；悬停侧栏/预览区显示 ID、文件与说明。智能摘要留待 M4 检索引擎。</p>
-            <label class="m0-settings-field">
+    return `<section class="-settings-section">
+            <h3 class="-settings-heading">节点标签</h3>
+            <p class="-muted -settings-note">画布上为<strong>短标签</strong>；悬停侧栏/预览区显示 ID、文件与说明。智能摘要留待 M4 检索引擎。</p>
+            <label class="-settings-field">
               <span>显示策略</span>
               <select data-graph-setting="labelMode">${modeOptions}</select>
             </label>
-            <label class="m0-settings-field">
+            <label class="-settings-field">
               <span>缩短字数 <output data-graph-setting-value="labelMaxLen">${s.labelMaxLen}</output></span>
               <input type="range" data-graph-setting="labelMaxLen" min="4" max="20" step="1" value="${s.labelMaxLen}">
             </label>
@@ -523,17 +523,17 @@
       ? rangeField("arrowSize", "箭头大小", 4, 12, 1, s.arrowSize)
       : "";
     const zoomFields = includeArrow
-      ? `<p class="m0-muted m0-settings-note">缩放：滚轮灵敏度与范围。</p>
+      ? `<p class="-muted -settings-note">缩放：滚轮灵敏度与范围。</p>
          ${rangeField("zoomSensitivity2d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity2d, true)}
          ${rangeField("zoomMin2d", "最小缩放", 0.02, 0.5, 0.01, s.zoomMin2d, true)}
          ${rangeField("zoomMax2d", "最大缩放", 2, 16, 0.5, s.zoomMax2d)}`
-      : `<p class="m0-muted m0-settings-note">缩放：相机距离范围与灵敏度。</p>
+      : `<p class="-muted -settings-note">缩放：相机距离范围与灵敏度。</p>
          ${rangeField("zoomSensitivity3d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity3d, true)}
          ${rangeField("zoomMinDistance3d", "最近距离", 2, 50, 1, s.zoomMinDistance3d)}
          ${rangeField("zoomMaxDistance3d", "最远距离", 500, 8000, 100, s.zoomMaxDistance3d)}`;
-    return `<section class="m0-settings-section">
-            <h3 class="m0-settings-heading">${title}</h3>
-            <p class="m0-muted m0-settings-note">力导向参数；2D/3D 各自独立布局，参数名共用。</p>
+    return `<section class="-settings-section">
+            <h3 class="-settings-heading">${title}</h3>
+            <p class="-muted -settings-note">力导向参数；2D/3D 各自独立布局，参数名共用。</p>
             ${rangeField("linkDistance", "边长", 60, 200, 4, s.linkDistance)}
             ${rangeField("repulsion", "斥力", 2000, 9000, 200, s.repulsion)}
             ${rangeField("linkStrength", "边拉力", 0.08, 0.6, 0.02, s.linkStrength, true)}
@@ -541,7 +541,7 @@
             ${rangeField("spreadFactor", "初始散布", 0.2, 0.55, 0.02, s.spreadFactor, true)}
             ${rangeField("nodeRadius", "节点半径", 4, 12, 1, s.nodeRadius)}
             ${arrow}
-            <p class="m0-muted m0-settings-note">模拟 Alpha：余温、衰减与拖拽加热。</p>
+            <p class="-muted -settings-note">模拟 Alpha：余温、衰减与拖拽加热。</p>
             ${rangeField("alphaMin", "最低 alpha", 0.002, 0.05, 0.001, s.alphaMin, true, 3)}
             ${rangeField("alphaDecay", "衰减率", 0.01, 0.12, 0.005, s.alphaDecay, true, 3)}
             ${rangeField("alphaTarget", "初始余温", 0.05, 0.5, 0.01, s.alphaTarget, true)}
@@ -553,27 +553,27 @@
 
   function renderStyleSection(s, is3d) {
     const galaxyVisible = s.graphStyle === "galaxy";
-    return `<section class="m0-settings-section">
-            <h3 class="m0-settings-heading">图谱样式</h3>
-            <p class="m0-muted m0-settings-note">标准为经典渲染；银河样式把节点呈现为星空星点（亮度随连接度变化，重要节点更亮更大），布局仍为力导向，交互高亮保持不变。光晕强度 2D/3D 各自独立调节。</p>
-            <label class="m0-settings-field">
+    return `<section class="-settings-section">
+            <h3 class="-settings-heading">图谱样式</h3>
+            <p class="-muted -settings-note">标准为经典渲染；银河样式把节点呈现为星空星点（亮度随连接度变化，重要节点更亮更大），布局仍为力导向，交互高亮保持不变。光晕强度 2D/3D 各自独立调节。</p>
+            <label class="-settings-field">
               <span>视觉样式</span>
               <select data-graph-setting="graphStyle">
                 <option value="force"${s.graphStyle === "force" ? " selected" : ""}>标准</option>
                 <option value="galaxy"${s.graphStyle === "galaxy" ? " selected" : ""}>银河 Galaxy</option>
               </select>
             </label>
-            <div class="m0-settings-fieldset${galaxyVisible ? "" : " m0-settings-fieldset--hidden"}" data-style-group="galaxy">
+            <div class="-settings-fieldset${galaxyVisible ? "" : " -settings-fieldset--hidden"}" data-style-group="galaxy">
               ${rangeField(is3d ? "galaxyGlow3d" : "galaxyGlow2d", "光晕强度", 0, 1, 0.05, is3d ? s.galaxyGlow3d : s.galaxyGlow2d, true, 2)}
             </div>
           </section>`;
   }
 
   function renderGroupTabSection(s) {
-    return `<section class="m0-settings-section">
-            <h3 class="m0-settings-heading">节点群页签</h3>
-            <p class="m0-muted m0-settings-note">并查集闭包分量；侧栏第二行页签对 2D/3D 通用。M4 可接入智能命名与排序。</p>
-            <label class="m0-settings-field">
+    return `<section class="-settings-section">
+            <h3 class="-settings-heading">节点群页签</h3>
+            <p class="-muted -settings-note">并查集闭包分量；侧栏第二行页签对 2D/3D 通用。M4 可接入智能命名与排序。</p>
+            <label class="-settings-field">
               <span>页签命名</span>
               <select data-graph-setting="groupLabelMode">
                 <option value="hub_name"${s.groupLabelMode === "hub_name" ? " selected" : ""}>Hub 名称</option>
@@ -583,13 +583,13 @@
             </label>
             ${rangeField("groupLabelMaxLen", "页签最大字数", 6, 20, 1, s.groupLabelMaxLen)}
             ${rangeField("groupSpacing", "「全部」群间距", 160, 420, 20, s.groupSpacing)}
-            <label class="m0-settings-field">
+            <label class="-settings-field">
               <span>群页签排序</span>
               <select disabled title="M4 占位">
                 <option>按规模（默认）</option>
               </select>
             </label>
-            <label class="m0-settings-field m0-settings-field--placeholder">
+            <label class="-settings-field -settings-field--placeholder">
               <span>隐藏单节点群页签</span>
               <input type="checkbox" disabled title="后续版本">
             </label>
@@ -597,23 +597,23 @@
   }
 
   function renderPreviewColumn(hintText) {
-    return `<div class="m0-settings-preview-col">
-          <h3 class="m0-settings-heading">示例预览</h3>
-          <div class="m0-settings-preview-stack">
-            <div id="graph-settings-preview-wrap" class="m0-graph-settings-preview-wrap">
-              <div id="graph-settings-preview" class="m0-graph-settings-preview"></div>
-              <div id="graph-settings-preview-hint" class="m0-graph-hint m0-graph-hint--overlay m0-graph-settings-preview-hint">
-                <span class="m0-muted">${hintText}</span>
+    return `<div class="-settings-preview-col">
+          <h3 class="-settings-heading">示例预览</h3>
+          <div class="-settings-preview-stack">
+            <div id="graph-settings-preview-wrap" class="-graph-settings-preview-wrap">
+              <div id="graph-settings-preview" class="-graph-settings-preview"></div>
+              <div id="graph-settings-preview-hint" class="-graph-hint -graph-hint--overlay -graph-settings-preview-hint">
+                <span class="-muted">${hintText}</span>
               </div>
             </div>
-            <div id="graph-settings-preview-resizer" class="m0-graph-panel-resizer" title="拖拽调整预览高度"></div>
+            <div id="graph-settings-preview-resizer" class="-graph-panel-resizer" title="拖拽调整预览高度"></div>
           </div>
         </div>`;
   }
 
   function renderSettingsShell(formSectionsHtml, hintText) {
-    return `<div class="m0-settings-layout">
-        <div class="m0-settings-form">${formSectionsHtml}</div>
+    return `<div class="-settings-layout">
+        <div class="-settings-form">${formSectionsHtml}</div>
         ${renderPreviewColumn(hintText)}
       </div>`;
   }
@@ -640,8 +640,8 @@
 
   function renderSettingsBodyGroups() {
     const s = load();
-    return `<div class="m0-settings-layout m0-settings-layout--solo">
-        <div class="m0-settings-form">${renderGroupTabSection(s)}</div>
+    return `<div class="-settings-layout -settings-layout--solo">
+        <div class="-settings-form">${renderGroupTabSection(s)}</div>
       </div>`;
   }
 
@@ -653,7 +653,7 @@
     const dec = decimals != null ? decimals : isFloat ? 2 : 0;
     const v = isFloat ? Number(value).toFixed(dec) : value;
     const decAttr = isFloat && decimals != null ? ` data-graph-setting-decimals="${decimals}"` : "";
-    return `<label class="m0-settings-field">
+    return `<label class="-settings-field">
       <span>${label} <output data-graph-setting-value="${key}">${v}</output></span>
       <input type="range" data-graph-setting="${key}" min="${min}" max="${max}" step="${step}" value="${value}"${decAttr}>
     </label>`;
@@ -666,8 +666,8 @@
       if (!node) {
         hint.innerHTML =
           settingsTab === "graph3d"
-            ? '<span class="m0-muted">左键旋转 · 滚轮缩放 · 悬停节点查看详情</span>'
-            : '<span class="m0-muted">悬停节点查看完整信息</span>';
+            ? '<span class="-muted">左键旋转 · 滚轮缩放 · 悬停节点查看详情</span>'
+            : '<span class="-muted">悬停节点查看完整信息</span>';
         return;
       }
       hint.innerHTML = MemoriaGraphLabels.resolveNodeHoverHtml(node);
@@ -755,12 +755,12 @@
   }
 
   function renderTabsHtml(active) {
-    return `<div class="m0-config-tabs" role="tablist">
-      <button type="button" class="m0-config-tab${active === "graph2d" ? " active" : ""}" data-settings-tab="graph2d" role="tab">2D 图谱</button>
-      <button type="button" class="m0-config-tab${active === "graph3d" ? " active" : ""}" data-settings-tab="graph3d" role="tab">3D 图谱</button>
-      <button type="button" class="m0-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">节点群页签</button>
-      <button type="button" class="m0-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">检索</button>
-      <button type="button" class="m0-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">检查</button>
+    return `<div class="-config-tabs" role="tablist">
+      <button type="button" class="-config-tab${active === "graph2d" ? " active" : ""}" data-settings-tab="graph2d" role="tab">2D 图谱</button>
+      <button type="button" class="-config-tab${active === "graph3d" ? " active" : ""}" data-settings-tab="graph3d" role="tab">3D 图谱</button>
+      <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">节点群页签</button>
+      <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">检索</button>
+      <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">检查</button>
     </div>`;
   }
 
@@ -939,7 +939,7 @@
     });
     document
       .getElementById("settings-modal")
-      ?.querySelector(".m0-modal-backdrop")
+      ?.querySelector(".-modal-backdrop")
       ?.addEventListener("click", closeModal);
   }
 

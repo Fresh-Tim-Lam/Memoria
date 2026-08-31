@@ -1,3 +1,0 @@
-# Attention
-
-English concept name.

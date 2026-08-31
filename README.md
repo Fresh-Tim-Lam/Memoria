@@ -4,23 +4,23 @@
 
 ## 项目结构
 
-```
-src/memoria/
-├── domain/          # 领域类型（Range、KP 等）
-├── range/           # snippet + line_hint 定位算法
-├── storage/         # 侧车 YAML、Markdown、目录扫描
-├── services/        # 应用服务（文档加载、KP 解析）
-├── presentation/    # pywebview API 桥接
-├── app/             # 桌面启动入口
-└── ui/static/       # 前端静态资源
-    ├── theme/       # IDE 主题（memoria.css）
-    └── m0/          # M0 界面
+每个一级目录顶部都有 `README.md` 说明其职责（AGENT 请先读 [AGENT.md](AGENT.md#4-directory导航) 获取导航）。
 
-tests/unit/          # 单元测试
-examples/            # 示例知识库
-docs/design/         # 设计文档
-_archive/            # 历史代码备份
 ```
+├── src/            # 源码（Python 包 + 前端静态资源）         → src/README.md
+├── tests/          # 单元/集成测试（pytest）                  → tests/README.md
+├── docs/           # 文档中心（规范/设计/指南/示例知识库）      → docs/README.md
+├── scripts/        # 开发者工具（开发启动/基准脚本）            → scripts/README.md
+├── packaging/      # 打包发布（build_release.cmd → Package/）  → packaging/README.md
+├── resources/      # 应用资源（图标）                         → resources/README.md
+├── benchmarks/     # 检索评估数据与结果                       → benchmarks/README.md
+├── config/         # 程序配置（ui-settings.json）             → config/README.md
+├── artifacts/      # 临时产物/垃圾区（gitignore）             → artifacts/README.md
+├── Package/        # 构建发布产物（gitignore）                → Package/README.txt
+└── app.py          # 源码运行入口
+```
+
+> 缓存目录 `build/`（PyInstaller 中间产物）与 `logs/`（调试日志）均已被 `.gitignore` 忽略，各有简短 README 说明。
 
 ## 开发
 

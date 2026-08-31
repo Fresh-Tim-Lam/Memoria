@@ -1410,7 +1410,7 @@ def _first_paint_refresh_tick(window: QMainWindow) -> None:
         try:
             view.page().runJavaScript(
                 "JSON.stringify({focus: document.hasFocus(), vis: document.visibilityState,"
-                " ready: document.readyState, diag: window.__m0diag || null})",
+                " ready: document.readyState, diag: window.__diag || null})",
                 lambda r, s=shot: shell_log_window(
                     window, "first_paint_frontend", shot=s, state=str(r)
                 ),

@@ -23,7 +23,7 @@ search = ["pypinyin>=0.50"]
 
 [project.scripts]
 memoria = "memoria.cli.main:main"
-memoria-m0 = "memoria.app.desktop:main"
+memoria-desktop = "memoria.app.desktop:main"
 memoria-build = "memoria.app.build:main"
 
 [tool.setuptools.packages.find]

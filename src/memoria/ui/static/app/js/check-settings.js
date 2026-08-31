@@ -4,7 +4,7 @@
 (function (global) {
   "use strict";
 
-  const STORAGE_KEY = "m0-check-settings";
+  const STORAGE_KEY = "-check-settings";
   const INTERVAL_OPTIONS = [
     { sec: 0, label: "关闭" },
     { sec: 30, label: "30 秒" },
@@ -158,20 +158,20 @@
       (o) =>
         `<option value="${o.sec}"${s.silentCheckIntervalSec === o.sec ? " selected" : ""}>${o.label}</option>`
     ).join("");
-    return `<div class="m0-settings-layout m0-settings-layout--solo">
-      <div class="m0-settings-form">
-        <section class="m0-settings-section">
-          <h3 class="m0-settings-heading">静默检查</h3>
-          <p class="m0-muted m0-settings-note">在后台定期校验知识库；发现错误时「检查」按钮显示红色角标，仅警告时显示黄色角标。底栏统计同步着色。</p>
-          <label class="m0-settings-field">
+    return `<div class="-settings-layout -settings-layout--solo">
+      <div class="-settings-form">
+        <section class="-settings-section">
+          <h3 class="-settings-heading">静默检查</h3>
+          <p class="-muted -settings-note">在后台定期校验知识库；发现错误时「检查」按钮显示红色角标，仅警告时显示黄色角标。底栏统计同步着色。</p>
+          <label class="-settings-field">
             <span>检查间隔</span>
             <select data-check-setting="silentCheckIntervalSec">${intervalOptions}</select>
           </label>
-          <label class="m0-settings-field m0-settings-field--inline">
+          <label class="-settings-field -settings-field--inline">
             <input type="checkbox" data-check-setting="silentCheckEnabled"${s.silentCheckEnabled && s.silentCheckIntervalSec > 0 ? " checked" : ""}${s.silentCheckIntervalSec === 0 ? " disabled" : ""}>
             <span>启用静默检查</span>
           </label>
-          <p class="m0-muted m0-settings-note">间隔设为「关闭」时不进行后台检查；打开知识库时仍会执行一次检查。</p>
+          <p class="-muted -settings-note">间隔设为「关闭」时不进行后台检查；打开知识库时仍会执行一次检查。</p>
         </section>
       </div>
     </div>`;

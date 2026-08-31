@@ -102,7 +102,7 @@
 
   function hidePreviewCursor() {
     if (_previewCursorBlock) {
-      _previewCursorBlock.classList.remove("m0-preview-cursor");
+      _previewCursorBlock.classList.remove("-preview-cursor");
       _previewCursorBlock = null;
     }
   }
@@ -116,11 +116,11 @@
     hidePreviewCursor();
 
     // 查找源码行对应的预览 block
-    var blocks = document.querySelectorAll('.m0-src-block[data-m0-src-line]');
+    var blocks = document.querySelectorAll('.-src-block[data--src-line]');
     var targetBlock = null;
     for (var i = 0; i < blocks.length; i++) {
-      var s = parseInt(blocks[i].getAttribute("data-m0-src-line"), 10);
-      var e = parseInt(blocks[i].getAttribute("data-m0-src-line-end"), 10) || s;
+      var s = parseInt(blocks[i].getAttribute("data--src-line"), 10);
+      var e = parseInt(blocks[i].getAttribute("data--src-line-end"), 10) || s;
       if (srcLine >= s && srcLine <= e) {
         targetBlock = blocks[i];
         break;
@@ -129,11 +129,11 @@
     if (!targetBlock) return;
 
     // 不可编辑 block：不显示光标
-    var blockIdx = parseInt(targetBlock.getAttribute("data-m0-block-index"), 10);
+    var blockIdx = parseInt(targetBlock.getAttribute("data--block-index"), 10);
     if (isNonEditableBlock(blockIdx)) return;
 
     // 可编辑 block：添加光标指示
-    targetBlock.classList.add("m0-preview-cursor");
+    targetBlock.classList.add("-preview-cursor");
     _previewCursorBlock = targetBlock;
   }
 
@@ -173,14 +173,14 @@
 
   function showFakeCursor(srcLine, srcCol) {
     hideFakeCursor();
-    var lineEl = document.querySelector("#line-" + srcLine + " .m0-line-content");
+    var lineEl = document.querySelector("#line-" + srcLine + " .-line-content");
     if (!lineEl) return;
     var node = lineEl.firstChild;
     if (!node || node.nodeType !== 3) return;
     var safeCol = Math.min(Math.max(0, srcCol), node.textContent.length);
     var afterNode = node.splitText(safeCol);
     var cursor = document.createElement("span");
-    cursor.className = "m0-sync-cursor";
+    cursor.className = "-sync-cursor";
     cursor.textContent = "|";
     lineEl.insertBefore(cursor, afterNode);
     _fakeCursorEl = cursor;
@@ -229,12 +229,12 @@
       return null;
     }
 
-    // 行号：从 DOM 的 data-m0-src-line 获取（由 stampBlockLines 精确计算）
+    // 行号：从 DOM 的 data--src-line 获取（由 stampBlockLines 精确计算）
     // astToSrc 的 line 对 frontmatter/多行 block 计算不准确
     var srcLine = srcPos.line;  // 0-based fallback
-    var blockEl = document.querySelector('.m0-src-block[data-m0-block-index="' + astPos.blockIndex + '"]');
+    var blockEl = document.querySelector('.-src-block[data--block-index="' + astPos.blockIndex + '"]');
     if (blockEl) {
-      var dl = parseInt(blockEl.getAttribute("data-m0-src-line"), 10);
+      var dl = parseInt(blockEl.getAttribute("data--src-line"), 10);
       if (!isNaN(dl)) srcLine = dl - 1;  // 转为 0-based
     }
 
@@ -310,9 +310,9 @@
     var M = window.MemoriaMapper;
     var doc = M ? M.getDoc() : null;
     var block = doc && doc.blocks ? doc.blocks[blockIndex] : null;
-    var srcLineEl = document.querySelector("#line-" + srcLine + " .m0-line-content");
+    var srcLineEl = document.querySelector("#line-" + srcLine + " .-line-content");
     var srcLineText = srcLineEl ? (srcLineEl.textContent || "") : "";
-    var blockEl = block ? document.querySelector('.m0-src-block[data-m0-block-index="' + blockIndex + '"]') : null;
+    var blockEl = block ? document.querySelector('.-src-block[data--block-index="' + blockIndex + '"]') : null;
     var pvText = blockEl ? (blockEl.textContent || "") : "";
 
     // LIST block: 使用特定 <li> 的文本和偏移
@@ -384,16 +384,16 @@
   /** 光标是否停在图片块的 img 前（0）/后（1）；非图片停靠位置返回 -1 */
   function imageStopOffset(sel) {
     if (!sel || !sel.anchorNode || !sel.anchorNode.classList) return -1;
-    if (!sel.anchorNode.classList.contains("m0-src-block")) return -1;
+    if (!sel.anchorNode.classList.contains("-src-block")) return -1;
     if (sel.anchorOffset !== 0 && sel.anchorOffset !== 1) return -1;
-    var bi = parseInt(sel.anchorNode.getAttribute("data-m0-block-index"), 10);
+    var bi = parseInt(sel.anchorNode.getAttribute("data--block-index"), 10);
     if (isNaN(bi) || !isImageBlock(bi)) return -1;
     return sel.anchorOffset;
   }
 
   /** 在图片块的 img 前（side=0）/后（side=1）放置光标 */
   function placeCursorInImageBlock(blockIndex, side) {
-    var el = document.querySelector('.m0-src-block[data-m0-block-index="' + blockIndex + '"]');
+    var el = document.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
     if (!el) return false;
     var off = side > 0 ? (el.childNodes.length || 0) : 0;
     var r = document.createRange();
@@ -430,17 +430,17 @@
     var el = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
     var tag = sel.anchorNode.nodeName || "?";
     var off = sel.anchorOffset;
-    while (el && !(el.classList && el.classList.contains("m0-src-block"))) {
+    while (el && !(el.classList && el.classList.contains("-src-block"))) {
       el = el.parentElement;
     }
-    if (!el) { flog("GBI", "→ -1 (anchor=" + tag + " off=" + off + " no .m0-src-block)"); return -1; }
-    var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
+    if (!el) { flog("GBI", "→ -1 (anchor=" + tag + " off=" + off + " no .-src-block)"); return -1; }
+    var bi = parseInt(el.getAttribute("data--block-index"), 10);
     flog("GBI", "→ " + bi + " (anchor=" + tag + " off=" + off + ")");
     return bi;
   }
 
   function placeCursorInBlock(blockIndex, atEnd) {
-    var el = document.querySelector('.m0-src-block[data-m0-block-index="' + blockIndex + '"]');
+    var el = document.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
     if (!el) { flog("PCB", "placeCursorInBlock(" + blockIndex + "," + atEnd + ") → FAIL no blockEl"); return false; }
     flog("PCB", "placeCursorInBlock(" + blockIndex + "," + atEnd + ") tag=" + el.tagName + " ce=" + el.contentEditable);
     var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
@@ -499,7 +499,7 @@
     var el = sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement;
     var blockEl = null;
     while (el) {
-      if (el.classList && el.classList.contains("m0-src-block")) { blockEl = el; break; }
+      if (el.classList && el.classList.contains("-src-block")) { blockEl = el; break; }
       el = el.parentElement;
     }
     if (!blockEl) { flog("EDGE", "isAtBlockEdge(" + direction + ") → false (no blockEl)"); return false; }
@@ -682,28 +682,28 @@
       // 如果点击在不可编辑 block 上，不同步光标（避免转移焦点，让 dblclick 能触发）
       var clickTarget = e.target;
       // 行内公式（contenteditable=false 原子块）：点击/拖拽用于整体选中公式，不同步光标
-      if (clickTarget.closest && clickTarget.closest(".m0-math")) {
+      if (clickTarget.closest && clickTarget.closest(".-math")) {
         flog("MOUSE", "mouseup on inline math → skip sync (keep formula selection)");
         return;
       }
       var walkEl = clickTarget;
-      while (walkEl && !(walkEl.classList && walkEl.classList.contains("m0-src-block"))) {
+      while (walkEl && !(walkEl.classList && walkEl.classList.contains("-src-block"))) {
         walkEl = walkEl.parentElement;
       }
       if (walkEl) {
-        var clickBi = parseInt(walkEl.getAttribute("data-m0-block-index"), 10);
+        var clickBi = parseInt(walkEl.getAttribute("data--block-index"), 10);
         if (!isNaN(clickBi) && isNonEditableBlock(clickBi)) {
           // 正在编辑名称（caption）时，点击名称文字交给原生光标定位（可点文字中间），
           // 不做图片前/后停靠，否则每次点击 selection 都被 placeCursorInImageBlock 覆盖
           if (isImageBlock(clickBi) && EH.blockEditMode && EH.blockEditMode.blockType === "image" &&
-              clickTarget.closest && clickTarget.closest("[data-m0-image-caption]")) {
+              clickTarget.closest && clickTarget.closest("[data--image-caption]")) {
             flog("MOUSE", "mouseup on caption while editing → skip dock (native caret)");
             return;
           }
           // 图片块：点击 img 外的空白 → 光标停靠图片前/后（点击 img 本体 → Lightbox）
           if (isImageBlock(clickBi) && !(clickTarget.tagName === "IMG")) {
             var sideImg = 0;
-            var imgEl = walkEl.querySelector("img.m0-preview-image");
+            var imgEl = walkEl.querySelector("img.-preview-image");
             if (imgEl) {
               var ir = imgEl.getBoundingClientRect();
               sideImg = e.clientX >= ir.left + ir.width / 2 ? 1 : 0;
@@ -876,7 +876,7 @@
       label: "编辑代码块",
       tools: function (block) {
         var langs = ["", "javascript", "python", "bash", "json", "html", "css", "sql", "mermaid"];
-        var sel = '<select id="blk-lang-sel" class="m0-block-lang-sel" title="语言">';
+        var sel = '<select id="blk-lang-sel" class="-block-lang-sel" title="语言">';
         for (var i = 0; i < langs.length; i++) {
           var v = langs[i];
           var sel2 = (block.lang === v) ? " selected" : "";
@@ -897,7 +897,7 @@
           { v: "erDiagram", l: "ER图" },
           { v: "gantt", l: "甘特图" },
         ];
-        var html = '<span class="m0-block-edit-hint">类型:</span><select id="blk-mermaid-type" class="m0-block-lang-sel">';
+        var html = '<span class="-block-edit-hint">类型:</span><select id="blk-mermaid-type" class="-block-lang-sel">';
         for (var i = 0; i < types.length; i++) {
           html += '<option value="' + types[i].v + '">' + types[i].l + "</option>";
         }
@@ -909,9 +909,9 @@
       label: "编辑数学公式",
       tools: function () {
         var syms = ["α","β","γ","δ","θ","λ","μ","π","σ","φ","ω","∑","∏","∫","∂","∞","≤","≥","≠","±","×","÷","√","∈","∉","⊂","⊃","∪","∩","∀","∃"];
-        var html = '<span class="m0-block-edit-hint">符号:</span>';
+        var html = '<span class="-block-edit-hint">符号:</span>';
         for (var i = 0; i < syms.length; i++) {
-          html += '<button type="button" class="m0-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
+          html += '<button type="button" class="-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
         }
         return html;
       }
@@ -919,32 +919,32 @@
     table: {
       label: "编辑表格",
       tools: function () {
-        return '<button type="button" class="m0-fmt-btn" id="blk-add-row" title="添加行">+行</button>' +
-               '<button type="button" class="m0-fmt-btn" id="blk-add-col" title="添加列">+列</button>';
+        return '<button type="button" class="-fmt-btn" id="blk-add-row" title="添加行">+行</button>' +
+               '<button type="button" class="-fmt-btn" id="blk-add-col" title="添加列">+列</button>';
       }
     },
     image: {
       label: "编辑图片",
       tools: function () {
-        return '<span class="m0-block-edit-hint">对齐:</span>' +
-          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="left" title="左对齐">左</button>' +
-          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="center" title="居中">中</button>' +
-          '<button type="button" class="m0-fmt-btn m0-img-align-btn" data-align="right" title="右对齐">右</button>' +
-          '<span class="m0-block-edit-hint">大小:</span>' +
-          '<input type="range" id="img-size-slider" class="m0-img-size-slider" min="50" max="800" step="10" title="图片显示宽度">' +
-          '<span class="m0-img-size-val" id="img-size-val">300</span>' +
-          '<span class="m0-block-edit-hint">名称:</span>' +
-          '<input type="range" id="img-name-size-slider" class="m0-img-name-size-slider" min="10" max="32" step="1" title="名称字号">' +
-          '<span class="m0-img-name-val" id="img-name-val">14</span>' +
-          '<button type="button" id="img-name-toggle" class="m0-fmt-btn" title="显示/隐藏图片名称">名称:开</button>' +
-          '<button type="button" class="m0-fmt-btn" id="img-mgr-btn" title="打开图片管理">图片管理</button>';
+        return '<span class="-block-edit-hint">对齐:</span>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="left" title="左对齐">左</button>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="center" title="居中">中</button>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="right" title="右对齐">右</button>' +
+          '<span class="-block-edit-hint">大小:</span>' +
+          '<input type="range" id="img-size-slider" class="-img-size-slider" min="50" max="800" step="10" title="图片显示宽度">' +
+          '<span class="-img-size-val" id="img-size-val">300</span>' +
+          '<span class="-block-edit-hint">名称:</span>' +
+          '<input type="range" id="img-name-size-slider" class="-img-name-size-slider" min="10" max="32" step="1" title="名称字号">' +
+          '<span class="-img-name-val" id="img-name-val">14</span>' +
+          '<button type="button" id="img-name-toggle" class="-fmt-btn" title="显示/隐藏图片名称">名称:开</button>' +
+          '<button type="button" class="-fmt-btn" id="img-mgr-btn" title="打开图片管理">图片管理</button>';
       }
     }
   };
 
   /**
    * 进入行内公式编辑模式
-   * @param {HTMLElement} mathEl — .m0-math span 或 mjx-container[data-m0-inline-math] 元素
+   * @param {HTMLElement} mathEl — .-math span 或 mjx-container[data--inline-math] 元素
    */
   function enterInlineMathEditMode(mathEl) {
     if (EH.blockEditMode) exitBlockEditMode();
@@ -956,7 +956,7 @@
       // MathJax 渲染后的 mjx-container：从 data-formula 属性获取
       formula = mathEl.getAttribute("data-formula") || "";
     } else {
-      // 原始 .m0-math span：从 data-formula 或 textContent 获取
+      // 原始 .-math span：从 data-formula 或 textContent 获取
       formula = mathEl.getAttribute("data-formula") || "";
       if (!formula) {
         var rawText = mathEl.textContent || "";
@@ -973,7 +973,7 @@
     };
 
     // 切换工具栏
-    var fmtBar = document.querySelector(".m0-format-bar");
+    var fmtBar = document.querySelector(".-format-bar");
     var blkBar = document.getElementById("block-edit-bar");
     if (fmtBar) fmtBar.classList.add("hidden");
     if (blkBar) blkBar.classList.remove("hidden");
@@ -985,14 +985,14 @@
     var toolsEl = document.getElementById("block-edit-tools");
     if (toolsEl) {
       var syms = ["α","β","γ","δ","θ","λ","μ","π","σ","φ","ω","∑","∏","∫","∂","∞","≤","≥","≠","±","×","÷","√","∈","∉","⊂","⊃","∪","∩","∀","∃"];
-      var html = '<span class="m0-block-edit-hint">符号:</span>';
+      var html = '<span class="-block-edit-hint">符号:</span>';
       for (var i = 0; i < syms.length; i++) {
-        html += '<button type="button" class="m0-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
+        html += '<button type="button" class="-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
       }
       toolsEl.innerHTML = html;
 
       // 绑定符号按钮：在光标处插入符号
-      toolsEl.querySelectorAll(".m0-math-sym-btn").forEach(function (btn) {
+      toolsEl.querySelectorAll(".-math-sym-btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
           var sym = btn.getAttribute("data-sym");
           var sel = window.getSelection();
@@ -1010,7 +1010,7 @@
 
     // 清除 MathJax 渲染内容，显示原始公式文本（不含 $）
     mathEl.contentEditable = "true";
-    mathEl.classList.add("m0-block-editing");
+    mathEl.classList.add("-block-editing");
     mathEl.textContent = formula;
 
     // 聚焦并全选
@@ -1041,20 +1041,20 @@
     if (!toolsDef) return;
 
     // 获取源码行范围
-    var srcStart = parseInt(blockEl.getAttribute("data-m0-src-line"), 10) || 0;
-    var srcEnd = parseInt(blockEl.getAttribute("data-m0-src-line-end"), 10) || srcStart;
+    var srcStart = parseInt(blockEl.getAttribute("data--src-line"), 10) || 0;
+    var srcEnd = parseInt(blockEl.getAttribute("data--src-line-end"), 10) || srcStart;
 
     // 图片块：保留 <img> 显示，工具栏提供对齐/大小/管理操作（单击图片触发）
     if (blockType === "image") {
       var editorImg = document.getElementById("editor");
       var srcLineText = "";
       if (editorImg && srcStart > 0) {
-        var lineElsImg = editorImg.querySelectorAll(".m0-line-content");
+        var lineElsImg = editorImg.querySelectorAll(".-line-content");
         var srcLineElImg = lineElsImg[srcStart - 1];
         if (srcLineElImg) srcLineText = srcLineElImg.textContent || "";
       }
       var imgElImg = blockEl.querySelector("img");
-      var capElImg = blockEl.querySelector("[data-m0-image-caption]");
+      var capElImg = blockEl.querySelector("[data--image-caption]");
       EH.blockEditMode = {
         blockIndex: blockIndex, blockEl: blockEl, blockType: "image",
         srcStart: srcStart, srcEnd: srcStart, originalContent: srcLineText,
@@ -1073,7 +1073,7 @@
       };
 
       // 切换工具栏
-      var fmtBarImg = document.querySelector(".m0-format-bar");
+      var fmtBarImg = document.querySelector(".-format-bar");
       var blkBarImg = document.getElementById("block-edit-bar");
       if (fmtBarImg) fmtBarImg.classList.add("hidden");
       if (blkBarImg) blkBarImg.classList.remove("hidden");
@@ -1087,7 +1087,7 @@
         toolsElImg.innerHTML = toolsDef.tools(block);
         _initImageTools();
       }
-      blockEl.classList.add("m0-block-editing");
+      blockEl.classList.add("-block-editing");
       log("EH", "enterBlockEditMode: image block " + blockIndex + " line " + srcStart + " attrs=" + JSON.stringify(EH.blockEditMode.imgAttrs));
       return;
     }
@@ -1098,7 +1098,7 @@
     EH.blockEditMode = { blockIndex: blockIndex, blockEl: blockEl, blockType: blockType, srcStart: srcStart, srcEnd: srcEnd, originalContent: originalContent };
 
     // 切换工具栏
-    var fmtBar = document.querySelector(".m0-format-bar");
+    var fmtBar = document.querySelector(".-format-bar");
     var blkBar = document.getElementById("block-edit-bar");
     if (fmtBar) fmtBar.classList.add("hidden");
     if (blkBar) blkBar.classList.remove("hidden");
@@ -1115,7 +1115,7 @@
 
     // 使 block 可编辑
     blockEl.contentEditable = "true";
-    blockEl.classList.add("m0-block-editing");
+    blockEl.classList.add("-block-editing");
 
     // 聚焦
     blockEl.focus();
@@ -1155,14 +1155,14 @@
     if (!ctx || ctx.blockType !== "image") return;
 
     // 对齐按钮：点击 → 派发属性更新（app.js 写回源码并重进编辑）
-    var alignBtns = document.querySelectorAll("#block-edit-tools .m0-img-align-btn");
+    var alignBtns = document.querySelectorAll("#block-edit-tools .-img-align-btn");
     for (var i = 0; i < alignBtns.length; i++) {
       (function (btn) {
         var a = btn.getAttribute("data-align");
         if (ctx.imgAttrs.align === a) btn.classList.add("active");
         btn.addEventListener("click", function () {
           var align = btn.getAttribute("data-align");
-          var btns = document.querySelectorAll("#block-edit-tools .m0-img-align-btn");
+          var btns = document.querySelectorAll("#block-edit-tools .-img-align-btn");
           for (var j = 0; j < btns.length; j++) btns[j].classList.remove("active");
           btn.classList.add("active");
           dispatchImageAttr({ align: align });
@@ -1238,12 +1238,12 @@
     if (EH._captionEditingEl === capEl) return;
     if (EH._captionEditingEl) finishCaptionEdit();
     EH._captionEditingEl = capEl;
-    capEl.classList.add("m0-caption-editing");
+    capEl.classList.add("-caption-editing");
     // 记录原文本（放弃编辑时恢复）
-    capEl.setAttribute("data-m0-caption-orig", capEl.textContent || "");
+    capEl.setAttribute("data--caption-orig", capEl.textContent || "");
     var input = document.createElement("input");
     input.type = "text";
-    input.className = "m0-caption-input";
+    input.className = "-caption-input";
     input.value = capEl.textContent || "";
     // 字号跟随名称字号（renderer name-size 或默认）
     var fs = window.getComputedStyle(capEl).fontSize;
@@ -1270,10 +1270,10 @@
     if (EH._captionEditingEl !== capEl) return;
     EH._captionEditingEl = null;
     if (!capEl) return;
-    capEl.classList.remove("m0-caption-editing");
+    capEl.classList.remove("-caption-editing");
     var newCap = (inputValue != null ? inputValue : capEl.textContent || "").trim().replace(/\s*\n\s*/g, " ");
     // 移除 input，恢复纯文本显示（app.js 会重渲染，这里先本地更新）
-    if (capEl.querySelector("input.m0-caption-input")) {
+    if (capEl.querySelector("input.-caption-input")) {
       capEl.textContent = newCap;
     }
     var ctx = EH.blockEditMode;
@@ -1309,7 +1309,7 @@
         });
       }
     } else if (blockType === "math_block") {
-      var symBtns = document.querySelectorAll(".m0-math-sym-btn");
+      var symBtns = document.querySelectorAll(".-math-sym-btn");
       for (var i = 0; i < symBtns.length; i++) {
         symBtns[i].addEventListener("click", function () {
           var sym = this.getAttribute("data-sym");
@@ -1340,7 +1340,7 @@
 
       // 恢复不可编辑
       mathEl.contentEditable = "false";
-      mathEl.classList.remove("m0-block-editing");
+      mathEl.classList.remove("-block-editing");
 
       _restoreToolbar();
       EH.blockEditMode = null;
@@ -1349,7 +1349,7 @@
         // 找到包含此公式的源码行并替换
         var editor = document.getElementById("editor");
         if (editor) {
-          var lineEls = editor.querySelectorAll(".m0-line-content");
+          var lineEls = editor.querySelectorAll(".-line-content");
           var oldStr = "$" + ctx.originalFormula + "$";
           var newStr = "$" + newFormula + "$";
           for (var li = 0; li < lineEls.length; li++) {
@@ -1367,14 +1367,14 @@
       }
 
       // mjx-container 需要重新渲染以恢复 MathJax 显示（无论是否修改）
-      // .m0-math span 如果未修改则可以直接显示 $formula$ 文本
+      // .-math span 如果未修改则可以直接显示 $formula$ 文本
       if (ctx.isMjxContainer || changed) {
         if (typeof state !== "undefined" && state) {
           if (typeof window._scheduleRender === "function") window._scheduleRender();
           else if (typeof window.renderPreview === "function") window.renderPreview();
         }
       } else {
-        // .m0-math span 未修改：恢复 $formula$ 文本
+        // .-math span 未修改：恢复 $formula$ 文本
         mathEl.textContent = "$" + newFormula + "$";
       }
       flog("DBL", "exit inline math: changed=" + changed + " new=" + newFormula + " mjx=" + (ctx.isMjxContainer || false));
@@ -1391,9 +1391,9 @@
       // 若正在编辑名称文字则先收尾（不提交：视为放弃本次名称编辑）
       if (EH._captionEditingEl) {
         var capElX = EH._captionEditingEl;
-        capElX.classList.remove("m0-caption-editing");
-        if (capElX.querySelector("input.m0-caption-input")) {
-          capElX.textContent = capElX.getAttribute("data-m0-caption-orig") || "";
+        capElX.classList.remove("-caption-editing");
+        if (capElX.querySelector("input.-caption-input")) {
+          capElX.textContent = capElX.getAttribute("data--caption-orig") || "";
         }
         EH._captionEditingEl = null;
       }
@@ -1401,7 +1401,7 @@
         ctx.imgEl.style.width = (ctx.imgOrigStyle && ctx.imgOrigStyle.width) || "";
         ctx.imgEl.style.maxWidth = (ctx.imgOrigStyle && ctx.imgOrigStyle.maxWidth) || "";
       }
-      if (blockEl) blockEl.classList.remove("m0-block-editing");
+      if (blockEl) blockEl.classList.remove("-block-editing");
       // 恢复文件名显示（进入图片编辑时隐藏了 #file-meta 使标签位于工具栏最左）
       var metaElImg2 = document.getElementById("file-meta");
       if (metaElImg2) metaElImg2.style.display = "";
@@ -1448,7 +1448,7 @@
     }
 
     // 替换源码行 (1-based → 0-based)
-    var lineEls = editor.querySelectorAll(".m0-line-content");
+    var lineEls = editor.querySelectorAll(".-line-content");
     var oldLineCount = srcEnd - srcStart + 1;
 
     // 简单策略：如果行数相同，逐行替换；如果不同，重建编辑器
@@ -1476,9 +1476,9 @@
         // 手动重建
         editor.innerHTML = combined.map(function (line, k) {
           var n = k + 1;
-          return '<div class="m0-line" data-line="' + n + '" id="line-' + n + '">' +
-            '<span class="m0-lineno">' + n + '</span>' +
-            '<span class="m0-line-content" contenteditable="true" spellcheck="false" tabindex="-1">' +
+          return '<div class="-line" data-line="' + n + '" id="line-' + n + '">' +
+            '<span class="-lineno">' + n + '</span>' +
+            '<span class="-line-content" contenteditable="true" spellcheck="false" tabindex="-1">' +
             (line || "") + '</span></div>';
         }).join("");
       }
@@ -1491,7 +1491,7 @@
 
     // 恢复 block 不可编辑
     blockEl.contentEditable = "false";
-    blockEl.classList.remove("m0-block-editing");
+    blockEl.classList.remove("-block-editing");
 
     // 恢复工具栏
     _restoreToolbar();
@@ -1509,7 +1509,7 @@
   }
 
   function _restoreToolbar() {
-    var fmtBar = document.querySelector(".m0-format-bar");
+    var fmtBar = document.querySelector(".-format-bar");
     var blkBar = document.getElementById("block-edit-bar");
     if (fmtBar) fmtBar.classList.remove("hidden");
     if (blkBar) blkBar.classList.add("hidden");
@@ -1531,20 +1531,20 @@
       // 图片编辑模式（双击放大场景）：放行到下方图片块分支执行退出；其余编辑模式直接跳过
       if (EH.blockEditMode && EH.blockEditMode.blockType !== "image") { flog("DBL", "already in blockEditMode → return"); return; }
 
-      // ── 检查是否双击了行内公式 (.m0-math 或 mjx-container[data-m0-inline-math]) ──
-      // MathJax typeset 后 .m0-math span 可能被替换为 mjx-container，
+      // ── 检查是否双击了行内公式 (.-math 或 mjx-container[data--inline-math]) ──
+      // MathJax typeset 后 .-math span 可能被替换为 mjx-container，
       // 因此同时检查两种标记
       var mathEl = e.target;
       while (mathEl && mathEl !== preview) {
-        if (mathEl.classList && mathEl.classList.contains("m0-math")) break;
-        if (mathEl.tagName === "MJX-CONTAINER" && mathEl.getAttribute("data-m0-inline-math") === "true") break;
+        if (mathEl.classList && mathEl.classList.contains("-math")) break;
+        if (mathEl.tagName === "MJX-CONTAINER" && mathEl.getAttribute("data--inline-math") === "true") break;
         mathEl = mathEl.parentElement;
       }
       if (mathEl && mathEl !== preview) {
-        var isMathSpan = mathEl.classList && mathEl.classList.contains("m0-math");
-        var isInlineMjx = mathEl.tagName === "MJX-CONTAINER" && mathEl.getAttribute("data-m0-inline-math") === "true";
+        var isMathSpan = mathEl.classList && mathEl.classList.contains("-math");
+        var isInlineMjx = mathEl.tagName === "MJX-CONTAINER" && mathEl.getAttribute("data--inline-math") === "true";
         if (isMathSpan || isInlineMjx) {
-          flog("DBL", "→ inline math edit mode (" + (isInlineMjx ? "mjx-container" : ".m0-math") + ")");
+          flog("DBL", "→ inline math edit mode (" + (isInlineMjx ? "mjx-container" : ".-math") + ")");
           enterInlineMathEditMode(mathEl);
           e.preventDefault();
           return;
@@ -1553,13 +1553,13 @@
 
       // ── 检查是否双击了不可编辑 block ──
       var el = e.target;
-      while (el && !(el.classList && el.classList.contains("m0-src-block"))) {
+      while (el && !(el.classList && el.classList.contains("-src-block"))) {
         el = el.parentElement;
       }
-      if (!el) { flog("DBL", "no .m0-src-block ancestor → return"); return; }
+      if (!el) { flog("DBL", "no .-src-block ancestor → return"); return; }
 
-      var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
-      flog("DBL", "found .m0-src-block bi=" + bi + " tag=" + el.tagName + " ce=" + el.contentEditable);
+      var bi = parseInt(el.getAttribute("data--block-index"), 10);
+      flog("DBL", "found .-src-block bi=" + bi + " tag=" + el.tagName + " ce=" + el.contentEditable);
       if (isNaN(bi)) { flog("DBL", "bi NaN → return"); return; }
 
       var ned = isNonEditableBlock(bi);
@@ -1583,12 +1583,12 @@
       if (typeof state === "undefined" || !state || state.viewMode === "source") return;
       var el = e.target;
       // 单击名称文字 → 直接编辑名称（同时进入/保持图片编辑模式，阶段 G）
-      var capT = el && el.closest ? el.closest("[data-m0-image-caption]") : null;
+      var capT = el && el.closest ? el.closest("[data--image-caption]") : null;
       if (capT && preview.contains(capT)) {
         if (!(EH.blockEditMode && EH.blockEditMode.blockType === "image")) {
-          var capBlock = capT.closest(".m0-image-block");
+          var capBlock = capT.closest(".-image-block");
           if (capBlock && preview.contains(capBlock)) {
-            var capBi = parseInt(capBlock.getAttribute("data-m0-block-index"), 10);
+            var capBi = parseInt(capBlock.getAttribute("data--block-index"), 10);
             if (!isNaN(capBi) && isImageBlock(capBi)) {
               enterBlockEditMode(capBlock, capBi);
             }
@@ -1601,9 +1601,9 @@
         }
       }
       if (EH.blockEditMode) return;
-      var imgBlock = el && el.closest ? el.closest(".m0-image-block") : null;
+      var imgBlock = el && el.closest ? el.closest(".-image-block") : null;
       if (!imgBlock || !preview.contains(imgBlock)) return;
-      var biImg = parseInt(imgBlock.getAttribute("data-m0-block-index"), 10);
+      var biImg = parseInt(imgBlock.getAttribute("data--block-index"), 10);
       if (isNaN(biImg)) return;
       if (!isImageBlock(biImg)) return;
       flog("CLK", "single click image block bi=" + biImg + " → enterBlockEditMode");
@@ -1637,9 +1637,9 @@
    * @param {number} srcLine — 1-based 源码行号
    */
   EH.reenterImageEdit = function (srcLine) {
-    var el = document.querySelector('.m0-src-block[data-m0-src-line="' + srcLine + '"]');
+    var el = document.querySelector('.-src-block[data--src-line="' + srcLine + '"]');
     if (!el) return;
-    var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
+    var bi = parseInt(el.getAttribute("data--block-index"), 10);
     if (isNaN(bi)) return;
     var M = window.MemoriaMapper;
     var doc = M ? M.getDoc() : null;
@@ -1654,9 +1654,9 @@
    * @param {number} srcLine — 1-based 源码行号
    */
   EH.placeCaretAfterNameEdit = function (srcLine) {
-    var el = document.querySelector('.m0-src-block[data-m0-src-line="' + srcLine + '"]');
+    var el = document.querySelector('.-src-block[data--src-line="' + srcLine + '"]');
     if (!el) return;
-    var bi = parseInt(el.getAttribute("data-m0-block-index"), 10);
+    var bi = parseInt(el.getAttribute("data--block-index"), 10);
     if (isNaN(bi)) return;
     var outIdx = findEditableBlockIndex(bi, -1);
     if (outIdx >= 0) {

@@ -40,11 +40,11 @@
     if (resizeLayer) return resizeLayer;
     resizeLayer = document.createElement("div");
     resizeLayer.id = "window-resize-layer";
-    resizeLayer.className = "m0-win-resize-layer hidden";
+    resizeLayer.className = "-win-resize-layer hidden";
     resizeLayer.setAttribute("aria-hidden", "true");
     EDGES.forEach((edge) => {
       const el = document.createElement("div");
-      el.className = `m0-win-resize-handle m0-win-resize-${edge}`;
+      el.className = `-win-resize-handle -win-resize-${edge}`;
       el.dataset.edge = edge;
       resizeLayer.appendChild(el);
     });
@@ -89,10 +89,10 @@
       dragging = null;
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseup", onUp);
-      document.body.classList.remove("m0-win-resizing");
+      document.body.classList.remove("-win-resizing");
     };
 
-    layer.querySelectorAll(".m0-win-resize-handle").forEach((handle) => {
+    layer.querySelectorAll(".-win-resize-handle").forEach((handle) => {
       handle.addEventListener("mousedown", (e) => {
         if (maximized || e.button !== 0) return;
         e.preventDefault();
@@ -104,7 +104,7 @@
           w: global.innerWidth,
           h: global.innerHeight,
         };
-        document.body.classList.add("m0-win-resizing");
+        document.body.classList.add("-win-resizing");
         document.addEventListener("mousemove", onMove);
         document.addEventListener("mouseup", onUp);
       });
@@ -114,7 +114,7 @@
   }
 
   const NO_DRAG_SELECTORS =
-    "#btn-kb-close, .m0-kb-exit, .toolbar-search-wrap, .toolbar-actions, .m0-window-controls";
+    "#btn-kb-close, .-kb-exit, .toolbar-search-wrap, .toolbar-actions, .-window-controls";
 
   function isNoDragTarget(target) {
     return target instanceof Element && !!target.closest(NO_DRAG_SELECTORS);
@@ -302,7 +302,7 @@
         const v = `v${res.version}`;
         document.title = `Memoria ${v}`;
         const h1 = document.querySelector("#welcome h1");
-        if (h1) h1.innerHTML = `Memoria <span class="m0-app-version">${v}</span>`;
+        if (h1) h1.innerHTML = `Memoria <span class="-app-version">${v}</span>`;
         const badge = document.getElementById("app-badge");
         if (badge) badge.textContent = v;
       }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Memoria 桌面应用入口（当前里程碑：M0）。"""
+"""Memoria 桌面应用入口"""
 
 import sys
 from pathlib import Path

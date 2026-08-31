@@ -62,41 +62,41 @@ def _frameless_enabled() -> bool:
     return os.environ.get("MEMORIA_FRAMELESS", "1").lower() not in ("0", "false", "no")
 
 
-# 前端探针：页面加载后注入，维护 window.__m0diag 事件计数与焦点/可见性状态，
+# 前端探针：页面加载后注入，维护 window.__diag 事件计数与焦点/可见性状态，
 # 由 Python 侧 runJavaScript 主动查询（PyQt6 无 console 信号，故不走 console.log）。
 # 并承担合成器冻结自愈检测：requestAnimationFrame 由合成器驱动，冻结时回调停止；
 # 可见状态下 rAF 停滞 >1.2s 判定合成冻结，通过 document.title 通知 Qt（titleChanged
 # 信号）触发整窗 HWND 翻转自愈（等效最小化→还原的合成器重置）。
 _DIAG_PROBE_JS = r"""
 (function () {
-  if (window.__m0diagReady) { return; }
-  window.__m0diagReady = true;
-  window.__m0diag = {
+  if (window.__diagReady) { return; }
+  window.__diagReady = true;
+  window.__diag = {
     down: 0, up: 0, focus: 0, blur: 0, focusNow: document.hasFocus(),
     vis: document.visibilityState, ready: document.readyState,
     bridge: !!window.MemoriaBridge, last: ''
   };
   document.addEventListener('pointerdown', function (e) {
-    var d = window.__m0diag; d.down++; d.last = 'tag=' + (e.target && e.target.tagName) +
+    var d = window.__diag; d.down++; d.last = 'tag=' + (e.target && e.target.tagName) +
       ' x=' + Math.round(e.clientX) + ' y=' + Math.round(e.clientY) + ' focus=' + document.hasFocus();
   }, true);
-  document.addEventListener('pointerup', function () { window.__m0diag.up++; }, true);
-  window.addEventListener('focus', function () { var d = window.__m0diag; d.focus++; d.focusNow = true; }, true);
-  window.addEventListener('blur', function () { var d = window.__m0diag; d.blur++; d.focusNow = false; }, true);
+  document.addEventListener('pointerup', function () { window.__diag.up++; }, true);
+  window.addEventListener('focus', function () { var d = window.__diag; d.focus++; d.focusNow = true; }, true);
+  window.addEventListener('blur', function () { var d = window.__diag; d.blur++; d.focusNow = false; }, true);
   document.addEventListener('visibilitychange', function () {
-    window.__m0diag.vis = document.visibilityState;
+    window.__diag.vis = document.visibilityState;
   }, true);
   // 合成冻结自愈：rAF 由合成器驱动，冻结时回调停止；可见且停滞>1.2s 判冻结
   (function () {
     var last = Date.now();
-    window.__m0rafTick = function () { last = Date.now(); requestAnimationFrame(window.__m0rafTick); };
-    requestAnimationFrame(window.__m0rafTick);
+    window.__rafTick = function () { last = Date.now(); requestAnimationFrame(window.__rafTick); };
+    requestAnimationFrame(window.__rafTick);
     setInterval(function () {
       if (document.visibilityState !== 'visible') { return; }
       var now = Date.now();
-      if (now - last > 1200 && document.title.indexOf('__m0frozen__') !== 0) {
+      if (now - last > 1200 && document.title.indexOf('__frozen__') !== 0) {
         var t0 = document.title;
-        document.title = '__m0frozen__' + now;
+        document.title = '__frozen__' + now;
         setTimeout(function () { document.title = t0; }, 600);
       }
     }, 400);
@@ -182,10 +182,10 @@ def run() -> None:
                         y=round(pos.y()) if pos is not None else None,
                     )
                     # 点击到达 Qt 层后，立即查询前端探针计数：
-                    # 若 __m0diag.down 未增长，说明点击未到达页面 DOM（事件路由/合成问题）
+                    # 若 __diag.down 未增长，说明点击未到达页面 DOM（事件路由/合成问题）
                     try:
                         view.page().runJavaScript(
-                            "JSON.stringify(window.__m0diag || null)",
+                            "JSON.stringify(window.__diag || null)",
                             lambda r: shell_log("frontend_probe", state=str(r)),
                         )
                     except Exception:  # noqa: BLE001
@@ -278,7 +278,7 @@ def run() -> None:
     app.installEventFilter(diag_filter)
     window._memoria_diag_filter = diag_filter  # noqa: SLF001 防止 GC
     # 注：PyQt6 的 QWebEnginePage 无 javaScriptConsoleMessage 信号（仅静态方法），
-    # 前端探针状态改经 window.__m0diag + runJavaScript 主动查询（见事件过滤与首帧刷新）。
+    # 前端探针状态改经 window.__diag + runJavaScript 主动查询（见事件过滤与首帧刷新）。
     page.loadStarted.connect(lambda: shell_log("load_started"))
     page.renderProcessTerminated.connect(
         lambda status, code: shell_log(
@@ -325,7 +325,7 @@ def run() -> None:
         # 页面就绪后补一轮首帧刷新（重置 show 后那轮尚未完成的多拍链）
         schedule_first_paint_refresh(window)
 
-    # 合成冻结自愈（前端探针经 document.title 上报 __m0frozen__）
+    # 合成冻结自愈（前端探针经 document.title 上报 __frozen__）
     _last_heal = [0.0]  # time.monotonic 时间戳（防抖）
 
     def _heal_synthesis() -> None:
@@ -339,7 +339,7 @@ def run() -> None:
 
     def _on_page_title_changed(title: str) -> None:
         t = str(title)
-        if t.startswith("__m0frozen__"):
+        if t.startswith("__frozen__"):
             shell_log("synthesis_frozen_detected", title=t[:80])
             _heal_synthesis()
 

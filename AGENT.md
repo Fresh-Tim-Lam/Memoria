@@ -31,7 +31,7 @@ Agent 在此项目的职责：按 [collaboration.md](docs/guides/collaboration.m
 | `pytest` | 单元测试（`tests/`） |
 | `.\packaging\build_release.cmd` | 构建发布包（`--no-clean` 增量） |
 | `.\packaging\run_release.cmd` | 运行 `Package\Memoria.exe`（发布态） |
-| `memoria` / `memoria-m0` | 安装后的 console 入口（cli / desktop） |
+| `memoria` / `memoria-desktop` | 安装后的 console 入口（cli / desktop） |
 
 **版本变更**：版本唯一事实源是 [src/memoria/\_\_version\_\_.py](src/memoria/__version__.py)，pyproject 通过 dynamic attr 读取，构建自动跟随。**禁止**手改 pyproject.toml 中的硬编码版本号。详见 [version.md](docs/conventions/version.md)。
 
@@ -42,6 +42,21 @@ app.py → app/desktop.py（DPI/UTF-8 兜底）→ app/shell/（壳选择：pywe
         → presentation/static_server.py（bottle：静态资源 + /files/ + /rpc）
         → ui/static/app/（前端：编辑/预览/图谱/搜索）
 ```
+
+**顶层目录导航**：每个一级目录顶部都有 `README.md` 说明职责——进入任何目录前先读其 README：
+
+| 目录 | 职责 | README |
+|------|------|--------|
+| `src/` | 源码（Python 包 + 前端静态资源） | [src/README.md](src/README.md) |
+| `tests/` | pytest 单元/集成测试 | [tests/README.md](tests/README.md) |
+| `docs/` | 文档中心（规范/设计/指南/示例） | [docs/README.md](docs/README.md) |
+| `scripts/` | 开发者工具（启动/基准） | [scripts/README.md](scripts/README.md) |
+| `packaging/` | 打包发布（唯一入口 `build_release.cmd`） | [packaging/README.md](packaging/README.md) |
+| `resources/` | 应用资源（图标） | [resources/README.md](resources/README.md) |
+| `benchmarks/` | 检索评估数据与结果 | [benchmarks/README.md](benchmarks/README.md) |
+| `config/` | 程序配置（`ui-settings.json`） | [config/README.md](config/README.md) |
+| `artifacts/` | 临时产物区（已 gitignore） | [artifacts/README.md](artifacts/README.md) |
+| `Package/` | 构建发布产物（gitignore，勿手改） | Package/README.txt |
 
 | 模块 | 职责 |
 |------|------|
@@ -82,9 +97,13 @@ app.py → app/desktop.py（DPI/UTF-8 兜底）→ app/shell/（壳选择：pywe
 - 新日志遵守 [logging.md](docs/conventions/logging.md) 的存放/命名/格式。
 - 中文内容统一 UTF-8；前端改动保持原生 JS 无框架风格。
 - 修改交互逻辑后跑通 [operations.md](docs/guides/operations.md) 中的验证方式（如 harness）。
+- **生成物自动维护，不等用户提示**：`.gitignore` 忽略的目录（`*.egg-info/`、`build/`、`logs/`、`artifacts/`、`Package/*`、`__pycache__/`、`.cache/`、`.vendor-cache/` 等）均为**可再生物**，不是源码——发现过期（如 `src/memoria.egg-info/` 的 SOURCES.txt 未跟随源码、或 pyproject 依赖/入口变更后未刷新）时，主动执行 `pip install -e ".[dev]"` 重新生成；**不手动编辑、不提交任何生成物**。
+- **任务收尾执行文件组织自检，不等用户提示**：本轮操作产生的文件是否落在正确目录（临时/调试→`artifacts/`，可复用工具→`scripts/`，打包→`packaging/`，文档→`docs/` 对应子目录，正式代码→`src/`）；根目录是否出现违规产物（`cdp-*.mjs`、`test-*.html`、`diag-*.json`、`shot-*.png`、`dbg/` 等兜底模式）→ 移入 `artifacts/`；目录/文档变更后父目录 README 与 docs-management 登记表是否同步；若发现 git 历史误跟踪的缓存/垃圾（如 `.cache/`、`cmake-build-debug/`、`Package.zip`）→ 主动向用户提出 `git rm` 解除跟踪（执行前仍须用户确认）。
 
 ### Ask First（先问用户）
-- 结构性重构、删除/移动文件、改变目录组织。
+
+> **区分"日常归位"与"结构性变更"**：临时文件归位、清理可再生缓存、同步文档索引、刷新生成物属 **Always**（主动做，不必问）；下述**结构性变更**必须先问：
+- 结构性重构、删除/移动**正式文件**、改变目录组织。
 - 打包/发布流程、新增第三方依赖、改动构建配置。
 - 修改 `docs/example/` 下演示知识库或测试数据的内容。
 - 改动会影响 `.memoria/` 元数据（sidecar/manifest/pending）一致性的逻辑。
@@ -104,6 +123,7 @@ app.py → app/desktop.py（DPI/UTF-8 兜底）→ app/shell/（壳选择：pywe
 - **事件派发**：前端全局事件用 `document` 派发（`window` 在壳内不可靠）。
 - **图片/富文本编辑**：图片块单击编辑 / 双击放大，属性写回经 `memoria:image-attr`（document 派发）→ 源码合并 → 重进编辑；改前读 [image-features.md](docs/reference/image-features.md)。
 - **git mv**：重命名文件用 `git mv` 保留历史（本次 docs 重构已用）。
+- **`src/memoria.egg-info/` 过期不是故障**：它是 `pip install -e` 生成的元数据缓存（已被 gitignore，不入库），`SOURCES.txt` 不会自动跟随源码变化——新增/删除模块后显示旧内容属**正常现象**，不要手动编辑它，也不要据此误判源码丢失；需要刷新时重跑 `pip install -e ".[dev]"` 即可再生。
 
 ## 8. References（参考）
 

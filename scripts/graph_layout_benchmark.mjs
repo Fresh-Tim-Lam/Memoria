@@ -14,7 +14,7 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-const JS_DIR = path.join(ROOT, "src", "memoria", "ui", "static", "m0", "js");
+const JS_DIR = path.join(ROOT, "src", "memoria", "ui", "static", "app", "js");
 
 function parseArgs(argv) {
   const out = { scales: null, patterns: null, simFrames: 60, ticksPerFrame: 6 };

@@ -1,4 +1,4 @@
-"""后台静态资源 HTTP 服务（PyQt6 壳加载 m0 前端）。"""
+"""后台静态资源 HTTP 服务（PyQt6 壳加载前端）。"""
 
 from __future__ import annotations
 

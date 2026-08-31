@@ -29,6 +29,11 @@ logs/
 /test-*.mjs
 /pages.json
 
+# 运行缓存 / IDE 构建残留
+.vendor-cache/
+.pytest_cache/
+cmake-build-debug/
+
 # Python
 __pycache__/
 *.pyc

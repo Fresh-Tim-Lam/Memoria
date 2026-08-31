@@ -38,92 +38,92 @@
           <img class="logo-icon" src="/icons/Memoria.ico" alt="" decoding="async">
           <span class="logo">Memoria</span>
         </span>
-        <span class="m0-badge" id="app-badge"></span>
+        <span class="-badge" id="app-badge"></span>
       </div>
       <div class="toolbar-actions">
-        <button id="btn-nav-back" class="m0-nav-btn" title="后退 (Alt+←)" disabled>←</button>
-        <button id="btn-nav-forward" class="m0-nav-btn" title="前进 (Alt+→)" disabled>→</button>
+        <button id="btn-nav-back" class="-nav-btn" title="后退 (Alt+←)" disabled>←</button>
+        <button id="btn-nav-forward" class="-nav-btn" title="前进 (Alt+→)" disabled>→</button>
         <button id="btn-open" title="打开知识库">打开</button>
         <button id="btn-import" title="导入平面文件">导入</button>
         <button id="btn-refresh" title="刷新">刷新</button>
         <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱">构建</button>
-        <span class="m0-toolbar-btn-wrap">
+        <span class="-toolbar-btn-wrap">
           <button id="btn-check" type="button" title="知识库完整性检查">检查</button>
-          <span id="btn-check-badge" class="m0-toolbar-badge hidden" aria-hidden="true"></span>
+          <span id="btn-check-badge" class="-toolbar-badge hidden" aria-hidden="true"></span>
         </span>
         <button id="btn-settings" type="button" title="设置">设置</button>
       </div>
-      <div class="m0-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
+      <div class="-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-search-wrap">
-        <div id="toolbar-search-scope" class="m0-toolbar-search-scope" role="switch" tabindex="0" aria-label="搜索范围">
-          <button type="button" id="toolbar-search-scope-kb" class="m0-toolbar-search-scope-btn active" title="搜索全库">全库</button>
-          <button type="button" id="toolbar-search-scope-file" class="m0-toolbar-search-scope-btn" title="仅当前文件">文件</button>
+        <div id="toolbar-search-scope" class="-toolbar-search-scope" role="switch" tabindex="0" aria-label="搜索范围">
+          <button type="button" id="toolbar-search-scope-kb" class="-toolbar-search-scope-btn active" title="搜索全库">全库</button>
+          <button type="button" id="toolbar-search-scope-file" class="-toolbar-search-scope-btn" title="仅当前文件">文件</button>
         </div>
-        <div class="m0-toolbar-search-field">
+        <div class="-toolbar-search-field">
           <input
             type="search"
             id="toolbar-search"
-            class="m0-toolbar-search"
+            class="-toolbar-search"
             placeholder="搜索知识点、标签…"
             autocomplete="off"
             spellcheck="false"
             title="全局搜索（Ctrl+K · Shift+Enter 仅当前文件）"
           />
-          <div id="toolbar-search-panel" class="m0-toolbar-search-panel hidden" aria-live="polite"></div>
+          <div id="toolbar-search-panel" class="-toolbar-search-panel hidden" aria-live="polite"></div>
         </div>
       </div>
-      <div class="m0-titlebar-drag-spacer m0-titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
+      <div class="-titlebar-drag-spacer -titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-right">
         <span id="kb-indicator-wrap" class="kb-indicator-wrap hidden">
           <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）"></span>
-          <button id="btn-kb-close" type="button" class="m0-btn primary m0-btn--sm m0-kb-exit" title="关闭知识库，返回欢迎页">退出</button>
+          <button id="btn-kb-close" type="button" class="-btn primary -btn--sm -kb-exit" title="关闭知识库，返回欢迎页">退出</button>
         </span>
-        <div id="window-controls" class="m0-window-controls hidden" aria-label="窗口控制">
-          <button type="button" id="btn-win-minimize" class="m0-win-btn m0-win-btn--min" title="最小化" aria-label="最小化"></button>
-          <button type="button" id="btn-win-maximize" class="m0-win-btn m0-win-btn--max" title="最大化" aria-label="最大化"></button>
-          <button type="button" id="btn-win-close" class="m0-win-btn m0-win-btn--close" title="关闭" aria-label="关闭"></button>
+        <div id="window-controls" class="-window-controls hidden" aria-label="窗口控制">
+          <button type="button" id="btn-win-minimize" class="-win-btn -win-btn--min" title="最小化" aria-label="最小化"></button>
+          <button type="button" id="btn-win-maximize" class="-win-btn -win-btn--max" title="最大化" aria-label="最大化"></button>
+          <button type="button" id="btn-win-close" class="-win-btn -win-btn--close" title="关闭" aria-label="关闭"></button>
         </div>
       </div>
     </div>
 
     <div id="main">
-      <aside id="m0-sidebar">
+      <aside id="-sidebar">
         <div id="sidebar-resizer"></div>
-        <div class="m0-sidebar-tabs-wrap">
-          <div class="m0-config-tabs m0-sidebar-nav-tabs" role="tablist" aria-label="资源管理器">
-            <button type="button" class="m0-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true">文件 <span class="m0-tab-count" id="sidebar-tab-count-files">0</span></button>
-            <button type="button" class="m0-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="m0-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
-            <button type="button" class="m0-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="m0-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
+        <div class="-sidebar-tabs-wrap">
+          <div class="-config-tabs -sidebar-nav-tabs" role="tablist" aria-label="资源管理器">
+            <button type="button" class="-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true">文件 <span class="-tab-count" id="sidebar-tab-count-files">0</span></button>
+            <button type="button" class="-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
+            <button type="button" class="-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
           </div>
         </div>
-        <div id="sidebar-graph-group-bar" class="m0-graph-group-bar hidden" aria-hidden="true">
-          <div id="sidebar-graph-group-tabs" class="m0-graph-group-tabs"></div>
+        <div id="sidebar-graph-group-bar" class="-graph-group-bar hidden" aria-hidden="true">
+          <div id="sidebar-graph-group-tabs" class="-graph-group-tabs"></div>
         </div>
-        <div id="sidebar-body-split" class="m0-sidebar-body-split">
-          <div id="sidebar-nav-panel" class="m0-panel m0-sidebar-nav-panel">
-            <div id="sidebar-view-files" class="m0-sidebar-view" data-sidebar-view="files">
+        <div id="sidebar-body-split" class="-sidebar-body-split">
+          <div id="sidebar-nav-panel" class="-panel -sidebar-nav-panel">
+            <div id="sidebar-view-files" class="-sidebar-view" data-sidebar-view="files">
               <div id="file-tree"></div>
             </div>
-            <div id="sidebar-view-graph2d" class="m0-sidebar-view hidden" data-sidebar-view="graph2d">
-              <div id="graph-2d-root" class="m0-graph-root"></div>
-              <div id="graph-2d-hint" class="m0-graph-hint m0-graph-hint--overlay m0-muted"><span class="m0-muted">滚轮缩放 · 拖空白平移 · 点击跳转</span></div>
+            <div id="sidebar-view-graph2d" class="-sidebar-view hidden" data-sidebar-view="graph2d">
+              <div id="graph-2d-root" class="-graph-root"></div>
+              <div id="graph-2d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted">滚轮缩放 · 拖空白平移 · 点击跳转</span></div>
             </div>
-            <div id="sidebar-view-graph3d" class="m0-sidebar-view hidden" data-sidebar-view="graph3d">
-              <div id="graph-3d-root" class="m0-graph-root"></div>
-              <div id="graph-3d-hint" class="m0-graph-hint m0-graph-hint--overlay m0-muted"><span class="m0-muted">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
+            <div id="sidebar-view-graph3d" class="-sidebar-view hidden" data-sidebar-view="graph3d">
+              <div id="graph-3d-root" class="-graph-root"></div>
+              <div id="graph-3d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
             </div>
           </div>
-          <div id="sidebar-nav-kp-resizer" class="m0-graph-panel-resizer m0-sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比"></div>
-          <div id="sidebar-kp-block" class="m0-sidebar-kp-block">
-            <div class="sidebar-toolbar m0-kp-toolbar">
-              <span class="m0-kp-toolbar-label">知识点</span>
-              <span id="kp-count" class="m0-muted"></span>
-              <div class="m0-kp-toolbar-actions">
-                <button type="button" id="btn-config" class="m0-config-btn" title="文件总配置（知识点与链接）">配置</button>
-                <button type="button" id="btn-kp-new" class="m0-config-btn" title="新建知识点（当前文件）">新建</button>
+          <div id="sidebar-nav-kp-resizer" class="-graph-panel-resizer -sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比"></div>
+          <div id="sidebar-kp-block" class="-sidebar-kp-block">
+            <div class="sidebar-toolbar -kp-toolbar">
+              <span class="-kp-toolbar-label">知识点</span>
+              <span id="kp-count" class="-muted"></span>
+              <div class="-kp-toolbar-actions">
+                <button type="button" id="btn-config" class="-config-btn" title="文件总配置（知识点与链接）">配置</button>
+                <button type="button" id="btn-kp-new" class="-config-btn" title="新建知识点（当前文件）">新建</button>
               </div>
             </div>
-            <div id="kp-list" class="m0-panel m0-kp-panel"></div>
+            <div id="kp-list" class="-panel -kp-panel"></div>
           </div>
         </div>
       </aside>
@@ -140,60 +140,60 @@
           </div>
           <div id="editor-wrap" class="hidden">
             <div id="editor-header">
-              <span id="file-meta" class="m0-muted"></span>
-              <div class="m0-format-bar" role="toolbar" aria-label="格式工具">
-                <button type="button" class="m0-fmt-btn" data-fmt="bold" title="加粗 (Ctrl+B)：左键涂抹/切换，右键取消"><strong>B</strong></button>
-                <button type="button" class="m0-fmt-btn" data-fmt="italic" title="斜体 (Ctrl+I)：左键涂抹/切换，右键取消"><em>I</em></button>
-                <span class="m0-fmt-sep"></span>
-                <span class="m0-fmt-dropdown">
-                  <button type="button" class="m0-fmt-btn" data-fmt="highlight" title="荧光笔：选色后左键涂抹，右键取消">H▾</button>
-                  <div class="m0-fmt-dropdown-menu m0-hl-colors">
-                    <button type="button" data-hl-color="yellow" class="m0-hl-swatch m0-hl-yellow" title="黄色">黄</button>
-                    <button type="button" data-hl-color="green" class="m0-hl-swatch m0-hl-green" title="绿色">绿</button>
-                    <button type="button" data-hl-color="red" class="m0-hl-swatch m0-hl-red" title="红色">红</button>
-                    <button type="button" data-hl-color="blue" class="m0-hl-swatch m0-hl-blue" title="蓝色">蓝</button>
-                    <button type="button" data-hl-color="orange" class="m0-hl-swatch m0-hl-orange" title="橙色">橙</button>
-                    <button type="button" class="m0-hl-option m0-hl-none" data-hl-none="1" title="移除高亮">无色</button>
-                    <button type="button" class="m0-hl-option m0-hl-custom" data-hl-custom="1" title="选择颜色并添加到色板">添加颜色</button>
+              <span id="file-meta" class="-muted"></span>
+              <div class="-format-bar" role="toolbar" aria-label="格式工具">
+                <button type="button" class="-fmt-btn" data-fmt="bold" title="加粗 (Ctrl+B)：左键涂抹/切换，右键取消"><strong>B</strong></button>
+                <button type="button" class="-fmt-btn" data-fmt="italic" title="斜体 (Ctrl+I)：左键涂抹/切换，右键取消"><em>I</em></button>
+                <span class="-fmt-sep"></span>
+                <span class="-fmt-dropdown">
+                  <button type="button" class="-fmt-btn" data-fmt="highlight" title="荧光笔：选色后左键涂抹，右键取消">H▾</button>
+                  <div class="-fmt-dropdown-menu -hl-colors">
+                    <button type="button" data-hl-color="yellow" class="-hl-swatch -hl-yellow" title="黄色">黄</button>
+                    <button type="button" data-hl-color="green" class="-hl-swatch -hl-green" title="绿色">绿</button>
+                    <button type="button" data-hl-color="red" class="-hl-swatch -hl-red" title="红色">红</button>
+                    <button type="button" data-hl-color="blue" class="-hl-swatch -hl-blue" title="蓝色">蓝</button>
+                    <button type="button" data-hl-color="orange" class="-hl-swatch -hl-orange" title="橙色">橙</button>
+                    <button type="button" class="-hl-option -hl-none" data-hl-none="1" title="移除高亮">无色</button>
+                    <button type="button" class="-hl-option -hl-custom" data-hl-custom="1" title="选择颜色并添加到色板">添加颜色</button>
                   </div>
                 </span>
-                <span class="m0-fmt-dropdown">
-                  <button type="button" class="m0-fmt-btn" data-fmt="fontcolor" title="字体颜色：选色后左键涂抹，右键取消">色▾</button>
-                  <div class="m0-fmt-dropdown-menu m0-fc-colors">
-                    <button type="button" data-fc-color="red" class="m0-fc-swatch m0-fc-red" title="红色">红</button>
-                    <button type="button" data-fc-color="orange" class="m0-fc-swatch m0-fc-orange" title="橙色">橙</button>
-                    <button type="button" data-fc-color="yellow" class="m0-fc-swatch m0-fc-yellow" title="黄色">黄</button>
-                    <button type="button" data-fc-color="green" class="m0-fc-swatch m0-fc-green" title="绿色">绿</button>
-                    <button type="button" data-fc-color="blue" class="m0-fc-swatch m0-fc-blue" title="蓝色">蓝</button>
-                    <button type="button" data-fc-color="purple" class="m0-fc-swatch m0-fc-purple" title="紫色">紫</button>
-                    <button type="button" data-fc-color="gray" class="m0-fc-swatch m0-fc-gray" title="灰色">灰</button>
-                    <button type="button" class="m0-fc-option m0-fc-none" data-fc-none="1" title="移除字体色">无色</button>
-                    <button type="button" class="m0-fc-option m0-fc-custom" data-fc-custom="1" title="选择颜色并添加到色板">添加颜色</button>
+                <span class="-fmt-dropdown">
+                  <button type="button" class="-fmt-btn" data-fmt="fontcolor" title="字体颜色：选色后左键涂抹，右键取消">色▾</button>
+                  <div class="-fmt-dropdown-menu -fc-colors">
+                    <button type="button" data-fc-color="red" class="-fc-swatch -fc-red" title="红色">红</button>
+                    <button type="button" data-fc-color="orange" class="-fc-swatch -fc-orange" title="橙色">橙</button>
+                    <button type="button" data-fc-color="yellow" class="-fc-swatch -fc-yellow" title="黄色">黄</button>
+                    <button type="button" data-fc-color="green" class="-fc-swatch -fc-green" title="绿色">绿</button>
+                    <button type="button" data-fc-color="blue" class="-fc-swatch -fc-blue" title="蓝色">蓝</button>
+                    <button type="button" data-fc-color="purple" class="-fc-swatch -fc-purple" title="紫色">紫</button>
+                    <button type="button" data-fc-color="gray" class="-fc-swatch -fc-gray" title="灰色">灰</button>
+                    <button type="button" class="-fc-option -fc-none" data-fc-none="1" title="移除字体色">无色</button>
+                    <button type="button" class="-fc-option -fc-custom" data-fc-custom="1" title="选择颜色并添加到色板">添加颜色</button>
                   </div>
                 </span>
-                <span class="m0-fmt-sep"></span>
-                <button type="button" id="btn-insert-image" class="m0-fmt-btn" data-insert-image="1" title="插入图片（复制入库 .memoria/images；需先将文本光标置于预览区域）" disabled>图片</button>
+                <span class="-fmt-sep"></span>
+                <button type="button" id="btn-insert-image" class="-fmt-btn" data-insert-image="1" title="插入图片（复制入库 .memoria/images；需先将文本光标置于预览区域）" disabled>图片</button>
               </div>
-              <div id="block-edit-bar" class="m0-block-edit-bar hidden" role="toolbar" aria-label="块编辑工具">
-                <span id="block-edit-label" class="m0-block-edit-label"></span>
-                <span class="m0-block-edit-tools" id="block-edit-tools"></span>
+              <div id="block-edit-bar" class="-block-edit-bar hidden" role="toolbar" aria-label="块编辑工具">
+                <span id="block-edit-label" class="-block-edit-label"></span>
+                <span class="-block-edit-tools" id="block-edit-tools"></span>
               </div>
-              <div class="m0-view-toggle" role="tablist" aria-label="视图模式">
-                <button type="button" class="m0-view-btn active" data-view="source" title="源码">源码</button>
-                <button type="button" class="m0-view-btn" data-view="preview" title="Markdown 预览">预览</button>
-                <button type="button" class="m0-view-btn" data-view="split" title="分栏">分栏</button>
+              <div class="-view-toggle" role="tablist" aria-label="视图模式">
+                <button type="button" class="-view-btn active" data-view="source" title="源码">源码</button>
+                <button type="button" class="-view-btn" data-view="preview" title="Markdown 预览">预览</button>
+                <button type="button" class="-view-btn" data-view="split" title="分栏">分栏</button>
               </div>
-              <div id="edit-mode-toggle" class="m0-toolbar-search-scope edit-mode-toggle" role="switch" tabindex="0" aria-label="编辑模式" title="编辑模式：点击定位光标（再次点击关闭）">
-                <button type="button" id="btn-edit-mode" class="m0-toolbar-search-scope-btn active">编辑</button>
+              <div id="edit-mode-toggle" class="-toolbar-search-scope edit-mode-toggle" role="switch" tabindex="0" aria-label="编辑模式" title="编辑模式：点击定位光标（再次点击关闭）">
+                <button type="button" id="btn-edit-mode" class="-toolbar-search-scope-btn active">编辑</button>
               </div>
             </div>
             <div id="preview-status" class="hidden"></div>
             <div id="editor-split" class="view-source">
-              <div id="editor-pane" class="m0-pane">
-                <div id="editor" class="m0-editor"></div>
+              <div id="editor-pane" class="-pane">
+                <div id="editor" class="-editor"></div>
               </div>
-              <div id="preview-pane" class="m0-pane">
-                <div id="preview" class="m0-preview markdown-body"></div>
+              <div id="preview-pane" class="-pane">
+                <div id="preview" class="-preview markdown-body"></div>
               </div>
             </div>
           </div>
@@ -205,136 +205,136 @@
       <span id="status-info">就绪</span>
       <span id="status-stats"></span>
     </div>
-    <div id="m0-flash-host" aria-live="polite"></div>
+    <div id="-flash-host" aria-live="polite"></div>
   </div>
 
-  <div id="kp-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-tabbed" id="kp-modal-box">
-      <div class="m0-modal-header">
+  <div id="kp-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-tabbed" id="kp-modal-box">
+      <div class="-modal-header">
         <span id="kp-title">知识点配置</span>
-        <button id="kp-close" class="m0-icon-btn" title="关闭">×</button>
+        <button id="kp-close" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="kp-body" class="m0-modal-body"></div>
-      <div class="m0-modal-footer m0-kp-modal-footer m0-btn-bar">
-        <button type="button" id="kp-delete" class="m0-btn danger m0-kp-delete-btn">删除知识点</button>
-        <span class="m0-modal-footer-spacer"></span>
-        <button type="button" class="m0-btn secondary" id="kp-cancel">取消</button>
-        <button type="button" class="m0-btn primary" id="kp-save" title="确定">确定</button>
+      <div id="kp-body" class="-modal-body"></div>
+      <div class="-modal-footer -kp-modal-footer -btn-bar">
+        <button type="button" id="kp-delete" class="-btn danger -kp-delete-btn">删除知识点</button>
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn secondary" id="kp-cancel">取消</button>
+        <button type="button" class="-btn primary" id="kp-save" title="确定">确定</button>
       </div>
     </div>
   </div>
 
-  <div id="config-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-tabbed" id="config-modal-box">
-      <div class="m0-modal-header">
+  <div id="config-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-tabbed" id="config-modal-box">
+      <div class="-modal-header">
         <span id="config-title">文件配置</span>
-        <button id="config-close" class="m0-icon-btn" title="关闭">×</button>
+        <button id="config-close" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="config-body" class="m0-modal-body"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="config-close-btn">关闭</button>
+      <div id="config-body" class="-modal-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="config-close-btn">关闭</button>
       </div>
     </div>
   </div>
 
-  <div id="assist-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-assist" id="assist-modal-box">
-      <div class="m0-modal-header">
+  <div id="assist-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-assist" id="assist-modal-box">
+      <div class="-modal-header">
         <span id="assist-title">定位辅助</span>
-        <button id="assist-close" class="m0-icon-btn" title="关闭">×</button>
+        <button id="assist-close" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="assist-body" class="m0-modal-body m0-modal-body-assist"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="assist-cancel">取消</button>
-        <button type="button" class="m0-btn primary" id="assist-confirm">确认</button>
+      <div id="assist-body" class="-modal-body -modal-body-assist"></div>
+      <div class="-modal-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="assist-cancel">取消</button>
+        <button type="button" class="-btn primary" id="assist-confirm">确认</button>
       </div>
     </div>
   </div>
 
-  <div id="check-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-check">
-      <div class="m0-modal-header">
+  <div id="check-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-check">
+      <div class="-modal-header">
         <span>知识库检查</span>
-        <button id="check-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+        <button id="check-close" type="button" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="check-body" class="m0-modal-body m0-check-body"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="check-rerun">重新检查</button>
-        <span class="m0-modal-footer-spacer"></span>
-        <button type="button" class="m0-btn primary" id="check-dismiss">关闭</button>
+      <div id="check-body" class="-modal-body -check-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="check-rerun">重新检查</button>
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn primary" id="check-dismiss">关闭</button>
       </div>
     </div>
   </div>
 
-  <div id="settings-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-settings">
-      <div class="m0-modal-header">
+  <div id="settings-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-settings">
+      <div class="-modal-header">
         <span>设置</span>
-        <button id="settings-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+        <button id="settings-close" type="button" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="settings-tabs" class="m0-settings-tabs-wrap"></div>
-      <div id="settings-body" class="m0-modal-body m0-settings-body"></div>
-      <p id="settings-config-path" class="m0-muted m0-settings-config-path" hidden></p>
-      <div class="m0-modal-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="settings-reset">恢复默认</button>
-        <span class="m0-modal-footer-spacer"></span>
-        <button type="button" class="m0-btn primary" id="settings-dismiss">关闭</button>
+      <div id="settings-tabs" class="-settings-tabs-wrap"></div>
+      <div id="settings-body" class="-modal-body -settings-body"></div>
+      <p id="settings-config-path" class="-muted -settings-config-path" hidden></p>
+      <div class="-modal-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="settings-reset">恢复默认</button>
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn primary" id="settings-dismiss">关闭</button>
       </div>
     </div>
   </div>
 
-  <div id="link-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box">
-      <div class="m0-modal-header">
+  <div id="link-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box">
+      <div class="-modal-header">
         <span id="link-title">选择跳转目标</span>
-        <button id="link-close" class="m0-icon-btn" title="关闭">×</button>
+        <button id="link-close" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="link-body" class="m0-modal-body"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <span id="link-hint" class="m0-muted m0-link-hint"></span>
-        <button type="button" class="m0-btn secondary hidden" id="link-config-view">查看全部链接</button>
-        <button type="button" class="m0-btn secondary" id="link-cancel">取消</button>
-        <button type="button" class="m0-btn primary hidden" id="link-save">保存</button>
-        <button type="button" class="m0-btn primary hidden" id="link-save-jump">保存并跳转</button>
-        <button type="button" class="m0-btn primary" id="link-confirm" disabled>确认跳转</button>
+      <div id="link-body" class="-modal-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <span id="link-hint" class="-muted -link-hint"></span>
+        <button type="button" class="-btn secondary hidden" id="link-config-view">查看全部链接</button>
+        <button type="button" class="-btn secondary" id="link-cancel">取消</button>
+        <button type="button" class="-btn primary hidden" id="link-save">保存</button>
+        <button type="button" class="-btn primary hidden" id="link-save-jump">保存并跳转</button>
+        <button type="button" class="-btn primary" id="link-confirm" disabled>确认跳转</button>
       </div>
     </div>
   </div>
 
-  <div id="import-conflict-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-import-conflict">
-      <div class="m0-modal-header">
+  <div id="import-conflict-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-import-conflict">
+      <div class="-modal-header">
         <span>导入冲突</span>
-        <button id="import-conflict-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+        <button id="import-conflict-close" type="button" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="import-conflict-body" class="m0-modal-body"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="import-conflict-copy-report">复制报告</button>
-        <span class="m0-modal-footer-spacer"></span>
-        <button type="button" class="m0-btn secondary" id="import-conflict-cancel">取消</button>
-        <button type="button" class="m0-btn primary" id="import-conflict-confirm">确认导入</button>
+      <div id="import-conflict-body" class="-modal-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="import-conflict-copy-report">复制报告</button>
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn secondary" id="import-conflict-cancel">取消</button>
+        <button type="button" class="-btn primary" id="import-conflict-confirm">确认导入</button>
       </div>
     </div>
   </div>
 
-  <div id="import-result-modal" class="m0-modal hidden">
-    <div class="m0-modal-backdrop"></div>
-    <div class="m0-modal-box m0-modal-import-result">
-      <div class="m0-modal-header">
+  <div id="import-result-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-import-result">
+      <div class="-modal-header">
         <span>导入结果</span>
-        <button id="import-result-close" type="button" class="m0-icon-btn" title="关闭">×</button>
+        <button id="import-result-close" type="button" class="-icon-btn" title="关闭">×</button>
       </div>
-      <div id="import-result-body" class="m0-modal-body"></div>
-      <div class="m0-modal-footer m0-btn-bar">
-        <span class="m0-modal-footer-spacer"></span>
-        <button type="button" class="m0-btn primary" id="import-result-dismiss">确定</button>
+      <div id="import-result-body" class="-modal-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn primary" id="import-result-dismiss">确定</button>
       </div>
     </div>
   </div>

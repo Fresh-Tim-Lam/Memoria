@@ -560,14 +560,14 @@ window.MemoriaMapper = (function () {
     var doc = _currentDoc;
     if (!doc) return null;
 
-    // 向上查找 m0-src-block
+    // 向上查找 -src-block
     var blockEl = domNode;
-    while (blockEl && !(blockEl.classList && blockEl.classList.contains("m0-src-block"))) {
+    while (blockEl && !(blockEl.classList && blockEl.classList.contains("-src-block"))) {
       blockEl = blockEl.parentElement;
     }
     if (!blockEl) return null;
 
-    var blockIndex = parseInt(blockEl.getAttribute("data-m0-block-index"), 10);
+    var blockIndex = parseInt(blockEl.getAttribute("data--block-index"), 10);
     if (isNaN(blockIndex) || blockIndex >= doc.blocks.length) return null;
 
     var block = doc.blocks[blockIndex];
@@ -687,7 +687,7 @@ window.MemoriaMapper = (function () {
     collectTextNodes(blockEl, textNodes);
 
     // 计算光标对应的「渲染文本偏移」。domNode 可能是文本节点（直接命中），
-    // 也可能是元素节点（选区边界停在元素上，如 span.m0-hl 的 offset=0 /
+    // 也可能是元素节点（选区边界停在元素上，如 span.-hl 的 offset=0 /
     // offset=子节点数）。元素节点必须按「元素之前的文本长度 + 元素内部前
     // offset 个子节点的文本长度」计算，否则会累加成整块总长，导致跨样式
     // 边界选区的样式应用错位甚至失败（颜色完全没变）。
@@ -782,7 +782,7 @@ window.MemoriaMapper = (function () {
     var doc = _currentDoc;
     if (!doc) return null;
 
-    var blockEl = document.querySelector('.m0-src-block[data-m0-block-index="' + blockIndex + '"]');
+    var blockEl = document.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
     if (!blockEl) return null;
 
     var block = doc.blocks[blockIndex];
@@ -951,14 +951,14 @@ window.MemoriaMapper = (function () {
 
   /**
    * 判断 DOM 元素是否为「原子块」（内容不可逐字编辑/定位）：
-   * contentEditable=false 元素；或 MathJax 可能把 .m0-math 重建成的 mjx-container
-   * （带 data-m0-inline-math 标记）；或渲染器生成的 .m0-math span。
+   * contentEditable=false 元素；或 MathJax 可能把 .-math 重建成的 mjx-container
+   * （带 data--inline-math 标记）；或渲染器生成的 .-math span。
    */
   function _isAtomElement(el) {
     if (!el || el.nodeType !== 1) return false;
     if (el.contentEditable === "false") return true;
-    if (el.classList && el.classList.contains("m0-math")) return true;
-    if (el.hasAttribute && el.hasAttribute("data-m0-inline-math")) return true;
+    if (el.classList && el.classList.contains("-math")) return true;
+    if (el.hasAttribute && el.hasAttribute("data--inline-math")) return true;
     return false;
   }
 
@@ -1022,17 +1022,17 @@ window.MemoriaMapper = (function () {
   }
 
   /**
-   * 文本节点的最近 m0-math 祖先（公式原子块），无则返回 null。
-   * MathJax 会把 .m0-math 内部的 $...$ 二次渲染成 CHTML mjx 结构，
+   * 文本节点的最近 -math 祖先（公式原子块），无则返回 null。
+   * MathJax 会把 .-math 内部的 $...$ 二次渲染成 CHTML mjx 结构，
    * 内部产生多个文本节点；这些节点不能逐个计入渲染偏移，必须跳过。
    */
   function nearestMathAncestor(tn) {
     if (!tn) return null;
     var p = tn.parentElement;
     while (p && p.nodeType === 1) {
-      if (p.classList && p.classList.contains("m0-math")) return p;
-      // MathJax typeset 后 .m0-math span 可能被替换为带 data-m0-inline-math 的 mjx-container
-      if (p.hasAttribute && p.hasAttribute("data-m0-inline-math")) return p;
+      if (p.classList && p.classList.contains("-math")) return p;
+      // MathJax typeset 后 .-math span 可能被替换为带 data--inline-math 的 mjx-container
+      if (p.hasAttribute && p.hasAttribute("data--inline-math")) return p;
       p = p.parentElement;
     }
     return null;

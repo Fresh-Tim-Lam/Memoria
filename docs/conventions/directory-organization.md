@@ -6,6 +6,8 @@
 
 ## 1. 顶层目录职责总表
 
+> 每个一级目录顶部都有 `README.md` 说明职责——进入任何目录前先读其 README。
+
 | 路径 | 职责 | 可否放临时文件 |
 |------|------|:---:|
 | `src/` | 源码（Python + UI 静态资源） | ❌ |
@@ -13,13 +15,15 @@
 | `docs/` | 文档（规范/设计/交接/示例知识库） | ⚠️ 仅 `docs/tmp/` |
 | `scripts/` | **正式可复用**的开发者工具（启动/基准/数据生成） | ❌ |
 | `packaging/` | 打包发布脚本与配置（唯一入口 `build_release.cmd`） | ❌ |
-| `artifacts/` | **临时产物/垃圾区**（已被 gitignore） | ✅ 唯一指定处 |
 | `resources/` | 应用图标等资源 | ❌ |
 | `benchmarks/` | 检索评估数据与结果 | ❌ |
-| `_archive/` | 历史版本/废弃代码归档 | ❌ |
+| `config/` | 程序配置（`ui-settings.json`，用户本机设置，gitignore） | ❌ |
+| `artifacts/` | **临时产物/垃圾区**（已被 gitignore） | ✅ 唯一指定处 |
+| `logs/` | 开发调试日志（已被 gitignore，规范见 logging.md） | ✅ |
+| `build/` | PyInstaller 构建中间产物（已被 gitignore） | ❌ |
 | `Package/` | 构建发布产物（`Memoria.exe` + `lib/`） | ❌（构建生成，gitignore） |
 | `.venv/` | 虚拟环境 | ❌ |
-| 仓库根目录 | 仅允许：`README.md`、`LICENSE`、`pyproject.toml`、`requirements.txt`、`app.py`、`.gitignore`、`.gitattributes` 等**顶层配置** | ❌ |
+| 仓库根目录 | 仅允许：`README.md`、`AGENT.md`、`LICENSE`、`pyproject.toml`、`requirements.txt`、`app.py`、`.gitignore`、`.gitattributes` 等**顶层配置** | ❌ |
 
 ## 2. 临时文件规则（本规范最重要的一条）
 

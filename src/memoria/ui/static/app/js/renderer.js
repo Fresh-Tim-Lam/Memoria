@@ -27,7 +27,7 @@ window.MemoriaRenderer = (function () {
    */
   function render(doc) {
     var container = document.createElement("div");
-    container.className = "m0-preview-content";
+    container.className = "-preview-content";
 
     if (!doc || !doc.blocks) return container;
 
@@ -51,15 +51,15 @@ window.MemoriaRenderer = (function () {
     switch (block.type) {
       case T.BLANK_LINE:
         el = document.createElement("div");
-        el.className = "m0-src-block m0-blank-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -blank-block";
+        el.setAttribute("data--block-index", blockIndex);
         el.innerHTML = "<br>";
         return el;
 
       case T.HEADING:
         el = document.createElement("h" + block.level);
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         renderInlineList(block.children, el);
         // 空标题补 <br> 占位，否则零高度无法放置光标，输入会漂移到下一块
         if (!block.children || block.children.length === 0) el.innerHTML = "<br>";
@@ -67,8 +67,8 @@ window.MemoriaRenderer = (function () {
 
       case T.PARAGRAPH:
         el = document.createElement("p");
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         renderInlineList(block.children, el);
         // 空段落同样补 <br> 占位
         if (!block.children || block.children.length === 0) el.innerHTML = "<br>";
@@ -76,8 +76,8 @@ window.MemoriaRenderer = (function () {
 
       case T.CODE_BLOCK:
         el = document.createElement("pre");
-        el.className = "m0-src-block m0-code-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -code-block";
+        el.setAttribute("data--block-index", blockIndex);
         var codeEl = document.createElement("code");
         if (block.lang) codeEl.className = "language-" + block.lang;
         codeEl.textContent = block.code;
@@ -86,19 +86,19 @@ window.MemoriaRenderer = (function () {
 
       case T.MATH_BLOCK:
         el = document.createElement("div");
-        el.className = "m0-src-block m0-math-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -math-block";
+        el.setAttribute("data--block-index", blockIndex);
         el.textContent = "$$" + block.formula + "$$";
         return el;
 
       case T.IMAGE:
         el = document.createElement("p");
-        el.className = "m0-src-block m0-image-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -image-block";
+        el.setAttribute("data--block-index", blockIndex);
         var img = document.createElement("img");
         img.src = block.url;
         img.alt = block.alt;
-        img.className = "m0-preview-image";
+        img.className = "-preview-image";
         if (block.title) img.title = block.title;
         // 阶段 E 属性渲染：width/height → 内联样式；align → 容器对齐 class
         // 阶段 G 属性：name-size（名称字号）/ name=hide（隐藏名称）
@@ -113,7 +113,7 @@ window.MemoriaRenderer = (function () {
             } else if (_ak === "align") {
               var a = block.attrs.align;
               if (a === "center" || a === "left" || a === "right") {
-                el.classList.add("m0-image-align-" + a);
+                el.classList.add("-image-align-" + a);
               }
             } else if (_ak !== "name-size" && _ak !== "name") {
               console.warn("[img-attrs] 未知图片属性 key=" + _ak + "（已忽略），支持 width/height/align/name-size/name");
@@ -123,8 +123,8 @@ window.MemoriaRenderer = (function () {
         el.appendChild(img);
         // 图片名称（alt）显示在图片下方（阶段 G）
         var cap = document.createElement("span");
-        cap.className = "m0-image-caption";
-        cap.setAttribute("data-m0-image-caption", "1");
+        cap.className = "-image-caption";
+        cap.setAttribute("data--image-caption", "1");
         cap.textContent = block.alt || "";
         if (block.attrs) {
           var ns = block.attrs["name-size"];
@@ -139,16 +139,16 @@ window.MemoriaRenderer = (function () {
 
       case T.HORIZONTAL_RULE:
         el = document.createElement("hr");
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         return el;
 
       case T.BLOCKQUOTE:
         el = document.createElement("blockquote");
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         if (block.children) {
-          // 内层段落渲染为普通 <p>（不带 m0-src-block / block-index），
+          // 内层段落渲染为普通 <p>（不带 -src-block / block-index），
           // 否则 domToAst 会定位到内层段落且多段落索引相同，导致映射错乱
           for (var qi = 0; qi < block.children.length; qi++) {
             var inner = block.children[qi];
@@ -164,8 +164,8 @@ window.MemoriaRenderer = (function () {
 
       case T.LIST:
         el = document.createElement(block.ordered ? "ol" : "ul");
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         if (block.items) {
           for (var li = 0; li < block.items.length; li++) {
             var liEl = document.createElement("li");
@@ -179,8 +179,8 @@ window.MemoriaRenderer = (function () {
 
       case T.TABLE:
         el = document.createElement("table");
-        el.className = "m0-src-block m0-table";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -table";
+        el.setAttribute("data--block-index", blockIndex);
         if (block.header) {
           var thead = document.createElement("thead");
           var tr = document.createElement("tr");
@@ -209,15 +209,15 @@ window.MemoriaRenderer = (function () {
 
       case T.FRONTMATTER:
         el = document.createElement("pre");
-        el.className = "m0-src-block m0-frontmatter";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -frontmatter";
+        el.setAttribute("data--block-index", blockIndex);
         el.textContent = block.yaml;
         return el;
 
       case T.MERMAID:
         el = document.createElement("pre");
-        el.className = "m0-src-block m0-mermaid";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block -mermaid";
+        el.setAttribute("data--block-index", blockIndex);
         var mc = document.createElement("code");
         mc.className = "language-mermaid";
         mc.textContent = block.code;
@@ -226,8 +226,8 @@ window.MemoriaRenderer = (function () {
 
       default:
         el = document.createElement("div");
-        el.className = "m0-src-block";
-        el.setAttribute("data-m0-block-index", blockIndex);
+        el.className = "-src-block";
+        el.setAttribute("data--block-index", blockIndex);
         return el;
     }
   }
@@ -309,9 +309,9 @@ window.MemoriaRenderer = (function () {
 
       case T.HIGHLIGHT:
         var hlEl = document.createElement("span");
-        hlEl.className = "m0-hl";
+        hlEl.className = "-hl";
         hlEl.style.backgroundColor = _hlColorHex(node.color || "yellow");
-        if (node.color && _hlColorMap[node.color]) hlEl.className += " m0-hl-" + node.color;
+        if (node.color && _hlColorMap[node.color]) hlEl.className += " -hl-" + node.color;
         if (node.fgColor) hlEl.style.color = _fcColorHex(node.fgColor);
         renderInlineList(node.children, hlEl);
         return hlEl;
@@ -358,8 +358,8 @@ window.MemoriaRenderer = (function () {
 
       case T.WIKI_LINK:
         var wlEl = document.createElement("a");
-        wlEl.className = "m0-wikilink";
-        wlEl.setAttribute("data-m0-target", node.target);
+        wlEl.className = "-wikilink";
+        wlEl.setAttribute("data--target", node.target);
         wlEl.textContent = node.display || node.target;
         wlEl.contentEditable = "false";
         return wlEl;
@@ -377,7 +377,7 @@ window.MemoriaRenderer = (function () {
         var imgEl = document.createElement("img");
         imgEl.src = node.url;
         imgEl.alt = node.alt;
-        imgEl.className = "m0-preview-image";
+        imgEl.className = "-preview-image";
         if (node.title) imgEl.title = node.title;
         if (node.attrs) {
           for (var _ik in node.attrs) {
@@ -394,7 +394,7 @@ window.MemoriaRenderer = (function () {
 
       case T.MATH_INLINE:
         var mEl = document.createElement("span");
-        mEl.className = "m0-math";
+        mEl.className = "-math";
         mEl.contentEditable = "false";
         mEl.setAttribute("data-formula", node.formula);
         mEl.textContent = "$" + node.formula + "$";
@@ -418,11 +418,11 @@ window.MemoriaRenderer = (function () {
   function renderRange(doc, startBlock, endBlock, container) {
     if (!doc || !doc.blocks || !container) return;
 
-    // 获取旧 block 元素（container 应为 block 的直接父级，如 .m0-preview-content）
-    var oldBlocks = container.querySelectorAll(".m0-src-block");
+    // 获取旧 block 元素（container 应为 block 的直接父级，如 .-preview-content）
+    var oldBlocks = container.querySelectorAll(".-src-block");
     var targetIndices = [];
     for (var i = 0; i < oldBlocks.length; i++) {
-      var idx = parseInt(oldBlocks[i].getAttribute("data-m0-block-index"), 10);
+      var idx = parseInt(oldBlocks[i].getAttribute("data--block-index"), 10);
       if (idx >= startBlock && idx < endBlock) {
         targetIndices.push(i);
       }

@@ -135,7 +135,7 @@
       this.layout = layout;
       this.opts = { ...DEFAULTS, ...options };
       this.canvas = document.createElement("canvas");
-      this.canvas.className = "m0-graph-canvas";
+      this.canvas.className = "-graph-canvas";
       this.ctx = this.canvas.getContext("2d");
       container.innerHTML = "";
       container.appendChild(this.canvas);

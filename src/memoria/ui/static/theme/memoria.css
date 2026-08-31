@@ -90,7 +90,7 @@ body {
     background: var(--bg-hover);
     color: var(--text-bright);
 }
-.m0-titlebar-drag-spacer {
+.-titlebar-drag-spacer {
     flex: 1 1 0;
     min-width: 8px;
     height: 35px;
@@ -228,7 +228,7 @@ body {
     -webkit-app-region: drag;
     cursor: default;
 }
-.m0-kb-exit {
+.-kb-exit {
     flex-shrink: 0;
     background: var(--theme-color) !important;
     border: 1px solid var(--theme-color) !important;
@@ -238,7 +238,7 @@ body {
     height: 24px !important;
     font-size: 11px !important;
 }
-.m0-kb-exit:hover {
+.-kb-exit:hover {
     background: var(--accent-hover) !important;
     border-color: var(--accent-hover) !important;
     color: #fff !important;

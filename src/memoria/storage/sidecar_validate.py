@@ -1,4 +1,4 @@
-"""侧车 M0 校验：写入前拒绝、加载时报告 warnings。"""
+"""侧车校验：写入前拒绝、加载时报告 warnings。"""
 
 from __future__ import annotations
 

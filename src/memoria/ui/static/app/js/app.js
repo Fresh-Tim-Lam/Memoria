@@ -16,7 +16,7 @@
     doc: null,
     activeKpId: null,
     assist: null,
-    viewMode: localStorage.getItem("m0-view") || "source",
+    viewMode: localStorage.getItem("-view") || "source",
     previewToken: 0,
     assistPreviewTimer: null,
     assistScrollFocus: "start",
@@ -29,7 +29,7 @@
     configTab: "kp",
     configModalOpts: {},
     kpPanel: null,
-    sidebarTab: localStorage.getItem("m0-sidebar-tab") || "files",
+    sidebarTab: localStorage.getItem("-sidebar-tab") || "files",
     treeExpanded: null,
     graphEngine: null,
     graphLayout2d: null,
@@ -41,9 +41,9 @@
     _editorLinkHoverLine: 0,
     graphData: null,
     graphAudit: null,
-    graphGroupId: localStorage.getItem("m0-graph-group") || "all",
+    graphGroupId: localStorage.getItem("-graph-group") || "all",
     kbValidateReport: null,
-    toolbarSearchScope: localStorage.getItem("m0-search-scope") || "kb",
+    toolbarSearchScope: localStorage.getItem("-search-scope") || "kb",
     toolbarSearchResults: [],
     kbPending: null,
     lastFileStats: "",
@@ -75,8 +75,8 @@
   function collectEditorBody() {
     const editor = $("#editor");
     if (!editor) { syncLog("collectEditorBody: editor DOM 不存在"); return null; }
-    const lines = [...editor.querySelectorAll(".m0-line-content")];
-    if (!lines.length) { syncLog("collectEditorBody: 无 .m0-line-content 行"); return null; }
+    const lines = [...editor.querySelectorAll(".-line-content")];
+    if (!lines.length) { syncLog("collectEditorBody: 无 .-line-content 行"); return null; }
     const body = lines.map((el) => el.textContent ?? "").join("\n");
     syncLog("collectEditorBody: 收集到", lines.length, "行, 总长度", body.length);
     return body;
@@ -162,10 +162,10 @@
     if (err === 0 && warn === 0) return "";
     const parts = ["检查"];
     if (err > 0) {
-      parts.push(`<span class="m0-stat-error">${err} 错误</span>`);
+      parts.push(`<span class="-stat-error">${err} 错误</span>`);
     }
     if (warn > 0) {
-      parts.push(`<span class="m0-stat-warn">${warn} 警告</span>`);
+      parts.push(`<span class="-stat-warn">${warn} 警告</span>`);
     }
     return parts.join(" · ");
   }
@@ -180,7 +180,7 @@
     const err = vr?.errors || 0;
     const warn = vr?.warnings || 0;
     const total = err + warn;
-    badge.classList.remove("m0-toolbar-badge--error", "m0-toolbar-badge--warn", "hidden");
+    badge.classList.remove("-toolbar-badge--error", "-toolbar-badge--warn", "hidden");
     if (total <= 0) {
       badge.textContent = "";
       badge.classList.add("hidden");
@@ -191,10 +191,10 @@
     badge.textContent = String(total > 99 ? "99+" : total);
     badge.removeAttribute("aria-hidden");
     if (err > 0) {
-      badge.classList.add("m0-toolbar-badge--error");
+      badge.classList.add("-toolbar-badge--error");
       badge.title = warn > 0 ? `${err} 错误 · ${warn} 警告` : `${err} 错误`;
     } else {
-      badge.classList.add("m0-toolbar-badge--warn");
+      badge.classList.add("-toolbar-badge--warn");
       badge.title = `${warn} 警告`;
     }
   }
@@ -202,7 +202,7 @@
   function renderStatusStats() {
     const el = $("#status-stats");
     if (!el) return;
-    el.classList.remove("m0-status-clickable");
+    el.classList.remove("-status-clickable");
     delete el.dataset.graphAuditGoto;
 
     const chunks = [];
@@ -213,13 +213,13 @@
     } else {
       delete el.dataset.kbCheck;
       if (vr?.status === "ok" && state.kbPath && !state.lastFileStats) {
-        chunks.push('<span class="m0-stat-ok">检查通过</span>');
+        chunks.push('<span class="-stat-ok">检查通过</span>');
       }
     }
 
     const gw = vr?.graph_audit?.summary?.warn_count;
     if (gw && !state.lastFileStats) {
-      chunks.push(`<span class="m0-stat-warn">图谱 ${gw} 处待配置</span>`);
+      chunks.push(`<span class="-stat-warn">图谱 ${gw} 处待配置</span>`);
     }
 
     if (state.lastFileStats) {
@@ -231,17 +231,17 @@
     if (fileWarns.length) {
       const first = fileWarns[0];
       chunks.push(
-        `<span class="m0-stat-warn">图谱建边 ${fileWarns.length} 处 · ${esc(basename(first.file))} · 点击定位</span>`
+        `<span class="-stat-warn">图谱建边 ${fileWarns.length} 处 · ${esc(basename(first.file))} · 点击定位</span>`
       );
-      el.classList.add("m0-status-clickable");
+      el.classList.add("-status-clickable");
       el.dataset.graphAuditGoto = "1";
     } else if (kbWarns.length) {
       const first = kbWarns[0];
       const fileCount = new Set(kbWarns.map((w) => normRelPath(w.file))).size;
       chunks.push(
-        `<span class="m0-stat-warn">图谱建边 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""} · 点击打开</span>`
+        `<span class="-stat-warn">图谱建边 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""} · 点击打开</span>`
       );
-      el.classList.add("m0-status-clickable");
+      el.classList.add("-status-clickable");
       el.dataset.graphAuditGoto = "1";
     }
 
@@ -266,33 +266,33 @@
   }
 
   function showFlashError(msg, detail, opts = {}) {
-    const host = $("#m0-flash-host");
+    const host = $("#-flash-host");
     if (!host || !msg) return;
     const duration = opts.duration ?? 3800;
     const el = document.createElement("div");
-    el.className = "m0-flash-error";
+    el.className = "-flash-error";
     el.innerHTML =
-      `<div class="m0-flash-error-title">${esc(String(msg))}</div>` +
-      (detail ? `<div class="m0-flash-error-detail">${esc(String(detail))}</div>` : "");
+      `<div class="-flash-error-title">${esc(String(msg))}</div>` +
+      (detail ? `<div class="-flash-error-detail">${esc(String(detail))}</div>` : "");
     host.appendChild(el);
     const fadeMs = 280;
-    const fadeTimer = window.setTimeout(() => el.classList.add("m0-flash-leaving"), duration);
+    const fadeTimer = window.setTimeout(() => el.classList.add("-flash-leaving"), duration);
     const removeTimer = window.setTimeout(() => el.remove(), duration + fadeMs);
-    el._m0FlashTimers = [fadeTimer, removeTimer];
+    el._FlashTimers = [fadeTimer, removeTimer];
   }
 
   function showFlashInfo(msg, opts = {}) {
-    const host = $("#m0-flash-host");
+    const host = $("#-flash-host");
     if (!host || !msg) return;
     const duration = opts.duration ?? 3800;
     const el = document.createElement("div");
-    el.className = "m0-flash-info";
+    el.className = "-flash-info";
     el.textContent = String(msg);
     host.appendChild(el);
     const fadeMs = 280;
-    const fadeTimer = window.setTimeout(() => el.classList.add("m0-flash-leaving"), duration);
+    const fadeTimer = window.setTimeout(() => el.classList.add("-flash-leaving"), duration);
     const removeTimer = window.setTimeout(() => el.remove(), duration + fadeMs);
-    el._m0FlashTimers = [fadeTimer, removeTimer];
+    el._FlashTimers = [fadeTimer, removeTimer];
   }
 
   function setStatusError(msg, detail, opts = {}) {
@@ -599,13 +599,13 @@
   function renderTreeDirNode(node, depth) {
     const expanded = ensureTreeExpandedSet().has(node.path);
     const pad = 4 + depth * 14;
-    let html = `<div class="m0-tree-dir" data-dir="${esc(node.path)}">
-      <div class="m0-tree-dir-head" data-dir-toggle="${esc(node.path)}" style="padding-left:${pad}px">
-        <span class="m0-tree-twisty">${expanded ? "▼" : "▶"}</span>
-        <span class="m0-tree-icon">📁</span>
-        <span class="m0-tree-label">${esc(node.name)}</span>
+    let html = `<div class="-tree-dir" data-dir="${esc(node.path)}">
+      <div class="-tree-dir-head" data-dir-toggle="${esc(node.path)}" style="padding-left:${pad}px">
+        <span class="-tree-twisty">${expanded ? "▼" : "▶"}</span>
+        <span class="-tree-icon">📁</span>
+        <span class="-tree-label">${esc(node.name)}</span>
       </div>
-      <div class="m0-tree-dir-children${expanded ? "" : " collapsed"}">`;
+      <div class="-tree-dir-children${expanded ? "" : " collapsed"}">`;
     html += renderTreeLevel(node, depth + 1);
     html += "</div></div>";
     return html;
@@ -617,9 +617,9 @@
     const icon = f.has_sidecar ? "📄" : "📝";
     const pad = 12 + depth * 14;
     const label = basename(f.path);
-    return `<div class="m0-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" style="padding-left:${pad}px">
-      <span class="m0-tree-icon">${icon}</span>
-      <span class="m0-tree-label">${esc(label)}</span>
+    return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" style="padding-left:${pad}px">
+      <span class="-tree-icon">${icon}</span>
+      <span class="-tree-label">${esc(label)}</span>
     </div>`;
   }
 
@@ -651,7 +651,7 @@
         renderFileTree();
       });
     });
-    el.querySelectorAll(".m0-tree-item").forEach((node) => {
+    el.querySelectorAll(".-tree-item").forEach((node) => {
       node.addEventListener("click", () => navigateToFile(node.dataset.path));
     });
     // 右键菜单（事件委托，属性赋值避免 render 重建重复绑定）：
@@ -659,7 +659,7 @@
     el.oncontextmenu = (e) => {
       const t = e.target;
       if (!t || !t.closest) return;
-      const item = t.closest(".m0-tree-item");
+      const item = t.closest(".-tree-item");
       if (item) {
         e.preventDefault();
         e.stopPropagation();
@@ -669,7 +669,7 @@
         ]);
         return;
       }
-      const dirHead = t.closest(".m0-tree-dir-head");
+      const dirHead = t.closest(".-tree-dir-head");
       if (dirHead) {
         e.preventDefault();
         e.stopPropagation();
@@ -694,7 +694,7 @@
 
   // ── 文件树右键菜单 ──────────────────────────────────────────
 
-  const FT_MENU_ID = "m0-ft-context-menu";
+  const FT_MENU_ID = "-ft-context-menu";
   let _ftMenuBound = false;
 
   function hideTreeContextMenu() {
@@ -705,18 +705,18 @@
     hideTreeContextMenu();
     const menu = document.createElement("div");
     menu.id = FT_MENU_ID;
-    menu.className = "m0-context-menu";
+    menu.className = "-context-menu";
     menu.setAttribute("role", "menu");
     for (const it of items) {
       if (it.divider) {
         const div = document.createElement("div");
-        div.className = "m0-ctx-divider";
+        div.className = "-ctx-divider";
         menu.appendChild(div);
         continue;
       }
       const row = document.createElement("button");
       row.type = "button";
-      row.className = "m0-ctx-item" + (it.danger ? " danger" : "");
+      row.className = "-ctx-item" + (it.danger ? " danger" : "");
       row.setAttribute("role", "menuitem");
       row.textContent = it.label;
       row.addEventListener("click", (e) => {
@@ -751,22 +751,22 @@
     }
   }
 
-  /** 轻量应用内输入弹窗（复用 .m0-modal 样式，避免 pywebview 原生 prompt 系统对话框） */
+  /** 轻量应用内输入弹窗（复用 .-modal 样式，避免 pywebview 原生 prompt 系统对话框） */
   function promptTreeInput(title, placeholder, initial, okLabel, cb) {
     const overlay = document.createElement("div");
-    overlay.className = "m0-modal";
+    overlay.className = "-modal";
     overlay.innerHTML = `
-      <div class="m0-modal-backdrop"></div>
-      <div class="m0-modal-box" style="width:min(360px,92vw)">
-        <div class="m0-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
-        <div class="m0-modal-body">
+      <div class="-modal-backdrop"></div>
+      <div class="-modal-box" style="width:min(360px,92vw)">
+        <div class="-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
+        <div class="-modal-body">
           <input data-role="ft-input" type="text" style="width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid var(--border);background:var(--bg-primary);color:var(--text-primary);border-radius:4px;font-size:12px;outline:none"
             placeholder="${esc(placeholder || "")}" value="${esc(initial || "")}" />
         </div>
-        <div class="m0-modal-footer m0-btn-bar">
-          <span class="m0-modal-footer-spacer"></span>
-          <button type="button" class="m0-btn" data-act="cancel">取消</button>
-          <button type="button" class="m0-btn primary" data-act="ok">${esc(okLabel || "确定")}</button>
+        <div class="-modal-footer -btn-bar">
+          <span class="-modal-footer-spacer"></span>
+          <button type="button" class="-btn" data-act="cancel">取消</button>
+          <button type="button" class="-btn primary" data-act="ok">${esc(okLabel || "确定")}</button>
         </div>
       </div>`;
     document.body.appendChild(overlay);
@@ -775,7 +775,7 @@
       overlay.remove();
       cb(val);
     };
-    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", () => close(null));
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => close(null));
     overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => close(null));
     overlay.querySelector('[data-act="ok"]').addEventListener("click", () => {
       close(input.value.trim() || null);
@@ -794,16 +794,16 @@
   /** 轻量应用内确认弹窗 */
   function confirmTreeAction(title, message, okLabel, cb) {
     const overlay = document.createElement("div");
-    overlay.className = "m0-modal";
+    overlay.className = "-modal";
     overlay.innerHTML = `
-      <div class="m0-modal-backdrop"></div>
-      <div class="m0-modal-box" style="width:min(400px,92vw)">
-        <div class="m0-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
-        <div class="m0-modal-body">${esc(message)}</div>
-        <div class="m0-modal-footer m0-btn-bar">
-          <span class="m0-modal-footer-spacer"></span>
-          <button type="button" class="m0-btn" data-act="cancel">取消</button>
-          <button type="button" class="m0-btn danger" data-act="ok">${esc(okLabel || "确定")}</button>
+      <div class="-modal-backdrop"></div>
+      <div class="-modal-box" style="width:min(400px,92vw)">
+        <div class="-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
+        <div class="-modal-body">${esc(message)}</div>
+        <div class="-modal-footer -btn-bar">
+          <span class="-modal-footer-spacer"></span>
+          <button type="button" class="-btn" data-act="cancel">取消</button>
+          <button type="button" class="-btn danger" data-act="ok">${esc(okLabel || "确定")}</button>
         </div>
       </div>`;
     document.body.appendChild(overlay);
@@ -811,7 +811,7 @@
       overlay.remove();
       if (val) cb();
     };
-    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", () => close(false));
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => close(false));
     overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => close(false));
     overlay.querySelector('[data-act="ok"]').addEventListener("click", () => close(true));
   }
@@ -927,7 +927,7 @@
     const groups = state.graphEngine?.groups?.groups || [];
     if (!groups.some((g) => g.id === state.graphGroupId)) {
       state.graphGroupId = allId;
-      localStorage.setItem("m0-graph-group", allId);
+      localStorage.setItem("-graph-group", allId);
     }
   }
 
@@ -973,7 +973,7 @@
     root.innerHTML = tabs
       .map(
         (t) => `<div class="tab${t.id === activeId ? " active" : ""}" data-graph-group="${escapeAttr(t.id)}" title="${escapeAttr(t.title)}">
-          <span class="tab-label">${escapeHtml(t.label)}</span>${t.count != null ? ` <span class="m0-tab-count">${t.count}</span>` : ""}
+          <span class="tab-label">${escapeHtml(t.label)}</span>${t.count != null ? ` <span class="-tab-count">${t.count}</span>` : ""}
         </div>`
       )
       .join("");
@@ -989,7 +989,7 @@
   function selectGraphGroup(groupId) {
     const allId = window.MemoriaGraphGroups?.ALL_GROUP_ID || "all";
     state.graphGroupId = groupId || allId;
-    localStorage.setItem("m0-graph-group", state.graphGroupId);
+    localStorage.setItem("-graph-group", state.graphGroupId);
     clearGraphKpHover();
     renderGraphGroupTabs();
     applyGraphGroupLayout({ relayout: true });
@@ -1244,22 +1244,22 @@
     const sev = normalizeCheckSeverity(severity);
     const badge =
       sev === "error"
-        ? '<span class="m0-check-badge m0-check-badge--error">错误</span>'
-        : '<span class="m0-check-badge m0-check-badge--warning">警告</span>';
+        ? '<span class="-check-badge -check-badge--error">错误</span>'
+        : '<span class="-check-badge -check-badge--warning">警告</span>';
     const dataAttrs = [
       meta?.kpId ? `data-check-kp="${esc(meta.kpId)}"` : "",
       meta?.line ? `data-check-line="${meta.line}"` : "",
       meta?.kind ? `data-check-kind="${esc(meta.kind)}"` : "",
     ].filter(Boolean).join(" ");
     const openBtn = openPath
-      ? `<button type="button" class="m0-btn secondary m0-check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>打开</button>`
+      ? `<button type="button" class="-btn secondary -check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>打开</button>`
       : "";
     const pathHtml = path
-      ? `<div class="m0-check-item-path">${esc(path)}</div>`
+      ? `<div class="-check-item-path">${esc(path)}</div>`
       : "";
-    return `<div class="m0-check-item m0-check-item--${sev}">
+    return `<div class="-check-item -check-item--${sev}">
       ${badge}
-      <div class="m0-check-item-main">
+      <div class="-check-item-main">
         <div>${esc(message)}</div>
         ${pathHtml}
       </div>
@@ -1283,17 +1283,17 @@
     const body = $("#check-body");
     if (!body) return;
     if (!vr) {
-      body.innerHTML = '<p class="m0-muted">暂无检查结果</p>';
+      body.innerHTML = '<p class="-muted">暂无检查结果</p>';
       return;
     }
     const errN = vr.errors || 0;
     const warnN = vr.warnings || 0;
     const summaryCls =
-      errN > 0 ? "m0-check-summary m0-check-summary--error" : "m0-check-summary";
+      errN > 0 ? "-check-summary -check-summary--error" : "-check-summary";
     let html = `<div class="${summaryCls}">
       已检查 ${vr.files_checked || 0} 个 Markdown 文件 ·
-      ${errN > 0 ? `<strong class="m0-stat-error">${errN}</strong>` : `<strong>${errN}</strong>`} 错误 ·
-      ${warnN > 0 ? `<strong class="m0-stat-warn">${warnN}</strong>` : `<strong>${warnN}</strong>`} 警告
+      ${errN > 0 ? `<strong class="-stat-error">${errN}</strong>` : `<strong>${errN}</strong>`} 错误 ·
+      ${warnN > 0 ? `<strong class="-stat-warn">${warnN}</strong>` : `<strong>${warnN}</strong>`} 警告
     </div>`;
 
     const kbIssues = [
@@ -1306,7 +1306,7 @@
     ];
     const pathMoves = vr.path_moves || [];
     if (kbIssues.length) {
-      html += '<section class="m0-check-section"><h4 class="m0-check-section-title">全库</h4>';
+      html += '<section class="-check-section"><h4 class="-check-section-title">全库</h4>';
       for (const issue of kbIssues) {
         const path = issue.paths?.[0] || "";
         html += checkItemHtml(
@@ -1320,10 +1320,10 @@
     }
 
     if (pathMoves.length) {
-      html += `<section class="m0-check-section"><h4 class="m0-check-section-title">路径变更
-        <button type="button" class="m0-btn secondary m0-btn--sm" id="check-repair-paths">修复路径</button>
+      html += `<section class="-check-section"><h4 class="-check-section-title">路径变更
+        <button type="button" class="-btn secondary -btn--sm" id="check-repair-paths">修复路径</button>
       </h4>`;
-      html += `<p class="m0-muted">检测到文件移动/重命名。请先修复路径（会同步更新元数据、待确认项与文件清单）；在此完成前请勿「更新文件清单」。</p>`;
+      html += `<p class="-muted">检测到文件移动/重命名。请先修复路径（会同步更新元数据、待确认项与文件清单）；在此完成前请勿「更新文件清单」。</p>`;
       for (const m of pathMoves) {
         const hint =
           m.kind === "md_sha256"
@@ -1345,13 +1345,13 @@
       const md = vr.manifest_diff || {};
       const syncBtn =
         manifestIssues.length > 0 && pathMoves.length === 0
-          ? `<button type="button" class="m0-btn secondary m0-btn--sm" id="check-sync-manifest">更新文件清单</button>`
+          ? `<button type="button" class="-btn secondary -btn--sm" id="check-sync-manifest">更新文件清单</button>`
           : "";
-      html += `<section class="m0-check-section"><h4 class="m0-check-section-title">文件清单 ${syncBtn}</h4>`;
+      html += `<section class="-check-section"><h4 class="-check-section-title">文件清单 ${syncBtn}</h4>`;
       if (md.baseline_created) {
-        html += `<p class="m0-muted">首次打开：已建立文件清单（${md.file_count || 0} 个文档）</p>`;
+        html += `<p class="-muted">首次打开：已建立文件清单（${md.file_count || 0} 个文档）</p>`;
       } else if (!manifestIssues.length) {
-        html += `<p class="m0-muted">文件清单与磁盘一致（${md.file_count || 0} 个文档）</p>`;
+        html += `<p class="-muted">文件清单与磁盘一致（${md.file_count || 0} 个文档）</p>`;
       }
       for (const issue of manifestIssues) {
         const path = issue.paths?.[0] || "";
@@ -1366,7 +1366,7 @@
     }
 
     for (const fr of vr.files || []) {
-      html += `<section class="m0-check-section"><h4 class="m0-check-section-title">${esc(fr.path)}</h4>`;
+      html += `<section class="-check-section"><h4 class="-check-section-title">${esc(fr.path)}</h4>`;
       for (const e of fr.errors || []) {
         const meta = _issueMeta(e);
         html += checkItemHtml("error", _issueMessage(e), fr.path, fr.path, meta);
@@ -1382,7 +1382,7 @@
       (f) => (f.issues || []).length
     );
     if (gaFiles.length) {
-      html += '<section class="m0-check-section"><h4 class="m0-check-section-title">图谱建边</h4>';
+      html += '<section class="-check-section"><h4 class="-check-section-title">图谱建边</h4>';
       for (const gf of gaFiles) {
         for (const issue of gf.issues || []) {
           html += checkItemHtml(
@@ -1403,7 +1403,7 @@
       !(vr.files || []).length &&
       !gaFiles.length
     ) {
-      html += '<p class="m0-muted">未发现配置或图谱问题。</p>';
+      html += '<p class="-muted">未发现配置或图谱问题。</p>';
     }
     body.innerHTML = html;
     body.querySelector("#check-sync-manifest")?.addEventListener("click", async () => {
@@ -1599,9 +1599,9 @@
       sel.anchorNode.nodeType === Node.TEXT_NODE
         ? sel.anchorNode.parentElement
         : sel.anchorNode;
-    const block = node && node.closest ? node.closest(".m0-src-block") : null;
+    const block = node && node.closest ? node.closest(".-src-block") : null;
     if (!block || !preview.contains(block)) return 0;
-    return +(block.getAttribute("data-m0-src-line") || 0);
+    return +(block.getAttribute("data--src-line") || 0);
   }
 
   /** 在源码编辑器插入一个独占行（图片须独占一行才渲染），并入撤销栈 */
@@ -1623,21 +1623,21 @@
       if (pLine > 0) baseLine = document.getElementById("line-" + pLine);
     }
     if (!baseLine) {
-      const all = editor.querySelectorAll(".m0-line");
+      const all = editor.querySelectorAll(".-line");
       baseLine = all[all.length - 1] || null;
     }
     _srcPushBefore();
     _srcCoalesceAt = 0;
     const lastNum = baseLine ? +(baseLine.dataset.line || 0) : 0;
     const newLineEl = document.createElement("div");
-    newLineEl.className = "m0-line";
+    newLineEl.className = "-line";
     newLineEl.dataset.line = String(lastNum + 1);
     newLineEl.id = "line-" + (lastNum + 1);
     const lineno = document.createElement("span");
-    lineno.className = "m0-lineno";
+    lineno.className = "-lineno";
     lineno.textContent = String(lastNum + 1);
     const content = document.createElement("span");
-    content.className = "m0-line-content";
+    content.className = "-line-content";
     content.contentEditable = "true";
     content.spellcheck = false;
     content.tabIndex = -1;
@@ -1737,26 +1737,26 @@
   async function openImageManager() {
     closeImgMgr();
     const overlay = document.createElement("div");
-    overlay.className = "m0-modal";
-    overlay.id = "m0-image-manager";
+    overlay.className = "-modal";
+    overlay.id = "-image-manager";
     overlay.innerHTML = `
-      <div class="m0-modal-backdrop"></div>
-      <div class="m0-modal-box m0-image-mgr-box">
-        <div class="m0-modal-header">
+      <div class="-modal-backdrop"></div>
+      <div class="-modal-box -image-mgr-box">
+        <div class="-modal-header">
           <span>图片管理</span>
-          <span class="m0-image-mgr-close" data-act="close" title="关闭">✕</span>
+          <span class="-image-mgr-close" data-act="close" title="关闭">✕</span>
         </div>
-        <div class="m0-image-mgr-toolbar">
-          <span class="m0-image-mgr-stat" id="imgr-stat">加载中…</span>
-          <button type="button" class="m0-btn" data-act="refresh">刷新</button>
-          <button type="button" class="m0-btn" data-act="diagnose">检查异常引用</button>
-          <button type="button" class="m0-btn danger" data-act="cleanup">清理未使用图片</button>
+        <div class="-image-mgr-toolbar">
+          <span class="-image-mgr-stat" id="imgr-stat">加载中…</span>
+          <button type="button" class="-btn" data-act="refresh">刷新</button>
+          <button type="button" class="-btn" data-act="diagnose">检查异常引用</button>
+          <button type="button" class="-btn danger" data-act="cleanup">清理未使用图片</button>
         </div>
-        <div class="m0-image-mgr-grid" id="imgr-grid"></div>
+        <div class="-image-mgr-grid" id="imgr-grid"></div>
       </div>`;
     document.body.appendChild(overlay);
     _imgMgrOverlay = overlay;
-    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", closeImgMgr);
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", closeImgMgr);
     overlay.querySelector('[data-act="close"]').addEventListener("click", closeImgMgr);
     overlay.querySelector('[data-act="refresh"]').addEventListener("click", renderImageList);
     overlay.querySelector('[data-act="diagnose"]').addEventListener("click", diagnoseImageRefs);
@@ -1782,31 +1782,31 @@
     const unreg = res.unregistered || [];
     const missing = res.missing || [];
     const overlay = document.createElement("div");
-    overlay.className = "m0-modal";
-    overlay.id = "m0-img-diagnose";
+    overlay.className = "-modal";
+    overlay.id = "-img-diagnose";
     let html = `
-      <div class="m0-modal-backdrop"></div>
-      <div class="m0-modal-box m0-img-diag-box">
-        <div class="m0-modal-header">
+      <div class="-modal-backdrop"></div>
+      <div class="-modal-box -img-diag-box">
+        <div class="-modal-header">
           <span>检查异常图片引用</span>
-          <span class="m0-image-mgr-close" data-act="close" title="关闭">✕</span>
+          <span class="-image-mgr-close" data-act="close" title="关闭">✕</span>
         </div>`;
     if (!unreg.length && !missing.length) {
-      html += `<div class="m0-img-diag-body"><div class="m0-img-diag-ok">未发现异常引用</div></div></div>`;
+      html += `<div class="-img-diag-body"><div class="-img-diag-ok">未发现异常引用</div></div></div>`;
     } else {
       if (unreg.length) {
-        html += `<div class="m0-img-diag-body">
-          <div class="m0-img-diag-title">已引用但未注册（${unreg.length}）—— 文件名含空格/中文且未用尖括号包裹，保存时会被误判为未使用而删除</div>
-          <ul class="m0-img-diag-list">` +
+        html += `<div class="-img-diag-body">
+          <div class="-img-diag-title">已引用但未注册（${unreg.length}）—— 文件名含空格/中文且未用尖括号包裹，保存时会被误判为未使用而删除</div>
+          <ul class="-img-diag-list">` +
           unreg.map((u) => `<li><code>${esc(u.src)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）${u.exists ? "" : " ⚠ 文件已缺失，需重新放入 images"}</span></li>`).join("") +
           `</ul>
-          <button type="button" class="m0-btn" data-act="fix">一键修复为尖括号格式</button>
+          <button type="button" class="-btn" data-act="fix">一键修复为尖括号格式</button>
         </div>`;
       }
       if (missing.length) {
-        html += `<div class="m0-img-diag-body">
-          <div class="m0-img-diag-title">引用格式正常但文件缺失（${missing.length}）</div>
-          <ul class="m0-img-diag-list">` +
+        html += `<div class="-img-diag-body">
+          <div class="-img-diag-title">引用格式正常但文件缺失（${missing.length}）</div>
+          <ul class="-img-diag-list">` +
           missing.map((u) => `<li><code>${esc(u.url)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）文件不存在</span></li>`).join("") +
           `</ul></div>`;
       }
@@ -1814,7 +1814,7 @@
     }
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
-    overlay.querySelector(".m0-modal-backdrop").addEventListener("click", () => overlay.remove());
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => overlay.remove());
     overlay.querySelector('[data-act="close"]').addEventListener("click", () => overlay.remove());
     const fixBtn = overlay.querySelector('[data-act="fix"]');
     if (fixBtn) {
@@ -1835,32 +1835,32 @@
     const grid = $("#imgr-grid");
     const stat = $("#imgr-stat");
     if (!grid || !stat) return;
-    grid.innerHTML = '<div class="m0-image-mgr-empty">加载中…</div>';
+    grid.innerHTML = '<div class="-image-mgr-empty">加载中…</div>';
     const res = await call("list_images");
     const imgs = (res && res.images) || [];
     const used = imgs.filter((x) => x.referenced).length;
     stat.textContent = `共 ${imgs.length} 张图片 · 已引用 ${used} · 未使用 ${imgs.length - used}`;
     if (!imgs.length) {
-      grid.innerHTML = '<div class="m0-image-mgr-empty">知识库暂无图片资产</div>';
+      grid.innerHTML = '<div class="-image-mgr-empty">知识库暂无图片资产</div>';
       return;
     }
     let html = "";
     for (const im of imgs) {
       const refs = im.referencedBy || [];
       const tag = im.referenced
-        ? `<span class="m0-img-tag m0-img-tag-used">已引用 ${refs.length}</span>`
-        : `<span class="m0-img-tag m0-img-tag-unused">未使用</span>`;
+        ? `<span class="-img-tag -img-tag-used">已引用 ${refs.length}</span>`
+        : `<span class="-img-tag -img-tag-unused">未使用</span>`;
       const refTxt = im.referenced ? "被 " + refs.join("、") + " 引用" : "未被任何文档引用";
-      html += `<div class="m0-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
-        <img class="m0-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
-        <div class="m0-image-card-info">
-          <div class="m0-image-card-name" title="${esc(im.name)}">${esc(im.name)}${tag}</div>
-          <div class="m0-image-card-meta">${fmtImageSize(im.size || 0)}</div>
-          <div class="m0-image-card-refs" title="${esc(refTxt)}">${esc(refTxt)}</div>
+      html += `<div class="-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
+        <img class="-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
+        <div class="-image-card-info">
+          <div class="-image-card-name" title="${esc(im.name)}">${esc(im.name)}${tag}</div>
+          <div class="-image-card-meta">${fmtImageSize(im.size || 0)}</div>
+          <div class="-image-card-refs" title="${esc(refTxt)}">${esc(refTxt)}</div>
         </div>
-        <div class="m0-image-card-actions">
-          <button type="button" class="m0-btn" data-act="insert">插入</button>
-          <button type="button" class="m0-btn danger" data-act="delete">删除</button>
+        <div class="-image-card-actions">
+          <button type="button" class="-btn" data-act="insert">插入</button>
+          <button type="button" class="-btn danger" data-act="delete">删除</button>
         </div>
       </div>`;
     }
@@ -1869,7 +1869,7 @@
 
   function onImageCardAction(e) {
     const btn = e.target.closest("button[data-act]");
-    const card = e.target.closest(".m0-image-card");
+    const card = e.target.closest(".-image-card");
     if (!btn || !card) return;
     const rel = card.dataset.rel;
     const name = card.dataset.name;
@@ -2047,32 +2047,32 @@
     if (!body) return;
     const conflicts = scanResult.conflicts || [];
     let html = "";
-    html += `<div class="m0-import-scan-summary">`;
+    html += `<div class="-import-scan-summary">`;
     html += `<p>共 <strong>${esc(String(scanResult.total_files || 0))}</strong> 个文件，`;
     html += `<strong>${esc(String(scanResult.total_sections || 0))}</strong> 个段落，`;
     html += `<strong>${esc(String(scanResult.total_kp_declarations || 0))}</strong> 个 KP 声明。</p>`;
-    html += `<p class="m0-stat-error">检测到 <strong>${esc(String(conflicts.length))}</strong> 处 KP id 冲突：</p>`;
+    html += `<p class="-stat-error">检测到 <strong>${esc(String(conflicts.length))}</strong> 处 KP id 冲突：</p>`;
     html += `</div>`;
-    html += `<div class="m0-import-conflict-report">`;
-    html += `<textarea id="import-conflict-report-text" class="m0-import-report-textarea" readonly rows="4">${esc(scanResult.conflict_report || "")}</textarea>`;
+    html += `<div class="-import-conflict-report">`;
+    html += `<textarea id="import-conflict-report-text" class="-import-report-textarea" readonly rows="4">${esc(scanResult.conflict_report || "")}</textarea>`;
     html += `</div>`;
-    html += `<div class="m0-import-conflict-list">`;
+    html += `<div class="-import-conflict-list">`;
     conflicts.forEach((c, i) => {
       const kpId = esc(c.kp_id || "");
       const source = esc(c.import_source || "");
       const line = c.import_line || 0;
       const existFile = esc(c.existing_file || "");
       const existName = esc(c.existing_name || "");
-      html += `<div class="m0-import-conflict-item" data-conflict-idx="${i}">`;
-      html += `<div class="m0-import-conflict-header">`;
-      html += `<span class="m0-import-conflict-kp-id">${kpId}</span>`;
-      html += `<span class="m0-muted">来源: ${source}:${line} → 已存在: ${existFile} (${existName})</span>`;
+      html += `<div class="-import-conflict-item" data-conflict-idx="${i}">`;
+      html += `<div class="-import-conflict-header">`;
+      html += `<span class="-import-conflict-kp-id">${kpId}</span>`;
+      html += `<span class="-muted">来源: ${source}:${line} → 已存在: ${existFile} (${existName})</span>`;
       html += `</div>`;
-      html += `<div class="m0-import-conflict-resolution">`;
+      html += `<div class="-import-conflict-resolution">`;
       html += `<label><input type="radio" name="import-res-${i}" value="skip" checked> 跳过</label>`;
       html += `<label><input type="radio" name="import-res-${i}" value="overwrite"> 覆盖</label>`;
       html += `<label><input type="radio" name="import-res-${i}" value="rename"> 重命名</label>`;
-      html += `<input type="text" class="m0-import-rename-input hidden" data-conflict-idx="${i}" placeholder="新 KP id">`;
+      html += `<input type="text" class="-import-rename-input hidden" data-conflict-idx="${i}" placeholder="新 KP id">`;
       html += `</div>`;
       html += `</div>`;
     });
@@ -2082,7 +2082,7 @@
     body.querySelectorAll('input[type="radio"]').forEach((radio) => {
       radio.addEventListener("change", (e) => {
         const idx = e.target.name.replace("import-res-", "");
-        const renameInput = body.querySelector(`.m0-import-rename-input[data-conflict-idx="${idx}"]`);
+        const renameInput = body.querySelector(`.-import-rename-input[data-conflict-idx="${idx}"]`);
         if (renameInput) {
           renameInput.classList.toggle("hidden", e.target.value !== "rename");
           if (e.target.value === "rename") renameInput.focus();
@@ -2101,7 +2101,7 @@
       let choice = "skip";
       radios.forEach((r) => { if (r.checked) choice = r.value; });
       if (choice === "rename") {
-        const renameInput = body.querySelector(`.m0-import-rename-input[data-conflict-idx="${i}"]`);
+        const renameInput = body.querySelector(`.-import-rename-input[data-conflict-idx="${i}"]`);
         const newId = (renameInput && renameInput.value.trim()) || c.kp_id;
         resolution[c.kp_id] = "rename:" + newId;
       } else {
@@ -2116,8 +2116,8 @@
     if (!body) return;
     const kp = (result.kp_imported || 0) + (result.kp_overwritten || 0) + (result.kp_renamed || 0);
     let html = "";
-    html += `<div class="m0-import-result-summary">`;
-    html += `<p class="m0-stat-ok">导入成功</p>`;
+    html += `<div class="-import-result-summary">`;
+    html += `<p class="-stat-ok">导入成功</p>`;
     html += `<p>写入 <strong>${esc(String(result.files_written || 0))}</strong> 个文件，`;
     html += `导入 <strong>${esc(String(result.kp_imported || 0))}</strong> 个 KP，`;
     html += `覆盖 <strong>${esc(String(result.kp_overwritten || 0))}</strong> 个，`;
@@ -2125,7 +2125,7 @@
     html += `跳过 <strong>${esc(String(result.kp_skipped || 0))}</strong> 个。</p>`;
     const errors = result.errors || [];
     if (errors.length) {
-      html += `<p class="m0-stat-error">${esc(String(errors.length))} 个错误：</p><ul>`;
+      html += `<p class="-stat-error">${esc(String(errors.length))} 个错误：</p><ul>`;
       errors.forEach((e) => { html += `<li>${esc(String(e))}</li>`; });
       html += `</ul>`;
     }
@@ -2234,22 +2234,22 @@
     const fileWarns = currentFileGraphAuditWarns();
     if (fileWarns.length) {
       const first = fileWarns[0];
-      hint.innerHTML = `<span class="m0-graph-audit-warn">⚠ ${esc(graphAuditHintLabel(first))}：${esc(first.message)}</span>
-        <button type="button" class="m0-btn secondary m0-btn--sm m0-graph-audit-goto">打开文件</button>`;
+      hint.innerHTML = `<span class="-graph-audit-warn">⚠ ${esc(graphAuditHintLabel(first))}：${esc(first.message)}</span>
+        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">打开文件</button>`;
       return;
     }
     const kbWarns = collectKbGraphAuditWarns(state.graphAudit);
     if (kbWarns.length) {
       const first = kbWarns[0];
       const fileCount = new Set(kbWarns.map((w) => normRelPath(w.file))).size;
-      hint.innerHTML = `<span class="m0-graph-audit-warn">⚠ 全库 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""}：${esc(first.message)}</span>
-        <button type="button" class="m0-btn secondary m0-btn--sm m0-graph-audit-goto">打开 ${esc(basename(first.file))}</button>`;
+      hint.innerHTML = `<span class="-graph-audit-warn">⚠ 全库 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""}：${esc(first.message)}</span>
+        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">打开 ${esc(basename(first.file))}</button>`;
       return;
     }
     hint.innerHTML =
       state.sidebarTab === "graph3d"
-        ? '<span class="m0-muted">左键旋转 · 滚轮缩放 · 点击跳转 · 悬停正文链接可高亮</span>'
-        : '<span class="m0-muted">滚轮缩放 · 拖空白平移 · 点击跳转 · 悬停正文链接可高亮</span>';
+        ? '<span class="-muted">左键旋转 · 滚轮缩放 · 点击跳转 · 悬停正文链接可高亮</span>'
+        : '<span class="-muted">滚轮缩放 · 拖空白平移 · 点击跳转 · 悬停正文链接可高亮</span>';
   }
 
   function syncGraphAuditStatusBar(_baseStats) {
@@ -2297,7 +2297,7 @@
 
   function setSidebarTab(tab) {
     state.sidebarTab = tab;
-    localStorage.setItem("m0-sidebar-tab", tab);
+    localStorage.setItem("-sidebar-tab", tab);
     document.querySelectorAll("[data-sidebar-tab]").forEach((btn) => {
       const on = btn.dataset.sidebarTab === tab;
       btn.classList.toggle("active", on);
@@ -2621,9 +2621,9 @@
       .map((line, i) => {
         const n = i + 1;
         const content = esc(line) || "<br>";
-        return `<div class="m0-line" data-line="${n}" id="line-${n}">
-          <span class="m0-lineno">${n}</span>
-          <span class="m0-line-content" contenteditable="true" spellcheck="false" tabindex="-1">${content}</span>
+        return `<div class="-line" data-line="${n}" id="line-${n}">
+          <span class="-lineno">${n}</span>
+          <span class="-line-content" contenteditable="true" spellcheck="false" tabindex="-1">${content}</span>
         </div>`;
       })
       .join("");
@@ -2634,7 +2634,7 @@
     let alreadyRendered = false;
     state.viewMode = mode;
     if (!opts?.skipSave) {
-      localStorage.setItem("m0-view", mode);
+      localStorage.setItem("-view", mode);
     }
     // 页签切换前：将源码编辑器内容同步到内存，刷新两个视图
     if (prevMode !== mode) {
@@ -2665,7 +2665,7 @@
     const split = $("#editor-split");
     split.classList.remove("view-source", "view-preview", "view-split");
     split.classList.add(`view-${mode}`);
-    document.querySelectorAll(".m0-view-btn").forEach((btn) => {
+    document.querySelectorAll(".-view-btn").forEach((btn) => {
       btn.classList.toggle("active", btn.dataset.view === mode);
     });
     // 视图切换后预览区可见性变化，刷新图片插入按钮的可用状态
@@ -2698,7 +2698,7 @@
     const previewPane = $("#preview-pane");
     if ((mode === "source" || mode === "split") && editorPane) {
       const containerTop = editorPane.getBoundingClientRect().top;
-      const lines = editorPane.querySelectorAll(".m0-line");
+      const lines = editorPane.querySelectorAll(".-line");
       for (const line of lines) {
         const r = line.getBoundingClientRect();
         if (r.bottom >= containerTop) {
@@ -2708,11 +2708,11 @@
     }
     if ((mode === "preview" || mode === "split") && previewPane) {
       const containerTop = previewPane.getBoundingClientRect().top;
-      const blocks = previewPane.querySelectorAll("[data-m0-src-line]");
+      const blocks = previewPane.querySelectorAll("[data--src-line]");
       for (const block of blocks) {
         const r = block.getBoundingClientRect();
         if (r.bottom >= containerTop) {
-          return +(block.dataset.m0SrcLine || 0) || null;
+          return +(block.dataset.SrcLine || 0) || null;
         }
       }
     }
@@ -2733,11 +2733,11 @@
       }
     }
     if ((mode === "preview" || mode === "split") && previewPane) {
-      const blocks = [...previewPane.querySelectorAll("[data-m0-src-line]")];
+      const blocks = [...previewPane.querySelectorAll("[data--src-line]")];
       let target = null;
       for (const block of blocks) {
-        const s = +(block.dataset.m0SrcLine || 0);
-        const e = +(block.dataset.m0SrcLineEnd || s);
+        const s = +(block.dataset.SrcLine || 0);
+        const e = +(block.dataset.SrcLineEnd || s);
         if (s <= lineNum && e >= lineNum) { target = block; break; }
         if (s >= lineNum && !target) { target = block; }
       }
@@ -2783,7 +2783,7 @@
   var _blockLineMap = null;  // blockIndex → { startLine, endLine } (0-based)
 
   /**
-   * 给 AST 渲染的 DOM 元素标记 data-m0-src-line
+   * 给 AST 渲染的 DOM 元素标记 data--src-line
    * 直接匹配 sourceLines 和 AST blocks 的消费顺序
    */
   function stampBlockLines(preview, doc) {
@@ -2861,10 +2861,10 @@
       // else: heading / paragraph / image / hr → 1 line
 
       _blockLineMap[blockIdx] = { startLine: srcIdx, endLine: srcIdx + lineCount - 1 };
-      var el = preview.querySelector('.m0-src-block[data-m0-block-index="' + blockIdx + '"]');
+      var el = preview.querySelector('.-src-block[data--block-index="' + blockIdx + '"]');
       if (el) {
-        el.setAttribute("data-m0-src-line", srcIdx + 1);
-        el.setAttribute("data-m0-src-line-end", srcIdx + lineCount);
+        el.setAttribute("data--src-line", srcIdx + 1);
+        el.setAttribute("data--src-line-end", srcIdx + lineCount);
       }
       blockIdx++;
       srcIdx += lineCount;
@@ -2896,13 +2896,13 @@
     const preview = $("#preview");
     hidePreviewStatus();
     if (!P || !R || !M) {
-      preview.innerHTML = '<p class="m0-preview-loading">预览模块未加载</p>';
+      preview.innerHTML = '<p class="-preview-loading">预览模块未加载</p>';
       _renderingPreview = false;
       return;
     }
     const token = ++state.previewToken;
     if (!incremental) {
-      preview.innerHTML = '<p class="m0-preview-loading">渲染中…</p>';
+      preview.innerHTML = '<p class="-preview-loading">渲染中…</p>';
     }
     preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
     try {
@@ -2922,15 +2922,15 @@
       preview.innerHTML = "";
       preview.appendChild(content);
 
-      // 3b. 构建 block→源行映射，给每个 DOM 元素标记 data-m0-src-line
+      // 3b. 构建 block→源行映射，给每个 DOM 元素标记 data--src-line
       stampBlockLines(preview, _doc);
 
       // 4. 存储 blockLineMap 供 Mapper 使用
-      window._m0_blockLineMap = _blockLineMap;
+      window.__blockLineMap = _blockLineMap;
 
       // 4. 禁止特殊元素编辑
       preview.querySelectorAll(
-        'mjx-container, pre, code, table, svg, .m0-mermaid-container, .m0-mermaid-error, .m0-lightbox-overlay'
+        'mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay'
       ).forEach(el => { el.contentEditable = "false"; });
 
       log("F1", "rendered " + _doc.blocks.length + " blocks in " + (performance.now() - t0).toFixed(1) + "ms");
@@ -2950,21 +2950,21 @@
       }
 
       // 7. Mermaid/MathJax 可能创建了新元素，重新设置 contentEditable=false
-      //    直接在 .m0-src-block 容器上设置，确保即使内部内容被替换也保持不可编辑
+      //    直接在 .-src-block 容器上设置，确保即使内部内容被替换也保持不可编辑
       var _nonEditableTypes = { code_block: 1, math_block: 1, mermaid: 1, table: 1, frontmatter: 1 };
-      preview.querySelectorAll('.m0-src-block').forEach(function (blkEl) {
-        var bi = parseInt(blkEl.getAttribute("data-m0-block-index"), 10);
+      preview.querySelectorAll('.-src-block').forEach(function (blkEl) {
+        var bi = parseInt(blkEl.getAttribute("data--block-index"), 10);
         if (!isNaN(bi) && _doc.blocks[bi] && _nonEditableTypes[_doc.blocks[bi].type]) {
           blkEl.contentEditable = "false";
           // 容器内所有子元素也设为不可编辑
-          blkEl.querySelectorAll('pre, code, table, svg, mjx-container, .m0-mermaid-container, .m0-mermaid-error').forEach(function (el) {
+          blkEl.querySelectorAll('pre, code, table, svg, mjx-container, .-mermaid-container, .-mermaid-error').forEach(function (el) {
             el.contentEditable = "false";
           });
         }
       });
 
-      // 8. 标记行内公式 mjx-container — MathJax 会替换 .m0-math span，
-      //    导致 dblclick 无法通过 .m0-math class 找到行内公式。
+      // 8. 标记行内公式 mjx-container — MathJax 会替换 .-math span，
+      //    导致 dblclick 无法通过 .-math class 找到行内公式。
       //    遍历 AST，将 MATH_INLINE 公式按顺序匹配到可编辑 block 内的 mjx-container
       _tagInlineMathContainers(preview, _doc);
 
@@ -2973,7 +2973,7 @@
       showLinkAuditPreviewHint(doc);
     } catch (e) {
       if (token !== state.previewToken) { _renderingPreview = false; return; }
-      preview.innerHTML = `<p class="m0-preview-loading">预览失败: ${esc(String(e))}</p>`;
+      preview.innerHTML = `<p class="-preview-loading">预览失败: ${esc(String(e))}</p>`;
       showPreviewReport({ ok: false, messages: [String(e)] });
     }
     _renderingPreview = false;
@@ -2987,9 +2987,9 @@
 
   /**
    * 标记行内公式的 mjx-container 元素
-   * MathJax typeset 后 .m0-math span 可能被替换，导致 dblclick 无法定位。
+   * MathJax typeset 后 .-math span 可能被替换，导致 dblclick 无法定位。
    * 此函数遍历 AST 中所有 MATH_INLINE 节点，按 block → 顺序匹配 DOM 中的 mjx-container，
-   * 打上 data-m0-inline-math="true" 和 data-formula 属性。
+   * 打上 data--inline-math="true" 和 data-formula 属性。
    */
   function _tagInlineMathContainers(preview, doc) {
     if (!doc || !doc.blocks) return;
@@ -3020,11 +3020,11 @@
       if (_nonEdTypes[block.type]) continue; // 非可编辑 block 中的 MathJax 是 block math
       var formulas = collectFormulas(block);
       if (formulas.length === 0) continue;
-      var blockEl = preview.querySelector('.m0-src-block[data-m0-block-index="' + bi + '"]');
+      var blockEl = preview.querySelector('.-src-block[data--block-index="' + bi + '"]');
       if (!blockEl) continue;
       var mjxEls = blockEl.querySelectorAll('mjx-container');
       for (var mi = 0; mi < mjxEls.length && mi < formulas.length; mi++) {
-        mjxEls[mi].setAttribute("data-m0-inline-math", "true");
+        mjxEls[mi].setAttribute("data--inline-math", "true");
         mjxEls[mi].setAttribute("data-formula", formulas[mi]);
         mjxEls[mi].contentEditable = "false";
       }
@@ -3153,14 +3153,14 @@
     }
     if (!kps.length) {
       el.innerHTML =
-        `<div class="empty">无正式 KP · ${proposals.length} 个标题提议<br><span class="m0-muted">点「配置」→ 待确认</span></div>`;
+        `<div class="empty">无正式 KP · ${proposals.length} 个标题提议<br><span class="-muted">点「配置」→ 待确认</span></div>`;
       return;
     }
 
     el.innerHTML = kps
       .map((kp) => {
         const rr = kp.range_resolved || {};
-        let cls = "m0-kp-item";
+        let cls = "-kp-item";
         if (kp.id === state.activeKpId) cls += " active";
         let meta = kp.id;
         if (rr.ok) {
@@ -3170,16 +3170,16 @@
           meta = errorLabel(rr.error);
         }
         const tags = (kp.tags || [])
-          .map((t) => `<span class="m0-tag">${esc(t)}</span>`)
+          .map((t) => `<span class="-tag">${esc(t)}</span>`)
           .join("");
         return `<div class="${cls}" data-kp="${esc(kp.id)}">
-          <div class="m0-kp-name">${esc(kp.name || kp.id)}</div>
-          <div class="m0-kp-meta"><span>${esc(meta)}</span>${tags}</div>
+          <div class="-kp-name">${esc(kp.name || kp.id)}</div>
+          <div class="-kp-meta"><span>${esc(meta)}</span>${tags}</div>
         </div>`;
       })
       .join("");
 
-    el.querySelectorAll(".m0-kp-item").forEach((node) => {
+    el.querySelectorAll(".-kp-item").forEach((node) => {
       node.addEventListener("click", () => onKpClick(node.dataset.kp));
       node.addEventListener("mouseenter", (e) => {
         if (shouldSuppressHoverHighlight(e)) return;
@@ -3221,23 +3221,23 @@
   function m4SuggestBlockHtml(kind) {
     const kpItems =
       kind === "kp"
-        ? `<div class="m0-suggest-item m0-suggest-placeholder">
-            <span class="m0-suggest-score">87%</span>
-            <span class="m0-suggest-label">policy-gradient</span>
-            <span class="m0-muted">本文件 · 可合并</span>
-            <button type="button" class="m0-btn secondary m0-btn--sm" disabled>合并</button>
+        ? `<div class="-suggest-item -suggest-placeholder">
+            <span class="-suggest-score">87%</span>
+            <span class="-suggest-label">policy-gradient</span>
+            <span class="-muted">本文件 · 可合并</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>合并</button>
           </div>
-          <div class="m0-suggest-item m0-suggest-placeholder">
-            <span class="m0-suggest-score">72%</span>
-            <span class="m0-suggest-label">q-learning</span>
-            <span class="m0-muted">q-learning.md · 跨文件</span>
-            <button type="button" class="m0-btn secondary m0-btn--sm" disabled>创建引用</button>
+          <div class="-suggest-item -suggest-placeholder">
+            <span class="-suggest-score">72%</span>
+            <span class="-suggest-label">q-learning</span>
+            <span class="-muted">q-learning.md · 跨文件</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>创建引用</button>
           </div>`
-        : `<div class="m0-suggest-item m0-suggest-placeholder">
-            <span class="m0-suggest-score">91%</span>
-            <span class="m0-suggest-label">[[q-learning|Q-learning]]</span>
-            <span class="m0-muted">正文 L42 未绑定</span>
-            <button type="button" class="m0-btn secondary m0-btn--sm" disabled>创建路由</button>
+        : `<div class="-suggest-item -suggest-placeholder">
+            <span class="-suggest-score">91%</span>
+            <span class="-suggest-label">[[q-learning|Q-learning]]</span>
+            <span class="-muted">正文 L42 未绑定</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>创建路由</button>
           </div>`;
     const title =
       kind === "kp"
@@ -3247,10 +3247,10 @@
       kind === "kp"
         ? "M4 接入 SearchKernel 后：按 name、tags、description Lexical 精排；近重复合并在此展示。"
         : "M4 接入后：扫描正文 [[…]] 与配置差异；未绑定链接与多目标一并列出。";
-    return `<details class="m0-suggest-block">
+    return `<details class="-suggest-block">
       <summary>${esc(title)}</summary>
-      <p class="m0-config-hint">${esc(hint)}</p>
-      <div class="m0-suggest-list">${kpItems}</div>
+      <p class="-config-hint">${esc(hint)}</p>
+      <div class="-suggest-list">${kpItems}</div>
     </details>`;
   }
 
@@ -3284,11 +3284,11 @@
       { id: "links", label: "链接", count: counts.links },
       { id: "pending", label: "待确认", count: counts.pending },
     ];
-    return `<div class="m0-config-tabs" role="tablist">
+    return `<div class="-config-tabs" role="tablist">
       ${tabs
         .map(
           (t) =>
-            `<button type="button" class="m0-config-tab${activeTab === t.id ? " active" : ""}" data-config-tab="${t.id}" role="tab" aria-selected="${activeTab === t.id}">${esc(t.label)} <span class="m0-tab-count">${t.count}</span></button>`
+            `<button type="button" class="-config-tab${activeTab === t.id ? " active" : ""}" data-config-tab="${t.id}" role="tab" aria-selected="${activeTab === t.id}">${esc(t.label)} <span class="-tab-count">${t.count}</span></button>`
         )
         .join("")}
     </div>`;
@@ -3296,29 +3296,29 @@
 
   function renderConfigKpTab(counts) {
     const { confirmedKps } = counts;
-    let html = `<div class="m0-config-toolbar m0-btn-bar m0-btn-bar--start">
-      <button type="button" class="m0-btn primary m0-btn--sm" data-config-new-kp>新建知识点</button>
-      <span class="m0-muted">空白新建，或在「待确认」Tab 配置标题提议</span>
+    let html = `<div class="-config-toolbar -btn-bar -btn-bar--start">
+      <button type="button" class="-btn primary -btn--sm" data-config-new-kp>新建知识点</button>
+      <span class="-muted">空白新建，或在「待确认」Tab 配置标题提议</span>
     </div>`;
     if (!confirmedKps.length) {
-      html += `<p class="m0-muted">暂无正式知识点 · 在「待确认」Tab 配置并确认提议</p>`;
+      html += `<p class="-muted">暂无正式知识点 · 在「待确认」Tab 配置并确认提议</p>`;
     } else {
       html += confirmedKps
         .map((kp) => {
           const meta = kpRangeMeta(kp);
-          const metaCls = meta.ok ? "m0-muted" : "m0-config-range-warn";
+          const metaCls = meta.ok ? "-muted" : "-config-range-warn";
           const tags = (kp.tags || [])
-            .map((t) => `<span class="m0-tag">${esc(t)}</span>`)
+            .map((t) => `<span class="-tag">${esc(t)}</span>`)
             .join("");
-          return `<div class="m0-config-item">
-            <div class="m0-config-item-main">
-              <span class="m0-config-kp-name">${esc(kp.name || kp.id)}</span>
+          return `<div class="-config-item">
+            <div class="-config-item-main">
+              <span class="-config-kp-name">${esc(kp.name || kp.id)}</span>
               <span class="${metaCls}">${esc(meta.text)}</span>
               ${tags}
             </div>
-            <div class="m0-config-item-actions">
-              <button type="button" class="m0-btn primary m0-btn--sm" data-kp-config="${esc(kp.id)}">配置</button>
-              <button type="button" class="m0-btn danger m0-btn--sm" data-kp-delete="${esc(kp.id)}" title="从配置中删除该知识点">删除</button>
+            <div class="-config-item-actions">
+              <button type="button" class="-btn primary -btn--sm" data-kp-config="${esc(kp.id)}">配置</button>
+              <button type="button" class="-btn danger -btn--sm" data-kp-delete="${esc(kp.id)}" title="从配置中删除该知识点">删除</button>
             </div>
           </div>`;
         })
@@ -3336,14 +3336,14 @@
     if (entry.status === "ok" && entry.targets_resolved !== false) return "";
     const parts = [];
     if (entry.status === "missing_body") {
-      parts.push('<span class="m0-link-audit-bad" title="配置已有，正文无 [[]] 入口">缺正文入口</span>');
+      parts.push('<span class="-link-audit-bad" title="配置已有，正文无 [[]] 入口">缺正文入口</span>');
     } else if (entry.status === "stale_instance") {
-      parts.push('<span class="m0-link-audit-bad" title="instances 行号与正文不一致">实例失效</span>');
+      parts.push('<span class="-link-audit-bad" title="instances 行号与正文不一致">实例失效</span>');
     } else if (entry.status === "partial") {
-      parts.push('<span class="m0-link-audit-warn" title="部分实例未挂接">部分挂接</span>');
+      parts.push('<span class="-link-audit-warn" title="部分实例未挂接">部分挂接</span>');
     }
     if (entry.targets_resolved === false) {
-      parts.push('<span class="m0-link-audit-warn" title="跳转目标无法解析">目标未解析</span>');
+      parts.push('<span class="-link-audit-warn" title="跳转目标无法解析">目标未解析</span>');
     }
     return parts.join(" ");
   }
@@ -3356,9 +3356,9 @@
       (x) => x.status !== "ok" || x.targets_resolved === false
     );
     const fixBtn = first
-      ? `<button type="button" class="m0-btn secondary m0-btn--sm" data-link-audit-fix="${esc(first.anchor_text)}">打开首个问题</button>`
+      ? `<button type="button" class="-btn secondary -btn--sm" data-link-audit-fix="${esc(first.anchor_text)}">打开首个问题</button>`
       : "";
-    return `<div class="m0-link-audit-banner" role="alert">
+    return `<div class="-link-audit-banner" role="alert">
       <strong>链接一致性</strong>
       <span>${n} 个跳转入口存在一致性问题 · 在列表中点「匹配」勾选位置后，再点面板内「确认并包裹所选」（仅保存路由不会改写正文）</span>
       ${fixBtn}
@@ -3371,16 +3371,16 @@
 
   function renderLinkSearchOptionsHtml(prefix, options) {
     const o = { ...defaultLinkSearchOptions(), ...(options || {}) };
-    return `<div class="m0-link-search-options" data-search-options-root="${prefix}">
-      <label class="m0-link-search-opt" title="如「深度RL」可匹配正文「深度 RL」">
+    return `<div class="-link-search-options" data-search-options-root="${prefix}">
+      <label class="-link-search-opt" title="如「深度RL」可匹配正文「深度 RL」">
         <input type="checkbox" data-search-opt="fuzzy_whitespace" ${o.fuzzy_whitespace ? "checked" : ""} />
         忽略空格
       </label>
-      <label class="m0-link-search-opt" title="输入时可推荐已有链接文本、标题或正文匹配">
+      <label class="-link-search-opt" title="输入时可推荐已有链接文本、标题或正文匹配">
         <input type="checkbox" data-search-opt="fuzzy_suggest" ${o.fuzzy_suggest ? "checked" : ""} />
         模糊推荐
       </label>
-      <label class="m0-link-search-opt m0-link-search-opt-future" title="预留 · 后续接搜索引擎">
+      <label class="-link-search-opt -link-search-opt-future" title="预留 · 后续接搜索引擎">
         <input type="checkbox" data-search-opt="case_insensitive" disabled ${o.case_insensitive ? "checked" : ""} />
         忽略大小写
       </label>
@@ -3441,11 +3441,11 @@
   function renderLinkMatchPanelHtml(m, variant) {
     if (!m) {
       return variant === "editor"
-        ? '<p class="m0-muted m0-link-match-empty">填写匹配文本后扫描正文</p>'
+        ? '<p class="-muted -link-match-empty">填写匹配文本后扫描正文</p>'
         : "";
     }
     if (m.loading) {
-      return '<p class="m0-muted m0-link-match-empty">扫描中…</p>';
+      return '<p class="-muted -link-match-empty">扫描中…</p>';
     }
 
     const anchor = m.anchorText;
@@ -3457,14 +3457,14 @@
     const panelId =
       variant === "config" ? "config-link-match-panel" : "link-editor-match-panel";
     const panelCls =
-      variant === "config" ? "m0-config-link-match m0-link-match-panel" : "m0-link-editor-match m0-link-match-panel";
+      variant === "config" ? "-config-link-match -link-match-panel" : "-link-editor-match -link-match-panel";
 
     const rows = m.matches
       .map((row) => {
         const checked = m.selected.has(row.line);
         const disabled = row.is_substring || row.excluded || row.blocked;
         const cls =
-          "m0-link-match-row" +
+          "-link-match-row" +
           (checked ? " is-selected" : "") +
           (row.is_substring ? " is-substring" : "") +
           (row.excluded ? " is-excluded" : "") +
@@ -3477,17 +3477,17 @@
             ? "已排除 · 点击定位到该行"
             : "点击整行切换勾选并定位到该行";
         const checkCell = disabled
-          ? `<span class="m0-link-match-check-placeholder" aria-hidden="true">—</span>`
+          ? `<span class="-link-match-check-placeholder" aria-hidden="true">—</span>`
           : `<input type="checkbox" data-match-check="${row.line}" ${checked ? "checked" : ""} aria-label="L${row.line}" />`;
         return `<div class="${cls}" data-match-line="${row.line}" data-match-locate="${disabled ? "1" : "0"}" title="${esc(title)}">
           ${checkCell}
-          <div class="m0-link-match-main">
-            <div class="m0-link-match-head">
-              <span class="m0-link-match-line">L${row.line}</span>
-              ${row.section ? `<span class="m0-link-match-section">${esc(row.section)}</span>` : ""}
-              <span class="m0-link-match-badge">${esc(matchRowBadge(row))}</span>
+          <div class="-link-match-main">
+            <div class="-link-match-head">
+              <span class="-link-match-line">L${row.line}</span>
+              ${row.section ? `<span class="-link-match-section">${esc(row.section)}</span>` : ""}
+              <span class="-link-match-badge">${esc(matchRowBadge(row))}</span>
             </div>
-            <div class="m0-link-match-snippet">${highlightSnippet(row.snippet, row.matched_text)}</div>
+            <div class="-link-match-snippet">${highlightSnippet(row.snippet, row.matched_text)}</div>
           </div>
         </div>`;
       })
@@ -3495,14 +3495,14 @@
 
     const closeBtn =
       variant === "config"
-        ? `<button type="button" class="m0-icon-btn" id="config-link-match-close" title="收起">×</button>`
+        ? `<button type="button" class="-icon-btn" id="config-link-match-close" title="收起">×</button>`
         : "";
 
     let footer = "";
     if (variant === "config") {
-      footer = `<div class="m0-config-link-match-footer m0-btn-bar">
-        <button type="button" class="m0-btn secondary" id="config-link-match-cancel">取消</button>
-        <button type="button" class="m0-btn primary" id="config-link-match-confirm" ${m.selected.size ? "" : "disabled"}>确认并包裹所选</button>
+      footer = `<div class="-config-link-match-footer -btn-bar">
+        <button type="button" class="-btn secondary" id="config-link-match-cancel">取消</button>
+        <button type="button" class="-btn primary" id="config-link-match-confirm" ${m.selected.size ? "" : "disabled"}>确认并包裹所选</button>
       </div>`;
     }
 
@@ -3519,17 +3519,17 @@
     const allBtnLabel = allSelected ? "取消全选" : "全选";
 
     return `<div id="${panelId}" class="${panelCls}">
-      <div class="m0-link-match-panel-header">
-        <span class="m0-link-match-panel-title">匹配「${esc(m.anchorText)}」</span>
-        <span class="m0-muted m0-link-match-panel-hint">${esc(hint)}</span>
+      <div class="-link-match-panel-header">
+        <span class="-link-match-panel-title">匹配「${esc(m.anchorText)}」</span>
+        <span class="-muted -link-match-panel-hint">${esc(hint)}</span>
         ${closeBtn}
       </div>
       ${searchOptsHtml}
-      <div class="m0-link-match-toolbar m0-btn-bar m0-btn-bar--start">
-        <button type="button" class="m0-btn secondary m0-btn--sm" id="${prefix}-all">${esc(allBtnLabel)}</button>
-        <button type="button" class="m0-btn secondary m0-btn--sm" id="${prefix}-plain">仅选未包裹</button>
+      <div class="-link-match-toolbar -btn-bar -btn-bar--start">
+        <button type="button" class="-btn secondary -btn--sm" id="${prefix}-all">${esc(allBtnLabel)}</button>
+        <button type="button" class="-btn secondary -btn--sm" id="${prefix}-plain">仅选未包裹</button>
       </div>
-      <div class="m0-link-match-list">${rows || '<p class="m0-muted">未找到匹配</p>'}</div>
+      <div class="-link-match-list">${rows || '<p class="-muted">未找到匹配</p>'}</div>
       ${footer}
     </div>`;
   }
@@ -3546,25 +3546,25 @@
     const a = (anchor || "").trim();
     if (!a) return null;
     return document.querySelector(
-      `.m0-config-link-match-slot[data-link-match-slot="${CSS.escape(a)}"]`
+      `.-config-link-match-slot[data-link-match-slot="${CSS.escape(a)}"]`
     );
   }
 
   function _readLinkMatchListScroll(rootEl) {
-    const list = rootEl?.querySelector(".m0-link-match-list");
+    const list = rootEl?.querySelector(".-link-match-list");
     return list ? list.scrollTop : 0;
   }
 
   function _restoreLinkMatchListScroll(rootEl, scrollTop) {
     if (scrollTop == null) return;
-    const list = rootEl?.querySelector(".m0-link-match-list");
+    const list = rootEl?.querySelector(".-link-match-list");
     if (list) list.scrollTop = scrollTop;
   }
 
   function refreshConfigLinkMatchPanel() {
     const prevSlot = configLinkMatchSlotEl(state.configLinkMatch?.anchorText);
     const prevScroll = _readLinkMatchListScroll(prevSlot);
-    document.querySelectorAll(".m0-config-link-match-slot").forEach((el) => {
+    document.querySelectorAll(".-config-link-match-slot").forEach((el) => {
       el.innerHTML = "";
     });
     if (!state.configLinkMatch) return;
@@ -3623,9 +3623,9 @@
       box.innerHTML = items
         .map(
           (s) =>
-            `<button type="button" class="m0-suggest-pick" data-anchor-pick="${esc(s.text)}" title="${esc(s.source || "")}">
-              <span class="m0-suggest-label">${esc(s.text)}</span>
-              <span class="m0-muted">${esc(s.source || "")}</span>
+            `<button type="button" class="-suggest-pick" data-anchor-pick="${esc(s.text)}" title="${esc(s.source || "")}">
+              <span class="-suggest-label">${esc(s.text)}</span>
+              <span class="-muted">${esc(s.source || "")}</span>
             </button>`
         )
         .join("");
@@ -3734,19 +3734,19 @@
     state.configLinkMatch = null;
     refreshConfigLinkMatchPanel();
     document
-      .querySelectorAll(".m0-config-link-item.is-match-active")
+      .querySelectorAll(".-config-link-item.is-match-active")
       .forEach((el) => el.classList.remove("is-match-active"));
   }
 
   function renderConfigLinksTab(counts, highlightAnchor, linkAudit) {
     const { fileLinks } = counts;
     let html = renderLinkAuditBanner(linkAudit);
-    html += `<div class="m0-config-toolbar m0-btn-bar m0-btn-bar--start">
-      <button type="button" class="m0-btn primary m0-btn--sm" id="config-new-link">新建链接</button>
-      <span class="m0-muted">正文选区右键也可创建 · 源码/预览均可拖选 · 匹配文本须与 [[…]] 一致</span>
+    html += `<div class="-config-toolbar -btn-bar -btn-bar--start">
+      <button type="button" class="-btn primary -btn--sm" id="config-new-link">新建链接</button>
+      <span class="-muted">正文选区右键也可创建 · 源码/预览均可拖选 · 匹配文本须与 [[…]] 一致</span>
     </div>`;
     if (!fileLinks.length) {
-      html += `<p class="m0-muted">尚未配置链接 · [[文本]] 按知识点 id 或文件名解析</p>`;
+      html += `<p class="-muted">尚未配置链接 · [[文本]] 按知识点 id 或文件名解析</p>`;
     } else {
       html += fileLinks
         .map((link) => {
@@ -3777,21 +3777,21 @@
             state.configLinkMatch?.anchorText === anchor
               ? renderConfigLinkMatchPanelHtml()
               : "";
-          return `<div class="m0-config-link-block">
-          <div class="m0-config-item m0-config-link-item${hl}" data-link-anchor="${esc(anchor)}" role="button" tabindex="0" title="点击在下方匹配正文位置">
-            <div class="m0-config-item-main">
-              <code class="m0-config-anchor">${esc(anchor)}</code>
+          return `<div class="-config-link-block">
+          <div class="-config-item -config-link-item${hl}" data-link-anchor="${esc(anchor)}" role="button" tabindex="0" title="点击在下方匹配正文位置">
+            <div class="-config-item-main">
+              <code class="-config-anchor">${esc(anchor)}</code>
               ${badge}
-              <span class="m0-muted">→ ${esc(targets || "（未绑定）")}${pool}${instHint}</span>
-              ${auditEntry?.issues?.length ? `<span class="m0-link-audit-detail" title="${esc(auditEntry.issues.join("；"))}">${esc(auditEntry.issues[0])}</span>` : ""}
+              <span class="-muted">→ ${esc(targets || "（未绑定）")}${pool}${instHint}</span>
+              ${auditEntry?.issues?.length ? `<span class="-link-audit-detail" title="${esc(auditEntry.issues.join("；"))}">${esc(auditEntry.issues[0])}</span>` : ""}
             </div>
-            <div class="m0-config-item-actions">
-              <button type="button" class="m0-btn secondary m0-btn--sm" data-link-match="${esc(anchor)}" title="在下方选择正文挂接位置">匹配</button>
-              <button type="button" class="m0-btn primary m0-btn--sm" data-link-edit="${esc(anchor)}">编辑</button>
-              <button type="button" class="m0-btn danger m0-btn--sm" data-link-delete="${esc(anchor)}" title="删除跳转入口及正文 [[]]">删除</button>
+            <div class="-config-item-actions">
+              <button type="button" class="-btn secondary -btn--sm" data-link-match="${esc(anchor)}" title="在下方选择正文挂接位置">匹配</button>
+              <button type="button" class="-btn primary -btn--sm" data-link-edit="${esc(anchor)}">编辑</button>
+              <button type="button" class="-btn danger -btn--sm" data-link-delete="${esc(anchor)}" title="删除跳转入口及正文 [[]]">删除</button>
             </div>
           </div>
-          <div class="m0-config-link-match-slot" data-link-match-slot="${esc(anchor)}">${matchPanelHtml}</div>
+          <div class="-config-link-match-slot" data-link-match-slot="${esc(anchor)}">${matchPanelHtml}</div>
           </div>`;
         })
         .join("");
@@ -3807,31 +3807,31 @@
     const { pendingHeading, pendingMention, pendingDefinition, headingP, mentionP, definitionP } =
       counts;
     const kbTotal = state.kbPending?.total;
-    let html = `<div class="m0-config-toolbar m0-btn-bar m0-btn-bar--start">
-      <button type="button" class="m0-btn secondary m0-btn--sm" data-config-sync-pending>刷新待确认</button>
-      ${kbTotal != null ? `<span class="m0-muted">全库 ${kbTotal} 项</span>` : ""}
+    let html = `<div class="-config-toolbar -btn-bar -btn-bar--start">
+      <button type="button" class="-btn secondary -btn--sm" data-config-sync-pending>刷新待确认</button>
+      ${kbTotal != null ? `<span class="-muted">全库 ${kbTotal} 项</span>` : ""}
     </div>`;
     if (!counts.pending) {
-      html += `<p class="m0-muted">无待确认提议 · 扫描标题、段落 mention 或定义句（「X 是…」）后出现在此</p>`;
+      html += `<p class="-muted">无待确认提议 · 扫描标题、段落 mention 或定义句（「X 是…」）后出现在此</p>`;
       html += renderConfigPendingSuggestBlocks();
       return html;
     }
     if (pendingHeading.length) {
-      html += `<div class="m0-config-kp-group"><div class="m0-config-kp-group-title">标题提议 (${pendingHeading.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">标题提议 (${pendingHeading.length})</div>`;
       html += pendingHeading
         .map((p) => {
           const r = p.range || {};
           const lines = `L${r.start?.line_hint || "?"}–${r.end?.line_hint || "?"}`;
           const idx = headingP.indexOf(p);
-          return `<div class="m0-config-item">
-            <div class="m0-config-item-main">
-              <span class="m0-config-tag">标题</span>
-              <span class="m0-config-kp-name">${esc(p.name)}</span>
-              <span class="m0-muted">${lines}</span>
+          return `<div class="-config-item">
+            <div class="-config-item-main">
+              <span class="-config-tag">标题</span>
+              <span class="-config-kp-name">${esc(p.name)}</span>
+              <span class="-muted">${lines}</span>
             </div>
-            <div class="m0-config-item-actions">
-              <button type="button" class="m0-btn primary m0-btn--sm" data-heading-proposal="${idx}">配置并确认</button>
-              ${p.pending_id ? `<button type="button" class="m0-btn secondary m0-btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
+            <div class="-config-item-actions">
+              <button type="button" class="-btn primary -btn--sm" data-heading-proposal="${idx}">配置并确认</button>
+              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
             </div>
           </div>`;
         })
@@ -3839,21 +3839,21 @@
       html += `</div>`;
     }
     if (pendingMention.length) {
-      html += `<div class="m0-config-kp-group"><div class="m0-config-kp-group-title">段落提议 (${pendingMention.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">段落提议 (${pendingMention.length})</div>`;
       html += pendingMention
         .map((p) => {
           const r = p.range || {};
           const lines = `L${r.start?.line_hint || "?"}–${r.end?.line_hint || "?"}`;
           const idx = mentionP.indexOf(p);
-          return `<div class="m0-config-item">
-            <div class="m0-config-item-main">
-              <span class="m0-config-tag">段落</span>
-              <span class="m0-config-kp-name">${esc(p.name)}</span>
-              <span class="m0-muted">${lines}</span>
+          return `<div class="-config-item">
+            <div class="-config-item-main">
+              <span class="-config-tag">段落</span>
+              <span class="-config-kp-name">${esc(p.name)}</span>
+              <span class="-muted">${lines}</span>
             </div>
-            <div class="m0-config-item-actions">
-              <button type="button" class="m0-btn primary m0-btn--sm" data-mention-proposal="${idx}">配置并确认</button>
-              ${p.pending_id ? `<button type="button" class="m0-btn secondary m0-btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
+            <div class="-config-item-actions">
+              <button type="button" class="-btn primary -btn--sm" data-mention-proposal="${idx}">配置并确认</button>
+              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
             </div>
           </div>`;
         })
@@ -3861,20 +3861,20 @@
       html += `</div>`;
     }
     if (pendingDefinition.length) {
-      html += `<div class="m0-config-kp-group"><div class="m0-config-kp-group-title">定义句提议 (${pendingDefinition.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">定义句提议 (${pendingDefinition.length})</div>`;
       html += pendingDefinition
         .map((p) => {
           const r = p.range || {};
           const lines = `L${r.start?.line_hint || "?"}–${r.end?.line_hint || "?"}`;
           const idx = definitionP.indexOf(p);
-          return `<div class="m0-config-item">
-            <div class="m0-config-item-main">
-              <span class="m0-config-tag">定义</span>
-              <span class="m0-config-kp-name">${esc(p.name)}</span>
-              <span class="m0-muted">${lines}</span>
+          return `<div class="-config-item">
+            <div class="-config-item-main">
+              <span class="-config-tag">定义</span>
+              <span class="-config-kp-name">${esc(p.name)}</span>
+              <span class="-muted">${lines}</span>
             </div>
-            <div class="m0-config-item-actions">
-              <button type="button" class="m0-btn primary m0-btn--sm" data-definition-proposal="${idx}">配置并确认</button>
+            <div class="-config-item-actions">
+              <button type="button" class="-btn primary -btn--sm" data-definition-proposal="${idx}">配置并确认</button>
             </div>
           </div>`;
         })
@@ -3998,7 +3998,7 @@
     const highlightAnchor = opts.highlightLinkTarget || null;
     if (highlightAnchor && state.configTab === "links") {
       requestAnimationFrame(() => {
-        body.querySelector(".m0-config-link-item.is-highlight")?.scrollIntoView({
+        body.querySelector(".-config-link-item.is-highlight")?.scrollIntoView({
           block: "nearest",
           behavior: "smooth",
         });
@@ -4017,22 +4017,22 @@
 
     $("#config-title").textContent = `文件配置 — ${basename(doc.path)}`;
 
-    let html = `<p class="m0-config-summary">元数据 ${hasSidecar ? "已配置" : "未创建"} · 知识点 ${counts.kp} · 链接 ${counts.links} · 待确认 ${counts.pending}</p>`;
+    let html = `<p class="-config-summary">元数据 ${hasSidecar ? "已配置" : "未创建"} · 知识点 ${counts.kp} · 链接 ${counts.links} · 待确认 ${counts.pending}</p>`;
     if (validation.errors?.length) {
-      html += `<p class="m0-config-error">错误：${esc(validation.errors.join("；"))}</p>`;
+      html += `<p class="-config-error">错误：${esc(validation.errors.join("；"))}</p>`;
     }
     if (validation.warnings?.length) {
-      html += `<p class="m0-config-warn">警告：${esc(validation.warnings.join("；"))}</p>`;
+      html += `<p class="-config-warn">警告：${esc(validation.warnings.join("；"))}</p>`;
     }
     if (tab === "links" && doc.link_audit && !doc.link_audit.ok) {
       const n = doc.link_audit.summary?.issue_count || 0;
       if (n) {
-        html += `<p class="m0-config-warn">链接一致性：${n} 个入口未在正文中挂接为可点击 [[…]]</p>`;
+        html += `<p class="-config-warn">链接一致性：${n} 个入口未在正文中挂接为可点击 [[…]]</p>`;
       }
     }
 
     html += renderConfigTabBar(counts, tab);
-    html += `<div class="m0-config-tab-panel" role="tabpanel">`;
+    html += `<div class="-config-tab-panel" role="tabpanel">`;
     if (tab === "kp") html += renderConfigKpTab(counts);
     else if (tab === "links")
       html += renderConfigLinksTab(
@@ -4117,11 +4117,11 @@
       { id: "tags", label: "标签" },
       { id: "edges", label: "边" },
     ];
-    return `<div class="m0-config-tabs m0-kp-tabs" role="tablist">
+    return `<div class="-config-tabs -kp-tabs" role="tablist">
       ${tabs
         .map(
           (t) =>
-            `<button type="button" class="m0-config-tab${activeTab === t.id ? " active" : ""}" data-kp-tab="${t.id}" role="tab">${esc(t.label)}</button>`
+            `<button type="button" class="-config-tab${activeTab === t.id ? " active" : ""}" data-kp-tab="${t.id}" role="tab">${esc(t.label)}</button>`
         )
         .join("")}
     </div>`;
@@ -4188,24 +4188,24 @@
   function buildRangeEditorHtml(a) {
     let html = "";
     if (a.error) {
-      html += `<p class="m0-config-range-warn">${esc(errorLabel(a.error))}</p>`;
+      html += `<p class="-config-range-warn">${esc(errorLabel(a.error))}</p>`;
     }
     const total = state.doc?.lines?.length || 0;
-    html += `<div class="m0-assist-line-inputs">
-      <label>起点行 <input type="number" class="m0-line-input" data-range-start min="1" max="${total || ""}" value="${a.startLine}"></label>
-      <label>终点行 <input type="number" class="m0-line-input" data-range-end min="1" max="${total || ""}" value="${a.endLine}"></label>
-      <span class="m0-muted">滚轮可微调行号${total ? ` · 正文共 ${total} 行` : ""}</span>
+    html += `<div class="-assist-line-inputs">
+      <label>起点行 <input type="number" class="-line-input" data-range-start min="1" max="${total || ""}" value="${a.startLine}"></label>
+      <label>终点行 <input type="number" class="-line-input" data-range-end min="1" max="${total || ""}" value="${a.endLine}"></label>
+      <span class="-muted">滚轮可微调行号${total ? ` · 正文共 ${total} 行` : ""}</span>
     </div>`;
     if (a.startCandidates.length > 1) {
-      html += `<p class="m0-range-candidates-label"><strong>起点候选</strong></p>`;
-      html += `<div class="m0-range-candidates">${renderCandidates("start", a.startCandidates)}</div>`;
+      html += `<p class="-range-candidates-label"><strong>起点候选</strong></p>`;
+      html += `<div class="-range-candidates">${renderCandidates("start", a.startCandidates)}</div>`;
     }
     if (a.endCandidates.length > 1) {
-      html += `<p class="m0-range-candidates-label"><strong>终点候选</strong></p>`;
-      html += `<div class="m0-range-candidates">${renderCandidates("end", a.endCandidates)}</div>`;
+      html += `<p class="-range-candidates-label"><strong>终点候选</strong></p>`;
+      html += `<div class="-range-candidates">${renderCandidates("end", a.endCandidates)}</div>`;
     }
-    html += `<div data-range-preview class="m0-assist-preview-wrap"></div>`;
-    html += `<p class="m0-muted">调整行号即更新高亮；预览区可切换源码 / Markdown。</p>`;
+    html += `<div data-range-preview class="-assist-preview-wrap"></div>`;
+    html += `<p class="-muted">调整行号即更新高亮；预览区可切换源码 / Markdown。</p>`;
     return html;
   }
 
@@ -4261,8 +4261,8 @@
 
   function syncKpModalLayout(tab) {
     const body = $("#kp-body");
-    body?.classList.toggle("m0-modal-body-kp-range", tab === "range");
-    body?.classList.toggle("m0-modal-body-kp-edges", tab === "edges");
+    body?.classList.toggle("-modal-body-kp-range", tab === "range");
+    body?.classList.toggle("-modal-body-kp-edges", tab === "edges");
   }
 
   function syncKpModalFooter(_tab, isCreate = false) {
@@ -4393,16 +4393,16 @@
       }
       state.assistScrollFocus = "start";
       state.assistLastView = null;
-      content = `<div class="m0-kp-tab-panel m0-kp-range-panel">${buildRangeEditorHtml(state.assist)}</div>`;
+      content = `<div class="-kp-tab-panel -kp-range-panel">${buildRangeEditorHtml(state.assist)}</div>`;
     } else if (tab === "identity") {
       clearKpRangeAssist();
       const idVal = isCreate ? kp.id : (panel.draft?.id ?? kp.id);
       const nameVal = isCreate ? (kp.name || kp.id) : (panel.draft?.name ?? kp.name ?? kp.id);
-      content = `<div class="m0-kp-tab-panel"><div class="m0-kp-form">
-        <label class="m0-link-field">id <input type="text" id="kp-field-id" value="${esc(idVal)}" autocomplete="off" spellcheck="false"></label>
-        <label class="m0-link-field">名称 <input type="text" id="kp-field-name" value="${esc(nameVal)}" autocomplete="off"></label>
-        <p class="m0-config-hint">${isCreate ? "新建知识点请先在此填写 id 与名称，再到「范围」调整行号。" : "修改 id 将全库同步链接配置与正文 [[…]]（显示文字保持不变）。"}</p>
-        ${isCreate ? "" : `<div id="kp-merge-suggest" class="m0-kp-merge-suggest hidden"></div>`}
+      content = `<div class="-kp-tab-panel"><div class="-kp-form">
+        <label class="-link-field">id <input type="text" id="kp-field-id" value="${esc(idVal)}" autocomplete="off" spellcheck="false"></label>
+        <label class="-link-field">名称 <input type="text" id="kp-field-name" value="${esc(nameVal)}" autocomplete="off"></label>
+        <p class="-config-hint">${isCreate ? "新建知识点请先在此填写 id 与名称，再到「范围」调整行号。" : "修改 id 将全库同步链接配置与正文 [[…]]（显示文字保持不变）。"}</p>
+        ${isCreate ? "" : `<div id="kp-merge-suggest" class="-kp-merge-suggest hidden"></div>`}
       </div></div>`;
     } else if (tab === "edges") {
       clearKpRangeAssist();
@@ -4415,18 +4415,18 @@
         : panel.draft?.description != null
           ? panel.draft.description
           : kp.description || "";
-      content = `<div class="m0-kp-tab-panel"><div class="m0-kp-form">
+      content = `<div class="-kp-tab-panel"><div class="-kp-form">
         ${renderKpTagsEditorHtml(panel, kp, isCreate)}
         ${renderKpAliasEditorHtml(panel, kp)}
-        <label class="m0-link-field">描述
+        <label class="-link-field">描述
           <textarea id="kp-desc-input" rows="3" placeholder="可选；用于检索与图谱提示">${esc(desc)}</textarea>
         </label>
         ${renderKpDescCandEditorHtml(panel, kp)}
-        <div class="m0-kp-tags-zone-toolbar">
-          <button type="button" id="kp-sync-aux" class="m0-btn secondary m0-btn--sm">同步检索 aux</button>
-          <button type="button" id="kp-suggest-desc" class="m0-btn secondary m0-btn--sm">建议描述</button>
+        <div class="-kp-tags-zone-toolbar">
+          <button type="button" id="kp-sync-aux" class="-btn secondary -btn--sm">同步检索 aux</button>
+          <button type="button" id="kp-suggest-desc" class="-btn secondary -btn--sm">建议描述</button>
         </div>
-        <p class="m0-config-hint">${isCreate ? "描述可选；确认创建时会一并保存。tag/别名/描述候选可提前配置。" : "已选 tag/别名保存后参与检索；候选区点击应用；「同步检索 aux」合并隐式索引提议。"}</p>
+        <p class="-config-hint">${isCreate ? "描述可选；确认创建时会一并保存。tag/别名/描述候选可提前配置。" : "已选 tag/别名保存后参与检索；候选区点击应用；「同步检索 aux」合并隐式索引提议。"}</p>
       </div></div>`;
     }
 
@@ -4617,7 +4617,7 @@
     const labels = { contain: "包含", reference: "引用", extend: "扩展" };
     const color = colors[type] || "#999";
     const label = labels[type] || type;
-    return `<span class="m0-edge-type-badge" style="background:${color};color:#fff">${esc(label)}</span>`;
+    return `<span class="-edge-type-badge" style="background:${color};color:#fff">${esc(label)}</span>`;
   }
 
   function edgeOriginLabel(edge) {
@@ -4633,73 +4633,73 @@
     const outgoing = edges.filter((e) => e.source_id === kpId);
     const incoming = edges.filter((e) => e.target_id === kpId && e.source_id !== kpId);
 
-    let html = `<div class="m0-kp-tab-panel m0-kp-edges-panel">`;
+    let html = `<div class="-kp-tab-panel -kp-edges-panel">`;
 
     // Outgoing edges section
-    html += `<div class="m0-edge-section">`;
-    html += `<h4 class="m0-edge-section-title">出边 <span class="m0-tab-count">${outgoing.length}</span></h4>`;
+    html += `<div class="-edge-section">`;
+    html += `<h4 class="-edge-section-title">出边 <span class="-tab-count">${outgoing.length}</span></h4>`;
     if (outgoing.length) {
-      html += `<div class="m0-edge-list">`;
+      html += `<div class="-edge-list">`;
       for (const e of outgoing) {
-        html += `<div class="m0-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}" ${e.anchor_text ? `data-edge-anchor="${esc(e.anchor_text)}"` : ""}>`;
-        html += `<div class="m0-edge-main">`;
+        html += `<div class="-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}" ${e.anchor_text ? `data-edge-anchor="${esc(e.anchor_text)}"` : ""}>`;
+        html += `<div class="-edge-main">`;
         html += edgeTypeBadgeHtml(e.type);
-        html += `<span class="m0-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
-        html += `<span class="m0-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
-        html += `<span class="m0-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
-        if (e.no_build) html += `<span class="m0-edge-no-build">已抑制</span>`;
+        html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
+        html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
+        html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
+        if (e.no_build) html += `<span class="-edge-no-build">已抑制</span>`;
         html += `</div>`;
-        html += `<div class="m0-edge-actions">`;
+        html += `<div class="-edge-actions">`;
         if (e.type === "contain" && e.no_build) {
-          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">恢复</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">恢复</button>`;
         } else if (e.type === "contain" && !e.no_build) {
-          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">抑制</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">抑制</button>`;
         }
         if (e.origin === "sidecar_edge") {
-          html += `<button type="button" class="m0-btn danger m0-btn--sm m0-edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">删除</button>`;
+          html += `<button type="button" class="-btn danger -btn--sm -edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">删除</button>`;
         }
         if (e.origin === "link" && e.anchor_text) {
-          html += `<button type="button" class="m0-btn secondary m0-btn--sm m0-edge-btn-config-link" data-anchor="${esc(e.anchor_text)}">配置链接</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-config-link" data-anchor="${esc(e.anchor_text)}">配置链接</button>`;
         }
         html += `</div>`;
         html += `</div>`;
       }
       html += `</div>`;
     } else {
-      html += `<p class="m0-muted">无出边</p>`;
+      html += `<p class="-muted">无出边</p>`;
     }
     html += `</div>`;
 
     // Incoming edges section
-    html += `<div class="m0-edge-section">`;
-    html += `<h4 class="m0-edge-section-title">入边 <span class="m0-tab-count">${incoming.length}</span></h4>`;
+    html += `<div class="-edge-section">`;
+    html += `<h4 class="-edge-section-title">入边 <span class="-tab-count">${incoming.length}</span></h4>`;
     if (incoming.length) {
-      html += `<div class="m0-edge-list">`;
+      html += `<div class="-edge-list">`;
       for (const e of incoming) {
-        html += `<div class="m0-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}">`;
-        html += `<div class="m0-edge-main">`;
+        html += `<div class="-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}">`;
+        html += `<div class="-edge-main">`;
         html += edgeTypeBadgeHtml(e.type);
-        html += `<span class="m0-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
-        html += `<span class="m0-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
-        html += `<span class="m0-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
-        if (e.no_build) html += `<span class="m0-edge-no-build">已抑制</span>`;
+        html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
+        html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
+        html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
+        if (e.no_build) html += `<span class="-edge-no-build">已抑制</span>`;
         html += `</div>`;
         html += `</div>`;
       }
       html += `</div>`;
     } else {
-      html += `<p class="m0-muted">入边需全库扫描，当前仅显示本文件内入边</p>`;
+      html += `<p class="-muted">入边需全库扫描，当前仅显示本文件内入边</p>`;
     }
     html += `</div>`;
 
     // Create new edge form
-    html += `<div class="m0-edge-section m0-edge-create-form">`;
-    html += `<h4 class="m0-edge-section-title">新建边</h4>`;
-    html += `<div class="m0-edge-create-fields">`;
-    html += `<label class="m0-link-field">目标 KP <input type="text" id="kp-edge-target" placeholder="输入 KP id" autocomplete="off" spellcheck="false"></label>`;
-    html += `<label class="m0-link-field">边类型 <select id="kp-edge-type"><option value="reference">引用 (reference)</option><option value="extend">扩展 (extend)</option></select></label>`;
-    html += `<label class="m0-link-field">关联度 <input type="range" id="kp-edge-relevance" min="0" max="1" step="0.05" value="0.7"><span id="kp-edge-relevance-val">0.70</span></label>`;
-    html += `<button type="button" id="kp-edge-create-btn" class="m0-btn primary m0-btn--sm">新建</button>`;
+    html += `<div class="-edge-section -edge-create-form">`;
+    html += `<h4 class="-edge-section-title">新建边</h4>`;
+    html += `<div class="-edge-create-fields">`;
+    html += `<label class="-link-field">目标 KP <input type="text" id="kp-edge-target" placeholder="输入 KP id" autocomplete="off" spellcheck="false"></label>`;
+    html += `<label class="-link-field">边类型 <select id="kp-edge-type"><option value="reference">引用 (reference)</option><option value="extend">扩展 (extend)</option></select></label>`;
+    html += `<label class="-link-field">关联度 <input type="range" id="kp-edge-relevance" min="0" max="1" step="0.05" value="0.7"><span id="kp-edge-relevance-val">0.70</span></label>`;
+    html += `<button type="button" id="kp-edge-create-btn" class="-btn primary -btn--sm">新建</button>`;
     html += `</div>`;
     html += `</div>`;
 
@@ -4720,7 +4720,7 @@
     if (!body) return;
 
     // Suppress contain edge
-    body.querySelectorAll(".m0-edge-btn-suppress").forEach((btn) => {
+    body.querySelectorAll(".-edge-btn-suppress").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const parentId = btn.dataset.source;
         const childId = btn.dataset.target;
@@ -4737,7 +4737,7 @@
     });
 
     // Restore contain edge (remove no_build)
-    body.querySelectorAll(".m0-edge-btn-restore").forEach((btn) => {
+    body.querySelectorAll(".-edge-btn-restore").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const parentId = btn.dataset.source;
         const childId = btn.dataset.target;
@@ -4754,7 +4754,7 @@
     });
 
     // Delete pure sidecar edge
-    body.querySelectorAll(".m0-edge-btn-delete").forEach((btn) => {
+    body.querySelectorAll(".-edge-btn-delete").forEach((btn) => {
       btn.addEventListener("click", async () => {
         const sourceId = btn.dataset.source;
         const targetId = btn.dataset.target;
@@ -4773,7 +4773,7 @@
     });
 
     // Configure link (opens link editor for that anchor)
-    body.querySelectorAll(".m0-edge-btn-config-link").forEach((btn) => {
+    body.querySelectorAll(".-edge-btn-config-link").forEach((btn) => {
       btn.addEventListener("click", () => {
         const anchor = btn.dataset.anchor;
         if (!anchor) return;
@@ -4803,7 +4803,7 @@
     if (targetInput) {
       targetInput.addEventListener("input", () => {
         const val = targetInput.value.trim().toLowerCase();
-        const existing = body.querySelector(".m0-edge-target-datalist");
+        const existing = body.querySelector(".-edge-target-datalist");
         if (existing) existing.remove();
         if (!val) return;
         const kpIds = (state.doc?.knowledge_points || [])
@@ -4813,10 +4813,10 @@
         const allIds = [...new Set([...kpIds, ...linkTargets.filter((t) => t.toLowerCase().includes(val))])];
         if (!allIds.length) return;
         const datalist = document.createElement("div");
-        datalist.className = "m0-edge-target-datalist";
+        datalist.className = "-edge-target-datalist";
         allIds.slice(0, 10).forEach((id) => {
           const opt = document.createElement("div");
-          opt.className = "m0-edge-target-option";
+          opt.className = "-edge-target-option";
           opt.textContent = id;
           opt.addEventListener("click", () => {
             targetInput.value = id;
@@ -4828,7 +4828,7 @@
       });
       targetInput.addEventListener("blur", () => {
         setTimeout(() => {
-          const dl = body.querySelector(".m0-edge-target-datalist");
+          const dl = body.querySelector(".-edge-target-datalist");
           if (dl) dl.remove();
         }, 200);
       });
@@ -4990,26 +4990,26 @@
   }
 
   function renderKpAliasChip(alias, kind, opts = {}) {
-    const dismiss = `<button type="button" class="m0-kp-tag-chip-btn" data-alias-dismiss="${esc(alias)}" title="移除">×</button>`;
+    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-alias-dismiss="${esc(alias)}" title="移除">×</button>`;
     const kindCls =
       kind === "selected"
-        ? "m0-kp-tag-pick--selected"
+        ? "-kp-tag-pick--selected"
         : kind === "cand-user"
-          ? "m0-kp-tag-pick--cand-user"
-          : "m0-kp-tag-pick--cand-system";
+          ? "-kp-tag-pick--cand-user"
+          : "-kp-tag-pick--cand-system";
     const title = kind === "selected" ? "点击移到候选" : "点击应用到已选";
-    return `<span class="m0-kp-tag-pick ${kindCls}" data-alias="${esc(alias)}" data-alias-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
-      <span class="m0-kp-tag-chip-label">${esc(alias)}</span>
-      <span class="m0-kp-tag-chip-actions">${dismiss}</span>
+    return `<span class="-kp-tag-pick ${kindCls}" data-alias="${esc(alias)}" data-alias-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
+      <span class="-kp-tag-chip-label">${esc(alias)}</span>
+      <span class="-kp-tag-chip-actions">${dismiss}</span>
     </span>`;
   }
 
   function renderKpDescCandChip(text, source) {
-    const kindCls = source === "user" ? "m0-kp-tag-pick--cand-user" : "m0-kp-tag-pick--cand-system";
+    const kindCls = source === "user" ? "-kp-tag-pick--cand-user" : "-kp-tag-pick--cand-system";
     const short = text.length > 72 ? text.slice(0, 70) + "…" : text;
-    return `<span class="m0-kp-tag-pick ${kindCls} m0-kp-desc-cand" data-desc-cand="${esc(text)}" title="点击填入描述">
-      <span class="m0-kp-tag-chip-label">${esc(short)}</span>
-      <button type="button" class="m0-kp-tag-chip-btn" data-desc-dismiss="${esc(text)}" title="移除">×</button>
+    return `<span class="-kp-tag-pick ${kindCls} -kp-desc-cand" data-desc-cand="${esc(text)}" title="点击填入描述">
+      <span class="-kp-tag-chip-label">${esc(short)}</span>
+      <button type="button" class="-kp-tag-chip-btn" data-desc-dismiss="${esc(text)}" title="移除">×</button>
     </span>`;
   }
 
@@ -5017,28 +5017,28 @@
     const as = ensureKpAliasState(panel, kp);
     const selHtml = as.selected.length
       ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
-      : `<span class="m0-muted m0-kp-tags-empty">暂无已选别名</span>`;
+      : `<span class="-muted -kp-tags-empty">暂无已选别名</span>`;
     const candHtml = as.candidates.length
       ? as.candidates
           .map((c) =>
             renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
           )
           .join("")
-      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 或下方新建</span>`;
-    return `<div class="m0-kp-tags-editor m0-kp-alias-editor" id="kp-alias-editor">
-      <div class="m0-kp-tags-zone m0-kp-tags-zone--selected">
-        <div class="m0-kp-tags-zone-head">已选别名 <span class="m0-muted">参与检索</span></div>
-        <div id="kp-alias-selected" class="m0-kp-tags-chips">${selHtml}</div>
+      : `<span class="-muted -kp-tags-empty">同步 aux 或下方新建</span>`;
+    return `<div class="-kp-tags-editor -kp-alias-editor" id="kp-alias-editor">
+      <div class="-kp-tags-zone -kp-tags-zone--selected">
+        <div class="-kp-tags-zone-head">已选别名 <span class="-muted">参与检索</span></div>
+        <div id="kp-alias-selected" class="-kp-tags-chips">${selHtml}</div>
       </div>
-      <div class="m0-kp-tags-zone m0-kp-tags-zone--candidate">
-        <div class="m0-kp-tags-zone-head">别名候选</div>
-        <div class="m0-kp-tags-zone-toolbar">
-          <div class="m0-kp-tag-create-row">
+      <div class="-kp-tags-zone -kp-tags-zone--candidate">
+        <div class="-kp-tags-zone-head">别名候选</div>
+        <div class="-kp-tags-zone-toolbar">
+          <div class="-kp-tag-create-row">
             <input type="text" id="kp-alias-new-input" placeholder="新建别名" autocomplete="off" spellcheck="false" />
-            <button type="button" id="kp-alias-add-btn" class="m0-btn secondary m0-btn--sm">加入候选</button>
+            <button type="button" id="kp-alias-add-btn" class="-btn secondary -btn--sm">加入候选</button>
           </div>
         </div>
-        <div id="kp-alias-candidates" class="m0-kp-tags-chips">${candHtml}</div>
+        <div id="kp-alias-candidates" class="-kp-tags-chips">${candHtml}</div>
       </div>
     </div>`;
   }
@@ -5049,10 +5049,10 @@
       ? ds.candidates
           .map((c) => renderKpDescCandChip(c.text, c.source))
           .join("")
-      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 后显示描述候选</span>`;
-    return `<div class="m0-kp-desc-cand-editor" id="kp-desc-cand-editor">
-      <div class="m0-kp-tags-zone-head">描述候选 <span class="m0-muted">点击填入上方描述框</span></div>
-      <div id="kp-desc-candidates" class="m0-kp-tags-chips">${candHtml}</div>
+      : `<span class="-muted -kp-tags-empty">同步 aux 后显示描述候选</span>`;
+    return `<div class="-kp-desc-cand-editor" id="kp-desc-cand-editor">
+      <div class="-kp-tags-zone-head">描述候选 <span class="-muted">点击填入上方描述框</span></div>
+      <div id="kp-desc-candidates" class="-kp-tags-chips">${candHtml}</div>
     </div>`;
   }
 
@@ -5063,7 +5063,7 @@
     const as = panel.draft.aliasState;
     sel.innerHTML = as.selected.length
       ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
-      : `<span class="m0-muted m0-kp-tags-empty">暂无已选别名</span>`;
+      : `<span class="-muted -kp-tags-empty">暂无已选别名</span>`;
     if (cand) {
       cand.innerHTML = as.candidates.length
         ? as.candidates
@@ -5071,7 +5071,7 @@
               renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
             )
             .join("")
-        : `<span class="m0-muted m0-kp-tags-empty">同步 aux 或下方新建</span>`;
+        : `<span class="-muted -kp-tags-empty">同步 aux 或下方新建</span>`;
     }
   }
 
@@ -5081,26 +5081,26 @@
     const ds = panel.draft.descCandState;
     root.innerHTML = ds.candidates.length
       ? ds.candidates.map((c) => renderKpDescCandChip(c.text, c.source)).join("")
-      : `<span class="m0-muted m0-kp-tags-empty">同步 aux 后显示描述候选</span>`;
+      : `<span class="-muted -kp-tags-empty">同步 aux 后显示描述候选</span>`;
   }
 
   function renderKpTagChip(tag, kind, opts = {}) {
     const score =
       opts.score != null
-        ? `<span class="m0-kp-tag-pick-score">${esc(String(Math.round(opts.score)))}</span>`
+        ? `<span class="-kp-tag-pick-score">${esc(String(Math.round(opts.score)))}</span>`
         : "";
-    const dismiss = `<button type="button" class="m0-kp-tag-chip-btn" data-tag-dismiss="${esc(tag)}" title="移除">×</button>`;
+    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-tag-dismiss="${esc(tag)}" title="移除">×</button>`;
     const kindCls =
       kind === "selected"
-        ? "m0-kp-tag-pick--selected"
+        ? "-kp-tag-pick--selected"
         : kind === "cand-user"
-          ? "m0-kp-tag-pick--cand-user"
-          : "m0-kp-tag-pick--cand-system";
+          ? "-kp-tag-pick--cand-user"
+          : "-kp-tag-pick--cand-system";
     const title =
       kind === "selected" ? "点击移到候选" : "点击应用到已选";
-    return `<span class="m0-kp-tag-pick ${kindCls}" data-tag="${esc(tag)}" data-tag-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
-      <span class="m0-kp-tag-chip-label">${esc(tag)}</span>${score}
-      <span class="m0-kp-tag-chip-actions">${dismiss}</span>
+    return `<span class="-kp-tag-pick ${kindCls}" data-tag="${esc(tag)}" data-tag-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
+      <span class="-kp-tag-chip-label">${esc(tag)}</span>${score}
+      <span class="-kp-tag-chip-actions">${dismiss}</span>
     </span>`;
   }
 
@@ -5108,7 +5108,7 @@
     const ts = ensureKpTagState(panel, kp);
     const selectedHtml = ts.selected.length
       ? ts.selected.map((t) => renderKpTagChip(t, "selected")).join("")
-      : `<span class="m0-muted m0-kp-tags-empty">暂无已选 tag</span>`;
+      : `<span class="-muted -kp-tags-empty">暂无已选 tag</span>`;
     const candHtml = ts.candidates.length
       ? ts.candidates
           .map((c) =>
@@ -5117,22 +5117,22 @@
             })
           )
           .join("")
-      : `<span class="m0-muted m0-kp-tags-empty">点击「系统建议」或下方新建</span>`;
-    return `<div class="m0-kp-tags-editor" id="kp-tags-editor">
-      <div class="m0-kp-tags-zone m0-kp-tags-zone--selected">
-        <div class="m0-kp-tags-zone-head">已选 <span class="m0-muted">点击 chip 移到候选</span></div>
-        <div id="kp-tags-selected" class="m0-kp-tags-chips">${selectedHtml}</div>
+      : `<span class="-muted -kp-tags-empty">点击「系统建议」或下方新建</span>`;
+    return `<div class="-kp-tags-editor" id="kp-tags-editor">
+      <div class="-kp-tags-zone -kp-tags-zone--selected">
+        <div class="-kp-tags-zone-head">已选 <span class="-muted">点击 chip 移到候选</span></div>
+        <div id="kp-tags-selected" class="-kp-tags-chips">${selectedHtml}</div>
       </div>
-      <div class="m0-kp-tags-zone m0-kp-tags-zone--candidate">
-        <div class="m0-kp-tags-zone-head">候选 <span class="m0-muted">点击 chip 应用到已选 · × 移除</span></div>
-        <div class="m0-kp-tags-zone-toolbar">
-          <button type="button" id="kp-suggest-tags" class="m0-btn secondary m0-btn--sm">系统建议</button>
-          <div class="m0-kp-tag-create-row">
+      <div class="-kp-tags-zone -kp-tags-zone--candidate">
+        <div class="-kp-tags-zone-head">候选 <span class="-muted">点击 chip 应用到已选 · × 移除</span></div>
+        <div class="-kp-tags-zone-toolbar">
+          <button type="button" id="kp-suggest-tags" class="-btn secondary -btn--sm">系统建议</button>
+          <div class="-kp-tag-create-row">
             <input type="text" id="kp-tag-new-input" placeholder="新建 tag" autocomplete="off" spellcheck="false" />
-            <button type="button" id="kp-tag-add-btn" class="m0-btn secondary m0-btn--sm">加入候选</button>
+            <button type="button" id="kp-tag-add-btn" class="-btn secondary -btn--sm">加入候选</button>
           </div>
         </div>
-        <div id="kp-tags-candidates" class="m0-kp-tags-chips">${candHtml}</div>
+        <div id="kp-tags-candidates" class="-kp-tags-chips">${candHtml}</div>
       </div>
     </div>`;
   }
@@ -5146,7 +5146,7 @@
     if (sel) {
       sel.innerHTML = ts.selected.length
         ? ts.selected.map((t) => renderKpTagChip(t, "selected")).join("")
-        : `<span class="m0-muted m0-kp-tags-empty">暂无已选 tag</span>`;
+        : `<span class="-muted -kp-tags-empty">暂无已选 tag</span>`;
     }
     if (cand) {
       cand.innerHTML = ts.candidates.length
@@ -5157,7 +5157,7 @@
               })
             )
             .join("")
-        : `<span class="m0-muted m0-kp-tags-empty">点击「系统建议」或下方新建</span>`;
+        : `<span class="-muted -kp-tags-empty">点击「系统建议」或下方新建</span>`;
     }
   }
 
@@ -5228,7 +5228,7 @@
           );
           return;
         }
-        const chip = e.target.closest(".m0-kp-tag-pick");
+        const chip = e.target.closest(".-kp-tag-pick");
         if (!chip) return;
         const tag = chip.getAttribute("data-tag");
         const kind = chip.getAttribute("data-tag-kind");
@@ -5471,19 +5471,19 @@
       const items = (res.suggestions || []).filter((s) => s.kp_id && s.kp_id !== kpId);
       if (!items.length) return;
       box.innerHTML =
-        `<p class="m0-config-hint">名称相近的知识点（仅供参考，合并需手动处理）：</p>` +
+        `<p class="-config-hint">名称相近的知识点（仅供参考，合并需手动处理）：</p>` +
         items
           .map(
             (s) =>
-              `<button type="button" class="m0-suggest-item m0-kp-merge-hit" data-merge-file="${esc(s.file || "")}" data-merge-kp="${esc(s.kp_id || "")}">
-                <span class="m0-suggest-score">${esc(String(Math.round(s.score || 0)))}</span>
-                <span class="m0-suggest-label">${esc(s.name || s.kp_id)}</span>
-                <span class="m0-muted">${esc(basename(s.file || ""))}</span>
+              `<button type="button" class="-suggest-item -kp-merge-hit" data-merge-file="${esc(s.file || "")}" data-merge-kp="${esc(s.kp_id || "")}">
+                <span class="-suggest-score">${esc(String(Math.round(s.score || 0)))}</span>
+                <span class="-suggest-label">${esc(s.name || s.kp_id)}</span>
+                <span class="-muted">${esc(basename(s.file || ""))}</span>
               </button>`
           )
           .join("");
       box.classList.remove("hidden");
-      box.querySelectorAll(".m0-kp-merge-hit").forEach((btn) => {
+      box.querySelectorAll(".-kp-merge-hit").forEach((btn) => {
         btn.addEventListener("click", async () => {
           const file = btn.getAttribute("data-merge-file");
           const kid = btn.getAttribute("data-merge-kp");
@@ -5570,8 +5570,8 @@
     const fromProposal = !!panel?.proposal;
     clearKpRangeAssist();
     state.kpPanel = null;
-    $("#kp-body")?.classList.remove("m0-modal-body-kp-range");
-    $("#kp-body")?.classList.remove("m0-modal-body-kp-edges");
+    $("#kp-body")?.classList.remove("-modal-body-kp-range");
+    $("#kp-body")?.classList.remove("-modal-body-kp-edges");
     $("#kp-modal").classList.add("hidden");
     if (returnTo === "config") {
       openConfigModal({
@@ -5778,24 +5778,24 @@
   function renderTargetEdgeControls(pickIndex, props) {
     const et = normalizeLinkEdgeType(props.edge_type);
     const rel = normalizeLinkRelevance(props.relevance, et);
-    return `<div class="m0-link-target-edge">
-      <span class="m0-link-target-edge-label">类型</span>
+    return `<div class="-link-target-edge">
+      <span class="-link-target-edge-label">类型</span>
       <select data-target-edge-type="${pickIndex}">
         <option value="reference"${et === "reference" ? " selected" : ""}>引用</option>
         <option value="extend"${et === "extend" ? " selected" : ""}>扩展</option>
       </select>
-      <span class="m0-link-target-edge-label">强度</span>
+      <span class="-link-target-edge-label">强度</span>
       <input type="range" data-target-edge-rel-range="${pickIndex}" min="0" max="1" step="0.05" value="${rel}" title="边强度 relevance" />
-      <input type="number" data-target-edge-rel-num="${pickIndex}" class="m0-link-relevance-num" min="0" max="1" step="0.05" value="${formatLinkRelevance(rel)}" title="边强度 relevance" />
-      <button type="button" class="m0-btn secondary m0-btn--sm" data-target-edge-suggest="${pickIndex}">推荐</button>
+      <input type="number" data-target-edge-rel-num="${pickIndex}" class="-link-relevance-num" min="0" max="1" step="0.05" value="${formatLinkRelevance(rel)}" title="边强度 relevance" />
+      <button type="button" class="-btn secondary -btn--sm" data-target-edge-suggest="${pickIndex}">推荐</button>
     </div>`;
   }
 
   function renderLinkTargetEdgesPanel(p) {
     if (!p.selectedOrder.length) {
-      return `<div class="m0-link-edge-editor-panel" id="link-edge-editor-panel">
-        <div class="m0-link-section-title">图谱边</div>
-        <p class="m0-muted m0-link-edge-empty">请先勾选跳转目标，再在此配置语义边属性</p>
+      return `<div class="-link-edge-editor-panel" id="link-edge-editor-panel">
+        <div class="-link-section-title">图谱边</div>
+        <p class="-muted -link-edge-empty">请先勾选跳转目标，再在此配置语义边属性</p>
       </div>`;
     }
     const items = p.selectedOrder
@@ -5805,18 +5805,18 @@
         if (!tid) return "";
         const props = ensureTargetEdge(p, tid);
         const name = c?.name || tid;
-        return `<div class="m0-link-edge-editor-item">
-          <div class="m0-link-edge-editor-head">
-            <span class="m0-link-edge-editor-name">${esc(name)}</span>
-            <span class="m0-link-edge-editor-id m0-muted">${esc(tid)} · ${esc(c?.file || tid)}</span>
+        return `<div class="-link-edge-editor-item">
+          <div class="-link-edge-editor-head">
+            <span class="-link-edge-editor-name">${esc(name)}</span>
+            <span class="-link-edge-editor-id -muted">${esc(tid)} · ${esc(c?.file || tid)}</span>
           </div>
           ${renderTargetEdgeControls(pickIndex, props)}
         </div>`;
       })
       .join("");
-    return `<div class="m0-link-edge-editor-panel" id="link-edge-editor-panel">
-      <div class="m0-link-section-title">图谱边</div>
-      <p class="m0-config-hint m0-link-edge-panel-hint">为下方每个已选目标单独设置语义关系。</p>
+    return `<div class="-link-edge-editor-panel" id="link-edge-editor-panel">
+      <div class="-link-section-title">图谱边</div>
+      <p class="-config-hint -link-edge-panel-hint">为下方每个已选目标单独设置语义关系。</p>
       ${items}
     </div>`;
   }
@@ -5934,11 +5934,11 @@
   function renderLinkEditMeta(p) {
     const text = p.anchorText || p.displayText || "";
     const searchOpts = p.searchOptions || defaultLinkSearchOptions();
-    let html = `<div class="m0-link-edit-meta">`;
-    html += `<label class="m0-link-field"><span>匹配文本</span>
-      <div class="m0-link-anchor-field">
+    let html = `<div class="-link-edit-meta">`;
+    html += `<label class="-link-field"><span>匹配文本</span>
+      <div class="-link-anchor-field">
         <input type="text" id="link-edit-anchor" value="${esc(text)}" placeholder="正文与预览中可见的文字，即跳转键" autocomplete="off" spellcheck="false" />
-        <div class="m0-link-target-suggest hidden" id="link-anchor-suggest"></div>
+        <div class="-link-target-suggest hidden" id="link-anchor-suggest"></div>
       </div>
     </label>`;
     html += `<div id="link-edit-search-options">${renderLinkSearchOptionsHtml("link-edit", searchOpts)}</div>`;
@@ -5959,26 +5959,26 @@
     if (isEdit) {
       html += renderLinkEditMeta(p);
       html += `<div id="link-editor-match-slot">${renderLinkEditorMatchPanelHtml()}</div>`;
-      html += `<p class="m0-config-hint m0-link-meta-hint">对应正文 <code>[[匹配文本]]</code>。输入框为搜索词；保存时按所选匹配项采用正文 canonical 文本。</p>`;
-      html += `<div class="m0-link-section-title">点击后打开</div>`;
-      html += `<p class="m0-config-hint m0-link-targets-hint">勾选目标参与跳转。</p>`;
+      html += `<p class="-config-hint -link-meta-hint">对应正文 <code>[[匹配文本]]</code>。输入框为搜索词；保存时按所选匹配项采用正文 canonical 文本。</p>`;
+      html += `<div class="-link-section-title">点击后打开</div>`;
+      html += `<p class="-config-hint -link-targets-hint">勾选目标参与跳转。</p>`;
     }
 
     if (isEdit) {
-      html += `<div class="m0-link-pick-legend">
-        <span><i class="m0-link-legend-dot sel"></i>已选（参与跳转）</span>
-        <span><i class="m0-link-legend-dot"></i>未选（保留备选）</span>
+      html += `<div class="-link-pick-legend">
+        <span><i class="-link-legend-dot sel"></i>已选（参与跳转）</span>
+        <span><i class="-link-legend-dot"></i>未选（保留备选）</span>
       </div>`;
     } else {
-      html += `<div class="m0-link-pick-legend">
-        <span><i class="m0-link-legend-dot primary"></i>队首跳转</span>
-        <span><i class="m0-link-legend-dot sel"></i>已选入队</span>
-        <span><i class="m0-link-legend-dot"></i>未选</span>
+      html += `<div class="-link-pick-legend">
+        <span><i class="-link-legend-dot primary"></i>队首跳转</span>
+        <span><i class="-link-legend-dot sel"></i>已选入队</span>
+        <span><i class="-link-legend-dot"></i>未选</span>
       </div>`;
     }
 
     if (!candidates.length && isEdit) {
-      html += `<p class="m0-muted m0-link-empty">暂无目标 · 在下方添加 KP id 或文件 stem</p>`;
+      html += `<p class="-muted -link-empty">暂无目标 · 在下方添加 KP id 或文件 stem</p>`;
     }
 
     html += candidates
@@ -5986,44 +5986,44 @@
         const rank = pickIndexRank(selectedOrder, i);
         const isSelected = rank >= 0;
         const isPrimary = !isEdit && rank === 0;
-        let dotCls = "m0-pick-dot";
+        let dotCls = "-pick-dot";
         if (isPrimary) dotCls += " is-primary";
         else if (isSelected) dotCls += " is-selected";
         const rowCls =
-          "m0-link-pick-item" +
+          "-link-pick-item" +
           (isPrimary ? " is-active" : isEdit && isSelected ? " is-selected-row" : "");
         const tid = candidateTargetId(c);
         return `<div class="${rowCls}" data-pick-row="${i}">
           <button type="button" class="${dotCls}" data-pick-dot="${i}" aria-label="选择">
-            <span class="m0-pick-dot-inner"></span>
+            <span class="-pick-dot-inner"></span>
           </button>
-          <div class="m0-link-pick-label">
-            <div class="m0-link-pick-name">${esc(c.name || tid || c.file)}</div>
-            <div class="m0-link-pick-file">${esc(c.file || tid)}</div>
+          <div class="-link-pick-label">
+            <div class="-link-pick-name">${esc(c.name || tid || c.file)}</div>
+            <div class="-link-pick-file">${esc(c.file || tid)}</div>
           </div>
-          ${isEdit ? `<button type="button" class="m0-link-remove-target" data-remove-target="${i}" title="移除">×</button>` : ""}
+          ${isEdit ? `<button type="button" class="-link-remove-target" data-remove-target="${i}" title="移除">×</button>` : ""}
         </div>`;
       })
       .join("");
 
     if (isEdit) {
-      html += `<div class="m0-link-add-row">
-        <div class="m0-link-add-field">
+      html += `<div class="-link-add-row">
+        <div class="-link-add-field">
           <input type="text" id="link-add-target" placeholder="id 或 tag:rl policy …" autocomplete="off" spellcheck="false" />
-          <div class="m0-link-target-suggest hidden" id="link-add-target-suggest"></div>
+          <div class="-link-target-suggest hidden" id="link-add-target-suggest"></div>
         </div>
         <button type="button" id="link-add-target-btn">添加</button>
       </div>`;
       html += renderLinkTargetEdgesPanel(p);
-      html += `<details class="m0-suggest-block m0-link-tag-suggest">
+      html += `<details class="-suggest-block -link-tag-suggest">
         <summary>智能匹配（M4 · tag / Lexical）</summary>
-        <p class="m0-config-hint">输入 tag: 前缀按标签检索知识点；无匹配时可创建未绑定链接或新建知识点。</p>
-        <div class="m0-suggest-list m0-suggest-placeholder-list">
-          <div class="m0-suggest-item m0-suggest-placeholder">
-            <span class="m0-suggest-score">94%</span>
-            <span class="m0-suggest-label">q-learning</span>
-            <span class="m0-muted">tag:rl · q-learning.md</span>
-            <button type="button" class="m0-btn secondary m0-btn--sm" disabled>选用</button>
+        <p class="-config-hint">输入 tag: 前缀按标签检索知识点；无匹配时可创建未绑定链接或新建知识点。</p>
+        <div class="-suggest-list -suggest-placeholder-list">
+          <div class="-suggest-item -suggest-placeholder">
+            <span class="-suggest-score">94%</span>
+            <span class="-suggest-label">q-learning</span>
+            <span class="-muted">tag:rl · q-learning.md</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>选用</button>
           </div>
         </div>
       </details>`;
@@ -6177,15 +6177,15 @@
         const file = typeof it === "string" ? "" : it.file || "";
         const score = typeof it === "string" ? 0 : it.score || 0;
         const meta = file ? basename(file) : "";
-        return `<button type="button" class="m0-link-target-opt" data-target-id="${esc(id)}" title="${esc(label)}">
-          ${score ? `<span class="m0-suggest-score">${esc(String(Math.round(score)))}</span>` : ""}
-          <span class="m0-suggest-label">${esc(label)}</span>
-          ${meta ? `<span class="m0-muted">${esc(meta)}</span>` : ""}
+        return `<button type="button" class="-link-target-opt" data-target-id="${esc(id)}" title="${esc(label)}">
+          ${score ? `<span class="-suggest-score">${esc(String(Math.round(score)))}</span>` : ""}
+          <span class="-suggest-label">${esc(label)}</span>
+          ${meta ? `<span class="-muted">${esc(meta)}</span>` : ""}
         </button>`;
       })
       .join("");
     box.classList.remove("hidden");
-    box.querySelectorAll(".m0-link-target-opt").forEach((btn) => {
+    box.querySelectorAll(".-link-target-opt").forEach((btn) => {
       btn.addEventListener("mousedown", (e) => {
         e.preventDefault();
         const input = $("#link-add-target");
@@ -6812,8 +6812,8 @@
     if (!state.currentPath) return;
     let line = Number(linkEl?.dataset?.linkLine || payload.line || 0);
     if (!line && linkEl) {
-      const block = linkEl.closest("[data-m0-src-line]");
-      if (block) line = Number(block.dataset.m0SrcLine) || 0;
+      const block = linkEl.closest("[data--src-line]");
+      if (block) line = Number(block.dataset.SrcLine) || 0;
     }
     const label = payload.displayText || payload.targetId;
     const ok = window.confirm(
@@ -6919,7 +6919,7 @@
     const target = el.dataset.linkTarget;
     const type = el.dataset.linkType || "";
     if (!target) return;
-    if (el.classList.contains("m0-link-broken")) {
+    if (el.classList.contains("-link-broken")) {
       await openLinkEditorFromElement(el);
       return;
     }
@@ -6997,9 +6997,9 @@
     const targetId = linkEl.dataset.linkTarget || "";
     const linkType = linkEl.dataset.linkType || "";
     const displayText = linkEl.textContent?.trim() || targetId;
-    const isBroken = linkEl.classList.contains("m0-link-broken");
+    const isBroken = linkEl.classList.contains("-link-broken");
     const multiRaw = linkEl.dataset.linkTargets;
-    let isMulti = linkEl.classList.contains("m0-link-multi");
+    let isMulti = linkEl.classList.contains("-link-multi");
     let multiTargets = null;
     if (multiRaw) {
       try {
@@ -7033,27 +7033,27 @@
     if (!preview) return;
     const lookup = state.linkTargetSet;
     const hasLookup = lookup instanceof Set;
-    preview.querySelectorAll(".m0-wikilink").forEach((el) => {
-      const target = el.getAttribute("data-m0-target") || "";
+    preview.querySelectorAll(".-wikilink").forEach((el) => {
+      const target = el.getAttribute("data--target") || "";
       el.classList.add("memoria-link");
       el.setAttribute("role", "link");
       el.setAttribute("data-link-target", target);
       el.setAttribute("data-link-type", "");
-      const blockEl = el.closest("[data-m0-src-line]");
-      const line = blockEl ? Number(blockEl.getAttribute("data-m0-src-line")) || 0 : 0;
+      const blockEl = el.closest("[data--src-line]");
+      const line = blockEl ? Number(blockEl.getAttribute("data--src-line")) || 0 : 0;
       el.setAttribute("data-link-line", String(line));
       if (hasLookup) {
         if (lookup.has(target)) {
-          el.classList.add("m0-link-resolved");
+          el.classList.add("-link-resolved");
           el.setAttribute("tabindex", "0");
           el.setAttribute("title", "跳转到 " + target);
         } else {
-          el.classList.add("m0-link-broken", "memoria-broken-link");
+          el.classList.add("-link-broken", "memoria-broken-link");
           el.setAttribute("tabindex", "-1");
           el.setAttribute("title", "未绑定目标: " + target);
         }
       } else {
-        el.classList.add("m0-link-pending");
+        el.classList.add("-link-pending");
         el.setAttribute("tabindex", "0");
       }
     });
@@ -7063,8 +7063,8 @@
     const preview = $("#preview");
     if (!preview) return;
     // 仅绑定未绑定过的元素，避免增量渲染时对旧链接重复绑定事件
-    preview.querySelectorAll(".memoria-link:not([data-m0-bound])").forEach((el) => {
-      el.setAttribute("data-m0-bound", "1");
+    preview.querySelectorAll(".memoria-link:not([data--bound])").forEach((el) => {
+      el.setAttribute("data--bound", "1");
       el.addEventListener("click", (e) => {
         e.preventDefault();
         onMemoriaLinkClick(el);
@@ -7197,8 +7197,8 @@
     const note =
       targetIds.length || !rawTargets?.length
         ? ""
-        : ' <span class="m0-muted">（目标未入图谱）</span>';
-    hint.innerHTML = `<span class="m0-muted">链接</span> ${esc(src)} → ${esc(tgt)}${note}`;
+        : ' <span class="-muted">（目标未入图谱）</span>';
+    hint.innerHTML = `<span class="-muted">链接</span> ${esc(src)} → ${esc(tgt)}${note}`;
   }
 
   function highlightGraphFromLinkAnchor(anchorText, line, linkEl) {
@@ -7261,7 +7261,7 @@
     editor.addEventListener("mouseover", (e) => {
       if (shouldSuppressHoverHighlight(e)) return;
       if (state.viewMode === "preview") return;
-      const row = e.target.closest(".m0-line");
+      const row = e.target.closest(".-line");
       if (!row || !editor.contains(row)) return;
       const line = +(row.dataset.line || 0);
       const anchor = singleWikilinkAnchorOnLine(state.doc?.lines?.[line - 1] || "");
@@ -7289,8 +7289,8 @@
     while (el && el !== container) {
       const row = el.closest?.("[data-line]");
       if (row && container.contains(row)) return +(row.dataset.line || 0);
-      const block = el.closest?.("[data-m0-src-line]");
-      if (block && container.contains(block)) return +(block.dataset.m0SrcLine || 0);
+      const block = el.closest?.("[data--src-line]");
+      if (block && container.contains(block)) return +(block.dataset.SrcLine || 0);
       el = el.parentElement;
     }
     return 0;
@@ -7298,9 +7298,9 @@
 
   function previewLinesInRange(preview, lo, hi) {
     const lines = new Set();
-    preview.querySelectorAll("[data-m0-src-line]").forEach((el) => {
-      const s = +(el.dataset.m0SrcLine || 0);
-      const e = +(el.dataset.m0SrcLineEnd || s);
+    preview.querySelectorAll("[data--src-line]").forEach((el) => {
+      const s = +(el.dataset.SrcLine || 0);
+      const e = +(el.dataset.SrcLineEnd || s);
       for (let n = Math.max(lo, s); n <= Math.min(hi, e); n++) lines.add(n);
     });
     return [...lines].sort((a, b) => a - b);
@@ -7327,7 +7327,7 @@
   function focusSourceLine(lineNum) {
     const lineEl = document.getElementById("line-" + lineNum);
     if (!lineEl) return;
-    const content = lineEl.querySelector(".m0-line-content");
+    const content = lineEl.querySelector(".-line-content");
     if (!content) return;
     // 滚动到该行
     const editorPane = $("#editor-pane");
@@ -7357,8 +7357,8 @@
     const startEl = document.getElementById("line-" + lo);
     const endEl = document.getElementById("line-" + hi);
     if (!startEl || !endEl) return;
-    const startContent = startEl.querySelector(".m0-line-content");
-    const endContent = endEl.querySelector(".m0-line-content");
+    const startContent = startEl.querySelector(".-line-content");
+    const endContent = endEl.querySelector(".-line-content");
     if (!startContent || !endContent) return;
     // 滚动到起始行
     const editorPane = $("#editor-pane");
@@ -7383,13 +7383,13 @@
   function applyPreviewTextSelection(preview, anchorLine, focusLine) {
     const lo = Math.min(anchorLine, focusLine);
     const hi = Math.max(anchorLine, focusLine);
-    const blocks = [...preview.querySelectorAll(".m0-src-block")]
+    const blocks = [...preview.querySelectorAll(".-src-block")]
       .filter((el) => {
-        const s = +(el.dataset.m0SrcLine || 0);
-        const e = +(el.dataset.m0SrcLineEnd || s);
+        const s = +(el.dataset.SrcLine || 0);
+        const e = +(el.dataset.SrcLineEnd || s);
         return e >= lo && s <= hi;
       })
-      .sort((a, b) => +(a.dataset.m0SrcLine || 0) - +(b.dataset.m0SrcLine || 0));
+      .sort((a, b) => +(a.dataset.SrcLine || 0) - +(b.dataset.SrcLine || 0));
     if (!blocks.length) return false;
     const skip = ".memoria-link, mjx-container";
     const textNodes = [];
@@ -7410,18 +7410,18 @@
   function markPreviewDragSelect(preview, anchorLine, focusLine) {
     const lo = Math.min(anchorLine, focusLine);
     const hi = Math.max(anchorLine, focusLine);
-    preview.querySelectorAll(".m0-src-block.is-drag-select").forEach((el) => {
+    preview.querySelectorAll(".-src-block.is-drag-select").forEach((el) => {
       el.classList.remove("is-drag-select");
     });
-    preview.querySelectorAll(".m0-src-block").forEach((el) => {
-      const s = +(el.dataset.m0SrcLine || 0);
-      const e = +(el.dataset.m0SrcLineEnd || s);
+    preview.querySelectorAll(".-src-block").forEach((el) => {
+      const s = +(el.dataset.SrcLine || 0);
+      const e = +(el.dataset.SrcLineEnd || s);
       if (e >= lo && s <= hi) el.classList.add("is-drag-select");
     });
   }
 
   function clearPreviewDragSelect(preview) {
-    preview.querySelectorAll(".m0-src-block.is-drag-select").forEach((el) => {
+    preview.querySelectorAll(".-src-block.is-drag-select").forEach((el) => {
       el.classList.remove("is-drag-select");
     });
   }
@@ -7454,8 +7454,8 @@
   function applyEditorTextSelection(anchorLine, focusLine) {
     const lo = Math.min(anchorLine, focusLine);
     const hi = Math.max(anchorLine, focusLine);
-    const startEl = document.querySelector(`#line-${lo} .m0-line-content`);
-    const endEl = document.querySelector(`#line-${hi} .m0-line-content`);
+    const startEl = document.querySelector(`#line-${lo} .-line-content`);
+    const endEl = document.querySelector(`#line-${hi} .-line-content`);
     if (!startEl || !endEl) return false;
     const startNode = startEl.firstChild || startEl;
     const endNode = endEl.firstChild || endEl;
@@ -7473,7 +7473,7 @@
   function markEditorDragSelectLines(anchorLine, focusLine) {
     const lo = Math.min(anchorLine, focusLine);
     const hi = Math.max(anchorLine, focusLine);
-    document.querySelectorAll("#editor .m0-line.is-drag-select").forEach((el) => {
+    document.querySelectorAll("#editor .-line.is-drag-select").forEach((el) => {
       el.classList.remove("is-drag-select");
     });
     for (let n = lo; n <= hi; n++) {
@@ -7482,7 +7482,7 @@
   }
 
   function clearEditorDragSelectLines() {
-    document.querySelectorAll("#editor .m0-line.is-drag-select").forEach((el) => {
+    document.querySelectorAll("#editor .-line.is-drag-select").forEach((el) => {
       el.classList.remove("is-drag-select");
     });
   }
@@ -7510,11 +7510,11 @@
     sel.addRange(range);
   }
 
-  /** 从节点向上查找最近的 .m0-line 行元素 */
+  /** 从节点向上查找最近的 .-line 行元素 */
   function closestLineEl(node) {
     let el = node;
     while (el && el !== document.body) {
-      if (el.classList && el.classList.contains("m0-line")) return el;
+      if (el.classList && el.classList.contains("-line")) return el;
       el = el.parentNode;
     }
     return null;
@@ -7544,8 +7544,8 @@
     const loEl = aNum <= fNum ? anchorLineEl : focusLineEl;
     const hiEl = aNum <= fNum ? focusLineEl : anchorLineEl;
     const anchorFirst = aNum <= fNum;
-    const loContent = loEl.querySelector(".m0-line-content");
-    const hiContent = hiEl.querySelector(".m0-line-content");
+    const loContent = loEl.querySelector(".-line-content");
+    const hiContent = hiEl.querySelector(".-line-content");
     if (!loContent || !hiContent) return;
 
     const loText = loContent.textContent;
@@ -7613,7 +7613,7 @@
     if (!sel || !sel.rangeCount || !sel.anchorNode) return { line: 1, col: 0 };
     const lineEl = closestLineEl(sel.anchorNode);
     if (!lineEl) return { line: 1, col: 0 };
-    const content = lineEl.querySelector(".m0-line-content");
+    const content = lineEl.querySelector(".-line-content");
     const len = content ? (content.textContent || "").length : 0;
     let col = sel.anchorOffset;
     if (col > len) col = len;
@@ -7648,7 +7648,7 @@
     _srcCoalesceAt = 0;
     const lineEl = document.getElementById("line-" + snap.caret.line);
     if (lineEl) {
-      const content = lineEl.querySelector(".m0-line-content");
+      const content = lineEl.querySelector(".-line-content");
       if (content) {
         focusLineContent(content, Math.min(snap.caret.col, (content.textContent || "").length));
       }
@@ -7683,12 +7683,12 @@
 
   /** 按 DOM 顺序重排全部行号（data-line / id / 行号 span），保证连续且无重复 id */
   function renumberSourceLines() {
-    const els = document.querySelectorAll("#editor .m0-line");
+    const els = document.querySelectorAll("#editor .-line");
     els.forEach((el, i) => {
       const n = i + 1;
       el.dataset.line = String(n);
       el.id = "line-" + n;
-      const lineno = el.querySelector(".m0-lineno");
+      const lineno = el.querySelector(".-lineno");
       if (lineno) lineno.textContent = String(n);
     });
   }
@@ -7702,7 +7702,7 @@
 
     // 源码编辑时：实时同步预览 + 标记脏
     editor.addEventListener("input", (e) => {
-      const content = e.target.closest(".m0-line-content");
+      const content = e.target.closest(".-line-content");
       if (!content) return;
       // 有文字时清除占位 <br>，无文字时补回
       if (content.textContent && content.querySelector("br")) {
@@ -7728,7 +7728,7 @@
 
     // 源码编辑器：Backspace/Delete/Enter 行级操作
     editor.addEventListener("keydown", (e) => {
-      const content = e.target.closest(".m0-line-content");
+      const content = e.target.closest(".-line-content");
       if (!content) return;
       const lineEl = content.closest("[data-line]");
       if (!lineEl) return;
@@ -7770,12 +7770,12 @@
 
       // 光标移动键：跨行处理
       if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) {
-        // 跨行方向键：每个 .m0-line-content 是独立 contenteditable，浏览器无法跨行
+        // 跨行方向键：每个 .-line-content 是独立 contenteditable，浏览器无法跨行
         if (e.key === "ArrowDown") {
           e.preventDefault();
           const nextLineEl = document.getElementById("line-" + (line + 1));
           if (nextLineEl) {
-            const nextContent = nextLineEl.querySelector(".m0-line-content");
+            const nextContent = nextLineEl.querySelector(".-line-content");
             if (nextContent) {
               const col = Math.min(offset, (nextContent.textContent || "").length);
               focusLineContent(nextContent, col);
@@ -7785,7 +7785,7 @@
           e.preventDefault();
           const prevLineEl = document.getElementById("line-" + (line - 1));
           if (prevLineEl) {
-            const prevContent = prevLineEl.querySelector(".m0-line-content");
+            const prevContent = prevLineEl.querySelector(".-line-content");
             if (prevContent) {
               const col = Math.min(offset, (prevContent.textContent || "").length);
               focusLineContent(prevContent, col);
@@ -7795,7 +7795,7 @@
           e.preventDefault();
           const prevLineEl = document.getElementById("line-" + (line - 1));
           if (prevLineEl) {
-            const prevContent = prevLineEl.querySelector(".m0-line-content");
+            const prevContent = prevLineEl.querySelector(".-line-content");
             if (prevContent) {
               focusLineContent(prevContent, (prevContent.textContent || "").length);
             }
@@ -7804,7 +7804,7 @@
           e.preventDefault();
           const nextLineEl = document.getElementById("line-" + (line + 1));
           if (nextLineEl) {
-            const nextContent = nextLineEl.querySelector(".m0-line-content");
+            const nextContent = nextLineEl.querySelector(".-line-content");
             if (nextContent) {
               focusLineContent(nextContent, 0);
             }
@@ -7820,7 +7820,7 @@
         _srcPushBefore();
         _srcCoalesceAt = 0;
         editReport("srcEdit", line, offset, "deleteBack-lineStart", text);
-        const prevContent = prevLineEl.querySelector(".m0-line-content");
+        const prevContent = prevLineEl.querySelector(".-line-content");
         if (!prevContent) return;
         const prevText = prevContent.textContent;
         prevContent.textContent = prevText + text;
@@ -7848,7 +7848,7 @@
         _srcPushBefore();
         _srcCoalesceAt = 0;
         editReport("srcEdit", line, offset, "deleteForward-lineEnd", text);
-        const nextContent = nextLineEl.querySelector(".m0-line-content");
+        const nextContent = nextLineEl.querySelector(".-line-content");
         if (!nextContent) return;
         content.textContent = text + nextContent.textContent;
         // 保持空行有 <br>
@@ -7869,13 +7869,13 @@
         if (headingMatch && offset === headingMatch[1].length) {
           // 在当前行前插入空行
           const newLineEl = document.createElement("div");
-          newLineEl.className = "m0-line";
+          newLineEl.className = "-line";
           newLineEl.dataset.line = String(line);
           newLineEl.id = "line-" + line;
           const newLineno = document.createElement("span");
-          newLineno.className = "m0-lineno";
+          newLineno.className = "-lineno";
           const newLineContent = document.createElement("span");
-          newLineContent.className = "m0-line-content";
+          newLineContent.className = "-line-content";
           newLineContent.contentEditable = "true";
           newLineContent.spellcheck = false;
           newLineContent.tabIndex = -1;
@@ -7906,14 +7906,14 @@
         if (!before) content.innerHTML = "<br>";
         const newNum = line + 1;
         const newLineEl = document.createElement("div");
-        newLineEl.className = "m0-line";
+        newLineEl.className = "-line";
         newLineEl.dataset.line = String(newNum);
         newLineEl.id = "line-" + newNum;
         const newLineno = document.createElement("span");
-        newLineno.className = "m0-lineno";
+        newLineno.className = "-lineno";
         newLineno.textContent = String(newNum);
         const newLineContent = document.createElement("span");
-        newLineContent.className = "m0-line-content";
+        newLineContent.className = "-line-content";
         newLineContent.contentEditable = "true";
         newLineContent.spellcheck = false;
         newLineContent.tabIndex = -1;
@@ -7939,7 +7939,7 @@
     });
 
     editor.addEventListener("drop", (e) => {
-      if (e.target.closest(".m0-line-content")) e.preventDefault();
+      if (e.target.closest(".-line-content")) e.preventDefault();
     });
 
     // 粘贴多行文本：逐行拆分插入。contenteditable 原生粘贴会把换行压成 <br>/<div>，
@@ -7947,7 +7947,7 @@
     // 右键「粘贴」菜单也复用本函数（原生 paste 事件无法程序化构造 clipboardData）。
     editor.addEventListener("paste", (e) => {
       const t = e.target;
-      const contentEl = t && t.closest ? t.closest(".m0-line-content") : null;
+      const contentEl = t && t.closest ? t.closest(".-line-content") : null;
       if (!contentEl || !editor.contains(contentEl)) return;
       const clip = e.clipboardData || window.clipboardData;
       if (!clip) return;
@@ -7961,7 +7961,7 @@
      * 多行文本粘贴核心：读剪贴板文本 → 逐行拆分插入源码编辑器。
      * 由原生 paste 事件与右键「粘贴」菜单共用。
      * @param {string} raw 剪贴板纯文本
-     * @param {HTMLElement} contentEl 目标 .m0-line-content
+     * @param {HTMLElement} contentEl 目标 .-line-content
      */
     function applyEditorPaste(raw, contentEl) {
       // 粘贴整体作为一个撤销单元：先入栈（正文未变），期间 input 事件不再入栈
@@ -7979,7 +7979,7 @@
         if (a && b && a !== b) {
           deleteCrossLineSelection(a, b);
           curLineEl = a;
-          cur = a.querySelector(".m0-line-content");
+          cur = a.querySelector(".-line-content");
         }
       }
       // 首段替换当前（折叠）光标/选区
@@ -8010,14 +8010,14 @@
       for (let i = 1; i < parts.length; i++) {
         lastLineNum += 1;
         const newLineEl = document.createElement("div");
-        newLineEl.className = "m0-line";
+        newLineEl.className = "-line";
         newLineEl.dataset.line = String(lastLineNum);
         newLineEl.id = "line-" + lastLineNum;
         const newLineno = document.createElement("span");
-        newLineno.className = "m0-lineno";
+        newLineno.className = "-lineno";
         newLineno.textContent = String(lastLineNum);
         const newLineContent = document.createElement("span");
-        newLineContent.className = "m0-line-content";
+        newLineContent.className = "-line-content";
         newLineContent.contentEditable = "true";
         newLineContent.spellcheck = false;
         newLineContent.tabIndex = -1;
@@ -8064,8 +8064,8 @@
       if (sel && sel.anchorNode) {
         const an = sel.anchorNode;
         content = an.nodeType === Node.TEXT_NODE
-          ? (an.parentElement ? an.parentElement.closest(".m0-line-content") : null)
-          : (an.closest ? an.closest(".m0-line-content") : null);
+          ? (an.parentElement ? an.parentElement.closest(".-line-content") : null)
+          : (an.closest ? an.closest(".-line-content") : null);
       }
       if (!content || !editor.contains(content)) {
         setStatus("请先将光标置于源码编辑区");
@@ -8078,7 +8078,7 @@
     // （全局捕获阶段已屏蔽原生右键菜单；有选区时交还 bindEditorSelectionMenu 弹链接/知识点菜单）
     editor.addEventListener("contextmenu", (e) => {
       if (!state.currentPath) return;
-      if (!(e.target && e.target.closest && e.target.closest(".m0-line-content"))) return;
+      if (!(e.target && e.target.closest && e.target.closest(".-line-content"))) return;
       const info = getSelectionInContainer(editor);
       if (info) return;
       e.preventDefault();
@@ -8093,7 +8093,7 @@
 
     editor.addEventListener("mousedown", (e) => {
       if (e.button !== 0) return;
-      const content = e.target.closest(".m0-line-content");
+      const content = e.target.closest(".-line-content");
       if (!content) return;
       const line = +(content.closest("[data-line]")?.dataset.line || 0);
       if (!line) return;
@@ -8102,7 +8102,7 @@
 
     editor.addEventListener("mousemove", (e) => {
       if (!dragSelect || e.buttons !== 1) return;
-      const row = e.target.closest(".m0-line");
+      const row = e.target.closest(".-line");
       if (!row || !editor.contains(row)) return;
       const focusLine = +(row.dataset.line || 0);
       if (!focusLine || focusLine === dragSelect.focusLine) return;
@@ -8123,7 +8123,7 @@
     window.addEventListener("mouseup", endDragSelect);
 
     editor.addEventListener("dblclick", (e) => {
-      const content = e.target.closest(".m0-line-content");
+      const content = e.target.closest(".-line-content");
       if (!content) return;
       const line = +(content.closest("[data-line]")?.dataset.line || 0);
       if (!line) return;
@@ -8223,10 +8223,10 @@
     function reRenderBlock(blockIndex) {
       var preview = $("#preview");
       if (!preview) return;
-      var container = preview.querySelector(".m0-preview-content") || preview;
+      var container = preview.querySelector(".-preview-content") || preview;
       R.renderRange(_doc, blockIndex, blockIndex + 1, container);
       stampBlockLines(preview, _doc);
-      // 增量渲染替换了 block DOM：.m0-math span 是新节点，需重新触发 MathJax 排版，
+      // 增量渲染替换了 block DOM：.-math span 是新节点，需重新触发 MathJax 排版，
       // 否则行内公式会以裸文本显示（样式应用/笔刷后“公式预览失败”，全量刷新才恢复）
       if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
         try { window.MathJax.typesetPromise([container]); } catch (e) { }
@@ -10038,18 +10038,18 @@
     if (!preview || !window.MemoriaLinkContextMenu) return;
     preview.addEventListener("contextmenu", (e) => {
       // 图片右键：替换图片 / 删除图片（仅删引用）
-      const imgEl = e.target.closest("img.m0-preview-image");
+      const imgEl = e.target.closest("img.-preview-image");
       if (imgEl) {
         e.preventDefault();
-        const blockEl = imgEl.closest(".m0-image-block");
-        const lineNum = blockEl ? +(blockEl.getAttribute("data-m0-src-line") || 0) : 0;
+        const blockEl = imgEl.closest(".-image-block");
+        const lineNum = blockEl ? +(blockEl.getAttribute("data--src-line") || 0) : 0;
         if (lineNum > 0) {
           e.stopPropagation();
           showImageContextMenu(e.clientX, e.clientY, lineNum);
         }
         return;
       }
-      if (e.target.closest(".memoria-link, .m0-wikilink, a[href]")) return;
+      if (e.target.closest(".memoria-link, .-wikilink, a[href]")) return;
       if (!state.currentPath) return;
       const info = getSelectionInContainer(preview);
       if (!info) {
@@ -10198,12 +10198,12 @@
   }
 
   function _resetFormatToolbarState() {
-    const b = document.querySelector('.m0-fmt-btn[data-fmt="bold"]');
-    const i = document.querySelector('.m0-fmt-btn[data-fmt="italic"]');
+    const b = document.querySelector('.-fmt-btn[data-fmt="bold"]');
+    const i = document.querySelector('.-fmt-btn[data-fmt="italic"]');
     if (b) b.classList.remove("active");
     if (i) i.classList.remove("active");
-    _setSwatchActive(".m0-hl-swatch", "data-hl-color", undefined);
-    _setSwatchActive(".m0-fc-swatch", "data-fc-color", undefined);
+    _setSwatchActive(".-hl-swatch", "data-hl-color", undefined);
+    _setSwatchActive(".-fc-swatch", "data-fc-color", undefined);
   }
 
   /** 根据预览区实时选区刷新工具栏 active 指示 */
@@ -10211,12 +10211,12 @@
     // 画笔激活：工具栏显示画笔已选样式（B/I 高亮 + 对应色块加框标识）。
     // 高亮 / 文字颜色两个色板、B/I 各自独立显示选中状态，右键可单独取消。
     if (_brush) {
-      const b = document.querySelector('.m0-fmt-btn[data-fmt="bold"]');
-      const i = document.querySelector('.m0-fmt-btn[data-fmt="italic"]');
+      const b = document.querySelector('.-fmt-btn[data-fmt="bold"]');
+      const i = document.querySelector('.-fmt-btn[data-fmt="italic"]');
       if (b) b.classList.toggle("active", !!_brush.bold);
       if (i) i.classList.toggle("active", !!_brush.italic);
-      _setSwatchActive(".m0-hl-swatch", "data-hl-color", _brush.highlight);
-      _setSwatchActive(".m0-fc-swatch", "data-fc-color", _brush.fontcolor);
+      _setSwatchActive(".-hl-swatch", "data-hl-color", _brush.highlight);
+      _setSwatchActive(".-fc-swatch", "data-fc-color", _brush.fontcolor);
       _syncBrushArmed();
       return;
     }
@@ -10233,12 +10233,12 @@
     const styles = EditSync.getSelectionStyles(r);
     if (!styles) { _resetFormatToolbarState(); return; }
 
-    const b = document.querySelector('.m0-fmt-btn[data-fmt="bold"]');
-    const i = document.querySelector('.m0-fmt-btn[data-fmt="italic"]');
+    const b = document.querySelector('.-fmt-btn[data-fmt="bold"]');
+    const i = document.querySelector('.-fmt-btn[data-fmt="italic"]');
     if (b) b.classList.toggle("active", !!styles.bold);
     if (i) i.classList.toggle("active", !!styles.italic);
-    _setSwatchActive(".m0-hl-swatch", "data-hl-color", styles.highlightActive ? (styles.highlightColor || "yellow") : undefined);
-    _setSwatchActive(".m0-fc-swatch", "data-fc-color", styles.fontColorActive ? styles.fontColor : undefined);
+    _setSwatchActive(".-hl-swatch", "data-hl-color", styles.highlightActive ? (styles.highlightColor || "yellow") : undefined);
+    _setSwatchActive(".-fc-swatch", "data-fc-color", styles.fontColorActive ? styles.fontColor : undefined);
   }
 
   // 选区变化时刷新格式工具栏 active 状态（rAF 合并节流）
@@ -10252,13 +10252,13 @@
     });
   });
 
-  // contentEditable=false 原子块（行内公式 .m0-math 等）浏览器不渲染原生
-  // 选区高亮；检测选区是否覆盖这些原子块，动态加 .m0-sel-covered 高亮，
+  // contentEditable=false 原子块（行内公式 .-math 等）浏览器不渲染原生
+  // 选区高亮；检测选区是否覆盖这些原子块，动态加 .-sel-covered 高亮，
   // 让用户涂抹时能看到公式也被选中。
   function _updateAtomicSelectionHighlight() {
     const preview = $("#preview");
     if (!preview) return;
-    const atoms = preview.querySelectorAll(".m0-math");
+    const atoms = preview.querySelectorAll(".-math");
     if (!atoms.length) return;
     const sel = window.getSelection();
     let r = null;
@@ -10292,7 +10292,7 @@
           }
         } catch (err) { log("MAP", "selHit ERR " + err); }
       }
-      el.classList.toggle("m0-sel-covered", isCovered);
+      el.classList.toggle("-sel-covered", isCovered);
       if (isCovered) covered++;
     }
     log("MAP", "selHighlight sel=" + domDesc + " mathTotal=" + atoms.length + " covered=" + covered);
@@ -10308,13 +10308,13 @@
 
   function bindFormatToolbar() {
     // 捕获阶段记录预览区选区，避免点击按钮后选区丢失
-    const fmtBar = document.querySelector(".m0-format-bar");
+    const fmtBar = document.querySelector(".-format-bar");
     if (fmtBar && !fmtBar.dataset.selectionGuardBound) {
       fmtBar.dataset.selectionGuardBound = "1";
       fmtBar.addEventListener("mousedown", capturePreviewSelection, true);
     }
     // B and I buttons（已有选区→应用/切换；无选区→进入画笔模式）
-    document.querySelectorAll(".m0-fmt-btn[data-fmt]").forEach((btn) => {
+    document.querySelectorAll(".-fmt-btn[data-fmt]").forEach((btn) => {
       if (btn.dataset.fmt === "highlight" || btn.dataset.fmt === "fontcolor") return; // handled by dropdown
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -10327,10 +10327,10 @@
       });
     });
     // Dropdown toggle
-    document.querySelectorAll(".m0-fmt-dropdown > .m0-fmt-btn").forEach((btn) => {
+    document.querySelectorAll(".-fmt-dropdown > .-fmt-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
-        const dd = btn.closest(".m0-fmt-dropdown");
+        const dd = btn.closest(".-fmt-dropdown");
         const wasOpen = dd.classList.contains("open");
         closeAllDropdowns();
         if (!wasOpen) {
@@ -10340,7 +10340,7 @@
       });
     });
     // Highlight color swatches（已有选区→直接应用；无选区→进入画笔模式）
-    document.querySelectorAll(".m0-hl-swatch").forEach((sw) => {
+    document.querySelectorAll(".-hl-swatch").forEach((sw) => {
       sw.addEventListener("click", (e) => {
         e.stopPropagation();
         const color = sw.dataset.hlColor;
@@ -10353,7 +10353,7 @@
       });
     });
     // Font color swatches（已有选区→直接应用；无选区→进入画笔模式）
-    document.querySelectorAll(".m0-fc-swatch").forEach((sw) => {
+    document.querySelectorAll(".-fc-swatch").forEach((sw) => {
       sw.addEventListener("click", (e) => {
         e.stopPropagation();
         const color = sw.dataset.fcColor;
@@ -10401,7 +10401,7 @@
     // 窗口尺寸变化时重新定位已打开的下拉菜单
     if (!fmtBar || !fmtBar.dataset.resizeBound) {
       window.addEventListener("resize", () => {
-        document.querySelectorAll(".m0-fmt-dropdown.open").forEach((dd) => positionDropdown(dd));
+        document.querySelectorAll(".-fmt-dropdown.open").forEach((dd) => positionDropdown(dd));
       });
       if (fmtBar) fmtBar.dataset.resizeBound = "1";
     }
@@ -10452,34 +10452,34 @@
   function ensureColorPicker() {
     if (_cp) return _cp;
     const mask = document.createElement("div");
-    mask.className = "m0-color-picker-mask";
+    mask.className = "-color-picker-mask";
     mask.style.display = "none";
     mask.innerHTML =
-      '<div class="m0-color-picker">' +
-      '  <div class="m0-cp-title">添加自定义颜色</div>' +
-      '  <div class="m0-cp-preview"></div>' +
-      '  <div class="m0-cp-sv"><div class="m0-cp-cursor"></div></div>' +
-      '  <input type="range" class="m0-cp-hue" min="0" max="360" step="1" value="0">' +
-      '  <div class="m0-cp-presets"></div>' +
-      '  <div class="m0-cp-row">' +
-      '    <input type="text" class="m0-cp-hex" value="#ff0000" spellcheck="false" maxlength="7">' +
-      '    <button type="button" class="m0-cp-cancel">取消</button>' +
-      '    <button type="button" class="m0-cp-ok">确定</button>' +
+      '<div class="-color-picker">' +
+      '  <div class="-cp-title">添加自定义颜色</div>' +
+      '  <div class="-cp-preview"></div>' +
+      '  <div class="-cp-sv"><div class="-cp-cursor"></div></div>' +
+      '  <input type="range" class="-cp-hue" min="0" max="360" step="1" value="0">' +
+      '  <div class="-cp-presets"></div>' +
+      '  <div class="-cp-row">' +
+      '    <input type="text" class="-cp-hex" value="#ff0000" spellcheck="false" maxlength="7">' +
+      '    <button type="button" class="-cp-cancel">取消</button>' +
+      '    <button type="button" class="-cp-ok">确定</button>' +
       "  </div>" +
       "</div>";
     document.body.appendChild(mask);
     const box = mask.firstElementChild;
     const cp = {
       mask, box,
-      title: box.querySelector(".m0-cp-title"),
-      preview: box.querySelector(".m0-cp-preview"),
-      sv: box.querySelector(".m0-cp-sv"),
-      cursor: box.querySelector(".m0-cp-cursor"),
-      hue: box.querySelector(".m0-cp-hue"),
-      presets: box.querySelector(".m0-cp-presets"),
-      hex: box.querySelector(".m0-cp-hex"),
-      ok: box.querySelector(".m0-cp-ok"),
-      cancel: box.querySelector(".m0-cp-cancel")
+      title: box.querySelector(".-cp-title"),
+      preview: box.querySelector(".-cp-preview"),
+      sv: box.querySelector(".-cp-sv"),
+      cursor: box.querySelector(".-cp-cursor"),
+      hue: box.querySelector(".-cp-hue"),
+      presets: box.querySelector(".-cp-presets"),
+      hex: box.querySelector(".-cp-hex"),
+      ok: box.querySelector(".-cp-ok"),
+      cancel: box.querySelector(".-cp-cancel")
     };
     // 常用色快捷条
     _CP_PRESETS.forEach((c) => {
@@ -10505,7 +10505,7 @@
       cp.cursor.style.left = (_cpS * 100) + "%";
       cp.cursor.style.top = ((1 - _cpL) * 100) + "%";
       if (String(Math.round(_cpH)) !== cp.hue.value) cp.hue.value = String(Math.round(_cpH));
-      cp.hue.style.setProperty("--m0-cp-hue-thumb", "hsl(" + Math.round(_cpH) + ", 100%, 50%)");
+      cp.hue.style.setProperty("---cp-hue-thumb", "hsl(" + Math.round(_cpH) + ", 100%, 50%)");
       cp.preview.style.background = hex;
       if (updateHex && document.activeElement !== cp.hex) cp.hex.value = hex;
     }
@@ -10598,8 +10598,8 @@
   }
 
   // ---- 自定义颜色管理（添加 / 右键删除 / localStorage 持久化）----
-  const HL_CUSTOM_KEY = "m0-hl-custom-colors";
-  const FC_CUSTOM_KEY = "m0-fc-custom-colors";
+  const HL_CUSTOM_KEY = "-hl-custom-colors";
+  const FC_CUSTOM_KEY = "-fc-custom-colors";
 
   function _customColorKey(kind) {
     return kind === "highlight" ? HL_CUSTOM_KEY : FC_CUSTOM_KEY;
@@ -10684,23 +10684,23 @@
   function showSwatchCtxMenu(e, hex, kind) {
     hideSwatchCtxMenu();
     const menu = document.createElement("div");
-    menu.className = "m0-context-menu";
+    menu.className = "-context-menu";
     menu.setAttribute("role", "menu");
 
     const head = document.createElement("button");
     head.type = "button";
-    head.className = "m0-ctx-item disabled";
+    head.className = "-ctx-item disabled";
     head.setAttribute("role", "menuitem");
-    head.innerHTML = '<span class="m0-ctx-head">自定义颜色 ' + hex + "</span>";
+    head.innerHTML = '<span class="-ctx-head">自定义颜色 ' + hex + "</span>";
     menu.appendChild(head);
 
     const div = document.createElement("div");
-    div.className = "m0-ctx-divider";
+    div.className = "-ctx-divider";
     menu.appendChild(div);
 
     const del = document.createElement("button");
     del.type = "button";
-    del.className = "m0-ctx-item danger";
+    del.className = "-ctx-item danger";
     del.setAttribute("role", "menuitem");
     del.textContent = "删除该颜色";
     del.addEventListener("click", (ev) => {
@@ -10733,9 +10733,9 @@
 
   /** 重建色板中的自定义颜色块（幂等：先清后建），并绑定 点击=应用 / 右键=菜单 */
   function renderCustomSwatches(kind) {
-    const menu = document.querySelector(kind === "highlight" ? ".m0-hl-colors" : ".m0-fc-colors");
+    const menu = document.querySelector(kind === "highlight" ? ".-hl-colors" : ".-fc-colors");
     if (!menu) return;
-    menu.querySelectorAll(".m0-custom-swatch").forEach((el) => el.remove());
+    menu.querySelectorAll(".-custom-swatch").forEach((el) => el.remove());
     const noneBtn = menu.querySelector(kind === "highlight" ? "[data-hl-none]" : "[data-fc-none]");
     const dataAttr = kind === "highlight" ? "data-hl-color" : "data-fc-color";
     const fmt = kind === "highlight" ? "highlight" : "fontcolor";
@@ -10743,7 +10743,7 @@
     colors.forEach((hex) => {
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = (kind === "highlight" ? "m0-hl-swatch" : "m0-fc-swatch") + " m0-custom-swatch";
+      btn.className = (kind === "highlight" ? "-hl-swatch" : "-fc-swatch") + " -custom-swatch";
       btn.setAttribute(dataAttr, hex);
       btn.title = "自定义颜色 " + hex + "（右键菜单可删除）";
       btn.style.backgroundColor = hex;
@@ -10787,7 +10787,7 @@
   }
 
   function closeAllDropdowns() {
-    document.querySelectorAll(".m0-fmt-dropdown.open").forEach((d) => d.classList.remove("open"));
+    document.querySelectorAll(".-fmt-dropdown.open").forEach((d) => d.classList.remove("open"));
   }
 
   // ═══════════════════════════════════════════════════════════════
@@ -10805,10 +10805,10 @@
   /** 鼠标目标对应的样式类型（B/I/H▾/色▾/对应色块，含自定义色块），否则 null */
   function _targetStyleFmt(t) {
     if (!t || !t.closest) return null;
-    if (t.closest('.m0-fmt-btn[data-fmt="bold"]')) return "bold";
-    if (t.closest('.m0-fmt-btn[data-fmt="italic"]')) return "italic";
-    if (t.closest('.m0-fmt-btn[data-fmt="highlight"], .m0-hl-swatch')) return "highlight";
-    if (t.closest('.m0-fmt-btn[data-fmt="fontcolor"], .m0-fc-swatch')) return "fontcolor";
+    if (t.closest('.-fmt-btn[data-fmt="bold"]')) return "bold";
+    if (t.closest('.-fmt-btn[data-fmt="italic"]')) return "italic";
+    if (t.closest('.-fmt-btn[data-fmt="highlight"], .-hl-swatch')) return "highlight";
+    if (t.closest('.-fmt-btn[data-fmt="fontcolor"], .-fc-swatch')) return "fontcolor";
     return null;
   }
 
@@ -10840,11 +10840,11 @@
 
   /** 同步 brush-armed 标识（给每个已选样式对应的格式按钮加高亮） */
   function _syncBrushArmed() {
-    document.querySelectorAll(".m0-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
+    document.querySelectorAll(".-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
     if (!_brush) return;
     ["bold", "italic", "highlight", "fontcolor"].forEach((fmt) => {
       if (_isStyleSelected(fmt)) {
-        const el = document.querySelector('.m0-fmt-btn[data-fmt="' + fmt + '"]');
+        const el = document.querySelector('.-fmt-btn[data-fmt="' + fmt + '"]');
         if (el) el.classList.add("brush-armed");
       }
     });
@@ -10858,7 +10858,7 @@
     else if (fmt === "highlight") _brush.highlight = color;
     else if (fmt === "fontcolor") _brush.fontcolor = color;
     closeAllDropdowns();
-    document.body.classList.add("m0-brush-active");
+    document.body.classList.add("-brush-active");
     updateFormatToolbarState();
     setStatus("画笔已就绪：可继续点选其他样式，左键拖动涂抹一并应用；右键点击已选样式单独取消");
   }
@@ -10867,8 +10867,8 @@
   function cancelBrush() {
     if (!_brush) return;
     _brush = null;
-    document.body.classList.remove("m0-brush-active");
-    document.querySelectorAll(".m0-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
+    document.body.classList.remove("-brush-active");
+    document.querySelectorAll(".-fmt-btn.brush-armed").forEach((b) => b.classList.remove("brush-armed"));
     updateFormatToolbarState();
   }
 
@@ -10929,10 +10929,10 @@
     if (e.button !== 0) return;
     if (!e.target || !e.target.closest) return;
     // 色块 / 下拉开关 / 添加颜色 / 取色面板 / 右键菜单：交给各自的 click 处理（重新武装或保持）
-    if (e.target.closest(".m0-hl-swatch, .m0-fc-swatch, .m0-hl-custom, .m0-fc-custom, .m0-fmt-dropdown > .m0-fmt-btn, .m0-color-picker-mask, .m0-context-menu")) return;
+    if (e.target.closest(".-hl-swatch, .-fc-swatch, .-hl-custom, .-fc-custom, .-fmt-dropdown > .-fmt-btn, .-color-picker-mask, .-context-menu")) return;
     // 工具栏按钮 / 文档区域之外点击：保持画笔（不取消），可继续回来涂抹；
     // 画笔类型切换由各按钮自身的 click（armBrush 覆盖）负责
-    if (e.target.closest(".m0-fmt-btn, .m0-view-btn, #block-edit-bar, .m0-kp-toolbar")) return;
+    if (e.target.closest(".-fmt-btn, .-view-btn, #block-edit-bar, .-kp-toolbar")) return;
     // 笔刷仅作用于预览区：源码编辑器内涂抹不应用样式（笔刷保持武装，可回到预览继续涂）
     if (!e.target.closest("#preview")) return;
 
@@ -10964,9 +10964,9 @@
     const t = e.target;
     if (!t || !t.closest) return;
     // 自定义色块：保留定制删除菜单（画笔不取消，自身 handler 会 preventDefault）
-    if (t.closest(".m0-custom-swatch")) return;
+    if (t.closest(".-custom-swatch")) return;
     // 文件树 / 应用内弹窗 / 文件树右键菜单：放行给对应 handler，画笔不拦截
-    if (t.closest("#file-tree") || t.closest(".m0-modal") || t.closest("#" + FT_MENU_ID)) return;
+    if (t.closest("#file-tree") || t.closest(".-modal") || t.closest("#" + FT_MENU_ID)) return;
     // 屏蔽原生/其他右键菜单（预览区、工具栏等）
     e.preventDefault();
     e.stopPropagation();
@@ -10977,14 +10977,14 @@
     }
   }, true);
   // 格式工具栏 / 取色面板等工具 UI 上右键：屏蔽网页原生右键菜单。
-  // 自定义色块（.m0-custom-swatch）保留其定制删除菜单（自身 handler 会 preventDefault），此处跳过。
+  // 自定义色块（.-custom-swatch）保留其定制删除菜单（自身 handler 会 preventDefault），此处跳过。
   // 源码编辑器 / 预览区：仅 preventDefault 屏蔽原生菜单，不中断传播，
   // 以便选中文本右键的自定义菜单（创建链接/KP 等）照常弹出。
   document.addEventListener("contextmenu", (e) => {
     const t = e.target;
     if (!t || !t.closest) return;
-    if (t.closest(".m0-custom-swatch")) return;
-    if (t.closest(".m0-format-bar, .m0-color-picker-mask, .m0-context-menu")) {
+    if (t.closest(".-custom-swatch")) return;
+    if (t.closest(".-format-bar, .-color-picker-mask, .-context-menu")) {
       e.preventDefault();
       e.stopPropagation();
       return;
@@ -11004,8 +11004,8 @@
    * 垂直：优先向下展开，越界则向上展开。
    */
   function positionDropdown(dd) {
-    const menu = dd.querySelector(".m0-fmt-dropdown-menu");
-    const btn = dd.querySelector(".m0-fmt-btn");
+    const menu = dd.querySelector(".-fmt-dropdown-menu");
+    const btn = dd.querySelector(".-fmt-btn");
     if (!menu || !btn) return;
 
     const menuRect = menu.getBoundingClientRect();
@@ -11045,7 +11045,7 @@
       setStatus("格式化仅支持单行内选择");
       return null;
     }
-    const lineEl = document.querySelector(`#line-${anchorLine} .m0-line-content`);
+    const lineEl = document.querySelector(`#line-${anchorLine} .-line-content`);
     if (!lineEl) return null;
 
     // Calculate character offsets within the line text
@@ -11138,7 +11138,7 @@
   }
 
   function _focusEditorCol(lineNumber, col) {
-    const lineEl = document.querySelector(`#line-${lineNumber} .m0-line-content`);
+    const lineEl = document.querySelector(`#line-${lineNumber} .-line-content`);
     if (!lineEl || !lineEl.firstChild) return;
     const textNode = lineEl.firstChild;
     const range = document.createRange();
@@ -11200,20 +11200,20 @@
   }
 
   function previewElOverlapsRange(el, startLine, endLine) {
-    const elStart = +(el.dataset.m0SrcLine || 0);
-    const elEnd = +(el.dataset.m0SrcLineEnd || elStart);
+    const elStart = +(el.dataset.SrcLine || 0);
+    const elEnd = +(el.dataset.SrcLineEnd || elStart);
     if (!elStart) return false;
     return elStart <= endLine && elEnd >= startLine;
   }
 
   function clearHighlights() {
-    document.querySelectorAll(".m0-line").forEach((el) => {
+    document.querySelectorAll(".-line").forEach((el) => {
       el.classList.remove("kp-highlight-flash", "kp-error-flash", "fade-out", "in-range", "kp-hover");
     });
   }
 
   function clearKpListItemErrorHighlight() {
-    document.querySelectorAll(".m0-kp-item.error-highlight").forEach((el) => {
+    document.querySelectorAll(".-kp-item.error-highlight").forEach((el) => {
       el.classList.remove("error-highlight");
     });
   }
@@ -11226,7 +11226,7 @@
   }
 
   function clearKpHoverHighlight() {
-    document.querySelectorAll(".m0-line.kp-hover").forEach((el) => {
+    document.querySelectorAll(".-line.kp-hover").forEach((el) => {
       el.classList.remove("in-range", "kp-hover");
     });
     if (state.kpHighlightClearTimer == null && state.kpHighlightFadeTimer == null) {
@@ -11238,7 +11238,7 @@
     const kp = (state.doc?.knowledge_points || []).find((k) => k.id === kpId);
     const rr = kp?.range_resolved;
     if (!rr?.ok) return;
-    document.querySelectorAll(".m0-line.kp-hover").forEach((el) => {
+    document.querySelectorAll(".-line.kp-hover").forEach((el) => {
       el.classList.remove("in-range", "kp-hover");
     });
     for (let n = rr.start_line; n <= rr.end_line; n++) {
@@ -11292,10 +11292,10 @@
     }
 
     state.kpHighlightFadeTimer = window.setTimeout(() => {
-      document.querySelectorAll(".m0-line.kp-highlight-flash").forEach((el) => {
+      document.querySelectorAll(".-line.kp-highlight-flash").forEach((el) => {
         el.classList.add("fade-out");
       });
-      document.getElementById("m0-preview-range-band")?.classList.add("fade-out");
+      document.getElementById("-preview-range-band")?.classList.add("fade-out");
       state.kpHighlightFadeTimer = null;
     }, 800);
 
@@ -11330,7 +11330,7 @@
   // 左侧知识点列表定位高亮：滚动到对应 KP 并添加 error 样式
   function highlightKpListItemWithError(kpId) {
     if (!kpId) return;
-    const items = document.querySelectorAll(".m0-kp-item");
+    const items = document.querySelectorAll(".-kp-item");
     for (const item of items) {
       if (item.dataset.kp === kpId) {
         item.classList.add("error-highlight");
@@ -11345,7 +11345,7 @@
     if (!kpId) return;
     const kpList = $("#kp-list");
     if (!kpList) return;
-    const items = kpList.querySelectorAll(".m0-kp-item");
+    const items = kpList.querySelectorAll(".-kp-item");
     for (const item of items) {
       if (item.dataset.kp === kpId) {
         const containerTop = kpList.getBoundingClientRect().top;
@@ -11357,7 +11357,7 @@
   }
 
   function clearPreviewHighlights() {
-    document.getElementById("m0-preview-range-band")?.remove();
+    document.getElementById("-preview-range-band")?.remove();
   }
 
   function previewOffsetWithin(el, container) {
@@ -11370,7 +11370,7 @@
   }
 
   function layoutPreviewRangeBand(preview, startLine, endLine) {
-    const matches = [...preview.querySelectorAll("[data-m0-src-line]")].filter((el) =>
+    const matches = [...preview.querySelectorAll("[data--src-line]")].filter((el) =>
       previewElOverlapsRange(el, startLine, endLine)
     );
     if (!matches.length) return null;
@@ -11384,7 +11384,7 @@
       const pos = previewOffsetWithin(el, preview);
       top = Math.min(top, pos.top);
       bottom = Math.max(bottom, pos.bottom);
-      const ln = +(el.dataset.m0SrcLine || 0);
+      const ln = +(el.dataset.SrcLine || 0);
       if (ln >= startLine && ln < firstLine) {
         firstLine = ln;
         first = el;
@@ -11399,11 +11399,11 @@
 
     if (!Number.isFinite(top) || bottom <= top) return first;
 
-    let band = document.getElementById("m0-preview-range-band");
+    let band = document.getElementById("-preview-range-band");
     if (!band) {
       band = document.createElement("div");
-      band.id = "m0-preview-range-band";
-      band.className = "m0-preview-range-band";
+      band.id = "-preview-range-band";
+      band.className = "-preview-range-band";
       band.setAttribute("aria-hidden", "true");
       preview.appendChild(band);
     }
@@ -11421,7 +11421,7 @@
       clearPreviewHighlights();
     }
     const first = layoutPreviewRangeBand(preview, startLine, endLine);
-    const band = document.getElementById("m0-preview-range-band");
+    const band = document.getElementById("-preview-range-band");
     if (band) {
       band.classList.toggle("error", !!opts?.error);
     }
@@ -11484,11 +11484,11 @@
 
   function assistPreviewToolbarHtml() {
     const mode = state.assistPreviewMode || "source";
-    return `<div class="m0-assist-preview-head">
-      <span class="m0-muted">范围预览</span>
-      <div class="m0-view-toggle" role="tablist" aria-label="预览模式">
-        <button type="button" class="m0-view-btn${mode === "source" ? " active" : ""}" data-assist-view="source">源码</button>
-        <button type="button" class="m0-view-btn${mode === "markdown" ? " active" : ""}" data-assist-view="markdown">Markdown</button>
+    return `<div class="-assist-preview-head">
+      <span class="-muted">范围预览</span>
+      <div class="-view-toggle" role="tablist" aria-label="预览模式">
+        <button type="button" class="-view-btn${mode === "source" ? " active" : ""}" data-assist-view="source">源码</button>
+        <button type="button" class="-view-btn${mode === "markdown" ? " active" : ""}" data-assist-view="markdown">Markdown</button>
       </div>
     </div>`;
   }
@@ -11567,7 +11567,7 @@
   }
 
   function assistLineClass(n, start, end) {
-    let cls = "m0-line";
+    let cls = "-line";
     if (n >= start && n <= end) cls += " assist-in-range";
     if (n === start) cls += " assist-range-start";
     if (n === end && end !== start) cls += " assist-range-end";
@@ -11580,26 +11580,26 @@
     const el = document.createElement("div");
     el.className = assistLineClass(n, start, end);
     el.dataset.line = String(n);
-    el.innerHTML = `<span class="m0-lineno">${n}</span><span class="m0-line-content">${esc(line)}</span>`;
+    el.innerHTML = `<span class="-lineno">${n}</span><span class="-line-content">${esc(line)}</span>`;
     return el;
   }
 
   function updateAssistSourceHighlights(wrap, start, end) {
-    wrap.querySelectorAll("#assist-preview-scroll .m0-line").forEach((el) => {
+    wrap.querySelectorAll("#assist-preview-scroll .-line").forEach((el) => {
       const n = +el.dataset.line;
       el.className = assistLineClass(n, start, end);
     });
   }
 
   function updateAssistEllipsis(wrap, viewStart, viewEnd, total) {
-    const top = wrap.querySelector(".m0-assist-preview-ellipsis-top");
-    const bottom = wrap.querySelector(".m0-assist-preview-ellipsis-bottom");
+    const top = wrap.querySelector(".-assist-preview-ellipsis-top");
+    const bottom = wrap.querySelector(".-assist-preview-ellipsis-bottom");
     if (viewStart > 1) {
       const text = `… 上文第 1–${viewStart - 1} 行`;
       if (top) top.textContent = text;
       else {
         const el = document.createElement("div");
-        el.className = "m0-assist-preview-ellipsis m0-assist-preview-ellipsis-top m0-muted";
+        el.className = "-assist-preview-ellipsis -assist-preview-ellipsis-top -muted";
         el.textContent = text;
         wrap.insertBefore(el, wrap.querySelector("#assist-preview-scroll"));
       }
@@ -11611,7 +11611,7 @@
       if (bottom) bottom.textContent = text;
       else {
         const el = document.createElement("div");
-        el.className = "m0-assist-preview-ellipsis m0-assist-preview-ellipsis-bottom m0-muted";
+        el.className = "-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted";
         el.textContent = text;
         wrap.appendChild(el);
       }
@@ -11639,7 +11639,7 @@
     }
 
     if (last.viewStart === viewStart && viewEnd < last.viewEnd) {
-      scroll.querySelectorAll(".m0-line").forEach((el) => {
+      scroll.querySelectorAll(".-line").forEach((el) => {
         if (+el.dataset.line > viewEnd) el.remove();
       });
       updateAssistEllipsis(wrap, viewStart, viewEnd, total);
@@ -11659,7 +11659,7 @@
     }
 
     if (last.viewEnd === viewEnd && viewStart > last.viewStart) {
-      scroll.querySelectorAll(".m0-line").forEach((el) => {
+      scroll.querySelectorAll(".-line").forEach((el) => {
         if (+el.dataset.line < viewStart) el.remove();
       });
       updateAssistEllipsis(wrap, viewStart, viewEnd, total);
@@ -11681,21 +11681,21 @@
     let html = assistPreviewToolbarHtml();
 
     if (viewStart > 1) {
-      html += `<div class="m0-assist-preview-ellipsis m0-assist-preview-ellipsis-top m0-muted">… 上文第 1–${viewStart - 1} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">… 上文第 1–${viewStart - 1} 行</div>`;
     }
 
-    html += '<div class="m0-assist-preview" id="assist-preview-scroll">';
+    html += '<div class="-assist-preview" id="assist-preview-scroll">';
     for (let n = viewStart; n <= viewEnd; n++) {
       const line = state.doc.lines[n - 1] ?? "";
       html += `<div class="${assistLineClass(n, start, end)}" data-line="${n}">
-        <span class="m0-lineno">${n}</span>
-        <span class="m0-line-content">${esc(line)}</span>
+        <span class="-lineno">${n}</span>
+        <span class="-line-content">${esc(line)}</span>
       </div>`;
     }
     html += "</div>";
 
     if (viewEnd < total) {
-      html += `<div class="m0-assist-preview-ellipsis m0-assist-preview-ellipsis-bottom m0-muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
     }
 
     wrap.innerHTML = html;
@@ -11706,38 +11706,38 @@
     let html = assistPreviewToolbarHtml();
 
     if (viewStart > 1) {
-      html += `<div class="m0-assist-preview-ellipsis m0-assist-preview-ellipsis-top m0-muted">… 上文第 1–${viewStart - 1} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">… 上文第 1–${viewStart - 1} 行</div>`;
     }
 
-    html += '<div class="m0-assist-md m0-preview markdown-body" id="assist-md-scroll">';
+    html += '<div class="-assist-md -preview markdown-body" id="assist-md-scroll">';
     const lines = state.doc.lines;
 
     if (viewStart < start) {
       const chunk = lines.slice(viewStart - 1, start - 1).join("\n");
-      html += `<div class="m0-assist-md-part">${MemoriaMarkdownPreview.renderHtml(chunk)}</div>`;
+      html += `<div class="-assist-md-part">${MemoriaMarkdownPreview.renderHtml(chunk)}</div>`;
     }
 
     const rangeChunk = lines.slice(start - 1, end).join("\n");
-    html += `<div class="m0-assist-md-part assist-md-range" id="assist-md-range">`;
+    html += `<div class="-assist-md-part assist-md-range" id="assist-md-range">`;
     html += MemoriaMarkdownPreview.renderHtml(rangeChunk);
     html += '<div id="assist-md-range-end" class="assist-md-anchor" aria-hidden="true"></div>';
     html += "</div>";
 
     if (end < viewEnd) {
       const chunk = lines.slice(end, viewEnd).join("\n");
-      html += `<div class="m0-assist-md-part">${MemoriaMarkdownPreview.renderHtml(chunk)}</div>`;
+      html += `<div class="-assist-md-part">${MemoriaMarkdownPreview.renderHtml(chunk)}</div>`;
     }
 
     html += "</div>";
 
     if (viewEnd < total) {
-      html += `<div class="m0-assist-preview-ellipsis m0-assist-preview-ellipsis-bottom m0-muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
     }
 
     wrap.innerHTML = html;
     bindAssistPreviewToolbar(wrap);
 
-    const mdRoot = wrap.querySelector(".m0-assist-md");
+    const mdRoot = wrap.querySelector(".-assist-md");
     if (mdRoot && window.MemoriaMarkdownPreview?.initMathJax) {
       try {
         await MemoriaMarkdownPreview.initMathJax();
@@ -11763,7 +11763,7 @@
       state.assistLastView = null;
       wrap.innerHTML =
         assistPreviewToolbarHtml() +
-        '<p class="m0-assist-preview-error">行号无效：终点不能早于起点</p>';
+        '<p class="-assist-preview-error">行号无效：终点不能早于起点</p>';
       bindAssistPreviewToolbar(wrap);
       return;
     }
@@ -11811,7 +11811,7 @@
     const box = $("#kp-modal-box");
     if (!box) return;
     try {
-      const raw = localStorage.getItem("m0-kp-modal-size");
+      const raw = localStorage.getItem("-kp-modal-size");
       if (!raw) return;
       const { w, h } = JSON.parse(raw);
       if (w >= 420) box.style.width = `${w}px`;
@@ -11832,7 +11832,7 @@
       clearTimeout(saveTimer);
       saveTimer = setTimeout(() => {
         localStorage.setItem(
-          "m0-kp-modal-size",
+          "-kp-modal-size",
           JSON.stringify({ w: box.offsetWidth, h: box.offsetHeight })
         );
       }, 200);
@@ -11857,7 +11857,7 @@
         const text = (lines[i] || "").trim().slice(0, 72);
         return `<div class="candidate-row">
           <input type="radio" name="${group}" value="${n}" id="c-${group}-${n}">
-          <label for="c-${group}-${n}" class="candidate-line"><span class="m0-muted">L${n}</span> ${esc(text)}</label>
+          <label for="c-${group}-${n}" class="candidate-line"><span class="-muted">L${n}</span> ${esc(text)}</label>
         </div>`;
       })
       .join("");
@@ -12170,7 +12170,7 @@
   }
 
   function setupSidebarResize() {
-    const sidebar = $("#m0-sidebar");
+    const sidebar = $("#-sidebar");
     const resizer = $("#sidebar-resizer");
     let dragging = false;
     resizer.addEventListener("mousedown", (e) => {
@@ -12262,7 +12262,7 @@
       return;
     }
     state.toolbarSearchScope = scope === "file" ? "file" : "kb";
-    localStorage.setItem("m0-search-scope", state.toolbarSearchScope);
+    localStorage.setItem("-search-scope", state.toolbarSearchScope);
     syncToolbarSearchScopeUI();
     const q = $("#toolbar-search")?.value?.trim();
     if (q) runToolbarSearch();
@@ -12351,39 +12351,39 @@
         if (!window.MemoriaSearchSettings?.isBodyLocateEnabled?.()) {
           hint += " · 可在设置→检索开启「搜索正文定位」";
         }
-        showToolbarSearchPanel(`<div class="m0-search-placeholder">${hint}</div>`);
+        showToolbarSearchPanel(`<div class="-search-placeholder">${hint}</div>`);
       } else {
         let html = "";
         if (items.length) {
           html += items
             .map(
               (it, i) =>
-                `<button type="button" class="m0-suggest-item m0-toolbar-search-hit" data-search-kind="kp" data-search-idx="${i}">
-                  <span class="m0-suggest-score" title="${esc((it.sources || []).join(", "))}">${esc(formatSearchHitScore(it, modes))}</span>
-                  <span class="m0-suggest-label">${esc(it.label || it.name || it.id || "")}</span>
-                  <span class="m0-muted m0-toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                `<button type="button" class="-suggest-item -toolbar-search-hit" data-search-kind="kp" data-search-idx="${i}">
+                  <span class="-suggest-score" title="${esc((it.sources || []).join(", "))}">${esc(formatSearchHitScore(it, modes))}</span>
+                  <span class="-suggest-label">${esc(it.label || it.name || it.id || "")}</span>
+                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
                 </button>`
             )
             .join("");
         }
         if (bodyHits.length) {
           if (items.length) {
-            html += `<div class="m0-search-section-label">正文定位</div>`;
+            html += `<div class="-search-section-label">正文定位</div>`;
           }
           html += bodyHits
             .map(
               (it, i) =>
-                `<button type="button" class="m0-suggest-item m0-toolbar-search-hit m0-toolbar-search-body" data-search-kind="body" data-body-idx="${i}">
-                  <span class="m0-suggest-score m0-suggest-score--muted" title="正文行匹配">L${esc(String(it.line || ""))}</span>
-                  <span class="m0-suggest-label">${esc(it.label || it.snippet || "")}</span>
-                  <span class="m0-muted m0-toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                `<button type="button" class="-suggest-item -toolbar-search-hit -toolbar-search-body" data-search-kind="body" data-body-idx="${i}">
+                  <span class="-suggest-score -suggest-score--muted" title="正文行匹配">L${esc(String(it.line || ""))}</span>
+                  <span class="-suggest-label">${esc(it.label || it.snippet || "")}</span>
+                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
                 </button>`
             )
             .join("");
         }
         showToolbarSearchPanel(html);
         $("#toolbar-search-panel")
-          ?.querySelectorAll(".m0-toolbar-search-hit")
+          ?.querySelectorAll(".-toolbar-search-hit")
           .forEach((btn) => {
             btn.addEventListener("click", async () => {
               const kind = btn.getAttribute("data-search-kind") || "kp";
@@ -12412,14 +12412,14 @@
   }
 
   function bindPointerDragHoverGuard() {
-    if (document.body.dataset.m0HoverDragGuard) return;
-    document.body.dataset.m0HoverDragGuard = "1";
+    if (document.body.dataset.HoverDragGuard) return;
+    document.body.dataset.HoverDragGuard = "1";
     document.addEventListener(
       "pointerdown",
       (e) => {
         if (e.button !== 0) return;
-        if (e.target.closest(".m0-kp-item")) return;
-        if (e.target.closest(".m0-link-match-row")) return;
+        if (e.target.closest(".-kp-item")) return;
+        if (e.target.closest(".-link-match-row")) return;
         clearKpHoverHighlight();
         clearGraphKpHover();
         dismissKpRangeHighlight();
@@ -12510,7 +12510,7 @@
     $("#check-close").addEventListener("click", closeCheckModal);
     $("#check-dismiss").addEventListener("click", closeCheckModal);
     $("#check-rerun").addEventListener("click", () => runKbValidate({ silent: false }));
-    $("#check-modal .m0-modal-backdrop")?.addEventListener("click", closeCheckModal);
+    $("#check-modal .-modal-backdrop")?.addEventListener("click", closeCheckModal);
     $("#status-stats")?.addEventListener("click", async () => {
       if ($("#status-stats").dataset.kbCheck) {
         openCheckModal();
@@ -12521,12 +12521,12 @@
       if (issue) await gotoGraphAuditIssue(issue);
     });
     $("#graph-2d-hint")?.addEventListener("click", async (e) => {
-      if (!e.target.closest(".m0-graph-audit-goto")) return;
+      if (!e.target.closest(".-graph-audit-goto")) return;
       const issue = firstGraphAuditWarn();
       if (issue) await gotoGraphAuditIssue(issue);
     });
     $("#graph-3d-hint")?.addEventListener("click", async (e) => {
-      if (!e.target.closest(".m0-graph-audit-goto")) return;
+      if (!e.target.closest(".-graph-audit-goto")) return;
       const issue = firstGraphAuditWarn();
       if (issue) await gotoGraphAuditIssue(issue);
     });
@@ -12550,18 +12550,18 @@
     };
     $("#kp-close").addEventListener("click", closeKpModal);
     $("#kp-cancel").addEventListener("click", closeKpModal);
-    $("#kp-modal .m0-modal-backdrop").addEventListener("click", closeKpModal);
+    $("#kp-modal .-modal-backdrop").addEventListener("click", closeKpModal);
     $("#kp-delete").addEventListener("click", () => deleteKpFromModal());
     $("#kp-save").addEventListener("click", () => saveKpModal());
     $("#config-close").addEventListener("click", closeConfigModal);
     $("#config-close-btn").addEventListener("click", closeConfigModal);
-    $("#config-modal .m0-modal-backdrop").addEventListener("click", closeConfigModal);
+    $("#config-modal .-modal-backdrop").addEventListener("click", closeConfigModal);
     $("#link-close").addEventListener("click", closeLinkModal);
     $("#link-cancel").addEventListener("click", closeLinkModal);
     $("#link-confirm").addEventListener("click", confirmLinkPicker);
     $("#import-conflict-close").addEventListener("click", closeImportConflictModal);
     $("#import-conflict-cancel").addEventListener("click", closeImportConflictModal);
-    $("#import-conflict-modal .m0-modal-backdrop")?.addEventListener("click", closeImportConflictModal);
+    $("#import-conflict-modal .-modal-backdrop")?.addEventListener("click", closeImportConflictModal);
     $("#import-conflict-copy-report").addEventListener("click", () => {
       const ta = $("#import-conflict-report-text");
       if (ta) {
@@ -12577,7 +12577,7 @@
     });
     $("#import-result-close").addEventListener("click", closeImportResultModal);
     $("#import-result-dismiss").addEventListener("click", closeImportResultModal);
-    $("#import-result-modal .m0-modal-backdrop")?.addEventListener("click", closeImportResultModal);
+    $("#import-result-modal .-modal-backdrop")?.addEventListener("click", closeImportResultModal);
     $("#link-save").addEventListener("click", () => saveLinkEditor(false));
     $("#link-save-jump").addEventListener("click", () => saveLinkEditor(true));
     $("#link-config-view").addEventListener("click", () => {
@@ -12609,7 +12609,7 @@
         refreshConfigLinkMatchPanel();
         return;
       }
-      const rowEl = e.target.closest(".m0-link-match-row");
+      const rowEl = e.target.closest(".-link-match-row");
       if (rowEl && e.target.closest("#config-link-match-panel")) {
         const ln = +rowEl.dataset.matchLine;
         const match = m.matches.find((r) => r.line === ln);
@@ -12677,7 +12677,7 @@
         refreshLinkEditorMatchPanel();
         return;
       }
-      const rowEl = e.target.closest(".m0-link-match-row");
+      const rowEl = e.target.closest(".-link-match-row");
       if (rowEl && e.target.closest("#link-editor-match-panel")) {
         const ln = +rowEl.dataset.matchLine;
         const match = m.matches.find((r) => r.line === ln);
@@ -12712,7 +12712,7 @@
       else m.selected.delete(ln);
       refreshLinkEditorMatchPanel();
     });
-    $("#link-modal .m0-modal-backdrop").addEventListener("click", closeLinkModal);
+    $("#link-modal .-modal-backdrop").addEventListener("click", closeLinkModal);
     document.addEventListener("keydown", (e) => {
       if (e.altKey && e.key === "ArrowLeft") {
         e.preventDefault();
@@ -12722,7 +12722,7 @@
         navForward();
       }
     });
-    document.querySelectorAll(".m0-view-btn").forEach((btn) => {
+    document.querySelectorAll(".-view-btn").forEach((btn) => {
       btn.addEventListener("click", () => setViewMode(btn.dataset.view));
     });
     // 格式工具栏
@@ -12772,7 +12772,7 @@
 
   // ════════════════════════════════════════════════════════════
   // 行内公式拖拽选择：contenteditable=false 的公式无法被浏览器原生拖拽选中
-  // （按下不产生选区、跨过被跳过）。编辑模式下把 .m0-math 当作“原子字符”参与选择：
+  // （按下不产生选区、跨过被跳过）。编辑模式下把 .-math 当作“原子字符”参与选择：
   // 在公式上按下 → 整体选中公式，继续拖动可扩展选区到前后文本；双击仍放行进入公式编辑。
   // ════════════════════════════════════════════════════════════
   let _mathDrag = null;       // 拖拽态 { el, anchorRange }
@@ -12794,7 +12794,7 @@
   function _mathDragEndPoint(clientX, clientY, anchorEl, anchorRange) {
     // 终点落在公式上：公式整体参与（与锚点比较文档位置决定方向）
     const under = document.elementFromPoint(clientX, clientY);
-    const math2 = under && under.closest ? under.closest(".m0-math") : null;
+    const math2 = under && under.closest ? under.closest(".-math") : null;
     if (math2) {
       if (math2 === anchorEl) {
         return { sc: anchorRange.startContainer, so: anchorRange.startOffset, ec: anchorRange.endContainer, eo: anchorRange.endOffset };
@@ -12823,7 +12823,7 @@
     const t = e.target;
     if (!preview || !t || !t.closest) return;
     if (!preview.contains(t)) return;
-    const mathEl = t.closest(".m0-math");
+    const mathEl = t.closest(".-math");
     if (!mathEl) return;
     const now = Date.now();
     const isDbl = _mathLastDown && _mathLastDown.el === mathEl && now - _mathLastDown.t < _MATH_DBL_MS;
@@ -12861,10 +12861,10 @@
     document.addEventListener("mouseup", _onFormulaDragUp);
   }
 
-  /** 模态框标题栏拖拽：mousedown 在 header（排除交互元素）→ 移动整个 .m0-modal-box */
+  /** 模态框标题栏拖拽：mousedown 在 header（排除交互元素）→ 移动整个 .-modal-box */
   function bindModalDrag() {
     const NO_DRAG =
-      ".m0-icon-btn, button, input, textarea, select, a, [contenteditable], [data-no-drag]";
+      ".-icon-btn, button, input, textarea, select, a, [contenteditable], [data-no-drag]";
     let dragging = null;
 
     function readCurrentTranslate(box) {
@@ -12875,12 +12875,12 @@
 
     document.addEventListener("mousedown", (e) => {
       if (e.button !== 0) return;
-      const header = e.target.closest(".m0-modal-header");
+      const header = e.target.closest(".-modal-header");
       if (!header) return;
       if (e.target.closest(NO_DRAG)) return;
-      const box = header.closest(".m0-modal-box");
+      const box = header.closest(".-modal-box");
       if (!box) return;
-      const modal = box.closest(".m0-modal");
+      const modal = box.closest(".-modal");
       if (!modal || modal.classList.contains("hidden")) return;
       e.preventDefault();
       const cur = readCurrentTranslate(box);
@@ -12919,12 +12919,12 @@
         if (m.attributeName !== "class") continue;
         const modal = m.target;
         if (modal.classList.contains("hidden")) {
-          const box = modal.querySelector(".m0-modal-box");
+          const box = modal.querySelector(".-modal-box");
           if (box) box.style.transform = "";
         }
       }
     });
-    document.querySelectorAll(".m0-modal").forEach((modal) => {
+    document.querySelectorAll(".-modal").forEach((modal) => {
       observer.observe(modal, { attributes: true, attributeFilter: ["class"] });
     });
   }

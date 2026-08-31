@@ -4,7 +4,7 @@
 window.MemoriaLinkContextMenu = (function () {
   "use strict";
 
-  const MENU_ID = "m0-link-context-menu";
+  const MENU_ID = "-link-context-menu";
 
   function hide() {
     document.getElementById(MENU_ID)?.remove();
@@ -33,20 +33,20 @@ window.MemoriaLinkContextMenu = (function () {
     hide();
     const menu = document.createElement("div");
     menu.id = MENU_ID;
-    menu.className = "m0-context-menu";
+    menu.className = "-context-menu";
     menu.setAttribute("role", "menu");
 
     items.forEach((it) => {
       if (it.divider) {
         const div = document.createElement("div");
-        div.className = "m0-ctx-divider";
+        div.className = "-ctx-divider";
         menu.appendChild(div);
         return;
       }
       const row = document.createElement("button");
       row.type = "button";
       row.className =
-        "m0-ctx-item" +
+        "-ctx-item" +
         (it.disabled ? " disabled" : "") +
         (it.danger ? " danger" : "");
       row.setAttribute("role", "menuitem");
@@ -89,20 +89,20 @@ window.MemoriaLinkContextMenu = (function () {
 
     const targetId = ctx.targetId || linkEl.dataset.linkTarget || "";
     const displayText = ctx.displayText || linkEl.textContent?.trim() || targetId;
-    const isBroken = ctx.isBroken ?? linkEl.classList.contains("m0-link-broken");
+    const isBroken = ctx.isBroken ?? linkEl.classList.contains("-link-broken");
     const isMulti =
       ctx.isMulti ??
-      (linkEl.classList.contains("m0-link-multi") ||
+      (linkEl.classList.contains("-link-multi") ||
         (linkEl.dataset.linkTargets && linkEl.dataset.linkTargets.length > 2));
 
     const items = [
       {
-        label: `<span class="m0-ctx-head">${esc(displayText)}</span>`,
+        label: `<span class="-ctx-head">${esc(displayText)}</span>`,
         disabled: true,
         action: () => {},
       },
       {
-        label: `<span class="m0-ctx-meta">${esc(linkStatusLabel(isBroken, isMulti))} · ${esc(targetId)}</span>`,
+        label: `<span class="-ctx-meta">${esc(linkStatusLabel(isBroken, isMulti))} · ${esc(targetId)}</span>`,
         disabled: true,
         action: () => {},
       },
@@ -159,7 +159,7 @@ window.MemoriaLinkContextMenu = (function () {
 
     const items = [
       {
-        label: `<span class="m0-ctx-head">${esc(sel.slice(0, 40))}${sel.length > 40 ? "…" : ""}</span>`,
+        label: `<span class="-ctx-head">${esc(sel.slice(0, 40))}${sel.length > 40 ? "…" : ""}</span>`,
         disabled: true,
         action: () => {},
       },
@@ -210,7 +210,7 @@ window.MemoriaLinkContextMenu = (function () {
 
     const items = [
       {
-        label: `<span class="m0-ctx-head">光标位置</span>`,
+        label: `<span class="-ctx-head">光标位置</span>`,
         disabled: true,
         action: () => {},
       },
