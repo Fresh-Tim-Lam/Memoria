@@ -761,6 +761,7 @@
       <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">节点群页签</button>
       <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">检索</button>
       <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">检查</button>
+      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">显示</button>
     </div>`;
   }
 
@@ -800,6 +801,11 @@
       stopPreview();
       bodyEl.innerHTML = global.MemoriaSearchSettings.renderSettingsBody();
       global.MemoriaSearchSettings.bindSettingsForm(bodyEl);
+    } else if (tab === "view" && global.MemoriaDisplaySettings) {
+      teardownPreview();
+      stopPreview();
+      bodyEl.innerHTML = global.MemoriaDisplaySettings.renderSettingsBody();
+      global.MemoriaDisplaySettings.bindSettingsForm(bodyEl);
     }
   }
 

@@ -205,8 +205,11 @@
       <span id="status-info">就绪</span>
       <span id="status-stats"></span>
     </div>
-    <div id="-flash-host" aria-live="polite"></div>
   </div>
+
+  <!-- 浮层统一放 body 层（#app 外）：界面整体缩放（#app 的 zoom）不影响这些 fixed 元素，
+       保持视口锚定不随内容滚动错位 -->
+  <div id="-flash-host" aria-live="polite"></div>
 
   <div id="kp-modal" class="-modal hidden">
     <div class="-modal-backdrop"></div>
@@ -354,6 +357,7 @@
   <script src="/app/js/graph-settings.js"></script>
   <script src="/app/js/check-settings.js"></script>
   <script src="/app/js/search-settings.js"></script>
+  <script src="/app/js/display-settings.js"></script>
   <script src="/vendor/qwebchannel.js"></script>
   <script src="/app/js/bridge.js"></script>
   <script src="/app/js/window-chrome.js"></script>

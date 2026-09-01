@@ -12507,6 +12507,23 @@
         focusToolbarSearch();
       }
     });
+    // 界面整体缩放快捷键：Ctrl+= 放大 / Ctrl+- 缩小 / Ctrl+0 复位
+    if (window.MemoriaDisplaySettings) {
+      document.addEventListener("keydown", (e) => {
+        if (!(e.ctrlKey || e.metaKey)) return;
+        const k = e.key.toLowerCase();
+        if (k === "=" || k === "+") {
+          e.preventDefault();
+          MemoriaDisplaySettings.adjustUiScale(0.1);
+        } else if (k === "-") {
+          e.preventDefault();
+          MemoriaDisplaySettings.adjustUiScale(-0.1);
+        } else if (k === "0") {
+          e.preventDefault();
+          MemoriaDisplaySettings.resetUiScale();
+        }
+      });
+    }
     $("#check-close").addEventListener("click", closeCheckModal);
     $("#check-dismiss").addEventListener("click", closeCheckModal);
     $("#check-rerun").addEventListener("click", () => runKbValidate({ silent: false }));
@@ -12747,6 +12764,9 @@
       MemoriaCheckSettings.onChange(() => {
         if (state.kbPath) startKbSilentCheck();
       });
+    }
+    if (window.MemoriaDisplaySettings) {
+      MemoriaDisplaySettings.hydrateFromDisk();
     }
     setSidebarTab(state.sidebarTab);
     bindEditorSelectInteraction();
