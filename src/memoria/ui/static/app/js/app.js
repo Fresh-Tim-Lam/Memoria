@@ -1638,7 +1638,8 @@
     lineno.textContent = String(lastNum + 1);
     const content = document.createElement("span");
     content.className = "-line-content";
-    content.contentEditable = "true";
+    // 新增行遵循当前编辑模式（关闭编辑时新增行保持只读）
+    content.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
     content.spellcheck = false;
     content.tabIndex = -1;
     content.textContent = text;
@@ -2617,13 +2618,16 @@
     $("#file-meta").textContent = desc;
 
     const editor = $("#editor");
+    // 全量渲染遵循当前编辑模式（关闭编辑时行保持只读，视图切换后不恢复可编辑）
+    const srcEditable =
+      !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
     editor.innerHTML = doc.lines
       .map((line, i) => {
         const n = i + 1;
         const content = esc(line) || "<br>";
         return `<div class="-line" data-line="${n}" id="line-${n}">
           <span class="-lineno">${n}</span>
-          <span class="-line-content" contenteditable="true" spellcheck="false" tabindex="-1">${content}</span>
+          <span class="-line-content" contenteditable="${srcEditable}" spellcheck="false" tabindex="-1">${content}</span>
         </div>`;
       })
       .join("");
@@ -3808,6 +3812,7 @@
       counts;
     const kbTotal = state.kbPending?.total;
     let html = `<div class="-config-toolbar -btn-bar -btn-bar--start">
+      <button type="button" class="-btn primary -btn--sm" data-config-confirm-all>全部确认</button>
       <button type="button" class="-btn secondary -btn--sm" data-config-sync-pending>刷新待确认</button>
       ${kbTotal != null ? `<span class="-muted">全库 ${kbTotal} 项</span>` : ""}
     </div>`;
@@ -3830,6 +3835,7 @@
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-heading="${idx}">直接确认</button>
               <button type="button" class="-btn primary -btn--sm" data-heading-proposal="${idx}">配置并确认</button>
               ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
             </div>
@@ -3852,6 +3858,7 @@
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-mention="${idx}">直接确认</button>
               <button type="button" class="-btn primary -btn--sm" data-mention-proposal="${idx}">配置并确认</button>
               ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
             </div>
@@ -3874,6 +3881,7 @@
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-definition="${idx}">直接确认</button>
               <button type="button" class="-btn primary -btn--sm" data-definition-proposal="${idx}">配置并确认</button>
             </div>
           </div>`;
@@ -3970,10 +3978,20 @@
         openKpModalFromProposal(p, { returnTo: "config" });
       });
     });
+    body.querySelectorAll("[data-confirm-heading]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        confirmKpFromProposal(headingP[+btn.dataset.confirmHeading]);
+      });
+    });
     body.querySelectorAll("[data-mention-proposal]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const p = mentionP[+btn.dataset.mentionProposal];
         openKpModalFromProposal(p, { returnTo: "config" });
+      });
+    });
+    body.querySelectorAll("[data-confirm-mention]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        confirmKpFromProposal(mentionP[+btn.dataset.confirmMention]);
       });
     });
     body.querySelectorAll("[data-definition-proposal]").forEach((btn) => {
@@ -3982,7 +4000,15 @@
         openKpModalFromProposal(p, { returnTo: "config" });
       });
     });
+    body.querySelectorAll("[data-confirm-definition]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        confirmKpFromProposal(definitionP[+btn.dataset.confirmDefinition]);
+      });
+    });
 
+    body.querySelector("[data-config-confirm-all]")?.addEventListener("click", () => {
+      confirmAllPending();
+    });
     body.querySelector("[data-config-sync-pending]")?.addEventListener("click", () => {
       syncPendingFromConfig();
     });
@@ -5562,6 +5588,151 @@
       returnTo: opts.returnTo || "config",
       tab: "range",
     });
+  }
+
+  /** 直接确认待确认提议：不弹配置弹窗，用提议的 id/名称/范围直接创建知识点 */
+  async function confirmKpFromProposal(proposal) {
+    if (!proposal || !state.currentPath) return;
+    const r = proposal.range || {};
+    const start = r.start?.line_hint || 1;
+    const end = Math.max(start, r.end?.line_hint || start);
+    const total = state.doc?.lines?.length || 1;
+    if (end > total) {
+      setStatusError("无法确认", `终点第 ${end} 行超出正文（共 ${total} 行）`);
+      return;
+    }
+    const kpId = (proposal.concept_id || slugify(proposal.name || "")).trim();
+    const kpName = (proposal.name || "").trim();
+    if (!kpId) {
+      setStatusError("无法确认", "提议缺少 id");
+      return;
+    }
+    if (!kpName) {
+      setStatusError("无法确认", "提议缺少名称");
+      return;
+    }
+    try {
+      const check = await call("check_kp_id", kpId, state.currentPath);
+      if (check.status !== "ok" || !check.available) {
+        setStatusError(check.message || "目标 id 已存在", check.files?.join(", "));
+        return;
+      }
+    } catch (e) {
+      setStatusError("校验失败", String(e.message || e));
+      return;
+    }
+    setStatus("确认知识点…");
+    const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
+    if (res.status !== "ok") {
+      setStatusError(res.message || "写入失败");
+      return;
+    }
+    state.doc = res;
+    renderEditor(res);
+    renderKpList(res);
+    renderFileTree();
+    await setViewMode(state.viewMode, { skipSave: true });
+    await renderPreview(res);
+    state.activeKpId = kpId;
+    renderKpList(state.doc);
+    highlightRange(start, end);
+    scrollKpListItemIntoView(kpId);
+    setStatus("已确认知识点", `${kpId} L${start}–${end}`);
+    try {
+      await saveKpCreateMetadata(kpId);
+    } catch (_) {
+      /* optional */
+    }
+    try {
+      await loadGraphData();
+      applyGraphGroupLayout({ relayout: true });
+    } catch (_) {
+      /* optional */
+    }
+    if (!$("#config-modal").classList.contains("hidden")) {
+      openConfigModal({ tab: "pending" });
+    }
+  }
+
+  /** 全部确认：按顺序逐个用提议默认 id/名称/范围直接确认；冲突/异常项跳过并汇总 */
+  async function confirmAllPending() {
+    if (!state.currentPath || !state.doc) return;
+    const confirmed = state.doc.knowledge_points || [];
+    const all = [
+      ...(state.doc.heading_proposals || []),
+      ...(state.doc.mention_proposals || []),
+      ...(state.doc.definition_proposals || []),
+    ].filter((p) => !isKpCoveredByConfirmed(p, confirmed));
+    if (!all.length) {
+      setStatus("没有可确认的待确认项");
+      return;
+    }
+    if (
+      !window.confirm(
+        `将直接确认 ${all.length} 个待确认提议（使用提议默认 id 与名称）。\nid 冲突或范围异常的项目会跳过，并在最后列出。`
+      )
+    ) {
+      return;
+    }
+    const ok = [];
+    const skipped = [];
+    for (let i = 0; i < all.length; i++) {
+      const p = all[i];
+      setStatus(`确认中… ${i + 1}/${all.length}：${p.name || p.concept_id || ""}`);
+      const r = p.range || {};
+      const start = r.start?.line_hint || 1;
+      const end = Math.max(start, r.end?.line_hint || start);
+      const total = state.doc?.lines?.length || 1;
+      const kpId = (p.concept_id || slugify(p.name || "")).trim();
+      const kpName = (p.name || "").trim();
+      if (!kpId || !kpName) {
+        skipped.push(`${kpName || "?"}：缺少 id/名称`);
+        continue;
+      }
+      if (end > total) {
+        skipped.push(`${kpName}：范围超出正文`);
+        continue;
+      }
+      try {
+        const check = await call("check_kp_id", kpId, state.currentPath);
+        if (check.status !== "ok" || !check.available) {
+          skipped.push(`${kpName}：id 已存在`);
+          continue;
+        }
+      } catch (e) {
+        skipped.push(`${kpName}：校验失败 ${e.message || e}`);
+        continue;
+      }
+      const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
+      if (res.status !== "ok") {
+        skipped.push(`${kpName}：${res.message || "写入失败"}`);
+        continue;
+      }
+      state.doc = res;
+      ok.push(kpName);
+    }
+    renderEditor(state.doc);
+    renderKpList(state.doc);
+    renderFileTree();
+    await setViewMode(state.viewMode, { skipSave: true });
+    await renderPreview(state.doc);
+    try {
+      await loadGraphData();
+      applyGraphGroupLayout({ relayout: true });
+    } catch (_) {
+      /* optional */
+    }
+    if (skipped.length) {
+      setStatusError(`已确认 ${ok.length} 项 · 跳过 ${skipped.length} 项`, skipped[0]);
+      window.alert(
+        `以下 ${skipped.length} 项未能自动确认：\n\n${skipped.join("\n")}\n\n可对具体项使用「配置并确认」手动处理。`
+      );
+    } else {
+      setStatus(`已全部确认 ${ok.length} 项`);
+    }
+    if (!$("#config-modal").classList.contains("hidden")) {
+      openConfigModal({ tab: "pending" });
+    }
   }
 
   function closeKpModal(opts = {}) {
@@ -7698,6 +7869,47 @@
     if (!editor || editor.dataset.selectBound) return;
     editor.dataset.selectBound = "1";
 
+    // 方向键滚轮效果：pane 单步滚动（模拟滚轮一档约 6 行 @14px）。
+    // 仅在"编辑模式关闭（只读）"时生效：编辑模式下上下键归属光标位置控制，
+    // 源码/预览均正常移动光标，不做干预。
+    const ARROW_SCROLL_STEP = 96;
+    function scrollPaneBy(pane, dir) {
+      if (!pane) return;
+      const max = pane.scrollHeight - pane.clientHeight;
+      if (dir > 0 && pane.scrollTop < max - 1) {
+        pane.scrollTop = Math.min(pane.scrollTop + ARROW_SCROLL_STEP, max);
+      } else if (dir < 0 && pane.scrollTop > 0) {
+        pane.scrollTop = Math.max(pane.scrollTop - ARROW_SCROLL_STEP, 0);
+      }
+    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+      const preview = $("#preview");
+      if (!preview || preview.contentEditable === "true") return;
+      // 焦点在可编辑区/输入控件/文件树/弹窗内：交还各自处理
+      const ae = document.activeElement;
+      if (ae) {
+        if (ae.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;
+        if (ae.closest && (ae.closest("#file-tree") || ae.closest(".-modal"))) return;
+      }
+      const mode = state.viewMode;
+      if (mode !== "preview" && mode !== "split" && mode !== "source") return;
+      let pane;
+      if (mode === "source") {
+        pane = $("#editor-pane");
+      } else if (mode === "preview") {
+        pane = $("#preview-pane");
+      } else {
+        // 分栏：焦点在源码侧滚源码面板，否则滚预览面板
+        const editor = $("#editor");
+        pane = ae && editor && editor.contains(ae) ? $("#editor-pane") : $("#preview-pane");
+      }
+      if (!pane) return;
+      e.preventDefault();
+      scrollPaneBy(pane, e.key === "ArrowDown" ? 1 : -1);
+    });
+
     let dragSelect = null;
 
     // 源码编辑时：实时同步预览 + 标记脏
@@ -7876,7 +8088,7 @@
           newLineno.className = "-lineno";
           const newLineContent = document.createElement("span");
           newLineContent.className = "-line-content";
-          newLineContent.contentEditable = "true";
+          newLineContent.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
           newLineContent.spellcheck = false;
           newLineContent.tabIndex = -1;
           newLineContent.innerHTML = "<br>";
@@ -7914,7 +8126,7 @@
         newLineno.textContent = String(newNum);
         const newLineContent = document.createElement("span");
         newLineContent.className = "-line-content";
-        newLineContent.contentEditable = "true";
+        newLineContent.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
         newLineContent.spellcheck = false;
         newLineContent.tabIndex = -1;
         newLineContent.textContent = after;
@@ -8018,7 +8230,7 @@
         newLineno.textContent = String(lastLineNum);
         const newLineContent = document.createElement("span");
         newLineContent.className = "-line-content";
-        newLineContent.contentEditable = "true";
+        newLineContent.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
         newLineContent.spellcheck = false;
         newLineContent.tabIndex = -1;
         newLineContent.textContent = parts[i];
@@ -8078,6 +8290,8 @@
     // （全局捕获阶段已屏蔽原生右键菜单；有选区时交还 bindEditorSelectionMenu 弹链接/知识点菜单）
     editor.addEventListener("contextmenu", (e) => {
       if (!state.currentPath) return;
+      // 编辑模式关闭（只读）：源码区不弹粘贴等编辑菜单
+      if (window.MemoriaEditHandler && !window.MemoriaEditHandler.editMode) return;
       if (!(e.target && e.target.closest && e.target.closest(".-line-content"))) return;
       const info = getSelectionInContainer(editor);
       if (info) return;
@@ -10020,6 +10234,8 @@
     if (!editor || !window.MemoriaLinkContextMenu) return;
     editor.addEventListener("contextmenu", (e) => {
       if (!state.currentPath) return;
+      // 编辑模式关闭（只读）：源码区不弹创建链接/知识点菜单
+      if (window.MemoriaEditHandler && !window.MemoriaEditHandler.editMode) return;
       const info = getSelectionInContainer(editor);
       if (!info) return;
       MemoriaLinkContextMenu.showForSelection(e, info.text, {
@@ -10037,6 +10253,9 @@
     const preview = $("#preview");
     if (!preview || !window.MemoriaLinkContextMenu) return;
     preview.addEventListener("contextmenu", (e) => {
+      // 编辑模式关闭（只读）：不弹任何编辑类右键菜单（粘贴/插入图片/选区编辑/图片操作）。
+      // 原生菜单已由全局 handler 屏蔽，此处直接 return 即可。
+      if (preview.contentEditable !== "true") return;
       // 图片右键：替换图片 / 删除图片（仅删引用）
       const imgEl = e.target.closest("img.-preview-image");
       if (imgEl) {

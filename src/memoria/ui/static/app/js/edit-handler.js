@@ -75,6 +75,8 @@
     if (preview) {
       preview.contentEditable = EH.editMode ? "true" : "false";
     }
+    // 源码区（源码/分栏视图）同步只读：关闭编辑后不可定位光标/编辑
+    setSourceEditable(EH.editMode);
     // 编辑模式关闭 → 预览区无"闪烁光标"概念，图片插入按钮必须立即禁用
     // （selection 仍可能停留在预览区，selectionchange 不会因此触发，需在此主动禁用）
     if (!EH.editMode) {
@@ -87,6 +89,31 @@
         document.activeElement.closest && document.activeElement.closest("#preview"));
     }
   };
+
+  /**
+   * 同步源码编辑器（#editor 内所有行）的可编辑状态。
+   * 只读时清除残留光标/选区，并加 .-readonly 供 CSS 使用（如光标样式）。
+   */
+  function setSourceEditable(editable) {
+    var editor = document.getElementById("editor");
+    if (!editor) return;
+    editor.querySelectorAll(".-line-content").forEach(function (el) {
+      el.contentEditable = editable ? "true" : "false";
+    });
+    editor.classList.toggle(".-readonly", !editable);
+    if (!editable) {
+      var ae = document.activeElement;
+      if (ae && editor.contains(ae)) ae.blur();
+      var sel = window.getSelection();
+      if (sel && sel.rangeCount && sel.anchorNode && editor.contains(sel.anchorNode)) {
+        sel.removeAllRanges();
+      }
+    }
+  }
+
+  // 供 app.js 新增源码行时遵循当前编辑模式
+  EH.setSourceEditable = setSourceEditable;
+  EH.isSourceEditable = function () { return EH.editMode; };
 
   // ── 预览区光标位置缓存（源码坐标）──
   EH.currentCursor = null;  // { srcLine, srcCol, blockIndex }

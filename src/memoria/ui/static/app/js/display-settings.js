@@ -14,7 +14,7 @@
   };
 
   const FONT_MIN = 12;
-  const FONT_MAX = 20;
+  const FONT_MAX = 28;
   const SCALE_MIN = 0.8;
   const SCALE_MAX = 1.5;
   const SCALE_STEP = 0.1;
@@ -55,25 +55,33 @@
     return Math.round(x * 10) / 10;
   }
 
+  /** 仅保留本模块管理的两个键，避免 display 等脏键污染 load/save 结果 */
+  function pickKnown(data) {
+    const out = {};
+    if (data && data.previewFontSize !== undefined) out.previewFontSize = data.previewFontSize;
+    if (data && data.uiScale !== undefined) out.uiScale = data.uiScale;
+    return out;
+  }
+
   function load() {
-    const merged = Object.assign({}, DEFAULTS, readLocal());
-    if (diskPrefs && diskPrefs.display) Object.assign(merged, diskPrefs.display);
+    // 优先级：本地修改 > 磁盘种子 > 默认值。磁盘值仅作为启动时的初始种子
+    // （hydrateFromDisk 已写入 localStorage）；若无条件覆盖本地，用户拖滑块
+    // 写入 localStorage 后会被 diskPrefs 立即回滚，界面无任何反应。
+    const disk = diskPrefs && diskPrefs.display ? diskPrefs.display : {};
+    const merged = Object.assign({}, DEFAULTS, disk, readLocal());
     const fs = clamp(merged.previewFontSize, FONT_MIN, FONT_MAX);
     if (fs !== null) merged.previewFontSize = Math.round(fs);
     const sc = clamp(merged.uiScale, SCALE_MIN, SCALE_MAX);
     if (sc !== null) merged.uiScale = round1(sc);
-    return merged;
+    return pickKnown(merged);
   }
 
-  /** 预览容器：优先 #preview（主编辑区），其次 .-preview（设置页内嵌预览等） */
-  function previewRoot() {
-    return document.getElementById("preview") || document.querySelector(".-preview");
-  }
-
-  function applyPreviewFontSize(px) {
-    const root = previewRoot();
-    if (!root) return;
-    root.style.setProperty("--preview-font-size", px + "px");
+  /** 字号：同时作用于预览区（--preview-font-size）与源码/分栏区（--editor-font-size） */
+  function applyFontSize(px) {
+    const preview = document.getElementById("preview");
+    if (preview) preview.style.setProperty("--preview-font-size", px + "px");
+    const editor = document.getElementById("editor");
+    if (editor) editor.style.setProperty("--editor-font-size", px + "px");
   }
 
   function applyUiScale(x) {
@@ -87,7 +95,7 @@
 
   function applyAll() {
     const s = load();
-    applyPreviewFontSize(s.previewFontSize);
+    applyFontSize(s.previewFontSize);
     applyUiScale(s.uiScale);
   }
 
@@ -114,8 +122,9 @@
     try {
       const res = await a.get_ui_settings();
       if (res && res.status === "ok" && res.settings && res.settings.display) {
-        diskPrefs = { display: res.settings.display };
-        writeLocal(Object.assign({}, DEFAULTS, readLocal(), diskPrefs));
+        diskPrefs = { display: pickKnown(res.settings.display) };
+        // 清洗合并结果，避免残留的 display 键继续嵌套污染
+        writeLocal(pickKnown(Object.assign({}, DEFAULTS, readLocal(), diskPrefs.display)));
       }
     } catch (_) {
       /* ignore */
@@ -125,7 +134,7 @@
   }
 
   function save(partial) {
-    const next = Object.assign({}, load(), partial);
+    const next = Object.assign({}, load(), pickKnown(partial));
     writeLocal(next);
     scheduleDiskSave();
     applyAll();
@@ -154,8 +163,8 @@
   function renderSettingsBody() {
     const s = load();
     return `<section class="-settings-section">
-      <h3 class="-settings-heading">预览区文字</h3>
-      <p class="-muted -settings-note">仅作用于预览区正文，内部元素（标题/代码块/引用）随比例缩放。</p>
+      <h3 class="-settings-heading">文字</h3>
+      <p class="-muted -settings-note">作用于源码、分栏与预览区正文；标题/代码块/引用随比例缩放。</p>
       ${rangeField("previewFontSize", "字号", FONT_MIN, FONT_MAX, 1, s.previewFontSize, `默认 ${DEFAULTS.previewFontSize}px，范围 ${FONT_MIN}–${FONT_MAX}px。`)}
     </section>
     <section class="-settings-section">

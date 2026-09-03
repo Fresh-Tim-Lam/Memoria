@@ -3350,7 +3350,7 @@ body.-brush-active #editor {
 .-editor {
     min-height: 100%;
     font-family: Consolas, "Courier New", Monaco, monospace;
-    font-size: 0.8125rem;
+    font-size: var(--editor-font-size, 14px);
     line-height: 1.5;
     background: var(--bg-primary);
     -webkit-app-region: no-drag;
@@ -3484,7 +3484,9 @@ body.-brush-active #editor {
 .-line:hover { background: var(--bg-hover); }
 .-lineno {
     flex-shrink: 0;
-    width: 3rem;
+    /* 行号随源码字号缩放（em 相对 .-editor 字号），宽度按字号容纳多位数 */
+    width: 4.2em;
+    font-size: 0.9em;
     padding: 0 8px 0 0;
     text-align: right;
     color: var(--text-secondary);

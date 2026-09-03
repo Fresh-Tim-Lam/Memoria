@@ -163,6 +163,66 @@ def _apply_frameless_native(window) -> None:
         print(f"[shell] apply_frameless_native failed: {exc}", flush=True)
 
 
+def _disable_browser_accelerator_keys(window) -> None:
+    """关闭 WebView2 浏览器级加速键（Ctrl+= / Ctrl+- / Ctrl+0 等）。
+
+    pywebview 将 AreBrowserAcceleratorKeysEnabled 直接绑定 debug 标志：
+    开发态 debug=True → WebView2 自身拦截 Ctrl+= 等按键做页面缩放，
+    keydown 不再派发到页面，应用缩放快捷键因此失效。关闭后按键事件
+    交还给页面（app.js 自行处理 Ctrl+= 缩放快捷键）；打包态 debug=False
+    本就关闭，此函数无副作用。
+    """
+    native = None
+    for _ in range(30):
+        native = window.native
+        if native is not None:
+            break
+        time.sleep(0.25)
+    if native is None:
+        return
+    try:
+        # CoreWebView2 只能在 UI 线程访问；pywebview 的 start(func) 中 func
+        # 运行在非 UI 线程，直接读取会抛 InvalidCastException，须 Invoke 调度。
+        # 注意不能在 UI 线程 sleep 轮询：CoreWebView2 初始化回调也要在 UI 线程
+        # 派发，阻塞 UI 会形成死锁导致窗口白屏。改用初始化完成事件驱动。
+        from System import Action  # pythonnet
+
+        webview2 = native.webview
+
+        def _on_initialized(sender, args):
+            try:
+                core = webview2.CoreWebView2
+                if core is not None:
+                    core.Settings.AreBrowserAcceleratorKeysEnabled = False
+            except Exception:  # noqa: BLE001
+                pass
+
+        def _try_set() -> None:
+            core = None
+            try:
+                core = webview2.CoreWebView2
+            except Exception:  # noqa: BLE001
+                return
+            if core is not None:
+                try:
+                    core.Settings.AreBrowserAcceleratorKeysEnabled = False
+                except Exception:  # noqa: BLE001
+                    pass
+            else:
+                # 初始化未完成：挂事件，就绪时回调（幂等，不阻塞 UI）
+                try:
+                    webview2.CoreWebView2InitializationCompleted += _on_initialized
+                except Exception:  # noqa: BLE001
+                    pass
+
+        if native.InvokeRequired:
+            native.Invoke(Action(_try_set))
+        else:
+            _try_set()
+    except Exception as exc:  # noqa: BLE001
+        print(f"[shell] disable_browser_accelerator_keys failed: {exc}", flush=True)
+
+
 def run() -> None:
     frameless = _frameless_enabled()
     host = PyWebViewHost(frameless=frameless)
@@ -180,13 +240,19 @@ def run() -> None:
         min_size=(900, 600),
         frameless=frameless,
         easy_drag=False,
+        # pywebview 默认 text_select=False 会注入 body{-webkit-user-select:none}，
+        # Chromium 下该样式会阻止 <input type=range> 拖拽（滑块 input 事件不触发），
+        # 设置面板的字号/缩放滑块因此无响应；应用 CSS 已自行管理 user-select 策略
+        text_select=True,
     )
 
-    if frameless:
-        # 窗口创建并显示后补原生样式（HWND / native 就绪后再执行）
-        webview.start(lambda: _apply_frameless_native(window), debug=_debug_enabled())
-    else:
-        webview.start(debug=_debug_enabled())
+    def _post_launch(window_):
+        _disable_browser_accelerator_keys(window_)
+        if frameless:
+            # 窗口创建并显示后补原生样式（HWND / native 就绪后再执行）
+            _apply_frameless_native(window_)
+
+    webview.start(lambda: _post_launch(window), debug=_debug_enabled())
 
 
 def main() -> None:

@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import os
+import re
+import time
 import urllib.parse
 
 import bottle
@@ -91,6 +93,19 @@ def _serve_kb_file(filepath: str) -> bottle.HTTPResponse | None:
 
 _NO_STORE = {"Cache-Control": "no-store, no-cache, must-revalidate", "Pragma": "no-cache"}
 
+# 每次进程启动生成一次的资源版本号：注入 index.html 的静态资源 URL，
+# 配合 no-store 双保险，杜绝 WebView2 复用旧版 JS/CSS（改动前端后必须能拿到新文件）
+_ASSET_VER = "v=" + str(int(time.time()))
+_ASSET_URL = re.compile(
+    r'(?P<attr>(?:src|href))="(?P<url>/(?:app/|theme/|vendor/|icons/)[^"]+?)"'
+)
+
+
+def _inject_asset_ver(m: re.Match) -> str:
+    url = m.group("url")
+    sep = "&" if "?" in url else "?"
+    return f'{m.group("attr")}="{url}{sep}{_ASSET_VER}"'
+
 
 def create_app() -> bottle.Bottle:
     """以 ui/static/ 为根目录，使 app/ 与 theme/ 均可访问。"""
@@ -98,10 +113,18 @@ def create_app() -> bottle.Bottle:
 
     @app.get("/")
     def root() -> bottle.HTTPResponse:
-        resp = bottle.static_file("app/index.html", root=_STATIC_ROOT)
-        if isinstance(resp, bottle.HTTPResponse):
-            for k, v in _NO_STORE.items():
-                resp.set_header(k, v)
+        # 手动读取 index.html 并注入资源版本参数（static_file 无法改写 body）
+        html_path = os.path.join(_STATIC_ROOT, "app", "index.html")
+        with open(html_path, "r", encoding="utf-8") as f:
+            html = f.read()
+        html = _ASSET_URL.sub(_inject_asset_ver, html)
+        resp = bottle.HTTPResponse(
+            status=200,
+            body=html.encode("utf-8"),
+            headers={"Content-Type": "text/html; charset=utf-8"},
+        )
+        for k, v in _NO_STORE.items():
+            resp.set_header(k, v)
         return resp
 
     @app.get("/<path:path>")
