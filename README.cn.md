@@ -12,7 +12,7 @@
 
 所有数据都以普通文件保存在你的磁盘上——`.md` 正文 + YAML 元数据。没有账号、没有云同步、没有隐私泄露。打开即用，关闭即走，数据永远属于你。
 
-> Wanna See Eng Intro？Head to[README.md](README.md)。
+> Wanna See Eng Intro？Head to [README.md](README.md)。
 
 ---
 
