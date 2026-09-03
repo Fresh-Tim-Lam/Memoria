@@ -14,3 +14,4 @@
 | [glossary.md](./glossary.md) | 术语表（KP/sidecar/manifest/contain 边/虚链等） |
 | [hard-constraints.md](./hard-constraints.md) | 硬约束（不可违反的既定事实） |
 | [image-features.md](./image-features.md) | 图片功能说明与内部机制（渲染链路/路径解析/交互/静态服务） |
+| [preview-formats.md](./preview-formats.md) | 预览渲染说明：支持的格式与样式（块级/行内/扩展语法/样式/交互/边界） |

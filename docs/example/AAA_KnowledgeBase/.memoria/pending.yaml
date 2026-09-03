@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-08-22T07:37:26.986780+00:00'
+updated_at: '2026-09-03T07:48:15.347160+00:00'
 items:
 - pending_id: a70048884b857375
   file: DeepLearning/ELU.md
@@ -8615,6 +8615,614 @@ items:
       snippet: '**最优性割用凸函数的一阶条件（切线是下界）来“托底”目标函数，可行性割用 0 来“划线”约束边界。两者都是用线性近似来处理非线性问题，但一个针对目标，一个针对'
       line_hint: 562
   status: pending
+- pending_id: 2263f7656f34458d
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 证明
+  range:
+    start:
+      snippet: '## 证明'
+      line_hint: 11
+    end:
+      snippet: '---'
+      line_hint: 46
+  status: pending
+- pending_id: a407429166cb9b45
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 结合FFT的情况
+  range:
+    start:
+      snippet: '## 结合FFT的情况'
+      line_hint: 48
+    end:
+      snippet: '---'
+      line_hint: 55
+  status: pending
+- pending_id: 652ce0e4a369ad02
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 关键反例：次数超过 $n-1$，定理失效
+  range:
+    start:
+      snippet: '## 关键反例：次数超过 $n-1$，定理失效'
+      line_hint: 57
+    end:
+      snippet: '---'
+      line_hint: 78
+  status: pending
+- pending_id: 4b62b184cb1efa52
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 等价矩阵角度（范德蒙德）
+  range:
+    start:
+      snippet: '## 等价矩阵角度（范德蒙德）'
+      line_hint: 80
+    end:
+      snippet: '> 命题：如果 $\bol(\boldsymbol d)symbol a\neq \bol(\boldsymbol d)symbol
+        b$，则 $\bol(\b'
+      line_hint: 141
+  status: pending
+- pending_id: ae89b278ed44b538
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 一句话记忆
+  range:
+    start:
+      snippet: '### 一句话记忆'
+      line_hint: 109
+    end:
+      snippet: '> 命题：如果 $\bol(\boldsymbol d)symbol a\neq \bol(\boldsymbol d)symbol
+        b$，则 $\bol(\b'
+      line_hint: 141
+  status: pending
+- pending_id: 881e02b68db079d1
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 证明
+  range:
+    start:
+      snippet: '## 证明'
+      line_hint: 143
+    end:
+      snippet: '---'
+      line_hint: 184
+  status: pending
+- pending_id: 8bd660d0947e3dc1
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 套回FFT场景
+  range:
+    start:
+      snippet: '## 套回FFT场景'
+      line_hint: 186
+    end:
+      snippet: '> 这就是**双射（一一对应）**的矩阵版本。'
+      line_hint: 196
+  status: pending
+- pending_id: 32fbe9af9c3d9e03
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 什么时候这套结论失效？
+  range:
+    start:
+      snippet: '## 什么时候这套结论失效？'
+      line_hint: 198
+    end:
+      snippet: '> 采样点互异 (\Rightarrow) 范德蒙德行列式不为0 (\Rightarrow) 矩阵可逆 (\Rightarrow)
+        没有非零零空间 (\Righ'
+      line_hint: 208
+  status: pending
+- pending_id: b61cf40d497d2d96
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 一句话记忆
+  range:
+    start:
+      snippet: '### 一句话记忆'
+      line_hint: 205
+    end:
+      snippet: '> 采样点互异 (\Rightarrow) 范德蒙德行列式不为0 (\Rightarrow) 矩阵可逆 (\Rightarrow)
+        没有非零零空间 (\Righ'
+      line_hint: 208
+  status: pending
+- pending_id: 02b268c78dc82607
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: $$P
+  range:
+    start:
+      snippet: $$P(z_k)=Q(z_k),\quad k=0,1,\dots,n-1$$
+      line_hint: 6
+    end:
+      snippet: 则 $\boldsymbol{P(x)\equiv Q(x)}$（多项式恒等，全部系数对应相等）。
+      line_hint: 7
+  status: pending
+- pending_id: 06d7cde47409a87f
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: $$D
+  range:
+    start:
+      snippet: $$D(z_k)=P(z_k)-Q(z_k)=0$$
+      line_hint: 24
+    end:
+      snippet: 所以：$\boldsymbol{z_0,z_1,\dots,z_{n-1}}$ 是 $(D(x))$ 的 $n$ 个互不相同的根。
+      line_hint: 25
+  status: pending
+- pending_id: 35ec0a3731e7b98e
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: $$
+  range:
+    start:
+      snippet: $$(D(x))\equiv 0$$
+      line_hint: 38
+    end:
+      snippet: $$P(x)-Q(x)\equiv 0 \implies \boldsymbol{P(x)\equiv Q(x)}$$
+      line_hint: 40
+  status: pending
+- pending_id: 003ab1747886656c
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 也就
+  range:
+    start:
+      snippet: 也就是
+      line_hint: 39
+    end:
+      snippet: $$P(x)-Q(x)\equiv 0 \implies \boldsymbol{P(x)\equiv Q(x)}$$
+      line_hint: 40
+  status: pending
+- pending_id: 22a0d9bf1f98d47c
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 映射
+  range:
+    start:
+      snippet: '> 这就证明：**不同多项式 ⇒ 采样点值向量不同**，映射是单射。'
+      line_hint: 44
+    end:
+      snippet: ''
+      line_hint: 47
+  status: pending
+- pending_id: 4f61a68c7d4e3912
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: $D
+  range:
+    start:
+      snippet: $(\deg(D)=N)$，它的根恰好全部N次单位根：$D(W_N^k)=0$。
+      line_hint: 63
+    end:
+      snippet: ''
+      line_hint: 79
+  status: pending
+- pending_id: 9316bcf20c117fd5
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: =P
+  range:
+    start:
+      snippet: Q(W_N^k)=P(W_N^k)+0=P(W_N^k)
+      line_hint: 71
+    end:
+      snippet: 👉 **两个不同多项式，N个采样点完全一样，信息丢失。**
+      line_hint: 73
+  status: pending
+- pending_id: 01accb7de2f6df32
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: y$
+  range:
+    start:
+      snippet: 可逆矩阵意味着：$\boldsymbol a \mapsto \boldsymbol y$ 是双射。
+      line_hint: 101
+    end:
+      snippet: ''
+      line_hint: 114
+  status: pending
+- pending_id: 576b5dfebbbe6477
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 差多项式只能
+  range:
+    start:
+      snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
+      line_hint: 112
+    end:
+      snippet: ''
+      line_hint: 114
+  status: pending
+- pending_id: 33629a3321ab65f4
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 两两互不相同
+  range:
+    start:
+      snippet: 采样点 $z_0,z_1,\(\boldsymbol d)ots,z_{N-1}$，两两互不相同（FFT里就是 $z_k=W_N^k$）。
+      line_hint: 124
+    end:
+      snippet: ''
+      line_hint: 210
+  status: pending
+- pending_id: 7b9dfdd8152fa30b
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 这就
+  range:
+    start:
+      snippet: '> 这就是**双射（一一对应）**的矩阵版本。'
+      line_hint: 196
+    end:
+      snippet: ''
+      line_hint: 197
+  status: pending
+- pending_id: a388ac0cef8e034e
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 一、最基础：多项式的两种核心表示
+  range:
+    start:
+      snippet: '## 一、最基础：多项式的两种核心表示'
+      line_hint: 3
+    end:
+      snippet: 运算优势：**点值形式下多项式乘法为逐点相乘**，复杂度 $O(N)$。
+      line_hint: 25
+  status: pending
+- pending_id: b742e317faac1eee
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. 系数表示（原始表示）
+  range:
+    start:
+      snippet: '### 1\. 系数表示（原始表示）'
+      line_hint: 5
+    end:
+      snippet: 运算缺陷：多项式乘法为卷积运算，暴力计算复杂度 $O(N^2)$，效率极低。
+      line_hint: 13
+  status: pending
+- pending_id: 258d77f911cb9b87
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2\. 点值表示（FFT专用中间表示）
+  range:
+    start:
+      snippet: '### 2\. 点值表示（FFT专用中间表示）'
+      line_hint: 15
+    end:
+      snippet: 运算优势：**点值形式下多项式乘法为逐点相乘**，复杂度 $O(N)$。
+      line_hint: 25
+  status: pending
+- pending_id: 51eaff447045528f
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 二、核心选择：为什么选复数单位根作为采样点？
+  range:
+    start:
+      snippet: '## 二、核心选择：为什么选复数单位根作为采样点？'
+      line_hint: 27
+    end:
+      snippet: 👉 满足多项式点值唯一确定的前置条件。
+      line_hint: 59
+  status: pending
+- pending_id: 8d40008d2c2a1970
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. N次单位根定义（DFT/FFT核心基底）
+  range:
+    start:
+      snippet: '### 1\. N次单位根定义（DFT/FFT核心基底）'
+      line_hint: 29
+    end:
+      snippet: 所有N次单位根：$W_N^0,W_N^1,W_N^2,\dots,W_N^{N-1}$
+      line_hint: 35
+  status: pending
+- pending_id: 421dd5e255f27d60
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2\. 关键基础性质（FFT加速的根源）
+  range:
+    start:
+      snippet: '### 2\. 关键基础性质（FFT加速的根源）'
+      line_hint: 37
+    end:
+      snippet: $W_N^{k+\frac{N}{2}} = W_N^k \cdot W_N^{\frac{N}{2}} = W_N^k \cdot
+        e^{-j\pi} = -
+      line_hint: 51
+  status: pending
+- pending_id: 83a553ac03079402
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 3\. 单位根采样的合法性（一一对应前提）
+  range:
+    start:
+      snippet: '### 3\. 单位根采样的合法性（一一对应前提）'
+      line_hint: 53
+    end:
+      snippet: 👉 满足多项式点值唯一确定的前置条件。
+      line_hint: 59
+  status: pending
+- pending_id: 762c7b3774bef905
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 三、DFT的本质：多项式系数转单位根点值
+  range:
+    start:
+      snippet: '## 三、DFT的本质：多项式系数转单位根点值'
+      line_hint: 61
+    end:
+      snippet: 朴素DFT：逐点暴力求值，复杂度 $O(N^2)$。
+      line_hint: 75
+  status: pending
+- pending_id: a09bc5f173fd5ca5
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. DFT公式与多项式求值等价性
+  range:
+    start:
+      snippet: '### 1\. DFT公式与多项式求值等价性'
+      line_hint: 63
+    end:
+      snippet: 朴素DFT：逐点暴力求值，复杂度 $O(N^2)$。
+      line_hint: 75
+  status: pending
+- pending_id: d3c82b313bad5727
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 四、FFT加速原理：利用单位根性质递归求点值
+  range:
+    start:
+      snippet: '## 四、FFT加速原理：利用单位根性质递归求点值'
+      line_hint: 77
+    end:
+      snippet: 最终复杂度：$T(N)=O(N\log N)$，完成从暴力DFT到FFT的加速。
+      line_hint: 117
+  status: pending
+- pending_id: e64e8ae55dbde97a
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. 多项式奇偶拆分（分治核心）
+  range:
+    start:
+      snippet: '### 1\. 多项式奇偶拆分（分治核心）'
+      line_hint: 79
+    end:
+      snippet: $\begin{cases} A_{even}(t) = a_0+a_2t+a_4t^2+\dots \\ A_{odd}(t) =
+        a_1+a_3t+a_5t
+      line_hint: 87
+  status: pending
+- pending_id: a7c980716d312c42
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2\. 分治代入单位根（蝶形公式推导）
+  range:
+    start:
+      snippet: '### 2\. 分治代入单位根（蝶形公式推导）'
+      line_hint: 89
+    end:
+      snippet: $A(W_N^{k+\frac{N}{2}}) = A_{even}(W_{N/2}^k) - W_N^k \cdot A_{odd}(W_{N/2}^k)$
+      line_hint: 105
+  status: pending
+- pending_id: 532bf0863a6061ea
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 3\. 递归逻辑与复杂度优化
+  range:
+    start:
+      snippet: '### 3\. 递归逻辑与复杂度优化'
+      line_hint: 107
+    end:
+      snippet: 最终复杂度：$T(N)=O(N\log N)$，完成从暴力DFT到FFT的加速。
+      line_hint: 117
+  status: pending
+- pending_id: f7a8da8ab8a78ca8
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 五、严格证明：系数与点值一一对应（无歧义）
+  range:
+    start:
+      snippet: '## 五、严格证明：系数与点值一一对应（无歧义）'
+      line_hint: 119
+    end:
+      snippet: 矩阵可逆 ⇒ 方程只有零解 ⇒ **输入系数唯一对应输出点值，无多对一歧义**。
+      line_hint: 155
+  status: pending
+- pending_id: 0eb56c175bb10707
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. 多项式差值法证明（代数视角）
+  range:
+    start:
+      snippet: '### 1\. 多项式差值法证明（代数视角）'
+      line_hint: 121
+    end:
+      snippet: 👉 **不同多项式 ⇔ 不同点值序列，严格一一对应**。
+      line_hint: 137
+  status: pending
+- pending_id: b35a0972dace835c
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2\. 矩阵行列式证明（线性代数视角，终极闭环）
+  range:
+    start:
+      snippet: '### 2\. 矩阵行列式证明（线性代数视角，终极闭环）'
+      line_hint: 139
+    end:
+      snippet: 矩阵可逆 ⇒ 方程只有零解 ⇒ **输入系数唯一对应输出点值，无多对一歧义**。
+      line_hint: 155
+  status: pending
+- pending_id: 89a1e69e092ef7b9
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 六、关键答疑（解决所有核心误区）
+  range:
+    start:
+      snippet: '## 六、关键答疑（解决所有核心误区）'
+      line_hint: 157
+    end:
+      snippet: 仅当多项式次数 $\ge N$ 时失效，典型反例：$D(x)=x^N-1$，在所有单位根上取值为0。因此FFT多项式乘法必须**补零扩维**，保证次数
+        ≤ N\
+      line_hint: 169
+  status: pending
+- pending_id: 5a82e7b599a9ff53
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1\. 为什么实系数多项式可以代入复数单位根？
+  range:
+    start:
+      snippet: '### 1\. 为什么实系数多项式可以代入复数单位根？'
+      line_hint: 159
+    end:
+      snippet: 多项式的 \\\(x\\\) 是形式变量，仅代表加法、乘法运算，**不限制取值为实数**。复数完全兼容多项式运算，只是输出点值为复数，属于合法代数变换。
+      line_hint: 161
+  status: pending
+- pending_id: 6f39cadc6cbb144e
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2\. 采样点在复平面单位圆，为什么能确定实数域多项式？
+  range:
+    start:
+      snippet: '### 2\. 采样点在复平面单位圆，为什么能确定实数域多项式？'
+      line_hint: 163
+    end:
+      snippet: 多项式是**全局刚性整函数**，复平面上 \\\(N\\\) 个互异点可唯一锁定整个多项式，自然包含实数域所有取值信息。单位圆点值只是**中间运算载体**，最终
+      line_hint: 165
+  status: pending
+- pending_id: 7d83d38c394c89a5
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 3\. 什么时候会出现“不同多项式同点值”？
+  range:
+    start:
+      snippet: '### 3\. 什么时候会出现“不同多项式同点值”？'
+      line_hint: 167
+    end:
+      snippet: 仅当多项式次数 $\ge N$ 时失效，典型反例：$D(x)=x^N-1$，在所有单位根上取值为0。因此FFT多项式乘法必须**补零扩维**，保证次数
+        ≤ N\
+      line_hint: 169
+  status: pending
+- pending_id: 8c126d6943ee18f5
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 七、完整流水线总结（终极闭环）
+  range:
+    start:
+      snippet: '## 七、完整流水线总结（终极闭环）'
+      line_hint: 171
+    end:
+      snippet: '> （注：部分内容可能由 AI 生成）'
+      line_hint: 187
+  status: pending
+- pending_id: cb3f1210c15660e8
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: \\\
+  range:
+    start:
+      snippet: 对于次数不超过 \\\(N\-1\\\) 的多项式，标准形式：
+      line_hint: 7
+    end:
+      snippet: ''
+      line_hint: 14
+  status: pending
+- pending_id: 72c285ef0b3633d7
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $O
+  range:
+    start:
+      snippet: 运算缺陷：多项式乘法为卷积运算，暴力计算复杂度 $O(N^2)$，效率极低。
+      line_hint: 13
+    end:
+      snippet: ''
+      line_hint: 14
+  status: pending
+- pending_id: 724c5eadd2361c0b
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 这就
+  range:
+    start:
+      snippet: 这就是**标准DFT变换**：
+      line_hint: 69
+    end:
+      snippet: ''
+      line_hint: 76
+  status: pending
+- pending_id: 4c5b1e2998970e36
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $A
+  range:
+    start:
+      snippet: $A(W_N^k) = A_{even}(W_{N/2}^k) + W_N^k \cdot A_{odd}(W_{N/2}^k)$
+      line_hint: 95
+    end:
+      snippet: ''
+      line_hint: 106
+  status: pending
+- pending_id: 1dc9eb1331010428
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: '**O\'
+  range:
+    start:
+      snippet: 3. 通过上述两组蝶形公式，**O\(N\) 合并得到全部 \\\(N\\\) 个点值**。
+      line_hint: 113
+    end:
+      snippet: ''
+      line_hint: 118
+  status: pending
+- pending_id: a2dc7699a3f25448
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: =O
+  range:
+    start:
+      snippet: 最终复杂度：$T(N)=O(N\log N)$，完成从暴力DFT到FFT的加速。
+      line_hint: 117
+    end:
+      snippet: ''
+      line_hint: 118
+  status: pending
+- pending_id: 7e9185ca443b8e98
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $P
+  range:
+    start:
+      snippet: $P(W_N^k)=Q(W_N^k),\ \forall k$
+      line_hint: 125
+    end:
+      snippet: ''
+      line_hint: 138
+  status: pending
+- pending_id: 899468e72dc95dc8
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $D
+  range:
+    start:
+      snippet: '- $D(W_N^k)=0$，即 \\\(D\(x\)\\\) 有 \\\(N\\\) 个不同根'
+      line_hint: 131
+    end:
+      snippet: ''
+      line_hint: 138
+  status: pending
+- pending_id: fc25a2cf48108722
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: DFT求值本质
+  range:
+    start:
+      snippet: DFT求值本质是**范德蒙德矩阵乘法**：
+      line_hint: 141
+    end:
+      snippet: ''
+      line_hint: 156
+  status: pending
 - pending_id: 57466ec39ab13b95
   file: Mathemetical_Modeling/SRP/ACOPF.md
   kind: heading
@@ -9157,6 +9765,102 @@ items:
     end:
       snippet: ''
       line_hint: 264
+  status: pending
+- pending_id: 393d97ee29f47ab5
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: heading
+  name: 基例 $(n=2)$
+  range:
+    start:
+      snippet: '### 基例 $(n=2)$'
+      line_hint: 17
+    end:
+      snippet: '---'
+      line_hint: 29
+  status: pending
+- pending_id: 4f850c5ee5d81ab7
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: heading
+  name: 归纳步骤
+  range:
+    start:
+      snippet: '## 归纳步骤'
+      line_hint: 31
+    end:
+      snippet: $$
+      line_hint: 113
+  status: pending
+- pending_id: 9b9c96412ba973ca
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_1
+  range:
+    start:
+      snippet: z_1-z_0 & z_1(z_1-z_0) & \dots & z_1^{k-1}(z_1-z_0)\
+      line_hint: 69
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 64613da01655fe5b
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_2
+  range:
+    start:
+      snippet: z_2-z_0 & z_2(z_2-z_0) & \dots & z_2^{k-1}(z_2-z_0)\
+      line_hint: 70
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 35cb034fc3d68dfd
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_k
+  range:
+    start:
+      snippet: z_k-z_0 & z_k(z_k-z_0) & \dots & z_k^{k-1}(z_k-z_0)
+      line_hint: 72
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 5bb5430388e149be
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: ^k
+  range:
+    start:
+      snippet: V_{k+1}=\left[\prod_{j=1}^k (z_j-z_0)\right]
+      line_hint: 78
+    end:
+      snippet: $$
+      line_hint: 86
+  status: pending
+- pending_id: ee7429b9d364d757
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: 右下角就
+  range:
+    start:
+      snippet: 右下角就是 $k$ 阶范德蒙德行列式，对变量 $z_1,z_2,\dots,z_k$。
+      line_hint: 88
+    end:
+      snippet: $$
+      line_hint: 97
+  status: pending
+- pending_id: 4672726096e02c49
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: \det
+  range:
+    start:
+      snippet: \det(V_n)=\prod_{0\le i<j\le n-1}(z_j-z_i)
+      line_hint: 111
+    end:
+      snippet: $$
+      line_hint: 113
   status: pending
 - pending_id: 7682c9ad0268d22e
   file: PBT.md

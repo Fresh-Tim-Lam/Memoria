@@ -51,6 +51,7 @@
 | 2026-08-30 | `conventions/` | 契约性规范 | 由 `standards/` 拆分重组，中文文件名重命名 kebab-case |
 | 2026-08-30 | `guides/` | 操作指引 how-to | 由 `standards/`（AI 协作）+ `context/`（usage-agent-workflow）迁移 |
 | 2026-08-30 | `reference/` | 参考说明 | 由 `context/`（image-features）迁移，新增 architecture/glossary/hard-constraints |
+| 2026-09-03 | `screenshots/` | README / GitHub 演示截图 | 自动化捕获的真实界面截图（demo-*.png，1680×1000） |
 
 > 历史沿革：`agents/`（旧）→ `sessions/`（2026-08-20）；`skills/`（空目录，供将来存放可执行技能说明或并入 `context/` 用途）；`standards/` + `context/` → 按性质拆分为 `conventions/`（契约）+ `guides/`（how-to）+ `reference/`（understand）（2026-08-30）。
 
@@ -63,6 +64,8 @@
 | 2026-08-26 | image-features.md | 新增：图片功能说明文档，登记索引；后续随阶段落地更新 |
 | 2026-08-26 | image-asset-dev-plan.md | 新增：图片资产管理分阶段开发方案（design/），六阶段可交互验证；A/B/C/D 已落地并记录验证结果 |
 | 2026-08-30 | docs-management.md | 目录体系重构：`standards/` → `conventions/` + `guides/`；`context/` → `guides/` + `reference/`；新增三目录 README 与 reference/architecture、glossary、hard-constraints；决策表/登记表/沿革同步更新 |
+| 2026-09-01 | preview-formats.md | 新增：预览渲染格式与样式说明（reference/），登记 reference/README.md |
+| 2026-09-03 | docs-management.md | 新增 `screenshots/` 目录登记（README/GitHub 演示截图），docs/README.md 导航同步 |
 
 ### 4.3 定期整理约定
 
