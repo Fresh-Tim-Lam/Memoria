@@ -344,7 +344,7 @@ window.MemoriaParser = (function () {
         continue;
       }
 
-      // ── 数学块 $$ ──
+      // ── 数学块 $$（首尾各占一行） ──
       if (rawLine.trim() === "$$") {
         var mathLines = [];
         i++;
@@ -354,6 +354,15 @@ window.MemoriaParser = (function () {
         }
         i++; // skip closing $$
         blocks.push(AST.mathBlock(mathLines.join("\n")));
+        continue;
+      }
+
+      // ── 单行数学块 $$...$$（$$ 与内容同行，例如 $$P(z_k)=Q(z_k)$$） ──
+      // 只有整行首尾为 $$、且内容不含内嵌 $$ 时才视为块级公式，否则退回行内处理
+      var sm = /^\$\$(.*)\$\$\s*$/.exec(rawLine.trim());
+      if (sm && sm[1].indexOf("$$") === -1 && sm[1].trim() !== "") {
+        blocks.push(AST.mathBlock(sm[1].trim()));
+        i++;
         continue;
       }
 
@@ -413,6 +422,9 @@ window.MemoriaParser = (function () {
       // ── 列表 ──
       if (tokens.length > 0 && tokens[0].type === "list_prefix") {
         var isOrdered = /^\d+\.$/.test(tokens[0].value);
+        // 保留首项源编号：列表被公式/代码块等隔断拆成多个 <ol> 时，
+        // 渲染仍从正确数字开始（如 `1. a\n$$...$$\n2. b` 显示 1. / 2. 而非 1. / 1.）
+        var listStart = isOrdered ? parseInt(tokens[0].value, 10) : null;
         var items = [];
         var scan = i;
         while (scan < endLine) {
@@ -429,7 +441,7 @@ window.MemoriaParser = (function () {
           items.push(AST.listItem(itemChildren2));
           scan++;
         }
-        blocks.push(AST.list(isOrdered, items));
+        blocks.push(AST.list(isOrdered, items, listStart));
         i = scan;
         continue;
       }

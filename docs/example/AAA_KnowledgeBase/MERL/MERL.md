@@ -50,18 +50,18 @@
 
 | 符号 | 含义 |
 |------|------|
-| \(N\) | 智能体数量 |
-| \(M\) | 种群大小 |
-| \(\pi = \{\pi^1, \pi^2, \dots, \pi^N\}\) | 多头策略网络（每个头对应一个agent） |
-| \(\pi_{pg}\) | 策略梯度模块的策略网络 |
-| \(\mathcal{Q}\) | 共享的Critic网络 |
-| \(o_i\) | 第 \(i\) 个agent的观测 |
-| \(a_i\) | 第 \(i\) 个agent的动作 |
-| \(l_i\) | 第 \(i\) 个agent的**个体奖励（局部奖励）** |
-| \(g\) | **团队奖励（全局奖励）** |
-| \(R^k\) | 第 \(k\) 个agent的独立经验池 |
-| \(f(\pi)\) | 团队的适应度（=团队奖励 \(g\)） |
-| \(\xi\) | 每个rollout的episode数 |
+| $N$ | 智能体数量 |
+| $M$ | 种群大小 |
+| $\pi = \{\pi^1, \pi^2, \dots, \pi^N\}$ | 多头策略网络（每个头对应一个agent） |
+| $\pi_{pg}$ | 策略梯度模块的策略网络 |
+| $\mathcal{Q}$ | 共享的Critic网络 |
+| $o_i$ | 第 $i$ 个agent的观测 |
+| $a_i$ | 第 $i$ 个agent的动作 |
+| $l_i$ | 第 $i$ 个agent的**个体奖励（局部奖励）** |
+| $g$ | **团队奖励（全局奖励）** |
+| $R^k$ | 第 $k$ 个agent的独立经验池 |
+| $f(\pi)$ | 团队的适应度（=团队奖励 $g$） |
+| $\xi$ | 每个rollout的episode数 |
 
 ### 2.2 MERL的双目标优化
 
@@ -69,17 +69,17 @@ MERL同时优化两个目标：
 
 **EA部分（优化团队奖励）** ：
 
-\[
+$$
 \max_{\pi \in \text{pop}} f(\pi) = \max_{\pi} \mathbb{E}_{\pi}\left[ \sum_{t=0}^{T} g_t \right]
-\]
+$$
 
 **RL部分（优化个体奖励）** ：
 
-\[
+$$
 \max_{\theta^\pi} J(\theta^\pi) = \max_{\theta^\pi} \mathbb{E}_{\pi_\theta}\left[ \sum_{t=0}^{T} \gamma^t l_{i,t} \right], \quad \forall i \in \{1, \dots, N\}
-\]
+$$
 
-**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 \(g\)，RL优化局部个体奖励 \(l_i\)。两者通过经验池共享和权重迁移间接耦合。
+**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 $g$，RL优化局部个体奖励 $l_i$。两者通过经验池共享和权重迁移间接耦合。
 
 ### 2.3 多头策略网络结构
 
@@ -116,29 +116,29 @@ MERL使用**多头神经网络**来表征团队策略：
 
 **Critic更新（TD3风格，双Q网络）** ：
 
-\[
+$$
 y_i = l_i + \gamma \min_{j=1,2} \mathcal{Q}'_j(o_{i+1}, a')
-\]
+$$
 
-其中 \(a' = \pi_{pg}^{\prime k}(o_{i+1}) + \epsilon\)，\(\epsilon \sim \text{clip}(\mathcal{N}(0, \sigma), -c, c)\)（TD3的目标策略平滑）
+其中 $a' = \pi_{pg}^{\prime k}(o_{i+1}) + \epsilon$，$\epsilon \sim \text{clip}(\mathcal{N}(0, \sigma), -c, c)$（TD3的目标策略平滑）
 
-\[
+$$
 \mathcal{L}_{\mathcal{Q}} = \frac{1}{T} \sum_{i=1}^{T} \left( y_i - \mathcal{Q}(o_i, a_i) \right)^2
-\]
+$$
 
 **Actor更新（确定性策略梯度）** ：
 
-\[
+$$
 \nabla_{\theta_{pg}^\pi} J \approx \frac{1}{T} \sum_i \nabla_a \mathcal{Q}(o, a) \big|_{o=o_i, a=a_i} \nabla_{\theta_{pg}^\pi} \pi_{pg}^k(o_i)
-\]
+$$
 
 ### 2.5 EA部分的适应度
 
-\[
+$$
 f(\pi) = \frac{1}{\xi} \sum_{j=1}^{\xi} g^{(j)}
-\]
+$$
 
-其中 \(g^{(j)}\) 是第 \(j\) 个episode的团队奖励总和。
+其中 $g^{(j)}$ 是第 $j$ 个episode的团队奖励总和。
 
 
 ## 3. 完整算法流程
@@ -232,7 +232,7 @@ MERL最核心的创新是**不混合奖励**，而是让EA和RL各自优化不�
 
 ### 5.3 自适应信息迁移
 
-迁移频率由条件选择率 \(P(sel \mid mig)\) 自动调节：
+迁移频率由条件选择率 $P(sel \mid mig)$ 自动调节：
 
 - 如果迁移的个体被选为精英的概率高 → 迁移方向好，继续迁移
 - 如果迁移的个体被选为精英的概率低 → 迁移方向差，自然被忽略
@@ -241,9 +241,9 @@ MERL最核心的创新是**不混合奖励**，而是让EA和RL各自优化不�
 
 MERL在Critic中使用双Q网络 + 目标策略平滑：
 
-\[
+$$
 y_i = l_i + \gamma \min_{j=1,2} \mathcal{Q}'_j(o_{i+1}, \pi_{pg}'^k(o_{i+1}) + \epsilon)
-\]
+$$
 
 减轻Q值过估计问题。
 
@@ -270,11 +270,11 @@ y_i = l_i + \gamma \min_{j=1,2} \mathcal{Q}'_j(o_{i+1}, \pi_{pg}'^k(o_{i+1}) + \
 | Coupling=7 | ~0 | ~0 | ~0 | **~0.5** |
 
 **关键观察**：
-- 耦合要求 \(n\) 越高，EA和MATD3性能急剧下降
+- 耦合要求 $n$ 越高，EA和MATD3性能急剧下降
 - MERL在耦合=7时仍能学习，其他方法完全失败
 - 因为耦合增加只增加**协调难度**，不增加状态空间复杂度，证明MERL解决了协调问题
 
-### 7.2 条件选择率 \(P(sel \mid mig)\)
+### 7.2 条件选择率 $P(sel \mid mig)$
 
 | 环境 | 条件选择率 | 含义 |
 |------|-----------|------|

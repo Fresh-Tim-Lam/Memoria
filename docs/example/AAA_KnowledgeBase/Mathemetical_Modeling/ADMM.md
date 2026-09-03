@@ -8,20 +8,20 @@
 本文统一研究**等式约束凸优化标准形式**，是对偶理论、ALM、ADMM的通用基底：
 $$
 \begin{cases}
-\displaystyle \min_{x\in\mathbb{R}^n} \(f(x)\) \\[6pt]
+\displaystyle \min_{x\in\mathbb{R}^n} $f(x)$ \$$6pt]
 \text{s.t.}\; h(x) = Ax - b = 0,\; A\in\mathbb{R}^{m\times n},\; b\in\mathbb{R}^m
 \end{cases}
 $$
 其中：
-1. $\(f(x)\):\mathbb{R}^n\to\mathbb{R}$ 为**凸、适当、下半连续函数**；
+1. $$f(x)$:\mathbb{R}^n\to\mathbb{R}$ 为**凸、适当、下半连续函数**；
 2. $h(x)\in\mathbb{R}^m$ 为 $m$ 维线性等式约束，代表 $m$ 条独立约束；
-3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{\(f(x)\) \mid \(h(x)=0\)\big\}$。
+3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{$f(x)$ \mid $h(x)=0$\big\}$。
 
 ## 2 拉格朗日对偶理论（核心理论基石）
 ### 2.1 拉格朗日函数构造
 为将**约束优化问题转化为无约束问题**，引入拉格朗日乘子向量 $y\in\mathbb{R}^m$（每一条约束对应一个乘子），构造拉格朗日函数：
 $$
-L(x,y) = \(f(x)\) + y^\top h(x) = \(f(x)\) + y^\top(Ax-b)
+L(x,y) = $f(x)$ + y^\top h(x) = $f(x)$ + y^\top(Ax-b)
 $$
 - 原变量 $x\in\mathbb{R}^n$：优化目标变量；
 - 对偶变量 $y\in\mathbb{R}^m$：约束惩罚权重，无定义域限制。
@@ -29,35 +29,35 @@ $$
 ### 2.2 对偶函数定义
 固定对偶变量 $y$，对原变量 $x$ 做全局极小化，**消去原变量**，得到仅关于 $y$ 的函数，即**对偶函数**：
 $$
-\(q(y)\) = \min_{x\in\mathbb{R}^n} L(x,y)
+$q(y)$ = \min_{x\in\mathbb{R}^n} L(x,y)
 $$
-核心性质：对偶函数 $\(q(y)\)$ 一定是**凹函数**，与原函数 $\(f(x)\)$ 的凹凸性无关。
+核心性质：对偶函数 $$q(y)$$ 一定是**凹函数**，与原函数 $$f(x)$$ 的凹凸性无关。
 
 ### 2.3 对偶问题定义
 基于对偶函数，构造**极大化下界**的对偶优化问题：
 $$
-\max_{y\in\mathbb{R}^m} \(q(y)\)
+\max_{y\in\mathbb{R}^m} $q(y)$
 $$
-定义**对偶问题最优值**：$d^* = \sup\limits_{y} \(q(y)\)$。
+定义**对偶问题最优值**：$d^* = \sup\limits_{y} $q(y)$$。
 
 > 核心逻辑：原问题是「对 $x$ 求最小」，对偶问题是「对 $y$ 求最大」，优化变量完全不同，无逻辑矛盾。
 
 ### 2.4 弱对偶定理（严格证明）
-**定理**：对 $\forall y\in\mathbb{R}^m$，恒有 $\(q(y)\) \le p^*$，进而 $d^* \le p^*$。
+**定理**：对 $\forall y\in\mathbb{R}^m$，恒有 $$q(y)$ \le p^*$，进而 $d^* \le p^*$。
 
 **证明**：
-1. 任取原问题**可行解** $x$，满足约束 $\(h(x)=0\)$，代入拉格朗日函数：
+1. 任取原问题**可行解** $x$，满足约束 $$h(x)=0$$，代入拉格朗日函数：
 $$
-L(x,y) = \(f(x)\) + y^\top \cdot 0 = \(f(x)\)
+L(x,y) = $f(x)$ + y^\top \cdot 0 = $f(x)$
 $$
-2. 根据对偶函数定义：$\(q(y)\) = \min\limits_{\forall x} L(x,y)$，极小化遍历**全体实数域 $x$**（包含可行解、不可行解）；
+2. 根据对偶函数定义：$$q(y)$ = \min\limits_{\forall x} L(x,y)$，极小化遍历**全体实数域 $x$**（包含可行解、不可行解）；
 3. 全体域的最小值 $\le$ 可行域内的最小值：
 $$
-\(q(y)\) = \min_{\forall x}L(x,y) \le \min_{\text{可行}x}L(x,y) = \min_{\text{可行}x}\(f(x)\) = p^*
+$q(y)$ = \min_{\forall x}L(x,y) \le \min_{\text{可行}x}L(x,y) = \min_{\text{可行}x}$f(x)$ = p^*
 $$
-4. 由于**任意 $y$** 都满足 $\(q(y)\)\le p^*$，因此 $\(q(y)\)$ 的上确界必然小于等于 $p^*$：
+4. 由于**任意 $y$** 都满足 $$q(y)$\le p^*$，因此 $$q(y)$$ 的上确界必然小于等于 $p^*$：
 $$
-d^* = \max_y \(q(y)\) \le p^*
+d^* = \max_y $q(y)$ \le p^*
 $$
 **证毕**。
 
@@ -81,7 +81,7 @@ x^{k+1} = \arg\min_x L(x,y^k)
 $$
 
 2. **对偶变量更新（梯度上升）**
-对偶函数的梯度满足：$\nabla q(y^k) = h(x^{k+1})$，为最大化 $\(q(y)\)$，执行梯度上升：
+对偶函数的梯度满足：$\nabla q(y^k) = h(x^{k+1})$，为最大化 $$q(y)$$，执行梯度上升：
 $$
 y^{k+1} = y^k + \alpha \cdot h(x^{k+1}),\quad \alpha>0
 $$
@@ -96,7 +96,7 @@ $$
 ### 4.1 增广拉格朗日函数构造
 为解决对偶上升发散问题，在普通拉格朗日基础上，引入**二次惩罚项**，构造增广拉格朗日函数：
 $$
-L_\rho(x,y) = \(f(x)\) + y^\top h(x) + \frac{\rho}{2}\left\|h(x)\right\|_2^2,\quad \rho>0
+L_\rho(x,y) = $f(x)$ + y^\top h(x) + \frac{\rho}{2}\left\|h(x)\right\|_2^2,\quad \rho>0
 $$
 - $\rho$：惩罚超参数，仅影响收敛速度，不影响凸问题收敛性；
 - 新增二次项：强凸正则项，强制目标函数有下界，彻底解决迭代发散问题。
@@ -125,26 +125,26 @@ $$
 ADMM 专门解决**可分目标、耦合约束**的大规模凸优化问题，标准拆分形式：
 $$
 \begin{cases}
-\displaystyle \min_{\(x,z\)} \(f(x)\) + g(z) \\[6pt]
+\displaystyle \min_{$x,z$} $f(x)$ + g(z) \$$6pt]
 \text{s.t.}\; Ax + Bz = c
 \end{cases}
 $$
-- 目标函数可拆分为两个独立凸函数 $\(f(x)\),g(z)$；
-- 约束 $\(Ax+Bz=c\)$ 耦合两个变量，无法单独优化。
+- 目标函数可拆分为两个独立凸函数 $$f(x)$,g(z)$；
+- 约束 $$Ax+Bz=c$$ 耦合两个变量，无法单独优化。
 
 ### 5.2 ADMM增广拉格朗日函数
 对应拆分问题，构造增广拉格朗日：
 $$
-L_\rho(\(x,z\),y) = \(f(x)\)+g(z) + y^\top(Ax+Bz-c) + \frac{\rho}{2}\left\|Ax+Bz-c\right\|_2^2
+L_\rho($x,z$,y) = $f(x)$+g(z) + y^\top(Ax+Bz-c) + \frac{\rho}{2}\left\|Ax+Bz-c\right\|_2^2
 $$
 
 ### 5.3 ADMM核心创新：交替极小化（关键推导）
-ALM 需要**联合极小化 $\(x,z\)$**，计算量大；ADMM 放弃完整联合极小，采用**块交替坐标下降**，拆分三步迭代，完全解耦变量：
+ALM 需要**联合极小化 $$x,z$$**，计算量大；ADMM 放弃完整联合极小，采用**块交替坐标下降**，拆分三步迭代，完全解耦变量：
 
 1. **x-极小步（固定 $z^k,y^k$）**
 仅优化 $x$，剔除所有与 $x$ 无关项：
 $$
-x^{k+1} = \arg\min_x \left\{ \(f(x)\) + y^{k\top}Ax + \frac{\rho}{2}\left\|Ax+Bz^k-c\right\|_2^2 \right\}
+x^{k+1} = \arg\min_x \left\{ $f(x)$ + y^{k\top}Ax + \frac{\rho}{2}\left\|Ax+Bz^k-c\right\|_2^2 \right\}
 $$
 
 2. **z-极小步（固定 $x^{k+1},y^k$）**
@@ -162,22 +162,22 @@ $$
 令缩放对偶变量 $u = y/\rho$，代入化简，约去常数，得到代码通用最简形式：
 $$
 \begin{cases}
-x^{k+1} = \arg\min\limits_x \(f(x)\) + \dfrac{\rho}{2}\left\|x-z^k+u^k\right\|_2^2 \\[6pt]
-z^{k+1} = \arg\min\limits_z g(z) + \dfrac{\rho}{2}\left\|x^{k+1}-z+u^k\right\|_2^2 \\[6pt]
+x^{k+1} = \arg\min\limits_x $f(x)$ + \dfrac{\rho}{2}\left\|x-z^k+u^k\right\|_2^2 \$$6pt]
+z^{k+1} = \arg\min\limits_z g(z) + \dfrac{\rho}{2}\left\|x^{k+1}-z+u^k\right\|_2^2 \$$6pt]
 u^{k+1} = u^k + x^{k+1}-z^{k+1}
 \end{cases}
 $$
 
 ### 5.5 ADMM收敛性严格说明
 #### 收敛前提条件
-1. $\(f(x)\),g(z)$ 为凸、适当、下半连续函数；
+1. $$f(x)$,g(z)$ 为凸、适当、下半连续函数；
 2. 原问题可行，强对偶条件成立。
 
 #### 收敛结论（Boyd标准定理）
 1. 原始残差 $r^k=Ax^k+Bz^k-c \to 0$，约束渐进满足；
 2. 目标函数 $f(x^k)+g(z^k) \to p^*$，收敛到全局最优值；
 3. 迭代序列所有聚点均为原问题、对偶问题最优解；
-4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+4. 收敛速度：**$\boldsymbol{$\boldsymbol{O(1/k)}$}$ 次线性收敛**。
 
 ### 5.6 收敛停机准则
 定义双残差判定（工业标准），双残差同时小于阈值则收敛：

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: '2026-09-03T07:44:50.447609+00:00'
+updated_at: '2026-09-03T09:23:34.615724+00:00'
 items:
 - pending_id: a70048884b857375
   file: DeepLearning/ELU.md
@@ -825,7 +825,7 @@ items:
       snippet: '### 2.1 交叉熵方法（CEM）'
       line_hint: 44
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 79
   status: pending
 - pending_id: 0846fe547c3088b2
@@ -1148,7 +1148,7 @@ items:
   name: CEM是一种**分布估计算法
   range:
     start:
-      snippet: CEM是一种**分布估计算法（EDA）**，通过维护一个参数分布 \(\mathcal{N}(\mu, \Sigma)\) 来隐式地表示一个种群：
+      snippet: CEM是一种**分布估计算法（EDA）**，通过维护一个参数分布 $\mathcal{N}(\mu, \Sigma)$ 来隐式地表示一个种群：
       line_hint: 46
     end:
       snippet: ''
@@ -1163,7 +1163,7 @@ items:
       snippet: 2. 评估所有个体的适应度（fitness）
       line_hint: 49
     end:
-      snippet: 4. 用精英个体更新分布参数 \(\mu\) 和 \(\Sigma\)
+      snippet: 4. 用精英个体更新分布参数 $\mu$ 和 $\Sigma$
       line_hint: 51
   status: pending
 - pending_id: 26289f771eb494fd
@@ -1176,7 +1176,7 @@ items:
         - '
       line_hint: 66
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 67
   status: pending
 - pending_id: abc6aa12f58c5514
@@ -1215,6 +1215,18 @@ items:
       snippet: '- 无论如何，**所有个体产生的经验都存入replay buffer**，供critic学习'
       line_hint: 101
   status: pending
+- pending_id: 0459065c4dc4c145
+  file: EvolutionaryReforcementLearning/CEMRL.md
+  kind: definition
+  name: $\pi_\mu$
+  range:
+    start:
+      snippet: '| 1 | **初始化**：随机 actor $\pi_\mu$（CEM的均值），协方差 $\Sigma = \sigma_{init}\mathcal{I}$'
+      line_hint: 137
+    end:
+      snippet: '| 21 | **end while** |'
+      line_hint: 157
+  status: pending
 - pending_id: c89cf8bc85a5a795
   file: EvolutionaryReforcementLearning/CEMRL.md
   kind: definition
@@ -1237,7 +1249,7 @@ items:
         \left( r + \
       line_hint: 168
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 169
   status: pending
 - pending_id: f954165685d8f148
@@ -1381,7 +1393,7 @@ items:
       snippet: '### 第 1 步：评估适应度（Fitness）'
       line_hint: 24
     end:
-      snippet: 得到每个个体的适应度分数 \(f(W_i)\)。
+      snippet: 得到每个个体的适应度分数 $f(W_i)$。
       line_hint: 33
   status: pending
 - pending_id: c3ea275c7f366fe2
@@ -1441,28 +1453,28 @@ items:
       snippet: '### 第 1 步：收集经验'
       line_hint: 64
     end:
-      snippet: RL 智能体 \(W_{rl}\) 与环境交互，产生轨迹 \((s, a, r, s')\)，存入经验池 \(\mathcal{D}\)。
+      snippet: RL 智能体 $W_{rl}$ 与环境交互，产生轨迹 $(s, a, r, s')$，存入经验池 $\mathcal{D}$。
       line_hint: 66
   status: pending
-- pending_id: f151341295aac2bd
+- pending_id: 2f9623bcb5400305
   file: EvolutionaryReforcementLearning/ERL-Re^2-appendix.md
   kind: heading
-  name: 第 2 步：训练 Critic（\(Q_\psi\)）
+  name: 第 2 步：训练 Critic（$Q_\psi$）
   range:
     start:
-      snippet: '### 第 2 步：训练 Critic（\(Q_\psi\)）'
+      snippet: '### 第 2 步：训练 Critic（$Q_\psi$）'
       line_hint: 68
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 74
   status: pending
-- pending_id: 881f66c0ba2d2a62
+- pending_id: eb03645ffa94793b
   file: EvolutionaryReforcementLearning/ERL-Re^2-appendix.md
   kind: heading
-  name: 第 3 步：更新 RL 策略（\(W_{rl}\)）
+  name: 第 3 步：更新 RL 策略（$W_{rl}$）
   range:
     start:
-      snippet: '### 第 3 步：更新 RL 策略（\(W_{rl}\)）'
+      snippet: '### 第 3 步：更新 RL 策略（$W_{rl}$）'
       line_hint: 76
     end:
       snippet: '---'
@@ -1504,13 +1516,13 @@ items:
       snippet: '---'
       line_hint: 105
   status: pending
-- pending_id: fb7b7b8b8f01dc29
+- pending_id: 3a1577737ab57ce1
   file: EvolutionaryReforcementLearning/ERL-Re^2-appendix.md
   kind: heading
-  name: 四、公共底座 \(Z_\phi\) 是怎么更新的？
+  name: 四、公共底座 $Z_\phi$ 是怎么更新的？
   range:
     start:
-      snippet: '## 四、公共底座 \(Z_\phi\) 是怎么更新的？'
+      snippet: '## 四、公共底座 $Z_\phi$ 是怎么更新的？'
       line_hint: 107
     end:
       snippet: '---'
@@ -1630,7 +1642,7 @@ items:
   name: '**所有个体用的'
   range:
     start:
-      snippet: '**所有个体用的是同一个底座（\(Z_\phi\)），但各自有独立的决策头（\(W\)）。**'
+      snippet: '**所有个体用的是同一个底座（$Z_\phi$），但各自有独立的决策头（$W$）。**'
       line_hint: 16
     end:
       snippet: ''
@@ -1645,7 +1657,7 @@ items:
       snippet: 1. **完整评估（MC）**：跑完一整集，拿真实累积奖励。
       line_hint: 30
     end:
-      snippet: 2. **代理评估（PeVFA）**：只跑 \(H\) 步，然后用 PeVFA 预估剩下的价值。
+      snippet: 2. **代理评估（PeVFA）**：只跑 $H$ 步，然后用 PeVFA 预估剩下的价值。
       line_hint: 31
   status: pending
 - pending_id: 036c88db039d3760
@@ -1654,8 +1666,20 @@ items:
   name: '**代理评估'
   range:
     start:
-      snippet: 2. **代理评估（PeVFA）**：只跑 \(H\) 步，然后用 PeVFA 预估剩下的价值。
+      snippet: 2. **代理评估（PeVFA）**：只跑 $H$ 步，然后用 PeVFA 预估剩下的价值。
       line_hint: 31
+    end:
+      snippet: ''
+      line_hint: 34
+  status: pending
+- pending_id: d54db9bf752bb2da
+  file: EvolutionaryReforcementLearning/ERL-Re^2-appendix.md
+  kind: definition
+  name: $f
+  range:
+    start:
+      snippet: 得到每个个体的适应度分数 $f(W_i)$。
+      line_hint: 33
     end:
       snippet: ''
       line_hint: 34
@@ -1666,7 +1690,7 @@ items:
   name: '**精英'
   range:
     start:
-      snippet: '- **精英（Elite）**：分数最高的那 1 个（论文里 \(e=1\)），**直接保留**到下一代，不参与任何变异。'
+      snippet: '- **精英（Elite）**：分数最高的那 1 个（论文里 $e=1$），**直接保留**到下一代，不参与任何变异。'
       line_hint: 39
     end:
       snippet: '- **淘汰者（Discard）**：没被选上的，全部要被替换掉。'
@@ -1706,7 +1730,7 @@ items:
         \left( r +
       line_hint: 73
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 74
   status: pending
 - pending_id: 02526534c94e270f
@@ -1727,7 +1751,7 @@ items:
   name: 的更新方向
   range:
     start:
-      snippet: 每次迭代，\(Z_\phi\) 的更新方向是**把 RL 和 EA 的方向合在一起**：
+      snippet: 每次迭代，$Z_\phi$ 的更新方向是**把 RL 和 EA 的方向合在一起**：
       line_hint: 111
     end:
       snippet: ''
@@ -1742,7 +1766,7 @@ items:
       snippet: '- 第一项：让 RL 智能体的 Q 值变大（RL 想要的方向）'
       line_hint: 117
     end:
-      snippet: '- 第二项：让 \(K\) 个 EA 个体的 PeVFA 值变大（EA 想要的方向）'
+      snippet: '- 第二项：让 $K$ 个 EA 个体的 PeVFA 值变大（EA 想要的方向）'
       line_hint: 118
   status: pending
 - pending_id: b16ba451c2e1cbea
@@ -1862,7 +1886,7 @@ items:
       snippet: 1. **EA → RL 走的是“数据流”**
       line_hint: 265
     end:
-      snippet: 如果RL找到了一个好的权重 \(W_{rl}\),直接替换掉EA种群里的“吊车尾”。这样好基因不会丢失,还能通过EA的交叉变异进一步扩散和优化。
+      snippet: 如果RL找到了一个好的权重 $W_{rl}$,直接替换掉EA种群里的“吊车尾”。这样好基因不会丢失,还能通过EA的交叉变异进一步扩散和优化。
       line_hint: 269
   status: pending
 - pending_id: 1c5984fcabc0df12
@@ -3784,7 +3808,7 @@ items:
       snippet: '## 2. 数学框架'
       line_hint: 47
     end:
-      snippet: 其中 \(g^{(j)}\) 是第 \(j\) 个episode的团队奖励总和。
+      snippet: 其中 $g^{(j)}$ 是第 $j$ 个episode的团队奖励总和。
       line_hint: 141
   status: pending
 - pending_id: 5a079f6f48b2b62c
@@ -3796,7 +3820,7 @@ items:
       snippet: '### 2.1 符号系统'
       line_hint: 49
     end:
-      snippet: '| \(\xi\) | 每个rollout的episode数 |'
+      snippet: '| $\xi$ | 每个rollout的episode数 |'
       line_hint: 64
   status: pending
 - pending_id: 00452dfe1874ec6a
@@ -3808,7 +3832,7 @@ items:
       snippet: '### 2.2 MERL的双目标优化'
       line_hint: 66
     end:
-      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 \(g\)，RL优化局部个体奖励 \(l_i\)。两者通过经验池共享和权重迁移'
+      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 $g$，RL优化局部个体奖励 $l_i$。两者通过经验池共享和权重迁移间接耦合'
       line_hint: 82
   status: pending
 - pending_id: 4b7144de06211275
@@ -3832,7 +3856,7 @@ items:
       snippet: '### 2.4 RL部分的损失函数'
       line_hint: 115
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 133
   status: pending
 - pending_id: 9265c676a0d5c6c1
@@ -3844,7 +3868,7 @@ items:
       snippet: '### 2.5 EA部分的适应度'
       line_hint: 135
     end:
-      snippet: 其中 \(g^{(j)}\) 是第 \(j\) 个episode的团队奖励总和。
+      snippet: 其中 $g^{(j)}$ 是第 $j$ 个episode的团队奖励总和。
       line_hint: 141
   status: pending
 - pending_id: 966987bddb33ec1e
@@ -3980,13 +4004,13 @@ items:
       snippet: '- 因为耦合增加只增加**协调难度**，不增加状态空间复杂度，证明MERL解决了协调问题'
       line_hint: 275
   status: pending
-- pending_id: 3c72f19031b2f797
+- pending_id: ae2f3f6adf0111cf
   file: MERL/MERL.md
   kind: heading
-  name: 7.2 条件选择率 \(P(sel \mid mig)\)
+  name: 7.2 条件选择率 $P(sel \mid mig)$
   range:
     start:
-      snippet: '### 7.2 条件选择率 \(P(sel \mid mig)\)'
+      snippet: '### 7.2 条件选择率 $P(sel \mid mig)$'
       line_hint: 277
     end:
       snippet: '- MERL的迁移是**自适应的**——好迁移自动保留，坏迁移自动丢弃'
@@ -4023,7 +4047,7 @@ items:
   name: 两个优化器优化的
   range:
     start:
-      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 \(g\)，RL优化局部个体奖励 \(l_i\)。两者通过经验池共享和权重迁移'
+      snippet: '**关键点**：两个优化器优化的是**不同的奖励函数**——EA优化全局团队奖励 $g$，RL优化局部个体奖励 $l_i$。两者通过经验池共享和权重迁移间接耦合'
       line_hint: 82
     end:
       snippet: ''
@@ -4050,7 +4074,7 @@ items:
       snippet: y_i = l_i + \gamma \min_{j=1,2} \mathcal{Q}'_j(o_{i+1}, a')
       line_hint: 120
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 121
   status: pending
 - pending_id: 99e107f1a40ece08
@@ -4063,7 +4087,7 @@ items:
         a)
       line_hint: 132
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 133
   status: pending
 - pending_id: c4da31b8577e52e7
@@ -4101,6 +4125,18 @@ items:
     end:
       snippet: ''
       line_hint: 224
+  status: pending
+- pending_id: 9ef64d3604256bf1
+  file: MERL/MERL.md
+  kind: definition
+  name: $P
+  range:
+    start:
+      snippet: 迁移频率由条件选择率 $P(sel \mid mig)$ 自动调节：
+      line_hint: 235
+    end:
+      snippet: ''
+      line_hint: 239
   status: pending
 - pending_id: e8aac28a368d7b77
   file: MERL/MERL.md
@@ -4235,7 +4271,7 @@ items:
       snippet: '### 3.1 回归树：均方误差 (MSE)'
       line_hint: 64
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 82
   status: pending
 - pending_id: c621de336685631d
@@ -5112,7 +5148,7 @@ items:
       snippet: '#### 第一层理解：组合数'
       line_hint: 42
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 62
   status: pending
 - pending_id: 91d3c6506351b41e
@@ -5139,13 +5175,13 @@ items:
       snippet: '---'
       line_hint: 158
   status: pending
-- pending_id: 328a069a9d1ad7cc
+- pending_id: ffaa901865674160
   file: MachineLearning/SHAP_appendix.md
   kind: heading
-  name: 第 1 步：定义 \(f(S)\)
+  name: 第 1 步：定义 $f(S)$
   range:
     start:
-      snippet: '### 第 1 步：定义 \(f(S)\)'
+      snippet: '### 第 1 步：定义 $f(S)$'
       line_hint: 91
     end:
       snippet: '---'
@@ -5220,8 +5256,8 @@ items:
       snippet: '## 四、总结'
       line_hint: 203
     end:
-      snippet: '| 等价形式 | \(\phi_j = \frac{1}{M} \sum_{S \subseteq F \setminus \{j\}}
-        \frac{1}{\b'
+      snippet: '| 等价形式 | $\phi_j = \frac{1}{M} \sum_{S \subseteq F \setminus \{j\}}
+        \frac{1}{\bi'
       line_hint: 211
   status: pending
 - pending_id: 70510919fc3a254e
@@ -5230,11 +5266,23 @@ items:
   name: 的定义式
   range:
     start:
-      snippet: SHAP 值 \(\phi_j\) 的定义式是：
+      snippet: SHAP 值 $\phi_j$ 的定义式是：
       line_hint: 9
     end:
       snippet: ''
       line_hint: 88
+  status: pending
+- pending_id: a70802fce6659a27
+  file: MachineLearning/SHAP_appendix.md
+  kind: definition
+  name: $f
+  range:
+    start:
+      snippet: '| $f(S \cup \{j\})$ | **用 $S$ 中特征再加特征 $j$** 时模型的预测值 |'
+      line_hint: 25
+    end:
+      snippet: '| $f(S \cup \{j\}) - f(S)$ | 把特征 $j$ 加入到联盟 $S$ 中带来的边际贡献 |'
+      line_hint: 26
   status: pending
 - pending_id: 45061beb5378228a
   file: MachineLearning/SHAP_appendix.md
@@ -5242,7 +5290,7 @@ items:
   name: 公式本身不
   range:
     start:
-      snippet: Shapley 值的定义来自博弈论。有 \(M\) 个玩家，要公平地分配总收益。它满足几个公理（对称性、有效性、可加性、虚拟玩家）。公式本身不是被“解”出来的，
+      snippet: Shapley 值的定义来自博弈论。有 $M$ 个玩家，要公平地分配总收益。它满足几个公理（对称性、有效性、可加性、虚拟玩家）。公式本身不是被“解”出来的，而是
       line_hint: 32
     end:
       snippet: ''
@@ -5254,7 +5302,7 @@ items:
   name: 上面那一坨的分母
   range:
     start:
-      snippet: 上面那一坨的分母是 \(|F|!\)，分子是 \(|S|! (|F|-|S|-1)!\)，所以：
+      snippet: 上面那一坨的分母是 $|F|!$，分子是 $|S|! (|F|-|S|-1)!$，所以：
       line_hint: 50
     end:
       snippet: ''
@@ -5266,7 +5314,7 @@ items:
   name: 的“边际贡献”
   range:
     start:
-      snippet: 从 \(M\) 个特征中随机选一个排列。在任意一个排列中，某个特征 \(j\) 的“边际贡献”定义为：**把它加入它前面的那一组特征时带来的增量**。
+      snippet: 从 $M$ 个特征中随机选一个排列。在任意一个排列中，某个特征 $j$ 的“边际贡献”定义为：**把它加入它前面的那一组特征时带来的增量**。
       line_hint: 66
     end:
       snippet: ''
@@ -5278,8 +5326,8 @@ items:
   name: 后面的特征任意排列的概率
   range:
     start:
-      snippet: '对于一个特定的子集 \(S\)，把它作为特征 \(j\) 前面的那一组特征，这个 \(S\) 在随机排列中**恰好**出现在 \(j\)
-        前面、且 \(j\) '
+      snippet: 对于一个特定的子集 $S$，把它作为特征 $j$ 前面的那一组特征，这个 $S$ 在随机排列中**恰好**出现在 $j$ 前面、且 $j$
+        后面的特征任意排列的
       line_hint: 68
     end:
       snippet: ''
@@ -5291,7 +5339,7 @@ items:
   name: 前面的那一组特征正好
   range:
     start:
-      snippet: '**含义**：在随机排列中，特征 \(j\) 前面的那一组特征正好是 \(S\) 的概率。'
+      snippet: '**含义**：在随机排列中，特征 $j$ 前面的那一组特征正好是 $S$ 的概率。'
       line_hint: 83
     end:
       snippet: ''
@@ -5303,7 +5351,7 @@ items:
   name: 值就
   range:
     start:
-      snippet: SHAP 值就是把特征 \(j\) 在**所有可能的排列**中，相对于它前面的那一组特征产生的边际贡献取平均。这个系数就是“这种情况发生的概率”。
+      snippet: SHAP 值就是把特征 $j$ 在**所有可能的排列**中，相对于它前面的那一组特征产生的边际贡献取平均。这个系数就是“这种情况发生的概率”。
       line_hint: 85
     end:
       snippet: ''
@@ -5315,7 +5363,7 @@ items:
   name: 这就
   range:
     start:
-      snippet: 即所有样本的平均预测值。这就是基准值 \(\phi_0\)。
+      snippet: 即所有样本的平均预测值。这就是基准值 $\phi_0$。
       line_hint: 111
     end:
       snippet: ''
@@ -5327,7 +5375,7 @@ items:
   name: 值本质上就
   range:
     start:
-      snippet: SHAP 值本质上就是把总贡献 \(f(F) - f(\emptyset)\) 按照每个特征在所有排列中的平均边际贡献进行分解：
+      snippet: SHAP 值本质上就是把总贡献 $f(F) - f(\emptyset)$ 按照每个特征在所有排列中的平均边际贡献进行分解：
       line_hint: 139
     end:
       snippet: ''
@@ -5342,7 +5390,7 @@ items:
       snippet: = \frac{k! (M - k - 1)!}{M \cdot (M-1)!}
       line_hint: 184
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 187
   status: pending
 - pending_id: ceb8a719298a9266
@@ -5351,7 +5399,7 @@ items:
   name: 个的组合数
   range:
     start:
-      snippet: 因为在 \((M-1)\) 个特征中选 \(k\) 个的组合数是 \(\binom{M-1}{k} = \frac{(M-1)!}{k!(M-1-k)!}\)。
+      snippet: 因为在 $(M-1)$ 个特征中选 $k$ 个的组合数是 $\binom{M-1}{k} = \frac{(M-1)!}{k!(M-1-k)!}$。
       line_hint: 189
     end:
       snippet: ''
@@ -5363,7 +5411,7 @@ items:
   name: 这个形式的意义
   range:
     start:
-      snippet: 这个形式的意义是：对每个特征子集大小 \(k\)，在所有不含 \(j\) 的大小为 \(k\) 的子集上取平均边际贡献，然后再对不同的子集大小取平均。
+      snippet: 这个形式的意义是：对每个特征子集大小 $k$，在所有不含 $j$ 的大小为 $k$ 的子集上取平均边际贡献，然后再对不同的子集大小取平均。
       line_hint: 199
     end:
       snippet: ''
@@ -7433,7 +7481,7 @@ items:
       snippet: '## 1 约束凸优化基础问题定义'
       line_hint: 7
     end:
-      snippet: 3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{\(f(x)\) \mid \(h(x)=0\)\big\}$。
+      snippet: 3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{$f(x)$ \mid $h(x)=0$\big\}$。
       line_hint: 18
   status: pending
 - pending_id: 8d3a08c40ada7fee
@@ -7469,7 +7517,7 @@ items:
       snippet: '### 2.2 对偶函数定义'
       line_hint: 29
     end:
-      snippet: 核心性质：对偶函数 $\(q(y)\)$ 一定是**凹函数**，与原函数 $\(f(x)\)$ 的凹凸性无关。
+      snippet: 核心性质：对偶函数 $$q(y)$$ 一定是**凹函数**，与原函数 $$f(x)$$ 的凹凸性无关。
       line_hint: 34
   status: pending
 - pending_id: 4eabbc3e6fff3703
@@ -7613,7 +7661,7 @@ items:
       snippet: '### 5.1 ADMM标准拆分问题'
       line_hint: 124
     end:
-      snippet: '- 约束 $\(Ax+Bz=c\)$ 耦合两个变量，无法单独优化。'
+      snippet: '- 约束 $$Ax+Bz=c$$ 耦合两个变量，无法单独优化。'
       line_hint: 133
   status: pending
 - pending_id: 07399220dc7a8bad
@@ -7661,7 +7709,7 @@ items:
       snippet: '### 5.5 ADMM收敛性严格说明'
       line_hint: 171
     end:
-      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      snippet: 4. 收敛速度：**$\boldsymbol{$\boldsymbol{O(1/k)}$}$ 次线性收敛**。
       line_hint: 180
   status: pending
 - pending_id: 435dc5e66773f43f
@@ -7685,7 +7733,7 @@ items:
       snippet: '#### 收敛结论（Boyd标准定理）'
       line_hint: 176
     end:
-      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      snippet: 4. 收敛速度：**$\boldsymbol{$\boldsymbol{O(1/k)}$}$ 次线性收敛**。
       line_hint: 180
   status: pending
 - pending_id: be3b71d3038998af
@@ -7748,29 +7796,29 @@ items:
       snippet: ''
       line_hint: 6
   status: pending
-- pending_id: bae348109810edb6
-  file: Mathemetical_Modeling/ADMM.md
-  kind: definition
-  name: $\
-  range:
-    start:
-      snippet: 1. $\(f(x)\):\mathbb{R}^n\to\mathbb{R}$ 为**凸、适当、下半连续函数**；
-      line_hint: 16
-    end:
-      snippet: 3. 定义**原问题最优值**：$p^* = \inf\limits_{x} \big\{\(f(x)\) \mid \(h(x)=0\)\big\}$。
-      line_hint: 18
-  status: pending
 - pending_id: 2e4405775f934cfc
   file: Mathemetical_Modeling/ADMM.md
   kind: definition
   name: y^\top
   range:
     start:
-      snippet: L(x,y) = \(f(x)\) + y^\top h(x) = \(f(x)\) + y^\top(Ax-b)
+      snippet: L(x,y) = $f(x)$ + y^\top h(x) = $f(x)$ + y^\top(Ax-b)
       line_hint: 24
     end:
       snippet: '- 对偶变量 $y\in\mathbb{R}^m$：约束惩罚权重，无定义域限制。'
       line_hint: 27
+  status: pending
+- pending_id: 6df4608a0e347519
+  file: Mathemetical_Modeling/ADMM.md
+  kind: definition
+  name: 一定
+  range:
+    start:
+      snippet: 核心性质：对偶函数 $$q(y)$$ 一定是**凹函数**，与原函数 $$f(x)$$ 的凹凸性无关。
+      line_hint: 34
+    end:
+      snippet: ''
+      line_hint: 35
   status: pending
 - pending_id: ce9d67d630ea6c56
   file: Mathemetical_Modeling/ADMM.md
@@ -7814,7 +7862,7 @@ items:
   name: L_\rho
   range:
     start:
-      snippet: L_\rho(x,y) = \(f(x)\) + y^\top h(x) + \frac{\rho}{2}\left\|h(x)\right\|_2^2,\qu
+      snippet: L_\rho(x,y) = $f(x)$ + y^\top h(x) + \frac{\rho}{2}\left\|h(x)\right\|_2^2,\quad
       line_hint: 99
     end:
       snippet: '- 新增二次项：强凸正则项，强制目标函数有下界，彻底解决迭代发散问题。'
@@ -7841,7 +7889,7 @@ items:
       snippet: 2. 目标函数 $f(x^k)+g(z^k) \to p^*$，收敛到全局最优值；
       line_hint: 178
     end:
-      snippet: 4. 收敛速度：**$\boldsymbol{\(\boldsymbol{O(1/k)}\)}$ 次线性收敛**。
+      snippet: 4. 收敛速度：**$\boldsymbol{$\boldsymbol{O(1/k)}$}$ 次线性收敛**。
       line_hint: 180
   status: pending
 - pending_id: 73d578865e6de0b2
@@ -7961,7 +8009,7 @@ items:
       snippet: '### 7.1 GBD 的子问题是什么？'
       line_hint: 187
     end:
-      snippet: 其中 \( \bar{y} \) 是主问题给定的一个具体值，在这一步中是**固定的常数**。
+      snippet: 其中 $ \bar{y} $ 是主问题给定的一个具体值，在这一步中是**固定的常数**。
       line_hint: 203
   status: pending
 - pending_id: 13de992796f7f57b
@@ -7973,7 +8021,7 @@ items:
       snippet: '### 7.2 构造子问题的拉格朗日函数'
       line_hint: 205
     end:
-      snippet: 其中 \( u \) 是拉格朗日乘子向量。
+      snippet: 其中 $ u $ 是拉格朗日乘子向量。
       line_hint: 211
   status: pending
 - pending_id: 48761e18f125678b
@@ -7985,19 +8033,19 @@ items:
       snippet: '### 7.3 子问题的对偶函数'
       line_hint: 213
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 227
   status: pending
-- pending_id: f6acb25a09f8b15b
+- pending_id: 879cef8bd7b7fad7
   file: Mathemetical_Modeling/DBMC.md
   kind: heading
-  name: 7.4 最关键的一步：推广到任意 \( y \)
+  name: 7.4 最关键的一步：推广到任意 $ y $
   range:
     start:
-      snippet: '### 7.4 最关键的一步：推广到任意 \( y \)'
+      snippet: '### 7.4 最关键的一步：推广到任意 $ y $'
       line_hint: 229
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 247
   status: pending
 - pending_id: 254216dc1d443c5e
@@ -8045,7 +8093,7 @@ items:
       snippet: '### 8.2 如何处理不可行？'
       line_hint: 275
     end:
-      snippet: 求解后得到最优乘子 \( u^* \)。
+      snippet: 求解后得到最优乘子 $ u^* $。
       line_hint: 295
   status: pending
 - pending_id: 7bbe62f9ff1649ee
@@ -8343,7 +8391,7 @@ items:
   name: 在这一步中
   range:
     start:
-      snippet: 其中 \( \bar{y} \) 是主问题给定的一个具体值，在这一步中是**固定的常数**。
+      snippet: 其中 $ \bar{y} $ 是主问题给定的一个具体值，在这一步中是**固定的常数**。
       line_hint: 203
     end:
       snippet: ''
@@ -8355,10 +8403,10 @@ items:
   name: 如果子问题
   range:
     start:
-      snippet: 如果子问题是凸的，且强对偶成立，那么存在 \( u^* \) 使得：
+      snippet: 如果子问题是凸的，且强对偶成立，那么存在 $ u^* $ 使得：
       line_hint: 224
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 227
   status: pending
 - pending_id: d96788e523098ea3
@@ -8367,7 +8415,7 @@ items:
   name: 我们现在固定的
   range:
     start:
-      snippet: 我们现在固定的是 \( \bar{y} \)，求得了最优解 \( x^* \) 和最优乘子 \( u^* \)。
+      snippet: 我们现在固定的是 $ \bar{y} $，求得了最优解 $ x^* $ 和最优乘子 $ u^* $。
       line_hint: 231
     end:
       snippet: ''
@@ -8379,7 +8427,7 @@ items:
   name: 现在的问题
   range:
     start:
-      snippet: 现在的问题是：**对于其他任意的 \( y \)，我们能不能用这些信息来估计子问题的最优值？**
+      snippet: 现在的问题是：**对于其他任意的 $ y $，我们能不能用这些信息来估计子问题的最优值？**
       line_hint: 233
     end:
       snippet: ''
@@ -8391,7 +8439,7 @@ items:
   name: 答案
   range:
     start:
-      snippet: 答案是**能**。因为拉格朗日函数对 \( y \) 也是凸的（假设原问题是凸的），所以有：
+      snippet: 答案是**能**。因为拉格朗日函数对 $ y $ 也是凸的（假设原问题是凸的），所以有：
       line_hint: 235
     end:
       snippet: ''
@@ -8407,7 +8455,7 @@ items:
         + \na
       line_hint: 238
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 239
   status: pending
 - pending_id: d9b0045598d41f67
@@ -8428,7 +8476,7 @@ items:
   name: 右边
   range:
     start:
-      snippet: '- 右边是一个线性函数（关于 \( y \) 的线性函数）'
+      snippet: '- 右边是一个线性函数（关于 $ y $ 的线性函数）'
       line_hint: 257
     end:
       snippet: '- 所以它给出了**一个下界**'
@@ -8443,7 +8491,7 @@ items:
       snippet: L_s(x, s, u) = s + u^T (g(x, \bar{y}) - s)
       line_hint: 292
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 293
   status: pending
 - pending_id: dcd7adc1fe90b9d4
@@ -8452,10 +8500,10 @@ items:
   name: 这个约束
   range:
     start:
-      snippet: '- 这个约束是从当前不可行的 \( \bar{y} \) 推导出来的'
+      snippet: '- 这个约束是从当前不可行的 $ \bar{y} $ 推导出来的'
       line_hint: 305
     end:
-      snippet: '- **"切掉"** 所有会导致类似不可行性的 \( y \) 值'
+      snippet: '- **"切掉"** 所有会导致类似不可行性的 $ y $ 值'
       line_hint: 306
   status: pending
 - pending_id: ee37c2a3a02d2d28
@@ -8467,7 +8515,7 @@ items:
       snippet: 4. 主问题的可行域是**紧集**（有界闭集），且割的数目有限（或可数无限）
       line_hint: 354
     end:
-      snippet: 5. 当 \( LB \) 和 \( UB \) 收敛到同一值时，找到了**全局最优解**
+      snippet: 5. 当 $ LB $ 和 $ UB $ 收敛到同一值时，找到了**全局最优解**
       line_hint: 355
   status: pending
 - pending_id: 397b6f5e0eb0360d
@@ -8512,7 +8560,7 @@ items:
   name: \Rightarrow
   range:
     start:
-      snippet: '- 对于任意 \( y \)，验证：\( y^2 \ge 2y - 1 \Rightarrow (y - 1)^2 \ge 0 \)，永远成立'
+      snippet: '- 对于任意 $ y $，验证：$ y^2 \ge 2y - 1 \Rightarrow (y - 1)^2 \ge 0 $，永远成立'
       line_hint: 451
     end:
       snippet: ''
@@ -8560,7 +8608,7 @@ items:
   name: 因此其一阶泰勒展开
   range:
     start:
-      snippet: 即**拉格朗日函数（作为 y 的函数，且固定 \( x^* \) 时）是凸的，因此其一阶泰勒展开是全局下界**。这保证了最优性割的右边不会高估真实的子问题目标值
+      snippet: 即**拉格朗日函数（作为 y 的函数，且固定 $ x^* $ 时）是凸的，因此其一阶泰勒展开是全局下界**。这保证了最优性割的右边不会高估真实的子问题目标值。
       line_hint: 515
     end:
       snippet: ''
@@ -8584,7 +8632,7 @@ items:
   name: '**这里的“0”就'
   range:
     start:
-      snippet: '**这里的“0”就是原约束 \( g(x,y) \le 0 \) 的右侧边界。**'
+      snippet: '**这里的“0”就是原约束 $ g(x,y) \le 0 $ 的右侧边界。**'
       line_hint: 527
     end:
       snippet: ''
@@ -8596,8 +8644,8 @@ items:
   name: 可行性割的本质
   range:
     start:
-      snippet: '可行性割的本质是：用约束函数的一阶近似（在不可行点处线性化），把这个近似约束强行压低到 0 以下，从而“切掉”主问题中那些会导致子问题不可行的
-        \( y \) '
+      snippet: 可行性割的本质是：用约束函数的一阶近似（在不可行点处线性化），把这个近似约束强行压低到 0 以下，从而“切掉”主问题中那些会导致子问题不可行的
+        $ y $ 值。
       line_hint: 529
     end:
       snippet: ''
@@ -8636,8 +8684,8 @@ items:
       snippet: '## 结合FFT的情况'
       line_hint: 48
     end:
-      snippet: '---'
-      line_hint: 55
+      snippet: 也就是点值向量一定不一样。
+      line_hint: 53
   status: pending
 - pending_id: 652ce0e4a369ad02
   file: Mathemetical_Modeling/FFT-appendix.md
@@ -8660,8 +8708,9 @@ items:
       snippet: '## 等价矩阵角度（范德蒙德）'
       line_hint: 80
     end:
-      snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
-      line_hint: 112
+      snippet: '> 命题：如果 $\bol(\boldsymbol d)symbol a\neq \bol(\boldsymbol d)symbol
+        b$，则 $\bol(\b'
+      line_hint: 141
   status: pending
 - pending_id: ae89b278ed44b538
   file: Mathemetical_Modeling/FFT-appendix.md
@@ -8672,8 +8721,59 @@ items:
       snippet: '### 一句话记忆'
       line_hint: 109
     end:
-      snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
-      line_hint: 112
+      snippet: '> 命题：如果 $\bol(\boldsymbol d)symbol a\neq \bol(\boldsymbol d)symbol
+        b$，则 $\bol(\b'
+      line_hint: 141
+  status: pending
+- pending_id: 881e02b68db079d1
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 证明
+  range:
+    start:
+      snippet: '## 证明'
+      line_hint: 143
+    end:
+      snippet: '---'
+      line_hint: 184
+  status: pending
+- pending_id: 8bd660d0947e3dc1
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 套回FFT场景
+  range:
+    start:
+      snippet: '## 套回FFT场景'
+      line_hint: 186
+    end:
+      snippet: '> 这就是**双射（一一对应）**的矩阵版本。'
+      line_hint: 196
+  status: pending
+- pending_id: 32fbe9af9c3d9e03
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 什么时候这套结论失效？
+  range:
+    start:
+      snippet: '## 什么时候这套结论失效？'
+      line_hint: 198
+    end:
+      snippet: '> 采样点互异 (\Rightarrow) 范德蒙德行列式不为0 (\Rightarrow) 矩阵可逆 (\Rightarrow)
+        没有非零零空间 (\Righ'
+      line_hint: 208
+  status: pending
+- pending_id: b61cf40d497d2d96
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: heading
+  name: 一句话记忆
+  range:
+    start:
+      snippet: '### 一句话记忆'
+      line_hint: 205
+    end:
+      snippet: '> 采样点互异 (\Rightarrow) 范德蒙德行列式不为0 (\Rightarrow) 矩阵可逆 (\Rightarrow)
+        没有非零零空间 (\Righ'
+      line_hint: 208
   status: pending
 - pending_id: 02b268c78dc82607
   file: Mathemetical_Modeling/FFT-appendix.md
@@ -8768,8 +8868,8 @@ items:
       snippet: 可逆矩阵意味着：$\boldsymbol a \mapsto \boldsymbol y$ 是双射。
       line_hint: 101
     end:
-      snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
-      line_hint: 112
+      snippet: ''
+      line_hint: 114
   status: pending
 - pending_id: 576b5dfebbbe6477
   file: Mathemetical_Modeling/FFT-appendix.md
@@ -8780,8 +8880,32 @@ items:
       snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
       line_hint: 112
     end:
-      snippet: '> $\deg\le n-1$ 的多项式，最多拥有 $n-1$ 个根；n个互异点全部相等，差多项式只能是零多项式，故多项式必相等。'
-      line_hint: 112
+      snippet: ''
+      line_hint: 114
+  status: pending
+- pending_id: 33629a3321ab65f4
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 两两互不相同
+  range:
+    start:
+      snippet: 采样点 $z_0,z_1,$\boldsymbol d)ots,z_{N-1}$，两两互不相同（FFT里就是 $z_k=W_N^k$）。
+      line_hint: 124
+    end:
+      snippet: ''
+      line_hint: 209
+  status: pending
+- pending_id: 7b9dfdd8152fa30b
+  file: Mathemetical_Modeling/FFT-appendix.md
+  kind: definition
+  name: 这就
+  range:
+    start:
+      snippet: '> 这就是**双射（一一对应）**的矩阵版本。'
+      line_hint: 196
+    end:
+      snippet: ''
+      line_hint: 197
   status: pending
 - pending_id: a388ac0cef8e034e
   file: Mathemetical_Modeling/FFT.md
@@ -8999,7 +9123,7 @@ items:
       snippet: '### 1\. 为什么实系数多项式可以代入复数单位根？'
       line_hint: 159
     end:
-      snippet: 多项式的 \\\(x\\\) 是形式变量，仅代表加法、乘法运算，**不限制取值为实数**。复数完全兼容多项式运算，只是输出点值为复数，属于合法代数变换。
+      snippet: 多项式的 \\$x\\$ 是形式变量，仅代表加法、乘法运算，**不限制取值为实数**。复数完全兼容多项式运算，只是输出点值为复数，属于合法代数变换。
       line_hint: 161
   status: pending
 - pending_id: 6f39cadc6cbb144e
@@ -9011,7 +9135,7 @@ items:
       snippet: '### 2\. 采样点在复平面单位圆，为什么能确定实数域多项式？'
       line_hint: 163
     end:
-      snippet: 多项式是**全局刚性整函数**，复平面上 \\\(N\\\) 个互异点可唯一锁定整个多项式，自然包含实数域所有取值信息。单位圆点值只是**中间运算载体**，最终
+      snippet: 多项式是**全局刚性整函数**，复平面上 \\$N\\$ 个互异点可唯一锁定整个多项式，自然包含实数域所有取值信息。单位圆点值只是**中间运算载体**，最终可通
       line_hint: 165
   status: pending
 - pending_id: 7d83d38c394c89a5
@@ -9039,17 +9163,137 @@ items:
       snippet: '> （注：部分内容可能由 AI 生成）'
       line_hint: 187
   status: pending
-- pending_id: cb3f1210c15660e8
+- pending_id: 392fce4a6583542f
   file: Mathemetical_Modeling/FFT.md
-  kind: definition
-  name: \\\
+  kind: heading
+  name: 1 先写出两条公式
   range:
     start:
-      snippet: 对于次数不超过 \\\(N\-1\\\) 的多项式，标准形式：
-      line_hint: 7
+      snippet: '## 1 先写出两条公式'
+      line_hint: 190
     end:
-      snippet: ''
-      line_hint: 14
+      snippet: 根源是**单位根正交性**。
+      line_hint: 196
+  status: pending
+- pending_id: 1290f34cf926f584
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2 核心正交恒等式（最关键）
+  range:
+    start:
+      snippet: '## 2 核心正交恒等式（最关键）'
+      line_hint: 198
+    end:
+      snippet: '- $m$ 不是 $N$ 的倍数：分子为0，总和等于0'
+      line_hint: 209
+  status: pending
+- pending_id: 9cc892522524beac
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 3 把DFT代入IDFT右侧，严格推导
+  range:
+    start:
+      snippet: '## 3 把DFT代入IDFT右侧，严格推导'
+      line_hint: 211
+    end:
+      snippet: 左侧等于 $$\bolds$\boldsymbol y$mbol a$_n$。**等式成立。**
+      line_hint: 227
+  status: pending
+- pending_id: d3121770f21bc5a8
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 4 通俗理解
+  range:
+    start:
+      snippet: '## 4 通俗理解'
+      line_hint: 229
+    end:
+      snippet: '> 这就是FFT必须选用单位根的根本原因。'
+      line_hint: 239
+  status: pending
+- pending_id: 0e363b8cfa642729
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 5 和范德蒙德插值对比，看清本质
+  range:
+    start:
+      snippet: '## 5 和范德蒙德插值对比，看清本质'
+      line_hint: 241
+    end:
+      snippet: 这就是IDFT能 $O(N\log N)$ 完成插值的秘密。
+      line_hint: 248
+  status: pending
+- pending_id: 5f6adcc760fa38bd
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 6 重要限制（再次提醒，承接前面讨论）
+  range:
+    start:
+      snippet: '## 6 重要限制（再次提醒，承接前面讨论）'
+      line_hint: 250
+    end:
+      snippet: 所以FFT做乘法前必须补零扩维。
+      line_hint: 253
+  status: pending
+- pending_id: 3eb58fe37948326f
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 一句话总结
+  range:
+    start:
+      snippet: '## 一句话总结'
+      line_hint: 255
+    end:
+      snippet: $$
+      line_hint: 292
+  status: pending
+- pending_id: cbcea3d1dbb81213
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 1 定义
+  range:
+    start:
+      snippet: '### 1 定义'
+      line_hint: 261
+    end:
+      snippet: $$
+      line_hint: 268
+  status: pending
+- pending_id: 56965b81eeed33ca
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 2 幂次形式（DFT/IDFT中用到）
+  range:
+    start:
+      snippet: '### 2 幂次形式（DFT/IDFT中用到）'
+      line_hint: 269
+    end:
+      snippet: $$
+      line_hint: 276
+  status: pending
+- pending_id: bc6cc5275163a1b4
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 3 常用性质复述（汇总）
+  range:
+    start:
+      snippet: '### 3 常用性质复述（汇总）'
+      line_hint: 278
+    end:
+      snippet: 4. $W_N^{2k}=W_{N/2}^{k}$（平方折叠）
+      line_hint: 282
+  status: pending
+- pending_id: 9877a5c4d75de4d8
+  file: Mathemetical_Modeling/FFT.md
+  kind: heading
+  name: 4 代入DFT、IDFT
+  range:
+    start:
+      snippet: '### 4 代入DFT、IDFT'
+      line_hint: 284
+    end:
+      snippet: $$
+      line_hint: 292
   status: pending
 - pending_id: 72c285ef0b3633d7
   file: Mathemetical_Modeling/FFT.md
@@ -9087,18 +9331,6 @@ items:
       snippet: ''
       line_hint: 106
   status: pending
-- pending_id: 1dc9eb1331010428
-  file: Mathemetical_Modeling/FFT.md
-  kind: definition
-  name: '**O\'
-  range:
-    start:
-      snippet: 3. 通过上述两组蝶形公式，**O\(N\) 合并得到全部 \\\(N\\\) 个点值**。
-      line_hint: 113
-    end:
-      snippet: ''
-      line_hint: 118
-  status: pending
 - pending_id: a2dc7699a3f25448
   file: Mathemetical_Modeling/FFT.md
   kind: definition
@@ -9129,7 +9361,7 @@ items:
   name: $D
   range:
     start:
-      snippet: '- $D(W_N^k)=0$，即 \\\(D\(x\)\\\) 有 \\\(N\\\) 个不同根'
+      snippet: '- $D(W_N^k)=0$，即 \\$D$x$\\$ 有 \\$N\\$ 个不同根'
       line_hint: 131
     end:
       snippet: ''
@@ -9146,6 +9378,143 @@ items:
     end:
       snippet: ''
       line_hint: 156
+  status: pending
+- pending_id: 82f2a0ca6c2ff579
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: \\$x\\$
+  range:
+    start:
+      snippet: 多项式的 \\$x\\$ 是形式变量，仅代表加法、乘法运算，**不限制取值为实数**。复数完全兼容多项式运算，只是输出点值为复数，属于合法代数变换。
+      line_hint: 161
+    end:
+      snippet: ''
+      line_hint: 162
+  status: pending
+- pending_id: afb23c2e08d0d41e
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 多项式
+  range:
+    start:
+      snippet: 多项式是**全局刚性整函数**，复平面上 \\$N\\$ 个互异点可唯一锁定整个多项式，自然包含实数域所有取值信息。单位圆点值只是**中间运算载体**，最终可通
+      line_hint: 165
+    end:
+      snippet: ''
+      line_hint: 166
+  status: pending
+- pending_id: 626d00f569f52130
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 根源
+  range:
+    start:
+      snippet: 根源是**单位根正交性**。
+      line_hint: 196
+    end:
+      snippet: ''
+      line_hint: 197
+  status: pending
+- pending_id: c60a7cc3d32fe357
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 1-
+  range:
+    start:
+      snippet: $$S(m)=\fr$\bolds$\boldsymbol y$mbol a$c{1-W_N^{mN}}{1-W_N^{m}}=\fr$\bolds$\bold
+      line_hint: 207
+    end:
+      snippet: '- $m$ 不是 $N$ 的倍数：分子为0，总和等于0'
+      line_hint: 209
+  status: pending
+- pending_id: a9ad635c44d4d8fa
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $m$
+  range:
+    start:
+      snippet: '- $m$ 是 $N$ 的倍数：每一项都是 $1$，总和 $N$'
+      line_hint: 208
+    end:
+      snippet: '- $m$ 不是 $N$ 的倍数：分子为0，总和等于0'
+      line_hint: 209
+  status: pending
+- pending_id: 76eb8af49e46e198
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: $S
+  range:
+    start:
+      snippet: '- 当 $$t=n$$：$S(t-n)=S(0)=N$'
+      line_hint: 220
+    end:
+      snippet: '- 当 $t\neq n$：$S(t-n)=0$'
+      line_hint: 221
+  status: pending
+- pending_id: da992ccf2581e4af
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 普通拉格朗日插值
+  range:
+    start:
+      snippet: 普通拉格朗日插值是构造一组复杂的基函数。
+      line_hint: 230
+    end:
+      snippet: IDFT就是**正交投影的逆操作**：利用正交性过滤掉别的分量，单独提取出原始系数 $$\bolds$\boldsymbol y$mbol
+        a$_n$。
+      line_hint: 236
+  status: pending
+- pending_id: 8ba3545baf61ac11
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: DFT
+  range:
+    start:
+      snippet: 'DFT是把多项式系数向量 $\bolds$\boldsymbol y$mbol $\bolds$\boldsymbol y$mbol
+        a$$ **投影到正交基 '
+      line_hint: 235
+    end:
+      snippet: IDFT就是**正交投影的逆操作**：利用正交性过滤掉别的分量，单独提取出原始系数 $$\bolds$\boldsymbol y$mbol
+        a$_n$。
+      line_hint: 236
+  status: pending
+- pending_id: 7bb183e68240b20f
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: IDFT就
+  range:
+    start:
+      snippet: IDFT就是**正交投影的逆操作**：利用正交性过滤掉别的分量，单独提取出原始系数 $$\bolds$\boldsymbol y$mbol
+        a$_n$。
+      line_hint: 236
+    end:
+      snippet: ''
+      line_hint: 240
+  status: pending
+- pending_id: f2cf3a6c6b8a7f35
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 此时IDFT还原出来的**不
+  range:
+    start:
+      snippet: 若次数 $\ge N$，不同多项式可以拥有完全一样的DFT点值，此时IDFT还原出来的**不是原来的高次多项式**，而是它模 $(x^N-1)$
+        的次数小于 $
+      line_hint: 252
+    end:
+      snippet: 所以FFT做乘法前必须补零扩维。
+      line_hint: 253
+  status: pending
+- pending_id: 3b4b88d0562d68e9
+  file: Mathemetical_Modeling/FFT.md
+  kind: definition
+  name: 逆变换里面
+  range:
+    start:
+      snippet: 逆变换里面是负指数：
+      line_hint: 273
+    end:
+      snippet: $$
+      line_hint: 276
   status: pending
 - pending_id: 57466ec39ab13b95
   file: Mathemetical_Modeling/SRP/ACOPF.md
@@ -9689,6 +10058,102 @@ items:
     end:
       snippet: ''
       line_hint: 264
+  status: pending
+- pending_id: 393d97ee29f47ab5
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: heading
+  name: 基例 $(n=2)$
+  range:
+    start:
+      snippet: '### 基例 $(n=2)$'
+      line_hint: 17
+    end:
+      snippet: '---'
+      line_hint: 29
+  status: pending
+- pending_id: 4f850c5ee5d81ab7
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: heading
+  name: 归纳步骤
+  range:
+    start:
+      snippet: '## 归纳步骤'
+      line_hint: 31
+    end:
+      snippet: $$
+      line_hint: 113
+  status: pending
+- pending_id: 9b9c96412ba973ca
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_1
+  range:
+    start:
+      snippet: z_1-z_0 & z_1(z_1-z_0) & \dots & z_1^{k-1}(z_1-z_0)\
+      line_hint: 69
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 64613da01655fe5b
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_2
+  range:
+    start:
+      snippet: z_2-z_0 & z_2(z_2-z_0) & \dots & z_2^{k-1}(z_2-z_0)\
+      line_hint: 70
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 35cb034fc3d68dfd
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: z_k
+  range:
+    start:
+      snippet: z_k-z_0 & z_k(z_k-z_0) & \dots & z_k^{k-1}(z_k-z_0)
+      line_hint: 72
+    end:
+      snippet: $$
+      line_hint: 74
+  status: pending
+- pending_id: 5bb5430388e149be
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: ^k
+  range:
+    start:
+      snippet: V_{k+1}=\left[\prod_{j=1}^k (z_j-z_0)\right]
+      line_hint: 78
+    end:
+      snippet: $$
+      line_hint: 86
+  status: pending
+- pending_id: ee7429b9d364d757
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: 右下角就
+  range:
+    start:
+      snippet: 右下角就是 $k$ 阶范德蒙德行列式，对变量 $z_1,z_2,\dots,z_k$。
+      line_hint: 88
+    end:
+      snippet: $$
+      line_hint: 97
+  status: pending
+- pending_id: 4672726096e02c49
+  file: Mathemetical_Modeling/Vandermonde.md
+  kind: definition
+  name: \det
+  range:
+    start:
+      snippet: \det(V_n)=\prod_{0\le i<j\le n-1}(z_j-z_i)
+      line_hint: 111
+    end:
+      snippet: $$
+      line_hint: 113
   status: pending
 - pending_id: 7682c9ad0268d22e
   file: PBT.md
@@ -13046,31 +13511,31 @@ items:
       snippet: '## 2.1 问题的核心：算子范数的定义'
       line_hint: 47
     end:
-      snippet: '**通俗理解**：\(\|T\|_\infty\) 表示算子 \(T\) 能将任意有界函数放大多少倍（最坏情况）。'
+      snippet: '**通俗理解**：$\|T\|_\infty$ 表示算子 $T$ 能将任意有界函数放大多少倍（最坏情况）。'
       line_hint: 59
   status: pending
-- pending_id: e29050614aac0dcb
+- pending_id: e2b72c411955f1b3
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 2.1.1 什么是 \(\|\cdot\|_\infty\) 范数？
+  name: 2.1.1 什么是 $\|\cdot\|_\infty$ 范数？
   range:
     start:
-      snippet: '### 2.1.1 什么是 \(\|\cdot\|_\infty\) 范数？'
+      snippet: '### 2.1.1 什么是 $\|\cdot\|_\infty$ 范数？'
       line_hint: 49
     end:
-      snippet: '**通俗理解**：\(\|T\|_\infty\) 表示算子 \(T\) 能将任意有界函数放大多少倍（最坏情况）。'
+      snippet: '**通俗理解**：$\|T\|_\infty$ 表示算子 $T$ 能将任意有界函数放大多少倍（最坏情况）。'
       line_hint: 59
   status: pending
-- pending_id: b23f1ef23a9ad909
+- pending_id: 776e2858df306b3e
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 2.2 证明 \(\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1\)
+  name: 2.2 证明 $\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1$
   range:
     start:
-      snippet: '## 2.2 证明 \(\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1\)'
+      snippet: '## 2.2 证明 $\|\mathcal{P}^{\mu_\theta}\|_\infty \leq 1$'
       line_hint: 63
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 117
   status: pending
 - pending_id: 7e7f11b08842b891
@@ -13082,7 +13547,7 @@ items:
       snippet: '### 2.2.1 转移算子的定义'
       line_hint: 65
     end:
-      snippet: 即：从状态 \(s\) 出发，按确定性策略 \(\mu_\theta\) 选择动作，转移到下一状态后，取函数 \(f\) 在该状态的期望值。
+      snippet: 即：从状态 $s$ 出发，按确定性策略 $\mu_\theta$ 选择动作，转移到下一状态后，取函数 $f$ 在该状态的期望值。
       line_hint: 71
   status: pending
 - pending_id: f5c1007415b25318
@@ -13094,17 +13559,17 @@ items:
       snippet: '### 2.2.2 范数上界'
       line_hint: 75
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 117
   status: pending
-- pending_id: f2c5ccddd9306774
+- pending_id: 742246f4e324bedc
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 2.3 证明 \(\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma < 1\)
+  name: 2.3 证明 $\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma < 1$
   range:
     start:
-      snippet: '## 2.3 证明 \(\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma
-        < 1\)'
+      snippet: '## 2.3 证明 $\|\gamma \mathcal{P}^{\mu_\theta}\|_\infty \leq \gamma
+        < 1$'
       line_hint: 120
     end:
       snippet: 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。
@@ -13119,7 +13584,7 @@ items:
       snippet: '### 2.3.1 缩放性质'
       line_hint: 122
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 134
   status: pending
 - pending_id: e61cd64615d8a6ed
@@ -13155,31 +13620,31 @@ items:
       snippet: '### 3.1.1 定义部分和'
       line_hint: 166
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 172
   status: pending
-- pending_id: 3a045544f3865d08
+- pending_id: 132aaaab02f3944c
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 3.1.2 计算 \((I - T)S_n\)
+  name: 3.1.2 计算 $(I - T)S_n$
   range:
     start:
-      snippet: '### 3.1.2 计算 \((I - T)S_n\)'
+      snippet: '### 3.1.2 计算 $(I - T)S_n$'
       line_hint: 174
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 192
   status: pending
-- pending_id: 188baabab0f60068
+- pending_id: 859a81f1bf366444
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 3.1.3 取极限 \(n \to \infty\)
+  name: 3.1.3 取极限 $n \to \infty$
   range:
     start:
-      snippet: '### 3.1.3 取极限 \(n \to \infty\)'
+      snippet: '### 3.1.3 取极限 $n \to \infty$'
       line_hint: 196
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 214
   status: pending
 - pending_id: fa7f4aa7d2151710
@@ -13191,7 +13656,7 @@ items:
       snippet: '### 3.1.4 同样地，验证右逆'
       line_hint: 218
     end:
-      snippet: 因此 \(\lim_{n \to \infty} S_n\) 既是 \(I - T\) 的左逆，也是右逆。
+      snippet: 因此 $\lim_{n \to \infty} S_n$ 既是 $I - T$ 的左逆，也是右逆。
       line_hint: 232
   status: pending
 - pending_id: 79cd2e7e12972979
@@ -13206,13 +13671,13 @@ items:
       snippet: '**证毕。**'
       line_hint: 242
   status: pending
-- pending_id: 10987cb3e65ab2ef
+- pending_id: 938b9ff79146c6fb
   file: ReinforcementLearning/DPG_appendix.md
   kind: heading
-  name: 3.2 为什么 \(\|T\| < 1\) 保证了 \(T^{n+1} \to 0\)？
+  name: 3.2 为什么 $\|T\| < 1$ 保证了 $T^{n+1} \to 0$？
   range:
     start:
-      snippet: '## 3.2 为什么 \(\|T\| < 1\) 保证了 \(T^{n+1} \to 0\)？'
+      snippet: '## 3.2 为什么 $\|T\| < 1$ 保证了 $T^{n+1} \to 0$？'
       line_hint: 246
     end:
       snippet: '---'
@@ -13272,7 +13737,7 @@ items:
   name: 其**诱导上确界范数**
   range:
     start:
-      snippet: 对于作用于函数空间 \(\mathcal{B}(\mathcal{S})\)（有界实值函数）上的线性算子 \(T\)，其**诱导上确界范数**定义为：
+      snippet: 对于作用于函数空间 $\mathcal{B}(\mathcal{S})$（有界实值函数）上的线性算子 $T$，其**诱导上确界范数**定义为：
       line_hint: 51
     end:
       snippet: ''
@@ -13288,8 +13753,20 @@ items:
         s, \mu_\thet'
       line_hint: 86
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 87
+  status: pending
+- pending_id: d80249b0762e4522
+  file: ReinforcementLearning/DPG_appendix.md
+  kind: definition
+  name: $|f
+  range:
+    start:
+      snippet: 由于 $|f(s')| \leq \|f\|_\infty$ 对所有 $s'$ 成立：
+      line_hint: 89
+    end:
+      snippet: ''
+      line_hint: 119
   status: pending
 - pending_id: 650d6ee89c652b21
   file: ReinforcementLearning/DPG_appendix.md
@@ -13297,7 +13774,8 @@ items:
   name: 问的
   range:
     start:
-      snippet: 问的是：**为什么满足 \(\|T\| < 1\) 后，\((I - T)^{-1}\) 就等于 Neumann 级数 \(\sum_{k=0}^{\infty
+      snippet: 问的是：**为什么满足 $\|T\| < 1$ 后，$(I - T)^{-1}$ 就等于 Neumann 级数 $\sum_{k=0}^{\infty}
+        T^k
       line_hint: 160
     end:
       snippet: ''
@@ -13324,7 +13802,7 @@ items:
       snippet: S_n(I - T) = I - T^{n+1}
       line_hint: 223
     end:
-      snippet: \]
+      snippet: $$
       line_hint: 224
   status: pending
 - pending_id: 440086e726ae27a1

@@ -22,6 +22,28 @@ window.MemoriaRenderer = (function () {
   }
 
   /**
+   * 渲染表格单元格的文本为行内 AST（支持 **加粗** / *斜体* / 荧光笔 /
+   * 行内公式 $...$ / [[wiki]] 等）。失败时退化为纯文本。
+   */
+  function _renderTableCellText(el, text) {
+    if (
+      window.MemoriaLexer &&
+      window.MemoriaParser &&
+      typeof text === "string"
+    ) {
+      try {
+        var _tokens = window.MemoriaLexer.tokenize(text);
+        var _children = window.MemoriaParser.parseInline(_tokens);
+        renderInlineList(_children, el);
+        return;
+      } catch (_e) {
+        /* 解析失败退化纯文本 */
+      }
+    }
+    el.textContent = text == null ? "" : String(text);
+  }
+
+  /**
    * @param {object} doc — Document AST
    * @returns {HTMLElement}
    */
@@ -166,6 +188,11 @@ window.MemoriaRenderer = (function () {
         el = document.createElement(block.ordered ? "ol" : "ul");
         el.className = "-src-block";
         el.setAttribute("data--block-index", blockIndex);
+        // 列表被块级元素（公式/代码块等）隔断时会拆成多个 <ol>，
+        // 用首项源编号保持编号连续，避免全部从 1 重新开始
+        if (block.ordered && block.start && block.start > 1) {
+          el.setAttribute("start", String(block.start));
+        }
         if (block.items) {
           for (var li = 0; li < block.items.length; li++) {
             var liEl = document.createElement("li");
@@ -186,7 +213,7 @@ window.MemoriaRenderer = (function () {
           var tr = document.createElement("tr");
           for (var hi = 0; hi < block.header.length; hi++) {
             var th = document.createElement("th");
-            th.textContent = block.header[hi];
+            _renderTableCellText(th, block.header[hi]);
             tr.appendChild(th);
           }
           thead.appendChild(tr);
@@ -198,7 +225,7 @@ window.MemoriaRenderer = (function () {
             var row = document.createElement("tr");
             for (var ci = 0; ci < block.rows[ri].length; ci++) {
               var td = document.createElement("td");
-              td.textContent = block.rows[ri][ci];
+              _renderTableCellText(td, block.rows[ri][ci]);
               row.appendChild(td);
             }
             tbody.appendChild(row);

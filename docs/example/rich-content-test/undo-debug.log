@@ -20,7 +20,7 @@
 [09:25:11.197] [UNDO] beginUndo kind=format force=true pre=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] coalesce=false | undo=0 redo=0
 [09:25:11.197] [UNDO] recordUndo push pre=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] bodyLen=762 | undo=1 redo=0
 [09:25:11.197] [UNDO] commitSelection bi=10 start=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] end=bi=10 path=[0,0,0] off=11 | L11:30 [y^2=z^2$|*|*]][[\h:]
-[09:25:11.208] [UNDO] recordGroup kind=format post=bi=10 path=[0,0,0] off=11 | L11:30 [+y^2=z^2|$|***]][[\]
+[09:25:11.208] [UNDO] recordGroup kind=format post=bi=10 path=[0,0,0] off=11 | L11:30 [+y^2=z^2|$|***]][[$$
 [09:25:11.706] [UNDO] beginUndo kind=format force=true pre=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] coalesce=false | undo=1 redo=0
 [09:25:11.706] [UNDO] recordUndo push pre=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] bodyLen=764 | undo=2 redo=0
 [09:25:11.706] [UNDO] commitSelection bi=10 start=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] end=bi=10 path=[0,0,0] off=11 | L11:29 [2+y^2=z^|2|$***]][[]
@@ -28,7 +28,7 @@
 [09:25:12.577] [UNDO] beginUndo kind=format force=true pre=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] coalesce=false | undo=2 redo=0
 [09:25:12.577] [UNDO] recordUndo push pre=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] bodyLen=762 | undo=3 redo=0
 [09:25:12.578] [UNDO] commitSelection bi=10 start=bi=10 path=[0,0,0] off=0 | L11:19 [een|**$x|^|2+y^2=z^] end=bi=10 path=[0,0,0] off=11 | L11:30 [y^2=z^2$|*|*]][[\h:]
-[09:25:12.587] [UNDO] recordGroup kind=format post=bi=10 path=[0,0,0] off=11 | L11:30 [+y^2=z^2|$|***]][[\]
+[09:25:12.587] [UNDO] recordGroup kind=format post=bi=10 path=[0,0,0] off=11 | L11:30 [+y^2=z^2|$|***]][[$$
 [09:25:13.193] [UNDO] beginUndo kind=format force=true pre=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] coalesce=false | undo=3 redo=0
 [09:25:13.194] [UNDO] recordUndo push pre=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] bodyLen=764 | undo=4 redo=0
 [09:25:13.194] [UNDO] commitSelection bi=10 start=bi=10 path=[0,0,0] off=0 | L11:18 [reen|***|$|x^2+y^2=] end=bi=10 path=[0,0,0] off=11 | L11:29 [2+y^2=z^|2|$***]][[]
@@ -101,8 +101,8 @@
 [09:26:23.475] [UNDO] recordUndo push pre=bi=16 path=[2,0,0] off=1 | L17:83 [:green|*|*| **$P(A|] bodyLen=720 | undo=21 redo=0
 [09:26:23.475] [UNDO] commitSelection bi=16 start=bi=16 path=[3,0] off=0 | L17:99 [|B)=\fra|c|{P(B|A)P] end=bi=16 path=[3,0] off=30 | L17:129 [|·|]
 [09:26:23.482] [UNDO] recordGroup kind=format post=bi=16 path=[3,0] off=30 | L17:129 [(A)}{P(B|)|}$]]]
-[09:26:25.105] [UNDO] beginUndo kind=format force=true pre=bi=16 path=[2,0,0] off=1 | L17:83 [:green|*|*| **]][[\] coalesce=false | undo=21 redo=0
-[09:26:25.105] [UNDO] recordUndo push pre=bi=16 path=[2,0,0] off=1 | L17:83 [:green|*|*| **]][[\] bodyLen=733 | undo=22 redo=0
+[09:26:25.105] [UNDO] beginUndo kind=format force=true pre=bi=16 path=[2,0,0] off=1 | L17:83 [:green|*|*| **]][[$$ coalesce=false | undo=21 redo=0
+[09:26:25.105] [UNDO] recordUndo push pre=bi=16 path=[2,0,0] off=1 | L17:83 [:green|*|*| **]][[$$ bodyLen=733 | undo=22 redo=0
 [09:26:25.105] [UNDO] commitSelection bi=16 start=bi=16 path=[3] off=0 | L17:88 [n|** **]|]|[[\c:gre] end=bi=16 path=[3] off=30 | L17:118 [rac{P(B||A|)P(A)}{P]
 [09:26:25.111] [UNDO] recordGroup kind=format post=bi=16 path=[3] off=30 | L17:118 [(A)}{P(B|)|}$]
 [09:26:37.604] [UNDO] beginUndo kind=backspace force=false pre=bi=22 path=[1,0,0] off=2 | L23:47 [c00|**本||*|*]]] coalesce=false | undo=22 redo=0
@@ -118,8 +118,8 @@
 [09:26:44.938] [UNDO] recordUndo push pre=bi=28 path=[0,0,2] off=12 | L29:36 [式换色成蓝色，再|把| **[[\c:] bodyLen=715 | undo=25 redo=0
 [09:26:44.938] [UNDO] commitSelection bi=28 start=bi=28 path=[1,0] off=0 | L29:51 [c:blue|$|E|=h\nu$]]] end=bi=28 path=[1,0] off=6 | L29:57 [|$E=h\nu|$|]]** 加荧光]
 [09:26:44.943] [UNDO] recordGroup kind=format post=bi=28 path=[1,0] off=6 | L29:57 [ue|$E=h\|n|u$]][[\h]
-[09:26:46.776] [UNDO] beginUndo kind=format force=true pre=bi=28 path=[0,0,2] off=12 | L29:36 [式换色成蓝色，再|把| **]][[\] coalesce=false | undo=25 redo=0
-[09:26:46.776] [UNDO] recordUndo push pre=bi=28 path=[0,0,2] off=12 | L29:36 [式换色成蓝色，再|把| **]][[\] bodyLen=730 | undo=26 redo=0
+[09:26:46.776] [UNDO] beginUndo kind=format force=true pre=bi=28 path=[0,0,2] off=12 | L29:36 [式换色成蓝色，再|把| **]][[$$ coalesce=false | undo=25 redo=0
+[09:26:46.776] [UNDO] recordUndo push pre=bi=28 path=[0,0,2] off=12 | L29:36 [式换色成蓝色，再|把| **]][[$$ bodyLen=730 | undo=26 redo=0
 [09:26:46.776] [UNDO] commitSelection bi=28 start=bi=28 path=[1] off=0 | L29:41 [色，再把 **]|]|[[\c:blu] end=bi=28 path=[1] off=6 | L29:47 [*]][[\c:|b|lue|$E=h]
 [09:26:46.782] [UNDO] recordGroup kind=format post=bi=28 path=[1] off=6 | L29:47 [*]]$E=h\|n|u$[[\h:#]
 [09:26:49.960] [UNDO] beginUndo kind=format force=true pre=bi=28 path=[0,0,1] off=0 | L29:15 [0cc00|**|把|这段 $v=s/] coalesce=false | undo=26 redo=0
@@ -133,7 +133,7 @@
 [09:26:55.924] [UNDO] beginUndo kind=format force=true pre=bi=16 path=[0,0,0,0] off=0 | L17:26 [green|**|*|$E=mc^2$] coalesce=false | undo=28 redo=0
 [09:26:55.924] [UNDO] recordUndo push pre=bi=16 path=[0,0,0,0] off=0 | L17:26 [green|**|*|$E=mc^2$] bodyLen=737 | undo=29 redo=0
 [09:26:55.924] [UNDO] commitSelection bi=16 start=bi=16 path=[0,0,0,0] off=0 | L17:26 [green|**|*|$E=mc^2$] end=bi=16 path=[0,0,0,0] off=6 | L17:32 [***$E=mc|^|2$***]]]]
-[09:26:55.938] [UNDO] recordGroup kind=format post=bi=16 path=[0,0,0,0] off=6 | L17:32 [*$E=mc^2|$|*]]]][[\]
+[09:26:55.938] [UNDO] recordGroup kind=format post=bi=16 path=[0,0,0,0] off=6 | L17:32 [*$E=mc^2|$|*]]]][[$$
 [09:26:57.732] [UNDO] beginUndo kind=format force=true pre=bi=16 path=[0,0,0,0] off=0 | L17:13 [#00cc00||[|[\c:gree] coalesce=false | undo=29 redo=0
 [09:26:57.732] [UNDO] recordUndo push pre=bi=16 path=[0,0,0,0] off=0 | L17:13 [#00cc00||[|[\c:gree] bodyLen=733 | undo=30 redo=0
 [09:26:57.732] [UNDO] commitSelection bi=16 start=bi=16 path=[0,0,0] off=0 | L17:13 [#00cc00||[|[\c:gree] end=bi=16 path=[0,0,0] off=6 | L17:19 [0|[[\c:g|r|een|*$E=]
@@ -2379,3 +2379,38 @@
 [21:32:46.472] [UNDO] resetHistory undo=0 redo=0
 [23:07:20.249] [UNDO] resetHistory undo=0 redo=0
 [23:02:56.898] [UNDO] resetHistory undo=0 redo=0
+[19:14:07.533] [UNDO] resetHistory undo=0 redo=0
+[19:14:09.356] [UNDO] resetHistory undo=0 redo=0
+[19:14:10.130] [UNDO] resetHistory undo=0 redo=0
+[19:14:55.562] [UNDO] beginUndo kind=insert force=true pre=bi=53 path=[] off=6 | L54:84 [)|·|] coalesce=false | undo=0 redo=0
+[19:14:55.563] [UNDO] recordUndo push pre=bi=53 path=[] off=6 | L54:84 [)|·|] bodyLen=30195 | undo=1 redo=0
+[19:14:55.563] [UNDO] commit cursor=bi=53 path=[0] off=5 | L54:5 [![带标题|本|地图片](.me]
+[19:14:55.578] [UNDO] restoreCursor bi=53 path=[0] off=5
+[19:14:55.580] [UNDO] recordGroup kind=insert post=bi=53 path=[0] off=5 | L54:5 [![带标题|本|地图片](/fi]
+[19:17:52.536] [UNDO] resetHistory undo=1 redo=0
+[19:17:53.958] [UNDO] resetHistory undo=0 redo=0
+[19:21:17.763] [UNDO] resetHistory undo=0 redo=0
+[20:03:50.492] [UNDO] resetHistory undo=0 redo=0
+[20:03:52.622] [UNDO] resetHistory undo=0 redo=0
+[20:03:53.325] [UNDO] resetHistory undo=0 redo=0
+[20:03:55.775] [UNDO] resetHistory undo=0 redo=0
+[20:03:55.979] [UNDO] resetHistory undo=0 redo=0
+[20:03:56.892] [UNDO] resetHistory undo=0 redo=0
+[20:04:05.151] [UNDO] resetHistory undo=0 redo=0
+[20:04:05.472] [UNDO] resetHistory undo=0 redo=0
+[20:04:05.714] [UNDO] resetHistory undo=0 redo=0
+[20:04:06.292] [UNDO] resetHistory undo=0 redo=0
+[20:04:07.392] [UNDO] resetHistory undo=0 redo=0
+[20:04:07.801] [UNDO] resetHistory undo=0 redo=0
+[20:04:24.386] [UNDO] resetHistory undo=0 redo=0
+[20:04:27.405] [UNDO] resetHistory undo=0 redo=0
+[20:29:17.490] [UNDO] resetHistory undo=0 redo=0
+[20:29:44.063] [UNDO] resetHistory undo=0 redo=0
+[20:29:48.887] [UNDO] resetHistory undo=0 redo=0
+[20:53:13.235] [UNDO] resetHistory undo=0 redo=0
+[20:53:54.176] [UNDO] resetHistory undo=0 redo=0
+[20:53:57.102] [UNDO] resetHistory undo=0 redo=0
+[20:54:49.284] [UNDO] resetHistory undo=0 redo=0
+[20:57:24.258] [UNDO] resetHistory undo=0 redo=0
+[20:57:27.173] [UNDO] resetHistory undo=0 redo=0
+[20:58:12.457] [UNDO] resetHistory undo=0 redo=0

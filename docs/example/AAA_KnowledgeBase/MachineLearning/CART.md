@@ -14,9 +14,9 @@
 
 **数学表达**：
 
-\[
+$$
 f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
-\]
+$$
 
 其中：
 - $T$：叶子节点数量
@@ -67,9 +67,9 @@ f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
 
 **单个节点的纯度（不纯度）**：
 
-\[
+$$
 \text{MSE}(R_j) = \frac{1}{|I_j|} \sum_{i \in I_j} (y_i - \bar{y}_j)^2
-\]
+$$
 
 其中 $\bar{y}_j = \frac{1}{|I_j|} \sum_{i \in I_j} y_i$ 是该叶子节点的预测值（样本均值）。
 
@@ -77,9 +77,9 @@ f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
 
 对于特征 $k$ 和分裂点 $s$，将样本分为左子集 $R_L$ 和右子集 $R_R$，目标是**最小化分裂后的加权 MSE 之和**：
 
-\[
+$$
 \min_{k, s} \left[ \frac{|I_L|}{n} \text{MSE}(R_L) + \frac{|I_R|}{n} \text{MSE}(R_R) \right]
-\]
+$$
 
 ### 3.2 分类树：基尼系数 (Gini Index)
 
@@ -87,9 +87,9 @@ f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
 
 **基尼系数的定义**：
 
-\[
+$$
 \text{Gini}(R_j) = 1 - \sum_{c=1}^{C} p_{jc}^2
-\]
+$$
 
 其中 $p_{jc}$ 是节点 $j$ 中第 $c$ 类样本的比例。
 
@@ -99,9 +99,9 @@ f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
 
 **选择分裂点**：
 
-\[
+$$
 \min_{k, s} \left[ \frac{|I_L|}{n} \text{Gini}(R_L) + \frac{|I_R|}{n} \text{Gini}(R_R) \right]
-\]
+$$
 
 ---
 
@@ -111,9 +111,9 @@ f(x) = \sum_{j=1}^{T} w_j \cdot \mathbf{1}\{x \in R_j\}
 
 **代价复杂度函数**：
 
-\[
+$$
 \text{Cost}(T) = \text{Err}(T) + \alpha \cdot |T|
-\]
+$$
 
 其中：
 - $\text{Err}(T)$：树 $T$ 的训练误差

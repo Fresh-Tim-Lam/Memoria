@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kp_id": "DPG-appendix3",
-  "source_fingerprint": "25777672f7243eb9a3ffced4a570719a",
+  "source_fingerprint": "e629efdab6d6a6c159eb5346d84f414f",
   "model_set_id": "memoria-v1.5a-rule",
   "auto_tags": [],
   "aliases": [
@@ -13,13 +13,13 @@
     "等于",
     "neumann",
     "级数",
-    "sum",
-    "infty",
-    "本质"
+    "本质",
+    "一个",
+    "泛函"
   ],
-  "summary_1l": "问的是：**为什么满足 \\(\\|T\\| < 1\\) 后，\\((I - T)^{-1}\\) 就等于 Neumann 级数 \\(\\sum_{k=0}^{\\infty} T^k\\)？",
+  "summary_1l": "问的是：**为什么满足 后， 就等于 Neumann 级数 ？",
   "query_hits": [],
-  "embed_text": "DPG-appendix3 DPG补充3 DPG-appendix3 为什么 满足 等于 neumann 级数 sum infty 本质 问的是：**为什么满足 \\(\\|T\\| < 1\\) 后，\\((I - T)^{-1}\\) 就等于 Neumann 级数 \\(\\sum_{k=0}^{\\infty} T^k\\)？ 问的是：**为什么满足 \\(\\|T\\| < 1\\) 后，\\((I - T)^{-1}\\) 就等于 Neumann 级数 \\(\\sum_{k=0}^{\\infty} T^k\\)？** 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。 3.1 代数证明（最严谨） 3.1.1 定义部分和 令 Neumann 级数的前 \\(n+1\\) 项部分和为： \\[ S_n \\triangleq I + T + T^2 + \\cdots + T^n = \\sum_{k=0}^{n} T^k \\] 3.1.2 计算 \\((I - T)S_n\\) 展开： \\[ (I - T)S_n = (I - T)(I + T + T^2 + \\cdots + T^n) \\] 逐项相乘： \\[ = I + T + T^2 + \\cdots + T^n - T - T^2 - T^3 - \\cdots - T^{n+1} \\] 中间的 \\(T, T^2, \\ldots, T^n\\) 全部抵消，只剩下： \\[ (I - T)S_n = I - T^{n+1} \\tag{1} \\] 3.1.3 取极限 \\(n \\to \\infty\\) 如果 \\(\\|T\\| < 1\\)，那么： \\[ \\|T^{n+1}\\| \\le \\|T\\|^{n+1} \\xrightarrow{n \\to \\infty} 0 \\] 因此 \\(T^{n+1} \\to 0\\)（零算子）。于是： \\[ \\lim_{n \\to \\infty} (I - T)S_n = I - \\lim_{n \\to \\infty} T^{n+1} = I \\] 即： \\[ (I - T) \\lim_{n \\to \\infty} S_n = I \\] 3.1.4 同样地，验证右逆 同理： \\[ S_n(I - T) = I - T^{",
+  "embed_text": "DPG-appendix3 DPG补充3 DPG-appendix3 为什么 满足 等于 neumann 级数 本质 一个 泛函 问的是：**为什么满足 后， 就等于 Neumann 级数 ？ 问的是：**为什么满足 后， 就等于 Neumann 级数 ？** 这本质上是一个**泛函分析**中的经典结论。下面我用纯代数推导和几何直观两种方式来解释。 3.1 代数证明（最严谨） 3.1.1 定义部分和 令 Neumann 级数的前 项部分和为： 3.1.2 计算 展开： 逐项相乘： 中间的 全部抵消，只剩下： 3.1.3 取极限 如果 ，那么： 因此 （零算子）。于是： 即： 3.1.4 同样地，验证右逆 同理： 取极限： 因此 既是 的左逆，也是右逆。 3.1.5 结论 **证毕。** 3.2 为什么 保证了 ？ 这是算子范数的一个重要性质： 如果 ，右边的 ，所以 。 在 Banach 空间中，范数趋向于 0 意味着算子本身趋向于零算子。 > **类比**：实数中，如果 ，那么 。 就是这个条件的算子版本。 ---",
   "generated_by": [
     {
       "field": "auto_tags",
@@ -42,5 +42,5 @@
     "auto_tags": [],
     "aliases": []
   },
-  "updated_at": "2026-07-16T13:02:45.456827+00:00"
+  "updated_at": "2026-09-03T08:46:01.464546+00:00"
 }

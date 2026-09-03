@@ -242,8 +242,8 @@ $$
 
 $$
 M_{ij} \leftarrow \begin{cases}
-M_{ij}\cdot\mathcal{N}(0,\,100\cdot\text{mutstrength}) & r()<\text{supermutprob}\quad(\text{super mutation})\\[4pt]
-\mathcal{N}(0,\,1) & \text{else if } r()<\text{resetprob}\quad(\text{reset})\\[4pt]
+M_{ij}\cdot\mathcal{N}(0,\,100\cdot\text{mutstrength}) & r()<\text{supermutprob}\quad(\text{super mutation})\$$4pt]
+\mathcal{N}(0,\,1) & \text{else if } r()<\text{resetprob}\quad(\text{reset})\$$4pt]
 M_{ij}\cdot\mathcal{N}(0,\,\text{mutstrength}) & \text{otherwise}\quad(\text{small mutation})
 \end{cases}
 $$

@@ -22,7 +22,7 @@ items:
       snippet: '#### 知识点10-2：提示学习、指令微调与RLHF（对应表格“语言大模型”）'
       line_hint: 81
     end:
-      snippet: '- 第三项：防止过度优化，损失GPT-3原有核心性能（系数 \(\gamma\)，\(\gamma=0\) 时为PPO模型，否则为PPO-ptx模型）'
+      snippet: '- 第三项：防止过度优化，损失GPT-3原有核心性能（系数 $\gamma\)，$\gamma=0\) 时为PPO模型，否则为PPO-ptx模型）'
       line_hint: 125
   status: pending
 - pending_id: ff51bbf718a9df2a
@@ -169,8 +169,8 @@ items:
       snippet: '#### 知识点2-2：命题逻辑基础（对应表格“一阶谓词逻辑推理”的前提知识）'
       line_hint: 47
     end:
-      snippet: '- **关键思路**：要证明命题 \(\gamma\) 成立，可先假设 \(\lnot \gamma\) 为真，然后应用归结法推导出矛盾，从而证明
-        \(\gam'
+      snippet: '- **关键思路**：要证明命题 $\gamma\) 成立，可先假设 $\lnot \gamma\) 为真，然后应用归结法推导出矛盾，从而证明
+        $\gam'
       line_hint: 112
   status: pending
 - pending_id: 0499c4817fa08432
@@ -194,7 +194,7 @@ items:
       snippet: '### 知识点整理：【模块2：知识表达与推理】（第二批）'
       line_hint: 3
     end:
-      snippet: '| **层次3：反事实** | What if we did things differently? | \(P(y'' \mid
+      snippet: '| **层次3：反事实** | What if we did things differently? | $P(y'' \mid
         A)\) | 对已发生结果进行'
       line_hint: 336
   status: pending
@@ -231,7 +231,7 @@ items:
       snippet: '#### 知识点2-6：路径排序推理算法（PRA）（对应表格“知识图谱推理”）'
       line_hint: 121
     end:
-      snippet: '- **预测**：对于 (David, Ann)，其特征向量为 [1, 0, 0, 0]，输入分类器 \(M\)，若输出为+1，则推理出
+      snippet: '- **预测**：对于 (David, Ann)，其特征向量为 [1, 0, 0, 0]，输入分类器 $M\)，若输出为+1，则推理出
         **Father(Da'
       line_hint: 156
   status: pending
@@ -244,7 +244,7 @@ items:
       snippet: '#### 知识点2-7：分布式表示下的知识推理（对应表格“知识图谱推理”）'
       line_hint: 159
     end:
-      snippet: '- 例如：计算 \(\psi(\text{David} + \text{Father}, \text{Ann})\)，若取值小于阈值，则可推理出
+      snippet: '- 例如：计算 $\psi(\text{David} + \text{Father}, \text{Ann})\)，若取值小于阈值，则可推理出
         **Fathe'
       line_hint: 183
   status: pending
@@ -281,7 +281,7 @@ items:
       snippet: '#### 知识点2-10：因果推理基础（对应表格“因果推理基础”）'
       line_hint: 266
     end:
-      snippet: '| **层次3：反事实** | What if we did things differently? | \(P(y'' \mid
+      snippet: '| **层次3：反事实** | What if we did things differently? | $P(y'' \mid
         A)\) | 对已发生结果进行'
       line_hint: 336
   status: pending
@@ -462,7 +462,7 @@ items:
       snippet: '### 知识点整理：【模块4：机器学习】（第二批）'
       line_hint: 1
     end:
-      snippet: '- 选择特征人脸数量 \(l\) 需要权衡**重建质量**与**算法时空复杂度**。'
+      snippet: '- 选择特征人脸数量 $l\) 需要权衡**重建质量**与**算法时空复杂度**。'
       line_hint: 225
   status: pending
 - pending_id: 42d69268274c95e1
@@ -486,7 +486,7 @@ items:
       snippet: '#### 知识点4-7：线性判别分析（LDA）——有监督降维（对应表格“有监督降维”）'
       line_hint: 77
     end:
-      snippet: 4. 通过 \(W\) 将每个样本映射到低维空间
+      snippet: 4. 通过 $W\) 将每个样本映射到低维空间
       line_hint: 126
   status: pending
 - pending_id: d729a3ec27adf2f7
@@ -498,7 +498,7 @@ items:
       snippet: '#### 知识点4-8：主成分分析（PCA）——无监督降维（对应表格“无监督降维”）'
       line_hint: 129
     end:
-      snippet: '- 选取前 \(l\) 个右奇异向量即可实现降维'
+      snippet: '- 选取前 $l\) 个右奇异向量即可实现降维'
       line_hint: 179
   status: pending
 - pending_id: d8aeec936ef75c72
@@ -510,7 +510,7 @@ items:
       snippet: '#### 知识点4-9：特征人脸法（Eigenface）（对应表格“无监督降维”）'
       line_hint: 182
     end:
-      snippet: '- 选择特征人脸数量 \(l\) 需要权衡**重建质量**与**算法时空复杂度**。'
+      snippet: '- 选择特征人脸数量 $l\) 需要权衡**重建质量**与**算法时空复杂度**。'
       line_hint: 225
   status: pending
 - pending_id: ce1392e8511e11bc
@@ -546,7 +546,7 @@ items:
       snippet: '#### 知识点5-2：神经网络参数优化——梯度下降与误差反向传播（对应表格“反向传播算法”）'
       line_hint: 60
     end:
-      snippet: '- \(\frac{\partial E}{\partial w_1} = \sum_{j=1}^{3} \frac{\partial
+      snippet: '- $\frac{\partial E}{\partial w_1} = \sum_{j=1}^{3} \frac{\partial
         E}{\partial '
       line_hint: 111
   status: pending
@@ -571,7 +571,7 @@ items:
       snippet: '### 知识点整理：【模块5：深度学习】（第二批）'
       line_hint: 1
     end:
-      snippet: '| **L2范数** | \(\|W\|_2 = \sqrt{\sum_i w_i^2}\) | 权重衰减（Weight Decay），使权重趋近于0但不会完全'
+      snippet: '| **L2范数** | $\|W\|_2 = \sqrt{\sum_i w_i^2}\) | 权重衰减（Weight Decay），使权重趋近于0但不会完全'
       line_hint: 207
   status: pending
 - pending_id: 6622d22263701d4b
@@ -595,7 +595,7 @@ items:
       snippet: '#### 知识点5-5：长短时记忆网络（LSTM）（对应表格“循环神经网络”）'
       line_hint: 63
     end:
-      snippet: '- **形象比喻**：内部记忆单元 \(c_t\) 好比人脑的**长时记忆**，隐式编码 \(h_t\) 好比**短时记忆**。'
+      snippet: '- **形象比喻**：内部记忆单元 $c_t\) 好比人脑的**长时记忆**，隐式编码 $h_t\) 好比**短时记忆**。'
       line_hint: 101
   status: pending
 - pending_id: 0b9971e075c8d85f
@@ -631,7 +631,7 @@ items:
       snippet: '#### 知识点5-8：神经网络正则化技术（对应表格“网络优化与正则化”）'
       line_hint: 176
     end:
-      snippet: '| **L2范数** | \(\|W\|_2 = \sqrt{\sum_i w_i^2}\) | 权重衰减（Weight Decay），使权重趋近于0但不会完全'
+      snippet: '| **L2范数** | $\|W\|_2 = \sqrt{\sum_i w_i^2}\) | 权重衰减（Weight Decay），使权重趋近于0但不会完全'
       line_hint: 207
   status: pending
 - pending_id: 076bfa81e7984d97
@@ -679,7 +679,7 @@ items:
       snippet: '#### 知识点6-1：强化学习基本概念与马尔可夫决策过程（MDP）（对应表格“马尔科夫决策过程”）'
       line_hint: 14
     end:
-      snippet: '- **终止状态**：\(s_9\)（成功）和 \(s_d\)（损坏）'
+      snippet: '- **终止状态**：$s_9\)（成功）和 $s_d\)（损坏）'
       line_hint: 77
   status: pending
 - pending_id: 6489202364ce2827
@@ -763,7 +763,7 @@ items:
       snippet: '#### 知识点6-7：基于策略的强化学习——策略梯度法（对应表格“基于近似求解法的策略学习”）'
       line_hint: 72
     end:
-      snippet: '- **偏差与方差**：REINFORCE是无偏的（因为 \(G_t\) 是真实回报的估计），但**方差较大**。'
+      snippet: '- **偏差与方差**：REINFORCE是无偏的（因为 $G_t\) 是真实回报的估计），但**方差较大**。'
       line_hint: 108
   status: pending
 - pending_id: d692ae747af8c672
@@ -871,7 +871,7 @@ items:
       snippet: '#### 知识点7-5：安全子博弈（对应表格“博弈策略求解算法”）'
       line_hint: 94
     end:
-      snippet: '- **实现方法**：通过虚拟价值的估计找到安全子博弈。比较采取动作 \(a''\) 和信息集 \(I_1\) 之间的价值差距，若差距足够小，则对应的子博弈就是安'
+      snippet: '- **实现方法**：通过虚拟价值的估计找到安全子博弈。比较采取动作 $a''\) 和信息集 $I_1\) 之间的价值差距，若差距足够小，则对应的子博弈就是安'
       line_hint: 115
   status: pending
 - pending_id: a8c8b7b62934ed7e

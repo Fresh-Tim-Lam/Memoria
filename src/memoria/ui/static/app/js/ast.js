@@ -175,7 +175,8 @@ window.MemoriaAST = (function () {
 
   /**
    * 解析图片 title 为属性表（阶段 E：width=300,align=center 逗号分隔 key=value）
-   * 任一段不匹配 key=value 则整体按普通 title 处理（如图片说明文字）
+   * title 可含普通说明文字段（如「测试标题,align=left」），非 key=value 段会被跳过，
+   * 只收集匹配的 key=value 属性；全都不匹配则返回 null。
    * @param {string} title
    * @returns {object|null}
    */
@@ -185,7 +186,7 @@ window.MemoriaAST = (function () {
     var attrs = null;
     for (var i = 0; i < parts.length; i++) {
       var m = /^\s*([A-Za-z0-9_-]+)\s*=\s*(.+?)\s*$/.exec(parts[i]);
-      if (!m) return null;
+      if (!m) continue;
       if (!attrs) attrs = {};
       attrs[m[1]] = m[2];
     }
@@ -214,9 +215,15 @@ window.MemoriaAST = (function () {
   }
 
   /** @param {boolean} ordered
-   *  @return {{type:"list", ordered:boolean, items:ListItem[]}} */
-  function list(ordered, items) {
-    return { type: TYPES.LIST, ordered: !!ordered, items: items || [] };
+   *  @param {number|null} [start] — 有序列表首项源编号（缺省/1 时渲染不写 start）
+   *  @return {{type:"list", ordered:boolean, items:ListItem[], start:number|null}} */
+  function list(ordered, items, start) {
+    return {
+      type: TYPES.LIST,
+      ordered: !!ordered,
+      items: items || [],
+      start: start && start > 1 ? start : null,
+    };
   }
 
   /** @return {{type:"list_item", children:Inline[]}} */

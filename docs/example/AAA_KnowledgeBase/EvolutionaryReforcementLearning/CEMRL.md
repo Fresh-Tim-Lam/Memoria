@@ -43,40 +43,40 @@
 
 ### 2.1 交叉熵方法（CEM）
 
-CEM是一种**分布估计算法（EDA）**，通过维护一个参数分布 \(\mathcal{N}(\mu, \Sigma)\) 来隐式地表示一个种群：
+CEM是一种**分布估计算法（EDA）**，通过维护一个参数分布 $\mathcal{N}(\mu, \Sigma)$ 来隐式地表示一个种群：
 
-1. 从分布 \(\mathcal{N}(\mu, \Sigma)\) 中采样 \(\lambda\) 个个体
+1. 从分布 $\mathcal{N}(\mu, \Sigma)$ 中采样 $\lambda$ 个个体
 2. 评估所有个体的适应度（fitness）
-3. 选择前 \(K_e\) 个精英个体
-4. 用精英个体更新分布参数 \(\mu\) 和 \(\Sigma\)
+3. 选择前 $K_e$ 个精英个体
+4. 用精英个体更新分布参数 $\mu$ 和 $\Sigma$
 
 **CEM的分布更新公式**（论文公式1-3）：
 
-精英个体：\(\{z_i\}_{i=1}^{K_e}\)，权重 \(\lambda_i\)（通常为 \(1/K_e\) 或按排名加权）
+精英个体：$\{z_i\}_{i=1}^{K_e}$，权重 $\lambda_i$（通常为 $1/K_e$ 或按排名加权）
 
 均值更新：
 
-\[
+$$
 \mu_{\text{new}} = \sum_{i=1}^{K_e} \lambda_i z_i
-\]
+$$
 
-协方差更新（使用当前均值 \(\mu_{\text{old}}\)，而非新均值，以保持多样性）：
+协方差更新（使用当前均值 $\mu_{\text{old}}$，而非新均值，以保持多样性）：
 
-\[
+$$
 \Sigma_{\text{new}} = \sum_{i=1}^{K_e} \lambda_i (z_i - \mu_{\text{old}})(z_i - \mu_{\text{old}})^\top + \epsilon \mathcal{I}
-\]
+$$
 
 在实际实现中，为处理高维参数空间，使用**对角协方差**：
 
-\[
+$$
 \Sigma_{\text{new}} = \sum_{i=1}^{K_e} \lambda_i (z_i - \mu_{\text{old}})^2 + \epsilon \mathcal{I}
-\]
+$$
 
-其中 \(\epsilon\) 随世代指数衰减：
+其中 $\epsilon$ 随世代指数衰减：
 
-\[
+$$
 \epsilon \leftarrow \tau_{\text{cem}} \epsilon + (1 - \tau_{\text{cem}}) \sigma_{\text{end}}
-\]
+$$
 
 ### 2.2 TD3
 
@@ -134,26 +134,26 @@ graph TD
 
 | 行号 | 伪代码 |
 |------|--------|
-| 1 | **初始化**：随机 actor \(\pi_\mu\)（CEM的均值），协方差 \(\Sigma = \sigma_{init}\mathcal{I}\) |
-| 2 | **初始化**：critic \(\mathcal{Q}^\pi\) 和目标 critic \(\mathcal{Q}_t^\pi\) |
-| 3 | **初始化**：空循环replay buffer \(\mathcal{R}\) |
+| 1 | **初始化**：随机 actor $\pi_\mu$（CEM的均值），协方差 $\Sigma = \sigma_{init}\mathcal{I}$ |
+| 2 | **初始化**：critic $\mathcal{Q}^\pi$ 和目标 critic $\mathcal{Q}_t^\pi$ |
+| 3 | **初始化**：空循环replay buffer $\mathcal{R}$ |
 | 4 | `total_steps, actor_steps = 0, 0` |
 | 5 | **while** `total_steps < max_steps` **do** |
-| 6 |  `pop` ← 从 \(\mathcal{N}(\pi_\mu, \Sigma)\) 采样（使用importance mixing） |
-| 7 |  **for** \(i \gets 1\) **to** `pop_size/2` **do** ▷ 对半数个体施加梯度步 |
-| 8 |   \(\pi\) ← `pop[i]` |
-| 9 |   初始化目标actor \(\pi_t\) 为 \(\pi\) 的副本 |
-| 10 |   用 \(2 \times \text{actor_steps} / \text{pop_size}\) 个mini-batch训练 \(\mathcal{Q}^\pi\) |
-| 11 |   用 `actor_steps` 个mini-batch训练 \(\pi\)（最大化Q值） |
-| 12 |   将更新后的 \(\pi\) 写回 `pop` |
+| 6 |  `pop` ← 从 $\mathcal{N}(\pi_\mu, \Sigma)$ 采样（使用importance mixing） |
+| 7 |  **for** $i \gets 1$ **to** `pop_size/2` **do** ▷ 对半数个体施加梯度步 |
+| 8 |   $\pi$ ← `pop[i]` |
+| 9 |   初始化目标actor $\pi_t$ 为 $\pi$ 的副本 |
+| 10 |   用 $2 \times \text{actor_steps} / \text{pop_size}$ 个mini-batch训练 $\mathcal{Q}^\pi$ |
+| 11 |   用 `actor_steps` 个mini-batch训练 $\pi$（最大化Q值） |
+| 12 |   将更新后的 $\pi$ 写回 `pop` |
 | 13 |  **end for** |
-| 14 |  **for** \(i \gets 1\) **to** `pop_size` **do** ▷ 评估所有个体 |
-| 15 |   \(\pi\) ← `pop[i]` |
-| 16 |   \((\text{fitness}, \text{steps})\) ← evaluate(\(\pi\)) |
-| 17 |   将经验存入 \(\mathcal{R}\) |
+| 14 |  **for** $i \gets 1$ **to** `pop_size` **do** ▷ 评估所有个体 |
+| 15 |   $\pi$ ← `pop[i]` |
+| 16 |   $(\text{fitness}, \text{steps})$ ← evaluate($\pi$) |
+| 17 |   将经验存入 $\mathcal{R}$ |
 | 18 |   `actor_steps += steps`，`total_steps += actor_steps` |
 | 19 |  **end for** |
-| 20 |  用前 \(K_e\) 个精英更新 \(\pi_\mu\) 和 \(\Sigma\)（公式1-3） |
+| 20 |  用前 $K_e$ 个精英更新 $\pi_\mu$ 和 $\Sigma$（公式1-3） |
 | 21 | **end while** |
 
 **关于 `actor_steps` 的说明**：
@@ -164,18 +164,18 @@ graph TD
 
 **DDPG版本**的critic损失（标准TD误差）：
 
-\[
+$$
 \mathcal{L}(\psi) = \mathbb{E}_{(s,a,r,s') \sim \mathcal{R}} \left[ \left( r + \gamma Q_{\psi'}(s', \pi_{\omega'}(s')) - Q_\psi(s,a) \right)^2 \right]
-\]
+$$
 
 **TD3版本**使用双critic + 延迟策略更新 + 目标策略平滑。
 
 **CEM-RL中critic训练的关键点**：
 - critic从**所有个体**（包括纯CEM个体和梯度增强个体）产生的经验中学习
 - 梯度增强个体使用critic的梯度更新自己：
-  \[
+  $$
   \nabla_\omega J \approx \mathbb{E}_{s \sim \mathcal{R}} \left[ \nabla_a Q_\psi(s,a) \big|_{a=\pi_\omega(s)} \cdot \nabla_\omega \pi_\omega(s) \right]
-  \]
+  $$
 - 这本质上是**DDPG/TD3的actor更新公式**
 
 ### 3.5 Importance Mixing（附录B）
@@ -197,16 +197,16 @@ CEM-RL中，**只有不接收梯度步的那一半个体**可以使用importance
 |------|-----|
 | 环境 | HalfCheetah-v2, Hopper-v2, Walker2d-v2, Swimmer-v2, Ant-v2 |
 | 种群大小 | 10 |
-| 精英比例 | 50%（\(K_e = 5\)） |
-| \(\sigma_{init}\) | \(10^{-3}\) |
-| \(\sigma_{end}\) | \(10^{-5}\) |
-| \(\tau_{cem}\) | 0.95 |
-| 折扣因子 \(\gamma\) | 0.99 |
-| 目标更新系数 \(\tau\) | \(5 \times 10^{-3}\) |
-| Replay buffer大小 | \(10^6\) |
+| 精英比例 | 50%（$K_e = 5$） |
+| $\sigma_{init}$ | $10^{-3}$ |
+| $\sigma_{end}$ | $10^{-5}$ |
+| $\tau_{cem}$ | 0.95 |
+| 折扣因子 $\gamma$ | 0.99 |
+| 目标更新系数 $\tau$ | $5 \times 10^{-3}$ |
+| Replay buffer大小 | $10^6$ |
 | Batch size | 100 |
 | 优化器 | Adam |
-| 学习率 | \(10^{-3}\)（actor和critic） |
+| 学习率 | $10^{-3}$（actor和critic） |
 | 运行次数 | 10次独立运行 |
 
 ### 4.2 主要结果

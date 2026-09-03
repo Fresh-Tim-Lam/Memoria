@@ -2914,7 +2914,10 @@
       let body = doc.preview_body || doc.body || "";
 
       // 1. 数学标准化 + 本地图片路径重写（在源码层）
-      body = MemoriaMarkdownPreview ? MemoriaMarkdownPreview.normalizeBody(body) : body;
+      // 注意：markdown-preview 是可选模块（可能未加载），必须经 window. 访问，
+      // 直接裸读会在其缺失时抛 ReferenceError 导致整个预览失败
+      const MP0 = window.MemoriaMarkdownPreview;
+      body = MP0 && typeof MP0.normalizeBody === "function" ? MP0.normalizeBody(body) : body;
       body = rewriteMdImagePaths(body);
 
       // 2. AST 解析
@@ -2948,6 +2951,11 @@
         const MP = MemoriaMarkdownPreview;
         if (MP.renderMermaidBlocks) { try { await MP.renderMermaidBlocks(preview); } catch (e) { log("render", "Mermaid: " + e.message); } }
         if (MP.attachImageLightbox) { try { MP.attachImageLightbox(preview); } catch (e) { log("render", "Lightbox: " + e.message); } }
+      }
+      // 6.5 等 MathJax 真正就绪再排版（typesetPromise 在 startup 完成后才存在，
+      //    加载慢时直接调用会被空值守卫跳过，导致公式一直以 $…$ 源码显示）
+      if (window.MathJax?.startup?.promise) {
+        try { await MathJax.startup.promise; } catch (e) { log("render", "MathJax startup: " + e.message); }
       }
       if (window.MathJax?.typesetPromise) {
         try { await MathJax.typesetPromise([preview]); } catch (e) { log("render", "MathJax: " + e.message); }
@@ -7204,6 +7212,10 @@
     if (!preview) return;
     const lookup = state.linkTargetSet;
     const hasLookup = lookup instanceof Set;
+    // 侧车 links[] 里已把该 [[]] 锚文本路由到具体 target（如 [[中文名]] → 英文 id）。
+    // 这类链接即使锚文本本身不在 kp id / 文件 stem 里，也应按“实跳转”处理，
+    // 否则会被标成虚跳转（-link-broken）而走编辑流程而不是跳转。
+    const overrides = state.doc?.link_overrides || {};
     preview.querySelectorAll(".-wikilink").forEach((el) => {
       const target = el.getAttribute("data--target") || "";
       el.classList.add("memoria-link");
@@ -7213,8 +7225,9 @@
       const blockEl = el.closest("[data--src-line]");
       const line = blockEl ? Number(blockEl.getAttribute("data--src-line")) || 0 : 0;
       el.setAttribute("data-link-line", String(line));
+      const routeOk = !!(overrides[target] && overrides[target].length);
       if (hasLookup) {
-        if (lookup.has(target)) {
+        if (lookup.has(target) || routeOk) {
           el.classList.add("-link-resolved");
           el.setAttribute("tabindex", "0");
           el.setAttribute("title", "跳转到 " + target);

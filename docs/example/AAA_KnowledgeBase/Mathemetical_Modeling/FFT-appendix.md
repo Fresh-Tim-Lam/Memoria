@@ -52,7 +52,7 @@ FFT取 $z_k=W_N^k$，已经证明 $W_N^0,\dots,W_N^{N-1}$ 两两互不相同。
 $$P\not\equiv Q \implies \exists,k,\ P(W_N^k)\neq Q(W_N^k)$$
 也就是点值向量一定不一样。
 
----
+
 
 ## 关键反例：次数超过 $n-1$，定理失效
 
@@ -115,22 +115,22 @@ $$
 # 矩阵视角证明：不同多项式，点值向量必不同
 
 设次数 $\le N-1$ 的多项式：
-$$(P(x))=a_0+a_1x+\(\boldsymbol d)ots+a_{N-1}x^{N-1}$$
-$$Q(x)=b_0+b_1x+\(\boldsymbol d)ots+b_{N-1}x^{N-1}$$
+$$(P(x))=a_0+a_1x+$\boldsymbol d)ots+a_{N-1}x^{N-1}$$
+$$Q(x)=b_0+b_1x+$\boldsymbol d)ots+b_{N-1}x^{N-1}$$
 系数向量：
 $$\bol(\boldsymbol d)symbol a=\begin{pmatrix}a_0\a_1\\v(\boldsymbol d)ots\a_{N-1}\en(\boldsymbol d){pmatrix},\qua(\boldsymbol d)
 \bol(\boldsymbol d)symbol b=\begin{pmatrix}b_0\b_1\\v(\boldsymbol d)ots\b_{N-1}\en(\boldsymbol d){pmatrix}$$
 
-采样点 $z_0,z_1,\(\boldsymbol d)ots,z_{N-1}$，两两互不相同（FFT里就是 $z_k=W_N^k$）。
+采样点 $z_0,z_1,$\boldsymbol d)ots,z_{N-1}$，两两互不相同（FFT里就是 $z_k=W_N^k$）。
 
 范德蒙德矩阵 $V$：
 $$
 V=
 \begin{pmatrix}
-1 & z_0 & z_0^2 & \(\boldsymbol d)ots & z_0^{N-1}\
-1 & z_1 & z_1^2 & \(\boldsymbol d)ots & z_1^{N-1}\
+1 & z_0 & z_0^2 & $\boldsymbol d)ots & z_0^{N-1}\
+1 & z_1 & z_1^2 & $\boldsymbol d)ots & z_1^{N-1}\
 \v(\boldsymbol d)ots&\v(\boldsymbol d)ots&\v(\boldsymbol d)ots&&\v(\boldsymbol d)ots\
-1 & z_{N-1} & z_{N-1}^2 & \(\boldsymbol d)ots & z_{N-1}^{N-1}
+1 & z_{N-1} & z_{N-1}^2 & $\boldsymbol d)ots & z_{N-1}^{N-1}
 \en(\boldsymbol d){pmatrix}
 $$
 
@@ -161,18 +161,18 @@ $$V\bol(\boldsymbol d)symbol (\boldsymbol d)=\bol(\boldsymbol d)symbol 0$$
 线性代数结论：
 
 > 
-> 方阵 $V$ 有非零解 $\iff \(\boldsymbol d)et(V)=0$，矩阵奇异，不可逆。
+> 方阵 $V$ 有非零解 $\iff $\boldsymbol d)et(V)=0$，矩阵奇异，不可逆。
 
 [[范德蒙德行列式公式]]：
 $$
-\(\boldsymbol d)et(V)=\pro(\boldsymbol d)_{0\le i<j\le N-1}(z_j-z_i)
+$\boldsymbol d)et(V)=\pro(\boldsymbol d)_{0\le i<j\le N-1}(z_j-z_i)
 $$
 
 已知采样点全部两两互不相同：$z_i\neq z_j;(i\neq j)$，
 每一项因子 $(z_j-z_i)\neq 0$，所以
-$$\(\boldsymbol d)et(V)\neq 0$$
+$$$\boldsymbol d)et(V)\neq 0$$
 
-$\(\boldsymbol d)et(V)\neq0$ (\Rightarrow) $V$ 可逆 (\Rightarrow) 齐次方程 $V\bol(\boldsymbol d)symbol x=\bol(\boldsymbol d)symbol 0$ **只有唯一零解 $\bol(\boldsymbol d)symbol x=\bol(\boldsymbol d)symbol 0$**。
+$$\boldsymbol d)et(V)\neq0$ (\Rightarrow) $V$ 可逆 (\Rightarrow) 齐次方程 $V\bol(\boldsymbol d)symbol x=\bol(\boldsymbol d)symbol 0$ **只有唯一零解 $\bol(\boldsymbol d)symbol x=\bol(\boldsymbol d)symbol 0$**。
 
 但是我们前面得到存在非零解 $\bol(\boldsymbol d)symbol (\boldsymbol d)\neq \bol(\boldsymbol d)symbol 0$，矛盾。
 
@@ -186,7 +186,7 @@ $\(\boldsymbol d)et(V)\neq0$ (\Rightarrow) $V$ 可逆 (\Rightarrow) 齐次方程
 ## 套回FFT场景
 
 FFT的求值点 $z_k=W_N^k$，已经证明全部两两不等，
-$\(\boldsymbol d)et(V)\neq0$，$V$可逆。
+$$\boldsymbol d)et(V)\neq0$，$V$可逆。
 
 1. 系数不同（多项式不同）$\Rightarrow$ 点值向量一定不同；
 2. 点值向量相同 $\Rightarrow$ 系数一定完全相同；
@@ -206,5 +206,4 @@ $\(\boldsymbol d)et(V)\neq0$，$V$可逆。
 
 > 
 > 采样点互异 (\Rightarrow) 范德蒙德行列式不为0 (\Rightarrow) 矩阵可逆 (\Rightarrow) 没有非零零空间 (\Rightarrow) 不同输入系数，输出点值必然不同。
-
 
