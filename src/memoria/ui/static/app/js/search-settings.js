@@ -14,6 +14,8 @@
 
 
 
+  const TT = (k, p) => (global.MemoriaI18n ? global.MemoriaI18n.t(k, p) : k);
+
   const DEFAULTS = {
 
     embeddingEnabled: false,
@@ -254,29 +256,29 @@
 
         <section class="-settings-section">
 
-          <h3 class="-settings-heading">检索内核</h3>
+          <h3 class="-settings-heading">${TT("search.settings.heading")}</h3>
 
-          <p class="-muted -settings-note">Lexical 层（倒排 + jieba）始终开启。语义搜索使用<strong>本地</strong> sentence-transformers 模型（默认缓存于 <code>~/.cache/huggingface</code>）；首次下载后离线运行。向量索引持久化在知识库 <code>.memoria/cache/embeddings/</code>，仅对变更 KP 增量编码。</p>
+          <p class="-muted -settings-note">${TT("search.settings.noteMain")}</p>
 
           <label class="-settings-field -settings-field--inline">
 
             <input type="checkbox" data-search-setting="embeddingEnabled"${s.embeddingEnabled ? " checked" : ""}>
 
-            <span>启用语义搜索（Embedding）</span>
+            <span>${TT("search.settings.enableEmbedding")}</span>
 
           </label>
 
-          <p class="-muted -settings-note">开启后工具栏搜索使用 Lexical + 语义双路合并；关闭则仅字面匹配。</p>
+          <p class="-muted -settings-note">${TT("search.settings.noteEmbedding")}</p>
 
           <label class="-settings-field -settings-field--inline">
 
             <input type="checkbox" data-search-setting="bodyLocateEnabled"${s.bodyLocateEnabled ? " checked" : ""}>
 
-            <span>搜索正文定位内容</span>
+            <span>${TT("search.settings.bodyLocate")}</span>
 
           </label>
 
-          <p class="-muted -settings-note">KP 结果之外，在 md 正文行内 substring 匹配并定位（非 KP 命中，分级展示）。</p>
+          <p class="-muted -settings-note">${TT("search.settings.noteBodyLocate")}</p>
 
         </section>
 

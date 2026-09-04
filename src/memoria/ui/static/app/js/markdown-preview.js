@@ -9,6 +9,9 @@ window.MemoriaMarkdownPreview = (function () {
   const INLINE_START = "\uE000";
   const INLINE_END = "\uE001";
 
+  /** i18n 取词助手（无 MemoriaI18n 时回退键名）。 */
+  const _t = (k, p) => (window.MemoriaI18n ? window.MemoriaI18n.t(k, p) : k);
+
   let mathJaxReady = null;
 
   function initMathJax() {
@@ -28,7 +31,7 @@ window.MemoriaMarkdownPreview = (function () {
           return;
         }
         if (++tries > 400) {
-          reject(new Error("MathJax 加载超时"));
+          reject(new Error(_t("preview.math.timeout")));
           return;
         }
         setTimeout(tick, 50);
@@ -216,7 +219,7 @@ window.MemoriaMarkdownPreview = (function () {
           div.classList.add("-src-block");
           div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
         }
-        div.textContent = "Mermaid 渲染失败: " + (e.message || e);
+        div.textContent = _t("preview.mermaidFail", { msg: e.message || e });
         pre.replaceWith(div);
       }
     }
@@ -605,20 +608,20 @@ window.MemoriaMarkdownPreview = (function () {
         : routeTargets || [];
       const total = routeTargets?.length || 0;
       if (resolved === false) {
-        return `未绑定目标 · ${key}（${total} 个目标均无法解析）`;
+        return _t("preview.link.unresolved", { key, total });
       }
       if (routeTargets?.length) {
         if (resolvedList.length > 1) {
-          return `多目标链接 · ${resolvedList.length}/${total} 可跳转`;
+          return _t("preview.link.multi", { resolved: resolvedList.length, total });
         }
         if (resolvedList.length === 1) {
-          return `路由链接 · 跳转到 ${resolvedList[0]}`;
+          return _t("preview.link.routed", { target: resolvedList[0] });
         }
       }
       if (resolved === true) {
-        return `跳转到 ${key}`;
+        return _t("preview.link.jump", { key });
       }
-      return "链接跳转";
+      return _t("preview.link.title");
     }
 
     const srcMd = blockMarkdown != null ? String(blockMarkdown) : "";
@@ -1318,7 +1321,7 @@ window.MemoriaMarkdownPreview = (function () {
 
     container.querySelectorAll("mjx-merror").forEach((el) => {
       report.ok = false;
-      report.mathErrors.push((el.textContent || "").trim().slice(0, 120) || "TeX 错误");
+      report.mathErrors.push((el.textContent || "").trim().slice(0, 120) || _t("preview.math.texError"));
     });
 
     const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
@@ -1334,13 +1337,13 @@ window.MemoriaMarkdownPreview = (function () {
 
     if (report.mathExpected > 0 && report.mathRendered === 0) {
       report.ok = false;
-      report.messages.push("未检测到已渲染公式");
+      report.messages.push(_t("preview.math.noRendered"));
     }
     if (report.mathErrors.length) {
-      report.messages.push(`${report.mathErrors.length} 处 TeX 错误`);
+      report.messages.push(_t("preview.math.texErrors", { n: report.mathErrors.length }));
     }
     if (report.rawDelimiters.length) {
-      report.messages.push(`${report.rawDelimiters.length} 处未处理定界符`);
+      report.messages.push(_t("preview.math.rawDelims", { n: report.rawDelimiters.length }));
     }
 
     return report;
@@ -1348,7 +1351,7 @@ window.MemoriaMarkdownPreview = (function () {
 
   function renderHtml(body, options) {
     if (!window.marked) {
-      return `<pre class="-preview-error">marked 未加载</pre>`;
+      return `<pre class="-preview-error">${_t("preview.markedMissing")}</pre>`;
     }
     const knownTargets = options?.knownTargets || null;
     const linkOverrides = options?.linkOverrides || null;
@@ -1382,7 +1385,7 @@ window.MemoriaMarkdownPreview = (function () {
       mathRendered: 0,
       mathErrors: [],
       rawDelimiters: [],
-      messages: ["MathJax 未就绪"],
+      messages: [_t("preview.math.notReady")],
     };
     try {
       await initMathJax();

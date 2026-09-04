@@ -16,6 +16,8 @@
     extend: "#d29922",
   };
 
+  const _t = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
+
   function hexColor(type) {
     const h = EDGE_COLORS[type] || EDGE_COLORS.reference;
     return parseInt(String(h).replace("#", ""), 16);
@@ -171,7 +173,7 @@
   class GraphView3D {
     constructor(container, engine, layout, options = {}) {
       if (!global.THREE) {
-        throw new Error("THREE.js 未加载");
+        throw new Error(_t("graph.view3d.notLoaded"));
       }
       this.THREE = global.THREE;
       this.container = container;

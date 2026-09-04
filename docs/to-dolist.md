@@ -10,6 +10,8 @@
 - 🔄 样式笔刷：预览模式涂抹后选区保持（用户反馈纯预览模式下应用样式后选区消失，分栏模式正常；harness 多次复现未果，待用户确认环境/操作细节后定位）
 - 🔄 样式笔刷：同行含公式涂抹混乱（映射修复已上，验证中）
 - 🔄 M5 桌面壳收尾：窗口原生动画/顶栏拖拽/圆角/最大化已达成；剩余图标与安装体验、更新通道
+- 🔄 语言系统 i18n（中英语言包）：①②完成（清单 + 规范）→ ③ 机制已落地（i18n.js + zh-CN/en 包 + 设置→显示即时切换 + 首批静态文案）→ ④ 整理语言包进行中：2026-09-03 已迁移「检查」功能链路（index.html 检查弹窗 / app.js 状态栏·角标·检查弹窗·图谱建边提示 / check-settings.js 设置→检查页）并落地后端检查消息 code+params 本地化（en `check.issue.<code>`，未知 code 回退中文；§5.1）；同日补齐相邻文案（图片管理/诊断/清理 `img.*`、图谱空态提示 `graph.hint.*`、共享「请先打开知识库」`app.openKbFirst`、检查相关 RPC 错误按 code 翻译）；link-context-menu.js 右键菜单已整文件接入 `menu.*`（含源码/预览「插入图片」对齐）；2026-09-04 edit-handler.js 编辑块工具栏已整文件接入 `edit.block.*`（块类型标签/语言/类型/符号/对齐/大小/名称工具、行内公式、图片名称开关、编辑模式切换提示，32 候选清零）；同日图谱/检索设置页整文件接入（graph-settings.js `graph.settings.*` + 示例图 `graph.sample.*`、graph-label.js `graph.labelModes.*`、search-settings.js `search.settings.*`，71 候选清零，设置示例图随语言重建）；其余文件（约 614 行 CJK 候选）待迁移
+- ✅ 演示截图迁出 docs → `resources/screenshots/`（2026-09-03，git mv 保历史；README 双语引用 14 处同步）；新增 conventions/readme-i18n.md（README.md↔README.cn.md 双语 + 截图收录/存放维护规范）；docs 不再存截图类二进制资源
 
 ***
 

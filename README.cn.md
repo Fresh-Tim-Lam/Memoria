@@ -6,13 +6,13 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.2.5-8A2BE2)](src/memoria/__version__.py)
-[![English](https://img.shields.io/badge/README-English-green)](README.en.md)
+[![English](https://img.shields.io/badge/README-English-green)](README.md)
 
 **Memoria** 是一款面向个人知识库的本地知识图谱 IDE：Markdown 笔记 + 双向链接（`[[]]`）语义、荧光笔与富文本标记、LaTeX 公式、Mermaid 图表、2D/3D 知识图谱，配一个**纯离线**的检索内核。
 
 所有数据都以普通文件保存在你的磁盘上——`.md` 正文 + YAML 元数据。没有账号、没有云同步、没有隐私泄露。打开即用，关闭即走，数据永远属于你。
 
-> Wanna See Eng Intro？Head to [README.md](README.md)。
+> English introduction: see [README.md](README.md).
 
 ---
 
@@ -71,29 +71,29 @@
 
 工作区（2D 图谱视图）：侧栏顶部分页可切换 文件树 / 2D / 3D；图谱面板可拖拽加宽、按分组查看。下方为知识点列表，右侧编辑当前文档。
 
-<img src="docs/screenshots/demo-workspace.png" alt="Memoria 工作区：2D 知识图谱与文档编辑" width="820"/>
+<img src="resources/screenshots/demo-workspace.png" alt="Memoria 工作区：2D 知识图谱与文档编辑" width="820"/>
 
 3D 知识图谱：滚轮缩放、左键旋转，节点点击跳回原文。
 
-<img src="docs/screenshots/demo-graph-3d.png" alt="Memoria 3D 知识图谱" width="820"/>
+<img src="resources/screenshots/demo-graph-3d.png" alt="Memoria 3D 知识图谱" width="820"/>
 
 分栏模式：左侧源码、右侧实时渲染预览，光标同步。
 
-<img src="docs/screenshots/demo-split.png" alt="Memoria 分栏编辑：源码 + 实时预览" width="820"/>
+<img src="resources/screenshots/demo-split.png" alt="Memoria 分栏编辑：源码 + 实时预览" width="820"/>
 
 渲染预览：荧光笔、Wiki 链接、表格、代码块混合排版。
 
-<img src="docs/screenshots/demo-preview.png" alt="Memoria 富文本预览渲染" width="820"/>
+<img src="resources/screenshots/demo-preview.png" alt="Memoria 富文本预览渲染" width="820"/>
 
 数学公式：MathJax 渲染的 LaTeX 公式（行内 / 块级 / cases / align）。
 
-<img src="docs/screenshots/demo-math.png" alt="Memoria LaTeX 数学公式渲染" width="820"/>
+<img src="resources/screenshots/demo-math.png" alt="Memoria LaTeX 数学公式渲染" width="820"/>
 
 显示设置与完整性检查：字号 / 界面缩放可调；一键扫描知识库结构问题。
 
-<img src="docs/screenshots/demo-settings.png" alt="Memoria 显示设置" width="820"/>
+<img src="resources/screenshots/demo-settings.png" alt="Memoria 显示设置" width="820"/>
 
-<img src="docs/screenshots/demo-check.png" alt="Memoria 知识库完整性检查" width="820"/>
+<img src="resources/screenshots/demo-check.png" alt="Memoria 知识库完整性检查" width="820"/>
 
 ---
 
@@ -194,7 +194,7 @@ Memoria 的文档体系专为人机协作设计：每个一级目录顶部有 `R
 ├── docs/           # 文档中心（规范/设计/指南/示例）     → docs/README.md
 ├── scripts/        # 开发者工具（启动/基准）             → scripts/README.md
 ├── packaging/      # 打包发布（build_release.cmd → Package/）→ packaging/README.md
-├── resources/      # 应用资源（图标）                   → resources/README.md
+├── resources/      # 应用资源（图标、演示截图）         → resources/README.md
 ├── benchmarks/     # 检索评估数据与结果                 → benchmarks/README.md
 ├── config/         # 程序配置（ui-settings.json）       → config/README.md
 └── app.py          # 源码运行入口

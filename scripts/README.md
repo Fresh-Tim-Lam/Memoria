@@ -11,6 +11,8 @@
 | `benchmark/` | 检索评估工具集（lexical / embedding / rerank 评测跑批） |
 | `bootstrap_example_sidecars.py` | 生成示例知识库 sidecar |
 | `gen_example_boonie_sidecars.py` | 生成 boonie 示例知识库 sidecar |
+| `scan_ui_strings.py` | UI 界面文案清单扫描器：刷新 `docs/reference/i18n-inventory.md`（i18n 盘点） |
+| `i18n_selftest.js` | i18n 引擎自测：`node scripts/i18n_selftest.js`（默认语言/切换/缺键回退/参数填充） |
 
 ## 规则
 

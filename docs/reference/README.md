@@ -15,3 +15,4 @@
 | [hard-constraints.md](./hard-constraints.md) | 硬约束（不可违反的既定事实） |
 | [image-features.md](./image-features.md) | 图片功能说明与内部机制（渲染链路/路径解析/交互/静态服务） |
 | [preview-formats.md](./preview-formats.md) | 预览渲染说明：支持的格式与样式（块级/行内/扩展语法/样式/交互/边界） |
+| [i18n-inventory.md](./i18n-inventory.md) | UI 界面文案登记清单（含中文文案定位，i18n 迁移与语言包维护的事实依据；`python scripts/scan_ui_strings.py` 刷新） |

@@ -162,17 +162,34 @@
 
   function renderSettingsBody() {
     const s = load();
+    const T = (k, p) => (global.MemoriaI18n ? global.MemoriaI18n.t(k, p) : k);
+    const i18n = global.MemoriaI18n;
+    const curLang = i18n ? i18n.currentLang() : "zh-CN";
+    const langOptions = (i18n ? i18n.SUPPORTED : ["zh-CN"])
+      .map(
+        (code) =>
+          `<option value="${code}"${code === curLang ? " selected" : ""}>${i18n ? i18n.langDisplay(code) : code}</option>`
+      )
+      .join("");
     return `<section class="-settings-section">
-      <h3 class="-settings-heading">文字</h3>
-      <p class="-muted -settings-note">作用于源码、分栏与预览区正文；标题/代码块/引用随比例缩放。</p>
-      ${rangeField("previewFontSize", "字号", FONT_MIN, FONT_MAX, 1, s.previewFontSize, `默认 ${DEFAULTS.previewFontSize}px，范围 ${FONT_MIN}–${FONT_MAX}px。`)}
+      <h3 class="-settings-heading">${T("settings.display.langGroup")}</h3>
+      <label class="-settings-field">
+        <span>${T("settings.display.langLabel")}</span>
+        <select id="display-language">${langOptions}</select>
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.langNote")}</p>
     </section>
     <section class="-settings-section">
-      <h3 class="-settings-heading">界面整体缩放</h3>
-      <p class="-muted -settings-note">对整个应用界面按比例缩放（等价于浏览器 Ctrl+±）。</p>
-      ${rangeField("uiScale", "缩放比例", SCALE_MIN, SCALE_MAX, SCALE_STEP, s.uiScale, "快捷键：Ctrl+= 放大 / Ctrl+- 缩小 / Ctrl+0 复位 100%。")}
+      <h3 class="-settings-heading">${T("settings.display.text")}</h3>
+      <p class="-muted -settings-note">${T("settings.display.fontNote")}</p>
+      ${rangeField("previewFontSize", T("settings.display.fontSize"), FONT_MIN, FONT_MAX, 1, s.previewFontSize, T("settings.display.fontDefault", { def: DEFAULTS.previewFontSize, min: FONT_MIN, max: FONT_MAX }))}
+    </section>
+    <section class="-settings-section">
+      <h3 class="-settings-heading">${T("settings.display.uiScaleGroup")}</h3>
+      <p class="-muted -settings-note">${T("settings.display.uiScaleNote")}</p>
+      ${rangeField("uiScale", T("settings.display.uiScale"), SCALE_MIN, SCALE_MAX, SCALE_STEP, s.uiScale, T("settings.display.uiScaleHint"))}
       <div class="-settings-actions">
-        <button type="button" class="-btn secondary" id="display-ui-scale-reset">复位为 100%</button>
+        <button type="button" class="-btn secondary" id="display-ui-scale-reset">${T("settings.display.resetScale")}</button>
       </div>
     </section>`;
   }
@@ -204,6 +221,15 @@
         if (out) out.textContent = String(DEFAULTS.uiScale);
         const range = root.querySelector('[data-display-setting="uiScale"]');
         if (range) range.value = String(DEFAULTS.uiScale);
+      });
+    }
+    const langSel = root.querySelector("#display-language");
+    if (langSel && global.MemoriaI18n) {
+      langSel.addEventListener("change", () => {
+        global.MemoriaI18n.setLang(langSel.value);
+        if (global.MemoriaGraphSettings && global.MemoriaGraphSettings.rerenderCurrentTab) {
+          global.MemoriaGraphSettings.rerenderCurrentTab();
+        }
       });
     }
   }

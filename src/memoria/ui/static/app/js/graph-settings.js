@@ -6,6 +6,7 @@
 
   const STORAGE_KEY = "-graph-settings";
   const PREVIEW_H_KEY = "-settings-preview-h";
+  const TT = (k, p) => (global.MemoriaI18n ? global.MemoriaI18n.t(k, p) : k);
 
   const DEFAULTS = {
     labelMode: "name_short",
@@ -46,62 +47,66 @@
 
   const LEGACY_SPLIT_KEY = "-graph-sidebar-nav-kp-split";
 
-  const SAMPLE_GRAPH = {
-    nodes: [
-      {
-        id: "rl-overview",
-        name: "RL 概览",
-        label: "RL 概览",
-        file: "knowledge/rl-overview.md",
-        description: "子目录示例 — 学习路径概览",
-        range_ok: true,
-      },
-      {
-        id: "mdp",
-        name: "马尔可夫决策过程",
-        label: "马尔可夫决策过程",
-        file: "mdp.md",
-        description: "强化学习的数学基础框架",
-        range_ok: true,
-      },
-      {
-        id: "贝尔曼方程",
-        name: "贝尔曼方程",
-        label: "贝尔曼方程",
-        file: "mdp.md",
-        range_ok: true,
-      },
-      {
-        id: "q-learning",
-        name: "Q-Learning",
-        label: "Q-Learning",
-        file: "q-learning.md",
-        range_ok: true,
-      },
-      {
-        id: "policy-gradient",
-        name: "策略梯度",
-        label: "策略梯度",
-        file: "policy-gradient.md",
-        range_ok: true,
-      },
-    ],
-    edges: [
-      {
-        type: "reference",
-        source_id: "rl-overview",
-        targets: ["mdp", "贝尔曼方程"],
-        relevance: 0.85,
-      },
-      { type: "extend", source_id: "mdp", targets: ["q-learning"], relevance: 0.6 },
-      {
-        type: "reference",
-        source_id: "q-learning",
-        targets: ["policy-gradient"],
-        relevance: 0.7,
-      },
-    ],
-  };
+  /** 设置预览用的示例图：节点文案随界面语言本地化（buildSampleGraph 在预览重建时调用，语言切换后重绘生效）。 */
+  function buildSampleGraph() {
+    const smp = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
+    return {
+      nodes: [
+        {
+          id: "rl-overview",
+          name: smp("graph.sample.rlOverview.name"),
+          label: smp("graph.sample.rlOverview.name"),
+          file: "knowledge/rl-overview.md",
+          description: smp("graph.sample.rlOverview.desc"),
+          range_ok: true,
+        },
+        {
+          id: "mdp",
+          name: smp("graph.sample.mdp.name"),
+          label: smp("graph.sample.mdp.name"),
+          file: "mdp.md",
+          description: smp("graph.sample.mdp.desc"),
+          range_ok: true,
+        },
+        {
+          id: "bellman-equation",
+          name: smp("graph.sample.bellman.name"),
+          label: smp("graph.sample.bellman.name"),
+          file: "mdp.md",
+          range_ok: true,
+        },
+        {
+          id: "q-learning",
+          name: "Q-Learning",
+          label: "Q-Learning",
+          file: "q-learning.md",
+          range_ok: true,
+        },
+        {
+          id: "policy-gradient",
+          name: smp("graph.sample.policyGradient.name"),
+          label: smp("graph.sample.policyGradient.name"),
+          file: "policy-gradient.md",
+          range_ok: true,
+        },
+      ],
+      edges: [
+        {
+          type: "reference",
+          source_id: "rl-overview",
+          targets: ["mdp", "bellman-equation"],
+          relevance: 0.85,
+        },
+        { type: "extend", source_id: "mdp", targets: ["q-learning"], relevance: 0.6 },
+        {
+          type: "reference",
+          source_id: "q-learning",
+          targets: ["policy-gradient"],
+          relevance: 0.7,
+        },
+      ],
+    };
+  }
 
   let settingsTab = "graph2d";
   let previewEngine = null;
@@ -501,104 +506,107 @@
     const modeOptions = Object.entries(modes)
       .map(
         ([id, meta]) =>
-          `<option value="${id}"${!meta.available ? " disabled" : ""}${s.labelMode === id ? " selected" : ""}>${meta.label}</option>`
+          `<option value="${id}"${!meta.available ? " disabled" : ""}${s.labelMode === id ? " selected" : ""}>${TT(meta.labelKey)}</option>`
       )
       .join("");
     return `<section class="-settings-section">
-            <h3 class="-settings-heading">节点标签</h3>
-            <p class="-muted -settings-note">画布上为<strong>短标签</strong>；悬停侧栏/预览区显示 ID、文件与说明。智能摘要留待 M4 检索引擎。</p>
+            <h3 class="-settings-heading">${TT("graph.settings.nodeLabel.heading")}</h3>
+            <p class="-muted -settings-note">${TT("graph.settings.nodeLabel.note")}</p>
             <label class="-settings-field">
-              <span>显示策略</span>
+              <span>${TT("graph.settings.nodeLabel.display")}</span>
               <select data-graph-setting="labelMode">${modeOptions}</select>
             </label>
             <label class="-settings-field">
-              <span>缩短字数 <output data-graph-setting-value="labelMaxLen">${s.labelMaxLen}</output></span>
+              <span>${TT("graph.settings.nodeLabel.maxLen")} <output data-graph-setting-value="labelMaxLen">${s.labelMaxLen}</output></span>
               <input type="range" data-graph-setting="labelMaxLen" min="4" max="20" step="1" value="${s.labelMaxLen}">
             </label>
           </section>`;
   }
 
-  function renderLayoutSection(s, title, includeArrow) {
+  function renderLayoutSection(s, titleKey, includeArrow) {
+    const L = "graph.settings.layout.";
     const arrow = includeArrow
-      ? rangeField("arrowSize", "箭头大小", 4, 12, 1, s.arrowSize)
+      ? rangeField("arrowSize", L + "arrowSize", 4, 12, 1, s.arrowSize)
       : "";
     const zoomFields = includeArrow
-      ? `<p class="-muted -settings-note">缩放：滚轮灵敏度与范围。</p>
-         ${rangeField("zoomSensitivity2d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity2d, true)}
-         ${rangeField("zoomMin2d", "最小缩放", 0.02, 0.5, 0.01, s.zoomMin2d, true)}
-         ${rangeField("zoomMax2d", "最大缩放", 2, 16, 0.5, s.zoomMax2d)}`
-      : `<p class="-muted -settings-note">缩放：相机距离范围与灵敏度。</p>
-         ${rangeField("zoomSensitivity3d", "缩放灵敏度", 0.3, 2.5, 0.1, s.zoomSensitivity3d, true)}
-         ${rangeField("zoomMinDistance3d", "最近距离", 2, 50, 1, s.zoomMinDistance3d)}
-         ${rangeField("zoomMaxDistance3d", "最远距离", 500, 8000, 100, s.zoomMaxDistance3d)}`;
+      ? `<p class="-muted -settings-note">${TT(L + "zoomNote2d")}</p>
+         ${rangeField("zoomSensitivity2d", L + "zoomSensitivity", 0.3, 2.5, 0.1, s.zoomSensitivity2d, true)}
+         ${rangeField("zoomMin2d", L + "zoomMin2d", 0.02, 0.5, 0.01, s.zoomMin2d, true)}
+         ${rangeField("zoomMax2d", L + "zoomMax2d", 2, 16, 0.5, s.zoomMax2d)}`
+      : `<p class="-muted -settings-note">${TT(L + "zoomNote3d")}</p>
+         ${rangeField("zoomSensitivity3d", L + "zoomSensitivity", 0.3, 2.5, 0.1, s.zoomSensitivity3d, true)}
+         ${rangeField("zoomMinDistance3d", L + "zoomMinDist3d", 2, 50, 1, s.zoomMinDistance3d)}
+         ${rangeField("zoomMaxDistance3d", L + "zoomMaxDist3d", 500, 8000, 100, s.zoomMaxDistance3d)}`;
     return `<section class="-settings-section">
-            <h3 class="-settings-heading">${title}</h3>
-            <p class="-muted -settings-note">力导向参数；2D/3D 各自独立布局，参数名共用。</p>
-            ${rangeField("linkDistance", "边长", 60, 200, 4, s.linkDistance)}
-            ${rangeField("repulsion", "斥力", 2000, 9000, 200, s.repulsion)}
-            ${rangeField("linkStrength", "边拉力", 0.08, 0.6, 0.02, s.linkStrength, true)}
-            ${rangeField("centerStrength", "向心力", 0, 0.05, 0.002, s.centerStrength, true)}
-            ${rangeField("spreadFactor", "初始散布", 0.2, 0.55, 0.02, s.spreadFactor, true)}
-            ${rangeField("nodeRadius", "节点半径", 4, 12, 1, s.nodeRadius)}
+            <h3 class="-settings-heading">${TT(titleKey)}</h3>
+            <p class="-muted -settings-note">${TT(L + "note")}</p>
+            ${rangeField("linkDistance", L + "linkDistance", 60, 200, 4, s.linkDistance)}
+            ${rangeField("repulsion", L + "repulsion", 2000, 9000, 200, s.repulsion)}
+            ${rangeField("linkStrength", L + "linkStrength", 0.08, 0.6, 0.02, s.linkStrength, true)}
+            ${rangeField("centerStrength", L + "centerStrength", 0, 0.05, 0.002, s.centerStrength, true)}
+            ${rangeField("spreadFactor", L + "spreadFactor", 0.2, 0.55, 0.02, s.spreadFactor, true)}
+            ${rangeField("nodeRadius", L + "nodeRadius", 4, 12, 1, s.nodeRadius)}
             ${arrow}
-            <p class="-muted -settings-note">模拟 Alpha：余温、衰减与拖拽加热。</p>
-            ${rangeField("alphaMin", "最低 alpha", 0.002, 0.05, 0.001, s.alphaMin, true, 3)}
-            ${rangeField("alphaDecay", "衰减率", 0.01, 0.12, 0.005, s.alphaDecay, true, 3)}
-            ${rangeField("alphaTarget", "初始余温", 0.05, 0.5, 0.01, s.alphaTarget, true)}
-            ${rangeField("dragReheat", "拖拽加热", 0.1, 0.6, 0.02, s.dragReheat, true)}
-            ${rangeField("dragReleaseReheat", "松手加热", 0.05, 0.5, 0.02, s.dragReleaseReheat, true)}
+            <p class="-muted -settings-note">${TT(L + "alphaNote")}</p>
+            ${rangeField("alphaMin", L + "alphaMin", 0.002, 0.05, 0.001, s.alphaMin, true, 3)}
+            ${rangeField("alphaDecay", L + "alphaDecay", 0.01, 0.12, 0.005, s.alphaDecay, true, 3)}
+            ${rangeField("alphaTarget", L + "alphaTarget", 0.05, 0.5, 0.01, s.alphaTarget, true)}
+            ${rangeField("dragReheat", L + "dragReheat", 0.1, 0.6, 0.02, s.dragReheat, true)}
+            ${rangeField("dragReleaseReheat", L + "dragReleaseReheat", 0.05, 0.5, 0.02, s.dragReleaseReheat, true)}
             ${zoomFields}
           </section>`;
   }
 
   function renderStyleSection(s, is3d) {
     const galaxyVisible = s.graphStyle === "galaxy";
+    const S = "graph.settings.style.";
     return `<section class="-settings-section">
-            <h3 class="-settings-heading">图谱样式</h3>
-            <p class="-muted -settings-note">标准为经典渲染；银河样式把节点呈现为星空星点（亮度随连接度变化，重要节点更亮更大），布局仍为力导向，交互高亮保持不变。光晕强度 2D/3D 各自独立调节。</p>
+            <h3 class="-settings-heading">${TT(S + "heading")}</h3>
+            <p class="-muted -settings-note">${TT(S + "note")}</p>
             <label class="-settings-field">
-              <span>视觉样式</span>
+              <span>${TT(S + "label")}</span>
               <select data-graph-setting="graphStyle">
-                <option value="force"${s.graphStyle === "force" ? " selected" : ""}>标准</option>
-                <option value="galaxy"${s.graphStyle === "galaxy" ? " selected" : ""}>银河 Galaxy</option>
+                <option value="force"${s.graphStyle === "force" ? " selected" : ""}>${TT(S + "standard")}</option>
+                <option value="galaxy"${s.graphStyle === "galaxy" ? " selected" : ""}>${TT(S + "galaxy")}</option>
               </select>
             </label>
             <div class="-settings-fieldset${galaxyVisible ? "" : " -settings-fieldset--hidden"}" data-style-group="galaxy">
-              ${rangeField(is3d ? "galaxyGlow3d" : "galaxyGlow2d", "光晕强度", 0, 1, 0.05, is3d ? s.galaxyGlow3d : s.galaxyGlow2d, true, 2)}
+              ${rangeField(is3d ? "galaxyGlow3d" : "galaxyGlow2d", S + "glow", 0, 1, 0.05, is3d ? s.galaxyGlow3d : s.galaxyGlow2d, true, 2)}
             </div>
           </section>`;
   }
 
   function renderGroupTabSection(s) {
+    const G = "graph.settings.groups.";
     return `<section class="-settings-section">
-            <h3 class="-settings-heading">节点群页签</h3>
-            <p class="-muted -settings-note">并查集闭包分量；侧栏第二行页签对 2D/3D 通用。M4 可接入智能命名与排序。</p>
+            <h3 class="-settings-heading">${TT(G + "heading")}</h3>
+            <p class="-muted -settings-note">${TT(G + "note")}</p>
             <label class="-settings-field">
-              <span>页签命名</span>
+              <span>${TT(G + "label")}</span>
               <select data-graph-setting="groupLabelMode">
-                <option value="hub_name"${s.groupLabelMode === "hub_name" ? " selected" : ""}>Hub 名称</option>
-                <option value="hub_id"${s.groupLabelMode === "hub_id" ? " selected" : ""}>Hub ID</option>
-                <option value="smart" disabled>智能命名（M4 占位）</option>
+                <option value="hub_name"${s.groupLabelMode === "hub_name" ? " selected" : ""}>${TT(G + "hubName")}</option>
+                <option value="hub_id"${s.groupLabelMode === "hub_id" ? " selected" : ""}>${TT(G + "hubId")}</option>
+                <option value="smart" disabled>${TT(G + "smart")}</option>
               </select>
             </label>
-            ${rangeField("groupLabelMaxLen", "页签最大字数", 6, 20, 1, s.groupLabelMaxLen)}
-            ${rangeField("groupSpacing", "「全部」群间距", 160, 420, 20, s.groupSpacing)}
+            ${rangeField("groupLabelMaxLen", G + "maxLen", 6, 20, 1, s.groupLabelMaxLen)}
+            ${rangeField("groupSpacing", G + "spacing", 160, 420, 20, s.groupSpacing)}
             <label class="-settings-field">
-              <span>群页签排序</span>
-              <select disabled title="M4 占位">
-                <option>按规模（默认）</option>
+              <span>${TT(G + "sort")}</span>
+              <select disabled title="${TT(G + "placeholder")}">
+                <option>${TT(G + "bySize")}</option>
               </select>
             </label>
             <label class="-settings-field -settings-field--placeholder">
-              <span>隐藏单节点群页签</span>
-              <input type="checkbox" disabled title="后续版本">
+              <span>${TT(G + "hideSingle")}</span>
+              <input type="checkbox" disabled title="${TT(G + "futureTitle")}">
             </label>
           </section>`;
   }
 
   function renderPreviewColumn(hintText) {
     return `<div class="-settings-preview-col">
-          <h3 class="-settings-heading">示例预览</h3>
+          <h3 class="-settings-heading">${TT("graph.settings.preview.heading")}</h3>
           <div class="-settings-preview-stack">
             <div id="graph-settings-preview-wrap" class="-graph-settings-preview-wrap">
               <div id="graph-settings-preview" class="-graph-settings-preview"></div>
@@ -606,7 +614,7 @@
                 <span class="-muted">${hintText}</span>
               </div>
             </div>
-            <div id="graph-settings-preview-resizer" class="-graph-panel-resizer" title="拖拽调整预览高度"></div>
+            <div id="graph-settings-preview-resizer" class="-graph-panel-resizer" title="${TT("graph.settings.preview.resize")}"></div>
           </div>
         </div>`;
   }
@@ -623,8 +631,8 @@
     return renderSettingsShell(
       renderLabelSection(s) +
         renderStyleSection(s, false) +
-        renderLayoutSection(s, "2D 布局", true),
-      "悬停节点查看完整信息"
+        renderLayoutSection(s, "graph.settings.layout.t2d", true),
+      TT("graph.hint.preview2d")
     );
   }
 
@@ -633,8 +641,8 @@
     return renderSettingsShell(
       renderLabelSection(s) +
         renderStyleSection(s, true) +
-        renderLayoutSection(s, "3D 布局", false),
-      "左键旋转 · 滚轮缩放 · 悬停节点查看详情"
+        renderLayoutSection(s, "graph.settings.layout.t3d", false),
+      TT("graph.hint.preview3d")
     );
   }
 
@@ -649,12 +657,12 @@
     return renderSettingsBody2d();
   }
 
-  function rangeField(key, label, min, max, step, value, isFloat, decimals) {
+  function rangeField(key, labelKey, min, max, step, value, isFloat, decimals) {
     const dec = decimals != null ? decimals : isFloat ? 2 : 0;
     const v = isFloat ? Number(value).toFixed(dec) : value;
     const decAttr = isFloat && decimals != null ? ` data-graph-setting-decimals="${decimals}"` : "";
     return `<label class="-settings-field">
-      <span>${label} <output data-graph-setting-value="${key}">${v}</output></span>
+      <span>${TT(labelKey)} <output data-graph-setting-value="${key}">${v}</output></span>
       <input type="range" data-graph-setting="${key}" min="${min}" max="${max}" step="${step}" value="${value}"${decAttr}>
     </label>`;
   }
@@ -666,8 +674,8 @@
       if (!node) {
         hint.innerHTML =
           settingsTab === "graph3d"
-            ? '<span class="-muted">左键旋转 · 滚轮缩放 · 悬停节点查看详情</span>'
-            : '<span class="-muted">悬停节点查看完整信息</span>';
+            ? `<span class="-muted">${TT("graph.hint.preview3d")}</span>`
+            : `<span class="-muted">${TT("graph.hint.preview2d")}</span>`;
         return;
       }
       hint.innerHTML = MemoriaGraphLabels.resolveNodeHoverHtml(node);
@@ -707,7 +715,7 @@
     }
     if (!previewEngine) {
       previewEngine = new MemoriaGraphEngine();
-      previewEngine.loadPayload(SAMPLE_GRAPH);
+      previewEngine.loadPayload(buildSampleGraph());
       previewLayout = new MemoriaGraphLayout2D(getViewOptions());
       previewLayout.start();
       previewView = new MemoriaGraphView2D(
@@ -738,7 +746,7 @@
     }
     if (!previewEngine) {
       previewEngine = new MemoriaGraphEngine();
-      previewEngine.loadPayload(SAMPLE_GRAPH);
+      previewEngine.loadPayload(buildSampleGraph());
       previewLayout = new MemoriaGraphLayout3D(getViewOptions());
       previewLayout.start();
       previewView = new MemoriaGraphView3D(
@@ -755,13 +763,14 @@
   }
 
   function renderTabsHtml(active) {
+    const T = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
     return `<div class="-config-tabs" role="tablist">
-      <button type="button" class="-config-tab${active === "graph2d" ? " active" : ""}" data-settings-tab="graph2d" role="tab">2D 图谱</button>
-      <button type="button" class="-config-tab${active === "graph3d" ? " active" : ""}" data-settings-tab="graph3d" role="tab">3D 图谱</button>
-      <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">节点群页签</button>
-      <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">检索</button>
-      <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">检查</button>
-      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">显示</button>
+      <button type="button" class="-config-tab${active === "graph2d" ? " active" : ""}" data-settings-tab="graph2d" role="tab">${T("settings.tab.graph2d")}</button>
+      <button type="button" class="-config-tab${active === "graph3d" ? " active" : ""}" data-settings-tab="graph3d" role="tab">${T("settings.tab.graph3d")}</button>
+      <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">${T("settings.tab.groups")}</button>
+      <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">${T("settings.tab.search")}</button>
+      <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">${T("settings.tab.check")}</button>
+      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">${T("settings.tab.view")}</button>
     </div>`;
   }
 
@@ -862,7 +871,9 @@
         return;
       }
       const label = res.settings_rel || "config/ui-settings.json";
-      el.textContent = `设置保存在程序目录：${label}`;
+      el.textContent = global.MemoriaI18n
+        ? global.MemoriaI18n.t("settings.configPath", { path: label })
+        : label;
       el.title = res.settings_file || label;
       el.hidden = false;
     } catch (_) {
@@ -962,6 +973,12 @@
     openModal,
     closeModal,
     bindModal,
+    /** 语言切换后重绘当前设置页签（仅当设置弹窗打开时） */
+    rerenderCurrentTab() {
+      if (!document.getElementById("settings-modal")?.classList.contains("hidden")) {
+        setSettingsTab(settingsTab);
+      }
+    },
     bindVerticalResize,
     bindSidebarNavKpSplit,
     refreshSidebarNavKpSplit,
@@ -972,6 +989,6 @@
     refreshSidebarGraphSplit: (onResize) => refreshSidebarNavKpSplit("graph2d", onResize),
     /** @deprecated */
     deactivateSidebarGraphSplit: clearSidebarNavKpSplit,
-    SAMPLE_GRAPH,
+    SAMPLE_GRAPH: buildSampleGraph,
   };
 })(typeof window !== "undefined" ? window : globalThis);

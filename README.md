@@ -2,17 +2,18 @@
 
 > **Turn Markdown notes into a navigable, searchable, visualizable knowledge network — entirely on your machine.**
 
+> 想快速浏览中文介绍？请看 [README.cn.md](README.cn.md)。
+
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.2.5-8A2BE2)](src/memoria/__version__.py)
-[![中文](https://img.shields.io/badge/README-中文-green)](README.md)
+[![中文](https://img.shields.io/badge/README-中文-green)](README.cn.md)
 
 **Memoria** is a local-first knowledge-graph IDE for personal knowledge bases: Markdown notes with bidirectional `[[]]` links, highlighter & rich inline markup, LaTeX math, Mermaid diagrams, a 2D/3D knowledge graph, and a fully **offline retrieval kernel**.
 
 All of your data lives in plain files on your disk — `.md` bodies plus YAML metadata. No accounts, no cloud sync, no privacy leaks. Data stays yours, forever.
 
-> 想快速浏览中文介绍？请看 [README.cn.md](README.cn.md)。
 ---
 
 ## Why Memoria?
@@ -70,29 +71,29 @@ All of your data lives in plain files on your disk — `.md` bodies plus YAML me
 
 Workspace in the 2D graph view: the sidebar tab bar switches between file tree / 2D / 3D; the graph panel can be widened by dragging and browsed by group. Below it sits the knowledge-point list; the current document is edited on the right.
 
-<img src="docs/screenshots/demo-workspace.png" alt="Memoria workspace: 2D knowledge graph + document editing" width="820"/>
+<img src="resources/screenshots/demo-workspace.png" alt="Memoria workspace: 2D knowledge graph + document editing" width="820"/>
 
 3D knowledge graph: zoom with the wheel, rotate with the left mouse button; click a node to jump back to the source.
 
-<img src="docs/screenshots/demo-graph-3d.png" alt="Memoria 3D knowledge graph" width="820"/>
+<img src="resources/screenshots/demo-graph-3d.png" alt="Memoria 3D knowledge graph" width="820"/>
 
 Split view: source on the left, live rendered preview on the right.
 
-<img src="docs/screenshots/demo-split.png" alt="Memoria split view: source code + live preview" width="820"/>
+<img src="resources/screenshots/demo-split.png" alt="Memoria split view: source code + live preview" width="820"/>
 
 Rendered preview: highlighters, wiki links, tables, and code blocks in mixed layout.
 
-<img src="docs/screenshots/demo-preview.png" alt="Memoria rich-text preview rendering" width="820"/>
+<img src="resources/screenshots/demo-preview.png" alt="Memoria rich-text preview rendering" width="820"/>
 
 Math rendering: LaTeX formulas via MathJax (inline / block / cases / align).
 
-<img src="docs/screenshots/demo-math.png" alt="Memoria LaTeX math rendering" width="820"/>
+<img src="resources/screenshots/demo-math.png" alt="Memoria LaTeX math rendering" width="820"/>
 
 Display settings and integrity check: adjustable font size / UI scale; one-click structural scan.
 
-<img src="docs/screenshots/demo-settings.png" alt="Memoria display settings" width="820"/>
+<img src="resources/screenshots/demo-settings.png" alt="Memoria display settings" width="820"/>
 
-<img src="docs/screenshots/demo-check.png" alt="Memoria knowledge-base integrity check" width="820"/>
+<img src="resources/screenshots/demo-check.png" alt="Memoria knowledge-base integrity check" width="820"/>
 
 ---
 
@@ -193,7 +194,7 @@ Memoria's documentation is designed for human + agent collaboration: every top-l
 ├── docs/           # Docs hub (conventions / guides / reference / samples) → docs/README.md
 ├── scripts/        # Dev tooling (run & benchmark)                   → scripts/README.md
 ├── packaging/      # Release build (build_release.cmd → Package/)    → packaging/README.md
-├── resources/      # App resources (icons)                           → resources/README.md
+├── resources/      # App resources (icons, demo screenshots)        → resources/README.md
 ├── benchmarks/     # Retrieval evaluation data & results             → benchmarks/README.md
 ├── config/         # App configuration (ui-settings.json)            → config/README.md
 └── app.py          # Source run entry point

@@ -6,6 +6,8 @@ window.MemoriaKpContextMenu = (function () {
 
   const MENU_ID = "-kp-context-menu";
 
+  const _t = (k) => (window.MemoriaI18n ? window.MemoriaI18n.t(k) : k);
+
   function hide() {
     document.getElementById(MENU_ID)?.remove();
   }
@@ -32,7 +34,7 @@ window.MemoriaKpContextMenu = (function () {
     menu.className = "-context-menu";
     menu.setAttribute("role", "menu");
 
-    const items = [{ label: "配置", action: () => actions.configure(kpId) }];
+    const items = [{ label: _t("side.kp.config"), action: () => actions.configure(kpId) }];
 
     items.forEach((it) => {
       if (it.divider) {

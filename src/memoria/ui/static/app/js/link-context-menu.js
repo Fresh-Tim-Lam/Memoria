@@ -17,6 +17,12 @@ window.MemoriaLinkContextMenu = (function () {
       .replace(/"/g, "&quot;");
   }
 
+  function L(key, params) {
+    return window.MemoriaI18n && window.MemoriaI18n.t
+      ? window.MemoriaI18n.t(key, params)
+      : key;
+  }
+
   function placeMenu(menu, x, y) {
     menu.style.left = `${x}px`;
     menu.style.top = `${y}px`;
@@ -71,16 +77,17 @@ window.MemoriaLinkContextMenu = (function () {
     if (!t) return;
     try {
       await navigator.clipboard.writeText(t);
-      onStatus?.(`已复制：${t.slice(0, 48)}${t.length > 48 ? "…" : ""}`);
+      const snippet = t.slice(0, 48) + (t.length > 48 ? "…" : "");
+      onStatus?.(L("menu.copyDone", { text: snippet }));
     } catch (_) {
-      onStatus?.("复制失败");
+      onStatus?.(L("menu.copyFailed"));
     }
   }
 
   function linkStatusLabel(isBroken, isMulti) {
-    if (isBroken) return "未绑定目标";
-    if (isMulti) return "多目标链接";
-    return "已解析";
+    if (isBroken) return L("menu.linkUnbound");
+    if (isMulti) return L("menu.linkMulti");
+    return L("menu.linkResolved");
   }
 
   function showForLink(e, linkEl, ctx) {
@@ -108,27 +115,27 @@ window.MemoriaLinkContextMenu = (function () {
       },
       { divider: true },
       {
-        label: "编辑链接…",
+        label: L("menu.linkEdit"),
         action: () => ctx.onEditLink?.({ linkEl, targetId, displayText }),
       },
       {
-        label: "复制目标键",
+        label: L("menu.copyTargetKey"),
         action: () => copyText(targetId, ctx.onStatus),
       },
     ];
 
     if (displayText && displayText !== targetId) {
       items.push({
-        label: "复制显示文字",
+        label: L("menu.copyDisplayText"),
         action: () => copyText(displayText, ctx.onStatus),
       });
     }
 
     items.push({ divider: true });
     items.push({
-      label: "从跳转入口移除此处",
+      label: L("menu.linkDetach"),
       danger: true,
-      hint: "仅解除本处 [[…]]，保留链接配置",
+      hint: L("menu.linkDetachHint"),
       action: () =>
         ctx.onDetachLink?.({
           targetId,
@@ -138,7 +145,7 @@ window.MemoriaLinkContextMenu = (function () {
         }),
     });
     items.push({
-      label: "移除 [[]] 并删除路由",
+      label: L("menu.linkRemoveRoute"),
       danger: true,
       action: () =>
         ctx.onRemoveLink?.({
@@ -165,8 +172,8 @@ window.MemoriaLinkContextMenu = (function () {
       },
       { divider: true },
       {
-        label: "复制",
-        hint: "复制选中文本",
+        label: L("menu.copy"),
+        hint: L("menu.copyHint"),
         action: () => copyText(sel, ctx.onStatus),
       },
     ];
@@ -174,29 +181,29 @@ window.MemoriaLinkContextMenu = (function () {
     if (ctx.onApplyStyle) {
       items.push(
         { divider: true },
-        { label: "加粗", action: () => ctx.onApplyStyle("bold") },
-        { label: "斜体", action: () => ctx.onApplyStyle("italic") },
-        { label: "高亮", action: () => ctx.onApplyStyle("highlight", "yellow") },
-        { label: "字体颜色", action: () => ctx.onApplyStyle("fontcolor", "red") },
+        { label: L("menu.bold"), action: () => ctx.onApplyStyle("bold") },
+        { label: L("menu.italic"), action: () => ctx.onApplyStyle("italic") },
+        { label: L("menu.highlight"), action: () => ctx.onApplyStyle("highlight", "yellow") },
+        { label: L("menu.fontColor"), action: () => ctx.onApplyStyle("fontcolor", "red") },
       );
     }
 
     items.push(
       { divider: true },
       {
-        label: "创建链接…",
+        label: L("menu.createLink"),
         action: () => ctx.onCreateLink?.({ text: sel }),
       },
       {
-        label: "设为知识点…",
+        label: L("menu.makeKp"),
         action: () => ctx.onCreateKp?.({ text: sel, lines: ctx.lines }),
       },
     );
 
     if (ctx.markdown) {
       items.push({
-        label: "复制 Markdown",
-        hint: "复制选中片段对应的源码",
+        label: L("menu.copyMarkdown"),
+        hint: L("menu.copyMarkdownHint"),
         action: () => copyText(ctx.markdown, ctx.onStatus),
       });
     }
@@ -210,14 +217,14 @@ window.MemoriaLinkContextMenu = (function () {
 
     const items = [
       {
-        label: `<span class="-ctx-head">光标位置</span>`,
+        label: `<span class="-ctx-head">${esc(L("menu.cursorPos"))}</span>`,
         disabled: true,
         action: () => {},
       },
       { divider: true },
       {
-        label: "粘贴",
-        hint: "将剪贴板内容插入到光标位置",
+        label: L("menu.paste"),
+        hint: L("menu.pasteHint"),
         action: () => ctx.onPaste?.(),
       },
     ];
@@ -225,8 +232,8 @@ window.MemoriaLinkContextMenu = (function () {
     if (ctx.onInsertImage) {
       items.push({ divider: true });
       items.push({
-        label: "插入图片",
-        hint: "选择图片并复制入库 .memoria/images",
+        label: L("menu.insertImage"),
+        hint: L("menu.insertImageHint"),
         action: () => ctx.onInsertImage(),
       });
     }

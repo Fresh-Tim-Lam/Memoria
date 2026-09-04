@@ -41,47 +41,39 @@
         <span class="-badge" id="app-badge"></span>
       </div>
       <div class="toolbar-actions">
-        <button id="btn-nav-back" class="-nav-btn" title="后退 (Alt+←)" disabled>←</button>
-        <button id="btn-nav-forward" class="-nav-btn" title="前进 (Alt+→)" disabled>→</button>
-        <button id="btn-open" title="打开知识库">打开</button>
-        <button id="btn-import" title="导入平面文件">导入</button>
-        <button id="btn-refresh" title="刷新">刷新</button>
-        <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱">构建</button>
+        <button id="btn-nav-back" class="-nav-btn" title="后退 (Alt+←)" data-i18n-attr="title:toolbar.back.title" disabled>←</button>
+        <button id="btn-nav-forward" class="-nav-btn" title="前进 (Alt+→)" data-i18n-attr="title:toolbar.forward.title" disabled>→</button>
+        <button id="btn-open" title="打开知识库" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
+        <button id="btn-import" title="导入平面文件" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
+        <button id="btn-refresh" title="刷新" data-i18n="toolbar.refresh" data-i18n-attr="title:toolbar.refreshTitle">刷新</button>
+        <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱" data-i18n="toolbar.build" data-i18n-attr="title:toolbar.buildTitle">构建</button>
         <span class="-toolbar-btn-wrap">
-          <button id="btn-check" type="button" title="知识库完整性检查">检查</button>
+          <button id="btn-check" type="button" title="知识库完整性检查" data-i18n="toolbar.check" data-i18n-attr="title:toolbar.checkTitle">检查</button>
           <span id="btn-check-badge" class="-toolbar-badge hidden" aria-hidden="true"></span>
         </span>
-        <button id="btn-settings" type="button" title="设置">设置</button>
+        <button id="btn-settings" type="button" title="设置" data-i18n="toolbar.settings" data-i18n-attr="title:toolbar.settingsTitle">设置</button>
       </div>
       <div class="-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-search-wrap">
-        <div id="toolbar-search-scope" class="-toolbar-search-scope" role="switch" tabindex="0" aria-label="搜索范围">
-          <button type="button" id="toolbar-search-scope-kb" class="-toolbar-search-scope-btn active" title="搜索全库">全库</button>
-          <button type="button" id="toolbar-search-scope-file" class="-toolbar-search-scope-btn" title="仅当前文件">文件</button>
+        <div id="toolbar-search-scope" class="-toolbar-search-scope" role="switch" tabindex="0" aria-label="搜索范围" data-i18n-attr="aria-label:app.scope.aria">
+          <button type="button" id="toolbar-search-scope-kb" class="-toolbar-search-scope-btn active" title="搜索全库" data-i18n="search.scopeKb" data-i18n-attr="title:search.scopeKbTitle">全库</button>
+          <button type="button" id="toolbar-search-scope-file" class="-toolbar-search-scope-btn" title="仅当前文件" data-i18n="search.scopeFile" data-i18n-attr="title:search.scopeFileTitle">文件</button>
         </div>
         <div class="-toolbar-search-field">
-          <input
-            type="search"
-            id="toolbar-search"
-            class="-toolbar-search"
-            placeholder="搜索知识点、标签…"
-            autocomplete="off"
-            spellcheck="false"
-            title="全局搜索（Ctrl+K · Shift+Enter 仅当前文件）"
-          />
+          <input type="search" id="toolbar-search" class="-toolbar-search" placeholder="搜索知识点、标签…" data-i18n-attr="placeholder:search.ph;title:search.title" autocomplete="off" spellcheck="false"/>
           <div id="toolbar-search-panel" class="-toolbar-search-panel hidden" aria-live="polite"></div>
         </div>
       </div>
       <div class="-titlebar-drag-spacer -titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-right">
         <span id="kb-indicator-wrap" class="kb-indicator-wrap hidden">
-          <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）"></span>
-          <button id="btn-kb-close" type="button" class="-btn primary -btn--sm -kb-exit" title="关闭知识库，返回欢迎页">退出</button>
+          <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）" data-i18n-attr="title:app.kbPath.title"></span>
+          <button id="btn-kb-close" type="button" class="-btn primary -btn--sm -kb-exit" title="关闭知识库，返回欢迎页" data-i18n="toolbar.exit" data-i18n-attr="title:toolbar.exitTitle">退出</button>
         </span>
-        <div id="window-controls" class="-window-controls hidden" aria-label="窗口控制">
-          <button type="button" id="btn-win-minimize" class="-win-btn -win-btn--min" title="最小化" aria-label="最小化"></button>
-          <button type="button" id="btn-win-maximize" class="-win-btn -win-btn--max" title="最大化" aria-label="最大化"></button>
-          <button type="button" id="btn-win-close" class="-win-btn -win-btn--close" title="关闭" aria-label="关闭"></button>
+        <div id="window-controls" class="-window-controls hidden" aria-label="窗口控制" data-i18n-attr="aria-label:win.controlsAria">
+          <button type="button" id="btn-win-minimize" class="-win-btn -win-btn--min" title="最小化" aria-label="最小化" data-i18n-attr="title:win.minimize;aria-label:win.minimize"></button>
+          <button type="button" id="btn-win-maximize" class="-win-btn -win-btn--max" title="最大化" aria-label="最大化" data-i18n-attr="title:win.maximize;aria-label:win.maximize"></button>
+          <button type="button" id="btn-win-close" class="-win-btn -win-btn--close" title="关闭" aria-label="关闭" data-i18n-attr="title:win.close;aria-label:win.close"></button>
         </div>
       </div>
     </div>
@@ -90,8 +82,8 @@
       <aside id="-sidebar">
         <div id="sidebar-resizer"></div>
         <div class="-sidebar-tabs-wrap">
-          <div class="-config-tabs -sidebar-nav-tabs" role="tablist" aria-label="资源管理器">
-            <button type="button" class="-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true">文件 <span class="-tab-count" id="sidebar-tab-count-files">0</span></button>
+          <div class="-config-tabs -sidebar-nav-tabs" role="tablist" aria-label="资源管理器" data-i18n-attr="aria-label:side.tabs.aria">
+            <button type="button" class="-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true"><span data-i18n="side.tab.files">文件</span> <span class="-tab-count" id="sidebar-tab-count-files">0</span></button>
             <button type="button" class="-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
             <button type="button" class="-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
           </div>
@@ -106,21 +98,21 @@
             </div>
             <div id="sidebar-view-graph2d" class="-sidebar-view hidden" data-sidebar-view="graph2d">
               <div id="graph-2d-root" class="-graph-root"></div>
-              <div id="graph-2d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted">滚轮缩放 · 拖空白平移 · 点击跳转</span></div>
+              <div id="graph-2d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted" data-i18n="graph.overlay2d">滚轮缩放 · 拖空白平移 · 点击跳转</span></div>
             </div>
             <div id="sidebar-view-graph3d" class="-sidebar-view hidden" data-sidebar-view="graph3d">
               <div id="graph-3d-root" class="-graph-root"></div>
-              <div id="graph-3d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
+              <div id="graph-3d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted" data-i18n="graph.overlay3d">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
             </div>
           </div>
-          <div id="sidebar-nav-kp-resizer" class="-graph-panel-resizer -sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比"></div>
+          <div id="sidebar-nav-kp-resizer" class="-graph-panel-resizer -sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比" data-i18n-attr="title:side.split.title"></div>
           <div id="sidebar-kp-block" class="-sidebar-kp-block">
             <div class="sidebar-toolbar -kp-toolbar">
-              <span class="-kp-toolbar-label">知识点</span>
+              <span class="-kp-toolbar-label" data-i18n="side.kp.label">知识点</span>
               <span id="kp-count" class="-muted"></span>
               <div class="-kp-toolbar-actions">
-                <button type="button" id="btn-config" class="-config-btn" title="文件总配置（知识点与链接）">配置</button>
-                <button type="button" id="btn-kp-new" class="-config-btn" title="新建知识点（当前文件）">新建</button>
+                <button type="button" id="btn-config" class="-config-btn" title="文件总配置（知识点与链接）" data-i18n="side.kp.config" data-i18n-attr="title:side.kp.configTitle">配置</button>
+                <button type="button" id="btn-kp-new" class="-config-btn" title="新建知识点（当前文件）" data-i18n="side.kp.new" data-i18n-attr="title:side.kp.newTitle">新建</button>
               </div>
             </div>
             <div id="kp-list" class="-panel -kp-panel"></div>
@@ -135,56 +127,56 @@
         <div id="viewer">
           <div id="welcome">
             <h1>Memoria</h1>
-            <p>snippet range · 链接跳转 · 导航栈</p>
-            <button id="btn-welcome-open">打开知识库</button>
+            <p data-i18n="welcome.tagline">snippet range · 链接跳转 · 导航栈</p>
+            <button id="btn-welcome-open" data-i18n="welcome.open">打开知识库</button>
           </div>
           <div id="editor-wrap" class="hidden">
             <div id="editor-header">
               <span id="file-meta" class="-muted"></span>
-              <div class="-format-bar" role="toolbar" aria-label="格式工具">
-                <button type="button" class="-fmt-btn" data-fmt="bold" title="加粗 (Ctrl+B)：左键涂抹/切换，右键取消"><strong>B</strong></button>
-                <button type="button" class="-fmt-btn" data-fmt="italic" title="斜体 (Ctrl+I)：左键涂抹/切换，右键取消"><em>I</em></button>
+              <div class="-format-bar" role="toolbar" aria-label="格式工具" data-i18n-attr="aria-label:edit.fmt.aria">
+                <button type="button" class="-fmt-btn" data-fmt="bold" title="加粗 (Ctrl+B)：左键涂抹/切换，右键取消" data-i18n-attr="title:edit.fmt.boldTitle"><strong>B</strong></button>
+                <button type="button" class="-fmt-btn" data-fmt="italic" title="斜体 (Ctrl+I)：左键涂抹/切换，右键取消" data-i18n-attr="title:edit.fmt.italicTitle"><em>I</em></button>
                 <span class="-fmt-sep"></span>
                 <span class="-fmt-dropdown">
-                  <button type="button" class="-fmt-btn" data-fmt="highlight" title="荧光笔：选色后左键涂抹，右键取消">H▾</button>
+                  <button type="button" class="-fmt-btn" data-fmt="highlight" title="荧光笔：选色后左键涂抹，右键取消" data-i18n-attr="title:edit.fmt.highlightTitle">H▾</button>
                   <div class="-fmt-dropdown-menu -hl-colors">
-                    <button type="button" data-hl-color="yellow" class="-hl-swatch -hl-yellow" title="黄色">黄</button>
-                    <button type="button" data-hl-color="green" class="-hl-swatch -hl-green" title="绿色">绿</button>
-                    <button type="button" data-hl-color="red" class="-hl-swatch -hl-red" title="红色">红</button>
-                    <button type="button" data-hl-color="blue" class="-hl-swatch -hl-blue" title="蓝色">蓝</button>
-                    <button type="button" data-hl-color="orange" class="-hl-swatch -hl-orange" title="橙色">橙</button>
-                    <button type="button" class="-hl-option -hl-none" data-hl-none="1" title="移除高亮">无色</button>
-                    <button type="button" class="-hl-option -hl-custom" data-hl-custom="1" title="选择颜色并添加到色板">添加颜色</button>
+                    <button type="button" data-hl-color="yellow" class="-hl-swatch -hl-yellow" title="黄色" data-i18n="color.yellowShort" data-i18n-attr="title:color.yellow">黄</button>
+                    <button type="button" data-hl-color="green" class="-hl-swatch -hl-green" title="绿色" data-i18n="color.greenShort" data-i18n-attr="title:color.green">绿</button>
+                    <button type="button" data-hl-color="red" class="-hl-swatch -hl-red" title="红色" data-i18n="color.redShort" data-i18n-attr="title:color.red">红</button>
+                    <button type="button" data-hl-color="blue" class="-hl-swatch -hl-blue" title="蓝色" data-i18n="color.blueShort" data-i18n-attr="title:color.blue">蓝</button>
+                    <button type="button" data-hl-color="orange" class="-hl-swatch -hl-orange" title="橙色" data-i18n="color.orangeShort" data-i18n-attr="title:color.orange">橙</button>
+                    <button type="button" class="-hl-option -hl-none" data-hl-none="1" title="移除高亮" data-i18n="color.noneShort" data-i18n-attr="title:color.hlNoneTitle">无色</button>
+                    <button type="button" class="-hl-option -hl-custom" data-hl-custom="1" title="选择颜色并添加到色板" data-i18n="color.addShort" data-i18n-attr="title:color.addTitle">添加颜色</button>
                   </div>
                 </span>
                 <span class="-fmt-dropdown">
-                  <button type="button" class="-fmt-btn" data-fmt="fontcolor" title="字体颜色：选色后左键涂抹，右键取消">色▾</button>
+                  <button type="button" class="-fmt-btn" data-fmt="fontcolor" title="字体颜色：选色后左键涂抹，右键取消" data-i18n-attr="title:edit.fmt.fontcolorTitle">色▾</button>
                   <div class="-fmt-dropdown-menu -fc-colors">
-                    <button type="button" data-fc-color="red" class="-fc-swatch -fc-red" title="红色">红</button>
-                    <button type="button" data-fc-color="orange" class="-fc-swatch -fc-orange" title="橙色">橙</button>
-                    <button type="button" data-fc-color="yellow" class="-fc-swatch -fc-yellow" title="黄色">黄</button>
-                    <button type="button" data-fc-color="green" class="-fc-swatch -fc-green" title="绿色">绿</button>
-                    <button type="button" data-fc-color="blue" class="-fc-swatch -fc-blue" title="蓝色">蓝</button>
-                    <button type="button" data-fc-color="purple" class="-fc-swatch -fc-purple" title="紫色">紫</button>
-                    <button type="button" data-fc-color="gray" class="-fc-swatch -fc-gray" title="灰色">灰</button>
-                    <button type="button" class="-fc-option -fc-none" data-fc-none="1" title="移除字体色">无色</button>
-                    <button type="button" class="-fc-option -fc-custom" data-fc-custom="1" title="选择颜色并添加到色板">添加颜色</button>
+                    <button type="button" data-fc-color="red" class="-fc-swatch -fc-red" title="红色" data-i18n="color.redShort" data-i18n-attr="title:color.red">红</button>
+                    <button type="button" data-fc-color="orange" class="-fc-swatch -fc-orange" title="橙色" data-i18n="color.orangeShort" data-i18n-attr="title:color.orange">橙</button>
+                    <button type="button" data-fc-color="yellow" class="-fc-swatch -fc-yellow" title="黄色" data-i18n="color.yellowShort" data-i18n-attr="title:color.yellow">黄</button>
+                    <button type="button" data-fc-color="green" class="-fc-swatch -fc-green" title="绿色" data-i18n="color.greenShort" data-i18n-attr="title:color.green">绿</button>
+                    <button type="button" data-fc-color="blue" class="-fc-swatch -fc-blue" title="蓝色" data-i18n="color.blueShort" data-i18n-attr="title:color.blue">蓝</button>
+                    <button type="button" data-fc-color="purple" class="-fc-swatch -fc-purple" title="紫色" data-i18n="color.purpleShort" data-i18n-attr="title:color.purple">紫</button>
+                    <button type="button" data-fc-color="gray" class="-fc-swatch -fc-gray" title="灰色" data-i18n="color.grayShort" data-i18n-attr="title:color.gray">灰</button>
+                    <button type="button" class="-fc-option -fc-none" data-fc-none="1" title="移除字体色" data-i18n="color.noneShort" data-i18n-attr="title:color.fcNoneTitle">无色</button>
+                    <button type="button" class="-fc-option -fc-custom" data-fc-custom="1" title="选择颜色并添加到色板" data-i18n="color.addShort" data-i18n-attr="title:color.addTitle">添加颜色</button>
                   </div>
                 </span>
                 <span class="-fmt-sep"></span>
-                <button type="button" id="btn-insert-image" class="-fmt-btn" data-insert-image="1" title="插入图片（复制入库 .memoria/images；需先将文本光标置于预览区域）" disabled>图片</button>
+                <button type="button" id="btn-insert-image" class="-fmt-btn" data-insert-image="1" title="插入图片（复制入库 .memoria/images；需先将文本光标置于预览区域）" data-i18n="edit.fmt.image" data-i18n-attr="title:edit.fmt.imageTitle" disabled>图片</button>
               </div>
-              <div id="block-edit-bar" class="-block-edit-bar hidden" role="toolbar" aria-label="块编辑工具">
+              <div id="block-edit-bar" class="-block-edit-bar hidden" role="toolbar" aria-label="块编辑工具" data-i18n-attr="aria-label:edit.block.aria">
                 <span id="block-edit-label" class="-block-edit-label"></span>
                 <span class="-block-edit-tools" id="block-edit-tools"></span>
               </div>
-              <div class="-view-toggle" role="tablist" aria-label="视图模式">
-                <button type="button" class="-view-btn active" data-view="source" title="源码">源码</button>
-                <button type="button" class="-view-btn" data-view="preview" title="Markdown 预览">预览</button>
-                <button type="button" class="-view-btn" data-view="split" title="分栏">分栏</button>
+              <div class="-view-toggle" role="tablist" aria-label="视图模式" data-i18n-attr="aria-label:view.toggleAria">
+                <button type="button" class="-view-btn active" data-view="source" title="源码" data-i18n="view.source" data-i18n-attr="title:view.sourceTitle">源码</button>
+                <button type="button" class="-view-btn" data-view="preview" title="Markdown 预览" data-i18n="view.preview" data-i18n-attr="title:view.previewTitle">预览</button>
+                <button type="button" class="-view-btn" data-view="split" title="分栏" data-i18n="view.split" data-i18n-attr="title:view.splitTitle">分栏</button>
               </div>
-              <div id="edit-mode-toggle" class="-toolbar-search-scope edit-mode-toggle" role="switch" tabindex="0" aria-label="编辑模式" title="编辑模式：点击定位光标（再次点击关闭）">
-                <button type="button" id="btn-edit-mode" class="-toolbar-search-scope-btn active">编辑</button>
+              <div id="edit-mode-toggle" class="-toolbar-search-scope edit-mode-toggle" role="switch" tabindex="0" aria-label="编辑模式" data-i18n-attr="aria-label:edit.mode.aria;title:edit.mode.title" title="编辑模式：点击定位光标（再次点击关闭）">
+                <button type="button" id="btn-edit-mode" class="-toolbar-search-scope-btn active" data-i18n="edit.mode.btn">编辑</button>
               </div>
             </div>
             <div id="preview-status" class="hidden"></div>
@@ -202,7 +194,7 @@
     </div>
 
     <div id="status-bar">
-      <span id="status-info">就绪</span>
+      <span id="status-info" data-i18n="app.status.ready">就绪</span>
       <span id="status-stats"></span>
     </div>
   </div>
@@ -215,15 +207,15 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-tabbed" id="kp-modal-box">
       <div class="-modal-header">
-        <span id="kp-title">知识点配置</span>
-        <button id="kp-close" class="-icon-btn" title="关闭">×</button>
+        <span id="kp-title" data-i18n="dlg.kpTitle">知识点配置</span>
+        <button id="kp-close" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="kp-body" class="-modal-body"></div>
       <div class="-modal-footer -kp-modal-footer -btn-bar">
-        <button type="button" id="kp-delete" class="-btn danger -kp-delete-btn">删除知识点</button>
+        <button type="button" id="kp-delete" class="-btn danger -kp-delete-btn" data-i18n="dlg.kpDelete">删除知识点</button>
         <span class="-modal-footer-spacer"></span>
-        <button type="button" class="-btn secondary" id="kp-cancel">取消</button>
-        <button type="button" class="-btn primary" id="kp-save" title="确定">确定</button>
+        <button type="button" class="-btn secondary" id="kp-cancel" data-i18n="common.cancel">取消</button>
+        <button type="button" class="-btn primary" id="kp-save" title="确定" data-i18n="common.ok" data-i18n-attr="title:common.ok">确定</button>
       </div>
     </div>
   </div>
@@ -232,12 +224,12 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-tabbed" id="config-modal-box">
       <div class="-modal-header">
-        <span id="config-title">文件配置</span>
-        <button id="config-close" class="-icon-btn" title="关闭">×</button>
+        <span id="config-title" data-i18n="dlg.configTitle">文件配置</span>
+        <button id="config-close" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="config-body" class="-modal-body"></div>
       <div class="-modal-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="config-close-btn">关闭</button>
+        <button type="button" class="-btn secondary" id="config-close-btn" data-i18n="common.close">关闭</button>
       </div>
     </div>
   </div>
@@ -246,13 +238,13 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-assist" id="assist-modal-box">
       <div class="-modal-header">
-        <span id="assist-title">定位辅助</span>
-        <button id="assist-close" class="-icon-btn" title="关闭">×</button>
+        <span id="assist-title" data-i18n="dlg.assistTitle">定位辅助</span>
+        <button id="assist-close" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="assist-body" class="-modal-body -modal-body-assist"></div>
       <div class="-modal-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="assist-cancel">取消</button>
-        <button type="button" class="-btn primary" id="assist-confirm">确认</button>
+        <button type="button" class="-btn secondary" id="assist-cancel" data-i18n="common.cancel">取消</button>
+        <button type="button" class="-btn primary" id="assist-confirm" data-i18n="common.ok">确认</button>
       </div>
     </div>
   </div>
@@ -261,14 +253,14 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-check">
       <div class="-modal-header">
-        <span>知识库检查</span>
-        <button id="check-close" type="button" class="-icon-btn" title="关闭">×</button>
+        <span data-i18n="check.modalTitle">知识库检查</span>
+        <button id="check-close" type="button" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="check-body" class="-modal-body -check-body"></div>
       <div class="-modal-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="check-rerun">重新检查</button>
+        <button type="button" class="-btn secondary" id="check-rerun" data-i18n="check.rerun">重新检查</button>
         <span class="-modal-footer-spacer"></span>
-        <button type="button" class="-btn primary" id="check-dismiss">关闭</button>
+        <button type="button" class="-btn primary" id="check-dismiss" data-i18n="common.close">关闭</button>
       </div>
     </div>
   </div>
@@ -277,16 +269,16 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-settings">
       <div class="-modal-header">
-        <span>设置</span>
-        <button id="settings-close" type="button" class="-icon-btn" title="关闭">×</button>
+        <span data-i18n="modal.settings">设置</span>
+        <button id="settings-close" type="button" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="settings-tabs" class="-settings-tabs-wrap"></div>
       <div id="settings-body" class="-modal-body -settings-body"></div>
       <p id="settings-config-path" class="-muted -settings-config-path" hidden></p>
       <div class="-modal-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="settings-reset">恢复默认</button>
+        <button type="button" class="-btn secondary" id="settings-reset" data-i18n="settings.reset">恢复默认</button>
         <span class="-modal-footer-spacer"></span>
-        <button type="button" class="-btn primary" id="settings-dismiss">关闭</button>
+        <button type="button" class="-btn primary" id="settings-dismiss" data-i18n="common.close">关闭</button>
       </div>
     </div>
   </div>
@@ -295,17 +287,17 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box">
       <div class="-modal-header">
-        <span id="link-title">选择跳转目标</span>
-        <button id="link-close" class="-icon-btn" title="关闭">×</button>
+        <span id="link-title" data-i18n="link.selectTarget">选择跳转目标</span>
+        <button id="link-close" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="link-body" class="-modal-body"></div>
       <div class="-modal-footer -btn-bar">
         <span id="link-hint" class="-muted -link-hint"></span>
-        <button type="button" class="-btn secondary hidden" id="link-config-view">查看全部链接</button>
-        <button type="button" class="-btn secondary" id="link-cancel">取消</button>
-        <button type="button" class="-btn primary hidden" id="link-save">保存</button>
-        <button type="button" class="-btn primary hidden" id="link-save-jump">保存并跳转</button>
-        <button type="button" class="-btn primary" id="link-confirm" disabled>确认跳转</button>
+        <button type="button" class="-btn secondary hidden" id="link-config-view" data-i18n="link.viewAll">查看全部链接</button>
+        <button type="button" class="-btn secondary" id="link-cancel" data-i18n="common.cancel">取消</button>
+        <button type="button" class="-btn primary hidden" id="link-save" data-i18n="common.save">保存</button>
+        <button type="button" class="-btn primary hidden" id="link-save-jump" data-i18n="link.saveJump">保存并跳转</button>
+        <button type="button" class="-btn primary" id="link-confirm" disabled data-i18n="link.confirmJump">确认跳转</button>
       </div>
     </div>
   </div>
@@ -314,15 +306,15 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-import-conflict">
       <div class="-modal-header">
-        <span>导入冲突</span>
-        <button id="import-conflict-close" type="button" class="-icon-btn" title="关闭">×</button>
+        <span data-i18n="import.conflictTitle">导入冲突</span>
+        <button id="import-conflict-close" type="button" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="import-conflict-body" class="-modal-body"></div>
       <div class="-modal-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="import-conflict-copy-report">复制报告</button>
+        <button type="button" class="-btn secondary" id="import-conflict-copy-report" data-i18n="import.copyReport">复制报告</button>
         <span class="-modal-footer-spacer"></span>
-        <button type="button" class="-btn secondary" id="import-conflict-cancel">取消</button>
-        <button type="button" class="-btn primary" id="import-conflict-confirm">确认导入</button>
+        <button type="button" class="-btn secondary" id="import-conflict-cancel" data-i18n="common.cancel">取消</button>
+        <button type="button" class="-btn primary" id="import-conflict-confirm" data-i18n="import.confirmImport">确认导入</button>
       </div>
     </div>
   </div>
@@ -331,13 +323,13 @@
     <div class="-modal-backdrop"></div>
     <div class="-modal-box -modal-import-result">
       <div class="-modal-header">
-        <span>导入结果</span>
-        <button id="import-result-close" type="button" class="-icon-btn" title="关闭">×</button>
+        <span data-i18n="import.resultTitle">导入结果</span>
+        <button id="import-result-close" type="button" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
       </div>
       <div id="import-result-body" class="-modal-body"></div>
       <div class="-modal-footer -btn-bar">
         <span class="-modal-footer-spacer"></span>
-        <button type="button" class="-btn primary" id="import-result-dismiss">确定</button>
+        <button type="button" class="-btn primary" id="import-result-dismiss" data-i18n="common.ok">确定</button>
       </div>
     </div>
   </div>
@@ -374,6 +366,9 @@
   <script src="/app/js/edit-handler.js"></script>
   <script src="/app/js/link-context-menu.js"></script>
   <script src="/app/js/kp-context-menu.js"></script>
+  <script src="/app/i18n/zh-CN.js"></script>
+  <script src="/app/i18n/en.js"></script>
+  <script src="/app/js/i18n.js"></script>
   <script src="/app/js/app.js"></script>
 </body>
 </html>

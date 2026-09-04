@@ -51,7 +51,6 @@
 | 2026-08-30 | `conventions/` | 契约性规范 | 由 `standards/` 拆分重组，中文文件名重命名 kebab-case |
 | 2026-08-30 | `guides/` | 操作指引 how-to | 由 `standards/`（AI 协作）+ `context/`（usage-agent-workflow）迁移 |
 | 2026-08-30 | `reference/` | 参考说明 | 由 `context/`（image-features）迁移，新增 architecture/glossary/hard-constraints |
-| 2026-09-03 | `screenshots/` | README / GitHub 演示截图 | 自动化捕获的真实界面截图（demo-*.png，1680×1000） |
 
 > 历史沿革：`agents/`（旧）→ `sessions/`（2026-08-20）；`skills/`（空目录，供将来存放可执行技能说明或并入 `context/` 用途）；`standards/` + `context/` → 按性质拆分为 `conventions/`（契约）+ `guides/`（how-to）+ `reference/`（understand）（2026-08-30）。
 
@@ -65,7 +64,12 @@
 | 2026-08-26 | image-asset-dev-plan.md | 新增：图片资产管理分阶段开发方案（design/），六阶段可交互验证；A/B/C/D 已落地并记录验证结果 |
 | 2026-08-30 | docs-management.md | 目录体系重构：`standards/` → `conventions/` + `guides/`；`context/` → `guides/` + `reference/`；新增三目录 README 与 reference/architecture、glossary、hard-constraints；决策表/登记表/沿革同步更新 |
 | 2026-09-01 | preview-formats.md | 新增：预览渲染格式与样式说明（reference/），登记 reference/README.md |
-| 2026-09-03 | docs-management.md | 新增 `screenshots/` 目录登记（README/GitHub 演示截图），docs/README.md 导航同步 |
+| 2026-09-03 | docs-management.md | 新增 `screenshots/` 目录登记（README/GitHub 演示截图），docs/README.md 导航同步；后经复核 `screenshots/` 属**非文档内容**（图片资源），随仓库截图约定迁出 docs（目录登记行删除） |
+| 2026-09-03 | i18n.md / i18n-inventory.md | 新增：语言系统维护规范（conventions/）与 UI 界面文案登记清单（reference/，由 scripts/scan_ui_strings.py 刷新），登记两目录 README 索引 |
+| 2026-09-03 | readme-i18n.md | 新增：README 与项目截图中英双语维护规范（conventions/）；同日 `docs/screenshots/` 迁出至 `resources/screenshots/`（docs 不存截图类二进制资源），登记 conventions/README.md |
+| 2026-09-04 | i18n.md / i18n-inventory.md | 编辑块工具栏整文件接入 `edit.block.*`（edit-handler.js，32 候选清零，文件退出清单）；i18n.md 修订记录与 `edit.` 前缀登记、清单迁移记录同步 |
+| 2026-09-04 | i18n.md / i18n-inventory.md | 图谱/检索设置页整文件接入（graph-settings.js + graph-label.js + search-settings.js，71 候选清零，三文件退出清单）；新增 `graph.settings.*`/`graph.sample.*`/`graph.labelModes.*`/`search.settings.*`，`SAMPLE_GRAPH` 改 `buildSampleGraph()` |
+| 2026-09-04 | collaboration.md | 新增 §0「通用协作规则（存疑对齐，适用于所有场景）」：存疑即停先问后做、反问须具体带选项/推荐、先用尽自解手段再问、对齐后按结果执行、低风险事务不阻塞（guides/，登记 guides/README 指引清单现有条目内，无新文件） |
 
 ### 4.3 定期整理约定
 
@@ -88,3 +92,10 @@
 - 中文文件名重命名为 kebab-case：`上下文规范.md` → `conventions/context-key.md`、`参考资料系统.md` → `conventions/refs-system.md`、`AAA_讨论元规范.md` → `conventions/meta-rules.md`、`AI 编程协作规范.md` → `guides/collaboration.md`
 - 删除 `standards/README.md` 与 `context/README.md`，由 `conventions/`/`guides/`/`reference/` 三目录 README 取代
 - 全部交叉引用同步（docs 内互链 + prompts/ + design/ 关联文档）
+
+### 5.3 2026-09-03（演示截图迁出 docs）
+
+- `docs/screenshots/`（`demo-*.png` × 7）→ `resources/screenshots/`（`git mv` 保留历史）——截图属**应用仓库静态资源**而非 docs 文档内容，且 README 仓库级展示配图应与 GitHub 展示约定一致。
+- 引用同步：`README.md`、`README.cn.md` 全部 `<img src="docs/screenshots/…">` → `resources/screenshots/…`（14 处）。
+- 目录登记同步：docs-management.md §4.1 删除 `screenshots/` 行（docs 不存二进制截图）；docs/README.md 子目录导航删除该行；resources/README.md 内容表补充 `screenshots/`。
+- 新增规范 [conventions/readme-i18n.md](./readme-i18n.md)：README 双语（`README.md`↔`README.cn.md`）与截图收录/存放的维护规则（含自查清单）。

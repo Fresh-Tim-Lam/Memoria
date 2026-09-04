@@ -123,7 +123,12 @@
       } else {
         syncLog("syncToDisk: 保存成功");
         if (res.cleanedImages && res.cleanedImages.length) {
-          showFlashInfo(`已清理 ${res.cleanedImages.length} 张未使用图片：${res.cleanedImages.join("、")}`);
+          showFlashInfo(
+            T("img.cleanup.doneList", {
+              n: res.cleanedImages.length,
+              files: res.cleanedImages.join(T("img.listSep")),
+            })
+          );
         }
       }
     } catch (e) {
@@ -147,6 +152,40 @@
     await syncToDisk();
   }
 
+  function T(key, params) {
+    return window.MemoriaI18n && window.MemoriaI18n.t
+      ? window.MemoriaI18n.t(key, params)
+      : key;
+  }
+
+  /** 后端 check issue 消息本地化：当前语言包含 check.issue.<code> 时翻译，否则回退后端中文 message。 */
+  function localizeCheckIssue(issue) {
+    if (issue && issue.code && window.MemoriaI18n) {
+      const lang = window.MemoriaI18n.currentLang();
+      if (lang !== window.MemoriaI18n.DEFAULT_LANG) {
+        const key = "check.issue." + issue.code;
+        if (window.MemoriaI18n.rawLookup(lang, key) != null) {
+          return window.MemoriaI18n.t(key, issue.params || {});
+        }
+      }
+    }
+    if (issue && issue.message) return issue.message;
+    return issue ? issue.code || String(issue) : "";
+  }
+
+  /** 检查统计的单复数词尾（紧跟在数字 strong 之后，如「2 错误 / 1 error」）。 */
+  function checkCountWord(n, kind) {
+    const key = n === 1 ? `check.word.${kind}` : `check.word.${kind}s`;
+    return T(key);
+  }
+
+  /** 底栏/汇总里整段着色的统计块（如「2 错误」）。 */
+  function statCountHtml(n, kind) {
+    const cls = kind === "error" ? "-stat-error" : "-stat-warn";
+    const key = n === 1 ? `check.stat.${kind}s.one` : `check.stat.${kind}s.many`;
+    return `<span class="${cls}">${T(key, { n })}</span>`;
+  }
+
   function setStatus(msg, stats) {
     $("#status-info").textContent = msg;
     if (stats !== undefined) {
@@ -160,12 +199,12 @@
     const err = vr.errors || 0;
     const warn = vr.warnings || 0;
     if (err === 0 && warn === 0) return "";
-    const parts = ["检查"];
+    const parts = [T("check.stat.head")];
     if (err > 0) {
-      parts.push(`<span class="-stat-error">${err} 错误</span>`);
+      parts.push(statCountHtml(err, "error"));
     }
     if (warn > 0) {
-      parts.push(`<span class="-stat-warn">${warn} 警告</span>`);
+      parts.push(statCountHtml(warn, "warning"));
     }
     return parts.join(" · ");
   }
@@ -192,10 +231,13 @@
     badge.removeAttribute("aria-hidden");
     if (err > 0) {
       badge.classList.add("-toolbar-badge--error");
-      badge.title = warn > 0 ? `${err} 错误 · ${warn} 警告` : `${err} 错误`;
+      badge.title =
+        warn > 0
+          ? T("check.badge.tooltipMixed", { err, warn })
+          : T("check.badge.tooltipErrors", { n: err });
     } else {
       badge.classList.add("-toolbar-badge--warn");
-      badge.title = `${warn} 警告`;
+      badge.title = T("check.badge.tooltipWarnings", { n: warn });
     }
   }
 
@@ -213,13 +255,13 @@
     } else {
       delete el.dataset.kbCheck;
       if (vr?.status === "ok" && state.kbPath && !state.lastFileStats) {
-        chunks.push('<span class="-stat-ok">检查通过</span>');
+        chunks.push(`<span class="-stat-ok">${T("check.stat.pass")}</span>`);
       }
     }
 
     const gw = vr?.graph_audit?.summary?.warn_count;
     if (gw && !state.lastFileStats) {
-      chunks.push(`<span class="-stat-warn">图谱 ${gw} 处待配置</span>`);
+      chunks.push(`<span class="-stat-warn">${T("check.stat.graphTodo", { n: gw })}</span>`);
     }
 
     if (state.lastFileStats) {
@@ -231,7 +273,7 @@
     if (fileWarns.length) {
       const first = fileWarns[0];
       chunks.push(
-        `<span class="-stat-warn">图谱建边 ${fileWarns.length} 处 · ${esc(basename(first.file))} · 点击定位</span>`
+        `<span class="-stat-warn">${T("check.stat.graphIssuesFile", { n: fileWarns.length, file: esc(basename(first.file)) })}</span>`
       );
       el.classList.add("-status-clickable");
       el.dataset.graphAuditGoto = "1";
@@ -239,7 +281,11 @@
       const first = kbWarns[0];
       const fileCount = new Set(kbWarns.map((w) => normRelPath(w.file))).size;
       chunks.push(
-        `<span class="-stat-warn">图谱建边 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""} · 点击打开</span>`
+        `<span class="-stat-warn">${T("check.stat.graphIssuesKb", {
+          n: kbWarns.length,
+          file: esc(basename(first.file)),
+          more: fileCount > 1 ? T("check.stat.moreFiles", { n: fileCount }) : "",
+        })}</span>`
       );
       el.classList.add("-status-clickable");
       el.dataset.graphAuditGoto = "1";
@@ -686,7 +732,7 @@
         showTreeContextMenu(e.clientX, e.clientY, [
           { label: "新建文件", action: () => createTreeFile("") },
           { label: "新建文件夹", action: () => createTreeDir("") },
-          { label: "图片管理…", action: () => openImageManager() },
+          { label: T("img.menuLabel"), action: () => openImageManager() },
         ]);
       }
     };
@@ -802,8 +848,8 @@
         <div class="-modal-body">${esc(message)}</div>
         <div class="-modal-footer -btn-bar">
           <span class="-modal-footer-spacer"></span>
-          <button type="button" class="-btn" data-act="cancel">取消</button>
-          <button type="button" class="-btn danger" data-act="ok">${esc(okLabel || "确定")}</button>
+          <button type="button" class="-btn" data-act="cancel">${T("common.cancel")}</button>
+          <button type="button" class="-btn danger" data-act="ok">${esc(okLabel || T("common.ok"))}</button>
         </div>
       </div>`;
     document.body.appendChild(overlay);
@@ -1172,7 +1218,7 @@
 
   async function buildKb() {
     if (!state.kbPath) {
-      setStatus("请先打开知识库");
+      setStatus(T("app.openKbFirst"));
       return;
     }
     const btn = $("#btn-build");
@@ -1216,10 +1262,10 @@
     if (vr.errors > 0 || vr.warnings > 0) {
       /* 底栏统计已由 renderStatusStats 着色；保留当前文件路径于 status-info */
       if (!state.currentPath) {
-        setStatus(state.kbPath || "知识库");
+        setStatus(state.kbPath || T("check.kbName"));
       }
     } else if (vr.status === "ok" && !state.currentPath) {
-      setStatus(state.kbPath || "知识库");
+      setStatus(state.kbPath || T("check.kbName"));
     }
   }
 
@@ -1235,24 +1281,24 @@
       }
       return vr;
     } catch (e) {
-      if (!opts.silent) setStatus("检查失败", String(e.message || e));
+      if (!opts.silent) setStatus(T("check.status.checkFailed"), String(e.message || e));
       return null;
     }
   }
 
-  function checkItemHtml(severity, message, path, openPath, meta) {
+  function checkItemHtml(issue, severity, path, openPath) {
     const sev = normalizeCheckSeverity(severity);
     const badge =
       sev === "error"
-        ? '<span class="-check-badge -check-badge--error">错误</span>'
-        : '<span class="-check-badge -check-badge--warning">警告</span>';
+        ? `<span class="-check-badge -check-badge--error">${T("check.badge.error")}</span>`
+        : `<span class="-check-badge -check-badge--warning">${T("check.badge.warning")}</span>`;
     const dataAttrs = [
-      meta?.kpId ? `data-check-kp="${esc(meta.kpId)}"` : "",
-      meta?.line ? `data-check-line="${meta.line}"` : "",
-      meta?.kind ? `data-check-kind="${esc(meta.kind)}"` : "",
+      issue?.kp_id ? `data-check-kp="${esc(issue.kp_id)}"` : "",
+      issue?.line ? `data-check-line="${issue.line}"` : "",
+      issue?.kind ? `data-check-kind="${esc(issue.kind)}"` : "",
     ].filter(Boolean).join(" ");
     const openBtn = openPath
-      ? `<button type="button" class="-btn secondary -check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>打开</button>`
+      ? `<button type="button" class="-btn secondary -check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>${T("check.open")}</button>`
       : "";
     const pathHtml = path
       ? `<div class="-check-item-path">${esc(path)}</div>`
@@ -1260,40 +1306,30 @@
     return `<div class="-check-item -check-item--${sev}">
       ${badge}
       <div class="-check-item-main">
-        <div>${esc(message)}</div>
+        <div>${esc(localizeCheckIssue(issue))}</div>
         ${pathHtml}
       </div>
       ${openBtn}
     </div>`;
   }
 
-  function _issueMessage(e) {
-    return typeof e === "string" ? e : (e?.message || String(e));
-  }
-  function _issueMeta(e) {
-    if (typeof e === "string") return {};
-    return {
-      kpId: e?.kp_id || null,
-      line: e?.line || null,
-      kind: e?.kind || null,
-    };
-  }
-
   function renderCheckModalBody(vr) {
     const body = $("#check-body");
     if (!body) return;
     if (!vr) {
-      body.innerHTML = '<p class="-muted">暂无检查结果</p>';
+      body.innerHTML = `<p class="-muted">${T("check.empty")}</p>`;
       return;
     }
     const errN = vr.errors || 0;
     const warnN = vr.warnings || 0;
     const summaryCls =
       errN > 0 ? "-check-summary -check-summary--error" : "-check-summary";
+    const errWord = checkCountWord(errN, "error");
+    const warnWord = checkCountWord(warnN, "warning");
     let html = `<div class="${summaryCls}">
-      已检查 ${vr.files_checked || 0} 个 Markdown 文件 ·
-      ${errN > 0 ? `<strong class="-stat-error">${errN}</strong>` : `<strong>${errN}</strong>`} 错误 ·
-      ${warnN > 0 ? `<strong class="-stat-warn">${warnN}</strong>` : `<strong>${warnN}</strong>`} 警告
+      ${T("check.summaryChecked", { files: vr.files_checked || 0 })} ·
+      ${errN > 0 ? `<strong class="-stat-error">${errN}</strong>` : `<strong>${errN}</strong>`} ${errWord} ·
+      ${warnN > 0 ? `<strong class="-stat-warn">${warnN}</strong>` : `<strong>${warnN}</strong>`} ${warnWord}
     </div>`;
 
     const kbIssues = [
@@ -1306,12 +1342,12 @@
     ];
     const pathMoves = vr.path_moves || [];
     if (kbIssues.length) {
-      html += '<section class="-check-section"><h4 class="-check-section-title">全库</h4>';
+      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.kb")}</h4>`;
       for (const issue of kbIssues) {
         const path = issue.paths?.[0] || "";
         html += checkItemHtml(
+          issue,
           issue.severity,
-          issue.message,
           issue.paths?.length > 1 ? issue.paths.join(" · ") : path,
           path || null
         );
@@ -1320,20 +1356,20 @@
     }
 
     if (pathMoves.length) {
-      html += `<section class="-check-section"><h4 class="-check-section-title">路径变更
-        <button type="button" class="-btn secondary -btn--sm" id="check-repair-paths">修复路径</button>
+      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.pathMoves")}
+        <button type="button" class="-btn secondary -btn--sm" id="check-repair-paths">${T("check.repairBtn")}</button>
       </h4>`;
-      html += `<p class="-muted">检测到文件移动/重命名。请先修复路径（会同步更新元数据、待确认项与文件清单）；在此完成前请勿「更新文件清单」。</p>`;
+      html += `<p class="-muted">${T("check.note.pathMovesRepair")}</p>`;
       for (const m of pathMoves) {
         const hint =
           m.kind === "md_sha256"
-            ? "内容 hash 匹配"
+            ? T("check.pathmove.match")
             : m.kind === "sidecar_drift"
-              ? "配置路径漂移"
+              ? T("check.pathmove.drift")
               : m.kind || "";
         html += checkItemHtml(
+          { message: `${m.from} → ${m.to}` },
           m.severity,
-          `${m.from} → ${m.to}`,
           hint,
           m.to || null
         );
@@ -1345,19 +1381,19 @@
       const md = vr.manifest_diff || {};
       const syncBtn =
         manifestIssues.length > 0 && pathMoves.length === 0
-          ? `<button type="button" class="-btn secondary -btn--sm" id="check-sync-manifest">更新文件清单</button>`
+          ? `<button type="button" class="-btn secondary -btn--sm" id="check-sync-manifest">${T("check.syncManifestBtn")}</button>`
           : "";
-      html += `<section class="-check-section"><h4 class="-check-section-title">文件清单 ${syncBtn}</h4>`;
+      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.manifest")} ${syncBtn}</h4>`;
       if (md.baseline_created) {
-        html += `<p class="-muted">首次打开：已建立文件清单（${md.file_count || 0} 个文档）</p>`;
+        html += `<p class="-muted">${T("check.note.manifestBaseline", { docs: md.file_count || 0 })}</p>`;
       } else if (!manifestIssues.length) {
-        html += `<p class="-muted">文件清单与磁盘一致（${md.file_count || 0} 个文档）</p>`;
+        html += `<p class="-muted">${T("check.note.manifestConsistent", { docs: md.file_count || 0 })}</p>`;
       }
       for (const issue of manifestIssues) {
         const path = issue.paths?.[0] || "";
         html += checkItemHtml(
+          issue,
           issue.severity,
-          issue.message,
           issue.paths?.length > 1 ? issue.paths.join(" · ") : path,
           path || null
         );
@@ -1368,12 +1404,10 @@
     for (const fr of vr.files || []) {
       html += `<section class="-check-section"><h4 class="-check-section-title">${esc(fr.path)}</h4>`;
       for (const e of fr.errors || []) {
-        const meta = _issueMeta(e);
-        html += checkItemHtml("error", _issueMessage(e), fr.path, fr.path, meta);
+        html += checkItemHtml(e, "error", fr.path, fr.path);
       }
       for (const w of fr.warnings || []) {
-        const meta = _issueMeta(w);
-        html += checkItemHtml("warning", _issueMessage(w), fr.path, fr.path, meta);
+        html += checkItemHtml(w, "warning", fr.path, fr.path);
       }
       html += "</section>";
     }
@@ -1382,15 +1416,10 @@
       (f) => (f.issues || []).length
     );
     if (gaFiles.length) {
-      html += '<section class="-check-section"><h4 class="-check-section-title">图谱建边</h4>';
+      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.graphEdges")}</h4>`;
       for (const gf of gaFiles) {
         for (const issue of gf.issues || []) {
-          html += checkItemHtml(
-            issue.severity,
-            issue.message || issue.code,
-            gf.file,
-            gf.file
-          );
+          html += checkItemHtml(issue, issue.severity, gf.file, gf.file);
         }
       }
       html += "</section>";
@@ -1403,17 +1432,17 @@
       !(vr.files || []).length &&
       !gaFiles.length
     ) {
-      html += '<p class="-muted">未发现配置或图谱问题。</p>';
+      html += `<p class="-muted">${T("check.noProblems")}</p>`;
     }
     body.innerHTML = html;
     body.querySelector("#check-sync-manifest")?.addEventListener("click", async () => {
-      setStatus("更新文件清单…");
+      setStatus(T("check.status.syncStart"));
       const res = await call("sync_manifest");
       if (res.status === "ok") {
-        setStatus("文件清单已更新", `${res.file_count || 0} 个文档`);
+        setStatus(T("check.status.manifestUpdated"), T("check.countDocs", { n: res.file_count || 0 }));
         await runKbValidate({ silent: false });
       } else {
-        setStatusError(res.message || "同步失败");
+        setStatusError((res && localizeCheckIssue(res)) || T("check.status.syncFailed"));
         if (res.blocked && (res.path_moves || []).length) {
           await runKbValidate({ silent: false });
         }
@@ -1421,19 +1450,18 @@
     });
 
     body.querySelector("#check-repair-paths")?.addEventListener("click", async () => {
-      if (
-        !window.confirm(
-          "修复检测到的路径变更？\n将更新元数据路径、待确认项与文件清单。"
-        )
-      ) {
+      if (!window.confirm(T("check.confirm.repair"))) {
         return;
       }
-      setStatus("修复路径…");
+      setStatus(T("check.status.repairing"));
       const res = await call("repair_path_cascade", true);
       if (res.status === "ok" || res.status === "partial") {
         setStatus(
-          "路径已修复",
-          `${res.applied_count ?? 0}/${res.move_count ?? 0} 处`
+          T("check.status.pathRepaired"),
+          T("check.status.repairedStats", {
+            done: res.applied_count ?? 0,
+            total: res.move_count ?? 0,
+          })
         );
         remapOpenTabsAfterPathRepair(res.applied || []);
         const cur = normRelPath(state.currentPath || "");
@@ -1451,7 +1479,7 @@
         await loadGraphData();
         await runKbValidate({ silent: false });
       } else {
-        setStatusError(res.message || "修复失败");
+        setStatusError((res && localizeCheckIssue(res)) || T("check.status.repairFailed"));
       }
     });
 
@@ -1478,7 +1506,7 @@
 
   function openCheckModal() {
     if (!state.kbPath) {
-      setStatus("请先打开知识库");
+      setStatus(T("app.openKbFirst"));
       return;
     }
     const modal = $("#check-modal");
@@ -1499,7 +1527,7 @@
 
   async function startImport() {
     if (!state.kbPath) {
-      setStatus("请先打开知识库");
+      setStatus(T("app.openKbFirst"));
       return;
     }
     const btn = $("#btn-import");
@@ -1566,28 +1594,28 @@
 
   async function startInsertImage(insertAtLine) {
     if (!state.kbPath) {
-      setStatus("请先打开知识库");
+      setStatus(T("app.openKbFirst"));
       return;
     }
     if (!state.currentPath) {
-      setStatus("请先打开一个文档再插入图片");
+      setStatus(T("img.insert.openDocFirst"));
       return;
     }
     const local = await call("select_image_file");
     if (!local) return;
     const res = await call("import_image", local);
     if (!res || res.status !== "ok") {
-      setStatusError("图片入库失败", (res && res.message) || "未知错误");
+      setStatusError(T("img.insert.importFailed"), (res && res.message) || T("common.unknownError"));
       return;
     }
     const alt = String(res.name || "").replace(/\.[^.]+$/, "");
     // URL 用尖括号包裹：文件名可能含中文/空格（如 Windows 截图），裸 URL 会被
     // marked 在空格处截断导致不渲染为图片
     if (!insertSourceLine("![" + alt + "](<" + res.relPath + ">)", insertAtLine)) {
-      setStatusError("插入失败", "无法写入源码编辑器");
+      setStatusError(T("img.insert.failed"), T("img.insert.noEditor"));
       return;
     }
-    setStatus("图片已入库", res.relPath);
+    setStatus(T("img.insert.stored"), res.relPath);
   }
 
   /** 预览光标所在块的源码起始行（鼠标在预览区域编辑时定位插入点用） */
@@ -1692,8 +1720,8 @@
   /** 预览区图片右键菜单：替换（换图保留 alt/title）/ 删除（仅删引用，磁盘文件保留） */
   function showImageContextMenu(x, y, lineNum) {
     showTreeContextMenu(x, y, [
-      { label: "替换图片", action: () => replaceImageAtLine(lineNum) },
-      { label: "删除图片（仅删引用）", danger: true, action: () => deleteImageAtLine(lineNum) },
+      { label: T("img.edit.replace"), action: () => replaceImageAtLine(lineNum) },
+      { label: T("img.edit.deleteRef"), danger: true, action: () => deleteImageAtLine(lineNum) },
     ]);
   }
 
@@ -1702,19 +1730,19 @@
     if (!local) return;
     const res = await call("import_image", local);
     if (!res || res.status !== "ok") {
-      setStatusError("图片入库失败", (res && res.message) || "未知错误");
+      setStatusError(T("img.insert.importFailed"), (res && res.message) || T("common.unknownError"));
       return;
     }
     const lines = (state.doc.body || "").split("\n");
     const raw = lines[lineNum - 1] || "";
     const m = raw.match(/^!\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+"[^"]*")?)\)/);
     if (!m) {
-      setStatusError("替换失败", "该行不是标准图片语法");
+      setStatusError(T("img.edit.replaceFailed"), T("img.edit.notImageLine"));
       return;
     }
     lines[lineNum - 1] = "![" + m[1] + "](<" + res.relPath + ">" + (m[4] || "") + ")";
     await applyImageEditLines(lines);
-    setStatus("图片已替换", res.relPath);
+    setStatus(T("img.edit.replaced"), res.relPath);
   }
 
   function deleteImageAtLine(lineNum) {
@@ -1722,7 +1750,7 @@
     if (lineNum - 1 >= lines.length) return;
     lines.splice(lineNum - 1, 1);
     applyImageEditLines(lines);
-    setStatus("已删除图片引用（磁盘文件保留）");
+    setStatus(T("img.del.refsDone"));
   }
 
   // ── 图片管理视图（阶段 F：.memoria/images/ 资产可见化管理） ────────
@@ -1744,14 +1772,14 @@
       <div class="-modal-backdrop"></div>
       <div class="-modal-box -image-mgr-box">
         <div class="-modal-header">
-          <span>图片管理</span>
-          <span class="-image-mgr-close" data-act="close" title="关闭">✕</span>
+          <span>${T("img.title")}</span>
+          <span class="-image-mgr-close" data-act="close" title="${T("dialog.closeTitle")}">✕</span>
         </div>
         <div class="-image-mgr-toolbar">
-          <span class="-image-mgr-stat" id="imgr-stat">加载中…</span>
-          <button type="button" class="-btn" data-act="refresh">刷新</button>
-          <button type="button" class="-btn" data-act="diagnose">检查异常引用</button>
-          <button type="button" class="-btn danger" data-act="cleanup">清理未使用图片</button>
+          <span class="-image-mgr-stat" id="imgr-stat">${T("img.loading")}</span>
+          <button type="button" class="-btn" data-act="refresh">${T("img.refresh")}</button>
+          <button type="button" class="-btn" data-act="diagnose">${T("img.diagnose")}</button>
+          <button type="button" class="-btn danger" data-act="cleanup">${T("img.cleanup")}</button>
         </div>
         <div class="-image-mgr-grid" id="imgr-grid"></div>
       </div>`;
@@ -1777,11 +1805,12 @@
   async function diagnoseImageRefs() {
     const res = await call("diagnose_image_refs");
     if (!res || res.status !== "ok") {
-      setStatusError("检查失败", (res && res.message) || "未知错误");
+      setStatusError(T("img.diag.failed"), (res && res.message) || T("common.unknownError"));
       return;
     }
     const unreg = res.unregistered || [];
     const missing = res.missing || [];
+    const atLine = (doc, line) => T("img.atLine", { doc: esc(doc), line });
     const overlay = document.createElement("div");
     overlay.className = "-modal";
     overlay.id = "-img-diagnose";
@@ -1789,26 +1818,27 @@
       <div class="-modal-backdrop"></div>
       <div class="-modal-box -img-diag-box">
         <div class="-modal-header">
-          <span>检查异常图片引用</span>
-          <span class="-image-mgr-close" data-act="close" title="关闭">✕</span>
+          <span>${T("img.diag.title")}</span>
+          <span class="-image-mgr-close" data-act="close" title="${T("dialog.closeTitle")}">✕</span>
         </div>`;
     if (!unreg.length && !missing.length) {
-      html += `<div class="-img-diag-body"><div class="-img-diag-ok">未发现异常引用</div></div></div>`;
+      html += `<div class="-img-diag-body"><div class="-img-diag-ok">${T("img.diag.clean")}</div></div></div>`;
     } else {
       if (unreg.length) {
+        const reason = T("img.diag.unregReason");
         html += `<div class="-img-diag-body">
-          <div class="-img-diag-title">已引用但未注册（${unreg.length}）—— 文件名含空格/中文且未用尖括号包裹，保存时会被误判为未使用而删除</div>
+          <div class="-img-diag-title">${T("img.diag.unregTitle", { n: unreg.length, reason })}</div>
           <ul class="-img-diag-list">` +
-          unreg.map((u) => `<li><code>${esc(u.src)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）${u.exists ? "" : " ⚠ 文件已缺失，需重新放入 images"}</span></li>`).join("") +
+          unreg.map((u) => `<li><code>${esc(u.src)}</code><span>${atLine(u.doc, u.line)}${u.exists ? "" : T("img.diag.fileMissing")}</span></li>`).join("") +
           `</ul>
-          <button type="button" class="-btn" data-act="fix">一键修复为尖括号格式</button>
+          <button type="button" class="-btn" data-act="fix">${T("img.diag.fix")}</button>
         </div>`;
       }
       if (missing.length) {
         html += `<div class="-img-diag-body">
-          <div class="-img-diag-title">引用格式正常但文件缺失（${missing.length}）</div>
+          <div class="-img-diag-title">${T("img.diag.missingTitle", { n: missing.length })}</div>
           <ul class="-img-diag-list">` +
-          missing.map((u) => `<li><code>${esc(u.url)}</code><span>（${esc(u.doc)} 第 ${u.line} 行）文件不存在</span></li>`).join("") +
+          missing.map((u) => `<li><code>${esc(u.url)}</code><span>${atLine(u.doc, u.line)}${T("img.diag.fileNotExists")}</span></li>`).join("") +
           `</ul></div>`;
       }
       html += `</div>`;
@@ -1822,11 +1852,11 @@
       fixBtn.addEventListener("click", async () => {
         const r = await call("fix_unregistered_image_refs");
         if (r && r.status === "ok") {
-          setStatus("修复完成", `已改写 ${r.fixed} 处引用`);
+          setStatus(T("img.status.fixDone"), T("img.status.rewritten", { n: r.fixed }));
           overlay.remove();
           renderImageList();
         } else {
-          setStatusError("修复失败", (r && r.message) || "未知错误");
+          setStatusError(T("img.status.fixFailed"), (r && r.message) || T("common.unknownError"));
         }
       });
     }
@@ -1836,22 +1866,23 @@
     const grid = $("#imgr-grid");
     const stat = $("#imgr-stat");
     if (!grid || !stat) return;
-    grid.innerHTML = '<div class="-image-mgr-empty">加载中…</div>';
+    grid.innerHTML = `<div class="-image-mgr-empty">${T("img.loading")}</div>`;
     const res = await call("list_images");
     const imgs = (res && res.images) || [];
     const used = imgs.filter((x) => x.referenced).length;
-    stat.textContent = `共 ${imgs.length} 张图片 · 已引用 ${used} · 未使用 ${imgs.length - used}`;
+    stat.textContent = T("img.statSummary", { total: imgs.length, used, unused: imgs.length - used });
     if (!imgs.length) {
-      grid.innerHTML = '<div class="-image-mgr-empty">知识库暂无图片资产</div>';
+      grid.innerHTML = `<div class="-image-mgr-empty">${T("img.emptyKb")}</div>`;
       return;
     }
+    const sep = T("img.listSep");
     let html = "";
     for (const im of imgs) {
       const refs = im.referencedBy || [];
       const tag = im.referenced
-        ? `<span class="-img-tag -img-tag-used">已引用 ${refs.length}</span>`
-        : `<span class="-img-tag -img-tag-unused">未使用</span>`;
-      const refTxt = im.referenced ? "被 " + refs.join("、") + " 引用" : "未被任何文档引用";
+        ? `<span class="-img-tag -img-tag-used">${T("img.tagUsed", { n: refs.length })}</span>`
+        : `<span class="-img-tag -img-tag-unused">${T("img.tagUnused")}</span>`;
+      const refTxt = im.referenced ? T("img.refsUsed", { files: refs.join(sep) }) : T("img.refsUnused");
       html += `<div class="-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
         <img class="-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
         <div class="-image-card-info">
@@ -1860,8 +1891,8 @@
           <div class="-image-card-refs" title="${esc(refTxt)}">${esc(refTxt)}</div>
         </div>
         <div class="-image-card-actions">
-          <button type="button" class="-btn" data-act="insert">插入</button>
-          <button type="button" class="-btn danger" data-act="delete">删除</button>
+          <button type="button" class="-btn" data-act="insert">${T("img.insert")}</button>
+          <button type="button" class="-btn danger" data-act="delete">${T("img.delete")}</button>
         </div>
       </div>`;
     }
@@ -1881,14 +1912,14 @@
 
   function insertImageFromManager(rel, name) {
     if (!state.currentPath) {
-      setStatus("请先打开一个文档再插入图片");
+      setStatus(T("img.insert.openDocFirst"));
       return;
     }
     const alt = String(name || "").replace(/\.[^.]+$/, "");
     if (insertSourceLine("![" + alt + "](<" + rel + '> "width=300")')) {
-      setStatus("已插入图片", rel);
+      setStatus(T("img.insert.done"), rel);
     } else {
-      setStatusError("插入失败", "无法写入源码编辑器");
+      setStatusError(T("img.insert.failed"), T("img.insert.noEditor"));
     }
   }
 
@@ -1899,38 +1930,38 @@
       ).length;
       if (!n) {
         confirmTreeAction(
-          "无法删除",
-          "该图片被其他文档引用，当前文档未引用它。\n需先在引用它的文档中移除引用，或使用“清理未使用图片”。",
-          "知道了",
+          T("img.del.blockedTitle"),
+          T("img.del.blockedBody"),
+          T("img.del.gotIt"),
           () => {}
         );
         return;
       }
       confirmTreeAction(
-        "删除引用",
-        `该图片在当前文档有 ${n} 处引用。\n将从当前文档移除这些引用（磁盘文件保留）。`,
-        "仅删引用",
+        T("img.del.refTitle"),
+        T("img.del.refBody", { n }),
+        T("img.del.onlyRefs"),
         () => {
           const lines = (state.doc.body || "")
             .split("\n")
             .filter((l) => !(l.includes(rel) || l.includes("/files/" + rel)));
           applyImageEditLines(lines);
-          setStatus("已删除图片引用（磁盘文件保留）");
+          setStatus(T("img.del.refsDone"));
           renderImageList();
         }
       );
     } else {
       confirmTreeAction(
-        "删除图片文件",
-        `“${name}”未被任何文档引用。\n确定从 .memoria/images/ 删除该文件吗？此操作不可恢复。`,
-        "连文件删",
+        T("img.del.fileTitle"),
+        T("img.del.fileBody", { name }),
+        T("img.del.fileBtn"),
         async () => {
           const res = await call("cleanup_unused_images", [rel]);
           if (res && res.status === "ok" && (res.deleted || []).length) {
-            setStatus("已删除图片文件", name);
+            setStatus(T("img.del.fileDone"), name);
             renderImageList();
           } else {
-            setStatusError("删除失败", (res && res.message) || "文件不存在");
+            setStatusError(T("img.del.failed"), (res && res.message) || T("img.del.fileGone"));
           }
         }
       );
@@ -1941,26 +1972,27 @@
     const res = await call("unused_images");
     const un = (res && res.images) || [];
     if (!un.length) {
-      setStatus("没有未使用的图片");
+      setStatus(T("img.cleanup.none"));
       renderImageList();
       return;
     }
+    const sep = T("img.listSep");
     const names = un
       .slice(0, 5)
       .map((x) => x.name)
-      .join("、");
-    const more = un.length > 5 ? ` 等 ${un.length} 张` : "";
+      .join(sep);
+    const more = un.length > 5 ? T("img.cleanup.more", { n: un.length }) : "";
     confirmTreeAction(
-      "清理未使用图片",
-      `发现 ${un.length} 张未被任何文档引用的图片：${names}${more}\n\n确定删除这些文件吗？此操作不可恢复。`,
-      "清理",
+      T("img.cleanup.title"),
+      T("img.cleanup.body", { n: un.length, names, more }),
+      T("img.cleanup.btn"),
       async () => {
         const r = await call("cleanup_unused_images");
         if (r && r.status === "ok") {
-          setStatus(`已清理 ${(r.deleted || []).length} 张未使用图片`);
+          setStatus(T("img.cleanup.done", { n: (r.deleted || []).length }));
           renderImageList();
         } else {
-          setStatusError("清理失败", (r && r.message) || "未知错误");
+          setStatusError(T("img.cleanup.failed"), (r && r.message) || T("common.unknownError"));
         }
       }
     );
@@ -2211,7 +2243,7 @@
         .getElementById(`line-${issue.line}`)
         ?.scrollIntoView({ block: "center", behavior: "smooth" });
     }
-    setStatus(`图谱建边 · ${basename(rel)}`, issue.message || "");
+    setStatus(T("check.status.graphEdgeAt", { file: basename(rel) }), localizeCheckIssue(issue) || "");
     updateGraphAuditHint();
   }
 
@@ -2219,7 +2251,7 @@
     const fileLabel = basename(issue.file || "");
     const loc = issue.line ? `L${issue.line}` : "";
     if (fileLabel && loc) return `${fileLabel} · ${loc}`;
-    return fileLabel || loc || "待配置";
+    return fileLabel || loc || T("check.pending");
   }
 
   function activeGraphHint() {
@@ -2235,22 +2267,30 @@
     const fileWarns = currentFileGraphAuditWarns();
     if (fileWarns.length) {
       const first = fileWarns[0];
-      hint.innerHTML = `<span class="-graph-audit-warn">⚠ ${esc(graphAuditHintLabel(first))}：${esc(first.message)}</span>
-        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">打开文件</button>`;
+      hint.innerHTML = `<span class="-graph-audit-warn">⚠ ${T("check.hint.file", {
+        label: esc(graphAuditHintLabel(first)),
+        message: esc(localizeCheckIssue(first)),
+      })}</span>
+        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">${T("check.openFile")}</button>`;
       return;
     }
     const kbWarns = collectKbGraphAuditWarns(state.graphAudit);
     if (kbWarns.length) {
       const first = kbWarns[0];
       const fileCount = new Set(kbWarns.map((w) => normRelPath(w.file))).size;
-      hint.innerHTML = `<span class="-graph-audit-warn">⚠ 全库 ${kbWarns.length} 处 · ${esc(basename(first.file))}${fileCount > 1 ? ` 等 ${fileCount} 文件` : ""}：${esc(first.message)}</span>
-        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">打开 ${esc(basename(first.file))}</button>`;
+      hint.innerHTML = `<span class="-graph-audit-warn">⚠ ${T("check.hint.kb", {
+        n: kbWarns.length,
+        file: esc(basename(first.file)),
+        more: fileCount > 1 ? T("check.stat.moreFiles", { n: fileCount }) : "",
+        message: esc(localizeCheckIssue(first)),
+      })}</span>
+        <button type="button" class="-btn secondary -btn--sm -graph-audit-goto">${T("check.openFileNamed", { file: esc(basename(first.file)) })}</button>`;
       return;
     }
     hint.innerHTML =
       state.sidebarTab === "graph3d"
-        ? '<span class="-muted">左键旋转 · 滚轮缩放 · 点击跳转 · 悬停正文链接可高亮</span>'
-        : '<span class="-muted">滚轮缩放 · 拖空白平移 · 点击跳转 · 悬停正文链接可高亮</span>';
+        ? `<span class="-muted">${T("graph.hint.idle3d")}</span>`
+        : `<span class="-muted">${T("graph.hint.idle2d")}</span>`;
   }
 
   function syncGraphAuditStatusBar(_baseStats) {
@@ -8299,7 +8339,7 @@
       applyEditorPaste(text, content);
     }
 
-    // 源码编辑器右键：无选中文本 → 提供「粘贴」菜单
+    // 源码编辑器右键：无选中文本 → 提供「粘贴」「插入图片」菜单
     // （全局捕获阶段已屏蔽原生右键菜单；有选区时交还 bindEditorSelectionMenu 弹链接/知识点菜单）
     editor.addEventListener("contextmenu", (e) => {
       if (!state.currentPath) return;
@@ -8309,8 +8349,11 @@
       const info = getSelectionInContainer(editor);
       if (info) return;
       e.preventDefault();
+      const row = e.target.closest(".-line");
+      const srcLine = row ? +(row.dataset.line || 0) : 0;
       MemoriaLinkContextMenu.showForCursor(e, {
         onPaste: pasteAtSourceEditor,
+        onInsertImage: () => startInsertImage(srcLine || undefined),
       });
     });
 
@@ -12535,7 +12578,7 @@
 
   async function runToolbarSearch(opts = {}) {
     if (!state.kbPath) {
-      setStatusError("请先打开知识库");
+      setStatusError(T("app.openKbFirst"));
       return;
     }
     const q = $("#toolbar-search")?.value?.trim() || "";
@@ -12999,6 +13042,20 @@
     }
     if (window.MemoriaDisplaySettings) {
       MemoriaDisplaySettings.hydrateFromDisk();
+    }
+    if (window.MemoriaI18n) {
+      MemoriaI18n.hydrate();
+      MemoriaI18n.addRefresh(function () {
+        if (window.MemoriaGraphSettings && window.MemoriaGraphSettings.rerenderCurrentTab) {
+          window.MemoriaGraphSettings.rerenderCurrentTab();
+        }
+        if (state.kbValidateReport) {
+          applyCheckIndicators(state.kbValidateReport);
+          if ($("#check-modal") && !$("#check-modal").classList.contains("hidden")) {
+            renderCheckModalBody(state.kbValidateReport);
+          }
+        }
+      });
     }
     setSidebarTab(state.sidebarTab);
     bindEditorSelectInteraction();

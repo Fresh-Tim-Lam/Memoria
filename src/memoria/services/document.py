@@ -1598,6 +1598,7 @@ class DocumentService:
         if moves:
             return {
                 "status": "error",
+                "code": "manifest_blocked_by_path_moves",
                 "message": "检测到路径变更，请先使用「修复路径」。直接更新文件清单会导致元数据路径无法恢复。",
                 "path_moves": moves,
                 "blocked": True,

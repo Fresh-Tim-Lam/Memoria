@@ -5,10 +5,10 @@
   "use strict";
 
   const LABEL_MODES = {
-    name_short: { label: "名称（缩短）", available: true },
-    id: { label: "知识点 ID", available: true },
-    name: { label: "名称（完整）", available: true },
-    smart: { label: "智能摘要（M4 检索引擎）", available: false },
+    name_short: { labelKey: "graph.labelModes.name_short", available: true },
+    id: { labelKey: "graph.labelModes.id", available: true },
+    name: { labelKey: "graph.labelModes.name", available: true },
+    smart: { labelKey: "graph.labelModes.smart", available: false },
   };
 
   const DEFAULT_LABEL = {

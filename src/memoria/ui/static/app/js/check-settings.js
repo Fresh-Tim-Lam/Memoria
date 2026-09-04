@@ -5,14 +5,7 @@
   "use strict";
 
   const STORAGE_KEY = "-check-settings";
-  const INTERVAL_OPTIONS = [
-    { sec: 0, label: "关闭" },
-    { sec: 30, label: "30 秒" },
-    { sec: 60, label: "1 分钟" },
-    { sec: 120, label: "2 分钟" },
-    { sec: 300, label: "5 分钟" },
-    { sec: 600, label: "10 分钟" },
-  ];
+  const INTERVAL_OPTIONS = [0, 30, 60, 120, 300, 600];
 
   const DEFAULTS = {
     silentCheckEnabled: true,
@@ -51,7 +44,7 @@
   function normalizeInterval(sec) {
     const n = parseInt(sec, 10);
     if (!Number.isFinite(n)) return DEFAULTS.silentCheckIntervalSec;
-    return INTERVAL_OPTIONS.some((o) => o.sec === n) ? n : DEFAULTS.silentCheckIntervalSec;
+    return INTERVAL_OPTIONS.indexOf(n) !== -1 ? n : DEFAULTS.silentCheckIntervalSec;
   }
 
   function load() {
@@ -152,26 +145,38 @@
     if (silentRunner) startSilentCheck(silentRunner);
   }
 
+  function T(key, params) {
+    return global.MemoriaI18n && global.MemoriaI18n.t
+      ? global.MemoriaI18n.t(key, params)
+      : key;
+  }
+
+  function intervalLabel(sec) {
+    if (sec <= 0) return T("check.settings.off");
+    if (sec % 60 === 0) return T("check.settings.minutes", { n: sec / 60 });
+    return T("check.settings.seconds", { n: sec });
+  }
+
   function renderSettingsBody() {
     const s = load();
     const intervalOptions = INTERVAL_OPTIONS.map(
-      (o) =>
-        `<option value="${o.sec}"${s.silentCheckIntervalSec === o.sec ? " selected" : ""}>${o.label}</option>`
+      (sec) =>
+        `<option value="${sec}"${s.silentCheckIntervalSec === sec ? " selected" : ""}>${intervalLabel(sec)}</option>`
     ).join("");
     return `<div class="-settings-layout -settings-layout--solo">
       <div class="-settings-form">
         <section class="-settings-section">
-          <h3 class="-settings-heading">静默检查</h3>
-          <p class="-muted -settings-note">在后台定期校验知识库；发现错误时「检查」按钮显示红色角标，仅警告时显示黄色角标。底栏统计同步着色。</p>
+          <h3 class="-settings-heading">${T("check.settings.heading")}</h3>
+          <p class="-muted -settings-note">${T("check.settings.noteMain")}</p>
           <label class="-settings-field">
-            <span>检查间隔</span>
+            <span>${T("check.settings.interval")}</span>
             <select data-check-setting="silentCheckIntervalSec">${intervalOptions}</select>
           </label>
           <label class="-settings-field -settings-field--inline">
             <input type="checkbox" data-check-setting="silentCheckEnabled"${s.silentCheckEnabled && s.silentCheckIntervalSec > 0 ? " checked" : ""}${s.silentCheckIntervalSec === 0 ? " disabled" : ""}>
-            <span>启用静默检查</span>
+            <span>${T("check.settings.enabled")}</span>
           </label>
-          <p class="-muted -settings-note">间隔设为「关闭」时不进行后台检查；打开知识库时仍会执行一次检查。</p>
+          <p class="-muted -settings-note">${T("check.settings.noteOff")}</p>
         </section>
       </div>
     </div>`;

@@ -148,11 +148,16 @@ def apply_path_move(kb_path: str, old_rel: str, new_rel: str) -> dict:
     old_rel = _norm(old_rel)
     new_rel = _norm(new_rel)
     if not old_rel or not new_rel or old_rel == new_rel:
-        return {"status": "error", "message": "路径无效"}
+        return {"status": "error", "code": "path_move_invalid", "message": "路径无效"}
 
     new_md = Path(kb_path) / new_rel
     if not new_md.is_file():
-        return {"status": "error", "message": f"目标文档不存在：{new_rel}"}
+        return {
+            "status": "error",
+            "code": "path_target_missing",
+            "params": {"rel": new_rel},
+            "message": f"目标文档不存在：{new_rel}",
+        }
 
     sidecar_moved = _relocate_sidecar_file(kb_path, old_rel, new_rel)
     sidecar_updated = _update_sidecar_file_field(kb_path, new_rel)
@@ -181,7 +186,12 @@ def apply_path_move(kb_path: str, old_rel: str, new_rel: str) -> dict:
 def reconcile_path_cascade(kb_path: str, *, apply: bool = False) -> dict:
     """检测并可选应用路径级联修复。"""
     if not os.path.isdir(kb_path):
-        return {"status": "error", "message": f"目录不存在: {kb_path}"}
+        return {
+            "status": "error",
+            "code": "kb_dir_missing",
+            "params": {"kb": kb_path},
+            "message": f"目录不存在: {kb_path}",
+        }
 
     moves = detect_path_moves(kb_path)
     if not apply:

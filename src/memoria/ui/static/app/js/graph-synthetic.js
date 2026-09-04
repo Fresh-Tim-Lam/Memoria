@@ -26,8 +26,8 @@
     const id = `kp-${i}`;
     return {
       id,
-      name: `知识点 ${i}`,
-      label: `知识点 ${i}`,
+      name: `Node ${i}`,
+      label: `Node ${i}`,
       description: `synthetic node ${i}`,
       file: `synthetic/file-${fileIdx % 8}.md`,
       kp_id: id,

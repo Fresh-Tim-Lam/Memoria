@@ -10,6 +10,13 @@
 
   var EH = window.MemoriaEditHandler = {};
 
+  /** i18n 取词助手：MemoriaI18n 未就绪时回退键名（与 graph-settings/app.js 一致）。 */
+  function _t(key, params) {
+    return window.MemoriaI18n && window.MemoriaI18n.t
+      ? window.MemoriaI18n.t(key, params)
+      : key;
+  }
+
   // ════════════════════════════════════════════════════════════════
   //  文件日志系统 — 输出到 d:\AAA_Jupyter\Memoria\logs\block-skip-debug.log
   // ════════════════════════════════════════════════════════════════
@@ -68,7 +75,7 @@
     var sw = document.getElementById("edit-mode-toggle");
     if (sw) {
       sw.setAttribute("aria-checked", EH.editMode ? "true" : "false");
-      sw.title = EH.editMode ? "编辑模式：点击定位光标（再次点击关闭）" : "浏览模式：点击链接（再次点击开启编辑）";
+      sw.title = EH.editMode ? _t("edit.mode.title") : _t("edit.mode.browseTitle");
     }
     // 控制预览区 contentEditable：OFF 时链接可点击跳转
     var preview = document.getElementById("preview");
@@ -900,43 +907,43 @@
   /** 块类型对应的标签和工具 */
   var _BLOCK_TOOLS = {
     code_block: {
-      label: "编辑代码块",
+      labelKey: "edit.block.editCodeBlock",
       tools: function (block) {
         var langs = ["", "javascript", "python", "bash", "json", "html", "css", "sql", "mermaid"];
-        var sel = '<select id="blk-lang-sel" class="-block-lang-sel" title="语言">';
+        var sel = '<select id="blk-lang-sel" class="-block-lang-sel" title="' + _t("edit.block.lang") + '">';
         for (var i = 0; i < langs.length; i++) {
           var v = langs[i];
           var sel2 = (block.lang === v) ? " selected" : "";
-          sel += '<option value="' + v + '"' + sel2 + ">" + (v || "无") + "</option>";
+          sel += '<option value="' + v + '"' + sel2 + ">" + (v || _t("edit.block.none")) + "</option>";
         }
         sel += "</select>";
         return sel;
       }
     },
     mermaid: {
-      label: "编辑思维导图",
+      labelKey: "edit.block.editMermaid",
       tools: function () {
         var types = [
-          { v: "graph TD", l: "流程图" },
-          { v: "sequenceDiagram", l: "序列图" },
-          { v: "classDiagram", l: "类图" },
-          { v: "stateDiagram-v2", l: "状态图" },
-          { v: "erDiagram", l: "ER图" },
-          { v: "gantt", l: "甘特图" },
+          { v: "graph TD", k: "edit.block.flow" },
+          { v: "sequenceDiagram", k: "edit.block.sequence" },
+          { v: "classDiagram", k: "edit.block.class" },
+          { v: "stateDiagram-v2", k: "edit.block.state" },
+          { v: "erDiagram", k: "edit.block.er" },
+          { v: "gantt", k: "edit.block.gantt" },
         ];
-        var html = '<span class="-block-edit-hint">类型:</span><select id="blk-mermaid-type" class="-block-lang-sel">';
+        var html = '<span class="-block-edit-hint">' + _t("edit.block.type") + ':</span><select id="blk-mermaid-type" class="-block-lang-sel">';
         for (var i = 0; i < types.length; i++) {
-          html += '<option value="' + types[i].v + '">' + types[i].l + "</option>";
+          html += '<option value="' + types[i].v + '">' + _t(types[i].k) + "</option>";
         }
         html += "</select>";
         return html;
       }
     },
     math_block: {
-      label: "编辑数学公式",
+      labelKey: "edit.block.editMathBlock",
       tools: function () {
         var syms = ["α","β","γ","δ","θ","λ","μ","π","σ","φ","ω","∑","∏","∫","∂","∞","≤","≥","≠","±","×","÷","√","∈","∉","⊂","⊃","∪","∩","∀","∃"];
-        var html = '<span class="-block-edit-hint">符号:</span>';
+        var html = '<span class="-block-edit-hint">' + _t("edit.block.symbols") + ':</span>';
         for (var i = 0; i < syms.length; i++) {
           html += '<button type="button" class="-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
         }
@@ -944,27 +951,27 @@
       }
     },
     table: {
-      label: "编辑表格",
+      labelKey: "edit.block.editTable",
       tools: function () {
-        return '<button type="button" class="-fmt-btn" id="blk-add-row" title="添加行">+行</button>' +
-               '<button type="button" class="-fmt-btn" id="blk-add-col" title="添加列">+列</button>';
+        return '<button type="button" class="-fmt-btn" id="blk-add-row" title="' + _t("edit.block.addRow") + '">' + _t("edit.block.addRowShort") + '</button>' +
+               '<button type="button" class="-fmt-btn" id="blk-add-col" title="' + _t("edit.block.addCol") + '">' + _t("edit.block.addColShort") + '</button>';
       }
     },
     image: {
-      label: "编辑图片",
+      labelKey: "edit.block.editImage",
       tools: function () {
-        return '<span class="-block-edit-hint">对齐:</span>' +
-          '<button type="button" class="-fmt-btn -img-align-btn" data-align="left" title="左对齐">左</button>' +
-          '<button type="button" class="-fmt-btn -img-align-btn" data-align="center" title="居中">中</button>' +
-          '<button type="button" class="-fmt-btn -img-align-btn" data-align="right" title="右对齐">右</button>' +
-          '<span class="-block-edit-hint">大小:</span>' +
-          '<input type="range" id="img-size-slider" class="-img-size-slider" min="50" max="800" step="10" title="图片显示宽度">' +
+        return '<span class="-block-edit-hint">' + _t("edit.block.align") + ':</span>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="left" title="' + _t("edit.block.alignLeft") + '">' + _t("edit.block.alignLeftShort") + '</button>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="center" title="' + _t("edit.block.alignCenter") + '">' + _t("edit.block.alignCenterShort") + '</button>' +
+          '<button type="button" class="-fmt-btn -img-align-btn" data-align="right" title="' + _t("edit.block.alignRight") + '">' + _t("edit.block.alignRightShort") + '</button>' +
+          '<span class="-block-edit-hint">' + _t("edit.block.size") + ':</span>' +
+          '<input type="range" id="img-size-slider" class="-img-size-slider" min="50" max="800" step="10" title="' + _t("edit.block.imgWidth") + '">' +
           '<span class="-img-size-val" id="img-size-val">300</span>' +
-          '<span class="-block-edit-hint">名称:</span>' +
-          '<input type="range" id="img-name-size-slider" class="-img-name-size-slider" min="10" max="32" step="1" title="名称字号">' +
+          '<span class="-block-edit-hint">' + _t("edit.block.name") + ':</span>' +
+          '<input type="range" id="img-name-size-slider" class="-img-name-size-slider" min="10" max="32" step="1" title="' + _t("edit.block.nameSize") + '">' +
           '<span class="-img-name-val" id="img-name-val">14</span>' +
-          '<button type="button" id="img-name-toggle" class="-fmt-btn" title="显示/隐藏图片名称">名称:开</button>' +
-          '<button type="button" class="-fmt-btn" id="img-mgr-btn" title="打开图片管理">图片管理</button>';
+          '<button type="button" id="img-name-toggle" class="-fmt-btn" title="' + _t("edit.block.nameToggle") + '">' + _t("edit.block.nameOn") + '</button>' +
+          '<button type="button" class="-fmt-btn" id="img-mgr-btn" title="' + _t("img.openTitle") + '">' + _t("img.title") + '</button>';
       }
     }
   };
@@ -1006,13 +1013,13 @@
     if (blkBar) blkBar.classList.remove("hidden");
 
     var labelEl = document.getElementById("block-edit-label");
-    if (labelEl) labelEl.textContent = "编辑行内公式";
+    if (labelEl) labelEl.textContent = _t("edit.block.editInlineMath");
 
     // 生成符号工具栏
     var toolsEl = document.getElementById("block-edit-tools");
     if (toolsEl) {
       var syms = ["α","β","γ","δ","θ","λ","μ","π","σ","φ","ω","∑","∏","∫","∂","∞","≤","≥","≠","±","×","÷","√","∈","∉","⊂","⊃","∪","∩","∀","∃"];
-      var html = '<span class="-block-edit-hint">符号:</span>';
+      var html = '<span class="-block-edit-hint">' + _t("edit.block.symbols") + ':</span>';
       for (var i = 0; i < syms.length; i++) {
         html += '<button type="button" class="-math-sym-btn" data-sym="' + syms[i] + '">' + syms[i] + "</button>";
       }
@@ -1105,7 +1112,7 @@
       if (fmtBarImg) fmtBarImg.classList.add("hidden");
       if (blkBarImg) blkBarImg.classList.remove("hidden");
       var labelElImg = document.getElementById("block-edit-label");
-      if (labelElImg) labelElImg.textContent = "编辑图片";
+      if (labelElImg) labelElImg.textContent = _t(toolsDef.labelKey);
       // "编辑图片"标签置于工具栏（#editor-header）最左侧：隐藏文件名 #file-meta
       var metaElImg = document.getElementById("file-meta");
       if (metaElImg) metaElImg.style.display = "none";
@@ -1131,7 +1138,7 @@
     if (blkBar) blkBar.classList.remove("hidden");
 
     var labelEl = document.getElementById("block-edit-label");
-    if (labelEl) labelEl.textContent = toolsDef.label;
+    if (labelEl) labelEl.textContent = _t(toolsDef.labelKey);
 
     var toolsEl = document.getElementById("block-edit-tools");
     if (toolsEl) {
@@ -1252,7 +1259,7 @@
     var nameToggle = document.getElementById("img-name-toggle");
     if (nameToggle) {
       var nameHidden = ctx.imgAttrs.name === "hide";
-      nameToggle.textContent = nameHidden ? "名称:关" : "名称:开";
+      nameToggle.textContent = nameHidden ? _t("edit.block.nameOff") : _t("edit.block.nameOn");
       nameToggle.classList.toggle("active", !nameHidden);
       nameToggle.addEventListener("click", function () {
         dispatchImageAttr({ name: ctx.imgAttrs.name === "hide" ? "show" : "hide" });

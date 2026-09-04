@@ -14,6 +14,8 @@
   let minSize = { w: 900, h: 600 };
   let resizeLayer = null;
 
+  const _t = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
+
   function api() {
     return global.MemoriaBridge && global.MemoriaBridge.api();
   }
@@ -21,7 +23,7 @@
   function setMaximizeIcon(btn, isMax) {
     if (!btn) return;
     btn.classList.toggle("is-restore", !!isMax);
-    btn.title = isMax ? "还原" : "最大化";
+    btn.title = isMax ? _t("win.restore") : _t("win.maximize");
     btn.setAttribute("aria-label", btn.title);
   }
 

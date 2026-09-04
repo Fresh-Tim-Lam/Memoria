@@ -18,10 +18,20 @@ def _norm(p: str) -> str:
     return p.replace("\\", "/")
 
 
-def _issue(code: str, message: str, *, severity: str, paths: list[str] | None = None) -> dict:
+def _issue(
+    code: str,
+    message: str,
+    *,
+    severity: str,
+    paths: list[str] | None = None,
+    params: dict | None = None,
+) -> dict:
+    """构造检查问题行；``code`` 为前端翻译键后缀（en 包 check.issue.<code>），``params`` 供英文模板占位。"""
     row: dict = {"code": code, "message": message, "severity": severity}
     if paths:
         row["paths"] = paths
+    if params:
+        row["params"] = params
     return row
 
 
@@ -45,6 +55,7 @@ def audit_kb_integrity(kb_path: str) -> dict:
                 f"知识点 id「{kp_id}」在 {len(paths)} 个文件中重复",
                 severity="error",
                 paths=paths,
+                params={"kp_id": kp_id, "count": len(paths)},
             )
         )
 
@@ -56,6 +67,7 @@ def audit_kb_integrity(kb_path: str) -> dict:
                 f"文档缺少元数据配置：{rel}",
                 severity="warning",
                 paths=[rel],
+                params={"rel": rel},
             )
         )
 
@@ -64,6 +76,9 @@ def audit_kb_integrity(kb_path: str) -> dict:
         sc_path = sidecar_path_for(os.path.join(kb, rel), kb)
         sidecar = load_sidecar(sc_path)
         file_field = (sidecar or {}).get("file")
+        params: dict = {"rel": rel}
+        if file_field:
+            params["fileSuffix"] = f" (declared file: {file_field})"
         warnings.append(
             _issue(
                 CODE_ORPHAN_SIDECAR,
@@ -71,6 +86,7 @@ def audit_kb_integrity(kb_path: str) -> dict:
                 + (f"（file: {file_field}）" if file_field else ""),
                 severity="warning",
                 paths=[rel],
+                params=params,
             )
         )
 

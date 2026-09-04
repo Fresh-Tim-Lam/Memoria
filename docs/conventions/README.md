@@ -19,5 +19,7 @@
 | [context-key.md](./context-key.md) | CTX-KEY 上下文防火墙机制 | 项目负责人与 AI Agent |
 | [logging.md](./logging.md) | 日志存放/命名/格式/生命周期 | 添加或排查日志者 |
 | [refs-system.md](./refs-system.md) | 参考资料库（refs/）使用规范 | 引用技术资料者 |
+| [i18n.md](./i18n.md) | 语言系统维护规范（文案抽键/语言包结构与回退/新 UI 接入/清单维护） | 新增或修改界面文案者 |
+| [readme-i18n.md](./readme-i18n.md) | README 与项目截图的中英双语维护规范（README.md ↔ README.cn.md 同步、截图收录/存放、自查） | 维护 README 或新增/更换演示截图者 |
 
 > **决策流程**：内容属于"人机都要遵守的规则" → 放本目录；属于操作指引（how-to）→ `guides/`；属于参考说明（understand）→ `reference/`。详见 [docs-management.md](./docs-management.md)。

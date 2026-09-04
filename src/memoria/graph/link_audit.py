@@ -21,6 +21,7 @@ from memoria.storage.scanner import collect_md_files
 from memoria.storage.sidecar import load_sidecar_for_md
 
 ISSUE_MISSING_SIDECAR = "missing_sidecar_link"
+ISSUE_MISSING_INSTANCES = "missing_instances_row"
 ISSUE_NO_INSTANCES = "no_instances"
 ISSUE_INSTANCE_OUTSIDE_KP = "instance_outside_kp"
 ISSUE_UNRESOLVED_TARGET = "unresolved_graph_target"
@@ -154,6 +155,7 @@ def audit_file_graph_links(
                     "file": rel_path,
                     "anchor_text": anchor,
                     "message": f"链接「{anchor}」未绑定目标，不参与图谱建边",
+                    "params": {"anchor": anchor},
                 }
             )
             continue
@@ -169,6 +171,7 @@ def audit_file_graph_links(
                     "anchor_text": anchor,
                     "targets": raw_targets,
                     "message": f"链接「{anchor}」已配置跳转目标但无 instances，图谱不建边",
+                    "params": {"anchor": anchor},
                 }
             )
             continue
@@ -184,6 +187,7 @@ def audit_file_graph_links(
                         "anchor_text": anchor,
                         "line": line,
                         "message": f"链接「{anchor}」L{line} 不在任何 KP range 内，图谱不建边",
+                        "params": {"anchor": anchor, "line": line},
                     }
                 )
                 continue
@@ -202,6 +206,11 @@ def audit_file_graph_links(
                             f"链接「{anchor}」L{line} 的 targets 均无法解析为 KP id"
                             f"（{', '.join(raw_targets)}）"
                         ),
+                        "params": {
+                            "anchor": anchor,
+                            "line": line,
+                            "targets": ", ".join(raw_targets),
+                        },
                     }
                 )
             elif unresolved:
@@ -218,6 +227,11 @@ def audit_file_graph_links(
                             f"链接「{anchor}」部分 target 未入图谱："
                             f"{', '.join(unresolved)}"
                         ),
+                        "params": {
+                            "anchor": anchor,
+                            "line": line,
+                            "targets": ", ".join(unresolved),
+                        },
                     }
                 )
 
@@ -248,6 +262,7 @@ def audit_file_graph_links(
                             f"KP「{src}」内正文 [[{anchor}]]（L{line}）"
                             f"未配置 sidecar links[]，图谱不建边"
                         ),
+                        "params": {"src": src, "anchor": anchor, "line": line},
                     }
                 )
             continue
@@ -257,7 +272,7 @@ def audit_file_graph_links(
             for src in sources:
                 issues.append(
                     {
-                        "code": ISSUE_MISSING_SIDECAR,
+                        "code": ISSUE_MISSING_INSTANCES,
                         "severity": "warning",
                         "file": rel_path,
                         "kp_id": src,
@@ -267,6 +282,7 @@ def audit_file_graph_links(
                             f"KP「{src}」内 [[{anchor}]]（L{line}）"
                             f"无对应 instances 行，图谱不建边"
                         ),
+                        "params": {"src": src, "anchor": anchor, "line": line},
                     }
                 )
 

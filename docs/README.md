@@ -16,7 +16,6 @@
 | `design/` | 设计文档与决策记录 | system-design.md、dicussion.md、designV0.md 等 |
 | `sessions/` | 历史对话记录（承接上下文，原 agents/） | 各会话文档 |
 | `example/` | 示例知识库与测试环境 | example-boonie/、rich-content-test/、导入测试等 |
-| `screenshots/` | README / GitHub 演示截图 | demo-*.png（真实界面自动化截图） |
 | `refs/` | 开发参考资料 | [README.md](refs/README.md) |
 | `prompts/` | 提示词模板 | [README.md](prompts/README.md) |
 | `tmp/` | 少量诊断/调试记录 | 调试会话记录 |

@@ -19,6 +19,8 @@ MANIFEST_FILENAME = "manifest.yaml"
 CODE_MANIFEST_ADDED = "manifest_added"
 CODE_MANIFEST_REMOVED = "manifest_removed"
 CODE_MANIFEST_MD_CHANGED = "manifest_md_changed"
+CODE_MANIFEST_SIDECAR_ADDED = "manifest_sidecar_added"
+CODE_MANIFEST_SIDECAR_REMOVED = "manifest_sidecar_removed"
 CODE_MANIFEST_SIDECAR_CHANGED = "manifest_sidecar_changed"
 
 
@@ -137,8 +139,8 @@ def rebuild_manifest(kb_path: str) -> dict:
     }
 
 
-def _issue(code: str, message: str, *, severity: str, path: str) -> dict:
-    return {"code": code, "message": message, "severity": severity, "paths": [path]}
+def _issue(code: str, message: str, *, severity: str, path: str, params: dict | None = None) -> dict:
+    return {"code": code, "message": message, "severity": severity, "paths": [path], **({"params": params} if params else {})}
 
 
 def filter_manifest_diff_for_path_moves(
@@ -170,7 +172,10 @@ def filter_manifest_diff_for_path_moves(
         1 for w in kept if w.get("code") == CODE_MANIFEST_MD_CHANGED
     )
     summary["sidecar_changed_count"] = sum(
-        1 for w in kept if w.get("code") == CODE_MANIFEST_SIDECAR_CHANGED
+        1
+        for w in kept
+        if w.get("code")
+        in (CODE_MANIFEST_SIDECAR_CHANGED, CODE_MANIFEST_SIDECAR_ADDED, CODE_MANIFEST_SIDECAR_REMOVED)
     )
     out = dict(manifest_diff)
     out["errors"] = errors
@@ -214,6 +219,7 @@ def audit_manifest_diff(kb_path: str) -> dict:
                 f"文件清单中的文档已被删除：{path}",
                 severity="warning",
                 path=path,
+                params={"path": path},
             )
         )
 
@@ -224,6 +230,7 @@ def audit_manifest_diff(kb_path: str) -> dict:
                 f"发现新文档（尚未记入文件清单）：{path}",
                 severity="warning",
                 path=path,
+                params={"path": path},
             )
         )
 
@@ -237,23 +244,28 @@ def audit_manifest_diff(kb_path: str) -> dict:
                     f"文档内容已在外部被修改：{path}",
                     severity="warning",
                     path=path,
+                    params={"path": path},
                 )
             )
         old_sc = old.get("sidecar_sha256")
         new_sc = new.get("sidecar_sha256")
         if old_sc != new_sc:
             if old_sc is None and new_sc is not None:
+                code = CODE_MANIFEST_SIDECAR_ADDED
                 msg = f"已新增元数据配置：{path}"
             elif old_sc is not None and new_sc is None:
+                code = CODE_MANIFEST_SIDECAR_REMOVED
                 msg = f"元数据配置已删除：{path}"
             else:
+                code = CODE_MANIFEST_SIDECAR_CHANGED
                 msg = f"配置内容已在外部被修改：{path}"
             warnings.append(
                 _issue(
-                    CODE_MANIFEST_SIDECAR_CHANGED,
+                    code,
                     msg,
                     severity="warning",
                     path=path,
+                    params={"path": path},
                 )
             )
 
@@ -270,7 +282,10 @@ def audit_manifest_diff(kb_path: str) -> dict:
                 1 for w in warnings if w["code"] == CODE_MANIFEST_MD_CHANGED
             ),
             "sidecar_changed_count": sum(
-                1 for w in warnings if w["code"] == CODE_MANIFEST_SIDECAR_CHANGED
+                1
+                for w in warnings
+                if w["code"]
+                in (CODE_MANIFEST_SIDECAR_CHANGED, CODE_MANIFEST_SIDECAR_ADDED, CODE_MANIFEST_SIDECAR_REMOVED)
             ),
         },
         "manifest_path": manifest_path(kb_path),
