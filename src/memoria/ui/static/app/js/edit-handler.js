@@ -1169,7 +1169,8 @@
    * @returns {object} {width?, height?, align?}
    */
   function parseImageAttrsFromLine(line) {
-    var m = line && line.match(/^!\[[^\]]*\]\([^)\s]+(?:\s+"([^"]*)")?\)\s*$/);
+    // url 允许含空格（`<...>` 尖括号包裹形式）；属性串可缺省
+    var m = line && line.match(/^!\[[^\]]*\]\([\s\S]*?(?:\s+"([^"]*)")?\s*\)\s*$/);
     if (!m || !m[1]) return {};
     var attrs = {};
     m[1].split(",").forEach(function (kv) {

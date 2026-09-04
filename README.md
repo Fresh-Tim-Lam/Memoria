@@ -35,12 +35,14 @@ All of your data lives in plain files on your disk — `.md` bodies plus YAML me
 - **Wiki-style links**: `[[Knowledge Point Name]]` weaves any snippet into a network. Click to jump to the target source snippet with highlight, with back/forward navigation.
 - **2D / 3D graph**: switch between force-directed 2D and spatial 3D views in the sidebar; click a node to jump back to its source; graph groups are rebuilt via the "Build" button.
 - **snippet-range navigation**: links resolve to the exact line range in a document — not just the whole page.
+- **Multi-target links & semantic edges**: one link text can point to several targets — clicking jumps to the queue leader while the rest stay as tag-bar alternates; every edge carries a type (reference / extend / contain) and a relevance strength, synced on graph build and individually suppressible or deletable.
 
 ### Immersive writing
 
 - **Three views**: `Source` / `Preview` / `Split`, edit while you watch; toggle "Edit mode" on and off (read-only browsing when off).
 - **Visual editing**: paint **highlighters / font colors / bold / italic** with your mouse like a word processor; changes are written back to source automatically.
 - **Format toolbar**: bold, italic, highlighters (yellow/green/red/blue/orange/custom/dual-color/named), font colors, image insertion.
+- **Style brush & color picker**: pick a style (bold / italic / highlight / font color), then drag with the left button to paint it across a run; right-click cancels one style at a time. The picker manages a custom palette you can add colors to or remove from.
 
 ### Rich rendering (Markdown+)
 
@@ -53,12 +55,17 @@ All of your data lives in plain files on your disk — `.md` bodies plus YAML me
 
 - Declare **Knowledge Points** (name, weight, tags) in front-matter or extract them from text; the sidebar panel manages the points and links of the current file.
 - **Pending confirmation**: after checks surface unconfirmed/dangling points and links, confirm them **one by one or all at once**.
+- **Candidates & suggestions**: body mentions, aliases, and descriptions appear as candidates — adopt them as aliases / tags / descriptions in one click; "System suggestions / Sync search aux" derives suggested candidates from the body index.
 - **Integrity check**: scan the whole library in one click — dangling links, missing points, inconsistent structure.
 
 ### Local offline retrieval
 
 - Built-in **Chinese tokenized search (jieba)**, whole-library or current-file scope, `Ctrl+K` to summon.
 - Optional `sentence-transformers` semantic retrieval + rerank fusion (optional dependency, not required).
+
+### Bilingual UI (Chinese / English)
+
+- **UI language**: Settings → Display → Interface language, switched instantly and remembered automatically; every UI string is localized, and missing English entries fall back to Chinese.
 
 ### Your data, your format
 

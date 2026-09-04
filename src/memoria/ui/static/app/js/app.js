@@ -173,71 +173,11 @@
     return issue ? issue.code || String(issue) : "";
   }
 
-  /** 检查统计的单复数词尾（紧跟在数字 strong 之后，如「2 错误 / 1 error」）。 */
-  function checkCountWord(n, kind) {
-    const key = n === 1 ? `check.word.${kind}` : `check.word.${kind}s`;
-    return T(key);
-  }
-
-  /** 底栏/汇总里整段着色的统计块（如「2 错误」）。 */
-  function statCountHtml(n, kind) {
-    const cls = kind === "error" ? "-stat-error" : "-stat-warn";
-    const key = n === 1 ? `check.stat.${kind}s.one` : `check.stat.${kind}s.many`;
-    return `<span class="${cls}">${T(key, { n })}</span>`;
-  }
-
   function setStatus(msg, stats) {
     $("#status-info").textContent = msg;
     if (stats !== undefined) {
       state.lastFileStats = stats == null ? "" : String(stats);
       renderStatusStats();
-    }
-  }
-
-  function formatKbCheckStatsHtml(vr) {
-    if (!vr) return "";
-    const err = vr.errors || 0;
-    const warn = vr.warnings || 0;
-    if (err === 0 && warn === 0) return "";
-    const parts = [T("check.stat.head")];
-    if (err > 0) {
-      parts.push(statCountHtml(err, "error"));
-    }
-    if (warn > 0) {
-      parts.push(statCountHtml(warn, "warning"));
-    }
-    return parts.join(" · ");
-  }
-
-  function normalizeCheckSeverity(severity) {
-    return severity === "error" ? "error" : "warning";
-  }
-
-  function updateCheckButtonBadge(vr) {
-    const badge = $("#btn-check-badge");
-    if (!badge) return;
-    const err = vr?.errors || 0;
-    const warn = vr?.warnings || 0;
-    const total = err + warn;
-    badge.classList.remove("-toolbar-badge--error", "-toolbar-badge--warn", "hidden");
-    if (total <= 0) {
-      badge.textContent = "";
-      badge.classList.add("hidden");
-      badge.setAttribute("aria-hidden", "true");
-      badge.removeAttribute("title");
-      return;
-    }
-    badge.textContent = String(total > 99 ? "99+" : total);
-    badge.removeAttribute("aria-hidden");
-    if (err > 0) {
-      badge.classList.add("-toolbar-badge--error");
-      badge.title =
-        warn > 0
-          ? T("check.badge.tooltipMixed", { err, warn })
-          : T("check.badge.tooltipErrors", { n: err });
-    } else {
-      badge.classList.add("-toolbar-badge--warn");
-      badge.title = T("check.badge.tooltipWarnings", { n: warn });
     }
   }
 
@@ -250,7 +190,8 @@
     const chunks = [];
     const vr = state.kbValidateReport;
     if (vr && (vr.errors > 0 || vr.warnings > 0)) {
-      chunks.push(formatKbCheckStatsHtml(vr));
+      // 「检查统计」块文案由 kb-check.js statsChunk 提供（KB 检查子系统拆分后自包含）
+      chunks.push(window.MemoriaKbCheck?.statsChunk?.(vr) || "");
       el.dataset.kbCheck = "1";
     } else {
       delete el.dataset.kbCheck;
@@ -292,23 +233,6 @@
     }
 
     el.innerHTML = chunks.filter(Boolean).join(" · ");
-  }
-
-  function applyCheckIndicators(vr) {
-    if (!vr) return;
-    updateCheckButtonBadge(vr);
-    renderStatusStats();
-  }
-
-  function startKbSilentCheck() {
-    if (!window.MemoriaCheckSettings) return;
-    MemoriaCheckSettings.startSilentCheck(() => {
-      if (state.kbPath) runKbValidate({ silent: true });
-    });
-  }
-
-  function stopKbSilentCheck() {
-    window.MemoriaCheckSettings?.stopSilentCheck?.();
   }
 
   function showFlashError(msg, detail, opts = {}) {
@@ -363,7 +287,7 @@
 
   async function call(fn, ...args) {
     const a = api();
-    if (!a || !a[fn]) throw new Error("API 不可用: " + fn);
+    if (!a || !a[fn]) throw new Error(T("app.apiUnavailable", { fn }));
     return await a[fn](...args);
   }
 
@@ -447,9 +371,9 @@
         await refreshFiles();
         await loadLinkTargets();
         await loadGraphData();
-        setStatus("已加载知识库", state.kbPath);
-        await runKbValidate({ silent: false });
-        startKbSilentCheck();
+        setStatus(T("app.status.kbLoaded"), state.kbPath);
+        await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
+        window.MemoriaKbCheck?.startKbSilentCheck?.();
         const preferred =
           state.files.find((f) => f.path === "navigation-demo.md") ||
           state.files.find((f) => f.path === "mdp.md") ||
@@ -461,7 +385,7 @@
         setStatus("Memoria");
       }
     } catch (e) {
-      setStatus("等待后端…");
+      setStatus(T("app.status.waitingBackend"));
     }
   }
 
@@ -524,9 +448,9 @@
     await loadLinkTargets();
     await loadGraphData();
     await refreshKbPendingSummary();
-    setStatus("已打开知识库", path);
-    await runKbValidate({ silent: false });
-    startKbSilentCheck();
+    setStatus(T("app.status.kbOpened"), path);
+    await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
+    window.MemoriaKbCheck?.startKbSilentCheck?.();
   }
 
   async function closeKb() {
@@ -546,7 +470,7 @@
     state.kbValidateReport = null;
     state.kbPending = null;
     state.lastFileStats = "";
-    updateCheckButtonBadge(null);
+    window.MemoriaKbCheck?.resetIndicators?.();
     state.linkTargetSet = null;
     state.linkTargetList = [];
     clearGraphKpHover();
@@ -561,184 +485,39 @@
     state.graphView3d?.stop?.();
     syncGraphGroupBarVisibility();
     updateSidebarTabCounts();
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     renderTabs();
     const editor = $("#editor");
     if (editor) editor.innerHTML = "";
     const preview = $("#preview");
     if (preview) preview.innerHTML = "";
     const kpList = $("#kp-list");
-    if (kpList) kpList.innerHTML = '<div class="empty">未打开知识库</div>';
+    if (kpList) kpList.innerHTML = '<div class="empty">' + T("app.status.kbEmpty") + '</div>';
     const kpCount = $("#kp-count");
     if (kpCount) kpCount.textContent = "";
     showWelcome(true);
-    stopKbSilentCheck();
-    setStatus("未打开知识库", "点「打开知识库」选择目录");
-    closeCheckModal();
+    window.MemoriaKbCheck?.stopSilentCheck?.();
+    setStatus(T("app.status.kbEmpty"), T("app.status.kbEmptyDetail"));
+    window.MemoriaKbCheck?.closeCheckModal?.();
   }
 
   async function refreshFiles() {
     const res = await call("list_files");
     if (res.status !== "ok") {
-      setStatus(res.message || "列表失败");
+      setStatus(res.message || T("app.listFailed"));
       return;
     }
     state.files = res.files || [];
     state.dirs = res.dirs || [];
     updateSidebarTabCounts();
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
   }
 
-  function ensureTreeExpandedSet() {
-    if (!state.treeExpanded) {
-      state.treeExpanded = new Set();
-    }
-    return state.treeExpanded;
-  }
+  // 文件树渲染/展开折叠/点击切换文档/右键新建·重命名·删除等已随文件树子系统迁至 file-tree.js
+  // （window.MemoriaFileTree；boot 在 MemoriaKbCheck.init 后 init，refreshFiles/openFile/
+  //  closeKb/closeTabAt/KP 写回等经 render/expandToPath 触发重新渲染）。
 
-  function ensureTreeExpandedForPath(relPath) {
-    if (!relPath) return;
-    const expanded = ensureTreeExpandedSet();
-    const parts = relPath.replace(/\\/g, "/").split("/");
-    let acc = "";
-    for (let i = 0; i < parts.length - 1; i++) {
-      acc = acc ? `${acc}/${parts[i]}` : parts[i];
-      expanded.add(acc);
-    }
-  }
-
-  function compareTreeNames(a, b) {
-    return String(a).localeCompare(String(b), "zh-CN", {
-      sensitivity: "base",
-      numeric: true,
-    });
-  }
-
-  function buildFileTreeRoot(files, extraDirs) {
-    const root = { dirs: {}, files: [] };
-    const ensureDir = (segments) => {
-      let node = root;
-      let dirPath = "";
-      for (const seg of segments) {
-        if (!seg) continue;
-        dirPath = dirPath ? `${dirPath}/${seg}` : seg;
-        if (!node.dirs[seg]) {
-          node.dirs[seg] = { name: seg, path: dirPath, dirs: {}, files: [] };
-        }
-        node = node.dirs[seg];
-      }
-      return node;
-    };
-    // 先建立目录骨架（含空目录，保证新建的空文件夹可见）
-    for (const d of extraDirs || []) {
-      ensureDir(String(d).replace(/\\/g, "/").split("/"));
-    }
-    for (const f of files) {
-      const norm = f.path.replace(/\\/g, "/");
-      const parts = norm.split("/");
-      const dir = parts.length > 1 ? ensureDir(parts.slice(0, -1)) : root;
-      dir.files.push({ ...f, path: norm });
-    }
-    return root;
-  }
-
-  function renderTreeDirNode(node, depth) {
-    const expanded = ensureTreeExpandedSet().has(node.path);
-    const pad = 4 + depth * 14;
-    let html = `<div class="-tree-dir" data-dir="${esc(node.path)}">
-      <div class="-tree-dir-head" data-dir-toggle="${esc(node.path)}" style="padding-left:${pad}px">
-        <span class="-tree-twisty">${expanded ? "▼" : "▶"}</span>
-        <span class="-tree-icon">📁</span>
-        <span class="-tree-label">${esc(node.name)}</span>
-      </div>
-      <div class="-tree-dir-children${expanded ? "" : " collapsed"}">`;
-    html += renderTreeLevel(node, depth + 1);
-    html += "</div></div>";
-    return html;
-  }
-
-  function renderTreeFileItem(f, depth) {
-    const active = f.path === state.currentPath ? " active" : "";
-    const side = f.has_sidecar ? "" : " no-sidecar";
-    const icon = f.has_sidecar ? "📄" : "📝";
-    const pad = 12 + depth * 14;
-    const label = basename(f.path);
-    return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" style="padding-left:${pad}px">
-      <span class="-tree-icon">${icon}</span>
-      <span class="-tree-label">${esc(label)}</span>
-    </div>`;
-  }
-
-  function renderTreeLevel(node, depth) {
-    let html = "";
-    const dirs = Object.values(node.dirs || {}).sort((a, b) =>
-      compareTreeNames(a.name, b.name)
-    );
-    for (const dir of dirs) {
-      html += renderTreeDirNode(dir, depth);
-    }
-    const files = (node.files || [])
-      .slice()
-      .sort((a, b) => compareTreeNames(basename(a.path), basename(b.path)));
-    for (const f of files) {
-      html += renderTreeFileItem(f, depth);
-    }
-    return html;
-  }
-
-  function bindFileTreeInteraction(el) {
-    el.querySelectorAll("[data-dir-toggle]").forEach((head) => {
-      head.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const dirPath = head.dataset.dirToggle;
-        const expanded = ensureTreeExpandedSet();
-        if (expanded.has(dirPath)) expanded.delete(dirPath);
-        else expanded.add(dirPath);
-        renderFileTree();
-      });
-    });
-    el.querySelectorAll(".-tree-item").forEach((node) => {
-      node.addEventListener("click", () => navigateToFile(node.dataset.path));
-    });
-    // 右键菜单（事件委托，属性赋值避免 render 重建重复绑定）：
-    // 文件 → 重命名/删除；文件夹 → 新建文件/文件夹；空白区 → 根目录下新建
-    el.oncontextmenu = (e) => {
-      const t = e.target;
-      if (!t || !t.closest) return;
-      const item = t.closest(".-tree-item");
-      if (item) {
-        e.preventDefault();
-        e.stopPropagation();
-        showTreeContextMenu(e.clientX, e.clientY, [
-          { label: "重命名", action: () => renameTreeFile(item.dataset.path) },
-          { label: "删除", danger: true, action: () => deleteTreeFile(item.dataset.path) },
-        ]);
-        return;
-      }
-      const dirHead = t.closest(".-tree-dir-head");
-      if (dirHead) {
-        e.preventDefault();
-        e.stopPropagation();
-        const base = dirHead.dataset.dirToggle || "";
-        showTreeContextMenu(e.clientX, e.clientY, [
-          { label: "新建文件", action: () => createTreeFile(base) },
-          { label: "新建文件夹", action: () => createTreeDir(base) },
-        ]);
-        return;
-      }
-      if (t.closest("#file-tree")) {
-        e.preventDefault();
-        e.stopPropagation();
-        showTreeContextMenu(e.clientX, e.clientY, [
-          { label: "新建文件", action: () => createTreeFile("") },
-          { label: "新建文件夹", action: () => createTreeDir("") },
-          { label: T("img.menuLabel"), action: () => openImageManager() },
-        ]);
-      }
-    };
-  }
-
-  // ── 文件树右键菜单 ──────────────────────────────────────────
+  // ── 文件树右键浮层（通用 .-context-menu 渲染与确认弹窗：image-tools.js 亦经门面共用，保留）────
 
   const FT_MENU_ID = "-ft-context-menu";
   let _ftMenuBound = false;
@@ -797,46 +576,6 @@
     }
   }
 
-  /** 轻量应用内输入弹窗（复用 .-modal 样式，避免 pywebview 原生 prompt 系统对话框） */
-  function promptTreeInput(title, placeholder, initial, okLabel, cb) {
-    const overlay = document.createElement("div");
-    overlay.className = "-modal";
-    overlay.innerHTML = `
-      <div class="-modal-backdrop"></div>
-      <div class="-modal-box" style="width:min(360px,92vw)">
-        <div class="-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
-        <div class="-modal-body">
-          <input data-role="ft-input" type="text" style="width:100%;box-sizing:border-box;padding:6px 8px;border:1px solid var(--border);background:var(--bg-primary);color:var(--text-primary);border-radius:4px;font-size:12px;outline:none"
-            placeholder="${esc(placeholder || "")}" value="${esc(initial || "")}" />
-        </div>
-        <div class="-modal-footer -btn-bar">
-          <span class="-modal-footer-spacer"></span>
-          <button type="button" class="-btn" data-act="cancel">取消</button>
-          <button type="button" class="-btn primary" data-act="ok">${esc(okLabel || "确定")}</button>
-        </div>
-      </div>`;
-    document.body.appendChild(overlay);
-    const input = overlay.querySelector("[data-role=ft-input]");
-    const close = (val) => {
-      overlay.remove();
-      cb(val);
-    };
-    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => close(null));
-    overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => close(null));
-    overlay.querySelector('[data-act="ok"]').addEventListener("click", () => {
-      close(input.value.trim() || null);
-    });
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        close(input.value.trim() || null);
-      } else if (e.key === "Escape") {
-        close(null);
-      }
-    });
-    setTimeout(() => input.focus(), 30);
-  }
-
   /** 轻量应用内确认弹窗 */
   function confirmTreeAction(title, message, okLabel, cb) {
     const overlay = document.createElement("div");
@@ -860,82 +599,6 @@
     overlay.querySelector(".-modal-backdrop").addEventListener("click", () => close(false));
     overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => close(false));
     overlay.querySelector('[data-act="ok"]').addEventListener("click", () => close(true));
-  }
-
-  async function renameTreeFile(relPath) {
-    const oldName = basename(relPath);
-    promptTreeInput("重命名文件", "输入新文件名（自动补 .md）", oldName, "重命名", async (val) => {
-      if (!val || val === oldName) return;
-      const res = await call("file_rename", relPath, val);
-      if (res.status !== "ok") {
-        setStatus(res.message || "重命名失败");
-        return;
-      }
-      setStatus("已重命名", res.path);
-      if (res.synced) {
-        const n = res.md_replacements || 0;
-        const m = (res.md_files || []).length;
-        const s = (res.sidecar_files || []).length;
-        setStatus(`已重命名并同步 ${n} 处链接引用（${m} 个文件正文、${s} 个侧车）`, res.path);
-      }
-      const tab = state.openTabs.find((t) => t.path === relPath);
-      if (tab) {
-        tab.path = res.path;
-        tab.label = basename(res.path);
-      }
-      renderTabs();
-      await refreshFiles();
-      if (state.currentPath === relPath) {
-        await openFile(res.path, { fromNav: true });
-      }
-    });
-  }
-
-  async function deleteTreeFile(relPath) {
-    confirmTreeAction("删除文件", `确定删除「${basename(relPath)}」？此操作不可恢复。`, "删除", async () => {
-      const res = await call("file_delete", relPath);
-      if (res.status !== "ok") {
-        setStatus(res.message || "删除失败");
-        return;
-      }
-      setStatus("已删除", basename(relPath));
-      const tabIdx = state.openTabs.findIndex((t) => t.path === relPath);
-      if (tabIdx >= 0) {
-        closeTabAt(tabIdx);
-      }
-      await refreshFiles();
-    });
-  }
-
-  async function createTreeFile(baseDir) {
-    promptTreeInput("新建文件", "输入文件名（自动补 .md）", "", "创建", async (val) => {
-      if (!val) return;
-      const rel = baseDir ? `${baseDir}/${val}` : val;
-      const res = await call("file_create", rel);
-      if (res.status !== "ok") {
-        setStatus(res.message || "创建失败");
-        return;
-      }
-      setStatus("已创建", res.path);
-      if (baseDir) ensureTreeExpandedSet().add(baseDir);
-      await refreshFiles();
-      await openFile(res.path, { fromNav: true });
-    });
-  }
-
-  async function createTreeDir(baseDir) {
-    promptTreeInput("新建文件夹", "输入文件夹名", "", "创建", async (val) => {
-      if (!val) return;
-      const rel = baseDir ? `${baseDir}/${val}` : val;
-      const res = await call("dir_create", rel);
-      if (res.status !== "ok") {
-        setStatus(res.message || "创建失败");
-        return;
-      }
-      setStatus("已创建文件夹", res.path);
-      if (baseDir) ensureTreeExpandedSet().add(baseDir);
-      await refreshFiles();
-    });
   }
 
   function updateSidebarTabCounts() {
@@ -1004,14 +667,18 @@
     const tabs = [
       {
         id: allId,
-        label: "全部",
-        title: "全部节点群（横向瀑布流）",
+        label: T("graph.group.allLabel"),
+        title: T("graph.group.allTitle"),
         count: groups.length || null,
       },
       ...groups.map((g) => ({
         id: g.id,
         label: g.label || g.hubName || g.hubId || g.id,
-        title: `${g.hubName || g.hubId} · ${g.size} 节点 · ${g.edgeCount} 边`,
+        title: T("graph.group.tabTitle", {
+          name: g.hubName || g.hubId || g.id,
+          size: g.size,
+          edges: g.edgeCount,
+        }),
         count: g.size > 1 ? g.size : null,
       })),
     ];
@@ -1223,11 +890,11 @@
     }
     const btn = $("#btn-build");
     if (btn) btn.disabled = true;
-    setStatus("构建中…", "同步链接配置并生成图谱");
+    setStatus(T("graph.build.building"), T("graph.build.buildingDetail"));
     try {
       const res = await call("build_kb");
       if (res.status === "error") {
-        setStatus(res.message || "构建失败");
+        setStatus(res.message || T("graph.build.failed"));
         return;
       }
       await refreshFiles();
@@ -1236,944 +903,23 @@
       if (state.currentPath) {
         await openFile(state.currentPath, { skipNav: true });
       }
-      const msg = res.message || "构建完成";
+      const msg = res.message || T("graph.build.done");
       const stats = res.warn_count
-        ? `${msg} · ${res.warn_count} 处待人工配置`
+        ? T("graph.build.doneDetail", { msg, n: res.warn_count })
         : msg;
-      setStatus("构建完成", stats);
+      setStatus(T("graph.build.done"), stats);
       if (res.warn_count > 0 && res.audit) {
         const kinds = Object.entries(res.audit.by_kind || {})
           .filter(([, n]) => n > 0)
           .map(([k, n]) => `${k}: ${n}`)
           .join(" · ");
-        if (kinds) setStatus("构建完成", `${stats}（${kinds}）`);
+        if (kinds) setStatus(T("graph.build.done"), T("graph.build.doneKinds", { stats, kinds }));
       }
     } catch (e) {
-      setStatus("构建失败", String(e.message || e));
+      setStatus(T("graph.build.failed"), String(e.message || e));
     } finally {
       if (btn) btn.disabled = false;
     }
-  }
-
-  function applyKbValidateStatus(vr, opts = {}) {
-    if (!vr) return;
-    applyCheckIndicators(vr);
-    if (opts.silent) return;
-    if (vr.errors > 0 || vr.warnings > 0) {
-      /* 底栏统计已由 renderStatusStats 着色；保留当前文件路径于 status-info */
-      if (!state.currentPath) {
-        setStatus(state.kbPath || T("check.kbName"));
-      }
-    } else if (vr.status === "ok" && !state.currentPath) {
-      setStatus(state.kbPath || T("check.kbName"));
-    }
-  }
-
-  async function runKbValidate(opts = {}) {
-    if (!state.kbPath) return null;
-    try {
-      const vr = await call("validate_kb");
-      state.kbValidateReport = vr;
-      state.graphAudit = vr.graph_audit || state.graphAudit;
-      applyKbValidateStatus(vr, { silent: !!opts.silent });
-      if ($("#check-modal") && !$("#check-modal").classList.contains("hidden")) {
-        renderCheckModalBody(vr);
-      }
-      return vr;
-    } catch (e) {
-      if (!opts.silent) setStatus(T("check.status.checkFailed"), String(e.message || e));
-      return null;
-    }
-  }
-
-  function checkItemHtml(issue, severity, path, openPath) {
-    const sev = normalizeCheckSeverity(severity);
-    const badge =
-      sev === "error"
-        ? `<span class="-check-badge -check-badge--error">${T("check.badge.error")}</span>`
-        : `<span class="-check-badge -check-badge--warning">${T("check.badge.warning")}</span>`;
-    const dataAttrs = [
-      issue?.kp_id ? `data-check-kp="${esc(issue.kp_id)}"` : "",
-      issue?.line ? `data-check-line="${issue.line}"` : "",
-      issue?.kind ? `data-check-kind="${esc(issue.kind)}"` : "",
-    ].filter(Boolean).join(" ");
-    const openBtn = openPath
-      ? `<button type="button" class="-btn secondary -check-open-btn" data-check-open="${esc(openPath)}" ${dataAttrs}>${T("check.open")}</button>`
-      : "";
-    const pathHtml = path
-      ? `<div class="-check-item-path">${esc(path)}</div>`
-      : "";
-    return `<div class="-check-item -check-item--${sev}">
-      ${badge}
-      <div class="-check-item-main">
-        <div>${esc(localizeCheckIssue(issue))}</div>
-        ${pathHtml}
-      </div>
-      ${openBtn}
-    </div>`;
-  }
-
-  function renderCheckModalBody(vr) {
-    const body = $("#check-body");
-    if (!body) return;
-    if (!vr) {
-      body.innerHTML = `<p class="-muted">${T("check.empty")}</p>`;
-      return;
-    }
-    const errN = vr.errors || 0;
-    const warnN = vr.warnings || 0;
-    const summaryCls =
-      errN > 0 ? "-check-summary -check-summary--error" : "-check-summary";
-    const errWord = checkCountWord(errN, "error");
-    const warnWord = checkCountWord(warnN, "warning");
-    let html = `<div class="${summaryCls}">
-      ${T("check.summaryChecked", { files: vr.files_checked || 0 })} ·
-      ${errN > 0 ? `<strong class="-stat-error">${errN}</strong>` : `<strong>${errN}</strong>`} ${errWord} ·
-      ${warnN > 0 ? `<strong class="-stat-warn">${warnN}</strong>` : `<strong>${warnN}</strong>`} ${warnWord}
-    </div>`;
-
-    const kbIssues = [
-      ...(vr.kb_integrity?.errors || []),
-      ...(vr.kb_integrity?.warnings || []),
-    ];
-    const manifestIssues = [
-      ...(vr.manifest_diff?.errors || []),
-      ...(vr.manifest_diff?.warnings || []),
-    ];
-    const pathMoves = vr.path_moves || [];
-    if (kbIssues.length) {
-      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.kb")}</h4>`;
-      for (const issue of kbIssues) {
-        const path = issue.paths?.[0] || "";
-        html += checkItemHtml(
-          issue,
-          issue.severity,
-          issue.paths?.length > 1 ? issue.paths.join(" · ") : path,
-          path || null
-        );
-      }
-      html += "</section>";
-    }
-
-    if (pathMoves.length) {
-      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.pathMoves")}
-        <button type="button" class="-btn secondary -btn--sm" id="check-repair-paths">${T("check.repairBtn")}</button>
-      </h4>`;
-      html += `<p class="-muted">${T("check.note.pathMovesRepair")}</p>`;
-      for (const m of pathMoves) {
-        const hint =
-          m.kind === "md_sha256"
-            ? T("check.pathmove.match")
-            : m.kind === "sidecar_drift"
-              ? T("check.pathmove.drift")
-              : m.kind || "";
-        html += checkItemHtml(
-          { message: `${m.from} → ${m.to}` },
-          m.severity,
-          hint,
-          m.to || null
-        );
-      }
-      html += "</section>";
-    }
-
-    if (manifestIssues.length || (vr.manifest_diff && pathMoves.length === 0)) {
-      const md = vr.manifest_diff || {};
-      const syncBtn =
-        manifestIssues.length > 0 && pathMoves.length === 0
-          ? `<button type="button" class="-btn secondary -btn--sm" id="check-sync-manifest">${T("check.syncManifestBtn")}</button>`
-          : "";
-      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.manifest")} ${syncBtn}</h4>`;
-      if (md.baseline_created) {
-        html += `<p class="-muted">${T("check.note.manifestBaseline", { docs: md.file_count || 0 })}</p>`;
-      } else if (!manifestIssues.length) {
-        html += `<p class="-muted">${T("check.note.manifestConsistent", { docs: md.file_count || 0 })}</p>`;
-      }
-      for (const issue of manifestIssues) {
-        const path = issue.paths?.[0] || "";
-        html += checkItemHtml(
-          issue,
-          issue.severity,
-          issue.paths?.length > 1 ? issue.paths.join(" · ") : path,
-          path || null
-        );
-      }
-      html += "</section>";
-    }
-
-    for (const fr of vr.files || []) {
-      html += `<section class="-check-section"><h4 class="-check-section-title">${esc(fr.path)}</h4>`;
-      for (const e of fr.errors || []) {
-        html += checkItemHtml(e, "error", fr.path, fr.path);
-      }
-      for (const w of fr.warnings || []) {
-        html += checkItemHtml(w, "warning", fr.path, fr.path);
-      }
-      html += "</section>";
-    }
-
-    const gaFiles = (vr.graph_audit?.files || []).filter(
-      (f) => (f.issues || []).length
-    );
-    if (gaFiles.length) {
-      html += `<section class="-check-section"><h4 class="-check-section-title">${T("check.section.graphEdges")}</h4>`;
-      for (const gf of gaFiles) {
-        for (const issue of gf.issues || []) {
-          html += checkItemHtml(issue, issue.severity, gf.file, gf.file);
-        }
-      }
-      html += "</section>";
-    }
-
-    if (
-      !kbIssues.length &&
-      !manifestIssues.length &&
-      !pathMoves.length &&
-      !(vr.files || []).length &&
-      !gaFiles.length
-    ) {
-      html += `<p class="-muted">${T("check.noProblems")}</p>`;
-    }
-    body.innerHTML = html;
-    body.querySelector("#check-sync-manifest")?.addEventListener("click", async () => {
-      setStatus(T("check.status.syncStart"));
-      const res = await call("sync_manifest");
-      if (res.status === "ok") {
-        setStatus(T("check.status.manifestUpdated"), T("check.countDocs", { n: res.file_count || 0 }));
-        await runKbValidate({ silent: false });
-      } else {
-        setStatusError((res && localizeCheckIssue(res)) || T("check.status.syncFailed"));
-        if (res.blocked && (res.path_moves || []).length) {
-          await runKbValidate({ silent: false });
-        }
-      }
-    });
-
-    body.querySelector("#check-repair-paths")?.addEventListener("click", async () => {
-      if (!window.confirm(T("check.confirm.repair"))) {
-        return;
-      }
-      setStatus(T("check.status.repairing"));
-      const res = await call("repair_path_cascade", true);
-      if (res.status === "ok" || res.status === "partial") {
-        setStatus(
-          T("check.status.pathRepaired"),
-          T("check.status.repairedStats", {
-            done: res.applied_count ?? 0,
-            total: res.move_count ?? 0,
-          })
-        );
-        remapOpenTabsAfterPathRepair(res.applied || []);
-        const cur = normRelPath(state.currentPath || "");
-        const moved = (res.applied || []).find(
-          (m) => normRelPath(m.from) === cur
-        );
-        const reopenPath = moved ? normRelPath(moved.to) : state.currentPath;
-        if (reopenPath) {
-          await openFile(reopenPath, {
-            skipNav: true,
-            kpId: state.activeKpId || null,
-          });
-        }
-        await refreshFiles();
-        await loadGraphData();
-        await runKbValidate({ silent: false });
-      } else {
-        setStatusError((res && localizeCheckIssue(res)) || T("check.status.repairFailed"));
-      }
-    });
-
-    body.querySelectorAll("[data-check-open]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const p = btn.getAttribute("data-check-open");
-        if (!p) return;
-        const kpId = btn.getAttribute("data-check-kp") || null;
-        const lineStr = btn.getAttribute("data-check-line");
-        const kind = btn.getAttribute("data-check-kind") || null;
-        const line = lineStr ? parseInt(lineStr, 10) : null;
-        closeCheckModal();
-        openFile(p, {
-          kpId,
-          errorHighlight: {
-            kind,
-            kpId,
-            line: line && Number.isFinite(line) ? line : null,
-          },
-        });
-      });
-    });
-  }
-
-  function openCheckModal() {
-    if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
-      return;
-    }
-    const modal = $("#check-modal");
-    if (!modal) return;
-    modal.classList.remove("hidden");
-    renderCheckModalBody(state.kbValidateReport);
-    runKbValidate({ silent: true });
-  }
-
-  function closeCheckModal() {
-    $("#check-modal")?.classList.add("hidden");
-  }
-
-  // ── R11: 平面文件导入 ──────────────────────────────────────────
-
-  let _importFileContents = null;
-  let _importScanResult = null;
-
-  async function startImport() {
-    if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
-      return;
-    }
-    const btn = $("#btn-import");
-    if (btn) btn.disabled = true;
-    try {
-      const files = await call("select_import_files");
-      if (!files || !files.length) {
-        return;
-      }
-      _importFileContents = files;
-      setStatus("导入预扫描中…");
-      const scan = await call("pre_scan_import", files);
-      if (scan.status === "error") {
-        setStatusError(scan.message || "预扫描失败");
-        return;
-      }
-      _importScanResult = scan;
-      if (!scan.has_conflicts) {
-        await executeImportDirect(files, {});
-        return;
-      }
-      renderImportConflictDialog(scan);
-      $("#import-conflict-modal").classList.remove("hidden");
-    } catch (e) {
-      setStatusError("导入失败", e.message);
-    } finally {
-      if (btn) btn.disabled = false;
-    }
-  }
-
-  async function executeImportDirect(files, conflictResolution) {
-    const btn = $("#btn-import");
-    if (btn) btn.disabled = true;
-    try {
-      setStatus("导入中…");
-      const result = await call("execute_import", files, conflictResolution);
-      if (result.status === "error") {
-        setStatusError(result.message || "导入失败");
-        return;
-      }
-      await afterImportRefresh(result);
-      renderImportResultDialog(result);
-      $("#import-result-modal").classList.remove("hidden");
-    } catch (e) {
-      setStatusError("导入失败", e.message);
-    } finally {
-      if (btn) btn.disabled = false;
-    }
-  }
-
-  async function afterImportRefresh(result) {
-    await refreshFiles();
-    await loadLinkTargets();
-    await loadGraphData();
-    await refreshKbPendingSummary();
-    if (state.currentPath) {
-      await openFile(state.currentPath, { skipNav: true });
-    }
-    const kp = (result.kp_imported || 0) + (result.kp_overwritten || 0) + (result.kp_renamed || 0);
-    setStatus("导入完成", `${result.files_written || 0} 文件 · ${kp} KP`);
-  }
-
-  // ── 图片插入与管理（复制入库 .memoria/images/，阶段 D） ──────────
-
-  async function startInsertImage(insertAtLine) {
-    if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
-      return;
-    }
-    if (!state.currentPath) {
-      setStatus(T("img.insert.openDocFirst"));
-      return;
-    }
-    const local = await call("select_image_file");
-    if (!local) return;
-    const res = await call("import_image", local);
-    if (!res || res.status !== "ok") {
-      setStatusError(T("img.insert.importFailed"), (res && res.message) || T("common.unknownError"));
-      return;
-    }
-    const alt = String(res.name || "").replace(/\.[^.]+$/, "");
-    // URL 用尖括号包裹：文件名可能含中文/空格（如 Windows 截图），裸 URL 会被
-    // marked 在空格处截断导致不渲染为图片
-    if (!insertSourceLine("![" + alt + "](<" + res.relPath + ">)", insertAtLine)) {
-      setStatusError(T("img.insert.failed"), T("img.insert.noEditor"));
-      return;
-    }
-    setStatus(T("img.insert.stored"), res.relPath);
-  }
-
-  /** 预览光标所在块的源码起始行（鼠标在预览区域编辑时定位插入点用） */
-  function previewCursorSourceLine() {
-    const preview = $("#preview");
-    const sel = window.getSelection();
-    if (!preview || !sel || !sel.rangeCount || !sel.anchorNode) return 0;
-    const node =
-      sel.anchorNode.nodeType === Node.TEXT_NODE
-        ? sel.anchorNode.parentElement
-        : sel.anchorNode;
-    const block = node && node.closest ? node.closest(".-src-block") : null;
-    if (!block || !preview.contains(block)) return 0;
-    return +(block.getAttribute("data--src-line") || 0);
-  }
-
-  /** 在源码编辑器插入一个独占行（图片须独占一行才渲染），并入撤销栈 */
-  function insertSourceLine(text, lineNum) {
-    const editor = $("#editor");
-    if (!editor) return false;
-    const sel = window.getSelection();
-    let anchorLine = null;
-    if (sel && sel.rangeCount && sel.anchorNode) {
-      anchorLine = closestLineEl(sel.anchorNode);
-      if (!editor.contains(anchorLine)) anchorLine = null;
-    }
-    let baseLine = anchorLine;
-    // 指定行号优先（预览右键菜单已捕获的光标行）
-    if (!baseLine && lineNum > 0) baseLine = document.getElementById("line-" + lineNum);
-    // 预览光标兜底：鼠标在预览区域时，selection 锚点在预览 DOM 上
-    if (!baseLine) {
-      const pLine = previewCursorSourceLine();
-      if (pLine > 0) baseLine = document.getElementById("line-" + pLine);
-    }
-    if (!baseLine) {
-      const all = editor.querySelectorAll(".-line");
-      baseLine = all[all.length - 1] || null;
-    }
-    _srcPushBefore();
-    _srcCoalesceAt = 0;
-    const lastNum = baseLine ? +(baseLine.dataset.line || 0) : 0;
-    const newLineEl = document.createElement("div");
-    newLineEl.className = "-line";
-    newLineEl.dataset.line = String(lastNum + 1);
-    newLineEl.id = "line-" + (lastNum + 1);
-    const lineno = document.createElement("span");
-    lineno.className = "-lineno";
-    lineno.textContent = String(lastNum + 1);
-    const content = document.createElement("span");
-    content.className = "-line-content";
-    // 新增行遵循当前编辑模式（关闭编辑时新增行保持只读）
-    content.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
-    content.spellcheck = false;
-    content.tabIndex = -1;
-    content.textContent = text;
-    newLineEl.appendChild(lineno);
-    newLineEl.appendChild(content);
-    if (baseLine) baseLine.after(newLineEl);
-    else editor.appendChild(newLineEl);
-    renumberSourceLines();
-    _srcAfterEdit();
-    const r = document.createRange();
-    const node = content.firstChild;
-    r.setStart(node, node ? (node.nodeType === Node.TEXT_NODE ? node.textContent.length : 0) : 0);
-    r.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(r);
-    scheduleRenderSync();
-    markDirty();
-    return true;
-  }
-
-  /** 编辑光标是否真实位于预览区域（闪烁光标 = 可插入图片） */
-  function previewHasCaret() {
-    const EH = window.MemoriaEditHandler;
-    if (!EH || !EH.editMode) return false;
-    // 显式状态机（focusin / 预览区 mouseup / 模式与文件切换维护），
-    // 不依赖实时 selection 快照 —— 切换文件后 selection 可能残留旧预览位置，实时读取不可控
-    return !!EH._caretInPreview;
-  }
-
-  /** 图片插入按钮可用性：仅当文本光标位于预览区域时可点（否则灰色 disabled，不可点） */
-  function refreshImageInsertAvailability() {
-    const btn = $("#btn-insert-image");
-    if (btn) btn.disabled = !previewHasCaret();
-  }
-
-  /** 将新的行数组写回文档并重渲染（替换/删除图片用），整体入撤销栈 */
-  async function applyImageEditLines(lines) {
-    const body = lines.join("\n");
-    _srcPushBefore();
-    _srcCoalesceAt = 0;
-    state.doc.body = body;
-    state.doc.lines = lines;
-    state.doc.preview_body = null;
-    renderEditor(state.doc);
-    await renderPreview(state.doc);
-    _srcAfterEdit();
-    markDirty();
-  }
-
-  /** 预览区图片右键菜单：替换（换图保留 alt/title）/ 删除（仅删引用，磁盘文件保留） */
-  function showImageContextMenu(x, y, lineNum) {
-    showTreeContextMenu(x, y, [
-      { label: T("img.edit.replace"), action: () => replaceImageAtLine(lineNum) },
-      { label: T("img.edit.deleteRef"), danger: true, action: () => deleteImageAtLine(lineNum) },
-    ]);
-  }
-
-  async function replaceImageAtLine(lineNum) {
-    const local = await call("select_image_file");
-    if (!local) return;
-    const res = await call("import_image", local);
-    if (!res || res.status !== "ok") {
-      setStatusError(T("img.insert.importFailed"), (res && res.message) || T("common.unknownError"));
-      return;
-    }
-    const lines = (state.doc.body || "").split("\n");
-    const raw = lines[lineNum - 1] || "";
-    const m = raw.match(/^!\[([^\]]*)\]\(\s*(?:<([^>]+)>|([^)\s]+))((?:\s+"[^"]*")?)\)/);
-    if (!m) {
-      setStatusError(T("img.edit.replaceFailed"), T("img.edit.notImageLine"));
-      return;
-    }
-    lines[lineNum - 1] = "![" + m[1] + "](<" + res.relPath + ">" + (m[4] || "") + ")";
-    await applyImageEditLines(lines);
-    setStatus(T("img.edit.replaced"), res.relPath);
-  }
-
-  function deleteImageAtLine(lineNum) {
-    const lines = (state.doc.body || "").split("\n");
-    if (lineNum - 1 >= lines.length) return;
-    lines.splice(lineNum - 1, 1);
-    applyImageEditLines(lines);
-    setStatus(T("img.del.refsDone"));
-  }
-
-  // ── 图片管理视图（阶段 F：.memoria/images/ 资产可见化管理） ────────
-
-  let _imgMgrOverlay = null;
-
-  function fmtImageSize(bytes) {
-    if (bytes >= 1048576) return (bytes / 1048576).toFixed(2) + " MB";
-    if (bytes >= 1024) return (bytes / 1024).toFixed(1) + " KB";
-    return bytes + " B";
-  }
-
-  async function openImageManager() {
-    closeImgMgr();
-    const overlay = document.createElement("div");
-    overlay.className = "-modal";
-    overlay.id = "-image-manager";
-    overlay.innerHTML = `
-      <div class="-modal-backdrop"></div>
-      <div class="-modal-box -image-mgr-box">
-        <div class="-modal-header">
-          <span>${T("img.title")}</span>
-          <span class="-image-mgr-close" data-act="close" title="${T("dialog.closeTitle")}">✕</span>
-        </div>
-        <div class="-image-mgr-toolbar">
-          <span class="-image-mgr-stat" id="imgr-stat">${T("img.loading")}</span>
-          <button type="button" class="-btn" data-act="refresh">${T("img.refresh")}</button>
-          <button type="button" class="-btn" data-act="diagnose">${T("img.diagnose")}</button>
-          <button type="button" class="-btn danger" data-act="cleanup">${T("img.cleanup")}</button>
-        </div>
-        <div class="-image-mgr-grid" id="imgr-grid"></div>
-      </div>`;
-    document.body.appendChild(overlay);
-    _imgMgrOverlay = overlay;
-    overlay.querySelector(".-modal-backdrop").addEventListener("click", closeImgMgr);
-    overlay.querySelector('[data-act="close"]').addEventListener("click", closeImgMgr);
-    overlay.querySelector('[data-act="refresh"]').addEventListener("click", renderImageList);
-    overlay.querySelector('[data-act="diagnose"]').addEventListener("click", diagnoseImageRefs);
-    overlay.querySelector('[data-act="cleanup"]').addEventListener("click", cleanupUnusedImages);
-    overlay.querySelector("#imgr-grid").addEventListener("click", onImageCardAction);
-    renderImageList();
-  }
-
-  function closeImgMgr() {
-    if (_imgMgrOverlay) {
-      _imgMgrOverlay.remove();
-      _imgMgrOverlay = null;
-    }
-  }
-
-  /** 检查"被文档引用但未成功注册"的图片引用（诊断入口） */
-  async function diagnoseImageRefs() {
-    const res = await call("diagnose_image_refs");
-    if (!res || res.status !== "ok") {
-      setStatusError(T("img.diag.failed"), (res && res.message) || T("common.unknownError"));
-      return;
-    }
-    const unreg = res.unregistered || [];
-    const missing = res.missing || [];
-    const atLine = (doc, line) => T("img.atLine", { doc: esc(doc), line });
-    const overlay = document.createElement("div");
-    overlay.className = "-modal";
-    overlay.id = "-img-diagnose";
-    let html = `
-      <div class="-modal-backdrop"></div>
-      <div class="-modal-box -img-diag-box">
-        <div class="-modal-header">
-          <span>${T("img.diag.title")}</span>
-          <span class="-image-mgr-close" data-act="close" title="${T("dialog.closeTitle")}">✕</span>
-        </div>`;
-    if (!unreg.length && !missing.length) {
-      html += `<div class="-img-diag-body"><div class="-img-diag-ok">${T("img.diag.clean")}</div></div></div>`;
-    } else {
-      if (unreg.length) {
-        const reason = T("img.diag.unregReason");
-        html += `<div class="-img-diag-body">
-          <div class="-img-diag-title">${T("img.diag.unregTitle", { n: unreg.length, reason })}</div>
-          <ul class="-img-diag-list">` +
-          unreg.map((u) => `<li><code>${esc(u.src)}</code><span>${atLine(u.doc, u.line)}${u.exists ? "" : T("img.diag.fileMissing")}</span></li>`).join("") +
-          `</ul>
-          <button type="button" class="-btn" data-act="fix">${T("img.diag.fix")}</button>
-        </div>`;
-      }
-      if (missing.length) {
-        html += `<div class="-img-diag-body">
-          <div class="-img-diag-title">${T("img.diag.missingTitle", { n: missing.length })}</div>
-          <ul class="-img-diag-list">` +
-          missing.map((u) => `<li><code>${esc(u.url)}</code><span>${atLine(u.doc, u.line)}${T("img.diag.fileNotExists")}</span></li>`).join("") +
-          `</ul></div>`;
-      }
-      html += `</div>`;
-    }
-    overlay.innerHTML = html;
-    document.body.appendChild(overlay);
-    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => overlay.remove());
-    overlay.querySelector('[data-act="close"]').addEventListener("click", () => overlay.remove());
-    const fixBtn = overlay.querySelector('[data-act="fix"]');
-    if (fixBtn) {
-      fixBtn.addEventListener("click", async () => {
-        const r = await call("fix_unregistered_image_refs");
-        if (r && r.status === "ok") {
-          setStatus(T("img.status.fixDone"), T("img.status.rewritten", { n: r.fixed }));
-          overlay.remove();
-          renderImageList();
-        } else {
-          setStatusError(T("img.status.fixFailed"), (r && r.message) || T("common.unknownError"));
-        }
-      });
-    }
-  }
-
-  async function renderImageList() {
-    const grid = $("#imgr-grid");
-    const stat = $("#imgr-stat");
-    if (!grid || !stat) return;
-    grid.innerHTML = `<div class="-image-mgr-empty">${T("img.loading")}</div>`;
-    const res = await call("list_images");
-    const imgs = (res && res.images) || [];
-    const used = imgs.filter((x) => x.referenced).length;
-    stat.textContent = T("img.statSummary", { total: imgs.length, used, unused: imgs.length - used });
-    if (!imgs.length) {
-      grid.innerHTML = `<div class="-image-mgr-empty">${T("img.emptyKb")}</div>`;
-      return;
-    }
-    const sep = T("img.listSep");
-    let html = "";
-    for (const im of imgs) {
-      const refs = im.referencedBy || [];
-      const tag = im.referenced
-        ? `<span class="-img-tag -img-tag-used">${T("img.tagUsed", { n: refs.length })}</span>`
-        : `<span class="-img-tag -img-tag-unused">${T("img.tagUnused")}</span>`;
-      const refTxt = im.referenced ? T("img.refsUsed", { files: refs.join(sep) }) : T("img.refsUnused");
-      html += `<div class="-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
-        <img class="-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
-        <div class="-image-card-info">
-          <div class="-image-card-name" title="${esc(im.name)}">${esc(im.name)}${tag}</div>
-          <div class="-image-card-meta">${fmtImageSize(im.size || 0)}</div>
-          <div class="-image-card-refs" title="${esc(refTxt)}">${esc(refTxt)}</div>
-        </div>
-        <div class="-image-card-actions">
-          <button type="button" class="-btn" data-act="insert">${T("img.insert")}</button>
-          <button type="button" class="-btn danger" data-act="delete">${T("img.delete")}</button>
-        </div>
-      </div>`;
-    }
-    grid.innerHTML = html;
-  }
-
-  function onImageCardAction(e) {
-    const btn = e.target.closest("button[data-act]");
-    const card = e.target.closest(".-image-card");
-    if (!btn || !card) return;
-    const rel = card.dataset.rel;
-    const name = card.dataset.name;
-    const referenced = card.dataset.referenced === "1";
-    if (btn.dataset.act === "insert") insertImageFromManager(rel, name);
-    else if (btn.dataset.act === "delete") deleteImageFromManager(rel, name, referenced);
-  }
-
-  function insertImageFromManager(rel, name) {
-    if (!state.currentPath) {
-      setStatus(T("img.insert.openDocFirst"));
-      return;
-    }
-    const alt = String(name || "").replace(/\.[^.]+$/, "");
-    if (insertSourceLine("![" + alt + "](<" + rel + '> "width=300")')) {
-      setStatus(T("img.insert.done"), rel);
-    } else {
-      setStatusError(T("img.insert.failed"), T("img.insert.noEditor"));
-    }
-  }
-
-  function deleteImageFromManager(rel, name, referenced) {
-    if (referenced) {
-      const n = (state.doc.lines || []).filter(
-        (l) => l.includes(rel) || l.includes("/files/" + rel)
-      ).length;
-      if (!n) {
-        confirmTreeAction(
-          T("img.del.blockedTitle"),
-          T("img.del.blockedBody"),
-          T("img.del.gotIt"),
-          () => {}
-        );
-        return;
-      }
-      confirmTreeAction(
-        T("img.del.refTitle"),
-        T("img.del.refBody", { n }),
-        T("img.del.onlyRefs"),
-        () => {
-          const lines = (state.doc.body || "")
-            .split("\n")
-            .filter((l) => !(l.includes(rel) || l.includes("/files/" + rel)));
-          applyImageEditLines(lines);
-          setStatus(T("img.del.refsDone"));
-          renderImageList();
-        }
-      );
-    } else {
-      confirmTreeAction(
-        T("img.del.fileTitle"),
-        T("img.del.fileBody", { name }),
-        T("img.del.fileBtn"),
-        async () => {
-          const res = await call("cleanup_unused_images", [rel]);
-          if (res && res.status === "ok" && (res.deleted || []).length) {
-            setStatus(T("img.del.fileDone"), name);
-            renderImageList();
-          } else {
-            setStatusError(T("img.del.failed"), (res && res.message) || T("img.del.fileGone"));
-          }
-        }
-      );
-    }
-  }
-
-  async function cleanupUnusedImages() {
-    const res = await call("unused_images");
-    const un = (res && res.images) || [];
-    if (!un.length) {
-      setStatus(T("img.cleanup.none"));
-      renderImageList();
-      return;
-    }
-    const sep = T("img.listSep");
-    const names = un
-      .slice(0, 5)
-      .map((x) => x.name)
-      .join(sep);
-    const more = un.length > 5 ? T("img.cleanup.more", { n: un.length }) : "";
-    confirmTreeAction(
-      T("img.cleanup.title"),
-      T("img.cleanup.body", { n: un.length, names, more }),
-      T("img.cleanup.btn"),
-      async () => {
-        const r = await call("cleanup_unused_images");
-        if (r && r.status === "ok") {
-          setStatus(T("img.cleanup.done", { n: (r.deleted || []).length }));
-          renderImageList();
-        } else {
-          setStatusError(T("img.cleanup.failed"), (r && r.message) || T("common.unknownError"));
-        }
-      }
-    );
-  }
-
-  /** 更新图片源码行属性（阶段 F 工具栏：对齐/大小滑条；阶段 G：名称字号/显隐），返回新行或 null */
-  function updateImageAttrsLine(line, attrs) {
-    const m = line.match(/^(!\[[^\]]*\]\([^)\s]+)((?:\s+"[^"]*")?)(\)\s*)$/);
-    if (!m) return null;
-    const title = m[2].replace(/^\s+"|"$/g, "");
-    const list = title ? title.split(",") : [];
-    const pending = {};
-    ["width", "align", "name-size", "name"].forEach((k) => {
-      if (attrs[k] !== undefined) pending[k] = String(attrs[k]);
-    });
-    const merged = [];
-    list.forEach((item) => {
-      const eq = item.indexOf("=");
-      const k = eq > 0 ? item.slice(0, eq).trim() : item.trim();
-      if (pending[k] !== undefined) {
-        merged.push(k + "=" + pending[k]);
-        pending[k] = undefined;
-      } else {
-        merged.push(item);
-      }
-    });
-    Object.keys(pending).forEach((k) => {
-      if (pending[k] !== undefined) merged.push(k + "=" + pending[k]);
-    });
-    const newTitle = merged.length ? ' "' + merged.join(",") + '"' : "";
-    return m[1] + newTitle + m[3];
-  }
-
-  /** 更新图片源码行的名称（alt），返回新行或 null（阶段 G：编辑模式下单击名称文字） */
-  function updateImageCaptionLine(line, caption) {
-    const m = line.match(/^(!\[)([^\]]*)(\]\([^)\s]+)((?:\s+"[^"]*")?)(\)\s*)$/);
-    if (!m) return null;
-    return m[1] + caption + m[3] + m[4] + m[5];
-  }
-
-  // 图片工具栏属性提交（阶段 F）：对齐/大小 → 更新源码行 → 重写渲染 → 重进编辑
-  // 注意：必须 await applyImageEditLines（含 renderPreview）完成后重进编辑，
-  // 否则 setTimeout(0) 捕获的是即将被重建的旧 preview DOM，imgEl 变 detached，
-  // 后续滑条/对齐操作全部作用在不可见节点上（症状：拖动/确定后图片大小不变）。
-  document.addEventListener("memoria:image-attr", async (e) => {
-    const detail = (e && e.detail) || {};
-    const srcLine = detail.srcLine;
-    const attrs = detail.attrs;
-    if (!srcLine || !attrs) return;
-    const lines = (state.doc.body || "").split("\n");
-    const line = lines[srcLine - 1];
-    if (!line) return;
-    const updated = updateImageAttrsLine(line, attrs);
-    if (updated === null) return;
-    lines[srcLine - 1] = updated;
-    await applyImageEditLines(lines);
-    const EH = window.MemoriaEditHandler;
-    if (EH && EH.reenterImageEdit) EH.reenterImageEdit(srcLine);
-  });
-
-  // 图片名称（alt）编辑提交（阶段 G）：编辑模式下单击名称文字 → 失焦/回车 → 写回源码
-  document.addEventListener("memoria:image-caption", async (e) => {
-    const detail = (e && e.detail) || {};
-    const srcLine = detail.srcLine;
-    const caption = detail.caption;
-    if (!srcLine || caption === undefined) return;
-    const lines = (state.doc.body || "").split("\n");
-    const line = lines[srcLine - 1];
-    if (!line) return;
-    const updated = updateImageCaptionLine(line, caption);
-    if (updated === null) return;
-    lines[srcLine - 1] = updated;
-    await applyImageEditLines(lines);
-    const EH = window.MemoriaEditHandler;
-    // 名称提交后：光标定位到图片相邻文本（避免残留图片块停靠点/文档开头），
-    // 不再重进编辑模式（名称是一次性文字操作；属性/滑条路径仍走 reenterImageEdit）
-    if (EH && EH.placeCaretAfterNameEdit) EH.placeCaretAfterNameEdit(srcLine);
-  });
-
-  // 图片编辑工具栏 → 打开图片管理
-  document.addEventListener("memoria:open-image-manager", () => openImageManager());
-
-  function renderImportConflictDialog(scanResult) {
-    const body = $("#import-conflict-body");
-    if (!body) return;
-    const conflicts = scanResult.conflicts || [];
-    let html = "";
-    html += `<div class="-import-scan-summary">`;
-    html += `<p>共 <strong>${esc(String(scanResult.total_files || 0))}</strong> 个文件，`;
-    html += `<strong>${esc(String(scanResult.total_sections || 0))}</strong> 个段落，`;
-    html += `<strong>${esc(String(scanResult.total_kp_declarations || 0))}</strong> 个 KP 声明。</p>`;
-    html += `<p class="-stat-error">检测到 <strong>${esc(String(conflicts.length))}</strong> 处 KP id 冲突：</p>`;
-    html += `</div>`;
-    html += `<div class="-import-conflict-report">`;
-    html += `<textarea id="import-conflict-report-text" class="-import-report-textarea" readonly rows="4">${esc(scanResult.conflict_report || "")}</textarea>`;
-    html += `</div>`;
-    html += `<div class="-import-conflict-list">`;
-    conflicts.forEach((c, i) => {
-      const kpId = esc(c.kp_id || "");
-      const source = esc(c.import_source || "");
-      const line = c.import_line || 0;
-      const existFile = esc(c.existing_file || "");
-      const existName = esc(c.existing_name || "");
-      html += `<div class="-import-conflict-item" data-conflict-idx="${i}">`;
-      html += `<div class="-import-conflict-header">`;
-      html += `<span class="-import-conflict-kp-id">${kpId}</span>`;
-      html += `<span class="-muted">来源: ${source}:${line} → 已存在: ${existFile} (${existName})</span>`;
-      html += `</div>`;
-      html += `<div class="-import-conflict-resolution">`;
-      html += `<label><input type="radio" name="import-res-${i}" value="skip" checked> 跳过</label>`;
-      html += `<label><input type="radio" name="import-res-${i}" value="overwrite"> 覆盖</label>`;
-      html += `<label><input type="radio" name="import-res-${i}" value="rename"> 重命名</label>`;
-      html += `<input type="text" class="-import-rename-input hidden" data-conflict-idx="${i}" placeholder="新 KP id">`;
-      html += `</div>`;
-      html += `</div>`;
-    });
-    html += `</div>`;
-    body.innerHTML = html;
-
-    body.querySelectorAll('input[type="radio"]').forEach((radio) => {
-      radio.addEventListener("change", (e) => {
-        const idx = e.target.name.replace("import-res-", "");
-        const renameInput = body.querySelector(`.-import-rename-input[data-conflict-idx="${idx}"]`);
-        if (renameInput) {
-          renameInput.classList.toggle("hidden", e.target.value !== "rename");
-          if (e.target.value === "rename") renameInput.focus();
-        }
-      });
-    });
-  }
-
-  function collectImportConflictResolution() {
-    const body = $("#import-conflict-body");
-    if (!body) return {};
-    const conflicts = (_importScanResult && _importScanResult.conflicts) || [];
-    const resolution = {};
-    conflicts.forEach((c, i) => {
-      const radios = body.querySelectorAll(`input[name="import-res-${i}"]`);
-      let choice = "skip";
-      radios.forEach((r) => { if (r.checked) choice = r.value; });
-      if (choice === "rename") {
-        const renameInput = body.querySelector(`.-import-rename-input[data-conflict-idx="${i}"]`);
-        const newId = (renameInput && renameInput.value.trim()) || c.kp_id;
-        resolution[c.kp_id] = "rename:" + newId;
-      } else {
-        resolution[c.kp_id] = choice;
-      }
-    });
-    return resolution;
-  }
-
-  function renderImportResultDialog(result) {
-    const body = $("#import-result-body");
-    if (!body) return;
-    const kp = (result.kp_imported || 0) + (result.kp_overwritten || 0) + (result.kp_renamed || 0);
-    let html = "";
-    html += `<div class="-import-result-summary">`;
-    html += `<p class="-stat-ok">导入成功</p>`;
-    html += `<p>写入 <strong>${esc(String(result.files_written || 0))}</strong> 个文件，`;
-    html += `导入 <strong>${esc(String(result.kp_imported || 0))}</strong> 个 KP，`;
-    html += `覆盖 <strong>${esc(String(result.kp_overwritten || 0))}</strong> 个，`;
-    html += `重命名 <strong>${esc(String(result.kp_renamed || 0))}</strong> 个，`;
-    html += `跳过 <strong>${esc(String(result.kp_skipped || 0))}</strong> 个。</p>`;
-    const errors = result.errors || [];
-    if (errors.length) {
-      html += `<p class="-stat-error">${esc(String(errors.length))} 个错误：</p><ul>`;
-      errors.forEach((e) => { html += `<li>${esc(String(e))}</li>`; });
-      html += `</ul>`;
-    }
-    html += `</div>`;
-    body.innerHTML = html;
-  }
-
-  function closeImportConflictModal() {
-    $("#import-conflict-modal").classList.add("hidden");
-    _importFileContents = null;
-    _importScanResult = null;
-  }
-
-  function closeImportResultModal() {
-    $("#import-result-modal").classList.add("hidden");
   }
 
   async function loadGraphData() {
@@ -2181,7 +927,7 @@
     try {
       const res = await call("get_graph_data");
       if (res.status !== "ok") {
-        setStatus(res.message || "图谱加载失败");
+        setStatus(res.message || T("graph.loadFailed"));
         return;
       }
       state.graphData = res;
@@ -2198,7 +944,7 @@
       }
       updateGraphAuditHint();
     } catch (e) {
-      setStatus("图谱加载失败", String(e.message || e));
+      setStatus(T("graph.loadFailed"), String(e.message || e));
     }
   }
 
@@ -2236,7 +982,8 @@
   async function gotoGraphAuditIssue(issue) {
     if (!issue?.file) return;
     const rel = normRelPath(issue.file);
-    await openFile(rel, { skipNav: true });
+    // 审计条目跳转 = 用户定位：入栈并丢弃旧前向（openFile 内统一处理）
+    await openFile(rel, { kpId: issue.kp_id || null, navSource: "audit" });
     if (issue.line) {
       highlightRange(issue.line, issue.line);
       document
@@ -2360,18 +1107,7 @@
     }
   }
 
-  function renderFileTree() {
-    const el = $("#file-tree");
-    if (!el) return;
-    if (!state.files.length && !(state.dirs || []).length) {
-      el.innerHTML = '<div class="empty">无 Markdown 文件</div>';
-      return;
-    }
-    if (state.currentPath) ensureTreeExpandedForPath(state.currentPath);
-    const root = buildFileTreeRoot(state.files, state.dirs);
-    el.innerHTML = renderTreeLevel(root, 0);
-    bindFileTreeInteraction(el);
-  }
+  // 文件树渲染已迁至 file-tree.js：app.js 各调用点经 window.MemoriaFileTree?.render?.() / expandToPath
 
   function tabLabelFor(candidate) {
     return candidate.name || candidate.kp_id || basename(candidate.file || candidate.path || "");
@@ -2441,9 +1177,9 @@
       state.doc = null;
       state.activeKpId = null;
       renderTabs();
-      renderFileTree();
+      window.MemoriaFileTree?.render?.();
       renderKpList(null);
-      syncToolbarSearchScopeUI();
+      window.MemoriaToolbarSearch?.syncScope?.();
       const editor = $("#editor");
       if (editor) editor.innerHTML = "";
       const preview = $("#preview");
@@ -2471,8 +1207,13 @@
     // Save scroll position of the current tab before switching
     _saveCurrentTabScroll();
     ensureOpenTab({ file: path, kp_id: kpId }, { activate: true, pending: false });
-    // Switching tabs should not trigger kp/line jump — restore last scroll
-    await openFile(path, { fromNav: true, skipTabUpsert: true, restoreScroll: true });
+    // 标签切换 = 用户导航：非 skipNav（如关闭标签后的自动激活）时交给 openFile 统一入栈；
+    // skipNav=true 属程序自动激活，不产生历史条目。
+    await openFile(path, {
+      fromNav: !!opts.skipNav,
+      skipTabUpsert: true,
+      restoreScroll: true,
+    });
   }
 
   function renderTabs() {
@@ -2490,7 +1231,7 @@
         else if (t.pending) cls += " tab-pending";
         return `<div class="${cls}" data-tab-index="${i}" title="${esc(t.path)}">
           <span class="tab-label">${esc(t.label || basename(t.path))}</span>
-          <span class="close-btn" data-tab-close="${i}" title="关闭">×</span>
+          <span class="close-btn" data-tab-close="${i}" title="${T("common.close")}">×</span>
         </div>`;
       })
       .join("");
@@ -2510,15 +1251,24 @@
     });
   }
 
-  async function navigateToFile(relPath) {
-    if (window.MemoriaNavStack) {
-      MemoriaNavStack.openFileFromTree(relPath);
-      updateNavButtons();
-    }
-    await openFile(relPath, { fromNav: true });
-  }
+  // 树内点击切换文档（原 navigateToFile）已随文件树子系统迁至 file-tree.js
 
   async function openFile(relPath, opts = {}) {
+    // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
+    // 旧尾、插入本次切换目标并把指针移到新顶（因此前进随之不可用）。后退/前进按钮
+    // （fromNav=true）与程序内部重载（skipNav=true）不产生新条目。
+    if (!opts.skipNav && !opts.fromNav && window.MemoriaNavStack) {
+      const cur = MemoriaNavStack.current();
+      const targetKp = opts.kpId || null;
+      if (!cur || cur.file !== relPath || (cur.kpId || null) !== targetKp) {
+        MemoriaNavStack.push({
+          file: relPath,
+          kpId: targetKp,
+          source: opts.navSource || "open",
+        });
+        updateNavButtons();
+      }
+    }
     // 切换文件前：同步当前文件到磁盘
     if (state.currentPath && state.currentPath !== relPath) {
       await flushSync();
@@ -2529,10 +1279,10 @@
     clearPreviewHighlights();
     clearGraphLinkHighlight();
     clearGraphKpHover();
-    setStatus("加载中…", relPath);
+    setStatus(T("app.loading"), relPath);
     const res = await call("load_document", relPath);
     if (res.status !== "ok") {
-      setStatus(res.message || "加载失败");
+      setStatus(res.message || T("app.loadFailed"));
       return;
     }
     state.currentPath = relPath;
@@ -2556,8 +1306,8 @@
       }
     }
     showWelcome(false);
-    ensureTreeExpandedForPath(relPath);
-    renderFileTree();
+    window.MemoriaFileTree?.expandToPath?.(relPath);
+    window.MemoriaFileTree?.render?.();
     renderTabs();
     renderEditor(res);
     srcResetUndo();
@@ -2575,7 +1325,7 @@
     await renderPreview(res);
     // 切换文件：预览区是全新 DOM，旧文件的编辑光标不继承（selection 可能残留，显式清空）
     if (window.MemoriaEditHandler) window.MemoriaEditHandler._caretInPreview = false;
-    refreshImageInsertAvailability();
+    window.MemoriaImageTools?.refreshImageInsertAvailability?.();
     if (opts.restoreScroll) {
       // Tab switch: restore last scroll position instead of jumping to kp/line
       _restoreTabScroll();
@@ -2614,18 +1364,23 @@
         highlightRange(line, line);
       }
     }
-    let stats = `${res.knowledge_points.length} KP · ${res.lines.length} 行`;
+    let stats = T("app.stat.kpLines", {
+      kp: res.knowledge_points.length,
+      lines: res.lines.length,
+    });
     const sv = res.sidecar_validation;
     if (sv && (!sv.ok || sv.warnings?.length)) {
       const parts = [];
-      if (sv.errors?.length) parts.push(`${sv.errors.length} 错误`);
-      if (sv.warnings?.length) parts.push(`${sv.warnings.length} 警告`);
-      stats += ` · 配置 ${parts.join(" ")}`;
+      if (sv.errors?.length)
+        parts.push(T("app.stat.errors", { n: sv.errors.length }));
+      if (sv.warnings?.length)
+        parts.push(T("app.stat.warnings", { n: sv.warnings.length }));
+      stats += T("app.stat.sidecar", { parts: parts.join(" ") });
     }
     setStatus(relPath, stats);
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
-    syncToolbarSearchScopeUI();
+    window.MemoriaToolbarSearch?.syncScope?.();
   }
 
   // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
@@ -2713,7 +1468,7 @@
       btn.classList.toggle("active", btn.dataset.view === mode);
     });
     // 视图切换后预览区可见性变化，刷新图片插入按钮的可用状态
-    refreshImageInsertAvailability();
+    window.MemoriaImageTools?.refreshImageInsertAvailability?.();
     if (mode !== "source" && state.doc && !alreadyRendered) {
       await renderPreview(state.doc);
     }
@@ -2940,13 +1695,13 @@
     const preview = $("#preview");
     hidePreviewStatus();
     if (!P || !R || !M) {
-      preview.innerHTML = '<p class="-preview-loading">预览模块未加载</p>';
+      preview.innerHTML = '<p class="-preview-loading">' + T("preview.loadNotReady") + '</p>';
       _renderingPreview = false;
       return;
     }
     const token = ++state.previewToken;
     if (!incremental) {
-      preview.innerHTML = '<p class="-preview-loading">渲染中…</p>';
+      preview.innerHTML = '<p class="-preview-loading">' + T("preview.rendering") + '</p>';
     }
     preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
     try {
@@ -3025,7 +1780,7 @@
       showLinkAuditPreviewHint(doc);
     } catch (e) {
       if (token !== state.previewToken) { _renderingPreview = false; return; }
-      preview.innerHTML = `<p class="-preview-loading">预览失败: ${esc(String(e))}</p>`;
+      preview.innerHTML = '<p class="-preview-loading">' + T("preview.renderFail", { e: esc(String(e)) }) + '</p>';
       showPreviewReport({ ok: false, messages: [String(e)] });
     }
     _renderingPreview = false;
@@ -3130,7 +1885,7 @@
     const el = $("#preview-status");
     el.classList.remove("hidden", "error");
     el.classList.add("warn");
-    el.innerHTML = `<span>⚠ 链接一致性：${n} 个配置入口未在正文中挂接为可点击 [[…]] · 请打开「配置 → 链接」点击「挂接…」</span>`;
+    el.innerHTML = '<span>⚠ ' + esc(T("preview.linkAuditHint", { n })) + '</span>';
   }
 
   function showPreviewReport(report) {
@@ -3142,8 +1897,11 @@
     if (report.ok) {
       hidePreviewStatus();
       setStatus(
-        state.currentPath || "就绪",
-        `预览 OK · 公式 ${report.mathRendered}/${report.mathExpected}`
+        state.currentPath || T("app.status.ready"),
+        T("preview.okDetail", {
+          rendered: report.mathRendered,
+          expected: report.mathExpected,
+        })
       );
       return;
     }
@@ -3151,15 +1909,20 @@
     el.classList.add("warn");
     const parts = report.messages?.length
       ? report.messages
-      : ["预览未完全成功"];
+      : [T("preview.incomplete")];
     el.innerHTML =
-      `<span>⚠ 预览自检：${esc(parts.join("；"))}</span>` +
+      '<span>⚠ ' +
+      esc(T("preview.selfcheck", { parts: parts.join("；") })) +
+      "</span>" +
       (report.mathErrors?.length
-        ? `<details><summary>TeX 错误</summary><pre>${esc(report.mathErrors.join("\n"))}</pre></details>`
+        ? `<details><summary>${esc(T("preview.math.texError"))}</summary><pre>${esc(report.mathErrors.join("\n"))}</pre></details>`
         : "");
     setStatus(
-      state.currentPath || "预览",
-      `公式 ${report.mathRendered}/${report.mathExpected} · 有问题`
+      state.currentPath || T("preview.brief"),
+      T("preview.failDetail", {
+        rendered: report.mathRendered,
+        expected: report.mathExpected,
+      })
     );
   }
 
@@ -3186,7 +1949,7 @@
     const el = $("#kp-list");
     const kpCount = $("#kp-count");
     if (!doc) {
-      if (el) el.innerHTML = '<div class="empty">请选择文件</div>';
+      if (el) el.innerHTML = '<div class="empty">' + T("app.kpListSelectFile") + '</div>';
       if (kpCount) kpCount.textContent = "";
       return;
     }
@@ -3200,12 +1963,16 @@
     if (kpCount) kpCount.textContent = kps.length ? `${kps.length}` : "";
 
     if (!kps.length && !proposals.length) {
-      el.innerHTML = '<div class="empty">无知识点 · 右键条目或点「配置」</div>';
+      el.innerHTML = '<div class="empty">' + T("app.kpListNoKp") + '</div>';
       return;
     }
     if (!kps.length) {
       el.innerHTML =
-        `<div class="empty">无正式 KP · ${proposals.length} 个标题提议<br><span class="-muted">点「配置」→ 待确认</span></div>`;
+        '<div class="empty">' +
+        T("app.kpListOnlyProposals", { n: proposals.length }) +
+        '<br><span class="-muted">' +
+        T("app.kpListOnlyProposalsHint") +
+        "</span></div>";
       return;
     }
 
@@ -3257,7 +2024,7 @@
     const rr = kp.range_resolved || {};
     if (rr.ok) return { text: `L${rr.start_line}–${rr.end_line}`, ok: true };
     if (rr.error) return { text: errorLabel(rr.error), ok: false };
-    return { text: "未配置", ok: false };
+    return { text: T("cfg.kpRange.unset"), ok: false };
   }
 
   function isKpCoveredByConfirmed(proposal, confirmedKps) {
@@ -3276,29 +2043,25 @@
         ? `<div class="-suggest-item -suggest-placeholder">
             <span class="-suggest-score">87%</span>
             <span class="-suggest-label">policy-gradient</span>
-            <span class="-muted">本文件 · 可合并</span>
-            <button type="button" class="-btn secondary -btn--sm" disabled>合并</button>
+            <span class="-muted">${esc(T("cfg.m4.sameFileNote"))}</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>${esc(T("cfg.m4.mergeBtn"))}</button>
           </div>
           <div class="-suggest-item -suggest-placeholder">
             <span class="-suggest-score">72%</span>
             <span class="-suggest-label">q-learning</span>
-            <span class="-muted">q-learning.md · 跨文件</span>
-            <button type="button" class="-btn secondary -btn--sm" disabled>创建引用</button>
+            <span class="-muted">${esc(T("cfg.m4.crossFileNote", { file: "q-learning.md" }))}</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>${esc(T("cfg.m4.citeBtn"))}</button>
           </div>`
         : `<div class="-suggest-item -suggest-placeholder">
             <span class="-suggest-score">91%</span>
             <span class="-suggest-label">[[q-learning|Q-learning]]</span>
-            <span class="-muted">正文 L42 未绑定</span>
-            <button type="button" class="-btn secondary -btn--sm" disabled>创建路由</button>
+            <span class="-muted">${esc(T("cfg.m4.bodyUnboundNote", { line: 42 }))}</span>
+            <button type="button" class="-btn secondary -btn--sm" disabled>${esc(T("cfg.m4.routeBtn"))}</button>
           </div>`;
     const title =
-      kind === "kp"
-        ? "模糊匹配 · 创建 / 合并知识点（M4）"
-        : "模糊匹配 · 推荐链接路由（M4）";
+      kind === "kp" ? T("cfg.m4.mergeTitle") : T("cfg.m4.linkTitle");
     const hint =
-      kind === "kp"
-        ? "M4 接入 SearchKernel 后：按 name、tags、description Lexical 精排；近重复合并在此展示。"
-        : "M4 接入后：扫描正文 [[…]] 与配置差异；未绑定链接与多目标一并列出。";
+      kind === "kp" ? T("cfg.m4.mergeHint") : T("cfg.m4.linkHint");
     return `<details class="-suggest-block">
       <summary>${esc(title)}</summary>
       <p class="-config-hint">${esc(hint)}</p>
@@ -3332,9 +2095,9 @@
 
   function renderConfigTabBar(counts, activeTab) {
     const tabs = [
-      { id: "kp", label: "知识点", count: counts.kp },
-      { id: "links", label: "链接", count: counts.links },
-      { id: "pending", label: "待确认", count: counts.pending },
+      { id: "kp", label: T("cfg.tab.kp"), count: counts.kp },
+      { id: "links", label: T("cfg.tab.links"), count: counts.links },
+      { id: "pending", label: T("cfg.tab.pending"), count: counts.pending },
     ];
     return `<div class="-config-tabs" role="tablist">
       ${tabs
@@ -3349,11 +2112,11 @@
   function renderConfigKpTab(counts) {
     const { confirmedKps } = counts;
     let html = `<div class="-config-toolbar -btn-bar -btn-bar--start">
-      <button type="button" class="-btn primary -btn--sm" data-config-new-kp>新建知识点</button>
-      <span class="-muted">空白新建，或在「待确认」Tab 配置标题提议</span>
+      <button type="button" class="-btn primary -btn--sm" data-config-new-kp>${esc(T("cfg.kpTab.newKp"))}</button>
+      <span class="-muted">${esc(T("cfg.kpTab.newKpHint"))}</span>
     </div>`;
     if (!confirmedKps.length) {
-      html += `<p class="-muted">暂无正式知识点 · 在「待确认」Tab 配置并确认提议</p>`;
+      html += `<p class="-muted">${esc(T("cfg.kpTab.empty"))}</p>`;
     } else {
       html += confirmedKps
         .map((kp) => {
@@ -3369,8 +2132,8 @@
               ${tags}
             </div>
             <div class="-config-item-actions">
-              <button type="button" class="-btn primary -btn--sm" data-kp-config="${esc(kp.id)}">配置</button>
-              <button type="button" class="-btn danger -btn--sm" data-kp-delete="${esc(kp.id)}" title="从配置中删除该知识点">删除</button>
+              <button type="button" class="-btn primary -btn--sm" data-kp-config="${esc(kp.id)}">${esc(T("cfg.kpTab.config"))}</button>
+              <button type="button" class="-btn danger -btn--sm" data-kp-delete="${esc(kp.id)}" title="${esc(T("cfg.kpTab.deleteTitle"))}">${esc(T("common.delete"))}</button>
             </div>
           </div>`;
         })
@@ -3388,14 +2151,14 @@
     if (entry.status === "ok" && entry.targets_resolved !== false) return "";
     const parts = [];
     if (entry.status === "missing_body") {
-      parts.push('<span class="-link-audit-bad" title="配置已有，正文无 [[]] 入口">缺正文入口</span>');
+      parts.push(`<span class="-link-audit-bad" title="${esc(T("cfg.audit.missingTitle"))}">${esc(T("cfg.audit.missingLabel"))}</span>`);
     } else if (entry.status === "stale_instance") {
-      parts.push('<span class="-link-audit-bad" title="instances 行号与正文不一致">实例失效</span>');
+      parts.push(`<span class="-link-audit-bad" title="${esc(T("cfg.audit.staleTitle"))}">${esc(T("cfg.audit.staleLabel"))}</span>`);
     } else if (entry.status === "partial") {
-      parts.push('<span class="-link-audit-warn" title="部分实例未挂接">部分挂接</span>');
+      parts.push(`<span class="-link-audit-warn" title="${esc(T("cfg.audit.partialTitle"))}">${esc(T("cfg.audit.partialLabel"))}</span>`);
     }
     if (entry.targets_resolved === false) {
-      parts.push('<span class="-link-audit-warn" title="跳转目标无法解析">目标未解析</span>');
+      parts.push(`<span class="-link-audit-warn" title="${esc(T("cfg.audit.unresolvedTitle"))}">${esc(T("cfg.audit.unresolvedLabel"))}</span>`);
     }
     return parts.join(" ");
   }
@@ -3408,11 +2171,11 @@
       (x) => x.status !== "ok" || x.targets_resolved === false
     );
     const fixBtn = first
-      ? `<button type="button" class="-btn secondary -btn--sm" data-link-audit-fix="${esc(first.anchor_text)}">打开首个问题</button>`
+      ? `<button type="button" class="-btn secondary -btn--sm" data-link-audit-fix="${esc(first.anchor_text)}">${esc(T("cfg.audit.openFirst"))}</button>`
       : "";
     return `<div class="-link-audit-banner" role="alert">
-      <strong>链接一致性</strong>
-      <span>${n} 个跳转入口存在一致性问题 · 在列表中点「匹配」勾选位置后，再点面板内「确认并包裹所选」（仅保存路由不会改写正文）</span>
+      <strong>${esc(T("cfg.audit.bannerTitle"))}</strong>
+      <span>${esc(T("cfg.audit.bannerBody", { n }))}</span>
       ${fixBtn}
     </div>`;
   }
@@ -3424,17 +2187,17 @@
   function renderLinkSearchOptionsHtml(prefix, options) {
     const o = { ...defaultLinkSearchOptions(), ...(options || {}) };
     return `<div class="-link-search-options" data-search-options-root="${prefix}">
-      <label class="-link-search-opt" title="如「深度RL」可匹配正文「深度 RL」">
+      <label class="-link-search-opt" title="${esc(T("cfg.search.ignoreSpaceTitle"))}">
         <input type="checkbox" data-search-opt="fuzzy_whitespace" ${o.fuzzy_whitespace ? "checked" : ""} />
-        忽略空格
+        ${esc(T("cfg.search.ignoreSpace"))}
       </label>
-      <label class="-link-search-opt" title="输入时可推荐已有链接文本、标题或正文匹配">
+      <label class="-link-search-opt" title="${esc(T("cfg.search.suggestTitle"))}">
         <input type="checkbox" data-search-opt="fuzzy_suggest" ${o.fuzzy_suggest ? "checked" : ""} />
-        模糊推荐
+        ${esc(T("cfg.search.suggest"))}
       </label>
-      <label class="-link-search-opt -link-search-opt-future" title="预留 · 后续接搜索引擎">
+      <label class="-link-search-opt -link-search-opt-future" title="${esc(T("cfg.search.caseTitle"))}">
         <input type="checkbox" data-search-opt="case_insensitive" disabled ${o.case_insensitive ? "checked" : ""} />
-        忽略大小写
+        ${esc(T("cfg.search.case"))}
       </label>
     </div>`;
   }
@@ -3493,18 +2256,22 @@
   function renderLinkMatchPanelHtml(m, variant) {
     if (!m) {
       return variant === "editor"
-        ? '<p class="-muted -link-match-empty">填写匹配文本后扫描正文</p>'
+        ? `<p class="-muted -link-match-empty">${esc(T("cfg.match.needInput"))}</p>`
         : "";
     }
     if (m.loading) {
-      return '<p class="-muted -link-match-empty">扫描中…</p>';
+      return `<p class="-muted -link-match-empty">${esc(T("cfg.match.scanning"))}</p>`;
     }
 
     const anchor = m.anchorText;
     const attached = m.matches.filter((x) => x.attached && !x.excluded).length;
     const excluded = m.matches.filter((x) => x.excluded).length;
-    const hint =
-      `共 ${m.matches.length} 处 · 已挂接 ${attached} 处 · 排除 ${excluded} 处 · 已选 ${m.selected.size} 处`;
+    const hint = T("cfg.match.summary", {
+      total: m.matches.length,
+      attached,
+      excluded,
+      selected: m.selected.size,
+    });
     const prefix = variant === "config" ? "config-link-match" : "link-editor-match";
     const panelId =
       variant === "config" ? "config-link-match-panel" : "link-editor-match-panel";
@@ -3522,12 +2289,14 @@
           (row.excluded ? " is-excluded" : "") +
           (row.blocked ? " is-blocked" : "");
         const title = row.blocked
-          ? (row.block_reason || "与其它跳转占用区域重叠") + " · 点击定位到该行"
+          ? T("cfg.match.locateBlocked", {
+              reason: row.block_reason || T("cfg.match.blockedReason"),
+            })
           : row.is_substring
-          ? "子串匹配，不可挂接 · 点击定位到该行"
+          ? T("cfg.match.locateSubstring")
           : row.excluded
-            ? "已排除 · 点击定位到该行"
-            : "点击整行切换勾选并定位到该行";
+            ? T("cfg.match.locateExcluded")
+            : T("cfg.match.locateRow");
         const checkCell = disabled
           ? `<span class="-link-match-check-placeholder" aria-hidden="true">—</span>`
           : `<input type="checkbox" data-match-check="${row.line}" ${checked ? "checked" : ""} aria-label="L${row.line}" />`;
@@ -3547,14 +2316,14 @@
 
     const closeBtn =
       variant === "config"
-        ? `<button type="button" class="-icon-btn" id="config-link-match-close" title="收起">×</button>`
+        ? `<button type="button" class="-icon-btn" id="config-link-match-close" title="${esc(T("cfg.match.collapse"))}">×</button>`
         : "";
 
     let footer = "";
     if (variant === "config") {
       footer = `<div class="-config-link-match-footer -btn-bar">
-        <button type="button" class="-btn secondary" id="config-link-match-cancel">取消</button>
-        <button type="button" class="-btn primary" id="config-link-match-confirm" ${m.selected.size ? "" : "disabled"}>确认并包裹所选</button>
+        <button type="button" class="-btn secondary" id="config-link-match-cancel">${esc(T("common.cancel"))}</button>
+        <button type="button" class="-btn primary" id="config-link-match-confirm" ${m.selected.size ? "" : "disabled"}>${esc(T("cfg.match.confirmWrap"))}</button>
       </div>`;
     }
 
@@ -3568,20 +2337,20 @@
     const allSelected =
       selectableRows.length > 0 &&
       selectableRows.every((row) => m.selected.has(row.line));
-    const allBtnLabel = allSelected ? "取消全选" : "全选";
+    const allBtnLabel = allSelected ? T("cfg.match.clearAll") : T("cfg.match.selectAll");
 
     return `<div id="${panelId}" class="${panelCls}">
       <div class="-link-match-panel-header">
-        <span class="-link-match-panel-title">匹配「${esc(m.anchorText)}」</span>
+        <span class="-link-match-panel-title">${esc(T("cfg.match.panelTitle", { anchor: m.anchorText }))}</span>
         <span class="-muted -link-match-panel-hint">${esc(hint)}</span>
         ${closeBtn}
       </div>
       ${searchOptsHtml}
       <div class="-link-match-toolbar -btn-bar -btn-bar--start">
         <button type="button" class="-btn secondary -btn--sm" id="${prefix}-all">${esc(allBtnLabel)}</button>
-        <button type="button" class="-btn secondary -btn--sm" id="${prefix}-plain">仅选未包裹</button>
+        <button type="button" class="-btn secondary -btn--sm" id="${prefix}-plain">${esc(T("cfg.match.onlyUnwrapped"))}</button>
       </div>
-      <div class="-link-match-list">${rows || '<p class="-muted">未找到匹配</p>'}</div>
+      <div class="-link-match-list">${rows || `<p class="-muted">${esc(T("cfg.match.noMatch"))}</p>`}</div>
       ${footer}
     </div>`;
   }
@@ -3750,7 +2519,7 @@
     } catch (e) {
       p.match = null;
       refreshLinkEditorMatchPanel();
-      setStatus("扫描失败", String(e.message || e));
+      setStatus(T("cfg.match.scanFail"), String(e.message || e));
       return;
     }
     if (scan.status !== "ok") {
@@ -3794,11 +2563,11 @@
     const { fileLinks } = counts;
     let html = renderLinkAuditBanner(linkAudit);
     html += `<div class="-config-toolbar -btn-bar -btn-bar--start">
-      <button type="button" class="-btn primary -btn--sm" id="config-new-link">新建链接</button>
-      <span class="-muted">正文选区右键也可创建 · 源码/预览均可拖选 · 匹配文本须与 [[…]] 一致</span>
+      <button type="button" class="-btn primary -btn--sm" id="config-new-link">${esc(T("cfg.linktab.newLink"))}</button>
+      <span class="-muted">${esc(T("cfg.linktab.newLinkHint"))}</span>
     </div>`;
     if (!fileLinks.length) {
-      html += `<p class="-muted">尚未配置链接 · [[文本]] 按知识点 id 或文件名解析</p>`;
+      html += `<p class="-muted">${esc(T("cfg.linktab.empty"))}</p>`;
     } else {
       html += fileLinks
         .map((link) => {
@@ -3806,7 +2575,7 @@
           const targets = (link.targets || []).join(", ");
           const pool =
             (link.pool || []).length > (link.targets || []).length
-              ? ` · 备选 ${link.pool.length}`
+              ? T("cfg.linktab.poolNote", { n: link.pool.length })
               : "";
           const auditEntry = linkAuditFor(anchor, linkAudit);
           const badge = linkAuditBadgeHtml(auditEntry);
@@ -3821,26 +2590,26 @@
             (needsAttach ? " has-audit-issue" : "");
           const instHint =
             auditEntry && auditEntry.preview_attached_count > 0
-              ? ` · 已挂接 ${auditEntry.preview_attached_count} 处`
+              ? T("cfg.linktab.attachedNote", { n: auditEntry.preview_attached_count })
               : auditEntry && auditEntry.body_wrapped_count > 0
-                ? ` · 正文 ${auditEntry.body_wrapped_count} 处 [[]]`
+                ? T("cfg.linktab.bodyWrappedNote", { n: auditEntry.body_wrapped_count })
                 : "";
           const matchPanelHtml =
             state.configLinkMatch?.anchorText === anchor
               ? renderConfigLinkMatchPanelHtml()
               : "";
           return `<div class="-config-link-block">
-          <div class="-config-item -config-link-item${hl}" data-link-anchor="${esc(anchor)}" role="button" tabindex="0" title="点击在下方匹配正文位置">
+          <div class="-config-item -config-link-item${hl}" data-link-anchor="${esc(anchor)}" role="button" tabindex="0" title="${esc(T("cfg.linktab.locateTitle"))}">
             <div class="-config-item-main">
               <code class="-config-anchor">${esc(anchor)}</code>
               ${badge}
-              <span class="-muted">→ ${esc(targets || "（未绑定）")}${pool}${instHint}</span>
+              <span class="-muted">→ ${esc(targets || T("cfg.linktab.unbound"))}${esc(pool)}${esc(instHint)}</span>
               ${auditEntry?.issues?.length ? `<span class="-link-audit-detail" title="${esc(auditEntry.issues.join("；"))}">${esc(auditEntry.issues[0])}</span>` : ""}
             </div>
             <div class="-config-item-actions">
-              <button type="button" class="-btn secondary -btn--sm" data-link-match="${esc(anchor)}" title="在下方选择正文挂接位置">匹配</button>
-              <button type="button" class="-btn primary -btn--sm" data-link-edit="${esc(anchor)}">编辑</button>
-              <button type="button" class="-btn danger -btn--sm" data-link-delete="${esc(anchor)}" title="删除跳转入口及正文 [[]]">删除</button>
+              <button type="button" class="-btn secondary -btn--sm" data-link-match="${esc(anchor)}" title="${esc(T("cfg.linktab.matchBtnTitle"))}">${esc(T("cfg.linktab.matchBtn"))}</button>
+              <button type="button" class="-btn primary -btn--sm" data-link-edit="${esc(anchor)}">${esc(T("cfg.linktab.editBtn"))}</button>
+              <button type="button" class="-btn danger -btn--sm" data-link-delete="${esc(anchor)}" title="${esc(T("cfg.linktab.deleteTitle"))}">${esc(T("common.delete"))}</button>
             </div>
           </div>
           <div class="-config-link-match-slot" data-link-match-slot="${esc(anchor)}">${matchPanelHtml}</div>
@@ -3860,17 +2629,17 @@
       counts;
     const kbTotal = state.kbPending?.total;
     let html = `<div class="-config-toolbar -btn-bar -btn-bar--start">
-      <button type="button" class="-btn primary -btn--sm" data-config-confirm-all>全部确认</button>
-      <button type="button" class="-btn secondary -btn--sm" data-config-sync-pending>刷新待确认</button>
-      ${kbTotal != null ? `<span class="-muted">全库 ${kbTotal} 项</span>` : ""}
+      <button type="button" class="-btn primary -btn--sm" data-config-confirm-all>${esc(T("cfg.pending.confirmAll"))}</button>
+      <button type="button" class="-btn secondary -btn--sm" data-config-sync-pending>${esc(T("cfg.pending.refreshBtn"))}</button>
+      ${kbTotal != null ? `<span class="-muted">${esc(T("cfg.pending.kbTotal", { n: kbTotal }))}</span>` : ""}
     </div>`;
     if (!counts.pending) {
-      html += `<p class="-muted">无待确认提议 · 扫描标题、段落 mention 或定义句（「X 是…」）后出现在此</p>`;
+      html += `<p class="-muted">${esc(T("cfg.pending.empty"))}</p>`;
       html += renderConfigPendingSuggestBlocks();
       return html;
     }
     if (pendingHeading.length) {
-      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">标题提议 (${pendingHeading.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">${esc(T("cfg.pending.grpHeading", { n: pendingHeading.length }))}</div>`;
       html += pendingHeading
         .map((p) => {
           const r = p.range || {};
@@ -3878,14 +2647,14 @@
           const idx = headingP.indexOf(p);
           return `<div class="-config-item">
             <div class="-config-item-main">
-              <span class="-config-tag">标题</span>
+              <span class="-config-tag">${esc(T("cfg.pending.tagHeading"))}</span>
               <span class="-config-kp-name">${esc(p.name)}</span>
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
-              <button type="button" class="-btn secondary -btn--sm" data-confirm-heading="${idx}">直接确认</button>
-              <button type="button" class="-btn primary -btn--sm" data-heading-proposal="${idx}">配置并确认</button>
-              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-heading="${idx}">${esc(T("cfg.pending.confirmDirect"))}</button>
+              <button type="button" class="-btn primary -btn--sm" data-heading-proposal="${idx}">${esc(T("cfg.pending.confirmConfig"))}</button>
+              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">${esc(T("cfg.pending.dismiss"))}</button>` : ""}
             </div>
           </div>`;
         })
@@ -3893,7 +2662,7 @@
       html += `</div>`;
     }
     if (pendingMention.length) {
-      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">段落提议 (${pendingMention.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">${esc(T("cfg.pending.grpMention", { n: pendingMention.length }))}</div>`;
       html += pendingMention
         .map((p) => {
           const r = p.range || {};
@@ -3901,14 +2670,14 @@
           const idx = mentionP.indexOf(p);
           return `<div class="-config-item">
             <div class="-config-item-main">
-              <span class="-config-tag">段落</span>
+              <span class="-config-tag">${esc(T("cfg.pending.tagMention"))}</span>
               <span class="-config-kp-name">${esc(p.name)}</span>
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
-              <button type="button" class="-btn secondary -btn--sm" data-confirm-mention="${idx}">直接确认</button>
-              <button type="button" class="-btn primary -btn--sm" data-mention-proposal="${idx}">配置并确认</button>
-              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">忽略</button>` : ""}
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-mention="${idx}">${esc(T("cfg.pending.confirmDirect"))}</button>
+              <button type="button" class="-btn primary -btn--sm" data-mention-proposal="${idx}">${esc(T("cfg.pending.confirmConfig"))}</button>
+              ${p.pending_id ? `<button type="button" class="-btn secondary -btn--sm" data-dismiss-pending="${esc(p.pending_id)}">${esc(T("cfg.pending.dismiss"))}</button>` : ""}
             </div>
           </div>`;
         })
@@ -3916,7 +2685,7 @@
       html += `</div>`;
     }
     if (pendingDefinition.length) {
-      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">定义句提议 (${pendingDefinition.length})</div>`;
+      html += `<div class="-config-kp-group"><div class="-config-kp-group-title">${esc(T("cfg.pending.grpDefinition", { n: pendingDefinition.length }))}</div>`;
       html += pendingDefinition
         .map((p) => {
           const r = p.range || {};
@@ -3924,13 +2693,13 @@
           const idx = definitionP.indexOf(p);
           return `<div class="-config-item">
             <div class="-config-item-main">
-              <span class="-config-tag">定义</span>
+              <span class="-config-tag">${esc(T("cfg.pending.tagDefinition"))}</span>
               <span class="-config-kp-name">${esc(p.name)}</span>
               <span class="-muted">${lines}</span>
             </div>
             <div class="-config-item-actions">
-              <button type="button" class="-btn secondary -btn--sm" data-confirm-definition="${idx}">直接确认</button>
-              <button type="button" class="-btn primary -btn--sm" data-definition-proposal="${idx}">配置并确认</button>
+              <button type="button" class="-btn secondary -btn--sm" data-confirm-definition="${idx}">${esc(T("cfg.pending.confirmDirect"))}</button>
+              <button type="button" class="-btn primary -btn--sm" data-definition-proposal="${idx}">${esc(T("cfg.pending.confirmConfig"))}</button>
             </div>
           </div>`;
         })
@@ -4089,19 +2858,25 @@
     const hasSidecar = !!doc.sidecar;
     const tab = state.configTab || "kp";
 
-    $("#config-title").textContent = `文件配置 — ${basename(doc.path)}`;
+    $("#config-title").textContent = T("cfg.config.title", { name: basename(doc.path) });
 
-    let html = `<p class="-config-summary">元数据 ${hasSidecar ? "已配置" : "未创建"} · 知识点 ${counts.kp} · 链接 ${counts.links} · 待确认 ${counts.pending}</p>`;
+    let html = `<p class="-config-summary">${esc(
+      T("cfg.config.summary", {
+        sidecar: hasSidecar ? T("cfg.config.metaDone") : T("cfg.config.metaNone"),
+        kp: counts.kp,
+        links: counts.links,
+      })
+    )}</p>`;
     if (validation.errors?.length) {
-      html += `<p class="-config-error">错误：${esc(validation.errors.join("；"))}</p>`;
+      html += `<p class="-config-error">${esc(T("cfg.config.errors", { msg: validation.errors.join("；") }))}</p>`;
     }
     if (validation.warnings?.length) {
-      html += `<p class="-config-warn">警告：${esc(validation.warnings.join("；"))}</p>`;
+      html += `<p class="-config-warn">${esc(T("cfg.config.warnings", { msg: validation.warnings.join("；") }))}</p>`;
     }
     if (tab === "links" && doc.link_audit && !doc.link_audit.ok) {
       const n = doc.link_audit.summary?.issue_count || 0;
       if (n) {
-        html += `<p class="-config-warn">链接一致性：${n} 个入口未在正文中挂接为可点击 [[…]]</p>`;
+        html += `<p class="-config-warn">${esc(T("cfg.config.linkWarn", { n }))}</p>`;
       }
     }
 
@@ -4138,7 +2913,7 @@
     try {
       const res = await call("dismiss_pending", pendingId);
       if (res.status !== "ok") {
-        setStatusError(res.message || "忽略失败");
+        setStatusError(T("cfg.pending.ignoreFail"), res.message);
         return;
       }
       if (state.currentPath) {
@@ -4150,18 +2925,18 @@
       }
       await refreshKbPendingSummary();
       if (opts.refreshConfig) renderConfigModal();
-      setStatus("已忽略待确认项");
+      setStatus(T("cfg.pending.ignored"));
     } catch (e) {
-      setStatusError("忽略失败", e.message);
+      setStatusError(T("cfg.pending.ignoreFail"), e.message);
     }
   }
 
   async function syncPendingFromConfig() {
     try {
-      setStatus("刷新待确认…");
+      setStatus(T("cfg.pending.refreshing"));
       const res = await call("sync_pending");
       if (res.status !== "ok") {
-        setStatusError(res.message || "刷新失败");
+        setStatusError(T("cfg.pending.refreshFail"), res.message);
         return;
       }
       if (state.currentPath) {
@@ -4173,9 +2948,9 @@
       }
       await refreshKbPendingSummary();
       renderConfigModal();
-      setStatus("待确认已刷新", `${res.pending_count ?? 0} 项`);
+      setStatus(T("cfg.pending.refreshed"), T("cfg.pending.items", { n: res.pending_count ?? 0 }));
     } catch (e) {
-      setStatusError("刷新失败", e.message);
+      setStatusError(T("cfg.pending.refreshFail"), e.message);
     }
   }
 
@@ -4186,10 +2961,10 @@
 
   function renderKpModalTabs(activeTab) {
     const tabs = [
-      { id: "range", label: "范围" },
-      { id: "identity", label: "标识" },
-      { id: "tags", label: "标签" },
-      { id: "edges", label: "边" },
+      { id: "range", label: T("cfg.panel.tabs.range") },
+      { id: "identity", label: T("cfg.panel.tabs.identity") },
+      { id: "tags", label: T("cfg.panel.tabs.tags") },
+      { id: "edges", label: T("cfg.panel.tabs.edges") },
     ];
     return `<div class="-config-tabs -kp-tabs" role="tablist">
       ${tabs
@@ -4266,20 +3041,20 @@
     }
     const total = state.doc?.lines?.length || 0;
     html += `<div class="-assist-line-inputs">
-      <label>起点行 <input type="number" class="-line-input" data-range-start min="1" max="${total || ""}" value="${a.startLine}"></label>
-      <label>终点行 <input type="number" class="-line-input" data-range-end min="1" max="${total || ""}" value="${a.endLine}"></label>
-      <span class="-muted">滚轮可微调行号${total ? ` · 正文共 ${total} 行` : ""}</span>
+      <label>${esc(T("cfg.range.start"))} <input type="number" class="-line-input" data-range-start min="1" max="${total || ""}" value="${a.startLine}"></label>
+      <label>${esc(T("cfg.range.end"))} <input type="number" class="-line-input" data-range-end min="1" max="${total || ""}" value="${a.endLine}"></label>
+      <span class="-muted">${esc(T("cfg.range.wheelNote"))}${total ? esc(T("cfg.range.totalNote", { total })) : ""}</span>
     </div>`;
     if (a.startCandidates.length > 1) {
-      html += `<p class="-range-candidates-label"><strong>起点候选</strong></p>`;
+      html += `<p class="-range-candidates-label"><strong>${esc(T("cfg.range.startCand"))}</strong></p>`;
       html += `<div class="-range-candidates">${renderCandidates("start", a.startCandidates)}</div>`;
     }
     if (a.endCandidates.length > 1) {
-      html += `<p class="-range-candidates-label"><strong>终点候选</strong></p>`;
+      html += `<p class="-range-candidates-label"><strong>${esc(T("cfg.range.endCand"))}</strong></p>`;
       html += `<div class="-range-candidates">${renderCandidates("end", a.endCandidates)}</div>`;
     }
     html += `<div data-range-preview class="-assist-preview-wrap"></div>`;
-    html += `<p class="-muted">调整行号即更新高亮；预览区可切换源码 / Markdown。</p>`;
+    html += `<p class="-muted">${esc(T("cfg.range.updateNote"))}</p>`;
     return html;
   }
 
@@ -4349,8 +3124,8 @@
     } else {
       saveBtn.classList.remove("hidden");
       saveBtn.disabled = false;
-      saveBtn.textContent = "确定";
-      saveBtn.title = "确定";
+      saveBtn.textContent = T("common.ok");
+      saveBtn.title = T("common.ok");
     }
   }
 
@@ -4440,8 +3215,10 @@
 
     const tab = panel.tab || "range";
     $("#kp-title").textContent = isCreate
-      ? `新建知识点${panel.name ? " — " + panel.name : ""}`
-      : `知识点 — ${kp.name || kp.id}`;
+      ? (panel.name
+        ? T("cfg.kpModal.createTitleNamed", { name: panel.name })
+        : T("cfg.kpModal.createTitlePlain"))
+      : T("cfg.kpModal.editTitle", { name: kp.name || kp.id });
     syncKpModalLayout(tab);
     syncKpModalFooter(tab, isCreate);
 
@@ -4474,8 +3251,8 @@
       const nameVal = isCreate ? (kp.name || kp.id) : (panel.draft?.name ?? kp.name ?? kp.id);
       content = `<div class="-kp-tab-panel"><div class="-kp-form">
         <label class="-link-field">id <input type="text" id="kp-field-id" value="${esc(idVal)}" autocomplete="off" spellcheck="false"></label>
-        <label class="-link-field">名称 <input type="text" id="kp-field-name" value="${esc(nameVal)}" autocomplete="off"></label>
-        <p class="-config-hint">${isCreate ? "新建知识点请先在此填写 id 与名称，再到「范围」调整行号。" : "修改 id 将全库同步链接配置与正文 [[…]]（显示文字保持不变）。"}</p>
+        <label class="-link-field">${esc(T("cfg.kpIdent.nameLabel"))} <input type="text" id="kp-field-name" value="${esc(nameVal)}" autocomplete="off"></label>
+        <p class="-config-hint">${isCreate ? esc(T("cfg.kpIdent.createHint")) : esc(T("cfg.kpIdent.editHint"))}</p>
         ${isCreate ? "" : `<div id="kp-merge-suggest" class="-kp-merge-suggest hidden"></div>`}
       </div></div>`;
     } else if (tab === "edges") {
@@ -4492,15 +3269,15 @@
       content = `<div class="-kp-tab-panel"><div class="-kp-form">
         ${renderKpTagsEditorHtml(panel, kp, isCreate)}
         ${renderKpAliasEditorHtml(panel, kp)}
-        <label class="-link-field">描述
-          <textarea id="kp-desc-input" rows="3" placeholder="可选；用于检索与图谱提示">${esc(desc)}</textarea>
+        <label class="-link-field">${esc(T("cfg.kpIdent.descLabel"))}
+          <textarea id="kp-desc-input" rows="3" placeholder="${esc(T("cfg.kpIdent.descPlaceholder"))}">${esc(desc)}</textarea>
         </label>
         ${renderKpDescCandEditorHtml(panel, kp)}
         <div class="-kp-tags-zone-toolbar">
-          <button type="button" id="kp-sync-aux" class="-btn secondary -btn--sm">同步检索 aux</button>
-          <button type="button" id="kp-suggest-desc" class="-btn secondary -btn--sm">建议描述</button>
+          <button type="button" id="kp-sync-aux" class="-btn secondary -btn--sm">${esc(T("cfg.kpIdent.syncAux"))}</button>
+          <button type="button" id="kp-suggest-desc" class="-btn secondary -btn--sm">${esc(T("cfg.kpIdent.suggestDesc"))}</button>
         </div>
-        <p class="-config-hint">${isCreate ? "描述可选；确认创建时会一并保存。tag/别名/描述候选可提前配置。" : "已选 tag/别名保存后参与检索；候选区点击应用；「同步检索 aux」合并隐式索引提议。"}</p>
+        <p class="-config-hint">${isCreate ? esc(T("cfg.kpIdent.descCreateHint")) : esc(T("cfg.kpIdent.descEditHint"))}</p>
       </div></div>`;
     }
 
@@ -4688,16 +3465,20 @@
 
   function edgeTypeBadgeHtml(type) {
     const colors = { contain: "#5cb85c", reference: "#5bc0de", extend: "#f0ad4e" };
-    const labels = { contain: "包含", reference: "引用", extend: "扩展" };
+    const labels = {
+      contain: T("cfg.edge.typeContain"),
+      reference: T("cfg.edge.typeReference"),
+      extend: T("cfg.edge.typeExtend"),
+    };
     const color = colors[type] || "#999";
     const label = labels[type] || type;
     return `<span class="-edge-type-badge" style="background:${color};color:#fff">${esc(label)}</span>`;
   }
 
   function edgeOriginLabel(edge) {
-    if (edge.origin === "link") return "链接";
-    if (edge.origin === "range") return "嵌套";
-    if (edge.origin === "sidecar_edge") return "手动";
+    if (edge.origin === "link") return T("cfg.edge.originLink");
+    if (edge.origin === "range") return T("cfg.edge.originRange");
+    if (edge.origin === "sidecar_edge") return T("cfg.edge.originManual");
     return edge.origin || "";
   }
 
@@ -4711,7 +3492,7 @@
 
     // Outgoing edges section
     html += `<div class="-edge-section">`;
-    html += `<h4 class="-edge-section-title">出边 <span class="-tab-count">${outgoing.length}</span></h4>`;
+    html += `<h4 class="-edge-section-title">${esc(T("cfg.edge.outTitle"))} <span class="-tab-count">${outgoing.length}</span></h4>`;
     if (outgoing.length) {
       html += `<div class="-edge-list">`;
       for (const e of outgoing) {
@@ -4721,32 +3502,32 @@
         html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
         html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
         html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
-        if (e.no_build) html += `<span class="-edge-no-build">已抑制</span>`;
+        if (e.no_build) html += `<span class="-edge-no-build">${esc(T("cfg.edge.suppressed"))}</span>`;
         html += `</div>`;
         html += `<div class="-edge-actions">`;
         if (e.type === "contain" && e.no_build) {
-          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">恢复</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.restoreBtn"))}</button>`;
         } else if (e.type === "contain" && !e.no_build) {
-          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">抑制</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.suppressBtn"))}</button>`;
         }
         if (e.origin === "sidecar_edge") {
-          html += `<button type="button" class="-btn danger -btn--sm -edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">删除</button>`;
+          html += `<button type="button" class="-btn danger -btn--sm -edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">${esc(T("common.delete"))}</button>`;
         }
         if (e.origin === "link" && e.anchor_text) {
-          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-config-link" data-anchor="${esc(e.anchor_text)}">配置链接</button>`;
+          html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-config-link" data-anchor="${esc(e.anchor_text)}">${esc(T("cfg.edge.configLinkBtn"))}</button>`;
         }
         html += `</div>`;
         html += `</div>`;
       }
       html += `</div>`;
     } else {
-      html += `<p class="-muted">无出边</p>`;
+      html += `<p class="-muted">${esc(T("cfg.edge.noOut"))}</p>`;
     }
     html += `</div>`;
 
     // Incoming edges section
     html += `<div class="-edge-section">`;
-    html += `<h4 class="-edge-section-title">入边 <span class="-tab-count">${incoming.length}</span></h4>`;
+    html += `<h4 class="-edge-section-title">${esc(T("cfg.edge.inTitle"))} <span class="-tab-count">${incoming.length}</span></h4>`;
     if (incoming.length) {
       html += `<div class="-edge-list">`;
       for (const e of incoming) {
@@ -4756,24 +3537,24 @@
         html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
         html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
         html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
-        if (e.no_build) html += `<span class="-edge-no-build">已抑制</span>`;
+        if (e.no_build) html += `<span class="-edge-no-build">${esc(T("cfg.edge.suppressed"))}</span>`;
         html += `</div>`;
         html += `</div>`;
       }
       html += `</div>`;
     } else {
-      html += `<p class="-muted">入边需全库扫描，当前仅显示本文件内入边</p>`;
+      html += `<p class="-muted">${esc(T("cfg.edge.inScopeNote"))}</p>`;
     }
     html += `</div>`;
 
     // Create new edge form
     html += `<div class="-edge-section -edge-create-form">`;
-    html += `<h4 class="-edge-section-title">新建边</h4>`;
+    html += `<h4 class="-edge-section-title">${esc(T("cfg.edge.createTitle"))}</h4>`;
     html += `<div class="-edge-create-fields">`;
-    html += `<label class="-link-field">目标 KP <input type="text" id="kp-edge-target" placeholder="输入 KP id" autocomplete="off" spellcheck="false"></label>`;
-    html += `<label class="-link-field">边类型 <select id="kp-edge-type"><option value="reference">引用 (reference)</option><option value="extend">扩展 (extend)</option></select></label>`;
-    html += `<label class="-link-field">关联度 <input type="range" id="kp-edge-relevance" min="0" max="1" step="0.05" value="0.7"><span id="kp-edge-relevance-val">0.70</span></label>`;
-    html += `<button type="button" id="kp-edge-create-btn" class="-btn primary -btn--sm">新建</button>`;
+    html += `<label class="-link-field">${esc(T("cfg.edge.targetKp"))} <input type="text" id="kp-edge-target" placeholder="${esc(T("cfg.edge.targetPlaceholder"))}" autocomplete="off" spellcheck="false"></label>`;
+    html += `<label class="-link-field">${esc(T("cfg.edge.typeLabel"))} <select id="kp-edge-type"><option value="reference">${esc(T("cfg.edge.optReference"))}</option><option value="extend">${esc(T("cfg.edge.optExtend"))}</option></select></label>`;
+    html += `<label class="-link-field">${esc(T("cfg.edge.relevanceLabel"))} <input type="range" id="kp-edge-relevance" min="0" max="1" step="0.05" value="0.7"><span id="kp-edge-relevance-val">0.70</span></label>`;
+    html += `<button type="button" id="kp-edge-create-btn" class="-btn primary -btn--sm">${esc(T("cfg.edge.createBtn"))}</button>`;
     html += `</div>`;
     html += `</div>`;
 
@@ -4799,13 +3580,13 @@
         const parentId = btn.dataset.source;
         const childId = btn.dataset.target;
         if (!state.currentPath || !parentId || !childId) return;
-        setStatus("抑制 contain 边…");
+        setStatus(T("cfg.edge.suppressInProg"));
         const res = await call("set_contain_no_build", state.currentPath, parentId, childId, true);
         if (res.status !== "ok") {
-          setStatus(res.message || "操作失败");
+          setStatus(res.message || T("cfg.edge.opFailed"));
           return;
         }
-        setStatus("已抑制 contain 边");
+        setStatus(T("cfg.edge.suppressedContain"));
         await reloadDocAndRefreshEdges(kp.id);
       });
     });
@@ -4816,13 +3597,13 @@
         const parentId = btn.dataset.source;
         const childId = btn.dataset.target;
         if (!state.currentPath || !parentId || !childId) return;
-        setStatus("恢复 contain 边…");
+        setStatus(T("cfg.edge.restoreInProg"));
         const res = await call("set_contain_no_build", state.currentPath, parentId, childId, false);
         if (res.status !== "ok") {
-          setStatus(res.message || "操作失败");
+          setStatus(res.message || T("cfg.edge.opFailed"));
           return;
         }
-        setStatus("已恢复 contain 边");
+        setStatus(T("cfg.edge.restoredContain"));
         await reloadDocAndRefreshEdges(kp.id);
       });
     });
@@ -4834,14 +3615,14 @@
         const targetId = btn.dataset.target;
         const edgeType = btn.dataset.type;
         if (!state.currentPath || !sourceId || !targetId || !edgeType) return;
-        if (!window.confirm(`删除边 ${sourceId} → ${targetId} (${edgeType})？`)) return;
-        setStatus("删除边…");
+        if (!window.confirm(T("cfg.edge.confirmDelete", { src: sourceId, tgt: targetId, type: edgeType }))) return;
+        setStatus(T("cfg.edge.deleteInProg"));
         const res = await call("delete_edge", state.currentPath, sourceId, targetId, edgeType);
         if (res.status !== "ok") {
-          setStatus(res.message || "操作失败");
+          setStatus(res.message || T("cfg.edge.opFailed"));
           return;
         }
-        setStatus("已删除边");
+        setStatus(T("cfg.edge.deleted"));
         await reloadDocAndRefreshEdges(kp.id);
       });
     });
@@ -4914,17 +3695,17 @@
         const edgeType = ($("#kp-edge-type")?.value || "reference").trim();
         const relevance = parseFloat($("#kp-edge-relevance")?.value || "0.7");
         if (!targetId) {
-          setStatusError("请输入目标 KP id");
+          setStatusError(T("cfg.edge.needTargetId"));
           return;
         }
         if (!state.currentPath) return;
-        setStatus("新建边…");
+        setStatus(T("cfg.edge.createInProg"));
         const res = await call("create_edge", state.currentPath, kp.id, targetId, edgeType, relevance);
         if (res.status !== "ok") {
-          setStatus(res.message || "新建边失败");
+          setStatus(res.message || T("cfg.edge.createFail"));
           return;
         }
-        setStatus("已新建边");
+        setStatus(T("cfg.edge.created"));
         await reloadDocAndRefreshEdges(kp.id);
       });
     }
@@ -5064,14 +3845,14 @@
   }
 
   function renderKpAliasChip(alias, kind, opts = {}) {
-    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-alias-dismiss="${esc(alias)}" title="移除">×</button>`;
+    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-alias-dismiss="${esc(alias)}" title="${esc(T("cfg.chip.remove"))}">×</button>`;
     const kindCls =
       kind === "selected"
         ? "-kp-tag-pick--selected"
         : kind === "cand-user"
           ? "-kp-tag-pick--cand-user"
           : "-kp-tag-pick--cand-system";
-    const title = kind === "selected" ? "点击移到候选" : "点击应用到已选";
+    const title = kind === "selected" ? esc(T("cfg.chip.moveToCand")) : esc(T("cfg.chip.applyToSel"));
     return `<span class="-kp-tag-pick ${kindCls}" data-alias="${esc(alias)}" data-alias-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
       <span class="-kp-tag-chip-label">${esc(alias)}</span>
       <span class="-kp-tag-chip-actions">${dismiss}</span>
@@ -5081,9 +3862,9 @@
   function renderKpDescCandChip(text, source) {
     const kindCls = source === "user" ? "-kp-tag-pick--cand-user" : "-kp-tag-pick--cand-system";
     const short = text.length > 72 ? text.slice(0, 70) + "…" : text;
-    return `<span class="-kp-tag-pick ${kindCls} -kp-desc-cand" data-desc-cand="${esc(text)}" title="点击填入描述">
+    return `<span class="-kp-tag-pick ${kindCls} -kp-desc-cand" data-desc-cand="${esc(text)}" title="${esc(T("cfg.chip.fillDesc"))}">
       <span class="-kp-tag-chip-label">${esc(short)}</span>
-      <button type="button" class="-kp-tag-chip-btn" data-desc-dismiss="${esc(text)}" title="移除">×</button>
+      <button type="button" class="-kp-tag-chip-btn" data-desc-dismiss="${esc(text)}" title="${esc(T("cfg.chip.remove"))}">×</button>
     </span>`;
   }
 
@@ -5091,25 +3872,25 @@
     const as = ensureKpAliasState(panel, kp);
     const selHtml = as.selected.length
       ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
-      : `<span class="-muted -kp-tags-empty">暂无已选别名</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.aliasSelEmpty"))}</span>`;
     const candHtml = as.candidates.length
       ? as.candidates
           .map((c) =>
             renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
           )
           .join("")
-      : `<span class="-muted -kp-tags-empty">同步 aux 或下方新建</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.aliasCandEmpty"))}</span>`;
     return `<div class="-kp-tags-editor -kp-alias-editor" id="kp-alias-editor">
       <div class="-kp-tags-zone -kp-tags-zone--selected">
-        <div class="-kp-tags-zone-head">已选别名 <span class="-muted">参与检索</span></div>
+        <div class="-kp-tags-zone-head">${esc(T("cfg.kpTag.zoneAliasSel"))} <span class="-muted">${esc(T("cfg.kpTag.partSearchNote"))}</span></div>
         <div id="kp-alias-selected" class="-kp-tags-chips">${selHtml}</div>
       </div>
       <div class="-kp-tags-zone -kp-tags-zone--candidate">
-        <div class="-kp-tags-zone-head">别名候选</div>
+        <div class="-kp-tags-zone-head">${esc(T("cfg.kpTag.zoneAliasCand"))}</div>
         <div class="-kp-tags-zone-toolbar">
           <div class="-kp-tag-create-row">
-            <input type="text" id="kp-alias-new-input" placeholder="新建别名" autocomplete="off" spellcheck="false" />
-            <button type="button" id="kp-alias-add-btn" class="-btn secondary -btn--sm">加入候选</button>
+            <input type="text" id="kp-alias-new-input" placeholder="${esc(T("cfg.kpTag.aliasNewPlaceholder"))}" autocomplete="off" spellcheck="false" />
+            <button type="button" id="kp-alias-add-btn" class="-btn secondary -btn--sm">${esc(T("cfg.kpTag.addCandBtn"))}</button>
           </div>
         </div>
         <div id="kp-alias-candidates" class="-kp-tags-chips">${candHtml}</div>
@@ -5123,9 +3904,9 @@
       ? ds.candidates
           .map((c) => renderKpDescCandChip(c.text, c.source))
           .join("")
-      : `<span class="-muted -kp-tags-empty">同步 aux 后显示描述候选</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.descCandEmpty"))}</span>`;
     return `<div class="-kp-desc-cand-editor" id="kp-desc-cand-editor">
-      <div class="-kp-tags-zone-head">描述候选 <span class="-muted">点击填入上方描述框</span></div>
+      <div class="-kp-tags-zone-head">${esc(T("cfg.kpTag.zoneDescCand"))} <span class="-muted">${esc(T("cfg.kpTag.fillDescNote"))}</span></div>
       <div id="kp-desc-candidates" class="-kp-tags-chips">${candHtml}</div>
     </div>`;
   }
@@ -5137,7 +3918,7 @@
     const as = panel.draft.aliasState;
     sel.innerHTML = as.selected.length
       ? as.selected.map((a) => renderKpAliasChip(a, "selected")).join("")
-      : `<span class="-muted -kp-tags-empty">暂无已选别名</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.aliasSelEmpty"))}</span>`;
     if (cand) {
       cand.innerHTML = as.candidates.length
         ? as.candidates
@@ -5145,7 +3926,7 @@
               renderKpAliasChip(c.alias, c.source === "user" ? "cand-user" : "cand-system")
             )
             .join("")
-        : `<span class="-muted -kp-tags-empty">同步 aux 或下方新建</span>`;
+        : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.aliasCandEmpty"))}</span>`;
     }
   }
 
@@ -5155,7 +3936,7 @@
     const ds = panel.draft.descCandState;
     root.innerHTML = ds.candidates.length
       ? ds.candidates.map((c) => renderKpDescCandChip(c.text, c.source)).join("")
-      : `<span class="-muted -kp-tags-empty">同步 aux 后显示描述候选</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.descCandEmpty"))}</span>`;
   }
 
   function renderKpTagChip(tag, kind, opts = {}) {
@@ -5163,7 +3944,7 @@
       opts.score != null
         ? `<span class="-kp-tag-pick-score">${esc(String(Math.round(opts.score)))}</span>`
         : "";
-    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-tag-dismiss="${esc(tag)}" title="移除">×</button>`;
+    const dismiss = `<button type="button" class="-kp-tag-chip-btn" data-tag-dismiss="${esc(tag)}" title="${esc(T("cfg.chip.remove"))}">×</button>`;
     const kindCls =
       kind === "selected"
         ? "-kp-tag-pick--selected"
@@ -5171,7 +3952,7 @@
           ? "-kp-tag-pick--cand-user"
           : "-kp-tag-pick--cand-system";
     const title =
-      kind === "selected" ? "点击移到候选" : "点击应用到已选";
+      kind === "selected" ? esc(T("cfg.chip.moveToCand")) : esc(T("cfg.chip.applyToSel"));
     return `<span class="-kp-tag-pick ${kindCls}" data-tag="${esc(tag)}" data-tag-kind="${kind === "selected" ? "selected" : "candidate"}" title="${title}">
       <span class="-kp-tag-chip-label">${esc(tag)}</span>${score}
       <span class="-kp-tag-chip-actions">${dismiss}</span>
@@ -5182,7 +3963,7 @@
     const ts = ensureKpTagState(panel, kp);
     const selectedHtml = ts.selected.length
       ? ts.selected.map((t) => renderKpTagChip(t, "selected")).join("")
-      : `<span class="-muted -kp-tags-empty">暂无已选 tag</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.tagSelEmpty"))}</span>`;
     const candHtml = ts.candidates.length
       ? ts.candidates
           .map((c) =>
@@ -5191,19 +3972,19 @@
             })
           )
           .join("")
-      : `<span class="-muted -kp-tags-empty">点击「系统建议」或下方新建</span>`;
+      : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.tagCandEmpty"))}</span>`;
     return `<div class="-kp-tags-editor" id="kp-tags-editor">
       <div class="-kp-tags-zone -kp-tags-zone--selected">
-        <div class="-kp-tags-zone-head">已选 <span class="-muted">点击 chip 移到候选</span></div>
+        <div class="-kp-tags-zone-head">${esc(T("cfg.kpTag.zoneTagsSel"))} <span class="-muted">${esc(T("cfg.kpTag.tagsSelNote"))}</span></div>
         <div id="kp-tags-selected" class="-kp-tags-chips">${selectedHtml}</div>
       </div>
       <div class="-kp-tags-zone -kp-tags-zone--candidate">
-        <div class="-kp-tags-zone-head">候选 <span class="-muted">点击 chip 应用到已选 · × 移除</span></div>
+        <div class="-kp-tags-zone-head">${esc(T("cfg.kpTag.zoneTagsCand"))} <span class="-muted">${esc(T("cfg.kpTag.tagsCandNote"))}</span></div>
         <div class="-kp-tags-zone-toolbar">
-          <button type="button" id="kp-suggest-tags" class="-btn secondary -btn--sm">系统建议</button>
+          <button type="button" id="kp-suggest-tags" class="-btn secondary -btn--sm">${esc(T("cfg.kpTag.sysSuggestBtn"))}</button>
           <div class="-kp-tag-create-row">
-            <input type="text" id="kp-tag-new-input" placeholder="新建 tag" autocomplete="off" spellcheck="false" />
-            <button type="button" id="kp-tag-add-btn" class="-btn secondary -btn--sm">加入候选</button>
+            <input type="text" id="kp-tag-new-input" placeholder="${esc(T("cfg.kpTag.tagNewPlaceholder"))}" autocomplete="off" spellcheck="false" />
+            <button type="button" id="kp-tag-add-btn" class="-btn secondary -btn--sm">${esc(T("cfg.kpTag.addCandBtn"))}</button>
           </div>
         </div>
         <div id="kp-tags-candidates" class="-kp-tags-chips">${candHtml}</div>
@@ -5220,7 +4001,7 @@
     if (sel) {
       sel.innerHTML = ts.selected.length
         ? ts.selected.map((t) => renderKpTagChip(t, "selected")).join("")
-        : `<span class="-muted -kp-tags-empty">暂无已选 tag</span>`;
+        : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.tagSelEmpty"))}</span>`;
     }
     if (cand) {
       cand.innerHTML = ts.candidates.length
@@ -5231,7 +4012,7 @@
               })
             )
             .join("")
-        : `<span class="-muted -kp-tags-empty">点击「系统建议」或下方新建</span>`;
+        : `<span class="-muted -kp-tags-empty">${esc(T("cfg.kpTag.tagCandEmpty"))}</span>`;
     }
   }
 
@@ -5454,7 +4235,7 @@
     try {
       const res = await call("sync_implicit_proposals", state.currentPath, kpId, tempKp);
       if (res.status !== "ok") {
-        setStatus(res.message || "同步失败");
+        setStatus(res.message || T("cfg.aux.syncFail"));
         return;
       }
       let added = 0;
@@ -5485,7 +4266,7 @@
       refreshKpTagsEditorDom(panel, kp);
       refreshKpAliasEditorDom(panel, kp);
       refreshKpDescCandEditorDom(panel, kp);
-      setStatus(added ? `已从 aux 合并 ${added} 条候选` : "aux 已同步，无新候选");
+      setStatus(added ? T("cfg.aux.merged", { n: added }) : T("cfg.aux.none"));
     } catch (e) {
       setStatusError(String(e.message || e));
     }
@@ -5528,8 +4309,8 @@
         panel,
         state.doc?.knowledge_points?.find((k) => k.id === kpId) || { id: kpId }
       );
-      if (!items.length) setStatus("暂无 tag 建议");
-      else if (added) setStatus(`已加入 ${added} 个系统候选`);
+      if (!items.length) setStatus(T("cfg.aux.noTagSuggest"));
+      else if (added) setStatus(T("cfg.aux.tagAdded", { n: added }));
     } catch (_) {
       /* optional */
     }
@@ -5545,7 +4326,7 @@
       const items = (res.suggestions || []).filter((s) => s.kp_id && s.kp_id !== kpId);
       if (!items.length) return;
       box.innerHTML =
-        `<p class="-config-hint">名称相近的知识点（仅供参考，合并需手动处理）：</p>` +
+        `<p class="-config-hint">${T("cfg.aux.mergeHint")}</p>` +
         items
           .map(
             (s) =>
@@ -5646,46 +4427,46 @@
     const end = Math.max(start, r.end?.line_hint || start);
     const total = state.doc?.lines?.length || 1;
     if (end > total) {
-      setStatusError("无法确认", `终点第 ${end} 行超出正文（共 ${total} 行）`);
+      setStatusError(T("cfg.confirm.cannot"), T("cfg.confirm.endOutOfRange", { end, total }));
       return;
     }
     const kpId = (proposal.concept_id || slugify(proposal.name || "")).trim();
     const kpName = (proposal.name || "").trim();
     if (!kpId) {
-      setStatusError("无法确认", "提议缺少 id");
+      setStatusError(T("cfg.confirm.cannot"), T("cfg.confirm.missingId"));
       return;
     }
     if (!kpName) {
-      setStatusError("无法确认", "提议缺少名称");
+      setStatusError(T("cfg.confirm.cannot"), T("cfg.confirm.missingName"));
       return;
     }
     try {
       const check = await call("check_kp_id", kpId, state.currentPath);
       if (check.status !== "ok" || !check.available) {
-        setStatusError(check.message || "目标 id 已存在", check.files?.join(", "));
+        setStatusError(check.message || T("cfg.confirm.idTaken"), check.files?.join(", "));
         return;
       }
     } catch (e) {
-      setStatusError("校验失败", String(e.message || e));
+      setStatusError(T("cfg.confirm.validateFail"), String(e.message || e));
       return;
     }
-    setStatus("确认知识点…");
+    setStatus(T("cfg.confirm.inProg"));
     const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
     if (res.status !== "ok") {
-      setStatusError(res.message || "写入失败");
+      setStatusError(res.message || T("cfg.confirm.writeFail"));
       return;
     }
     state.doc = res;
     renderEditor(res);
     renderKpList(res);
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     await setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
     state.activeKpId = kpId;
     renderKpList(state.doc);
     highlightRange(start, end);
     scrollKpListItemIntoView(kpId);
-    setStatus("已确认知识点", `${kpId} L${start}–${end}`);
+    setStatus(T("cfg.confirm.done"), T("cfg.confirm.doneDetail", { kpId, start, end }));
     try {
       await saveKpCreateMetadata(kpId);
     } catch (_) {
@@ -5712,21 +4493,17 @@
       ...(state.doc.definition_proposals || []),
     ].filter((p) => !isKpCoveredByConfirmed(p, confirmed));
     if (!all.length) {
-      setStatus("没有可确认的待确认项");
+      setStatus(T("cfg.confirm.nonePending"));
       return;
     }
-    if (
-      !window.confirm(
-        `将直接确认 ${all.length} 个待确认提议（使用提议默认 id 与名称）。\nid 冲突或范围异常的项目会跳过，并在最后列出。`
-      )
-    ) {
+    if (!window.confirm(T("cfg.confirm.confirmAll", { n: all.length }))) {
       return;
     }
     const ok = [];
     const skipped = [];
     for (let i = 0; i < all.length; i++) {
       const p = all[i];
-      setStatus(`确认中… ${i + 1}/${all.length}：${p.name || p.concept_id || ""}`);
+      setStatus(T("cfg.confirm.working", { cur: i + 1, total: all.length, name: p.name || p.concept_id || "" }));
       const r = p.range || {};
       const start = r.start?.line_hint || 1;
       const end = Math.max(start, r.end?.line_hint || start);
@@ -5734,26 +4511,26 @@
       const kpId = (p.concept_id || slugify(p.name || "")).trim();
       const kpName = (p.name || "").trim();
       if (!kpId || !kpName) {
-        skipped.push(`${kpName || "?"}：缺少 id/名称`);
+        skipped.push(T("cfg.confirm.skNoId", { name: kpName || "?" }));
         continue;
       }
       if (end > total) {
-        skipped.push(`${kpName}：范围超出正文`);
+        skipped.push(T("cfg.confirm.skRange", { name: kpName }));
         continue;
       }
       try {
         const check = await call("check_kp_id", kpId, state.currentPath);
         if (check.status !== "ok" || !check.available) {
-          skipped.push(`${kpName}：id 已存在`);
+          skipped.push(T("cfg.confirm.skIdTaken", { name: kpName }));
           continue;
         }
       } catch (e) {
-        skipped.push(`${kpName}：校验失败 ${e.message || e}`);
+        skipped.push(T("cfg.confirm.skValidate", { name: kpName, msg: e.message || e }));
         continue;
       }
       const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
       if (res.status !== "ok") {
-        skipped.push(`${kpName}：${res.message || "写入失败"}`);
+        skipped.push(T("cfg.confirm.skWrite", { name: kpName, msg: res.message || T("cfg.confirm.writeFail") }));
         continue;
       }
       state.doc = res;
@@ -5761,7 +4538,7 @@
     }
     renderEditor(state.doc);
     renderKpList(state.doc);
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     await setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(state.doc);
     try {
@@ -5771,12 +4548,10 @@
       /* optional */
     }
     if (skipped.length) {
-      setStatusError(`已确认 ${ok.length} 项 · 跳过 ${skipped.length} 项`, skipped[0]);
-      window.alert(
-        `以下 ${skipped.length} 项未能自动确认：\n\n${skipped.join("\n")}\n\n可对具体项使用「配置并确认」手动处理。`
-      );
+      setStatusError(T("cfg.confirm.result", { ok: ok.length, skip: skipped.length }), skipped[0]);
+      window.alert(T("cfg.confirm.alert", { n: skipped.length, list: skipped.join("\n") }));
     } else {
-      setStatus(`已全部确认 ${ok.length} 项`);
+      setStatus(T("cfg.confirm.allDone", { n: ok.length }));
     }
     if (!$("#config-modal").classList.contains("hidden")) {
       openConfigModal({ tab: "pending" });
@@ -5816,7 +4591,7 @@
       skipTabUpsert: opts.skipTabUpsert,
     });
     const label = candidate.name || candidate.kp_id || candidate.file;
-    setStatus(`已跳转 · ${label}`, candidate.file);
+    setStatus(T("cfg.jump.done", { label }), candidate.file);
   }
 
   function closeLinkModal(opts = {}) {
@@ -5847,7 +4622,7 @@
     $("#link-save-jump").classList.toggle("hidden", !isEdit);
     $("#link-config-view").classList.toggle("hidden", !isEdit || fromConfig);
     if (mode === "jump") {
-      $("#link-confirm").textContent = "确认跳转";
+      $("#link-confirm").textContent = T("cfg.jump.confirmBtn");
     }
   }
 
@@ -5961,21 +4736,24 @@
         state.activeKpId || ""
       );
       if (res.status !== "ok") {
-        setStatus(res.message || "推荐失败");
+        setStatus(res.message || T("cfg.linkEdge.recommendFail"));
         return;
       }
       if (res.suggested != null) {
         props.relevance = normalizeLinkRelevance(res.suggested, props.edge_type);
         renderLinkTargetList({ preserveFields: false });
-        setStatus(`已应用 ${tid} 推荐`, formatLinkRelevance(props.relevance));
+        setStatus(T("cfg.linkEdge.applied", { tid }), formatLinkRelevance(props.relevance));
       } else {
         setStatus(
-          "智能推荐尚未接入",
-          `${tid} 默认 ${formatLinkRelevance(res.default ?? defaultRelevanceForEdgeType(props.edge_type))}`
+          T("cfg.linkEdge.notIntegrated"),
+          T("cfg.linkEdge.defaultDetail", {
+            tid,
+            rel: formatLinkRelevance(res.default ?? defaultRelevanceForEdgeType(props.edge_type)),
+          })
         );
       }
     } catch (e) {
-      setStatus("推荐失败", String(e.message || e));
+      setStatus(T("cfg.linkEdge.recommendFail"), String(e.message || e));
     }
   }
 
@@ -5998,23 +4776,23 @@
     const et = normalizeLinkEdgeType(props.edge_type);
     const rel = normalizeLinkRelevance(props.relevance, et);
     return `<div class="-link-target-edge">
-      <span class="-link-target-edge-label">类型</span>
+      <span class="-link-target-edge-label">${esc(T("cfg.linkEdge.typeLabel"))}</span>
       <select data-target-edge-type="${pickIndex}">
-        <option value="reference"${et === "reference" ? " selected" : ""}>引用</option>
-        <option value="extend"${et === "extend" ? " selected" : ""}>扩展</option>
+        <option value="reference"${et === "reference" ? " selected" : ""}>${esc(T("cfg.edge.typeReference"))}</option>
+        <option value="extend"${et === "extend" ? " selected" : ""}>${esc(T("cfg.edge.typeExtend"))}</option>
       </select>
-      <span class="-link-target-edge-label">强度</span>
-      <input type="range" data-target-edge-rel-range="${pickIndex}" min="0" max="1" step="0.05" value="${rel}" title="边强度 relevance" />
-      <input type="number" data-target-edge-rel-num="${pickIndex}" class="-link-relevance-num" min="0" max="1" step="0.05" value="${formatLinkRelevance(rel)}" title="边强度 relevance" />
-      <button type="button" class="-btn secondary -btn--sm" data-target-edge-suggest="${pickIndex}">推荐</button>
+      <span class="-link-target-edge-label">${esc(T("cfg.linkEdge.strengthLabel"))}</span>
+      <input type="range" data-target-edge-rel-range="${pickIndex}" min="0" max="1" step="0.05" value="${rel}" title="${esc(T("cfg.linkEdge.relTitle"))}" />
+      <input type="number" data-target-edge-rel-num="${pickIndex}" class="-link-relevance-num" min="0" max="1" step="0.05" value="${formatLinkRelevance(rel)}" title="${esc(T("cfg.linkEdge.relTitle"))}" />
+      <button type="button" class="-btn secondary -btn--sm" data-target-edge-suggest="${pickIndex}">${esc(T("cfg.linkEdge.suggestBtn"))}</button>
     </div>`;
   }
 
   function renderLinkTargetEdgesPanel(p) {
     if (!p.selectedOrder.length) {
       return `<div class="-link-edge-editor-panel" id="link-edge-editor-panel">
-        <div class="-link-section-title">图谱边</div>
-        <p class="-muted -link-edge-empty">请先勾选跳转目标，再在此配置语义边属性</p>
+        <div class="-link-section-title">${esc(T("cfg.linkEdge.sectionTitle"))}</div>
+        <p class="-muted -link-edge-empty">${esc(T("cfg.linkEdge.empty"))}</p>
       </div>`;
     }
     const items = p.selectedOrder
@@ -6034,8 +4812,8 @@
       })
       .join("");
     return `<div class="-link-edge-editor-panel" id="link-edge-editor-panel">
-      <div class="-link-section-title">图谱边</div>
-      <p class="-config-hint -link-edge-panel-hint">为下方每个已选目标单独设置语义关系。</p>
+      <div class="-link-section-title">${esc(T("cfg.linkEdge.sectionTitle"))}</div>
+      <p class="-config-hint -link-edge-panel-hint">${esc(T("cfg.linkEdge.panelHint"))}</p>
       ${items}
     </div>`;
   }
@@ -6061,10 +4839,10 @@
   }
 
   function linkEditorSaveHint(p) {
-    if (!p.selectedOrder.length) return "请添加至少一个跳转目标";
+    if (!p.selectedOrder.length) return T("cfg.linkSave.hintNoTarget");
     readLinkEditorFields();
     if (!(p.anchorText || "").trim()) {
-      return "请填写匹配文本，并在下方添加跳转目标";
+      return T("cfg.linkSave.hintNeedAnchor");
     }
     return linkEditorStatusText(p);
   }
@@ -6144,19 +4922,19 @@
   }
 
   function linkEditorStatusText(p) {
-    if (!p.selectedOrder.length) return "请添加至少一个跳转目标";
+    if (!p.selectedOrder.length) return T("cfg.linkSave.hintNoTarget");
     const n = p.selectedOrder.length;
-    if (p.mode === "create") return `新建链接 · ${n} 个目标`;
-    return n > 1 ? `已选 ${n} 个跳转目标` : "已选 1 个跳转目标";
+    if (p.mode === "create") return T("cfg.linkSave.statusCreate", { n });
+    return n > 1 ? T("cfg.linkSave.statusMulti", { n }) : T("cfg.linkSave.statusSingle");
   }
 
   function renderLinkEditMeta(p) {
     const text = p.anchorText || p.displayText || "";
     const searchOpts = p.searchOptions || defaultLinkSearchOptions();
     let html = `<div class="-link-edit-meta">`;
-    html += `<label class="-link-field"><span>匹配文本</span>
+    html += `<label class="-link-field"><span>${esc(T("cfg.linkMeta.anchorLabel"))}</span>
       <div class="-link-anchor-field">
-        <input type="text" id="link-edit-anchor" value="${esc(text)}" placeholder="正文与预览中可见的文字，即跳转键" autocomplete="off" spellcheck="false" />
+        <input type="text" id="link-edit-anchor" value="${esc(text)}" placeholder="${esc(T("cfg.linkMeta.anchorPlaceholder"))}" autocomplete="off" spellcheck="false" />
         <div class="-link-target-suggest hidden" id="link-anchor-suggest"></div>
       </div>
     </label>`;
@@ -6178,26 +4956,26 @@
     if (isEdit) {
       html += renderLinkEditMeta(p);
       html += `<div id="link-editor-match-slot">${renderLinkEditorMatchPanelHtml()}</div>`;
-      html += `<p class="-config-hint -link-meta-hint">对应正文 <code>[[匹配文本]]</code>。输入框为搜索词；保存时按所选匹配项采用正文 canonical 文本。</p>`;
-      html += `<div class="-link-section-title">点击后打开</div>`;
-      html += `<p class="-config-hint -link-targets-hint">勾选目标参与跳转。</p>`;
+      html += `<p class="-config-hint -link-meta-hint">${T("cfg.linkMeta.metaHint")}</p>`;
+      html += `<div class="-link-section-title">${esc(T("cfg.linkMeta.openTitle"))}</div>`;
+      html += `<p class="-config-hint -link-targets-hint">${esc(T("cfg.linkMeta.targetsHint"))}</p>`;
     }
 
     if (isEdit) {
       html += `<div class="-link-pick-legend">
-        <span><i class="-link-legend-dot sel"></i>已选（参与跳转）</span>
-        <span><i class="-link-legend-dot"></i>未选（保留备选）</span>
+        <span><i class="-link-legend-dot sel"></i>${esc(T("cfg.linkMeta.legendSel"))}</span>
+        <span><i class="-link-legend-dot"></i>${esc(T("cfg.linkMeta.legendUnsel"))}</span>
       </div>`;
     } else {
       html += `<div class="-link-pick-legend">
-        <span><i class="-link-legend-dot primary"></i>队首跳转</span>
-        <span><i class="-link-legend-dot sel"></i>已选入队</span>
-        <span><i class="-link-legend-dot"></i>未选</span>
+        <span><i class="-link-legend-dot primary"></i>${esc(T("cfg.linkMeta.legendPrimary"))}</span>
+        <span><i class="-link-legend-dot sel"></i>${esc(T("cfg.linkMeta.legendQueued"))}</span>
+        <span><i class="-link-legend-dot"></i>${esc(T("cfg.linkMeta.legendPlain"))}</span>
       </div>`;
     }
 
     if (!candidates.length && isEdit) {
-      html += `<p class="-muted -link-empty">暂无目标 · 在下方添加 KP id 或文件 stem</p>`;
+      html += `<p class="-muted -link-empty">${esc(T("cfg.linkMeta.noTarget"))}</p>`;
     }
 
     html += candidates
@@ -6213,14 +4991,14 @@
           (isPrimary ? " is-active" : isEdit && isSelected ? " is-selected-row" : "");
         const tid = candidateTargetId(c);
         return `<div class="${rowCls}" data-pick-row="${i}">
-          <button type="button" class="${dotCls}" data-pick-dot="${i}" aria-label="选择">
+          <button type="button" class="${dotCls}" data-pick-dot="${i}" aria-label="${esc(T("cfg.linkMeta.pickAria"))}">
             <span class="-pick-dot-inner"></span>
           </button>
           <div class="-link-pick-label">
             <div class="-link-pick-name">${esc(c.name || tid || c.file)}</div>
             <div class="-link-pick-file">${esc(c.file || tid)}</div>
           </div>
-          ${isEdit ? `<button type="button" class="-link-remove-target" data-remove-target="${i}" title="移除">×</button>` : ""}
+          ${isEdit ? `<button type="button" class="-link-remove-target" data-remove-target="${i}" title="${esc(T("cfg.chip.remove"))}">×</button>` : ""}
         </div>`;
       })
       .join("");
@@ -6228,21 +5006,21 @@
     if (isEdit) {
       html += `<div class="-link-add-row">
         <div class="-link-add-field">
-          <input type="text" id="link-add-target" placeholder="id 或 tag:rl policy …" autocomplete="off" spellcheck="false" />
+          <input type="text" id="link-add-target" placeholder="${esc(T("cfg.linkMeta.addPlaceholder"))}" autocomplete="off" spellcheck="false" />
           <div class="-link-target-suggest hidden" id="link-add-target-suggest"></div>
         </div>
-        <button type="button" id="link-add-target-btn">添加</button>
+        <button type="button" id="link-add-target-btn">${esc(T("cfg.linkMeta.addBtn"))}</button>
       </div>`;
       html += renderLinkTargetEdgesPanel(p);
       html += `<details class="-suggest-block -link-tag-suggest">
-        <summary>智能匹配（M4 · tag / Lexical）</summary>
-        <p class="-config-hint">输入 tag: 前缀按标签检索知识点；无匹配时可创建未绑定链接或新建知识点。</p>
+        <summary>${esc(T("cfg.linkMeta.m4Summary"))}</summary>
+        <p class="-config-hint">${esc(T("cfg.linkMeta.m4Hint"))}</p>
         <div class="-suggest-list -suggest-placeholder-list">
           <div class="-suggest-item -suggest-placeholder">
             <span class="-suggest-score">94%</span>
             <span class="-suggest-label">q-learning</span>
             <span class="-muted">tag:rl · q-learning.md</span>
-            <button type="button" class="-btn secondary -btn--sm" disabled>选用</button>
+            <button type="button" class="-btn secondary -btn--sm" disabled>${esc(T("cfg.linkMeta.pickBtn"))}</button>
           </div>
         </div>
       </details>`;
@@ -6260,11 +5038,12 @@
         const primary = candidates[selectedOrder[0]];
         const rest = selectedOrder.length - 1;
         hint.textContent =
-          `队首：${primary?.name || candidateTargetId(primary) || primary?.file}` +
-          (rest > 0 ? ` · 另有 ${rest} 个将加入标签栏` : "");
+          T("cfg.linkMeta.queuePrimary", {
+            name: primary?.name || candidateTargetId(primary) || primary?.file,
+          }) + (rest > 0 ? T("cfg.linkMeta.queueMore", { n: rest }) : "");
         confirmBtn.disabled = false;
       } else {
-        hint.textContent = "点击圆圈多选；再次点击队首可取消";
+        hint.textContent = T("cfg.linkMeta.queueHint");
         confirmBtn.disabled = true;
       }
     } else {
@@ -6437,7 +5216,7 @@
     const tid = input.value.trim();
     if (!tid) return;
     if (p.candidates.some((c) => candidateTargetId(c) === tid)) {
-      setStatus("目标已存在", tid);
+      setStatus(T("cfg.linkSave.targetExists"), tid);
       return;
     }
     try {
@@ -6462,7 +5241,7 @@
       hideLinkTargetSuggest();
       renderLinkTargetList({ preserveFields: true });
     } catch (e) {
-      setStatus("添加失败", String(e.message || e));
+      setStatus(T("cfg.linkSave.addFail"), String(e.message || e));
     }
   }
 
@@ -6580,10 +5359,12 @@
 
     if (opts.mode === "create") {
       $("#link-title").textContent = displayText
-        ? `创建链接 — ${displayText.slice(0, 32)}`
-        : "创建链接";
+        ? T("cfg.linkSave.titleCreateNamed", { text: displayText.slice(0, 32) })
+        : T("cfg.linkSave.titleCreate");
     } else {
-      $("#link-title").textContent = `编辑链接 — ${displayText.slice(0, 32)}`;
+      $("#link-title").textContent = T("cfg.linkSave.titleEdit", {
+        text: displayText.slice(0, 32),
+      });
     }
 
     try {
@@ -6619,7 +5400,7 @@
       createSelectionLines: opts.preselectLines || null,
     });
     if (overrides[t]?.length) {
-      setStatus("发现已有路由", overrides[t].join(", "));
+      setStatus(T("cfg.linkSave.foundRoute"), overrides[t].join(", "));
     }
   }
 
@@ -6630,7 +5411,7 @@
       candidates,
       selectedOrder: candidates.length === 1 ? [0] : [],
     };
-    $("#link-title").textContent = `多目标链接 — ${title}`;
+    $("#link-title").textContent = T("cfg.linkSave.titleMulti", { title });
     openLinkModal();
   }
 
@@ -6653,14 +5434,14 @@
     const p = state.linkPicker;
     if (!p || (p.mode !== "edit" && p.mode !== "create")) return;
     if (!p.selectedOrder.length) {
-      setStatus("保存失败", "至少选择一个目标");
+      setStatus(T("cfg.linkSave.fail"), T("cfg.linkSave.needTarget"));
       return;
     }
     const searchQuery = (p.anchorText || "").trim();
     const selectedLines = p.match?.selected?.size ? [...p.match.selected] : [];
     const saveAnchor = resolveSaveAnchorFromSelection(p.match, selectedLines, searchQuery);
     if (!saveAnchor) {
-      setStatus("保存失败", "请填写匹配文本");
+      setStatus(T("cfg.linkSave.fail"), T("cfg.linkSave.needAnchor"));
       return;
     }
 
@@ -6678,7 +5459,7 @@
     const defaultEdgeType =
       Object.values(targetEdges)[0]?.edge_type || p.defaultEdgeType || "reference";
 
-    setStatus("保存中…");
+    setStatus(T("cfg.linkSave.saving"));
 
     try {
       let res;
@@ -6713,7 +5494,7 @@
       }
 
       if (res.status !== "ok") {
-        setStatus(res.message || "保存失败");
+        setStatus(res.message || T("cfg.linkSave.fail"));
         return;
       }
 
@@ -6758,12 +5539,12 @@
           targetEdges
         );
         if (applyRes.status !== "ok") {
-          setStatus(applyRes.message || "挂接失败");
+          setStatus(applyRes.message || T("cfg.linkSave.attachFail"));
           return;
         }
         doc = applyRes.document;
       } else if (needsMatch && !selectedLines.length) {
-        setStatus("保存失败", "请在弹窗中勾选正文匹配位置");
+        setStatus(T("cfg.linkSave.fail"), T("cfg.linkSave.needPositions"));
         return;
       }
 
@@ -6777,7 +5558,14 @@
         await loadLinkTargets();
       }
 
-      setStatus("链接已保存", res.warning || `${saveAnchor} → ${targetIds.join(", ")}`);
+      setStatus(
+        T("cfg.linkSave.saved"),
+        res.warning ||
+          T("cfg.linkSave.savedDetail", {
+            saveAnchor,
+            targets: targetIds.join(", "),
+          })
+      );
       if (returnTo === "config") {
         openConfigModal({ tab: "links", highlightLinkTarget: configHighlight });
       }
@@ -6787,7 +5575,7 @@
         if (primary) await jumpToTarget(primary, { source: "link" });
       }
     } catch (e) {
-      setStatus("保存失败", String(e.message || e));
+      setStatus(T("cfg.linkSave.fail"), String(e.message || e));
     }
   }
 
@@ -6812,12 +5600,12 @@
   }
 
   function matchRowBadge(m) {
-    if (m.blocked) return "冲突";
-    if (m.excluded) return "已排除";
-    if (m.is_substring) return "子串";
-    if (m.fuzzy) return "模糊";
-    if (m.wrapped) return "已包裹";
-    if (m.attached) return "已挂接";
+    if (m.blocked) return T("cfg.match.badgeConflict");
+    if (m.excluded) return T("cfg.match.badgeExcluded");
+    if (m.is_substring) return T("cfg.match.badgeSubstring");
+    if (m.fuzzy) return T("cfg.match.badgeFuzzy");
+    if (m.wrapped) return T("cfg.match.badgeWrapped");
+    if (m.attached) return T("cfg.match.badgeAttached");
     return "plain";
   }
 
@@ -6901,7 +5689,7 @@
       ...(opts.searchOptions || defaultLinkSearchOptions()),
       route_anchor: anchor,
     };
-    setStatus("扫描匹配…");
+    setStatus(T("cfg.match.scanMatching"));
     let scan;
     try {
       scan = await call(
@@ -6911,11 +5699,11 @@
         searchOptions
       );
     } catch (e) {
-      setStatus("扫描失败", String(e.message || e));
+      setStatus(T("cfg.match.scanFail"), String(e.message || e));
       return;
     }
     if (scan.status !== "ok") {
-      setStatus(scan.message || "扫描失败");
+      setStatus(scan.message || T("cfg.match.scanFail"));
       return;
     }
 
@@ -6947,32 +5735,32 @@
       openConfigModal({ tab: "links", highlightLinkTarget: highlight });
     }
     requestAnimationFrame(() => refreshConfigLinkMatchPanel());
-    setStatus(`匹配「${anchor}」`);
+    setStatus(T("cfg.match.matched", { anchor }));
   }
 
   async function confirmConfigLinkMatch() {
     const m = state.configLinkMatch;
     if (!m || !state.currentPath) {
-      setStatus("应用失败", "无匹配任务");
+      setStatus(T("cfg.match.applyFail"), T("cfg.match.noTask"));
       return;
     }
     if (!m.selected.size) {
       const hasSubstring = m.matches.some((r) => r.is_substring && r.line);
       setStatus(
-        "应用失败",
+        T("cfg.match.applyFail"),
         hasSubstring
-          ? "子串匹配不可挂接，请勾选带复选框的行"
-          : "请先勾选要包裹的正文位置"
+          ? T("cfg.match.substringNote")
+          : T("cfg.match.selectNote")
       );
       return;
     }
     const searchQuery = (m.anchorText || "").trim();
     const saveAnchor = resolveSaveAnchorFromSelection(m, [...m.selected], searchQuery);
     if (!saveAnchor) {
-      setStatus("应用失败", "匹配文本不能为空");
+      setStatus(T("cfg.match.applyFail"), T("cfg.match.needText"));
       return;
     }
-    setStatus("应用匹配…");
+    setStatus(T("cfg.match.applying"));
     try {
       const searchOptions = {
         ...readConfigLinkSearchOptions(),
@@ -6996,7 +5784,7 @@
         searchOptions
       );
       if (res.status !== "ok") {
-        setStatus(res.message || "应用失败");
+        setStatus(res.message || T("cfg.match.applyFail"));
         return;
       }
       const configHighlight = m.configHighlight || saveAnchor;
@@ -7011,7 +5799,13 @@
         await renderPreview(doc);
         await loadLinkTargets();
       }
-      setStatus("链接已挂接", `${saveAnchor} · ${m.selected.size} 处`);
+      setStatus(
+        T("cfg.match.attached"),
+        T("cfg.match.attachDetail", {
+          anchor: saveAnchor,
+          n: m.selected.size,
+        })
+      );
       if (!$("#config-modal").classList.contains("hidden")) {
         renderConfigModal();
       } else {
@@ -7023,7 +5817,7 @@
         if (primary) await jumpToTarget(primary, { source: "link" });
       }
     } catch (e) {
-      setStatus("应用失败", String(e.message || e));
+      setStatus(T("cfg.match.applyFail"), String(e.message || e));
     }
   }
 
@@ -7036,14 +5830,14 @@
     }
     const label = payload.displayText || payload.targetId;
     const ok = window.confirm(
-      `从跳转入口移除此处？\n\nL${line || "?"} · ${label}\n\n仅解除本处链接标记，保留跳转配置。`
+      T("cfg.linkOps.detachConfirm", { line: line || "?", label })
     );
     if (!ok) return;
     if (!line) {
-      setStatus("无法定位行号", "请在预览中右键链接");
+      setStatus(T("cfg.linkOps.noLine"), T("cfg.linkOps.noLineDetail"));
       return;
     }
-    setStatus("移除中…");
+    setStatus(T("cfg.linkOps.removing"));
     try {
       const res = await call(
         "detach_link_instance",
@@ -7052,7 +5846,7 @@
         line
       );
       if (res.status !== "ok") {
-        setStatus(res.message || "移除失败");
+        setStatus(res.message || T("cfg.linkOps.removeFail"));
         return;
       }
       const doc = res.document;
@@ -7062,9 +5856,9 @@
         renderKpList(doc);
         await renderPreview(doc);
       }
-      setStatus("已从跳转入口移除此处");
+      setStatus(T("cfg.linkOps.detached"));
     } catch (e) {
-      setStatus("移除失败", String(e.message || e));
+      setStatus(T("cfg.linkOps.removeFail"), String(e.message || e));
     }
   }
 
@@ -7072,15 +5866,13 @@
     if (!state.currentPath) return;
     const anchor = (anchorText || "").trim();
     if (!anchor) return;
-    const ok = window.confirm(
-      `删除跳转入口「${anchor}」？\n\n将移除链接配置，并解除正文中所有 [[${anchor}]] 包裹（保留可见文字）。`
-    );
+    const ok = window.confirm(T("cfg.linkOps.deleteConfirm", { anchor }));
     if (!ok) return;
-    setStatus("删除中…");
+    setStatus(T("cfg.linkOps.deleting"));
     try {
       const res = await call("delete_link_route", state.currentPath, anchor);
       if (res.status !== "ok") {
-        setStatus(res.message || "删除失败");
+        setStatus(res.message || T("cfg.linkOps.deleteFail"));
         return;
       }
       const doc = res.document;
@@ -7095,19 +5887,21 @@
         state.configTab = "links";
         renderConfigModal();
       }
-      setStatus("已删除跳转入口", anchor);
+      setStatus(T("cfg.linkOps.deleted"), anchor);
     } catch (e) {
-      setStatus("删除失败", String(e.message || e));
+      setStatus(T("cfg.linkOps.deleteFail"), String(e.message || e));
     }
   }
 
   async function removeLinkFromDocument(payload) {
     if (!state.currentPath) return;
     const ok = window.confirm(
-      `移除链接标记并保留显示文字？\n\n${payload.displayText || payload.targetId}`
+      T("cfg.linkOps.unwrapConfirm", {
+        text: payload.displayText || payload.targetId,
+      })
     );
     if (!ok) return;
-    setStatus("移除中…");
+    setStatus(T("cfg.linkOps.removing"));
     try {
       const res = await call(
         "remove_link",
@@ -7117,7 +5911,7 @@
         payload.linkType || ""
       );
       if (res.status !== "ok") {
-        setStatus(res.message || "移除失败");
+        setStatus(res.message || T("cfg.linkOps.removeFail"));
         return;
       }
       const doc = res.document;
@@ -7127,9 +5921,9 @@
         renderKpList(doc);
         await renderPreview(doc);
       }
-      setStatus("已移除 [[]] 标记");
+      setStatus(T("cfg.linkOps.unwrapped"));
     } catch (e) {
-      setStatus("移除失败", String(e.message || e));
+      setStatus(T("cfg.linkOps.removeFail"), String(e.message || e));
     }
   }
 
@@ -7153,7 +5947,10 @@
         }
         const res = await call("resolve_links", ids);
         if (res.status === "not_found" || res.status === "error") {
-          setStatus(res.message || "多目标链接无法解析", "未绑定");
+          setStatus(
+            res.message || T("cfg.linkClick.unresolvable"),
+            T("cfg.linkClick.unbound")
+          );
           return;
         }
         const candidates = res.candidates || [];
@@ -7177,7 +5974,10 @@
       }
       const res = await call("resolve_link", target);
       if (res.status === "not_found" || res.status === "error") {
-        setStatus(res.message || `未找到 [[${target}]]`, "未绑定");
+        setStatus(
+          res.message || T("cfg.linkClick.notFound", { target }),
+          T("cfg.linkClick.unbound")
+        );
         return;
       }
       if (res.status === "ambiguous") {
@@ -7186,12 +5986,12 @@
       }
       const candidate = (res.candidates || [])[0];
       if (!candidate) {
-        setStatus(`未找到 [[${target}]]`, "未绑定");
+        setStatus(T("cfg.linkClick.notFound", { target }), T("cfg.linkClick.unbound"));
         return;
       }
       await jumpToTarget(candidate, { source: "link" });
     } catch (e) {
-      setStatus(`链接失败: ${target}`, String(e.message || e));
+      setStatus(T("cfg.linkClick.failed", { target }), String(e.message || e));
     }
     if (type) {
       /* edge_hint 预留 M2/M3 边类型展示 */
@@ -7253,8 +6053,9 @@
     const lookup = state.linkTargetSet;
     const hasLookup = lookup instanceof Set;
     // 侧车 links[] 里已把该 [[]] 锚文本路由到具体 target（如 [[中文名]] → 英文 id）。
-    // 这类链接即使锚文本本身不在 kp id / 文件 stem 里，也应按“实跳转”处理，
-    // 否则会被标成虚跳转（-link-broken）而走编辑流程而不是跳转。
+    // 判定“实跳转”需同时满足：锚文本本身可解析，或存在路由且至少一个路由目标
+    // 落在可解析集合（KP id / 文件 stem）内；路由指向不存在目标时仍按虚链接
+    // （-link-broken）处理，与 marked 显示路径（postProcessMemoriaLinks）保持一致。
     const overrides = state.doc?.link_overrides || {};
     preview.querySelectorAll(".-wikilink").forEach((el) => {
       const target = el.getAttribute("data--target") || "";
@@ -7265,16 +6066,18 @@
       const blockEl = el.closest("[data--src-line]");
       const line = blockEl ? Number(blockEl.getAttribute("data--src-line")) || 0 : 0;
       el.setAttribute("data-link-line", String(line));
-      const routeOk = !!(overrides[target] && overrides[target].length);
+      const routeTargets = overrides[target] || [];
+      const routeOk = routeTargets.length > 0;
       if (hasLookup) {
-        if (lookup.has(target) || routeOk) {
+        const routeResolved = routeOk && routeTargets.some((t) => lookup.has(t));
+        if (lookup.has(target) || routeResolved) {
           el.classList.add("-link-resolved");
           el.setAttribute("tabindex", "0");
-          el.setAttribute("title", "跳转到 " + target);
+          el.setAttribute("title", esc(T("preview.link.jump", { key: target })));
         } else {
           el.classList.add("-link-broken", "memoria-broken-link");
           el.setAttribute("tabindex", "-1");
-          el.setAttribute("title", "未绑定目标: " + target);
+          el.setAttribute("title", esc(T("cfg.linkClick.unboundTitle", { target })));
         }
       } else {
         el.classList.add("-link-pending");
@@ -7421,8 +6224,8 @@
     const note =
       targetIds.length || !rawTargets?.length
         ? ""
-        : ' <span class="-muted">（目标未入图谱）</span>';
-    hint.innerHTML = `<span class="-muted">链接</span> ${esc(src)} → ${esc(tgt)}${note}`;
+        : ` <span class="-muted">${esc(T("cfg.linkClick.notInGraph"))}</span>`;
+    hint.innerHTML = `<span class="-muted">${esc(T("cfg.linkClick.graphLinkWord"))}</span> ${esc(src)} → ${esc(tgt)}${note}`;
   }
 
   function highlightGraphFromLinkAnchor(anchorText, line, linkEl) {
@@ -8321,7 +7124,7 @@
         text = "";
       }
       if (!text) {
-        setStatus("剪贴板为空或无法读取");
+        setStatus(T("cfg.clip.empty"));
         return;
       }
       const sel = window.getSelection();
@@ -8333,7 +7136,7 @@
           : (an.closest ? an.closest(".-line-content") : null);
       }
       if (!content || !editor.contains(content)) {
-        setStatus("请先将光标置于源码编辑区");
+        setStatus(T("cfg.clip.needCursor"));
         return;
       }
       applyEditorPaste(text, content);
@@ -8353,7 +7156,7 @@
       const srcLine = row ? +(row.dataset.line || 0) : 0;
       MemoriaLinkContextMenu.showForCursor(e, {
         onPaste: pasteAtSourceEditor,
-        onInsertImage: () => startInsertImage(srcLine || undefined),
+        onInsertImage: () => window.MemoriaImageTools?.startInsertImage?.(srcLine || undefined),
       });
     });
 
@@ -10041,7 +8844,7 @@
 
     /** 单 block 样式应用：变换 + commit + 恢复选区 */
     function _commitSingleStyle(ctx, formatType, color, forceApply) {
-      if (NON_EDITABLE[ctx.block.type]) return { ok: false, message: "该内容不可编辑" };
+      if (NON_EDITABLE[ctx.block.type]) return { ok: false, message: T("cfg.style.notEditable") };
       var preCursor = cloneCursor(ctx.start);
       log("STYLE", "single before=[" + _fmtNodes(ctx.before) + "] middle=[" + _fmtNodes(ctx.middle) + "] after=[" + _fmtNodes(ctx.after) + "]");
       var sel = _applyStyleToBlock(ctx, formatType, color, forceApply ? "apply" : undefined);
@@ -10050,7 +8853,7 @@
       var ok = commitSelection(ctx.block, ctx.blockIndex, sel.selStart, sel.selEnd);
       log("STYLE", "single commit ok=" + ok);
       if (ok) recordGroup("format", { blockIndex: ctx.blockIndex, nodePath: sel.selEnd.nodePath, offset: sel.selEnd.offset });
-      return { ok: ok, message: ok ? "" : "样式应用失败" };
+      return { ok: ok, message: ok ? "" : T("cfg.style.applyFailed") };
     }
 
     /** 跨 block 样式应用：逐块变换，作为一个撤销单元提交，最后恢复跨块选区 */
@@ -10059,16 +8862,16 @@
       var end = M.domToAst(range.endContainer, range.endOffset);
       log("STYLE", "multi domToAst start=" + (start ? JSON.stringify(start) : "null") + " end=" + (end ? JSON.stringify(end) : "null"));
       if (!start || !end || start.blockIndex >= end.blockIndex) {
-        return { ok: false, message: "选区边界包含不可拆分元素或跨段落" };
+        return { ok: false, message: T("cfg.style.rangeBoundary") };
       }
 
       var infos = [];
       for (var bi = start.blockIndex; bi <= end.blockIndex; bi++) {
         var block = _doc.blocks[bi];
-        if (!block) return { ok: false, message: "选区包含无效块" };
-        if (NON_EDITABLE[block.type]) return { ok: false, message: "选区包含不可编辑内容（表格/代码/公式等）" };
-        if (block.type === "list") return { ok: false, message: "暂不支持跨列表选区的样式应用" };
-        if (block.type === "blockquote") return { ok: false, message: "暂不支持跨引用块边界的样式应用" };
+        if (!block) return { ok: false, message: T("cfg.style.invalidBlock") };
+        if (NON_EDITABLE[block.type]) return { ok: false, message: T("cfg.style.uneditableContent") };
+        if (block.type === "list") return { ok: false, message: T("cfg.style.crossList") };
+        if (block.type === "blockquote") return { ok: false, message: T("cfg.style.crossQuote") };
 
         var before = [], middle = [], after = [];
         if (bi === start.blockIndex) {
@@ -10078,7 +8881,7 @@
             before = []; middle = []; after = [];
           } else {
             var sp = splitInlineAt(startChildren, start.nodePath || [], start.offset);
-            if (!sp) return { ok: false, message: "选区边界不可拆分" };
+            if (!sp) return { ok: false, message: T("cfg.style.boundaryUnsplit") };
             before = sp.left; middle = sp.right; after = [];
           }
         } else if (bi === end.blockIndex) {
@@ -10088,7 +8891,7 @@
             before = []; middle = []; after = [];
           } else {
             var ep = splitInlineAt(endChildren, end.nodePath || [], end.offset);
-            if (!ep) return { ok: false, message: "选区边界不可拆分" };
+            if (!ep) return { ok: false, message: T("cfg.style.boundaryUnsplit") };
             before = []; middle = ep.left; after = ep.right;
           }
         } else {
@@ -10134,7 +8937,7 @@
         restoreSelectionMulti(firstSelBlock, firstSel.nodePath, firstSel.offset, lastSelBlock, lastSel.nodePath, lastSel.offset);
       }
       log("STYLE", "multi touched=" + touched + " ok=" + (touched > 0));
-      return { ok: touched > 0, message: touched > 0 ? "" : "样式应用失败" };
+      return { ok: touched > 0, message: touched > 0 ? "" : T("cfg.style.applyFailed") };
     }
 
     /**
@@ -10146,7 +8949,7 @@
      * @param {boolean} [forceApply] — 强制「应用」而非切换（画笔涂抹使用，已有同样式文字保持不取消）
      */
     function applyStyle(formatType, color, range, forceApply) {
-      if (!_isSupportedFormat(formatType)) return { ok: false, message: "不支持的样式类型" };
+      if (!_isSupportedFormat(formatType)) return { ok: false, message: T("cfg.style.unsupportedType") };
       log("STYLE", "applyStyle fmt=" + formatType + " color=" + (color || "null") + (forceApply ? " force=apply" : ""));
 
       var single = _extractSelectionMiddle(range);
@@ -10312,28 +9115,18 @@
       // 编辑模式关闭（只读）：不弹任何编辑类右键菜单（粘贴/插入图片/选区编辑/图片操作）。
       // 原生菜单已由全局 handler 屏蔽，此处直接 return 即可。
       if (preview.contentEditable !== "true") return;
-      // 图片右键：替换图片 / 删除图片（仅删引用）
-      const imgEl = e.target.closest("img.-preview-image");
-      if (imgEl) {
-        e.preventDefault();
-        const blockEl = imgEl.closest(".-image-block");
-        const lineNum = blockEl ? +(blockEl.getAttribute("data--src-line") || 0) : 0;
-        if (lineNum > 0) {
-          e.stopPropagation();
-          showImageContextMenu(e.clientX, e.clientY, lineNum);
-        }
-        return;
-      }
+      // 图片右键：替换/删除菜单已随图片子系统迁至 image-tools.js（init 绑定），此处放行交由其处理
+      if (e.target.closest("img.-preview-image")) return;
       if (e.target.closest(".memoria-link, .-wikilink, a[href]")) return;
       if (!state.currentPath) return;
       const info = getSelectionInContainer(preview);
       if (!info) {
         // 无选中文本（光标折叠）→ 提供「粘贴」「插入图片」
         if (!syncPreviewCursorForPaste()) return;
-        const insLine = previewCursorSourceLine();
+        const insLine = window.MemoriaImageTools?.previewCursorSourceLine?.() || 0;
         MemoriaLinkContextMenu.showForCursor(e, {
           onPaste: pasteAtCursor,
-          onInsertImage: () => startInsertImage(insLine || undefined),
+          onInsertImage: () => window.MemoriaImageTools?.startInsertImage?.(insLine || undefined),
         });
         return;
       }
@@ -10387,13 +9180,13 @@
       text = "";
     }
     if (!text) {
-      setStatus("剪贴板为空或无法读取");
+      setStatus(T("cfg.clip.empty"));
       return;
     }
 
     const EditSync = window.MemoriaEditSync;
     if (!EditSync || typeof EditSync.insertText !== "function") {
-      setStatus("编辑器未就绪");
+      setStatus(T("cfg.clip.editorNotReady"));
       return;
     }
 
@@ -10402,7 +9195,7 @@
     if (typeof EditSync.beginUndoGroup === "function") EditSync.beginUndoGroup();
     if (!EditSync.insertText(lines[0])) {
       if (typeof EditSync.endUndoGroup === "function") EditSync.endUndoGroup();
-      setStatus("粘贴失败（当前位置不可编辑）");
+      setStatus(T("cfg.clip.pasteFail"));
       return;
     }
     for (let i = 1; i < lines.length; i++) {
@@ -10410,7 +9203,7 @@
       if (lines[i]) EditSync.insertText(lines[i]);
     }
     if (typeof EditSync.endUndoGroup === "function") EditSync.endUndoGroup();
-    setStatus("已粘贴");
+    setStatus(T("cfg.clip.pasted"));
   }
 
   /* ── Format toolbar ── */
@@ -10731,15 +9524,15 @@
     mask.style.display = "none";
     mask.innerHTML =
       '<div class="-color-picker">' +
-      '  <div class="-cp-title">添加自定义颜色</div>' +
+      '  <div class="-cp-title">' + T("color.customTitle") + "</div>" +
       '  <div class="-cp-preview"></div>' +
       '  <div class="-cp-sv"><div class="-cp-cursor"></div></div>' +
       '  <input type="range" class="-cp-hue" min="0" max="360" step="1" value="0">' +
       '  <div class="-cp-presets"></div>' +
       '  <div class="-cp-row">' +
       '    <input type="text" class="-cp-hex" value="#ff0000" spellcheck="false" maxlength="7">' +
-      '    <button type="button" class="-cp-cancel">取消</button>' +
-      '    <button type="button" class="-cp-ok">确定</button>' +
+      '    <button type="button" class="-cp-cancel">' + T("common.cancel") + "</button>" +
+      '    <button type="button" class="-cp-ok">' + T("common.ok") + "</button>" +
       "  </div>" +
       "</div>";
     document.body.appendChild(mask);
@@ -10966,7 +9759,7 @@
     head.type = "button";
     head.className = "-ctx-item disabled";
     head.setAttribute("role", "menuitem");
-    head.innerHTML = '<span class="-ctx-head">自定义颜色 ' + hex + "</span>";
+    head.innerHTML = '<span class="-ctx-head">' + T("color.ctxHead", { hex: hex }) + "</span>";
     menu.appendChild(head);
 
     const div = document.createElement("div");
@@ -10977,13 +9770,13 @@
     del.type = "button";
     del.className = "-ctx-item danger";
     del.setAttribute("role", "menuitem");
-    del.textContent = "删除该颜色";
+    del.textContent = T("color.ctxDelete");
     del.addEventListener("click", (ev) => {
       ev.stopPropagation();
       hideSwatchCtxMenu();
       saveCustomColors(kind, getCustomColors(kind).filter((c) => c !== hex));
       renderCustomSwatches(kind);
-      setStatus("已删除自定义颜色 " + hex);
+      setStatus(T("color.deleted", { hex: hex }));
     });
     menu.appendChild(del);
 
@@ -11020,7 +9813,7 @@
       btn.type = "button";
       btn.className = (kind === "highlight" ? "-hl-swatch" : "-fc-swatch") + " -custom-swatch";
       btn.setAttribute(dataAttr, hex);
-      btn.title = "自定义颜色 " + hex + "（右键菜单可删除）";
+      btn.title = T("color.swatchTitle", { hex: hex });
       btn.style.backgroundColor = hex;
       btn.style.color = swatchTextColor(hex);
       btn.textContent = "●";
@@ -11044,18 +9837,18 @@
 
   /** 打开应用内取色面板；确定后将颜色追加到色板（不直接应用），并进入画笔模式 */
   function addCustomColor(kind) {
-    openColorPicker("添加自定义颜色", (hex) => {
+    openColorPicker(T("color.customTitle"), (hex) => {
       if (!hex) return; // 取消
       const colors = getCustomColors(kind);
       if (colors.indexOf(hex) !== -1) {
-        setStatus("颜色 " + hex + " 已在色板中");
+        setStatus(T("color.inPalette", { hex: hex }));
         armBrush(kind === "highlight" ? "highlight" : "fontcolor", hex);
         return;
       }
       colors.push(hex);
       saveCustomColors(kind, colors);
       renderCustomSwatches(kind);
-      setStatus("已添加自定义颜色 " + hex);
+      setStatus(T("color.added", { hex: hex }));
       // 添加成功即进入画笔模式，拖动即可涂抹新颜色
       armBrush(kind === "highlight" ? "highlight" : "fontcolor", hex);
     });
@@ -11072,9 +9865,9 @@
 
   /** 画笔样式的中文名 */
   function _brushLabel(fmt) {
-    return fmt === "highlight" ? "高亮" :
-      fmt === "fontcolor" ? "字体颜色" :
-      fmt === "bold" ? "加粗" : "斜体";
+    return fmt === "highlight" ? T("brush.style.highlight") :
+      fmt === "fontcolor" ? T("brush.style.fontcolor") :
+      fmt === "bold" ? T("brush.style.bold") : T("brush.style.italic");
   }
 
   /** 鼠标目标对应的样式类型（B/I/H▾/色▾/对应色块，含自定义色块），否则 null */
@@ -11135,7 +9928,7 @@
     closeAllDropdowns();
     document.body.classList.add("-brush-active");
     updateFormatToolbarState();
-    setStatus("画笔已就绪：可继续点选其他样式，左键拖动涂抹一并应用；右键点击已选样式单独取消");
+    setStatus(T("brush.ready"));
   }
 
   /** 全部退出画笔模式（Esc / 右键取消最后一个样式时） */
@@ -11156,11 +9949,11 @@
     else if (fmt === "fontcolor") _brush.fontcolor = null;
     if (!_brush.bold && !_brush.italic && !_brush.highlight && !_brush.fontcolor) {
       cancelBrush();
-      setStatus("已取消画笔");
+      setStatus(T("brush.cancelled"));
       return;
     }
     updateFormatToolbarState();
-    setStatus("已取消" + _brushLabel(fmt) + "，其余样式保留");
+    setStatus(T("brush.cancelPart", { x: _brushLabel(fmt) }));
   }
 
   /** 是否已存在可应用样式的非折叠选区（预览区实时/捕获选区，或源码编辑器） */
@@ -11179,7 +9972,7 @@
    *  每次应用后重取实时选区（edit-sync 会恢复选区到新位置） */
   function _applyBrushToRange(ES, firstRange) {
     const styles = _brushStyleList();
-    if (!styles.length) return { ok: false, message: "未选择任何样式，请先点击样式按钮或色块" };
+    if (!styles.length) return { ok: false, message: T("brush.noStyle") };
     let curRange = firstRange;
     let applied = 0;
     for (let k = 0; k < styles.length; k++) {
@@ -11195,7 +9988,7 @@
       if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) break;
       curRange = sel.getRangeAt(0);
     }
-    return { ok: applied > 0, message: applied > 0 ? "" : "样式应用失败", applied };
+    return { ok: applied > 0, message: applied > 0 ? "" : T("brush.applyFail"), applied };
   }
 
   /** 画笔 mouseup：预览区内拖动结束 → 应用目标样式（保持画笔可连续涂抹）；右键取消由 contextmenu 捕获阶段处理 */
@@ -11213,7 +10006,7 @@
 
     const sel = window.getSelection();
     if (!sel || !sel.rangeCount || sel.getRangeAt(0).collapsed) {
-      setStatus("画笔就绪：左键拖动涂抹应用" + _brushListLabel() + "，右键点击已选样式取消");
+      setStatus(T("brush.standby", { x: _brushListLabel() }));
       return;
     }
     const r = sel.getRangeAt(0);
@@ -11223,7 +10016,7 @@
       if (ES && typeof ES.applyStyle === "function") {
         const res = _applyBrushToRange(ES, r);
         if (res.ok) {
-          setStatus("已应用" + _brushListLabel() + "，继续拖动涂抹或按 Esc 退出");
+          setStatus(T("brush.applied", { x: _brushListLabel() }));
         } else if (res.message) {
           setStatus(res.message);
         }
@@ -11317,7 +10110,7 @@
     if (!anchorLine || !focusLine) return null;
     // Only support single-line selection for now
     if (anchorLine !== focusLine) {
-      setStatus("格式化仅支持单行内选择");
+      setStatus(T("cfg.style.singleLineOnly"));
       return null;
     }
     const lineEl = document.querySelector(`#line-${anchorLine} .-line-content`);
@@ -11352,31 +10145,31 @@
       log("STYLE", "applyFormat res=" + JSON.stringify(res));
       _pendingPreviewRange = null;
       if (res && res.ok) {
-        setStatus("已应用样式");
+        setStatus(T("cfg.style.applied"));
       } else if (res && res.message) {
         setStatus(res.message);
       } else {
-        setStatus("样式应用失败");
+        setStatus(T("cfg.style.applyFailed"));
       }
       return;
     }
 
     // 移除样式（无色）仅支持预览区 AST 管线；源码区暂不支持
     if (formatType === "unhighlight" || formatType === "unfontcolor") {
-      setStatus("请先在预览区选中文字，再使用「无色」");
+      setStatus(T("cfg.style.needPreviewSel"));
       return;
     }
 
     const info = getEditorSelectionInfo();
     if (!info) {
-      setStatus("请先在源码中选中文字");
+      setStatus(T("cfg.style.needSourceSel"));
       return;
     }
     if (info.startCol === info.endCol) {
       // No selection — insert empty wrapper at cursor
       const res = await call("format_text", state.currentPath, info.line, info.startCol, info.endCol, formatType, color || null);
       if (res.status !== "ok") {
-        setStatus(res.message || "格式化失败");
+        setStatus(res.message || T("cfg.style.formatFail"));
         return;
       }
       state.doc = res;
@@ -11388,7 +10181,7 @@
     } else {
       const res = await call("format_text", state.currentPath, info.line, info.startCol, info.endCol, formatType, color || null);
       if (res.status !== "ok") {
-        setStatus(res.message || "格式化失败");
+        setStatus(res.message || T("cfg.style.formatFail"));
         return;
       }
       state.doc = res;
@@ -11432,10 +10225,10 @@
 
   function errorLabel(err) {
     const map = {
-      start_snippet_not_found: "起点未找到",
-      end_snippet_not_found: "终点未找到",
-      end_before_start: "终点在起点前",
-      missing_snippet: "缺少 snippet",
+      start_snippet_not_found: T("cfg.kpErr.startSnippet"),
+      end_snippet_not_found: T("cfg.kpErr.endSnippet"),
+      end_before_start: T("cfg.kpErr.endBeforeStart"),
+      missing_snippet: T("cfg.kpErr.missingSnippet"),
     };
     return map[err] || err;
   }
@@ -11713,7 +10506,7 @@
     if (!lines?.length) return;
     const lo = Math.min(...lines);
     const hi = Math.max(...lines);
-    const name = (text || "").split(/\n/)[0].trim().slice(0, 80) || "新知识点";
+    const name = (text || "").split(/\n/)[0].trim().slice(0, 80) || T("cfg.assist.defaultName");
     openKpModalForCreate({
       kpId: slugify(name),
       name,
@@ -11760,10 +10553,10 @@
   function assistPreviewToolbarHtml() {
     const mode = state.assistPreviewMode || "source";
     return `<div class="-assist-preview-head">
-      <span class="-muted">范围预览</span>
-      <div class="-view-toggle" role="tablist" aria-label="预览模式">
-        <button type="button" class="-view-btn${mode === "source" ? " active" : ""}" data-assist-view="source">源码</button>
-        <button type="button" class="-view-btn${mode === "markdown" ? " active" : ""}" data-assist-view="markdown">Markdown</button>
+      <span class="-muted">${esc(T("cfg.assist.rangeLabel"))}</span>
+      <div class="-view-toggle" role="tablist" aria-label="${esc(T("cfg.assist.previewModeAria"))}">
+        <button type="button" class="-view-btn${mode === "source" ? " active" : ""}" data-assist-view="source">${esc(T("cfg.assist.viewSource"))}</button>
+        <button type="button" class="-view-btn${mode === "markdown" ? " active" : ""}" data-assist-view="markdown">${esc(T("cfg.assist.viewMarkdown"))}</button>
       </div>
     </div>`;
   }
@@ -11870,7 +10663,7 @@
     const top = wrap.querySelector(".-assist-preview-ellipsis-top");
     const bottom = wrap.querySelector(".-assist-preview-ellipsis-bottom");
     if (viewStart > 1) {
-      const text = `… 上文第 1–${viewStart - 1} 行`;
+      const text = T("cfg.assist.ellipsisTop", { to: viewStart - 1 });
       if (top) top.textContent = text;
       else {
         const el = document.createElement("div");
@@ -11882,7 +10675,7 @@
       top.remove();
     }
     if (viewEnd < total) {
-      const text = `… 下文第 ${viewEnd + 1}–${total} 行`;
+      const text = T("cfg.assist.ellipsisBottom", { from: viewEnd + 1, total });
       if (bottom) bottom.textContent = text;
       else {
         const el = document.createElement("div");
@@ -11956,7 +10749,7 @@
     let html = assistPreviewToolbarHtml();
 
     if (viewStart > 1) {
-      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">… 上文第 1–${viewStart - 1} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">${esc(T("cfg.assist.ellipsisTop", { to: viewStart - 1 }))}</div>`;
     }
 
     html += '<div class="-assist-preview" id="assist-preview-scroll">';
@@ -11970,7 +10763,7 @@
     html += "</div>";
 
     if (viewEnd < total) {
-      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">${esc(T("cfg.assist.ellipsisBottom", { from: viewEnd + 1, total }))}</div>`;
     }
 
     wrap.innerHTML = html;
@@ -11981,7 +10774,7 @@
     let html = assistPreviewToolbarHtml();
 
     if (viewStart > 1) {
-      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">… 上文第 1–${viewStart - 1} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-top -muted">${esc(T("cfg.assist.ellipsisTop", { to: viewStart - 1 }))}</div>`;
     }
 
     html += '<div class="-assist-md -preview markdown-body" id="assist-md-scroll">';
@@ -12006,7 +10799,7 @@
     html += "</div>";
 
     if (viewEnd < total) {
-      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">… 下文第 ${viewEnd + 1}–${total} 行</div>`;
+      html += `<div class="-assist-preview-ellipsis -assist-preview-ellipsis-bottom -muted">${esc(T("cfg.assist.ellipsisBottom", { from: viewEnd + 1, total }))}</div>`;
     }
 
     wrap.innerHTML = html;
@@ -12038,7 +10831,7 @@
       state.assistLastView = null;
       wrap.innerHTML =
         assistPreviewToolbarHtml() +
-        '<p class="-assist-preview-error">行号无效：终点不能早于起点</p>';
+        `<p class="-assist-preview-error">${esc(T("cfg.assist.rangeError"))}</p>`;
       bindAssistPreviewToolbar(wrap);
       return;
     }
@@ -12151,13 +10944,13 @@
 
   async function reloadDocAfterKpChange(res, kpId, message) {
     if (res.status !== "ok") {
-      setStatusError(res.message || "保存失败");
+      setStatusError(res.message || T("cfg.kpSave.fail"));
       return false;
     }
     state.doc = res;
     renderEditor(res);
     renderKpList(res);
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     await setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
     onKpClick(kpId, { skipRangeModal: true });
@@ -12172,21 +10965,21 @@
     const newId = $("#kp-field-id")?.value?.trim() || oldId;
     const name = $("#kp-field-name")?.value?.trim();
     if (!name) {
-      setStatusError("保存失败", "名称不能为空");
+      setStatusError(T("cfg.kpSave.fail"), T("cfg.kpSave.nameEmpty"));
       return false;
     }
     if (newId !== oldId) {
       if (
         !window.confirm(
-          `将知识点 id「${oldId}」重命名为「${newId}」？\n全库链接配置与正文 [[…]] 将同步更新，显示文字不变。`
+          T("cfg.kpSave.renameConfirm", { oldId, newId })
         )
       ) {
         return false;
       }
-      setStatus("迁移 id…");
+      setStatus(T("cfg.kpSave.migrating"));
       const renameRes = await call("rename_kp_id", oldId, newId);
       if (renameRes.status !== "ok") {
-        setStatusError(renameRes.message || "id 迁移失败");
+        setStatusError(renameRes.message || T("cfg.kpSave.migrateFail"));
         return false;
       }
       panel.kpId = newId;
@@ -12200,13 +10993,16 @@
         if (docRes.status === "ok") state.doc = docRes;
       }
       const stats = renameRes.sidecar_files?.length
-        ? `${renameRes.sidecar_files.length} 个文件配置 · ${renameRes.md_replacements || 0} 处正文`
+        ? T("cfg.kpSave.migrateStats", {
+            n: renameRes.sidecar_files.length,
+            m: renameRes.md_replacements || 0,
+          })
         : "";
-      setStatus(`id 已迁移 ${oldId} → ${newId}`, stats);
+      setStatus(T("cfg.kpSave.migrated", { old: oldId, new: newId }), stats);
     }
-    setStatus("保存配置…");
+    setStatus(T("cfg.kpSave.savingCfg"));
     const res = await call("update_kp", state.currentPath, panel.kpId, name);
-    return reloadDocAfterKpChange(res, panel.kpId, `已更新 ${panel.kpId}`);
+    return reloadDocAfterKpChange(res, panel.kpId, T("cfg.kpSave.updated", { kpId: panel.kpId }));
   }
 
   async function saveKpTags() {
@@ -12225,7 +11021,7 @@
     const descriptionCandidates = serializeKpDescCandidates(
       panel.draft?.descCandState?.candidates || []
     );
-    setStatus("保存配置…");
+    setStatus(T("cfg.kpSave.savingCfg"));
     const res = await call(
       "update_kp",
       state.currentPath,
@@ -12238,7 +11034,7 @@
       aliases,
       descriptionCandidates
     );
-    return reloadDocAfterKpChange(res, panel.kpId, `已更新标签 · ${panel.kpId}`);
+    return reloadDocAfterKpChange(res, panel.kpId, T("cfg.kpSave.updatedTags", { kpId: panel.kpId }));
   }
 
   async function saveKpModal() {
@@ -12264,24 +11060,24 @@
     const label = kp?.name || kpId;
     if (
       !window.confirm(
-        `删除知识点「${label}」？\n配置中的条目将移除；正文不会被改写。`
+        T("cfg.kpSave.deleteConfirm", { label })
       )
     ) {
       return;
     }
-    setStatus("删除中…");
+    setStatus(T("cfg.kpSave.deleting"));
     const res = await call("delete_kp", state.currentPath, kpId);
     if (res.status !== "ok") {
-      setStatus(res.message || "删除失败");
+      setStatus(res.message || T("cfg.kpSave.deleteFail"));
       return;
     }
     state.doc = res;
     renderEditor(res);
     renderKpList(res);
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     setViewMode(state.viewMode, { skipSave: true });
     renderPreview(res);
-    setStatus("已删除知识点", kpId);
+    setStatus(T("cfg.kpSave.deleted"), kpId);
     if (opts.closeModal && state.kpPanel?.kpId === kpId) {
       closeKpModal();
     }
@@ -12307,7 +11103,7 @@
       state.doc = res;
       renderEditor(res);
       renderKpList(res);
-      renderFileTree();
+      window.MemoriaFileTree?.render?.();
       setViewMode(state.viewMode, { skipSave: true });
       renderPreview(res);
     }
@@ -12336,22 +11132,22 @@
     if (!a) return false;
     const { start, end, total, valid } = getAssistRangeInputs();
     if (!valid) {
-      setStatusError("行号无效", "终点不能早于起点");
+      setStatusError(T("cfg.kpSave.invalidRange"), T("cfg.kpSave.endBeforeStart"));
       return false;
     }
     if (end > total) {
       setStatusError(
-        "行号无效",
-        `终点第 ${end} 行超出正文（共 ${total} 行）；请使用编辑器行号，不是含 frontmatter 的文件行号`
+        T("cfg.kpSave.invalidRange"),
+        T("cfg.kpSave.endBeyond", { end, total })
       );
       return false;
     }
     if (!lineHasRangeSnippet(start)) {
-      setStatusError("无法保存", `起点第 ${start} 行为空，请选择有内容的行`);
+      setStatusError(T("cfg.kpSave.cannotSave"), T("cfg.kpSave.startEmpty", { start }));
       return false;
     }
     if (!lineHasRangeSnippet(end)) {
-      setStatusError("无法保存", `终点第 ${end} 行为空，请选择有内容的行`);
+      setStatusError(T("cfg.kpSave.cannotSave"), T("cfg.kpSave.endEmpty", { end }));
       return false;
     }
     const host = a.host;
@@ -12366,26 +11162,26 @@
       a.kpId = kpId;
       a.name = kpName;
       if (!kpId) {
-        setStatusError("保存失败", "id 不能为空");
+        setStatusError(T("cfg.kpSave.fail"), T("cfg.kpSave.idEmpty"));
         return false;
       }
       if (!kpName) {
-        setStatusError("保存失败", "名称不能为空");
+        setStatusError(T("cfg.kpSave.fail"), T("cfg.kpSave.nameEmpty"));
         return false;
       }
       try {
         const check = await call("check_kp_id", kpId, state.currentPath);
         if (check.status !== "ok" || !check.available) {
-          setStatusError(check.message || "目标 id 已存在", check.files?.join(", "));
+          setStatusError(check.message || T("cfg.confirm.idTaken"), check.files?.join(", "));
           return false;
         }
       } catch (e) {
-        setStatusError("校验失败", String(e.message || e));
+        setStatusError(T("cfg.confirm.validateFail"), String(e.message || e));
         return false;
       }
     }
 
-    setStatus("保存配置…");
+    setStatus(T("cfg.kpSave.savingCfg"));
     const res = await call(
       "confirm_kp_range",
       state.currentPath,
@@ -12395,7 +11191,7 @@
       end
     );
     if (res.status !== "ok") {
-      setStatusError(res.message || "写入失败");
+      setStatusError(res.message || T("cfg.confirm.writeFail"));
       if (host === "kp" && state.kpPanel?.kpId) {
         ensureKpRangeAssist(
           (state.doc.knowledge_points || []).find((k) => k.id === state.kpPanel.kpId) || {
@@ -12411,7 +11207,7 @@
     state.doc = res;
     renderEditor(res);
     renderKpList(res);
-    renderFileTree();
+    window.MemoriaFileTree?.render?.();
     await setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
     // 与 openFile 的 kpId 跳转路径一致：直接 highlightRange + scrollKpListItemIntoView
@@ -12420,7 +11216,10 @@
     highlightRange(start, end);
     scrollKpListItemIntoView(kpId);
     const created = a.mode === "create";
-    setStatus(created ? "已创建知识点" : "已更新 range", `${kpId} L${start}–${end}`);
+    setStatus(
+      created ? T("cfg.kpSave.created") : T("cfg.kpSave.updatedRange"),
+      T("cfg.confirm.doneDetail", { kpId, start, end })
+    );
     if (created) {
       try {
         await saveKpCreateMetadata(kpId);
@@ -12487,205 +11286,6 @@
       .slice(0, 40) || "kp";
   }
 
-  function focusToolbarSearch() {
-    const input = $("#toolbar-search");
-    if (!input) return;
-    input.focus();
-    input.select();
-  }
-
-  function hideToolbarSearchPanel() {
-    $("#toolbar-search-panel")?.classList.add("hidden");
-  }
-
-  function showToolbarSearchPanel(html) {
-    const panel = $("#toolbar-search-panel");
-    if (!panel) return;
-    panel.innerHTML = html;
-    panel.classList.remove("hidden");
-  }
-
-  function syncToolbarSearchScopeUI() {
-    const scope = state.toolbarSearchScope === "file" ? "file" : "kb";
-    $("#toolbar-search-scope-kb")?.classList.toggle("active", scope === "kb");
-    $("#toolbar-search-scope-file")?.classList.toggle("active", scope === "file");
-    const fileBtn = $("#toolbar-search-scope-file");
-    if (fileBtn) {
-      fileBtn.disabled = !state.currentPath;
-      fileBtn.title = state.currentPath
-        ? `仅搜索 ${basename(state.currentPath)}`
-        : "请先打开文件";
-    }
-    const scopeSwitch = $("#toolbar-search-scope");
-    if (scopeSwitch) {
-      scopeSwitch.setAttribute("aria-checked", scope === "file" ? "true" : "false");
-      scopeSwitch.title =
-        scope === "file"
-          ? fileBtn?.title || "仅当前文件（点击切换全库）"
-          : "搜索全库（点击切换文件）";
-    }
-  }
-
-  function toggleToolbarSearchScope() {
-    const cur = state.toolbarSearchScope === "file" ? "file" : "kb";
-    setToolbarSearchScope(cur === "file" ? "kb" : "file");
-  }
-
-  function setToolbarSearchScope(scope) {
-    if (scope === "file" && !state.currentPath) {
-      setStatusError("请先打开文件");
-      return;
-    }
-    state.toolbarSearchScope = scope === "file" ? "file" : "kb";
-    localStorage.setItem("-search-scope", state.toolbarSearchScope);
-    syncToolbarSearchScopeUI();
-    const q = $("#toolbar-search")?.value?.trim();
-    if (q) runToolbarSearch();
-  }
-
-  let toolbarSearchTimer = null;
-
-  function formatSearchHitScore(hit, modes) {
-    const mode = (modes || "lexical").toLowerCase();
-    const sem =
-      hit.semantic_score != null
-        ? hit.semantic_score
-        : hit.confidence != null
-          ? hit.confidence
-          : null;
-    const lex = hit.lexical_score != null ? hit.lexical_score : null;
-
-    if (mode === "semantic" && sem != null) {
-      return `语义 ${Math.round(sem)}%`;
-    }
-    if (mode === "both" || mode === "full") {
-      const parts = [];
-      if (lex != null && lex > 0) parts.push(`字 ${Math.round(lex)}`);
-      if (sem != null && sem > 0) parts.push(`语义 ${Math.round(sem)}%`);
-      if (hit.tier) {
-        const tierLabel = { high: "高", medium: "中", low: "低" }[hit.tier] || hit.tier;
-        parts.push(tierLabel);
-      }
-      if (parts.length) return parts.join(" · ");
-    }
-    if (hit.tier && mode === "lexical") {
-      const tierLabel = { high: "高", medium: "中", low: "低" }[hit.tier] || hit.tier;
-      return `字 ${Math.round(lex != null ? lex : hit.score || 0)} · ${tierLabel}`;
-    }
-    if (lex != null) return `字 ${Math.round(lex)}`;
-    return String(Math.round(hit.score || 0));
-  }
-
-  async function runToolbarSearch(opts = {}) {
-    if (!state.kbPath) {
-      setStatusError(T("app.openKbFirst"));
-      return;
-    }
-    const q = $("#toolbar-search")?.value?.trim() || "";
-    if (!q) {
-      hideToolbarSearchPanel();
-      return;
-    }
-    const shiftFile = !!opts.fileOnly && !!state.currentPath;
-    const scope =
-      shiftFile || state.toolbarSearchScope === "file" ? "file" : "kb";
-    if (scope === "file" && !state.currentPath) {
-      setStatusError("请先打开文件");
-      return;
-    }
-    const relPath = scope === "file" ? state.currentPath : "";
-    const scopeHint = scope === "file" ? ` · ${basename(state.currentPath)}` : "";
-    setStatus("搜索…", q + scopeHint);
-    try {
-      const modesRequested = window.MemoriaSearchSettings?.getSearchModes?.() || "lexical";
-      const res = await call("search", q, scope, 20, modesRequested, relPath);
-      if (res.status === "error") {
-        hideToolbarSearchPanel();
-        setStatusError("搜索失败", res.message || "");
-        return;
-      }
-      const items = res.results || [];
-      const bodyHits = res.body_locate || [];
-      state.toolbarSearchResults = items;
-      state.toolbarSearchBodyHits = bodyHits;
-      const modes = res.modes || modesRequested;
-      if (!items.length && !bodyHits.length) {
-        let hint = `无匹配 · ${esc(q)}`;
-        if (
-          modes !== "lexical" &&
-          res.semantic?.available === false &&
-          res.semantic?.reason
-        ) {
-          const reasonMap = {
-            embedding_not_enabled: "语义搜索未开启（设置 → 检索）",
-            embedding_not_installed: "未安装 sentence-transformers",
-            embedding_index_empty: "语义索引为空",
-          };
-          hint += ` · ${reasonMap[res.semantic.reason] || res.semantic.reason}`;
-        }
-        if (!window.MemoriaSearchSettings?.isBodyLocateEnabled?.()) {
-          hint += " · 可在设置→检索开启「搜索正文定位」";
-        }
-        showToolbarSearchPanel(`<div class="-search-placeholder">${hint}</div>`);
-      } else {
-        let html = "";
-        if (items.length) {
-          html += items
-            .map(
-              (it, i) =>
-                `<button type="button" class="-suggest-item -toolbar-search-hit" data-search-kind="kp" data-search-idx="${i}">
-                  <span class="-suggest-score" title="${esc((it.sources || []).join(", "))}">${esc(formatSearchHitScore(it, modes))}</span>
-                  <span class="-suggest-label">${esc(it.label || it.name || it.id || "")}</span>
-                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
-                </button>`
-            )
-            .join("");
-        }
-        if (bodyHits.length) {
-          if (items.length) {
-            html += `<div class="-search-section-label">正文定位</div>`;
-          }
-          html += bodyHits
-            .map(
-              (it, i) =>
-                `<button type="button" class="-suggest-item -toolbar-search-hit -toolbar-search-body" data-search-kind="body" data-body-idx="${i}">
-                  <span class="-suggest-score -suggest-score--muted" title="正文行匹配">L${esc(String(it.line || ""))}</span>
-                  <span class="-suggest-label">${esc(it.label || it.snippet || "")}</span>
-                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
-                </button>`
-            )
-            .join("");
-        }
-        showToolbarSearchPanel(html);
-        $("#toolbar-search-panel")
-          ?.querySelectorAll(".-toolbar-search-hit")
-          .forEach((btn) => {
-            btn.addEventListener("click", async () => {
-              const kind = btn.getAttribute("data-search-kind") || "kp";
-              if (kind === "body") {
-                const idx = parseInt(btn.getAttribute("data-body-idx") || "-1", 10);
-                const hit = state.toolbarSearchBodyHits[idx];
-                if (!hit?.file) return;
-                hideToolbarSearchPanel();
-                await openFile(hit.file, { lineHint: hit.line });
-                return;
-              }
-              const idx = parseInt(btn.getAttribute("data-search-idx") || "-1", 10);
-              const hit = state.toolbarSearchResults[idx];
-              if (!hit?.file) return;
-              hideToolbarSearchPanel();
-              await openFile(hit.file, { kpId: hit.kp_id || null });
-            });
-          });
-      }
-      const total = items.length + bodyHits.length;
-      setStatus("搜索完成", `${total} 条 · ${q}${scopeHint}`);
-    } catch (e) {
-      hideToolbarSearchPanel();
-      setStatusError("搜索失败", String(e.message || e));
-    }
-  }
-
   function bindPointerDragHoverGuard() {
     if (document.body.dataset.HoverDragGuard) return;
     document.body.dataset.HoverDragGuard = "1";
@@ -12706,28 +11306,8 @@
   function bindEvents() {
     bindPointerDragHoverGuard();
     $("#btn-open").addEventListener("click", openKb);
-    $("#btn-import").addEventListener("click", () => startImport());
-    $("#btn-insert-image").addEventListener("click", () => startInsertImage());
-    // 图片插入按钮：mousedown 阻止焦点从预览区转移（不触发 focusin 的禁用刷新）。
-    // 否则点击按钮的瞬间焦点离开预览区 → _caretInPreview=false → 按钮被禁用 → click 无法触发
-    // （焦点状态机下"点击即失效"的经典缺陷）。阻止聚焦后 focus 保持在预览区，
-    // 按钮保持可点，且预览区 selection 完好，插入位置定位（previewCursorSourceLine）不受影响。
-    $("#btn-insert-image").addEventListener("mousedown", (e) => {
-      if (e.button === 0) e.preventDefault();
-    });
-    // 文本光标位置变化时刷新按钮可用性（点击预览区/编辑器、方向键移动光标等都会触发）
-    document.addEventListener("selectionchange", refreshImageInsertAvailability);
-    // 焦点进入预览区 → 编辑光标真实存在于预览区（闪烁）→ 按钮可点；焦点离开（编辑器/文件树/弹窗等）→ 禁用。
-    // 以 focus 状态机驱动，不依赖 selection 快照：切换文件后 selection 残留旧位置也不会误判。
-    document.addEventListener("focusin", function (e) {
-      const EH2 = window.MemoriaEditHandler;
-      if (!EH2) return;
-      const t = e.target;
-      const inPreview = !!(t && t.nodeType === 1 && t.closest && t.closest("#preview"));
-      EH2._caretInPreview = inPreview && EH2.editMode;
-      refreshImageInsertAvailability();
-    });
-    refreshImageInsertAvailability();
+    // 图片插入按钮（btn-insert-image）的 click/mousedown 与可用性状态机
+    // （focusin/selectionchange/初始刷新）已随图片子系统迁至 image-tools.js，由 boot init
     $("#btn-kb-close").addEventListener("click", () => closeKb());
     $("#btn-welcome-open").addEventListener("click", openKb);
     $("#btn-nav-back").addEventListener("click", navBack);
@@ -12739,49 +11319,8 @@
       if (state.currentPath) await openFile(state.currentPath, { skipNav: true });
     });
     $("#btn-build").addEventListener("click", () => buildKb());
-    $("#btn-check").addEventListener("click", () => openCheckModal());
-    $("#toolbar-search")?.addEventListener("input", () => {
-      clearTimeout(toolbarSearchTimer);
-      toolbarSearchTimer = setTimeout(() => {
-        const q = $("#toolbar-search")?.value?.trim();
-        if (q) runToolbarSearch();
-        else hideToolbarSearchPanel();
-      }, 220);
-    });
-    $("#toolbar-search-scope")?.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleToolbarSearchScope();
-    });
-    $("#toolbar-search-scope")?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleToolbarSearchScope();
-      }
-    });
-    syncToolbarSearchScopeUI();
-    $("#toolbar-search")?.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        runToolbarSearch({ fileOnly: e.shiftKey });
-      } else if (e.key === "Escape") {
-        hideToolbarSearchPanel();
-        e.target.blur();
-      }
-    });
-    $("#toolbar-search")?.addEventListener("focus", () => {
-      const q = $("#toolbar-search")?.value?.trim();
-      if (q) runToolbarSearch();
-    });
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest(".toolbar-search-wrap")) hideToolbarSearchPanel();
-    });
-    document.addEventListener("keydown", (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        focusToolbarSearch();
-      }
-    });
+    // 「检查」按钮 click 已随 KB 完整性检查子系统迁至 kb-check.js，由 boot init
+    // 工具条搜索（Ctrl+K/输入/范围切换/结果面板）已抽至 toolbar-search.js，由 boot init
     // 界面整体缩放快捷键：Ctrl+= 放大 / Ctrl+- 缩小 / Ctrl+0 复位
     if (window.MemoriaDisplaySettings) {
       document.addEventListener("keydown", (e) => {
@@ -12799,13 +11338,10 @@
         }
       });
     }
-    $("#check-close").addEventListener("click", closeCheckModal);
-    $("#check-dismiss").addEventListener("click", closeCheckModal);
-    $("#check-rerun").addEventListener("click", () => runKbValidate({ silent: false }));
-    $("#check-modal .-modal-backdrop")?.addEventListener("click", closeCheckModal);
+    // 检查弹窗的关闭/重新检查/backdrop 点击已随 KB 完整性检查子系统迁至 kb-check.js，由 boot init
     $("#status-stats")?.addEventListener("click", async () => {
       if ($("#status-stats").dataset.kbCheck) {
-        openCheckModal();
+        window.MemoriaKbCheck?.openCheckModal?.();
         return;
       }
       if (!$("#status-stats").dataset.graphAuditGoto) return;
@@ -12825,7 +11361,7 @@
     $("#btn-config").addEventListener("click", () => openConfigModal({ tab: "kp" }));
     $("#btn-kp-new").addEventListener("click", () => {
       if (!state.currentPath || !state.doc) {
-        setStatusError("请先打开文件");
+        setStatusError(T("app.openFileFirst"));
         return;
       }
       openKpModalForCreate();
@@ -12851,25 +11387,6 @@
     $("#link-close").addEventListener("click", closeLinkModal);
     $("#link-cancel").addEventListener("click", closeLinkModal);
     $("#link-confirm").addEventListener("click", confirmLinkPicker);
-    $("#import-conflict-close").addEventListener("click", closeImportConflictModal);
-    $("#import-conflict-cancel").addEventListener("click", closeImportConflictModal);
-    $("#import-conflict-modal .-modal-backdrop")?.addEventListener("click", closeImportConflictModal);
-    $("#import-conflict-copy-report").addEventListener("click", () => {
-      const ta = $("#import-conflict-report-text");
-      if (ta) {
-        ta.select();
-        navigator.clipboard.writeText(ta.value).then(() => setStatus("冲突报告已复制")).catch(() => { document.execCommand("copy"); setStatus("冲突报告已复制"); });
-      }
-    });
-    $("#import-conflict-confirm").addEventListener("click", async () => {
-      const resolution = collectImportConflictResolution();
-      const files = _importFileContents;
-      closeImportConflictModal();
-      if (files) await executeImportDirect(files, resolution);
-    });
-    $("#import-result-close").addEventListener("click", closeImportResultModal);
-    $("#import-result-dismiss").addEventListener("click", closeImportResultModal);
-    $("#import-result-modal .-modal-backdrop")?.addEventListener("click", closeImportResultModal);
     $("#link-save").addEventListener("click", () => saveLinkEditor(false));
     $("#link-save-jump").addEventListener("click", () => saveLinkEditor(true));
     $("#link-config-view").addEventListener("click", () => {
@@ -12918,7 +11435,7 @@
         highlightRange(ln, ln);
         scrollEditorToLine(ln);
         if (locateOnly) {
-          setStatus(`已定位 L${ln}`, match?.is_substring ? "子串匹配，不可挂接" : "点击复选框可挂接");
+          setStatus(T("cfg.match.located", { ln }), match?.is_substring ? T("cfg.match.substringBlocked") : T("cfg.match.checkboxHint"));
         }
       }
     });
@@ -12986,7 +11503,7 @@
         highlightRange(ln, ln);
         scrollEditorToLine(ln);
         if (locateOnly) {
-          setStatus(`已定位 L${ln}`, match?.is_substring ? "子串匹配，不可挂接" : "");
+          setStatus(T("cfg.match.located", { ln }), match?.is_substring ? T("cfg.match.substringBlocked") : "");
         }
       }
     });
@@ -13035,25 +11552,16 @@
         state.graphView3d?.reflow?.();
       });
     }
-    if (window.MemoriaCheckSettings) {
-      MemoriaCheckSettings.onChange(() => {
-        if (state.kbPath) startKbSilentCheck();
-      });
-    }
+    // 静默检查设置订阅（MemoriaCheckSettings.onChange）已随 KB 完整性检查子系统迁至 kb-check.js init
     if (window.MemoriaDisplaySettings) {
       MemoriaDisplaySettings.hydrateFromDisk();
     }
     if (window.MemoriaI18n) {
       MemoriaI18n.hydrate();
+      // 语言切换后的检查弹窗/角标重绘分支已随 KB 完整性检查子系统迁至 kb-check.js init
       MemoriaI18n.addRefresh(function () {
         if (window.MemoriaGraphSettings && window.MemoriaGraphSettings.rerenderCurrentTab) {
           window.MemoriaGraphSettings.rerenderCurrentTab();
-        }
-        if (state.kbValidateReport) {
-          applyCheckIndicators(state.kbValidateReport);
-          if ($("#check-modal") && !$("#check-modal").classList.contains("hidden")) {
-            renderCheckModalBody(state.kbValidateReport);
-          }
         }
       });
     }
@@ -13071,7 +11579,7 @@
         e.stopPropagation();
         if (window.MemoriaEditHandler) MemoriaEditHandler.toggleEditMode();
         // 编辑模式切换后立即刷新图片插入按钮可用性（不依赖 selectionchange 的后续触发）
-        refreshImageInsertAvailability();
+        window.MemoriaImageTools?.refreshImageInsertAvailability?.();
       });
     }
     bindPreviewSelectionMenu();
@@ -13238,8 +11746,61 @@
     });
   }
 
+  /**
+   * 应用服务门面：暴露给拆分出去的功能模块（import-flow 等）回调使用。
+   * 新增需要被外部模块调用的 app 私有服务时，在此追加。
+   */
+  window.MemoriaApp = {
+    state,
+    call,
+    T,
+    esc,
+    setStatus,
+    setStatusError,
+    refreshFiles,
+    loadLinkTargets,
+    loadGraphData,
+    refreshKbPendingSummary,
+    openFile,
+    // ── 图片子系统（image-tools.js）追加的私有服务 ──────────────────
+    // 源码行写回/撤销/重渲染/右键菜单/确认弹窗，均为 app.js 闭包内实现，
+    // 通过门面供 image-tools.js 调用（行为与原先在 app.js 内一致）。
+    closestLineEl,
+    renumberSourceLines,
+    scheduleRenderSync,
+    markDirty,
+    srcPushBefore: _srcPushBefore,
+    srcAfterEdit: _srcAfterEdit,
+    srcResetCoalesce: () => {
+      _srcCoalesceAt = 0;
+    },
+    renderEditor,
+    renderPreview,
+    showTreeContextMenu,
+    confirmTreeAction,
+    // ── 文件树子系统（file-tree.js）追加的私有服务 ─────────────────
+    // 标签栏重绘（重命名改签）、关闭标签（删除被删文件）、导航按钮刷新（树内点击切换），
+    // 均为 app.js 闭包内实现，通过门面供 file-tree.js 调用（行为与原先在 app.js 内一致）。
+    renderTabs,
+    closeTabAt,
+    updateNavButtons,
+    // ── KB 完整性检查模块（kb-check.js）追加的私有服务 ─────────────────
+    // 后端检查消息本地化（i18n.md §5.1 助手，图谱审计提示等 app.js 侧亦复用）、
+    // 状态栏统计重绘、路径规范化、路径修复后的打开标签重映射，均为 app.js 闭包内实现，
+    // 通过门面供 kb-check.js 调用（行为与原先在 app.js 内一致）。
+    localizeCheckIssue,
+    renderStatusStats,
+    normRelPath,
+    remapOpenTabsAfterPathRepair,
+  };
+
   window.MemoriaBridge?.onReady?.(() => {
     bindEvents();
+    window.MemoriaImportFlow?.init?.();
+    window.MemoriaToolbarSearch?.init?.();
+    window.MemoriaImageTools?.init?.();
+    window.MemoriaKbCheck?.init?.();
+    window.MemoriaFileTree?.init?.();
     initKb();
     hydrateCustomColorsFromDisk();
     window.MemoriaWindowChrome?.initWindowChrome?.();

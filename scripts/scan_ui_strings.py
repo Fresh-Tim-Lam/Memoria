@@ -23,7 +23,9 @@ OUT = os.path.join(ROOT, "docs", "reference", "i18n-inventory.md")
 
 CJK = re.compile(r"[\u4e00-\u9fff]")
 MAX_SNIP = 110
-DEV_LOG_RE = re.compile(r"\bconsole\s*\.\s*[A-Za-z]+\s*\(|\b(?:syncLog|debugLog|traceLog|warnLog)\s*\(")
+DEV_LOG_RE = re.compile(
+    r"\bconsole\s*\.\s*[A-Za-z]+\s*\(|\b(?:syncLog|debugLog|traceLog|warnLog)\s*\(|\blog\s*\(\s*\"[A-Za-z_][A-Za-z0-9_]*\""
+)
 
 
 def iter_files():

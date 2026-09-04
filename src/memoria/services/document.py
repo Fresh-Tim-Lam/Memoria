@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import logging
 import os
 import re
 import shutil
+import time
 from dataclasses import dataclass, field
 
 from memoria.range.constants import SNIPPET_MAX_LEN
@@ -252,8 +254,9 @@ class DocumentService:
     def save_document(self, rel_path: str, body: str) -> dict:
         """将编辑后的正文写回 .md 文件（保留原有 frontmatter）。
 
-        保存成功后自动清理未引用图片资产（注册机制：全库文档无引用的图片
-        从 .memoria/images/ 删除，返回 cleanedImages 清单）。
+        注意：保存**不**触发图片清理。图片资产清理（按全库引用扫描）
+        只在用户于「图片管理器」主动点击清理/删除时执行（RPC cleanup_unused_images），
+        避免编辑/预览中间态导致误删仍被引用的图片。
         """
         if not self.kb_path:
             return {"status": "error", "message": "未打开知识库"}
@@ -275,17 +278,13 @@ class DocumentService:
         # 清除缓存，下次 load 时重新解析
         self._cache.pop(rel_norm, None)
         touch_manifest_entry(self.kb_path, rel_norm)
-        result = {"status": "ok"}
-        # 保存后自动清理：全库无引用的图片从 .memoria/images/ 删除
+        # 保存后增量维护图片注册表（只重扫该文档；删除仅在用户显式触发时进行）
         try:
-            cleaned = self.cleanup_unused_images()
-            deleted = cleaned.get("deleted") or []
-            if deleted:
-                result["cleanedImages"] = [d["name"] for d in deleted]
+            self._update_registry_for_doc(rel_norm)
         except Exception:  # noqa: BLE001
-            # 清理失败不影响保存结果
+            # 注册表维护失败不影响保存结果
             pass
-        return result
+        return {"status": "ok"}
 
     def close_kb(self) -> None:
         kb = self.kb_path
@@ -584,11 +583,16 @@ class DocumentService:
         return h.hexdigest()
 
     def list_images(self) -> list[dict]:
-        """列出 .memoria/images/ 全部图片（含注册状态：referenced=是否被文档引用）。"""
+        """列出 .memoria/images/ 全部图片（含注册状态：referenced=是否被文档引用）。
+
+        打开图片管理器即为「全量扫描 + 维护注册表」触发点：重建并落盘 registry.json，
+        使按钮确认列表、注册表与磁盘三方一致。
+        """
         target_dir = self.images_dir()
         if not os.path.isdir(target_dir):
             return []
-        refs = self._scan_image_refs()
+        reg = self.rebuild_image_registry()
+        refs = reg["refs"]
         out = []
         for entry in sorted(os.listdir(target_dir)):
             full = os.path.join(target_dir, entry)
@@ -606,42 +610,163 @@ class DocumentService:
             })
         return out
 
-    # 图片引用正则：![alt](url) 或 ![alt](url "title")；
-    # URL 可为裸路径（不含空白），也可用尖括号包裹（含中文/空格等需编码字符，如
-    # <.../屏幕截图 2026.png>），两种形式都提取 URL 供引用注册。
+    # 图片引用识别（主正则 + 提及兜底）与注册表机制
+    # 主正则：![alt](url) 或 ![alt](url "title")；url 可为裸路径（不含空白），
+    # 也可用尖括号 <...> 包裹（含中文/空格等需编码字符）。
     _IMG_REF_RE = re.compile(
         r"!\[[^\]]*\]\(\s*(?:<([^>]*)>|([^)\s]+))(?:\s+\"[^\"]*\")?\s*\)"
     )
+    # 提及兜底：凡正文出现 `.memoria/images/<名>`（尖括号/裸路径，含 /files/ 前缀）
+    # 即视为被引用，避免解析漏判导致清理误删（data-loss 防线）。
+    _IMG_MENTION_RE = re.compile(
+        r"<(?:\/files)?\.memoria\/images\/([^>]*)>|"
+        r"(?:\/files)?\.memoria\/images\/([^)\s\"'<>]+)"
+    )
+
+    def _doc_image_names_from_body(self, body: str) -> set[str]:
+        """从单个文档正文提取指向本库 .memoria/images/ 的图片资产名（去重）。"""
+        prefix = f"{MEMORIA_DIR}/images/"
+        names: set[str] = set()
+        for m in self._IMG_REF_RE.finditer(body):
+            url = (m.group(1) or m.group(2) or "").strip()
+            norm = url[8:] if url.startswith("/files/") else url
+            if not norm.startswith(prefix):
+                continue
+            name = norm[len(prefix):].split("#", 1)[0].split("?", 1)[0]
+            if name and "/" not in name and "\\" not in name:
+                names.add(name)
+        for m in self._IMG_MENTION_RE.finditer(body):
+            name = (m.group(1) or m.group(2) or "").strip()
+            name = name.split("#", 1)[0].split("?", 1)[0]
+            if name and "/" not in name and "\\" not in name:
+                names.add(name)
+        return names
+
+    def _doc_image_names(self, rel: str) -> set[str]:
+        """读取 KB 内单个 md 文档，返回其引用的图片资产名。"""
+        full = os.path.join(self.kb_path, rel)
+        try:
+            with open(full, "r", encoding="utf-8") as f:
+                body = f.read()
+        except (OSError, UnicodeDecodeError):
+            return set()
+        return self._doc_image_names_from_body(body)
 
     def _scan_image_refs(self) -> dict[str, list[str]]:
-        """扫描 KB 全部 md 文档的图片引用，建立注册表。
-
-        返回 {.memoria/images 内文件名: [引用该图片的文档相对路径]}。
-        只统计规范化后指向 .memoria/images/ 的引用（源码 `.memoria/images/x.png`
-        或 API 形式 `/files/.memoria/images/x.png`）；其他相对路径（如
-        `./images/x.png` 当前文件目录语义）与远程 URL 不注册。
-        """
+        """全量扫描 KB 全部 md 文档，返回 {.memoria/images 资产名: [引用文档相对路径]}。"""
         refs: dict[str, set[str]] = {}
         if not self.kb_path:
             return {}
-        prefix = f"{MEMORIA_DIR}/images/"
         for rel in collect_md_files(self.kb_path):
-            full = os.path.join(self.kb_path, rel)
-            try:
-                with open(full, "r", encoding="utf-8") as f:
-                    body = f.read()
-            except (OSError, UnicodeDecodeError):
-                continue
-            for m in self._IMG_REF_RE.finditer(body):
-                url = (m.group(1) or m.group(2) or "").strip()
-                norm = url[8:] if url.startswith("/files/") else url
-                if not norm.startswith(prefix):
-                    continue
-                name = norm[len(prefix):].split("#", 1)[0].split("?", 1)[0]
-                if not name or "/" in name or "\\" in name:
-                    continue
+            for name in self._doc_image_names(rel):
                 refs.setdefault(name, set()).add(rel)
         return {k: sorted(v) for k, v in refs.items()}
+
+    # ── 图片注册表（磁盘 .memoria/images/registry.json）：轻量，供运行期自动检查 ──
+    _REGISTRY_FILE = "registry.json"
+    # 自动清理宽限期：文件导入 6 小时内即使注册表暂无引用也绝不自动删，
+    # 覆盖「插入→编辑→样式应用→尚未落盘」的编辑窗口，杜绝样式瞬间误删。
+    _AUTO_CLEAN_GRACE_SEC = 6 * 3600
+
+    def _image_registry_path(self) -> str | None:
+        if not self.kb_path:
+            return None
+        return os.path.join(self.kb_path, MEMORIA_DIR, "images", self._REGISTRY_FILE)
+
+    def _load_image_registry(self) -> dict:
+        path = self._image_registry_path()
+        if not path or not os.path.isfile(path):
+            return {}
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except (OSError, ValueError):
+            return {}
+        refs = data.get("refs") if isinstance(data, dict) else None
+        if not isinstance(refs, dict):
+            return {}
+        return {"refs": refs}
+
+    def _save_image_registry(self, reg: dict) -> None:
+        path = self._image_registry_path()
+        if not path:
+            return
+        try:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            tmp = path + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(reg, f, ensure_ascii=False, indent=1)
+            os.replace(tmp, path)
+        except OSError:
+            pass
+
+    def rebuild_image_registry(self) -> dict:
+        """全量扫描重建注册表并落盘（打开库时缺表/图片管理器按钮对账用）。"""
+        reg = {"refs": self._scan_image_refs()}
+        self._save_image_registry(reg)
+        return reg
+
+    def _registry_ensure(self) -> dict:
+        """注册表缺失时用一次全量扫描重建；否则直接读盘（轻）。"""
+        path = self._image_registry_path()
+        if not path or not os.path.isfile(path):
+            return self.rebuild_image_registry()
+        return self._load_image_registry()
+
+    def _update_registry_for_doc(self, rel: str) -> None:
+        """保存单个文档后增量更新注册表：只重扫该文档，不触发删除（轻）。"""
+        if not self.kb_path or not rel:
+            return
+        reg = self._registry_ensure()
+        refs = reg.setdefault("refs", {})
+        for name in list(refs.keys()):
+            docs = refs[name]
+            if rel in docs:
+                rest = [d for d in docs if d != rel]
+                if rest:
+                    refs[name] = rest
+                else:
+                    del refs[name]
+        for name in self._doc_image_names(rel):
+            lst = refs.setdefault(name, [])
+            if rel not in lst:
+                lst.append(rel)
+        self._save_image_registry(reg)
+
+    def image_registry_auto_check(self) -> dict:
+        """运行期轻量自动检查：以注册表为准，删除「注册表内无任何引用」的图片。
+
+        触发点：打开知识库 / 定时（长间隔）由前端调用；注册表缺失时自动全量重建一次。
+        """
+        if not self.kb_path:
+            return {"status": "ok", "deleted": [], "mode": "registry"}
+        reg = self._registry_ensure()
+        refs = reg.get("refs") or {}
+        target_dir = os.path.join(self.kb_path, MEMORIA_DIR, "images")
+        deleted: list[dict] = []
+        if not os.path.isdir(target_dir):
+            return {"status": "ok", "deleted": [], "mode": "registry"}
+        now = time.time()
+        for entry in sorted(os.listdir(target_dir)):
+            full = os.path.join(target_dir, entry)
+            if not os.path.isfile(full):
+                continue
+            if os.path.splitext(entry)[1].lower() not in self._IMAGE_EXTENSIONS:
+                continue
+            if entry in refs:
+                continue
+            # 宽限期：刚导入/编辑中尚未落盘引用的图片不自动删（用户显式清理不受此限）
+            try:
+                if now - os.path.getmtime(full) < self._AUTO_CLEAN_GRACE_SEC:
+                    continue
+            except OSError:
+                continue
+            try:
+                os.remove(full)
+            except OSError:
+                continue
+            deleted.append({"name": entry, "relPath": f"{MEMORIA_DIR}/images/{entry}"})
+        return {"status": "ok", "deleted": deleted, "mode": "registry"}
 
     def unused_images(self) -> list[dict]:
         """返回未被任何文档引用的图片资产（未注册图片）。"""
@@ -666,7 +791,7 @@ class DocumentService:
         return out
 
     def cleanup_unused_images(self, rel_paths: list[str] | None = None) -> dict:
-        """清理未注册（未被任何文档引用）的图片资产。
+        """图片管理器按钮触发（用户显式）：全量扫描 → 重建注册表 → 删除未引用图片。
 
         rel_paths 为 None 时清理全部未引用图片；否则仅清理列表中属于
         未引用集合的图片（不误删已引用资产）。返回删除清单。
@@ -674,7 +799,8 @@ class DocumentService:
         target_dir = self.images_dir()
         if not os.path.isdir(target_dir):
             return {"status": "ok", "deleted": []}
-        refs = self._scan_image_refs()
+        reg = self.rebuild_image_registry()
+        refs = reg["refs"]
         prefix = f"{MEMORIA_DIR}/images/"
         unused = {
             e for e in os.listdir(target_dir)

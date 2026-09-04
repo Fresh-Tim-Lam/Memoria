@@ -53,3 +53,13 @@ models/
 
 # 用户知识库（示例除外）
 # examples/ 下的 nodes 可以提交，其他不入库
+
+# 示例知识库运行/调试产物（不入库）
+docs/example/**/*.bak
+docs/example/**/*.log
+docs/example/**/.memoria/cache/
+docs/example/**/.memoria/pending.yaml
+docs/example/**/.memoria/images/
+
+# 单次调试脚本
+scripts/_tmp_parse.js

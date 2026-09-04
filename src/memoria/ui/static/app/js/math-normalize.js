@@ -39,8 +39,10 @@ window.MemoriaMathNormalize = (function () {
     if (/\*\*[^*]+\*\*/.test(t)) return false;
     if (/\[\[[^\]]+\]\]/.test(t)) return false;
     // 图片行（![alt](path)）不是公式：alt 常含下划线（如文件名 photomode_21072025_160332），
-    // 否则会被 MATH_RE 的 `_` 误判为旧式公式而包成 $$ 数学块，图片永不渲染
-    if (/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)/.test(t)) return false;
+    // 否则会被 MATH_RE 的 `_` 误判为旧式公式而包成 $$ 数学块，图片永不渲染。
+    // url 支持尖括号 <...>（路径可含空格/中文）与裸路径两种形式，属性串可缺省。
+    if (/^!\[[^\]]*\]\(\s*<[^>]*>(?:\s+"[^"]*")?\s*\)/.test(t)) return false;
+    if (/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\s*\)/.test(t)) return false;
     if (hasInlineOrBlockDelimiters(t)) return false;
     if (!MATH_RE.test(t)) return false;
     if (chineseRatio(t) > 0.15) return false;

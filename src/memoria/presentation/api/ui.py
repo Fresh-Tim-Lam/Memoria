@@ -784,9 +784,16 @@ class UIAPI:
             return {"status": "error", "message": str(e)}
 
     def cleanup_unused_images(self, rel_paths: list[str] | None = None) -> dict:
-        """清理未注册图片；rel_paths 为空时清理全部未引用图片，返回删除清单。"""
+        """清理未注册图片（图片管理器按钮显式触发）；rel_paths 为空时清理全部未引用图片。"""
         try:
             return self._svc.cleanup_unused_images(rel_paths)
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def image_registry_auto_check(self) -> dict:
+        """运行期轻量自动检查（打开知识库/定时触发）：基于磁盘注册表清理未引用图片。"""
+        try:
+            return self._svc.image_registry_auto_check()
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
 
