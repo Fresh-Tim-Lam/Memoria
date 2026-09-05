@@ -549,6 +549,8 @@
       tabs: { aria: "资源管理器" },
       tab: { files: "文件" },
       split: { title: "拖拽调整上方面板与知识点列表占比" },
+      collapseTitle: "收起侧栏",
+      expandTitle: "展开侧栏",
       kp: {
         label: "知识点",
         config: "配置",

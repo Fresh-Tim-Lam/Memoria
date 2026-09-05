@@ -549,6 +549,8 @@
       tabs: { aria: "Explorer" },
       tab: { files: "Files" },
       split: { title: "Drag to adjust graph / knowledge-point list ratio" },
+      collapseTitle: "Collapse sidebar",
+      expandTitle: "Expand sidebar",
       kp: {
         label: "Knowledge Points",
         config: "Config",

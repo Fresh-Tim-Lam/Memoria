@@ -1426,6 +1426,11 @@
         </div>`;
       })
       .join("");
+    // 行号列宽按总行数位数自适应（见 .-lineno 的 --lineno-ch）
+    editor.style.setProperty(
+      "--lineno-ch",
+      String(Math.max(1, String(doc.lines.length).length))
+    );
   }
 
   async function setViewMode(mode, opts) {
@@ -6718,6 +6723,13 @@
       const lineno = el.querySelector(".-lineno");
       if (lineno) lineno.textContent = String(n);
     });
+    const editor = $("#editor");
+    if (editor) {
+      editor.style.setProperty(
+        "--lineno-ch",
+        String(Math.max(1, String(els.length).length))
+      );
+    }
   }
 
   function bindEditorSelectInteraction() {
@@ -11255,10 +11267,55 @@
       if (!dragging) return;
       const w = Math.max(180, Math.min(480, e.clientX));
       sidebar.style.width = w + "px";
+      if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
     });
     window.addEventListener("mouseup", () => {
       dragging = false;
     });
+  }
+
+  // 左栏（文件树/图谱）整体收起/展开
+  let _sideCollapseTimer = null;
+  let _sidebarCollapsed = localStorage.getItem("-sidebar-collapsed") === "1";
+
+  function _positionSidebarCollapseBtn() {
+    const sidebar = $("#-sidebar");
+    const btn = $("#sidebar-collapse-btn");
+    if (!sidebar || !btn) return;
+    const r = sidebar.getBoundingClientRect();
+    btn.style.left = (_sidebarCollapsed ? 0 : Math.max(0, r.right - 1)) + "px";
+  }
+
+  function _applySidebarCollapsed() {
+    const sidebar = $("#-sidebar");
+    const btn = $("#sidebar-collapse-btn");
+    if (!sidebar || !btn) return;
+    sidebar.classList.toggle("-sidebar--collapsed", _sidebarCollapsed);
+    btn.textContent = _sidebarCollapsed ? "›" : "‹";
+    btn.title = T(_sidebarCollapsed ? "side.expandTitle" : "side.collapseTitle");
+    btn.setAttribute("aria-label", btn.title);
+    btn.setAttribute("aria-expanded", String(!_sidebarCollapsed));
+    localStorage.setItem("-sidebar-collapsed", _sidebarCollapsed ? "1" : "0");
+    _positionSidebarCollapseBtn();
+    clearTimeout(_sideCollapseTimer);
+    // 等宽度过渡结束后让图谱画布/布局重新量算
+    _sideCollapseTimer = setTimeout(() => {
+      window.dispatchEvent(new Event("resize"));
+      window.MemoriaGraphGroups?.notifyLayoutChanged?.();
+    }, 220);
+  }
+
+  function setupSidebarCollapse() {
+    const btn = $("#sidebar-collapse-btn");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      _sidebarCollapsed = !_sidebarCollapsed;
+      _applySidebarCollapsed();
+    });
+    window.addEventListener("resize", () => {
+      if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
+    });
+    _applySidebarCollapsed();
   }
 
   function esc(s) {
@@ -11539,6 +11596,7 @@
     // 分栏模式双向滚动同步
     setupSplitScrollSync();
     setupSidebarResize();
+    setupSidebarCollapse();
     setupKpModalResize();
     document.querySelectorAll("[data-sidebar-tab]").forEach((btn) => {
       btn.addEventListener("click", () => setSidebarTab(btn.dataset.sidebarTab));

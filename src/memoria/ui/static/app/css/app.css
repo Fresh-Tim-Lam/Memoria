@@ -129,6 +129,45 @@
     flex-direction: column;
     flex-shrink: 0;
     position: relative;
+    transition: width 0.18s ease, min-width 0.18s ease;
+}
+
+/* 左栏（文件树/图谱）整体收起：宽度归零，隐藏内容与拖拽柄 */
+#-sidebar.-sidebar--collapsed {
+    width: 0 !important;
+    min-width: 0;
+    border-right: none;
+    overflow: hidden;
+}
+#-sidebar.-sidebar--collapsed #sidebar-resizer {
+    display: none;
+}
+
+/* 收起/展开浮动按钮：贴在侧栏右缘垂直居中，收起后贴左缘 */
+.-sidebar-collapse-btn {
+    position: fixed;
+    top: 45%;
+    transform: translateY(-50%);
+    z-index: 90;
+    width: 20px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: left 0.18s ease, color 0.1s ease, background 0.1s ease;
+}
+.-sidebar-collapse-btn:hover {
+    color: var(--text-bright);
+    background: var(--bg-hover);
 }
 
 .-panel {
@@ -631,10 +670,15 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    min-width: 0;
 }
 
+/* 「知识点」标题可收缩省略，右侧 Config/New 按钮始终完整可见不被遮挡 */
 .-kp-toolbar-label {
-    flex-shrink: 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .-kp-toolbar-actions {
@@ -3510,10 +3554,11 @@ body.-brush-active #editor {
 .-line:hover { background: var(--bg-hover); }
 .-lineno {
     flex-shrink: 0;
-    /* 行号随源码字号缩放（em 相对 .-editor 字号），宽度按字号容纳多位数 */
-    width: 4.2em;
+    box-sizing: border-box;
+    /* 列宽 = 总行数位数 × ch + 左右各 1.5ch 留白 + 1px 边框；位数由 --lineno-ch 提供 */
+    width: calc((var(--lineno-ch, 3) + 3) * 1ch + 1px);
     font-size: 0.9em;
-    padding: 0 8px 0 0;
+    padding: 0 1.5ch;
     text-align: right;
     color: var(--text-secondary);
     user-select: none;
