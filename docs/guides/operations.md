@@ -92,6 +92,10 @@ python -c "import importlib; m=importlib.util.spec_from_file_location('v','src/m
 - 产物：仓库根 `Package/`（`Memoria.exe` + `lib/` + `resources/` + `config/` + `VERSION` + `manifest.json` + `README.txt`）。
 - 整包 zip/拷贝分发即可。
 - **铁律**：`Package/lib/` 与 `src/` 代码必须同版本——每次改前端/后端后发布前重新构建；发布态验证跑 `.\.\packaging\run_release.cmd`。
+- **随包资源**：`Package/resources/` 由 `packaging/build.py` `_stage_runtime_resources()` 登记表收集（icons/agent-prompts/examples/example-boonie），构建结束前自动自检必带文件（含 `resources/agent-prompts/organize.zh-CN.md`）。新增随包资源按 [packaging/README.md](../../packaging/README.md)「随包资源登记」四步维护；构建后自检：
+  ```powershell
+  python -c "from pathlib import Path; p=Path('Package/resources'); print((p/'agent-prompts'/'organize.zh-CN.md').is_file(), (p/'icons'/'Memoria.ico').is_file())"
+  ```
 - 构建中间产物 `packaging/build/`、`packaging/dist/` 已被 gitignore，勿提交。
 
 ## 6. 发布态运行

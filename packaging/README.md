@@ -35,6 +35,25 @@ Package/
 
 将整个 `Package/` 文件夹打包（zip/拷贝）给用户即可。
 
+## 随包资源登记（防漏包）
+
+发布包的 `resources/` 内容由 `packaging/build.py` 的 **`_stage_runtime_resources()` 登记表**统一收集，不是自动整目录拷贝：
+
+| 登记项（源 → 包内） | 性质 | 运行态读取方 |
+|---|---|---|
+| `resources/icons` → `resources/icons` | 必带 | 图标 |
+| `resources/agent-prompts` → `resources/agent-prompts` | **必带** | `get_agent_prompt`（程序内 Agent 整理提示词，单一事实源） |
+| `examples` → `resources/examples` | 可选 | 默认示例库 |
+| `example-boonie` → `resources/example-boonie` | 可选 | 示例库 |
+
+- **必带清单**：`_REQUIRED_RELEASE_RESOURCES`；构建结束前 `_verify_release_resources()` 自检，缺失即终止构建。
+- **新增随包资源（目录/必带文件）的维护铁律**：① 在 `build.py` 登记表（或必带清单）登记 → ② 同步本表 → ③ 有需要时更新 `templates/README.release.txt` → ④ 构建后到 `Package/resources/` 自检。
+- 构建后自检（无需完整重打包）：
+
+```powershell
+python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file(), '| examples:', (p/'examples').is_dir())"
+```
+
 ## 本地运行
 
 ```powershell

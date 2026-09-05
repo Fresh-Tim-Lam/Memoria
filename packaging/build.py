@@ -152,6 +152,46 @@ def _clean_release_dir() -> None:
             child.unlink()
 
 
+def _stage_runtime_resources() -> None:
+    """随包资源登记表：新增随包目录必须在此登记，并同步 packaging/README.md §随包资源登记。
+
+    语义：
+    - resources/icons、resources/agent-prompts：运行态 RPC（图标 / get_agent_prompt）直接读取，
+      **必须**随包；漏拷会导致发布态功能缺失。
+    - examples / example-boonie：官方示例库（可选目录，缺失时跳过）。
+    """
+    targets = [
+        (ROOT / "resources" / "icons", RELEASE_RES / "icons", None),
+        (ROOT / "resources" / "agent-prompts", RELEASE_RES / "agent-prompts", None),
+        (ROOT / "examples", RELEASE_RES / "examples", EXAMPLES_IGNORE),
+        (ROOT / "example-boonie", RELEASE_RES / "example-boonie", EXAMPLES_IGNORE),
+    ]
+    for src, dest, ignore in targets:
+        if src.is_dir():
+            shutil.copytree(src, dest, ignore=ignore, dirs_exist_ok=True)
+
+
+_REQUIRED_RELEASE_RESOURCES = (
+    "agent-prompts/organize.zh-CN.md",  # 程序内 Agent 整理提示词（单一事实源，运行态 RPC 读取）
+    "icons/Memoria.ico",
+    "icons/Memoria.png",
+)
+
+
+def _verify_release_resources() -> None:
+    """构建后自检：登记表内「必带」资源若缺失则终止，防止静默漏包。"""
+    missing = [
+        rel
+        for rel in _REQUIRED_RELEASE_RESOURCES
+        if not (RELEASE_RES / rel).is_file()
+    ]
+    if missing:
+        raise FileNotFoundError(
+            "发布包 resources/ 缺失必带资源: " + ", ".join(missing) +
+            "。若为新增资源未登记，请补充 packaging/build.py _stage_runtime_resources 登记表。"
+        )
+
+
 def _stage_release(version: str) -> None:
     if not DIST_STAGING.is_dir():
         raise FileNotFoundError(f"PyInstaller 产物不存在: {DIST_STAGING}")
@@ -170,29 +210,7 @@ def _stage_release(version: str) -> None:
     if dest_lib.name != CONTENTS_DIR:
         dest_lib.rename(RELEASE_LIB)
     RELEASE_RES.mkdir(parents=True, exist_ok=True)
-
-    examples_src = ROOT / "examples"
-    if examples_src.is_dir():
-        shutil.copytree(
-            examples_src,
-            RELEASE_RES / "examples",
-            ignore=EXAMPLES_IGNORE,
-            dirs_exist_ok=True,
-        )
-
-    boonie_src = ROOT / "example-boonie"
-    if boonie_src.is_dir():
-        shutil.copytree(
-            boonie_src,
-            RELEASE_RES / "example-boonie",
-            ignore=EXAMPLES_IGNORE,
-            dirs_exist_ok=True,
-        )
-
-    icons_src = ROOT / "resources" / "icons"
-    if icons_src.is_dir():
-        shutil.copytree(icons_src, RELEASE_RES / "icons", dirs_exist_ok=True)
-
+    _stage_runtime_resources()
     bundled_models = _bundle_hf_models()
 
     meta = {
@@ -224,6 +242,7 @@ def _stage_release(version: str) -> None:
 
     _verify_release_bundle()
     _ensure_release_config()
+    _verify_release_resources()
     shutil.rmtree(PKG / "dist", ignore_errors=True)
 
 
