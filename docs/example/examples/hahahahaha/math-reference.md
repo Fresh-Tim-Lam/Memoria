@@ -34,7 +34,7 @@ $$
 \nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta}\!\left[\nabla \log \pi_\theta(a|s)\, Q^{\pi_\theta}(s,a)\right]
 $$
 
-## 多行对齐（align）
+## 多行[[对齐]]（align）
 
 $$
 \begin{align}

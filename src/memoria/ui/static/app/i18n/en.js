@@ -527,7 +527,7 @@
       scopeFileSwitchTitle: "Current file only (click to switch to whole KB)",
       noMatch: "No match \u00b7 {q}",
       semReasonNotEnabled: "Semantic search is off (Settings \u2192 Search)",
-      semReasonNotInstalled: "sentence-transformers not installed",
+      semReasonNotInstalled: "Semantic search dependencies not installed (torch / transformers)",
       semReasonIndexEmpty: "Semantic index is empty",
       bodyLocateTip: " \u00b7 enable \u201cLocate matches in body\u201d in Settings \u2192 Search",
       bodySection: "Body matches",

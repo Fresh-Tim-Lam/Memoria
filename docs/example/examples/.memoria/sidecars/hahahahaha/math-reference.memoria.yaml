@@ -26,7 +26,7 @@ knowledge_points:
   name: 偏导与梯度
   range:
     start:
-      snippet: '## 偏导与梯度'
+      snippet: '## 偏导与[[梯度]]'
       line_hint: 26
     end:
       snippet: $$
@@ -35,7 +35,7 @@ knowledge_points:
   name: 多行对齐（align）
   range:
     start:
-      snippet: '## 多行对齐（align）'
+      snippet: '## 多行[[对齐]]（align）'
       line_hint: 34
     end:
       snippet: 以上结构均由 **MathJax 3 tex-chtml-full** 渲染，与标准 LaTeX 数学环境兼容。
@@ -55,4 +55,20 @@ links:
   instances:
   - line: 26
     wrapped: true
+  excluded: []
+- anchor_text: 对齐
+  occurrence: 0
+  targets:
+  - 哈哈哈哈哈哈哈哈哈
+  edge_type: reference
+  target_edges:
+    哈哈哈哈哈哈哈哈哈:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 34
+    wrapped: true
+  pool:
+  - 哈哈哈哈哈哈哈哈哈
+  source_id: 偏导与梯度
   excluded: []

@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import os
+import sys
 import threading
 from typing import Any
 
@@ -14,6 +15,12 @@ from typing import Any
 # 会在 import 时缓存 online 状态，后续 setdefault 无效
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+# 发布包（PyInstaller frozen）内置离线模型于 <exe 目录>/hf（构建见 packaging/build.py）
+if getattr(sys, "frozen", False):
+    _bundled_hf = os.path.join(os.path.dirname(sys.executable), "hf")
+    if os.path.isdir(_bundled_hf):
+        os.environ.setdefault("HF_HOME", _bundled_hf)
 
 from memoria.services.model_router import embed_rerank_model, is_role_enabled
 from memoria.services.text_normalize import normalize_math_for_semantic

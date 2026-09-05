@@ -61,7 +61,7 @@
 ### 纯本地离线检索
 
 - 内置**中文分词（jieba）词法检索**，支持全库 / 当前文件两种范围，`Ctrl+K` 快速唤起。
-- 可选安装 `sentence-transformers` 语义检索 + 重排融合，构建真正懂语义的本地搜索引擎（可选依赖，不强制）。
+- 可选安装语义依赖（`torch` + `transformers`）并缓存离线模型后，开启**语义检索**与重排融合——构建真正懂语义的本地搜索引擎（默认离线模型 `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` 等，均走本地缓存，不联网）。
 
 ### 界面中英双语
 

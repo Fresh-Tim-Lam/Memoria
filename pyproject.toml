@@ -18,7 +18,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 benchmark = ["certifi>=2024.0"]
-semantic = ["sentence-transformers>=3.0"]
+# 语义检索运行时依赖为 torch + transformers（embedding_provider 自实现均值池化，
+# 不再需要 sentence-transformers，避免其拉入 TensorFlow/Keras 兼容链）
+semantic = ["torch>=2.0", "transformers>=4.30"]
 search = ["pypinyin>=0.50"]
 
 [project.scripts]

@@ -527,7 +527,7 @@
       scopeFileSwitchTitle: "仅当前文件（点击切换全库）",
       noMatch: "无匹配 · {q}",
       semReasonNotEnabled: "语义搜索未开启（设置 → 检索）",
-      semReasonNotInstalled: "未安装 sentence-transformers",
+      semReasonNotInstalled: "未安装语义检索依赖（torch / transformers）",
       semReasonIndexEmpty: "语义索引为空",
       bodyLocateTip: " · 可在设置→检索开启「搜索正文定位」",
       bodySection: "正文定位",

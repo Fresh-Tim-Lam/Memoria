@@ -61,7 +61,7 @@ All of your data lives in plain files on your disk — `.md` bodies plus YAML me
 ### Local offline retrieval
 
 - Built-in **Chinese tokenized search (jieba)**, whole-library or current-file scope, `Ctrl+K` to summon.
-- Optional `sentence-transformers` semantic retrieval + rerank fusion (optional dependency, not required).
+- Optionally install the semantic dependencies (`torch` + `transformers`) and cache offline models to enable **semantic search** with rerank fusion — a genuinely semantic local search engine (default offline model `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` etc., all served from local cache, no network).
 
 ### Bilingual UI (Chinese / English)
 

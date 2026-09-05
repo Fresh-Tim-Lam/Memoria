@@ -5,6 +5,18 @@
 
 
 
+![屏幕截图 2025-05-30 211756](<.memoria/images/屏幕截图 2025-05-30 211756.png> "width=680,name-size=15")
+
+
+![photomode_29072025_004812](<.memoria/images/photomode_29072025_004812.png> "width=570,align=right,name-size=15,name=hide")
+
+
+
+
+
+
+
+![photomode_21072025_214606](<.memoria/images/photomode_21072025_214606.png> "align=center,width=650,name-size=29,name=show")
 
 
 
@@ -25,9 +37,6 @@
 
 
 
-
-
-![API图](/files/.memoria/images/test-image.png)
 
 ## 远程图片
 
@@ -53,3 +62,4 @@ print("hello")
 
 
 ![AI 暗杀杀s噶那么sss核心](/files/.memoria/images/ai_warm_core.png "width=620,align=center")
+![屏幕截图 2025-06-10 110718](<.memoria/images/屏幕截图 2025-06-10 110718.png> "width=300")

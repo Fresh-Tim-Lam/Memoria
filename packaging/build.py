@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -23,6 +24,41 @@ RELEASE_RES = RELEASE / "resources"
 TEMPLATES = PKG / "templates"
 CONTENTS_DIR = "lib"
 _RELEASE_PRESERVE_DIRS = frozenset({"config"})
+
+# 语义/重排模型随包内置：构建时从本地 HuggingFace 缓存（hub/models--<org>--<name>）
+# 拷到 Package/hf/hub/…；运行端把 HF_HOME 指向 Package/hf（见 embedding/rerank provider）。
+RELEASE_HF = RELEASE / "hf"
+BUNDLE_MODELS = (
+    "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "cross-encoder/ms-marco-MiniLM-L-6-v2",
+)
+
+
+def _default_hf_hub_src() -> Path:
+    env = os.environ.get("MEMORIA_MODELS_SRC")
+    if env:
+        return Path(env)
+    return Path.home() / ".cache" / "huggingface" / "hub"
+
+
+def _bundle_hf_models() -> list[str]:
+    """拷贝离线模型快照到 Package/hf/hub/，返回实际内置的模型 id。"""
+    src_hub = _default_hf_hub_src()
+    if not src_hub.is_dir():
+        print(f"[memoria.build] 未找到 HF 缓存 {src_hub}，跳过模型内置", file=sys.stderr)
+        return []
+    dest_hub = RELEASE_HF / "hub"
+    dest_hub.mkdir(parents=True, exist_ok=True)
+    bundled: list[str] = []
+    for repo in BUNDLE_MODELS:
+        src = src_hub / f"models--{repo.replace('/', '--')}"
+        if not src.is_dir():
+            print(f"[memoria.build] 模型未缓存，跳过内置: {repo}", file=sys.stderr)
+            continue
+        shutil.copytree(src, dest_hub / src.name, dirs_exist_ok=True)
+        bundled.append(repo)
+    return bundled
+
 
 EXAMPLES_IGNORE = shutil.ignore_patterns(
     ".memoria",
@@ -157,6 +193,8 @@ def _stage_release(version: str) -> None:
     if icons_src.is_dir():
         shutil.copytree(icons_src, RELEASE_RES / "icons", dirs_exist_ok=True)
 
+    bundled_models = _bundle_hf_models()
+
     meta = {
         "name": "Memoria",
         "version": version,
@@ -169,7 +207,9 @@ def _stage_release(version: str) -> None:
             "lib": "lib/",
             "resources": "resources/",
             "config": "config/ui-settings.json",
+            "hf": "hf/",
         },
+        "semantic_models": bundled_models,
     }
     (RELEASE / "VERSION").write_text(f"{version}\n", encoding="utf-8")
     (RELEASE / "manifest.json").write_text(
