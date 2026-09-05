@@ -170,6 +170,47 @@
     background: var(--bg-hover);
 }
 
+/* ── 0.3.0 统一导入向导（import-flow.js）── */
+.-import-kind-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.25rem 0 0.5rem;
+}
+.-import-kind-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    text-align: left;
+    width: 100%;
+}
+.-import-section-title {
+    margin: 0.75rem 0 0.25rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 0.5rem;
+}
+.-import-file-list {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 0.75rem;
+}
+.-import-file-list li {
+    margin: 0.15rem 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-import-preview-actions {
+    gap: 0.375rem;
+    margin: 0.25rem 0 0.5rem;
+}
+
 .-panel {
     overflow-y: auto;
     flex: 1;
@@ -4247,4 +4288,76 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     padding-left: 1.25rem;
     font-size: 0.75rem;
     color: var(--error);
+}
+
+/* 0.3.0 统一导入：冲突动作 select 走主题（与 .-link-field select 观感一致） */
+.-import-conflict-resolution select {
+    padding: 0.25rem 6px;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    max-width: 8.5rem;
+}
+.-import-conflict-resolution select option {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+}
+.-import-conflict-resolution select:focus {
+    outline: none;
+    border-color: var(--theme-color);
+}
+
+/* ── 「文件」下拉（打开/导入/导出预留）── */
+.-tb-file {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.-tb-file-menu {
+    position: absolute;
+    top: calc(100% + 2px);
+    left: 0;
+    z-index: 60;
+    min-width: 11rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    padding: 0.25rem 0;
+    display: flex;
+    flex-direction: column;
+}
+.-tb-file-menu[hidden] {
+    display: none;
+}
+.-tb-file-menu button {
+    background: transparent;
+    color: var(--text-primary);
+    border: none;
+    text-align: left;
+    padding: 0.375rem 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    width: 100%;
+    height: auto;
+}
+.-tb-file-menu button:hover:not(:disabled) {
+    background: var(--bg-hover);
+    color: var(--text-bright);
+}
+.-tb-file-menu button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+.-tb-file-menu-sep {
+    height: 1px;
+    background: var(--border);
+    margin: 0.25rem 0;
 }

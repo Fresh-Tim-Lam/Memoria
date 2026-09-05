@@ -811,6 +811,7 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
 
+    # DEPRECATED(0.3.0): 统一入口请用 select_import_sources/import_scan/import_execute
     def pre_scan_import(self, file_contents: list[dict]) -> dict:
         """预扫描导入文件，检测 KP id 冲突。
 
@@ -847,6 +848,7 @@ class UIAPI:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
+    # DEPRECATED(0.3.0): 统一入口请用 select_import_sources/import_scan/import_execute
     def execute_import(self, file_contents: list[dict], conflict_resolution: dict | None = None) -> dict:
         """执行导入。
 
@@ -877,4 +879,114 @@ class UIAPI:
                 "build_report": result.build_report,
             }
         except Exception as e:
+            return {"status": "error", "message": str(e)}
+
+    # ── 0.3.0 统一导入（import-spec §10）：scan → preview → execute ──
+
+    def select_import_sources(self, kind: str) -> dict:
+        """按导入源类型弹选择框并返回 sources。
+
+        flat_file → 多选文本并读取为 {name, content}；
+        md_dir → 选择目录（后端递归收集 .md）；kb_bundle → 选择包目录。
+        """
+        from memoria.services.import_plan import FLAT_FILE, KB_BUNDLE, MD_DIR
+
+        try:
+            if kind == FLAT_FILE:
+                if self._host is None:
+                    return {"status": "ok", "kind": kind, "sources": []}
+                paths = self._host.pick_import_files() or []
+                sources: list[dict] = []
+                for p in paths:
+                    try:
+                        with open(p, "r", encoding="utf-8") as f:
+                            sources.append({"name": os.path.basename(p), "content": f.read()})
+                    except OSError:
+                        continue
+                return {"status": "ok", "kind": kind, "sources": sources}
+            if kind in (MD_DIR, KB_BUNDLE):
+                if self._host is None or not hasattr(self._host, "pick_directory"):
+                    return {"status": "error", "message": "当前壳不支持目录选择"}
+                picked = self._host.pick_directory()
+                if not picked:
+                    return {"status": "ok", "kind": kind, "sources": []}
+                return {"status": "ok", "kind": kind, "sources": [{"path": picked}]}
+            return {"status": "error", "message": f"不支持的导入源 kind={kind!r}"}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def import_scan(self, kind: str, sources: list[dict]) -> dict:
+        """0.3.0 统一扫描（只读）：返回 {status, preview(JSON), markdown}（import-spec §7/§8）。"""
+        from memoria.services.import_plan import KINDS, build_import_preview
+
+        try:
+            if not self._svc.kb_path:
+                return {"status": "error", "message": "请先打开知识库"}
+            if kind not in KINDS:
+                return {"status": "error", "message": f"不支持的导入源 kind={kind!r}"}
+            if not sources:
+                return {"status": "error", "message": "未选择导入源"}
+            pv = build_import_preview(kind, sources, self._svc.kb_path)
+            return {"status": "ok", "preview": pv.as_json(), "markdown": pv.as_markdown()}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def import_execute(self, kind: str, sources: list[dict], decisions: dict | None = None) -> dict:
+        """0.3.0 统一执行：写 md/sidecar/图谱同步。
+
+        decisions: {subject(rel_path 或 kp_id): "skip" | "overwrite" | "rename:<新名>"}
+        """
+        from memoria.services.import_executor import execute_import as execute_unified
+        from memoria.services.import_plan import KINDS
+
+        try:
+            if not self._svc.kb_path:
+                return {"status": "error", "message": "请先打开知识库"}
+            if kind not in KINDS or not sources:
+                return {"status": "error", "message": "kind/sources 无效"}
+            decisions = decisions or {}
+            bad = [
+                k
+                for k, v in decisions.items()
+                if not (isinstance(v, str) and (v in ("skip", "overwrite") or v.startswith("rename:")))
+            ]
+            if bad:
+                return {"status": "error", "message": f"非法 decisions: {', '.join(bad)}"}
+            res = execute_unified(kind, sources, self._svc.kb_path, decisions)
+            return {
+                "status": res.status,
+                "files_written": res.files_written,
+                "files_unchanged": res.files_unchanged,
+                "files_skipped": res.files_skipped,
+                "files_renamed": res.files_renamed,
+                "files_overwritten": res.files_overwritten,
+                "sidecars_written": res.sidecars_written,
+                "kp_imported": res.kp_imported,
+                "kp_skipped": res.kp_skipped,
+                "kp_renamed": res.kp_renamed,
+                "kp_overwritten": res.kp_overwritten,
+                "errors": res.errors,
+                "build_report": res.build_report,
+            }
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def get_agent_prompt(self, lang: str = "zh-CN") -> dict:
+        """读取程序内可复制的 Agent 整理提示词（单一事实源 resources/agent-prompts/）。"""
+        from memoria.app.runtime import resources_dir
+
+        try:
+            res_root = resources_dir()
+            candidates = [f"organize.{lang}.md", "organize.zh-CN.md"]
+            for name in candidates:
+                path = res_root / "agent-prompts" / name
+                if path.is_file():
+                    return {
+                        "status": "ok",
+                        "name": path.name,
+                        "lang": lang,
+                        "text": path.read_text(encoding="utf-8"),
+                    }
+            return {"status": "error", "message": "未找到整理提示词资源（agent-prompts/organize.*.md）"}
+        except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}

@@ -11362,7 +11362,31 @@
 
   function bindEvents() {
     bindPointerDragHoverGuard();
-    $("#btn-open").addEventListener("click", openKb);
+    const fileMenuEl = $("#file-menu");
+    const closeFileMenu = () => {
+      if (fileMenuEl) fileMenuEl.hidden = true;
+      $("#btn-file")?.setAttribute("aria-expanded", "false");
+    };
+    $("#btn-file")?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const willOpen = !!(fileMenuEl && fileMenuEl.hidden);
+      if (fileMenuEl) fileMenuEl.hidden = !willOpen;
+      $("#btn-file")?.setAttribute("aria-expanded", String(willOpen));
+    });
+    document.addEventListener("click", (e) => {
+      const btn = $("#btn-file");
+      if (fileMenuEl && btn && !fileMenuEl.contains(e.target) && !btn.contains(e.target)) {
+        closeFileMenu();
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeFileMenu();
+    });
+    $("#file-menu-open")?.addEventListener("click", () => { closeFileMenu(); openKb(); });
+    $("#file-menu-import")?.addEventListener("click", () => {
+      closeFileMenu();
+      window.MemoriaImportFlow?.start();
+    });
     // 图片插入按钮（btn-insert-image）的 click/mousedown 与可用性状态机
     // （focusin/selectionchange/初始刷新）已随图片子系统迁至 image-tools.js，由 boot init
     $("#btn-kb-close").addEventListener("click", () => closeKb());

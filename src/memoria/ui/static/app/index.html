@@ -43,8 +43,15 @@
       <div class="toolbar-actions">
         <button id="btn-nav-back" class="-nav-btn" title="后退 (Alt+←)" data-i18n-attr="title:toolbar.back.title" disabled>←</button>
         <button id="btn-nav-forward" class="-nav-btn" title="前进 (Alt+→)" data-i18n-attr="title:toolbar.forward.title" disabled>→</button>
-        <button id="btn-open" title="打开知识库" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
-        <button id="btn-import" title="导入平面文件" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
+        <div class="-tb-file">
+          <button id="btn-file" type="button" aria-haspopup="menu" aria-expanded="false" title="文件：打开 / 导入 / 导出（预留）" data-i18n-attr="title:toolbar.fileTitle"><span data-i18n="toolbar.file">文件</span></button>
+          <div id="file-menu" class="-tb-file-menu" role="menu" hidden>
+            <button type="button" role="menuitem" id="file-menu-open" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
+            <button type="button" role="menuitem" id="file-menu-import" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
+            <div class="-tb-file-menu-sep" role="separator"></div>
+            <button type="button" role="menuitem" id="file-menu-export" disabled data-i18n="toolbar.export" data-i18n-attr="title:toolbar.exportTitle">导出</button>
+          </div>
+        </div>
         <button id="btn-refresh" title="刷新" data-i18n="toolbar.refresh" data-i18n-attr="title:toolbar.refreshTitle">刷新</button>
         <button id="btn-build" type="button" title="构建：同步链接配置并生成图谱" data-i18n="toolbar.build" data-i18n-attr="title:toolbar.buildTitle">构建</button>
         <span class="-toolbar-btn-wrap">

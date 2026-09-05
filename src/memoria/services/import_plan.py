@@ -19,6 +19,7 @@ import yaml
 from memoria.services.import_engine import _normalize_import_path, parse_flat_file
 from memoria.services.kp_index import build_kp_index
 from memoria.storage.markdown import compose_markdown
+from memoria.storage.sidecar import SIDECAR_SUFFIX
 
 FLAT_FILE = "flat_file"
 MD_DIR = "md_dir"
@@ -51,7 +52,22 @@ def _existing_kp_ids(kb_path: str) -> dict[str, dict]:
         index = build_kp_index(kb_path)
     except Exception:
         return {}
-    return index.get("by_id") or {}
+    by_id = index.get("by_id") or {}
+    out: dict[str, dict] = {}
+    for kid, entries in by_id.items():
+        first = entries[0] if entries else None
+        out[kid] = (
+            {"file": first.file, "name": first.name}
+            if first is not None
+            else {}
+        )
+    return out
+
+
+def _is_idempotent_kp(ex: dict, rel_path: str, action: str) -> bool:
+    """幂等重导判定：目标文件无变更且库内该 KP 同处此文件 →
+    导入不会改写任何内容，无需决策，不构成冲突（消除幂等重导的冲突噪声）。"""
+    return action == "unchanged" and ex.get("file") == rel_path
 
 
 @dataclass
@@ -228,14 +244,15 @@ def _preview_flat(sources: list[dict], kb_path: str) -> ImportPreview:
                     )
                 elif kid in existing_kp:
                     ex = existing_kp[kid]
-                    preview.conflicts.append(
-                        ConflictItem(
-                            kind="kp_id_taken",
-                            subject=kid,
-                            options=["skip", "overwrite", "rename"],
-                            detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                    if not _is_idempotent_kp(ex, rel_path, action):
+                        preview.conflicts.append(
+                            ConflictItem(
+                                kind="kp_id_taken",
+                                subject=kid,
+                                options=["skip", "overwrite", "rename"],
+                                detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                            )
                         )
-                    )
                 seen_kp_dup[kid] = rel_path
                 preview.kp.append(
                     PlannedKp(
@@ -261,38 +278,84 @@ def _preview_flat(sources: list[dict], kb_path: str) -> ImportPreview:
     return preview
 
 
+def expand_md_source_pairs(sources: list[dict]) -> list[tuple[str, str]]:
+    """md_dir 源展开为 (绝对路径, 目标 rel)。
+
+    源可为单文件或目录：目录递归收集 .md 并保留目录内相对结构；
+    src 带 root 时，目标 rel 相对该 root（多文件/混选时保持子目录层级）。
+    """
+    out: list[tuple[str, str]] = []
+    for src in sources:
+        p = Path(src.get("path") or "")
+        root = Path(src["root"]) if src.get("root") else None
+        if p.is_dir():
+            for md in sorted(p.rglob("*.md")):
+                if ".memoria" in md.parts:
+                    continue
+                out.append((str(md), md.relative_to(p).as_posix()))
+        elif p.is_file() and p.suffix.lower() == ".md":
+            rel = f"{p.stem}.md"
+            if root and root.is_dir():
+                try:
+                    rel = p.relative_to(root).as_posix()
+                except ValueError:
+                    rel = f"{p.stem}.md"
+            out.append((str(p), rel))
+    return out
+
+
 def _preview_md_dir(sources: list[dict], kb_path: str) -> ImportPreview:
-    """sources: [{"path": 源文件绝对路径}]；无 frontmatter → 纯文件入库。"""
+    """sources: [{"path": 文件或目录}]；无 frontmatter → 纯文件入库。"""
     existing = _existing_file_map(kb_path)
     existing_kp = _existing_kp_ids(kb_path)
-    preview = ImportPreview(kind=MD_DIR, source_label=", ".join(s["path"] for s in sources))
+    preview = ImportPreview(kind=MD_DIR, source_label=", ".join(s.get("path", "") for s in sources))
     used_names: set[str] = set()
 
-    for src in sources:
-        p = Path(src["path"])
+    for abs_path, rel_path in expand_md_source_pairs(sources):
+        p = Path(abs_path)
         try:
             content = p.read_text(encoding="utf-8")
         except OSError as exc:
             preview.issues.append(f"{p}: 读取失败 {exc}")
             continue
         fm, body = _split_frontmatter(content)
-        rel_path = _pick_rel_path(p.stem, kb_path, existing, used_names)
         concepts = [c for c in (fm.get("concepts") or []) if isinstance(c, dict) and c.get("id")]
         action = _decide_file_action(rel_path, content, existing)
+        if rel_path in used_names:
+            preview.conflicts.append(
+                ConflictItem(
+                    kind="file_exists",
+                    subject=rel_path,
+                    options=["skip", "overwrite", "rename"],
+                    detail="同批源文件中存在重名文件",
+                )
+            )
+        else:
+            used_names.add(rel_path)
+        if action == "overwrite":
+            preview.conflicts.append(
+                ConflictItem(
+                    kind="file_exists",
+                    subject=rel_path,
+                    options=["skip", "overwrite", "rename"],
+                    detail=f"目标文件已存在且内容不同（{existing.get(rel_path)}）",
+                )
+            )
         kp_ids = []
         for concept in concepts:
             kid = str(concept.get("id") or "")
             kp_ids.append(kid)
             if kid in existing_kp:
                 ex = existing_kp[kid]
-                preview.conflicts.append(
-                    ConflictItem(
-                        kind="kp_id_taken",
-                        subject=kid,
-                        options=["skip", "overwrite", "rename"],
-                        detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                if not _is_idempotent_kp(ex, rel_path, action):
+                    preview.conflicts.append(
+                        ConflictItem(
+                            kind="kp_id_taken",
+                            subject=kid,
+                            options=["skip", "overwrite", "rename"],
+                            detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                        )
                     )
-                )
             preview.kp.append(
                 PlannedKp(
                     id=kid,
@@ -343,14 +406,15 @@ def _preview_kb_bundle(sources: list[dict], kb_path: str) -> ImportPreview:
                         kp_ids.append(kid)
                         if kid in existing_kp:
                             ex = existing_kp[kid]
-                            preview.conflicts.append(
-                                ConflictItem(
-                                    kind="kp_id_taken",
-                                    subject=kid,
-                                    options=["skip", "overwrite", "rename"],
-                                    detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                            if not _is_idempotent_kp(ex, rel, action):
+                                preview.conflicts.append(
+                                    ConflictItem(
+                                        kind="kp_id_taken",
+                                        subject=kid,
+                                        options=["skip", "overwrite", "rename"],
+                                        detail=f"库内已有：{ex.get('file')} / {ex.get('name')}",
+                                    )
                                 )
-                            )
                         preview.kp.append(
                             PlannedKp(
                                 id=kid,
@@ -368,12 +432,25 @@ def _preview_kb_bundle(sources: list[dict], kb_path: str) -> ImportPreview:
 
 
 def _bundle_sidecar_for(sidecar_dir: Path, rel_path: str) -> dict | None:
-    for p in sorted(sidecar_dir.rglob(f"{Path(rel_path).stem}.memoria.yaml")):
+    """包内 sidecar 按 md 相对路径镜像映射（与库内约定一致）：
+    rel='sub/a.md' → .memoria/sidecars/sub/a.memoria.yaml；
+    无镜像时回退包内同层扁平命名（旧包布局）。"""
+    rel = str(rel_path or "").replace("\\", "/")
+    if not rel:
+        return None
+    candidates = []
+    if rel.endswith(".md"):
+        candidates.append(sidecar_dir / (rel[: -3] + SIDECAR_SUFFIX))
+        candidates.append(sidecar_dir / (Path(rel).stem + SIDECAR_SUFFIX))
+    for cand in candidates:
+        if not cand.is_file():
+            continue
         try:
-            data = yaml.safe_load(p.read_text(encoding="utf-8"))
+            data = yaml.safe_load(cand.read_text(encoding="utf-8"))
         except (OSError, yaml.YAMLError):
             continue
-        return data if isinstance(data, dict) else None
+        if isinstance(data, dict):
+            return data
     return None
 
 
@@ -404,34 +481,23 @@ def _split_frontmatter(content: str) -> tuple[dict, str]:
     return {}, content
 
 
-def _pick_rel_path(
-    stem: str,
-    kb_path: str,
-    existing: dict[str, Path],
-    used: set[str],
-) -> str:
-    """目录迁移目标路径：重名时追加序号（预览阶段即给唯一目标）。"""
-    candidate = f"{stem}.md"
-    if candidate in existing or candidate in used:
-        i = 2
-        while f"{stem}-{i}.md" in existing or f"{stem}-{i}.md" in used:
-            i += 1
-        candidate = f"{stem}-{i}.md"
-    used.add(candidate)
-    return candidate
-
-
 def _finalize_summary(preview: ImportPreview) -> None:
     counts = {"new": 0, "overwrite": 0, "rename": 0, "skip": 0, "unchanged": 0}
     for f in preview.files:
         counts[f.action] = counts.get(f.action, 0) + 1
+    # kp_new 只计「会实际写库」的 KP：源文件无变更（unchanged）时不产生任何写
+    # 作，其声明 KP 不计入新增，保证幂等重导摘要呈现为 0 变更。
+    action_by_file = {f.rel_path: f.action for f in preview.files}
+    kp_new = sum(
+        1 for k in preview.kp if action_by_file.get(k.file, "") not in ("", "unchanged")
+    )
     preview.summary = {
         "files_new": counts["new"],
         "files_overwrite": counts["overwrite"],
         "files_rename": counts["rename"],
         "files_skip": counts["skip"],
         "files_unchanged": counts["unchanged"],
-        "kp_new": len(preview.kp),
+        "kp_new": kp_new,
         "conflicts": len(preview.conflicts),
     }
 
