@@ -4,6 +4,7 @@
 > **目标读者**：知识库内容生产者（含 Agent）· 维护者（排查预览渲染问题时先读本页）。
 > **关联文档**：[markdown-form-std.md](../conventions/markdown-form-std.md)（`[[]]` 语法体系与 sidecar 存储契约）；[image-features.md](./image-features.md)（图片功能机制）；[architecture.md](./architecture.md)（前端模块与数据流）；[glossary.md](./glossary.md)（术语）。
 > **状态**：生效中。核验于 2026-09-01，与 `ui/static/app/` 当前源码一致。源码行号随实现演进可能漂移，以行为描述为准。
+> **提示词关联**：程序内 Agent 整理提示词 `resources/agent-prompts/organize.zh-CN.md` §7「正文书写格式」要点以本页为权威源；渲染行为变更后若与要点失配，请同步该提示词（防双份漂移）。
 
 ---
 

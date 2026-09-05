@@ -29,6 +29,7 @@ window.MemoriaImportFlow = (function () {
   let _conflicts = null; // 预览阶段冲突条目列表（含 kind/subject/options）
   let _busy = false;
   let _promptText = null; // Agent 整理提示词视图
+  let _docText = null; // 格式说明视图（preview-formats.md 全文）
 
   const KIND_FLAT = "flat_file";
   const KIND_MD = "md_dir";
@@ -55,7 +56,9 @@ window.MemoriaImportFlow = (function () {
     _preview = null;
     _conflicts = null;
     _promptText = null;
-    setImportActionButtons(true);
+    _docText = null;
+    // 源类型选择阶段尚未选定文件/目录：确认导入/复制报告不出现
+    setImportActionButtons(false);
   }
 
   function setImportActionButtons(showImport) {
@@ -166,10 +169,72 @@ window.MemoriaImportFlow = (function () {
     )}</textarea>`;
     html += `<div class="-import-preview-actions"><button type="button" class="-btn secondary -btn--sm" data-feedback="prompt">${esc(
       t("import.copyPrompt")
+    )}</button><button type="button" class="-btn secondary -btn--sm" data-docview="1">${esc(
+      t("import.viewFormatDoc")
     )}</button></div>`;
     body.innerHTML = html;
     const btn = body.querySelector('[data-feedback="prompt"]');
     if (btn) btn.addEventListener("click", () => copyFeedback("prompt"));
+    const docBtn = body.querySelector('[data-docview="1"]');
+    if (docBtn) docBtn.addEventListener("click", () => showFormatDoc());
+  }
+
+  // ── 1b. 格式说明视图（preview-formats.md，可在弹窗内查看/复制） ──
+
+  async function showFormatDoc() {
+    const a = A();
+    if (_busy) return;
+    _busy = true;
+    try {
+      a.setStatus?.(t("import.promptLoading"));
+      const res = await a.call("get_reference_doc", "preview-formats.md");
+      if (res.status === "error") {
+        a.setStatusError?.(res.message || t("import.failed"));
+        return;
+      }
+      _docText = res.text || "";
+      renderDocView();
+    } catch (e) {
+      a.setStatusError?.(t("import.failed"), String(e.message || e));
+    } finally {
+      _busy = false;
+    }
+  }
+
+  function renderDocView() {
+    const body = $("#import-conflict-body");
+    if (!body) return;
+    setTitle(t("import.formatDocTitle"));
+    setImportActionButtons(false);
+    let html = `<p class="-muted">${esc(t("import.formatDocSource"))}</p>`;
+    html += `<textarea class="-import-report-textarea" readonly rows="20">${esc(
+      _docText || ""
+    )}</textarea>`;
+    html += `<div class="-import-preview-actions"><button type="button" class="-btn secondary -btn--sm" data-doccopy="1">${esc(
+      t("import.copyDoc")
+    )}</button><button type="button" class="-btn secondary -btn--sm" data-backprompt="1">${esc(
+      t("import.backToPrompt")
+    )}</button></div>`;
+    body.innerHTML = html;
+    body
+      .querySelector('[data-doccopy="1"]')
+      ?.addEventListener("click", () => copyRawText(_docText || ""));
+    body
+      .querySelector('[data-backprompt="1"]')
+      ?.addEventListener("click", () => loadPrompt());
+  }
+
+  function copyRawText(text) {
+    const done = () => A().setStatus?.(t("import.copyDone"));
+    if (!text) {
+      done();
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => done());
+    } else {
+      done();
+    }
   }
 
   // ── 2. 扫描与预览 ────────────────────────────────────────────────
@@ -187,6 +252,8 @@ window.MemoriaImportFlow = (function () {
     _conflicts = (res.preview && res.preview.conflicts) || [];
     setTitle(t("import.previewTitle"));
     renderPreview();
+    // 扫描完成、进入清单预览后：确认导入 / 复制报告才出现
+    setImportActionButtons(true);
     $("#import-conflict-modal")?.classList.remove("hidden");
   }
 

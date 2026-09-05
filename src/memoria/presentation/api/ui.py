@@ -990,3 +990,36 @@ class UIAPI:
             return {"status": "error", "message": "未找到整理提示词资源（agent-prompts/organize.*.md）"}
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
+
+    # 文档白名单：可在「Agent 整理提示词」弹窗内查看的格式说明（docs/reference，单一事实源）
+    REFERENCE_DOCS = {
+        "preview-formats.md": "preview-formats.md",
+    }
+
+    def get_reference_doc(self, name: str = "preview-formats.md") -> dict:
+        """读取 docs/reference 下的格式说明文档（供弹窗内查看/复制）。
+
+        仅放行白名单文件；发布包不随带 docs/，返回可读提示（功能面向源码仓库）。
+        """
+        from memoria.app.runtime import is_frozen, repo_root
+
+        try:
+            real = self.REFERENCE_DOCS.get(str(name or ""))
+            if not real:
+                return {"status": "error", "message": f"不支持的文档: {name!r}"}
+            if is_frozen():
+                return {
+                    "status": "error",
+                    "message": "格式说明文档未随发布包提供（docs/ 仅存在于源码仓库）",
+                }
+            path = repo_root() / "docs" / "reference" / real
+            if not path.is_file():
+                return {"status": "error", "message": f"文档不存在: {real}"}
+            return {
+                "status": "ok",
+                "name": real,
+                "text": path.read_text(encoding="utf-8"),
+                "note": f"docs/reference/{real}",
+            }
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
