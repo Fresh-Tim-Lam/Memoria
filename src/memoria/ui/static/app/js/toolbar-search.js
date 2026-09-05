@@ -186,8 +186,10 @@ window.MemoriaToolbarSearch = (function () {
               (it, i) =>
                 `<button type="button" class="-suggest-item -toolbar-search-hit" data-search-kind="kp" data-search-idx="${i}">
                   <span class="-suggest-score" title="${esc((it.sources || []).join(", "))}">${esc(formatScore(it, modes))}</span>
-                  <span class="-suggest-label">${esc(it.label || it.name || it.id || "")}</span>
-                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                  <div class="-toolbar-search-main">
+                    <span class="-suggest-label">${esc(it.label || it.name || it.id || "")}</span>
+                    <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                  </div>
                 </button>`
             )
             .join("");
@@ -201,8 +203,10 @@ window.MemoriaToolbarSearch = (function () {
               (it, i) =>
                 `<button type="button" class="-suggest-item -toolbar-search-hit -toolbar-search-body" data-search-kind="body" data-body-idx="${i}">
                   <span class="-suggest-score -suggest-score--muted" title="${t("search.bodyLineTitle")}">L${esc(String(it.line || ""))}</span>
-                  <span class="-suggest-label">${esc(it.label || it.snippet || "")}</span>
-                  <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                  <div class="-toolbar-search-main">
+                    <span class="-suggest-label">${esc(it.label || it.snippet || "")}</span>
+                    <span class="-muted -toolbar-search-file">${esc(basename(it.file || ""))}</span>
+                  </div>
                 </button>`
             )
             .join("");

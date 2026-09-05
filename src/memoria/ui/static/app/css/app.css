@@ -1199,6 +1199,12 @@
 .-suggest-score--muted {
     color: var(--text-muted);
     font-weight: 500;
+    /* 正文行号等非百分比徽标：不占 5.5rem 固定分数列，改为按内容自适应，避免挤占同行动态布局 */
+    min-width: 0;
+    flex: none;
+    width: auto;
+    text-align: right;
+    white-space: nowrap;
 }
 .-search-section-label {
     padding: 0.375rem 10px 4px;
@@ -1237,6 +1243,26 @@
 .-toolbar-search-file {
     font-size: 0.625rem;
     flex-shrink: 0;
+}
+
+/* 搜索命中行主列：label 一行 + 文件路径一行（置于 label 下方），两行均超长省略 */
+.-toolbar-search-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+.-toolbar-search-hit .-suggest-label {
+    flex: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.-toolbar-search-hit .-toolbar-search-file {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .-kp-merge-suggest {
