@@ -44,14 +44,23 @@ pytest                         # 单元测试（tests/）
 
 ### 3.1 浏览器复现 harness（前端交互验证）
 
-交互性前端改动（图片、编辑、图谱）用 harness 在真实浏览器复现：
+交互性前端改动（图片、编辑、图谱、导入）用 harness 在真实浏览器复现：
 
 ```powershell
-python docs\example\rich-content-test\_harness.py
+python docs\example\rich-content-test\_harness.py            # 富内容样例库（KB=rich-content-test）
+python docs\example\import-test\_harness_import.py --fresh    # 导入模块（KB=docs/example/empty3，--fresh 复位空库）
 ```
 
-- bottle 服务真实前端 + M0API over `/rpc` + 注入 pywebview 桥。
-- **注意**：harness 注入的桥对裸字符串 RPC 响应解析失败，需 `r.text()` + 单次解析的容错代理，并手动触发 `memoriaready`。
+- harness 机制：bottle 服务真实前端 + UIAPI over `/rpc` + 注入 pywebview 桥。
+- **注意**：harness 注入的桥对裸字符串 RPC 响应解析失败，需 `r.text()` + 单次解析的容错代理；且 api 需**异步延迟挂载**（先空壳再派发 `pywebviewready`，约 1.2s），否则晚于 app.js 加载的模块 init 会被静默跳过。
+- 导入 harness 附加「测试反馈机制」（供 browseragent/脚本回读执行证据）：
+  | 端点 | 作用 |
+  |---|---|
+  | `POST /harness/pick` | 队列 canned「文件选择」结果（`{type:dir\|files, value}`），替代原生对话框 |
+  | `POST /harness/mark` | 测试步骤/断言标记（step/kind/ok/note） |
+  | `POST /harness/console` | 前端 console/onerror/unhandledrejection 上报 |
+  | `GET /harness/state` | 实时状态 + RPC/console 环形缓冲 |
+  | `GET /harness/report` | 汇总结构化报告（meta+marks+rpc+console+错误统计），落 `<KB>/.memoria/harness/` |
 - 验证原则：每阶段独立可交互验证（见 [image-asset-dev-plan.md](../design/image-asset-dev-plan.md) 的分阶段方法），完成即记录验证结果。
 
 ### 3.2 前端调试日志
