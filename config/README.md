@@ -1,17 +1,19 @@
-# config/ — 程序配置目录（开发态 / 发布包通用）
+[中文](README.cn.md) | English
 
-| 文件 | 说明 |
-|------|------|
-| `ui-settings.json` | 界面设置（开发态位于仓库根目录同级 `config/`，发布态位于 `Package/config/`，便携） |
+# config/ — Program configuration directory (shared by dev mode / release package)
 
-发布包布局：
+| File | Description |
+|------|-------------|
+| `ui-settings.json` | UI settings (in dev mode located in `config/` next to the repo root; in release mode in `Package/config/`, portable) |
+
+Release package layout:
 
 ```text
 Package/
   Memoria.exe
-  config/ui-settings.json   ← 程序设置
+  config/ui-settings.json   ← program settings
   lib/
   resources/
 ```
 
-> `ui-settings.json` 已被 `.gitignore` 忽略（用户本机设置不入库）。
+> `ui-settings.json` is ignored by `.gitignore` (per-user local settings are not committed).

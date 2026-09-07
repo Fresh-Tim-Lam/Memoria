@@ -1,21 +1,23 @@
-# tests/ — 单元/集成测试
+[中文](README.cn.md) | English
 
-pytest 测试目录（`pyproject.toml` 中 `testpaths = ["tests"]`）。
+# tests/ — Unit / integration tests
 
-## 结构
+pytest test directory (`testpaths = ["tests"]` in `pyproject.toml`).
 
-| 路径 | 职责 |
-|------|------|
-| `fixtures/` | 测试夹具（示例知识库、检索基准小型语料等） |
-| `.memoria/` | 测试用知识库元数据（manifest/pending/cache） |
+## Structure
 
-## 运行
+| Path | Responsibility |
+|------|----------------|
+| `fixtures/` | Test fixtures (sample knowledge bases, small retrieval-benchmark corpora, etc.) |
+| `.memoria/` | Knowledge-base metadata for tests (manifest/pending/cache) |
+
+## Run
 
 ```powershell
 pytest
 ```
 
-## 规则
+## Rules
 
-- 正式测试代码放这里；一次性调试脚本放 `artifacts/`
-- 涉及检索评估的跑批脚本放 `scripts/benchmark/`，数据与结果放 `benchmarks/`
+- Official test code goes here; one-off debug scripts go in `artifacts/`
+- Batch scripts involving retrieval evaluation go in `scripts/benchmark/`, with data and results in `benchmarks/`

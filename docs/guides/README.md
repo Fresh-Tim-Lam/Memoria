@@ -1,15 +1,17 @@
-# Guides（操作指引）
+[中文](README.cn.md) | English
 
-> **用途**：`guides/` 存放**操作指引（how-to）**——完成特定工作流的步骤与方法（协作方式、知识库生产流水线、开发/发布操作）。面向执行者。
-> **目标读者**：项目负责人（用户）与 AI Agent（执行具体工作流前先读对应指引）。
-> **关联文档**：[docs-management.md](../conventions/docs-management.md)（docs 组织规则）；[meta-rules.md](../conventions/meta-rules.md)（规范书写元规则）。
+# Guides
+
+> **Purpose**: `guides/` holds **how-to guides** — steps and methods for completing specific workflows (collaboration practices, the knowledge-base production pipeline, development/release operations). Aimed at those carrying out the work.
+> **Target readers**: Project owner (the user) and AI Agents (read the relevant guide before running a specific workflow).
+> **Related docs**: [docs-management.md](../conventions/docs-management.md) (rules for organizing docs); [meta-rules.md](../conventions/meta-rules.md) (meta-rules for writing conventions).
 
 ---
 
-## 指引清单
+## Guides index
 
-| 指引 | 内容 | 适用场景 |
+| Guide | Content | When to use |
 |------|------|---------|
-| [collaboration.md](./collaboration.md) | AI 编程协作规范：架构讨论/模块开发/测试/Debug/代码审查 | 任何开发场景 |
-| [usage-agent-workflow.md](./usage-agent-workflow.md) | 知识库生产流水线：内容生成 Agent → 用户转贴 → 转换 Agent | 生产/转换知识库 |
-| [operations.md](./operations.md) | 开发/发布/构建/harness 验证操作手册 | 本地开发与打包 |
+| [collaboration.md](./collaboration.md) | AI coding-collaboration conventions: architecture discussion / module development / testing / debugging / code review | Any development scenario |
+| [usage-agent-workflow.md](./usage-agent-workflow.md) | Knowledge-base production pipeline: content generation Agent → user pastes back → conversion Agent | Producing/converting knowledge base |
+| [operations.md](./operations.md) | Development/release/build/harness-validation operations manual | Local development and packaging |

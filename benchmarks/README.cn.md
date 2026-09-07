@@ -1,29 +1,29 @@
-[中文](README.cn.md) | English
+[English](README.md) | 中文
 
 # Retrieval benchmarks
 
-Authoritative IR datasets → Memoria knowledge base → SearchKernel quantitative evaluation.
+权威 IR 数据集 → Memoria 知识库 → SearchKernel 量化评测。
 
-**Code location**: `scripts/benchmark/` (dev tooling, not shipped with the Memoria runtime)
+**代码位置**：`scripts/benchmark/`（开发工具，不随 Memoria 运行时发布）
 
-**Design doc**: [`docs/design/search-retrieval-benchmark.md`](../docs/design/search-retrieval-benchmark.md)
+**设计文档**：[`docs/design/search-retrieval-benchmark.md`](../docs/design/search-retrieval-benchmark.md)
 
 ## Quick start
 
 ```bash
-# Full SciFact (requires network, ~5k documents)
+# 全量 SciFact（需网络，~5k 文档）
 python scripts/benchmark/build_scifact_kb.py
 
-# Quick sample (200 documents)
+# 快速抽样（200 文档）
 python scripts/benchmark/build_scifact_kb.py --doc-limit 200 --query-limit 50
 
-# Lexical evaluation
+# Lexical 评测
 python scripts/benchmark/run_search_benchmark.py \
   --kb benchmarks/beir_scifact/kb_gold \
   --queries benchmarks/beir_scifact/eval/queries.json \
   --qrels benchmarks/beir_scifact/eval/qrels.json
 
-# Compare three tiers of KP profiling (gold / minimal / skeleton)
+# 对比三档 KP 刻画（gold / minimal / skeleton）
 for p in gold minimal skeleton; do
   echo "=== kb_$p ==="
   python scripts/benchmark/run_search_benchmark.py \
@@ -35,6 +35,6 @@ done
 
 ## CI
 
-No download required: `pytest tests/unit/benchmark/ -q`
+无需下载：`pytest tests/unit/benchmark/ -q`
 
-Fixture: `tests/fixtures/benchmark_retrieval_tiny/` (5 KPs, 3 queries)
+Fixture：`tests/fixtures/benchmark_retrieval_tiny/`（5 KP，3 queries）

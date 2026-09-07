@@ -1,24 +1,26 @@
-# src/ — Memoria 源码
+[中文](README.cn.md) | English
 
-> src layout：Python 包 + 前端静态资源，安装后以 `memoria` 包导入。
+# src/ — Memoria source code
 
-## 结构
+> src layout: Python package + frontend static assets, imported as the `memoria` package after installation.
 
-| 路径 | 职责 |
-|------|------|
-| `memoria/app/` | 桌面启动入口：`desktop.py`（DPI/UTF-8 兜底）、`shell/`（pywebview / pyqt6 壳）、`build.py`、`runtime.py` |
-| `memoria/cli/` | 命令行入口（`memoria`） |
-| `memoria/domain/` | 领域类型（Range、KP 等） |
-| `memoria/range/` | snippet + line_hint 定位算法 |
-| `memoria/graph/` | 图谱构建、边推导、链接审计、布局基准 |
-| `memoria/presentation/` | pywebview API 桥（`api/`）、路径解析、bottle 静态服务器 |
-| `memoria/services/` | 应用服务：文档加载、检索内核（lexical/embedding/rerank 融合）、导入引擎、KP 索引 |
-| `memoria/storage/` | 侧车 YAML、manifest、Markdown 解析、目录扫描、原子写入 |
-| `memoria/ui/static/` | 前端资源：`app/`（界面 HTML/CSS/JS）、`theme/`（memoria.css）、`vendor/`（MathJax 等第三方） |
-| `memoria/__version__.py` | 版本唯一事实源 |
+## Structure
 
-## 规则
+| Path | Responsibility |
+|------|----------------|
+| `memoria/app/` | Desktop startup entry: `desktop.py` (DPI/UTF-8 fallbacks), `shell/` (pywebview / pyqt6 shells), `build.py`, `runtime.py` |
+| `memoria/cli/` | Command-line entry (`memoria`) |
+| `memoria/domain/` | Domain types (Range, KP, etc.) |
+| `memoria/range/` | snippet + line_hint location algorithms |
+| `memoria/graph/` | Graph building, edge derivation, link audit, layout benchmarks |
+| `memoria/presentation/` | pywebview API bridge (`api/`), path resolution, bottle static server |
+| `memoria/services/` | Application services: document loading, retrieval kernel (lexical/embedding/rerank fusion), import engine, KP index |
+| `memoria/storage/` | Sidecar YAML, manifest, Markdown parsing, directory scanning, atomic writes |
+| `memoria/ui/static/` | Frontend assets: `app/` (UI HTML/CSS/JS), `theme/` (memoria.css), `vendor/` (third-party like MathJax) |
+| `memoria/__version__.py` | Single source of truth for the version |
 
-- 禁止在 `src/` 放置临时/调试文件 → 归 `artifacts/`
-- 版本号只允许修改 `__version__.py`，**禁止**手改 pyproject.toml 中的硬编码版本号（见 [docs/conventions/version.md](../docs/conventions/version.md)）
-- 前端保持原生 JS 无框架风格
+## Rules
+
+- No temporary/debug files in `src/` → put them in `artifacts/`
+- The version number may only be changed in `__version__.py`; **do not** hand-edit the hardcoded version in pyproject.toml (see [docs/conventions/version.md](../docs/conventions/version.md))
+- Frontend keeps the vanilla-JS, no-framework style

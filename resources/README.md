@@ -1,17 +1,19 @@
-# resources/ — 应用资源
+[中文](README.cn.md) | English
 
-> **用途**：存放随应用仓库分发的**非代码静态资源**（应用图标、演示截图等），供应用运行时、打包脚本与 GitHub 展示引用；截图同时承担仓库 README（中/英）的配图职责。
-> **目标读者**：维护图标的开发者；维护/新增项目演示截图者（README 配图）；打包脚本维护者。
-> **关联文档**：[docs/conventions/readme-i18n.md](../docs/conventions/readme-i18n.md)（README 与截图中英描述维护规范）；[docs/conventions/docs-management.md](../docs/conventions/docs-management.md)（docs 组织规则）；[docs/conventions/directory-organization.md](../docs/conventions/directory-organization.md)（顶层目录职责）。
+# resources/ — Application Assets
 
-## 内容
+> **Purpose**: stores the **non-code static assets** distributed with the app repository (app icons, demo screenshots, etc.), referenced by the app at runtime, by packaging scripts, and by the GitHub showcase; the screenshots also serve as the images for the repository READMEs (English / Chinese).
+> **Intended readers**: developers who maintain the icons; people who maintain / add project demo screenshots (README images); packaging-script maintainers.
+> **Related docs**: [docs/conventions/readme-i18n.md](../docs/conventions/readme-i18n.md) (conventions for maintaining the bilingual EN/CN README and screenshot descriptions); [docs/conventions/docs-management.md](../docs/conventions/docs-management.md) (docs organization rules); [docs/conventions/directory-organization.md](../docs/conventions/directory-organization.md) (top-level directory responsibilities).
 
-| 路径 | 用途 |
+## Contents
+
+| Path | Purpose |
 |------|------|
-| `icons/` | 应用图标（`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`），用于窗口、任务栏与打包产物 |
-| `screenshots/` | 项目演示截图（`demo-*.png`），README（中/英）配图；由打包脚本**不纳入**发布包 |
+| `icons/` | App icons (`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`), used for the window, the taskbar, and packaged artifacts |
+| `screenshots/` | Project demo screenshots (`demo-*.png`) used as images in the READMEs (EN / CN); **not included** in the release package by the packaging script |
 
-## 目录变更约定
+## Directory-Change Conventions
 
-- `docs/` 下**不得**存放图片资源（docs 只放文档，截图等二进制资源一律落 `resources/screenshots/`）；发现 `docs/` 出现截图类二进制文件时应迁至本目录并同步引用。
-- 新增/删除/重命名截图后，必须同步：README.md + README.cn.md 引用、本表说明、仓库文档登记（docs-management.md 修订记录）。
+- **No** image assets may live under `docs/` (docs holds documents only — binary assets such as screenshots always go under `resources/screenshots/`); if a screenshot-type binary appears under `docs/`, move it into this directory and update the references accordingly.
+- After adding / deleting / renaming a screenshot, update in sync: the `README.md` and `README.cn.md` references, this table's description, and the repository document registry (the revision log in docs-management.md).
