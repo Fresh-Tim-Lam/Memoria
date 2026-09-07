@@ -79,10 +79,47 @@ class UIAPI:
         return self._svc.kb_path or ""
 
     def get_remembered_kb_path(self) -> str:
+        """前端启动时询问“是否自动打开上次知识库”。
+
+        「新窗口」（MEMORIA_NO_KB=1）进程返回空串：前端据此停在欢迎页，
+        不触发 resolveStartupKbPath 的 remembered 自动打开分支。
+        """
+        from memoria.app.runtime import no_auto_kb_env
         from memoria.storage.ui_settings import resolve_last_kb_path
 
+        if no_auto_kb_env():
+            return ""
         path = resolve_last_kb_path()
         return path or ""
+
+    def get_recent_kbs(self) -> dict:
+        """最近打开的知识库（按上次打开时间降序，固定数量）。"""
+        from pathlib import Path
+
+        from memoria.storage.ui_settings import resolve_recent_kb_paths
+
+        paths = resolve_recent_kb_paths()
+        # 显示名默认取目录名；重名时附加父目录名以便区分
+        by_name: dict[str, int] = {}
+        for p in paths:
+            by_name[Path(p).name] = by_name.get(Path(p).name, 0) + 1
+        items = []
+        for p in paths:
+            path = Path(p)
+            name = path.name or p
+            if by_name.get(name, 0) > 1:
+                name = f"{path.parent.name} / {name}"
+            items.append({"path": p, "name": name})
+        return {"status": "ok", "items": items}
+
+    def open_new_window(self, kb_path: str = "") -> dict:
+        """文件 → 新窗口 / 打开最近：启动独立的新 Memoria 窗口进程。
+
+        kb_path 为空 → 新窗口不打开任何知识库（欢迎页）。
+        """
+        from memoria.app.runtime import spawn_window
+
+        return spawn_window(kb_path=kb_path or None)
 
     def close_kb(self) -> dict:
         self._svc.close_kb()

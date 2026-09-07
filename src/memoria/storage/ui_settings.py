@@ -86,9 +86,60 @@ def resolve_last_kb_path() -> str | None:
     return None
 
 
+# 「打开最近」固定展示数量（最新在前）
+RECENT_KB_MAX = 8
+
+
 def remember_last_kb_path(path: str | None) -> None:
-    """记录上次打开的知识库；关闭时传 None。"""
-    if path:
-        save_ui_settings({"last_kb_path": str(Path(path).resolve())})
-    else:
+    """记录上次打开的知识库，并维护「最近打开」列表（去重、最新在前）。
+
+    - path 非空：写入 last_kb_path，并把该路径移到 recent 列表头部（截断 RECENT_KB_MAX）；
+    - path 为 None：仅清空 last_kb_path（关闭窗口），recent 列表保留供其它窗口使用。
+    """
+    if not path:
         save_ui_settings({"last_kb_path": ""})
+        return
+    resolved = str(Path(path).resolve())
+    recent = _load_recent_raw()
+    recent = [p for p in recent if p != resolved]
+    recent.insert(0, resolved)
+    recent = recent[:RECENT_KB_MAX]
+    save_ui_settings({"last_kb_path": resolved, "recent_kbs": recent})
+
+
+def _load_recent_raw() -> list[str]:
+    raw = load_ui_settings().get("recent_kbs")
+    if not isinstance(raw, list):
+        return []
+    out: list[str] = []
+    for item in raw:
+        if isinstance(item, str) and item.strip():
+            out.append(item.strip())
+    return out
+
+
+def resolve_recent_kb_paths() -> list[str]:
+    """最近打开的知识库（存在目录、最新在前，最多 RECENT_KB_MAX）。
+
+    旧版本设置没有 recent_kbs 键：以 last_kb_path 作为种子初始化一次。
+    """
+    recent = _load_recent_raw()
+    if not recent:
+        last = resolve_last_kb_path()
+        if last:
+            recent = [last]
+    seen: set[str] = set()
+    out: list[str] = []
+    for p in recent:
+        try:
+            rp = str(Path(p).resolve())
+        except OSError:
+            continue
+        if rp in seen:
+            continue
+        if Path(rp).is_dir():
+            seen.add(rp)
+            out.append(rp)
+        if len(out) >= RECENT_KB_MAX:
+            break
+    return out

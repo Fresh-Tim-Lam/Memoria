@@ -10,15 +10,15 @@ import time
 import webview
 
 from memoria import __version__
+from memoria.app.runtime import resolve_startup_kb_path
 from memoria.app.shell.pywebview_host import PyWebViewHost
 from memoria.presentation.api.ui import UIAPI
 from memoria.presentation.paths import UI_APP_INDEX
 from memoria.presentation.static_server import create_app
-from memoria.storage.ui_settings import resolve_last_kb_path
 
 
 def _startup_kb_path() -> str | None:
-    return resolve_last_kb_path()
+    return resolve_startup_kb_path()
 
 
 def _frameless_enabled() -> bool:

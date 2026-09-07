@@ -11363,14 +11363,17 @@
   function bindEvents() {
     bindPointerDragHoverGuard();
     const fileMenuEl = $("#file-menu");
+    const recentPanelEl = $("#file-menu-recent");
     const closeFileMenu = () => {
       if (fileMenuEl) fileMenuEl.hidden = true;
+      if (recentPanelEl) recentPanelEl.hidden = true;
       $("#btn-file")?.setAttribute("aria-expanded", "false");
     };
     $("#btn-file")?.addEventListener("click", (e) => {
       e.stopPropagation();
       const willOpen = !!(fileMenuEl && fileMenuEl.hidden);
       if (fileMenuEl) fileMenuEl.hidden = !willOpen;
+      if (!willOpen && recentPanelEl) recentPanelEl.hidden = true;
       $("#btn-file")?.setAttribute("aria-expanded", String(willOpen));
     });
     document.addEventListener("click", (e) => {
@@ -11386,6 +11389,66 @@
     $("#file-menu-import")?.addEventListener("click", () => {
       closeFileMenu();
       window.MemoriaImportFlow?.start();
+    });
+
+    /** 请求后端启动一个新的 Memoria 窗口进程（可选携带知识库目录）。 */
+    async function spawnNewWindow(kbPath) {
+      let res = null;
+      try {
+        res = await call("open_new_window", kbPath || "");
+      } catch (err) {
+        res = { status: "error", message: String(err) };
+      }
+      if (!res || res.status !== "ok") {
+        setStatus(T("toolbar.newWindowFailed"), (res && res.message) || "");
+      }
+    }
+
+    /** 拉取最近打开的知识库并渲染「打开最近」二级列表（按上次打开时间降序）。 */
+    async function renderRecentKbMenu() {
+      if (!recentPanelEl) return;
+      recentPanelEl.textContent = "";
+      const makeItem = (label, opts) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = label;
+        if (opts && opts.title) b.title = opts.title;
+        if (opts && opts.disabled) b.disabled = true;
+        recentPanelEl.appendChild(b);
+        return b;
+      };
+      let res = null;
+      try {
+        res = await call("get_recent_kbs");
+      } catch (_) {
+        res = null;
+      }
+      const items = (res && Array.isArray(res.items)) ? res.items : null;
+      if (!items) {
+        makeItem(T("toolbar.recentLoadFailed"), { disabled: true });
+        return;
+      }
+      if (!items.length) {
+        makeItem(T("toolbar.recentEmpty"), { disabled: true });
+        return;
+      }
+      for (const it of items) {
+        const label = it.name || it.path || "";
+        makeItem(label, { title: it.path }).addEventListener("click", () => {
+          closeFileMenu();
+          spawnNewWindow(it.path);
+        });
+      }
+    }
+
+    $("#file-menu-new-window")?.addEventListener("click", () => {
+      closeFileMenu();
+      spawnNewWindow("");
+    });
+    $("#file-menu-open-recent")?.addEventListener("click", () => {
+      const willShow = !!(recentPanelEl && recentPanelEl.hidden);
+      if (recentPanelEl) recentPanelEl.hidden = !willShow;
+      if (willShow) renderRecentKbMenu();
     });
     // 图片插入按钮（btn-insert-image）的 click/mousedown 与可用性状态机
     // （focusin/selectionchange/初始刷新）已随图片子系统迁至 image-tools.js，由 boot init

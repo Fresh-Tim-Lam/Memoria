@@ -49,6 +49,13 @@
             <button type="button" role="menuitem" id="file-menu-open" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
             <button type="button" role="menuitem" id="file-menu-import" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
             <div class="-tb-file-menu-sep" role="separator"></div>
+            <button type="button" role="menuitem" id="file-menu-new-window" data-i18n="toolbar.newWindow" data-i18n-attr="title:toolbar.newWindowTitle">新窗口</button>
+            <div class="-tb-file-menu-row" id="file-menu-recent-wrap" role="none">
+              <button type="button" role="menuitem" id="file-menu-open-recent" data-i18n="toolbar.openRecent" data-i18n-attr="title:toolbar.openRecentTitle">打开最近</button>
+              <span class="-tb-file-caret" aria-hidden="true">›</span>
+              <div id="file-menu-recent" class="-tb-file-submenu" role="menu" hidden></div>
+            </div>
+            <div class="-tb-file-menu-sep" role="separator"></div>
             <button type="button" role="menuitem" id="file-menu-export" disabled data-i18n="toolbar.export" data-i18n-attr="title:toolbar.exportTitle">导出</button>
           </div>
         </div>

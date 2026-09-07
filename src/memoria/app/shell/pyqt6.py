@@ -18,13 +18,13 @@ from memoria.app.shell.pyqt6_hidden_chrome import (
 )
 from memoria.app.shell.pyqt6_host import PyQt6Host
 from memoria.app.shell.static_server_thread import StaticServerThread
+from memoria.app.runtime import resolve_startup_kb_path
 from memoria.presentation.api.ui import UIAPI
-from memoria.storage.ui_settings import resolve_last_kb_path
 from memoria.presentation.paths import UI_APP_INDEX
 
 
 def _startup_kb_path() -> str | None:
-    return resolve_last_kb_path()
+    return resolve_startup_kb_path()
 
 
 def _configure_qtwebengine_env() -> None:
