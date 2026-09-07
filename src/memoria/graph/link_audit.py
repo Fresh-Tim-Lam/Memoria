@@ -240,6 +240,9 @@ def audit_file_graph_links(
         anchor = (wl.get("target_id") or "").strip()
         if not anchor:
             continue
+        if anchor.startswith("\\"):
+            # 样式命令（[[\h|…]] / [[\c:red|…]] 等）不是知识点链接，不参与建边审计
+            continue
         if not line_in_any_kp(line, ranges):
             continue
         sources = minimal_kps_for_line(line, ranges)
