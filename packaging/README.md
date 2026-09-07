@@ -43,6 +43,7 @@ Package/
 |---|---|---|
 | `resources/icons` → `resources/icons` | 必带 | 图标 |
 | `resources/agent-prompts` → `resources/agent-prompts` | **必带** | `get_agent_prompt`（程序内 Agent 整理提示词，单一事实源） |
+| `docs/reference`（白名单） → `resources/docs` | **必带** | `get_reference_doc`（弹窗"查看格式说明"，单一事实源） |
 | `examples` → `resources/examples` | 可选 | 默认示例库 |
 | `example-boonie` → `resources/example-boonie` | 可选 | 示例库 |
 
@@ -51,7 +52,7 @@ Package/
 - 构建后自检（无需完整重打包）：
 
 ```powershell
-python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file(), '| examples:', (p/'examples').is_dir())"
+python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| docs:', (p/'docs'/'preview-formats.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file(), '| examples:', (p/'examples').is_dir())"
 ```
 
 ## 本地运行

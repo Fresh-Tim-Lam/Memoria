@@ -997,29 +997,34 @@ class UIAPI:
     }
 
     def get_reference_doc(self, name: str = "preview-formats.md") -> dict:
-        """读取 docs/reference 下的格式说明文档（供弹窗内查看/复制）。
+        """读取应用内格式说明文档（供弹窗内查看/复制）。
 
-        仅放行白名单文件；发布包不随带 docs/，返回可读提示（功能面向源码仓库）。
+        单一事实源 docs/reference/{name}：开发态直接读仓库文件；发布态读随包
+        资源 resources/docs/{name}（白名单登记于 packaging/build.py
+        _REFERENCE_DOC_BUNDLE，构建时随包拷贝）。仅放行白名单文件。
         """
-        from memoria.app.runtime import is_frozen, repo_root
+        from memoria.app.runtime import is_frozen, repo_root, resources_dir
 
         try:
             real = self.REFERENCE_DOCS.get(str(name or ""))
             if not real:
                 return {"status": "error", "message": f"不支持的文档: {name!r}"}
             if is_frozen():
+                path = resources_dir() / "docs" / real
+                note = f"resources/docs/{real}"
+            else:
+                path = repo_root() / "docs" / "reference" / real
+                note = f"docs/reference/{real}"
+            if not path.is_file():
                 return {
                     "status": "error",
-                    "message": "格式说明文档未随发布包提供（docs/ 仅存在于源码仓库）",
+                    "message": f"文档不存在: {real}（{note}；发布包需在 build.py 登记随包）",
                 }
-            path = repo_root() / "docs" / "reference" / real
-            if not path.is_file():
-                return {"status": "error", "message": f"文档不存在: {real}"}
             return {
                 "status": "ok",
                 "name": real,
                 "text": path.read_text(encoding="utf-8"),
-                "note": f"docs/reference/{real}",
+                "note": note,
             }
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}

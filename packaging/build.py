@@ -152,12 +152,18 @@ def _clean_release_dir() -> None:
             child.unlink()
 
 
+# 应用内文档白名单：docs/reference 下随包拷贝（弹窗"查看格式说明" get_reference_doc 发布态读取）
+_REFERENCE_DOC_BUNDLE = ("preview-formats.md",)
+
+
 def _stage_runtime_resources() -> None:
     """随包资源登记表：新增随包目录必须在此登记，并同步 packaging/README.md §随包资源登记。
 
     语义：
     - resources/icons、resources/agent-prompts：运行态 RPC（图标 / get_agent_prompt）直接读取，
       **必须**随包；漏拷会导致发布态功能缺失。
+    - resources/docs（白名单 _REFERENCE_DOC_BUNDLE）：弹窗"查看格式说明"（get_reference_doc）
+      发布态读取；**必须**随包。
     - examples / example-boonie：官方示例库（可选目录，缺失时跳过）。
     """
     targets = [
@@ -169,10 +175,18 @@ def _stage_runtime_resources() -> None:
     for src, dest, ignore in targets:
         if src.is_dir():
             shutil.copytree(src, dest, ignore=ignore, dirs_exist_ok=True)
+    # docs/reference 白名单单文件随包（保持目录结构与源码一致：docs/…）
+    for name in _REFERENCE_DOC_BUNDLE:
+        src_doc = ROOT / "docs" / "reference" / name
+        if src_doc.is_file():
+            docs_dest = RELEASE_RES / "docs"
+            docs_dest.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_doc, docs_dest / name)
 
 
 _REQUIRED_RELEASE_RESOURCES = (
     "agent-prompts/organize.zh-CN.md",  # 程序内 Agent 整理提示词（单一事实源，运行态 RPC 读取）
+    "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
     "icons/Memoria.ico",
     "icons/Memoria.png",
 )
