@@ -1323,6 +1323,9 @@
     }
     setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
+    // 渲染可能因重入保护被"排队重跑"（重跑会重建 preview DOM 并清掉高亮），
+    // 等最终一轮渲染结束再执行下方的高亮/定位，否则 band 会被重跑清掉
+    await _waitRenderSettled();
     // 切换文件：预览区是全新 DOM，旧文件的编辑光标不继承（selection 可能残留，显式清空）
     if (window.MemoriaEditHandler) window.MemoriaEditHandler._caretInPreview = false;
     window.MemoriaImageTools?.refreshImageInsertAvailability?.();
@@ -1584,6 +1587,22 @@
 
   let _renderingPreview = false;
   let _renderPending = false;  // 全量渲染被重入保护跳过时置位，当前渲染完成后自动补一次
+  // 渲染重入保护会产生"排队重跑"，重跑会清空并重建 preview DOM；
+  // 依赖 DOM 的操作（如 KP 高亮 band）必须等最终一轮渲染完成后再执行。
+  let _renderSettledWaiters = [];
+  function _notifyRenderSettled() {
+    const waiters = _renderSettledWaiters;
+    _renderSettledWaiters = [];
+    for (const fn of waiters) {
+      try { fn(); } catch (_) { /* noop */ }
+    }
+  }
+  function _waitRenderSettled() {
+    return new Promise((resolve) => {
+      if (!_renderingPreview && !_renderPending) return resolve();
+      _renderSettledWaiters.push(resolve);
+    });
+  }
   var _blockLineMap = null;  // blockIndex → { startLine, endLine } (0-based)
 
   /**
@@ -1794,7 +1813,9 @@
       _renderPending = false;
       log("render", "re-run queued render");
       renderPreview(state.doc);
+      return; // 新一轮渲染完成时会再次走本收尾并通知 _renderSettledWaiters
     }
+    _notifyRenderSettled();
   }
 
   /**
@@ -6091,9 +6112,72 @@
     });
   }
 
+  function isKbMarkdownHref(href) {
+    return (
+      typeof href === "string" &&
+      href.length > 0 &&
+      !href.startsWith("#") &&
+      !/^(https?:|data:|mailto:|javascript:|ftp:|\/\/|\/)/i.test(href) &&
+      /\.(md|markdown)(?:[?#]|$)/i.test(href)
+    );
+  }
+
+  function resolveKbMdTarget(href, currentPath) {
+    if (!currentPath) return null;
+    const curDir =
+      currentPath.indexOf("/") >= 0
+        ? currentPath.slice(0, currentPath.lastIndexOf("/") + 1)
+        : "";
+    const raw = href.split(/[?#]/)[0].replace(/^\.\//, "");
+    const parts = [
+      ...curDir.split("/").filter(Boolean),
+      ...raw.split("/").filter(Boolean),
+    ];
+    const out = [];
+    for (const p of parts) {
+      if (p === ".") continue;
+      if (p === "..") {
+        out.pop();
+        continue;
+      }
+      out.push(p);
+    }
+    return out.length ? out.join("/") : null;
+  }
+
+  function onPreviewMdLinkDelegate(e) {
+    const t = e.target;
+    if (!t || !t.closest) return;
+    if (e.button !== 0 && e.button !== undefined) return;
+    const a = t.closest("a[href]");
+    if (!a) return;
+    // wikilink/关系链接已由元素级处理，不在此拦截
+    if (a.closest(".memoria-link, .-wikilink")) return;
+    const href = (a.getAttribute("href") || "").trim();
+    if (!isKbMarkdownHref(href)) return;
+    const rel = resolveKbMdTarget(href, state.currentPath || "");
+    if (!rel) return;
+    const files = state.files;
+    if (!Array.isArray(files)) return;
+    // list_files 返回 items 数组（{path, ...}），兼容纯字符串形态
+    const known = files.some((f) =>
+      f ? (typeof f === "string" ? f === rel : f.path === rel) : false
+    );
+    if (!known) return;
+    e.preventDefault();
+    e.stopPropagation();
+    openFile(rel).catch(() => {});
+  }
+
   function bindPreviewLinks() {
     const preview = $("#preview");
     if (!preview) return;
+    // 惰性绑定一次：#preview 容器级委托，把指向 KB 内 .md 的普通 markdown 链接
+    // 转为应用内文件打开（避免 WebView 导航到静态路径 404）
+    if (!preview.dataset.kbmdBound) {
+      preview.dataset.kbmdBound = "1";
+      preview.addEventListener("click", onPreviewMdLinkDelegate);
+    }
     // 仅绑定未绑定过的元素，避免增量渲染时对旧链接重复绑定事件
     preview.querySelectorAll(".memoria-link:not([data--bound])").forEach((el) => {
       el.setAttribute("data--bound", "1");
