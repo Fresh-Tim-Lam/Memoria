@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+import threading
 import time
 
 import webview
@@ -99,7 +100,7 @@ def _apply_frameless_native(window) -> None:
                 break
             time.sleep(0.25)
         if native is None:
-            print("[shell] apply_frameless_native: native not ready", flush=True)
+            _diag("apply_frameless native-not-ready")
             return
 
         hwnd = native.Handle.ToInt64()
@@ -144,23 +145,211 @@ def _apply_frameless_native(window) -> None:
         corners_ok = enable_rounded_corners(window)
         steps.append(f"corners={corners_ok}")
 
-        print(
-            f"[shell] apply_frameless_native: hwnd=0x{hwnd:x} style=0x{style_new:08x} "
-            f"corners={corners_ok} nccalc={nc_ok}",
-            flush=True,
-        )
-        # 文件副作用：确认执行路径（windowed 下 stdout 不可靠）
+        # 文件诊断：记录无边框改造执行的完整步骤（追加，勿覆盖 run 早期日志）
+        _diag("apply_frameless " + " ".join(steps))
+    except Exception as exc:  # noqa: BLE001
+        _diag(f"apply_frameless failed: {exc}")
+
+
+def _own_top_level_windows():
+    """枚举本进程全部顶层窗口句柄（不依赖 pywebview window.native）。"""
+    import ctypes
+    from ctypes import wintypes
+
+    user32 = ctypes.windll.user32
+    kernel32 = ctypes.windll.kernel32
+    my_pid = int(kernel32.GetCurrentProcessId())
+
+    handles: list[int] = []
+
+    @ctypes.WINFUNCTYPE(wintypes.BOOL, wintypes.HWND, wintypes.LPARAM)
+    def _cb(hwnd, _lp):
+        pid = wintypes.DWORD()
+        user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+        if pid.value == my_pid:
+            handles.append(int(hwnd))
+        return True
+
+    user32.EnumWindows(_cb, 0)
+    return handles
+
+
+def _force_window_show(_native=None) -> bool:
+    """兜底显示：native 可用则直接用其句柄；否则枚举本进程顶层窗口。
+    任一不可见窗口 Show(SW_SHOW)+置前即视为执行了 Show。"""
+    import ctypes
+    from ctypes import wintypes
+
+    user32 = ctypes.windll.user32
+    user32.IsWindowVisible.restype = wintypes.BOOL
+    user32.IsWindowVisible.argtypes = [wintypes.HWND]
+    user32.ShowWindow.argtypes = [wintypes.HWND, ctypes.c_int]
+    user32.SetForegroundWindow.argtypes = [wintypes.HWND]
+
+    targets: list[int] = []
+    if _native is not None:
         try:
-            with open(
-                os.path.join(os.path.dirname(os.path.abspath(sys.executable)), "frameless-ok.txt"),
-                "w",
-                encoding="utf-8",
-            ) as f:
-                f.write(" ".join(steps) + "\n")
+            targets.append(int(_native.Handle.ToInt64()))
+        except Exception:  # noqa: BLE001
+            targets = []
+    if not targets:
+        targets = _own_top_level_windows()
+
+    shown_any = False
+    for hwnd in targets:
+        h = ctypes.c_void_p(hwnd)
+        try:
+            if not user32.IsWindowVisible(h):
+                user32.ShowWindow(h, 5)  # SW_SHOW
+                user32.SetForegroundWindow(h)
+                shown_any = True
+        except Exception:  # noqa: BLE001
+            continue
+    return shown_any
+
+
+def _diag_path() -> str:
+    """诊断文件路径：发布态为 exe 同目录 frameless-ok.txt（windowed 下 stdout 不可靠）。"""
+    return os.path.join(os.path.dirname(os.path.abspath(sys.executable)), "frameless-ok.txt")
+
+
+def _diag_clear() -> None:
+    """清空旧诊断，保证本次运行从头记录。"""
+    try:
+        if os.path.exists(_diag_path()):
+            os.remove(_diag_path())
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _write_diag(line: str) -> None:
+    """追加一行诊断到文件（仅落盘，供发布态排查；永不抛错）。"""
+    try:
+        with open(_diag_path(), "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def _diag(line: str) -> None:
+    """统一诊断出口：发布态落盘；开发态同时打印到控制台。"""
+    _write_diag(line)
+    if _debug_enabled():
+        try:
+            print(f"[shell] {line}", flush=True)
         except Exception:  # noqa: BLE001
             pass
+
+
+def _ensure_window_visible(window) -> None:
+    """启动后即时兜底（一次）：尽量 Show 本进程窗口并落诊断。"""
+    native = None
+    for _ in range(40):
+        native = window.native
+        if native is not None:
+            break
+        time.sleep(0.25)
+    _diag(f"ensure_visible native_ok={native is not None}")
+    shown = _force_window_show(native)
+    _diag(f"ensure_visible executed_show={shown}")
+
+
+def _watch_window_visible(window) -> None:
+    """守护线程兜底（修复打包态"后台进程无窗口"）。
+
+    注意：不要在这里调 window.show() —— pywebview 的 show() 被 @_shown_call
+    包装，内部会 events.shown.wait(20)；一旦窗口因故障从未 shown，show() 会
+    阻塞 20 秒，使兜底轮询失效。这里只走纯 Win32（EnumWindows + ShowWindow），
+    不依赖 shown 事件。每 0.5s 枚举本进程顶层窗口：存在不可见主窗口 → 强制
+    Show+置前并结束；全部可见（正常态）→ 立即结束；40s 仍无任何顶层窗口
+    → 落结论行（说明 create_window 阶段就失败，需看 run 早期诊断）。
+    """
+    import time as _t
+
+    _diag("watch start")
+    for i in range(80):
+        _t.sleep(0.5)
+        try:
+            wins = _own_top_level_windows()
+        except Exception:  # noqa: BLE001
+            continue
+        if not wins:
+            continue  # 窗口尚未创建，继续等
+        # 存在不可见窗口 → 已执行 Show（_force_window_show 返回 True）
+        if _force_window_show(None):
+            _diag(f"watch forced_shown=1 t={(i + 1) // 2}s")
+            return
+        # 有顶层窗口且全部可见 → 正常，无需兜底
+        _diag(f"watch all_visible t={(i + 1) // 2}s n={len(wins)}")
+        return
+    _diag("watch no-top-level-windows t=40s")
+
+
+def _own_window_info() -> list[str]:
+    """自进程顶层窗口摘要：[hwnd:class:visible:title]（不依赖 window.native）。"""
+    import ctypes
+    from ctypes import wintypes
+
+    user32 = ctypes.windll.user32
+    user32.GetWindowTextW.argtypes = [wintypes.HWND, ctypes.c_wchar_p, ctypes.c_int]
+    user32.GetWindowTextW.restype = ctypes.c_int
+    user32.GetClassNameW.argtypes = [wintypes.HWND, ctypes.c_wchar_p, ctypes.c_int]
+    user32.GetClassNameW.restype = ctypes.c_int
+    user32.IsWindowVisible.restype = wintypes.BOOL
+    user32.IsWindowVisible.argtypes = [wintypes.HWND]
+
+    out: list[str] = []
+    for h in _own_top_level_windows():
+        try:
+            title = ctypes.create_unicode_buffer(256)
+            cls = ctypes.create_unicode_buffer(128)
+            user32.GetWindowTextW(h, title, 256)
+            user32.GetClassNameW(h, cls, 128)
+            vis = int(user32.IsWindowVisible(ctypes.c_void_p(h)))
+            out.append(f"0x{h:x}:{cls.value or '?'}:vis={vis}:{title.value or ''}")
+        except Exception:  # noqa: BLE001
+            continue
+    return out
+
+
+def _post_launch_log(stage: str) -> None:
+    """阶段日志：开发态打印，发布态落盘 frameless-ok.txt。"""
+    try:
+        _diag(f"post_launch:{stage} own={_own_window_info()}")
     except Exception as exc:  # noqa: BLE001
-        print(f"[shell] apply_frameless_native failed: {exc}", flush=True)
+        _diag(f"post_launch:{stage} log-err {exc}")
+
+
+def _start_dev_window_monitor(window) -> None:
+    """开发态窗口显示链路监视器：每秒打印 native/gui/shown 事件与自进程窗口状态。
+
+    定位 pywebview 窗口"创建但不可见"：shown 事件是否触发、native/gui 是否就绪、
+    顶层窗口是否带 WS_VISIBLE。打包态不打印（走 frameless-ok.txt 文件诊断）。
+    """
+    if not _debug_enabled():
+        return
+
+    def _run() -> None:
+        for i in range(45):
+            try:
+                native_ok = window.native is not None
+                gui_ok = getattr(window, "gui", None) is not None
+                shown_evt = "?"
+                try:
+                    shown_evt = bool(window.events.shown.is_set())
+                except Exception:  # noqa: BLE001
+                    pass
+                wins = _own_window_info()
+                print(
+                    f"[shell] mon t={i}s native={int(native_ok)} gui={int(gui_ok)} "
+                    f"shown_evt={shown_evt} own={wins}",
+                    flush=True,
+                )
+            except Exception as exc:  # noqa: BLE001
+                print(f"[shell] mon err {exc}", flush=True)
+            time.sleep(1)
+
+    threading.Thread(target=_run, daemon=True).start()
 
 
 def _disable_browser_accelerator_keys(window) -> None:
@@ -180,14 +369,31 @@ def _disable_browser_accelerator_keys(window) -> None:
         time.sleep(0.25)
     if native is None:
         return
+
+    # WebView2 控件在 pywebview 各版本的暴露位置不同（native.webview /
+    # native.browser.webview）；pythonnet 跨线程代理可能不暴露 Python 侧
+    # 附加属性，统一多级兼容解析。找不到则静默跳过（页面自行处理缩放键）。
+    webview2 = None
+    for _getter in (
+        lambda n: n.webview,
+        lambda n: n.browser.webview,
+        lambda n: getattr(n, "CoreWebView2", None),
+    ):
+        try:
+            webview2 = _getter(native)
+            if webview2 is not None:
+                break
+        except Exception:  # noqa: BLE001
+            continue
+    if webview2 is None:
+        return
+
     try:
         # CoreWebView2 只能在 UI 线程访问；pywebview 的 start(func) 中 func
         # 运行在非 UI 线程，直接读取会抛 InvalidCastException，须 Invoke 调度。
         # 注意不能在 UI 线程 sleep 轮询：CoreWebView2 初始化回调也要在 UI 线程
         # 派发，阻塞 UI 会形成死锁导致窗口白屏。改用初始化完成事件驱动。
         from System import Action  # pythonnet
-
-        webview2 = native.webview
 
         def _on_initialized(sender, args):
             try:
@@ -225,11 +431,19 @@ def _disable_browser_accelerator_keys(window) -> None:
 
 def run() -> None:
     frameless = _frameless_enabled()
+    # 本次运行诊断从头记录（发布态落地 Package/frameless-ok.txt）
+    _diag_clear()
+    _diag(
+        f"run enter frameless={frameless} frozen={getattr(sys, 'frozen', False)} "
+        f"webview={webview.__file__}"
+    )
     host = PyWebViewHost(frameless=frameless)
     startup_kb = _startup_kb_path()
     api = UIAPI(host=host, kb_path=startup_kb)
     if not UI_APP_INDEX.is_file():
+        _diag(f"run ui-index-missing {UI_APP_INDEX}")
         raise FileNotFoundError(f"UI 入口不存在: {UI_APP_INDEX}")
+    _diag(f"run ui-ready kb={startup_kb}")
 
     window = webview.create_window(
         title=f"Memoria v{__version__}",
@@ -245,13 +459,30 @@ def run() -> None:
         # 设置面板的字号/缩放滑块因此无响应；应用 CSS 已自行管理 user-select 策略
         text_select=True,
     )
+    _diag(
+        f"run created_window native={window.native is not None} "
+        f"gui={getattr(window, 'gui', None) is not None}"
+    )
 
     def _post_launch(window_):
+        _post_launch_log("enter")
         _disable_browser_accelerator_keys(window_)
+        _post_launch_log("after_disable_keys")
         if frameless:
             # 窗口创建并显示后补原生样式（HWND / native 就绪后再执行）
             _apply_frameless_native(window_)
+            _post_launch_log("after_frameless")
+        # 兜底：确保主窗口可见并置前（打包态偶发"后台进程无窗口"）
+        _ensure_window_visible(window_)
+        _post_launch_log("after_ensure_visible")
 
+    _start_dev_window_monitor(window)
+    # 守护线程：native 就绪晚时仍能强制显示窗口（打包态排查/修复用）。
+    # 注意该线程与 _post_launch 均不依赖 shown 事件，避免故障态下阻塞。
+    _diag("run start watch-thread")
+    threading.Thread(target=_watch_window_visible, args=(window,), daemon=True).start()
+
+    _diag("run webview.start begin")
     webview.start(lambda: _post_launch(window), debug=_debug_enabled())
 
 
