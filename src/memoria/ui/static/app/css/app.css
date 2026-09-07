@@ -3504,6 +3504,13 @@ body.-brush-active #editor {
 .-preview .-src-block > h6 {
     margin: 0;
 }
+/* 预览标题随「设置 → 显示 → 字号」等比缩放：标题块由 renderer 渲染为
+   h1/h2/h3 且自带 .-src-block（无外层容器），此处按该结构直接命中，
+   字号以 --preview-font-size（.-preview 已设置）为基准计算：
+   默认 14px 正文时还原为原 26/20/16px（h4–h6 无显式字号，本就随正文）。 */
+.-preview h1.-src-block { font-size: calc(var(--preview-font-size, 14px) * 1.857); }
+.-preview h2.-src-block { font-size: calc(var(--preview-font-size, 14px) * 1.429); }
+.-preview h3.-src-block { font-size: calc(var(--preview-font-size, 14px) * 1.143); }
 .-preview ol.-src-block,
 .-preview ul.-src-block {
     margin: 0;
