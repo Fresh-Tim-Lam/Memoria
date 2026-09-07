@@ -1,0 +1,114 @@
+schema_version: 1
+file: rl-intro.md
+knowledge_points:
+- id: rl-intro
+  name: 强化学习
+  aliases:
+  - RL
+  - 增强学习
+  tags:
+  - 强化学习
+  - 概览
+  range:
+    start:
+      snippet: '## 强化学习'
+      line_hint: 1
+    end:
+      snippet: 现代实现则依赖深度网络（[[rl-policy|深度强化学习]]）。
+      line_hint: 5
+- id: rl-mdp
+  name: 马尔可夫决策过程
+  aliases:
+  - MDP
+  tags:
+  - 强化学习
+  - 形式化
+  range:
+    start:
+      snippet: '## 马尔可夫决策过程'
+      line_hint: 7
+    end:
+      snippet: MDP 是强化学习与最优控制的共同数学语言。
+      line_hint: 11
+- id: rl-value
+  name: 值函数与贝尔曼方程
+  aliases:
+  - 值函数
+  - 贝尔曼方程
+  - Q 学习
+  tags:
+  - 强化学习
+  - 核心
+  range:
+    start:
+      snippet: '## 值函数与贝尔曼方程'
+      line_hint: 13
+    end:
+      snippet: 也与[[ml-overview|机器学习]]的价值预测思路相通。
+      line_hint: 21
+- id: rl-policy
+  name: 策略梯度与深度强化学习
+  aliases:
+  - 策略梯度
+  - PPO
+  - DQN
+  tags:
+  - 强化学习
+  - 进阶
+  range:
+    start:
+      snippet: '## 策略梯度与深度强化学习'
+      line_hint: 23
+    end:
+      snippet: 强化学习对[[mlp|神经网络]]的依赖，让“深度”二字名副其实。
+      line_hint: 27
+links:
+- anchor_text: supervised
+  targets:
+  - supervised
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: rl-intro
+- anchor_text: unsupervised
+  targets:
+  - unsupervised
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: rl-intro
+- anchor_text: rl-mdp
+  targets:
+  - rl-mdp
+  edge_type: reference
+  instances:
+  - line: 5
+  source_id: rl-intro
+- anchor_text: rl-value
+  targets:
+  - rl-value
+  edge_type: reference
+  instances:
+  - line: 5
+  source_id: rl-intro
+- anchor_text: rl-policy
+  targets:
+  - rl-policy
+  edge_type: extend
+  instances:
+  - line: 5
+  source_id: rl-intro
+- anchor_text: ml-overview
+  targets:
+  - ml-overview
+  edge_type: reference
+  instances:
+  - line: 21
+  source_id: rl-value
+- anchor_text: mlp
+  targets:
+  - mlp
+  edge_type: reference
+  instances:
+  - line: 27
+  source_id: rl-policy

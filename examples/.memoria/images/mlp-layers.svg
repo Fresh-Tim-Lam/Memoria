@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+  <rect width="960" height="420" fill="#fafbfc"/>
+  <text x="480" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2328">多层感知机（MLP）结构示意</text>
+  <g text-anchor="middle" font-size="13">
+    <circle cx="110" cy="100" r="26" fill="#dbe8fb" stroke="#4a90d9" stroke-width="2"/>
+    <circle cx="110" cy="180" r="26" fill="#dbe8fb" stroke="#4a90d9" stroke-width="2"/>
+    <circle cx="110" cy="260" r="26" fill="#dbe8fb" stroke="#4a90d9" stroke-width="2"/>
+    <circle cx="110" cy="340" r="26" fill="#dbe8fb" stroke="#4a90d9" stroke-width="2"/>
+    <text x="110" y="396" font-size="13" fill="#34508a">输入层 (4)</text>
+
+    <circle cx="360" cy="130" r="26" fill="#cfe9d8" stroke="#3aa866" stroke-width="2"/>
+    <circle cx="360" cy="230" r="26" fill="#cfe9d8" stroke="#3aa866" stroke-width="2"/>
+    <circle cx="360" cy="330" r="26" fill="#cfe9d8" stroke="#3aa866" stroke-width="2"/>
+    <text x="360" y="396" font-size="13" fill="#1e6b3c">隐藏层 (3)</text>
+
+    <circle cx="610" cy="180" r="26" fill="#f6e3cb" stroke="#e8962e" stroke-width="2"/>
+    <circle cx="610" cy="290" r="26" fill="#f6e3cb" stroke="#e8962e" stroke-width="2"/>
+    <text x="610" y="396" font-size="13" fill="#8a4f10">输出层 (2)</text>
+
+    <text x="850" y="150" font-size="12" fill="#8a97a8">a = f(W·x + b)</text>
+    <text x="850" y="180" font-size="12" fill="#8a97a8">f：激活函数</text>
+    <text x="850" y="210" font-size="12" fill="#8a97a8">W：权重矩阵</text>
+    <text x="850" y="240" font-size="12" fill="#8a97a8">b：偏置向量</text>
+  </g>
+  <g stroke="#b7c1cd" stroke-width="1.2">
+    <line x1="136" y1="100" x2="334" y2="130"/><line x1="136" y1="100" x2="334" y2="230"/>
+    <line x1="136" y1="100" x2="334" y2="330"/>
+    <line x1="136" y1="180" x2="334" y2="130"/><line x1="136" y1="180" x2="334" y2="230"/>
+    <line x1="136" y1="180" x2="334" y2="330"/>
+    <line x1="136" y1="260" x2="334" y2="130"/><line x1="136" y1="260" x2="334" y2="230"/>
+    <line x1="136" y1="260" x2="334" y2="330"/>
+    <line x1="136" y1="340" x2="334" y2="130"/><line x1="136" y1="340" x2="334" y2="230"/>
+    <line x1="136" y1="340" x2="334" y2="330"/>
+    <line x1="386" y1="130" x2="584" y2="180"/><line x1="386" y1="130" x2="584" y2="290"/>
+    <line x1="386" y1="230" x2="584" y2="180"/><line x1="386" y1="230" x2="584" y2="290"/>
+    <line x1="386" y1="330" x2="584" y2="180"/><line x1="386" y1="330" x2="584" y2="290"/>
+  </g>
+</svg>

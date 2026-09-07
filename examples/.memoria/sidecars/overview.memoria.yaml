@@ -1,0 +1,100 @@
+schema_version: 1
+file: overview.md
+knowledge_points:
+- id: ml-overview
+  name: 机器学习
+  tags:
+  - 导论
+  - 核心概念
+  range:
+    start:
+      snippet: '## 机器学习'
+      line_hint: 1
+    end:
+      snippet: '![机器学习三大学习范式](./.memoria/images/ml-landscape.svg "width=560,align=center")'
+      line_hint: 21
+- id: generalization
+  name: 泛化与过拟合
+  tags:
+  - 导论
+  - 核心概念
+  - 评估
+  range:
+    start:
+      snippet: '## 泛化与过拟合'
+      line_hint: 23
+    end:
+      snippet: 关于学习曲线与正则化的定量讨论，继续阅读 [[supervised|监督学习概览]] 与 [[decision-tree|决策树]] 页面。
+      line_hint: 29
+links:
+- anchor_text: supervised
+  targets:
+  - supervised
+  edge_type: reference
+  instances:
+  - line: 9
+  - line: 29
+  source_id: ml-overview
+- anchor_text: linear-regression
+  targets:
+  - linear-regression
+  edge_type: reference
+  instances:
+  - line: 9
+  source_id: ml-overview
+- anchor_text: logistic-regression
+  targets:
+  - logistic-regression
+  edge_type: reference
+  instances:
+  - line: 9
+  source_id: ml-overview
+- anchor_text: unsupervised
+  targets:
+  - unsupervised
+  edge_type: reference
+  instances:
+  - line: 13
+  source_id: ml-overview
+- anchor_text: rl-intro
+  targets:
+  - rl-intro
+  edge_type: reference
+  instances:
+  - line: 17
+  source_id: ml-overview
+- anchor_text: 机器学习
+  targets:
+  - ml-overview
+  edge_type: reference
+  instances:
+  - line: 25
+  source_id: generalization
+- anchor_text: generalization
+  targets:
+  - generalization
+  edge_type: reference
+  instances:
+  - line: 25
+  source_id: generalization
+- anchor_text: model-eval
+  targets:
+  - model-eval
+  edge_type: reference
+  instances:
+  - line: 25
+  source_id: generalization
+- anchor_text: feature-engineering
+  targets:
+  - feature-engineering
+  edge_type: reference
+  instances:
+  - line: 27
+  source_id: generalization
+- anchor_text: decision-tree
+  targets:
+  - decision-tree
+  edge_type: reference
+  instances:
+  - line: 29
+  source_id: generalization

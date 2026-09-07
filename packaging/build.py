@@ -60,12 +60,18 @@ def _bundle_hf_models() -> list[str]:
     return bundled
 
 
+# examples/ 为官方展示样例库（机器学习导论）：随包须带正文 + .memoria/sidecars +
+# .memoria/images + manifest（打开即完整可链接）；仅剔除运行时产物与备份。
 EXAMPLES_IGNORE = shutil.ignore_patterns(
-    ".memoria",
     ".build",
     "__pycache__",
     "*.pyc",
     ".git",
+    "cache",
+    "pending.yaml",
+    "pending.yaml.bak",
+    "registry.json",
+    "*.bak",
 )
 
 
@@ -164,7 +170,8 @@ def _stage_runtime_resources() -> None:
       **必须**随包；漏拷会导致发布态功能缺失。
     - resources/docs（白名单 _REFERENCE_DOC_BUNDLE）：弹窗"查看格式说明"（get_reference_doc）
       发布态读取；**必须**随包。
-    - examples / example-boonie：官方示例库（可选目录，缺失时跳过）。
+    - examples：官方展示样例库（机器学习导论），随包分发供用户打开试用；**必须**随包
+      （正文/侧车/图片随包，运行时产物剔除）。
     """
     targets = [
         (ROOT / "resources" / "icons", RELEASE_RES / "icons", None),
@@ -187,6 +194,7 @@ def _stage_runtime_resources() -> None:
 _REQUIRED_RELEASE_RESOURCES = (
     "agent-prompts/organize.zh-CN.md",  # 程序内 Agent 整理提示词（单一事实源，运行态 RPC 读取）
     "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
+    "examples/README.md",  # 官方展示样例库入口（机器学习导论，随包可试用）
     "icons/Memoria.ico",
     "icons/Memoria.png",
 )

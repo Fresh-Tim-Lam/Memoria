@@ -1,0 +1,121 @@
+schema_version: 1
+file: neural-network.md
+knowledge_points:
+- id: perceptron
+  name: 感知机
+  tags:
+  - 神经网络
+  - 基础
+  range:
+    start:
+      snippet: '## 感知机'
+      line_hint: 1
+    end:
+      snippet: 后来的发展只是把它“堆叠”并换用可导的 [[activation|激活函数]]。
+      line_hint: 5
+- id: mlp
+  name: 多层感知机
+  aliases:
+  - MLP
+  - 全连接网络
+  tags:
+  - 神经网络
+  - 算法
+  range:
+    start:
+      snippet: '## 多层感知机'
+      line_hint: 7
+    end:
+      snippet: MLP 属于 [[supervised|监督学习]] 的经典模型，也是深度学习的起点。
+      line_hint: 15
+- id: activation
+  name: 激活函数
+  tags:
+  - 神经网络
+  - 组件
+  range:
+    start:
+      snippet: '## 激活函数'
+      line_hint: 17
+    end:
+      snippet: 在深网中显著缓解了[[backprop|梯度消失]]，是当下默认选择。
+      line_hint: 28
+- id: backprop
+  name: 反向传播
+  aliases:
+  - BP
+  - 误差反向传播
+  tags:
+  - 神经网络
+  - 训练
+  range:
+    start:
+      snippet: '## 反向传播'
+      line_hint: 30
+    end:
+      snippet: 但其原理仍是训练一切的基石。
+      line_hint: 39
+- id: loss
+  name: 损失函数
+  tags:
+  - 训练
+  - 组件
+  range:
+    start:
+      snippet: '## 损失函数'
+      line_hint: 41
+    end:
+      snippet: 从 MLP 继续延伸，见 [[embedding|词嵌入]] 与 [[cnn|卷积神经网络]] 页面。
+      line_hint: 51
+links:
+- anchor_text: activation
+  targets:
+  - activation
+  edge_type: reference
+  instances:
+  - line: 5
+  - line: 49
+  source_id: perceptron
+- anchor_text: loss
+  targets:
+  - loss
+  edge_type: reference
+  instances:
+  - line: 15
+  source_id: mlp
+- anchor_text: backprop
+  targets:
+  - backprop
+  edge_type: reference
+  instances:
+  - line: 15
+  - line: 28
+  source_id: mlp
+- anchor_text: supervised
+  targets:
+  - supervised
+  edge_type: reference
+  instances:
+  - line: 15
+  source_id: mlp
+- anchor_text: logistic-regression
+  targets:
+  - logistic-regression
+  edge_type: reference
+  instances:
+  - line: 49
+  source_id: loss
+- anchor_text: embedding
+  targets:
+  - embedding
+  edge_type: reference
+  instances:
+  - line: 51
+  source_id: loss
+- anchor_text: cnn
+  targets:
+  - cnn
+  edge_type: reference
+  instances:
+  - line: 51
+  source_id: loss

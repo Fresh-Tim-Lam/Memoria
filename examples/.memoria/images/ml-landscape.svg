@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="400" viewBox="0 0 960 400" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+  <rect width="960" height="400" fill="#fafbfc"/>
+  <text x="480" y="36" text-anchor="middle" font-size="20" font-weight="700" fill="#1f2328">机器学习三大学习范式</text>
+  <rect x="40" y="70" width="270" height="250" rx="12" fill="#e8f1ff" stroke="#4a90d9" stroke-width="2"/>
+  <text x="175" y="104" text-anchor="middle" font-size="18" font-weight="700" fill="#1f4e9c">监督学习</text>
+  <text x="175" y="134" text-anchor="middle" font-size="13" fill="#34508a">带标签样本</text>
+  <text x="175" y="160" text-anchor="middle" font-size="13" fill="#34508a">回归 · 分类</text>
+  <rect x="175" y="184" width="0" height="0"/>
+  <text x="175" y="200" text-anchor="middle" font-size="12" fill="#6b7a99">线性回归 / 逻辑回归</text>
+  <text x="175" y="222" text-anchor="middle" font-size="12" fill="#6b7a99">决策树 / 随机森林 / GBDT</text>
+  <text x="175" y="244" text-anchor="middle" font-size="12" fill="#6b7a99">神经网络 · SVM</text>
+  <rect x="345" y="70" width="270" height="250" rx="12" fill="#e9f9ef" stroke="#3aa866" stroke-width="2"/>
+  <text x="480" y="104" text-anchor="middle" font-size="18" font-weight="700" fill="#1e6b3c">无监督学习</text>
+  <text x="480" y="134" text-anchor="middle" font-size="13" fill="#2f6b45">无标签数据</text>
+  <text x="480" y="160" text-anchor="middle" font-size="13" fill="#2f6b45">聚类 · 降维</text>
+  <text x="480" y="200" text-anchor="middle" font-size="12" fill="#55805f">K-Means / 层次聚类</text>
+  <text x="480" y="222" text-anchor="middle" font-size="12" fill="#55805f">PCA 主成分分析</text>
+  <text x="480" y="244" text-anchor="middle" font-size="12" fill="#55805f">词嵌入学习</text>
+  <rect x="650" y="70" width="270" height="250" rx="12" fill="#fff3e0" stroke="#e8962e" stroke-width="2"/>
+  <text x="785" y="104" text-anchor="middle" font-size="18" font-weight="700" fill="#8a4f10">强化学习</text>
+  <text x="785" y="134" text-anchor="middle" font-size="13" fill="#8a5a2a">智能体 · 环境</text>
+  <text x="785" y="160" text-anchor="middle" font-size="13" fill="#8a5a2a">奖励信号驱动</text>
+  <text x="785" y="200" text-anchor="middle" font-size="12" fill="#a07645">马尔可夫决策过程</text>
+  <text x="785" y="222" text-anchor="middle" font-size="12" fill="#a07645">策略梯度 / Q 学习</text>
+  <text x="175" y="356" text-anchor="middle" font-size="12" fill="#8a97a8">例子：房价预测 · 垃圾邮件分类</text>
+  <text x="480" y="356" text-anchor="middle" font-size="12" fill="#8a97a8">例子：用户分群 · 特征压缩</text>
+  <text x="785" y="356" text-anchor="middle" font-size="12" fill="#8a97a8">例子：棋类博弈 · 机器人控制</text>
+  <path d="M 310 195 H 345" stroke="#9aa7b8" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+  <path d="M 615 195 H 650" stroke="#9aa7b8" stroke-width="2" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9aa7b8"/>
+    </marker>
+  </defs>
+</svg>

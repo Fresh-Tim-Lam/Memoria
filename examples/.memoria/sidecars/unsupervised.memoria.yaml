@@ -1,0 +1,112 @@
+schema_version: 1
+file: unsupervised.md
+knowledge_points:
+- id: unsupervised
+  name: 无监督学习概览
+  tags:
+  - 无监督
+  - 概览
+  range:
+    start:
+      snippet: '## 无监督学习概览'
+      line_hint: 1
+    end:
+      snippet: 或降维后的信息保留率。
+      line_hint: 5
+- id: clustering
+  name: 聚类
+  tags:
+  - 无监督
+  - 任务
+  range:
+    start:
+      snippet: '## 聚类'
+      line_hint: 7
+    end:
+      snippet: 这也是无监督问题的通性。
+      line_hint: 11
+- id: kmeans
+  name: K-Means 聚类
+  aliases:
+  - K-Means
+  - K均值
+  tags:
+  - 聚类
+  - 算法
+  range:
+    start:
+      snippet: '## K-Means 聚类'
+      line_hint: 13
+    end:
+      snippet: 实践上用 K-Means++ 初始化并多次运行取最优。
+      line_hint: 21
+- id: hierarchical
+  name: 层次聚类
+  tags:
+  - 聚类
+  - 算法
+  range:
+    start:
+      snippet: '## 层次聚类'
+      line_hint: 23
+    end:
+      snippet: 不适合超大数据。
+      line_hint: 27
+- id: pca
+  name: 主成分分析
+  aliases:
+  - PCA
+  - 降维
+  tags:
+  - 降维
+  - 算法
+  range:
+    start:
+      snippet: '## 主成分分析'
+      line_hint: 29
+    end:
+      snippet: 无监督得到的低维表示也常作为 [[supervised|监督学习]] 的输入特征。
+      line_hint: 39
+links:
+- anchor_text: clustering
+  targets:
+  - clustering
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: unsupervised
+- anchor_text: pca
+  targets:
+  - pca
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: unsupervised
+- anchor_text: kmeans
+  targets:
+  - kmeans
+  edge_type: extend
+  instances:
+  - line: 11
+  source_id: clustering
+- anchor_text: hierarchical
+  targets:
+  - hierarchical
+  edge_type: extend
+  instances:
+  - line: 11
+  source_id: clustering
+- anchor_text: linear-regression
+  targets:
+  - linear-regression
+  edge_type: reference
+  instances:
+  - line: 37
+  source_id: pca
+- anchor_text: supervised
+  targets:
+  - supervised
+  edge_type: reference
+  instances:
+  - line: 39
+  source_id: pca

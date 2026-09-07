@@ -118,11 +118,10 @@ python app.py
 .\scripts\run_dev.ps1
 ```
 
-Click **Open Knowledge Base** and pick any folder of Markdown files. To try it right away, open one of the bundled sample knowledge bases:
+Click **Open Knowledge Base** and pick any folder of Markdown files. To try it right away, open the bundled official showcase knowledge base (machine-learning intro; covers styles, images, links, search):
 
 ```
-docs\example\examples\           # RL / LLM topics (53 nodes with links and graph)
-docs\example\rich-content-test\  # rich-content syntax samples (math / images / Mermaid / highlighters)
+examples\    # Official showcase: 35 knowledge points, cross-page links, images, aliases
 ```
 
 Want a standalone exe? Run `.\packaging\build_release.cmd`; output goes to `Package\Memoria.exe`.

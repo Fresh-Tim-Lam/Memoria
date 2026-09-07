@@ -1,0 +1,124 @@
+schema_version: 1
+file: deep-learning.md
+knowledge_points:
+- id: embedding
+  name: 词嵌入
+  aliases:
+  - Word Embedding
+  - 向量表示
+  tags:
+  - 表示学习
+  - NLP
+  range:
+    start:
+      snippet: '## 词嵌入'
+      line_hint: 1
+    end:
+      snippet: 见 [[unsupervised|无监督学习]] 的表示学习分支。
+      line_hint: 5
+- id: cnn
+  name: 卷积神经网络
+  aliases:
+  - CNN
+  - 卷积网络
+  tags:
+  - 架构
+  - 视觉
+  range:
+    start:
+      snippet: '## 卷积神经网络'
+      line_hint: 7
+    end:
+      snippet: 处理文本顺序时，人们转向 [[rnn|循环神经网络]]。
+      line_hint: 11
+- id: rnn
+  name: 循环神经网络
+  aliases:
+  - RNN
+  - 循环网络
+  tags:
+  - 架构
+  - 序列
+  range:
+    start:
+      snippet: '## 循环神经网络'
+      line_hint: 13
+    end:
+      snippet: 注意力机制的登场改变了这一局面。
+      line_hint: 17
+- id: attention
+  name: 注意力机制
+  aliases:
+  - Attention
+  - 自注意力
+  - 注意力
+  tags:
+  - 架构
+  - NLP
+  - 核心
+  range:
+    start:
+      snippet: '## 注意力机制'
+      line_hint: 19
+    end:
+      snippet: 直接催生了 [[transformer|Transformer]]。
+      line_hint: 27
+- id: transformer
+  name: Transformer
+  aliases:
+  - Transformer 架构
+  - 变换器
+  tags:
+  - 架构
+  - 核心
+  range:
+    start:
+      snippet: '## Transformer'
+      line_hint: 29
+    end:
+      snippet: 主线一直是“更强的特征交互 + 更大的容量 + 更稳的训练”。
+      line_hint: 43
+links:
+- anchor_text: attention
+  targets:
+  - attention
+  edge_type: reference
+  instances:
+  - line: 5
+  source_id: embedding
+- anchor_text: unsupervised
+  targets:
+  - unsupervised
+  edge_type: reference
+  instances:
+  - line: 5
+  source_id: embedding
+- anchor_text: mlp
+  targets:
+  - mlp
+  edge_type: reference
+  instances:
+  - line: 11
+  - line: 43
+  source_id: cnn
+- anchor_text: rnn
+  targets:
+  - rnn
+  edge_type: extend
+  instances:
+  - line: 11
+  source_id: cnn
+- anchor_text: backprop
+  targets:
+  - backprop
+  edge_type: reference
+  instances:
+  - line: 15
+  source_id: rnn
+- anchor_text: transformer
+  targets:
+  - transformer
+  edge_type: extend
+  instances:
+  - line: 27
+  source_id: attention

@@ -1,0 +1,95 @@
+schema_version: 1
+file: tree-ensemble.md
+knowledge_points:
+- id: decision-tree
+  name: 决策树
+  tags:
+  - 算法
+  - 可解释
+  range:
+    start:
+      snippet: '## 决策树'
+      line_hint: 1
+    end:
+      snippet: 把噪声学进分支——解决思路是 [[ensemble|集成学习]]。
+      line_hint: 20
+- id: ensemble
+  name: 集成学习
+  tags:
+  - 方法
+  - 组合
+  range:
+    start:
+      snippet: '## 集成学习'
+      line_hint: 22
+    end:
+      snippet: 也与“把多模型结果平均”的朴素思路一脉相承。
+      line_hint: 26
+- id: random-forest
+  name: 随机森林
+  aliases:
+  - Random Forest
+  tags:
+  - 集成
+  - 算法
+  - Bagging
+  range:
+    start:
+      snippet: '## 随机森林'
+      line_hint: 28
+    end:
+      snippet: 几乎不需要调参，对[[feature-engineering|特征缩放]]也不敏感。
+      line_hint: 32
+- id: gbdt
+  name: 梯度提升树
+  aliases:
+  - GBDT
+  - 梯度提升
+  tags:
+  - 集成
+  - 算法
+  - Boosting
+  range:
+    start:
+      snippet: '## 梯度提升树'
+      line_hint: 34
+    end:
+      snippet: 再用 [[model-eval|评估与诊断]] 的方法做细粒度对比。
+      line_hint: 47
+links:
+- anchor_text: ensemble
+  targets:
+  - ensemble
+  edge_type: reference
+  instances:
+  - line: 20
+  source_id: decision-tree
+- anchor_text: random-forest
+  targets:
+  - random-forest
+  edge_type: extend
+  instances:
+  - line: 26
+  - line: 38
+  source_id: ensemble
+- anchor_text: gbdt
+  targets:
+  - gbdt
+  edge_type: extend
+  instances:
+  - line: 26
+  source_id: ensemble
+- anchor_text: feature-engineering
+  targets:
+  - feature-engineering
+  edge_type: reference
+  instances:
+  - line: 32
+  source_id: random-forest
+- anchor_text: model-eval
+  targets:
+  - model-eval
+  edge_type: reference
+  instances:
+  - line: 47
+  source_id: gbdt

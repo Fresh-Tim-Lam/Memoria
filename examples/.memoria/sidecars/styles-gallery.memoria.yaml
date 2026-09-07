@@ -1,0 +1,157 @@
+schema_version: 1
+file: styles-gallery.md
+knowledge_points:
+- id: markup-gallery
+  name: 样式与文本演示
+  tags:
+  - 图鉴
+  - 样式
+  range:
+    start:
+      snippet: '## 样式与文本演示'
+      line_hint: 1
+    end:
+      snippet: 3. [[rl-intro|强化学习]]
+      line_hint: 31
+- id: image-gallery
+  name: 图片样式演示
+  tags:
+  - 图鉴
+  - 图片
+  range:
+    start:
+      snippet: '## 图片样式演示'
+      line_hint: 33
+    end:
+      snippet: '![机器学习三大学习范式](./.memoria/images/ml-landscape.svg "width=300,align=left,name=hide'
+      line_hint: 55
+- id: link-patterns
+  name: 链接与关系模式
+  tags:
+  - 图鉴
+  - 图谱
+  range:
+    start:
+      snippet: '## 链接与关系模式'
+      line_hint: 57
+    end:
+      snippet: 'T-->>H: 图谱高亮联动回跳'
+      line_hint: 83
+- id: search-demo
+  name: 搜索与同义词演示
+  tags:
+  - 图鉴
+  - 搜索
+  range:
+    start:
+      snippet: '## 搜索与同义词演示'
+      line_hint: 86
+    end:
+      snippet: 模糊输入（如 `gbdt` 写小写）也由别名与检索策略兜底。
+      line_hint: 96
+links:
+- anchor_text: feature-engineering
+  targets:
+  - feature-engineering
+  edge_type: reference
+  instances:
+  - line: 20
+  source_id: markup-gallery
+- anchor_text: supervised
+  targets:
+  - supervised
+  edge_type: reference
+  instances:
+  - line: 29
+  - line: 67
+  - line: 69
+  source_id: markup-gallery
+- anchor_text: unsupervised
+  targets:
+  - unsupervised
+  edge_type: reference
+  instances:
+  - line: 30
+  - line: 67
+  source_id: markup-gallery
+- anchor_text: rl-intro
+  targets:
+  - rl-intro
+  edge_type: reference
+  instances:
+  - line: 31
+  - line: 67
+  source_id: markup-gallery
+- anchor_text: generalization
+  targets:
+  - generalization
+  edge_type: reference
+  instances:
+  - line: 61
+  - line: 69
+  source_id: link-patterns
+- anchor_text: ml-overview
+  targets:
+  - ml-overview
+  edge_type: reference
+  instances:
+  - line: 61
+  - line: 69
+  source_id: link-patterns
+- anchor_text: ensemble
+  targets:
+  - ensemble
+  edge_type: reference
+  instances:
+  - line: 62
+  source_id: link-patterns
+- anchor_text: random-forest
+  targets:
+  - random-forest
+  edge_type: extend
+  instances:
+  - line: 62
+  source_id: link-patterns
+- anchor_text: gbdt
+  targets:
+  - gbdt
+  edge_type: extend
+  instances:
+  - line: 62
+  - line: 94
+  source_id: link-patterns
+- anchor_text: model-eval
+  targets:
+  - model-eval
+  edge_type: reference
+  instances:
+  - line: 69
+  source_id: link-patterns
+- anchor_text: linear-regression
+  targets:
+  - linear-regression
+  edge_type: reference
+  instances:
+  - line: 90
+  source_id: search-demo
+- anchor_text: logistic-regression
+  targets:
+  - logistic-regression
+  edge_type: reference
+  instances:
+  - line: 91
+  source_id: search-demo
+- anchor_text: pca
+  targets:
+  - pca
+  edge_type: reference
+  instances:
+  - line: 92
+  source_id: search-demo
+- anchor_text: attention
+  targets:
+  - attention
+  edge_type: reference
+  instances:
+  - line: 93
+  source_id: search-demo

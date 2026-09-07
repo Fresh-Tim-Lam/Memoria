@@ -1,0 +1,149 @@
+schema_version: 1
+file: supervised.md
+knowledge_points:
+- id: supervised
+  name: 监督学习概览
+  tags:
+  - 监督学习
+  - 概览
+  range:
+    start:
+      snippet: '## 监督学习概览'
+      line_hint: 1
+    end:
+      snippet: 否则模型再精巧也无从衡量好坏。
+      line_hint: 3
+- id: linear-regression
+  name: 线性回归
+  aliases:
+  - 最小二乘回归
+  - 线性模型
+  tags:
+  - 回归
+  - 算法
+  range:
+    start:
+      snippet: '## 线性回归'
+      line_hint: 5
+    end:
+      snippet: 这正是 [[ml-overview|机器学习]] 中最先遇到的工程细节之一。
+      line_hint: 17
+- id: logistic-regression
+  name: 逻辑回归
+  aliases:
+  - 逻辑分类
+  - LR
+  tags:
+  - 分类
+  - 算法
+  range:
+    start:
+      snippet: '## 逻辑回归'
+      line_hint: 19
+    end:
+      snippet: 常作为深度模型的对照基线。
+      line_hint: 27
+- id: svm
+  name: 支持向量机
+  aliases:
+  - SVM
+  - 支持向量机算法
+  tags:
+  - 分类
+  - 算法
+  range:
+    start:
+      snippet: '## 支持向量机'
+      line_hint: 29
+    end:
+      snippet: 这是它与神经网络（局部最优，见 [[backprop|反向传播]]）的重要差异。
+      line_hint: 33
+- id: feature-engineering
+  name: 特征工程
+  tags:
+  - 预处理
+  - 方法
+  range:
+    start:
+      snippet: '## 特征工程'
+      line_hint: 35
+    end:
+      snippet: “垃圾进、垃圾出”是数据科学最朴素的告诫。
+      line_hint: 39
+- id: model-eval
+  name: 评估与诊断
+  tags:
+  - 评估
+  - 方法
+  range:
+    start:
+      snippet: '## 评估与诊断'
+      line_hint: 41
+    end:
+      snippet: 继续阅读 [[decision-tree|决策树与集成]] 与 [[perceptron|神经网络]] 页面。
+      line_hint: 57
+links:
+- anchor_text: feature-engineering
+  targets:
+  - feature-engineering
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: supervised
+- anchor_text: model-eval
+  targets:
+  - model-eval
+  edge_type: reference
+  instances:
+  - line: 3
+  source_id: supervised
+- anchor_text: ml-overview
+  targets:
+  - ml-overview
+  edge_type: reference
+  instances:
+  - line: 17
+  source_id: linear-regression
+- anchor_text: loss
+  targets:
+  - loss
+  edge_type: reference
+  instances:
+  - line: 27
+  source_id: logistic-regression
+- anchor_text: backprop
+  targets:
+  - backprop
+  edge_type: reference
+  instances:
+  - line: 33
+  source_id: svm
+- anchor_text: pca
+  targets:
+  - pca
+  edge_type: reference
+  instances:
+  - line: 37
+  source_id: feature-engineering
+- anchor_text: decision-tree
+  targets:
+  - decision-tree
+  edge_type: reference
+  instances:
+  - line: 39
+  - line: 57
+  source_id: feature-engineering
+- anchor_text: generalization
+  targets:
+  - generalization
+  edge_type: reference
+  instances:
+  - line: 45
+  source_id: model-eval
+- anchor_text: perceptron
+  targets:
+  - perceptron
+  edge_type: reference
+  instances:
+  - line: 57
+  source_id: model-eval
