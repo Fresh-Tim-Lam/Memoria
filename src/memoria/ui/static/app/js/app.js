@@ -11315,6 +11315,17 @@
     window.addEventListener("resize", () => {
       if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
     });
+    // 侧栏几何变化（UI 缩放 rem 重排、拖拽改宽、折叠/展开过渡）都会改变
+    // #-sidebar 的宽度，但并非每次都触发 window resize；用 ResizeObserver
+    // 直接观察侧栏盒子，任何尺寸变化都重算浮动按钮的 left，保证按钮始终
+    // 贴住侧栏右缘（此前 Ctrl+缩放下按钮不跟随）。
+    const sidebarEl = $("#-sidebar");
+    if (sidebarEl && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(() => {
+        if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
+      });
+      ro.observe(sidebarEl);
+    }
     _applySidebarCollapsed();
   }
 

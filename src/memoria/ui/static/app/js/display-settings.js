@@ -91,6 +91,10 @@
     // 不会像 zoom 那样"放大镜越界"。
     document.documentElement.style.fontSize =
       target === DEFAULTS.uiScale ? "" : 16 * target + "px";
+    // rem 基准变化会重排侧栏等以 rem 定宽的元素，但其几何变化不会触发
+    // window resize；主动派发一次，让监听方（侧栏收起按钮对齐、图谱容器等）
+    // 按新的布局重算（如 #-sidebar 右缘 → sidebar-collapse-btn 的 left）。
+    window.dispatchEvent(new Event("resize"));
   }
 
   function applyAll() {
