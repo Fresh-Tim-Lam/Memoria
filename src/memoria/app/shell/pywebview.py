@@ -174,9 +174,44 @@ def _own_top_level_windows():
     return handles
 
 
+def _win_texts(hwnd: int) -> tuple[str, str]:
+    """返回顶层窗口 (类名, 标题)，失败时 ('?', '')。"""
+    import ctypes
+    from ctypes import wintypes
+
+    user32 = ctypes.windll.user32
+    title = ctypes.create_unicode_buffer(256)
+    cls = ctypes.create_unicode_buffer(128)
+    try:
+        user32.GetWindowTextW(hwnd, title, 256)
+        user32.GetClassNameW(hwnd, cls, 128)
+    except Exception:  # noqa: BLE001
+        return "?", ""
+    return cls.value or "?", title.value or ""
+
+
+def _own_main_windows() -> list[int]:
+    """本进程中应用主窗口句柄：WindowsForms10 类 + 标题含 Memoria。
+
+    只认 pywebview BrowserForm 主窗口；GDI+ Hook Window、.NET-Broadcast
+    EventWindow、IME/MSCTF 等系统辅助窗口一律排除 —— 它们正常应保持
+    隐藏，强制 Show 会把它们弹出成多余窗口。
+    """
+    out: list[int] = []
+    for h in _own_top_level_windows():
+        cls, title = _win_texts(h)
+        if cls.startswith("WindowsForms10") and "Memoria" in title:
+            out.append(h)
+    return out
+
+
 def _force_window_show(_native=None) -> bool:
-    """兜底显示：native 可用则直接用其句柄；否则枚举本进程顶层窗口。
-    任一不可见窗口 Show(SW_SHOW)+置前即视为执行了 Show。"""
+    """兜底显示：只针对应用主窗口，绝不碰系统辅助窗口。
+
+    native 可用则直接用其句柄（BrowserForm）；否则按
+    WindowsForms10 + 标题含 Memoria 匹配主窗口。任一不可见主窗口
+    Show(SW_SHOW)+置前即视为执行了 Show。
+    """
     import ctypes
     from ctypes import wintypes
 
@@ -193,7 +228,7 @@ def _force_window_show(_native=None) -> bool:
         except Exception:  # noqa: BLE001
             targets = []
     if not targets:
-        targets = _own_top_level_windows()
+        targets = _own_main_windows()
 
     shown_any = False
     for hwnd in targets:
@@ -260,29 +295,26 @@ def _watch_window_visible(window) -> None:
     注意：不要在这里调 window.show() —— pywebview 的 show() 被 @_shown_call
     包装，内部会 events.shown.wait(20)；一旦窗口因故障从未 shown，show() 会
     阻塞 20 秒，使兜底轮询失效。这里只走纯 Win32（EnumWindows + ShowWindow），
-    不依赖 shown 事件。每 0.5s 枚举本进程顶层窗口：存在不可见主窗口 → 强制
-    Show+置前并结束；全部可见（正常态）→ 立即结束；40s 仍无任何顶层窗口
-    → 落结论行（说明 create_window 阶段就失败，需看 run 早期诊断）。
+    不依赖 shown 事件，且只针对应用主窗口（WindowsForms10 + Memoria 标题），
+    绝不 Show GDI+/Broadcast/IME 等系统辅助窗口。每 0.5s 轮询：主窗口出现且
+    不可见 → 强制 Show+置前并结束；主窗口可见（正常态）→ 立即结束；40s 仍
+    无主窗口 → 落结论行（说明 create_window 阶段就失败，需看 run 早期诊断）。
     """
     import time as _t
 
     _diag("watch start")
     for i in range(80):
         _t.sleep(0.5)
-        try:
-            wins = _own_top_level_windows()
-        except Exception:  # noqa: BLE001
-            continue
-        if not wins:
-            continue  # 窗口尚未创建，继续等
-        # 存在不可见窗口 → 已执行 Show（_force_window_show 返回 True）
+        if not _own_main_windows():
+            continue  # 主窗口尚未创建，继续等
+        # 存在不可见主窗口 → 已执行 Show（_force_window_show 返回 True）
         if _force_window_show(None):
             _diag(f"watch forced_shown=1 t={(i + 1) // 2}s")
             return
-        # 有顶层窗口且全部可见 → 正常，无需兜底
-        _diag(f"watch all_visible t={(i + 1) // 2}s n={len(wins)}")
+        # 主窗口已可见 → 正常，无需兜底
+        _diag(f"watch main_visible t={(i + 1) // 2}s")
         return
-    _diag("watch no-top-level-windows t=40s")
+    _diag("watch no-main-window t=40s")
 
 
 def _own_window_info() -> list[str]:
@@ -291,22 +323,15 @@ def _own_window_info() -> list[str]:
     from ctypes import wintypes
 
     user32 = ctypes.windll.user32
-    user32.GetWindowTextW.argtypes = [wintypes.HWND, ctypes.c_wchar_p, ctypes.c_int]
-    user32.GetWindowTextW.restype = ctypes.c_int
-    user32.GetClassNameW.argtypes = [wintypes.HWND, ctypes.c_wchar_p, ctypes.c_int]
-    user32.GetClassNameW.restype = ctypes.c_int
     user32.IsWindowVisible.restype = wintypes.BOOL
     user32.IsWindowVisible.argtypes = [wintypes.HWND]
 
     out: list[str] = []
     for h in _own_top_level_windows():
         try:
-            title = ctypes.create_unicode_buffer(256)
-            cls = ctypes.create_unicode_buffer(128)
-            user32.GetWindowTextW(h, title, 256)
-            user32.GetClassNameW(h, cls, 128)
+            cls, title = _win_texts(h)
             vis = int(user32.IsWindowVisible(ctypes.c_void_p(h)))
-            out.append(f"0x{h:x}:{cls.value or '?'}:vis={vis}:{title.value or ''}")
+            out.append(f"0x{h:x}:{cls}:vis={vis}:{title}")
         except Exception:  # noqa: BLE001
             continue
     return out
