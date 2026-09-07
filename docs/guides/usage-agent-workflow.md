@@ -169,9 +169,9 @@ edges: []
   - 按领域/章节建子目录，可多级嵌套（如 `MachineLearning/ReinforcementLearning/DDPG/`、`英语/词汇/外交`）
   - 导入时由 frontmatter `path` 字段直接指定（如 `path: MachineLearning/Basics`），目录自动创建，sidecar 同步镜像；未指定 `path` 的段落根目录
   - 组织原则：同主题文件进同一目录；目录名语义化；避免根目录散落文件；hub/README 文件可置于根目录
-- **Hub 页**：知识库较大时创建 1 个概览文件（如 `README.md` 或 `overview.md`），用链接串起主要 KP 作为阅读入口（示例：官方展示库 `examples/README.md` 即 Hub 首页）
+- **Hub 页**：知识库较大时创建 1 个概览文件（如 `README.md` 或 `overview.md`），用链接串起主要 KP 作为阅读入口（示例：官方展示库 `docs/example/showcase/README.md` 即 Hub 首页）
 
-> **完整落地示例**：`docs/example/example-english-kb/`（仅本地保留，不入 GitHub；GitHub 展示集为根 `examples/` 官方库）是「角色 A 平面文件（docs/sessions/AgentAnswer.md，两批会话记录）→ 导入 → 知识库文件夹」的成品——9 个 md + 9 个 sidecar，图谱 40 节点 23 边。每段单一主题、相关 KP 互链，导入引擎自动剥离批次围栏与对话噪音。可直接用 Memoria「打开」该目录查看。
+> **完整落地示例**：`docs/example/example-english-kb/`（仅本地保留，不入 GitHub；GitHub 展示集为 `docs/example/showcase/` 官方库）是「角色 A 平面文件（docs/sessions/AgentAnswer.md，两批会话记录）→ 导入 → 知识库文件夹」的成品——9 个 md + 9 个 sidecar，图谱 40 节点 23 边。每段单一主题、相关 KP 互链，导入引擎自动剥离批次围栏与对话噪音。可直接用 Memoria「打开」该目录查看。
 
 ### 4.8 交付前验证
 
@@ -224,7 +224,7 @@ edges: []
 ### 6.3 每次知识库任务的收尾动作
 
 - 检查本文件 §2/§4/§5 是否覆盖你本次实际遇到的全部规则，缺则补
-- 若你为某规则新增了示例：展示级样例落到根 `examples/`（官方展示库）；测试/导入夹具落到 `docs/example/import-test/`；历史样例（example-boonie 等）仅存本地不入库
+- 若你为某规则新增了示例：展示级样例落到 `docs/example/showcase/`（官方展示库）；测试/导入夹具落到 `docs/example/import-test/`；历史样例（example-boonie 等）仅存本地不入库
 
 ---
 

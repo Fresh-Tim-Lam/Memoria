@@ -121,7 +121,7 @@ python app.py
 打开后点击「打开知识库」，选择任意 Markdown 目录即可开始；想先体验，可以直接打开仓库内**官方展示样例库**（机器学习导论，覆盖样式文本/图片/链接/搜索演示）：
 
 ```
-examples\    # 官方展示样例：35 个知识点、跨页链接、图片资产与搜索别名
+docs\example\showcase\    # 官方展示样例：35 个知识点、跨页链接、图片资产与搜索别名
 ```
 
 需要离线打包成独立 exe？运行 `.\packaging\build_release.cmd`，产物在 `Package\Memoria.exe`。

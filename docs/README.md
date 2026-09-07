@@ -15,7 +15,7 @@
 | `reference/` | 参考说明（understand：架构、术语、硬约束、功能机制） | [README.md](reference/README.md) |
 | `design/` | 设计文档与决策记录 | system-design.md、dicussion.md、designV0.md 等 |
 | `sessions/` | 历史对话记录（承接上下文，原 agents/） | 各会话文档 |
-| `example/` | 开发期样例/测试与本地知识库 | import-test/（夹具，入库）；其余本地样例与个人库仅存本地（GitHub 展示根 `examples/` 官方库） |
+| `example/` | 示例知识库容器：showcase/（官方展示，入库）与 import-test/（夹具，入库）；其余本地样例与个人库仅存本地 |
 | `refs/` | 开发参考资料 | [README.md](refs/README.md) |
 | `prompts/` | 提示词模板 | [README.md](prompts/README.md) |
 | `tmp/` | 少量诊断/调试记录 | 调试会话记录 |

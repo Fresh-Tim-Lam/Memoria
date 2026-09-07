@@ -121,7 +121,7 @@ python app.py
 Click **Open Knowledge Base** and pick any folder of Markdown files. To try it right away, open the bundled official showcase knowledge base (machine-learning intro; covers styles, images, links, search):
 
 ```
-examples\    # Official showcase: 35 knowledge points, cross-page links, images, aliases
+docs\example\showcase\    # Official showcase: 35 knowledge points, cross-page links, images, aliases
 ```
 
 Want a standalone exe? Run `.\packaging\build_release.cmd`; output goes to `Package\Memoria.exe`.

@@ -44,7 +44,7 @@ Package/
 | `resources/icons` → `resources/icons` | 必带 | 图标 |
 | `resources/agent-prompts` → `resources/agent-prompts` | **必带** | `get_agent_prompt`（程序内 Agent 整理提示词，单一事实源） |
 | `docs/reference`（白名单） → `resources/docs` | **必带** | `get_reference_doc`（弹窗"查看格式说明"，单一事实源） |
-| `examples` → `resources/examples` | **必带** | 官方展示样例库（机器学习导论，打开知识库试用；仅正文/侧车/图片随包，cache 等剔除） |
+| `docs/example/showcase` → `resources/examples` | **必带** | 官方展示样例库（机器学习导论，打开知识库试用；仅正文/侧车/图片随包，cache 等剔除） |
 
 - **必带清单**：`_REQUIRED_RELEASE_RESOURCES`；构建结束前 `_verify_release_resources()` 自检，缺失即终止构建。
 - **新增随包资源（目录/必带文件）的维护铁律**：① 在 `build.py` 登记表（或必带清单）登记 → ② 同步本表 → ③ 有需要时更新 `templates/README.release.txt` → ④ 构建后到 `Package/resources/` 自检。

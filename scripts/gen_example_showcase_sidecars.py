@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""生成官方展示样例库 examples/ 的 sidecar（links 与 KP range 行号自动校准）。
+"""生成官方展示样例库 docs/example/showcase/ 的 sidecar（links 与 KP range 行号自动校准）。
 
 背景：examples/ 正文链接使用 `[[kp-id|显示文本]]` 形式。图谱链接审计
 (src/memoria/graph/link_audit.py) 以「正文 target_id == sidecar links[].anchor_text」
@@ -25,7 +25,7 @@ import yaml  # noqa: E402
 from memoria.services.link_resolver import scan_wikilinks  # noqa: E402
 from memoria.storage.markdown import strip_frontmatter  # noqa: E402
 
-KB = ROOT / "examples"
+KB = ROOT / "docs" / "example" / "showcase"
 SIDECAR_DIR = KB / ".memoria" / "sidecars"
 SNIPPET_MAX = 80
 

@@ -34,6 +34,7 @@ def default_examples_dir() -> Path | None:
         resources_dir() / "examples",
         install_root() / "examples",
         repo_root() / "examples",
+        repo_root() / "docs" / "example" / "showcase",
     ):
         if candidate.is_dir():
             return candidate

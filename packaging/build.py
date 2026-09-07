@@ -170,14 +170,13 @@ def _stage_runtime_resources() -> None:
       **必须**随包；漏拷会导致发布态功能缺失。
     - resources/docs（白名单 _REFERENCE_DOC_BUNDLE）：弹窗"查看格式说明"（get_reference_doc）
       发布态读取；**必须**随包。
-    - examples：官方展示样例库（机器学习导论），随包分发供用户打开试用；**必须**随包
-      （正文/侧车/图片随包，运行时产物剔除）。
+    - examples：官方展示样例库（docs/example/showcase，机器学习导论），随包分发
+      供用户打开试用；**必须**随包（正文/侧车/图片随包，运行时产物剔除）。
     """
     targets = [
         (ROOT / "resources" / "icons", RELEASE_RES / "icons", None),
         (ROOT / "resources" / "agent-prompts", RELEASE_RES / "agent-prompts", None),
-        (ROOT / "examples", RELEASE_RES / "examples", EXAMPLES_IGNORE),
-        (ROOT / "example-boonie", RELEASE_RES / "example-boonie", EXAMPLES_IGNORE),
+        (ROOT / "docs" / "example" / "showcase", RELEASE_RES / "examples", EXAMPLES_IGNORE),
     ]
     for src, dest, ignore in targets:
         if src.is_dir():

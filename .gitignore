@@ -60,13 +60,17 @@ docs/example/**/*.log
 docs/example/**/.memoria/cache/
 docs/example/**/.memoria/pending.yaml
 docs/example/**/.memoria/images/
-# 官方展示样例库（examples/，机器学习导论）运行时产物（不入库；sidecars 与图片资产入库展示）
-examples/.memoria/cache/
-examples/.memoria/pending.yaml
-examples/.memoria/pending.yaml.bak
-examples/.memoria/images/registry.json
-examples/.build/
-# 本地保留样例/个人知识库（GitHub 仅展示 examples/ 官方库；文件保留本地不提交）
+# 官方展示样例库（docs/example/showcase，机器学习导论）运行时产物（不入库；
+# sidecars 与图片资产入库展示；manifest.yaml 入库作基线）
+docs/example/showcase/.memoria/cache/
+docs/example/showcase/.memoria/pending.yaml
+docs/example/showcase/.memoria/pending.yaml.bak
+docs/example/showcase/.memoria/images/registry.json
+docs/example/showcase/.build/
+# 豁免上面的通用图片忽略，仅放行本库图片资产（其余 docs/example 图片仍不入库）
+!docs/example/showcase/.memoria/images/
+!docs/example/showcase/.memoria/images/*.svg
+# 本地保留样例/个人知识库（GitHub 仅展示 docs/example/showcase 官方库；文件保留本地不提交）
 docs/example/AAA_KnowledgeBase/
 docs/example/AAA_Vocab/
 docs/example/example-boonie/
@@ -79,7 +83,7 @@ docs/example/generate_html_v2.py
 docs/example/人工智能导论知识点汇总*/
 docs/example/*.html
 docs/example/*.zip
-# 本地试用知识库（仅官方样例与 import-test 夹具入库，保护本地隐私，见 import-plan.md M5.3）
+# 本地试用知识库（仅官方 showcase 与 import-test 夹具入库，保护本地隐私，见 import-plan.md M5.3）
 docs/example/empty*/
 docs/example/导入test/
 docs/example/行政法/

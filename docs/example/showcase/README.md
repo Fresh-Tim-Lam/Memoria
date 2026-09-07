@@ -13,7 +13,7 @@ description: Memoria 官方展示样例库——机器学习导论
 3. 打开“知识检查”面板执行一次完整性校验，或命令行运行：
 
 ```bash
-python -m memoria.cli.main validate examples
+python -m memoria.cli.main validate docs/example/showcase
 ```
 
 ## 内容地图（阅读路径）
