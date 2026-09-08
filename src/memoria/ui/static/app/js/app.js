@@ -9244,6 +9244,57 @@
           openLinkEditorFromSelection(t, { preselectLines: info.lines }),
         onCreateKp: ({ text: t, lines }) => openAssistFromSelection({ text: t, lines }),
         onApplyStyle: (formatType, color) => applyFormat(formatType, color),
+        // 右键"高光/字体颜色"：不关闭当前右键菜单，在其旁侧展开工具栏同款预设色下拉
+        // （右侧优先，放不下放左侧，再不行放菜单下方），选色应用到右键时捕获的选区
+        onPickStyle: (fmt, x, y) => {
+          closeAllDropdowns();
+          const ddBtn = document.querySelector(
+            `.-fmt-dropdown > .-fmt-btn[data-fmt="${fmt}"]`
+          );
+          const dd = ddBtn ? ddBtn.closest(".-fmt-dropdown") : null;
+          if (!dd) {
+            applyFormat(fmt, fmt === "highlight" ? "yellow" : "red");
+            return;
+          }
+          dd.classList.add("open");
+          const menu = dd.querySelector(".-fmt-dropdown-menu");
+          if (!menu) return;
+          const mw = menu.offsetWidth;
+          const mh = menu.offsetHeight;
+          const ctx = document.getElementById("-link-context-menu");
+          let left = x;
+          let top = y;
+          if (ctx) {
+            const cr = ctx.getBoundingClientRect();
+            top = Math.max(4, cr.top);
+            const rightX = cr.right + 6;
+            if (rightX + mw <= window.innerWidth - 4) {
+              left = rightX;
+            } else {
+              const leftX = cr.left - mw - 6;
+              if (leftX >= 4) {
+                left = leftX;
+              } else {
+                left = Math.max(4, cr.left);
+                top = cr.bottom + 6;
+              }
+            }
+          }
+          if (top + mh > window.innerHeight) {
+            if (ctx) {
+              const cr = ctx.getBoundingClientRect();
+              top = Math.max(4, cr.top - mh - 4);
+            } else {
+              top = Math.max(4, y - mh - 4);
+            }
+          }
+          menu.style.position = "fixed";
+          menu.style.left = `${Math.max(4, left)}px`;
+          menu.style.right = "auto";
+          menu.style.top = `${Math.max(4, top)}px`;
+          menu.style.bottom = "auto";
+          menu.style.zIndex = "100000";
+        },
       });
     });
   }

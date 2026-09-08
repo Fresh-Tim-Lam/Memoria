@@ -61,7 +61,8 @@ window.MemoriaLinkContextMenu = (function () {
       if (!it.disabled) {
         row.addEventListener("click", (e) => {
           e.stopPropagation();
-          hide();
+          // keepMenu 项（如"展开颜色下拉"）不关闭当前菜单，方便用户反悔点其它项
+          if (!it.keepMenu) hide();
           it.action();
         });
       }
@@ -179,12 +180,28 @@ window.MemoriaLinkContextMenu = (function () {
     ];
 
     if (ctx.onApplyStyle) {
+      const mx = e.clientX;
+      const my = e.clientY;
       items.push(
         { divider: true },
         { label: L("menu.bold"), action: () => ctx.onApplyStyle("bold") },
         { label: L("menu.italic"), action: () => ctx.onApplyStyle("italic") },
-        { label: L("menu.highlight"), action: () => ctx.onApplyStyle("highlight", "yellow") },
-        { label: L("menu.fontColor"), action: () => ctx.onApplyStyle("fontcolor", "red") },
+        {
+          label: L("menu.highlight"),
+          keepMenu: true,
+          action: () =>
+            ctx.onPickStyle
+              ? ctx.onPickStyle("highlight", mx, my)
+              : ctx.onApplyStyle("highlight", "yellow"),
+        },
+        {
+          label: L("menu.fontColor"),
+          keepMenu: true,
+          action: () =>
+            ctx.onPickStyle
+              ? ctx.onPickStyle("fontcolor", mx, my)
+              : ctx.onApplyStyle("fontcolor", "red"),
+        },
       );
     }
 
