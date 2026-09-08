@@ -71,6 +71,7 @@
 | 2026-09-04 | i18n.md / i18n-inventory.md | 图谱/检索设置页整文件接入（graph-settings.js + graph-label.js + search-settings.js，71 候选清零，三文件退出清单）；新增 `graph.settings.*`/`graph.sample.*`/`graph.labelModes.*`/`search.settings.*`，`SAMPLE_GRAPH` 改 `buildSampleGraph()` |
 | 2026-09-04 | collaboration.md | 新增 §0「通用协作规则（存疑对齐，适用于所有场景）」：存疑即停先问后做、反问须具体带选项/推荐、先用尽自解手段再问、对齐后按结果执行、低风险事务不阻塞（guides/，登记 guides/README 指引清单现有条目内，无新文件） |
 | 2026-09-04 | i18n.md / i18n-inventory.md / scan_ui_strings.py / js/* | i18n 收尾改为「app.js 拆分 + 随拆分同步 i18n」专项：扫描器剔除规则修订；导入流程抽为 `js/import-flow.js`（`window.MemoriaApp` 门面 + boot init）；其余拆分候选顺序依可行性修订（搜索→图片→KB 检查→文件树→取色器/画笔） |
+| 2026-09-08 | export-plan.md | 新增：导出功能设计文档（design/，草稿待评审）。范围=知识库包（kb_bundle）导出（导入 §4C 逆过程）；R12/R14/PDF 明确非本期；含产物规格/RPC/UI/阶段与打开问题 |
 
 ### 4.3 定期整理约定
 

@@ -11,6 +11,7 @@
 | 文件 | 用途 |
 |------|------|
 | [role-a-content-agent.md](role-a-content-agent.md) | 角色 A（内容生成 Agent）完整手册：任务提示词 + 平面文件格式规范 + 整理/分批规则 + 输出格式 + 自检清单与冲突处理。取代原 knowledge-organizer-prompt.md |
+| [new-project-init-prompt.md](new-project-init-prompt.md) | 新项目初始化提示词：开启新仓库时让 Agent 快速搭出目录骨架 + 每目录/文件职责规范 + AGENT.md + docs 规范体系（范式提炼自本项目，可跨项目复用） |
 
 ## 约定
 

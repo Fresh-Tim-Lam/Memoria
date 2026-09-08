@@ -11,6 +11,7 @@
 | File | Purpose |
 |------|------|
 | [role-a-content-agent.md](role-a-content-agent.md) | Complete manual for Role A (content generation Agent): task prompt + flat-file format conventions + organization/batching rules + output format + self-check checklist and conflict handling. Replaces the former knowledge-organizer-prompt.md |
+| [new-project-init-prompt.md](new-project-init-prompt.md) | New-project bootstrap prompt: when starting a fresh repository, ask the Agent to scaffold the directory skeleton + per-folder/file responsibility conventions + AGENT.md + the docs conventions system (pattern distilled from this project; reusable across projects) |
 
 ## Conventions
 
