@@ -1,16 +1,20 @@
 ---
 description: 机器学习是什么、三大学习范式与泛化问题——官方展示库的入口概念页
 concepts:
-  - id: ml-overview
-    name: 机器学习
-    weight: 1.0
-    tags: [导论, 核心概念]
-  - id: generalization
-    name: 泛化与过拟合
-    weight: 0.8
-    tags: [导论, 核心概念, 评估]
+- id: ml-overview
+  name: 机器学习
+  weight: 1.0
+  tags:
+  - 导论
+  - 核心概念
+- id: generalization
+  name: 泛化与过拟合
+  weight: 0.8
+  tags:
+  - 导论
+  - 核心概念
+  - 评估
 ---
-
 ## 机器学习
 
 机器学习是让计算机**从数据中自动学习规律**、而不是由人逐条编写规则的一类方法。一个典型流程是：收集样本 → 用算法拟合模型 → 用模型对未知输入做预测。

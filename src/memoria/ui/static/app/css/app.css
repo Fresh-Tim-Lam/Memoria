@@ -4427,3 +4427,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     opacity: 0.45;
     cursor: default;
 }
+/* 颜色下拉 hover 预览：临时隐藏选区高亮，露出临时底色（仅 hover 预览期间，见 app.js _applyColorTint） */
+#preview.-color-tinting ::selection {
+    background: transparent;
+}

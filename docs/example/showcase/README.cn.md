@@ -12,7 +12,6 @@ description: Memoria 官方展示样例库——机器学习导论
 1. 在 Memoria 中把知识库根目录设为 **`examples/`**（本文件夹）。
 2. 从任意一页开始阅读；点击正文中的蓝色链接在知识点之间跳转，左侧知识面板会同步高亮。
 3. 打开“知识检查”面板执行一次完整性校验，或命令行运行：
-
 ```bash
 python -m memoria.cli.main validate docs/example/showcase
 ```

@@ -9047,9 +9047,23 @@
     function applyStyle(formatType, color, range, forceApply) {
       if (!_isSupportedFormat(formatType)) return { ok: false, message: T("cfg.style.unsupportedType") };
       log("STYLE", "applyStyle fmt=" + formatType + " color=" + (color || "null") + (forceApply ? " force=apply" : ""));
+      // 点击应用 debug：选区将先经 domToAst 定位到 AST 节点（_extract 打印 cursor/middle），
+      // 单段走 _commitSingleStyle（改写该 inline 树并提交源码行），跨段走 _commitMultiStyle
+      console.log("[APPLY] fmt=" + formatType + " color=" + (color || "null") +
+        " range=" + (typeof _describeRange === "function" ? _describeRange(range) : String(range)));
 
       var single = _extractSelectionMiddle(range);
-      if (single) return _commitSingleStyle(single, formatType, color, forceApply);
+      if (single) {
+        console.log("[APPLY] single blockIndex=" + single.blockIndex +
+          " blockType=" + (single.block && single.block.type) +
+          " start=" + _fmtCursor(single.start) +
+          " beforeN=" + (single.before || []).length +
+          " middleN=" + (single.middle || []).length +
+          " afterN=" + (single.after || []).length +
+          " middle=" + _fmtNodes(single.middle));
+        return _commitSingleStyle(single, formatType, color, forceApply);
+      }
+      console.log("[APPLY] multi: range → _commitMultiStyle（跨块或多块）");
       return _commitMultiStyle(formatType, color, range, forceApply);
     }
 
@@ -9356,16 +9370,16 @@
   /* ── Format toolbar ── */
   let _pendingPreviewRange = null;
 
-  /** 在 mousedown 阶段捕获预览区非折叠选区（点击工具栏按钮会导致 contenteditable 失焦） */
+  /** 在 mousedown 阶段捕获预览区非折叠选区（点击按钮会导致 contenteditable 失焦）。
+   *  只在拿到有效选区时才写入 _pendingPreviewRange，绝不把已有捕获清掉——
+   *  否则第一次点击后失焦，第二次点击会因 pending 丢失而误入笔刷模式。 */
   function capturePreviewSelection() {
     const sel = window.getSelection();
     const preview = $("#preview");
-    if (!sel || !sel.rangeCount || !preview) { _pendingPreviewRange = null; return; }
+    if (!sel || !sel.rangeCount || !preview) return;
     const range = sel.getRangeAt(0);
-    if (range.collapsed || !preview.contains(range.startContainer) || !preview.contains(range.endContainer)) {
-      _pendingPreviewRange = null;
-      return;
-    }
+    if (range.collapsed) return;
+    if (!preview.contains(range.startContainer) || !preview.contains(range.endContainer)) return;
     _pendingPreviewRange = range.cloneRange();
   }
 
@@ -9402,6 +9416,177 @@
     }
     log("STYLE", "getPreviewSelectionRange -> null (no non-collapsed selection in preview)");
     return null;
+  }
+
+  // ── 颜色下拉 hover 实时预览：临时给选区文本包色 span，不改源码/AST，移出即恢复 ──
+  // 稳定性设计：不依赖"实时选区在我们 split/unwrap 后仍不变"这一脆弱前提。
+  // 捕获一次锚点 =（所在 .-src-block + 块内字符偏移）。hover 期间我们只增删文本节点
+  // 缝（span），块元素与其文本长度恒定，故每次 hover 都从锚点重建出同一段 Range。
+  // 每次清理后把实时选区还原到锚点，保证点击应用时拿到的仍是原始那段文字。
+  let _tintSpans = [];
+  let _tintAnchor = null; // { startBlock, startChar, endBlock, endChar }
+
+  /** 找到 node 所在的渲染块（.-src-block）；找不到则退回 #preview */
+  function _tintBlockOf(node) {
+    let el = node && node.nodeType === 1 ? node : (node && node.parentElement);
+    while (el && el !== document.body) {
+      if (el.classList && el.classList.contains("-src-block")) return el;
+      el = el.parentElement;
+    }
+    return null;
+  }
+
+  /** 边界点 (container, offset) 在其所在块文本中的字符位置（块文本 start → 边界 的 toString 长度） */
+  function _tintCharOffsetOf(blockEl, container, offset) {
+    if (!blockEl || !container || !blockEl.contains(container)) return -1;
+    const r = document.createRange();
+    r.selectNodeContents(blockEl);
+    try {
+      r.setStart(blockEl, 0);
+      r.setEnd(container, offset);
+    } catch (_) {
+      return -1;
+    }
+    return r.toString().length;
+  }
+
+  /** 按块内字符位置反查 (文本节点, 节点内偏移)；位置恰在节点尾时锚在该节点尾 */
+  function _tintTextAtOffset(blockEl, targetChar) {
+    const walker = document.createTreeWalker(blockEl, NodeFilter.SHOW_TEXT);
+    let acc = 0;
+    let last = null;
+    let lastLen = 0;
+    while (walker.nextNode()) {
+      const n = walker.currentNode;
+      const len = n.data.length;
+      last = n;
+      lastLen = len;
+      if (targetChar < acc + len) return { node: n, off: targetChar - acc };
+      if (targetChar === acc + len) return { node: n, off: len };
+      acc += len;
+    }
+    if (targetChar === acc && last) return { node: last, off: lastLen };
+    return null;
+  }
+
+  /** 从当前实时/捕获选区建立锚点（只在尚未建锚且 DOM 未被我方改动时调用） */
+  function _captureTintAnchor() {
+    _tintAnchor = null;
+    const preview = $("#preview");
+    if (!preview) return null;
+    const r = getPreviewSelectionRange();
+    if (!r || r.collapsed) return null;
+    const sb = _tintBlockOf(r.startContainer) || preview;
+    const eb = _tintBlockOf(r.endContainer) || preview;
+    const sc = _tintCharOffsetOf(sb, r.startContainer, r.startOffset);
+    const ec = _tintCharOffsetOf(eb, r.endContainer, r.endOffset);
+    if (sc < 0 || ec < 0) return null;
+    _tintAnchor = { startBlock: sb, startChar: sc, endBlock: eb, endChar: ec };
+    return _tintAnchor;
+  }
+
+  /** 按锚点重建当前 DOM 上的 Range（块内只可能多出相邻文本节点缝，不影响字符位置） */
+  function _tintAnchorRange() {
+    const a = _tintAnchor;
+    if (!a) return null;
+    if (!a.startBlock.isConnected || !a.endBlock.isConnected) { _tintAnchor = null; return null; }
+    const st = _tintTextAtOffset(a.startBlock, a.startChar);
+    const en = _tintTextAtOffset(a.endBlock, a.endChar);
+    if (!st || !en) return null;
+    const r = document.createRange();
+    try {
+      r.setStart(st.node, st.off);
+      r.setEnd(en.node, en.off);
+    } catch (_) {
+      return null;
+    }
+    if (r.collapsed) return null;
+    return r;
+  }
+
+  /** 把实时选区还原为锚点对应的文字（removeAllRanges 后立即 addRange，选区不消失） */
+  function _restoreTintSelection() {
+    const r = _tintAnchorRange();
+    if (!r) return;
+    const sel = window.getSelection();
+    if (!sel) return;
+    try {
+      sel.removeAllRanges();
+      sel.addRange(r);
+    } catch (_) { /* noop */ }
+  }
+
+  function _dropTintAnchor() {
+    _tintAnchor = null;
+  }
+
+  function _clearColorTint() {
+    const hadSpans = _tintSpans.length > 0;
+    for (const el of _tintSpans) {
+      const parent = el.parentNode;
+      if (parent) {
+        while (el.firstChild) parent.insertBefore(el.firstChild, el);
+        parent.removeChild(el);
+      }
+    }
+    _tintSpans = [];
+    // 不做 normalize：合并相邻文本节点会让浏览器把 range 端点挪到元素级（实测选区漂移）。
+    // 保留拆分缝无害（相邻文本节点渲染/映射与合并前等价），且端点始终留在文本节点内。
+    const preview = $("#preview");
+    if (preview) preview.classList.remove("-color-tinting");
+    // 我方刚拆过 DOM 时，把实时选区还原到锚点，避免漂移影响下一次 hover/点击应用
+    if (hadSpans && _tintAnchor) _restoreTintSelection();
+  }
+
+  function _applyColorTint(colorCss, applyAs = "backgroundColor") {
+    _clearColorTint();
+    const preview = $("#preview");
+    if (!preview) return;
+    if (!_tintAnchor) _captureTintAnchor();
+    const r = _tintAnchorRange();
+    if (!r) return;
+    const root =
+      r.commonAncestorContainer.nodeType === 1
+        ? r.commonAncestorContainer
+        : r.commonAncestorContainer.parentNode;
+    if (!root || !preview.contains(root)) return;
+    preview.classList.add("-color-tinting");
+    // 先收集受影响的文本节点与偏移（处理过程中会 splitText，range 会失效，须先取数）
+    const jobs = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (!r.intersectsNode(node) || !node.data) continue;
+      let s = 0;
+      let e = node.length;
+      if (node === r.startContainer) s = r.startOffset;
+      if (node === r.endContainer) e = r.endOffset;
+      if (e <= s) continue;
+      jobs.push({ node, s, e });
+    }
+    const spans = [];
+    for (const j of jobs) {
+      // splitText 语义：mid = [s, len)，再切出 seg=[e, len)，mid 即选区段 [s, e)。
+      // 只在必要时切分，避免 splitText(0)/splitText(len) 产生空文本节点——
+      // 空节点会把 range 端点顶到元素级，导致第二次 hover 起选区漂移
+      let mid = j.node;
+      if (j.s > 0) mid = j.node.splitText(j.s);
+      const wrap = document.createElement("span");
+      wrap.style[applyAs] = colorCss;
+      if (j.e < j.node.length) {
+        const seg = mid.splitText(j.e - j.s);
+        seg.parentNode.insertBefore(wrap, seg);
+      } else {
+        mid.parentNode.insertBefore(wrap, mid.nextSibling);
+      }
+      wrap.appendChild(mid);
+      spans.push(wrap);
+    }
+    _tintSpans = spans;
+    // 包完 span 后立即把实时选区还原到锚点文字（其边界此刻可能悬在临时 span 上）
+    if (spans.length) _restoreTintSelection();
+    console.log("[TINT] spans=" + spans.length + " texts=" +
+      spans.map((sp) => JSON.stringify(sp.textContent)).join(","));
   }
 
   /** 切换格式按钮/色块的 active 状态 */
@@ -9522,11 +9707,24 @@
   }
 
   function bindFormatToolbar() {
-    // 捕获阶段记录预览区选区，避免点击按钮后选区丢失
-    const fmtBar = document.querySelector(".-format-bar");
-    if (fmtBar && !fmtBar.dataset.selectionGuardBound) {
-      fmtBar.dataset.selectionGuardBound = "1";
-      fmtBar.addEventListener("mousedown", capturePreviewSelection, true);
+    // 全局 mousedown（捕获阶段）维护预览区选区捕获：
+    // - 按在预览区外（工具栏/右键菜单/色板下拉）：捕获实时选区，防止按钮点击后 contenteditable 失焦丢失
+    // - 按在预览区内：用户将新建选区/光标，作废此前捕获
+    if (!window.__previewSelDocGuard) {
+      window.__previewSelDocGuard = 1;
+      document.addEventListener(
+        "mousedown",
+        (e) => {
+          const preview = $("#preview");
+          if (!preview) return;
+          if (preview.contains(e.target)) {
+            if (_pendingPreviewRange) _pendingPreviewRange = null;
+            return;
+          }
+          capturePreviewSelection();
+        },
+        true
+      );
     }
     // B and I buttons（已有选区→应用/切换；无选区→进入画笔模式）
     document.querySelectorAll(".-fmt-btn[data-fmt]").forEach((btn) => {
@@ -9566,6 +9764,13 @@
           armBrush("highlight", color);
         }
       });
+      // hover 实时预览：仅临时给选区文本着色（不改源码/AST），移出色块即恢复
+      sw.addEventListener("mouseenter", () => {
+        if (hasExistingSelection()) {
+          _applyColorTint(getComputedStyle(sw).backgroundColor);
+        }
+      });
+      sw.addEventListener("mouseleave", _clearColorTint);
     });
     // Font color swatches（已有选区→直接应用；无选区→进入画笔模式）
     document.querySelectorAll(".-fc-swatch").forEach((sw) => {
@@ -9579,6 +9784,13 @@
           armBrush("fontcolor", color);
         }
       });
+      // hover 实时预览：仅临时给选区文字染色（不改源码/AST），移出色块即恢复
+      sw.addEventListener("mouseenter", () => {
+        if (hasExistingSelection()) {
+          _applyColorTint(getComputedStyle(sw).backgroundColor, "color");
+        }
+      });
+      sw.addEventListener("mouseleave", _clearColorTint);
     });
     // 移除样式（无色）
     document.querySelectorAll("[data-hl-none]").forEach((btn) => {
@@ -9614,11 +9826,11 @@
     // Close dropdowns on outside click
     document.addEventListener("click", () => closeAllDropdowns());
     // 窗口尺寸变化时重新定位已打开的下拉菜单
-    if (!fmtBar || !fmtBar.dataset.resizeBound) {
+    if (!window.__previewResizeBound) {
+      window.__previewResizeBound = 1;
       window.addEventListener("resize", () => {
         document.querySelectorAll(".-fmt-dropdown.open").forEach((dd) => positionDropdown(dd));
       });
-      if (fmtBar) fmtBar.dataset.resizeBound = "1";
     }
   }
 
@@ -10002,6 +10214,9 @@
   }
 
   function closeAllDropdowns() {
+    // 收起下拉时一并清除 hover 预览的临时着色，并丢弃选区锚点（下拉已关，旧锚点不再适用）
+    _clearColorTint();
+    _dropTintAnchor();
     document.querySelectorAll(".-fmt-dropdown.open").forEach((d) => d.classList.remove("open"));
   }
 
@@ -10282,6 +10497,8 @@
   }
 
   async function applyFormat(formatType, color) {
+    // 点击色块前先移除 hover 预览的临时着色，避免干扰真实应用
+    _clearColorTint();
     if (!state.currentPath) return;
     log("STYLE", "applyFormat fmt=" + formatType + " color=" + (color || "null") + " path=" + state.currentPath);
 
