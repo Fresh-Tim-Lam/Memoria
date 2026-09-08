@@ -356,7 +356,6 @@ window.MemoriaImageTools = (function () {
         : `<span class="-img-tag -img-tag-unused">${T("img.tagUnused")}</span>`;
       const refTxt = im.referenced ? T("img.refsUsed", { files: refs.join(sep) }) : T("img.refsUnused");
       html += `<div class="-image-card" data-rel="${esc(im.relPath)}" data-name="${esc(im.name)}" data-referenced="${im.referenced ? 1 : 0}">
-        <img class="-image-card-thumb" src="/files/${esc(im.relPath)}" alt="${esc(im.name)}" loading="lazy">
         <div class="-image-card-info">
           <div class="-image-card-name" title="${esc(im.name)}">${esc(im.name)}${tag}</div>
           <div class="-image-card-meta">${fmtImageSize(im.size || 0)}</div>
@@ -369,6 +368,19 @@ window.MemoriaImageTools = (function () {
       </div>`;
     }
     grid.innerHTML = html;
+    // WebView2 缺陷：凡经整串 innerHTML 解析出来的 <img> 都可能进入"已加载(natural>0)
+    // 却不绘制"的卡死状态，且重排/样式微扰/事后补 src 均无效；实测只有用 new Image()
+    // 创建并连接后再赋 src 的图能正常绘制。因此卡片模板不含 <img>，插入后用 DOM API
+    // 逐个创建缩略图挂到卡片头部（data-rel 即 .memoria/images 相对路径）。
+    grid.querySelectorAll(".-image-card").forEach((card) => {
+      const rel = card.getAttribute("data-rel");
+      if (!rel) return;
+      const im = new Image();
+      im.className = "-image-card-thumb";
+      im.alt = card.getAttribute("data-name") || "";
+      im.src = "/files/" + rel;
+      card.insertBefore(im, card.firstChild);
+    });
   }
 
   function onImageCardAction(e) {
