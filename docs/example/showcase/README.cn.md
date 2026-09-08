@@ -1,7 +1,6 @@
 ---
 description: Memoria 官方展示样例库——机器学习导论
 ---
-
 [English](README.md) | 中文
 
 # Memoria 官方展示样例库：机器学习导论
