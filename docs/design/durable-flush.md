@@ -1,6 +1,6 @@
 # 持久化 flush 屏障（durable_flush）设计方案
 
-> 状态：**草稿（待评审）**，2026-09-09。
+> 状态：**已评审锁定**（2026-09-09，待 G4 施工），决策见 §9。
 > 关联：[maintenance-jobs.md](./maintenance-jobs.md)（作业模型/登记表）；[to-dolist.md §12](../to-dolist.md)（G4/M6a 门禁）；[maintenance-benchmark.md](./maintenance-benchmark.md)（A/B 依据）。
 > A/B 依据：[results/compare_ae66a012_d1894ba1.md](../scripts/benchmark/maintenance/results/compare_ae66a012_d1894ba1.md)（2 轮 ABBA：base 158.6ms vs HEAD 180.5ms，**+13.8%**）。
 
@@ -27,7 +27,7 @@
 
 ```text
 编辑 → 自动保存(save_document: tmp+replace, 记入 dirty 集)
-   → [显式保存 | 切文件 | 关库 | 退出] 屏障
+   → [停止输入约 3s 防抖兜底] 或 [显式保存 | 切文件 | 关库 | 退出] 屏障
        → durable_flush 作业: 对 dirty 集逐个 fsync → 清空
 ```
 
@@ -78,9 +78,10 @@
 | manifest 批量 | 连续保存 N 次：manifest 只落盘 1 次（计数断言）；文件可读 | PASS |
 | 回归冒烟 | rename-test / showcase 临时副本全流程 | PASS 后再 commit `G4` |
 
-## 9. 打开问题（评审拍板后才施工）
+## 9. 决策记录（2026-09-09 已评审锁定）
 
-- **Q1** 显式"保存"是否必须即时 fsync？（建议：是，保证用户语义）
-- **Q2** manifest 批量采用方案 A（并入屏障）还是 A+B（防抖兜底）？（建议 A+B）
-- **Q3** 自动保存与屏障间的掉电窗口是否需要 UI 提示（脏标记/未持久化角标），还是维持静默？
-- **Q4** barrier 默认 fsync 模式切换的版本策略：随 G4 一次切换，还是先保留 `MEMORIA_FSYNC_MODE` 开关一段时间？
+- **Q1** 显式"保存"（若存在该入口）即时 fsync，保证"已保存=已落盘"；**自动保存不即时 fsync**，只做候选写。知识点创建等 RPC 不引入 fsync 等待（KP 创建关窗/等待不变）。
+- **Q2** manifest 批量 = **A+B**：平时只改内存 entries，屏障统一写一次；另设防抖兜底（长 idle 补一次）。
+- **Q3** 不设 UI 提示：正文自动保存后约 **3s 防抖 fsync 兜底**，把掉电窗口收敛到 ≤~3s 级别，正常使用无感。
+- **Q4** G4 施工即切默认 barrier，保留 `MEMORIA_FSYNC_MODE=inline|barrier` 开关供 A/B 回归。
+- 附：fsync 防抖兜底计时常量（建议 `SAVE_FLUSH_IDLE_MS ≈ 3000`）在施工时定稿；屏障/兜底均由 `durable_flush` 作业合并执行（同批一次刷 dirty 集）。
