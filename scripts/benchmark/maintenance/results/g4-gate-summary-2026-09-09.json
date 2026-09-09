@@ -1,0 +1,33 @@
+{
+  "kind": "g4-gate-summary",
+  "recorded_at": "2026-09-09",
+  "status": "G4 收口（C4 拆分后续项，仅可行性讨论）",
+  "items": {
+    "M6a_durable_flush": {
+      "status": "PASS（用户拍板）",
+      "evidence": ["results/durable-flush-2026-09-09.json", "真机 idle3s flushed1/manifest1/14.99ms", "切文件屏障 1.91ms", "崩溃注入 15/15", "回归冒烟 PASS", "inline 89.35→barrier 24.62ms(-72.5%)"]
+    },
+    "M3_lexical_background": {
+      "status": "PASS（真机）",
+      "evidence": ["results/m3-lexical-background-2026-09-09.json", "检索一致（立即/连建均命中）", "rpc 340.5→260~320ms", "回归冒烟 PASS"]
+    },
+    "M6b_range_live": {
+      "status": "PASS（真机）",
+      "evidence": ["单测 15/15（m6b_adjust_test.js）", "源码/预览结构编辑即时解析 resolve_kp_ranges（420ms 回写）+ 保存校正兜底", "用户确认已修"]
+    },
+    "regression": {
+      "tool": "scripts/benchmark/maintenance/regression_smoke_m6a.py",
+      "result": "PASS"
+    }
+  },
+  "deferred": {
+    "C4_graph_partial_refresh": {
+      "note": "已拆独立后续项（可行性讨论，见下）",
+      "feasibility": {
+        "choke_points": ["KP 保存/改名/删除后前端 loadGraphData()+applyGraphGroupLayout({relayout:true}) 全量重建（app.js L11895/11901/11644 等）", "graph-engine.loadPayload 整体替换 nodes/links（graph-engine.js L62）", "2D/3D 视图各自消费 load 并整图重排"],
+        "approach": ["graph-engine 增 applyDelta(delta)：按 id 增/删/改节点与边，保留未变节点位置", "视图仅局部 draw（不整图 force），新增节点用小组局部布局（如围绕其边邻居安置）", "后端 get_graph_delta 或复用单文件相关边推导减少扫描", "门禁：对照同操作下增量 vs 全量 的 draw/relayout 耗时与视觉一致"],
+        "risk": ["2D/3D 两视图布局/摄像机耦合", "分组(computeGraphGroups)与过滤在增量下的状态一致性", "跨文件反向链接变化仍可能需按文件粒度增量"]
+      }
+    }
+  }
+}

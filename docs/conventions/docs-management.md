@@ -82,6 +82,7 @@
 | 2026-09-09 | G4 M6a 施工 + 设计锁定 | durable-flush 决策锁定（Q1–Q4）；施工：save_document barrier 默认（`MEMORIA_FSYNC_MODE` 开关）+ `durable_flush` RPC + manifest 模块 pending overlay（读侧一致、任一写/屏障批量落盘）+ 前端 3s 防抖/切文件/关库/退出屏障；冒烟 PASS；实测 inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；to-dolist §12 G4/E7 更新 |
 | 2026-09-09 | G4 M3 + G3 收口 | G3 门禁通过（VM 全 PASS + 真机陈旧丢弃/queued=0，tag `maint-g3`）；M3 词法索引后台化（锁+合并 daemon，写路径不阻塞；search/切库/关库 wait）；results/m3-lexical-background-2026-09-09.json；to-dolist G3/G4/E8 更新 |
 | 2026-09-09 | M6b 施工 | M6b 拍板：KP 创建/更新保持内联不入队；正文编辑行号范围实时同步（app.js：M6b 辅助函数 + Enter 区域并入/顺延、行前插空行吸收、Backspace/Delete 删行收缩；hover 高亮与列表行号实时更新，保存后端 resync 权威校正）；单测 15/15（scripts/benchmark/maintenance/m6b_adjust_test.js）；to-dolist G4/E9、jobs.md kp_create 同步 |
+| 2026-09-09 | G4 收口 + C4 拆分 | M6b 迭代：预览 AST 引擎补 `adjustKpRangesAfterSpanReplace` + 即时权威解析 RPC `resolve_kp_ranges`（前端 420ms 回写）+ 每次保存后静默校正（不再仅 resync>0）→ 真机通过。G4 出口汇总 results/g4-gate-summary-2026-09-09.json；C4 图谱局部刷新拆独立后续项（engine.applyDelta 方案要点与风险）；快照 tag `maint-g4` |
 
 ### 4.3 定期整理约定
 
