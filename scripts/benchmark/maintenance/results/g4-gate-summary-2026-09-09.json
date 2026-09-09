@@ -21,13 +21,15 @@
     }
   },
   "deferred": {
-    "C4_graph_partial_refresh": {
-      "note": "已拆独立后续项（可行性讨论，见下）",
+    "C4_graph_incremental_update": {
+      "name_correction": "原「图谱局部刷新/增量渲染」表述不准确——帧绘制本身是整体的（Canvas/WebGL 每帧整帧绘制，SVG/DOM 每次全量重排），无法逐元素只画一角。修正为「图谱增量更新」：增量的是布局与数据，不是绘制。",
       "feasibility": {
-        "choke_points": ["KP 保存/改名/删除后前端 loadGraphData()+applyGraphGroupLayout({relayout:true}) 全量重建（app.js L11895/11901/11644 等）", "graph-engine.loadPayload 整体替换 nodes/links（graph-engine.js L62）", "2D/3D 视图各自消费 load 并整图重排"],
-        "approach": ["graph-engine 增 applyDelta(delta)：按 id 增/删/改节点与边，保留未变节点位置", "视图仅局部 draw（不整图 force），新增节点用小组局部布局（如围绕其边邻居安置）", "后端 get_graph_delta 或复用单文件相关边推导减少扫描", "门禁：对照同操作下增量 vs 全量 的 draw/relayout 耗时与视觉一致"],
-        "risk": ["2D/3D 两视图布局/摄像机耦合", "分组(computeGraphGroups)与过滤在增量下的状态一致性", "跨文件反向链接变化仍可能需按文件粒度增量"]
-      }
+        "choke_points": ["KP 保存/改名/删除后前端 loadGraphData()+applyGraphGroupLayout({relayout:true}) 全量重建（app.js L11895/11901/11644 等）", "graph-engine.loadPayload 整体替换 nodes/links（graph-engine.js L62）", "2D/3D 视图各自消费 load 并整图重排", "分组 computeGraphGroups / 过滤 / audit 全量重算"],
+        "approach": ["引擎增 applyDelta(delta)：按 id 增/改/删节点与边；未变节点保留坐标，不做全图 force 迭代，仅对受影响子图做少量局部松弛", "数据层：先全量 get_graph_data 在前端 diff（先验证渲染层收益），后续上后端 get_graph_delta（按文件/反向链接增量推导，砍扫描）", "分组/过滤/audit 仅对变化集重算", "帧绘制保持整体（每帧照常画全部），收益体现在 relayout/数据重建耗时下降与未变节点坐标稳定，而非帧内逐元素绘制"],
+        "metric": "对照同操作下 全量 relayout/重建 vs 增量更新 的耗时与未变节点坐标位移（不应以帧绘制次数为指标）",
+        "risk": ["2D/3D 两视图布局/摄像机耦合", "分组缓存与过滤在增量下的一致性", "跨文件反向链接变化仍可能需按文件粒度增量"]
+      },
+      "suggested_steps": ["S1 引擎 applyDelta 数据层 + 2D 视图（保留位置/局部布局）", "S2 3D 视图", "S3 分组/audit 一致性", "S4 后端 delta RPC + L1 对照"]
     }
   }
 }
