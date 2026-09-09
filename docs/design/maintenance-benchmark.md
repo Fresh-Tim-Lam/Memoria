@@ -43,9 +43,10 @@
 
 1. 同一语料（确定性再生成）在同一台机器、同环境变量。
 2. 每组基准 = warmup 1 次 + 采样 N（默认 5）次，输出 median/p95/raw。
-3. 对照对：先 `ae66a012`(基线，无 scheduler) vs `f5be88bf`(有 scheduler/C2)；后续每完成一项（如 M3 索引作业化）追加一对 `改前 vs 改后`。
-4. 汇总为 `benchmarks/maintenance/summary.md` 表格：指标 | 改前 | 改后 | 变化% | 结论(通过/回退)。
-5. **门禁规则**：凡"改善"类提交，需附该对照表；无对照或出现关键指标回退（如 save_p95 上升、longtask 增加）→ 打回。
+3. **改造前基线（已锚定）**：`results/baseline_ae66a012.{json,md}`（commit `ae66a012`，tag `maint-base`），由 `scripts/benchmark/maintenance/anchor_baseline.py` 生成（确定性语料 200 文件/599 KP/333 links；外部计时 `save_document`，median≈123ms）。语料 digest 见该文件。
+4. **改造后采集**：同一台机跑 `anchor_baseline.py --sha <改造后commit>` → 产出 `results/baseline_<sha>.json`；口径差异（内部分项 `bench_ms` vs 外部总时）在 md 中注明以便对齐。
+5. 汇总为 `scripts/benchmark/maintenance/results/summary.md` 表格：指标 | 改前(引用 baseline) | 改后 | 变化% | 结论(通过/回退)。
+6. **门禁规则**：凡"改善"类提交，需附该对照表；无对照或出现关键指标回退（如 save_p95 上升、longtask 增加）→ 打回。基线文件与 tag 用于防"开发堆积后无法还原开发前数据"。
 
 ## 6. 仪器化缺口（实现时补）
 
@@ -56,6 +57,7 @@
 
 ## 6.5 实现状态（2026-09-09）
 
+- B0 ✅ 改造前基线已锚定：`results/baseline_ae66a012.{json,md}`（tag `maint-base`），语料 digest `756f3cc3…`，save median≈123ms / p95≈200ms（60 次采样）。
 - B1 ✅ `scripts/benchmark/maintenance/gen_maintenance_kb.py`：确定性（两次生成内容一致 PASS）、默认档 200 文件 / ~599 KP / 333 链接、range 可解析 PASS。
 - B2 ✅（部分）：scheduler counters + 旁路 PASS；save `bench_ms` PASS；PerformanceObserver 与 KP 创建时间戳待 B4/B2 后续。
 - B3–B6：未开始。
