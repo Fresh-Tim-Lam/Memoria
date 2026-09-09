@@ -194,6 +194,13 @@
 
 > 目的：把「知识库数据一致性 + 维护作业」类机制/任务统一登记为施工总表，据此敲定施工计划。
 > 状态标记沿用文件头约定。关联设计：[maintenance-jobs.md](design/maintenance-jobs.md)（维护作业/静默同步，草稿）、[export-plan.md](design/export-plan.md)（导出，草稿）。
+>
+> **设计取向（2026-09-09 用户确立）：有意借鉴操作系统手段来组织维护机制**，把维护当作「任务/作业」而非一次性函数：
+> - 调度内核：优先级、去重（replace/merge）、idle 执行、epoch 陈旧丢弃、flush/旁路（见 G3、scheduler.js）；
+> - 写盘分级：缓存/缓冲 + 原子替换 + 延迟批量 fsync 屏障（durable flush，类 write-back 缓存/回写屏障，见 G4 M6a 与 [durable-flush.md](design/durable-flush.md)）；
+> - 后台化与合并：重活（词法索引）移出同步路径，daemon 线程 + 合并重建（G4 M3）；
+> - 时机/一致性：切文件/关库/退出为屏障点，前台即时响应、后台收尾（M6a/M6b/M3 均按此取舍）。
+> 后续任务立项与评审都以「是否符合该作业化/屏障语义」为考量；jobs.md 与阶段门禁沿此口径登记。
 
 ### A. 一致性 / 注册内核
 
