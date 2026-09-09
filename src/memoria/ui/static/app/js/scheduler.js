@@ -26,6 +26,15 @@
   var _running = false;
   var _seq = 0;
   var _epoch = 0;
+  var _counters = { scheduled: 0, executed: 0, merged: 0, dropped: 0, queue_max: 0 };
+
+  function trackQueue() {
+    if (QUEUE.length > _counters.queue_max) _counters.queue_max = QUEUE.length;
+  }
+
+  function isBypass() {
+    return !!(g.__BENCH_DISABLE_SCHEDULER);
+  }
 
   function tag(j) {
     return j.kind + (j.key ? ":" + j.key : "");
@@ -77,6 +86,19 @@
       log("schedule 忽略（无 run）: " + tag(j));
       return null;
     }
+    // 基准旁路（__BENCH_DISABLE_SCHEDULER=1）：退化回“立即同步执行”，用于 A/B 对照“没有调度”的路径
+    if (isBypass()) {
+      _counters.scheduled += 1;
+      _counters.executed += 1;
+      log("旁路执行 " + tag(j) + " #" + j.id);
+      try {
+        var pr = j.run({ kind: j.kind, key: j.key, id: j.id });
+        if (pr && typeof pr.then === "function") pr.catch(function () { /* noop */ });
+      } catch (err) {
+        log("旁路失败 " + tag(j) + ": " + (err && err.message ? err.message : err));
+      }
+      return j.id;
+    }
     var dk = tag(j);
     // 合并语义：replace=true → 顶替同键 queued 旧作业；replace=false → 同键已在队则忽略新作业
     if (j.replace) {
@@ -84,6 +106,7 @@
         if (QUEUE[i].status === "queued" && tag(QUEUE[i]) === dk) {
           QUEUE[i].status = "dropped";
           QUEUE.splice(i, 1);
+          _counters.merged += 1;
           log("合并(顶替) " + dk);
         }
       }
@@ -92,6 +115,7 @@
         return q.status === "queued" && tag(q) === dk;
       });
       if (exists) {
+        _counters.merged += 1;
         log("合并(忽略新) " + dk + " #" + j.id);
         return QUEUE.filter(function (q) {
           return q.status === "queued" && tag(q) === dk;
@@ -99,6 +123,8 @@
       }
     }
     QUEUE.push(j);
+    _counters.scheduled += 1;
+    trackQueue();
     log("入队 " + dk + " #" + j.id + " prio=" + j.priority + " queue=" + QUEUE.length);
     pump();
     return j.id;
@@ -125,12 +151,15 @@
         var j = _pick();
         if (!j) break;
         QUEUE.shift();
+        trackQueue();
         if (j.dropStale && j.gen < _epoch) {
           j.status = "dropped";
+          _counters.dropped += 1;
           log("陈旧丢弃 " + tag(j) + " (gen " + j.gen + " < " + _epoch + ")");
           continue;
         }
         j.status = "running";
+        _counters.executed += 1;
         log("执行 " + tag(j) + " #" + j.id);
         try {
           await j.run({ kind: j.kind, key: j.key, id: j.id });
@@ -160,6 +189,18 @@
       epoch: _epoch,
     };
   }
+  function counters() {
+    return {
+      scheduled: _counters.scheduled,
+      executed: _counters.executed,
+      merged: _counters.merged,
+      dropped: _counters.dropped,
+      queue_max: _counters.queue_max,
+    };
+  }
+  function resetCounters() {
+    _counters = { scheduled: 0, executed: 0, merged: 0, dropped: 0, queue_max: 0 };
+  }
 
   g.MemoriaScheduler = {
     schedule: schedule,
@@ -167,5 +208,8 @@
     epoch: epoch,
     bumpEpoch: bumpEpoch,
     status: status,
+    counters: counters,
+    resetCounters: resetCounters,
+    isBypass: isBypass,
   };
 })(typeof window !== "undefined" ? window : globalThis);

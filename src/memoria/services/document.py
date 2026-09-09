@@ -287,19 +287,30 @@ class DocumentService:
         self._cache.pop(rel_norm, None)
         touch_manifest_entry(self.kb_path, rel_norm)
         # 保存后增量维护图片注册表（只重扫该文档；删除仅在用户显式触发时进行）
+        bench = os.environ.get("MEMORIA_BENCH_TIMING") == "1"
+        ms = {"registry": None, "resync": None}
+        t = time.perf_counter()
         try:
             self._update_registry_for_doc(rel_norm)
         except Exception:  # noqa: BLE001
             # 注册表维护失败不影响保存结果
             pass
+        if bench:
+            ms["registry"] = round((time.perf_counter() - t) * 1000, 2)
         # 保存后重新锚定 KP range：正文换行/行号漂移会导致 line_hint 失效甚至
         # end 锚点行被拆成两行而解析失败（识别失败）。见 _resync_kp_ranges_after_edit。
         resynced = 0
+        t = time.perf_counter()
         try:
             resynced = self._resync_kp_ranges_after_edit(rel_norm)
         except Exception:  # noqa: BLE001
             pass
-        return {"status": "ok", "ranges_resynced": resynced}
+        if bench:
+            ms["resync"] = round((time.perf_counter() - t) * 1000, 2)
+        result = {"status": "ok", "ranges_resynced": resynced}
+        if bench:
+            result["bench_ms"] = ms
+        return result
 
     _HEADING_RE = re.compile(r"^(#{1,6})\s+")
 
