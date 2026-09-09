@@ -7056,6 +7056,9 @@
         const ns = s === R ? Math.max(1, s - 1) : s;
         _kpSetLines(k, ns, Math.max(ns, e - 1));
       }
+      if (window.__bench) {
+        syncLog("[M6b] remove", JSON.stringify({ R, after: _kpList().map((k) => `${k.id}:${_kpStart(k)}-${_kpEnd(k)}`) }));
+      }
       refreshKpRangeUi();
     }
 
@@ -10890,7 +10893,12 @@
   }
 
   function highlightKpHover(kpId) {
+    state.hoveredKpId = kpId || null;
     const kp = (state.doc?.knowledge_points || []).find((k) => k.id === kpId);
+    if (window.__bench && kp) {
+      const rr = kp.range_resolved || {};
+      syncLog("[M6b] hover", JSON.stringify({ id: kpId, rr, hint: [kp.range?.start?.line_hint, kp.range?.end?.line_hint] }));
+    }
     const rr = kp?.range_resolved;
     if (!rr?.ok) return;
     document.querySelectorAll(".-line.kp-hover").forEach((el) => {
