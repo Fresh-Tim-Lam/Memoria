@@ -302,7 +302,7 @@
 - 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过，tool `scripts/benchmark/maintenance/scheduler_vm_test.js`）｜bumpEpoch `[真机]` 陈旧丢弃生效（✅ 证据：g3_probe dropped=1）｜`[job]` 日志 `queued=0` 收敛（✅ 证据：status queued=0）｜回归冒烟 PASS → **✅ G3 门禁通过（用户拍板 2026-09-09），快照见 tag `maint-g3`**
 
 **G4 · 作业化落地**
-- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 门禁通过 2026-09-09**）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜**M3 词法索引后台化**（**✅ 已施工 2026-09-09**：锁+合并 daemon 重建，`_write_sidecar` 不再同步重建；search/切库/关库前 wait 保证一致，results/m3-lexical-background-2026-09-09.json；待真机验证）｜**M6b KP 区域行号范围实时同步**（**✅ 已施工 2026-09-09**：源码编辑 Enter 在区域内并入新行/区域外顺延、行前插空行、Backspace/Delete 删行收缩；前端增量调整 KP range+高亮/列表行号实时更新，保存后由后端 resync 权威校正；单测 15/15，tool `m6b_adjust_test.js`；待真机）｜C4 图谱局部刷新
+- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 门禁通过 2026-09-09**）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜**M3 词法索引后台化**（**✅ 真机验证通过 2026-09-09**：锁+合并 daemon 重建，`_write_sidecar` 不再同步重建；检索一致、rpc 340.5→260~320ms，results/m3-lexical-background-2026-09-09.json）｜**M6b KP 区域行号范围实时同步**（**✅ 真机通过 2026-09-09**：源码 Enter 并入/删行收缩 + 预览块替换平移 + 即时权威解析 RPC `resolve_kp_ranges`（停手 420ms 回写）+ 保存后校正兜底；单测 15/15）｜C4 图谱局部刷新
 - 入口：G3 门禁通过（作业底座就绪）
 - 出口门禁：M6a 屏障对照（fsync 内联 vs 屏障批量：L1 median Δ 显著下降；切文件/关库屏障后数据可读）｜manifest 批量：连续保存只触发 1 次落盘｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
 
