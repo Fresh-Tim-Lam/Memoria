@@ -246,6 +246,7 @@
 | E4 | docs-management / to-dolist 修订登记 | ✅（2026-09-09 复核补登记 to-dolist §12 行） |
 | E5 | L2 KP 创建链路归因闭环：前端插桩 + 后端克隆计时工具 trace_kp_confirm.py + results 记录（归因 pending 同步，B5 修复对照） | ✅ 2026-09-09 |
 | E6 | L1 保存路径回退归因：2 轮 ABBA（base 158.6 vs HEAD 180.5，+13.8%）→ diff 定位 M1 fsync；分项剖析 trace_save_document.py（manifest_touch ~50ms 为大头）→ 决策 fsync flush 屏障化 + manifest 批量（jobs.md 登记，G4 M6a） | ✅ 2026-09-09 |
+| E7 | G4 M6a 施工：durable_flush（barrier 默认 + RPC + 前端屏障）+ manifest 模块 pending overlay；实测 save median inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；冒烟 PASS；待真机/崩溃注入/门禁 | ✅ 2026-09-09（施工完成，待门禁） |
 
 ### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
 
@@ -299,7 +300,7 @@
 - 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过）｜bumpEpoch `[真机]` 验证陈旧丢弃生效｜`[job]` 日志 `queued=0` 收敛｜回归冒烟 PASS → commit `G3`
 
 **G4 · 作业化落地**
-- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush` 在切文件/关库/退出屏障批量执行，2026-09-09 A/B 依据 ~15% fsync 成本）｜M6b（待定）KP 创建/更新作业化（已提速至 485ms 保持内联，是否入队待拍板）｜**manifest_touch 批量合并**（~50ms/保存绝对大头）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
+- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 已施工 2026-09-09**：save_document barrier 默认 + flush_durable RPC + 前端 3s 防抖/切文件/关库/退出屏障；待真机/崩溃注入/门禁）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜M6b（待定）KP 创建/更新作业化（已提速至 485ms 保持内联，是否入队待拍板）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
 - 入口：G3 门禁通过（作业底座就绪）
 - 出口门禁：M6a 屏障对照（fsync 内联 vs 屏障批量：L1 median Δ 显著下降；切文件/关库屏障后数据可读）｜manifest 批量：连续保存只触发 1 次落盘｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
 

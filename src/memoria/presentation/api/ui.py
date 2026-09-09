@@ -203,6 +203,13 @@ class UIAPI:
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
+    def flush_durable(self) -> dict:
+        """屏障持久化：manifest pending 批量落盘 + dirty 正文 fsync（G4 M6a）。"""
+        try:
+            return self._svc.durable_flush()
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
     def confirm_kp_range(
         self,
         rel_path: str,

@@ -64,8 +64,10 @@
   // ── Document sync (in-memory + disk) ──
   const RENDER_DEBOUNCE_MS = 80;   // 停止编辑 80ms 后同步预览（纯内存，接近零延迟）
   const SAVE_DEBOUNCE_MS  = 1500;  // 停止编辑 1.5s 后写盘
+  const DURABLE_FLUSH_IDLE_MS = 3000; // 自动保存后 3s 防抖兜底 fsync（durable_flush，G4 M6a）
   let _renderTimer = null;  // 内存实时同步计时器
   let _saveTimer  = null;  // 磁盘保存计时器
+  let _durableTimer = null; // durable_flush 防抖计时器
   let _dirty = false;      // 是否有未写盘的编辑
   const _SYNC_LOG = true;  // 调试开关，设为 false 关闭日志
 
@@ -146,6 +148,7 @@
     syncLog("markDirty: _dirty", _dirty, "→ true, 将在", SAVE_DEBOUNCE_MS, "ms 后写盘");
     _dirty = true;
     clearTimeout(_saveTimer);
+    clearTimeout(_durableTimer); // 有新编辑则推迟 durable_flush 兜底
     _saveTimer = setTimeout(() => syncToDisk(), SAVE_DEBOUNCE_MS);
   }
 
@@ -155,6 +158,27 @@
     clearTimeout(_saveTimer);
     clearTimeout(_renderTimer);
     await syncToDisk();
+  }
+
+  /** durable_flush 防抖兜底：自动保存后 ~3s 无新编辑则刷盘（fsync + manifest） */
+  function scheduleDurableFlush() {
+    clearTimeout(_durableTimer);
+    _durableTimer = setTimeout(() => {
+      _durableTimer = null;
+      call("flush_durable").catch(() => {});
+    }, DURABLE_FLUSH_IDLE_MS);
+  }
+
+  /** 屏障持久化：先确保内存内容已写盘，再请求后端 fsync dirty 集 + manifest pending */
+  async function flushDurableBarrier() {
+    clearTimeout(_durableTimer);
+    _durableTimer = null;
+    await flushSync();
+    try {
+      await call("flush_durable");
+    } catch (_) {
+      /* optional */
+    }
   }
 
   // ── 静默刷新（经 M5 调度内核）：保存后 range 被后端重锚定时，不打断编辑地更新派生视图 ──
@@ -483,6 +507,8 @@
   }
 
   async function closeKb() {
+    // 关库屏障：先保存内存内容并 durable_flush（fsync + manifest pending）
+    await flushDurableBarrier();
     try {
       await call("close_kb");
     } catch (_) {
@@ -1300,9 +1326,9 @@
         updateNavButtons();
       }
     }
-    // 切换文件前：同步当前文件到磁盘
+    // 切换文件前：同步当前文件到磁盘并触发 durable_flush 屏障（fsync+manifest）
     if (state.currentPath && state.currentPath !== relPath) {
-      await flushSync();
+      await flushDurableBarrier();
       _saveCurrentTabScroll();
     }
     cancelKpHighlightTimers();
@@ -7391,7 +7417,7 @@
   function log(tag, msg) { if (!MAP_LOG) return; const l = ts() + " [" + tag + "] " + msg; console.log(l); _logBuf.push(l); _scheduleFlush(); }
   function _scheduleFlush() { if (_logTimer) clearTimeout(_logTimer); _logTimer = setTimeout(_flushNow, 300); }
   function _flushNow() { if (_logTimer) { clearTimeout(_logTimer); _logTimer = null; } if (!_logBuf.length) return; const c = _logBuf.join("\n") + "\n"; _logBuf = []; call("write_map_log", LOG_FILE, c).catch(function () { }); }
-  window.addEventListener("beforeunload", function () { _flushNow(); });
+  window.addEventListener("beforeunload", function () { _flushNow(); try { call("flush_durable"); } catch (e) { /* ignore */ } });
   window.log = log;  // 导出给 edit-handler.js 等外部模块使用
 
   // ── AST pipeline shortcuts ──

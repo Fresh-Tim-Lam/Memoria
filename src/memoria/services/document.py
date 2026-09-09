@@ -199,10 +199,23 @@ def _normalize_targets_list(raw: object) -> list[str]:
     return []
 
 
+def _fsync_mode() -> str:
+    """正文保存的 fsync 模式（docs/design/durable-flush.md，G4 M6a）。
+
+    - inline：每次保存 tmp+fsync+replace（M1 旧行为，最稳、~20ms/次）；
+    - barrier（默认）：tmp+replace 写系统缓存立即返回，fsync 由 durable_flush
+      在屏障/防抖兜底批量执行。
+    A/B 用环境变量 MEMORIA_FSYNC_MODE=inline|barrier。
+    """
+    return (os.environ.get("MEMORIA_FSYNC_MODE") or "barrier").strip().lower() or "barrier"
+
+
 @dataclass
 class DocumentService:
     kb_path: str | None = None
     _cache: dict[str, dict] = field(default_factory=dict, repr=False)
+    # M6a：barrier 模式下待刷盘的正文路径集（rel_norm）；manifest pending 在 manifest.py 模块级
+    _dirty_fsync: set[str] = field(default_factory=set, repr=False)
 
     def __post_init__(self) -> None:
         if self.kb_path:
@@ -211,6 +224,12 @@ class DocumentService:
     def set_kb_path(self, path: str) -> None:
         if not os.path.isdir(path):
             raise FileNotFoundError(f"目录不存在: {path}")
+        if self.kb_path and os.path.normpath(self.kb_path) != os.path.normpath(path):
+            # 切库前先把上一个 KB 的 pending manifest / dirty fsync 落盘（M6a）
+            try:
+                self.durable_flush()
+            except Exception:  # noqa: BLE001
+                pass
         self.kb_path = path
         self._cache.clear()
         remember_last_kb_path(path)
@@ -282,16 +301,27 @@ class DocumentService:
 
         _, fm = strip_frontmatter(raw)
         new_content = compose_markdown(body, fm)
-        # 原子写（M1/A7）：正文保存走 tmp + os.replace，避免半程崩溃留下半包正文
+        # 原子写 + fsync 策略（M1 原子写扩展为 durable_flush，见 durable-flush.md）
+        mode = _fsync_mode()
         tmp_full = full + ".tmp"
         with open(tmp_full, "w", encoding="utf-8") as f:
             f.write(new_content)
             f.flush()
-            os.fsync(f.fileno())
+            if mode == "inline":
+                os.fsync(f.fileno())
         os.replace(tmp_full, full)
+        if mode != "inline":
+            self._dirty_fsync.add(rel_norm)
         # 清除缓存，下次 load 时重新解析
         self._cache.pop(rel_norm, None)
-        touch_manifest_entry(self.kb_path, rel_norm)
+        if mode == "inline":
+            # M1 旧行为：manifest 单条即时落盘
+            touch_manifest_entry(self.kb_path, rel_norm)
+        else:
+            # M6a：manifest 单条更新延迟落盘（入模块 pending，屏障批量写一次）
+            from memoria.storage.manifest import defer_manifest_touch
+
+            defer_manifest_touch(self.kb_path, rel_norm)
         # 保存后增量维护图片注册表（只重扫该文档；删除仅在用户显式触发时进行）
         bench = os.environ.get("MEMORIA_BENCH_TIMING") == "1"
         ms = {"registry": None, "resync": None}
@@ -317,6 +347,38 @@ class DocumentService:
         if bench:
             result["bench_ms"] = ms
         return result
+
+    def durable_flush(self) -> dict:
+        """屏障持久化（docs/design/durable-flush.md，G4 M6a）。
+
+        1) manifest pending 批量落盘（读侧已由 overlay 保证一致）；2) dirty 正文集
+        逐个 fsync（失败保留待重试）。前端在显式保存/切文件/关库/退出与自动保存后
+        ~3s 防抖兜底时调用。
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        from memoria.storage.manifest import flush_manifest_deferred
+
+        out = {"status": "ok", "flushed": 0, "manifest": 0, "pending": 0}
+        t0 = time.perf_counter()
+        try:
+            out["manifest"] = flush_manifest_deferred(self.kb_path)
+        except Exception as e:  # noqa: BLE001
+            out["status"] = "error"
+            out["message"] = f"manifest flush 失败: {e}"
+        remaining: set[str] = set()
+        for rel in sorted(self._dirty_fsync):
+            full = os.path.join(self.kb_path, rel)
+            try:
+                with open(full, "r+b") as f:
+                    os.fsync(f.fileno())
+                out["flushed"] += 1
+            except OSError:
+                remaining.add(rel)
+        self._dirty_fsync = remaining
+        out["pending"] = len(remaining)
+        out["ms"] = round((time.perf_counter() - t0) * 1000, 2)
+        return out
 
     _HEADING_RE = re.compile(r"^(#{1,6})\s+")
 
@@ -380,6 +442,12 @@ class DocumentService:
 
     def close_kb(self) -> None:
         kb = self.kb_path
+        if kb:
+            # 关库屏障：pending manifest / dirty fsync 落盘（M6a，尽力而为）
+            try:
+                self.durable_flush()
+            except Exception:  # noqa: BLE001
+                pass
         self.kb_path = None
         self._cache.clear()
         remember_last_kb_path(None)

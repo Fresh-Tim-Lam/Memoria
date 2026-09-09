@@ -1,0 +1,42 @@
+{
+  "kind": "durable-flush-m6a",
+  "recorded_at": "2026-09-09",
+  "method": "trace_save_document.py：60 文件合成语料、sample 全量、runs=2（n=120/模式）；同会话同盘切换 MEMORIA_FSYNC_MODE=inline|barrier",
+  "save_document_median_ms": {
+    "inline": {
+      "total": 89.35,
+      "manifest_touch": 61.98,
+      "registry": 9.94,
+      "resync": 8.82,
+      "atomic_write_fsync": 8.14,
+      "manifest_ops_count": 120
+    },
+    "barrier": {
+      "total": 24.62,
+      "manifest_touch": null,
+      "registry": 6.82,
+      "resync": 4.51,
+      "manifest_ops_count": 0
+    }
+  },
+  "delta": { "total_change": "-72.5%", "note": "barrier 移出 manifest 单次全量写与内联 fsync；manifest 改模块 pending，读侧 overlay 一致" },
+  "barriers": [
+    "自动保存成功 → ~3s 防抖兜底 flush_durable",
+    "切文件（openFile）前 flushDurableBarrier",
+    "closeKb 关库屏障",
+    "beforeunload 尽力 flush"
+  ],
+  "smoke": {
+    "result": "PASS",
+    "asserts": [
+      "barrier：文件内容即时替换、manifest 磁盘不立即变、load_manifest overlay 可见",
+      "durable_flush：manifest 落盘 + dirty 清空",
+      "inline：保存即 fsync + manifest 即时落盘"
+    ]
+  },
+  "remaining_gate": [
+    "真机回归：自动保存→3s flush、切文件/关库后重开内容在",
+    "崩溃注入（M1 中断脚本扩展：barrier 候选写半程 kill 无半包）",
+    "完整 L1 run_l1/compare_ab inline vs barrier 记录（本记录用 trace_save_document 分项口径）"
+  ]
+}

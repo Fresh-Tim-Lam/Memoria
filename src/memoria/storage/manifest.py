@@ -72,6 +72,42 @@ def build_manifest_entries(kb_path: str) -> dict[str, dict]:
     return entries
 
 
+# M6a：延迟落盘的 manifest 单条更新（kb_path → {rel: True}）。
+# 热路径（正文保存）只入 pending；读盘时叠加 pending（内存可见，不落盘）；
+# 任一 manifest 写操作或 durable_flush 屏障会把 pending 一并落盘后清空。
+_PENDING_TOUCH: dict[str, dict[str, bool]] = {}
+
+
+def defer_manifest_touch(kb_path: str, rel_md: str) -> None:
+    """登记一条延迟的 manifest 更新（正文保存等高频写路径使用）。"""
+    _PENDING_TOUCH.setdefault(str(kb_path), {})[_norm(rel_md)] = True
+
+
+def _apply_pending(entries: dict[str, dict], kb_path: str) -> None:
+    for rel in _PENDING_TOUCH.get(str(kb_path), {}):
+        md_full = Path(kb_path) / rel
+        if md_full.is_file():
+            try:
+                entries[rel] = entry_for_md(kb_path, rel)
+            except FileNotFoundError:
+                entries.pop(rel, None)
+        else:
+            entries.pop(rel, None)
+
+
+def clear_pending_touches(kb_path: str) -> None:
+    _PENDING_TOUCH.pop(str(kb_path), None)
+
+
+def flush_manifest_deferred(kb_path: str) -> int:
+    """把该 KB 的 pending manifest 更新批量落盘（屏障/显式 flush 调用）。"""
+    pending = _PENDING_TOUCH.get(str(kb_path))
+    if not pending:
+        return 0
+    update_manifest_entries(kb_path, sorted(pending))
+    return len(pending)
+
+
 def load_manifest(kb_path: str) -> dict | None:
     path = manifest_path(kb_path)
     if not os.path.isfile(path):
@@ -87,6 +123,9 @@ def load_manifest(kb_path: str) -> dict | None:
     for row in files:
         if isinstance(row, dict) and row.get("path"):
             by_path[_norm(str(row["path"]))] = row
+    # M6a：叠加 pending（读侧一致，不在此落盘）
+    if str(kb_path) in _PENDING_TOUCH:
+        _apply_pending(by_path, str(kb_path))
     return {
         "schema_version": data.get("schema_version", MANIFEST_SCHEMA_VERSION),
         "updated_at": data.get("updated_at"),
@@ -113,20 +152,32 @@ def ensure_manifest_baseline(kb_path: str) -> bool:
     return True
 
 
-def touch_manifest_entry(kb_path: str, rel_md: str) -> None:
-    """Memoria 写入侧车/md 后更新单条 manifest 记录。"""
-    rel = _norm(rel_md)
+def update_manifest_entries(kb_path: str, rel_mds: list[str]) -> None:
+    """批量更新多条 manifest 记录（M6a：一次 load + 一次落盘，避免逐条全量重写）。
+
+    每条按「文件当前存在则重算 entry，不存在则移除」处理；与 touch_manifest_entry 单条语义一致。
+    """
+    if not rel_mds:
+        return
     manifest = load_manifest(kb_path)
     entries = (manifest or {}).get("files_by_path") or {}
     if not manifest:
         entries = build_manifest_entries(kb_path)
-    else:
+    for rel in rel_mds:
+        rel = _norm(rel)
         md_full = Path(kb_path) / rel
         if md_full.is_file():
             entries[rel] = entry_for_md(kb_path, rel)
         else:
             entries.pop(rel, None)
     save_manifest(kb_path, entries)
+    # 整份已由叠加后的 entries 重写，pending 一并落盘，清空
+    clear_pending_touches(kb_path)
+
+
+def touch_manifest_entry(kb_path: str, rel_md: str) -> None:
+    """Memoria 写入侧车/md 后更新单条 manifest 记录。"""
+    update_manifest_entries(kb_path, [rel_md])
 
 
 def rebuild_manifest(kb_path: str) -> dict:

@@ -1,6 +1,7 @@
 # 持久化 flush 屏障（durable_flush）设计方案
 
 > 状态：**已评审锁定**（2026-09-09，待 G4 施工），决策见 §9。
+> 施工：**M6a 已实现**（2026-09-09，待真机回归与门禁）：save_document barrier 默认（`MEMORIA_FSYNC_MODE=inline|barrier`）+ `durable_flush` RPC + manifest 模块 pending overlay；实测 [results/durable-flush-2026-09-09.json](../scripts/benchmark/maintenance/results/durable-flush-2026-09-09.json)（save median inline 89.35ms → barrier 24.62ms，-72.5%）。
 > 关联：[maintenance-jobs.md](./maintenance-jobs.md)（作业模型/登记表）；[to-dolist.md §12](../to-dolist.md)（G4/M6a 门禁）；[maintenance-benchmark.md](./maintenance-benchmark.md)（A/B 依据）。
 > A/B 依据：[results/compare_ae66a012_d1894ba1.md](../scripts/benchmark/maintenance/results/compare_ae66a012_d1894ba1.md)（2 轮 ABBA：base 158.6ms vs HEAD 180.5ms，**+13.8%**）。
 
