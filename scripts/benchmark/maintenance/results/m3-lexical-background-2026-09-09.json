@@ -18,8 +18,18 @@
     "close_kb / set_kb_path 切库前 _lexical_wait + durable_flush",
     "同一服务多次 sidecar 写触发一次合并重建（重建期间新写入标记 pending → 补一轮）"
   ],
+  "real_machine": {
+    "recorded_at": "2026-09-09",
+    "search_immediate": "② 建 KP 后立即检索命中（用户确认）",
+    "search_burst": "③ 连续建 2~3 个 KP 后逐一检索均命中（用户确认）",
+    "kp_bench": {
+      "note": "两次真机会话 KP 创建 modal 链（词法重建已后台）",
+      "session1": { "rpc_ms": 260.3, "total_ms": 397.2 },
+      "session2": { "rpc_ms": 320.3, "total_ms": 467.9 }
+    },
+    "no_errors": "两次会话日志无 Traceback/异常"
+  },
   "remaining_gate": [
-    "真机：KP 保存后立即检索命中（wait 路径）；连续快速多次建 KP 后索引一致",
-    "完整耗时对照（trace_kp_confirm/真机 KP 链确认 rpc 段下降）可选补充"
+    "G4 出口对照汇总 + 用户门禁拍板（合并计数不做确定性断言：后台重建以 pending 清零收敛，时序相关；以回归冒烟 + 真机检索一致代替）"
   ]
 }
