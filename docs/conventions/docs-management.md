@@ -80,6 +80,7 @@
 | 2026-09-09 | maintenance-benchmark.md + to-dolist §12 + pending 存储 | KP 创建链路归因闭环：pending.yaml 全量 YAML 同步为慢 RPC 主因 → pending 存储改 JSON（constants/pending.py 自动迁移）+ confirm/delete 改 `sync_pending_for_file` 单文件范围同步 + 前端弹窗关窗先于图谱刷新；L2 插桩与克隆计时工具 `scripts/benchmark/maintenance/trace_kp_confirm.py`、结果 `results/kp-confirm-2026-09-09.json`；真机 modal 链 2442.6→981.6ms，后端稳态 4s→285.7ms；to-dolist §12 B5/E5 与 benchmark §6.5 同步更新 |
 | 2026-09-09 | maintenance-jobs.md + durable-flush.md | L1 保存路径 A/B 归因（2 轮 ABBA +13.8%，diff 定位 M1 fsync；分项剖析 manifest_touch ~50ms 为大头，tool `trace_save_document.py`）→ jobs.md 登记 durable_flush(P0)/manifest_touch_batch(P2)；新增设计 `design/durable-flush.md`（写盘两级 + 屏障触发 + 崩溃语义 + 门禁，草稿待评审）；to-dolist G4 改 M6a |
 | 2026-09-09 | G4 M6a 施工 + 设计锁定 | durable-flush 决策锁定（Q1–Q4）；施工：save_document barrier 默认（`MEMORIA_FSYNC_MODE` 开关）+ `durable_flush` RPC + manifest 模块 pending overlay（读侧一致、任一写/屏障批量落盘）+ 前端 3s 防抖/切文件/关库/退出屏障；冒烟 PASS；实测 inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；to-dolist §12 G4/E7 更新 |
+| 2026-09-09 | G4 M3 + G3 收口 | G3 门禁通过（VM 全 PASS + 真机陈旧丢弃/queued=0，tag `maint-g3`）；M3 词法索引后台化（锁+合并 daemon，写路径不阻塞；search/切库/关库 wait）；results/m3-lexical-background-2026-09-09.json；to-dolist G3/G4/E8 更新 |
 
 ### 4.3 定期整理约定
 

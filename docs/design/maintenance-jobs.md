@@ -100,7 +100,7 @@
 | kp_create / kp_update | 用户确认/编辑知识点 | P1 | ❌ | ✅ 2026-09-09 提速（JSON+单文件同步+关窗先于图谱）485ms 保持内联；作业化是否仍需待 M6b 拍板 |
 | kp_panel_refresh | ranges_resynced>0 | P2 | ✅ | `_silentRefreshKpPanel` 已落地 |
 | preview_range_redraw | 重锚就绪 | P2 | ✅ | 未实现（P2） |
-| index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅ | `_write_sidecar` 同步触发（待改后台） |
+| index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅（合并） | ✅ M3 后台化（2026-09-09）：锁+合并 daemon 重建，写路径不阻塞；search/切库/关库前 wait |
 | graph_build | 显式“构建” | P3 | ✅ | 手动 |
 | cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅ | 定时/手动 |
 | file_tree_refresh | 树/结构变更 | P2 | ✅ | refreshFiles |

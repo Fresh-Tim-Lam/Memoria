@@ -218,6 +218,11 @@ class DocumentService:
     _dirty_fsync: set[str] = field(default_factory=set, repr=False)
 
     def __post_init__(self) -> None:
+        import threading
+
+        self._lex_lock = threading.RLock()
+        self._lex_pending = 0
+        self._lex_thread = None
         if self.kb_path:
             self.set_kb_path(self.kb_path)
 
@@ -225,7 +230,11 @@ class DocumentService:
         if not os.path.isdir(path):
             raise FileNotFoundError(f"目录不存在: {path}")
         if self.kb_path and os.path.normpath(self.kb_path) != os.path.normpath(path):
-            # 切库前先把上一个 KB 的 pending manifest / dirty fsync 落盘（M6a）
+            # 切库前等后台词法重建收尾 + 冲刷旧 KB（M3/M6a）
+            try:
+                self._lexical_wait()
+            except Exception:  # noqa: BLE001
+                pass
             try:
                 self.durable_flush()
             except Exception:  # noqa: BLE001
@@ -258,7 +267,8 @@ class DocumentService:
         self._sort_kps_by_start_line(sidecar)
         save_sidecar_for_md(full, self.kb_path, sidecar)
         touch_manifest_entry(self.kb_path, rel_norm)
-        self._rebuild_lexical_index()
+        # M3：词法/embedding 索引重建改为后台合并执行，不再阻塞写路径
+        self._schedule_lexical_rebuild()
 
     @staticmethod
     def _sort_kps_by_start_line(sidecar: dict) -> None:
@@ -1416,6 +1426,8 @@ class DocumentService:
         modes: str | None = None,
         rel_path: str | None = None,
     ) -> dict:
+        # 显式检索前等待后台词法重建收尾（保证检索到最新索引）
+        self._lexical_wait()
         from memoria.services.search_kernel import search
 
         return search(
@@ -1513,7 +1525,51 @@ class DocumentService:
             "description": "",
         }
 
+    # ── M3：词法/embedding 索引后台重建（合并执行，不阻塞写路径） ──
+
+    def _lexical_wait(self, timeout: float = 20.0) -> None:
+        """等待进行中的后台重建结束（切库/关库/显式检索前调用，保证索引新鲜）。"""
+        th = getattr(self, "_lex_thread", None)
+        if th is not None and th.is_alive():
+            th.join(timeout=timeout)
+
+    def _schedule_lexical_rebuild(self) -> None:
+        """登记一次重建；若已有重建线程在跑则标记合并（结束后自动补一轮）。"""
+        if not self.kb_path:
+            return
+        import threading
+
+        with self._lex_lock:
+            self._lex_pending += 1
+            th = self._lex_thread
+            if th is not None and th.is_alive():
+                return
+            self._lex_thread = threading.Thread(
+                target=self._lex_worker, name="m3-lex-rebuild", daemon=True
+            )
+            worker = self._lex_thread
+        worker.start()
+
+    def _lex_worker(self) -> None:
+        try:
+            while True:
+                with self._lex_lock:
+                    self._lex_pending = 0
+                self._rebuild_lexical_index()
+                with self._lex_lock:
+                    if self._lex_pending > 0:
+                        continue  # 重建期间又有写入 → 补一轮（合并语义）
+                    self._lex_thread = None
+                    break
+        finally:
+            with self._lex_lock:
+                self._lex_thread = None
+
     def _rebuild_lexical_index(self) -> None:
+        with self._lex_lock:
+            self._rebuild_lexical_index_locked()
+
+    def _rebuild_lexical_index_locked(self) -> None:
         if not self.kb_path:
             return
         try:

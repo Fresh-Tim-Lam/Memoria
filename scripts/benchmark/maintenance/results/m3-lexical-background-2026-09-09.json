@@ -1,0 +1,25 @@
+{
+  "kind": "m3-lexical-background",
+  "recorded_at": "2026-09-09",
+  "change": "词法/embedding 索引重建从 _write_sidecar 同步路径移出：锁 + 合并重建 daemon 线程（_lex_pending 标记，重建中再次写入结束后自动补一轮）；切库/关库前 _lexical_wait 收尾；显式 search_api 前等待保证索引新鲜。",
+  "files": ["src/memoria/services/document.py"],
+  "probe": {
+    "note": "120 文件微型库，含首跑模型/jieba 与重建并发噪音，仅示 RPC 返回已不阻塞等待重建",
+    "confirm_rpc_return_ms": 597.8,
+    "background_rebuild_wait_ms": 127.3,
+    "status": "ok"
+  },
+  "regression": {
+    "tool": "scripts/benchmark/maintenance/regression_smoke_m6a.py",
+    "result": "PASS（confirm/rename/close_kb 等待重建收尾/manifest 一致）"
+  },
+  "consistency_points": [
+    "search_api 前 _lexical_wait（显式检索读到最新索引）",
+    "close_kb / set_kb_path 切库前 _lexical_wait + durable_flush",
+    "同一服务多次 sidecar 写触发一次合并重建（重建期间新写入标记 pending → 补一轮）"
+  ],
+  "remaining_gate": [
+    "真机：KP 保存后立即检索命中（wait 路径）；连续快速多次建 KP 后索引一致",
+    "完整耗时对照（trace_kp_confirm/真机 KP 链确认 rpc 段下降）可选补充"
+  ]
+}
