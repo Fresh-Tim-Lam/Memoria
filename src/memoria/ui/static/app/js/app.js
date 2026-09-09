@@ -165,7 +165,9 @@
     clearTimeout(_durableTimer);
     _durableTimer = setTimeout(() => {
       _durableTimer = null;
-      call("flush_durable").catch(() => {});
+      call("flush_durable")
+        .then((res) => syncLog("durable_flush idle 触发:", res))
+        .catch(() => syncLog("durable_flush idle 失败"));
     }, DURABLE_FLUSH_IDLE_MS);
   }
 
@@ -175,9 +177,10 @@
     _durableTimer = null;
     await flushSync();
     try {
-      await call("flush_durable");
+      const res = await call("flush_durable");
+      syncLog("durable_flush 屏障触发:", res);
     } catch (_) {
-      /* optional */
+      syncLog("durable_flush 屏障失败");
     }
   }
 
