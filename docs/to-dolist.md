@@ -205,7 +205,7 @@
 | A4 | 图片注册表：doc 增量 / 全量 / 自动检查 / 清理 | ✅（渲染 bug 已修） |
 | A5 | KP range 双端定位（locator）+ 保存重锚 heal | ✅ 2026-09-09 |
 | A6 | 词法/embedding 索引：侧车写后同步重建 | ⚠️ 待作业化（重，P3） |
-| A7 | 原子写（tmp + os.replace） | ✅ |
+| A7 | 原子写（tmp + os.replace） | ✅ M1 已补（2026-09-09）：md 正文保存（document.py）与 ui-settings（storage/ui_settings.py）；YAML/registry 原已原子 |
 
 ### B. 操作 / 作业
 
@@ -287,7 +287,7 @@
 - 出口门禁：B2 三方核对脚本 PASS（含 partial 上屏）｜B3 `[真机]` 清单通过｜A5 heal 脚本 + `[真机]` 面板自动更新｜D1 代码审查 + `[真机]` 目测｜E1 生成器复跑 PASS｜`py_compile`/`node --check`/validate/i18n rows=0｜to-dolist 状态更新 → commit `G1`
 
 **G2 · 一致性补强**
-- 范围：M1 原子写（md 保存 + ui-settings）｜B6 md 相对路径链接改写（消已知边界）｜M4(C3) 预览带静默重绘
+- 范围：M1 原子写 ✅（2026-09-09 已实现并验证）｜B6 md 相对路径链接改写（消已知边界）｜M4(C3) 预览带静默重绘
 - 入口：G1 门禁通过
 - 出口门禁：M1 写盘点盘点 + 中断恢复脚本 PASS｜B6 跨层/`../` 断言 PASS｜M4 代码路径（无 scroll/flash）+ `[真机]` 滚动光标不动｜回归冒烟 PASS → commit `G2`
 

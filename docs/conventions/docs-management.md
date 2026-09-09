@@ -76,6 +76,7 @@
 | 2026-09-09 | to-dolist §12 + 代码复核 | 施工总表（A–E）建立并落盘 to-dolist §12；2026-09-09 代码复核修正：A7 原子写注明范围、B2 partial 上屏、恢复 export-plan.md（此前缺失致引用悬空）、E4 补本登记行 |
 | 2026-09-09 | maintenance-benchmark.md | 新增：维护机制基准设计（design/，草稿待评审）。受控语料/指标采集/A–B 对照/门禁规则，回答“调度等机制改造前后改善多少”；当前无基准实现 |
 | 2026-09-09 | collaboration.md | §0 通用协作规则新增规则 6「待评审问题须答复后才继续」：Agent 提出的待评审/打开问题未获答复前不得默认继续执行或给下一步方案 |
+| 2026-09-09 | M1/A7 原子写 | 正文保存（document.py save_document）与 ui-settings（storage/ui_settings.py）改 tmp+os.replace 原子写并验证（M1） |
 
 ### 4.3 定期整理约定
 

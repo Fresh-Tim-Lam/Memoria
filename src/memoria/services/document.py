@@ -281,8 +281,13 @@ class DocumentService:
 
         _, fm = strip_frontmatter(raw)
         new_content = compose_markdown(body, fm)
-        with open(full, "w", encoding="utf-8") as f:
+        # 原子写（M1/A7）：正文保存走 tmp + os.replace，避免半程崩溃留下半包正文
+        tmp_full = full + ".tmp"
+        with open(tmp_full, "w", encoding="utf-8") as f:
             f.write(new_content)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp_full, full)
         # 清除缓存，下次 load 时重新解析
         self._cache.pop(rel_norm, None)
         touch_manifest_entry(self.kb_path, rel_norm)

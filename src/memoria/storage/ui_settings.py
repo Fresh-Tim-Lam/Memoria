@@ -65,10 +65,13 @@ def save_ui_settings(partial: dict[str, Any]) -> dict[str, Any]:
             current[key] = val
     path = settings_path()
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(
+    # 原子写（M1，A7）：tmp + os.replace，避免半程崩溃留下损坏的 ui-settings
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_text(
         json.dumps(current, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    os.replace(tmp, path)
     return current
 
 
