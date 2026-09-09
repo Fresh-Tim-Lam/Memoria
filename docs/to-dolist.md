@@ -190,6 +190,79 @@
 
 ***
 
+## 12. 知识库与维护机制 · 施工总表（2026-09-09 建立）
+
+> 目的：把「知识库数据一致性 + 维护作业」类机制/任务统一登记为施工总表，据此敲定施工计划。
+> 状态标记沿用文件头约定。关联设计：[maintenance-jobs.md](design/maintenance-jobs.md)（维护作业/静默同步，草稿）、[export-plan.md](design/export-plan.md)（导出，草稿）。
+
+### A. 一致性 / 注册内核
+
+| # | 机制 | 现状 |
+|---|---|---|
+| A1 | sidecar 镜像 + `file` 字段 + 校验 + 级联（path_cascade.apply_path_move） | ✅ |
+| A2 | manifest 基线/差分/幂等移动/touch | ✅ |
+| A3 | pending 项路径同步（重命名已接入） | ✅ |
+| A4 | 图片注册表：doc 增量 / 全量 / 自动检查 / 清理 | ✅（渲染 bug 已修） |
+| A5 | KP range 双端定位（locator）+ 保存重锚 heal | ✅ 2026-09-09 |
+| A6 | 词法/embedding 索引：侧车写后同步重建 | ⚠️ 待作业化（重，P3） |
+| A7 | 原子写（tmp + os.replace） | ✅ |
+
+### B. 操作 / 作业
+
+| # | 任务 | 现状 |
+|---|---|---|
+| B1 | 文件重命名（stem 引用改写 / KP-shadow / 冲突 / pending+registry 级联） | ✅ 已加固 |
+| B2 | 文件夹重命名 dir_rename（整树移动 + 逐文件级联） | ✅ 新增（partial 级联失败已上屏，2026-09-09 复核修正），**待真机验收** |
+| B3 | F2 快捷键（文件/文件夹，捕获阶段 + 仅拦可见弹窗） | ✅ 新增，**待验收** |
+| B4 | 保存 autosave / flush / 脏标记 | ✅ |
+| B5 | KP 创建/更新慢 RPC（当前阻塞 UI） | ⚠️ 作业化目标（P1） |
+| B6 | md 相对路径链接在目录重命名时自动改写 | ❌ 已知边界（待扩展） |
+| B7 | 导出知识库包（bundle） | ⏳ design 草稿待评审 |
+
+### C. 视图 / 静默刷新
+
+| # | 任务 | 现状 |
+|---|---|---|
+| C1 | 文件树重映射 + 刷新（rename 后 applyRenameUi） | ✅ |
+| C2 | KP 面板静默刷新（ranges_resynced 触发） | ✅ 首期 |
+| C3 | 预览范围带静默重绘（无滚动/闪烁） | ⏳ P2 |
+| C4 | 图谱节点/标签局部刷新 | ⏳ P2 |
+| C5 | maintenance-jobs 调度内核（合并/优先级/idle/epoch/flush） | ⏳ 设计稿 |
+
+### D. 渲染 / 显示
+
+| # | 任务 | 现状 |
+|---|---|---|
+| D1 | 图片缩略图渲染修复（lazy 干预 + overflow:hidden 不绘制） | ✅ |
+| D2 | 预览颜色 hover / 选区机制（历史修复） | ✅ |
+
+### E. 测试 / 文档 / 规范
+
+| # | 任务 | 现状 |
+|---|---|---|
+| E1 | rename-test 测试库 + 生成脚本 + example README 登记 | ✅ |
+| E2 | 图片路径规范（preview-formats §4.4 / organize §7.3，含 `../` 禁例）同步 | ✅ |
+| E3 | design：export-plan / maintenance-jobs（草稿，2026-09-09 复核恢复 export-plan） | ⏳ 待评审 |
+| E4 | docs-management / to-dolist 修订登记 | ✅（2026-09-09 复核补登记 to-dolist §12 行） |
+
+### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
+
+| # | 机制/任务 | 触发点 | 现状 |
+|---|---|---|---|
+| F01 | KB 完整性检查/审计子系统（`validate_kb` + 静默检查 + 徽标，kb-check.js） | 打开/定时/显式 | ✅ 存在，未纳入调度登记 |
+| F02 | 路径漂移检测/修复（`detect_path_moves` / `repair_path_cascade`，GUI+CLI 双入口） | 修复 RPC/检查 | ✅ 存在，未纳入施工范围评估 |
+| F03 | 图片引用诊断/修复（`diagnose_image_refs` / `fix_unregistered_image_refs`，防误删已引用图片） | 图片管理/保存后 | ✅ 存在，未纳入施工范围评估 |
+
+### 施工计划（分档候选，顺序待敲定）
+
+- 档 1 · 验收收尾：B2 / B3 / A5+C2 / D1 / E1 真机回归（rename-test + showcase）
+- 档 2 · 一致性补齐：B6 + C3
+- 档 3 · 作业化（maintenance-jobs P1）：B5 + A6
+- 档 4 · 内核与重活（P2/P3）：C5 → C4 → 线程池/定时队列
+- 旁线 · 独立推进：B7 导出 bundle
+
+***
+
 ## 附录：已交付规范（保留原文）
 
 ### A. 知识文件整理导入提示词

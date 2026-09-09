@@ -158,6 +158,12 @@ class UIAPI:
         except RuntimeError as e:
             return {"status": "error", "message": str(e)}
 
+    def dir_rename(self, old_rel: str, new_name: str) -> dict:
+        try:
+            return self._svc.rename_dir(old_rel, new_name)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
     def load_document(self, rel_path: str) -> dict:
         try:
             return self._svc.load_document(rel_path)

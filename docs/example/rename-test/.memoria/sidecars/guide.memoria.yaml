@@ -1,0 +1,45 @@
+schema_version: 1
+file: guide.md
+knowledge_points:
+- id: kp-guide
+  name: 重命名测试 · 入口
+  tags:
+  - 测试
+  - 入口
+  range:
+    start:
+      snippet: '## 重命名测试 · 入口'
+      line_hint: 1
+    end:
+      snippet: '> 说明：`alpha/` 文件夹重命名后，上述 md 相对路径链接按当前实现不自动改写（已知边界）。'
+      line_hint: 12
+links:
+- anchor_text: kp-note-a
+  targets:
+  - kp-note-a
+  edge_type: reference
+  instances:
+  - 5
+  source_id: kp-guide
+- anchor_text: kp-note-b
+  targets:
+  - kp-note-b
+  edge_type: reference
+  instances:
+  - 6
+  source_id: kp-guide
+- anchor_text: kp-note-c
+  targets:
+  - kp-note-c
+  edge_type: reference
+  instances:
+  - 7
+  source_id: kp-guide
+- anchor_text: plain
+  targets:
+  - plain
+  edge_type: reference
+  instances:
+  - 8
+  source_id: kp-guide
+edges: []

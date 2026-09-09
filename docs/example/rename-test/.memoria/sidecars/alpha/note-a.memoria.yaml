@@ -1,0 +1,27 @@
+schema_version: 1
+file: alpha/note-a.md
+knowledge_points:
+- id: kp-note-a
+  name: 笔记A 核心
+  aliases:
+  - 笔记甲
+  tags:
+  - 测试
+  - A
+  range:
+    start:
+      snippet: '## 笔记A 核心'
+      line_hint: 1
+    end:
+      snippet: 引用：[[kp-note-b|笔记B主题]]。
+      line_hint: 5
+links:
+- anchor_text: kp-note-b
+  targets:
+  - kp-note-b
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: kp-note-a
+edges: []

@@ -1,0 +1,33 @@
+schema_version: 1
+file: beta/deep/note-c.md
+knowledge_points:
+- id: kp-note-c
+  name: 深层笔记C
+  tags:
+  - 测试
+  - 深层
+  range:
+    start:
+      snippet: '## 深层笔记C'
+      line_hint: 1
+    end:
+      snippet: '![点图](.memoria/images/dot.png "width=60")'
+      line_hint: 12
+links:
+- anchor_text: kp-note-a
+  targets:
+  - kp-note-a
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: kp-note-c
+- anchor_text: kp-note-b
+  targets:
+  - kp-note-b
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: kp-note-c
+edges: []

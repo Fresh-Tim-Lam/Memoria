@@ -1,0 +1,37 @@
+schema_version: 1
+file: alpha/note-b.md
+knowledge_points:
+- id: kp-note-b
+  name: 笔记B 主题
+  tags:
+  - 测试
+  - B
+  range:
+    start:
+      snippet: '## 笔记B 主题'
+      line_hint: 1
+    end:
+      snippet: 回链：[[kp-note-a|笔记A核心]]。
+      line_hint: 5
+- id: kp-note-b2
+  name: 笔记B 扩展
+  tags:
+  - 测试
+  - B2
+  range:
+    start:
+      snippet: '## 笔记B 扩展'
+      line_hint: 7
+    end:
+      snippet: 同文件的第二个 KP，验证多 KP 文件的 range 绑定。
+      line_hint: 9
+links:
+- anchor_text: kp-note-a
+  targets:
+  - kp-note-a
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  source_id: kp-note-b
+edges: []

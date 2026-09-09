@@ -3,8 +3,11 @@
  *
  * 自包含：#file-tree 渲染（目录/文件分层、展开/折叠状态 treeExpanded、目录与文件图标、
  * 侧车缺失标记、当前文件高亮）、树内点击切换文档（navigateToFile）、右键上下文菜单
- * （文件 → 重命名/删除；目录/空白区 → 新建文件/文件夹；空白区另含图片管理入口）、
+ * （文件 → 重命名/删除；文件夹 → 重命名/新建文件/新建文件夹；空白区另含图片管理入口）、
  * 新建/重命名/删除的后端调用与结果状态提示（确认弹窗复用应用内轻量 .-modal 浮层）。
+ * 重命名（文件/文件夹）走完整自维护链路：后端迁移磁盘 + 侧车镜像/file 字段 + pending
+ * + manifest + 图片注册表；前端 applyRenameUi 统一重映射标签页/展开集/当前文件并刷新。
+ * 快捷键：点击文件或文件夹后按 F2 触发重命名（输入框/浮层激活时不劫持）。
  *
  * DOM/事件绑定全部由渲染后的 bindFileTreeInteraction 完成（沿用原 app.js 行为，属性
  * 赋值避免 render 重建重复绑定）；init() 仅为与其他子系统统一的 boot 入口（树无独立
@@ -33,6 +36,39 @@ window.MemoriaFileTree = (function () {
 
   // app.js 导出 state 为同一对象引用（永不整体替换），捕获一次后属性读写均实时可见
   const state = A().state || {};
+
+  // 最近一次左键点中的树节点（用于 F2 快捷键重命名）；type: 'file' | 'dir'
+  let _lastSel = null;
+
+  /** 把路径 oldPath 相关的引用路径重映射到 newPath（自身或子树前缀），不相关返回 null */
+  function remapPath(p, oldPath, newPath) {
+    if (!p) return null;
+    if (p === oldPath) return newPath;
+    const pre = oldPath + "/";
+    return p.startsWith(pre) ? newPath + p.slice(oldPath.length) : null;
+  }
+
+  /** 重命名成功后统一刷新界面状态：树展开集 / 打开标签页 / 当前文件；返回重映射后的当前文件路径 */
+  function applyRenameUi(oldPath, newPath) {
+    const mappedCur = remapPath(state.currentPath, oldPath, newPath);
+    const expanded = ensureTreeExpandedSet();
+    for (const k of Array.from(expanded)) {
+      const nk = remapPath(k, oldPath, newPath);
+      if (nk) {
+        expanded.delete(k);
+        expanded.add(nk);
+      }
+    }
+    for (const t of state.openTabs) {
+      const nk = remapPath(t.path, oldPath, newPath);
+      if (nk) {
+        t.path = nk;
+        t.label = basename(nk);
+      }
+    }
+    renderTabs();
+    return mappedCur;
+  }
 
   function T(key, params) {
     const a = A();
@@ -166,6 +202,7 @@ window.MemoriaFileTree = (function () {
       head.addEventListener("click", (e) => {
         e.stopPropagation();
         const dirPath = head.dataset.dirToggle;
+        _lastSel = { type: "dir", path: dirPath };
         const expanded = ensureTreeExpandedSet();
         if (expanded.has(dirPath)) expanded.delete(dirPath);
         else expanded.add(dirPath);
@@ -173,10 +210,13 @@ window.MemoriaFileTree = (function () {
       });
     });
     el.querySelectorAll(".-tree-item").forEach((node) => {
-      node.addEventListener("click", () => navigateToFile(node.dataset.path));
+      node.addEventListener("click", () => {
+        _lastSel = { type: "file", path: node.dataset.path };
+        navigateToFile(node.dataset.path);
+      });
     });
     // 右键菜单（事件委托，属性赋值避免 render 重建重复绑定）：
-    // 文件 → 重命名/删除；文件夹 → 新建文件/文件夹；空白区 → 根目录下新建
+    // 文件 → 重命名/删除；文件夹 → 重命名/新建文件/新建文件夹；空白区 → 根目录下新建
     el.oncontextmenu = (e) => {
       const t = e.target;
       if (!t || !t.closest) return;
@@ -184,6 +224,7 @@ window.MemoriaFileTree = (function () {
       if (item) {
         e.preventDefault();
         e.stopPropagation();
+        _lastSel = { type: "file", path: item.dataset.path };
         showTreeContextMenu(e.clientX, e.clientY, [
           { label: T("tree.rename"), action: () => renameTreeFile(item.dataset.path) },
           { label: T("tree.delete"), danger: true, action: () => deleteTreeFile(item.dataset.path) },
@@ -195,7 +236,10 @@ window.MemoriaFileTree = (function () {
         e.preventDefault();
         e.stopPropagation();
         const base = dirHead.dataset.dirToggle || "";
+        _lastSel = { type: "dir", path: base };
         showTreeContextMenu(e.clientX, e.clientY, [
+          { label: T("tree.rename"), action: () => renameTreeDir(base) },
+          { divider: true },
           { label: T("tree.newFile"), action: () => createTreeFile(base) },
           { label: T("tree.newFolder"), action: () => createTreeDir(base) },
         ]);
@@ -266,8 +310,8 @@ window.MemoriaFileTree = (function () {
     promptTreeInput(T("tree.renameTitle"), T("tree.renamePh"), oldName, T("tree.rename"), async (val) => {
       if (!val || val === oldName) return;
       const res = await call("file_rename", relPath, val);
-      if (res.status !== "ok") {
-        setStatus(res.message || T("tree.renameFail"));
+      if (!res || res.status !== "ok") {
+        setStatus((res && res.message) || T("tree.renameFail"));
         return;
       }
       setStatus(T("tree.renamed"), res.path);
@@ -277,15 +321,39 @@ window.MemoriaFileTree = (function () {
         const s = (res.sidecar_files || []).length;
         setStatus(T("tree.renamedSynced", { n, m, s }), res.path);
       }
-      const tab = state.openTabs.find((t) => t.path === relPath);
-      if (tab) {
-        tab.path = res.path;
-        tab.label = basename(res.path);
-      }
-      renderTabs();
+      const mappedCur = applyRenameUi(relPath, res.path);
       await refreshFiles();
-      if (state.currentPath === relPath) {
-        await openFile(res.path, { fromNav: true });
+      if (mappedCur) {
+        await openFile(mappedCur, { fromNav: true });
+      }
+    });
+  }
+
+  async function renameTreeDir(relPath) {
+    const oldName = basename(relPath);
+    promptTreeInput(T("tree.renameDirTitle"), T("tree.renameDirPh"), oldName, T("tree.rename"), async (val) => {
+      if (!val || val === oldName) return;
+      const res = await call("dir_rename", relPath, val);
+      // 后端可能返回 "partial"（部分文档级联失败）——此时同样提示，不再误判为成功
+      if (!res || res.status !== "ok") {
+        setStatus((res && res.message) || T("tree.renameFail"));
+        return;
+      }
+      setStatus(T("tree.dirRenamed"), res.path);
+      if (res.files) {
+        setStatus(
+          T("tree.dirRenamedSynced", {
+            files: res.files,
+            sidecars: (res.sidecar_files || []).length,
+            pending: res.pending_updated || 0,
+          }),
+          res.path
+        );
+      }
+      const mappedCur = applyRenameUi(relPath, res.path);
+      await refreshFiles();
+      if (mappedCur) {
+        await openFile(mappedCur, { fromNav: true });
       }
     });
   }
@@ -365,7 +433,35 @@ window.MemoriaFileTree = (function () {
    * 重新渲染由 app.js 侧状态变更后调用公开 API render 触发。
    */
   function init() {
-    /* 见上方注释：无独立事件绑定 */
+    // F2 重命名快捷键：左键/右键点中文件或文件夹后按 F2 打开重命名弹窗。
+    // 点击文件后焦点通常已进入可编辑预览区，因此 contenteditable 不拦截（F2 为功能键）；
+    // 仅避开真正的文本输入控件与已打开的浮层，避免与输入/其它弹窗冲突。
+    if (!window.__memoriaFileTreeF2) {
+      window.__memoriaFileTreeF2 = 1;
+      // 捕获阶段注册：预览/编辑器等内部 keydown 可能 stopPropagation，冒泡阶段收不到；
+      // 捕获在 document 处最先执行，可绕过内部拦截。
+      document.addEventListener(
+        "keydown",
+        (e) => {
+          if (e.key !== "F2") return;
+          const t = e.target;
+          if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT")) {
+            return;
+          }
+          // 仅当有“可见”弹窗时拦截（index.html 常驻多个 .-modal.hidden，不可见的不算）
+          const openModal = Array.from(document.querySelectorAll(".-modal")).some(
+            (m) => !m.classList.contains("hidden")
+          );
+          if (openModal) return;
+          if (!_lastSel) return;
+          e.preventDefault();
+          e.stopPropagation();
+          if (_lastSel.type === "dir") renameTreeDir(_lastSel.path);
+          else renameTreeFile(_lastSel.path);
+        },
+        true
+      );
+    }
   }
 
   return {

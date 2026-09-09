@@ -130,6 +130,11 @@
             })
           );
         }
+        // 保存时后端重锚定了 KP range（如换行导致的漂移/锚点断裂已自动修正）：
+        // 静默刷新知识点面板，避免“点刷新才看到新行号”；不触碰编辑器/光标/滚动。
+        if (res.ranges_resynced && res.ranges_resynced > 0) {
+          _silentRefreshKpPanel();
+        }
       }
     } catch (e) {
       console.warn("[SYNC] 保存异常:", e);
@@ -150,6 +155,25 @@
     clearTimeout(_saveTimer);
     clearTimeout(_renderTimer);
     await syncToDisk();
+  }
+
+  // ── 静默刷新（首期）：保存后 range 被后端重锚定时，不打断编辑地更新派生视图 ──
+  let _kpPanelSilentBusy = false;
+
+  /** 仅重取当前文档并刷新“知识点面板”（不触碰编辑器/预览滚动/光标）。可被多次保存触发，防重入。 */
+  async function _silentRefreshKpPanel() {
+    if (_kpPanelSilentBusy || !state.currentPath) return;
+    _kpPanelSilentBusy = true;
+    try {
+      const doc = await call("load_document", state.currentPath);
+      if (doc && doc.status !== "error") {
+        renderKpList(doc);
+      }
+    } catch (_) {
+      /* 静默失败不影响编辑 */
+    } finally {
+      _kpPanelSilentBusy = false;
+    }
   }
 
   function T(key, params) {

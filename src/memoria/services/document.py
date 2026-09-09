@@ -55,6 +55,8 @@ from memoria.services.kp_rename import (
     replace_link_id_in_markdown,
 )
 from memoria.services.range_proposals import merge_range_proposals
+from memoria.range.constants import SNIPPET_MAX_LEN
+from memoria.range.locator import resolve_range
 from memoria.storage.constants import MEMORIA_DIR, SIDECAR_SCHEMA_VERSION
 from memoria.storage.markdown import compose_markdown, strip_frontmatter
 from memoria.storage.scanner import collect_md_files
@@ -71,9 +73,15 @@ from memoria.storage.manifest import (
     rebuild_manifest,
     touch_manifest_entry,
 )
-from memoria.storage.path_cascade import detect_path_moves, reconcile_path_cascade
+from memoria.storage.path_cascade import (
+    apply_path_move,
+    detect_path_moves,
+    reconcile_path_cascade,
+)
 from memoria.storage.pending import (
     dismiss_pending_item,
+    load_pending,
+    save_pending,
     summarize_kb_pending,
     sync_kb_pending,
 )
@@ -284,7 +292,74 @@ class DocumentService:
         except Exception:  # noqa: BLE001
             # 注册表维护失败不影响保存结果
             pass
-        return {"status": "ok"}
+        # 保存后重新锚定 KP range：正文换行/行号漂移会导致 line_hint 失效甚至
+        # end 锚点行被拆成两行而解析失败（识别失败）。见 _resync_kp_ranges_after_edit。
+        resynced = 0
+        try:
+            resynced = self._resync_kp_ranges_after_edit(rel_norm)
+        except Exception:  # noqa: BLE001
+            pass
+        return {"status": "ok", "ranges_resynced": resynced}
+
+    _HEADING_RE = re.compile(r"^(#{1,6})\s+")
+
+    def _resync_kp_ranges_after_edit(self, rel_norm: str) -> int:
+        """正文保存后重新锚定该文档的 KP range，返回改动数。
+
+        - 解析成功：仅把漂移的 line_hint 更新为实际解析到的行号；
+        - 解析失败且为 end 锚点丢失（如“在结尾行中间回车”把锚点行拆成两行）：
+          从已定位的 start 起，按下一条 `#{1,6} ` 标题前（或文末）重建 end，
+          同步 snippet 为重建行内容截断——避免 KP 因锚点断裂而无法识别。
+        """
+        full = os.path.join(self.kb_path, rel_norm)
+        sc = load_sidecar_for_md(full, self.kb_path)
+        if not sc:
+            return 0
+        try:
+            with open(full, "r", encoding="utf-8") as f:
+                raw = f.read()
+        except OSError:
+            return 0
+        body, _ = strip_frontmatter(raw)
+        lines = body.splitlines()
+        if not lines:
+            return 0
+        kps = sc.get("knowledge_points")
+        if not isinstance(kps, list):
+            return 0
+        changed = 0
+        for kp in kps:
+            if not isinstance(kp, dict) or not isinstance(kp.get("range"), dict):
+                continue
+            rng = kp["range"]
+            start = dict(rng.get("start") or {})
+            end = dict(rng.get("end") or {})
+            rr = resolve_range(lines, start, end)
+            if rr.get("ok"):
+                ns, ne = rr["start_line"], rr["end_line"]
+                if start.get("line_hint") != ns or end.get("line_hint") != ne:
+                    start["line_hint"] = ns
+                    end["line_hint"] = ne
+                    rng["start"] = start
+                    rng["end"] = end
+                    changed += 1
+                continue
+            # 结构修复：start 已定位、end 锚点断裂 → 按标题结构重建 end
+            if rr.get("error") == "end_snippet_not_found" and rr.get("start_line"):
+                si = rr["start_line"] - 1
+                nxt = None
+                for i in range(si + 1, len(lines)):
+                    if self._HEADING_RE.match(lines[i]):
+                        nxt = i
+                        break
+                ei = len(lines) - 1 if nxt is None else nxt - 1
+                end["line_hint"] = ei + 1
+                end["snippet"] = lines[ei].strip()[:SNIPPET_MAX_LEN]
+                rng["end"] = end
+                changed += 1
+        if changed:
+            self._write_sidecar(rel_norm, sc)
+        return changed
 
     def close_kb(self) -> None:
         kb = self.kb_path
@@ -462,6 +537,24 @@ class DocumentService:
         # 旧路径条目已失效 → touch 会因文件不存在而移除；再写入新路径条目
         touch_manifest_entry(self.kb_path, old)
         touch_manifest_entry(self.kb_path, new_rel)
+        # 级联：pending 项路径 & 图片注册表增量（与 rename_dir pipeline 一致）
+        try:
+            data = load_pending(self.kb_path) or {}
+            changed = 0
+            for item in data.get("items") or []:
+                if isinstance(item, dict) and str(item.get("file") or "").replace("\\", "/") == old:
+                    item["file"] = new_rel
+                    changed += 1
+            if changed:
+                save_pending(self.kb_path, data)
+        except Exception:  # noqa: BLE001
+            pass
+        try:
+            # 旧文件已不存在 → 剔除旧引用；按新路径重扫引用
+            self._update_registry_for_doc(old)
+            self._update_registry_for_doc(new_rel)
+        except Exception:  # noqa: BLE001
+            pass
         return {
             "status": "ok",
             "path": new_rel,
@@ -469,6 +562,91 @@ class DocumentService:
             "md_replacements": md_replacements,
             "md_files": md_files,
             "sidecar_files": sidecar_files,
+        }
+
+    def rename_dir(self, old_rel: str, new_name: str) -> dict:
+        """重命名文件夹（相对 KB 根，保持所在父目录），并完成内部注册信息级联。
+
+        自维护 pipeline（与 rename_file 语义对齐，保证安全/一致）：
+        1) 校验：目录存在于 KB 内、非 KB 根/系统目录（.memoria）；新名合法且不冲突；
+        2) 移动前收集受影响 .md（旧前缀下全部，含子目录）；
+        3) 物理移动整个目录（md + 目录内非 md 资产一并移动）；
+        4) 逐文件级联 path_cascade.apply_path_move：侧车镜像迁移 + sidecar.file 字段
+           + pending 项路径 + manifest files_by_path；
+        5) 图片注册表按文档增量刷新（旧路径剔除 / 新路径重扫）；
+        6) 内存缓存失效，汇总 files/sidecars/pending 并上报错误（部分成功不清零）。
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        old = self._resolve_rel_path(old_rel).strip("/")
+        if not old:
+            return {"status": "error", "message": "目录无效"}
+        if old == MEMORIA_DIR or old.startswith(MEMORIA_DIR + "/") or old.startswith("."):
+            return {"status": "error", "message": "不能重命名系统/隐藏目录"}
+        name = (new_name or "").strip().replace("\\", "/").strip("/")
+        if not name or name in (".", "..") or "/" in name:
+            return {"status": "error", "message": "文件夹名无效"}
+        parent = old.rsplit("/", 1)[0] if "/" in old else ""
+        new_rel = f"{parent}/{name}" if parent else name
+        if old == new_rel:
+            return {"status": "ok", "path": new_rel, "synced": False, "files": 0}
+        old_full = self._full_path(old)
+        new_full = self._full_path(new_rel)
+        if not os.path.isdir(old_full):
+            return {"status": "error", "message": "目录不存在"}
+        if os.path.exists(new_full):
+            return {"status": "error", "message": "目标文件夹已存在"}
+        prefix = old + "/"
+        moved = [
+            r.replace("\\", "/")
+            for r in collect_md_files(self.kb_path)
+            if r.replace("\\", "/").startswith(prefix)
+        ]
+        try:
+            os.rename(old_full, new_full)
+        except OSError as e:  # noqa: BLE001
+            return {"status": "error", "message": f"移动文件夹失败: {e}"}
+        if not os.path.isdir(new_full):
+            return {"status": "error", "message": "移动后目录不存在（可能被占用），请检查后重试"}
+        sidecar_files: list[str] = []
+        pending_updated = 0
+        errors: list[dict] = []
+        for old_md in moved:
+            new_md = new_rel + old_md[len(old):]
+            self._cache.pop(old_md, None)
+            self._cache.pop(new_md, None)
+            try:
+                res = apply_path_move(self.kb_path, old_md, new_md)
+                if res.get("status") != "ok":
+                    errors.append({"from": old_md, "to": new_md, "error": res.get("message", "级联失败")})
+                    continue
+                if res.get("sidecar_moved") or res.get("sidecar_updated"):
+                    sidecar_files.append(new_md)
+                pending_updated += int(res.get("pending_updated") or 0)
+            except Exception as e:  # noqa: BLE001
+                errors.append({"from": old_md, "to": new_md, "error": str(e)})
+            try:
+                # 图片注册表增量：旧路径引用剔除（文件已移动），新路径重扫
+                self._update_registry_for_doc(old_md)
+                self._update_registry_for_doc(new_md)
+            except Exception:  # noqa: BLE001
+                pass
+        message = ""
+        if errors:
+            head = errors[0]
+            message = (
+                f"部分文档级联失败（{len(errors)} 项）；首项 {head.get('from')} → "
+                f"{head.get('to')}: {head.get('error', '未知')}"
+            )
+        return {
+            "status": "ok" if not errors else "partial",
+            "path": new_rel,
+            "files": len(moved),
+            "synced": bool(sidecar_files or pending_updated),
+            "sidecar_files": sidecar_files,
+            "pending_updated": pending_updated,
+            "errors": errors,
+            "message": message or None,
         }
 
     def delete_file(self, rel_path: str) -> dict:
