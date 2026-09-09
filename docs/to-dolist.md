@@ -314,9 +314,10 @@
 - 出口门禁：M6a 屏障对照（✅ inline 89.35 → barrier 24.62ms，切文件/关库屏障后可读，崩溃注入 15/15）｜manifest 批量（✅ 连续保存单次落盘证据 idle/屏障）｜M3 前后耗时/重建次数对照 + 检索一致（✅ rpc 340.5→260~320ms，合并计数以 pending 清零收敛代替确定性断言）｜回归冒烟 PASS（✅）→ **G4 收口 2026-09-09：M6a/M3/M6b 全✅（用户验收），汇总 results/g4-gate-summary-2026-09-09.json，快照见 tag `maint-g4`；C4 图谱增量更新拆分后续项（可行性见 summary.deferred.C4_graph_partial_refresh），不计入本门禁**
 
 **G5 · 维护面收敛（M7）**
-- 范围：F01 检查/审计、F02 路径漂移修复、F03 图片引用诊断修复 → 评估后登记/纳入调度；重活线程池与定时队列
+- 范围（2026-09-09 评估盘点）：**F01** `validate_kb`（RPC full-KB 扫描：逐文件 validate_sidecar + 图链路审计 + manifest diff + 路径漂移检测；静默检查默认 120s/可关，跑在主 RPC 线程）｜**F02** `repair_path_cascade`/`detect_path_moves`（GUI+CLI `repair-paths` 已有，干跑/apply 一致）｜**F03** `diagnose_image_refs`/`fix_unregistered_image_refs`（GUI RPC 已有，**CLI 无 diagnose 子命令**；保存后 cleanedImages 已做部分自动清理）｜**M7b 重活线程池与定时队列**（当前仅 M3 单 daemon 合并线程）
+- 子计划：**G5.1** F01 后台化/调度化（静默 validate 纳入调度内核：epoch/dropStale、编辑中跳过、idle 跑、结果角标；新建标准语料 validate 0-issue 基准脚本 + 大库耗时对照）｜**G5.2** CLI 补全与断言（新增 `diagnose-images` 子命令；repair 干跑一致性断言；UI 入口/i18n 核对）｜**G5.3** M7b 后端执行器（线程池+队列：validate/audit 等重活入队执行，RPC 不阻塞；与 M3 锁语义对齐）
 - 入口：G4 门禁通过
-- 出口门禁：validate CLI 0 issue｜repair_path_cascade 干跑与实操一致｜diagnose 结构化输出合法｜纳入登记表与 i18n 核对｜回归冒烟 PASS → commit `G5`
+- 出口门禁：validate CLI 0 issue（基准语料）｜repair_path_cascade 干跑与实操一致｜diagnose 结构化输出合法（CLI+GUI）｜F01 调度化后无编辑期运行且不阻塞 RPC（`[真机]`+耗时对照）｜登记表与 i18n rows=0｜回归冒烟 PASS → commit `G5`
 
 **旁线 · B7 导出 bundle（独立评审门，不阻塞主线）**：export-plan 评审 → 通过后按 M1–M5 阶段表独立推进。
 
