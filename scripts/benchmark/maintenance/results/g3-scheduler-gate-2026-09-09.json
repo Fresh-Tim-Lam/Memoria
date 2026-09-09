@@ -1,0 +1,20 @@
+{
+  "kind": "g3-scheduler-gate",
+  "recorded_at": "2026-09-09",
+  "vm_unit_test": {
+    "tool": "scripts/benchmark/maintenance/scheduler_vm_test.js",
+    "result": "PASS（9/9）",
+    "scenarios": ["replace 顶替合并 merged=1", "P0 优先于 P2 执行", "flush 后 queued=0", "epoch 陈旧丢弃 dropped=1 executed=0", "旁路 __BENCH_DISABLE_SCHEDULER scheduled=executed"]
+  },
+  "real_machine_evidence": {
+    "stale_drop": {
+      "log_lines": ["[job] 入队 g3_probe:stale #1 prio=3 queue=1", "[job] 陈旧丢弃 g3_probe:stale (gen 0 < 1)", "[G3] {queued:0, running:false, epoch:1} {scheduled:1, executed:0, merged:0, dropped:1, queue_max:1}"],
+      "note": "DevTools Console：dropStale job 入队后 bumpEpoch → 陈旧丢弃生效、queued=0"
+    },
+    "queue_converge": {
+      "log": "JSON.stringify(window.MemoriaScheduler.status()) => {\"queued\":0,\"running\":false,\"epoch\":2}",
+      "note": "编辑保存（kp_panel 等作业 idle 执行）后队列收敛为 0"
+    }
+  },
+  "conclusion": "G3 出口门禁证据齐（VM 单测全 PASS + 真机陈旧丢弃/queued=0 + 回归冒烟已由 M6a regression_smoke PASS 覆盖）；待用户拍板后打 G3 快照 commit"
+}
