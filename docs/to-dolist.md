@@ -248,6 +248,7 @@
 | E6 | L1 保存路径回退归因：2 轮 ABBA（base 158.6 vs HEAD 180.5，+13.8%）→ diff 定位 M1 fsync；分项剖析 trace_save_document.py（manifest_touch ~50ms 为大头）→ 决策 fsync flush 屏障化 + manifest 批量（jobs.md 登记，G4 M6a） | ✅ 2026-09-09 |
 | E7 | G4 M6a 施工：durable_flush（barrier 默认 + RPC + 前端屏障）+ manifest 模块 pending overlay；实测 save median inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；**门禁通过（用户 2026-09-09 拍板）**：真机 idle 3s（flushed1/manifest1/14.99ms）+ 切文件屏障（1.91ms）+ 崩溃注入 15/15 PASS + 回归冒烟 PASS | ✅ 2026-09-09（门禁通过） |
 | E8 | G4 M3 词法索引后台化（锁+合并 daemon，`_write_sidecar` 不再同步重建；search/切库/关库前 wait）；回归冒烟 PASS；**真机验证通过（2026-09-09：建后立即检索与连建后检索均命中，rpc 340.5→260~320ms）**，results/m3-lexical-background-2026-09-09.json；待 G4 出口对照汇总 | ✅ 2026-09-09（施工+真机验证通过） |
+| E9 | G4 M6b 正文编辑 KP 区域行号范围实时同步（区域内 Enter 并入/区域外与后续顺延/行前插空行吸收/删行收缩；前端实时更新列表行号与 hover 高亮，保存后后端 resync 权威校正）；单测 15/15（m6b_adjust_test.js，从真实 app.js 抽取断言）；待真机 | ✅ 2026-09-09（施工完成，待真机） |
 
 ### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
 
@@ -301,7 +302,7 @@
 - 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过，tool `scripts/benchmark/maintenance/scheduler_vm_test.js`）｜bumpEpoch `[真机]` 陈旧丢弃生效（✅ 证据：g3_probe dropped=1）｜`[job]` 日志 `queued=0` 收敛（✅ 证据：status queued=0）｜回归冒烟 PASS → **✅ G3 门禁通过（用户拍板 2026-09-09），快照见 tag `maint-g3`**
 
 **G4 · 作业化落地**
-- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 门禁通过 2026-09-09**）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜**M3 词法索引后台化**（**✅ 已施工 2026-09-09**：锁+合并 daemon 重建，`_write_sidecar` 不再同步重建；search/切库/关库前 wait 保证一致，results/m3-lexical-background-2026-09-09.json；待真机验证）｜M6b（待定）KP 创建/更新作业化（已提速至 485ms 保持内联，是否入队待拍板）｜C4 图谱局部刷新
+- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 门禁通过 2026-09-09**）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜**M3 词法索引后台化**（**✅ 已施工 2026-09-09**：锁+合并 daemon 重建，`_write_sidecar` 不再同步重建；search/切库/关库前 wait 保证一致，results/m3-lexical-background-2026-09-09.json；待真机验证）｜**M6b KP 区域行号范围实时同步**（**✅ 已施工 2026-09-09**：源码编辑 Enter 在区域内并入新行/区域外顺延、行前插空行、Backspace/Delete 删行收缩；前端增量调整 KP range+高亮/列表行号实时更新，保存后由后端 resync 权威校正；单测 15/15，tool `m6b_adjust_test.js`；待真机）｜C4 图谱局部刷新
 - 入口：G3 门禁通过（作业底座就绪）
 - 出口门禁：M6a 屏障对照（fsync 内联 vs 屏障批量：L1 median Δ 显著下降；切文件/关库屏障后数据可读）｜manifest 批量：连续保存只触发 1 次落盘｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
 

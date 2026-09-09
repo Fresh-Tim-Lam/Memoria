@@ -97,7 +97,7 @@
 | kp_range_resync | doc_save 成功后同事务 | P0 | ✅（并入 doc_save） | 已并入 `_resync_kp_ranges_after_edit` |
 | registry_doc | doc_save 成功后 | P0 | ✅ | 已并入 `_update_registry_for_doc` |
 | rename_cascade | 文件/文件夹重命名 | P0 | ❌（独占） | rename_file/rename_dir 已实现 |
-| kp_create / kp_update | 用户确认/编辑知识点 | P1 | ❌ | ✅ 2026-09-09 提速（JSON+单文件同步+关窗先于图谱）485ms 保持内联；作业化是否仍需待 M6b 拍板 |
+| kp_create / kp_update | 用户确认/编辑知识点 | P1 | ❌ | ✅ 2026-09-09 提速（JSON+单文件同步+关窗先于图谱）485ms 保持内联；M6b 拍板：保持内联不入队，改为正文编辑行范围实时同步（区域内 Enter 并入/删行收缩，保存后 resync 权威校正） |
 | kp_panel_refresh | ranges_resynced>0 | P2 | ✅ | `_silentRefreshKpPanel` 已落地 |
 | preview_range_redraw | 重锚就绪 | P2 | ✅ | 未实现（P2） |
 | index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅（合并） | ✅ M3 后台化（2026-09-09）：锁+合并 daemon 重建，写路径不阻塞；search/切库/关库前 wait |

@@ -15,6 +15,7 @@
     currentPath: null,
     doc: null,
     activeKpId: null,
+    hoveredKpId: null,
     assist: null,
     viewMode: localStorage.getItem("-view") || "source",
     previewToken: 0,
@@ -6997,6 +6998,114 @@
       markDirty();
     });
 
+    // ── M6b：正文行结构变化（Enter/删行合并）实时同步 KP 行号范围与高亮 ──
+    function _kpRr(kp) { return kp.range_resolved || {}; }
+    function _kpStart(kp) {
+      const r = _kpRr(kp);
+      if (r.ok) return r.start_line || 1;
+      return kp.range?.start?.line_hint || 1;
+    }
+    function _kpEnd(kp) {
+      const s = _kpStart(kp);
+      const r = _kpRr(kp);
+      if (r.ok) return Math.max(s, r.end_line || s);
+      return Math.max(s, kp.range?.end?.line_hint || s);
+    }
+    function _kpSetLines(kp, s, e) {
+      if (!kp) return;
+      e = Math.max(1, s, e);
+      const r = _kpRr(kp);
+      if (r.ok) {
+        r.start_line = s;
+        r.end_line = e;
+      }
+      const range = kp.range || {};
+      range.start = range.start || {};
+      range.start.line_hint = s;
+      range.end = range.end || {};
+      range.end.line_hint = e;
+    }
+    function _kpList() { return (state.doc && state.doc.knowledge_points) || []; }
+
+    /** 插入 delta 行后调整。
+     *  before=false：新行位于 p 行之后，后续 KP（起点 > p）顺延；
+     *  before=true：新行插到 p 行之前，后续 KP（起点 >= p）顺延。
+     *  absorbId：该 KP 吸收新行（并入区域）→ 仅终点 +delta。 */
+    function adjustKpRangesAfterInsert(p, { before = false, absorbId = null, delta = 1 } = {}) {
+      const kps = _kpList();
+      for (const k of kps) {
+        if (k.id === absorbId) {
+          _kpSetLines(k, _kpStart(k), _kpEnd(k) + delta);
+          continue;
+        }
+        const s = _kpStart(k);
+        if ((before ? s >= p : s > p)) _kpSetLines(k, s + delta, _kpEnd(k) + delta);
+      }
+      refreshKpRangeUi();
+    }
+
+    /** 删除 R 行（内容并入上一行）后调整。 */
+    function adjustKpRangesAfterRemove(R) {
+      const kps = _kpList();
+      for (const k of kps) {
+        const s = _kpStart(k);
+        const e = _kpEnd(k);
+        if (s > R) { _kpSetLines(k, s - 1, e - 1); continue; }
+        if (e < R) continue;
+        // 覆盖 R：区域收缩一行；若删除的是区域首行则并入上一行（近似，保存后端重锚会校正）
+        const ns = s === R ? Math.max(1, s - 1) : s;
+        _kpSetLines(k, ns, Math.max(ns, e - 1));
+      }
+      refreshKpRangeUi();
+    }
+
+    /** 找出“吸收新行”的 KP：覆盖 line，且光标不在该 KP 末行的行尾（行尾换行视为区域外）。 */
+    function findAbsorbKp(line, offset, textLen) {
+      for (const k of _kpList()) {
+        const s = _kpStart(k);
+        const e = _kpEnd(k);
+        if (s <= line && line <= e) {
+          if (e === line && offset >= textLen) continue;
+          return k.id;
+        }
+      }
+      return null;
+    }
+
+    /** 行前插空行时：若空行落在 KP 区域内部（start < line <= end）则该 KP 吸收（终点+1）。 */
+    function findAbsorbKpBefore(line) {
+      for (const k of _kpList()) {
+        const s = _kpStart(k);
+        const e = _kpEnd(k);
+        if (s < line && line <= e) return k.id;
+      }
+      return null;
+    }
+
+    /** 定点同步：KP 列表行号文本 + 重绘当前 hover 高亮（沿用最新行号）。 */
+    function refreshKpRangeUi() {
+      const hoverId = state.hoveredKpId;
+      let hoverItem = null;
+      for (const k of _kpList()) {
+        const item = document.querySelector(`.-kp-item[data-kp="${CSS.escape(k.id)}"]`);
+        if (!item) continue;
+        if (k.id === hoverId) hoverItem = item;
+        const meta = item.querySelector(".-kp-meta span");
+        if (!meta) continue;
+        const r = _kpRr(k);
+        if (r.ok) meta.textContent = `L${r.start_line}–${r.end_line}`;
+        else if (k.range?.start?.line_hint) {
+          const es = k.range?.end?.line_hint || k.range.start.line_hint;
+          meta.textContent = `L${k.range.start.line_hint}–${es}`;
+        }
+      }
+      if (hoverId && hoverItem && hoverItem.matches(":hover")) {
+        highlightKpHover(hoverId);
+      } else {
+        state.hoveredKpId = null;
+      }
+    }
+
     // 源码编辑器：Backspace/Delete/Enter 行级操作
     editor.addEventListener("keydown", (e) => {
       const content = e.target.closest(".-line-content");
@@ -7100,6 +7209,7 @@
         lineEl.remove();
         renumberSourceLines(line);
         _srcAfterEdit();
+        adjustKpRangesAfterRemove(line); // M6b：删除当前行并并入上一行 → KP 范围收缩/顺延
         // 光标移到合并位置
         const targetNode = prevContent.firstChild;
         if (targetNode) {
@@ -7156,6 +7266,8 @@
           lineEl.before(newLineEl);
           renumberSourceLines(line);
           _srcAfterEdit();
+          // M6b：标题行前插空行 → 区域内吸收(终点+1)/后续 KP 顺延
+          adjustKpRangesAfterInsert(line, { before: true, absorbId: findAbsorbKpBefore(line) });
           // 光标留在新空行中
           const br = newLineContent.querySelector("br");
           if (br) {
@@ -7195,6 +7307,9 @@
         lineEl.after(newLineEl);
         renumberSourceLines(newNum + 1);
         _srcAfterEdit();
+        // M6b：区域内换行 → 该 KP 吸收新行（终点+1）；后续 KP 顺延
+        const absorbId = findAbsorbKp(line, offset, text.length);
+        adjustKpRangesAfterInsert(line, { before: false, absorbId });
         // 光标移到新行开头
         const range = document.createRange();
         const firstText = newLineContent.firstChild;
@@ -10765,6 +10880,7 @@
   }
 
   function clearKpHoverHighlight() {
+    state.hoveredKpId = null;
     document.querySelectorAll(".-line.kp-hover").forEach((el) => {
       el.classList.remove("in-range", "kp-hover");
     });
