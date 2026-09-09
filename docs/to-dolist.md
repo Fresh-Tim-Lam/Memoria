@@ -244,6 +244,8 @@
 | E2 | 图片路径规范（preview-formats §4.4 / organize §7.3，含 `../` 禁例）同步 | ✅ |
 | E3 | design：export-plan / maintenance-jobs（草稿，2026-09-09 复核恢复 export-plan） | ⏳ 待评审 |
 | E4 | docs-management / to-dolist 修订登记 | ✅（2026-09-09 复核补登记 to-dolist §12 行） |
+| E5 | L2 KP 创建链路归因闭环：前端插桩 + 后端克隆计时工具 trace_kp_confirm.py + results 记录（归因 pending 同步，B5 修复对照） | ✅ 2026-09-09 |
+| E6 | L1 保存路径回退归因：2 轮 ABBA（base 158.6 vs HEAD 180.5，+13.8%）→ diff 定位 M1 fsync；分项剖析 trace_save_document.py（manifest_touch ~50ms 为大头）→ 决策 fsync flush 屏障化 + manifest 批量（jobs.md 登记，G4 M6a） | ✅ 2026-09-09 |
 
 ### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
 
@@ -297,9 +299,9 @@
 - 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过）｜bumpEpoch `[真机]` 验证陈旧丢弃生效｜`[job]` 日志 `queued=0` 收敛｜回归冒烟 PASS → commit `G3`
 
 **G4 · 作业化落地**
-- 范围：M6 KP 创建/更新作业化（入队即放行）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
+- 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush` 在切文件/关库/退出屏障批量执行，2026-09-09 A/B 依据 ~15% fsync 成本）｜M6b（待定）KP 创建/更新作业化（已提速至 485ms 保持内联，是否入队待拍板）｜**manifest_touch 批量合并**（~50ms/保存绝对大头）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
 - 入口：G3 门禁通过（作业底座就绪）
-- 出口门禁：M6 连续 2+ 次创建无阻塞计时上限 + 完成后 KP 可见｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
+- 出口门禁：M6a 屏障对照（fsync 内联 vs 屏障批量：L1 median Δ 显著下降；切文件/关库屏障后数据可读）｜manifest 批量：连续保存只触发 1 次落盘｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
 
 **G5 · 维护面收敛（M7）**
 - 范围：F01 检查/审计、F02 路径漂移修复、F03 图片引用诊断修复 → 评估后登记/纳入调度；重活线程池与定时队列
