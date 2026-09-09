@@ -242,7 +242,7 @@
 |---|---|---|
 | E1 | rename-test 测试库 + 生成脚本 + example README 登记 | ✅ |
 | E2 | 图片路径规范（preview-formats §4.4 / organize §7.3，含 `../` 禁例）同步 | ✅ |
-| E3 | design：export-plan / maintenance-jobs（草稿，2026-09-09 复核恢复 export-plan） | ⏳ 待评审 |
+| E3 | design：export-plan / maintenance-jobs / durable-flush（草稿，2026-09-09 复核恢复 export-plan；durable-flush 为 G4 M6a 设计） | ⏳ 待评审 |
 | E4 | docs-management / to-dolist 修订登记 | ✅（2026-09-09 复核补登记 to-dolist §12 行） |
 | E5 | L2 KP 创建链路归因闭环：前端插桩 + 后端克隆计时工具 trace_kp_confirm.py + results 记录（归因 pending 同步，B5 修复对照） | ✅ 2026-09-09 |
 | E6 | L1 保存路径回退归因：2 轮 ABBA（base 158.6 vs HEAD 180.5，+13.8%）→ diff 定位 M1 fsync；分项剖析 trace_save_document.py（manifest_touch ~50ms 为大头）→ 决策 fsync flush 屏障化 + manifest 批量（jobs.md 登记，G4 M6a） | ✅ 2026-09-09 |
