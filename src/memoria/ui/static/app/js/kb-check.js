@@ -148,8 +148,26 @@ window.MemoriaKbCheck = (function () {
 
   function startKbSilentCheck() {
     if (!window.MemoriaCheckSettings) return;
-    MemoriaCheckSettings.startSilentCheck(() => {
-      if (state.kbPath) runKbValidate({ silent: true });
+    MemoriaCheckSettings.startSilentCheck(scheduleSilentValidate);
+  }
+
+  /** G5.1：静默 validate 经调度内核执行（优先级/idle、按 KB 合并、关库 epoch 陈旧丢弃、忙时不跑）。 */
+  function scheduleSilentValidate() {
+    const S = window.MemoriaScheduler;
+    if (!S || !state.kbPath) return;
+    S.schedule({
+      kind: "kb_check",
+      key: "kb:" + state.kbPath,
+      priority: 3,
+      replace: true,
+      dropStale: true,
+      gen: S.epoch(),
+      run: () => {
+        if (!state.kbPath) return;
+        const busy = window.__memoriaHasPendingEdits && window.__memoriaHasPendingEdits();
+        if (busy) return; // 编辑/待保存未收敛：本次跳过，等下轮间隔
+        runKbValidate({ silent: true });
+      },
     });
   }
 

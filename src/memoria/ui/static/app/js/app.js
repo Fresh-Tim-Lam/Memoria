@@ -105,7 +105,10 @@
   function scheduleRenderSync() {
     clearTimeout(_renderTimer);
     syncLog("scheduleRenderSync: 将在", RENDER_DEBOUNCE_MS, "ms 后执行 syncSourceToPreview");
-    _renderTimer = setTimeout(() => syncSourceToPreview(), RENDER_DEBOUNCE_MS);
+    _renderTimer = setTimeout(() => {
+      _renderTimer = null;
+      syncSourceToPreview();
+    }, RENDER_DEBOUNCE_MS);
   }
 
   /** 将当前内存内容写回磁盘（始终从源码编辑器收集，保证 markdown 格式完整） */
@@ -150,13 +153,18 @@
     _dirty = true;
     clearTimeout(_saveTimer);
     clearTimeout(_durableTimer); // 有新编辑则推迟 durable_flush 兜底
-    _saveTimer = setTimeout(() => syncToDisk(), SAVE_DEBOUNCE_MS);
+    _saveTimer = setTimeout(() => {
+      _saveTimer = null;
+      syncToDisk();
+    }, SAVE_DEBOUNCE_MS);
     scheduleEditorRangesResolve(); // M6b：停手后按当前正文即时权威解析 KP 范围（不依赖保存）
   }
 
   // ── M6b：即时 KP 范围解析（结构编辑后 420ms，正文当前态 → 后端解析 → 回写 hover/列表）──
   let _rangeTimer = null;
   let _docRev = 0;
+  /** 供 kb-check 等判断“编辑/待保存尚未收敛”（G5.1：静默 validate 不在忙时触发） */
+  window.__memoriaHasPendingEdits = () => !!_dirty || !!_saveTimer || !!_renderTimer || !!_rangeTimer;
   function scheduleEditorRangesResolve() {
     if (!state.doc || !state.currentPath || !(state.doc.knowledge_points || []).length) return;
     clearTimeout(_rangeTimer);
@@ -187,7 +195,9 @@
   async function flushSync() {
     syncLog("flushSync: dirty=", _dirty);
     clearTimeout(_saveTimer);
+    _saveTimer = null;
     clearTimeout(_renderTimer);
+    _renderTimer = null;
     await syncToDisk();
   }
 
@@ -1537,6 +1547,7 @@
     // 页签切换前：将源码编辑器内容同步到内存，刷新两个视图
     if (prevMode !== mode) {
       clearTimeout(_renderTimer);
+      _renderTimer = null;
       syncLog("setViewMode:", prevMode, "→", mode, "| dirty=", _dirty);
       // 始终从源码编辑器收集（它是 markdown 源，不会丢失格式）
       const body = collectEditorBody();
@@ -1552,7 +1563,7 @@
       await renderPreview(state.doc);
       alreadyRendered = true;
       // 触发写盘
-      if (_dirty) { clearTimeout(_saveTimer); syncToDisk(); }
+      if (_dirty) { clearTimeout(_saveTimer); _saveTimer = null; syncToDisk(); }
       _saveCurrentViewScroll(prevMode);
     }
     // 记录源码行号锚点：用于跨视图（源码↔预览）的文本位置映射
