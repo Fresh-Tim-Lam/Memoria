@@ -1,0 +1,28 @@
+{
+  "kind": "maintenance-baseline",
+  "baseline_commit": "ae66a012",
+  "recorded_at": "2026-09-09T06:25:25.537224+00:00",
+  "corpus": {
+    "files": 200,
+    "kps": 599,
+    "links": 333,
+    "digest": "756f3cc3d473d86c9d165ba1a25d9509734556a693664099b0da1bc7a8e7b4df",
+    "gen_cmd": "gen_maintenance_kb.py --files 200"
+  },
+  "env": {
+    "python": "3.12.4",
+    "os": "nt"
+  },
+  "method": {
+    "sample_files": 20,
+    "runs_per_file": 3,
+    "total_saves": 60,
+    "instrument": "external total save_document ms"
+  },
+  "result_ms": {
+    "count": 60,
+    "mean": 136.06,
+    "median": 123.14,
+    "p95": 200.1
+  }
+}
