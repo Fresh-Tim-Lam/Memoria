@@ -1,6 +1,6 @@
 # 维护机制基准（Maintenance Benchmark）
 
-> **用途**：为「维护机制改进」建立可量化的**改造前后（A/B）对照**：定义受控基准知识库、指标与采集点、A/B 流程，以及"每阶段改善必须附基准对照"的门禁规则。回答"加了调度内核/静默刷新/索引作业化后，比之前改善了多少"。当前（2026-09-09）**尚无基准实现与基准知识库**——本文档为设计，评审通过后按 §7 实现。
+> **用途**：为「维护机制改进」建立可量化的**改造前后（A/B）对照**：定义受控基准知识库、指标与采集点、A/B 流程，以及"每阶段改善必须附基准对照"的门禁规则。回答"加了调度内核/静默刷新/索引作业化后，比之前改善了多少"。当前（2026-09-09）B0/B1 基线已落地、B2 部分（L1 采样 + L2 前端插桩）、KP 创建链路归因闭环（§6.5）；其余按 §7 推进。
 > **目标读者**：项目负责人（评审指标/流程）；实施 Agent（按 §7 落地生成器与采集）；验收者（跑 A/B 出对照报告）。
 > **关联文档**：[to-dolist.md §12](../to-dolist.md)（施工总表/阶段门禁/验证机制分配）；[maintenance-jobs.md](./maintenance-jobs.md)（作业模型与指标挂钩）；[rename-test 生成器](../../docs/example/rename-test/_gen_rename_test_kb.py)（语料生成范式）；[import-plan.md](../reference/import-plan.md)（headless harness 先例）。
 > **状态**：草稿（待评审），2026-09-09。
@@ -53,14 +53,15 @@
 - scheduler.js：加 counters（scheduled/executed/merged/dropped/queue_max）+ `resetCounters()` + `counters()`。✅ 2026-09-09 已实现（另含 `__BENCH_DISABLE_SCHEDULER` 旁路与 `isBypass()`）。
 - document.py：save_document 分项计时（heal/registry 分项）——`MEMORIA_BENCH_TIMING=1` 时返回 `bench_ms`。✅ 2026-09-09 已实现（registry/resync 两分项）。
 - 前端：PerformanceObserver 在 `?bench=1` 或环境 flag 下启用并把长任务累计写入状态。⏳ B4 时实现。
-- KP 创建链路：前后端各埋一个时间戳键。⏳ B2 后续/B4。
+- KP 创建链路：前后端各埋一个时间戳键。✅ 2026-09-09 已实现（L2）：前端 `?bench=1` 或 DevTools `window.__bench=true`，链路分 kind=`modal`/`quick` 分段输出 `[KP-BENCH]`（start→check_ok→rpc_ok→ui_done→modal_closed），并写入 `window.__benchLog`；后端归因用 `scripts/benchmark/maintenance/trace_kp_confirm.py`（克隆库计时 + 子阶段插桩）。
 
 ## 6.5 实现状态（2026-09-09）
 
 - B0 ✅ 改造前基线已锚定：`results/baseline_ae66a012.{json,md}`（tag `maint-base`），语料 digest `756f3cc3…`，save median≈123ms / p95≈200ms（60 次采样）。
 - B1 ✅ `scripts/benchmark/maintenance/gen_maintenance_kb.py`：确定性（两次生成内容一致 PASS）、默认档 200 文件 / ~599 KP / 333 链接、range 可解析 PASS。
-- B2 ✅（部分）：scheduler counters + 旁路 PASS；save `bench_ms` PASS；PerformanceObserver 与 KP 创建时间戳待 B4/B2 后续。
+- B2 ✅（部分）：scheduler counters + 旁路 PASS；save `bench_ms` PASS；L2 前端插桩与后端归因工具 PASS；PerformanceObserver ⏳ 待 B4。
 - B3–B6：未开始。
+- **KP 创建链路归因闭环（真实库 `D:\AAA_Courses\软件工程概论`，2026-09-09）**：见 [results/kp-confirm-2026-09-09.json](../scripts/benchmark/maintenance/results/kp-confirm-2026-09-09.json)。要点：① 真机 modal 链 total 2442.6ms→(pending 切 JSON 后)981.6ms，其中 rpc 段 2389→706.6ms；② 后端稳态 confirm 4s(YAML 全量 sync)→515ms(JSON)→285.7ms(+单文件范围同步)；③ 根因=pending.yaml 全量 safe_load/safe_dump 每确认同步执行（JSON 同数据约快 150×）+ 全库 propose 全量重跑；④ 已修：pending 存储 JSON+自动迁移、confirm/delete 改 `sync_pending_for_file`、前端弹窗关窗先于图谱刷新；⑤ 克隆库首写 ~12s 为词法/embedding 冷启动重建伪影，真机热态无此。
 
 ## 7. 实施步骤（评审通过后）
 

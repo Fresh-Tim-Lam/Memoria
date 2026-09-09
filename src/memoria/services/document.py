@@ -84,6 +84,7 @@ from memoria.storage.pending import (
     save_pending,
     summarize_kb_pending,
     sync_kb_pending,
+    sync_pending_for_file,
 )
 from memoria.storage.sidecar_validate import validate_sidecar
 from memoria.storage.ui_settings import remember_last_kb_path
@@ -1303,7 +1304,7 @@ class DocumentService:
             }
 
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
-        sync_kb_pending(self.kb_path)
+        sync_pending_for_file(self.kb_path, rel_path.replace("\\", "/"))
         self._cache.pop(rel_path, None)
         return self.load_document(rel_path)
 
@@ -1713,7 +1714,7 @@ class DocumentService:
             }
 
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
-        sync_kb_pending(self.kb_path)
+        sync_pending_for_file(self.kb_path, rel_path.replace("\\", "/"))
         self._cache.pop(rel_path, None)
         return self.load_document(rel_path)
 

@@ -1,0 +1,71 @@
+{
+  "kind": "kp-confirm-l2",
+  "recorded_at": "2026-09-09",
+  "kb": "D:\\AAA_Courses\\软件工程概论",
+  "corpus": {
+    "md_files": 14,
+    "pending_items": 2579,
+    "total_mb": 118.4
+  },
+  "method": {
+    "frontend": "app.js L2 插桩：?bench=1 或 DevTools window.__bench=true；confirm_kp_range 链路分 kind=modal/quick 打点并输出 [KP-BENCH]（start/check_ok/rpc_ok/ui_done/modal_closed），结果同时写入 window.__benchLog",
+    "backend": "scripts/benchmark/maintenance/trace_kp_confirm.py：整库克隆到临时目录执行真实 confirm_kp_range 并对子阶段插桩计时，跑完删除克隆（真实库零改动）"
+  },
+  "front_modal_chain_ms": {
+    "before_pending_json": {
+      "source": "logs/out L246 真机拖拽创建",
+      "flow": "start>check_ok>rpc_ok>ui_done",
+      "total": 2442.6,
+      "rpc_phase": 2389.1,
+      "ui_phase": 34.9,
+      "note": "modal_closed 段当时未测到（插桩结算时机 bug，已修）"
+    },
+    "after_pending_json": {
+      "source": "真机拖拽创建（kind=modal 完整链）",
+      "flow": "start>check_ok>rpc_ok>ui_done>modal_closed",
+      "total": 981.6,
+      "phases": [
+        "check_ok+21.8ms",
+        "rpc_ok+706.6ms",
+        "ui_done+95.1ms",
+        "modal_closed+158.1ms"
+      ],
+      "note": "pending YAML→JSON 后；rpc 段残余 ~230ms 为全库 propose（已再改单文件范围），~160ms 为词法索引全库重建（G4/M3 目标）"
+    }
+  },
+  "backend_confirm_steady_ms": {
+    "yaml_full_sync": {
+      "confirm_total": null,
+      "stages": { "sync_kb_pending": 4040, "P:load_pending_yaml": 2066, "P:save_pending_yaml": 1456, "RP:propose_all_ranges": 745 },
+      "note": "同一克隆环境稳态；confirm 总耗时约 = write ~160 + sync ~4000 + load_document ~50"
+    },
+    "after_json_full_sync": {
+      "confirm_total": 515.0,
+      "stages": { "sync_kb_pending": 306, "P:load_pending_json": 7, "P:save_pending_json": 25 }
+    },
+    "after_json_single_file": {
+      "confirm_total": 285.7,
+      "stages": { "svc:_write_sidecar": 189.6, "sync_pending_for_file": null, "svc:load_document": 48.5 },
+      "note": "词法索引全库重建 ~163ms 仍在 write_sidecar 内（冷启动伪影外的真实稳态，剩余优化点）"
+    }
+  },
+  "serialization_micro": {
+    "same_pending_data_1.17MB": {
+      "yaml_safe_load_ms": 888.7,
+      "yaml_safe_dump_ms": 532.0,
+      "json_loads_ms": 3.4,
+      "json_dumps_ms": 4.6
+    }
+  },
+  "root_cause": "confirm_kp_range 每次同步全量重算并重写 pending.yaml：YAML safe_load/safe_dump 数千条提议每确认 ~1.4s（同数据 JSON ~10ms）+ 全库 propose_all_ranges 全量重跑 + 条目合并后全量写盘；均在 RPC 内阻塞",
+  "fixes": [
+    "pending 存储 pending.yaml → pending.json（constants.py + pending.py，load/save 自动迁移旧 yaml 并清理，原子写+备份）",
+    "confirm_kp_range / delete_kp 改用 sync_pending_for_file（只重算受影响文件，其余条目原样保留，dismissed 跨文件保留）",
+    "前端 saveKpRange host=kp 分支：图谱刷新 fire-and-forget，先返回关窗再异步 relayout（ui_done→modal_closed 不再被图谱拖住）"
+  ],
+  "notes": [
+    "克隆库 run0 首写 12~23s 为词法/embedding 冷启动重建伪影（预热后 run1 ~160~190ms），真机热态无此；",
+    "词法索引每次保存全库重建（rebuild_lexical_index）为剩余稳态大头，作业化归 to-dolist §12 M3/G4；",
+    "pending YAML 即便 libyaml 可用仍 ~0.9s 解析 1.1MB，不深究原因，JSON 已消除该成本。"
+  ]
+}

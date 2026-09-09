@@ -4476,6 +4476,47 @@
     });
   }
 
+  // ---- [bench] 知识点创建链路 L2 插桩（?bench=1 或 DevTools 设 window.__bench=true 开启；默认关）----
+  // kind: "modal"=创建弹窗保存链（终点 modal_closed）；"quick"=配置弹窗直接确认链（终点 ui_done）
+  const __benchMarks = [];
+  let __benchKind = null;
+  function __benchActive() {
+    return (
+      typeof window !== "undefined" &&
+      (window.__bench === true || /[?&]bench=1([&#]|$)/.test(location.search))
+    );
+  }
+  function benchMark(label, kind) {
+    if (!__benchActive()) return;
+    if (label === "start") {
+      __benchMarks.length = 0;
+      __benchKind = kind || "quick";
+    }
+    __benchMarks.push({ label, t: performance.now() });
+    console.log("[KP-BENCH-t]", label, "kind=" + __benchKind);
+    if (label === "modal_closed") benchReport();
+    else if (label === "ui_done" && __benchKind !== "modal") benchReport();
+  }
+  function benchReport() {
+    if (!__benchMarks.length) return;
+    const list = __benchMarks;
+    const t0 = list[0].t;
+    const phases = [];
+    for (let i = 1; i < list.length; i++) {
+      phases.push(list[i].label + "+" + (list[i].t - list[i - 1].t).toFixed(1) + "ms");
+    }
+    const rec = {
+      kind: __benchKind,
+      flow: list.map((x) => x.label).join(">"),
+      total_ms: +((list[list.length - 1].t - t0)).toFixed(1),
+      phases,
+    };
+    (window.__benchLog = window.__benchLog || []).push(rec);
+    console.log("[KP-BENCH]", JSON.stringify(rec));
+    __benchMarks.length = 0;
+    __benchKind = null;
+  }
+
   /** 直接确认待确认提议：不弹配置弹窗，用提议的 id/名称/范围直接创建知识点 */
   async function confirmKpFromProposal(proposal) {
     if (!proposal || !state.currentPath) return;
@@ -4498,11 +4539,13 @@
       return;
     }
     try {
+      benchMark("start", "quick");
       const check = await call("check_kp_id", kpId, state.currentPath);
       if (check.status !== "ok" || !check.available) {
         setStatusError(check.message || T("cfg.confirm.idTaken"), check.files?.join(", "));
         return;
       }
+      benchMark("check_ok");
     } catch (e) {
       setStatusError(T("cfg.confirm.validateFail"), String(e.message || e));
       return;
@@ -4513,6 +4556,7 @@
       setStatusError(res.message || T("cfg.confirm.writeFail"));
       return;
     }
+    benchMark("rpc_ok");
     state.doc = res;
     renderEditor(res);
     renderKpList(res);
@@ -4523,6 +4567,7 @@
     renderKpList(state.doc);
     highlightRange(start, end);
     scrollKpListItemIntoView(kpId);
+    benchMark("ui_done");
     setStatus(T("cfg.confirm.done"), T("cfg.confirm.doneDetail", { kpId, start, end }));
     try {
       await saveKpCreateMetadata(kpId);
@@ -11436,8 +11481,12 @@
     const panel = state.kpPanel;
     syncKpPanelFromForm();
     if (panel?.mode === "create") {
+      benchMark("start", "modal");
       const ok = await saveKpRange();
-      if (ok) closeKpModal();
+      if (ok) {
+        closeKpModal();
+        benchMark("modal_closed");
+      }
       return;
     }
     const tab = panel?.tab || "range";
@@ -11574,6 +11623,7 @@
         setStatusError(T("cfg.confirm.validateFail"), String(e.message || e));
         return false;
       }
+      benchMark("check_ok");
     }
 
     setStatus(T("cfg.kpSave.savingCfg"));
@@ -11598,6 +11648,7 @@
       }
       return false;
     }
+    if (a.mode === "create") benchMark("rpc_ok");
 
     state.doc = res;
     renderEditor(res);
@@ -11610,6 +11661,7 @@
     renderKpList(state.doc);
     highlightRange(start, end);
     scrollKpListItemIntoView(kpId);
+    if (a.mode === "create") benchMark("ui_done");
     const created = a.mode === "create";
     setStatus(
       created ? T("cfg.kpSave.created") : T("cfg.kpSave.updatedRange"),
@@ -11622,6 +11674,14 @@
         /* optional */
       }
     }
+    // 图谱刷新与「弹窗关闭」解耦：host=kp（创建/编辑弹窗）先返回关窗，
+    // 让用户立即看到定位+高亮，图数据异步补刷，避免窗口关闭被 relayout 拖住。
+    if (host === "kp") {
+      loadGraphData()
+        .then(() => applyGraphGroupLayout({ relayout: true }))
+        .catch(() => {});
+      return true;
+    }
     try {
       await loadGraphData();
       applyGraphGroupLayout({ relayout: true });
@@ -11629,9 +11689,6 @@
       /* optional */
     }
 
-    if (host === "kp") {
-      return true;
-    }
     if (returnTo === "config") {
       openConfigModal({ tab: "kp" });
     }

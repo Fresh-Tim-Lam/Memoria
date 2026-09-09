@@ -215,7 +215,7 @@
 | B2 | 文件夹重命名 dir_rename（整树移动 + 逐文件级联） | ✅ 新增（partial 级联失败已上屏，2026-09-09 复核修正），**待真机验收** |
 | B3 | F2 快捷键（文件/文件夹，捕获阶段 + 仅拦可见弹窗） | ✅ 新增，**待验收** |
 | B4 | 保存 autosave / flush / 脏标记 | ✅ |
-| B5 | KP 创建/更新慢 RPC（当前阻塞 UI） | ⚠️ 作业化目标（P1） |
+| B5 | KP 创建/更新慢 RPC（原阻塞 UI） | ✅ 主因已修（2026-09-09）：pending 存储 YAML→JSON（自动迁移）+ confirm/delete 改单文件范围同步 + 弹窗关窗先于图谱刷新；真机 modal 链 2442.6→981.6ms，后端稳态 4s→285.7ms（详见 [results/kp-confirm-2026-09-09.json](../scripts/benchmark/maintenance/results/kp-confirm-2026-09-09.json)）；剩余词法索引全库重建作业化归 M3/G4（P1） |
 | B6 | md 相对路径链接在目录重命名时自动改写 | ❌ 已知边界（待扩展） |
 | B7 | 导出知识库包（bundle） | ⏳ design 草稿待评审 |
 

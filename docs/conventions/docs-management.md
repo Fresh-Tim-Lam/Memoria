@@ -77,6 +77,7 @@
 | 2026-09-09 | maintenance-benchmark.md | 新增：维护机制基准设计（design/，草稿待评审）。受控语料/指标采集/A–B 对照/门禁规则，回答“调度等机制改造前后改善多少”；当前无基准实现 |
 | 2026-09-09 | collaboration.md | §0 通用协作规则新增规则 6「待评审问题须答复后才继续」：Agent 提出的待评审/打开问题未获答复前不得默认继续执行或给下一步方案 |
 | 2026-09-09 | M1/A7 原子写 | 正文保存（document.py save_document）与 ui-settings（storage/ui_settings.py）改 tmp+os.replace 原子写并验证（M1） |
+| 2026-09-09 | maintenance-benchmark.md + to-dolist §12 + pending 存储 | KP 创建链路归因闭环：pending.yaml 全量 YAML 同步为慢 RPC 主因 → pending 存储改 JSON（constants/pending.py 自动迁移）+ confirm/delete 改 `sync_pending_for_file` 单文件范围同步 + 前端弹窗关窗先于图谱刷新；L2 插桩与克隆计时工具 `scripts/benchmark/maintenance/trace_kp_confirm.py`、结果 `results/kp-confirm-2026-09-09.json`；真机 modal 链 2442.6→981.6ms，后端稳态 4s→285.7ms；to-dolist §12 B5/E5 与 benchmark §6.5 同步更新 |
 
 ### 4.3 定期整理约定
 
