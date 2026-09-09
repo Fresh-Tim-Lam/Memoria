@@ -50,6 +50,8 @@ window.MemoriaFileTree = (function () {
 
   /** 重命名成功后统一刷新界面状态：树展开集 / 打开标签页 / 当前文件；返回重映射后的当前文件路径 */
   function applyRenameUi(oldPath, newPath) {
+    // 结构变更 → 提升调度 epoch，使基于旧路径/旧结构的排队派生作业陈旧可弃
+    window.MemoriaScheduler?.bumpEpoch?.();
     const mappedCur = remapPath(state.currentPath, oldPath, newPath);
     const expanded = ensureTreeExpandedSet();
     for (const k of Array.from(expanded)) {

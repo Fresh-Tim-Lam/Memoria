@@ -157,23 +157,28 @@
     await syncToDisk();
   }
 
-  // ── 静默刷新（首期）：保存后 range 被后端重锚定时，不打断编辑地更新派生视图 ──
-  let _kpPanelSilentBusy = false;
+  // ── 静默刷新（经 M5 调度内核）：保存后 range 被后端重锚定时，不打断编辑地更新派生视图 ──
 
-  /** 仅重取当前文档并刷新“知识点面板”（不触碰编辑器/预览滚动/光标）。可被多次保存触发，防重入。 */
-  async function _silentRefreshKpPanel() {
-    if (_kpPanelSilentBusy || !state.currentPath) return;
-    _kpPanelSilentBusy = true;
-    try {
-      const doc = await call("load_document", state.currentPath);
-      if (doc && doc.status !== "error") {
-        renderKpList(doc);
-      }
-    } catch (_) {
-      /* 静默失败不影响编辑 */
-    } finally {
-      _kpPanelSilentBusy = false;
-    }
+  /** 入队“KP 面板静默刷新”作业（P2 派生视图；同文件多次触发自动合并；idle 执行）。
+   *  作业执行时若用户已切走文件（路径陈旧）则直接丢弃，不刷新错文件。 */
+  function _silentRefreshKpPanel() {
+    const S = window.MemoriaScheduler;
+    const path = state.currentPath;
+    if (!S || !path) return;
+    S.schedule({
+      kind: "kp_panel",
+      key: path,
+      priority: 2,
+      replace: true,
+      dropStale: true, // 文件切换(openFile/closeKb bump)后排队中的旧作业自动丢弃
+      run: async () => {
+        if (state.currentPath !== path) return; // 兜底：用户已切走 → 陈旧丢弃
+        const doc = await call("load_document", path);
+        if (doc && doc.status !== "error") {
+          renderKpList(doc);
+        }
+      },
+    });
   }
 
   function T(key, params) {
@@ -1278,6 +1283,8 @@
   // 树内点击切换文档（原 navigateToFile）已随文件树子系统迁至 file-tree.js
 
   async function openFile(relPath, opts = {}) {
+    // 文件上下文切换 → 提升调度 epoch，使基于旧文件的排队作业（如 kp_panel）陈旧可弃
+    window.MemoriaScheduler?.bumpEpoch?.();
     // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
     // 旧尾、插入本次切换目标并把指针移到新顶（因此前进随之不可用）。后退/前进按钮
     // （fromNav=true）与程序内部重载（skipNav=true）不产生新条目。

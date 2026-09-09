@@ -253,13 +253,59 @@
 | F02 | 路径漂移检测/修复（`detect_path_moves` / `repair_path_cascade`，GUI+CLI 双入口） | 修复 RPC/检查 | ✅ 存在，未纳入施工范围评估 |
 | F03 | 图片引用诊断/修复（`diagnose_image_refs` / `fix_unregistered_image_refs`，防误删已引用图片） | 图片管理/保存后 | ✅ 存在，未纳入施工范围评估 |
 
-### 施工计划（分档候选，顺序待敲定）
+### 验证机制分配（2026-09-09）
 
-- 档 1 · 验收收尾：B2 / B3 / A5+C2 / D1 / E1 真机回归（rename-test + showcase）
-- 档 2 · 一致性补齐：B6 + C3
-- 档 3 · 作业化（maintenance-jobs P1）：B5 + A6
-- 档 4 · 内核与重活（P2/P3）：C5 → C4 → 线程池/定时队列
-- 旁线 · 独立推进：B7 导出 bundle
+> 通用基线（每项都过）：`py_compile` / `node --check` / IDE 诊断 0 错；改动前端 UI 后 i18n 扫描 `rows=0`（scripts/scan_ui_strings.py）。真机类标 `[真机]`，由用户按清单执行，Agent 负责提供步骤与判定标准。
+
+| 计划项 | 验证机制（手段/工具） | 通过标准（可复核证据） |
+|---|---|---|
+| M1 原子写补全 | 静态核查：列出全部写盘点是否 tmp+replace（grep `open(.w.)`/`write_text`）；临时副本压力脚本：反复写/读回 + 半程中断后重启可读 | 报告列明：md 保存/ui-settings 已改原子；临时副本中断后无半包、可正常打开 |
+| M2 保存链路基线（A5+C2） | rename-test 临时副本断言脚本（结尾行回车→save→`ranges_resynced=1`→KP 重解析 ok）；真机：保存后 KP 面板行号自动更新 | 脚本 PASS；`[真机]` 面板无需手动刷新即更新 |
+| M3 索引作业化 | 性能对照：同一保存路径 改造前后 计时（或计数索引重建次数）；行为：内容可检索；复用 scheduler VM 自检断言合并计数 | 报告含前后耗时/次数对比；检索命中一致；同文件连续保存只触发 1 次重建 |
+| M4 预览带静默重绘 | 代码审查：确认静默路径无 `scrollIntoView`/flash 分支；`[真机]` 编辑换行保存后带位置自动更新且滚动/光标不动 | 代码路径证据 + `[真机]` 通过 |
+| M5 调度内核 | scheduler VM 单测（artifacts 临时）：merge/优先级/epoch 陈旧/flush 各 PASS（已建基线）；`[真机]` 触发保存看 `[job]` 日志与 queue 收敛为 0 | 单测全 PASS；真机日志 `执行 kp_panel` 后 `queued=0` |
+| M6 KP 创建作业化 | 行为脚本/计时：连续 2+ 次创建不再同步等待（入队立即返回）；完成事件后 KP 可见（轮询断言） | 连续创建无阻塞（耗时上限）；完成后 KP 列表/跳转可用 |
+| M7 F01–F03 评估 | KB validate CLI（`python -m memoria.cli.main validate <kb>`）；repair_path_cascade 干跑报告断言；diagnose_image_refs 结构化输出断言；UI 入口 `[真机]` | validate 0 issue；干跑 moves 与实际 rename 一致；diagnose 输出合法 |
+| B2 文件夹重命名 | rename-test 临时副本断言脚本（文件/sidecar 镜像/manifest 三方核对，已用）；partial 注入验证（构造只读目标） | 脚本 PASS；partial 时前端提示首项错误（上屏） |
+| B3 F2 | `[真机]` 清单：文件/文件夹各一次 + 弹窗已开不劫持 + 输入框不劫持 | `[真机]` 全通过 |
+| B6 md 链接改写 | 临时副本断言：dir 重命名后 `](...)` 相对链接指向仍正确；跨层/含 `../` 用例 | 断言 PASS；边界（根/子目录/同层）用例通过 |
+| D1 图片渲染 | 代码审查（无 lazy/overflow 注释/圆角补位）+ `[真机]` 打开图片管理目测 | 审查证据 + `[真机]` 缩略图全显示 |
+| A6/A7 回归 | 见 M1/M3；完成后在 snapshot 前跑全量临时库冒烟 | 冒烟 PASS 后再提交 |
+
+### 施工计划 · 阶段门禁（2026-09-09 定版）
+
+> 推进纪律：**逐阶段施工，阶段出口过「门禁(Gate)」才进下一阶段**；门禁结论由用户复核拍板（Agent 出证据，用户签字）。
+> 每阶段通用执行顺序：任务实现 → 逐项验证（按「验证机制分配」表）→ 回归冒烟（rename-test/showcase 临时副本）→ 更新 to-dolist 状态 → **独立 git commit 快照收口**（可回滚）。
+> 打回规则：任一项失败/证据不足 → 打回该阶段修复 → 重跑本阶段门禁 → 通过后再前进。
+
+**G0 · 基线快照** ✅ `ae66a012`（维护机制基线已提交，工作区干净，恢复点就绪）→ 进入 G1 的入口条件已满足。
+
+**G1 · 验收收尾（档 1）**
+- 范围：B2 文件夹重命名 / B3 F2 / A5+C2（KP range 重锚+面板静默）/ D1 图片渲染 / E1 rename-test
+- 入口：G0 通过；rename-test 与 showcase 可打开
+- 出口门禁：B2 三方核对脚本 PASS（含 partial 上屏）｜B3 `[真机]` 清单通过｜A5 heal 脚本 + `[真机]` 面板自动更新｜D1 代码审查 + `[真机]` 目测｜E1 生成器复跑 PASS｜`py_compile`/`node --check`/validate/i18n rows=0｜to-dolist 状态更新 → commit `G1`
+
+**G2 · 一致性补强**
+- 范围：M1 原子写（md 保存 + ui-settings）｜B6 md 相对路径链接改写（消已知边界）｜M4(C3) 预览带静默重绘
+- 入口：G1 门禁通过
+- 出口门禁：M1 写盘点盘点 + 中断恢复脚本 PASS｜B6 跨层/`../` 断言 PASS｜M4 代码路径（无 scroll/flash）+ `[真机]` 滚动光标不动｜回归冒烟 PASS → commit `G2`
+
+**G3 · 调度内核完善（M5 继续）**
+- 范围：`bumpEpoch` 接入文件切换/关闭/重命名（✅ 已接入 openFile/closeKb/applyRenameUi）；replace/merge 语义实现（✅）；首批消费 `kp_panel`（启用 dropStale）；**文件树/registry 刷新等其余作业化随 M3/M4/C4 采用时注册**
+- 入口：G2 门禁通过
+- 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过）｜bumpEpoch `[真机]` 验证陈旧丢弃生效｜`[job]` 日志 `queued=0` 收敛｜回归冒烟 PASS → commit `G3`
+
+**G4 · 作业化落地**
+- 范围：M6 KP 创建/更新作业化（入队即放行）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
+- 入口：G3 门禁通过（作业底座就绪）
+- 出口门禁：M6 连续 2+ 次创建无阻塞计时上限 + 完成后 KP 可见｜M3 前后耗时/重建次数对照 + 检索一致 + 合并计数断言｜C4 局部刷新不整图重绘（代码+`[真机]`）｜回归冒烟 PASS → commit `G4`
+
+**G5 · 维护面收敛（M7）**
+- 范围：F01 检查/审计、F02 路径漂移修复、F03 图片引用诊断修复 → 评估后登记/纳入调度；重活线程池与定时队列
+- 入口：G4 门禁通过
+- 出口门禁：validate CLI 0 issue｜repair_path_cascade 干跑与实操一致｜diagnose 结构化输出合法｜纳入登记表与 i18n 核对｜回归冒烟 PASS → commit `G5`
+
+**旁线 · B7 导出 bundle（独立评审门，不阻塞主线）**：export-plan 评审 → 通过后按 M1–M5 阶段表独立推进。
 
 ***
 

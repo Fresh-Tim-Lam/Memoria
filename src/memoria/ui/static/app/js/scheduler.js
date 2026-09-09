@@ -69,6 +69,7 @@
       run: typeof spec.run === "function" ? spec.run : null,
       gen: spec.gen !== undefined ? spec.gen : _epoch,
       dropStale: !!spec.dropStale,
+      replace: spec.replace !== false, // 默认 true：同键新作业顶替旧作业
       created: Date.now(),
       status: "queued",
     };
@@ -77,12 +78,24 @@
       return null;
     }
     var dk = tag(j);
-    // 合并：删除同键的 queued 旧作业
-    for (var i = QUEUE.length - 1; i >= 0; i--) {
-      if (QUEUE[i].status === "queued" && tag(QUEUE[i]) === dk) {
-        QUEUE[i].status = "dropped";
-        QUEUE.splice(i, 1);
-        log("合并(顶替) " + dk);
+    // 合并语义：replace=true → 顶替同键 queued 旧作业；replace=false → 同键已在队则忽略新作业
+    if (j.replace) {
+      for (var i = QUEUE.length - 1; i >= 0; i--) {
+        if (QUEUE[i].status === "queued" && tag(QUEUE[i]) === dk) {
+          QUEUE[i].status = "dropped";
+          QUEUE.splice(i, 1);
+          log("合并(顶替) " + dk);
+        }
+      }
+    } else {
+      var exists = QUEUE.some(function (q) {
+        return q.status === "queued" && tag(q) === dk;
+      });
+      if (exists) {
+        log("合并(忽略新) " + dk + " #" + j.id);
+        return QUEUE.filter(function (q) {
+          return q.status === "queued" && tag(q) === dk;
+        })[0].id;
       }
     }
     QUEUE.push(j);
