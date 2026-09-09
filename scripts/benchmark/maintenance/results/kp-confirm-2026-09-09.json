@@ -31,6 +31,18 @@
         "modal_closed+158.1ms"
       ],
       "note": "pending YAML→JSON 后；rpc 段残余 ~230ms 为全库 propose（已再改单文件范围），~160ms 为词法索引全库重建（G4/M3 目标）"
+    },
+    "after_all_fixes": {
+      "source": "真机拖拽创建（JSON + 单文件范围同步 + 关窗先于图谱刷新）",
+      "flow": "start>check_ok>rpc_ok>ui_done>modal_closed",
+      "total": 485.7,
+      "phases": [
+        "check_ok+22.2ms",
+        "rpc_ok+340.5ms",
+        "ui_done+122.5ms",
+        "modal_closed+0.5ms"
+      ],
+      "note": "modal_closed≈0 → 关窗先于图谱刷新生效；rpc 340ms 大头为词法索引全库重建 ~160ms + load_document ~50ms + 单文件 pending ~15ms"
     }
   },
   "backend_confirm_steady_ms": {

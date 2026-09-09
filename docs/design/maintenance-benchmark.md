@@ -61,7 +61,7 @@
 - B1 ✅ `scripts/benchmark/maintenance/gen_maintenance_kb.py`：确定性（两次生成内容一致 PASS）、默认档 200 文件 / ~599 KP / 333 链接、range 可解析 PASS。
 - B2 ✅（部分）：scheduler counters + 旁路 PASS；save `bench_ms` PASS；L2 前端插桩与后端归因工具 PASS；PerformanceObserver ⏳ 待 B4。
 - B3–B6：未开始。
-- **KP 创建链路归因闭环（真实库 `D:\AAA_Courses\软件工程概论`，2026-09-09）**：见 [results/kp-confirm-2026-09-09.json](../scripts/benchmark/maintenance/results/kp-confirm-2026-09-09.json)。要点：① 真机 modal 链 total 2442.6ms→(pending 切 JSON 后)981.6ms，其中 rpc 段 2389→706.6ms；② 后端稳态 confirm 4s(YAML 全量 sync)→515ms(JSON)→285.7ms(+单文件范围同步)；③ 根因=pending.yaml 全量 safe_load/safe_dump 每确认同步执行（JSON 同数据约快 150×）+ 全库 propose 全量重跑；④ 已修：pending 存储 JSON+自动迁移、confirm/delete 改 `sync_pending_for_file`、前端弹窗关窗先于图谱刷新；⑤ 克隆库首写 ~12s 为词法/embedding 冷启动重建伪影，真机热态无此。
+- **KP 创建链路归因闭环（真实库 `D:\AAA_Courses\软件工程概论`，2026-09-09）**：见 [results/kp-confirm-2026-09-09.json](../scripts/benchmark/maintenance/results/kp-confirm-2026-09-09.json)。要点：① 真机 modal 链 total 2442.6ms→(JSON)981.6ms→(**全部修复后)485.7ms**，其中 rpc 段 2389→706.6→340.5ms，modal_closed 段 158.1→0.5ms（关窗先于图谱刷新生效）；② 后端稳态 confirm 4s(YAML 全量 sync)→515ms(JSON)→285.7ms(+单文件范围同步)；③ 根因=pending.yaml 全量 safe_load/safe_dump 每确认同步执行（JSON 同数据约快 150×）+ 全库 propose 全量重跑；④ 已修：pending 存储 JSON+自动迁移、confirm/delete 改 `sync_pending_for_file`、前端弹窗关窗先于图谱刷新；⑤ 克隆库首写 ~12s 为词法/embedding 冷启动重建伪影，真机热态无此；⑥ 剩余稳态大头=词法索引每次保存全库重建（作业化归 M3/G4）。
 
 ## 7. 实施步骤（评审通过后）
 
