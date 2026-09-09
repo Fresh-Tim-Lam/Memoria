@@ -1,0 +1,31 @@
+{
+  "kind": "maintenance-l1",
+  "commit": "8a5bfd03544839aedacd59d9e7ce5346e11303f2",
+  "recorded_at": "2026-09-09T06:39:44.082402+00:00",
+  "corpus": {
+    "files": 200,
+    "digest": "756f3cc3d473d86c9d165ba1a25d9509734556a693664099b0da1bc7a8e7b4df"
+  },
+  "method": {
+    "sample_files": 20,
+    "runs_per_file": 3
+  },
+  "total_ms": {
+    "count": 60,
+    "mean": 191.53,
+    "median": 190.27,
+    "p95": 237.71
+  },
+  "registry_ms": {
+    "count": 60,
+    "mean": 13.83,
+    "median": 10.78,
+    "p95": 21.41
+  },
+  "resync_ms": {
+    "count": 60,
+    "mean": 11.0,
+    "median": 10.25,
+    "p95": 19.3
+  }
+}
