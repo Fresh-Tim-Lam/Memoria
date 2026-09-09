@@ -133,11 +133,9 @@
             })
           );
         }
-        // 保存时后端重锚定了 KP range（如换行导致的漂移/锚点断裂已自动修正）：
-        // 静默刷新知识点面板，避免“点刷新才看到新行号”；不触碰编辑器/光标/滚动。
-        if (res.ranges_resynced && res.ranges_resynced > 0) {
-          _silentRefreshKpPanel();
-        }
+        // M6b：每次保存后用 load_document 的权威解析静默校正列表与 state.doc（hover 数据源）。
+        // 早期只在 ranges_resynced>0 时刷新，而多数换行/删行后端判为“无变化”导致必须手动刷新才同步。
+        _silentRefreshKpPanel();
         // 自动保存后 ~3s 防抖兜底 fsync（G4 M6a：写缓存→稍后刷盘）
         scheduleDurableFlush();
       }
@@ -7062,6 +7060,32 @@
       refreshKpRangeUi();
     }
 
+    /** 块级源码替换（预览 AST 编辑提交）：按 0 基区间 [startIdx, endIdxExcl) 替换行数的差平移 KP 范围。
+     *  与替换区重叠的 KP 以“内容并入/扩展”近似：起点在区前则保留，在区内则移到区新起点，终点随 delta 平移；
+     *  完全在区后的 KP 整体顺延 delta。近似结果由保存后后端 resync 权威校正。 */
+    function adjustKpRangesAfterSpanReplace(startIdx, endIdxExcl, oldCount, newCount) {
+      const delta = newCount - oldCount;
+      if (!delta) return;
+      for (const k of _kpList()) {
+        const s = _kpStart(k);
+        const e = _kpEnd(k);
+        const is = s - 1;
+        const ie = e - 1;
+        if (ie < startIdx) continue; // 完全在替换区之前
+        if (is >= endIdxExcl) {
+          _kpSetLines(k, s + delta, e + delta); // 之后整体顺延
+          continue;
+        }
+        // 与替换区重叠
+        const ns = is < startIdx ? s : startIdx + 1;
+        _kpSetLines(k, ns, Math.max(ns, e + delta));
+      }
+      if (window.__bench) {
+        syncLog("[M6b] span", JSON.stringify({ startIdx, oldCount, newCount, delta, after: _kpList().map((k) => `${k.id}:${_kpStart(k)}-${_kpEnd(k)}`) }));
+      }
+      refreshKpRangeUi();
+    }
+
     /** 找出“吸收新行”的 KP：覆盖 line，且光标不在该 KP 末行的行尾（行尾换行视为区域外）。 */
     function findAbsorbKp(line, offset, textLen) {
       for (const k of _kpList()) {
@@ -7608,9 +7632,15 @@
       var start = range ? range.startLine : 0;
       var end = range ? range.endLine : (rawLines.length - 1);
       var newLines = newBlockSrc.split("\n");
-      var merged = rawLines.slice(0, start).concat(newLines, rawLines.slice(end + 1));
+      var endExcl = end + 1;
+      var oldCount = endExcl - start;
+      var merged = rawLines.slice(0, start).concat(newLines, rawLines.slice(endExcl));
       state.doc.body = merged.join("\n");
       state.doc.lines = merged;
+      // M6b：块替换后按行数差平移 KP 范围并同步列表/hover（预览区编辑实时同步）
+      if (typeof adjustKpRangesAfterSpanReplace === "function") {
+        adjustKpRangesAfterSpanReplace(start, endExcl, oldCount, newLines.length);
+      }
     }
 
     /** 增量重渲染预览中的单个 block，并重建 block→源行映射 */
