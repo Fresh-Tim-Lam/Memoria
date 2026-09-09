@@ -34,9 +34,14 @@
       "inline：保存即 fsync + manifest 即时落盘"
     ]
   },
+  "real_machine_evidence": {
+    "idle_3s": { "log": "[SYNC] durable_flush idle 触发: {flushed:1, manifest:1, pending:0, ms:14.99}", "note": "自动保存后停手约3s触发" },
+    "switch_barrier": { "log": "[SYNC] durable_flush 屏障触发: {flushed:1, manifest:0, pending:0, ms:1.91}", "note": "切文件前屏障 fsync；manifest 常被 resync 即时写清空属正常" },
+    "crash_inject": { "result": "PASS", "attempts": 15, "tool": "scripts/benchmark/maintenance/crash_inject_m6a.py", "note": "1.3MB 内容循环保存中随机强杀子进程，15/15 正文完整（A/B 之一）且新实例重开可读，无半包" }
+  },
   "remaining_gate": [
-    "真机回归：自动保存→3s flush、切文件/关库后重开内容在",
-    "崩溃注入（M1 中断脚本扩展：barrier 候选写半程 kill 无半包）",
-    "完整 L1 run_l1/compare_ab inline vs barrier 记录（本记录用 trace_save_document 分项口径）"
+    "回归冒烟（rename-test/showcase 临时副本）",
+    "门禁拍板（用户复核本记录后签字）",
+    "完整 L1 run_l1/compare_ab inline vs barrier 记录（本记录用 trace_save_document 分项口径，可选补充）"
   ]
 }
