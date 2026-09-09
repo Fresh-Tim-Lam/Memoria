@@ -246,7 +246,7 @@
 | E4 | docs-management / to-dolist 修订登记 | ✅（2026-09-09 复核补登记 to-dolist §12 行） |
 | E5 | L2 KP 创建链路归因闭环：前端插桩 + 后端克隆计时工具 trace_kp_confirm.py + results 记录（归因 pending 同步，B5 修复对照） | ✅ 2026-09-09 |
 | E6 | L1 保存路径回退归因：2 轮 ABBA（base 158.6 vs HEAD 180.5，+13.8%）→ diff 定位 M1 fsync；分项剖析 trace_save_document.py（manifest_touch ~50ms 为大头）→ 决策 fsync flush 屏障化 + manifest 批量（jobs.md 登记，G4 M6a） | ✅ 2026-09-09 |
-| E7 | G4 M6a 施工：durable_flush（barrier 默认 + RPC + 前端屏障）+ manifest 模块 pending overlay；实测 save median inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；**门禁证据齐**：真机 idle 3s（flushed1/manifest1/14.99ms）+ 切文件屏障（1.91ms）+ 崩溃注入 15/15 PASS + 回归冒烟 PASS（regression_smoke_m6a.py，confirm/rename/关库重开/manifest 一致）；待用户拍板 | ✅ 2026-09-09（待门禁拍板） |
+| E7 | G4 M6a 施工：durable_flush（barrier 默认 + RPC + 前端屏障）+ manifest 模块 pending overlay；实测 save median inline 89.35 → barrier 24.62ms（-72.5%，results/durable-flush-2026-09-09.json）；**门禁通过（用户 2026-09-09 拍板）**：真机 idle 3s（flushed1/manifest1/14.99ms）+ 切文件屏障（1.91ms）+ 崩溃注入 15/15 PASS + 回归冒烟 PASS | ✅ 2026-09-09（门禁通过） |
 
 ### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
 
