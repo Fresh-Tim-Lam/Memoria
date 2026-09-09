@@ -129,12 +129,22 @@ def main():
     ap.add_argument("--runs", type=int, default=3)
     ap.add_argument("--sample", type=int, default=20)
     ap.add_argument("--summary", action="store_true")
+    ap.add_argument("--worker", action="store_true")  # 供 compare_ab 逐次调用：仅打印一行 JSON
     a = ap.parse_args()
     if a.summary:
         build_summary()
         return
     sha = (a.sha or head_sha()).strip()
     totals, regs, resyncs, digest = measure(sha, a.files, a.runs, a.sample)
+    if a.worker:
+        print(json.dumps({
+            "commit": sha,
+            "corpus_digest": digest[:16],
+            "total_ms": summarize(totals),
+            "registry_ms": summarize(regs),
+            "resync_ms": summarize(resyncs),
+        }, ensure_ascii=False))
+        return
     write_record(sha, a.files, a.runs, a.sample, totals, regs, resyncs, digest)
     build_summary()
 
