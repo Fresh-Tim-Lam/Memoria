@@ -137,6 +137,8 @@
         if (res.ranges_resynced && res.ranges_resynced > 0) {
           _silentRefreshKpPanel();
         }
+        // 自动保存后 ~3s 防抖兜底 fsync（G4 M6a：写缓存→稍后刷盘）
+        scheduleDurableFlush();
       }
     } catch (e) {
       console.warn("[SYNC] 保存异常:", e);
