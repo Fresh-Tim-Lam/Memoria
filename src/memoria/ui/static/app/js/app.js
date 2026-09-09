@@ -151,6 +151,36 @@
     clearTimeout(_saveTimer);
     clearTimeout(_durableTimer); // 有新编辑则推迟 durable_flush 兜底
     _saveTimer = setTimeout(() => syncToDisk(), SAVE_DEBOUNCE_MS);
+    scheduleEditorRangesResolve(); // M6b：停手后按当前正文即时权威解析 KP 范围（不依赖保存）
+  }
+
+  // ── M6b：即时 KP 范围解析（结构编辑后 420ms，正文当前态 → 后端解析 → 回写 hover/列表）──
+  let _rangeTimer = null;
+  let _docRev = 0;
+  function scheduleEditorRangesResolve() {
+    if (!state.doc || !state.currentPath || !(state.doc.knowledge_points || []).length) return;
+    clearTimeout(_rangeTimer);
+    const rev = ++_docRev;
+    _rangeTimer = setTimeout(async () => {
+      _rangeTimer = null;
+      if (!state.doc || !state.currentPath) return;
+      const body = collectEditorBody();
+      if (body === null) return;
+      try {
+        const res = await call("resolve_kp_ranges", state.currentPath, body);
+        if (
+          res && res.status === "ok" && Array.isArray(res.knowledge_points) &&
+          _docRev === rev && state.doc && state.currentPath
+        ) {
+          const known = new Set((state.doc.knowledge_points || []).map((k) => k.id));
+          state.doc.knowledge_points = res.knowledge_points.filter((k) => known.has(k.id));
+          renderKpList(state.doc);
+          if (state.hoveredKpId) highlightKpHover(state.hoveredKpId);
+        }
+      } catch (_e) {
+        // 静默：保存后 _silentRefreshKpPanel 仍会兜底校正
+      }
+    }, 420);
   }
 
   /** 立即写盘（如果脏），返回 Promise。用于文件切换前。 */

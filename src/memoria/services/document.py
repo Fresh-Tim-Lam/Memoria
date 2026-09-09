@@ -1590,6 +1590,23 @@ class DocumentService:
         except OSError:
             pass
 
+    def resolve_kp_ranges_for_editor(self, rel_path: str, body: str) -> dict:
+        """按当前编辑器正文即时解析各 KP 范围（不写盘），供前端结构编辑后即时校正。"""
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        if not rel_path or body is None:
+            return {"status": "error", "message": "缺少参数"}
+        rel_norm = rel_path.replace("\\", "/")
+        full = os.path.join(self.kb_path, rel_norm)
+        try:
+            sidecar = load_sidecar_for_md(full, self.kb_path)
+        except OSError:
+            sidecar = None
+        from memoria.services.kp_resolver import resolve_knowledge_points
+
+        kps = resolve_knowledge_points(body, sidecar or {})
+        return {"status": "ok", "knowledge_points": kps}
+
     def pick_snippet_line(
         self,
         rel_path: str,

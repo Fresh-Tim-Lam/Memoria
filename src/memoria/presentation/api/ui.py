@@ -203,6 +203,13 @@ class UIAPI:
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
+    def resolve_kp_ranges(self, rel_path: str, body: str) -> dict:
+        """按编辑器当前正文即时解析 KP 范围（不写盘）；M6b 结构编辑后即时校正 hover/列表。"""
+        try:
+            return self._svc.resolve_kp_ranges_for_editor(rel_path, body)
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
     def flush_durable(self) -> dict:
         """屏障持久化：manifest pending 批量落盘 + dirty 正文 fsync（G4 M6a）。"""
         try:
