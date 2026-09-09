@@ -297,7 +297,7 @@
 **G3 · 调度内核完善（M5 继续）**
 - 范围：`bumpEpoch` 接入文件切换/关闭/重命名（✅ 已接入 openFile/closeKb/applyRenameUi）；replace/merge 语义实现（✅）；首批消费 `kp_panel`（启用 dropStale）；**文件树/registry 刷新等其余作业化随 M3/M4/C4 采用时注册**
 - 入口：G2 门禁通过
-- 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过，tool `scripts/benchmark/maintenance/scheduler_vm_test.js`）｜bumpEpoch `[真机]` 陈旧丢弃生效（✅ 2026-09-09 证据：g3_probe dropped=1）｜`[job]` 日志 `queued=0` 收敛（✅ 证据：status queued=0）｜回归冒烟（✅ M6a regression_smoke PASS 覆盖）→ **待用户拍板后 commit `G3` 快照**（记录 results/g3-scheduler-gate-2026-09-09.json）
+- 出口门禁：scheduler VM 单测（replace=true/false、merge、prio、epoch/flush）全 PASS（✅ 已通过，tool `scripts/benchmark/maintenance/scheduler_vm_test.js`）｜bumpEpoch `[真机]` 陈旧丢弃生效（✅ 证据：g3_probe dropped=1）｜`[job]` 日志 `queued=0` 收敛（✅ 证据：status queued=0）｜回归冒烟 PASS → **✅ G3 门禁通过（用户拍板 2026-09-09），快照见 tag `maint-g3`**
 
 **G4 · 作业化落地**
 - 范围：**M6a 持久化 flush 屏障**（正文写降级 tmp+replace，fsync 收拢为 `durable_flush`，**✅ 已施工 2026-09-09**：save_document barrier 默认 + flush_durable RPC + 前端 3s 防抖/切文件/关库/退出屏障；待真机/崩溃注入/门禁）｜**manifest_touch 批量合并**（**✅ 已施工**：模块 pending overlay + 屏障落盘，~50ms/保存消除，barrier 24.6 vs inline 89.4ms）｜M6b（待定）KP 创建/更新作业化（已提速至 485ms 保持内联，是否入队待拍板）｜M3 词法索引移出同步保存路径（合并+后台）｜C4 图谱局部刷新
