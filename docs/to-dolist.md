@@ -213,7 +213,7 @@
 | A3 | pending 项路径同步（重命名已接入） | ✅ |
 | A4 | 图片注册表：doc 增量 / 全量 / 自动检查 / 清理 | ✅（渲染 bug 已修） |
 | A5 | KP range 双端定位（locator）+ 保存重锚 heal | ✅ 2026-09-09 |
-| A6 | 词法/embedding 索引：侧车写后同步重建 | ⚠️ 待作业化（重，P3） |
+| A6 | 词法/embedding 索引：侧车写后同步重建 | ✅ 词法已后台化（G4 M3：锁 + 合并 daemon，写路径不阻塞，检索前 wait）；embedding 未纳入机制（maintenance-jobs §7 建议保持现状） |
 | A7 | 原子写（tmp + os.replace） | ✅ M1 已补（2026-09-09）：md 正文保存（document.py）与 ui-settings（storage/ui_settings.py）；YAML/registry 原已原子 |
 
 ### B. 操作 / 作业
@@ -234,9 +234,9 @@
 |---|---|---|
 | C1 | 文件树重映射 + 刷新（rename 后 applyRenameUi） | ✅ |
 | C2 | KP 面板静默刷新（ranges_resynced 触发） | ✅ 首期 |
-| C3 | 预览范围带静默重绘（无滚动/闪烁） | ⏳ P2 |
-| C4 | 图谱节点/标签局部刷新 | ⏳ P2 |
-| C5 | maintenance-jobs 调度内核（合并/优先级/idle/epoch/flush） | ⏳ 设计稿 |
+| C3 | 预览范围带静默重绘（无滚动/闪烁） | 🔄 部分（2026-09-10）：新增 `markRangeQuiet`（只标记范围，不滚动/不闪烁/不自动消失）并用于「修改范围 / 创建知识点」（原走 `highlightRange` 会滚+闪）；跳转语义（点链接/列表/检查打开）仍走 `highlightRange`；**编辑导致的重锚静默重绘待接** |
+| C4 | 图谱**增量更新**（增量在布局与数据层，非帧绘制；原「局部刷新」表述已修正） | ⏳ G4 拆分后续项，方案 S1–S4 见 results/g4-gate-summary-2026-09-09.json |
+| C5 | maintenance-jobs 调度内核（合并/优先级/idle/epoch/flush） | ✅ G3 已落地（`scheduler.js`，VM 单测全 PASS）；后端执行器见 G5.3 |
 
 ### D. 渲染 / 显示
 
