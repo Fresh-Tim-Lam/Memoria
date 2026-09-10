@@ -31,6 +31,7 @@
 | 同步屏障 / 检查点 | 文件切换/关库前 `flush`；保存成功 = 检查点，下游才消费 |
 | 幂等 / 重试 | 每类作业带 dedupeKey 与幂等执行，失败可重试无副作用 |
 | 缓存失效链 | 写后失效：正文 → sidecar → manifest/注册表 → 索引 → 图谱 |
+| 触发点约束（2026-09-10 确立） | 维护动作只有两类合法触发点：**后台调度**（自动、不阻塞交互）或**用户显式**（打开库/刷新/构建/点击）；**交互热路径（切换文件、输入、点击）禁止任何同步重活**。读路径只读已就绪快照，未就绪时用上一版并登记后台重建（最终一致） |
 
 ## 3. 作业模型与调度内核
 
@@ -101,6 +102,7 @@
 | kp_panel_refresh | ranges_resynced>0 | P2 | ✅ | `_silentRefreshKpPanel` 已落地 |
 | preview_range_redraw | 重锚就绪 | P2 | ✅ | 未实现（P2） |
 | index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅（合并） | ✅ M3 后台化（2026-09-09）：锁+合并 daemon 重建，写路径不阻塞；search/切库/关库前 wait |
+| kp_index_rebuild | 侧车写后（KP id 集合）/文件增删改（stem）/显式刷新 | P3 | ✅（合并 + 逐文件增量） | ✅ G5.4（2026-09-10）：读路径只读 `.memoria/kp_targets.json` 轻量快照（零构建），写后失效 + 后台增量重建（逐 sidecar mtime+size 缓存）；打开库只秒读快照，不触发全库重活 |
 | graph_build | 显式“构建” | P3 | ✅ | 手动 |
 | cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅ | 定时/手动 |
 | file_tree_refresh | 树/结构变更 | P2 | ✅ | refreshFiles |

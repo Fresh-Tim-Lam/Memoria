@@ -145,10 +145,11 @@
 | ID     | 任务                                                  | 状态     |
 | ------ | --------------------------------------------------- | ------ |
 | V01    | R14 知识点沿路拼接·导出新文档                                   | ⏳      |
-| V02    | R06 遗忘曲线·主动复习（进度存 `.memoria/`）                      | 💡     |
+| V02    | R06 遗忘曲线·主动复习（进度存 `.memoria/`）                      | 🔄 由 V06 的 FSRS 工具包实现（`.memoria/agent/review/`）；待真机验收 |
 | V03    | R12 全库静态离线 HTML 导出（只读子集）                            | 💡     |
 | V04    | 导出 PDF                                              | 💡     |
 | V05    | Android 端                                           | 💡     |
+| V06    | Trae 知识库智能体：`.memoria/agent/` 工具包（指令 + 编撰规范 + FSRS 调度）；应用内「文件 → 创建 Trae 智能体」一键生成并复制指令，规则可独立升级而无需重建智能体 | 🔄 已实现（2026-09-10，设计 [design/kb-agent.md](design/kb-agent.md)）；待真机验收 |
 | <br /> | 接入大语言模型api接口，直接进行对话，增强检索框引擎联网场景能力，同时让用户直接在程序维护发展知识库 | <br /> |
 
 ***
@@ -199,7 +200,8 @@
 > - 调度内核：优先级、去重（replace/merge）、idle 执行、epoch 陈旧丢弃、flush/旁路（见 G3、scheduler.js）；
 > - 写盘分级：缓存/缓冲 + 原子替换 + 延迟批量 fsync 屏障（durable flush，类 write-back 缓存/回写屏障，见 G4 M6a 与 [durable-flush.md](design/durable-flush.md)）；
 > - 后台化与合并：重活（词法索引）移出同步路径，daemon 线程 + 合并重建（G4 M3）；
-> - 时机/一致性：切文件/关库/退出为屏障点，前台即时响应、后台收尾（M6a/M6b/M3 均按此取舍）。
+> - 时机/一致性：切文件/关库/退出为屏障点，前台即时响应、后台收尾（M6a/M6b/M3 均按此取舍）；
+> - **触发点约束（2026-09-10 用户确立）**：维护动作只允许两类触发点——**后台（自动、不阻塞交互）** 或 **用户显式（打开库/刷新/构建/点击）**；**交互热路径（切换文件、输入、点击）禁止任何同步重活**。反例：`load_document` 曾每次同步重建全库 KP 索引（见 G5.4 修正）。
 > 后续任务立项与评审都以「是否符合该作业化/屏障语义」为考量；jobs.md 与阶段门禁沿此口径登记。
 
 ### A. 一致性 / 注册内核
@@ -315,9 +317,10 @@
 
 **G5 · 维护面收敛（M7）**
 - 范围（2026-09-09 评估盘点）：**F01** `validate_kb`（RPC full-KB 扫描：逐文件 validate_sidecar + 图链路审计 + manifest diff + 路径漂移检测；静默检查默认 120s/可关，跑在主 RPC 线程）｜**F02** `repair_path_cascade`/`detect_path_moves`（GUI+CLI `repair-paths` 已有，干跑/apply 一致）｜**F03** `diagnose_image_refs`/`fix_unregistered_image_refs`（GUI RPC 已有，**CLI 无 diagnose 子命令**；保存后 cleanedImages 已做部分自动清理）｜**M7b 重活线程池与定时队列**（当前仅 M3 单 daemon 合并线程）
-- 子计划：**G5.1** F01 后台化/调度化（静默 validate 纳入调度内核：epoch/dropStale、编辑中跳过、idle 跑、结果角标；新建标准语料 validate 0-issue 基准脚本 + 大库耗时对照）｜**G5.2** CLI 补全与断言（新增 `diagnose-images` 子命令；repair 干跑一致性断言；UI 入口/i18n 核对）｜**G5.3** M7b 后端执行器（线程池+队列：validate/audit 等重活入队执行，RPC 不阻塞；与 M3 锁语义对齐）
+- 子计划：**G5.1** F01 后台化/调度化（**✅ 2026-09-10 施工+自动验证**：静默 validate 纳入调度内核——priority3 / 按库 replace / dropStale、编辑忙时跳过、idle 执行；新增 L1 基准 `run_validate_l1.py`（200 文件语料 median 5.93s、errors=0）；真机 `[job]` 证据：`入队→执行→开始→完成`、编辑中 3 次`跳过（编辑/待保存未收敛）`、`queue=1` 收敛）｜**G5.2** CLI 补全与断言（新增 `diagnose-images` 子命令；repair 干跑一致性断言；UI 入口/i18n 核对）｜**G5.3** M7b 后端执行器（线程池+队列：validate/audit 等重活入队执行，RPC 不阻塞；与 M3 锁语义对齐）｜**G5.4** 读路径索引缓存（M7a，**✅ 2026-09-10 施工+自动验证**：`load_document` 原每次两次全库 `build_kp_index`（含与 id 无关的范围解析）→ 改为只读轻量快照（KP id / 文件 stem / (文件,KP id) 对，仅读 sidecar）+ 持久化 `.memoria/kp_targets.json` + 打开库秒读 + 写后失效与后台增量重建（逐 sidecar mtime+size 缓存）；实测 `load_document` 1822 → 7.6ms（-99.6%）；遗留：打开库仍有 ~1.06s `sync_kb_pending` 全库扫描，另记）
 - 入口：G4 门禁通过
-- 出口门禁：validate CLI 0 issue（基准语料）｜repair_path_cascade 干跑与实操一致｜diagnose 结构化输出合法（CLI+GUI）｜F01 调度化后无编辑期运行且不阻塞 RPC（`[真机]`+耗时对照）｜登记表与 i18n rows=0｜回归冒烟 PASS → commit `G5`
+- 出口门禁：validate CLI 0 issue（基准语料）｜repair_path_cascade 干跑与实操一致｜diagnose 结构化输出合法（CLI+GUI）｜F01 调度化后无编辑期运行且不阻塞 RPC（`[真机]`+耗时对照）｜G5.4 交互热路径零构建（切换文件耗时对照 + 链接可解析性与全量索引一致 + 打开库不触发全库重活）｜登记表与 i18n rows=0｜回归冒烟 PASS → commit `G5`
+- 遗留（另记，非本阶段引入）：打开库 `sync_kb_pending` 全库扫描 ~1.06s（见 G5.4 实测）；`kp_panel` 作业在文件切换瞬间有一次 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志）—— 待排查触发条件
 
 **旁线 · B7 导出 bundle（独立评审门，不阻塞主线）**：export-plan 评审 → 通过后按 M1–M5 阶段表独立推进。
 
@@ -337,3 +340,6 @@
 ### C. 样例库隐私与官方样例（用户备注）
 
 > docs/example 下本地知识库运行产物（`.memoria/**`、`empty*/` 等）按 .gitignore 自动忽略；仅维护/上传「官方样例知识库」与 import-test 夹具，保护本地隐私（见 import-plan.md M5.3）。
+
+----待讨论
+需要完整的规则提示词让agent学会整理修改.Memoria以及markdown格式的知识文件

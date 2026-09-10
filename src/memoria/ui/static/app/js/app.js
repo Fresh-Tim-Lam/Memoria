@@ -551,6 +551,10 @@
   }
 
   async function closeKb() {
+    // 关库 → 提升调度 epoch：排队中的旧库作业（如 kb_check）执行前陈旧丢弃（G5.1）
+    const _S = window.MemoriaScheduler;
+    _S?.bumpEpoch?.();
+    _S?.note?.("kb 关闭 epoch→" + (_S.epoch?.() ?? "?") + "（排队旧库作业将陈旧丢弃）");
     // 关库屏障：先保存内存内容并 durable_flush（fsync + manifest pending）
     await flushDurableBarrier();
     try {
@@ -560,6 +564,7 @@
     }
     state.kbPath = "";
     state.files = [];
+    state.dirs = []; // 关库需一并清空目录清单，否则文件树仍渲染旧库结构（点击无效）
     state.currentPath = null;
     state.doc = null;
     state.activeKpId = null;
@@ -12622,6 +12627,7 @@
     window.MemoriaToolbarSearch?.init?.();
     window.MemoriaImageTools?.init?.();
     window.MemoriaKbCheck?.init?.();
+    window.MemoriaKbAgent?.init?.();
     window.MemoriaFileTree?.init?.();
     initKb();
     hydrateCustomColorsFromDisk();

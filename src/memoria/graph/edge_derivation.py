@@ -227,6 +227,69 @@ def build_target_kp_resolver(kb_path: str):
     return resolve
 
 
+# ── G5：由全库轻量快照构造 resolver（读路径零构建，语义与上文一致）────────────
+# 快照来自 memoria.services.kp_index.collect_kp_targets：ids / file_stems / (文件, kp_id) 对。
+# 触发点约束见 docs/to-dolist.md §12：交互热路径只读快照，不构建全库索引。
+
+def build_target_kp_resolver_from(
+    known_kp_ids: set[str] | None,
+    file_stems: dict[str, str] | None,
+    pairs: set[tuple[str, str]] | None,
+):
+
+    """图谱边 target：仅当 raw 为已存在的 KP id 时才解析（不用文件 stem→首个 KP）。"""
+
+    known = set(known_kp_ids or ())
+
+    stems: dict[str, str] = dict(file_stems or {})
+
+    present = {(f.replace("\\", "/"), k) for f, k in (pairs or ())}
+
+    cache: dict[str, str | None] = {}
+
+
+
+    def resolve(raw: str) -> str | None:
+
+        tid = (raw or "").strip()
+
+        if not tid:
+
+            return None
+
+        if tid in cache:
+
+            return cache[tid]
+
+        if tid in known:
+
+            cache[tid] = tid
+
+            return tid
+
+        if tid in stems:
+
+            rel = stems[tid].replace("\\", "/")
+
+            if (rel, tid) in present:
+
+                cache[tid] = tid
+
+                return tid
+
+            cache[tid] = None
+
+            return None
+
+        cache[tid] = None
+
+        return None
+
+
+
+    return resolve
+
+
 
 
 

@@ -16,7 +16,15 @@ from memoria.graph.edge_types import normalize_link_edge_type, normalize_link_re
 
 logger = logging.getLogger(__name__)
 from memoria.services.check_report import summarize_check_counts
-from memoria.services.kp_index import build_kp_index
+from memoria.services.kp_index import (
+    build_kp_index,
+    invalidate_kp_targets,
+    kp_targets_snapshot,
+    load_persisted_kp_targets,
+    rebuild_kp_targets,
+    schedule_kp_targets_rebuild,
+    wait_kp_targets,
+)
 from memoria.services.kp_resolver import resolve_knowledge_points
 from memoria.services.link_instances import (
     add_excluded_lines,
@@ -45,6 +53,7 @@ from memoria.services.link_md import (
 from memoria.services.link_resolver import (
     build_link_overrides,
     build_target_lookup,
+    build_target_lookup_from,
     collect_link_alias_anchors,
     resolve_link_target,
     resolve_link_targets,
@@ -236,12 +245,24 @@ class DocumentService:
             except Exception:  # noqa: BLE001
                 pass
             try:
+                wait_kp_targets(self.kb_path)  # G5：等旧库后台快照重建收尾
+            except Exception:  # noqa: BLE001
+                pass
+            try:
                 self.durable_flush()
             except Exception:  # noqa: BLE001
                 pass
         self.kb_path = path
         self._cache.clear()
         remember_last_kb_path(path)
+        # G5：打开/切换库属「用户显式」触发点 → 秒读上次持久化快照（打开库不做任何全库重活）；
+        # 仅当该库首次（无持久化）时才同步构建一次。运行期维护只走「写后失效 + 后台增量重建」。
+        try:
+            invalidate_kp_targets(path)
+            if not load_persisted_kp_targets(path):
+                rebuild_kp_targets(path)
+        except Exception:  # noqa: BLE001
+            logger.warning("kp_targets bootstrap failed for %s", path, exc_info=True)
         # manifest 基线 / pending 同步为启动辅助动作：失败降级（记录日志），
         # 不应阻断应用启动（此前 .bak 备份 PermissionError 会让发布态启动崩溃）
         try:
@@ -269,6 +290,9 @@ class DocumentService:
         touch_manifest_entry(self.kb_path, rel_norm)
         # M3：词法/embedding 索引重建改为后台合并执行，不再阻塞写路径
         self._schedule_lexical_rebuild()
+        # G5：KP id 集合可能变化 → 失效快照 + 后台合并重建（写路径不做同步重活）
+        invalidate_kp_targets(self.kb_path)
+        schedule_kp_targets_rebuild(self.kb_path)
 
     @staticmethod
     def _sort_kps_by_start_line(sidecar: dict) -> None:
@@ -458,6 +482,10 @@ class DocumentService:
                 self.durable_flush()
             except Exception:  # noqa: BLE001
                 pass
+            try:
+                wait_kp_targets(kb)  # G5：等后台全库快照重建收尾
+            except Exception:  # noqa: BLE001
+                pass
         self.kb_path = None
         self._cache.clear()
         remember_last_kb_path(None)
@@ -532,6 +560,10 @@ class DocumentService:
             if old_sc and new_sc and old_sc != new_sc and os.path.isfile(old_sc):
                 os.makedirs(os.path.dirname(new_sc), exist_ok=True)
                 os.rename(old_sc, new_sc)
+        if self.kb_path:
+            # G5：文件 stem 变化 → 全库快照失效 + 后台重建
+            invalidate_kp_targets(self.kb_path)
+            schedule_kp_targets_rebuild(self.kb_path)
 
     def _remove_sidecar(self, md_full: str) -> None:
         """删除 md 时联动删除侧车（两种布局）。"""
@@ -544,6 +576,10 @@ class DocumentService:
                     os.remove(sc)
                 except OSError:
                     pass
+        if self.kb_path:
+            # G5：文件删除 → 全库快照失效 + 后台重建
+            invalidate_kp_targets(self.kb_path)
+            schedule_kp_targets_rebuild(self.kb_path)
 
     def rename_file(self, old_rel: str, new_name: str) -> dict:
         """重命名 .md 文件（仅文件名，保持所在目录），联动侧车、manifest 与全库引用。
@@ -769,6 +805,10 @@ class DocumentService:
             f.write(body or "")
         self._cache.pop(rel, None)
         touch_manifest_entry(self.kb_path, rel)
+        # G5：新增文件 → 全库快照失效 + 后台重建（写路径不阻塞）
+        if self.kb_path:
+            invalidate_kp_targets(self.kb_path)
+            schedule_kp_targets_rebuild(self.kb_path)
         return {"status": "ok", "path": rel}
 
     def create_dir(self, rel_path: str) -> dict:
@@ -1270,7 +1310,9 @@ class DocumentService:
         )
         sidecar_validation = validate_sidecar(sidecar, rel_path.replace("\\", "/"), lines)
         link_overrides = build_link_overrides(sidecar, body)
-        target_lookup = build_target_lookup(self.kb_path)
+        # G5：全库 id/stem 只读快照（读路径零构建；陈旧时由后台重建补齐，最终一致）
+        _snap = kp_targets_snapshot(self.kb_path)
+        target_lookup = build_target_lookup_from(_snap["ids"], _snap["stems"])
         resolved_targets = set(target_lookup.get("resolved_targets") or [])
         link_audit = audit_link_consistency(
             body,
@@ -1278,14 +1320,16 @@ class DocumentService:
             lines,
             resolved_targets=resolved_targets,
         )
-        from memoria.graph.edge_derivation import build_target_kp_resolver
+        from memoria.graph.edge_derivation import build_target_kp_resolver_from
         from memoria.graph.link_audit import audit_file_graph_links
 
         graph_link_audit = audit_file_graph_links(
             rel_path.replace("\\", "/"),
             body,
             sidecar,
-            resolve_target_kp=build_target_kp_resolver(self.kb_path),
+            resolve_target_kp=build_target_kp_resolver_from(
+                _snap["ids"], _snap["stems"], _snap["pairs"]
+            ),
         )
 
         doc = {
@@ -1306,6 +1350,7 @@ class DocumentService:
             "link_overrides": link_overrides,
             "link_audit": link_audit,
             "graph_link_audit": graph_link_audit,
+            "link_index_ready": bool(_snap["ready"]),
             "lines": lines,
         }
         self._cache[rel_path] = doc
@@ -1904,7 +1949,11 @@ class DocumentService:
     def get_link_targets(self) -> dict:
         if not self.kb_path:
             raise RuntimeError("未打开知识库")
-        return {"status": "ok", **build_target_lookup(self.kb_path)}
+        snap = kp_targets_snapshot(self.kb_path)
+        if not snap["ready"]:
+            # 兜底：未就绪时按显式路径构建（开库/手动刷新属「用户显式」触发点）
+            return {"status": "ok", **build_target_lookup(self.kb_path)}
+        return {"status": "ok", **build_target_lookup_from(snap["ids"], snap["stems"])}
 
     def get_graph_data(self) -> dict:
         if not self.kb_path:
@@ -1995,6 +2044,9 @@ class DocumentService:
         result = reconcile_path_cascade(self.kb_path, apply=apply)
         if apply and result.get("status") in ("ok", "partial"):
             self._cache.clear()
+            # G5：路径级联修复改变了文件路径 → 全库快照失效 + 后台重建
+            invalidate_kp_targets(self.kb_path)
+            schedule_kp_targets_rebuild(self.kb_path)
         return result
 
     def _write_body(self, rel_path: str, body: str, fm: dict | None) -> None:

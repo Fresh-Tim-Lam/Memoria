@@ -40,12 +40,62 @@
     return j.kind + (j.key ? ":" + j.key : "");
   }
 
+  // ── 真机验收追踪（G5.1）：window.__jobTrace=true 开启；200ms 批量写 logs/job-trace.log ──
+  var _traceBuf = [];
+  var _traceTimer = null;
+  var _traceSeq = 0;
+
+  function _pad(n, w) {
+    var s = String(n);
+    while (s.length < w) s = "0" + s;
+    return s;
+  }
+
+  function traceFlush() {
+    if (_traceTimer) {
+      clearTimeout(_traceTimer);
+      _traceTimer = null;
+    }
+    if (!_traceBuf.length) return;
+    var body = _traceBuf.join("\n") + "\n";
+    _traceBuf = [];
+    try {
+      var api =
+        (g.MemoriaBridge && g.MemoriaBridge.api && g.MemoriaBridge.api()) ||
+        (g.memoria && g.memoria.api);
+      if (api && api.write_debug_log) api.write_debug_log("job-trace.log", body);
+    } catch (_) {
+      /* noop */
+    }
+  }
+
+  function trace(msg) {
+    if (!g.__jobTrace) return;
+    var d = new Date();
+    var ts =
+      _pad(d.getHours(), 2) + ":" + _pad(d.getMinutes(), 2) + ":" +
+      _pad(d.getSeconds(), 2) + "." + _pad(d.getMilliseconds(), 3);
+    _traceBuf.push(ts + " #" + ++_traceSeq + " " + msg);
+    if (_traceTimer) clearTimeout(_traceTimer);
+    _traceTimer = setTimeout(traceFlush, 200);
+  }
+
   function log(msg) {
     try {
       if (g.console) g.console.log("[job] " + msg);
     } catch (_) {
       /* noop */
     }
+    trace(msg);
+  }
+
+  /** 供作业实现方补记观测（如“忙时跳过”），统一带 [job] 前缀与追踪落盘。 */
+  function note(msg) {
+    log(msg);
+  }
+
+  if (g && typeof g.addEventListener === "function") {
+    g.addEventListener("beforeunload", traceFlush);
   }
 
   function idle(fn) {
@@ -211,5 +261,7 @@
     counters: counters,
     resetCounters: resetCounters,
     isBypass: isBypass,
+    note: note,
+    traceFlush: traceFlush,
   };
 })(typeof window !== "undefined" ? window : globalThis);

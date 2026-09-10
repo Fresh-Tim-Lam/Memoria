@@ -228,3 +228,14 @@ def build_target_lookup(kb_path: str) -> dict:
         "file_stems": file_stems,
         "resolved_targets": sorted(set(kp_ids) | set(file_stems)),
     }
+
+
+def build_target_lookup_from(kp_ids: set[str] | None, file_stems: dict[str, str] | None) -> dict:
+    """G5：由全库轻量快照构造（读路径零构建，见 kp_index.kp_targets_snapshot）。"""
+    ids = sorted(kp_ids or ())
+    stems = sorted((file_stems or {}).keys())
+    return {
+        "kp_ids": ids,
+        "file_stems": stems,
+        "resolved_targets": sorted(set(ids) | set(stems)),
+    }

@@ -163,10 +163,17 @@ window.MemoriaKbCheck = (function () {
       dropStale: true,
       gen: S.epoch(),
       run: () => {
-        if (!state.kbPath) return;
+        if (!state.kbPath) {
+          S.note?.("kb_check 丢弃（已无打开的知识库）");
+          return;
+        }
         const busy = window.__memoriaHasPendingEdits && window.__memoriaHasPendingEdits();
-        if (busy) return; // 编辑/待保存未收敛：本次跳过，等下轮间隔
-        runKbValidate({ silent: true });
+        if (busy) {
+          S.note?.("kb_check 跳过（编辑/待保存未收敛，等下轮）");
+          return;
+        }
+        S.note?.("kb_check 开始（全库 validate）");
+        runKbValidate({ silent: true }).then(() => S.note?.("kb_check 完成"));
       },
     });
   }
