@@ -127,6 +127,7 @@ app.py → app/desktop.py（DPI/UTF-8 兜底）→ app/shell/（壳选择：pywe
 
 ## 8. References（参考）
 
+- [AGENTS.md](AGENTS.md) — 多 Agent 协作与调度契约（基础 Agent 集、事件 Schema、权限隔离、可插拔扩展）
 - [docs/README.md](docs/README.md) — 文档中心总索引（先读）
 - [reference/architecture.md](docs/reference/architecture.md) — 系统架构总览
 - [reference/glossary.md](docs/reference/glossary.md) — 术语表（KP/sidecar/manifest/contain 边/虚链）
