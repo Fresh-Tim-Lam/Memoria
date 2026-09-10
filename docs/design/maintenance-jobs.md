@@ -82,7 +82,7 @@
 | 视图 | 静默更新方式 | 现状 |
 |---|---|---|
 | 知识点面板 | 保存后 `ranges_resynced>0` → 防重入地重取 doc 后 `renderKpList` | ✅ 已首期落地（app.js `_silentRefreshKpPanel`） |
-| 预览范围带 | 抽出“仅重绘范围带、无滚动/闪烁”的轻量路径（区别于 `highlightRange` 的 scroll+flash）；在新范围就绪后静默重绘 | 🔄 部分（2026-09-10）：`markRangeQuiet`（只标记、不滚不闪、不自动消失）已用于「改范围 / 创建知识点」；编辑重锚路径待接（C3 剩余） |
+| 预览范围带 | 抽出“仅重绘范围带、无滚动/闪烁”的轻量路径（区别于 `highlightRange` 的 scroll+flash）；在新范围就绪后静默重绘 | ✅ 2026-09-10：`markRangeQuiet`（只标记、不滚不闪、不自动消失）用于「改范围 / 创建知识点」；跳转仍走 `highlightRange`。编辑路径本就静默（M6b 实时映射），无需另接 |
 | 源码高亮 | 编辑中由实时映射自洽；仅在重锚结果与行号不符时局部更新 | ⏳ 阶段 P2 |
 | 文件树 | rename 后统一重映射+`refreshFiles`（已随重命名 pipeline） | ✅ |
 | 图谱 | **增量更新**（增量在布局与数据层，非帧绘制）：引擎 `applyDelta` + 受影响子图局部松弛；完整重建仍走 P3 | ⏳ G4 拆分后续项（方案 S1–S4，见 g4-gate-summary） |

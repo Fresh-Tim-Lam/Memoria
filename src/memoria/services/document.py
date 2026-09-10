@@ -290,9 +290,10 @@ class DocumentService:
         touch_manifest_entry(self.kb_path, rel_norm)
         # M3：词法/embedding 索引重建改为后台合并执行，不再阻塞写路径
         self._schedule_lexical_rebuild()
-        # G5：KP id 集合可能变化 → 失效快照 + 后台合并重建（写路径不做同步重活）
+        # G5：KP id 集合可能变化 → 仅标记陈旧（微秒级）。
+        # 重建不在此触发：每次保存都跑后台全库扫描会与输入争 GIL（换行卡顿），
+        # 改由读路径发现陈旧时登记一次（惰性 + 合并，见 load_document）。
         invalidate_kp_targets(self.kb_path)
-        schedule_kp_targets_rebuild(self.kb_path)
 
     @staticmethod
     def _sort_kps_by_start_line(sidecar: dict) -> None:
@@ -561,9 +562,8 @@ class DocumentService:
                 os.makedirs(os.path.dirname(new_sc), exist_ok=True)
                 os.rename(old_sc, new_sc)
         if self.kb_path:
-            # G5：文件 stem 变化 → 全库快照失效 + 后台重建
+            # G5：文件 stem 变化 → 仅标记陈旧（重建留到读路径惰性触发）
             invalidate_kp_targets(self.kb_path)
-            schedule_kp_targets_rebuild(self.kb_path)
 
     def _remove_sidecar(self, md_full: str) -> None:
         """删除 md 时联动删除侧车（两种布局）。"""
@@ -577,9 +577,8 @@ class DocumentService:
                 except OSError:
                     pass
         if self.kb_path:
-            # G5：文件删除 → 全库快照失效 + 后台重建
+            # G5：文件删除 → 仅标记陈旧（重建留到读路径惰性触发）
             invalidate_kp_targets(self.kb_path)
-            schedule_kp_targets_rebuild(self.kb_path)
 
     def rename_file(self, old_rel: str, new_name: str) -> dict:
         """重命名 .md 文件（仅文件名，保持所在目录），联动侧车、manifest 与全库引用。
@@ -805,10 +804,9 @@ class DocumentService:
             f.write(body or "")
         self._cache.pop(rel, None)
         touch_manifest_entry(self.kb_path, rel)
-        # G5：新增文件 → 全库快照失效 + 后台重建（写路径不阻塞）
+        # G5：新增文件 → 仅标记陈旧（重建留到读路径惰性触发）
         if self.kb_path:
             invalidate_kp_targets(self.kb_path)
-            schedule_kp_targets_rebuild(self.kb_path)
         return {"status": "ok", "path": rel}
 
     def create_dir(self, rel_path: str) -> dict:
@@ -1310,8 +1308,11 @@ class DocumentService:
         )
         sidecar_validation = validate_sidecar(sidecar, rel_path.replace("\\", "/"), lines)
         link_overrides = build_link_overrides(sidecar, body)
-        # G5：全库 id/stem 只读快照（读路径零构建；陈旧时由后台重建补齐，最终一致）
+        # G5：全库 id/stem 只读快照（读路径零构建）；陈旧则登记一次后台增量重建
+        # （本次仍用旧快照返回，不阻塞；合并语义由 schedule 保证同库单线程）
         _snap = kp_targets_snapshot(self.kb_path)
+        if not _snap["ready"]:
+            schedule_kp_targets_rebuild(self.kb_path)
         target_lookup = build_target_lookup_from(_snap["ids"], _snap["stems"])
         resolved_targets = set(target_lookup.get("resolved_targets") or [])
         link_audit = audit_link_consistency(
@@ -1951,8 +1952,11 @@ class DocumentService:
             raise RuntimeError("未打开知识库")
         snap = kp_targets_snapshot(self.kb_path)
         if not snap["ready"]:
-            # 兜底：未就绪时按显式路径构建（开库/手动刷新属「用户显式」触发点）
-            return {"status": "ok", **build_target_lookup(self.kb_path)}
+            # 陈旧：登记后台重建（不阻塞），本次仍用旧快照；
+            # 仅当完全无快照（该库首次且持久化缺失）才按显式路径同步构建一次
+            schedule_kp_targets_rebuild(self.kb_path)
+            if not snap["ids"] and not snap["stems"]:
+                return {"status": "ok", **build_target_lookup(self.kb_path)}
         return {"status": "ok", **build_target_lookup_from(snap["ids"], snap["stems"])}
 
     def get_graph_data(self) -> dict:
@@ -2044,9 +2048,8 @@ class DocumentService:
         result = reconcile_path_cascade(self.kb_path, apply=apply)
         if apply and result.get("status") in ("ok", "partial"):
             self._cache.clear()
-            # G5：路径级联修复改变了文件路径 → 全库快照失效 + 后台重建
+            # G5：路径级联修复改变了文件路径 → 仅标记陈旧（重建留到读路径惰性触发）
             invalidate_kp_targets(self.kb_path)
-            schedule_kp_targets_rebuild(self.kb_path)
         return result
 
     def _write_body(self, rel_path: str, body: str, fm: dict | None) -> None:
