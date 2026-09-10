@@ -1,0 +1,61 @@
+{
+  "kind": "g5-gate-summary",
+  "recorded_at": "2026-09-10",
+  "status": "G5 收口（维护面收敛 M7：F01–F03 + G5.4 读路径索引）",
+  "items": {
+    "G5.1_F01_silent_validate_scheduling": {
+      "status": "PASS（自动 + 真机）",
+      "evidence": [
+        "results/validate-l1-2026-09-10.json（200 文件语料 median 5.93s、errors=0、warnings=666）",
+        "真机 [job]：入队→执行→提交后台；编辑中 3 次『跳过（编辑/待保存未收敛，等下轮）』；queue=1 收敛",
+        "关库陈旧证据：[job] kb 关闭 epoch→2（排队旧库作业将陈旧丢弃）",
+        "守卫修正：_saveTimer/_renderTimer fire/clear 后归零，否则忙标志永真→静默检查永不触发"
+      ]
+    },
+    "G5.2_CLI_and_assertions": {
+      "status": "PASS（自动）",
+      "evidence": [
+        "新增 CLI：python -m memoria.cli.main diagnose-images <kb> [--json]",
+        "cli_assert_g5_2.py 14/14 PASS：validate 0-issue；diagnose 分类与字段合法；repair 干跑不写盘且 move 集合与 apply 一致；修复后 errors=0",
+        "i18n 清单 rows=0（扫描器补日志封装剔除）+ i18n 自检 12/12 PASS"
+      ]
+    },
+    "G5.3_M7b_backend_executor": {
+      "status": "PASS（自动 + 真机）",
+      "evidence": [
+        "services/executor.py：submit 即返回 job_id；同 kind+key 排队作业按 replace 顶替合并；结果保留供轮询",
+        "RPC：validate_kb_async + job_status + jobs_snapshot（同步 validate_kb 保持兼容）",
+        "executor_assert_g5_3.py 全 PASS：submit 1.0ms 返回（作业 1.2s）、superseded 合并、异步 validate 与同步 errors/files 一致",
+        "真机：[job] kb_check 已提交后台作业 #5d3359df38eb → 完成（787.6ms）"
+      ]
+    },
+    "G5.4_read_path_index_cache": {
+      "status": "PASS（自动 + 真机）",
+      "evidence": [
+        "load_document 1822ms → 7.6ms（-99.6%）：原每次两次全库 build_kp_index（含与 id 无关的范围解析）",
+        "轻量快照（KP id / 文件 stem / (文件,KP id) 对，仅读 sidecar）+ 持久化 .memoria/kp_targets.json + 打开库秒读 + 写后失效与后台增量重建（逐 sidecar mtime+size 缓存）",
+        "一致性：快照 vs 全量索引 ids 599/599、stems 200/200；validate errors=0 无回归",
+        "真机：AAA_KnowledgeBase/.memoria/kp_targets.json 生成；切换文件流畅（用户确认）",
+        "附带修复：关库未清 state.dirs 导致文件树残留旧库目录（点击无效）"
+      ]
+    },
+    "regression": {
+      "tools": [
+        "scripts/benchmark/maintenance/regression_smoke_m6a.py",
+        "scripts/benchmark/maintenance/scheduler_vm_test.js"
+      ],
+      "result": "PASS"
+    }
+  },
+  "gate_rules": {
+    "principle": "维护动作只允许两类触发点：后台（自动、不阻塞交互）或用户显式（打开库/刷新/构建/点击）；交互热路径禁止任何同步重活。",
+    "registered_in": [
+      "docs/to-dolist.md §12 设计取向·触发点约束",
+      "docs/design/maintenance-jobs.md §2 概念表 / §3.4 执行边界 / §5 作业登记表"
+    ]
+  },
+  "deferred": {
+    "open_kb_sync_pending": "打开库仍有 ~1.06s sync_kb_pending 全库扫描（既有，非本阶段引入）",
+    "kp_panel_transient_error": "文件切换瞬间 kp_panel 偶发 expected str, bytes or os.PathLike object, not NoneType（待排查触发条件）"
+  }
+}
