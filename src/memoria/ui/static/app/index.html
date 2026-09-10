@@ -48,6 +48,7 @@
           <div id="file-menu" class="-tb-file-menu" role="menu" hidden>
             <button type="button" role="menuitem" id="file-menu-open" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
             <button type="button" role="menuitem" id="file-menu-import" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
+            <button type="button" role="menuitem" id="file-menu-kb-agent" data-i18n="toolbar.kbAgent" data-i18n-attr="title:toolbar.kbAgentTitle">创建 Trae 智能体</button>
             <div class="-tb-file-menu-sep" role="separator"></div>
             <button type="button" role="menuitem" id="file-menu-new-window" data-i18n="toolbar.newWindow" data-i18n-attr="title:toolbar.newWindowTitle">新窗口</button>
             <div class="-tb-file-menu-row" id="file-menu-recent-wrap" role="none">
@@ -350,6 +351,22 @@
     </div>
   </div>
 
+  <div id="kb-agent-modal" class="-modal hidden">
+    <div class="-modal-backdrop"></div>
+    <div class="-modal-box -modal-import-conflict">
+      <div class="-modal-header">
+        <span data-i18n="kbAgent.title">为知识库创建 Trae 智能体</span>
+        <button id="kb-agent-close-x" type="button" class="-icon-btn" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>
+      </div>
+      <div id="kb-agent-body" class="-modal-body"></div>
+      <div class="-modal-footer -btn-bar">
+        <span class="-modal-footer-spacer"></span>
+        <button type="button" class="-btn secondary" id="kb-agent-close" data-i18n="common.close">关闭</button>
+        <button type="button" class="-btn primary" id="kb-agent-copy" data-i18n="kbAgent.copyPrompt">复制指令</button>
+      </div>
+    </div>
+  </div>
+
   <script src="/app/lib/three.min.js"></script>
   <script src="/app/lib/OrbitControls.js"></script>
   <script src="/app/js/graph-label.js"></script>
@@ -391,6 +408,7 @@
   <script src="/app/js/toolbar-search.js"></script>
   <script src="/app/js/image-tools.js"></script>
   <script src="/app/js/kb-check.js"></script>
+  <script src="/app/js/kb-agent.js"></script>
   <script src="/app/js/file-tree.js"></script>
 </body>
 </html>

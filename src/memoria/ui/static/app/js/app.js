@@ -471,6 +471,8 @@
         setStatus(T("app.status.kbLoaded"), state.kbPath);
         await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
         window.MemoriaKbCheck?.startKbSilentCheck?.();
+        // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
+        window.MemoriaKbAgent?.ensure?.();
         const preferred =
           state.files.find((f) => f.path === "navigation-demo.md") ||
           state.files.find((f) => f.path === "mdp.md") ||
@@ -548,6 +550,8 @@
     setStatus(T("app.status.kbOpened"), path);
     await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
     window.MemoriaKbCheck?.startKbSilentCheck?.();
+    // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
+    window.MemoriaKbAgent?.ensure?.();
   }
 
   async function closeKb() {
@@ -4641,8 +4645,8 @@
     await renderPreview(res);
     state.activeKpId = kpId;
     renderKpList(state.doc);
-    highlightRange(start, end);
-    scrollKpListItemIntoView(kpId);
+    // 改范围/创建：只标记范围（不滚动不闪烁），避免打断用户当前视线
+    markRangeQuiet(start, end);
     benchMark("ui_done");
     setStatus(T("cfg.confirm.done"), T("cfg.confirm.doneDetail", { kpId, start, end }));
     try {
@@ -11009,6 +11013,22 @@
     if (line) line.scrollIntoView({ block: "center", behavior: "smooth" });
   }
 
+  /**
+   * 只标记 KP 范围：不滚动、不闪烁、不自动消失。
+   * 用于「修改范围 / 创建知识点」等**用户正在看屏幕上内容**的场合——
+   * 这些场景只需要把范围标出来，滚动+闪烁会打断阅读/输入（与跳转语义区分）。
+   */
+  function markRangeQuiet(startLine, endLine) {
+    dismissKpRangeHighlight();
+    for (let n = startLine; n <= endLine; n++) {
+      const line = document.getElementById("line-" + n);
+      if (line) line.classList.add("in-range");
+    }
+    if (state.viewMode !== "source") {
+      highlightPreviewRange(startLine, endLine, { scroll: false, flash: false });
+    }
+  }
+
   function highlightRange(startLine, endLine) {
     dismissKpRangeHighlight();
 
@@ -11887,11 +11907,11 @@
     window.MemoriaFileTree?.render?.();
     await setViewMode(state.viewMode, { skipSave: true });
     await renderPreview(res);
-    // 与 openFile 的 kpId 跳转路径一致：直接 highlightRange + scrollKpListItemIntoView
+    // 与 openFile 的 kpId 跳转路径不同：这里只标记范围（不滚动不闪烁），
+    // 避免保存/创建后把用户视线拽走（跳转语义仍走 highlightRange）
     state.activeKpId = kpId;
     renderKpList(state.doc);
-    highlightRange(start, end);
-    scrollKpListItemIntoView(kpId);
+    markRangeQuiet(start, end);
     if (a.mode === "create") benchMark("ui_done");
     const created = a.mode === "create";
     setStatus(
@@ -12589,6 +12609,7 @@
     loadGraphData,
     refreshKbPendingSummary,
     openFile,
+    openKb,
     // ── 图片子系统（image-tools.js）追加的私有服务 ──────────────────
     // 源码行写回/撤销/重渲染/右键菜单/确认弹窗，均为 app.js 闭包内实现，
     // 通过门面供 image-tools.js 调用（行为与原先在 app.js 内一致）。

@@ -192,6 +192,10 @@ def _stage_runtime_resources() -> None:
 
 _REQUIRED_RELEASE_RESOURCES = (
     "agent-prompts/organize.zh-CN.md",  # 程序内 Agent 整理提示词（单一事实源，运行态 RPC 读取）
+    "agent-prompts/kb-agent.zh-CN.md",  # 知识库智能体指令（install_kb_agent 分发到 .memoria/agent/）
+    "agent-prompts/kb-spec.zh-CN.md",  # 知识库编撰/维护规范（同上，独立随版本升级）
+    "agent-prompts/kb-agent-readme.md",  # .memoria/agent/README.md 模板
+    "agent-prompts/fsrs.py",  # 确定性 FSRS 调度脚本（随包分发）
     "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
     "examples/README.md",  # 官方展示样例库入口（机器学习导论，随包可试用）
     "icons/Memoria.ico",

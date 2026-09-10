@@ -12,6 +12,7 @@
 |------|------|
 | `icons/` | 应用图标（`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`），用于窗口、任务栏与打包产物 |
 | `screenshots/` | 项目演示截图（`demo-*.png`），README（中/英）配图；由打包脚本**不纳入**发布包 |
+| `agent-prompts/` | 随应用分发的 Agent 提示词模板：`organize.zh-CN.md`（导入整理，程序内单一事实源）、`kb-agent.zh-CN.md`（知识库智能体**指令**，粘贴进 Trae 一次）、`kb-spec.zh-CN.md`（知识库**编撰/维护规范**，供 agent 按需读、独立随版本升级，见 [docs/design/kb-agent.md](../docs/design/kb-agent.md)） |
 
 ## 目录变更约定
 

@@ -12,6 +12,7 @@
 |------|------|
 | `icons/` | App icons (`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`), used for the window, the taskbar, and packaged artifacts |
 | `screenshots/` | Project demo screenshots (`demo-*.png`) used as images in the READMEs (EN / CN); **not included** in the release package by the packaging script |
+| `agent-prompts/` | Agent prompt templates shipped with the app: `organize.zh-CN.md` (import/organize single source of truth in-app), `kb-agent.zh-CN.md` (knowledge-base agent **instruction**, pasted into Trae once), `kb-spec.zh-CN.md` (knowledge-base **authoring/maintenance spec**, read by the agent, versioned independently — see [docs/design/kb-agent.md](../docs/design/kb-agent.md)) |
 
 ## Directory-Change Conventions
 
