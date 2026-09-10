@@ -72,7 +72,7 @@
 ### 3.4 执行边界（前后端）
 
 - **前端**：协作式分片 + RPC；展示级轻作业在本线程空闲执行；绝不因派生刷新阻塞输入。
-- **Python 后端**：IO/CPU 重活放**线程池**（`concurrent.futures` 或独立 worker 线程 + 队列），RPC 快速返回 `accepted`；完成事件经轮询或回调刷新前端。GIL 下 CPU 密集用线程+`ThreadPoolExecutor` 仍受 GIL，但本应用重活以 IO/文件/YAML 为主，必要时才考虑进程。
+- **Python 后端**：IO/CPU 重活放**线程池**（`concurrent.futures` 或独立 worker 线程 + 队列），RPC 快速返回 `accepted`；完成事件经轮询或回调刷新前端。GIL 下 CPU 密集用线程+`ThreadPoolExecutor` 仍受 GIL，但本应用重活以 IO/文件/YAML 为主，必要时才考虑进程。**（✅ G5.3 已落地：`services/executor.py` 线程池 + 作业表；`validate_kb_async` 提交即返回 + `job_status` 轮询，见 §7 首期取轮询；资源级串行仍由作业自身加锁，如 M3 的 `_lex_lock`）**
 - **原子性**：所有写盘沿用“tmp + `os.replace`”；作业失败只回滚自身，不影响其它队列。
 
 ## 4. 静默刷新：不打扰原则
@@ -104,7 +104,7 @@
 | index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅（合并） | ✅ M3 后台化（2026-09-09）：锁+合并 daemon 重建，写路径不阻塞；search/切库/关库前 wait |
 | kp_index_rebuild | 侧车写后（KP id 集合）/文件增删改（stem）/显式刷新 | P3 | ✅（合并 + 逐文件增量） | ✅ G5.4（2026-09-10）：读路径只读 `.memoria/kp_targets.json` 轻量快照（零构建），写后失效 + 后台增量重建（逐 sidecar mtime+size 缓存）；打开库只秒读快照，不触发全库重活 |
 | graph_build | 显式“构建” | P3 | ✅ | 手动 |
-| cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅ | 定时/手动 |
+| cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅ | ✅ G5.3 后端执行器（2026-09-10）：`validate_kb_async` 提交线程池即返回 + `job_status` 轮询；同库同 kind 排队顶替合并 |
 | file_tree_refresh | 树/结构变更 | P2 | ✅ | refreshFiles |
 
 ## 6. 阶段规划（每阶段含验证，通过后再进下一阶段）

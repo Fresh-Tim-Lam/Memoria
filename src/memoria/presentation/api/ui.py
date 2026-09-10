@@ -387,6 +387,30 @@ class UIAPI:
         except RuntimeError as e:
             return {"status": "error", "message": str(e)}
 
+    # ── G5.3 / M7b：重活入线程池，RPC 提交即返回（见 services/executor.py）────
+
+    def validate_kb_async(self) -> dict:
+        """把全库 validate 提交为后台作业：立即返回 job_id，RPC 不再被重活阻塞。"""
+        from memoria.services.executor import get_executor
+
+        if not self._svc.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        kb = self._svc.kb_path
+        return get_executor().submit("validate_kb", lambda: self._svc.validate_kb(), key=kb)
+
+    def job_status(self, job_id: str) -> dict:
+        """查询后台作业状态与结果（前端轮询用）。"""
+        from memoria.services.executor import get_executor
+
+        return get_executor().status(job_id)
+
+    def jobs_snapshot(self) -> dict:
+        """执行器观测：计数与在途作业数。"""
+        from memoria.services.executor import get_executor
+
+        snap = get_executor().snapshot()
+        return {"status": "ok", **snap}
+
     def sync_manifest(self) -> dict:
         try:
             return self._svc.sync_manifest()
@@ -1045,6 +1069,38 @@ class UIAPI:
                         "text": path.read_text(encoding="utf-8"),
                     }
             return {"status": "error", "message": "未找到整理提示词资源（agent-prompts/organize.*.md）"}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def get_kb_agent_prompt(self, lang: str = "zh-CN") -> dict:
+        """读取程序内可复制的「知识库智能体指令」（resources/agent-prompts/kb-agent.*.md）。"""
+        from memoria.app.runtime import resources_dir
+
+        try:
+            res_root = resources_dir()
+            candidates = [f"kb-agent.{lang}.md", "kb-agent.zh-CN.md"]
+            for name in candidates:
+                path = res_root / "agent-prompts" / name
+                if path.is_file():
+                    return {
+                        "status": "ok",
+                        "name": path.name,
+                        "lang": lang,
+                        "text": path.read_text(encoding="utf-8"),
+                    }
+            return {"status": "error", "message": "未找到智能体指令资源（agent-prompts/kb-agent.*.md）"}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
+    def install_kb_agent(self) -> dict:
+        """把内置 Agent 工具包写入当前知识库 `.memoria/agent/`（幂等；不覆盖 review/）。
+
+        设计见 docs/design/kb-agent.md §2/§7。
+        """
+        from memoria.services.kb_agent import install_kb_agent as _install
+
+        try:
+            return _install(self._svc.kb_path)
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
 

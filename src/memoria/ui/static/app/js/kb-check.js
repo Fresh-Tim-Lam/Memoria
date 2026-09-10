@@ -172,10 +172,71 @@ window.MemoriaKbCheck = (function () {
           S.note?.("kb_check 跳过（编辑/待保存未收敛，等下轮）");
           return;
         }
-        S.note?.("kb_check 开始（全库 validate）");
-        runKbValidate({ silent: true }).then(() => S.note?.("kb_check 完成"));
+        // G5.3：提交后端后台作业并轮询 —— 不 await，调度队列不被长作业占用
+        submitAsyncValidate();
       },
     });
+  }
+
+  // ── G5.3：静默 validate 走后端作业执行器（M7b）+ 轮询 ────────────────────
+
+  const POLL_INTERVAL_MS = 400;
+  const POLL_TIMEOUT_MS = 120000;
+
+  /** 应用后台作业返回的校验报告（与同步路径共用同一套角标/状态栏/弹窗逻辑）。 */
+  function applyAsyncValidateReport(vr) {
+    if (!state.kbPath || !vr) return;
+    state.kbValidateReport = vr;
+    state.graphAudit = vr.graph_audit || state.graphAudit;
+    applyKbValidateStatus(vr, { silent: true });
+    if ($("#check-modal") && !$("#check-modal").classList.contains("hidden")) {
+      renderCheckModalBody(vr);
+    }
+  }
+
+  /** 提交后台 validate 作业并轮询结果；调用方不 await（不占用调度队列）。 */
+  async function submitAsyncValidate() {
+    const S = window.MemoriaScheduler;
+    let res;
+    try {
+      res = await call("validate_kb_async");
+    } catch (e) {
+      S?.note?.("kb_check 提交异常：" + (e && e.message ? e.message : e));
+      return;
+    }
+    if (!res || res.status !== "ok" || !res.job_id) {
+      S?.note?.("kb_check 提交失败：" + ((res && res.message) || "unknown"));
+      return;
+    }
+    S?.note?.("kb_check 已提交后台作业 #" + res.job_id);
+    const deadline = Date.now() + POLL_TIMEOUT_MS;
+    while (Date.now() < deadline) {
+      await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+      if (!state.kbPath) {
+        S?.note?.("kb_check 丢弃（轮询期间已关库，结果不应用）");
+        return;
+      }
+      let st;
+      try {
+        st = await call("job_status", res.job_id);
+      } catch (_) {
+        return;
+      }
+      if (!st || st.status === "error") {
+        S?.note?.("kb_check 失败：" + ((st && st.error) || "unknown"));
+        return;
+      }
+      if (st.status === "superseded") {
+        S?.note?.("kb_check 已被新作业顶替（合并）");
+        return;
+      }
+      if (st.status === "done") {
+        applyAsyncValidateReport(st.result);
+        S?.note?.("kb_check 完成（后台作业 #" + res.job_id + "，" + (st.elapsed_ms ?? "?") + "ms）");
+        return;
+      }
+    }
+    S?.note?.("kb_check 轮询超时（作业仍在后台执行）");
   }
 
   function stopKbSilentCheck() {
