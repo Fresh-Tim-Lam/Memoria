@@ -76,6 +76,30 @@ def _print_repair(result: dict, *, as_json: bool) -> int:
     return 0
 
 
+def _print_diagnose_images(result: dict, *, as_json: bool) -> int:
+    """G5.2：图片引用诊断（unregistered=格式不可注册 / missing=文件缺失）。"""
+    if as_json:
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+    else:
+        if result.get("status") == "error":
+            print(result.get("message", "失败"), file=sys.stderr)
+            return 1
+        unreg = result.get("unregistered") or []
+        missing = result.get("missing") or []
+        print(f"图片引用诊断：{len(unreg)} 处不可注册 · {len(missing)} 处文件缺失")
+        for title, rows in (("不可注册（可一键修复）", unreg), ("文件缺失", missing)):
+            if not rows:
+                continue
+            print(f"\n{title}：")
+            for it in rows:
+                print(f"  {it.get('doc')}:{it.get('line')}  {it.get('url')}")
+    if result.get("status") != "ok":
+        return 1
+    if (result.get("unregistered") or []) or (result.get("missing") or []):
+        return 1
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         try:
@@ -96,6 +120,10 @@ def main(argv: list[str] | None = None) -> int:
     p_rep.add_argument("--apply", action="store_true", help="写入修复（默认仅预览）")
     p_rep.add_argument("--json", action="store_true", help="JSON 输出")
 
+    p_diag = sub.add_parser("diagnose-images", help="诊断图片引用（不可注册 / 文件缺失）")
+    p_diag.add_argument("kb_path", help="知识库根目录")
+    p_diag.add_argument("--json", action="store_true", help="JSON 输出")
+
     args = parser.parse_args(argv)
 
     if args.command == "validate":
@@ -106,6 +134,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "repair-paths":
         result = reconcile_path_cascade(args.kb_path, apply=args.apply)
         return _print_repair(result, as_json=args.json)
+
+    if args.command == "diagnose-images":
+        svc = DocumentService(kb_path=args.kb_path)
+        result = svc.diagnose_image_refs()
+        return _print_diagnose_images(result, as_json=args.json)
 
     parser.print_help()
     return 2

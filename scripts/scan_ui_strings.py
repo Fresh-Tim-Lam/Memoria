@@ -24,7 +24,9 @@ OUT = os.path.join(ROOT, "docs", "reference", "i18n-inventory.md")
 CJK = re.compile(r"[\u4e00-\u9fff]")
 MAX_SNIP = 110
 DEV_LOG_RE = re.compile(
-    r"\bconsole\s*\.\s*[A-Za-z]+\s*\(|\b(?:syncLog|debugLog|traceLog|warnLog)\s*\(|\blog\s*\(\s*\"[A-Za-z_][A-Za-z0-9_]*\""
+    r"\bconsole\s*\.\s*[A-Za-z]+\s*\(|"
+    r"\b(?:syncLog|debugLog|traceLog|warnLog|flog|log|note)\s*\(|"
+    r"\.\s*note\s*\??\.\s*\("
 )
 
 
@@ -156,7 +158,7 @@ def main():
     P("> **目标读者**：项目负责人 / AI Agent（迁移文案、新增 UI、审阅语言包前必查）。")
     P("> **关联文档**：[i18n.md](../conventions/i18n.md)（语言系统维护规范）；[docs-management.md](../conventions/docs-management.md)（docs 组织规则）。")
     P("> **范围/边界**：仅统计 `src/memoria/ui/static/app/` 下 index.html、app/js/*.js、app/css 的 `content:` 文案；**不含** lib/vendor/mathjax 第三方库、纯注释文件（lexer/parser/ast 等中文均为注释，不属界面文案）；后端 Python 返回给界面的消息（document.py/import_engine.py/ui.py 等）为另一分区，机制落地后另行登记。")
-    P("> **剔除规则**：开发日志 `console.*`/`syncLog` 等（i18n.md §2 非界面文案）；HTML 中已挂 `data-i18n`/`data-i18n-attr` 的静态节点（行内含标记即视为已迁移，中文仅为默认值/占位）。")
+    P("> **剔除规则**：开发日志（`console.*` / `syncLog` / `log(` / `.note?.(` 等封装调用；i18n.md §2 非界面文案）；HTML 中已挂 `data-i18n`/`data-i18n-attr` 的静态节点（行内含标记即视为已迁移，中文仅为默认值/占位）。")
     P("> **生成**：`python scripts/scan_ui_strings.py`（确定性输出，可重复执行覆盖本文）。状态口径：`☐ 未迁移` 表示仍硬编码中文；迁移为 `t('key')` 后人工将对应文件状态置 `✔ 已迁移`（脚本重跑会重置，可在本文末尾「迁移记录」人工维护）。")
     P("> 生成日期：%s" % date.today().isoformat())
     P("")
