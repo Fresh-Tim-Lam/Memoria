@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.3.0-8A2BE2)](src/memoria/__version__.py)
+[![Version](https://img.shields.io/badge/Version-0.4.0-8A2BE2)](src/memoria/__version__.py)
 [![English](https://img.shields.io/badge/README-English-green)](README.md)
 
 **Memoria** 是一款面向个人知识库的本地知识图谱 IDE：Markdown 笔记 + 双向链接（`[[]]`）语义、荧光笔与富文本标记、LaTeX 公式、Mermaid 图表、2D/3D 知识图谱，配一个**纯离线**的检索内核。
@@ -188,7 +188,7 @@ Memoria 的文档体系专为人机协作设计：每个一级目录顶部有 `R
 - 文档中心：[docs/README.md](docs/README.md)（含目录导航）
 - 架构说明：[docs/reference/architecture.md](docs/reference/architecture.md)、[docs/design/system-design.md](docs/design/system-design.md)
 - 设计里程碑：[docs/design/designV0.md](docs/design/designV0.md)
-- 版本号唯一事实源：[src/memoria/\_\_version\_\_.py](src/memoria/__version__.py)（当前 **0.3.0**）
+- 版本号唯一事实源：[src/memoria/\_\_version\_\_.py](src/memoria/__version__.py)（当前 **0.4.0**）
 
 ---
 
