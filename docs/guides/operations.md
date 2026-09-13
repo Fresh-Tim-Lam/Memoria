@@ -98,6 +98,29 @@ python -c "import importlib; m=importlib.util.spec_from_file_location('v','src/m
   ```
 - 构建中间产物 `packaging/build/`、`packaging/dist/` 已被 gitignore，勿提交。
 
+### 5.1 发布资产命名（GitHub Release）
+
+Release 的 Asset 命名固定为：
+
+| 资产 | 命名格式 | 内容 |
+|------|---------|------|
+| 完整包 | `Memoria-v<版本>-win64.zip` | 内置模型（`Package/hf/`），离线可用 |
+| 轻量包 | `Memoria-v<版本>-win64-lite.zip` | 不含内置模型；首次使用 embedding / rerank 需联网获取 |
+
+规则：
+
+- `<版本>` 与 git tag、`__version__.py` 完全一致，**带 `v` 前缀**（tag `v0.3.1` → `Memoria-v0.3.1-win64.zip`）。
+- 平台标识固定 `win64`；将来新增平台时追加平台后缀（如 `-macos-arm64`）。
+- **无后缀 = 完整包**；`-lite` = 不含内置模型。两种形态**每次同时上传**，供用户按网络条件 / 磁盘占用自行选择。
+- 样板（v0.3.1）：`Memoria-v0.3.1-win64.zip`（1182.8 MB）、`Memoria-v0.3.1-win64-lite.zip`（35.1 MB）。
+
+轻量包生成（仅选完整包内容、排除 `hf/` 模型目录）：
+
+```powershell
+Compress-Archive -Path "Package\Memoria.exe","Package\lib","Package\resources","Package\config","Package\README.txt","Package\VERSION","Package\manifest.json" `
+  -DestinationPath "artifacts\Memoria-v<版本>-win64-lite.zip" -CompressionLevel Optimal
+```
+
 ## 6. 发布态运行
 
 ```powershell

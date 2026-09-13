@@ -35,7 +35,7 @@ Package/
   README.txt
 ```
 
-Just package the entire `Package/` folder (zip / copy) and hand it to the user.
+Just package the entire `Package/` folder (zip / copy) and hand it to the user. For GitHub Release asset naming and the two variants (full / lite), see [operations.md §5.1](../docs/guides/operations.md).
 
 ## Bundled-Resource Registry (to Prevent Missing Files)
 

@@ -4437,3 +4437,34 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 #preview.-color-tinting ::selection {
     background: transparent;
 }
+
+/* ========== 轻提示（toast） ========== */
+.-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 3.25rem;
+    transform: translate(-50%, 0.75rem);
+    max-width: min(72vw, 44rem);
+    padding: 0.5rem 0.875rem;
+    background: var(--bg-tertiary);
+    color: var(--text-bright);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    z-index: 30000;
+}
+.-toast--visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+.-toast--error {
+    border-color: var(--error);
+    color: var(--error);
+}

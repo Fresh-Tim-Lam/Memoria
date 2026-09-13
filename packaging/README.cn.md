@@ -35,7 +35,7 @@ Package/
   README.txt
 ```
 
-将整个 `Package/` 文件夹打包（zip/拷贝）给用户即可。
+将整个 `Package/` 文件夹打包（zip/拷贝）给用户即可。发布到 GitHub Release 时的资产命名与双形态（完整包 / 轻量包）规范见 [operations.md §5.1](../docs/guides/operations.md)。
 
 ## 随包资源登记（防漏包）
 

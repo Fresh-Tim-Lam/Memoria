@@ -667,6 +667,15 @@
     check: {
       modalTitle: "Knowledge Base Check",
       rerun: "Re-run",
+      copy: "Copy Report",
+      copyDone: "Check report copied to clipboard",
+      copyFailed: "Copy failed — please select and copy manually",
+      report: {
+        title: "Knowledge Base Check Report",
+        time: "Checked at",
+        statLine: "Files {files} · Errors {errors} · Warnings {warnings}",
+        noItems: "(none)",
+      },
       kbName: "Knowledge base",
       pending: "pending",
       badge: {

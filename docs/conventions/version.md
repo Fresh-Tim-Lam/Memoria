@@ -8,7 +8,7 @@
 
 | 项 | 值 |
 |----|----|
-| 当前版本 | **0.3.1** |
+| 当前版本 | **0.3.2** |
 | 版本阶段 | 0.x（未稳定，接口可变更） |
 | 版本类型 | SemVer：`MAJOR.MINOR.PATCH` |
 
@@ -87,6 +87,7 @@ __version__.py
 4. 验证：
    - `Package\VERSION` 内容 = `x.y.z`
    - 启动发布包后顶栏 badge / 欢迎页 / 窗口标题显示 `vx.y.z`
+5. 打 tag 与发布：tag 用 `vx.y.z`；GitHub Release 资产按 [operations.md §5.1](../guides/operations.md) 命名（`Memoria-vx.y.z-win64.zip` 完整包 + `Memoria-vx.y.z-win64-lite.zip` 轻量包，**两者同时上传**）
 
 ## 7. 变更记录（CHANGELOG）
 
@@ -94,6 +95,7 @@ __version__.py
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| 0.3.2 | 2026-09-10 | 检查面板新增「复制报告」（结构化 Markdown 文本，便于粘贴给他人 / Agent 排查）；新增通用轻提示组件 `js/toast.js`（复制类反馈在弹窗内可见，落地 i18n 规范中已登记的 `toast.` 规划）；顶栏右侧拖拽区修正（知识库路径框底部空白不再触发文本选择 / 拖拽复制）；补发布资产命名规范（operations.md §5.1：完整包 `Memoria-v<版本>-win64.zip` + 轻量包 `-win64-lite.zip` 双形态） |
 | 0.3.1 | 2026-09-10 | 维护机制迭代（G3–G5）：前端作业调度内核、持久化 flush 屏障、词法索引后台化、KP 行号范围实时同步、F01–F03 维护面收敛（含 CLI `diagnose-images`）。**知识库 Agent**：`.memoria/agent/` 工具包（智能体指令 + 编撰/维护规范 + 支持格式说明 + FSRS 确定性调度脚本），应用内「文件 → 创建 Trae 智能体」一键生成、打开知识库自动补写/刷新、规则可独立升级无需重建智能体。新增多 Agent 协作契约 `AGENTS.md`（builder/verifier/registrar + 可插拔扩展） |
 | 0.3.0 | 2026-09-04 | 导入模块：由 0.2.x 单一「平面文件导入」扩展为面向三类场景的完整导入体系（三种导入源、统一内容模型、增量与冲突策略），新增导入前清单预览与面向 Agent harness 的结构化反馈接口（字段名冻结）；版本 0.3.0 同步 `__version__.py` + README 徽标 |
 | 0.2.0 | 2026-08-20 | 换壳 pywebview（WebView2）根治首帧冻结；窗口原生动画/顶栏原生拖拽/Aero Snap/Win11 圆角/最大化铺满工作区；打包机制整理（scripts↔packaging 职责划分、构建脚本修复）；m0→app 目录与命名重构；版本统一机制（单一事实源 + 构建校验）；样式笔刷公式映射修复与选区高亮 |

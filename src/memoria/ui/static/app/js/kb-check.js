@@ -496,6 +496,115 @@ window.MemoriaKbCheck = (function () {
     });
   }
 
+  // ── 复制检查报告：生成结构化文本（便于粘贴给他人 / Agent 排查）────────────────
+
+  /** 把当前检查结果拼成可粘贴的 Markdown 文本报告。 */
+  function buildCheckReportText(vr) {
+    const lines = [];
+    lines.push(`# ${T("check.report.title")}`);
+    lines.push(`${T("check.kbName")}: ${state.kbPath || ""}`);
+    lines.push(`${T("check.report.time")}: ${new Date().toLocaleString()}`);
+    lines.push(
+      T("check.report.statLine", {
+        files: vr.files_checked || 0,
+        errors: vr.errors || 0,
+        warnings: vr.warnings || 0,
+      })
+    );
+
+    const sevWord = (s) =>
+      s === "error"
+        ? T("check.badge.error")
+        : s === "warning"
+          ? T("check.badge.warning")
+          : s || "";
+    const itemLine = (issue, detail) => {
+      const head = sevWord(issue.severity);
+      const body = [issue.code ? String(issue.code) : "", localizeCheckIssue(issue)]
+        .filter(Boolean)
+        .join(" ");
+      const line = `- [${head}] ${body}`;
+      return detail ? `${line}\n  → ${detail}` : line;
+    };
+    const push = (title, items) => {
+      if (!items.length) return;
+      lines.push("", `## ${title}`, ...items);
+    };
+
+    push(
+      T("check.section.kb"),
+      [
+        ...(vr.kb_integrity?.errors || []),
+        ...(vr.kb_integrity?.warnings || []),
+      ].map((i) => itemLine(i, (i.paths || []).join(" · ")))
+    );
+    push(
+      T("check.section.pathMoves"),
+      (vr.path_moves || []).map((m) =>
+        itemLine({ severity: m.severity, code: m.kind, message: `${m.from} → ${m.to}` }, "")
+      )
+    );
+    push(
+      T("check.section.manifest"),
+      [
+        ...(vr.manifest_diff?.errors || []),
+        ...(vr.manifest_diff?.warnings || []),
+      ].map((i) => itemLine(i, (i.paths || []).join(" · ")))
+    );
+
+    for (const fr of vr.files || []) {
+      const rows = [
+        ...(fr.errors || []).map((e) =>
+          itemLine({ ...e, severity: e.severity || "error" }, fr.path)
+        ),
+        ...(fr.warnings || []).map((w) =>
+          itemLine({ ...w, severity: w.severity || "warning" }, fr.path)
+        ),
+      ];
+      if (rows.length) lines.push("", `### ${fr.path}`, ...rows);
+    }
+
+    const graphItems = [];
+    for (const gf of vr.graph_audit?.files || []) {
+      for (const issue of gf.issues || []) graphItems.push(itemLine(issue, gf.file));
+    }
+    push(T("check.section.graphEdges"), graphItems);
+
+    if (lines.length === 4) lines.push("", T("check.noProblems"));
+    return lines.join("\n");
+  }
+
+  /** 复制当前检查报告到剪贴板（clipboard API，失败回退 execCommand）。 */
+  async function copyCheckReport() {
+    const vr = state.kbValidateReport;
+    if (!vr) {
+      setStatus(T("check.empty"));
+      return;
+    }
+    const text = buildCheckReportText(vr);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-1000px";
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        ta.remove();
+        if (!ok) throw new Error("execCommand copy failed");
+      }
+      setStatus(T("check.copyDone"));
+      window.MemoriaToast?.show(T("check.copyDone"));
+    } catch (_) {
+      setStatusError(T("check.copyFailed"));
+      window.MemoriaToast?.show(T("check.copyFailed"), { type: "error" });
+    }
+  }
+
   function openCheckModal() {
     if (!state.kbPath) {
       setStatus(T("app.openKbFirst"));
@@ -521,6 +630,7 @@ window.MemoriaKbCheck = (function () {
     $("#check-close")?.addEventListener("click", closeCheckModal);
     $("#check-dismiss")?.addEventListener("click", closeCheckModal);
     $("#check-rerun")?.addEventListener("click", () => runKbValidate({ silent: false }));
+    $("#check-copy")?.addEventListener("click", () => copyCheckReport());
     $("#check-modal .-modal-backdrop")?.addEventListener("click", closeCheckModal);
     // 静默检查设置变化：知识库已打开时按新间隔重启后台检查（原 app.js bindEvents）
     if (window.MemoriaCheckSettings) {

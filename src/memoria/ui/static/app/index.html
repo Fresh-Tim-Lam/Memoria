@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="-titlebar-drag-spacer -titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
-      <div class="toolbar-right">
+      <div class="toolbar-right pywebview-drag-region">
         <span id="kb-indicator-wrap" class="kb-indicator-wrap hidden">
           <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）" data-i18n-attr="title:app.kbPath.title"></span>
           <button id="btn-kb-close" type="button" class="-btn primary -btn--sm -kb-exit" title="关闭知识库，返回欢迎页" data-i18n="toolbar.exit" data-i18n-attr="title:toolbar.exitTitle">退出</button>
@@ -276,6 +276,7 @@
       <div id="check-body" class="-modal-body -check-body"></div>
       <div class="-modal-footer -btn-bar">
         <button type="button" class="-btn secondary" id="check-rerun" data-i18n="check.rerun">重新检查</button>
+        <button type="button" class="-btn secondary" id="check-copy" data-i18n="check.copy">复制报告</button>
         <span class="-modal-footer-spacer"></span>
         <button type="button" class="-btn primary" id="check-dismiss" data-i18n="common.close">关闭</button>
       </div>
@@ -367,6 +368,8 @@
     </div>
   </div>
 
+  <div id="-toast" class="-toast" role="status" aria-live="polite"></div>
+
   <script src="/app/lib/three.min.js"></script>
   <script src="/app/lib/OrbitControls.js"></script>
   <script src="/app/js/graph-label.js"></script>
@@ -402,6 +405,7 @@
   <script src="/app/i18n/zh-CN.js"></script>
   <script src="/app/i18n/en.js"></script>
   <script src="/app/js/i18n.js"></script>
+  <script src="/app/js/toast.js"></script>
   <script src="/app/js/scheduler.js"></script>
   <script src="/app/js/app.js"></script>
   <script src="/app/js/import-flow.js"></script>

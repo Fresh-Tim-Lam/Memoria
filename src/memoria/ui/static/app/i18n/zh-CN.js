@@ -667,6 +667,15 @@
     check: {
       modalTitle: "知识库检查",
       rerun: "重新检查",
+      copy: "复制报告",
+      copyDone: "检查报告已复制到剪贴板",
+      copyFailed: "复制失败，请手动选择文本复制",
+      report: {
+        title: "知识库检查报告",
+        time: "检查时间",
+        statLine: "文件 {files} · 错误 {errors} · 警告 {warnings}",
+        noItems: "（无）",
+      },
       kbName: "知识库",
       pending: "待配置",
       badge: {
