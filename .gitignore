@@ -60,11 +60,17 @@ docs/example/**/*.bak
 docs/example/**/*.log
 docs/example/**/.memoria/cache/
 docs/example/**/.memoria/pending.yaml
+docs/example/**/.memoria/pending.json
+docs/example/**/.memoria/kp_targets.json
+docs/example/**/.memoria/agent/
 docs/example/**/.memoria/images/
 # 官方展示样例库（docs/example/showcase，机器学习导论）运行时产物（不入库；
 # sidecars 与图片资产入库展示；manifest.yaml 入库作基线）
 docs/example/showcase/.memoria/cache/
 docs/example/showcase/.memoria/pending.yaml
+docs/example/showcase/.memoria/pending.json
+docs/example/showcase/.memoria/kp_targets.json
+docs/example/showcase/.memoria/agent/
 docs/example/showcase/.memoria/pending.yaml.bak
 docs/example/showcase/.memoria/images/registry.json
 docs/example/showcase/.build/
