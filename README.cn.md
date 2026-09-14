@@ -102,6 +102,10 @@
 
 <img src="resources/screenshots/demo-check.png" alt="Memoria 知识库完整性检查" width="820"/>
 
+知识库检查 + 可复制报告：面板汇总完整性、清单差异与图谱建边问题；点「复制报告」把 Markdown 报告写入剪贴板，并在底部用小弹窗确认。
+
+<img src="resources/screenshots/demo-check-report.png" alt="Memoria 知识库检查面板与「复制报告」小弹窗提示" width="820"/>
+
 ---
 
 ## 快速开始

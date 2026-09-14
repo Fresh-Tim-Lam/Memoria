@@ -121,6 +121,44 @@ Compress-Archive -Path "Package\Memoria.exe","Package\lib","Package\resources","
   -DestinationPath "artifacts\Memoria-v<版本>-win64-lite.zip" -CompressionLevel Optimal
 ```
 
+### 5.2 Release 说明（双语 + 上下排版）
+
+Release 正文必须**中英双语**，且**上下排版**——中文段在前、英文段在后，之间用 `---` 分隔：
+
+```markdown
+## Memoria vX.Y.Z
+
+<中文说明：本次变更要点，含两个 package 的选择说明>
+
+---
+
+## Memoria vX.Y.Z
+
+<English description: same highlights, incl. which package to choose>
+```
+
+规则：
+
+- 两段使用**同一版本标题**，便于读者按语言定位。
+- 用 `---` 分隔，避免中英混排导致标题层级混乱。
+- 变更要点与「完整包 / 轻量包怎么选」在两段中**都要出现**（各自语言）。
+- 样板：v0.3.2 Release（本条规范落地后的首个双语说明）。
+
+#### 截图（必要时补）
+
+有**用户可见的新功能 / 界面变化**时（如检查面板新增按钮、交互反馈变化），Release 说明应配截图：
+
+- **复用 README 的同一份截图资源**：存放 `resources/screenshots/`、命名 `demo-<场景>.png`、分辨率与现有图一致；收录与三处登记流程见 [readme-i18n.md §3](../conventions/readme-i18n.md)（不新建第二份截图目录）。
+- **Release 正文必须用绝对 URL**（Release 页面不具备仓库相对路径上下文）：
+
+  ```markdown
+  ![检查面板「复制报告」](https://raw.githubusercontent.com/Fresh-Tim-Lam/Memoria/main/resources/screenshots/demo-check-report.png)
+  ```
+
+- 中英两段**各自附一次**（同一张图可复用；`alt` / 图注用各自语言）。
+- 该功能尚无截图时：先按 [readme-i18n.md §3.1](../conventions/readme-i18n.md) 入库（放入 `resources/screenshots/` + 两份 README 各加一张 + 登记），再在 Release 引用。
+- 纯内部重构 / 修复、无界面变化时可省略截图。
+
 ## 6. 发布态运行
 
 ```powershell

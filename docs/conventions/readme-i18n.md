@@ -32,7 +32,7 @@
 
 ### 3.1 收录
 
-- 截图必须是**真实界面捕获**（自动化/手动均可），统一命名 `demo-<场景>.png`（当前：workspace / graph-3d / split / preview / math / settings / check），分辨率尽量一致（当前 1680×1000）。
+- 截图必须是**真实界面捕获**（自动化/手动均可），统一命名 `demo-<场景>.png`（当前：workspace / graph-3d / split / preview / math / settings / check / check-report），分辨率尽量一致（当前 1680×1000；自动捕获受宿主浏览器面板视口限制时，以**接近的宽高比**为准并在登记时注明实际像素）。
 - 新增截图流程：
   1. 文件放入 `resources/screenshots/`；
   2. 英文 README §Screenshots **与** 中文 README §界面预览 **各加一张**（`<img src="resources/screenshots/demo-x.png" …>`，配一句各自语言的说明）；需要先说明再贴图；
@@ -61,3 +61,4 @@
 | 日期 | 修订内容 |
 |------|---------|
 | 2026-09-03 | 初版：README 双语对照结构、截图收录/存放规则、维护后自查清单 |
+| 2026-09-14 | §3.1 收录：场景清单补 `check-report`；分辨率条款放宽——自动捕获受宿主浏览器面板视口限制时以**接近的宽高比**为准并注明实际像素（README 图片均按 `width="820"` 显示） |

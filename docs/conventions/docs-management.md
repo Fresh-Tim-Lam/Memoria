@@ -87,6 +87,8 @@
 | 2026-09-10 | KB Agent 落地（T1–T5） | 新增 `resources/agent-prompts/{kb-agent.zh-CN.md,kb-spec.zh-CN.md,kb-agent-readme.md,fsrs.py}`；后端 `services/kb_agent.py`（原子写 + 幂等 + 不覆盖 `review/**`）+ RPC `install_kb_agent` / `get_kb_agent_prompt`（ui.py）；前端「文件 → 创建 Trae 智能体」（新 `js/kb-agent.js` + index.html 菜单项/弹窗 + app.js 一行初始化 + i18n 中英）；打包登记 `build.py _REQUIRED_RELEASE_RESOURCES`。验证：`fsrs.py --selftest` 16/16；真装幂等（二次 `written=[]`）且 `review/` 不被覆盖；有无 `.memoria/agent/` 的 `validate_kb` 输出完全一致（errors=0）；`py_compile`/`node --check`/`scan_ui_strings.py` 通过。to-dolist §9 登记 V02 更新 + V06 |
 | 2026-09-10 | KB Agent 细化 | ①菜单项不再禁用：无 KB 时点击先唤起「打开知识库」（`MemoriaApp` 导出 `openKb`）；②补分发**支持格式说明**——`install_kb_agent` 新增 `REFERENCE_DOCS`，把 `docs/reference/preview-formats.md` 复制为 `<kb>/.memoria/agent/preview-formats.md`，使 KB 内智能体可读渲染写法（kb-spec/指令/README 指向同目录该文件）；③**打开知识库自动补写/刷新**——`initKb`/`openKb` 后调 `MemoriaKbAgent.ensure()`（幂等、不阻塞、不弹窗，实际写入时提示），旧库首次打开即补齐、升级后再开即刷新（**有意例外于"禁止 silent 写入"**，缓解见 kb-agent.md §7.5）。验证：真装 5 文件且仍幂等；`node --check`/`i18n_selftest`/`scan_ui_strings`(rows=0) 通过 |
 | 2026-09-10 | kb-agent.md 评审收口 | Q1 ✅ 固定 FSRS-5 默认权重（不训练/不调参）；Q2 ✅ 新卡按 KP 批量确认后落盘；Q4 ✅ `log` 保持 append-only；Q5 ✅ 一 Trae 工作区 = 一知识库。§9 更名「评审项与结论（全部已拍板）」，§1/§4.3/§6 与内置指令同步 |
+| 2026-09-14 | operations.md | 新增发布规范：§5.1 发布资产命名（完整包/轻量包 `Memoria-v<版本>-win64[-lite].zip`、双形态同时上传）；§5.2 Release 说明双语上下排版（中文段 → `---` → 英文段）、截图必备条款（绝对 URL、中英各引一次、无截图先入库） |
+| 2026-09-14 | 截图登记 | 新增演示截图 `resources/screenshots/demo-check-report.png`（知识库检查面板 + 「复制报告」toast，1474×888 自动捕获）；`README.md` §Screenshots / `README.cn.md` §界面预览 各增一条先说明后贴图；`readme-i18n.md` §3.1 场景清单与 §5 修订记录同步 |
 
 ### 4.3 定期整理约定
 
