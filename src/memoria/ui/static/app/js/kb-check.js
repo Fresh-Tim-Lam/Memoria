@@ -574,6 +574,33 @@ window.MemoriaKbCheck = (function () {
     return lines.join("\n");
   }
 
+  /** 写剪贴板：优先 clipboard API；被拒（失焦/无权限）时回退 execCommand。 */
+  async function writeClipboard(text) {
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (_) {
+        // 窗口失焦或权限被拒时 writeText 会 reject，继续走 execCommand 回退
+      }
+    }
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.top = "-1000px";
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try {
+      ok = document.execCommand("copy");
+    } catch (_) {
+      ok = false;
+    }
+    ta.remove();
+    return ok;
+  }
+
   /** 复制当前检查报告到剪贴板（clipboard API，失败回退 execCommand）。 */
   async function copyCheckReport() {
     const vr = state.kbValidateReport;
@@ -583,20 +610,7 @@ window.MemoriaKbCheck = (function () {
     }
     const text = buildCheckReportText(vr);
     try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.top = "-1000px";
-        document.body.appendChild(ta);
-        ta.select();
-        const ok = document.execCommand("copy");
-        ta.remove();
-        if (!ok) throw new Error("execCommand copy failed");
-      }
+      if (!(await writeClipboard(text))) throw new Error("copy failed");
       setStatus(T("check.copyDone"));
       window.MemoriaToast?.show(T("check.copyDone"));
     } catch (_) {
