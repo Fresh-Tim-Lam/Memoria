@@ -11,6 +11,7 @@
 | `run_dev.ps1` | 开发态启动：源码 + pywebview 壳 + DevTools + 无边框（`MEMORIA_MODE=dev`） |
 | `graph_layout_benchmark.py` / `.mjs` | 图谱布局压力基准（2D/3D 布局 + 分组计算） |
 | `benchmark/` | 检索评估工具集（lexical / embedding / rerank 评测跑批） |
+| `screenshots/` | README / 文档截图采集：热键触发抓窗口客户区（带重复帧识别） |
 | `bootstrap_example_sidecars.py` | 生成示例知识库 sidecar |
 | `gen_example_boonie_sidecars.py` | 生成 boonie 示例知识库 sidecar |
 | `scan_ui_strings.py` | UI 界面文案清单扫描器：刷新 `docs/reference/i18n-inventory.md`（i18n 盘点） |
