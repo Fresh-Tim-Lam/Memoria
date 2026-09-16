@@ -28,6 +28,19 @@
     --tk-fn: #dcdcaa;
     --tk-pre: #c586c0;
     --tk-prop: #9cdcfe;
+    /* Mermaid 图（深色）；浅色主题只需覆盖同名变量 */
+    --mmd-dark: 1;
+    --mmd-canvas-bg: #232326;
+    --mmd-node-bg: #2d2d31;
+    --mmd-node-border: #565660;
+    --mmd-node-text: #e6e6e6;
+    --mmd-line: #8c8c96;
+    --mmd-label-bg: #1b1b1e;
+    --mmd-label-text: #d6d6d6;
+    --mmd-cluster-bg: rgba(255, 255, 255, 0.035);
+    --mmd-cluster-border: #46464e;
+    --mmd-note-bg: #33333a;
+    --mmd-note-border: #5c5c66;
 }
 
 body {

@@ -183,15 +183,21 @@ window.MemoriaMarkdownPreview = (function () {
   function initMermaid() {
     if (mermaidInited) return;
     if (!window.mermaid) return;
-    window.mermaid.initialize({
-      startOnLoad: false,
-      theme: "default",
-      securityLevel: "loose",
-      fontFamily: "inherit",
-      // mermaid 默认把 parse 失败画成一张 "Syntax error in text / mermaid version X" 的错误图；
-      // 关掉它改为抛异常，由 renderMermaidBlocks 统一提示（用户不该看到 mermaid 的原始报错图）。
-      suppressErrorRendering: true,
-    });
+    // 主题配置集中在 js/mermaid-theme.js（颜色读 :root 的 --mmd-*，浅色主题只改这些变量）；
+    // 取不到时退回最小可用配置，保证 mermaid 仍能渲染。
+    window.mermaid.initialize(
+      window.MemoriaMermaidTheme
+        ? window.MemoriaMermaidTheme.options()
+        : {
+            startOnLoad: false,
+            theme: "default",
+            securityLevel: "loose",
+            fontFamily: "inherit",
+            // mermaid 默认把 parse 失败画成一张 "Syntax error in text / mermaid version X" 的错误图；
+            // 关掉它改为抛异常，由 renderMermaidBlocks 统一提示（用户不该看到 mermaid 的原始报错图）。
+            suppressErrorRendering: true,
+          }
+    );
     mermaidInited = true;
   }
 

@@ -1,0 +1,119 @@
+/* Mermaid 渲染结果样式（必须在 app.css 之后加载）
+ *
+ * 分工：
+ *   · 颜色  → js/mermaid-theme.js 的 themeVariables（mermaid 会把它们写成元素内联样式，
+ *             外部 CSS 抢不过内联样式，所以颜色一律走那条路）
+ *   · 几何/排版 → 本文件（rx、线宽、标签底衬、字号、箭头等；这些 mermaid 多以
+ *             **属性**形式输出，CSS 能覆盖，必要时用 !important 兜住内联）
+ *   · 颜色变量：theme/memoria.css 的 --mmd-*（浅色主题只需覆盖同名变量）
+ */
+
+/* ── 容器微调（框体外的留白与圆角）── */
+.-mermaid-container {
+    margin: 0.75rem 0;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    overflow-x: auto;
+    background: var(--mmd-canvas-bg, var(--bg-secondary));
+    border: 1px solid var(--mmd-cluster-border, var(--border));
+}
+
+/* ── 节点框体：统一圆角 + 线宽，避免直角方块 ── */
+.-mermaid-container .node rect {
+    rx: 8px;
+    ry: 8px;
+}
+.-mermaid-container .node rect,
+.-mermaid-container .node circle,
+.-mermaid-container .node ellipse,
+.-mermaid-container .node polygon,
+.-mermaid-container .node path {
+    stroke-width: 1.4px !important;
+}
+/* 子图/分区也用圆角，弱化它以免喧宾夺主 */
+.-mermaid-container .cluster rect {
+    rx: 10px;
+    ry: 10px;
+    stroke-width: 1px !important;
+}
+
+/* ── 连线：略加粗 + 平滑；箭头与线同色 ── */
+.-mermaid-container .edgePath .path,
+.-mermaid-container .flowchart-link,
+.-mermaid-container .relation,
+.-mermaid-container .transition {
+    stroke-width: 1.8px !important;
+    stroke-linecap: round;
+}
+.-mermaid-container marker path,
+.-mermaid-container .arrowheadPath,
+.-mermaid-container .arrowMarkerPath {
+    fill: var(--mmd-line, #9a9a9a) !important;
+    stroke: var(--mmd-line, #9a9a9a) !important;
+}
+
+/* ── 连线标签：加底衬，压线时也读得清（"连线不清晰"的主因）── */
+.-mermaid-container .edgeLabel,
+.-mermaid-container .edgeLabel p,
+.-mermaid-container .edgeLabels .label,
+.-mermaid-container .edgeLabel span {
+    background: var(--mmd-label-bg, var(--bg-primary)) !important;
+    color: var(--mmd-label-text, var(--text-primary)) !important;
+    padding: 1px 6px;
+    border-radius: 4px;
+    line-height: 1.5;
+}
+.-mermaid-container .edgeLabel foreignObject > div {
+    background: transparent !important;
+}
+.-mermaid-container .edgeLabel rect {
+    fill: var(--mmd-label-bg, var(--bg-primary)) !important;
+    opacity: 1 !important;
+}
+
+/* ── 文字：与编辑器字号一致，标题略亮 ── */
+.-mermaid-container .nodeLabel,
+.-mermaid-container .node foreignObject div,
+.-mermaid-container .cluster-label .nodeLabel {
+    font-size: 13px;
+    line-height: 1.45;
+}
+.-mermaid-container text.nodeLabel,
+.-mermaid-container text .tspan {
+    font-size: 13px !important;
+}
+.-mermaid-container .cluster-label .nodeLabel,
+.-mermaid-container .cluster text {
+    fill: var(--text-secondary, #858585) !important;
+    color: var(--text-secondary, #858585) !important;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* ── 时序图 ── */
+.-mermaid-container .actor {
+    stroke-width: 1.4px !important;
+}
+.-mermaid-container .messageLine0,
+.-mermaid-container .messageLine1 {
+    stroke-width: 1.6px !important;
+}
+.-mermaid-container .note {
+    stroke-width: 1.2px !important;
+}
+.-mermaid-container .noteText > tspan,
+.-mermaid-container .noteText {
+    font-size: 12.5px;
+}
+
+/* ── 状态图 / 类图 ── */
+.-mermaid-container .stateGroup rect,
+.-mermaid-container .classGroup rect {
+    rx: 8px;
+    ry: 8px;
+}
+.-mermaid-container .statediagram-note rect {
+    rx: 6px;
+    ry: 6px;
+}

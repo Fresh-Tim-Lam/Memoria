@@ -1523,26 +1523,49 @@
 
   // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
   let splitSyncLock = false;
+  // 回声抑制：程序化滚动会在**被同步的那一侧**再触发一次 scroll 事件；若让这次事件
+  // 反向同步回来，就会出现"滚动被弹回"——因为反向对齐是把块**顶边**对到容器顶边，
+  // 比用户原来的位置更高，每次来回都往上弹一截。块越高越明显（$$ 公式块/图片/代码块）。
+  // 记下程序化滚动的落点，消费掉那一侧的下一次同位置 scroll 事件即可断开环。
+  let splitEcho = null;
+
+  function _markSplitEcho(mode, pane) {
+    if (!pane) return;
+    // 读回浏览器实际落点（目标可能被 clamp 到 max），保证回声判定能对上；
+    // 300ms 内的同侧事件一并视为回声（Chromium 偶发对一次程序化滚动发多个 scroll）
+    splitEcho = { mode: mode, top: pane.scrollTop, until: performance.now() + 300 };
+  }
+
+  function _consumeSplitEcho(mode, pane) {
+    if (!splitEcho || splitEcho.mode !== mode) return false;
+    const near = Math.abs(pane.scrollTop - splitEcho.top) <= 2;
+    const fresh = performance.now() <= splitEcho.until;
+    splitEcho = null;
+    return near || fresh;
+  }
+
+  function _onSplitPaneScroll(mode, pane) {
+    if (state.viewMode !== "split" || splitSyncLock) return;
+    if (_consumeSplitEcho(mode, pane)) return;   // 刚被程序化滚动的回声 → 丢弃，不反向同步
+    splitSyncLock = true;
+    const line = _getViewTopSrcLine(mode);
+    if (line != null) {
+      const other = mode === "source" ? "preview" : "source";
+      if (_scrollToSrcLine(other, line)) {
+        _markSplitEcho(other, other === "source" ? $("#editor-pane") : $("#preview-pane"));
+      }
+    }
+    requestAnimationFrame(() => { splitSyncLock = false; });
+  }
+
   function setupSplitScrollSync() {
     const editorPane = $("#editor-pane");
     const previewPane = $("#preview-pane");
     if (editorPane) {
-      editorPane.addEventListener("scroll", () => {
-        if (state.viewMode !== "split" || splitSyncLock) return;
-        splitSyncLock = true;
-        const line = _getViewTopSrcLine("source");
-        if (line != null) _scrollToSrcLine("preview", line);
-        requestAnimationFrame(() => { splitSyncLock = false; });
-      });
+      editorPane.addEventListener("scroll", () => _onSplitPaneScroll("source", editorPane));
     }
     if (previewPane) {
-      previewPane.addEventListener("scroll", () => {
-        if (state.viewMode !== "split" || splitSyncLock) return;
-        splitSyncLock = true;
-        const line = _getViewTopSrcLine("preview");
-        if (line != null) _scrollToSrcLine("source", line);
-        requestAnimationFrame(() => { splitSyncLock = false; });
-      });
+      previewPane.addEventListener("scroll", () => _onSplitPaneScroll("preview", previewPane));
     }
   }
 
