@@ -1,0 +1,85 @@
+/* 浅色主题 — 只覆盖变量，不重复任何结构样式
+ *
+ * 启用方式：<html data-theme="light">（由 app/js/theme-mode.js 设置）
+ * 深色仍是默认（theme/memoria.css 的 :root），本文件靠属性选择器 + 靠后加载取胜。
+ *
+ * ★ 这里同时补上了 6 个"被引用但从未定义"的颜色 token：
+ *   --bg-elevated / --bg-input / --bg-toolbar / --border-color / --border-subtle / --text-muted
+ *   它们在深色下仍走各自 var() 的兜底值（深色观感零变化），浅色下必须显式给出，
+ *   否则会出现"浅色界面里冒出深色浮层"。
+ */
+
+html[data-theme="light"] {
+    /* 让原生控件（select / 滚动条 / 输入框）也走浅色 */
+    color-scheme: light;
+
+    --bg-primary: #ffffff;
+    --bg-secondary: #f6f6f6;
+    --bg-tertiary: #ececec;
+    --bg-active: #e2e7f0;
+    --bg-hover: #ececec;
+    --text-primary: #2f2f2f;
+    --text-secondary: #6b6b6b;
+    --text-bright: #000000;
+    --accent: #0066bf;
+    --accent-hover: #00559f;
+    --accent-soft: rgba(0, 102, 191, 0.12);
+    --border: #d6d6d6;
+    --border-light: #bfbfbf;
+    --success: #107c41;
+    --error: #cd3131;
+    --warning: #a86400;
+
+    /* 之前缺失的颜色 token（浅色取值） */
+    --bg-toolbar: #f0f0f0;
+    --bg-elevated: #ffffff;
+    --bg-input: #ffffff;
+    --border-color: #d6d6d6;
+    --border-subtle: #e8e8e8;
+    --text-muted: #8a8a8a;
+
+    /* 代码块语法高亮（VSCode Light+ 取色） */
+    --tk-com: #008000;
+    --tk-str: #a31515;
+    --tk-num: #098658;
+    --tk-kw: #0000ff;
+    --tk-typ: #267f99;
+    --tk-fn: #795e26;
+    --tk-pre: #af00db;
+    --tk-prop: #001080;
+
+    /* Mermaid 图（浅色） */
+    --mmd-dark: 0;
+    --mmd-canvas-bg: #fbfbfb;
+    --mmd-node-bg: #eef3fb;
+    --mmd-node-border: #b6c2d4;
+    --mmd-node-text: #24292f;
+    --mmd-line: #6a7381;
+    --mmd-label-bg: #ffffff;
+    --mmd-label-text: #2f2f2f;
+    --mmd-cluster-bg: rgba(0, 0, 0, 0.025);
+    --mmd-cluster-border: #d6d6d6;
+    --mmd-note-bg: #fff8dc;
+    --mmd-note-border: #e3d4a3;
+}
+
+/* 滚动条：深色主题用浅灰滑块，浅色底上换成中灰，避免"看不见" */
+html[data-theme="light"] *::-webkit-scrollbar-thumb {
+    background: rgba(100, 100, 100, 0.35);
+}
+html[data-theme="light"] *::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 100, 100, 0.6);
+}
+
+/* 状态色：app.css 里这几个值是按深色底调的（偏亮），浅色底上对比不足，这里收紧 */
+html[data-theme="light"] .-graph-audit-warn,
+html[data-theme="light"] #status-stats.-status-clickable,
+html[data-theme="light"] .-stat-warn {
+    color: #8a5a00;
+}
+html[data-theme="light"] #status-stats.-status-clickable:hover {
+    color: #a86400;
+}
+html[data-theme="light"] .-stat-error {
+    color: #c0281f;
+}

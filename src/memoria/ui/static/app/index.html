@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="/app/css/app.css">
   <!-- Mermaid 渲染结果样式（必须在 app.css 之后：同样选择器靠后生效） -->
   <link rel="stylesheet" href="/theme/mermaid.css">
+  <!-- 浅色主题：只覆盖变量，排在最后以便覆盖前面的同名声明 -->
+  <link rel="stylesheet" href="/theme/light.css">
+  <script>
+    // 首帧前定主题，避免"深色闪一下"：localStorage 快路径（磁盘设置由 theme-mode.js 随后同步）
+    try {
+      var _tm = localStorage.getItem("-theme-mode") || "system";
+      var _light = _tm === "light" ||
+        (_tm === "system" && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches);
+      document.documentElement.setAttribute("data-theme", _light ? "light" : "dark");
+    } catch (e) { /* ignore */ }
+  </script>
   <script>
     window.MathJax = {
       tex: {
@@ -389,6 +400,7 @@
   <script src="/app/js/display-settings.js"></script>
   <script src="/vendor/qwebchannel.js"></script>
   <script src="/app/js/bridge.js"></script>
+  <script src="/app/js/theme-mode.js"></script>
   <script src="/app/js/window-chrome.js"></script>
   <script src="/app/js/math-normalize.js"></script>
   <script src="/app/js/nav-stack.js"></script>

@@ -650,6 +650,12 @@
       reset: "恢复默认",
       configPath: "设置保存在程序目录：{path}",
       display: {
+        themeGroup: "主题",
+        themeLabel: "界面主题",
+        themeSystem: "跟随系统",
+        themeDark: "深色",
+        themeLight: "浅色",
+        themeNote: "切换即时生效并自动保存；“跟随系统”会随系统外观自动改变。",
         langGroup: "语言",
         langLabel: "界面语言",
         langNote: "选择后界面文案即时切换并自动保存。",

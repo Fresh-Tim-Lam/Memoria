@@ -164,6 +164,12 @@
     </label>${note ? `<p class="-muted -settings-note">${note}</p>` : ""}`;
   }
 
+  /** 当前主题模式（深色/浅色/跟随系统）；模块缺失时按跟随系统处理 */
+  function themeMode() {
+    const tm = global.MemoriaThemeMode;
+    return tm && tm.MODES.indexOf(tm.get()) !== -1 ? tm.get() : "system";
+  }
+
   function renderSettingsBody() {
     const s = load();
     const T = (k, p) => (global.MemoriaI18n ? global.MemoriaI18n.t(k, p) : k);
@@ -176,6 +182,18 @@
       )
       .join("");
     return `<section class="-settings-section">
+      <h3 class="-settings-heading">${T("settings.display.themeGroup")}</h3>
+      <label class="-settings-field">
+        <span>${T("settings.display.themeLabel")}</span>
+        <select id="display-theme">
+          <option value="system"${themeMode() === "system" ? " selected" : ""}>${T("settings.display.themeSystem")}</option>
+          <option value="dark"${themeMode() === "dark" ? " selected" : ""}>${T("settings.display.themeDark")}</option>
+          <option value="light"${themeMode() === "light" ? " selected" : ""}>${T("settings.display.themeLight")}</option>
+        </select>
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.themeNote")}</p>
+    </section>
+    <section class="-settings-section">
       <h3 class="-settings-heading">${T("settings.display.langGroup")}</h3>
       <label class="-settings-field">
         <span>${T("settings.display.langLabel")}</span>
@@ -225,6 +243,12 @@
         if (out) out.textContent = String(DEFAULTS.uiScale);
         const range = root.querySelector('[data-display-setting="uiScale"]');
         if (range) range.value = String(DEFAULTS.uiScale);
+      });
+    }
+    const themeSel = root.querySelector("#display-theme");
+    if (themeSel && global.MemoriaThemeMode) {
+      themeSel.addEventListener("change", () => {
+        global.MemoriaThemeMode.set(themeSel.value);
       });
     }
     const langSel = root.querySelector("#display-language");

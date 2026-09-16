@@ -650,6 +650,12 @@
       reset: "Reset to defaults",
       configPath: "Settings are saved in: {path}",
       display: {
+        themeGroup: "Theme",
+        themeLabel: "Appearance",
+        themeSystem: "Follow system",
+        themeDark: "Dark",
+        themeLight: "Light",
+        themeNote: "Applies immediately and is saved; \"Follow system\" tracks the OS appearance.",
         langGroup: "Language",
         langLabel: "UI language",
         langNote: "UI text switches instantly and is saved automatically.",
