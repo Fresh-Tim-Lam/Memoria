@@ -80,7 +80,14 @@
     if (!editor) { syncLog("collectEditorBody: editor DOM 不存在"); return null; }
     const lines = [...editor.querySelectorAll(".-line-content")];
     if (!lines.length) { syncLog("collectEditorBody: 无 .-line-content 行"); return null; }
-    const body = lines.map((el) => el.textContent ?? "").join("\n");
+    const body = lines.map((el) => {
+      // 剔除视觉元素：分栏模式的"假光标"是注入源码行的 <span class="-sync-cursor">，
+      // 它不是正文；若被读进来会随保存写进 .md（历史 bug："aaa"→"a|aa"、"<details>"→"<details>|"）
+      if (!el.querySelector(".-sync-cursor")) return el.textContent ?? "";
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll(".-sync-cursor").forEach((n) => n.remove());
+      return clone.textContent ?? "";
+    }).join("\n");
     syncLog("collectEditorBody: 收集到", lines.length, "行, 总长度", body.length);
     return body;
   }
@@ -531,9 +538,21 @@
     showWelcome(true);
   }
 
-  async function openKb() {
-    const path = await call("select_directory");
+  /** 在当前窗口装载指定知识库目录（「打开」选目录与「打开最近」共用同一序列）。 */
+  async function openKbAt(path) {
     if (!path) return;
+    // 先同步后端知识库根（服务实例 + 静态服务 _kb_root）：选目录路径由 select_directory 内部完成，
+    // 直接按已知路径装载时必须在此补上，否则后续 list_files 等会返回「未打开知识库」。
+    let res = null;
+    try {
+      res = await call("set_kb_path", path);
+    } catch (err) {
+      res = { status: "error", message: String(err) };
+    }
+    if (!res || res.status !== "ok") {
+      setStatus(T("app.loadFailed"), (res && res.message) || "");
+      return;
+    }
     resetOpenDocumentUi();
     state.kbPath = path;
     if (window.MemoriaMarkdownPreview?.setKbRootForImages) {
@@ -552,6 +571,12 @@
     window.MemoriaKbCheck?.startKbSilentCheck?.();
     // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
     window.MemoriaKbAgent?.ensure?.();
+  }
+
+  async function openKb() {
+    const path = await call("select_directory");
+    if (!path) return;
+    await openKbAt(path);
   }
 
   async function closeKb() {
@@ -4633,7 +4658,7 @@
     setStatus(T("cfg.confirm.inProg"));
     const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
     if (res.status !== "ok") {
-      setStatusError(res.message || T("cfg.confirm.writeFail"));
+      setStatusError(kpErrText(res));
       return;
     }
     benchMark("rpc_ok");
@@ -4712,7 +4737,7 @@
       }
       const res = await call("confirm_kp_range", state.currentPath, kpId, kpName, start, end);
       if (res.status !== "ok") {
-        skipped.push(T("cfg.confirm.skWrite", { name: kpName, msg: res.message || T("cfg.confirm.writeFail") }));
+        skipped.push(T("cfg.confirm.skWrite", { name: kpName, msg: kpErrText(res) }));
         continue;
       }
       state.doc = res;
@@ -6723,41 +6748,9 @@
     return { text, lines };
   }
 
-  function applyEditorTextSelection(anchorLine, focusLine) {
-    const lo = Math.min(anchorLine, focusLine);
-    const hi = Math.max(anchorLine, focusLine);
-    const startEl = document.querySelector(`#line-${lo} .-line-content`);
-    const endEl = document.querySelector(`#line-${hi} .-line-content`);
-    if (!startEl || !endEl) return false;
-    const startNode = startEl.firstChild || startEl;
-    const endNode = endEl.firstChild || endEl;
-    const endLen = endNode.textContent?.length ?? 0;
-    const range = document.createRange();
-    range.setStart(startNode, 0);
-    range.setEnd(endNode, endLen);
-    const sel = window.getSelection();
-    if (!sel) return false;
-    sel.removeAllRanges();
-    sel.addRange(range);
-    return true;
-  }
-
-  function markEditorDragSelectLines(anchorLine, focusLine) {
-    const lo = Math.min(anchorLine, focusLine);
-    const hi = Math.max(anchorLine, focusLine);
-    document.querySelectorAll("#editor .-line.is-drag-select").forEach((el) => {
-      el.classList.remove("is-drag-select");
-    });
-    for (let n = lo; n <= hi; n++) {
-      document.getElementById("line-" + n)?.classList.add("is-drag-select");
-    }
-  }
-
-  function clearEditorDragSelectLines() {
-    document.querySelectorAll("#editor .-line.is-drag-select").forEach((el) => {
-      el.classList.remove("is-drag-select");
-    });
-  }
+  // 源码区选区（键盘 Shift+方向键 / 鼠标跨行拖拽）已按
+  // docs/conventions/frontend-modules.md 迁至 js/sel-source.js，
+  // 由 bindEditorSelectInteraction() 末尾 MemoriaSelSource.init({...}) 装配。
 
   /** 聚焦到指定行内容并设置光标位置 */
   function focusLineContent(contentEl, col) {
@@ -7017,8 +7010,6 @@
       e.preventDefault();
       scrollPaneBy(pane, e.key === "ArrowDown" ? 1 : -1);
     });
-
-    let dragSelect = null;
 
     // 源码编辑时：实时同步预览 + 标记脏
     editor.addEventListener("input", (e) => {
@@ -7559,45 +7550,15 @@
     editor.addEventListener("compositionstart", () => { _srcComposing = true; });
     editor.addEventListener("compositionend", () => { _srcComposing = false; });
 
-    editor.addEventListener("mousedown", (e) => {
-      if (e.button !== 0) return;
-      const content = e.target.closest(".-line-content");
-      if (!content) return;
-      const line = +(content.closest("[data-line]")?.dataset.line || 0);
-      if (!line) return;
-      dragSelect = { anchorLine: line, focusLine: line };
-    });
-
-    editor.addEventListener("mousemove", (e) => {
-      if (!dragSelect || e.buttons !== 1) return;
-      const row = e.target.closest(".-line");
-      if (!row || !editor.contains(row)) return;
-      const focusLine = +(row.dataset.line || 0);
-      if (!focusLine || focusLine === dragSelect.focusLine) return;
-      dragSelect.focusLine = focusLine;
-      applyEditorTextSelection(dragSelect.anchorLine, dragSelect.focusLine);
-      markEditorDragSelectLines(dragSelect.anchorLine, dragSelect.focusLine);
-    });
-
-    const endDragSelect = () => {
-      if (!dragSelect) return;
-      if (dragSelect.anchorLine !== dragSelect.focusLine) {
-        applyEditorTextSelection(dragSelect.anchorLine, dragSelect.focusLine);
-      }
-      dragSelect = null;
-      clearEditorDragSelectLines();
-    };
-    editor.addEventListener("mouseup", endDragSelect);
-    window.addEventListener("mouseup", endDragSelect);
-
-    editor.addEventListener("dblclick", (e) => {
-      const content = e.target.closest(".-line-content");
-      if (!content) return;
-      const line = +(content.closest("[data-line]")?.dataset.line || 0);
-      if (!line) return;
-      e.preventDefault();
-      applyEditorTextSelection(line, line);
-    });
+    // 源码区选区（键盘 Shift+方向键 / 鼠标跨行拖拽 / 双击整行）→ js/sel-source.js
+    // 显式注入宿主能力，模块不读本文件闭包私有符号（见 docs/conventions/frontend-modules.md R2）
+    if (window.MemoriaSelSource) {
+      window.MemoriaSelSource.init({
+        editor: editor,
+        closestLineEl: closestLineEl,
+        offsetWithinLine: offsetWithinLine,
+      });
+    }
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -7889,6 +7850,19 @@
       if (sub.left.length) left2.push(cloneInlineNode(node, sub.left));
       if (sub.right.length) right2.unshift(cloneInlineNode(node, sub.right));
       return { left: left2, right: right2 };
+    }
+
+    /**
+     * 端点切分（容忍"块边界"端点）：nodePath 为空表示端点落在块边界——
+     * 空行块、图片块等**无 inline 文本**的块，或元素级位置。
+     * splitInlineAt 对空路径一律返回 null，会让整次跨块删除静默失败
+     * （表现为"选中了却删不掉"）；此处按"块开头"处理：左侧为空、右侧为整块内容。
+     */
+    function splitInlineAtEdge(children, nodePath, offset) {
+      if (!nodePath || !nodePath.length) {
+        return { left: [], right: (children || []).slice() };
+      }
+      return splitInlineAt(children, nodePath, offset);
     }
 
     /** 找到 inline 数组中第一个 TEXT 叶节点的路径（用于把光标放到块开头） */
@@ -8361,6 +8335,10 @@
     function insertText(text, forceGroup) {
       if (!text) return false;
 
+      // 停在不可编辑块边界（代码块/表格等）时键入 → 先建空行再写入
+      var EH1 = window.MemoriaEditHandler;
+      if (EH1 && insertAtNonEditableDock(EH1.cursorAST, text)) return true;
+
       var ctx = getEditContext();
       if (!ctx) return false;
       var block = ctx.block;
@@ -8665,11 +8643,55 @@
     }
 
     /**
+     * 光标停在**不可编辑块边界**时（代码块/表格等，见 edit-handler 的 dockAtNonEditableBlock）
+     * 键入或回车：先在块**下方**（offset>0）或**上方**（offset=0）新建空行，再写入文字。
+     * text === "" 表示只新建空行（回车）。与图片块既有路径同款（见 splitParagraph 的 image 分支）。
+     * @returns {boolean} true = 已处理
+     */
+    function insertAtNonEditableDock(cursor, text) {
+      var EH = window.MemoriaEditHandler;
+      var dock = EH && EH.dockAfter;
+      if (!dock || dock.blockIndex < 0) return false;
+      if (!_doc || !_doc.blocks) return false;
+      var block = _doc.blocks[dock.blockIndex];
+      if (!block || !NON_EDITABLE[block.type]) return false;
+      var range = (_blockLineMap && _blockLineMap[dock.blockIndex]) || null;
+      if (!range) return false;
+
+      var raw = (state.doc.body || "").split("\n");
+      var after = !dock.before;                                        // 停靠在块后
+      var insertAt = after ? range.endLine + 1 : range.startLine;      // 块后 / 块前
+      var newCursor = { blockIndex: dock.blockIndex + (after ? 1 : 0), nodePath: [], offset: 0 };
+      var preCursor = cloneCursor(cursor || { blockIndex: dock.blockIndex, nodePath: [], offset: 0 });
+      EH.dockAfter = null;                                             // 标记消费掉
+      hlog("dock insert bi=" + dock.blockIndex + " after=" + after + " line=" + insertAt +
+        " text=" + JSON.stringify(text));
+
+      beginUndo(text ? "dockInsert" : "enter", preCursor, true);
+      raw.splice(insertAt, 0, text || "");
+      state.doc.body = raw.join("\n");
+      state.doc.lines = raw;
+      state.doc.preview_body = null;   // 本地编辑使缓存过期，必须清空否则渲染旧内容
+      renderEditor(state.doc);
+      renderPreview(state.doc).then(function () {
+        restoreCursor(newCursor.blockIndex, newCursor.nodePath, newCursor.offset);
+        // 有文字：重渲染后递归走正常插入路径（此时新块已可编辑），保证字序与撤销分组正确
+        if (text) insertText(text, true);
+      });
+      markDirty();
+      if (!text) recordGroup("enter", newCursor);
+      return true;
+    }
+
+    /**
      * Enter 拆分段落（insertParagraph）
      * 支持：段落、标题（后段变普通段落）、列表项（同列表内拆两项）
      * 拆分后全量重渲染并恢复光标到新块开头
      */
     function splitParagraph() {
+      // 停在不可编辑块边界（代码块/表格等）按回车 → 在上/下方新建空行
+      var EH0 = window.MemoriaEditHandler;
+      if (EH0 && insertAtNonEditableDock(EH0.cursorAST, "")) return true;
       // 图片块换行（光标停在 img 前/后）：不经过 getEditContext（图片块在
       // NON_EDITABLE 中会被拦截），直接走专用路径——图片前→上方插空行，图片后→下方插空行
       var EH2 = window.MemoriaEditHandler;
@@ -9424,50 +9446,102 @@
       var end = M.domToAst(range.endContainer, range.endOffset);
       if (!start || !end || start.blockIndex >= end.blockIndex) return false;
 
-      // 校验范围内所有 block 均可编辑（跨列表暂不支持）
+      // 校验范围内所有 block 均可编辑
+      //   list  ：支持（按 item 定位到行，前后未被选中的 item 会保留）
+      //   quote ：仍不支持——一个引用块含多个段落，而 block→行映射只到"整块"粒度，
+      //           无法保证末段之后的内容不被误删
       for (var bi = start.blockIndex; bi <= end.blockIndex; bi++) {
         var blk = _doc.blocks[bi];
-        if (!blk) return false;
-        if (NON_EDITABLE[blk.type]) return false;
-        if (blk.type === "list") return false;
-        if (blk.type === "blockquote") return false;
+        var why = !blk ? ("block " + bi + " 缺失")
+          : NON_EDITABLE[blk.type] ? ("block " + bi + " type=" + blk.type + " 不可编辑")
+            : (blk.type === "blockquote" ? ("block " + bi + " type=blockquote 暂不支持跨块") : null);
+        if (why) { log("STYLE", "deleteMulti ABORT: " + why); return false; }
       }
 
       var startBlock = _doc.blocks[start.blockIndex];
       var endBlock = _doc.blocks[end.blockIndex];
       var preCursor = cloneCursor(start);
 
-      // 拆分首块左半、末块右半
-      var sp = splitInlineAt(startBlock.children || [], start.nodePath || [], start.offset);
-      var ep = splitInlineAt(endBlock.children || [], end.nodePath || [], end.offset);
-      if (!sp || !ep) return false;
+      /**
+       * 块内 inline 根 + 相对路径：列表 / 引用需下钻到 item / 段落内部，
+       * 否则会把 item 容器当成 inline 节点处理（AST 非法嵌套、文本丢失）。
+       */
+      function inlineCtx(block, cursor) {
+        var path = cursor.nodePath || [];
+        if (block.type === "list") {
+          var ii = path.length ? path[0] : 0;
+          var item = block.items && block.items[ii];
+          if (!item) return null;
+          return { children: item.children || [], path: path.slice(1) };
+        }
+        if (block.type === "blockquote") {
+          var qi = path.length ? path[0] : 0;
+          var inner = block.children && block.children[qi];
+          if (!inner) return null;
+          return { children: inner.children || [], path: path.slice(1) };
+        }
+        return { children: block.children || [], path: path };
+      }
+      var sc = inlineCtx(startBlock, start);
+      var ec = inlineCtx(endBlock, end);
+
+      // 拆分首块左半、末块右半（端点落在块边界/无文本块时走 splitInlineAtEdge，不再静默失败）
+      var sp = sc ? splitInlineAtEdge(sc.children, sc.path, start.offset) : null;
+      var ep = ec ? splitInlineAtEdge(ec.children, ec.path, end.offset) : null;
+      if (!sp || !ep) {
+        log("STYLE", "deleteMulti ABORT: split=null start=" + _fmtCursor(start) + " end=" + _fmtCursor(end));
+        return false;
+      }
 
       var before = sp.left;
       var after = ep.right;
       var joined = mergeAdjacentInline(before.concat(after));
 
-      // 结果 block 沿用首块类型（heading 保留级别）；全部删空则退化为空行
-      var newBlock = startBlock.type === "heading"
-        ? A.heading(startBlock.level, joined)
-        : A.paragraph(joined);
+      // 结果 block 沿用首块类型（heading 保留级别；列表保留列表形态，item 前缀 `- ` 不丢）；
+      // 全部删空则退化为空行
+      var newBlock;
+      if (startBlock.type === "list" && before.length) {
+        newBlock = A.list(startBlock.ordered, [A.listItem(joined)]);
+      } else if (startBlock.type === "heading") {
+        newBlock = A.heading(startBlock.level, joined);
+      } else {
+        newBlock = A.paragraph(joined);
+      }
       var newLines = joined.length ? [G.generateBlock(newBlock)] : [""];
 
       // 计算要替换的源码行范围（0-based）
-      var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
-      var endSrc = M.astToSrc(end.blockIndex, end.nodePath || [], end.offset);
-      if (!startSrc || !endSrc) return false;
-      var startLine = startSrc.line;
-      var endLine = endSrc.line;
+      // ★ 用真实的 block→行映射（_blockLineMap，按真实源码行表构建），不能用 M.astToSrc：
+      //   后者按"逐块行数累加"推行号，一旦存在不属于任何块的行（块间空行等）就整体偏移。
+      //   实测：block3 实际在 L5，astToSrc 却返回 3 → 删除整体上移一行且漏删末块所在行。
+      var blm = window.__blockLineMap || null;
+      var startLine, endLine;
+      if (blm && blm[start.blockIndex] && blm[end.blockIndex]) {
+        // 列表块一个 item 一行：用 item 索引精确定位到行，
+        // 否则"从列表头部删到中段"会连带删掉**后面没被选中**的 item（_blockLineMap 只到整块粒度）
+        startLine = blm[start.blockIndex].startLine + (start.listItemIndex || 0);
+        endLine = (endBlock.type === "list")
+          ? (blm[end.blockIndex].startLine + (end.listItemIndex || 0))
+          : blm[end.blockIndex].endLine;
+      } else {
+        var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
+        var endSrc = M.astToSrc(end.blockIndex, end.nodePath || [], end.offset);
+        if (!startSrc || !endSrc) return false;
+        startLine = startSrc.line;
+        endLine = endSrc.line;
+      }
 
-      // 新光标：合并处（before 末尾）
+      // 新光标：合并处（before 末尾）。首块为列表时合并结果只剩一个 item，路径需带 item 前缀
+      var cursorPrefix = (startBlock.type === "list" && before.length) ? [0] : [];
       var beforeLen = renderedLenOfNodes(before);
       var cursorRel = joined.length ? renderedOffsetToPath(joined, beforeLen) : null;
       var newCursor = cursorRel
-        ? { blockIndex: start.blockIndex, nodePath: cursorRel.nodePath, offset: cursorRel.offset }
-        : { blockIndex: start.blockIndex, nodePath: [], offset: 0 };
+        ? { blockIndex: start.blockIndex, nodePath: cursorPrefix.concat(cursorRel.nodePath || []), offset: cursorRel.offset }
+        : { blockIndex: start.blockIndex, nodePath: cursorPrefix, offset: 0 };
 
       log("STYLE", "deleteMulti blocks=" + (end.blockIndex - start.blockIndex + 1) +
-        " srcLines=[" + startLine + "," + endLine + "] newSrc=" + JSON.stringify(newLines[0]));
+        " srcLines=[" + startLine + "," + endLine + "]" +
+        " blm=[s" + JSON.stringify(blm && blm[start.blockIndex]) + " e" + JSON.stringify(blm && blm[end.blockIndex]) + "]" +
+        " newSrc=" + JSON.stringify(newLines[0]));
       return commitRange(startLine, endLine, newLines, newCursor, preCursor, "deleteSelection");
     }
 
@@ -9637,26 +9711,16 @@
     return true;
   }
 
-  /** 读取剪贴板并在光标位置粘贴（多行文本逐行拆分插入） */
-  async function pasteAtCursor() {
-    let text = "";
-    try {
-      text = (await navigator.clipboard.readText()) || "";
-    } catch (_) {
-      text = "";
-    }
-    if (!text) {
-      setStatus(T("cfg.clip.empty"));
-      return;
-    }
-
+  /** 把给定文本插入预览区光标处（多行逐行拆分、整体作为一个撤销单元）。
+   *  由 Ctrl+V（paste 事件）与右键「粘贴」共用。 */
+  function pasteTextAtCursor(text) {
     const EditSync = window.MemoriaEditSync;
     if (!EditSync || typeof EditSync.insertText !== "function") {
       setStatus(T("cfg.clip.editorNotReady"));
       return;
     }
 
-    const lines = text.replace(/\r\n?/g, "\n").split("\n");
+    const lines = String(text).replace(/\r\n?/g, "\n").split("\n");
     // 作为单个撤销单元：分组包裹，子操作（insertText/splitParagraph）不各自入栈
     if (typeof EditSync.beginUndoGroup === "function") EditSync.beginUndoGroup();
     if (!EditSync.insertText(lines[0])) {
@@ -9670,6 +9734,42 @@
     }
     if (typeof EditSync.endUndoGroup === "function") EditSync.endUndoGroup();
     setStatus(T("cfg.clip.pasted"));
+  }
+
+  /** 读取剪贴板并在光标位置粘贴（右键菜单入口；经 clipboard API，WebView2 会询问权限） */
+  async function pasteAtCursor() {
+    let text = "";
+    try {
+      text = (await navigator.clipboard.readText()) || "";
+    } catch (_) {
+      text = "";
+    }
+    if (!text) {
+      setStatus(T("cfg.clip.empty"));
+      return;
+    }
+    pasteTextAtCursor(text);
+  }
+
+  /** 预览区 Ctrl+V：走原生 paste 事件读 clipboardData（**不触发 WebView2 剪贴板权限询问**），
+   *  并与源码区（见编辑器 paste 监听）保持同一模式：拦截原生粘贴、改由 AST 管线插入。 */
+  function bindPreviewPaste() {
+    const preview = document.getElementById("preview");
+    if (!preview || preview._memoriaPasteBound) return;
+    preview._memoriaPasteBound = true;
+    preview.addEventListener("paste", (e) => {
+      if (window.MemoriaEditHandler && !window.MemoriaEditHandler.editMode) return;
+      if (state.viewMode === "source") return;
+      const clip = e.clipboardData || window.clipboardData;
+      if (!clip) return;
+      const raw = clip.getData("text/plain");
+      if (raw === null || raw === undefined) return;
+      // 与右键「粘贴」一致：先从当前选区解析出 AST 光标锚点。
+      // 解析不到（光标不在预览区 / 无法映射）则**不拦截**，退回浏览器原生粘贴——宁可有原生行为，也不吞掉用户的粘贴。
+      if (!syncPreviewCursorForPaste()) return;
+      e.preventDefault();
+      pasteTextAtCursor(raw);
+    });
   }
 
   /* ── Format toolbar ── */
@@ -10902,6 +11002,19 @@
     return map[err] || err;
   }
 
+  /** 后端 confirm/update 类错误的本地化：优先按 `code` 取文案（与 cfg.kpSave.* 同源），
+   *  缺失 code 时回退后端 message（保持既有行为）。 */
+  function kpErrText(res) {
+    const codeMap = {
+      kp_range_invalid: "cfg.kpSave.invalidRange",
+      kp_range_start_empty: "cfg.kpSave.startEmpty",
+      kp_range_end_empty: "cfg.kpSave.endEmpty",
+    };
+    const key = res && res.code ? codeMap[res.code] : null;
+    if (key) return T(key, res.params || {});
+    return (res && res.message) || T("cfg.confirm.writeFail");
+  }
+
   function onKpClick(kpId, opts = {}) {
     const kp = (state.doc.knowledge_points || []).find((k) => k.id === kpId);
     if (!kp) return;
@@ -11946,22 +12059,57 @@
     return true;
   }
 
+  /** 侧栏宽度钳制：180 px ~ 窗口宽×75%（硬顶 1400px） */
+  function _clampSidebarWidth(px) {
+    const maxW = Math.max(480, Math.min(1400, Math.round(window.innerWidth * 0.75)));
+    return Math.max(180, Math.min(maxW, Math.round(px)));
+  }
+
+  /**
+   * 应用侧栏宽度；persist=true 时落盘到 ui-settings.json 的 layout.sidebarWidth。
+   * ★ 只写 localStorage 是不够的：桌面壳（pywebview WebView2）默认 private_mode=True，
+   *   每次启动清空本地存储 → 必须写应用自己的配置文件（磁盘为权威源）。
+   */
+  function applySidebarWidth(px, persist) {
+    const sidebar = $("#-sidebar");
+    if (!sidebar) return;
+    const w = _clampSidebarWidth(px);
+    sidebar.style.width = w + "px";
+    if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
+    if (!persist) return;
+    try { localStorage.setItem("-sidebar-width", String(w)); } catch (e) { /* ignore */ }
+    call("save_ui_settings", { layout: { sidebarWidth: w } }).catch(() => {});
+  }
+
+  /** 启动时从程序配置同步侧栏宽度（磁盘优先，覆盖本地缓存） */
+  async function hydrateLayoutFromDisk() {
+    try {
+      const res = await call("get_ui_settings");
+      const lay = res && res.status === "ok" && res.settings && res.settings.layout;
+      const w = lay ? parseInt(lay.sidebarWidth, 10) : NaN;
+      if (!isNaN(w)) applySidebarWidth(w, false);
+    } catch (_) { /* 非桌面环境忽略 */ }
+  }
+
   function setupSidebarResize() {
     const sidebar = $("#-sidebar");
     const resizer = $("#sidebar-resizer");
     let dragging = false;
+    // 首帧先用本地缓存（若有），随后 hydrateLayoutFromDisk 用磁盘值覆盖
+    const saved = parseInt(localStorage.getItem("-sidebar-width") || "", 10);
+    if (!isNaN(saved)) applySidebarWidth(saved, false);
     resizer.addEventListener("mousedown", (e) => {
       dragging = true;
       e.preventDefault();
     });
     window.addEventListener("mousemove", (e) => {
       if (!dragging) return;
-      const w = Math.max(180, Math.min(480, e.clientX));
-      sidebar.style.width = w + "px";
-      if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
+      applySidebarWidth(e.clientX, false);
     });
     window.addEventListener("mouseup", () => {
+      if (!dragging) return;
       dragging = false;
+      applySidebarWidth(parseInt(sidebar.style.width, 10), true);
     });
   }
 
@@ -12106,6 +12254,13 @@
       }
     }
 
+    /** 归一化比较两个知识库目录路径（分隔符 / 末尾斜杠 / 大小写不敏感）。 */
+    function samePath(a, b) {
+      const norm = (p) => String(p || "").replace(/[\\/]+/g, "/").replace(/\/+$/, "").toLowerCase();
+      const na = norm(a);
+      return !!na && na === norm(b);
+    }
+
     /** 拉取最近打开的知识库并渲染「打开最近」二级列表（按上次打开时间降序）。 */
     async function renderRecentKbMenu() {
       if (!recentPanelEl) return;
@@ -12138,7 +12293,13 @@
         const label = it.name || it.path || "";
         makeItem(label, { title: it.path }).addEventListener("click", () => {
           closeFileMenu();
-          spawnNewWindow(it.path);
+          // 当前窗口未开库 → 直接在本窗口装载；已开着别的库 → 另开窗口（不打断当前会话）；
+          // 同一个库 → 忽略，避免重复装载。
+          if (!state.kbPath) {
+            openKbAt(it.path);
+            return;
+          }
+          if (!samePath(state.kbPath, it.path)) spawnNewWindow(it.path);
         });
       }
     }
@@ -12650,8 +12811,10 @@
     window.MemoriaKbCheck?.init?.();
     window.MemoriaKbAgent?.init?.();
     window.MemoriaFileTree?.init?.();
+    bindPreviewPaste();
     initKb();
     hydrateCustomColorsFromDisk();
+    hydrateLayoutFromDisk();
     window.MemoriaWindowChrome?.initWindowChrome?.();
   });
 

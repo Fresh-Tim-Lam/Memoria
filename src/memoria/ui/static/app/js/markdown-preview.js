@@ -188,6 +188,9 @@ window.MemoriaMarkdownPreview = (function () {
       theme: "default",
       securityLevel: "loose",
       fontFamily: "inherit",
+      // mermaid 默认把 parse 失败画成一张 "Syntax error in text / mermaid version X" 的错误图；
+      // 关掉它改为抛异常，由 renderMermaidBlocks 统一提示（用户不该看到 mermaid 的原始报错图）。
+      suppressErrorRendering: true,
     });
     mermaidInited = true;
   }
@@ -199,25 +202,36 @@ window.MemoriaMarkdownPreview = (function () {
     for (const el of els) {
       const pre = el.parentElement;
       if (!pre) continue;
-      const src = el.textContent || "";
+      // 编辑中途会出现空/半成品源码；空源码交给 mermaid 必然得到一张错误图 → 直接跳过
+      const src = (el.textContent || "").trim();
+      if (!src) continue;
+      // 重入/并发保护：同一 <pre> 只渲染一次；await 后若已被新一轮渲染替换则放弃写入
+      if (pre.dataset.mermaidRendered === "1") continue;
+      pre.dataset.mermaidRendered = "1";
       const id = "mermaid-" + Math.random().toString(36).slice(2, 10);
       try {
         const { svg } = await window.mermaid.render(id, src);
+        if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-container";
         // 保留 -src-block 和 data--block-index 以便双击编辑
         if (pre.classList.contains("-src-block")) {
           div.classList.add("-src-block");
           div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
+          div.setAttribute("data--src-line", pre.getAttribute("data--src-line") || "");
+          div.setAttribute("data--src-line-end", pre.getAttribute("data--src-line-end") || "");
         }
         div.innerHTML = svg;
         pre.replaceWith(div);
       } catch (e) {
+        if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-error";
         if (pre.classList.contains("-src-block")) {
           div.classList.add("-src-block");
           div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
+          div.setAttribute("data--src-line", pre.getAttribute("data--src-line") || "");
+          div.setAttribute("data--src-line-end", pre.getAttribute("data--src-line-end") || "");
         }
         div.textContent = _t("preview.mermaidFail", { msg: e.message || e });
         pre.replaceWith(div);
@@ -492,6 +506,91 @@ window.MemoriaMarkdownPreview = (function () {
     return `<span style="color:${escAttr(color)}">${innerText}</span>`;
   }
 
+  /** Lightbox 放大：滚轮以光标为中心缩放、左键拖拽平移；Esc / 右键 / 点击背景退出。 */
+  function openLightbox(srcImg) {
+    if (document.querySelector(".-lightbox-overlay")) return;
+    const overlay = document.createElement("div");
+    overlay.className = "-lightbox-overlay";
+    const bigImg = document.createElement("img");
+    bigImg.src = srcImg.src;
+    bigImg.alt = srcImg.alt || "";
+    bigImg.className = "-lightbox-image";
+    bigImg.draggable = false;
+    overlay.appendChild(bigImg);
+    const hintText = (window.MemoriaI18n && window.MemoriaI18n.t)
+      ? window.MemoriaI18n.t("preview.lightboxHint")
+      : "";
+    if (hintText) {
+      const hintEl = document.createElement("div");
+      hintEl.className = "-lightbox-hint";
+      hintEl.textContent = hintText;
+      overlay.appendChild(hintEl);
+    }
+    document.body.appendChild(overlay);
+
+    let scale = 1, tx = 0, ty = 0;
+    let dragging = false, moved = false, grabX = 0, grabY = 0;
+
+    function apply() {
+      bigImg.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + scale + ")";
+    }
+    apply();
+
+    function onWheel(ev) {
+      ev.preventDefault();
+      const rect = bigImg.getBoundingClientRect();
+      const cx = ev.clientX - (rect.left + rect.width / 2);
+      const cy = ev.clientY - (rect.top + rect.height / 2);
+      const next = Math.min(12, Math.max(0.2, scale * (ev.deltaY < 0 ? 1.15 : 1 / 1.15)));
+      const k = next / scale - 1;
+      tx -= cx * k;
+      ty -= cy * k;
+      scale = next;
+      moved = true;
+      apply();
+    }
+    function onDown(ev) {
+      if (ev.button !== 0) return;
+      ev.preventDefault();
+      dragging = true;
+      moved = false;
+      grabX = ev.clientX - tx;
+      grabY = ev.clientY - ty;
+      overlay.classList.add("-lightbox-dragging");
+      if (bigImg.setPointerCapture) { try { bigImg.setPointerCapture(ev.pointerId); } catch (_) { /* 合成事件无活动指针 */ } }
+    }
+    function onMove(ev) {
+      if (!dragging) return;
+      tx = ev.clientX - grabX;
+      ty = ev.clientY - grabY;
+      moved = true;
+      apply();
+    }
+    function onUp(ev) {
+      if (!dragging) return;
+      dragging = false;
+      overlay.classList.remove("-lightbox-dragging");
+      if (bigImg.releasePointerCapture) { try { bigImg.releasePointerCapture(ev.pointerId); } catch (_) { /* noop */ } }
+    }
+    function close() {
+      window.removeEventListener("keydown", onKey, true);
+      overlay.remove();
+    }
+    function onKey(ev) {
+      if (ev.key === "Escape") { ev.preventDefault(); close(); }
+    }
+
+    overlay.addEventListener("wheel", onWheel, { passive: false });
+    bigImg.addEventListener("pointerdown", onDown);
+    bigImg.addEventListener("pointermove", onMove);
+    bigImg.addEventListener("pointerup", onUp);
+    bigImg.addEventListener("pointercancel", onUp);
+    bigImg.addEventListener("dragstart", (ev) => ev.preventDefault());
+    overlay.addEventListener("contextmenu", (ev) => { ev.preventDefault(); close(); });
+    overlay.addEventListener("click", () => { if (!moved) close(); });
+    window.addEventListener("keydown", onKey, true);
+  }
+
   // ── Image Lightbox ──
   function attachImageLightbox(container) {
     container.querySelectorAll("img").forEach((img) => {
@@ -503,17 +602,10 @@ window.MemoriaMarkdownPreview = (function () {
       img.addEventListener("load", () => console.log("[img-debug] LOAD OK:", img.src, "naturalWidth:", img.naturalWidth));
       // 双击放大（阶段 F 交互：单击进入图片编辑工具栏，双击 Lightbox 放大）
       img.addEventListener("dblclick", (e) => {
-        const overlay = document.createElement("div");
-        overlay.className = "-lightbox-overlay";
-        const bigImg = document.createElement("img");
-        bigImg.src = img.src;
-        bigImg.className = "-lightbox-image";
-        overlay.appendChild(bigImg);
-        overlay.addEventListener("click", () => overlay.remove());
-        document.body.appendChild(overlay);
         // 双击放大时退出已进入的图片编辑模式（由 edit-handler 的 preview dblclick 处理，
         // 此处不 stopPropagation，让冒泡链继续）
         e.preventDefault();
+        openLightbox(img);
       });
     });
   }

@@ -503,7 +503,7 @@
       newWindow: "New Window",
       newWindowTitle: "Create a new window with no knowledge base opened",
       openRecent: "Open Recent",
-      openRecentTitle: "List recently opened knowledge bases (click to open in a new window)",
+      openRecentTitle: "List recently opened knowledge bases (opens in this window; opens a new window when another KB is already open)",
       recentEmpty: "No recently opened knowledge bases",
       recentLoadFailed: "Failed to load the recent list",
       newWindowFailed: "Failed to open a new window",
@@ -968,6 +968,7 @@
       },
       mermaidFail: "Mermaid render failed: {msg}",
       markedMissing: "marked not loaded",
+      lightboxHint: "Wheel to zoom · Drag with left button to pan · Esc or right-click to exit",
       link: {
         unresolved: "Unbound target \u00b7 {key} (none of {total} targets can be resolved)",
         multi: "Multi-target link \u00b7 {resolved}/{total} resolvable",

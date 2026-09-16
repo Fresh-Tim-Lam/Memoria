@@ -503,7 +503,7 @@
       newWindow: "新窗口",
       newWindowTitle: "创建一个未打开知识库的新窗口",
       openRecent: "打开最近",
-      openRecentTitle: "在另一侧列出最近打开的知识库（点击即以新窗口打开）",
+      openRecentTitle: "列出最近打开的知识库（点击即在当前窗口打开；当前窗口已开着其他库时另开窗口）",
       recentEmpty: "暂无最近打开的知识库",
       recentLoadFailed: "读取最近打开列表失败",
       newWindowFailed: "打开新窗口失败",
@@ -885,6 +885,7 @@
       },
       mermaidFail: "Mermaid 渲染失败: {msg}",
       markedMissing: "marked 未加载",
+      lightboxHint: "滚轮缩放 · 左键拖拽平移 · Esc 或右键退出",
       link: {
         unresolved: "未绑定目标 · {key}（{total} 个目标均无法解析）",
         multi: "多目标链接 · {resolved}/{total} 可跳转",

@@ -3524,6 +3524,17 @@ body.-brush-active #editor {
 .-preview .-src-block > pre {
     margin: 0;
 }
+
+/* ── 代码块语法高亮 token 配色（颜色来自主题变量，浅色主题只需覆盖 --tk-*）──
+   仅着色，不改变文本；结构由 js/code-highlight.js 生成。 */
+.-preview .-tk-com  { color: var(--tk-com);  font-style: italic; }
+.-preview .-tk-str  { color: var(--tk-str); }
+.-preview .-tk-num  { color: var(--tk-num); }
+.-preview .-tk-kw   { color: var(--tk-kw); }
+.-preview .-tk-typ  { color: var(--tk-typ); }
+.-preview .-tk-fn   { color: var(--tk-fn); }
+.-preview .-tk-pre  { color: var(--tk-pre); }
+.-preview .-tk-prop { color: var(--tk-prop); }
 .-preview .-src-block > hr {
     margin: 0;
     border: none;
@@ -3734,10 +3745,14 @@ em.-fmt-i     { /* inherits italic from <em> */ }
 mark[style*="color:"] { /* fg color set via inline style */ }
 
 /* ── Sync cursor (fake cursor in source area for split-mode verification) ── */
+/* ★ 竖线用 CSS 画，元素内**不含任何文本**：该 span 位于源码行内，
+   collectEditorBody 会把行 textContent 当正文写盘，含文本就会污染 .md 文件 */
 .-sync-cursor {
-    display: inline;
-    color: #2563eb;
-    font-weight: bold;
+    display: inline-block;
+    width: 0;
+    height: 1em;
+    vertical-align: text-bottom;
+    border-left: 2px solid #2563eb;
     animation: -cursor-blink 0.6s step-end infinite;
     pointer-events: none;
     user-select: none;
@@ -3745,6 +3760,20 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 @keyframes -cursor-blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+}
+
+/* ── 停靠光标：不可编辑块（代码块等）边界处的可见光标 ──
+   原生选区落在块元素内部时浏览器常不绘制光标，用户会以为"按了没反应"。
+   同样是纯 CSS 竖线，元素内**不含文本**（避免污染源码写盘）。 */
+.-dock-caret {
+    display: inline-block;
+    width: 0;
+    height: 1em;
+    vertical-align: text-bottom;
+    border-left: 2px solid #2563eb;
+    animation: -cursor-blink 0.6s step-end infinite;
+    pointer-events: none;
+    user-select: none;
 }
 
 /* ── Preview cursor indicator (source→preview direction, split mode) ── */
@@ -4046,6 +4075,33 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+    transform-origin: center center;
+    transition: transform 0.06s linear;
+    will-change: transform;
+}
+.-lightbox-overlay.-lightbox-dragging,
+.-lightbox-overlay.-lightbox-dragging .-lightbox-image {
+    cursor: grabbing;
+}
+.-lightbox-overlay.-lightbox-dragging .-lightbox-image {
+    transition: none;
+}
+.-lightbox-hint {
+    position: fixed;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    padding: 0.35rem 0.75rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: #e6e6e6;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    pointer-events: none;
+    white-space: nowrap;
 }
 
 /* ── Mermaid Container ── */

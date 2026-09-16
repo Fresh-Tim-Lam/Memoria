@@ -51,6 +51,7 @@
 | 2026-08-30 | `conventions/` | 契约性规范 | 由 `standards/` 拆分重组，中文文件名重命名 kebab-case |
 | 2026-08-30 | `guides/` | 操作指引 how-to | 由 `standards/`（AI 协作）+ `context/`（usage-agent-workflow）迁移 |
 | 2026-08-30 | `reference/` | 参考说明 | 由 `context/`（image-features）迁移，新增 architecture/glossary/hard-constraints |
+| 2026-09-15 | `reference/agent-guide/` | 面向 Agent 的**功能·排版·交互说明书**（10 篇 + 索引） | 供外部集成方（把 Memoria 嵌进 dsh 的插件等）与后续 Agent 建立准确心智模型；每处描述带 `文件:行号` 证据锚，末节登记"未证实/待确认" |
 
 > 历史沿革：`agents/`（旧）→ `sessions/`（2026-08-20）；`skills/`（空目录，供将来存放可执行技能说明或并入 `context/` 用途）；`standards/` + `context/` → 按性质拆分为 `conventions/`（契约）+ `guides/`（how-to）+ `reference/`（understand）（2026-08-30）。
 
@@ -89,6 +90,10 @@
 | 2026-09-10 | kb-agent.md 评审收口 | Q1 ✅ 固定 FSRS-5 默认权重（不训练/不调参）；Q2 ✅ 新卡按 KP 批量确认后落盘；Q4 ✅ `log` 保持 append-only；Q5 ✅ 一 Trae 工作区 = 一知识库。§9 更名「评审项与结论（全部已拍板）」，§1/§4.3/§6 与内置指令同步 |
 | 2026-09-14 | operations.md | 新增发布规范：§5.1 发布资产命名（完整包/轻量包 `Memoria-v<版本>-win64[-lite].zip`、双形态同时上传）；§5.2 Release 说明双语上下排版（中文段 → `---` → 英文段）、截图必备条款（绝对 URL、中英各引一次、无截图先入库） |
 | 2026-09-14 | 截图登记 | 新增演示截图 `resources/screenshots/demo-check-report.png`（知识库检查面板 + 「复制报告」toast，1474×888 自动捕获）；`README.md` §Screenshots / `README.cn.md` §界面预览 各增一条先说明后贴图；`readme-i18n.md` §3.1 场景清单与 §5 修订记录同步 |
+| 2026-09-14 | ledger-maintenance.md | 新增：**台账维护规范**（conventions/）。针对首轮对账发现的台账失真（11 条已收口仍开放 / 7 条描述与代码不符 / 3 处内部矛盾），确立七条规则：单一事实源与写者唯一、状态标记 + **四类分区**（真开放 / 代码完成·验收未闭环 / 待评审 / 已收口，禁止混装）、**证据锚必填**（实现/产物/评审/验收四类合法形式）、**收口判据**（实现类/行为类/评审类/边界类分列）、收口动作与归档（就地改状态 + §10 记批次，不物理搬行）、**定期对账**（触发点/五类清单产出/落点 `artifacts/_audit/**`）、禁止事项七条；附三处已知漂移（`to-dolist.md` 命名、`artifacts/agent/**` 契约空转、maintenance-jobs §4/§5 不一致）。登记 conventions/README.md 索引 |
+| 2026-09-14 | deepseek-harness-integration.md | 新增：DeepSeek Harness（dsh）与 Memoria **双向融入**的可行性分析与分阶段规划（design/，草稿待评审）。**D1**＝dsh 融入 Memoria；**D2**＝Memoria 作为插件融入 dsh（正由另一项目推进）。含 dsh 事实基线（官方来源 + 未证实清单）、Memoria 四条红线与**对外可调用面**（CLI 已自带 `--json` 与 `--apply` 预览语义）、10 条冲突面（X9 跨进程并发写 / X10 沙箱与知识库位置）、D2 传输面 T1–T3 与分级能力面 L0–L2、阶段 0–3 规划与验收、13 条风险、对已拍板决策的裁决项、阻塞问题 Q1–Q9 与建议门禁登记 H1–H6（待批准）、附带发现（`to-dolist.md` 引用悬空）。**本次仅文档，未改任何代码** |
+| 2026-09-15 | reference/agent-guide/ | 新增：面向 Agent 的**功能·排版·交互说明书**（10 篇 + 索引 + 维护约定）。逐处对代码取证（`src/memoria/ui/static/app/**`），每处描述带 `文件:行号` 证据锚，各篇末含「代码锚点表」与「未证实/待确认」。首轮取证并发现**三处既有文档与代码不符**（已在索引 §3 登记待修）：① `static_server` **不存在 `/rpc`**（`/rpc` 是测试 harness 自建端点）—— 与 architecture.md / deepseek-harness-integration.md 的说法冲突；② `hard-constraints.md:31`「保存自动清理未引用图片」与 `document.py:317-323` 相反；③ 事实源口径三处不一致。登记 `reference/README.md` 索引与目录注册表 |
+| 2026-09-15 | frontend-modules.md | 新增：**前端 JS 模块化规范**（conventions/）。针对 `app.js` 12,933 行（是第二名 6.7 倍）的单文件堆砌，确立六条规则：R1 新功能主体不进 `app.js`、R2 `init({...})` 显式依赖注入（禁读闭包私有符号）、R3 单向依赖、R4 **触及即搬**的增量重构（一次一件、纯搬移不改语义、`node --check` + 真机复测）、R5 共享纯函数放 core 文件（禁 `EH.xxx` 跨文件私有导出互借）、R6 内核（`state`/`$()`/`log`/`markDirty`）最后搬且**禁止一次性大爆炸重写**；附候选迁移顺序与提交前自查清单。首例落地 `sel-source.js`（源码区键盘 + 鼠标选区迁出 `app.js`）。登记 `conventions/README.md` / `README.cn.md` 索引 |
 
 ### 4.3 定期整理约定
 

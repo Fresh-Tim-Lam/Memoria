@@ -17,11 +17,14 @@ Memoria 是**本地桌面应用**：Python 后端 + 原生 JS 前端，跑在 We
 └──────────────────────────────┬─────────────────────────────────────┘
                                │ WebView2 / QtWebEngine
 ┌──────────────────────────────▼─────────────────────────────────────┐
-│  presentation/static_server.py（bottle）                            │
+│  presentation/static_server.py（bottle，仅两条 GET 路由）             │
 │   · /          → UI 静态资源（index.html + js/css）                  │
-│   · /files/    → 知识库文件（防目录穿越）                             │
-│   · /rpc       → 前端 ↔ 后端 API 桥（M0API）                         │
+│   · /files/…   → 知识库文件（防目录穿越）                             │
 └──────────────────────────────┬─────────────────────────────────────┘
+                               │ 前后端 API 不经过 HTTP：
+                               │  · pywebview 壳 → `js_api`（window.pywebview.api）
+                               │  · pyqt6 壳    → QWebChannel 单槽 UIAPIRpc.invoke(method, args_json)
+                               │  （契约见 presentation/api/ui.py 的 UIAPI）
                                │
 ┌──────────────────────────────▼─────────────────────────────────────┐
 │  后端分层：domain/ → range/ → storage/ → services/ → presentation/   │
@@ -41,8 +44,8 @@ Memoria 是**本地桌面应用**：Python 后端 + 原生 JS 前端，跑在 We
 
 ## 3. 服务端（presentation/）
 
-- `static_server.py`：bottle 应用。三路由：UI 静态资源、`/files/<kbRelPath>` 知识库文件（段级 unquote → normpath → 前缀校验防穿越）、`/rpc` 桥接 `api/ui.py` 的 M0API。
-- `api/ui.py`：前后端 RPC 契约（文档加载/保存、搜索、KP 操作、图片管理、导入等）。
+- `static_server.py`：bottle 应用。**两条 GET 路由**：UI 静态资源、`/files/<kbRelPath>` 知识库文件（段级 unquote → normpath → 前缀校验防穿越）。**注意：不存在 `/rpc` 之类的 HTTP API 路由** —— 前后端调用只走壳层通道（pywebview `js_api` / pyqt6 QWebChannel `UIAPIRpc.invoke`），因此「用 HTTP 驱动 Memoria」需要另行新增能力（见 [agent-guide/10-data-layout-and-host-embedding.md](./agent-guide/10-data-layout-and-host-embedding.md) §B）。
+- `api/ui.py`：前后端 RPC 契约（文档加载/保存、搜索、KP 操作、图片管理、导入等），类名 `UIAPI`。
 - `paths.py`：路径解析（KB 根、应用数据目录）。
 
 ## 4. 后端分层

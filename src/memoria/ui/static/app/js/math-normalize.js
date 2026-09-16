@@ -80,10 +80,22 @@ window.MemoriaMathNormalize = (function () {
     const docHasExplicitMath = /\$/.test(body);
     const lines = body.split("\n");
     let inDisplayBlock = false;
+    let fence = null;   // 当前围栏字符（``` 或 ~~~）；null = 不在代码块内
 
     return lines
       .map((line) => {
         const trimmed = line.trim();
+
+        // ── 围栏代码块：内部一律原样返回，绝不参与公式转换 ──
+        // 代码行里的 = / _ / ^ / π / ∈ 等不是公式，否则会被 isLegacyFormulaLine
+        // 判为"旧式公式"并包成 $$：表现为代码块里的 `sdasda = q` 被渲染成 $$ 数学块。
+        const fm = /^\s*(`{3,}|~{3,})/.exec(line);
+        if (fm) {
+          if (!fence) fence = fm[1][0];
+          else if (fm[1][0] === fence) fence = null;
+          return line;
+        }
+        if (fence) return line;
 
         if (trimmed === "$$") {
           inDisplayBlock = !inDisplayBlock;

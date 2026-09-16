@@ -102,7 +102,10 @@ window.MemoriaRenderer = (function () {
         el.setAttribute("data--block-index", blockIndex);
         var codeEl = document.createElement("code");
         if (block.lang) codeEl.className = "language-" + block.lang;
-        codeEl.textContent = block.code;
+        // 语法高亮：由 code-highlight.js 统一实现（未知语言/异常自动降级为转义纯文本）
+        var Hl = window.MemoriaCodeHighlight;
+        if (Hl) codeEl.innerHTML = Hl.render(block.code, block.lang);
+        else codeEl.textContent = block.code;
         el.appendChild(codeEl);
         return el;
 

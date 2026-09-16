@@ -28,7 +28,7 @@
 - **属性写回时序**：`memoria:image-attr` 处理器必须 `async` 且 `await applyImageEditLines(...)` **渲染完成后**再 `reenterImageEdit`（detached DOM bug 教训——setTimeout(0) 会抓到旧 DOM，后续操作全失效）。
 - **退出编辑恢复而非删除**：图片编辑退出时恢复进入时记录的 `imgOrigStyle`，不能无条件删 width/max-width（否则写回值被清、退回 35% 钳制）。
 - **入库路径**：图片复制到 KB 根 `.memoria/images/`，正文写 KB 根相对路径；重名追加序号（`x.png` → `x-1.png`），内容去重（MD5）优先复用；**永不覆盖**。
-- **保存自动清理**：`save_document` 成功后清理全库未引用图片（物理删除）；临时移除引用再保存即删资产——已接受的取舍。
+- **保存不清理图片**：`save_document` **不触发**图片清理（`services/document.py:317-323`）——刻意避免编辑/预览中间态误删仍被引用的图片；清理只在用户显式触发 `cleanup_unused_images`（`ui.py:867`，图片管理器「清理」按钮）时执行。**（2026-09-15 更正：本条此前写作"保存自动清理"，与代码相反）**
 - **路径重写**：本地相对图片路径在 AST 解析前由 `rewriteLocalImagePaths` 改写为 `/files/...` API URL；Enter 前后处理图片行必须用原始 source line（不能用 generateBlock，否则 `/files/` 绝对化污染相对路径）。
 - **静态服务安全**：`/files/` 路由段级 unquote → normpath → 小写化 → KB 根前缀校验，逃逸 404。
 

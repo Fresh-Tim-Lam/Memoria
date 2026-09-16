@@ -38,9 +38,11 @@ def locate_snippet(
     # Trust line_hint first: if the hint line contains the snippet, use it
     # directly without searching the full window. This prevents the locator
     # from matching an earlier occurrence of the same snippet text.
+    # 注意：forward_only（终点锚点）时必须要求 hint 行不早于 search_from，
+    # 否则过期的 hint 会把终点钉到起点之前（表现为 end_before_start）。
     if line_hint is not None and 1 <= line_hint <= len(lines):
         h = line_hint - 1
-        if needle in _norm(lines[h]):
+        if needle in _norm(lines[h]) and (not forward_only or h >= start):
             # Build candidate list from the window for transparency, but
             # pin the result to the hint line.
             scan(max(start, h - HINT_WINDOW), min(len(lines), h + HINT_WINDOW + 1))

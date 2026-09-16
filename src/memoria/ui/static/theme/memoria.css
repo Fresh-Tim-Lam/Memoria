@@ -19,6 +19,15 @@
     --error: #f14c4c;
     --warning: #ce9178;
     --theme-color: #007acc;
+    /* 代码块语法高亮（VSCode Dark+ 取色）；浅色主题只需覆盖这几个变量 */
+    --tk-com: #6a9955;
+    --tk-str: #ce9178;
+    --tk-num: #b5cea8;
+    --tk-kw: #569cd6;
+    --tk-typ: #4ec9b0;
+    --tk-fn: #dcdcaa;
+    --tk-pre: #c586c0;
+    --tk-prop: #9cdcfe;
 }
 
 body {

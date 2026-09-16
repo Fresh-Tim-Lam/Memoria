@@ -1367,7 +1367,12 @@ class DocumentService:
     ) -> dict:
         body, fm, lines = self._read_body(rel_path)
         if start_line < 1 or end_line > len(lines) or start_line > end_line:
-            return {"status": "error", "message": "行号无效"}
+            return {
+                "status": "error",
+                "code": "kp_range_invalid",
+                "params": {"start": start_line, "end": end_line},
+                "message": "行号无效",
+            }
 
         full = os.path.join(self.kb_path, rel_path)
         sidecar = load_sidecar_for_md(full, self.kb_path) or {
@@ -1381,11 +1386,15 @@ class DocumentService:
         if not start_snip:
             return {
                 "status": "error",
+                "code": "kp_range_start_empty",
+                "params": {"start": start_line},
                 "message": f"起点第 {start_line} 行为空，请选择有内容的行",
             }
         if not end_snip:
             return {
                 "status": "error",
+                "code": "kp_range_end_empty",
+                "params": {"end": end_line},
                 "message": f"终点第 {end_line} 行为空，请选择有内容的行",
             }
         range_data = {

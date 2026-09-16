@@ -125,6 +125,7 @@
   // ── 预览区光标位置缓存（源码坐标）──
   EH.currentCursor = null;  // { srcLine, srcCol, blockIndex }
   EH.cursorAST = null;      // { blockIndex, nodePath, offset } — 预览区编辑锚点
+  EH.dockAfter = null;      // { blockIndex, before? } — 光标停靠在不可编辑块边界（见 dockAtNonEditableBlock）
   EH._composing = false;      // 是否处于 IME 组合输入中
   EH._composeStartAST = null; // 组合输入起始 AST 锚点（组合期间 DOM 会被污染，仅以此为准）
 
@@ -215,7 +216,9 @@
     var afterNode = node.splitText(safeCol);
     var cursor = document.createElement("span");
     cursor.className = "-sync-cursor";
-    cursor.textContent = "|";
+    // ★ 不得写入任何文本：源码行 DOM 会被 collectEditorBody 读成正文并写盘。
+    //   曾用 textContent = "|" 导致保存时把 `|` 写进 .md（"aaa"→"a|aa"、"<details>"→"<details>|"）。
+    //   竖线改由 CSS 绘制（见 app.css 的 .-sync-cursor）。
     lineEl.insertBefore(cursor, afterNode);
     _fakeCursorEl = cursor;
   }
@@ -305,7 +308,183 @@
    * 从浏览器 Selection 读取光标并同步到源码（click / arrow 共用）
    * @param {string} tag — 日志标签（如 "click"、"arrow:ArrowLeft"）
    */
+  // ── 键盘扩展选区（Shift+方向键）────────────────────────────────
+  // 预览区光标是"假光标元素 + AST 坐标"，原生选区扩展没有承接者，
+  // 因此键盘选区自带一套**完全确定性**的 anchor/focus 记账，绝不回读原生光标。
+  var _selAnchor = null;   // { blockIndex, textOffset }
+  var _selFocus = null;    // { blockIndex, textOffset }
+
+  function _blk(bi) {
+    return document.querySelector('#preview .-src-block[data--block-index="' + bi + '"]');
+  }
+
+  /** 块内文本偏移 → DOM 文本位置（空块落到元素本身，偏移 0）—— 复用 selection-core 唯一实现 */
+  function _textPosAt(el, offset) {
+    var C = window.MemoriaSelectionCore;
+    return C ? C.textPosAt(el, offset) : null;
+  }
+
+  function _blkText(bi) {
+    var el = _blk(bi);
+    return el ? (el.textContent || "") : "";
+  }
+
+  function _blkTextLen(bi) { return _blkText(bi).length; }
+
+  // 词边界（Ctrl+Shift+←/→）统一走 selection-core（唯一实现，见 frontend-modules.md R5）
+  function _wordLeft(text, from) {
+    var C = window.MemoriaSelectionCore;
+    return C ? C.wordLeft(text, from) : 0;
+  }
+
+  function _wordRight(text, from) {
+    var C = window.MemoriaSelectionCore;
+    return C ? C.wordRight(text, from) : text.length;
+  }
+
+  function _caretBlockIndex() {
+    var bi = getBlockIndexFromSelection();
+    if (bi < 0 && EH.currentCursor && EH.currentCursor.blockIndex >= 0) bi = EH.currentCursor.blockIndex;
+    return bi;
+  }
+
+  function _caretOffsetIn(bi) {
+    var el = _blk(bi);
+    var s = window.getSelection();
+    if (!el || !s || !s.rangeCount || !el.contains(s.focusNode)) return 0;
+    return getTextOffsetInBlock(el, s.focusNode, s.focusOffset);
+  }
+
+  function _ord(p) { return p.blockIndex * 1000000 + p.textOffset; }
+
+  /**
+   * 端点规范化：端点落在**空块**（空行，无文本节点）时，改挂到相邻有文本块的边界。
+   * 否则 DOM 位置是 [element,0]，_extract 映射不出 AST 节点（path=[]）→ 判
+   * invalid/cross-block → deleteSelection 返回 false，表现为"选中了却删不掉"。
+   *   isStart=true  → 向后（+1）找第一个有文本块，取其**开头**
+   *   isStart=false → 向前（-1）找第一个有文本块，取其**末尾**
+   */
+  function _normPos(blockIndex, isStart) {
+    var step = isStart ? 1 : -1;
+    var bi = blockIndex;
+    for (var guard = 0; guard < 500; guard++) {
+      var len = _blkTextLen(bi);
+      if (len > 0) {
+        return { bi: bi, pos: _textPosAt(_blk(bi), isStart ? 0 : len) };
+      }
+      var ni = bi + step;
+      if (!_blk(ni)) break;
+      bi = ni;
+    }
+    return null;
+  }
+
+  /**
+   * 端点 DOM 位置：**优先用该块自身**（空块 → 元素本身 offset 0），
+   * 让选区末尾"能落到空行"；仅当块元素缺失时才回退到相邻有文本块。
+   */
+  function _posOf(p, isStart) {
+    var el = _blk(p.blockIndex);
+    if (el) {
+      var len = (el.textContent || "").length;
+      var off = Math.max(0, Math.min(p.textOffset, len));
+      return { bi: p.blockIndex, pos: _textPosAt(el, off) };
+    }
+    return _normPos(p.blockIndex, isStart);
+  }
+
+  /** 渲染 anchor→focus 选区（rAF 再断言一次，抵挡中间链路的折叠） */
+  function _renderSel() {
+    if (!_selAnchor || !_selFocus) return;
+    var aFirst = _ord(_selAnchor) <= _ord(_selFocus);
+    var first = aFirst ? _selAnchor : _selFocus;
+    var last = aFirst ? _selFocus : _selAnchor;
+    var a = _posOf(first, true);
+    var b = _posOf(last, false);
+    if (!a || !b) return;
+    // 规范化后可能反序（例如起点在空行、被前推到下一个有文本块）→ 交换
+    if (a.bi > b.bi || (a.bi === b.bi && a.pos.offset > b.pos.offset)) {
+      var tmp = a;
+      a = b;
+      b = tmp;
+    }
+    var sp = a.pos, ep = b.pos;
+    var r = document.createRange();
+    try { r.setStart(sp.node, sp.offset); r.setEnd(ep.node, ep.offset); } catch (err) { return; }
+    var apply = function () {
+      var sel = window.getSelection();
+      if (!sel) return;
+      sel.removeAllRanges();
+      sel.addRange(r);
+      EH.cursorAST = { blockIndex: b.bi, nodePath: [], offset: b.pos.offset };
+    };
+    apply();
+    if (window.requestAnimationFrame) window.requestAnimationFrame(apply);
+    flog("KEY", "sel a=" + JSON.stringify(_selAnchor) + " f=" + JSON.stringify(_selFocus) +
+      " render=" + a.bi + "→" + b.bi + " len=" + (r.toString() || "").length);
+  }
+
+  /**
+   * Shift+方向键：确定性扩展。
+   *   ←/→ 逐字符（Ctrl+Shift 时按**词**：英文单词 / 连续汉字段）
+   *   ↑/↓ 按块跨行并**保留列**（列超长时钳到目标块长度）
+   */
+  function _shiftExtend(key, dir, word) {
+    // 记账失效判据：原生选区已折叠 ⇒ 光标被"我们之外"的力量移动过
+    // （点击/普通方向键/撤销重做/编辑后重渲染）。此时旧 anchor/focus 已过期，
+    // 若继续沿用，Shift+方向键会从**上一次选区的末端**再走一步，表现为"一跳选中下方全部"。
+    var nativeSel = window.getSelection();
+    var nativeCollapsed = !nativeSel || !nativeSel.rangeCount || nativeSel.isCollapsed;
+    if (!_selAnchor || nativeCollapsed) {
+      var bi = _caretBlockIndex();
+      if (bi < 0) return;
+      var off = _caretOffsetIn(bi);
+      _selAnchor = { blockIndex: bi, textOffset: off };
+      _selFocus = { blockIndex: bi, textOffset: off };
+    }
+    var f = _selFocus;
+    if (key === "ArrowRight") {
+      var lenR = _blkTextLen(f.blockIndex);
+      if (f.textOffset < lenR) {
+        if (word) {                              // Ctrl+Shift：按词/汉字段
+          var tR = _wordRight(_blkText(f.blockIndex), f.textOffset);
+          f.textOffset = (tR > f.textOffset) ? Math.min(tR, lenR) : lenR;
+        } else {
+          f.textOffset += 1;                     // Shift：逐字符
+        }
+      } else if (_blk(f.blockIndex + 1)) {
+        f.blockIndex += 1;                       // 越界 → 邻块开头
+        f.textOffset = 0;
+      } else { return; }
+    } else if (key === "ArrowLeft") {
+      if (f.textOffset > 0) {
+        if (word) {                              // Ctrl+Shift：按词/汉字段
+          f.textOffset = _wordLeft(_blkText(f.blockIndex), f.textOffset);
+        } else {
+          f.textOffset -= 1;                     // Shift：逐字符
+        }
+      } else if (_blk(f.blockIndex - 1)) {
+        f.blockIndex -= 1;                       // 越界 → 邻块末尾
+        f.textOffset = _blkTextLen(f.blockIndex);
+      } else { return; }
+    } else {
+      var ni = f.blockIndex + dir;
+      if (!_blk(ni)) return;
+      f.blockIndex = ni;
+      f.textOffset = Math.min(f.textOffset, _blkTextLen(ni));  // 保留列
+    }
+    _renderSel();
+  }
+
+  // 鼠标在预览区按下 → 放弃键盘选区记账
+  document.addEventListener("mousedown", function (e) {
+    var pv = document.getElementById("preview");
+    if (pv && e.target && pv.contains(e.target)) { _selAnchor = null; _selFocus = null; }
+  }, true);
+
   function syncFromSelection(tag) {
+    EH.dockAfter = null;   // 任何常规光标同步都作废"停靠不可编辑块边界"标记
+    hideDockCaret();
     var cur = getPreviewCursor();
     if (!cur) { log("EH", tag + ": not on a valid block"); return; }
     logCursorContext(cur.srcLine, cur.srcCol, cur.blockIndex, cur.listItemIndex);
@@ -521,6 +700,68 @@
   }
 
   /**
+   * 停靠光标（可见）：不可编辑块边界的原生光标在很多情况下**不绘制**（位置落在块元素里），
+   * 用户会误以为"没动"。这里补一个纯 CSS 画的竖线标记。
+   * ★ 元素内**不得有文本**：预览 DOM 会被选区映射读取，含文本会污染源码（同假光标教训）。
+   */
+  var _dockCaretEl = null;
+
+  function hideDockCaret() {
+    if (_dockCaretEl && _dockCaretEl.parentNode) {
+      _dockCaretEl.parentNode.removeChild(_dockCaretEl);
+    }
+    _dockCaretEl = null;
+  }
+
+  function showDockCaret(parent, el, before) {
+    hideDockCaret();
+    if (!parent || !el) return;
+    var m = document.createElement("span");
+    m.className = "-dock-caret";
+    // 插在块元素**外侧**的兄弟位置（不是块内部），与光标位置一致
+    parent.insertBefore(m, before ? el : el.nextSibling);
+    _dockCaretEl = m;
+  }
+
+  /**
+   * 把光标停靠在**不可编辑块的外侧**（该方向已无可编辑块时）：
+   *   dir>0 → 块**之后**；dir<0 → 块**之前**。
+   * 位置落在**容器层级**（块元素的前/后兄弟位），而不是块元素内部的末尾——
+   * 后者会被用户感知为"进到块内部了"。可见光标由 .-dock-caret 绘制；
+   * 在此键入/回车由 AST 管线在块上/下方新建空行（见 app.js 的 insertAtNonEditableDock）。
+   */
+  function dockAtNonEditableBlock(blockIndex, dir) {
+    var el = _blk(blockIndex);
+    if (!el) return false;
+    var parent = el.parentNode;
+    if (!parent) return false;
+    var idx = Array.prototype.indexOf.call(parent.childNodes, el);
+    if (idx < 0) return false;
+    var off = dir > 0 ? idx + 1 : idx;      // 容器层级：块元素之后 / 之前
+    var r = document.createRange();
+    try { r.setStart(parent, off); } catch (e) { return false; }
+    r.collapse(true);
+    var s = window.getSelection();
+    if (!s) return false;
+    s.removeAllRanges();
+    s.addRange(r);
+    // 停靠标记：该位置在源码里没有对应列（是块外的容器位），AST 锚点显式给定；
+    // 键入/回车由 AST 管线在块上/下方新建空行（见 app.js insertAtNonEditableDock）。
+    // 任何其它光标同步（点击/普通方向键/重渲染）都会清掉它。
+    EH.dockAfter = (dir > 0)
+      ? { blockIndex: blockIndex }
+      : { blockIndex: blockIndex, before: true };
+    EH.cursorAST = { blockIndex: blockIndex, nodePath: [], offset: dir > 0 ? 1 : 0 };
+    // 容器级位置取不到 block 索引（getBlockIndexFromSelection 会返回 -1），
+    // 因此把 currentCursor 也写上，供后续方向键的 lastBlk 回退使用
+    var dl = parseInt(el.getAttribute("data--src-line"), 10);
+    if (!isNaN(dl)) EH.currentCursor = { srcLine: dl, srcCol: 0, blockIndex: blockIndex };
+    showDockCaret(parent, el, dir < 0);
+    flog("DOCK", "dockAtNonEditableBlock(" + blockIndex + ") dir=" + dir + " → parent off=" + off);
+    return true;
+  }
+
+  /**
    * 检查光标是否在当前 block 的边界（使用编译内核查询 DOM 位置）
    * @param {number} direction - 1=末尾（Right/Down），-1=开头（Left/Up）
    * @returns {boolean}
@@ -615,8 +856,9 @@
 
       if (typeof EditSync[fn] !== "function") return;
 
-      // 用最新浏览器选区刷新 AST 锚点（保证光标位置准确）
-      syncFromSelection("beforeinput");
+      // 用最新浏览器选区刷新 AST 锚点（保证光标位置准确）；
+      // "停靠"在不可编辑块边界的光标在源码里没有对应列，保留其显式锚点
+      if (!EH.dockAfter) syncFromSelection("beforeinput");
 
       // 阻止浏览器直接修改 DOM，改由 AST 编辑管线统一处理
       e.preventDefault();
@@ -771,6 +1013,17 @@
       var key = e.key;
       var dir = (key === "ArrowRight" || key === "ArrowDown") ? 1 : -1;
 
+      // Shift+方向键 = 键盘扩展选区：走**完全确定性**的独立路径，不进 Case A/B/C，
+      // 也绝不回读原生光标（预览区光标本就是"假光标 + AST 坐标"，回读必出错）。
+      if (e.shiftKey) {
+        e.preventDefault();
+        // Ctrl+Shift（含 Cmd+Shift）：←/→ 按词/汉字段（大块）；↑/↓ 仍是按块
+        _shiftExtend(key, dir, !!(e.ctrlKey || e.metaKey));
+        return;
+      }
+      _selAnchor = null;
+      _selFocus = null;
+
       flog("═══", "═══════════════════════════════════════════");
       flog("KEY", "keydown: " + key + " dir=" + dir + " editMode=" + EH.editMode);
       flog("KEY", "currentCursor=" + JSON.stringify(EH.currentCursor));
@@ -817,6 +1070,11 @@
         var skipIdx = findEditableBlockIndex(curBlkIdx, dir);
         if (skipIdx >= 0) {
           placeCursorInBlock(skipIdx, dir < 0);
+        } else {
+          // 该方向已无更多块（典型：文档末尾的代码块）→ 停靠在块边界，
+          // 若在此键入/回车，AST 管线会在块上/下方新建空行。停靠位置无法用源码列表达，
+          // 因此不再走 syncFromSelection（否则会把停靠锚点冲掉）。
+          if (dockAtNonEditableBlock(curBlkIdx, dir)) return;
         }
         syncFromSelection("arrow:" + key);
         return;
@@ -844,6 +1102,9 @@
           var skipIdx2 = findEditableBlockIndex(nextBlk, dir);
           if (skipIdx2 >= 0) {
             placeCursorInBlock(skipIdx2, dir < 0);
+          } else {
+            // 越过该不可编辑块后已无更多块 → 停靠在块边界（键入时会新建空行）
+            if (dockAtNonEditableBlock(nextBlk, dir)) return;
           }
           syncFromSelection("arrow:" + key);
           return;

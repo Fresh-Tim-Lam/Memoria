@@ -23,5 +23,6 @@
 | [refs-system.md](./refs-system.md) | 参考资料库（refs/）使用规范 | 引用技术资料者 |
 | [i18n.md](./i18n.md) | 语言系统维护规范（文案抽键/语言包结构与回退/新 UI 接入/清单维护） | 新增或修改界面文案者 |
 | [readme-i18n.md](./readme-i18n.md) | README 与项目截图的中英双语维护规范（README.md ↔ README.cn.md 同步、截图收录/存放、自查） | 维护 README 或新增/更换演示截图者 |
+| [frontend-modules.md](./frontend-modules.md) | 前端 JS 模块化规范：新功能主体不进 `app.js`、`init({...})` 显式依赖注入、共享纯函数放 core 文件（禁止跨文件私有导出互借）、触及即搬的增量重构、自查清单 | 改动前端代码者（`src/memoria/ui/static/**`） |
 
 > **决策流程**：内容属于"人机都要遵守的规则" → 放本目录；属于操作指引（how-to）→ `guides/`；属于参考说明（understand）→ `reference/`。详见 [docs-management.md](./docs-management.md)。

@@ -48,16 +48,15 @@
           <div id="file-menu" class="-tb-file-menu" role="menu" hidden>
             <button type="button" role="menuitem" id="file-menu-open" data-i18n="toolbar.open" data-i18n-attr="title:toolbar.openTitle">打开</button>
             <button type="button" role="menuitem" id="file-menu-import" data-i18n="toolbar.import" data-i18n-attr="title:toolbar.importTitle">导入</button>
-            <button type="button" role="menuitem" id="file-menu-kb-agent" data-i18n="toolbar.kbAgent" data-i18n-attr="title:toolbar.kbAgentTitle">创建 Trae 智能体</button>
+            <button type="button" role="menuitem" id="file-menu-export" disabled data-i18n="toolbar.export" data-i18n-attr="title:toolbar.exportTitle">导出</button>
             <div class="-tb-file-menu-sep" role="separator"></div>
+            <button type="button" role="menuitem" id="file-menu-kb-agent" data-i18n="toolbar.kbAgent" data-i18n-attr="title:toolbar.kbAgentTitle">创建 Trae 智能体</button>
             <button type="button" role="menuitem" id="file-menu-new-window" data-i18n="toolbar.newWindow" data-i18n-attr="title:toolbar.newWindowTitle">新窗口</button>
             <div class="-tb-file-menu-row" id="file-menu-recent-wrap" role="none">
               <button type="button" role="menuitem" id="file-menu-open-recent" data-i18n="toolbar.openRecent" data-i18n-attr="title:toolbar.openRecentTitle">打开最近</button>
               <span class="-tb-file-caret" aria-hidden="true">›</span>
               <div id="file-menu-recent" class="-tb-file-submenu" role="menu" hidden></div>
             </div>
-            <div class="-tb-file-menu-sep" role="separator"></div>
-            <button type="button" role="menuitem" id="file-menu-export" disabled data-i18n="toolbar.export" data-i18n-attr="title:toolbar.exportTitle">导出</button>
           </div>
         </div>
         <button id="btn-refresh" title="刷新" data-i18n="toolbar.refresh" data-i18n-attr="title:toolbar.refreshTitle">刷新</button>
@@ -399,7 +398,10 @@
   <script src="/app/js/source-gen.js"></script>
   <script src="/app/js/mapper.js"></script>
   <script src="/app/js/renderer.js"></script>
+  <script src="/app/js/code-highlight.js"></script>
+  <script src="/app/js/selection-core.js"></script>
   <script src="/app/js/edit-handler.js"></script>
+  <script src="/app/js/sel-source.js"></script>
   <script src="/app/js/link-context-menu.js"></script>
   <script src="/app/js/kp-context-menu.js"></script>
   <script src="/app/i18n/zh-CN.js"></script>
@@ -414,5 +416,7 @@
   <script src="/app/js/kb-check.js"></script>
   <script src="/app/js/kb-agent.js"></script>
   <script src="/app/js/file-tree.js"></script>
+  <!-- 临时诊断埋点（键盘选区/删除），定位完成后删除本行与本文件 -->
+  <script src="/app/js/keys-debug.js"></script>
 </body>
 </html>

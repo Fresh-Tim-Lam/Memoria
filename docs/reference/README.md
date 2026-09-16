@@ -18,3 +18,4 @@
 | [image-features.md](./image-features.md) | Image feature description and internals (rendering pipeline / path resolution / interaction / static serving) |
 | [preview-formats.md](./preview-formats.md) | Preview rendering notes: supported formats and styling (block / inline / extended syntax / styles / interaction / boundaries) |
 | [i18n-inventory.md](./i18n-inventory.md) | Registry of UI copy strings (incl. locating Chinese copy; the factual basis for i18n migration and language-pack maintenance; refresh with `python scripts/scan_ui_strings.py`) |
+| [agent-guide/](./agent-guide/README.md) | **Agent-facing feature / layout / interaction guide** (10 parts): window shell, file tree & nav, editor & formatting, preview & rendering, knowledge points, links & graph, search & images, import/export & check, settings·i18n·shortcuts, data layout & host embedding |
