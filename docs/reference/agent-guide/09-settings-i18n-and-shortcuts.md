@@ -90,15 +90,18 @@
 
 ### 2.4 「节点群页签」页
 
-渲染 `renderSettingsBodyGroups()`（graph-settings.js:579-605、649-654），单列、**无预览列**。
+渲染 `renderSettingsBodyGroups()`（graph-settings.js:592-629、649-654），单列、**无预览列**。
 
 | 项（key） | 控件 | 取值与默认值 | 生效 |
 |---|---|---|---|
-| 页签命名 `graph.settings.groups.label` | select `groupLabelMode` | `hub_name`（默认）/ `hub_id`；`smart` **disabled**（graph-settings.js:586-590） | 即时（触发群重算，app.js:969-977） |
+| 分布模式 `graph.settings.groups.distLabel` | select `distMode` | `grid`（群组网格，默认）/ `scatter`（散落）（graph-settings.js:26、600-604）。`grid`＝群按 cols×rows 网格占位、跨群不排斥（群多时易叠成一团）；`scatter`＝群心随机撒在圆/球内、**不写 `groupOx/Oy/Oz` 锚点**，改由「向原点中心力 + 跨群排斥」自然铺开，无连边的孤立节点散落到外围 | 即时（`distMode` 在 app.js `_RELAYOUT_KEYS` 内 → 2D/3D 都重布局） |
+| 「全部」群间距 `…spacing` | range 160–420 / 20 | 260（graph-settings.js:25）；**仅 `distMode=grid` 生效**，散落模式下整块隐藏（graph-settings.js:606-608、`syncDistVisibility`） | 即时 |
+| 页签命名 `graph.settings.groups.label` | select `groupLabelMode` | `hub_name`（默认）/ `hub_id`；`smart` **disabled**（graph-settings.js:611-615） | 即时（触发群重算，app.js:969-977） |
 | 页签最大字数 `…maxLen` | range 6–20 / 1 | 12（graph-settings.js:24） | 即时 |
-| 「全部」群间距 `…spacing` | range 160–420 / 20 | 260（graph-settings.js:25） | 即时 |
-| 群页签排序 `…sort` | select **disabled**（占位） | 仅「按规模（默认）」（graph-settings.js:594-599） | — |
-| 隐藏单节点群页签 `…hideSingle` | checkbox **disabled**（占位，`.-settings-field--placeholder`） | 未实现（graph-settings.js:600-603） | — |
+| 群页签排序 `…sort` | select **disabled**（占位） | 仅「按规模（默认）」（graph-settings.js:618-623） | — |
+| 隐藏单节点群页签 `…hideSingle` | checkbox **disabled**（占位，`.-settings-field--placeholder`） | 未实现（graph-settings.js:624-627） | — |
+
+> 分布模式的实现落在布局层：`initialPositionsScattered`（`graph-layout-2d.js:85`-`127` 圆盘 / `graph-layout-3d.js:97`-`144` 球），跨群排斥开关见 `graph-layout-sim-core.js` 的 `skipPairRepulsion`（`scatter` 不跳过）。
 
 ### 2.5 「检索」页
 

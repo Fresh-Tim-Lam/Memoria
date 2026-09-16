@@ -23,6 +23,7 @@
     groupLabelMode: "hub_name",
     groupLabelMaxLen: 12,
     groupSpacing: 260,
+    distMode: "grid",
     alphaMin: 0.012,
     alphaDecay: 0.045,
     alphaTarget: 0.12,
@@ -262,6 +263,7 @@
       groupLabelMode: s.groupLabelMode,
       groupLabelMaxLen: s.groupLabelMaxLen,
       groupSpacing: s.groupSpacing,
+      distMode: s.distMode,
       alphaMin: s.alphaMin,
       alphaDecay: s.alphaDecay,
       alphaTarget: s.alphaTarget,
@@ -299,6 +301,16 @@
     group.classList.toggle("-settings-fieldset--hidden", !show);
   }
 
+  /** 「群间距」只对分布模式=群组网格生效；散落模式下隐藏 */
+  function syncDistVisibility(root) {
+    const r = root || document.getElementById("settings-body");
+    if (!r) return;
+    const sel = r.querySelector('[data-graph-setting="distMode"]');
+    const group = r.querySelector('[data-dist-group="grid"]');
+    if (!sel || !group) return;
+    group.classList.toggle("-settings-fieldset--hidden", sel.value === "scatter");
+  }
+
   function syncFormFromSettings() {
     const s = load();
     const root = document.getElementById("settings-body");
@@ -315,6 +327,7 @@
       }
     });
     syncStyleVisibility(root);
+    syncDistVisibility(root);
   }
 
   function teardownPreview() {
@@ -578,9 +591,21 @@
 
   function renderGroupTabSection(s) {
     const G = "graph.settings.groups.";
+    const scatter = s.distMode === "scatter";
     return `<section class="-settings-section">
             <h3 class="-settings-heading">${TT(G + "heading")}</h3>
             <p class="-muted -settings-note">${TT(G + "note")}</p>
+            <label class="-settings-field">
+              <span>${TT(G + "distLabel")}</span>
+              <select data-graph-setting="distMode">
+                <option value="grid"${scatter ? "" : " selected"}>${TT(G + "distGrid")}</option>
+                <option value="scatter"${scatter ? " selected" : ""}>${TT(G + "distScatter")}</option>
+              </select>
+            </label>
+            <p class="-muted -settings-note">${TT(G + "distNote")}</p>
+            <div class="-settings-fieldset${scatter ? " -settings-fieldset--hidden" : ""}" data-dist-group="grid">
+              ${rangeField("groupSpacing", G + "spacing", 160, 420, 20, s.groupSpacing)}
+            </div>
             <label class="-settings-field">
               <span>${TT(G + "label")}</span>
               <select data-graph-setting="groupLabelMode">
@@ -590,7 +615,6 @@
               </select>
             </label>
             ${rangeField("groupLabelMaxLen", G + "maxLen", 6, 20, 1, s.groupLabelMaxLen)}
-            ${rangeField("groupSpacing", G + "spacing", 160, 420, 20, s.groupSpacing)}
             <label class="-settings-field">
               <span>${TT(G + "sort")}</span>
               <select disabled title="${TT(G + "placeholder")}">

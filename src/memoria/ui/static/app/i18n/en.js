@@ -1070,6 +1070,10 @@
         groups: {
           heading: "Node group tabs",
           note: "Union-find connected components; the second row of sidebar tabs works for both 2D/3D. M4 may add smart naming and ordering.",
+          distLabel: "Distribution",
+          distGrid: "Cluster grid",
+          distScatter: "Scattered",
+          distNote: "Initial placement for the “All” tab. <strong>Cluster grid</strong>: each cluster takes a grid slot (spacing = cell pitch) and clusters do not repel each other, so many clusters tend to pile into one blob. <strong>Scattered</strong>: cluster centers are sprinkled inside a disc with no per-cluster anchor, letting “centering force toward the origin + inter-cluster repulsion” spread them out — isolated nodes with no edges drift to the outer area instead of being pinned to grid cells.",
           label: "Tab naming",
           hubName: "Hub name",
           hubId: "Hub ID",

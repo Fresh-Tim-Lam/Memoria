@@ -5,7 +5,15 @@
   "use strict";
 
   const DEFAULT_WORKER_MIN_NODES = 60;
-  const WORKER_READY_TIMEOUT_MS = 3000;
+  /**
+   * worker「就绪」超时：worker 收到 load 后会**同步**跑完 warmup 才回 `ready`，而 warmup 是 O(N²) 的。
+   * 原先 3s 在目标档必然超时 → 触发 `_recoverMainThreadSimulation` 回退到主线程，把同一份**无界工作**
+   * 搬到主线程 → **界面卡死**（实测 5000 节点 136s，见 docs/design/graph-benchmark.md §1.1 X4）。
+   *
+   * 现在 warmup 有了工作量上限（`sim-core.WARMUP_PAIR_TICK_CAP` ⇒ 装载降到 ~4.6s，单对开销最坏翻倍仍 <10s），
+   * 故固定 15s 足以覆盖正常路径；同时保留"worker 真挂了也能恢复"的兜底时延。
+   */
+  const WORKER_READY_TIMEOUT_MS = 15000;
 
   function resolveWorkerUrl() {
     if (typeof window !== "undefined" && window.location?.href) {

@@ -1,6 +1,7 @@
 /* Memoria 图谱布局 Web Worker */
 "use strict";
 
+importScripts("/app/js/graph-bh-tree.js");
 importScripts("/app/js/graph-layout-sim-core.js");
 
 const Sim = self.MemoriaGraphLayoutSim;
@@ -17,9 +18,9 @@ function tickOnce(alphaOverride) {
 
 function loop() {
   if (!running) return;
-  for (let i = 0; i < opts.maxTicksPerFrame; i++) {
-    tickOnce();
-  }
+  // 与主线程共用同一帧预算实现（graph-layout-sim-core.js 的 runTicksWithBudget）：
+  // 原先固定 6 个 tick，大图上 worker 单帧可达数秒 → 让主线程一直等不到新位置。
+  Sim.runTicksWithBudget(() => tickOnce(), opts);
   self.postMessage({
     type: "tick",
     alpha: state.alpha,

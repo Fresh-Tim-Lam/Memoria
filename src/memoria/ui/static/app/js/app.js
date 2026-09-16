@@ -922,6 +922,7 @@
     "warmupTicks",
     "spreadFactor",
     "groupSpacing",
+    "distMode",
     "alphaMin",
     "alphaDecay",
     "alphaTarget",
@@ -1016,11 +1017,21 @@
     }
   }
 
+  // 构建是重活且**不可并发**：连点会让多条构建指令排队，表现为"构建完又构建"。
+  // 用显式的在飞标志做幂等，而不是只靠按钮 disabled —— disabled 会被中途的状态刷新/重渲染绕过，
+  // 且它保护不了非按钮入口（快捷键/命令面板）。后到的请求一律**忽略**（构建一次就够）。
+  let buildInFlight = false;
+
   async function buildKb() {
+    if (buildInFlight) {
+      console.info("[BUILD] 已在构建中，忽略本次重复请求");
+      return;
+    }
     if (!state.kbPath) {
       setStatus(T("app.openKbFirst"));
       return;
     }
+    buildInFlight = true;
     const btn = $("#btn-build");
     if (btn) btn.disabled = true;
     setStatus(T("graph.build.building"), T("graph.build.buildingDetail"));
@@ -1051,6 +1062,7 @@
     } catch (e) {
       setStatus(T("graph.build.failed"), String(e.message || e));
     } finally {
+      buildInFlight = false;
       if (btn) btn.disabled = false;
     }
   }

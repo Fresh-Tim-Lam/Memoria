@@ -169,6 +169,7 @@
       groupId: groupId ?? ALL_GROUP_ID,
       groups: engine?.groups,
       groupSpacing: viewOpts?.groupSpacing ?? 260,
+      distMode: viewOpts?.distMode ?? "grid",
       graphStyle: viewOpts?.graphStyle ?? "force",
     };
   }

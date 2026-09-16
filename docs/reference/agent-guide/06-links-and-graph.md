@@ -168,7 +168,7 @@
 | 显隐 | 仅在 `sidebarTab ∈ {graph2d,graph3d}` **且**图谱有节点时显示 | `app.js:748`-`757` |
 | 选择 | `selectGraphGroup` → 存 `localStorage["-graph-group"]` → 重渲页签 → `resetSimulation()` 重布局 | `app.js:828`-`842` |
 | 过滤 | 选中某群时只装载该群的节点与**两端都在群内**的边 | `graph-groups.js:152`-`164`；`graph-layout-2d.js:147`-`175` |
-| 群间距 | 「全部」视图按群散布，间距 `groupSpacing`（默认 260）；初始位置按群分布 | `graph-groups.js:166`-`174`；`graph-layout-2d.js:51`-`82` |
+| 群分布 | 「全部」视图按群散布，两种模式由设置 `distMode` 决定：`grid`（默认）群按 cols×rows 网格占位、间距 `groupSpacing`（默认 260）、跨群**不**排斥；`scatter` 群心随机撒在圆/球内、**不写群锚点**、跨群排斥开启（孤立节点因此散落到外围） | `graph-groups.js:166`-`175`；`graph-layout-2d.js:52`-`83`、`90`-`127`；`graph-layout-sim-core.js` `skipPairRepulsion` |
 | 页签轮滑 | 页签条监听 `wheel`（δy 为主时）横向滚动 | `app.js:769`-`782` |
 
 ### 2.8 图谱样式与持久化
@@ -244,8 +244,8 @@
 7. **「构建」后重载当前文件不带 flush**：`buildKb` 末尾调 `openFile(currentPath,{skipNav:true})`（`app.js:1029`-`1031`），而 `openFile` 只在**目标路径与当前不同**时才 `flushDurableBarrier()`（`app.js:1400`-`1404`）；同一路径重载会直接用 `load_document` 的结果覆盖 `state.doc` 并把 `_dirty` 置 false（`app.js:1411`-`1419`）。因此「构建」瞬间未落盘的编辑（<1.5s 自动保存窗口）有被磁盘内容覆盖的风险（静态代码路径推断，未做运行时验证 → 见 §7）。
 8. **3D 初始化可能直接抛错**：`GraphView3D` 构造器在 `global.THREE` 缺失时 `throw new Error(T("graph.view3d.notLoaded"))`（`graph-view-3d.js:175`-`177`），而 `initGraphPanel` 对该构造**未包 try/catch**（`app.js:880`-`888`）——Three 脚本缺失时可能中断后续 `nodeClick/hover` 绑定；WebGL 创建失败则走内部 `_webglFailed` 静默路径（`graph-view-3d.js:245`-`252`）。
 9. **图谱页签计数=节点数**：`#sidebar-tab-count-graph2d/graph3d` 都写 `graphData.nodes.length`（`app.js:733`-`737`），不区分群。
-10. **群命名「智能」是占位**：`suggestGroupLabel` 恒返回 `null`（`graph-groups.js:136`-`150`），设置页对应选项 `disabled`（`graph-settings.js:589`）。
-11. **群页签只在「全部」视图里有群间距概念**：选中具体群时只保留该群节点，`groupSpacing` 不再起作用（`graph-groups.js:152`-`174`）。
+10. **群命名「智能」是占位**：`suggestGroupLabel` 恒返回 `null`（`graph-groups.js:136`-`150`），设置页对应选项 `disabled`（`graph-settings.js:614`）。
+11. **`groupSpacing` 只在「全部」视图的 `grid` 分布下有摆位意义**：选中具体群时只保留该群节点，`groupSpacing` 不再起作用（`graph-groups.js:152`-`164`）；`scatter` 分布不写群锚点，`groupSpacing` 只用于估算初始散布半径（`graph-layout-2d.js:101`-`106`）。
 12. **`data--src-line` 缺失影响图谱联动**：链接的 `data-link-line` 取自最近 `[data--src-line]` 块（`app.js:6266`-`6268`），因此 Mermaid 等替换块内的链接拿不到行号 → 图谱高亮的「源」会为空（与 04 篇「未证实/待确认」第 2 条同源）。
 
 ## 6. 代码锚点表

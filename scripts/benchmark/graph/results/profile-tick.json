@@ -1,0 +1,742 @@
+{
+  "status": "ok",
+  "engine": "memoria-graph-render-l1",
+  "layer": "L1-headless",
+  "dimension": "2d",
+  "view": {
+    "w": 1200,
+    "h": 800,
+    "dpr": 2
+  },
+  "frames": 120,
+  "seed": 42,
+  "frameBudgetOverride": null,
+  "caveats": [
+    "无头环境无真 canvas：绘制只测调用次数与 JS 侧耗时，不含光栅化/GPU",
+    "真机 ≥60 节点时布局在 Web Worker 内，本层为主线程同代码口径",
+    "真帧率与长任务需走 L2 浏览器层",
+    "仅覆盖 2D；3D 需 WebGL，只能走 L2"
+  ],
+  "results": [
+    {
+      "scale": 1000,
+      "pattern": "small_world",
+      "nodeCount": 1000,
+      "linkCount": 2000,
+      "groupCount": 23,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 160,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4344.908,
+      "tickMs": {
+        "p50": 26.756,
+        "p95": 28.482,
+        "max": 42.377
+      },
+      "drawMs": {
+        "p50": 2.579,
+        "p95": 2.826,
+        "max": 3.24
+      },
+      "frameMs": {
+        "p50": 29.352,
+        "p95": 31.027,
+        "max": 45.029
+      },
+      "hoverDrawMs": {
+        "p50": 2.686,
+        "p95": 3.293,
+        "max": 3.293
+      },
+      "callsPerDraw": {
+        "save": 2001,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 5000,
+        "moveTo": 4000,
+        "lineTo": 8000,
+        "stroke": 2000,
+        "closePath": 2000,
+        "fill": 3000,
+        "restore": 2001,
+        "arc": 1000,
+        "strokeText": 1000,
+        "fillText": 1000
+      },
+      "callsPerDrawTotal": 31006,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 1605,
+        "drawMs": 155,
+        "calls": 1860360
+      },
+      "quality": {
+        "edgeLenP50": 1663,
+        "edgeLenP95": 3194.6,
+        "edgeLenMax": 10284.6,
+        "edgeCount": 2000,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 57213240,
+        "skippedPairs": 2726760,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 1,
+        "repulsionMs": 3237.23,
+        "linksMs": 18.09,
+        "integrateMs": 1.13,
+        "repulsionShare": 0.994,
+        "nsPerPairRepulsion": 57
+      }
+    },
+    {
+      "scale": 3000,
+      "pattern": "small_world",
+      "nodeCount": 3000,
+      "linkCount": 6000,
+      "groupCount": 55,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 17,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4278.526,
+      "tickMs": {
+        "p50": 244.607,
+        "p95": 545.214,
+        "max": 557.976
+      },
+      "drawMs": {
+        "p50": 8.15,
+        "p95": 16.702,
+        "max": 21.697
+      },
+      "frameMs": {
+        "p50": 252.814,
+        "p95": 562.315,
+        "max": 577.402
+      },
+      "hoverDrawMs": {
+        "p50": 8.326,
+        "p95": 9.068,
+        "max": 9.068
+      },
+      "callsPerDraw": {
+        "save": 6001,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 15000,
+        "moveTo": 12000,
+        "lineTo": 24000,
+        "stroke": 6000,
+        "closePath": 6000,
+        "fill": 9000,
+        "restore": 6001,
+        "arc": 3000,
+        "strokeText": 3000,
+        "fillText": 3000
+      },
+      "callsPerDrawTotal": 93006,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 14676,
+        "drawMs": 489,
+        "calls": 5580360
+      },
+      "quality": {
+        "edgeLenP50": 3403.7,
+        "edgeLenP95": 14257.3,
+        "edgeLenMax": 34608775303.8,
+        "edgeCount": 6000,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 519498720,
+        "skippedPairs": 20321280,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 2.23,
+        "repulsionMs": 38025.66,
+        "linksMs": 99.12,
+        "integrateMs": 5.41,
+        "repulsionShare": 0.997,
+        "nsPerPairRepulsion": 73
+      }
+    },
+    {
+      "scale": 5000,
+      "pattern": "small_world",
+      "nodeCount": 5000,
+      "linkCount": 7909,
+      "groupCount": 225,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 6,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4069.492,
+      "tickMs": {
+        "p50": 639.981,
+        "p95": 653.84,
+        "max": 674.11
+      },
+      "drawMs": {
+        "p50": 11.414,
+        "p95": 12.125,
+        "max": 13.453
+      },
+      "frameMs": {
+        "p50": 651.651,
+        "p95": 665.077,
+        "max": 685.294
+      },
+      "hoverDrawMs": {
+        "p50": 11.534,
+        "p95": 12.239,
+        "max": 12.239
+      },
+      "callsPerDraw": {
+        "save": 7910,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 20818,
+        "moveTo": 15818,
+        "lineTo": 31636,
+        "stroke": 7909,
+        "closePath": 7909,
+        "fill": 12909,
+        "restore": 7910,
+        "arc": 5000,
+        "strokeText": 5000,
+        "fillText": 5000
+      },
+      "callsPerDrawTotal": 127823,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 38399,
+        "drawMs": 685,
+        "calls": 7669380
+      },
+      "quality": {
+        "edgeLenP50": 4306,
+        "edgeLenP95": 9339.4,
+        "edgeLenMax": 10069981683,
+        "edgeCount": 7909,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 1354608960,
+        "skippedPairs": 145091040,
+        "distGuardHits": 1,
+        "guardHitRate": 0,
+        "centerMs": 3.52,
+        "repulsionMs": 76782.17,
+        "linksMs": 131.03,
+        "integrateMs": 5.86,
+        "repulsionShare": 0.998,
+        "nsPerPairRepulsion": 57
+      }
+    },
+    {
+      "scale": 1000,
+      "pattern": "star",
+      "nodeCount": 1000,
+      "linkCount": 999,
+      "groupCount": 1,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 160,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4459.157,
+      "tickMs": {
+        "p50": 27.744,
+        "p95": 28.662,
+        "max": 29.29
+      },
+      "drawMs": {
+        "p50": 1.476,
+        "p95": 1.678,
+        "max": 1.753
+      },
+      "frameMs": {
+        "p50": 29.246,
+        "p95": 30.183,
+        "max": 30.809
+      },
+      "hoverDrawMs": {
+        "p50": 1.479,
+        "p95": 1.728,
+        "max": 1.728
+      },
+      "callsPerDraw": {
+        "save": 1000,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 2998,
+        "moveTo": 1998,
+        "lineTo": 3996,
+        "stroke": 999,
+        "closePath": 999,
+        "fill": 1999,
+        "restore": 1000,
+        "arc": 1000,
+        "strokeText": 1000,
+        "fillText": 1000
+      },
+      "callsPerDrawTotal": 17993,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 1665,
+        "drawMs": 89,
+        "calls": 1079580
+      },
+      "quality": {
+        "edgeLenP50": 1364.1,
+        "edgeLenP95": 2070.1,
+        "edgeLenMax": 604511693.3,
+        "edgeCount": 999,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 59940000,
+        "skippedPairs": 0,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 0.44,
+        "repulsionMs": 3328.19,
+        "linksMs": 8.56,
+        "integrateMs": 0.86,
+        "repulsionShare": 0.997,
+        "nsPerPairRepulsion": 56
+      }
+    },
+    {
+      "scale": 3000,
+      "pattern": "star",
+      "nodeCount": 3000,
+      "linkCount": 2999,
+      "groupCount": 1,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 17,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4322.057,
+      "tickMs": {
+        "p50": 253.216,
+        "p95": 256.643,
+        "max": 258.947
+      },
+      "drawMs": {
+        "p50": 4.672,
+        "p95": 5.075,
+        "max": 5.309
+      },
+      "frameMs": {
+        "p50": 258.085,
+        "p95": 261.396,
+        "max": 263.481
+      },
+      "hoverDrawMs": {
+        "p50": 4.682,
+        "p95": 4.868,
+        "max": 4.868
+      },
+      "callsPerDraw": {
+        "save": 3000,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 8998,
+        "moveTo": 5998,
+        "lineTo": 11996,
+        "stroke": 2999,
+        "closePath": 2999,
+        "fill": 5999,
+        "restore": 3000,
+        "arc": 3000,
+        "strokeText": 3000,
+        "fillText": 3000
+      },
+      "callsPerDrawTotal": 53993,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 15193,
+        "drawMs": 280,
+        "calls": 3239580
+      },
+      "quality": {
+        "edgeLenP50": 2548.5,
+        "edgeLenP95": 5580.7,
+        "edgeLenMax": 27744746266.3,
+        "edgeCount": 2999,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 539820000,
+        "skippedPairs": 0,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 1.48,
+        "repulsionMs": 30391.33,
+        "linksMs": 24.65,
+        "integrateMs": 2.49,
+        "repulsionShare": 0.999,
+        "nsPerPairRepulsion": 56
+      }
+    },
+    {
+      "scale": 5000,
+      "pattern": "star",
+      "nodeCount": 5000,
+      "linkCount": 4999,
+      "groupCount": 1,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 6,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 4286.64,
+      "tickMs": {
+        "p50": 703.736,
+        "p95": 717.812,
+        "max": 727.884
+      },
+      "drawMs": {
+        "p50": 7.728,
+        "p95": 8.293,
+        "max": 13.919
+      },
+      "frameMs": {
+        "p50": 711.405,
+        "p95": 725.784,
+        "max": 735.47
+      },
+      "hoverDrawMs": {
+        "p50": 7.789,
+        "p95": 8.129,
+        "max": 8.129
+      },
+      "callsPerDraw": {
+        "save": 5000,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 14998,
+        "moveTo": 9998,
+        "lineTo": 19996,
+        "stroke": 4999,
+        "closePath": 4999,
+        "fill": 9999,
+        "restore": 5000,
+        "arc": 5000,
+        "strokeText": 5000,
+        "fillText": 5000
+      },
+      "callsPerDrawTotal": 89993,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 42224,
+        "drawMs": 464,
+        "calls": 5399580
+      },
+      "quality": {
+        "edgeLenP50": 3293.6,
+        "edgeLenP95": 5430.7,
+        "edgeLenMax": 21435260649.2,
+        "edgeCount": 4999,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 1499700000,
+        "skippedPairs": 0,
+        "distGuardHits": 5,
+        "guardHitRate": 0,
+        "centerMs": 3.04,
+        "repulsionMs": 84520.74,
+        "linksMs": 45.16,
+        "integrateMs": 5.37,
+        "repulsionShare": 0.999,
+        "nsPerPairRepulsion": 56
+      }
+    },
+    {
+      "scale": 1000,
+      "pattern": "partitioned",
+      "nodeCount": 1000,
+      "linkCount": 1000,
+      "groupCount": 25,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 160,
+      "ticksRun": {
+        "mean": 2.11,
+        "min": 2,
+        "max": 3
+      },
+      "loadMs": 601.764,
+      "tickMs": {
+        "p50": 8.223,
+        "p95": 11.983,
+        "max": 12.144
+      },
+      "drawMs": {
+        "p50": 1.502,
+        "p95": 1.666,
+        "max": 1.842
+      },
+      "frameMs": {
+        "p50": 9.738,
+        "p95": 13.511,
+        "max": 13.921
+      },
+      "hoverDrawMs": {
+        "p50": 1.518,
+        "p95": 1.621,
+        "max": 1.621
+      },
+      "callsPerDraw": {
+        "save": 1001,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 3000,
+        "moveTo": 2000,
+        "lineTo": 4000,
+        "stroke": 1000,
+        "closePath": 1000,
+        "fill": 2000,
+        "restore": 1001,
+        "arc": 1000,
+        "strokeText": 1000,
+        "fillText": 1000
+      },
+      "callsPerDrawTotal": 18006,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 493,
+        "drawMs": 90,
+        "calls": 1080360
+      },
+      "quality": {
+        "edgeLenP50": 206.4,
+        "edgeLenP95": 472.2,
+        "edgeLenMax": 6548.2,
+        "edgeCount": 1000,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 253,
+        "pairs": 4933500,
+        "skippedPairs": 121440000,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 0.63,
+        "repulsionMs": 1019.75,
+        "linksMs": 14.87,
+        "integrateMs": 1.12,
+        "repulsionShare": 0.984,
+        "nsPerPairRepulsion": 207
+      }
+    },
+    {
+      "scale": 3000,
+      "pattern": "partitioned",
+      "nodeCount": 3000,
+      "linkCount": 3000,
+      "groupCount": 75,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 17,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 489.589,
+      "tickMs": {
+        "p50": 28.218,
+        "p95": 30.223,
+        "max": 43.457
+      },
+      "drawMs": {
+        "p50": 4.725,
+        "p95": 5.089,
+        "max": 9.511
+      },
+      "frameMs": {
+        "p50": 33.011,
+        "p95": 35.178,
+        "max": 52.981
+      },
+      "hoverDrawMs": {
+        "p50": 4.785,
+        "p95": 4.891,
+        "max": 4.891
+      },
+      "callsPerDraw": {
+        "save": 3001,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 9000,
+        "moveTo": 6000,
+        "lineTo": 12000,
+        "stroke": 3000,
+        "closePath": 3000,
+        "fill": 6000,
+        "restore": 3001,
+        "arc": 3000,
+        "strokeText": 3000,
+        "fillText": 3000
+      },
+      "callsPerDrawTotal": 54006,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 1693,
+        "drawMs": 284,
+        "calls": 3240360
+      },
+      "quality": {
+        "edgeLenP50": 309.7,
+        "edgeLenP95": 1269.7,
+        "edgeLenMax": 270962.4,
+        "edgeCount": 3000,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 7020000,
+        "skippedPairs": 532800000,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 1.81,
+        "repulsionMs": 3397.4,
+        "linksMs": 22.32,
+        "integrateMs": 2.45,
+        "repulsionShare": 0.992,
+        "nsPerPairRepulsion": 484
+      }
+    },
+    {
+      "scale": 5000,
+      "pattern": "partitioned",
+      "nodeCount": 5000,
+      "linkCount": 5000,
+      "groupCount": 125,
+      "ticksPerFrame": 6,
+      "frameBudgetMs": 8,
+      "warmupTicksRun": 6,
+      "ticksRun": {
+        "mean": 1,
+        "min": 1,
+        "max": 1
+      },
+      "loadMs": 540.321,
+      "tickMs": {
+        "p50": 78.351,
+        "p95": 80.234,
+        "max": 90.348
+      },
+      "drawMs": {
+        "p50": 7.968,
+        "p95": 8.499,
+        "max": 10.921
+      },
+      "frameMs": {
+        "p50": 86.484,
+        "p95": 88.531,
+        "max": 101.283
+      },
+      "hoverDrawMs": {
+        "p50": 8.093,
+        "p95": 8.613,
+        "max": 8.613
+      },
+      "callsPerDraw": {
+        "save": 5001,
+        "clearRect": 1,
+        "fillRect": 1,
+        "translate": 1,
+        "scale": 1,
+        "beginPath": 15000,
+        "moveTo": 10000,
+        "lineTo": 20000,
+        "stroke": 5000,
+        "closePath": 5000,
+        "fill": 10000,
+        "restore": 5001,
+        "arc": 5000,
+        "strokeText": 5000,
+        "fillText": 5000
+      },
+      "callsPerDrawTotal": 90006,
+      "idlePerSecIfNeverStop": {
+        "frames": 60,
+        "tickMs": 4701,
+        "drawMs": 478,
+        "calls": 5400360
+      },
+      "quality": {
+        "edgeLenP50": 328.5,
+        "edgeLenP95": 1902.2,
+        "edgeLenMax": 242146553377.7,
+        "edgeCount": 5000,
+        "edgeSkipped": 0
+      },
+      "profile": {
+        "ticks": 120,
+        "pairs": 11700000,
+        "skippedPairs": 1488000000,
+        "distGuardHits": 0,
+        "guardHitRate": 0,
+        "centerMs": 2.94,
+        "repulsionMs": 9393.71,
+        "linksMs": 36.05,
+        "integrateMs": 4.39,
+        "repulsionShare": 0.995,
+        "nsPerPairRepulsion": 803
+      }
+    }
+  ]
+}

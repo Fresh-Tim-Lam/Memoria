@@ -16,9 +16,11 @@
     dragReheat: 0.28,
     dragReleaseReheat: 0.2,
     maxTicksPerFrame: 6,
+    frameBudgetMs: 8,
     warmupTicks: 160,
     spreadFactor: 0.42,
     groupSpacing: 260,
+    distMode: "grid",
   };
 
   function nodeIndex(nodes) {
@@ -90,6 +92,55 @@
       }
     });
 
+    return out;
+  }
+
+  /**
+   * 「散落」分布（3D）：群心随机撒在一个球内（不走 cols×rows 网格），且**不写 groupOx/groupOy/groupOz 锚点**。
+   * 锚点留在原点后，节点只受"向原点中心力 + 节点间排斥"支配：连通群靠内部连边抱团、
+   * 被跨群排斥推开，没有连边的孤立节点被挤到外围散落 —— 排斥保证不重叠，中心力保证不跑出图外。
+   */
+  function initialPositionsScattered(allNodes, groupsMeta, spreadFactor, groupSpacing) {
+    const nodeById = new Map(allNodes.map((n) => [n.id, n]));
+    const groupList = (groupsMeta?.groups || []).filter((g) =>
+      g.nodeIds.some((id) => nodeById.has(id))
+    );
+    if (!groupList.length) {
+      return initialPositions3D(
+        allNodes,
+        spreadRadiusForCount(allNodes.length, spreadFactor)
+      );
+    }
+    // 群心散布半径：群越多撒得越开，免得一开始就叠成一坨
+    const cloud = Math.max(
+      spreadRadiusForCount(allNodes.length, spreadFactor),
+      ((groupSpacing || DEFAULTS.groupSpacing) * Math.sqrt(groupList.length)) / 2
+    );
+    const out = [];
+    for (const g of groupList) {
+      const subset = g.nodeIds.map((id) => nodeById.get(id)).filter(Boolean);
+      if (!subset.length) continue;
+      const local = initialPositions3D(
+        subset,
+        spreadRadiusForCount(subset.length, spreadFactor)
+      );
+      // 球内随机取点：半径乘 cbrt(u) 才是球内均匀，否则会往球心堆
+      const u = Math.random();
+      const r = cloud * Math.cbrt(u);
+      const cosPhi = 2 * Math.random() - 1;
+      const sinPhi = Math.sqrt(Math.max(0, 1 - cosPhi * cosPhi));
+      const theta = Math.random() * Math.PI * 2;
+      const ox = r * sinPhi * Math.cos(theta);
+      const oy = r * cosPhi;
+      const oz = r * sinPhi * Math.sin(theta);
+      for (const n of local) {
+        n.x += ox;
+        n.y += oy;
+        n.z += oz;
+        n.groupId = g.id;
+        out.push(n);
+      }
+    }
     return out;
   }
 
@@ -179,13 +230,13 @@
       }
 
       const sf = opts.spreadFactor ?? this.opts.spreadFactor;
+      this._distMode = opts.distMode ?? this.opts.distMode ?? "grid";
       if (this._groupMode === "all" && opts.groups?.groups?.length) {
-        this.nodes = initialPositionsForGroups(
-          layoutNodes,
-          opts.groups,
-          sf,
-          opts.groupSpacing ?? this.opts.groupSpacing
-        );
+        const spacing = opts.groupSpacing ?? this.opts.groupSpacing;
+        this.nodes =
+          this._distMode === "scatter"
+            ? initialPositionsScattered(layoutNodes, opts.groups, sf, spacing)
+            : initialPositionsForGroups(layoutNodes, opts.groups, sf, spacing);
       } else {
         const radius = spreadRadiusForCount(layoutNodes.length, sf);
         this.nodes = initialPositions3D(layoutNodes, radius);
@@ -219,7 +270,11 @@
     }
 
     _simOpts() {
-      return { ...this.opts, groupMode: this._groupMode || "single" };
+      return {
+        ...this.opts,
+        groupMode: this._groupMode || "single",
+        distMode: this._distMode || this.opts.distMode || "grid",
+      };
     }
 
     _warmup() {
@@ -271,9 +326,11 @@
           simLinks: this.simLinks,
           alpha: this.alpha,
           dragId: this._dragId,
+          profile: this._profile || null,
         };
         Sim.tick3D(st, this._simOpts(), alphaOverride);
         this.alpha = st.alpha;
+        if (st.profile) this._profile = st.profile; // 剖面需跨 tick 累加（见 sim-core ensureProfile）
         return;
       }
       const { nodes, simLinks: links } = this;
@@ -295,6 +352,7 @@
       for (let i = 0; i < n; i++) {
         for (let j = i + 1; j < n; j++) {
           if (
+            this._distMode !== "scatter" &&
             nodes[i].groupId &&
             nodes[j].groupId &&
             nodes[i].groupId !== nodes[j].groupId
@@ -363,14 +421,27 @@
       }
     }
 
+    /**
+     * 跑一帧的 tick（在帧预算内尽量多跑）——`start()` 与基准采集共用同一入口，
+     * 避免"基准测的口径"与"真机跑的口径"不一致。
+     * @returns {number} 本帧实际执行的 tick 数
+     */
+    runFrameTicks() {
+      const Sim = global.MemoriaGraphLayoutSim;
+      if (Sim?.runTicksWithBudget) {
+        return Sim.runTicksWithBudget(() => this.tick(), this._simOpts());
+      }
+      const n = Math.max(1, this.opts.maxTicksPerFrame ?? 6);
+      for (let i = 0; i < n; i++) this.tick();
+      return n;
+    }
+
     start() {
       if (this.running) return;
       this.running = true;
       const frame = () => {
         if (!this.running) return;
-        for (let i = 0; i < this.opts.maxTicksPerFrame; i++) {
-          this.tick();
-        }
+        this.runFrameTicks();
         this._emit("tick", { nodes: this.nodes, alpha: this.alpha });
         this.raf = requestAnimationFrame(frame);
       };
