@@ -64,6 +64,8 @@ docs/example/**/.memoria/pending.json
 docs/example/**/.memoria/kp_targets.json
 docs/example/**/.memoria/agent/
 docs/example/**/.memoria/images/
+# 公开库里的编辑器/Agent 本地配置不入库（settings.local.json 含本机路径与命令授权）
+docs/example/**/.claude/
 # 官方展示样例库（docs/example/showcase，机器学习导论）运行时产物（不入库；
 # sidecars 与图片资产入库展示；manifest.yaml 入库作基线）
 docs/example/showcase/.memoria/cache/
@@ -77,9 +79,11 @@ docs/example/showcase/.build/
 # 豁免上面的通用图片忽略，仅放行本库图片资产（其余 docs/example 图片仍不入库）
 !docs/example/showcase/.memoria/images/
 !docs/example/showcase/.memoria/images/*.svg
-# 本地保留样例/个人知识库（GitHub 仅展示 docs/example/showcase 官方库；文件保留本地不提交）
+# 本地保留样例/个人知识库（公开的只有 docs/example/showcase 官方库与 docs/example/AAA_Vocab 公开词汇库，
+# 后者含它的上手/部署指引页 index.html；其余文件保留本地不提交。
+# AAA_Vocab 的运行时产物（.memoria/agent、cache、pending、kp_targets、images、*.bak、*.log）
+# 仍由上面 docs/example/** 的规则忽略 —— 它们会在打开知识库时自动重建）
 docs/example/AAA_KnowledgeBase/
-docs/example/AAA_Vocab/
 docs/example/example-boonie/
 docs/example/example-english-kb/
 docs/example/examples/

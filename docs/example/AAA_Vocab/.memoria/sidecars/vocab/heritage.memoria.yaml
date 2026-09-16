@@ -1,0 +1,45 @@
+schema_version: 1
+file: vocab/heritage.md
+knowledge_points:
+- id: heritage
+  name: heritage
+  aliases:
+  - cultural heritage
+  - historical heritage
+  - world heritage site
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - Culture
+  - 历史文化场所
+  - B2
+  description: 遗产；文化传统；底蕴（历史文化场所与新旧交融话题）
+  range:
+    start:
+      snippet: '# heritage'
+      line_hint: 1
+    end:
+      snippet: '- Answer: heritage（遗产；文化传统；底蕴）'
+      line_hint: 78
+links:
+- anchor_text: blend
+  occurrence: 0
+  targets:
+  - blend
+  edge_type: reference
+  instances:
+  - line: 70
+    wrapped: true
+  source_id: heritage
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 70
+    wrapped: true
+  source_id: heritage
+edges: []

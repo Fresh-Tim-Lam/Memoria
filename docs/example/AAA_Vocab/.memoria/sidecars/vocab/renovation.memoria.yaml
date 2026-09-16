@@ -1,0 +1,35 @@
+schema_version: 1
+file: vocab/renovation.md
+knowledge_points:
+- id: renovation
+  name: renovation
+  aliases:
+  - renovate
+  - under renovation
+  - undergo renovation
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - 城市街区
+  - C1
+  description: 翻新；整修；改造（旧城区改造叙事，与 dilapidated 正反成对）
+  range:
+    start:
+      snippet: '# renovation'
+      line_hint: 1
+    end:
+      snippet: '- Answer: renovation（翻新；整修；改造）'
+      line_hint: 77
+links:
+- anchor_text: dilapidated
+  occurrence: 0
+  targets:
+  - dilapidated
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: renovation
+edges: []

@@ -1,0 +1,35 @@
+schema_version: 1
+file: vocab/breathtaking.md
+knowledge_points:
+- id: breathtaking
+  name: breathtaking
+  aliases:
+  - breathtaking views
+  - breathtaking scenery
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - Nature
+  - 自然风光
+  - B2
+  description: 令人叹为观止的；美得令人屏息的（自然风光描写）
+  range:
+    start:
+      snippet: '# breathtaking'
+      line_hint: 1
+    end:
+      snippet: '- Answer: breathtaking（令人叹为观止的；美得令人屏息的）'
+      line_hint: 74
+links:
+- anchor_text: picturesque
+  occurrence: 0
+  targets:
+  - picturesque
+  edge_type: reference
+  instances:
+  - line: 66
+    wrapped: true
+  source_id: breathtaking
+edges: []

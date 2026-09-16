@@ -1,0 +1,44 @@
+schema_version: 1
+file: vocab/picturesque.md
+knowledge_points:
+- id: picturesque
+  name: picturesque
+  aliases:
+  - a picturesque village
+  - picturesque scenery
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - Nature
+  - 自然风光
+  - B2
+  description: 风景如画的；优美的（自然风光与古村镇描写）
+  range:
+    start:
+      snippet: '# picturesque'
+      line_hint: 1
+    end:
+      snippet: '- Answer: picturesque（风景如画的；优美的）'
+      line_hint: 77
+links:
+- anchor_text: secluded
+  occurrence: 0
+  targets:
+  - secluded
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: picturesque
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: picturesque
+edges: []

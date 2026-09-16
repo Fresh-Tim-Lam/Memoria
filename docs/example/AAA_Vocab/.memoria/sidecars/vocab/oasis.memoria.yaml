@@ -1,0 +1,53 @@
+schema_version: 1
+file: vocab/oasis.md
+knowledge_points:
+- id: oasis
+  name: oasis
+  aliases:
+  - an oasis of calm
+  - oases
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - Nature
+  - 休闲场所
+  - B2
+  description: 绿洲；（喻）喧嚣中的宁静之地（休闲消费场所话题）
+  range:
+    start:
+      snippet: '# oasis'
+      line_hint: 1
+    end:
+      snippet: '- Answer: oasis（绿洲；（喻）喧嚣中的宁静之地）'
+      line_hint: 80
+links:
+- anchor_text: hustle-and-bustle
+  occurrence: 0
+  targets:
+  - hustle-and-bustle
+  edge_type: reference
+  instances:
+  - line: 67
+    wrapped: true
+  source_id: oasis
+- anchor_text: secluded
+  occurrence: 0
+  targets:
+  - secluded
+  edge_type: reference
+  instances:
+  - line: 72
+    wrapped: true
+  source_id: oasis
+- anchor_text: breathtaking
+  occurrence: 0
+  targets:
+  - breathtaking
+  edge_type: reference
+  instances:
+  - line: 72
+    wrapped: true
+  source_id: oasis
+edges: []

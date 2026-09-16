@@ -1,0 +1,35 @@
+schema_version: 1
+file: vocab/blend.md
+knowledge_points:
+- id: blend
+  name: blend
+  aliases:
+  - a blend of
+  - blend in
+  - blend into
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - 融合
+  - B2
+  description: 融合体；使混合；使融合（地点题描述新旧交融）
+  range:
+    start:
+      snippet: '# blend'
+      line_hint: 1
+    end:
+      snippet: '- Answer: blend（融合体；使融合；使混合）'
+      line_hint: 80
+links:
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  instances:
+  - line: 72
+    wrapped: true
+  source_id: blend
+edges: []

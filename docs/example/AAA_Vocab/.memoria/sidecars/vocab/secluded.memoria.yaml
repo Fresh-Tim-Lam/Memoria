@@ -1,0 +1,45 @@
+schema_version: 1
+file: vocab/secluded.md
+knowledge_points:
+- id: secluded
+  name: secluded
+  aliases:
+  - a secluded spot
+  - seclusion
+  - off the beaten track
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - Nature
+  - 自然风光
+  - B2
+  description: 僻静的；幽静的；远离人烟的（自然风光与安静场所描写）
+  range:
+    start:
+      snippet: '# secluded'
+      line_hint: 1
+    end:
+      snippet: '- Answer: secluded（僻静的；幽静的；远离人烟的）'
+      line_hint: 77
+links:
+- anchor_text: picturesque
+  occurrence: 0
+  targets:
+  - picturesque
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: secluded
+- anchor_text: hustle-and-bustle
+  occurrence: 0
+  targets:
+  - hustle-and-bustle
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: secluded
+edges: []

@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS 词汇教练 · 上手与部署指引 / Setup &amp; Deployment Guide</title>
+<style>
+  :root{--fg:#1f2328;--muted:#59636e;--line:#d8dee4;--bg:#fff;--code-bg:#f6f8fa;--accent:#0b62d0;}
+  *{box-sizing:border-box}
+  body{margin:0;padding:2.5rem 1.25rem 4rem;font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;color:var(--fg);background:var(--bg)}
+  main{max-width:52rem;margin:0 auto}
+  h1{font-size:1.75rem;line-height:1.35;margin:0 0 .4rem}
+  h2{font-size:1.25rem;margin:2.5rem 0 .75rem;padding-bottom:.35rem;border-bottom:1px solid var(--line)}
+  h3{font-size:1.05rem;margin:1.75rem 0 .5rem}
+  p,li{color:var(--fg)}
+  .sub{color:var(--muted);margin:0 0 .5rem}
+  nav a{color:var(--accent);text-decoration:none;margin-right:.75rem}
+  a{color:var(--accent)}
+  ol.steps{padding-left:1.4rem}
+  ol.steps>li{margin:.9rem 0}
+  figure{margin:1rem 0 1.5rem}
+  figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+  figcaption{color:var(--muted);font-size:.875rem;margin-top:.4rem}
+  code{background:var(--code-bg);border-radius:4px;padding:.1rem .35rem;font-size:.9em}
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:.85rem 1rem;overflow-x:auto;font-size:.875rem}
+  pre code{background:none;padding:0}
+  blockquote{margin:.75rem 0;padding:.1rem 1rem;border-left:4px solid var(--line);color:var(--muted)}
+  table{border-collapse:collapse;width:100%;font-size:.925rem;margin:.75rem 0}
+  th,td{border:1px solid var(--line);padding:.45rem .6rem;text-align:left;vertical-align:top}
+  .note{background:#fff8e5;border:1px solid #f0d48a;border-radius:8px;padding:.75rem 1rem;margin:1rem 0}
+  .tip{background:#eef6ff;border:1px solid #c6ddfb;border-radius:8px;padding:.75rem 1rem;margin:1rem 0}
+  hr.split{border:0;border-top:1px solid var(--line);margin:3rem 0 1rem}
+  footer{max-width:52rem;margin:3rem auto 0;color:var(--muted);font-size:.875rem;border-top:1px solid var(--line);padding-top:1rem}
+</style>
+</head>
+<body>
+<main>
+
+<h1>IELTS 词汇教练 · 上手与部署指引</h1>
+<p class="sub">AAA_Vocab —— 一个 Memoria 知识库 + 一个 Trae 智能体。把「背单词」换成「能被批改的主动输出训练」。</p>
+<p class="sub">A Memoria knowledge base + a Trae agent. Setup &amp; deployment guide.</p>
+<nav><a href="#cn">中文</a><a href="#en">English</a><a href="#pages">部署到 GitHub Pages</a></nav>
+
+<section id="cn">
+<h2>中文</h2>
+
+<h3>你会得到什么</h3>
+<p>一个可以对话的 IELTS 词汇教练：音标与听力陷阱、词典释义（英英 + 中文，标注 Oxford / Cambridge / Collins 来源）、词族与高频搭配矩阵、近义词辨析矩阵、主动输出练习（口语 / 写作场景、填空、词组编织），以及基于间隔重复（SM-2 改良）的**复习排程与学习记录**。全部数据存在你自己的磁盘上。</p>
+
+<h3>准备（两件东西）</h3>
+<table>
+  <tr><th>需要</th><th>从哪来</th></tr>
+  <tr><td><strong>Trae</strong>（AI IDE，免费）</td><td>官网 <a href="https://www.trae.ai/">trae.ai</a> 下载安装（就是第 1 步那张截图）</td></tr>
+  <tr><td><strong>Memoria</strong>（本知识库的编辑器，Windows 免安装）</td><td><a href="https://github.com/Fresh-Tim-Lam/Memoria/releases">Releases</a> 下 <code>Memoria-v*-win64.zip</code>（内置模型，完全离线）或 <code>-lite.zip</code>（约 34 MB，首次用语义检索时联网取模型），解压后跑 <code>Memoria.exe</code></td></tr>
+</table>
+<p class="sub">只想用智能体、不想装 Memoria？见下方「捷径」。</p>
+
+<h3>步骤</h3>
+<ol class="steps">
+  <li><strong>下载并安装 Trae</strong>：打开官网 → 点「下载 TraeCode」→ 按提示安装并登录。
+    <figure><img src="images/trae_website_cn.png" alt="Trae 官网，下载 TraeCode"><figcaption>官网下载页：<code>下载 TraeCode</code> / <code>下载中心</code>。</figcaption></figure>
+  </li>
+  <li><strong>用 Memoria 打开本知识库</strong>：启动 Memoria → 欢迎页点「打开知识库」→ 在「选择知识库文件夹」里选中<strong>本仓库根目录</strong>（能看到 <code>vocab/</code>、<code>expressions/</code> 的那一层）。
+    <figure><img src="images/guide0_cn.png" alt="Memoria 主界面"><figcaption>Memoria v0.3.4 主界面（欢迎页 / 空态）。</figcaption></figure>
+    <figure><img src="images/guide1.png" alt="选择知识库文件夹对话框"><figcaption>系统「选择知识库文件夹」对话框：选中本仓库根目录。</figcaption></figure>
+  </li>
+  <li><strong>创建 Trae 智能体</strong>：顶栏「文件」→「创建 Trae 智能体」。
+    <figure><img src="images/guide2_cn.png" alt="文件菜单：创建 Trae 智能体"><figcaption>「文件」菜单：打开 / 导入 / 导出 / <strong>创建 Trae 智能体</strong> / 新窗口 / 打开最近。</figcaption></figure>
+  </li>
+  <li><strong>复制指令</strong>：弹出「智能体工具包已生成」——它把工具包写进 <code>&lt;本库&gt;/.memoria/agent/</code>（幂等，不会覆盖你的复习记录），点右下「复制指令」把完整指令复制到剪贴板。
+    <figure><img src="images/guide3_cn.png" alt="智能体工具包已生成弹窗"><figcaption>弹窗含「智能体目录」、写入/跳过的文件清单、4 条使用步骤，以及底部的指令全文与「复制指令」。</figcaption></figure>
+  </li>
+  <li><strong>在 Trae 里新建自定义智能体</strong>：在 Trae 中打开本知识库目录 → 智能体面板点「Create Agent」→ 名称随意（如 <code>IELTS Coach</code>）→ 把刚复制的指令粘进「指令 / Prompt」框 → 创建。
+    <figure><img src="images/guide4_cn.png" alt="Trae 的 Create Agent 弹窗"><figcaption>Trae 的 Create Agent：Name / Prompt（Paste Here）/ Smart Generate / Create。</figcaption></figure>
+  </li>
+  <li><strong>开始对话</strong>：在 Agents 面板选中刚建好的智能体，直接说一句，例如：
+    <blockquote>用我的词汇库开始今天的复习</blockquote>
+    它会读 <code>vocab/</code>，按 <code>.memoria/agent/</code> 里的规范与复习排程脚本给你出题、讲解、批改。
+    <figure><img src="images/guide5.png" alt="Trae 的 Agents 面板"><figcaption>Trae 的 Agents 面板：选中自定义智能体。</figcaption></figure>
+    <figure><img src="images/lets_chat.png" alt="在 Trae 中开始对话"><figcaption>开始对话（示例：让它帮你整理 / 复习本知识库）。</figcaption></figure>
+  </li>
+</ol>
+
+<h3>推荐提示词（试试这个）</h3>
+<p>本仓库自带一份<strong>主动输出型</strong>的词汇提示词：<a href="prompts/IELTS-vocab.md"><code>prompts/IELTS-vocab.md</code></a>。</p>
+<p>把它的内容贴给刚建好的智能体，然后说一句：</p>
+<blockquote>按这份提示词处理 <code>vocab/legacy.md</code>（或：帮我过一遍 <code>vocab/</code> 里的词）</blockquote>
+<div class="tip">这份提示词规定的是「输出格式」：音标与听力陷阱 → 词典释义（英英 + 中文）→ 词族/搭配矩阵 → 近义词辨析矩阵 → 主动输出练习 → 复习标签。配合本仓库的词汇文件，就是一套可以直接开口练的素材。</div>
+
+<h3>捷径：不装 Memoria 也能用</h3>
+<p>智能体要读的那份指令也随 Memoria 仓库公开：<code>resources/agent-prompts/kb-agent.zh-CN.md</code>。直接在 Trae 里打开本知识库目录 → 新建自定义智能体 → 把这份指令粘进去即可。</p>
+<ul>
+  <li><code>resources/agent-prompts/kb-agent.zh-CN.md</code> —— 智能体指令（建智能体时粘一次）</li>
+  <li><code>resources/agent-prompts/kb-spec.zh-CN.md</code> —— 知识库编撰 / 维护规范（智能体每次会话先读）</li>
+  <li><code>prompts/IELTS-vocab.md</code> —— 推荐的主动输出提示词</li>
+  <li><code>docs/</code> —— 本知识库的详细规格（词条格式 / 需求 / 智能体规格）</li>
+</ul>
+<p class="sub">用 Memoria 打开过本库的话，它会把工具包自动写到 <code>.memoria/agent/</code>（指令 + 规范 + <code>fsrs.py</code> 复习排程脚本）；这些属于运行时产物，不随仓库公开。</p>
+
+<h3>数据与隐私</h3>
+<ul>
+  <li>全部本地：词汇是普通 Markdown 文件，学习记录在 <code>.memoria/</code>；没有账号、没有云同步。</li>
+  <li>想备份 / 同步：把这个目录用 Git 管起来推到自己账号，或直接网盘同步整个文件夹。</li>
+  <li>复习记录：<code>.memoria/agent/review/</code>。</li>
+</ul>
+
+<h3>常见问题</h3>
+<ul>
+  <li><strong>打开知识库后左侧是空的？</strong>确认选中的是<strong>本仓库根目录</strong>（有 <code>vocab/</code>、<code>expressions/</code> 的那层），而不是它的上一级。</li>
+  <li><strong>智能体答得太泛？</strong>先让它读 <code>.memoria/agent/kb-spec.zh-CN.md</code>，并明确「按推荐的 IELTS 提示词格式输出」。</li>
+  <li><strong>想改词条格式？</strong>见 <code>docs/vocab_format.md</code>（词条格式）与 <code>docs/format.md</code>。</li>
+</ul>
+</section>
+
+<hr class="split">
+
+<section id="en">
+<h2>English</h2>
+
+<h3>What you get</h3>
+<p>A conversational IELTS vocabulary coach: IPA &amp; listening traps, dictionary-based definitions (English first, Chinese in parentheses, with Oxford / Cambridge / Collins attribution), word families and high-frequency collocations, a near-synonym confusion matrix, active-output drills (speaking / writing scenarios, gap-fill, word weaving), plus <strong>spaced-repetition scheduling and learning records</strong>. All data stays on your own disk.</p>
+
+<h3>Prerequisites (two things)</h3>
+<table>
+  <tr><th>What</th><th>Where</th></tr>
+  <tr><td><strong>Trae</strong> (AI IDE, free)</td><td>Download from <a href="https://www.trae.ai/">trae.ai</a> (this is the screenshot in step 1)</td></tr>
+  <tr><td><strong>Memoria</strong> (editor for this knowledge base; portable on Windows)</td><td>Grab <code>Memoria-v*-win64.zip</code> (models bundled, fully offline) or <code>-lite.zip</code> (~34 MB, fetches models on first use) from <a href="https://github.com/Fresh-Tim-Lam/Memoria/releases">Releases</a>, unzip and run <code>Memoria.exe</code></td></tr>
+</table>
+<p class="sub">Only want the agent and don't want to install Memoria? See “Shortcut” below.</p>
+
+<h3>Steps</h3>
+<ol class="steps">
+  <li><strong>Download and install Trae</strong>: open the website → <code>Download TraeCode</code> → install and sign in.
+    <figure><img src="images/trae_website_en.png" alt="Trae website — download TraeCode"><figcaption>Trae website: <code>Download TraeCode</code> / <code>Download Center</code>.</figcaption></figure>
+  </li>
+  <li><strong>Open this knowledge base in Memoria</strong>: launch Memoria → <code>Open knowledge base</code> → pick the <strong>repository root</strong> (the folder containing <code>vocab/</code> and <code>expressions/</code>).
+    <figure><img src="images/guide4_en.png" alt="Memoria with an empty workspace"><figcaption>Memoria (English UI) before a knowledge base is opened.</figcaption></figure>
+    <figure><img src="images/guide1.png" alt="Select knowledge base folder dialog"><figcaption>The system “select folder” dialog — choose this repository's root folder.</figcaption></figure>
+  </li>
+  <li><strong>Create the Trae agent kit</strong>: menu <code>File</code> → <code>Create Trae Agent</code>.
+    <figure><img src="images/guide2_en.png" alt="File menu with Create Trae Agent"><figcaption>The <code>File</code> menu: Open / Import / Export / <strong>Create Trae Agent</strong> / New Window / Open Recent.</figcaption></figure>
+  </li>
+  <li><strong>Copy the instructions</strong>: the “Agent kit generated” dialog writes the kit into <code>&lt;kb&gt;/.memoria/agent/</code> (idempotent — it never overwrites your review records). Click <code>Copy instructions</code> at the bottom right.
+    <figure><img src="images/guide3_en.png" alt="Agent kit generated dialog"><figcaption>Shows the agent directory, written/skipped files, the 4 usage steps, the full instruction text and <code>Copy instructions</code>.</figcaption></figure>
+  </li>
+  <li><strong>Create a custom agent in Trae</strong>: open this repository folder in Trae → click <code>Create Agent</code> in the Agents panel → name it anything (e.g. <code>IELTS Coach</code>) → paste the copied instructions into the <code>Prompt</code> box → Create. (Trae's own UI is English in both language versions, so the screenshot below is shared.)
+    <figure><img src="images/guide4_cn.png" alt="Trae Create Agent dialog"><figcaption>Trae's Create Agent dialog: Name / Prompt (Paste Here) / Smart Generate / Create.</figcaption></figure>
+  </li>
+  <li><strong>Start chatting</strong>: select the agent you just created in the Agents panel, then simply say:
+    <blockquote>Start today's review with my vocabulary library.</blockquote>
+    It reads <code>vocab/</code> and follows the spec and review-scheduling script in <code>.memoria/agent/</code> to quiz, explain and grade you.
+    <figure><img src="images/guide5.png" alt="Trae Agents panel"><figcaption>Trae's Agents panel with the custom agent selected.</figcaption></figure>
+    <figure><img src="images/lets_chat.png" alt="Starting a chat in Trae"><figcaption>Start the conversation (example: ask it to organize / review this knowledge base).</figcaption></figure>
+  </li>
+</ol>
+
+<h3>Recommended prompt (try this one)</h3>
+<p>This repository ships an <strong>active-output</strong> vocabulary prompt: <a href="prompts/IELTS-vocab.md"><code>prompts/IELTS-vocab.md</code></a>.</p>
+<p>Paste its content to the agent you just created, then say:</p>
+<blockquote>Process <code>vocab/legacy.md</code> with this prompt (or: walk me through every word in <code>vocab/</code>)</blockquote>
+<div class="tip">That prompt defines the <em>output format</em>: pronunciation &amp; listening traps → dictionary definitions (English + Chinese) → word family / collocation matrix → confusion matrix → active-output drills → revision tags. Together with the vocabulary files here it becomes material you can immediately practise out loud.</div>
+
+<h3>Shortcut: use it without Memoria</h3>
+<p>The agent instructions also ship publicly with the Memoria repository: <code>resources/agent-prompts/kb-agent.zh-CN.md</code>. Open this knowledge base folder in Trae → create a custom agent → paste those instructions.</p>
+<ul>
+  <li><code>resources/agent-prompts/kb-agent.zh-CN.md</code> — agent instructions (paste once when creating the agent)</li>
+  <li><code>resources/agent-prompts/kb-spec.zh-CN.md</code> — knowledge-base authoring / maintenance spec (read at the start of every session)</li>
+  <li><code>prompts/IELTS-vocab.md</code> — the recommended active-output prompt</li>
+  <li><code>docs/</code> — detailed specs for this knowledge base (entry format / requirements / agent spec)</li>
+</ul>
+<p class="sub">If you <em>do</em> open this library in Memoria, it writes the kit into <code>.memoria/agent/</code> (instructions + spec + the <code>fsrs.py</code> review scheduler); those are runtime artifacts and are not published with this repository.</p>
+
+<h3>Data &amp; privacy</h3>
+<ul>
+  <li>Everything is local: vocabulary lives in plain Markdown files, learning records in <code>.memoria/</code>. No account, no cloud sync.</li>
+  <li>To back up / sync: put this folder under Git and push it to your own account, or sync the folder with any cloud drive.</li>
+  <li>Review records: <code>.memoria/agent/review/</code>.</li>
+</ul>
+
+<h3>Troubleshooting</h3>
+<ul>
+  <li><strong>Left pane is empty after opening the KB?</strong> Make sure you picked the <strong>repository root</strong> (the folder containing <code>vocab/</code> and <code>expressions/</code>), not its parent.</li>
+  <li><strong>Agent answers are too generic?</strong> Ask it to read <code>.memoria/agent/kb-spec.zh-CN.md</code> first and to follow the recommended IELTS prompt format.</li>
+  <li><strong>Want to change the entry format?</strong> See <code>docs/vocab_format.md</code> and <code>docs/format.md</code>.</li>
+</ul>
+</section>
+
+<hr class="split">
+
+<section id="pages">
+<h2>这一页是怎么部署的</h2>
+<p>本页就在 <strong>Memoria 仓库</strong>里：<code>docs/example/AAA_Vocab/</code>，由 <code>.github/workflows/pages.yml</code> 用 GitHub Actions 发布 —— 该 workflow <strong>只上传这一个目录</strong>，所以 Memoria 自己的 <code>docs/</code> 不会跟着上站。</p>
+<ol class="steps">
+  <li><strong>一次性开启</strong>：仓库 → <strong>Settings → Pages</strong> → <code>Source</code> 选 <strong>GitHub Actions</strong> → 保存。（页面上不会让你选分支/目录——路径由 workflow 里的 <code>path:</code> 决定。）</li>
+  <li><strong>日常更新</strong>：只要 push 改动 <code>docs/example/AAA_Vocab/**</code>，Actions 自动重建；也可以在 Actions 页手动 <code>Run workflow</code>。</li>
+  <li><strong>站点地址</strong>：<code>https://&lt;owner&gt;.github.io/Memoria/</code> —— 打开就是这份指引（Settings → Pages 顶部也会显示）。</li>
+</ol>
+
+<h3>想发布到自己的账号 / 自己的仓库？</h3>
+<p>这页是纯静态的（<code>index.html</code> + <code>images/</code>），换个仓库照样能发：</p>
+<ol class="steps">
+  <li><strong>新建仓库</strong>：<code>New repository</code> → 选 <strong>Public</strong> → <em>不要</em>勾选 “Add a README” → Create。</li>
+  <li><strong>上传本目录内容</strong>：网页版 <code>Add file</code> → <code>Upload files</code> 拖进去即可；命令行：
+    <pre><code>cd &lt;本目录&gt;
+git init -b main
+git add .
+git commit -m "IELTS vocabulary knowledge base + setup guide"
+git remote add origin https://github.com/&lt;你的用户名&gt;/&lt;仓库名&gt;.git
+git push -u origin main</code></pre>
+  </li>
+  <li><strong>开启 Pages</strong>：<strong>Settings → Pages</strong> → <code>Source</code> 选 <strong>Deploy from a branch</strong> → <code>Branch</code> 选 <strong>main</strong> + <strong>/ (root)</strong> → <code>Save</code>。</li>
+  <li><strong>拿到网址</strong>：<code>https://&lt;你的用户名&gt;.github.io/&lt;仓库名&gt;/</code>（等 1 分钟左右）。</li>
+</ol>
+<div class="note"><strong>如果 404 或页面没样式：</strong>① 仓库必须是 <strong>Public</strong>（私有仓库的 Pages 要付费计划）；② <code>index.html</code> 必须在<strong>站点根</strong>（本仓库里是 <code>docs/example/AAA_Vocab/index.html</code>，与 <code>images/</code> 同级）；③ 用 Actions 发布时，Pages 的 <code>Source</code> 必须是 <strong>GitHub Actions</strong>（不是 “Deploy from a branch”）；④ 首次部署有时要等 1–2 分钟。</div>
+<p class="sub">Markdown 版同一份内容见本目录的 <code>GUIDE.md</code>（GitHub 上可直接阅读，便于改动与 diff）。</p>
+</section>
+
+</main>
+
+<footer>
+  <p>本页由 <code>index.html</code> 渲染，图片在 <code>images/</code>；Markdown 版为 <code>GUIDE.md</code> —— 两者内容一致，改一处记得同步另一处。</p>
+  <p>IELTS Vocab Coach agent spec / vocabulary entries are part of this repository. Memoria is an open-source local knowledge-graph IDE.</p>
+</footer>
+
+</body>
+</html>

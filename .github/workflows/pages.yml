@@ -1,0 +1,40 @@
+# 把公开词汇库的上手/部署指引页发布到 GitHub Pages。
+#
+# 站点根 = docs/example/AAA_Vocab/（该目录里的 index.html 是落地页，images/ 是配图）。
+# 只用 Actions 上传这一个目录，因此 Memoria 自己的 docs/ 不会随之上站。
+#
+# 一次性设置：仓库 Settings → Pages → Source 选「GitHub Actions」。
+# 站点地址：https://<owner>.github.io/Memoria/
+name: Deploy vocab guide to Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/example/AAA_Vocab/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/example/AAA_Vocab
+      - id: deploy
+        uses: actions/deploy-pages@v4

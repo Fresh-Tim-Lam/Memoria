@@ -1,0 +1,36 @@
+schema_version: 1
+file: vocab/delapidated.md
+knowledge_points:
+- id: dilapidated
+  name: dilapidated
+  aliases:
+  - dilapidation
+  - dilapidate
+  - in a dilapidated state
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Place
+  - 城市街区
+  - 建筑描写
+  - C1
+  description: 破旧的；年久失修的（建筑与街区负面描写，与 renovation 正反成对）
+  range:
+    start:
+      snippet: '# dilapidated'
+      line_hint: 1
+    end:
+      snippet: （曾经繁荣的工业区在工厂关闭后陷入了**破败**。那些**破旧的**建筑，窗户破碎、墙壁剥落，成了安全隐患。然而，当地社区决定**翻新**该区域而非拆除。在多年的**忽视**之后，他们将旧工厂**改造**成了现代艺术画廊和咖啡馆，为社区注入了新的活力。）
+      line_hint: 107
+links:
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 46
+    wrapped: true
+  source_id: dilapidated
+edges: []
