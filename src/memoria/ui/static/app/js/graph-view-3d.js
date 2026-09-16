@@ -36,17 +36,45 @@
     return s.slice(0, Math.max(1, max - 1)) + "…";
   }
 
+  /**
+   * 主题色：WebGL/纹理都吃不到 CSS 变量，统一从 js/graph-theme.js 取；
+   * 模块缺失时退回改造前的硬编码色，保证图谱不会变空白。
+   */
+  function themeHex() {
+    if (global.MemoriaGraphTheme && global.MemoriaGraphTheme.hex) {
+      return global.MemoriaGraphTheme.hex();
+    }
+    return {
+      bg: 0x0a0d13, node: 0xc9d1d9, nodeHover: 0xf0f6fc, nodeTarget: 0x79c0ff,
+      nodeDim: 0x484f58, nodeMuted: 0x8b949e, label: 0xadbac7,
+      labelInvalid: 0x6e7681, galaxyDim: 0x8b949e, galaxyBright: 0xf0f6fc,
+    };
+  }
+
+  function themeColors() {
+    if (global.MemoriaGraphTheme && global.MemoriaGraphTheme.colors) {
+      return global.MemoriaGraphTheme.colors();
+    }
+    return {
+      label: "#adbac7",
+      labelBg: "rgba(13, 17, 23, 0.85)",
+      halo: "rgba(13, 17, 23, 0.92)",
+    };
+  }
+
   function labelColorHex(isHover, isTarget, rangeOk) {
-    if (isHover) return 0xf0f6fc;
-    if (isTarget) return 0x79c0ff;
-    if (rangeOk === false) return 0x6e7681;
-    return 0xadbac7;
+    const h = themeHex();
+    if (isHover) return h.nodeHover;
+    if (isTarget) return h.nodeTarget;
+    if (rangeOk === false) return h.labelInvalid;
+    return h.label;
   }
 
   /** 银河样式：按度数在暗星(0x8b949e)与亮星(0xf0f6fc)之间插值 */
   function galaxyColor3D(ratio) {
-    const dim = [139, 148, 158];
-    const bright = [240, 246, 252];
+    const h = themeHex();
+    const dim = [(h.galaxyDim >> 16) & 255, (h.galaxyDim >> 8) & 255, h.galaxyDim & 255];
+    const bright = [(h.galaxyBright >> 16) & 255, (h.galaxyBright >> 8) & 255, h.galaxyBright & 255];
     const k = Math.max(0, Math.min(1, ratio));
     const r = Math.round(dim[0] + (bright[0] - dim[0]) * k);
     const g = Math.round(dim[1] + (bright[1] - dim[1]) * k);
@@ -97,21 +125,23 @@
   }
 
   function paintNodeLabelCanvas(ctx, w, h, text, fontSize, textColor) {
+    const C = themeColors();
     ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "rgba(13, 17, 23, 0.85)";
+    ctx.fillStyle = C.labelBg;
     fillRoundRect(ctx, 0, 0, w, h, 6);
     ctx.fill();
     ctx.font = `${fontSize}px system-ui, sans-serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "rgba(13, 17, 23, 0.92)";
+    ctx.strokeStyle = C.halo;
     ctx.strokeText(text, w / 2, h / 2);
-    ctx.fillStyle = textColor;
+    ctx.fillStyle = textColor || C.label;
     ctx.fillText(text, w / 2, h / 2);
   }
 
   function createNodeLabelSprite(THREE, text, nodeRadius, textColor) {
+    const C = themeColors();
     const fontSize = 32;
     const padX = 8;
     const padY = 5;
@@ -123,7 +153,7 @@
     const h = fontSize + padY * 2;
     canvas.width = w;
     canvas.height = h;
-    paintNodeLabelCanvas(ctx, w, h, text, fontSize, textColor || "#adbac7");
+    paintNodeLabelCanvas(ctx, w, h, text, fontSize, textColor || C.label);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.minFilter = THREE.LinearFilter;
@@ -148,7 +178,7 @@
       h,
       nodeRadius: r,
       fontSize,
-      textColor: textColor || "#adbac7",
+      textColor: textColor || C.label,
     };
     return sprite;
   }
@@ -282,9 +312,21 @@
     /** 银河样式使用深空底色，其余保持默认 */
     _syncBackground() {
       if (!this.scene || !this.THREE) return;
-      this.scene.background = new this.THREE.Color(
-        this.opts.graphStyle === "galaxy" ? 0x0a0d13 : 0x161b22
-      );
+      // 主题切换后重新同步（场景背景不会自动跟随 CSS）
+      if (!this._themeHooked && global.MemoriaGraphTheme) {
+        this._themeHooked = true;
+        global.MemoriaGraphTheme.onThemeChange(() => this._syncBackground());
+      }
+      // 非银河样式跟随容器背景（即主题），银河样式用 --graph-bg
+      const h = themeHex();
+      let bgHex = h.bg;
+      if (this.opts.graphStyle !== "galaxy") {
+        const cssBg = getComputedStyle(this.container).backgroundColor;
+        bgHex = cssBg && global.MemoriaGraphTheme
+          ? global.MemoriaGraphTheme.toInt(cssBg)
+          : 0x161b22;
+      }
+      this.scene.background = new this.THREE.Color(bgHex);
     }
 
     _observeResize() {
@@ -380,9 +422,10 @@
       });
       const galaxy = this.opts.graphStyle === "galaxy";
       const gStats = galaxy ? this._galaxyStats() : null;
+      const H = themeHex();
 
       for (const n of this.layout.nodes) {
-        let baseColor = n.range_ok === false ? 0x8b949e : 0xc9d1d9;
+        let baseColor = n.range_ok === false ? H.nodeMuted : H.node;
         let scale = 1;
         let ratio = 0;
         if (gStats) {
@@ -792,24 +835,25 @@
         ? new Set(this.engine.getOutgoingLinks(hover).map((l) => l.target))
         : null;
 
+      const H = themeHex();
       for (const [id, mesh] of this._nodeMeshes) {
         const isHover = id === hover;
         const isExtSource = extActive && ext.sourceIds.has(id);
         const isExtTarget = extActive && ext.targetIds.has(id);
         const isTarget = (outTargets && outTargets.has(id)) || isExtTarget;
-        let color = 0xc9d1d9;
+        let color = H.node;
         if (this.opts.graphStyle === "galaxy") {
           const gStats = this._galaxyStats();
           color = galaxyColor3D(
             gStats.max ? (gStats.deg.get(id) || 0) / gStats.max : 0
           );
         }
-        if (isHover || isExtSource) color = 0xf0f6fc;
-        else if (isTarget) color = 0x79c0ff;
-        else if (extActive || hover) color = 0x484f58;
+        if (isHover || isExtSource) color = H.nodeHover;
+        else if (isTarget) color = H.nodeTarget;
+        else if (extActive || hover) color = H.nodeDim;
         const node = this.engine.getNode(id);
         if (node?.range_ok === false && !isHover && !isExtSource && !isTarget) {
-          color = 0x8b949e;
+          color = H.nodeMuted;
         }
         mesh.material.color.setHex(color);
         if (mesh.material.emissive) {

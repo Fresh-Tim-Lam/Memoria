@@ -72,7 +72,30 @@
     ctx.restore();
   }
 
-  function drawNodeLabel(ctx, n, r, opts, isHover, isTarget) {
+  /**
+   * 主题色（canvas 吃不到 CSS 变量，必须显式取）；
+   * 模块缺失时退回改造前的硬编码色，保证图谱不会变空白。
+   */
+  function themeColors() {
+    if (global.MemoriaGraphTheme) return global.MemoriaGraphTheme.colors();
+    return {
+      bg: "#0a0d13",
+      node: "#c9d1d9",
+      nodeHover: "#f0f6fc",
+      nodeTarget: "#79c0ff",
+      nodeDim: "#3d4350",
+      nodeInvalid: "#3a4152",
+      label: "#adbac7",
+      labelInvalid: "#6e7681",
+      halo: "rgba(13, 17, 23, 0.92)",
+      focus: "#58a6ff",
+      focusExt: "#a371f7",
+      galaxyDim: "rgb(139,148,158)",
+      galaxyBright: "rgb(240,246,252)",
+    };
+  }
+
+  function drawNodeLabel(ctx, n, r, opts, isHover, isTarget, C) {
     const text = displayLabelForNode(n, opts);
     const fontSize = 10;
     const ly = n.y + r + 4;
@@ -80,19 +103,25 @@
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
     ctx.lineWidth = 3;
-    ctx.strokeStyle = "rgba(13, 17, 23, 0.92)";
+    // 描边用画布底色，让文字从背景里"抠"出来（浅色主题下必须是浅色）
+    ctx.strokeStyle = C.halo;
     ctx.strokeText(text, n.x, ly);
-    if (isHover) ctx.fillStyle = "#f0f6fc";
-    else if (isTarget) ctx.fillStyle = "#79c0ff";
-    else if (n.range_ok === false) ctx.fillStyle = "#6e7681";
-    else ctx.fillStyle = "#adbac7";
+    if (isHover) ctx.fillStyle = C.nodeHover;
+    else if (isTarget) ctx.fillStyle = C.nodeTarget;
+    else if (n.range_ok === false) ctx.fillStyle = C.labelInvalid;
+    else ctx.fillStyle = C.label;
     ctx.fillText(text, n.x, ly);
   }
 
-  /** 银河样式：按度数亮度插值（Hub 亮、叶子暗） */
+  /** 银河样式：按度数亮度插值（Hub 亮、叶子暗）；色标来自主题变量 */
   function galaxyNodeColor2D(ratio) {
-    const dim = [139, 148, 158];
-    const bright = [240, 246, 252];
+    const h = global.MemoriaGraphTheme && global.MemoriaGraphTheme.hex
+      ? global.MemoriaGraphTheme.hex()
+      : null;
+    const dimHex = h ? h.galaxyDim : 0x8b949e;
+    const brightHex = h ? h.galaxyBright : 0xf0f6fc;
+    const dim = [(dimHex >> 16) & 255, (dimHex >> 8) & 255, dimHex & 255];
+    const bright = [(brightHex >> 16) & 255, (brightHex >> 8) & 255, brightHex & 255];
     const k = Math.max(0, Math.min(1, ratio));
     const r = Math.round(dim[0] + (bright[0] - dim[0]) * k);
     const g = Math.round(dim[1] + (bright[1] - dim[1]) * k);
@@ -153,6 +182,13 @@
       this._pendingRelayout = false;
       this._userView = false;
       this._pulse = 0;
+
+      // 主题切换后按新配色重绘：画布颜色是"取出来"画的，不重绘会残留旧主题颜色
+      if (global.MemoriaGraphTheme) {
+        global.MemoriaGraphTheme.onThemeChange(() => {
+          if (this.active) this.draw();
+        });
+      }
 
       this._onEngineLoad = () => this.resetSimulation();
       this._onLayoutTick = () => {
@@ -525,11 +561,12 @@
       const w = this.viewW || 1;
       const h = this.viewH || 1;
       const opts = this.opts;
+      const C = themeColors();
       ctx.save();
       const galaxy = opts.graphStyle === "galaxy";
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = galaxy
-        ? "#0a0d13"
+        ? C.bg
         : getComputedStyle(this.container).backgroundColor || "#161b22";
       ctx.fillRect(0, 0, w, h);
 
@@ -595,12 +632,12 @@
         if (gStats) r = r * (1 + ratio * 0.5);
         let fill;
         let halo = 0;
-        if (isHover || isExtSource) fill = "#f0f6fc";
-        else if (isTarget) fill = "#79c0ff";
-        else if (extActive || hover) fill = "#3d4350";
-        else if (n.range_ok === false) fill = "#3a4152";
+        if (isHover || isExtSource) fill = C.nodeHover;
+        else if (isTarget) fill = C.nodeTarget;
+        else if (extActive || hover) fill = C.nodeDim;
+        else if (n.range_ok === false) fill = C.nodeInvalid;
         else if (gStats) fill = galaxyNodeColor2D(ratio);
-        else fill = "#c9d1d9";
+        else fill = C.node;
         if (galaxy) {
           if (isHover || isExtSource) halo = 0.6;
           else if (isTarget) halo = 0.4;
@@ -616,11 +653,11 @@
           ctx.fill();
         }
         if (isFocus) {
-          ctx.strokeStyle = isExtSource || isExtTarget ? "#a371f7" : "#58a6ff";
+          ctx.strokeStyle = isExtSource || isExtTarget ? C.focusExt : C.focus;
           ctx.lineWidth = 2;
           ctx.stroke();
         }
-        drawNodeLabel(ctx, n, r, opts, isHover || isExtSource, isTarget);
+        drawNodeLabel(ctx, n, r, opts, isHover || isExtSource, isTarget, C);
       }
 
       ctx.restore();

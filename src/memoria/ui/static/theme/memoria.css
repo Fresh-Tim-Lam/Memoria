@@ -19,6 +19,10 @@
     --error: #f14c4c;
     --warning: #ce9178;
     --theme-color: #007acc;
+    /* 顶栏：灰底 + 比底色更深的搜索框（浅色主题里搜索框比底色更浅） */
+    --bg-toolbar: #3c3c3c;
+    --bg-toolbar-hover: #4a4a4a;
+    --bg-toolbar-input: #2b2b2b;
     /* 代码块语法高亮（VSCode Dark+ 取色）；浅色主题只需覆盖这几个变量 */
     --tk-com: #6a9955;
     --tk-str: #ce9178;
@@ -41,6 +45,22 @@
     --mmd-cluster-border: #46464e;
     --mmd-note-bg: #33333a;
     --mmd-note-border: #5c5c66;
+    /* 知识图谱（canvas/WebGL 绘制，由 js/graph-theme.js 读取；浅色主题覆盖同名变量） */
+    --graph-bg: #0a0d13;
+    --graph-node: #c9d1d9;
+    --graph-node-hover: #f0f6fc;
+    --graph-node-target: #79c0ff;
+    --graph-node-dim: #3d4350;
+    --graph-node-invalid: #3a4152;
+    --graph-node-muted: #8b949e;
+    --graph-label: #adbac7;
+    --graph-label-invalid: #6e7681;
+    --graph-label-bg: rgba(13, 17, 23, 0.85);
+    --graph-halo: rgba(13, 17, 23, 0.92);
+    --graph-focus: #58a6ff;
+    --graph-focus-ext: #a371f7;
+    --graph-galaxy-dim: rgb(139, 148, 158);
+    --graph-galaxy-bright: rgb(240, 246, 252);
 }
 
 body {
@@ -73,7 +93,7 @@ body {
     overflow: visible;
     padding: 0 0 0 12px;
     height: 2.1875rem;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
     isolation: isolate;
@@ -84,7 +104,7 @@ body {
     position: relative;
     z-index: 4;
     flex-shrink: 0;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
 }
 .toolbar-actions {
     display: flex;
@@ -94,7 +114,7 @@ body {
     gap: 0;
     position: relative;
     z-index: 4;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
 }
 .toolbar-actions button {
     background: transparent;
@@ -109,7 +129,7 @@ body {
     align-items: center;
 }
 .toolbar-actions button:hover {
-    background: var(--bg-hover);
+    background: var(--bg-toolbar-hover, var(--bg-hover));
     color: var(--text-bright);
 }
 .-titlebar-drag-spacer {
@@ -178,7 +198,7 @@ body {
     align-items: center;
 }
 .toolbar-center button:hover, .toolbar-right button:hover {
-    background: var(--bg-hover);
+    background: var(--bg-toolbar-hover, var(--bg-hover));
     color: var(--text-bright);
 }
 .nav-btn { font-size: 0.875rem !important; padding: 0.25rem 8px !important; color: var(--text-primary); }
@@ -234,7 +254,7 @@ body {
     flex: 1 1 auto;
     position: relative;
     z-index: 1;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
 }
 .kb-indicator-wrap.hidden { display: none; }
 .kb-indicator {

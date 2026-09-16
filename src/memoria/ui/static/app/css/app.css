@@ -1754,6 +1754,26 @@
     color: var(--text-secondary);
 }
 
+/* 底部状态栏是**蓝底**（--theme-color）。原来用的 #d29922 是"深色底上的琥珀"，在蓝底上
+   对比不足（浅色主题更糊），这里换成更亮的黄。
+   注：蓝底上黄字对比上限约 3:1，小字号会略"发虚"；若要更高的可读性，可加一层淡底衬
+   （见本块下方的注释版规则）或把 --theme-color 调深。 */
+#status-bar .-stat-warn,
+#status-bar .-graph-audit-warn,
+#status-bar #status-stats.-status-clickable {
+    color: #ffd75e;
+}
+#status-bar .-stat-error {
+    color: #ffb3a7;
+}
+#status-bar #status-stats.-status-clickable:hover {
+    color: #ffe9a8;
+}
+/* 需要底衬版本时改用这两条（当前未启用）：
+#status-bar .-stat-warn, #status-bar .-graph-audit-warn, #status-bar #status-stats.-status-clickable,
+#status-bar .-stat-error { background: rgba(0, 0, 0, 0.22); border-radius: 3px; padding: 0 4px; }
+*/
+
 .-toolbar-btn-wrap {
     position: relative;
     display: inline-flex;
@@ -1816,7 +1836,7 @@
     margin-left: 0.375rem;
     position: relative;
     z-index: 5;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
     -webkit-app-region: no-drag;
 }
 
@@ -1866,8 +1886,9 @@
     margin-top: 0.1875rem;
     margin-left: -3px;
     border: 1px solid currentColor;
-    background: var(--bg-secondary);
-    box-shadow: 4px -4px 0 0 var(--bg-secondary), 4px -4px 0 1px currentColor;
+    /* "还原"图标的挖空必须与顶栏底色一致，否则两个方块重叠处会露出异色 */
+    background: var(--bg-toolbar, var(--bg-secondary));
+    box-shadow: 4px -4px 0 0 var(--bg-toolbar, var(--bg-secondary)), 4px -4px 0 1px currentColor;
 }
 
 .-win-btn--close::before,
@@ -1888,7 +1909,13 @@
 }
 
 .-win-btn:hover {
-    background: var(--bg-hover);
+    background: var(--bg-toolbar-hover, var(--bg-hover));
+}
+
+/* 悬停时"还原"图标的挖空要跟着换成悬停底色 */
+.-win-btn--max.is-restore:hover::before {
+    background: var(--bg-toolbar-hover, var(--bg-hover));
+    box-shadow: 4px -4px 0 0 var(--bg-toolbar-hover, var(--bg-hover)), 4px -4px 0 1px currentColor;
 }
 
 .-win-btn--close:hover {
@@ -2003,7 +2030,7 @@ body.-win-dragging {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar, var(--bg-secondary));
     padding: 0 2px;
     box-sizing: border-box;
 }
@@ -2030,7 +2057,7 @@ body.-win-dragging {
     padding: 0.125rem 6px;
     font-size: 0.625rem;
     border: none;
-    background: var(--bg-secondary);
+    background: var(--bg-toolbar-input, var(--bg-secondary));
     color: var(--text-muted);
     cursor: inherit;
     pointer-events: none;
@@ -2063,7 +2090,8 @@ body.-win-dragging {
     font-size: 0.75rem;
     border: 1px dashed var(--border-light, var(--border));
     border-radius: 4px;
-    background: var(--bg-tertiary, var(--bg-secondary));
+    /* 深色主题比顶栏更深；浅色主题比顶栏更浅（两套取值都在 --bg-toolbar-input） */
+    background: var(--bg-toolbar-input, var(--bg-tertiary, var(--bg-secondary)));
     color: var(--text-primary);
     opacity: 0.92;
 }

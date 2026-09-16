@@ -33,6 +33,12 @@
   function apply() {
     var root = document.documentElement;
     if (root) root.setAttribute("data-theme", resolved());
+    // 通知画布类视图（图谱 2D/3D 等）刷新调色板并重绘
+    try {
+      global.dispatchEvent(new CustomEvent("memoria:themechange", { detail: { theme: resolved() } }));
+    } catch (e) {
+      /* 老内核无 CustomEvent 时忽略 */
+    }
   }
 
   function api() {

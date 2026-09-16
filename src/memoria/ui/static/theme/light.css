@@ -30,8 +30,10 @@ html[data-theme="light"] {
     --error: #cd3131;
     --warning: #a86400;
 
-    /* 之前缺失的颜色 token（浅色取值） */
-    --bg-toolbar: #f0f0f0;
+    /* 之前缺失的颜色 token（浅色取值）；顶栏是**可见的灰**，搜索框比它更白 */
+    --bg-toolbar: #e7e7e7;
+    --bg-toolbar-hover: #dcdcdc;
+    --bg-toolbar-input: #ffffff;
     --bg-elevated: #ffffff;
     --bg-input: #ffffff;
     --border-color: #d6d6d6;
@@ -61,6 +63,23 @@ html[data-theme="light"] {
     --mmd-cluster-border: #d6d6d6;
     --mmd-note-bg: #fff8dc;
     --mmd-note-border: #e3d4a3;
+
+    /* 知识图谱（canvas/WebGL）：浅色底上节点要更深、标签底衬要更浅 */
+    --graph-bg: #f6f8fa;
+    --graph-node: #57606a;
+    --graph-node-hover: #1f2328;
+    --graph-node-target: #0969da;
+    --graph-node-dim: #b7bec7;
+    --graph-node-invalid: #c6ccd4;
+    --graph-node-muted: #8b949e;
+    --graph-label: #4a5462;
+    --graph-label-invalid: #8a929c;
+    --graph-label-bg: rgba(255, 255, 255, 0.88);
+    --graph-halo: rgba(255, 255, 255, 0.92);
+    --graph-focus: #0969da;
+    --graph-focus-ext: #8250df;
+    --graph-galaxy-dim: rgb(178, 184, 192);
+    --graph-galaxy-bright: rgb(31, 35, 40);
 }
 
 /* 滚动条：深色主题用浅灰滑块，浅色底上换成中灰，避免"看不见" */

@@ -25,6 +25,9 @@ TEMPLATES = PKG / "templates"
 CONTENTS_DIR = "lib"
 _RELEASE_PRESERVE_DIRS = frozenset({"config"})
 
+# 应用图标名（index.html 写死 /icons/Memoria.ico；见 docs/reference/icon-system.md §1）
+APP_ICON_NAME = "Memoria"
+
 # 语义/重排模型随包内置：构建时从本地 HuggingFace 缓存（hub/models--<org>--<name>）
 # 拷到 Package/hf/hub/…；运行端把 HF_HOME 指向 Package/hf（见 embedding/rerank provider）。
 RELEASE_HF = RELEASE / "hf"
@@ -74,6 +77,14 @@ EXAMPLES_IGNORE = shutil.ignore_patterns(
     "*.bak",
 )
 
+# resources/icons 只随包应用图标本体：草稿 / 备份 / 候选图不随包 —— 规则与
+# scripts/icons/build_icons.py 的源图发现、docs/reference/icon-system.md §4.2 一致
+# （`_` 开头、含 copy / 副本 / backup / bak / orig / old）。否则会把几百 KB 的
+# 源图与候选图打进发布包。
+ICONS_IGNORE = shutil.ignore_patterns(
+    "_*", "*copy*", "*副本*", "*backup*", "*bak*", "*orig*", "*old*"
+)
+
 
 def _read_version() -> str:
     """版本唯一事实源：src/memoria/__version__.py。
@@ -99,13 +110,18 @@ def _read_version() -> str:
 
 
 def _sync_app_icons() -> None:
-    """resources/icons → UI static，供 Web 顶栏与 favicon 使用。"""
+    """resources/icons → UI static，供 Web 顶栏与 favicon 使用（index.html 只读 /icons/Memoria.ico）。
+
+    只同步应用图标本体。草稿 / 备份 / 候选图（`_` 开头、含 copy/backup/old 等）与其他名字的
+    图标都不随包 —— 规则与 scripts/icons/build_icons.py、docs/reference/icon-system.md 一致。
+    """
     src_dir = ROOT / "resources" / "icons"
     if not src_dir.is_dir():
         return
     dest_dir = ROOT / "src" / "memoria" / "ui" / "static" / "icons"
     dest_dir.mkdir(parents=True, exist_ok=True)
-    for item in src_dir.iterdir():
+    for ext in (".ico", ".png"):
+        item = src_dir / f"{APP_ICON_NAME}{ext}"
         if item.is_file():
             shutil.copy2(item, dest_dir / item.name)
 
@@ -174,7 +190,7 @@ def _stage_runtime_resources() -> None:
       供用户打开试用；**必须**随包（正文/侧车/图片随包，运行时产物剔除）。
     """
     targets = [
-        (ROOT / "resources" / "icons", RELEASE_RES / "icons", None),
+        (ROOT / "resources" / "icons", RELEASE_RES / "icons", ICONS_IGNORE),
         (ROOT / "resources" / "agent-prompts", RELEASE_RES / "agent-prompts", None),
         (ROOT / "docs" / "example" / "showcase", RELEASE_RES / "examples", EXAMPLES_IGNORE),
     ]
