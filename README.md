@@ -1,3 +1,5 @@
+<img src="resources/icons/Memoria.png" alt="Memoria" width="96"/>
+
 # Memoria — A Local Knowledge-Graph IDE
 
 > **Turn Markdown notes into a navigable, searchable, visualizable knowledge network — entirely on your machine.**

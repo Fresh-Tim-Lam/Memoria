@@ -1,3 +1,5 @@
+<img src="resources/icons/Memoria.png" alt="Memoria 图标" width="96"/>
+
 # Memoria — 本地知识图谱 IDE
 
 > **把 Markdown 笔记变成一张可跳转、可检索、可可视化的知识网络。**
