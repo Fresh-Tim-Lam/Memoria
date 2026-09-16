@@ -88,11 +88,11 @@ Split view: source on the left, live rendered preview on the right.
 
 <img src="resources/screenshots/demo-split.png" alt="Memoria split view: source code + live preview" width="820"/>
 
-Rendered preview: highlighters, wiki links, tables, and code blocks in mixed layout.
+Rendered preview: tables, wiki links and code blocks in mixed layout.
 
 <img src="resources/screenshots/demo-preview.png" alt="Memoria rich-text preview rendering" width="820"/>
 
-Math rendering: LaTeX formulas via MathJax (inline / block / cases / align).
+Math rendering: LaTeX formulas via MathJax (inline and display).
 
 <img src="resources/screenshots/demo-math.png" alt="Memoria LaTeX math rendering" width="820"/>
 

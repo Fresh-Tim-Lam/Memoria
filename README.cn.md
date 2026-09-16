@@ -88,11 +88,11 @@
 
 <img src="resources/screenshots/demo-split.png" alt="Memoria 分栏编辑：源码 + 实时预览" width="820"/>
 
-渲染预览：荧光笔、Wiki 链接、表格、代码块混合排版。
+渲染预览：表格、Wiki 链接、代码块混合排版。
 
 <img src="resources/screenshots/demo-preview.png" alt="Memoria 富文本预览渲染" width="820"/>
 
-数学公式：MathJax 渲染的 LaTeX 公式（行内 / 块级 / cases / align）。
+数学公式：MathJax 渲染的 LaTeX 公式（行内 / 块级）。
 
 <img src="resources/screenshots/demo-math.png" alt="Memoria LaTeX 数学公式渲染" width="820"/>
 
