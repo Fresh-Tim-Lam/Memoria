@@ -16,6 +16,7 @@
 | `gen_example_boonie_sidecars.py` | 生成 boonie 示例知识库 sidecar |
 | `scan_ui_strings.py` | UI 界面文案清单扫描器：刷新 `docs/reference/i18n-inventory.md`（i18n 盘点） |
 | `i18n_selftest.js` | i18n 引擎自测：`node scripts/i18n_selftest.js`（默认语言/切换/缺键回退/参数填充） |
+| `agent_llm_smoke.py` | 智能体 LLM 冒烟工具（dsh 移植 M1）：向已配置端点流式要一句回答并打印用量；`--mock` 起内置假 SSE 端点，**离线可跑**。配置读 `MEMORIA_AGENT_BASE_URL` / `MEMORIA_AGENT_API_KEY` / `MEMORIA_AGENT_MODEL`（密钥永不打印） |
 
 ## 规则
 

@@ -23,8 +23,9 @@
 | `logs/` | 开发调试日志（已被 gitignore，规范见 logging.md） | ✅ |
 | `build/` | PyInstaller 构建中间产物（已被 gitignore） | ❌ |
 | `Package/` | 构建发布产物（`Memoria.exe` + `lib/`） | ❌（构建生成，gitignore） |
+| `dsh-src/` | **dsh 上游只读参考检出**（语义移植时查源码；已被 gitignore，不入库） | ❌ |
 | `.venv/` | 虚拟环境 | ❌ |
-| 仓库根目录 | 仅允许：`README.md`、`AGENT.md`、`LICENSE`、`pyproject.toml`、`requirements.txt`、`app.py`、`.gitignore`、`.gitattributes` 等**顶层配置** | ❌ |
+| 仓库根目录 | 仅允许：`README.md`、`AGENT.md`、`LICENSE`、`THIRD_PARTY_NOTICES.md`、`pyproject.toml`、`requirements.txt`、`app.py`、`.gitignore`、`.gitattributes` 等**顶层配置** | ❌ |
 
 ## 2. 临时文件规则（本规范最重要的一条）
 

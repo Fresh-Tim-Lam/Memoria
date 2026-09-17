@@ -1,5 +1,7 @@
 # DeepSeek Harness（dsh）与 Memoria 的双向融入：可行性分析与分阶段规划
 
+> ⚠️ **口径变更（2026-09-17）**：本文的 **D1/D2 二分框架已不再是主线** —— 用户拍板把「**代码级移植 `dsh` 到 Memoria（记为 D1′）**」立为主线，见 [dsh-agent-port.md](./dsh-agent-port.md)。本文 **D1 的 ❌ 结论（不起子进程、不内嵌运行时）与 D2 的旁支结论仍然有效**，保留作可行性分析记录；涉及"产品内对话 Agent"的判断请以新文档为准。
+
 > **用途**：评估 `dsh`（DeepSeek Harness）与 Memoria 的**两个方向**的融入——**D1（正）把 `dsh` 融入 Memoria**、**D2（反）把 Memoria 作为插件融入 `dsh`**（D2 正在由另一项目推进）。说明各方向与 Memoria 既有硬约束（离线优先、禁止 silent 写入、单一事实源、免安装打包）的关系、可选路线、推荐路线、以及每个决策点由谁拍板。**本文只做分析与规划，不含任何实施；实施前须先答复 §13 的阻塞问题。**
 > **目标读者**：项目负责人（评审范围与取舍）；推进 D2 的外部项目作者（对齐接口契约）；后续实施 Agent（决策冻结后据此拆任务）。
 > **关联文档**：[kb-agent.md](./kb-agent.md)（知识库 Agent 载体决策）、[dicussion.md](./dicussion.md)（P2 LLM 智能层规划）、[designV0.md](./designV0.md)（离线 / 不进热路径 / 禁止 silent 写入三条红线）、[../../AGENTS.md](../../AGENTS.md)（多 Agent 协作契约与权限矩阵）、[../reference/architecture.md](../reference/architecture.md)（四层架构）、[../todo.md](../todo.md)（§9 V 系列 = 需求挂点、§12 = 门禁台账）。

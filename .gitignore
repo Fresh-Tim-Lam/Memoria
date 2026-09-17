@@ -46,7 +46,9 @@ venv/
 .vscode/
 .idea/
 *.user
+# 敏感数据
 GH_TOKEN
+config/agent.json
 
 # 模型缓存
 models/
@@ -97,7 +99,11 @@ docs/example/*.zip
 # 本地试用知识库（仅官方 showcase 与 import-test 夹具入库，保护本地隐私，见 import-plan.md M5.3）
 docs/example/empty*/
 docs/example/导入test/
+
 docs/example/行政法/
 
 # 单次调试脚本
 scripts/_tmp_parse.js
+
+# dsh 上游只读参考检出（移植时查源码用；不入库，见 docs/design/dsh-agent-port.md §4.2）
+/dsh-src/
