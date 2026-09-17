@@ -1,0 +1,459 @@
+# 配套单测：被测调用面语义移植自 deepseek-harness packages/core/{agent-loop,tools}、
+# packages/session/*、packages/interaction/user-approval（MIT / BSD-3-Clause）
+# 上游：https://github.com/deepseek-ai/deepseek-harness @ 0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
+# 版权归 DeepSeek；声明见仓库根 THIRD_PARTY_NOTICES.md
+
+"""agent 循环 / 工具 / 会话 / 审批 的离线单测：不联网、不写知识库正文。
+
+覆盖（对应任务验收项）：
+① loop 单轮无工具直接答；② 一轮工具调用后回填并给出最终答案；③ 未知工具/参数非法
+→ 工具结果带错误且循环继续；④ 达 `max_iterations` 的终止行为；⑤ 会话 JSONL 追加与
+回放；⑥ 审批默认策略拒绝写类工具；⑦ 只读工具调用后知识库零写入。
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from collections.abc import Iterator, Sequence
+from pathlib import Path
+from typing import Any
+
+import pytest
+
+from memoria.services.agent.approvals import (
+    ApprovalOutcome,
+    ApprovalRequest,
+    AskPolicy,
+    DefaultApprovalPolicy,
+    NeverPolicy,
+)
+from memoria.services.agent.ask import ask
+from memoria.services.agent.llm import (
+    FinishEvent,
+    FinishReason,
+    LlmRequest,
+    Role,
+    TextDelta,
+    ToolCall,
+    Usage,
+    UsageEvent,
+)
+from memoria.services.agent.loop import AgentLoop, StopReason
+from memoria.services.agent.prompt import build_system_prompt
+from memoria.services.agent.session.store import SessionStore, new_session_id, read_session
+from memoria.services.agent.tools import (
+    DENIED_CODE,
+    INVALID_ARGUMENTS_CODE,
+    UNKNOWN_TOOL_CODE,
+    Tool,
+    ToolOutput,
+    ToolRegistry,
+    build_kb_tools,
+)
+
+NEURAL_MD = """# 神经网络
+
+## 感知机
+
+最古老的线性分类器。
+
+## 多层感知机
+
+MLP 由多层全连接组成。
+"""
+
+NEURAL_SIDECAR = """schema_version: 1
+file: neural-network.md
+knowledge_points:
+- id: perceptron
+  name: 感知机
+  tags:
+  - 神经网络
+  range:
+    start:
+      snippet: '## 感知机'
+      line_hint: 3
+    end:
+      snippet: 最古老的线性分类器。
+      line_hint: 5
+- id: mlp
+  name: 多层感知机
+  tags:
+  - 神经网络
+  range:
+    start:
+      snippet: '## 多层感知机'
+      line_hint: 7
+    end:
+      snippet: MLP 由多层全连接组成。
+      line_hint: 9
+"""
+
+SUPERVISED_MD = """# 监督学习
+
+## 定义
+
+用带标签的数据训练模型。
+"""
+
+SUPERVISED_SIDECAR = """schema_version: 1
+file: supervised.md
+knowledge_points:
+- id: supervised
+  name: 监督学习
+  tags:
+  - 学习范式
+  range:
+    start:
+      snippet: '## 定义'
+      line_hint: 3
+    end:
+      snippet: 用带标签的数据训练模型。
+      line_hint: 5
+"""
+
+KB_SPEC = """# 知识库编撰与维护规范
+
+KP 只认 sidecar；改 KP = 改 sidecar。
+"""
+
+
+@pytest.fixture()
+def kb(tmp_path: Path) -> Path:
+    """最小知识库：两篇文档 + 两个 sidecar + 一个指令文件；**故意不带任何缓存**。"""
+    root = tmp_path / "kb"
+    (root / ".memoria" / "sidecars").mkdir(parents=True)
+    (root / ".memoria" / "agent").mkdir(parents=True)
+    (root / "neural-network.md").write_text(NEURAL_MD, encoding="utf-8")
+    (root / "supervised.md").write_text(SUPERVISED_MD, encoding="utf-8")
+    (root / ".memoria" / "sidecars" / "neural-network.memoria.yaml").write_text(NEURAL_SIDECAR, encoding="utf-8")
+    (root / ".memoria" / "sidecars" / "supervised.memoria.yaml").write_text(SUPERVISED_SIDECAR, encoding="utf-8")
+    (root / ".memoria" / "agent" / "kb-spec.zh-CN.md").write_text(KB_SPEC, encoding="utf-8")
+    return root
+
+
+# —— 测试替身 ——
+
+
+class FakeProvider:
+    """按脚本产出流式事件的假 provider；记录收到的请求以便断言。"""
+
+    name = "fake"
+
+    def __init__(self, script: Sequence[Sequence[Any]]) -> None:
+        self.script: list[list[Any]] = [list(step) for step in script]
+        self.requests: list[LlmRequest] = []
+
+    def stream(self, request: LlmRequest) -> Iterator[Any]:
+        self.requests.append(request)
+        step = self.script.pop(0) if self.script else [TextDelta("（脚本耗尽）"), FinishEvent(reason=FinishReason.STOP)]
+        yield from step
+
+
+def text_step(text: str) -> list[Any]:
+    return [
+        TextDelta(text),
+        UsageEvent(Usage(prompt_tokens=10, completion_tokens=5)),
+        FinishEvent(reason=FinishReason.STOP),
+    ]
+
+
+def tool_step(*calls: ToolCall) -> list[Any]:
+    return [FinishEvent(reason=FinishReason.TOOL_CALLS, tool_calls=calls)]
+
+
+def kb_registry(kb: Path, **kwargs: Any) -> ToolRegistry:
+    return ToolRegistry(build_kb_tools(str(kb), **kwargs))
+
+
+def is_role(message: Any, role: Role) -> bool:
+    return message.role == role or message.role == role.value
+
+
+def _snapshot(root: Path) -> dict[str, tuple[int, int, str]]:
+    """全库文件的 (mtime_ns, size, sha256) 快照（只比对文件，目录 mtime 不计）。"""
+    out: dict[str, tuple[int, int, str]] = {}
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        stat = path.stat()
+        out[str(path.relative_to(root)).replace("\\", "/")] = (
+            stat.st_mtime_ns,
+            stat.st_size,
+            hashlib.sha256(path.read_bytes()).hexdigest(),
+        )
+    return out
+
+
+# —— ① 单轮无工具 ——
+
+
+def test_loop_answers_without_tools(kb: Path) -> None:
+    provider = FakeProvider([text_step("直答：这是一个知识库。")])
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb), model="fake-model")
+
+    result = loop.run("这是什么？")
+
+    assert result.stop_reason is StopReason.FINAL_ANSWER
+    assert result.answer == "直答：这是一个知识库。"
+    assert result.iterations == 1
+    assert result.tool_calls == () and result.anchors == ()
+    assert result.usage.total == 15
+    sent = provider.requests[0]
+    assert sent.model == "fake-model"
+    assert [tool.name for tool in sent.tools] == [
+        "search_kb",
+        "read_document",
+        "read_kp",
+        "kb_overview",
+        "validate_kb",
+    ]
+    assert sent.messages[-1].content == "这是什么？"
+
+
+# —— ② 一轮工具调用后回填 ——
+
+
+def test_loop_executes_tool_then_answers(kb: Path) -> None:
+    provider = FakeProvider(
+        [
+            tool_step(ToolCall(id="c1", name="search_kb", arguments=json.dumps({"query": "多层感知机"}))),
+            text_step("MLP 见 neural-network.md:7"),
+        ]
+    )
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb))
+
+    result = loop.run("多层感知机讲的是什么？")
+
+    assert result.stop_reason is StopReason.FINAL_ANSWER
+    assert result.iterations == 2
+    assert result.answer == "MLP 见 neural-network.md:7"
+    assert [call.name for call in result.tool_calls] == ["search_kb"]
+    assert not result.tool_calls[0].is_error
+    anchors = {(anchor["file"], anchor["line"], anchor["kp_id"]) for anchor in result.anchors}
+    assert ("neural-network.md", 7, "mlp") in anchors
+
+    second = list(provider.requests[1].messages)
+    assistant = next(message for message in second if is_role(message, Role.ASSISTANT))
+    assert assistant.tool_calls[0].name == "search_kb"
+    tool_message = next(message for message in second if is_role(message, Role.TOOL))
+    assert tool_message.tool_call_id == "c1"
+    assert "neural-network.md:7" in tool_message.content
+
+
+# —— ③ 未知工具 / 参数非法 ——
+
+
+def test_unknown_tool_and_invalid_arguments_keep_loop_running(kb: Path) -> None:
+    provider = FakeProvider(
+        [
+            tool_step(
+                ToolCall(id="c1", name="no_such_tool", arguments="{}"),
+                ToolCall(id="c2", name="search_kb", arguments='{"query": 42}'),
+                ToolCall(id="c3", name="search_kb", arguments="{不是 JSON"),
+            ),
+            text_step("已忽略那几个失败调用。"),
+        ]
+    )
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb))
+
+    result = loop.run("随便问问")
+
+    assert result.stop_reason is StopReason.FINAL_ANSWER
+    assert [call.output.code for call in result.tool_calls] == [
+        UNKNOWN_TOOL_CODE,
+        INVALID_ARGUMENTS_CODE,
+        INVALID_ARGUMENTS_CODE,
+    ]
+    assert all(call.content.startswith("Error: ") for call in result.tool_calls)
+    tool_contents = [
+        message.content for message in provider.requests[1].messages if is_role(message, Role.TOOL)
+    ]
+    assert len(tool_contents) == 3
+    assert all(content.startswith("Error: ") for content in tool_contents)
+
+
+# —— ④ 达上限 ——
+
+
+def test_loop_stops_at_max_iterations(kb: Path) -> None:
+    provider = FakeProvider(
+        [tool_step(ToolCall(id=f"c{index}", name="kb_overview", arguments="{}")) for index in range(5)]
+    )
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb), max_iterations=3)
+
+    result = loop.run("一直查概览")
+
+    assert result.stop_reason is StopReason.MAX_ITERATIONS
+    assert result.iterations == 3
+    assert len(result.tool_calls) == 3
+    assert len(provider.requests) == 3
+
+
+def test_loop_reports_error_stop_reason(kb: Path) -> None:
+    provider = FakeProvider([[TextDelta("半句"), FinishEvent(reason=FinishReason.ABORTED)]])
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb))
+
+    result = loop.run("会被中断")
+
+    assert result.stop_reason is StopReason.ABORTED
+    assert result.answer == "半句"  # 已投递文本保留（对齐上游取消语义）
+
+
+# —— ⑤ 会话 JSONL ——
+
+
+def test_session_jsonl_append_and_replay(kb: Path) -> None:
+    session_id = new_session_id()
+    store = SessionStore(str(kb), session_id)
+    path = Path(store.path)
+    assert path.parent == kb / ".memoria" / "agent" / "sessions"
+
+    first = store.append("user/message", {"text": "你好"})
+    second = store.append("assistant/message", {"content": "在的"})
+    store.flush()
+    assert (first["seq"], second["seq"]) == (0, 1)
+
+    records = read_session(str(kb), session_id)
+    assert records[0]["type"] == "session/header"
+    assert records[0]["data"]["id"] == session_id
+    assert [row["seq"] for row in records[1:]] == [0, 1]
+    assert records[1]["data"]["text"] == "你好"
+
+    before = path.stat().st_size
+    store.append("loop/end", {"stop_reason": "final-answer"})
+    assert path.stat().st_size > before  # 只追加
+    assert "你好" in path.read_text(encoding="utf-8").splitlines()[1]  # 历史行未被改写
+
+    resumed = SessionStore(str(kb), session_id)  # 复用同一 id：seq 续接
+    assert resumed.next_seq == 3
+    assert resumed.append("x", {})["seq"] == 3
+
+    with pytest.raises(ValueError):
+        SessionStore(str(kb), "../escape")
+
+
+# —— ⑥ 审批默认策略 ——
+
+
+def test_default_approval_rejects_write_tools(kb: Path) -> None:
+    policy = DefaultApprovalPolicy()
+    assert policy.decide(ApprovalRequest(tool="search_kb", read_only=True)).allowed
+    denied = policy.decide(ApprovalRequest(tool="write_document", read_only=False))
+    assert denied.outcome is ApprovalOutcome.REJECTED and not denied.allowed
+
+    # 对齐上游：无应答者 / 应答者抛错 / 词汇外取值 ⇒ unavailable ⇒ 按拒绝关闭
+    assert AskPolicy().decide(ApprovalRequest(tool="w", read_only=False)).outcome is ApprovalOutcome.UNAVAILABLE
+
+    def boom(_request: ApprovalRequest) -> ApprovalOutcome:
+        raise RuntimeError("没有可用 UI")
+
+    assert AskPolicy(boom).decide(ApprovalRequest(tool="w", read_only=False)).outcome is ApprovalOutcome.UNAVAILABLE
+    assert (
+        AskPolicy(lambda _request: "yes").decide(ApprovalRequest(tool="w", read_only=False)).outcome
+        is ApprovalOutcome.UNAVAILABLE
+    )
+    assert NeverPolicy().decide(ApprovalRequest(tool="w", read_only=False)).outcome is ApprovalOutcome.REJECTED
+
+    # 写类工具走完整流水线：被拒绝、循环继续
+    write_tool = Tool(
+        name="write_document",
+        description="写入文档（仅测试用）",
+        parameters={"type": "object", "properties": {}, "additionalProperties": False},
+        handler=lambda _arguments: ToolOutput("已写入"),
+        read_only=False,
+    )
+    registry = ToolRegistry([*build_kb_tools(str(kb)), write_tool])
+    provider = FakeProvider([tool_step(ToolCall(id="w1", name="write_document", arguments="{}")), text_step("写入被拒绝")])
+    loop = AgentLoop(provider=provider, tools=registry, approval=policy)
+
+    result = loop.run("请写入一篇文档")
+
+    assert result.tool_calls[0].is_error
+    assert result.tool_calls[0].output.code == DENIED_CODE
+    assert "拒绝" in result.tool_calls[0].content
+    assert result.stop_reason is StopReason.FINAL_ANSWER
+    assert not (kb / "new-doc.md").exists()
+
+
+# —— ⑦ 只读工具零写入 ——
+
+
+def test_read_only_tools_leave_knowledge_base_untouched(kb: Path) -> None:
+    registry = kb_registry(kb)
+    before = _snapshot(kb)
+    assert not (kb / ".memoria" / "cache").exists()  # 库内本无缓存：一旦写入就会被发现
+
+    calls = [
+        ToolCall(id="c1", name="search_kb", arguments=json.dumps({"query": "多层感知机", "top_k": 5})),
+        ToolCall(id="c2", name="read_document", arguments=json.dumps({"path": "neural-network.md"})),
+        ToolCall(id="c3", name="read_kp", arguments=json.dumps({"id": "mlp"})),
+        ToolCall(id="c4", name="kb_overview", arguments="{}"),
+        ToolCall(id="c5", name="validate_kb", arguments="{}"),
+    ]
+    results = [registry.invoke(call, approval=DefaultApprovalPolicy()) for call in calls]
+
+    assert not any(result.is_error for result in results), [r.content for r in results if r.is_error]
+    assert "neural-network.md:7" in results[0].content
+    assert "neural-network.md:7" in results[2].content
+    assert not (kb / ".memoria" / "cache").exists()
+    assert not (kb / ".memoria" / "agent" / "sessions").exists()
+    assert not (kb / ".memoria" / "manifest.yaml").exists()
+    assert _snapshot(kb) == before
+
+
+def test_read_document_rejects_path_escape(kb: Path) -> None:
+    registry = kb_registry(kb)
+    result = registry.invoke(ToolCall(id="c1", name="read_document", arguments='{"path": "../outside.md"}'))
+    assert result.is_error and result.output.code == INVALID_ARGUMENTS_CODE
+
+
+# —— 附：prompt 组装与端到端竖切 ——
+
+
+def test_system_prompt_injects_kb_instructions_and_tools(kb: Path) -> None:
+    registry = kb_registry(kb)
+    prompt = build_system_prompt(str(kb), tools=registry.schemas(), model="fake-model")
+
+    assert "kb-spec.zh-CN.md" in prompt
+    assert "KP 只认 sidecar" in prompt
+    assert "`search_kb`" in prompt and "`read_kp`" in prompt
+    assert "文件相对路径:行号" in prompt
+    assert "只读" in prompt
+
+
+def test_ask_end_to_end_offline_only_writes_session(kb: Path) -> None:
+    provider = FakeProvider(
+        [
+            tool_step(ToolCall(id="c1", name="search_kb", arguments=json.dumps({"query": "多层感知机"}))),
+            text_step("多层感知机见 `neural-network.md:7`。"),
+        ]
+    )
+    before = _snapshot(kb)
+
+    result = ask(str(kb), "多层感知机在哪？", provider=provider, model="fake-model", session_id="session-test-0001")
+
+    assert result.answer == "多层感知机见 `neural-network.md:7`。"
+    assert result.stop_reason == "final-answer"
+    assert result.iterations == 2
+    assert result.session_path == str(kb / ".memoria" / "agent" / "sessions" / "session-test-0001.jsonl")
+    assert any(anchor["file"] == "neural-network.md" and anchor["line"] == 7 for anchor in result.anchors)
+    assert result.usage["total_tokens"] > 0
+    assert [call["name"] for call in result.tool_calls] == ["search_kb"]
+
+    records = read_session(str(kb), "session-test-0001")
+    types = [row["type"] for row in records]
+    assert types[0] == "session/header"
+    for expected in ("user/message", "step/start", "assistant/message", "tool/call", "tool/result", "loop/end"):
+        assert expected in types, f"会话缺少事件：{expected}"
+
+    after = _snapshot(kb)
+    changed = {name for name, value in after.items() if before.get(name) != value}
+    assert changed == {".memoria/agent/sessions/session-test-0001.jsonl"}
+    assert set(after) - set(before) == {".memoria/agent/sessions/session-test-0001.jsonl"}
+
+
+def test_ask_rejects_missing_kb(tmp_path: Path) -> None:
+    with pytest.raises(ValueError):
+        ask(str(tmp_path / "nope"), "在吗？", provider=FakeProvider([]))

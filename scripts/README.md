@@ -17,6 +17,7 @@ Home of the **official, reusable** developer tools. Separated from `packaging/` 
 | `scan_ui_strings.py` | UI copy inventory scanner: refreshes `docs/reference/i18n-inventory.md` (i18n inventory) |
 | `i18n_selftest.js` | i18n engine self-test: `node scripts/i18n_selftest.js` (default language / switching / missing-key fallback / parameter filling) |
 | `agent_llm_smoke.py` | Agent LLM smoke tool (dsh port, M1): streams one answer from the configured remote endpoint and prints usage. `--mock` runs a built-in fake SSE endpoint so it works offline. Config via `MEMORIA_AGENT_BASE_URL` / `MEMORIA_AGENT_API_KEY` / `MEMORIA_AGENT_MODEL` (key never printed) |
+| `agent_ask.py` | Agent end-to-end ask tool (dsh port, M1): `--kb <path> "<question>"` runs the read-only agent loop (search / read / overview / validate tools) and prints the answer with `file:line` anchors, usage and the session file. `--mock` uses a scripted offline provider (no network). Never writes the knowledge base except `<kb>/.memoria/agent/sessions/*.jsonl` |
 
 ## Rules
 

@@ -190,6 +190,25 @@ src/memoria/services/agent/
 
 > 上游 `llm/*` 四行（见 §5）**已落地**；下一步按 §6.2 继续吃 `core`（loop/system-prompt/tools/session）。
 
+### 6.6 M1b 实施记录（2026-09-17：吃 `core` + `session` + `context` + `interaction`，已落地）
+
+**新增文件**（11 个 / 2,236 行；未改任何既有文件）：`services/agent/{loop,prompt,approvals,ask}.py`、`services/agent/tools/{__init__,registry,kb}.py`、`services/agent/session/{__init__,store}.py`、`scripts/agent_ask.py`、`tests/test_agent_loop.py`。
+
+**验收证据（实施者与本人各自复跑）**：
+
+| 命令 | 结果 |
+|---|---|
+| `py_compile` × 13 新文件 | 全过 |
+| `python -m pytest tests/test_agent_loop.py tests/test_agent_llm.py -q` | **33 passed** |
+| `python scripts/agent_ask.py --mock --kb <库副本> "这个知识库大概有什么内容？"` | 假 provider 先发 `search_kb` → 带锚点结果 → 最终答案；`[stop] reason=final-answer iterations=2`；`[anchors] rl-intro.md:13 / deep-learning.md:19 / supervised.md:41 / …` |
+| **零写入**（运行前后逐文件 `mtime_ns + size` 对比） | 差异**只有** `.memoria/agent/sessions/<id>.jsonl`；原 `docs/example/showcase` 未被触碰；jieba 词典缓存被重定向到系统 temp（日志可见） |
+
+**语义偏差与取舍（上游 → 本地）**：① **`max_iterations=8` 为本地新增**（上游无轮次预算，靠协作式取消）；未移植并行工具、取消信号、runtime context、请求 header 冻结；② 工具错误统一 `Error: <msg> (<CODE>)`（`UNKNOWN_TOOL`/`INVALID_ARGUMENTS`/`DENIED`/`TOOL_FAILED`），只支持 JSON Schema 子集；③ 会话格式自持 `SESSION_FORMAT_VERSION=1`，**与上游 v3 不互通**（未移植 zstd / v0→v3 迁移链 / 跨进程锁 / 崩溃 closer）；④ 指令文件注入进 **system 段**（而非会话消息序列 ⇒ 不回放、不可压缩）；⑤ 审批比上游更严：**只读免审批、写类一律拒绝**（fail-closed），`ask_user_question` 未注册（M1 无问答 UI）；⑥ **只走 lexical 检索**（embedding 需 torch + 权重，与离线优先冲突）；⑦ 零写入靠"**重定向 + 抑制**"4 个库内写点（jieba 缓存 / lexical 缓存 / search_aux / manifest 保存）——属本地新增机制，**将来新增写点必须同步维护该清单**（已写进 docstring）；⑧ `credentials` 不单独实现（`llm/config.py` 已覆盖，M3 需多凭据时再评估）。
+
+**未实测**：真实远端端点（用户本地自测）；真实库上的检索召回质量。
+
+> M1 后端竖切至此打通（提问 → 检索 → 带锚点回答 → 会话落盘）；剩余 M1 部分为**前端对话面板 + 出网开关**，M2 为 compaction 与 session-query。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -255,3 +274,4 @@ src/memoria/services/agent/
 | 2026-09-17 | 拍板回填：**P1** = `src/memoria/services/agent/**`；**P2** = 标准库 `urllib` + 手写 SSE（零新依赖）；**P3** = `<kb>/.memoria/agent/sessions/*.jsonl`（待人工登记 AGENTS.md §1）；**P7** = MIT + `THIRD_PARTY_NOTICES.md`。P4–P6 按推荐默认（全局开关+端点配置 / M1 不做 slash / 建议修订边界措辞，两项契约改动需人工落地） |
 | 2026-09-17 | **更正**：§0/§4.3/P7 曾记"仓库无 `LICENSE`"——错（源于一次失败的目录检查）。核实：`LICENSE` 早已存在（MIT，`Copyright (c) 2026 FreshTim`，`730f9a8a`），故 P7 作废；实际缺口只有缺 `THIRD_PARTY_NOTICES.md`。同步更正 `docs-management.md` §4.2 同条登记 |
 | 2026-09-17 | **M1a 落地**（只吃 `llm` 包）：新增 `src/memoria/services/agent/llm/**`（10 文件）+ `scripts/agent_llm_smoke.py` + `tests/test_agent_llm.py`（21 例）+ 仓库根 `THIRD_PARTY_NOTICES.md`。验收：`py_compile` 12/12、`pytest 21 passed`、`--mock` 冒烟通过、零第三方依赖、12/12 带来源注释、无既有文件被改；偏差与未实测项见 §6.5 |
+| 2026-09-17 | **M1b 落地**（吃 `core`/`session`/`context`/`interaction`）：新增 11 文件 / 2,236 行（loop、system-prompt 组装、11 个只读工具与注册表、jsonl 会话存储、fail-closed 审批、`ask()` 入口、`scripts/agent_ask.py`、12 例单测）。验收：`py_compile` 全过、`pytest 33 passed`、`--mock` 离线竖切跑通（先 `search_kb` 再作答、输出 `文件:行号` 锚点）、**零写入**（逐文件对比仅新增会话 jsonl）。偏差见 §6.6 |
