@@ -1774,6 +1774,18 @@
 #status-bar .-stat-error { background: rgba(0, 0, 0, 0.22); border-radius: 3px; padding: 0 4px; }
 */
 
+/* 「未开库 / 未开文档」这类**硬前置**提示：底栏整行转红，否则一行灰字太容易被略过
+   （用户点完按钮视线还在工具栏，不会去看窗口最底部）。
+   蓝底上不能直接用 --error（#f14c4c 在蓝底偏暗），沿用上面 .-stat-error 的亮红，
+   并补一层深底衬把对比拉起来。 */
+#status-bar #status-info.-status-error {
+    color: #ffb3a7;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.22);
+    border-radius: 3px;
+    padding: 0 4px;
+}
+
 .-toolbar-btn-wrap {
     position: relative;
     display: inline-flex;
@@ -4520,35 +4532,4 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 /* 颜色下拉 hover 预览：临时隐藏选区高亮，露出临时底色（仅 hover 预览期间，见 app.js _applyColorTint） */
 #preview.-color-tinting ::selection {
     background: transparent;
-}
-
-/* ========== 轻提示（toast） ========== */
-.-toast {
-    position: fixed;
-    left: 50%;
-    bottom: 3.25rem;
-    transform: translate(-50%, 0.75rem);
-    max-width: min(72vw, 44rem);
-    padding: 0.5rem 0.875rem;
-    background: var(--bg-tertiary);
-    color: var(--text-bright);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-    font-size: 0.75rem;
-    line-height: 1.45;
-    white-space: pre-wrap;
-    word-break: break-word;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.16s ease, transform 0.16s ease;
-    z-index: 30000;
-}
-.-toast--visible {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-.-toast--error {
-    border-color: var(--error);
-    color: var(--error);
 }

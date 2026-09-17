@@ -19,7 +19,7 @@
 
 | # | 文件 | 覆盖范围 | 状态 |
 |---|---|---|---|
-| 01 | [01-shell-and-layout.md](./01-shell-and-layout.md) | 窗口外壳与整体布局：窗口 chrome / 顶栏 / 侧栏 / 文档区 / 状态栏 / toast / 弹窗层级 / 缩放 | ✅ 233 行 |
+| 01 | [01-shell-and-layout.md](./01-shell-and-layout.md) | 窗口外壳与整体布局：窗口 chrome / 顶栏 / 侧栏 / 文档区 / 状态栏 / flash 浮层 / 弹窗层级 / 缩放 | ✅ 236 行 |
 | 02 | [02-file-tree-and-nav.md](./02-file-tree-and-nav.md) | 文件树与导航：树渲染 / 右键菜单 / F2 / 标签页 / 前进后退 / 空态 | ✅ 259 行 |
 | 03 | [03-editor-and-formatting.md](./03-editor-and-formatting.md) | 编辑器与格式：源码编辑 / 格式工具栏 / 编辑块工具栏 / 撤销重做 / 粘贴复制 | ✅ 240 行 |
 | 04 | [04-preview-and-rendering.md](./04-preview-and-rendering.md) | 预览与渲染：三视图切换 / 渲染管线 / 渲染后 DOM 与交互 / KP 高亮语义 | ✅ 194 行 |

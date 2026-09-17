@@ -1,6 +1,6 @@
 # 01 · 窗口外壳与整体布局
 
-> **用途**：把 Memoria 桌面窗口的「外壳 + 五大区域」（窗口 chrome / 顶栏 / 左侧栏 / 文档区 / 状态栏）连同 toast、弹窗层级与缩放变量，写到可据以定位实现的粒度。
+> **用途**：把 Memoria 桌面窗口的「外壳 + 五大区域」（窗口 chrome / 顶栏 / 左侧栏 / 文档区 / 状态栏）连同闪烁提示（flash）、弹窗层级与缩放变量，写到可据以定位实现的粒度。
 > **目标读者**：在 Memoria 之上做集成 / 移植 / 对齐的 Agent 与人；给 Memoria 写前端改动的人。
 > **关联文档**：[README.md](./README.md)（本套说明书的用法与维护约定）、[02-file-tree-and-nav.md](./02-file-tree-and-nav.md)（左侧栏「文件」页签的细节）、[09-settings-i18n-and-shortcuts.md](./09-settings-i18n-and-shortcuts.md)（设置四页与快捷键总表）、[../preview-formats.md](../preview-formats.md)（渲染语法权威）、[../i18n-inventory.md](../i18n-inventory.md)（文案清单）。
 > **状态**：生效中，2026-09-15。
@@ -28,7 +28,7 @@
 │           ├── #welcome       index.html:144   欢迎页（空态）
 │           └── #editor-wrap   index.html:149   默认 .hidden；header:150 / preview-status:198 / editor-split:199
 └── #status-bar                index.html:212   （memoria.css:561-573）
-#-flash-host:220 · 9 个 .-modal:222-368 · #-toast:370   均在 #app 之外，fixed
+#-flash-host:233 · 9 个 .-modal:235-381   均在 #app 之外，fixed
 ```
 
 **关键互斥关系**（§5 展开）：`#welcome` 与 `#editor-wrap` 由 `showWelcome()` 互斥（app.js:380-383）；导航面板内三视图由 `.hidden` 互斥（app.js:1220-1222）；`#editor-split` 三视图由类名互斥（app.js:1602-1603）。
@@ -66,15 +66,15 @@
 | 「文件」菜单按钮 | 同上 | `#btn-file`（`.-tb-file`，app.css:4326-4331） | 点击切换 `#file-menu` 显隐并同步 `aria-expanded`（app.js:12092-12098） | 无禁用 |
 | ─ 打开 / ─ 导入 | 菜单内 | `#file-menu-open` / `#file-menu-import` | 关闭菜单后分别调 `openKb()`（app.js:12108；app.js:569-573）与 `MemoriaImportFlow.start()`（app.js:12109-12112） | 无 |
 | ─ 导出（预留） | 菜单内 | `#file-menu-export` | 无 | 恒定禁用（index.html:51）；title "导出知识库（预留，待后续版本）"（i18n/zh-CN.js:510-511） |
-| ─ 创建 Trae 智能体 | 菜单内 | `#file-menu-kb-agent` | 绑定于 kb-agent.js:187；未开库时先唤起选目录（kb-agent.js:45-48） | 无 |
+| ─ 创建 Trae 智能体 | 菜单内 | `#file-menu-kb-agent` | 绑定于 kb-agent.js:188；未开库时给应用内错误提示（底栏转红 + 浮层），**不**弹系统目录选择（kb-agent.js:43-50） | 无 |
 | ─ 新窗口 | 菜单内 | `#file-menu-new-window` | `spawnNewWindow("")` → `call("open_new_window")`（app.js:12115-12125、12177-12180） | 无 |
 | ─ 打开最近 ▸（菜单项与分隔线顺序见 index.html:52-59） | 菜单内 | `#file-menu-open-recent` + `#file-menu-recent` | 点击展开二级面板并拉取列表（app.js:12181-12185）；点条目：未开库→本窗口装载，已开别的库→另开窗口，同库→忽略（app.js:12164-12173） | 列表项可 disabled：「读取最近打开列表失败」/「暂无最近打开的知识库」（app.js:12154-12161） |
 | 刷新 | 同上 | `#btn-refresh` | 依次 `refreshFiles` → `loadLinkTargets` → `loadGraphData` → 以 `skipNav:true` 重开当前文件（app.js:12192-12197） | 无禁用、无前置检查 |
-| 构建 | 同上 | `#btn-build` | `buildKb()`：同步链接配置并生成图谱（app.js:1012-1049） | 执行期间 `disabled`（app.js:1018、1047）；未开库仅状态栏提示、不置灰（app.js:1013-1016） |
-| 检查（+角标） | 同上 | `#btn-check` + `#btn-check-badge`（`.-toolbar-badge`，app.css:1768-1799） | 打开检查弹窗（kb-check.js:642）；角标按 error/warn 计数着色（kb-check.js:113-121） | 未开库仅状态栏提示（kb-check.js:623-625）；角标 `.hidden` 即隐藏（app.css:1788-1790） |
+| 构建 | 同上 | `#btn-build` | `buildKb()`：同步链接配置并生成图谱（app.js:1027-1070） | 执行期间 `disabled`（app.js:1038、1068）；未开库不置灰，给错误样式提示（底栏转红 + 浮层，app.js:1032-1035） |
+| 检查（+角标） | 同上 | `#btn-check` + `#btn-check-badge`（`.-toolbar-badge`，app.css:1800-1818） | 打开检查弹窗（kb-check.js:642）；角标按 error/warn 计数着色（kb-check.js:113-121） | 未开库不置灰，给错误样式提示（底栏转红 + 浮层，kb-check.js:622-626）；角标 `.hidden` 即隐藏（app.css:1820-1822） |
 | 设置 | 同上 | `#btn-settings` | 打开设置弹窗（graph-settings.js:950） | 无 |
 | 搜索范围开关 | `.toolbar-search-wrap` | `#toolbar-search-scope`（`role="switch"`） | 整块可点/可聚焦，点击或 Enter/Space 翻转「全库 ⇄ 文件」（toolbar-search.js:253-263）；子按钮 `pointer-events:none`（app.css:2035） | 内部「文件」子按钮在无 `currentPath` 时 `disabled`（toolbar-search.js:60）；强行切到 file 会发 `openFileFirst` 错误（toolbar-search.js:85-88） |
-| 搜索框 | 同上 | `#toolbar-search` | 输入防抖 220ms、Enter 搜索（Shift+Enter 仅当前文件）、Esc 关面板并失焦、聚焦时有内容即重搜（toolbar-search.js:245-277）；Ctrl+K 聚焦（281-286） | 无禁用；未开库时提示 `openKbFirst`（toolbar-search.js:132-135） |
+| 搜索框 | 同上 | `#toolbar-search` | 输入防抖 220ms、Enter 搜索（Shift+Enter 仅当前文件）、Esc 关面板并失焦、聚焦时有内容即重搜（toolbar-search.js:245-277）；Ctrl+K 聚焦（281-286） | 无禁用；未开库时提示 `openKbFirst`（错误样式，toolbar-search.js:132-135） |
 | 搜索结果面板 | 同上 | `#toolbar-search-panel` | 绝对定位于搜索框下方，`z-index:9000`、最大高 `min(240px,40vh)`（app.css:2081-2096）；点外部或选中结果即隐藏（toolbar-search.js:278-280） | 默认 `.hidden`（index.html:78） |
 | 知识库路径指示 | `.toolbar-right` | `#kb-indicator`（memoria.css:218-230） | 纯展示，title 为完整路径；CSS 标为拖拽区 | 外层 `#kb-indicator-wrap` 无路径时 `.hidden`（app.js:370-377） |
 | 退出 | 同上 | `#btn-kb-close`（`-btn primary -btn--sm -kb-exit`） | `closeKb()`：屏障刷盘 → 关库 → 清空全部前端状态 → 回欢迎页（app.js:575-628、12188） | 与 `#kb-indicator-wrap` 同步隐藏 |
@@ -118,17 +118,20 @@
 | 右段统计块 | app.js:281-333；i18n/zh-CN.js:485-490 | 由 `renderStatusStats()` 以 ` · ` 连接：① 检查统计（有 error/warn 时，文案取自 kb-check.js 的 `statsChunk`，并打 `data-kb-check="1"`）；② 全库检查通过（`check.stat.pass`，且无文件级统计）；③ 图谱待办 warn 数；④ 当前文件统计 `app.stat.kpLines`「{kp} KP · {lines} 行」，若有 sidecar 问题再追加 `app.stat.errors/warnings` + `app.stat.sidecar`；⑤ 图谱审计问题（文件级优先，其次全库） |
 | 样式与点击 | app.css:1732-1755；app.js:12219-12227 | `.-stat-error` 红、`.-stat-warn` 黄、`.-stat-ok` 次色；命中图谱审计时 `#status-stats` 加 `.-status-clickable`（黄 + 下划线 + 指针）；点击时 `data-kb-check` 优先 → 检查弹窗，否则 `data-graph-audit-goto` → 跳到首个图谱审计问题 |
 
-### 2.7 toast 与 flash（瞬时反馈）
+### 2.7 闪烁提示（flash，瞬时反馈）
 
-| 项 | toast | flash |
-|---|---|---|
-| 宿主 / 位置 / 层级 | `#-toast`（index.html:370）；fixed，`left:50%`、`bottom:3.25rem`；`z-index:30000`（app.css:4442-4462） | `#-flash-host`（index.html:220）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2161-2172） |
-| 时长 / 并发 | 默认 2400ms（toast.js:17、46-50）；**同一时刻只留一条**，新消息顶替并重置计时（toast.js:12、42-50） | 默认 3800ms + 280ms 淡出（app.js:338、345-348）；可多条堆叠（host 为 flex 列，追加节点） |
-| 变体 / 触发 | `.-toast--error` 红边红字（app.css:4467-4470）；`MemoriaToast.show(text,{type,ms})`，模块零 i18n 键（toast.js:7-9） | `.-flash-error` 红边 + 标题/详情两行（app.css:2174-2219）、`.-flash-info` 绿边（app.css:2192-2208）；`setStatusError(msg,detail)` = `setStatus` + `showFlashError`（app.js:365-368），即**同时**写状态栏 |
+| 项 | 说明 |
+|---|---|
+| 宿主 / 位置 / 层级 | `#-flash-host`（index.html:233）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2202-2213）⇒ **高于弹窗**，弹窗内也能看见 |
+| 时长 / 并发 | 默认 3800ms + 280ms 淡出（app.js:347、354-356）；可多条堆叠（host 为 flex 列，追加节点） |
+| 变体 / 入口 | `.-flash-error` 红边 + 标题/详情两行（app.css:2215-2227）、`.-flash-info` 绿边（app.css:2233-2245）；`showFlashError(msg, detail)`（app.js:344）、`showFlashInfo(msg)`（app.js:360），两者均已挂在 `MemoriaApp` 门面上供子模块调用 |
+| 与底栏的分工 | `setStatusError(msg, detail)` = `setStatus` + `showFlashError`（app.js:374-377）⇒ 底栏 + 卡片**双写**；`setStatus(msg, undefined, {error:true})` 只把底栏转红、不弹卡片；「导入」未开库是唯一**只弹卡片、不写底栏**的入口（import-flow.js:44） |
+
+> **2026-09-16 收敛为单通道**：原先另有一个 `js/toast.js` 轻提示组件（`#-toast`，z-index 30000），其唯一调用点（检查弹窗「复制报告」）与 flash 卡片**同文案双通道**，底部会叠两个一模一样的框。该模块、`#-toast` 节点与其 CSS 已删除，瞬时反馈一律走 flash 卡片（成功绿边 / 失败红边）。
 
 ### 2.8 弹窗与层级
 
-通用结构（index.html:222-368 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
+通用结构（index.html:235-381 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
 
 现有变体类：`#kp-modal`、`#config-modal`（`-modal-tabbed`）、`#assist-modal`（`-modal-assist`）、`#check-modal`（`-modal-check`）、`#settings-modal`（`-modal-settings`）、`#link-modal`、`#import-conflict-modal` / `#import-result-modal`（`-modal-import-conflict|-result`）、`#kb-agent-modal`（复用 `-modal-import-conflict`）。另有**运行时动态创建**的 `.-modal`：文件树输入/确认框（file-tree.js:263-300；app.js:706-728）。
 
@@ -140,7 +143,7 @@
 | 50 / 60 / 61 / 90 | `#toolbar` / `.-tb-file-menu` / `.-tb-file-submenu` / `.-sidebar-collapse-btn` | memoria.css:59；app.css:4337、4397、151 |
 | **1000** | **`.-modal`（全部弹窗）** | app.css:4122-4129 |
 | 9000 / 10000 / 10050 | `.-toolbar-search-panel` / `.-win-resize-layer` / `.-context-menu`、`.-fmt-dropdown-menu` | app.css:2095、1901、2571、3184 |
-| 12000 / 20000 / 30000 / 99999 | `#-flash-host` / `.-color-picker-mask` / `.-toast` / `.-lightbox-overlay` | app.css:2166、3279、4461、4036 |
+| 12000 / 20000 / 99999 | `#-flash-host` / `.-color-picker-mask` / `.-lightbox-overlay` | app.css:2202、3279、4036 |
 
 **同时只允许一个弹窗的约束**：**没有**"关掉其它弹窗"的中央实现，各弹窗各自管理自己的 `hidden`（app.js:3062、4539、5451；kb-check.js:629）；唯一存在的"全局互斥"是 F2 的前置检查——只要存在任一非 `hidden` 的 `.-modal` 就不劫持 F2（file-tree.js:453-457）。
 
@@ -156,7 +159,7 @@
 | 持久化 | `localStorage["-display-settings"]`（display-settings.js:9、40-46）+ 磁盘 `ui-settings.json` 的 `display` 段（display-settings.js:114-118） | 启动 `hydrateFromDisk` 时"本地优先、磁盘仅作种子"（display-settings.js:66-77、120-138） |
 | 快捷键 | `Ctrl+=` / `Ctrl++` 放大、`Ctrl+-` 缩小、`Ctrl+0` 复位（app.js:12201-12217） | 步进 ±0.1 并被夹在区间内（display-settings.js:147-157）；**无按键目标过滤**（输入框内同样生效） |
 
-> 注：`index.html:218-219` 注释称"浮层放 `#app` 外以免受 `#app` 的 zoom 影响"，但当前实现改的是**根元素 `font-size`**（display-settings.js:92-93），`rem` 会级联到 `body` 下所有浮层，故 toast/flash 的间距实际**会**随缩放变化——注释与实现已不一致。
+> 注：`index.html:231-232` 注释称"浮层放 `#app` 外以免受 `#app` 的 zoom 影响"，但当前实现改的是**根元素 `font-size`**（display-settings.js:92-93），`rem` 会级联到 `body` 下所有浮层，故 flash 卡片的间距实际**会**随缩放变化——注释与实现已不一致。
 
 ## 3. 交互流程
 
@@ -188,9 +191,9 @@
 
 ## 5. 边界与已知坑
 
-1. **弹窗层级低于多个浮层**：`.-modal` 为 `z-index:1000`（app.css:4125），低于搜索面板 9000、右键菜单 10050、颜色选择器遮罩 20000、toast 30000、图片灯箱 99999。这是有意为之（toast 的存在理由就是"弹窗打开时状态栏被遮住"，toast.js:4-5），但意味着**任何 1000 以上的浮层都能盖住弹窗**。
+1. **弹窗层级低于多个浮层**：`.-modal` 为 `z-index:1000`（app.css:4218），低于搜索面板 9000、右键菜单 10050、flash 卡片 12000、颜色选择器遮罩 20000、图片灯箱 99999。flash 卡片刻意高于弹窗（弹窗会遮住底栏，反馈只能靠它，见 §2.7），代价是**任何 1000 以上的浮层都能盖住弹窗**。
 2. **没有"只能开一个弹窗"的中央约束**：各弹窗独立管理 `hidden`，多个弹窗可同时可见；唯一的"统一判定"是 F2 的全局检查（file-tree.js:453-457）。
-3. **禁用态并不统一**：后退/前进用 `disabled`；构建仅在执行中 `disabled`；检查/刷新/设置无禁用，改为点击后在状态栏给提示（`openKbFirst` / `openFileFirst`）。集成方判断"能否操作"需按 §2.2 表逐项判，不能只看是否灰化。
+3. **禁用态并不统一**：后退/前进用 `disabled`；构建仅在执行中 `disabled`；检查/刷新/设置无禁用，改为点击后提示前置条件（`openKbFirst` / `openFileFirst`）。**这类提示分两档**：`setStatusError` = 底栏整行转红（`.-status-error`，app.css:1777-1787）+ 底部浮层卡片；`setStatus` = 底栏普通色。当前「硬前置」类（构建/检查/插入图片/搜索/创建智能体）都走**前者**；**导入**是唯一只弹悬浮卡片、**不**写底栏的入口（直调 `showFlashError`，见 08 篇 §2.1）。集成方判断"能否操作"需按 §2.2 表逐项判，不能只看是否灰化。
 4. **侧栏宽度是两套口径**：CSS 默认 17.5rem / 最小 11.25rem（app.css:124-125），JS 拖拽夹在 180–480px（app.js:11977）；非 100% 缩放时 rem 与 px 不一致，会出现"能拖到比 CSS 最小值更窄/更宽"的观感。
 5. **`Ctrl+= / Ctrl+- / Ctrl+0` 无目标过滤**：在搜索框、弹窗输入框内按同样触发整界面缩放（app.js:12203-12216 未检查 `e.target`）。
 6. **顶栏拖拽靠"选择器黑名单"**：`NO_DRAG_SELECTORS`（window-chrome.js:118-119）未包含 `.toolbar-left` 内部元素，故品牌区整体可拖；新增顶栏控件若不在黑名单内，会被拖拽的 mousedown 吞掉点击。
@@ -219,7 +222,7 @@
 | 格式栏与块编辑栏互斥 | index.html:152-188；edit-handler.js:1009-1013、1545-1550 |
 | 欢迎页与文档区切换 / 关库复位 | app.js:380-383、575-628 |
 | 状态栏统计拼装 / 点击跳转 / 样式 | app.js:281-333、12219-12227；app.css:1732-1755 |
-| toast / flash 实现 | toast.js:14-63；app.js:335-368；app.css:4442-4470、2161-2241 |
+| flash 卡片实现 | app.js:344-372；app.css:2202-2245 |
 | 弹窗通用结构 / 拖动 / 动态弹窗 | app.css:4122-4186；app.js:12560-12625、706-728；file-tree.js:263-300 |
 | 显示设置（字号 / 缩放）/ 缩放快捷键 | display-settings.js:11-20、79-98、140-157；app.js:12201-12217 |
 | i18n 静态节点刷新 / boot 顺序 | i18n.js:91-115、154-169；app.js:12676-12687 |

@@ -612,16 +612,16 @@ window.MemoriaKbCheck = (function () {
     try {
       if (!(await writeClipboard(text))) throw new Error("copy failed");
       setStatus(T("check.copyDone"));
-      window.MemoriaToast?.show(T("check.copyDone"));
+      A().showFlashInfo?.(T("check.copyDone")); // 弹窗挡住底栏，用悬浮卡片给可见反馈
     } catch (_) {
       setStatusError(T("check.copyFailed"));
-      window.MemoriaToast?.show(T("check.copyFailed"), { type: "error" });
+      // 同一条文案只走一个通道（原先这里再弹一个 toast，底部会叠两个一样的框）
     }
   }
 
   function openCheckModal() {
     if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
+      setStatusError(T("app.openKbFirst"));
       return;
     }
     const modal = $("#check-modal");

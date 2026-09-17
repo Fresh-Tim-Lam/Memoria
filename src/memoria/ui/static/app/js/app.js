@@ -277,8 +277,10 @@
     return issue ? issue.code || String(issue) : "";
   }
 
-  function setStatus(msg, stats) {
-    $("#status-info").textContent = msg;
+  function setStatus(msg, stats, opts = {}) {
+    const el = $("#status-info");
+    el.textContent = msg;
+    el.classList.toggle("-status-error", !!(opts && opts.error)); // 错误类提示底栏转红（见 app.css）
     if (stats !== undefined) {
       state.lastFileStats = stats == null ? "" : String(stats);
       renderStatusStats();
@@ -370,7 +372,7 @@
   }
 
   function setStatusError(msg, detail, opts = {}) {
-    setStatus(msg, detail);
+    setStatus(msg, detail, { error: true });
     showFlashError(msg, detail, opts);
   }
 
@@ -1028,7 +1030,7 @@
       return;
     }
     if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
+      setStatusError(T("app.openKbFirst"));
       return;
     }
     buildInFlight = true;
@@ -12800,6 +12802,8 @@
     esc,
     setStatus,
     setStatusError,
+    showFlashError,
+    showFlashInfo,
     refreshFiles,
     loadLinkTargets,
     loadGraphData,

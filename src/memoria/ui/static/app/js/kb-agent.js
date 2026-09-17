@@ -9,10 +9,10 @@
  *
  * 复用 .-modal 通用浮层 #kb-agent-modal（结构与 import-conflict-modal 镜像）。
  * 文案全部经 T()（toolbar.kbAgent / kbAgent.* 键族）；菜单项始终可点，
- * 未打开知识库时点击先唤起「打开知识库」目录选择，取消则中止。
+ * 未打开知识库时点击给应用内错误提示（底栏转红 + 浮层），不再弹系统目录选择框。
  *
  * 依赖 window.MemoriaApp（app.js 导出的应用服务门面）：
- *   state / call / T / esc / setStatus / setStatusError / openKb
+ *   state / call / T / esc / setStatus / setStatusError
  */
 window.MemoriaKbAgent = (function () {
   "use strict";
@@ -42,10 +42,11 @@ window.MemoriaKbAgent = (function () {
 
   async function start() {
     const a = A();
-    // 未打开知识库：先唤起「打开知识库」（目录选择）；用户取消则中止
+    // 未打开知识库：拒绝并提示（与构建/检查/导入同一张卡片），**不**弹系统目录选择框。
+    // 工具包必须写进 <KB>/.memoria/agent/，指令全文也来自落盘后的 prompt.zh-CN.md —— 没有库就没有可做的事。
     if (!a.state || !a.state.kbPath) {
-      await a.openKb?.();
-      if (!a.state || !a.state.kbPath) return;
+      a.setStatusError?.(t("app.openKbFirst"));
+      return;
     }
     if (_busy) return;
     _busy = true;

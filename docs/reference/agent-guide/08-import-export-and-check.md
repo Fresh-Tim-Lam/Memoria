@@ -40,7 +40,7 @@
 | 项 | 证据 | 说明 |
 |---|---|---|
 | 入口 | index.html:50；app.js:12109-12112 | 「文件」菜单 →「导入」：`closeFileMenu()` 后 `MemoriaImportFlow.start()` |
-| 未开库 | import-flow.js:43-46 | 状态栏提示 `app.openKbFirst`（`setStatus`，非错误样式） |
+| 未开库 | import-flow.js:43-46 | **悬浮卡片**（直调 `showFlashError`，与「创建 Trae 智能体」未开库时同一处样式）提示 `app.openKbFirst`；不写底栏 |
 | 首次呈现 | import-flow.js:47-51 | `_resetState()` → `renderKindChooser()` → 标题 `import.chooseTitle`「选择导入源」→ **移除 `#import-conflict-modal` 的 `hidden`** |
 | 按钮可见性状态机 | import-flow.js:64-69、255-256 | 「确认导入」`#import-conflict-confirm` 与「复制报告」`#import-conflict-copy-report` 默认隐藏，**仅在扫描完成进入预览后**出现 |
 | 标题栏 | index.html:325-328；import-flow.js:71-76 | 标题是 header 内第一个 `<span>`，由 `setTitle()` 逐阶段改写（源选择 / 预览 / 提示词 / 格式说明） |
@@ -102,7 +102,7 @@
 | 元素 | 证据 | 说明 |
 |---|---|---|
 | 顶栏按钮 + 角标 | index.html:64-67 | `#btn-check` 与 `#btn-check-badge`；角标在 `.-toolbar-btn-wrap`（`position:relative`）内绝对定位到按钮右下（`translate(calc(55% - 3px), calc(42% - 3px))`，app.css:1785），`pointer-events:none` |
-| 打开弹窗 | kb-check.js:640-642、622-632 | 未开库只提示 `app.openKbFirst`；否则先显示弹窗并用**缓存报告**渲染（`state.kbValidateReport`），随后以 `silent:true` 跑一次刷新 |
+| 打开弹窗 | kb-check.js:642、622-633 | 未开库给错误样式提示 `app.openKbFirst`（底栏转红 + 浮层）；否则先显示弹窗并用**缓存报告**渲染（`state.kbValidateReport`），随后以 `silent:true` 跑一次刷新 |
 | 弹窗骨架 | index.html:268-283；app.css:456-463 | `.-modal-box.-modal-check`（宽 `min(720px,94vw)`、max-height 82vh、min-height 22.5rem）；正文 `#check-body.-check-body` 可滚动；标题 `check.modalTitle` |
 | 底部按钮 | index.html:276-281 | 「重新检查」`#check-rerun`（`check.rerun`）、「复制报告」`#check-copy`（`check.copy`）、spacer、「关闭」`#check-dismiss`（`common.close`）；右上 X `#check-close` |
 
@@ -129,7 +129,7 @@
 
 **重新检查**：`#check-rerun` → `runKbValidate({silent:false})`（kb-check.js:646），走**同步** RPC `validate_kb`（ui.py:385-388），与静默路径的异步作业不同（§2.9）。
 
-**复制报告**（kb-check.js:499-620）：文本由 `buildCheckReportText()` 生成——`# 知识库检查报告` + 知识库路径 + `check.report.time`（`toLocaleString()`）+ `check.report.statLine`，再按 `## 全库` / `## 路径变更` / `## 文件清单` / `### <文件>` / `## 图谱建边` 分节，条目为 `- [错误|警告] <code> <本地化消息>`，有详情追加 `  → <详情>`，全空则追加 `check.noProblems`。写剪贴板 `writeClipboard()` 先试 `navigator.clipboard.writeText`，**reject 时回退** `document.execCommand("copy")`（临时 off-screen textarea）；成功 → 状态栏 `check.copyDone` **且** toast，失败 → `setStatusError(check.copyFailed)` + 错误 toast；无缓存报告 → 状态栏 `check.empty`。语言切换后由 `MemoriaI18n.addRefresh` 重绘角标 / 状态栏统计 / 已打开的弹窗（kb-check.js:656-665）。
+**复制报告**（kb-check.js:499-620）：文本由 `buildCheckReportText()` 生成——`# 知识库检查报告` + 知识库路径 + `check.report.time`（`toLocaleString()`）+ `check.report.statLine`，再按 `## 全库` / `## 路径变更` / `## 文件清单` / `### <文件>` / `## 图谱建边` 分节，条目为 `- [错误|警告] <code> <本地化消息>`，有详情追加 `  → <详情>`，全空则追加 `check.noProblems`。写剪贴板 `writeClipboard()` 先试 `navigator.clipboard.writeText`，**reject 时回退** `document.execCommand("copy")`（临时 off-screen textarea）；成功 → 状态栏 `check.copyDone` **且**绿色 flash 卡片，失败 → `setStatusError(check.copyFailed)`（底栏转红 + 红色卡片）；无缓存报告 → 状态栏 `check.empty`。语言切换后由 `MemoriaI18n.addRefresh` 重绘角标 / 状态栏统计 / 已打开的弹窗（kb-check.js:656-665）。
 
 ### 2.8 检查角标与状态栏统计
 
@@ -164,7 +164,7 @@
 | 检查作业日志文本 | kb-check.js:167、173、204、208、211、226、230、235、239 | 「丢弃（已无打开的知识库）」「跳过（编辑/待保存未收敛，等下轮）」「已提交后台作业 #id」「完成（后台作业 #id，Nms）」「已被新作业顶替（合并）」「轮询超时（作业仍在后台执行）」等 |
 | 可选落盘追踪 | scheduler.js:43-81、97-99 | 置 `window.__jobTrace = true` 时日志以 200ms 批量写 `logs/job-trace.log`（经 `write_debug_log`），`beforeunload` 前 flush |
 | 后端作业状态机与观测接口 | executor.py:24-28、44-68、97-144；ui.py:392-412 | `queued → running → done\|error`，同 `kind+key` 的 queued 作业被顶替为 `superseded`；`status()` 返回 `elapsed_ms`，`done` 带 `result`、`error` 带 `error`；接口 `validate_kb_async` / `job_status` / `jobs_snapshot` |
-| 用户可见反馈 | — | **前端不发 toast、不显示进度条**；排队/完成/跳过只在控制台与状态栏（角标 + 统计块）体现 |
+| 用户可见反馈 | — | **前端不发浮层提示、不显示进度条**；排队/完成/跳过只在控制台与状态栏（角标 + 统计块）体现 |
 
 ### 2.11 「刷新」与「构建」
 
@@ -209,7 +209,7 @@
 12. **静默检查无 UI 反馈**：排队 / 跳过 / 完成 / 顶替只进控制台 `[job]` 与可选 `logs/job-trace.log`（§2.10）；用户侧只能看到角标与状态栏随之变化。
 13. **角标截断到 `99+`** 但 title 仍显示真实 `{err}/{warn}`（kb-check.js:127-138）。
 14. **角标挂在按钮包装层上**：`.toolbar-btn-wrap` 为 `position:relative`、角标 `translate(calc(55% - 3px), calc(42% - 3px))`（app.css:1785），故角标**溢出按钮右下角**而非贴合内角；`pointer-events:none` 保证不吞点击。
-15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4125），低于搜索面板 9000、右键菜单 10050、toast 30000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.8）。
+15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4218），低于搜索面板 9000、右键菜单 10050、flash 浮层 12000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.8）。
 16. **检查条目路径多值时只打开第一段**：`paths.length > 1` 时以 ` · ` 拼接展示，但 `data-check-open` 取首个 path（kb-check.js:340-345），点「打开」只会打开第一个文件。
 
 ## 6. 代码锚点表
@@ -232,7 +232,7 @@
 | 检查弹窗渲染与条目 | kb-check.js:281-306、308-497 |
 | 检查条目跳转 | kb-check.js:478-496；app.js:1463-1483 |
 | 修复路径 / 更新文件清单 | kb-check.js:430-476 |
-| 复制报告（文本 / 剪贴板 / toast） | kb-check.js:499-620 |
+| 复制报告（文本 / 剪贴板 / flash 卡片） | kb-check.js:499-620 |
 | 打开 / 关闭 / 重新检查 / 语言刷新 | kb-check.js:622-666 |
 | 静默检查调度与作业轮询 | kb-check.js:147-244；check-settings.js:111-146 |
 | 检查设置页 | check-settings.js:8-13、44-57、154-183、203-223；graph-settings.js:772、803-807 |

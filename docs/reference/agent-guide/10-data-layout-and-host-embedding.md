@@ -166,7 +166,7 @@
 
 ## 3. 交互流程
 
-**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:372-415 的顺序加载脚本（graph-* → \*-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `toast/scheduler/app.js` → 各子系统）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树 `init()` → `initKb()`（读启动库路径）→ `initWindowChrome()`。
+**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:383-434 的顺序加载脚本（graph-* → *-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `scheduler.js` → `app.js` → 各子系统）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树 `init()` → `initKb()`（读启动库路径）→ `initWindowChrome()`。
 
 **3.2 一次 RPC 往返**：前端 `call("name", ...)`（app.js:385-387）→ `window.memoria.api.name(...args)`：
 - pywebview：直接调用宿主对象方法（pywebview 内部完成序列化）；

@@ -41,7 +41,7 @@ window.MemoriaImportFlow = (function () {
   async function start() {
     const a = A();
     if (!a.state || !a.state.kbPath) {
-      a.setStatus?.(t("app.openKbFirst"));
+      a.showFlashError?.(t("app.openKbFirst")); // 与「创建 Trae 智能体」同一个悬浮卡片，不占底栏
       return;
     }
     _resetState();

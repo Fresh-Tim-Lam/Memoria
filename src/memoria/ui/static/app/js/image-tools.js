@@ -66,11 +66,11 @@ window.MemoriaImageTools = (function () {
 
   async function startInsertImage(insertAtLine) {
     if (!state.kbPath) {
-      setStatus(T("app.openKbFirst"));
+      setStatusError(T("app.openKbFirst"));
       return;
     }
     if (!state.currentPath) {
-      setStatus(T("img.insert.openDocFirst"));
+      setStatusError(T("img.insert.openDocFirst"));
       return;
     }
     const local = await call("select_image_file");

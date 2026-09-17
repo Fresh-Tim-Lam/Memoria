@@ -104,9 +104,9 @@ Display settings and integrity check: adjustable font size / UI scale; one-click
 
 <img src="resources/screenshots/demo-check.png" alt="Memoria knowledge-base integrity check" width="820"/>
 
-Knowledge-base check with a copyable report: the panel summarizes integrity, manifest diff and graph-edge issues; "Copy report" puts a Markdown report on the clipboard and confirms it with a bottom toast.
+Knowledge-base check with a copyable report: the panel summarizes integrity, manifest diff and graph-edge issues; "Copy report" puts a Markdown report on the clipboard and confirms it with a hint at the bottom.
 
-<img src="resources/screenshots/demo-check-report.png" alt="Memoria knowledge-base check panel with the copy-report toast" width="820"/>
+<img src="resources/screenshots/demo-check-report.png" alt="Memoria knowledge-base check panel with the copy-report confirmation hint" width="820"/>
 
 ---
 
