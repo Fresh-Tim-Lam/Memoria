@@ -642,7 +642,7 @@
       tab: {
         graph2d: "2D Graph",
         graph3d: "3D Graph",
-        groups: "Node Group Tabs",
+        groups: "Node Groups",
         search: "Search",
         check: "Check",
         view: "View",
@@ -1068,7 +1068,7 @@
           glow: "Glow strength",
         },
         groups: {
-          heading: "Node group tabs",
+          heading: "Node groups",
           note: "Union-find connected components; the second row of sidebar tabs works for both 2D/3D. M4 may add smart naming and ordering.",
           distLabel: "Distribution",
           distGrid: "Cluster grid",

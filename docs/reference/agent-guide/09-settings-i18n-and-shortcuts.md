@@ -25,7 +25,7 @@
 └── .-modal-footer                      index.html:295-300   「恢复默认」#settings-reset + 「关闭」#settings-dismiss
 ```
 
-页签集合是 **6 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群页签` / `检索` / `检查` / `显示`（graph-settings.js:765-775；文案 `settings.tab.*`，zh-CN.js:642-649）。**顺序即上表顺序**——「显示」在第 6 位（最后），「检索」在「检查」之前。
+页签集合是 **6 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示`（graph-settings.js:765-775；文案 `settings.tab.*`，zh-CN.js:642-649）。**顺序即上表顺序**——「显示」在第 6 位（最后），「检索」在「检查」之前。
 
 > ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另**当前不存在任何「高级选项」折叠区**：设置页只有具名页签，全前端检索「高级 / advanced」只命中链接编辑器的 `.-link-advanced`（app.css:2810-2820），不在设置窗口内。
 
@@ -88,7 +88,7 @@
 
 **预览列**（graph-settings.js:607-620、670-732）：右列画一张**固定示例图**（`buildSampleGraph()`，文案键 `graph.sample.*`，graph-settings.js:50-109）；hover 节点时提示区改为节点信息卡（graph-settings.js:670-683）；竖直分栏柄可调预览高度 140–520px（`bindPreviewResize`，graph-settings.js:479-491），高度存 `localStorage["-settings-preview-h"]` + 磁盘 `settingsPreviewH`。
 
-### 2.4 「节点群页签」页
+### 2.4 「节点群」页
 
 渲染 `renderSettingsBodyGroups()`（graph-settings.js:592-629、649-654），单列、**无预览列**。
 
@@ -130,8 +130,8 @@
 | | 内容 | 证据 |
 |---|---|---|
 | **会变**（静态节点） | 全部挂 `data-i18n` / `data-i18n-attr` 的节点（顶栏、侧栏页签、视图切换、格式栏、各弹窗标题与按钮、欢迎页…） | i18n.js:91-115、117-135 |
-| **会变**（注册了刷新回调的动态区域） | ① 设置弹窗当前页签重绘（graph-settings.js:976-981；app.js:12440-12444）；② 检查角标/状态栏检查统计/打开的检查弹窗（kb-check.js:656-665）；③ Trae 智能体弹窗（kb-agent.js:197） | 同左 |
-| **不会变**（在旧语言里留到下次重绘） | 已渲染但未注册刷新回调的动态区域：KP 列表（app.js 渲染）、状态栏常规统计、标签页标题、图谱分组条、搜索结果面板等 | 全库仅 3 处 `addRefresh`（app.js:12440、kb-check.js:657、kb-agent.js:197）——file-tree.js、app.js 的 KP 列表、toolbar-search.js 均无。注：**按需生成的浮层**（文件树右键菜单、重命名弹窗）在下次打开时才调 `T()`，因此会直接用新语言 |
+| **会变**（注册了刷新回调的动态区域） | ① 设置弹窗当前页签重绘（graph-settings.js:976-981；app.js:12440-12444）；② 检查角标/状态栏检查统计/打开的检查弹窗（kb-check.js:656-665）；③ Trae 智能体弹窗（kb-agent.js:198） | 同左 |
+| **不会变**（在旧语言里留到下次重绘） | 已渲染但未注册刷新回调的动态区域：KP 列表（app.js 渲染）、状态栏常规统计、标签页标题、图谱分组条、搜索结果面板等 | 全库仅 3 处 `addRefresh`（app.js:12440、kb-check.js:657、kb-agent.js:198）——file-tree.js、app.js 的 KP 列表、toolbar-search.js 均无。注：**按需生成的浮层**（文件树右键菜单、重命名弹窗）在下次打开时才调 `T()`，因此会直接用新语言 |
 | **不会变**（本就不翻译） | ① Markdown 正文（用户文档内容不属界面文案，conventions/i18n.md:22）；② 壳端**原生文件对话框标题**——硬编码中文：`选择知识库文件夹` / `选择要导入的文件` / `选择图片文件`（pywebview_host.py:152、171、194），`选择知识库目录` / `选择导入文件` / `选择图片`（pyqt6_host.py:55、65、74）；③ 后端返回的 `message`（除 `check.issue.<code>` 机制外原样显示，app.js:258-268） | 同左 |
 | 持久化 | `localStorage["-i18n"]`（立即）+ 磁盘 `ui-settings.json` 的 `i18n.lang`（280ms 去抖） | i18n.js:13、38-44、142-151 |
 
@@ -222,7 +222,7 @@
 2. **页签不落盘**：`settingsTab` 是模块内变量（graph-settings.js:111），重开应用回到 2D 图谱——集成方不要假设"上次打开的页"。
 3. **「恢复默认」范围小于直觉**：只覆盖图谱、侧栏分栏、检查（graph-settings.js:230-241）。显示与检索**不重置**；`MemoriaSearchSettings.reset()` 虽有实现但**无任何调用点**（search-settings.js:139-149）。
 4. **设置弹窗不响应 Esc**，也没有"同时只开一个弹窗"的中央约束（弹窗各自管 `hidden`）。
-5. **语言切换不是全量重绘**：只有 `data-i18n*` 静态节点 + 3 个注册了 `addRefresh` 的区域会更新（app.js:12440-12444、kb-check.js:657、kb-agent.js:197）。已渲染的 KP 列表、状态栏常规统计、标签页等会**停留在旧语言**，直到各自下次重绘（按需生成的浮层如右键菜单则在下次打开时即用新语言）。
+5. **语言切换不是全量重绘**：只有 `data-i18n*` 静态节点 + 3 个注册了 `addRefresh` 的区域会更新（app.js:12440-12444、kb-check.js:657、kb-agent.js:198）。已渲染的 KP 列表、状态栏常规统计、标签页等会**停留在旧语言**，直到各自下次重绘（按需生成的浮层如右键菜单则在下次打开时即用新语言）。
 6. **`memoria:langchange` 是死事件**：i18n.js:123 派发它，但全库无监听者（实际刷新靠 `addRefresh` 回调列表）。外部宿主若要联动，只能监听它或自行轮询 `currentLang()`。
 7. **缩放与 `Ctrl+K` 快捷键都无目标过滤**：`Ctrl+=/-/0` 在输入框内同样生效（app.js:12203-12216 未判 `e.target`），会连带改变弹窗尺寸；`Ctrl+K` 同样无条件 `preventDefault` 并抢焦点到顶栏搜索框（toolbar-search.js:281-286）。
 8. **`Ctrl+B` / `Ctrl+I` 只存在于文案**（tooltip）中，无按键实现；`Ctrl+S` 亦无。
@@ -249,7 +249,7 @@
 | 检查设置（选项集 / 归一 / 定时器） | check-settings.js:8-13、44-57、59-71、111-146、160-223 |
 | i18n 引擎（t / 回退 / 填充 / applyStatic / setLang / hydrate） | i18n.js:55-78、66-71、91-115、117-135、154-169 |
 | `data-i18n` / `data-i18n-attr` 用例与语言包 | index.html:44、47、77、87-90、100-102、146；i18n/zh-CN.js:420、640-666；i18n.js:15 |
-| 语言切换的刷新订阅点 / 后端 check 消息本地化 | app.js:12437-12445、258-268；kb-check.js:656-665、59-62；kb-agent.js:197 |
+| 语言切换的刷新订阅点 / 后端 check 消息本地化 | app.js:12437-12445、258-268；kb-check.js:656-665、59-62；kb-agent.js:198 |
 | 快捷键：源码编辑器 / 方向键滚面板 / 预览区 / 树输入框 | app.js:7205-7380、7011-7037；edit-handler.js:628-645、762-800、1650-1655、1291-1296；file-tree.js:437-467、291-299 |
 | 快捷键：Alt+←/→、Ctrl+K、各 Esc 关闭浮层 | app.js:12402-12410、698-700、10323-10327、10480-10482、10749-10751、12105-12107；toolbar-search.js:258-286；kp-context-menu.js:66-68；link-context-menu.js:263-265 |
 | 壳端原生对话框标题（硬编码中文） | app/shell/pywebview_host.py:152、171、194；app/shell/pyqt6_host.py:55、65、74 |

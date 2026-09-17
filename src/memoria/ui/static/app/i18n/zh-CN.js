@@ -642,7 +642,7 @@
       tab: {
         graph2d: "2D 图谱",
         graph3d: "3D 图谱",
-        groups: "节点群页签",
+        groups: "节点群",
         search: "检索",
         check: "检查",
         view: "显示",
@@ -985,7 +985,7 @@
           glow: "光晕强度",
         },
         groups: {
-          heading: "节点群页签",
+          heading: "节点群",
           note: "并查集闭包分量；侧栏第二行页签对 2D/3D 通用。M4 可接入智能命名与排序。",
           distLabel: "分布模式",
           distGrid: "群组网格",

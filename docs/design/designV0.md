@@ -1174,7 +1174,7 @@ filePointer: A→3, B→1, C→2
 |------|----------|------|
 | **M0** `[✅]` | KP snippet range + 用户辅助 + 目标高亮 | S1/S2 snippet；歧义 UI；标题提议需确认 |
 | **M1** `[✅]` | links + 导航栈 | `[[]]` + `links[]`；← → 栈 + filePointer；多目标跳转；右键建链/编辑；虚链 |
-| **M2** `[部分]` | 图谱引擎 + 2D/3D | 独立 2D/3D 布局；Canvas + Three.js；节点群页签；**压测** `scripts/graph_layout_benchmark.py` + `test_graph_stress.py`；**Worker 布局**（≥60 节点）+ **3D 八叉树拾取**（≥40 节点）；**待办**：布局模式、M4 智能群命名 |
+| **M2** `[部分]` | 图谱引擎 + 2D/3D | 独立 2D/3D 布局；Canvas + Three.js；节点群；**压测** `scripts/graph_layout_benchmark.py` + `test_graph_stress.py`；**Worker 布局**（≥60 节点）+ **3D 八叉树拾取**（≥40 节点）；**待办**：布局模式、M4 智能群命名 |
 | **M3** | 配置 + 手动维护 | 无 AI 也能建库、改 id、绑跳转 |
 | **M4** | Lexical 检索内核 | SearchKernel + 虚链定向 + suggest；Embedding 接口 stub |
 | **M5** `[🔄]` | **PyQt6 + Win32 桌面壳（收尾）** | 发布包已可用；hidden chrome / 打包 / 图标；见 §4.6、§16 R01 |
