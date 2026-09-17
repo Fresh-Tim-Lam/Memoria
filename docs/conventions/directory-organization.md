@@ -13,6 +13,7 @@
 | `src/` | 源码（Python + UI 静态资源） | ❌ |
 | `tests/` | 单元/集成测试 | ❌ |
 | `docs/` | 文档（规范/设计/交接/示例知识库） | ⚠️ 仅 `docs/tmp/` |
+| `site/` | **公开静态站点**（对外指引页；GitHub Pages 的站点源，由 `.github/workflows/pages.yml` **只上传本目录**） | ❌ |
 | `scripts/` | **正式可复用**的开发者工具（启动/基准/数据生成） | ❌ |
 | `packaging/` | 打包发布脚本与配置（唯一入口 `build_release.cmd`） | ❌ |
 | `resources/` | 应用图标等资源 | ❌ |

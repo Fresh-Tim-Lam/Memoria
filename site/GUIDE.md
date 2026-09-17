@@ -18,25 +18,29 @@
 
 | 需要 | 从哪来 |
 |---|---|
-| **Trae**（AI IDE，免费） | 官网 <https://www.trae.ai/> 下载安装（就是第 1 步那张截图） |
+| **Trae**（AI IDE，免费） | 国内版官网 <https://www.trae.cn/> 下载安装（就是第 1 步那张截图）。若在海外、或需要国际版模型（GPT / Claude 等），用国际版 <https://www.trae.ai/>；两版能力与交互一致，区别主要在模型与计价 |
 | **Memoria**（本知识库的编辑器，Windows 免安装） | [Releases](https://github.com/Fresh-Tim-Lam/Memoria/releases) 下 `Memoria-v*-win64.zip`（内置模型，完全离线）或 `-lite.zip`（约 34 MB，首次用语义检索时联网取模型），解压后跑 `Memoria.exe` |
 
 > 只想用智能体、不想装 Memoria？见下方「捷径」。
 
+### 准备知识库
+
+本页只讲「怎么用」，词汇库本体在 Memoria 仓库里：[`docs/example/AAA_Vocab`](https://github.com/Fresh-Tim-Lam/Memoria/tree/main/docs/example/AAA_Vocab)。把它 clone / 下载到本地（或直接 clone 整个 Memoria 仓库），下一步用它作为知识库目录。
+
 ### 步骤
 
-1. **下载并安装 Trae**：打开官网 → 点「下载 TraeCode」→ 按提示安装并登录。
+1. **下载并安装 Trae**：打开 <https://www.trae.cn/> → 点「下载 TraeCode」→ 按提示安装并登录。
 
-   ![Trae 官网，下载 TraeCode](images/trae_website_cn.png)
-   > 官网下载页：`下载 TraeCode` / `下载中心`。
+   ![Trae 中文官网，下载 TraeCode](images/trae_website_cn.png)
+   > 中文官网（trae.cn）下载页：`下载 TraeCode` / `下载中心`。
 
-2. **用 Memoria 打开本知识库**：启动 Memoria → 欢迎页点「打开知识库」→ 在「选择知识库文件夹」里选中**本仓库根目录**（能看到 `vocab/`、`expressions/` 的那一层）。
+2. **用 Memoria 打开词汇库**：启动 Memoria → 欢迎页点「打开知识库」→ 在「选择知识库文件夹」里选中 `AAA_Vocab` 目录（判断标准：这一层能看到 `vocab/`、`expressions/`）。
 
    ![Memoria 主界面](images/guide0_cn.png)
    > Memoria v0.3.4 主界面（欢迎页 / 空态）。
 
    ![选择知识库文件夹对话框](images/guide1.png)
-   > 系统「选择知识库文件夹」对话框：选中本仓库根目录。
+   > 系统「选择知识库文件夹」对话框：选中 AAA_Vocab 目录。
 
 3. **创建 Trae 智能体**：顶栏「文件」→「创建 Trae 智能体」。
 
@@ -67,7 +71,7 @@
 
 ### 推荐提示词（试试这个）
 
-本仓库自带一份**主动输出型**的词汇提示词：[`prompts/IELTS-vocab.md`](prompts/IELTS-vocab.md)。
+词汇库自带一份**主动输出型**提示词：[`docs/example/AAA_Vocab/prompts/IELTS-vocab.md`](https://github.com/Fresh-Tim-Lam/Memoria/blob/main/docs/example/AAA_Vocab/prompts/IELTS-vocab.md)（在词汇库目录里直接打开也行）。
 
 把它的内容贴给刚建好的智能体，然后说一句：
 
@@ -77,26 +81,27 @@
 
 ### 捷径：不装 Memoria 也能用
 
-智能体要读的那份指令也随 Memoria 仓库公开：`resources/agent-prompts/kb-agent.zh-CN.md`。直接在 Trae 里打开本知识库目录 → 新建自定义智能体 → 把这份指令粘进去即可。
+智能体要读的那份指令也随 Memoria 仓库公开：`resources/agent-prompts/kb-agent.zh-CN.md`。直接在 Trae 里打开词汇库目录 → 新建自定义智能体 → 把这份指令粘进去即可。
 
 - `resources/agent-prompts/kb-agent.zh-CN.md` —— 智能体指令（建智能体时粘一次）
 - `resources/agent-prompts/kb-spec.zh-CN.md` —— 知识库编撰 / 维护规范（智能体每次会话先读）
-- `prompts/IELTS-vocab.md` —— 推荐的主动输出提示词
-- `docs/` —— 本知识库的详细规格（词条格式 / 需求 / 智能体规格）
+- [`prompts/IELTS-vocab.md`](https://github.com/Fresh-Tim-Lam/Memoria/blob/main/docs/example/AAA_Vocab/prompts/IELTS-vocab.md) —— 推荐的主动输出提示词（在词汇库里）
+- `docs/`（词汇库内）—— 词条格式 / 需求 / 智能体规格
 
 > 用 Memoria 打开过本库的话，它会把工具包自动写到 `.memoria/agent/`（指令 + 规范 + `fsrs.py` 复习排程脚本）；这些属于运行时产物，不随仓库公开。
 
 ### 数据与隐私
 
 - 全部本地：词汇是普通 Markdown 文件，学习记录在 `.memoria/`；没有账号、没有云同步。
-- 想备份 / 同步：把这个目录用 Git 管起来推到自己账号，或直接网盘同步整个文件夹。
+- 想备份 / 同步：把词汇库目录用 Git 管起来推到自己账号，或直接网盘同步整个文件夹。
 - 复习记录：`.memoria/agent/review/`。
 
 ### 常见问题
 
-- **打开知识库后左侧是空的？** 确认选中的是**本仓库根目录**（有 `vocab/`、`expressions/` 的那层），而不是它的上一级。
+- **打开知识库后左侧是空的？** 确认选中的是 `AAA_Vocab` 目录本身（有 `vocab/`、`expressions/` 的那层），而不是它的上一级。
 - **智能体答得太泛？** 先让它读 `.memoria/agent/kb-spec.zh-CN.md`，并明确「按推荐的 IELTS 提示词格式输出」。
-- **想改词条格式？** 见 `docs/vocab_format.md`（词条格式）与 `docs/format.md`。
+- **想改词条格式？** 见词汇库里的 `docs/vocab_format.md` 与 `docs/format.md`。
+- **中文站打不开 / 提示区域不支持？** trae.cn 有地域围栏（大陆版），境外访问用国际版 <https://www.trae.ai/>。
 
 ---
 
@@ -110,25 +115,29 @@ A conversational IELTS vocabulary coach: IPA & listening traps, dictionary-based
 
 | What | Where |
 |---|---|
-| **Trae** (AI IDE, free) | Download from <https://www.trae.ai/> (this is the screenshot in step 1) |
+| **Trae** (AI IDE, free) | Download from the international site <https://www.trae.ai/> (this is the screenshot in step 1). Mainland China users should use the China edition <https://www.trae.cn/> instead — same capabilities and UX, different models and pricing |
 | **Memoria** (editor for this knowledge base; portable on Windows) | Grab `Memoria-v*-win64.zip` (models bundled, fully offline) or `-lite.zip` (~34 MB, fetches models on first use) from [Releases](https://github.com/Fresh-Tim-Lam/Memoria/releases), unzip and run `Memoria.exe` |
 
 > Only want the agent and don't want to install Memoria? See "Shortcut" below.
 
+### Get the vocabulary library
+
+This page only covers *how to use it*; the library itself lives in the Memoria repository: [`docs/example/AAA_Vocab`](https://github.com/Fresh-Tim-Lam/Memoria/tree/main/docs/example/AAA_Vocab). Clone or download it locally (cloning the whole Memoria repo is fine too) — that folder is what you open next.
+
 ### Steps
 
-1. **Download and install Trae**: open the website → `Download TraeCode` → install and sign in.
+1. **Download and install Trae**: open <https://www.trae.ai/> → `Download TraeCode` → install and sign in.
 
-   ![Trae website — download TraeCode](images/trae_website_en.png)
-   > Trae website: `Download TraeCode` / `Download Center`.
+   ![Trae international site — download TraeCode](images/trae_website_en.png)
+   > International site (trae.ai): `Download TraeCode` / `Download Center`.
 
-2. **Open this knowledge base in Memoria**: launch Memoria → `Open knowledge base` → pick the **repository root** (the folder containing `vocab/` and `expressions/`).
+2. **Open the vocabulary library in Memoria**: launch Memoria → `Open knowledge base` → pick the `AAA_Vocab` folder you just downloaded (it is the one containing `vocab/` and `expressions/`).
 
    ![Memoria with an empty workspace](images/guide4_en.png)
    > Memoria (English UI) before a knowledge base is opened.
 
    ![Select knowledge base folder dialog](images/guide1.png)
-   > The system "select folder" dialog — choose this repository's root folder.
+   > The system "select folder" dialog — choose the AAA_Vocab folder.
 
 3. **Create the Trae agent kit**: menu `File` → `Create Trae Agent`.
 
@@ -159,7 +168,7 @@ A conversational IELTS vocabulary coach: IPA & listening traps, dictionary-based
 
 ### Recommended prompt (try this one)
 
-This repository ships an **active-output** vocabulary prompt: [`prompts/IELTS-vocab.md`](prompts/IELTS-vocab.md).
+The library ships an **active-output** prompt: [`docs/example/AAA_Vocab/prompts/IELTS-vocab.md`](https://github.com/Fresh-Tim-Lam/Memoria/blob/main/docs/example/AAA_Vocab/prompts/IELTS-vocab.md) (you can also just open it inside the library folder).
 
 Paste its content to the agent you just created, then say:
 
@@ -169,35 +178,36 @@ Paste its content to the agent you just created, then say:
 
 ### Shortcut: use it without Memoria
 
-The agent instructions also ship publicly with the Memoria repository: `resources/agent-prompts/kb-agent.zh-CN.md`. Open this knowledge base folder in Trae → create a custom agent → paste those instructions.
+The agent instructions also ship publicly with the Memoria repository: `resources/agent-prompts/kb-agent.zh-CN.md`. Open the library folder in Trae → create a custom agent → paste those instructions.
 
 - `resources/agent-prompts/kb-agent.zh-CN.md` — agent instructions (paste once when creating the agent)
 - `resources/agent-prompts/kb-spec.zh-CN.md` — knowledge-base authoring / maintenance spec (read at the start of every session)
-- `prompts/IELTS-vocab.md` — the recommended active-output prompt
-- `docs/` — detailed specs for this knowledge base (entry format / requirements / agent spec)
+- [`prompts/IELTS-vocab.md`](https://github.com/Fresh-Tim-Lam/Memoria/blob/main/docs/example/AAA_Vocab/prompts/IELTS-vocab.md) — the recommended active-output prompt (inside the library)
+- `docs/` (inside the library) — entry format / requirements / agent spec
 
 > If you *do* open this library in Memoria, it writes the kit into `.memoria/agent/` (instructions + spec + the `fsrs.py` review scheduler); those are runtime artifacts and are not published with this repository.
 
 ### Data & privacy
 
 - Everything is local: vocabulary lives in plain Markdown files, learning records in `.memoria/`. No account, no cloud sync.
-- To back up / sync: put this folder under Git and push it to your own account, or sync the folder with any cloud drive.
+- To back up / sync: put the library folder under Git and push it to your own account, or sync the folder with any cloud drive.
 - Review records: `.memoria/agent/review/`.
 
 ### Troubleshooting
 
-- **Left pane is empty after opening the KB?** Make sure you picked the **repository root** (the folder containing `vocab/` and `expressions/`), not its parent.
+- **Left pane is empty after opening the KB?** Make sure you picked the `AAA_Vocab` folder itself (the one containing `vocab/` and `expressions/`), not its parent.
 - **Agent answers are too generic?** Ask it to read `.memoria/agent/kb-spec.zh-CN.md` first and to follow the recommended IELTS prompt format.
-- **Want to change the entry format?** See `docs/vocab_format.md` and `docs/format.md`.
+- **Want to change the entry format?** See `docs/vocab_format.md` and `docs/format.md` inside the library.
+- **trae.cn unreachable / region blocked?** The China edition has a regional fence; use the international site <https://www.trae.ai/> from outside mainland China.
 
 ---
 
 ## 这一页是怎么部署的
 
-本页就在 **Memoria 仓库**里：`docs/example/AAA_Vocab/`，由 `.github/workflows/pages.yml` 用 GitHub Actions 发布 —— 该 workflow **只上传这一个目录**，所以 Memoria 自己的 `docs/` 不会跟着上站。
+本页的源文件在 Memoria 仓库的 `site/` 目录（本页 = `site/index.html`，配图在 `site/images/`），由 `.github/workflows/pages.yml` 用 GitHub Actions 发布 —— 该 workflow **只上传 `site/`**，所以 Memoria 自己的 `docs/` 与词汇库都不会跟着上站。
 
 1. **一次性开启**：仓库 → **Settings → Pages** → `Source` 选 **GitHub Actions** → 保存。（这一步不会让你选分支/目录——路径由 workflow 里的 `path:` 决定。）
-2. **日常更新**：只要 push 改动 `docs/example/AAA_Vocab/**`，Actions 自动重建；也可以在 Actions 页手动 `Run workflow`。
+2. **日常更新**：只要 push 改动 `site/**`，Actions 自动重建；也可以在 Actions 页手动 `Run workflow`。
 3. **站点地址**：`https://<owner>.github.io/Memoria/` —— 打开就是这份指引（Settings → Pages 顶部也会显示）。
 
 ### 想发布到自己的账号 / 自己的仓库？
@@ -218,7 +228,7 @@ The agent instructions also ship publicly with the Memoria repository: `resource
 3. **开启 Pages**：**Settings → Pages** → `Source` 选 **Deploy from a branch** → `Branch` 选 **main** + **/ (root)** → `Save`。
 4. **拿到网址**：`https://<你的用户名>.github.io/<仓库名>/`（等 1 分钟左右）。
 
-> **如果 404 或页面没样式：** ① 仓库必须是 **Public**（私有仓库的 Pages 要付费计划）；② `index.html` 必须在**站点根**（本仓库里是 `docs/example/AAA_Vocab/index.html`，与 `images/` 同级）；③ 用 Actions 发布时，Pages 的 `Source` 必须是 **GitHub Actions**（不是 "Deploy from a branch"）；④ 首次部署有时要等 1–2 分钟。
+> **如果 404 或页面没样式：** ① 仓库必须是 **Public**（私有仓库的 Pages 要付费计划）；② `index.html` 必须在**站点根**（本仓库里是 `site/index.html`，与 `site/images/` 同级）；③ 用 Actions 发布时，Pages 的 `Source` 必须是 **GitHub Actions**（不是 "Deploy from a branch"）；④ 首次部署有时要等 1–2 分钟。
 
 ---
 
