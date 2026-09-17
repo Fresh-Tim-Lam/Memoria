@@ -1,14 +1,24 @@
 /**
- * 应用内对话面板（左侧栏第 4 个页签，M1 首版：接 `services/agent/**` 的只读问答）。
+ * 应用内对话面板（**右侧独立停靠栏** `#-agent-dock`，M1 首版曾挂在左栏第 4 页签）。
  *
  * 自包含：DOM/事件绑定全部由本模块 init() 完成，不依赖 app.js 的 bindEvents：
- *   - 页签激活（`[data-sidebar-tab="agent"]` 点击 / 面板可见）→ 拉取端点配置
+ *   - 顶栏 `#btn-agent` / 浮动 `#agent-dock-collapse-btn` → 停靠栏展开·收起
+ *   - `#agent-dock-resizer` 向左拖拽调宽（rem）→ 落盘 `layout.agentDockWidth`
  *   - `#agent-settings-toggle` 折叠设置区；`#agent-save-config` 保存端点配置
  *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
  *   - `#agent-abandon`「忽略本次」（**不是取消**：丢弃后续结果 + 停止轮询）
  *   - `#agent-clear` 清空对话；`#agent-messages` 内锚点点击 → 跳转文件:行号
- *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态（静态节点由 i18n 引擎刷）
+ *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/折叠按钮（静态节点由 i18n 引擎刷）
+ *
+ * 布局持久化（`config/ui-settings.json` 的 `layout` 段：`agentDockWidth` /
+ * `agentDockCollapsed`）见 saveDockLayout()——**必须先读旧 layout 再整体写回**，
+ * 否则会抹掉 `layout.sidebarWidth`（后端是顶层浅合并）。
+ *
+ * 宽度分「**期望宽度**」与「**生效宽度**」（见 applyDockLayout()）：
+ * `agentDockWidth` 是期望宽度（只在拖拽/显式操作时写盘）；生效宽度按可用空间实时算出
+ * ——文档区（`#content`）保底 `CONTENT_MIN_PX=360`，不够就让 dock 先缩到 16rem、
+ * 再整体**临时自动隐藏**（加 `-agent-dock--auto-hidden`，不写盘、窗口变宽自动还原）。
  *
  * 与后端的分工（见 `presentation/api/ui.py` 的 4 个 RPC）：
  *   `agent_get_config` / `agent_save_config` / `agent_ask_start` / `agent_ask_poll`。
@@ -100,6 +110,193 @@ window.MemoriaAgentPanel = (function () {
   let job = null; // { id, cursor }：在飞作业（null = 无）
   let busy = false; // 生成/轮询中（禁用发送）
   let streamingEl = null; // 正在流式写入的消息体元素
+
+  // ── 右侧停靠栏宽度 / 折叠（持久化到 config/ui-settings.json 的 layout 段）──
+  const DOCK_MIN_REM = 16; // 与 app.css 的 #-agent-dock min-width 一致
+  const DOCK_MAX_REM = 34; // 与 max-width 一致
+  const DOCK_DEFAULT_REM = 22; // 与 width 一致
+  // 文档区（#content）最小宽度保护：三栏（左栏 + #content + dock）都是固定/自动宽，
+  // 空间不足时**只让 dock 让位**（先缩到 16rem，再整体临时隐藏），#content 永不小于它。
+  const CONTENT_MIN_PX = 360;
+  let dockWidthRem = DOCK_DEFAULT_REM; // **期望宽度**（rem）：只在拖拽/显式操作时改写
+  let dockCollapsed = false; // 手动折叠（用户意图，落盘）
+  let dockAutoHidden = false; // 空间不足自动隐藏（派生态，**永不落盘**）
+
+  /** 根字号（rem→px 换算基准；受显示设置 uiScale 影响）。 */
+  function rootFontSize() {
+    const px = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return px > 0 ? px : 16;
+  }
+
+  function clampDockRem(rem) {
+    const rounded = Math.round(rem * 100) / 100;
+    return Math.min(DOCK_MAX_REM, Math.max(DOCK_MIN_REM, rounded));
+  }
+
+  /** 左栏**生效**宽度（px）：未折叠 = 当前宽度，折叠 = 0（CSS 已把宽度归零）。 */
+  function sidebarEffectivePx() {
+    const sb = $("#-sidebar");
+    if (!sb) return 0;
+    const w = sb.getBoundingClientRect().width;
+    return w > 0 ? w : 0;
+  }
+
+  /** 容许 dock 占用的宽度（px）= `#main` 内宽 − 左栏生效宽 − 文档区最小宽 360。 */
+  function availableDockPx() {
+    const main = $("#main");
+    const mainW = main ? main.clientWidth : window.innerWidth;
+    return mainW - sidebarEffectivePx() - CONTENT_MIN_PX;
+  }
+
+  /** 浮动按钮贴对话栏左缘（右栏在最右侧，故用 right 定位；隐藏时贴窗口右缘）。 */
+  function positionDockCollapseBtn() {
+    const dock = $("#-agent-dock");
+    const btn = $("#agent-dock-collapse-btn");
+    if (!dock || !btn) return;
+    btn.style.right = (
+      dockCollapsed || dockAutoHidden
+        ? 0
+        : Math.max(0, window.innerWidth - dock.getBoundingClientRect().left - 1)
+    ) + "px";
+  }
+
+  /**
+   * 把三态（手动折叠 / 空间不足自动隐藏 / 展开）落到 DOM：类名 + 按钮字形·文案·aria。
+   * 三态的**浮动按钮文案不同**——自动隐藏用 `agent.dockNoSpaceTitle`（说明"先折叠左栏"），
+   * 从而与用户主动折叠可区分；顶栏 `#btn-agent` 的 title 仍由 i18n 静态节点
+   * `agent.btnTitle` 驱动（不在此改写，避免与语言包刷新抢写）。
+   */
+  function applyDockCollapsed() {
+    const dock = $("#-agent-dock");
+    const btn = $("#agent-dock-collapse-btn");
+    const toolbarBtn = $("#btn-agent");
+    if (dock) dock.classList.toggle("-agent-dock--collapsed", dockCollapsed);
+    const hidden = dockCollapsed || dockAutoHidden;
+    if (btn) {
+      btn.textContent = hidden ? "‹" : "›";
+      btn.title = T(
+        dockAutoHidden
+          ? "agent.dockNoSpaceTitle"
+          : dockCollapsed
+            ? "agent.dockExpandTitle"
+            : "agent.dockCollapseTitle"
+      );
+      btn.setAttribute("aria-label", btn.title);
+      btn.setAttribute("aria-expanded", String(!hidden));
+    }
+    if (toolbarBtn) toolbarBtn.setAttribute("aria-pressed", String(!hidden));
+    positionDockCollapseBtn();
+  }
+
+  /**
+   * 重算**生效宽度**并落到 DOM。期望宽度 ≠ 生效宽度：
+   *   available = `#main` 内宽 − 左栏生效宽 − CONTENT_MIN_PX(360)
+   *   手动折叠                    → 0
+   *   available ≥ dockMin(16rem)  → clamp(期望, 16rem, min(34rem, available))
+   *   否则                        → 0（空间不足：临时自动隐藏）
+   * **自动收缩/自动隐藏都不回写盘**：dockWidthRem 始终是用户期望值，窗口变宽即自动还原。
+   * CSS 的 min-width/max-width 仍作兜底——本函数只写内联 `width`，不覆盖它们。
+   */
+  function applyDockLayout() {
+    const dock = $("#-agent-dock");
+    if (!dock) return;
+    const unit = rootFontSize();
+    let effectiveRem = 0;
+    dockAutoHidden = false;
+    if (!dockCollapsed) {
+      const cappedPx = Math.min(DOCK_MAX_REM * unit, availableDockPx());
+      if (cappedPx >= DOCK_MIN_REM * unit) {
+        effectiveRem = Math.min(dockWidthRem, cappedPx / unit);
+      } else {
+        dockAutoHidden = true;
+      }
+    }
+    dock.classList.toggle("-agent-dock--auto-hidden", dockAutoHidden);
+    // 折叠/自动隐藏都交由 CSS（两者都是 width:0 !important）；隐藏期间保留内联值不清，
+    // 展开时再由本函数按新的 available 重算覆盖。
+    if (!dockCollapsed && !dockAutoHidden) {
+      dock.style.width = Math.round(effectiveRem * 100) / 100 + "rem";
+    }
+    applyDockCollapsed();
+  }
+
+  /** 手动切换（两个入口共用）：隐藏态（手动折叠**或**空间不足）点击 = 请求展开。 */
+  function toggleDock() {
+    setDockCollapsed(!(dockCollapsed || dockAutoHidden), true);
+  }
+
+  /**
+   * 写 layout 段。
+   * ⚠️ 后端 `save_ui_settings` 是**顶层浅合并**（`storage/ui_settings.py:58-75`）：
+   * 直接传 `{layout:{agentDockWidth}}` 会把整个 `layout` 换成只含本键的对象、
+   * 抹掉 `layout.sidebarWidth`。故必须先读现有 layout 再整体写回。
+   */
+  async function saveDockLayout(patch) {
+    let layout = {};
+    try {
+      const res = await call("get_ui_settings");
+      const cur = res && res.status === "ok" && res.settings && res.settings.layout;
+      if (cur && typeof cur === "object") layout = Object.assign({}, cur);
+    } catch (_e) { /* 非桌面环境：保持内存态 */ }
+    Object.assign(layout, patch);
+    try {
+      await call("save_ui_settings", { layout: layout });
+    } catch (_e) { /* 同上 */ }
+  }
+
+  function setupDockResize() {
+    const resizer = $("#agent-dock-resizer");
+    if (!resizer) return;
+    let dragging = false;
+    resizer.addEventListener("mousedown", (e) => {
+      dragging = true;
+      e.preventDefault();
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      // 右栏与左栏相反：向左拖变宽 ⇒ 期望宽度 = 窗口右缘 − 指针 x
+      // 上界同时受「文档区留 360px」约束（min(34rem, available)）：拖到极限也不会破 360
+      const unit = rootFontSize();
+      const upperRem = Math.min(DOCK_MAX_REM, availableDockPx() / unit);
+      const wantRem = (window.innerWidth - e.clientX) / unit;
+      dockWidthRem = Math.min(Math.max(DOCK_MIN_REM, wantRem), Math.max(DOCK_MIN_REM, upperRem));
+      applyDockLayout(); // 拖拽过程中实时生效
+    });
+    window.addEventListener("mouseup", () => {
+      if (!dragging) return;
+      dragging = false;
+      saveDockLayout({ agentDockWidth: dockWidthRem }); // 只有松手才写盘（照左栏做法）
+    });
+  }
+
+  function setDockCollapsed(collapsed, persist) {
+    const want = !!collapsed;
+    // 空间不足自动隐藏时的「展开」请求：**不允许挤压文档区** ⇒ 保持隐藏并提示先折叠左栏。
+    // 不写盘、也不改 dockCollapsed，故窗口变宽后仍会自动回到期望宽度，无需用户再点。
+    if (!want && dockAutoHidden) {
+      showFlashInfo(T("agent.dockNoSpace"));
+      return;
+    }
+    const wasCollapsed = dockCollapsed;
+    dockCollapsed = want;
+    applyDockLayout();
+    if (persist) saveDockLayout({ agentDockCollapsed: dockCollapsed });
+    // 展开时刷新端点配置（可能被外部改动），与旧版「切到对话页签即拉配置」同语义
+    if (wasCollapsed && !dockCollapsed) refreshConfig();
+  }
+
+  /** 启动时同步停靠栏宽度/折叠态（磁盘优先；无磁盘值则用 CSS 默认 22rem / 展开）。 */
+  async function hydrateDockLayout() {
+    try {
+      const res = await call("get_ui_settings");
+      const lay = res && res.status === "ok" && res.settings && res.settings.layout;
+      if (!lay) return;
+      const w = parseFloat(lay.agentDockWidth);
+      if (Number.isFinite(w)) dockWidthRem = clampDockRem(w); // 磁盘上是**期望宽度**
+      if (typeof lay.agentDockCollapsed === "boolean") dockCollapsed = lay.agentDockCollapsed;
+      applyDockLayout();
+    } catch (_e) { /* 非桌面环境忽略 */ }
+  }
 
   // ── 渲染 ────────────────────────────────────────────────────────────
 
@@ -526,7 +723,7 @@ window.MemoriaAgentPanel = (function () {
   // ── 装配 ────────────────────────────────────────────────────────────
 
   function init() {
-    if (!$("#sidebar-view-agent")) return; // 页面未登记本区域（旧版 index.html）
+    if (!$("#-agent-dock")) return; // 页面未登记右侧停靠栏（旧版 index.html）
 
     const settingsToggle = $("#agent-settings-toggle");
     const settings = $("#agent-settings");
@@ -571,14 +768,33 @@ window.MemoriaAgentPanel = (function () {
       });
     }
 
-    // 切到本页签时刷新配置（端点可能被外部改动）；初始为 agent 页签时也覆盖
-    const tabBtn = document.querySelector('[data-sidebar-tab="agent"]');
-    if (tabBtn) tabBtn.addEventListener("click", () => refreshConfig());
+    // 停靠栏显隐/调宽：顶栏按钮 + 浮动按钮 + 左缘拖拽柄（两个按钮同一状态、同一 handler）
+    const toolbarBtn = $("#btn-agent");
+    if (toolbarBtn) toolbarBtn.addEventListener("click", () => toggleDock());
+    const collapseBtn = $("#agent-dock-collapse-btn");
+    if (collapseBtn) {
+      collapseBtn.addEventListener("click", () => toggleDock());
+    }
+    setupDockResize();
+    // 重算生效宽度的触发时机全部收敛到「几何变化」：视口（含 uiScale 改根字号后的
+    // 显式 resize 事件）+ 左栏宽度拖拽/折叠展开（#-sidebar 宽变）+ dock 自身。
+    // 用 ResizeObserver 盯 #main / #-sidebar 比到 app.js 各处挂钩子侵入更小；
+    // 宽度过渡（.18s）期间 resize 事件不触发，RO 仍能逐帧跟上（与浮动按钮定位同套路）。
+    window.addEventListener("resize", () => applyDockLayout());
+    const dockEl = $("#-agent-dock");
+    if (dockEl && typeof ResizeObserver !== "undefined") {
+      new ResizeObserver(() => applyDockLayout()).observe($("#main"));
+      new ResizeObserver(() => applyDockLayout()).observe($("#-sidebar"));
+      new ResizeObserver(() => positionDockCollapseBtn()).observe(dockEl);
+    }
+    applyDockLayout(); // 首帧：按当前几何 + 默认期望宽度落一次（含三态文案）
+    hydrateDockLayout(); // 磁盘值（若有）随后覆盖
 
     if (window.MemoriaI18n && window.MemoriaI18n.addRefresh) {
       window.MemoriaI18n.addRefresh(() => {
         applyConfigToForm();
         renderMessages();
+        applyDockCollapsed(); // 语言切换后重绘按钮文案（含三态 title）
       });
     }
 
@@ -589,7 +805,12 @@ window.MemoriaAgentPanel = (function () {
 
   return {
     init: init,
-    open: () => document.querySelector('[data-sidebar-tab="agent"]')?.click(),
+    // 展开并刷新配置（旧版是「点开左栏对话页签」）；
+    // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
+    open: () => {
+      if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
+      else refreshConfig();
+    },
     clear: clear,
   };
 })();

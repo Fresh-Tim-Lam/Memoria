@@ -574,6 +574,13 @@
     },
     agent: {
       tab: "对话",
+      btnTitle: "对话面板：显示 / 收起右侧对话栏",
+      dockAria: "对话",
+      dockCollapseTitle: "收起对话栏",
+      dockExpandTitle: "展开对话栏",
+      dockResizeTitle: "拖拽调整对话栏宽度",
+      dockNoSpaceTitle: "空间不足：先折叠左栏（或把它调窄），对话栏才能展开",
+      dockNoSpace: "空间不足：对话栏保持隐藏，请先折叠左栏或把左栏调窄",
       net: {
         label: "出网",
         title: "允许本面板调用远端模型；关闭后禁用发送（配置项 enabled）",

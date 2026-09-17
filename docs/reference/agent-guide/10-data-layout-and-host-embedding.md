@@ -170,7 +170,7 @@
 
 ### 2.15 应用内对话：4 个 RPC 与数据落点（2026-09-17 落地）
 
-M1 首版「对话」面板（前端在 [01 篇 §2.3.1](./01-shell-and-layout.md)）新增 4 个 RPC，
+M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，前端见 [01 篇 §2.4](./01-shell-and-layout.md)）新增 4 个 RPC，
 **均为新增方法，未改任何既有方法的语义与签名**（`presentation/api/ui.py:1145-1213`）：
 
 | 方法 | 签名 | 返回 |
@@ -184,13 +184,13 @@ M1 首版「对话」面板（前端在 [01 篇 §2.3.1](./01-shell-and-layout.m
 - **配置落点**：`config/agent.json`（程序目录，与 `ui-settings.json` 同级；`config_file_path()` llm/config.py:164-174）。读路径为「环境变量 → 该文件 → 默认值」（`load_config()` llm/config.py:202-241，环境变量名见该模块头表）；写路径为**浅合并 + tmp/`os.replace` 原子写**（`save_config()` llm/config.py:284-330），`api_key` 仅在传入非空新值时覆盖——避免面板的掩码占位把已存密钥清空。键 `enabled`（允许出网）缺省视为 **true**（`is_enabled()` llm/config.py:265-281；`timeout_s` 空值同表"不修改"语义）。
 - **会话事实源**：`<kb>/.memoria/agent/sessions/<session-id>.jsonl`（`services/agent/session/store.py:56-66`）。首行 header、其后每行一个事件（`seq` 连续、append-only、撕裂尾部对读者不可见）；由 `ask()` 写（ask.py:142-159）。`session_id` 随 `agent_ask_poll` 的最终结果返回，面板状态行显示。
 - **伪流式与并发**：`agent_ask_start` 把一次同步 `ask()` 提交到**独立单线程执行器**（`services/agent/ask_stream.py::AskJobManager`，164-171 建池、`thread_name_prefix="agent-ask"`），**不占用** `MaintenanceExecutor` 的 2 个 worker（services/executor.py:31-35）；增量来自 `ask(on_text=...)`（ask.py:128 → loop.py:118，消费 provider 的 `TextDelta`），`agent_ask_poll` 按 `cursor` 返回新增文本（snapshot()，ask_stream.py:134-156）。**同一时刻只允许一个 ask 在飞**，重复提交返回 `busy`（ask_stream.py:195-202）。
-- **无真取消**：M1 循环内无取消点，前端「忽略本次」= 丢弃后续结果 + 停止轮询（纯前端，agent-panel.js:498-505），后端作业仍会跑完；期间再次提问得到 `busy`（真机上已验证该文案，见 [01 篇 §7](./01-shell-and-layout.md)）。
+- **无真取消**：M1 循环内无取消点，前端「忽略本次」= 丢弃后续结果 + 停止轮询（纯前端，agent-panel.js:695-702），后端作业仍会跑完；期间再次提问得到 `busy`（真机上已验证该文案，见 [01 篇 §7](./01-shell-and-layout.md)）。
 - **写入范围**：本面板除会话 JSONL 外不写知识库任何内容（工具面自带零写入守卫，见 ask.py:13-14）；`config/agent.json` 在知识库之外。
 - **宿主嵌入注意**：这 4 个方法与其它 RPC 一样经 `window.memoria.api` / QWebChannel 单槽调用（§2.13），**没有** HTTP `/rpc`；宿主若只实现最小桥（§5.1 第 2 条列出的 6 个方法），对话面板会在 `agent_get_config` 缺失时抛 `app.apiUnavailable` 并就地显示错误（不静默）。
 
 ## 3. 交互流程
 
-**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:428-480 的顺序加载脚本（graph-* → *-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `scheduler.js` → `app.js` → 各子系统，末位是 2026-09-17 追加的 `agent-panel.js`:478）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树/**对话面板** `init()`（app.js:12847-12853）→ `initKb()`（读启动库路径）→ `initWindowChrome()`。
+**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:432-484 的顺序加载脚本（graph-* → *-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `scheduler.js` → `app.js` → 各子系统，末位是 2026-09-17 追加的 `agent-panel.js`:482）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树/**对话面板** `init()`（app.js:12850-12856）→ `initKb()`（读启动库路径）→ `initWindowChrome()`。
 
 **3.2 一次 RPC 往返**：前端 `call("name", ...)`（app.js:385-387）→ `window.memoria.api.name(...args)`：
 - pywebview：直接调用宿主对象方法（pywebview 内部完成序列化）；
@@ -208,7 +208,7 @@ M1 首版「对话」面板（前端在 [01 篇 §2.3.1](./01-shell-and-layout.m
 | `settings.configPath` | graph-settings.js:874-876；zh-CN.js:651 | 设置弹窗底部：`设置保存在程序目录：{path}`（`{path}` 来自 `get_ui_settings().settings_rel`） |
 | `modal.settings` / `common.close` | index.html:289、298 | 设置弹窗骨架（静态节点，随语言刷新） |
 | `app.openKbFirst` / `app.openFileFirst` | 各 RPC 前置校验失败的提示（如 kb-check.js:623-625） | 未开库时的统一文案 |
-| `agent.err.<code>` | js/agent-panel.js:60-85（`ERR_KEYS` / `GENERIC_CODES`）、202-231（`errorText`/`errorDetail`/`fullErrorText`）；zh-CN.js:620-641 | 对话面板把后端 4 个 RPC 的**稳定 code** 映射为文案（`no_kb`/`busy`/`no_base_url`/`MISSING_CREDENTIAL`/`RATE_LIMIT` …）；**未登记的 code 回退后端中文 `message`**；兜底 code（`ask_failed`/`config_error`）额外拼后端原文（LLM 失败原因只在原文里） |
+| `agent.err.<code>` | js/agent-panel.js:70-95（`ERR_KEYS` / `GENERIC_CODES`）、399-428（`errorText`/`errorDetail`/`fullErrorText`）；zh-CN.js:627-648 | 对话面板把后端 4 个 RPC 的**稳定 code** 映射为文案（`no_kb`/`busy`/`no_base_url`/`MISSING_CREDENTIAL`/`RATE_LIMIT` …）；**未登记的 code 回退后端中文 `message`**；兜底 code（`ask_failed`/`config_error`）额外拼后端原文（LLM 失败原因只在原文里） |
 | `check.issue.<code>` | app.js:258-268（`localizeCheckIssue` + `rawLookup`） | **唯一**会翻译后端消息的机制：当前语言包有该 code 模板才翻译，否则原样显示后端中文 `message` |
 | 后端返回的其它 `message` | ui.py / document.py / import_engine.py | **一律中文原样透传**，不参与 i18n（conventions/i18n.md:5.1 只对检查 issue 与少量 `backend.*` 键例外） |
 

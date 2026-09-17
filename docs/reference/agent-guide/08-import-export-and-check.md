@@ -209,7 +209,7 @@
 12. **静默检查无 UI 反馈**：排队 / 跳过 / 完成 / 顶替只进控制台 `[job]` 与可选 `logs/job-trace.log`（§2.10）；用户侧只能看到角标与状态栏随之变化。
 13. **角标截断到 `99+`** 但 title 仍显示真实 `{err}/{warn}`（kb-check.js:127-138）。
 14. **角标挂在按钮包装层上**：`.toolbar-btn-wrap` 为 `position:relative`、角标 `translate(calc(55% - 3px), calc(42% - 3px))`（app.css:1785），故角标**溢出按钮右下角**而非贴合内角；`pointer-events:none` 保证不吞点击。
-15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4218），低于搜索面板 9000、右键菜单 10050、flash 浮层 12000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.8）。
+15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4506），低于搜索面板 9000、右键菜单 10050、flash 浮层 12000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.9）。
 16. **检查条目路径多值时只打开第一段**：`paths.length > 1` 时以 ` · ` 拼接展示，但 `data-check-open` 取首个 path（kb-check.js:340-345），点「打开」只会打开第一个文件。
 
 ## 6. 代码锚点表

@@ -574,6 +574,13 @@
     },
     agent: {
       tab: "Chat",
+      btnTitle: "Chat panel: show / collapse the right-side dock",
+      dockAria: "Chat",
+      dockCollapseTitle: "Collapse chat dock",
+      dockExpandTitle: "Expand chat dock",
+      dockResizeTitle: "Drag to resize the chat dock",
+      dockNoSpaceTitle: "Not enough space: collapse or narrow the left sidebar to expand the dock",
+      dockNoSpace: "Not enough space — the chat dock stays hidden; collapse or narrow the left sidebar first",
       net: {
         label: "Network",
         title: "Allow this panel to call the remote model; when off, sending is disabled (config key enabled)",

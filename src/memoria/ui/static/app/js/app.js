@@ -1231,6 +1231,9 @@
   }
 
   function setSidebarTab(tab) {
+    // 2026-09-17：左栏「对话」页签已迁为右侧 #-agent-dock，旧 localStorage["-sidebar-tab"]
+    // 若仍为 "agent" 会命中不到任何 [data-sidebar-view] ⇒ 三个视图全被隐藏。无对应视图即回退 files。
+    if (!document.querySelector('[data-sidebar-view="' + tab + '"]')) tab = "files";
     state.sidebarTab = tab;
     localStorage.setItem("-sidebar-tab", tab);
     document.querySelectorAll("[data-sidebar-tab]").forEach((btn) => {

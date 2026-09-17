@@ -79,6 +79,7 @@
           <span id="btn-check-badge" class="-toolbar-badge hidden" aria-hidden="true"></span>
         </span>
         <button id="btn-settings" type="button" title="设置" data-i18n="toolbar.settings" data-i18n-attr="title:toolbar.settingsTitle">设置</button>
+        <button id="btn-agent" type="button" aria-pressed="true" title="对话面板：显示 / 收起右侧对话栏" data-i18n="agent.tab" data-i18n-attr="title:agent.btnTitle">对话</button>
       </div>
       <div class="-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-search-wrap">
@@ -113,7 +114,6 @@
             <button type="button" class="-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true"><span data-i18n="side.tab.files">文件</span> <span class="-tab-count" id="sidebar-tab-count-files">0</span></button>
             <button type="button" class="-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
             <button type="button" class="-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
-            <button type="button" class="-config-tab" data-sidebar-tab="agent" role="tab" aria-selected="false" data-i18n="agent.tab">对话</button>
           </div>
         </div>
         <div id="sidebar-graph-group-bar" class="-graph-group-bar hidden" aria-hidden="true">
@@ -131,50 +131,6 @@
             <div id="sidebar-view-graph3d" class="-sidebar-view hidden" data-sidebar-view="graph3d">
               <div id="graph-3d-root" class="-graph-root"></div>
               <div id="graph-3d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted" data-i18n="graph.overlay3d">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
-            </div>
-            <div id="sidebar-view-agent" class="-sidebar-view -agent-view hidden" data-sidebar-view="agent">
-              <div class="-agent-head">
-                <span id="agent-model-label" class="-agent-model"></span>
-                <div class="-agent-head-actions">
-                  <label class="-agent-net" data-i18n-attr="title:agent.net.title">
-                    <input type="checkbox" id="agent-net-toggle">
-                    <span data-i18n="agent.net.label">出网</span>
-                  </label>
-                  <button type="button" id="agent-settings-toggle" class="-config-btn" aria-expanded="false" aria-controls="agent-settings" data-i18n="agent.settings.toggle">设置</button>
-                </div>
-              </div>
-              <div id="agent-settings" class="-agent-settings hidden">
-                <label class="-agent-field">
-                  <span data-i18n="agent.settings.baseUrl">模型端点</span>
-                  <input type="text" id="agent-base-url" spellcheck="false" data-i18n-attr="placeholder:agent.settings.baseUrlPh">
-                </label>
-                <label class="-agent-field">
-                  <span data-i18n="agent.settings.model">模型</span>
-                  <input type="text" id="agent-model" spellcheck="false" data-i18n-attr="placeholder:agent.settings.modelPh">
-                </label>
-                <label class="-agent-field">
-                  <span data-i18n="agent.settings.apiKey">密钥</span>
-                  <input type="password" id="agent-api-key" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:agent.settings.apiKeyPh">
-                </label>
-                <label class="-agent-field">
-                  <span data-i18n="agent.settings.timeout">超时（秒）</span>
-                  <input type="text" id="agent-timeout" inputmode="decimal" data-i18n-attr="placeholder:agent.settings.timeoutPh">
-                </label>
-                <div class="-agent-settings-actions">
-                  <span id="agent-config-path" class="-agent-config-path -muted"></span>
-                  <button type="button" id="agent-save-config" class="-btn primary -btn--sm" data-i18n="agent.settings.save">保存</button>
-                </div>
-              </div>
-              <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
-              <div class="-agent-composer">
-                <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea>
-                <div class="-agent-composer-actions">
-                  <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
-                  <button type="button" id="agent-abandon" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.abandonTitle"><span data-i18n="agent.abandon">忽略本次</span></button>
-                  <button type="button" id="agent-clear" class="-btn secondary -btn--sm -agent-clear" data-i18n-attr="title:agent.clearTitle"><span data-i18n="agent.clear">清空对话</span></button>
-                </div>
-                <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>
-              </div>
             </div>
           </div>
           <div id="sidebar-nav-kp-resizer" class="-graph-panel-resizer -sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比" data-i18n-attr="title:side.split.title"></div>
@@ -265,6 +221,54 @@
           </div>
         </div>
       </div>
+
+      <aside id="-agent-dock" class="-agent-dock" aria-label="对话" data-i18n-attr="aria-label:agent.dockAria">
+        <div id="agent-dock-resizer" title="拖拽调整对话栏宽度" data-i18n-attr="title:agent.dockResizeTitle"></div>
+        <div class="-agent-head">
+          <span id="agent-model-label" class="-agent-model"></span>
+          <div class="-agent-head-actions">
+            <label class="-agent-net" data-i18n-attr="title:agent.net.title">
+              <input type="checkbox" id="agent-net-toggle">
+              <span data-i18n="agent.net.label">出网</span>
+            </label>
+            <button type="button" id="agent-settings-toggle" class="-config-btn" aria-expanded="false" aria-controls="agent-settings" data-i18n="agent.settings.toggle">设置</button>
+          </div>
+        </div>
+        <div id="agent-settings" class="-agent-settings hidden">
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.baseUrl">模型端点</span>
+            <input type="text" id="agent-base-url" spellcheck="false" data-i18n-attr="placeholder:agent.settings.baseUrlPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.model">模型</span>
+            <input type="text" id="agent-model" spellcheck="false" data-i18n-attr="placeholder:agent.settings.modelPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.apiKey">密钥</span>
+            <input type="password" id="agent-api-key" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:agent.settings.apiKeyPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.timeout">超时（秒）</span>
+            <input type="text" id="agent-timeout" inputmode="decimal" data-i18n-attr="placeholder:agent.settings.timeoutPh">
+          </label>
+          <div class="-agent-settings-actions">
+            <span id="agent-config-path" class="-agent-config-path -muted"></span>
+            <button type="button" id="agent-save-config" class="-btn primary -btn--sm" data-i18n="agent.settings.save">保存</button>
+          </div>
+        </div>
+        <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
+        <div class="-agent-composer">
+          <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea>
+          <div class="-agent-composer-actions">
+            <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
+            <button type="button" id="agent-abandon" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.abandonTitle"><span data-i18n="agent.abandon">忽略本次</span></button>
+            <button type="button" id="agent-clear" class="-btn secondary -btn--sm -agent-clear" data-i18n-attr="title:agent.clearTitle"><span data-i18n="agent.clear">清空对话</span></button>
+          </div>
+          <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <button type="button" id="agent-dock-collapse-btn" class="-agent-dock-collapse-btn" aria-expanded="true" title="收起对话栏" data-i18n-attr="title:agent.dockCollapseTitle;aria-label:agent.dockCollapseTitle"></button>
     </div>
 
     <div id="status-bar">
