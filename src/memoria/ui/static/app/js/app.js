@@ -12850,6 +12850,7 @@
     window.MemoriaKbCheck?.init?.();
     window.MemoriaKbAgent?.init?.();
     window.MemoriaFileTree?.init?.();
+    window.MemoriaAgentPanel?.init?.();
     bindPreviewPaste();
     initKb();
     hydrateCustomColorsFromDisk();

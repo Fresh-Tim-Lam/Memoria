@@ -3,7 +3,7 @@
 > **用途**：说清 ①一个知识库目录里**究竟有什么文件、谁写的、能不能删、是不是事实源**；②要把 Memoria 前端**嵌进别的宿主**（Electron / 其它 webview / iframe）时，前后端各自提供了什么、缺什么、必须自建什么。
 > **目标读者**：外部集成方（把 Memoria 嵌进插件 / 桌面壳 / 智能体的人）、维护 `.memoria/**` 数据契约的人、排查"文件被谁改了"的人。
 > **关联文档**：[README.md](./README.md)（本套用法与维护约定）、[../hard-constraints.md](../hard-constraints.md)（红线）、[../architecture.md](../architecture.md)（分层——注意其 `/rpc` 描述已过时，见 §5）、[../../design/kb-agent.md](../../design/kb-agent.md)（知识库侧智能体契约）、[../../design/deepseek-harness-integration.md](../../design/deepseek-harness-integration.md)（对外能力面分析）、[01-shell-and-layout.md](./01-shell-and-layout.md)（窗口 chrome 与顶栏拖拽区）。
-> **状态**：生效中，2026-09-15。
+> **状态**：生效中，2026-09-17。
 
 ---
 
@@ -35,10 +35,12 @@
     └── agent/                             Trae 智能体工具包（services/kb_agent.py:40-42）
         ├── README.md · prompt.zh-CN.md · kb-spec.zh-CN.md · preview-formats.md · fsrs.py
         ├── .kit.json                     版本清单（无时间戳 → 保证幂等）kb_agent.py:74-81
-        └── review/                       cards.json / progress.json —— **产品永不覆盖**（kb_agent.py:8、114）
+        ├── review/                       cards.json / progress.json —— **产品永不覆盖**（kb_agent.py:8、114）
+        └── sessions/                     **应用内对话的会话事实源**（JSONL，append-only）
+            └── <session-id>.jsonl        session/store.py:56-66、169-237（M1b 起由 `ask()` 写）
 ```
 
-**不在知识库里的那一份**：UI 偏好（含语言、字号、缩放、图谱参数、窗口最近列表）写在**程序目录** `config/ui-settings.json`（`storage/ui_settings.py:11-28`），可用环境变量 `MEMORIA_CONFIG_DIR` 改址；旧位置 `~/.memoria/ui-settings.json` 会自动迁移一次（ui_settings.py:14-15、31-43）。→ **知识库可携带，UI 偏好不可携带**。
+**不在知识库里的那一份**：UI 偏好（含语言、字号、缩放、图谱参数、窗口最近列表）写在**程序目录** `config/ui-settings.json`（`storage/ui_settings.py:11-28`），可用环境变量 `MEMORIA_CONFIG_DIR` 改址；旧位置 `~/.memoria/ui-settings.json` 会自动迁移一次（ui_settings.py:14-15、31-43）。**应用内对话的端点配置**另存程序目录 `config/agent.json`（`services/agent/llm/config.py:164-174`；同受 `MEMORIA_CONFIG_DIR` 控制）。→ **知识库可携带（知识+会话），UI/端点偏好不可携带**。
 
 ### 1.2 数据分类（谁写 / 能否删 / 是否事实源）
 
@@ -52,7 +54,9 @@
 | 派生索引 | `.memoria/kp_targets.json`、`.memoria/cache/**`、`.memoria/build/**` | 产品（可重建） | 可删，下次读写自动重建 | ❌ |
 | 图片资产 | `.memoria/images/**`（含 registry.json） | 产品（插入/清理 RPC） | 图片文件删=正文引用悬空（检查会报）；registry 可删（重建） | 图片本体≈事实源 |
 | 工具包 | `.memoria/agent/{README,prompt,kb-spec,preview-formats,fsrs.py,.kit.json}` | 产品（`install_kb_agent`，升级时覆盖） | 可删：删目录即完全回滚（kb-agent.md:252） | ❌ 分发物 |
+| 对话会话 | `.memoria/agent/sessions/*.jsonl` | 产品服务层（应用内对话 `ask()` → `SessionStore`，session/store.py:169-237） | 可删：丢对话记录（过程数据，非知识） | ⚠️ 会话事实源（对话自身的权威记录；**不是**知识事实源） |
 | UI 偏好 | `config/ui-settings.json` | 前端 → `save_ui_settings` | 可删（回默认值） | ❌ |
+| 端点配置 | `config/agent.json` | 前端（对话面板）→ `agent_save_config` → `llm/config.py::save_config` | 可删（回默认端点，需重新配置） | ❌（含密钥，**仅本地文件**） |
 
 ## 2. 逐处细节
 
@@ -164,9 +168,29 @@
 - 命令行只有一个面向**知识库运维**的 CLI：`memoria validate|repair-paths|diagnose-images`（cli/main.py:111-125），**不含**起服务、也不加载前端。
 - 因此"不启 GUI 就能浏览器访问 Memoria UI"目前**做不到**（deepseek-harness-integration.md:151 亦承认 T3 需新代码）。
 
+### 2.15 应用内对话：4 个 RPC 与数据落点（2026-09-17 落地）
+
+M1 首版「对话」面板（前端在 [01 篇 §2.3.1](./01-shell-and-layout.md)）新增 4 个 RPC，
+**均为新增方法，未改任何既有方法的语义与签名**（`presentation/api/ui.py:1145-1213`）：
+
+| 方法 | 签名 | 返回 |
+|---|---|---|
+| `agent_get_config` | `()` | `{status:"ok", enabled, base_url, model, timeout_s, has_key, key_masked, source, config_file, config_rel, config_keys}` |
+| `agent_save_config` | `(patch: dict)` | 同 `agent_get_config`（写后回读）；`patch` 白名单键 `base_url`/`api_key`/`model`/`timeout_s`/`enabled`，非法键返回 `{status:"error", code:"config_error", message}` |
+| `agent_ask_start` | `(question: str, kb_path: str \| None = None)` | `{status:"ok", job_id, job_status:"running"}` 或 `{status:"error", code, message}`（`no_kb`/`empty_question`/`net_disabled`/`no_base_url`/`busy`） |
+| `agent_ask_poll` | `(job_id: str, cursor: int = 0)` | `{status:"running"\|"done"\|"error", job_id, delta, cursor, answer, anchors, tool_calls, usage, session_id, stop_reason, iterations, error, code, elapsed_ms}`；未知作业返回 `code:"unknown_job"` |
+
+- **密钥边界（硬约束）**：`agent_get_config` / `agent_save_config` **只回掩码**（`mask_secret`，llm/config.py:94-101），明文密钥不进入任何返回值、日志、异常或 DOM；面板输入框保存后即清空，已存密钥只作 placeholder。
+- **配置落点**：`config/agent.json`（程序目录，与 `ui-settings.json` 同级；`config_file_path()` llm/config.py:164-174）。读路径为「环境变量 → 该文件 → 默认值」（`load_config()` llm/config.py:202-241，环境变量名见该模块头表）；写路径为**浅合并 + tmp/`os.replace` 原子写**（`save_config()` llm/config.py:284-330），`api_key` 仅在传入非空新值时覆盖——避免面板的掩码占位把已存密钥清空。键 `enabled`（允许出网）缺省视为 **true**（`is_enabled()` llm/config.py:265-281；`timeout_s` 空值同表"不修改"语义）。
+- **会话事实源**：`<kb>/.memoria/agent/sessions/<session-id>.jsonl`（`services/agent/session/store.py:56-66`）。首行 header、其后每行一个事件（`seq` 连续、append-only、撕裂尾部对读者不可见）；由 `ask()` 写（ask.py:142-159）。`session_id` 随 `agent_ask_poll` 的最终结果返回，面板状态行显示。
+- **伪流式与并发**：`agent_ask_start` 把一次同步 `ask()` 提交到**独立单线程执行器**（`services/agent/ask_stream.py::AskJobManager`，164-171 建池、`thread_name_prefix="agent-ask"`），**不占用** `MaintenanceExecutor` 的 2 个 worker（services/executor.py:31-35）；增量来自 `ask(on_text=...)`（ask.py:128 → loop.py:118，消费 provider 的 `TextDelta`），`agent_ask_poll` 按 `cursor` 返回新增文本（snapshot()，ask_stream.py:134-156）。**同一时刻只允许一个 ask 在飞**，重复提交返回 `busy`（ask_stream.py:195-202）。
+- **无真取消**：M1 循环内无取消点，前端「忽略本次」= 丢弃后续结果 + 停止轮询（纯前端，agent-panel.js:498-505），后端作业仍会跑完；期间再次提问得到 `busy`（真机上已验证该文案，见 [01 篇 §7](./01-shell-and-layout.md)）。
+- **写入范围**：本面板除会话 JSONL 外不写知识库任何内容（工具面自带零写入守卫，见 ask.py:13-14）；`config/agent.json` 在知识库之外。
+- **宿主嵌入注意**：这 4 个方法与其它 RPC 一样经 `window.memoria.api` / QWebChannel 单槽调用（§2.13），**没有** HTTP `/rpc`；宿主若只实现最小桥（§5.1 第 2 条列出的 6 个方法），对话面板会在 `agent_get_config` 缺失时抛 `app.apiUnavailable` 并就地显示错误（不静默）。
+
 ## 3. 交互流程
 
-**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:383-434 的顺序加载脚本（graph-* → *-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `scheduler.js` → `app.js` → 各子系统）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树 `init()` → `initKb()`（读启动库路径）→ `initWindowChrome()`。
+**3.1 首帧 → boot**：请求 `/` → 返回注入了 `?v=` 的 index.html（no-store）→ 按 index.html:428-480 的顺序加载脚本（graph-* → *-settings → `vendor/qwebchannel.js` → `bridge.js` → `window-chrome.js` → 编辑管线 → i18n 包 → `i18n.js` → `scheduler.js` → `app.js` → 各子系统，末位是 2026-09-17 追加的 `agent-panel.js`:478）→ bridge.js 立即安装（pywebview 已有 api）或轮询等待（Qt）→ `installApi()` → 派发 `memoriaready` → app.js 的 `onReady` 回调执行 `bindEvents()` → 导入流/搜索/图片/检查/智能体/文件树/**对话面板** `init()`（app.js:12847-12853）→ `initKb()`（读启动库路径）→ `initWindowChrome()`。
 
 **3.2 一次 RPC 往返**：前端 `call("name", ...)`（app.js:385-387）→ `window.memoria.api.name(...args)`：
 - pywebview：直接调用宿主对象方法（pywebview 内部完成序列化）；
@@ -184,6 +208,7 @@
 | `settings.configPath` | graph-settings.js:874-876；zh-CN.js:651 | 设置弹窗底部：`设置保存在程序目录：{path}`（`{path}` 来自 `get_ui_settings().settings_rel`） |
 | `modal.settings` / `common.close` | index.html:289、298 | 设置弹窗骨架（静态节点，随语言刷新） |
 | `app.openKbFirst` / `app.openFileFirst` | 各 RPC 前置校验失败的提示（如 kb-check.js:623-625） | 未开库时的统一文案 |
+| `agent.err.<code>` | js/agent-panel.js:60-85（`ERR_KEYS` / `GENERIC_CODES`）、202-231（`errorText`/`errorDetail`/`fullErrorText`）；zh-CN.js:620-641 | 对话面板把后端 4 个 RPC 的**稳定 code** 映射为文案（`no_kb`/`busy`/`no_base_url`/`MISSING_CREDENTIAL`/`RATE_LIMIT` …）；**未登记的 code 回退后端中文 `message`**；兜底 code（`ask_failed`/`config_error`）额外拼后端原文（LLM 失败原因只在原文里） |
 | `check.issue.<code>` | app.js:258-268（`localizeCheckIssue` + `rawLookup`） | **唯一**会翻译后端消息的机制：当前语言包有该 code 模板才翻译，否则原样显示后端中文 `message` |
 | 后端返回的其它 `message` | ui.py / document.py / import_engine.py | **一律中文原样透传**，不参与 i18n（conventions/i18n.md:5.1 只对检查 issue 与少量 `backend.*` 键例外） |
 
@@ -248,6 +273,8 @@
 | PyQt6 静态服务线程与随机端口 | app/shell/static_server_thread.py:11-35；app/shell/pyqt6.py:224-225、268-273 |
 | pywebview 启动（WSGI + js_api） | app/shell/pywebview.py:455-509 |
 | QWebChannel 单槽 RPC 契约 | app/shell/api_rpc.py:14-67 |
+| 对话面板 4 个 RPC / 伪流式作业 / 配置读写 | presentation/api/ui.py:1145-1213；services/agent/ask_stream.py:1-258；services/agent/llm/config.py:164-174、247-330 |
+| 对话会话 JSONL 存储 | services/agent/session/store.py:56-66、169-237 |
 | 壳选择 / CLI（无 headless） | app/shell/__init__.py:12-24；cli/main.py:111-125 |
 | 后端消息本地化（仅 check.issue） | js/app.js:258-268 |
 
@@ -258,3 +285,4 @@
 - ⚠️ 待确认（未能取证）：`.memoria/images/registry.json` 的字段结构（仅取证其存在与重建时机）。
 - ⚠️ 待确认（未能取证）：iframe 场景下前端 `localStorage`（`-i18n`、`-display-settings`、`-graph-settings`、`-sidebar-*`）归属哪个 origin、是否与宿主共享；以及复用 `StaticServerThread`（`wsgiref.simple_server`，单线程阻塞）时的并发能力——均未在真实环境验证。
 - ⚠️ 待确认（未能取证）：`.memoria/agent/review/**` 的 `cards.json`/`progress.json` 结构与字段（kb-agent.md:195-200 有描述，本次未读 `fsrs.py` 实现核对）。
+- ⚠️ **本轮未取证（对话会话与端点配置）**：① 会话 JSONL 的**事件类型全集**（只取证了 header + `user/message` + loop 的 `on_event` 透传三类来源，未穷举实际写入的 `type` 值）；② 真实模型调用下 `agent_ask_poll` 的增量节奏（SSE 分片 → 250ms 轮询的实际观感）与 `answer` 覆盖流式文本的效果（需真实端点）；③ `config/agent.json` 被外部（非本面板）手改后的行为只做了「读时生效」的推理，未在真机验证；④ `agent_ask_poll` **不返回完整文本**（只返回 `delta`），故宿主若想在多端同时渲染同一作业，需按 `cursor` 自持缓冲。

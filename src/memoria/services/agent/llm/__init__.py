@@ -24,9 +24,12 @@ from __future__ import annotations
 from memoria.services.agent.llm.config import (
     AgentConfig,
     config_file_path,
+    is_enabled,
     load_config,
     mask_secret,
     normalize_api_key,
+    read_raw_config,
+    save_config,
 )
 from memoria.services.agent.llm.errors import (
     AgentLlmError,
@@ -100,6 +103,7 @@ __all__ = [
     "create_provider",
     "delay_for",
     "estimate_usage",
+    "is_enabled",
     "is_retryable",
     "iter_with_retry",
     "load_config",
@@ -107,7 +111,9 @@ __all__ = [
     "mask_secret",
     "normalize_api_key",
     "provider_names",
+    "read_raw_config",
     "register_provider",
     "run_with_retry",
+    "save_config",
     "unregister_provider",
 ]

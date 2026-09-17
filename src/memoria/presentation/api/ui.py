@@ -1141,3 +1141,74 @@ class UIAPI:
             }
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
+
+    # ── M1 应用内对话（services/agent/**，见 design/dsh-agent-port.md）──────
+    # 只读问答 + 端点配置读写：配置落在程序目录 `config/agent.json`
+    # （`llm/config.py` 的 `config_file_path()`），会话事实源是
+    # `<kb>/.memoria/agent/sessions/*.jsonl`（services/agent/session/store.py）。
+
+    def _agent_config_view(self) -> dict:
+        """端点配置的对外视图：**只出掩码，绝不出明文密钥**。"""
+        from memoria.services.agent.llm import load_config, mask_secret, read_raw_config
+        from memoria.services.agent.llm.config import config_file_path, is_enabled
+
+        config = load_config()
+        path = config_file_path()
+        root = path.parent.parent
+        rel = path.relative_to(root).as_posix() if path.is_relative_to(root) else path.name
+        return {
+            "enabled": is_enabled(),
+            "base_url": config.base_url,
+            "model": config.model,
+            "timeout_s": config.timeout_s,
+            "has_key": config.has_api_key,
+            "key_masked": mask_secret(config.api_key),
+            "source": config.source,
+            "config_file": str(path),
+            "config_rel": rel,
+            "config_keys": sorted(read_raw_config()),
+        }
+
+    def agent_get_config(self) -> dict:
+        """读取对话面板的端点配置（密钥只回掩码）。"""
+        try:
+            return {"status": "ok", **self._agent_config_view()}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "config_error", "message": str(e)}
+
+    def agent_save_config(self, patch: dict | None = None) -> dict:
+        """浅合并写入端点配置；`api_key` 仅在传入非空新值时覆盖。"""
+        from memoria.services.agent.llm import save_config
+
+        try:
+            save_config(patch if isinstance(patch, dict) else {})
+            return {"status": "ok", **self._agent_config_view()}
+        except Exception as e:  # noqa: BLE001 —— 配置非法（如超时非正数）以结构化错误返回
+            return {"status": "error", "code": "config_error", "message": str(e)}
+
+    def agent_ask_start(self, question: str, kb_path: str | None = None) -> dict:
+        """提交一次只读问答作业：立即返回 `{status, job_id}`（不阻塞 RPC 线程）。
+
+        前置校验（未开库 / 问题为空 / 出网已关 / 未配置端点 / 已有 ask 在飞）
+        一律返回结构化错误 `{status:"error", code, message}`，不抛裸异常。
+        `kb_path` 省略时用当前已打开的知识库。
+        """
+        from memoria.services.agent.ask_stream import get_ask_jobs
+
+        kb = kb_path or self._svc.kb_path
+        if not kb:
+            from memoria.services.agent.ask_stream import CODE_NO_KB
+
+            return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
+        return get_ask_jobs().start(kb, question)
+
+    def agent_ask_poll(self, job_id: str, cursor: int = 0) -> dict:
+        """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
+
+        返回 `{status:"running"|"done"|"error", delta, cursor, answer, anchors,
+        tool_calls, usage, session_id, error, ...}`；`status:"error"` 含稳定 `code`。
+        """
+        from memoria.services.agent.ask_stream import get_ask_jobs
+
+        return get_ask_jobs().poll(job_id, cursor)
+
