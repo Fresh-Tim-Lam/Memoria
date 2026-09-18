@@ -376,14 +376,16 @@
     showFlashError(msg, detail, opts);
   }
 
+  // 知识库路径显示（2026-09-18 由顶栏 #kb-indicator 移到底栏 #status-kb）：
+  // 文本 + title 同写；空路径 → 文本为空 ⇒ CSS `#status-kb:empty` 隐藏（不占位）。
+  // 顺带同步「文件 → 关闭知识库」菜单项的可用态（同一"开库/关库"状态源，避免两处漂移）。
   function showKbIndicator(path) {
-    const wrap = $("#kb-indicator-wrap");
-    const el = $("#kb-indicator");
-    if (!wrap || !el) return;
+    const closeItem = $("#file-menu-close-kb");
+    if (closeItem) closeItem.disabled = !path;
+    const el = $("#status-kb");
+    if (!el) return;
     el.textContent = path || "";
     el.title = path || "";
-    wrap.classList.toggle("hidden", !path);
-    window.MemoriaWindowChrome?.syncToolbarDragExclusion?.();
   }
 
   function showWelcome(show) {
@@ -12119,7 +12121,6 @@
     if (!sidebar) return;
     const w = _clampSidebarWidth(px);
     sidebar.style.width = w + "px";
-    if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
     if (!persist) return;
     try { localStorage.setItem("-sidebar-width", String(w)); } catch (e) { /* ignore */ }
     call("save_ui_settings", { layout: { sidebarWidth: w } }).catch(() => {});
@@ -12157,29 +12158,28 @@
     });
   }
 
-  // 左栏（文件树/图谱）整体收起/展开
+  // 左栏（文件树/图谱）整体收起/展开。
+  // 2026-09-18：边缘浮动按钮 `#sidebar-collapse-btn` 已删除，唯一入口改为顶栏最左的
+  // 图标按钮 `#btn-toggle-sidebar`（VSCode 式），故不再需要任何"贴侧栏右缘"的定位代码。
   let _sideCollapseTimer = null;
   let _sidebarCollapsed = localStorage.getItem("-sidebar-collapsed") === "1";
 
-  function _positionSidebarCollapseBtn() {
-    const sidebar = $("#-sidebar");
-    const btn = $("#sidebar-collapse-btn");
-    if (!sidebar || !btn) return;
-    const r = sidebar.getBoundingClientRect();
-    btn.style.left = (_sidebarCollapsed ? 0 : Math.max(0, r.right - 1)) + "px";
+  /** 顶栏左栏按钮的文案/可按压态（语言切换后也走这里刷新，避免残留旧语言 title） */
+  function _syncSidebarToggleBtn() {
+    const btn = $("#btn-toggle-sidebar");
+    if (!btn) return;
+    btn.title = T(_sidebarCollapsed ? "side.expandTitle" : "side.collapseTitle");
+    btn.setAttribute("aria-label", btn.title);
+    // aria-pressed = 当前是否展开（与右栏 `#btn-agent` 同一口径）
+    btn.setAttribute("aria-pressed", String(!_sidebarCollapsed));
   }
 
   function _applySidebarCollapsed() {
     const sidebar = $("#-sidebar");
-    const btn = $("#sidebar-collapse-btn");
-    if (!sidebar || !btn) return;
+    if (!sidebar) return;
     sidebar.classList.toggle("-sidebar--collapsed", _sidebarCollapsed);
-    btn.textContent = _sidebarCollapsed ? "›" : "‹";
-    btn.title = T(_sidebarCollapsed ? "side.expandTitle" : "side.collapseTitle");
-    btn.setAttribute("aria-label", btn.title);
-    btn.setAttribute("aria-expanded", String(!_sidebarCollapsed));
+    _syncSidebarToggleBtn();
     localStorage.setItem("-sidebar-collapsed", _sidebarCollapsed ? "1" : "0");
-    _positionSidebarCollapseBtn();
     clearTimeout(_sideCollapseTimer);
     // 等宽度过渡结束后让图谱画布/布局重新量算
     _sideCollapseTimer = setTimeout(() => {
@@ -12189,26 +12189,13 @@
   }
 
   function setupSidebarCollapse() {
-    const btn = $("#sidebar-collapse-btn");
+    const btn = $("#btn-toggle-sidebar");
     if (!btn) return;
     btn.addEventListener("click", () => {
       _sidebarCollapsed = !_sidebarCollapsed;
       _applySidebarCollapsed();
     });
-    window.addEventListener("resize", () => {
-      if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
-    });
-    // 侧栏几何变化（UI 缩放 rem 重排、拖拽改宽、折叠/展开过渡）都会改变
-    // #-sidebar 的宽度，但并非每次都触发 window resize；用 ResizeObserver
-    // 直接观察侧栏盒子，任何尺寸变化都重算浮动按钮的 left，保证按钮始终
-    // 贴住侧栏右缘（此前 Ctrl+缩放下按钮不跟随）。
-    const sidebarEl = $("#-sidebar");
-    if (sidebarEl && typeof ResizeObserver !== "undefined") {
-      const ro = new ResizeObserver(() => {
-        if (!_sidebarCollapsed) _positionSidebarCollapseBtn();
-      });
-      ro.observe(sidebarEl);
-    }
+    window.MemoriaI18n?.addRefresh?.(_syncSidebarToggleBtn);
     _applySidebarCollapsed();
   }
 
@@ -12359,7 +12346,14 @@
     });
     // 图片插入按钮（btn-insert-image）的 click/mousedown 与可用性状态机
     // （focusin/selectionchange/初始刷新）已随图片子系统迁至 image-tools.js，由 boot init
-    $("#btn-kb-close").addEventListener("click", () => closeKb());
+    // 「关闭知识库」= 原顶栏 `#btn-kb-close`（退出）按钮的行为，2026-09-18 移入文件菜单；
+    // 可用态由 showKbIndicator() 统一同步（未开库 → disabled）
+    $("#file-menu-close-kb")?.addEventListener("click", () => { closeFileMenu(); closeKb(); });
+    // 「退出程序」= 与窗口关闭键**同一条调用路径**（MemoriaWindowChrome.requestClose → window_close RPC）
+    $("#file-menu-quit")?.addEventListener("click", () => {
+      closeFileMenu();
+      window.MemoriaWindowChrome?.requestClose?.();
+    });
     $("#btn-welcome-open").addEventListener("click", openKb);
     $("#btn-nav-back").addEventListener("click", navBack);
     $("#btn-nav-forward").addEventListener("click", navForward);

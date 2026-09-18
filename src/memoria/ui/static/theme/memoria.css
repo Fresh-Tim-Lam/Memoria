@@ -89,6 +89,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    /* 顶栏是**单行**弹性条：任何情况下都不换行，窄窗口靠"收缩 + 截断"消化，
+       从而保证右侧 #window-controls（三键）永不被挤出视口（见 .toolbar-right 注释） */
+    flex-wrap: nowrap;
     position: relative;
     overflow: visible;
     padding: 0 0 0 12px;
@@ -100,23 +103,34 @@ body {
     /* 搜索下拉需浮在 #main / 预览区之上 */
     z-index: 50;
 }
+/* 顶栏左侧（VSCode 式：最左是左栏伸缩图标 + 品牌）。
+   flex: 0 1 auto + min-width: 0 = 空间不足时**可收缩**、overflow:hidden 就地截断
+   （不含任何浮层，裁掉是安全的）；这样"被挤"的永远是中段的按钮/搜索框，不是三键。 */
 .toolbar-left {
+    display: flex;
+    align-items: center;
     position: relative;
     z-index: 4;
-    flex-shrink: 0;
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
     background: var(--bg-toolbar, var(--bg-secondary));
 }
 .toolbar-actions {
     display: flex;
     align-items: center;
-    flex-shrink: 0;
+    /* 同上：可收缩但**不设 overflow:hidden**——盒内有 #file-menu 浮层，
+       裁切会把下拉整个切掉；收缩时的截断由各按钮自行承担（button min-width:0 + overflow:hidden） */
+    flex: 0 1 auto;
+    min-width: 0;
     margin-left: 0.5rem;
     gap: 0;
     position: relative;
     z-index: 4;
     background: var(--bg-toolbar, var(--bg-secondary));
 }
-.toolbar-actions button {
+.toolbar-actions button,
+#btn-toggle-sidebar {
     background: transparent;
     color: var(--text-primary);
     border: none;
@@ -128,9 +142,23 @@ body {
     display: flex;
     align-items: center;
 }
-.toolbar-actions button:hover {
+/* 顶栏图标按钮（左栏伸缩 / 右栏对话）：单色字形、无文字，与相邻按钮同款 hover */
+#btn-toggle-sidebar,
+.toolbar-right #btn-agent {
+    font-size: 0.875rem;
+    padding: 0.25rem 8px;
+    line-height: 1;
+}
+.toolbar-actions button:hover,
+#btn-toggle-sidebar:hover {
     background: var(--bg-toolbar-hover, var(--bg-hover));
     color: var(--text-bright);
+}
+/* 按钮自身可被压缩（flex item 默认 min-width:auto 会拒绝收缩到字宽以下），
+   收缩时以 overflow:hidden 就地截断，不外溢出盒、不顶走右侧三键 */
+.toolbar-actions button {
+    min-width: 0;
+    overflow: hidden;
 }
 .-titlebar-drag-spacer {
     flex: 1 1 0;
@@ -244,47 +272,6 @@ body {
     height: 1.375rem;
 }
 #search-box:focus { outline: 1px solid var(--theme-color); border-color: var(--theme-color); }
-.kb-indicator-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-left: 0.75rem;
-    min-width: 0;
-    max-width: min(420px, 34vw);
-    flex: 1 1 auto;
-    position: relative;
-    z-index: 1;
-    background: var(--bg-toolbar, var(--bg-secondary));
-}
-.kb-indicator-wrap.hidden { display: none; }
-.kb-indicator {
-    font-size: 0.6875rem;
-    color: var(--text-secondary);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: 0;
-    flex: 1 1 auto;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-app-region: drag;
-    cursor: default;
-}
-.-kb-exit {
-    flex-shrink: 0;
-    background: var(--theme-color) !important;
-    border: 1px solid var(--theme-color) !important;
-    color: #fff !important;
-    border-radius: 2px !important;
-    padding: 0.125rem 10px !important;
-    height: 1.5rem !important;
-    font-size: 0.6875rem !important;
-}
-.-kb-exit:hover {
-    background: var(--accent-hover) !important;
-    border-color: var(--accent-hover) !important;
-    color: #fff !important;
-}
 
 /* ========== 主体 ========== */
 #main { display: flex; flex: 1; overflow: hidden; }

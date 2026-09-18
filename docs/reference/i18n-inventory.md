@@ -21,9 +21,9 @@
 
 ### src/memoria/ui/static/app/js/app.js
 
-- L9499: var why = !blk ? ("block " + bi + " 缺失")
-- L9500: "block " + bi + " type=" + blk.type + " 不可编辑")
-- L9501: e" ? ("block " + bi + " type=blockquote 暂不支持跨块") : null);
+- L9501: var why = !blk ? ("block " + bi + " 缺失")
+- L9502: "block " + bi + " type=" + blk.type + " 不可编辑")
+- L9503: e" ? ("block " + bi + " type=blockquote 暂不支持跨块") : null);
 
 ### src/memoria/ui/static/app/index.html
 

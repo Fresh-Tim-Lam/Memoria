@@ -143,33 +143,6 @@
     display: none;
 }
 
-/* 收起/展开浮动按钮：贴在侧栏右缘垂直居中，收起后贴左缘 */
-.-sidebar-collapse-btn {
-    position: fixed;
-    top: 45%;
-    transform: translateY(-50%);
-    z-index: 90;
-    width: 20px;
-    height: 40px;
-    padding: 0;
-    border: 1px solid var(--border);
-    border-left: none;
-    border-radius: 0 6px 6px 0;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: left 0.18s ease, color 0.1s ease, background 0.1s ease;
-}
-.-sidebar-collapse-btn:hover {
-    color: var(--text-bright);
-    background: var(--bg-hover);
-}
-
 /* ── 0.3.0 统一导入向导（import-flow.js）── */
 .-import-kind-list {
     display: flex;
@@ -356,8 +329,8 @@
 
 /* **空间不足自动隐藏**（2026-09-17 新增，文档区最小宽度保护）：视觉与手动折叠一致，
    但语义不同——由 js/agent-panel.js 的 applyDockLayout() 按 available < min-width 施加，
-   **不写盘**（用户期望宽度保留），窗口变宽即自动还原；浮动按钮的 title 会改为
-   `agent.dockNoSpaceTitle`（提示"先折叠左栏"）以与手动折叠区分。 */
+   **不写盘**（用户期望宽度保留），窗口变宽即自动还原。展开入口只有顶栏 `#btn-agent`
+   （2026-09-18 起浮动收起按钮已移除），受阻时由 setDockCollapsed() 弹 `agent.dockNoSpace`。 */
 #-agent-dock.-agent-dock--auto-hidden {
     width: 0 !important;
     min-width: 0;
@@ -381,33 +354,6 @@
 #agent-dock-resizer:hover {
     background: var(--theme-color);
     opacity: 0.5;
-}
-
-/* 收起/展开浮动按钮：贴对话栏左缘垂直居中，收起后贴窗口右缘 */
-.-agent-dock-collapse-btn {
-    position: fixed;
-    top: 45%;
-    transform: translateY(-50%);
-    z-index: 90;
-    width: 20px;
-    height: 40px;
-    padding: 0;
-    border: 1px solid var(--border);
-    border-right: none;
-    border-radius: 6px 0 0 6px;
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: right 0.18s ease, color 0.1s ease, background 0.1s ease;
-}
-.-agent-dock-collapse-btn:hover {
-    color: var(--text-bright);
-    background: var(--bg-hover);
 }
 
 .-agent-head {
@@ -2144,6 +2090,20 @@
 #status-agent:empty { display: none; }
 #status-agent:hover { text-decoration: underline; text-underline-offset: 0.125rem; }
 
+/* 状态栏的**知识库路径**格（index.html `#status-kb`，由 app.js showKbIndicator() 更新；
+   2026-09-18 由顶栏 `#kb-indicator` 移来）：底栏不是标题栏，故**不带**拖拽语义。
+   长路径省略号截断，完整路径在 title；未开库（空文本）时 `:empty` 完全隐藏、不占位。 */
+#status-kb {
+    margin-left: 0.75rem;
+    max-width: 40%;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.92;
+}
+#status-kb:empty { display: none; }
+
 .-toolbar-btn-wrap {
     position: relative;
     display: inline-flex;
@@ -2202,7 +2162,8 @@
 .-window-controls {
     display: flex;
     align-items: stretch;
-    flex-shrink: 0;
+    /* 永不收缩：窗口三键是最右端的"硬"元素，窄窗口时被挤的只能是中段（见 memoria.css #toolbar 块） */
+    flex: 0 0 auto;
     margin-left: 0.375rem;
     position: relative;
     z-index: 5;
@@ -2393,8 +2354,13 @@ body.-win-dragging {
     position: relative;
     z-index: 6;
     pointer-events: auto;
-    flex: 0 1 auto;
-    min-width: 0;
+    /* 顶栏的**主要收缩项**：唯一"可以让位到很窄"的弹性元素（min-width 之外的下限）；
+       flex:1 1 auto + 显式 flex-shrink 放大 ⇒ 窄窗口先缩它，再谈左段按钮（见 memoria.css #toolbar 块） */
+    flex: 1 1 auto;
+    flex-shrink: 12;
+    /* 下限 = 内部两个不可再缩的子块之和（范围开关 ~66px + 输入框 min-width:4.5rem + gap/padding）；
+       不能取 0 —— 否则子块外溢出盒，会抬升 #toolbar 的 scrollWidth（溢出仍可见，不受本盒约束） */
+    min-width: 9.5rem;
     width: min(380px, 42vw);
     max-width: calc(100% - 200px);
     display: flex;

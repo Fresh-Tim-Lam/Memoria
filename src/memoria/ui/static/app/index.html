@@ -47,6 +47,7 @@
   <div id="app">
     <div id="toolbar">
       <div class="toolbar-left pywebview-drag-region">
+        <button type="button" id="btn-toggle-sidebar" aria-pressed="true" title="收起侧栏" data-i18n-attr="title:side.collapseTitle">◧</button>
         <span class="toolbar-brand">
           <img class="logo-icon" src="/icons/Memoria.ico" alt="" decoding="async">
           <span class="logo">Memoria</span>
@@ -70,6 +71,9 @@
               <span class="-tb-file-caret" aria-hidden="true">›</span>
               <div id="file-menu-recent" class="-tb-file-submenu" role="menu" hidden></div>
             </div>
+            <div class="-tb-file-menu-sep" role="separator"></div>
+            <button type="button" role="menuitem" id="file-menu-close-kb" disabled data-i18n="toolbar.closeKb" data-i18n-attr="title:toolbar.closeKbTitle">关闭知识库</button>
+            <button type="button" role="menuitem" id="file-menu-quit" data-i18n="toolbar.quit" data-i18n-attr="title:toolbar.quitTitle">退出程序</button>
           </div>
         </div>
         <button id="btn-refresh" title="刷新" data-i18n="toolbar.refresh" data-i18n-attr="title:toolbar.refreshTitle">刷新</button>
@@ -79,7 +83,6 @@
           <span id="btn-check-badge" class="-toolbar-badge hidden" aria-hidden="true"></span>
         </span>
         <button id="btn-settings" type="button" title="设置" data-i18n="toolbar.settings" data-i18n-attr="title:toolbar.settingsTitle">设置</button>
-        <button id="btn-agent" type="button" aria-pressed="true" title="对话面板：显示 / 收起右侧对话栏" data-i18n="agent.tab" data-i18n-attr="title:agent.btnTitle">对话</button>
       </div>
       <div class="-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-search-wrap">
@@ -94,10 +97,7 @@
       </div>
       <div class="-titlebar-drag-spacer -titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-right pywebview-drag-region">
-        <span id="kb-indicator-wrap" class="kb-indicator-wrap hidden">
-          <span id="kb-indicator" class="kb-indicator pywebview-drag-region" title="当前知识库路径（可拖拽移动窗口）" data-i18n-attr="title:app.kbPath.title"></span>
-          <button id="btn-kb-close" type="button" class="-btn primary -btn--sm -kb-exit" title="关闭知识库，返回欢迎页" data-i18n="toolbar.exit" data-i18n-attr="title:toolbar.exitTitle">退出</button>
-        </span>
+        <button id="btn-agent" type="button" aria-pressed="true" title="对话面板：显示 / 收起右侧对话栏" data-i18n-attr="title:agent.btnTitle">◨</button>
         <div id="window-controls" class="-window-controls hidden" aria-label="窗口控制" data-i18n-attr="aria-label:win.controlsAria">
           <button type="button" id="btn-win-minimize" class="-win-btn -win-btn--min" title="最小化" aria-label="最小化" data-i18n-attr="title:win.minimize;aria-label:win.minimize"></button>
           <button type="button" id="btn-win-maximize" class="-win-btn -win-btn--max" title="最大化" aria-label="最大化" data-i18n-attr="title:win.maximize;aria-label:win.maximize"></button>
@@ -147,8 +147,6 @@
           </div>
         </div>
       </aside>
-
-      <button type="button" id="sidebar-collapse-btn" class="-sidebar-collapse-btn" aria-expanded="true" title="收起侧栏" data-i18n-attr="title:side.collapseTitle"></button>
 
       <div id="content">
         <div id="tab-bar">
@@ -272,14 +270,13 @@
           <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>
         </div>
       </aside>
-
-      <button type="button" id="agent-dock-collapse-btn" class="-agent-dock-collapse-btn" aria-expanded="true" title="收起对话栏" data-i18n-attr="title:agent.dockCollapseTitle;aria-label:agent.dockCollapseTitle"></button>
     </div>
 
     <div id="status-bar">
       <span id="status-info" data-i18n="app.status.ready">就绪</span>
       <span id="status-stats"></span>
       <span id="status-agent"></span>
+      <span id="status-kb"></span>
     </div>
   </div>
 

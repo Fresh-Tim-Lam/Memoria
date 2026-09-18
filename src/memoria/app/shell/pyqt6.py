@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 
 from memoria import __version__
+from memoria.app.shell.host import WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
 from memoria.app.shell.pyqt6_hidden_chrome import (
     create_main_window,
     finalize_frameless_chrome,
@@ -229,7 +230,7 @@ def run() -> None:
     if app_icon is not None and icon_path is not None:
         apply_app_window_icons(app, window, icon_path, app_icon)
     window.resize(1280, 860)
-    window.setMinimumSize(900, 600)
+    window.setMinimumSize(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT)
 
     host = PyQt6Host(window, frameless=frameless)
     startup_kb = _startup_kb_path()

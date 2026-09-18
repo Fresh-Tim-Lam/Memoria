@@ -660,6 +660,9 @@ class UIAPI:
             return {"status": "error", "message": str(e)}
 
     def get_window_chrome(self) -> dict:
+        # 最小尺寸单一事实源：memoria/app/shell/host.py（壳与前端共用同一常量）
+        from memoria.app.shell.host import WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
+
         host = self._host
         return {
             "status": "ok",
@@ -667,15 +670,17 @@ class UIAPI:
             "maximized": bool(host and host.maximized),
             "shell": host.kind if host else "none",
             "version": __version__,
-            "min_width": 900,
-            "min_height": 600,
+            "min_width": WINDOW_MIN_WIDTH,
+            "min_height": WINDOW_MIN_HEIGHT,
         }
 
     def window_resize_to(self, width: int, height: int, anchor: str) -> dict:
         if self._host is None:
             return {"status": "error", "message": "窗口不可用"}
-        w = max(900, int(width))
-        h = max(600, int(height))
+        from memoria.app.shell.host import WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
+
+        w = max(WINDOW_MIN_WIDTH, int(width))
+        h = max(WINDOW_MIN_HEIGHT, int(height))
         try:
             self._host.resize(w, h, str(anchor or "se"))
             return {"status": "ok"}

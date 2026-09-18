@@ -2,7 +2,8 @@
  * 应用内对话面板（**右侧独立停靠栏** `#-agent-dock`，M1 首版曾挂在左栏第 4 页签）。
  *
  * 自包含：DOM/事件绑定全部由本模块 init() 完成，不依赖 app.js 的 bindEvents：
- *   - 顶栏 `#btn-agent` / 浮动 `#agent-dock-collapse-btn` → 停靠栏展开·收起
+ *   - 顶栏（右侧）`#btn-agent` → 停靠栏展开·收起（2026-09-18 起唯一入口：边缘浮动按钮
+ *     `#agent-dock-collapse-btn` 已删除，改为 VSCode 式顶栏图标按钮）
  *   - `#agent-dock-resizer` 向左拖拽调宽（rem）→ 落盘 `layout.agentDockWidth`
  *   - `#agent-settings-toggle` 折叠设置区；`#agent-save-config` 保存端点配置
  *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
@@ -11,7 +12,7 @@
  *   - `#agent-clear` 清空对话（= 开新会话，并顺带取消在飞作业）
  *   - `#agent-history` 下拉恢复历史会话；`#agent-history-delete` 删除选中会话（两次点击确认）
  *   - `#agent-messages` 内锚点点击 → 跳转文件:行号
- *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项/折叠按钮（静态节点由 i18n 引擎刷）
+ *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项（静态节点由 i18n 引擎刷）
  *
  * **多轮续聊（M1c）**：本模块自持 `sessionId`（首次提问为 null）。`agent_ask_poll`
  * 返回的 `session_id` 存下来，之后的提问都带上它 ⇒ 后端按会话文件回放历史，形成多轮；
@@ -212,44 +213,19 @@ window.MemoriaAgentPanel = (function () {
     return mainW - sidebarEffectivePx() - CONTENT_MIN_PX;
   }
 
-  /** 浮动按钮贴对话栏左缘（右栏在最右侧，故用 right 定位；隐藏时贴窗口右缘）。 */
-  function positionDockCollapseBtn() {
-    const dock = $("#-agent-dock");
-    const btn = $("#agent-dock-collapse-btn");
-    if (!dock || !btn) return;
-    btn.style.right = (
-      dockCollapsed || dockAutoHidden
-        ? 0
-        : Math.max(0, window.innerWidth - dock.getBoundingClientRect().left - 1)
-    ) + "px";
-  }
-
   /**
-   * 把三态（手动折叠 / 空间不足自动隐藏 / 展开）落到 DOM：类名 + 按钮字形·文案·aria。
-   * 三态的**浮动按钮文案不同**——自动隐藏用 `agent.dockNoSpaceTitle`（说明"先折叠左栏"），
-   * 从而与用户主动折叠可区分；顶栏 `#btn-agent` 的 title 仍由 i18n 静态节点
-   * `agent.btnTitle` 驱动（不在此改写，避免与语言包刷新抢写）。
+   * 把三态（手动折叠 / 空间不足自动隐藏 / 展开）落到 DOM：类名 + 顶栏按钮的 aria-pressed。
+   * 2026-09-18：浮动收起按钮 `#agent-dock-collapse-btn` 已删除，展开入口只剩顶栏
+   * `#btn-agent`（其 title 仍由 i18n 静态节点 `agent.btnTitle` 驱动，不在此改写，避免与
+   * 语言包刷新抢写）；"空间不足"的提示改由 setDockCollapsed() 的 flash 承担
+   * （`agent.dockNoSpace`，文案不变）。
    */
   function applyDockCollapsed() {
     const dock = $("#-agent-dock");
-    const btn = $("#agent-dock-collapse-btn");
     const toolbarBtn = $("#btn-agent");
     if (dock) dock.classList.toggle("-agent-dock--collapsed", dockCollapsed);
     const hidden = dockCollapsed || dockAutoHidden;
-    if (btn) {
-      btn.textContent = hidden ? "‹" : "›";
-      btn.title = T(
-        dockAutoHidden
-          ? "agent.dockNoSpaceTitle"
-          : dockCollapsed
-            ? "agent.dockExpandTitle"
-            : "agent.dockCollapseTitle"
-      );
-      btn.setAttribute("aria-label", btn.title);
-      btn.setAttribute("aria-expanded", String(!hidden));
-    }
     if (toolbarBtn) toolbarBtn.setAttribute("aria-pressed", String(!hidden));
-    positionDockCollapseBtn();
   }
 
   /**
@@ -1338,26 +1314,20 @@ window.MemoriaAgentPanel = (function () {
       });
     }
 
-    // 停靠栏显隐/调宽：顶栏按钮 + 浮动按钮 + 左缘拖拽柄（两个按钮同一状态、同一 handler）
+    // 停靠栏显隐/调宽：顶栏 `#btn-agent` + 左缘拖拽柄（2026-09-18 起浮动按钮已删除）
     const toolbarBtn = $("#btn-agent");
     if (toolbarBtn) toolbarBtn.addEventListener("click", () => toggleDock());
-    const collapseBtn = $("#agent-dock-collapse-btn");
-    if (collapseBtn) {
-      collapseBtn.addEventListener("click", () => toggleDock());
-    }
     setupDockResize();
     // 重算生效宽度的触发时机全部收敛到「几何变化」：视口（含 uiScale 改根字号后的
     // 显式 resize 事件）+ 左栏宽度拖拽/折叠展开（#-sidebar 宽变）+ dock 自身。
     // 用 ResizeObserver 盯 #main / #-sidebar 比到 app.js 各处挂钩子侵入更小；
-    // 宽度过渡（.18s）期间 resize 事件不触发，RO 仍能逐帧跟上（与浮动按钮定位同套路）。
+    // 宽度过渡（.18s）期间 resize 事件不触发，RO 仍能逐帧跟上。
     window.addEventListener("resize", () => applyDockLayout());
-    const dockEl = $("#-agent-dock");
-    if (dockEl && typeof ResizeObserver !== "undefined") {
+    if (typeof ResizeObserver !== "undefined") {
       new ResizeObserver(() => applyDockLayout()).observe($("#main"));
       new ResizeObserver(() => applyDockLayout()).observe($("#-sidebar"));
-      new ResizeObserver(() => positionDockCollapseBtn()).observe(dockEl);
     }
-    applyDockLayout(); // 首帧：按当前几何 + 默认期望宽度落一次（含三态文案）
+    applyDockLayout(); // 首帧：按当前几何 + 默认期望宽度落一次（含顶栏按钮 aria-pressed）
     hydrateDockLayout(); // 磁盘值（若有）随后覆盖
 
     if (window.MemoriaI18n && window.MemoriaI18n.addRefresh) {
@@ -1366,7 +1336,7 @@ window.MemoriaAgentPanel = (function () {
         renderMessages();
         resetDeleteArmed(); // 语言切换后删除按钮文案随语言包（含复位二次确认）
         refreshHistoryLabels(); // 历史选项文案（含禁用态占位）随语言切换
-        applyDockCollapsed(); // 语言切换后重绘按钮文案（含三态 title）
+        applyDockCollapsed(); // 语言切换后同步顶栏按钮 aria-pressed（title 由 i18n 静态节点刷）
         renderStatusUsage(); // 状态栏用量格文案（中英）随语言切换
       });
     }

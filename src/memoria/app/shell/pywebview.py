@@ -11,6 +11,7 @@ import webview
 
 from memoria import __version__
 from memoria.app.runtime import resolve_startup_kb_path
+from memoria.app.shell.host import WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
 from memoria.app.shell.pywebview_host import PyWebViewHost
 from memoria.presentation.api.ui import UIAPI
 from memoria.presentation.paths import UI_APP_INDEX
@@ -476,7 +477,7 @@ def run() -> None:
         js_api=api,
         width=1280,
         height=860,
-        min_size=(900, 600),
+        min_size=(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT),
         frameless=frameless,
         easy_drag=False,
         # pywebview 默认 text_select=False 会注入 body{-webkit-user-select:none}，

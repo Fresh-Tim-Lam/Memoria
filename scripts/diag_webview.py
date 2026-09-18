@@ -13,6 +13,7 @@ import time
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src"))
 
 import webview
+from memoria.app.shell.host import WINDOW_MIN_HEIGHT, WINDOW_MIN_WIDTH
 from memoria.app.shell.pywebview_host import PyWebViewHost
 from memoria.app.shell.pywebview import _startup_kb_path
 from memoria.presentation.api.ui import UIAPI
@@ -94,7 +95,7 @@ def main() -> None:
         js_api=api,
         width=1280,
         height=860,
-        min_size=(900, 600),
+        min_size=(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT),
         frameless=False,
         easy_drag=False,
     )

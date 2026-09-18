@@ -4,6 +4,16 @@ from __future__ import annotations
 
 from typing import Protocol, runtime_checkable
 
+# ── 窗口最小尺寸（px）：唯一事实源 ───────────────────────────────────────────
+# 引用方：pywebview 壳（create_window min_size）、PyQt6 壳（setMinimumSize）、
+# UIAPI 的 get_window_chrome/window_resize_to（前端按它夹取 JS 侧边缘缩放）、
+# scripts/diag_webview.py。
+# 取 1000×600 的理由：三栏并排所需宽度 = 左栏默认 17.5rem(280) + 右栏 dock 默认
+# 22rem(352) + 文档区保底 CONTENT_MIN_PX(360) ≈ 992 → 取整 1000，使最小窗口下
+# dock 仍能正常显示（不会被 `-agent-dock--auto-hidden` 自动隐藏）。高度沿用 600。
+WINDOW_MIN_WIDTH = 1000
+WINDOW_MIN_HEIGHT = 600
+
 
 @runtime_checkable
 class WindowHost(Protocol):

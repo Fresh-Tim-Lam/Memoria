@@ -13,31 +13,31 @@
 
 ```
 #app                          index.html:47    （memoria.css:39-43 纵向 flex，高 100vh）
-├── #toolbar                  index.html:48    z-index 50（memoria.css:46-60）
-│   顺序：.toolbar-left:49 → .toolbar-actions:56（末位 `#btn-agent`:82）→ spacer:84
-│         → .toolbar-search-wrap:85 → spacer:95 → .toolbar-right:96
-├── #main                     index.html:109   （memoria.css:248 横向 flex，flex:1）
+├── #toolbar                  index.html:48    z-index 50（memoria.css:88-105）
+│   顺序：.toolbar-left:49（左端 `#btn-toggle-sidebar`:50 + 品牌:51-54）→ .toolbar-actions:57
+│         （文件菜单按钮:60、菜单面板:61-77）→ spacer:87 → .toolbar-search-wrap:88
+│         → spacer:98 → .toolbar-right:99（`#btn-agent`:100 + #window-controls:101-105）
+├── #main                     index.html:109   （memoria.css:277 横向 flex，flex:1）
 │   ├── #-sidebar             index.html:110    （app.css:123-133）
 │   │   ├── #sidebar-resizer:111 · .-sidebar-tabs-wrap:112（文件/2D/3D）
 │   │   ├── #sidebar-graph-group-bar:119       仅图谱页签 + 有节点时显示
 │   │   └── #sidebar-body-split:122            导航面板:123 / 分栏柄:136 / 知识点块:137
 │   │        └── 导航面板内三视图：files:124 / graph2d:127 / graph3d:131
-│   ├── #sidebar-collapse-btn  index.html:151   fixed 收起/展开（左栏，z-index 90）
-│   ├── #content               index.html:153   （memoria.css:388-393）
-│   │   ├── #tab-bar > #tabs   index.html:154-156
-│   │   └── #viewer            index.html:157   （memoria.css:439-443）
-│   │       ├── #welcome       index.html:158    欢迎页（空态）
-│   │       └── #editor-wrap   index.html:163    默认 .hidden；header:164 / preview-status:212 / editor-split:213
-│   ├── #-agent-dock           index.html:225   右侧「对话」停靠栏（app.css:331-344）；见 §2.4
-│   │   ├── #agent-dock-resizer:226             左缘拖拽柄（app.css:371-384）
-│   │   └── 内部：顶部操作条:227-236 / 设置区:237-258 / 历史行:259-262 / 消息区:263 / 输入区:264-272
-│   └── #agent-dock-collapse-btn index.html:275 fixed 收起/展开（右栏，z-index 90）
-└── #status-bar                index.html:279    （memoria.css:604-615）
-     #status-info:280 · #status-stats:281 · #status-agent:282（agent 用量格）
-#-flash-host:288 · 9 个 .-modal:290-436   均在 #app 之外，fixed
+│   ├── #content               index.html:151   （memoria.css:388-393）
+│   │   ├── #tab-bar > #tabs   index.html:152-154
+│   │   └── #viewer            index.html:155   （memoria.css:439-443）
+│   │       ├── #welcome       index.html:156    欢迎页（空态）
+│   │       └── #editor-wrap   index.html:161    默认 .hidden；header:162 / preview-status:210 / editor-split:211
+│   ├── #-agent-dock           index.html:223   右侧「对话」停靠栏（app.css:304-317）；见 §2.4
+│   │   ├── #agent-dock-resizer:224             左缘拖拽柄（app.css:344-357）
+│   │   └── 内部：顶部操作条:225-234 / 设置区:235-256 / 历史行:257-261 / 消息区:262 / 输入区:263-271
+│   └──（2026-09-18：原 `#agent-dock-collapse-btn` 浮动按钮已删除）
+└── #status-bar                index.html:275    （memoria.css:591-601）
+     #status-info:276 · #status-stats:277 · #status-agent:278（agent 用量格）· #status-kb:279（知识库路径）
+#-flash-host:285 · 9 个 .-modal:287-433   均在 #app 之外，fixed
 ```
 
-> ⚠️ **行号漂移（2026-09-18 实测）**：本节 tree 已按当前 `index.html` 重取。差异来源：① **既有漂移**——本文最初记录的 `index.html` 锚点整段比实际**小 13 行**（`#app` 旧记 34、实际 47），`js/*.js` 锚点亦有小偏差（`showWelcome` 旧记 380-383、实际 388-391）；② **2026-09-17 第一轮**——在侧栏插入第 4 页签与「对话」面板（共 +45 行），故 `#main` 内其后节点 = 旧锚 +58；③ **2026-09-17 第二轮**——对话面板由左栏第 4 页签**迁为右侧 `#-agent-dock`**（`index.html` 净 +4 行）；④ **2026-09-17 第三轮**（文档区最小宽度保护）**未改 `index.html`**，但 `app.css` 在 dock 段插入了 `.-agent-dock--auto-hidden`（+14 行）⇒ `app.css` 中 dock 段及其后行号整体位移；⑤ **2026-09-18（本轮 M1c）**——对话面板新增历史行 `.-agent-history`（`index.html` **+4 行**，259-262）⇒ **`index.html` 中 dock 之后各节点行号 +4**（`#-agent-dock` 225 不变、`</aside>` 269→273、折叠按钮 271→275、`#status-bar` 274→278、`#-flash-host` 282→286、`.-modal` 284-430→288-434）；`app.css` 仅新增 `.-agent-history` 5 条规则（494-526，其后各条行号下移 33 行，如 `.-agent-messages` 494→527）；⑥ **2026-09-18（本轮「agent 用量可视化」）**——`#status-bar` 内新增 agent 用量格 `<span id="status-agent">`（`index.html` **+1 行**）⇒ 其后各节点行号 +1（`#-flash-host` 286→288、`.-modal` 288-434→290-436）；`app.css` 新增 `#status-agent` 3 条规则（**+12 行**，其后各条行号 +12）；`js/agent-panel.js` **+131 行**（状态栏用量格的状态与渲染/累加，见 §2.7）⇒ §2.4 表中 `agent-panel.js` 锚点按 **+5**（原 1-555 段）/ **+111**（原 556+ 段）换算。**本文 §2.1/§2.2 内的旧锚点仍未逐条重扫**，按上述偏移换算；§2.3 与 §2.4 用的是 2026-09-18 实测值。
+> ⚠️ **行号漂移（2026-09-18 实测）**：本节 tree 已按当前 `index.html` 重取。差异来源：① **既有漂移**——本文最初记录的 `index.html` 锚点整段比实际**小 13 行**（`#app` 旧记 34、实际 47），`js/*.js` 锚点亦有小偏差（`showWelcome` 旧记 380-383、实际 388-391）；② **2026-09-17 第一轮**——在侧栏插入第 4 页签与「对话」面板（共 +45 行），故 `#main` 内其后节点 = 旧锚 +58；③ **2026-09-17 第二轮**——对话面板由左栏第 4 页签**迁为右侧 `#-agent-dock`**（`index.html` 净 +4 行）；④ **2026-09-17 第三轮**（文档区最小宽度保护）**未改 `index.html`**，但 `app.css` 在 dock 段插入了 `.-agent-dock--auto-hidden`（+14 行）⇒ `app.css` 中 dock 段及其后行号整体位移；⑤ **2026-09-18（本轮 M1c）**——对话面板新增历史行 `.-agent-history`（`index.html` **+4 行**，259-262）⇒ **`index.html` 中 dock 之后各节点行号 +4**（`#-agent-dock` 225 不变、`</aside>` 269→273、折叠按钮 271→275、`#status-bar` 274→278、`#-flash-host` 282→286、`.-modal` 284-430→288-434）；`app.css` 仅新增 `.-agent-history` 5 条规则（494-526，其后各条行号下移 33 行，如 `.-agent-messages` 494→527）；⑥ **2026-09-18（本轮「agent 用量可视化」）**——`#status-bar` 内新增 agent 用量格 `<span id="status-agent">`（`index.html` **+1 行**）⇒ 其后各节点行号 +1（`#-flash-host` 286→288、`.-modal` 288-434→290-436）；`app.css` 新增 `#status-agent` 3 条规则（**+12 行**，其后各条行号 +12）；`js/agent-panel.js` **+131 行**（状态栏用量格的状态与渲染/累加，见 §2.7）⇒ §2.4 表中 `agent-panel.js` 锚点按 **+5**（原 1-555 段）/ **+111**（原 556+ 段）换算；⑦ **2026-09-18（本轮「外壳层重构」）**——顶栏：`.toolbar-left` 内新增 `#btn-toggle-sidebar`（+1 行）、`#file-menu` 内新增分隔线 + 「关闭知识库」/「退出程序」两项（+3 行）、`.toolbar-right` 内原 4 行 `#kb-indicator-wrap`（路径 + 退出按钮）替换为 1 行 `#btn-agent`（−3 行）、左栏浮动按钮 `#sidebar-collapse-btn` 与右栏浮动按钮 `#agent-dock-collapse-btn` 各删除 1 行 + 1 空行（−4 行）⇒ **`index.html` 净 −3 行**（顶栏区 +1；`#sidebar-collapse-btn` 及其空行 −2 ⇒ `#-agent-dock` 225→223；`#agent-dock-collapse-btn` 及其空行 −2 ⇒ `#status-bar` 279→275）；`theme/memoria.css` 新增顶栏弹性纪律（`#toolbar`/`.toolbar-left`/`.toolbar-actions`/`#btn-toggle-sidebar` 相关规则，**+37 行**，其后各条行号下移）并删除 `.kb-indicator-wrap`/`.kb-indicator`/`.-kb-exit`（**−38 行**）；`app.css` 删除两个浮动按钮的样式（`.-sidebar-collapse-btn` 26 行 + `.-agent-dock-collapse-btn` 26 行）、新增 `#status-kb` 与顶栏收缩规则。**本文 §2.1/§2.2 的锚点已在本轮一并重扫**（不再依赖偏移换算）。
 
 **关键互斥关系**（§5 展开）：`#welcome` 与 `#editor-wrap` 由 `showWelcome()` 互斥（app.js:388-391）；导航面板内**三**视图由 `.hidden` 互斥（app.js:1241-1246，见 §2.3）；`#editor-split` 三视图由类名互斥（app.js:1646）。
 
@@ -47,54 +47,61 @@
 
 | 项 | 实现位置 | 说明 |
 |---|---|---|
-| 是否无边框 | window-chrome.js:296-297 | 由后端 `get_window_chrome().frameless` 决定（ui.py:662-672）；非无边框时隐藏三键并给所有拖拽区设 `-webkit-app-region: no-drag`（window-chrome.js:315-322） |
-| 三键容器与外观 | index.html:87-91；app.css:1826-1896 | `#window-controls` 默认 `hidden`，仅 frameless 时显示（window-chrome.js:324）；按钮宽 2.875rem、高 2.1875rem，`font-size:0`，图形由 `::before/::after` 画（最小化=横线、最大化=方块、关闭=叉）；关闭键 hover 变 `#e81123` |
-| 图标状态与行为 | window-chrome.js:23-28、367-380 | 最大化时切 `.is-restore`（app.css:1862-1870）并改 title/aria；三键分别经桥 `window_minimize` / `window_toggle_maximize` / `window_close` |
-| 拖拽区与排除 | index.html:36,70,81,82,84；window-chrome.js:118-123 | 5 处挂 `pywebview-drag-region`（`.toolbar-left`、两个 spacer、`.toolbar-right`、`#kb-indicator`）；命中排除 `NO_DRAG_SELECTORS` = `#btn-kb-close, .-kb-exit, .toolbar-search-wrap, .toolbar-actions, .-window-controls`（`closest()` 判定） |
-| pywebview 拖拽路径 | window-chrome.js:188-208、339-344 | `mousedown` → RPC `window_begin_drag` → 后端 `PostMessage` → WndProc 执行 `WM_NCLBUTTONDOWN + HTCAPTION`（原生拖动 + Aero Snap），不用 `-webkit-app-region` |
-| pyqt6 拖拽路径 | window-chrome.js:158-179、125-156 | 走 `__memoriaQtBridge.startMove()`；另把 `.toolbar-right` 左沿 x 同步给 Qt 作拖拽排除带 |
-| 最大化下拉还原 | window-chrome.js:222-283、8-9 | 阈值 `DRAG_THRESHOLD=4`、标题栏纵向偏移 `TITLEBAR_Y_OFFSET=17`；越阈值先 `window_restore_from_drag` 再 `window_move_to` |
-| 双击标题栏 / 焦点回拉 | window-chrome.js:353-365、210-220 | 仅 pywebview 绑双击切换最大化；窗口重获焦点时用 `get_window_chrome()` 校正图标（覆盖 Aero Snap 等 JS 未知变化） |
-| 边缘缩放层 | window-chrome.js:36-116；app.css:1898-1977 | `#window-resize-layer` 含 8 个手柄（n/s/e/w/nw/ne/sw/se），`z-index:10000`，拖拽经 `window_resize_to`（ui.py:674-681 再夹 900×600 下限） |
+| 是否无边框 | window-chrome.js:300-301 | 由后端 `get_window_chrome().frameless` 决定（ui.py:662-675）；非无边框时隐藏三键并给所有拖拽区设 `-webkit-app-region: no-drag`（window-chrome.js:330-337） |
+| 三键容器与外观 | index.html:101-105；app.css:2162-2255 | `#window-controls` 默认 `hidden`，仅 frameless 时显示（window-chrome.js:339）；按钮宽 2.875rem、高 2.1875rem，`font-size:0`，图形由 `::before/::after` 画（最小化=横线、最大化=方块、关闭=叉）；关闭键 hover 变 `#e81123`。**`flex: 0 0 auto`（永不收缩，app.css:2166）** |
+| 三键永不被挤出（弹性纪律，2026-09-18 本轮） | theme/memoria.css:88-162；app.css:2166、2353-2360 | 顶栏是**单行**弹性条（`#toolbar{flex-wrap:nowrap}`，memoria.css:92-94）。**不可收缩**：`.toolbar-right`（`flex:0 0 auto`，memoria.css:235-241）与 `#window-controls`（app.css:2166）⇒ 三键恒定贴右缘可见。**可收缩**：`.toolbar-left`（`flex:0 1 auto; min-width:0; overflow:hidden`，memoria.css:106-118）、`.toolbar-actions`（同前两者 + 各按钮 `min-width:0; overflow:hidden`，memoria.css:119-131、157-162）、**主要收缩项** `.toolbar-search-wrap`（`flex:1 1 auto; flex-shrink:12; min-width:9.5rem`，app.css:2353-2360——下限取"内部范围开关 + 输入框 `min-width:4.5rem`"之和，取 0 会让子块外溢并抬高 `#toolbar.scrollWidth`）。⚠️ `.toolbar-actions` **不得**加 `overflow:hidden`（盒内含 `#file-menu` 浮层，裁切会把下拉整个切掉）。实测定值见 §7 本轮记录 |
+| 图标状态与行为 | window-chrome.js:23-28、380-393 | 最大化时切 `.is-restore`（app.css:2214-2223）并改 title/aria；三键分别经桥 `window_minimize` / `window_toggle_maximize` / `window_close`（关闭键走 `requestClose()`，见下行） |
+| 关闭入口复用（`requestClose`，2026-09-18 本轮） | window-chrome.js:291-296、391-393、400-404 | 新增导出 `MemoriaWindowChrome.requestClose()` = `api()?.window_close?.()`；`#btn-win-close` 的 click 与「文件 → 退出程序」菜单项**共用**它（不另造退出机制）。它**不依赖** `#window-controls` 是否可见（原生标题栏模式下三键被隐藏，RPC 仍可用） |
+| 拖拽区与排除 | index.html:49、87、98、99；window-chrome.js:118-128 | 4 处挂 `pywebview-drag-region`（`.toolbar-left`、两个 spacer、`.toolbar-right`；**2026-09-18 起顶栏内已无 `#kb-indicator`**）；命中排除 `NO_DRAG_SELECTORS` = `#btn-toggle-sidebar, #btn-agent, .toolbar-search-wrap, .toolbar-actions, .-window-controls`（`closest()` 判定）。**本轮变化**：删去已不存在的 `#btn-kb-close`/`.-kb-exit`，新增两个图标按钮 `#btn-toggle-sidebar`（在 `.toolbar-left` 内，必须显式登记）与 `#btn-agent`（已移入 `.toolbar-right`，不再被 `.toolbar-actions` 兜住）。harness（frameless 变体）实测：点这两个按钮**不**触发 `window_begin_drag`，点品牌区**会**触发 |
+| pywebview 拖拽路径 | window-chrome.js:195-215、350-355 | `mousedown` → RPC `window_begin_drag` → 后端 `PostMessage` → WndProc 执行 `WM_NCLBUTTONDOWN + HTCAPTION`（原生拖动 + Aero Snap），不用 `-webkit-app-region` |
+| pyqt6 拖拽路径 | window-chrome.js:164-186、131-162 | 走 `__memoriaQtBridge.startMove()`；另把 `.toolbar-right` 左沿 x 同步给 Qt 作拖拽排除带（ResizeObserver 观察 `#toolbar` 与 `.toolbar-right`——**本轮**由已删除的 `#kb-indicator-wrap` 换成后者） |
+| 最大化下拉还原 | window-chrome.js:228-289、8-9 | 阈值 `DRAG_THRESHOLD=4`、标题栏纵向偏移 `TITLEBAR_Y_OFFSET=17`；越阈值先 `window_restore_from_drag` 再 `window_move_to` |
+| 双击标题栏 / 焦点回拉 | window-chrome.js:364-376、216-226 | 仅 pywebview 绑双击切换最大化；窗口重获焦点时用 `get_window_chrome()` 校正图标（覆盖 Aero Snap 等 JS 未知变化） |
+| 边缘缩放层 | window-chrome.js:36-117；app.css:2257-2336 | `#window-resize-layer` 含 8 个手柄（n/s/e/w/nw/ne/sw/se），`z-index:10000`、容器 `pointer-events:none`（只有手柄 `auto`），拖拽经 `window_resize_to`（ui.py:677-684 再按 `WINDOW_MIN_*` 夹下限） |
 | 原生 NCHITTEST 例外 | window-chrome.js:57-64 | `shell === "pyqt6"` 且 Windows 时不启用 JS 缩放层，交给系统 `WM_NCHITTEST` |
 | DWM 圆角 | src/memoria/app/window_win32.py:166-180 | `DWMWA_WINDOW_CORNER_PREFERENCE(33)=DWMWCP_ROUND(2)`，保留 DWM 边框/阴影，标题栏区域由 `WM_NCCALCSIZE→0` 消除；pyqt6 hidden chrome 同常量（src/memoria/app/shell/pyqt6_hidden_chrome.py:886-891） |
-| 最小尺寸 / 版本号 | window-chrome.js:14、300-301、302-310 | 默认 `{w:900,h:600}` 可被后端覆盖；`version` 写入 `document.title`、`#welcome h1` 与 `#app-badge` |
+| **最小尺寸（2026-09-18 起 1000×600）** | src/memoria/app/shell/host.py:7-15（**唯一事实源**）；pywebview.py:480；pyqt6.py:233；ui.py:662-684；window-chrome.js:16、313-315 | 常量 `WINDOW_MIN_WIDTH=1000` / `WINDOW_MIN_HEIGHT=600` 定义在宿主协议模块 `app/shell/host.py`，被三处引用：pywebview `create_window(min_size=…)`、PyQt6 `setMinimumSize(…)`、`get_window_chrome()` 的 `min_width/min_height`（前端 `window-chrome.js` 用它夹 JS 侧边缘缩放，兜底默认值同步为 1000×600）；`scripts/diag_webview.py:98` 亦改用常量。**1000 的理由**：三栏并排 = 左栏默认 17.5rem(280) + 右栏 dock 默认 22rem(352) + 文档区保底 `CONTENT_MIN_PX=360` ≈ **992** ⇒ 取整 1000，最小窗口下 dock 仍正常显示（不触发 `-agent-dock--auto-hidden`）；高度沿用 600 |
+| 版本号 | window-chrome.js:313-320 | `version` 写入 `document.title`、`#welcome h1` 与 `#app-badge` |
 
-> ⚠️ `.pywebview-drag-region` 在 `theme/memoria.css:101-105` 写着 `-webkit-app-region: drag`，但两条真实路径上都被 JS 显式改成 `no-drag`（window-chrome.js:318-320、334-337）——类名里的 "drag" 当前不生效。
+> ⚠️ `.pywebview-drag-region` 在 `theme/memoria.css:171-178` 写着 `-webkit-app-region: drag`，但两条真实路径上都被 JS 显式改成 `no-drag`（window-chrome.js:333-335、349-351）——类名里的 "drag" 当前不生效。
 
 ### 2.2 顶栏
 
-顶栏高 2.1875rem、左内边距 12px、右内边距 0（memoria.css:52-53），故窗口三键贴右缘。
+顶栏高 2.1875rem、左内边距 12px、右内边距 0（memoria.css:97-98），故窗口三键贴右缘。
+**2026-09-18 起为 VSCode / Trae 式布局**：顶栏**最左**是左栏伸缩图标按钮，**最右**是对话栏图标按钮 + 窗口三键；知识库路径与「关闭知识库」都已移出顶栏（见本表与 §2.7）。顶栏的弹性纪律（谁能被挤、谁不能被挤）见 §2.1「三键永不被挤出」。
 
 | 元素 | 位置 | id / 类 | 交互 | 禁用 / 隐藏条件 |
 |---|---|---|---|---|
-| 品牌 + 版本徽标 | `.toolbar-left` | `#app-badge`（`.-badge`，app.css:3-15） | 无（拖拽区） | 徽标文本仅在后端返回 version 时填充（window-chrome.js:308-309） |
-| 后退 | `.toolbar-actions` | `#btn-nav-back`（`.-nav-btn`） | 点击 → `navBack()`（app.js:12190）；Alt+←（app.js:12402-12405） | `disabled = !canBack()`（app.js:410）；HTML 初值 disabled（index.html:44） |
-| 前进 | 同上 | `#btn-nav-forward` | 点击 → `navForward()`（app.js:12191）；Alt+→（app.js:12406-12409） | `disabled = !canForward()`（app.js:411） |
-| 「文件」菜单按钮 | 同上 | `#btn-file`（`.-tb-file`，app.css:4326-4331） | 点击切换 `#file-menu` 显隐并同步 `aria-expanded`（app.js:12092-12098） | 无禁用 |
-| ─ 打开 / ─ 导入 | 菜单内 | `#file-menu-open` / `#file-menu-import` | 关闭菜单后分别调 `openKb()`（app.js:12108；app.js:569-573）与 `MemoriaImportFlow.start()`（app.js:12109-12112） | 无 |
-| ─ 导出（预留） | 菜单内 | `#file-menu-export` | 无 | 恒定禁用（index.html:51）；title "导出知识库（预留，待后续版本）"（i18n/zh-CN.js:510-511） |
-| ─ 创建 Trae 智能体 | 菜单内 | `#file-menu-kb-agent` | 绑定于 kb-agent.js:188；未开库时给应用内错误提示（底栏转红 + 浮层），**不**弹系统目录选择（kb-agent.js:43-50） | 无 |
-| ─ 新窗口 | 菜单内 | `#file-menu-new-window` | `spawnNewWindow("")` → `call("open_new_window")`（app.js:12115-12125、12177-12180） | 无 |
-| ─ 打开最近 ▸（菜单项与分隔线顺序见 index.html:52-59） | 菜单内 | `#file-menu-open-recent` + `#file-menu-recent` | 点击展开二级面板并拉取列表（app.js:12181-12185）；点条目：未开库→本窗口装载，已开别的库→另开窗口，同库→忽略（app.js:12164-12173） | 列表项可 disabled：「读取最近打开列表失败」/「暂无最近打开的知识库」（app.js:12154-12161） |
-| 刷新 | 同上 | `#btn-refresh` | 依次 `refreshFiles` → `loadLinkTargets` → `loadGraphData` → 以 `skipNav:true` 重开当前文件（app.js:12192-12197） | 无禁用、无前置检查 |
-| 构建 | 同上 | `#btn-build` | `buildKb()`：同步链接配置并生成图谱（app.js:1027-1070） | 执行期间 `disabled`（app.js:1038、1068）；未开库不置灰，给错误样式提示（底栏转红 + 浮层，app.js:1032-1035） |
-| 检查（+角标） | 同上 | `#btn-check` + `#btn-check-badge`（`.-toolbar-badge`，app.css:1800-1818） | 打开检查弹窗（kb-check.js:642）；角标按 error/warn 计数着色（kb-check.js:113-121） | 未开库不置灰，给错误样式提示（底栏转红 + 浮层，kb-check.js:622-626）；角标 `.hidden` 即隐藏（app.css:1820-1822） |
+| **左栏伸缩（顶栏最左，2026-09-18 新增）** | `.toolbar-left` 首位（品牌之前） | `#btn-toggle-sidebar`（index.html:50）；纯图标 **`◧`**（左半实心方块＝左栏）、无文字；视觉复用 `.toolbar-actions button` 规则（memoria.css:132-151，含 hover） | 点击 = 左栏整体收起/展开（app.js:12191-12201 → `_applySidebarCollapsed()`，app.js:12177-12190）；`aria-pressed` = **是否展开**（与右栏 `#btn-agent` 同口径）；title/`aria-label` = `side.collapseTitle` / `side.expandTitle`（成对），语言切换由 `MemoriaI18n.addRefresh` 重刷（app.js:12199） | 无禁用；折叠态存 `localStorage["-sidebar-collapsed"]`（app.js:12166、12183）。**原浮动按钮 `#sidebar-collapse-btn` 已删除**（见 §2.3） |
+| 品牌 + 版本徽标 | 同上（图标之后） | `#app-badge`（`.-badge`，app.css:3-15） | 无（拖拽区；`.toolbar-left` 整体挂 `pywebview-drag-region`） | 徽标文本仅在后端返回 version 时填充（window-chrome.js:323-324） |
+| 后退 | `.toolbar-actions` | `#btn-nav-back`（`.-nav-btn`，app.css:2619-2630） | 点击 → `navBack()`（app.js:6254-6259）；Alt+←（app.js:12571-12579） | `disabled = !canBack()`（app.js:417-423）；HTML 初值 disabled（index.html:57） |
+| 前进 | 同上 | `#btn-nav-forward` | 点击 → `navForward()`（app.js:6261-6266）；Alt+→（app.js:12580-12588） | `disabled = !canForward()` |
+| 「文件」菜单按钮 | 同上 | `#btn-file`（`.-tb-file`，app.css:4753-4759） | 点击切换 `#file-menu` 显隐并同步 `aria-expanded`（app.js:12266-12286） | 无禁用 |
+| ─ 打开 / ─ 导入 | 菜单内（index.html:62-63） | `#file-menu-open` / `#file-menu-import` | 关闭菜单后分别调 `openKb()`（app.js:583-587）与 `MemoriaImportFlow.start()`（app.js:12283-12286） | 无 |
+| ─ 导出（预留） | 菜单内（index.html:64） | `#file-menu-export` | 无 | 恒定禁用；title「导出知识库（预留，待后续版本）」（i18n/zh-CN.js:511-512） |
+| ─ 创建 Trae 智能体 | 菜单内（index.html:67） | `#file-menu-kb-agent` | 绑定于 kb-agent.js:188；未开库时给应用内错误提示（底栏转红 + 浮层），**不**弹系统目录选择（kb-agent.js:43-50） | 无 |
+| ─ 新窗口 | 菜单内（index.html:68） | `#file-menu-new-window` | `spawnNewWindow("")` → `call("open_new_window")`（app.js:12289-12299） | 无 |
+| ─ 打开最近 ▸ | 菜单内（index.html:69-73） | `#file-menu-open-recent` + `#file-menu-recent` | 点击展开二级面板并拉取列表（app.js:12309-12359）；点条目：未开库→本窗口装载，已开别的库→另开窗口，同库→忽略 | 列表项可 disabled：`toolbar.recentLoadFailed` / `toolbar.recentEmpty` |
+| **─ 关闭知识库（2026-09-18 新增）** | 菜单内**末尾段**（分隔线 index.html:74 之后，index.html:75） | `#file-menu-close-kb`（`role="menuitem"`） | 首句 `closeFileMenu()` 后调 `closeKb()`（app.js:12351）——**与原顶栏 `#btn-kb-close`（退出）按钮行为完全一致**（屏障刷盘 → 关库 → 清空全部前端状态 → 回欢迎页，app.js:589-641） | **未开库时 `disabled`**；可用态由 `showKbIndicator()` 统一同步（app.js:382-389），HTML 初值 `disabled` |
+| **─ 退出程序（2026-09-18 新增，见 §7 待拍板）** | 菜单内最末（index.html:76） | `#file-menu-quit`（`role="menuitem"`） | 首句 `closeFileMenu()` 后调 `window.MemoriaWindowChrome?.requestClose?.()`（app.js:12353-12356）= 与窗口关闭键**同一条链路**（`window_close` RPC，window-chrome.js:291-296） | 无禁用 |
+| 刷新 | 同上 | `#btn-refresh` | 依次 `refreshFiles` → `loadLinkTargets` → `loadGraphData` → 以 `skipNav:true` 重开当前文件（app.js:12360-12365） | 无禁用、无前置检查 |
+| 构建 | 同上 | `#btn-build` | `buildKb()`：同步链接配置并生成图谱（app.js:1012-1049） | 执行期间 `disabled`；未开库不置灰，给错误样式提示（底栏转红 + 浮层） |
+| 检查（+角标） | 同上 | `#btn-check` + `#btn-check-badge`（`.-toolbar-badge`，app.css:2118-2150） | 打开检查弹窗（kb-check.js:642）；角标按 error/warn 计数着色 | 未开库不置灰，给错误样式提示（kb-check.js:622-626）；角标 `.hidden` 即隐藏 |
 | 设置 | 同上 | `#btn-settings` | 打开设置弹窗（graph-settings.js:950） | 无 |
-| 对话（右侧 dock 开关） | 同上 | `#btn-agent`（`data-i18n="agent.tab"`，index.html:82） | 点击切换右侧 `#-agent-dock` 的展开/收起（agent-panel.js:259-261 → `toggleDock()`，它在「手动折叠**或**空间不足自动隐藏」两种隐藏态下都解释为"请求展开"）；与浮动 `#agent-dock-collapse-btn` 共用同一状态机（agent-panel.js:231-234、272-286）；`aria-pressed` 反映展开态（agent-panel.js:196）；见 §2.4 | 无禁用；页面无 `#-agent-dock` 时整个面板不装配（agent-panel.js:735） |
-| 搜索范围开关 | `.toolbar-search-wrap` | `#toolbar-search-scope`（`role="switch"`） | 整块可点/可聚焦，点击或 Enter/Space 翻转「全库 ⇄ 文件」（toolbar-search.js:253-263）；子按钮 `pointer-events:none`（app.css:2035） | 内部「文件」子按钮在无 `currentPath` 时 `disabled`（toolbar-search.js:60）；强行切到 file 会发 `openFileFirst` 错误（toolbar-search.js:85-88） |
-| 搜索框 | 同上 | `#toolbar-search` | 输入防抖 220ms、Enter 搜索（Shift+Enter 仅当前文件）、Esc 关面板并失焦、聚焦时有内容即重搜（toolbar-search.js:245-277）；Ctrl+K 聚焦（281-286） | 无禁用；未开库时提示 `openKbFirst`（错误样式，toolbar-search.js:132-135） |
-| 搜索结果面板 | 同上 | `#toolbar-search-panel` | 绝对定位于搜索框下方，`z-index:9000`、最大高 `min(240px,40vh)`（app.css:2081-2096）；点外部或选中结果即隐藏（toolbar-search.js:278-280） | 默认 `.hidden`（index.html:78） |
-| 知识库路径指示 | `.toolbar-right` | `#kb-indicator`（memoria.css:218-230） | 纯展示，title 为完整路径；CSS 标为拖拽区 | 外层 `#kb-indicator-wrap` 无路径时 `.hidden`（app.js:370-377） |
-| 退出 | 同上 | `#btn-kb-close`（`-btn primary -btn--sm -kb-exit`） | `closeKb()`：屏障刷盘 → 关库 → 清空全部前端状态 → 回欢迎页（app.js:575-628、12188） | 与 `#kb-indicator-wrap` 同步隐藏 |
-| 窗口三键 | 同上 | `#window-controls` | 见 §2.1 | 默认 `hidden`（index.html:87） |
+| 搜索范围开关 | `.toolbar-search-wrap` | `#toolbar-search-scope`（`role="switch"`） | 整块可点/可聚焦，点击或 Enter/Space 翻转「全库 ⇄ 文件」（toolbar-search.js:253-263）；子按钮 `pointer-events:none` | 内部「文件」子按钮在无 `currentPath` 时 `disabled`；强行切到 file 会发 `openFileFirst` 错误 |
+| 搜索框 | 同上 | `#toolbar-search` | 输入防抖 220ms、Enter 搜索（Shift+Enter 仅当前文件）、Esc 关面板并失焦、Ctrl+K 聚焦 | 无禁用；未开库时提示 `openKbFirst`（错误样式） |
+| 搜索结果面板 | 同上 | `#toolbar-search-panel` | 绝对定位于搜索框下方，`z-index:9000`；点外部或选中结果即隐藏 | 默认 `.hidden` |
+| **对话（右栏 dock 开关，2026-09-18 移到顶栏右侧）** | `.toolbar-right` 首位（`#window-controls` 之前） | `#btn-agent`（index.html:100）；纯图标 **`◨`**（右半实心方块＝右栏）、无文字；title 仍走 i18n `agent.btnTitle` | 点击切换右侧 `#-agent-dock` 的展开/收起（agent-panel.js:1317-1319 → `toggleDock()`:264-266，它在「手动折叠**或**空间不足自动隐藏」两种隐藏态下都解释为"请求展开"）；`aria-pressed` = 是否可见（agent-panel.js:223-229）；**原浮动 `#agent-dock-collapse-btn` 已删除**，故这是唯一入口；见 §2.4 | 无禁用；页面无 `#-agent-dock` 时整个面板不装配（agent-panel.js:1245） |
+| **知识库路径（2026-09-18 移到底栏）** | ~~`.toolbar-right`~~ → `#status-bar` | `#status-kb`（index.html:279；app.css:2096-2105） | 见 §2.7 | 空路径 ⇒ `:empty{display:none}` 隐藏不占位 |
+| **退出（2026-09-18 移入「文件」菜单）** | ~~`.toolbar-right`~~ → `#file-menu-close-kb` | 见上「关闭知识库」行 | 同上 | 同上 |
+| 窗口三键 | `.toolbar-right` 末位 | `#window-controls`（index.html:101-105） | 见 §2.1 | 默认 `hidden`（非 frameless 或 RPC 不可用时不 `remove("hidden")`） |
 
 ### 2.3 左侧栏
 
 | 项 | 证据 | 说明 |
 |---|---|---|
 | 容器 / 收起态 | index.html:110；app.css:123-144 | `#-sidebar` 默认宽 17.5rem、`min-width` 11.25rem、含宽度过渡；加 `.-sidebar--collapsed` 后宽 0、去右边框、溢出自隐、隐藏拖拽柄 |
-| 收起/展开按钮 | index.html:151；app.css:147-171；app.js:12158-12206 | `fixed`、`top:45%`、`z-index:90`、20×40px 半圆角；展开时贴侧栏右缘（`left = right-1`）、收起时贴左缘；字形 `‹`/`›`；状态存 `localStorage["-sidebar-collapsed"]`（app.js:12158、12177）；几何变化不触发 `resize`，另用 `ResizeObserver` 跟踪（app.js:12187-12206） |
+| 收起/展开按钮（**2026-09-18 改为顶栏图标**） | index.html:50（顶栏 `.toolbar-left` 首位）；memoria.css:132-151、106-118；app.js:12162-12201 | **原 `#sidebar-collapse-btn` 浮动按钮已删除**——连同 `app.css:147-171` 样式、贴侧栏右缘的 `_positionSidebarCollapseBtn()`、跟随几何的 `ResizeObserver` 与 `window.resize` 重定位（`applySidebarWidth()` 里的定位调用，原 app.js:12124）一并移除；现唯一入口是顶栏最左的 `#btn-toggle-sidebar`（图标 `◧`，见 §2.2），`aria-pressed` 反映展开态（`aria-expanded` 已弃用），点击走同一份 `_applySidebarCollapsed()`（app.js:12177-12190），状态存 `localStorage["-sidebar-collapsed"]` |
 | 宽度拖拽 | index.html:111；app.js:12134-12154；夹取 app.js:12103-12106；手柄样式 theme/memoria.css:304-316 | 手柄在右缘外 3px、宽 0.375rem、hover 高亮主题色；把 `clientX` 夹到 **180–480px**（与 CSS 的 11.25rem 最小值/17.5rem 默认值为两套口径）；`mouseup` 落盘 `layout.sidebarWidth`（app.js:12113-12122，落盘点 12121） |
 | **三页签** | index.html:112-116；app.js:1233-1258 | `[data-sidebar-tab]` = `files`(113) / `graph2d`(114) / `graph3d`(115)，复用 `.-config-tab`；切换逻辑是通用实现（按 `dataset` 遍历按钮与视图，无 tab 白名单，app.js:1239-1246）；当前页签写 `localStorage["-sidebar-tab"]`（app.js:1238），初值读同键、默认 `files`（app.js:33）。**2026-09-17：「对话」第 4 页签已删除**（面板迁为右侧 `#-agent-dock`，见 §2.4），同时 `setSidebarTab` 加了一行守卫——存量 `localStorage["-sidebar-tab"]="agent"` 命中不到任何 `[data-sidebar-view]` 时回退 `files`（app.js:1234-1236），否则三个视图会被一起隐藏 |
 | 页签计数 | index.html:113-115；app.js:739-741 | `#sidebar-tab-count-files` = `state.files.length`；`#sidebar-tab-count-graph2d/-graph3d` = `state.graphData.nodes.length`（两者同值）；更新于 `refreshFiles`（app.js:639）与 `loadGraphData`（app.js:1072） |
@@ -105,24 +112,26 @@
 ### 2.4 右侧「对话」停靠栏（`#-agent-dock`，2026-09-17 由左栏第 4 页签迁出）
 
 只读问答面板：问一句 → 后端 `ask()` 跑「检索 → 远端模型 → 带 `文件:行号` 锚点的回答」，
-答案里的锚点可点击跳转。DOM 骨架**静态写在 index.html**（index.html:225-269；`index.html:271` 是同级的浮动折叠按钮），
+答案里的锚点可点击跳转。DOM 骨架**静态写在 index.html**（index.html:223-271），
 行为与渲染全部在独立模块 `js/agent-panel.js`（`window.MemoriaAgentPanel`，装配于 app.js:12856）。
 结构**与左栏 `#-sidebar` 镜像**：同为 `#main` 的直系子节点（在 `#content` **之后**）、`flex-shrink:0`、
 1px 分隔边框、宽度过渡；差别只在「贴右缘 / 边框在左 / 拖拽方向相反」。
+**2026-09-18**：同级浮动折叠按钮 `#agent-dock-collapse-btn`（原 index.html:275）已删除，
+展开/收起的唯一入口是顶栏右侧图标按钮 `#btn-agent`（见 §2.2）。
 
 | 项 | 证据 | 说明 |
 |---|---|---|
-| 容器与宽度 | index.html:225；app.css:331-344 | `#-agent-dock` 默认 **22rem**、`min-width` **16rem**、`max-width` **34rem**；`background:var(--bg-secondary)`、`border-left:1px solid var(--border)`、`transition: width .18s ease`；**展开态不设 `overflow`**（与 `#-sidebar` 一致——设了会把它左缘外 3px 的拖拽柄裁掉一半，见「拖拽柄」行）。内容结构 = 顶部操作条 / 折叠设置区 / **历史行（M1c）** / 消息区（唯一滚动容器）/ 底部输入区，五段都是 `flex-shrink:0` 或 `flex:1` 的纵向 flex 子项 |
-| 宽度单位是 rem | agent-panel.js:185-193、259-281 | JS 改宽写的是 `dock.style.width = <n>rem`（不是 px），故随显示设置的根 `font-size`（`uiScale`，见 §2.10）等比缩放，与 CSS 默认值同口径；拖动时用 `getComputedStyle(documentElement).fontSize` 做 px↔rem 换算 |
-| 折叠（宽度归零） | app.css:347-356；agent-panel.js:228-257、362-380 | 加 `.-agent-dock--collapsed` ⇒ `width:0 !important`、`min-width:0`、去左边框、`overflow:hidden`、隐藏 `#agent-dock-resizer`。**只归零宽度、节点仍在 DOM**（不 `display:none`），故 `clientWidth===0` 可断言；状态可逆 |
-| 两个折叠入口（同一状态） | index.html:82、276；agent-panel.js:283-285、1209-1214 | 顶栏 `#btn-agent`（见 §2.2）与浮动 `#agent-dock-collapse-btn` 都调 `toggleDock()`——它把「隐藏态（手动折叠**或**空间不足自动隐藏）点击」统一解释为「请求展开」，故自动隐藏时点到的是展开分支（由 `setDockCollapsed` 拦下并提示，见下行「空间不足自动隐藏」）；前者以 `aria-pressed`、后者以 `aria-expanded` + 字形反映状态。**默认展开可见**（`dockCollapsed` 初值 false，agent-panel.js:179） |
-| 展开/收起浮动按钮 | app.css:387-411；agent-panel.js:211-226 | `fixed`、`top:45%`、`z-index:90`、20×40px、圆角在左（`6px 0 0 6px`，去右边框）；**贴对话栏左缘**（`right = innerWidth − dock.left − 1`），折叠/自动隐藏时 `right:0` 贴窗口右缘；字形展开态 `›`（可收起）、隐藏态 `‹`（可展开）；宽度过渡期间靠 `ResizeObserver` 持续跟随（agent-panel.js:1223-1225） |
-| 拖拽柄 | index.html:226；app.css:357-370；agent-panel.js:337-360 | 贴**左**缘外 3px、宽 0.375rem（`left:-3px` ⇒ 可抓区 3px 在 dock 内、3px 在外，故**展开态必须不裁剪**）、`cursor:col-resize`、hover 高亮主题色；**向左拖变宽**（期望宽度 = `innerWidth − clientX`，与左栏相反）；拖动中实时夹到 16–34rem（`clampDockRem`，agent-panel.js:190-193），**上界还受 `available` 约束**（`min(34rem, available)`，见下行「文档区最小宽度保护」）；拖动中实时生效、**`mouseup` 才落盘**（写的是期望宽度） |
-| **文档区最小宽度保护**（期望 ≠ 生效） | agent-panel.js:172-183、196-209、259-281 | 新增 `CONTENT_MIN_PX = 360`（agent-panel.js:179）。`layout.agentDockWidth` 是**期望宽度**（rem，只在拖拽/显式操作时写盘）；每次布局变化按 `available = #main.clientWidth − 左栏生效宽度 − 360` 算**生效宽度**（agent-panel.js:259-281）：手动折叠 → 0；`available ≥ 16rem` → `clamp(期望, 16rem, min(34rem, available))`；否则 → 0。左栏「生效宽度」= 未折叠时的实测宽度、折叠时按 0 计（`sidebarEffectivePx()`，agent-panel.js:196-202，直接量几何宽度即可覆盖两态）。生效宽度只写**内联 `width`**（rem），**不覆盖** CSS 的 min/max 规则；因此 `#content` 宽度 = `#main.clientWidth − 左栏 − dock ≥ 360`（推导：`#content` 是 `flex:1`+`overflow:hidden`，宽度即剩余空间；`*{box-sizing:border-box}`，memoria.css:2）。**前提**：仅当 `#main.clientWidth ≥ 左栏生效宽 + 360` 时该保底成立；再窄下去 dock 保持隐藏、`#content` 只剩更少的空间（左栏行为未改，不参与让位） |
-| 空间不足自动隐藏（`.-agent-dock--auto-hidden`） | app.css:361-373；agent-panel.js:259-281、362-380 | `available < 16rem` 时加 `.-agent-dock--auto-hidden`（视觉同手动折叠：`width:0 !important` / 隐藏拖拽柄 / 去左边框），与 `.-agent-dock--collapsed` **互斥**。它是**派生态**：**不写盘、不改用户期望值**，窗口变宽即自动还原到期望宽度（无需用户再点）。浮动按钮的 title 改为 `agent.dockNoSpaceTitle`（「空间不足：先折叠左栏…」）以区别于手动折叠的 `agent.dockExpandTitle`（agent-panel.js:228-257）。**此时点浮动按钮/顶栏按钮不会展开**：`setDockCollapsed(false, …)` 检测到自动隐藏即 `showFlashInfo(agent.dockNoSpace)` 后返回，**不挤压文档区**、也不写盘（agent-panel.js:362-380；`toggleDock()`:283-285 把"隐藏态点击"统一解释为"请求展开"，故自动隐藏时点到的是"请求展开"分支而非折叠分支） |
-| 生效宽度的重算时机 | agent-panel.js:1216-1228 | **ResizeObserver 为主**：`#main`（视口/`uiScale` 改根字号）+ `#-sidebar`（左栏宽度拖拽、折叠/展开）+ dock 自身（浮动按钮跟随）。另接 `window.resize`（`uiScale` 由 display-settings.js:97 显式派发）。折叠/展开与顶栏按钮走 `applyDockLayout()`（agent-panel.js:375）；dock 拖拽过程中逐帧 `applyDockLayout()`（:355）；语言切换由 `MemoriaI18n.addRefresh` 重绘按钮 title（:1233-1240）。**未**在 `app.js` 的左栏拖拽/折叠代码里挂钩子（左栏行为零改动） |
-| 布局持久化 | agent-panel.js:293-304、382-393 | 键在 `config/ui-settings.json` 的 `layout` 段：`layout.agentDockWidth`（数字，**rem 数值**，如 `22`——**期望宽度**）与 `layout.agentDockCollapsed`（bool，**只记手动折叠**）。启动 `hydrateDockLayout()` 读回；拖动结束/手动切换折叠时 `saveDockLayout()` 落盘。⚠️ **自动收缩/自动隐藏一律不回写盘**（这是本轮硬规则：窗口临时变窄不会污染用户期望值）。⚠️ **必须先读旧 `layout` 再整体写回**：后端 `save_ui_settings` 是**顶层浅合并**（`storage/ui_settings.py:58-75`），直接传 `{layout:{agentDockWidth}}` 会把整个 `layout` 换掉、**抹掉 `layout.sidebarWidth`**（左栏宽度）——agent-panel.js:293-304 的 `get_ui_settings` → 合并 → `save_ui_settings` 就是为规避它（harness 已断言 `sidebarWidth` 保持不变；M1 收尾新增的顶层 `agent` 段偏好走同套路的 `saveAgentPrefs()`:311-322） |
-| 层级关系 | app.css:387-392；对比 app.css:4533、2448、2519 | dock 在 `#main` 的**普通流**内、自身**无** `z-index`（它在文档区内，不可能盖住任何浮层）；折叠按钮虽然 `position:fixed`，但只给 `z-index:90`（app.css:391），**低于** `.-modal` 的 1000（app.css:4533）⇒ 弹窗、搜索面板(9000，app.css:2448)、右键菜单/格式下拉(10050)、`#-flash-host`(12000，app.css:2519) 都会盖住它。`#status-bar`（index.html:279）在 `#main` **之外**，与 dock 不重叠（harness 实测 876×271 视口：`#status-bar` top=249、dock 底=249，相接） |
+| 容器与宽度 | index.html:223；app.css:304-317 | `#-agent-dock` 默认 **22rem**、`min-width` **16rem**、`max-width` **34rem**；`background:var(--bg-secondary)`、`border-left:1px solid var(--border)`、`transition: width .18s ease`；**展开态不设 `overflow`**（与 `#-sidebar` 一致——设了会把它左缘外 3px 的拖拽柄裁掉一半，见「拖拽柄」行）。内容结构 = 顶部操作条 / 折叠设置区 / **历史行（M1c）** / 消息区（唯一滚动容器）/ 底部输入区，五段都是 `flex-shrink:0` 或 `flex:1` 的纵向 flex 子项 |
+| 宽度单位是 rem | agent-panel.js:191-194、240-261 | JS 改宽写的是 `dock.style.width = <n>rem`（不是 px），故随显示设置的根 `font-size`（`uiScale`，见 §2.10）等比缩放，与 CSS 默认值同口径；拖动时用 `getComputedStyle(documentElement).fontSize` 做 px↔rem 换算 |
+| 折叠（宽度归零） | app.css:320-328；agent-panel.js:223-229、240-261 | 加 `.-agent-dock--collapsed` ⇒ `width:0 !important`、`min-width:0`、去左边框、`overflow:hidden`、隐藏 `#agent-dock-resizer`。**只归零宽度、节点仍在 DOM**（不 `display:none`），故 `clientWidth===0` 可断言；状态可逆 |
+| **折叠入口（2026-09-18 起唯一）** | index.html:100；agent-panel.js:264-266、1317-1319 | 顶栏 `#btn-agent`（见 §2.2）→ `toggleDock()` —— 它把「隐藏态（手动折叠**或**空间不足自动隐藏）点击」统一解释为「请求展开」，故自动隐藏时点到的是展开分支（由 `setDockCollapsed` 拦下并提示，见下行「空间不足自动隐藏」）；按钮以 `aria-pressed` 反映是否可见（agent-panel.js:223-229），title 恒为 i18n `agent.btnTitle`。**默认展开可见**（`dockCollapsed` 初值 false，agent-panel.js:186） |
+| ~~展开/收起浮动按钮~~（2026-09-18 **已删除**） | ~~app.css:387-411；agent-panel.js:211-226~~ | 原 `fixed; top:45%; z-index:90; 20×40px` 的按钮及其定位函数 `positionDockCollapseBtn()`、跟随 `ResizeObserver`、`dockCollapseTitle`/`dockExpandTitle`/`dockNoSpaceTitle` 三键**全部移除**。改由顶栏 `#btn-agent` 承担；「空间不足」的说明改由 flash 文案 `agent.dockNoSpace` 承担（见下行） |
+| 拖拽柄 | index.html:224；app.css:344-357；agent-panel.js:318-341 | 贴**左**缘外 3px、宽 0.375rem（`left:-3px` ⇒ 可抓区 3px 在 dock 内、3px 在外，故**展开态必须不裁剪**）、`cursor:col-resize`、hover 高亮主题色；**向左拖变宽**（期望宽度 = `innerWidth − clientX`，与左栏相反）；拖动中实时夹到 16–34rem（`clampDockRem`，agent-panel.js:195-198），**上界还受 `available` 约束**（`min(34rem, available)`，见下行「文档区最小宽度保护」）；拖动中实时生效、**`mouseup` 才落盘**（写的是期望宽度） |
+| **文档区最小宽度保护**（期望 ≠ 生效） | agent-panel.js:179-213、240-261 | `CONTENT_MIN_PX = 360`（agent-panel.js:185）。`layout.agentDockWidth` 是**期望宽度**（rem，只在拖拽/显式操作时写盘）；每次布局变化按 `available = #main.clientWidth − 左栏生效宽度 − 360` 算**生效宽度**（agent-panel.js:240-261）：手动折叠 → 0；`available ≥ 16rem` → `clamp(期望, 16rem, min(34rem, available))`；否则 → 0。左栏「生效宽度」= 未折叠时的实测宽度、折叠时按 0 计（`sidebarEffectivePx()`，agent-panel.js:202-207，直接量几何宽度即可覆盖两态）。生效宽度只写**内联 `width`**（rem），**不覆盖** CSS 的 min/max 规则；因此 `#content` 宽度 = `#main.clientWidth − 左栏 − dock ≥ 360`（推导：`#content` 是 `flex:1`+`overflow:hidden`，宽度即剩余空间；`*{box-sizing:border-box}`，memoria.css:2）。**前提**：仅当 `#main.clientWidth ≥ 左栏生效宽 + 360` 时该保底成立；再窄下去 dock 保持隐藏、`#content` 只剩更少的空间（左栏行为未改，不参与让位） |
+| 空间不足自动隐藏（`.-agent-dock--auto-hidden`） | app.css:330-341；agent-panel.js:240-261、343-360 | `available < 16rem` 时加 `.-agent-dock--auto-hidden`（视觉同手动折叠：`width:0 !important` / 隐藏拖拽柄 / 去左边框），与 `.-agent-dock--collapsed` **互斥**。它是**派生态**：**不写盘、不改用户期望值**，窗口变宽即自动还原到期望宽度（无需用户再点）。**2026-09-18 起不再有"三态 title"**：顶栏按钮 title 恒为 `agent.btnTitle`，隐藏原因只在点击展开时才由 flash 说明。**此时点顶栏 `#btn-agent` 不会展开**：`setDockCollapsed(false, …)` 检测到自动隐藏即 `showFlashInfo(agent.dockNoSpace)` 后返回，**不挤压文档区**、也不写盘（agent-panel.js:343-360；`toggleDock()`:264-266 把"隐藏态点击"统一解释为"请求展开"，故自动隐藏时点到的是"请求展开"分支而非折叠分支）。harness 实测：自动隐藏态点顶栏按钮 → flash「空间不足：对话栏保持隐藏…」且 `clientWidth` 仍 0 |
+| 生效宽度的重算时机 | agent-panel.js:1320-1329 | **ResizeObserver 为主**：`#main`（视口/`uiScale` 改根字号）+ `#-sidebar`（左栏宽度拖拽、折叠/展开）。另接 `window.resize`（`uiScale` 由 display-settings.js:97 显式派发）。折叠/展开与顶栏按钮走 `applyDockLayout()`（agent-panel.js:240-261）；dock 拖拽过程中逐帧 `applyDockLayout()`（:329）；语言切换由 `MemoriaI18n.addRefresh` 同步按钮 aria 与状态栏文案（:1333-1342）——**2026-09-18 移除**了跟随浮动按钮位置的第三个 `ResizeObserver`。**未**在 `app.js` 的左栏拖拽/折叠代码里挂钩子（左栏行为零改动） |
+| 布局持久化 | agent-panel.js:274-285、363-373 | 键在 `config/ui-settings.json` 的 `layout` 段：`layout.agentDockWidth`（数字，**rem 数值**，如 `22`——**期望宽度**）与 `layout.agentDockCollapsed`（bool，**只记手动折叠**）。启动 `hydrateDockLayout()` 读回；拖动结束/手动切换折叠时 `saveDockLayout()` 落盘。⚠️ **自动收缩/自动隐藏一律不回写盘**（这是上一轮硬规则：窗口临时变窄不会污染用户期望值）。⚠️ **必须先读旧 `layout` 再整体写回**：后端 `save_ui_settings` 是**顶层浅合并**（`storage/ui_settings.py:58-75`），直接传 `{layout:{agentDockWidth}}` 会把整个 `layout` 换掉、**抹掉 `layout.sidebarWidth`**（左栏宽度）——agent-panel.js:274-285 的 `get_ui_settings` → 合并 → `save_ui_settings` 就是为规避它（harness 已断言 `sidebarWidth` 保持不变；M1 收尾新增的顶层 `agent` 段偏好走同套路的 `saveAgentPrefs()`:292-303） |
+| 层级关系 | 对比 app.css:4542（`.-modal`）、2353（搜索面板 z-index:6 的包裹层）；§2.9 表 | dock 在 `#main` 的**普通流**内、自身**无** `z-index`（它在文档区内，不可能盖住任何浮层）。**2026-09-18**：原浮动按钮（`z-index:90`）已删除，dock 段落里不再有任何 `position:fixed` 节点 ⇒ 顶栏（`#toolbar` z-index:50）与弹窗/搜索面板/右键菜单/`#-flash-host` 的层级关系不再涉及 dock。`#status-bar`（index.html:275）在 `#main` **之外**，与 dock 不重叠（harness 实测：`#status-bar` top 与 dock 底相接） |
 | 顶部操作条 | index.html:227-236；app.css:413-448 | `#agent-model-label`（模型名 + 关网时的「出网已关」尾注，由 `applyConfigToForm()`:802-830 写入）+ `#agent-net-toggle`（checkbox，文案「出网」）+ `#agent-settings-toggle`（`.-config-btn`，带 `aria-expanded`/`aria-controls`） |
 | 折叠设置区 | index.html:237-258；app.css:449-493；agent-panel.js:1150-1157 | 默认 `.hidden`；点「设置」按钮 `classList.toggle("hidden")` 并同步 `aria-expanded`（**就地折叠，不弹窗**）。字段：`#agent-base-url` / `#agent-model` / `#agent-api-key`(type=password) / `#agent-timeout` + `#agent-save-config`；底部 `#agent-config-path` 显示 `config/agent.json` 相对路径（`agent.settings.path`）。**2026-09-17 修复**：加 `max-height: min(24rem, 45vh)` + `overflow-y:auto`（app.css:456-457）——此前无上限，矮窗口展开后「保存」按钮被顶出可视区且无法滚动（harness 271px 高窗口下现已可滚到） |
 | 密钥处理 | index.html:248；agent-panel.js:815-822、861-885 | 输入框**永不回显**密钥：保存后清空，已存密钥只作 placeholder（`agent.settings.apiKeySet` 带 `{masked}`，掩码由后端 `mask_secret` 生成）；留空即「不修改」（后端 `save_config` 同语义，`llm/config.py:309-313`）；保存请求仅在输入非空时带 `api_key` |
@@ -139,7 +148,7 @@
 | 换库 / 关库 | agent-panel.js:1014-1024、661-683、747-760 | 轮询期间 `state.kbPath` 变化 ⇒ 丢弃本次结果并提示（`agent.status.dropped`），不把 A 库的答案留在 B 库的面板里；同时作废 `sessionId` 并刷新历史列表（`sessionKb` 与当前库不一致时也在 `refreshHistory()` 里作废，避免把 A 库的会话续到 B 库）；M1 收尾新增 `onKbChanged()`:747-760 由 `app.js` 在开库/关库处显式调用（清会话态 + 重试恢复上次会话） |
 | 发送前置 | agent-panel.js:953-1003 | 未开库 / 未输问题 / `enabled=false` 时**就地报错**（状态行转红 + flash 卡片），不静默失败；前端已 `busy` 时直接返回不重复提交（后端仍有单飞约束）；`enabled=false` 时发送按钮 `disabled` 且带 title（`renderComposer()`:832-840） |
 | 错误呈现 | agent-panel.js:104-130、499-529、861-903、1048-1052 | 后端 8 个 agent RPC 的错误按**稳定 code** 映射文案（`ERR_KEYS`:104-130，M1c 新增 `unknown_session`/`session_failed`，M1 收尾新增 `cancel_failed`）。**具体 code**（`busy`/`no_base_url`/`net_disabled`/`unknown_job`/`unknown_session`…）只显示本地化文案；**兜底 code**（`ask_failed`/`config_error`，`GENERIC_CODES`:132）额外拼后端原文——LLM 失败的真实原因（传输/认证/HTTP/确定性连接失败）只存在于 `error` 文本里；未登记 code 一律回显原文。flash 卡片同理（标题=本地化、详情=原文，app.js:344-358） |
-| 语言切换 | agent-panel.js:1233-1240 | 静态节点由 `MemoriaI18n` 刷新；动态消息/状态行 + 历史选项（含禁用态占位）+ 删除按钮文案（含二次确认复位）+ 折叠按钮的 title/aria（含三态文案）由 `MemoriaI18n.addRefresh` 重绘（与 kb-check.js 同套路） |
+| 语言切换 | agent-panel.js:1333-1342 | 静态节点由 `MemoriaI18n` 刷新；动态消息/状态行 + 历史选项（含禁用态占位）+ 删除按钮文案（含二次确认复位）+ **顶栏 `#btn-agent` 的 `aria-pressed`**（title 由静态节点 `agent.btnTitle` 刷）+ 状态栏用量格文案由 `MemoriaI18n.addRefresh` 重绘（与 kb-check.js 同套路）。**2026-09-18**：原浮动按钮的三态 title 随语言刷新已随按钮一并删除 |
 | 默认宽度与三栏挤压（实测） | 实测（harness，2026-09-17） | 见下方「dock 实测尺寸」段与「文档区最小宽度保护」行 |
 
 **dock 实测尺寸（headless Edge + harness，2026-09-17 第三轮复测；左栏宽度由 `layout.sidebarWidth=301` 预置，期望宽度 22rem）**
@@ -160,7 +169,7 @@
 | 820 / 800，左栏 480 | 480 | 0（自动隐藏） | 340 / 320 | **前提不成立**（左栏 480+360 > 视口）⇒ 文档区必然 < 360；dock 仍不参与挤压（`#main.scrollWidth == clientWidth`） |
 | 1200×668，左栏 301，**手动把 dock 拖到极限** | 301 | **539.03** | 360 | 上界 = `available`（539）< 34rem（544）⇒ 拖不破 360；拖拽中实时生效、**松开鼠标才落盘** |
 
-> 推论（`uiScale=1`、左栏默认 17.5rem=280px 时）：应用最小窗口 900×600 下 `available = 900−280−360 = 260 ≥ 16rem` ⇒ dock 仍可见（约 16.25rem）；但左栏一旦宽于 ≈283px，900px 宽窗口就会触发 dock 自动隐藏。见 §7 待拍板项。
+> 推论（`uiScale=1`、左栏默认 17.5rem=280px 时）：应用最小窗口 **1000×600（2026-09-18 起，原 900×600；理由见 §2.1）** 下 `available = 1000−280−360 = 360 ≥ 16rem` ⇒ dock 仍可见（22rem 以内可全宽显示）；原 900×600 下 `available = 260` 恰在 16rem 下限之上（约 16.25rem），左栏一旦宽于 ≈283px 就会触发 dock 自动隐藏——这正是本轮把最小宽度提到 1000 的原因。见 §7 待拍板项。
 >
 > 上一轮（2026-09-17 第二轮）在 876×271 视口做出的「设置区可滚到保存按钮」断言，在本轮行为下**需在 ≥917px 宽窗口才可复现**（876 宽时 dock 已自动隐藏）——那是**行为变更的副作用，非缺陷**：设置区自身的 `max-height + overflow-y:auto`（app.css:456-457）未改。
 
@@ -179,14 +188,14 @@
 
 | 项 | 证据 | 说明 |
 |---|---|---|
-| 层级 | index.html:139-208；app.css:3081-3092 | `#content` > `#tab-bar` + `#viewer`；`#editor-wrap` 可见时 `#viewer` 变无内边距、`overflow:hidden` 的纵向 flex（`:has()`） |
-| 欢迎页 | index.html:144-148；memoria.css:445-466 | 标题 `Memoria`（运行时追加版本号）、副标题 `welcome.tagline`、`#btn-welcome-open` 打开知识库 |
-| 文件信息 / 预览状态条 | index.html:151、198；app.js:1542-1544；app.css:3702-3706、4076-4085 | `#file-meta` 只显示**侧车 description**（`doc.sidecar.description`）；`#preview-status` 初始 `hidden`，警告态加 `.warn` |
-| 格式工具栏 | index.html:152-184；app.css:3136-3197 | `.-format-bar`（`role="toolbar"`）：B / I / 分隔 / H▾（6 色 + 无色 + 添加颜色）/ 色▾（7 色 + 无色 + 添加颜色）/ 分隔 / `#btn-insert-image`（初始 `disabled`）；颜色下拉为 `position:fixed` + `z-index:10050`，靠 `.-fmt-dropdown` 加 `.open` 显示 |
-| 块编辑栏（与格式栏互斥） | index.html:185-188；app.css:3756-3768；edit-handler.js:1010-1013、1134-1137、1545-1550 | 二者共用 `#editor-header` 同一位置：进块编辑时格式栏 `hidden`、块编辑栏显示，退出时反向 |
-| 视图模式 | index.html:189-193；app.css:3111-3133、3453-3459 | `.-view-btn` 三键（源码/预览/分栏）：实现为 `#editor-split` 上换 `view-source|view-preview|view-split` 类；当前模式写 `localStorage["-view"]`（app.js:1571-1573），初值读同键、默认 `source`（app.js:20） |
-| 编辑模式开关 | index.html:194-196；app.css:2048-2050；edit-handler.js:59-98 | `#edit-mode-toggle`（`role="switch"`，复用 `-toolbar-search-scope` 样式）+ `#btn-edit-mode`；**默认开启**（edit-handler.js:60）；关闭时 `#preview` 的 `contentEditable=false`、源码行全部只读并加 `.-readonly`（edit-handler.js:80-118），并强制禁用图片插入按钮（edit-handler.js:89-92） |
-| 双窗格 | index.html:199-206；app.css:3441-3485 | `#editor-pane > #editor`（等宽字体，字号 `--editor-font-size`）、`#preview-pane > #preview`（`markdown-body`，字号 `--preview-font-size`） |
+| 层级 | index.html:151-217；app.css:3081-3092 | `#content` > `#tab-bar`(152) + `#viewer`(155)；`#editor-wrap` 可见时 `#viewer` 变无内边距、`overflow:hidden` 的纵向 flex（`:has()`） |
+| 欢迎页 | index.html:156-160；memoria.css:445-466 | 标题 `Memoria`（运行时追加版本号）、副标题 `welcome.tagline`、`#btn-welcome-open` 打开知识库 |
+| 文件信息 / 预览状态条 | index.html:163、210；app.js:1542-1544；app.css:3702-3706、4076-4085 | `#file-meta` 只显示**侧车 description**（`doc.sidecar.description`）；`#preview-status` 初始 `hidden`，警告态加 `.warn` |
+| 格式工具栏 | index.html:164-196；app.css:3136-3197 | `.-format-bar`（`role="toolbar"`）：B / I / 分隔 / H▾（6 色 + 无色 + 添加颜色）/ 色▾（7 色 + 无色 + 添加颜色）/ 分隔 / `#btn-insert-image`（初值 `disabled`，195）；颜色下拉为 `position:fixed` + `z-index:10050`，靠 `.-fmt-dropdown` 加 `.open` 显示 |
+| 块编辑栏（与格式栏互斥） | index.html:197-200；app.css:3756-3768；edit-handler.js:1010-1013、1134-1137、1545-1550 | 二者共用 `#editor-header` 同一位置：进块编辑时格式栏 `hidden`、块编辑栏显示，退出时反向 |
+| 视图模式 | index.html:201-205；app.css:3111-3133、3453-3459 | `.-view-btn` 三键（源码/预览/分栏）：实现为 `#editor-split` 上换 `view-source|view-preview|view-split` 类；当前模式写 `localStorage["-view"]`（app.js:1571-1573），初值读同键、默认 `source`（app.js:20） |
+| 编辑模式开关 | index.html:206-208；app.css:2048-2050；edit-handler.js:59-98 | `#edit-mode-toggle`（`role="switch"`，复用 `-toolbar-search-scope` 样式）+ `#btn-edit-mode`；**默认开启**（edit-handler.js:60）；关闭时 `#preview` 的 `contentEditable=false`、源码行全部只读并加 `.-readonly`（edit-handler.js:80-118），并强制禁用图片插入按钮（edit-handler.js:89-92） |
+| 双窗格 | index.html:212-217；app.css:3441-3485 | `#editor-pane > #editor`（等宽字体，字号 `--editor-font-size`）、`#preview-pane > #preview`（`markdown-body`，字号 `--preview-font-size`） |
 
 ### 2.6 知识点面板（仅定位）
 
@@ -196,37 +205,40 @@
 
 | 项 | 证据 | 说明 |
 |---|---|---|
-| 容器与左段 | index.html:279-283；memoria.css:604-615 | 高 1.375rem、主题蓝底、白字、`flex-shrink:0`；`#status-info` 为 `flex:1` 单行省略（memoria.css:614），初值「就绪」（`app.status.ready`） |
-| 右段统计块 | app.js:281-333；i18n/zh-CN.js:485-490 | 由 `renderStatusStats()` 以 ` · ` 连接：① 检查统计（有 error/warn 时，文案取自 kb-check.js 的 `statsChunk`，并打 `data-kb-check="1"`）；② 全库检查通过（`check.stat.pass`，且无文件级统计）；③ 图谱待办 warn 数；④ 当前文件统计 `app.stat.kpLines`「{kp} KP · {lines} 行」，若有 sidecar 问题再追加 `app.stat.errors/warnings` + `app.stat.sidecar`；⑤ 图谱审计问题（文件级优先，其次全库） |
-| **Agent 用量格** `#status-agent` | index.html:282；app.css:2138-2145；agent-panel.js:169-172、560-661、1156-1161、1308-1315 | **本轮（2026-09-18）新增，为 `#status-stats` 之后的独立 span**（不与统计块共用节点，**`#status-stats` 的语义与点击行为完全不变**）。显示**最近一轮**的紧凑摘要：`↑8.7k ↓233 · 命中 62%`（`↑` = 输入 `prompt_tokens`、`↓` = 输出 `completion_tokens`；数字 ≥1000 用 k 缩写一位小数）。**命中率未知时省略该段**（绝不显示 0%）；`title`（悬停）给计费拆分多行文本：本轮输入/输出/合计、**命中/未命中/命中率**、是否估算、**本会话累计**（含命中的拆分）。点击 ⇒ `MemoriaAgentPanel.open()` 展开右侧对话面板（`open()` 内部按空间不足规则处理，**不新增弹窗**）。**无 agent 活动时该 span 为空**（`:empty { display:none }`，不占位）。数值来源：`agent_ask_poll` 的 `usage`（含 `cache_read_tokens`/`cache_miss_tokens`）；本会话累计由面板**自行累加**（不新增 RPC 轮询），「清空对话」/载入历史会话/切换知识库时复位（历史会话视图不含 usage，无法回算旧用量） |
-| 样式与点击（统计块） | app.css:1732-1755；app.js:12219-12227 | `.-stat-error` 红、`.-stat-warn` 黄、`.-stat-ok` 次色；命中图谱审计时 `#status-stats` 加 `.-status-clickable`（黄 + 下划线 + 指针）；点击时 `data-kb-check` 优先 → 检查弹窗，否则 `data-graph-audit-goto` → 跳到首个图谱审计问题（**本条只描述 `#status-stats`；`#status-agent` 见上一行**） |
+| 容器与左段 | index.html:275-280；memoria.css:591-601 | 高 1.375rem、主题蓝底、白字、`flex-shrink:0`；`#status-info` 为 `flex:1` 单行省略（memoria.css:601），初值「就绪」（`app.status.ready`） |
+| 右段统计块 | app.js:290-342；i18n/zh-CN.js:486-491 | 由 `renderStatusStats()` 以 ` · ` 连接：① 检查统计（有 error/warn 时，文案取自 kb-check.js 的 `statsChunk`，并打 `data-kb-check="1"`）；② 全库检查通过（`check.stat.pass`，且无文件级统计）；③ 图谱待办 warn 数；④ 当前文件统计 `app.stat.kpLines`「{kp} KP · {lines} 行」，若有 sidecar 问题再追加 `app.stat.errors/warnings` + `app.stat.sidecar`；⑤ 图谱审计问题（文件级优先，其次全库） |
+| **Agent 用量格** `#status-agent` | index.html:278；app.css:2084-2091；agent-panel.js:172、581-660、1134、1285-1291、634、1340 | **2026-09-18（上一轮）新增，为 `#status-stats` 之后的独立 span**（不与统计块共用节点，**`#status-stats` 的语义与点击行为完全不变**）。显示**最近一轮**的紧凑摘要：`↑8.7k ↓233 · 命中 62%`（`↑` = 输入 `prompt_tokens`、`↓` = 输出 `completion_tokens`；数字 ≥1000 用 k 缩写一位小数）。**命中率未知时省略该段**（绝不显示 0%）；`title`（悬停）给计费拆分多行文本：本轮输入/输出/合计、**命中/未命中/命中率**、是否估算、**本会话累计**（含命中的拆分）。点击 ⇒ `MemoriaAgentPanel.open()` 展开右侧对话面板（`open()` 内部按空间不足规则处理，**不新增弹窗**）。**无 agent 活动时该 span 为空**（`:empty { display:none }`，不占位）。数值来源：`agent_ask_poll` 的 `usage`（含 `cache_read_tokens`/`cache_miss_tokens`）；本会话累计由面板**自行累加**（不新增 RPC 轮询），「清空对话」/载入历史会话/切换知识库时复位（历史会话视图不含 usage，无法回算旧用量） |
+| **知识库路径格** `#status-kb`（2026-09-18 本轮新增） | index.html:279；app.css:2096-2105；app.js:379-389 | 底栏**最右**的独立 span（在 `#status-agent` 之后）。由 `showKbIndicator(path)` 写 `textContent` 与 `title`（**title = 完整路径**，`textContent` 可被省略号截断）：`#status-kb { margin-left:.75rem; max-width:40%; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }`，**空路径 ⇒ `:empty{display:none}` 完全隐藏、不占位**。**不是标题栏**：不带 `pywebview-drag-region`、不参与窗口拖动（原顶栏 `#kb-indicator` 的拖拽语义已随节点删除）。同一函数还同步「文件 → 关闭知识库」的 `disabled`（未开库即禁用）。调用点：`initKb` 恢复态（app.js:477）、无库态（app.js:496）、开库（app.js:568）、关库（app.js:621） |
+| 样式与点击（统计块） | app.css:2024-2050；app.js:12387-12396 | `.-stat-error` 红（app.css:2035）、`.-stat-warn` 黄（app.css:2040）、`.-stat-ok` 次色；命中图谱审计时 `#status-stats` 加 `.-status-clickable`（黄 + 下划线 + 指针，app.css:2024）；点击时 `data-kb-check` 优先 → 检查弹窗，否则 `data-graph-audit-goto` → 跳到首个图谱审计问题（**本条只描述 `#status-stats`；`#status-agent` 与 `#status-kb` 见上两行**） |
 
 ### 2.8 闪烁提示（flash，瞬时反馈）
 
 | 项 | 说明 |
 |---|---|
-| 宿主 / 位置 / 层级 | `#-flash-host`（index.html:288）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2202-2213）⇒ **高于弹窗**，弹窗内也能看见 |
-| 时长 / 并发 | 默认 3800ms + 280ms 淡出（app.js:347、354-356）；可多条堆叠（host 为 flex 列，追加节点） |
-| 变体 / 入口 | `.-flash-error` 红边 + 标题/详情两行（app.css:2215-2227）、`.-flash-info` 绿边（app.css:2233-2245）；`showFlashError(msg, detail)`（app.js:344）、`showFlashInfo(msg)`（app.js:360），两者均已挂在 `MemoriaApp` 门面上供子模块调用 |
+| 宿主 / 位置 / 层级 | `#-flash-host`（index.html:285）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2526-2531）⇒ **高于弹窗**，弹窗内也能看见 |
+| 时长 / 并发 | 默认 3800ms + 280ms 淡出（app.js:363-371）；可多条堆叠（host 为 flex 列，追加节点） |
+| 变体 / 入口 | `.-flash-error` 红边 + 标题/详情两行（app.css:2539-2569）、`.-flash-info` 绿边（app.css:2557-2574）；`showFlashError(msg, detail)`（app.js:347）、`showFlashInfo(msg)`（app.js:360），两者均已挂在 `MemoriaApp` 门面上供子模块调用 |
 | 与底栏的分工 | `setStatusError(msg, detail)` = `setStatus` + `showFlashError`（app.js:374-377）⇒ 底栏 + 卡片**双写**；`setStatus(msg, undefined, {error:true})` 只把底栏转红、不弹卡片；「导入」未开库是唯一**只弹卡片、不写底栏**的入口（import-flow.js:44） |
 
 > **2026-09-16 收敛为单通道**：原先另有一个 `js/toast.js` 轻提示组件（`#-toast`，z-index 30000），其唯一调用点（检查弹窗「复制报告」）与 flash 卡片**同文案双通道**，底部会叠两个一模一样的框。该模块、`#-toast` 节点与其 CSS 已删除，瞬时反馈一律走 flash 卡片（成功绿边 / 失败红边）。
 
 ### 2.9 弹窗与层级
 
-通用结构（index.html:290-436 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
+通用结构（index.html:287-433 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
 
 现有变体类：`#kp-modal`、`#config-modal`（`-modal-tabbed`）、`#assist-modal`（`-modal-assist`）、`#check-modal`（`-modal-check`）、`#settings-modal`（`-modal-settings`）、`#link-modal`、`#import-conflict-modal` / `#import-result-modal`（`-modal-import-conflict|-result`）、`#kb-agent-modal`（复用 `-modal-import-conflict`）。另有**运行时动态创建**的 `.-modal`：文件树输入/确认框（file-tree.js:263-300；app.js:706-728）。
 
 | 层级值 | 归属 | 证据 |
 |---|---|---|
 | 1 | 面板内装饰（角标、范围带、辅助线） | app.css:1089、1100、1784、3579 |
-| 2–6 | 顶栏内部：`.toolbar-right`:2、`.-graph-hint--overlay`:3、`.toolbar-left/actions`:4、`.-window-controls`:5、`.toolbar-search-wrap`:6 | memoria.css:172、63、74；app.css:411、1817、1996 |
+| 2–6 | 顶栏内部：`.toolbar-right`:2、`.-graph-hint--overlay`:3、`.toolbar-left`/`.toolbar-actions`:4、`.-window-controls`:5、`.toolbar-search-wrap`:6 | memoria.css:242、113、128；app.css:698、2169、2355 |
 | 10 / 20 | `#sidebar-resizer` / `.-link-target-suggest` | memoria.css:269；app.css:2854 |
-| 50 / 60 / 61 / 90 | `#toolbar` / `.-tb-file-menu` / `.-tb-file-submenu` / `.-sidebar-collapse-btn` | memoria.css:59；app.css:4337、4397、151 |
-| **1000** | **`.-modal`（全部弹窗）** | app.css:4122-4129 |
-| 9000 / 10000 / 10050 | `.-toolbar-search-panel` / `.-win-resize-layer` / `.-context-menu`、`.-fmt-dropdown-menu` | app.css:2095、1901、2571、3184 |
-| 12000 / 20000 / 99999 | `#-flash-host` / `.-color-picker-mask` / `.-lightbox-overlay` | app.css:2202、3279、4036 |
+| 50 / 60 / 61 | `#toolbar` / `.-tb-file-menu` / `.-tb-file-submenu` | memoria.css:104；app.css:4757、4817 |
+| **1000** | **`.-modal`（全部弹窗）** | app.css:4548 |
+| 9000 / 10000 / 10050 | `.-toolbar-search-panel` / `.-win-resize-layer` / `.-context-menu`、`.-fmt-dropdown-menu` | app.css:2460、2257-2260、2933、3541 |
+| 12000 / 20000 / 99999 | `#-flash-host` / `.-color-picker-mask` / `.-lightbox-overlay` | app.css:2526-2531、3640、4426 |
+
+> **2026-09-18**：原 `z-index:90` 的两个浮动按钮（`.-sidebar-collapse-btn` / `.-agent-dock-collapse-btn`）已删除，故「90」这一档在顶栏/侧栏区域**不再存在**；顶栏内部层级（2–6）与 `#toolbar`(50) 不变。
 
 **同时只允许一个弹窗的约束**：**没有**"关掉其它弹窗"的中央实现，各弹窗各自管理自己的 `hidden`（app.js:3062、4539、5451；kb-check.js:629）；唯一存在的"全局互斥"是 F2 的前置检查——只要存在任一非 `hidden` 的 `.-modal` 就不劫持 F2（file-tree.js:453-457）。
 
@@ -240,23 +252,23 @@
 | `--lineno-ch` | `#editor` inline style（app.js:1561-1564） | 源码行号列宽，按总行数位数自适应 |
 | `uiScale` | `document.documentElement.style.fontSize = 16×scale px`；等于 1.0 时清空恢复（display-settings.js:87-98） | **全界面**：样式表尺寸/字号绝大多数用 `rem`，故整体等比缩放；改完主动派发一次 `resize` 让监听方重算（display-settings.js:97）；0.8–1.5、步长 0.1（display-settings.js:18-20），默认 1.0 |
 | 持久化 | `localStorage["-display-settings"]`（display-settings.js:9、40-46）+ 磁盘 `ui-settings.json` 的 `display` 段（display-settings.js:114-118） | 启动 `hydrateFromDisk` 时"本地优先、磁盘仅作种子"（display-settings.js:66-77、120-138） |
-| 快捷键 | `Ctrl+=` / `Ctrl++` 放大、`Ctrl+-` 缩小、`Ctrl+0` 复位（app.js:12201-12217） | 步进 ±0.1 并被夹在区间内（display-settings.js:147-157）；**无按键目标过滤**（输入框内同样生效） |
+| 快捷键 | `Ctrl+=` / `Ctrl++` 放大、`Ctrl+-` 缩小、`Ctrl+0` 复位（app.js:12372-12387） | 步进 ±0.1 并被夹在区间内（display-settings.js:147-157）；**无按键目标过滤**（输入框内同样生效） |
 
-> 注：`index.html:279-280` 注释称"浮层放 `#app` 外以免受 `#app` 的 zoom 影响"，但当前实现改的是**根元素 `font-size`**（display-settings.js:92-93），`rem` 会级联到 `body` 下所有浮层，故 flash 卡片的间距实际**会**随缩放变化——注释与实现已不一致。**同一原因适用于 `#-agent-dock` 的宽度**：它以 rem 计量（agent-panel.js:140），故 `Ctrl+=` 缩放时 dock 会跟着变宽/变窄（见 §2.4「宽度单位是 rem」）。
+> 注：`index.html:283-284` 注释称"浮层放 `#app` 外以免受 `#app` 的 zoom 影响"，但当前实现改的是**根元素 `font-size`**（display-settings.js:92-93），`rem` 会级联到 `body` 下所有浮层，故 flash 卡片的间距实际**会**随缩放变化——注释与实现已不一致。**同一原因适用于 `#-agent-dock` 的宽度**：它以 rem 计量（agent-panel.js:191-194），故 `Ctrl+=` 缩放时 dock 会跟着变宽/变窄（见 §2.4「宽度单位是 rem」）。
 
 ## 3. 交互流程
 
-**3.1 启动 → 主界面**：`MemoriaBridge.onReady` 后统一 boot（导入流 → 工具条搜索 → 图片 → 检查 → KB 智能体 → 文件树 → **对话面板** → `initKb()` → `initWindowChrome()`，app.js:12848-12862）；`initWindowChrome` 先取 `get_window_chrome()`，失败则三键保持隐藏（window-chrome.js:289-293），成功则写标题/版本并判定 frameless（window-chrome.js:295-313）；`initKb()` 有路径时显示路径指示、清空导航栈与标签页、刷新文件、加载链接目标与图谱、跑一次完整检查并打开首选文件（`navigation-demo.md` → `mdp.md` → 首个文件，app.js:476-480），无路径则显示欢迎页、隐藏路径指示、状态栏写 `Memoria`（app.js:481-485）。
+**3.1 启动 → 主界面**：`MemoriaBridge.onReady` 后统一 boot（导入流 → 工具条搜索 → 图片 → 检查 → KB 智能体 → 文件树 → **对话面板** → `initKb()` → `initWindowChrome()`，app.js:12847-12862）；`initWindowChrome` 先取 `get_window_chrome()`，失败则三键保持隐藏（window-chrome.js:304-308），成功则写标题/版本、判定 frameless 并把 `min_width/min_height`（**1000×600**）灌进 JS 侧夹取值（window-chrome.js:310-328）；`initKb()` 有路径时**在底栏 `#status-kb` 显示路径**、清空导航栈与标签页、刷新文件、加载链接目标与图谱、跑一次完整检查并打开首选文件（`navigation-demo.md` → `mdp.md` → 首个文件，app.js:477-480），无路径则显示欢迎页、清空底栏路径、状态栏写 `Memoria`（app.js:496-501）。**2026-09-18**：路径不再出现在顶栏，也不再随开/关库同步拖拽排除带（顶栏 `.toolbar-right` 的宽度已与知识库状态无关）。
 
-**3.2 顶栏「文件」菜单**：点 `#btn-file` 翻转 `#file-menu` 的 `hidden`、同步 `aria-expanded`、收起时一并隐藏二级面板（app.js:12092-12098）；点「打开最近」显示二级面板并异步拉列表（app.js:12181-12185）；关闭有三条路径——点菜单外部（app.js:12099-12104）、按 Esc（app.js:12105-12107）、点任意菜单项（各项 handler 首句都先 `closeFileMenu()`）。
+**3.2 顶栏「文件」菜单**：点 `#btn-file` 翻转 `#file-menu` 的 `hidden`、同步 `aria-expanded`、收起时一并隐藏二级面板（app.js:12266-12272）；点「打开最近」显示二级面板并异步拉列表（app.js:12355-12359）；关闭有三条路径——点菜单外部（app.js:12273-12278）、按 Esc（app.js:12279-12281）、点任意菜单项（各项 handler 首句都先 `closeFileMenu()`）。**2026-09-18 新增两项**：点「关闭知识库」→ `closeKb()`（app.js:12351，未开库时该项 `disabled`，可用态由 `showKbIndicator()` 维护）；点「退出程序」→ `MemoriaWindowChrome.requestClose()`（app.js:12353-12356，与窗口关闭键同一链路）。
 
-**3.3 侧栏页签**：点 `[data-sidebar-tab]`（app.js:12591-12593）→ `setSidebarTab`（app.js:1233-1258）：无对应 `[data-sidebar-view]` 的悬空页签名（如存量的 `"agent"`）先回退 `files`（app.js:1234-1236），再写 localStorage、刷新按钮 `.active`/`aria-selected`、切换 `[data-sidebar-view]` 的 `.hidden`；随后清图谱 hover、启停对应图谱视图、按需重算上下分栏比例。
+**3.3 侧栏页签**：点 `[data-sidebar-tab]`（app.js:12591-12593）→ `setSidebarTab`（app.js:1233-1258）：无对应 `[data-sidebar-view]` 的悬空页签名（如存量的 `"agent"`）先回退 `files`（app.js:1234-1236），再写 localStorage、刷新按钮 `.active`/`aria-selected`、切换 `[data-sidebar-view]` 的 `.hidden`；随后清图谱 hover、启停对应图谱视图、按需重算上下分栏比例。**左栏整体收起/展开**改由顶栏最左的 `#btn-toggle-sidebar` 触发（app.js:12191-12201 → `_applySidebarCollapsed()` 12177-12190），不再有贴侧栏右缘的浮动按钮。
 
-**3.3.1 右侧对话停靠栏**：顶栏 `#btn-agent` 或浮动 `#agent-dock-collapse-btn` → `toggleDock()`（agent-panel.js:259-261）→ `setDockCollapsed()`（agent-panel.js:307-325）：切 `.-agent-dock--collapsed` 类、同步 `aria-pressed`/`aria-expanded`/字形、状态落盘在 `layout.agentDockCollapsed`（`localStorage` 无关）、**展开时**额外 `refreshConfig()` 拉一次端点配置（与旧版「切到对话页签即拉配置」同语义）；**空间不足自动隐藏态（`.-agent-dock--auto-hidden`）下点这两个入口不会展开**——只弹 `agent.dockNoSpace` 提示并保持隐藏（不写盘、不挤压文档区，见 §2.4）。拖拽 `#agent-dock-resizer` → 实时改宽（agent-panel.js:282-306，上界受 `available` 约束）、`mouseup` 才落盘；期望/生效宽度与自动隐藏规则见 §2.4。
+**3.3.1 右侧对话停靠栏**：顶栏 `#btn-agent`（**2026-09-18 起唯一入口**） → `toggleDock()`（agent-panel.js:264-266）→ `setDockCollapsed()`（agent-panel.js:343-360）：切 `.-agent-dock--collapsed` 类、同步 `aria-pressed`（agent-panel.js:223-229）、状态落盘在 `layout.agentDockCollapsed`（`localStorage` 无关）、**展开时**额外 `refreshConfig()` 拉一次端点配置（与旧版「切到对话页签即拉配置」同语义）；**空间不足自动隐藏态（`.-agent-dock--auto-hidden`）下点它不会展开**——只弹 `agent.dockNoSpace` 提示并保持隐藏（不写盘、不挤压文档区，见 §2.4）。拖拽 `#agent-dock-resizer` → 实时改宽（agent-panel.js:318-341，上界受 `available` 约束）、`mouseup` 才落盘；期望/生效宽度与自动隐藏规则见 §2.4。
 
 **3.4 视图 / 编辑模式**：点 `.-view-btn` → `setViewMode(mode)`：先把源码编辑器内容同步回 `state.doc` 并重渲染两窗格，再换 `#editor-split` 类名与按钮 `.active`（app.js:1567-1611）；点 `#edit-mode-toggle` → `toggleEditMode()`（app.js:12453-12462）：切 `contentEditable`、刷按钮态、按需禁用图片插入（edit-handler.js:70-98）；预览区双击进入块编辑时格式栏与块编辑栏互换（edit-handler.js:1009-1013），退出恢复（edit-handler.js:1545-1550）。
 
-**3.5 缩放**：`Ctrl+=` / `Ctrl+-` / `Ctrl+0` → `adjustUiScale(±0.1)` / `resetUiScale()` → 改根 `font-size` 并派发 `resize`（app.js:12201-12217；display-settings.js:87-98、147-157）。
+**3.5 缩放**：`Ctrl+=` / `Ctrl+-` / `Ctrl+0` → `adjustUiScale(±0.1)` / `resetUiScale()` → 改根 `font-size` 并派发 `resize`（app.js:12372-12387；display-settings.js:87-98、147-157）。
 
 ## 4. i18n key
 
@@ -264,13 +276,13 @@
 
 | 前缀 / 键 | 覆盖 | 代表键（zh-CN.js 行号） |
 |---|---|---|
-| `app.*` | 状态栏、窗口/范围 aria、空态 | `app.status.ready`、`app.status.kbEmpty`、`app.stat.kpLines`、`app.scope.aria`、`app.kbPath.title`（468-495） |
-| `toolbar.*` | 顶栏全部按钮与文件菜单项、相关 title | `toolbar.file`、`open`、`import`、`export`、`kbAgent`、`newWindow`、`openRecent`、`recentEmpty`、`refresh`、`build`、`check`、`settings`、`exit`、`back.title`、`forward.title`（496-526） |
+| `app.*` | 状态栏、窗口/范围 aria、空态 | `app.status.ready`、`app.status.kbEmpty`、`app.stat.kpLines`、`app.scope.aria`（468-495）。**2026-09-18**：`app.kbPath.title`（原顶栏路径的"可拖拽移动窗口"提示）**已删除**——路径改由 `#status-kb` 以完整路径写 `title`，不再有静态 i18n 文案 |
+| `toolbar.*` | 顶栏全部按钮与文件菜单项、相关 title | `toolbar.file`、`open`、`import`、`export`、`kbAgent`、`newWindow`、`openRecent`、`recentEmpty`、`refresh`、`build`、`check`、`settings`、**`closeKb`、`closeKbTitle`、`quit`、`quitTitle`（2026-09-18 新增 4 键，供文件菜单末尾两项）**、`back.title`、`forward.title`（496-527）。原 `toolbar.exit`/`exitTitle` 已删除 |
 | `win.*` | 窗口三键与控制区 aria | `win.controlsAria`、`minimize`、`maximize`、`restore`、`close`（421-427） |
-| `side.*` | 侧栏页签、分栏、收起、知识点工具栏 | `side.tabs.aria`、`side.tab.files`、`collapseTitle`、`expandTitle`、`split.title`、`side.kp.label|config|new`（561-574） |
+| `side.*` | 侧栏页签、分栏、收起、知识点工具栏 | `side.tabs.aria`、`side.tab.files`、`collapseTitle`、`expandTitle`（**2026-09-18 起由顶栏 `#btn-toggle-sidebar` 使用**，见 §2.2）、`split.title`、`side.kp.label|config|new`（561-575） |
 | `view.*` / `edit.*` | 视图模式、编辑模式、格式栏、块编辑栏 | `view.toggleAria`、`view.source|preview|split`、`edit.mode.aria|title|browseTitle|btn`、`edit.fmt.aria|boldTitle|…`、`edit.block.aria`（648-679） |
 | `search.*` | 搜索范围、占位符、状态与结果文案 | `search.scopeKb`、`scopeFile`、`ph`、`title`、`statusSearching`（527-536） |
-| `agent.*` | 右侧「对话」停靠栏（**顶栏按钮文案复用 `agent.tab`** + dock aria/折叠/拖拽 title + 出网开关 + 端点设置 8 字段 + 输入占位 + 角色两态 + 来源 + 状态与错误） + **状态栏用量格** | `agent.tab`（= 顶栏 `#btn-agent` 文案）、`agent.btnTitle`、`agent.dockAria`、`agent.dockCollapseTitle`、`agent.dockExpandTitle`、`agent.dockResizeTitle`（2026-09-17 新增 5 键）、`agent.dockNoSpaceTitle` / `agent.dockNoSpace`（同日第二轮新增 2 键：空间不足自动隐藏的三态文案）、`agent.net.label`、`agent.settings.apiKeySet`、`agent.status.usage`、`agent.err.no_base_url`、**`agent.statusBar.*`**（2026-09-18 本轮新增 9 键：`span`/`spanCache`/`line`/`cache`/`cacheUnknown`/`estimated`/`session`/`sessionCache`/`hint`，供状态栏 `#status-agent` 的文本与多行 `title`）（zh-CN.js:575-663） |
+| `agent.*` | 右侧「对话」停靠栏（**顶栏按钮 title `agent.btnTitle`** + dock aria/拖拽 title + 出网开关 + 端点设置 8 字段 + 输入占位 + 角色两态 + 来源 + 状态与错误） + **状态栏用量格** | `agent.btnTitle`（顶栏 `#btn-agent` 的 title；按钮已是**纯图标 `◨`**，不再有文字键）、`agent.dockAria`、`agent.dockResizeTitle`、`agent.dockNoSpace`（点顶栏按钮请求展开但空间不足时的 flash 文案）、`agent.net.label`、`agent.settings.apiKeySet`、`agent.status.usage`、`agent.err.no_base_url`、**`agent.statusBar.*`**（2026-09-18 上一轮新增 9 键：`span`/`spanCache`/`line`/`cache`/`cacheUnknown`/`estimated`/`session`/`sessionCache`/`hint`，供状态栏 `#status-agent` 的文本与多行 `title`）（zh-CN.js:576-664）。**2026-09-18 本轮删除 4 键**：`agent.tab`（原按钮文字）、`agent.dockCollapseTitle`、`agent.dockExpandTitle`、`agent.dockNoSpaceTitle`（原浮动按钮的三态 title） |
 | `dlg.*` / `check.*` / `kbAgent.*` / `import.*` | 各弹窗标题与按钮 | `dlg.kpTitle`、`dlg.configTitle`、`check.modalTitle` 等 |
 
 完整清单与未迁移中文行的登记规则见 [../i18n-inventory.md](../i18n-inventory.md)；语言系统维护规范见 [../../conventions/i18n.md](../../conventions/i18n.md)。
@@ -281,14 +293,14 @@
 2. **没有"只能开一个弹窗"的中央约束**：各弹窗独立管理 `hidden`，多个弹窗可同时可见；唯一的"统一判定"是 F2 的全局检查（file-tree.js:453-457）。
 3. **禁用态并不统一**：后退/前进用 `disabled`；构建仅在执行中 `disabled`；检查/刷新/设置/对话 无禁用，改为点击后提示前置条件（`openKbFirst` / `openFileFirst`）。**这类提示分两档**：`setStatusError` = 底栏整行转红（`.-status-error`，app.css:1777-1787）+ 底部浮层卡片；`setStatus` = 底栏普通色。当前「硬前置」类（构建/检查/插入图片/搜索/创建智能体）都走**前者**；**导入**是唯一只弹悬浮卡片、**不**写底栏的入口（直调 `showFlashError`，见 08 篇 §2.1）。集成方判断"能否操作"需按 §2.2 表逐项判，不能只看是否灰化。
 4. **侧栏宽度是两套口径**：CSS 默认 17.5rem / 最小 11.25rem（app.css:124-125），JS 拖拽夹在 180–480px（app.js:12104）；非 100% 缩放时 rem 与 px 不一致，会出现"能拖到比 CSS 最小值更窄/更宽"的观感。
-5. **`Ctrl+= / Ctrl+- / Ctrl+0` 无目标过滤**：在搜索框、弹窗输入框内按同样触发整界面缩放（app.js:12203-12216 未检查 `e.target`）。
-6. **顶栏拖拽靠"选择器黑名单"**：`NO_DRAG_SELECTORS`（window-chrome.js:118-119）含 `.toolbar-actions`，故 `#btn-agent` 的点击不会被拖拽 mousedown 吞掉（harness 实测点击生效）；但**未**包含 `.toolbar-left` 内部元素，故品牌区整体可拖。新增顶栏控件若不在黑名单内，会被拖拽的 mousedown 吞掉点击。
+5. **`Ctrl+= / Ctrl+- / Ctrl+0` 无目标过滤**：在搜索框、弹窗输入框内按同样触发整界面缩放（app.js:12374-12387 未检查 `e.target`）。
+6. **顶栏拖拽靠"选择器黑名单"**：`NO_DRAG_SELECTORS`（window-chrome.js:118-128）= `#btn-toggle-sidebar, #btn-agent, .toolbar-search-wrap, .toolbar-actions, .-window-controls`。**2026-09-18 本轮**新增的两个图标按钮都必须在名单里：`#btn-toggle-sidebar` 位于 `.toolbar-left`（该容器不在名单内、整体可拖），`#btn-agent` 已移入 `.toolbar-right`（同样不在名单内）——漏登记会被拖拽的 mousedown 吞掉点击。harness（frameless 变体，见 §7）已实测：点这两个按钮**不**触发 `window_begin_drag`，点品牌区**会**触发。新增顶栏控件时**必须**同步这份名单。
 7. **块编辑栏与格式栏互斥**：二者共用 `#editor-header` 同一位置；若在块编辑中切换视图，恢复依赖 `_restoreToolbar()`（edit-handler.js:1545-1550），未被调用则格式栏会一直隐藏。
 8. **`#preview-status` 的 `.warn` 态样式存在但需渲染层主动加类**（app.css:4080）；未打开文件时该节点保持 `hidden`（index.html:212）。
-9. **`theme/memoria.css` 含大量与当前 DOM 不符的历史选择器**：`#sidebar`、`.toolbar-center`、`#group-tabs`、`.mode-switch`、`.file-grid`、`.file-card` 在 `index.html` 与 `js/**` 中均无对应节点（已检索确认）。不要把它里面的 `#sidebar { width: 23.75rem }`（memoria.css:251-253）当成左侧栏实际宽度——实际是 `#-sidebar { 17.5rem }`（app.css:124）。
-10. **`uiScale` 的注释已过时**：见 §2.10 末尾（index.html:279-280 vs display-settings.js:92-93）。
-11. **右侧 dock 是"左栏/文档区/dock 三栏，dock 让位"**（2026-09-17 第二轮加入**文档区最小宽度保护**后）：`#-sidebar`(17.5rem) 与 `#-agent-dock`(22rem) 都是 `flex-shrink:0`，`#content` 名义上 `flex:1`、实际宽度就是剩余空间。现在 JS 每次布局变化都会算 `available = #main.clientWidth − 左栏 − 360`，把 dock 的**生效宽度**压到 `min(期望, min(34rem, available))`；`available < 16rem` 时整条 dock 临时自动隐藏（`.-agent-dock--auto-hidden`）。故 `#content ≥ 360` 在 `#main.clientWidth ≥ 左栏 + 360` 时成立；**再窄下去**（左栏本身已占满）`#content` 会 < 360，但 dock 不会把 `#main` 撑出溢出——`#main` 的 `overflow:hidden` 不再裁掉 dock。应用最小窗口 900×600（§2.1）下不会触发自动隐藏。
-12. **两种"隐藏"语义不同、类名不同**：手动折叠 `.-agent-dock--collapsed`（**落盘** `layout.agentDockCollapsed=true`，只有用户再点才展开）；空间不足自动隐藏 `.-agent-dock--auto-hidden`（**派生态、永不落盘**，窗口一变宽就自动还原到期望宽度）。两者都只归零宽度、不 `display:none`（仍是布局节点、`clientWidth=0`，消息滚动位置与未发送文本保留、内部仍参与事件与 a11y 树）。自动隐藏时点浮动/顶栏按钮**不会展开**（会弹 `agent.dockNoSpace` 提示），因为强行展开必然挤压文档区。若集成方需要"完全不存在"，须自行 `hidden`/移除节点。
+9. **`theme/memoria.css` 含大量与当前 DOM 不符的历史选择器**：`#sidebar`、`.toolbar-center`、`#group-tabs`、`.mode-switch`、`.file-grid`、`.file-card` 在 `index.html` 与 `js/**` 中均无对应节点（已检索确认）。不要把它里面的 `#sidebar { width: 23.75rem }`（memoria.css:280-282）当成左侧栏实际宽度——实际是 `#-sidebar { 17.5rem }`（app.css:123-133）。**2026-09-18**：原 `.kb-indicator-wrap` / `.kb-indicator` / `.-kb-exit` 三条规则已随顶栏路径块一并删除（不再是"历史选择器"）。
+10. **`uiScale` 的注释已过时**：见 §2.10 末尾（index.html:283-284 vs display-settings.js:92-93）。
+11. **右侧 dock 是"左栏/文档区/dock 三栏，dock 让位"**（2026-09-17 第二轮加入**文档区最小宽度保护**后）：`#-sidebar`(17.5rem) 与 `#-agent-dock`(22rem) 都是 `flex-shrink:0`，`#content` 名义上 `flex:1`、实际宽度就是剩余空间。现在 JS 每次布局变化都会算 `available = #main.clientWidth − 左栏 − 360`，把 dock 的**生效宽度**压到 `min(期望, min(34rem, available))`；`available < 16rem` 时整条 dock 临时自动隐藏（`.-agent-dock--auto-hidden`）。故 `#content ≥ 360` 在 `#main.clientWidth ≥ 左栏 + 360` 时成立；**再窄下去**（左栏本身已占满）`#content` 会 < 360，但 dock 不会把 `#main` 撑出溢出——`#main` 的 `overflow:hidden` 不再裁掉 dock。应用最小窗口 **1000×600**（§2.1）下 `available = 1000−280−360 = 360 ≥ 16rem`，**不会**触发自动隐藏。
+12. **两种"隐藏"语义不同、类名不同**：手动折叠 `.-agent-dock--collapsed`（**落盘** `layout.agentDockCollapsed=true`，只有用户再点才展开）；空间不足自动隐藏 `.-agent-dock--auto-hidden`（**派生态、永不落盘**，窗口一变宽就自动还原到期望宽度）。两者都只归零宽度、不 `display:none`（仍是布局节点、`clientWidth=0`，消息滚动位置与未发送文本保留、内部仍参与事件与 a11y 树）。自动隐藏时点**顶栏 `#btn-agent`**（2026-09-18 起唯一入口）**不会展开**（会弹 `agent.dockNoSpace` 提示），因为强行展开必然挤压文档区。若集成方需要"完全不存在"，须自行 `hidden`/移除节点。
 13. **「停止」现在是真取消（M1 收尾语义变更）**：`services/agent/loop.py` 三个检查点观察 `CancelToken`（`loop.py:287-291`、`240-241`、`371-374`），点「停止」后后端**停止消费模型流并关闭底层响应**（`stream.close()` → provider 的 `with closing(response)`），单飞 `busy` **立即释放**，故停止后**可以立刻再提问**；已生成的部分文本保留在助手气泡并标注「（已停止）」，`loop/end` 以 `stop_reason="aborted"` 落盘。**残留边界**：取消是**协作式**的——若工作线程正阻塞在一次 `read1()` 上，要等该分片到达才会返回；且被取消的一轮**不会**写入 `assistant/message`（会话文件里该轮只有 `user/message` + `loop/end(aborted)`），故刷新后该轮的部分文本不再显示（见 §7 待拍板项）。
 14. **端点配置是全局的、不随库走**：`config/agent.json` 在程序目录（与 `ui-settings.json` 同级），一个进程一份；`enabled=false` 时发送按钮禁用（`disabled` + title），**不是**点击后报错。
 15. **dock 的滚动边界**：只有 `#agent-messages` 滚动（`overflow-y:auto`、`flex:1`、`min-height:0`），头部、**历史行（M1c 加入）**与输入区是 `flex-shrink:0`，矮窗口下会挤压消息区（实测 876×271 + 设置展开：消息区只剩 20px 高）。展开态 dock 本身**不设** `overflow`（为保证左缘拖拽柄可抓，见 §2.4「拖拽柄」），折叠态才 `overflow:hidden`；设置区自身有 `max-height: min(24rem,45vh)` + `overflow-y:auto` 兜底（app.css:456-457，2026-09-17 修），但**头部、历史行与输入区仍无滚动兜底**——若未来往这几处加内容，需自行保证不撑破。
@@ -297,33 +309,49 @@
 
 | 要点 | 锚点 |
 |---|---|
-| 顶层骨架 / 区域顺序 | index.html:47-283；theme/memoria.css:39-43、248、388-393、439-443 |
-| `#toolbar` 尺寸与层级 / 顶栏元素顺序 | theme/memoria.css:46-60；index.html:48-107 |
-| 拖拽区标记 / 排除选择器 | index.html:49、84、95、96、97；window-chrome.js:118-123 |
-| 原生标题栏拖动 / 下拉还原 / 双击最大化 / 焦点回拉 | window-chrome.js:188-208、339-344、222-283、353-365、210-220 |
-| 边缘缩放层 / 三键图形 / 最大最小尺寸 | window-chrome.js:36-116；app.css:1898-1977、1826-1896；window-chrome.js:14、300-301 |
-| 窗口信息接口 / DWM 圆角 | src/memoria/presentation/api/ui.py:662-672；src/memoria/app/window_win32.py:166-180 |
-| 文件菜单开合 / 最近列表渲染 | app.js:12085-12185、12134-12175 |
-| 后退前进动作与按钮态 / Alt+←→ | app.js:406-412、6201-6213、12402-12410 |
-| 刷新 / 构建 | app.js:12192-12197、1012-1049 |
-| **顶栏对话开关** `#btn-agent` | index.html:82；agent-panel.js:1209-1214、228-257、283-285 |
-| 侧栏页签 / 悬空页签回退 / 计数 / 宽度拖拽 / 收起展开 / 上下分栏 | app.js:1233-1258（回退守卫 1234-1236）、739-741、12103-12106、12134-12154、12158-12206；graph-settings.js:43-47、343、361、915-965、967 |
-| **右侧「对话」停靠栏**（骨架 / 样式 / 模块 / 装配 / 持久化 / 最小宽度保护 / 历史会话 / 删除 / 恢复上次会话 / 停止与取消 / 等待计时 / 状态栏用量格） | index.html:225-274、276（历史行 259-263，删除按钮 262）；app.css:331-680（自动隐藏 361-373；历史行 495-533、删除按钮 528-533；消息区 534-628；「（已停止）」587-589；输入区 629-668）；js/agent-panel.js:1-1397（dock 控制 190-407、渲染 425-554、**状态栏用量格 169-172 / 556-660 / 1156-1161 / 1308-1315 / 1370**、会话历史/删除/恢复 693-915、提问与取消 1023-1249、装配 1268-1380）；app.js:12856（另见 452/560/598 三处 `onKbChanged` 钩子） |
+| 顶层骨架 / 区域顺序 | index.html:47-280；theme/memoria.css:39-43、277、388-393、439-443 |
+| `#toolbar` 尺寸与层级 / 顶栏元素顺序 / 弹性纪律 | theme/memoria.css:88-162（`#toolbar` 88-105、`.toolbar-left` 106-118、`.toolbar-actions` 119-131、按钮 132-162）；index.html:48-106 |
+| 拖拽区标记 / 排除选择器 | index.html:49、87、98、99；window-chrome.js:118-128 |
+| 原生标题栏拖动 / 下拉还原 / 双击最大化 / 焦点回拉 | window-chrome.js:195-215、350-355、228-289、364-376、216-226 |
+| 边缘缩放层 / 三键图形 / 最大最小尺寸 | window-chrome.js:41-117；app.css:2257-2336、2162-2255；window-chrome.js:16、310-316 |
+| 窗口信息接口 / 最小尺寸常量 / DWM 圆角 | src/memoria/app/shell/host.py:7-15；src/memoria/presentation/api/ui.py:662-684；src/memoria/app/window_win32.py:166-180 |
+| 关闭入口复用（三键 ↔ 菜单项） | window-chrome.js:291-296、400-404；app.js:12353-12356 |
+| 文件菜单开合 / 最近列表渲染 / 关闭知识库 / 退出程序 | app.js:12266-12286、12309-12359、12351、12353-12356 |
+| 后退前进动作与按钮态 / Alt+←→ | app.js:417-423、6254-6266、12571-12588 |
+| 刷新 / 构建 | app.js:12360-12365、1033-1070 |
+| **顶栏左栏伸缩开关** `#btn-toggle-sidebar` | index.html:50；memoria.css:132-151；app.js:12162-12228（`_syncSidebarToggleBtn` 12168-12176、`_applySidebarCollapsed` 12177-12190、`setupSidebarCollapse` 12191-12201、装配 12587） |
+| **顶栏对话开关** `#btn-agent`（右侧） | index.html:100；agent-panel.js:1317-1319、223-229、264-266 |
+| 侧栏页签 / 悬空页签回退 / 计数 / 宽度拖拽 / 上下分栏 | app.js:1233-1258（回退守卫 1234-1236）、739-741、12103-12106、12119-12127；graph-settings.js:43-47、343、361、915-965、967 |
+| **右侧「对话」停靠栏**（骨架 / 样式 / 模块 / 装配 / 持久化 / 最小宽度保护 / 历史会话 / 删除 / 恢复上次会话 / 停止与取消 / 等待计时 / 状态栏用量格） | index.html:223-271（历史行 257-261，删除按钮 260）；app.css:304-680（折叠 320-328；自动隐藏 330-341；拖拽柄 344-357；历史行 441-…；消息区 480-…；输入区 583-…）；js/agent-panel.js:1-1396（dock 控制 191-374、渲染 455-…、**状态栏用量格 581-660 / 1134 / 1285-1291 / 1340**、会话历史/删除/恢复、提问与取消、装配 1244-1350）；app.js:12854（另见 452/560/598 三处 `onKbChanged` 钩子） |
 | 侧栏与树样式 | app.css:123-323；app.css:3000-3048 |
 | 图谱分组条显隐 | app.js:757-768 |
 | 视图模式切换 / 编辑模式开关 | app.js:1567-1629；app.css:3453-3459；edit-handler.js:59-122 |
-| 格式栏与块编辑栏互斥 | index.html:164-201；edit-handler.js:1009-1013、1545-1550 |
-| 欢迎页与文档区切换 / 关库复位 | app.js:380-383、575-628 |
-| 状态栏统计拼装 / 点击跳转 / 样式 | app.js:281-333、12219-12227；app.css:1732-1755 |
-| **状态栏 Agent 用量格** `#status-agent`（本轮新增） | index.html:282；app.css:2138-2145；agent-panel.js:169-172（状态）、556-660（渲染/累加/复位）、1156-1161（轮询结束时写入）、1240（清空对话复位）、1308-1315（点击展开面板）、1370（语言切换重绘）；i18n/zh-CN.js:642-652（`agent.statusBar.*` 9 键，en.js 同段） |
-| flash 卡片实现 | app.js:344-372；app.css:2202-2245 |
-| 弹窗通用结构 / 拖动 / 动态弹窗 | app.css:4503-4567；app.js:12560-12625、706-728；file-tree.js:263-300 |
-| 显示设置（字号 / 缩放）/ 缩放快捷键 | display-settings.js:11-20、79-98、140-157；app.js:12201-12217 |
-| i18n 静态节点刷新 / boot 顺序 | i18n.js:91-115、154-169；app.js:12852-12866（`MemoriaAgentPanel.init` 在 12860） |
+| 格式栏与块编辑栏互斥 | index.html:162-199；edit-handler.js:1009-1013、1545-1550 |
+| 欢迎页与文档区切换 / 关库复位 | app.js:391-394、589-641 |
+| 状态栏统计拼装 / 点击跳转 / 样式 | app.js:290-342、12387-12396；app.css:2024-2050 |
+| **状态栏知识库路径格** `#status-kb`（2026-09-18 本轮新增） | index.html:279；app.css:2096-2105；app.js:379-389（写入点 477/496/568/621） |
+| **状态栏 Agent 用量格** `#status-agent` | index.html:278；app.css:2084-2091；agent-panel.js:172（状态）、581-660（渲染/累加/复位）、1134（轮询结束时写入）、634（清空对话复位）、1285-1291（点击展开面板）、1340（语言切换重绘）；i18n/zh-CN.js:643-653（`agent.statusBar.*` 9 键，en.js 同段） |
+| flash 卡片实现 | app.js:347-379；app.css:2526-2584 |
+| 弹窗通用结构 / 拖动 / 动态弹窗 | app.css:4542-4606；app.js:12560-12625、706-728；file-tree.js:263-300 |
+| 显示设置（字号 / 缩放）/ 缩放快捷键 | display-settings.js:11-20、79-98、140-157；app.js:12361-12377 |
+| i18n 静态节点刷新 / boot 顺序 | i18n.js:91-115、154-169；app.js:12847-12862（`MemoriaFileTree.init` 12853、`MemoriaAgentPanel.init` 12854、`initWindowChrome` 12859） |
 
 ## 7. 未证实 / 待确认
 
-- ⚠️ **本轮（2026-09-18：状态栏 agent 用量格 `#status-agent`）已取证 / 未取证**。已取证（headless Edge + CDP + harness `/rpc` + 本地假 SSE 端点，`MEMORIA_CONFIG_DIR` 与 KB 均指向临时目录；**11/11 PASS**）：⑧ 用量格文本 **`↑8.7k ↓233 · 命中 62%`**；⑨ `title` 含 `缓存：命中 5402 / 未命中 3311 / 命中率 62%` + `本会话累计…`；⑩ 无活动时为空且 `display:none`（不占位）；⑪ 折叠 dock 后点该格使其重新可见（`clientWidth 0 → 351`）；⑫ 会话 `loop/end.usage` 带 `cache_read_tokens`/`cache_miss_tokens`。详见 [10 篇 §7](./10-data-layout-and-host-embedding.md) 与 §2.7。**未取证**：悬停 `title` 在真机不同主题 / `uiScale` 下的换行观感、真实模型端点下的命中率数值。同类「桥在 document-start 就绪时后续模块 init 落空」的装载顺序脆弱点见 10 篇 §7（非本轮引入、未改代码）。
+- ⚠️ **本轮（2026-09-18：外壳层重构——顶栏 VSCode 式图标按钮 / 知识库路径下底栏 / 退出入「文件」菜单 / 三键永不被挤出 + 最小尺寸 1000×600）已断言 / 未取证**。已断言（**headless Edge（`--headless=new --remote-allow-origins=*`）+ CDP（`websocket-client` 直连，断言全在 Python 侧）+ harness `/rpc` 两份变体**：① 仓库普通 harness（端口 8643，`UIAPI(host=None)`）；② **frameless 变体 harness**（端口 8644，把 `UIAPI` 的 host 换成"假无边框宿主"⇒ 前端走真机 frameless 分支，`#window-controls` 自然显示并绑定标题栏拖拽处理链）；`MEMORIA_CONFIG_DIR` 与 KB 均指向临时目录；脚本与产物在仓库外临时目录）——**39/39 + 15/15 PASS**：
+  - **① 三键永不被挤出**：四个视口（1600×900 / 1200×800 / 1000×700 / 900×600）下 `#btn-win-close` **完整可见且可命中**（`right ≤ innerWidth`，`elementFromPoint` 命中 `#window-controls` 内），`#window-controls` 未裁剪（`scrollWidth == clientWidth == 138`）；右缘恒为视口宽（1600/1200/1000/900 → right 1600/1200/1000/900）。
+  - **② `#toolbar` 无横向溢出**：同四档 `scrollWidth == clientWidth`，`flex-wrap:nowrap`。实测几何（w900）：`left 183.78 / actions 280.08 / search 224.44 / right 138`（w1600 为 190.3 / 290 / 561.34 / 138）⇒ 收缩主要由 `.toolbar-search-wrap` 吸收（378→224），左段仅被削 ~17px。
+  - **③ 两枚图标按钮 + aria**：`#btn-toggle-sidebar` 在顶栏**最左**（图标 `◧`）、`#btn-agent` 在 `.toolbar-right`（图标 `◨`）；`aria-pressed` 随状态翻转（true⇄false 双向验证）；点左栏按钮 → `.-sidebar--collapsed` 出现/消失；点右栏按钮 → `#-agent-dock` 加/去 `.-agent-dock--collapsed`（`dockRect` 352→0→352，`aria-pressed` 同步）。
+  - **④ 底栏路径格**：`#status-kb` 的 `textContent` 与 `title` 都等于知识库**完整路径**；计算样式 `overflow:hidden`、`text-overflow:ellipsis`、`max-width:40%`；900px 下**真截断**（`scrollWidth 608 > clientWidth 354`）；`#status-bar` 自身无溢出；点「关闭知识库」后文本为空且 `display:none`（不占位）。
+  - **⑤ 文件菜单两项**：含「关闭知识库」「退出程序」；已开库时前者可用（`disabled=false`），关库后 `disabled=true`。
+  - **⑥ 旧节点已消失**：`#sidebar-collapse-btn`、`#agent-dock-collapse-btn`、`#kb-indicator`、`#btn-kb-close` 在四档视口下均不存在。
+  - **⑦ 自动隐藏回归**：900px + 左栏 480（`available < 16rem`）→ dock 进入 `-agent-dock--auto-hidden`；点顶栏 `#btn-agent` → **仍弹「空间不足：对话栏保持隐藏，请先折叠左栏或把左栏调窄」**（`agent.dockNoSpace` 文案未变）且 `clientWidth` 保持 0、未展开。
+  - **⑧ frameless 变体专项 15/15**：`#window-controls` **无需手动去 `hidden`** 即显示；四档三键完整可见 + 顶栏无溢出；**点 `#btn-toggle-sidebar` / `#btn-agent` 都不触发 `window_begin_drag`**（拖拽豁免生效），而**点品牌区（非豁免拖拽区）会触发**（豁免是选择性的）；点 `#btn-win-close` 触发 `window_close`。
+  - **配置隔离证据**：运行前后真实 `config/agent.json`（SHA256 `C9CFC8B72271A4FA382270F4210BC59063432CA8F417DED86CCB0FB54CD01D50`）与 `config/ui-settings.json`（`DBAE36E137DF802C08DC071E5C3A61DCB37A2F9AB9854DC498E114E4E2E0A326`）**完全一致**；全部写入只发生在临时 `MEMORIA_CONFIG_DIR`（两份 `ui-settings.json`，307B / 355B）与临时知识库；仓库内 `docs/example/rich-content-test/` 无新增脏文件。
+  - **未取证（harness 不可断言，须人工验证）**：① **真机最小尺寸**——`min_size=(1000,600)`（pywebview）与 `setMinimumSize(1000,600)`（Qt）由 OS 窗口管理器执行，CDP 的 `Emulation.setDeviceMetricsOverride` 只改渲染视口、不受应用最小尺寸约束（故 900px 档能跑通，但**不能**据此证明真机缩不到 900）。**人工步骤**：真机启动 → 用鼠标把窗口拖到尽可能小 → 目测宽度卡在 1000px（且三键始终可见、无横向裁剪）；再 `Ctrl+=` 把 `uiScale` 调到 1.5 复核。② **系统级原生拖拽**：真机上 `window_begin_drag` 走 PostMessage + `WM_NCLBUTTONDOWN(HTCAPTION)` 进入原生拖动循环，harness 里该 RPC 是 no-op，**只能**验证"是否调用了该 RPC"。**人工步骤**：真机按住品牌区拖动窗口（应能移动且不选中文字）、按住/点击两个图标按钮（应正常切换且不触发窗口拖动）。③ **pyqt6 的拖拽排除带同步**（`set_toolbar_drag_exclusion`）：本轮把被 `ResizeObserver` 观察的节点从已删除的 `#kb-indicator-wrap` 换成 `.toolbar-right`，真机 pyqt6 未跑。**人工步骤**：`MEMORIA_SHELL=pyqt6` 启动，点「文件/检查/设置/对话」与两个图标按钮，确认点击均生效（未被标题栏拖动吞掉）。④ `uiScale ≠ 1`（0.8–1.5）下顶栏各段收缩的分界点（本轮实测均在根字号 16px）。
+- ⚠️ **上一轮（2026-09-18：状态栏 agent 用量格 `#status-agent`）已取证 / 未取证**。已取证（headless Edge + CDP + harness `/rpc` + 本地假 SSE 端点，`MEMORIA_CONFIG_DIR` 与 KB 均指向临时目录；**11/11 PASS**）：⑧ 用量格文本 **`↑8.7k ↓233 · 命中 62%`**；⑨ `title` 含 `缓存：命中 5402 / 未命中 3311 / 命中率 62%` + `本会话累计…`；⑩ 无活动时为空且 `display:none`（不占位）；⑪ 折叠 dock 后点该格使其重新可见（`clientWidth 0 → 351`）；⑫ 会话 `loop/end.usage` 带 `cache_read_tokens`/`cache_miss_tokens`。详见 [10 篇 §7](./10-data-layout-and-host-embedding.md) 与 §2.7。**未取证**：悬停 `title` 在真机不同主题 / `uiScale` 下的换行观感、真实模型端点下的命中率数值。同类「桥在 document-start 就绪时后续模块 init 落空」的装载顺序脆弱点见 10 篇 §7（非本轮引入、未改代码）。
+- ⚠️ 待拍板（2026-09-18 本轮）：**「文件 → 退出程序」菜单项的去留**。用户原话只要求把原顶栏「退出」（= 关库返回欢迎页）移入「文件」菜单；**「退出程序」是按 File 菜单惯例额外加的**（等价于点窗口关闭键，见 §2.2 表）。否决只需删 `#file-menu-quit`（index.html:76）与其 i18n 两键（`toolbar.quit`/`quitTitle`）+ 一行绑定（app.js:12353-12356）。
+- ⚠️ 待拍板（2026-09-18 本轮）：**知识库路径在底栏的位置**——现放在 `#status-bar` **最右**（`#status-agent` 之后，index.html:279）。备选是紧贴 `#status-info` 之后；改位置只需挪动该 span（CSS 的 `margin-left/max-width` 已独立可调）。
 - ⚠️ 待确认（未能取证）：`#preview-status` 的填充逻辑与出现时机（app.js:2029-2047 附近有读写点，但完整触发链跨渲染层，未穷尽；留 [04-preview-and-rendering.md](./04-preview-and-rendering.md)）。
 - ⚠️ 待确认（设计口径，需用户拍板）：**被「停止」的那一轮，部分文本是否要写进会话文件**。当前实现只落 `user/message` + `loop/end(stop_reason="aborted")`（部分文本只保留在面板内存与该轮 `answer` 里），因此**刷新页面/恢复会话后该轮只剩用户气泡**。若要"停止后刷新仍能看到半截回答"，需在 `loop.py` 的取消分支补发一条 `assistant/message`（会改变"aborted 轮不提交助手消息"的既有语义）。
 - ⚠️ 待确认（未能取证）：`.-graph-settings-preview`（设置页内的图谱预览窗，app.css:332-367）的归属与交互，需在 [06-links-and-graph.md](./06-links-and-graph.md) 或 09 篇确认。

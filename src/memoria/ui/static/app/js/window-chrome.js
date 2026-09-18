@@ -11,7 +11,9 @@
   let maximized = false;
   let frameless = false;
   let shellKind = "pywebview";
-  let minSize = { w: 900, h: 600 };
+  // JS 侧兜底最小尺寸（真值由 get_window_chrome 返回的 min_width/min_height 覆盖，
+  // 单一事实源见 memoria/app/shell/host.py；此处仅在 RPC 不可用时兜底，须与之保持一致）
+  let minSize = { w: 1000, h: 600 };
   let resizeLayer = null;
 
   const _t = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
@@ -115,8 +117,12 @@
     setResizeLayerVisible(frameless && !maximized);
   }
 
+  // 顶栏拖拽"豁免名单"：命中即不触发原生标题栏拖动（否则 mousedown 会吞掉点击）。
+  // 2026-09-18：#btn-kb-close / .-kb-exit 已删除（移入「文件」菜单）；新增的两个顶栏
+  // 图标按钮（左栏 #btn-toggle-sidebar、右栏 #btn-agent 现位于 .toolbar-right）必须登记，
+  // 因为它们不在 .toolbar-actions 里、否则会被拖拽吞掉。
   const NO_DRAG_SELECTORS =
-    "#btn-kb-close, .-kb-exit, .toolbar-search-wrap, .toolbar-actions, .-window-controls";
+    "#btn-toggle-sidebar, #btn-agent, .toolbar-search-wrap, .toolbar-actions, .-window-controls";
 
   function isNoDragTarget(target) {
     return target instanceof Element && !!target.closest(NO_DRAG_SELECTORS);
@@ -147,10 +153,12 @@
     global.addEventListener("resize", schedule);
     if (typeof ResizeObserver !== "undefined") {
       const toolbar = document.getElementById("toolbar");
-      const kbWrap = document.getElementById("kb-indicator-wrap");
+      // 观察对象：.toolbar-right（其左沿 x 就是拖拽排除带的起点）。
+      // 2026-09-18 前这里盯的是 #kb-indicator-wrap——路径移到底栏后该节点已删除。
+      const right = document.querySelector(".toolbar-right");
       const ro = new ResizeObserver(schedule);
       if (toolbar) ro.observe(toolbar);
-      if (kbWrap) ro.observe(kbWrap);
+      if (right) ro.observe(right);
     }
     schedule();
   }
@@ -282,6 +290,13 @@
     });
   }
 
+  /** 请求关闭窗口（与 `#btn-win-close` 同一条链路：window_close RPC）。
+   *  「文件 → 退出程序」菜单项复用此入口，避免另造一套退出机制；
+   *  不依赖 #window-controls 是否显示（原生标题栏模式下它被隐藏，但 RPC 依然可用）。 */
+  function requestClose() {
+    api()?.window_close?.();
+  }
+
   async function initWindowChrome() {
     const wrap = document.getElementById("window-controls");
     if (!wrap) return;
@@ -376,7 +391,7 @@
     });
 
     btnClose?.addEventListener("click", () => {
-      a.window_close?.();
+      requestClose();
     });
 
     onMaximizeStateChange(maximized, btnMax);
@@ -385,5 +400,6 @@
   global.MemoriaWindowChrome = {
     initWindowChrome,
     syncToolbarDragExclusion,
+    requestClose,
   };
 })(typeof window !== "undefined" ? window : globalThis);

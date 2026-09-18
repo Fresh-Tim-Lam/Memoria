@@ -143,7 +143,7 @@
 | 启动链 | `MemoriaBridge.onReady` 永不触发 → `bindEvents()` 与各子系统 `init()` **全部不执行** | app.js:12676-12687（boot 是唯一入口；各模块自身不做 DOMContentLoaded 初始化） |
 | 界面 | 静态 HTML 可见：`#welcome` 欢迎页显示（`#editor-wrap` 默认 `hidden`）、顶栏按钮只有外观、文件树/KP 列表为空、状态栏停在 `app.status.ready`「就绪」 | index.html:144-148、149；app.js:212-215 |
 | 交互 | 点「设置」无反应（`#btn-settings` 未绑）、F2 无效（`_lastSel` 恒空）、搜索框可输入但一切后端调用最终报 `app.apiUnavailable`「API 不可用: {fn}」 | graph-settings.js:950；file-tree.js:445-465；app.js:385-387；i18n/zh-CN.js:484 |
-| 窗口三键 | `#window-controls` 保持 `hidden`（HTML 默认即 hidden；`initWindowChrome` 无 `get_window_chrome` 时直接返回） | index.html:87；window-chrome.js:286-293 |
+| 窗口三键 | `#window-controls` 保持 `hidden`（HTML 默认即 hidden；`initWindowChrome` 无 `get_window_chrome` 时直接返回） | index.html:101-105；window-chrome.js:301-308 |
 | 例外 | 不依赖桥的纯前端行为照旧可用：字号/缩放快捷键（本地存储）、取色面板、格式栏选区涂抹等 | app.js:12203-12216 等 |
 
 > 结论：**没有桥 = 只能看到一个"壳"**。集成方的第一优先级是提供 `window.memoria.api`（或 QWebChannel `bridge.invoke`），否则整站不启动。
@@ -323,10 +323,10 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 | # | 必须满足 | 现状 | 需自建 |
 |---|---|---|---|
 | 1 | **后端能无窗口运行** | ❌ 无 headless 入口，服务随 GUI 起（§2.14） | 新增（或接受"必须拉起 GUI 进程"这一前提） |
-| 2 | **宿主提供桥** | 契约点已固定：`window.memoria.api` 或 QWebChannel `bridge` 的 `invoke(method, argsJson)` | 宿主实现；最少需 `get_kb_path/open_kb/load_document/save_document/get_ui_settings/save_ui_settings`（`get_window_chrome` 可省，缺则窗口三键隐藏，window-chrome.js:289-293） |
+| 2 | **宿主提供桥** | 契约点已固定：`window.memoria.api` 或 QWebChannel `bridge` 的 `invoke(method, argsJson)` | 宿主实现；最少需 `get_kb_path/open_kb/load_document/save_document/get_ui_settings/save_ui_settings`（`get_window_chrome` 可省，缺则窗口三键隐藏，window-chrome.js:304-308；**该 RPC 还返回 `min_width/min_height`（2026-09-18 起 1000×600），前端用它夹 JS 侧边缘缩放**——宿主自建时应一并声明自己的窗口最小尺寸，见 §5.4） |
 | 3 | **端口与实例绑定** | pyqt6 路径已回环 + 随机端口；但 `_kb_root` 是进程级全局 | **一库一进程**；多库并存须多进程 |
 | 4 | **静态资源可由任意 HTTP 服务提供** | ✅ 无 CSP / X-Frame-Options 拦截；iframe 可行 | 自建服务时应照抄 `no-store` 与 `?v=` 注入（防 WebView 复用旧 JS） |
-| 5 | **顶栏拖拽区在 iframe 内的表现** | `.pywebview-drag-region` 在真实路径上会被 JS 改成 `no-drag`（window-chrome.js:334-336、318-320），且拖动绑定只发生在 `initWindowChrome()` 的 frameless 分支（324-365） | 无 `get_window_chrome()` 时**不绑任何拖动**：顶栏（含 `#app-badge`、`#kb-indicator`）是普通 DOM，不会拖动宿主窗口；副作用为零，但"可拖"的观感是假象 |
+| 5 | **顶栏拖拽区在 iframe 内的表现** | `.pywebview-drag-region` 在真实路径上会被 JS 改成 `no-drag`（window-chrome.js:349-351、333-335），且拖动绑定只发生在 `initWindowChrome()` 的 frameless 分支（339-397） | 无 `get_window_chrome()` 时**不绑任何拖动**：顶栏（含 `#app-badge`、底栏 `#status-kb`）是普通 DOM，不会拖动宿主窗口；副作用为零，但"可拖"的观感是假象 |
 
 ### 5.2 给集成方的自检清单
 
@@ -354,6 +354,12 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 9. **无任何 origin/令牌校验**：pyqt6 路径的静态服务绑 `127.0.0.1` 且只读知识库文件，但**桥本身不校验调用方**（QWebChannel 不受同源限制）——同机任意页面只要拿到桥就能读写知识库；deepseek-harness-integration.md:150 也标注"该面当前无令牌"。
 10. **跨进程并发写无互斥**：服务层的原子写只保证单次写入不半包，不提供文件级锁；GUI 与外部智能体同时写同一 md 属未定义行为（deepseek-harness-integration.md:120 已列为 X9）。
 
+### 5.4 宿主窗口最小尺寸（2026-09-18 起 1000×600）
+
+- **单一事实源**：`src/memoria/app/shell/host.py:7-15` 的 `WINDOW_MIN_WIDTH = 1000` / `WINDOW_MIN_HEIGHT = 600`（宿主协议模块，与 `WindowHost` 同文件）。**三处引用**：pywebview 壳 `create_window(min_size=(…))`（pywebview.py:480）、PyQt6 壳 `window.setMinimumSize(…)`（pyqt6.py:233）、`UIAPI.get_window_chrome()` 的 `min_width/min_height`（ui.py:662-675）与 `window_resize_to()` 的下限夹取（ui.py:677-684）；`scripts/diag_webview.py:98` 亦用同一常量；前端 `window-chrome.js:16` 的兜底默认值同步为 `{w:1000,h:600}`（RPC 不可用时才生效）。**改一处即全局一致**，不要再散落硬编码。
+- **取 1000 的理由**：三栏并排所需宽度 = 左栏默认 17.5rem(280) + 右栏 dock 默认 22rem(352) + 文档区保底 `CONTENT_MIN_PX=360` ≈ 992 ⇒ 取整 1000，使最小窗口下 dock 仍正常显示（不触发 `-agent-dock--auto-hidden`）。高度沿用 600。
+- **由谁执行**：最小尺寸是**窗口管理器层**的约束（pywebview `min_size` / Qt `setMinimumSize` 最终交给 OS），**不是** CSS 或 JS 能强制的；`get_window_chrome` 里的数值只是给前端在 JS 侧拖拽缩放时做同样的夹取，二者需保持同值。宿主自建（iframe 嵌入）时须自行声明；浏览器/CDP 环境下的"视口"不受它限制（见 01 篇 §7 本轮"未取证"条）。
+
 ## 6. 代码锚点表
 
 | 要点 | 锚点 |
@@ -371,7 +377,8 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 | UI 偏好磁盘文件与迁移 | storage/ui_settings.py:11-75；presentation/api/ui.py:647-658 |
 | 前端桥（READY / pywebview / QWebChannel / 代理） | js/bridge.js:7、9-20、22-27、29-49、56-67、69-111、113-119 |
 | 启动顺序与 boot 唯一入口 | js/app.js:12676-12687；js/index.html:372-415 |
-| 无桥时的窗口三键处理 | js/window-chrome.js:286-293、315-322 |
+| 无桥时的窗口三键处理 | js/window-chrome.js:301-308、330-337 |
+| 窗口最小尺寸常量（唯一事实源） | src/memoria/app/shell/host.py:7-15（引用：pywebview.py:480、pyqt6.py:233、ui.py:662-684、window-chrome.js:16；见 §5.4） |
 | 静态服务路由 / no-store / 资源版本注入 | presentation/static_server.py:94-156 |
 | `/files/` 防穿越与 MIME | presentation/static_server.py:19-28、56-91 |
 | PyQt6 静态服务线程与随机端口 | app/shell/static_server_thread.py:11-35；app/shell/pyqt6.py:224-225、268-273 |
