@@ -47,6 +47,8 @@ assistant 带 `tool_calls` + 紧随其后的 `tool` 消息（`tool_call_id` 与 
 
 from __future__ import annotations
 
+import json
+import os
 from collections.abc import Mapping, Sequence
 from typing import Any
 
@@ -56,10 +58,12 @@ from memoria.services.agent.session.store import read_session
 __all__ = [
     "MAX_HISTORY_CHARS",
     "MAX_HISTORY_MESSAGES",
+    "SESSION_SCAN_MAX_BYTES",
     "build_history",
     "conversation_messages",
     "summarize_events",
     "summarize_session",
+    "summarize_session_file",
 ]
 
 #: 回放时保留的最大消息条数（从最新往旧保留）。
@@ -76,6 +80,16 @@ TOOL_RESULT = "tool/result"
 #: 会话列表里 `preview` / `title` 的最大字符数。
 PREVIEW_CHARS = 80
 TITLE_CHARS = 40
+
+#: `summarize_session_file()` 单份会话文件的**最大扫描字节数**（超出即 `capped`）。
+#: 目的：会话列表只统计/预览，绝不因某份超大会话（如长工具输出）把列表变慢；
+#: 取 2 MiB（远大于正常对话：一次问答通常几十 KiB）。
+SESSION_SCAN_MAX_BYTES = 2 * 1024 * 1024
+
+#: 原始行扫描时的 `user/message` 事件标记（`store._encode` 写出的 JSON 形态）。
+#: 用 **bytes** 形态：扫描全程不解码整份文件（纯 ASCII 子串在字节串上同样精确），
+#: 只对命中的**那一行**解码 + 解析预览——这是"去读放大"的关键。
+_USER_TYPE_MARK = b'"user/message"'
 
 
 def _conversation_events(kb_path: str, session_id: str) -> list[dict[str, Any]]:
@@ -230,6 +244,68 @@ def summarize_events(events: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
 def summarize_session(kb_path: str, session_id: str) -> dict[str, Any]:
     """读盘并返回 `summarize_events()` 的摘要（会话不存在 ⇒ 全零摘要）。"""
     return summarize_events(_conversation_events(kb_path, session_id))
+
+
+def _preview_from_line(line: bytes) -> str:
+    """从**单行**事件 JSON 取 `data.text`（仅此一处解码 + 一次 `json.loads`）。"""
+    try:
+        record = json.loads(line.decode("utf-8", errors="replace"))
+    except json.JSONDecodeError:
+        return ""
+    if not isinstance(record, Mapping):
+        return ""
+    return _text(record).strip()
+
+
+def summarize_session_file(
+    path: str, *, max_bytes: int = SESSION_SCAN_MAX_BYTES, size: int | None = None
+) -> dict[str, Any]:
+    """**原始行扫描**的会话摘要（供 `agent_sessions_list` 用，避免读放大）。
+
+    与 `summarize_session()` 的差别：**不整体 `json.loads`**——只按行找
+    `"user/message"` 子串计 `turn_count`，并从**首个**命中行取预览/标题。扫描全程
+    在**字节串**上进行（不解码整份文件），只对该命中行解码 + `json.loads` 一次；因此：
+
+    - `turn_count` 语义为「**扫描上限内的** `user/message` 事件行数」（超限时
+      只统计上限内的部分，返回值另带 `capped: true`）；
+    - 单文件读取上限 `max_bytes`（默认 `SESSION_SCAN_MAX_BYTES` = 2 MiB），
+      `capped` 表示「该文件超过上限，统计被截断」；为免把半行算作一行，
+      `capped` 时丢弃最后一段（可能是被截断的不完整行）。未超限时按"整读"取内容
+      （`read(-1)`），**不**按上限长度去 ask（那会给每个小文件白分配 2 MiB 缓冲）；
+    - `size` 可传入调用方**已知**的文件字节数（`list_sessions()` 已 stat 过）
+      以免重复 stat；省略时自行 `os.path.getsize`；
+    - 子串判定是**行级近似**：若某条非 user 事件的正文里恰好引用字面量
+      `"user/message"`，会被计入（正常对话不会出现；`summarize_session()` 的
+      精确口径仍保留给需要严格计数的调用方）。
+    """
+    limit = max_bytes if isinstance(max_bytes, int) and max_bytes > 0 else 0
+    if size is None:
+        try:
+            size = os.path.getsize(path)
+        except OSError:
+            return {"turn_count": 0, "preview": "", "title": "", "capped": False}
+    capped = bool(limit) and size > limit
+    with open(path, "rb") as handle:
+        data = handle.read(limit) if capped else handle.read()
+    lines = data.split(b"\n")
+    if capped and lines:
+        lines.pop()  # 末段多半是被截断的半行，不计
+    turn_count = 0
+    first = ""
+    seen_first = False
+    for line in lines:
+        if _USER_TYPE_MARK not in line:
+            continue
+        turn_count += 1
+        if not seen_first:
+            seen_first = True
+            first = _preview_from_line(line)
+    return {
+        "turn_count": turn_count,
+        "preview": first[:PREVIEW_CHARS],
+        "title": first[:TITLE_CHARS],
+        "capped": capped,
+    }
 
 
 def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]:

@@ -16,8 +16,11 @@
 | 流内失败以带 `failure` 的终止事件投递 | 同样：终止事件带 `failure` ⇒ `StopReason.ERROR`，已投递文本保留 |
 
 未移植：并行工具调度与独占屏障（`maxParallelToolCalls`/`tool-calls.ts`）、
-会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结、取消信号。
-M1 串行执行工具、同步阻塞、无取消面（与第一块 `llm/` 的取舍一致）。
+会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结。
+M1 串行执行工具、同步阻塞；**取消为协作式**（M1 收尾新增 `CancelToken`，
+见其 docstring）：只在三个检查点观察（每轮迭代前、流式逐事件、每次工具调用后），
+故"取消"不打断正在阻塞的 socket 读，但会**立即停止消费生成器**（`stream.close()`
+令 provider 的 `with closing(response)` 关闭底层 HTTP 响应，不再收完剩余分片）。
 
 provider 与工具集都在构造时注入，因此本模块**不联网、不读配置**，可用脚本化
 假 provider 完整离线验证。
@@ -26,6 +29,7 @@ provider 与工具集都在构造时注入，因此本模块**不联网、不读
 from __future__ import annotations
 
 import logging
+import threading
 from collections.abc import Callable, Mapping, Sequence
 from dataclasses import dataclass
 from enum import Enum
@@ -56,12 +60,44 @@ logger = logging.getLogger(__name__)
 __all__ = [
     "DEFAULT_MAX_ITERATIONS",
     "AgentLoop",
+    "CancelToken",
     "LoopResult",
     "StopReason",
 ]
 
 #: 单次提问允许的最大模型步数（上游无内置预算，此处是 M1 的安全上界）。
 DEFAULT_MAX_ITERATIONS = 8
+
+
+class CancelToken:
+    """轻量取消令牌（跨线程安全、幂等）。
+
+    M1 的 agent 循环是**同步阻塞**的，取消只能**协作式**完成：RPC 线程调
+    `cancel()`，工作线程在检查点观察到后主动收敛（`StopReason.ABORTED`）。
+
+    选 `threading.Event` 而非"裸可调用对象"，理由：
+    ① `Event` 自带内存可见性与线程安全，跨线程写后读无需额外锁、无竞态；
+    ② `is_cancelled()` 名字明确——可调用对象容易被误传成 `bool` 或返回非布尔值；
+    ③ `cancel()` 幂等，同一令牌可被作业面（`AskJob`）与循环共用；
+    ④ 与 `AskJob.lock` 无耦合，不引入锁顺序问题，也不会在持锁时回调用户代码。
+    """
+
+    __slots__ = ("_event",)
+
+    def __init__(self) -> None:
+        self._event = threading.Event()
+
+    def cancel(self) -> None:
+        """请求取消（幂等；可从任意线程调用）。"""
+        self._event.set()
+
+    def is_cancelled(self) -> bool:
+        """是否已请求取消。"""
+        return self._event.is_set()
+
+    def reset(self) -> None:
+        """清除取消标志（令牌复用/测试用）。"""
+        self._event.clear()
 
 
 class StopReason(str, Enum):
@@ -124,6 +160,7 @@ class AgentLoop:
         meter: UsageMeter | None = None,
         on_text: Callable[[str], None] | None = None,
         on_event: Callable[[str, Mapping[str, Any]], None] | None = None,
+        cancel: CancelToken | None = None,
     ) -> None:
         if max_iterations < 1:
             raise ValueError("max_iterations 必须为正整数")
@@ -140,6 +177,7 @@ class AgentLoop:
         self.meter = meter if meter is not None else UsageMeter()
         self.on_text = on_text
         self.on_event = on_event
+        self.cancel = cancel
 
     # —— 内部 ——
 
@@ -166,6 +204,10 @@ class AgentLoop:
             timeout_s=self.timeout_s,
         )
 
+    def _cancelled(self) -> bool:
+        """是否已请求取消（无令牌者恒为 False）。"""
+        return self.cancel is not None and self.cancel.is_cancelled()
+
     def _stream_once(
         self, request: LlmRequest, retry_counter: list[int]
     ) -> tuple[str, Usage | None, FinishEvent | None]:
@@ -174,6 +216,10 @@ class AgentLoop:
         `retry_counter`（单元素列表，调用方持有）记录本步**已发生的重试次数**：
         `iter_with_retry` 重试发生在流内部，抛错时无法从返回值带回，故用计数器
         让调用方在 `step/error` 与最终错误串里如实呈现"已重试 N 次"。
+
+        取消检查点②：**逐个事件**观察取消令牌；一旦取消即 `break` 并在 `finally`
+        中 `stream.close()`——这把 `GeneratorExit` 抛进 `iter_with_retry`，进而令
+        provider 的 `with closing(response)` 关闭底层 HTTP 响应，剩余分片不再收。
         """
         text_parts: list[str] = []
         reasoning_parts: list[str] = []
@@ -184,22 +230,29 @@ class AgentLoop:
             retry_counter[0] = attempt
             logger.warning("[agent-loop] 第 %d 次重试（等待 %.2fs 后）：%r", attempt, delay, exc)
 
-        for event in iter_with_retry(
+        stream = iter_with_retry(
             lambda: self.provider.stream(request),
             policy=self.retry_policy,
             on_retry=on_retry,
-        ):
-            if isinstance(event, TextDelta):
-                text_parts.append(event.text)
-                if self.on_text is not None:
-                    self.on_text(event.text)
-            elif isinstance(event, ReasoningDelta):
-                reasoning_parts.append(event.text)
-            elif isinstance(event, UsageEvent):
-                usage = event.usage if usage is None else usage.plus(event.usage)
-                self.meter.add(event.usage)
-            elif isinstance(event, FinishEvent):
-                finish = event
+        )
+        try:
+            for event in stream:
+                if self._cancelled():
+                    break
+                if isinstance(event, TextDelta):
+                    text_parts.append(event.text)
+                    if self.on_text is not None:
+                        self.on_text(event.text)
+                elif isinstance(event, ReasoningDelta):
+                    reasoning_parts.append(event.text)
+                elif isinstance(event, UsageEvent):
+                    usage = event.usage if usage is None else usage.plus(event.usage)
+                    self.meter.add(event.usage)
+                elif isinstance(event, FinishEvent):
+                    finish = event
+        finally:
+            # 正常跑完/抛错时 close() 是空操作；取消 break 时它立即关闭底层响应。
+            stream.close()
         text = "".join(text_parts)
         if usage is None and finish is not None and finish.usage is not None:
             usage = finish.usage
@@ -231,6 +284,10 @@ class AgentLoop:
         iterations = 0
 
         for iteration in range(1, self.max_iterations + 1):
+            # 取消检查点①：每轮迭代开始前
+            if self._cancelled():
+                stop_reason = StopReason.ABORTED
+                break
             iterations = iteration
             request = self._request(history)
             self._emit("step/start", {"iteration": iteration, "message_count": len(history)})
@@ -248,6 +305,13 @@ class AgentLoop:
                 usage = usage.plus(step_usage)
             if text:
                 answer = text
+
+            # 取消检查点②的收口：流式消费中被取消（`_stream_once` 已停止消费并关闭
+            # 生成器），此时 `finish` 多半为 None —— 必须**先于**"无终止事件"判定，
+            # 否则取消会被误报成 ERROR。保留已生成的部分文本作为 answer。
+            if self._cancelled():
+                stop_reason = StopReason.ABORTED
+                break
 
             if finish is None:
                 stop_reason, error = StopReason.ERROR, "模型流未给出终止事件"
@@ -284,6 +348,7 @@ class AgentLoop:
                 stop_reason = StopReason.FINAL_ANSWER
                 break
 
+            aborted = False
             for call in finish.tool_calls:
                 result = self.tools.invoke(call, approval=self.approval)
                 tool_results.append(result)
@@ -303,6 +368,13 @@ class AgentLoop:
                         "anchors": [dict(anchor) for anchor in result.output.anchors],
                     },
                 )
+                # 取消检查点③：每次工具调用之后（工具本身很短、不设内部中断点）
+                if self._cancelled():
+                    aborted = True
+                    break
+            if aborted:
+                stop_reason = StopReason.ABORTED
+                break
         else:
             stop_reason = StopReason.MAX_ITERATIONS
 

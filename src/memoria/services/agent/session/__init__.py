@@ -19,10 +19,12 @@ from __future__ import annotations
 from memoria.services.agent.session.history import (
     MAX_HISTORY_CHARS,
     MAX_HISTORY_MESSAGES,
+    SESSION_SCAN_MAX_BYTES,
     build_history,
     conversation_messages,
     summarize_events,
     summarize_session,
+    summarize_session_file,
 )
 from memoria.services.agent.session.store import (
     SESSION_FORMAT_VERSION,
@@ -39,6 +41,7 @@ __all__ = [
     "MAX_HISTORY_CHARS",
     "MAX_HISTORY_MESSAGES",
     "SESSION_FORMAT_VERSION",
+    "SESSION_SCAN_MAX_BYTES",
     "SessionHeader",
     "SessionStore",
     "build_history",
@@ -50,4 +53,5 @@ __all__ = [
     "sessions_dir",
     "summarize_events",
     "summarize_session",
+    "summarize_session_file",
 ]

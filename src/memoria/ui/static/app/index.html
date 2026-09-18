@@ -259,13 +259,14 @@
         <div class="-agent-history">
           <label class="-agent-history-label" for="agent-history" data-i18n="agent.history.label">历史</label>
           <select id="agent-history" class="-agent-history-select" data-i18n-attr="aria-label:agent.history.aria"></select>
+          <button type="button" id="agent-history-delete" class="-btn secondary -btn--sm -agent-history-delete" disabled data-i18n-attr="title:agent.history.deleteTitle"><span data-i18n="agent.history.delete">删除</span></button>
         </div>
         <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
         <div class="-agent-composer">
           <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea>
           <div class="-agent-composer-actions">
             <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
-            <button type="button" id="agent-abandon" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.abandonTitle"><span data-i18n="agent.abandon">忽略本次</span></button>
+            <button type="button" id="agent-stop" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.stopTitle"><span data-i18n="agent.stop">停止</span></button>
             <button type="button" id="agent-clear" class="-btn secondary -btn--sm -agent-clear" data-i18n-attr="title:agent.clearTitle"><span data-i18n="agent.clear">清空对话</span></button>
           </div>
           <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>

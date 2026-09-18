@@ -45,7 +45,7 @@ from memoria.services.agent.llm import (
     create_provider,
     load_config,
 )
-from memoria.services.agent.loop import DEFAULT_MAX_ITERATIONS, AgentLoop, LoopResult
+from memoria.services.agent.loop import DEFAULT_MAX_ITERATIONS, AgentLoop, CancelToken, LoopResult
 from memoria.services.agent.prompt import build_system_prompt
 from memoria.services.agent.session.history import build_history
 from memoria.services.agent.session.store import SessionStore, new_session_id, session_file
@@ -98,6 +98,7 @@ def build_loop(
     max_tokens: int | None = None,
     timeout_s: float | None = None,
     on_text: Callable[[str], None] | None = None,
+    cancel: CancelToken | None = None,
 ) -> AgentLoop:
     """组装一个绑定了知识库只读工具的循环（供 `ask()` 与测试复用）。"""
     registry = ToolRegistry(build_kb_tools(kb_path, top_k=top_k))
@@ -115,6 +116,7 @@ def build_loop(
         retry_policy=retry_policy,
         on_text=on_text,
         on_event=session.append if session is not None else None,
+        cancel=cancel,
     )
 
 
@@ -135,11 +137,16 @@ def ask(
     timeout_s: float | None = None,
     on_text: Callable[[str], None] | None = None,
     replay: bool = True,
+    cancel: CancelToken | None = None,
 ) -> AskResult:
     """问一个关于知识库的问题；返回答案、锚点、工具调用、用量与会话位置。
 
     `session_id` 指向**已存在**的会话文件且 `replay=True` 时，先回放该会话的消息
     作为上下文（续聊），再追加本轮问题（见模块 docstring）。
+
+    `cancel`（M1 收尾**追加的可选参数**，不影响既有调用）：取消令牌透传到
+    `AgentLoop`；取消时本轮以 `stop_reason="aborted"` 结束、**保留已生成的部分
+    文本**作为 `answer`，并照常落盘 `loop/end`（不抛异常）。
     """
     root = os.path.abspath(kb_path or "")
     if not os.path.isdir(root):
@@ -176,6 +183,7 @@ def ask(
         max_tokens=max_tokens,
         timeout_s=timeout_s,
         on_text=on_text,
+        cancel=cancel,
     )
     result: LoopResult = loop.run(text, messages=history)
     session.flush()

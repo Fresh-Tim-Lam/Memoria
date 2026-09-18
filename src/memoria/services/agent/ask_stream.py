@@ -15,8 +15,12 @@
   已有 ask 在飞时再次提交返回 `busy` 结构化错误（不抛异常、不排队）；
 - **增量缓冲**：`on_text` 把片段追加进缓冲区，`poll(cursor)` 只返回
   `cursor` 之后的新增文本，前端无需重放全文；
-- **不做真取消**（M1 无取消点）：`abandon` 由前端自行实现为「丢弃后续结果 +
-  停止轮询」，本模块不提供假的取消语义；
+- **真取消（M1 收尾）**：每个作业持一枚 `CancelToken`（`loop.py`），`cancel(job_id)`
+  置位令牌并**立即**把作业收敛为 `done` + `stop_reason="aborted"`（保留已生成的
+  部分文本为 `answer`）⇒ `busy` 立刻释放、可马上发起新提问；工作线程在下个检查点
+  观察到取消后停止消费生成器（关闭底层 HTTP 响应）、正常落盘 `loop/end`
+  （`stop_reason=aborted`）并返回，不会把取消改写回 `error`。取消是**协作式**的：
+  阻塞中的 socket 读不会被抢占，最长等一个分片的到达；
 - **有界重试**（交互路径）：作业固定使用 `PANEL_RETRY_POLICY`（`max_retries=2` /
   `total_timeout_s=20`），库层 `llm/retry.py` 的上游默认值不变；确定性连接失败
   （`UNREACHABLE`）不重试，故面板对"必拒连端点"是**立即失败**；
@@ -40,6 +44,7 @@ from typing import Any
 
 from memoria.services.agent.ask import ask
 from memoria.services.agent.llm import RetryPolicy
+from memoria.services.agent.loop import CancelToken, StopReason
 
 logger = logging.getLogger(__name__)
 
@@ -59,6 +64,9 @@ __all__ = [
 RUNNING = "running"
 DONE = "done"
 ERROR = "error"
+
+#: 被取消时 `stop_reason` 的取值（与 `loop.StopReason.ABORTED.value` 同源）。
+STOP_ABORTED = StopReason.ABORTED.value
 
 #: 稳定错误 code（前端据此本地化；不解析 message 文本）。
 #: `no_kb` / `empty_question` / `net_disabled` / `no_base_url` / `busy` 由提交侧产生，
@@ -95,6 +103,10 @@ class AskJob:
 
     `parts` 由工作线程写入、RPC 线程读取，故所有访问都在 `lock` 内；
     增量文本按到达顺序拼接，`poll` 用字符下标做 cursor，不重放历史。
+
+    `cancel_token` 是**跨线程**取消信号（`CancelToken` 自带线程安全），
+    `cancelled` 是"已取消"的**终态标记**（在 `lock` 内读写），二者职责不同：
+    前者通知工作线程停止消费，后者保证取消后不再被工作线程改写状态。
     """
 
     job_id: str
@@ -104,6 +116,7 @@ class AskJob:
     #: 本轮要**续接**的会话 id（前端带上上一轮 `session_id`）；None = 全新会话。
     resume_session_id: str | None = None
     lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
+    cancel_token: CancelToken = field(default_factory=CancelToken, repr=False)
     status: str = RUNNING
     parts: list[str] = field(default_factory=list, repr=False)
     answer: str = ""
@@ -115,6 +128,7 @@ class AskJob:
     iterations: int = 0
     error: str | None = None
     code: str | None = None
+    cancelled: bool = False
     started_at: float = field(default_factory=time.time)
     finished_at: float | None = None
 
@@ -129,6 +143,10 @@ class AskJob:
 
     def fail(self, error: str, code: str) -> None:
         with self.lock:
+            if self.cancelled:
+                # 取消是终态：工作线程后续的失败（含关闭响应引发的传输错误）
+                # 不得把 `done/aborted` 改写回 `error`。
+                return
             self.status = ERROR
             self.error = error
             self.code = code
@@ -137,6 +155,12 @@ class AskJob:
     def succeed(self, result: Any) -> None:
         """把 `AskResult` 落进作业；`result.error` 非空时判为 error（保留已投递文本）。"""
         with self.lock:
+            if self.cancelled:
+                # 取消后只允许补"取消时还不知道的"会话 id（供下一句续聊用），
+                # 状态、答案、用量等一律以取消瞬间的快照为准。
+                if self.session_id is None and getattr(result, "session_id", None):
+                    self.session_id = str(result.session_id)
+                return
             self.answer = result.answer
             self.anchors = [dict(anchor) for anchor in result.anchors]
             self.tool_calls = [dict(call) for call in result.tool_calls]
@@ -150,6 +174,21 @@ class AskJob:
             self.finished_at = time.time()
 
     # —— RPC 线程侧 ——
+
+    def cancel(self) -> bool:
+        """请求取消并**立即**收敛为 `done`/`aborted`；已结束时返回 False（幂等）。"""
+        with self.lock:
+            if self.finished_at is not None:
+                return False
+            self.cancel_token.cancel()
+            self.cancelled = True
+            self.status = DONE
+            self.stop_reason = STOP_ABORTED
+            self.answer = "".join(self.parts)
+            self.code = None
+            self.error = None
+            self.finished_at = time.time()
+            return True
 
     def snapshot(self, cursor: int = 0) -> dict[str, Any]:
         """轮询快照：`delta` = `cursor` 之后的新增文本，`cursor` = 已投递字符数。"""
@@ -170,6 +209,7 @@ class AskJob:
                 "iterations": self.iterations,
                 "error": self.error,
                 "code": self.code,
+                "cancelled": self.cancelled,
                 "elapsed_ms": round(((self.finished_at or time.time()) - self.started_at) * 1000, 1),
             }
         return out
@@ -226,10 +266,10 @@ class AskJobManager:
 
         with self._lock:
             running = self._jobs.get(self._active) if self._active else None
-            if running is not None and running.status == RUNNING:
+            if running is not None and running.status == RUNNING and not running.cancelled:
                 return _error(
                     CODE_BUSY,
-                    "上一个问题仍在生成（M1 无真取消），请等它结束后再提问",
+                    "上一个问题仍在生成，请先「停止」或等它结束后再提问",
                     job_id=running.job_id,
                 )
             job = AskJob(
@@ -256,6 +296,7 @@ class AskJobManager:
                 session_id=job.resume_session_id,
                 retry_policy=PANEL_RETRY_POLICY,
                 on_text=job.note_delta,
+                cancel=job.cancel_token,
             )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
             code = getattr(exc, "code", None) or CODE_ASK_FAILED
@@ -263,6 +304,26 @@ class AskJobManager:
             job.fail(str(exc), str(code))
             return
         job.succeed(result)
+
+    # —— 取消 ——
+
+    def cancel(self, job_id: str) -> dict:
+        """取消在飞作业（幂等）：置取消令牌 ⇒ `busy` 立刻释放、可马上再提交。
+
+        未知作业 ⇒ `{status:"error", code:"unknown_job", cancelled:false}`；
+        已结束的作业 ⇒ `{status:"ok", cancelled:false}`（无可取消者）；均不抛异常。
+        """
+        key = str(job_id or "")
+        with self._lock:
+            job = self._jobs.get(key) if key else None
+        if job is None:
+            return _error(CODE_UNKNOWN_JOB, "未知任务（可能已重启或已被清理）", job_id=key, cancelled=False)
+        return {
+            "status": "ok",
+            "job_id": job.job_id,
+            "cancelled": job.cancel(),
+            "job_status": job.snapshot(0)["status"],
+        }
 
     # —— 查询 ——
 

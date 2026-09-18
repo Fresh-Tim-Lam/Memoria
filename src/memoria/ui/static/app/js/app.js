@@ -448,6 +448,8 @@
       if (state.kbPath) {
         // 确保服务端 _kb_root 同步（防止前端通过 remembered path 获取但服务端未设置）
         await call("ensure_kb_root", state.kbPath);
+        // 对话面板：启动即已开库（initKb 在面板 init 之后跑）时刷新历史并恢复「上次会话」
+        window.MemoriaAgentPanel?.onKbChanged?.();
       }
       if (window.MemoriaMarkdownPreview?.setKbRootForImages) {
         MemoriaMarkdownPreview.setKbRootForImages(state.kbPath);
@@ -557,6 +559,7 @@
     }
     resetOpenDocumentUi();
     state.kbPath = path;
+    window.MemoriaAgentPanel?.onKbChanged?.(); // 对话面板：作废跨库会话并尝试恢复本库「上次会话」
     if (window.MemoriaMarkdownPreview?.setKbRootForImages) {
       MemoriaMarkdownPreview.setKbRootForImages(path);
     }
@@ -594,6 +597,7 @@
       /* optional */
     }
     state.kbPath = "";
+    window.MemoriaAgentPanel?.onKbChanged?.(); // 对话面板：关库后清空当前会话态
     state.files = [];
     state.dirs = []; // 关库需一并清空目录清单，否则文件树仍渲染旧库结构（点击无效）
     state.currentPath = null;

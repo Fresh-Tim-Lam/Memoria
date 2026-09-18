@@ -1195,6 +1195,7 @@ class UIAPI:
         `session_id` 省略/为空 ⇒ 全新会话；非空 ⇒ **续聊**（后端按该会话文件
         回放历史，见 `services/agent/session/history.py::build_history`）。
         该参数为**追加的可选参数**：既有两参调用语义与返回结构完全不变。
+        单飞 `busy` 可被 `agent_ask_cancel` **立即解除**（M1 收尾的真取消）。
         """
         from memoria.services.agent.ask_stream import get_ask_jobs
 
@@ -1209,13 +1210,37 @@ class UIAPI:
         """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
 
         返回 `{status:"running"|"done"|"error", delta, cursor, answer, anchors,
-        tool_calls, usage, session_id, error, ...}`；`status:"error"` 含稳定 `code`。
+        tool_calls, usage, session_id, stop_reason, cancelled, error, ...}`；
+        `status:"error"` 含稳定 `code`。被「停止」后为 `status:"done"` +
+        `stop_reason:"aborted"`（`answer` 为已生成的部分文本、`cancelled:true`）。
         """
         from memoria.services.agent.ask_stream import get_ask_jobs
 
         return get_ask_jobs().poll(job_id, cursor)
 
-    # ── M1c 会话历史（**只读**）：列表 / 载入 ─────────────────────────────
+    def agent_ask_cancel(self, job_id: str) -> dict:
+        """**真取消**一个在飞问答作业（M1 收尾新增，幂等）。
+
+        置取消令牌 ⇒ 后端停止消费模型流（关闭底层 HTTP 响应、不再烧 token），
+        并**立即**释放单飞 `busy`（随后可马上 `agent_ask_start` 新提问）。
+        返回 `{status:"ok", job_id, cancelled, job_status}`；未知作业 ⇒
+        `{status:"error", code:"unknown_job", message, job_id, cancelled:false}`；
+        已结束的作业 ⇒ `{status:"ok", cancelled:false}`（无可取消者）。不抛裸异常。
+        """
+        from memoria.services.agent.ask_stream import get_ask_jobs
+
+        try:
+            return get_ask_jobs().cancel(job_id)
+        except Exception as e:  # noqa: BLE001 —— 取消面同样只回结构化错误
+            return {
+                "status": "error",
+                "code": "cancel_failed",
+                "message": str(e),
+                "job_id": str(job_id or ""),
+                "cancelled": False,
+            }
+
+    # ── M1c 会话历史：列表 / 载入（只读） + 删除（M1 收尾）────────────────
 
     #: `agent_sessions_list` 单次返回的最大会话数（按修改时间倒序取最新）。
     SESSION_LIST_LIMIT = 30
@@ -1228,10 +1253,16 @@ class UIAPI:
     def agent_sessions_list(self, kb_path: str | None = None) -> dict:
         """列出库内会话（**只读**，不写盘）：按文件修改时间倒序，最多 30 条。
 
-        每条含 `session_id` / `modified_at`（epoch 毫秒）/ `turn_count`（`user/message` 条数）
-        / `preview`（首条提问前 80 字）/ `title`（同首条提问前 40 字）；单份会话损坏只跳过该条。
+        每条含 `session_id` / `modified_at`（epoch 毫秒）/ `turn_count` /
+        `preview`（首条提问前 80 字）/ `title`（同首条提问前 40 字）/ `capped`。
+
+        **去读放大（M1 收尾）**：摘要改走 `summarize_session_file()` 的**原始行扫描**
+        （不做整体 JSON 解析），单份会话最多只读 `SESSION_SCAN_MAX_BYTES`（2 MiB）；
+        因此 `turn_count` 是「**扫描上限内**的 `user/message` 事件行数」，
+        `capped:true` 表示该份会话超过上限、统计被截断（其余字段语义不变）。
+        单份会话损坏只跳过该条。
         """
-        from memoria.services.agent.session import list_sessions, summarize_session
+        from memoria.services.agent.session import list_sessions, summarize_session_file
 
         kb = self._agent_kb(kb_path)
         if kb is None:
@@ -1244,7 +1275,10 @@ class UIAPI:
         for row in rows:
             session_id = str(row.get("session_id") or "")
             try:
-                summary = summarize_session(kb, session_id)
+                # 复用 list_sessions 已 stat 到的字节数（免重复 stat）；只读上限内字节
+                summary = summarize_session_file(
+                    str(row.get("path") or ""), size=int(row.get("size_bytes") or 0) or None
+                )
             except (OSError, ValueError):
                 continue  # 单份会话损坏不拖垮整个列表
             sessions.append(
@@ -1254,6 +1288,7 @@ class UIAPI:
                     "turn_count": summary["turn_count"],
                     "preview": summary["preview"],
                     "title": summary["title"],
+                    "capped": summary["capped"],
                 }
             )
         return {"status": "ok", "sessions": sessions, "count": len(sessions)}
@@ -1285,4 +1320,41 @@ class UIAPI:
         except (OSError, ValueError) as e:
             return {"status": "error", "code": "session_failed", "message": str(e)}
         return {"status": "ok", "session_id": sid, "messages": messages}
+
+    def agent_session_delete(self, session_id: str, kb_path: str | None = None) -> dict:
+        """删除一个会话文件（M1 收尾新增）：**本产品首次允许写知识库**。
+
+        写入范围被压到最小：**只删** `<kb>/.memoria/agent/sessions/<id>.jsonl`
+        这一个由产品自己管理的运行时产物（会话目录是对话事实源，不是知识内容；
+        正文、sidecar、manifest、图片等一律不碰）。删除目标由
+        `session/store.py::session_file()` 解析——其 id 正则（`^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$`）
+        与目录拼接天然挡住目录穿越；此处再加一道**目录归属校验**（解析后的父目录
+        必须等于会话目录），双保险。
+
+        返回 `{status:"ok", deleted:true, session_id}`；id 非法或会话不存在 ⇒
+        `{status:"error", code:"unknown_session", message}`；删除失败（占用/权限）⇒
+        `{status:"error", code:"session_failed", message}`。不抛裸异常。
+        """
+        from memoria.services.agent.session import session_file, sessions_dir
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        if not sid:
+            return {"status": "error", "code": "unknown_session", "message": "会话 id 为空"}
+        try:
+            path = session_file(kb, sid)
+        except ValueError as e:
+            return {"status": "error", "code": "unknown_session", "message": str(e)}
+        # 目录归属校验：只允许删会话目录内的文件（防穿越的第二道闸）
+        if os.path.realpath(os.path.dirname(path)) != os.path.realpath(sessions_dir(kb)):
+            return {"status": "error", "code": "unknown_session", "message": f"非法会话路径：{sid}"}
+        if not os.path.isfile(path):
+            return {"status": "error", "code": "unknown_session", "message": f"会话不存在：{sid}"}
+        try:
+            os.remove(path)
+        except OSError as e:
+            return {"status": "error", "code": "session_failed", "message": str(e)}
+        return {"status": "ok", "deleted": True, "session_id": sid}
 

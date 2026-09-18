@@ -12,11 +12,16 @@
 ④ 全新会话不带历史；⑤ `replay=False` 时不回放；⑥ 会话文件里 `user/message` 2 条且 `seq` 连续。
 另覆盖 `agent_sessions_list` / `agent_session_load` 所依赖的
 `summarize_session()` 与 `conversation_messages()`。
+**M1 收尾新增**：`summarize_session_file()`（原始行扫描、去读放大）的等价性与
+`capped` 上限语义（⑤⑥），以及 `agent_session_delete`（⑦正常删除、⑧非法 id/
+未知会话结构化报错且不误删）。
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 from collections.abc import Iterator, Sequence
 from pathlib import Path
 from typing import Any
@@ -41,8 +46,9 @@ from memoria.services.agent.session.history import (
     build_history,
     conversation_messages,
     summarize_session,
+    summarize_session_file,
 )
-from memoria.services.agent.session.store import SessionStore, new_session_id, read_session
+from memoria.services.agent.session.store import SessionStore, new_session_id, read_session, session_file
 
 NEURAL_MD = """# 神经网络
 
@@ -365,3 +371,135 @@ def test_summarize_and_conversation_view_with_anchors(kb: Path) -> None:
         "title": "",
     }
     assert conversation_messages(str(kb), "session-does-not-exist") == []
+
+
+# —— M1 收尾 ⑤/⑥：会话列表摘要改「原始行扫描」（去读放大）+ 扫描上限 ——
+
+
+def test_summarize_session_file_matches_parsed_summary(kb: Path) -> None:
+    """⑤ 原始行扫描的 `turn_count`/`preview`/`title` 与旧实现（整体解析）一致。"""
+    session_id = "session-scan-0001"
+    store = SessionStore(str(kb), session_id)
+    store.append("user/message", {"text": '中文提问 "双引号" 与 \\ 反斜杠、\n 转义换行、tab\t制表'})
+    store.append("assistant/message", {"content": "回答一（含 `neural-network.md:7`）", "tool_calls": []})
+    store.append("user/message", {"text": "第二问：多层感知机还有哪些要点？" + "长" * 120})
+    store.append("assistant/message", {"content": "回答二", "tool_calls": []})
+
+    old = summarize_session(str(kb), session_id)
+    new = summarize_session_file(session_file(str(kb), session_id))
+
+    assert old["turn_count"] == 2
+    assert new["turn_count"] == old["turn_count"]
+    assert new["preview"] == old["preview"]
+    assert new["title"] == old["title"]
+    assert new["capped"] is False
+    assert len(new["preview"]) <= 80 and len(new["title"]) <= 40
+
+
+def test_summarize_session_file_caps_scan_and_flags(kb: Path) -> None:
+    """⑥ 单文件读取有上限：超限即 `capped: true` 且只统计上限内的 `user/message` 行。"""
+    from memoria.services.agent.session.history import SESSION_SCAN_MAX_BYTES
+
+    assert SESSION_SCAN_MAX_BYTES == 2 * 1024 * 1024
+    session_id = "session-scan-0002"
+    store = SessionStore(str(kb), session_id)
+    chunk = "填" * 200
+    for index in range(20):
+        store.append("user/message", {"text": f"问{index}-{chunk}"})
+        store.append("assistant/message", {"content": chunk, "tool_calls": []})
+    path = session_file(str(kb), session_id)
+
+    full = summarize_session_file(path)
+    assert full["capped"] is False and full["turn_count"] == 20  # 默认上限内完整计数
+
+    capped = summarize_session_file(path, max_bytes=4096)
+    assert capped["capped"] is True
+    assert 0 < capped["turn_count"] < 20
+    assert capped["preview"].startswith("问0-")
+
+
+def test_agent_sessions_list_reports_capped_field(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """⑥（RPC 面）超限会话在 `agent_sessions_list` 里带 `capped: true`（字段只增不改）。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.session.history import SESSION_SCAN_MAX_BYTES
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    sessions = kb / ".memoria" / "agent" / "sessions"
+    sessions.mkdir(parents=True, exist_ok=True)
+    big = "x" * (SESSION_SCAN_MAX_BYTES + 4096)
+    rows = [
+        json.dumps({"v": 1, "seq": 0, "time": 1, "type": "user/message", "data": {"text": "超大问答"}}, ensure_ascii=False),
+        json.dumps({"v": 1, "seq": 1, "time": 2, "type": "assistant/message", "data": {"content": big, "tool_calls": []}}, ensure_ascii=False),
+    ]
+    (sessions / "session-capped-0001.jsonl").write_text("\n".join(rows) + "\n", encoding="utf-8")
+
+    api = UIAPI(kb_path=str(kb))
+    res = api.agent_sessions_list()
+    assert res["status"] == "ok"
+    by_id = {row["session_id"]: row for row in res["sessions"]}
+    row = by_id["session-capped-0001"]
+    assert row["capped"] is True
+    assert row["turn_count"] == 1  # 上限内计数（docstring 口径）
+    assert row["preview"] == "超大问答"
+
+
+# —— M1 收尾 ⑦/⑧：会话删除（只允许删会话目录内的文件）——
+
+
+def _kb_snapshot(root: Path) -> dict[str, str]:
+    """知识库文件快照（相对路径 → SHA256），用于断言"未误删任何文件"。"""
+    out: dict[str, str] = {}
+    for path in sorted(root.rglob("*")):
+        if path.is_file():
+            out[str(path.relative_to(root)).replace("\\", "/")] = hashlib.sha256(path.read_bytes()).hexdigest()
+    return out
+
+
+def test_agent_session_delete_removes_only_that_file(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """⑦ 正常删除：目标文件消失、知识库其余文件逐字节不变。"""
+    from memoria.presentation.api.ui import UIAPI
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    keep_id = "session-delete-keep"
+    drop_id = "session-delete-0001"
+    SessionStore(str(kb), keep_id).append("user/message", {"text": "保留"})
+    SessionStore(str(kb), drop_id).append("user/message", {"text": "待删"})
+    # 先实例化 API（DocumentService 首次装载会补写 manifest/pending/kp_targets），
+    # 再取快照——否则快照差异里会混入服务初始化产物，掩盖真实的删除差异
+    api = UIAPI(kb_path=str(kb))
+    before = _kb_snapshot(kb)
+
+    res = api.agent_session_delete(drop_id)
+
+    assert res == {"status": "ok", "deleted": True, "session_id": drop_id}
+    assert not os.path.isfile(session_file(str(kb), drop_id))
+    after = _kb_snapshot(kb)
+    assert set(before) - set(after) == {f".memoria/agent/sessions/{drop_id}.jsonl"}
+    for rel, digest in after.items():
+        assert before[rel] == digest
+
+
+def test_agent_session_delete_rejects_illegal_and_unknown_ids(
+    kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """⑧ 非法 id（目录穿越）/未知会话 ⇒ 结构化错误，且**未误删任何文件**。"""
+    from memoria.presentation.api.ui import UIAPI
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    sessions = kb / ".memoria" / "agent" / "sessions"
+    sessions.mkdir(parents=True, exist_ok=True)
+    # 穿越的"诱饵"文件：分别放在会话目录的上一级与同级之外
+    decoy_parent = kb / ".memoria" / "agent" / "decoy.jsonl"
+    decoy_parent.write_text("{}\n", encoding="utf-8")
+    SessionStore(str(kb), "session-delete-real").append("user/message", {"text": "不应被删"})
+    api = UIAPI(kb_path=str(kb))  # 先实例化（服务初始化会补写元数据）再取快照
+    before = _kb_snapshot(kb)
+
+    for bad in ["../decoy", "..\\decoy", "a/b", "..", "", "   ", "不合法id", "session-does-not-exist"]:
+        res = api.agent_session_delete(bad)
+        assert res["status"] == "error", bad
+        assert res["code"] == "unknown_session", bad
+
+    assert _kb_snapshot(kb) == before  # 逐文件 SHA256 完全一致 ⇒ 未误删任何文件
+    assert decoy_parent.is_file()
+    assert os.path.isfile(session_file(str(kb), "session-delete-real"))

@@ -296,7 +296,11 @@ class OpenAICompatibleProvider:
         def payloads() -> Iterator[str]:
             while True:
                 try:
-                    chunk = response.read(_READ_SIZE)
+                    # 必须用 read1()：`HTTPResponse.read(n)` 在 "无 Content-Length / Connection: close"
+                    # 的 SSE 响应上会**阻塞到 EOF 或读满 n 字节**（实测：一次 3.6s 的流只在结束时
+                    # 返回一整块）——那样增量投递与"取消时立即停止消费"都失效。`read1` 至多触发一次
+                    # 底层读，SSE 帧一到即返回（实测逐帧返回），是本层真流式与可取消的前提。
+                    chunk = response.read1(_READ_SIZE)
                 except TimeoutError as exc:
                     raise error_for(TIMEOUT_CODE, f"读取 {request.model} 响应超时") from exc
                 except OSError as exc:

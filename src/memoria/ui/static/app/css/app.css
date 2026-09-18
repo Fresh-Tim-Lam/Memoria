@@ -524,6 +524,13 @@
     color: var(--text-secondary);
     opacity: 0.7;
 }
+/* 删除按钮（M1 收尾）：与历史行同高的小按钮；二次确认时文案变「再点一次删除」 */
+.-agent-history-delete {
+    flex-shrink: 0;
+    padding: 0.1875rem 6px;
+    font-size: 0.6875rem;
+    white-space: nowrap;
+}
 .-agent-messages {
     flex: 1;
     min-height: 0;
@@ -575,6 +582,10 @@
     margin-top: 0.375rem;
     font-size: 0.75rem;
     color: var(--error);
+}
+/* 「（已停止）」标注：真取消后保留部分文本的收尾说明，用次要色而非错误色 */
+.-agent-msg-note.-agent-stopped {
+    color: var(--text-secondary);
 }
 .-agent-anchor {
     color: var(--theme-color);

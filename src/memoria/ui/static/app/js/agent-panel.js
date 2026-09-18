@@ -7,8 +7,9 @@
  *   - `#agent-settings-toggle` 折叠设置区；`#agent-save-config` 保存端点配置
  *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
- *   - `#agent-abandon`「忽略本次」（**不是取消**：丢弃后续结果 + 停止轮询）
- *   - `#agent-clear` 清空对话（= 开新会话）；`#agent-history` 下拉恢复历史会话
+ *   - `#agent-stop`「停止」（**真取消**：调 `agent_ask_cancel`，保留已生成的部分文本）
+ *   - `#agent-clear` 清空对话（= 开新会话，并顺带取消在飞作业）
+ *   - `#agent-history` 下拉恢复历史会话；`#agent-history-delete` 删除选中会话（两次点击确认）
  *   - `#agent-messages` 内锚点点击 → 跳转文件:行号
  *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项/折叠按钮（静态节点由 i18n 引擎刷）
  *
@@ -17,16 +18,29 @@
  * 「清空对话」= 把 `sessionId` 重置为 null（开新会话，旧会话已在磁盘上、进历史列表）。
  * `sessionKb` 记录该会话所属知识库，换库即作废（避免把 A 库的会话 id 带到 B 库）。
  *
+ * **停止 = 真取消（M1 收尾）**：`stop()` 递增 `epoch` 作废在飞回调 → 调
+ * `agent_ask_cancel(job_id)`（后端置取消令牌，停止消费模型流并**立即**释放单飞 busy）
+ * → 保留已生成的部分文本为助手气泡并标注「（已停止）」、状态行写「已停止」、
+ * 停止轮询。**不再丢弃结果**（旧版「忽略本次」的语义已废除）。停止后立刻可再提问。
+ *
  * **世代号（epoch）作废（M1 收尾）**：每次提问递增模块级 `epoch`，在飞作业记住自己的
  * epoch；提交/轮询回调只有「epoch 仍是最新」时才允许写回任何面板状态（`sessionId`、
- * 气泡、状态行、锚点）。「清空对话」与「忽略本次」都递增 `epoch` ⇒ 在飞结果一律作废
- * （停止轮询、不写回会话 id）——修掉"生成中点清空后，已作废会话的 `session_id` 又被
+ * 气泡、状态行、锚点）。「清空对话」递增 `epoch` ⇒ 在飞结果一律作废（停止轮询、
+ * 不写回会话 id）——修掉"生成中点清空后，已作废会话的 `session_id` 又被
  * 写回、下一句续到上一轮"的缺陷。作废后用户立刻再提问不受影响（新 epoch 正常写回）。
- * 生成中**不**禁用「清空」：允许清空，但据此作废在飞结果。
+ * 生成中**不**禁用「清空」：允许清空，同时**顺带取消**后端作业（避免白烧 token）。
  *
  * **会话历史（M1c）**：`#agent-history` 由 `agent_sessions_list` 填充（按修改时间倒序，
  * 最多 30 条），选中某条 → `agent_session_load` 把消息灌进气泡区并把 `sessionId`
- * 设为该会话（下一句即续聊）。两个 RPC 都是**只读**、不写盘。
+ * 设为该会话（下一句即续聊）。列表/载入是**只读**；`agent_session_delete` 是
+ * **本产品首次允许写知识库**（仅限会话目录 `.memoria/agent/sessions/<id>.jsonl`，
+ * 见 10 篇 §2.15）。删除用**两次点击确认**（`#agent-history-delete`），不弹窗。
+ *
+ * **恢复上次会话（M1 收尾）**：磁盘偏好 `config/ui-settings.json` 的**顶层** `agent`
+ * 段存 `lastSessionId`（提问成功/载入/恢复时写、清空时置空）。面板打开或**切换知识库**
+ * 时若该会话文件仍存在即自动载入（下一句即续聊）；不存在则**静默忽略**（不报错、
+ * 不提示）。落盘见 saveAgentPrefs()——与 saveDockLayout() 同理，**必须先读旧值再合并
+ * 写回**（后端 `save_ui_settings` 是顶层浅合并，不能覆盖 `layout` 段）。
  *
  * 布局持久化（`config/ui-settings.json` 的 `layout` 段：`agentDockWidth` /
  * `agentDockCollapsed`）见 saveDockLayout()——**必须先读旧 layout 再整体写回**，
@@ -37,9 +51,10 @@
  * ——文档区（`#content`）保底 `CONTENT_MIN_PX=360`，不够就让 dock 先缩到 16rem、
  * 再整体**临时自动隐藏**（加 `-agent-dock--auto-hidden`，不写盘、窗口变宽自动还原）。
  *
- * 与后端的分工（见 `presentation/api/ui.py` 的 6 个 RPC）：
+ * 与后端的分工（见 `presentation/api/ui.py` 的 9 个 RPC）：
  *   `agent_get_config` / `agent_save_config` / `agent_ask_start` / `agent_ask_poll` /
- *   `agent_sessions_list` / `agent_session_load`。
+ *   `agent_ask_cancel` / `agent_sessions_list` / `agent_session_load` /
+ *   `agent_session_delete` / （`get_ui_settings` / `save_ui_settings` 为通用偏好 RPC）。
  * 伪流式：`agent_ask_start` 提交即返回 job_id，本模块每 250ms 轮询
  * `agent_ask_poll(job_id, cursor)` 取 `delta`（后端 worker 线程跑同步 `ask()`，
  * 增量来自 `ask(on_text=...)`），从而得到打字机效果；轮询期间状态行带「生成中… Ns」
@@ -95,6 +110,7 @@ window.MemoriaAgentPanel = (function () {
     unknown_job: "agent.err.unknown_job",
     unknown_session: "agent.err.unknown_session",
     session_failed: "agent.err.sessionFailed",
+    cancel_failed: "agent.err.cancelFailed",
     config_error: "agent.err.config",
     ask_failed: "agent.err.askFailed",
     CONFIG: "agent.err.config",
@@ -127,11 +143,11 @@ window.MemoriaAgentPanel = (function () {
   };
 
   // 会话消息（渲染的唯一来源；清空 = 置空数组）
-  const messages = []; // { role: "user"|"assistant", text, anchors, error }
+  const messages = []; // { role: "user"|"assistant", text, anchors, error, stopped }
   let job = null; // { id, cursor, epoch }：在飞作业（null = 无）
   let busy = false; // 生成/轮询中（禁用发送）
   let streamingEl = null; // 正在流式写入的消息体元素
-  // 世代号：每次提问递增；「清空对话」/「忽略本次」也递增 ⇒ 在飞回调据此作废
+  // 世代号：每次提问递增；「清空对话」/「停止」也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
 
   // 多轮续聊：当前会话 id（null = 全新会话）与其所属知识库（换库即作废）
@@ -141,6 +157,14 @@ window.MemoriaAgentPanel = (function () {
   // 历史会话下拉的缓存（供语言切换后就地重绘，无需重新请求）
   let historyRows = [];
   let historyDisabled = true;
+
+  // 删除的二次确认状态（3s 内未再点即复位；不弹窗）
+  const DELETE_CONFIRM_MS = 3000;
+  let deleteArmed = false;
+  let deleteTimer = null;
+
+  // 「恢复上次会话」的幂等键（同一库+同一 id 只自动恢复一次，避免重复请求/覆盖）
+  let restoredKey = "";
 
   // 等待计时：轮询期间状态行显示「生成中… Ns」（每秒刷新，结束/出错即停）
   let waitStartedAt = 0;
@@ -279,6 +303,37 @@ window.MemoriaAgentPanel = (function () {
     } catch (_e) { /* 同上 */ }
   }
 
+  /**
+   * 写 `config/ui-settings.json` 的**顶层 `agent` 段**（当前只有 `lastSessionId`）。
+   * 与 saveDockLayout() 同理：后端 `save_ui_settings` 是**顶层浅合并**，先读旧
+   * `agent` 段再合并写回，避免抹掉同段其它键（也绝不触碰 `layout` 段）。
+   */
+  async function saveAgentPrefs(patch) {
+    let agent = {};
+    try {
+      const res = await call("get_ui_settings");
+      const cur = res && res.status === "ok" && res.settings && res.settings.agent;
+      if (cur && typeof cur === "object") agent = Object.assign({}, cur);
+    } catch (_e) { /* 非桌面环境：保持内存态 */ }
+    Object.assign(agent, patch);
+    try {
+      await call("save_ui_settings", { agent: agent });
+    } catch (_e) { /* 同上 */ }
+  }
+
+  /** 读磁盘偏好里的「上次会话 id」（顶层 `agent.lastSessionId`，空即 null）。 */
+  async function readLastSessionId() {
+    try {
+      const res = await call("get_ui_settings");
+      const seg = res && res.status === "ok" && res.settings && res.settings.agent;
+      const raw = seg && seg.lastSessionId;
+      const id = typeof raw === "string" ? raw.trim() : "";
+      return id || null;
+    } catch (_e) {
+      return null;
+    }
+  }
+
   function setupDockResize() {
     const resizer = $("#agent-dock-resizer");
     if (!resizer) return;
@@ -316,10 +371,10 @@ window.MemoriaAgentPanel = (function () {
     dockCollapsed = want;
     applyDockLayout();
     if (persist) saveDockLayout({ agentDockCollapsed: dockCollapsed });
-    // 展开时刷新端点配置与历史列表（可能被外部改动），与旧版「切到对话页签即拉配置」同语义
+    // 展开时刷新端点配置与历史列表（可能被外部改动），并尝试恢复上次会话
     if (wasCollapsed && !dockCollapsed) {
       refreshConfig();
-      refreshHistory();
+      refreshHistory().then(() => restoreLastSession());
     }
   }
 
@@ -381,6 +436,13 @@ window.MemoriaAgentPanel = (function () {
       const note = document.createElement("div");
       note.className = "-agent-msg-note";
       note.textContent = rec.error;
+      wrap.appendChild(note);
+    }
+    if (rec.stopped) {
+      // 真取消：保留已生成的部分文本，其后标注「（已停止）」（次要色，非错误）
+      const note = document.createElement("div");
+      note.className = "-agent-msg-note -agent-stopped";
+      note.textContent = T("agent.stopped");
       wrap.appendChild(note);
     }
     return wrap;
@@ -510,7 +572,34 @@ window.MemoriaAgentPanel = (function () {
     waitStartedAt = 0;
   }
 
-  // ── 会话历史（只读：agent_sessions_list / agent_session_load）──────────
+  // ── 会话历史（列/载 只读；删除为 M1 收尾新增的唯一写知识库入口）─────────
+
+  /**
+   * 删除按钮的文案与禁用态：未选中具体会话（「（新会话）」/列表空）时禁用；
+   * 二次确认中显示 `agent.history.deleteConfirm`。
+   */
+  function syncDeleteButton() {
+    const btn = $("#agent-history-delete");
+    if (!btn) return;
+    const sel = $("#agent-history");
+    const hasTarget = !!(sel && sel.value && historyRows.length && !historyDisabled);
+    btn.disabled = !hasTarget;
+    const label = deleteArmed && hasTarget ? T("agent.history.deleteConfirm") : T("agent.history.delete");
+    const span = btn.querySelector("span");
+    if (span) span.textContent = label;
+    else btn.textContent = label;
+    btn.title = T("agent.history.deleteTitle");
+  }
+
+  /** 复位删除的二次确认态（选择变化 / 超时 / 删除完成后调用）。 */
+  function resetDeleteArmed() {
+    if (deleteTimer) {
+      clearTimeout(deleteTimer);
+      deleteTimer = null;
+    }
+    deleteArmed = false;
+    syncDeleteButton();
+  }
 
   /** 把会话列表渲染进 `#agent-history`；空/不可用时给禁用态与提示文案。 */
   function renderHistory(sel, sessions, disabled) {
@@ -527,16 +616,19 @@ window.MemoriaAgentPanel = (function () {
       if (!id) return;
       const opt = document.createElement("option");
       opt.value = id;
-      opt.textContent = T("agent.history.option", {
-        preview: String(session.preview || id),
-        n: session.turn_count || 0,
-      });
+      // 超限会话（后端 `capped:true`：turn 计数被扫描上限截断）补一个后缀标记
+      opt.textContent =
+        T("agent.history.option", {
+          preview: String(session.preview || id),
+          n: session.turn_count || 0,
+        }) + (session.capped ? T("agent.history.capped") : "");
       sel.appendChild(opt);
     });
     sel.disabled = historyDisabled || !historyRows.length;
     if (!historyRows.length) none.textContent = T("agent.history.empty");
     sel.title = sel.disabled ? none.textContent : "";
     syncHistorySelection();
+    resetDeleteArmed(); // 列表重绘后先复位，再按当前选中态刷新按钮
   }
 
   /** 让下拉选中当前 `sessionId`（不在列表中则落回「（新会话）」）。 */
@@ -547,10 +639,12 @@ window.MemoriaAgentPanel = (function () {
     for (let i = 0; i < sel.options.length; i += 1) {
       if (sel.options[i].value === want) {
         sel.selectedIndex = i;
+        syncDeleteButton();
         return;
       }
     }
     if (sel.options.length) sel.selectedIndex = 0;
+    syncDeleteButton();
   }
 
   /** 语言切换后就地重绘历史选项（文案来自语言包，无需重新请求）。 */
@@ -561,7 +655,7 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /**
-   * 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏时）。
+   * 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏 / 切换知识库时）。
    * 顺带作废跨库会话：`sessionKb` 与当前库不一致 ⇒ `sessionId` 置空（开新会话）。
    */
   async function refreshHistory() {
@@ -589,9 +683,12 @@ window.MemoriaAgentPanel = (function () {
     renderHistory(sel, res.sessions, false);
   }
 
-  /** 载入一个历史会话：灌进气泡区并把 `sessionId` 设为它（下一句即续聊）。 */
-  async function loadSession(id) {
-    if (busy) return;
+  /**
+   * 载入一个历史会话：灌进气泡区并把 `sessionId` 设为它（下一句即续聊）。
+   * `silent=true`（恢复上次会话用）⇒ 失败**不报错、不提示**，只是不载入。
+   */
+  async function loadSession(id, silent) {
+    if (busy) return false;
     const kb = state.kbPath || "";
     let res;
     try {
@@ -600,11 +697,13 @@ window.MemoriaAgentPanel = (function () {
       res = { status: "error", message: String((e && e.message) || e) };
     }
     if (!res || res.status !== "ok") {
-      const msg = fullErrorText(res);
-      setStatusText(msg, true);
-      showFlashError(msg);
-      syncHistorySelection(); // 失败即把下拉回滚到当前会话
-      return;
+      if (!silent) {
+        const msg = fullErrorText(res);
+        setStatusText(msg, true);
+        showFlashError(msg);
+        syncHistorySelection(); // 失败即把下拉回滚到当前会话
+      }
+      return false;
     }
     messages.length = 0;
     (res.messages || []).forEach(function (item) {
@@ -614,6 +713,7 @@ window.MemoriaAgentPanel = (function () {
         text: String(rec.text || ""),
         anchors: Array.isArray(rec.anchors) ? rec.anchors : [],
         error: "",
+        stopped: false,
       });
     });
     streamingEl = null;
@@ -622,6 +722,79 @@ window.MemoriaAgentPanel = (function () {
     renderMessages();
     setStatusText(T("agent.status.session", { id: sessionId }));
     syncHistorySelection();
+    saveAgentPrefs({ lastSessionId: sessionId }); // 记住当前会话，供下次自动恢复
+    return true;
+  }
+
+  /**
+   * 恢复上次会话（面板打开 / 切换知识库后）：磁盘偏好里的 `lastSessionId` 若指向
+   * **仍存在**的会话文件即自动载入并设为当前会话；不存在/非法 ⇒ **静默忽略**
+   * （不报错、不提示）。同一（库, id）只尝试一次（`restoredKey` 幂等）。
+   */
+  async function restoreLastSession() {
+    if (busy || job || messages.length || sessionId) return;
+    const kb = state.kbPath || "";
+    if (!kb) return;
+    const id = await readLastSessionId();
+    if (!id) return;
+    const key = kb + "|" + id;
+    if (restoredKey === key) return;
+    restoredKey = key;
+    await loadSession(id, true);
+  }
+
+  /** 知识库切换钩子（app.js 在开库/关库时调用）：换库即作废会话并重试恢复。 */
+  function onKbChanged() {
+    const kb = state.kbPath || "";
+    resetDeleteArmed();
+    if (sessionKb && sessionKb !== kb) {
+      sessionId = null;
+      sessionKb = "";
+      messages.length = 0;
+      streamingEl = null;
+      renderMessages();
+      setStatusText("");
+    }
+    restoredKey = "";
+    refreshHistory();
+    restoreLastSession();
+  }
+
+  /** 「删除」按钮：两次点击确认（首点变「再点一次删除」，3s 未再点即复位）。 */
+  async function deleteSelected() {
+    const sel = $("#agent-history");
+    const id = (sel && sel.value) || "";
+    if (!id || !historyRows.length) return;
+    if (!deleteArmed) {
+      deleteArmed = true;
+      syncDeleteButton();
+      if (deleteTimer) clearTimeout(deleteTimer);
+      deleteTimer = setTimeout(function () {
+        deleteTimer = null;
+        deleteArmed = false;
+        syncDeleteButton();
+      }, DELETE_CONFIRM_MS);
+      return;
+    }
+    resetDeleteArmed();
+    const kb = state.kbPath || "";
+    let res;
+    try {
+      res = await call("agent_session_delete", id, kb || null);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(fullErrorText(res));
+      return;
+    }
+    // 删的是当前会话 ⇒ 回到「新会话」态（清空气泡与偏好），否则仅刷新列表
+    if (sessionId === id) {
+      await clear();
+      restoredKey = ""; // 该会话已不存在：清掉幂等键，避免下次误判
+    }
+    await refreshHistory();
+    showFlashInfo(T("agent.history.deleted"));
   }
 
   // ── 表单 / 按钮态 ───────────────────────────────────────────────────
@@ -658,12 +831,12 @@ window.MemoriaAgentPanel = (function () {
 
   function renderComposer() {
     const send = $("#agent-send");
-    const abandon = $("#agent-abandon");
+    const stopBtn = $("#agent-stop");
     if (send) {
       send.disabled = busy || !cfg.enabled;
       send.title = !cfg.enabled ? T("agent.err.net_disabled") : "";
     }
-    if (abandon) abandon.classList.toggle("hidden", !busy);
+    if (stopBtn) stopBtn.classList.toggle("hidden", !busy);
   }
 
   // ── 配置读写 ────────────────────────────────────────────────────────
@@ -734,7 +907,7 @@ window.MemoriaAgentPanel = (function () {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
   function pushMessage(role, text) {
-    const rec = { role: role, text: text || "", anchors: [], error: "" };
+    const rec = { role: role, text: text || "", anchors: [], error: "", stopped: false };
     messages.push(rec);
     const box = $("#agent-messages");
     if (box) {
@@ -836,7 +1009,7 @@ window.MemoriaAgentPanel = (function () {
     startWait();
     while (job && epoch === myEpoch && Date.now() < deadline) {
       await sleep(POLL_INTERVAL_MS);
-      // 已被「清空对话」/「忽略本次」作废（job 置空、epoch 递增）⇒ 停止轮询、不写回
+      // 已被「清空对话」/「停止」作废（job 置空、epoch 递增）⇒ 停止轮询、不写回
       if (!job || epoch !== myEpoch) return;
       if ((state.kbPath || "") !== kbAtStart) {
         // 轮询期间换库/关库：结果与当前库无关，丢弃（不谎称已取消）
@@ -867,9 +1040,10 @@ window.MemoriaAgentPanel = (function () {
       stopWait();
       finalizeMessage(st);
       if (st.session_id) {
-        // 后端把本次会话 id 回传：存下来，后续提问即续聊
+        // 后端把本次会话 id 回传：存下来，后续提问即续聊；并落盘供下次自动恢复
         sessionId = String(st.session_id);
         sessionKb = kbAtStart;
+        saveAgentPrefs({ lastSessionId: sessionId });
       }
       const parts = [usageText(st.usage), st.session_id ? T("agent.status.session", { id: st.session_id }) : ""];
       const ok = st.status === "done";
@@ -891,35 +1065,68 @@ window.MemoriaAgentPanel = (function () {
     }
   }
 
-  /** 「忽略本次」：丢弃后续结果 + 停止轮询。**不是取消**（M1 后端无取消点）。 */
-  function abandon() {
+  /**
+   * 「停止」= **真取消**（M1 收尾语义变更：不再是"忽略本次"）。
+   *
+   * 顺序：① 递增 `epoch` 作废在飞回调（含 `poll` 的下一帧）并把 `job` 置空 ⇒ 立即
+   * 停止轮询；② 把**已生成的部分文本**留在当前助手气泡上并标注「（已停止）」；
+   * ③ 调 `agent_ask_cancel(job_id)`（后端置取消令牌、停止消费模型流并**立即**释放
+   * 单飞 busy）；④ 取消 RPC 返回后再放开发送按钮 ⇒ 立刻可再次提问，不会撞 `busy`。
+   * 取消 RPC 失败（如作业已结束/已清理）**不影响本地已停止**的结果。
+   */
+  async function stop() {
     if (!job) return;
+    const jid = job.id;
     epoch += 1; // 作废在飞结果：后续轮询回调一律不再写回（含 sessionId）
     job = null;
-    busy = false;
     streamingEl = null;
     stopWait();
+    // 保留已生成的部分文本（不回填后端 answer —— 尚未定型），并在其后标注「（已停止）」
+    const rec = currentAssistant();
+    if (rec && !rec.error) rec.stopped = true;
+    renderMessages();
+    setStatusText(T("agent.status.stopped"));
+    let res = null;
+    try {
+      res = await call("agent_ask_cancel", jid);
+    } catch (_e) {
+      res = null;
+    }
+    busy = false;
     renderComposer();
-    setStatusText(T("agent.status.abandoned"));
+    if (res && res.status !== "ok" && res.code !== "unknown_job") {
+      showFlashError(errorText(res), errorDetail(res));
+    }
+    refreshHistory();
   }
 
-  /** 清空对话 = 开新会话（`sessionId` 置空）；旧会话已在磁盘上、进历史列表。
+  /**
+   * 清空对话 = 开新会话（`sessionId` 置空）；旧会话已在磁盘上、进历史列表。
    *
    * 生成中点「清空」同样**作废在飞结果**（递增 epoch ⇒ 轮询停止、session id 不写回），
-   * 故清空后不会"看着是空的、下一句却续到上一轮会话"；发送按钮随即恢复（后端仍在跑，
-   * 立刻再提问会收到 `busy` 结构化错误，与「忽略本次」同语义）。
+   * 并**顺带调 `agent_ask_cancel` 取消后端在飞作业**（M1 收尾：避免丢弃结果却继续烧
+   * token）。等取消返回后才放开发送按钮，故清空后立刻再提问不会撞 `busy`。
+   * 同时把偏好里的 `lastSessionId` 置空（新建会话不该恢复旧会话）。
    */
-  function clear() {
+  async function clear() {
+    const jid = job ? job.id : "";
     epoch += 1; // 作废在飞作业（若有）
     job = null;
-    busy = false;
     messages.length = 0;
     streamingEl = null;
     sessionId = null;
+    sessionKb = "";
     stopWait();
     renderMessages();
-    renderComposer();
     setStatusText("");
+    if (jid) {
+      try {
+        await call("agent_ask_cancel", jid);
+      } catch (_e) { /* 本地已清空；后端取消失败不影响面板 */ }
+    }
+    busy = false;
+    renderComposer();
+    saveAgentPrefs({ lastSessionId: "" });
     refreshHistory();
   }
 
@@ -954,13 +1161,14 @@ window.MemoriaAgentPanel = (function () {
     if (net) net.addEventListener("change", () => toggleNet(net.checked));
     const send = $("#agent-send");
     if (send) send.addEventListener("click", () => ask());
-    const abandonBtn = $("#agent-abandon");
-    if (abandonBtn) abandonBtn.addEventListener("click", () => abandon());
+    const stopBtn = $("#agent-stop");
+    if (stopBtn) stopBtn.addEventListener("click", () => stop());
     const clearBtn = $("#agent-clear");
     if (clearBtn) clearBtn.addEventListener("click", () => clear());
     const historySel = $("#agent-history");
     if (historySel) {
       historySel.addEventListener("change", () => {
+        resetDeleteArmed(); // 选中项变了 ⇒ 复位二次确认
         const value = historySel.value || "";
         if (busy) {
           syncHistorySelection(); // 生成中不接受切换（loadSession 也会拒绝）
@@ -973,6 +1181,8 @@ window.MemoriaAgentPanel = (function () {
         loadSession(value);
       });
     }
+    const deleteBtn = $("#agent-history-delete");
+    if (deleteBtn) deleteBtn.addEventListener("click", () => deleteSelected());
 
     const input = $("#agent-input");
     if (input) {
@@ -1024,6 +1234,7 @@ window.MemoriaAgentPanel = (function () {
       window.MemoriaI18n.addRefresh(() => {
         applyConfigToForm();
         renderMessages();
+        resetDeleteArmed(); // 语言切换后删除按钮文案随语言包（含复位二次确认）
         refreshHistoryLabels(); // 历史选项文案（含禁用态占位）随语言切换
         applyDockCollapsed(); // 语言切换后重绘按钮文案（含三态 title）
       });
@@ -1031,8 +1242,10 @@ window.MemoriaAgentPanel = (function () {
 
     renderMessages();
     setStatusText("");
+    syncDeleteButton();
     refreshConfig();
-    refreshHistory();
+    // 打开面板即刷新历史；若磁盘偏好里有「上次会话」且仍存在，则自动载入（静默）
+    refreshHistory().then(() => restoreLastSession());
   }
 
   return {
@@ -1043,9 +1256,11 @@ window.MemoriaAgentPanel = (function () {
       if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
       else {
         refreshConfig();
-        refreshHistory();
+        refreshHistory().then(() => restoreLastSession());
       }
     },
+    // 知识库切换钩子（app.js 在 openKbAt/closeKb 处调用）：作废跨库会话并重试恢复
+    onKbChanged: onKbChanged,
     clear: clear,
   };
 })();
