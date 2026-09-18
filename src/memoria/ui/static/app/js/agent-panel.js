@@ -17,7 +17,9 @@
  * **多轮续聊（M1c）**：本模块自持 `sessionId`（首次提问为 null）。`agent_ask_poll`
  * 返回的 `session_id` 存下来，之后的提问都带上它 ⇒ 后端按会话文件回放历史，形成多轮；
  * 「清空对话」= 把 `sessionId` 重置为 null（开新会话，旧会话已在磁盘上、进历史列表）。
- * `sessionKb` 记录该会话所属知识库，换库即作废（避免把 A 库的会话 id 带到 B 库）。
+ * `sessionKb` 记录该会话所属知识库，**只作 `ask()` 的兜底断言**（绝不给后端发别的库的
+ * 会话 id），**不再是「是否重置面板」的判据**——后者由 `renderedKb`（当前气泡属于哪个
+ * 库）承担，见「换库无条件重置」。
  *
  * **停止 = 真取消（M1 收尾）**：`stop()` 递增 `epoch` 作废在飞回调 → 调
  * `agent_ask_cancel(job_id)`（后端置取消令牌，停止消费模型流并**立即**释放单飞 busy）
@@ -37,11 +39,24 @@
  * **本产品首次允许写知识库**（仅限会话目录 `.memoria/agent/sessions/<id>.jsonl`，
  * 见 10 篇 §2.15）。删除用**两次点击确认**（`#agent-history-delete`），不弹窗。
  *
- * **恢复上次会话（M1 收尾）**：磁盘偏好 `config/ui-settings.json` 的**顶层** `agent`
- * 段存 `lastSessionId`（提问成功/载入/恢复时写、清空时置空）。面板打开或**切换知识库**
- * 时若该会话文件仍存在即自动载入（下一句即续聊）；不存在则**静默忽略**（不报错、
- * 不提示）。落盘见 saveAgentPrefs()——与 saveDockLayout() 同理，**必须先读旧值再合并
- * 写回**（后端 `save_ui_settings` 是顶层浅合并，不能覆盖 `layout` 段）。
+ * **恢复上次会话（M1 收尾；2026-09-18 起按库记）**：磁盘偏好
+ * `config/ui-settings.json` 的**顶层 `agent` 段**里的 `lastSessionByKb`
+ * （`{ "<库标识>": "<会话 id>" }`，库标识由 `kbKey()` 归一化）**只存当前库自己的**
+ * 上次会话（提问成功/载入/恢复时写、清空时删条目）。面板打开或**切换知识库**时若该
+ * 会话文件仍存在即自动载入（下一句即续聊）；不存在则**静默忽略**（不报错、不提示）
+ * 并**清掉该陈旧条目**（避免每次打开都重试）。旧版全局单键 `agent.lastSessionId`
+ * 由 `restoreLastSession()` **一次性迁移**：只有当该会话在当前库下确实能载入时才认领
+ * （写入 map + 删除旧键），否则不动（留给它所属的库认领）。
+ * 落盘见 `writeAgentPrefs()`——后端 `save_ui_settings` 对嵌套对象是**浅合并**
+ * （`{**old, **new}`），**无法删除键**（旧 `lastSessionId` / 陈旧 map 条目），故必须
+ * 「先置 `null` 迫使后端整体替换、再写目标对象」两步，**绝不覆盖 `layout` 段**。
+ *
+ * **换库无条件重置（2026-09-18）**：`onKbChanged()` 只要 `renderedKb !==` 当前库就
+ * 重置面板（清空气泡、`sessionId=null`、`sessionKb=""`、`streamingEl=null`、用量格归零、
+ * 重绘消息、清状态行）。**不再依赖 `sessionKb`**——它只在会话真正建立时才赋值，故
+ * 「上一轮提问失败（未配置端点，只留用户气泡）后换库」的旧气泡会被漏掉（原缺陷）。
+ * 换库时若有**属于别的库的在飞 `job`** ⇒ 递增 `epoch` 作废旧回调 + 并发调
+ * `agent_ask_cancel(job_id)`（不阻塞 UI），语义与「清空对话」一致。
  *
  * 布局持久化（`config/ui-settings.json` 的 `layout` 段：`agentDockWidth` /
  * `agentDockCollapsed`）见 saveDockLayout()——**必须先读旧 layout 再整体写回**，
@@ -145,15 +160,18 @@ window.MemoriaAgentPanel = (function () {
 
   // 会话消息（渲染的唯一来源；清空 = 置空数组）
   const messages = []; // { role: "user"|"assistant", text, anchors, error, stopped }
-  let job = null; // { id, cursor, epoch }：在飞作业（null = 无）
+  let job = null; // { id, cursor, epoch, kb }：在飞作业（null = 无）；kb = 提问时的库
   let busy = false; // 生成/轮询中（禁用发送）
   let streamingEl = null; // 正在流式写入的消息体元素
-  // 世代号：每次提问递增；「清空对话」/「停止」也递增 ⇒ 在飞回调据此作废
+  // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
 
-  // 多轮续聊：当前会话 id（null = 全新会话）与其所属知识库（换库即作废）
+  // 多轮续聊：当前会话 id（null = 全新会话）与其所属知识库。
+  // `sessionKb` 现仅作 `ask()` 的兜底断言（绝不把别的库的 id 发给后端）。
   let sessionId = null;
   let sessionKb = "";
+  // 当前气泡区（`messages`）属于哪个库——换库判据；提问开始 / 载入会话成功时更新。
+  let renderedKb = "";
 
   // 历史会话下拉的缓存（供语言切换后就地重绘，无需重新请求）
   let historyRows = [];
@@ -285,34 +303,91 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /**
-   * 写 `config/ui-settings.json` 的**顶层 `agent` 段**（当前只有 `lastSessionId`）。
-   * 与 saveDockLayout() 同理：后端 `save_ui_settings` 是**顶层浅合并**，先读旧
-   * `agent` 段再合并写回，避免抹掉同段其它键（也绝不触碰 `layout` 段）。
+   * 知识库标识归一化（`agent.lastSessionByKb` 的键）。
+   * 同一库的不同写法必须落到**同一个键**，否则会分裂成多条：
+   *   - 分隔符统一为 `\`（Windows 盘符/UNC 场景）；
+   *   - 去掉尾部分隔符（`D:\A\` ≡ `D:\A`）；
+   *   - **Windows 上再做大小写统一**（`toLowerCase`）——NTFS 大小写不敏感。
+   * 读 / 写 / 迁移 / 清理**全部**经此函数，禁止在别处各自实现。
    */
-  async function saveAgentPrefs(patch) {
-    let agent = {};
-    try {
-      const res = await call("get_ui_settings");
-      const cur = res && res.status === "ok" && res.settings && res.settings.agent;
-      if (cur && typeof cur === "object") agent = Object.assign({}, cur);
-    } catch (_e) { /* 非桌面环境：保持内存态 */ }
-    Object.assign(agent, patch);
-    try {
-      await call("save_ui_settings", { agent: agent });
-    } catch (_e) { /* 同上 */ }
+  const IS_WINDOWS = /Windows/i.test((typeof navigator !== "undefined" && navigator.userAgent) || "");
+  function kbKey(path) {
+    const key = String(path == null ? "" : path).trim().replace(/\//g, "\\").replace(/\\+$/, "");
+    return IS_WINDOWS ? key.toLowerCase() : key;
   }
 
-  /** 读磁盘偏好里的「上次会话 id」（顶层 `agent.lastSessionId`，空即 null）。 */
-  async function readLastSessionId() {
+  /** 读 `config/ui-settings.json` 顶层 `agent` 段（缺省返回 `{}`；失败返回 `{}`）。 */
+  async function readAgentPrefs() {
     try {
       const res = await call("get_ui_settings");
       const seg = res && res.status === "ok" && res.settings && res.settings.agent;
-      const raw = seg && seg.lastSessionId;
-      const id = typeof raw === "string" ? raw.trim() : "";
-      return id || null;
+      return seg && typeof seg === "object" ? Object.assign({}, seg) : {};
     } catch (_e) {
-      return null;
+      return {};
     }
+  }
+
+  /** 取 `agent.lastSessionByKb` 里当前库记的会话 id（无 / 空 ⇒ null）。 */
+  function lastSessionIdFor(agent, kb) {
+    const map = agent && agent.lastSessionByKb;
+    if (!map || typeof map !== "object") return null;
+    const raw = map[kbKey(kb)];
+    const id = typeof raw === "string" ? raw.trim() : "";
+    return id || null;
+  }
+
+  /**
+   * 写回 `config/ui-settings.json` 顶层 `agent` 段（`next` 为**目标完整对象**）。
+   *
+   * ⚠️ 必须**两步**「先置 `null` 再写目标」：后端 `save_ui_settings`
+   * （`storage/ui_settings.py:58-75`）对嵌套对象走**浅合并**（`{**old, **new}`），
+   * **无法删除键**——而本模块需要移除旧全局键 `lastSessionId` 与陈旧的 map 条目。
+   * 先写 `{agent: null}`（非 dict ⇒ 后端走"整体替换"分支）再写目标对象，
+   * 即可得到"现存键 = 目标键"的精确结果；两写之间的瞬时 `null` 会被立刻覆盖。
+   * 绝不触碰 `layout` 段（后端顶层浅合并）。
+   */
+  async function writeAgentPrefs(next) {
+    try {
+      await call("save_ui_settings", { agent: null });
+      await call("save_ui_settings", { agent: next });
+    } catch (_e) { /* 非桌面环境：保持内存态 */ }
+  }
+
+  /**
+   * 记住（`id` 非空）或清除（`id` 空）**当前库自己**的「上次会话 id」。
+   * 同时**删除旧全局键 `lastSessionId`**（迁移收尾；此后不再读写它）。
+   */
+  async function setLastSessionId(kb, id) {
+    if (!kb) return;
+    const agent = await readAgentPrefs();
+    const map =
+      agent.lastSessionByKb && typeof agent.lastSessionByKb === "object"
+        ? Object.assign({}, agent.lastSessionByKb)
+        : {};
+    const key = kbKey(kb);
+    if (id) map[key] = String(id);
+    else delete map[key];
+    agent.lastSessionByKb = map;
+    delete agent.lastSessionId;
+    await writeAgentPrefs(agent);
+  }
+
+  /** 清掉某库的「上次会话」条目（陈旧条目清理 / 清空对话；条目不存在则不发写请求）。 */
+  async function clearLastSessionId(kb) {
+    if (!kb) return;
+    const agent = await readAgentPrefs();
+    const map =
+      agent.lastSessionByKb && typeof agent.lastSessionByKb === "object"
+        ? Object.assign({}, agent.lastSessionByKb)
+        : {};
+    const key = kbKey(kb);
+    if (!(key in map)) {
+      if (!("lastSessionId" in agent)) return; // 无条目也无旧键：无事可做
+    }
+    delete map[key];
+    agent.lastSessionByKb = map;
+    delete agent.lastSessionId;
+    await writeAgentPrefs(agent);
   }
 
   function setupDockResize() {
@@ -744,16 +819,12 @@ window.MemoriaAgentPanel = (function () {
 
   /**
    * 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏 / 切换知识库时）。
-   * 顺带作废跨库会话：`sessionKb` 与当前库不一致 ⇒ `sessionId` 置空（开新会话）。
+   * **只列当前库**的会话；跨库作废已由 `onKbChanged()` 无条件重置承担（不再在此判 `sessionKb`）。
    */
   async function refreshHistory() {
     const sel = $("#agent-history");
     if (!sel) return;
     const kb = state.kbPath || "";
-    if (sessionKb && sessionKb !== kb) {
-      sessionId = null;
-      sessionKb = "";
-    }
     if (!kb) {
       renderHistory(sel, [], true);
       return;
@@ -774,9 +845,11 @@ window.MemoriaAgentPanel = (function () {
   /**
    * 载入一个历史会话：灌进气泡区并把 `sessionId` 设为它（下一句即续聊）。
    * `silent=true`（恢复上次会话用）⇒ 失败**不报错、不提示**，只是不载入。
+   * 返回后端响应对象（`{status:"ok",…}` 或 `{status:"error", code, …}`），供调用方判别
+   * `unknown_session`（陈旧条目清理）。
    */
   async function loadSession(id, silent) {
-    if (busy) return false;
+    if (busy) return { status: "error", code: "busy" };
     const kb = state.kbPath || "";
     let res;
     try {
@@ -791,7 +864,7 @@ window.MemoriaAgentPanel = (function () {
         showFlashError(msg);
         syncHistorySelection(); // 失败即把下拉回滚到当前会话
       }
-      return false;
+      return res || { status: "error" };
     }
     messages.length = 0;
     (res.messages || []).forEach(function (item) {
@@ -807,36 +880,66 @@ window.MemoriaAgentPanel = (function () {
     streamingEl = null;
     sessionId = String(res.session_id || id);
     sessionKb = kb;
+    renderedKb = kb; // 气泡区现在属于本库
     resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
     setStatusText(T("agent.status.session", { id: sessionId }));
     syncHistorySelection();
-    saveAgentPrefs({ lastSessionId: sessionId }); // 记住当前会话，供下次自动恢复
-    return true;
+    setLastSessionId(kb, sessionId); // 记住**本库**的会话，供下次自动恢复（并清掉旧全局键）
+    return res;
   }
 
   /**
-   * 恢复上次会话（面板打开 / 切换知识库后）：磁盘偏好里的 `lastSessionId` 若指向
-   * **仍存在**的会话文件即自动载入并设为当前会话；不存在/非法 ⇒ **静默忽略**
-   * （不报错、不提示）。同一（库, id）只尝试一次（`restoredKey` 幂等）。
+   * 恢复上次会话（面板打开 / 切换知识库后）。
+   *
+   * 目标 id 取自 `agent.lastSessionByKb[<当前库>]`；若该条目不存在但存在**旧全局键**
+   * `agent.lastSessionId`，则把它当候选（**一次性迁移**）：只有当它在**当前库**下确实
+   * 能载入时才认领（`loadSession` 成功即写入 map 并删除旧键）；载入失败 ⇒ 不迁移、
+   * 也不删（该会话可能属于别的库，留给它所属的库认领）。
+   * map 条目存在但载入失败且后端报 `unknown_session` ⇒ 会话文件已不存在（**陈旧条目**）
+   * ⇒ 静默空态并**删除该条目**（避免每次打开都重试）。
+   * 同一（库, id）只尝试一次（`restoredKey` 幂等）。
    */
   async function restoreLastSession() {
     if (busy || job || messages.length || sessionId) return;
     const kb = state.kbPath || "";
     if (!kb) return;
-    const id = await readLastSessionId();
+    const agent = await readAgentPrefs();
+    const mapped = lastSessionIdFor(agent, kb);
+    const legacy = typeof agent.lastSessionId === "string" ? agent.lastSessionId.trim() : "";
+    const fromLegacy = !mapped && !!legacy;
+    const id = mapped || legacy;
     if (!id) return;
-    const key = kb + "|" + id;
+    const key = kbKey(kb) + "|" + id;
     if (restoredKey === key) return;
     restoredKey = key;
-    await loadSession(id, true);
+    const res = await loadSession(id, true);
+    if (res && res.status === "ok") return; // 迁移/写入已由 loadSession → setLastSessionId 完成
+    if (fromLegacy) return; // 旧键指向别的库（或已消失）：不迁移、不删
+    if (res && res.code === "unknown_session") await clearLastSessionId(kb); // 陈旧条目：静默清理
   }
 
-  /** 知识库切换钩子（app.js 在开库/关库时调用）：换库即作废会话并重试恢复。 */
+  /**
+   * 知识库切换钩子（app.js 在开库/关库时调用）。
+   *
+   * **无条件重置**：只要当前气泡所属库（`renderedKb`）≠ 新库就清空面板——不依赖
+   * `sessionKb`（后者只在会话真正建立时才有值，"上一轮提问失败只留用户气泡"时它仍为空，
+   * 会让旧气泡残留 = 原缺陷）。换库时若在飞作业属于**别的库** ⇒ 递增 `epoch` 作废在飞
+   * 回调 + 并发 `agent_ask_cancel`（不阻塞 UI），语义与「清空对话」一致。
+   */
   function onKbChanged() {
     const kb = state.kbPath || "";
     resetDeleteArmed();
-    if (sessionKb && sessionKb !== kb) {
+    if (renderedKb !== kb) {
+      if (job && job.kb !== kb) {
+        const jid = job.id;
+        epoch += 1; // 作废在飞回调（含 poll 的下一帧）
+        job = null;
+        stopWait();
+        busy = false;
+        renderComposer();
+        call("agent_ask_cancel", jid).catch(() => {}); // 并发取消后端作业，不阻塞 UI
+      }
       sessionId = null;
       sessionKb = "";
       messages.length = 0;
@@ -844,6 +947,7 @@ window.MemoriaAgentPanel = (function () {
       resetStatusUsage(); // 换库即作废本会话累计与状态栏用量格
       renderMessages();
       setStatusText("");
+      renderedKb = kb;
     }
     restoredKey = "";
     refreshHistory();
@@ -1058,24 +1162,23 @@ window.MemoriaAgentPanel = (function () {
       setStatusText(T("agent.err.net_disabled"), true);
       return;
     }
-    // 换库后旧会话 id 失效：作废即开新会话（避免把 A 库的会话续到 B 库）
+    // 兜底断言：绝不把**别的库**的会话 id 发给后端（正常路径由 onKbChanged 无条件重置保证；
+    // 这里再判一次是纵深防御，不改变 sessionId/sessionKb 本身）。
     const kb = state.kbPath || "";
-    if (sessionKb && sessionKb !== kb) {
-      sessionId = null;
-      sessionKb = "";
-    }
-    // 本问的世代号：清空/忽略会递增 epoch，使本次提交与轮询结果一律作废
+    const sessionForKb = sessionKb && sessionKb !== kb ? null : sessionId || null;
+    renderedKb = kb; // 本问的用户气泡从此属于本库（换库判据）
+    // 本问的世代号：清空/忽略/换库会递增 epoch，使本次提交与轮询结果一律作废
     const myEpoch = ++epoch;
 
     pushMessage("user", text);
     if (input) input.value = "";
     let res;
     try {
-      res = await call("agent_ask_start", text, kb || null, sessionId || null);
+      res = await call("agent_ask_start", text, kb || null, sessionForKb);
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
-    if (epoch !== myEpoch) return; // 提交期间被「清空对话」作废 ⇒ 丢弃，不写回面板
+    if (epoch !== myEpoch) return; // 提交期间被「清空对话」/换库作废 ⇒ 丢弃，不写回面板
     if (!res || res.status !== "ok" || !res.job_id) {
       const msg = fullErrorText(res);
       const rec = pushMessage("assistant", "");
@@ -1085,7 +1188,7 @@ window.MemoriaAgentPanel = (function () {
       showFlashError(msg);
       return;
     }
-    job = { id: res.job_id, cursor: 0, epoch: myEpoch };
+    job = { id: res.job_id, cursor: 0, epoch: myEpoch, kb: kb };
     busy = true;
     pushMessage("assistant", "");
     renderComposer();
@@ -1136,10 +1239,11 @@ window.MemoriaAgentPanel = (function () {
         renderStatusUsage();
       }
       if (st.session_id) {
-        // 后端把本次会话 id 回传：存下来，后续提问即续聊；并落盘供下次自动恢复
+        // 后端把本次会话 id 回传：存下来，后续提问即续聊；并按库落盘供下次自动恢复
         sessionId = String(st.session_id);
         sessionKb = kbAtStart;
-        saveAgentPrefs({ lastSessionId: sessionId });
+        renderedKb = kbAtStart;
+        setLastSessionId(kbAtStart, sessionId);
       }
       const parts = [usageText(st.usage), st.session_id ? T("agent.status.session", { id: st.session_id }) : ""];
       const ok = st.status === "done";
@@ -1202,16 +1306,19 @@ window.MemoriaAgentPanel = (function () {
    * 生成中点「清空」同样**作废在飞结果**（递增 epoch ⇒ 轮询停止、session id 不写回），
    * 并**顺带调 `agent_ask_cancel` 取消后端在飞作业**（M1 收尾：避免丢弃结果却继续烧
    * token）。等取消返回后才放开发送按钮，故清空后立刻再提问不会撞 `busy`。
-   * 同时把偏好里的 `lastSessionId` 置空（新建会话不该恢复旧会话）。
+   * 同时**删掉当前库在 `lastSessionByKb` 里的条目**（新建会话不该恢复旧会话；
+   * 只删本库条目，不动别的库）。
    */
   async function clear() {
     const jid = job ? job.id : "";
+    const kb = state.kbPath || "";
     epoch += 1; // 作废在飞作业（若有）
     job = null;
     messages.length = 0;
     streamingEl = null;
     sessionId = null;
     sessionKb = "";
+    renderedKb = kb; // 清空后空面板仍属于当前库
     stopWait();
     resetStatusUsage(); // 开新会话：状态栏用量格与本会话累计一并清零
     renderMessages();
@@ -1223,7 +1330,7 @@ window.MemoriaAgentPanel = (function () {
     }
     busy = false;
     renderComposer();
-    saveAgentPrefs({ lastSessionId: "" });
+    clearLastSessionId(kb);
     refreshHistory();
   }
 
