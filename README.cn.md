@@ -112,7 +112,7 @@
 
 ## 快速开始
 
-> 前置条件：Python ≥ 3.11、Windows（桌面壳基于 pywebview / Chromium）。
+> 前置条件：开发需 Python ≥ 3.11；桌面壳需 Windows 10/11 x64。桌面壳基于 pywebview，依赖 .NET Framework 4.7.2+ 与 WebView2 运行时——Windows 10 1803+ 与 Windows 11 均已内置。
 
 ```powershell
 # 1. 安装（开发模式，含 pytest）
@@ -131,6 +131,8 @@ docs\example\showcase\    # 官方展示样例：35 个知识点、跨页链接�
 ```
 
 需要离线打包成独立 exe？运行 `.\packaging\build_release.cmd`，产物在 `Package\Memoria.exe`。
+
+使用打包版（`Memoria-v*-win64.zip`）时请**整包解压**到可写目录，不要直接在 zip 里运行 `Memoria.exe`。若启动失败，exe 同目录的 `crash.log` 有详细报错；若是 Windows 以「文件来自网络」为由拦截了随包 .NET 运行时，在解压目录执行 `Get-ChildItem -Recurse | Unblock-File` 后重试。
 
 ---
 

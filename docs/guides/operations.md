@@ -114,12 +114,26 @@ Release 的 Asset 命名固定为：
 - **无后缀 = 完整包**；`-lite` = 不含内置模型。两种形态**每次同时上传**，供用户按网络条件 / 磁盘占用自行选择。
 - 样板（v0.3.1）：`Memoria-v0.3.1-win64.zip`（1182.8 MB）、`Memoria-v0.3.1-win64-lite.zip`（35.1 MB）。
 
-轻量包生成（仅选完整包内容、排除 `hf/` 模型目录）：
+发布资产生成（轻量包仅选完整包内容、排除 `hf/` 模型目录）：
 
 ```powershell
-Compress-Archive -Path "Package\Memoria.exe","Package\lib","Package\resources","Package\config","Package\README.txt","Package\VERSION","Package\manifest.json" `
+# 完整包（含内置模型 hf/）
+Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Package\lib","Package\resources","Package\hf","Package\README.txt","Package\VERSION","Package\manifest.json" `
+  -DestinationPath "artifacts\Memoria-v<版本>-win64.zip" -CompressionLevel Optimal
+
+# 轻量包（不含 hf/）
+Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Package\lib","Package\resources","Package\README.txt","Package\VERSION","Package\manifest.json" `
   -DestinationPath "artifacts\Memoria-v<版本>-win64-lite.zip" -CompressionLevel Optimal
 ```
+
+> **两份清单都不打 `Package\config\`**：`build.py` 的 `_RELEASE_PRESERVE_DIRS` 会跨构建保留**开发机自己**的
+> `ui-settings.json`（含 `last_kb_path`、`recent_kbs` 等本机私人路径），整目录打包会把维护者的本机设置分发出去。
+> `config/` 本就由首次运行按需创建（`storage/ui_settings.py::save_ui_settings` 会 `mkdir(parents=True)`），
+> 无需随包。`Package/config/` 仅为本地 `run_release.cmd` 保留。
+> 用显式清单而非 `Package\*`，同理是为了不把 `.gitkeep`、`crash.log`、`logs/` 等运行时残留带进包。
+>
+> **`Memoria.exe.config` 不可省**：它是 .NET 应用配置，缺了则 zip 解压出的文件带 Mark-of-the-Web 时
+> pythonnet 起不来（P06）。`packaging/build.py` 的 `_verify_release_bundle()` 会在构建末尾校验其存在。
 
 ### 5.2 Release 说明（双语 + 上下排版）
 
@@ -129,12 +143,14 @@ Release 正文必须**中英双语**，且**上下排版**——中文段在前�
 ## Memoria vX.Y.Z
 
 <中文说明：本次变更要点，含两个 package 的选择说明>
+<系统要求 + 整包解压 / Unblock-File 提示>
 
 ---
 
 ## Memoria vX.Y.Z
 
 <English description: same highlights, incl. which package to choose>
+<system requirements + unzip / Unblock-File note>
 ```
 
 规则：
@@ -142,6 +158,8 @@ Release 正文必须**中英双语**，且**上下排版**——中文段在前�
 - 两段使用**同一版本标题**，便于读者按语言定位。
 - 用 `---` 分隔，避免中英混排导致标题层级混乱。
 - 变更要点与「完整包 / 轻量包怎么选」在两段中**都要出现**（各自语言）。
+- 两段**都要**给出**系统要求**（Windows 10/11 x64、.NET Framework 4.7.2+、WebView2）与「**整包解压**到可写目录、勿在 zip 内直接运行」的提示；启动排障指向 exe 同目录的 `crash.log`，并附可选命令 `Get-ChildItem -Recurse | Unblock-File`。
+  - 原因（P06）：zip 解压会给文件打上 Mark-of-the-Web，.NET 因此拒绝 `Assembly.LoadFrom` 加载随包运行时，报 `Failed to resolve Python.Runtime.Loader.Initialize`，首发表现即「双击闪退」。产品侧的解法是随包 `Memoria.exe.config`（`loadFromRemoteSources`，见 §5.1）；`Unblock-File` 仅作兜底提示。随包 `README.release.txt` 与两份 README 已有同款说明。
 - 样板：v0.3.2 Release（本条规范落地后的首个双语说明）。
 
 #### 截图（必要时补）

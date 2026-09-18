@@ -112,7 +112,7 @@ Knowledge-base check with a copyable report: the panel summarizes integrity, man
 
 ## Getting Started
 
-> Prerequisites: Python ≥ 3.11, Windows (the desktop shell is built on pywebview / Chromium).
+> Prerequisites: Python ≥ 3.11 for development; Windows 10/11 x64 for the desktop shell. The shell is built on pywebview, which needs .NET Framework 4.7.2+ and the WebView2 runtime — both included in Windows 10 1803+ and Windows 11.
 
 ```powershell
 # 1. Install (development mode, includes pytest)
@@ -131,6 +131,8 @@ docs\example\showcase\    # Official showcase: 35 knowledge points, cross-page l
 ```
 
 Want a standalone exe? Run `.\packaging\build_release.cmd`; output goes to `Package\Memoria.exe`.
+
+Using the packaged build (`Memoria-v*-win64.zip`)? Extract the **whole** archive to a writable folder first — never run `Memoria.exe` from inside the zip. If it fails to start, `crash.log` next to the exe has the details; if Windows is blocking the bundled .NET runtime because the files came from the Internet, run `Get-ChildItem -Recurse | Unblock-File` in the extracted folder and try again.
 
 ---
 

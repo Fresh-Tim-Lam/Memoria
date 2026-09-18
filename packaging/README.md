@@ -27,6 +27,7 @@ After a build, the distributable directory is **`Package/`** at the repository r
 ```
 Package/
   Memoria.exe
+  Memoria.exe.config    # .NET app config (loadFromRemoteSources); MUST ship — see P06
   lib/
   resources/
   config/               # ui-settings.json (same directory as the exe; portable)
@@ -34,6 +35,12 @@ Package/
   manifest.json
   README.txt
 ```
+
+`Memoria.exe.config` is copied from [`templates/Memoria.exe.config`](templates/Memoria.exe.config)
+and verified by `_verify_release_bundle()`. Without it, .NET refuses to `Assembly.LoadFrom`
+the bundled pythonnet runtime when the extracted files carry Mark-of-the-Web, and the app
+dies at startup with `Failed to resolve Python.Runtime.Loader.Initialize`. Keep the filename
+aligned with the exe name and never drop it from the zip asset lists.
 
 Just package the entire `Package/` folder (zip / copy) and hand it to the user. For GitHub Release asset naming and the two variants (full / lite), see [operations.md §5.1](../docs/guides/operations.md).
 

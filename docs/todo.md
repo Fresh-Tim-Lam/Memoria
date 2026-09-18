@@ -16,7 +16,7 @@
 - 🔄 样式笔刷·同行含公式涂抹混乱（旧 §10.1 内重复记作「样式笔刷同行公式涂抹」）：映射修复已在 `app.js:9217-9218,10640`。K2（验证未闭环，无通过证据）
 - 🔄 M5 桌面壳收尾：窗口原生动画/顶栏拖拽/圆角/最大化已达成；剩余图标与安装体验、更新通道。K1
 - 🔄 app.js 拆分瘦身（先拆分、随拆分同步 i18n）：已抽 `js/import-flow.js`、`toolbar-search.js`、`image-tools.js`、`kb-check.js`、`file-tree.js`，app.js ~10.9k 行；界面文案候选清零（i18n-inventory 为空清单）。下一步：editor-styles 层抽取（画笔与编辑格式管线耦合，`FT_MENU_ID` 浮层引用仍在 app.js）；真机回归待用户执行。K1
-- 🔴 **P06 打包态在他人机器启动崩溃**（pythonnet `Python.Runtime.Loader.Initialize` 解析失败，v0.3.4-lite 分发实测）：已排除打包缺件，缺口在目标机环境 + `launch_shell()` 无回退。K1（见 §8 P06 详情）
+- 🔄 **P06 打包态在他人机器启动崩溃**（根因 = **Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面说明；v0.3.4 已重新构建并替换资产）。K2（待在报错机器复验，见 §8 P06 详情）
 
 ***
 
@@ -117,7 +117,7 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | P03 | R13 UI 语言切换 | 🔄 K1（前端已完成 `js/i18n.js:14-15` + 设置→显示即时切换；壳端未做，原生对话框标题硬编码中文 `app/pywebview_host.py:152/171/194`；不自动翻译 md 正文） |
 | P04 | Windows 右键文件夹「以 Memoria 打开」+ 打开前安全检查（2026-08-29 登记，详情见下） | ⏳ |
 | P05 | `static_server` 的 `_kb_root` 是模块全局 → 一进程只能服务一个知识库（多库/多实例与外部宿主嵌入受阻） | ⏳ K1（`static_server.py`；与 D2 集成 X10 相关；来源 agent-guide/10） |
-| P06 | 打包态在**他人机器**启动崩溃：pythonnet 初始化失败（`Failed to resolve Python.Runtime.Loader.Initialize`，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔴 K1（已排除打包缺件；未排除目标机 .NET 版本与文件被锁；`launch_shell()` 无回退。详情见下） |
+| P06 | 打包态在**他人机器**启动崩溃：pythonnet 初始化失败（`Failed to resolve Python.Runtime.Loader.Initialize`，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔄 K2（**根因已定位 = Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面补系统要求；v0.3.4 已重新构建并替换资产。证据 `artifacts/p06-motw-e2e.txt`、发布态 A/B。待在报错机器复验。详情见下） |
 
 **P04 详情（2026-08-29 登记）：**
 
@@ -126,14 +126,15 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 - **打开前安全检查**（任一不通过 → 明确提示，不强行打开）：① 存在性（存在且为目录）② 权限（可读+可写，防只读介质写 `.memoria` 失败）③ 范围（排除 `C:\Windows`、`Program Files`、`ProgramData`、回收站、`C:\` 根等）④ 结构（含 `.memoria/` 直接打开；空目录提示可初始化；有 md 无 `.memoria` 提示将创建并写前确认）⑤ 路径（长度限制、非法/特殊字符、UNC/网络路径）⑥ 占用（已被另一实例打开 → 聚焦已有窗口）。
 - **验收**：右键 → 打开指定文件夹成为当前知识库；安全项逐一构造反例验证提示正确；卸载后右键菜单消失。
 
-**P06 详情（2026-09-18 登记，v0.3.4 分发故障）：**
+**P06 详情（2026-09-18 登记；同日定位根因、修复并重新发布）：**
 
-- **现象**：他人机器解压 `Memoria-v0.3.4-win64-lite.zip` 后启动即崩 —— `webview/platforms/winforms.py` → `pythonnet/__init__.py:143 load()` → `clr_loader/netfx.py:47 _get_callable` → `RuntimeError: Failed to resolve Python.Runtime.Loader.Initialize from <解压目录>\lib\pythonnet\runtime\Python.Runtime.dll`。即 pywebview 走 **WinForms/EdgeChromium** 后端时 pythonnet（默认 **netfx** 运行时）初始化失败。
-- **已排除（实测）**：打包缺件 —— `Package/lib/pythonnet/runtime/` 有 `Python.Runtime.dll`（445,952 B）、`Python.Runtime.deps.json`、`netstandard.dll` 与 ~100 个 `System.*` facade；`lib/clr_loader/ffi/dlls/{amd64,x86}/ClrLoader.dll` 亦在；且**完整版与 lite 版这 105 条条目逐一相同**（zip 条目对比）⇒ 非变体裁剪所致。
-- **未排除（优先序）**：① 目标机 **.NET Framework** 版本过低/损坏（本机可用 ≠ 他机可用）；② 解压文件带 **MotW** / 杀软拦截 / OneDrive「按需文件」占位；③ 路径权限或非 ASCII；④ x86/x64 不匹配（可能性低）。
-- **缺口**：`app/shell/__init__.py:12-24` 的 `launch_shell()` **无回退**（pywebview 起不来即整体退出，而 `MEMORIA_SHELL=pyqt6` 这条替代壳已存在）；`docs/guides/**` 检索 `.NET|WebView2|系统要求` **0 命中** ⇒ 分发物缺系统要求与排障入口。
-- **修法**：A 复现取证（干净 VM + 报错机器收 `HKLM\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full` 的 `Release` 值、`Get-Item -Stream Zone.Identifier`、OneDrive/杀软是否介入）→ B **产品级缓解**：启动失败**自动回退** `pyqt6` 壳或至少给可读错误（对齐 `app/runtime.py:44-48`）→ C **交付面**：README/Release 补系统要求与「解压后 `Get-ChildItem -Recurse | Unblock-File`」。
-- **验收**：干净 Windows VM 解压即用（或自动回退 Qt 壳且提示清晰）；报错机器按文档操作后可启动；`MEMORIA_SHELL=pyqt6` 显式路径回归不受影响。
+- **现象**：他人机器解压 `Memoria-v0.3.4-win64-lite.zip` 后启动即崩 —— `pythonnet/__init__.py:143 load()` → `clr_loader/netfx.py:47` → `RuntimeError: Failed to resolve Python.Runtime.Loader.Initialize from <解压目录>\lib\pythonnet\runtime\Python.Runtime.dll`。
+- **根因 = Mark-of-the-Web（实测）**：zip 解压出的文件被 Windows 写入 `Zone.Identifier`（ZoneId=3）；.NET 的 `Assembly.LoadFrom` 拒绝加载来源为「Internet 区域」的程序集（HRESULT `0x80131515`），而 clr_loader 的原生入口把该异常吞成 NULL，故 Python 侧只剩上面那句无细节报错。对照实验（同一 445,952 B 的 dll）：干净 → OK；打 ZoneId=3 → 失败；`Unblock-File` → OK（可逆、确定性）；给真实 `.venv` 的 dll 打标记后 `import clr` 复现出**逐字一致**的 traceback。已排除打包缺件（完整版/lite 版 105 条条目逐一相同）与目标机 .NET 版本（报错机 `Release=0x82405` ≈ 4.8，足够）。
+- **修复**：**随包 `Memoria.exe.config`**（`<loadFromRemoteSources enabled="true"/>`，.NET 为「加载 Internet 区域程序集」提供的官方开关）—— 新增模板 `packaging/templates/Memoria.exe.config`，`build.py::_stage_release` 拷入、`_verify_release_bundle()` 构建末尾校验，两份 zip 清单（`operations.md §5.1`）同步加入。配套 `app_release.py::_show_fatal_dialog()`（发布态启动失败弹可读弹窗）、两份 README / 随包 `README.release.txt` / `site/**` 补系统要求与整包解压说明，并写死进 `operations.md §5.2` 的 Release 规则。
+- **否决的初版做法**：启动时删 `lib/pythonnet/**` 的 `Zone.Identifier`（`runtime.py::unblock_bundled_runtime()` + 4 例单测）**已全部移除** —— 该删流操作在本机 D: 盘静默失效（`os.remove` 不抛异常、`DeleteFileW` 返回 TRUE 而流仍在，`Unblock-File` 亦无效），且属修改文件元数据；改用配置后不需要它。
+- **顺带修复**：两份 zip 不再打 `Package\config\`——`_RELEASE_PRESERVE_DIRS` 会跨构建保留开发机自己的 `ui-settings.json`（含本机私人路径），整目录打包会把它发出去。
+- **证据**：`artifacts/p06-motw-e2e.txt`。发布态 A/B（同一产物，只差 `Memoria.exe.config`）：无配置 → `crash.log` 内容即该 RuntimeError；有配置 → dll 仍带 MotW 也正常启动。全套 `pytest -q` 80 passed。
+- **遗留**：发布包不含 PyQt6（`spec:12` 的 `_HEAVY_EXCLUDES`），「回退 Qt 壳」不可行，由可读弹窗兜底。**v0.3.0～v0.3.4 共 5 个 Release、9 个 zip 已全部重新构建并替换**（旧版由各自 tag 的 `git worktree` 构建 + 注入 `Memoria.exe.config`）；报错机器按新包复验待用户执行。同批清理了随包示例库的运行/调试产物残留（见 [docs-management.md](conventions/docs-management.md) §4.2 同日条目）。
 
 ***
 

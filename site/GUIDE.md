@@ -19,7 +19,7 @@
 | 需要 | 从哪来 |
 |---|---|
 | **Trae**（AI IDE，免费） | 国内版官网 <https://www.trae.cn/> 下载安装（就是第 1 步那张截图）。若在海外、或需要国际版模型（GPT / Claude 等），用国际版 <https://www.trae.ai/>；两版能力与交互一致，区别主要在模型与计价 |
-| **Memoria**（本知识库的编辑器，Windows 免安装） | [Releases](https://github.com/Fresh-Tim-Lam/Memoria/releases) 下 `Memoria-v*-win64.zip`（内置模型，完全离线）或 `-lite.zip`（约 34 MB，首次用语义检索时联网取模型），解压后跑 `Memoria.exe` |
+| **Memoria**（本知识库的编辑器，Windows 免安装） | [Releases](https://github.com/Fresh-Tim-Lam/Memoria/releases) 下 `Memoria-v*-win64.zip`（内置模型，完全离线）或 `-lite.zip`（约 34 MB，首次用语义检索时联网取模型），**整包解压**到可写目录后跑 `Memoria.exe`（别直接在 zip 里双击） |
 
 > 只想用智能体、不想装 Memoria？见下方「捷径」。
 

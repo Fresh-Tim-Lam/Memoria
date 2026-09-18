@@ -65,14 +65,24 @@ def _bundle_hf_models() -> list[str]:
 
 # examples/ 为官方展示样例库（机器学习导论）：随包须带正文 + .memoria/sidecars +
 # .memoria/images + manifest（打开即完整可链接）；仅剔除运行时产物与备份。
+# 与仓库 .gitignore「示例知识库运行/调试产物」逐条对齐：随包示例库只带
+# 正文 + 侧车 + 图片资产 + manifest 基线，运行/调试产物一律不带。
+# 这些文件都被 .gitignore 忽略（只存在于开发机的未跟踪文件里），若不过滤，
+# 「开发机构建」与「干净检出构建」出来的包内容会不一致 —— 实测曾把
+# mapping-debug.log(672 KB) 等前端调试日志与 pending.json 带进 Release。
 EXAMPLES_IGNORE = shutil.ignore_patterns(
     ".build",
     "__pycache__",
     "*.pyc",
     ".git",
+    "*.log",
     "cache",
     "pending.yaml",
     "pending.yaml.bak",
+    "pending.json",
+    "pending.json.bak",
+    "kp_targets.json",
+    "agent",
     "registry.json",
     "*.bak",
 )
@@ -155,6 +165,13 @@ def _verify_release_bundle() -> None:
     dll = RELEASE_LIB / "python312.dll"
     if not dll.is_file():
         raise FileNotFoundError(f"发布包不完整，缺少: {dll}")
+    # 与 exe 同名同目录；缺失 ⇒ zip 解压（带 Mark-of-the-Web）后 pythonnet 起不来（P06）
+    exe_config = RELEASE / "Memoria.exe.config"
+    if not exe_config.is_file():
+        raise FileNotFoundError(
+            f"发布包不完整，缺少: {exe_config}"
+            "（模板 packaging/templates/Memoria.exe.config 未生成，见 P06）"
+        )
     exe_data = RELEASE_EXE.read_bytes()
     if b"pyi-contents-directory _internal" in exe_data:
         raise RuntimeError(
@@ -280,6 +297,13 @@ def _stage_release(version: str) -> None:
     if readme_tpl.is_file():
         readme = readme_tpl.read_text(encoding="utf-8").replace("{version}", version)
         (RELEASE / "README.txt").write_text(readme, encoding="utf-8")
+
+    # .NET 应用配置：必须与 exe 同名同目录。zip 解压出的文件带 Mark-of-the-Web，
+    # .NET 默认拒绝 Assembly.LoadFrom 加载「Internet 区域」的程序集，pythonnet
+    # 因此起不来（P06）；该开关是 .NET 为这一场景提供的官方解法。
+    exe_config_tpl = TEMPLATES / "Memoria.exe.config"
+    if exe_config_tpl.is_file():
+        shutil.copy2(exe_config_tpl, RELEASE / "Memoria.exe.config")
 
     _verify_release_bundle()
     _ensure_release_config()
