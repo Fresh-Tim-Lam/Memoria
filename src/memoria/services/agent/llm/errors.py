@@ -9,7 +9,9 @@
 
 - `AgentLlmError`：基类，携带稳定 `code`，可选 HTTP `status` 与 `retry_after_s`；
 - `ConfigError` / `AuthError` / `RateLimited` / `LlmTimeoutError` / `ProviderError`；
-- `is_retryable()`：429 / 5xx / 网络超时 / 连接错误可重试，其余 4xx 不重试。
+- `is_retryable()`：429 / 5xx / 网络超时 / 连接重置可重试；**确定性连接失败**
+  （连接被拒 / DNS 解析失败 / TLS 证书校验失败 / 无效 URL，见 `is_unreachable()`）
+  归为 `UNREACHABLE` 且**不重试**；其余 4xx 不重试。
 
 异常消息中**绝不出现密钥**：凭据问题只点名配置来源（环境变量名或配置文件），
 不回显取值。
@@ -17,7 +19,11 @@
 
 from __future__ import annotations
 
+import errno as _errno
+import http.client
 import re
+import socket
+import ssl
 from typing import Any
 
 __all__ = [
@@ -28,12 +34,15 @@ __all__ = [
     "ProviderError",
     "RateLimited",
     "RETRYABLE_CODES",
+    "UNREACHABLE_CODE",
     "classify_detail",
     "code_for_status",
     "error_for",
     "is_context_window_exceeded",
     "is_quota_exceeded",
     "is_retryable",
+    "is_unreachable",
+    "unreachable_kind",
 ]
 
 # —— 与上游共享的稳定 code 词汇（`HarnessError.code` / 失败 code 常量）——
@@ -48,12 +57,16 @@ EMPTY_RESPONSE_CODE = "EMPTY_RESPONSE"
 SERVER_CODE = "SERVER"
 TRANSPORT_CODE = "TRANSPORT"
 TIMEOUT_CODE = "TIMEOUT"
+#: 新增（非上游词汇）：**确定性**连接失败——连接被拒 / DNS 解析失败 / TLS 证书
+#: 校验失败 / 无效 URL。重试必然会以同样方式失败，故**刻意不进** `RETRYABLE_CODES`。
+UNREACHABLE_CODE = "UNREACHABLE"
 INVALID_REQUEST_CODE = "INVALID_REQUEST"
 PROTOCOL_CODE = "PROTOCOL"
 NO_ADAPTER_CODE = "NO_ADAPTER"
 DUPLICATE_ADAPTER_CODE = "DUPLICATE_ADAPTER"
 
 #: 上游 `retry-policy.ts` 的默认可重试集合（normal 模式）。
+#: 本轮**未增未删**：`UNREACHABLE` 是新增的独立 code，不在其中。
 RETRYABLE_CODES: frozenset[str] = frozenset(
     {EMPTY_RESPONSE_CODE, RATE_LIMIT_CODE, SERVER_CODE, TIMEOUT_CODE, TRANSPORT_CODE}
 )
@@ -71,8 +84,24 @@ _TERMINAL_CODES: frozenset[str] = frozenset(
         PROTOCOL_CODE,
         NO_ADAPTER_CODE,
         DUPLICATE_ADAPTER_CODE,
+        UNREACHABLE_CODE,
     }
 )
+
+#: `URLError` 里以**字符串**形式给出的"无效 URL"提示（`reason` 非异常对象）。
+_UNREACHABLE_TEXT_MARKERS = ("unknown url type", "no host given", "no host supplied")
+
+#: 端点报错文本里的**确定性**连接失败措辞（命中即归 `UNREACHABLE`，不重试）。
+#: 刻意只收确定性措辞：`connection reset/aborted/broken pipe` 属瞬时故障，仍归 `TRANSPORT`。
+_UNREACHABLE_DETAIL = re.compile(
+    r"connection\s+refused|actively\s+refused|getaddrinfo|name\s+or\s+service\s+not\s+known"
+    r"|nodename\s+nor\s+servname|certificate\s+verify\s+failed|self[- ]signed\s+certificate"
+    r"|no\s+host\s+given|unknown\s+url\s+type",
+    re.IGNORECASE,
+)
+
+#: Windows 的"目标计算机积极拒绝"（`ConnectionRefusedError` 已覆盖，此处兜底裸 OSError）。
+_WINERROR_CONNECTION_REFUSED = 10061
 
 
 class AgentLlmError(Exception):
@@ -155,11 +184,71 @@ class ProviderError(AgentLlmError):
     code = "PROVIDER"
 
 
+def _root_cause(error: BaseException) -> BaseException:
+    """剥开 `urllib.error.URLError` 等包装层，取最底层的失败原因。
+
+    `URLError` 自身是 `OSError` 子类，其 `reason` 才是真实的 `socket`/`ssl` 异常；
+    分类必须先下钻，否则"连接被拒"会被当成笼统的连接错误。
+    """
+    seen: set[int] = set()
+    current = error
+    while id(current) not in seen:
+        seen.add(id(current))
+        reason = getattr(current, "reason", None)
+        if isinstance(reason, BaseException):
+            current = reason
+        else:
+            break
+    return current
+
+
+def is_unreachable(error: BaseException) -> bool:
+    """是否为**确定性**连接失败：重试必然以同样方式失败，故不应重试。
+
+    覆盖：连接被拒（`ConnectionRefusedError` / WinError 10061）、DNS 解析失败
+    （`socket.gaierror`）、TLS 证书校验失败（`ssl.SSLCertVerificationError`）、
+    无效 URL（`http.client.InvalidURL` 或 `URLError("unknown url type…")`）。
+
+    与**瞬时故障**（超时 / 连接重置 / broken pipe / 5xx / 429）相对；后者仍可重试。
+    """
+    if getattr(error, "code", None) == UNREACHABLE_CODE:
+        return True  # 已按本 code 分类过的失败（幂等）
+    cause = _root_cause(error)
+    if isinstance(cause, (ConnectionRefusedError, socket.gaierror, ssl.SSLCertVerificationError)):
+        return True
+    if isinstance(cause, ssl.SSLError) and "CERTIFICATE_VERIFY_FAILED" in str(cause).upper():
+        return True
+    if isinstance(cause, http.client.InvalidURL):
+        return True
+    if getattr(cause, "winerror", None) == _WINERROR_CONNECTION_REFUSED:
+        return True
+    if getattr(cause, "errno", None) == _errno.ECONNREFUSED:
+        return True
+    text = str(cause).lower()
+    return any(marker in text for marker in _UNREACHABLE_TEXT_MARKERS)
+
+
+def unreachable_kind(error: BaseException) -> str:
+    """确定性连接失败的中文归类（供异常消息拼装；不含凭据）。"""
+    cause = _root_cause(error)
+    if isinstance(cause, ConnectionRefusedError) or getattr(cause, "winerror", None) == _WINERROR_CONNECTION_REFUSED:
+        return "目标端口拒绝连接"
+    if getattr(cause, "errno", None) == _errno.ECONNREFUSED:
+        return "目标端口拒绝连接"
+    if isinstance(cause, socket.gaierror):
+        return "域名解析失败"
+    if isinstance(cause, ssl.SSLCertVerificationError) or isinstance(cause, ssl.SSLError):
+        return "TLS 证书校验失败"
+    if isinstance(cause, http.client.InvalidURL):
+        return "端点 URL 无效"
+    return "端点 URL 无效或不可达"
+
+
 def is_retryable(error: BaseException) -> bool:
-    """判断一次失败是否值得重试（429 / 5xx / 超时 / 连接错误）。
+    """判断一次失败是否值得重试（429 / 5xx / 超时 / 连接中断）。
 
     未知失败一律判为不可重试（fail closed），与上游「不在合格集合内的失败
-    原样委派」一致。
+    原样委派」一致；确定性连接失败（`is_unreachable()`）明确判为不可重试。
     """
     if isinstance(error, (ConfigError, AuthError)):
         return False
@@ -176,9 +265,9 @@ def is_retryable(error: BaseException) -> bool:
     if isinstance(error, AgentLlmError):
         return error.code in RETRYABLE_CODES
     # 网络层异常（socket 超时、连接重置、DNS 失败等）都是 OSError 子类；
-    # 本模块只用于模型调用边界，因此整体视为可重试。
+    # 本模块只用于模型调用边界，故整体视为可重试——**确定性连接失败除外**。
     if isinstance(error, OSError):
-        return True
+        return not is_unreachable(error)
     return False
 
 
@@ -255,6 +344,9 @@ def classify_detail(detail: str, status: int | None = None) -> str:
         return SERVER_CODE
     if re.search(r"\btime(?:d)?\s*out\b|timeout", detail, re.IGNORECASE):
         return TIMEOUT_CODE
+    if _UNREACHABLE_DETAIL.search(detail):
+        # 端点带内报错里的确定性连接失败（无 HTTP 状态可依据时）——不重试。
+        return UNREACHABLE_CODE
     if re.search(r"\b(?:network|connection|socket|fetch|terminated)\b|ECONN[A-Z]+", detail, re.IGNORECASE):
         return TRANSPORT_CODE
     return PROTOCOL_CODE

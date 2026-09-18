@@ -98,6 +98,13 @@ class LoopResult:
         }
 
 
+def _retry_note(message: str, retries: int) -> str:
+    """最终错误串：附上"（已重试 N 次）"；`retries == 0` 时原样返回。"""
+    if retries <= 0:
+        return message
+    return f"{message}（已重试 {retries} 次）"
+
+
 class AgentLoop:
     """同步 agent 循环；provider、工具集、审批策略全部注入。"""
 
@@ -159,13 +166,29 @@ class AgentLoop:
             timeout_s=self.timeout_s,
         )
 
-    def _stream_once(self, request: LlmRequest) -> tuple[str, Usage | None, FinishEvent | None]:
-        """跑完一次模型流；返回（文本, 用量, 终止事件）。"""
+    def _stream_once(
+        self, request: LlmRequest, retry_counter: list[int]
+    ) -> tuple[str, Usage | None, FinishEvent | None]:
+        """跑完一次模型流；返回（文本, 用量, 终止事件）。
+
+        `retry_counter`（单元素列表，调用方持有）记录本步**已发生的重试次数**：
+        `iter_with_retry` 重试发生在流内部，抛错时无法从返回值带回，故用计数器
+        让调用方在 `step/error` 与最终错误串里如实呈现"已重试 N 次"。
+        """
         text_parts: list[str] = []
         reasoning_parts: list[str] = []
         usage: Usage | None = None
         finish: FinishEvent | None = None
-        for event in iter_with_retry(lambda: self.provider.stream(request), policy=self.retry_policy):
+
+        def on_retry(attempt: int, delay: float, exc: BaseException) -> None:
+            retry_counter[0] = attempt
+            logger.warning("[agent-loop] 第 %d 次重试（等待 %.2fs 后）：%r", attempt, delay, exc)
+
+        for event in iter_with_retry(
+            lambda: self.provider.stream(request),
+            policy=self.retry_policy,
+            on_retry=on_retry,
+        ):
             if isinstance(event, TextDelta):
                 text_parts.append(event.text)
                 if self.on_text is not None:
@@ -211,11 +234,15 @@ class AgentLoop:
             iterations = iteration
             request = self._request(history)
             self._emit("step/start", {"iteration": iteration, "message_count": len(history)})
+            retry_counter = [0]
             try:
-                text, step_usage, finish = self._stream_once(request)
+                text, step_usage, finish = self._stream_once(request, retry_counter)
             except AgentLlmError as exc:
-                self._emit("step/error", {"iteration": iteration, "error": repr(exc)})
-                stop_reason, error = StopReason.ERROR, str(exc)
+                self._emit(
+                    "step/error",
+                    {"iteration": iteration, "error": repr(exc), "retries": retry_counter[0]},
+                )
+                stop_reason, error = StopReason.ERROR, _retry_note(str(exc), retry_counter[0])
                 break
             if step_usage is not None:
                 usage = usage.plus(step_usage)
@@ -227,7 +254,7 @@ class AgentLoop:
                 break
             if finish.failure is not None:
                 stop_reason = StopReason.ERROR
-                error = str(finish.failure)
+                error = _retry_note(str(finish.failure), retry_counter[0])
                 break
             if finish.reason is FinishReason.ABORTED:
                 stop_reason = StopReason.ABORTED

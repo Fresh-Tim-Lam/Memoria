@@ -17,8 +17,11 @@
   `estimated=True`（不强求端点的 `stream_options.include_usage`，因为不少网关
   会拒绝未知字段）；
 - 失败语义：HTTP 状态/连接失败在**尚未产出事件**时抛 `AgentLlmError` 子类；
-  已开始产出后的断流、带内 `error` 对象、无终止标记的截断，以携带 `failure`
-  的终止 `FinishEvent` 投递（对齐上游「流始终以终止 finish 结束」）。
+  连接被拒 / DNS 解析失败 / TLS 证书校验失败 / 无效 URL 等**确定性**连接失败归
+  `UNREACHABLE`（不重试），超时与连接重置/中断等**瞬时**故障归 `TIMEOUT` /
+  `TRANSPORT`（可重试）；已开始产出后的断流、带内 `error` 对象、无终止标记的
+  截断，以携带 `failure` 的终止 `FinishEvent` 投递（对齐上游「流始终以终止
+  finish 结束」）。
 
 密钥只用于 `Authorization` 头，且绝不写入日志、异常消息或 `repr`。
 """
@@ -26,6 +29,7 @@
 from __future__ import annotations
 
 import codecs
+import http.client
 import json
 import logging
 import urllib.error
@@ -41,11 +45,14 @@ from memoria.services.agent.llm.errors import (
     PROTOCOL_CODE,
     TIMEOUT_CODE,
     TRANSPORT_CODE,
+    UNREACHABLE_CODE,
     AgentLlmError,
     ConfigError,
     ProviderError,
     classify_detail,
     error_for,
+    is_unreachable,
+    unreachable_kind,
 )
 from memoria.services.agent.llm.types import (
     FinishEvent,
@@ -262,8 +269,16 @@ class OpenAICompatibleProvider:
             raise _http_error(exc) from exc
         except TimeoutError as exc:
             raise error_for(TIMEOUT_CODE, f"请求 {url} 超时（{timeout}s）") from exc
+        except http.client.InvalidURL as exc:
+            # 非数字端口等：`InvalidURL` 不是 `OSError`，须显式捕获（确定性，不重试）。
+            raise error_for(
+                UNREACHABLE_CODE,
+                f"模型端点 {url} 不是可用的 URL：{exc}；确定性失败，不会重试",
+            ) from exc
         except OSError as exc:
-            raise error_for(TRANSPORT_CODE, f"连接 {url} 失败：{exc}") from exc
+            # 连接被拒 / DNS 失败 / 证书失败 / 无效 URL ⇒ UNREACHABLE（不重试）；
+            # 超时、连接重置/中断等瞬时故障 ⇒ TRANSPORT（可重试）。
+            raise _transport_error(f"连接模型端点 {url} 失败", exc) from exc
         with closing(response):
             yield from self._iter_events(response, request)
 
@@ -285,7 +300,7 @@ class OpenAICompatibleProvider:
                 except TimeoutError as exc:
                     raise error_for(TIMEOUT_CODE, f"读取 {request.model} 响应超时") from exc
                 except OSError as exc:
-                    raise error_for(TRANSPORT_CODE, f"读取响应中断：{exc}") from exc
+                    raise _transport_error(f"读取 model={request.model} 的响应中断", exc) from exc
                 if not chunk:
                     break
                 yield from decoder.feed(chunk)
@@ -442,6 +457,21 @@ def _error_from_body(raw: Any) -> AgentLlmError:
         text = f"{code} {detail}" if isinstance(code, str) and code else detail
         return error_for(classify_detail(text), f"端点返回错误：{detail}")
     return error_for(classify_detail(str(raw)), f"端点返回错误：{raw}")
+
+
+def _transport_error(label: str, exc: BaseException) -> AgentLlmError:
+    """连接/读取的底层异常 → 稳定 code。
+
+    **确定性**连接失败（连接被拒 / DNS 解析失败 / TLS 证书校验失败 / 无效 URL）
+    归 `UNREACHABLE`，**不重试**；瞬时故障（连接重置、中断、broken pipe 等）
+    仍归 `TRANSPORT`（可重试）。消息含目标与底层原因，便于人眼辨认。
+    """
+    if is_unreachable(exc):
+        return error_for(
+            UNREACHABLE_CODE,
+            f"{label}：{unreachable_kind(exc)}（{exc}）；确定性失败，不会重试",
+        )
+    return error_for(TRANSPORT_CODE, f"{label}：{exc}")
 
 
 def _http_error(exc: urllib.error.HTTPError) -> AgentLlmError:

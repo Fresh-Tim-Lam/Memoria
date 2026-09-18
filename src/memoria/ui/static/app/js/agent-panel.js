@@ -17,6 +17,13 @@
  * 「清空对话」= 把 `sessionId` 重置为 null（开新会话，旧会话已在磁盘上、进历史列表）。
  * `sessionKb` 记录该会话所属知识库，换库即作废（避免把 A 库的会话 id 带到 B 库）。
  *
+ * **世代号（epoch）作废（M1 收尾）**：每次提问递增模块级 `epoch`，在飞作业记住自己的
+ * epoch；提交/轮询回调只有「epoch 仍是最新」时才允许写回任何面板状态（`sessionId`、
+ * 气泡、状态行、锚点）。「清空对话」与「忽略本次」都递增 `epoch` ⇒ 在飞结果一律作废
+ * （停止轮询、不写回会话 id）——修掉"生成中点清空后，已作废会话的 `session_id` 又被
+ * 写回、下一句续到上一轮"的缺陷。作废后用户立刻再提问不受影响（新 epoch 正常写回）。
+ * 生成中**不**禁用「清空」：允许清空，但据此作废在飞结果。
+ *
  * **会话历史（M1c）**：`#agent-history` 由 `agent_sessions_list` 填充（按修改时间倒序，
  * 最多 30 条），选中某条 → `agent_session_load` 把消息灌进气泡区并把 `sessionId`
  * 设为该会话（下一句即续聊）。两个 RPC 都是**只读**、不写盘。
@@ -121,9 +128,11 @@ window.MemoriaAgentPanel = (function () {
 
   // 会话消息（渲染的唯一来源；清空 = 置空数组）
   const messages = []; // { role: "user"|"assistant", text, anchors, error }
-  let job = null; // { id, cursor }：在飞作业（null = 无）
+  let job = null; // { id, cursor, epoch }：在飞作业（null = 无）
   let busy = false; // 生成/轮询中（禁用发送）
   let streamingEl = null; // 正在流式写入的消息体元素
+  // 世代号：每次提问递增；「清空对话」/「忽略本次」也递增 ⇒ 在飞回调据此作废
+  let epoch = 0;
 
   // 多轮续聊：当前会话 id（null = 全新会话）与其所属知识库（换库即作废）
   let sessionId = null;
@@ -792,6 +801,8 @@ window.MemoriaAgentPanel = (function () {
       sessionId = null;
       sessionKb = "";
     }
+    // 本问的世代号：清空/忽略会递增 epoch，使本次提交与轮询结果一律作废
+    const myEpoch = ++epoch;
 
     pushMessage("user", text);
     if (input) input.value = "";
@@ -801,6 +812,7 @@ window.MemoriaAgentPanel = (function () {
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
+    if (epoch !== myEpoch) return; // 提交期间被「清空对话」作废 ⇒ 丢弃，不写回面板
     if (!res || res.status !== "ok" || !res.job_id) {
       const msg = fullErrorText(res);
       const rec = pushMessage("assistant", "");
@@ -810,7 +822,7 @@ window.MemoriaAgentPanel = (function () {
       showFlashError(msg);
       return;
     }
-    job = { id: res.job_id, cursor: 0 };
+    job = { id: res.job_id, cursor: 0, epoch: myEpoch };
     busy = true;
     pushMessage("assistant", "");
     renderComposer();
@@ -818,12 +830,14 @@ window.MemoriaAgentPanel = (function () {
   }
 
   async function poll() {
+    const myEpoch = epoch; // 本次轮询所属世代：epoch 一旦被递增，本次结果一律作废
     const deadline = Date.now() + POLL_TIMEOUT_MS;
     const kbAtStart = state.kbPath || "";
     startWait();
-    while (job && Date.now() < deadline) {
+    while (job && epoch === myEpoch && Date.now() < deadline) {
       await sleep(POLL_INTERVAL_MS);
-      if (!job) return; // 已被「忽略本次」丢弃（abandon() 已停计时）
+      // 已被「清空对话」/「忽略本次」作废（job 置空、epoch 递增）⇒ 停止轮询、不写回
+      if (!job || epoch !== myEpoch) return;
       if ((state.kbPath || "") !== kbAtStart) {
         // 轮询期间换库/关库：结果与当前库无关，丢弃（不谎称已取消）
         job = null;
@@ -842,6 +856,7 @@ window.MemoriaAgentPanel = (function () {
       } catch (e) {
         st = { status: "error", message: String((e && e.message) || e) };
       }
+      if (!job || epoch !== myEpoch) return; // 轮询请求期间被作废 ⇒ 丢弃响应
       if (!st) st = { status: "error", message: T("agent.err.unknown") };
       if (st.delta) applyDelta(st.delta);
       if (typeof st.cursor === "number") job.cursor = st.cursor;
@@ -879,6 +894,7 @@ window.MemoriaAgentPanel = (function () {
   /** 「忽略本次」：丢弃后续结果 + 停止轮询。**不是取消**（M1 后端无取消点）。 */
   function abandon() {
     if (!job) return;
+    epoch += 1; // 作废在飞结果：后续轮询回调一律不再写回（含 sessionId）
     job = null;
     busy = false;
     streamingEl = null;
@@ -887,12 +903,22 @@ window.MemoriaAgentPanel = (function () {
     setStatusText(T("agent.status.abandoned"));
   }
 
-  /** 清空对话 = 开新会话（`sessionId` 置空）；旧会话已在磁盘上、进历史列表。 */
+  /** 清空对话 = 开新会话（`sessionId` 置空）；旧会话已在磁盘上、进历史列表。
+   *
+   * 生成中点「清空」同样**作废在飞结果**（递增 epoch ⇒ 轮询停止、session id 不写回），
+   * 故清空后不会"看着是空的、下一句却续到上一轮会话"；发送按钮随即恢复（后端仍在跑，
+   * 立刻再提问会收到 `busy` 结构化错误，与「忽略本次」同语义）。
+   */
   function clear() {
+    epoch += 1; // 作废在飞作业（若有）
+    job = null;
+    busy = false;
     messages.length = 0;
     streamingEl = null;
     sessionId = null;
+    stopWait();
     renderMessages();
+    renderComposer();
     setStatusText("");
     refreshHistory();
   }

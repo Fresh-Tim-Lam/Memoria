@@ -33,6 +33,8 @@ from memoria.services.agent.llm import (
     FinishEvent,
     FinishReason,
     LlmRequest,
+    ProviderError,
+    RetryPolicy,
     Role,
     TextDelta,
     ToolCall,
@@ -157,6 +159,21 @@ def text_step(text: str) -> list[Any]:
         UsageEvent(Usage(prompt_tokens=10, completion_tokens=5)),
         FinishEvent(reason=FinishReason.STOP),
     ]
+
+
+class AlwaysFailingProvider:
+    """每次 `stream()` 都以同一可重试失败抛错（用于断言"已重试 N 次"）。"""
+
+    name = "failing"
+
+    def __init__(self, error: BaseException) -> None:
+        self.error = error
+        self.calls = 0
+
+    def stream(self, request: LlmRequest) -> Iterator[Any]:
+        self.calls += 1
+        raise self.error
+        yield  # pragma: no cover —— 只为让本方法是生成器（与真 provider 一致）
 
 
 def tool_step(*calls: ToolCall) -> list[Any]:
@@ -299,6 +316,52 @@ def test_loop_reports_error_stop_reason(kb: Path) -> None:
 
     assert result.stop_reason is StopReason.ABORTED
     assert result.answer == "半句"  # 已投递文本保留（对齐上游取消语义）
+
+
+# —— ④b 最终错误串带重试次数 ——
+
+
+def test_loop_appends_retry_count_to_final_error(kb: Path) -> None:
+    provider = AlwaysFailingProvider(ProviderError("服务端错误", code="SERVER", status=500))
+    loop = AgentLoop(
+        provider=provider,
+        tools=kb_registry(kb),
+        retry_policy=RetryPolicy(max_retries=2, initial_delay_s=0.001, max_delay_s=0.01, jitter_ratio=0.0),
+    )
+
+    result = loop.run("会失败的问题")
+
+    assert result.stop_reason is StopReason.ERROR
+    assert provider.calls == 3  # 首次 + 2 次重试
+    assert result.error is not None
+    assert result.error.endswith("（已重试 2 次）")
+    assert "服务端错误" in result.error
+
+
+def test_loop_error_without_retry_has_no_retry_note(kb: Path) -> None:
+    provider = AlwaysFailingProvider(ProviderError("服务端错误", code="SERVER", status=500))
+    loop = AgentLoop(provider=provider, tools=kb_registry(kb), retry_policy=RetryPolicy(max_retries=0))
+
+    result = loop.run("一次失败")
+
+    assert provider.calls == 1
+    assert result.error is not None and result.error == "服务端错误"  # N=0 时不加后缀
+
+
+def test_loop_unreachable_error_fails_without_retry(kb: Path) -> None:
+    """确定性连接失败（UNREACHABLE）：一次尝试即失败，且错误串不含重试次数。"""
+    error = ProviderError("无法连接模型端点 X:1/v1：目标端口拒绝连接", code="UNREACHABLE")
+    provider = AlwaysFailingProvider(error)
+    loop = AgentLoop(
+        provider=provider,
+        tools=kb_registry(kb),
+        retry_policy=RetryPolicy(max_retries=5, initial_delay_s=0.001, max_delay_s=0.01, jitter_ratio=0.0),
+    )
+
+    result = loop.run("必拒连")
+
+    assert provider.calls == 1
+    assert result.error is not None and "已重试" not in result.error
 
 
 # —— ⑤ 会话 JSONL ——

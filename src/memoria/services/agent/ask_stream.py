@@ -17,6 +17,9 @@
   `cursor` 之后的新增文本，前端无需重放全文；
 - **不做真取消**（M1 无取消点）：`abandon` 由前端自行实现为「丢弃后续结果 +
   停止轮询」，本模块不提供假的取消语义；
+- **有界重试**（交互路径）：作业固定使用 `PANEL_RETRY_POLICY`（`max_retries=2` /
+  `total_timeout_s=20`），库层 `llm/retry.py` 的上游默认值不变；确定性连接失败
+  （`UNREACHABLE`）不重试，故面板对"必拒连端点"是**立即失败**；
 - **密钥不落本模块**：端点配置由 `llm/config.py` 读取，异常消息由
   `llm/errors.py` 保证不含凭据取值。
 
@@ -36,12 +39,16 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from memoria.services.agent.ask import ask
+from memoria.services.agent.llm import RetryPolicy
 
 logger = logging.getLogger(__name__)
 
 __all__ = [
     "DONE",
     "ERROR",
+    "PANEL_MAX_RETRIES",
+    "PANEL_RETRY_POLICY",
+    "PANEL_TOTAL_TIMEOUT_S",
     "RUNNING",
     "AskJob",
     "AskJobManager",
@@ -64,6 +71,17 @@ CODE_NO_BASE_URL = "no_base_url"
 CODE_BUSY = "busy"
 CODE_UNKNOWN_JOB = "unknown_job"
 CODE_ASK_FAILED = "ask_failed"
+
+# ── 面板路径的重试策略（**交互路径，等待必须有界**）──────────────────────────
+# 库层 `llm/retry.py` 的 DEFAULT_*（5 次 / 0.5s 起 / 上限 10s / 总时限 120s）是上游
+# 口径，**不改**；对话面板是交互路径，用户在等答案，故在此显式收紧：
+# ① `max_retries=2`：首次 + 至多 2 次重试，足以覆盖偶发抖动（退避上限 0.5+1.0≈1.5s）；
+# ② `total_timeout_s=20`：模型单次回答的长尾之外不再等待——超过 20s 的"无输出等待"
+#    在面板里已属"像卡死"，宁可失败让用户重试（前端另有 5 分钟轮询兜底，更宽松）。
+# 确定性连接失败（`UNREACHABLE`）不参与重试，故本策略只约束瞬时故障。
+PANEL_MAX_RETRIES = 2
+PANEL_TOTAL_TIMEOUT_S = 20.0
+PANEL_RETRY_POLICY = RetryPolicy(max_retries=PANEL_MAX_RETRIES, total_timeout_s=PANEL_TOTAL_TIMEOUT_S)
 
 
 def _error(code: str, message: str, **extra: Any) -> dict[str, Any]:
@@ -236,6 +254,7 @@ class AskJobManager:
                 job.question,
                 model=job.model,
                 session_id=job.resume_session_id,
+                retry_policy=PANEL_RETRY_POLICY,
                 on_text=job.note_delta,
             )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业

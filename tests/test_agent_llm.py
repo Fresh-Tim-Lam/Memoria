@@ -6,9 +6,13 @@
 
 from __future__ import annotations
 
+import http.client
 import io
 import json
+import socket
+import ssl
 import threading
+import urllib.error
 from collections.abc import Iterator
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -24,6 +28,7 @@ from memoria.services.agent.llm import (
     FinishEvent,
     FinishReason,
     LlmRequest,
+    LlmTimeoutError,
     Message,
     OpenAICompatibleProvider,
     ProviderError,
@@ -37,17 +42,26 @@ from memoria.services.agent.llm import (
     UsageMeter,
     delay_for,
     estimate_usage,
+    is_retryable,
     iter_with_retry,
     local_delay,
     mask_secret,
     normalize_api_key,
+    run_with_retry,
 )
 from memoria.services.agent.llm.errors import (
     EMPTY_RESPONSE_CODE,
     INVALID_REQUEST_CODE,
+    RETRYABLE_CODES,
     TRANSPORT_CODE,
+    UNREACHABLE_CODE,
+    is_unreachable,
 )
 from memoria.services.agent.llm.providers.openai_compatible import SseDecoder
+from memoria.services.agent.llm.retry import (
+    DEFAULT_MAX_RETRIES,
+    DEFAULT_TOTAL_TIMEOUT_S,
+)
 
 SECRET = "sk-memoria-test-SECRET-0123456789abcdef"
 MODEL = "test-model"
@@ -537,3 +551,232 @@ def test_agent_llm_error_failure_facts() -> None:
         "providerRetryAfterMs": 1500,
     }
     assert "code='SERVER'" in repr(error)
+
+
+# —— ⑦ 确定性连接失败 vs 瞬时故障（不重试 / 仍重试）——
+
+
+def deterministic_errors() -> list[BaseException]:
+    """构造的确定性连接失败（不需要真网络）。"""
+    refused = ConnectionRefusedError(10061, "由于目标计算机积极拒绝，无法连接。")
+    return [
+        refused,
+        urllib.error.URLError(refused),  # urlopen 会把底层原因包进 URLError（本身是 OSError）
+        socket.gaierror(-2, "Name or service not known"),
+        ssl.SSLCertVerificationError(1, "certificate verify failed"),
+        http.client.InvalidURL("nonnumeric port: 'abc'"),
+        urllib.error.URLError("unknown url type: 'htp'"),
+        ProviderError("无法连接模型端点", code=UNREACHABLE_CODE),
+    ]
+
+
+def transient_errors() -> list[BaseException]:
+    """构造的瞬时故障（超时 / 重置 / 5xx / 429 / 传输截断）。"""
+    return [
+        TimeoutError("timed out"),
+        ConnectionResetError(10054, "远程主机强迫关闭了一个现有的连接。"),
+        BrokenPipeError(32, "Broken pipe"),
+        ProviderError("服务端错误", code="SERVER", status=500),
+        ProviderError("传输中断", code=TRANSPORT_CODE),
+        AgentLlmError("传输中断", code=TRANSPORT_CODE, status=None),
+        RateLimited("限流"),
+        LlmTimeoutError("读取超时"),
+    ]
+
+
+def test_deterministic_connection_failures_are_not_retryable() -> None:
+    assert UNREACHABLE_CODE not in RETRYABLE_CODES  # 新增 code 刻意不进可重试集合
+    policy = RetryPolicy()
+    for error in deterministic_errors():
+        assert is_unreachable(error) is True, repr(error)
+        assert is_retryable(error) is False, repr(error)
+        assert policy.allows(error) is False, repr(error)
+
+
+def test_transient_failures_stay_retryable() -> None:
+    policy = RetryPolicy()
+    for error in transient_errors():
+        assert is_unreachable(error) is False, repr(error)
+        assert is_retryable(error) is True, repr(error)
+        assert policy.allows(error) is True, repr(error)
+
+
+def test_connection_refused_endpoint_fails_immediately_with_unreachable() -> None:
+    """注入 opener 抛"连接被拒"：一次尝试即失败，code=UNREACHABLE，消息含 URL 与原因。"""
+    calls: list[str] = []
+
+    def opener(request: Any, timeout: float | None = None) -> Any:
+        calls.append(request.full_url)
+        raise urllib.error.URLError(ConnectionRefusedError(10061, "由于目标计算机积极拒绝，无法连接。"))
+
+    provider = OpenAICompatibleProvider(
+        AgentConfig(base_url="http://127.0.0.1:9/v1", model=MODEL, timeout_s=5.0),
+        opener=opener,
+    )
+    policy = RetryPolicy(max_retries=5, initial_delay_s=0.001, max_delay_s=0.01, jitter_ratio=0.0)
+    with pytest.raises(AgentLlmError) as excinfo:
+        list(iter_with_retry(lambda: provider.stream(make_request()), policy=policy))
+
+    assert len(calls) == 1  # 不做任何重试
+    assert excinfo.value.code == UNREACHABLE_CODE
+    assert "http://127.0.0.1:9/v1/chat/completions" in str(excinfo.value)  # 人话：含目标 URL
+    assert "确定性" in str(excinfo.value)
+    assert SECRET not in str(excinfo.value)
+
+
+def test_invalid_url_is_classified_unreachable_without_retry() -> None:
+    def opener(request: Any, timeout: float | None = None) -> Any:
+        raise http.client.InvalidURL("nonnumeric port: 'abc'")
+
+    provider = OpenAICompatibleProvider(
+        AgentConfig(base_url="http://bad.example:abc/v1", model=MODEL),
+        opener=opener,
+    )
+    with pytest.raises(AgentLlmError) as excinfo:
+        list(iter_with_retry(lambda: provider.stream(make_request()), policy=RetryPolicy(max_retries=3)))
+    assert excinfo.value.code == UNREACHABLE_CODE
+    assert "URL" in str(excinfo.value)
+
+
+def test_transport_failure_still_retried_then_succeeds() -> None:
+    """瞬时故障（连接重置）仍走重试：第二次尝试成功。"""
+    attempts: list[int] = []
+
+    def opener(request: Any, timeout: float | None = None) -> Any:
+        attempts.append(1)
+        if len(attempts) == 1:
+            raise ConnectionResetError(10054, "远程主机强迫关闭了一个现有的连接。")
+        return io.BytesIO(sse(delta_chunk("恢复"), finish_chunk("stop"), "[DONE]"))
+
+    provider = OpenAICompatibleProvider(AgentConfig(base_url="http://reset.example/v1", model=MODEL), opener=opener)
+    retries: list[int] = []
+    events = list(
+        iter_with_retry(
+            lambda: provider.stream(make_request()),
+            policy=RetryPolicy(max_retries=2, initial_delay_s=0.001, max_delay_s=0.01, jitter_ratio=0.0),
+            on_retry=lambda attempt, _delay, _exc: retries.append(attempt),
+        )
+    )
+    assert len(attempts) == 2
+    assert retries == [1]
+    assert text_of(events) == "恢复"
+
+
+# —— ⑧ 有界等待：total_timeout_s 用假时钟判定 ——
+
+
+def test_run_with_retry_gives_up_when_backoff_would_exceed_total_timeout() -> None:
+    clock = [0.0]
+    calls: list[int] = []
+    retries: list[int] = []
+
+    def call() -> None:
+        calls.append(1)
+        raise RateLimited("限流")
+
+    policy = RetryPolicy(
+        max_retries=5,
+        initial_delay_s=1.0,
+        max_delay_s=10.0,
+        jitter_ratio=0.0,
+        total_timeout_s=2.5,
+    )
+    with pytest.raises(RateLimited):
+        run_with_retry(
+            call,
+            policy=policy,
+            sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds),
+            monotonic=lambda: clock[0],
+            rand=lambda: 0.5,
+            on_retry=lambda attempt, _delay, _exc: retries.append(attempt),
+        )
+
+    # 第 1 次重试退避 1.0s（可行）→ 第 2 次退避 2.0s 会越过 deadline 2.5s ⇒ 放弃
+    assert calls == [1, 1]
+    assert retries == [1]
+    assert clock[0] == 1.0  # 只 sleep 了 1.0s，绝不越过总时限
+
+
+def test_iter_with_retry_reports_each_retry_attempt() -> None:
+    state = {"n": 0}
+
+    def factory() -> Iterator[Any]:
+        state["n"] += 1
+        if state["n"] < 3:
+            raise ProviderError("服务端错误", code="SERVER", status=500)
+        return iter([TextDelta("ok"), FinishEvent(reason=FinishReason.STOP)])
+
+    seen: list[tuple[int, float]] = []
+    events = list(
+        iter_with_retry(
+            factory,
+            policy=RetryPolicy(max_retries=5, initial_delay_s=0.001, max_delay_s=0.01, jitter_ratio=0.0),
+            on_retry=lambda attempt, delay, _exc: seen.append((attempt, delay)),
+        )
+    )
+    assert [attempt for attempt, _delay in seen] == [1, 2]
+    assert text_of(events) == "ok"
+
+
+# —— ⑨ 面板路径策略（交互路径，等待有界；库层默认不变）——
+
+
+def test_panel_retry_policy_is_tighter_than_library_default() -> None:
+    from memoria.services.agent.ask_stream import (
+        PANEL_MAX_RETRIES,
+        PANEL_RETRY_POLICY,
+        PANEL_TOTAL_TIMEOUT_S,
+    )
+
+    assert (PANEL_MAX_RETRIES, PANEL_TOTAL_TIMEOUT_S) == (2, 20.0)
+    assert PANEL_RETRY_POLICY.max_retries == 2
+    assert PANEL_RETRY_POLICY.total_timeout_s == 20.0
+    assert PANEL_RETRY_POLICY.retryable_codes == RETRYABLE_CODES
+    assert PANEL_RETRY_POLICY.initial_delay_s == 0.5  # 其余沿用库层默认
+    assert PANEL_RETRY_POLICY.max_delay_s == 10.0
+    # 库层上游默认值不变
+    assert DEFAULT_MAX_RETRIES == 5
+    assert DEFAULT_TOTAL_TIMEOUT_S == 120.0
+    assert RetryPolicy().max_retries == 5
+    assert RetryPolicy().total_timeout_s == 120.0
+
+
+def test_ask_job_manager_uses_panel_retry_policy(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> None:
+    """面板作业实际把 PANEL_RETRY_POLICY 传给了 ask()（不改 RPC 签名）。"""
+    import time
+    from types import SimpleNamespace
+
+    from memoria.services.agent import ask_stream
+
+    captured: dict[str, Any] = {}
+
+    def fake_ask(kb_path: str, question: str, **kwargs: Any) -> Any:
+        captured.update(kwargs)
+        return SimpleNamespace(
+            answer="好",
+            anchors=(),
+            tool_calls=(),
+            usage={},
+            session_id="session-x",
+            stop_reason="final-answer",
+            iterations=1,
+            error=None,
+        )
+
+    monkeypatch.setattr(ask_stream, "ask", fake_ask)
+    kb = tmp_path / "kb"
+    kb.mkdir()
+    manager = ask_stream.AskJobManager()
+    env = {"MEMORIA_AGENT_BASE_URL": "http://panel.example/v1", "MEMORIA_AGENT_MODEL": MODEL}
+    started = manager.start(str(kb), "问题", env=env)
+    assert started["status"] == "ok"
+
+    job_id = started["job_id"]
+    for _ in range(200):  # 等工作线程跑完（池是单线程，几乎立即）
+        snapshot = manager.poll(job_id, 0)
+        if snapshot["status"] != ask_stream.RUNNING:
+            break
+        time.sleep(0.01)
+    assert snapshot["status"] == ask_stream.DONE
+    assert captured["retry_policy"] is ask_stream.PANEL_RETRY_POLICY
+    assert captured["session_id"] is None
