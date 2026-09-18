@@ -166,6 +166,11 @@ window.MemoriaAgentPanel = (function () {
   // 「恢复上次会话」的幂等键（同一库+同一 id 只自动恢复一次，避免重复请求/覆盖）
   let restoredKey = "";
 
+  // 底部状态栏用量格（`#status-agent`）：最近一轮 usage + **本会话累计**
+  // （面板自持累加；**不**为此新增任何 RPC 轮询）。`null` = 尚无（该格为空、不占位）。
+  let lastUsage = null;
+  let sessionUsage = null;
+
   // 等待计时：轮询期间状态行显示「生成中… Ns」（每秒刷新，结束/出错即停）
   let waitStartedAt = 0;
   let waitTimer = null;
@@ -548,6 +553,113 @@ window.MemoriaAgentPanel = (function () {
     return parts.filter(Boolean).join(" · ");
   }
 
+  // ── 底部状态栏用量格（`#status-agent`）────────────────────────────────
+  // 显示**最近一轮**的紧凑摘要（如 `↑8.7k ↓233 · 命中 62%`）；悬停给计费拆分
+  // （本轮 + 本会话累计）；点击展开右侧对话面板。无 agent 活动 ⇒ 空（`:empty` 不占位）。
+
+  function usageInt(value) {
+    return typeof value === "number" && isFinite(value) ? value : null;
+  }
+
+  /** token 数的紧凑写法：≥1000 用 k（一位小数，去掉多余的 .0），否则原样。 */
+  function fmtTokens(n) {
+    const v = Number(n) || 0;
+    if (v < 1000) return String(v);
+    return (v / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  }
+
+  /** 命中率文本；**命中量未知时返回 null**（调用方据此省略该段，绝不瞎报 0%）。 */
+  function hitRateText(hit, prompt) {
+    if (hit === null || !prompt) return null;
+    return ((hit / prompt) * 100).toFixed(1).replace(/\.0$/, "") + "%";
+  }
+
+  /** 把一轮 usage 累加进本会话累计（只累加，不发请求）。 */
+  function addSessionUsage(usage) {
+    if (!sessionUsage) {
+      sessionUsage = {
+        turns: 0, prompt: 0, completion: 0, total: 0,
+        cache_hit: 0, cache_miss: 0, hit_denom: 0, hit_known: 0, miss_known: 0,
+      };
+    }
+    const prompt = usage.prompt_tokens || 0;
+    const completion = usage.completion_tokens || 0;
+    const hit = usageInt(usage.cache_read_tokens);
+    const miss = usageInt(usage.cache_miss_tokens);
+    sessionUsage.turns += 1;
+    sessionUsage.prompt += prompt;
+    sessionUsage.completion += completion;
+    sessionUsage.total += usage.total_tokens || prompt + completion;
+    if (hit !== null) {
+      sessionUsage.hit_known += 1;
+      sessionUsage.cache_hit += hit;
+      sessionUsage.hit_denom += prompt;
+    }
+    if (miss !== null) {
+      sessionUsage.miss_known += 1;
+      sessionUsage.cache_miss += miss;
+    }
+  }
+
+  /** 重绘用量格；`lastUsage` 为空即清空文本与 title（`:empty` 使其不占位）。 */
+  function renderStatusUsage() {
+    const el = $("#status-agent");
+    if (!el) return;
+    const u = lastUsage;
+    if (!u || !u.total_tokens) {
+      el.textContent = "";
+      el.title = "";
+      return;
+    }
+    const prompt = u.prompt_tokens || 0;
+    const completion = u.completion_tokens || 0;
+    const total = u.total_tokens || prompt + completion;
+    const hit = usageInt(u.cache_read_tokens);
+    const miss = usageInt(u.cache_miss_tokens);
+    const rate = hitRateText(hit, prompt);
+
+    el.textContent =
+      T("agent.statusBar.span", { prompt: fmtTokens(prompt), completion: fmtTokens(completion) }) +
+      (rate ? T("agent.statusBar.spanCache", { rate: rate }) : "");
+
+    const lines = [T("agent.statusBar.line", { prompt: prompt, completion: completion, total: total })];
+    lines.push(
+      hit === null
+        ? T("agent.statusBar.cacheUnknown")
+        : T("agent.statusBar.cache", { hit: hit, miss: miss === null ? "—" : miss, rate: rate || "—" })
+    );
+    if (u.estimated) lines.push(T("agent.statusBar.estimated"));
+    if (sessionUsage && sessionUsage.turns > 0) {
+      lines.push(
+        T("agent.statusBar.session", {
+          turns: sessionUsage.turns,
+          prompt: sessionUsage.prompt,
+          completion: sessionUsage.completion,
+          total: sessionUsage.total,
+        })
+      );
+      // 累计缓存只在"至少一轮上报过命中量"时给（与后端 report 口径一致）
+      if (sessionUsage.hit_known > 0) {
+        lines.push(
+          T("agent.statusBar.sessionCache", {
+            hit: sessionUsage.cache_hit,
+            miss: sessionUsage.miss_known > 0 ? sessionUsage.cache_miss : "—",
+            rate: hitRateText(sessionUsage.cache_hit, sessionUsage.hit_denom) || "—",
+          })
+        );
+      }
+    }
+    lines.push(T("agent.statusBar.hint"));
+    el.title = lines.join("\n");
+  }
+
+  /** 复位用量格（清空对话 / 载入历史会话 / 换库；历史会话无法回算旧用量）。 */
+  function resetStatusUsage() {
+    lastUsage = null;
+    sessionUsage = null;
+    renderStatusUsage();
+  }
+
   // ── 等待计时（轮询期间状态行「生成中… Ns」）────────────────────────────
 
   /** 每秒刷新一次状态行；只在 `startWait()` 之后生效。 */
@@ -719,6 +831,7 @@ window.MemoriaAgentPanel = (function () {
     streamingEl = null;
     sessionId = String(res.session_id || id);
     sessionKb = kb;
+    resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
     setStatusText(T("agent.status.session", { id: sessionId }));
     syncHistorySelection();
@@ -752,6 +865,7 @@ window.MemoriaAgentPanel = (function () {
       sessionKb = "";
       messages.length = 0;
       streamingEl = null;
+      resetStatusUsage(); // 换库即作废本会话累计与状态栏用量格
       renderMessages();
       setStatusText("");
     }
@@ -1039,6 +1153,12 @@ window.MemoriaAgentPanel = (function () {
       }
       stopWait();
       finalizeMessage(st);
+      // 状态栏用量格：只认"确实有总量"的 usage（取消/未知作业的 usage 为空 ⇒ 保留上一轮）
+      if (st.usage && st.usage.total_tokens) {
+        lastUsage = st.usage;
+        addSessionUsage(st.usage);
+        renderStatusUsage();
+      }
       if (st.session_id) {
         // 后端把本次会话 id 回传：存下来，后续提问即续聊；并落盘供下次自动恢复
         sessionId = String(st.session_id);
@@ -1117,6 +1237,7 @@ window.MemoriaAgentPanel = (function () {
     sessionId = null;
     sessionKb = "";
     stopWait();
+    resetStatusUsage(); // 开新会话：状态栏用量格与本会话累计一并清零
     renderMessages();
     setStatusText("");
     if (jid) {
@@ -1184,6 +1305,15 @@ window.MemoriaAgentPanel = (function () {
     const deleteBtn = $("#agent-history-delete");
     if (deleteBtn) deleteBtn.addEventListener("click", () => deleteSelected());
 
+    // 状态栏用量格：点击展开右侧对话面板（不新增弹窗；面板在此前已由本模块定义）
+    const statusAgent = $("#status-agent");
+    if (statusAgent) {
+      statusAgent.addEventListener("click", () => {
+        const panel = window.MemoriaAgentPanel;
+        if (panel && panel.open) panel.open();
+      });
+    }
+
     const input = $("#agent-input");
     if (input) {
       input.addEventListener("keydown", (e) => {
@@ -1237,6 +1367,7 @@ window.MemoriaAgentPanel = (function () {
         resetDeleteArmed(); // 语言切换后删除按钮文案随语言包（含复位二次确认）
         refreshHistoryLabels(); // 历史选项文案（含禁用态占位）随语言切换
         applyDockCollapsed(); // 语言切换后重绘按钮文案（含三态 title）
+        renderStatusUsage(); // 状态栏用量格文案（中英）随语言切换
       });
     }
 

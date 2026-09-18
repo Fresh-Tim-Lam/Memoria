@@ -32,11 +32,12 @@
 │   │   ├── #agent-dock-resizer:226             左缘拖拽柄（app.css:371-384）
 │   │   └── 内部：顶部操作条:227-236 / 设置区:237-258 / 历史行:259-262 / 消息区:263 / 输入区:264-272
 │   └── #agent-dock-collapse-btn index.html:275 fixed 收起/展开（右栏，z-index 90）
-└── #status-bar                index.html:278    （memoria.css:561-573）
-#-flash-host:286 · 9 个 .-modal:288-434   均在 #app 之外，fixed
+└── #status-bar                index.html:279    （memoria.css:604-615）
+     #status-info:280 · #status-stats:281 · #status-agent:282（agent 用量格）
+#-flash-host:288 · 9 个 .-modal:290-436   均在 #app 之外，fixed
 ```
 
-> ⚠️ **行号漂移（2026-09-18 实测）**：本节 tree 已按当前 `index.html` 重取。差异来源：① **既有漂移**——本文最初记录的 `index.html` 锚点整段比实际**小 13 行**（`#app` 旧记 34、实际 47），`js/*.js` 锚点亦有小偏差（`showWelcome` 旧记 380-383、实际 388-391）；② **2026-09-17 第一轮**——在侧栏插入第 4 页签与「对话」面板（共 +45 行），故 `#main` 内其后节点 = 旧锚 +58；③ **2026-09-17 第二轮**——对话面板由左栏第 4 页签**迁为右侧 `#-agent-dock`**（`index.html` 净 +4 行）；④ **2026-09-17 第三轮**（文档区最小宽度保护）**未改 `index.html`**，但 `app.css` 在 dock 段插入了 `.-agent-dock--auto-hidden`（+14 行）⇒ `app.css` 中 dock 段及其后行号整体位移；⑤ **2026-09-18（本轮 M1c）**——对话面板新增历史行 `.-agent-history`（`index.html` **+4 行**，259-262）⇒ **`index.html` 中 dock 之后各节点行号 +4**（`#-agent-dock` 225 不变、`</aside>` 269→273、折叠按钮 271→275、`#status-bar` 274→278、`#-flash-host` 282→286、`.-modal` 284-430→288-434）；`app.css` 仅新增 `.-agent-history` 5 条规则（494-526，其后各条行号下移 33 行，如 `.-agent-messages` 494→527）。**本文 §2.1/§2.2 内的旧锚点仍未逐条重扫**，按上述偏移换算；§2.3 与 §2.4 用的是 2026-09-18 实测值。
+> ⚠️ **行号漂移（2026-09-18 实测）**：本节 tree 已按当前 `index.html` 重取。差异来源：① **既有漂移**——本文最初记录的 `index.html` 锚点整段比实际**小 13 行**（`#app` 旧记 34、实际 47），`js/*.js` 锚点亦有小偏差（`showWelcome` 旧记 380-383、实际 388-391）；② **2026-09-17 第一轮**——在侧栏插入第 4 页签与「对话」面板（共 +45 行），故 `#main` 内其后节点 = 旧锚 +58；③ **2026-09-17 第二轮**——对话面板由左栏第 4 页签**迁为右侧 `#-agent-dock`**（`index.html` 净 +4 行）；④ **2026-09-17 第三轮**（文档区最小宽度保护）**未改 `index.html`**，但 `app.css` 在 dock 段插入了 `.-agent-dock--auto-hidden`（+14 行）⇒ `app.css` 中 dock 段及其后行号整体位移；⑤ **2026-09-18（本轮 M1c）**——对话面板新增历史行 `.-agent-history`（`index.html` **+4 行**，259-262）⇒ **`index.html` 中 dock 之后各节点行号 +4**（`#-agent-dock` 225 不变、`</aside>` 269→273、折叠按钮 271→275、`#status-bar` 274→278、`#-flash-host` 282→286、`.-modal` 284-430→288-434）；`app.css` 仅新增 `.-agent-history` 5 条规则（494-526，其后各条行号下移 33 行，如 `.-agent-messages` 494→527）；⑥ **2026-09-18（本轮「agent 用量可视化」）**——`#status-bar` 内新增 agent 用量格 `<span id="status-agent">`（`index.html` **+1 行**）⇒ 其后各节点行号 +1（`#-flash-host` 286→288、`.-modal` 288-434→290-436）；`app.css` 新增 `#status-agent` 3 条规则（**+12 行**，其后各条行号 +12）；`js/agent-panel.js` **+131 行**（状态栏用量格的状态与渲染/累加，见 §2.7）⇒ §2.4 表中 `agent-panel.js` 锚点按 **+5**（原 1-555 段）/ **+111**（原 556+ 段）换算。**本文 §2.1/§2.2 内的旧锚点仍未逐条重扫**，按上述偏移换算；§2.3 与 §2.4 用的是 2026-09-18 实测值。
 
 **关键互斥关系**（§5 展开）：`#welcome` 与 `#editor-wrap` 由 `showWelcome()` 互斥（app.js:388-391）；导航面板内**三**视图由 `.hidden` 互斥（app.js:1241-1246，见 §2.3）；`#editor-split` 三视图由类名互斥（app.js:1646）。
 
@@ -195,15 +196,16 @@
 
 | 项 | 证据 | 说明 |
 |---|---|---|
-| 容器与左段 | index.html:274-277；memoria.css:561-573 | 高 1.375rem、主题蓝底、白字、`flex-shrink:0`；`#status-info` 为 `flex:1` 单行省略（memoria.css:572），初值「就绪」（`app.status.ready`） |
+| 容器与左段 | index.html:279-283；memoria.css:604-615 | 高 1.375rem、主题蓝底、白字、`flex-shrink:0`；`#status-info` 为 `flex:1` 单行省略（memoria.css:614），初值「就绪」（`app.status.ready`） |
 | 右段统计块 | app.js:281-333；i18n/zh-CN.js:485-490 | 由 `renderStatusStats()` 以 ` · ` 连接：① 检查统计（有 error/warn 时，文案取自 kb-check.js 的 `statsChunk`，并打 `data-kb-check="1"`）；② 全库检查通过（`check.stat.pass`，且无文件级统计）；③ 图谱待办 warn 数；④ 当前文件统计 `app.stat.kpLines`「{kp} KP · {lines} 行」，若有 sidecar 问题再追加 `app.stat.errors/warnings` + `app.stat.sidecar`；⑤ 图谱审计问题（文件级优先，其次全库） |
-| 样式与点击 | app.css:1732-1755；app.js:12219-12227 | `.-stat-error` 红、`.-stat-warn` 黄、`.-stat-ok` 次色；命中图谱审计时 `#status-stats` 加 `.-status-clickable`（黄 + 下划线 + 指针）；点击时 `data-kb-check` 优先 → 检查弹窗，否则 `data-graph-audit-goto` → 跳到首个图谱审计问题 |
+| **Agent 用量格** `#status-agent` | index.html:282；app.css:2138-2145；agent-panel.js:169-172、560-661、1156-1161、1308-1315 | **本轮（2026-09-18）新增，为 `#status-stats` 之后的独立 span**（不与统计块共用节点，**`#status-stats` 的语义与点击行为完全不变**）。显示**最近一轮**的紧凑摘要：`↑8.7k ↓233 · 命中 62%`（`↑` = 输入 `prompt_tokens`、`↓` = 输出 `completion_tokens`；数字 ≥1000 用 k 缩写一位小数）。**命中率未知时省略该段**（绝不显示 0%）；`title`（悬停）给计费拆分多行文本：本轮输入/输出/合计、**命中/未命中/命中率**、是否估算、**本会话累计**（含命中的拆分）。点击 ⇒ `MemoriaAgentPanel.open()` 展开右侧对话面板（`open()` 内部按空间不足规则处理，**不新增弹窗**）。**无 agent 活动时该 span 为空**（`:empty { display:none }`，不占位）。数值来源：`agent_ask_poll` 的 `usage`（含 `cache_read_tokens`/`cache_miss_tokens`）；本会话累计由面板**自行累加**（不新增 RPC 轮询），「清空对话」/载入历史会话/切换知识库时复位（历史会话视图不含 usage，无法回算旧用量） |
+| 样式与点击（统计块） | app.css:1732-1755；app.js:12219-12227 | `.-stat-error` 红、`.-stat-warn` 黄、`.-stat-ok` 次色；命中图谱审计时 `#status-stats` 加 `.-status-clickable`（黄 + 下划线 + 指针）；点击时 `data-kb-check` 优先 → 检查弹窗，否则 `data-graph-audit-goto` → 跳到首个图谱审计问题（**本条只描述 `#status-stats`；`#status-agent` 见上一行**） |
 
 ### 2.8 闪烁提示（flash，瞬时反馈）
 
 | 项 | 说明 |
 |---|---|
-| 宿主 / 位置 / 层级 | `#-flash-host`（index.html:282）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2202-2213）⇒ **高于弹窗**，弹窗内也能看见 |
+| 宿主 / 位置 / 层级 | `#-flash-host`（index.html:288）；fixed，`left:50%`、`bottom:2rem`，纵向列；`z-index:12000`（app.css:2202-2213）⇒ **高于弹窗**，弹窗内也能看见 |
 | 时长 / 并发 | 默认 3800ms + 280ms 淡出（app.js:347、354-356）；可多条堆叠（host 为 flex 列，追加节点） |
 | 变体 / 入口 | `.-flash-error` 红边 + 标题/详情两行（app.css:2215-2227）、`.-flash-info` 绿边（app.css:2233-2245）；`showFlashError(msg, detail)`（app.js:344）、`showFlashInfo(msg)`（app.js:360），两者均已挂在 `MemoriaApp` 门面上供子模块调用 |
 | 与底栏的分工 | `setStatusError(msg, detail)` = `setStatus` + `showFlashError`（app.js:374-377）⇒ 底栏 + 卡片**双写**；`setStatus(msg, undefined, {error:true})` 只把底栏转红、不弹卡片；「导入」未开库是唯一**只弹卡片、不写底栏**的入口（import-flow.js:44） |
@@ -212,7 +214,7 @@
 
 ### 2.9 弹窗与层级
 
-通用结构（index.html:284-430 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
+通用结构（index.html:290-436 共 9 个）：`.-modal[.hidden]` > `.-modal-backdrop` + `.-modal-box[变体类]` > `.-modal-header`（标题 + `.-icon-btn` ×）/ `.-modal-body` / `.-modal-footer.-btn-bar`。
 
 现有变体类：`#kp-modal`、`#config-modal`（`-modal-tabbed`）、`#assist-modal`（`-modal-assist`）、`#check-modal`（`-modal-check`）、`#settings-modal`（`-modal-settings`）、`#link-modal`、`#import-conflict-modal` / `#import-result-modal`（`-modal-import-conflict|-result`）、`#kb-agent-modal`（复用 `-modal-import-conflict`）。另有**运行时动态创建**的 `.-modal`：文件树输入/确认框（file-tree.js:263-300；app.js:706-728）。
 
@@ -268,7 +270,7 @@
 | `side.*` | 侧栏页签、分栏、收起、知识点工具栏 | `side.tabs.aria`、`side.tab.files`、`collapseTitle`、`expandTitle`、`split.title`、`side.kp.label|config|new`（561-574） |
 | `view.*` / `edit.*` | 视图模式、编辑模式、格式栏、块编辑栏 | `view.toggleAria`、`view.source|preview|split`、`edit.mode.aria|title|browseTitle|btn`、`edit.fmt.aria|boldTitle|…`、`edit.block.aria`（648-679） |
 | `search.*` | 搜索范围、占位符、状态与结果文案 | `search.scopeKb`、`scopeFile`、`ph`、`title`、`statusSearching`（527-536） |
-| `agent.*` | 右侧「对话」停靠栏（**顶栏按钮文案复用 `agent.tab`** + dock aria/折叠/拖拽 title + 出网开关 + 端点设置 8 字段 + 输入占位 + 角色两态 + 来源 + 状态与错误） | `agent.tab`（= 顶栏 `#btn-agent` 文案）、`agent.btnTitle`、`agent.dockAria`、`agent.dockCollapseTitle`、`agent.dockExpandTitle`、`agent.dockResizeTitle`（2026-09-17 新增 5 键）、`agent.dockNoSpaceTitle` / `agent.dockNoSpace`（同日第二轮新增 2 键：空间不足自动隐藏的三态文案）、`agent.net.label`、`agent.settings.apiKeySet`、`agent.status.usage`、`agent.err.no_base_url`（zh-CN.js:575-649） |
+| `agent.*` | 右侧「对话」停靠栏（**顶栏按钮文案复用 `agent.tab`** + dock aria/折叠/拖拽 title + 出网开关 + 端点设置 8 字段 + 输入占位 + 角色两态 + 来源 + 状态与错误） + **状态栏用量格** | `agent.tab`（= 顶栏 `#btn-agent` 文案）、`agent.btnTitle`、`agent.dockAria`、`agent.dockCollapseTitle`、`agent.dockExpandTitle`、`agent.dockResizeTitle`（2026-09-17 新增 5 键）、`agent.dockNoSpaceTitle` / `agent.dockNoSpace`（同日第二轮新增 2 键：空间不足自动隐藏的三态文案）、`agent.net.label`、`agent.settings.apiKeySet`、`agent.status.usage`、`agent.err.no_base_url`、**`agent.statusBar.*`**（2026-09-18 本轮新增 9 键：`span`/`spanCache`/`line`/`cache`/`cacheUnknown`/`estimated`/`session`/`sessionCache`/`hint`，供状态栏 `#status-agent` 的文本与多行 `title`）（zh-CN.js:575-663） |
 | `dlg.*` / `check.*` / `kbAgent.*` / `import.*` | 各弹窗标题与按钮 | `dlg.kpTitle`、`dlg.configTitle`、`check.modalTitle` 等 |
 
 完整清单与未迁移中文行的登记规则见 [../i18n-inventory.md](../i18n-inventory.md)；语言系统维护规范见 [../../conventions/i18n.md](../../conventions/i18n.md)。
@@ -295,7 +297,7 @@
 
 | 要点 | 锚点 |
 |---|---|
-| 顶层骨架 / 区域顺序 | index.html:47-282；theme/memoria.css:39-43、248、388-393、439-443 |
+| 顶层骨架 / 区域顺序 | index.html:47-283；theme/memoria.css:39-43、248、388-393、439-443 |
 | `#toolbar` 尺寸与层级 / 顶栏元素顺序 | theme/memoria.css:46-60；index.html:48-107 |
 | 拖拽区标记 / 排除选择器 | index.html:49、84、95、96、97；window-chrome.js:118-123 |
 | 原生标题栏拖动 / 下拉还原 / 双击最大化 / 焦点回拉 | window-chrome.js:188-208、339-344、222-283、353-365、210-220 |
@@ -306,20 +308,22 @@
 | 刷新 / 构建 | app.js:12192-12197、1012-1049 |
 | **顶栏对话开关** `#btn-agent` | index.html:82；agent-panel.js:1209-1214、228-257、283-285 |
 | 侧栏页签 / 悬空页签回退 / 计数 / 宽度拖拽 / 收起展开 / 上下分栏 | app.js:1233-1258（回退守卫 1234-1236）、739-741、12103-12106、12134-12154、12158-12206；graph-settings.js:43-47、343、361、915-965、967 |
-| **右侧「对话」停靠栏**（骨架 / 样式 / 模块 / 装配 / 持久化 / 最小宽度保护 / 历史会话 / 删除 / 恢复上次会话 / 停止与取消 / 等待计时） | index.html:225-274、276（历史行 259-263，删除按钮 262）；app.css:331-668（自动隐藏 361-373；历史行 495-533、删除按钮 528-533；消息区 534-628；「（已停止）」587-589；输入区 629-668）；js/agent-panel.js:1-1266（dock 控制 172-392、渲染 394-549、会话历史/删除/恢复 575-797、提问与取消 905-1131、装配 1145-1249）；app.js:12856（另见 452/560/598 三处 `onKbChanged` 钩子） |
+| **右侧「对话」停靠栏**（骨架 / 样式 / 模块 / 装配 / 持久化 / 最小宽度保护 / 历史会话 / 删除 / 恢复上次会话 / 停止与取消 / 等待计时 / 状态栏用量格） | index.html:225-274、276（历史行 259-263，删除按钮 262）；app.css:331-680（自动隐藏 361-373；历史行 495-533、删除按钮 528-533；消息区 534-628；「（已停止）」587-589；输入区 629-668）；js/agent-panel.js:1-1397（dock 控制 190-407、渲染 425-554、**状态栏用量格 169-172 / 556-660 / 1156-1161 / 1308-1315 / 1370**、会话历史/删除/恢复 693-915、提问与取消 1023-1249、装配 1268-1380）；app.js:12856（另见 452/560/598 三处 `onKbChanged` 钩子） |
 | 侧栏与树样式 | app.css:123-323；app.css:3000-3048 |
 | 图谱分组条显隐 | app.js:757-768 |
 | 视图模式切换 / 编辑模式开关 | app.js:1567-1629；app.css:3453-3459；edit-handler.js:59-122 |
 | 格式栏与块编辑栏互斥 | index.html:164-201；edit-handler.js:1009-1013、1545-1550 |
 | 欢迎页与文档区切换 / 关库复位 | app.js:380-383、575-628 |
 | 状态栏统计拼装 / 点击跳转 / 样式 | app.js:281-333、12219-12227；app.css:1732-1755 |
+| **状态栏 Agent 用量格** `#status-agent`（本轮新增） | index.html:282；app.css:2138-2145；agent-panel.js:169-172（状态）、556-660（渲染/累加/复位）、1156-1161（轮询结束时写入）、1240（清空对话复位）、1308-1315（点击展开面板）、1370（语言切换重绘）；i18n/zh-CN.js:642-652（`agent.statusBar.*` 9 键，en.js 同段） |
 | flash 卡片实现 | app.js:344-372；app.css:2202-2245 |
 | 弹窗通用结构 / 拖动 / 动态弹窗 | app.css:4503-4567；app.js:12560-12625、706-728；file-tree.js:263-300 |
 | 显示设置（字号 / 缩放）/ 缩放快捷键 | display-settings.js:11-20、79-98、140-157；app.js:12201-12217 |
-| i18n 静态节点刷新 / boot 顺序 | i18n.js:91-115、154-169；app.js:12848-12862（`MemoriaAgentPanel.init` 在 12856） |
+| i18n 静态节点刷新 / boot 顺序 | i18n.js:91-115、154-169；app.js:12852-12866（`MemoriaAgentPanel.init` 在 12860） |
 
 ## 7. 未证实 / 待确认
 
+- ⚠️ **本轮（2026-09-18：状态栏 agent 用量格 `#status-agent`）已取证 / 未取证**。已取证（headless Edge + CDP + harness `/rpc` + 本地假 SSE 端点，`MEMORIA_CONFIG_DIR` 与 KB 均指向临时目录；**11/11 PASS**）：⑧ 用量格文本 **`↑8.7k ↓233 · 命中 62%`**；⑨ `title` 含 `缓存：命中 5402 / 未命中 3311 / 命中率 62%` + `本会话累计…`；⑩ 无活动时为空且 `display:none`（不占位）；⑪ 折叠 dock 后点该格使其重新可见（`clientWidth 0 → 351`）；⑫ 会话 `loop/end.usage` 带 `cache_read_tokens`/`cache_miss_tokens`。详见 [10 篇 §7](./10-data-layout-and-host-embedding.md) 与 §2.7。**未取证**：悬停 `title` 在真机不同主题 / `uiScale` 下的换行观感、真实模型端点下的命中率数值。同类「桥在 document-start 就绪时后续模块 init 落空」的装载顺序脆弱点见 10 篇 §7（非本轮引入、未改代码）。
 - ⚠️ 待确认（未能取证）：`#preview-status` 的填充逻辑与出现时机（app.js:2029-2047 附近有读写点，但完整触发链跨渲染层，未穷尽；留 [04-preview-and-rendering.md](./04-preview-and-rendering.md)）。
 - ⚠️ 待确认（设计口径，需用户拍板）：**被「停止」的那一轮，部分文本是否要写进会话文件**。当前实现只落 `user/message` + `loop/end(stop_reason="aborted")`（部分文本只保留在面板内存与该轮 `answer` 里），因此**刷新页面/恢复会话后该轮只剩用户气泡**。若要"停止后刷新仍能看到半截回答"，需在 `loop.py` 的取消分支补发一条 `assistant/message`（会改变"aborted 轮不提交助手消息"的既有语义）。
 - ⚠️ 待确认（未能取证）：`.-graph-settings-preview`（设置页内的图谱预览窗，app.css:332-367）的归属与交互，需在 [06-links-and-graph.md](./06-links-and-graph.md) 或 09 篇确认。

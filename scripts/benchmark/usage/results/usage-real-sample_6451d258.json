@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "label": "real-sample",
+    "sha": "6451d258",
+    "tree_state": "dirty（含未提交改动）",
+    "generated_at": "2026-09-18T06:56:53.801637+00:00",
+    "kb_path": "D:\\AAA_Jupyter\\Memoria\\docs\\example\\AAA_Vocab",
+    "tool": "scripts/benchmark/usage/report_usage.py",
+    "cmd": "python scripts/benchmark/usage/report_usage.py --kb D:\\AAA_Jupyter\\Memoria\\docs\\example\\AAA_Vocab --label real-sample"
+  },
+  "kb_path": "D:\\AAA_Jupyter\\Memoria\\docs\\example\\AAA_Vocab",
+  "sessions": [
+    {
+      "session_id": "session-20260918T025752Z-7e93534e",
+      "path": "D:\\AAA_Jupyter\\Memoria\\docs\\example\\AAA_Vocab\\.memoria\\agent\\sessions\\session-20260918T025752Z-7e93534e.jsonl",
+      "capped": false,
+      "turns": 3,
+      "prompt": 128907,
+      "completion": 4504,
+      "total": 133411,
+      "cache_hit": null,
+      "cache_miss": null,
+      "hit_rate": null,
+      "estimated_turns": 0,
+      "cache_unknown_turns": 3
+    }
+  ],
+  "turns": [
+    {
+      "session_id": "session-20260918T025752Z-7e93534e",
+      "seq": 3,
+      "prompt": 8713,
+      "completion": 233,
+      "total": 8946,
+      "cache_hit": null,
+      "cache_miss": null,
+      "hit_rate": null,
+      "estimated": false
+    },
+    {
+      "session_id": "session-20260918T025752Z-7e93534e",
+      "seq": 23,
+      "prompt": 43178,
+      "completion": 2008,
+      "total": 45186,
+      "cache_hit": null,
+      "cache_miss": null,
+      "hit_rate": null,
+      "estimated": false
+    },
+    {
+      "session_id": "session-20260918T025752Z-7e93534e",
+      "seq": 45,
+      "prompt": 77016,
+      "completion": 2263,
+      "total": 79279,
+      "cache_hit": null,
+      "cache_miss": null,
+      "hit_rate": null,
+      "estimated": false
+    }
+  ],
+  "summary": {
+    "sessions": 1,
+    "turns": 3,
+    "prompt": 128907,
+    "completion": 4504,
+    "total": 133411,
+    "cache_hit": null,
+    "cache_miss": null,
+    "hit_rate": null,
+    "estimated_turns": 0,
+    "cache_unknown_turns": 3
+  }
+}

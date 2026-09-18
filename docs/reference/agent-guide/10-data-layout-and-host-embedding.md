@@ -169,13 +169,15 @@
 - 命令行只有一个面向**知识库运维**的 CLI：`memoria validate|repair-paths|diagnose-images`（cli/main.py:111-125），**不含**起服务、也不加载前端。
 - 因此"不启 GUI 就能浏览器访问 Memoria UI"目前**做不到**（deepseek-harness-integration.md:151 亦承认 T3 需新代码）。
 
-### 2.15 应用内对话：8 个 RPC、会话事实源、多轮续聊与「停止/删除」（2026-09-17 落地，2026-09-18 增补 M1c 与 M1 收尾）
+### 2.15 应用内对话：9 个 RPC、会话事实源、多轮续聊与「停止/删除」（2026-09-17 落地，2026-09-18 增补 M1c、M1 收尾与用量统计）
 
-M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，前端见 [01 篇 §2.4](./01-shell-and-layout.md)）共 8 个 RPC：
+M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，前端见 [01 篇 §2.4](./01-shell-and-layout.md)）共 9 个 RPC：
 **4 个为 2026-09-17 新增**（`presentation/api/ui.py:1145-1218`），**2 个为 2026-09-18（M1c）新增的只读会话历史**（ui.py:1242-1318），
-**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1220-1240、`agent_session_delete` ui.py:1320-1355）；
+**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1220-1240、`agent_session_delete` ui.py:1320-1359），
+**1 个为 2026-09-18（用量可视化）新增的只读用量统计**（`agent_usage_stats` ui.py:1363-1394，见 §2.17）；
 除下表中 `agent_ask_start` 的**追加可选参数**（`session_id`）、`agent_ask_poll` 的**追加字段**（`cancelled`）、
-`agent_sessions_list` 的**追加字段**（`capped`）外，**未改任何既有方法的语义与签名**；`save_ui_settings` 新增顶层 `agent` 段（非本表 RPC）。
+`agent_sessions_list` 的**追加字段**（`capped`）、`loop/end.usage` 的**追加字段**（三个 cache 字段，见 §2.17）外，
+**未改任何既有方法的语义与签名**；`save_ui_settings` 新增顶层 `agent` 段（非本表 RPC）。
 
 | 方法 | 签名 | 返回 |
 |---|---|---|
@@ -187,6 +189,7 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 | `agent_sessions_list` | `(kb_path: str \| None = None)` | `{status:"ok", sessions:[{session_id, modified_at(epoch 毫秒), turn_count, preview(前 80 字), title(前 40 字), capped}], count}`；按文件修改时间倒序、**最多 30 条**（`SESSION_LIST_LIMIT`，ui.py:1245）；`capped` 为 **M1 收尾追加字段**（见下「去读放大」）。单份会话损坏只跳过该条。**只读、不写盘** |
 | `agent_session_load` | `(session_id: str, kb_path: str \| None = None)` | `{status:"ok", session_id, messages:[{role:"user"\|"assistant", text, anchors?}]}`；未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。**只读、不写盘** |
 | `agent_session_delete` | `(session_id: str, kb_path: str \| None = None)` | **M1 收尾新增，产品首次允许写知识库**。只删 `<kb>/.memoria/agent/sessions/<id>.jsonl`；id 由 `session_file()` 的正则校验（防目录穿越）+ 一道**目录归属校验**（`realpath(父目录) == realpath(sessions_dir)`）双保险。`{status:"ok", deleted:true, session_id}`；id 非法/会话不存在 ⇒ `code:"unknown_session"`；删除失败（占用/权限）⇒ `code:"session_failed"` |
+| `agent_usage_stats` | `(kb_path: str \| None = None, session_id: str \| None = None)` | **2026-09-18（用量可视化）新增，只读**。聚合会话 `loop/end.usage`：`{status:"ok", kb_path, sessions:[按会话汇总], turns:[逐轮行], summary:{sessions, turns, prompt, completion, total, cache_hit, cache_miss, hit_rate, estimated_turns, cache_unknown_turns}}`；`session_id` 省略 ⇒ 全库。**命中率在 cache 数据未知时为 `None`**（不写 0）。未知/非法会话 ⇒ `code:"unknown_session"`；读取失败 ⇒ `code:"usage_failed"`。口径见 §2.17 |
 
 - **密钥边界（硬约束）**：`agent_get_config` / `agent_save_config` **只回掩码**（`mask_secret`，llm/config.py:94-101），明文密钥不进入任何返回值、日志、异常或 DOM；面板输入框保存后即清空，已存密钥只作 placeholder。
 - **配置落点**：`config/agent.json`（程序目录，与 `ui-settings.json` 同级；`config_file_path()` llm/config.py:164-174）。读路径为「环境变量 → 该文件 → 默认值」（`load_config()` llm/config.py:202-241，环境变量名见该模块头表）；写路径为**浅合并 + tmp/`os.replace` 原子写**（`save_config()` llm/config.py:284-330），`api_key` 仅在传入非空新值时覆盖——避免面板的掩码占位把已存密钥清空。键 `enabled`（允许出网）缺省视为 **true**（`is_enabled()` llm/config.py:265-281；`timeout_s` 空值同表"不修改"语义）。
@@ -196,12 +199,12 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 - **回放保真度（全保真，仅异常轮降级）**：`ToolCall` 可用 `{id,name,arguments}` 完整重建，且 OpenAI 兼容适配器正是按 `tool_call_id`/`tool_calls` 序列化（`llm/providers/openai_compatible.py:374-391`），故**带工具的轮次原样回放**（assistant 带 tool_calls + 紧随其后的 tool 消息）。唯一降级分支：某条 assistant 的 `tool_calls` 与随后的 `tool/result` **无法一一配对**（`id` 为空/数量不等/顺序不符，正常写作只在进程崩在工具执行中途出现）⇒ **整轮丢弃**，保证输出里绝不出现孤立 `tool_calls` 或孤儿 `tool` 消息（违规会被端点 400）。**容量上限与截断策略**：最多 **40 条消息**（`MAX_HISTORY_MESSAGES`，history.py:66）/ **32000 字符**（`MAX_HISTORY_CHARS`，history.py:68），**从最新往旧保留**整条消息，至少保留最新 1 条（单条超预算也保留，否则续聊会凭空丢掉当前上下文）；截断后若首部是被截掉 assistant 的 `tool` 消息，则一并丢弃以保持序列合法（`_truncate()`，history.py:180-194）。
 - **会话历史视图**：`agent_sessions_list` 逐份算摘要；`agent_session_load` 用 `conversation_messages()`（history.py:311-343）产出**渲染视图**——只出 `user`/`assistant`、**不含** `tool` 消息，每轮只出**一条** assistant 气泡（= 该轮最后一条非空 `assistant/message`，与实时渲染一致）。**锚点归属口径**：该轮全部 `tool/result.anchors` 去重后挂在该轮那条 assistant 气泡上（跨轮不混淆；轮内取并集）。
 - **去读放大（M1 收尾，`agent_sessions_list`）**：摘要改走 `history.py::summarize_session_file()`（history.py:260-308）的**原始行扫描**——全程在**字节串**上找 `"user/message"` 子串计 `turn_count`（不解码整份文件、不整体 `json.loads`），只对**首个命中行**解码 + `json.loads` 一次取预览；单份文件读取上限 `SESSION_SCAN_MAX_BYTES` = **2 MiB**（`capped:true` 表示超限、统计被截断，且**丢弃末段半行**不计），`size` 复用 `list_sessions()` 已 stat 到的字节数以免重复 stat。**`turn_count` 语义因此是「扫描上限内的 `user/message` 事件行数」**。实测（30 份会话 / 3.4 MiB / 每份 114.5 KiB）：**12.4–13.9 ms → 4.8–5.6 ms（约 2.2–2.7×）**；单份 3.0 MiB 病态会话：**10.4 ms → 1.4–1.7 ms（≈6.4–7.5×，`capped=true`）**。口径更严的 `summarize_session()` 仍保留给需要精确计数的调用方。
-- **伪流式、真增量与并发**：`agent_ask_start` 把一次同步 `ask()` 提交到**独立单线程执行器**（`services/agent/ask_stream.py::AskJobManager`，建池与 `thread_name_prefix="agent-ask"`），**不占用** `MaintenanceExecutor` 的 2 个 worker；增量来自 `ask(on_text=...)`（ask.py:117/185 → loop.py:245，消费 provider 的 `TextDelta`），`agent_ask_poll` 按 `cursor` 返回新增文本（`snapshot()`）。**同一时刻只允许一个 ask 在飞**，重复提交返回 `busy`（但被停止/已取消者不再占位）。续聊的 `session_id` 经 `AskJob.resume_session_id` 透传到 `ask(session_id=...)`。**面板作业固定用收紧的重试策略**（`retry_policy=PANEL_RETRY_POLICY`，见 §2.16）。**M1 收尾起是"真增量"**：`llm/providers/openai_compatible.py:296-311` 用 `response.read1(_READ_SIZE)` 读响应体（`HTTPResponse.read(n)` 在「无 Content-Length / `Connection: close`」的 SSE 上会阻塞到 EOF 或读满 n 字节，实测 3.6s 的流只在结束时返回一整块 ⇒ 增量投递与取消都失效）；`read1` 至多触发一次底层读，SSE 帧一到即返回（实测逐帧 90B/0.3s）。
-- **「停止」= 真取消（M1 收尾，替换旧「忽略本次」）**：`loop.py::CancelToken`（`threading.Event`）经 `ask(cancel=...)` 透传进 `AgentLoop`，在**三个检查点**观察——每轮迭代前（loop.py:287-291）、**流式逐事件**（loop.py:240-241）、每次工具调用后（loop.py:371-374）。取消时 `_stream_once` **停止消费生成器并 `stream.close()`**（令 provider 的 `with closing(response)` 关闭底层 HTTP 响应、不再收完），`stop_reason = StopReason.ABORTED`、**保留已生成的部分文本为 `answer`**，正常发 `loop/end`（`stop_reason="aborted"`）落盘、**不抛异常**；`AskJob.cancel()` 同时把作业**立即**收敛为 `done/aborted` 并释放单飞 busy（`ask_stream.py`），工作线程随后的 `succeed()/fail()` 不再改写状态（只补会话 id）。**边界（如实声明）**：取消是**协作式**的——阻塞在一次 `read1()` 上时须等该分片到达才返回；被取消那一轮**不写 `assistant/message`**（会话文件里只有 `user/message` + `loop/end(aborted)`），故刷新/恢复后该轮只剩用户气泡。
+- **伪流式、真增量与并发**：`agent_ask_start` 把一次同步 `ask()` 提交到**独立单线程执行器**（`services/agent/ask_stream.py::AskJobManager`，建池与 `thread_name_prefix="agent-ask"`），**不占用** `MaintenanceExecutor` 的 2 个 worker；增量来自 `ask(on_text=...)`（ask.py:117/185 → loop.py:253，消费 provider 的 `TextDelta`），`agent_ask_poll` 按 `cursor` 返回新增文本（`snapshot()`）。**同一时刻只允许一个 ask 在飞**，重复提交返回 `busy`（但被停止/已取消者不再占位）。续聊的 `session_id` 经 `AskJob.resume_session_id` 透传到 `ask(session_id=...)`。**面板作业固定用收紧的重试策略**（`retry_policy=PANEL_RETRY_POLICY`，见 §2.16）。**M1 收尾起是"真增量"**：`llm/providers/openai_compatible.py:296-311` 用 `response.read1(_READ_SIZE)` 读响应体（`HTTPResponse.read(n)` 在「无 Content-Length / `Connection: close`」的 SSE 上会阻塞到 EOF 或读满 n 字节，实测 3.6s 的流只在结束时返回一整块 ⇒ 增量投递与取消都失效）；`read1` 至多触发一次底层读，SSE 帧一到即返回（实测逐帧 90B/0.3s）。
+- **「停止」= 真取消（M1 收尾，替换旧「忽略本次」）**：`loop.py::CancelToken`（`threading.Event`）经 `ask(cancel=...)` 透传进 `AgentLoop`，在**三个检查点**观察——每轮迭代前（loop.py:295-299）、**流式逐事件**（loop.py:248-249）、每次工具调用后（loop.py:379-382）。取消时 `_stream_once` **停止消费生成器并 `stream.close()`**（令 provider 的 `with closing(response)` 关闭底层 HTTP 响应、不再收完），`stop_reason = StopReason.ABORTED`、**保留已生成的部分文本为 `answer`**，正常发 `loop/end`（`stop_reason="aborted"`）落盘、**不抛异常**；`AskJob.cancel()` 同时把作业**立即**收敛为 `done/aborted` 并释放单飞 busy（`ask_stream.py`），工作线程随后的 `succeed()/fail()` 不再改写状态（只补会话 id）。**边界（如实声明）**：取消是**协作式**的——阻塞在一次 `read1()` 上时须等该分片到达才返回；被取消那一轮**不写 `assistant/message`**（会话文件里只有 `user/message` + `loop/end(aborted)`），故刷新/恢复后该轮只剩用户气泡。
 - **「清空对话」（生成中亦可用）**：本地面板清空 + 偏好 `agent.lastSessionId` 置空，且**顺带调 `agent_ask_cancel`**（避免丢弃结果却继续烧 token）。
 - **恢复上次会话（M1 收尾）**：面板打开（`init` / dock 展开）或**切换知识库**（`app.js` 在 `initKb:452`/`openKbAt:560`/`closeKb:598` 调 `panel.onKbChanged()`）时，若 `agent.lastSessionId` 指向的会话文件仍存在 ⇒ 自动 `agent_session_load` 并设为当前会话（下一句即续聊）；**不存在则静默忽略**（不报错、不提示）。
 - **写入范围与「会话目录可写」边界（M1 收尾更新）**：此前本面板除会话 JSONL 外**不写知识库任何内容**（工具面自带零写入守卫）。M1 收尾**首次**开放一个写入口——`agent_session_delete` **只删** `<kb>/.memoria/agent/sessions/<id>.jsonl`：该目录是**产品自己管理的运行时产物**（会话事实源，不是知识内容），删除是**产品对自己产物的管理动作**，与"零写入正文/sidecar/manifest/pending"的边界不冲突；正文、sidecar、manifest、图片等**仍一律不碰**。删除后的可见影响：该对话无法再续聊（历史下拉里消失），知识本身不受影响。
-- **宿主嵌入注意**：这 8 个方法与其它 RPC 一样经 `window.memoria.api` / QWebChannel 单槽调用（§2.13），**没有** HTTP `/rpc`（`/rpc` 仅存在于测试 harness）；宿主若只实现最小桥，对话面板会在 `agent_get_config` 缺失时抛 `app.apiUnavailable` 并就地显示错误（不静默）。
+- **宿主嵌入注意**：这 9 个方法与其它 RPC 一样经 `window.memoria.api` / QWebChannel 单槽调用（§2.13），**没有** HTTP `/rpc`（`/rpc` 仅存在于测试 harness）；宿主若只实现最小桥，对话面板会在 `agent_get_config` 缺失时抛 `app.apiUnavailable` 并就地显示错误（不静默）。
 
 ### 2.16 重试与失败分类（2026-09-18，M1 收尾）
 
@@ -214,11 +217,76 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 | 其它永久失败 | 401/403、配额、上下文超限、400/413/422、协议错 | `AUTH` / `QUOTA` / `CONTEXT_WINDOW_EXCEEDED` / `INVALID_REQUEST` / `PROTOCOL` | ❌（现行为不变） |
 
 - **分类落点**：新增稳定 code `UNREACHABLE`（`llm/errors.py:62`），**刻意不进** `RETRYABLE_CODES`（errors.py:70——本轮**未增未删**，仍为 `EMPTY_RESPONSE`/`RATE_LIMIT`/`SERVER`/`TIMEOUT`/`TRANSPORT`），而是列入 `_TERMINAL_CODES`（errors.py:87）。判定函数 `is_unreachable()`（errors.py:205）先剥开 `urllib.error.URLError.reason` 再按底层异常分类；`is_retryable()` 的裸 `OSError` 分支改为「非确定性才可重试」（errors.py:247）。端点带内报错文本里的确定性措辞（`connection refused` / `getaddrinfo` / `certificate verify failed` / `unknown url type` 等）也在 `classify_detail()` 里归 `UNREACHABLE`（errors.py:96、345-347），而 `connection reset/aborted/broken pipe` 仍归 `TRANSPORT`。
-- **适配器落点**：`_transport_error()`（`llm/providers/openai_compatible.py:462-474`）在**建立连接**（:281）与**读取响应**（:303）两条路径统一分类；非数字端口等 `http.client.InvalidURL` 单独捕获（:272-277）。消息含**目标 URL + 底层原因 + 「确定性失败，不会重试」**，形如：`连接模型端点 http://127.0.0.1:9/v1/chat/completions 失败：目标端口拒绝连接（<urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>）；确定性失败，不会重试`。
+- **适配器落点**：`_transport_error()`（`llm/providers/openai_compatible.py:485-497`）在**建立连接**（:281）与**读取响应**（:303）两条路径统一分类；非数字端口等 `http.client.InvalidURL` 单独捕获（:272-277）。消息含**目标 URL + 底层原因 + 「确定性失败，不会重试」**，形如：`连接模型端点 http://127.0.0.1:9/v1/chat/completions 失败：目标端口拒绝连接（<urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>）；确定性失败，不会重试`。
 - **面板路径的等待上限**：库层默认值保持上游口径（`max_retries=5` / `initial_delay_s=0.5` / `max_delay_s=10` / `total_timeout_s=120`，`llm/retry.py:52-56`，**本轮未改**）；`ask_stream.py` 为**交互路径**显式构造更紧的 `PANEL_RETRY_POLICY`（`max_retries=2`、`total_timeout_s=20`，ask_stream.py:82-84）并传给 `ask()`（ask_stream.py:257）。理由：面板是「人在等」的交互路径，等待必须有界——2 次重试足以覆盖偶发抖动（退避上限 0.5+1.0≈1.5s），20s 是"还能等"与"像卡死"的分界（前端另有 5 分钟轮询兜底）；库层作为通用调用面保留上游默认。
-- **重试次数可见**：`AgentLoop` 把 `iter_with_retry` 的 `on_retry` 接进计数器（`loop.py:169-190`），最终 `error` 串在发生重试时追加「（已重试 N 次）」（`_retry_note()`，loop.py:101；**N=0 不加**），并在 `step/error` 观测事件里附 `retries`（loop.py:243）；`AgentLlmError` 的公开字段未变。
+- **重试次数可见**：`AgentLoop` 把 `iter_with_retry` 的 `on_retry` 接进计数器（`loop.py:177-198`），最终 `error` 串在发生重试时追加「（已重试 N 次）」（`_retry_note()`，loop.py:109；**N=0 不加**），并在 `step/error` 观测事件里附 `retries`（loop.py:251）；`AgentLlmError` 的公开字段未变。
 - **A/B 实测（必拒连端点）**：`base_url=http://127.0.0.1:9/v1` 走 `agent_ask_start` + 轮询——修复前 **27578ms**（= 6 次尝试 × 2.06s 单次拒绝耗时 + 5 次退避 15.5s，与人工实测 27986ms 同量级）⇒ 修复后 **2281ms**（1 次尝试、重试日志 0 行）；RPC 侧 `code:"ask_failed"`（`ask_failed` 是作业兜底 code），`error` 为上面那条含 URL 的原文。
 - **前端呈现**：面板的 code 映射（`agent-panel.js:89-114`）**未新增、未改动**；LLM 失败一律经 `ask_failed` 兜底显示本地化文案 + **后端原文**（原文即含 URL 与"确定性失败，不会重试"，agent-panel.js:872-878）。
+
+### 2.17 Agent 用量：端点字段映射、`loop/end.usage`、RPC 与报告脚本（2026-09-18，为 token benchmark 打前置）
+
+**目标**：把"这次调用花了多少 token、其中多少命中缓存"这类**事实数据**完整落盘并可聚合，
+为后续 token benchmark / A-B 对照提供前置。**不引入任何价格表**（成本换算由使用方按当时的公开价自行乘）。
+
+**1) `Usage` 的缓存字段**（`services/agent/llm/types.py:109-152`）
+
+| 字段 | 含义 | 来源 |
+|---|---|---|
+| `cache_read_tokens` | 命中的缓存（输入）token | 端点上报（见下映射） |
+| `cache_write_tokens` | 写入缓存的 token | 端点上报（**当前两个内置映射都不产出**，保持 `None`） |
+| **`cache_miss_tokens`** | **本轮新增**：未命中的缓存（输入）token | 端点上报，或 OpenAI 形态下由 `prompt_tokens - cached` 补出 |
+
+- `plus()` 已同步合并三者（`_sum_optional`：任一侧为 `None` 取另一侧，两侧皆 `None` 得 `None`）；
+  `UsageMeter.add()/to_dict()/reset()`（`llm/usage.py:105-159`）同步累计与输出 `cache_miss_tokens`。
+- **只增字段**：既有字段名与语义未改；老读者忽略未知键即可（`loop/end.usage` 载荷同样只增键）。
+
+**2) 端点 `usage` → 缓存字段的映射**（`llm/providers/openai_compatible.py:428-464` 的 `_usage_from_wire`）
+
+| 端点形态 | 读什么 | 映射 |
+|---|---|---|
+| **DeepSeek**（优先） | 顶层 `prompt_cache_hit_tokens` / `prompt_cache_miss_tokens` | → `cache_read_tokens` / `cache_miss_tokens` |
+| **OpenAI 风格**（兜底） | `prompt_tokens_details.cached_tokens` | → `cache_read_tokens`；未命中量按 `prompt_tokens - cached` **可推才推** |
+| 两者皆缺 | — | 三个 cache 字段保持 `None` = **未知** |
+
+**`estimated` 语义未变**：只有端点**完全没给** `usage` 时才由 `estimate_usage()` 置 `estimated=True`
+（`openai_compatible.py:384-385`）；**给了 usage 但缺 cache 字段不算估算**（`estimated=False`，cache 为 `None`）。
+用户端点是 `api.deepseek.com`，此前只读 OpenAI 风格字段 ⇒ `cache_read_tokens` 恒为 `None`、命中率无从计算，本条即修此缺陷。
+
+**3) `loop/end.usage` 载荷**（`loop.py::_usage_payload()`，`loop/end` 事件与 `AskResult.usage` **共用同一形状**）
+
+`{prompt_tokens, completion_tokens, total_tokens, estimated, cache_read_tokens, cache_write_tokens, cache_miss_tokens}`
+（前 4 键既有，后 3 键本轮起随 `loop/end` 与 `agent_ask_poll.usage` 一并返回；`AskResult` 的公开字段未改）。
+
+**4) RPC `agent_usage_stats`**（ui.py:1363-1394）—— **只读**，见 §2.15 表；
+实现是 `services/agent/usage_report.py::usage_stats()`，与 CLI 报告脚本同一份口径。
+
+**5) 报告脚本** `scripts/benchmark/usage/report_usage.py`（目录与命名对齐 `scripts/benchmark/graph/`，README 中文单语）
+
+```powershell
+python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签>] [--session <会话 id>] [--out <目录>]
+```
+
+- 产物 **JSON + MD 双份**（`results/usage-<label>_<sha>.json|.md`）：JSON 供后续 A/B，MD 供人读
+  （总览 / 按会话 / 按轮次 / **口径与限制**，含来源 commit 与生成时间）；
+- **只读知识库**：只读 `<kb>/.memoria/agent/sessions/*.jsonl`，除 `--out` 外不写任何位置；
+  `--out` 落在知识库内会被**直接拒绝**；
+- 读取走**原始行扫描 + 字节上限**（复用/参照 `session/history.py::summarize_session_file()` 的做法）：
+  全程在字节串上找 `"loop/end"` 子串、只对命中行解码，单份文件最多读 `SCAN_MAX_BYTES = 2 MiB`
+  （超限会话标 `capped:true`，只统计上限内的轮次并丢弃末段半行）⇒ 大文件不会把内存打爆。
+
+**6) 口径与已知限制**（引用数字时必须一起给出）
+
+- **一轮** = 一条 `loop/end` 事件（一次提问里全部模型步数之和），**不是**"一次模型请求"；
+- **命中率未知 ≠ 0**：本轮改动之前落盘的**老会话**没有 cache 字段 ⇒ 其轮次计入
+  `cache_unknown_turns` 且**不参与**命中率分母，命中率返回 `None`（报告显示「未知」）。
+  逐轮行的 `hit_rate = cache_hit / prompt`（`prompt <= 0` 或 `cache_hit is None` ⇒ `None`）；
+  汇总的 `hit_rate` 只在 cache 已知的轮次上算（同上）。
+  显式上报 `cache_read_tokens = 0` 是**已知**（命中率 0%），与"未知"不同（有单测覆盖）；
+- **会话文件未记录模型名**，故逐轮行不含 `model`；
+- `cache_miss_tokens` 在 OpenAI 形态下是**推出来的**（端点只给命中量），DeepSeek 形态下是端点直报。
+
+**7) 前端状态栏用量格** `#status-agent`：显示最近一轮紧凑摘要与悬停拆分（布局/交互见 [01 篇 §2.7](./01-shell-and-layout.md)）；
+本会话累计由面板**自行累加**（不新增 RPC 轮询），载入历史会话时因会话视图不含 usage 而从 0 起算。
 
 ## 3. 交互流程
 
@@ -240,10 +308,11 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 | `settings.configPath` | graph-settings.js:874-876；zh-CN.js:651 | 设置弹窗底部：`设置保存在程序目录：{path}`（`{path}` 来自 `get_ui_settings().settings_rel`） |
 | `modal.settings` / `common.close` | index.html:289、298 | 设置弹窗骨架（静态节点，随语言刷新） |
 | `app.openKbFirst` / `app.openFileFirst` | 各 RPC 前置校验失败的提示（如 kb-check.js:623-625） | 未开库时的统一文案 |
-| `agent.err.<code>` | js/agent-panel.js:104-130（`ERR_KEYS` / `GENERIC_CODES`）、499-529（`errorText`/`errorDetail`/`fullErrorText`）；zh-CN.js:627-657 | 对话面板把后端 8 个 agent RPC 的**稳定 code** 映射为文案（`no_kb`/`busy`/`no_base_url`/`unknown_session`/`session_failed`/**`cancel_failed`（M1 收尾新增）**/`MISSING_CREDENTIAL`/`RATE_LIMIT` …）；**未登记的 code 回退后端中文 `message`**；兜底 code（`ask_failed`/`config_error`）额外拼后端原文（LLM 失败原因只在原文里） |
+| `agent.err.<code>` | js/agent-panel.js:104-130（`ERR_KEYS` / `GENERIC_CODES`）、499-529（`errorText`/`errorDetail`/`fullErrorText`）；zh-CN.js:653-669 | 对话面板把后端 agent RPC 的**稳定 code** 映射为文案（`no_kb`/`busy`/`no_base_url`/`unknown_session`/`session_failed`/**`cancel_failed`（M1 收尾新增）**/`MISSING_CREDENTIAL`/`RATE_LIMIT` …）；**未登记的 code 回退后端中文 `message`**；兜底 code（`ask_failed`/`config_error`）额外拼后端原文（LLM 失败原因只在原文里）。**`agent_usage_stats` 本轮新增的 `usage_failed` / `unknown_session` 走同一兜底**（前端暂未调用该 RPC，故未加映射） |
 | `agent.history.*` | index.html:259-263（静态节点）；js/agent-panel.js:575-683（`renderHistory`/`refreshHistory`/`loadSession`）；zh-CN.js:614-626 | M1c 历史会话下拉：`label`/`aria`/`none`（「（新会话）」）/`empty`（空列表禁用态占位）/`option`（`{preview}（{n} 轮）`）/`capped`（「（已截断）」，M1 收尾）；M1 收尾新增 `delete`/`deleteTitle`/`deleteConfirm`（「再点一次删除」）/`deleted`；选项文本用 `textContent` 写入（不注入 HTML） |
 | `agent.stopped` / `agent.stopTitle` / `agent.status.stopped` | js/agent-panel.js:420-450（`messageEl` 的 `rec.stopped` 分支）、1068-1101（`stop()`）；index.html:269；zh-CN.js:610-613、636 | M1 收尾：生成中按钮文案「停止」（旧 `agent.abandon*` 已废除）、助手气泡后的「（已停止）」标注、状态行「已停止…」 |
 | `agent.status.elapsed` | js/agent-panel.js:554-573（`tickWait`/`startWait`/`stopWait`）；zh-CN.js:632 | 等待计时后缀（`{n}s`），与 `agent.status.thinking` 由 `statusLine()` 拼成「生成中… Ns」 |
+| `agent.statusBar.*` | index.html:282（静态节点，**空**）；js/agent-panel.js:556-660（`renderStatusUsage` 等）；zh-CN.js:642-652 | 本轮新增 9 键：`span` / `spanCache`（紧凑摘要，如 `↑8.7k ↓233 · 命中 62%`）、`line` / `cache` / `cacheUnknown` / `estimated` / `session` / `sessionCache` / `hint`（`title` 多行拆分，`\n` 连接）；命中率未知时**不渲染** `spanCache` 段 |
 | `check.issue.<code>` | app.js:258-268（`localizeCheckIssue` + `rawLookup`） | **唯一**会翻译后端消息的机制：当前语言包有该 code 模板才翻译，否则原样显示后端中文 `message` |
 | 后端返回的其它 `message` | ui.py / document.py / import_engine.py | **一律中文原样透传**，不参与 i18n（conventions/i18n.md:5.1 只对检查 issue 与少量 `backend.*` 键例外） |
 
@@ -308,15 +377,30 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 | PyQt6 静态服务线程与随机端口 | app/shell/static_server_thread.py:11-35；app/shell/pyqt6.py:224-225、268-273 |
 | pywebview 启动（WSGI + js_api） | app/shell/pywebview.py:455-509 |
 | QWebChannel 单槽 RPC 契约 | app/shell/api_rpc.py:14-67 |
-| 对话面板 8 个 RPC / 伪流式作业 / 真取消 / 配置与偏好读写 / 会话历史与删除 | presentation/api/ui.py:1145-1355（配置 1150-1187、问答 1189-1218、取消 1220-1240、会话列表 1252-1290、载入 1292-1318、删除 1320-1355）；services/agent/ask_stream.py:1-337；services/agent/llm/config.py:164-174、247-330；storage/ui_settings.py:58-75（顶层 `agent` 段） |
-| **重试与失败分类**（确定性立即失败 / 瞬时重试 / 面板等待上限 / 错误串带重试次数） | services/agent/llm/errors.py:62、70、87、96、205、247、345-347；services/agent/llm/providers/openai_compatible.py:272-277、281、303、462-474；services/agent/llm/retry.py:52-56；services/agent/ask_stream.py:82-84；services/agent/loop.py:101、169-190、299-303（§2.16） |
+| 对话面板 9 个 RPC / 伪流式作业 / 真取消 / 配置与偏好读写 / 会话历史与删除 / 用量统计 | presentation/api/ui.py:1145-1394（配置 1150-1187、问答 1189-1218、取消 1220-1240、会话列表 1252-1290、载入 1292-1318、删除 1320-1359、用量统计 1363-1394）；services/agent/ask_stream.py:1-337；services/agent/llm/config.py:164-174、247-330；storage/ui_settings.py:58-75（顶层 `agent` 段） |
+| **重试与失败分类**（确定性立即失败 / 瞬时重试 / 面板等待上限 / 错误串带重试次数） | services/agent/llm/errors.py:62、70、87、96、205、247、345-347；services/agent/llm/providers/openai_compatible.py:272-277、281、303、485-497；services/agent/llm/retry.py:52-56；services/agent/ask_stream.py:82-84；services/agent/loop.py:109、177-198、307-311（§2.16） |
+| **Agent 用量**（`Usage` 缓存字段 / 端点字段映射 / `loop/end.usage` / 只读 RPC / 报告脚本） | services/agent/llm/types.py:109-152（`Usage`，`cache_miss_tokens`）、132-145（`plus()`）；services/agent/llm/usage.py:105-159（`UsageMeter`）；services/agent/llm/providers/openai_compatible.py:428-464（`_usage_from_wire`）；services/agent/loop.py:132-142（`_usage_payload()`）、389-396（`loop/end`）；services/agent/usage_report.py:1-225；presentation/api/ui.py:1363-1394；scripts/benchmark/usage/report_usage.py（§2.17） |
 | 对话会话 JSONL 存储 / 历史重建（回放与截断）/ 摘要扫描（去读放大）/ 续聊入口 | services/agent/session/store.py:56-66、169-237；services/agent/session/history.py:1-343（`build_history` 197-216、`_replay` 126-177、`_truncate` 180-194、`summarize_session` 242-244、`summarize_session_file` 260-308、`conversation_messages` 311-343）；services/agent/ask.py:113-216（`replay` 139、`cancel` 140、回放注入 162-169、`messages=history` 188） |
-| **真取消**（取消令牌 / 三个检查点 / 作业面收敛与幂等） | services/agent/loop.py:72-100（`CancelToken`）、207-209（`_cancelled`）、238-256（检查点② 与 `stream.close()`）、287-291（①）、371-377（③）；services/agent/ask_stream.py:100-215（`AskJob.cancel()` 178-191、`succeed/fail` 的取消守卫 144-174）、310-326（`AskJobManager.cancel()`） |
+| **真取消**（取消令牌 / 三个检查点 / 作业面收敛与幂等） | services/agent/loop.py:72-100（`CancelToken`）、215-217（`_cancelled`）、246-264（检查点② 与 `stream.close()`）、295-299（①）、379-385（③）；services/agent/ask_stream.py:100-215（`AskJob.cancel()` 178-191、`succeed/fail` 的取消守卫 144-174）、310-326（`AskJobManager.cancel()`） |
 | 壳选择 / CLI（无 headless） | app/shell/__init__.py:12-24；cli/main.py:111-125 |
 | 后端消息本地化（仅 check.issue） | js/app.js:258-268 |
 
 ## 7. 未证实 / 待确认
 
+- ⚠️ **本轮（2026-09-18：Agent 用量可视化 + 用量报告）已取证 / 未取证**。已取证：
+  - **静态**：`py_compile` 7 个 Python 文件（`llm/types.py`、`llm/usage.py`、`llm/providers/openai_compatible.py`、`loop.py`、`usage_report.py`、`api/ui.py`、`scripts/benchmark/usage/report_usage.py`）、`node --check` 3 个前端文件（`agent-panel.js`、`i18n/{zh-CN,en}.js`）、`node scripts/i18n_selftest.js` 12/12 PASS、`python scripts/scan_ui_strings.py`（files=3 rows=5，**无新增硬编码候选**）。
+  - **单测**：`pytest tests/ -q` **80 passed**（新增 `tests/test_agent_usage.py` 13 例）——DeepSeek 形态（顶层 `prompt_cache_hit_tokens`/`prompt_cache_miss_tokens`）/ OpenAI 形态（`prompt_tokens_details.cached_tokens`，未命中量按 `prompt - cached` 补）/ 两者皆缺 `cache_read_tokens is None` 且**不**误置 `estimated` / SSE 全链路落 `UsageEvent` / `Usage.plus()` 与 `UsageMeter` 合并含 None 的混合 / `loop/end.usage` 载荷带三 cache 键 / 命中率计算 / `cache_unknown_turns` 计数 / 命中率未知为 `None`（显式 `0` 仍算**已知** 0%）/ 扫描上限 `capped` 且只统计上限内轮次。
+  - **真实样本**（`python scripts/benchmark/usage/report_usage.py --kb docs/example/AAA_Vocab --label real-sample`）：**1 会话 / 3 轮 / 输入 128,907 + 输出 4,504 = 133,411 tokens**、**命中率「未知」**（不是 0%）、`cache_unknown_turns=3`、`estimated_turns=0`；产物 `scripts/benchmark/usage/results/usage-real-sample_6451d258.{json,md}`。**只读证据**：KB 全量 100 个文件的 (相对路径, SHA256) 快照在脚本运行前后**完全一致**。
+  - **端到端 11/11 PASS**（本地假 SSE 端点，usage 带 DeepSeek cache 字段：`prompt=8713`/`completion=233`/`cache_hit=5402`/`cache_miss=3311`；harness `/rpc` 直转真实 `UIAPI` + headless Edge（`--headless=new`）+ CDP（websocket-client 直连，断言在 Python 侧）；`MEMORIA_CONFIG_DIR` 指向临时目录，KB 亦为临时目录；脚本与产物在仓库外临时目录）：
+    - ③ **boot**：脚本全就绪后装桥（`window.pywebview`）并派发 `pywebviewready` ⇒ `memoria.api` 可用、`#agent-messages` 渲染空态（证明 `MemoriaAgentPanel.init()` 已执行）；
+    - ⑧ `#status-agent` 出现，文本 **`↑8.7k ↓233 · 命中 62%`**（与端点 5402/8713=62.0% 一致）；
+    - ⑨ `title`（多行）含 `缓存：命中 5402 / 未命中 3311 / 命中率 62%` 与 `本会话累计 1 轮：…` + `本会话累计缓存：…`；
+    - ⑩ 无活动时 `#status-agent` 文本与 title 皆空且 `getComputedStyle(...).display === "none"`（不占位）；
+    - ⑪ 先折叠 dock（`clientWidth=0`）再点 `#status-agent` ⇒ `clientWidth=351`（dock 重新可见）；
+    - ⑫ 会话文件 `loop/end.usage` = `{prompt_tokens: 8713, completion_tokens: 233, total_tokens: 8946, estimated: false, cache_read_tokens: 5402, cache_write_tokens: null, cache_miss_tokens: 3311}`；假端点侧 `hits=1`。
+  - **配置隔离证据**：真实 `config/agent.json`（SHA256 `C9CFC8B72271A4FA382270F4210BC59063432CA8F417DED86CCB0FB54CD01D50`）与 `config/ui-settings.json`（`DBAE36E137DF802C08DC071E5C3A61DCB37A2F9AB9854DC498E114E4E2E0A326`）在整个验证期间**未变**（harness 与报告脚本均指向临时目录）。
+  - **顺带的 harness 发现（非本轮引入，属既有前端装载顺序特性）**：桥若在 **document-start** 就绪（`window.pywebview.api` 在 `bridge.js` 之前存在），`bridge.js:102` 会立刻 `installApi` + 派发 `memoriaready`，而 `app.js` 紧随其后加载、其 `MemoriaBridge.onReady` 回调**立即执行**——此时 `agent-panel.js`（`index.html` 末位）尚未加载，`MemoriaAgentPanel?.init?.()` 落空（`MemoriaImportFlow` / `MemoriaToolbarSearch` / `MemoriaImageTools` / `MemoriaKbCheck` / `MemoriaKbAgent` / `MemoriaFileTree` 等同样在 `app.js` 之后加载的模块同理）。生产路径不受影响（pywebview/Qt 的 `pywebviewready` 在脚本加载后异步到达）；但对**同步提供桥的宿主**这是一个既有的装载顺序脆弱点，本轮仅如实记录、未改代码。
+  - **未取证**：真实模型端点（`api.deepseek.com`）下的**命中率数值**与 `cache_write_tokens`（用户 `config/agent.json` 是真密钥，**刻意不调用**）；`#status-agent` 的悬停 `title` 在真机不同主题/`uiScale` 下的换行观感。
 - ⚠️ 待确认（未能取证）：pywebview 内部如何托管 WSGI app（是否真的监听某 TCP 端口、端口能否从 JS 侧读到）——bridge.js 不使用端口，`window.pywebview.api` 不经 HTTP，故本次未取证。
 - ⚠️ 待确认（未能取证）：`.memoria/build/` 下具体产物文件名与数量（只取证了 `_build_dir()` 与 `_write_json` 的写入方式，未穷举调用点）。
 - ⚠️ 待确认（未能取证）：`.memoria/images/registry.json` 的字段结构（仅取证其存在与重建时机）。

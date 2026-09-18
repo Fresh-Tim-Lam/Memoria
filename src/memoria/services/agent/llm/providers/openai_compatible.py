@@ -426,7 +426,18 @@ def _parse_payload(payload: str) -> dict[str, Any]:
 
 
 def _usage_from_wire(raw: Any) -> Usage | None:
-    """端点 `usage` 对象 → `Usage`；缺字段返回 None。"""
+    """端点 `usage` 对象 → `Usage`；缺字段返回 None。
+
+    缓存字段按**端点形态**择一读取（任一端点自带哪种就读哪种，不臆造）：
+
+    - **DeepSeek**：顶层 `prompt_cache_hit_tokens` → `cache_read_tokens`、
+      `prompt_cache_miss_tokens` → `cache_miss_tokens`（优先）；
+    - **OpenAI 风格**：`prompt_tokens_details.cached_tokens` → `cache_read_tokens`
+      （兜底）；该形态不单列未命中量，故在可推时取 `prompt_tokens - cached`。
+
+    两者皆缺时缓存字段保持 `None`（"端点没说"，**不**据此把 `estimated` 置真——
+    只有端点完全没给 usage 才由 `estimate_usage()` 标估算）。
+    """
     if not isinstance(raw, dict):
         return None
     prompt = raw.get("prompt_tokens")
@@ -435,13 +446,21 @@ def _usage_from_wire(raw: Any) -> Usage | None:
         return None
     total = raw.get("total_tokens")
     details = raw.get("prompt_tokens_details") if isinstance(raw.get("prompt_tokens_details"), dict) else {}
-    cache_read = details.get("cached_tokens")
+    cache_read = raw.get("prompt_cache_hit_tokens")
+    if not isinstance(cache_read, int):
+        cache_read = details.get("cached_tokens")
+    if not isinstance(cache_read, int):
+        cache_read = None
+    cache_miss = raw.get("prompt_cache_miss_tokens")
+    if not isinstance(cache_miss, int):
+        cache_miss = prompt - cache_read if cache_read is not None and prompt >= cache_read else None
     return Usage(
         prompt_tokens=prompt,
         completion_tokens=completion,
         total_tokens=total if isinstance(total, int) else None,
         estimated=False,
-        cache_read_tokens=cache_read if isinstance(cache_read, int) else None,
+        cache_read_tokens=cache_read,
+        cache_miss_tokens=cache_miss,
     )
 
 

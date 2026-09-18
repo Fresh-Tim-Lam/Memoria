@@ -11,6 +11,7 @@ Home of the **official, reusable** developer tools. Separated from `packaging/` 
 | `run_dev.ps1` | Dev-mode launch: source + pywebview shell + DevTools + frameless (`MEMORIA_MODE=dev`) |
 | `graph_layout_benchmark.py` / `.mjs` | Graph-layout stress benchmark (2D/3D layout + grouping computation) |
 | `benchmark/` | Retrieval-evaluation toolset (lexical / embedding / rerank eval batch runs) |
+| `benchmark/usage/` | Agent token-usage report: aggregates session `loop/end.usage` into JSON + Markdown, read-only (`report_usage.py`, cn-only README) |
 | `screenshots/` | Screenshot capture for README / docs: hotkey-triggered client-area grab with duplicate-frame detection |
 | `bootstrap_example_sidecars.py` | Generate sidecars for the sample knowledge base |
 | `gen_example_boonie_sidecars.py` | Generate sidecars for the boonie sample knowledge base |

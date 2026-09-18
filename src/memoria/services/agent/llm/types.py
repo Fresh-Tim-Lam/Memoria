@@ -121,6 +121,7 @@ class Usage:
     estimated: bool = False
     cache_read_tokens: int | None = None
     cache_write_tokens: int | None = None
+    cache_miss_tokens: int | None = None
 
     @property
     def total(self) -> int:
@@ -140,6 +141,7 @@ class Usage:
             estimated=self.estimated or other.estimated,
             cache_read_tokens=_sum_optional(self.cache_read_tokens, other.cache_read_tokens),
             cache_write_tokens=_sum_optional(self.cache_write_tokens, other.cache_write_tokens),
+            cache_miss_tokens=_sum_optional(self.cache_miss_tokens, other.cache_miss_tokens),
         )
 
 

@@ -107,6 +107,7 @@ class UsageMeter:
     total_tokens: int = 0
     cache_read_tokens: int = 0
     cache_write_tokens: int = 0
+    cache_miss_tokens: int = 0
     calls: int = 0
     estimated_calls: int = 0
     last: Usage | None = field(default=None)
@@ -118,6 +119,7 @@ class UsageMeter:
         self.total_tokens += usage.total
         self.cache_read_tokens += usage.cache_read_tokens or 0
         self.cache_write_tokens += usage.cache_write_tokens or 0
+        self.cache_miss_tokens += usage.cache_miss_tokens or 0
         self.calls += 1
         if usage.estimated:
             self.estimated_calls += 1
@@ -137,6 +139,7 @@ class UsageMeter:
             "total_tokens": self.total_tokens,
             "cache_read_tokens": self.cache_read_tokens,
             "cache_write_tokens": self.cache_write_tokens,
+            "cache_miss_tokens": self.cache_miss_tokens,
             "calls": self.calls,
             "estimated_calls": self.estimated_calls,
             "any_estimated": self.any_estimated,
@@ -150,6 +153,7 @@ class UsageMeter:
         self.total_tokens = 0
         self.cache_read_tokens = 0
         self.cache_write_tokens = 0
+        self.cache_miss_tokens = 0
         self.calls = 0
         self.estimated_calls = 0
         self.last = None

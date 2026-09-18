@@ -2132,6 +2132,18 @@
     padding: 0 4px;
 }
 
+/* 状态栏的 Agent 用量格（index.html `#status-agent`，由 js/agent-panel.js 更新）：
+   与状态栏其它文字**同号同级**（不另设 font-size/颜色，继承 #status-bar 的白字），
+   `:empty` 时完全隐藏（无 agent 活动不占位）；点击 = 打开右侧对话面板。 */
+#status-agent {
+    margin-left: 0.75rem;
+    white-space: nowrap;
+    cursor: pointer;
+    opacity: 0.92;
+}
+#status-agent:empty { display: none; }
+#status-agent:hover { text-decoration: underline; text-underline-offset: 0.125rem; }
+
 .-toolbar-btn-wrap {
     position: relative;
     display: inline-flex;

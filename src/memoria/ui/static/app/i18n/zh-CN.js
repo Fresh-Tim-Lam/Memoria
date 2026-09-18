@@ -638,6 +638,18 @@
         dropped: "知识库已切换，本次结果已丢弃",
         timeout: "轮询超时（后端可能仍在生成）",
       },
+      // 底部状态栏的用量格（index.html `#status-agent`，js/agent-panel.js 更新）
+      statusBar: {
+        span: "↑{prompt} ↓{completion}",
+        spanCache: " · 命中 {rate}",
+        line: "本轮：输入 {prompt} / 输出 {completion} / 合计 {total} tokens",
+        cache: "缓存：命中 {hit} / 未命中 {miss} / 命中率 {rate}",
+        cacheUnknown: "缓存：未知（端点未上报，或为本次改动之前的旧会话）",
+        estimated: "（本轮用量为估算值，端点未返回 usage）",
+        session: "本会话累计 {turns} 轮：输入 {prompt} / 输出 {completion} / 合计 {total} tokens",
+        sessionCache: "本会话累计缓存：命中 {hit} / 未命中 {miss} / 命中率 {rate}",
+        hint: "点击打开对话面板",
+      },
       err: {
         unknown: "未知错误",
         no_kb: "请先打开知识库",

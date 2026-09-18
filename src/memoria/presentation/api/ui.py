@@ -1358,3 +1358,38 @@ class UIAPI:
             return {"status": "error", "code": "session_failed", "message": str(e)}
         return {"status": "ok", "deleted": True, "session_id": sid}
 
+    # ── Agent 用量报告（只读；为后续 token benchmark 前置）───────────────
+
+    def agent_usage_stats(self, kb_path: str | None = None, session_id: str | None = None) -> dict:
+        """聚合会话 `loop/end.usage` 的 token 用量（**只读**，不写盘）。
+
+        `session_id` 省略 ⇒ 统计库内全部会话；非空 ⇒ 只统计该会话。
+        返回 `{status:"ok", kb_path, sessions:[按会话汇总...], turns:[逐轮行...],
+        summary:{sessions, turns, prompt, completion, total, cache_hit, cache_miss,
+        hit_rate, estimated_turns, cache_unknown_turns}}`（口径与已知限制见
+        `services/agent/usage_report.py` 模块 docstring）。**命中率在 cache 数据
+        未知时为 `None`（"未知"），不写 0**；老会话缺 cache 字段的轮次计入
+        `cache_unknown_turns`。
+        未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`；
+        读取失败 ⇒ `code:"usage_failed"`。不抛裸异常。
+        """
+        from memoria.services.agent.session import session_file
+        from memoria.services.agent.usage_report import usage_stats
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        if sid:
+            try:
+                path = session_file(kb, sid)
+            except ValueError as e:
+                return {"status": "error", "code": "unknown_session", "message": str(e)}
+            if not os.path.isfile(path):
+                return {"status": "error", "code": "unknown_session", "message": f"会话不存在：{sid}"}
+        try:
+            report = usage_stats(kb, sid or None)
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "usage_failed", "message": str(e)}
+        return {"status": "ok", **report}
+

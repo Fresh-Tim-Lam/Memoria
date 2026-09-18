@@ -126,12 +126,20 @@ class LoopResult:
 
     def usage_dict(self) -> dict[str, int | bool | None]:
         """用量的可序列化快照（对齐 `UsageMeter.to_dict()` 的字段命名）。"""
-        return {
-            "prompt_tokens": self.usage.prompt_tokens,
-            "completion_tokens": self.usage.completion_tokens,
-            "total_tokens": self.usage.total,
-            "estimated": self.usage.estimated,
-        }
+        return _usage_payload(self.usage)
+
+
+def _usage_payload(usage: Usage) -> dict[str, int | bool | None]:
+    """`Usage` → 可序列化载荷；`loop/end` 事件与 `AskResult.usage` 共用同一形状。"""
+    return {
+        "prompt_tokens": usage.prompt_tokens,
+        "completion_tokens": usage.completion_tokens,
+        "total_tokens": usage.total,
+        "estimated": usage.estimated,
+        "cache_read_tokens": usage.cache_read_tokens,
+        "cache_write_tokens": usage.cache_write_tokens,
+        "cache_miss_tokens": usage.cache_miss_tokens,
+    }
 
 
 def _retry_note(message: str, retries: int) -> str:
@@ -383,12 +391,7 @@ class AgentLoop:
             {
                 "stop_reason": stop_reason.value,
                 "iterations": iterations,
-                "usage": {
-                    "prompt_tokens": usage.prompt_tokens,
-                    "completion_tokens": usage.completion_tokens,
-                    "total_tokens": usage.total,
-                    "estimated": usage.estimated,
-                },
+                "usage": _usage_payload(usage),
                 "error": error,
             },
         )

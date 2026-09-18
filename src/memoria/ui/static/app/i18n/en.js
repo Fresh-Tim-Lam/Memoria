@@ -638,6 +638,18 @@
         dropped: "Knowledge base changed, this result was dropped",
         timeout: "Polling timed out (the backend may still be generating)",
       },
+      // Agent usage cell in the bottom status bar (index.html `#status-agent`, updated by js/agent-panel.js)
+      statusBar: {
+        span: "↑{prompt} ↓{completion}",
+        spanCache: " · {rate} cached",
+        line: "This turn: input {prompt} / output {completion} / total {total} tokens",
+        cache: "Cache: hit {hit} / miss {miss} / hit rate {rate}",
+        cacheUnknown: "Cache: unknown (not reported by the endpoint, or an older session)",
+        estimated: "(this turn's usage is estimated — the endpoint returned no usage)",
+        session: "Session total ({turns} turns): input {prompt} / output {completion} / total {total} tokens",
+        sessionCache: "Session cache total: hit {hit} / miss {miss} / hit rate {rate}",
+        hint: "Click to open the chat panel",
+      },
       err: {
         unknown: "Unknown error",
         no_kb: "Open a knowledge base first",
