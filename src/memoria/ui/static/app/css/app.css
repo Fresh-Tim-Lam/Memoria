@@ -626,8 +626,13 @@
     border-color: var(--theme-color);
     outline: none;
 }
-/* 文件树拖到对话栏时的落点高亮（agent-panel.js 在 dragover/dragleave/drop 处加去类） */
-.-agent-composer--drop .-agent-input {
+/* 文件树拖到对话栏时的落点高亮（agent-panel.js 在 dragover/dragleave/drop 处加去类）。
+   落点是**整个对话栏** `#-agent-dock`（含消息区/设置区/输入框），不必精准落到那个小输入框
+   —— 后者手感太别扭。同时给输入框叠一圈同色描边，提示"会插到光标处"。 */
+#-agent-dock.-agent-dock--drop {
+    box-shadow: inset 0 0 0 2px var(--theme-color);
+}
+#-agent-dock.-agent-dock--drop .-agent-input {
     border-color: var(--theme-color);
     box-shadow: inset 0 0 0 2px var(--theme-color);
 }

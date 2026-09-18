@@ -1524,22 +1524,23 @@ window.MemoriaAgentPanel = (function () {
         input.addEventListener(ev, rememberCaret)
       );
       // 文件树拖入（js/file-tree.js 发同名自定义 MIME）→ 插入 `@相对路径` 到上次光标位置。
-      // 只认自定义 MIME：普通文本/文件拖放不 preventDefault，保留浏览器默认行为。
-      const composer = document.querySelector(".-agent-composer");
-      const dropZone = composer || input;
+      // 落点是**整个对话栏**（`#-agent-dock`，含消息区/设置区/输入框），不是只有那个小输入框
+      // —— 要求精准落到 textarea 上手感太别扭。只认自定义 MIME：普通文本/文件拖放
+      // 不 preventDefault，保留浏览器默认行为。
+      const dock = document.querySelector("#-agent-dock");
+      const dropZone = dock || input;
       dropZone.addEventListener("dragover", (e) => {
         if (!hasMentionPayload(e)) return;
         e.preventDefault(); // 不 preventDefault 就不会触发 drop
         if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
-        if (composer) composer.classList.add("-agent-composer--drop");
+        if (dock) dock.classList.add("-agent-dock--drop");
       });
       dropZone.addEventListener("dragleave", (e) => {
-        if (composer && !composer.contains(e.relatedTarget)) {
-          composer.classList.remove("-agent-composer--drop");
-        }
+        // 子元素之间移动也会触发 dragleave，故只在真正离开对话栏时清高亮
+        if (dock && !dock.contains(e.relatedTarget)) dock.classList.remove("-agent-dock--drop");
       });
       dropZone.addEventListener("drop", (e) => {
-        if (composer) composer.classList.remove("-agent-composer--drop");
+        if (dock) dock.classList.remove("-agent-dock--drop");
         if (!hasMentionPayload(e)) return;
         const payload = readMentionPayload(e);
         if (!payload) return;
