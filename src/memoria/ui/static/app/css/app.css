@@ -491,6 +491,39 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+/* 历史会话下拉（M1c）：与顶部操作条同宽的独立一行，位于设置区与消息区之间 */
+.-agent-history {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4375rem 10px;
+    border-bottom: 1px solid var(--border);
+}
+.-agent-history-label {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.-agent-history-select {
+    flex: 1;
+    min-width: 0;
+    padding: 0.25rem 6px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    border: 1px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-radius: 2px;
+}
+.-agent-history-select:focus {
+    border-color: var(--theme-color);
+    outline: none;
+}
+.-agent-history-select:disabled {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
 .-agent-messages {
     flex: 1;
     min-height: 0;
@@ -500,6 +533,7 @@
     gap: 0.5rem;
     padding: 0.625rem 10px;
 }
+
 .-agent-empty {
     padding: 0.25rem 0;
     line-height: 1.5;

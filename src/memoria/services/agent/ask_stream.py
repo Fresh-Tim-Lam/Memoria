@@ -83,6 +83,8 @@ class AskJob:
     kb_path: str
     question: str
     model: str = ""
+    #: 本轮要**续接**的会话 id（前端带上上一轮 `session_id`）；None = 全新会话。
+    resume_session_id: str | None = None
     lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
     status: str = RUNNING
     parts: list[str] = field(default_factory=list, repr=False)
@@ -170,8 +172,19 @@ class AskJobManager:
 
     # —— 提交 ——
 
-    def start(self, kb_path: str, question: str, *, model: str = "", env: Mapping[str, str] | None = None) -> dict:
-        """校验并提交一次提问；返回 `{status:"ok", job_id}` 或结构化错误。"""
+    def start(
+        self,
+        kb_path: str,
+        question: str,
+        *,
+        session_id: str | None = None,
+        model: str = "",
+        env: Mapping[str, str] | None = None,
+    ) -> dict:
+        """校验并提交一次提问；返回 `{status:"ok", job_id}` 或结构化错误。
+
+        `session_id` 非空 ⇒ 续聊（后端按会话文件回放历史，见 `ask()`）。
+        """
         from memoria.services.agent.llm.config import is_enabled, load_config
 
         kb = os.path.abspath(kb_path or "")
@@ -180,6 +193,7 @@ class AskJobManager:
         text = (question or "").strip()
         if not text:
             return _error(CODE_EMPTY_QUESTION, "问题不能为空")
+        resume = (session_id or "").strip() or None
         try:
             enabled = is_enabled(env)
         except Exception as exc:  # noqa: BLE001 —— 配置不可读时按"不允许出网"处理，不裸抛
@@ -200,7 +214,13 @@ class AskJobManager:
                     "上一个问题仍在生成（M1 无真取消），请等它结束后再提问",
                     job_id=running.job_id,
                 )
-            job = AskJob(job_id=uuid.uuid4().hex[:12], kb_path=kb, question=text, model=model)
+            job = AskJob(
+                job_id=uuid.uuid4().hex[:12],
+                kb_path=kb,
+                question=text,
+                model=model,
+                resume_session_id=resume,
+            )
             self._jobs[job.job_id] = job
             self._order.append(job.job_id)
             self._active = job.job_id
@@ -211,7 +231,13 @@ class AskJobManager:
     def _run(self, job: AskJob) -> None:
         """工作线程：跑一次同步 ask，增量经 `on_text` 流入作业缓冲。"""
         try:
-            result = ask(job.kb_path, job.question, model=job.model, on_text=job.note_delta)
+            result = ask(
+                job.kb_path,
+                job.question,
+                model=job.model,
+                session_id=job.resume_session_id,
+                on_text=job.note_delta,
+            )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
             code = getattr(exc, "code", None) or CODE_ASK_FAILED
             logger.warning("[agent-ask] 作业 %s 失败（code=%s）", job.job_id, code)

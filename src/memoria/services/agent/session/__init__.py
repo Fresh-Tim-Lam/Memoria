@@ -7,6 +7,7 @@
 | 模块 | 上游 | 职责 |
 |---|---|---|
 | `store.py` | `session-persistence` + `session-persistence-jsonl`（当前格式）+ `session-format` | 会话 id、header、逐行追加与回放 |
+| `history.py` | （本地新增，M1c） | 把会话事件**语义回放**成可再发的消息序列 / 渲染视图 |
 
 只取**当前格式**：上游的 `session-format-v0-to-v1/v1-to-v2/v2-to-v3` 迁移链
 与 Zstandard 压缩、单写者租约、崩溃修复（`interruptedTurnClosers`）均未移植
@@ -15,6 +16,14 @@
 
 from __future__ import annotations
 
+from memoria.services.agent.session.history import (
+    MAX_HISTORY_CHARS,
+    MAX_HISTORY_MESSAGES,
+    build_history,
+    conversation_messages,
+    summarize_events,
+    summarize_session,
+)
 from memoria.services.agent.session.store import (
     SESSION_FORMAT_VERSION,
     SessionHeader,
@@ -27,12 +36,18 @@ from memoria.services.agent.session.store import (
 )
 
 __all__ = [
+    "MAX_HISTORY_CHARS",
+    "MAX_HISTORY_MESSAGES",
     "SESSION_FORMAT_VERSION",
     "SessionHeader",
     "SessionStore",
+    "build_history",
+    "conversation_messages",
     "list_sessions",
     "new_session_id",
     "read_session",
     "session_file",
     "sessions_dir",
+    "summarize_events",
+    "summarize_session",
 ]

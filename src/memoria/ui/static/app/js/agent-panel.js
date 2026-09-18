@@ -8,8 +8,18 @@
  *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
  *   - `#agent-abandon`「忽略本次」（**不是取消**：丢弃后续结果 + 停止轮询）
- *   - `#agent-clear` 清空对话；`#agent-messages` 内锚点点击 → 跳转文件:行号
- *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/折叠按钮（静态节点由 i18n 引擎刷）
+ *   - `#agent-clear` 清空对话（= 开新会话）；`#agent-history` 下拉恢复历史会话
+ *   - `#agent-messages` 内锚点点击 → 跳转文件:行号
+ *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项/折叠按钮（静态节点由 i18n 引擎刷）
+ *
+ * **多轮续聊（M1c）**：本模块自持 `sessionId`（首次提问为 null）。`agent_ask_poll`
+ * 返回的 `session_id` 存下来，之后的提问都带上它 ⇒ 后端按会话文件回放历史，形成多轮；
+ * 「清空对话」= 把 `sessionId` 重置为 null（开新会话，旧会话已在磁盘上、进历史列表）。
+ * `sessionKb` 记录该会话所属知识库，换库即作废（避免把 A 库的会话 id 带到 B 库）。
+ *
+ * **会话历史（M1c）**：`#agent-history` 由 `agent_sessions_list` 填充（按修改时间倒序，
+ * 最多 30 条），选中某条 → `agent_session_load` 把消息灌进气泡区并把 `sessionId`
+ * 设为该会话（下一句即续聊）。两个 RPC 都是**只读**、不写盘。
  *
  * 布局持久化（`config/ui-settings.json` 的 `layout` 段：`agentDockWidth` /
  * `agentDockCollapsed`）见 saveDockLayout()——**必须先读旧 layout 再整体写回**，
@@ -20,11 +30,13 @@
  * ——文档区（`#content`）保底 `CONTENT_MIN_PX=360`，不够就让 dock 先缩到 16rem、
  * 再整体**临时自动隐藏**（加 `-agent-dock--auto-hidden`，不写盘、窗口变宽自动还原）。
  *
- * 与后端的分工（见 `presentation/api/ui.py` 的 4 个 RPC）：
- *   `agent_get_config` / `agent_save_config` / `agent_ask_start` / `agent_ask_poll`。
+ * 与后端的分工（见 `presentation/api/ui.py` 的 6 个 RPC）：
+ *   `agent_get_config` / `agent_save_config` / `agent_ask_start` / `agent_ask_poll` /
+ *   `agent_sessions_list` / `agent_session_load`。
  * 伪流式：`agent_ask_start` 提交即返回 job_id，本模块每 250ms 轮询
  * `agent_ask_poll(job_id, cursor)` 取 `delta`（后端 worker 线程跑同步 `ask()`，
- * 增量来自 `ask(on_text=...)`），从而得到打字机效果。
+ * 增量来自 `ask(on_text=...)`），从而得到打字机效果；轮询期间状态行带「生成中… Ns」
+ * 计时（每秒刷新），缓解长等待的"像卡死"观感。
  *
  * 依赖 window.MemoriaApp（app.js 门面）：state / call / T / esc /
  * showFlashError / showFlashInfo / openFile。
@@ -74,6 +86,8 @@ window.MemoriaAgentPanel = (function () {
     no_base_url: "agent.err.no_base_url",
     busy: "agent.err.busy",
     unknown_job: "agent.err.unknown_job",
+    unknown_session: "agent.err.unknown_session",
+    session_failed: "agent.err.sessionFailed",
     config_error: "agent.err.config",
     ask_failed: "agent.err.askFailed",
     CONFIG: "agent.err.config",
@@ -110,6 +124,18 @@ window.MemoriaAgentPanel = (function () {
   let job = null; // { id, cursor }：在飞作业（null = 无）
   let busy = false; // 生成/轮询中（禁用发送）
   let streamingEl = null; // 正在流式写入的消息体元素
+
+  // 多轮续聊：当前会话 id（null = 全新会话）与其所属知识库（换库即作废）
+  let sessionId = null;
+  let sessionKb = "";
+
+  // 历史会话下拉的缓存（供语言切换后就地重绘，无需重新请求）
+  let historyRows = [];
+  let historyDisabled = true;
+
+  // 等待计时：轮询期间状态行显示「生成中… Ns」（每秒刷新，结束/出错即停）
+  let waitStartedAt = 0;
+  let waitTimer = null;
 
   // ── 右侧停靠栏宽度 / 折叠（持久化到 config/ui-settings.json 的 layout 段）──
   const DOCK_MIN_REM = 16; // 与 app.css 的 #-agent-dock min-width 一致
@@ -281,8 +307,11 @@ window.MemoriaAgentPanel = (function () {
     dockCollapsed = want;
     applyDockLayout();
     if (persist) saveDockLayout({ agentDockCollapsed: dockCollapsed });
-    // 展开时刷新端点配置（可能被外部改动），与旧版「切到对话页签即拉配置」同语义
-    if (wasCollapsed && !dockCollapsed) refreshConfig();
+    // 展开时刷新端点配置与历史列表（可能被外部改动），与旧版「切到对话页签即拉配置」同语义
+    if (wasCollapsed && !dockCollapsed) {
+      refreshConfig();
+      refreshHistory();
+    }
   }
 
   /** 启动时同步停靠栏宽度/折叠态（磁盘优先；无磁盘值则用 CSS 默认 22rem / 展开）。 */
@@ -446,6 +475,144 @@ window.MemoriaAgentPanel = (function () {
 
   function statusLine(parts) {
     return parts.filter(Boolean).join(" · ");
+  }
+
+  // ── 等待计时（轮询期间状态行「生成中… Ns」）────────────────────────────
+
+  /** 每秒刷新一次状态行；只在 `startWait()` 之后生效。 */
+  function tickWait() {
+    if (!waitStartedAt) return;
+    const secs = Math.max(0, Math.floor((Date.now() - waitStartedAt) / 1000));
+    setStatusText(statusLine([T("agent.status.thinking"), T("agent.status.elapsed", { n: secs })]));
+  }
+
+  function startWait() {
+    waitStartedAt = Date.now();
+    if (waitTimer) clearInterval(waitTimer);
+    waitTimer = setInterval(tickWait, 1000);
+    tickWait();
+  }
+
+  function stopWait() {
+    if (waitTimer) {
+      clearInterval(waitTimer);
+      waitTimer = null;
+    }
+    waitStartedAt = 0;
+  }
+
+  // ── 会话历史（只读：agent_sessions_list / agent_session_load）──────────
+
+  /** 把会话列表渲染进 `#agent-history`；空/不可用时给禁用态与提示文案。 */
+  function renderHistory(sel, sessions, disabled) {
+    historyRows = Array.isArray(sessions) ? sessions : [];
+    historyDisabled = !!disabled;
+    sel.innerHTML = "";
+    const none = document.createElement("option");
+    none.value = "";
+    none.textContent = T("agent.history.none");
+    sel.appendChild(none);
+    historyRows.forEach(function (row) {
+      const session = row || {};
+      const id = String(session.session_id || "");
+      if (!id) return;
+      const opt = document.createElement("option");
+      opt.value = id;
+      opt.textContent = T("agent.history.option", {
+        preview: String(session.preview || id),
+        n: session.turn_count || 0,
+      });
+      sel.appendChild(opt);
+    });
+    sel.disabled = historyDisabled || !historyRows.length;
+    if (!historyRows.length) none.textContent = T("agent.history.empty");
+    sel.title = sel.disabled ? none.textContent : "";
+    syncHistorySelection();
+  }
+
+  /** 让下拉选中当前 `sessionId`（不在列表中则落回「（新会话）」）。 */
+  function syncHistorySelection() {
+    const sel = $("#agent-history");
+    if (!sel) return;
+    const want = sessionId || "";
+    for (let i = 0; i < sel.options.length; i += 1) {
+      if (sel.options[i].value === want) {
+        sel.selectedIndex = i;
+        return;
+      }
+    }
+    if (sel.options.length) sel.selectedIndex = 0;
+  }
+
+  /** 语言切换后就地重绘历史选项（文案来自语言包，无需重新请求）。 */
+  function refreshHistoryLabels() {
+    const sel = $("#agent-history");
+    if (!sel) return;
+    renderHistory(sel, historyRows, historyDisabled);
+  }
+
+  /**
+   * 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏时）。
+   * 顺带作废跨库会话：`sessionKb` 与当前库不一致 ⇒ `sessionId` 置空（开新会话）。
+   */
+  async function refreshHistory() {
+    const sel = $("#agent-history");
+    if (!sel) return;
+    const kb = state.kbPath || "";
+    if (sessionKb && sessionKb !== kb) {
+      sessionId = null;
+      sessionKb = "";
+    }
+    if (!kb) {
+      renderHistory(sel, [], true);
+      return;
+    }
+    let res;
+    try {
+      res = await call("agent_sessions_list", kb);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok" || !Array.isArray(res.sessions)) {
+      renderHistory(sel, [], true);
+      return;
+    }
+    renderHistory(sel, res.sessions, false);
+  }
+
+  /** 载入一个历史会话：灌进气泡区并把 `sessionId` 设为它（下一句即续聊）。 */
+  async function loadSession(id) {
+    if (busy) return;
+    const kb = state.kbPath || "";
+    let res;
+    try {
+      res = await call("agent_session_load", id, kb || null);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      const msg = fullErrorText(res);
+      setStatusText(msg, true);
+      showFlashError(msg);
+      syncHistorySelection(); // 失败即把下拉回滚到当前会话
+      return;
+    }
+    messages.length = 0;
+    (res.messages || []).forEach(function (item) {
+      const rec = item || {};
+      messages.push({
+        role: rec.role === "user" ? "user" : "assistant",
+        text: String(rec.text || ""),
+        anchors: Array.isArray(rec.anchors) ? rec.anchors : [],
+        error: "",
+      });
+    });
+    streamingEl = null;
+    sessionId = String(res.session_id || id);
+    sessionKb = kb;
+    renderMessages();
+    setStatusText(T("agent.status.session", { id: sessionId }));
+    syncHistorySelection();
   }
 
   // ── 表单 / 按钮态 ───────────────────────────────────────────────────
@@ -619,12 +786,18 @@ window.MemoriaAgentPanel = (function () {
       setStatusText(T("agent.err.net_disabled"), true);
       return;
     }
+    // 换库后旧会话 id 失效：作废即开新会话（避免把 A 库的会话续到 B 库）
+    const kb = state.kbPath || "";
+    if (sessionKb && sessionKb !== kb) {
+      sessionId = null;
+      sessionKb = "";
+    }
 
     pushMessage("user", text);
     if (input) input.value = "";
     let res;
     try {
-      res = await call("agent_ask_start", text, state.kbPath || null);
+      res = await call("agent_ask_start", text, kb || null, sessionId || null);
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
@@ -641,22 +814,26 @@ window.MemoriaAgentPanel = (function () {
     busy = true;
     pushMessage("assistant", "");
     renderComposer();
-    setStatusText(T("agent.status.thinking"));
     await poll();
   }
 
   async function poll() {
     const deadline = Date.now() + POLL_TIMEOUT_MS;
     const kbAtStart = state.kbPath || "";
+    startWait();
     while (job && Date.now() < deadline) {
       await sleep(POLL_INTERVAL_MS);
-      if (!job) return; // 已被「忽略本次」丢弃
+      if (!job) return; // 已被「忽略本次」丢弃（abandon() 已停计时）
       if ((state.kbPath || "") !== kbAtStart) {
         // 轮询期间换库/关库：结果与当前库无关，丢弃（不谎称已取消）
         job = null;
         busy = false;
+        stopWait();
+        sessionId = null;
+        sessionKb = "";
         renderComposer();
         setStatusText(T("agent.status.dropped"), true);
+        refreshHistory();
         return;
       }
       let st;
@@ -669,10 +846,16 @@ window.MemoriaAgentPanel = (function () {
       if (st.delta) applyDelta(st.delta);
       if (typeof st.cursor === "number") job.cursor = st.cursor;
       if (st.status === "running") {
-        setStatusText(T("agent.status.thinking"));
+        tickWait();
         continue;
       }
+      stopWait();
       finalizeMessage(st);
+      if (st.session_id) {
+        // 后端把本次会话 id 回传：存下来，后续提问即续聊
+        sessionId = String(st.session_id);
+        sessionKb = kbAtStart;
+      }
       const parts = [usageText(st.usage), st.session_id ? T("agent.status.session", { id: st.session_id }) : ""];
       const ok = st.status === "done";
       const detail = ok ? "" : fullErrorText(st);
@@ -681,11 +864,13 @@ window.MemoriaAgentPanel = (function () {
       job = null;
       busy = false;
       renderComposer();
+      await refreshHistory(); // 新增/更新的会话进入历史列表，并选中当前会话
       return;
     }
     if (job) {
       job = null;
       busy = false;
+      stopWait();
       renderComposer();
       setStatusText(T("agent.status.timeout"), true);
     }
@@ -697,15 +882,19 @@ window.MemoriaAgentPanel = (function () {
     job = null;
     busy = false;
     streamingEl = null;
+    stopWait();
     renderComposer();
     setStatusText(T("agent.status.abandoned"));
   }
 
+  /** 清空对话 = 开新会话（`sessionId` 置空）；旧会话已在磁盘上、进历史列表。 */
   function clear() {
     messages.length = 0;
     streamingEl = null;
+    sessionId = null;
     renderMessages();
     setStatusText("");
+    refreshHistory();
   }
 
   // ── 锚点跳转 ────────────────────────────────────────────────────────
@@ -743,6 +932,21 @@ window.MemoriaAgentPanel = (function () {
     if (abandonBtn) abandonBtn.addEventListener("click", () => abandon());
     const clearBtn = $("#agent-clear");
     if (clearBtn) clearBtn.addEventListener("click", () => clear());
+    const historySel = $("#agent-history");
+    if (historySel) {
+      historySel.addEventListener("change", () => {
+        const value = historySel.value || "";
+        if (busy) {
+          syncHistorySelection(); // 生成中不接受切换（loadSession 也会拒绝）
+          return;
+        }
+        if (!value) {
+          clear(); // 选「（新会话）」= 开新会话
+          return;
+        }
+        loadSession(value);
+      });
+    }
 
     const input = $("#agent-input");
     if (input) {
@@ -794,6 +998,7 @@ window.MemoriaAgentPanel = (function () {
       window.MemoriaI18n.addRefresh(() => {
         applyConfigToForm();
         renderMessages();
+        refreshHistoryLabels(); // 历史选项文案（含禁用态占位）随语言切换
         applyDockCollapsed(); // 语言切换后重绘按钮文案（含三态 title）
       });
     }
@@ -801,6 +1006,7 @@ window.MemoriaAgentPanel = (function () {
     renderMessages();
     setStatusText("");
     refreshConfig();
+    refreshHistory();
   }
 
   return {
@@ -809,7 +1015,10 @@ window.MemoriaAgentPanel = (function () {
     // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
     open: () => {
       if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
-      else refreshConfig();
+      else {
+        refreshConfig();
+        refreshHistory();
+      }
     },
     clear: clear,
   };

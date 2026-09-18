@@ -1186,12 +1186,15 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001 —— 配置非法（如超时非正数）以结构化错误返回
             return {"status": "error", "code": "config_error", "message": str(e)}
 
-    def agent_ask_start(self, question: str, kb_path: str | None = None) -> dict:
+    def agent_ask_start(self, question: str, kb_path: str | None = None, session_id: str | None = None) -> dict:
         """提交一次只读问答作业：立即返回 `{status, job_id}`（不阻塞 RPC 线程）。
 
         前置校验（未开库 / 问题为空 / 出网已关 / 未配置端点 / 已有 ask 在飞）
         一律返回结构化错误 `{status:"error", code, message}`，不抛裸异常。
         `kb_path` 省略时用当前已打开的知识库。
+        `session_id` 省略/为空 ⇒ 全新会话；非空 ⇒ **续聊**（后端按该会话文件
+        回放历史，见 `services/agent/session/history.py::build_history`）。
+        该参数为**追加的可选参数**：既有两参调用语义与返回结构完全不变。
         """
         from memoria.services.agent.ask_stream import get_ask_jobs
 
@@ -1200,7 +1203,7 @@ class UIAPI:
             from memoria.services.agent.ask_stream import CODE_NO_KB
 
             return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
-        return get_ask_jobs().start(kb, question)
+        return get_ask_jobs().start(kb, question, session_id=session_id)
 
     def agent_ask_poll(self, job_id: str, cursor: int = 0) -> dict:
         """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
@@ -1211,4 +1214,75 @@ class UIAPI:
         from memoria.services.agent.ask_stream import get_ask_jobs
 
         return get_ask_jobs().poll(job_id, cursor)
+
+    # ── M1c 会话历史（**只读**）：列表 / 载入 ─────────────────────────────
+
+    #: `agent_sessions_list` 单次返回的最大会话数（按修改时间倒序取最新）。
+    SESSION_LIST_LIMIT = 30
+
+    def _agent_kb(self, kb_path: str | None) -> str | None:
+        """解析要操作的知识库根（显式入参优先，否则当前已打开的库）。"""
+        kb = kb_path or self._svc.kb_path
+        return kb if kb and os.path.isdir(kb) else None
+
+    def agent_sessions_list(self, kb_path: str | None = None) -> dict:
+        """列出库内会话（**只读**，不写盘）：按文件修改时间倒序，最多 30 条。
+
+        每条含 `session_id` / `modified_at`（epoch 毫秒）/ `turn_count`（`user/message` 条数）
+        / `preview`（首条提问前 80 字）/ `title`（同首条提问前 40 字）；单份会话损坏只跳过该条。
+        """
+        from memoria.services.agent.session import list_sessions, summarize_session
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        try:
+            rows = list_sessions(kb)[: self.SESSION_LIST_LIMIT]
+        except OSError as e:
+            return {"status": "error", "code": "session_failed", "message": str(e)}
+        sessions: list[dict] = []
+        for row in rows:
+            session_id = str(row.get("session_id") or "")
+            try:
+                summary = summarize_session(kb, session_id)
+            except (OSError, ValueError):
+                continue  # 单份会话损坏不拖垮整个列表
+            sessions.append(
+                {
+                    "session_id": session_id,
+                    "modified_at": row.get("modified_at"),
+                    "turn_count": summary["turn_count"],
+                    "preview": summary["preview"],
+                    "title": summary["title"],
+                }
+            )
+        return {"status": "ok", "sessions": sessions, "count": len(sessions)}
+
+    def agent_session_load(self, session_id: str, kb_path: str | None = None) -> dict:
+        """载入一个会话的渲染视图（**只读**，不写盘）。
+
+        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?}]}`。
+        锚点归属：按轮汇总该轮 `tool/result.anchors`，去重后挂在该轮 assistant 气泡上
+        （口径见 `services/agent/session/history.py::conversation_messages`）。
+        未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。
+        """
+        from memoria.services.agent.session import conversation_messages, session_file
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        if not sid:
+            return {"status": "error", "code": "unknown_session", "message": "会话 id 为空"}
+        try:
+            path = session_file(kb, sid)
+        except ValueError as e:
+            return {"status": "error", "code": "unknown_session", "message": str(e)}
+        if not os.path.isfile(path):
+            return {"status": "error", "code": "unknown_session", "message": f"会话不存在：{sid}"}
+        try:
+            messages = conversation_messages(kb, sid)
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "session_failed", "message": str(e)}
+        return {"status": "ok", "session_id": sid, "messages": messages}
 

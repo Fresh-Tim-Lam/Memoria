@@ -19,7 +19,7 @@
 
 | # | 文件 | 覆盖范围 | 状态 |
 |---|---|---|---|
-| 01 | [01-shell-and-layout.md](./01-shell-and-layout.md) | 窗口外壳与整体布局：窗口 chrome / 顶栏（**含「对话」开关 `#btn-agent`**）/ 侧栏（**3 页签**）/ **右侧「对话」停靠栏 `#-agent-dock`**（§2.4，含**文档区最小宽度保护 `CONTENT_MIN_PX=360`**：期望宽度 vs 生效宽度、空间不足自动隐藏且不回写盘）/ 文档区 / 状态栏 / flash 浮层 / 弹窗层级 / 缩放 | ✅ 327 行 |
+| 01 | [01-shell-and-layout.md](./01-shell-and-layout.md) | 窗口外壳与整体布局：窗口 chrome / 顶栏（**含「对话」开关 `#btn-agent`**）/ 侧栏（**3 页签**）/ **右侧「对话」停靠栏 `#-agent-dock`**（§2.4，含**文档区最小宽度保护 `CONTENT_MIN_PX=360`**：期望宽度 vs 生效宽度、空间不足自动隐藏且不回写盘；**历史会话下拉 `#agent-history`** 与**等待计时「生成中… Ns」**）/ 文档区 / 状态栏 / flash 浮层 / 弹窗层级 / 缩放 | ✅ 338 行 |
 | 02 | [02-file-tree-and-nav.md](./02-file-tree-and-nav.md) | 文件树与导航：树渲染 / 右键菜单 / F2 / 标签页 / 前进后退 / 空态 | ✅ 259 行 |
 | 03 | [03-editor-and-formatting.md](./03-editor-and-formatting.md) | 编辑器与格式：源码编辑 / 格式工具栏 / 编辑块工具栏 / 撤销重做 / 粘贴复制 | ✅ 240 行 |
 | 04 | [04-preview-and-rendering.md](./04-preview-and-rendering.md) | 预览与渲染：三视图切换 / 渲染管线 / 渲染后 DOM 与交互 / KP 高亮语义 | ✅ 194 行 |
@@ -28,7 +28,7 @@
 | 07 | [07-search-and-images.md](./07-search-and-images.md) | 检索与图片：搜索框与范围 / 结果跳转 / 图片插入·管理·属性·诊断 | ✅ 253 行 |
 | 08 | [08-import-export-and-check.md](./08-import-export-and-check.md) | 导入导出与检查：导入向导（三源/冲突/结果）/ 导出（预留）/ 检查面板与徽标 | ✅ 253 行 |
 | 09 | [09-settings-i18n-and-shortcuts.md](./09-settings-i18n-and-shortcuts.md) | 设置页签 / 语言切换 / 快捷键总表 | ✅ 260 行 |
-| 10 | [10-data-layout-and-host-embedding.md](./10-data-layout-and-host-embedding.md) | 磁盘布局与事实源 / 红线 / **把 Memoria 嵌进别的宿主**（桥、无窗口模式、iframe 可行性）；§2.15 为应用内对话的 4 个 RPC 与 `config/agent.json`、会话 JSONL | ✅ 288 行 |
+| 10 | [10-data-layout-and-host-embedding.md](./10-data-layout-and-host-embedding.md) | 磁盘布局与事实源 / 红线 / **把 Memoria 嵌进别的宿主**（桥、无窗口模式、iframe 可行性）；§2.15 为应用内对话的 **6 个 RPC**（含 M1c **只读会话历史** `agent_sessions_list` / `agent_session_load`）、**多轮续聊**（按 `session_id` 回放，容量上限 40 条 / 32000 字符）与 `config/agent.json`、会话 JSONL | ✅ 297 行 |
 
 ## 3. 首轮取证发现的既有文档错误（待修）
 

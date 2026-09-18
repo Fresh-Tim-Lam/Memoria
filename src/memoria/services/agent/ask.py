@@ -13,6 +13,12 @@
 会话事实源：`<kb>/.memoria/agent/sessions/<session-id>.jsonl`（用户 P3 拍板）。
 除该目录外，本模块不写知识库任何内容（工具面自带零写入守卫）。
 
+**多轮续聊（M1c）**：`session_id` 指向的会话文件**已存在**时，先按
+`session/history.py::build_history()` 把它回放成消息序列，作为 `messages=` 传给
+`loop.run(question, messages=history)`（在追加本轮 `user/message` **之前**回放，
+故历史里不含本轮问题，不会被重复加入）。`session_id` 省略或文件不存在 ⇒ 全新会话，
+行为与 M1b 完全一致。`replay=False` 可显式关闭回放（测试/脚本用）。
+
 密钥与端点**不另起实现**：上游 `dsh-credentials-local` 的"配置写名不写值"语义已由
 第一块 `llm/config.py`（环境变量 / `config/agent.json` + 掩码 + 格式校验）覆盖，
 M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；等 M3 需要
@@ -34,13 +40,15 @@ from memoria.services.agent.approvals import DEFAULT_POLICY, ApprovalPolicy
 from memoria.services.agent.llm import (
     AgentConfig,
     LlmProvider,
+    Message,
     RetryPolicy,
     create_provider,
     load_config,
 )
 from memoria.services.agent.loop import DEFAULT_MAX_ITERATIONS, AgentLoop, LoopResult
 from memoria.services.agent.prompt import build_system_prompt
-from memoria.services.agent.session.store import SessionStore, new_session_id
+from memoria.services.agent.session.history import build_history
+from memoria.services.agent.session.store import SessionStore, new_session_id, session_file
 from memoria.services.agent.tools.kb import DEFAULT_TOP_K, build_kb_tools
 from memoria.services.agent.tools.registry import ToolRegistry
 
@@ -126,8 +134,13 @@ def ask(
     max_tokens: int | None = None,
     timeout_s: float | None = None,
     on_text: Callable[[str], None] | None = None,
+    replay: bool = True,
 ) -> AskResult:
-    """问一个关于知识库的问题；返回答案、锚点、工具调用、用量与会话位置。"""
+    """问一个关于知识库的问题；返回答案、锚点、工具调用、用量与会话位置。
+
+    `session_id` 指向**已存在**的会话文件且 `replay=True` 时，先回放该会话的消息
+    作为上下文（续聊），再追加本轮问题（见模块 docstring）。
+    """
     root = os.path.abspath(kb_path or "")
     if not os.path.isdir(root):
         raise ValueError(f"知识库目录不存在：{kb_path!r}")
@@ -138,6 +151,15 @@ def ask(
     settings = config if config is not None else (None if provider is not None else load_config())
     active_provider = provider if provider is not None else create_provider(None, config=settings)
     active_model = model or (settings.model if settings is not None else "")
+
+    history: list[Message] | None = None
+    if replay and session_id:
+        try:
+            resumed = os.path.isfile(session_file(root, session_id))
+        except ValueError:
+            resumed = False  # 非法 id 交由 SessionStore 抛同一异常（保持既有行为）
+        if resumed:
+            history = build_history(root, session_id)
 
     session = SessionStore(root, session_id or new_session_id())
     session.append("user/message", {"text": text})
@@ -155,7 +177,7 @@ def ask(
         timeout_s=timeout_s,
         on_text=on_text,
     )
-    result: LoopResult = loop.run(text)
+    result: LoopResult = loop.run(text, messages=history)
     session.flush()
 
     tool_calls = tuple(
