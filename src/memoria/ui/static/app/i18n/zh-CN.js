@@ -522,8 +522,6 @@
       settingsTitle: "设置",
       closeKb: "关闭知识库",
       closeKbTitle: "关闭知识库，返回欢迎页（等价于旧顶栏「退出」按钮）",
-      quit: "退出程序",
-      quitTitle: "退出 Memoria（等价于点窗口右上角的关闭键）",
     },
     search: {
       scopeKb: "全库",
@@ -625,6 +623,11 @@
       empty: "还没有对话。回答里的「文件:行号」可点击跳转。",
       role: { user: "我", assistant: "智能体" },
       sources: "来源 {n}",
+      // 消息里 `@相对路径` 引用 chip 的悬停文案（文件树拖入；目录在左栏定位，文件直接打开）
+      mention: {
+        openTitle: "打开 {path}",
+        revealTitle: "在左侧文件树中定位 {path}",
+      },
       status: {
         thinking: "生成中…",
         elapsed: "{n}s",

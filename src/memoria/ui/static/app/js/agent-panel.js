@@ -116,6 +116,14 @@ window.MemoriaAgentPanel = (function () {
   // 答案里的 `文件:行号`（允许被反引号包裹；路径不允许空白/引号/括号/冒号）
   const ANCHOR_RE = /`?([^\s`"'<>()[\]:]+\.md):(\d+)`?/g;
 
+  // 用户消息里的 `@相对路径` 引用（由文件树拖拽插入，也可手打）。路径同样不允许空白/`@`
+  // （与 ANCHOR_RE 同口径：含空格的路径不识别，退化为纯文本）。目录以尾斜杠区分：`@docs/example/`。
+  const MENTION_RE = /@([^\s@]+)/g;
+  // 文件树拖拽载荷 MIME（发送端在 js/file-tree.js，同一字面量；改一处必须同步改另一处）
+  const DRAG_MIME = "application/x-memoria-path";
+  // 输入框「上次光标位置」：失焦后 selectionStart 会归 0，故拖拽落点按这份自己记的值插入
+  let inputCaret = null;
+
   // 后端稳定 code → 文案键；未登记的 code 回退后端 message（i18n.md §5.1 口径）
   const ERR_KEYS = {
     no_kb: "agent.err.no_kb",
@@ -473,6 +481,104 @@ window.MemoriaAgentPanel = (function () {
       .replace(/\n/g, "<br>");
   }
 
+  /**
+   * 用户消息里的 `@相对路径` → 可点击跳转 chip（与答案里的 `-agent-anchor` 视觉区分：
+   * 本类是 `-agent-mention`，目录再加 `--dir`）。目录 chip 点击 = 左栏树里定位，
+   * 文件 chip 点击 = 打开该文件（复用锚点那套 `data-agent-file` 委托）。
+   */
+  function mentionChip(path, isDir) {
+    const shown = isDir ? path.replace(/\/+$/, "") + "/" : path;
+    const title = T(isDir ? "agent.mention.revealTitle" : "agent.mention.openTitle", { path: shown });
+    return (
+      '<span class="-agent-mention' +
+      (isDir ? " -agent-mention--dir" : "") +
+      '" role="link" tabindex="0" title="' +
+      esc(title) +
+      '" data-agent-file="' +
+      esc(path.replace(/\/+$/, "")) +
+      '"' +
+      (isDir ? ' data-agent-dir="1"' : "") +
+      ">" +
+      esc(shown) +
+      "</span>"
+    );
+  }
+
+  /**
+   * 用户消息渲染：先按 `@路径` 切分再逐段转义（**不先整体 esc**，避免路径里的
+   * `&` 被二次转义成 `&amp;amp;`），非引用部分换行转 `<br>`。
+   */
+  function linkifyUser(text) {
+    const raw = String(text == null ? "" : text);
+    let out = "";
+    let last = 0;
+    for (const m of raw.matchAll(MENTION_RE)) {
+      out += esc(raw.slice(last, m.index)).replace(/\n/g, "<br>");
+      const token = m[1];
+      out += mentionChip(token.replace(/\/+$/, ""), /\/$/.test(token));
+      last = m.index + m[0].length;
+    }
+    out += esc(raw.slice(last)).replace(/\n/g, "<br>");
+    return out;
+  }
+
+  // ── 文件树 → 输入框拖拽 ─────────────────────────────────────────────
+
+  /** dragover / drop 是否携带文件树拖拽载荷（只认自定义 MIME，不劫持普通文本拖放）。 */
+  function hasMentionPayload(e) {
+    const dt = e.dataTransfer;
+    if (!dt) return false;
+    return dt.types ? Array.from(dt.types).indexOf(DRAG_MIME) >= 0 : false;
+  }
+
+  /** 解析拖拽载荷 → `{path, kind:"file"|"dir"}`；无效返回 null。 */
+  function readMentionPayload(e) {
+    const dt = e.dataTransfer;
+    if (!dt) return null;
+    let raw = "";
+    try {
+      raw = dt.getData(DRAG_MIME) || "";
+    } catch (_err) {
+      return null;
+    }
+    if (!raw) return null;
+    try {
+      const obj = JSON.parse(raw);
+      const path = String((obj && obj.path) || "").replace(/\\/g, "/");
+      if (!path) return null;
+      return { path, kind: obj.kind === "dir" ? "dir" : "file" };
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  /**
+   * 把 `@相对路径` 插到输入框的**上次光标位置**（失焦后 `selectionStart` 归 0，故用自记的
+   * `inputCaret`）；目录带尾斜杠。前面缺空白时补空格、末尾恒补一个空格，便于接着打字。
+   */
+  function insertMention(path, kind) {
+    const input = $("#agent-input");
+    if (!input) return;
+    const p = String(path || "").replace(/\\/g, "/").replace(/^\/+|\/+$/g, "");
+    if (!p) return;
+    const token = "@" + p + (kind === "dir" ? "/" : "");
+    const len = input.value.length;
+    const pos = Number.isInteger(inputCaret) ? Math.max(0, Math.min(inputCaret, len)) : len;
+    const before = input.value.slice(0, pos);
+    const after = input.value.slice(pos);
+    // 前面缺空白则补一个；后面已紧跟空白就不再加尾空格（避免双空格）
+    const ins = (before && !/\s$/.test(before) ? " " : "") + token + (after && /^\s/.test(after) ? "" : " ");
+    input.value = before + ins + after;
+    const caret = pos + ins.length;
+    input.focus();
+    try {
+      input.setSelectionRange(caret, caret);
+    } catch (_err) {
+      // 非文本控件/不支持选区的宿主：忽略，至少内容已插入
+    }
+    inputCaret = caret;
+  }
+
   function messageEl(rec) {
     const wrap = document.createElement("div");
     wrap.className = "-agent-msg " + (rec.role === "user" ? "-agent-msg--user" : "-agent-msg--assistant");
@@ -482,7 +588,7 @@ window.MemoriaAgentPanel = (function () {
     role.textContent = T(rec.role === "user" ? "agent.role.user" : "agent.role.assistant");
     const body = document.createElement("div");
     body.className = "-agent-msg-body";
-    body.innerHTML = rec.role === "user" ? esc(rec.text).replace(/\n/g, "<br>") : linkify(rec.text);
+    body.innerHTML = rec.role === "user" ? linkifyUser(rec.text) : linkify(rec.text);
     wrap.appendChild(role);
     wrap.appendChild(body);
     if (rec.anchors && rec.anchors.length) {
@@ -1339,6 +1445,11 @@ window.MemoriaAgentPanel = (function () {
   function onAnchorClick(target) {
     const file = target.getAttribute("data-agent-file");
     if (!file) return;
+    // 目录引用（`@docs/example/`）没有「打开」语义：在左栏文件树里展开并定位
+    if (target.getAttribute("data-agent-dir")) {
+      window.MemoriaFileTree?.revealDir?.(file);
+      return;
+    }
     const line = parseInt(target.getAttribute("data-agent-line") || "", 10);
     // openFile(relPath, {kpId, lineHint})：kpId 优先于 lineHint（app.js:1505-1517）
     const opts = { navSource: "agent" };
@@ -1403,6 +1514,37 @@ window.MemoriaAgentPanel = (function () {
         if (e.key !== "Enter" || e.shiftKey || e.isComposing) return;
         e.preventDefault();
         ask();
+      });
+      // 记录「上次光标位置」：失焦后 selectionStart 会归 0，而拖拽落点要用它
+      const rememberCaret = () => {
+        const p = input.selectionStart;
+        if (Number.isInteger(p)) inputCaret = p;
+      };
+      ["keyup", "click", "select", "input", "blur"].forEach((ev) =>
+        input.addEventListener(ev, rememberCaret)
+      );
+      // 文件树拖入（js/file-tree.js 发同名自定义 MIME）→ 插入 `@相对路径` 到上次光标位置。
+      // 只认自定义 MIME：普通文本/文件拖放不 preventDefault，保留浏览器默认行为。
+      const composer = document.querySelector(".-agent-composer");
+      const dropZone = composer || input;
+      dropZone.addEventListener("dragover", (e) => {
+        if (!hasMentionPayload(e)) return;
+        e.preventDefault(); // 不 preventDefault 就不会触发 drop
+        if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+        if (composer) composer.classList.add("-agent-composer--drop");
+      });
+      dropZone.addEventListener("dragleave", (e) => {
+        if (composer && !composer.contains(e.relatedTarget)) {
+          composer.classList.remove("-agent-composer--drop");
+        }
+      });
+      dropZone.addEventListener("drop", (e) => {
+        if (composer) composer.classList.remove("-agent-composer--drop");
+        if (!hasMentionPayload(e)) return;
+        const payload = readMentionPayload(e);
+        if (!payload) return;
+        e.preventDefault();
+        insertMention(payload.path, payload.kind);
       });
     }
     const box = $("#agent-messages");

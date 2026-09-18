@@ -481,7 +481,7 @@
         await refreshFiles();
         await loadLinkTargets();
         await loadGraphData();
-        setStatus(T("app.status.kbLoaded"), state.kbPath);
+        setStatus(T("app.status.kbLoaded"));
         await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
         window.MemoriaKbCheck?.startKbSilentCheck?.();
         // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
@@ -573,7 +573,7 @@
     await loadLinkTargets();
     await loadGraphData();
     await refreshKbPendingSummary();
-    setStatus(T("app.status.kbOpened"), path);
+    setStatus(T("app.status.kbOpened"));
     await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
     window.MemoriaKbCheck?.startKbSilentCheck?.();
     // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
@@ -12349,11 +12349,6 @@
     // 「关闭知识库」= 原顶栏 `#btn-kb-close`（退出）按钮的行为，2026-09-18 移入文件菜单；
     // 可用态由 showKbIndicator() 统一同步（未开库 → disabled）
     $("#file-menu-close-kb")?.addEventListener("click", () => { closeFileMenu(); closeKb(); });
-    // 「退出程序」= 与窗口关闭键**同一条调用路径**（MemoriaWindowChrome.requestClose → window_close RPC）
-    $("#file-menu-quit")?.addEventListener("click", () => {
-      closeFileMenu();
-      window.MemoriaWindowChrome?.requestClose?.();
-    });
     $("#btn-welcome-open").addEventListener("click", openKb);
     $("#btn-nav-back").addEventListener("click", navBack);
     $("#btn-nav-forward").addEventListener("click", navForward);

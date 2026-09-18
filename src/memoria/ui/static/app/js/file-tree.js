@@ -34,6 +34,12 @@ window.MemoriaFileTree = (function () {
   const $ = (sel) => document.querySelector(sel);
   const A = () => window.MemoriaApp || {};
 
+  // 拖拽到右侧对话栏用：自定义 MIME 携带结构化载荷 `{path, kind:"file"|"dir"}`；
+  // 另写 `text/plain`（相对路径、目录带尾斜杠）供其它输入框兜底。
+  // 接收端在 js/agent-panel.js（同一字面量，两文件各自持有常量 —— 按 frontend-modules.md R5
+  // 不跨文件互借私有符号；改这里必须同步改那边）。
+  const DRAG_MIME = "application/x-memoria-path";
+
   // app.js 导出 state 为同一对象引用（永不整体替换），捕获一次后属性读写均实时可见
   const state = A().state || {};
 
@@ -159,7 +165,7 @@ window.MemoriaFileTree = (function () {
     const expanded = ensureTreeExpandedSet().has(node.path);
     const pad = 4 + depth * 14;
     let html = `<div class="-tree-dir" data-dir="${esc(node.path)}">
-      <div class="-tree-dir-head" data-dir-toggle="${esc(node.path)}" style="padding-left:${pad}px">
+      <div class="-tree-dir-head" data-dir-toggle="${esc(node.path)}" draggable="true" style="padding-left:${pad}px">
         <span class="-tree-twisty">${expanded ? "▼" : "▶"}</span>
         <span class="-tree-icon">📁</span>
         <span class="-tree-label">${esc(node.name)}</span>
@@ -176,7 +182,7 @@ window.MemoriaFileTree = (function () {
     const icon = f.has_sidecar ? "📄" : "📝";
     const pad = 12 + depth * 14;
     const label = basename(f.path);
-    return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" style="padding-left:${pad}px">
+    return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" draggable="true" style="padding-left:${pad}px">
       <span class="-tree-icon">${icon}</span>
       <span class="-tree-label">${esc(label)}</span>
     </div>`;
@@ -217,6 +223,29 @@ window.MemoriaFileTree = (function () {
         navigateToFile(node.dataset.path);
       });
     });
+    // 拖拽到右侧对话栏：载荷 = 相对路径（目录带尾斜杠），另附自定义 MIME 供接收端区分类型。
+    // 用**属性赋值**而非 addEventListener —— 本函数每次 render 都会跑，而 el 是常驻节点，
+    // addEventListener 会逐次叠加（与下方 oncontextmenu 同理）。
+    el.ondragstart = (e) => {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const item = t.closest(".-tree-item");
+      const head = item ? null : t.closest(".-tree-dir-head");
+      const path = item ? item.dataset.path : head ? head.dataset.dirToggle : "";
+      if (!path) return;
+      const kind = item ? "file" : "dir";
+      if (e.dataTransfer) {
+        e.dataTransfer.effectAllowed = "copy";
+        try {
+          e.dataTransfer.setData(DRAG_MIME, JSON.stringify({ path, kind }));
+        } catch (_err) {
+          // 个别宿主不接受自定义 MIME：此时对话栏接不到这次拖拽
+          //（text/plain 仍写着，供其它输入框或外部程序使用）
+        }
+        e.dataTransfer.setData("text/plain", kind === "dir" ? path.replace(/\/+$/, "") + "/" : path);
+      }
+      _lastSel = { type: kind, path };
+    };
     // 右键菜单（事件委托，属性赋值避免 render 重建重复绑定）：
     // 文件 → 重命名/删除；文件夹 → 重命名/新建文件/新建文件夹；空白区 → 根目录下新建
     el.oncontextmenu = (e) => {
@@ -466,9 +495,33 @@ window.MemoriaFileTree = (function () {
     }
   }
 
+  /**
+   * 在树中展开并定位一个目录（右侧对话栏里点击「文件夹引用」chip 时调用）。
+   * 展开目标目录**自身与全部祖先**，重绘后滚到可见处。
+   */
+  function revealDir(dirPath) {
+    const p = String(dirPath || "").replace(/\\/g, "/").replace(/\/+$/, "");
+    if (!p) return;
+    const expanded = ensureTreeExpandedSet();
+    let acc = "";
+    for (const seg of p.split("/")) {
+      if (!seg) continue;
+      acc = acc ? `${acc}/${seg}` : seg;
+      expanded.add(acc);
+    }
+    renderFileTree();
+    for (const head of document.querySelectorAll("#file-tree .-tree-dir-head")) {
+      if (head.dataset.dirToggle === p) {
+        head.scrollIntoView({ block: "nearest" });
+        break;
+      }
+    }
+  }
+
   return {
     init,
     render: renderFileTree,                    // 原 renderFileTree（app.js refreshFiles/openFile/closeKb/closeTabAt/KP 写回后重绘）
     expandToPath: ensureTreeExpandedForPath,   // 原 ensureTreeExpandedForPath（openFile 展开当前文件所在目录）
+    revealDir,                                 // 对话栏「文件夹引用」chip 的跳转目标（展开并滚动到位）
   };
 })(typeof window !== "undefined" ? window : globalThis);

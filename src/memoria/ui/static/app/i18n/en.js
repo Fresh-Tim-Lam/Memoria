@@ -522,8 +522,6 @@
       settingsTitle: "Settings",
       closeKb: "Close Knowledge Base",
       closeKbTitle: "Close the knowledge base and return to the welcome page (same as the old toolbar \u201cExit\u201d button)",
-      quit: "Quit",
-      quitTitle: "Quit Memoria (same as clicking the window close button)",
     },
     search: {
       scopeKb: "All",
@@ -625,6 +623,12 @@
       empty: "No messages yet. `file:line` references in answers are clickable.",
       role: { user: "Me", assistant: "Agent" },
       sources: "Sources {n}",
+      // Tooltip for the `@relative/path` reference chips (dropped from the file tree;
+      // directories reveal in the tree, files open directly)
+      mention: {
+        openTitle: "Open {path}",
+        revealTitle: "Reveal {path} in the file tree",
+      },
       status: {
         thinking: "Generating…",
         elapsed: "{n}s",

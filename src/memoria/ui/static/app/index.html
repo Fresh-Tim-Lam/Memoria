@@ -47,7 +47,6 @@
   <div id="app">
     <div id="toolbar">
       <div class="toolbar-left pywebview-drag-region">
-        <button type="button" id="btn-toggle-sidebar" aria-pressed="true" title="收起侧栏" data-i18n-attr="title:side.collapseTitle">◧</button>
         <span class="toolbar-brand">
           <img class="logo-icon" src="/icons/Memoria.ico" alt="" decoding="async">
           <span class="logo">Memoria</span>
@@ -73,7 +72,6 @@
             </div>
             <div class="-tb-file-menu-sep" role="separator"></div>
             <button type="button" role="menuitem" id="file-menu-close-kb" disabled data-i18n="toolbar.closeKb" data-i18n-attr="title:toolbar.closeKbTitle">关闭知识库</button>
-            <button type="button" role="menuitem" id="file-menu-quit" data-i18n="toolbar.quit" data-i18n-attr="title:toolbar.quitTitle">退出程序</button>
           </div>
         </div>
         <button id="btn-refresh" title="刷新" data-i18n="toolbar.refresh" data-i18n-attr="title:toolbar.refreshTitle">刷新</button>
@@ -97,6 +95,7 @@
       </div>
       <div class="-titlebar-drag-spacer -titlebar-drag-spacer--after pywebview-drag-region" aria-hidden="true"></div>
       <div class="toolbar-right pywebview-drag-region">
+        <button type="button" id="btn-toggle-sidebar" aria-pressed="true" title="收起侧栏" data-i18n-attr="title:side.collapseTitle">◧</button>
         <button id="btn-agent" type="button" aria-pressed="true" title="对话面板：显示 / 收起右侧对话栏" data-i18n-attr="title:agent.btnTitle">◨</button>
         <div id="window-controls" class="-window-controls hidden" aria-label="窗口控制" data-i18n-attr="aria-label:win.controlsAria">
           <button type="button" id="btn-win-minimize" class="-win-btn -win-btn--min" title="最小化" aria-label="最小化" data-i18n-attr="title:win.minimize;aria-label:win.minimize"></button>
@@ -273,10 +272,10 @@
     </div>
 
     <div id="status-bar">
+      <span id="status-kb"></span>
       <span id="status-info" data-i18n="app.status.ready">就绪</span>
       <span id="status-stats"></span>
       <span id="status-agent"></span>
-      <span id="status-kb"></span>
     </div>
   </div>
 

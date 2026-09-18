@@ -543,6 +543,35 @@
     color: var(--accent-hover);
     outline: none;
 }
+/* 用户消息里的 `@相对路径` 引用 chip（agent-panel.js mentionChip）。
+   与答案里的 `-agent-anchor`（纯文字 + 下划线）**刻意不同**：这里是带边框底色的"标签块"，
+   一眼能认出"这是我拖进来的文件"，而不是答案里那种行内引用。目录叠 `--dir`（虚线边框
+   + 次要色）与文件的实线边框区分。 */
+.-agent-mention {
+    display: inline-block;
+    max-width: 100%;
+    padding: 0 5px;
+    margin: 0 1px;
+    font-size: 0.75rem;
+    border: 1px solid var(--theme-color);
+    border-radius: 2px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+.-agent-mention:hover,
+.-agent-mention:focus {
+    background: var(--bg-hover);
+    outline: none;
+}
+.-agent-mention--dir {
+    border-style: dashed;
+    color: var(--text-secondary);
+}
 .-agent-sources {
     display: flex;
     flex-wrap: wrap;
@@ -596,6 +625,11 @@
 .-agent-input:focus {
     border-color: var(--theme-color);
     outline: none;
+}
+/* 文件树拖到对话栏时的落点高亮（agent-panel.js 在 dragover/dragleave/drop 处加去类） */
+.-agent-composer--drop .-agent-input {
+    border-color: var(--theme-color);
+    box-shadow: inset 0 0 0 2px var(--theme-color);
 }
 .-agent-composer-actions {
     display: flex;
@@ -2090,11 +2124,13 @@
 #status-agent:empty { display: none; }
 #status-agent:hover { text-decoration: underline; text-underline-offset: 0.125rem; }
 
-/* 状态栏的**知识库路径**格（index.html `#status-kb`，由 app.js showKbIndicator() 更新；
-   2026-09-18 由顶栏 `#kb-indicator` 移来）：底栏不是标题栏，故**不带**拖拽语义。
-   长路径省略号截断，完整路径在 title；未开库（空文本）时 `:empty` 完全隐藏、不占位。 */
+/* 状态栏**最左**的「知识库绝对路径」格（index.html `#status-kb`，由 app.js
+   showKbIndicator() 更新；2026-09-18 由顶栏 `#kb-indicator` 移来，同日再由最右
+   移到最左并成为**唯一**的路径显示位——`#status-stats` 里那处重复的路径已去掉）。
+   底栏不是标题栏，故**不带**拖拽语义。长路径省略号截断，完整路径在 title；
+   未开库（空文本）时 `:empty` 完全隐藏、不占位。 */
 #status-kb {
-    margin-left: 0.75rem;
+    margin-right: 0.75rem;
     max-width: 40%;
     min-width: 0;
     overflow: hidden;
