@@ -118,7 +118,7 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | P04 | Windows 右键文件夹「以 Memoria 打开」+ 打开前安全检查（2026-08-29 登记，详情见下） | ⏳ |
 | P05 | `static_server` 的 `_kb_root` 是模块全局 → 一进程只能服务一个知识库（多库/多实例与外部宿主嵌入受阻） | ⏳ K1（`static_server.py`；与 D2 集成 X10 相关；来源 agent-guide/10） |
 | P06 | 打包态在**他人机器**启动崩溃：pythonnet 初始化失败（`Failed to resolve Python.Runtime.Loader.Initialize`，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔄 K2（**根因已定位 = Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面补系统要求；v0.3.4 已重新构建并替换资产。证据 `artifacts/p06-motw-e2e.txt`、发布态 A/B。待在报错机器复验。详情见下） |
-| P07 | UI 视觉收敛（滚动条 / 标签栏滚轮 / 圆角 4·6·8·12·999 / 描边 0.5px / 阴影三档 / 对话面板前两行与显示区上两栏对齐） | 🔄 K2（`app.css` 末尾三块 + 全库原位改值；harness 8651–8654 实测：可见滑块 2px、**横向轨道 10→6px 且滑块贴上沿**、8 标签滚轮 `scrollLeft 0→240`、圆角违规档清零、三档阴影令牌解析、`.-agent-head` 39.5 与 `.-agent-history` 41.36 对齐左两栏。**未取证**：B-7 的 0.5px 在 DPR=1 被上取整为 1px ⇒ 视觉 no-op（仅 DPR≥2 有收益）、真实 hover/滚轮、真机观感。详见 [design/ui-visual-language.md §4](design/ui-visual-language.md)） |
+| P07 | UI 视觉收敛（滚动条 / 标签栏滚轮 / 圆角五档 / 描边 0.5px / 阴影三档 / 面板前两行对齐上两栏 / 侧栏页签条去 13.2px 白留） | 🔄 K2（`app.css` 末尾块 + 原位改值；harness 8651–8655 实测：可见滑块 2px、横向轨道 10→6px 且贴上沿、圆角违规档清零、三档阴影令牌解析、`.-agent-head` 39.5 与 `.-agent-history` 41.36 对齐左两栏、侧栏页签条与 `#sidebar-body-split` 间隙 0.00px。**未取证**：B-7 的 0.5px 在 DPR=1 被上取整为 1px ⇒ 视觉 no-op、真实 hover/滚轮、真机观感。详见 agent-guide/01 §7） |
 
 **P04 详情（2026-08-29 登记）：**
 

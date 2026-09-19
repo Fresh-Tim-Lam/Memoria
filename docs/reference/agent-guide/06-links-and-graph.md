@@ -10,18 +10,20 @@
 ## 1. 区域概览
 
 ```
-#-sidebar                                              （index.html:96）
-├─ .-config-tabs.-sidebar-nav-tabs                     （index.html:99-103）
-│  └─ [data-sidebar-tab=files|graph2d|graph3d] + #sidebar-tab-count-*
-├─ #sidebar-graph-group-bar.-graph-group-bar           （index.html:105-107，仅图谱页且有节点时显示）
+#-sidebar                                              （index.html:109）
+├─ #sidebar-resizer                                   （index.html:110）
+├─ .-sidebar-tabs-wrap                                （index.html:111；`padding: 0 8px`）
+│  └─ .-config-tabs.-sidebar-nav-tabs                 （index.html:112-117）
+│     └─ [data-sidebar-tab=files|graph2d|graph3d] + #sidebar-tab-count-*  （index.html:113-115）
+├─ #sidebar-graph-group-bar.-graph-group-bar           （index.html:118-120，仅图谱页且有节点时显示）
 │  └─ #sidebar-graph-group-tabs.-graph-group-tabs      （横向可滚动页签）
-└─ #sidebar-body-split                                 （index.html:108）
+└─ #sidebar-body-split                                 （index.html:121）
    ├─ #sidebar-nav-panel.-panel.-sidebar-nav-panel
    │  ├─ #sidebar-view-files  > #file-tree
    │  ├─ #sidebar-view-graph2d > #graph-2d-root.-graph-root
-   │  │                        + #graph-2d-hint.-graph-hint--overlay     （index.html:115）
+   │  │                        + #graph-2d-hint.-graph-hint--overlay     （index.html:128）
    │  └─ #sidebar-view-graph3d > #graph-3d-root.-graph-root
-   │                           + #graph-3d-hint.-graph-hint--overlay    （index.html:119）
+   │                           + #graph-3d-hint.-graph-hint--overlay    （index.html:132）
    └─ #sidebar-kp-resizer.-graph-panel-resizer          （上下占比拖拽）
       └─ #sidebar-kp-block                              （知识点，见 05 篇）
 
@@ -204,8 +206,9 @@
 | 失败 | `res.status==="error"` → `setStatus(res.message \|\| graph.build.failed)`；抛异常 → `graph.build.failed` + 异常串 | 同上 |
 | 数据加载 | `loadGraphData()` → `get_graph_data`；非 ok → `graph.loadFailed`「图谱加载失败」+ 服务端消息 | `app.js:1051`-`1075` |
 | 加载后 | 刷新 2D/3D 页签计数（=节点数）→ 首次才 `initGraphPanel()` → `loadPayload` → 服务端群标签 → 群页签 → `resetSimulation` → 更新提示条 | `app.js:730`-`738`、`1059`-`1071` |
-| 提示条（覆盖层） | `.-graph-hint--overlay` 绝对定位在画布底部、`pointer-events:none`（仅按钮可点）；DOM 初始文案为 `graph.overlay2d/3d`（`index.html:115`、`119`），首次刷新后改由 `updateGraphAuditHint()` 写 `graph.hint.idle2d/idle3d`；有图边审计告警时换成告警 + 「打开文件」按钮（点击 `gotoGraphAuditIssue`） | `app.css:406`-`427`；`app.js:1136`-`1167`、`12228`-`12237` |
-| 页签切换 | `setSidebarTab`：同步按钮 `active`、切 `.-sidebar-view` 显隐、启停下层布局、清 KP hover、刷群页签与提示条、`reflow()` 两块视图 | `app.js:1212`-`1234`、`1173`-`1210` |
+| 提示条（覆盖层） | `.-graph-hint--overlay` 绝对定位在画布底部、`pointer-events:none`（仅按钮可点）；DOM 初始文案为 `graph.overlay2d/3d`（`index.html:128`、`132`），首次刷新后改由 `updateGraphAuditHint()` 写 `graph.hint.idle2d/idle3d`；有图边审计告警时换成告警 + 「打开文件」按钮（点击 `gotoGraphAuditIssue`） | `app.css:406`-`427`；`app.js:1136`-`1167`、`12228`-`12237` |
+| 页签切换 | `setSidebarTab`：同步按钮 `active`、切 `.-sidebar-view` 显隐、启停下层布局、清 KP hover、刷群页签与提示条、`reflow()` 两块视图 | `app.js:1239`-`1250`、`1173`-`1210` |
+| **页签条几何（2026-09-19 修）** | `. -sidebar-tabs-wrap` 高 = 页签条高（实测 30.19px @root17.6），其下缘与 `#sidebar-body-split` 顶边**严丝合缝（间隙 0）**；页签条自身高 30.19、`border-bottom: 0.5px`（计算 1px）、页签 `border-bottom: 2px` + `margin-bottom: -1px` 正好压在容器下边框上。**起因**：`. -sidebar-nav-tabs { margin-bottom: 0 }` 与 `.-config-tabs { margin-bottom: 0.75rem }` 同特异度、而后者在本文件更靠后 ⇒ 那条 0 一直被盖掉，页签条下白留 **13.2px**（用户反馈"外框太宽、与页签间还有缝隙"）；修法 = 选择器改双类 `.-config-tabs.-sidebar-nav-tabs`（`app.css:236-238`） | `app.css:231`-`244`、`1534`-`1560`；实测 harness 8655 |
 
 ## 3. 交互流程
 

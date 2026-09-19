@@ -233,7 +233,7 @@
     flex-shrink: 0;
 }
 
-.-sidebar-nav-tabs {
+.-config-tabs.-sidebar-nav-tabs { /* 必须双类：单类 `.-sidebar-nav-tabs` 与 `.-config-tabs` 特异度相同，而后者在本文件更靠后 ⇒ 那条 `margin-bottom:0` 一直被盖掉，侧栏页签条下白留 0.75rem（用户 2026-09-19 反馈"外框太宽、与页签间还有缝隙"） */
     margin-bottom: 0;
 }
 
