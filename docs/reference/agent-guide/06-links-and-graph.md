@@ -208,7 +208,7 @@
 | 加载后 | 刷新 2D/3D 页签计数（=节点数）→ 首次才 `initGraphPanel()` → `loadPayload` → 服务端群标签 → 群页签 → `resetSimulation` → 更新提示条 | `app.js:730`-`738`、`1059`-`1071` |
 | 提示条（覆盖层） | `.-graph-hint--overlay` 绝对定位在画布底部、`pointer-events:none`（仅按钮可点）；DOM 初始文案为 `graph.overlay2d/3d`（`index.html:128`、`132`），首次刷新后改由 `updateGraphAuditHint()` 写 `graph.hint.idle2d/idle3d`；有图边审计告警时换成告警 + 「打开文件」按钮（点击 `gotoGraphAuditIssue`） | `app.css:406`-`427`；`app.js:1136`-`1167`、`12228`-`12237` |
 | 页签切换 | `setSidebarTab`：同步按钮 `active`、切 `.-sidebar-view` 显隐、启停下层布局、清 KP hover、刷群页签与提示条、`reflow()` 两块视图 | `app.js:1239`-`1250`、`1173`-`1210` |
-| **页签条几何（2026-09-19 修）** | `. -sidebar-tabs-wrap` 高 = 页签条高（实测 30.19px @root17.6），其下缘与 `#sidebar-body-split` 顶边**严丝合缝（间隙 0）**；页签条自身高 30.19、`border-bottom: 0.5px`（计算 1px）、页签 `border-bottom: 2px` + `margin-bottom: -1px` 正好压在容器下边框上。**起因**：`. -sidebar-nav-tabs { margin-bottom: 0 }` 与 `.-config-tabs { margin-bottom: 0.75rem }` 同特异度、而后者在本文件更靠后 ⇒ 那条 0 一直被盖掉，页签条下白留 **13.2px**（用户反馈"外框太宽、与页签间还有缝隙"）；修法 = 选择器改双类 `.-config-tabs.-sidebar-nav-tabs`（`app.css:236-238`） | `app.css:231`-`244`、`1534`-`1560`；实测 harness 8655 |
+| **页签条几何（2026-09-19 修）** | `. -sidebar-tabs-wrap` 高 = 页签条高（**2026-09-19 起为 34px**：由末尾 `--bar-h-b` 统一钉住，见 01 篇 §6「统一栏高」），其下缘与 `#sidebar-body-split` 顶边**严丝合缝（间隙 0）**；页签条 `border-bottom: 0.5px`（计算 1px）、页签 `border-bottom: 2px` + `margin-bottom: -1px` 正好压在容器下边框上（实测 active 页签 `bottom` 与容器 `bottom` 差 **0.00**）。**起因**：`. -sidebar-nav-tabs { margin-bottom: 0 }` 与 `.-config-tabs { margin-bottom: 0.75rem }` 同特异度、而后者在本文件更靠后 ⇒ 那条 0 一直被盖掉，页签条下白留 **13.2px**（用户反馈"外框太宽、与页签间还有缝隙"）；修法 = 选择器改双类 `.-config-tabs.-sidebar-nav-tabs`（`app.css:236-238`） | `app.css:231`-`244`、`1534`-`1560`、`5170`-`5204`；实测 harness 8655（13.2px→0）与 8656（高 30.19→34） |
 
 ## 3. 交互流程
 

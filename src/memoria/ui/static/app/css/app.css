@@ -256,7 +256,7 @@
 
 .-graph-group-tabs {
     display: flex;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: thin;
@@ -361,7 +361,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4375rem 10px;
+    padding: 0.25rem 10px; /* 2026-09-19 收窄（0.4375→0.25rem）：整条高度改由末尾的 `--bar-h-b` 统一钉住 */
     border-bottom: 0.5px solid var(--border);
 }
 .-agent-model {
@@ -2218,7 +2218,7 @@
 
 .-win-btn {
     width: 2.875rem;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     border: none;
     background: transparent;
     color: var(--text-primary);
@@ -3386,11 +3386,11 @@ body.-win-dragging {
 #tab-bar {
     display: flex;
     align-items: stretch;
-    min-height: 2.1875rem;
+    min-height: var(--bar-h, 1.875rem);
 }
 #tabs {
     display: flex;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     flex: 1;
     min-width: 0;
     overflow-x: auto;
@@ -3503,7 +3503,7 @@ body.-win-dragging {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.5rem 16px;
+    padding: 0.25rem 16px; /* 2026-09-19 收窄（0.5→0.25rem）：整条高度改由末尾的 `--bar-h-b` 统一钉住 */
     background: var(--bg-secondary);
     border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
@@ -5167,24 +5167,38 @@ html *::-webkit-scrollbar-thumb:active {
     -webkit-backdrop-filter: blur(2px);
 }
 
-/* ===== 对话面板前两行 ↔ 显示区上两栏 对齐（2026-09-19，用户反馈）===============
-   实测（root 17.6px = uiScale 1.1）：`#tab-bar` 39.5px、`#editor-header` 41.38px，而
-   `.-agent-head` 只有 **36.75px**、`.-agent-history` 却有 **46.16px** —— 两行一个短 2.75、
-   一个长 4.78，既跟左边的两栏错位、两行之间也一胖一瘦。修法：
-   ① `.-agent-head` 用与 `#tab-bar` **同一个公式**（2.1875rem 内容 + 1px 下边框）⇒ 39.5px 逐像素对齐；
-   ② `.-agent-history` **钉到 `#editor-header` 的实测高**（2.35rem）；它原本是被里面的原生
-      `<select>`（约 29.8px）撑高的，故同时把行内距收到 0.3125rem、下拉框内距收到 0.125rem，
-      让 select 落到行内而不是继续撑高行（两行都是 `align-items:center`，子元素在行内居中）。
-   两个目标值都以 rem 表达 ⇒ 用户改「界面缩放 / 字号」时两栏一起缩放、对齐关系不破。 */
+/* ===== 统一「栏高」`--bar-h`：chrome 各横条同一厚度（2026-09-19，用户反馈"太粗了"）========
+   用户反馈：「（`#editor-header` 那行）太粗了，对应的左右侧栏也要同步粗细度」「`#toolbar` 也可以细一点」。
+   改前实测（root 17.6px = uiScale 1.1）：`#toolbar` 38.5、`#tab-bar` 39.5、`#editor-header` **41.38**、
+   左栏页签条 **30.19**、右栏 `.-agent-head` 39.5 / `.-agent-history` **41.36** —— 三列三套高度且偏胖。
+   口径（**一处可调**）：所有横条 = `--bar-h` 内容高（1.875rem = 33px @root17.6）+ 各自 1px 下边框
+   ⇒ 整条 34px；含原生 `<select>` 的 `.-agent-history` 同高，但把行内距收到 0.125rem，否则 select 的
+   29.8px 会把行顶高（这正是上一轮"一胖一瘦"的根因）。改法：既有规则里的 `2.1875rem` 全部**原行替换**
+   为 `var(--bar-h, 1.875rem)`（memoria.css 7 处 + app.css 4 处，**行数不变 ⇒ 锚点零漂移**）；
+   本块只承载"必须新增声明"的两条（`#editor-header` 与左栏页签条在既有规则里**没有**高度声明）——
+   两处内距已在原位收窄（`#editor-header` 0.5→0.25rem、`.-agent-head` 0.4375→0.25rem）。
+   **想再细/再粗：只改 `--bar-h` 一个值**（`--bar-h-b` 与 fallback 都会跟着走）。 */
+:root {
+    --bar-h: 1.875rem;                     /* 横条内容高：33px @root17.6 / 28px @root16 */
+    --bar-h-b: calc(var(--bar-h) + 1px);   /* 含自身 1px 下边框的整条高：34px */
+}
 .-agent-head {
-    min-height: calc(2.1875rem + 1px);
+    min-height: var(--bar-h-b);
 }
 .-agent-history {
-    height: 2.35rem;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
+    height: var(--bar-h-b);
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
 }
 .-agent-history-select {
     padding-top: 0.125rem;
     padding-bottom: 0.125rem;
+}
+/* 需**新增声明**的两条（既有规则里没有高度）：编辑区头部（格式栏那行）与左栏「文件 / 2D / 3D」页签条
+   —— 与 `#tab-bar` / `.-agent-head` 同高（`#tab-bar` = `#tabs` 33px + 自身 1px 边框 = 34px）。 */
+#editor-header {
+    height: var(--bar-h-b);
+}
+.-config-tabs.-sidebar-nav-tabs {
+    min-height: var(--bar-h-b);
 }

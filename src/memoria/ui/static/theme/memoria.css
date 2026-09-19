@@ -95,7 +95,7 @@ body {
     position: relative;
     overflow: visible;
     padding: 0 0 0 12px;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     background: var(--bg-toolbar, var(--bg-secondary));
     border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
@@ -138,7 +138,7 @@ body {
     cursor: pointer;
     font-size: 0.75rem;
     transition: background 0.1s;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     display: flex;
     align-items: center;
 }
@@ -163,7 +163,7 @@ body {
 .-titlebar-drag-spacer {
     flex: 1 1 0;
     min-width: 0.5rem;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     cursor: default;
     position: relative;
     z-index: 1;
@@ -191,7 +191,7 @@ body {
     align-items: center;
     gap: 0.5rem;
     flex-shrink: 0;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
 }
 .toolbar-left .logo-icon {
     width: 1.625rem;
@@ -221,7 +221,7 @@ body {
     cursor: pointer;
     font-size: 0.75rem;
     transition: background 0.1s;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     display: flex;
     align-items: center;
 }
@@ -306,7 +306,7 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 8px;
-    height: 2.1875rem;
+    height: var(--bar-h, 1.875rem);
     border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
 }
@@ -428,7 +428,7 @@ body {
     flex-shrink: 0;
     overflow-x: auto;
 }
-#tabs { display: flex; height: 2.1875rem; }
+#tabs { display: flex; height: var(--bar-h, 1.875rem); }
 .tab {
     display: flex;
     align-items: center;
