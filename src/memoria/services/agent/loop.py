@@ -131,7 +131,7 @@ class LoopResult:
 
 
 def usage_payload(usage: Usage) -> dict[str, int | bool | None]:
-    """`Usage` → 可序列化载荷；`loop/end` 事件、`AskResult.usage` 与压缩事件共用同一形状。"""
+    """`Usage` → 可序列化载荷；`loop/end` 事件、`AskResult.usage` 与压缩/标题事件共用同一形状。"""
     return {
         "prompt_tokens": usage.prompt_tokens,
         "completion_tokens": usage.completion_tokens,

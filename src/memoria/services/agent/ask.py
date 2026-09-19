@@ -36,6 +36,12 @@ M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；
 `_compact_if_needed()`：`summarize_span()` 自身 fail-closed，但这里只记日志、按未压缩历史继续）。
 为了让摘要调用成为「上一次已路由请求」的真实前缀（复用 provider 的 KV 缓存），压缩与主回合
 **共用同一份 `system` + 工具集** —— 故本模块先建一次 `registry` / `system` 再传给 `build_loop()`。
+
+**会话标题（M2）**：标题是 **log-only** 的 `session/title` 事件（**永不进模型输入**，见 `title.py`）。
+本地分两步、都在 `ask()` 里：① 追加本轮 `user/message` **之后**立刻补一条**确定性兜底**标题
+（零模型调用、零网络，会话已有标题则跳过）；② 主回合结束后跑**首轮一次**的模型标题
+（`first-prompt` 节律：会话里恰好一条合格人类消息时；**被取消的轮次跳过**）。两步都 fail-open
+（失败只记 warning）；代价是「面板的 `done` 会晚一个极小辅助调用的时间，仅每会话首轮一次」。
 """
 
 from __future__ import annotations
@@ -67,6 +73,7 @@ from memoria.services.agent.loop import (
     AgentLoop,
     CancelToken,
     LoopResult,
+    StopReason,
     usage_payload,
 )
 from memoria.services.agent.prompt import build_system_prompt
@@ -86,6 +93,7 @@ from memoria.services.agent.session.history import (
 from memoria.services.agent.session.store import SessionStore, new_session_id, session_file
 from memoria.services.agent.tools.kb import DEFAULT_TOP_K, build_kb_tools
 from memoria.services.agent.tools.registry import ToolRegistry
+from memoria.services.agent.title import TitleError, auto_title, ensure_fallback
 
 logger = logging.getLogger(__name__)
 
@@ -265,6 +273,54 @@ def _compact_if_needed(
     return True
 
 
+def _append_fallback_title(root: str, session: SessionStore) -> None:
+    """在**追加本轮提问之后**补一条兜底标题（零模型调用、零网络，见 `title.py`）。
+
+    与压缩/裁剪同理，标题是**优化**：任何意外都不该让用户的问题问不出去 —— 失败只记 warning。
+    """
+    try:
+        if ensure_fallback(session, conversation_events(root, session.session_id)):
+            logger.info("[agent-title] 已落兜底标题")
+    except (TitleError, OSError, ValueError) as exc:
+        logger.warning("[agent-title] 兜底标题失败（不影响问答）：%s", exc)
+
+
+def _maybe_generate_title(
+    root: str,
+    session: SessionStore,
+    *,
+    result: LoopResult,
+    provider: Any,
+    model: str,
+    timeout_s: float | None,
+    retry_policy: RetryPolicy | None,
+    cancel: CancelToken | None,
+) -> None:
+    """主回答结束后的**首轮一次**模型标题（`first-prompt` 节律，见 `title.auto_title()`）。
+
+    两个本地取舍：① 排在**主回合之后**（本地没有异步的标题服务），故只影响「面板的 `done` 晚一点」，
+    且**仅每会话首轮一次**；② **被取消的那一轮不生成**（用户已喊停，不再多花一次调用）。
+    失败 fail-open：只记 warning（标题是优化，不该影响问答）。
+    """
+    if result.stop_reason is StopReason.ABORTED:
+        return
+    try:
+        call = auto_title(
+            session,
+            conversation_events(root, session.session_id),
+            provider=provider,
+            model=model,
+            timeout_s=timeout_s,
+            retry_policy=retry_policy,
+            cancel=cancel,
+        )
+    except TitleError as exc:
+        logger.warning("[agent-title] 标题生成失败（不影响问答）：%s", exc)
+        return
+    if call is None:
+        logger.debug("[agent-title] 非首轮（first-prompt 节律未命中），不生成标题")
+
+
 def ask(
     kb_path: str,
     question: str,
@@ -333,6 +389,8 @@ def ask(
         # 裁剪/压缩已落盘 ⇒ 重新回放，让本轮请求用上裁剪与摘要视图（被覆盖区间不再逐字重发）
         history = build_history(root, session.session_id)
     session.append("user/message", {"text": text})
+    # 标题（M2）第 1 步：兜底标题 —— 零成本、零模型调用，先落一条（对齐上游 onUserMessage 的节律）
+    _append_fallback_title(root, session)
     loop = build_loop(
         root,
         provider=active_provider,
@@ -352,6 +410,17 @@ def ask(
     )
     result: LoopResult = loop.run(text, messages=history)
     session.flush()
+    # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过
+    _maybe_generate_title(
+        root,
+        session,
+        result=result,
+        provider=active_provider,
+        model=active_model,
+        timeout_s=timeout_s,
+        retry_policy=retry_policy,
+        cancel=cancel,
+    )
 
     tool_calls = tuple(
         {

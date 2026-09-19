@@ -104,7 +104,7 @@
 | `core/session` · `core/scope` | 同上 | 会话与作用域 | ✅ 吃（子集） | `services/agent/session/` | **M1** |
 | `core/agent` · `agent-default-model` · `agent-tool-presentation` | 同上 | agent 定义、默认模型、工具呈现 | ⏳ 按需 | 同上 | M1/M2 |
 | `session/session-persistence` + `-jsonl` + `session-format` | 158 ts（整组） | 会话持久化（jsonl）+ 格式定义 | ✅ 吃**当前格式**（迁移链 `v0→v3` ❌ 不吃） | `services/agent/session/store.py` | **M1** |
-| `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ⏳ 投影与标题 M2；**telemetry（OTel）❌ 不吃** | — | M2 |
+| `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ✅ 吃**标题**（`session-title` + `-llm` + `-first-prompt-llm`，§6.11；`-all-prompts` ❌）；投影框架 / 统计 ⏳；**telemetry（OTel）❌ 不吃** | `services/agent/title.py` | **M2** |
 | `context/agent-instructions` | 39 ts | 工作区指令文件 → 上下文（**只加上下文、不加工具**） | ✅ 吃 | 对接既有 `.memoria/agent/kb-spec*.md` | **M1** |
 | `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ⏳ 引用类 M2；tmux ❌ | — | M2 |
 | `interaction/user-approval` · `tool-ask-user` | 24 ts | 一次性审批、向用户提问（fail-closed） | ✅ 吃最小面 | `services/agent/approvals.py` | **M1** |
@@ -484,6 +484,92 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 
 **文档**：见 §11 对应行。
 
+### 6.11 M2 会话标题实施记录（2026-09-19：吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`，已落地）
+
+**范围界定**：上游与"标题"相关的有 4 个包 + 通用投影框架，本地只吃三个：
+
+| 上游包 / 设施 | 吃否 | 理由 |
+|---|---|---|
+| `session-title`（规范化 / 折叠 / 兜底 / 接受与取代） | ✅ | 标题的核心契约：来源优先级、字节限额、控制字符清洗、log-only |
+| `session-title-llm`（模型标题的**共享调用策略**） | ✅ | system 提示、JSON 框定、输入/输出/超时限额、finish 判据 |
+| `session-title-first-prompt-llm`（首条消息选材 + `first-prompt` 节律） | ✅ | 本地选定的自动节律（见下） |
+| `session-title-all-prompts-llm` | ❌ | 每来一句就重算一次标题 —— 本地方针是"能省则省"，不值得每轮多一次调用 |
+| `session-projection*`（投影框架 `title` / `titleInput` 单元） | ❌ | 本地不引投影框架：直接**折叠**（`fold_title()`），列表用原始行扫描 |
+| `session/title-llm-request`（预派发记录） | ❌ | 上游用它自证"辅助调用的路由与已记录的主请求路由一致"；本地路由就是本轮的 provider/model |
+| `rename()`（`source.kind == "user"`） | ❌ | 本地没有改名入口；事件形状保留 `source`，折叠时**不解释**它 |
+
+**改动**（1 个新模块 + 4 个既有文件 + 1 个新测试文件 + 1 处前端一行）：
+
+- **新增 `services/agent/title.py`**（约 470 行，语义移植自上游三个包）：
+  - 常量与限额：`SESSION_TITLE = "session/title"`、`TITLE_FALLBACK_MAX_WORDS = 8` /
+    `TITLE_FALLBACK_MAX_BYTES = 96` / `TITLE_MAX_BYTES = 120`（上游三限额**必填无默认**，本地取它 README
+    示例值）、`TITLE_TARGET_WORDS = 6` / `TITLE_TARGET_CJK_CHARS = 12`（共享调用策略里的"目标长度"）、
+    `TITLE_MAX_INPUT_BYTES = 32768` / `TITLE_MAX_OUTPUT_TOKENS = 96` / `TITLE_TIMEOUT_S = 20` + 一次重试；
+  - **规范化**（上游 `normalize.ts` 同名模式逐条照搬）：OSC（含未终结尾巴）/ CSI / 其余两字节 ESC 序列、
+    非空白 C0/C1 控制字符、**方向与隐形控制字符**全去；空白折叠成单空格；`truncate_title_utf8()` 按
+    **UTF-8 字节**截断且**不切开码点**（Python 侧逐字符累加 `len(ch.encode())`）；
+  - **合格消息与折叠**：`title_message()`（只认人类 `user/message` 且规范化后非空）→
+    `collect_title_messages(events, through_seq=…)` → `fold_title(events)`（最后一条**非空**标题胜出）；
+  - `ensure_fallback()`：无标题时按首条合格消息落一条 `fallback`（**零模型调用、零网络**）；
+  - `title_system_prompt()` / `frame_messages()`（把选材消息**框成 JSON**，正文无法破坏结构分隔）/
+    `generate_title()`（**fail-closed**：无终止事件 / `error` / `aborted` / `max-tokens` / 返回工具调用 /
+    **非 `stop` 的终止原因**（含 `content-filter`）/ 正文规范化后为空 ⇒ `TitleError`）；
+  - `auto_title()`：`first-prompt` 节律 —— 会话里**恰好一条**合格人类消息时才生成并落 `provider` 标题。
+- `session/history.py`：事件表新增 `session/title` 行（**跳过**：标题 log-only，不进消息序列）+ 新增
+  「标题」小节；`summarize_events()` 的 `title` 改为**优先取 `fold_title()`**；`summarize_session_file()`
+  的**原始行扫描**里另找 `"session/title"` 行、只对**最后一个命中行**解码取 `data.title`（与折叠**同口径**：
+  最后一条非空标题），没有标题事件时才回落到「首条提问前 40 字」（M1 行为）。
+- `ask.py`：新增两个小函数并接进 `ask()` ——
+  ① `_append_fallback_title()`：追加本轮 `user/message` **之后**立刻补兜底标题（对齐上游 `onUserMessage`
+  的节律：每条合格消息都尝试、已有标题即跳过）；② `_maybe_generate_title()`：主回合结束后跑**首轮一次**
+  的模型标题（`auto_title()`），**被取消的轮次跳过**。两步都 **fail-open**（只记 warning）。
+- `ui/static/app/js/agent-panel.js`：`#agent-history` 下拉的标签由 `session.preview` 改为
+  **`session.title || session.preview`** —— 原来后端返回的 `title` 字段**根本没被前端用过**，标题做完也是
+  白做；这是本次唯一的前端改动（1 行取值，无新文案、无 i18n 变更）。
+- `tests/test_agent_title.py`（**31 例**）；`tests/test_agent_history.py` 的
+  `test_summarize_and_conversation_view_with_anchors` 补一个标题步骤并改断言（见下）。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **没有异步服务**（最重要的一条）：上游是常驻 `SessionTitleService`，自动生成**从不阻塞主回答**，
+   并用 `AbortController` 处理取代/超时/生命周期。本地 `ask()` 是**同步**调用面 ⇒ 标题调用排在**主回合
+   之后**（`loop/end` 已落盘）。**代价**：面板的 `done` 会晚一个**极小**辅助调用的时间，且**仅每会话首轮
+   一次**；换来的是**没有**引入后台线程池与取代状态机（本地单写者 + 单飞作业，不值得）。
+2. **被取消的轮次不生成标题**（**本地新增**，上游无此分支）：用户已喊停，不再多花一次调用。
+3. **只吃 `first-prompt`**：不吃 `all-prompts`；因此也不做上游那层「provider 注册表 + automatic 节律」
+   抽象，只有一条内联路径。
+4. **不吃 `rename()`**：无改名入口；`source` 仍写进事件（`fallback` / `provider`），折叠时不解释它。
+5. **不移植投影框架与预派发记录**（见上表）。
+6. **折叠加固**：空标题记录**视作没有**（继续用前一条有效标题）—— 上游 `findLast` 会直接采用它；
+   本地要求"最后一条**非空**"，且**与列表的原始行扫描同口径**（否则 `summarize_events` 与
+   `summarize_session_file` 会给出不同标题）。
+7. **本地扩展：标题调用用量记进事件**（`session/title.usage`，形状同 `loop/end.usage`）—— 上游不记。
+   与 `compaction.usage` 一样**不进** benchmark（报告只扫 `loop/end`）。
+8. `TITLE_TARGET_WORDS` / `TITLE_TARGET_CJK_CHARS` / `maxInputBytes` / `maxOutputTokens` / `timeoutMs`
+   在上游都是**必填配置**（库内无默认），本地落为模块常量（默认值即上文）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（新模块 + 4 个既有文件） / `node --check` | 全过 |
+| `pytest -q` | **184 passed**（原 153 + 新增 **31** 例 `tests/test_agent_title.py`） |
+| 覆盖点 | 规范化（CSI/OSC/未终结 OSC/两字节 ESC、C0-C1、方向与隐形字符、空白折叠、**按字节截断不切开码点**、非法上限 5 例）；合格消息与折叠（非人类/空白/纯控制字符不合格、`through_seq` 上界、**最后一条非空标题胜出**）；兜底（首条消息前 8 词 / 96 字节、只落一次、已有标题或没有合格消息则跳过）；模型调用（**请求形状**：system = `title_system_prompt()`、单条 user、正文以固定前缀开头且其后是 `[{seq,text}]` 的合法 JSON、`max_tokens = 96`；正常返回带 usage；**fail-closed 七路**（error / aborted / max-tokens / tool-calls / content-filter / 空正文 / 无终止事件）；输入超限与空选材不发请求；`AgentLlmError` 被包成 `TitleError`；取消）；节律（恰好一条合格消息才生成，两条则一次请求都不发）；端到端（首轮落 `fallback` + `provider` 两条且后者带 `usage`、**次轮不再生成**、**被取消的轮次只留兜底**、**标题调用失败不影响问答**、老会话再聊一句补兜底但不做模型标题、**标题永不进模型输入**（主回合请求无标题字样 + `build_history` 不多出消息 + 列表扫描与折叠同口径）） |
+| **浏览器实测**（harness `MEMORIA_HARNESS_KB` 指向临时库、`MEMORIA_CONFIG_DIR` 隔离、端口 8645；**不需要模型**：会话文件里的 `session/title` 直接手写） | `/rpc` `agent_sessions_list` 返回 `title = "多层感知机的要点"`（**折叠出的 provider 标题**，不是 `preview` 也不是首条提问）；浏览器里 `#agent-history` 的选项为 `{value: "session-title-demo", text: "多层感知机的要点（1 轮）"}`、`optionCount = 2`、未禁用；`#-agent-dock` / `#agent-input` 均存在（面板已初始化） |
+| 依赖面 | 纯标准库 / 纯浏览器原生 API，**零新依赖** |
+
+**顺带修掉的一处"做完也看不见"**：后端从 M1c 起就返回 `title` 字段，但前端一直用的是 `preview`
+（首条提问前 80 字）。本次把下拉标签改成 `title || preview`，标题才真正可见。
+
+**已知缺口（本轮未做）**：① **标题调用用量不进 benchmark / 面板状态栏**（只扫 `loop/end`，与 §6.8 同一缺口，
+现在多了一处来源）；② 无改名（`rename()`）与"钉住"语义；③ 无 `all-prompts` 节律；④ 不做标题的
+`titleInput` 投影缓存（每次折叠走一次事件列表 ⇒ O(n)，本地会话规模无压力）。
+
+**未实测**：真实模型端点下**标题的质量**与语言选择（只做静态 + 单测 + 假 provider + 手写会话文件的浏览器实测；
+用户 `config/agent.json` 是真密钥、**刻意不调用**）；真机上"首轮多等一个辅助调用"的实际手感。
+
+**文档**：见 §11 对应行。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -513,8 +599,8 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 > `SESSION_FORMAT_VERSION`、也无老会话迁移问题。详见 §6.8。
 >
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
-> §6.9（session-query）、**§6.10（`compaction-tool-result-pruner`）**。**剩余**：会话标题
-> （`session/title*` + 投影）、`session-reference`（跨会话引用）。
+> §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、**§6.11（会话标题）**。
+> **剩余**：`session-reference`（跨会话引用 —— 本地目前只支持 `@路径`，且没有产生会话引用的入口）。
 
 ---
 
@@ -566,3 +652,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-18 | **更正**：上一条拍板笔记里「需同步 `SESSION_FORMAT_VERSION`」**不成立** —— `compaction` 是纯追加类型且三个既有读者对未知 type 一律跳过 ⇒ 旧版本读新文件只降级为「没有压缩」，不误读不崩（等价上游 `ignorable: true`）。按上游「只有结构变更才 bump」的规则，**不 bump**。已同步修 §8 表下注与 §6.8 |
 | 2026-09-19 | **M2 session-query 落地**（吃 `session-query/session-query` 的 `extraction.ts`+`filters.ts` + `session-query/tool-session-query`；**不吃** `session-query-sqlite`（不引索引）/ `session-log-export`（导出 UI））：新增 `services/agent/session/query.py`（语义文本抽取含**本地扩展**的 `compaction`→`summary`、字面量匹配的逐词转义防注入 + 空白弹性、摘要窗、`_Filters` 的「子句间 AND / 子句内 OR」、四重有界化、字节级预筛）；`tools/kb.py` 增 `search_sessions` 工具（只读，命中写成「会话 `<id>` 第 N 条」**且刻意不产生 `文件:行号` 锚点**）；新增 `tests/test_agent_session_query.py` 28 例。验收：`pytest -q` **132 passed**（原 104 + 28）；修掉一个真 bug（`limit=0` 仍返回 1 条）；零新依赖。偏差（语料无 live/SQLite 索引、排序由相关性改为 `modified_at` 倒序、`snippet` 窗口未逐字对齐、不移植游标/谱系/可观测性）、缺口与未实测见 §6.9 |
 | 2026-09-19 | **M2 工具结果裁剪落地**（吃 `compaction/compaction-tool-result-pruner` —— §6.8 曾登记为「留后」，本轮补上）：新增 `services/agent/pruner.py`（`PRUNE_MARKER` 逐字照抄、阈值/头/尾 = 8192/4096/1024 同上游、`PruneBudgets` 构造期校验保证**永不增长**、`prune_text`/`apply_budget`/`applied_chars`/`prune_plan`/`prune_records`/`prune_applied`）；`session/history.py` 新增事件表行 + 「工具结果裁剪回放」小节（`_tool_message`/`_replay`/`replay_events` 接裁剪表、`build_history` 自动应用、新增 `compaction_shadowed()`）；`compaction.py` 的 `event_chars`/`select_span` 新增 `effective_chars`（按**有效视图**计账，避免高估尾部）；`ask._compact_if_needed()` 改为**先裁、再压**（裁完够用即**免掉**一次摘要调用，仍是超则摘要器读裁剪视图），返回值语义放宽为「是否落了事件」。**落盘**：一条 `compaction/prune`（`{pruned:[{seq,id,chars_before,chars_after,head,tail}], chars_removed}`），回放期**就地**重建 —— 不像上游那样追加替换 `tool/result`（同一 `tool_call_id` 两条工具消息会被端点 400）。验收：`pytest -q` **153 passed**（原 132 + 21 例 `tests/test_agent_pruner.py`）；零新依赖。偏差（纯字符串内容模型、不移植影子定价/`surfaceOp`、检索仍走原文、字符非 token 预算）、缺口与未实测见 §6.10；§8「M2 剩余」同步更新 |
+| 2026-09-19 | **M2 会话标题落地**（吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`；**不吃** `all-prompts`（每轮一次调用不值）/ 投影框架 / `session/title-llm-request` 预派发记录 / `rename()`）：新增 `services/agent/title.py`（`session/title` **log-only** 事件；来源最新者胜：`fallback` 确定性兜底 = 首条人类消息前 8 词 / 96 字节、`provider` 模型标题、`user` 改名未移植；规范化照搬上游（OSC/CSI/ESC 序列、C0-C1、方向与隐形字符、空白折叠、**按 UTF-8 字节截断不切开码点**）；限额 8/96/120 + 调用策略 `maxInputBytes=32768` / `maxOutputTokens=96` / `timeout=20s`；`generate_title()` **fail-closed**（非 `stop` 的终止原因一律拒）；`auto_title()` = `first-prompt` 节律）；`history.py` 的 `summarize_events`/`summarize_session_file` 都改为**优先取折叠标题**（原始行扫描只对最后一个命中行解码，与折叠同口径）；`ask()` 两步接进（追加提问后落兜底、主回合后跑首轮一次的模型标题、**被取消的轮次跳过**、两步都 fail-open）；**顺带修掉"做完也看不见"**——前端 `#agent-history` 下拉标签由 `preview` 改为 `title || preview`（后端 `title` 字段此前从未被前端使用）。验收：`pytest -q` **184 passed**（原 153 + 31 例 `tests/test_agent_title.py`；`test_agent_history.py` 一处断言随之更新）；**浏览器实测**（harness 端口 8645、临时库 + 手写 `session/title`、不需要模型）：`agent_sessions_list.title = "多层感知机的要点"`、下拉选项文本 `多层感知机的要点（1 轮）`。偏差（**本地无异步服务 ⇒ 标题调用排在主回合之后**、仅首轮一次；被取消轮次不生成；用量记进事件但不进 benchmark）、缺口与未实测见 §6.11；§5 映射表与 §8「M2 剩余」同步更新 |

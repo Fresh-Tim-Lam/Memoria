@@ -20,6 +20,7 @@
 | `step/start`、`step/error`、`loop/end` | — | **跳过**（非对话内容） |
 | `compaction` | `{summary, shadowed:[seq…], …}` | 在 `shadowed` 中最旧的 seq 处出一条 `user` 消息（摘要 + checkpoint 框定），其 `shadowed` 里的 seq **全部跳过** |
 | `compaction/prune` | `{pruned:[{seq, head, tail, …}]}` | 被列出的 `tool/result` 在回放时**就地**换成「头 + 标记 + 尾」（**原事件逐字留在日志里**，只是不再进请求） |
+| `session/title` | `{title, message_seqs:[seq…], source:{kind}}` | **跳过**（标题是 **log-only** 的：既不进消息序列、也不进模型输入；只由**标题折叠**读取，见 `title.py`） |
 
 ## 压缩回放（M2）
 
@@ -44,6 +45,14 @@
   请求用裁剪视图；
 - **链式/重复**：同一 `seq` 被多条记录覆盖时**后写覆盖**（与压缩同口径）；形状不全的记录**整条
   忽略**（fail-safe：宁可让模型看到原文，也不拿半截预算去切正文）。
+
+## 标题（M2）
+
+`session/title` 事件（形状见 `services/agent/title.py`）是 **log-only** 的：回放**跳过**它（既不出消息、
+也不进模型输入），但**会话摘要**要读它 —— `summarize_events()` 用 `title.fold_title()` 折叠；
+`summarize_session_file()` 的**原始行扫描**里另找 `"session/title"` 行、只对**最后一个命中行**解码
+（与它读 `user/message` 预览同一套"不解码整份文件"的做法）。**两处口径一致**：都以**最后一条非空标题**为准，
+没有标题事件时回落到「首条提问前 `TITLE_CHARS` 字」。
 
 ## 保真度（**全保真回放**，仅异常轮降级）
 
@@ -84,6 +93,7 @@ from typing import Any
 from memoria.services.agent.llm import Message, Role, ToolCall
 from memoria.services.agent.pruner import apply_budget, prune_applied
 from memoria.services.agent.session.store import read_session
+from memoria.services.agent.title import fold_title
 
 __all__ = [
     "COMPACTION",
@@ -126,6 +136,9 @@ SESSION_SCAN_MAX_BYTES = 2 * 1024 * 1024
 #: 用 **bytes** 形态：扫描全程不解码整份文件（纯 ASCII 子串在字节串上同样精确），
 #: 只对命中的**那一行**解码 + 解析预览——这是"去读放大"的关键。
 _USER_TYPE_MARK = b'"user/message"'
+
+#: 原始行扫描时的 `session/title` 事件标记（取值同 `title.SESSION_TITLE`；写字面量避免反向依赖）。
+_TITLE_TYPE_MARK = b'"session/title"'
 
 
 def _conversation_events(kb_path: str, session_id: str) -> list[dict[str, Any]]:
@@ -367,13 +380,18 @@ def _first_user_text(events: Sequence[Mapping[str, Any]]) -> str:
 
 
 def summarize_events(events: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
-    """会话摘要（`agent_sessions_list` 用）：轮数 / 首条提问预览与短标题。"""
+    """会话摘要（`agent_sessions_list` 用）：轮数 / 首条提问预览与标题。
+
+    `title` 优先取**折叠出的标题**（`session/title` 事件：模型标题或确定性兜底）；
+    没有标题事件时才回落到「首条提问前 `TITLE_CHARS` 字」（M1 行为）。
+    """
     turn_count = sum(1 for event in events if event.get("type") == USER_MESSAGE)
     first = _first_user_text(events)
+    folded = fold_title(events)
     return {
         "turn_count": turn_count,
         "preview": first[:PREVIEW_CHARS],
-        "title": first[:TITLE_CHARS],
+        "title": folded.title if folded is not None else first[:TITLE_CHARS],
     }
 
 
@@ -384,13 +402,22 @@ def summarize_session(kb_path: str, session_id: str) -> dict[str, Any]:
 
 def _preview_from_line(line: bytes) -> str:
     """从**单行**事件 JSON 取 `data.text`（仅此一处解码 + 一次 `json.loads`）。"""
+    record = _record_from_line(line)
+    return _text(record).strip() if record is not None else ""
+
+
+def _title_from_line(line: bytes) -> str:
+    """从**单行** `session/title` JSON 取 `data.title`（同样只解码一次）。"""
+    record = _record_from_line(line)
+    return str(_data(record).get("title") or "") if record is not None else ""
+
+
+def _record_from_line(line: bytes) -> Mapping[str, Any] | None:
     try:
         record = json.loads(line.decode("utf-8", errors="replace"))
     except json.JSONDecodeError:
-        return ""
-    if not isinstance(record, Mapping):
-        return ""
-    return _text(record).strip()
+        return None
+    return record if isinstance(record, Mapping) else None
 
 
 def summarize_session_file(
@@ -399,11 +426,15 @@ def summarize_session_file(
     """**原始行扫描**的会话摘要（供 `agent_sessions_list` 用，避免读放大）。
 
     与 `summarize_session()` 的差别：**不整体 `json.loads`**——只按行找
-    `"user/message"` 子串计 `turn_count`，并从**首个**命中行取预览/标题。扫描全程
-    在**字节串**上进行（不解码整份文件），只对该命中行解码 + `json.loads` 一次；因此：
+    `"user/message"` 子串计 `turn_count`，并从**首个**命中行取预览、从**最后一个**
+    `"session/title"` 命中行取标题。扫描全程在**字节串**上进行（不解码整份文件），
+    只对命中行解码 + `json.loads` 一次；因此：
 
     - `turn_count` 语义为「**扫描上限内的** `user/message` 事件行数」（超限时
       只统计上限内的部分，返回值另带 `capped: true`）；
+    - **标题**：优先取最后一条非空 `session/title`（模型标题或兜底标题），没有时才回落到
+      「首个 `user/message` 行前 `TITLE_CHARS` 字」——与 `summarize_events()` 的
+      `fold_title()` **同口径**；
     - 单文件读取上限 `max_bytes`（默认 `SESSION_SCAN_MAX_BYTES` = 2 MiB），
       `capped` 表示「该文件超过上限，统计被截断」；为免把半行算作一行，
       `capped` 时丢弃最后一段（可能是被截断的不完整行）。未超限时按"整读"取内容
@@ -429,7 +460,13 @@ def summarize_session_file(
     turn_count = 0
     first = ""
     seen_first = False
+    title = ""
     for line in lines:
+        if _TITLE_TYPE_MARK in line:
+            candidate = _title_from_line(line)
+            if candidate:
+                title = candidate  # 最后一条**非空**标题胜出（与 fold_title 同口径）
+            continue
         if _USER_TYPE_MARK not in line:
             continue
         turn_count += 1
@@ -439,7 +476,7 @@ def summarize_session_file(
     return {
         "turn_count": turn_count,
         "preview": first[:PREVIEW_CHARS],
-        "title": first[:TITLE_CHARS],
+        "title": title or first[:TITLE_CHARS],
         "capped": capped,
     }
 

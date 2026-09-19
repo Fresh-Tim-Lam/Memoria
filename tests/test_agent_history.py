@@ -347,6 +347,8 @@ def test_summarize_and_conversation_view_with_anchors(kb: Path) -> None:
         [
             tool_step(ToolCall(id="c1", name="search_kb", arguments=json.dumps({"query": "多层感知机"}))),
             text_step("多层感知机见 `neural-network.md:7`。"),
+            # 第 3 步给标题辅助调用（M2：首轮一次，排在主回合之后）
+            text_step("多层感知机的要点"),
         ]
     )
     ask(str(kb), "多层感知机讲的是什么？", provider=provider, model="fake-model", session_id=session_id)
@@ -354,7 +356,10 @@ def test_summarize_and_conversation_view_with_anchors(kb: Path) -> None:
     summary = summarize_session(str(kb), session_id)
     assert summary["turn_count"] == 1
     assert summary["preview"] == "多层感知机讲的是什么？"
-    assert summary["title"] == "多层感知机讲的是什么？"
+    # 标题取**模型标题**（`session/title` 的 `provider` 来源；兜底那条先落、被它覆盖）
+    assert summary["title"] == "多层感知机的要点"
+    kinds = [row["data"]["source"]["kind"] for row in session_events(kb, session_id) if row["type"] == "session/title"]
+    assert kinds == ["fallback", "provider"]
 
     view = conversation_messages(str(kb), session_id)
     # 一轮只出一条 assistant 气泡 = 该轮最后一条非空 assistant/message（工具轮前言不入气泡）

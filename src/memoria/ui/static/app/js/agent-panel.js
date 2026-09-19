@@ -904,10 +904,10 @@ window.MemoriaAgentPanel = (function () {
       if (!id) return;
       const opt = document.createElement("option");
       opt.value = id;
-      // 超限会话（后端 `capped:true`：turn 计数被扫描上限截断）补一个后缀标记
+      // 标签优先用后端折叠出的**标题**（M2 `session/title`，无标题事件时后端已回落首问前 40 字）；超限会话（`capped`）补后缀标记
       opt.textContent =
         T("agent.history.option", {
-          preview: String(session.preview || id),
+          preview: String(session.title || session.preview || id),
           n: session.turn_count || 0,
         }) + (session.capped ? T("agent.history.capped") : "");
       sel.appendChild(opt);
