@@ -56,12 +56,24 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 
 ## 4. 改进分档（可分别拍板）
 
-### A 档：零风险、纯增益（建议直接做）
+### A 档：零风险、纯增益（✅ **已于 2026-09-19 实施**，用户选择"直接把 A 档 5 项做掉"）
 1. **补 `prefers-reduced-motion` 兜底**（现在 0 处）—— 无障碍合规，且不影响任何现有观感。
 2. **补 hover/展开/淡入的过渡**（120–160ms，统一缓动）—— 只加 `transition`，不改色值不挪位置。
 3. **字体族收敛到一处**，并把"Windows CJK 不加裸 `monospace`"这条陷阱写进注释。
 4. **统一 focus 环**：`outline: 2px solid var(--theme-color); outline-offset: 2px` —— 键盘可用性直接提升。
 5. **列表 hover 与选中同底色**（对齐 dsh 的做法）。
+
+**实施记录（2026-09-19）**——改法一律"**追加在文件末尾 / 单行内替换**"，故既有 `app.css`(4984→5076 行) 与 `memoria.css`(639→654 行) 的**行号锚点零漂移**：
+
+| 项 | 落地位置 | 实测证据 |
+|---|---|---|
+| ③ 字体族 | `theme/memoria.css` **末尾新增** `:root{--font-sans;--font-mono}`（**全仓唯一定义点**，`memoria.css:650,652`）；9 处散落的 `Consolas,…` 写法**逐行替换**为 `var(--font-mono)`（`app.css:1367/1406/2836/3816/3872/4663/4695/4729/4752`、`memoria.css:550`）；`body` 的 sans 链改为 `var(--font-sans)`（`memoria.css:67`） | 浏览器实测：`--font-mono` / `--font-sans` 均解析出值；`body` 计算字体族已含 `PingFang SC`/`Microsoft YaHei`；全仓**再无**裸 `Consolas…monospace` 写法（残留 0 处）。**修掉一个真坑**：`--font-mono` 此前**从未定义**（2836 原写作 `var(--font-mono, monospace)`）⇒ 代码区中文实际落到 SimSun |
+| ① reduced-motion | `app.css` 末尾块（5002-5011） | 浏览器实测：样式表里能读到 `@media (prefers-reduced-motion: reduce)` 及其四条 `!important` 内规则 |
+| ② 过渡 | `app.css` 末尾块（5016-5047）+ 两个时长/一条缓动令牌（4992-4997） | 浏览器实测：`.-tree-item` 计算 `transition-property: background-color, color, border-color, box-shadow`、`duration: 0.12s`、`timing: cubic-bezier(0.4,0,0.2,1)` |
+| ⑤ 选中态 | `app.css` 末尾块（5069-5076）：`.-tree-item.active` 由 `--bg-active` 并入 `--accent-soft` + `inset 2px 0 0 var(--theme-color)` | 浏览器实测：带 `.active` 的树项计算背景 = `rgba(0,122,204,0.2)`（= `--accent-soft`）、`box-shadow = rgb(0,122,204) 2px 0 0 inset`；口径同步登记到 [agent-guide/02 §2.1](../reference/agent-guide/02-file-tree-and-nav.md)（原有锚点写错，一并修正） |
+| ④ focus 环 | `app.css` 末尾块（5052-5067），**只作用于 `:focus-visible`**（鼠标点击不出现）⇒ 与各组件既有 `:focus` 并存 | 样式表里确认规则存在且被解析（`outline: 2px solid var(--theme-color); outline-offset: 2px`）。**⚠️ 视觉未取证**：harness 的 CDP 合成输入环境下 `:focus-visible` **恒不匹配**（连真实 Tab 键走进 `agent-send`/`agent-clear` 也是 `false`）⇒ 计算样式恒为 `0px none`，属**测量环境限制**、非规则问题；真机观感需用户确认 |
+
+> 说明：A 档刻意**不改任何尺寸/间距/色相**，故不需要截图比对；唯一观感变化是 ⑤（浅色主题下树选中从灰蓝 `#e2e7f0` 变主题色淡底 + 左侧细线）。
 
 ### B 档：中等、需要试点（改观感，但要挨个过一遍页面）
 6. **圆角收敛为 4/6/8/12/999 五档**，按"容器 > 内部控件 > 胶囊"分级替换（`app.css` 里 2px×52 处是主要工作量）。
@@ -93,7 +105,7 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 
 | ID | 问题 | 选项 | 影响 |
 |---|---|---|---|
-| **U1** | A 档（5 项零风险改进）是否直接做？ | ① 全做（推荐） ② 只做 reduced-motion + focus ③ 暂不做 | 低风险、可见度中 |
+| **U1** | A 档（5 项零风险改进）是否直接做？ | ✅ **已定：① 全做**（2026-09-19 用户选择，实施记录见 §4-A） | — |
 | **U2** | 圆角收敛（B-6） | ① 收敛为 4/6/8/12/999（推荐） ② 只把主按钮改胶囊 ③ 不动 | 观感变化最大的一项 |
 | **U3** | 主字号上移一档（B-8） | ① 全站上移 ② 只上移面板/长文本区 ③ 不动 + 提供字号设置 | 信息密度会下降，需接受 |
 | **U4** | 0.5px 描边（B-7） | ① 试做分隔线 ② 分隔线+卡片框 ③ 不做 | 细微但"精致感"关键 |
@@ -107,3 +119,4 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 | 日期 | 变更 |
 |---|---|
 | 2026-09-19 | 初版（待讨论）：四条主轴（令牌化 / 视觉密度 / 形状与层次 / 反馈与动效）+ 12 维度对照表（dsh 侧带 `文件:行号`，Memoria 侧带实测计数）+ 4 条诊断 + A/B/C 三档改进（A 5 项零风险、B 5 项试点、C 3 项大改）+ 5 项不照搬及原因 + U1–U6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG06） |
+| 2026-09-19 | **A 档 5 项实施完毕**（U1 = ①）：字体族收敛（新增 `--font-sans`/`--font-mono` 唯一来源，9 处散落写法改 `var()`，**顺带修掉 `--font-mono` 从未定义 ⇒ 代码区中文落 SimSun 的真坑**）、`prefers-reduced-motion` 兜底、四属性交互过渡（120ms + 统一缓动）、`:focus-visible` 统一焦点环、树选中态并入 `--accent-soft` + 左侧主题色细线；改法全部"末尾追加 / 单行替换"⇒ 行号锚点零漂移。逐项实测证据见 §4-A「实施记录」（④ 的视觉表现因 harness CDP 环境 `:focus-visible` 恒不匹配而**未取证**，已如实标注）。B/C 档与 U2–U6 仍待拍板 |

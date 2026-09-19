@@ -64,7 +64,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--font-sans);
     background: var(--bg-primary);
     color: var(--text-primary);
     height: 100vh;
@@ -547,7 +547,7 @@ body {
     background: var(--bg-tertiary);
     padding: 0.125rem 5px;
     border-radius: 2px;
-    font-family: Consolas, Monaco, monospace;
+    font-family: var(--font-mono);
     font-size: 0.9em;
     color: var(--warning);
 }
@@ -637,3 +637,18 @@ body {
     box-shadow: inset 3px 0 0 0 transparent;
 }
 .empty { color: var(--text-secondary); text-align: center; padding: 2.5rem; font-size: 0.75rem; }
+
+/* ── A 档视觉微调①：字体族收敛到一处（2026-09-19）────────────────────────────
+   背景：`--font-mono` **此前从未被定义**（`app.css:2836` 写作 `var(--font-mono, monospace)`
+   ⇒ 实际落到裸 `monospace`），而裸 `monospace` 在 Windows 上会让中文回退到 SimSun（衬线、
+   发虚）；sans 链也缺 CJK 字体。上游 dsh 明确规避同一坑（`dsh-src/.../styles/base.css:4-10`
+   注释「Windows CJK falls back to SimSun」）。
+   口径：等宽链里**CJK 字体必须排在泛型 `monospace` 之前**（逐字符回退按顺序命中，故中文会
+   先落在 PingFang/雅黑上；末尾保留 `monospace` 仅作最后兜底，不会再落到 SimSun）。
+   依据 docs/design/ui-visual-language.md §4-A③。 */
+:root {
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    --font-mono: Consolas, "SF Mono", "JetBrains Mono", Menlo, "Courier New", Monaco,
+        "PingFang SC", "Microsoft YaHei", monospace;
+}

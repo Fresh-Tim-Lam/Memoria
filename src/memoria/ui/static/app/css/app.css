@@ -1364,7 +1364,7 @@
     width: 4rem;
     padding: 0.125rem 6px;
     font-size: 0.75rem;
-    font-family: Consolas, "Courier New", Monaco, monospace;
+    font-family: var(--font-mono);
     background: var(--bg-primary);
     color: var(--text-primary);
     border: 1px solid var(--border);
@@ -1403,7 +1403,7 @@
     border: 1px solid var(--border);
     border-radius: 2px;
     background: var(--bg-primary);
-    font-family: Consolas, "Courier New", Monaco, monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1.5;
     position: relative;
@@ -2833,7 +2833,7 @@ body.-win-dragging {
 }
 .-link-match-line {
     font-weight: 600;
-    font-family: var(--font-mono, monospace);
+    font-family: var(--font-mono);
 }
 .-link-match-section {
     color: var(--text-muted);
@@ -3813,7 +3813,7 @@ body.-win-dragging {
     border-radius: 6px;
     background: var(--bg-secondary, #f8f9fa);
     color: var(--text-primary, #222);
-    font-family: Consolas, Menlo, monospace;
+    font-family: var(--font-mono);
 }
 .-cp-row button {
     padding: 0.375rem 14px;
@@ -3869,7 +3869,7 @@ body.-brush-active #editor {
 
 .-editor {
     min-height: 100%;
-    font-family: Consolas, "Courier New", Monaco, monospace;
+    font-family: var(--font-mono);
     font-size: var(--editor-font-size, 14px);
     line-height: 1.5;
     background: var(--bg-primary);
@@ -4660,7 +4660,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .candidate-row:last-child { border-bottom: none; }
 .candidate-row input { accent-color: var(--theme-color); }
 .candidate-line {
-    font-family: Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
     color: var(--text-primary);
     flex: 1;
@@ -4692,7 +4692,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 
 .-import-report-textarea {
     width: 100%;
-    font-family: Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.6875rem;
     line-height: 1.5;
     padding: 0.5rem;
@@ -4726,7 +4726,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 
 .-import-conflict-kp-id {
     font-weight: 600;
-    font-family: Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.8125rem;
     color: var(--error);
 }
@@ -4749,7 +4749,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     width: 8.75rem;
     padding: 0.125rem 6px;
     font-size: 0.75rem;
-    font-family: Consolas, monospace;
+    font-family: var(--font-mono);
     border: 1px solid var(--border);
     border-radius: 2px;
     background: var(--bg-primary);
@@ -4981,4 +4981,96 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .-agent-statusbar-facts b {
     font-weight: 600;
     color: var(--text-primary);
+}
+
+/* ========== A 档视觉微调（2026-09-19）=========================================
+   依据 docs/design/ui-visual-language.md §4-A：**五项零风险改进**（不换色相、不挪布局、
+   不动既有选择器里的任何一行）。整块追加在文件末尾 ⇒ 既有 app.css 行号锚点零漂移
+   （与状态栏块同一策略）。
+   ②③④⑤ 都只作用于"已存在交互态"的视觉过渡与指示，不改任何尺寸与间距。 */
+
+:root {
+    /* 动效：只定两个时长 + 一条缓动（C 档「别名令牌层」未拍板前，不扩大令牌面） */
+    --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --motion-fast: 120ms;
+    --motion-base: 160ms;
+}
+
+/* ① 尊重系统「减少动态效果」：此前全仓 0 处（dsh 有 39 处）。
+   hard-stop 写法（同 dsh 的普遍做法）：时长压到近乎 0，动画只跑一轮 ⇒ 过渡与循环动画都停，
+   但**状态仍然改变**，只是不"动"。JS 侧的 scrollIntoView({behavior:"smooth"}) 不受此处影响。 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ② 交互过渡：此前全文件仅约 12 处 transition（多在生硬的显隐上）。这里只补"指针/选中态"
+   会变的四个**非布局**属性（background-color/color/border-color/box-shadow）——
+   不碰 width/height/margin/padding ⇒ 不会引起重排与抖动。 */
+button,
+select,
+input,
+textarea,
+summary,
+[role="option"],
+.-tree-item,
+.-tree-dir-head,
+.-kp-item,
+.-config-item,
+.-config-tab,
+.-view-btn,
+.-fmt-btn,
+.-fc-swatch,
+.-toolbar-search-hit,
+.-toolbar-search-scope-btn,
+.-suggest-pick,
+.-link-pick-item,
+.-link-match-row,
+.-link-target-opt,
+.-edge-target-option,
+.-ctx-item,
+.-agent-anchor,
+.-agent-mention,
+.-toolbar-btn,
+.-icon-btn {
+    transition:
+        background-color var(--motion-fast) var(--motion-ease),
+        color var(--motion-fast) var(--motion-ease),
+        border-color var(--motion-fast) var(--motion-ease),
+        box-shadow var(--motion-fast) var(--motion-ease);
+}
+
+/* ④ 统一键盘焦点环：用 `:focus-visible`（**仅键盘/无障碍焦点**，鼠标点击不出现），
+   故与各组件既有的 `:focus`（鼠标态）样式并存、不打架。颜色取动态主题色 `--theme-color`
+   （用户可在设置里改主色，主题色即时生效；dsh 同款做法是统一 2px outline）。 */
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[role="link"]:focus-visible,
+[role="option"]:focus-visible,
+[role="button"]:focus-visible,
+.-tree-item:focus-visible,
+.-kp-item:focus-visible,
+.-config-item:focus-visible,
+.-config-tab:focus-visible {
+    outline: 2px solid var(--theme-color);
+    outline-offset: 2px;
+}
+
+/* ⑤ 「列表里选中一行」此前有两套口径：文件树 `.-tree-item.active` 用 `--bg-active`（浅色主题下
+   偏灰的 #e2e7f0），而 KP 列表 `.-kp-item.active`、链接选择 `.-link-pick-item.is-active` 用
+   `--accent-soft`（主题色淡底）。此处把树**并入 `--accent-soft`**，并补一条**不占布局**的左侧
+   主题色细线（inset box-shadow），使选中态在淡底上仍一眼可辨（hover 仍是 `--bg-hover`）。 */
+.-tree-item.active {
+    background: var(--accent-soft);
+    box-shadow: inset 2px 0 0 var(--theme-color);
 }
