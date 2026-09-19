@@ -223,35 +223,6 @@
         <div id="agent-dock-resizer" title="拖拽调整对话栏宽度" data-i18n-attr="title:agent.dockResizeTitle"></div>
         <div class="-agent-head">
           <span id="agent-model-label" class="-agent-model"></span>
-          <div class="-agent-head-actions">
-            <label class="-agent-net" data-i18n-attr="title:agent.net.title">
-              <input type="checkbox" id="agent-net-toggle">
-              <span data-i18n="agent.net.label">出网</span>
-            </label>
-            <button type="button" id="agent-settings-toggle" class="-config-btn" aria-expanded="false" aria-controls="agent-settings" data-i18n="agent.settings.toggle">设置</button>
-          </div>
-        </div>
-        <div id="agent-settings" class="-agent-settings hidden">
-          <label class="-agent-field">
-            <span data-i18n="agent.settings.baseUrl">模型端点</span>
-            <input type="text" id="agent-base-url" spellcheck="false" data-i18n-attr="placeholder:agent.settings.baseUrlPh">
-          </label>
-          <label class="-agent-field">
-            <span data-i18n="agent.settings.model">模型</span>
-            <input type="text" id="agent-model" spellcheck="false" data-i18n-attr="placeholder:agent.settings.modelPh">
-          </label>
-          <label class="-agent-field">
-            <span data-i18n="agent.settings.apiKey">密钥</span>
-            <input type="password" id="agent-api-key" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:agent.settings.apiKeyPh">
-          </label>
-          <label class="-agent-field">
-            <span data-i18n="agent.settings.timeout">超时（秒）</span>
-            <input type="text" id="agent-timeout" inputmode="decimal" data-i18n-attr="placeholder:agent.settings.timeoutPh">
-          </label>
-          <div class="-agent-settings-actions">
-            <span id="agent-config-path" class="-agent-config-path -muted"></span>
-            <button type="button" id="agent-save-config" class="-btn primary -btn--sm" data-i18n="agent.settings.save">保存</button>
-          </div>
         </div>
         <div class="-agent-history">
           <span class="-agent-history-label" data-i18n="agent.history.currentLabel">当前会话</span>
@@ -264,7 +235,6 @@
           <div class="-agent-composer-actions">
             <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
             <button type="button" id="agent-stop" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.stopTitle"><span data-i18n="agent.stop">停止</span></button>
-            <button type="button" id="agent-clear" class="-btn secondary -btn--sm -agent-clear" data-i18n-attr="title:agent.clearTitle"><span data-i18n="agent.clear">清空对话</span></button>
           </div>
           <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>
         </div>
@@ -355,6 +325,34 @@
       </div>
       <div id="settings-tabs" class="-settings-tabs-wrap"></div>
       <div id="settings-body" class="-modal-body -settings-body"></div>
+      <div id="settings-body-agent" class="-modal-body -settings-body hidden">
+        <div id="agent-settings" class="-agent-settings">
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.baseUrl">模型端点</span>
+            <input type="text" id="agent-base-url" spellcheck="false" data-i18n-attr="placeholder:agent.settings.baseUrlPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.model">模型</span>
+            <input type="text" id="agent-model" spellcheck="false" data-i18n-attr="placeholder:agent.settings.modelPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.apiKey">密钥</span>
+            <input type="password" id="agent-api-key" autocomplete="off" spellcheck="false" data-i18n-attr="placeholder:agent.settings.apiKeyPh">
+          </label>
+          <label class="-agent-field">
+            <span data-i18n="agent.settings.timeout">超时（秒）</span>
+            <input type="text" id="agent-timeout" inputmode="decimal" data-i18n-attr="placeholder:agent.settings.timeoutPh">
+          </label>
+          <label class="-agent-net" data-i18n-attr="title:agent.net.title">
+            <input type="checkbox" id="agent-net-toggle">
+            <span data-i18n="agent.net.label">出网</span>
+          </label>
+          <div class="-agent-settings-actions">
+            <span id="agent-config-path" class="-agent-config-path -muted"></span>
+            <button type="button" id="agent-save-config" class="-btn primary -btn--sm" data-i18n="agent.settings.save">保存</button>
+          </div>
+        </div>
+      </div>
       <p id="settings-config-path" class="-muted -settings-config-path" hidden></p>
       <div class="-modal-footer -btn-bar">
         <button type="button" class="-btn secondary" id="settings-reset" data-i18n="settings.reset">恢复默认</button>

@@ -5255,7 +5255,11 @@ html *::-webkit-scrollbar-thumb:active {
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    padding: 0.375rem 8px;
+    /* 与其它「第二栏」等高（`--bar-h-b` = 34px @root17.6）：内容高 33 + 自身 0.5px 下边框。
+       高度钉住后**纵向内距归零**，装不下的风险由窄内距兜住（用户 2026-09-19："这个栏粗细
+       没有和其他区域的第二栏保持一致"）。 */
+    height: var(--bar-h-b, 1.9375rem);
+    padding: 0 8px;
     border-bottom: 0.5px solid var(--border-sep, var(--border));
 }
 .-hist-head #hist-new { flex: 0 0 auto; white-space: nowrap; }
@@ -5342,4 +5346,30 @@ html *::-webkit-scrollbar-thumb:active {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* ===== 设置弹窗新增「对话」页签（2026-09-19）====================================
+   用户四条反馈里的三条落在这里：① dock 头部的「出网」开关没必要；② 「清空对话」不知道有啥用；
+   ③ 那个「设置」按钮的设置可以直接做到设置面板。做法：
+   - `#agent-settings`（端点 / 模型 / 密钥 / 超时 / 出网）**整块搬进** 设置弹窗的「对话」页签，
+     容器是 `#settings-body-agent`（**静态节点**，见 index.html）⇒ 字段 id 不变，
+     `agent-panel.js` 的 `applyConfigToForm()` / `saveConfig()` / `toggleNet()` **一行未改**；
+   - 「对话」是**静态体**、其它页签是**动态体**（`#settings-body` 由 `setSettingsTab()` 每次
+     `innerHTML` 重建）⇒ 两块**必须互斥**：都是 `flex: 1`，同时显示会平分高度（见 graph-settings.js）；
+   - 「清空对话」**退役**：它就是"开新会话"，而左栏「历史」页签的「＋ 新会话」已是同一件事
+     （`clear()` 本身仍被历史页签与"删掉当前会话"复用，只是不再单设按钮）。
+   本块**末尾追加**（在历史页签块之后）⇒ 既有行号锚点零漂移。 */
+#settings-body-agent {
+    overflow-y: auto; /* 覆盖 `.-settings-body` 的 `overflow: hidden`（ID 特异度更高，滚动交给本块） */
+}
+/* 搬进弹窗后不再需要"停靠栏内嵌面板"的那套外观（自带底色/分隔线/最大高度/自滚） */
+#settings-body-agent #agent-settings {
+    padding: 0;
+    border-bottom: none;
+    background: transparent;
+    max-height: none;
+    overflow: visible;
+}
+#settings-body-agent .-agent-net {
+    margin: 0.25rem 0 0.4375rem; /* 与上方 .-agent-field 同节奏（该 label 原本只有行内布局） */
 }

@@ -1339,4 +1339,12 @@
     hoursAgo: "{n} h ago",
     daysAgo: "{n} d ago",
   };
+
+  // ===== appended 2026-09-19: new "Chat" tab in the settings dialog =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every
+  // `en.js:<line>` anchor in the docs keeps pointing at the same declaration.
+  // All other strings inside the tab reuse existing keys (`agent.settings.*`, `agent.net.*`).
+  Object.assign(g.MEMORIA_LOCALES["en"].settings.tab, {
+    agent: "Chat",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

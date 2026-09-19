@@ -5,11 +5,11 @@
  *   - 顶栏（右侧）`#btn-agent` → 停靠栏展开·收起（2026-09-18 起唯一入口：边缘浮动按钮
  *     `#agent-dock-collapse-btn` 已删除，改为 VSCode 式顶栏图标按钮）
  *   - `#agent-dock-resizer` 向左拖拽调宽（rem）→ 落盘 `layout.agentDockWidth`
- *   - `#agent-settings-toggle` 折叠设置区；`#agent-save-config` 保存端点配置
+ *   - `#agent-settings`（端点/模型/密钥/超时/出网）**2026-09-19 搬进设置弹窗「对话」页签**（`#settings-body-agent`）；`#agent-save-config` 保存端点配置
  *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
  *   - `#agent-stop`「停止」（**真取消**：调 `agent_ask_cancel`，保留已生成的部分文本）
- *   - `#agent-clear` 清空对话（= 开新会话，并顺带取消在飞作业）
+ *   - 开新会话：**无独立按钮**（原 `#agent-clear`「清空对话」已退役；左栏「历史」页签的「＋ 新会话」= 下方 `clear()`）
  *   - `#agent-history` 下拉恢复历史会话；`#agent-history-delete` 删除选中会话（两次点击确认）
  *   - `#agent-messages` 内锚点点击 → 跳转文件:行号
  *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项（静态节点由 i18n 引擎刷）
@@ -1481,14 +1481,6 @@ window.MemoriaAgentPanel = (function () {
   function init() {
     if (!$("#-agent-dock")) return; // 页面未登记右侧停靠栏（旧版 index.html）
 
-    const settingsToggle = $("#agent-settings-toggle");
-    const settings = $("#agent-settings");
-    if (settingsToggle && settings) {
-      settingsToggle.addEventListener("click", () => {
-        const open = settings.classList.toggle("hidden");
-        settingsToggle.setAttribute("aria-expanded", open ? "false" : "true");
-      });
-    }
     const save = $("#agent-save-config");
     if (save) save.addEventListener("click", () => saveConfig());
     const net = $("#agent-net-toggle");
@@ -1543,7 +1535,7 @@ window.MemoriaAgentPanel = (function () {
         input.addEventListener(ev, rememberCaret)
       );
       // 文件树拖入（js/file-tree.js 发同名自定义 MIME）→ 插入 `@相对路径` 到上次光标位置。
-      // 落点是**整个对话栏**（`#-agent-dock`，含消息区/设置区/输入框），不是只有那个小输入框
+      // 落点是**整个对话栏**（`#-agent-dock`，含消息区/历史和输入框；设置区已搬到设置弹窗），不是只有那个小输入框
       // —— 要求精准落到 textarea 上手感太别扭。只认自定义 MIME：普通文本/文件拖放
       // 不 preventDefault，保留浏览器默认行为。
       const dock = document.querySelector("#-agent-dock");

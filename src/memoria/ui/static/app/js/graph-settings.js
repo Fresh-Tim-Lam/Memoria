@@ -794,7 +794,7 @@
       <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">${T("settings.tab.groups")}</button>
       <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">${T("settings.tab.search")}</button>
       <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">${T("settings.tab.check")}</button>
-      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">${T("settings.tab.view")}</button>
+      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">${T("settings.tab.view")}</button><button type="button" class="-config-tab${active === "agent" ? " active" : ""}" data-settings-tab="agent" role="tab">${T("settings.tab.agent")}</button>
     </div>`;
   }
 
@@ -804,10 +804,13 @@
     const bodyEl = document.getElementById("settings-body");
     if (!tabsEl || !bodyEl) return;
     tabsEl.innerHTML = renderTabsHtml(tab);
-    tabsEl.querySelectorAll("[data-settings-tab]").forEach((btn) => {
-      btn.addEventListener("click", () => setSettingsTab(btn.dataset.settingsTab));
-    });
-    if (tab === "graph2d") {
+    tabsEl.querySelectorAll("[data-settings-tab]").forEach((btn) => btn.addEventListener("click", () => setSettingsTab(btn.dataset.settingsTab)));
+    // 「对话」页签是**静态体**（index.html 的 `#settings-body-agent`，内含 `#agent-settings`，由 agent-panel.js 绑定）
+    const agentBody = document.getElementById("settings-body-agent"), isAgent = tab === "agent";
+    if (agentBody) agentBody.classList.toggle("hidden", !isAgent);
+    bodyEl.classList.toggle("hidden", isAgent); // 两块都是 flex:1，同时显示会平分高度 ⇒ 必须互相排斥
+    if (isAgent) { teardownPreview(); stopPreview(); bodyEl.innerHTML = ""; }
+    else if (tab === "graph2d") {
       teardownPreview();
       bodyEl.innerHTML = renderSettingsBody2d();
       bindSettingsForm(bodyEl);
@@ -825,18 +828,15 @@
       bodyEl.innerHTML = renderSettingsBodyGroups();
       bindSettingsForm(bodyEl);
     } else if (tab === "check" && global.MemoriaCheckSettings) {
-      teardownPreview();
-      stopPreview();
+      teardownPreview(); stopPreview();
       bodyEl.innerHTML = global.MemoriaCheckSettings.renderSettingsBody();
       global.MemoriaCheckSettings.bindSettingsForm(bodyEl);
     } else if (tab === "search" && global.MemoriaSearchSettings) {
-      teardownPreview();
-      stopPreview();
+      teardownPreview(); stopPreview();
       bodyEl.innerHTML = global.MemoriaSearchSettings.renderSettingsBody();
       global.MemoriaSearchSettings.bindSettingsForm(bodyEl);
     } else if (tab === "view" && global.MemoriaDisplaySettings) {
-      teardownPreview();
-      stopPreview();
+      teardownPreview(); stopPreview();
       bodyEl.innerHTML = global.MemoriaDisplaySettings.renderSettingsBody();
       global.MemoriaDisplaySettings.bindSettingsForm(bodyEl);
     }

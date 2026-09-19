@@ -12,20 +12,22 @@
 ## 1. 区域概览
 
 ```
-#btn-settings（顶栏「设置」按钮）        index.html:68        → openModal()  graph-settings.js:950
-#settings-modal .-modal.hidden          index.html:285-301   宽 min(820px,96vw) / 高 min(680px,88vh)（app.css:445-453）
-├── .-modal-header                      index.html:288-291   标题 modal.settings + ×（#settings-close）
-├── #settings-tabs .-settings-tabs-wrap index.html:292       运行时注入页签按钮（graph-settings.js:782-785）
-├── #settings-body .-modal-body.-settings-body index.html:293 运行时注入当前页签内容（graph-settings.js:786-818）
-│   ├── .-settings-layout              app.css:585-592       grid：表单列 minmax(220px,1fr) + 预览列 minmax(260px,1.1fr)
-│   │   ├── .-settings-form            app.css:598-603       表单列（纵向滚动，overscroll 隔离）
-│   │   └── .-settings-preview-col     graph-settings.js:607-620  仅 2D/3D 页：示例图画布 + 竖直分栏柄
-│   └── .-settings-layout--solo        app.css:594-596       单列（节点群 / 检索 / 检查 / 显示页）
-├── #settings-config-path               index.html:294       底部一行：settings.configPath「设置保存在程序目录：{path}」（graph-settings.js:859-882）
-└── .-modal-footer                      index.html:295-300   「恢复默认」#settings-reset + 「关闭」#settings-dismiss
+#btn-settings（顶栏「设置」按钮）        index.html:83         → openModal()  graph-settings.js:875
+#settings-modal .-modal.hidden          index.html:319-363   宽 min(820px,96vw) / 高 min(680px,88vh)（app.css:777-785）
+├── .-modal-header                      index.html:322-325   标题 modal.settings + ×（#settings-close）
+├── #settings-tabs .-settings-tabs-wrap index.html:326       运行时注入页签按钮（graph-settings.js:789-799）
+├── #settings-body .-modal-body.-settings-body index.html:327 运行时注入当前页签内容（graph-settings.js:801-843）
+│   ├── .-settings-layout              app.css:916-923       grid：表单列 minmax(220px,1fr) + 预览列 minmax(260px,1.1fr)
+│   │   ├── .-settings-form            app.css:929-934       表单列（纵向滚动，overscroll 隔离）
+│   │   └── .-settings-preview-col     app.css:980-… / graph-settings.js:607-620  仅 2D/3D 页：示例图画布 + 竖直分栏柄
+│   └── .-settings-layout--solo        app.css:925-927       单列（节点群 / 检索 / 检查 / 显示页）
+├── #settings-body-agent               index.html:328-355   **静态体**（2026-09-19 新增）：「对话」页签的字段常驻此处，
+│                                                         与上行动态体 `hidden` **互斥**（见 graph-settings.js:807-812）
+└── #settings-config-path               index.html:356       底部一行：settings.configPath「设置保存在程序目录：{path}」（graph-settings.js:883-906）
+└── .-modal-footer                      index.html:357-362   「恢复默认」#settings-reset + 「关闭」#settings-dismiss
 ```
 
-页签集合是 **6 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示`（graph-settings.js:765-775；文案 `settings.tab.*`，zh-CN.js:642-649）。**顺序即上表顺序**——「显示」在第 6 位（最后），「检索」在「检查」之前。
+页签集合是 **7 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示` / **`对话`**（graph-settings.js:789-799；文案 `settings.tab.*`，`settings.tab.agent` 追加在 zh-CN.js:1263-1265 / en.js:1347-1349）。**顺序即上表顺序**——「显示」在第 6 位、「对话」在最后（第 7 位），「检索」在「检查」之前。**「对话」是唯一的静态体页签**：内容（`#settings-body-agent`，端点/模型/密钥/超时/出网）常驻 index.html，由 `setSettingsTab()` 显隐，与其它页签的动态体 `#settings-body` **互斥**。
 
 > ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另**当前不存在任何「高级选项」折叠区**：设置页只有具名页签，全前端检索「高级 / advanced」只命中链接编辑器的 `.-link-advanced`（app.css:2810-2820），不在设置窗口内。
 
@@ -218,7 +220,7 @@
 
 ## 5. 边界与已知坑
 
-1. **「四页」是错的**：设置是 **6 个具名页签**（2D / 3D / 节点群 / 检索 / 检查 / 显示），且「显示」排在最后（graph-settings.js:765-775）。**不存在「高级选项」区**。
+1. **「四页」是错的**：设置是 **7 个具名页签**（2D / 3D / 节点群 / 检索 / 检查 / 显示 / **对话**），且「显示」在第 6 位、「对话」在最后（graph-settings.js:789-799）。**不存在「高级选项」区**。
 2. **页签不落盘**：`settingsTab` 是模块内变量（graph-settings.js:111），重开应用回到 2D 图谱——集成方不要假设"上次打开的页"。
 3. **「恢复默认」范围小于直觉**：只覆盖图谱、侧栏分栏、检查（graph-settings.js:230-241）。显示与检索**不重置**；`MemoriaSearchSettings.reset()` 虽有实现但**无任何调用点**（search-settings.js:139-149）。
 4. **设置弹窗不响应 Esc**，也没有"同时只开一个弹窗"的中央约束（弹窗各自管 `hidden`）。
@@ -258,6 +260,6 @@
 
 - ⚠️ 待确认（未能取证）：`uiScale` 对**非 rem 尺寸**绘制物（Three.js 画布、MathJax CHTML、图片灯箱）的实际观感影响未在真实窗口验证；代码只保证根字号与 `resize` 事件。
 - ⚠️ 待确认（未能取证）：`i18n/en.js` 与 `zh-CN.js` 的键是否**逐键对齐**（本次只抽样比对，未做机械 diff）。
-- ⚠️ 待确认（未能取证）：设置页签按钮只有 `role="tab"`，未见 `aria-selected`/`aria-controls`/`tabpanel` 关联（graph-settings.js:765-775），屏幕阅读器表现未验证。
+- ⚠️ 待确认（未能取证）：设置页签按钮只有 `role="tab"`，未见 `aria-selected`/`aria-controls`/`tabpanel` 关联（graph-settings.js:789-799），屏幕阅读器表现未验证。
 - ⚠️ 待确认（未能取证）：`#edit-mode-toggle` 键盘不可达为**代码推断**（无 keydown 绑定），未在真实窗口中按 Enter/Space 复验。
 - ⚠️ 待确认（未能取证）：`F2` 在「取色面板打开」等非 `.-modal` 浮层下的行为（前置检查只看 `.-modal`），未真机验证。

@@ -1255,4 +1255,12 @@
     hoursAgo: "{n} 小时前",
     daysAgo: "{n} 天前",
   };
+
+  // ===== 2026-09-19 追加：设置弹窗新增「对话」页签（原 dock 头部那个「设置」内嵌面板搬来）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 页签内其余文案**复用既有键**（`agent.settings.baseUrl|model|apiKey|timeout|save|path|apiKeySet`、
+  // `agent.net.label|title`）—— 尤其 `agent.net.title` 已写明"关闭后禁用发送"，故不再新造说明文案。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.tab, {
+    agent: "对话",
+  });
 })(typeof window !== "undefined" ? window : globalThis);
