@@ -16,7 +16,7 @@
 | 流内失败以带 `failure` 的终止事件投递 | 同样：终止事件带 `failure` ⇒ `StopReason.ERROR`，已投递文本保留 |
 
 未移植：并行工具调度与独占屏障（`maxParallelToolCalls`/`tool-calls.ts`）、
-会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结。
+会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结。**有意偏差（AG08）**：模型的思考流（`ReasoningDelta`）只经 `on_reasoning` **实时送前端**，**不落会话文件** —— 故重载页面/载入旧会话都看不到过往思考（上游 dsh 会持久化），口径与后果见 `ask_stream.py` 模块 docstring。
 M1 串行执行工具、同步阻塞；**取消为协作式**（M1 收尾新增 `CancelToken`，
 见其 docstring）：只在三个检查点观察（每轮迭代前、流式逐事件、每次工具调用后），
 故"取消"不打断正在阻塞的 socket 读，但会**立即停止消费生成器**（`stream.close()`
@@ -167,7 +167,7 @@ class AgentLoop:
         approval: ApprovalPolicy | None = None,
         retry_policy: RetryPolicy | None = None,
         meter: UsageMeter | None = None,
-        on_text: Callable[[str], None] | None = None,
+        on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None,
         on_event: Callable[[str, Mapping[str, Any]], None] | None = None,
         cancel: CancelToken | None = None,
     ) -> None:
@@ -184,7 +184,7 @@ class AgentLoop:
         self.approval = approval if approval is not None else DEFAULT_POLICY
         self.retry_policy = retry_policy
         self.meter = meter if meter is not None else UsageMeter()
-        self.on_text = on_text
+        self.on_text, self.on_reasoning = on_text, on_reasoning
         self.on_event = on_event
         self.cancel = cancel
 
@@ -253,7 +253,7 @@ class AgentLoop:
                     if self.on_text is not None:
                         self.on_text(event.text)
                 elif isinstance(event, ReasoningDelta):
-                    reasoning_parts.append(event.text)
+                    self._note_reasoning(reasoning_parts, event.text)
                 elif isinstance(event, UsageEvent):
                     usage = event.usage if usage is None else usage.plus(event.usage)
                     self.meter.add(event.usage)
@@ -406,3 +406,17 @@ class AgentLoop:
             usage=usage,
             error=error,
         )
+
+    # —— 思考流（AG08；方法置于类尾，保持上方 `<文件>:<行号>` 锚点零漂移）——
+
+    def _note_reasoning(self, parts: list[str], piece: str) -> None:
+        """记录一片思考增量并**实时**投递（`on_reasoning` 未接线时只记录）。
+
+        与 `on_text` 同节拍、同粒度（provider 每片 `ReasoningDelta` 调一次）；
+        记录只为无 usage 时 `estimate_usage` 计账，**不落会话文件**（有意偏差，
+        口径与后果见 `ask_stream.py` 模块 docstring）。
+        """
+        parts.append(piece)
+        if self.on_reasoning is not None:
+            self.on_reasoning(piece)
+

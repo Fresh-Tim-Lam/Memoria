@@ -1363,4 +1363,11 @@
     quote: "Quote",
     quoteTitle: "Insert a reference to this session (does not switch sessions)",
   });
+
+  // ===== appended 2026-09-19: title of the collapsible "thinking" block (AG08) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every
+  // `en.js:<line>` anchor in the docs keeps pointing at the same declaration.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    think: "Thinking",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

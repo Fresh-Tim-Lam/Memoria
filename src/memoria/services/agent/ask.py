@@ -41,7 +41,7 @@ M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；
 本地分两步、都在 `ask()` 里：① 追加本轮 `user/message` **之后**立刻补一条**确定性兜底**标题
 （零模型调用、零网络，会话已有标题则跳过）；② 主回合结束后跑**首轮一次**的模型标题
 （`first-prompt` 节律：会话里恰好一条合格人类消息时；**被取消的轮次跳过**）。两步都 fail-open
-（失败只记 warning）；代价是「面板的 `done` 会晚一个极小辅助调用的时间，仅每会话首轮一次」。
+（失败只记 warning）；代价是「面板的 `done` 会晚一个极小辅助调用的时间，仅每会话首轮一次」。**思考流（AG08）**：模型的思考增量（`ReasoningDelta`）经 `on_reasoning` 实时送前端、**不落会话文件**（会话文件同时是读取路径的事实源 ⇒ 重载页面/载入旧会话都不显示过往思考；上游 dsh 会持久化；口径见 `ask_stream.py` 模块 docstring）。
 """
 
 from __future__ import annotations
@@ -143,7 +143,7 @@ def build_loop(
     temperature: float | None = None,
     max_tokens: int | None = None,
     timeout_s: float | None = None,
-    on_text: Callable[[str], None] | None = None,
+    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None,
     cancel: CancelToken | None = None,
 ) -> AgentLoop:
     """组装一个绑定了知识库只读工具的循环（供 `ask()` 与测试复用）。
@@ -167,7 +167,7 @@ def build_loop(
         timeout_s=timeout_s,
         approval=approval if approval is not None else DEFAULT_POLICY,
         retry_policy=retry_policy,
-        on_text=on_text,
+        on_text=on_text, on_reasoning=on_reasoning,
         on_event=session.append if session is not None else None,
         cancel=cancel,
     )
@@ -337,7 +337,7 @@ def ask(
     temperature: float | None = None,
     max_tokens: int | None = None,
     timeout_s: float | None = None,
-    on_text: Callable[[str], None] | None = None,
+    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None,
     replay: bool = True,
     cancel: CancelToken | None = None,
 ) -> AskResult:
@@ -415,7 +415,7 @@ def ask(
         temperature=temperature,
         max_tokens=max_tokens,
         timeout_s=timeout_s,
-        on_text=on_text,
+        on_text=on_text, on_reasoning=on_reasoning,
         cancel=cancel,
     )
     prompt = rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot

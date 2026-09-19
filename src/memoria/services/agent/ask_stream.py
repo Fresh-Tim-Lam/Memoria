@@ -25,7 +25,13 @@
   `total_timeout_s=20`），库层 `llm/retry.py` 的上游默认值不变；确定性连接失败
   （`UNREACHABLE`）不重试，故面板对"必拒连端点"是**立即失败**；
 - **密钥不落本模块**：端点配置由 `llm/config.py` 读取，异常消息由
-  `llm/errors.py` 保证不含凭据取值。
+  `llm/errors.py` 保证不含凭据取值；
+- **思考流只流式、不落盘（AG08；有意偏差）**：模型的 `ReasoningDelta` 经
+  `ask(on_reasoning=…)` 追进 `reasoning_parts`，由 `poll` 以**独立游标**增量投递
+  （`reasoning_delta` / `reasoning_cursor`，与文本游标互不影响）⇒ 面板生成中实时显示
+  思考块。**不写进会话 JSONL**：该文件同时是读取路径的事实源（列表扫描 2 MiB 上限、
+  `agent_session_load` 直接回放成渲染视图）⇒ **重载页面或载入旧会话都不显示过往思考**
+  （上游 dsh 会持久化思考，本地刻意不持久化以保住读路径的形状与成本）。
 
 本模块不联网（联网只发生在注入的 provider 内）、不打印；`logging` 只记失败。
 """
@@ -119,6 +125,7 @@ class AskJob:
     cancel_token: CancelToken = field(default_factory=CancelToken, repr=False)
     status: str = RUNNING
     parts: list[str] = field(default_factory=list, repr=False)
+    reasoning_parts: list[str] = field(default_factory=list, repr=False)
     answer: str = ""
     anchors: list[dict[str, Any]] = field(default_factory=list)
     tool_calls: list[dict[str, Any]] = field(default_factory=list)
@@ -140,6 +147,17 @@ class AskJob:
             return
         with self.lock:
             self.parts.append(piece)
+
+    def note_reasoning(self, piece: str) -> None:
+        """`ask(on_reasoning=...)` 回调：追加剧增思考文本（空片段忽略）。
+
+        与 `note_delta` 同一把锁、同一节奏；思考缓冲与文本缓冲**相互独立**，
+        故 `poll` 的两个游标可以各自前进、互不影响。
+        """
+        if not piece:
+            return
+        with self.lock:
+            self.reasoning_parts.append(piece)
 
     def fail(self, error: str, code: str) -> None:
         with self.lock:
@@ -190,16 +208,24 @@ class AskJob:
             self.finished_at = time.time()
             return True
 
-    def snapshot(self, cursor: int = 0) -> dict[str, Any]:
-        """轮询快照：`delta` = `cursor` 之后的新增文本，`cursor` = 已投递字符数。"""
+    def snapshot(self, cursor: int = 0, reasoning_cursor: int = 0) -> dict[str, Any]:
+        """轮询快照：`delta` / `reasoning_delta` = 各自 `cursor` 之后的新增文本（不重放历史）。
+
+        两个游标**完全独立**：思考游标只在自己那条缓冲上推进，文本游标的语义
+        （`0 < cursor <= len` 时切片、越界回落到 0 重放）在此**逐字保持不变**。
+        """
         with self.lock:
             text = "".join(self.parts)
             start = cursor if 0 < cursor <= len(text) else 0
+            reasoning = "".join(self.reasoning_parts)
+            r_start = reasoning_cursor if 0 < reasoning_cursor <= len(reasoning) else 0
             out: dict[str, Any] = {
                 "status": self.status,
                 "job_id": self.job_id,
                 "delta": text[start:],
                 "cursor": len(text),
+                "reasoning_delta": reasoning[r_start:],
+                "reasoning_cursor": len(reasoning),
                 "answer": self.answer,
                 "anchors": [dict(anchor) for anchor in self.anchors],
                 "tool_calls": [dict(call) for call in self.tool_calls],
@@ -296,6 +322,7 @@ class AskJobManager:
                 session_id=job.resume_session_id,
                 retry_policy=PANEL_RETRY_POLICY,
                 on_text=job.note_delta,
+                on_reasoning=job.note_reasoning,
                 cancel=job.cancel_token,
             )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
@@ -327,8 +354,13 @@ class AskJobManager:
 
     # —— 查询 ——
 
-    def poll(self, job_id: str, cursor: int = 0) -> dict:
-        """轮询作业：返回增量、状态与最终产物；未知 job 返回 `unknown_job`。"""
+    def poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0) -> dict:
+        """轮询作业：返回增量、状态与最终产物；未知 job 返回 `unknown_job`。
+
+        `reasoning_cursor` 是**追加的可选参数**（AG08）：既有两参调用的返回里
+        只是多出 `reasoning_delta` / `reasoning_cursor` 两个字段（**只增不改**），
+        文本侧的 `delta` / `cursor` 语义与形状完全不变。
+        """
         with self._lock:
             job = self._jobs.get(job_id) if job_id else None
         if job is None:
@@ -337,7 +369,11 @@ class AskJobManager:
             offset = max(0, int(cursor))
         except (TypeError, ValueError):
             offset = 0
-        return job.snapshot(offset)
+        try:
+            r_offset = max(0, int(reasoning_cursor))
+        except (TypeError, ValueError):
+            r_offset = 0
+        return job.snapshot(offset, r_offset)
 
     def active_job_id(self) -> str | None:
         """当前在飞作业 id（无则 None）；供诊断/测试观察并发约束。"""

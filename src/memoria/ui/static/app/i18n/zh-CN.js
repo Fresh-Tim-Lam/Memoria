@@ -1281,4 +1281,10 @@
     quote: "引用",
     quoteTitle: "在输入框引用这条会话（不切换当前会话）",
   });
+
+  // ===== 2026-09-19 追加：助手气泡内「思考过程」折叠块标题（AG08）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    think: "思考过程",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

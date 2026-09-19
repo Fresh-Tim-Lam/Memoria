@@ -1211,17 +1211,17 @@ class UIAPI:
             return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
         return get_ask_jobs().start(kb, question, session_id=session_id)
 
-    def agent_ask_poll(self, job_id: str, cursor: int = 0) -> dict:
+    def agent_ask_poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0) -> dict:
         """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
 
-        返回 `{status:"running"|"done"|"error", delta, cursor, answer, anchors,
-        tool_calls, usage, session_id, stop_reason, cancelled, error, ...}`；
-        `status:"error"` 含稳定 `code`。被「停止」后为 `status:"done"` +
-        `stop_reason:"aborted"`（`answer` 为已生成的部分文本、`cancelled:true`）。
+        返回 `{status:"running"|"done"|"error", delta, cursor, reasoning_delta,
+        reasoning_cursor, answer, anchors, tool_calls, usage, session_id, stop_reason,
+        cancelled, error, ...}`；`status:"error"` 含稳定 `code`。被「停止」后为 `status:"done"` +
+        `stop_reason:"aborted"`（`answer` 为已生成的部分文本、`cancelled:true`）；`reasoning_delta` / `reasoning_cursor` 为 AG08 追加（只增不改；思考与正文各自独立游标，仅流式可见、不落盘 —— 见 `ask_stream.py`）。
         """
         from memoria.services.agent.ask_stream import get_ask_jobs
 
-        return get_ask_jobs().poll(job_id, cursor)
+        return get_ask_jobs().poll(job_id, cursor, reasoning_cursor)
 
     def agent_ask_cancel(self, job_id: str) -> dict:
         """**真取消**一个在飞问答作业（M1 收尾新增，幂等）。

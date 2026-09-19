@@ -2539,6 +2539,103 @@ window.MemoriaAgentPanel = (function () {
 
   renderHistoryList(); // 用包装后的版本重绘一次（列表为空时是空操作）
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 模型思考流（AG08；思考增量此前只被后端解析、从未送到面板）
+  // ① 后端 `agent_ask_poll` 新增独立游标 `reasoning_cursor` 与增量 `reasoning_delta`；
+  //    基座 `poll()` 只认文本的 `delta`/`cursor`（一行未改），故在**门面 `call`** 上包一层：
+  //    发 `agent_ask_poll` 时补上第三个位置参数（思考游标），收到响应先落思考增量再交还原逻辑。
+  // ② 思考渲染成助手气泡里的**折叠块**（`<details class="-agent-think">`），排在答案正文之前：
+  //    流式期间展开、跟随增量实时更新（`textContent`，与流式正文同一条插入路径，不新造渲染器）；
+  //    定稿后**默认折叠但常驻 DOM**，用户可随时展开（`messageEl` 包装负责重建）。
+  // ③ **无思考则整块不存在**（首个非空增量才创建，`rec.reasoning` 为空时不插入 ⇒ 无空块、无跳变）。
+  // ④ 思考**不落会话文件**：会话文件同时是读取路径的事实源（列表 2 MiB 扫描、`agent_session_load`
+  //    直接回放成渲染视图）⇒ 重载页面或载入旧会话都**不显示过往思考**（有意偏差，上游 dsh 会持久化；
+  //    口径见 services/agent/ask_stream.py 模块 docstring）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 已投递的思考字符数（**与文本游标完全独立**）；每轮提问由 `ask()` 包装重置。
+  let reasoningCursor = 0;
+
+  /** 思考折叠块骨架；`open` = 流式期间展开、定稿后折叠；`text` = 定稿重绘时回填的已有思考。 */
+  function thinkEl(open, text) {
+    const box = document.createElement("details");
+    box.className = "-agent-think";
+    if (open) box.open = true;
+    const summary = document.createElement("summary");
+    summary.className = "-agent-think-summary";
+    summary.textContent = T("agent.think");
+    box.appendChild(summary);
+    const body = document.createElement("div");
+    body.className = "-agent-think-body";
+    body.textContent = text || "";
+    box.appendChild(body);
+    return box;
+  }
+
+  /** 流式期间确保当前助手气泡里有思考块（首个非空增量才创建 ⇒ 无思考则完全无此节点）。 */
+  function ensureThinkBlock() {
+    if (!streamingEl) return null;
+    const wrap = streamingEl.parentElement;
+    if (!wrap) return null;
+    let box = wrap.querySelector(".-agent-think");
+    if (!box) {
+      box = thinkEl(true); // 生成中：展开跟随
+      wrap.insertBefore(box, streamingEl); // 排在答案正文**之前**
+      scrollToBottom();
+    }
+    return box;
+  }
+
+  /** 把一片思考增量追加到当前助手气泡（复用流式正文的 `textContent` 路径，纯文本、无 HTML 注入）。 */
+  function applyReasoningDelta(delta) {
+    const rec = currentAssistant();
+    if (!rec) return;
+    rec.reasoning = (rec.reasoning || "") + delta;
+    const box = ensureThinkBlock();
+    if (!box) return;
+    const body = box.querySelector(".-agent-think-body");
+    if (body) body.textContent = rec.reasoning;
+    scrollToBottom();
+  }
+
+  // 定稿/重绘都经 `messageEl`：思考非空才在正文前插入**折叠**常驻块（`rec.reasoning` 由增量累积）。
+  const baseMessageEl = messageEl;
+  messageEl = function (rec) {
+    const wrap = baseMessageEl.apply(null, arguments);
+    if (rec && rec.role === "assistant" && rec.reasoning) {
+      const body = wrap.querySelector(".-agent-msg-body");
+      if (body) wrap.insertBefore(thinkEl(false, rec.reasoning), body);
+    }
+    return wrap;
+  };
+
+  // 每轮提问重置思考游标（基座 `ask()` 的 job 游标是每轮新建，思考游标同口径）。
+  const baseAsk = ask;
+  ask = function () {
+    reasoningCursor = 0;
+    return baseAsk.apply(null, arguments);
+  };
+
+  // 门面 `call` 包装：只干预 `agent_ask_poll`（其余方法原样透传，不改任何调用方语义）。
+  const facade = A();
+  const baseFacadeCall = facade && facade.call;
+  if (typeof baseFacadeCall === "function") {
+    facade.call = function (fnName) {
+      if (fnName !== "agent_ask_poll") return baseFacadeCall.apply(this, arguments);
+      const args = Array.prototype.slice.call(arguments);
+      args.push(reasoningCursor); // 第 3 个位置参数 = 思考游标（后端 AG08 追加的可选参数）
+      const pending = baseFacadeCall.apply(this, args);
+      return Promise.resolve(pending).then(function (res) {
+        if (res && typeof res.reasoning_cursor === "number") reasoningCursor = res.reasoning_cursor;
+        if (res && typeof res.reasoning_delta === "string" && res.reasoning_delta) {
+          applyReasoningDelta(res.reasoning_delta);
+        }
+        return res;
+      });
+    };
+  }
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

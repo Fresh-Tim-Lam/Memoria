@@ -5441,3 +5441,33 @@ html *::-webkit-scrollbar-thumb:active {
     box-shadow: inset 0 0 0 2px var(--accent);
     border-radius: 3px;
 }
+
+/* ===== 2026-09-19 追加（AG08）：助手气泡内的思考折叠块（`.-agent-think*`）=====
+   只在模型确实吐思考流时出现（无思考则整块不存在 ⇒ 无空块、无布局跳变）。
+   视觉刻意"压低"（次要色 + 等宽 + 左侧线），一眼区分于答案正文；默认折叠，
+   流式期间展开跟随增量（`<details>` 原生开合，逻辑见 agent-panel.js 末尾块）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-think {
+    align-self: stretch;
+    margin: 0 0 0.375rem;
+    border-left: 2px solid var(--border);
+    border-radius: 0 3px 3px 0;
+    background: var(--bg-tertiary);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.-agent-think-summary {
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    color: var(--text-secondary);
+    user-select: none;
+}
+.-agent-think-body {
+    max-height: 12rem;
+    overflow: auto;
+    padding: 0 0.5rem 0.375rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: var(--font-mono);
+    line-height: 1.45;
+}
