@@ -46,7 +46,7 @@
 
 ### 2.2 「显示」页（`settings.tab.view`）
 
-渲染：`MemoriaDisplaySettings.renderSettingsBody()`（display-settings.js:167-199）；绑定：display-settings.js:201-239。三个 section：语言 / 文字 / 界面整体缩放。
+渲染：`MemoriaDisplaySettings.renderSettingsBody()`（display-settings.js:167-199）；绑定：display-settings.js:201-239。四个 section：主题 / 语言 / 文字 / 界面整体缩放。**2026-09-19 修（滚不动）**：显示页原先是**唯一**没有 `-settings-layout--solo > -settings-form` 包裹的页签（检索 / 检查 / 节点群 都有），而弹窗体 `#settings-body` 是 `overflow: hidden` ⇒ 内容一旦高于弹窗体就**整块裁掉、滚轮无效、下半截看不到**（用户报："这个页签下的配置项没有办法滚轮滚动，底下的看不到"）。现按同款结构包一层（`return` 模板的首尾**原位各加一层**，**行号零漂移**）⇒ 滚动交给 `.-settings-form`（实测 `#settings-body` 448=448 不再溢出、`.-settings-form` 428→550 可滚、`scrollTop` 可写到底且末节可见）。
 
 | 项（i18n key） | 控件 / 选择器 | 取值与默认值 | 即时生效 | 落盘 |
 |---|---|---|---|---|

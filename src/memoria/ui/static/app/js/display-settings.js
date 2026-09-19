@@ -182,7 +182,7 @@
           `<option value="${code}"${code === curLang ? " selected" : ""}>${i18n ? i18n.langDisplay(code) : code}</option>`
       )
       .join("");
-    return `<section class="-settings-section">
+    return `<div class="-settings-layout -settings-layout--solo"><div class="-settings-form"><section class="-settings-section">
       <h3 class="-settings-heading">${T("settings.display.themeGroup")}</h3>
       <label class="-settings-field">
         <span>${T("settings.display.themeLabel")}</span>
@@ -214,7 +214,7 @@
       <div class="-settings-actions">
         <button type="button" class="-btn secondary" id="display-ui-scale-reset">${T("settings.display.resetScale")}</button>
       </div>
-    </section>`;
+    </section></div></div>`;
   }
 
   function bindSettingsForm(root) {
