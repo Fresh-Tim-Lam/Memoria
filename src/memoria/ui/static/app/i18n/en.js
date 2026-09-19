@@ -1383,4 +1383,29 @@
       frontmatter: "Reading document header…",
     },
   });
+
+  // ===== appended 2026-09-19: per-turn usage line under the last assistant bubble (`agent.usage.line`) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>` anchor
+  // in the docs keeps pointing at the same declaration.
+  // `{hit}` / `{miss}` are the per-turn cached / uncached prompt tokens; `{total}` is their sum. When the
+  // endpoint reports no cache fields the frontend writes "—" for both and `{total}` falls back to the
+  // endpoint-reported `total_tokens` (never fabricating a 0).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    usage: { line: "Usage {hit} cached + {miss} uncached = {total} tokens" },
+  });
+
+  // ===== appended 2026-09-19: status-bar refresh interval (settings → Chat tab, `#agent-refresh`) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>` anchor
+  // in the docs keeps pointing at the same declaration.
+  // The seven choices mirror `agent-panel.js::STATUS_REFRESH_CHOICES` (values are milliseconds).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.settings, {
+    refreshLabel: "Refresh interval",
+    refresh5s: "5s",
+    refresh15s: "15s",
+    refresh30s: "30s",
+    refresh1m: "1 min",
+    refresh5m: "5 min",
+    refresh10m: "10 min",
+    refresh1h: "1 h",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

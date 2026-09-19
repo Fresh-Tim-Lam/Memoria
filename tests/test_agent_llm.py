@@ -517,6 +517,41 @@ def test_config_from_env_and_file(tmp_path: Any, monkeypatch: pytest.MonkeyPatch
         config_module.load_config()
 
 
+def test_status_refresh_ms_default_and_roundtrip(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> None:
+    """状态 bar 刷新间隔（`status_refresh_ms`）：默认 1min、白名单往返、非法值不落盘、读侧宽松。"""
+    from memoria.services.agent.llm import config as config_module
+
+    config_file = tmp_path / "agent.json"
+    monkeypatch.setenv("MEMORIA_AGENT_CONFIG", str(config_file))
+
+    # 未配置 ⇒ 默认 60 000 ms（=1min，既有余额 60s TTL 的节拍）
+    assert config_module.DEFAULT_STATUS_REFRESH_MS == 60000
+    assert config_module.status_refresh_ms() == 60000
+    # 它不是调用参数：`AgentConfig` / `load_config()` 都不带这个字段（与 `enabled` 同类）
+    assert not hasattr(config_module.load_config(), "status_refresh_ms")
+
+    # 写盘（白名单键）→ 原样读回（毫秒整数）
+    saved = config_module.save_config({"status_refresh_ms": 300000})
+    assert saved["status_refresh_ms"] == 300000
+    assert config_module.status_refresh_ms() == 300000
+
+    # 空值 = 不修改；非法值（0 / 非数）不落盘
+    assert config_module.save_config({"status_refresh_ms": ""})["status_refresh_ms"] == 300000
+    with pytest.raises(ConfigError):
+        config_module.save_config({"status_refresh_ms": 0})
+    with pytest.raises(ConfigError):
+        config_module.save_config({"status_refresh_ms": "abc"})
+    assert config_module.status_refresh_ms() == 300000
+
+    # 未在白名单里的键仍被拒绝（新增键不得放宽白名单）
+    with pytest.raises(ConfigError):
+        config_module.save_config({"status_refresh_msec": 1})
+
+    # 手改坏值（绕过 UI 校验）⇒ 读侧宽松回退默认，不抛错
+    config_file.write_text(json.dumps({"status_refresh_ms": "oops"}), encoding="utf-8")
+    assert config_module.status_refresh_ms() == 60000
+
+
 def test_missing_base_url_raises_config_error() -> None:
     provider = OpenAICompatibleProvider(AgentConfig())
     with pytest.raises(ConfigError):

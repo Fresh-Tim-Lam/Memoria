@@ -2762,6 +2762,221 @@ window.MemoriaAgentPanel = (function () {
     return baseStopWait.apply(null, arguments);
   };
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 每轮 token 用量行（2026-09-19；用户："对话框下方的 tokens 花费计算做到 agent 最后一次回复的
+  // 对话框下方，并且格式应该为『用量 xx(命中)+xx(未命中)=xx tokens』"）
+  //   ① 数据来源 = 每轮 `agent_ask_poll` 的 `usage`（后端 `AskJob.usage` ← `LoopResult.usage`）——
+  //      这是**本轮**口径：一次提问内的若干 LLM 轮次（含工具调用轮）已由 `Usage.plus()` 逐轮
+  //      求和（`services/agent/loop.py:289,314`）；缓存两字段由
+  //      `services/agent/llm/providers/openai_compatible.py::_usage_from_wire()` 按端点形态择一
+  //      读取（DeepSeek 顶层 `prompt_cache_hit_tokens` / `prompt_cache_miss_tokens`；OpenAI 形态
+  //      `prompt_tokens_details.cached_tokens`，未命中量按 `prompt - cached` 推得）；两者皆缺时
+  //      `cache_*=None`。
+  //   ② `{total}` = `hit + miss`（与用户给的式子一致）；端点未上报缓存字段时不臆造 0 ——
+  //      命中/未命中显示 `—`，`{total}` 回落为端点上报的 `total_tokens`。
+  //   ③ 只挂在**最后一条助手气泡**上：每次重绘先清掉全部 `.-agent-usage` 再挂一次 ⇒ 新一轮
+  //      结束时上一条的副本被移除，不留过期副本。
+  //   ④ 挂载时机复用既有路径（`poll()` 拿到本轮 usage 后调 `renderStatusUsage()`，见 `1358-1365`
+  //      的既有代码；整串重绘走 `renderMessages()`），只**包装**这两个函数、不改其函数体。
+  //   ⑤ 正文仍走既有 markdown 渲染（AG11 流式路径不受影响）：本行是定稿后**追加**的纯文本节点
+  //      （`textContent`），不参与流式重绘，也不影响 AG08 思考块（它在正文之前）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** token 数文本：英文用千分位（`1,234`）、中文原样（`1234`）；未知（null）返回 `—`。 */
+  function usageNumText(value) {
+    const n = usageInt(value);
+    if (n === null) return "—";
+    const i18n = window.MemoriaI18n;
+    const lang = i18n && i18n.currentLang ? i18n.currentLang() : "zh-CN";
+    return lang === "en" ? n.toLocaleString("en-US") : String(n);
+  }
+
+  /** 本轮用量行文案；无总量（无本轮 usage）返回 ""（调用方据此不挂节点）。 */
+  function usageLineText(u) {
+    if (!u || !u.total_tokens) return "";
+    const hit = usageInt(u.cache_read_tokens);
+    const miss = usageInt(u.cache_miss_tokens);
+    const total = hit !== null && miss !== null ? hit + miss : usageInt(u.total_tokens);
+    return T("agent.usage.line", {
+      hit: usageNumText(hit),
+      miss: usageNumText(miss),
+      total: usageNumText(total),
+    });
+  }
+
+  // 哪条助手消息"拥有"当前 `lastUsage`。**按消息对象记录**（而不是"DOM 里最后一条助手气泡"）：
+  // 生成中「停止」会 `renderMessages()` 整串重绘，若按 DOM 末条定位，上一轮的用量行会被错挂到
+  // 本次（被停止的）气泡上；按归属重定位则始终回到产出该 usage 的那条气泡。
+  let usageOwner = null;
+  // 上次见到的 usage 对象（身份比较）：`poll()` 每轮**新建** usage 对象 ⇒ 身份变化即"新一轮落定"；
+  // 语言切换 / 整串重绘时对象不变 ⇒ 归属不被改写。
+  let usageSeen = null;
+
+  /** 清掉消息区里所有用量行（幂等；整串重绘时通常已被一起换掉）。 */
+  function clearUsageLines() {
+    const box = $("#agent-messages");
+    if (!box) return;
+    const nodes = box.querySelectorAll(".-agent-usage");
+    for (let i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+    }
+  }
+
+  /** `rec` 在「助手消息」里的序位（0 起）；不在 `messages` 里返回 -1。 */
+  function assistantOrdinal(rec) {
+    let ordinal = -1;
+    for (let i = 0; i < messages.length; i += 1) {
+      if (messages[i].role !== "assistant") continue;
+      ordinal += 1;
+      if (messages[i] === rec) return ordinal;
+    }
+    return -1;
+  }
+
+  /** 重绘用量行：只挂在**拥有该 usage 的那条助手气泡**末尾（全面板最多一份）；无则只清不挂。 */
+  function renderTurnUsage() {
+    clearUsageLines();
+    const text = usageLineText(lastUsage);
+    if (!text || !usageOwner) return;
+    const ordinal = assistantOrdinal(usageOwner);
+    if (ordinal < 0) {
+      usageOwner = null; // 那条消息已被清空/换会话 ⇒ 不再有归属
+      return;
+    }
+    const box = $("#agent-messages");
+    if (!box) return;
+    const wraps = box.querySelectorAll(".-agent-msg--assistant");
+    const wrap = ordinal < wraps.length ? wraps[ordinal] : null;
+    if (!wrap) return;
+    const line = document.createElement("div");
+    line.className = "-agent-usage -muted";
+    line.textContent = text;
+    wrap.appendChild(line);
+  }
+
+  // 本轮 usage 落定（`poll()` 更新 `lastUsage` 后调 `renderStatusUsage()`）⇒ 记归属并同步刷新用量行；
+  // `resetStatusUsage()`（清空/载入历史/换库）也走这里 ⇒ `lastUsage=null` 时自动清行与归属。
+  const baseRenderStatusUsageForTurn = renderStatusUsage;
+  renderStatusUsage = function () {
+    baseRenderStatusUsageForTurn.apply(null, arguments);
+    if (lastUsage !== usageSeen) {
+      usageSeen = lastUsage;
+      usageOwner = lastUsage && lastUsage.total_tokens ? currentAssistant() : null;
+    }
+    renderTurnUsage();
+  };
+  // 整串重绘（清空/停止/载入会话/语言切换）会丢掉该行 ⇒ 之后按同一 `lastUsage` 重新挂上。
+  const baseRenderMessagesForTurn = renderMessages;
+  renderMessages = function () {
+    const out = baseRenderMessagesForTurn.apply(null, arguments);
+    renderTurnUsage();
+    return out;
+  };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 状态 bar 刷新间隔（2026-09-19；用户："对话框上 bar 栏状态设置更新间隔，在设置面板配置，
+  // 有 5s 15s 30s 1min 5min 10min 1h"）
+  //   ① 持久化 = `config/agent.json` 的 `status_refresh_ms`（毫秒整数，白名单键），与端点/模型
+  //      同一条 `agent_get_config` / `agent_save_config` RPC（`services/agent/llm/config.py`）。
+  //      设置面板「对话」页签里的 `<select id="agent-refresh">`（index.html 静态体），改选即写盘
+  //      （同「网络」开关的即时保存口径）。
+  //   ② 默认 **60000 ms（1min）** —— 与今天唯一的固定节拍一致：余额槽的 60s TTL
+  //      （`refreshBalance()` 的 `now - balanceFetchedAt < 60000`）＋成本/命中率的 30s TTL。
+  //   ③ 计时器**只驱动既有**的 `refreshBalance()` / `refreshCost()`（状态 bar 的余额与成本/命中率），
+  //      不新增任何槽位与 UI；改设置时先 `clearInterval` 再按新间隔重挂 ⇒ 无需重启。
+  //   ④ 1h 是真选项：`setInterval(3600000)` 每小时才碰一次余额 RPC（该 RPC 会出网）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方行号锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  const DEFAULT_STATUS_REFRESH_MS = 60000;
+  //: 7 档（用户指定）——值即毫秒。
+  const STATUS_REFRESH_CHOICES = [5000, 15000, 30000, 60000, 300000, 600000, 3600000];
+  //: 7 档 → i18n 文案键（中英一一对应）。
+  const STATUS_REFRESH_KEYS = {
+    5000: "agent.settings.refresh5s",
+    15000: "agent.settings.refresh15s",
+    30000: "agent.settings.refresh30s",
+    60000: "agent.settings.refresh1m",
+    300000: "agent.settings.refresh5m",
+    600000: "agent.settings.refresh10m",
+    3600000: "agent.settings.refresh1h",
+  };
+  let statusRefreshTimer = null;
+
+  /** 生效间隔（ms）：只认 7 档之一；未配置/越界 ⇒ 默认 1min（即今天的节拍）。
+   *  `Number(...)` 只为容错（后端回的是毫秒整数；手改 agent.json 成了字符串也不至于回落到默认）。 */
+  function statusRefreshMs() {
+    const v = usageInt(Number(cfg.status_refresh_ms));
+    return v !== null && STATUS_REFRESH_CHOICES.indexOf(v) !== -1 ? v : DEFAULT_STATUS_REFRESH_MS;
+  }
+
+  /** 重填 `<select id="agent-refresh">` 的选项（含语言切换后的文案）并对齐当前值。 */
+  function syncRefreshSelect() {
+    const sel = $("#agent-refresh");
+    if (!sel) return;
+    sel.innerHTML = "";
+    STATUS_REFRESH_CHOICES.forEach(function (ms) {
+      const opt = document.createElement("option");
+      opt.value = String(ms);
+      opt.textContent = T(STATUS_REFRESH_KEYS[ms]);
+      sel.appendChild(opt);
+    });
+    sel.value = String(statusRefreshMs());
+  }
+
+  /** 按当前设置重挂计时器（幂等；改设置即生效，无需重启）。 */
+  function armStatusRefresh() {
+    if (statusRefreshTimer) clearInterval(statusRefreshTimer);
+    statusRefreshTimer = setInterval(function () {
+      refreshBalance(true); // 出网关时前端/后端都会挡（`refreshBalance` 内已判 `cfg.enabled`）
+      refreshCost(true); // 成本与命中率同节拍（既有口径）
+    }, statusRefreshMs());
+  }
+
+  /** 选中即保存（与「网络」开关同套路：走 `agent_save_config`；失败回滚显示，不改计时器）。 */
+  async function saveStatusRefresh(value) {
+    const ms = usageInt(Number(value));
+    if (ms === null || STATUS_REFRESH_CHOICES.indexOf(ms) === -1) {
+      syncRefreshSelect(); // 非法取值：回滚显示
+      return;
+    }
+    let res;
+    try {
+      res = await call("agent_save_config", { status_refresh_ms: ms });
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(T("agent.settings.saveFailed"), errorDetail(res) || errorText(res));
+      syncRefreshSelect();
+      return;
+    }
+    cfg = res;
+    applyConfigToForm(); // 内含 syncRefreshSelect + armStatusRefresh（重挂计时器）
+  }
+
+  // 表单回填 / 配置落定后同步选择框并重挂计时器（`refreshConfig`/`saveConfig`/语言切换都经此）。
+  const baseApplyConfigToFormForRefresh = applyConfigToForm;
+  applyConfigToForm = function () {
+    const out = baseApplyConfigToFormForRefresh.apply(null, arguments);
+    syncRefreshSelect();
+    armStatusRefresh();
+    return out;
+  };
+
+  // 装配：绑选择框 + 首帧挂计时器（与基座同判据：页面未登记停靠栏则整体不介入）。
+  const baseInitForRefresh = init;
+  init = function () {
+    const out = baseInitForRefresh.apply(null, arguments);
+    if (!$("#-agent-dock")) return out;
+    const sel = $("#agent-refresh");
+    if (sel) sel.addEventListener("change", () => saveStatusRefresh(sel.value));
+    syncRefreshSelect();
+    armStatusRefresh();
+    return out;
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

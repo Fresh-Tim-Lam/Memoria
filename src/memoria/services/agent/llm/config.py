@@ -13,9 +13,9 @@
 | 模型 | `MEMORIA_AGENT_MODEL` | `model` |
 | 超时（秒） | `MEMORIA_AGENT_TIMEOUT_S` | `timeout_s` |
 
-键 `enabled`（是否允许出网，桌面端 UI 开关）**不参与** `load_config()` 的逐字段
-回退（它不是调用参数而是功能开关），由 `is_enabled()` / `save_config()` 读写同一份
-JSON，缺省视为开。
+键 `enabled`（是否允许出网）与 `status_refresh_ms`（状态 bar 刷新间隔，毫秒整数）都是
+**UI 旋钮**、不是调用参数，故**不参与** `load_config()` 的逐字段回退：由 `is_enabled()` /
+`status_refresh_ms()` / `save_config()` 读写同一份 JSON（缺省与细节见文件末尾那段）。
 
 密钥只从环境或本地文件读取，**绝不进入日志、异常消息或 `repr`**（掩码见
 `mask_secret`）。导入本模块不联网、不读文件：只有显式调用 `load_config()`
@@ -82,7 +82,7 @@ DEFAULT_TIMEOUT_S = 60.0
 #: 「允许出网」开关的 JSON 键（缺省视为开）。
 ENABLED_KEY = "enabled"
 
-_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", ENABLED_KEY)
+_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", "status_refresh_ms", ENABLED_KEY)
 #: UI 可写键白名单（`save_config` 只接受这些键）。
 _WRITABLE_KEYS = frozenset(_JSON_KEYS)
 #: 文本类键（trim 后原样存）。
@@ -289,11 +289,11 @@ def save_config(
 
     约定（与桌面端配置面板一致）：
 
-    - 只接受白名单键 `base_url` / `api_key` / `model` / `timeout_s` / `enabled`，
-      其它键报 `ConfigError`（绝不写文件）；
+    - 只接受白名单键 `base_url` / `api_key` / `model` / `timeout_s` / `enabled`
+      以及 `status_refresh_ms`，其它键报 `ConfigError`（绝不写文件）；
     - `api_key` **仅在传入非空新值时覆盖**——面板回显的是掩码，空值表示"不修改"；
     - `timeout_s` 空值同样表示"不修改"，非空则沿用 `load_config()` 的同一套校验
-      （正数），非法值不落盘；
+      （正数），非法值不落盘；`status_refresh_ms` 同口径（正整数毫秒）；
     - 文件里已有的未知键原样保留。
     """
     if not isinstance(patch, Mapping):
@@ -322,9 +322,48 @@ def save_config(
         if name in _TEXT_KEYS:
             current[name] = "" if value is None else str(value).strip()
             continue
+        # 追加键（2026-09-19）：放在分支链末位 ⇒ 既有键的处理行号零漂移
+        if name == "status_refresh_ms" and value not in (None, ""):
+            current[name] = _coerce_status_refresh_ms(value, origin=str(path))
 
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
     tmp.write_text(json.dumps(current, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     os.replace(tmp, path)
     return current
+
+
+# ── 状态 bar 刷新间隔（2026-09-19；桌面端 UI 计时器旋钮）────────────────────────
+# **与 `enabled` 同类**：它是 UI 旋钮、不是模型调用参数，故不进 `AgentConfig`、也不参与
+# `load_config()` 的逐字段回退；由 `status_refresh_ms()` / `save_config()` 读写同一份 JSON。
+# 取值 = **毫秒整数**（前端只给 7 档：5000 / 15000 / 30000 / 60000 / 300000 / 600000 / 3600000，
+# 由 `agent-panel.js::STATUS_REFRESH_CHOICES` 收敛）。本段整体追加在文件末尾 ⇒ 上方所有
+# `<文件>:<行号>` 锚点零漂移。
+_STATUS_REFRESH_KEY = "status_refresh_ms"
+#: 状态 bar 的默认刷新间隔（毫秒）；60 000 = 既有余额槽 60s TTL 的节拍，也是七档里的 `1min`。
+DEFAULT_STATUS_REFRESH_MS = 60000
+
+
+def status_refresh_ms(env: Mapping[str, str] | None = None) -> int:
+    """状态 bar 的刷新间隔（毫秒）；缺省 / 非法值一律回退 `DEFAULT_STATUS_REFRESH_MS`。
+
+    宽松口径与 `is_enabled()` 一致（手改坏值不该让配置视图 RPC 失败）；**严格校验在
+    写侧**（`save_config` 走 `_coerce_status_refresh_ms`）。
+    """
+    raw = read_raw_config(env).get(_STATUS_REFRESH_KEY)
+    try:
+        ms = int(float(raw))
+    except (TypeError, ValueError):
+        return DEFAULT_STATUS_REFRESH_MS
+    return ms if ms > 0 else DEFAULT_STATUS_REFRESH_MS
+
+
+def _coerce_status_refresh_ms(value: Any, origin: str) -> int:
+    """写侧校验：**正整数毫秒**（档位由前端收敛为 7 档，这里只做正数校验）。"""
+    try:
+        ms = int(float(value))
+    except (TypeError, ValueError) as exc:
+        raise ConfigError(f"{origin} 的刷新间隔必须是毫秒数，收到 {value!r}") from exc
+    if ms <= 0:
+        raise ConfigError(f"{origin} 的刷新间隔必须为正数，收到 {ms!r}")
+    return ms

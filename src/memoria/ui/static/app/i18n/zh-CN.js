@@ -1299,4 +1299,26 @@
       frontmatter: "正在读取文档头…",
     },
   });
+
+  // ===== 2026-09-19 追加：助手气泡下的**本轮用量行**（`agent.usage.line`）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径：`{hit}`=本轮缓存命中 token、`{miss}`=本轮未命中 token、`{total}`=两者之和；端点未上报
+  // 缓存字段时前端把前两项写成「—」，`{total}` 回落为端点上报的 `total_tokens`（绝不臆造 0）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    usage: { line: "用量 {hit}(命中)+{miss}(未命中)={total} tokens" },
+  });
+
+  // ===== 2026-09-19 追加：状态 bar 的刷新间隔（设置弹窗「对话」页签，`#agent-refresh`）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 七档一一对应 `agent-panel.js::STATUS_REFRESH_CHOICES`（值 = 毫秒）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.settings, {
+    refreshLabel: "刷新间隔",
+    refresh5s: "5 秒",
+    refresh15s: "15 秒",
+    refresh30s: "30 秒",
+    refresh1m: "1 分钟",
+    refresh5m: "5 分钟",
+    refresh10m: "10 分钟",
+    refresh1h: "1 小时",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

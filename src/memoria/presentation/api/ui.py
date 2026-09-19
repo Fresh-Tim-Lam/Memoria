@@ -1155,7 +1155,7 @@ class UIAPI:
     def _agent_config_view(self) -> dict:
         """端点配置的对外视图：**只出掩码，绝不出明文密钥**。"""
         from memoria.services.agent.llm import load_config, mask_secret, read_raw_config
-        from memoria.services.agent.llm.config import config_file_path, is_enabled
+        from memoria.services.agent.llm.config import config_file_path, is_enabled, status_refresh_ms
 
         config = load_config()
         path = config_file_path()
@@ -1165,7 +1165,7 @@ class UIAPI:
             "enabled": is_enabled(),
             "base_url": config.base_url,
             "model": config.model,
-            "timeout_s": config.timeout_s,
+            "timeout_s": config.timeout_s, "status_refresh_ms": status_refresh_ms(),
             "has_key": config.has_api_key,
             "key_masked": mask_secret(config.api_key),
             "source": config.source,

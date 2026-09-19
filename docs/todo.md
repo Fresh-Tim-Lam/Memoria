@@ -4,9 +4,7 @@
 > 维护规范：[conventions/ledger-maintenance.md](conventions/ledger-maintenance.md) —— K1 真开放 / K2 代码完成·验收未闭环 / K3 待评审 / K4 已收口；证据锚必填；规则 8：体积 ≤36 KB，已收口条目按批次出表入 §10。
 > 状态标记：✅ 已收口 / 🔄 进行中 / ⏳ 待做 / 💡 方向性（需再规格化）/ 🔴 Bug / ⬇️ 最低优先级。
 > 2026-09-16 按规则 8 压缩至预算内：开发流水账出表（i18n 迁移明细见 [conventions/i18n.md](conventions/i18n.md) 修订记录；拆分与文档登记见 [docs-management.md](conventions/docs-management.md)；版本级变更见 [version.md §7](conventions/version.md)）；旧文末两段用户粘贴的 bug 记录按规则 8.3 归位（E22 补复现记录、新增 E23）。
-> 2026-09-16 G05 规划落地：设计稿 [design/graph-benchmark.md](design/graph-benchmark.md) + L1 无头采集器 + 改造前基线；诊断结论为「拖拽瓶颈在布局（每帧固定 6 次 O(N²) 排斥）而非渲染算法」。
-> 2026-09-15 取证登记 8 条（逐条带 `文件:行号`，来源 `reference/agent-guide/**`）：C10 / S06 / E18 / E19 / I06 / I07 / P05 / B8。
-> 2026-09-14 首轮对账结论：11 条误开已收口、7 条描述与代码不符已修正、5 条代码完成但真机验收未闭环（K2）、2 条设计待评审（K3）、2 条无法定位（❓）；明细见 §10.3 与 §12。
+> 2026-09-19 按规则 8.2 再清理：删表头三行逐日过程追述与 §10.4 修复流水账（事实在 §10 / §10.3 与各条目行内），新增 §13 的 AG12–AG16。
 
 ***
 
@@ -176,7 +174,7 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | 2026-09-09/10 | C1, C2, C3, C5, D1, D2 | §12.C 视图/静默刷新：文件树重映射刷新、KP 面板静默刷新、预览范围带静默重绘（`markRangeQuiet`）、调度内核 G3 落地（`scheduler.js`）；§12.D 渲染：图片缩略图渲染修复、预览颜色 hover/选区 | `scheduler_vm_test.js`；CHANGELOG 0.3.1 |
 | 2026-09-09/10 | E1, E2, E4, E5, E6, E7, E8, E9, F01, F02, F03 | §12.E 测试/文档/规范：rename-test 库与生成脚本、图片路径规范同步、docs 修订登记、KP 创建链路 L2 归因、保存路径回退归因、G4 M6a/M3/M6b 施工与真机门禁；§12.F 开放发现 F01–F03 存在性确认，后续由 G5.1–G5.3 后台化/CLI 补全承接 | `results/durable-flush-2026-09-09.json`；`results/g4-gate-summary-2026-09-09.json` |
 | 2026-09-14 | C01, C05, C07, L02, S01, E05, E12, I01, E9, E3（部分）, i18n ④ | 首轮台账对账：11 条「已收口但仍开放」条目收口（代码与产物早已闭环），明细见 §10.3 | 见 §10.3 证据清单 |
-| 2026-09-14 | — | 「文件」菜单 3 项修复：菜单顺序改为 `打开/导入/导出 ─── 创建 Trae 智能体/新窗口/打开最近` 并去掉末尾分隔线；「打开最近」按状态分流；按已知路径装载漏 `set_kb_path` 的隐性缺陷 | `index.html:49-59`、`app.js:534-566,12152-12161`，详见 §10.4 |
+| 2026-09-14 | — | 「文件」菜单 3 项修复：菜单顺序改为 `打开/导入/导出 ─── 创建 Trae 智能体/新窗口/打开最近` 并去掉末尾分隔线；「打开最近」按状态分流；按已知路径装载漏 `set_kb_path` 的隐性缺陷。**未覆盖边界**：已开着别的库时点「打开最近」（会起新进程，该分支仅经代码审查） | `index.html:49-59`、`app.js:534-566,12152-12161`；`git log -S openKbAt` |
 | 2026-09-15 | E19, E21, A8 | 修复批次：Mermaid 块替换后复制 `data--src-line`/`data--src-line-end`（预览范围带与源码定位恢复）；Mermaid 失败不再展示原生错误图（`suppressErrorRendering` + 空源码跳过 + 重入保护）；`locate_snippet` 终点锚 `forward_only` 漏洞（hint 未校验是否在起点之后） | `markdown-preview.js`；`vendor/mermaid.min.js`；`range/locator.py:45` |
 | 2026-09-19 | G0–G5、附录指针 | §12「施工计划 · 阶段门禁」**整段收口出表**（G0 基线 / G1 验收收尾 / G2 一致性补强 / G3 调度内核 / G4 作业化 / G5 维护面收敛，结论与实测数字见证据锚）；同批删除文末「附录：已交付规范」三行指针（其事实早已在别处：A → `resources/agent-prompts/organize.zh-CN.md`、B → [import-spec.md](reference/import-spec.md) §4A、C → [import-plan.md](reference/import-plan.md) M5.3） | tag `maint-g3` / `maint-g4` / `maint-g5`；`results/g4-gate-summary-2026-09-09.json`、`results/g5-gate-summary-2026-09-10.json`；`git log -S maint-g4` |
 
@@ -185,11 +183,6 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 > 依据：[ledger-maintenance.md](conventions/ledger-maintenance.md) 规则 4/5/6；方式 = 三路只读核验（逐条对 `src/**` 与产物取证），**未改任何代码**。
 > 收口 11 项证据锚：C01 `index.html:129` + `app.js:12207`；C05 `architecture.md:88` + `kp_rename.py:28-69`；C07 `kp_rename.py:28-69` + `ui.py:342`；L02 `link-context-menu.js:106-160` + `app.js:5512/5563/5238-5276` + `ui.py:479`；S01 `search_kernel.py:38-133` + `ui.py:241-258`；E05 `app.js:9703-9723,10013-10045,10810-10824`；E12 `display-settings.js:11-19` + `app.js:12170-12186`；I01 `import-flow.js:4` + `ui.py:967/999/1015` + `import_executor.py:130-160`；E9 `results/g4-gate-summary-2026-09-09.json:14-17`（真机 PASS）；E3（部分）`durable-flush.md:3,82-88` 已评审锁定；i18n ④ `i18n-inventory.md` 候选 0 行。
 > 同批处置：描述与代码不符已改描述 7 条（C02/C03/C06/C08/L01/E02/E14）；矛盾消解 3 处（§7↔§0 导入状态、§12 E9↔G4 段、`maintenance-jobs.md` §4↔§5）；K2 5 项（V02/V06/B2/B3/样式笔刷·同行公式）与 K3 2 项（B7、E3 中的 `maintenance-jobs.md`）**保留在活动分区未收口**；❓ 2 条（C09/E10）描述不足以定位控件，待补信息。
-
-### 10.4 2026-09-14 「文件」菜单修复（3 项，用户报告）
-
-> 修法：菜单顺序与分隔线整理（`index.html:49-59`）；「打开最近」按状态分流（无库→本窗口装载 / 已开着别的库→新窗口 / 同一库→忽略），`openKb()` 抽出 `openKbAt(path)` 复用 + i18n `toolbar.openRecentTitle` 中英同步（`app.js:12152-12161`、`534-566`）；「按已知路径装载未同步后端库根」补 `set_kb_path`（`app.js:534-548`）。
-> 验证（harness 真实前端 + `/rpc` 调用序列）：菜单 DOM 顺序含 1 条分隔线、末尾无；关库后点 `showcase` 的 RPC 序列正确、`open_new_window` 0 次、`state.files=10`；同库重复点击 RPC 0 次；`node --check` OK、`i18n_selftest` 12 PASS、`scan_ui_strings` rows=0。**未覆盖**：已开着别的库时点击最近项（会启动新进程，分支逻辑仅经代码审查）。
 
 ***
 
@@ -266,4 +259,9 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG08 | 面板看不到模型 **thinking** | ✅ K2：`ReasoningDelta` → `on_reasoning` → 折叠块 `.-agent-think*`（§7；真机未验） |
 | AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size`；harness 8653 实测 15px→20px 联动；真机观感未验） |
 | AG10 | dock 整理：会话选择**迁到左栏「历史」页签**；头部「出网」「设置」与「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（harness 8659/8660 通过；真机观感未验；实现细节见 agent-guide/01 §7） |
-| AG11 | 流式**逐行渲染**（面板侧中间缓冲；代码块/公式未闭合时转圈） | ✅ K2：`agent-stream-buffer.js` + `.-agent-stream-wait*`（§7 取证；真机未验；图片渲染延后） |
+| AG11 | 流式**逐行渲染**（面板侧中间缓冲；代码块/公式未闭合时转圈） | ✅ K2：`agent-stream-buffer.js` + `.-agent-stream-wait*`（§7 取证；真机未验；图片渲染另立 AG12） |
+| AG12 | 图片渲染支持：在流式管线里渲染模型输出的图片（行内 `![]()` / 图片资产） | ⏳ K1（由 AG11 行内注记独立成条；无实现证据） |
+| AG13 | 思考不落盘的后果：重新载入旧会话 / 刷新页面看不到历史思考（AG08 偏差 1）——是否改为落盘 = JSONL 事件 + 回放 + 渲染三点，需另立规格 | ⏳ K1 待规格化（`ask_stream.py:29-34` 明示"只流式、不落盘"；落盘会牵动读路径成本） |
+| AG14 | 会话重命名（方案 D：给 `services/agent/title.py` 补 `user` 来源 + RPC + 左栏历史行的改名入口） | ⏳ K1（`title.py:40` 明示 `source.kind=="user"` 本地未移植；无 rename RPC） |
+| AG15 | 每轮 token 用量行：最后一轮助手气泡下显示「用量 {hit}(命中)+{miss}(未命中)={total} tokens」，旧副本随新一轮移除 | 🔄 K2 验收未闭环（实现 = `agent-panel.js` 末尾块 `.-agent-usage`；待真机 DOM 验收） |
+| AG16 | 状态 bar 刷新间隔可配：设置 → 对话，5s/15s/30s/1min/5min/10min/1h（默认 1min），改设置即重挂计时器 | 🔄 K2 验收未闭环（`agent.json` 的 `status_refresh_ms`；待真机 DOM 验收） |

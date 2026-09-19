@@ -5524,3 +5524,29 @@ html *::-webkit-scrollbar-thumb:active {
     font-size: 0.6875rem;
     color: var(--text-secondary);
 }
+
+/* ===== 2026-09-19 追加：助手气泡下的「本轮用量行」（`.-agent-usage`）==========
+   位置 = 最后一条助手气泡（`.-agent-msg--assistant`）的**最后一个子节点**，由
+   `agent-panel.js::renderTurnUsage()` 挂载（每次重绘先清后挂，全面板最多一份）。
+   视觉刻意"压低"（次要色 + 小字号 + 上间距），与正文/来源条区隔；只在定稿（或整串
+   重绘）之后出现，不参与 AG11 流式重绘 ⇒ 无布局跳变。
+   本块末尾追加（在 AG11 等待区块之后）⇒ 既有行号锚点零漂移。 */
+.-agent-usage {
+    margin-top: 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+
+/* ===== 2026-09-19 追加：状态 bar 刷新间隔选择框（设置 → 对话，`#agent-refresh`）=====
+   `.-agent-field` 只给 `input` 定了外观（见上方 408-428 的 `.` `-agent-field input`），
+   故这里为同族的 `<select>` 补一套等价样式（同内边距/边框/底色/圆角；仅控件自带字号）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+#settings-body-agent #agent-refresh {
+    padding: 0.3125rem 8px;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-radius: 4px;
+}
