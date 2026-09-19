@@ -260,7 +260,7 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡渲染 Markdown + `文件:行号` 锚点 | ✅ 代码完成（harness 二十项断言，见 §4.2）；真机观感待验 |
 | AG03 | dsh M2 剩余 `session-reference` | ⏳ K1（无前端入口，排后） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
-| AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额（悬停出成本浮层）**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance` → `llm/balance.py`；**成本浮层 = `agent_usage_cost` → `llm/pricing.py`**：官方价目表快照 + **逐轮**按事件时间定峰谷价；harness 8653 手算比对一致；见 §4.2） |
+| AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额（悬停出成本浮层）**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance` → `llm/balance.py`；**成本浮层 = 自绘常驻节点 `#agent-costtip`**（不用原生 `title`：facts 串每次重绘就换节点 ⇒ 提示弹不出来）+ `agent_usage_cost` → `llm/pricing.py`（官方价目表快照 + 逐轮峰谷价）；harness 8653/8657 实测；见 §4.2） |
 | AG06 | UI 视觉语言对照（借 dsh 观感）：A 档 + **B 档全部收口**（B-6/7/9/10 已做，B-8 按建议不做） | 🔄 K1（design/ui-visual-language.md §4 实施记录 A/B）；**U4 派生新问题**（B-7 在 DPR=1 无效，是否改把 `--border` 调淡）、**U5 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
 | AG08 | 面板看不到模型 **thinking** | ⏳ K1 已定性：`ReasoningDelta` 已解析但未送前端（`loop.py:255`）；模型是否吐该字段待验 |

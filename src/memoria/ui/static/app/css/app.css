@@ -5202,3 +5202,35 @@ html *::-webkit-scrollbar-thumb:active {
 .-config-tabs.-sidebar-nav-tabs {
     min-height: var(--bar-h-b);
 }
+
+/* ===== 状态 bar 余额槽的「成本浮层」（2026-09-19；用户反馈"悬停没有悬浮显示详情"）========
+   不用原生 `title`：余额槽每次 `renderStatusBar()` 都被整串 `innerHTML` 换掉（生成期间轮询
+   250ms 一次）⇒ 悬停状态不断被打断、原生提示永远弹不出来。改为**自绘浮层**：常驻隐藏块
+   （`agent-panel.js::costTipHtml()`）+ JS 现算位置（`syncCostTip()`，委托在**稳定的**
+   `#agent-statusbar-facts`/文档上，故重绘不会把它弄丢）。
+   `position: fixed` 是**必须**的：祖先 `.-agent-statusbar-facts` 带 `overflow: hidden`（做省略号
+   截断），`absolute` 会被裁掉；`fixed` 的包含块是视口、不受祖先裁剪（祖先里也没有 transform/filter）。
+   配色与阴影全部走既有令牌（`--shadow-float` 即 B-9 的浮层档）。 */
+.-agent-statusbar-balance {
+    cursor: help;
+}
+.-agent-costtip {
+    display: none;
+    position: fixed;
+    z-index: 40;
+    width: max-content;
+    max-width: min(26rem, 78vw);
+    padding: 0.375rem 0.5rem;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    box-shadow: var(--shadow-float);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    white-space: normal;
+    text-align: left;
+    pointer-events: none; /* 不抢指针：移开金额槽即收起，也不挡住下面的消息 */
+}
+.-agent-costtip.is-open { display: block; }
+.-agent-costtip > span { display: block; }

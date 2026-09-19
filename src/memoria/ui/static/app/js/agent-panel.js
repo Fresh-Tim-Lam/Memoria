@@ -1775,8 +1775,8 @@ window.MemoriaAgentPanel = (function () {
     facts.innerHTML = [
       T("agent.settings.model") + " <b>" + esc(model) + "</b>",
       esc(net),
-      // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；**悬停**再给成本浮层 `title=costTipText()`（其中 `esc()` 已转义 `& < > "`，拼进双引号属性安全）。
-      ('<span class="-agent-statusbar-balance" title="' + esc(costTipText()) + '">' + esc(balanceText || "—") + "</span>"),
+      // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；悬停浮层**不再用原生 `title`**（该槽每次重绘都被换掉、悬停总被打断 ⇒ 原生提示弹不出来），改为**常驻的自绘浮层**（`#agent-costtip`，见文件末的成本块），此处只用 `aria-describedby` 指过去。
+      ('<span class="-agent-statusbar-balance" aria-describedby="agent-costtip">' + esc(balanceText || "—") + "</span>"),
       esc(turnText),
     ].join(" · ");
   }
@@ -1845,12 +1845,13 @@ window.MemoriaAgentPanel = (function () {
     return n.toFixed(n > 0 && n < 0.0001 ? 6 : 4);
   }
 
-  /** 悬停浮层文案：首行按用户指定格式「命中:…tokens(…元)，未命中:…tokens(…元)」，次行注明口径与价格表日期。 */
-  function costTipText() {
+  /** 悬停浮层文案（**数组，一行一条**）：首行按用户指定格式「命中:…tokens(…元)，未命中:…tokens(…元)」，
+   *  次行注明口径与价格表日期；无可计价数据时只给一条「为什么没有」。 */
+  function costTipLines() {
     const model = String(cfg.model || "") || T("agent.model.none");
     const c = costInfo;
     const date = (c && c.price_table) || "—";
-    if (!c || !c.priced) return T("agent.statusBar.costEmpty", { model: model, date: date });
+    if (!c || !c.priced) return [T("agent.statusBar.costEmpty", { model: model, date: date })];
     return [
       T("agent.statusBar.costLine", {
         hitTokens: fmtTokens(c.hit_tokens),
@@ -1859,8 +1860,89 @@ window.MemoriaAgentPanel = (function () {
         missCost: moneyText(c.miss_cost),
       }),
       T("agent.statusBar.costNote", { model: model, date: date }),
-    ].join("\n");
+    ];
   }
+
+  /** **常驻**的成本浮层节点（懒建一次，挂在**稳定的** `#agent-statusbar` 上）。
+   *
+   *  ⚠️ 为什么不用原生 `title`、也不把浮层塞进余额槽（两版都栽在同一点上，2026-09-19 实测）：
+   *  `renderStatusBar()` 会把 `#agent-statusbar-facts` 的 innerHTML **整串替换**（生成期间轮询
+   *  每 250ms 一次），于是 —— ㈠ 原生提示要求指针在同一节点停留 0.5–1s，节点一换就被打断，
+   *  提示永远弹不出来（用户报的"悬停没有显示详情"）；㈡ 把浮层放进 facts 串里，则每次重绘都会
+   *  造出一个**新的、没带 `is-open`** 的浮层 ⇒ 悬停中被"关掉"（实测：重绘后 `is-open` 丢失）。
+   *  故：节点**只建一次**、挂在 facts 之外（`#agent-statusbar` 是静态节点，永不重绘），
+   *  文本由 `refreshCostTip()` 随重绘更新，展开状态因此在重绘中**保持**。 */
+  let costTipNode = null;
+
+  function ensureCostTip() {
+    if (costTipNode && costTipNode.isConnected) return costTipNode;
+    const host = document.getElementById("agent-statusbar");
+    if (!host) return null;
+    costTipNode = document.createElement("span");
+    costTipNode.className = "-agent-costtip";
+    costTipNode.id = "agent-costtip";
+    costTipNode.setAttribute("role", "tooltip");
+    host.appendChild(costTipNode);
+    return costTipNode;
+  }
+
+  /** 浮层定位：右缘对齐金额槽、上弹到状态 bar 之上，再夹进视口（贴边不裁字）。
+   *  `position: fixed` ⇒ 不受 `.-agent-statusbar-facts` 的 `overflow: hidden`（省略号截断）裁剪。 */
+  function placeCostTip(tip) {
+    const host = document.querySelector(".-agent-statusbar-balance");
+    if (!host) return;
+    const r = host.getBoundingClientRect();
+    const box = tip.getBoundingClientRect();
+    const left = Math.max(6, Math.min(r.right - box.width, window.innerWidth - box.width - 6));
+    tip.style.left = Math.round(left) + "px";
+    tip.style.top = Math.round(Math.max(6, r.top - box.height - 6)) + "px";
+  }
+
+  /** 重绘后刷新浮层文本（并保持它已展开状态与位置）。 */
+  function refreshCostTip() {
+    const tip = ensureCostTip();
+    if (!tip) return;
+    const html = costTipLines()
+      .map(function (line) {
+        return "<span>" + esc(line) + "</span>";
+      })
+      .join("");
+    if (tip.innerHTML !== html) tip.innerHTML = html;
+    if (tip.classList.contains("is-open")) placeCostTip(tip);
+  }
+
+  /** 指针在文档上移动：落在余额槽上就展开（并现算位置），否则收起。 */
+  function syncCostTip(event) {
+    const tip = ensureCostTip();
+    if (!tip) return;
+    const host =
+      event.target && event.target.closest
+        ? event.target.closest(".-agent-statusbar-balance")
+        : null;
+    if (!host || !tip.firstChild) {
+      tip.classList.remove("is-open");
+      return;
+    }
+    tip.classList.add("is-open");
+    placeCostTip(tip);
+  }
+
+  // `renderStatusBar` 每次重绘后刷新浮层文本（**包装而非改行** ⇒ 上方行号锚点零漂移）。
+  const baseRenderStatusBar = renderStatusBar;
+  renderStatusBar = function () {
+    baseRenderStatusBar.apply(null, arguments);
+    refreshCostTip();
+  };
+
+  // 挂**文档级**监听（捕获阶段）而不是挂在余额槽上：余额槽每次重绘都被换掉，挂在它身上会随节点消失。
+  // 指针一动就判一次"是否落在余额槽上"——不是就收起；`scroll`/`resize`/窗口失焦同样收起（避免浮层留在旧位置）。
+  ["mousemove", "scroll", "resize"].forEach(function (type) {
+    document.addEventListener(type, syncCostTip, true);
+  });
+  window.addEventListener("blur", function () {
+    const tip = ensureCostTip();
+    if (tip) tip.classList.remove("is-open");
+  });
 
   function refreshCost(force) {
     const sid = sessionId ? String(sessionId) : "";
