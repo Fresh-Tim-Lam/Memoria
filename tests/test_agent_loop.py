@@ -486,6 +486,26 @@ def test_system_prompt_injects_kb_instructions_and_tools(kb: Path) -> None:
     assert "只读" in prompt
 
 
+def test_system_prompt_gates_file_reference_section_on_read_tool(kb: Path) -> None:
+    """`@路径` 引用说明与上游同门控：只在 `read_document` 在场时出现。
+
+    语义移植自 `context/file-reference`（上游 `ctx.tools.get('read') === undefined ? '' : ...`）：
+    模型没有读取手段时，教它"去读"没有意义。
+    """
+    schemas = kb_registry(kb).schemas()
+    with_read = build_system_prompt(str(kb), tools=schemas, model="m")
+    assert "用户引用（`@路径`）" in with_read
+    assert '@"..."' in with_read
+    assert "不得声称已经看过" in with_read
+
+    without_read = build_system_prompt(
+        str(kb),
+        tools=tuple(s for s in schemas if s.name != "read_document"),
+        model="m",
+    )
+    assert "用户引用（`@路径`）" not in without_read
+
+
 def test_ask_end_to_end_offline_only_writes_session(kb: Path) -> None:
     provider = FakeProvider(
         [

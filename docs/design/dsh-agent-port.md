@@ -209,6 +209,54 @@ src/memoria/services/agent/
 
 > M1 后端竖切至此打通（提问 → 检索 → 带锚点回答 → 会话落盘）；剩余 M1 部分为**前端对话面板 + 出网开关**，M2 为 compaction 与 session-query。
 
+### 6.7 M2 上半实施记录（2026-09-18：吃 `context/file-reference`，已落地）
+
+> 用户拍板：**先补完上下文引用**（M2 的四块里最小的一块）。compaction 的落盘口径同时拍板为「持久化进会话 JSONL」——见 §8 表下注。
+
+**范围界定（先摸清上游才敢动手）**：`context/file-reference` 只做两件事 ——
+① 一段**固定的模型可见说明**（`FILE_REFERENCE_PROMPT`），且**只在 `read` 工具在场时注入**；
+② 给编辑器用的路径补全服务（`file-reference-local` / `WorkspaceFileSearch`）。
+**它不把被引用文件的内容塞进请求** —— 内容仍由模型自己用读取工具取。
+故本块很小：本地只吃 ①，并**顺带修掉前端 `@` 语法的两处保真缺口**（下）。
+
+**改动**（2 个既有文件 + 1 个测试文件，无新增模块 —— §5 映射表里本行「本地落点」原本就是 `—`）：
+
+- `services/agent/prompt.py`
+  - 新增常量 `FILE_REFERENCE_SECTION`：上游 `FILE_REFERENCE_PROMPT` 的**逐条中文落法**，四层语义一条不少 —— ① `@` 前缀 token 是用户**明确圈定**的库内路径；② 尾斜杠＝目录；③ 其余＝文件，需要时用 `read_document` 读取，**在真正读过之前不得声称已经看过**；④ `@"..."` 表示含空格。
+  - 新增小工具 `_has_tool()`；`build_system_prompt()` 在**工具段之后、回答要求之前**按上游门控注入（**仅当 `read_document` 在场** —— 对齐上游 `ctx.tools.get('read') === undefined ? '' : FILE_REFERENCE_PROMPT`：模型没有读取手段时，教它"去读"没有意义）。
+  - **删除**今天早些时候临时塞进「基础身份」段的那一行（被独立段落取代）。
+  - 模块来源注释由两个上游包扩为**三个**（新增 `packages/context/file-reference`）。
+- `ui/static/app/js/agent-panel.js`
+  - `MENTION_RE` 换成上游 `activeAtToken` 语义的**四分组式**（前导 / 完整 token / 带引号路径 / 裸路径）。
+  - 新增 `formatMention()`（上游 `formatFileMention` 语义）；`linkifyUser()` 按新分组重写；`insertMention()` 改用它生成 token。
+- `tests/test_agent_loop.py`：新增 `test_system_prompt_gates_file_reference_section_on_read_tool`（在场含该段 / 不在场不含）。
+
+**修掉的两处前端保真缺口（旧实现是真缺陷，不是优化）**：
+
+1. **邮箱误判**：旧 `MENTION_RE`（`/@([^\s@]+)/g`）没有"token 开头"约束 ⇒ 用户消息里的 `a@b.com` 会被**误渲染成引用 chip**。上游 `activeAtToken` 明确规定 `@` 须为行首或前导空白。
+2. **含空格路径**：旧实现完全无法表示含空格的路径 —— 我当时把它写进文档当作"与 `ANCHOR_RE` 同口径的已知限制"。上游有 `@"..."` 形式专治此事，本轮补上（该"已知限制"在 01 篇已作废）。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+- 上游那段是**英文**且要求"逐字固定"；本地按仓库既有口径**落为中文**（与其余 5 个段落语言一致），**上游英文原文留在 `FILE_REFERENCE_SECTION` 上方注释里**以备对照；
+- 上游目录条目是 `list it`（上游有列目录工具），本地**没有**列目录工具 ⇒ 改指 `search_kb`；
+- 上游对**目录**用 `@"dir/`（**留开引号**，便于编辑器继续逐级下钻），本地交互是"选中即完成" ⇒ **闭合**引号（`@"dir with space/"`），让消息文本良构；
+- 上游的路径补全服务（`WorkspaceFileSearch`，387 行 fuzzy 路径搜索）**不移植**：本地引用由文件树拖拽产生，不需要 `@` 触发的补全弹层。若将来要 `@` 补全，可按需再吃该包；
+- **未**顺带吃 `time-context`（注入当前时间）与 `session-reference`（跨会话引用）—— 两者同属 M2 引用类，留作后续小块。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile` / `node --check` | 全过 |
+| `pytest -q` | **81 passed**（+1 例门控测试） |
+| harness 浏览器实测（8642；`MEMORIA_CONFIG_DIR` 指向临时目录隔离；先经 RPC 置 `agent_save_config(enabled=true, base_url=http://127.0.0.1:9/v1)`，使"发送"能走到气泡渲染） | 一条含 `@a.md` / `@"docs/IELTS vocab.md"` / `@"dir with space/"` / `a@b.com` / 裸 `@` / 行首 `@line-start.md` 的消息 ⇒ **4 个 chip**：`data-agent-file = ["a.md","docs/IELTS vocab.md","dir with space","line-start.md"]`、`data-agent-dir = [null,null,"1",null]`；`a@b.com` 与裸 `@` **保持原样、未被识别**。插入侧合成拖拽载荷：`docs/IELTS vocab.md`→`@"docs/IELTS vocab.md" `、`dir with space`→`@"dir with space/" `、`plain.md`→`@plain.md `、`docs/example`→`@docs/example/ ` |
+| 依赖面 | 纯标准库 / 纯浏览器原生 API，**零新依赖** |
+
+**未实测**：真实模型端点下该段落的实际引导效果（只做静态 + 单测 + 渲染核对，未调真实模型）；真实鼠标拖拽手势。
+
+**文档**：`reference/agent-guide/01` §2.4 两行（chip 渲染 / 拖拽插入）+ §5 坑 17 重写 + §6/§7 按实测重取；`10` §2.15 段落顺序 + §6 新增「系统提示组装」行；`conventions/docs-management.md §4.2` 登记。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -230,6 +278,10 @@ src/memoria/services/agent/
 | **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
 | **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路 | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
+
+> **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。因此 M2 落地时会**改会话格式** ⇒ 需同步 `SESSION_FORMAT_VERSION`、老会话兼容策略、以及 `reference/agent-guide/10` 的会话格式表。
+>
+> **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）。**剩余**：compaction（`compaction/*` 四个包）、session-query（`session-query/*` 四个包）、会话标题（`session/title*` + 投影）。
 
 ---
 
@@ -275,3 +327,5 @@ src/memoria/services/agent/
 | 2026-09-17 | **更正**：§0/§4.3/P7 曾记"仓库无 `LICENSE`"——错（源于一次失败的目录检查）。核实：`LICENSE` 早已存在（MIT，`Copyright (c) 2026 FreshTim`，`730f9a8a`），故 P7 作废；实际缺口只有缺 `THIRD_PARTY_NOTICES.md`。同步更正 `docs-management.md` §4.2 同条登记 |
 | 2026-09-17 | **M1a 落地**（只吃 `llm` 包）：新增 `src/memoria/services/agent/llm/**`（10 文件）+ `scripts/agent_llm_smoke.py` + `tests/test_agent_llm.py`（21 例）+ 仓库根 `THIRD_PARTY_NOTICES.md`。验收：`py_compile` 12/12、`pytest 21 passed`、`--mock` 冒烟通过、零第三方依赖、12/12 带来源注释、无既有文件被改；偏差与未实测项见 §6.5 |
 | 2026-09-17 | **M1b 落地**（吃 `core`/`session`/`context`/`interaction`）：新增 11 文件 / 2,236 行（loop、system-prompt 组装、11 个只读工具与注册表、jsonl 会话存储、fail-closed 审批、`ask()` 入口、`scripts/agent_ask.py`、12 例单测）。验收：`py_compile` 全过、`pytest 33 passed`、`--mock` 离线竖切跑通（先 `search_kb` 再作答、输出 `文件:行号` 锚点）、**零写入**（逐文件对比仅新增会话 jsonl）。偏差见 §6.6 |
+| 2026-09-18 | **M2 上半落地**（吃 `context/file-reference`）：`services/agent/prompt.py` 新增常量 `FILE_REFERENCE_SECTION`（上游 `FILE_REFERENCE_PROMPT` 的中文落法）并按上游门控注入（**仅当 `read_document` 在场**），段落顺序变为「基础身份 → 运行环境 → 库内指令 → 可用工具 → 用户引用（`@路径`） → 回答要求」；删掉同日早些时候临时塞进「基础身份」的那一行。顺带修掉前端 `@` 语法两处**真缺陷**（邮箱 `a@b.com` 被误渲染成 chip / 含空格路径完全无法表示）—— `MENTION_RE` 换成上游 `activeAtToken` 语义的四分组式 + 新增 `formatMention()`（上游 `formatFileMention` 语义）。验收：`pytest 81 passed`（+1 门控单测）、harness 浏览器实测 4 chip + `a@b.com` 不被识别 + 插入侧 `@"含空格"` 形式。偏差与证据见 §6.7 |
+| 2026-09-18 | **拍板 M2 落盘口径**：compaction 的结果**持久化进会话 JSONL**（新增记录类型，`build_history()` 回放时替换被覆盖区间），对齐上游「把摘要写进会话事件面」；**不**走「请求期变换 + cache 缓存摘要」。故 compaction 落地时会改会话格式 ⇒ 需同步 `SESSION_FORMAT_VERSION` 与老会话兼容策略（见 §8 表下注）。同轮还确立：**先补 M2 的最小一块（上下文引用）**，compaction / session-query / 标题留后 |

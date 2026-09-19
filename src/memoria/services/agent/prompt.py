@@ -1,19 +1,25 @@
-# 语义移植自 deepseek-harness packages/core/system-prompt 与 packages/context/agent-instructions（MIT / BSD-3-Clause）
+# 语义移植自 deepseek-harness packages/core/system-prompt + packages/context/agent-instructions
+# + packages/context/file-reference（MIT / BSD-3-Clause）
 # 上游：https://github.com/deepseek-ai/deepseek-harness @ 0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
 # 版权归 DeepSeek；声明见仓库根 THIRD_PARTY_NOTICES.md
 
 """system prompt 组装：基础指令 + 知识库上下文 + 工具清单。
 
-对照上游两处语义：
+对照上游三处语义：
 
 1. `dsh-system-prompt`：提示词是**有序段落的组装结果**，工具 schema 属于同一份
    组装产物（"模型获知自己能做什么"是一个整体）。本地按
-   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 回答要求」的固定顺序拼接，
-   工具段落由 `ToolSchema` 生成，工具集合为空时不产生该段（空段消失）。
+   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 用户引用（`@路径`）→ 回答要求」
+   的固定顺序拼接，工具段落由 `ToolSchema` 生成，工具集合为空时不产生该段（空段消失）。
 2. `dsh-agent-instructions`：把工作区指令文件（`AGENTS.md` 兼容）作为**注入的
    上下文**送达模型——**只加上下文、不加工具**。本地读取知识库内的
    `.memoria/agent/{kb-spec.zh-CN.md, preview-formats.md, prompt.zh-CN.md}`
    （事实源仍是这些文件本身，本模块只负责"发现并注入"，不另立副本）。
+3. `dsh-file-reference`：`@` 前缀 token 是用户**显式引用**的工作区路径，需要一份固定的
+   模型可见说明教模型怎么对待它们（见 `FILE_REFERENCE_SECTION`）。上游把它做成一个**独立
+   段落**并按「`read` 工具是否在场」门控；本地同构 —— 段落独立、同样按 `read_document`
+   是否在场门控。上游另有一半是给编辑器用的路径补全服务（`file-reference-local`），
+   本前端不用它（引用靠文件树拖拽产生，不需要 `@` 触发的补全弹层）。
 
 与上游的差异（已登记）：
 - 上游把指令作为**持久 user 角色消息**写入会话日志（可回放、可压缩）；M1 直接
@@ -44,6 +50,7 @@ __all__ = [
     "AGENT_DIR",
     "DEFAULT_MAX_INSTRUCTION_BYTES",
     "DEFAULT_MAX_SOURCE_BYTES",
+    "FILE_REFERENCE_SECTION",
     "INSTRUCTION_FILENAMES",
     "InstructionSource",
     "build_system_prompt",
@@ -184,6 +191,37 @@ def _render_tools(tools: Sequence[ToolSchema]) -> str:
     )
 
 
+#: `@路径` 引用的模型可见说明。语义移植自上游 `context/file-reference` 的
+#: `FILE_REFERENCE_PROMPT`（`packages/context/file-reference/src/index.ts:17`，pin `0d1f5000`）原文：
+#:
+#:   Tokens prefixed with @ are workspace paths the user explicitly referenced, relative to the
+#:   workspace root. A trailing slash marks a directory: list it when its contents matter.
+#:   Anything else is a file: use the read tool when its contents are needed, and do not claim to
+#:   have inspected it before reading. @"..." quotes a path containing spaces.
+#:
+#: 逐条落为中文（与本文其余段落语言一致），四层语义一条不少：**明确引用** / 尾斜杠＝目录 /
+#: 否则是文件且"读过之前不得声称看过" / `@"..."` 表示含空格。
+#:
+#: 门控对齐上游（`ctx.tools.get('read') === undefined ? '' : FILE_REFERENCE_PROMPT`）：
+#: **只在 `read_document` 在场时注入** —— 模型没有读取手段时，教它"去读"没有意义。
+#: 语义偏差：上游目录一条是 "list it"（它有列目录工具），本地无列目录工具，故改指 `search_kb`。
+FILE_REFERENCE_SECTION = "\n".join(
+    [
+        "## 用户引用（`@路径`）",
+        "",
+        "用户消息里以 `@` 开头的 token 是他**明确圈定**的库内路径（相对知识库根）：",
+        "",
+        "1. 结尾带 `/` 表示**目录**：只在其内容确实相关时才去检索（`search_kb`），不要臆测目录内容；",
+        "2. 其余表示**文件**：需要其内容时用 `read_document` 读取；**在真正读过之前，不得声称已经看过**；",
+        '3. `@"..."` 表示路径中含空格，例如 `@"docs/IELTS vocab.md"`。',
+    ]
+)
+
+
+def _has_tool(tools: Sequence[ToolSchema], name: str) -> bool:
+    return any((tool.name or "") == name for tool in tools)
+
+
 def build_system_prompt(
     kb_path: str,
     *,
@@ -200,8 +238,6 @@ def build_system_prompt(
                 "你的知识来源只有两处：本地知识库内容（通过工具读取）与用户在本轮对话中给出的信息。",
                 "当前能力是**只读**的：你可以检索与阅读知识库，但不能修改、创建或删除任何文件；",
                 "如果用户要求写入，请明确说明本阶段不支持写入，并给出建议的改动清单。",
-                "用户消息里的 `@相对路径` 表示他明确圈定了某个库内文件（目录以 `/` 结尾）；"
-                "这类引用应优先用 `read_document` 读取该文件后再回答，不要忽略。",
             ]
         ),
         "\n".join(
@@ -221,6 +257,10 @@ def build_system_prompt(
     tool_section = _render_tools(tools)
     if tool_section:
         sections.append(tool_section)
+
+    # `@路径` 引用说明：与上游同门控 —— 只在模型确实有读取手段时给出（见 FILE_REFERENCE_SECTION）
+    if _has_tool(tools, "read_document"):
+        sections.append(FILE_REFERENCE_SECTION)
 
     sections.append(
         "\n".join(

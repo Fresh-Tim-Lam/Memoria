@@ -116,9 +116,13 @@ window.MemoriaAgentPanel = (function () {
   // 答案里的 `文件:行号`（允许被反引号包裹；路径不允许空白/引号/括号/冒号）
   const ANCHOR_RE = /`?([^\s`"'<>()[\]:]+\.md):(\d+)`?/g;
 
-  // 用户消息里的 `@相对路径` 引用（由文件树拖拽插入，也可手打）。路径同样不允许空白/`@`
-  // （与 ANCHOR_RE 同口径：含空格的路径不识别，退化为纯文本）。目录以尾斜杠区分：`@docs/example/`。
-  const MENTION_RE = /@([^\s@]+)/g;
+  // 用户消息里的 `@路径` 引用（由文件树拖拽插入，也可手打）。
+  // 语法语义移植自上游 `context/file-reference` 的 activeAtToken / formatFileMention：
+  //   - `@` 必须是**一个 token 的开头**（行首或前面是空白）—— 邮箱 `a@b.com` 里的 `@` 不是引用；
+  //   - `@"..."` 表示含空格的路径（收尾引号可缺，见 formatMention 的说明）；
+  //   - 结尾带 `/` 表示目录。
+  // 分组：1 = 前导（行首 / 空白，原样保留）2 = 完整 token 3 = 带引号的路径 4 = 裸路径
+  const MENTION_RE = /(^|\s)(@"([^"]*)"?|@(\S+))/g;
   // 文件树拖拽载荷 MIME（发送端在 js/file-tree.js，同一字面量；改一处必须同步改另一处）
   const DRAG_MIME = "application/x-memoria-path";
   // 输入框「上次光标位置」：失焦后 selectionStart 会归 0，故拖拽落点按这份自己记的值插入
@@ -505,18 +509,22 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /**
-   * 用户消息渲染：先按 `@路径` 切分再逐段转义（**不先整体 esc**，避免路径里的
+   * 用户消息渲染：先按 `@路径` 语法切分再逐段转义（**不先整体 esc**，避免路径里的
    * `&` 被二次转义成 `&amp;amp;`），非引用部分换行转 `<br>`。
+   * 前导空白（分组 1）不进 chip、原样留在文本里，故 chip 从 token 起点开始。
    */
   function linkifyUser(text) {
     const raw = String(text == null ? "" : text);
     let out = "";
     let last = 0;
     for (const m of raw.matchAll(MENTION_RE)) {
-      out += esc(raw.slice(last, m.index)).replace(/\n/g, "<br>");
-      const token = m[1];
-      out += mentionChip(token.replace(/\/+$/, ""), /\/$/.test(token));
-      last = m.index + m[0].length;
+      const token = m[2];
+      const body = (m[3] !== undefined ? m[3] : m[4]) || "";
+      const start = m.index + m[1].length;
+      out += esc(raw.slice(last, start)).replace(/\n/g, "<br>");
+      const path = body.replace(/\/+$/, "");
+      out += path ? mentionChip(path, /\/$/.test(body)) : esc(token);
+      last = start + token.length;
     }
     out += esc(raw.slice(last)).replace(/\n/g, "<br>");
     return out;
@@ -553,6 +561,17 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /**
+   * 把路径格式化为引用 token；**含空白时用上游的 `@"..."` 形式**
+   * （语义移植自 `context/file-reference` 的 formatFileMention）。
+   * 与上游的一处偏差：目录也**闭合引号** —— 上游留开引号是为了让编辑器继续逐级下钻
+   * （`@"dir/sub`），而我们这里是"选中即完成"，闭合后消息文本才良构。
+   */
+  function formatMention(path, kind) {
+    const p = kind === "dir" ? path.replace(/\/+$/, "") + "/" : path;
+    return /\s/.test(p) ? '@"' + p + '"' : "@" + p;
+  }
+
+  /**
    * 把 `@相对路径` 插到输入框的**上次光标位置**（失焦后 `selectionStart` 归 0，故用自记的
    * `inputCaret`）；目录带尾斜杠。前面缺空白时补空格、末尾恒补一个空格，便于接着打字。
    */
@@ -561,7 +580,7 @@ window.MemoriaAgentPanel = (function () {
     if (!input) return;
     const p = String(path || "").replace(/\\/g, "/").replace(/^\/+|\/+$/g, "");
     if (!p) return;
-    const token = "@" + p + (kind === "dir" ? "/" : "");
+    const token = formatMention(p, kind);
     const len = input.value.length;
     const pos = Number.isInteger(inputCaret) ? Math.max(0, Math.min(inputCaret, len)) : len;
     const before = input.value.slice(0, pos);
