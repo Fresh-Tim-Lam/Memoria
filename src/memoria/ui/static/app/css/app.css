@@ -5399,3 +5399,13 @@ html *::-webkit-scrollbar-thumb:active {
     background: var(--error);
     opacity: 1;
 }
+
+/* ===== 发送按钮「右下角」（2026-09-19；用户："`#agent-send` 放右下角"）==========
+   `.-agent-composer-actions`（604-648 那组里的 639-643）原本是**左对齐**的一行：更早那版靠
+   「清空对话」按钮的 `margin-left: auto` 把自己右推（644-646 的 `.-agent-clear` 规则，**该按钮
+   2026-09-19 已退役 ⇒ 这条规则现在没有对应节点**），清空按钮一走，整行就只剩左边两个按钮。
+   现在整行右对齐 ⇒ 发送 / 停止落在输入框下方那行的**右下角**。
+   只加一条声明、且本块在文件末尾（同特异度靠后取胜）⇒ 既有行号锚点零漂移。 */
+.-agent-composer-actions {
+    justify-content: flex-end;
+}
