@@ -1,11 +1,12 @@
-# 语义移植自 deepseek-harness packages/core/tools（工具定义与错误语义）
-# 与 packages/context/agent-instructions（指令文件发现，见 prompt.py）（MIT / BSD-3-Clause）
+# 语义移植自 deepseek-harness packages/core/tools（工具定义与错误语义）、
+# packages/context/agent-instructions（指令文件发现，见 prompt.py）、
+# packages/session-query/tool-session-query（会话检索工具）（MIT / BSD-3-Clause）
 # 上游：https://github.com/deepseek-ai/deepseek-harness @ 0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
 # 版权归 DeepSeek；声明见仓库根 THIRD_PARTY_NOTICES.md
 
-"""只读知识库工具：检索 / 读文档 / 读知识点 / 库概览 / 校验。
+"""只读知识库工具：检索 / 读文档 / 读知识点 / 库概览 / 校验 / 检索历史会话。
 
-五个工具全部**复用 Memoria 既有服务层**（不重写检索、不另立索引）：
+六个工具全部**复用 Memoria 既有服务层**（不重写检索、不另立索引）：
 
 | 工具 | 复用 |
 |---|---|
@@ -14,6 +15,7 @@
 | `read_kp` | `services/kp_index.py` + 正文切片 |
 | `kb_overview` | `storage.scanner.collect_md_files()` + sidecar 摘要 |
 | `validate_kb` | `services/document.DocumentService.validate_kb()`（内部经 `check_report.summarize_check_counts`） |
+| `search_sessions` | `services/agent/session/query.py`（本轮 M2 新增；**对话记录**而非知识库文档，故不产生 `文件:行号` 锚点） |
 
 两处必须说明的实现取舍：
 
@@ -68,7 +70,18 @@ SNIPPET_CHARS = 240
 MAX_FILES_IN_OVERVIEW = 200
 MAX_ISSUES_IN_REPORT = 20
 
-KB_TOOL_NAMES = ("search_kb", "read_document", "read_kp", "kb_overview", "validate_kb")
+KB_TOOL_NAMES = (
+    "search_kb",
+    "read_document",
+    "read_kp",
+    "kb_overview",
+    "validate_kb",
+    "search_sessions",
+)
+
+#: `search_sessions` 默认 / 最多列出多少个历史会话。
+DEFAULT_SESSION_HITS = 5
+MAX_SESSION_HITS = 20
 
 _SCRATCH_DIRS: dict[str, str] = {}
 
@@ -430,12 +443,59 @@ def _validate_kb(kb_path: str) -> ToolOutput:
 # —— 工具声明（OpenAI function-calling 兼容 schema）——
 
 
+def _search_session_history(kb_path: str, query: str, limit: int) -> ToolOutput:
+    """检索**历史会话**（过去与本库的对话记录）。
+
+    与知识库文档无关：命中以「会话 `<id>` 第 N 条」标识，**不产生 `文件:行号` 锚点**
+    （那是文档引用的形状，混用会让模型把对话当成库内出处）。只读会话 JSONL 目录，
+    不碰正文 / sidecar / manifest；作用域限本库（不存在跨库会话）。
+    """
+    from memoria.services.agent.session.query import SessionQueryError, search_sessions
+
+    text = (query or "").strip()
+    if not text:
+        return _error("search_sessions: query 不能为空")
+    try:
+        # 每会话只取最强一条（工具面靠它定位，避免把大段历史灌进上下文）；语料按 modified_at 倒序
+        groups = search_sessions(kb_path, text, hit_limit=1)
+    except SessionQueryError as exc:
+        return _error(f"search_sessions: {exc}")
+    if not groups:
+        return ToolOutput(
+            text=(
+                "（历史会话里没有命中。注意这里检索的是**过去与本知识库的对话记录**，"
+                "不是知识库文档 —— 找资料请用 `search_kb`。）"
+            )
+        )
+    cap = max(1, min(limit, MAX_SESSION_HITS))
+    lines = [f"历史会话命中 {len(groups)} 个（按最近聊过排序，最多列出 {cap} 个）："]
+    for group in groups[:cap]:
+        lines.append("")
+        lines.append(f"## 会话 {group.session_id}")
+        if group.title:
+            lines.append(f"- 标题：{group.title}")
+        lines.append(f"- 轮数：{group.turn_count}")
+        hit = group.best
+        lines.append(f"- 最强命中：第 {hit.seq} 条（{hit.type}）—— {hit.snippet}")
+    lines.append("")
+    lines.append("引用这些内容时写成「会话 <id> 第 N 条」，**不要**写成 `文件:行号`（那是知识库文档的形状）。")
+    return ToolOutput(text="\n".join(lines))
+
+
 def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, ...]:
     """绑定到某个知识库的只读工具集；全部声明 `read_only=True`。"""
     root = os.path.abspath(kb_path)
 
     def _bound_search(arguments: Mapping[str, Any]) -> ToolOutput:
         return _search_kb(root, str(arguments.get("query") or ""), int(arguments.get("top_k") or top_k))
+
+    def _bound_search_sessions(arguments: Mapping[str, Any]) -> ToolOutput:
+        raw = arguments.get("limit")
+        try:
+            limit = int(raw) if raw is not None else DEFAULT_SESSION_HITS
+        except (TypeError, ValueError):
+            limit = DEFAULT_SESSION_HITS
+        return _search_session_history(root, str(arguments.get("query") or ""), limit)
 
     return (
         Tool(
@@ -501,5 +561,33 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
             description="运行知识库校验，返回 errors/warnings 摘要（sidecar、manifest、路径漂移、图链接）。",
             parameters={"type": "object", "properties": {}, "additionalProperties": False},
             handler=lambda _arguments: _validate_kb(root),
+        ),
+        Tool(
+            name="search_sessions",
+            description=(
+                "检索**过去与本知识库的对话记录**（历史会话），返回命中的会话与片段。"
+                "问「我们之前聊过什么 / 上次说到哪」这类问题时用它；"
+                "它检索的不是知识库文档（找资料请用 `search_kb`）。"
+                "命中以「会话 <id> 第 N 条」标识，**不要**写成 `文件:行号`。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "检索词（按字面量匹配：空白弹性、大小写不敏感）",
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": MAX_SESSION_HITS,
+                        "description": f"最多列出多少个会话（默认 {DEFAULT_SESSION_HITS}）",
+                    },
+                },
+                "required": ["query"],
+                "additionalProperties": False,
+            },
+            handler=_bound_search_sessions,
         ),
     )

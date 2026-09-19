@@ -328,6 +328,81 @@ src/memoria/services/agent/
 
 **文档**：`reference/agent-guide/10` 会话格式表新增 `compaction` 事件 + 回放口径；`conventions/docs-management.md §4.2` 登记。
 
+### 6.9 M2 session-query 实施记录（2026-09-19：吃 `session-query/session-query` + `session-query/tool-session-query`，已落地）
+
+**范围界定**：上游 `session-query/` 有 4 个子包，本地只吃两个（且第一个只吃其中两个文件）：
+
+| 上游包 | 吃否 | 理由 |
+|---|---|---|
+| `session-query`（抽取 / 过滤 / 语料 / 游标 / 可观测性的接缝） | ✅ **部分** | 只吃 `extraction.ts`（语义文本抽取）与 `filters.ts`（字面量匹配编译）；`corpus` / `cursor` / `tracing` / `observation` 不吃 |
+| `tool-session-query`（把检索暴露成工具） | ✅ | 对应本地新工具 `search_sessions` |
+| `session-query-sqlite`（SQLite FTS 索引 + 分页游标） | ❌ | 本地不引索引：随库走的 jsonl 就是语料，纯标准库实现 |
+| `session-log-export`（导出 UI + 客户端组件） | ❌ | 导出界面，本轮不做 |
+
+**改动**（1 个新模块 + 1 个既有文件 + 1 个新测试文件）：
+
+- **新增 `services/agent/session/query.py`**（约 370 行，语义移植自 `session-query` 的 `extraction.ts` + `filters.ts`）：
+  - **语义文本抽取 `event_text()`**（query.py:125-146）：只有"第一方语义事件"贡献可检索文本 —— `user/message`→`text`、
+    `assistant/message`→`content` + 各 `tool_calls` 的 `name`/`arguments`、`tool/result`→`content`；
+    `tool/call`/`step/*`/`loop/end`（`_STRUCTURAL`，query.py:108）与**未知 type 一律空**（上游口径：未知事件不因
+    载荷里恰好有字符串就变成可检索）。**本地新增一行**：`compaction`→`summary` —— 被压缩掉的旧对话只剩这份摘要，
+    不检索它等于把那段对话从检索面抹掉（上游无该事件，属本地扩展）。
+  - **字面量匹配 `compile_text_pattern()`**（query.py:149-159）：查询被当**数据**而非可执行语法 —— 按空白切词、
+    **逐词 `re.escape`**（杜绝正则注入）、词间以 `\s+` 连接（**空白弹性**）、整条 `IGNORECASE | UNICODE`；
+    空查询抛 `SessionQueryError`。
+  - **摘要窗 `snippet()`**（query.py:162-176）：空白先折叠成单空格，取**首个匹配点前后各 `SNIPPET_WIDTH(80)` 字符**，
+    被裁剪的一侧补 `…`。
+  - **过滤子 `_Filters`**（query.py:202-227）：沿用上游「**子句间 AND、子句内取值 OR**」；本地实现
+    `types`/`time`/`seq`/`text` 四类（上游另有 `surface`，本地无"表面"概念 —— 压缩覆盖由 `history` 在回放层处理）。
+  - **有界化**（query.py:230-236、常量 93-105）：单份文件 `SESSION_QUERY_MAX_BYTES = 2 MiB`（与
+    `history.SESSION_SCAN_MAX_BYTES` 同值同意图）、跨会话扫描份数 ≤ 500、单页命中 ≤ 200；`limit=0` **合法**（返回空）；
+    负数/非整数 fail loud。
+  - **性能**：`_prefilter_ok()`（query.py:239-246）在**不解码的字节串**上做 ASCII 小写化后的逐词存在性检查，
+    全词命中才解析该文件（`bytes.lower()` 只影响 ASCII A–Z，故"判否"是安全的）；`search_sessions()` 复用
+    `list_sessions()` 已 `stat` 到的 `size`，不重复 stat。
+- `services/agent/tools/kb.py`：`KB_TOOL_NAMES` 增 `search_sessions`（kb.py:73-80）；新增
+  `_search_session_history()`（kb.py:446-482）与工具声明（kb.py:566-592，`query` 必填 / `limit` 1–20、默认 5）。
+  **命中以「会话 `<id>` 第 N 条」标识、明确不产生 `文件:行号` 锚点** —— 那是文档引用的形状，混用会让模型把
+  对话记录当成库内出处；无命中时提示「这里检索的是**历史对话**，找资料请用 `search_kb`」。全工具只读。
+- `tests/test_agent_session_query.py`（**28 例**）；`tests/test_agent_loop.py:224` 的硬编码工具清单改为
+  `list(KB_TOOL_NAMES)`（同一文件新增的不变量测试 `test_kb_tool_names_match_built_tools` 正是防这类漂移）。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **语料不同**：上游是 `ctx.sessions`（live 优先）+ SQLite FTS；本地没有 live 会话注册表、也不引索引，
+   语料就是**磁盘上的会话文件**（`list_sessions()` 已按 `modified_at` 倒序）。
+2. **排序口径改为「最近聊过的先出」**：上游按「该会话最强匹配事件」做**相关性**排序；本地没有相关度评分器
+   ⇒ 组间按 `modified_at` 倒序、组内按 `seq` 升序。已登记为偏差。
+3. **`snippet` 的窗口算法未逐字对齐**：上游只说"匹配点附近的纯文本摘录"，本地实现为前后各 80 字符 + 省略号。
+4. **不移植**：不透明游标 `SessionSearchCursor`（分批给 SQLite 分页用，本地用显式 `limit`）、
+   `lineage`/`trace`（会话谱系与事件溯源，本地无 fork/派生会话）、`tracing.ts`/`observation.ts`（宿主可观测性）。
+5. **预筛的大小写折叠只对 ASCII 成立**：非 ASCII 的大小写折叠只在解析后生效；这只影响"要不要解析该文件"的
+   性能判断，**不影响命中正确性**（预筛判否只会跳过文件，而可解析的命中必然先在字节层命中过）。
+6. **`capped` 事实不进 `search_session()` 的返回** —— 需要它的调用方用 `history.summarize_session_file()`
+   （会话列表已在用）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（新模块 + 1 改动文件） | 全过 |
+| `pytest -q` | **132 passed**（原 104 + 新增 **28** 例 `tests/test_agent_session_query.py`） |
+| 覆盖点 | 抽取规则表（语义事件取值正确；结构性/未知 type 返回空；`compaction` 取 `summary`；`tool_calls` 的 name+arguments 入文；空段被丢）；字面量匹配（正则元字符与 `\d`/`.*` 当字面量、空白弹性、大小写不敏感 + Unicode、空查询报错）；摘要窗（命中居中、两侧省略号、空白折叠）；会话内检索（按 `seq` 升序、`types` 白名单子句内 OR、`time`/`seq` 区间、**`limit=0` 返回空**、会话不存在返回空、非法 limit/会话 id 报错）；跨会话（按 `modified_at` 倒序分组、`sessions_limit` 夹紧、`hit_limit` 每会话上限、`best` = 最小 `seq`、`title`/`turn_count` 来自 `summarize_session_file`）；字节预筛（ASCII 大小写差异仍能命中）；工具面（`KB_TOOL_NAMES` 与 `build_kb_tools()` 实际工具集**逐项一致**、只读、命中写成「会话 `<id>` 第 N 条」**且不含 `文件:行号`**、空 query 报错、无命中时提示改用 `search_kb`、`limit` 生效） |
+| 依赖面 | 纯标准库，**零新依赖** |
+
+**修掉的一个真 bug**：`limit=0` 原本仍返回 1 条 —— 上限判断从 `hits.append` **之后**移到**之前**
+（query.py:286-287）；新写的 `test_search_session_respects_limit` 逮到它。
+
+**已知缺口（本轮未做）**：① **会话标题**（`session/title*` + 投影）仍是 M2 剩余项；② `session-reference`
+（跨会话引用）未吃 —— 上下文引用目前只支持 `@路径`（文件/目录），不支持引用某个会话；③ 工具面不返回 `capped`；
+④ 无相关度排序（见偏差 2）。
+
+**未实测**：真实模型端点下模型**是否会在该用 `search_sessions` 时用对**（工具选择正确性）—— 只做了静态 + 单测 +
+工具面形状核对，未调真实模型。
+
+**文档**：`reference/agent-guide/10` §2.15 新增「会话检索工具」条 + 会话事件面补 `compaction` 可检索一行 + §6/§7
+按实测重取；`conventions/docs-management.md §4.2` 登记。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -356,9 +431,9 @@ src/memoria/services/agent/
 > **降级为「没有压缩」**，不误读不崩（等价上游 `ignorable: true`）⇒ **不需要** bump
 > `SESSION_FORMAT_VERSION`、也无老会话迁移问题。详见 §6.8。
 >
-> **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、**§6.8（compaction）**。**剩余**：
-> session-query（`session-query/*` 四个包）、会话标题（`session/title*` + 投影）、
-> `compaction-tool-result-pruner`（免模型的旧工具输出裁剪）。
+> **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
+> **§6.9（session-query）**。**剩余**：会话标题（`session/title*` + 投影）、
+> `session-reference`（跨会话引用）、`compaction-tool-result-pruner`（免模型的旧工具输出裁剪）。
 
 ---
 
@@ -408,3 +483,4 @@ src/memoria/services/agent/
 | 2026-09-18 | **拍板 M2 落盘口径**：compaction 的结果**持久化进会话 JSONL**（新增记录类型，`build_history()` 回放时替换被覆盖区间），对齐上游「把摘要写进会话事件面」；**不**走「请求期变换 + cache 缓存摘要」。故 compaction 落地时会改会话格式 ⇒ 需同步 `SESSION_FORMAT_VERSION` 与老会话兼容策略（见 §8 表下注）。同轮还确立：**先补 M2 的最小一块（上下文引用）**，compaction / session-query / 标题留后 |
 | 2026-09-18 | **M2 compaction 落地**（吃 `compaction/compaction` + `compaction-basic`）：新增 `services/agent/compaction.py`（阈值/保留比例同上游 0.8/0.16、`MAX_TOKENS=8192`、8 段骨架的中文落法 + `frameSummary` + 工具配对切割点 + KV 前缀对齐的摘要调用 + fail-closed）；`session/history.py` 新增 `COMPACTION` 事件与压缩回放（原位出摘要、链式只出最新、无效记录不吞事件）；`ask.py` 加自动触发（超预算才压、**失败不打断提问**）；`loop.py` 的 `_usage_payload` 提为公开 `usage_payload`。验收：`pytest 104 passed`（+23 例 `tests/test_agent_compaction.py`）。偏差、缺口与未实测见 §6.8 |
 | 2026-09-18 | **更正**：上一条拍板笔记里「需同步 `SESSION_FORMAT_VERSION`」**不成立** —— `compaction` 是纯追加类型且三个既有读者对未知 type 一律跳过 ⇒ 旧版本读新文件只降级为「没有压缩」，不误读不崩（等价上游 `ignorable: true`）。按上游「只有结构变更才 bump」的规则，**不 bump**。已同步修 §8 表下注与 §6.8 |
+| 2026-09-19 | **M2 session-query 落地**（吃 `session-query/session-query` 的 `extraction.ts`+`filters.ts` + `session-query/tool-session-query`；**不吃** `session-query-sqlite`（不引索引）/ `session-log-export`（导出 UI））：新增 `services/agent/session/query.py`（语义文本抽取含**本地扩展**的 `compaction`→`summary`、字面量匹配的逐词转义防注入 + 空白弹性、摘要窗、`_Filters` 的「子句间 AND / 子句内 OR」、四重有界化、字节级预筛）；`tools/kb.py` 增 `search_sessions` 工具（只读，命中写成「会话 `<id>` 第 N 条」**且刻意不产生 `文件:行号` 锚点**）；新增 `tests/test_agent_session_query.py` 28 例。验收：`pytest -q` **132 passed**（原 104 + 28）；修掉一个真 bug（`limit=0` 仍返回 1 条）；零新依赖。偏差（语料无 live/SQLite 索引、排序由相关性改为 `modified_at` 倒序、`snippet` 窗口未逐字对齐、不移植游标/谱系/可观测性）、缺口与未实测见 §6.9 |

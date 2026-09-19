@@ -47,6 +47,7 @@ from memoria.services.agent.session.store import SessionStore, new_session_id, r
 from memoria.services.agent.tools import (
     DENIED_CODE,
     INVALID_ARGUMENTS_CODE,
+    KB_TOOL_NAMES,
     UNKNOWN_TOOL_CODE,
     Tool,
     ToolOutput,
@@ -219,13 +220,8 @@ def test_loop_answers_without_tools(kb: Path) -> None:
     assert result.usage.total == 15
     sent = provider.requests[0]
     assert sent.model == "fake-model"
-    assert [tool.name for tool in sent.tools] == [
-        "search_kb",
-        "read_document",
-        "read_kp",
-        "kb_overview",
-        "validate_kb",
-    ]
+    # 与工具集清单同源（原来这里是硬编码的五个名字，新增工具时会漂移）
+    assert [tool.name for tool in sent.tools] == list(KB_TOOL_NAMES)
     assert sent.messages[-1].content == "这是什么？"
 
 
