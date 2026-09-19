@@ -86,7 +86,7 @@
 | 项 | 事实（已核实 2026-09-17） | 处置 |
 |---|---|---|
 | 自身 `LICENSE` | **已有**：MIT，`Copyright (c) 2026 FreshTim`（`730f9a8a Initial commit`，1085 字节） | ✅ 无需新建（P7 因此作废）；若要把署名统一成 `Fresh-Tim-Lam` 可自行改 |
-| `THIRD_PARTY_NOTICES.md` | **缺失**（`NOTICE` / `NOTICE.md` / `COPYING` 亦均无） | ⚠️ 需新增：登记 `dsh`（**MIT 原文逐字保留** + pin commit + 与 npm 包字段 `BSD-3-Clause` 的差异说明），之后每移植一块追加条目 |
+| `THIRD_PARTY_NOTICES.md` | ✅ **已新增（2026-09-19）**：仓库根（该文件名在 [directory-organization.md §1](../conventions/directory-organization.md) 的根目录白名单内）。含 dsh 的 **MIT 原文逐字** + pin `0d1f5000…` + npm 字段 `BSD-3-Clause` 差异说明 + **逐块移植落点表**（本地路径 ↔ 上游包）+ 未移植清单 | 之后每移植一块追加条目 |
 | `pyproject.toml` 许可声明 | 未声明 `license` 字段 | 可选：补 `license = "MIT"`（与 `LICENSE` 一致） |
 
 ---
@@ -106,7 +106,7 @@
 | `session/session-persistence` + `-jsonl` + `session-format` | 158 ts（整组） | 会话持久化（jsonl）+ 格式定义 | ✅ 吃**当前格式**（迁移链 `v0→v3` ❌ 不吃） | `services/agent/session/store.py` | **M1** |
 | `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ✅ 吃**标题**（`session-title` + `-llm` + `-first-prompt-llm`，§6.11；`-all-prompts` ❌）；投影框架 / 统计 ⏳；**telemetry（OTel）❌ 不吃** | `services/agent/title.py` | **M2** |
 | `context/agent-instructions` | 39 ts | 工作区指令文件 → 上下文（**只加上下文、不加工具**） | ✅ 吃 | 对接既有 `.memoria/agent/kb-spec*.md` | **M1** |
-| `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ⏳ 引用类 M2；tmux ❌ | — | M2 |
+| `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ✅ 吃文件引用（§6.7）与会话引用（§6.12）；`time-context` ⏳、tmux ❌ | `services/agent/prompt.py`、`services/agent/session/reference.py` | **M2** |
 | `interaction/user-approval` · `tool-ask-user` | 24 ts | 一次性审批、向用户提问（fail-closed） | ✅ 吃最小面 | `services/agent/approvals.py` | **M1** |
 | `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M2/M3 | 前端指令 | M2 |
 | `credentials/credentials-local` | 19 ts | 本地密钥**引用**（配置写名不写值） | ✅ 吃 | `services/agent/credentials.py` | **M1** |
@@ -570,6 +570,82 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 
 **文档**：见 §11 对应行。
 
+### 6.12 M2 收尾实施记录（2026-09-19：吃 `context/session-reference`，已落地）
+
+**范围界定（先读上游四文件才动手）**：`context/session-reference` 上游有 7 个源文件，本地只吃三块的**语义**，
+`spill.ts` 明确不吃（见下）：
+
+| 上游文件 | 吃否 | 理由 |
+|---|---|---|
+| `src/uri.ts`（URI 编解码 / mention 格式化与解析） | ✅ | 语法与规范化规则的唯一事实源 |
+| `src/projection.ts`（当前表层投影 + 字节预算保留） | ✅ | 只投影 user/assistant 文本、先丢较早消息再截断 |
+| `src/serialization.ts`（标签安全 JSON） | ✅ | `<` → `\u003c`，源文本拼不出定界标签 |
+| `src/spill.ts`（完整 transcript 落盘 + 省略通知） | ❌ | 本地无 spill 存储；截断/放弃时**只**出省略通知并写明"未保存" |
+| `src/index.ts` / `config.ts` / `types.ts`（服务监听器 / 配置 schema / 类型） | ⚠️ 部分 | 只取"规范化 + 准备 + 渲染"这条纯函数链；**pre-step 监听器**不移植（本地是同步 `ask()`，没有 agent 事件总线） |
+
+**改动**（1 个新模块 + 3 个既有文件 + 1 个新测试文件 + 前端 4 个文件）：
+
+- **新增 `services/agent/session/reference.py`**（语义移植自 `uri.ts` + `projection.ts` + `serialization.ts`）：
+  - `SESSION_REFERENCE_SCHEME = "dsh-session:"`；`encode_session_uri()` = scheme + `base64url(JSON.dumps(id))`（无填充）
+    ⇒ **任何字符串 id 都能精确往返**；`decode_session_uri()` 只收规范输入（错 scheme / payload 不匹配
+    `^[A-Za-z0-9_-]+$` / 解出不是 JSON 字符串 / **重编码与原串不逐字节相等** ⇒ `SessionReferenceError`）；
+  - `format_session_mention()`（label 里 `\` 与 `]` 转义）、`parse_session_references()`（正则与上游 `uri.ts:71` 逐字一致：
+    **显式 Markdown mention 格式错误即报错**；裸 token 只在 payload 为非空 base64url 形状时才当引用，随后仍按规范化校验）；
+  - `list_candidates()`：排除调用方自己、对 id/标题做不区分大小写过滤、**最近修改在前**（本地每库一份会话 ⇒ 上游"按 cwd 亲和度排序"退化为"同库"）；
+  - `build_snapshot()`：去重（保首次顺序）、**拒绝自引用**、`max_references ≤ 3`；逐来源经 `conversation_messages()` 投影后
+    按字节预算保留（**先丢较早消息、再头尾截断**）、`<` 逃逸、渲染 `## 引用的会话` + 固定警告 +
+    `<referenced-sessions>` + 省略通知 `<referenced-session-omissions>`。
+- `services/agent/session/__init__.py`：导出新增的 10 个公开名（常量 / 异常 / 8 个函数）。
+- `services/agent/ask.py`：`session.append("user/message")` **之前**解析 mention 并建快照；`loop.run()` 收
+  `rendered_text + "\n\n" + snapshot`，**JSONL 只落 `rendered_text`**（见下偏差 1）。
+- 前端：`js/agent-panel.js` 末尾追加块（会话 URI 编解码 / chip 渲染包装 `linkifyUser` / 历史行「引用」按钮
+  + 被引用高亮 / document 级点击委托）；`css/app.css` 末尾追加样式块；`i18n/{zh-CN,en}.js` 末尾各追加 3 键。
+- `tests/test_agent_session_reference.py`（**33 例**）。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **不落盘快照**（最重要的一条）：上游把快照作为**第二条 user 消息**持久化进目标会话，使"捕获后的源变更无法改变回放"；
+   本地只在 `loop.run()` 的请求里追加，JSONL 里仍是**可读的 `@label` 原文**。**理由**：本地会话文件同时是
+   **读取路径的事实源** —— `agent_sessions_list` 以 2 MiB 上限做原始行扫描（去读放大）、`agent_session_load`
+   直接把它回放成渲染视图；把几十 KiB 的不受信背景写进去会污染渲染视图、推高扫描成本，也让"列表预览/标题"不再干净。
+   **代价**：目标会话的后续轮次不会自动重放该快照（上游会）⇒ **重新 mention 即重新附带**，这就是本地的"重新挂载"方式。
+2. **不移植 spill 存储**：上游把被截断引用的完整 transcript 存进 spill 后端并给出 `retrievalHint`；本地无此设施 ⇒
+   省略通知里写 `spill: "unavailable"` 并**显式说明"完整 transcript 未保存，被省略内容无法取回"**（不含检索提示）。
+3. **投影口径本地化**：上游逐 `assistant/message` 投影并识别 compaction checkpoint；本地用 `conversation_messages()`
+   （**每轮一条最终 assistant 气泡 + user 文本**，不含工具）⇒ ① 同一轮的多条中间 assistant 不逐个进快照；
+   ② 本地 `compaction` 摘要是"回放期在原位补一条 user 消息"，**`conversation_messages()` 不应用压缩覆盖**，
+   故源会话的摘要不进快照、**也没有 checkpoint 概念** ⇒ 保留策略退化为"先丢最旧消息"（上游会跳过 checkpoint）。
+4. **来源放不下时放弃该来源、记 `unavailable`**（上游让整次 preparation 失败）：本地是用户面向的问答入口，
+   不值得因某个被引用会话过大而整轮失败；实现上"空信封都装不下"才算放弃（头尾截断几乎总能压进预算）。
+5. `cwd` / `capturedThroughSeq` 恒为 `null`：本地无 per-session 工作目录、也没有"冻结到某 seq"的捕获概念
+   （字段保留上游形状，值如实为 null）。
+6. **无自动字节预算**：上游按 `max(65536, floor(contextWindow × 4 × referenceContextFraction))` 估算；本地固定
+   `REFERENCE_MAX_BYTES = 65536`（无路由/容量元数据），`max_references` 默认 3 且越限报错。
+7. **无 pre-step 监听器 / 无投影框架 / 无游标与谱系**：本地只保留纯函数链，`ask()` 直接调用。
+8. **前端是本地新增**：上游把候选发现与 mention 插入交给宿主编辑器（`ctx.remote.sessionReferenceResolver`），
+   本地没有这层 ⇒ 最小入口 = 左栏「历史」行内「引用」按钮（插 token、**不切会话**）+ 用户气泡里的会话 chip
+   （点击切到「历史」页签并高亮该行、**不载入**该会话）。
+9. **解析失败会向上抛**：显式 Markdown mention 的 URI 格式错误（或裸候选非规范）在 `parse_session_references()`
+   即 `SessionReferenceError`；`ask()` **未拦截**（对齐上游"格式错误即失败"），是本地的一处已知易踩点。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（新模块 + `session/__init__.py` + `ask.py` + 新测试） | 全过 |
+| `pytest tests/ -q` | **245 passed**（本轮新增 **33** 例 `tests/test_agent_session_reference.py`） |
+| `node --check`（`agent-panel.js` / `zh-CN.js` / `en.js`） | 3/3 通过 |
+| `node scripts/i18n_selftest.js` | **12/12 PASS** |
+| `python scripts/scan_ui_strings.py` | `files=3 rows=5`（**无新增硬编码候选**） |
+| `(Get-Item docs\todo.md).Length` | 见 §11 本轮行（≤ 36864） |
+| 依赖面 | 纯标准库 / 纯浏览器原生 API，**零新依赖** |
+
+**未实测**：① **浏览器交互**（本轮会话**没有浏览器工具**，无法执行"点引用→输入框出现 token→发送→chip 渲染→点 chip 切页签"
+的端到端步骤；仅有单测与静态检查）；② 真实模型端点下"引用背景"的实际引导效果与 token 影响；③ 源会话含压缩/裁剪事件时
+快照的具体取舍观感。
+
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`docs/todo.md §13` **AG03** 改写为完成态；本节。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -599,8 +675,8 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 > `SESSION_FORMAT_VERSION`、也无老会话迁移问题。详见 §6.8。
 >
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
-> §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、**§6.11（会话标题）**。
-> **剩余**：`session-reference`（跨会话引用 —— 本地目前只支持 `@路径`，且没有产生会话引用的入口）。
+> §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、§6.11（会话标题）、
+> **§6.12（跨会话引用 `context/session-reference`）**。**M2 已全部落地**；下一阶段为 M3 写能力。
 
 ---
 
@@ -627,7 +703,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | **P4** | 出网开关粒度 | ① 全局开关 + 端点配置（推荐，M1 够用）② per-KB 开关 ③ 全局 + per-KB | 决定设置面板与隐私边界 |
 | **P5** | 是否复刻 `interaction/commands`（slash 命令） | ① M1 不做（推荐）② 做最小 `/clear` `/compact` | 决定前端工作量 |
 | **P6** | 是否同步修订 `AGENTS.md` / `kb-agent.md` 的边界措辞（产品内 Agent ≠ 仓库协作 Agent） | ① 修订（推荐，避免后续误读 RISC 条款）② 只在本文说明 | 决定契约文件改动 |
-| **P7** | 自身 `LICENSE` 选哪个 | ✅ **已作废（2026-09-17）**：`LICENSE` 本就是 MIT（署名 `FreshTim`）⇒ 无需选择/新建；本条实际只剩**新增 `THIRD_PARTY_NOTICES.md`**（登记 dsh 的 MIT 原文 + pin `0d1f5000` + npm 字段 `BSD-3-Clause` 差异） | 关闭 §4.3 剩余缺口 |
+| **P7** | 自身 `LICENSE` 选哪个 | ✅ **已作废（2026-09-17）**：`LICENSE` 本就是 MIT（署名 `FreshTim`）⇒ 无需选择/新建；本条实际只剩**新增 `THIRD_PARTY_NOTICES.md`**（登记 dsh 的 MIT 原文 + pin `0d1f5000` + npm 字段 `BSD-3-Clause` 差异）—— **✅ 已于 2026-09-19 完成**（根目录，另含逐块移植落点表） | §4.3 剩余缺口**已关闭** |
 
 > **P4–P6 默认执行口径（2026-09-17，未另问）**：**P4** = 全局出网开关 + 端点配置（M1 够用，per-KB 留到 M3）；**P5** = M1 不做 slash 命令；**P6** = 建议修订措辞（见下方待人工改动）。
 >
@@ -653,3 +729,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-19 | **M2 session-query 落地**（吃 `session-query/session-query` 的 `extraction.ts`+`filters.ts` + `session-query/tool-session-query`；**不吃** `session-query-sqlite`（不引索引）/ `session-log-export`（导出 UI））：新增 `services/agent/session/query.py`（语义文本抽取含**本地扩展**的 `compaction`→`summary`、字面量匹配的逐词转义防注入 + 空白弹性、摘要窗、`_Filters` 的「子句间 AND / 子句内 OR」、四重有界化、字节级预筛）；`tools/kb.py` 增 `search_sessions` 工具（只读，命中写成「会话 `<id>` 第 N 条」**且刻意不产生 `文件:行号` 锚点**）；新增 `tests/test_agent_session_query.py` 28 例。验收：`pytest -q` **132 passed**（原 104 + 28）；修掉一个真 bug（`limit=0` 仍返回 1 条）；零新依赖。偏差（语料无 live/SQLite 索引、排序由相关性改为 `modified_at` 倒序、`snippet` 窗口未逐字对齐、不移植游标/谱系/可观测性）、缺口与未实测见 §6.9 |
 | 2026-09-19 | **M2 工具结果裁剪落地**（吃 `compaction/compaction-tool-result-pruner` —— §6.8 曾登记为「留后」，本轮补上）：新增 `services/agent/pruner.py`（`PRUNE_MARKER` 逐字照抄、阈值/头/尾 = 8192/4096/1024 同上游、`PruneBudgets` 构造期校验保证**永不增长**、`prune_text`/`apply_budget`/`applied_chars`/`prune_plan`/`prune_records`/`prune_applied`）；`session/history.py` 新增事件表行 + 「工具结果裁剪回放」小节（`_tool_message`/`_replay`/`replay_events` 接裁剪表、`build_history` 自动应用、新增 `compaction_shadowed()`）；`compaction.py` 的 `event_chars`/`select_span` 新增 `effective_chars`（按**有效视图**计账，避免高估尾部）；`ask._compact_if_needed()` 改为**先裁、再压**（裁完够用即**免掉**一次摘要调用，仍是超则摘要器读裁剪视图），返回值语义放宽为「是否落了事件」。**落盘**：一条 `compaction/prune`（`{pruned:[{seq,id,chars_before,chars_after,head,tail}], chars_removed}`），回放期**就地**重建 —— 不像上游那样追加替换 `tool/result`（同一 `tool_call_id` 两条工具消息会被端点 400）。验收：`pytest -q` **153 passed**（原 132 + 21 例 `tests/test_agent_pruner.py`）；零新依赖。偏差（纯字符串内容模型、不移植影子定价/`surfaceOp`、检索仍走原文、字符非 token 预算）、缺口与未实测见 §6.10；§8「M2 剩余」同步更新 |
 | 2026-09-19 | **M2 会话标题落地**（吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`；**不吃** `all-prompts`（每轮一次调用不值）/ 投影框架 / `session/title-llm-request` 预派发记录 / `rename()`）：新增 `services/agent/title.py`（`session/title` **log-only** 事件；来源最新者胜：`fallback` 确定性兜底 = 首条人类消息前 8 词 / 96 字节、`provider` 模型标题、`user` 改名未移植；规范化照搬上游（OSC/CSI/ESC 序列、C0-C1、方向与隐形字符、空白折叠、**按 UTF-8 字节截断不切开码点**）；限额 8/96/120 + 调用策略 `maxInputBytes=32768` / `maxOutputTokens=96` / `timeout=20s`；`generate_title()` **fail-closed**（非 `stop` 的终止原因一律拒）；`auto_title()` = `first-prompt` 节律）；`history.py` 的 `summarize_events`/`summarize_session_file` 都改为**优先取折叠标题**（原始行扫描只对最后一个命中行解码，与折叠同口径）；`ask()` 两步接进（追加提问后落兜底、主回合后跑首轮一次的模型标题、**被取消的轮次跳过**、两步都 fail-open）；**顺带修掉"做完也看不见"**——前端 `#agent-history` 下拉标签由 `preview` 改为 `title || preview`（后端 `title` 字段此前从未被前端使用）。验收：`pytest -q` **184 passed**（原 153 + 31 例 `tests/test_agent_title.py`；`test_agent_history.py` 一处断言随之更新）；**浏览器实测**（harness 端口 8645、临时库 + 手写 `session/title`、不需要模型）：`agent_sessions_list.title = "多层感知机的要点"`、下拉选项文本 `多层感知机的要点（1 轮）`。偏差（**本地无异步服务 ⇒ 标题调用排在主回合之后**、仅首轮一次；被取消轮次不生成；用量记进事件但不进 benchmark）、缺口与未实测见 §6.11；§5 映射表与 §8「M2 剩余」同步更新 |
+| 2026-09-19 | **M2 跨会话引用落地**（吃 `context/session-reference` 的 `uri.ts` + `projection.ts` + `serialization.ts`；**不吃** `spill.ts`（无存储 ⇒ 省略通知写明"未保存"）/ pre-step 监听器 / 投影框架）：新增 `services/agent/session/reference.py`（`dsh-session:` URI 规范化编解码、mention 格式化与解析、`list_candidates`、字节预算快照 + `<`→`\u003c` 逃逸 + 省略通知）；`ask()` 把快照**只**加进本轮 `loop.run()`（**JSONL 仍落干净 `@label`**，见 §6.12 偏差 1）；前端历史行「引用」按钮 + 用户气泡会话 chip（点击切「历史」页签并高亮）。验收：`pytest -q` **245 passed**（原 212 + 33 例 `tests/test_agent_session_reference.py`）；`node --check` 3 文件、`i18n_selftest` 12/12、`scan_ui_strings` rows=5 无新增；**浏览器交互未实测**（本轮无浏览器工具）。偏差、缺口与未实测见 §6.12；§5 映射表与 §8「M2 剩余」同步更新，**M2 至此全部落地** |

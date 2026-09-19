@@ -1,33 +1,39 @@
-# 第三方声明（Third-Party Notices）
+# THIRD PARTY NOTICES
 
-> **用途**：登记 Memoria 中包含或**派生于**第三方代码的部分及其许可与版权声明。
-> **规则**：① 每引入/移植一块第三方代码，必须在此追加条目（来源仓库 + **pin 的 commit** + 许可 + 移植了什么）；② 相应源文件头部必须带来源注释；③ 许可原文**逐字保留**，不得改写或翻译；④ 若同一上游存在多处许可声明不一致，按**最严格者**处理。
-> **本仓库自身许可**：MIT —— 见 [LICENSE](./LICENSE)（`Copyright (c) 2026 FreshTim`）。
+本仓库包含（或移植自）第三方开源软件的代码与语义。逐条登记如下；**每移植一块上游代码，在此追加一条**
+（登记约定见 [docs/design/dsh-agent-port.md](docs/design/dsh-agent-port.md) §4）。
 
 ---
 
-## 1. DeepSeek Harness（`dsh`）
+## deepseek-harness（`dsh`）
 
-| 项 | 值 |
+- 上游：<https://github.com/deepseek-ai/deepseek-harness>
+- 本仓库跟随的 commit：**`0d1f50007f9bca3f52b06e1c3074fa14d5fb0720`**（`master`，2026-09-15T03:16:06Z；
+  本文写作时 = pin `0d1f5000`）
+- 上游仓库 `LICENSE`：**MIT**（原文见下）。注意：npm 包 `@deepseek-ai/dsh` 的 `license` 字段标为
+  `BSD-3-Clause`，与仓库根 `LICENSE` 不一致；本仓库按**仓库 `LICENSE` = MIT** 处理，且只在
+  "语义移植（按上游行为重写为 Python / 原生 JS）" 的范围内使用，不整体搬运 npm 产物。
+
+### 移植落点（本地 → 上游包）
+
+| 本地 | 上游包 |
 |---|---|
-| 来源仓库 | <https://github.com/deepseek-ai/deepseek-harness> |
-| 锁定版本 | commit `0d1f50007f9bca3f52b06e1c3074fa14d5fb0720`（`master`，2026-09-15T03:16:06Z） |
-| 上游仓库许可 | **MIT**（仓库根 `LICENSE`，`Copyright (c) 2026 DeepSeek`）—— 原文见 §1.2 |
-| 包元数据许可 | npm `@deepseek-ai/dsh` 的 `license` 字段声明 **BSD-3-Clause**；PyPI `deepseek-harness-sdk` 声明 MIT ⇒ 两处不一致，故**并行遵守 BSD-3-Clause 的额外要求**（§1.3） |
-| 使用方式 | **语义移植（Python 重写）**，非逐行复制；**不包含**上游品牌资产（logo、`BRAND_GUIDELINES*`） |
-| 不背书声明 | 本项目与 DeepSeek 无隶属或合作关系；不使用 `DeepSeek` / `dsh` 的名义为 Memoria 或其派生作品做背书或推广 |
+| `src/memoria/services/agent/llm/**`（含 `providers/openai_compatible.py`、`retry.py`、`usage.py`） | `llm/llm`、`llm/llm-pi-ai`（OpenAI 兼容形态）、`llm/llm-retry`、`llm/token-meter` |
+| `src/memoria/services/agent/loop.py` | `core/agent-loop` |
+| `src/memoria/services/agent/prompt.py` | `core/system-prompt`、`context/agent-instructions`、`context/file-reference` |
+| `src/memoria/services/agent/tools/**` | `core/tools` |
+| `src/memoria/services/agent/session/**`（`store.py`、`history.py`、`query.py`、`title.py`、`reference.py`） | `core/session`、`core/scope`、`session/session-persistence-jsonl`、`session-query/*`、`session-title*`、`context/session-reference` |
+| `src/memoria/services/agent/approvals.py` | `interaction/user-approval` |
+| `src/memoria/services/agent/llm/config.py`（密钥"引用不落明文"部分） | `credentials/credentials-local` |
+| `src/memoria/services/agent/compaction.py`、`pruner.py` | `compaction/compaction`、`compaction-basic`、`compaction-tool-result-pruner` |
+| `src/memoria/ui/static/app/js/agent-panel.js` 中的 `@路径` / `dsh-session:` mention 语义 | `context/file-reference`、`context/session-reference`（`uri.ts`） |
 
-### 1.1 已移植清单
+**未移植**：`api/*`、`sdk/*`、`bundle/*`、`sandbox/*`、`shell/*`、`terminal/*`、`subprocess/*`、`ssh/*`、
+`lsp/*`、`mcp/*`、`browser-use/*`、`computer-use/*`、`subagent/*`、`workflow/*`、`jobs/*`、`schedule/*`、
+`native/*`、`skill/*`、`hooks/*`、`guard/*`、`plan/*`、`goal/*`、`todo/*`（逐条理由见
+[docs/design/dsh-agent-port.md](docs/design/dsh-agent-port.md) §5）。
 
-| 上游路径 | 本地落点 | 阶段 | 移植内容 |
-|---|---|---|---|
-| `packages/llm/llm` | `src/memoria/services/agent/llm/` | M1 | provider 中立的模型调用语义（请求 / 流式 / 用量 / 取消） |
-| `packages/llm/llm-pi-ai`（仅 OpenAI 兼容部分） | `src/memoria/services/agent/llm/providers/openai_compatible.py` | M1 | OpenAI 兼容端点适配 |
-| `packages/llm/llm-retry` | `src/memoria/services/agent/llm/retry.py` | M1 | 重试 / 退避语义 |
-| `packages/llm/token-meter` | `src/memoria/services/agent/llm/usage.py` | M1 | 用量计量语义 |
-| `packages/core/*`、`packages/session/*`、`packages/context/*`、`packages/interaction/*`、`packages/credentials/*` | 待定（见 `docs/design/dsh-agent-port.md` §5–§6） | M1 后续 | 每吃一块在此追加一行 |
-
-### 1.2 上游许可原文（MIT，逐字保留）
+### 上游许可证原文（MIT，逐字保留）
 
 ```
 MIT License
@@ -53,29 +59,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### 1.3 BSD-3-Clause 额外要求（因 npm 字段声明而并行遵守）
-
-> Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-（即：不得用 `DeepSeek` 或其贡献者的名义为 Memoria 或派生作品背书或推广。）
-
 ---
 
-## 2. 其它第三方组件（待补）
+## 第三方运行时（随包分发，非源码移植）
 
-| 组件 | 许可 | 位置 | 备注 |
-|---|---|---|---|
-| MathJax | 待核 | `src/memoria/ui/static/vendor/mathjax/**` | 前端公式渲染 |
-| mermaid | 待核 | `src/memoria/ui/static/app/vendor/mermaid.min.js` | 图表渲染 |
-| three.js | 待核 | `src/memoria/ui/static/app/lib/three.min.js` | 3D 图谱 |
-| Python 依赖（`requirements.txt`） | 待核 | `requirements.txt` | 各自许可需登记 |
-
-> 本节为既有组件的补登记清单，非本次移植引入；核对后逐行补全（含各许可原文或指向其分发页的链接）。
-
----
-
-## 变更记录
-
-| 日期 | 变更 |
-|---|---|
-| 2026-09-17 | 初版：登记 DeepSeek Harness（pin `0d1f5000`；MIT 原文逐字保留；npm 字段 `BSD-3-Clause` 差异说明与并行遵守条款；已移植清单）；建立"其它第三方组件"待补表 |
+| 组件 | 许可 | 说明 |
+|---|---|---|
+| MathJax（`src/memoria/ui/static/vendor/mathjax/**`） | Apache-2.0 | 预览区公式渲染 |
+| marked / mermaid 等 `vendor/**` 前端库 | 见各目录随附文件 | 预览与图谱渲染 |

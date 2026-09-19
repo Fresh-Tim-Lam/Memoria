@@ -5409,3 +5409,35 @@ html *::-webkit-scrollbar-thumb:active {
 .-agent-composer-actions {
     justify-content: flex-end;
 }
+
+/* ===== 跨会话引用（M2 收尾，2026-09-19）========================================
+   ① 用户气泡里的会话 chip：与文件 `.-agent-mention` 同族（复用其外形），叠 `--session` 用
+      主题色边框 + `--accent-soft` 底，和「拖进来的文件」一眼区分；点击 = 切左栏「历史」页签
+      并高亮那一行（由 `agent-panel.js` 的 document 委托处理，这里只管外观）。
+   ② 历史行内「引用」动作：形状沿用 `.-hist-del`，但**常显**（是正向动作，不该藏在 hover 里）；
+      进入被引用高亮（`--referenced`）时给整行一圈主题色内描边，与「当前」的左侧色线区分。
+   本块**末尾追加**（在发送按钮块之后）⇒ 既有行号锚点零漂移。 */
+.-agent-mention--session {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--text-primary);
+}
+.-hist-quote {
+    flex: 0 0 auto;
+    height: 1.25rem;
+    padding: 0 6px;
+    font-family: inherit;
+    font-size: 0.6875rem;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.-hist-quote:hover { color: var(--theme-color); border-color: var(--theme-color); }
+.-hist-row--referenced {
+    background: var(--accent-soft);
+    box-shadow: inset 0 0 0 2px var(--accent);
+    border-radius: 3px;
+}

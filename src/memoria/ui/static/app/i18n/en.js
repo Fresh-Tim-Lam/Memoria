@@ -1352,4 +1352,15 @@
   Object.assign(g.MEMORIA_LOCALES["en"].agent.statusBar, {
     hitRate: "Cache hit {rate}",
   });
+
+  // ===== appended 2026-09-19: cross-session references (M2 wrap-up, `session-reference`) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every
+  // `en.js:<line>` anchor in the docs keeps pointing at the same declaration.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.mention, {
+    sessionTitle: "Session reference “{id}”: click to open the History tab and highlight it",
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.historyList, {
+    quote: "Quote",
+    quoteTitle: "Insert a reference to this session (does not switch sessions)",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

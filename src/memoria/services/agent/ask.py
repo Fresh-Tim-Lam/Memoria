@@ -90,6 +90,7 @@ from memoria.services.agent.session.history import (
     conversation_events,
     replay_events,
 )
+from memoria.services.agent.session.reference import build_snapshot, parse_session_references
 from memoria.services.agent.session.store import SessionStore, new_session_id, session_file
 from memoria.services.agent.tools.kb import DEFAULT_TOP_K, build_kb_tools
 from memoria.services.agent.tools.registry import ToolRegistry
@@ -388,7 +389,16 @@ def ask(
     ):
         # 裁剪/压缩已落盘 ⇒ 重新回放，让本轮请求用上裁剪与摘要视图（被覆盖区间不再逐字重发）
         history = build_history(root, session.session_id)
-    session.append("user/message", {"text": text})
+    # 跨会话引用（M2 收尾）：mention 改写为可读 `@label`，快照**只**进本轮 `loop.run()` 的请求。
+    # 有意偏差：上游把快照作为**第二条 user 消息**持久化进目标会话；本地会话文件同时是读取路径的
+    # 事实源（`agent_sessions_list` 以 2 MiB 上限做原始行扫描、`agent_session_load` 直接回放成渲染
+    # 视图），故 JSONL 里只留干净的 `@label` 原文，不受信背景不落盘（标题生成/日志也因此拿不到它）。
+    # 用户**再次 mention** 即可重新附带该会话 —— 这就是本地"重新挂载"的方式。
+    rendered_text, references = parse_session_references(text)
+    snapshot = (
+        build_snapshot(root, references, exclude_session_id=session.session_id) if references else None
+    )
+    session.append("user/message", {"text": rendered_text})
     # 标题（M2）第 1 步：兜底标题 —— 零成本、零模型调用，先落一条（对齐上游 onUserMessage 的节律）
     _append_fallback_title(root, session)
     loop = build_loop(
@@ -408,7 +418,8 @@ def ask(
         on_text=on_text,
         cancel=cancel,
     )
-    result: LoopResult = loop.run(text, messages=history)
+    prompt = rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot
+    result: LoopResult = loop.run(prompt, messages=history)
     session.flush()
     # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过
     _maybe_generate_title(

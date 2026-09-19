@@ -2359,6 +2359,186 @@ window.MemoriaAgentPanel = (function () {
   const histDockBtn = document.getElementById("agent-history-open");
   if (histDockBtn) histDockBtn.addEventListener("click", showHistoryTab);
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 跨会话引用（M2 收尾；语义移植自 dsh `packages/context/session-reference` 的 `uri.ts`）
+  // ① 左栏「历史」每行加「引用」动作：把 `@[标题](dsh-session:<id>) ` 插到输入框（**不切会话**）；
+  // ② 用户气泡里该 token 渲染成会话 chip（`data-agent-session`）：点它 = 切到「历史」页签并高亮
+  //    那一行（**不载入**该会话 —— 载入仍由点条目本身负责）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // `linkifyUser` / `renderHistoryList` 都是「包一层」，不改其内部实现或行数。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  const SESSION_URI_PREFIX = "dsh-session:";
+  // 与后端 `reference.py::_MENTION_RE`（及上游 `uri.ts:71`）同一形状：
+  // 组 1 = Markdown label、组 2 = Markdown URI、组 3 = 裸 URI。
+  const SESSION_MENTION_RE = /@\[((?:\\.|[^\\\]])*)\]\((dsh-session:[^\s)]*)\)|(dsh-session:[A-Za-z0-9_-]+)/g;
+  // 被点中的会话行 id（重绘时保留高亮；空 = 无）。
+  let histFlashId = "";
+
+  /** 会话 id → 规范 URI（`base64url(JSON.stringify(id))`，无填充），与后端 `encode_session_uri` 逐字节一致。 */
+  function sessionUri(id) {
+    const bytes = new TextEncoder().encode(JSON.stringify(String(id == null ? "" : id)));
+    let bin = "";
+    for (let i = 0; i < bytes.length; i += 1) bin += String.fromCharCode(bytes[i]);
+    return SESSION_URI_PREFIX + btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  /** 规范 URI → 会话 id；非规范/解不出字符串返回 null（渲染期**绝不抛错**，退回纯文本）。 */
+  function decodeSessionUri(uri) {
+    const raw = String(uri || "");
+    if (raw.indexOf(SESSION_URI_PREFIX) !== 0) return null;
+    const payload = raw.slice(SESSION_URI_PREFIX.length);
+    if (!/^[A-Za-z0-9_-]+$/.test(payload)) return null;
+    try {
+      let b64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      const bin = atob(b64);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i += 1) bytes[i] = bin.charCodeAt(i);
+      const parsed = JSON.parse(new TextDecoder().decode(bytes));
+      return typeof parsed === "string" ? parsed : null;
+    } catch (_err) {
+      return null;
+    }
+  }
+
+  /** `@[标题](uri)` token；label 里的 `\` 与 `]` 按上游口径转义（与后端 `format_session_mention` 同口径）。 */
+  function formatSessionMentionToken(id, label) {
+    const text = String(label == null || label === "" ? id : label);
+    return "@[" + text.replace(/[\\\]]/g, function (m) { return "\\" + m; }) + "](" + sessionUri(id) + ")";
+  }
+
+  /** 会话 chip（与文件 `-agent-mention` 同族，叠 `--session` 区分；点击委托见下方 document 监听）。 */
+  function sessionChip(id, label) {
+    return (
+      '<span class="-agent-mention -agent-mention--session" role="link" tabindex="0" title="' +
+      esc(T("agent.mention.sessionTitle", { id: id })) +
+      '" data-agent-session="' +
+      esc(id) +
+      '">@' +
+      esc(label) +
+      "</span>"
+    );
+  }
+
+  /** 会话 mention 先于文件 `@路径` 解析：命中段直接出 chip，其余段交给原 `linkifyUser`。 */
+  const baseLinkifyUser = linkifyUser;
+  linkifyUser = function (text) {
+    const raw = String(text == null ? "" : text);
+    let out = "";
+    let last = 0;
+    for (const m of raw.matchAll(SESSION_MENTION_RE)) {
+      const uri = m[2] !== undefined ? m[2] : m[3];
+      const id = decodeSessionUri(uri);
+      if (id === null) continue; // 非规范 URI：当普通文本，交给原 linkifyUser 处理
+      const label = m[1] === undefined ? id : m[1].replace(/\\(.)/g, "$1");
+      out += baseLinkifyUser(raw.slice(last, m.index));
+      out += sessionChip(id, label);
+      last = m.index + m[0].length;
+    }
+    out += baseLinkifyUser(raw.slice(last));
+    return out;
+  };
+
+  /** 历史数据行（按 id 找 `historyRows` 里那条，供「引用」按钮取标题）。 */
+  function histDataRow(id) {
+    for (let i = 0; i < historyRows.length; i += 1) {
+      if (String((historyRows[i] || {}).session_id || "") === id) return historyRows[i];
+    }
+    return null;
+  }
+
+  /** 把一段 token 插到输入框的上次光标位置（与上方 `insertMention` 同一套规则）。
+   *  ⚠️ 这里**刻意重复**那 10 行而不是把 `insertMention` 抽出一个共用函数：本轮新增代码一律落在
+   *  本追加块内，才能保住上方所有 `<文件>:<行号>` 锚点零漂移（那是本篇与 01/10 篇的取证底座）。 */
+  function insertSessionToken(token) {
+    const input = $("#agent-input");
+    if (!input || !token) return;
+    const len = input.value.length;
+    const pos = Number.isInteger(inputCaret) ? Math.max(0, Math.min(inputCaret, len)) : len;
+    const before = input.value.slice(0, pos);
+    const after = input.value.slice(pos);
+    const ins = (before && !/\s$/.test(before) ? " " : "") + token + (after && /^\s/.test(after) ? "" : " ");
+    input.value = before + ins + after;
+    const caret = pos + ins.length;
+    input.focus();
+    try {
+      input.setSelectionRange(caret, caret);
+    } catch (_err) {
+      // 非文本控件/不支持选区的宿主：忽略，至少内容已插入
+    }
+    inputCaret = caret;
+  }
+
+  /** 把会话 mention 插到输入框（**不切换当前会话**）。 */
+  function quoteSession(id) {
+    if (!id) return;
+    const row = histDataRow(id);
+    insertSessionToken(formatSessionMentionToken(id, row ? histTitle(row) : id));
+  }
+
+  /** 历史行装「引用」按钮 + 命中高亮（追加在既有行 DOM 上，不改 `renderHistoryList` 内部）。 */
+  function decorateHistoryRows() {
+    const list = document.getElementById("hist-list");
+    if (!list) return;
+    const rows = list.querySelectorAll("[data-hist-id]");
+    for (let i = 0; i < rows.length; i += 1) {
+      const row = rows[i];
+      const id = row.getAttribute("data-hist-id") || "";
+      if (histFlashId && id === histFlashId) row.classList.add("-hist-row--referenced");
+      if (!id || row.querySelector("[data-hist-quote]")) continue;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "-hist-quote";
+      btn.setAttribute("data-hist-quote", id);
+      btn.title = T("agent.historyList.quoteTitle");
+      btn.textContent = T("agent.historyList.quote");
+      btn.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation(); // 别让行点击把这条会话载入
+        quoteSession(id);
+      });
+      btn.addEventListener("keydown", function (ev) {
+        if (ev.key !== "Enter" && ev.key !== " ") return;
+        ev.preventDefault();
+        ev.stopPropagation();
+        quoteSession(id);
+      });
+      const del = row.querySelector("[data-hist-del]");
+      if (del) row.insertBefore(btn, del);
+      else row.appendChild(btn);
+    }
+  }
+
+  const baseRenderHistoryList = renderHistoryList;
+  renderHistoryList = function () {
+    const pending = baseRenderHistoryList.apply(null, arguments);
+    decorateHistoryRows();
+    return pending;
+  };
+
+  /** 点会话 chip：切到左栏「历史」页签并高亮那一行（**不载入**该会话）。 */
+  function highlightSessionInHistory(id) {
+    if (!id) return;
+    histFlashId = id;
+    showHistoryTab(); // 内部已 renderHistoryList ⇒ 高亮随之生效
+  }
+
+  // 会话 chip 的点击/键盘委托：挂在 `document` 上 ⇒ 与面板初始化时机无关，也不动既有气泡监听。
+  document.addEventListener("click", function (ev) {
+    const t = ev.target && ev.target.closest ? ev.target.closest("[data-agent-session]") : null;
+    if (t) highlightSessionInHistory(t.getAttribute("data-agent-session"));
+  });
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Enter" && ev.key !== " ") return;
+    const t = ev.target && ev.target.closest ? ev.target.closest("[data-agent-session]") : null;
+    if (!t) return;
+    ev.preventDefault();
+    highlightSessionInHistory(t.getAttribute("data-agent-session"));
+  });
+
+  renderHistoryList(); // 用包装后的版本重绘一次（列表为空时是空操作）
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

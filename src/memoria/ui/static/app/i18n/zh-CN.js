@@ -1270,4 +1270,15 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.statusBar, {
     hitRate: "缓存命中率 {rate}",
   });
+
+  // ===== 2026-09-19 追加：跨会话引用（M2 收尾，`session-reference`）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // `agent.mention.*` 是文件引用 chip 的既有段，这里只补会话 chip 的 tooltip。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.mention, {
+    sessionTitle: "会话引用「{id}」：点击切到左栏「历史」页签并高亮该会话",
+  });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.historyList, {
+    quote: "引用",
+    quoteTitle: "在输入框引用这条会话（不切换当前会话）",
+  });
 })(typeof window !== "undefined" ? window : globalThis);
