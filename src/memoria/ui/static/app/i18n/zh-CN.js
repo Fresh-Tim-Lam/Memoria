@@ -1263,4 +1263,11 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.tab, {
     agent: "对话",
   });
+
+  // ===== 2026-09-19 追加：状态 bar 第四槽由「历史（N 轮）」改为**本会话缓存命中率** =====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // `{rate}` 由前端填（未知时是「—」）；命中率口径与底部 `#status-agent` 的「命中 xx%」同源。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.statusBar, {
+    hitRate: "缓存命中率 {rate}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

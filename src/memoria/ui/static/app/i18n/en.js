@@ -1347,4 +1347,9 @@
   Object.assign(g.MEMORIA_LOCALES["en"].settings.tab, {
     agent: "Chat",
   });
+
+  // ===== appended 2026-09-19: 4th slot of the status bar = session cache hit rate =====
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.statusBar, {
+    hitRate: "Cache hit {rate}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

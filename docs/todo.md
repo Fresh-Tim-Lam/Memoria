@@ -260,9 +260,9 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡渲染 Markdown + `文件:行号` 锚点 | ✅ 代码完成（harness 二十项断言，见 §4.2）；真机观感待验 |
 | AG03 | dsh M2 剩余 `session-reference` | ⏳ K1（无前端入口，排后） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
-| AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额（悬停出成本浮层）**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance`；成本浮层 = 自绘常驻节点 `#agent-costtip` + `agent_usage_cost`（官方价目表快照 + 逐轮峰谷价）；harness 8653/8657 实测；见 §4.2） |
+| AG05 | 状态栏/状态 bar（点绿/红 + 模型/出网绿红/**余额对数连续色（悬停出浮层）**/**缓存命中率**；已去掉会话 id 与轮次） | 🔄 K1 待完善（余额 = `agent_balance`；命中率 = `agent_usage_stats`；浮层 = `#agent-costtip` + `agent_usage_cost`；harness 8653/8657/8660 实测；见 §4.2） |
 | AG06 | UI 视觉语言对照（借 dsh 观感）：A/B 档全收口（B-6/7/9/10 已做，B-8 不做）+ **U4 分隔线专用档 `--border-sep`** | 🔄 K1（design/ui-visual-language.md §4/§7）；**U5 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
 | AG08 | 面板看不到模型 **thinking** | ⏳ K1 已定性：`ReasoningDelta` 已解析但未送前端（`loop.py:255`）；模型是否吐该字段待验 |
 | AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size` → app.css 的 `.-agent-msg`/`#agent-input` 消费；harness 8653 实测 15px→20px 联动；**真机观感未验**） |
-| AG10 | dock 整理：会话选择**迁到左栏第 4 页签「历史」**；头部「出网」「设置」与底部「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（两行式 + 过滤 + 行内删除 + 点即载入；harness 8659/8660 全通过、0 error，顺带修掉徽章被裁与页签条 34→45 两处；**真机观感未验**；见 §4.2） |
+| AG10 | dock 整理：会话选择**迁到左栏第 4 页签「历史」**；头部「出网」「设置」与底部「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（两行式 + 过滤 + 行内删除 + 点即载入；harness 8659/8660 全通过、0 error；**真机观感未验**；见 §4.2） |

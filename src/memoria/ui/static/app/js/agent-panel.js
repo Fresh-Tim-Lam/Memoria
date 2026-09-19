@@ -1758,24 +1758,24 @@ window.MemoriaAgentPanel = (function () {
     if (!dot || !facts) return;
     dot.setAttribute("data-state", statusBarDotState());
     const model = String(cfg.model || "") || T("agent.model.none");
-    // 出网：开时只显示标签（"出网"），关时用既有的「出网已关」（含状态，避免再借一个键）
+    // 出网：开时显示「出网」并**上绿**，关时显示既有的「出网已关」并**上红**（颜色由 CSS 的 `data-on` 决定）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
-    const turns = messages.filter(function (m) {
-      return m && m.role === "user";
-    }).length;
-    const turnText = T("agent.history.option", { preview: T("agent.history.label"), n: turns });
+    // 第四槽（2026-09-19 由「历史（N 轮）」改为**本会话缓存命中率**）：数字来自只读 RPC
+    // `agent_usage_stats(session_id)` 的 `summary.hit_rate`（口径同底部 `#status-agent`；未知即 `—`）
+    const rate = hitRatePercent();
+    const tone = balanceTone(); // 余额的**对数连续色**（"" ⇒ 不染色：未知余额/取不到主题色）
     facts.innerHTML = [
       T("agent.settings.model") + " <b>" + esc(model) + "</b>",
-      esc(net),
-      // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；悬停浮层**不再用原生 `title`**（该槽每次重绘都被换掉、悬停总被打断 ⇒ 原生提示弹不出来），改为**常驻的自绘浮层**（`#agent-costtip`，见文件末的成本块），此处只用 `aria-describedby` 指过去。
-      ('<span class="-agent-statusbar-balance" aria-describedby="agent-costtip">' + esc(balanceText || "—") + "</span>"),
-      esc(turnText),
+      '<span class="-agent-statusbar-net" data-on="' + (cfg.enabled ? "1" : "0") + '">' + esc(net) + "</span>",
+      // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；悬停浮层**不再用原生 `title`**（该槽每次重绘都被换掉、悬停总被打断 ⇒ 原生提示弹不出来），改为**常驻的自绘浮层**（`#agent-costtip`，见文件末的成本块），此处只用 `aria-describedby` 指过去。金额文字另有**对数连续色**（越少越红、越多越绿，¥10 = 红端；算法见文件末 `balanceTone()`）。
+      ('<span class="-agent-statusbar-balance"' + (tone ? ' style="color:' + tone + '"' : "") + ' aria-describedby="agent-costtip">' + esc(balanceText || "—") + "</span>"),
+      esc(T("agent.statusBar.hitRate", { rate: rate || "—" })),
     ].join(" · ");
   }
 
   // 余额槽：**60s TTL** + 出网关闭时不发请求（后端 `fetch_balance` 还会再挡一次）。
   // 首次抓取**延后 1.5s**：RPC 是同步的，放在启动路径上会在最坏情况下（6s 超时）卡住首屏。
-  let balanceText = "—";
+  let balanceText = "—", balanceAmount = null; // amount 供「对数连续色」用（`balanceTone()`，见文件末）
   let balanceFetchedAt = 0;
 
   function refreshBalance(force) {
@@ -1783,17 +1783,18 @@ window.MemoriaAgentPanel = (function () {
     if (!force && now - balanceFetchedAt < 60000) return;
     balanceFetchedAt = now;
     if (!cfg.enabled) {
-      balanceText = "—";
+      balanceText = "—"; balanceAmount = null;
       renderStatusBar();
       return;
     }
     call("agent_balance")
       .then(function (res) {
-        balanceText = (res && res.text) || "—";
+        balanceText = (res && res.text) || "—"; // 数值由后端给（`total`），**不从前端解析 `text`**
+        balanceAmount = res && typeof res.total === "number" ? res.total : null;
         renderStatusBar();
       })
       .catch(function () {
-        balanceText = "—";
+        balanceText = "—"; balanceAmount = null;
         renderStatusBar();
       });
   }
@@ -1936,16 +1937,98 @@ window.MemoriaAgentPanel = (function () {
     if (tip) tip.classList.remove("is-open");
   });
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 状态 bar 的「事实着色」与第四槽（2026-09-19；用户："Network 有网就绿、没网就红；模型可用的
+  // 那个点就绿、否则红；余额用对数连续色，越少越红越多越绿，¥10 就是本项目那个红；别再显示
+  // History，改显示缓存命中率"）。
+  //   ① 出网字样与状态点的颜色**全在 CSS**（`.-agent-statusbar-net[data-on]`，点按 `data-state`，
+  //      见 app.css 末尾块）—— 那里只有两个静态色，不需要 JS；
+  //   ② 余额色随金额**连续**变化 ⇒ CSS 做不了对数映射，由 `balanceTone()` 现算并写成内联 `color`；
+  //   ③ 命中率取只读 RPC `agent_usage_stats(session_id)` 的 `summary.hit_rate`（**未知即 `—`，
+  //      绝不瞎报 0%**），与成本同一节拍刷新（每轮结束 / 载入会话 / 换模型 / 清空）。
+  // ──────────────────────────────────────────────────────────────────────────────
+
+  /** 本会话缓存命中率（0..1 或 null；null = 无会话 / 端点未上报 cache）。 */
+  let hitRateValue = null;
+
+  /** 命中率百分比串（`62%`）；未知返回 `""`（调用方写 `—`）。 */
+  function hitRatePercent() {
+    if (typeof hitRateValue !== "number" || !isFinite(hitRateValue)) return "";
+    return (hitRateValue * 100).toFixed(1).replace(/\.0$/, "") + "%";
+  }
+
+  /** `r,g,b`（0..255）→ `{h,s,l}`（h 为度、s/l 为 0..1）。 */
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+    if (max === min) return { h: 0, s: 0, l: l };
+    const d = max - min, s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    const h = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return { h: h * 60, s: s, l: l };
+  }
+
+  /** 读一个主题色令牌（`--error` / `--success`）并转 HSL；**随主题解析**（深/浅各一份），
+   *  取不到（非 6 位 hex / 空值）返回 `null` ⇒ 调用方退回不染色。 */
+  function cssColorHsl(name) {
+    const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    const m = /^#([0-9a-f]{6})$/i.exec(raw);
+    if (!m) return null;
+    const n = parseInt(m[1], 16);
+    return rgbToHsl((n >> 16) & 255, (n >> 8) & 255, n & 255);
+  }
+
+  /** 余额的**对数连续色**：≤¥10 = `--error`（红端，用户指定的"本项目那个红"），≥¥1000 =
+   *  `--success`（绿端），中间按 `log10` 线性取值并在**色相**上从红经黄/青插到绿（只插
+   *  hue/sat/light ⇒ 中点不会糊成灰）。两个锚点是一条**可调**口径（用户只钉了红端 ¥10，
+   *  绿端选了 ¥1000 = 两个数量级）；金额未知返回 `""`（不染色，保持继承色）。 */
+  const BALANCE_RED_AT = 10;
+  const BALANCE_GREEN_AT = 1000;
+
+  function balanceTone() {
+    if (typeof balanceAmount !== "number" || !isFinite(balanceAmount)) return "";
+    const lo = Math.log10(BALANCE_RED_AT), hi = Math.log10(BALANCE_GREEN_AT);
+    const x = Math.log10(Math.max(balanceAmount, 0.01)); // 0/负数先夹进 log 定义域（仍是红端）
+    const t = Math.min(1, Math.max(0, (x - lo) / (hi - lo)));
+    // 两端**直接用令牌**（而不是取整后的 hsl）⇒ 端点与 `--error` / `--success` 逐字节一致、且随主题变
+    if (t <= 0) return "var(--error)";
+    if (t >= 1) return "var(--success)";
+    const a = cssColorHsl("--error"), b = cssColorHsl("--success");
+    if (!a || !b) return "";
+    const h = a.h + (b.h - a.h) * t, s = a.s + (b.s - a.s) * t, l = a.l + (b.l - a.l) * t;
+    return "hsl(" + h.toFixed(0) + " " + (s * 100).toFixed(0) + "% " + (l * 100).toFixed(0) + "%)";
+  }
+
+  /** 命中率与成本**同一节拍**刷新（两者都只依赖会话文件）；`sid` 为空即清空为「未知」。 */
+  function refreshHitRate(sid) {
+    if (!sid) {
+      hitRateValue = null;
+      renderStatusBar();
+      return;
+    }
+    call("agent_usage_stats", null, sid)
+      .then(function (res) {
+        const sum = res && res.status === "ok" ? res.summary : null;
+        hitRateValue = sum && typeof sum.hit_rate === "number" ? sum.hit_rate : null;
+        renderStatusBar();
+      })
+      .catch(function () {
+        hitRateValue = null; // 取不到就当未知，绝不瞎报 0%
+        renderStatusBar();
+      });
+  }
+
   function refreshCost(force) {
     const sid = sessionId ? String(sessionId) : "";
     if (!sid) {
       costInfo = null;
+      refreshHitRate(""); // 无会话 ⇒ 命中率也随之回到「未知」
       renderStatusBar();
       return;
     }
     const now = Date.now();
     if (!force && now - costFetchedAt < 30000) return;
     costFetchedAt = now;
+    refreshHitRate(sid); // 命中率与成本**同节拍**（两个独立 RPC、各自 fail-open）
     call("agent_usage_cost", sid)
       .then(function (res) {
         costInfo = res && res.status === "ok" ? res.cost : null;

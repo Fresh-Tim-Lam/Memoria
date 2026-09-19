@@ -5373,3 +5373,29 @@ html *::-webkit-scrollbar-thumb:active {
 #settings-body-agent .-agent-net {
     margin: 0.25rem 0 0.4375rem; /* 与上方 .-agent-field 同节奏（该 label 原本只有行内布局） */
 }
+
+/* ===== 状态 bar 的事实着色（2026-09-19）========================================
+   用户：「Network 这个字如果是有网就绿色，如果没有就红色，模型可用那个点就绿色否则红色，余额的
+   颜色采用连续，我们使用对数函数，钱越少越红，越多越绿，参考数值：当钱只有 10 块就是该项目
+   普遍采用的红色」。
+   - **出网字样**：`.-agent-statusbar-net[data-on="1|0"]` → `--success` / `--error`（两个静态色 ⇒ 纯 CSS）；
+   - **状态点**：`idle`（模型可用）→ `--success`、`off`（出网关闭）与 `error` → `--error`；`busy`
+     仍是主题色 —— "正在生成"是第三种态，不该和"可用/不可用"混色。这里只**新增**两条
+     `[data-state=…]` 规则，与既有 busy/error 两条同特异度但取值不同 ⇒ 互不冲突；
+   - **余额**：连续色**由 JS 现算**（对数映射 CSS 表达不了）⇒ 内联 `color`，见
+     `agent-panel.js::balanceTone()`（锚点 ≤¥10 = `--error`、≥¥1000 = `--success`）。
+   本块**末尾追加**（在「对话」页签块之后）⇒ 既有行号锚点零漂移。 */
+.-agent-statusbar-net {
+    color: var(--success);
+}
+.-agent-statusbar-net[data-on="0"] {
+    color: var(--error);
+}
+.-agent-statusbar-dot[data-state="idle"] {
+    background: var(--success);
+    opacity: 1;
+}
+.-agent-statusbar-dot[data-state="off"] {
+    background: var(--error);
+    opacity: 1;
+}
