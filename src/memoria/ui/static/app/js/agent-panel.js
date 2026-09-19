@@ -113,8 +113,8 @@ window.MemoriaAgentPanel = (function () {
   const POLL_INTERVAL_MS = 250;
   const POLL_TIMEOUT_MS = 300000; // 5 分钟兜底；模型长回答不会被误判超时
 
-  // 答案里的 `文件:行号`（允许被反引号包裹；路径不允许空白/引号/括号/冒号）
-  const ANCHOR_RE = /`?([^\s`"'<>()[\]:]+\.md):(\d+)`?/g;
+  // 答案里的 `文件:行号`（允许全角冒号 `：`、支持 `7-9` 区间；路径须排除中日韩标点 —— 原因与实测见 agent-guide/01 §7）
+  const ANCHOR_RE = /`?"?'?([^\s`"'<>()[\]:：，、。；！？「」『』【】（）《》〈〉〔〕…·—～]+\.(?:md|markdown))[:：](\d+(?:[-–—~]\d+)?)`?"?'?/g;
 
   // 用户消息里的 `@路径` 引用（由文件树拖拽插入，也可手打）。
   // 语法语义移植自上游 `context/file-reference` 的 activeAtToken / formatFileMention：
