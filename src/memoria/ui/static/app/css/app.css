@@ -5234,3 +5234,112 @@ html *::-webkit-scrollbar-thumb:active {
 }
 .-agent-costtip.is-open { display: block; }
 .-agent-costtip > span { display: block; }
+
+/* ===== 左栏第 4 页签「历史」= 会话选择（2026-09-19；原为 dock 里那个原生 `<select>` 行）=====
+   为什么单开一页签：原生 `<select>` 一条 option 只能一行文本、挂不了行内动作、30 条时不可过滤；
+   左栏（280px）里可以做成**两行式条目 + 行内删除 + 顶部过滤**，且与「文件/2D/3D」共用页签机制
+   （`setSidebarTab` 是通用的，见 app/js/app.js:1239-1256，故无需改 app.js）。
+   条目：第一行标题（超长省略 + tooltip），第二行 `轮数 · 相对时间 · 截断标记`；当前会话带主题色左线
+   + `--accent-soft` 底 + 「当前」徽章。删除按钮**默认隐形**（hover / 键盘进入该行才显形），
+   避免列表被按钮噪点淹没；进入二次确认时它变红并改文案。
+   注：dock 里那条 `.-agent-history-select*`（app.css:454-472）自本次起**已无对应元素**（选择器已
+   迁到左栏）；为不动其后全部行号锚点而**原地保留**，文档里已标注为退役。 */
+#sidebar-view-history {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+}
+.-hist-head {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 8px;
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
+}
+.-hist-head #hist-new { flex: 0 0 auto; white-space: nowrap; }
+.-hist-filter {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1.5rem;
+    padding: 0 6px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+}
+.-hist-filter:focus { border-color: var(--theme-color); outline: none; }
+.-hist-list { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 0.25rem 0; }
+.-hist-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.375rem;
+    padding: 0.3125rem 8px;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+}
+.-hist-row:hover { background: var(--bg-hover); }
+.-hist-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.-hist-row--current { background: var(--accent-soft); border-left-color: var(--theme-color); }
+.-hist-main { flex: 1 1 auto; min-width: 0; }
+/* 标题行：标题可省略、徽章不可被吃掉（2026-09-19 实测抓到：徽章原本嵌在 `.-hist-title` 内，
+   长标题时被那行的 overflow:hidden + 省略号一起裁掉 ⇒ 「当前」标记看不见） */
+.-hist-title-row { display: flex; align-items: center; gap: 0.3125rem; min-width: 0; }
+.-hist-title {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.-hist-badge {
+    flex: 0 0 auto;
+    padding: 0 5px;
+    font-size: 0.625rem;
+    color: #ffffff;
+    background: var(--theme-color);
+    border-radius: 999px;
+}
+.-hist-meta { margin-top: 1px; font-size: 0.6875rem; }
+.-hist-del {
+    flex: 0 0 auto;
+    visibility: hidden;
+    height: 1.25rem;
+    padding: 0 6px;
+    font-family: inherit;
+    font-size: 0.6875rem;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.-hist-row:hover .-hist-del,
+.-hist-row:focus-within .-hist-del { visibility: visible; }
+.-hist-del:hover { color: var(--error); border-color: var(--error); }
+.-hist-empty { padding: 0.75rem 10px; font-size: 0.75rem; line-height: 1.5; }
+/* 左栏页签按钮**不换行**：加到第 4 个页签后每个按钮只剩约 66px，标签+计数会折成两行
+   ⇒ 页签条从 34px 涨到 45px，连带破坏「同一带左右中三列 top/bottom 两两相等」（`--bar-h-b`）。
+   实测抓到，故钉死 nowrap（放不下就省略号，`title` 里仍有全称）。 */
+.-config-tabs.-sidebar-nav-tabs .-config-tab {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/* dock 那一行的「当前会话」：接管原 `.-agent-history-select` 的占位（flex:1 + 省略号） */
+.-agent-history-current {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

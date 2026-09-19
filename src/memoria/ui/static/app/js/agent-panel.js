@@ -1986,6 +1986,304 @@ window.MemoriaAgentPanel = (function () {
     renderStatusBar();
   };
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 左栏第 4 页签「历史」= **会话选择**（2026-09-19；用户："关于会话选择的设计可以优化" →
+  // "移到这里（左栏页签栏）做页签"）。原先是 dock 里一行：原生 `<select>` + 独立删除按钮，
+  // 受限于原生控件（一条 option 塞不下"标题 + 轮数 + 时间"两行、不能挂行内动作、不可过滤）。
+  // 迁到左栏页签后：两行式条目（标题 / 轮数 · 相对时间 · 截断标记）+ 顶部「＋ 新会话」与过滤框
+  // + 行内删除（点两次确认）+ 点条目即载入并展开右侧对话栏。dock 那一行改为
+  // 「当前会话：<标题> ＋ 历史按钮」⇒ 它仍是"我正看的是哪段对话"的指示器，
+  // 两行高度与编辑区对齐（`--bar-h-b`）也不破。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // 说明：原 `renderHistory()` 仍把数据写进那个已被移除的 `<select>`（`if (!sel) return` 会直接
+  // 不干活）、`refreshHistoryLabels()` 更会对着 null 取 innerHTML 抛错 ⇒ 两者在本块**整体接管**
+  // （数据仍落在同一个模块级 `historyRows`）。旧的下拉/删除按钮绑定因元素不存在而自然跳过。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 过滤串（纯客户端过滤标题/预览，不请求后端）。 */
+  let histFilter = "";
+  /** 进入"二次确认删除"的会话 id（超时/列表重绘即复位）。 */
+  let histDeleteArmed = "";
+  let histDeleteTimer = null;
+  let histBound = false;
+
+  function historyViewEl() {
+    return document.getElementById("sidebar-view-history");
+  }
+
+  /** 相对时间（`刚刚` / `N 分钟前` …；超过 7 天给本地化日期）。`ms` = epoch 毫秒。 */
+  function histAgo(ms) {
+    const t = Number(ms);
+    if (!isFinite(t) || t <= 0) return "";
+    const diff = Date.now() - t;
+    if (diff < 60000) return T("agent.historyList.justNow");
+    if (diff < 3600000) return T("agent.historyList.minutesAgo", { n: Math.floor(diff / 60000) });
+    if (diff < 86400000) return T("agent.historyList.hoursAgo", { n: Math.floor(diff / 3600000) });
+    if (diff < 604800000) return T("agent.historyList.daysAgo", { n: Math.floor(diff / 86400000) });
+    try {
+      return new Date(t).toLocaleDateString();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  /** 条目标题：优先后端折叠出的标题，回落首问预览，再回落会话 id。 */
+  function histTitle(row) {
+    const s = row || {};
+    return String(s.title || s.preview || s.session_id || "");
+  }
+
+  /** 建出页签视图骨架（只建一次；列表内容随 `renderHistoryList()` 重绘）。 */
+  function ensureHistoryView() {
+    const view = historyViewEl();
+    if (!view || view.dataset.histReady === "1") return view;
+    view.dataset.histReady = "1";
+    view.innerHTML =
+      '<div class="-hist-head">' +
+      '<button type="button" class="-btn secondary -btn--sm" id="hist-new" title="' +
+      esc(T("agent.historyList.newChatTitle")) +
+      '">' +
+      esc(T("agent.historyList.newChat")) +
+      "</button>" +
+      '<input type="search" id="hist-filter" class="-hist-filter" autocomplete="off" spellcheck="false" placeholder="' +
+      esc(T("agent.historyList.filterPh")) +
+      '" value="' +
+      esc(histFilter) +
+      '" />' +
+      "</div>" +
+      '<div class="-hist-list" id="hist-list" role="list"></div>';
+    return view;
+  }
+
+  /** dock 那一行的「当前会话」文案（标题 / 会话 id 缩略 /（新会话））。 */
+  function syncHistoryCurrentLabel() {
+    const el = document.getElementById("agent-history-current");
+    if (!el) return;
+    const id = sessionId ? String(sessionId) : "";
+    let row = null;
+    for (let i = 0; i < historyRows.length; i += 1) {
+      if (String((historyRows[i] || {}).session_id || "") === id) {
+        row = historyRows[i];
+        break;
+      }
+    }
+    const text = id ? (row ? histTitle(row) : id.slice(0, 12) + "…") : T("agent.history.none");
+    el.textContent = text;
+    el.title = text;
+  }
+
+  /** 重绘列表（含过滤 / 当前项高亮 / 空态）＋ 同步页签计数与 dock 的「当前会话」。 */
+  function renderHistoryList() {
+    const view = ensureHistoryView();
+    if (!view) return;
+    const list = document.getElementById("hist-list");
+    if (!list) return;
+    const q = histFilter.trim().toLowerCase();
+    const rows = historyRows.filter(function (row) {
+      if (!q) return true;
+      const hay = (histTitle(row) + " " + String((row && row.preview) || "")).toLowerCase();
+      return hay.indexOf(q) >= 0;
+    });
+    if (!rows.length) {
+      list.innerHTML =
+        '<div class="-hist-empty -muted">' +
+        esc(
+          historyRows.length
+            ? T("agent.historyList.filtered", { q: histFilter.trim() })
+            : T("agent.historyList.empty")
+        ) +
+        "</div>";
+    } else {
+      list.innerHTML = rows
+        .map(function (row) {
+          const id = String((row && row.session_id) || "");
+          const on = !!id && id === String(sessionId || "");
+          const meta = [
+            T("agent.historyList.turns", { n: (row && row.turn_count) || 0 }),
+            histAgo(row && row.modified_at),
+            row && row.capped ? T("agent.history.capped") : "",
+          ]
+            .filter(Boolean)
+            .join(" · ");
+          const title = histTitle(row);
+          return (
+            '<div class="-hist-row' +
+            (on ? " -hist-row--current" : "") +
+            '" data-hist-id="' +
+            esc(id) +
+            '" role="listitem" tabindex="0">' +
+            '<div class="-hist-main">' +
+            // 标题与徽章**分开**：徽章若嵌在 `.-hist-title` 里，会被那行的 `overflow:hidden` + 省略号一起吃掉
+            // （长标题时「当前」标记就看不见了 —— 实测抓到）。
+            '<div class="-hist-title-row">' +
+            '<div class="-hist-title" title="' +
+            esc(title) +
+            '">' +
+            esc(title) +
+            "</div>" +
+            (on ? '<span class="-hist-badge">' + esc(T("agent.historyList.current")) + "</span>" : "") +
+            "</div>" +
+            '<div class="-hist-meta -muted">' +
+            esc(meta) +
+            "</div>" +
+            "</div>" +
+            '<button type="button" class="-hist-del" data-hist-del="' +
+            esc(id) +
+            '" title="' +
+            esc(T("agent.historyList.deleteTitle")) +
+            '">' +
+            esc(histDeleteArmed === id ? T("agent.historyList.deleteArm") : T("agent.history.delete")) +
+            "</button>" +
+            "</div>"
+          );
+        })
+        .join("");
+    }
+    const count = document.getElementById("sidebar-tab-count-history");
+    if (count) count.textContent = String(historyRows.length);
+    syncHistoryCurrentLabel();
+  }
+
+  /** 点条目 = 载入该会话，并在必要时展开右侧对话栏（生成中不切换，与旧下拉同口径）。 */
+  async function histOpen(id) {
+    if (!id || busy) return;
+    await loadSession(id);
+    if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
+  }
+
+  /** 行内删除：第一次点进入确认态（超时复位），第二次才真删（复用既有 RPC 与善后逻辑）。 */
+  async function histDelete(id) {
+    if (!id) return;
+    if (histDeleteArmed !== id) {
+      histDeleteArmed = id;
+      renderHistoryList();
+      if (histDeleteTimer) clearTimeout(histDeleteTimer);
+      histDeleteTimer = setTimeout(function () {
+        histDeleteTimer = null;
+        histDeleteArmed = "";
+        renderHistoryList();
+      }, DELETE_CONFIRM_MS);
+      return;
+    }
+    histDeleteArmed = "";
+    if (histDeleteTimer) {
+      clearTimeout(histDeleteTimer);
+      histDeleteTimer = null;
+    }
+    const kb = state.kbPath || "";
+    let res;
+    try {
+      res = await call("agent_session_delete", id, kb || null);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(fullErrorText(res));
+      return;
+    }
+    if (sessionId === id) {
+      await clear(); // 删的是当前会话 ⇒ 回到「新会话」态
+      restoredKey = ""; // 该会话已不存在：清掉幂等键，避免下次误判
+    }
+    await refreshHistory();
+  }
+
+  /** 把 dock 的「历史」按钮变成"左栏 → 历史页签"的入口（左栏收起时先展开）。 */
+  function showHistoryTab() {
+    const side = document.getElementById("-sidebar");
+    const toggle = document.getElementById("btn-toggle-sidebar");
+    if (side && side.classList.contains("-sidebar--collapsed") && toggle) toggle.click();
+    const tab = document.querySelector('[data-sidebar-tab="history"]');
+    if (tab) tab.click(); // 复用 app.js 的 setSidebarTab（含持久化与图谱启停）
+    renderHistoryList();
+  }
+
+  /** 事件绑定（委托在视图容器上；只绑一次）。 */
+  function bindHistoryView() {
+    const view = historyViewEl();
+    if (!view || histBound) return;
+    histBound = true;
+    view.addEventListener("click", function (ev) {
+      const t = ev.target;
+      if (!t || !t.closest) return;
+      const del = t.closest("[data-hist-del]");
+      if (del) {
+        histDelete(del.getAttribute("data-hist-del"));
+        return;
+      }
+      if (t.closest("#hist-new")) {
+        clear(); // 与旧下拉的「（新会话）」同义
+        return;
+      }
+      const row = t.closest("[data-hist-id]");
+      if (row) histOpen(row.getAttribute("data-hist-id"));
+    });
+    view.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Enter" && ev.key !== " ") return;
+      const row = ev.target && ev.target.closest ? ev.target.closest("[data-hist-id]") : null;
+      if (!row) return;
+      ev.preventDefault();
+      histOpen(row.getAttribute("data-hist-id"));
+    });
+    view.addEventListener("input", function (ev) {
+      if (!ev.target || ev.target.id !== "hist-filter") return;
+      histFilter = String(ev.target.value || "");
+      renderHistoryList(); // 只重绘列表 ⇒ 过滤框保持焦点与光标
+    });
+  }
+
+  // 接管列表数据流：原 `refreshHistory()` 会因 `$("#agent-history")` 为 null 而直接返回。
+  refreshHistory = async function () {
+    const kb = state.kbPath || "";
+    if (!kb) {
+      historyRows = [];
+      historyDisabled = true;
+      renderHistoryList();
+      return;
+    }
+    let res;
+    try {
+      res = await call("agent_sessions_list", kb);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    const ok = !!res && res.status === "ok" && Array.isArray(res.sessions);
+    historyRows = ok ? res.sessions : [];
+    historyDisabled = !ok;
+    renderHistoryList();
+  };
+
+  // 语言切换：骨架里的按钮文案与过滤框占位符也要换 ⇒ 清掉"已建"标记重建骨架（过滤串在 `histFilter` 里，不丢）。
+  refreshHistoryLabels = function () {
+    const view = historyViewEl();
+    if (view) view.dataset.histReady = "";
+    renderHistoryList();
+  };
+
+  // 载入会话 / 开新会话后同步列表高亮与 dock 的「当前会话」（包装 ⇒ 不改上方任何一行）。
+  const baseLoadSessionForList = loadSession;
+  loadSession = function () {
+    const pending = baseLoadSessionForList.apply(null, arguments);
+    Promise.resolve(pending).then(function () {
+      renderHistoryList();
+    });
+    return pending;
+  };
+  const baseClearForList = clear;
+  clear = function () {
+    const pending = baseClearForList.apply(null, arguments);
+    Promise.resolve(pending).then(function () {
+      renderHistoryList();
+    });
+    return pending;
+  };
+
+  bindHistoryView();
+  ensureHistoryView();
+  renderHistoryList();
+  const histDockBtn = document.getElementById("agent-history-open");
+  if (histDockBtn) histDockBtn.addEventListener("click", showHistoryTab);
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

@@ -1228,4 +1228,31 @@
     costNote: "本会话累计（仅输入，不含输出）。按 {model} 官方价目表（{date}）逐轮定峰谷价；高峰时段单价翻倍。",
     costEmpty: "本会话暂无可计价的用量（无记录 / 旧记录缺缓存明细 / 该模型未收录定价）。按 {model} 官方价目表（{date}）。",
   });
+  // ===== 2026-09-19 追加：左栏第 4 页签「历史」= **会话选择**（从右侧 dock 那个原生 `<select>` 迁来）=====
+  // 与上面两条同样走"文件末尾 Object.assign / 直接挂新对象"，避免推位文件上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 列表行 = 两行式：标题（一行省略）+ 元信息（轮数 · 相对时间 · 截断标记），行内动作在右侧（删除需点两次）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].side.tab, {
+    history: "历史",
+    historyTitle: "对话历史：列出本库的历史会话，点一条载入右侧对话栏",
+  });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.history, {
+    currentLabel: "当前会话",
+    open: "历史",
+    openTitle: "打开左栏「历史」页签（列出本库全部会话）",
+  });
+  g.MEMORIA_LOCALES["zh-CN"].agent.historyList = {
+    newChat: "＋ 新会话",
+    newChatTitle: "开一段新对话（当前会话仍留在列表里）",
+    filterPh: "过滤标题…",
+    empty: "本库还没有历史会话 · 首次提问后自动保存",
+    filtered: "没有匹配「{q}」的会话",
+    turns: "{n} 轮",
+    current: "当前",
+    deleteTitle: "删除这条会话（点两次确认）",
+    deleteArm: "确认删除",
+    justNow: "刚刚",
+    minutesAgo: "{n} 分钟前",
+    hoursAgo: "{n} 小时前",
+    daysAgo: "{n} 天前",
+  };
 })(typeof window !== "undefined" ? window : globalThis);

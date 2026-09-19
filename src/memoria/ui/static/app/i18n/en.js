@@ -1311,4 +1311,32 @@
     costNote: "This session (input only, output excluded). {model} list price ({date}), priced per turn by peak/off-peak; peak hours cost 2x.",
     costEmpty: "No priceable usage in this session (no records / legacy records lack cache detail / model not in the price list). {model} list price ({date}).",
   });
+  // ===== 2026-09-19 appended: 4th sidebar tab "History" = **session picker** (moved off the dock <select>) =====
+  // Same discipline as above: define at end-of-file (Object.assign / new object) so no `zh-CN.js`/`en.js`
+  // line-number anchor documented elsewhere shifts.
+  // Each row is two lines: title (single line, ellipsised) + meta (turns · relative time · capped), actions on the right.
+  Object.assign(g.MEMORIA_LOCALES["en"].side.tab, {
+    history: "History",
+    historyTitle: "Chat history: list this knowledge base's past sessions; click one to load it into the chat panel",
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.history, {
+    currentLabel: "Current",
+    open: "History",
+    openTitle: "Open the History tab in the left sidebar (all sessions of this knowledge base)",
+  });
+  g.MEMORIA_LOCALES["en"].agent.historyList = {
+    newChat: "+ New chat",
+    newChatTitle: "Start a new conversation (the current one stays in the list)",
+    filterPh: "Filter titles…",
+    empty: "No sessions yet — one is saved after your first question",
+    filtered: "No session matches “{q}”",
+    turns: "{n} turns",
+    current: "current",
+    deleteTitle: "Delete this session (click twice to confirm)",
+    deleteArm: "Confirm",
+    justNow: "just now",
+    minutesAgo: "{n} min ago",
+    hoursAgo: "{n} h ago",
+    daysAgo: "{n} d ago",
+  };
 })(typeof window !== "undefined" ? window : globalThis);

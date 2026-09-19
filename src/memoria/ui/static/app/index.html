@@ -112,7 +112,7 @@
           <div class="-config-tabs -sidebar-nav-tabs" role="tablist" aria-label="资源管理器" data-i18n-attr="aria-label:side.tabs.aria">
             <button type="button" class="-config-tab active" data-sidebar-tab="files" role="tab" aria-selected="true"><span data-i18n="side.tab.files">文件</span> <span class="-tab-count" id="sidebar-tab-count-files">0</span></button>
             <button type="button" class="-config-tab" data-sidebar-tab="graph2d" role="tab" aria-selected="false">2D <span class="-tab-count" id="sidebar-tab-count-graph2d">0</span></button>
-            <button type="button" class="-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="-tab-count" id="sidebar-tab-count-graph3d">0</span></button>
+            <button type="button" class="-config-tab" data-sidebar-tab="graph3d" role="tab" aria-selected="false">3D <span class="-tab-count" id="sidebar-tab-count-graph3d">0</span></button><button type="button" class="-config-tab" data-sidebar-tab="history" role="tab" aria-selected="false" title="对话历史：列出本库的历史会话，点一条载入右侧对话栏" data-i18n-attr="title:side.tab.historyTitle"><span data-i18n="side.tab.history">历史</span> <span class="-tab-count" id="sidebar-tab-count-history">0</span></button>
           </div>
         </div>
         <div id="sidebar-graph-group-bar" class="-graph-group-bar hidden" aria-hidden="true">
@@ -130,7 +130,7 @@
             <div id="sidebar-view-graph3d" class="-sidebar-view hidden" data-sidebar-view="graph3d">
               <div id="graph-3d-root" class="-graph-root"></div>
               <div id="graph-3d-hint" class="-graph-hint -graph-hint--overlay -muted"><span class="-muted" data-i18n="graph.overlay3d">左键旋转 · 滚轮缩放 · 点击跳转</span></div>
-            </div>
+            </div><div id="sidebar-view-history" class="-sidebar-view hidden" data-sidebar-view="history"></div>
           </div>
           <div id="sidebar-nav-kp-resizer" class="-graph-panel-resizer -sidebar-kp-resizer" title="拖拽调整上方面板与知识点列表占比" data-i18n-attr="title:side.split.title"></div>
           <div id="sidebar-kp-block" class="-sidebar-kp-block">
@@ -254,9 +254,9 @@
           </div>
         </div>
         <div class="-agent-history">
-          <label class="-agent-history-label" for="agent-history" data-i18n="agent.history.label">历史</label>
-          <select id="agent-history" class="-agent-history-select" data-i18n-attr="aria-label:agent.history.aria"></select>
-          <button type="button" id="agent-history-delete" class="-btn secondary -btn--sm -agent-history-delete" disabled data-i18n-attr="title:agent.history.deleteTitle"><span data-i18n="agent.history.delete">删除</span></button>
+          <span class="-agent-history-label" data-i18n="agent.history.currentLabel">当前会话</span>
+          <span id="agent-history-current" class="-agent-history-current" title=""></span>
+          <button type="button" id="agent-history-open" class="-btn secondary -btn--sm -agent-history-delete" data-i18n-attr="title:agent.history.openTitle"><span data-i18n="agent.history.open">历史</span></button>
         </div>
         <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
         <div class="-agent-composer"><div id="agent-statusbar" class="-agent-statusbar"><span id="agent-statusbar-dot" class="-agent-statusbar-dot" data-state="idle"></span><span id="agent-statusbar-facts" class="-agent-statusbar-facts"></span></div>

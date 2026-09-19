@@ -117,7 +117,7 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | P03 | R13 UI 语言切换 | 🔄 K1（前端已完成 `js/i18n.js:14-15` + 设置→显示即时切换；壳端未做，原生对话框标题硬编码中文 `app/pywebview_host.py:152/171/194`；不自动翻译 md 正文） |
 | P04 | Windows 右键文件夹「以 Memoria 打开」+ 打开前安全检查（2026-08-29 登记，详情见下） | ⏳ |
 | P05 | `static_server` 的 `_kb_root` 是模块全局 → 一进程只能服务一个知识库（多库/多实例与外部宿主嵌入受阻） | ⏳ K1（`static_server.py`；与 D2 集成 X10 相关；来源 agent-guide/10） |
-| P06 | 打包态在**他人机器**启动崩溃：pythonnet 初始化失败（`Failed to resolve Python.Runtime.Loader.Initialize`，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔄 K2（**根因已定位 = Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面补系统要求；v0.3.4 已重新构建并替换资产。证据 `artifacts/p06-motw-e2e.txt`、发布态 A/B。待在报错机器复验。详情见下） |
+| P06 | 打包态在**他人机器**启动崩溃（pythonnet 初始化失败，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔄 K2（**根因 = Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config` + 失败可读弹窗 + 交付面补系统要求；v0.3.4 已重建并替换资产。证据 `artifacts/p06-motw-e2e.txt`。待在报错机器复验。详情见下） |
 | P07 | UI 视觉收敛（滚动条 / 标签栏滚轮 / 圆角五档 / 描边 0.5px + **分隔线档 `--border-sep`** / 阴影三档 / **横条统一 33px（`--bar-h`）** / 侧栏页签条去 13.2px 白留） | 🔄 K2（`app.css` 末尾块 + 原位改值；harness 8651–8658 实测：滑块 2px、横向轨道 10→6px 贴上沿、圆角违规档清零、三档阴影令牌、横条全收敛 33 且三列 top/bottom 两两相等、分隔线对比 −16%（控件轮廓不变）、页签条与内容区间隙 0.00px。**未取证**：0.5px 在 1x 仍上取整为 1px、真实 hover/滚轮、真机观感。详见 agent-guide/01 §7） |
 
 **P04 详情（2026-08-29 登记）：**
@@ -260,8 +260,9 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡渲染 Markdown + `文件:行号` 锚点 | ✅ 代码完成（harness 二十项断言，见 §4.2）；真机观感待验 |
 | AG03 | dsh M2 剩余 `session-reference` | ⏳ K1（无前端入口，排后） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
-| AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额（悬停出成本浮层）**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance` → `llm/balance.py`；**成本浮层 = 自绘常驻节点 `#agent-costtip`**（不用原生 `title`：facts 串每次重绘就换节点 ⇒ 提示弹不出来）+ `agent_usage_cost` → `llm/pricing.py`（官方价目表快照 + 逐轮峰谷价）；harness 8653/8657 实测；见 §4.2） |
+| AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额（悬停出成本浮层）**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance`；成本浮层 = 自绘常驻节点 `#agent-costtip` + `agent_usage_cost`（官方价目表快照 + 逐轮峰谷价）；harness 8653/8657 实测；见 §4.2） |
 | AG06 | UI 视觉语言对照（借 dsh 观感）：A/B 档全收口（B-6/7/9/10 已做，B-8 不做）+ **U4 分隔线专用档 `--border-sep`** | 🔄 K1（design/ui-visual-language.md §4/§7）；**U5 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
 | AG08 | 面板看不到模型 **thinking** | ⏳ K1 已定性：`ReasoningDelta` 已解析但未送前端（`loop.py:255`）；模型是否吐该字段待验 |
 | AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size` → app.css 的 `.-agent-msg`/`#agent-input` 消费；harness 8653 实测 15px→20px 联动；**真机观感未验**） |
+| AG10 | 会话选择（picker）：从 dock 的原生下拉**迁到左栏第 4 页签「历史」** | 🔄 K2（两行式条目 + 过滤 + 行内删除 + 点即载入；harness 8659 实测切页签/过滤/加载/二次确认/真删/计数同步全通过、0 error；顺带修掉徽章被省略号裁掉与页签条 34→45 两处；**真机观感未验**；见 §4.2） |

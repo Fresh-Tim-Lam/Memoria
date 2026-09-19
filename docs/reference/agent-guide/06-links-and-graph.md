@@ -14,7 +14,7 @@
 ├─ #sidebar-resizer                                   （index.html:110）
 ├─ .-sidebar-tabs-wrap                                （index.html:111；`padding: 0 8px`）
 │  └─ .-config-tabs.-sidebar-nav-tabs                 （index.html:112-117）
-│     └─ [data-sidebar-tab=files|graph2d|graph3d] + #sidebar-tab-count-*  （index.html:113-115）
+│     └─ [data-sidebar-tab=files|graph2d|graph3d|**history**] + #sidebar-tab-count-*  （index.html:113-115；**history 按钮与 graph3d 压在同一行**，2026-09-19 加，行号零漂移）
 ├─ #sidebar-graph-group-bar.-graph-group-bar           （index.html:118-120，仅图谱页且有节点时显示）
 │  └─ #sidebar-graph-group-tabs.-graph-group-tabs      （横向可滚动页签）
 └─ #sidebar-body-split                                 （index.html:121）
@@ -22,8 +22,11 @@
    │  ├─ #sidebar-view-files  > #file-tree
    │  ├─ #sidebar-view-graph2d > #graph-2d-root.-graph-root
    │  │                        + #graph-2d-hint.-graph-hint--overlay     （index.html:128）
-   │  └─ #sidebar-view-graph3d > #graph-3d-root.-graph-root
-   │                           + #graph-3d-hint.-graph-hint--overlay    （index.html:132）
+   │  ├─ #sidebar-view-graph3d > #graph-3d-root.-graph-root
+   │  │                        + #graph-3d-hint.-graph-hint--overlay    （index.html:132）
+   │  └─ #sidebar-view-history  （**空容器**，2026-09-19 加；紧贴上行闭合 div 之后 ⇒ 行号零漂移；
+   │                              内容（`.-hist-head` / `#hist-new` / `#hist-filter` / `#hist-list`）
+   │                              由 agent-panel.js 末尾块在加载时建，见 01 篇 §6 与 §7）
    └─ #sidebar-kp-resizer.-graph-panel-resizer          （上下占比拖拽）
       └─ #sidebar-kp-block                              （知识点，见 05 篇）
 
