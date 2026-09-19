@@ -4948,3 +4948,37 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     margin: 0 0 0.5rem;
 }
 .-agent-msg-body.markdown-body hr { margin: 0.75rem 0; }
+
+/* ========== 对话面板：输入框上方的状态 bar ==========
+   结构 = 状态点（idle / busy / error / off）+ 一条「事实」串（模型 · 出网 · 会话 · 轮次）。
+   它是**操作面事实**的常显区；消息级长文案（「生成中… Ns」/ 错误原文 / 已停止）仍在下方
+   `#agent-status`，两者分工不同、不重复同一句话。 */
+.-agent-statusbar {
+    display: flex;
+    align-items: center;
+    gap: 0.4375rem;
+    min-width: 0;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+.-agent-statusbar-dot {
+    flex: 0 0 auto;
+    width: 0.4375rem;
+    height: 0.4375rem;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    opacity: 0.6;
+}
+.-agent-statusbar-dot[data-state="busy"] { background: var(--theme-color); opacity: 1; }
+.-agent-statusbar-dot[data-state="error"] { background: var(--error); opacity: 1; }
+.-agent-statusbar-facts {
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.-agent-statusbar-facts b {
+    font-weight: 600;
+    color: var(--text-primary);
+}

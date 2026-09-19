@@ -259,3 +259,4 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡不渲染 Markdown | 🔄 K2（**代码完成·验收未闭环**）：`agent-panel.js:1621-1728` + `app.css:4906-4950`；证据 = harness 8646 造会话实测 20 项断言（登记见 docs-management §4.2）。未覆盖：真机 WebView2 观感 |
 | AG03 | dsh M2 剩余：`session-reference`（跨会话引用） | ⏳ K1（设计稿 §8；无前端入口，收益偏弱故排后） |
 | AG04 | **工具与能力包路线图**：写能力（文件增删改/建点连边改边类型）、联网收集、skill 机制、宿主接口（悬浮卡片/定时唤醒/主动对话）+ token 三级预算与工具元层 + 基准集 L1/L2/L3 | ⏳ K3 待评审（设计稿 [design/agent-capabilities.md](design/agent-capabilities.md)；P1–P6 待拍板，阶段建议 T1→B1→W1→W2→N1→S1→H1） |
+| AG05 | **输入框上方的状态 bar**（首版：状态点 + 模型/出网/会话/轮次事实串） | 🔄 K1 **待用户指引完善**（`index.html:262`、`agent-panel.js:1730-1789`、`app.css:4952-4984`；已 harness 实测：位置在输入框正上方、关出网 ⇒ 点变 `off`+文案「出网已关」；**事实项与措辞未定稿**，且刻意未新增 i18n 键，详见 agent-guide/01 §2.4） |

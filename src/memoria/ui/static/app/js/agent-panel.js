@@ -1727,6 +1727,80 @@ window.MemoriaAgentPanel = (function () {
     }
   }
 
+  // ── 输入框上方的状态 bar（首版）────────────────────────────────────────
+  // 结构 = 状态点（idle / busy / error / off）+ 一条「事实」串（模型 · 出网 · 会话 · 轮次）。
+  // 分工：**事实与运行态**在这里常显；消息级长文案（「生成中… Ns」/ 错误原文 / 已停止）仍归
+  // 下方 `#agent-status`，两者不重复同一句话。
+  //
+  // 挂接方式（刻意）：在模块尾部**包装本模块自己的 `renderMessages()` / `setStatusText()` /
+  // `applyConfigToForm()`** —— 这三个入口已覆盖面板的全部状态流转（提交 / 轮询 / 定稿 / 出错 /
+  // 停止 / 清空 / 载入会话 / 换库 / 保存配置 / 换语言），且**不改动上方既有函数里的任何一行**
+  // ⇒ `agent-guide/01` 里那些 `agent-panel.js:<行号>` 锚点保持有效。
+  // 若将来 bar 要接更细的来源（工具调用、token 预算、skill…），应把这些调用点**内联**进对应
+  // 函数并**重取 01 篇的锚点**（那时是本注释让位于可读性的时候）。
+
+  /** 状态点：生成中 > **出网关** > 出错 > 空闲。
+   *
+   * 「出网关」刻意排在「出错」之前：关闭出网时 `toggleNet()` 会把状态行置红（`agent.err.net_disabled`，
+   * 见 `setStatusText(..., !cfg.enabled)`），若按"红字=出错"判，圆点会显示成故障 —— 但用户此刻看到的
+   * 事实是「出网已关、不能发」，不是"出错了"。错误态直接读 `#agent-status` 的类，不新起状态变量。
+   */
+  function statusBarDotState() {
+    if (busy) return "busy";
+    if (!cfg.enabled) return "off";
+    const st = $("#agent-status");
+    if (st && st.classList.contains("-agent-error")) return "error";
+    return "idle";
+  }
+
+  /** 重绘状态 bar（幂等、纯读当前状态；元素缺失时静默返回）。
+   *
+   * 文案**全部复用既有 i18n 键**（`agent.settings.model` / `agent.model.none` / `agent.net.label` /
+   * `agent.model.netOff` / `agent.status.session` / `agent.history.none` / `agent.history.option`）——
+   * 首版刻意不新增键：往 `zh-CN.js` 的 `agent` 段插键会把它**之后**的所有行推位，牵动 01/02/04/06/07/08/09
+   * 篇里十余处 `zh-CN.js:<行号>` 锚点。等 bar 的事实与措辞定下来再一次性补专用键（届时同步重取锚点）。
+   */
+  function renderStatusBar() {
+    const dot = $("#agent-statusbar-dot");
+    const facts = $("#agent-statusbar-facts");
+    if (!dot || !facts) return;
+    dot.setAttribute("data-state", statusBarDotState());
+    const model = String(cfg.model || "") || T("agent.model.none");
+    // 出网：开时只显示标签（"出网"），关时用既有的「出网已关」（含状态，避免再借一个键）
+    const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
+    // 会话 id 很长（`session-<UTC 时间戳>-<随机后缀>`）：bar 里只留尾巴，全 id 在下方状态行里
+    const session = sessionId
+      ? T("agent.status.session", { id: "…" + String(sessionId).slice(-8) })
+      : T("agent.history.none");
+    const turns = messages.filter(function (m) {
+      return m && m.role === "user";
+    }).length;
+    const turnText = T("agent.history.option", { preview: T("agent.history.label"), n: turns });
+    facts.innerHTML = [
+      T("agent.settings.model") + " <b>" + esc(model) + "</b>",
+      esc(net),
+      esc(session),
+      esc(turnText),
+    ].join(" · ");
+  }
+
+  // 包装（先留原函数引用再赋值；三处包装只多一次 bar 重绘，无副作用）
+  const baseRenderMessages = renderMessages;
+  renderMessages = function () {
+    baseRenderMessages.apply(null, arguments);
+    renderStatusBar();
+  };
+  const baseSetStatusText = setStatusText;
+  setStatusText = function () {
+    baseSetStatusText.apply(null, arguments);
+    renderStatusBar();
+  };
+  const baseApplyConfigToForm = applyConfigToForm;
+  applyConfigToForm = function () {
+    baseApplyConfigToForm.apply(null, arguments);
+    renderStatusBar();
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

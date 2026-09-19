@@ -259,7 +259,7 @@
           <button type="button" id="agent-history-delete" class="-btn secondary -btn--sm -agent-history-delete" disabled data-i18n-attr="title:agent.history.deleteTitle"><span data-i18n="agent.history.delete">删除</span></button>
         </div>
         <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
-        <div class="-agent-composer">
+        <div class="-agent-composer"><div id="agent-statusbar" class="-agent-statusbar"><span id="agent-statusbar-dot" class="-agent-statusbar-dot" data-state="idle"></span><span id="agent-statusbar-facts" class="-agent-statusbar-facts"></span></div>
           <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea>
           <div class="-agent-composer-actions">
             <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
