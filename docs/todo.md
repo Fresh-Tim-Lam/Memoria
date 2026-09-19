@@ -243,22 +243,7 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 
 ### 验证机制分配（2026-09-09）
 
-> 通用基线（每项都过）：`py_compile` / `node --check` / IDE 诊断 0 错；改动前端 UI 后 i18n 扫描 `rows=0`（`scripts/scan_ui_strings.py`）。真机类标 `[真机]`，由用户按清单执行，Agent 提供步骤与判定标准。
-
-| 计划项 | 验证机制（手段/工具） | 通过标准 |
-| --- | --- | --- |
-| M1 原子写 | 写盘点是否 tmp+replace；临时副本压力脚本（反复写读+半程中断） | 报告列明；中断后无半包可读 |
-| M2 保存链路（A5+C2） | 临时副本断言（结尾回车→save→`ranges_resynced=1`→KP 重解析 ok）；`[真机]` 面板行号自更新 | 脚本 PASS；真机免手动刷新 |
-| M3 索引作业化 | 同一保存路径前后计时/计数；检索一致；scheduler VM 断言合并计数 | 前后对比 + 连续保存只重建 1 次 |
-| M4 预览带静默重绘 | 代码审查（无 `scrollIntoView`/flash）+ `[真机]` 保存后带位置更新且不滚动 | 代码路径证据 + 真机通过 |
-| M5 调度内核 | scheduler VM 单测（merge/优先级/epoch/flush）+ `[真机]` `[job]` 日志与 queue 收敛 | 单测全 PASS；`queued=0` |
-| M6 KP 创建作业化 | 连续 2+ 次创建入队即返回；完成后轮询断言 KP 可见 | 无阻塞；完成后列表/跳转可用 |
-| M7 F01–F03 评估 | `python -m memoria.cli.main validate <kb>`；`repair_path_cascade` 干跑；`diagnose_image_refs` 输出断言；UI `[真机]` | validate 0 issue；干跑与实操一致；输出合法 |
-| B2 文件夹重命名 | rename-test 三方核对（文件/sidecar/manifest）+ partial 注入 | 脚本 PASS；partial 上屏首项错误 |
-| B3 F2 | `[真机]`：文件/文件夹各一次 + 弹窗已开不劫持 + 输入框不劫持 | 真机全通过 |
-| B6 md 链接改写 | 临时副本断言：dir 重命名后 `](...)` 相对链接正确；跨层/`../` 用例 | 断言 PASS（根/子目录/同层） |
-| D1 图片渲染 | 代码审查（无 lazy/overflow/圆角缺失）+ `[真机]` 图片管理目测 | 审查证据 + 缩略图全显示 |
-| A6/A7 回归 | 见 M1/M3；snapshot 前跑全量临时库冒烟 | 冒烟 PASS 后再提交 |
+> 该表属**施工期验证方法论**（"每项用什么手段验、通过标准是什么"），按规则 8.3 已移到 [design/maintenance-benchmark.md §9](design/maintenance-benchmark.md)（原地不再维护副本）；通用基线（`py_compile` / `node --check` / i18n `rows=0` 等）以 [AGENTS.md §2.2](../../AGENTS.md) 的验证阶梯为准。
 
 **§12 遗留（非门禁项）**：打开库 `sync_kb_pending` 全库扫描 ~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。
 
@@ -270,6 +255,7 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 
 | # | 任务 | 现状 |
 | --- | --- | --- |
-| AG01 | 引用 agent 回复内容再追问（选中/引用某条回复作下一轮显式上下文） | 💡 K1 需求待规格化（粒度=整条/选区、前端入口、请求形状与上限；2026-09-19 用户提出） |
-| AG02 | 助手气泡不渲染 Markdown | 🔄 K2（**代码完成·验收未闭环**）：`agent-panel.js:1621-1728` + `app.css:4906-4950`；证据 = harness 8646 造会话实测 20 项断言（见 [docs-management.md §4.2](conventions/docs-management.md)）。未覆盖：真机 WebView2 观感 |
+| AG01 | 引用 agent 回复内容再追问（选中/引用某条回复作下一轮显式上下文） | 💡 K1 需求待规格化（粒度=整条/选区、前端入口、请求形状；2026-09-19 用户提出） |
+| AG02 | 助手气泡不渲染 Markdown | 🔄 K2（**代码完成·验收未闭环**）：`agent-panel.js:1621-1728` + `app.css:4906-4950`；证据 = harness 8646 造会话实测 20 项断言（登记见 docs-management §4.2）。未覆盖：真机 WebView2 观感 |
 | AG03 | dsh M2 剩余：`session-reference`（跨会话引用） | ⏳ K1（设计稿 §8；无前端入口，收益偏弱故排后） |
+| AG04 | **工具与能力包路线图**：写能力（文件增删改/建点连边改边类型）、联网收集、skill 机制、宿主接口（悬浮卡片/定时唤醒/主动对话）+ token 三级预算与工具元层 + 基准集 L1/L2/L3 | ⏳ K3 待评审（设计稿 [design/agent-capabilities.md](design/agent-capabilities.md)；P1–P6 待拍板，阶段建议 T1→B1→W1→W2→N1→S1→H1） |

@@ -80,3 +80,27 @@
 - ~~L2 是否自动化~~ ✅ 直接自动化：用 browser/harness 驱动操作序列并采集（counters / PerformanceObserver / 面板时延）；手动清单仅作兜底。
 - ~~语料是否含 embedding~~ ✅ 默认档**关闭**（模型噪声不入维护基准）；预留 `--embed` 档供后续考核完整写链路。
 
+---
+
+## 9. 附：施工期验证机制分配（2026-09-09，历史记录）
+
+> 由 `docs/todo.md` §12 按台账规则 8.3 移入（该表是**验证方法论**，属设计域；台账原地只留指针）。
+> 通用基线（每项都过）：`py_compile` / `node --check` / IDE 诊断 0 错；改动前端 UI 后 i18n 扫描 `rows=0`（`scripts/scan_ui_strings.py`）——与 [AGENTS.md §2.2](../../AGENTS.md) 的验证阶梯一致。真机类标 `[真机]`，由用户按清单执行，Agent 提供步骤与判定标准。
+
+| 计划项 | 验证机制（手段/工具） | 通过标准 |
+| --- | --- | --- |
+| M1 原子写 | 写盘点是否 tmp+replace；临时副本压力脚本（反复写读+半程中断） | 报告列明；中断后无半包可读 |
+| M2 保存链路（A5+C2） | 临时副本断言（结尾回车→save→`ranges_resynced=1`→KP 重解析 ok）；`[真机]` 面板行号自更新 | 脚本 PASS；真机免手动刷新 |
+| M3 索引作业化 | 同一保存路径前后计时/计数；检索一致；scheduler VM 断言合并计数 | 前后对比 + 连续保存只重建 1 次 |
+| M4 预览带静默重绘 | 代码审查（无 `scrollIntoView`/flash）+ `[真机]` 保存后带位置更新且不滚动 | 代码路径证据 + 真机通过 |
+| M5 调度内核 | scheduler VM 单测（merge/优先级/epoch/flush）+ `[真机]` `[job]` 日志与 queue 收敛 | 单测全 PASS；`queued=0` |
+| M6 KP 创建作业化 | 连续 2+ 次创建入队即返回；完成后轮询断言 KP 可见 | 无阻塞；完成后列表/跳转可用 |
+| M7 F01–F03 评估 | `python -m memoria.cli.main validate <kb>`；`repair_path_cascade` 干跑；`diagnose_image_refs` 输出断言；UI `[真机]` | validate 0 issue；干跑与实操一致；输出合法 |
+| B2 文件夹重命名 | rename-test 三方核对（文件/sidecar/manifest）+ partial 注入 | 脚本 PASS；partial 上屏首项错误 |
+| B3 F2 | `[真机]`：文件/文件夹各一次 + 弹窗已开不劫持 + 输入框不劫持 | 真机全通过 |
+| B6 md 链接改写 | 临时副本断言：dir 重命名后 `](...)` 相对链接正确；跨层/`../` 用例 | 断言 PASS（根/子目录/同层） |
+| D1 图片渲染 | 代码审查（无 lazy/overflow/圆角缺失）+ `[真机]` 图片管理目测 | 审查证据 + 缩略图全显示 |
+| A6/A7 回归 | 见 M1/M3；snapshot 前跑全量临时库冒烟 | 冒烟 PASS 后再提交 |
+
+> 状态：`docs/todo.md` 的 [§12「施工总表」](../todo.md) 只记 B2/B3/B6/B7/B8/C4/E3 等**未收口**项的现状；上表仅是"这类改动怎么验"的历史口径，不表示这些项现在的完成状态。
+
