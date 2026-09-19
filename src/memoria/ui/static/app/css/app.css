@@ -2396,13 +2396,17 @@ body.-win-dragging {
     z-index: 6;
     pointer-events: auto;
     /* 顶栏的**主要收缩项**：唯一"可以让位到很窄"的弹性元素（min-width 之外的下限）；
-       flex:1 1 auto + 显式 flex-shrink 放大 ⇒ 窄窗口先缩它，再谈左段按钮（见 memoria.css #toolbar 块） */
-    flex: 1 1 auto;
+       flex-shrink 放大 ⇒ 窄窗口先缩它，再谈左段按钮（见 memoria.css #toolbar 块）。
+       **flex-grow: 0**：宽度就是下面的 width，不参与分空白 —— 原来 `flex:1 1 auto` 会让它
+       把中段剩余空白吃光，顶栏几乎没有可拖拽的空隙（2026-09-19 用户反馈「搜索框小一点、给
+       拖动留空间」）；空白改由两处 `.-titlebar-drag-spacer`（flex:1 1 0）分走 = 可拖拽区 */
+    flex: 0 1 auto;
     flex-shrink: 12;
     /* 下限 = 内部两个不可再缩的子块之和（范围开关 ~66px + 输入框 min-width:4.5rem + gap/padding）；
-       不能取 0 —— 否则子块外溢出盒，会抬升 #toolbar 的 scrollWidth（溢出仍可见，不受本盒约束） */
+       不能取 0 —— 否则子块外溢出盒，会抬升 #toolbar 的 scrollWidth（溢出仍可见，不受本盒约束）。
+       故**只收窄首选宽度，不动这个下限**（真机窄窗口的收缩行为保持不变） */
     min-width: 9.5rem;
-    width: min(380px, 42vw);
+    width: min(240px, 26vw);
     max-width: calc(100% - 200px);
     display: flex;
     align-items: center;
