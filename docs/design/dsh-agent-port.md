@@ -257,6 +257,77 @@ src/memoria/services/agent/
 
 **文档**：`reference/agent-guide/01` §2.4 两行（chip 渲染 / 拖拽插入）+ §5 坑 17 重写 + §6/§7 按实测重取；`10` §2.15 段落顺序 + §6 新增「系统提示组装」行；`conventions/docs-management.md §4.2` 登记。
 
+### 6.8 M2 compaction 实施记录（2026-09-18：吃 `compaction/compaction` + `compaction-basic`，已落地）
+
+> 用户拍板落盘口径 = **持久化进会话 JSONL**（见 §8 表下注）。**读码后更正一条**：本条**不需要**
+> bump `SESSION_FORMAT_VERSION` —— 理由见下。
+
+**范围界定**：上游 `compaction/` 有 5 个子包，本地只吃两个：
+
+| 上游包 | 吃否 | 理由 |
+|---|---|---|
+| `compaction`（接缝 / 不变量 / 工具配对） | ✅ | 切割点平衡与 fail-closed 判据的核心语义 |
+| `compaction-basic`（区域选择 + 摘要器） | ✅ | 阈值/保留比例、8 段骨架、KV 前缀对齐 |
+| `compaction-tool-result-pruner` | ❌ 留后 | 免模型的旧工具输出裁剪，价值独立、可单独落地 |
+| `compaction-image-offload` | ❌ | 本地无图片内容块 |
+| `command-compact` | ❌ | slash 命令，M1 已定不做（P5） |
+
+**改动**（1 个新模块 + 4 个既有文件 + 1 个新测试文件）：
+
+- **新增 `services/agent/compaction.py`**（语义移植自 `compaction/{compaction,compaction-basic}`）：
+  - 常量 `COMPACT_THRESHOLD_RATIO = 0.8` / `RETAIN_RATIO = 0.16`（上游 `config.ts:20-23` 同值）、
+    `SUMMARY_MAX_TOKENS = 8192`（同上游默认）、`SUMMARY_RETRY_POLICY`（`max_retries=1`，对齐上游
+    `compactionRetries` 默认 1）；**本地新增** `MIN_SPAN_CHARS = 2000`；
+  - `COMPACTION_INSTRUCTION` = 上游 8 段骨架（Primary Request…Critical Context）的**中文落法**：
+    段名与顺序、以及四条规则（逐字保留确切路径/命令/错误串、忠实记录用户纠正、不得提及本次压缩、
+    只输出正文且不调用工具）+「旧 checkpoint 要**合并**不要照抄」一条不少；上游英文原文留在上方注释；
+  - `CHECKPOINT_PREAMBLE` + `SUMMARY_OPEN_TAG`/`CLOSE_TAG` + `frame_summary()`（上游 `frameSummary`）；
+  - `balanced_cuts()` = 上游 `tool-pairing.ts::toolPairingBalancedBefore` 的折叠语义（未闭合工具调用数）；
+  - `select_span()`：尾部逐字保留 ≥ `retain_chars()` → 切割点必须平衡 → 尽量多压 → 两条本地下限
+    （覆盖量 ≥ `MIN_SPAN_CHARS`、区间内至少一条 `user/message`）；区间恒为**前缀**；
+  - `summarize_span()`：**同一份 system + tools + 被覆盖区间消息**，指令**只在最后**（上游注释给的理由
+    是复用 provider 的 KV 前缀缓存）；fail-closed：无终止事件 / `error` / `aborted` / `max-tokens` /
+    返回工具调用 / 正文为空 → `CompactionError`。
+- `session/history.py`：新增事件类型常量 `COMPACTION`、`conversation_events()`、`replay_events()`；
+  `_compaction_plan()` + `_replay(skip=/emit_at=)` —— 被覆盖的 seq 全部跳过，并在**区间最旧那条 seq 的
+  位置**出一条摘要 `user` 消息（时序仍在原处）；`build_history()` 先应用压缩、再做兜底截断。
+- `ask.py`：`build_loop()` 新增可选 `registry` / `system`（预置则不就地重建，省略时行为不变）；
+  `ask()` 在追加本轮 `user/message` **之前**调 `_compact_if_needed()` —— 超预算才压，且**失败不打断
+  提问**（`summarize_span()` 自身 fail-closed，这里只记 warning、按未压缩历史继续）；压缩成功即
+  **重新回放**，让本轮请求用上摘要视图。
+- `loop.py`：`_usage_payload()` 提为公开 `usage_payload()`（压缩事件与 `loop/end`、`AskResult.usage`
+  共用同一用量形状，避免第三份拷贝）；`usage_report.py` 的文档引用同步。
+
+**为什么不动 `SESSION_FORMAT_VERSION`（更正 §8 下注里我先写的那句）**：`compaction` 是**纯追加**的
+记录类型，且三个既有读者对未知 type 都是**跳过**而非报错 —— `history._replay()` 落到未知 type 就
+`index += 1`、`conversation_messages()` 只认 user/assistant、`usage_report` 只认 `loop/end`。故旧版本
+读新文件会**降级为「没有压缩」**（把被覆盖区间逐字重发），既不误读也不崩 —— 正等价于上游要求的
+`ignorable: true` 语义。按上游规则（只有**结构**变更才 bump），本变更不 bump。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（新模块 + 4 改动文件） | 全过 |
+| `pytest -q` | **104 passed**（原 81 + 新增 **23** 例 `tests/test_agent_compaction.py`） |
+| 覆盖点 | 区域选择（工具配对切割点 / 尾部逐字保留 / 最小覆盖量 / 必须含用户消息 / 尽量多压）；回放（原位替换、链式只出最新那份、无效记录不吞事件、**工具配对完好**、可关压缩取原始视图）；摘要器 fail-closed 六例（error / aborted / max-tokens / 空正文 / 工具调用 / 取消）+ 请求形状（指令在最后一条 user、对话前缀原样保留）；端到端（长会话自动压缩并落 `compaction`、主回合请求**不再含被覆盖旧料**、**压缩失败照常答题**、短会话一次多余调用都不发、**仅追加**（既有记录逐条不变 + seq 连续 + 仍是「一行一 JSON」）） |
+| 依赖面 | 纯标准库，**零新依赖** |
+
+**语义偏差与取舍**：① 阈值/保留由「上下文窗口比例」改为**字符预算比例**（本地无 context window
+概念、也不内嵌权重）；② 不移植上游 `compaction/start` + `compaction/end` 事务对与锁 —— 单写者 +
+仅追加，一条记录足够；③ 上游记 `shadowedSeqs` + `shadowedTokenCount`（启发式 token 价），本地记
+`shadowed`（seq）+ `shadowed_chars`（字符，与 `event_chars()` 同口径）；④ 本地新增两条下限。
+
+**已知缺口（本轮未做）**：① **摘要调用的用量不进 benchmark** —— 它记在 `compaction.usage`（与
+`loop/end` 同形状），但 `scripts/benchmark/usage/report_usage.py` 只扫 `loop/end` ⇒ 报告**不含**压缩
+开销（要做就是给报告加一类行）；② `compaction-tool-result-pruner` 未吃；③ 无手动触发（上游 `/compact`，
+本地方案 P5 已定不做 slash 命令）。
+
+**未实测**：真实模型端点下的**摘要质量**与「压缩前后 A/B」（§8 的 M2 门禁 —— 上下文长度易量，
+**回答可回溯性**需真人用真实库对照）。
+
+**文档**：`reference/agent-guide/10` 会话格式表新增 `compaction` 事件 + 回放口径；`conventions/docs-management.md §4.2` 登记。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -279,9 +350,15 @@ src/memoria/services/agent/
 | **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路 | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
 
-> **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。因此 M2 落地时会**改会话格式** ⇒ 需同步 `SESSION_FORMAT_VERSION`、老会话兼容策略、以及 `reference/agent-guide/10` 的会话格式表。
+> **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。
 >
-> **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）。**剩余**：compaction（`compaction/*` 四个包）、session-query（`session-query/*` 四个包）、会话标题（`session/title*` + 投影）。
+> **更正（读码后）**：该新增类型是**纯追加**且旧读者对未知 type 一律跳过 ⇒ 旧版本读新文件只是
+> **降级为「没有压缩」**，不误读不崩（等价上游 `ignorable: true`）⇒ **不需要** bump
+> `SESSION_FORMAT_VERSION`、也无老会话迁移问题。详见 §6.8。
+>
+> **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、**§6.8（compaction）**。**剩余**：
+> session-query（`session-query/*` 四个包）、会话标题（`session/title*` + 投影）、
+> `compaction-tool-result-pruner`（免模型的旧工具输出裁剪）。
 
 ---
 
@@ -329,3 +406,5 @@ src/memoria/services/agent/
 | 2026-09-17 | **M1b 落地**（吃 `core`/`session`/`context`/`interaction`）：新增 11 文件 / 2,236 行（loop、system-prompt 组装、11 个只读工具与注册表、jsonl 会话存储、fail-closed 审批、`ask()` 入口、`scripts/agent_ask.py`、12 例单测）。验收：`py_compile` 全过、`pytest 33 passed`、`--mock` 离线竖切跑通（先 `search_kb` 再作答、输出 `文件:行号` 锚点）、**零写入**（逐文件对比仅新增会话 jsonl）。偏差见 §6.6 |
 | 2026-09-18 | **M2 上半落地**（吃 `context/file-reference`）：`services/agent/prompt.py` 新增常量 `FILE_REFERENCE_SECTION`（上游 `FILE_REFERENCE_PROMPT` 的中文落法）并按上游门控注入（**仅当 `read_document` 在场**），段落顺序变为「基础身份 → 运行环境 → 库内指令 → 可用工具 → 用户引用（`@路径`） → 回答要求」；删掉同日早些时候临时塞进「基础身份」的那一行。顺带修掉前端 `@` 语法两处**真缺陷**（邮箱 `a@b.com` 被误渲染成 chip / 含空格路径完全无法表示）—— `MENTION_RE` 换成上游 `activeAtToken` 语义的四分组式 + 新增 `formatMention()`（上游 `formatFileMention` 语义）。验收：`pytest 81 passed`（+1 门控单测）、harness 浏览器实测 4 chip + `a@b.com` 不被识别 + 插入侧 `@"含空格"` 形式。偏差与证据见 §6.7 |
 | 2026-09-18 | **拍板 M2 落盘口径**：compaction 的结果**持久化进会话 JSONL**（新增记录类型，`build_history()` 回放时替换被覆盖区间），对齐上游「把摘要写进会话事件面」；**不**走「请求期变换 + cache 缓存摘要」。故 compaction 落地时会改会话格式 ⇒ 需同步 `SESSION_FORMAT_VERSION` 与老会话兼容策略（见 §8 表下注）。同轮还确立：**先补 M2 的最小一块（上下文引用）**，compaction / session-query / 标题留后 |
+| 2026-09-18 | **M2 compaction 落地**（吃 `compaction/compaction` + `compaction-basic`）：新增 `services/agent/compaction.py`（阈值/保留比例同上游 0.8/0.16、`MAX_TOKENS=8192`、8 段骨架的中文落法 + `frameSummary` + 工具配对切割点 + KV 前缀对齐的摘要调用 + fail-closed）；`session/history.py` 新增 `COMPACTION` 事件与压缩回放（原位出摘要、链式只出最新、无效记录不吞事件）；`ask.py` 加自动触发（超预算才压、**失败不打断提问**）；`loop.py` 的 `_usage_payload` 提为公开 `usage_payload`。验收：`pytest 104 passed`（+23 例 `tests/test_agent_compaction.py`）。偏差、缺口与未实测见 §6.8 |
+| 2026-09-18 | **更正**：上一条拍板笔记里「需同步 `SESSION_FORMAT_VERSION`」**不成立** —— `compaction` 是纯追加类型且三个既有读者对未知 type 一律跳过 ⇒ 旧版本读新文件只降级为「没有压缩」，不误读不崩（等价上游 `ignorable: true`）。按上游「只有结构变更才 bump」的规则，**不 bump**。已同步修 §8 表下注与 §6.8 |

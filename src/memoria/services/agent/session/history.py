@@ -18,6 +18,19 @@
 | `tool/result` | `{id,name,content,anchors}` | `Message(role=tool, content, tool_call_id=id, name=name)` |
 | `tool/call` | `{id,name,arguments}` | **跳过**（信息已在 assistant 的 `tool_calls` 里） |
 | `step/start`、`step/error`、`loop/end` | — | **跳过**（非对话内容） |
+| `compaction` | `{summary, shadowed:[seq…], …}` | 在 `shadowed` 中最旧的 seq 处出一条 `user` 消息（摘要 + checkpoint 框定），其 `shadowed` 里的 seq **全部跳过** |
+
+## 压缩回放（M2）
+
+`compaction` 事件由 `services/agent/compaction.py` 产出形状、由 `ask.py` 落盘（单写者 + 仅追加）。
+回放口径：
+
+- 摘要出自 `compaction.frame_summary()`（**延迟导入**：`compaction` 已按「事件常量」方向依赖本模块，
+  反向只能延迟，避免循环导入）；
+- 摘要在**原区间最旧一条 seq 的位置**出现（= 时序上仍在原处），而不是追加在末尾；
+- **链式压缩**：后一次压缩若覆盖前一次区间（含前一条 `compaction` 记录自身），则只出**最新**那份
+  合并摘要 —— `emit_at` 以同一键覆盖，旧摘要不再重复出现；
+- 无效记录（`shadowed` 为空 / 摘要为空）**忽略**，不吞掉任何事件（fail-safe：宁可当没压过）。
 
 ## 保真度（**全保真回放**，仅异常轮降级）
 
@@ -33,6 +46,9 @@ assistant 带 `tool_calls` + 紧随其后的 `tool` 消息（`tool_call_id` 与 
 一起丢），保证输出里绝不出现"孤立 tool_calls"或"孤儿 tool 消息"。
 
 ## 容量上限与截断策略
+
+上游用 compaction（把旧区间摘成摘要）解决长会话；本地 M2 起同构（见上「压缩回放」），
+**截断只是兜底**（硬上限）：
 
 - `MAX_HISTORY_MESSAGES = 40` 条、`MAX_HISTORY_CHARS = 32000` 字符（两个常量均导出）；
 - **从最新往旧保留**（越近的上下文越重要）；至少保留最新 1 条（单条超预算也保留，
@@ -56,11 +72,14 @@ from memoria.services.agent.llm import Message, Role, ToolCall
 from memoria.services.agent.session.store import read_session
 
 __all__ = [
+    "COMPACTION",
     "MAX_HISTORY_CHARS",
     "MAX_HISTORY_MESSAGES",
     "SESSION_SCAN_MAX_BYTES",
     "build_history",
+    "conversation_events",
     "conversation_messages",
+    "replay_events",
     "summarize_events",
     "summarize_session",
     "summarize_session_file",
@@ -76,6 +95,8 @@ USER_MESSAGE = "user/message"
 ASSISTANT_MESSAGE = "assistant/message"
 TOOL_CALL = "tool/call"
 TOOL_RESULT = "tool/result"
+#: 压缩事件（形状由 `services/agent/compaction.py` 定、`ask.py` 落盘；见「压缩回放」）。
+COMPACTION = "compaction"
 
 #: 会话列表里 `preview` / `title` 的最大字符数。
 PREVIEW_CHARS = 80
@@ -137,13 +158,65 @@ def _paired(calls: Sequence[ToolCall], results: Sequence[Mapping[str, Any]]) -> 
     )
 
 
-def _replay(events: Sequence[Mapping[str, Any]]) -> list[Message]:
-    """按事件顺序重建消息序列（配对失败的整轮丢弃，见模块 docstring）。"""
+def _summary_message(summary: str) -> Message:
+    """把落盘的摘要正文包成替换消息（框定语出自 `compaction.frame_summary()`）。"""
+    # 延迟导入：`compaction` 在模块层依赖本模块的事件常量，反向只能延迟（避免循环导入）
+    from memoria.services.agent.compaction import frame_summary
+
+    return Message(role=Role.USER, content=frame_summary(summary))
+
+
+def _compaction_plan(
+    events: Sequence[Mapping[str, Any]],
+) -> tuple[dict[int, str], set[int]]:
+    """把 `compaction` 事件折成（在哪些 seq 上出摘要, 要跳过哪些 seq）。
+
+    见模块 docstring 的「压缩回放」：摘要落在原区间最旧的 seq 处；链式压缩只出最新那份；
+    无效记录（空 `shadowed` / 空摘要）忽略。
+    """
+    emit_at: dict[int, str] = {}
+    skip: set[int] = set()
+    for event in events:
+        if event.get("type") != COMPACTION:
+            continue
+        data = _data(event)
+        raw = data.get("shadowed")
+        seqs = (
+            [seq for seq in raw if isinstance(seq, int)]
+            if isinstance(raw, Sequence) and not isinstance(raw, (str, bytes))
+            else []
+        )
+        summary = str(data.get("summary") or "").strip()
+        if not seqs or not summary:
+            continue  # 无效记录：忽略，不吞掉任何事件（fail-safe）
+        skip.update(seqs)
+        emit_at[min(seqs)] = summary  # 后写覆盖 ⇒ 链式压缩只出最新那份合并摘要
+    return emit_at, skip
+
+
+def _replay(
+    events: Sequence[Mapping[str, Any]],
+    *,
+    emit_at: Mapping[int, str] | None = None,
+    skip: set[int] | None = None,
+) -> list[Message]:
+    """按事件顺序重建消息序列（配对失败的整轮丢弃，见模块 docstring）。
+
+    `emit_at` / `skip` 由 `_compaction_plan()` 给出：被压缩覆盖的 seq 一律跳过，并在该区间
+    **最旧那条 seq** 处补一条摘要消息（位置不变，见「压缩回放」）。
+    """
     messages: list[Message] = []
     index = 0
     total = len(events)
     while index < total:
         event = events[index]
+        seq = event.get("seq")
+        if skip and isinstance(seq, int) and seq in skip:
+            summary = (emit_at or {}).get(seq)
+            if summary:
+                messages.append(_summary_message(summary))
+            index += 1
+            continue
         kind = event.get("type")
         if kind == USER_MESSAGE:
             messages.append(Message(role=Role.USER, content=_text(event)))
@@ -208,6 +281,29 @@ def _truncate(messages: Sequence[Message], max_messages: int, max_chars: int) ->
     return kept[start:]
 
 
+def conversation_events(kb_path: str, session_id: str) -> list[dict[str, Any]]:
+    """会话的**事件**列表（跳过 header）—— 供压缩选择区间用（`compaction.select_span`）。"""
+    return _conversation_events(kb_path, session_id)
+
+
+def replay_events(
+    events: Sequence[Mapping[str, Any]],
+    *,
+    apply_compaction: bool = True,
+) -> list[Message]:
+    """把**给定事件列表**回放成消息序列（不做容量截断）。
+
+    默认应用已落盘的压缩覆盖（`apply_compaction=True`）：压缩器据此拿到「有效视图」
+    （既有摘要 + 更新的轮次），从而**合并**旧 checkpoint 而不是把原文再喂一遍
+    （对齐上游「旧 checkpoint 要合并、不要照抄」）。
+    """
+    if apply_compaction:
+        emit_at, skip = _compaction_plan(events)
+    else:
+        emit_at, skip = {}, None
+    return _replay(events, emit_at=emit_at, skip=skip)
+
+
 def build_history(
     kb_path: str,
     session_id: str,
@@ -217,10 +313,13 @@ def build_history(
 ) -> list[Message]:
     """把会话回放成**可再发**的消息序列（含工具轮；容量截断见模块 docstring）。
 
+    会先应用已落盘的 `compaction` 事件（见「压缩回放」），再按容量做兜底截断。
     会话文件不存在时返回空列表（= 全新会话，等价于不带历史）。
     截断策略：从最新往旧保留，最多 `max_messages` 条 / `max_chars` 字符。
     """
-    return _truncate(_replay(_conversation_events(kb_path, session_id)), max_messages, max_chars)
+    events = _conversation_events(kb_path, session_id)
+    emit_at, skip = _compaction_plan(events)
+    return _truncate(_replay(events, emit_at=emit_at, skip=skip), max_messages, max_chars)
 
 
 def _first_user_text(events: Sequence[Mapping[str, Any]]) -> str:

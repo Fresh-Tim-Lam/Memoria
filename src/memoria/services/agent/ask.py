@@ -26,6 +26,14 @@ M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；
 
 `provider` 可注入：省略时才 `load_config()` + `create_provider()`（联网由 provider
 承担，本模块自身不联网）。
+
+**长会话压缩（M2）**：追加本轮 `user/message` **之前**，若回放出的历史超过
+`compaction.compact_threshold_chars()`，先按 `compaction.select_span()` 选出最旧的合法区间、
+跑一次摘要调用，并把结果作为一条 `compaction` 事件落盘（被覆盖的 seq 记在 `shadowed` 里；
+`build_history()` 回放时据此在原位置出摘要）。压缩**失败不打断提问**（见
+`_compact_if_needed()`：`summarize_span()` 自身 fail-closed，但这里只记日志、按未压缩历史继续）。
+为了让摘要调用成为「上一次已路由请求」的真实前缀（复用 provider 的 KV 缓存），压缩与主回合
+**共用同一份 `system` + 工具集** —— 故本模块先建一次 `registry` / `system` 再传给 `build_loop()`。
 """
 
 from __future__ import annotations
@@ -37,6 +45,13 @@ from dataclasses import dataclass
 from typing import Any
 
 from memoria.services.agent.approvals import DEFAULT_POLICY, ApprovalPolicy
+from memoria.services.agent.compaction import (
+    CompactionError,
+    compact_threshold_chars,
+    event_chars,
+    select_span,
+    summarize_span,
+)
 from memoria.services.agent.llm import (
     AgentConfig,
     LlmProvider,
@@ -45,9 +60,20 @@ from memoria.services.agent.llm import (
     create_provider,
     load_config,
 )
-from memoria.services.agent.loop import DEFAULT_MAX_ITERATIONS, AgentLoop, CancelToken, LoopResult
+from memoria.services.agent.loop import (
+    DEFAULT_MAX_ITERATIONS,
+    AgentLoop,
+    CancelToken,
+    LoopResult,
+    usage_payload,
+)
 from memoria.services.agent.prompt import build_system_prompt
-from memoria.services.agent.session.history import build_history
+from memoria.services.agent.session.history import (
+    COMPACTION,
+    build_history,
+    conversation_events,
+    replay_events,
+)
 from memoria.services.agent.session.store import SessionStore, new_session_id, session_file
 from memoria.services.agent.tools.kb import DEFAULT_TOP_K, build_kb_tools
 from memoria.services.agent.tools.registry import ToolRegistry
@@ -90,6 +116,8 @@ def build_loop(
     provider: Any,
     model: str = "",
     session: SessionStore | None = None,
+    registry: ToolRegistry | None = None,
+    system: str | None = None,
     max_iterations: int = DEFAULT_MAX_ITERATIONS,
     top_k: int = DEFAULT_TOP_K,
     approval: ApprovalPolicy | None = None,
@@ -100,9 +128,16 @@ def build_loop(
     on_text: Callable[[str], None] | None = None,
     cancel: CancelToken | None = None,
 ) -> AgentLoop:
-    """组装一个绑定了知识库只读工具的循环（供 `ask()` 与测试复用）。"""
-    registry = ToolRegistry(build_kb_tools(kb_path, top_k=top_k))
-    system = build_system_prompt(kb_path, tools=registry.schemas(), model=model)
+    """组装一个绑定了知识库只读工具的循环（供 `ask()` 与测试复用）。
+
+    `registry` / `system` 可**预置**：`ask()` 为了让压缩调用与主回合共用同一份 system + 工具集
+    （KV 前缀缓存对齐，见 `_compact_if_needed()`）而先建一次再传进来。省略时按
+    `kb_path` + `model` 就地构建，与 M1 行为完全一致。
+    """
+    if registry is None:
+        registry = ToolRegistry(build_kb_tools(kb_path, top_k=top_k))
+    if system is None:
+        system = build_system_prompt(kb_path, tools=registry.schemas(), model=model)
     return AgentLoop(
         provider=provider,
         tools=registry,
@@ -118,6 +153,78 @@ def build_loop(
         on_event=session.append if session is not None else None,
         cancel=cancel,
     )
+
+
+def _history_chars(messages: Sequence[Message]) -> int:
+    """消息序列的字符量（与 `compaction.event_chars()` 同口径：正文 + 工具调用名与参数）。"""
+    total = 0
+    for message in messages:
+        total += len(message.content or "")
+        for call in message.tool_calls or ():
+            total += len(call.arguments or "") + len(call.name or "")
+    return total
+
+
+def _compact_if_needed(
+    root: str,
+    session: SessionStore,
+    *,
+    history: Sequence[Message],
+    provider: Any,
+    system: str,
+    tools: Sequence[Any],
+    model: str,
+    timeout_s: float | None,
+    retry_policy: RetryPolicy | None,
+    cancel: CancelToken | None,
+) -> bool:
+    """历史超过预算时把最旧区间压成 checkpoint 并落盘；返回是否真的落了事件。
+
+    **失败不打断提问**（fail-open）：`summarize_span()` 自身是 fail-closed 的（任何异常路径都
+    抛 `CompactionError`，不产出半份摘要），这里只记一条 warning，让本轮按**未压缩**的历史继续
+    走 —— 压缩是优化，不该让用户的问题问不出去。
+    """
+    if _history_chars(history) <= compact_threshold_chars():
+        return False
+    events = conversation_events(root, session.session_id)
+    span = select_span(events)
+    if span is None:
+        return False
+    covered = list(events[span[0] : span[1]])
+    try:
+        call = summarize_span(
+            provider,
+            replay_events(covered),
+            system=system,
+            tools=tools,
+            model=model,
+            timeout_s=timeout_s,
+            retry_policy=retry_policy,
+            cancel=cancel,
+        )
+    except CompactionError as exc:
+        logger.warning("[agent-compaction] 压缩失败，本轮按未压缩历史继续：%s", exc)
+        return False
+    shadowed = [int(event["seq"]) for event in covered if isinstance(event.get("seq"), int)]
+    if not shadowed:
+        return False
+    shadowed_chars = sum(event_chars(event) for event in covered)
+    data: dict[str, Any] = {
+        "summary": call.text,
+        "shadowed": shadowed,
+        "shadowed_chars": shadowed_chars,
+        "model": call.model,
+    }
+    if call.usage is not None:
+        data["usage"] = usage_payload(call.usage)
+    session.append(COMPACTION, data)
+    logger.info(
+        "[agent-compaction] 已覆盖 %d 条事件（%d 字符）→ 摘要 %d 字符",
+        len(shadowed),
+        shadowed_chars,
+        len(call.text),
+    )
+    return True
 
 
 def ask(
@@ -159,6 +266,10 @@ def ask(
     active_provider = provider if provider is not None else create_provider(None, config=settings)
     active_model = model or (settings.model if settings is not None else "")
 
+    # 压缩与主回合**共用**同一份 system + 工具集（KV 前缀对齐，见模块 docstring 的 M2 段）
+    registry = ToolRegistry(build_kb_tools(root, top_k=top_k))
+    system = build_system_prompt(root, tools=registry.schemas(), model=active_model)
+
     history: list[Message] | None = None
     if replay and session_id:
         try:
@@ -169,12 +280,28 @@ def ask(
             history = build_history(root, session_id)
 
     session = SessionStore(root, session_id or new_session_id())
+    if history and _compact_if_needed(
+        root,
+        session,
+        history=history,
+        provider=active_provider,
+        system=system,
+        tools=registry.schemas(),
+        model=active_model,
+        timeout_s=timeout_s,
+        retry_policy=retry_policy,
+        cancel=cancel,
+    ):
+        # 压缩已落盘 ⇒ 重新回放，让本轮请求用上摘要视图（覆盖区间不再逐字重发）
+        history = build_history(root, session.session_id)
     session.append("user/message", {"text": text})
     loop = build_loop(
         root,
         provider=active_provider,
         model=active_model,
         session=session,
+        registry=registry,
+        system=system,
         max_iterations=max_iterations,
         top_k=top_k,
         approval=approval,

@@ -63,6 +63,7 @@ __all__ = [
     "CancelToken",
     "LoopResult",
     "StopReason",
+    "usage_payload",
 ]
 
 #: 单次提问允许的最大模型步数（上游无内置预算，此处是 M1 的安全上界）。
@@ -126,11 +127,11 @@ class LoopResult:
 
     def usage_dict(self) -> dict[str, int | bool | None]:
         """用量的可序列化快照（对齐 `UsageMeter.to_dict()` 的字段命名）。"""
-        return _usage_payload(self.usage)
+        return usage_payload(self.usage)
 
 
-def _usage_payload(usage: Usage) -> dict[str, int | bool | None]:
-    """`Usage` → 可序列化载荷；`loop/end` 事件与 `AskResult.usage` 共用同一形状。"""
+def usage_payload(usage: Usage) -> dict[str, int | bool | None]:
+    """`Usage` → 可序列化载荷；`loop/end` 事件、`AskResult.usage` 与压缩事件共用同一形状。"""
     return {
         "prompt_tokens": usage.prompt_tokens,
         "completion_tokens": usage.completion_tokens,
@@ -391,7 +392,7 @@ class AgentLoop:
             {
                 "stop_reason": stop_reason.value,
                 "iterations": iterations,
-                "usage": _usage_payload(usage),
+                "usage": usage_payload(usage),
                 "error": error,
             },
         )

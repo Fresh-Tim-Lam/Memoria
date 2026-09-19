@@ -1,9 +1,12 @@
 """会话用量聚合：把 `<kb>/.memoria/agent/sessions/*.jsonl` 的 `loop/end` 事件
 汇总成逐轮行与总量（**纯标准库、纯函数、只读**）。
 
-口径（字段与 `loop.py::_usage_payload()` 写进 `loop/end.usage` 的载荷一一对应）：
+口径（字段与 `loop.py::usage_payload()` 写进 `loop/end.usage` 的载荷一一对应）：
 
 - **一轮**（turn）= 一条 `loop/end` 事件（一次 `ask()` 里全部模型步数之和）；
+- **不含压缩开销**：M2 的 compaction 摘要调用把用量记在自己的 `compaction.usage`（与 `loop/end`
+  同形状，由 `ask.py` 落盘）里，本报告只扫 `loop/end` ⇒ 压缩消耗**不计入**任何一轮
+  （见 `docs/design/dsh-agent-port.md §6.8` 的「已知缺口」）；
 - `prompt` / `completion` / `total`：该轮输入 / 输出 / 合计 token；
 - `cache_hit` / `cache_miss`：端点上报的**命中 / 未命中**缓存 token。端点未给该
   形态字段时为 `None`（= **未知**，绝不写成 0）；OpenAI 形态只给命中量时，
