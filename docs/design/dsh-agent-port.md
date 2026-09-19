@@ -111,8 +111,8 @@
 | `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M2/M3 | 前端指令 | M2 |
 | `credentials/credentials-local` | 19 ts | 本地密钥**引用**（配置写名不写值） | ✅ 吃 | `services/agent/credentials.py` | **M1** |
 | `credentials/authorization` | 同上 | 授权流程 | ⏳ 需要 OAuth 类端点时 | — | M3 |
-| `compaction/*` | 33 ts | 长会话压缩、工具输出裁剪、`/compact` | ⏸ M2（长会话出现后） | `services/agent/compaction.py` | M2 |
-| `session-query/*` | 48 ts | 会话检索 | ⏸ M2 | — | M2 |
+| `compaction/*` | 33 ts | 长会话压缩、工具输出裁剪、`/compact` | ✅ 吃 `compaction` + `compaction-basic` + `compaction-tool-result-pruner`；`image-offload` / `command-compact` ❌ | `services/agent/compaction.py`、`services/agent/pruner.py` | **M2** |
+| `session-query/*` | 48 ts | 会话检索 | ✅ 吃 `session-query` 的 `extraction`+`filters` 与 `tool-session-query`；`session-query-sqlite` / `session-log-export` ❌ | `services/agent/session/query.py` | **M2** |
 | `api/*` · `sdk/*` · `bundle/*` | 162+21 ts | Client↔Host 远程层、JSON-RPC、profile 组合 | ❌ 不吃（若将来要对 Trae/ACP 对接，复用旧稿 D2 的 CLI 面即可） | — | — |
 | `storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*` | — | 非会话持久、技能、钩子、计划 | ⏸ 按需（`skill` 与既有 `.memoria/agent/` 提示词体系可能重合，M3 再评） | — | — |
 | `sandbox/*` · `shell/*` · `terminal/*` · `subprocess/*` · `ssh/*` · `lsp/*` · `mcp/*` · `browser-use/*` · `computer-use/*` · `subagent/*` · `workflow/*` · `jobs/*` · `schedule/*` · `native/*` | 大 | 执行与编排 | ❌ **不吃**（Memoria 不让它跑任意命令；也避免 CVE 面） | — | — |
@@ -268,7 +268,7 @@ src/memoria/services/agent/
 |---|---|---|
 | `compaction`（接缝 / 不变量 / 工具配对） | ✅ | 切割点平衡与 fail-closed 判据的核心语义 |
 | `compaction-basic`（区域选择 + 摘要器） | ✅ | 阈值/保留比例、8 段骨架、KV 前缀对齐 |
-| `compaction-tool-result-pruner` | ❌ 留后 | 免模型的旧工具输出裁剪，价值独立、可单独落地 |
+| `compaction-tool-result-pruner` | ❌ 留后（**2026-09-19 已由 §6.10 补上**） | 免模型的旧工具输出裁剪，价值独立、可单独落地 |
 | `compaction-image-offload` | ❌ | 本地无图片内容块 |
 | `command-compact` | ❌ | slash 命令，M1 已定不做（P5） |
 
@@ -320,7 +320,7 @@ src/memoria/services/agent/
 
 **已知缺口（本轮未做）**：① **摘要调用的用量不进 benchmark** —— 它记在 `compaction.usage`（与
 `loop/end` 同形状），但 `scripts/benchmark/usage/report_usage.py` 只扫 `loop/end` ⇒ 报告**不含**压缩
-开销（要做就是给报告加一类行）；② `compaction-tool-result-pruner` 未吃；③ 无手动触发（上游 `/compact`，
+开销（要做就是给报告加一类行）；② `compaction-tool-result-pruner` 未吃（**2026-09-19 已由 §6.10 补上**）；③ 无手动触发（上游 `/compact`，
 本地方案 P5 已定不做 slash 命令）。
 
 **未实测**：真实模型端点下的**摘要质量**与「压缩前后 A/B」（§8 的 M2 门禁 —— 上下文长度易量，
@@ -403,6 +403,87 @@ src/memoria/services/agent/
 **文档**：`reference/agent-guide/10` §2.15 新增「会话检索工具」条 + 会话事件面补 `compaction` 可检索一行 + §6/§7
 按实测重取；`conventions/docs-management.md §4.2` 登记。
 
+### 6.10 M2 工具结果裁剪实施记录（2026-09-19：吃 `compaction/compaction-tool-result-pruner`，已落地）
+
+> §6.8 曾把本包登记为「❌ 留后（价值独立、可单独落地）」—— 本轮补上，故 §8「M2 剩余」相应更新。
+
+**改动**（1 个新模块 + 4 个既有文件 + 1 个新测试文件）：
+
+- **新增 `services/agent/pruner.py`**（约 230 行，语义移植自上游该包 `config.ts` + `types.ts` + `index.ts`）：
+  - 常量 `PRUNE_MARKER`（上游同名字面量 `\n\n[... tool result middle pruned ...]\n\n` 逐字照抄）、
+    `PRUNE_THRESHOLD_CHARS = 8192` / `PRUNE_HEAD_CHARS = 4096` / `PRUNE_TAIL_CHARS = 1024`（同上游默认值）、
+    事件类型 `PRUNE = "compaction/prune"`（对齐上游事件名）；
+  - `PruneBudgets`（对齐上游 `ResolvedConfig` + `resolveConfig` 的**构造期**校验）：`threshold` 正整数、
+    `head`/`tail` 非负整数、**`head` + 标记 + `tail` ≤ `threshold`** —— 最后一条保证裁剪**永不增长**；
+  - `prune_text()`（对齐 `pruneContent`）：≤ 阈值返回 `None`（不改），否则取**前 `head` 码点 + 标记 +
+    后 `tail` 码点**。码点口径直接是 `len(str)`（Python `str` 无 UTF-16 代理对，等价上游
+    `codePointLength()`）；`tail=0` 走显式分支（`text[-0:]` 会把整串当末段的经典陷阱）；
+  - `apply_budget()`（回放用）：按**记录里落盘的**预算重建正文；`applied_chars()` = `head+标记+tail`；
+  - `prune_plan()`（对齐 `pruneSession` 的候选筛选）：只挑 `tool/result` 且正文超阈值的；**幂等**
+    （已有 `compaction/prune` 记录里的 seq 跳过）+ 可传 `skip`（调用方传「被 `compaction` 覆盖的 seq」，
+    那些本来就不进请求）；每条记 `{seq, id, chars_before, chars_after, head, tail}`；
+  - `prune_records()` / `prune_applied()`：前者取「已裁过的 seq」（幂等判据），后者给回放用的
+    `seq -> (head, tail)`（**后写覆盖**；**形状不全的记录整条忽略** —— fail-safe：宁可让模型看到原文，
+    也不拿半截预算去切正文）。
+- `session/history.py`：新增事件表行 + 「工具结果裁剪回放」小节；`_tool_message()` 接受裁剪表、
+  `_replay()` / `replay_events()` 新增 `prune` 参数、`build_history()` 自动应用落盘的裁剪记录；
+  新增公开小工具 `compaction_shadowed()`（`_compaction_plan()[1]` 的出口，供裁剪器跳过）。
+- `compaction.py`：`event_chars()` 与 `select_span()` 新增可选 `effective_chars`（`seq -> 有效字符数`）
+  —— **被裁过的工具结果在日志里仍是原文**，区域选择必须按**有效视图**计量，否则会高估尾部大小、
+  把本可逐字保留的轮次也压掉。`effective_chars` 是普通 dict，故 `compaction` 与 `pruner` **零耦合**。
+- `ask.py::_compact_if_needed()`：压力确认后**先裁、再压**（对齐上游 `compaction-basic` 的调用位次）——
+  1) `prune_plan(events, skip=compaction_shadowed(events))`，有料就落一条 `compaction/prune`；
+  2) 重算 `build_history()`，**若已低于阈值就直接返回**（免掉这次摘要调用 —— 上游原话
+     *trimming may relieve enough token pressure to skip summarization*）；
+  3) 仍超阈值则照常 `select_span(events, effective_chars=...)` + `summarize_span()`，
+     且摘要器读**裁剪视图**（`replay_events(covered, prune=prune_applied(events))`）。
+  返回值语义由「是否压过」放宽为「**是否落了事件**」（裁剪也算），调用方据此重新回放。
+
+**落盘形状**（单写者 + 仅追加，一条记录覆盖一轮的全部裁剪项）：
+
+```jsonc
+{"pruned": [{"seq": 42, "id": "call_1", "chars_before": 30022, "chars_after": 5159,
+             "head": 4096, "tail": 1024}], "chars_removed": 24863}
+```
+
+**为什么是「一条记录 + 回放期重建」而不是上游的「替换事件 + surfaceOp」**：上游把裁剪做成一次**表面替换**
+（追加新 `tool/result` 并 `sourceEventSeqs` 指向原事件，前置 `compaction/prune` 影子定价事件）。本地没有
+`Session.surface` / `surfaceOp` 抽象，且**不能为同一个 `tool_call_id` 追加第二条 `tool/result`** ——
+回放会把同一调用配成两条工具消息，端点直接 400。故改为「记录 `seq` + 记录实际预算」，由 `history.py`
+在回放时**就地**重建。收益与上游等同：原事件**逐字留在日志里**（检索/导出/审计看原文，只有发给模型的
+请求用裁剪视图），且因为预算随记录落盘，回放结果**不随默认常量变化而漂移**。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **内容模型退化**：上游工具结果是 `ContentBlock[]`（富块零成本直通、相对顺序不变）；本地是**纯字符串**
+   ⇒ 切片作用于整串，无富块通路（M1 只有只读文本工具）。
+2. **不移植影子定价**（`shadowedTokenCount`，本地无 token 计量服务）：改用字符量 `chars_before` /
+   `chars_after` / `chars_removed`，与 `compaction.shadowed_chars` 同口径。
+3. **不移植 `surfaceOp` / `Session.surface`**（见上）；也**不移植**「替换写入失败 ⇒ 整轮同步失败」——
+   本地是 fail-open（记不进就按原样继续，与压缩同口径）。
+4. **与检索的关系**：`session/query.py` 在**原始事件**上检索 ⇒ 被裁掉的中间段**仍可被搜到**
+   （本地取舍：宁可搜得全，也不让裁剪把历史从检索面抹掉）；上游检索走的是裁剪后的表面。
+5. **阈值/预算是字符码点不是 token**（上游同款已知限制）；**字素簇仍可能被切开**（上游同款已知限制，
+   本地无 locale-aware 分段）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（新模块 + 4 个既有文件 + 1 个 docstring 追加） | 全过 |
+| `pytest -q` | **153 passed**（原 132 + 新增 **21** 例 `tests/test_agent_pruner.py`） |
+| 覆盖点 | 纯函数（恰好等于阈值不裁 / 头+标记+尾形状与长度上界 / **`tail=0` 不退化** / 预算非法值 7 例构造期拒绝 / 清单只挑超预算 `tool/result` / 幂等 + 跳过被压缩覆盖的 seq / 畸形记录 fail-safe）；回放（记录就地生效、**原事件逐字保留**、不带裁剪表即原始视图、未知 seq 忽略、**后写覆盖**）；计账（`event_chars` 覆盖表命中/未命中、`select_span` 按有效字符选区间 —— 同组事件在有效视图下由 `(0,4)` 变为 `None`）；端到端（**裁完够用 ⇒ 只发 1 次模型调用**且主回合请求含标记、无被删中段；裁完仍超 ⇒ 照常压缩且**摘要器读到裁剪视图**；预算内一次多余调用都不发；仅追加 + `seq` 连续 + 不落任何 `compaction*`） |
+| 依赖面 | 纯标准库，**零新依赖** |
+
+**已知缺口（本轮未做）**：① `shadowedTokenCount` 等 token 侧事实一律不记（本地无计量服务），故「裁剪省了多少
+token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正文**，不碰 assistant 的 `tool_calls.arguments`
+（本地工具参数很短，上游同样不裁）；③ 无可配置入口（预算是模块常量；上游是插件配置项）。
+
+**未实测**：真实模型端点下「裁剪后模型是否仍答得对」（**信息有损**，上游同样列为已知限制）；大规模会话下的
+裁剪耗时未做 A/B 计时（纯字符串切片，复杂度线性，但**未实测墙钟**）。
+
+**文档**：见 §11 对应行。
+
 ---
 
 ## 7. 四条红线怎么落（逐条）
@@ -432,8 +513,8 @@ src/memoria/services/agent/
 > `SESSION_FORMAT_VERSION`、也无老会话迁移问题。详见 §6.8。
 >
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
-> **§6.9（session-query）**。**剩余**：会话标题（`session/title*` + 投影）、
-> `session-reference`（跨会话引用）、`compaction-tool-result-pruner`（免模型的旧工具输出裁剪）。
+> §6.9（session-query）、**§6.10（`compaction-tool-result-pruner`）**。**剩余**：会话标题
+> （`session/title*` + 投影）、`session-reference`（跨会话引用）。
 
 ---
 
@@ -484,3 +565,4 @@ src/memoria/services/agent/
 | 2026-09-18 | **M2 compaction 落地**（吃 `compaction/compaction` + `compaction-basic`）：新增 `services/agent/compaction.py`（阈值/保留比例同上游 0.8/0.16、`MAX_TOKENS=8192`、8 段骨架的中文落法 + `frameSummary` + 工具配对切割点 + KV 前缀对齐的摘要调用 + fail-closed）；`session/history.py` 新增 `COMPACTION` 事件与压缩回放（原位出摘要、链式只出最新、无效记录不吞事件）；`ask.py` 加自动触发（超预算才压、**失败不打断提问**）；`loop.py` 的 `_usage_payload` 提为公开 `usage_payload`。验收：`pytest 104 passed`（+23 例 `tests/test_agent_compaction.py`）。偏差、缺口与未实测见 §6.8 |
 | 2026-09-18 | **更正**：上一条拍板笔记里「需同步 `SESSION_FORMAT_VERSION`」**不成立** —— `compaction` 是纯追加类型且三个既有读者对未知 type 一律跳过 ⇒ 旧版本读新文件只降级为「没有压缩」，不误读不崩（等价上游 `ignorable: true`）。按上游「只有结构变更才 bump」的规则，**不 bump**。已同步修 §8 表下注与 §6.8 |
 | 2026-09-19 | **M2 session-query 落地**（吃 `session-query/session-query` 的 `extraction.ts`+`filters.ts` + `session-query/tool-session-query`；**不吃** `session-query-sqlite`（不引索引）/ `session-log-export`（导出 UI））：新增 `services/agent/session/query.py`（语义文本抽取含**本地扩展**的 `compaction`→`summary`、字面量匹配的逐词转义防注入 + 空白弹性、摘要窗、`_Filters` 的「子句间 AND / 子句内 OR」、四重有界化、字节级预筛）；`tools/kb.py` 增 `search_sessions` 工具（只读，命中写成「会话 `<id>` 第 N 条」**且刻意不产生 `文件:行号` 锚点**）；新增 `tests/test_agent_session_query.py` 28 例。验收：`pytest -q` **132 passed**（原 104 + 28）；修掉一个真 bug（`limit=0` 仍返回 1 条）；零新依赖。偏差（语料无 live/SQLite 索引、排序由相关性改为 `modified_at` 倒序、`snippet` 窗口未逐字对齐、不移植游标/谱系/可观测性）、缺口与未实测见 §6.9 |
+| 2026-09-19 | **M2 工具结果裁剪落地**（吃 `compaction/compaction-tool-result-pruner` —— §6.8 曾登记为「留后」，本轮补上）：新增 `services/agent/pruner.py`（`PRUNE_MARKER` 逐字照抄、阈值/头/尾 = 8192/4096/1024 同上游、`PruneBudgets` 构造期校验保证**永不增长**、`prune_text`/`apply_budget`/`applied_chars`/`prune_plan`/`prune_records`/`prune_applied`）；`session/history.py` 新增事件表行 + 「工具结果裁剪回放」小节（`_tool_message`/`_replay`/`replay_events` 接裁剪表、`build_history` 自动应用、新增 `compaction_shadowed()`）；`compaction.py` 的 `event_chars`/`select_span` 新增 `effective_chars`（按**有效视图**计账，避免高估尾部）；`ask._compact_if_needed()` 改为**先裁、再压**（裁完够用即**免掉**一次摘要调用，仍是超则摘要器读裁剪视图），返回值语义放宽为「是否落了事件」。**落盘**：一条 `compaction/prune`（`{pruned:[{seq,id,chars_before,chars_after,head,tail}], chars_removed}`），回放期**就地**重建 —— 不像上游那样追加替换 `tool/result`（同一 `tool_call_id` 两条工具消息会被端点 400）。验收：`pytest -q` **153 passed**（原 132 + 21 例 `tests/test_agent_pruner.py`）；零新依赖。偏差（纯字符串内容模型、不移植影子定价/`surfaceOp`、检索仍走原文、字符非 token 预算）、缺口与未实测见 §6.10；§8「M2 剩余」同步更新 |

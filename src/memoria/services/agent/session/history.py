@@ -19,6 +19,7 @@
 | `tool/call` | `{id,name,arguments}` | **跳过**（信息已在 assistant 的 `tool_calls` 里） |
 | `step/start`、`step/error`、`loop/end` | — | **跳过**（非对话内容） |
 | `compaction` | `{summary, shadowed:[seq…], …}` | 在 `shadowed` 中最旧的 seq 处出一条 `user` 消息（摘要 + checkpoint 框定），其 `shadowed` 里的 seq **全部跳过** |
+| `compaction/prune` | `{pruned:[{seq, head, tail, …}]}` | 被列出的 `tool/result` 在回放时**就地**换成「头 + 标记 + 尾」（**原事件逐字留在日志里**，只是不再进请求） |
 
 ## 压缩回放（M2）
 
@@ -31,6 +32,18 @@
 - **链式压缩**：后一次压缩若覆盖前一次区间（含前一条 `compaction` 记录自身），则只出**最新**那份
   合并摘要 —— `emit_at` 以同一键覆盖，旧摘要不再重复出现；
 - 无效记录（`shadowed` 为空 / 摘要为空）**忽略**，不吞掉任何事件（fail-safe：宁可当没压过）。
+
+## 工具结果裁剪回放（M2）
+
+`compaction/prune` 事件由 `services/agent/pruner.py` 产出形状、由 `ask.py` 落盘（同压缩：单写者 +
+仅追加）。回放口径：
+
+- 记录里的 `pruned[].seq` 指向 `tool/result` 事件；回放时用**记录里落盘的** `head` / `tail`
+  重建正文（`pruner.apply_budget()`）⇒ 与当次请求所见**逐字一致**，且不随默认预算变化而漂移；
+- **原事件仍在日志里**（append-only）⇒ 检索 / 导出 / 审计看到的仍是原文，只有**发给模型**的
+  请求用裁剪视图；
+- **链式/重复**：同一 `seq` 被多条记录覆盖时**后写覆盖**（与压缩同口径）；形状不全的记录**整条
+  忽略**（fail-safe：宁可让模型看到原文，也不拿半截预算去切正文）。
 
 ## 保真度（**全保真回放**，仅异常轮降级）
 
@@ -69,6 +82,7 @@ from collections.abc import Mapping, Sequence
 from typing import Any
 
 from memoria.services.agent.llm import Message, Role, ToolCall
+from memoria.services.agent.pruner import apply_budget, prune_applied
 from memoria.services.agent.session.store import read_session
 
 __all__ = [
@@ -77,6 +91,7 @@ __all__ = [
     "MAX_HISTORY_MESSAGES",
     "SESSION_SCAN_MAX_BYTES",
     "build_history",
+    "compaction_shadowed",
     "conversation_events",
     "conversation_messages",
     "replay_events",
@@ -137,12 +152,18 @@ def _tool_call(raw: Any) -> ToolCall | None:
     )
 
 
-def _tool_message(event: Mapping[str, Any]) -> Message:
+def _tool_message(event: Mapping[str, Any], prune: Mapping[int, tuple[int, int]] | None) -> Message:
+    """`tool/result` → `tool` 消息；被 `compaction/prune` 覆盖的按记录里的预算重建正文。"""
     data = _data(event)
     name = data.get("name")
+    content = str(data.get("content") or "")
+    seq = event.get("seq")
+    if prune and isinstance(seq, int) and seq in prune:
+        head, tail = prune[seq]
+        content = apply_budget(content, head, tail)
     return Message(
         role=Role.TOOL,
-        content=str(data.get("content") or ""),
+        content=content,
         tool_call_id=str(data.get("id") or ""),
         name=str(name) if name else None,
     )
@@ -194,16 +215,23 @@ def _compaction_plan(
     return emit_at, skip
 
 
+def compaction_shadowed(events: Sequence[Mapping[str, Any]]) -> set[int]:
+    """`compaction` 记录覆盖的 `seq`（供裁剪器跳过 —— 它们本来就不进请求）。"""
+    return _compaction_plan(events)[1]
+
+
 def _replay(
     events: Sequence[Mapping[str, Any]],
     *,
     emit_at: Mapping[int, str] | None = None,
     skip: set[int] | None = None,
+    prune: Mapping[int, tuple[int, int]] | None = None,
 ) -> list[Message]:
     """按事件顺序重建消息序列（配对失败的整轮丢弃，见模块 docstring）。
 
     `emit_at` / `skip` 由 `_compaction_plan()` 给出：被压缩覆盖的 seq 一律跳过，并在该区间
-    **最旧那条 seq** 处补一条摘要消息（位置不变，见「压缩回放」）。
+    **最旧那条 seq** 处补一条摘要消息（位置不变，见「压缩回放」）。`prune` 由
+    `pruner.prune_applied()` 给出：命中的 `tool/result` 按其预算重建正文（见「工具结果裁剪回放」）。
     """
     messages: list[Message] = []
     index = 0
@@ -251,7 +279,7 @@ def _replay(
                 break
             if _paired(calls, results):
                 messages.append(Message(role=Role.ASSISTANT, content=content, tool_calls=calls))
-                messages.extend(_tool_message(row) for row in results)
+                messages.extend(_tool_message(row, prune) for row in results)
             # 否则整轮丢弃：不留下孤立 tool_calls（端点会 400）
             index = cursor
             continue
@@ -290,18 +318,23 @@ def replay_events(
     events: Sequence[Mapping[str, Any]],
     *,
     apply_compaction: bool = True,
+    prune: Mapping[int, tuple[int, int]] | None = None,
 ) -> list[Message]:
     """把**给定事件列表**回放成消息序列（不做容量截断）。
 
     默认应用已落盘的压缩覆盖（`apply_compaction=True`）：压缩器据此拿到「有效视图」
     （既有摘要 + 更新的轮次），从而**合并**旧 checkpoint 而不是把原文再喂一遍
     （对齐上游「旧 checkpoint 要合并、不要照抄」）。
+
+    `prune`（可选）由调用方传 `pruner.prune_applied(session_events)`：**传入整份会话**的裁剪表，
+    这样即便只回放被压缩的一个子区间，区间内的工具结果也已按裁剪视图呈现（上游：摘要器读的是
+    裁剪后的表面）。省略时不裁剪 —— 这就是「原始视图」。
     """
     if apply_compaction:
         emit_at, skip = _compaction_plan(events)
     else:
         emit_at, skip = {}, None
-    return _replay(events, emit_at=emit_at, skip=skip)
+    return _replay(events, emit_at=emit_at, skip=skip, prune=prune)
 
 
 def build_history(
@@ -313,13 +346,17 @@ def build_history(
 ) -> list[Message]:
     """把会话回放成**可再发**的消息序列（含工具轮；容量截断见模块 docstring）。
 
-    会先应用已落盘的 `compaction` 事件（见「压缩回放」），再按容量做兜底截断。
-    会话文件不存在时返回空列表（= 全新会话，等价于不带历史）。
+    会先应用已落盘的 `compaction` 与 `compaction/prune` 事件（见「压缩回放」「工具结果裁剪回放」），
+    再按容量做兜底截断。会话文件不存在时返回空列表（= 全新会话，等价于不带历史）。
     截断策略：从最新往旧保留，最多 `max_messages` 条 / `max_chars` 字符。
     """
     events = _conversation_events(kb_path, session_id)
     emit_at, skip = _compaction_plan(events)
-    return _truncate(_replay(events, emit_at=emit_at, skip=skip), max_messages, max_chars)
+    return _truncate(
+        _replay(events, emit_at=emit_at, skip=skip, prune=prune_applied(events)),
+        max_messages,
+        max_chars,
+    )
 
 
 def _first_user_text(events: Sequence[Mapping[str, Any]]) -> str:

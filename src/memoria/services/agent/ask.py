@@ -28,9 +28,11 @@ M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；
 承担，本模块自身不联网）。
 
 **长会话压缩（M2）**：追加本轮 `user/message` **之前**，若回放出的历史超过
-`compaction.compact_threshold_chars()`，先按 `compaction.select_span()` 选出最旧的合法区间、
-跑一次摘要调用，并把结果作为一条 `compaction` 事件落盘（被覆盖的 seq 记在 `shadowed` 里；
-`build_history()` 回放时据此在原位置出摘要）。压缩**失败不打断提问**（见
+`compaction.compact_threshold_chars()`，**先**跑一遍免模型的**工具结果裁剪**
+（`pruner.prune_plan()` → 落一条 `compaction/prune`，把超预算的旧工具输出换成「头 + 标记 + 尾」；
+裁剪可能已把压力降到阈值之下 ⇒ **免掉这次摘要调用**），**再**按 `compaction.select_span()`
+选出最旧的合法区间、跑一次摘要调用，并把结果作为一条 `compaction` 事件落盘（被覆盖的 seq 记在
+`shadowed` 里；`build_history()` 回放时据此在原位置出摘要）。两步都**失败不打断提问**（见
 `_compact_if_needed()`：`summarize_span()` 自身 fail-closed，但这里只记日志、按未压缩历史继续）。
 为了让摘要调用成为「上一次已路由请求」的真实前缀（复用 provider 的 KV 缓存），压缩与主回合
 **共用同一份 `system` + 工具集** —— 故本模块先建一次 `registry` / `system` 再传给 `build_loop()`。
@@ -68,9 +70,16 @@ from memoria.services.agent.loop import (
     usage_payload,
 )
 from memoria.services.agent.prompt import build_system_prompt
+from memoria.services.agent.pruner import (
+    PRUNE,
+    applied_chars,
+    prune_applied,
+    prune_plan,
+)
 from memoria.services.agent.session.history import (
     COMPACTION,
     build_history,
+    compaction_shadowed,
     conversation_events,
     replay_events,
 )
@@ -178,7 +187,12 @@ def _compact_if_needed(
     retry_policy: RetryPolicy | None,
     cancel: CancelToken | None,
 ) -> bool:
-    """历史超过预算时把最旧区间压成 checkpoint 并落盘；返回是否真的落了事件。
+    """历史超过预算时**先裁旧工具输出、再按需压成 checkpoint**；返回是否落了事件。
+
+    顺序对齐上游 `compaction-basic`：压力确认后**先**跑工具结果裁剪（免模型），**再**选择压缩
+    区间 —— 裁剪可能已把压力降到阈值之下，那就**免掉这次摘要调用**（上游：*trimming may relieve
+    enough token pressure to skip summarization*）。裁出来的有效字符数一并交给 `select_span()`
+    计账，免得区域选择按原文（未裁）大小高估尾部、把本可保留的轮次也压掉。
 
     **失败不打断提问**（fail-open）：`summarize_span()` 自身是 fail-closed 的（任何异常路径都
     抛 `CompactionError`，不产出半份摘要），这里只记一条 warning，让本轮按**未压缩**的历史继续
@@ -187,14 +201,38 @@ def _compact_if_needed(
     if _history_chars(history) <= compact_threshold_chars():
         return False
     events = conversation_events(root, session.session_id)
-    span = select_span(events)
+    changed = False
+    plan = prune_plan(events, skip=compaction_shadowed(events))
+    if plan:
+        session.append(
+            PRUNE,
+            {
+                "pruned": plan,
+                "chars_removed": sum(int(item["chars_before"]) - int(item["chars_after"]) for item in plan),
+            },
+        )
+        logger.info(
+            "[agent-prune] 已裁 %d 条工具结果（%d → %d 字符）",
+            len(plan),
+            sum(int(item["chars_before"]) for item in plan),
+            sum(int(item["chars_after"]) for item in plan),
+        )
+        changed = True
+        events = conversation_events(root, session.session_id)
+        if _history_chars(build_history(root, session.session_id)) <= compact_threshold_chars():
+            return True  # 裁剪已把压力降到阈值之下 ⇒ 免掉这次摘要调用
+    applied = prune_applied(events)
+    effective = (
+        {seq: applied_chars(head, tail) for seq, (head, tail) in applied.items()} if applied else None
+    )
+    span = select_span(events, effective_chars=effective)
     if span is None:
-        return False
+        return changed
     covered = list(events[span[0] : span[1]])
     try:
         call = summarize_span(
             provider,
-            replay_events(covered),
+            replay_events(covered, prune=applied),
             system=system,
             tools=tools,
             model=model,
@@ -204,11 +242,11 @@ def _compact_if_needed(
         )
     except CompactionError as exc:
         logger.warning("[agent-compaction] 压缩失败，本轮按未压缩历史继续：%s", exc)
-        return False
+        return changed
     shadowed = [int(event["seq"]) for event in covered if isinstance(event.get("seq"), int)]
     if not shadowed:
-        return False
-    shadowed_chars = sum(event_chars(event) for event in covered)
+        return changed
+    shadowed_chars = sum(event_chars(event, effective_chars=effective) for event in covered)
     data: dict[str, Any] = {
         "summary": call.text,
         "shadowed": shadowed,
@@ -292,7 +330,7 @@ def ask(
         retry_policy=retry_policy,
         cancel=cancel,
     ):
-        # 压缩已落盘 ⇒ 重新回放，让本轮请求用上摘要视图（覆盖区间不再逐字重发）
+        # 裁剪/压缩已落盘 ⇒ 重新回放，让本轮请求用上裁剪与摘要视图（被覆盖区间不再逐字重发）
         history = build_history(root, session.session_id)
     session.append("user/message", {"text": text})
     loop = build_loop(

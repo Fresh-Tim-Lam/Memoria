@@ -39,8 +39,9 @@
   多写者并发准备的，本地是单写者 + 仅追加；
 - **本地新增两条下限**：一次压缩至少覆盖 `MIN_SPAN_CHARS` 字符，且区间内至少含一条
   `user/message`（否则不值得一次模型调用）。上游无对应项；
-- 未移植 `compaction-tool-result-pruner`（免模型的旧工具输出裁剪，另有独立价值）、
-  `compaction-image-offload`（本地无图片）、`command-compact`（slash 命令，M1 已定不做）。
+- 未移植 `compaction-image-offload`（本地无图片）、`command-compact`（slash 命令，M1 已定不做）；
+  `compaction-tool-result-pruner` 已另行落为 `services/agent/pruner.py`（免模型的旧工具输出裁剪），
+  由 `ask._compact_if_needed()` 在**选区间之前**先跑，故本模块只按传入的**有效字符表**计账。
 
 ## 不写盘
 
@@ -215,11 +216,23 @@ def _tool_calls_of(event: Mapping[str, Any]) -> Sequence[Any]:
     return ()
 
 
-def event_chars(event: Mapping[str, Any]) -> int:
+def event_chars(
+    event: Mapping[str, Any],
+    *,
+    effective_chars: Mapping[int, int] | None = None,
+) -> int:
     """该事件**回放后**的字符成本（与 `history._replay` 的口径一致）。
 
     `tool/call` 与 `step/*` / `loop/*` 都不进消息序列，故计 0；`compaction` 事件按其摘要正文计。
+
+    `effective_chars`（可选）：`seq -> 有效字符数` 的**覆盖表**。被 `compaction/prune` 裁过的
+    工具结果在日志里仍是原文，只有回放视图变短 ⇒ 区域选择必须按**有效视图**计量，否则会高估
+    尾部大小、把本可逐字保留的轮次也压掉（见 §6.10）。
     """
+    if effective_chars:
+        seq = event.get("seq")
+        if isinstance(seq, int) and seq in effective_chars:
+            return int(effective_chars[seq])
     data = _data(event)
     kind = event.get("type")
     if kind == USER_MESSAGE:
@@ -260,6 +273,7 @@ def select_span(
     events: Sequence[Mapping[str, Any]],
     *,
     max_chars: int = MAX_HISTORY_CHARS,
+    effective_chars: Mapping[int, int] | None = None,
 ) -> tuple[int, int] | None:
     """选出**要被摘要覆盖**的事件下标区间 `[start, end)`；无可压区间则 `None`。
 
@@ -271,6 +285,7 @@ def select_span(
     4. 本地下限：被覆盖区间至少 `MIN_SPAN_CHARS` 字符，且至少含一条 `user/message`。
 
     区间恒为**前缀**（`start == 0`）—— 被压缩的总是最旧的那一段，摘要在回放时出现在最前。
+    `effective_chars` 见 `event_chars()`（裁剪后的工具结果按有效字符数计账）。
     """
     total = len(events)
     if total == 0:
@@ -279,7 +294,7 @@ def select_span(
     cuts = balanced_cuts(events)
     prefix = [0] * (total + 1)
     for index, event in enumerate(events):
-        prefix[index + 1] = prefix[index] + event_chars(event)
+        prefix[index + 1] = prefix[index] + event_chars(event, effective_chars=effective_chars)
     total_chars = prefix[total]
     best: int | None = None
     for end in range(1, total + 1):
