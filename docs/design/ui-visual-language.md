@@ -103,7 +103,8 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 |---|---|---|
 | 细滚动条 | `app/css/app.css` **末尾追加块** `5078-5136`（`:root` 五个 `--scrollbar-*` 令牌 + `html[data-theme="light"]` 三档覆盖 + 五条 `::-webkit-scrollbar*` 规则） | `#tabs` / `#editor-pane` / `#kp-list` 三个滚动容器：轨道 `10px`、滑块 `border-top-width 4px` + `background-clip: content-box` + `border-radius 999px`、`background-color` 解析为 `rgba(140,148,158,0.18)`（**非** `rgba(0,0,0,0)` ⇒ `var()` 在滚动条伪元素里解析成功）、轨道透明；`getComputedStyle(document.body).scrollbarWidth/scrollbarColor` 均为 `auto` |
 | 标签栏滚轮 | `app/js/app.js` **末尾追加 IIFE** `12864-12888`（`#tabs` 上 `wheel` → `scrollLeft`，`ctrlKey` 不抢、无溢出时交还默认行为） | `#tabs.dataset.wheelBound = "1"`；8 标签溢出（`1024/496`）下派发 `deltaY=120` ⇒ `scrollLeft 0→120→240` 且 `defaultPrevented=true`，反向回退并在 `0` 钳住 |
-| ⚠️ 未取证 | — | **「按需显形」0.45/0.72 两档与真实滚轮**：harness 无法派发真实鼠标移动/滚轮（`browser_click` 无 `mousemove`、hover 工具不触发 CSS `:hover`、OS 级输入 0 事件）⇒ 只有 CSSOM 静态证据（规则与变量原文已读到），**真实 hover 观感需真机确认**；标签栏因滚动条 6→10px 少掉的 4px 高度（文字未裁）观感亦待真机 |
+| 细滚动条再收一档（同日更晚） | 同一末尾块，**原位改两个数值、行数零漂移**：`html *::-webkit-scrollbar { height: 6px → 3px }`（app.css:5112）、滑块 `border-width: …4px → 1px`（app.css:5125） | 用户："图谱的子图页签的滚轮也要同步做细" → 追问后："我发现他做的和显示区域的文件页签一样粗，都要细一点"。**harness 8659** 实测（深/浅各一遍）：`#tabs`、`#sidebar-graph-group-tabs` gutter 均 **3px**（改前 6px）、首标签 **27 → 30px**；`#tab-bar` / `.-graph-group-bar` 仍 **34px**（`--bar-h` 对齐未破）；纵向 `#editor-pane` / `#hist-list` 仍 **10px**；两条滚轮 `defaultPrevented=true` 且 `scrollLeft` 位移 |
+| ⚠️ 未取证 | — | **「按需显形」0.45/0.72 两档与真实滚轮**：harness 无法派发真实鼠标移动/滚轮（`browser_click` 无 `mousemove`、hover 工具不触发 CSS `:hover`、OS 级输入 0 事件）⇒ 只有 CSSOM 静态证据（规则与变量原文已读到），**真实 hover 观感需真机确认**；标签栏因滚动条 6→10px 少掉的 4px 高度（文字未裁）观感亦待真机；**同日晚再收一档（横向 3px）后的真机观感**（3px 是否"够细"、静止档 alpha 0.18 下 2px 滑块是否仍可见）同样待真机 |
 
 > 说明：本项与 A 档同样**不换色相、不挪布局**；唯一尺寸后果是滚动容器内容区比改前少 4px（轨道 6→10px），换来的可见滑块由 6px 降到 2px。
 

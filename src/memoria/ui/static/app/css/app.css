@@ -5078,8 +5078,8 @@ summary:focus-visible,
 /* ========== 滚动条：细 + 按需显形（IDE 风格，2026-09-19）====================
    诉求：全应用滚动条太粗 ⇒ 改成"很细，指针进入该滚动区域才明显，否则几乎消失"。
    整块**末尾追加** ⇒ 既有行号锚点零漂移（同 A 档块策略）。做法：
-   ① 轨道命中区：**纵向 10px**、**横向 6px** —— 横向条只出现在"条状区域"（标签栏/分组条/代码块/表格），
-      10px 会明显压低那一行并在标签下方留出 10px 空带（用户 2026-09-19 反馈"滚条要紧贴标签、外框有点粗"）；
+   ① 轨道命中区：**纵向 10px**、**横向 3px** —— 横向条只出现在"条状区域"（标签栏/分组条/代码块/表格），带子越高压低
+      那一行越多（用户 2026-09-19 反馈"滚条要紧贴标签、外框有点粗"，同日晚又"图谱子图页签的和显示区文件页签一样粗，都要细一点" ⇒ **6px → 3px**）；
    ② 滑块用透明 border + `background-clip: content-box` 内缩 ⇒ **两轴可见均 2px**；轨道 / 角落 / 箭头全透明；
    ③ 三档不透明度：静止 0.18（几乎消失）→ 指针进入该滚动区域 0.45 → 指针压在滑块上或
       正拖拽 0.72；滑块**不做 transition**（滚动条伪元素过渡在 Chromium 上易闪烁）；
@@ -5109,7 +5109,7 @@ html * {
 }
 html *::-webkit-scrollbar {
     width: var(--scrollbar-hit) !important;
-    height: 6px !important; /* 横向轨道：6 − 上下各 2px 内缩 = 可见 2px，且紧贴内容下沿 */
+    height: 3px !important; /* 横向轨道：3 − 下 1px 内缩 = 可见 2px，且紧贴内容下沿 */
     background: transparent !important;
 }
 html *::-webkit-scrollbar-track,
@@ -5122,7 +5122,7 @@ html *::-webkit-scrollbar-button {
 html *::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-idle) !important;
     background-clip: content-box !important;
-    border-width: 0 var(--scrollbar-inset) var(--scrollbar-inset) !important; border-style: solid !important; border-color: transparent !important; /* 上 0 ⇒ 横向滑块贴在轨道上沿（紧贴标签） */
+    border-width: 0 var(--scrollbar-inset) 1px !important; border-style: solid !important; border-color: transparent !important; /* 上 0 ⇒ 横向滑块贴在轨道上沿（紧贴标签）；下 1px ⇒ 3px 带里可见 2px */
     border-radius: 999px !important;
 }
 /* 指针进入该滚动区域 ⇒ 明显（与后续两条同特异度，靠"后出现"取胜） */
