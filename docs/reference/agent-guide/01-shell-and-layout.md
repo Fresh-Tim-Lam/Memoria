@@ -332,6 +332,7 @@
 | **右侧「对话」停靠栏**（骨架 / 样式 / 模块 / 装配 / 持久化 / 最小宽度保护 / 历史会话 / 删除 / 恢复上次会话 / **按库会话偏好** / **换库无条件重置** / 停止与取消 / 等待计时 / 状态栏用量格 / **`@路径` 引用与拖拽插入**） | index.html:222-270（历史行 256-260，删除按钮 259）；app.css:304-648（折叠 320-328；自动隐藏 334-342；拖拽柄 345-357；历史行 441-478；消息区 480-545；**`.-agent-mention` 546-574**；拖拽落点 629-638）；js/agent-panel.js:1-1636（dock 常量与几何 209-460；**按库会话偏好 326-403**：`kbKey` 326-329 / `readAgentPrefs` 332-340 / `lastSessionIdFor` 343-349 / `writeAgentPrefs` 361-366 / `setLastSessionId` 372-385 / `clearLastSessionId` 388-403；渲染 462-…（**`@路径` 引用 119-129、493-599**）；**状态栏用量格** 754-830 / 1364 / 1522-1528 / 1448 / 1608；会话历史/删除 893-1117；`loadSession` 976-1015；**`restoreLastSession` 1028-1045**；**`onKbChanged` 1055-1080**；提问与取消 1272-1460；装配 1479-1619）；app.js:12849（另见 454/564/602 三处 `onKbChanged` 钩子） |
 | **文件树拖拽 → 对话栏插入 `@相对路径`**（发送端 / 接收端 / 样式 / 后端提示） | file-tree.js:41、168、185、229-248、502-526；agent-panel.js:119-129、493-599、1530-1568；app.css:546-574、629-638；i18n/zh-CN.js:627-630、i18n/en.js:628-631；services/agent/prompt.py:194-218（门控 262-263） |
 | 侧栏与树样式 | app.css:123-323；app.css:3409-3457 |
+| **全局滚动条**（细 + 按需显形，2026-09-19）/ **顶部标签栏滚轮横向滚动** | app/css/app.css:5078-5136；app/js/app.js:12864-12888（`#tabs`）；同类先例 app.js:784-797（图谱分组条） |
 | 图谱分组条显隐 | app.js:763-772 |
 | 视图模式切换 / 编辑模式开关 | app.js:1620-1682；app.css:3520-3541、3862-3868；edit-handler.js:59-122 |
 | 格式栏与块编辑栏互斥 | index.html:162-199；edit-handler.js:1009-1013、1545-1550 |
@@ -346,7 +347,13 @@
 
 ## 7. 未证实 / 待确认
 
-- ⚠️ **本轮（2026-09-19：助手气泡锚点匹配修复）已断言 / 未取证**。已断言（harness 端口 8648 + 合成会话 `session-anchor-demo`，其助手回复是一段 **A1–A24 共 24 种锚点写法**的测试文本；两次浏览器实测同一 fixture，**修前/修后对照**）：
+- ⚠️ **本轮（2026-09-19：全局滚动条改细 + 顶部标签栏滚轮横向滚动）已断言 / 未取证**。用户诉求原话：「memoria 所有的滚条都太粗了，流行的 ide 方案是改很细而且在鼠标进入对应区域的时候才明显，否则几乎消失；顶部文件标签 bar 鼠标在这个区域滚轮应该可以控制滚条」。改动 = `app/css/app.css` **末尾追加**一个滚动条块（5078-5136）+ `app/js/app.js` **末尾追加**一个只做滚轮转横向的 IIFE（12864-12888）⇒ 既有行号锚点零漂移。已断言（**仓库自带 harness `docs/example/rich-content-test/_harness.py`，端口 8651**，浏览器内只读取值，窗口已从最小化恢复）：
+  - **尺寸与形状**：`#tabs` / `#editor-pane` / `#kp-list` 三个滚动容器的 `::-webkit-scrollbar` 实测 `width/height = 10px`，`::-webkit-scrollbar-thumb` 实测 `background-clip = content-box`、`border-top-width = 4px`、`border-radius = 999px`、`background-color = rgba(140, 148, 158, 0.18)`，`::-webkit-scrollbar-track` = `rgba(0, 0, 0, 0)`。⇒ **可见滑块 = 10 − 2×4 = 2px**（改前是 6px 实心滑块）。**注意**：`background-color` 读到的不是 `rgba(0,0,0,0)`，说明 `var(--scrollbar-*)` 在滚动条伪元素里**解析成功**（这是本条最关键的一条）。
+  - **标准属性已让位**：`getComputedStyle(document.body).scrollbarWidth = "auto"`、`scrollbarColor = "auto"` ⇒ Chromium ≥121 不会再因 `body` 上那条可继承的 `scrollbar-width: thin`（`theme/memoria.css:73-74`）而**整块忽略** `::-webkit-scrollbar` 并退回 Windows 原生粗滚动条。
+  - **标签栏高度未被压扁**：8 个标签溢出（`scrollWidth 1024 / clientWidth 496`）时，`#tabs` 实测 `offsetHeight 39 / clientHeight 29`（差值 10px = 横向滚动条）、首个标签 `offsetHeight 29`，且**文字包围盒完全落在标签盒内**（`overflowed = false`）。
+  - **滚轮转横向**：`#tabs.dataset.wheelBound = "1"`（处理函数已注册）；溢出态下派发 `deltaY=120` ⇒ `scrollLeft 0 → 120 → 240`（`defaultPrevented = true`），`deltaY=-120` ⇒ 回退 `240 → 120 → 0` 并在 `0` 处钳住。
+  - **未取证（重要，勿当已通过）**：① **「按需显形」的 0.45 / 0.72 两档没验到** —— harness 的浏览器环境**无法派发真实鼠标移动 / 真实滚轮**（`browser_click` 只出 `mousedown/mouseup/click`、无 `mousemove`；该环境的 hover 工具不触发 CSS `:hover`；OS 级点击/滚动投递到该窗口 0 事件）⇒ `html *:hover::-webkit-scrollbar-thumb` 与 `::-webkit-scrollbar-thumb:hover/:active` 这两条**只有 CSSOM 静态证据**（变量与规则原文均读到），**真实 hover 观感需真机确认**；② 上一项同理：C 段的滚轮是**合成 `WheelEvent`**，不是真实滚轮（真实滚轮未验）；③ 真机 WebView2 下 2px 滑块是否过细/是否看得清、`#tabs` 因滚动条从 6px 变 10px 而少掉的 4px 高度观感（标签文字未裁，但高度确实变矮）。
+- ⚠️ **同日更早一轮（2026-09-19：助手气泡锚点匹配修复）已断言 / 未取证**。已断言（harness 端口 8648 + 合成会话 `session-anchor-demo`，其助手回复是一段 **A1–A24 共 24 种锚点写法**的测试文本；两次浏览器实测同一 fixture，**修前/修后对照**）：
 
   | | 修前（旧 `ANCHOR_RE`） | 修后 |
   |---|---|---|

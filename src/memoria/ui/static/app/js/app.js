@@ -12860,3 +12860,29 @@
     },
   };
 })();
+
+/* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================
+   `#tabs`（index.html:152）是 `overflow-x: auto` 的**横向**标签条，但竖直滚轮对它无效
+   （浏览器默认只用竖直增量驱动纵向容器）⇒ 标签一多到溢出，就只能去拖那根很细的滑块。
+   此处把指针在标签条区域内的滚轮纵向增量转成横向滚动；横向增量优先，以兼容 Shift+滚轮
+   与触控板横向手势（写法与图谱分组标签条的 `bindGraphGroupTabWheel` 一致，app.js:784）。
+   零漂移：整块**追加在 app.js 末尾**（既有行号锚点不动）。app.js 于 body 末尾加载
+   （index.html:477），`#tabs` 此时已存在，无需等 DOMContentLoaded。 */
+(function bindFileTabWheelScroll() {
+  const tabs = document.getElementById("tabs");
+  if (!tabs || tabs.dataset.wheelBound) return;
+  tabs.dataset.wheelBound = "1";
+  tabs.addEventListener(
+    "wheel",
+    (e) => {
+      if (e.ctrlKey) return; // Ctrl+滚轮是缩放，不抢
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (!delta) return;
+      // 无需横向滚动时交还默认行为，避免无谓地吞掉滚轮
+      if (tabs.scrollWidth - tabs.clientWidth <= 0) return;
+      e.preventDefault();
+      tabs.scrollLeft += delta;
+    },
+    { passive: false }
+  );
+})();

@@ -80,7 +80,17 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 7. **中性描边 1px → 0.5px**（分隔线/卡片外框），状态色与虚线保持 1px。
 8. **主字号上移一档**（10→11、11→12、12→13）；行高成对固定。
 9. **层次改为"两档阴影 + 柔光"**，浮层加极淡 `backdrop-filter`。
-10. **细窄滚动条**（统一 8px、透明轨道、圆角拇指），与 dsh 一致。
+10. **细窄滚动条**（统一 8px、透明轨道、圆角拇指），与 dsh 一致。—— ✅ **已于 2026-09-19 实施**（**不经 U 拍板，用户直接下达指令**：「memoria 所有的滚条都太粗了，流行的 ide 方案是改很细而且在鼠标进入对应区域的时候才明显，否则几乎消失」）。实际落法比本项原设想更贴近 IDE：**轨道命中区 10px（含滑块两侧 4px 透明 border）⇒ 可见滑块仅 2px**、透明轨道/角落、三档不透明度（静止 0.18 / 指针进入该滚动区域 0.45 / 压在滑块上或拖拽 0.72）。**并顺手揭出一个根因**：`theme/memoria.css:73-74` 把 `scrollbar-width: thin` / `scrollbar-color` 写在 `body` 上，这两个标准属性**可继承**且在 Chromium ≥121 生效时会令浏览器**整块忽略** `::-webkit-scrollbar` ⇒ 全应用退回 Windows 原生粗滚动条；新块强制二者回 `auto` 收口。实施记录与逐项实测证据见 §4-B′；同轮还实现「顶部文件标签栏滚轮 = 横向滚动」（用户同一句里提出的第二件事）。
+
+### B′. B-10 实施记录（2026-09-19）
+
+| 项 | 落地位置 | 实测证据（harness 端口 8651） |
+|---|---|---|
+| 细滚动条 | `app/css/app.css` **末尾追加块** `5078-5136`（`:root` 五个 `--scrollbar-*` 令牌 + `html[data-theme="light"]` 三档覆盖 + 五条 `::-webkit-scrollbar*` 规则） | `#tabs` / `#editor-pane` / `#kp-list` 三个滚动容器：轨道 `10px`、滑块 `border-top-width 4px` + `background-clip: content-box` + `border-radius 999px`、`background-color` 解析为 `rgba(140,148,158,0.18)`（**非** `rgba(0,0,0,0)` ⇒ `var()` 在滚动条伪元素里解析成功）、轨道透明；`getComputedStyle(document.body).scrollbarWidth/scrollbarColor` 均为 `auto` |
+| 标签栏滚轮 | `app/js/app.js` **末尾追加 IIFE** `12864-12888`（`#tabs` 上 `wheel` → `scrollLeft`，`ctrlKey` 不抢、无溢出时交还默认行为） | `#tabs.dataset.wheelBound = "1"`；8 标签溢出（`1024/496`）下派发 `deltaY=120` ⇒ `scrollLeft 0→120→240` 且 `defaultPrevented=true`，反向回退并在 `0` 钳住 |
+| ⚠️ 未取证 | — | **「按需显形」0.45/0.72 两档与真实滚轮**：harness 无法派发真实鼠标移动/滚轮（`browser_click` 无 `mousemove`、hover 工具不触发 CSS `:hover`、OS 级输入 0 事件）⇒ 只有 CSSOM 静态证据（规则与变量原文已读到），**真实 hover 观感需真机确认**；标签栏因滚动条 6→10px 少掉的 4px 高度（文字未裁）观感亦待真机 |
+
+> 说明：本项与 A 档同样**不换色相、不挪布局**；唯一尺寸后果是滚动容器内容区比改前少 4px（轨道 6→10px），换来的可见滑块由 6px 降到 2px。
 
 ### C 档：大改、建议单独评审
 11. **引入 `--dsw` 式中间别名层**（`surface/line/ink` 三级）并把现有组件逐步迁移 —— 这是"以后能整体调风格"的前提，但要动所有样式。
@@ -120,3 +130,4 @@ Memoria 现有风格统一，但**尺度偏小、档位偏碎、几乎不动、�
 |---|---|
 | 2026-09-19 | 初版（待讨论）：四条主轴（令牌化 / 视觉密度 / 形状与层次 / 反馈与动效）+ 12 维度对照表（dsh 侧带 `文件:行号`，Memoria 侧带实测计数）+ 4 条诊断 + A/B/C 三档改进（A 5 项零风险、B 5 项试点、C 3 项大改）+ 5 项不照搬及原因 + U1–U6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG06） |
 | 2026-09-19 | **A 档 5 项实施完毕**（U1 = ①）：字体族收敛（新增 `--font-sans`/`--font-mono` 唯一来源，9 处散落写法改 `var()`，**顺带修掉 `--font-mono` 从未定义 ⇒ 代码区中文落 SimSun 的真坑**）、`prefers-reduced-motion` 兜底、四属性交互过渡（120ms + 统一缓动）、`:focus-visible` 统一焦点环、树选中态并入 `--accent-soft` + 左侧主题色细线；改法全部"末尾追加 / 单行替换"⇒ 行号锚点零漂移。逐项实测证据见 §4-A「实施记录」（④ 的视觉表现因 harness CDP 环境 `:focus-visible` 恒不匹配而**未取证**，已如实标注）。B/C 档与 U2–U6 仍待拍板 |
+| 2026-09-19 | **B-10（细窄滚动条）实施完毕**（**不经 U 拍板，用户直接指令**；同一句里还要求"顶部文件标签 bar 鼠标在这个区域滚轮应该可以控制滚条"）：滚动条改为"轨道命中区 10px + 4px 透明 border 内缩 ⇒ **可见滑块 2px** + 透明轨道 + 三档不透明度（0.18 / 0.45 / 0.72）"，并**修掉根因** —— `memoria.css:73-74` 的 `scrollbar-width: thin`/`scrollbar-color` 写在**可继承**的 `body` 上，在 Chromium ≥121 生效时会让浏览器整块忽略 `::-webkit-scrollbar` 而退回 Windows 原生粗滚动条，故新块用 `!important` 把二者强制回 `auto` 并收口 `memoria.css:76-80` 与 `light.css:86-91` 两处旧定义（滚动条外观此后**只此一处**维护）；新增 `app.js` 末尾 IIFE 把 `#tabs` 区域内的滚轮纵向增量转成横向滚动（与 `bindGraphGroupTabWheel` 同口径）。改法仍为"末尾追加"⇒ `app.css` 5076→5136 行、`app.js` 12862→12888 行，**既有行号锚点零漂移**。实测证据与**未取证项**（真实 hover / 真实滚轮在 harness 无法派发，只有 CSSOM 静态证据）见 §4-B′。B-6/7/8/9 与 U2–U6 仍待拍板 |

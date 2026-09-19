@@ -101,7 +101,7 @@
 |---|---|---|
 | 数据结构 | app.js:1242-1265 | `{ path, kpId, label, pending, sourceScroll, previewScroll, kpListScroll }`；同一 `path` 复用条目，已存在时只更新 `kpId`/`label`/`pending` |
 | 渲染 | app.js:1345-1378 | `<div class="tab[ active| tab-pending]" data-tab-index title=path><span class="tab-label">…</span><span class="close-btn" data-tab-close="i">×</span></div>` |
-| 样式 | theme/memoria.css:396-436 | 标签条可横向滚动；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框；`.tab-pending` 斜体 + 顶部虚线边框；标签名最大 8.75rem 省略；关闭键 hover 变红 |
+| 样式 | theme/memoria.css:423-465 | 标签条可横向滚动（`#tab-bar` 的 `overflow-x:auto` 在 428 行）；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框（445-449）；`.tab-pending` 斜体 + 顶部虚线边框（450-458）；标签名最大 8.75rem 省略（459-463）；关闭键 hover 变红（465）。**指针在标签条区域内的滚轮 = 横向滚动**（`app.js:12864-12888`，2026-09-19 新增；滚动条外观见 app.css 末尾块 5078-5136） |
 | 打开 | app.js:1424-1435 | `openFile` 默认 `ensureOpenTab(..., {activate:true, pending:false})`；`skipTabUpsert` 时只就地清 `pending` |
 | 点击切换 | app.js:1365-1371 → 1326-1343 | 命中 `.close-btn` 则忽略；否则 `activateTab(path, kpId)`：先存当前标签三处滚动位，再 `ensureOpenTab(activate)`，再 `openFile(..., {fromNav: !!skipNav, skipTabUpsert:true, restoreScroll:true})` |
 | 关闭 | app.js:1372-1377 → 1291-1324 | 点 `×` → `closeTabAt(i)`。**关掉后仍有标签**：若关的是当前标签 → 激活 `openTabs[min(i, len-1)]`（即顶上的那个标签，或最后一个），且以 `skipNav:true` 激活（**不**产生导航历史）；否则只重绘标签条。**关掉最后一个标签**：清高亮/`currentPath`/`doc`/`activeKpId`，清空编辑器与预览与 `#file-meta`，`renderKpList(null)`（KP 面板显示"请选择文件"），同步搜索范围按钮，显示欢迎页 |
@@ -205,7 +205,7 @@
 8. **F2 的"选中项"不会因失焦清除**：`_lastSel` 只在点击树节点时写入、从不置空（file-tree.js:41）。因此点过某个文件后，即使视觉上已在别处操作（未开弹窗、未聚焦输入框），F2 仍作用于那个文件。
 9. **右键菜单不会切换当前文件**：右键只写 `_lastSel`（file-tree.js:225-249），"删除"的确认文案用的是被右键的文件名（file-tree.js:366）。删除的**不是**当前打开文件时，标签页不会受影响（`closeTabAt` 只在命中时调用，file-tree.js:375-378）。
 10. **关闭最后一个标签 = 回欢迎页**：`closeTabAt` 会清空 `currentPath`/`doc` 并 `showWelcome(true)`（app.js:1296-1317），此时右侧内容区被欢迎页占满，但左侧树与 KP 面板仍在（KP 面板显示"请选择文件"，app.js:1307）。
-11. **`pending` 标签态**：`.tab-pending` 由 `ensureOpenTab` 的 `pending` 选项驱动（app.js:1252、1257、1260、1263、1329），样式为斜体 + 顶部虚线（memoria.css:421-429）。本篇未逐处确认所有写入方，见 §7。
+11. **`pending` 标签态**：`.tab-pending` 由 `ensureOpenTab` 的 `pending` 选项驱动（app.js:1252、1257、1260、1263、1329），样式为斜体 + 顶部虚线（memoria.css:450-458，2026-09-19 实测重取；原写 421-429 偏早约 29 行）。本篇未逐处确认所有写入方，见 §7。
 12. **空态文案复用**：关库后文件树与 KP 面板的占位分别是 `tree.empty`「无 Markdown 文件」与 `app.kpListSelectFile`「请选择文件」（file-tree.js:419、app.js:2107），二者语义不同，集成方勿混用。
 
 ## 6. 代码锚点表
@@ -233,7 +233,7 @@
 | `applyRenameUi` | file-tree.js:51-73 |
 | 路径重映射函数 | file-tree.js:43-49 |
 | 标签页数据结构 / 渲染 / 关闭 | app.js:1242-1265、1291-1324、1345-1378 |
-| 标签页样式 | theme/memoria.css:396-436；⚠️ `app.css` 部分**锚点待重取**（原写 2977-2988，该处实为右键菜单 `.-context-menu`） |
+| 标签页样式 | theme/memoria.css:423-465；app.css:3386-3397（`#tab-bar` / `#tabs`）；**滚动条外观统一收口在 app.css 末尾块 5078-5136**（2026-09-19 重取；原写 `memoria.css:396-436` 偏早约 20 行、`app.css` 部分此前标「锚点待重取」，本轮一并修正） |
 | 标签滚动位记忆 | app.js:1267-1289 |
 | 导航栈实现 | nav-stack.js:4-78 |
 | 前进/后退动作 | app.js:6201-6213 |

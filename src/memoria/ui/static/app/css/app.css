@@ -5074,3 +5074,63 @@ summary:focus-visible,
     background: var(--accent-soft);
     box-shadow: inset 2px 0 0 var(--theme-color);
 }
+
+/* ========== 滚动条：细 + 按需显形（IDE 风格，2026-09-19）====================
+   诉求：全应用滚动条太粗 ⇒ 改成"很细，指针进入该滚动区域才明显，否则几乎消失"。
+   整块**末尾追加** ⇒ 既有行号锚点零漂移（同 A 档块策略）。做法：
+   ① 轨道命中区 10px（比原 6px 更好点中/拖拽，透明区**也是滑块的可拖拽命中区**），滑块用
+      4px 透明 border + `background-clip: content-box` 内缩 ⇒ **实际可见仅 2px**；
+   ② 轨道 / 角落 / 箭头全透明 ⇒ 不占视觉，只留命中区；
+   ③ 三档不透明度：静止 0.18（几乎消失）→ 指针进入该滚动区域 0.45 → 指针压在滑块上或
+      正拖拽 0.72；滑块**不做 transition**（滚动条伪元素过渡在 Chromium 上易闪烁）；
+   ④ 这里用 `!important` 是**必要的**：`theme/memoria.css:76-80` 是更早的全局规则，而
+      `theme/light.css:86-91` 那条带 `html[data-theme]` 属性选择器、特异度更高且**后加载**
+      ⇒ 不加 `!important` 收口不掉。收口后滚动条外观**只此一处**维护；
+   ⑤ 必须强制 `scrollbar-width/scrollbar-color` 回 `auto`：这两个标准属性在 Chromium ≥121
+      生效，且**可继承** —— `theme/memoria.css:73-74` 写在 `body` 上会继承到全应用，一旦生效
+      浏览器会**整块忽略** `::-webkit-scrollbar`，退回 Windows 原生粗滚动条（正是"太粗"的根因）。 */
+:root {
+    --scrollbar-hit: 10px;                 /* 轨道命中区尺寸（含滑块两侧透明 border） */
+    --scrollbar-inset: 4px;                /* 视觉内缩 ⇒ 可见滑块 = 命中区 − 2×内缩 = 2px */
+    --scrollbar-thumb-idle: rgba(140, 148, 158, 0.18);
+    --scrollbar-thumb-hover: rgba(140, 148, 158, 0.45);
+    --scrollbar-thumb-drag: rgba(140, 148, 158, 0.72);
+}
+html[data-theme="light"] {
+    --scrollbar-thumb-idle: rgba(90, 95, 102, 0.16);
+    --scrollbar-thumb-hover: rgba(90, 95, 102, 0.42);
+    --scrollbar-thumb-drag: rgba(90, 95, 102, 0.70);
+}
+
+html,
+html * {
+    scrollbar-width: auto !important;
+    scrollbar-color: auto !important;
+}
+html *::-webkit-scrollbar {
+    width: var(--scrollbar-hit) !important;
+    height: var(--scrollbar-hit) !important;
+    background: transparent !important;
+}
+html *::-webkit-scrollbar-track,
+html *::-webkit-scrollbar-corner {
+    background: transparent !important;
+}
+html *::-webkit-scrollbar-button {
+    display: none !important;
+}
+html *::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-idle) !important;
+    background-clip: content-box !important;
+    border: var(--scrollbar-inset) solid transparent !important;
+    border-radius: 999px !important;
+}
+/* 指针进入该滚动区域 ⇒ 明显（与后续两条同特异度，靠"后出现"取胜） */
+html *:hover::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-hover) !important;
+}
+/* 指针压在滑块上 / 正在拖拽 ⇒ 最明显 */
+html *::-webkit-scrollbar-thumb:hover,
+html *::-webkit-scrollbar-thumb:active {
+    background-color: var(--scrollbar-thumb-drag) !important;
+}

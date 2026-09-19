@@ -118,6 +118,7 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | P04 | Windows 右键文件夹「以 Memoria 打开」+ 打开前安全检查（2026-08-29 登记，详情见下） | ⏳ |
 | P05 | `static_server` 的 `_kb_root` 是模块全局 → 一进程只能服务一个知识库（多库/多实例与外部宿主嵌入受阻） | ⏳ K1（`static_server.py`；与 D2 集成 X10 相关；来源 agent-guide/10） |
 | P06 | 打包态在**他人机器**启动崩溃：pythonnet 初始化失败（`Failed to resolve Python.Runtime.Loader.Initialize`，2026-09-18 用户报于 v0.3.4-lite 分发） | 🔄 K2（**根因已定位 = Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面补系统要求；v0.3.4 已重新构建并替换资产。证据 `artifacts/p06-motw-e2e.txt`、发布态 A/B。待在报错机器复验。详情见下） |
+| P07 | 全局滚动条改「细 + 指针进入该区域才明显」+ 顶部文件标签栏滚轮横向滚动（2026-09-19 用户直接指令） | 🔄 K2（`app.css:5078-5136` 末尾块 = 可见滑块 2px/三档不透明度，并强制 `scrollbar-width/color: auto` 以收口 `memoria.css:73-74` 那个会让骨架退回原生粗滚动条的**可继承**标准属性坑；`app.js:12864-12888` = `#tabs` 滚轮转横向。**harness 8651 实测**：三容器轨道 10px / 滑块 `content-box` + 4px border + `rgba(140,148,158,0.18)`、`body.scrollbarWidth=auto`、8 标签溢出下滚轮 `scrollLeft 0→120→240` 且文字未裁。**未取证**：真实 hover 的 0.45/0.72 两档与真实滚轮（harness 无法派发，只有 CSSOM 静态证据）+ 真机 2px 观感。详见 [design/ui-visual-language.md §4-B′](design/ui-visual-language.md)） |
 
 **P04 详情（2026-08-29 登记）：**
 
@@ -260,6 +261,6 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG03 | dsh M2 剩余 `session-reference` | ⏳ K1（无前端入口，排后） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
 | AG05 | 状态栏/状态 bar（bar＝状态点 + 模型/出网/**余额**/轮次；已去掉会话 id） | 🔄 K1 待完善（余额 = `agent_balance` → `llm/balance.py`，实测 `¥0.75`；见 §4.2） |
-| AG06 | UI 视觉语言对照（借 dsh 观感）：A 档已做，B/C 档待拍板 | 🔄 K1（design/ui-visual-language.md）；**U2–U6 待选** |
+| AG06 | UI 视觉语言对照（借 dsh 观感）：A 档已做；**B-10 细滚动条已做**（不经拍板，用户直接指令，见 §8 P07）；其余 B/C 档待拍板 | 🔄 K1（design/ui-visual-language.md，B-10 实施记录见其 §4-B′）；**U2–U6 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
 | AG08 | 面板看不到模型 **thinking** | ⏳ K1 已定性：`ReasoningDelta` 已解析但未送前端（`loop.py:255`）；模型是否吐该字段待验 |
