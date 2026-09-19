@@ -9,8 +9,8 @@
  *   - `#agent-net-toggle`「网络」开关（写 `config/agent.json` 的 enabled；2026-09-19 前文案是「出网」）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
  *   - `#agent-stop`「停止」（**真取消**：调 `agent_ask_cancel`，保留已生成的部分文本）
- *   - 开新会话：**无独立按钮**（原 `#agent-clear`「清空对话」已退役；左栏「历史」页签的「＋ 新会话」= 下方 `clear()`）
- *   - `#agent-history` 下拉恢复历史会话；`#agent-history-delete` 删除选中会话（两次点击确认）
+ *   - 开新会话：**无独立按钮**（原「清空对话」按钮已退役；左栏「历史」页签的「＋ 新会话」= 下方 `clear()`）
+ *   - 会话列表在左栏「历史」页签（`#sidebar-view-history`）；dock 头部只留「当前会话 + 历史按钮」
  *   - `#agent-messages` 内锚点点击 → 跳转文件:行号
  *   - MemoriaI18n.addRefresh → 语言切换后重绘消息/状态/历史选项（静态节点由 i18n 引擎刷）
  *
@@ -33,11 +33,11 @@
  * 写回、下一句续到上一轮"的缺陷。作废后用户立刻再提问不受影响（新 epoch 正常写回）。
  * 生成中**不**禁用「清空」：允许清空，同时**顺带取消**后端作业（避免白烧 token）。
  *
- * **会话历史（M1c）**：`#agent-history` 由 `agent_sessions_list` 填充（按修改时间倒序，
- * 最多 30 条），选中某条 → `agent_session_load` 把消息灌进气泡区并把 `sessionId`
- * 设为该会话（下一句即续聊）。列表/载入是**只读**；`agent_session_delete` 是
+ * **会话历史（M1c；2026-09-19 起列表在左栏「历史」页签）**：由 `agent_sessions_list` 填充
+ * （按修改时间倒序，最多 30 条），点某条 → `agent_session_load` 把消息灌进气泡区并把
+ * `sessionId` 设为该会话（下一句即续聊）。列表/载入是**只读**；`agent_session_delete` 是
  * **本产品首次允许写知识库**（仅限会话目录 `.memoria/agent/sessions/<id>.jsonl`，
- * 见 10 篇 §2.15）。删除用**两次点击确认**（`#agent-history-delete`），不弹窗。
+ * 见 10 篇 §2.15）。删除用**两次点击确认**（列表行内按钮），不弹窗。
  *
  * **恢复上次会话（M1 收尾；2026-09-18 起按库记）**：磁盘偏好
  * `config/ui-settings.json` 的**顶层 `agent` 段**里的 `lastSessionByKb`
@@ -185,14 +185,12 @@ window.MemoriaAgentPanel = (function () {
   // 当前气泡区（`messages`）属于哪个库——换库判据；提问开始 / 载入会话成功时更新。
   let renderedKb = "";
 
-  // 历史会话下拉的缓存（供语言切换后就地重绘，无需重新请求）
+  // 历史会话列表的缓存（供语言切换后就地重绘，无需重新请求）
   let historyRows = [];
   let historyDisabled = true;
 
-  // 删除的二次确认状态（3s 内未再点即复位；不弹窗）
+  // 删除的二次确认超时（3s 内未再点即复位；不弹窗；左栏历史页签的行内删除用）
   const DELETE_CONFIRM_MS = 3000;
-  let deleteArmed = false;
-  let deleteTimer = null;
 
   // 「恢复上次会话」的幂等键（同一库+同一 id 只自动恢复一次，避免重复请求/覆盖）
   let restoredKey = "";
@@ -861,111 +859,15 @@ window.MemoriaAgentPanel = (function () {
   }
 
   // ── 会话历史（列/载 只读；删除为 M1 收尾新增的唯一写知识库入口）─────────
+  // 列表渲染与删除见 IIFE 末尾的「左栏第 4 页签『历史』」块（`renderHistoryList` / `histDelete`）。
+  // 下面两个绑定早年由 dock 的原生 `<select>` 行使用，2026-09-19 会话选择迁到左栏后，
+  // 其实现已由该末尾块整体接管（此处的 `let` 声明供更早定义的函数调用，赋值在末尾块）。
 
-  /**
-   * 删除按钮的文案与禁用态：未选中具体会话（「（新会话）」/列表空）时禁用；
-   * 二次确认中显示 `agent.history.deleteConfirm`。
-   */
-  function syncDeleteButton() {
-    const btn = $("#agent-history-delete");
-    if (!btn) return;
-    const sel = $("#agent-history");
-    const hasTarget = !!(sel && sel.value && historyRows.length && !historyDisabled);
-    btn.disabled = !hasTarget;
-    const label = deleteArmed && hasTarget ? T("agent.history.deleteConfirm") : T("agent.history.delete");
-    const span = btn.querySelector("span");
-    if (span) span.textContent = label;
-    else btn.textContent = label;
-    btn.title = T("agent.history.deleteTitle");
-  }
+  /** 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏 / 切换知识库时）；实现在 IIFE 末尾。 */
+  let refreshHistory;
 
-  /** 复位删除的二次确认态（选择变化 / 超时 / 删除完成后调用）。 */
-  function resetDeleteArmed() {
-    if (deleteTimer) {
-      clearTimeout(deleteTimer);
-      deleteTimer = null;
-    }
-    deleteArmed = false;
-    syncDeleteButton();
-  }
-
-  /** 把会话列表渲染进 `#agent-history`；空/不可用时给禁用态与提示文案。 */
-  function renderHistory(sel, sessions, disabled) {
-    historyRows = Array.isArray(sessions) ? sessions : [];
-    historyDisabled = !!disabled;
-    sel.innerHTML = "";
-    const none = document.createElement("option");
-    none.value = "";
-    none.textContent = T("agent.history.none");
-    sel.appendChild(none);
-    historyRows.forEach(function (row) {
-      const session = row || {};
-      const id = String(session.session_id || "");
-      if (!id) return;
-      const opt = document.createElement("option");
-      opt.value = id;
-      // 标签优先用后端折叠出的**标题**（M2 `session/title`，无标题事件时后端已回落首问前 40 字）；超限会话（`capped`）补后缀标记
-      opt.textContent =
-        T("agent.history.option", {
-          preview: String(session.title || session.preview || id),
-          n: session.turn_count || 0,
-        }) + (session.capped ? T("agent.history.capped") : "");
-      sel.appendChild(opt);
-    });
-    sel.disabled = historyDisabled || !historyRows.length;
-    if (!historyRows.length) none.textContent = T("agent.history.empty");
-    sel.title = sel.disabled ? none.textContent : "";
-    syncHistorySelection();
-    resetDeleteArmed(); // 列表重绘后先复位，再按当前选中态刷新按钮
-  }
-
-  /** 让下拉选中当前 `sessionId`（不在列表中则落回「（新会话）」）。 */
-  function syncHistorySelection() {
-    const sel = $("#agent-history");
-    if (!sel) return;
-    const want = sessionId || "";
-    for (let i = 0; i < sel.options.length; i += 1) {
-      if (sel.options[i].value === want) {
-        sel.selectedIndex = i;
-        syncDeleteButton();
-        return;
-      }
-    }
-    if (sel.options.length) sel.selectedIndex = 0;
-    syncDeleteButton();
-  }
-
-  /** 语言切换后就地重绘历史选项（文案来自语言包，无需重新请求）。 */
-  function refreshHistoryLabels() {
-    const sel = $("#agent-history");
-    if (!sel) return;
-    renderHistory(sel, historyRows, historyDisabled);
-  }
-
-  /**
-   * 刷新历史列表（打开面板 / 每次提问结束后 / 展开停靠栏 / 切换知识库时）。
-   * **只列当前库**的会话；跨库作废已由 `onKbChanged()` 无条件重置承担（不再在此判 `sessionKb`）。
-   */
-  async function refreshHistory() {
-    const sel = $("#agent-history");
-    if (!sel) return;
-    const kb = state.kbPath || "";
-    if (!kb) {
-      renderHistory(sel, [], true);
-      return;
-    }
-    let res;
-    try {
-      res = await call("agent_sessions_list", kb);
-    } catch (e) {
-      res = { status: "error", message: String((e && e.message) || e) };
-    }
-    if (!res || res.status !== "ok" || !Array.isArray(res.sessions)) {
-      renderHistory(sel, [], true);
-      return;
-    }
-    renderHistory(sel, res.sessions, false);
-  }
+  /** 语言切换后就地重绘历史选项；实现在 IIFE 末尾。 */
+  let refreshHistoryLabels;
 
   /**
    * 载入一个历史会话：灌进气泡区并把 `sessionId` 设为它（下一句即续聊）。
@@ -987,7 +889,6 @@ window.MemoriaAgentPanel = (function () {
         const msg = fullErrorText(res);
         setStatusText(msg, true);
         showFlashError(msg);
-        syncHistorySelection(); // 失败即把下拉回滚到当前会话
       }
       return res || { status: "error" };
     }
@@ -1008,8 +909,7 @@ window.MemoriaAgentPanel = (function () {
     renderedKb = kb; // 气泡区现在属于本库
     resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
-    setStatusText(""); // 2026-09-19：状态行不再显示会话 id（用户不需要；会话身份在历史下拉里）
-    syncHistorySelection();
+    setStatusText(""); // 2026-09-19：状态行不再显示会话 id（用户不需要；会话身份在左栏「历史」列表里）
     setLastSessionId(kb, sessionId); // 记住**本库**的会话，供下次自动恢复（并清掉旧全局键）
     return res;
   }
@@ -1054,7 +954,6 @@ window.MemoriaAgentPanel = (function () {
    */
   function onKbChanged() {
     const kb = state.kbPath || "";
-    resetDeleteArmed();
     if (renderedKb !== kb) {
       if (job && job.kb !== kb) {
         const jid = job.id;
@@ -1077,43 +976,6 @@ window.MemoriaAgentPanel = (function () {
     restoredKey = "";
     refreshHistory();
     restoreLastSession();
-  }
-
-  /** 「删除」按钮：两次点击确认（首点变「再点一次删除」，3s 未再点即复位）。 */
-  async function deleteSelected() {
-    const sel = $("#agent-history");
-    const id = (sel && sel.value) || "";
-    if (!id || !historyRows.length) return;
-    if (!deleteArmed) {
-      deleteArmed = true;
-      syncDeleteButton();
-      if (deleteTimer) clearTimeout(deleteTimer);
-      deleteTimer = setTimeout(function () {
-        deleteTimer = null;
-        deleteArmed = false;
-        syncDeleteButton();
-      }, DELETE_CONFIRM_MS);
-      return;
-    }
-    resetDeleteArmed();
-    const kb = state.kbPath || "";
-    let res;
-    try {
-      res = await call("agent_session_delete", id, kb || null);
-    } catch (e) {
-      res = { status: "error", message: String((e && e.message) || e) };
-    }
-    if (!res || res.status !== "ok") {
-      showFlashError(fullErrorText(res));
-      return;
-    }
-    // 删的是当前会话 ⇒ 回到「新会话」态（清空气泡与偏好），否则仅刷新列表
-    if (sessionId === id) {
-      await clear();
-      restoredKey = ""; // 该会话已不存在：清掉幂等键，避免下次误判
-    }
-    await refreshHistory();
-    showFlashInfo(T("agent.history.deleted"));
   }
 
   // ── 表单 / 按钮态 ───────────────────────────────────────────────────
@@ -1489,26 +1351,6 @@ window.MemoriaAgentPanel = (function () {
     if (send) send.addEventListener("click", () => ask());
     const stopBtn = $("#agent-stop");
     if (stopBtn) stopBtn.addEventListener("click", () => stop());
-    const clearBtn = $("#agent-clear");
-    if (clearBtn) clearBtn.addEventListener("click", () => clear());
-    const historySel = $("#agent-history");
-    if (historySel) {
-      historySel.addEventListener("change", () => {
-        resetDeleteArmed(); // 选中项变了 ⇒ 复位二次确认
-        const value = historySel.value || "";
-        if (busy) {
-          syncHistorySelection(); // 生成中不接受切换（loadSession 也会拒绝）
-          return;
-        }
-        if (!value) {
-          clear(); // 选「（新会话）」= 开新会话
-          return;
-        }
-        loadSession(value);
-      });
-    }
-    const deleteBtn = $("#agent-history-delete");
-    if (deleteBtn) deleteBtn.addEventListener("click", () => deleteSelected());
 
     // 状态栏用量格：点击展开右侧对话面板（不新增弹窗；面板在此前已由本模块定义）
     const statusAgent = $("#status-agent");
@@ -1595,8 +1437,7 @@ window.MemoriaAgentPanel = (function () {
       window.MemoriaI18n.addRefresh(() => {
         applyConfigToForm();
         renderMessages();
-        resetDeleteArmed(); // 语言切换后删除按钮文案随语言包（含复位二次确认）
-        refreshHistoryLabels(); // 历史选项文案（含禁用态占位）随语言切换
+        refreshHistoryLabels(); // 左栏「历史」列表文案（骨架按钮 / 过滤框占位 / 行内动作）随语言切换
         applyDockCollapsed(); // 语言切换后同步顶栏按钮 aria-pressed（title 由 i18n 静态节点刷）
         renderStatusUsage(); // 状态栏用量格文案（中英）随语言切换
       });
@@ -1604,7 +1445,6 @@ window.MemoriaAgentPanel = (function () {
 
     renderMessages();
     setStatusText("");
-    syncDeleteButton();
     refreshConfig();
     // 打开面板即刷新历史；若磁盘偏好里有「上次会话」且仍存在，则自动载入（静默）
     refreshHistory().then(() => restoreLastSession());
@@ -1748,7 +1588,7 @@ window.MemoriaAgentPanel = (function () {
   /** 重绘状态 bar（幂等、纯读当前状态；元素缺失时静默返回）。
    *
    * 文案**全部复用既有 i18n 键**（`agent.settings.model` / `agent.model.none` / `agent.net.label` /
-   * `agent.model.netOff` / `agent.status.session` / `agent.history.none` / `agent.history.option`）——
+   * `agent.model.netOff` / `agent.status.session` / `agent.history.none`）——
    * 首版刻意不新增键：往 `zh-CN.js` 的 `agent` 段插键会把它**之后**的所有行推位，牵动 01/02/04/06/07/08/09
    * 篇里十余处 `zh-CN.js:<行号>` 锚点。等 bar 的事实与措辞定下来再一次性补专用键（届时同步重取锚点）。
    */
@@ -2070,9 +1910,9 @@ window.MemoriaAgentPanel = (function () {
   // 「当前会话：<标题> ＋ 历史按钮」⇒ 它仍是"我正看的是哪段对话"的指示器，
   // 两行高度与编辑区对齐（`--bar-h-b`）也不破。
   // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
-  // 说明：原 `renderHistory()` 仍把数据写进那个已被移除的 `<select>`（`if (!sel) return` 会直接
-  // 不干活）、`refreshHistoryLabels()` 更会对着 null 取 innerHTML 抛错 ⇒ 两者在本块**整体接管**
-  // （数据仍落在同一个模块级 `historyRows`）。旧的下拉/删除按钮绑定因元素不存在而自然跳过。
+  // 说明：本块**整体接管** `refreshHistory()` / `refreshHistoryLabels()` 的实现（早年为 dock 的
+  // 原生 `<select>` 而写；会话选择迁走后其旧实现已随本次清理删除），数据仍落在同一个模块级
+  // `historyRows`。
   // ══════════════════════════════════════════════════════════════════════════════
 
   /** 过滤串（纯客户端过滤标题/预览，不请求后端）。 */
@@ -2307,7 +2147,7 @@ window.MemoriaAgentPanel = (function () {
     });
   }
 
-  // 接管列表数据流：原 `refreshHistory()` 会因 `$("#agent-history")` 为 null 而直接返回。
+  // 接管列表数据流：把实现落到左栏「历史」页签的列表上（`renderHistoryList()`）。
   refreshHistory = async function () {
     const kb = state.kbPath || "";
     if (!kb) {

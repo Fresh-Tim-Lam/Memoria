@@ -13,7 +13,7 @@
 #-sidebar                                        （index.html:96）
 └─ #sidebar-body-split                           （index.html:108）
    ├─ #sidebar-nav-panel                         （文件树 / 2D / 3D，见 06 篇）
-   ├─ #sidebar-nav-kp-resizer                    （上下占比拖拽条，app.css:377）
+   ├─ #sidebar-nav-kp-resizer                    （上下占比拖拽条，app.css:680）
    └─ #sidebar-kp-block                          （app.css:234）
       ├─ .sidebar-toolbar.-kp-toolbar            （index.html:124）
       │  ├─ 「知识点」 .-kp-toolbar-label
@@ -24,7 +24,7 @@
       └─ #kp-list.-panel.-kp-panel               （index.html:132）
 
 #kp-modal                                        （index.html:222-237，浮层在 #app 外）
-└─ #kp-modal-box.-modal-box.-modal-tabbed       （app.css:752；resize:both，app.css:976）
+└─ #kp-modal-box.-modal-box.-modal-tabbed       （app.css:724；resize:both，app.css:948）
    ├─ #kp-title「知识点配置」+ #kp-close
    ├─ #kp-body.-modal-body                       （Tab 由 renderKpModalTabs 注入）
    └─ .-modal-footer： #kp-delete / #kp-cancel / #kp-save
@@ -53,12 +53,12 @@ KP 弹窗的四个页签（`range` / `identity` / `tags` / `edges`）由 `render
 | 排序 | 按 `range_resolved.start_line`，其次 `range.start.line_hint`，再退化 0 升序 | `app.js:2113`-`2117` |
 | 计数 | `#kp-count` = 正式 KP 数；为 0 时清空文本 | `app.js:2118` |
 | 行号/错误文案 | `rr.ok` → `L{start}–{end}`；`rr.error` → `errorLabel()` 并加 `error`（含 `not_found`）或 `warn` 类 | `app.js:2136`-`2145`、`2178`-`2183`；`errorLabel` `app.js:10913`-`10921` |
-| 标签 | `.-tag` 逐个渲染（不折叠、不省略） | `app.js:2146`-`2148`；`app.css:3073`-`3078` |
-| 当前选中 | `kp.id === state.activeKpId` → `active` 类（`background: var(--accent-soft)`） | `app.js:2138`；`app.css:3058` |
+| 标签 | `.-tag` 逐个渲染（不折叠、不省略） | `app.js:2146`-`2148`；`app.css:3045`-`3078` |
+| 当前选中 | `kp.id === state.activeKpId` → `active` 类（`background: var(--accent-soft)`） | `app.js:2138`；`app.css:3030` |
 | 空态 A（未选文件） | `<div class="empty">请选择文件</div>`，`app.kpListSelectFile` | `app.js:2106`-`2109`、`i18n/zh-CN.js:491` |
 | 空态 B（无 KP 且无提议） | `app.kpListNoKp`「无知识点 · 右键条目或点「配置」」 | `app.js:2120`-`2123`、`i18n/zh-CN.js:492` |
 | 空态 C（**仅有待确认**） | `app.kpListOnlyProposals`（`{n}`＝**仅标题提议数**，因为这里 `proposals` 只取 `doc.heading_proposals`）+ 换行 + `app.kpListOnlyProposalsHint` | `app.js:2112`、`2124`-`2132`、`i18n/zh-CN.js:493`-`494` |
-| 样式 | `.-kp-item:hover`/`.active`；`.-kp-item.warn .-kp-name`（warning 色）、`.-kp-item.error .-kp-name`（error 色） | `app.css:3051`-`3072` |
+| 样式 | `.-kp-item:hover`/`.active`；`.-kp-item.warn .-kp-name`（warning 色）、`.-kp-item.error .-kp-name`（error 色） | `app.css:3023`-`3072` |
 
 事件绑定（仅正式 KP 条目）：`click` → `onKpClick`；`mouseenter` → `highlightKpHover` + `highlightGraphFromKp`；`mouseleave` → `clearKpHoverHighlight` + `clearGraphKpHover`；`contextmenu` → `MemoriaKpContextMenu.show`（**菜单只有一项「配置」**，`kp-context-menu.js:37`）。
 
@@ -82,7 +82,7 @@ KP 弹窗的四个页签（`range` / `identity` / `tags` / `edges`）由 `render
 | 图谱联动 | 列表 hover 同步调用 `highlightGraphFromKp`（远端 hover，图谱节点加亮） | `app.js:2161`、`6451`-`6465` |
 | 抑制条件 | `shouldSuppressHoverHighlight(e)`＝`e.buttons` 非 0（按住鼠标拖拽时不触发） | `app.js:8`-`10`、`2159`、`2164` |
 | 清除 | `mouseleave` → 清 `in-range kp-hover`；只有闪烁与清除计时器**都为空**时才清预览浮层 | `app.js:2163`-`2167`、`10983`-`10991` |
-| CSS | 源码行 `.-line.in-range .-line-content{background:rgba(0,122,204,.08)}` | `app.css:3634`-`3636` |
+| CSS | 源码行 `.-line.in-range .-line-content{background:rgba(0,122,204,.08)}` | `app.css:3606`-`3636` |
 
 ### 2.4 KP 弹窗 · 打开方式与框架
 
@@ -98,7 +98,7 @@ KP 弹窗的四个页签（`range` / `identity` / `tags` / `edges`）由 `render
 
 ### 2.5 KP 弹窗 · 范围页（`range`）
 
-`-kp-range-panel`（`app.css:824`-`856`）。结构：错误条 → 起止行号输入 → 候选单选 → 预览区 → 说明。
+`-kp-range-panel`（`app.css:796`-`856`）。结构：错误条 → 起止行号输入 → 候选单选 → 预览区 → 说明。
 
 | 元素 | 现状 | 锚点 |
 |---|---|---|
@@ -127,7 +127,7 @@ KP 弹窗的四个页签（`range` / `identity` / `tags` / `edges`）由 `render
 | 描述候选 | —（`#kp-desc-candidates`） | 同左 | 「同步检索 aux」+ 「建议描述」→ `suggest_description` | `app.js:4056`-`4067`、`4430`-`4446` |
 | 描述正文 | — | `#kp-desc-input`（`textarea`，占位 `cfg.kpIdent.descPlaceholder`） | 点描述候选 chip 填入 | `app.js:3427`-`3429`、`4364`-`4372` |
 
-chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实线主题色描边；候选按 `source` 分 `cand-user`（虚线、主题色描边）/ `cand-system`（虚线、灰）；系统 tag chip 右上角显示 `score`。**点 chip 主体**＝切换已选/候选（`toggleKpTagZone` → `promote/demote`），**点 × 号**＝彻底移除（`dismissKpTag/dismissKpAlias`）（`app.js:4097`-`4115`、`4002`-`4015`、`4174`-`4219`、`4272`-`4296`、`app.js:4230`-`4251`；`app.css:1430`-`1468`）。描述候选进候选区的条件是文本 ≠ 当前描述（`app.js:3997`）。
+chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实线主题色描边；候选按 `source` 分 `cand-user`（虚线、主题色描边）/ `cand-system`（虚线、灰）；系统 tag chip 右上角显示 `score`。**点 chip 主体**＝切换已选/候选（`toggleKpTagZone` → `promote/demote`），**点 × 号**＝彻底移除（`dismissKpTag/dismissKpAlias`）（`app.js:4097`-`4115`、`4002`-`4015`、`4174`-`4219`、`4272`-`4296`、`app.js:4230`-`4251`；`app.css:1402`-`1468`）。描述候选进候选区的条件是文本 ≠ 当前描述（`app.js:3997`）。
 
 ### 2.8 KP 弹窗 · 边页（`edges`）
 
@@ -148,7 +148,7 @@ chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实
 | 配置链接 | `origin==="link"` 且有 `anchor_text` | 转 `openLinkEditor({mode:"edit", returnTo:"kp"})` | `app.js:3671`-`3673`、`3786`-`3799` |
 | 新建边 | 始终 | `create_edge(path, kp.id, targetId, edgeType, relevance)` | `app.js:3802`-`3866` |
 
-「新建边」表单细节：目标输入框用**自绘 datalist**（`.-edge-target-datalist`，最多 10 项，取自本文件 KP id ∪ `state.linkTargetList`，`blur` 后 200ms 移除）；边型下拉**只有 `reference` / `extend`**（没有 `contain`）；权重滑条 `min=0 max=1 step=0.05`，初值 **0.70**，旁显两位小数（`app.js:3709`-`3711`、`3805`-`3809`、`3811`-`3845`；`app.css:956`-`975`）。每次操作成功后都 `reloadDocAndRefreshEdges(kp.id)`：重新 `load_document` 后整页重渲（`app.js:3720`-`3726`）。
+「新建边」表单细节：目标输入框用**自绘 datalist**（`.-edge-target-datalist`，最多 10 项，取自本文件 KP id ∪ `state.linkTargetList`，`blur` 后 200ms 移除）；边型下拉**只有 `reference` / `extend`**（没有 `contain`）；权重滑条 `min=0 max=1 step=0.05`，初值 **0.70**，旁显两位小数（`app.js:3709`-`3711`、`3805`-`3809`、`3811`-`3845`；`app.css:928`-`975`）。每次操作成功后都 `reloadDocAndRefreshEdges(kp.id)`：重新 `load_document` 后整页重渲（`app.js:3720`-`3726`）。
 
 ### 2.9 保存 / 删除 / 重命名
 
@@ -206,7 +206,7 @@ chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实
 | 触发方 | KP 列表点击（`app.js:10939`）、`openFile({kpId})` 跳转（`app.js:1488`，含图谱节点点击）、搜索结果/审计定位、KP 保存后回跳（`reloadDocAfterKpChange` → `onKpClick(...,{skipRangeModal:true})`，`app.js:11665`） | KP 保存/创建之后（`app.js:11932`）、直接确认待确认提议（`app.js:4667`） |
 | 锚点 | `app.js:11050`-`11083` | `app.js:11039`-`11048` |
 
-第三态为错误高亮 `highlightRangeWithError`（`kp-error-flash`，不自动淡出，另给列表项加 `.error-highlight`，用于检查面板「打开」跳转，`app.js:11086`-`11118`、`app.css:3670`-`3700`）。**编辑期实时同步不在此列**——它走 §2.2 的 M6b 即时映射 + `resolve_kp_ranges` 回写。
+第三态为错误高亮 `highlightRangeWithError`（`kp-error-flash`，不自动淡出，另给列表项加 `.error-highlight`，用于检查面板「打开」跳转，`app.js:11086`-`11118`、`app.css:3642`-`3700`）。**编辑期实时同步不在此列**——它走 §2.2 的 M6b 即时映射 + `resolve_kp_ranges` 回写。
 
 ## 3. 交互流程
 
@@ -258,9 +258,9 @@ chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实
 | 侧栏 KP 区块 DOM（工具栏 / 列表 / 拖拽条） | `index.html:105`-`134` |
 | KP 弹窗 DOM / 配置弹窗 DOM | `index.html:222`-`237`、`239`-`251` |
 | 侧栏 KP 区块与列表样式 | `app.css:220`-`248`、`708`-`731`、`3051`-`3078` |
-| KP 弹窗尺寸/分页布局 | `app.css:752`-`773`、`976`-`978`、`799`-`856` |
-| 边页样式 / 候选 datalist | `app.css:858`-`975` |
-| 标签 chip 样式 | `app.css:1366`-`1530` |
+| KP 弹窗尺寸/分页布局 | `app.css:724`-`773`、`976`-`978`、`799`-`856` |
+| 边页样式 / 候选 datalist | `app.css:830`-`975` |
+| 标签 chip 样式 | `app.css:1338`-`1530` |
 | 列表渲染与事件 | `app.js:2103`-`2176` |
 | 计数与待确认过滤 | `app.js:2185`-`2193`、`2227`-`2249` |
 | 配置弹窗渲染与三 Tab | `app.js:2251`-`2298`、`2717`-`2776`、`2782`-`2866`、`3007`-`3064` |
@@ -278,7 +278,7 @@ chip 视觉与语义（`renderKpTagChip`/`renderKpAliasChip`）：`selected` 实
 | KP 列表点击 / 右键菜单动作 | `app.js:10923`-`10944`、`12246`-`12255`、`kp-context-menu.js:27`-`61` |
 | 范围语义（静默 / 跳转 / 错误） | `app.js:11039`-`11118` |
 | hover 高亮与抑制 | `app.js:8`-`10`、`10983`-`11012`、`2156`-`2167` |
-| 预览浮层条实现 | `app.js:11136`-`11208`；`app.css:3574`-`3591`、`3634`-`3700` |
+| 预览浮层条实现 | `app.js:11136`-`11208`；`app.css:3546`-`3591`、`3634`-`3700` |
 | M6b 实时行号映射与列表就地更新 | `app.js:160`-`192`、`7067`-`7202`、`7708`-`7711` |
 | 保存后静默刷新（调度作业） | `app.js:139`-`141`、`232`-`249` |
 | 选区右键「设为知识点」 | `app.js:9533`-`9540`、`9575`-`9582`、`11214`-`11225` |

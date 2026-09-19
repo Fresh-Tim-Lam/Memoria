@@ -659,7 +659,7 @@ body {
    1x 下唯一能真正"变轻"的手段是**把颜色调向背景**，于是给**区域分隔线**单开一档：
      深色 #3c3c3c → **#303030**（对比 `--bg-secondary #252526`：1.388 → 1.161，−16%）
    为什么**不直接调淡 `--border`**（实测数据）：`--border` 同时是**19 条规则**的
-   "tertiary 背景 + 自身描边"的轮廓色（`.-agent-input` / `.-agent-history-select` /
+   "tertiary 背景 + 自身描边"的轮廓色（`.-agent-input` /
    `.-settings-field select` / `.-config-btn` / `#graph-controls button` / `.tab` …），
    而 `--bg-tertiary` 正是 **#333333** —— 调到它附近，这些输入框/按钮的描边会在自己的
    背景上**消失**。故本档只给"区域分隔线"用，控件轮廓仍走 `--border`。

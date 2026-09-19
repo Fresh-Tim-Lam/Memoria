@@ -20,9 +20,9 @@
 │   │       └── #file-menu-export               index.html:51   disabled（占位）
 │   ├── #btn-refresh                            index.html:62
 │   ├── #btn-build                              index.html:63
-│   └── .-toolbar-btn-wrap                      index.html:64-67（app.css:1756-1762）
+│   └── .-toolbar-btn-wrap                      index.html:64-67（app.css:1728-1734）
 │       ├── #btn-check                          index.html:65
-│       └── #btn-check-badge .-toolbar-badge    index.html:66（app.css:1768-1799）
+│       └── #btn-check-badge .-toolbar-badge    index.html:66（app.css:1740-1771）
 
 弹窗（body 层，#app 外；index.html:222-368）
 ├── #import-conflict-modal .-modal              index.html:322-337（承载 源选择/预览/冲突/提示词/格式说明）
@@ -101,9 +101,9 @@
 
 | 元素 | 证据 | 说明 |
 |---|---|---|
-| 顶栏按钮 + 角标 | index.html:64-67 | `#btn-check` 与 `#btn-check-badge`；角标在 `.-toolbar-btn-wrap`（`position:relative`）内绝对定位到按钮右下（`translate(calc(55% - 3px), calc(42% - 3px))`，app.css:1785），`pointer-events:none` |
+| 顶栏按钮 + 角标 | index.html:64-67 | `#btn-check` 与 `#btn-check-badge`；角标在 `.-toolbar-btn-wrap`（`position:relative`）内绝对定位到按钮右下（`translate(calc(55% - 3px), calc(42% - 3px))`，app.css:1757），`pointer-events:none` |
 | 打开弹窗 | kb-check.js:642、622-633 | 未开库给错误样式提示 `app.openKbFirst`（底栏转红 + 浮层）；否则先显示弹窗并用**缓存报告**渲染（`state.kbValidateReport`），随后以 `silent:true` 跑一次刷新 |
-| 弹窗骨架 | index.html:268-283；app.css:456-463 | `.-modal-box.-modal-check`（宽 `min(720px,94vw)`、max-height 82vh、min-height 22.5rem）；正文 `#check-body.-check-body` 可滚动；标题 `check.modalTitle` |
+| 弹窗骨架 | index.html:268-283；app.css:759 | `.-modal-box.-modal-check`（宽 `min(720px,94vw)`、max-height 82vh、min-height 22.5rem）；正文 `#check-body.-check-body` 可滚动；标题 `check.modalTitle` |
 | 底部按钮 | index.html:276-281 | 「重新检查」`#check-rerun`（`check.rerun`）、「复制报告」`#check-copy`（`check.copy`）、spacer、「关闭」`#check-dismiss`（`common.close`）；右上 X `#check-close` |
 
 **弹窗正文**（`renderCheckModalBody`，kb-check.js:308-497）：
@@ -135,7 +135,7 @@
 
 | 项 | 证据 | 说明 |
 |---|---|---|
-| 角标数值与配色 | kb-check.js:113-139；app.css:1792-1799 | `total = errors + warnings`；`total<=0` → 清空文本 + `.hidden` + `aria-hidden="true"` + 清 title；否则文本为 `total`（**>99 显示 `99+`**）；有 error → `.-toolbar-badge--error`（红 `#da3633`）+ title `check.badge.tooltipErrors/tooltipMixed`，仅 warning → `--warn`（`#9e6a03`）+ `tooltipWarnings` |
+| 角标数值与配色 | kb-check.js:113-139；app.css:1764-1771 | `total = errors + warnings`；`total<=0` → 清空文本 + `.hidden` + `aria-hidden="true"` + 清 title；否则文本为 `total`（**>99 显示 `99+`**）；有 error → `.-toolbar-badge--error`（红 `#da3633`）+ title `check.badge.tooltipErrors/tooltipMixed`，仅 warning → `--warn`（`#9e6a03`）+ `tooltipWarnings` |
 | 刷新时机 | kb-check.js:141-145、248-260、187-195 | `applyCheckIndicators()` 同时刷角标与状态栏；同步、异步（`applyAsyncValidateReport`）、语言切换三条路径共用 |
 | 状态栏「检查统计」块 | kb-check.js:94-107；app.js:289-303 | 有 error/warn 时以 `check.stat.head`「检查」+ 着色 `check.stat.errors/warnings.{one,many}` 拼块，并给 `#status-stats` 打 `data-kb-check="1"`；无问题且报告 `status==="ok"` 且当前无文件统计时显示 `check.stat.pass`「检查通过」；`graph_audit.summary.warn_count` > 0 时追加 `check.stat.graphTodo` |
 | 状态栏点击与复位 | app.js:12219-12227；kb-check.js:673 | 点击：有 `data-kb-check` → `openCheckModal()`，否则有 `data-graph-audit-goto` → 跳到首个图谱审计问题；关库时 `resetIndicators()` = `updateCheckButtonBadge(null)` → 角标隐藏 |
@@ -208,8 +208,8 @@
 11. **静默检查会被导航「陈旧丢弃」**：入队时记 `gen=epoch()` 且 `dropStale:true`（kb-check.js:158-164），而 `openFile()` 每次切换文件都 `bumpEpoch()`（app.js:1384）。若「入队后、执行前」用户切换了文件，该轮后台检查被丢弃，只能等下一个间隔周期——频繁浏览时静默检查可能长期不落地。
 12. **静默检查无 UI 反馈**：排队 / 跳过 / 完成 / 顶替只进控制台 `[job]` 与可选 `logs/job-trace.log`（§2.10）；用户侧只能看到角标与状态栏随之变化。
 13. **角标截断到 `99+`** 但 title 仍显示真实 `{err}/{warn}`（kb-check.js:127-138）。
-14. **角标挂在按钮包装层上**：`.toolbar-btn-wrap` 为 `position:relative`、角标 `translate(calc(55% - 3px), calc(42% - 3px))`（app.css:1785），故角标**溢出按钮右下角**而非贴合内角；`pointer-events:none` 保证不吞点击。
-15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4506），低于搜索面板 9000、右键菜单 10050、flash 浮层 12000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.9）。
+14. **角标挂在按钮包装层上**：`.toolbar-btn-wrap` 为 `position:relative`、角标 `translate(calc(55% - 3px), calc(42% - 3px))`（app.css:1757），故角标**溢出按钮右下角**而非贴合内角；`pointer-events:none` 保证不吞点击。
+15. **弹窗层级**：`#import-*` / `#check-modal` 与所有 `.-modal` 同为 `z-index:1000`（app.css:4478），低于搜索面板 9000、右键菜单 10050、flash 浮层 12000；也没有「只许一个弹窗」的中央约束（见 01 篇 §2.9）。
 16. **检查条目路径多值时只打开第一段**：`paths.length > 1` 时以 ` · ` 拼接展示，但 `data-check-open` 取首个 path（kb-check.js:340-345），点「打开」只会打开第一个文件。
 
 ## 6. 代码锚点表
@@ -225,10 +225,10 @@
 | 执行、刷新、结果页、关闭 | import-flow.js:432-513、521-528 |
 | 提示词与格式说明视图 / 复制反馈 | import-flow.js:133-238、390-409 |
 | 导入后端 API | ui.py:967-997、999-1013、1015-1053、1055-1070、1108-1140 |
-| 导入向导 CSS | app.css:172-211、4207-4324 |
+| 导入向导 CSS | app.css:172-211、4179-4296 |
 | 导入契约（格式 / 幂等 / 冲突 / 预览字段 / UI 流程） | ../import-spec.md:51-170 |
 | 导出设计（未实现） | ../../design/export-plan.md；zh-CN.js:510-511 |
-| 检查按钮与角标 | index.html:64-67；app.css:1756-1799；kb-check.js:113-145 |
+| 检查按钮与角标 | index.html:64-67；app.css:1728-1771；kb-check.js:113-145 |
 | 检查弹窗渲染与条目 | kb-check.js:281-306、308-497 |
 | 检查条目跳转 | kb-check.js:478-496；app.js:1463-1483 |
 | 修复路径 / 更新文件清单 | kb-check.js:430-476 |
@@ -239,7 +239,7 @@
 | 状态栏统计与点击 | app.js:281-333、12219-12227；kb-check.js:94-107 |
 | 前端调度器与 `[job]` 日志 | scheduler.js:43-99、122-225、242-253 |
 | 后端执行器状态机 | executor.py:24-28、44-68、97-144；ui.py:392-412 |
-| 刷新 / 构建 | app.js:12192-12197、1012-1049；zh-CN.js:917-923 |
+| 刷新 / 构建 | app.js:12192-12197、1012-1049；zh-CN.js:910-916 |
 | 开库即检查 + 启动静默检查 | app.js:468-473 |
 
 ## 7. 未证实 / 待确认

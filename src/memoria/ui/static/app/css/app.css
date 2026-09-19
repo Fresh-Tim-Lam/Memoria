@@ -373,12 +373,6 @@
     font-size: 0.75rem;
     color: var(--text-secondary);
 }
-.-agent-head-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-shrink: 0;
-}
 .-agent-net {
     display: inline-flex;
     align-items: center;
@@ -450,25 +444,6 @@
     flex-shrink: 0;
     font-size: 0.75rem;
     color: var(--text-secondary);
-}
-.-agent-history-select {
-    flex: 1;
-    min-width: 0;
-    padding: 0.25rem 6px;
-    font-family: inherit;
-    font-size: 0.75rem;
-    border: 0.5px solid var(--border);
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    border-radius: 4px;
-}
-.-agent-history-select:focus {
-    border-color: var(--theme-color);
-    outline: none;
-}
-.-agent-history-select:disabled {
-    color: var(--text-secondary);
-    opacity: 0.7;
 }
 /* 删除按钮（M1 收尾）：与历史行同高的小按钮；二次确认时文案变「再点一次删除」 */
 .-agent-history-delete {
@@ -640,9 +615,6 @@
     display: flex;
     align-items: center;
     gap: 0.375rem;
-}
-.-agent-composer-actions .-agent-clear {
-    margin-left: auto;
 }
 .-agent-status {
     white-space: pre-wrap;
@@ -5190,10 +5162,6 @@ html *::-webkit-scrollbar-thumb:active {
     padding-top: 0.125rem;
     padding-bottom: 0.125rem;
 }
-.-agent-history-select {
-    padding-top: 0.125rem;
-    padding-bottom: 0.125rem;
-}
 /* 需**新增声明**的两条（既有规则里没有高度）：编辑区头部（格式栏那行）与左栏「文件 / 2D / 3D」页签条
    —— 与 `#tab-bar` / `.-agent-head` 同高（`#tab-bar` = `#tabs` 33px + 自身 1px 边框 = 34px）。 */
 #editor-header {
@@ -5242,8 +5210,8 @@ html *::-webkit-scrollbar-thumb:active {
    条目：第一行标题（超长省略 + tooltip），第二行 `轮数 · 相对时间 · 截断标记`；当前会话带主题色左线
    + `--accent-soft` 底 + 「当前」徽章。删除按钮**默认隐形**（hover / 键盘进入该行才显形），
    避免列表被按钮噪点淹没；进入二次确认时它变红并改文案。
-   注：dock 里那条 `.-agent-history-select*`（app.css:454-472）自本次起**已无对应元素**（选择器已
-   迁到左栏）；为不动其后全部行号锚点而**原地保留**，文档里已标注为退役。 */
+   注：dock 里那条原生 `<select>` 的样式规则**已随本次清理删除**
+   （页面早已无对应元素）。 */
 #sidebar-view-history {
     display: flex;
     flex-direction: column;
@@ -5337,7 +5305,7 @@ html *::-webkit-scrollbar-thumb:active {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-/* dock 那一行的「当前会话」：接管原 `.-agent-history-select` 的占位（flex:1 + 省略号） */
+/* dock 那一行的「当前会话」：接管原历史下拉的占位（flex:1 + 省略号） */
 .-agent-history-current {
     flex: 1 1 auto;
     min-width: 0;
@@ -5401,9 +5369,9 @@ html *::-webkit-scrollbar-thumb:active {
 }
 
 /* ===== 发送按钮「右下角」（2026-09-19；用户："`#agent-send` 放右下角"）==========
-   `.-agent-composer-actions`（604-648 那组里的 639-643）原本是**左对齐**的一行：更早那版靠
-   「清空对话」按钮的 `margin-left: auto` 把自己右推（644-646 的 `.-agent-clear` 规则，**该按钮
-   2026-09-19 已退役 ⇒ 这条规则现在没有对应节点**），清空按钮一走，整行就只剩左边两个按钮。
+   该动作行 `.-agent-composer-actions` 原本是**左对齐**的一行：更早那版靠「清空对话」按钮的
+   `margin-left: auto` 把自己右推；那个按钮 2026-09-19 已退役、其旧规则亦已随本次清理删除，
+   整行就只剩左边的发送 / 停止两个按钮。
    现在整行右对齐 ⇒ 发送 / 停止落在输入框下方那行的**右下角**。
    只加一条声明、且本块在文件末尾（同特异度靠后取胜）⇒ 既有行号锚点零漂移。 */
 .-agent-composer-actions {

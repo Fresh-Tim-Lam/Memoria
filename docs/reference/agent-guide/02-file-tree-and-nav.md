@@ -24,7 +24,7 @@
 ├── 递归目录节点
 │   └── .-tree-dir[data-dir]
 │       ├── .-tree-dir-head[data-dir-toggle]   三角图标（展开时 CSS 旋转 90°）+ 目录 open/close 图标 + 目录名
-│       └── .-tree-dir-children[.collapsed]    （折叠时 display:none，app.css:3430）
+│       └── .-tree-dir-children[.collapsed]    （折叠时 display:none，app.css:3402）
 │           └── 同名结构递归
 ├── .-tree-item[data-path][title=完整路径]      文件类型图标（借 dsh，见 §2.1「图标与侧车」）+ 文件名
 └── .-tree-root-zone（固定 64px 留白，供右键"根目录新建"）        file-tree.js:454-456
@@ -46,13 +46,13 @@
 | 建树 | file-tree.js:130-156 | `buildFileTreeRoot(files, extraDirs)`：**先**按 `dirs` 建目录骨架（保证新建的空文件夹可见），**再**把文件挂到对应目录；路径反斜杠统一转 `/` |
 | 目录行 | file-tree.js:164-177 | 结构见上图；`twisty` = dsh `IconTriangleRightFill14` 内联 SVG，**展开时由 CSS 旋转 90°**（file-tree.js:169；样式在 app.css 末尾块）；目录图标 = `IconFolderOpen16`/`IconFolderClose16` 随展开态切换（file-tree.js:170）；缩进 `padding-left = 4 + depth×14` px（file-tree.js:166）。**2026-09-19**：缩进区新增逐层连接线（dsh `IconTreeCorner8x10`，`treeGuides(depth)`，file-tree.js:168、700-706；样式 `.-tree-guide-*` 在 app.css 末尾块） |
 | 文件行 | file-tree.js:179-189 | 缩进 `padding-left = 12 + depth×14` px；`title` 为完整相对路径；`data-path` 为归一化路径 |
-| 图标与侧车 | file-tree.js:180-186；app.css:3449-3456 + **末尾追加块 5554-5615** | **2026-09-19 起不再用 emoji**：文件图标按扩展名/文件名分类（`classifyFileType`，file-tree.js:689-694）取 dsh `FileTypeIcon` 的类目 glyph（markdown/code/image/html/pdf/ppt/video/word/excel/other），类目→图标名映射见 `FT_CATEGORY_ICON`（file-tree.js:683-686）。原「有侧车 `📄` / 无侧车 `📝`」的**双字形差异已取消**——该信息本就由 `.no-sidecar` 类（图标透明度 0.45）独立承载，故保留为唯一区分；图标颜色一律 `currentColor`（随所在行的 `--text-secondary`/`--text-bright`，见末尾样式块） |
+| 图标与侧车 | file-tree.js:180-186；app.css:3421-3428 + **末尾追加块 5522-5583** | **2026-09-19 起不再用 emoji**：文件图标按扩展名/文件名分类（`classifyFileType`，file-tree.js:689-694）取 dsh `FileTypeIcon` 的类目 glyph（markdown/code/image/html/pdf/ppt/video/word/excel/other），类目→图标名映射见 `FT_CATEGORY_ICON`（file-tree.js:683-686）。原「有侧车 `📄` / 无侧车 `📝`」的**双字形差异已取消**——该信息本就由 `.no-sidecar` 类（图标透明度 0.45）独立承载，故保留为唯一区分；图标颜色一律 `currentColor`（随所在行的 `--text-secondary`/`--text-bright`，见末尾样式块） |
 | 排序 | file-tree.js:123-128、187-198 | 目录与文件**各自**用 `localeCompare(zh-CN, sensitivity:"base", numeric:true)` 升序，目录整体排在文件之前 |
-| 当前文件高亮 | file-tree.js:180；app.css:3444-3448、**5069-5076** | `f.path === state.currentPath` 时加 `.active`（字色 `--text-bright`）。**底色口径 2026-09-19 统一**：由 `--bg-active`（浅色主题下偏灰的 `#e2e7f0`）**并入 `--accent-soft`**（主题色淡底，与 `.-kp-item.active`、`.-link-pick-item.is-active` 同一口径），并补一条**不占布局**的左侧标记 `box-shadow: inset 2px 0 0 var(--theme-color)`（原规则在 app.css:3445-3448，覆盖块见 A 档视觉微调 5069-5076；hover 仍是 `--bg-hover`，见 3444）。⚠️ 本行原锚点 `app.css:3036-3039` 是**错的**（那里是 `.-ctx-item.danger:hover` / `.-link-edit-meta`），2026-09-19 一并修正 |
+| 当前文件高亮 | file-tree.js:180；app.css:3416-3420、**5069-5076** | `f.path === state.currentPath` 时加 `.active`（字色 `--text-bright`）。**底色口径 2026-09-19 统一**：由 `--bg-active`（浅色主题下偏灰的 `#e2e7f0`）**并入 `--accent-soft`**（主题色淡底，与 `.-kp-item.active`、`.-link-pick-item.is-active` 同一口径），并补一条**不占布局**的左侧标记 `box-shadow: inset 2px 0 0 var(--theme-color)`（原规则在 app.css:3417-3420，覆盖块见 A 档视觉微调 5069-5076；hover 仍是 `--bg-hover`，见 3444）。⚠️ 本行原锚点 `app.css:3008-3011` 是**错的**（那里是 `.-ctx-item.danger:hover` / `.-link-edit-meta`），2026-09-19 一并修正 |
 | 展开态 `treeExpanded` | app.js:34；file-tree.js:111-127 | `state.treeExpanded` 是 **`Set<string>`，仅存内存**（初值 `null`，首次使用惰性创建）；`ensureTreeExpandedForPath()` 会把当前文件的所有祖先目录加入集合；每次 `renderFileTree()` 前对 `state.currentPath` 自动展开（file-tree.js:451，**带重渲守卫**）。**2026-09-19 新增**同性质内存集合 `_userCollapsedDirs`（用户显式折叠记忆，file-tree.js:539-557）：重渲时跳过用户折叠过的目录，使含当前文件的文件夹能真正合上；任何**真实 reveal**（`expandToPath` / `revealDir` / 目录内新建）都会清除该记忆（见下行） |
 | 折叠/展开 | file-tree.js:208-219 | 点击 `.-tree-dir-head`：命中则 `collapseDir()`（移出展开集 + 记入 `_userCollapsedDirs`），否则 `expandDir()`（清记忆 + 加入展开集），然后整树重渲染（`e.stopPropagation()`），并记录 `_lastSel = {type:"dir", path}`。**记忆清除点**：展开分支、`expandToPath`（file-tree.js:118-127，不带 `respectUserCollapsed` 时）、`revealDir`（:510）、目录内新建文件/文件夹（:423、:439） |
 | 尾部留白区 | file-tree.js:424-427 | 高度 64px、`cursor:default`、空 title；保证滚到底仍有空白可右键出「根目录」菜单，也避免末项贴底难命中 |
-| 空树占位 | file-tree.js:418-421；i18n/zh-CN.js:1081 | `state.files` 与 `state.dirs` **同时**为空时渲染 `<div class="empty">无 Markdown 文件</div>` |
+| 空树占位 | file-tree.js:418-421；i18n/zh-CN.js:1074 | `state.files` 与 `state.dirs` **同时**为空时渲染 `<div class="empty">无 Markdown 文件</div>` |
 
 ### 2.2 点击切换文件
 
@@ -79,7 +79,7 @@
 |---|---|---|
 | 结构 | app.js:655-680 | 每次右键先移除旧菜单（`id="-ft-context-menu"`，`.-context-menu` + `role="menu"`）；项为 `<button class="-ctx-item[.danger]" role="menuitem">`；`items[].divider` 渲染为 `.-ctx-divider` |
 | 定位 | app.js:681-689 | `left/top = clientX/clientY`，然后按 `getBoundingClientRect()` 夹到视口内（右/下越界则回退到 `innerWidth - width - 4` / `innerHeight - height - 4`），再保底 `≥4px` |
-| 样式 / 层级 | app.css:2977-2995 | `position:fixed`、`z-index:10050`、宽 12.5–20rem、`.danger` 红字 + hover 红底（原写 `app.css:2569-2628` 是**错的**，那里是 KP 创建字段与 `#-flash-host`） |
+| 样式 / 层级 | app.css:2949-2967 | `position:fixed`、`z-index:10050`、宽 12.5–20rem、`.danger` 红字 + hover 红底（原写 `app.css:2541-2600` 是**错的**，那里是 KP 创建字段与 `#-flash-host`） |
 | 关闭 | app.js:691-702 | 一次性（`_ftMenuBound` 去重）绑定三个全局监听：任意 `click`、**外部** `contextmenu`（不在菜单内）、`Escape`。菜单项自身 `click` 先 `stopPropagation()` 再关闭并执行 action（app.js:673-677） |
 | 右键不改变当前文件 | file-tree.js:225-249 | 只更新 `_lastSel`，不调用 `navigateToFile` |
 
@@ -101,7 +101,7 @@
 |---|---|---|
 | 数据结构 | app.js:1242-1265 | `{ path, kpId, label, pending, sourceScroll, previewScroll, kpListScroll }`；同一 `path` 复用条目，已存在时只更新 `kpId`/`label`/`pending` |
 | 渲染 | app.js:1345-1378 | `<div class="tab[ active| tab-pending]" data-tab-index title=path><span class="tab-label">…</span><span class="close-btn" data-tab-close="i">×</span></div>` |
-| 样式 | theme/memoria.css:423-465 | 标签条可横向滚动（`#tab-bar` 的 `overflow-x:auto` 在 428 行）；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框（445-449）；`.tab-pending` 斜体 + 顶部虚线边框（450-458）；标签名最大 8.75rem 省略（459-463）；关闭键 hover 变红（465）。**指针在标签条区域内的滚轮 = 横向滚动**（`app.js:12864-12888`，2026-09-19 新增；滚动条外观见 app.css 末尾块 5078-5136） |
+| 样式 | theme/memoria.css:423-465 | 标签条可横向滚动（`#tab-bar` 的 `overflow-x:auto` 在 428 行）；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框（445-449）；`.tab-pending` 斜体 + 顶部虚线边框（450-458）；标签名最大 8.75rem 省略（459-463）；关闭键 hover 变红（465）。**指针在标签条区域内的滚轮 = 横向滚动**（`app.js:12864-12888`，2026-09-19 新增；滚动条外观见 app.css 末尾块 5046-5104） |
 | 打开 | app.js:1424-1435 | `openFile` 默认 `ensureOpenTab(..., {activate:true, pending:false})`；`skipTabUpsert` 时只就地清 `pending` |
 | 点击切换 | app.js:1365-1371 → 1326-1343 | 命中 `.close-btn` 则忽略；否则 `activateTab(path, kpId)`：先存当前标签三处滚动位，再 `ensureOpenTab(activate)`，再 `openFile(..., {fromNav: !!skipNav, skipTabUpsert:true, restoreScroll:true})` |
 | 关闭 | app.js:1372-1377 → 1291-1324 | 点 `×` → `closeTabAt(i)`。**关掉后仍有标签**：若关的是当前标签 → 激活 `openTabs[min(i, len-1)]`（即顶上的那个标签，或最后一个），且以 `skipNav:true` 激活（**不**产生导航历史）；否则只重绘标签条。**关掉最后一个标签**：清高亮/`currentPath`/`doc`/`activeKpId`，清空编辑器与预览与 `#file-meta`，`renderKpList(null)`（KP 面板显示"请选择文件"），同步搜索范围按钮，显示欢迎页 |
@@ -183,7 +183,7 @@
 
 | 键族 | 覆盖 | 代表键 |
 |---|---|---|
-| `tree.*` | 树内全部右键菜单项、输入/确认弹窗标题与按钮、状态提示 | `tree.empty`「无 Markdown 文件」、「tree.newFile / newFolder / rename / delete / createBtn」、`tree.renameTitle`、`tree.renameDirTitle`、`tree.renamePh`、`tree.renameDirPh`、`tree.newFilePh`、`tree.newFolderPh`、`tree.deleteTitle`、`tree.deleteBody`、`tree.renamed`、`tree.renamedSynced`、`tree.dirRenamed`、`tree.dirRenamedSynced`、`tree.deleted`、`tree.created`、`tree.createdFolder`、`tree.renameFail`、`tree.deleteFail`、`tree.createFail`（zh-CN.js:1080-1105） |
+| `tree.*` | 树内全部右键菜单项、输入/确认弹窗标题与按钮、状态提示 | `tree.empty`「无 Markdown 文件」、「tree.newFile / newFolder / rename / delete / createBtn」、`tree.renameTitle`、`tree.renameDirTitle`、`tree.renamePh`、`tree.renameDirPh`、`tree.newFilePh`、`tree.newFolderPh`、`tree.deleteTitle`、`tree.deleteBody`、`tree.renamed`、`tree.renamedSynced`、`tree.dirRenamed`、`tree.dirRenamedSynced`、`tree.deleted`、`tree.created`、`tree.createdFolder`、`tree.renameFail`、`tree.deleteFail`、`tree.createFail`（zh-CN.js:1073-1098） |
 | `app.kpList*` | KP 面板三种空态（未选文件 / 无 KP / 仅提议） | `app.kpListSelectFile`、`app.kpListNoKp`、`app.kpListOnlyProposals`、`app.kpListOnlyProposalsHint`（zh-CN.js:491-494） |
 | `app.*` | 打开文件前的提示与加载态 | `app.openFileFirst`、`app.openKbFirst`、`app.loading`、`app.loadFailed`、`app.listFailed`（zh-CN.js:479-483） |
 | `common.*` | 输入/确认弹窗的取消、确定、关闭 | `common.cancel`、`common.ok`、`common.close` |
@@ -222,7 +222,7 @@
 | **用户折叠记忆 / 重渲守卫**（2026-09-19） | file-tree.js:539-557、451 |
 | 交互绑定（点击 / 右键委托） | file-tree.js:208-289 |
 | 空树占位 / 尾部留白 | file-tree.js:444-458 |
-| 树样式 | app.css:3410-3457；**图标/连接线块末尾追加 5554-5615** |
+| 树样式 | app.css:3382-3429；**图标/连接线块末尾追加 5522-5583** |
 | 图标清单 / 文件类型分类器 / 单测 | file-tree.js:521-716；scripts/benchmark/maintenance/file_tree_icons_test.js |
 | 树滚动容器 | ⚠️ **锚点待重取**（原写 `app.css:304-312`，该处实为 `#-agent-dock`；2026-09-19 核对发现，未在本轮重取） |
 | 通用右键浮层 | app.js:648-703 |
@@ -235,7 +235,7 @@
 | `applyRenameUi` | file-tree.js:58-79 |
 | 路径重映射函数 | file-tree.js:50-55 |
 | 标签页数据结构 / 渲染 / 关闭 | app.js:1242-1265、1291-1324、1345-1378 |
-| 标签页样式 | theme/memoria.css:423-465；app.css:3386-3397（`#tab-bar` / `#tabs`）；**滚动条外观统一收口在 app.css 末尾块 5078-5136**（2026-09-19 重取；原写 `memoria.css:396-436` 偏早约 20 行、`app.css` 部分此前标「锚点待重取」，本轮一并修正） |
+| 标签页样式 | theme/memoria.css:423-465；app.css:3358-3369（`#tab-bar` / `#tabs`）；**滚动条外观统一收口在 app.css 末尾块 5046-5104**（2026-09-19 重取；原写 `memoria.css:396-436` 偏早约 20 行、`app.css` 部分此前标「锚点待重取」，本轮一并修正） |
 | 标签滚动位记忆 | app.js:1267-1289 |
 | 导航栈实现 | nav-stack.js:4-78 |
 | 前进/后退动作 | app.js:6201-6213 |
@@ -248,7 +248,7 @@
 | KP 面板空态 | app.js:2103-2132 |
 | 关库时的树/标签/KP 复位 | app.js:575-628 |
 | 欢迎页显示切换 | app.js:380-383 |
-| `tree.*` 文案 | i18n/zh-CN.js:1080-1105 |
+| `tree.*` 文案 | i18n/zh-CN.js:1073-1098 |
 | `app.kpList*` 文案 | i18n/zh-CN.js:491-494 |
 
 ## 7. 未证实 / 待确认

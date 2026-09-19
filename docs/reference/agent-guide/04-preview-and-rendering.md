@@ -23,7 +23,7 @@
 #preview-status                                 （index.html:198；渲染告警条，在 #editor-header 下方）
 ```
 
-三态显隐由 `#editor-split` 上的 class 决定：`view-source` 隐藏 `#preview-pane`、`view-preview` 隐藏 `#editor-pane`、`view-split` 两者并排且中间 1px 分隔线（`app.css:3453`-`3459`）。
+三态显隐由 `#editor-split` 上的 class 决定：`view-source` 隐藏 `#preview-pane`、`view-preview` 隐藏 `#editor-pane`、`view-split` 两者并排且中间 1px 分隔线（`app.css:3425`-`3459`）。
 
 ## 2. 三视图切换
 
@@ -60,30 +60,30 @@
 
 | 渲染物 | DOM 结构 | 样式类 / 关键属性 | 锚点 |
 |---|---|---|---|
-| 空行 | `<div class="-src-block -blank-block"><br></div>` | **预览纵向间距的唯一来源**（各 block `margin:0`） | `renderer.js:74`-`79`；`app.css:3487`-`3494`、`3533`-`3536` |
+| 空行 | `<div class="-src-block -blank-block"><br></div>` | **预览纵向间距的唯一来源**（各 block `margin:0`） | `renderer.js:74`-`79`；`app.css:3459`-`3494`、`3533`-`3536` |
 | 段落 | `<p class="-src-block">`（空段落补 `<br>`） | — | `renderer.js:90`-`97` |
-| 标题 | `<h1..h6 class="-src-block">`（空标题补 `<br>`） | 字号按 `--preview-font-size` 等比：h1×1.857 / h2×1.429 / h3×1.143 | `renderer.js:81`-`88`；`app.css:3511`-`3513` |
-| 分隔线 | `<hr class="-src-block">` | 1px 上边框 | `renderer.js:162`-`166`；`app.css:3527`-`3531` |
-| 引用 | `<blockquote class="-src-block">` 内含若干 `<p>`（内层**不带** `-src-block`，否则映射错乱） | 左侧 3px 竖线 | `renderer.js:168`-`185`；`app.css:3519`-`3523` |
+| 标题 | `<h1..h6 class="-src-block">`（空标题补 `<br>`） | 字号按 `--preview-font-size` 等比：h1×1.857 / h2×1.429 / h3×1.143 | `renderer.js:81`-`88`；`app.css:3483`-`3513` |
+| 分隔线 | `<hr class="-src-block">` | 1px 上边框 | `renderer.js:162`-`166`；`app.css:3499`-`3531` |
+| 引用 | `<blockquote class="-src-block">` 内含若干 `<p>`（内层**不带** `-src-block`，否则映射错乱） | 左侧 3px 竖线 | `renderer.js:168`-`185`；`app.css:3491`-`3523` |
 | 列表 | `<ol\|ul class="-src-block">` + `<li>`；有序列表首项 >1 时写 `start` | 空项补 `<br>` | `renderer.js:187`-`205` |
 | 表格 | `<table class="-src-block -table"><thead><tr><th>…<tbody><tr><td>` | 单元格文本再走 inline 解析（失败退化纯文本） | `renderer.js:207`-`235`、`28`-`44`；`theme/memoria.css:542`-`552` |
 | 代码块 | `<pre class="-src-block -code-block"><code class="language-<lang>">原文` | **无语法高亮**（无 highlight.js/Prism 依赖），只有 `language-*` 类名与主题底色 | `renderer.js:99`-`107`；`theme/memoria.css:525`-`526` |
-| Mermaid | 先渲染为 `<pre class="-src-block -mermaid"><code class="language-mermaid">`，随后整块被替换为 `<div class="-mermaid-container -src-block" data--block-index><svg>` | 失败替换为 `<div class="-mermaid-error -src-block">` + `preview.mermaidFail` 文案 | `renderer.js:244`-`252`；`markdown-preview.js:194`-`225`；`app.css:4051`-`4073` |
-| 块级公式 | `<div class="-src-block -math-block">` 初始 textContent 为 `$$formula$$`，MathJax 排版后内部变为 `<mjx-container display="true">` | 居中、上下 0.75rem | `renderer.js:109`-`114`；`app.css:2990`-`2994` |
+| Mermaid | 先渲染为 `<pre class="-src-block -mermaid"><code class="language-mermaid">`，随后整块被替换为 `<div class="-mermaid-container -src-block" data--block-index><svg>` | 失败替换为 `<div class="-mermaid-error -src-block">` + `preview.mermaidFail` 文案 | `renderer.js:244`-`252`；`markdown-preview.js:194`-`225`；`app.css:4023`-`4073` |
+| 块级公式 | `<div class="-src-block -math-block">` 初始 textContent 为 `$$formula$$`，MathJax 排版后内部变为 `<mjx-container display="true">` | 居中、上下 0.75rem | `renderer.js:109`-`114`；`app.css:2962`-`2994` |
 | frontmatter | `<pre class="-src-block -frontmatter">` | 无专属 CSS | `renderer.js:237`-`242` |
-| 图片块 | `<p class="-src-block -image-block">` + `<img class="-preview-image">` + `<span class="-image-caption" data--image-caption>` | 对齐加 `-image-align-left/center/right`；默认 `max-width:35%`，有 width/height 属性时内联尺寸 + `max-width:100%`；`name=hide` → caption `display:none` | `renderer.js:116`-`160`；`app.css:3840`-`3850`、`3988`-`3997` |
+| 图片块 | `<p class="-src-block -image-block">` + `<img class="-preview-image">` + `<span class="-image-caption" data--image-caption>` | 对齐加 `-image-align-left/center/right`；默认 `max-width:35%`，有 width/height 属性时内联尺寸 + `max-width:100%`；`name=hide` → caption `display:none` | `renderer.js:116`-`160`；`app.css:3812`-`3850`、`3988`-`3997` |
 | 行内加粗/斜体/删除线 | `<strong>` / `<em>` / `<strong><em>` / `<del>` | — | `renderer.js:310`-`330` |
 | 行内代码 | `<code>` | 主题底色 | `renderer.js:332`-`335` |
-| 荧光笔 | `<span class="-hl -hl-<color>" style="background-color:…">`（带前景色时再加 `style.color`） | 颜色由 renderer 内联样式决定，CSS 类仅作 fallback | `renderer.js:337`-`344`；`app.css:3823`-`3830` |
+| 荧光笔 | `<span class="-hl -hl-<color>" style="background-color:…">`（带前景色时再加 `style.color`） | 颜色由 renderer 内联样式决定，CSS 类仅作 fallback | `renderer.js:337`-`344`；`app.css:3795`-`3830` |
 | 字体色 | `<span style="color:…">`（**无 class**） | — | `renderer.js:346`-`350` |
 | 字号/`[[\b]]`/`[[\i]]`/`[[\u]]`/上下标 | `<span style="font-size/font-weight/font-style/text-decoration">`、`<sup>`、`<sub>` | — | `renderer.js:352`-`384` |
-| wiki 链接 | `<a class="-wikilink" data--target>` → 后处理加 `memoria-link` + `data-link-target/-type/-line` + `role=link` | 可跳转：`-link-resolved` + `tabindex=0` + title=`preview.link.jump`；断链：`-link-broken memoria-broken-link` + `tabindex=-1` + title=`cfg.linkClick.unboundTitle`；目标集未知：`-link-pending` | `renderer.js:386`-`392`；`app.js:6260`-`6286`；`app.css:1676`-`1721` |
+| wiki 链接 | `<a class="-wikilink" data--target>` → 后处理加 `memoria-link` + `data-link-target/-type/-line` + `role=link` | 可跳转：`-link-resolved` + `tabindex=0` + title=`preview.link.jump`；断链：`-link-broken memoria-broken-link` + `tabindex=-1` + title=`cfg.linkClick.unboundTitle`；目标集未知：`-link-pending` | `renderer.js:386`-`392`；`app.js:6260`-`6286`；`app.css:1648`-`1721` |
 | 普通链接 | `<a href>`（`contentEditable=false`） | KB 内 `.md` 的相对链接被容器级委托转为应用内打开（不触发 WebView 导航） | `renderer.js:394`-`399`；`app.js:6322`-`6354` |
-| 行内公式 | `<span class="-math" contenteditable="false" data-formula>`（文本 `$formula$`）；MathJax 后为 `<mjx-container data--inline-math="true" data-formula>` | 被选区覆盖时加 `-sel-covered`（浏览器不给原子块画选区） | `renderer.js:422`-`428`；`app.js:1929`、`1956`-`1993`、`9978`-`10022`；`app.css:3835`-`3839` |
+| 行内公式 | `<span class="-math" contenteditable="false" data-formula>`（文本 `$formula$`）；MathJax 后为 `<mjx-container data--inline-math="true" data-formula>` | 被选区覆盖时加 `-sel-covered`（浏览器不给原子块画选区） | `renderer.js:422`-`428`；`app.js:1929`、`1956`-`1993`、`9978`-`10022`；`app.css:3807`-`3839` |
 
 不可编辑元素白名单：渲染后分两轮把 `mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay` 以及非编辑块整块设为 `contentEditable="false"`（`app.js:1887`-`1889`、`1914`-`1924`）。
 
-**Lightbox**：渲染后给预览内每个 `<img>` 加 `cursor:zoom-in` 与双击监听，双击时向 `body` 追加 `.-lightbox-overlay`（含 `.-lightbox-image`），单击遮罩即移除（`markdown-preview.js:496`-`519`；样式 `app.css:4032`-`4049`，`z-index:99999`）。同一双击事件在编辑模式下还会先退出图片编辑模式（`edit-handler.js:1604`-`1609`）。
+**Lightbox**：渲染后给预览内每个 `<img>` 加 `cursor:zoom-in` 与双击监听，双击时向 `body` 追加 `.-lightbox-overlay`（含 `.-lightbox-image`），单击遮罩即移除（`markdown-preview.js:496`-`519`；样式 `app.css:4004`-`4049`，`z-index:99999`）。同一双击事件在编辑模式下还会先退出图片编辑模式（`edit-handler.js:1604`-`1609`）。
 
 ## 5. 预览区交互
 
@@ -94,7 +94,7 @@
 | 双击公式 | `.-math` 或 `mjx-container[data--inline-math]` → 行内公式编辑模式（全选公式文本） | `edit-handler.js:1569`-`1587`、`983`-`1059` |
 | 双击其他不可编辑块 | 进入块编辑模式（表格/代码块/公式块/mermaid/frontmatter） | `edit-handler.js:1589`-`1612`、`1064`-`1165` |
 | 链接 hover | `mouseenter` → 图谱高亮该链接（`is-graph-link-focus` 类）；按住鼠标拖拽期间抑制（`e.buttons` 非 0 即不触发） | `app.js:6362`-`6369`、`6511`-`6523`、`8`-`10` |
-| 链接 title | 可跳转/断链/多目标各有文案键（`preview.link.jump`、`cfg.linkClick.unboundTitle` 等） | `app.js:6276`、`6280`；`i18n/zh-CN.js:888`-`894` |
+| 链接 title | 可跳转/断链/多目标各有文案键（`preview.link.jump`、`cfg.linkClick.unboundTitle` 等） | `app.js:6276`、`6280`；`i18n/zh-CN.js:881`-`894` |
 | 链接 click | `onMemoriaLinkClick`：断链 → 打开链接编辑器；多目标 → 候选选择器；单目标 → 跳转。画笔模式下不跳转 | `app.js:6130`-`6170`；`6362`-`6371` |
 | 链接右键 | `bindLinkContextMenu`：编辑链接 / 复制目标 key / 复制显示文本 / 断开 / 移除路由 | `app.js:6234`-`6248`；`link-context-menu.js:94`-`160` |
 | 选区右键（与源码区差异） | 预览区菜单**多出样式项**（加粗/斜体/荧光笔▾/字体色▾）与「复制 Markdown」；源码区同款菜单只有复制/创建链接/设为知识点 | `app.js:9566`-`9635`（预览）、`9533`-`9540`（源码）；`link-context-menu.js:182`-`226` |
@@ -116,7 +116,7 @@
 | 自动消失 | 800ms 后加 `fade-out`（1.5s 过渡），2500ms 后整体清除 | 不自动消失，由下一次 `dismissKpRangeHighlight()` 清除 |
 | 锚点 | `app.js:11050`-`11083` | `app.js:11034`-`11048` |
 | 调用方 | `openFile({kpId})` 跳转（`app.js:1488`）、`onKpClick`（`10939`）、搜索结果定位（`1114`、`12312`、`12380`） | KP 保存/创建提交后（`app.js:4667`、`11932`） |
-| 第三种：错误高亮 | `highlightRangeWithError` 用 `kp-error-flash`（红色、无 `fade-out`、不自动清除），并给 KP 列表项加 `.error-highlight` | `app.js:11086`-`11118`；`app.css:3670`-`3699` |
+| 第三种：错误高亮 | `highlightRangeWithError` 用 `kp-error-flash`（红色、无 `fade-out`、不自动清除），并给 KP 列表项加 `.error-highlight` | `app.js:11086`-`11118`；`app.css:3642`-`3699` |
 
 hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover`，不闪烁、不自动清除，且仅当没有闪烁计时器时才动预览 band（`app.js:10993`-`11012`）。
 
@@ -124,14 +124,14 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 
 | 情形 | 表现 | 文案键 | 锚点 |
 |---|---|---|---|
-| 渲染模块缺失（`Parser/Renderer/Mapper` 任一为空） | 预览区替换为 `<p class="-preview-loading">` | `preview.loadNotReady` | `app.js:1850`-`1853`、`app.css:3592`-`3596` |
+| 渲染模块缺失（`Parser/Renderer/Mapper` 任一为空） | 预览区替换为 `<p class="-preview-loading">` | `preview.loadNotReady` | `app.js:1850`-`1853`、`app.css:3564`-`3596` |
 | 全量渲染进行中 | 先写入 `<p class="-preview-loading">渲染中…</p>` 占位，渲染完成后被替换 | `preview.rendering` | `app.js:1856`-`1858` |
 | 渲染抛异常 | 预览区显示失败文案（带异常串），并显示告警条 | `preview.renderFail`、`preview.selfcheck` | `app.js:1934`-`1938`、`2046`-`2082` |
 | 链接一致性告警 | `#preview-status` 加 `warn`，提示未挂接的配置入口 | `preview.linkAuditHint` | `app.js:2035`-`2044` |
 | TeX 错误 / 公式未渲染 | 仅当报告带 `messages`/`mathErrors` 时才出现 `<details><summary>TeX 错误</summary>`；**AST 主渲染路径不调用 `diagnose()`**，故主预览实际不会出现该详情块 | `preview.math.texError`、`preview.math.noRendered`、`preview.math.rawDelims` | `app.js:2062`-`2074`；`markdown-preview.js:1310`-`1350`（仅 `renderToElement`/`1398` 调用） |
 | 渲染成功 | 隐藏告警条，状态栏右侧写公式统计 | `preview.okDetail` | `app.js:2052`-`2061` |
 | MathJax 未就绪 | 渲染流程 `await MathJax.startup.promise` + `await typesetPromise`，**主预览路径无超时**；公式会先以 `$…$` 源码文本显示，排版完成后替换为 `mjx-container` | `preview.math.timeout`（仅辅助预览路径用） | `app.js:1903`-`1910`；`markdown-preview.js:17`-`42`（400×50ms）、`app.js:11518`-`11520` |
-| Mermaid 渲染失败 | 该块变为 `.-mermaid-error` 红框块，内含错误文案 | `preview.mermaidFail` | `markdown-preview.js:214`-`223`；`app.css:4065`-`4073` |
+| Mermaid 渲染失败 | 该块变为 `.-mermaid-error` 红框块，内含错误文案 | `preview.mermaidFail` | `markdown-preview.js:214`-`223`；`app.css:4037`-`4073` |
 | 图片加载失败 | 该 `<img>` 加红色虚线描边 + 半透明，`alt` 追加缺失标记，`title` 写文件名 | `img.missing` | `image-tools.js:546`-`564` |
 | 重入保护 | 渲染进行中再次请求 → 置 `_renderPending`，当前渲染结束后自动补渲染一次最新文档；依赖 DOM 的高亮/定位须 `await _waitRenderSettled()` | — | `app.js:1717`-`1734`、`1829`-`1837`、`1940`-`1947`、`1454`-`1456` |
 
@@ -157,7 +157,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | 视图顶部行号 / 滚动到行 | `app.js:1632`-`1656`、`1659`-`1687` |
 | 视图滚动位置存取 | `app.js:1689`-`1715` |
 | 分栏双向滚动同步 | `app.js:1517`-`1540`、`12416`-`12417` |
-| 三态显隐 CSS | `app.css:3441`-`3459` |
+| 三态显隐 CSS | `app.css:3413`-`3459` |
 | 渲染主编排 `renderPreview` | `app.js:1828`-`1948` |
 | 行内公式 mjx 标记 | `app.js:1956`-`1994` |
 | 图片路径重写 | `app.js:2000`-`2026` |
@@ -172,7 +172,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | 公式拖拽选中 | `app.js:12468`-`12553` |
 | KP 高亮（静默 / 跳转 / 错误 / hover） | `app.js:11034`-`11118`、`10993`-`11012` |
 | KP 高亮条布局与清除 | `app.js:11136`-`11208` |
-| KP 高亮 CSS | `app.css:3574`-`3591`、`3634`-`3691` |
+| KP 高亮 CSS | `app.css:3546`-`3591`、`3634`-`3691` |
 | `lexer.tokenize` | `lexer.js:50`-`56`；`349`-`414` |
 | `parser.parse/parseInline/parseBlocks` | `parser.js:276`、`39`、`300`-`481` |
 | AST 类型契约 | `ast.js:9`-`46` |
@@ -182,7 +182,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | 增量渲染单块 | `app.js:7714`-`7729` |
 | Mermaid / Lightbox / MathJax 辅助 | `markdown-preview.js:182`-`225`、`496`-`519`、`17`-`42` |
 | 图片加载失败提示 | `image-tools.js:546`-`564` |
-| 预览相关 CSS（块/行内/公式/图片/Mermaid/Lightbox） | `app.css:3487`-`3596`、`3708`-`3748`、`3823`-`3839`、`3840`-`3850`、`3963`-`4073` |
+| 预览相关 CSS（块/行内/公式/图片/Mermaid/Lightbox） | `app.css:3459`-`3596`、`3708`-`3748`、`3823`-`3839`、`3840`-`3850`、`3963`-`4073` |
 
 ## 10. 未证实 / 待确认
 

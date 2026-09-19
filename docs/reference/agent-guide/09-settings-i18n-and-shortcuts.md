@@ -13,23 +13,23 @@
 
 ```
 #btn-settings（顶栏「设置」按钮）        index.html:83         → openModal()  graph-settings.js:875
-#settings-modal .-modal.hidden          index.html:319-363   宽 min(820px,96vw) / 高 min(680px,88vh)（app.css:777-785）
+#settings-modal .-modal.hidden          index.html:319-363   宽 min(820px,96vw) / 高 min(680px,88vh)（app.css:749-757）
 ├── .-modal-header                      index.html:322-325   标题 modal.settings + ×（#settings-close）
 ├── #settings-tabs .-settings-tabs-wrap index.html:326       运行时注入页签按钮（graph-settings.js:789-799）
 ├── #settings-body .-modal-body.-settings-body index.html:327 运行时注入当前页签内容（graph-settings.js:801-843）
-│   ├── .-settings-layout              app.css:916-923       grid：表单列 minmax(220px,1fr) + 预览列 minmax(260px,1.1fr)
-│   │   ├── .-settings-form            app.css:929-934       表单列（纵向滚动，overscroll 隔离）
-│   │   └── .-settings-preview-col     app.css:980-… / graph-settings.js:607-620  仅 2D/3D 页：示例图画布 + 竖直分栏柄
-│   └── .-settings-layout--solo        app.css:925-927       单列（节点群 / 检索 / 检查 / 显示页）
+│   ├── .-settings-layout              app.css:888-895       grid：表单列 minmax(220px,1fr) + 预览列 minmax(260px,1.1fr)
+│   │   ├── .-settings-form            app.css:901-906       表单列（纵向滚动，overscroll 隔离）
+│   │   └── .-settings-preview-col     app.css:952-… / graph-settings.js:607-620  仅 2D/3D 页：示例图画布 + 竖直分栏柄
+│   └── .-settings-layout--solo        app.css:897-899       单列（节点群 / 检索 / 检查 / 显示页）
 ├── #settings-body-agent               index.html:328-355   **静态体**（2026-09-19 新增）：「对话」页签的字段常驻此处，
 │                                                         与上行动态体 `hidden` **互斥**（见 graph-settings.js:807-812）
 └── #settings-config-path               index.html:356       底部一行：settings.configPath「设置保存在程序目录：{path}」（graph-settings.js:883-906）
 └── .-modal-footer                      index.html:357-362   「恢复默认」#settings-reset + 「关闭」#settings-dismiss
 ```
 
-页签集合是 **7 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示` / **`对话`**（graph-settings.js:789-799；文案 `settings.tab.*`，`settings.tab.agent` 追加在 zh-CN.js:1263-1265 / en.js:1347-1349）。**顺序即上表顺序**——「显示」在第 6 位、「对话」在最后（第 7 位），「检索」在「检查」之前。**「对话」是唯一的静态体页签**：内容（`#settings-body-agent`，端点/模型/密钥/超时/出网）常驻 index.html，由 `setSettingsTab()` 显隐，与其它页签的动态体 `#settings-body` **互斥**。
+页签集合是 **7 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示` / **`对话`**（graph-settings.js:789-799；文案 `settings.tab.*`，`settings.tab.agent` 追加在 zh-CN.js:1256-1258 / en.js:1340-1342）。**顺序即上表顺序**——「显示」在第 6 位、「对话」在最后（第 7 位），「检索」在「检查」之前。**「对话」是唯一的静态体页签**：内容（`#settings-body-agent`，端点/模型/密钥/超时/出网）常驻 index.html，由 `setSettingsTab()` 显隐，与其它页签的动态体 `#settings-body` **互斥**。
 
-> ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另**当前不存在任何「高级选项」折叠区**：设置页只有具名页签，全前端检索「高级 / advanced」只命中链接编辑器的 `.-link-advanced`（app.css:2810-2820），不在设置窗口内。
+> ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另**当前不存在任何「高级选项」折叠区**：设置页只有具名页签，全前端检索「高级 / advanced」只命中链接编辑器的 `.-link-advanced`（app.css:2782-2792），不在设置窗口内。
 
 ## 2. 逐处细节
 
@@ -212,7 +212,7 @@
 | `settings.` | 设置弹窗骨架与页签 | `settings.tab.{graph2d,graph3d,groups,search,check,view}`（642-649）、`settings.reset`（650）、`settings.configPath`（651） |
 | `settings.display.*` | 「显示」页各项与说明 | `langGroup/langLabel/langNote`（653-655）、`text/fontNote/fontSize/fontDefault`（656-659）、`uiScaleGroup/uiScaleNote/uiScale/uiScaleHint/resetScale`（660-664） |
 | `graph.settings.*` | 2D/3D/节点群三页 + 预览列 | `nodeLabel.*`（941-946）、`layout.*`（947-964）、`style.*`、`groups.*`、`preview.*` |
-| `graph.labelModes.*` / `graph.sample.*` | 标签模式选项 / 示例图节点文案 | graph-label.js:8-11；zh-CN.js:935-939 |
+| `graph.labelModes.*` / `graph.sample.*` | 标签模式选项 / 示例图节点文案 | graph-label.js:8-11；zh-CN.js:928-932 |
 | `search.settings.*` / `check.settings.*` | 「检索」页 / 「检查」页 | `search.settings.{heading,noteMain,enableEmbedding,noteEmbedding,bodyLocate,noteBodyLocate}`；`check.settings.{heading,noteMain,interval,enabled,noteOff,off,seconds,minutes}`（746-755） |
 | `langs.*` / `modal.settings` / `common.close` / `dialog.closeTitle` | 语言自述名、弹窗标题与按钮 | `langs."zh-CN"` / `langs.en`（420）；640；index.html:290、296-298 |
 
@@ -237,7 +237,7 @@
 
 | 要点 | 锚点 |
 |---|---|
-| 设置弹窗结构 / 尺寸 / 布局 grid | index.html:285-301；app.css:445-453、551-603 |
+| 设置弹窗结构 / 尺寸 / 布局 grid | index.html:285-301；app.css:439-447、526-578 |
 | 入口 / 打开 / 关闭 / 恢复默认 / 拖动 / 路径提示 | graph-settings.js:950、851-857、884-889、953-961、859-882；app.js:12560-12624 |
 | 页签清单与整页重建 | graph-settings.js:765-785、786-818、111 |
 | 显示页渲染 / 绑定 / 默认值与范围 / 持久化 | display-settings.js:167-239、11-20、106-138 |
@@ -250,7 +250,7 @@
 | 检索设置（默认值 / 派生 searchModes / 落盘） | search-settings.js:19-27、99-135、153-183、249-311 |
 | 检查设置（选项集 / 归一 / 定时器） | check-settings.js:8-13、44-57、59-71、111-146、160-223 |
 | i18n 引擎（t / 回退 / 填充 / applyStatic / setLang / hydrate） | i18n.js:55-78、66-71、91-115、117-135、154-169 |
-| `data-i18n` / `data-i18n-attr` 用例与语言包 | index.html:44、47、77、87-90、100-102、146；i18n/zh-CN.js:420、640-666；i18n.js:15 |
+| `data-i18n` / `data-i18n-attr` 用例与语言包 | index.html:44、47、77、87-90、100-102、146；i18n/zh-CN.js:420、633-659；i18n.js:15 |
 | 语言切换的刷新订阅点 / 后端 check 消息本地化 | app.js:12437-12445、258-268；kb-check.js:656-665、59-62；kb-agent.js:198 |
 | 快捷键：源码编辑器 / 方向键滚面板 / 预览区 / 树输入框 | app.js:7205-7380、7011-7037；edit-handler.js:628-645、762-800、1650-1655、1291-1296；file-tree.js:437-467、291-299 |
 | 快捷键：Alt+←/→、Ctrl+K、各 Esc 关闭浮层 | app.js:12402-12410、698-700、10323-10327、10480-10482、10749-10751、12105-12107；toolbar-search.js:258-286；kp-context-menu.js:66-68；link-context-menu.js:263-265 |

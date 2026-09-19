@@ -11,7 +11,7 @@
 
 ```
 #editor-wrap                                   （index.html:149）
-├─ #editor-header                              （index.html:150；app.css:3093）
+├─ #editor-header                              （index.html:150；app.css:3065）
 │  ├─ #file-meta                               （index.html:151；显示 sidecar.description）
 │  ├─ .-format-bar          [role=toolbar]      （index.html:152-184）
 │  │  ├─ B / I / -fmt-sep
@@ -24,12 +24,12 @@
 │  ├─ .-view-toggle  > .-view-btn × 3           （index.html:189-193）
 │  └─ #edit-mode-toggle > #btn-edit-mode        （index.html:194-196）
 ├─ #preview-status.hidden                      （index.html:198；渲染告警条，见 04 篇）
-└─ #editor-split.view-source                   （index.html:199；app.css:3441）
+└─ #editor-split.view-source                   （index.html:199；app.css:3413）
    ├─ #editor-pane.-pane > #editor.-editor     （index.html:200-202）→ 源码编辑区
    └─ #preview-pane.-pane > #preview           （index.html:203-205）→ 预览区
 ```
 
-`. -format-bar` 与 `#block-edit-bar` **互斥显示**：进入块编辑时给格式栏加 `.hidden`、去掉块编辑栏的 `.hidden`；退出时反向（`edit-handler.js:1546`-`1551`）。两者同在 `#editor-header` 这一 flex 行内（`app.css:3093`-`3103`），块编辑栏 `flex:1` 且工具区可横向滚动（`app.css:3757`-`3778`）。
+`. -format-bar` 与 `#block-edit-bar` **互斥显示**：进入块编辑时给格式栏加 `.hidden`、去掉块编辑栏的 `.hidden`；退出时反向（`edit-handler.js:1546`-`1551`）。两者同在 `#editor-header` 这一 flex 行内（`app.css:3065`-`3103`），块编辑栏 `flex:1` 且工具区可横向滚动（`app.css:3729`-`3778`）。
 
 ## 2. 逐处细节
 
@@ -46,13 +46,13 @@
 
 | 元素 | 位置/尺寸 | 样式类 | 交互 | 状态与边界 |
 |---|---|---|---|---|
-| 行容器 | 全宽，`display:flex`，`min-height:1.25rem` | `.-line` | hover 有底色；KP 范围内加 `.in-range` | `app.css:3598`-`3602`、`app.css:3634` |
+| 行容器 | 全宽，`display:flex`，`min-height:1.25rem` | `.-line` | hover 有底色；KP 范围内加 `.in-range` | `app.css:3570`-`3602`、`app.css:3606` |
 | 行号栏 | 固定列宽 `calc((--lineno-ch + 3)*1ch + 1px)`，右对齐，不可选中 | `.-lineno` | 无交互 | 列宽按总行数位数自适应，`--lineno-ch` 由渲染时写入（`app.js:1561`-`1564`、`app.js:6984`-`6988`） |
-| 行内容 | `flex:1`，`white-space:pre-wrap`，可选中 | `.-line-content` | 独立 contenteditable（**每行一个可编辑单元**，浏览器无法跨行移动光标，跨行由 JS 接管） | `app.css:3616`-`3632`；跨行方向键/退格/回车见 `app.js:7246`-`7419` |
-| 空行占位 | — | — | 无文字时内部补 `<br>` | `app.js:7045`-`7050`；CSS `:empty::after`（`app.css:3632`） |
-| 滚动容器 | `overflow:auto` | `.-pane`（`#editor-pane`） | 分栏时滚动与预览联动 | `app.css:3447`-`3452`、`app.js:1519`-`1540` |
+| 行内容 | `flex:1`，`white-space:pre-wrap`，可选中 | `.-line-content` | 独立 contenteditable（**每行一个可编辑单元**，浏览器无法跨行移动光标，跨行由 JS 接管） | `app.css:3588`-`3632`；跨行方向键/退格/回车见 `app.js:7246`-`7419` |
+| 空行占位 | — | — | 无文字时内部补 `<br>` | `app.js:7045`-`7050`；CSS `:empty::after`（`app.css:3604`） |
+| 滚动容器 | `overflow:auto` | `.-pane`（`#editor-pane`） | 分栏时滚动与预览联动 | `app.css:3419`-`3452`、`app.js:1519`-`1540` |
 
-**没有独立的行号栏容器**：行号是每行的子元素，随行滚动（不是 sticky 定位的实现，`app.css:3603`-`3615` 中无 `position` 声明）。
+**没有独立的行号栏容器**：行号是每行的子元素，随行滚动（不是 sticky 定位的实现，`app.css:3575`-`3615` 中无 `position` 声明）。
 
 ### 2.2 编辑模式开关（编辑 / 只读）
 
@@ -60,7 +60,7 @@
 |---|---|---|
 | 默认态 | `EH.editMode = true` | `edit-handler.js:60` |
 | 开关节点 | `#edit-mode-toggle`（`role=switch`、`tabindex=0`）内含 `#btn-edit-mode` | `index.html:194`-`196` |
-| 点击绑定 | 绑定在**外层 wrapper** 上；`#btn-edit-mode` 自身 `pointer-events:none`（`app.css:2036`） | `app.js:12452`-`12462` |
+| 点击绑定 | 绑定在**外层 wrapper** 上；`#btn-edit-mode` 自身 `pointer-events:none`（`app.css:2008`） | `app.js:12452`-`12462` |
 | 关闭的影响面 | ① `#preview.contentEditable="false"`；② 源码全部 `.-line-content` 变 `contenteditable=false` 并清空残留选区；③ `#btn-insert-image` 立即 `disabled`；④ `_caretInPreview=false` | `edit-handler.js:80`-`97`、`104`-`119` |
 | 视觉 | 按钮 `.active` 切换；`#editor` 加/去 `.-readonly` | `edit-handler.js:74`、`110` |
 | 键盘 | **无 Enter/Space 处理**：`tabindex=0` 但只有 click 监听 | `app.js:12452`-`12462` |
@@ -85,7 +85,7 @@
 1. 全局 `mousedown`（捕获阶段）：按在预览区**外** → `capturePreviewSelection()` 缓存实时选区；按在预览区**内** → 作废缓存（`app.js:10036`-`10051`）。
 2. 取用时 `getPreviewSelectionRange()`：优先实时选区，其次缓存；两者都必须落在 `#preview` 内且非折叠（`app.js:9721`-`9742`）。
 3. 工具栏 active 指示由 `selectionchange`（`requestAnimationFrame` 合并节流）刷新（`app.js:9969`-`9976`、`9932`-`9965`）。
-4. `contentEditable=false` 的原子块（行内公式 `.-math`）浏览器不画选区高亮，另由 `._sel-covered` 补（`app.js:9978`-`10022`；样式 `app.css:3835`-`3839`）。
+4. `contentEditable=false` 的原子块（行内公式 `.-math`）浏览器不画选区高亮，另由 `._sel-covered` 补（`app.js:9978`-`10022`；样式 `app.css:3807`-`3839`）。
 
 **应用样式后选区是否保持**：保持。单块走 `commitSelection` → `restoreSelection`（非折叠）；跨块走 `_commitMultiStyle` → `restoreSelectionMulti`（`app.js:8129`-`8138`、`9356`、`7751`、`7788`）。画笔连续涂抹时每次应用后**重取实时选区**继续（`app.js:10672`-`10674`）。
 
@@ -161,7 +161,7 @@
 单击图片块（非 img 本体）→ `enterBlockEditMode`（`edit-handler.js:1616`-`1647`）；单击名称文字 → 替换成原生 `<input.-caption-input>`，Enter/失焦提交（`1271`-`1323`）；对齐/滑条/名称开关 → `dispatchImageAttr` 派发 `memoria:image-attr`，名称提交派发 `memoria:image-caption`，由 `app.js` 改源码行后**重新进入编辑**（`1326`-`1332`、`1674`-`1684`、`image-tools.js:486`-`519`）。
 
 ### 3.4 画笔连续涂抹
-无选区时点 `B`/色块 → `armBrush` → `body.-brush-active`（鼠标换成画笔光标，`app.css:3430`-`3433`）→ 在预览区拖选文字 → `mouseup` 捕获 → `_applyBrushToRange`（`forceApply=true`，固定顺序 加粗→斜体→高亮→字体色）→ 状态栏 `brush.applied`。Esc 或右键点已选样式取消（`app.js:10607`-`10751`）。
+无选区时点 `B`/色块 → `armBrush` → `body.-brush-active`（鼠标换成画笔光标，`app.css:3402`-`3433`）→ 在预览区拖选文字 → `mouseup` 捕获 → `_applyBrushToRange`（`forceApply=true`，固定顺序 加粗→斜体→高亮→字体色）→ 状态栏 `brush.applied`。Esc 或右键点已选样式取消（`app.js:10607`-`10751`）。
 
 ## 4. i18n key 前缀（代表键）
 
@@ -193,13 +193,13 @@
 |---|---|
 | 编辑器 DOM 结构 | `index.html:149`-`207` |
 | 格式栏 / 块编辑栏 / 视图切换 / 编辑模式开关 | `index.html:152`-`196` |
-| `#editor-wrap`/`#editor-header` 布局 | `app.css:3081`-`3103` |
-| 视图容器与三态显隐 | `app.css:3441`-`3459` |
-| `.-editor` 字号变量 | `app.css:3461`-`3468`；`display-settings.js:79`-`85` |
-| 行 / 行号 / 行内容样式 | `app.css:3598`-`3636` |
-| 格式按钮 / 分隔 / 下拉 / 色块样式 | `app.css:3136`-`3234` |
-| 画笔光标与 `brush-armed` | `app.css:3430`-`3439` |
-| 块编辑栏与工具样式 | `app.css:3756`-`3821` |
+| `#editor-wrap`/`#editor-header` 布局 | `app.css:3053`-`3103` |
+| 视图容器与三态显隐 | `app.css:3413`-`3459` |
+| `.-editor` 字号变量 | `app.css:3433`-`3468`；`display-settings.js:79`-`85` |
+| 行 / 行号 / 行内容样式 | `app.css:3570`-`3636` |
+| 格式按钮 / 分隔 / 下拉 / 色块样式 | `app.css:3108`-`3234` |
+| 画笔光标与 `brush-armed` | `app.css:3402`-`3439` |
+| 块编辑栏与工具样式 | `app.css:3728`-`3821` |
 | 编辑器渲染与 `--lineno-ch` | `app.js:1542`-`1565` |
 | 行号重排 | `app.js:6974`-`6990` |
 | 编辑模式切换 | `edit-handler.js:71`-`123`；`app.js:12452`-`12462` |

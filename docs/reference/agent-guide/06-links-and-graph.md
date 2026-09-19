@@ -53,8 +53,8 @@
 | 匹配文本 | `#link-edit-anchor` 输入框 + 建议下拉 `#link-anchor-suggest` | 输入即防抖重扫匹配（§2.2） | `app.js:5131`-`5144`、`2600`-`2627` |
 | 搜索选项 | `[data-search-opt]`：`fuzzy_whitespace`（忽略空格）、`fuzzy_suggest`（模糊推荐）、`case_insensitive`（**`disabled`**） | 勾选写入本次匹配请求 | `app.js:2338`-`2370`；`i18n/zh-CN.js:56`-`63` |
 | 匹配面板 | `#link-editor-match-slot` / `#link-editor-match-panel` | 勾选正文挂接位置 | `app.js:2517`-`2563` |
-| 图例 | `-link-pick-legend`：编辑模式＝已选/未选，跳转模式＝队首/已选入队/未选 | — | `app.js:5164`-`5175`；`app.css:2323`-`2350` |
-| 目标列表 | 每个候选一行 `.-link-pick-item[data-pick-row]`：`.-pick-dot` 圆点 + 名称 + 文件；编辑模式另带 `×`（`data-remove-target`） | 点行或点圆点＝切换；点 `×`＝**从候选表删除**（同时修正 `selectedOrder`） | `app.js:5181`-`5204`、`5272`-`5294`；`app.css:2266`-`2306`、`2897`-`2914` |
+| 图例 | `-link-pick-legend`：编辑模式＝已选/未选，跳转模式＝队首/已选入队/未选 | — | `app.js:5164`-`5175`；`app.css:2295`-`2350` |
+| 目标列表 | 每个候选一行 `.-link-pick-item[data-pick-row]`：`.-pick-dot` 圆点 + 名称 + 文件；编辑模式另带 `×`（`data-remove-target`） | 点行或点圆点＝切换；点 `×`＝**从候选表删除**（同时修正 `selectedOrder`） | `app.js:5181`-`5204`、`5272`-`5294`；`app.css:2238`-`2306`、`2897`-`2914` |
 | 添加目标 | `#link-add-target` + `#link-add-target-btn` + 建议下拉 `#link-add-target-suggest` | 见下 | `app.js:5207`-`5213`、`5411`-`5446` |
 | 图谱边面板 | `#link-edge-editor-panel`：为**每个已选目标**单独设边型与权重 | 见 §2.4 | `app.js:4991`-`5019` |
 | 智能匹配（M4） | `<details class="-suggest-block -link-tag-suggest">`，内含**禁用**的「选用」按钮占位 | **当前为纯占位**（详见 §5.3） | `app.js:5215`-`5226`；`i18n/zh-CN.js:331`-`333` |
@@ -98,7 +98,7 @@
 | 断链（虚链接） | 有 lookup 但不满足上述条件（含「路由指向不存在的目标」） | `-link-broken memoria-broken-link` + `tabindex=-1` + `title=cfg.linkClick.unboundTitle` | 灰、点状下划线、`opacity:.72` |
 | 目标集未知 | `state.linkTargetSet` 不是 `Set` | `-link-pending` | 主题色点状下划线 |
 
-锚点与样式：`app.js:6271`-`6285`；`app.css:1665`-`1721`。多目标链接另有 `-link-multi`（虚线，`app.css:1688`-`1698`）。
+锚点与样式：`app.js:6271`-`6285`；`app.css:1637`-`1721`。多目标链接另有 `-link-multi`（虚线，`app.css:1660`-`1698`）。
 
 **点击行为**（`onMemoriaLinkClick`，`app.js:6130`-`6199`）：画笔模式下不跳转；`-link-broken` → **打开链接编辑器**（不是报错）；有 `data-link-targets` → `resolve_links` 后单选直跳 / 多选 `showLinkPicker`；否则 `link_overrides[target]` 只有 1 个目标就直接跳，再退 `resolve_link`：`ambiguous` → picker，`not_found` → 状态栏 `cfg.linkClick.notFound` + `cfg.linkClick.unbound`。
 
@@ -169,7 +169,7 @@
 | 群排序 | 先按群规模降序，规模相同按标签 `localeCompare("zh")` | `graph-groups.js:121` |
 | 智能命名 | `suggestGroupLabel` 是**占位**，直接返回 `suggested:null` + `reason:"search_kernel_not_available"` | `graph-groups.js:136`-`150` |
 | 服务端标签 | `refreshGraphGroupLabels` 调 `suggest_group_labels`，返回项覆盖本地 hub 标签 | `app.js:987`-`1010` |
-| 页签 UI | 首项恒为「全部」（`graph.group.allLabel`，count=群数）；群页签 count 仅当 size>1 时显示 | `app.js:793`-`818`；`i18n/zh-CN.js:912`-`916` |
+| 页签 UI | 首项恒为「全部」（`graph.group.allLabel`，count=群数）；群页签 count 仅当 size>1 时显示 | `app.js:793`-`818`；`i18n/zh-CN.js:905`-`916` |
 | 显隐 | 仅在 `sidebarTab ∈ {graph2d,graph3d}` **且**图谱有节点时显示 | `app.js:748`-`757` |
 | 选择 | `selectGraphGroup` → 存 `localStorage["-graph-group"]` → 重渲页签 → `resetSimulation()` 重布局 | `app.js:828`-`842` |
 | 过滤 | 选中某群时只装载该群的节点与**两端都在群内**的边 | `graph-groups.js:152`-`164`；`graph-layout-2d.js:147`-`175` |
@@ -182,11 +182,11 @@
 
 | 项 | 现状 | 锚点 |
 |---|---|---|
-| 视觉样式 | `graphStyle` 只有 `force`（标准）/ `galaxy`（银河 Galaxy）两项，**无第三项** | `graph-settings.js:566`-`572`；`i18n/zh-CN.js:972`-`978` |
+| 视觉样式 | `graphStyle` 只有 `force`（标准）/ `galaxy`（银河 Galaxy）两项，**无第三项** | `graph-settings.js:566`-`572`；`i18n/zh-CN.js:965`-`978` |
 | 光晕强度 | `galaxyGlow2d` / `galaxyGlow3d`（0–1，步长 0.05，默认 0.6），仅 galaxy 时显示该字段组 | `graph-settings.js:573`-`575`、`292`-`300` |
 | 标签模式 | `labelMode`：名称（缩短）/ 知识点 ID / 名称（完整）/ **智能摘要（`smart`，`disabled` 占位）**；`labelMaxLen` 4–20 | `graph-label.js:7`-`17`、`graph-settings.js:504`-`523` |
 | 力导向参数 | 边长/斥力/边拉力/向心力/初始散布/节点半径/箭头（仅 2D）/alpha 三件套/拖拽加热与松手加热/缩放参数 | `graph-settings.js:526`-`557` |
-| 示例图 | `buildSampleGraph()` 硬编码 5 节点 4 条边（`reference`/`extend` 混用），文案键 `graph.sample.*`（随语言重绘） | `graph-settings.js:51`-`109`；`i18n/zh-CN.js:934`-`939` |
+| 示例图 | `buildSampleGraph()` 硬编码 5 节点 4 条边（`reference`/`extend` 混用），文案键 `graph.sample.*`（随语言重绘） | `graph-settings.js:51`-`109`；`i18n/zh-CN.js:927`-`939` |
 | 预览高度 | 拖拽 `#graph-settings-preview-resizer` 调高（140–520px），存 `localStorage["-settings-preview-h"]` 并写 ui-settings | `graph-settings.js:415`-`430`、`479`-`490` |
 | 持久化 | ① `localStorage["-graph-settings"]`；② `config/ui-settings.json` 经 `save_ui_settings`（280ms 防抖）与 `get_ui_settings`（Hydrate 时磁盘优先） | `graph-settings.js:7`、`124`-`228` |
 | 恢复默认 | `reset()` 清 localStorage 键并置默认值，同时级联 `MemoriaCheckSettings.reset()` | `graph-settings.js:230`-`241` |
@@ -209,7 +209,7 @@
 | 失败 | `res.status==="error"` → `setStatus(res.message \|\| graph.build.failed)`；抛异常 → `graph.build.failed` + 异常串 | 同上 |
 | 数据加载 | `loadGraphData()` → `get_graph_data`；非 ok → `graph.loadFailed`「图谱加载失败」+ 服务端消息 | `app.js:1051`-`1075` |
 | 加载后 | 刷新 2D/3D 页签计数（=节点数）→ 首次才 `initGraphPanel()` → `loadPayload` → 服务端群标签 → 群页签 → `resetSimulation` → 更新提示条 | `app.js:730`-`738`、`1059`-`1071` |
-| 提示条（覆盖层） | `.-graph-hint--overlay` 绝对定位在画布底部、`pointer-events:none`（仅按钮可点）；DOM 初始文案为 `graph.overlay2d/3d`（`index.html:128`、`132`），首次刷新后改由 `updateGraphAuditHint()` 写 `graph.hint.idle2d/idle3d`；有图边审计告警时换成告警 + 「打开文件」按钮（点击 `gotoGraphAuditIssue`） | `app.css:406`-`427`；`app.js:1136`-`1167`、`12228`-`12237` |
+| 提示条（覆盖层） | `.-graph-hint--overlay` 绝对定位在画布底部、`pointer-events:none`（仅按钮可点）；DOM 初始文案为 `graph.overlay2d/3d`（`index.html:128`、`132`），首次刷新后改由 `updateGraphAuditHint()` 写 `graph.hint.idle2d/idle3d`；有图边审计告警时换成告警 + 「打开文件」按钮（点击 `gotoGraphAuditIssue`） | `app.css:400`-`427`；`app.js:1136`-`1167`、`12228`-`12237` |
 | 页签切换 | `setSidebarTab`：同步按钮 `active`、切 `.-sidebar-view` 显隐、启停下层布局、清 KP hover、刷群页签与提示条、`reflow()` 两块视图 | `app.js:1239`-`1250`、`1173`-`1210` |
 | **页签条几何（2026-09-19 修）** | `. -sidebar-tabs-wrap` 高 = 页签条高（**2026-09-19 起为 34px**：由末尾 `--bar-h-b` 统一钉住，见 01 篇 §6「统一栏高」），其下缘与 `#sidebar-body-split` 顶边**严丝合缝（间隙 0）**；页签条 `border-bottom: 0.5px`（计算 1px）、页签 `border-bottom: 2px` + `margin-bottom: -1px` 正好压在容器下边框上（实测 active 页签 `bottom` 与容器 `bottom` 差 **0.00**）。**起因**：`. -sidebar-nav-tabs { margin-bottom: 0 }` 与 `.-config-tabs { margin-bottom: 0.75rem }` 同特异度、而后者在本文件更靠后 ⇒ 那条 0 一直被盖掉，页签条下白留 **13.2px**（用户反馈"外框太宽、与页签间还有缝隙"）；修法 = 选择器改双类 `.-config-tabs.-sidebar-nav-tabs`（`app.css:236-238`） | `app.css:231`-`244`、`1534`-`1560`、`5170`-`5204`；实测 harness 8655（13.2px→0）与 8656（高 30.19→34） |
 
@@ -242,10 +242,10 @@
 ## 5. 边界与已知坑
 
 1. **没有 Radial / Top-down / Free-force 之类的「布局模式」开关**：全仓 grep `radial|topdown|layoutMode` 在应用代码中零命中（只命中 `createRadialGradient`）。2D/3D **都是力导向**（`graph-layout-2d.js` / `graph-layout-3d.js` / `graph-layout-sim-core.js`），差异只在维度与初始位置分群（`initialPositionsForGroups`，`graph-layout-2d.js:51`-`82`）。
-2. **边没有「强边实线 / 弱边虚线」映射**：边的线型恒为实线，强弱只由颜色（类型）与透明度/线宽（是否聚焦）表达；虚线只出现在 `-link-pending` / `-link-broken` / `-link-multi` 的**文字下划线**上（`app.css:1665`-`1721`）。3D 的 `linewidth` 被硬编码为 1，改它不会有效果（WebGL 限制，`graph-view-3d.js:873`）。
+2. **边没有「强边实线 / 弱边虚线」映射**：边的线型恒为实线，强弱只由颜色（类型）与透明度/线宽（是否聚焦）表达；虚线只出现在 `-link-pending` / `-link-broken` / `-link-multi` 的**文字下划线**上（`app.css:1637`-`1721`）。3D 的 `linewidth` 被硬编码为 1，改它不会有效果（WebGL 限制，`graph-view-3d.js:873`）。
 3. **「智能推荐」占位 vs 真实「推荐」按钮**：链接编辑器里的 `<details>`「智能匹配（M4 · tag / Lexical）」是**纯静态占位**——按钮写死 `disabled`，内容是硬编码示例（`q-learning` / `94%`），无任何数据绑定（`app.js:5215`-`5226`）；配置弹窗「待确认」页底部同样有两块静态占位（`m4SuggestBlockHtml`，`app.js:2195`-`2225`、`2778`-`2780`、`2864`）。而图谱边面板里每个目标的「推荐」按钮是**真实接线**（`suggest_link_relevance`，`app.js:4921`-`4958`）：后端未给建议（`res.suggested == null`）时提示 `cfg.linkEdge.notIntegrated`「智能推荐尚未接入」+ `cfg.linkEdge.defaultDetail`。
 4. **边类型颜色有两套且不一致**：图谱用 `contain #3fb950 / reference #58a6ff / extend #d29922`（`graph-engine.js:7`-`11`），KP 边页徽标用 `contain #5cb85c / reference #5bc0de / extend #f0ad4e`（`app.js:3621`-`3631`）。
-5. **断链的鼠标样式与行为不一致**：`-link-broken` 声明 `cursor: not-allowed`（`app.css:1708`）且 `tabindex=-1`，但点击实际会**打开链接编辑器**（`app.js:6135`-`6137`），并非「不可点」。
+5. **断链的鼠标样式与行为不一致**：`-link-broken` 声明 `cursor: not-allowed`（`app.css:1680`）且 `tabindex=-1`，但点击实际会**打开链接编辑器**（`app.js:6135`-`6137`），并非「不可点」。
 6. **侧栏宽度不持久化**：`#sidebar-resizer` 只改内联宽度，无 `localStorage`/ui-settings 写入（`app.js:11967`-`11984`）；持久化的只有折叠状态 `-sidebar-collapsed`。
 7. **「构建」后重载当前文件不带 flush**：`buildKb` 末尾调 `openFile(currentPath,{skipNav:true})`（`app.js:1029`-`1031`），而 `openFile` 只在**目标路径与当前不同**时才 `flushDurableBarrier()`（`app.js:1400`-`1404`）；同一路径重载会直接用 `load_document` 的结果覆盖 `state.doc` 并把 `_dirty` 置 false（`app.js:1411`-`1419`）。因此「构建」瞬间未落盘的编辑（<1.5s 自动保存窗口）有被磁盘内容覆盖的风险（静态代码路径推断，未做运行时验证 → 见 §7）。
 8. **3D 初始化可能直接抛错**：`GraphView3D` 构造器在 `global.THREE` 缺失时 `throw new Error(T("graph.view3d.notLoaded"))`（`graph-view-3d.js:175`-`177`），而 `initGraphPanel` 对该构造**未包 try/catch**（`app.js:880`-`888`）——Three 脚本缺失时可能中断后续 `nodeClick/hover` 绑定；WebGL 创建失败则走内部 `_webglFailed` 静默路径（`graph-view-3d.js:245`-`252`）。
@@ -261,8 +261,8 @@
 | 侧栏页签 / 群页签条 / 图谱容器 DOM | `index.html:99`-`134` |
 | 链接弹窗 DOM 与页脚 | `index.html:303`-`320` |
 | 图谱容器与提示条样式 | `app.css:273`-`294`、`324`-`375`、`377`-`444` |
-| 链接编辑器控件样式 | `app.css:2266`-`2350`、`2533`-`2570`、`2630`-`2640`、`2723`-`2770`、`2796`-`2920`、`2922`-`2975` |
-| 断链 / 虚链接 / 多目标样式 | `app.css:1665`-`1721`、`3540`-`3557` |
+| 链接编辑器控件样式 | `app.css:2238`-`2350`、`2533`-`2570`、`2630`-`2640`、`2723`-`2770`、`2796`-`2920`、`2922`-`2975` |
+| 断链 / 虚链接 / 多目标样式 | `app.css:1637`-`1721`、`3540`-`3557` |
 | 链接右键菜单构建 | `link-context-menu.js:38`-`160` |
 | 选区右键菜单（创建链接 / 设为知识点 / 样式） | `link-context-menu.js:162`-`229`；`app.js:9524`-`9637` |
 | 链接编辑器候选构建 / 目标列表 / 图例 | `app.js:5461`-`5528`、`5146`-`5308` |
@@ -298,6 +298,6 @@
 - ⚠️ 待确认（未运行时验证）：`initGraphPanel` 里 `new MemoriaGraphView3D(...)` 在 `THREE` 缺失时的抛错会影响同一函数内后续的 `engine.on("nodeClick"/"hover")` 绑定（`app.js:880`-`905`、`graph-view-3d.js:175`-`177`）——静态代码路径如此，实际表现未验证。
 - ⚠️ 待确认（未取证）：`-link-multi` 类的赋值点不在 `postProcessWikilinks`（那里只写 `-link-resolved` / `-link-broken` / `-link-pending`，`app.js:6271`-`6285`）；菜单判定却依赖它（`link-context-menu.js:101`-`104`），实际赋值时机未逐处取证。
 - ⚠️ 待确认（未取证）：`suggest_link_relevance` 返回 `suggested == null` 时走 `cfg.linkEdge.notIntegrated` 分支（`app.js:4946`-`4953`）；后端何时返回空建议、是否等同「推荐未接入」未逐处取证。
-- ⚠️ 待确认（未取证）：2D 侧 `-link-pick-item` 有两条规则块（`app.css:2266`-`2277` 与 `2897`-`2914`），后者是否覆盖前者在既有主题下未做视觉核对。
+- ⚠️ 待确认（未取证）：2D 侧 `-link-pick-item` 有两条规则块（`app.css:2238`-`2277` 与 `2897`-`2914`），后者是否覆盖前者在既有主题下未做视觉核对。
 - ⚠️ 待确认（未取证）：`graph-octree.js` 的体素参数与命中率未做基准核对（仅在节点数 ≥40 时启用，`graph-view-3d.js:468`-`485`）。
 - ⚠️ 待确认（未取证）：链接编辑器匹配面板在超大文件下的渲染开销（`renderLinkEditorMatchPanelHtml` 逐条渲染命中，`app.js:2517`-`2563`）未做性能核对。
