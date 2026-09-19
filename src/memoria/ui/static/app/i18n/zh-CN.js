@@ -577,10 +577,10 @@
       dockResizeTitle: "拖拽调整对话栏宽度",
       dockNoSpace: "空间不足：对话栏保持隐藏，请先折叠左栏或把左栏调窄",
       net: {
-        label: "出网",
+        label: "网络",
         title: "允许本面板调用远端模型；关闭后禁用发送（配置项 enabled）",
       },
-      model: { none: "未配置模型", netOff: "出网已关" },
+      model: { none: "未配置模型", netOff: "网络已关" },
       settings: {
         toggle: "设置",
         baseUrl: "模型端点",
@@ -654,7 +654,7 @@
         unknown: "未知错误",
         no_kb: "请先打开知识库",
         empty_question: "请输入问题",
-        net_disabled: "已关闭「出网」，请先在上方开启后再提问",
+        net_disabled: "已关闭「网络」，请在设置 → 对话里开启后再提问",
         no_base_url: "未配置模型端点，请在上方「设置」里填写 base_url",
         busy: "上一个问题仍在生成，请先「停止」或等它结束后再试",
         unknown_job: "任务已失效（可能已重启），请重新提问",

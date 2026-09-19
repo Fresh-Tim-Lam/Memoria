@@ -655,7 +655,7 @@
         unknown: "Unknown error",
         no_kb: "Open a knowledge base first",
         empty_question: "Enter a question",
-        net_disabled: "Network access is off; turn it on above before asking",
+        net_disabled: "Network access is off; turn it on in Settings → Chat before asking",
         no_base_url: "No model endpoint configured; fill in base_url under Settings above",
         busy: "The previous question is still generating; stop it or wait for it to finish",
         unknown_job: "Job expired (the app may have restarted); ask again",

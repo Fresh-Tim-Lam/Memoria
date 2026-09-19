@@ -6,7 +6,7 @@
  *     `#agent-dock-collapse-btn` 已删除，改为 VSCode 式顶栏图标按钮）
  *   - `#agent-dock-resizer` 向左拖拽调宽（rem）→ 落盘 `layout.agentDockWidth`
  *   - `#agent-settings`（端点/模型/密钥/超时/出网）**2026-09-19 搬进设置弹窗「对话」页签**（`#settings-body-agent`）；`#agent-save-config` 保存端点配置
- *   - `#agent-net-toggle`「出网」开关（写 `config/agent.json` 的 enabled）
+ *   - `#agent-net-toggle`「网络」开关（写 `config/agent.json` 的 enabled；2026-09-19 前文案是「出网」）
  *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
  *   - `#agent-stop`「停止」（**真取消**：调 `agent_ask_cancel`，保留已生成的部分文本）
  *   - 开新会话：**无独立按钮**（原 `#agent-clear`「清空对话」已退役；左栏「历史」页签的「＋ 新会话」= 下方 `clear()`）
@@ -1758,7 +1758,7 @@ window.MemoriaAgentPanel = (function () {
     if (!dot || !facts) return;
     dot.setAttribute("data-state", statusBarDotState());
     const model = String(cfg.model || "") || T("agent.model.none");
-    // 出网：开时显示「出网」并**上绿**，关时显示既有的「出网已关」并**上红**（颜色由 CSS 的 `data-on` 决定）
+    // 网络：开时显示「网络」并**上绿**，关时显示既有的「网络已关」并**上红**（颜色由 CSS 的 `data-on` 决定）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
     // 第四槽（2026-09-19 由「历史（N 轮）」改为**本会话缓存命中率**）：数字来自只读 RPC
     // `agent_usage_stats(session_id)` 的 `summary.hit_rate`（口径同底部 `#status-agent`；未知即 `—`）

@@ -5378,7 +5378,7 @@ html *::-webkit-scrollbar-thumb:active {
    用户：「Network 这个字如果是有网就绿色，如果没有就红色，模型可用那个点就绿色否则红色，余额的
    颜色采用连续，我们使用对数函数，钱越少越红，越多越绿，参考数值：当钱只有 10 块就是该项目
    普遍采用的红色」。
-   - **出网字样**：`.-agent-statusbar-net[data-on="1|0"]` → `--success` / `--error`（两个静态色 ⇒ 纯 CSS）；
+   - **网络字样**（2026-09-19 前文案是「出网」）：`.-agent-statusbar-net[data-on="1|0"]` → `--success` / `--error`（两个静态色 ⇒ 纯 CSS）；
    - **状态点**：`idle`（模型可用）→ `--success`、`off`（出网关闭）与 `error` → `--error`；`busy`
      仍是主题色 —— "正在生成"是第三种态，不该和"可用/不可用"混色。这里只**新增**两条
      `[data-state=…]` 规则，与既有 busy/error 两条同特异度但取值不同 ⇒ 互不冲突；
