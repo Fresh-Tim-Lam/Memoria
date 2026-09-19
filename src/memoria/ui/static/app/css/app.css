@@ -124,7 +124,7 @@
     width: 17.5rem;
     min-width: 11.25rem;
     background: var(--bg-secondary);
-    border-right: 0.5px solid var(--border);
+    border-right: 0.5px solid var(--border-sep, var(--border));
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -193,7 +193,7 @@
 .-kp-panel {
     flex: 1;
     min-height: 0;
-    border-top: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border-sep, var(--border));
 }
 
 .-sidebar-body-split {
@@ -245,7 +245,7 @@
 
 .-graph-group-bar {
     flex-shrink: 0;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     background: var(--bg-secondary);
     overflow: hidden;
 }
@@ -306,7 +306,7 @@
     min-width: 16rem;
     max-width: 34rem;
     background: var(--bg-secondary);
-    border-left: 0.5px solid var(--border);
+    border-left: 0.5px solid var(--border-sep, var(--border));
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -362,7 +362,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.25rem 10px; /* 2026-09-19 收窄（0.4375→0.25rem）：整条高度改由末尾的 `--bar-h-b` 统一钉住 */
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
 }
 .-agent-model {
     flex: 1;
@@ -395,7 +395,7 @@
 .-agent-settings {
     flex-shrink: 0;
     padding: 0.625rem 10px 0.5rem;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     background: var(--bg-secondary);
     /* 矮窗口下设置区自身可滚：否则 flex-shrink:0 的它会顶掉消息区，
        并把「保存」按钮挤出可视区（2026-09-17 修复，376×271 窗口曾复现） */
@@ -444,7 +444,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.4375rem 10px;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
 }
 .-agent-history-label {
     flex-shrink: 0;
@@ -607,7 +607,7 @@
     flex-direction: column;
     gap: 0.375rem;
     padding: 0.5rem 10px;
-    border-top: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border-sep, var(--border));
 }
 .-agent-input {
     min-height: 2.75rem;
@@ -1037,7 +1037,7 @@
 }
 
 .-kp-toolbar {
-    border-top: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border-sep, var(--border));
     gap: 0.5rem;
     display: flex;
     align-items: center;
@@ -1535,7 +1535,7 @@
     display: flex;
     gap: 0.125rem;
     margin-bottom: 0.75rem;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     padding-bottom: 0;
 }
 .-config-tab {
@@ -3505,7 +3505,7 @@ body.-win-dragging {
     gap: 0.75rem;
     padding: 0.25rem 16px; /* 2026-09-19 收窄（0.5→0.25rem）：整条高度改由末尾的 `--bar-h-b` 统一钉住 */
     background: var(--bg-secondary);
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     flex-shrink: 0;
     user-select: none;
     -webkit-user-select: none;
@@ -3862,7 +3862,7 @@ body.-brush-active #editor {
 #editor-split.view-source #preview-pane { display: none; }
 #editor-split.view-preview #editor-pane { display: none; }
 #editor-split.view-split #editor-pane {
-    border-right: 0.5px solid var(--border);
+    border-right: 0.5px solid var(--border-sep, var(--border));
     flex: 1;
 }
 #editor-split.view-split #preview-pane { flex: 1; }
@@ -4122,7 +4122,7 @@ body.-brush-active #editor {
 #preview-status {
     padding: 0.375rem 16px;
     font-size: 0.6875rem;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
 }
 
 /* ── Highlighter (荧光笔) ── */
@@ -4308,7 +4308,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 14px;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
 }
 .-image-mgr-stat {
     flex: 1;

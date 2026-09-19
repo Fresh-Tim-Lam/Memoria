@@ -102,3 +102,12 @@ html[data-theme="light"] #status-stats.-status-clickable:hover {
 html[data-theme="light"] .-stat-error {
     color: #c0281f;
 }
+
+/* ===== 区域分隔线专用档 `--border-sep` 的浅色取值（2026-09-19，U4）=============
+   深色的取值与"为何不直接调淡 `--border`"见 `memoria.css` 末尾同令牌的注释。
+   浅色：`--border #d6d6d6` → **#e8e8e8**（= 本文件已有的 `--border-subtle` 取值；对比
+   `--bg-secondary #f6f6f6`：1.344 → 1.134，−16%，与深色档同幅度）。
+   注意浅色主题里 **#ececec = `--bg-tertiary`**，故不能比它更浅 —— #e8e8e8 恰好还在其下。 */
+html[data-theme="light"] {
+    --border-sep: #e8e8e8;
+}

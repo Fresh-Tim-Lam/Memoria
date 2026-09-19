@@ -97,7 +97,7 @@ body {
     padding: 0 0 0 12px;
     height: var(--bar-h, 1.875rem);
     background: var(--bg-toolbar, var(--bg-secondary));
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border); /* ⚠️ 顶栏**特意不用** `--border-sep`（2026-09-19 实测）：深色下 `--bg-toolbar` 就是 #3c3c3c（= 原 `--border`）⇒ 这条边本来就"看不见"，换成新档反而冒出一条更深的线（对比 1.196）；浅色下 `--bg-toolbar #e7e7e7` 与新档 `#e8e8e8` 几乎同色（对比 1.009）⇒ 线会消失。两套主题下都保持原观感。 */
     flex-shrink: 0;
     isolation: isolate;
     /* 搜索下拉需浮在 #main / 预览区之上 */
@@ -307,7 +307,7 @@ body {
     justify-content: space-between;
     padding: 0 8px;
     height: var(--bar-h, 1.875rem);
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     flex-shrink: 0;
 }
 .sidebar-toolbar span {
@@ -424,7 +424,7 @@ body {
 /* 标签页 */
 #tab-bar {
     background: var(--bg-secondary);
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 0.5px solid var(--border-sep, var(--border));
     flex-shrink: 0;
     overflow-x: auto;
 }
@@ -651,4 +651,21 @@ body {
         "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     --font-mono: Consolas, "SF Mono", "JetBrains Mono", Menlo, "Courier New", Monaco,
         "PingFang SC", "Microsoft YaHei", monospace;
+}
+
+/* ===== 区域分隔线专用档 `--border-sep`（2026-09-19，U4）=========================
+   B-7 把分隔线写成 `0.5px`，但 **DPR=1 下 Blink 会把非 0 的 <1px 边框上取整到 1 个设备
+   像素** ⇒ 实测视觉上是 no-op，分隔线仍是"实打实 1px 满色"（用户即为此提"太粗/太重"）。
+   1x 下唯一能真正"变轻"的手段是**把颜色调向背景**，于是给**区域分隔线**单开一档：
+     深色 #3c3c3c → **#303030**（对比 `--bg-secondary #252526`：1.388 → 1.161，−16%）
+   为什么**不直接调淡 `--border`**（实测数据）：`--border` 同时是**19 条规则**的
+   "tertiary 背景 + 自身描边"的轮廓色（`.-agent-input` / `.-agent-history-select` /
+   `.-settings-field select` / `.-config-btn` / `#graph-controls button` / `.tab` …），
+   而 `--bg-tertiary` 正是 **#333333** —— 调到它附近，这些输入框/按钮的描边会在自己的
+   背景上**消失**。故本档只给"区域分隔线"用，控件轮廓仍走 `--border`。
+   消费点 16 处（chrome 横条与区域竖边；**顶栏刻意除外** —— 它的底色与旧边框同色，
+   详见 `memoria.css:100` 那行注释），写法 `var(--border-sep, var(--border))`
+   ⇒ 没有本令牌的主题/文件自动退回旧观感。浅色主题的对应取值见 `light.css` 末尾。 */
+:root {
+    --border-sep: #303030;
 }
