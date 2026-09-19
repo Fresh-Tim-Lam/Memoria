@@ -5550,3 +5550,66 @@ html *::-webkit-scrollbar-thumb:active {
     color: var(--text-primary);
     border-radius: 4px;
 }
+
+/* ===== 2026-09-19 追加：文件树图标（借 dsh ui-primitives，MIT，pin 0d1f5000）==========
+   来源与许可证登记见 `js/file-tree.js` 末尾块 B 与仓库根 THIRD_PARTY_NOTICES.md。
+   - 图标一律 `currentColor`（颜色随所在行的 --text-secondary / --text-bright / --text-primary 走）；
+   - 尺寸对齐原有 em 盒：`.-tree-twisty` 0.875rem 宽、`.-tree-icon` 1rem 宽（宽度规则在 3423-3429 /
+     3449-3456，**未动**，这里只给子元素 svg 定尺寸与变换）；
+   - 展开态 = 右向三角（IconTriangleRightFill14）旋转 90°；
+   - `.no-sidecar` 的 0.45 透明度、hover、active 高亮仍由上方既有规则独立生效，本块不覆盖它们。
+   本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
+.-tree-twisty,
+.-tree-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.-tree-twisty > svg {
+    width: 0.5625rem;
+    height: 0.5625rem;
+    transition: transform 0.12s ease;
+}
+.-tree-twisty > svg.is-open {
+    transform: rotate(90deg);
+}
+.-tree-icon > svg {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+}
+/* 缩进连接线：每层 1 格 14px（与 padding-left = 4|12 + depth×14 的步长一致），
+   末层放 dsh IconTreeCorner8x10 折角；颜色走 --border（深浅主题都定义，见 theme/*.css） */
+.-tree-dir-head,
+.-tree-item {
+    position: relative;
+}
+.-tree-guides {
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    pointer-events: none;
+    color: var(--border);
+}
+.-tree-guide-rail {
+    flex: 0 0 14px;
+    width: 14px;
+    border-left: 1px solid currentColor;
+    opacity: 0.55;
+}
+.-tree-guide-corner {
+    position: relative;
+    flex: 0 0 14px;
+    width: 14px;
+}
+.-tree-guide-corner > svg {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 10px;
+    opacity: 0.75;
+}

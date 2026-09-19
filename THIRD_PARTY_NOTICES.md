@@ -27,6 +27,20 @@
 | `src/memoria/services/agent/llm/config.py`（密钥"引用不落明文"部分） | `credentials/credentials-local` |
 | `src/memoria/services/agent/compaction.py`、`pruner.py` | `compaction/compaction`、`compaction-basic`、`compaction-tool-result-pruner` |
 | `src/memoria/ui/static/app/js/agent-panel.js` 中的 `@路径` / `dsh-session:` mention 语义 | `context/file-reference`、`context/session-reference`（`uri.ts`） |
+| `src/memoria/ui/static/app/js/file-tree.js`（末尾追加块 B：文件树图标） | `client/ui-primitives`（`src/icons/index.tsx`、`src/FileTypeIcon.tsx`） |
+
+### 图标移植落点（`client/ui-primitives`，2026-09-19）
+
+| 本地 | 上游 |
+|---|---|
+| `src/memoria/ui/static/app/js/file-tree.js` 末尾追加块 B（树结构图标） | `packages/client/ui-primitives/src/icons/index.tsx`：`IconTriangleRightFill14`（~:192）、`IconFolderClose16`（~:685）、`IconFolderOpen16`（~:677）、`IconTreeCorner8x10`（~:692） |
+| 同上（文件类型 glyph） | `packages/client/ui-primitives/src/FileTypeIcon.tsx`：`FILE_BODY` / `FILE_FOLD` / 各类型 mark（~:141-175） |
+
+- 用法：SVG 的 **path 数据逐字复制**，颜色统一为 `currentColor`（内部用 `fill-opacity` 分层）；
+  **不移植** `CodeFileIcon` / `code-file-icon-artwork.ts` 的 48 个品牌/商标徽标 —— 代码类文件统一落通用 `code`
+  图形；`FileTypeIcon.tsx` 的 `folder` 类目在本仓库由同源的 `IconFolderClose16` 图形承担（树里的目录另有
+  open/close 成对）。
+- 许可与 pin 同本节 dsh 条目：仓库 `LICENSE` = **MIT**（原文见下），pin **`0d1f5000`**。
 
 **未移植**：`api/*`、`sdk/*`、`bundle/*`、`sandbox/*`、`shell/*`、`terminal/*`、`subprocess/*`、`ssh/*`、
 `lsp/*`、`mcp/*`、`browser-use/*`、`computer-use/*`、`subagent/*`、`workflow/*`、`jobs/*`、`schedule/*`、

@@ -20,14 +20,14 @@
     ├── #sidebar-nav-kp-resizer                   index.html:122
     └── #sidebar-kp-block                        index.html:123   （知识点列表，归 05 篇）
 
-#file-tree 内由 renderFileTree() 一次性 innerHTML 重建（file-tree.js:415-429）：
+#file-tree 内由 renderFileTree() 一次性 innerHTML 重建（file-tree.js:444-458）：
 ├── 递归目录节点
 │   └── .-tree-dir[data-dir]
-│       ├── .-tree-dir-head[data-dir-toggle]   ▶/▼ + 📁 + 目录名
+│       ├── .-tree-dir-head[data-dir-toggle]   三角图标（展开时 CSS 旋转 90°）+ 目录 open/close 图标 + 目录名
 │       └── .-tree-dir-children[.collapsed]    （折叠时 display:none，app.css:3430）
 │           └── 同名结构递归
-├── .-tree-item[data-path][title=完整路径]      📄（有侧车）/ 📝（无侧车）+ 文件名
-└── .-tree-root-zone（固定 64px 留白，供右键"根目录新建"）        file-tree.js:425-427
+├── .-tree-item[data-path][title=完整路径]      文件类型图标（借 dsh，见 §2.1「图标与侧车」）+ 文件名
+└── .-tree-root-zone（固定 64px 留白，供右键"根目录新建"）        file-tree.js:454-456
 
 #content                                          index.html:139
 ├── #tab-bar > #tabs[.tab / .tab.active / .tab-pending]   index.html:140-142
@@ -44,13 +44,13 @@
 |---|---|---|
 | 数据来源 | app.js:630-640 | `call("list_files")` → `state.files`（每项含 `path` / `has_sidecar`）与 `state.dirs`（目录全量清单，含空目录） |
 | 建树 | file-tree.js:130-156 | `buildFileTreeRoot(files, extraDirs)`：**先**按 `dirs` 建目录骨架（保证新建的空文件夹可见），**再**把文件挂到对应目录；路径反斜杠统一转 `/` |
-| 目录行 | file-tree.js:158-171 | 结构见上图；`twisty` 展开为 `▼`、折叠为 `▶`（file-tree.js:163）；缩进 `padding-left = 4 + depth×14` px（file-tree.js:160） |
-| 文件行 | file-tree.js:173-183 | 缩进 `padding-left = 12 + depth×14` px；`title` 为完整相对路径；`data-path` 为归一化路径 |
-| 图标与侧车 | file-tree.js:175-176；app.css:3449-3456 | 有侧车 `📄`，无侧车 `📝` **且**加 `.no-sidecar` 类把图标透明度降到 0.45；目录恒为 `📁` |
+| 目录行 | file-tree.js:164-177 | 结构见上图；`twisty` = dsh `IconTriangleRightFill14` 内联 SVG，**展开时由 CSS 旋转 90°**（file-tree.js:169；样式在 app.css 末尾块）；目录图标 = `IconFolderOpen16`/`IconFolderClose16` 随展开态切换（file-tree.js:170）；缩进 `padding-left = 4 + depth×14` px（file-tree.js:166）。**2026-09-19**：缩进区新增逐层连接线（dsh `IconTreeCorner8x10`，`treeGuides(depth)`，file-tree.js:168、700-706；样式 `.-tree-guide-*` 在 app.css 末尾块） |
+| 文件行 | file-tree.js:179-189 | 缩进 `padding-left = 12 + depth×14` px；`title` 为完整相对路径；`data-path` 为归一化路径 |
+| 图标与侧车 | file-tree.js:180-186；app.css:3449-3456 + **末尾追加块 5554-5615** | **2026-09-19 起不再用 emoji**：文件图标按扩展名/文件名分类（`classifyFileType`，file-tree.js:689-694）取 dsh `FileTypeIcon` 的类目 glyph（markdown/code/image/html/pdf/ppt/video/word/excel/other），类目→图标名映射见 `FT_CATEGORY_ICON`（file-tree.js:683-686）。原「有侧车 `📄` / 无侧车 `📝`」的**双字形差异已取消**——该信息本就由 `.no-sidecar` 类（图标透明度 0.45）独立承载，故保留为唯一区分；图标颜色一律 `currentColor`（随所在行的 `--text-secondary`/`--text-bright`，见末尾样式块） |
 | 排序 | file-tree.js:123-128、187-198 | 目录与文件**各自**用 `localeCompare(zh-CN, sensitivity:"base", numeric:true)` 升序，目录整体排在文件之前 |
-| 当前文件高亮 | file-tree.js:174；app.css:3444-3448、**5069-5076** | `f.path === state.currentPath` 时加 `.active`（字色 `--text-bright`）。**底色口径 2026-09-19 统一**：由 `--bg-active`（浅色主题下偏灰的 `#e2e7f0`）**并入 `--accent-soft`**（主题色淡底，与 `.-kp-item.active`、`.-link-pick-item.is-active` 同一口径），并补一条**不占布局**的左侧标记 `box-shadow: inset 2px 0 0 var(--theme-color)`（原规则在 app.css:3445-3448，覆盖块见 A 档视觉微调 5069-5076；hover 仍是 `--bg-hover`，见 3444）。⚠️ 本行原锚点 `app.css:3036-3039` 是**错的**（那里是 `.-ctx-item.danger:hover` / `.-link-edit-meta`），2026-09-19 一并修正 |
-| 展开态 `treeExpanded` | app.js:34；file-tree.js:105-121 | `state.treeExpanded` 是 **`Set<string>`，仅存内存**（初值 `null`，首次使用惰性创建）；`ensureTreeExpandedForPath()` 会把当前文件的所有祖先目录加入集合；每次 `renderFileTree()` 前对 `state.currentPath` 自动展开（file-tree.js:422） |
-| 折叠/展开 | file-tree.js:203-213 | 点击 `.-tree-dir-head`：命中则从集合删除，否则加入，然后整树重渲染（`e.stopPropagation()`），并记录 `_lastSel = {type:"dir", path}` |
+| 当前文件高亮 | file-tree.js:180；app.css:3444-3448、**5069-5076** | `f.path === state.currentPath` 时加 `.active`（字色 `--text-bright`）。**底色口径 2026-09-19 统一**：由 `--bg-active`（浅色主题下偏灰的 `#e2e7f0`）**并入 `--accent-soft`**（主题色淡底，与 `.-kp-item.active`、`.-link-pick-item.is-active` 同一口径），并补一条**不占布局**的左侧标记 `box-shadow: inset 2px 0 0 var(--theme-color)`（原规则在 app.css:3445-3448，覆盖块见 A 档视觉微调 5069-5076；hover 仍是 `--bg-hover`，见 3444）。⚠️ 本行原锚点 `app.css:3036-3039` 是**错的**（那里是 `.-ctx-item.danger:hover` / `.-link-edit-meta`），2026-09-19 一并修正 |
+| 展开态 `treeExpanded` | app.js:34；file-tree.js:111-127 | `state.treeExpanded` 是 **`Set<string>`，仅存内存**（初值 `null`，首次使用惰性创建）；`ensureTreeExpandedForPath()` 会把当前文件的所有祖先目录加入集合；每次 `renderFileTree()` 前对 `state.currentPath` 自动展开（file-tree.js:451，**带重渲守卫**）。**2026-09-19 新增**同性质内存集合 `_userCollapsedDirs`（用户显式折叠记忆，file-tree.js:539-557）：重渲时跳过用户折叠过的目录，使含当前文件的文件夹能真正合上；任何**真实 reveal**（`expandToPath` / `revealDir` / 目录内新建）都会清除该记忆（见下行） |
+| 折叠/展开 | file-tree.js:208-219 | 点击 `.-tree-dir-head`：命中则 `collapseDir()`（移出展开集 + 记入 `_userCollapsedDirs`），否则 `expandDir()`（清记忆 + 加入展开集），然后整树重渲染（`e.stopPropagation()`），并记录 `_lastSel = {type:"dir", path}`。**记忆清除点**：展开分支、`expandToPath`（file-tree.js:118-127，不带 `respectUserCollapsed` 时）、`revealDir`（:510）、目录内新建文件/文件夹（:423、:439） |
 | 尾部留白区 | file-tree.js:424-427 | 高度 64px、`cursor:default`、空 title；保证滚到底仍有空白可右键出「根目录」菜单，也避免末项贴底难命中 |
 | 空树占位 | file-tree.js:418-421；i18n/zh-CN.js:1081 | `state.files` 与 `state.dirs` **同时**为空时渲染 `<div class="empty">无 Markdown 文件</div>` |
 
@@ -213,25 +213,27 @@
 | 要点 | 锚点 |
 |---|---|
 | 树容器 DOM | index.html:110-112 |
-| 树模块总述与 API | file-tree.js:1-30、469-473 |
-| `init()`（F2 注册） | file-tree.js:437-467 |
-| 建树（含空目录） | file-tree.js:130-156 |
-| 目录行 / 文件行渲染 | file-tree.js:158-183 |
-| 排序规则 | file-tree.js:123-128、185-200 |
-| 展开集合与祖先展开 | file-tree.js:105-121 |
-| 交互绑定（点击 / 右键委托） | file-tree.js:202-260 |
-| 空树占位 / 尾部留白 | file-tree.js:415-429 |
-| 树样式 | app.css:3410-3457 |
+| 树模块总述与 API | file-tree.js:1-30、718-723 |
+| `init()`（F2 注册） | file-tree.js:466-496 |
+| 建树（含空目录） | file-tree.js:136-162 |
+| 目录行 / 文件行渲染 | file-tree.js:164-189 |
+| 排序规则 | file-tree.js:129-134、191-206 |
+| 展开集合与祖先展开 | file-tree.js:111-127 |
+| **用户折叠记忆 / 重渲守卫**（2026-09-19） | file-tree.js:539-557、451 |
+| 交互绑定（点击 / 右键委托） | file-tree.js:208-289 |
+| 空树占位 / 尾部留白 | file-tree.js:444-458 |
+| 树样式 | app.css:3410-3457；**图标/连接线块末尾追加 5554-5615** |
+| 图标清单 / 文件类型分类器 / 单测 | file-tree.js:521-716；scripts/benchmark/maintenance/file_tree_icons_test.js |
 | 树滚动容器 | ⚠️ **锚点待重取**（原写 `app.css:304-312`，该处实为 `#-agent-dock`；2026-09-19 核对发现，未在本轮重取） |
 | 通用右键浮层 | app.js:648-703 |
 | 确认弹窗 | app.js:706-728 |
-| 输入弹窗 | file-tree.js:263-300 |
-| 点击切换文件 | file-tree.js:302-308；app.js:1382-1459 |
-| 重命名链路（文件 / 目录） | file-tree.js:310-361 |
-| 删除链路 | file-tree.js:363-382 |
-| 新建链路 | file-tree.js:384-413 |
-| `applyRenameUi` | file-tree.js:51-73 |
-| 路径重映射函数 | file-tree.js:43-49 |
+| 输入弹窗 | file-tree.js:292-329 |
+| 点击切换文件 | file-tree.js:331-337；app.js:1382-1459 |
+| 重命名链路（文件 / 目录） | file-tree.js:339-390 |
+| 删除链路 | file-tree.js:392-411 |
+| 新建链路 | file-tree.js:413-442 |
+| `applyRenameUi` | file-tree.js:58-79 |
+| 路径重映射函数 | file-tree.js:50-55 |
 | 标签页数据结构 / 渲染 / 关闭 | app.js:1242-1265、1291-1324、1345-1378 |
 | 标签页样式 | theme/memoria.css:423-465；app.css:3386-3397（`#tab-bar` / `#tabs`）；**滚动条外观统一收口在 app.css 末尾块 5078-5136**（2026-09-19 重取；原写 `memoria.css:396-436` 偏早约 20 行、`app.css` 部分此前标「锚点待重取」，本轮一并修正） |
 | 标签滚动位记忆 | app.js:1267-1289 |
@@ -240,7 +242,7 @@
 | 按钮态刷新 | app.js:406-412 |
 | Alt+←/→ | app.js:12402-12410 |
 | 导航栈清空 | app.js:465、555、604 |
-| 树内跳转入栈入口 | file-tree.js:303-305；nav-stack.js:38-46 |
+| 树内跳转入栈入口 | file-tree.js:332-336；nav-stack.js:38-46 |
 | 链接跳转 / KP 跳转入栈 | app.js:4778-4790、10923-10933 |
 | 搜索命中跳转 | toolbar-search.js:215-234 |
 | KP 面板空态 | app.js:2103-2132 |
