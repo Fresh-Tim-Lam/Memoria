@@ -607,7 +607,7 @@ window.MemoriaAgentPanel = (function () {
     role.textContent = T(rec.role === "user" ? "agent.role.user" : "agent.role.assistant");
     const body = document.createElement("div");
     body.className = "-agent-msg-body";
-    body.innerHTML = rec.role === "user" ? linkifyUser(rec.text) : linkify(rec.text);
+    renderBody(body, rec.role, rec.text);
     wrap.appendChild(role);
     wrap.appendChild(body);
     if (rec.anchors && rec.anchors.length) {
@@ -1616,6 +1616,115 @@ window.MemoriaAgentPanel = (function () {
     refreshConfig();
     // 打开面板即刷新历史；若磁盘偏好里有「上次会话」且仍存在，则自动载入（静默）
     refreshHistory().then(() => restoreLastSession());
+  }
+
+  // ── 助手回复的 Markdown 渲染 ────────────────────────────────────────────
+  // 面板原先只做「转义 + `文件:行号` 锚点 + `<br>`」，模型按 Markdown 写的标题/列表/表格
+  // 全是原样文本。这里改成：`marked`（`vendor/marked.min.js`，GFM，与预览同一份配置）
+  // → **净化** → 文本节点锚点化。模型输出**不是**授信内容（可能引用库内文本、也可能被提示
+  // 注入），故净化是硬前置：只留白名单标签、**丢弃全部属性**。任一步失败或 `marked` 未加载
+  // ⇒ 退回 `linkify()`（M1c 原路径），"渲染坏了也不至于看不了答案"。
+  // 注：**流式期间仍是纯文本**（`applyDelta` 用 `textContent`），定稿时才渲染一次，
+  // 避免每 250ms 轮询都重排一遍 Markdown。
+
+  //: 整棵丢弃的标签（脚本 / 内嵌文档 / 表单 / 媒体 / **远程图片**——后者还会顺带出网）。
+  const MD_DROP_TAGS = new Set([
+    "SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "LINK", "META", "BASE", "TEMPLATE",
+    "FORM", "INPUT", "BUTTON", "SELECT", "OPTION", "TEXTAREA", "NOSCRIPT",
+    "IMG", "PICTURE", "VIDEO", "AUDIO", "SOURCE", "TRACK", "CANVAS", "SVG", "MATH",
+  ]);
+  //: 允许保留的标签。其余一律「拆外壳、留文字」；**所有属性一律丢弃**（顺带消灭 `on*`、
+  //: `href`、`src` —— 应用里没有任何外链跳转通道，留 `href` 只会让 webview 被导航走）。
+  const MD_KEEP_TAGS = new Set([
+    "P", "BR", "HR", "H1", "H2", "H3", "H4", "H5", "H6",
+    "UL", "OL", "LI", "BLOCKQUOTE", "PRE", "CODE", "STRONG", "EM", "DEL", "S",
+    "TABLE", "THEAD", "TBODY", "TFOOT", "TR", "TH", "TD", "SPAN", "DIV",
+  ]);
+
+  /** 一条消息正文的渲染入口：用户气泡走 `@引用` chip，助手气泡走 Markdown（含兜底）。 */
+  function renderBody(el, role, text) {
+    if (role === "user") {
+      el.innerHTML = linkifyUser(text);
+      return;
+    }
+    renderAssistantBody(el, text);
+  }
+
+  /** `文件:行号` 的可点锚点节点（与 `linkify()` 产出**同一份 DOM 形状**，样式与点击委托共用）。 */
+  function anchorEl(file, line) {
+    const span = document.createElement("span");
+    span.className = "-agent-anchor";
+    span.setAttribute("role", "link");
+    span.setAttribute("tabindex", "0");
+    span.setAttribute("data-agent-file", file);
+    span.setAttribute("data-agent-line", line);
+    span.textContent = file + ":" + line;
+    return span;
+  }
+
+  /** 净化 `marked` 产物：只留 `MD_KEEP_TAGS` 且不带任何属性；`MD_DROP_TAGS` 连内容一起丢。 */
+  function sanitizeHtmlInto(target, source) {
+    Array.prototype.slice.call(source.childNodes || []).forEach(function (node) {
+      if (node.nodeType === 3) {
+        target.appendChild(document.createTextNode(node.nodeValue || ""));
+        return;
+      }
+      if (node.nodeType !== 1) return; // 注释 / CDATA 等非元素非文本节点一律丢
+      const tag = node.tagName;
+      if (MD_DROP_TAGS.has(tag)) return;
+      if (!MD_KEEP_TAGS.has(tag)) {
+        sanitizeHtmlInto(target, node); // 未知或降级标签：拆外壳、保住里面的文字
+        return;
+      }
+      const el = document.createElement(tag);
+      sanitizeHtmlInto(el, node);
+      target.appendChild(el);
+    });
+  }
+
+  /** 在**已净化**的 DOM 里把 `文件:行号`（可被反引号包裹）换成可点锚点（只动文本节点）。 */
+  function linkifyNodes(root) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach(function (node) {
+      const text = node.nodeValue || "";
+      ANCHOR_RE.lastIndex = 0;
+      if (!ANCHOR_RE.test(text)) return;
+      ANCHOR_RE.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      let m;
+      while ((m = ANCHOR_RE.exec(text)) !== null) {
+        if (m.index > last) frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        frag.appendChild(anchorEl(m[1], m[2]));
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      if (node.parentNode) node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  /** 助手气泡正文渲染（失败/无 `marked` 时退回纯文本 + `<br>`）。 */
+  function renderAssistantBody(el, text) {
+    const src = String(text == null ? "" : text);
+    const md = window.marked;
+    if (!md || typeof md.parse !== "function") {
+      el.innerHTML = linkify(src);
+      return;
+    }
+    try {
+      const tpl = document.createElement("template"); // template 内容惰性：脚本/图片不会先跑起来
+      tpl.innerHTML = md.parse(src, { gfm: true, breaks: true });
+      el.innerHTML = "";
+      el.classList.add("markdown-body"); // 排版沿用预览的 .markdown-body（窄栏覆盖见 app.css）
+      sanitizeHtmlInto(el, tpl.content);
+      linkifyNodes(el);
+    } catch (e) {
+      el.classList.remove("markdown-body");
+      el.innerHTML = linkify(src);
+      console.warn("agent-md:", e);
+    }
   }
 
   return {

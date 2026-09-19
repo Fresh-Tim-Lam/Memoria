@@ -261,3 +261,15 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | A6/A7 回归 | 见 M1/M3；snapshot 前跑全量临时库冒烟 | 冒烟 PASS 后再提交 |
 
 **§12 遗留（非门禁项）**：打开库 `sync_kb_pending` 全库扫描 ~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。
+
+***
+
+## 13. 应用内对话（Agent 面板）
+
+> 只记**状态**；设计与逐块施工见 [design/dsh-agent-port.md](design/dsh-agent-port.md)（规则 1.2：不在本文重复）。
+
+| # | 任务 | 现状 |
+| --- | --- | --- |
+| AG01 | 引用 agent 回复内容再追问（选中/引用某条回复作下一轮显式上下文） | 💡 K1 需求待规格化（粒度=整条/选区、前端入口、请求形状与上限；2026-09-19 用户提出） |
+| AG02 | 助手气泡不渲染 Markdown | 🔄 K2（**代码完成·验收未闭环**）：`agent-panel.js:1621-1728` + `app.css:4906-4950`；证据 = harness 8646 造会话实测 20 项断言（见 [docs-management.md §4.2](conventions/docs-management.md)）。未覆盖：真机 WebView2 观感 |
+| AG03 | dsh M2 剩余：`session-reference`（跨会话引用） | ⏳ K1（设计稿 §8；无前端入口，收益偏弱故排后） |

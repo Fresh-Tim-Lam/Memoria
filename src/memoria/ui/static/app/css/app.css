@@ -4902,3 +4902,49 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 #preview.-color-tinting ::selection {
     background: transparent;
 }
+
+/* ========== 对话面板：助手回复的 Markdown 渲染 ==========
+   气泡容器原本是 white-space:pre-wrap（配合 <br> 的纯文本渲染），而 marked 产出的 HTML
+   各块之间带换行 —— 必须回到 normal，否则会显示成额外空行。排版沿用预览的 .markdown-body
+   （theme/memoria.css），这里只做「窄栏 + 紧凑」覆盖。只有**渲染成功**的助手气泡才带
+   .markdown-body 类，故这些覆盖不会影响用户气泡，也不影响 marked 缺失时的纯文本兜底。 */
+.-agent-msg-body.markdown-body {
+    white-space: normal;
+}
+.-agent-msg-body.markdown-body > :first-child { margin-top: 0; }
+.-agent-msg-body.markdown-body > :last-child { margin-bottom: 0; }
+.-agent-msg-body.markdown-body h1,
+.-agent-msg-body.markdown-body h2,
+.-agent-msg-body.markdown-body h3,
+.-agent-msg-body.markdown-body h4,
+.-agent-msg-body.markdown-body h5,
+.-agent-msg-body.markdown-body h6 {
+    font-size: 1rem;
+    margin: 0.75rem 0 0.375rem;
+    padding-bottom: 0.125rem;
+}
+.-agent-msg-body.markdown-body h1 { font-size: 1.0625rem; }
+.-agent-msg-body.markdown-body p {
+    margin: 0 0 0.5rem;
+    line-height: 1.6;
+}
+.-agent-msg-body.markdown-body ul,
+.-agent-msg-body.markdown-body ol { margin: 0 0 0.5rem 1.125rem; }
+.-agent-msg-body.markdown-body li { margin-bottom: 0.125rem; }
+.-agent-msg-body.markdown-body pre {
+    margin: 0 0 0.5rem;
+    padding: 0.5rem 0.625rem;
+}
+.-agent-msg-body.markdown-body code { font-size: 0.75rem; }
+.-agent-msg-body.markdown-body pre code { font-size: inherit; }
+.-agent-msg-body.markdown-body blockquote { margin: 0 0 0.5rem; }
+.-agent-msg-body.markdown-body th { background: var(--bg-tertiary); }
+/* 表格在窄栏里横向滚动，不撑破气泡 */
+.-agent-msg-body.markdown-body table {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 0 0 0.5rem;
+}
+.-agent-msg-body.markdown-body hr { margin: 0.75rem 0; }
