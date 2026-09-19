@@ -170,13 +170,14 @@ T01–T03 整段收口（右键重命名/删除/新建、重命名全库引用�
 | 历史 | B01, B02, B03, B04, B05, B06, B07, B08, U01, U02, U03, U06, U07, U10, U11, U12 | Bug 批次全部修复；UI/UX 批次修复 | `git log -S U12` |
 | 历史 | R02, R09, R18 | KB 根目录安全标记；Lexical 强化模糊搜索；SearchKernel v1.5（aux + 多模型 + 统一建议） | `services/search_kernel.py` |
 | 历史 | — | 边模型升级（强/弱边 + 实线/虚线）、图谱面板拖拽宽度、3D 图谱（Three.js）、布局模式（Radial/Top-down/Free-force）、节点点击跳转 + anchor 定位 | `graph-engine.js` |
-| 历史 | — | 检索量化基准：BEIR SciFact → Memoria KB（gold/minimal/skeleton 三档 profile）+ qrels；知识文件整理导入提示词 + 平面文件导入格式规范（见附录） | `scripts/benchmark/`；[import-spec.md](reference/import-spec.md) |
+| 历史 | — | 检索量化基准：BEIR SciFact → Memoria KB（gold/minimal/skeleton 三档 profile）+ qrels；知识文件整理导入提示词 + 平面文件导入格式规范（已收编进 [import-spec.md](reference/import-spec.md) §4A/§12） | `scripts/benchmark/`；[import-spec.md](reference/import-spec.md) |
 | 2026-09-09/10 | A1, A2, A3, A4, A5, A6, A7, A8, B1, B4, B5 | §12.A 一致性/注册内核整段收口：sidecar 镜像 + `file` 字段 + 校验 + 级联、manifest 基线/差分/幂等移动、pending 路径同步、图片注册表、KP range 双端定位 heal、词法索引后台化、原子写、终点锚 `forward_only` 漏洞修复；§12.B 文件重命名加固、autosave/flush/脏标记、KP 创建/更新提速（pending 改 JSON + 单文件同步） | `results/kp-confirm-2026-09-09.json`；`range/locator.py:45`；CHANGELOG 0.3.1 |
 | 2026-09-09/10 | C1, C2, C3, C5, D1, D2 | §12.C 视图/静默刷新：文件树重映射刷新、KP 面板静默刷新、预览范围带静默重绘（`markRangeQuiet`）、调度内核 G3 落地（`scheduler.js`）；§12.D 渲染：图片缩略图渲染修复、预览颜色 hover/选区 | `scheduler_vm_test.js`；CHANGELOG 0.3.1 |
 | 2026-09-09/10 | E1, E2, E4, E5, E6, E7, E8, E9, F01, F02, F03 | §12.E 测试/文档/规范：rename-test 库与生成脚本、图片路径规范同步、docs 修订登记、KP 创建链路 L2 归因、保存路径回退归因、G4 M6a/M3/M6b 施工与真机门禁；§12.F 开放发现 F01–F03 存在性确认，后续由 G5.1–G5.3 后台化/CLI 补全承接 | `results/durable-flush-2026-09-09.json`；`results/g4-gate-summary-2026-09-09.json` |
 | 2026-09-14 | C01, C05, C07, L02, S01, E05, E12, I01, E9, E3（部分）, i18n ④ | 首轮台账对账：11 条「已收口但仍开放」条目收口（代码与产物早已闭环），明细见 §10.3 | 见 §10.3 证据清单 |
 | 2026-09-14 | — | 「文件」菜单 3 项修复：菜单顺序改为 `打开/导入/导出 ─── 创建 Trae 智能体/新窗口/打开最近` 并去掉末尾分隔线；「打开最近」按状态分流；按已知路径装载漏 `set_kb_path` 的隐性缺陷 | `index.html:49-59`、`app.js:534-566,12152-12161`，详见 §10.4 |
 | 2026-09-15 | E19, E21, A8 | 修复批次：Mermaid 块替换后复制 `data--src-line`/`data--src-line-end`（预览范围带与源码定位恢复）；Mermaid 失败不再展示原生错误图（`suppressErrorRendering` + 空源码跳过 + 重入保护）；`locate_snippet` 终点锚 `forward_only` 漏洞（hint 未校验是否在起点之后） | `markdown-preview.js`；`vendor/mermaid.min.js`；`range/locator.py:45` |
+| 2026-09-19 | G0–G5、附录指针 | §12「施工计划 · 阶段门禁」**整段收口出表**（G0 基线 / G1 验收收尾 / G2 一致性补强 / G3 调度内核 / G4 作业化 / G5 维护面收敛，结论与实测数字见证据锚）；同批删除文末「附录：已交付规范」三行指针（其事实早已在别处：A → `resources/agent-prompts/organize.zh-CN.md`、B → [import-spec.md](reference/import-spec.md) §4A、C → [import-plan.md](reference/import-plan.md) M5.3） | tag `maint-g3` / `maint-g4` / `maint-g5`；`results/g4-gate-summary-2026-09-09.json`、`results/g5-gate-summary-2026-09-10.json`；`git log -S maint-g4` |
 
 ### 10.3 2026-09-14 首轮台账对账（收口 11 项 + 修正 7 条 + 消解 3 处矛盾）
 
@@ -259,34 +260,4 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | D1 图片渲染 | 代码审查（无 lazy/overflow/圆角缺失）+ `[真机]` 图片管理目测 | 审查证据 + 缩略图全显示 |
 | A6/A7 回归 | 见 M1/M3；snapshot 前跑全量临时库冒烟 | 冒烟 PASS 后再提交 |
 
-### 施工计划 · 阶段门禁（2026-09-09 定版）
-
-> 纪律：逐阶段施工，出口过「门禁(Gate)」才进下一阶段（门禁结论由用户复核拍板，Agent 出证据）；每阶段：实现 → 逐项验证 → 回归冒烟（rename-test/showcase 临时副本）→ 更新台账 → 独立 git commit 快照。任一项失败/证据不足 → 打回重跑门禁。「改善」类提交必须附 A/B 对照（[maintenance-benchmark.md](design/maintenance-benchmark.md)）。
-
-| 阶段 | 门禁结论 | 证据锚 |
-| --- | --- | --- |
-| G0 基线快照 | ✅ 维护机制基线已提交，工作区干净，恢复点就绪 | commit `ae66a012` |
-| G1 验收收尾（B2/B3/A5+C2/D1/E1） | ✅ 出口项达成（B2 三方核对 PASS 含 partial 上屏、B3 真机、A5 heal+真机、D1 审查+真机、E1 复跑 PASS、validate/i18n rows=0） | commit `G1` |
-| G2 一致性补强（M1/B6/M4） | ✅ M1 写盘点+中断恢复 PASS、B6 跨层/`../` 断言 PASS、M4 代码路径+真机、回归冒烟 PASS | commit `G2` |
-| G3 调度内核完善（M5） | ✅ 用户拍板 2026-09-09：scheduler VM 单测全 PASS、bumpEpoch 陈旧丢弃生效（g3_probe dropped=1）、`[job]` queued=0 收敛、回归冒烟 PASS | tag `maint-g3`；`scheduler_vm_test.js` |
-| G4 作业化落地（M6a/manifest 批量/M3/M6b） | ✅ 2026-09-09 用户验收：M6a 屏障对照 inline 89.35 → barrier 24.62ms、崩溃注入 15/15、manifest 连续保存单次落盘、M3 前后耗时/重建次数对照（rpc 340.5→260~320ms）、M6b 单测 15/15 + 真机 PASS；C4 图谱增量拆分后续项，不计入本门禁 | tag `maint-g4`；`results/g4-gate-summary-2026-09-09.json` |
-| G5 维护面收敛（M7） | ✅ 用户拍板 2026-09-10：validate CLI 0 issue、`repair_path_cascade` 干跑与实操一致、diagnose 结构化输出合法、F01 调度化后编辑期不运行且不阻塞 RPC、G5.4 交互热路径零构建（`load_document` 1822→7.6ms）、登记表与 i18n rows=0、回归冒烟 PASS | tag `maint-g5`；`results/g5-gate-summary-2026-09-10.json` |
-| 旁线 · B7 导出 bundle | 独立评审门，不阻塞主线（export-plan 评审通过后按 M1–M5 阶段表独立推进） | [export-plan.md](design/export-plan.md) |
-
-**遗留（另记，非门禁项）**：打开库 `sync_kb_pending` 全库扫描 ~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。
-
-***
-
-## 附录：已交付规范（保留原文）
-
-### A. 知识文件整理导入提示词
-
-> 已迁移为**单一事实源**：`resources/agent-prompts/organize.zh-CN.md`（程序内「导入 → Agent 整理提示词」直接读取该文件，docs 不再维护副本）。用途与用法见 [import-spec.md §12](reference/import-spec.md)（0.3.0 导入模块规格）。
-
-### B. 平面导入文件格式规范
-
-> 已收编为事实来源：[import-spec.md §4A 平面文件（AI 整理）](reference/import-spec.md)；导入实现/冲突/预览见同文件 §5–§8，模块计划见 [import-plan.md](reference/import-plan.md)。
-
-### C. 样例库隐私与官方样例（用户备注）
-
-> `docs/example` 下本地知识库运行产物（`.memoria/**`、`empty*/` 等）按 .gitignore 自动忽略；仅维护/上传「官方样例知识库」与 import-test 夹具，保护本地隐私（见 import-plan.md M5.3）。
+**§12 遗留（非门禁项）**：打开库 `sync_kb_pending` 全库扫描 ~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。

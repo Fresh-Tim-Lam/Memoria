@@ -161,7 +161,7 @@ harness 即「测试反馈机制」载体：bottle 真实前端 + UIAPI over `/r
 | M2 RPC | ☑ | ui.py 新增 select_import_sources/import_scan/import_execute（decisions 校验），旧接口标 deprecated；md_dir 目录递归保子目录结构；py_compile+冒烟通过（对话框真机项归 M6） |
 | M3 前端 | ☑ | import-flow.js 重写为统一向导：源选择卡 → import_scan 预览（摘要/文件/KP/冲突）→ 冲突逐项+应用到全部+重命名输入 → 复制反馈 JSON/Markdown → import_execute → 结果（新增 import.* 键 ~34 个 zh/en 成对；真机交互项归 M6） |
 | M4 i18n | ☑ | import.* 键族补齐，zh/en 平衡（0 missing/en-only），node --check+selftest PASS，扫描器 rows=0 |
-| M5 文档/样例 | ☑ | to-dolist 附录 A（→organize.zh-CN.md 单一事实源）/B（→import-spec §4A）收口为指针；import-test 夹具就位（flat/mdsrc/bundle）；.gitignore 忽略 empty*/导入test/行政法 本地库（M5.3） |
+| M5 文档/样例 | ☑ | to-dolist 附录 A（→organize.zh-CN.md 单一事实源）/B（→import-spec §4A）收口为指针；import-test 夹具就位（flat/mdsrc/bundle）；.gitignore 忽略 empty*/导入test/行政法 本地库（M5.3）。**2026-09-19 追加**：`docs/todo.md` 文末那组「附录指针」本身已按其体积纪律删除（事实分别落在 [import-spec.md:183](import-spec.md) 与本表 M5.3），此处保留指向 |
 | M6 版本/回归 | ☑ | 版本 0.3.0（__version__/README 徽标+正文）；自动化回归通过；GUI 真机项已用 browseragent × `_harness_import.py`（empty3）跑通：三源 × 新建/幂等/冲突(跳过·覆盖·重命名) 全 ✓ + 结构核对（见 M6.2 回归记录） |
 | M7 程序内 Agent 提示词 | ☑ | organize.zh-CN.md 事实源 + get_agent_prompt RPC（与文件字节一致）+ 导入向导「Agent 整理提示词」卡/复制视图 + 附录 A 同步指针；en 缺键回退 zh 文件 |
 
