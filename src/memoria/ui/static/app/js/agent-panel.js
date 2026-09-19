@@ -1768,8 +1768,6 @@ window.MemoriaAgentPanel = (function () {
     const model = String(cfg.model || "") || T("agent.model.none");
     // 出网：开时只显示标签（"出网"），关时用既有的「出网已关」（含状态，避免再借一个键）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
-    // 余额（2026-09-19 取代原「会话 id」槽）：显示串由后端 `agent_balance` 产出（`¥110.00`／`—`），
-    // 前端只贴不拼 ⇒ 不需要新增 i18n 键；未知/关闭/端点不支持时都是 `—`
     const turns = messages.filter(function (m) {
       return m && m.role === "user";
     }).length;
@@ -1777,7 +1775,8 @@ window.MemoriaAgentPanel = (function () {
     facts.innerHTML = [
       T("agent.settings.model") + " <b>" + esc(model) + "</b>",
       esc(net),
-      esc(balanceText || "—"),
+      // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；**悬停**再给成本浮层 `title=costTipText()`（其中 `esc()` 已转义 `& < > "`，拼进双引号属性安全）。
+      ('<span class="-agent-statusbar-balance" title="' + esc(costTipText()) + '">' + esc(balanceText || "—") + "</span>"),
       esc(turnText),
     ].join(" · ");
   }
@@ -1827,6 +1826,82 @@ window.MemoriaAgentPanel = (function () {
     baseApplyConfigToForm.apply(null, arguments);
     renderStatusBar();
     refreshBalance(true); // 换端点/换密钥后余额必须重查（force：不受 60s TTL 限制）
+    refreshCost(true); // 换模型后价目表也变了（force 同上）
+  };
+
+  // ── 成本浮层（余额槽悬停，2026-09-19）───────────────────────────────────
+  // 金额一律由后端 `agent_usage_cost` 给出（`services/agent/llm/pricing.py`：**官方价目表**、
+  // **逐轮**按事件时间定高峰/空闲价后求和），前端只做本地化拼装与千分位/金额美化。
+  // 刷新时机 = 每轮结束（包装 addSessionUsage）+ 载入历史会话（包装 loadSession）+ 换模型；
+  // 30s TTL 兜底。**会话 id 未知时不请求**（不带 session_id 会扫全库，对悬停来说太重）。
+  let costInfo = null;
+  let costFetchedAt = 0;
+
+  /** 金额文本（**不含货币符号** —— 单位由 i18n 模板带出：中文「元」/ 英文「CNY」）。
+   *  小额多加两位：会话成本常在 1e-4 量级，4 位会把 `¥0.0000` 抹成 0。 */
+  function moneyText(value) {
+    const n = Number(value);
+    if (!isFinite(n)) return "—";
+    return n.toFixed(n > 0 && n < 0.0001 ? 6 : 4);
+  }
+
+  /** 悬停浮层文案：首行按用户指定格式「命中:…tokens(…元)，未命中:…tokens(…元)」，次行注明口径与价格表日期。 */
+  function costTipText() {
+    const model = String(cfg.model || "") || T("agent.model.none");
+    const c = costInfo;
+    const date = (c && c.price_table) || "—";
+    if (!c || !c.priced) return T("agent.statusBar.costEmpty", { model: model, date: date });
+    return [
+      T("agent.statusBar.costLine", {
+        hitTokens: fmtTokens(c.hit_tokens),
+        hitCost: moneyText(c.hit_cost),
+        missTokens: fmtTokens(c.miss_tokens),
+        missCost: moneyText(c.miss_cost),
+      }),
+      T("agent.statusBar.costNote", { model: model, date: date }),
+    ].join("\n");
+  }
+
+  function refreshCost(force) {
+    const sid = sessionId ? String(sessionId) : "";
+    if (!sid) {
+      costInfo = null;
+      renderStatusBar();
+      return;
+    }
+    const now = Date.now();
+    if (!force && now - costFetchedAt < 30000) return;
+    costFetchedAt = now;
+    call("agent_usage_cost", sid)
+      .then(function (res) {
+        costInfo = res && res.status === "ok" ? res.cost : null;
+        renderStatusBar();
+      })
+      .catch(function () {
+        costInfo = null; // 取不到成本就只显示「暂无/未收录」口径，绝不影响其余状态
+        renderStatusBar();
+      });
+  }
+
+  const baseAddSessionUsage = addSessionUsage;
+  addSessionUsage = function () {
+    baseAddSessionUsage.apply(null, arguments);
+    refreshCost(true); // 一轮结束 = 成本变了（不设 TTL，保证刚问完就能看到本次开销）
+  };
+  const baseLoadSession = loadSession;
+  loadSession = function () {
+    const pending = baseLoadSession.apply(null, arguments);
+    // loadSession 是 async：等它把 sessionId 落定后再取成本
+    Promise.resolve(pending).then(function () {
+      refreshCost(true);
+    });
+    return pending;
+  };
+  const baseResetStatusUsage = resetStatusUsage;
+  resetStatusUsage = function () {
+    baseResetStatusUsage.apply(null, arguments);
+    costInfo = null;
+    renderStatusBar();
   };
 
   return {

@@ -1303,4 +1303,12 @@
       createdFolder: "Folder created",
     },
   };
+  // ===== 2026-09-19 appended: status bar **balance slot cost tooltip** (hover shows hit/miss tokens + money) =====
+  // Same key path (`agent.statusBar.*`); the definition just lives at end-of-file so that inserting into the
+  // literal above would not shift every following line (docs anchor `zh-CN.js:<line>` in 01/02/04/06/07/08/09).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.statusBar, {
+    costLine: "cache hit:{hitTokens}tokens({hitCost} CNY), cache miss:{missTokens}tokens({missCost} CNY)",
+    costNote: "This session (input only, output excluded). {model} list price ({date}), priced per turn by peak/off-peak; peak hours cost 2x.",
+    costEmpty: "No priceable usage in this session (no records / legacy records lack cache detail / model not in the price list). {model} list price ({date}).",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

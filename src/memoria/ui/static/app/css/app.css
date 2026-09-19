@@ -497,7 +497,7 @@
     padding: 0.5rem 10px;
     background: var(--bg-secondary);
     color: var(--text-primary);
-    font-size: 0.8125rem;
+    font-size: var(--agent-font-size, 0.8125rem); /* 2026-09-19：跟着设置里的「字号」走（`display-settings.js::applyFontSize` 在 `#-agent-dock` 上打令牌）；未设置时回落原值 13px */
     line-height: 1.55;
     max-width: 100%;
     overflow-wrap: break-word;
@@ -615,7 +615,7 @@
     resize: vertical;
     padding: 0.3125rem 8px;
     font-family: inherit;
-    font-size: 0.8125rem;
+    font-size: var(--agent-font-size, 0.8125rem); /* 2026-09-19：输入框与消息正文同字号（同一令牌，见 `.-agent-msg`） */
     line-height: 1.45;
     border: 0.5px solid var(--border);
     background: var(--bg-tertiary);

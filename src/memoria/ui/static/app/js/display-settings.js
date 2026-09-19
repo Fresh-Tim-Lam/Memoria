@@ -76,12 +76,13 @@
     return pickKnown(merged);
   }
 
-  /** 字号：同时作用于预览区（--preview-font-size）与源码/分栏区（--editor-font-size） */
+  /** 字号：作用预览区（--preview-font-size）、源码 / 分栏区（--editor-font-size）与**对话面板**（--agent-font-size，2026-09-19：设置里的字号同时管对话正文与输入框） */
   function applyFontSize(px) {
     const preview = document.getElementById("preview");
     if (preview) preview.style.setProperty("--preview-font-size", px + "px");
     const editor = document.getElementById("editor");
     if (editor) editor.style.setProperty("--editor-font-size", px + "px");
+    document.getElementById("-agent-dock")?.style.setProperty("--agent-font-size", px + "px"); // 对话面板根（元素缺失时 ?. 静默跳过）
   }
 
   function applyUiScale(x) {

@@ -1415,3 +1415,33 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001 —— 余额是"顺手看一眼"的能力，绝不打断界面
             return {"status": "error", "code": "balance_failed", "text": "—", "message": str(e)}
 
+    def agent_usage_cost(self, session_id: str | None = None) -> dict:
+        """按**官方价目表**估算 token 成本（只读、纯本地、不联网、fail-open）。
+
+        与 `agent_usage_stats` 的分工：那条给 token 用量与命中率（**事实**），这条只给
+        **金额**（派生量）。口径见 `services/agent/llm/pricing.py`：**逐轮**按其事件时间定
+        高峰/空闲价后求和（峰谷价差一倍，所以不能先加 token 再乘一个价）；模型取**已保存
+        的配置**（与状态 bar 显示的模型同源）。`session_id` 省略 ⇒ 统计库内全部会话
+        （要扫全库，调用方应只在需要时用）。
+
+        返回 `{status:"ok", kb_path, session_id, cost:{...}}`；`cost.priced=False` 表示
+        一个可计价轮次都没有（模型未收录 / 旧记录缺 cache 明细 / 缺事件时间）⇒ 界面应显示
+        `—` 而**不是** `¥0`。出错一律收敛成 `{status:"error", code, message}`，不抛给界面。
+        """
+        from memoria.services.agent.llm.config import load_config
+        from memoria.services.agent.llm.pricing import estimate
+        from memoria.services.agent.usage_report import usage_stats
+
+        kb = self._agent_kb(None)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        try:
+            report = usage_stats(kb, sid or None)
+            cost = estimate(report.get("turns") or [], load_config().model)
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "usage_failed", "message": str(e)}
+        except Exception as e:  # noqa: BLE001 —— 成本是附加信息，取不到不该影响界面主流程
+            return {"status": "error", "code": "cost_failed", "message": str(e)}
+        return {"status": "ok", "kb_path": kb, "session_id": sid or None, "cost": cost}
+

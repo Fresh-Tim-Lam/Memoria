@@ -91,6 +91,9 @@ def turn_from_event(record: Mapping[str, Any], session_id: str) -> dict[str, Any
     return {
         "session_id": session_id,
         "seq": _int_or_none(record.get("seq")),
+        # 事件时间（epoch 毫秒，见 session/store.py 的信封）。**成本估算要靠它定峰谷价**
+        # （`services/agent/llm/pricing.py`：高峰/空闲双档），故逐轮带出（2026-09-19 追加）。
+        "time": _int_or_none(record.get("time")),
         "prompt": prompt,
         "completion": completion,
         "total": total if total is not None else prompt + completion,

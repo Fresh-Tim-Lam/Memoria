@@ -1219,4 +1219,13 @@
       createdFolder: "已创建文件夹",
     },
   };
+  // ===== 2026-09-19 追加：状态 bar **余额槽的成本浮层**（悬停显示命中/未命中的 tokens 与金额）=====
+  // 键路径不变（仍是 `agent.statusBar.*`），只是定义点挪到文件末尾 —— 往上面的 `statusBar` 字面量里插键会把
+  // 其后所有行推位、牵动 01/02/04/06/07/08/09 篇里十余处 `zh-CN.js:<行号>` 锚点，故按"追加"纪律落在这里。
+  // 金额的单位写作「元」（与用户指定格式一致）；数值由 `agent-panel.js::moneyText()` 格式化，不含货币符号。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.statusBar, {
+    costLine: "命中:{hitTokens}tokens({hitCost}元)，未命中:{missTokens}tokens({missCost}元)",
+    costNote: "本会话累计（仅输入，不含输出）。按 {model} 官方价目表（{date}）逐轮定峰谷价；高峰时段单价翻倍。",
+    costEmpty: "本会话暂无可计价的用量（无记录 / 旧记录缺缓存明细 / 该模型未收录定价）。按 {model} 官方价目表（{date}）。",
+  });
 })(typeof window !== "undefined" ? window : globalThis);
