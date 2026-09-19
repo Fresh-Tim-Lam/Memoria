@@ -1398,3 +1398,20 @@ class UIAPI:
             return {"status": "error", "code": "usage_failed", "message": str(e)}
         return {"status": "ok", **report}
 
+    def agent_balance(self) -> dict:
+        """查询端点账户**余额**（只读、可选、fail-open；**出网关闭时一律不发请求**）。
+
+        返回 `{status, text, currency?, total?, code?, message?}`，其中
+        `status ∈ ok | disabled | no_key | unsupported | error`，`text` **永远可直接贴到界面**
+        （未知/不可用时是 `—`）。支持的端点与判定方式见
+        `services/agent/llm/balance.py` 的模块 docstring（DeepSeek `/user/balance`、
+        Moonshot `/v1/users/me/balance`；OpenAI 官方无余额端点 ⇒ `unsupported`）。
+        任何异常都在此收敛为 `status="error"`，不抛给界面。
+        """
+        from memoria.services.agent.llm.balance import fetch_balance
+
+        try:
+            return fetch_balance()
+        except Exception as e:  # noqa: BLE001 —— 余额是"顺手看一眼"的能力，绝不打断界面
+            return {"status": "error", "code": "balance_failed", "text": "—", "message": str(e)}
+

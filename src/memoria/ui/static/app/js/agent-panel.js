@@ -1008,7 +1008,7 @@ window.MemoriaAgentPanel = (function () {
     renderedKb = kb; // 气泡区现在属于本库
     resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
-    setStatusText(T("agent.status.session", { id: sessionId }));
+    setStatusText(""); // 2026-09-19：状态行不再显示会话 id（用户不需要；会话身份在历史下拉里）
     syncHistorySelection();
     setLastSessionId(kb, sessionId); // 记住**本库**的会话，供下次自动恢复（并清掉旧全局键）
     return res;
@@ -1370,7 +1370,7 @@ window.MemoriaAgentPanel = (function () {
         renderedKb = kbAtStart;
         setLastSessionId(kbAtStart, sessionId);
       }
-      const parts = [usageText(st.usage), st.session_id ? T("agent.status.session", { id: st.session_id }) : ""];
+      const parts = [usageText(st.usage)]; // 2026-09-19：不再把会话 id 拼进状态行（用户不需要）
       const ok = st.status === "done";
       const detail = ok ? "" : fullErrorText(st);
       setStatusText(ok ? statusLine(parts) : detail, !ok);
@@ -1768,10 +1768,8 @@ window.MemoriaAgentPanel = (function () {
     const model = String(cfg.model || "") || T("agent.model.none");
     // 出网：开时只显示标签（"出网"），关时用既有的「出网已关」（含状态，避免再借一个键）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
-    // 会话 id 很长（`session-<UTC 时间戳>-<随机后缀>`）：bar 里只留尾巴，全 id 在下方状态行里
-    const session = sessionId
-      ? T("agent.status.session", { id: "…" + String(sessionId).slice(-8) })
-      : T("agent.history.none");
+    // 余额（2026-09-19 取代原「会话 id」槽）：显示串由后端 `agent_balance` 产出（`¥110.00`／`—`），
+    // 前端只贴不拼 ⇒ 不需要新增 i18n 键；未知/关闭/端点不支持时都是 `—`
     const turns = messages.filter(function (m) {
       return m && m.role === "user";
     }).length;
@@ -1779,10 +1777,39 @@ window.MemoriaAgentPanel = (function () {
     facts.innerHTML = [
       T("agent.settings.model") + " <b>" + esc(model) + "</b>",
       esc(net),
-      esc(session),
+      esc(balanceText || "—"),
       esc(turnText),
     ].join(" · ");
   }
+
+  // 余额槽：**60s TTL** + 出网关闭时不发请求（后端 `fetch_balance` 还会再挡一次）。
+  // 首次抓取**延后 1.5s**：RPC 是同步的，放在启动路径上会在最坏情况下（6s 超时）卡住首屏。
+  let balanceText = "—";
+  let balanceFetchedAt = 0;
+
+  function refreshBalance(force) {
+    const now = Date.now();
+    if (!force && now - balanceFetchedAt < 60000) return;
+    balanceFetchedAt = now;
+    if (!cfg.enabled) {
+      balanceText = "—";
+      renderStatusBar();
+      return;
+    }
+    call("agent_balance")
+      .then(function (res) {
+        balanceText = (res && res.text) || "—";
+        renderStatusBar();
+      })
+      .catch(function () {
+        balanceText = "—";
+        renderStatusBar();
+      });
+  }
+
+  setTimeout(function () {
+    refreshBalance(true);
+  }, 1500);
 
   // 包装（先留原函数引用再赋值；三处包装只多一次 bar 重绘，无副作用）
   const baseRenderMessages = renderMessages;
@@ -1799,6 +1826,7 @@ window.MemoriaAgentPanel = (function () {
   applyConfigToForm = function () {
     baseApplyConfigToForm.apply(null, arguments);
     renderStatusBar();
+    refreshBalance(true); // 换端点/换密钥后余额必须重查（force：不受 60s TTL 限制）
   };
 
   return {

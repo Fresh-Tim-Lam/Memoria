@@ -180,6 +180,44 @@
 
 ---
 
+### 6.5 引用完整性：让模型写的路径真的可用（P / V / L 三路线，文献支撑）
+
+**问题**（实测，见 [agent-guide/01 §7](../reference/agent-guide/01-shell-and-layout.md)）：模型在回答里写 `文件.md:行号`，会出现①不存在的路径（少目录、近似文件名）②同一文件多种写法（`a.md`/`./a.md`/`docs/a.md`）③全角冒号/中文标点包裹/区间写法 ④点了跳不到。解析层 `services/link_resolver.py:41` 目前**只有精确匹配**（返回 `ambiguous`/`not_found`，无模糊或后缀回退）—— 这是"跳不到"的直接原因。
+
+**三条路线与证据强度**：
+
+| 路线 | 做法 | 证据强度 | 成本 | 与"只追加日志"红线 |
+|---|---|---|---|---|
+| **P** 提示词/规范约束 | 在 system prompt 里把引用语法**收窄到"只能取自工具回显的 canonical 路径"**，并给示例 | 中 | 低 | 兼容 |
+| **V** 输出后程序校验与自动修补 | 归一化 → 精确 → 唯一 basename → 唯一后缀 → 模糊；多候选返回候选、不猜 | **高** | 中 | 兼容（纯读时计算） |
+| **L** 事后修补落盘记录 | 就地改写会话 JSONL | **低**（档案/法规文献一致反对改写历史） | 中高 | **冲突** |
+
+**关键文献结论**（原文与链接见本轮检索记录）：
+- 引用类错误里"**混错 id**"只占约 **5%**，且属于**可被程序完全消除**的一类（[Fine-grained Rewards](https://arxiv.org/html/2402.04315v3)）⇒ V 的投入产出比最高。
+- **反证**：引用**格式风格**对幻觉率**没有可测影响**（[Where Fake Citations Are Made](https://arxiv.org/html/2604.18880v1)）⇒ 继续扩正则只能提高"可解析率"，**不会**提高"引对率"。
+- 厂商口径一致：要保证结构合规就用 structured outputs / strict 工具（[Anthropic](https://docs.anthropic.com/en/docs/control-output-format)、[Azure](https://learn.microsoft.com/en-au/Azure/foundry/openai/how-to/structured-outputs)、[Gemini](https://ai.google.dev/gemini-api/docs/structured-output)）；但 DeepSeek 官方 JSON mode **最弱**（自陈偶发返回空内容） ⇒ 在 DeepSeek 端点**必须** P+V 叠加（[DeepSeek JSON](https://api-docs.deepseek.com/guides/json_mode)）。
+- Anthropic 的 Citations/Search-results 用**内部标识符**（如 `kb://article-1234`）承载归属、由 API 解析指针 —— 这是"从根上不可能写错路径"的形态（[Citations](https://platform.claude.com/docs/en/build-with-claude/citations)），但也最贵。
+- **无外部反馈的"自我纠错"被证伪**（[ICLR 2024](https://arxiv.org/pdf/2310.01798.pdf)、[TACL 2024 综述](https://www.semanticscholar.org/paper/3fa1e1c67514b9eaf9ec8da562baef8974b4f3f9)）；有外部真值（文件清单）时才有显著收益（[PROCO](https://arxiv.org/pdf/2405.14092.pdf)）⇒ 校验器必须是**程序**，不是"再问模型一遍"。
+- 事件溯源与审计口径：历史**只能追加补偿事件**，读取用**投影**（[Azure Event Sourcing](https://learn.microsoft.com/en-us/azure/architecture/patterns/event-sourcing)）；这与本仓库 [AGENTS.md §3](../../AGENTS.md) 的"事件只追加、永不改写"一致。
+
+**落地顺序（建议）**：
+1. **V1 归一化**：NFKC（全角→半角）、剥 CJK 标点包裹、去引号、去 `./` 前缀（零风险，消掉问题②③）。
+2. **V2 分级收敛**：精确 → 唯一 basename → 唯一后缀 → 模糊（尾部元素加权，学 fzf 的 `path` 方案）；**任一级命中 >1 就判 `ambiguous` 并回候选，绝不猜**；行号越界 ⇒ 降级为文件级锚点。
+3. **V3 回灌**：把 `not_found` 当**正常工具结果**返回（"不存在；库内相近的有 X/Y/Z"），**不自动重试**；同一猜测三次即停。错误文本模板 = 什么失败 + 为什么 + 真实情况 + 下一步。
+4. **P**：只做一件事 —— 要求引用**取自工具回显的 canonical 路径**（`tools/kb.py:279` 已经在回显里带路径，把它变成硬约定）。**不要**加"请确保路径存在"这类话。
+5. **L**：只做**读取时投影**（渲染/查询层修正，等价 upcaster）；确需留痕则**追加**一条修正事件，**不碰** `sessions/*.jsonl` 与 `events.jsonl`。
+
+**明确"不要做"**（都有反证）：
+- ❌ 别再用扩大正则覆盖面来"修好跳转"（只影响可识别性，不影响目标真实性）。
+- ❌ 别依赖模型自我检查/自我修复（无外部反馈的自纠会掉分）。
+- ❌ 别用全局固定编辑距离阈值自动改写（短 basename 上极易误并；实体解析共识是**误并比漏并更糟**）。
+- ❌ 别改写已落盘的会话 JSONL / 事件日志（与仓库红线冲突，且与审计口径相反）。
+- ❌ 别为整个知识库做路径枚举 schema（引擎覆盖度不一、大字典有成本）；只对**检索候选集**做枚举约束。
+
+**目标口径**：V 的目标是"**零误跳 + 可解释的候选**"，不是"自动修对所有路径"（本领域没有对口研究；路径解析更接近 entity linking，其共识就是"启发式 + 候选 + 人工兜底"）。
+
+---
+
 ## 7. 横向 B：基准测试集设计
 
 ### 7.1 三个层次
