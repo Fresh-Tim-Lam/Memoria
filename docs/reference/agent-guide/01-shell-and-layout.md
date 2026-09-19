@@ -333,6 +333,7 @@
 | **文件树拖拽 → 对话栏插入 `@相对路径`**（发送端 / 接收端 / 样式 / 后端提示） | file-tree.js:41、168、185、229-248、502-526；agent-panel.js:119-129、493-599、1530-1568；app.css:546-574、629-638；i18n/zh-CN.js:627-630、i18n/en.js:628-631；services/agent/prompt.py:194-218（门控 262-263） |
 | 侧栏与树样式 | app.css:123-323；app.css:3409-3457 |
 | **全局滚动条**（细 + 按需显形，2026-09-19）/ **顶部标签栏滚轮横向滚动** | app/css/app.css:5078-5136；app/js/app.js:12864-12888（`#tabs`）；同类先例 app.js:784-797（图谱分组条） |
+| **B 档视觉收敛**（2026-09-19：圆角 4/6/8/12/999、中性描边 0.5px、阴影三档令牌） | app/css/app.css:5138-5168（阴影 `--shadow-soft/float/overlay` 令牌 + 模态背板模糊；其余全是**原位数值替换、行数未变**故不占新行）；逐项与实测见 [design/ui-visual-language.md §4 实施记录 A](../../design/ui-visual-language.md) |
 | 图谱分组条显隐 | app.js:763-772 |
 | 视图模式切换 / 编辑模式开关 | app.js:1620-1682；app.css:3520-3541、3862-3868；edit-handler.js:59-122 |
 | 格式栏与块编辑栏互斥 | index.html:162-199；edit-handler.js:1009-1013、1545-1550 |
@@ -347,7 +348,12 @@
 
 ## 7. 未证实 / 待确认
 
-- ⚠️ **本轮（2026-09-19：全局滚动条改细 + 顶部标签栏滚轮横向滚动）已断言 / 未取证**。用户诉求原话：「memoria 所有的滚条都太粗了，流行的 ide 方案是改很细而且在鼠标进入对应区域的时候才明显，否则几乎消失；顶部文件标签 bar 鼠标在这个区域滚轮应该可以控制滚条」。改动 = `app/css/app.css` **末尾追加**一个滚动条块（5078-5136）+ `app/js/app.js` **末尾追加**一个只做滚轮转横向的 IIFE（12864-12888）⇒ 既有行号锚点零漂移。已断言（**仓库自带 harness `docs/example/rich-content-test/_harness.py`，端口 8651**，浏览器内只读取值，窗口已从最小化恢复）：
+- ⚠️ **本轮（2026-09-19：B 档视觉收敛 B-6 圆角 / B-7 描边 / B-9 阴影）已断言 / 未取证**。改动 = `app/css/app.css` + `theme/memoria.css` 的**原位数值替换**（行数不变）+ `app.css:5138-5168` 末尾新增阴影令牌与模态背板模糊块；逐项清单与取舍见 [design/ui-visual-language.md §4 实施记录 A](../../design/ui-visual-language.md)。已断言（**harness `docs/example/rich-content-test/_harness.py`，端口 8652**，浏览器内只读取值）：
+  - **B-6 圆角**：全页 712 个元素的**计算** `border-radius` 只剩 6 个取值 —— `0px`×623 / `4px`×74 / `12px`×9 / `4px 4px 0 0`×3 / `6px`×2 / `50%`×1，**1/2/3/5/7/10px 全部清零**（改前是 10 档 16 种写法）；点值 `.-modal-box` = **12px**、`.-agent-input` = 4px。注意 `#tabs .tab` 计算值是 `0px` —— **这是对的**，`.tab` 从来没有圆角声明（方形标签是原设计），不是缺陷。
+  - **B-9 阴影**：`--shadow-soft`/`--shadow-float`/`--shadow-overlay` 三个令牌在 `documentElement` 上**解析成功**；`.-modal-box` 计算 `box-shadow` = overlay 的**两层**值（`rgba(0,0,0,0.34) 0 8px 24px, rgba(0,0,0,0.28) 0 24px 64px`）；`.-tb-file-menu` / `.-tb-file-submenu` / `.-fmt-dropdown-menu` / `.-toolbar-search-panel` 计算值 = float 的两层值且与令牌串**逐字一致**；`.-modal-backdrop` 计算 `background: rgba(0,0,0,0.42)` + `backdrop-filter: blur(2px)`（真开模态后取到）。
+  - **B-7 描边（负面结论，必须知道）**：109 处 `1px→0.5px` 确实写进了 CSSOM（105 条含 `0.5px` 的规则、且这些元素**没有任何 1px 覆盖规则**），但**计算值一律是 `1px`、全页 `0.5px` 计数 = 0** ⇒ **DPR=1（100% 缩放）下 Blink 把非 0 的 <1px 边框上取整到 1 个设备像素，视觉上是 no-op**。用受控探针复核（注入 `border-top: 0.5px` 与 `1px` 两块，同色 `rgb(60,60,60)`）：`getComputedStyle` **两块都返回 `1px`**。真正发丝只出现在 **DPR≥2**。**未取证**：125%/150% 缩放下的表现（本环境改不了 DPR）、以及与改前的逐像素对照。
+  - **未取证汇总**：① `.-context-menu`、`.-link-target-suggest`、`.-edge-target-datalist`、`.-flash-error`/`.-flash-info`、`.-color-picker`、`.-lightbox-image`、`.-kp-tag-pick` **当前都不在 DOM 里**（要特定交互才创建）⇒ 这几处只核到 CSSOM 规则、未核计算值；② **真机 WebView2 观感**（12px 模态圆角、控件由 2px 变 4px 圆角是否偏圆、双层阴影的柔和度、背板模糊的性能）；③ 本轮**没有"改前"基线截图**，两张截图（设置模态 / 默认主界面）只是改后的现状，未做像素级 A/B。
+- ⚠️ **同日更早一轮（2026-09-19：全局滚动条改细 + 顶部标签栏滚轮横向滚动）已断言 / 未取证**。用户诉求原话：「memoria 所有的滚条都太粗了，流行的 ide 方案是改很细而且在鼠标进入对应区域的时候才明显，否则几乎消失；顶部文件标签 bar 鼠标在这个区域滚轮应该可以控制滚条」。改动 = `app/css/app.css` **末尾追加**一个滚动条块（5078-5136）+ `app/js/app.js` **末尾追加**一个只做滚轮转横向的 IIFE（12864-12888）⇒ 既有行号锚点零漂移。已断言（**仓库自带 harness `docs/example/rich-content-test/_harness.py`，端口 8651**，浏览器内只读取值，窗口已从最小化恢复）：
   - **尺寸与形状**：`#tabs` / `#editor-pane` / `#kp-list` 三个滚动容器的 `::-webkit-scrollbar` 实测 `width/height = 10px`，`::-webkit-scrollbar-thumb` 实测 `background-clip = content-box`、`border-top-width = 4px`、`border-radius = 999px`、`background-color = rgba(140, 148, 158, 0.18)`，`::-webkit-scrollbar-track` = `rgba(0, 0, 0, 0)`。⇒ **可见滑块 = 10 − 2×4 = 2px**（改前是 6px 实心滑块）。**注意**：`background-color` 读到的不是 `rgba(0,0,0,0)`，说明 `var(--scrollbar-*)` 在滚动条伪元素里**解析成功**（这是本条最关键的一条）。
   - **标准属性已让位**：`getComputedStyle(document.body).scrollbarWidth = "auto"`、`scrollbarColor = "auto"` ⇒ Chromium ≥121 不会再因 `body` 上那条可继承的 `scrollbar-width: thin`（`theme/memoria.css:73-74`）而**整块忽略** `::-webkit-scrollbar` 并退回 Windows 原生粗滚动条。
   - **标签栏高度未被压扁**：8 个标签溢出（`scrollWidth 1024 / clientWidth 496`）时，`#tabs` 实测 `offsetHeight 39 / clientHeight 29`（差值 10px = 横向滚动条）、首个标签 `offsetHeight 29`，且**文字包围盒完全落在标签盒内**（`overflowed = false`）。

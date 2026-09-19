@@ -97,7 +97,7 @@ body {
     padding: 0 0 0 12px;
     height: 2.1875rem;
     background: var(--bg-toolbar, var(--bg-secondary));
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
     isolation: isolate;
     /* 搜索下拉需浮在 #main / 预览区之上 */
@@ -264,9 +264,9 @@ body {
 #search-box {
     background: var(--bg-primary);
     color: var(--text-primary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     padding: 0.1875rem 8px;
-    border-radius: 2px;
+    border-radius: 4px;
     font-size: 0.75rem;
     width: 13.75rem;
     height: 1.375rem;
@@ -281,7 +281,7 @@ body {
     width: 23.75rem;
     min-width: 12.5rem;
     background: var(--bg-secondary);
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -307,7 +307,7 @@ body {
     justify-content: space-between;
     padding: 0 8px;
     height: 2.1875rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
 }
 .sidebar-toolbar span {
@@ -323,7 +323,7 @@ body {
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     background: var(--bg-secondary);
     flex-shrink: 0;
     height: 2.625rem;
@@ -340,7 +340,7 @@ body {
     align-items: center;
     padding: 0 12px;
     border: none;
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-secondary);
     cursor: pointer;
@@ -360,13 +360,13 @@ body {
     display: flex;
     gap: 0.0625rem;
     background: var(--bg-tertiary);
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 0.0625rem;
 }
 .mode-btn {
     padding: 0.125rem 8px;
     border: none;
-    border-radius: 1px;
+    border-radius: 4px;
     background: transparent;
     color: var(--text-secondary);
     cursor: pointer;
@@ -403,8 +403,8 @@ body {
     height: 1.5rem;
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
     font-size: 0.875rem;
     display: flex;
@@ -424,7 +424,7 @@ body {
 /* 标签页 */
 #tab-bar {
     background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
     overflow-x: auto;
 }
@@ -434,7 +434,7 @@ body {
     align-items: center;
     padding: 0 12px;
     background: var(--bg-tertiary);
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     cursor: pointer;
     font-size: 0.75rem;
     color: var(--text-secondary);
@@ -488,7 +488,7 @@ body {
     background: var(--theme-color);
     color: #fff;
     border: none;
-    border-radius: 2px;
+    border-radius: 4px;
     font-size: 0.8125rem;
     cursor: pointer;
 }
@@ -503,8 +503,8 @@ body {
 .file-card {
     padding: 0.75rem;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
     transition: border-color 0.1s;
 }
@@ -522,8 +522,8 @@ body {
 }
 #btn-back {
     padding: 0.1875rem 10px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-secondary);
     color: var(--text-primary);
     cursor: pointer;
@@ -536,7 +536,7 @@ body {
 .markdown-body h1 {
     font-size: 1.625rem;
     margin: 1.5rem 0 16px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     padding-bottom: 0.5rem;
     color: var(--text-bright);
 }
@@ -546,7 +546,7 @@ body {
 .markdown-body code {
     background: var(--bg-tertiary);
     padding: 0.125rem 5px;
-    border-radius: 2px;
+    border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.9em;
     color: var(--warning);
@@ -574,7 +574,7 @@ body {
     margin-bottom: 1rem;
 }
 .markdown-body th, .markdown-body td {
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     padding: 0.375rem 10px;
     text-align: left;
 }
@@ -585,7 +585,7 @@ body {
     color: var(--text-secondary);
     margin: 0 0 12px;
 }
-.markdown-body hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+.markdown-body hr { border: none; border-top: 0.5px solid var(--border); margin: 1.25rem 0; }
 
 /* ========== 状态栏 ========== */
 #status-bar {
@@ -619,7 +619,7 @@ body {
     background: var(--warning);
     color: var(--bg-primary);
     padding: 0.0625rem 4px;
-    border-radius: 2px;
+    border-radius: 4px;
     margin-left: 0.25rem;
 }
 

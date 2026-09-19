@@ -7,7 +7,7 @@
     color: var(--theme-color);
     background: var(--accent-soft);
     padding: 0.0625rem 6px;
-    border-radius: 2px;
+    border-radius: 4px;
     margin-left: 0.5rem;
     letter-spacing: 0.0312rem;
     position: relative;
@@ -31,10 +31,10 @@
     font-size: 0.75rem;
     font-family: inherit;
     line-height: 1.35;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     white-space: nowrap;
 }
@@ -124,7 +124,7 @@
     width: 17.5rem;
     min-width: 11.25rem;
     background: var(--bg-secondary);
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -165,7 +165,7 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-secondary);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 0.5px solid var(--border-subtle);
     padding-top: 0.5rem;
 }
 .-import-file-list {
@@ -193,7 +193,7 @@
 .-kp-panel {
     flex: 1;
     min-height: 0;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 
 .-sidebar-body-split {
@@ -245,7 +245,7 @@
 
 .-graph-group-bar {
     flex-shrink: 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     background: var(--bg-secondary);
     overflow: hidden;
 }
@@ -306,7 +306,7 @@
     min-width: 16rem;
     max-width: 34rem;
     background: var(--bg-secondary);
-    border-left: 1px solid var(--border);
+    border-left: 0.5px solid var(--border);
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -362,7 +362,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.4375rem 10px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 .-agent-model {
     flex: 1;
@@ -395,7 +395,7 @@
 .-agent-settings {
     flex-shrink: 0;
     padding: 0.625rem 10px 0.5rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     background: var(--bg-secondary);
     /* 矮窗口下设置区自身可滚：否则 flex-shrink:0 的它会顶掉消息区，
        并把「保存」按钮挤出可视区（2026-09-17 修复，376×271 窗口曾复现） */
@@ -417,10 +417,10 @@
     padding: 0.3125rem 8px;
     font-family: inherit;
     font-size: 0.8125rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-agent-field input:focus {
     border-color: var(--theme-color);
@@ -444,7 +444,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.4375rem 10px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 .-agent-history-label {
     flex-shrink: 0;
@@ -457,10 +457,10 @@
     padding: 0.25rem 6px;
     font-family: inherit;
     font-size: 0.75rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-agent-history-select:focus {
     border-color: var(--theme-color);
@@ -492,7 +492,7 @@
     line-height: 1.5;
 }
 .-agent-msg {
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
     padding: 0.5rem 10px;
     background: var(--bg-secondary);
@@ -554,7 +554,7 @@
     margin: 0 1px;
     font-size: 0.75rem;
     border: 1px solid var(--theme-color);
-    border-radius: 2px;
+    border-radius: 4px;
     background: var(--bg-tertiary);
     color: var(--text-primary);
     cursor: pointer;
@@ -585,8 +585,8 @@
 .-agent-source {
     padding: 0 5px;
     font-size: 0.6875rem;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-tertiary);
     color: var(--text-primary);
     cursor: pointer;
@@ -607,7 +607,7 @@
     flex-direction: column;
     gap: 0.375rem;
     padding: 0.5rem 10px;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-agent-input {
     min-height: 2.75rem;
@@ -617,10 +617,10 @@
     font-family: inherit;
     font-size: 0.8125rem;
     line-height: 1.45;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-agent-input:focus {
     border-color: var(--theme-color);
@@ -666,7 +666,7 @@
     flex: none;
     min-height: 8.75rem;
     max-height: 32.5rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
     background: var(--bg-primary);
     overflow: hidden;
@@ -679,7 +679,7 @@
     height: 15rem;
     min-height: 8.75rem;
     max-height: 32.5rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
     background: var(--bg-primary);
     overflow: hidden;
@@ -710,7 +710,7 @@
     height: 0.375rem;
     cursor: ns-resize;
     background: transparent;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
     touch-action: none;
 }
 
@@ -726,7 +726,7 @@
     padding: 0.25rem 10px 8px;
     font-size: 0.625rem;
     line-height: 1.45;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
     display: flex;
     flex-direction: column;
     gap: 0.125rem;
@@ -802,7 +802,7 @@
 .-check-summary {
     margin: 0 0 12px;
     padding: 0.5rem 10px;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
     background: var(--bg-tertiary);
     font-size: 0.75rem;
@@ -830,8 +830,8 @@
     gap: 0.5rem;
     padding: 0.375rem 8px;
     margin-bottom: 0.25rem;
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     font-size: 0.6875rem;
     line-height: 1.4;
 }
@@ -859,7 +859,7 @@
     flex-shrink: 0;
     font-size: 0.625rem;
     padding: 0.0625rem 5px;
-    border-radius: 2px;
+    border-radius: 4px;
     font-weight: 600;
 }
 
@@ -971,10 +971,10 @@
 .-settings-field select {
     padding: 0.25rem 6px;
     font-size: 0.75rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .-settings-preview-col {
@@ -1037,7 +1037,7 @@
 }
 
 .-kp-toolbar {
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
     gap: 0.5rem;
     display: flex;
     align-items: center;
@@ -1064,10 +1064,10 @@
 .-config-btn {
     padding: 0.125rem 8px;
     font-size: 0.6875rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
 }
 .-config-btn:hover {
@@ -1174,8 +1174,8 @@
     flex-shrink: 0;
     max-height: min(160px, 28vh);
     overflow-y: auto;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-primary);
 }
 .-range-candidates .candidate-row {
@@ -1193,8 +1193,8 @@
     gap: 0.875rem;
 }
 .-edge-section {
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     padding: 0.5rem 10px;
 }
 .-edge-section-title {
@@ -1217,8 +1217,8 @@
     justify-content: space-between;
     gap: 0.375rem;
     padding: 0.25rem 6px;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-primary);
     flex-wrap: wrap;
 }
@@ -1233,7 +1233,7 @@
     font-size: 0.625rem;
     font-weight: 600;
     padding: 0.0625rem 6px;
-    border-radius: 2px;
+    border-radius: 4px;
     white-space: nowrap;
     letter-spacing: 0.0187rem;
 }
@@ -1254,15 +1254,15 @@
     color: var(--text-secondary);
     background: var(--bg-tertiary);
     padding: 0.0625rem 5px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-edge-no-build {
     font-size: 0.625rem;
     color: #888;
     background: var(--bg-tertiary);
     padding: 0.0625rem 5px;
-    border-radius: 2px;
-    border: 1px solid var(--border);
+    border-radius: 4px;
+    border: 0.5px solid var(--border);
 }
 .-edge-actions {
     display: flex;
@@ -1288,11 +1288,11 @@
     position: absolute;
     z-index: 10;
     background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     max-height: 8.75rem;
     overflow-y: auto;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-soft);
 }
 .-edge-target-option {
     padding: 0.25rem 8px;
@@ -1367,8 +1367,8 @@
     font-family: var(--font-mono);
     background: var(--bg-primary);
     color: var(--text-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     -moz-appearance: textfield;
     appearance: textfield;
 }
@@ -1388,7 +1388,7 @@
     color: var(--error);
     background: rgba(244, 71, 71, 0.1);
     border: 1px solid rgba(244, 71, 71, 0.35);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-assist-preview-ellipsis {
     font-size: 0.6875rem;
@@ -1400,8 +1400,8 @@
     min-height: 7.5rem;
     max-height: none;
     overflow: auto;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-primary);
     font-family: var(--font-mono);
     font-size: 0.75rem;
@@ -1440,7 +1440,7 @@
     padding: 0 8px;
     text-align: right;
     color: var(--text-secondary);
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     background: var(--bg-secondary);
     user-select: none;
 }
@@ -1479,8 +1479,8 @@
     min-height: 7.5rem;
     max-height: none;
     overflow: auto;
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-primary);
     padding: 0.75rem 16px;
     font-size: 0.8125rem;
@@ -1495,7 +1495,7 @@
     border-left: none;
     padding: 0;
     margin: 0.25rem 0;
-    border-radius: 2px;
+    border-radius: 4px;
     position: relative;
 }
 .-assist-md .assist-md-range::after {
@@ -1506,7 +1506,7 @@
     bottom: 0;
     width: 0.1875rem;
     background: var(--theme-color);
-    border-radius: 2px 0 0 2px;
+    border-radius: 4px 0 0 4px;
     pointer-events: none;
 }
 .-assist-md .assist-md-range::before {
@@ -1535,7 +1535,7 @@
     display: flex;
     gap: 0.125rem;
     margin-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     padding-bottom: 0;
 }
 .-config-tab {
@@ -1547,7 +1547,7 @@
     border-bottom: 2px solid transparent;
     margin-bottom: -1px;
     cursor: pointer;
-    border-radius: 2px 2px 0 0;
+    border-radius: 4px 4px 0 0;
 }
 .-config-tab:hover {
     color: var(--text-primary);
@@ -1598,7 +1598,7 @@
     gap: 0.5rem;
     padding: 0.375rem 8px;
     background: var(--bg-secondary);
-    border-radius: 2px;
+    border-radius: 4px;
     flex-wrap: wrap;
 }
 .-suggest-item.-suggest-placeholder {
@@ -1629,7 +1629,7 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-muted);
-    border-top: 1px solid var(--border-subtle);
+    border-top: 0.5px solid var(--border-subtle);
 }
 .-toolbar-search-body .-suggest-label {
     font-weight: 400;
@@ -1706,7 +1706,7 @@
     gap: 0.5rem;
     padding: 0.625rem;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
 }
 
@@ -1742,8 +1742,8 @@
     font-size: 0.75rem;
     color: var(--text-primary);
     background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
 }
 
 .-kp-tags-chips {
@@ -1768,7 +1768,7 @@
     line-height: 1.3;
     color: var(--text-primary);
     background: var(--bg-primary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 999px;
     cursor: pointer;
     user-select: none;
@@ -1835,13 +1835,13 @@
 
 .-kp-merge-hit {
     width: 100%;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     text-align: left;
     cursor: pointer;
     font: inherit;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 0.375rem 8px;
 }
 
@@ -1864,8 +1864,8 @@
 .-kp-range-card {
     padding: 0.75rem;
     background: var(--bg-secondary);
-    border-radius: 2px;
-    border: 1px solid var(--border);
+    border-radius: 4px;
+    border: 0.5px solid var(--border);
 }
 .-kp-range-value {
     font-size: 1.125rem;
@@ -1940,10 +1940,10 @@
     flex-shrink: 0;
     font-size: 0.5625rem;
     padding: 0.0625rem 5px;
-    border-radius: 2px;
+    border-radius: 4px;
     background: var(--bg-tertiary);
     color: var(--text-secondary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
 }
 .-config-anchor {
     font-size: 0.6875rem;
@@ -1971,7 +1971,7 @@
     justify-content: space-between;
     gap: 0.5rem;
     padding: 0.375rem 8px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     font-size: 0.75rem;
 }
 .-config-item:hover { background: var(--bg-hover); }
@@ -1982,7 +1982,7 @@
     margin-bottom: 0.5rem;
     padding: 0.375rem 8px;
     background: rgba(244, 71, 71, 0.1);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-config-warn {
     font-size: 0.75rem;
@@ -1990,7 +1990,7 @@
     margin-bottom: 0.5rem;
     padding: 0.375rem 8px;
     background: rgba(206, 145, 120, 0.12);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .-link-pending {
@@ -2031,7 +2031,7 @@
 .-preview .memoria-link.is-graph-link-focus {
     background: rgba(163, 113, 247, 0.22) !important;
     box-shadow: 0 0 0 1px rgba(163, 113, 247, 0.55);
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .-preview .memoria-link.-link-broken,
@@ -2102,7 +2102,7 @@
 }
 /* 需要底衬版本时改用这两条（当前未启用）：
 #status-bar .-stat-warn, #status-bar .-graph-audit-warn, #status-bar #status-stats.-status-clickable,
-#status-bar .-stat-error { background: rgba(0, 0, 0, 0.22); border-radius: 3px; padding: 0 4px; }
+#status-bar .-stat-error { background: rgba(0, 0, 0, 0.22); border-radius: 4px; padding: 0 4px; }
 */
 
 /* 「未开库 / 未开文档」这类**硬前置**提示：底栏整行转红，否则一行灰字太容易被略过
@@ -2113,7 +2113,7 @@
     color: #ffb3a7;
     font-weight: 600;
     background: rgba(0, 0, 0, 0.22);
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 0 4px;
 }
 
@@ -2164,7 +2164,7 @@
     min-width: 0.875rem;
     height: 0.875rem;
     padding: 0 3px;
-    border-radius: 7px;
+    border-radius: 6px;
     font-size: 0.5625rem;
     font-weight: 600;
     line-height: 0.875rem;
@@ -2426,8 +2426,8 @@ body.-win-dragging {
 .-toolbar-search-scope {
     display: flex;
     flex-shrink: 0;
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     overflow: hidden;
     cursor: pointer;
     -webkit-app-region: no-drag;
@@ -2499,9 +2499,9 @@ body.-win-dragging {
     overflow-y: auto;
     padding: 0.5rem;
     background: var(--bg-elevated, var(--bg-secondary));
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-float);
     z-index: 9000;
 }
 
@@ -2533,7 +2533,7 @@ body.-win-dragging {
     width: 100%;
     padding: 0.5rem 10px;
     font-size: 0.875rem;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 6px;
     background: var(--bg-input, var(--bg-secondary));
     color: var(--text-primary);
@@ -2555,7 +2555,7 @@ body.-win-dragging {
 .-kp-create-fields {
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 
 .-kp-create-fields .-link-field {
@@ -2587,7 +2587,7 @@ body.-win-dragging {
     background: var(--bg-elevated, #252526);
     border: 2px solid #e53935;
     border-radius: 8px;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-overlay);
     color: var(--text-primary, #e0e0e0);
     font-size: 0.8125rem;
     line-height: 1.45;
@@ -2605,7 +2605,7 @@ body.-win-dragging {
     background: var(--bg-elevated, #252526);
     border: 2px solid #26a269;
     border-radius: 8px;
-    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
+    box-shadow: var(--shadow-overlay);
     color: var(--text-primary, #e0e0e0);
     font-size: 0.8125rem;
     line-height: 1.45;
@@ -2677,7 +2677,7 @@ body.-win-dragging {
     align-items: center;
     gap: 0.625rem;
     padding: 0.5rem 4px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     cursor: pointer;
     user-select: none;
 }
@@ -2777,7 +2777,7 @@ body.-win-dragging {
     gap: 0.625rem;
     align-items: flex-start;
     padding: 0.5rem 10px;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 6px;
     cursor: pointer;
 }
@@ -2853,7 +2853,7 @@ body.-win-dragging {
     background: var(--accent-soft);
     color: inherit;
     padding: 0 2px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 .-link-match-panel,
@@ -2861,7 +2861,7 @@ body.-win-dragging {
 .-link-editor-match {
     margin-top: 0.5rem;
     padding: 0.5rem 10px;
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 6px;
     background: var(--bg-hover);
 }
@@ -2898,7 +2898,7 @@ body.-win-dragging {
 .-config-link-match-footer {
     margin-top: 0.75rem;
     padding-top: 0.625rem;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-config-link-block {
     margin-bottom: 0.125rem;
@@ -2981,9 +2981,9 @@ body.-win-dragging {
     min-width: 12.5rem;
     max-width: 20rem;
     background: var(--bg-primary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: var(--shadow-float);
     padding: 0.25rem 0;
     font-size: 0.75rem;
 }
@@ -3042,7 +3042,7 @@ body.-win-dragging {
     gap: 0.5rem;
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 .-link-field {
     display: flex;
@@ -3056,8 +3056,8 @@ body.-win-dragging {
     font-size: 0.75rem;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
 }
 .-link-field textarea {
     padding: 0.375rem 8px;
@@ -3066,8 +3066,8 @@ body.-win-dragging {
     font-family: inherit;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     resize: vertical;
     min-height: 4.5em;
 }
@@ -3076,8 +3076,8 @@ body.-win-dragging {
     font-size: 0.75rem;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
 }
 .-link-field select option {
@@ -3108,8 +3108,8 @@ body.-win-dragging {
     font-size: 0.625rem;
     color: var(--text-primary);
     background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     -moz-appearance: textfield;
 }
 .-link-relevance-num:focus {
@@ -3132,7 +3132,7 @@ body.-win-dragging {
 .-link-edge-editor-panel {
     margin-top: 0.75rem;
     padding-top: 0.625rem;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-link-edge-editor-panel .-link-section-title {
     margin-bottom: 0.25rem;
@@ -3146,8 +3146,8 @@ body.-win-dragging {
     padding: 0.5rem 10px;
     margin-bottom: 0.5rem;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
 }
 .-link-edge-editor-item:last-child {
     margin-bottom: 0;
@@ -3177,8 +3177,8 @@ body.-win-dragging {
     font-size: 0.625rem;
     color: var(--text-primary);
     background: var(--bg-primary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
 }
 .-link-target-edge select option {
@@ -3188,7 +3188,7 @@ body.-win-dragging {
 .-link-target-edge input[type="number"] {
     color: var(--text-primary);
     background: var(--bg-primary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
 }
 .-link-target-edge input[type="number"]:focus {
     outline: none;
@@ -3214,7 +3214,7 @@ body.-win-dragging {
     color: var(--theme-color);
     margin: 0.75rem 0 4px;
     padding-top: 0.5rem;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-link-advanced {
     margin-top: 0.375rem;
@@ -3238,7 +3238,7 @@ body.-win-dragging {
     gap: 0.5rem;
     margin-top: 0.625rem;
     padding-top: 0.625rem;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-link-add-field {
     position: relative;
@@ -3251,8 +3251,8 @@ body.-win-dragging {
     padding: 0.375rem 8px;
     font-size: 0.75rem;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     color: var(--text-primary);
 }
 .-link-target-suggest {
@@ -3264,9 +3264,9 @@ body.-win-dragging {
     max-height: 11.25rem;
     overflow-y: auto;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    box-shadow: var(--shadow-float);
 }
 .-link-target-suggest.hidden {
     display: none;
@@ -3318,7 +3318,7 @@ body.-win-dragging {
     cursor: pointer;
     font-size: 1rem;
     line-height: 1;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 .-link-remove-target:hover {
     color: var(--error);
@@ -3459,7 +3459,7 @@ body.-win-dragging {
 /* 知识点列表 */
 .-kp-item {
     padding: 0.375rem 10px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     cursor: pointer;
     transition: background 0.1s;
 }
@@ -3483,7 +3483,7 @@ body.-win-dragging {
     font-size: 0.5625rem;
     background: var(--bg-tertiary);
     padding: 0 4px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 
 /* 编辑器 */
@@ -3505,7 +3505,7 @@ body.-win-dragging {
     gap: 0.75rem;
     padding: 0.5rem 16px;
     background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     flex-shrink: 0;
     user-select: none;
     -webkit-user-select: none;
@@ -3521,7 +3521,7 @@ body.-win-dragging {
     display: flex;
     margin-left: auto;
     background: var(--bg-tertiary);
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 0.0625rem;
     gap: 0.0625rem;
     flex-shrink: 0;
@@ -3532,7 +3532,7 @@ body.-win-dragging {
     color: var(--text-secondary);
     font-size: 0.6875rem;
     padding: 0.1875rem 10px;
-    border-radius: 1px;
+    border-radius: 4px;
     cursor: pointer;
 }
 .-view-btn:hover { color: var(--text-primary); background: var(--bg-hover); }
@@ -3554,7 +3554,7 @@ body.-win-dragging {
     color: var(--text-secondary);
     font-size: 0.75rem;
     padding: 0.1875rem 7px;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     line-height: 1;
     white-space: nowrap;
@@ -3592,10 +3592,10 @@ body.-win-dragging {
     bottom: auto;
     z-index: 10050;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 4px;
     padding: 0.25rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+    box-shadow: var(--shadow-float);
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 0.125rem;
@@ -3609,7 +3609,7 @@ body.-win-dragging {
     border: none;
     font-size: 0.6875rem;
     padding: 0.1875rem 6px;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     color: #000;
     font-weight: 600;
@@ -3640,12 +3640,12 @@ body.-win-dragging {
 /* 无色 / 自定义 选项 */
 .-hl-option,
 .-fc-option {
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     background: var(--bg-tertiary);
     color: var(--text-primary);
     font-size: 0.625rem;
     padding: 0.1875rem 5px;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     white-space: nowrap;
     font-weight: 600;
@@ -3695,11 +3695,11 @@ body.-win-dragging {
     background: var(--bg-primary, #fff);
     color: var(--text-primary, #222);
     border: 1px solid var(--border-color, #d0d0d0);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1rem;
     width: 18.75rem;
     max-width: calc(100vw - 40px);
-    box-shadow: 0 10px 32px rgba(0, 0, 0, .35);
+    box-shadow: var(--shadow-overlay);
     font-size: 0.8125rem;
     box-sizing: border-box;
 }
@@ -3755,7 +3755,7 @@ body.-win-dragging {
 }
 .-cp-hue::-webkit-slider-runnable-track {
     height: 0.875rem;
-    border-radius: 7px;
+    border-radius: 6px;
     border: 1px solid var(--border-color, #d0d0d0);
     background: linear-gradient(90deg, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));
 }
@@ -3771,7 +3771,7 @@ body.-win-dragging {
 }
 .-cp-hue::-moz-range-track {
     height: 0.875rem;
-    border-radius: 7px;
+    border-radius: 6px;
     border: 1px solid var(--border-color, #d0d0d0);
     background: linear-gradient(90deg, hsl(0, 100%, 50%), hsl(60, 100%, 50%), hsl(120, 100%, 50%), hsl(180, 100%, 50%), hsl(240, 100%, 50%), hsl(300, 100%, 50%), hsl(360, 100%, 50%));
 }
@@ -3792,7 +3792,7 @@ body.-win-dragging {
 .-cp-presets button {
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, .18);
     padding: 0;
     cursor: pointer;
@@ -3862,7 +3862,7 @@ body.-brush-active #editor {
 #editor-split.view-source #preview-pane { display: none; }
 #editor-split.view-preview #editor-pane { display: none; }
 #editor-split.view-split #editor-pane {
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     flex: 1;
 }
 #editor-split.view-split #preview-pane { flex: 1; }
@@ -3899,7 +3899,7 @@ body.-brush-active #editor {
     user-select: text;
     -webkit-user-select: text;
     cursor: text;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 /* 所有 block 内元素 margin 归零，避免"虚假空行"光标 */
 .-preview .-src-block > p {
@@ -3947,7 +3947,7 @@ body.-brush-active #editor {
 .-preview .-src-block > hr {
     margin: 0;
     border: none;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 /* 空行占位 block：紧凑、可选中，是唯一的纵向间距来源 */
 .-preview .-blank-block {
@@ -3999,7 +3999,7 @@ body.-brush-active #editor {
     z-index: 1;
     background: rgba(0, 122, 204, 0.18);
     box-shadow: inset 3px 0 0 var(--theme-color);
-    border-radius: 2px;
+    border-radius: 4px;
     transition: background 1.5s ease-out, box-shadow 1.5s ease-out;
 }
 .-preview-range-band.fade-out {
@@ -4030,7 +4030,7 @@ body.-brush-active #editor {
     text-align: right;
     color: var(--text-secondary);
     user-select: none;
-    border-right: 1px solid var(--border);
+    border-right: 0.5px solid var(--border);
     background: var(--bg-secondary);
 }
 .-line-content {
@@ -4122,14 +4122,14 @@ body.-brush-active #editor {
 #preview-status {
     padding: 0.375rem 16px;
     font-size: 0.6875rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 
 /* ── Highlighter (荧光笔) ── */
 mark {
     background: #fff3cd;
     padding: 0.0625rem 3px;
-    border-radius: 2px;
+    border-radius: 4px;
 }
 mark.hl-yellow { background: #fff3cd; }
 mark.hl-green  { background: #d4edda; }
@@ -4225,8 +4225,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .-block-lang-sel {
     font-size: 0.75rem;
     padding: 0.125rem 6px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    border: 0.5px solid #ccc;
+    border-radius: 4px;
     background: #fff;
     cursor: pointer;
 }
@@ -4235,8 +4235,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     min-width: 1.5rem;
     height: 1.5rem;
     padding: 0 4px;
-    border: 1px solid #d0d5dd;
-    border-radius: 3px;
+    border: 0.5px solid #d0d5dd;
+    border-radius: 4px;
     background: #fff;
     cursor: pointer;
     line-height: 1;
@@ -4308,7 +4308,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 14px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 .-image-mgr-stat {
     flex: 1;
@@ -4332,7 +4332,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     padding: 1.75rem 0;
 }
 .-image-card {
-    border: 1px solid var(--border);
+    border: 0.5px solid var(--border);
     border-radius: 6px;
     /* 注意：不可加 overflow:hidden——WebView2 下 flex 容器 + overflow:hidden
        会导致内部 <img> 已加载却不绘制（图片管理整片灰底的根因，实测 2026-09-08）。
@@ -4349,7 +4349,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     object-fit: cover;
     display: block;
     background: var(--bg-secondary);
-    border-radius: 5px 5px 0 0;
+    border-radius: 6px 6px 0 0;
 }
 .-image-card-info {
     padding: 0.375rem 8px;
@@ -4378,8 +4378,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     display: flex;
     gap: 0.375rem;
     padding: 0.375rem 8px;
-    border-top: 1px solid var(--border);
-    border-radius: 0 0 5px 5px;
+    border-top: 0.5px solid var(--border);
+    border-radius: 0 0 6px 6px;
 }
 .-image-card-actions .-btn {
     flex: 1;
@@ -4483,7 +4483,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     max-height: 95vh;
     object-fit: contain;
     border-radius: 4px;
-    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-overlay);
     cursor: grab;
     user-select: none;
     -webkit-user-drag: none;
@@ -4506,7 +4506,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     padding: 0.35rem 0.75rem;
     background: rgba(0, 0, 0, 0.6);
     color: #e6e6e6;
-    border-radius: 3px;
+    border-radius: 4px;
     font-size: 0.75rem;
     line-height: 1.4;
     pointer-events: none;
@@ -4521,7 +4521,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     padding: 0.5rem;
     background: var(--bg-secondary, #f8f9fa);
     border-radius: 4px;
-    border: 1px solid var(--border, #dee2e6);
+    border: 0.5px solid var(--border, #dee2e6);
 }
 .-mermaid-container svg {
     max-width: 100%;
@@ -4556,7 +4556,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 
     padding: 0.5rem 16px;
     background: var(--bg-tertiary);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     font-size: 0.75rem;
     flex-shrink: 0;
 }
@@ -4567,7 +4567,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     background: var(--theme-color);
     color: #fff;
     border: none;
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
 }
 #proposal-banner button:hover { background: var(--accent-hover); }
@@ -4576,8 +4576,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     margin: 0.125rem 4px 2px 0;
     padding: 0.125rem 6px;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
     font-size: 0.6875rem;
 }
@@ -4595,25 +4595,25 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .-modal-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.42);
 }
 .-modal-box {
     position: relative;
     width: min(520px, 92vw);
     max-height: 80vh;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-overlay);
 }
 .-modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0.625rem 14px;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
     font-weight: 600;
     color: var(--text-bright);
     cursor: grab;
@@ -4632,7 +4632,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 14px;
-    border-top: 1px solid var(--border);
+    border-top: 0.5px solid var(--border);
 }
 .-modal-footer:has(.-link-hint) {
     justify-content: stretch;
@@ -4655,7 +4655,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     align-items: center;
     gap: 0.5rem;
     padding: 0.25rem 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 0.5px solid var(--border);
 }
 .candidate-row:last-child { border-bottom: none; }
 .candidate-row input { accent-color: var(--theme-color); }
@@ -4696,8 +4696,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     font-size: 0.6875rem;
     line-height: 1.5;
     padding: 0.5rem;
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-tertiary);
     color: var(--text-primary);
     resize: vertical;
@@ -4711,8 +4711,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 }
 
 .-import-conflict-item {
-    border: 1px solid var(--border);
-    border-radius: 3px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     padding: 0.5rem 10px;
     background: var(--bg-tertiary);
 }
@@ -4750,8 +4750,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     padding: 0.125rem 6px;
     font-size: 0.75rem;
     font-family: var(--font-mono);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     background: var(--bg-primary);
     color: var(--text-primary);
 }
@@ -4774,8 +4774,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     font-size: 0.75rem;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 2px;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
     cursor: pointer;
     max-width: 8.5rem;
 }
@@ -4802,9 +4802,9 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     z-index: 60;
     min-width: 11rem;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    box-shadow: var(--shadow-float);
     padding: 0.25rem 0;
     display: flex;
     flex-direction: column;
@@ -4865,9 +4865,9 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     max-height: 16rem;
     overflow-y: auto;
     background: var(--bg-secondary);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    box-shadow: var(--shadow-float);
     padding: 0.25rem 0;
     display: flex;
     flex-direction: column;
@@ -5133,4 +5133,36 @@ html *:hover::-webkit-scrollbar-thumb {
 html *::-webkit-scrollbar-thumb:hover,
 html *::-webkit-scrollbar-thumb:active {
     background-color: var(--scrollbar-thumb-drag) !important;
+}
+
+/* ========== B 档视觉收敛（2026-09-19）=========================================
+   依据 docs/design/ui-visual-language.md §4-B（用户选定「B 全做」）：B-6 圆角收敛、
+   B-7 中性描边 0.5px、B-9 阴影三档。**B-8（主字号上移一档）按建议未做** —— 应用已有
+   「显示 → 字号 / 界面缩放」（display-settings.js:11-14 的 previewFontSize 与 uiScale），
+   再动 CSS 档位会与之职责重叠且白丢信息密度；逐项记录见该文档 §4-B″。
+   改法：B-6/B-7/B-9 全部是**就地改数值 / 换 `var()`**（行数不变 ⇒ 既有行号锚点零漂移）；
+   本块只承载"必须新增声明"的两件事（阴影令牌、模态背板柔化），追加在文件末尾。 */
+
+:root {
+    /* 阴影三档（此前 10 处浮层各写各的一层值）。每档是 dsh 式「近层 + 远层柔光」两层结构：
+       soft    = 贴脸小提示（下拉候选）
+       float   = 菜单 / 下拉 / 搜索面板 / 右键菜单
+       overlay = 模态 / 闪报 / 调色板 / 灯箱
+       用途锚点：soft → `.-edge-target-datalist`；float → `.-toolbar-search-panel`、
+       `.-context-menu`、`.-link-target-suggest`、`.-fmt-dropdown-menu`、`.-tb-file-menu`、
+       `.-tb-file-submenu`；overlay → `.-flash-error`/`.-flash-info`、`.-color-picker`、
+       `.-lightbox-image`、`.-modal-box`。
+       **不在此档内**（语义不是"投影"，故保留原样）：所有 `inset` 指示线（范围高亮/拖拽
+       左线/树选中）、`0 0 0 Npx` 指示环（焦点环、徽标缝线、拾色点）、`.-win-btn--max` 的
+       `4px -4px 0 0` 两笔（那是"还原"图标本身）、两个滑块拇指的 `0 0 0 1px + 0 0 4px`。 */
+    --shadow-soft: 0 1px 4px rgba(0, 0, 0, 0.2);
+    --shadow-float: 0 4px 12px rgba(0, 0, 0, 0.28), 0 12px 32px rgba(0, 0, 0, 0.16);
+    --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.34), 0 24px 64px rgba(0, 0, 0, 0.28);
+}
+
+/* 模态背板：遮罩已由 0.55 原位减到 0.42（"极淡"），此处补一层轻微模糊。
+   `-webkit-backdrop-filter` 与 750 行 `.-graph-hint--overlay` 的既有写法保持一致。 */
+.-modal-backdrop {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 }
