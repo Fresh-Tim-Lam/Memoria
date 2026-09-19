@@ -260,9 +260,10 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡渲染 Markdown + `文件:行号` 锚点 | ✅ 代码完成（harness 二十项断言，见 §4.2）；真机观感待验 |
 | AG03 | dsh M2 `session-reference`（跨会话引用） | ✅ K2（§4.2；harness 8660 端到端） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
-| AG05 | 状态栏/状态 bar（点绿/红 + 模型/网络绿红/**余额对数连续色（悬停出浮层）**/**缓存命中率**；已去掉会话 id 与轮次） | 🔄 K1 待完善（余额 = `agent_balance`；命中率 = `agent_usage_stats`；浮层 = `#agent-costtip` + `agent_usage_cost`；harness 8653/8657/8660 实测；见 §4.2） |
-| AG06 | UI 视觉语言对照（借 dsh 观感）：A/B 档全收口（B-6/7/9/10 已做，B-8 不做）+ **U4 分隔线专用档 `--border-sep`** | 🔄 K1（design/ui-visual-language.md §4/§7）；**U5 待选** |
+| AG05 | 状态栏/状态 bar（点绿/红 + 模型/网络绿红/**余额对数连续色**/**缓存命中率**；已去会话 id 与轮次） | 🔄 K1（harness 8653/8657/8660 实测；实现细节见 agent-guide/01 §7） |
+| AG06 | UI 视觉语言对照（借 dsh 观感）：A/B 档全收口（B-8 不做）+ **U4 分隔线专用档 `--border-sep`** | 🔄 K1（design/ui-visual-language.md §4/§7）；**U5 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
 | AG08 | 面板看不到模型 **thinking** | ✅ K2：`ReasoningDelta` → `on_reasoning` → 折叠块 `.-agent-think*`（§7；真机未验） |
-| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size` → app.css 的 `.-agent-msg`/`#agent-input` 消费；harness 8653 实测 15px→20px 联动；**真机观感未验**） |
-| AG10 | dock 整理：会话选择**迁到左栏第 4 页签「历史」**；头部「出网」「设置」与底部「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（两行式 + 过滤 + 行内删除 + 点即载入；harness 8659/8660 全通过、0 error；**真机观感未验**；见 §4.2） |
+| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size`；harness 8653 实测 15px→20px 联动；真机观感未验） |
+| AG10 | dock 整理：会话选择**迁到左栏「历史」页签**；头部「出网」「设置」与「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（harness 8659/8660 通过；真机观感未验；实现细节见 agent-guide/01 §7） |
+| AG11 | 流式**逐行渲染**（面板侧中间缓冲；代码块/公式未闭合时转圈） | ✅ K2：`agent-stream-buffer.js` + `.-agent-stream-wait*`（§7 取证；真机未验；图片渲染延后） |

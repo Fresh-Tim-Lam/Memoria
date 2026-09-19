@@ -5471,3 +5471,56 @@ html *::-webkit-scrollbar-thumb:active {
     font-family: var(--font-mono);
     line-height: 1.45;
 }
+
+/* ===== 2026-09-19 追加（AG11）：流式「等待区」（`.-agent-stream-wait*`）==========
+   生成期间 `agent-panel.js` 把增量切成 `safe`（既有 markdown 路径渲染）与 `pending`
+   （未成型尾部 ⇒ 落在这里）。`data-block` 标明扣住尾部的是哪类构造：
+     - `fence` / `math` / `frontmatter`：显示**纯 CSS 转圈进度条** + i18n 提示 + 原文（等结构闭合）；
+     - `line`：只显示那一行未完成的原文（正常打字，无进度条、无提示）。
+   进度条是 `border-top-color` 旋转的定尺寸圆环（`animation` 只改 `transform` ⇒ **不触发重排**，
+   不会把气泡撑动）。本块**末尾追加**（在 AG08 思考块之后）⇒ 既有行号锚点零漂移。 */
+.-agent-stream-wait {
+    margin-top: 0.375rem;
+    padding-top: 0.375rem;
+    border-top: 0.5px dashed var(--border);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+}
+.-agent-stream-wait-hint {
+    color: var(--text-secondary);
+}
+/* 进度条：定尺寸 + 只动 transform ⇒ 自身不引起回流（`[hidden]` 显式归零，避免被 display 规则盖掉） */
+.-agent-stream-wait-spin {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.375rem;
+    vertical-align: -0.125rem;
+    border: 1.5px solid var(--border);
+    border-top-color: var(--theme-color);
+    border-radius: 50%;
+    animation: -agent-stream-wait-spin 0.8s linear infinite;
+}
+.-agent-stream-wait-spin[hidden],
+.-agent-stream-wait-hint[hidden] {
+    display: none;
+}
+@keyframes -agent-stream-wait-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* 未成型原文：等宽 + 限高可滚（半截代码块可能很长，不该把气泡顶穿） */
+.-agent-stream-wait-raw {
+    margin: 0.25rem 0 0;
+    max-height: 8rem;
+    overflow: auto;
+    padding: 0.25rem 0.5rem;
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}

@@ -1370,4 +1370,17 @@
   Object.assign(g.MEMORIA_LOCALES["en"].agent, {
     think: "Thinking",
   });
+
+  // ===== appended 2026-09-19 (AG11): hints of the streaming "waiting area" =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every
+  // `en.js:<line>` anchor in the docs keeps pointing at the same declaration.
+  // `fence` / `math` / `frontmatter` cover an open code fence / `$$` block / leading
+  // frontmatter; a plain partial line gets no spinner and needs no key.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    stream: {
+      fence: "Completing code block…",
+      math: "Completing formula block…",
+      frontmatter: "Reading document header…",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -482,5 +482,7 @@
   <script src="/app/js/agent-panel.js"></script>
   <!-- 临时诊断埋点（键盘选区/删除），定位完成后删除本行与本文件 -->
   <script src="/app/js/keys-debug.js"></script>
+  <!-- 流式中间缓冲（AG11）：纯分割器，须在 agent-panel.js 使用前加载；追加为最后一个 script 标签 -->
+  <script src="/app/js/agent-stream-buffer.js"></script>
 </body>
 </html>

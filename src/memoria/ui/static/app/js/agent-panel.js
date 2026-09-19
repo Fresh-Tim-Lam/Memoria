@@ -1245,7 +1245,7 @@ window.MemoriaAgentPanel = (function () {
     if (!rec) return;
     rec.text += delta;
     if (streamingEl) {
-      // 流式期间用 textContent 追加（不重排 HTML）；定稿时再 linkify
+      // 兜底路径（未加载缓冲模块时）；正常路径由末尾块包装本函数、按 safe 逐段渲染（AG11）
       streamingEl.textContent = rec.text;
       scrollToBottom();
     }
@@ -1616,8 +1616,8 @@ window.MemoriaAgentPanel = (function () {
   // → **净化** → 文本节点锚点化。模型输出**不是**授信内容（可能引用库内文本、也可能被提示
   // 注入），故净化是硬前置：只留白名单标签、**丢弃全部属性**。任一步失败或 `marked` 未加载
   // ⇒ 退回 `linkify()`（M1c 原路径），"渲染坏了也不至于看不了答案"。
-  // 注：**流式期间仍是纯文本**（`applyDelta` 用 `textContent`），定稿时才渲染一次，
-  // 避免每 250ms 轮询都重排一遍 Markdown。
+  // 注：**2026-09-19（AG11）起生成期间也走本函数**——末尾块把 `applyDelta` 包成"按 `MemoriaStreamBuffer`
+  // 的 `safe` 前缀渲染、未成型尾部进等待区"（逐行渲染）；上面这段是兜底（无缓冲模块时仍为纯文本）。
 
   //: 整棵丢弃的标签（脚本 / 内嵌文档 / 表单 / 媒体 / **远程图片**——后者还会顺带出网）。
   const MD_DROP_TAGS = new Set([
@@ -2635,6 +2635,132 @@ window.MemoriaAgentPanel = (function () {
       });
     };
   }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 流式中间缓冲（AG11；用户："memoria 做一层中间缓冲，既起到缓冲作用，又可以让输出的
+  // 内容逐行渲染…而不是输出完才渲染"）
+  // ① 分割器是**纯函数**独立文件 `app/js/agent-stream-buffer.js`（`window.MemoriaStreamBuffer.split`，
+  //    VM 单测见 `scripts/benchmark/maintenance/agent_stream_buffer_test.js`）：`safe` = 可安全渲染的
+  //    最长前缀（恒以换行收尾），`pending` = 未成型尾部，`openBlock` = 扣住尾部的构造。
+  // ② 生成期间：`safe` 交**既有** `renderAssistantBody()`（marked → 净化 → 锚点化，不新造渲染器）
+  //    渲染；`pending` 落到正文下方的**等待区** `.-agent-stream-wait`：代码块 / `$$` 公式块 /
+  //    文首 frontmatter 给纯 CSS 转圈进度条 + 提示（i18n `agent.stream.*`）+ 原文，普通半行只给原文。
+  //    这样表格"给完一行就渲染一行"，代码块/公式则等闭合（期间转圈），不会渲染出半截结构。
+  // ③ 定稿（`done`）仍走既有 `finalizeMessage()`（后端 `answer` 为准、整段重绘）并清掉等待区 ⇒
+  //    "flush，绝不丢字"；工具轮无文本增量时 safe/pending 皆空 ⇒ 不渲染任何额外节点。
+  // ④ **只包装、不改既有函数体**：`applyDelta`（流式渲染入口）、`finalizeMessage`、`stopWait`
+  //    （所有终止路径——定稿/超时/停止/清空/换库——都会调它）在末尾块被包一层 ⇒ 上方所有
+  //    `<文件>:<行号>` 锚点零漂移；未加载缓冲模块或无流式元素时原样回落到旧路径（纯文本）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 缓冲模块是否就绪（未加载 ⇒ 全程走旧路径，面板不因缺件而坏）。 */
+  function streamBufferReady() {
+    const buf = window.MemoriaStreamBuffer;
+    return !!(buf && typeof buf.split === "function");
+  }
+
+  //: `openBlock` → 等待区提示键（`line` 无提示、无进度条）。
+  const STREAM_BLOCK_HINTS = {
+    fence: "agent.stream.fence",
+    math: "agent.stream.math",
+    frontmatter: "agent.stream.frontmatter",
+  };
+
+  /** 清掉消息区里所有等待区节点（幂等；定稿重建整条气泡时通常已被一起换掉）。 */
+  function clearStreamWait() {
+    const box = $("#agent-messages");
+    if (!box) return;
+    const nodes = box.querySelectorAll(".-agent-stream-wait");
+    for (let i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+    }
+  }
+
+  /** 等待区骨架（**幂等复用**：每 250ms 一帧只改文本/属性，不重建节点 ⇒ 无闪烁）。 */
+  function ensureStreamWait(wrap) {
+    let box = wrap.querySelector(".-agent-stream-wait");
+    if (!box) {
+      box = document.createElement("div");
+      box.className = "-agent-stream-wait";
+      const spin = document.createElement("span");
+      spin.className = "-agent-stream-wait-spin";
+      spin.setAttribute("aria-hidden", "true");
+      const hint = document.createElement("span");
+      hint.className = "-agent-stream-wait-hint";
+      const raw = document.createElement("pre");
+      raw.className = "-agent-stream-wait-raw";
+      box.appendChild(spin);
+      box.appendChild(hint);
+      box.appendChild(raw);
+      // 排在正文之后、来源条/错误条之前（生成期间后者尚不存在）
+      if (streamingEl.nextSibling) wrap.insertBefore(box, streamingEl.nextSibling);
+      else wrap.appendChild(box);
+    }
+    return box;
+  }
+
+  /** 生成中一帧：`safe` 走既有 markdown 路径，`pending` 落等待区（两段拼接=全文，无重叠）。 */
+  function renderStreamFrame(rec) {
+    const wrap = streamingEl.parentElement;
+    if (!wrap) return;
+    const parts = window.MemoriaStreamBuffer.split(rec.text);
+    if (parts.safe) {
+      renderAssistantBody(streamingEl, parts.safe);
+    } else {
+      streamingEl.innerHTML = "";
+      streamingEl.classList.remove("markdown-body");
+    }
+    if (parts.pending) {
+      const box = ensureStreamWait(wrap);
+      box.setAttribute("data-block", parts.openBlock);
+      const key = STREAM_BLOCK_HINTS[parts.openBlock] || "";
+      const hint = box.querySelector(".-agent-stream-wait-hint");
+      const spin = box.querySelector(".-agent-stream-wait-spin");
+      if (hint) {
+        hint.hidden = !key;
+        hint.textContent = key ? T(key) : "";
+      }
+      if (spin) spin.hidden = !key; // 普通半行（line）不给进度条：这就是正常打字
+      const raw = box.querySelector(".-agent-stream-wait-raw");
+      if (raw) raw.textContent = parts.pending;
+    } else {
+      clearStreamWait();
+    }
+    scrollToBottom();
+  }
+
+  // 流式渲染入口：有缓冲模块且正文元素在场时走"分割渲染"，否则原样回落旧路径。
+  const baseApplyDelta = applyDelta;
+  applyDelta = function (delta) {
+    const rec = currentAssistant();
+    if (!delta || !rec || !streamingEl || !streamBufferReady()) {
+      return baseApplyDelta.apply(null, arguments);
+    }
+    rec.text += delta;
+    try {
+      renderStreamFrame(rec);
+    } catch (e) {
+      // 分割/渲染异常（含缓冲模块被替换）：退回纯文本，**不再追加 delta**（避免重复）
+      console.warn("agent-stream:", e);
+      streamingEl.textContent = rec.text;
+      clearStreamWait();
+    }
+  };
+
+  // 定稿：先清等待区，再交既有逻辑（后端 answer 为准、整段重绘）——flush，绝不丢字。
+  const baseFinalizeMessage = finalizeMessage;
+  finalizeMessage = function () {
+    clearStreamWait();
+    return baseFinalizeMessage.apply(null, arguments);
+  };
+
+  // 所有终止路径（定稿/超时/停止/清空/换库）都会调 stopWait ⇒ 在此兜底清等待区（含超时无重绘那一支）。
+  const baseStopWait = stopWait;
+  stopWait = function () {
+    clearStreamWait();
+    return baseStopWait.apply(null, arguments);
+  };
 
   return {
     init: init,

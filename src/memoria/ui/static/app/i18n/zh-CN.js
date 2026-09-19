@@ -1287,4 +1287,16 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
     think: "思考过程",
   });
+
+  // ===== 2026-09-19 追加（AG11）：流式中间缓冲「等待区」的提示语 =====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // `fence` / `math` / `frontmatter` 分别对应未闭合的代码块 / `$$` 公式块 / 文首 frontmatter；
+  // 普通半行（未完成的一行）不给进度条、只显示原文，故无对应键。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    stream: {
+      fence: "正在补全代码块…",
+      math: "正在补全公式块…",
+      frontmatter: "正在读取文档头…",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);
