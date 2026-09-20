@@ -605,8 +605,6 @@
       stop: "Stop",
       stopTitle: "Stop this generation: the backend really cancels (closes the model stream, no more tokens); the partial text is kept",
       stopped: "(stopped)",
-      clear: "Clear chat",
-      clearTitle: "Clear the transcript and start a new chat (session files on disk are kept; an in-flight job is stopped too)",
       history: {
         none: "(New chat)",
         capped: " (truncated)",
