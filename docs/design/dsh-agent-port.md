@@ -117,6 +117,81 @@
 | `storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*` | — | 非会话持久、技能、钩子、计划 | ⏸ 按需（`skill` 与既有 `.memoria/agent/` 提示词体系可能重合，M3 再评）。**M3 已评**：`skill` 归入 [agent-capabilities.md §2.1](agent-capabilities.md) 的**同一份能力插件契约**（**用户技能类**：由来源目录 `<kb>/.memoria/agent/skills/**` 约定，声明式、无执行体；该契约已**不含分类字段**，见其 §2.1「字段演进暂缓」）；本行其余仍按需 | — | — |
 | `sandbox/*` · `shell/*` · `terminal/*` · `subprocess/*` · `ssh/*` · `lsp/*` · `mcp/*` · `browser-use/*` · `computer-use/*` · `subagent/*` · `workflow/*` · `jobs/*` · `schedule/*` · `native/*` | 大 | 执行与编排 | ❌ **不吃**（Memoria 不让它跑任意命令；也避免 CVE 面） | — | — |
 
+### 5.1 上游读写面 vs 本地现状（对照表，2026-09-20）
+
+> **口径**：上游 = 只读检出 `dsh-src/`（pin `0d1f5000`，**未改**，见本轮验证）；本地 = `src/**` + `docs/**` 盘上现状。**「未移植」≠「该做」** —— 取舍仍以本节 §5 的 ❌/⏸ 判定与 §10 待拍板为准，本表只陈述事实与风险。所有 `file:line` 均为本轮实际读出（抽查 ≥8 处见 §11 本行）。
+
+**读工具**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| `read`（行窗读取） | `file_path` + `offset?`（1-based）+ `limit?`；单次默认且最多 **2000 行**、单行 2000 字符、单次 **50 KiB**、文件 ≥10 MiB 走流式（`dsh-src/packages/fs/tool-fs/README.md:46`、`src/read.ts:15`、`src/read-render.ts:11`、`src/read-render.ts:14`、`src/read.ts:21`） | ⏸ 无对应：`read_document` 整篇读、按 **20,000 字符**截断（`src/memoria/services/agent/tools/kb.py:66`、`:311-323`） | 缺分页续读 ⇒ 长文只拿到前 2 万字符，模型无法「再读下一页」 |
+| `read_image` | `file_path`；PNG/JPEG/WebP/GIF，无扩展名按文件签名识别；仅当 `attachments` 挂载时注册（`dsh-src/packages/fs/tool-fs/README.md:47`、`src/index.ts:70-72`） | ❌ 未移植（本地图片走既有预览链路，不进模型工具面） | 多模态读图空白；与 M1「锚点文字化」口径一致，但图上信息对模型不可见 |
+| `glob` | `pattern` + `path?`；含隐藏/忽略文件、排除 VCS 元数据；`globMaxResults` 默认 **100**（`dsh-src/packages/fs/tool-fs-search/README.md:48`、`:59-60`） | ❌ 未移植；`kb_overview` 只列前 **200** 篇（`.../tools/kb.py:70`、`:377`） | 模型无法按模式列文件，只能看概览清单的头 200 条 |
+| `grep` | `pattern` + `path?` + `include?`（ripgrep 正则，按文件分组返回 `Line N:` 预览）（`dsh-src/packages/fs/tool-fs-search/README.md:49`） | ❌ 未移植；本地检索走 `search_kernel.search(modes="lexical")`（`.../tools/kb.py:238`） | 无法按正则定位正文行；命中面受 KP 索引限制（非 KP 段落搜不到） |
+| 会话检索家族（5 个只读工具） | `session_search` / `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`；`maxSearchResults=100`、`searchTimeoutMs=30000`；跨会话需 `cwd` 精确相等（`dsh-src/packages/session-query/tool-session-query/README.md:38-39`、`:47-51`） | ⏸ 只移植 **1 个** `search_sessions`（`.../tools/kb.py:566-592`）；每会话只取最强 1 条（`:460`）；默认 5 / 上限 20（`:83-84`）；作用域限本库 | 缺事件级检索与谱系/关系追溯；本地退化为一层「会话 → 最强一条」，无法下钻到「第几步」
+| 其余读面（`str_replace_editor` 的 `view`、`todo_write`、`ask_user`、`skill`、web/computer-use/browser-use 等） | 分散在 `packages/fs/tool-str-replace-editor/src/index.ts`、`packages/todo/README.md`、`packages/interaction/tool-ask-user/README.md`、`packages/skill/tool-skill/README.md`、`packages/web/README.md` | ❌ 未移植（无执行面、无待办面、无技能工具、无外网工具） | 与 §5 第 118 行「执行与编排 ❌ 不吃」一致；`ask_user`（向用户提问）本地无，M3 的「逐条确认」交互尚无载体 |
+
+**引用与上下文**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| `@路径` 文件引用 | `@path` 起始/空白后触发、`@"含空格路径"`、目录尾斜杠；选区**不读内容**（`dsh-src/packages/context/file-reference/README.md:32`、`:12`） | ✅ 已移植：`FILE_REFERENCE_SECTION`（`src/memoria/services/agent/prompt.py:194-218`），门控同上游「`read` 在场」（`:261-263`） | 已完全移植；唯一偏差：上游「目录 → list it」本地无列目录工具，改指 `search_kb`（`:207`） |
+| 跨会话引用 | `@[label](dsh-session:<payload>)` mention + 投影快照；uri 语法与转义（`dsh-src/packages/context/session-reference/README.md`、`src/uri.ts`） | ✅ 已移植：scheme `dsh-session:`、payload = 无填充 base64url(JSON)（`src/memoria/services/agent/session/reference.py:91`、`:102`、`:137`、`:172`）；`max_references ≤ 3` | 投影有意简化：`cwd` / `capturedThroughSeq` 恒 null、快照只进本轮请求不落盘（登记于 `docs/conventions/docs-management.md:143`） |
+| `[[id]]` 知识点链接 | **上游无此语法** | ✅ 本地独有：`[[id]]` / `[[id#type]]` / `[[id\|text]]`（`docs/conventions/markdown-form-std.md:16-19`）；悬空目标校验 `ISSUE_UNRESOLVED_TARGET`（`src/memoria/graph/link_audit.py:27`） | 本地发明 ⇒ 无「未移植」可言；**悬空引用校验本地已有**（反向：上游反而是空白） |
+| `文件:行号` 锚点 | 上游只保证 `read` 结果自带行号，无「回答必须带锚点」约定（`dsh-src/packages/fs/tool-fs/README.md:182`） | ✅ 本地独有：工具结果带结构化 `anchors`（`.../tools/registry.py:66-78`）+ 提示词强制写法（`prompt.py:270`）；行号来自 KP range 解析（`.../tools/kb.py:212-215`） | 本地发明，是「答案可核查」的支点；风险=行号依赖 sidecar range 解析，解析失败时退化为 `line_hint` |
+| 时间上下文 | 每步注入时间/浏览器时区/elapsed；`refreshIntervalMs` 调速（`dsh-src/packages/context/time-context/README.md:12`、`:32`） | ✅ 已移植文本语义：`TIME_CONTEXT_SECTION` 无条件注入（`prompt.py:263`）、读数追加在本轮请求末尾（`ask.py:421`） | 有意偏差：读数不落盘、无 elapsed / turn-step、三态时区收敛为一句（§6.14） |
+| 指令文件（AGENTS.md 链） | 用户全局 + 项目链、宽到窄、`maxBytes` 预算（base 默认 65,536 B）（`dsh-src/packages/context/agent-instructions/README.md:12`、`:28`） | ✅ 已移植：`load_instructions` / `render_instructions`（`prompt.py:253`），对接既有 `.memoria/agent/kb-spec*.md` | 已移植；差别=本地只有「库内指令」一层，无 user-global 层级 |
+| 块级 / 片段引用 | **上游也没有**：`file-reference` 只到路径级，`read` 只有行窗（`README.md:32`、`:46`） | ❌ 未设计（本地亦无） | 属**双方共同空白**，不是「未移植」；若产品要块级引用，两边都得新造 |
+
+**写工具**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| `write` | **整篇覆写**：`file_path` + `content`（`dsh-src/packages/fs/tool-fs/README.md:48`、`src/write.ts:74-79`）；覆盖需先读，由 `fs/write-intent` waterfall 决定（`src/write.ts:114`） | ⏸ **未移植**（本地无写工具，六工具全 `read_only=True`，`.../tools/kb.py:486`）；设计走 **plan + 编译器**：领域动词只产出 plan、不落盘（`docs/design/agent-capabilities.md:75`、`:187`、`:223`；**迁移清单未迁** `docs/design/agent-plugin-design.md:142-143`） | 本地**换了模型**：不是「工具直接写」，而是「plan → 编译器 → 唯一写者」；编译器未实施 ⇒ 现在连"整篇覆写"都还没有 |
+| `edit` | **字面片段替换**：`old_string` / `new_string` / `replace_all?`，默认唯一匹配否则 `FS_AMBIGUOUS_EDIT`（`README.md:49`、`src/edit.ts:84-93`、`dsh-src/packages/fs/fs-local/src/fsio.ts:814-834`、`:830-832`）；**无行区间参数** | ⏸ 未移植（同上一行） | 上游也没有「行区间」写面 ⇒ 本地若要做行级编辑，只能落在编译器的新 op 上（`agent-plugin-design.md:155` 起写场景表） |
+| 原子写 | 私有 staging 目录 + 独占创建 `wx/0o600` + fsync + link/rename 发布；版本令牌 `dev:ino:size:mtimeNs:ctimeNs`（`dsh-src/packages/fs/fs-local/src/fsio.ts:588-670`、`:620`、`:649`、`:75-77`） | ✅ 已有等价物（人机 UI 路径）：tmp 写 + `os.replace` + fsync 策略（`src/memoria/services/document.py:339-349`） | 原子性对齐；**本地无版本令牌** ⇒ 做不到「文件被外部改动则拒绝写」（上游 `FS_STALE_VERSION` 的前提，见 `dsh-src/packages/fs/fs-observation-policy/README.md:42`） |
+| `str_replace_editor`（多命令写面） | 一套工具里的 `view` / `create` / `str_replace` / `insert`（`dsh-src/packages/fs/tool-str-replace-editor/src/index.ts`、`README.md`） | ❌ 未移植 | 与 `read`/`write`/`edit` 功能重叠，属上游「第二套写面」；本地无 |
+
+**把关（沙箱 · 审批 · 权限档）**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| 沙箱三档 | `read-only` / `workspace-write` / `danger-full-access`；由 `ctx.sandbox` + 平台后端在**执行器**强制（`dsh-src/packages/sandbox/README.md:12`、`:29-32`）；`write`/`edit` 在受限后端下才广告 `sandbox_permissions`+`justification`（`src/write.ts:44-54`、`:78`、`README.md:70`） | ❌ 未移植，**§5 第 118 行整组有意不吃**；`src/memoria/services/agent/**` 内 grep `sandbox` **零命中** | 本地是**替换**而非移植：无内核级隔离，改用声明式 `permissions` + realpath 前缀校验（`agent-plugin-design.md:147`）；隔离强度完全不同档 |
+| 一次性审批 | `approval/request` waterfall；`ask`/`never` 两种策略，`never` 在服务内**先于** waterfall（不可被 prepend 绕过）；无应答者 = `unavailable` = 失败关闭（`dsh-src/packages/interaction/user-approval/README.md:32`、`:36`、`:78`、`:46`） | ✅ 已移植：`AskPolicy`（`src/memoria/services/agent/approvals.py:127-152`，应答者异常/词汇外/缺席一律 `UNAVAILABLE`）、`NeverPolicy`（`:118-124`）、`DefaultApprovalPolicy`（`:109-115`）；问询在**分发前**（`.../tools/registry.py:265-288`），拒绝即 `DENIED_CODE` | 已移植；**唯一语义放宽**：本地把工具参数也交给应答者（`approvals.py:80-82` 已登记），上游应答者看不到参数 |
+| 权限预设（组合档） | 一个 preset = sandbox 档 + approval 档；`/permission` 切换；`custom`/`auto` 保留名（`dsh-src/packages/interaction/permission-presets/README.md:32`、`:56`） | ⏸ 未移植（本地只有一条固定策略、无 sandbox、无 `/` 命令面 ⇒ **≤1 个旋钮**，§5 第 111 行） | 组合层无处可挂；M3 的 `approval` 档（`auto`/`confirm`/`never`）若落地才凑出第二个旋钮（待拍板 P11） |
+| 命令注册表 | `ctx.commands.register()`：`/command [input]` 直接对 agent 执行、**不产生模型消息**；agent 作用域可遮蔽全局同名（`dsh-src/packages/interaction/commands/README.md:32`、`:50`、`:54`） | ❌ 未移植（§5 第 111 行：本地 registry 无消费方 —— `ask()` 无命令入口） | 缺 slash 面 ⇒ 本地所有交互都得走文字消息；将来做 `/compact` 类命令需先补这个 registry |
+
+**备份 · 审计 · 撤销**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| 写前备份 | **❌ 上游没有**：fs 写路径无 pre-image；Win32 替换调用显式把 backup 参数传 `null`（`dsh-src/packages/fs/fs-local/src/win32.ts:20`） | ⏸ **有设计、未实施**：pre-image + `<txid>` 批次 + 8 MiB/32 MiB 上限 fail-closed + 5 批/10 会话/64 MiB 保留（`docs/design/agent-capabilities.md:103`、`:129-142`；迁移清单 `agent-plugin-design.md:141` 标「未迁」） | **方向反转**：上游没有备份，我们设计了 ⇒ 属**本地发明**；上线即新增一条写路径，风险面随之增加 |
+| 撤销 | **❌ 上游没有**（`dsh-src/packages/fs/**` 内 `undo`/`revert` 无实现命中，仅 win32 替换 API 的形参） | ⏸ 有设计、未实施：以事务（批次）为单位回滚、撤销前校验 sha256、外部改动即拒绝（`agent-capabilities.md:165-176`、`:14` 红线） | 本地发明；**依赖备份与版本比对**，两者都未实施 ⇒ 当前写能力若上线即为「不可撤销」 |
+| 审计 | ✅ **上游有**：模型可见 ⟺ 会话日志可重建（`dsh-src/AGENTS.md`），审批成对落 `approval/asked`/`approval/decided`（`user-approval/README.md:86`） | ✅ 本地同类：会话 JSONL 追加事件、工具调用/结果可回放（`src/memoria/services/agent/session/history.py`）；能力插件另设计 `capability/apply`/`capability/undo`/`capability/backup`（`agent-capabilities.md:75`、`:142`） | 已对齐；差别=上游审计是**既有事实**，本地插件审计仍停留在设计 |
+| 「读后写」守卫 | `fs-observation-policy`：未读 ⇒ `FS_NOT_OBSERVED`、读后被改 ⇒ `FS_STALE_VERSION`；**不跨会话存活**，resume 后须重读（`dsh-src/packages/fs/fs-observation-policy/README.md:42`、`:126`） | ❌ 未移植（本地无写工具、无版本令牌；现由「写类一律拒绝」的 fail-closed 审批兜底，`approvals.py:109-115`） | 写能力上线前必须补；否则漏声明 `read_only` 的工具只能靠审批挡，而不是靠状态校验 |
+
+**技能与命令**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| `storage/*`（非会话持久） | 注册表 + backend + 原子写（`dsh-src/packages/storage/README.md`、`storage-json/src/atomic.ts`） | ❌ 未移植（§5 第 117 行 ⏸ 按需） | 本地无对应需求：会话是 JSONL、配置走既有链路 |
+| **`skill` 到底是什么形态** | **声明式目录包 + 渐进披露**：① 落在扫描根的 `<name>/SKILL.md` 或平铺 `<name>.md`（**嵌套 `**/SKILL.md` 不发现**）；② YAML frontmatter 必填 `name`（kebab-case）+`description`，可选 `whenToUse`/`metadata`/`disable-model-invocation`/`user-invocable`；③ **目录与正文两段式** —— 发现只解析 frontmatter 进目录，正文每次 `load` 重读（无需版本/缓存失效）；④ 五个默认根按 rank 100–500 排序（`.dsh/skills` / `.agents/skills` / custom / `~/.dsh/skills` / `~/.agents/skills`）；⑤ **权限/可见性只表达为两个布尔**：`modelInvocable` × `userInvocable` 四组合，注册表全留；⑥ 模型面由**另一个包** `tool-skill` 提供（`dsh-src/packages/skill/skill-filesystem/README.md:36`、`:38`、`:42`、`:48-54`；`skill/skill/README.md:55`、`:12`、`:32`） | ⏸ 只做了**目录约定**：`<kb>/.memoria/agent/skills/**`，声明式、**无执行体**（§5 第 117 行；`agent-capabilities.md:40` 契约已迁出）。**无** frontmatter 契约、**无**目录/正文两段式加载、**无** `modelInvocable`/`userInvocable` 调用策略、**无** `skill` 工具、**无** 用户命令面 | **名字重合、形态未移植**：本地现在等于「提示词目录」，上游是「渐进披露技能注册表 + 调用策略 + 模型工具」。若照搬，需新增 frontmatter 契约与发现器；若按「用户技能 = 声明式无执行体」简化，需写清放弃了渐进披露与用户命令面 |
+
+**其它差距**
+
+| 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
+|---|---|---|---|
+| 工具注册与扩展点 | `defineTool`（name/description/parameters/**output/render**/execute）注册即进 prompt；管线 `tools/pre-execute` waterfall → `guard` 单调守卫 → `tools/execute` → `tools/post-execute` → `tools/result`；`restrict` 掩码按 agent 收窄（`dsh-src/packages/core/tools/README.md:32-58`、`:28`、`:81`、`:85`、`:103`） | ✅ 已移植核心：`Tool` dataclass（`.../tools/registry.py:102-118`）+ `invoke` 管线（`:226-305`，含参数校验、审批、错误归一）；❌ 未移植：output/render/展示、`restrict` 掩码、多事件瀑布、PTC mode | 够 M1/M2；**扩展点缺失** ⇒ 第三方加工具时没有收口处，只能改 `registry.py` 本体 |
+| 模型可见 ⟺ 落盘 | dsh 硬规：任何进模型请求的内容必须能从会话日志重建（`dsh-src/AGENTS.md`） | ⏸ **有意例外 3 处**：时间上下文、模型切换告知、跨会话引用快照均「只进本轮请求、不落盘」（`docs/conventions/docs-management.md:143`、`:150`、`:151`） | 回放无法重建当轮真实输入；每处都已登记理由（护读路径成本），但汇总看是**成体系的偏差**，值得单列一节复核 |
+| 工具结果有界 | 上游处处设界（read 三重 cap、glob/grep cap、session-query cap） | ✅ 本地也有界：`DEFAULT_TOP_K=5` / `MAX_BODY_CHARS=20_000` / `MAX_FILES_IN_OVERVIEW=200` / `MAX_ISSUES_IN_REPORT=20`（`.../tools/kb.py:64-71`）+ 错误文本归一（`registry.py:57-63`） | 已对齐；唯一空隙：`read_kp` 的正文片段无独立字节上限（只受 KP 范围约束，`kb.py:341`） |
+
+**① 已完全移植的**：`@路径` 文件引用（含门控与「读过前不得声称看过」）；跨会话引用 `dsh-session:`（语法逐字对齐，偏差已登记）；时间上下文文本语义；库内指令文件注入；审批语义（`ask`/`never`/fail-closed/分发前询问）；工具注册表与「失败也是结果」的错误归一。
+
+**② 本地替换了上游模型的**：① **写面** —— 上游是 `write`/`edit` 工具直接落盘，本地改为 **plan + 编译器 + 唯一写者**（`agent-capabilities.md:75`、`:223`），理由是「禁止 silent 写入」红线要求写路径可枚举、可审计；② **沙箱** —— 上游用内核级三档隔离，本地改为**声明式 `permissions` + realpath 前缀校验**（`agent-plugin-design.md:147`），理由是不引入执行面；③ **引用体系** —— 上游只有路径级 mention，本地另造 `[[id]]` 与 `文件:行号` 两种库内引用（`markdown-form-std.md:16-19`、`prompt.py:270`）。
+
+**③ 我们完全没设计 / 没移植的（gap 清单）**：**读面** 分页读取（offset/limit）、图片读取、`glob`/`grep`、会话事件级检索与谱系（只做了 1/5）；**写面** 备份与撤销（有设计未实施）、「读后写」版本守卫、行/块级编辑 op；**把关** 沙箱（有意不吃）、权限预设组合档、命令注册表；**技能** frontmatter 契约 + 目录/正文两段式 + 调用策略 + `skill` 工具；**其它** 工具管线的瀑布/守卫/掩码扩展点、`ask_user` 提问面。其中 **①「备份 + 撤销」与 ②「沙箱」是本表唯一两处「本地与上游方向相反」的项**：前者我们比上游多设计了一层，后者我们主动放弃了上游的一层。
+
 ---
 
 ## 6. M1 切片：应用内对话 + 读库问答（竖切，只读）
@@ -895,3 +970,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-20 | **M2 时间上下文落地**（吃 `context/time-context` 的 `timestamp.ts` 字段口径 + `request-zone.ts` 三态策略 + `index.ts` 的 `renderText()` 文本；**不吃** pre-step 监听器 / `refreshIntervalMs` 到期调度 / `sessionProjections` 投影 / `invariant.ts`）：`services/agent/prompt.py` 文件尾追加 `TIME_CONTEXT_SECTION`（中文落法，上游英文原文写在常量注释上方；**不按工具门控** —— 对齐上游「插件被挂载」）+ `_local_now()` / `format_time_context()` / `render_time_context()`，`build_system_prompt()` 在「用户引用」之后无条件追加该段（`prompt.py:263`）；`ask.py:421` 把读数追加在**本轮请求末尾**（不进 system 段、不落盘）。验收：`py_compile` 全过；`pytest -q` **258 passed**（原 254 + 本轮 4 例，另 3 处既有断言随读数更新）；Python 级真实渲染 `当前本地时间：2026-09-20T09:51:44+08:00`（本机 `Asia/Shanghai`）+ `tools=()` 门控对照（时间上下文段在、文件引用段不在）。有意偏差：读数不落盘（同 §6.12 偏差 1）、静态说明与动态读数两分（KV 前缀）、三态时区收敛为一句、省略 `[IANA]` 括注、无 turn/step 与 elapsed、不新增配置项。偏差、缺口与未实测见 §6.14；§5 映射表 + §8 阶段状态同步 |
 | 2026-09-20 | **M2 模型切换落地 + ⏳ 候选全量界定**（吃 `core/agent` 的 `model-selection`；同一轮把 §5 全部 ⏳ 候选读码量过并逐条定性）：`loop.py` 的 `loop/end` 载荷新增 `"model"`（`loop.py:396`，**+1 行**）；`prompt.py` 文件尾追加 `MODEL_CHANGE_NOTICE` + `render_model_change_notice()`（上游 `modelSwitchNotice()` 的中文落法，英文原文写在常量注释上方）；`ask.py:421` 同行内联追加 `_model_notice(...)`（文件尾追加 `_last_recorded_model()` / `_model_notice()`）—— 续聊时「会话最后一条 `loop/end.model` ≠ 本轮模型」就在本轮请求里加一条告知（**不落盘**，同 §6.12/§6.14 口径）。验收：`py_compile` 全过；`pytest -q` **265 passed**（原 258 + 7 例，**无既有断言需要改**）；Python 级实请求逐字取证（`第二问\n\n[模型已更换：本轮之前的助手回复由 deepseek-chat 生成；本会话此后由 model-beta 继续]\n\n当前本地时间：…`；同模型续聊无告知；`loop/end.model=['deepseek-chat','model-beta','model-beta']`；JSONL 正文仍是用户原文）。**本轮把 6 个 ⏳ 候选定性为**：`core/agent` 的 registry/initiator 与 `session-projection*` 框架 = 不吃（Cordis 专有）、`agent-default-model` = 已覆盖（`llm/config.py`）、`agent-tool-presentation` = 本地恒 `native`、`session-stats` = 不吃（ttft/decode 无事件面、turns/steps 已覆盖、`toolMs` 因本地 `tool/call` 落盘位次而后测不准）、`commands`/`permission-presets` = 留 M3（无消费方 / 无第二个旋钮）、`credentials/authorization` = 条件性 ⏳。偏差（告知由日志派生而非持久消息、标签无 provider、基准是"最近一轮"、老会话不告知、`replay=False` 不告知、插入位次）与未实测见 §6.15；§5 四行 + §8 阶段状态同步 |
 | 2026-09-20 | **M3 设计完善（docs only，未实施）**：写能力改为「可插拔能力插件」形态并把四条线（W/N/S/H）收进**同一份契约**，详见 [agent-capabilities.md §2](agent-capabilities.md)（该文件本轮重写 §2 七小节 + 新增 §10 P7–P11 + §9 R8）。本文件同步：§5 `interaction/commands · permission-presets` 行（`approval` 档 = 第 2 个旋钮，待拍板 P11）、`credentials/authorization` 行、`storage/* · skill/* · hooks/*…` 行（`skill` 归入同一契约）；§7 红线「禁止 silent 写入」行（补"插件边界物理可证"）；§8 的 **M3 行**与 §8 表下注（M3 设计已完善，待拍板/待实施）。**未新增/修改任何源码**；`todo.md §13 AG04` 仍为 K3 待评审 |
+| 2026-09-20 | **§5.1 新增：上游读写面 vs 本地现状对照表（docs only，未改任何源码）**：只读上游检出 `dsh-src/`（pin `0d1f5000`，`git -C dsh-src status --porcelain` 空）读齐读面（`fs/tool-fs` 的 `read`/`read_image` + `fs/tool-fs-search` 的 `glob`/`grep` + `session-query/tool-session-query` 五个工具 + `context/*` 四包 + `core/tools` 注册表）、写面（`write`/`edit` 参数形态、`fs-local/fsio.ts` 原子写与版本令牌、`fs-observation-policy` 读后写守卫、`fs-sandbox`/`sandbox` 三档、`user-approval` waterfall、`permission-presets` 组合档）与 `skill` 形态（`skill-filesystem` 的 `SKILL.md`/平铺 `.md` + frontmatter + 目录/正文两段式 + 五根 rank + 两布尔调用策略）；逐条对照本地 `tools/kb.py`/`tools/registry.py`/`approvals.py`/`prompt.py`/`session/reference.py`/`document.py`。**表 30 行**（读工具 6 / 引用与上下文 7 / 写工具 4 / 把关 4 / 备份·审计·撤销 4 / 技能与命令 2 / 其它差距 3）+ 三段结论（已完全移植 / 本地替换 / 完全没设计）。**关键事实**：上游**有审计、无备份、无撤销**（`fs-local/src/win32.ts:20` backup 传 `null`），本地反之**设计了备份+撤销、无版本令牌**；本地写面已改为 plan + 编译器的模型（编译器未实施）。**已完全移植** 6 项、**本地替换** 3 项、**空白 gap** 5 类。**未实施任何代码**；`docs/todo.md` 未改动（另一写者并发重写中，本轮只报告不编辑）。抽查 file:line ≥8 处（`tool-fs/src/read.ts:15`、`read-render.ts:14`、`write.ts:114`、`fs-local/src/fsio.ts:620`、`win32.ts:20`、`user-approval/README.md:86`、`skill-filesystem/README.md:36`、`tools/kb.py:66`、`tools/registry.py:265-288`、`approvals.py:127-152`、`prompt.py:194-218`、`ask.py:421`） |
