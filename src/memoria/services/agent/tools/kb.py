@@ -158,16 +158,16 @@ def kb_read_only(kb_path: str) -> Iterator[str]:
 
 
 def _safe_rel(kb_path: str, path: str) -> str | None:
-    """校验并归一化知识库内相对路径；越界或非 .md 返回 None。"""
+    """校验并归一化工作区内相对路径（走允许根列表）；越界或非 .md 返回 None。"""
     rel = (path or "").strip().replace("\\", "/").lstrip("/")
     if not rel or not rel.lower().endswith(".md"):
         return None
-    norm = os.path.normpath(rel).replace(os.sep, "/")
-    if norm == ".." or norm.startswith("../"):
+    resolved = _resolve_in_read_roots(_read_roots(kb_path), rel)
+    if resolved is None:
         return None
-    full = os.path.abspath(os.path.join(kb_path, norm))
-    root = os.path.abspath(kb_path)
-    if full != root and not full.startswith(root + os.sep):
+    norm = resolved[1]
+    # `..` / 绝对路径 / 允许根之外都在 `_resolve_in_read_roots()` 内拒：这里只回「相对根」的路径
+    if norm == ".." or norm.startswith("../"):  # 冗余守卫：与旧实现同一口径（防解析器被放宽）
         return None
     return norm
 
@@ -283,7 +283,7 @@ def _search_kb(kb_path: str, query: str, top_k: int) -> ToolOutput:
 def _read_document(kb_path: str, path: str, *, offset: int = 1, limit: int | None = None) -> ToolOutput:
     rel = _safe_rel(kb_path, path)
     if rel is None:
-        return _error("read_document: path 必须是知识库内的相对 .md 路径（不得上跳）")
+        return _error("read_document: path 必须是工作区（允许根）内的相对 .md 路径（不得上跳）")
     full = os.path.join(kb_path, rel)
     if not os.path.isfile(full):
         return _error(f"read_document: 文档不存在：{rel}", "NOT_FOUND")
@@ -606,11 +606,11 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
             handler=_bound_search_sessions,
         ),
         # —— 上游读面（2026-09-20，§6.16）：`glob` / `grep` / `read_image` ——
-        # 三者都只读；库外路径、`.memoria/**` 与 VCS 元数据目录一律排除（见文件末尾块）。
+        # 三者都只读；允许根（今天=库根）之外一律拒绝，VCS 元数据目录排除、`.memoria/**` 默认可见（见文件末尾块）。
         Tool(
             name="glob",
             description=(
-                "按 glob 模式列出**知识库内**的文件路径（只读，只列文件、不列目录）。"
+                "按 glob 模式列出**工作区内**（当前 = 知识库根）的文件路径（只读，只列文件、不列目录）。"
                 "不含 `/` 的模式匹配任意深度的文件名（`*.md` 等于在全库找 .md）；"
                 f"最多返回 {GLOB_MAX_RESULTS} 条（按修改时间新→旧），超出时给出计数与收窄提示。"
             ),
@@ -618,7 +618,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "type": "object",
                 "properties": {
                     "pattern": {"type": "string", "minLength": 1, "description": "glob 模式，例如 **/*.md、vocab/*.md"},
-                    "path": {"type": "string", "description": "可选：库内相对目录（搜索根，默认库根）"},
+                    "path": {"type": "string", "description": "可选：工作区相对目录（搜索根，默认工作区根）"},
                 },
                 "required": ["pattern"],
                 "additionalProperties": False,
@@ -628,7 +628,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
         Tool(
             name="grep",
             description=(
-                "在**知识库内**按正则逐行搜索正文，按文件分组返回 `Line N: <片段>`（只读）。"
+                "在**工作区内**（当前 = 知识库根）按正则逐行搜索正文，按文件分组返回 `Line N: <片段>`（只读）。"
                 f"最多返回 {GREP_MAX_MATCHES} 处命中、单行预览 {GREP_MAX_LINE_BYTES} 字节，"
                 f"扫描超过 {GREP_TIMEOUT_S:.0f} 秒即中止。正则用 Python `re` 语法（非 ripgrep 方言）。"
             ),
@@ -636,7 +636,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "type": "object",
                 "properties": {
                     "pattern": {"type": "string", "description": "Python `re` 正则（空白本身是合法模式）"},
-                    "path": {"type": "string", "description": "可选：库内相对文件或目录（默认全库）"},
+                    "path": {"type": "string", "description": "可选：工作区相对文件或目录（默认整个工作区根）"},
                     "include": {
                         "type": "string",
                         "description": "可选：单个正向 glob 过滤文件名，例如 *.md、*.{md,markdown}（不支持 ! 取反与逗号列表）",
@@ -650,7 +650,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
         Tool(
             name="read_image",
             description=(
-                "读取知识库内的 PNG/JPEG/WebP/GIF 图片。**当前端点不支持图像输入**："
+                "读取工作区内的 PNG/JPEG/WebP/GIF 图片。**当前缺「多媒体眼睛」插件**："
                 "调用只会做参数与格式校验并返回明确错误，不会返回图片内容 —— 需要图上的信息时请改用文字描述。"
             ),
             parameters={
@@ -676,20 +676,20 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
 # 工具声明区因新增 `offset`/`limit` 两个参数 +15 行，其后锚点已重取，见 §6.16「文档」）。
 #
 # 与上游的三处结构性差异（详见 §6.16 偏差表）：
-# 1. 工具面是**知识库**不是工作区：所有路径经 `_safe_rel_any()` 限定库内，`.memoria/**` 与
-#    VCS 元数据目录一并跳过，解析到库外的符号链接条目不返回也不读；
+# 1. 工具面是**工作区根**（今天 = 库根）而不是「知识库内容面」：路径经**允许根列表**校验（今天
+#    = `[库根]`，将来可追加外部根：只读/不可信），可见性由程序施加；VCS 内部目录跳过，
+#    `.memoria/**` 默认可见，解析到允许根之外的条目一律**明确拒绝**（不是「不存在」）且不读；
 # 2. `grep` 用 Python `re` 而非 ripgrep：正则方言不同（无 `\p{…}`、无 `\z` 之外的 PCRE 扩展），
 #    结果上限与超时都在 Python 侧自持（`GREP_MAX_MATCHES` / `GREP_TIMEOUT_S`），零新依赖；
-# 3. 本地消息层**不能**承载图片内容块（`llm/types.py` 的 `Message.content` 是纯文本、
-#    `llm/providers/openai_compatible.py::_message_to_wire()` 只写 `{"role","content": <str>}`），
-#    故 `read_image` 只做参数/格式校验后**明确拒绝**，不伪造成功（见 `_read_image_tool()`）。
+# 3. `read_image` 缺的是**多媒体「眼睛」插件**（属未来多媒体能力，不算读面缺口）：端点消息
+#    层是纯文本（`llm/types.py` 的 `Message.content`），承载不了图片内容块 ⇒ 校验后明确拒绝。
 
 #: 一次 `read_document` 返回的默认且最大正文行数（上游 `READ_LIMIT`，`tool-fs/src/read.ts:15`）。
 DEFAULT_READ_LIMIT = 2000
 #: 一次 `glob` 内联展示的路径上限（上游 `globMaxResults`，`tool-fs-search/src/glob.ts:25` + README.md:60）。
 GLOB_MAX_RESULTS = 100
-#: `glob`/`grep` 遍历跳过的目录名：上游 `GLOB_VCS_EXCLUDES`（`src/glob.ts:37`）+ 本地知识库元数据目录。
-GLOB_EXCLUDED_DIRS = (".git", ".svn", ".hg", ".bzr", ".jj", ".sl", ".memoria")
+#: `glob`/`grep` 遍历跳过的目录名：**只跳 VCS 内部**（上游 `GLOB_VCS_EXCLUDES`，`src/glob.ts:37`）—— 理由=非内容且会污染 glob/grep；`.memoria/**` 默认可见（2026-09-20 改正）。
+GLOB_EXCLUDED_DIRS = (".git", ".svn", ".hg", ".bzr", ".jj", ".sl")
 #: 一次 `grep` 内联保留的命中数上限（上游 `grepMaxMatches`，`src/grep.ts:29` + README.md:61）。
 GREP_MAX_MATCHES = 250
 #: 单条命中行预览的字节上限（上游 `grepMaxLineBytes`，`src/grep.ts:35` + README.md:62）。
@@ -791,25 +791,25 @@ def _read_document_call(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutpu
 
 
 def _safe_rel_any(kb_path: str, path: str) -> str | None:
-    """校验并归一化库内相对路径（**不限定扩展名**）；空 / 上跳 / 越界返回 None。
+    """校验并归一化工作区相对路径（**不限定扩展名**）；空 / 上跳 / 越界返回 None。
 
     与 `_safe_rel()` 同源，只去掉 `.md` 后缀要求：`glob`/`grep` 要能指向任意文件与目录。
+    校验与归一化统一走**允许根列表**（`_read_roots()`）——
+    今天单根 ⇒ 语义与改正前逐字一致，将来多根即按序解析。
     """
     rel = (path or "").strip().replace("\\", "/").lstrip("/")
     if not rel:
         return None
-    norm = os.path.normpath(rel).replace(os.sep, "/")
-    if norm == ".." or norm.startswith("../"):
+    resolved = _resolve_in_read_roots(_read_roots(kb_path), rel)
+    if resolved is None:
         return None
-    full = os.path.abspath(os.path.join(kb_path, norm))
-    root = os.path.abspath(kb_path)
-    if full != root and not full.startswith(root + os.sep):
-        return None
-    return norm
+    # 越界（`..` / 绝对路径 / 允许根之外）在 `_resolve_in_read_roots()` 内 fail-closed 拒绝
+    # ⇒ 这里只回「落在某个允许根内」的相对路径，调用方（glob/grep/read_image）无需改动。
+    return resolved[1]
 
 
 def _safe_rel_dir(kb_path: str, path: str) -> str | None:
-    """库内相对**目录**（`""` = 库根）；越界/非法返回 None。"""
+    """工作区相对**目录**（`""` = 工作区根）；越界/非法返回 None。"""
     norm = _safe_rel_any(kb_path, path)
     if norm is None:
         return None
@@ -817,24 +817,24 @@ def _safe_rel_dir(kb_path: str, path: str) -> str | None:
 
 
 def _walk_kb_files(kb_path: str, subdir: str = "") -> list[str]:
-    """库内文件清单（相对库根、`/` 分隔）：跳过 `GLOB_EXCLUDED_DIRS` 与解析到库外的条目。
+    """工作区文件清单（相对**允许根**、`/` 分隔）：跳过 VCS 目录与解析到允许根外的条目。
 
     越界判定在**两侧都先 `realpath`**：Windows 8.3 短名（`LAMTIM~1`）与 junction/符号链接会让
-    `realpath` 与 `abspath` 的书写形式不同 —— 只归一化一侧会把整个库误判成「库外」而**静默返回空**。
+    `realpath` 与 `abspath` 的书写形式不同 —— 只归一化一侧会把整个库误判成「根外」而**静默返回空**。
     """
-    root = os.path.abspath(kb_path)
-    real_root = os.path.realpath(root)
-    base = os.path.join(root, subdir) if subdir else root
     out: list[str] = []
-    for current, dirnames, filenames in os.walk(base):
-        dirnames[:] = sorted(name for name in dirnames if name not in GLOB_EXCLUDED_DIRS)
-        prefix = os.path.relpath(current, root).replace(os.sep, "/")
-        prefix = "" if prefix == "." else prefix + "/"
-        for name in filenames:
-            real = os.path.realpath(os.path.join(current, name))
-            if real != real_root and not real.startswith(real_root + os.sep):
-                continue  # 符号链接指向库外 ⇒ 不返回（后续也不会去读）
-            out.append(prefix + name)
+    for root in _read_roots(kb_path):  # 今天单根（= 库根）⇒ 输出与改正前逐字一致；将来可多根
+        real_root = os.path.realpath(root)
+        base = os.path.join(root, subdir) if subdir else root
+        for current, dirnames, filenames in os.walk(base):
+            dirnames[:] = sorted(name for name in dirnames if name not in GLOB_EXCLUDED_DIRS)
+            prefix = os.path.relpath(current, root).replace(os.sep, "/")
+            prefix = "" if prefix == "." else prefix + "/"
+            for name in filenames:
+                real = os.path.realpath(os.path.join(current, name))
+                if real != real_root and not real.startswith(real_root + os.sep):
+                    continue  # 符号链接指向根外 ⇒ 不返回（后续也不会去读）
+                out.append(prefix + name)
     return sorted(out)
 
 
@@ -909,7 +909,7 @@ def _mtime(kb_path: str, rel: str) -> float:
 
 
 def _glob_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
-    """`glob`：按 glob 模式列出库内文件（只读；库外与越界一律拒绝）。"""
+    """`glob`：按 glob 模式列出工作区文件（只读；允许根之外与越界一律拒绝）。"""
     pattern = str(arguments.get("pattern") or "").strip()
     if not pattern:
         return _error("glob: pattern 不能为空")
@@ -918,7 +918,7 @@ def _glob_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
     if raw_path:
         resolved = _safe_rel_dir(kb_path, raw_path)
         if resolved is None:
-            return _error("glob: path 必须是知识库内的相对目录（不得上跳或越界）")
+            return _error("glob: path 必须是工作区（允许根）内的相对目录（不得上跳或越界）")
         subdir = resolved
         if not os.path.isdir(os.path.join(kb_path, subdir) if subdir else kb_path):
             return _error(f"glob: 目录不存在：{raw_path}", "NOT_FOUND")
@@ -929,7 +929,7 @@ def _glob_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
         if matches(rel[len(subdir) + 1 :] if subdir else rel)
     ]
     if not found:
-        return ToolOutput(text=f"未匹配到文件（pattern={pattern!r}）。glob 只列库内文件，不列目录。")
+        return ToolOutput(text=f"未匹配到文件（pattern={pattern!r}）。glob 只列文件、不列目录。")
     # 上游 `--sort=modified`：按修改时间排序（方向取「新→旧」，证据见 §6.16 未实测第 ① 条）
     found.sort(key=lambda rel: _mtime(kb_path, rel), reverse=True)
     shown = found[:GLOB_MAX_RESULTS]
@@ -980,7 +980,7 @@ def _grep_skipped_note(large: int, binary: int) -> str:
 
 
 def _grep_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
-    """`grep`：正则逐行搜库内正文，按文件分组返回 `Line N: <片段>`（只读）。"""
+    """`grep`：正则逐行搜工作区正文，按文件分组返回 `Line N: <片段>`（只读）。"""
     import re
     import time
 
@@ -1001,7 +1001,7 @@ def _grep_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
     if raw_path:
         resolved = _safe_rel_any(kb_path, raw_path)
         if resolved is None:
-            return _error("grep: path 必须是知识库内的相对文件或目录（不得上跳或越界）")
+            return _error("grep: path 必须是工作区（允许根）内的相对文件或目录（不得上跳或越界）")
         full = os.path.join(kb_path, resolved)
         if os.path.isdir(full):
             targets = _walk_kb_files(kb_path, "" if resolved == "." else resolved)
@@ -1086,10 +1086,11 @@ def _sniff_image_media_type(data: bytes) -> str | None:
 
 
 def _read_image_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
-    """`read_image`：参数与格式校验照上游，随后因**本端点不支持图像输入**而明确拒绝。
+    """`read_image`：参数与格式校验照上游，随后因**缺「多媒体眼睛」插件**而明确拒绝。
 
-    不伪造成功：本地消息层（`llm/types.py` 的纯文本 `Message.content`）无法把图片作为内容块
-    发出，故校验通过后仍返回 `UNSUPPORTED_IMAGE_INPUT`，并在文本里说明真实原因与替代做法。
+    不伪造成功：缺的是**多媒体「眼睛」插件**（属未来多媒体能力，非读面缺口）—— 本地消息层
+    （`llm/types.py` 的纯文本 `Message.content`）无法承载图片内容块，故校验通过后仍返回
+    `UNSUPPORTED_IMAGE_INPUT`，并在文本里说明真实原因与替代做法（图片识别留待该插件）。
     校验顺序先参数/格式、后能力拒绝：这样模型能区分「文件不是图片」与「端点收不了图片」。
     """
     raw = str(arguments.get("file_path") or "")
@@ -1097,7 +1098,7 @@ def _read_image_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
         return _error("read_image: file_path 不能为空")
     normalized = _safe_rel_any(kb_path, raw)
     if normalized is None:
-        return _error("read_image: file_path 必须是知识库内的相对路径（不得上跳或越界）")
+        return _error("read_image: file_path 必须是工作区（允许根）内的相对路径（不得上跳或越界）")
     extension = os.path.splitext(normalized)[1].lower()
     declared = IMAGE_EXTENSIONS.get(extension)
     if declared is None and extension:
@@ -1125,7 +1126,37 @@ def _read_image_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
     media_type = declared or sniffed
     return _error(
         f"read_image: 本端点暂不支持图像输入 —— {normalized} 已通过格式校验（{media_type}），"
-        "但当前模型通道（`llm/types.py` 的纯文本 `Message.content`）无法把图片作为内容块发出，"
-        "故不返回图片本身；请改用文字描述该图，或等「消息层图片支持」落地（见 dsh-agent-port.md §6.16 待办）。",
+        "但缺『多媒体眼睛』插件（属未来多媒体能力）：当前模型通道（纯文本 `Message.content`）"
+        "无法把图片作为内容块发出，故不返回图片本身；请改用文字描述该图（见 dsh-agent-port.md §6.16）。",
         UNSUPPORTED_IMAGE_INPUT,
     )
+
+
+# ── 允许读根列表（2026-09-20 设计改正：工具面 = **工作区根**，不是「知识库内容面」）──
+# 今天只有一个允许根（= 库根）⇒ 与改正前行为逐字等价；结构上支持将来追加外部根（例如 Windows
+# 拖入对话栏的外部文件，可带只读/不可信标记）。「只能看到某些文件」是**程序施加的可见性/权限**
+# （VCS 内部目录跳过 + realpath 越界拒绝），**不是**把工具本身缩到知识库；允许根之外一律
+# **明确拒绝**（fail-closed：参数错误，不是「文件不存在」），将来把根加进本列表即放行。
+
+
+def _read_roots(kb_path: str) -> tuple[str, ...]:
+    """允许读根列表（agent 工作区）：今天 = `(库根,)`；将来可追加外部根（只读/不可信）。"""
+    return (os.path.abspath(kb_path),)
+
+
+def _resolve_in_read_roots(roots: Sequence[str], path: str) -> tuple[str, str] | None:
+    """把相对路径解析到某个允许根，返回 `(根, 相对该根的路径)`；空 / 上跳 / 越界返回 None。
+
+    fail-closed：任一根都不容纳 ⇒ None（调用方一律转成参数错误，绝不「当成不存在」）。
+    """
+    rel = (path or "").strip().replace("\\", "/").lstrip("/")
+    if not rel:
+        return None
+    norm = os.path.normpath(rel).replace(os.sep, "/")
+    if norm == ".." or norm.startswith("../"):
+        return None
+    for root in roots:
+        full = os.path.abspath(os.path.join(root, norm))
+        if full == root or full.startswith(root + os.sep):
+            return root, norm
+    return None

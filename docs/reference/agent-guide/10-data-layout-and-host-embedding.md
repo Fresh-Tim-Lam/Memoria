@@ -178,7 +178,7 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 除下表中 `agent_ask_start` 的**追加可选参数**（`session_id`）、`agent_ask_poll` 的**追加字段**（`cancelled`）、
 `agent_sessions_list` 的**追加字段**（`capped`）、`loop/end.usage` 的**追加字段**（三个 cache 字段，见 §2.17）外，
 **未改任何既有方法的语义与签名**；`save_ui_settings` 新增顶层 `agent` 段（非本表 RPC）。
-**M2（2026-09-19）起**：会话事件面新增三条记录 —— 第 8 类 `compaction`（长会话压缩）、第 9 类 `compaction/prune`（工具结果裁剪）与第 10 类 `session/title`（**会话标题，log-only**），都是**纯追加**、**不新增 RPC、不 bump `SESSION_FORMAT_VERSION`**，分别见下方「长会话压缩」「工具结果裁剪」「会话标题」；同轮新增**第 6 个只读知识库工具** `search_sessions`（**也不新增 RPC** —— 它只在模型回合内部可用，前端不调用），见下方「会话检索工具」。**2026-09-20（上游读面移植）起**：知识库只读工具由 6 个增至 **9 个** —— 新增 `glob`（按模式列库内文件，上限 100）、`grep`（Python `re` 逐行搜正文，按文件分组回 `Line N:`，上限 250 处/单行 2000 字节）与 `read_image`（**只做参数与格式校验，端点不支持图像输入 ⇒ 明确返回 `UNSUPPORTED_IMAGE_INPUT`**）；`read_document` 同时获得 `offset`/`limit` 分页（默认且最多 2000 行、截断给续读提示）。见 [../../design/dsh-agent-port.md §6.16](../../design/dsh-agent-port.md)。
+**M2（2026-09-19）起**：会话事件面新增三条记录 —— 第 8 类 `compaction`（长会话压缩）、第 9 类 `compaction/prune`（工具结果裁剪）与第 10 类 `session/title`（**会话标题，log-only**），都是**纯追加**、**不新增 RPC、不 bump `SESSION_FORMAT_VERSION`**，分别见下方「长会话压缩」「工具结果裁剪」「会话标题」；同轮新增**第 6 个只读知识库工具** `search_sessions`（**也不新增 RPC** —— 它只在模型回合内部可用，前端不调用），见下方「会话检索工具」。**2026-09-20（上游读面移植）起**：知识库只读工具由 6 个增至 **9 个** —— 新增 `glob`（按模式列**工作区（今天 = 库根）**的文件，上限 100；`.memoria/**` 默认可见、`.git` 等 VCS 目录仍排除）、`grep`（Python `re` 逐行搜正文，按文件分组回 `Line N:`，上限 250 处/单行 2000 字节）与 `read_image`（**只做参数与格式校验；缺「多媒体眼睛」插件 ⇒ 明确返回 `UNSUPPORTED_IMAGE_INPUT`**）；`read_document` 同时获得 `offset`/`limit` 分页（默认且最多 2000 行、截断给续读提示）。见 [../../design/dsh-agent-port.md §6.16](../../design/dsh-agent-port.md)。
 
 | 方法 | 签名 | 返回 |
 |---|---|---|

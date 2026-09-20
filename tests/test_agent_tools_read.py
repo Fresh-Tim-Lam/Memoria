@@ -9,10 +9,12 @@
 覆盖：
 ① 分页边界（offset=0 / 中间 / 超尾；limit 上下限）与**续读提示可解析**；
 ② 未截断时与旧调用逐字兼容（含正文末尾换行）；
-③ `glob` 的匹配口径（含 `/` 比整条路径、不含则比文件名）、上限与库外/越界拒绝；
-④ `grep` 的命中格式、`include` 校验、结果上限、二进制跳过与库外拒绝；
-⑤ `read_image` 的参数/格式校验与「本端点不支持图像输入」的明确拒绝（不伪造成功）；
-⑥ 新工具注册与 `read_only`、`@路径` 段门控不回归。
+③ `glob` 的匹配口径（含 `/` 比整条路径、不含则比文件名）、上限与允许根之外/越界拒绝；
+④ `grep` 的命中格式、`include` 校验、结果上限、二进制跳过与允许根之外拒绝；
+⑤ `read_image` 的参数/格式校验与「缺『多媒体眼睛』插件」的明确拒绝（不伪造成功）；
+⑥ 新工具注册与 `read_only`、`@路径` 段门控不回归；
+⑦ 工具面 = 工作区根（**允许根列表**，今天 `[库根]`）：可见性由程序施加 —— `.memoria/**` 默认
+   可见、VCS 内部目录（`.git` 等）仍不可见、允许根之外一律明确拒绝（错误码稳定）。
 """
 
 from __future__ import annotations
@@ -185,17 +187,21 @@ def test_glob_matches_paths_and_basename_rule(kb: Path) -> None:
     assert "nested.md" in scoped.content and "long.md" not in scoped.content
 
 
-def test_glob_excludes_metadata_dirs_and_rejects_escape(kb: Path) -> None:
+def test_glob_visibility_rules_and_rejects_escape(kb: Path) -> None:
+    """可见性由程序施加：`.memoria/**` 默认可见、VCS 内部不可见；允许根之外一律拒绝。"""
     everything = invoke(kb, "glob", pattern="**/*.md")
     assert "sub/nested.md" in everything.content
-    assert ".memoria" not in everything.content  # 库内元数据目录
-    assert ".git" not in everything.content  # VCS 元数据（上游 GLOB_VCS_EXCLUDES）
+    assert ".memoria/agent/kb-spec.zh-CN.md" in everything.content  # .memoria/** 默认可见（2026-09-20 改正）
+    assert ".git" not in everything.content  # VCS 内部仍不可见（上游 GLOB_VCS_EXCLUDES）
+
+    scoped = invoke(kb, "glob", pattern="*.md", path=".memoria/agent")
+    assert "kb-spec.zh-CN.md" in scoped.content  # `.memoria` 可作搜索根
 
     escape = invoke(kb, "glob", pattern="*.md", path="../")
     assert escape.is_error and escape.output.code == INVALID_ARGUMENTS_CODE
 
     outside = invoke(kb, "glob", pattern="*.md", path="C:/Windows")
-    assert outside.is_error  # 绝对路径（Windows 盘符）不被当作库内相对目录
+    assert outside.is_error  # 绝对路径（Windows 盘符）不被当作工作区相对目录
 
     missing = invoke(kb, "glob", pattern="*.md", path="nope")
     assert missing.is_error and missing.output.code == "NOT_FOUND"
@@ -244,6 +250,41 @@ def test_walk_skips_entry_resolving_outside_the_kb(
     assert "long.md" in invoke(kb, "glob", pattern="*.md").content  # 库内条目不受影响
 
 
+# —— ③b 工具面 = 工作区根（允许根列表）——
+
+
+def test_read_roots_is_allow_list_and_outside_is_explicitly_rejected(kb: Path, tmp_path: Path) -> None:
+    """工具面挂在**允许根列表**上（今天 `[库根]`）；允许根之外是**明确拒绝**且错误码稳定。"""
+    from memoria.services.agent.tools import kb as kb_module
+
+    roots = kb_module._read_roots(str(kb))
+    assert roots == (os.path.abspath(str(kb)),)  # 今天只有一个允许根：库根（= 工作区根）
+    assert kb_module._resolve_in_read_roots(roots, "long.md") == (roots[0], "long.md")
+    assert kb_module._resolve_in_read_roots(roots, "sub/nested.md") == (roots[0], "sub/nested.md")
+    # `..` / 空路径一律 None（fail-closed；不因重构而放松）
+    assert kb_module._resolve_in_read_roots(roots, "../outside.md") is None
+    assert kb_module._resolve_in_read_roots(roots, "") is None
+    # 结构上多根即放行：把外层目录加进列表后，原本被拒的路径可解析
+    assert kb_module._resolve_in_read_roots((str(tmp_path),), "kb/long.md") == (
+        os.path.abspath(str(tmp_path)),
+        "kb/long.md",
+    )
+
+    (tmp_path / "outside.md").write_text("根外文档\n", encoding="utf-8")
+    for name, arguments in (
+        ("read_document", {"path": "../outside.md"}),
+        ("glob", {"pattern": "*.md", "path": "../"}),
+        ("grep", {"pattern": "x", "path": "../outside.md"}),
+        ("read_image", {"file_path": "../img.png"}),
+    ):
+        result = invoke(kb, name, **arguments)
+        assert result.is_error and result.output.code == INVALID_ARGUMENTS_CODE, name
+
+    # `.memoria/**` 是知识库的一部分：默认可见（sidecar/manifest 维护需要看得见）
+    doc = invoke(kb, "read_document", path=".memoria/agent/kb-spec.zh-CN.md")
+    assert not doc.is_error and "多层感知机（库内元数据）" in doc.content
+
+
 # —— ④ `grep` ——
 
 
@@ -251,18 +292,22 @@ def test_grep_groups_hits_by_file_with_line_numbers(kb: Path) -> None:
     result = invoke(kb, "grep", pattern="多层感知机")
 
     assert not result.is_error
-    assert result.content.startswith("命中 2 处")
+    assert result.content.startswith("命中 3 处")  # 含 `.memoria/**`（默认可见）
     assert "notes.txt\nLine 1: 多层感知机在这里出现一次" in result.content
     assert "fake.png\nLine 1: 多层感知机并不是图片" in result.content
+    assert ".memoria/agent/kb-spec.zh-CN.md\nLine 1: 多层感知机（库内元数据）" in result.content
 
 
 def test_grep_include_filter_and_no_match(kb: Path) -> None:
     only_md = invoke(kb, "grep", pattern="多层感知机", include="*.md")
     assert "notes.txt" not in only_md.content  # txt 被 include 过滤
-    assert only_md.content.startswith("未匹配到内容")
+    assert ".memoria/agent/kb-spec.zh-CN.md" in only_md.content  # `.memoria/**` 默认可见
 
     braces = invoke(kb, "grep", pattern="多层感知机", include="*.{md,txt}")
     assert "notes.txt" in braces.content
+
+    none = invoke(kb, "grep", pattern="多层感知机", include="*.json")
+    assert none.content.startswith("未匹配到内容")
 
     bad_negation = invoke(kb, "grep", pattern="x", include="!*.md")
     assert bad_negation.is_error and bad_negation.output.code == INVALID_ARGUMENTS_CODE
@@ -286,15 +331,18 @@ def test_grep_rejects_bad_regex_and_escape(kb: Path) -> None:
     assert missing.is_error and missing.output.code == "NOT_FOUND"
 
 
-def test_grep_skips_binary_and_metadata_dirs(kb: Path) -> None:
+def test_grep_skips_binary_and_keeps_metadata_visible(kb: Path) -> None:
     result = invoke(kb, "grep", pattern="多层感知机", path="sub")
 
     assert "blob.bin" not in result.content  # 含 NUL ⇒ 二进制跳过
     assert "1 个二进制文件已跳过" in result.content
 
     metadata = invoke(kb, "grep", pattern="库内元数据")
-    assert ".memoria" not in metadata.content
-    assert metadata.content.startswith("未匹配到内容")
+    assert ".memoria/agent/kb-spec.zh-CN.md" in metadata.content  # `.memoria/**` 默认可见
+    assert "Line 1: 多层感知机（库内元数据）" in metadata.content
+
+    vcs = invoke(kb, "grep", pattern="VCS 元数据")
+    assert vcs.content.startswith("未匹配到内容")  # `.git` 仍不可见
 
 
 def test_grep_caps_matches_and_previews_long_lines(kb: Path) -> None:
@@ -322,10 +370,11 @@ def test_grep_direct_call_shares_semantics(kb: Path) -> None:
 
 
 def test_read_image_validates_then_refuses(kb: Path) -> None:
-    """校验通过也**不伪造成功**：本端点收不了图片内容块 ⇒ 明确错误。"""
+    """校验通过也**不伪造成功**：缺『多媒体眼睛』插件（非读面缺口）⇒ 明确错误。"""
     ok = invoke(kb, "read_image", file_path="img.png")
     assert ok.is_error and ok.output.code == UNSUPPORTED_IMAGE_INPUT
     assert "本端点暂不支持图像输入" in ok.content and "image/png" in ok.content
+    assert "多媒体眼睛" in ok.content  # 原因归类：缺多媒体插件（不是「provider 不支持 content part」）
 
 
 def test_read_image_rejects_bad_extension_missing_and_escape(kb: Path) -> None:
