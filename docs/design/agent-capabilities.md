@@ -11,7 +11,7 @@
 | 红线 | 本路线图的落法 |
 |---|---|
 | **离线优先** | 只有 **N 线**引入出网，且**逐次显式**（默认只读、默认关；见 §3.1） |
-| **禁止 silent 写入** | **W 线**一律"提议 → 逐条确认 → 应用"，且只走既有服务层（§2.3）；**任何一次拒绝都不改盘**。**2026-09-20 加强**：该红线改为在**插件边界物理可证**——插件不含可执行体、核心写原语是唯一写者、落盘前做 realpath 前缀校验（§2.3.1） |
+| **禁止 silent 写入** | **W 线**一律"提议 → 逐条确认 → 应用"，且只走既有服务层（§2.3）；**任何一次拒绝都不改盘**。**2026-09-20 加强**：该红线改为在**插件边界物理可证**——插件不含可执行体、核心写原语是唯一写者、落盘前做 realpath 前缀校验（§2.3.1）；**写前必留 pre-image、备份失败即不写**（§2.3.2） |
 | **单一事实源** | 能力包（skill / 能力插件）、工具元数据、基准产物都要先登记进事实源表，禁止并行副本；**M3 新增的库级注册文件** `<kb>/.memoria/agent/capabilities.json` **须由人登记进 [AGENTS.md §1](../../AGENTS.md)**（见 §2.2） |
 
 ---
@@ -82,6 +82,7 @@
   "forbidden": [
     "写入库外路径（含符号链接指向库外）",
     "写入 .memoria/agent/sessions/**（会话事实源只由核心追加审计事件）",
+    "写入 .memoria/agent/backups/**（写前备份属唯一写者内部步骤，插件不可触达，见 §2.3.2）",
     "git commit / git push"
   ],
   "approval": { "read": "auto", "write": "confirm", "network": "never" },
@@ -89,7 +90,7 @@
     "max_files_per_apply": { "type": "integer", "default": 3, "minimum": 1, "maximum": 10 },
     "allow_file_delete":   { "type": "boolean", "default": false }
   },
-  "emits": [ "capability/proposal", "capability/apply", "capability/reject" ],
+  "emits": [ "capability/proposal", "capability/apply", "capability/reject", "capability/backup", "capability/undo" ],
   "verify": { "unit": "tests/test_agent_capabilities.py", "harness": "docs/example/rich-content-test/_harness.py#write-diff-card" },
   "provenance": "ported-from-dsh@0d1f5000（只借 `fs/tool-fs` 的 diff 呈现契约；不移植其落盘路径）",
   "unload": "restart"
@@ -133,14 +134,14 @@
 | 1 **propose** | 模型调用写工具 ⇒ **只产提议**、不落盘。提议 = 人话一句 + 影响文件清单 + 结构化变更（不含原始 JSON） | 写工具声明 `read_only=False`（`services/agent/tools/registry.py:114`）⇒ 必过审批 |
 | 2 **dry-run diff** | 应用前算出"将改哪些文件、哪些行"：已有文件在**临时副本**上真跑一次并算 diff，新建/删除给整段或整文件 | 取原文用 `DocumentService.load_document()`（`services/document.py:1271`）；diff 只在内存/`tempfile` 临时目录算 |
 | 3 **逐条确认** | 逐条 ✓/✗；**未获批 = 不执行**（无应答者也拒） | `ToolRegistry.invoke()` 在**分发前**问策略（`registry.py:265-288`）→ `ApprovalPolicy.decide`（`services/agent/approvals.py:109-115`）→ 应答者走 `AskPolicy(answerer=…)`（`approvals.py:127-152`），无应答者 ⇒ `unavailable` ⇒ 拒绝 |
-| 4 **apply** | 获批后**一次性**转调既有服务层：原子写 → 索引失效 → manifest/sidecar 同步 → pending 同步 → KP 重锚 | 见 2.3.1 |
+| 4 **apply** | 获批后**先取写前 pre-image（§2.3.2）**，再**一次性**转调既有服务层：原子写 → 索引失效 → manifest/sidecar 同步 → pending 同步 → KP 重锚 | 见 2.3.1、2.3.2 |
 | 5 **审计** | 追加事件 `capability/proposal` / `capability/apply` / `capability/reject`（含插件 id、`tool_id`、逐文件 ±行、幂等键、决定与时间） | 会话 JSONL `<kb>/.memoria/agent/sessions/*.jsonl`；**纯追加**，旧读者对未知 `type` 一律跳过（`services/agent/session/history.py:261-299`）⇒ **不 bump** `SESSION_FORMAT_VERSION`（同 [dsh-agent-port.md §6.8](dsh-agent-port.md) 的 compaction 口径） |
-| 6 **撤销** | 同一会话内"撤销上一次 apply"，口径见 §10 P10 | 由审计事件反向重放（或按快照目录，二者待拍板） |
+| 6 **撤销** | 同一会话内"撤销上一次 apply"，数据面见 §2.3.2、选项见 §10 P10 | 按**写前快照**（§2.3.2）逐字节回滚；审计事件只作可回放证据，不作唯一回滚源 |
 
 **统一形态的四条不变口径**（承 §2 初版，未放宽）：
 
 - 模型**不直接写盘**：写工具只产**提议**，人在面板上**逐条确认**后才应用；
-- 一次确认 = 一个**事务**：应用前取受影响文件的快照，任一步失败即**整批回滚**；
+- 一次确认 = 一个**事务**：应用前取受影响文件的**写前快照**（pre-image，口径见 §2.3.2），任一步失败即**整批回滚**；
 - 提议**可读**：每条带"人话一句 + 影响文件 + 前后差异"；
 - **不做**"模型自动应用"（M3 不做，见 2.6）；也不做"按规则批量自动应用"（留到基准能证明安全之后）。
 
@@ -149,10 +150,94 @@
 红线出处：[designV0.md:911](../designV0.md)（"所有结果 **提议 → 用户确认**，禁止 silent 写入"）与 [`designV0.md:254`](../designV0.md)（"**禁止静默写入**"）。落到**插件边界**＝三层同向：
 
 1. **没有代码 ⇒ 没有写入口**：插件目录不含可执行体（2.2 铁律），所以插件在物理上没有 `open(...,"w")` 的机会；它只能"挑用核心原语 + 声明权限"。
-2. **核心写原语是唯一写者**：每个写原语内部**只许**调既有服务层的公开入口 —— 正文 `DocumentService.save_document`（`services/document.py:317`，tmp + `os.replace`）与 `DocumentService._write_body`（`:2064`）；sidecar `storage/sidecar.py:120 save_sidecar_for_md`；manifest `storage/manifest.py:178 touch_manifest_entry` / `:102 flush_manifest_deferred` / `:136 save_manifest`；pending `storage/pending.py:273 sync_pending_for_file`。**原语之外不允许任何模块落盘**（本节 §2.3 初版口径不变：`open(...,"w")` 直接落盘即违规）。
+2. **核心写原语是唯一写者**：每个写原语内部**只许**调既有服务层的公开入口 —— 正文 `DocumentService.save_document`（`services/document.py:317`，tmp + `os.replace`）与 `DocumentService._write_body`（`:2064`）；sidecar `storage/sidecar.py:120 save_sidecar_for_md`；manifest `storage/manifest.py:178 touch_manifest_entry` / `:102 flush_manifest_deferred` / `:136 save_manifest`；pending `storage/pending.py:273 sync_pending_for_file`。**原语之外不允许任何模块落盘**（本节 §2.3 初版口径不变：`open(...,"w")` 直接落盘即违规）；**且原语的调用者唯一 = apply 入口**，写前 pre-image 是该入口的第一步（§2.3.2）⇒ agent 路径上"无备份的写入"不存在。
 3. **写前必过滤、写后必自证**：原语在落盘前用 `permissions.write` 的 glob + `os.path.realpath` 做前缀校验（2.4）；落盘后由门禁做**逐文件 SHA256 全等**比对（拒绝/失败 ⇒ 全等；成功 ⇒ 差异只出现在人确认过的那几条）。
 
 > 一句话：`禁止 silent 写入` 不再只靠"施工纪律"，而是**结构上可证**——插件无代码、写原语唯一、路径校验前置。
+
+#### 2.3.2 备份（写前 pre-image）与撤销的数据面
+
+> 用户口径（2026-09-20）：「写入技能还需要有备份机制」。本节把 §2.3 第 4 步（apply）与第 6 步（撤销）之间的**数据面**定死：写前留 pre-image、撤销按它**逐字节**回滚、保留与清理有数字口径，且全程**不静默**。
+
+**1. 时机与粒度**
+
+| 维度 | 口径 |
+|---|---|
+| 时机 | **apply 之前**（获批后、任何落盘之前）：先 pre-image，后写；失败即**不落盘** |
+| 粒度 | **单文件 pre-image + 每轮一个批次快照**（两者结合）：批次 = 一次确认 = 一个事务 = 一个 `txid`；批内含该事务**受影响文件集**的逐文件整字节副本 |
+| 受影响文件集 | 该事务会碰的全部文件 —— 正文 `.md`、其 sidecar、`.memoria/manifest.yaml`、`.memoria/pending.json`（即 §2.3.1 四个写原语的**全部**落盘目标） |
+| **新建文件** | 也留一条记录但**不留字节**：journal 记 `{"existed": false}` ⇒ 撤销 = **删除**该文件（避免 0 字节副本与"空文件"歧义） |
+| 删除文件 | 与新建对称：记 `{"existed": true, sha256, bytes}` ⇒ 撤销 = 从副本写回 |
+
+**2. 存哪、命名、格式**
+
+- **目录**（随库走，与 `.memoria/agent/**` 既有布局对齐）：`<kb>/.memoria/agent/backups/<session_id>/<txid>/`
+  - `<session_id>` 复用会话 id（`session-<UTC 时间戳>Z-<hex8>`，`services/agent/session/store.py:69`；字符集只含字母数字与 `. _ -`，可安全做目录名）；
+  - `<txid>` = 批次 id：`<UTC 时间戳>-<两位序号>`（如 `20260920T021100Z-07`），同会话内单调递增 ⇒ **字典序即 FIFO 顺序**。
+- **批次内命名**：
+  - `journal.json`：批次清单 `{txid, session_id, ts, plugin, tool_id, files:[{rel_path, existed, sha256, bytes, too_large}]}`；自身走 tmp + `os.replace`，**先于 apply 落盘**；
+  - `files/<原相对路径>`：逐文件**整字节**副本，**按原目录结构镜像**（如 `files/.memoria/sidecars/a.md.memoria.yaml`）⇒ 人可核对、无命名冲突。
+- **格式取舍：原字节复制（不存 diff/patch）**
+  - 支持理由：§2.3.1 的四个写原语**全部是整文件重写**（`save_document` `services/document.py:317` 的 `open(tmp,"w")` + `os.replace` `:342-347`；`save_sidecar_for_md` `storage/sidecar.py:120` → `atomic_write_yaml` `storage/atomic_yaml.py:46`；`touch_manifest_entry` `storage/manifest.py:178` → `save_manifest` `:136`；`sync_pending_for_file` `storage/pending.py:273` → `save_pending` `:91`）⇒ pre-image 天然就是"整份旧文件"；
+  - 二进制/超大文件：字节副本对二进制安全；diff 文本化会引入编码与换行风险 ⇒ **diff 只用于给人看的 dry-run（§2.3 第 2 步），不进备份存储**；
+  - **编码/换行保真**：字节副本 ⇒ 逐字节原样；撤销用 `os.replace` 覆盖，**不重新编码、不规范化换行**；
+  - **上限（fail-closed）**：单文件 > **8 MiB** 或单批 > **32 MiB** ⇒ 该次 apply **预检失败、不落盘**（可见报错），**不**降级为"无备份的写入"。
+
+**3. 保留与清理（数字口径）**
+
+| 项 | 数值 | 说明 |
+|---|---|---|
+| 每会话保留批次数 | **5** | 足够"撤销上一次"及其前几批回退 |
+| 每库保留会话数（备份目录） | **10**（按最新修改优先） | 超出按 FIFO 淘汰最旧会话的备份目录 |
+| 每库备份总字节上限 | **64 MiB** | 超限按 FIFO 淘汰最旧批次 |
+| 单文件 / 单批上限 | **8 MiB / 32 MiB** | 见上；超限即预检失败（拒绝该次 apply） |
+
+- **淘汰顺序**：FIFO（按 `<txid>` 时间戳，最旧先淘汰）。**不变式：淘汰永不删除"当前会话的最新批次"**（= 尚未撤销的最新批次）—— 撤销可用性的底线。
+- **清理时机**：① apply 成功、审计落盘后**机会式** trimming（只列备份目录，不扫库）；② 打开库时；③ 关库时。**读/查询热路径不触发**（见第 6 条）。
+- **不静默**：每次淘汰追加 `capability/backup` 事件 `{action:"evicted", batches:[], bytes_freed}`；**备份失败 ⇒ 不 apply**（fail-closed）—— 追加 `{action:"failed", reason}` 后当面报错，**不**沿用既有 `write_backup` 的 fail-open（见第 6 条）。
+
+**4. 与「唯一写者」的绑定点（调用序）**
+
+备份是 **apply 入口的第一步**；apply 入口是 agent 写路径上**唯一**能到达 §2.3.1 四原语的通道：
+
+```
+apply 入口（核心，M3a）
+  1. 路径校验（realpath 前缀；§2.4）—— 越界即拒，此时尚未建任何备份
+  2. snapshot_pre_images(tx)   → tmp 建 <txid>/files/** + journal.json（os.replace）
+  3. 任一步失败 ⇒ 删该 <txid> 残目录 + capability/backup{failed} + 返回（**零部分写**）
+  4. DocumentService.save_document()    services/document.py:317
+  5. save_sidecar_for_md()              storage/sidecar.py:120
+  6. touch_manifest_entry()             storage/manifest.py:178
+  7. sync_pending_for_file()            storage/pending.py:273
+  8. 审计 append（capability/apply，含 backup{txid, dir, files}）
+  9. 机会式 trimming（§2.3.2 第 3 条）
+```
+
+**插件为何绕不过**：① 插件目录不含可执行体（§2.2 铁律）⇒ 没有 `open(...,"w")`，也没有直呼上述四个函数的通道；② §2.3.1 已收紧"原语之外不允许任何模块落盘"，本节再加一条**原语的调用者唯一 = apply 入口**；③ 插件的 `permissions.write` 是**白名单**且**不含** `.memoria/agent/backups/**`（§2.1 `forbidden` 已显式列入）⇒ 它既写不了、也删不了备份。⇒ agent 路径上"无备份的写入"不存在。
+
+> **边界（如实说）**：**人机 UI 直存**（用户点保存、确认 KP 等既有链路）不属 M3 能力插件路径，本轮**不**纳入统一备份；它们沿用 designV0 §6.6 L2 的可选增强（见第 6 条），不在 M3a 门禁内。
+
+**5. 撤销 / 回滚**
+
+| 面 | 口径 |
+|---|---|
+| 粒度 | **以事务（批次）为单位**（一次 apply = 一个 `txid`）；"单条提议"= 该提议单独成批时即一批；**整轮** = 该轮各批次倒序；**整会话** = 会话内全部批次倒序。M3a 只做**撤销上一批**；整轮 / 整会话留 M3b（§2.6） |
+| 入口 | 走 §2.2 的**唯一通用网关**：`agent_capability_call(id, action="undo", payload={txid?})`（缺省 = 该会话最新批次），形态对齐既有 `agent_session_delete`（`presentation/api/ui.py:1329`）；**不新增具名方法**（§2.2 口径） |
+| UI | 紧挨面板里每条 `capability/apply` 审计卡片的「撤销」按钮（复用同一张 apply/reject 卡片，不新开面板） |
+| 审批 | 撤销本身是**写**（会覆盖当前盘上内容）⇒ 仍需 `approval=confirm` 逐条确认，**不因"是撤销"免审** |
+| 审计 | 追加 `capability/undo`（含 `txid`、逐文件 sha256 前后、结果）；纯追加，旧读者对未知 type 跳过 |
+| **外部改动保护** | 撤销前**必须**校验目标文件当前 sha256 == apply 时记录的 sha256；任一不符 ⇒ **拒绝撤销**（**不静默覆盖用户手改**），可见报错并保留备份 |
+| 一致性恢复 | 覆盖回 md + sidecar + manifest + pending 后，清 `DocumentService._cache` 并跑 `DocumentService.validate_kb()`（`services/document.py:2001`；RPC `presentation/api/ui.py:384`）⇒ errors 应为 0；词法索引按 `_write_body` 既有做法重建（`document.py:2076`） |
+| **撤销失败** | **不静默、保留备份、报错**：不删 `txid` 目录、失败即停（不二次自动恢复），追加 `capability/undo{result:"failed"}`，由用户重试或人工处置 |
+
+**6. 与既有机制的关系**
+
+- **既有 L2 备份（必须如实说明）**：`atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`，被 `save_sidecar`/`save_manifest` 与 pending 的 `_atomic_write_json` 调用）**已经在写前留同目录 `.bak`**（仅最新一版，designV0:611）。但它是**尽力而为 / fail-open**（`OSError` 只 `logger.warning` 后**降级继续写**，`:41-43`），且**不按事务聚合、不保证跨文件一致**；正文 `.md` 路径**完全没有**这层（`save_document`/`_write_body` 只有 tmp + `os.replace`）。**本节的 pre-image 与之叠加而非替代**：`.bak` 继续作单文件最后版本的兜底；**撤销只依赖批次快照**，并要求 **fail-closed**（备份失败 ⇒ 不写）——这是对既有 fail-open 的**有意收紧**，只作用于 M3 agent 路径。
+- **KB 本身是 git 仓库（可选情形）**：本机制**不依赖** git、也**不调** git（§2.1 `forbidden` 含 `git commit/push`）。备份仍照做（撤销要秒级，且 git 未必可用/已提交）；两者不互斥。**建议**（文档口径，不由程序写）该库把 `.memoria/agent/backups/` 加入忽略，以免备份进版本历史。
+- **不进热路径**（[designV0.md:987](../designV0.md)「不进查询热路径」）：备份是**本地文件字节复制** —— 无网络、无后台常驻、无索引构建；只出现在**写路径**（apply 前）与**打开/关库时的有界 trimming**；读 / 检索路径**零改动**。
+- **是否新增事实源**：**否**。备份是**非权威、可清理副本**：权威状态仍是 md / sidecar / manifest / pending 本身；删掉备份最多让撤销在窗口内不可用（且**可见报错**），**不损坏**任何权威数据 —— 与 [AGENTS.md §1](../../AGENTS.md) 对 `.memoria/cache/**`（可再生缓存、不作为事实源）的定性同类。
+- **但备份不放在 `.memoria/cache/**` 下**：cache 的既有语义是"校验失败**直接删了重建**"（designV0:657），静默清空会破坏撤销 ⇒ 给**独立目录 + 自己的保留口径 + 可见清理**。
+- **仅当**评审者选择把备份升格为"可分发 / 可审计的权威档案"（即 §10 P10 选②完整历史并承诺长期保留）时，才需把下面这行交**人**登记进 [AGENTS.md §1](../../AGENTS.md)：`| 写前备份（agent 能力插件） | 各知识库 .memoria/agent/backups/**（可清理副本） | 应用代码（仅 apply 入口写） |`
 
 ### 2.4 权限与越界（违约即硬拒 + 审计 + 零部分写）
 
@@ -163,6 +248,7 @@
 | `**/*.md`（库内正文） | R | **R/W**（`approval=confirm`） | R | R |
 | `.memoria/sidecars/**`、`.memoria/manifest.yaml`、`.memoria/pending.json` | R | **R/W**（**只经原语**，不直接写） | — | R |
 | `.memoria/agent/sessions/**` | R | R（**只由核心追加审计事件**） | R | R |
+| `.memoria/agent/backups/**`（写前备份，§2.3.2） | R | R（**只由 apply 入口写**；插件不可触达） | — | R |
 | `.memoria/images/**` | R | R/W（仅 `kb.file.image_*` 原语） | R/W（先落 pending） | R |
 | `.memoria/cache/**`（可再生缓存） | R/W | R/W | R/W | R/W |
 | **库根之外**任意路径 | **Deny** | **Deny** | Deny | Deny |
@@ -198,14 +284,16 @@
 
 | 切片 | 落什么 | K 级（[ledger-maintenance.md §2](../conventions/ledger-maintenance.md)） | 验收门 |
 |---|---|---|---|
-| **M3a**（骨架 + 首个写原语） | 契约校验器 + 装载器 + 库级注册文件 + 完整写管线（propose/dry-run/逐条确认/apply/审计）+ **原语目录头两个**：`kb.kp.create`、`kb.file.create` | 拍板前 **K3 待评审**；实施后 **K2 代码完成·验收未闭环**；三件证据齐 ⇒ **K4** | ① 单测 + ② harness DOM + ③ **安全门**（下列三条） |
-| **M3b**（族化收口） | 其余写原语（`kb.kp.update`、`kb.link.create`、`kb.link.set_type`、`kb.file.rename`、`kb.file.delete`）+ 撤销/回滚（§10 P10）+ `permission-presets` 的第二个旋钮 + **各一个"只声明不启用"的 N/S 样板插件**（验证契约通用性） | 同上 | M3a 门禁 + **越权次数 = 0** + L2 A/B（§7.4） |
+| **M3a**（骨架 + 首个写原语） | 契约校验器 + 装载器 + 库级注册文件 + 完整写管线（propose/dry-run/逐条确认/**写前备份**/apply/审计）+ **原语目录头两个**：`kb.kp.create`、`kb.file.create` | 拍板前 **K3 待评审**；实施后 **K2 代码完成·验收未闭环**；三件证据齐 ⇒ **K4** | ① 单测 + ② harness DOM + ③ **安全门**（下列四条） |
+| **M3b**（族化收口） | 其余写原语（`kb.kp.update`、`kb.link.create`、`kb.link.set_type`、`kb.file.rename`、`kb.file.delete`）+ 撤销/回滚（**整轮 / 整会话**，§2.3.2、§10 P10）+ `permission-presets` 的第二个旋钮 + **各一个"只声明不启用"的 N/S 样板插件**（验证契约通用性） | 同上 | M3a 门禁 + **越权次数 = 0** + L2 A/B（§7.4） |
 
-**安全门（三条缺一不可，产物落 `artifacts/agent/verify/**`）**：
+**安全门（四条缺一不可，产物落 `artifacts/agent/verify/**`）**：
 
 1. **无 silent 写**：任一次拒绝/失败后，受影响文件 + `.memoria/**` **逐文件 SHA256** 与事务前全等；
 2. **越界被拒**：`../escape.md`、库外绝对路径、指向库外的**符号链接**各一例 ⇒ `DENIED_CODE` 且零字节变化；
-3. **审计可回放**：**仅凭**会话 JSONL 的 `capability/apply` 事件即可重建"改了哪些文件、哪些行"（字段级断言，不依赖内存态）。
+3. **审计可回放**：**仅凭**会话 JSONL 的 `capability/apply` 事件即可重建"改了哪些文件、哪些行"（字段级断言，不依赖内存态）；
+4. **备份可用可清**（2026-09-20 新增，§2.3.2）：① **正常写后可用备份恢复逐字节一致** —— 用该批 `files/**` 覆盖回受影响文件 + `.memoria/**`，与事务前 SHA256 逐文件全等；② **写失败 / 备份失败 ⇒ 零部分写** —— 无任何文件被改，且失败批次目录被删除或标记为可见；③ **越界写被拒后无备份残留**（或残留可清理且计数可见）。
+   - **验证方式**：单测（`tests/test_agent_capabilities.py` 增 "restore byte-equal / zero-partial-write / deny-no-residue" 三组用例）+ 一个 `docs/example/rich-content-test/_harness.py` 演示（写 → 撤销 → 逐字节比对，走真实 KB）。
 
 **附：M3 首批写原语目录**（插件只能挑用这些；`幂等键` 是 §6.3 原则 5 的落实）：
 
@@ -437,7 +525,7 @@
 |---|---|---|
 | **T1** | 记账口径补齐（标题/压缩/裁剪进报告）+ 工具调用可观测（name/参数摘要/耗时/字节数） | 一份报告能回答"这轮花了多少、花在谁身上" |
 | **B1** | L1 + L2 骨架（工具选择正确率、任务级 token、越权次数） | 有可复跑的对照表（先只用只读能力） |
-| **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（提议 → dry-run diff → 逐条确认 → 应用 → 审计）+ **两个**写原语（`kb.kp.create`、`kb.file.create`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放（§2.6 安全门三条） |
+| **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（提议 → dry-run diff → 逐条确认 → 应用 → 审计）+ **两个**写原语（`kb.kp.create`、`kb.file.create`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放 + 备份可用可清（§2.6 安全门四条） |
 | **W2**（=`M3b`） | 其余写原语（`kb.kp.update` / `kb.link.*` / `kb.file.rename` / `kb.file.delete`）+ 撤销回滚 + `permission-presets` 第二旋钮 + N/S 各一个"只声明不启用"样板插件 | M3 出口（[dsh-agent-port §8](dsh-agent-port.md)）：越权次数 0 + L2 A/B |
 | **N1** | 出网一次 + `web_search`/`fetch_url` 原语 + 落 `pending` + `kind: network` 插件声明 | 出网可审计、长文不进上下文 |
 | **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ `kind: skill` 插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
@@ -451,7 +539,7 @@
 
 | # | 风险 | 等级 | 处置 |
 |---|---|---|---|
-| R1 | **写能力毁用户库**（模型误解、range 锚错位） | 高 | 逐条确认 + 事务回滚 + 只走既有服务层 + 每轮 `validate` |
+| R1 | **写能力毁用户库**（模型误解、range 锚错位） | 高 | 逐条确认 + 写前 pre-image / 事务回滚（§2.3.2）+ 只走既有服务层 + 每轮 `validate`；备份失败即不写（fail-closed） |
 | R2 | **正文内相对链接/引用未随文件移动改写**（`path_cascade` 明确不碰正文） | 中高 | M3b 前补齐正文改写，否则 `kb.file.move` 不进工具集（§2.6 不做清单） |
 | R3 | **出网泄露与"自动抓取"越界** | 中高 | 默认关 + 逐次显式 + 审计事件 + 私网地址拒绝 |
 | R4 | skill / 能力插件变成任意代码执行面 | 高 | 契约**不含执行体**（插件只声明，工具体=核心原语）+ `permissions.exec` M3 恒空（§2.1/§2.5/§2.6）；执行类需求单独评审（沙箱，上游**不吃**） |
@@ -475,7 +563,7 @@
 | **P7** | **能力插件注册表的承载位置**（§2.2） | ① 内置声明 `resources/agent-capabilities/**`（随版本）+ 库级启用 `<kb>/.memoria/agent/capabilities.json`（随库）（**推荐**：与既有"程序读取源 vs 库内事实源"分工一致，且不动 `config/agent.json` 键白名单）② 全部随库（`.memoria/agent/capabilities/**`，可分发，但升级要迁移）③ 全部在程序目录（跨库共享，但无法 per-KB 启停） | 决定是否需人工登记 `AGENTS.md §1` |
 | **P8** | **M3a 首批写原语个数** | ① 两个（`kb.kp.create` + `kb.file.create`，**推荐**：最小可证伪，先证"管线 + 安全门"）② 四个（再含 `kb.kp.update` + `kb.link.create`）③ 一个（只有 `kb.kp.create`，风险最低但契约的"多动作类 + 分级审批"未被验证） | M3a 工期与门禁覆盖 |
 | **P9** | **插件 `approval` 档是否允许用户覆写** | ① **不可覆写**：库级文件只接受启停与 `config` 参数，`approval` 由声明决定（**推荐**：审批档是安全不变量而非偏好）② 可覆写（用户可把某插件 `write` 降到 `auto`）—— 需醒目告警 + 额外审计，且与 §2.1 的装载期硬校验冲突 | 决定 `capabilities.json` 的字段面 |
-| **P10** | **撤销/回滚的实现口径**（§2.3 第 6 步） | ① **由审计事件反向重放**（**推荐**：零额外存储、天然可审计）② 落盘快照目录 `<kb>/.memoria/cache/capability/<txid>/`（大改动更稳，但引入新缓存与清理策略）③ 两者都做（先快照、重放兜底） | 存储与清理策略 |
+| **P10** | **撤销/回滚的实现口径**（§2.3 第 6 步；数据面见 §2.3.2） | ① **写前快照 + 会话内撤销 + 每会话保留 5 批 / 每库 64 MiB（FIFO，最新批次永不淘汰）**（**推荐**：可逐字节回滚、存储有界、撤销失败与淘汰均可见） ② **完整历史**（保留全部批次或用户设定的大额保留）：可撤销任意历史批次，代价 = 备份随写入线性增长 + 需人工清理 ③ **仅审计重放**（不存快照）：只能按 ±行 diff 语义回放，**不保证逐字节**，且文件被外部改动后不可安全回放 ⇒ 只作审计、不作撤销 | 存储与清理策略；② 的磁盘占用与"轻量/离线"的取舍 |
 | **P11** | **`permission-presets`（权限档）是否随 M3b 落地** | ① 随 M3b 落地最小两档（**推荐**：`ask`＝写能力开、`never`＝全关；此时§2.1 的 `approval` 已是第 2 个旋钮）② 留到 M4（写能力已能用，档位只是便利） | 呼应 [dsh-agent-port §6.15](dsh-agent-port.md) 的"无第二个旋钮"判定 |
 
 ---
@@ -486,3 +574,4 @@
 |---|---|
 | 2026-09-19 | 初版（待评审）：现状盘点（调用面已具备、能力面极窄）；四条能力线（W 写 / N 联网 / S skill / H 宿主）逐线给出形态、边界、风险与验收；两条横向约束（token 三级预算 + 工具元层六原则与反模式；基准三层 L1/L2/L3 + 指标 + 语料 + 门禁，复用 maintenance-benchmark 方法论）；阶段建议 T1→B1→W1→W2→N1→S1→H1；7 条风险；P1–P6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG04） |
 | 2026-09-20 | **完善 M3：写能力 → 可插拔能力插件机制**（用户口径「M3 需要完善设计，做成可插拔的机制」）。§2 由"写工具清单"重写为七小节：**2.1 插件能力契约**（14 个字段的硬校验表 + 内置声明与库级启用两份 JSON 实样；铁律 = 插件目录**不含可执行代码**）、**2.2 注册与装载**（内置声明 `resources/agent-capabilities/**` + 库级 `<kb>/.memoria/agent/capabilities.json` 两位置分工、发现顺序、冲突即失败、不变量"新增插件不改核心"逐个点名核心文件、UIAPI 只加**一个通用网关**）、**2.3 写管线**（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销六步，逐步标注**已存在**的接入函数）+ **2.3.1 唯一写者**（`DocumentService.save_document`(`document.py:317`) / `storage/sidecar.py:120` / `storage/manifest.py:178` / `storage/pending.py:273`）、**2.4 权限矩阵与越界**（realpath 前缀校验、硬拒 `DENIED_CODE`、零部分写、库外一律 Deny）、**2.5 四线 → 插件族**（W/N/S 纯声明式、H 需一个前端挂载点；如实说明"能插的是声明与权限，不能插的是执行体"）、**2.6 M3a/M3b 分期 + 安全门三条 + 首批写原语目录 + 不做清单**、**2.7 与上游关系**（借 `user-approval` 与 `tool-fs` 的 diff 呈现契约；**沙箱升级不吃**，本设计用声明式 permissions + realpath 校验替代 —— 本地发明）。同步：§0 红线「禁止 silent 写入」加强为"插件边界物理可证"、§0 单一事实源补库级注册文件须登记；§1 缺口行；§4.2 skill 归入同一契约；§8 `W1/W2` 更名 `M3a/M3b` 并补 N1/S1/H1 的不改核心前提；§9 新增 **R8**（装载器成为越权写入面）；§10 新增 **P7–P11**（注册表承载 / M3a 原语个数 / approval 可否覆写 / 回滚口径 / 权限档是否随 M3b）；全部锚点逐条读码核对（见 §2 各处的 `file:line`）。**未实施任何代码**（本轮 docs only）；`docs/todo.md §13 AG04` 行按规则 8 同义压缩后仍为 K3 待评审 |
+| 2026-09-20 | **为写能力补备份机制**（用户口径「写入技能还需要有备份机制」）。新增 **§2.3.2 备份（写前 pre-image）与撤销的数据面**（六小节）：① **时机/粒度** = apply 前、单文件 pre-image + 每轮一个批次快照（`txid`），覆盖 §2.3.1 四原语的**全部**落盘目标（md / sidecar / manifest / pending）；新建文件记 `{"existed": false}`（撤销=删除）；② **位置/命名/格式** = `<kb>/.memoria/agent/backups/<session_id>/<txid>/{journal.json,files/<原相对路径>}`，**原字节复制**（不做 diff/patch 存储，diff 只用于人看的 dry-run），逐字节/换行保真，单文件 >**8 MiB** 或单批 >**32 MiB** ⇒ 预检失败不写；③ **保留口径** = 每会话 **5** 批 / 每库 **10** 会话 / 总计 **64 MiB**，FIFO 淘汰且**永不删当前会话最新批次**，清理时机为 apply 后 / 打开 / 关库（不进读热路径），淘汰与失败**均可见**、**备份失败即不写（fail-closed）**；④ **唯一写者绑定点** = 备份是 apply 入口第一步（调用序 `路径校验 → snapshot_pre_images → 四原语 → 审计 → trimming`），插件无代码 + `permissions.write` 白名单不含 `backups/**` ⇒ 绕不过；⑤ **撤销** = 以事务为单位（M3a 只做撤上一批），入口走 §2.2 唯一通用网关 `agent_capability_call(action="undo")`（形态对齐 `ui.py:1329`），撤销**仍需审批 + 审计**，撤销前校验 sha256 防覆盖用户手改，撤销后跑 `validate_kb()`（`document.py:2001`）恢复一致性，**撤销失败不静默、保留备份、报错**；⑥ **与既有机制的关系** = 如实说明既有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）的 `.bak` 是 **fail-open、单版本、非事务**，本节 pre-image 与之**叠加**并**有意收紧**为 fail-closed（仅 M3 agent 路径）；git 库情形**不调 git**；**不构成新增事实源**（非权威可清理副本，与 `.memoria/cache/**` 同类，但**不**放 cache 下以免被静默清空），并给出"若升格为权威档案才需人工登记 `AGENTS.md §1`"的那一行原文。同步：§0 红线加"写前必留 pre-image、备份失败即不写"；§2.1 实样 `forbidden` 增 `backups/**`、`emits` 增 `capability/backup`/`capability/undo`；§2.3 表第 4/6 步与"四条不变口径"引 §2.3.2；§2.3.1 补"原语调用者唯一 = apply 入口"；§2.4 矩阵增 `backups/**` 行；§2.6 M3a 落点加"写前备份"、安全门**三条 → 四条**（新增"备份可用可清"+验证方式）、M3b 撤销范围标注"整轮/整会话"；§9 R1 处置加写前 pre-image；**§10 P10 重写**为三选项（①写前快照+会话内撤销+数字保留（推荐）②完整历史 ③仅审计重放） |

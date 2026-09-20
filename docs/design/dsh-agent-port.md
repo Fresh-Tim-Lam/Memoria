@@ -797,7 +797,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 红线（出处） | 本方案的落法 |
 |---|---|
 | **离线优先**（designV0） | 应用**默认可用但可一键关**出网；模型仅走用户自配端点；不内嵌权重、不后台拉取任何东西；`.memoria/cache/**` 之外不新增缓存 |
-| **禁止 silent 写入**（designV0:254,911） | M1 工具面**只读**；写能力（M3）一律"提议 → 用户确认 → 应用"，且应用必须走既有服务层（原子写 A7 → 索引失效 G5.4 → manifest/sidecar 同步 A1/A2 → pending 同步 A3），**禁止旁路写文件**。**M3 设计已完善**（[agent-capabilities.md §2.3.1](agent-capabilities.md)）：该红线在**插件边界物理可证** —— 插件不含可执行体（无 `open(...,"w")` 的机会）、核心写原语是唯一写者、落盘前做 realpath 前缀校验 |
+| **禁止 silent 写入**（designV0:254,911） | M1 工具面**只读**；写能力（M3）一律"提议 → 用户确认 → 应用"，且应用必须走既有服务层（原子写 A7 → 索引失效 G5.4 → manifest/sidecar 同步 A1/A2 → pending 同步 A3），**禁止旁路写文件**。**M3 设计已完善**（[agent-capabilities.md §2.3.1](agent-capabilities.md)）：该红线在**插件边界物理可证** —— 插件不含可执行体（无 `open(...,"w")` 的机会）、核心写原语是唯一写者、落盘前做 realpath 前缀校验；**且 apply 前必留写前 pre-image、备份失败即不写**（[§2.3.2](agent-capabilities.md)） |
 | **单一事实源**（AGENTS.md §1） | 会话数据落在新事实源（须先登记，见 P3）；提示词/规范仍只有 `.memoria/agent/**` 与 `resources/agent-prompts/**` 两处（后者是程序读取源） |
 | **免安装、可离线分发**（`build.py` 硬门禁） | 纯 Python 实现 ⇒ **不引 Node、不引新运行时**；新增依赖须过 `packaging/build.py` 的 `_REQUIRED_RELEASE_RESOURCES` 与体积预算（M1 目标：轻量包增量 < 2 MB） |
 
@@ -809,7 +809,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 |---|---|---|
 | **M1** | 应用内对话 + 读库问答（只读工具、单一会话、jsonl 持久化、密钥本地引用、出网开关） | §6.4 全绿 + 用户真机走查 |
 | **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference/time）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
-| **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路。**设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)：可插拔能力插件契约 + M3a/M3b 分期 + 安全门三条），待拍板（P7–P11）/ 待实施** | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
+| **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认 + **写前备份**）；对接既有写链路。**设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)：可插拔能力插件契约 + M3a/M3b 分期 + 安全门四条（含备份可用可清）），待拍板（P7–P11）/ 待实施** | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
 
 > **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。
@@ -829,7 +829,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 > （要有真实命令需求才有得注册）；**M4** = 对外契约（旧稿 §7 的 T1 CLI 面）。
 > **M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板（P7–P11）/ 待实施**：
 > 写能力改为「可插拔能力插件」形态（契约 + 装载器 + 写管线 + 权限矩阵），并给出 **M3a/M3b** 两个
-> 切片与安全门三条；`permission-presets` 所需的"第 2 个旋钮"由该契约的 `approval` 档提供（§2.1/P11）。
+> 切片与安全门四条（含**写前备份可用可清**，§2.3.2）；`permission-presets` 所需的"第 2 个旋钮"由该契约的 `approval` 档提供（§2.1/P11）。
 > 另有两条**本模块级**待办（见 §6.15 末段）：`tool/call` 落盘位次对齐（`toolMs` 可测的前提）与逐轮成本按轮模型归属。
 >
 > **仍标 ⏳ 的行（截至 2026-09-20，已按 §6.15 的全量读码界定收敛）**：
