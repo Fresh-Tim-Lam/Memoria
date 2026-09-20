@@ -809,7 +809,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 |---|---|---|
 | **M1** | 应用内对话 + 读库问答（只读工具、单一会话、jsonl 持久化、密钥本地引用、出网开关） | §6.4 全绿 + 用户真机走查 |
 | **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference/time）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
-| **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认 + **写前备份**）；对接既有写链路。**设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)：可插拔能力插件契约 + M3a/M3b 分期 + 安全门四条（含备份可用可清）），待拍板（P7–P11）/ 待实施** | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
+| **M3** | 写能力：提议（**agent 只产声明式 plan**）→ 确认 → 应用（per-KB 开关 + 逐条确认 + **写前备份**；落盘由**编译器**在 apply 入口完成）；对接既有写链路。**设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)：可插拔能力插件契约 + **计划 API + 编译器**（§2.3.3/§2.3.4）+ M3a/M3b 分期 + 安全门四条（含备份可用可清）），待拍板（P7–P12）/ 待实施** | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
 
 > **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。
@@ -827,8 +827,8 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 > **M2 之后仍未做（按阶段）**：**M3** = 写能力（提议 → 确认 → 应用）+ 由它解锁的
 > `interaction/permission-presets`（要有第 2 个旋钮才有"档"可切）与 `interaction/commands`
 > （要有真实命令需求才有得注册）；**M4** = 对外契约（旧稿 §7 的 T1 CLI 面）。
-> **M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板（P7–P11）/ 待实施**：
-> 写能力改为「可插拔能力插件」形态（契约 + 装载器 + 写管线 + 权限矩阵），并给出 **M3a/M3b** 两个
+> **M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板（P7–P12）/ 待实施**：
+> 写能力改为「可插拔能力插件 + **计划 API + 编译器**」形态（契约 + 装载器 + 写管线 + 权限矩阵；agent 只产 plan、落盘由编译器），并给出 **M3a/M3b** 两个
 > 切片与安全门四条（含**写前备份可用可清**，§2.3.2）；`permission-presets` 所需的"第 2 个旋钮"由该契约的 `approval` 档提供（§2.1/P11）。
 > 另有两条**本模块级**待办（见 §6.15 末段）：`tool/call` 落盘位次对齐（`toolMs` 可测的前提）与逐轮成本按轮模型归属。
 >
