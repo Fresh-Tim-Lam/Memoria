@@ -484,7 +484,9 @@ def test_new_session_query_tools_registered_and_read_only(tmp_path: Path) -> Non
     registry = ToolRegistry(build_kb_tools(str(root)))
 
     assert tuple(tool.name for tool in build_kb_tools(str(root))) == KB_TOOL_NAMES
-    assert registry.names()[-4:] == SESSION_TOOLS, "新增工具追加在工具面末尾（零锚点漂移）"
+    # 本轮的四个工具仍**连续**追加在原工具面之后（§6.17 零锚点漂移）；其后再接 R 线引用板块两工具（§6.18）
+    assert registry.names()[-6:-2] == SESSION_TOOLS, "会话查询四工具仍连续追加在工具面里"
+    assert registry.names()[-2:] == ("resolve_reference", "audit_references")
     for name in SESSION_TOOLS:
         tool = registry.get(name)
         assert tool is not None and tool.read_only and tool.parameters["additionalProperties"] is False

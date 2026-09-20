@@ -136,13 +136,13 @@
 
 | 项 | 上游（做法 + file:line） | 本地（现状 + file:line 或「未移植」） | 差异与风险 |
 |---|---|---|---|
-| `@路径` 文件引用 | `@path` 起始/空白后触发、`@"含空格路径"`、目录尾斜杠；选区**不读内容**（`dsh-src/packages/context/file-reference/README.md:32`、`:12`） | ✅ 已移植：`FILE_REFERENCE_SECTION`（`src/memoria/services/agent/prompt.py:194-218`），门控同上游「有读取手段即注入」（`:261` + 名单 `:385-394`） | 已完全移植；两处偏差：① 上游「目录 → list it」本地无列目录工具，改指 `search_kb` 与 `glob`（`:207`）；② 门控名单由「只认 `read_document`」放宽为四个读取工具（`FILE_REFERENCE_TOOLS`，§6.16 门控） |
-| 跨会话引用 | `@[label](dsh-session:<payload>)` mention + 投影快照；uri 语法与转义（`dsh-src/packages/context/session-reference/README.md`、`src/uri.ts`） | ✅ 已移植：scheme `dsh-session:`、payload = 无填充 base64url(JSON)（`src/memoria/services/agent/session/reference.py:91`、`:102`、`:137`、`:172`）；`max_references ≤ 3` | 投影有意简化：`cwd` / `capturedThroughSeq` 恒 null、快照只进本轮请求不落盘（登记于 `docs/conventions/docs-management.md:143`） |
-| `[[id]]` 知识点链接 | **上游无此语法** | ✅ 本地独有：`[[id]]` / `[[id#type]]` / `[[id\|text]]`（`docs/conventions/markdown-form-std.md:16-19`）；悬空目标校验 `ISSUE_UNRESOLVED_TARGET`（`src/memoria/graph/link_audit.py:27`） | 本地发明 ⇒ 无「未移植」可言；**悬空引用校验本地已有**（反向：上游反而是空白） |
-| `文件:行号` 锚点 | 上游只保证 `read` 结果自带行号，无「回答必须带锚点」约定（`dsh-src/packages/fs/tool-fs/README.md:182`） | ✅ 本地独有：工具结果带结构化 `anchors`（`.../tools/registry.py:66-78`）+ 提示词强制写法（`prompt.py:270`）；行号来自 KP range 解析（`.../tools/kb.py:212-215`） | 本地发明，是「答案可核查」的支点；风险=行号依赖 sidecar range 解析，解析失败时退化为 `line_hint` |
+| `@路径` 文件引用 | `@path` 起始/空白后触发、`@"含空格路径"`、目录尾斜杠；选区**不读内容**（`dsh-src/packages/context/file-reference/README.md:32`、`:12`） | ✅ 已移植：`FILE_REFERENCE_SECTION`（`src/memoria/services/agent/prompt.py:194-218`），门控同上游「有读取手段即注入」（`:261` + 名单 `:385-394`） | 已完全移植；两处偏差：① 上游「目录 → list it」本地无列目录工具，改指 `search_kb` 与 `glob`（`:207`）；② 门控名单由「只认 `read_document`」放宽为四个读取工具（`FILE_REFERENCE_TOOLS`，§6.16 门控）；**2026-09-20（§6.18）起** agent 侧另有只读解析与审计（`resolve_reference` / `audit_references` 覆盖本行这类 `@路径`：归一化 + 精确/唯一 basename/唯一后缀分级收敛，越界 fail-closed 拒绝、多义回候选不猜） |
+| 跨会话引用 | `@[label](dsh-session:<payload>)` mention + 投影快照；uri 语法与转义（`dsh-src/packages/context/session-reference/README.md`、`src/uri.ts`） | ✅ 已移植：scheme `dsh-session:`、payload = 无填充 base64url(JSON)（`src/memoria/services/agent/session/reference.py:91`、`:102`、`:137`、`:172`）；`max_references ≤ 3` | 投影有意简化：`cwd` / `capturedThroughSeq` 恒 null、快照只进本轮请求不落盘（登记于 `docs/conventions/docs-management.md:143`）；**2026-09-20（§6.18）**：agent 侧可按 URI 解出会话 id 并核对本库会话文件是否存在（`resolve_reference`），`audit_references` 另报「URI 非规范 / id 非法 / 本库无此会话」 |
+| `[[id]]` 知识点链接 | **上游无此语法** | ✅ 本地独有：`[[id]]` / `[[id#type]]` / `[[id\|text]]`（`docs/conventions/markdown-form-std.md:16-19`）；悬空目标校验 `ISSUE_UNRESOLVED_TARGET`（`src/memoria/graph/link_audit.py:27`） | 本地发明 ⇒ 无「未移植」可言；**悬空引用校验本地已有**（反向：上游反而是空白）；**2026-09-20（§6.18）起** agent 侧也有同名能力：`resolve_reference` 解 id / 文件名 / 多目标歧义，`audit_references` 逐处报「悬空 / 歧义 / 正文出现但未挂接」（别名判定需文档上下文，故落在审计侧） |
+| `文件:行号` 锚点 | 上游只保证 `read` 结果自带行号，无「回答必须带锚点」约定（`dsh-src/packages/fs/tool-fs/README.md:182`） | ✅ 本地独有：工具结果带结构化 `anchors`（`.../tools/registry.py:66-78`）+ 提示词强制写法（`prompt.py:270`）；行号来自 KP range 解析（`.../tools/kb.py:212-215`） | 本地发明，是「答案可核查」的支点；风险=行号依赖 sidecar range 解析，解析失败时退化为 `line_hint`；**2026-09-20（§6.18）起** agent 侧可解单条锚点并全库审计越界行，但**区间锚点（`#L12-L30`）如实回 `unsupported`** —— 本地没有读时投影（AG07 的 L 路线未实施），只核起始行、不校验末端 |
 | 时间上下文 | 每步注入时间/浏览器时区/elapsed；`refreshIntervalMs` 调速（`dsh-src/packages/context/time-context/README.md:12`、`:32`） | ✅ 已移植文本语义：`TIME_CONTEXT_SECTION` 无条件注入（`prompt.py:263`）、读数追加在本轮请求末尾（`ask.py:421`） | 有意偏差：读数不落盘、无 elapsed / turn-step、三态时区收敛为一句（§6.14） |
 | 指令文件（AGENTS.md 链） | 用户全局 + 项目链、宽到窄、`maxBytes` 预算（base 默认 65,536 B）（`dsh-src/packages/context/agent-instructions/README.md:12`、`:28`） | ✅ 已移植：`load_instructions` / `render_instructions`（`prompt.py:253`），对接既有 `.memoria/agent/kb-spec*.md` | 已移植；差别=本地只有「库内指令」一层，无 user-global 层级 |
-| 块级 / 片段引用 | **上游也没有**：`file-reference` 只到路径级，`read` 只有行窗（`README.md:32`、`:46`） | ❌ 未设计（本地亦无） | 属**双方共同空白**，不是「未移植」；若产品要块级引用，两边都得新造 |
+| 块级 / 片段引用 | **上游也没有**：`file-reference` 只到路径级，`read` 只有行窗（`README.md:32`、`:46`） | ❌ 未设计（本地亦无） | 属**双方共同空白**，不是「未移植」；若产品要块级引用，两边都得新造；**2026-09-20（§6.18）**：agent 侧两把引用工具**明确不含**这两类（写进工具描述与 §6.18，避免模型误以为能解） |
 
 **写工具**
 
@@ -1103,7 +1103,130 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 
 **未实测**：① 真实模型端点下模型**是否会正确选工具**（该用 `session_event_search` 时不用 `search_sessions`、拿到命中后是否接着 `session_event_read` 取原文）—— 只做静态 + 单测 + Python 级真实调用；② 大库（数百份会话 / 数 MiB 会话文件）下 `session_lineage` 的**墙钟耗时**（有界性有设计约束，未做 A/B 计时）；③ 真机面板端到端（本轮零前端改动，且没有浏览器工具）；④ 上游 dsh 真机上的对照行为（未运行 `dsh`，全部依据只读检出）。
 
-**文档**：`conventions/docs-management.md §4.2` 本轮登记行（`:162`）；`reference/agent-guide/10` 三处**等量改写**（工具面计数行 `181`「6 → 9 → **13**」、会话检索工具段 `226`、§6 证据锚行 `431` —— 三行都是单物理行改写 ⇒ **行号零漂移**）；本文件 §5.1 会话检索行 + 三段结论中的 ①③、§8「M2 已落地部分」与「已转 ✅」口径、§11 变更记录本轮行（`:1218`）。**锚点重取（old → new）**：`reference/agent-guide/10` 的 `services/agent/session/query.py:1-380` → **`:1-679`**（同块内新增 `read_event`/`trace_event`/`session_lineage` 与常量行）、`tools/kb.py:566-592` → **`:581-607`**（该行随 §6.16 重取，本轮沿用）；**§6.17 自身两次取号的更正**：本轮新增块 `_session_event_search` `:1295-1361` → **`:1297-1363`**、`_session_trace` `:1364-1411` → **`:1366-1413`**、`_session_event_trace` `:1414-1464` → **`:1416-1464`**、`_session_query_tools` `:1508-1603` → **`:1510-1605`**、`_epoch_ms` `:1207-1238` → **`:1208-1240`**（写作时点与验收时点的行号复取）。`tools/kb.py` 的**既有**引用（`:73-80`、`:83-84`、`:446-482`、`:581-607`、`:460`、`:523-550`、`:610-665`、`:688`、`:730-776`、`:793-839`、`:911-1072`、`:1088-1162`）**全部未动**（本轮对 `kb.py` 只有文件尾追加与等量改写）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行（`:162`）；`reference/agent-guide/10` 三处**等量改写**（工具面计数行 `181`「6 → 9 → **13**」、会话检索工具段 `226`、§6 证据锚行 `431` —— 三行都是单物理行改写 ⇒ **行号零漂移**）；本文件 §5.1 会话检索行 + 三段结论中的 ①③、§8「M2 已落地部分」与「已转 ✅」口径、§11 变更记录本轮行（`:1341` —— **原 `:1218`，随 §6.18 插入整体下移，已重取**）。**锚点重取（old → new）**：`reference/agent-guide/10` 的 `services/agent/session/query.py:1-380` → **`:1-679`**（同块内新增 `read_event`/`trace_event`/`session_lineage` 与常量行）、`tools/kb.py:566-592` → **`:581-607`**（该行随 §6.16 重取，本轮沿用）；**§6.17 自身两次取号的更正**：本轮新增块 `_session_event_search` `:1295-1361` → **`:1297-1363`**、`_session_trace` `:1364-1411` → **`:1366-1413`**、`_session_event_trace` `:1414-1464` → **`:1416-1464`**、`_session_query_tools` `:1508-1603` → **`:1510-1605`**、`_epoch_ms` `:1207-1238` → **`:1208-1240`**（写作时点与验收时点的行号复取）。`tools/kb.py` 的**既有**引用（`:73-80`、`:83-84`、`:446-482`、`:581-607`、`:460`、`:523-550`、`:610-665`、`:688`、`:730-776`、`:793-839`、`:911-1072`、`:1088-1162`）**全部未动**（本轮对 `kb.py` 只有文件尾追加与等量改写）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
+
+---
+
+### 6.18 引用板块（R 线）实施记录（2026-09-20：只读「引用解析」+「引用审计」，已落地）
+
+> 用户口径「把引用板块做了」。它是**读侧**能力、不动上游一行：把库里五种引用（`@路径` / `dsh-session:` / `[[…]]` / `文件:行号` / `![](...)`）做成两把**只读**工具 —— `resolve_reference`（解一条）与 `audit_references`（查一批）。前置关系：§6.13 的 A 子项（文件内选区引用）与写侧（M3）都要求「先能**准确解析**目标」，本板块就是那个前置。
+> **路线来源**：台账 **AG07**（`docs/todo.md:265`，K2 路线已定）与 [agent-capabilities.md §6.5](agent-capabilities.md)（`agent-capabilities.md:447-481`）已经拍板的 **P（提示词收窄语法）+ V（程序校验 + 用库内清单分级收敛）+ L（改读时投影）**，以及紧随其后的「**不要做**」清单。本节按它实现，**不另立口径**。
+
+**范围界定（本期只覆盖库内五类引用）**：
+
+| 引用 | 解析路径（复用件，全部实读） | 状态词 |
+|---|---|---|
+| `@相对路径`（含 `@"带空格"`、目录尾斜杠） | 正则逐字对齐前端 `MENTION_RE`（`ui/static/app/js/agent-panel.js:125`）；路径校验走**允许根**（`tools/kb.py:1142` `_read_roots()` / `:1147` `_resolve_in_read_roots()`，经 `:793` `_safe_rel_any()`）；库内清单来自 `:819` `_walk_kb_files()` | `ok` / `not_found` / `ambiguous` / `rejected` |
+| `@[label](dsh-session:…)` / 裸 URI | 复用 `session/reference.py:101` 的 `_MENTION_RE`（单一事实源，两处语法不再各写一份）+ `:142` `decode_session_uri()`；文件走 `session/store.py:61` `session_file()`（非法 id 直接抛错 ⇒ fail-closed） | `ok` / `not_found` / `invalid` / `rejected` |
+| `[[…]]`（id / 别名 / 文件名 / 多目标） | `link_resolver.py:25` `scan_wikilinks()` + `:41` `resolve_link_target()`（全局 id / file stem）；别名与挂接见偏差 3 | `ok` / `not_found` / `ambiguous` |
+| `文件:行号` / 区间 | 正则字符类对齐前端 `ANCHOR_RE`（`agent-panel.js:117`），另补 `#L12-L30` 与全角 `：`；行号对照剥 frontmatter 的正文行（`tools/kb.py:175` `_read_body_lines()`，与 `read_document` 同一行空间） | `ok` / `not_found` / `ambiguous` / `rejected` / **`unsupported`** |
+| `![](...)`（`.memoria/images/**` + registry 登记态） | 复用 `document.py:1151` `_parse_image_ref_url()`（可注册性）、`:1167` `diagnose_image_refs()`（全库口径）、`:987` `_load_image_registry()`（**只读、不重建**）、`:937` `_doc_image_names_from_body()` | `ok` / `not_found` / `invalid` / `unsupported` / `rejected` |
+
+**明确不做（写进两把工具的描述，避免模型误以为能解）**：① **块级引用**（代码块 / 表格 / 公式）—— 需要新的稳定块标识，属另一设计；② **选区 / 片段引用**（区间末端的读时投影、对话片段引用）—— 属 §6.13 的 A / B 子项。**L 路线本轮未实施** ⇒ 区间锚点一律如实回 `unsupported`（只核起始行、明说「不校验末端、不声称区间语义已被解析」），**不假装能解**。
+
+**三条路线逐条落法**：
+
+1. **P**（提示词收窄语法）= **已由 `prompt.FILE_REFERENCE_SECTION` 承载**（`prompt.py:208-218`，要求引用取自工具回显的 canonical 路径），本轮**不重复实现**、也不动提示词（保住 §6.14/§6.15 刚定的段落顺序与 KV 前缀）。
+2. **V**（本块核心）= 三级：**V1 归一化**（`_reference_normalize()`，NFKC → 按终止字符截断 → 剥引号/CJK 括注/反引号 → `\`→`/` → 去 `./` 前缀）；**V2 分级收敛**（`_reference_converge_file()`：**精确 → 唯一 basename → 唯一后缀**，任一级命中 >1 即 `ambiguous` 并回候选，**绝不猜**）；**V3 回灌**（`not_found` 当**普通工具结果**返回：「真实情况 + 下一步」，**不自动重试**、不扩正则）。
+3. **L**（改读时投影）= **未实施**（见上）。§6.5 落地顺序第 5 条只允许「读取时投影」这一种形态，本板块没有渲染层可投影 ⇒ 宁可回 `unsupported`。
+
+**改动**（1 个源文件 + 1 个新测试文件 + 1 个既有测试文件 1 行断言；`kb.py` 为**文件尾追加 + 2 处等量改写** ⇒ 既有 `file:line` 零漂移）：
+
+- `services/agent/tools/kb.py`
+  - **文件尾追加 986 行**（`git diff --numstat` 实测：新增 991 / 删除 5 = 追加 986 + 2 处改写 5 行；追加段 `kb.py:1606-2591`，其中块注释起 `:1608`；代码本身 `:1608-2591` = 984 行）：常量 `REFERENCE_MAX_CHARS = 512`（`:1640`）/ `REFERENCE_MAX_CANDIDATES = 10`（`:1642`）/ `REFERENCE_AUDIT_MAX_ISSUES = 100`（`:1644`）/ `REFERENCE_KINDS`（`:1647`）；正则三条 `_FILE_MENTION_PATTERN`（`:1669`）/ `_ANCHOR_REF_PATTERN`（`:1674`）/ `_IMAGE_REF_PATTERN`（`:1686`）；共用件 `_reference_normalize()`（`:1725`）/ `_reference_converge_file()`（`:1749`）/ `_reference_rel_in_roots()`；五个解析体 `_resolve_file_reference()`（`:1837`）/ `_resolve_session_reference()`（`:1917`）/ `_resolve_kp_link_reference()`（`:1970`）/ `_resolve_anchor_reference()`（`:2015`）/ `_resolve_image_reference()`（`:2099`）＋ `_reference_image_registry()`（`:2090`）；分派表 `_REFERENCE_RESOLVERS`（`:2187`）与自动识别 `_detect_reference_kind()`（`:2196`）；工具体 `_resolve_reference()`（`:2214-2235`）；审计 `_audit_document()`（`:2272-2466`，五类逐条扫）与 `_audit_references()`（`:2468-2521`）；声明工厂 `_reference_tools()`（`:2526-2591`，两把 `Tool` 均 `read_only=True`、`additionalProperties: false`）。
+  - **等量改写 2 处（零行漂移）**：`KB_TOOL_NAMES` 13 → **15** 个名字（`:73-80`，8 行等量改写）；`build_kb_tools()` 返回元组末行 `), *_session_query_tools(root),` → `), *_session_query_tools(root), *_reference_tools(root),`（`:665`）。
+- 测试：新增 `tests/test_agent_tools_reference.py`（**12 例**，含 fixture 库 + 逐检查名计数断言 + 零写入断言）；`tests/test_agent_session_query_trace.py:487` 一行断言由「末尾四工具」改为「末尾四工具仍连续 + 其后接 R 线两工具」。
+
+**模型看到的文本（逐字，仓库外临时脚本实测；节选）**：
+
+```text
+# ① resolve_reference（精确 / 唯一 basename 收敛 / 多义 / 行号越界）
+引用解析：@notes/b.md
+- 类型：file（`@路径` 文件引用）
+- 归一化目标：notes/b.md
+- 状态：ok（已解析）
+- 指向：知识库文档 notes/b.md（共 3 行，1 个知识点）
+- 建议下一步：read_document(path="notes/b.md")
+
+引用解析：notes/c.md:3
+- 类型：anchor（`文件:行号` 锚点）
+- 状态：ok（已解析）
+- 指向：sub/c.md 第 3 行：第一行。          ← 按唯一 basename 从 `notes/c.md` 收敛到 `sub/c.md`
+- 建议下一步：read_document(path="sub/c.md", offset=3, limit=1)
+
+引用解析：@same.md
+- 状态：ambiguous（多目标歧义（未猜））
+- 候选（共 2 个，最多列 10 个）：
+  1. dup1/same.md
+  2. dup2/same.md
+- 原因：库内有 2 个同名 / 同后缀文件（basename 级命中 >1）—— 程序不猜
+
+引用解析：notes/c.md#L2-L4
+- 状态：unsupported（本地不支持）
+- 指向：起始行 L2 在范围内（目标 `sub/c.md`）
+- 原因：区间锚点本地无法可靠解析：没有「读时投影」能力（§6.5 L 路线未落地），故只核起始行、**不校验末端**，也不声称区间语义已被解析
+
+# ② resolve_reference（会话 / 歧义 / 图片 / 越界 / 坏 URI）
+引用解析：@[上次](dsh-session:ImRlbW8tczEi)
+- 类型：session（`dsh-session:` 会话引用）   - 状态：ok（已解析）
+- 指向：会话 `demo-s1`（标题：第一句提问）
+引用解析：@../outside.md                    - 状态：rejected（越界拒绝）  - 原因：路径在允许根（知识库根）之外，或含上跳 `..` —— 工具面 fail-closed 拒绝
+引用解析：@[坏](dsh-session:%%%)             - 状态：invalid（token 非法） - 原因：URI 非规范（`decode_session_uri()` 拒绝…）
+引用解析：![pic](.memoria/images/pic.png)    - 状态：ok  - 指向：文件存在；registry.json 已登记（引用方：notes/a.md）
+
+# ③ audit_references（fixture 库全库；逐条 = 检查名 / 位置 / 目标 / 问题 / 严重级）
+引用审计：扫描 全库 5 篇 .md，发现 16 个引用问题（已列 16 条：error 6 / warning 10）。
+- [error] file_reference.missing @ notes/a.md:3 目标 @notes/missing.md：库内不存在该文件（精确 / 唯一 basename / 唯一后缀三级都未命中）
+- [error] file_reference.outside_root @ notes/a.md:5 目标 @../outside.md：路径在允许根之外或含上跳 `..`，fail-closed 拒绝
+- [warning] file_reference.ambiguous @ notes/a.md:7 目标 @same.md：多义：`dup1/same.md`、`dup2/same.md`（程序不猜，用完整相对路径重写）
+- [warning] kp_link.body_not_attached @ notes/a.md:9 目标 [[b-kp]]：正文出现但未挂接（sidecar `instances` / `excluded` 里没有本行）
+- [warning] kp_link.ambiguous_target @ notes/a.md:9 目标 [[dup-kp]]：`by_id` 内多条同 id 记录：…（不猜）
+- [warning] anchor.range_unsupported @ notes/a.md:11 目标 notes/c.md:2-4：区间锚点：本地没有读时投影（§6.5 L 路线未落地）⇒ 只保证起始行、不校验末端（不假装能解）
+- [error] image.unregistered @ notes/a.md:15 目标 ![sp](.memoria/images/my pic.png)：裸 URL 含空白 ⇒ 图片注册规则识别不到…
+- [warning] image.not_registered @ notes/a.md:16 目标 ![unreg](.memoria/images/unregistered.png)：`.memoria/images/unregistered.png` 不在 `registry.json` 的 refs 里
+检查名（可用 resolve_reference 逐个复现）：file_reference.missing / … / image.not_registered
+
+# ④ 上限（limit=3）与边界
+（已达上限 3 条：还有 13 条未列出；请用 `path` 参数收窄到单篇文档）
+[resolve_reference] reference="" -> INVALID_ARGUMENTS：reference 不能为空
+[resolve_reference] kind="bogus" -> INVALID_ARGUMENTS：未知 kind 'bogus'（可选 file、session、kp_link、anchor、image…）
+[resolve_reference] reference="x"*513 -> INVALID_ARGUMENTS：reference 过长（513 字符 > 上限 512）
+[resolve_reference] reference="???": INVALID_ARGUMENTS：无法识别引用类型
+[audit_references] path="../outside.md" -> INVALID_ARGUMENTS；path 缺文件 -> NOT_FOUND
+```
+
+**语义偏差与取舍（AG07 三路线 → 本地）**：
+
+1. **V2 只取三级收敛，**不吃** §6.5 的「模糊（尾部元素加权，学 fzf）」**：§6.5「不要做」第 3 条明确「短 basename 上极易误并；误并比漏并更糟」。本地把 ①精确 ②唯一 basename ③唯一后缀 做成**硬闸门**，>1 一律 `ambiguous` + 候选 ⇒ 目标口径「**零误跳 + 可解释的候选**」（§6.5 结语）。
+2. **L（读时投影）未实施 ⇒ 区间锚点 `unsupported`**：这是本轮**最主要的有意缺口**。工具仍给出「起始行在/不在范围内」这一条可用事实，但**明说**不校验末端、不声称区间语义已解析（对应 §6.5「不要假装能解」）。**取舍**：宁可让模型退回单行锚点（`x.md:12`）或自己 `read_document(offset=…)`，也不产出一个我们无法兑现的区间语义。
+3. **别名（`links[].anchor_text`）与「正文出现但未挂接」按**文档上下文**判定**：`resolve_reference` 只拿得到一条 token（没有所在文档），故只做**全局**解析（kp_id / file stem）并在文本里明说「别名与挂接需要文档上下文，请对含该 token 的文档跑 `audit_references`」；逐处判定落在审计侧（复用 `document.py:2145` `_resolve_scan_link_entry()` + `link_instances.py:380` `is_line_attached()`）。
+4. **V1 的「终止字符」集与前端 `ANCHOR_RE` 同源**（CJK 标点 / 成对括号 / 引号之后不属于路径）：好处是 `@a.md（说明）` 这类正文标注不再被当成文件名的一部分（实测修掉了一处误报）；**已知取舍**：文件名里若真含 `（）` 或 `，`，会被截断 ⇒ 现记为**已知限制**（真实库中未实测到此类文件名，见「未实测」）。空白**不**参与截断（`@"含 空格.md"` 的空白是路径的一部分，对齐上游 `formatFileMention`）。
+5. **图片引用只覆盖 `.memoria/images/**`**：非库内 URL（外链 / 其它目录）回 `unsupported`（明确「不支持」而不是瞎解析）；registry 状态**只读 `registry.json`**（`_load_image_registry()`，**不用** `_registry_ensure()`/`rebuild_image_registry()`）⇒ 注册表缺失时如实说「登记状态无法判定」，**不伪造「已登记」**，也不为一次只读调用去写库。
+6. **会话引用作用域限本库**（`session_file()` + 文件存在性）：`dsh-session:` 的 URI 解码成功但 id 形状非法（含 `..` / 空白等）⇒ `rejected`；URI 非规范 ⇒ `invalid`；文件不存在 ⇒ `not_found` 并说明「会话按库分，不跨库」（与 `agent_session_load` 同口径）。
+7. **审计语料 = `collect_md_files()`**（与 `validate_kb` / `diagnose_image_refs` 同口径）：不含 `.memoria/**`（那是产品元数据，不是知识正文）⇒ 不审 `kb-spec.zh-CN.md` 一类文件，避免噪声。
+8. **上限 100 条 + 「已达上限」提示，但计数保持完整**：超限时**继续计数、只截显示**（照 `grep` 的 `命中 N/M 处` 做法），文案给「还有 N 条未列出 + 用 `path` 收窄」。
+9. **错误码取本地既有码族**：参数非法（空 / 未知 kind / 超长 / 未知形态 / `limit` 越界 / `path` 越界）⇒ `INVALID_ARGUMENTS`；目标文档不存在 ⇒ `NOT_FOUND`（工具体内部另有**业务**状态词表 `ok` / `not_found` / `ambiguous` / `invalid` / `rejected` / `unsupported`，与错误码分离 —— 一条「解析不到」的引用是**正常结果**，不是工具失败）。
+10. **不改会话 / 事件日志、不新增事实源**：两把工具全程在 `kb_read_only()` 守卫内（`kb.py:103`），零写入（有单测以文件清单前后比对为证）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（`tools/kb.py` / `tests/test_agent_tools_reference.py`） | 全过 |
+| `python -m pytest tests/ -q` | **320 passed**（原 308 + 本轮新增 **12** 例 `tests/test_agent_tools_reference.py`；既有测试仅 1 处断言更新 —— `tests/test_agent_session_query_trace.py:487`） |
+| 真实行为取证（Python 级；仓库外临时脚本，跑完即删） | 见上「模型看到的文本」四段；另实测 `KB_TOOL_NAMES` 与 `build_kb_tools()` 实际注册顺序**逐项一致**（**15** 个）、两工具 `read_only=True`、`kind` 枚举 = 五类、`limit > 100` 与 `limit = 0`（直连工具体）都报错、`resolve_reference` 与 `audit_references` 调用前后 fixture 库文件清单**逐字不变** |
+| 覆盖点 | `@路径`（精确 / 唯一 basename 收敛 / `@"带空格"` / 目录尾斜杠 / 悬空 / 多义 / 上跳）；会话（规范 / 裸 URI / 悬空 / 坏 URI / 非法 id）；`[[…]]`（id / 悬空 / 跨文件同 id 歧义 / 未挂接）；锚点（精确 / 全角冒号 + `L` 前缀 / 越界行 / 区间 `unsupported` / 文件不存在 / 上跳）；图片（已登记 / 缺文件 / 不可注册 / 注册表缺失 / 非库内）；审计（14 类检查名的**逐条计数**、形状（检查名 / `文件:行` / 目标 / 问题）、上限提示、`path` 收窄、干净文档回「未发现问题」）；边界（空 / 未知 kind / 超长 / 未知形态 / 多余参数 / 越界 `path`） |
+| 依赖面 | **纯标准库**（`re` / `unicodedata` 均为函数内局部导入），零新依赖 ⇒ 打包体积不变 |
+| 行号 | `kb.py` 仅**文件尾追加**（`:1608-2591`）+ **2 处等量改写**（`:73-80`、`:665`）⇒ §5.1/§6.16/§6.17 引用的既有 `file:line` **零漂移**；本轮新增引用的外部行号已逐处实读（`agent-panel.js:117`/`:125`、`session/reference.py:101`/`:142`、`session/store.py:61`、`link_resolver.py:25`/`:41`、`link_instances.py:380`、`document.py:937`/`:987`/`:1151`/`:1167`/`:2145`） |
+| 上游检出未被改 | 本轮**未读**上游（R 线是本地独有能力的补齐，不是上游移植）；`dsh-src/` 未触碰 |
+
+**已知缺口（本轮未做）**：① **L 路线（读时投影）未实施** ⇒ 区间锚点只能 `unsupported`（偏差 2）；② 块级引用（代码块 / 表格 / 公式）与选区 / 片段引用**不在本期范围**（工具描述里已声明）；③ §6.5 的「模糊级收敛」按「不要做」清单**有意不采纳**；④ 别名 / 挂接的逐处判定只在 `audit_references` 侧（偏差 3）；⑤ 文件名含 CJK 标点时的截断限制（偏差 4）；⑥ **写侧不做** —— 本板块是 M3（plan + 编译器）的前置，写能力仍按 [agent-capabilities.md](agent-capabilities.md) 的插件契约走。
+
+**AG07 的状态变化（只在本节记录；`docs/todo.md` 未编辑）**：AG07 记的 K2 三路线里，**P 已在 §6.7 落地、V 由本轮落地（读侧）**，**L 与「写侧按引用改写正文」仍未做** ⇒ AG07 从「⏳ 路线已定」推进到「**V 已落地（读侧）/ L 未实施**」；台账行**未由本轮改写**（另一写者正在并发重写 `docs/todo.md`），建议文字见本轮报告。
+
+**未实测**：① 真实模型端点下模型**是否会主动用**这两把工具（先 `resolve_reference` 自检再写 `文件:行号`）；② 大库（数千篇 md）下 `audit_references` 的墙钟耗时（有界性只体现在**输出条数**，**未做**文件数 / 字节级预算，也未做 A/B 计时 —— 已知取舍）；③ 真实用户库中「文件名含 CJK 标点 / 括号」与「`@路径` 紧跟中文标点」的实际分布（fixture 只覆盖构造样例）；④ 真机面板端到端（本轮零前端改动）；⑤ 与 `dsh` 真机的对照（**不适用**：上游没有引用解析能力，本板块是本地独有）。
+
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`reference/agent-guide/10` 工具面计数行 **等量改写**（13 → **15**）；`reference/agent-guide/06` 新增一节「引用解析与审计（agent 侧只读）」；本文件 §5.1 五行（`@路径` / 跨会话 / `[[id]]` / `文件:行号` / 块级·片段）+ §11 变更记录本轮行。**锚点重取（old → new）**：本轮 `kb.py` 只有文件尾追加与等量改写 ⇒ **无 old → new**；`reference/agent-guide/10` 里 `tools/kb.py:1608-2591` 是本轮新增块的**首次**取号（旧文未引用）；**本文件内部的旧锚 `:1218`（§6.17 轮次的 §11 行）→ `:1341`**（§6.18 在本文件内插入 122 行 ⇒ 其后行号整体下移，仅此一处需重取；`docs/design/dsh-agent-port.md:245`（§6.14 引用）在插入点**之前**，未动）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
 
 ---
 
@@ -1216,3 +1339,4 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 | 2026-09-20 | **上游读面移植落地（§6.16）**：用户口径「上游的读先移植进来」⇒ 吃 `fs/tool-fs` 的 `read` 参数语义（offset 1-based / limit 默认且上限 2000 / 越界 `FS_NOT_FOUND`）/ 三重 cap / 续读 footer 与 `read_image` 的扩展名 + 文件签名校验，吃 `fs/tool-fs-search` 的 `glob`（100）/`grep`（250 处、单行 2000 字节、30s 预算）上限与输出形状。① `services/agent/tools/kb.py`：`read_document` 新增 `offset`/`limit`（默认且最多 **2000 行**、越界 `NOT_FOUND`、截断给「续读请把 offset 设为 N」；**不传参逐字兼容旧输出**）；新增三个只读工具 `glob`（匹配口径照上游「不含 `/` 比文件名/任意深度」）、`grep`（**Python `re` 而非 ripgrep**，零依赖）、`read_image`（**只做参数与校验；端点不支持图像输入 ⇒ 明确 `UNSUPPORTED_IMAGE_INPUT`，不伪造成功**）；路径校验复用 `_safe_rel` 系并扩展为「不限扩展名 + 两侧 realpath」（`.memoria/**` 与 VCS 元数据排除，符号链接越界**不列不读**）。② `services/agent/prompt.py`：`@路径` 段门控由「只认 `read_document`」放宽为**任一读取手段在场**（`FILE_REFERENCE_TOOLS`，零行漂移）。③ 测试：新增 `tests/test_agent_tools_read.py` **19 例**；`tests/test_agent_loop.py` 门控例语义更新 1 处。**验收**：`py_compile` 全过；`pytest -q` **284 passed**（原 265）；Python 级真实取证（续读提示可解析并续读成功、`glob` 列表、`grep` 分组命中、五类越界/库外拒绝逐项输出）；零新依赖、零前端 / 零 i18n 改动；`dsh-src` 检出未改。**偏差 12 条**（工具面=知识库 / Python `re` 方言 / `read_image` 只到校验 / 不逐行加行号 / 未截断无 footer / 字符非字节预算 / 无 spill / 排序取新→旧 / 门控放宽 / 注册条件 / glob 方言子集 / 不新增 `read` 工具）与 **7 条未实测**见 §6.16；**锚点重取** `tools/kb.py:566-592` → `:581-607`、`prompt.py:262-263` → `:261` + `:385-394`。④ 同轮在 §8 登记**用户优化项**（agent 靠 PowerShell 脚本化读写、语法错浪费 token ⇒ 优先原生工具 / 预置脚本模板 / 错误前置校验；**只登记不实现**）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
 | 2026-09-20 | **上游读面设计改正（工具面 = 工作区根 + 允许根列表 + 可见性/权限分离）**：用户口径「工具面应该是整个根目录的工作区，只是用户只能看见程序限制给他看的文件，甚至以后为了让 Windows 拖拽进对话栏，需要越出根目录」＋「无法识别照片是因为没装上多媒体的『眼睛』插件，留给以后」。① `services/agent/tools/kb.py`（**全部等量改写 + 文件尾追加 ⇒ 零锚点漂移**）：新增**允许根列表** `_read_roots()`（今天 = `(库根,)`）/ `_resolve_in_read_roots()`（`:1135-1162`），路径校验（`_safe_rel()` / `_safe_rel_any()`）与遍历（`_walk_kb_files()` 逐根）**都改走它**（行为等价）；`GLOB_EXCLUDED_DIRS` `:692` 收缩为**只跳 VCS 内部目录**（`.git`/`.svn`/`.hg`/`.bzr`/`.jj`/`.sl`，理由=非内容且会污染 glob/grep），**`.memoria/**` 改默认可见**（agent 维护 sidecar/manifest 需要看得见）；越界一律**明确的拒绝错误**（`INVALID_ARGUMENTS`，非「不存在」），将来把根加进列表即放行；`read_document`/`glob`/`grep`/`read_image` 的路径错误文案与工具描述改为「工作区（允许根）内」。② `read_image` **归类改正**：读不到图不是「provider 不支持 content part」，而是**缺一个多媒体的「眼睛」插件** ⇒ 归入**未来多媒体能力**、**从读面缺口移出**；待办措辞由「消息层图片支持」改为**「待『多媒体眼睛』插件」**（工具描述、错误文本、§5.1/§6.16 同步；错误码 `UNSUPPORTED_IMAGE_INPUT` 不变）。③ 测试：`tests/test_agent_tools_read.py` +1 例（允许根列表与越界错误码稳定，含「多根即放行」断言），2 例断言随 `.memoria/**` 可见性改写。**验收**：`py_compile` 全过；`pytest -q` **285 passed**（原 284）；仓库外临时脚本取证（`_read_roots()`/`_resolve_in_read_roots()` 输出、`.memoria` 可列可搜 vs `.git` 不可见、四类越界 `INVALID_ARGUMENTS`、符号链接越界不列不读）；零新依赖、零前端 / 零 i18n 改动；未碰 `agent-plugin-design.md`（人正在逐步对齐）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
 | 2026-09-20 | **会话查询五工具补全（§6.17）**：上游 `session-query/tool-session-query` 明说**五个**只读工具（`README.zh.md:12`、`:47-51`），本地此前只落 `search_sessions` 一个 ⇒ 本轮补上**其余四个**（`session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`），上游**名字、参数与结果形状**照搬，`search_sessions` 保留原名与既有行为（名字偏差见 §6.17 偏差 1）。① `services/agent/session/query.py`（**文件尾追加** + 3 处等量改写，零锚点漂移）：新增 `require_session()`（`:462-470`，会话不存在 ⇒ `SessionQueryNotFound`）/ `read_event()`（`:528-552`，窗口按事件下标取、两端夹紧）/ `trace_event()`（`:555-573`）/ `session_lineage()`（`:605-662`）＋四个结果 dataclass（`:417-459`）＋常量 `MAX_READ_WINDOW = 50`（上游 `SESSION_QUERY_READ_WINDOW_MAX`，`config.ts:6`）/ `DEFAULT_SEARCH_RESULT_LIMIT = 100`（上游 `maxSearchResults`，`index.ts:22`）/ `REPLACEMENT_TYPES`（本地承载替换的两类记录）。② `services/agent/tools/kb.py`（**文件尾追加** + 2 处等量改写，零锚点漂移）：`KB_TOOL_NAMES` 9 → **13**（`:73-80`）、`build_kb_tools()` 末位接 `*_session_query_tools(root)`（`:665`）、四个实现（`:1297-1363` / `:1366-1413` / `:1416-1464` / `:1467-1507`）与声明工厂（`:1510-1605`，四把 `Tool` 全 `read_only=True`、上限 `SESSION_EVENT_HITS_CAP = 100` `:1185`、`before`/`after` ≤ 50）；③ 测试：新增 `tests/test_agent_session_query_trace.py` **23 例**（`:1-522`），`tests/test_agent_tools_read.py:416` 一处断言语义更新。**验收**：`py_compile` 全过；`pytest -q` **308 passed**（原 285）；仓库外临时脚本 Python 级取证（四工具真实输出、105 条命中截到 100 + 上限提示、六类失败码 `NOT_FOUND` / `INVALID_ARGUMENTS`）；`git -C dsh-src status --porcelain` 空、HEAD 仍 `0d1f5000`。**偏差 13 条**（`session_id` 本地必填｜无调用方 `cwd` 授权与错误净化层｜替换关系改由 `compaction.shadowed`·`compaction/prune.pruned[].seq` 承载｜`sourceEventSeqs`/`derivedEventSeqs` 无从计算 ⇒ `None` 且文本明说、**不伪造「无」**｜无 `surfaces`/`availability`/`parent_session_ids`/`include_root_sessions` 过滤｜无 `Config` 与 `searchTimeoutMs`｜结果文本落为中文并保留本地「引用形状」约定｜ISO 8601 毫秒截断｜错误码取 `INVALID_ARGUMENTS`·`NOT_FOUND`｜不注入上游 `PROMPT_TEXT` 指引段）与 **4 条未实测**见 §6.17；**§5.1 会话检索行由 1/5 收敛为 5/5**。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
+| 2026-09-20 | **引用板块（R 线）落地（§6.18）**：用户口径「把引用板块做了」⇒ 交付两把**只读**工具 `resolve_reference`（解一条：类型 / 归一化目标 / 是否存在 / 指向什么 / 歧义候选 / 建议下一步）与 `audit_references`（查一批：检查名 / `文件:行` / 目标 / 问题 / 严重级，上限 100 + 已达上限提示），覆盖**库内五类引用** `@路径`（含 `@"带空格"`、目录尾斜杠）/ `@[label](dsh-session:…)` / `[[…]]` / `文件:行号`（含 `#L12-L30`）/ `![](...)`（`.memoria/images/**` + registry 登记态）。**路线照 [agent-capabilities.md §6.5](agent-capabilities.md) 的 AG07 已拍板三路线**：**P** 由既有 `FILE_REFERENCE_SECTION` 承载（不重复）、**V 本轮落地**（V1 归一化 NFKC/剥包裹/去 `./`；V2 分级收敛**精确 → 唯一 basename → 唯一后缀**，>1 即 `ambiguous` + 候选**绝不猜**；V3 `not_found` 当普通结果回灌、不自动重试）、**L 未实施** ⇒ 区间锚点如实回 `unsupported`（只核起始行、不假装能解）；§6.5「不要做」清单照办（不扩正则、不做编辑距离自动改写、不改会话/事件日志、不枚举全库 schema）。① `services/agent/tools/kb.py`（**文件尾追加 986 行（`git diff --numstat`：新增 991 / 删除 5）+ 2 处等量改写 ⇒ 既有 `file:line` 零漂移**）：新块 `:1608-2591`、`KB_TOOL_NAMES` 13 → **15**（`:73-80`）、`build_kb_tools()` 末位接 `*_reference_tools(root)`（`:665`）。② 复用而非重写（逐处实读）：`link_resolver.scan_wikilinks` / `resolve_link_target` / `build_link_overrides`、`link_instances.is_line_attached` / `line_at_offset`、`session/reference.decode_session_uri`（与其 `_MENTION_RE`，单一事实源）、`session/store.session_file`、`document.DocumentService` 的 `_parse_image_ref_url` / `diagnose_image_refs` / `_load_image_registry`（**只读不重建**）/ `_resolve_scan_link_entry`、`storage.scanner.collect_md_files`，以及 §6.16 的允许根（`_read_roots` / `_resolve_in_read_roots` / `_safe_rel_any` / `_walk_kb_files`）。**明确不做**：块级引用（代码块 / 表格 / 公式）与选区 / 片段引用（写进工具描述与 §6.18）。③ 测试：新增 `tests/test_agent_tools_reference.py` **12 例**（五类各有正常 / 悬空 / 多义 / 越界 + 逐检查名计数 + 零写入断言）；`tests/test_agent_session_query_trace.py:487` 一行断言更新。**验收**：`py_compile` 全过；`pytest -q` **320 passed**（原 308）；仓库外临时脚本 Python 级取证（五类逐条输出、fixture 库 16 条问题清单、上限提示、六类参数边界、两工具 `read_only=True` / schema `additionalProperties:false` / 注册顺序与 `KB_TOOL_NAMES` 逐项一致）；零新依赖（`re` / `unicodedata` 均函数内局部导入）、零前端 / 零 i18n 改动。**偏差 10 条**（三级收敛不含模糊级｜L 未实施 ⇒ 区间 `unsupported`｜别名与挂接只在审计侧｜终止字符截断的已知限制｜图片只覆盖 `.memoria/images/**` 且注册表只读｜会话引用限本库｜审计语料 = `collect_md_files()`｜上限 100 但计数完整｜错误码取本地码族、业务状态词表与错误码分离｜零写入）与 **5 条未实测**见 §6.18；**AG07 状态推进为「V 已落地（读侧）/ L 未实施」**（台账行未改写）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |

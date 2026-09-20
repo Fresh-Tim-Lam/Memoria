@@ -213,6 +213,22 @@
 | 页签切换 | `setSidebarTab`：同步按钮 `active`、切 `.-sidebar-view` 显隐、启停下层布局、清 KP hover、刷群页签与提示条、`reflow()` 两块视图 | `app.js:1239`-`1250`、`1173`-`1210` |
 | **页签条几何（2026-09-19 修）** | `. -sidebar-tabs-wrap` 高 = 页签条高（**2026-09-19 起为 34px**：由末尾 `--bar-h-b` 统一钉住，见 01 篇 §6「统一栏高」），其下缘与 `#sidebar-body-split` 顶边**严丝合缝（间隙 0）**；页签条 `border-bottom: 0.5px`（计算 1px）、页签 `border-bottom: 2px` + `margin-bottom: -1px` 正好压在容器下边框上（实测 active 页签 `bottom` 与容器 `bottom` 差 **0.00**）。**起因**：`. -sidebar-nav-tabs { margin-bottom: 0 }` 与 `.-config-tabs { margin-bottom: 0.75rem }` 同特异度、而后者在本文件更靠后 ⇒ 那条 0 一直被盖掉，页签条下白留 **13.2px**（用户反馈"外框太宽、与页签间还有缝隙"）；修法 = 选择器改双类 `.-config-tabs.-sidebar-nav-tabs`（`app.css:236-238`） | `app.css:231`-`244`、`1534`-`1560`、`5170`-`5204`；实测 harness 8655（13.2px→0）与 8656（高 30.19→34） |
 
+### 2.10 引用解析与引用审计（agent 侧只读，2026-09-20）
+
+应用内对话的 agent 现在也能**只读地解析引用**（不是新的链接存储，也不改本文 §2.1–§2.9 的任何链路）：两把工具 `resolve_reference`（解一条）/ `audit_references`（查一批），实现 `services/agent/tools/kb.py:1608-2591`（追加块），口径见 [../../design/dsh-agent-port.md §6.18](../../design/dsh-agent-port.md)。
+
+| 引用形态 | 与 UI 链路的对应 | 解析路径（复用件） |
+|---|---|---|
+| `@相对路径`（含 `@"带空格"`、目录尾斜杠） | 用户气泡里的 `@路径` chip（§2 之外的 `agent-panel.js` mention 渲染） | 正则对齐 `agent-panel.js:125` 的 `MENTION_RE`；路径走允许根（`tools/kb.py:1142`/`:1147`），库内清单 `:819`；分级收敛**精确 → 唯一 basename → 唯一后缀**，>1 即 `ambiguous` + 候选（`_reference_converge_file()`，`:1749`） |
+| `@[label](dsh-session:…)` | 会话 chip（`agent-panel.js:2214` 的 `SESSION_MENTION_RE` 同一语法） | `session/reference.py:142` `decode_session_uri()` + `session/store.py:61` `session_file()`（非法 id fail-closed） |
+| `[[…]]`（id / 别名 / 文件名 / 多目标 / 正文未挂接） | 本文 §2.3 的实跳转·断链·多目标三态 | 全局解析复用 `services/link_resolver.py:41` `resolve_link_target()`；**别名（`links[].anchor_text`）与「正文出现但未挂接」需要文档上下文**，只在 `audit_references` 侧判（`document.py:2145` `_resolve_scan_link_entry()` + `services/link_instances.py:380` `is_line_attached()`） |
+| `文件:行号`（含 `#L12-L30`） | 答案里的 `-agent-anchor`（`agent-panel.js:117` 的 `ANCHOR_RE` 同源字符类） | 行号对照剥 frontmatter 的正文行（`tools/kb.py:175`）；**区间锚点一律回 `unsupported`**（本地无读时投影，只核起始行） |
+| `![](...)`（`.memoria/images/**`） | §2 之外的图片引用与注册表（见 07 篇） | `document.py:1151` `_parse_image_ref_url()`（可注册性）+ `:1167` `diagnose_image_refs()` + `:987` `_load_image_registry()`（**只读不重建**） |
+
+**三条落到语义上的后果**（与本文其它节一致，不是新规则）：① **多目标一律不猜**：`[[…]]` 命中 >1 或同名文件 >1 ⇒ 只回候选清单，与 §2.2 的 `showLinkPicker` 同一立场；② **「正文出现但未挂接」是审计项**：`audit_references` 用 sidecar 的 `instances`/`excluded` 判该行是否挂接（与 §2.3 预览的挂接口径同一事实源），报 `kp_link.body_not_attached`；③ **块级 / 片段引用不在范围**：代码块 / 表格 / 公式与「区间末端投影」都不解析（工具描述里已声明），仍是 §5 第 12 条之外的一块**共同空白**。
+
+`audit_references` 一次最多列 **100** 条问题（到顶给「已达上限」提示 + 用 `path` 收窄），每条 = 检查名 / 位置（`文件:行`）/ 目标 / 问题 / 严重级；检查名共 **17** 个（`file_reference.*` / `session_reference.*` / `kp_link.*` / `anchor.*` / `image.*`，文本末尾一次列出，可用 `resolve_reference` 逐个复现）。
+
 ## 3. 交互流程
 
 **创建链接（选区）**：预览/源码拖选 → 右键 → 「创建链接…」→ 链接编辑器（`create`）→ 自动扫正文匹配并预勾选 → 勾选目标（可手输 `id` 或 `tag:`）→ 可选逐个设边型/权重 → 「保存」→ `wrap_text_as_link` → 重渲 → 状态栏 `cfg.linkSave.saved` + `savedDetail`（`app.js:5666` 起）。

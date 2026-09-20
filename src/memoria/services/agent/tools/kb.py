@@ -71,12 +71,12 @@ MAX_FILES_IN_OVERVIEW = 200
 MAX_ISSUES_IN_REPORT = 20
 
 KB_TOOL_NAMES = (
-    "search_kb", "read_document", "read_kp",
-    "kb_overview",
-    "validate_kb",
-    "search_sessions",
+    "search_kb", "read_document", "read_kp", "kb_overview",
+    "validate_kb", "search_sessions",
     "glob", "grep", "read_image",
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
+    "resolve_reference",
+    "audit_references",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -662,7 +662,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_session_query_tools(root),
+        ), *_session_query_tools(root), *_reference_tools(root),
     )
 
 
@@ -1601,5 +1601,991 @@ def _session_query_tools(kb_path: str) -> tuple[Tool, ...]:
                 "additionalProperties": False,
             },
             handler=lambda arguments: _session_event_read(kb_path, arguments),
+        ),
+    )
+
+
+# ── 引用板块（R 线）：只读「引用解析」+「引用审计」（2026-09-20；§6.18）──────────────────────
+# 口径来源 = `docs/design/agent-capabilities.md` §6.5「引用完整性：让模型写的路径真的可用（P / V / L
+# 三路线）」（该节 `agent-capabilities.md:447-481`；台账行 `docs/todo.md:265` 的 **AG07**，
+# 与 `docs/design/dsh-agent-port.md:733` 的前置依赖同一份口径）。三条路线逐条落法：
+#
+#   **P**（提示词收窄语法）= 已由 `prompt.FILE_REFERENCE_SECTION`（`prompt.py:208-218`）承载
+#       （要求引用取自工具回显的 canonical 路径），本块**不重复实现**；
+#   **V**（输出后程序校验 + 库内清单分级收敛）= **本块实现** ——
+#       V1 归一化：NFKC、剥 CJK 标点/引号包裹、去 `./` 前缀（`_reference_normalize()`）；
+#       V2 分级收敛：精确 → 唯一 basename → 唯一后缀（`_reference_converge_file()`）；
+#          **任一级命中 >1 即 `ambiguous` 并回候选，绝不猜**；
+#       V3 回灌：`not_found` 当**普通结果**返回（「真实情况 + 下一步」），**不自动重试**；
+#   **L**（改读时投影）= **未实现** ⇒ 区间锚点（`x.md#L12-L30`）一律如实回 `unsupported`，
+#       **不假装能解**（§6.5 落地顺序第 5 条只允许「读取时投影」形态，本块没有该形态）。
+#
+# §6.5 的「不要做」清单照办：不靠扩正则修跳转、不做模糊编辑距离自动改写（实体解析共识：误并比漏并更糟）、
+# 不改写会话 JSONL / 事件日志、不为整库做路径枚举 schema（只在库内清单上分级收敛）。
+#
+# **本期只覆盖库内五类引用**：`@路径` / `@[label](dsh-session:…)` / `[[…]]` / `文件:行号` / `![](...)`。
+# **明确不做**（写进工具描述，避免模型误以为能解）：① 块级引用（代码块 / 表格 / 公式 —— 需要新的稳定块
+# 标识，属另一设计）；② 选区 / 片段引用（区间末端的读时投影与对话片段引用，属 `dsh-agent-port.md §6.13`
+# 的 A / B 子项）。
+#
+# 两把工具都**只读**：路径一律走允许根列表（`_read_roots()` / `_resolve_in_read_roots()`）、会话 id 一律走
+# `session_file()`（非法 id 直接报错，fail-closed）、图片注册表只读不重建；工具体全程 `kb_read_only()` 守卫。
+# 复用（不重写）：`link_resolver.scan_wikilinks` / `resolve_link_target` / `build_link_overrides`、
+# `link_instances.is_line_attached` / `line_at_offset`、`session/reference.decode_session_uri`（与其 mention
+# 正则，单一事实源）、`session/store.session_file`、`document.DocumentService` 的图片引用解析
+# （`_parse_image_ref_url` / `diagnose_image_refs` / `_doc_image_names_from_body` / `_load_image_registry`）
+# 与 `_resolve_scan_link_entry`、`storage.scanner.collect_md_files`。
+
+#: 单条引用 token 的字符上限（超长 ⇒ `INVALID_ARGUMENTS`；防把整篇正文当 token 传进来）。
+REFERENCE_MAX_CHARS = 512
+#: 歧义候选一次最多列多少条。
+REFERENCE_MAX_CANDIDATES = 10
+#: `audit_references` 一次最多报多少条问题，同时是 `limit` 的上限（到顶给「已达上限」提示）。
+REFERENCE_AUDIT_MAX_ISSUES = 100
+
+#: 五类**库内**引用（本期范围）；`resolve_reference` 的 `kind` 省略即自动识别。
+REFERENCE_KINDS = ("file", "session", "kp_link", "anchor", "image")
+
+#: 解析状态词表（封闭集合）。`ambiguous` / `unsupported` 是两种「不猜」的诚实结果。
+_REFERENCE_STATUS_LABELS = {
+    "ok": "已解析",
+    "not_found": "目标不存在",
+    "ambiguous": "多目标歧义（未猜）",
+    "invalid": "token 非法",
+    "rejected": "越界拒绝",
+    "unsupported": "本地不支持",
+}
+
+_REFERENCE_KIND_LABELS = {
+    "file": "file（`@路径` 文件引用）",
+    "session": "session（`dsh-session:` 会话引用）",
+    "kp_link": "kp_link（`[[…]]` 知识点 / 链接）",
+    "anchor": "anchor（`文件:行号` 锚点）",
+    "image": "image（`![](...)` 图片引用）",
+}
+
+#: `@路径` 提及（语法逐字对齐前端 `agent-panel.js:125` 的 `MENTION_RE`：`@` 必须在行首或空白之后，
+#: `@"含空格"`（引号可缺）与裸 token 两种形态；两个分支恰好命中其一）。
+_FILE_MENTION_PATTERN = r'(?:^|\s)@(?:"([^"]*)"?|(\S+))'
+
+#: `文件:行号` / 区间锚点（文件字符类对齐前端 `ANCHOR_RE`，`agent-panel.js:117`；另补 `#L12-L30` 形态：
+#: 分隔符既可以是 `:` / `：`，也可以是 `#`）。字符类里的 CJK 标点全用 `\u` 转义写，
+#: 避免 `—～` 被 Python 解释成码点区间（JS 里的同类隐患）。
+_ANCHOR_REF_PATTERN = (
+    r"`?\"?'?"
+    r"(?P<file>[^\s`\"'<>()\[\]#:：\uFF1A\uFF0C\u3001\u3002\uFF1B\uFF01\uFF1F\u300C\u300D\u300E\u300F"
+    r"\u3010\u3011\uFF08\uFF09\u300A\u300B\u3008\u3009\u3014\u3015\u2026\u00B7\u2014\uFF5E]+?"
+    r"\.(?:md|markdown))"
+    r"(?:[:：]|#)\s*#?L?(?P<start>\d+)"
+    r"(?:\s*[-\u2013\u2014~]\s*#?L?(?P<end>\d+))?"
+    r"`?\"?'?"
+)
+
+#: 图片引用括号内文本（与 `DocumentService.diagnose_image_refs()` 的扫描形状一致：`!\[…\]\(([^)]*)\)`
+#: —— 比 `_IMG_REF_RE` 宽，能把「裸 URL 含空白」这类**不可注册**写法也取出来）。
+_IMAGE_REF_PATTERN = r"!\[[^\]]*\]\(([^)]*)\)"
+
+#: 本块全部检查名（`audit_references` 文本末尾一次性列出，均可由 `resolve_reference` 复现）。
+_REFERENCE_AUDIT_CHECKS = (
+    "file_reference.missing",
+    "file_reference.ambiguous",
+    "file_reference.outside_root",
+    "session_reference.invalid_uri",
+    "session_reference.invalid_id",
+    "session_reference.session_not_found",
+    "kp_link.unresolved_target",
+    "kp_link.ambiguous_target",
+    "kp_link.body_not_attached",
+    "anchor.file_missing",
+    "anchor.ambiguous_file",
+    "anchor.line_out_of_range",
+    "anchor.range_unsupported",
+    "anchor.outside_root",
+    "image.missing",
+    "image.unregistered",
+    "image.not_registered",
+)
+
+#: V1 归一化要剥掉的包裹字符（引号 / 反引号 / 成对括号与 CJK 括注）。
+_REFERENCE_WRAPPERS = "`\"'「」『』【】（）()《》〈〉〔〕[]"
+
+#: V1 归一化里「路径到此为止」的终止字符：CJK 标点/成对括号之后的内容不属于路径
+#: （`@a.md（说明）` 里的 `（说明）` 是正文标注，不是文件名）。与前端 `ANCHOR_RE` 的排除集同源。
+#: **不含空白** —— `@"含 空格.md"` 的引号形态里空白是路径的一部分（上游 `formatFileMention` 同口径）。
+_REFERENCE_TERMINATORS = "，。、；！？「」『』【】（）()《》〈〉〔〕…·\u2014\uFF5E"
+
+
+def _ref_re(pattern: str) -> Any:
+    """惰性编译引用正则（本模块顶层不导入 `re`，与 §6.17 同款做法）。"""
+    import re
+
+    return re.compile(pattern)
+
+
+def _reference_normalize(raw: str) -> str:
+    """V1 归一化（§6.5 落地顺序 1）：NFKC → 按终止字符截断 → 剥包裹标点 → `\\`→`/` → 去 `./` 前缀。
+
+    只做 §6.5 列出的那一档零风险动作：**不做**编辑距离、不做模糊改写。
+    """
+    import unicodedata
+
+    text = unicodedata.normalize("NFKC", str(raw or "")).strip()
+    for index, char in enumerate(text):
+        if char in _REFERENCE_TERMINATORS:
+            text = text[:index]
+            break
+    text = text.strip(_REFERENCE_WRAPPERS).strip()
+    text = text.replace("\\", "/")
+    while text.startswith("./"):
+        text = text[2:]
+    return text
+
+
+def _reference_rel_in_roots(kb_path: str, raw: str) -> str | None:
+    """归一化后落到某个允许根内 ⇒ 回相对路径；空 / 上跳 / 越界 ⇒ None（fail-closed）。"""
+    return _safe_rel_any(kb_path, _reference_normalize(raw))
+
+
+def _reference_converge_file(
+    kb_path: str,
+    rel: str,
+    *,
+    files: Sequence[str] | None = None,
+) -> tuple[str, str | None, list[str], str]:
+    """V2 分级收敛：精确 → 唯一 basename → 唯一后缀；任一级 >1 即 `ambiguous`（**绝不猜**）。
+
+    返回 `(status, 收敛目标, 候选, 命中级别)`。只比「库内清单」（`_walk_kb_files()`，即允许根 + VCS 排除），
+    不做任何模糊匹配 —— 与 §6.5「模糊（尾部元素加权）」的**未采纳**部分一致：误并比漏并更糟。
+    """
+    inventory = list(files) if files is not None else _walk_kb_files(kb_path)
+    if rel in inventory:
+        return "ok", rel, [], "exact"
+    base = rel.rsplit("/", 1)[-1]
+    hits = [name for name in inventory if name.rsplit("/", 1)[-1] == base]
+    if len(hits) == 1:
+        return "ok", hits[0], [], "unique_basename"
+    if len(hits) > 1:
+        return "ambiguous", None, hits, "basename"
+    suffix = "/" + rel
+    hits = [name for name in inventory if name.endswith(suffix)]
+    if len(hits) == 1:
+        return "ok", hits[0], [], "unique_suffix"
+    if len(hits) > 1:
+        return "ambiguous", None, hits, "suffix"
+    return "not_found", None, [], "none"
+
+
+def _reference_result(
+    kind: str,
+    *,
+    status: str,
+    target: str = "",
+    detail: str = "",
+    reason: str = "",
+    candidates: Sequence[str] = (),
+    next_step: str = "",
+) -> dict[str, Any]:
+    """一次解析的结构化结果（渲染层只负责排版，不再判断语义）。"""
+    return {
+        "kind": kind,
+        "status": status,
+        "target": target,
+        "detail": detail,
+        "reason": reason,
+        "candidates": [str(item) for item in candidates],
+        "next": next_step,
+    }
+
+
+def _reference_render(token: str, result: Mapping[str, Any]) -> str:
+    """把结构化结果排成模型可见文本（类型 / 归一化目标 / 状态 / 指向 / 候选 / 原因 / 下一步）。"""
+    lines = [
+        f"引用解析：{token}",
+        f"- 类型：{_REFERENCE_KIND_LABELS[result['kind']]}",
+        f"- 归一化目标：{result['target'] or '（未能归一化）'}",
+        f"- 状态：{result['status']}（{_REFERENCE_STATUS_LABELS[result['status']]}）",
+    ]
+    if result["detail"]:
+        lines.append(f"- 指向：{result['detail']}")
+    candidates = list(result["candidates"])
+    if candidates:
+        shown = candidates[:REFERENCE_MAX_CANDIDATES]
+        lines.append(f"- 候选（共 {len(candidates)} 个，最多列 {REFERENCE_MAX_CANDIDATES} 个）：")
+        lines.extend(f"  {index}. {item}" for index, item in enumerate(shown, start=1))
+        if len(candidates) > len(shown):
+            lines.append(f"  …（还有 {len(candidates) - len(shown)} 个未列出）")
+    if result["reason"]:
+        lines.append(f"- 原因：{result['reason']}")
+    if result["next"]:
+        lines.append(f"- 建议下一步：{result['next']}")
+    return "\n".join(lines)
+
+
+def _reference_kp_candidate(item: Mapping[str, Any]) -> str:
+    """知识点候选的一行描述（`{kp_id}（{name}）· {file}:{start_line}`）。"""
+    kp_id = str(item.get("kp_id") or "")
+    name = str(item.get("name") or kp_id)
+    file = str(item.get("file") or "")
+    line = item.get("start_line")
+    location = f"{file}:{line}" if line else file
+    return f"{kp_id}（{name}）· {location}" if kp_id else f"{name} · {location}"
+
+
+# —— 五类引用的解析体 ——
+
+
+def _resolve_file_reference(kb_path: str, token: str) -> dict[str, Any]:
+    """`@路径`（上游 `context/file-reference` 语义）：尾斜杠 = 目录，其余按文件（V 分级收敛）。"""
+    match = _ref_re(_FILE_MENTION_PATTERN).search(token)
+    if match is None:
+        return _reference_result(
+            "file",
+            status="invalid",
+            reason="不是 `@路径` 形态（`@` 必须在一个 token 的开头：行首或空白之后）",
+            next_step='传形如 `@docs/a.md` 或 `@"docs/A B.md"` 的 token',
+        )
+    raw = match.group(1) if match.group(1) is not None else (match.group(2) or "")
+    if raw.startswith("["):
+        return _reference_result(
+            "file",
+            status="invalid",
+            target=raw,
+            reason="这是 Markdown mention（`@[label](…)`）形态，不是文件引用",
+            next_step="显式传 kind=\"session\"，或去掉 kind 让工具按标记自动识别",
+        )
+    normalized = _reference_normalize(raw)
+    if not normalized:
+        return _reference_result("file", status="invalid", reason="`@` 之后为空", next_step="补上库内相对路径")
+    is_dir = normalized.endswith("/")
+    rel = _reference_rel_in_roots(kb_path, normalized)
+    if rel is None:
+        return _reference_result(
+            "file",
+            status="rejected",
+            target=normalized,
+            reason="路径在允许根（知识库根）之外，或含上跳 `..` —— 工具面 fail-closed 拒绝",
+            next_step="改用库内相对路径（`kb_overview` 可看全库文件清单）",
+        )
+    if is_dir:
+        if not os.path.isdir(os.path.join(kb_path, rel)):
+            return _reference_result(
+                "file",
+                status="not_found",
+                target=normalized.rstrip("/") + "/",
+                reason="库内没有该目录",
+                next_step='用 `glob(pattern="**/*.md")` 或 `kb_overview` 核对真实目录名',
+            )
+        count = len(_walk_kb_files(kb_path, rel))
+        return _reference_result(
+            "file",
+            status="ok",
+            target=normalized.rstrip("/") + "/",
+            detail=f"目录 {rel}/（其下 {count} 个文件）",
+            next_step=f'glob(pattern="**/*.md", path="{rel}") 或 search_kb 检索目录内容',
+        )
+
+    status, target, candidates, matched = _reference_converge_file(kb_path, rel)
+    if status == "ambiguous":
+        return _reference_result(
+            "file",
+            status="ambiguous",
+            target=rel,
+            reason=f"库内有 {len(candidates)} 个同名 / 同后缀文件（{matched} 级命中 >1）—— 程序不猜",
+            candidates=candidates,
+            next_step="把候选里的完整相对路径原样复制过来再问一次",
+        )
+    if status != "ok" or not target:
+        return _reference_result(
+            "file",
+            status="not_found",
+            target=rel,
+            reason="库内不存在该文件（精确 / 唯一 basename / 唯一后缀三级都未命中）",
+            next_step='用 `glob(pattern="**/*.md")` 或 `kb_overview` 核对真实路径',
+        )
+    info = _kp_map_for_file(kb_path, target)
+    _, target_lines = _read_body_lines(kb_path, target)
+    converged = "" if matched == "exact" else f"（按唯一 {matched} 收敛：`{rel}` → `{target}`）"
+    return _reference_result(
+        "file",
+        status="ok",
+        target=target,
+        detail=f"知识库文档 {target}（共 {len(target_lines)} 行，{len(info)} 个知识点）{converged}",
+        next_step=f'read_document(path="{target}")',
+    )
+
+
+def _resolve_session_reference(kb_path: str, token: str) -> dict[str, Any]:
+    """`dsh-session:` 会话引用：URI 走 `decode_session_uri()`，文件走 `session_file()`（fail-closed）。"""
+    from memoria.services.agent.session.reference import _MENTION_RE, decode_session_uri
+    from memoria.services.agent.session.store import session_file
+
+    match = _MENTION_RE.search(token)
+    if match is None:
+        return _reference_result(
+            "session",
+            status="invalid",
+            reason="不是会话引用形态（`@[label](dsh-session:…)` 或裸 `dsh-session:…`）",
+            next_step="用前端「历史」页签里的「引用」按钮插入规范 token",
+        )
+    uri = match.group(2) if match.group(2) is not None else (match.group(3) or "")
+    try:
+        session_id = decode_session_uri(uri)
+    except ValueError as exc:
+        return _reference_result(
+            "session",
+            status="invalid",
+            target=uri,
+            reason=f"URI 非规范（`decode_session_uri()` 拒绝：{exc}）",
+            next_step="重新用「历史」里的引用按钮生成 token（`dsh-session:` + 无填充 base64url(JSON)）",
+        )
+    try:
+        full = session_file(kb_path, session_id)
+    except ValueError as exc:
+        return _reference_result(
+            "session",
+            status="rejected",
+            target=session_id,
+            reason=f"解码成功但会话 id 非法：{exc}",
+            next_step="只接受 store 允许的 id 形状（字母数字与 `.` `_` `-`）",
+        )
+    if not os.path.isfile(full):
+        return _reference_result(
+            "session",
+            status="not_found",
+            target=session_id,
+            reason="本库会话目录内没有该会话文件（会话按库分，不跨库）",
+            next_step='用 `search_sessions` 找本库真实存在的会话 id',
+        )
+    title = _title_of(kb_path, session_id)
+    detail = f"会话 `{session_id}`" + (f"（标题：{title}）" if title else "（无标题，可能尚未生成）")
+    return _reference_result(
+        "session",
+        status="ok",
+        target=session_id,
+        detail=detail,
+        next_step=f'session_event_read(session_id="{session_id}", seq=0) 或 search_sessions',
+    )
+
+
+def _resolve_kp_link_reference(kb_path: str, token: str) -> dict[str, Any]:
+    """`[[…]]`：id / 文件名两路（`resolve_link_target()`）；**别名与挂接需文档上下文**，如实说明。"""
+    from memoria.services.link_resolver import resolve_link_target, scan_wikilinks
+
+    links = scan_wikilinks(token)
+    if not links:
+        return _reference_result(
+            "kp_link",
+            status="invalid",
+            reason="不是 `[[…]]` 形态（宽正则 `\\[\\[([^\\]|#\\]]+)(?:#…)?(?:\\|…)?\\]\\]` 未命中）",
+            next_step="传 `[[kp_id]]` / `[[kp_id#边型]]` / `[[kp_id|显示文字]]`",
+        )
+    link = links[0]
+    target_id = link["target_id"]
+    result = resolve_link_target(kb_path, target_id)
+    status = str(result.get("status") or "")
+    candidates = [_reference_kp_candidate(item) for item in result.get("candidates") or []]
+    alias_note = "；别名（`links[].anchor_text` / 正文同标签）与「正文出现但未挂接」需要文档上下文，请对含该 token 的文档跑 `audit_references`"
+    if status == "ok" and candidates:
+        item = result["candidates"][0]
+        return _reference_result(
+            "kp_link",
+            status="ok",
+            target=target_id,
+            detail=f"{_reference_kp_candidate(item)}（命中方式：{result.get('match') or 'kp_id'}）",
+            next_step=f'read_kp(id="{item.get("kp_id") or target_id}")' + alias_note,
+        )
+    if status == "ambiguous":
+        return _reference_result(
+            "kp_link",
+            status="ambiguous",
+            target=target_id,
+            reason=f"`by_id` 里有 {len(candidates)} 条同 id 记录（跨文件重复定义）—— 程序不猜",
+            candidates=candidates,
+            next_step="改用 `文件:行号` 锚点指定到具体那一处" + alias_note,
+        )
+    return _reference_result(
+        "kp_link",
+        status="not_found",
+        target=target_id,
+        reason=str(result.get("message") or "知识点 id 与文件 stem 都没命中"),
+        next_step='用 `search_kb` 或 `kb_overview` 找真实 id / 文件名' + alias_note,
+    )
+
+
+def _resolve_anchor_reference(kb_path: str, token: str) -> dict[str, Any]:
+    """`文件:行号` 锚点。单行锚点做存在性 + 行号范围校验；**区间锚点回 `unsupported`**（无读时投影）。"""
+    text = token.strip()
+    regex = _ref_re(_ANCHOR_REF_PATTERN)
+    match = regex.fullmatch(text) or regex.search(text)
+    if match is None:
+        return _reference_result(
+            "anchor",
+            status="invalid",
+            reason="不是 `文件:行号` 形态（文件需以 `.md` / `.markdown` 结尾，行号取十进制）",
+            next_step="传形如 `neural-network.md:17`、`notes/a.md:L7` 或 `notes/a.md#L12-L30` 的 token",
+        )
+    start = int(match.group("start"))
+    end_text = match.group("end")
+    end = int(end_text) if end_text else None
+    raw_file = match.group("file")
+    rel = _reference_rel_in_roots(kb_path, raw_file)
+    display = f"{_reference_normalize(raw_file)}:{start}" + (f"-{end}" if end else "")
+    if rel is None:
+        return _reference_result(
+            "anchor",
+            status="rejected",
+            target=display,
+            reason="锚点路径在允许根之外或含上跳 `..` —— fail-closed 拒绝",
+            next_step="改用库内相对路径（工具结果里回显的 canonical 路径）",
+        )
+    status, target, candidates, matched = _reference_converge_file(kb_path, rel)
+    if status == "ambiguous":
+        return _reference_result(
+            "anchor",
+            status="ambiguous",
+            target=display,
+            reason=f"锚点文件有 {len(candidates)} 个同名 / 同后缀候选（{matched} 级命中 >1）—— 不猜",
+            candidates=candidates,
+            next_step="用候选里的完整相对路径重写锚点",
+        )
+    if status != "ok" or not target:
+        return _reference_result(
+            "anchor",
+            status="not_found",
+            target=display,
+            reason="锚点文件在库内不存在（精确 / 唯一 basename / 唯一后缀三级都未命中）",
+            next_step='用 `glob(pattern="**/*.md")` 核对真实路径',
+        )
+    _, lines = _read_body_lines(kb_path, target)
+    total = len(lines)
+    if end is not None:
+        inside = "在范围内" if 1 <= start <= total else f"超出范围（共 {total} 行）"
+        return _reference_result(
+            "anchor",
+            status="unsupported",
+            target=display,
+            detail=f"起始行 L{start} {inside}（目标 `{target}`）",
+            reason="区间锚点本地无法可靠解析：没有「读时投影」能力（§6.5 L 路线未落地），"
+            "故只核起始行、**不校验末端**，也不声称区间语义已被解析",
+            next_step=f'改用单行锚点（如 `{target}:{start}`），或先 `read_document(path="{target}", offset={start})` 自行确认区间',
+        )
+    if start < 1 or start > total:
+        return _reference_result(
+            "anchor",
+            status="not_found",
+            target=display,
+            reason=f"第 {start} 行超出 `{target}` 的正文范围（该文档正文共 {total} 行）",
+            next_step=f'read_document(path="{target}") 取回真实行号（或按唯一 basename 收敛后的路径重试）',
+        )
+    snippet = lines[start - 1].strip()[:SNIPPET_CHARS]
+    return _reference_result(
+        "anchor",
+        status="ok",
+        target=display,
+        detail=f"{target} 第 {start} 行：{snippet or '（该行为空行）'}",
+        next_step=f'read_document(path="{target}", offset={start}, limit=1)',
+    )
+
+
+def _reference_image_registry(kb_path: str) -> tuple[dict[str, Any], bool]:
+    """读 `.memoria/images/registry.json`（**只读**：缺失时返回 `({}, False)`，不重建、不落盘）。"""
+    service = _readonly_document_service(kb_path)
+    path = service._image_registry_path()
+    if not path or not os.path.isfile(path):
+        return {}, False
+    return dict(service._load_image_registry().get("refs") or {}), True
+
+
+def _resolve_image_reference(kb_path: str, token: str) -> dict[str, Any]:
+    """`![](...)`：只覆盖 `.memoria/images/**`；校验存在性 + 注册规则可识别性 + registry 登记状态。"""
+    from memoria.services.document import DocumentService
+    from memoria.storage.constants import MEMORIA_DIR
+
+    match = _ref_re(_IMAGE_REF_PATTERN).search(token)
+    if match is None:
+        return _reference_result(
+            "image",
+            status="invalid",
+            reason="不是 `![](...)` 形态",
+            next_step="传形如 `![](<.memoria/images/x.png>)` 的完整图片引用",
+        )
+    raw = match.group(1).strip()
+    url, registrable = DocumentService._parse_image_ref_url(raw)
+    if url is None:
+        return _reference_result(
+            "image",
+            status="invalid",
+            target=raw,
+            reason="括号内取不到 URL",
+            next_step="传形如 `![](<.memoria/images/x.png>)` 的完整图片引用",
+        )
+    norm = url[8:] if url.startswith("/files/") else url
+    prefix = f"{MEMORIA_DIR}/images/"
+    if not norm.startswith(prefix):
+        return _reference_result(
+            "image",
+            status="unsupported",
+            target=norm,
+            reason="不是库内图片引用（本期只覆盖 `.memoria/images/**`；外链 / 其它目录不解析）",
+            next_step="若确为库内图片，请写成 `.memoria/images/<文件名>`（含空格用尖括号包裹）",
+        )
+    name = norm[len(prefix) :].split("#", 1)[0].split("?", 1)[0]
+    if not name or "/" in name or "\\" in name:
+        return _reference_result(
+            "image",
+            status="invalid",
+            target=norm,
+            reason="图片名非法（必须落在 `.memoria/images/` 直下、不含子目录）",
+            next_step="把图片放进 `.memoria/images/` 再引用",
+        )
+    rel = _reference_rel_in_roots(kb_path, norm)
+    if rel is None:
+        return _reference_result(
+            "image",
+            status="rejected",
+            target=norm,
+            reason="图片路径解析到允许根之外（含上跳或绝对路径）—— fail-closed 拒绝",
+            next_step="改用库内 `.memoria/images/<文件名>`",
+        )
+    display = f".memoria/images/{name}"
+    exists = os.path.isfile(os.path.join(kb_path, rel))
+    refs, registry_present = _reference_image_registry(kb_path)
+    if not registrable:
+        return _reference_result(
+            "image",
+            status="invalid",
+            target=display,
+            detail=f"文件{'存在' if exists else '不存在'}",
+            reason="裸 URL 含空白 ⇒ 图片注册规则（`_parse_image_ref_url()`）识别不到，"
+            "会被当成「未引用」，保存时有被自动清理误删的风险",
+            next_step=f"改写成尖括号形式：`![](<{norm}>)`",
+        )
+    if not exists:
+        return _reference_result(
+            "image",
+            status="not_found",
+            target=display,
+            reason="`.memoria/images/` 下没有该文件",
+            next_step="把图片导入该库（或修正文件名与扩展名）",
+        )
+    if not registry_present:
+        detail = "文件存在；`registry.json` 缺失（注册表未生成，登记状态无法判定）"
+    elif name in refs:
+        detail = "文件存在；registry.json 已登记（引用方：" + "、".join(str(x) for x in (refs.get(name) or [])) + "）"
+    else:
+        detail = "文件存在；但 registry.json 的 refs 里没有它（注册表可能未重建）"
+    return _reference_result(
+        "image",
+        status="ok",
+        target=display,
+        detail=detail,
+        next_step='read_image(file_path="' + rel + '")（当前缺「多媒体眼睛」插件，只会回明确错误）',
+    )
+
+
+#: kind → 解析体（`resolve_reference` 的唯一分派表）。
+_REFERENCE_RESOLVERS: dict[str, Any] = {
+    "file": _resolve_file_reference,
+    "session": _resolve_session_reference,
+    "kp_link": _resolve_kp_link_reference,
+    "anchor": _resolve_anchor_reference,
+    "image": _resolve_image_reference,
+}
+
+
+def _detect_reference_kind(token: str) -> str | None:
+    """按标记自动识别引用类型；识别不出回 None（调用方转成参数错误，绝不瞎猜）。"""
+    from memoria.services.agent.session.reference import _MENTION_RE
+
+    text = token.strip()
+    if _MENTION_RE.search(text):
+        return "session"
+    if text.startswith("!["):
+        return "image"
+    if text.startswith("@"):
+        return "file"
+    if _ref_re(_ANCHOR_REF_PATTERN).fullmatch(text):
+        return "anchor"
+    if text.startswith("[["):
+        return "kp_link"
+    return None
+
+
+def _resolve_reference(kb_path: str, reference: str, kind: str | None = None) -> ToolOutput:
+    """`resolve_reference` 工具体：解析**一条**引用并回结构化结果文本（只读）。"""
+    token = str(reference or "").strip()
+    if not token:
+        return _error("resolve_reference: reference 不能为空")
+    if len(token) > REFERENCE_MAX_CHARS:
+        return _error(
+            f"resolve_reference: reference 过长（{len(token)} 字符 > 上限 {REFERENCE_MAX_CHARS}）"
+            "—— 一次只解析一条引用 token"
+        )
+    if kind is not None and str(kind).strip():
+        key = str(kind).strip().lower()
+        if key not in REFERENCE_KINDS:
+            return _error(
+                f"resolve_reference: 未知 kind {kind!r}（可选 {'、'.join(REFERENCE_KINDS)}；省略即按标记自动识别）"
+            )
+    else:
+        detected = _detect_reference_kind(token)
+        if detected is None:
+            return _error(
+                f"resolve_reference: 无法识别引用类型：{token!r} —— 需是 `@路径`、`@[label](dsh-session:…)`、"
+                "`[[id]]`、`文件:行号`、`![](...)` 之一，或用 kind 显式指定"
+            )
+        key = detected
+    with kb_read_only(kb_path):
+        result = _REFERENCE_RESOLVERS[key](kb_path, token)
+    return ToolOutput(text=_reference_render(token, result))
+
+
+# —— 引用审计 ——
+
+
+def _audit_issue(
+    check: str,
+    severity: str,
+    rel: str,
+    line: int | None,
+    target: str,
+    problem: str,
+) -> dict[str, Any]:
+    """一条审计问题：类型（检查名）/ 位置（文件:行）/ 目标 / 问题 / 严重级。"""
+    return {
+        "check": check,
+        "severity": severity,
+        "file": rel,
+        "line": line,
+        "target": target,
+        "problem": problem,
+    }
+
+
+def _audit_preview(values: Sequence[str]) -> str:
+    """候选短清单（审计行内展示，最多 3 个）。"""
+    shown = [str(item) for item in values[:3]]
+    text = "、".join(f"`{item}`" for item in shown)
+    return text + (f" 等 {len(values)} 个" if len(values) > len(shown) else "")
+
+
+def _audit_document(
+    kb_path: str,
+    rel: str,
+    *,
+    service: Any,
+    inventory: Sequence[str],
+    image_problems: Mapping[str, list[dict[str, Any]]],
+    registry_refs: Mapping[str, Any],
+    registry_present: bool,
+) -> list[dict[str, Any]]:
+    """单篇文档的五类引用扫描（只读）；返回问题清单（未截断，由调用方做上限）。"""
+    from memoria.services.agent.session.reference import _MENTION_RE, decode_session_uri
+    from memoria.services.agent.session.store import session_file
+    from memoria.services.document import DocumentService
+    from memoria.services.link_instances import is_line_attached, line_at_offset
+    from memoria.services.link_resolver import (
+        build_link_overrides,
+        resolve_link_target,
+        scan_wikilinks,
+        wikilink_label,
+    )
+    from memoria.storage.constants import MEMORIA_DIR
+    from memoria.storage.sidecar import load_sidecar_for_md
+
+    body, lines = _read_body_lines(kb_path, rel)
+    issues: list[dict[str, Any]] = []
+
+    def add(check: str, severity: str, line: int, target: str, problem: str) -> None:
+        issues.append(_audit_issue(check, severity, rel, line, target, problem))
+
+    # ① `@路径`（跳过会话 mention 与 `@[label]` 形态：那些由 ② 负责）
+    for match in _ref_re(_FILE_MENTION_PATTERN).finditer(body):
+        token_text = match.group(1) if match.group(1) is not None else (match.group(2) or "")
+        if token_text.startswith("[") or token_text.startswith("dsh-session:"):
+            continue
+        raw = _reference_normalize(token_text)
+        if not raw:
+            continue
+        at = body.find("@", match.start(), match.end())
+        line = line_at_offset(body, at if at >= 0 else match.start())
+        target = f"@{raw}"
+        if raw.endswith("/"):
+            rel_dir = _reference_rel_in_roots(kb_path, raw)
+            if rel_dir is None:
+                add("file_reference.outside_root", "error", line, target, "路径在允许根之外或含上跳 `..`，fail-closed 拒绝")
+            elif not os.path.isdir(os.path.join(kb_path, rel_dir)):
+                add("file_reference.missing", "error", line, target, "库内没有该目录")
+            continue
+        rel_target = _reference_rel_in_roots(kb_path, raw)
+        if rel_target is None:
+            add("file_reference.outside_root", "error", line, target, "路径在允许根之外或含上跳 `..`，fail-closed 拒绝")
+            continue
+        status, _converged, candidates, _matched = _reference_converge_file(kb_path, rel_target, files=inventory)
+        if status == "not_found":
+            add("file_reference.missing", "error", line, target, "库内不存在该文件（精确 / 唯一 basename / 唯一后缀三级都未命中）")
+        elif status == "ambiguous":
+            add(
+                "file_reference.ambiguous",
+                "warning",
+                line,
+                target,
+                f"多义：{_audit_preview(candidates)}（程序不猜，用完整相对路径重写）",
+            )
+
+    # ② 会话引用（`@[label](dsh-session:…)` 与裸 `dsh-session:`）
+    for match in _MENTION_RE.finditer(body):
+        uri = match.group(2) if match.group(2) is not None else (match.group(3) or "")
+        line = line_at_offset(body, match.start())
+        try:
+            session_id = decode_session_uri(uri)
+        except ValueError:
+            add("session_reference.invalid_uri", "error", line, uri, "URI 非规范（`decode_session_uri()` 拒绝）")
+            continue
+        try:
+            full = session_file(kb_path, session_id)
+        except ValueError as exc:
+            add("session_reference.invalid_id", "error", line, session_id, f"会话 id 非法：{exc}")
+            continue
+        if not os.path.isfile(full):
+            add(
+                "session_reference.session_not_found",
+                "warning",
+                line,
+                session_id,
+                "本库会话目录内没有该会话文件（会话按库分，不跨库）",
+            )
+
+    # ③ `[[…]]`：目标可解析性 + 是否挂接（别名走 sidecar + 正文同标签的 overrides）
+    sidecar = load_sidecar_for_md(os.path.join(kb_path, rel), kb_path)
+    overrides = build_link_overrides(sidecar, body)
+    for link in scan_wikilinks(body):
+        raw = str(link["raw"])
+        target_id = str(link["target_id"])
+        label = wikilink_label(target_id, link.get("display"))
+        line = line_at_offset(body, int(link["start"]))
+        targets = [str(item) for item in (overrides.get(label) or overrides.get(target_id) or [])]
+        if len(targets) > 1:
+            add("kp_link.ambiguous_target", "warning", line, raw, f"别名「{label}」指向多个目标：{_audit_preview(targets)}（不猜）")
+        elif len(targets) == 1:
+            resolved = resolve_link_target(kb_path, targets[0])
+            if resolved.get("status") != "ok":
+                add("kp_link.unresolved_target", "warning", line, raw, f"路由目标 `{targets[0]}` 无法解析（知识点与文件都没命中）")
+        else:
+            resolved = resolve_link_target(kb_path, target_id)
+            if resolved.get("status") == "ambiguous":
+                candidates = [_reference_kp_candidate(item) for item in resolved.get("candidates") or []]
+                add("kp_link.ambiguous_target", "warning", line, raw, f"`by_id` 内多条同 id 记录：{_audit_preview(candidates)}（不猜）")
+            elif resolved.get("status") != "ok":
+                add("kp_link.unresolved_target", "warning", line, raw, f"知识点 id 与文件 stem 都没命中：`{target_id}`")
+        entry = service._resolve_scan_link_entry(sidecar, label) or service._resolve_scan_link_entry(sidecar, target_id)
+        if not is_line_attached(entry, line, body, lines):
+            add("kp_link.body_not_attached", "warning", line, raw, "正文出现但未挂接（sidecar `instances` / `excluded` 里没有本行）")
+
+    # ④ `文件:行号` 锚点（跳过 URL 里的 `…/x.md:3` 与 `@a.md:3` 的 `@` 形态：前一个字符是 `/` `:`，或文件段以 `@` 开头）
+    for match in _ref_re(_ANCHOR_REF_PATTERN).finditer(body):
+        if match.start() > 0 and body[match.start() - 1] in "/:":
+            continue
+        start = int(match.group("start"))
+        end_text = match.group("end")
+        end = int(end_text) if end_text else None
+        raw_file = match.group("file")
+        if raw_file.startswith("@"):
+            continue
+        line = line_at_offset(body, match.start())
+        target = f"{raw_file}:{start}" + (f"-{end}" if end else "")
+        rel_target = _reference_rel_in_roots(kb_path, raw_file)
+        if rel_target is None:
+            add("anchor.outside_root", "error", line, target, "锚点路径在允许根之外或含上跳 `..`，fail-closed 拒绝")
+            continue
+        status, converged, candidates, _matched = _reference_converge_file(kb_path, rel_target, files=inventory)
+        if status == "ambiguous":
+            add("anchor.ambiguous_file", "warning", line, target, f"锚点文件多义：{_audit_preview(candidates)}（不猜）")
+            continue
+        if status != "ok" or not converged:
+            add("anchor.file_missing", "warning", line, target, "锚点文件在库内不存在（精确 / 唯一 basename / 唯一后缀三级都未命中）")
+            continue
+        if end is not None:
+            add(
+                "anchor.range_unsupported",
+                "warning",
+                line,
+                target,
+                "区间锚点：本地没有读时投影（§6.5 L 路线未落地）⇒ 只保证起始行、不校验末端（不假装能解）",
+            )
+            continue
+        _, target_lines = _read_body_lines(kb_path, converged)
+        if start < 1 or start > len(target_lines):
+            add(
+                "anchor.line_out_of_range",
+                "warning",
+                line,
+                target,
+                f"第 {start} 行超出 `{converged}` 的正文范围（共 {len(target_lines)} 行）",
+            )
+
+    # ⑤ 图片：注册规则识别性 / 文件存在性（复用 `diagnose_image_refs()` 的口径）+ registry 登记状态
+    for item in image_problems.get("unregistered") or []:
+        add(
+            "image.unregistered",
+            "error",
+            int(item.get("line") or 0),
+            str(item.get("src") or ""),
+            "裸 URL 含空白 ⇒ 图片注册规则识别不到（保存时可能被当作未引用清理）；改成 `![](<…>)` 尖括号形式",
+        )
+    for item in image_problems.get("missing") or []:
+        add(
+            "image.missing",
+            "error",
+            int(item.get("line") or 0),
+            str(item.get("src") or ""),
+            f"引用的图片不在 `.memoria/images/`：`{item.get('url')}`",
+        )
+    prefix = f"{MEMORIA_DIR}/images/"
+    if registry_present:
+        for match in _ref_re(_IMAGE_REF_PATTERN).finditer(body):
+            url, registrable = DocumentService._parse_image_ref_url(match.group(1).strip())
+            if not url or not registrable:
+                continue  # 不可注册 / 取不到 URL 的写法由 `image.unregistered` 负责，不重复报
+            norm = url[8:] if url.startswith("/files/") else url
+            if not norm.startswith(prefix):
+                continue
+            name = norm[len(prefix) :].split("#", 1)[0].split("?", 1)[0]
+            if not name or "/" in name or name in registry_refs:
+                continue
+            if not os.path.isfile(os.path.join(kb_path, norm)):
+                continue  # 文件本身就不存在：由 `image.missing` 报，登记状态无意义
+            add(
+                "image.not_registered",
+                "warning",
+                line_at_offset(body, match.start()),
+                match.group(0),
+                f"`.memoria/images/{name}` 不在 `registry.json` 的 refs 里（注册表可能未重建）",
+            )
+    return issues
+
+
+def _audit_references(kb_path: str, path: Any = None, limit: int = REFERENCE_AUDIT_MAX_ISSUES) -> ToolOutput:
+    """`audit_references` 工具体：按文档扫五类引用，回问题清单（类型/位置/目标/问题/严重级/检查名）。"""
+    from memoria.storage.scanner import collect_md_files
+
+    if isinstance(limit, bool) or not isinstance(limit, int) or not 1 <= limit <= REFERENCE_AUDIT_MAX_ISSUES:
+        return _error(f"audit_references: limit 必须是 1..{REFERENCE_AUDIT_MAX_ISSUES} 的整数")
+
+    rel_filter: str | None = None
+    if path is not None and str(path).strip():
+        rel_filter = _safe_rel(kb_path, str(path))
+        if rel_filter is None:
+            return _error("audit_references: path 必须是工作区（允许根）内的相对 .md 路径（不得上跳）")
+        if not os.path.isfile(os.path.join(kb_path, rel_filter)):
+            return _error(f"audit_references: 文档不存在：{rel_filter}", "NOT_FOUND")
+
+    files = [rel_filter] if rel_filter else collect_md_files(kb_path)
+    shown: list[dict[str, Any]] = []
+    total = 0
+    with kb_read_only(kb_path):
+        service = _readonly_document_service(kb_path)
+        inventory = _walk_kb_files(kb_path)
+        registry_refs, registry_present = _reference_image_registry(kb_path)
+        diagnosed = service.diagnose_image_refs() or {}
+        per_doc: dict[str, dict[str, list[dict[str, Any]]]] = {}
+        for group in ("unregistered", "missing"):
+            for item in diagnosed.get(group) or []:
+                per_doc.setdefault(str(item.get("doc") or ""), {}).setdefault(group, []).append(item)
+        for rel in files:
+            found = _audit_document(
+                kb_path,
+                rel,
+                service=service,
+                inventory=inventory,
+                image_problems=per_doc.get(rel) or {},
+                registry_refs=registry_refs,
+                registry_present=registry_present,
+            )
+            for issue in found:
+                total += 1
+                if len(shown) < limit:
+                    shown.append(issue)
+
+    scope = f"指定文档 `{rel_filter}`" if rel_filter else f"全库 {len(files)} 篇 .md"
+    if not shown:
+        return ToolOutput(text=f"引用审计：扫描 {scope}，未发现引用问题。")
+    errors = sum(1 for item in shown if item["severity"] == "error")
+    warnings = len(shown) - errors
+    lines = [f"引用审计：扫描 {scope}，发现 {total} 个引用问题（已列 {len(shown)} 条：error {errors} / warning {warnings}）。"]
+    if total > len(shown):
+        lines.append(f"（已达上限 {limit} 条：还有 {total - len(shown)} 条未列出；请用 `path` 参数收窄到单篇文档）")
+    for item in shown:
+        where = f"{item['file']}:{item['line']}" if item["line"] else str(item["file"])
+        lines.append(f"- [{item['severity']}] {item['check']} @ {where} 目标 {item['target']}：{item['problem']}")
+    lines.append("")
+    lines.append("检查名（可用 resolve_reference 逐个复现）：" + " / ".join(_REFERENCE_AUDIT_CHECKS))
+    return ToolOutput(text="\n".join(lines))
+
+
+def _reference_tools(kb_path: str) -> tuple[Tool, ...]:
+    """引用板块（R 线）两把**只读**工具；`build_kb_tools()` 末尾拼接（§6.18）。"""
+
+    def _bound_resolve(arguments: Mapping[str, Any]) -> ToolOutput:
+        raw_kind = arguments.get("kind")
+        kind = str(raw_kind) if raw_kind is not None else None
+        return _resolve_reference(kb_path, str(arguments.get("reference") or ""), kind)
+
+    def _bound_audit(arguments: Mapping[str, Any]) -> ToolOutput:
+        limit = _positive_int(arguments.get("limit"), REFERENCE_AUDIT_MAX_ISSUES)
+        if limit is None or limit > REFERENCE_AUDIT_MAX_ISSUES:
+            return _error(f"audit_references: limit 必须是 1..{REFERENCE_AUDIT_MAX_ISSUES} 的整数")
+        return _audit_references(kb_path, arguments.get("path"), limit)
+
+    return (
+        Tool(
+            name="resolve_reference",
+            description=(
+                "解析**一条**库内引用，回结构化结果：类型 / 归一化目标 / 是否存在 / 指向什么 / 歧义候选 / 建议下一步。"
+                "覆盖五类：`@相对路径`（含 `@\"带空格\"` 与目录尾斜杠）、`@[label](dsh-session:…)`、`[[知识点]]`、"
+                "`文件:行号`、`![](...)`（`.memoria/images/**`）。"
+                "多目标一律判 `ambiguous` 并回候选（**不猜**）；区间锚点回 `unsupported`（本地无读时投影）；"
+                "**不支持**块级引用（代码块 / 表格 / 公式）与选区 / 片段引用。写回答前可先核对自己的引用是否可用。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "reference": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "一条引用 token 的原文（含 `@` / `[[…]]` / `![]` / `文件:行号` 标记）",
+                    },
+                    "kind": {
+                        "type": "string",
+                        "enum": list(REFERENCE_KINDS),
+                        "description": "可选：强制按该类引用解析（省略即按标记自动识别）",
+                    },
+                },
+                "required": ["reference"],
+                "additionalProperties": False,
+            },
+            handler=_bound_resolve,
+        ),
+        Tool(
+            name="audit_references",
+            description=(
+                "审计库内文档的引用完整性，逐条回「检查名 / 位置（文件:行）/ 目标 / 问题 / 严重级」。"
+                "默认扫全库 `.md`，可用 `path` 收窄到单篇。检查名与 `resolve_reference` 一一对应（可复现）。"
+                f"一次最多报 {REFERENCE_AUDIT_MAX_ISSUES} 条（到顶会提示收窄）。只读，不改任何文件。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "可选：只审计知识库内该篇 .md（默认全库）"},
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": REFERENCE_AUDIT_MAX_ISSUES,
+                        "description": f"最多列出多少条问题（默认且最多 {REFERENCE_AUDIT_MAX_ISSUES}）",
+                    },
+                },
+                "additionalProperties": False,
+            },
+            handler=_bound_audit,
         ),
     )
