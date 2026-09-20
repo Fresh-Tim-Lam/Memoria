@@ -106,3 +106,72 @@ def test_selection_path_passes_columns_into_the_formatter():
     # 列号来自源码区端点的**行内字符偏移**（只数 `.-line-content`，不数行号列）
     assert "el.closest(\".-line-content\")" in src
     assert "return { line: line, col: off + 1, lineStart: off === 0 };" in src
+
+
+def test_session_reference_is_a_short_alias_and_expands_before_send():
+    """会话引用在输入框里只写**别名**（不出现 34 字符会话 id），发送前展开成可解析的完整 URI。
+
+    口径来源：用户「会话引用不需要渲染会话id，太占地方，**实际要传入**」。
+    断言 ① 别名比完整 URI 短；② 同一会话复用同一别名；③ 已登记别名 / 完整 URI 都算合法、
+    未登记别名不认；④ `expandSessionAliases()` 把别名换回完整 URI；⑤ 非引用文本原样不动。
+    """
+    src = panel_source()
+    decl = re.search(r"const sessionAliasById = new Map\(\);[^\n]*\n\s*let sessionAliasSeq = 0;", src)
+    assert decl is not None, "未在 agent-panel.js 找到别名登记表声明"
+    prelude = (
+        'const SESSION_URI_PREFIX = "dsh-session:";\n'
+        "function sessionUri(id) { return SESSION_URI_PREFIX + "
+        'Buffer.from(JSON.stringify(String(id)), "utf8").toString("base64url"); }\n'
+        'function decodeSessionUri(uri) { const raw = String(uri || "");'
+        " if (raw.indexOf(SESSION_URI_PREFIX) !== 0) return null;"
+        " const p = raw.slice(SESSION_URI_PREFIX.length);"
+        ' if (!/^[A-Za-z0-9_-]+$/.test(p)) return null;'
+        ' try { return JSON.parse(Buffer.from(p, "base64url").toString("utf8")); } catch (e) { return null; } }\n'
+        + decl.group(0)
+        + "\n"
+    )
+    fns = "\n".join(
+        extract_function(name)
+        for name in (
+            "sessionAliasFor",
+            "sessionAliasUri",
+            "sessionAliasOrUriOk",
+            "expandSessionAliases",
+        )
+    )
+    script = (
+        prelude
+        + fns
+        + """
+const id = "session-20260918T163014Z-8ac06ed5";
+const full = Buffer.from(JSON.stringify(id), "utf8").toString("base64url");
+const uri = sessionAliasUri(id);
+const text = "@[" + "上一轮会话" + "](" + uri + "#seq:3-7) 总结";
+console.log(JSON.stringify({
+  uri: uri,
+  again: sessionAliasUri(id),
+  shorter: uri.length < ("dsh-session:" + full).length,
+  aliasOk: sessionAliasOrUriOk("s1"),
+  unknownOk: sessionAliasOrUriOk("s9"),
+  fullOk: sessionAliasOrUriOk(full),
+  expanded: expandSessionAliases(text),
+  expandedHasId: expandSessionAliases(text).indexOf(full) >= 0,
+  expandedStillShortAlias: expandSessionAliases(text).indexOf("dsh-session:s1") >= 0,
+  plain: expandSessionAliases("没有引用的纯文本"),
+}));
+"""
+    )
+    out = node_eval(script)
+    assert out["uri"] == "dsh-session:s1"
+    assert out["again"] == out["uri"]  # 同一会话复用同一别名
+    assert out["shorter"] is True
+    assert out["aliasOk"] is True
+    assert out["unknownOk"] is False  # 未登记别名不认（不猜）
+    assert out["fullOk"] is True  # 完整 URI 仍认（历史文本 / 旧 token）
+    assert out["expandedHasId"] is True and out["expandedStillShortAlias"] is False
+    assert out["plain"] == "没有引用的纯文本"
+    # 接线（静态断言，防"函数写了但没接上"）：① 两处会话 token 拼写都走别名 URI；
+    # ② 发送路径先把别名展开成完整 URI（发后端 / 落盘 / 气泡渲染都用展开后的文本）
+    assert "sessionAliasUri(id)" in extract_function("formatSessionMentionToken")
+    assert "sessionAliasUri(id)" in extract_function("sessionFragmentToken")
+    assert 'const text = expandSessionAliases(((input && input.value) || "").trim());' in src

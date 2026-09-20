@@ -1133,7 +1133,7 @@ window.MemoriaAgentPanel = (function () {
 
   async function ask() {
     const input = $("#agent-input");
-    const text = ((input && input.value) || "").trim();
+    const text = expandSessionAliases(((input && input.value) || "").trim()); // 短别名 → 完整 dsh-session URI（发给后端与落盘的始终是可解析形式）
     if (busy) return;
     if (!text) {
       setStatusText(T("agent.err.empty_question"), true);
@@ -2245,7 +2245,7 @@ window.MemoriaAgentPanel = (function () {
   /** `@[标题](uri)` token；label 里的 `\` 与 `]` 按上游口径转义（与后端 `format_session_mention` 同口径）。 */
   function formatSessionMentionToken(id, label) {
     const text = String(label == null || label === "" ? id : label);
-    return "@[" + text.replace(/[\\\]]/g, function (m) { return "\\" + m; }) + "](" + sessionUri(id) + ")";
+    return "@[" + text.replace(/[\\\]]/g, function (m) { return "\\" + m; }) + "](" + sessionAliasUri(id) + ")";
   }
 
   /** 会话 chip（与文件 `-agent-mention` 同族，叠 `--session` 区分；点击委托见下方 document 监听）。 */
@@ -3205,8 +3205,8 @@ window.MemoriaAgentPanel = (function () {
     const frag = end > from ? "#seq:" + from + "-" + end : "#seq:" + from;
     const row = histDataRow(id);
     const label = (row && histTitle(row)) || id;
-    const head = formatSessionMentionToken(id, label); // label 转义与 URI 编码复用既有实现（单一事实源）
-    return head.replace("(" + sessionUri(id) + ")", "(" + sessionUri(id) + frag + ")");
+    const head = formatSessionMentionToken(id, label); // 别名 URI（单一事实源）
+    return head.replace("(" + sessionAliasUri(id) + ")", "(" + sessionAliasUri(id) + frag + ")");
   }
 
   // ② 落点：源码/预览 ⇒ 带行区间的文件 token；气泡 ⇒ 会话片段 token。落点仍走既有 `inputCaret` 语义。
@@ -3251,7 +3251,7 @@ window.MemoriaAgentPanel = (function () {
   function composerTokenHtml(token) {
     const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
     if (session) {
-      if (decodeSessionUri(SESSION_URI_PREFIX + session[1].split("#seq:")[0]) === null) return esc(token);
+      if (!sessionAliasOrUriOk(session[1].split("#seq:")[0])) return esc(token);
       return '<span class="-agent-composer-chip -agent-composer-chip--session">' + esc(token) + "</span>";
     }
     const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:-L\d+)?)?$/.exec(token);
@@ -3617,7 +3617,7 @@ window.MemoriaAgentPanel = (function () {
     const cls = "-agent-composer-chip" + (active ? " -agent-composer-chip--active" : "");
     const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
     if (session) {
-      if (decodeSessionUri(SESSION_URI_PREFIX + session[1].split("#seq:")[0]) === null) return esc(token);
+      if (!sessionAliasOrUriOk(session[1].split("#seq:")[0])) return esc(token);
       return '<span class="' + cls + ' -agent-composer-chip--session">' + esc(token) + "</span>";
     }
     const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:C\d+)?(?:-L\d+(?:C\d+)?)?)?$/.exec(token);
@@ -3836,6 +3836,57 @@ window.MemoriaAgentPanel = (function () {
     baseRenderAssistantBodyForRefs(el, text);
     chipRangeRefsInDom(el);
   };
+
+  /* ══ 会话引用「短别名」token（2026-09-20）══════════════════════════════════════════════
+     用户口径：「会话引用不需要渲染会话id，太占地方，**实际要传入**」。
+     做法：输入框里只写**别名** —— `@[标题](dsh-session:s1#seq:3-7)`（`s1`/`s2`… 每个真实会话 id
+     一个），真实 id 留在下面这张内存表里；**发送前**由 `ask()` 调 `expandSessionAliases()`
+     换成完整 `dsh-session:<base64url>` URI ⇒ 发给后端、写进会话历史、被气泡渲染/审计工具看到的
+     **一律是可解析的完整形式**（别名只活在当前输入框里，发送即不再出现）。
+     为什么不是"显示层替换"：镜像层 chip 必须与 textarea **逐字同宽**，只改 chip 的可见文字会让
+     chip 之后的光标/选区与可见文字错位（在 chip 后面打字最明显）——所以让**两边都变短**。
+     落点纪律：本块追加在 IIFE 末尾（`return {…}` 门面之前）⇒ 仅门面行号变化，上方 anchor 零漂移。 */
+  const sessionAliasById = new Map(); // 真实 id → 别名
+  let sessionAliasSeq = 0;
+
+  /** 真实 id → 稳定别名（同一 id 反复引用只占一个别名）。 */
+  function sessionAliasFor(id) {
+    const key = String(id == null ? "" : id);
+    if (!key) return "";
+    if (!sessionAliasById.has(key)) {
+      sessionAliasSeq += 1;
+      sessionAliasById.set(key, "s" + sessionAliasSeq);
+    }
+    return sessionAliasById.get(key);
+  }
+
+  /** 别名形态的规范 URI（拼不出来时退回完整 URI，宁可长也不丢引用）。 */
+  function sessionAliasUri(id) {
+    const alias = sessionAliasFor(id);
+    return alias ? SESSION_URI_PREFIX + alias : sessionUri(id);
+  }
+
+  /** payload 合法性：**已登记别名**或**可解码的完整 base64url** 都算（镜像 chip 与解析器共用这一判据）。 */
+  function sessionAliasOrUriOk(payload) {
+    const p = String(payload == null ? "" : payload);
+    if (!p) return false;
+    for (const alias of sessionAliasById.values()) {
+      if (alias === p) return true;
+    }
+    return decodeSessionUri(SESSION_URI_PREFIX + p) !== null;
+  }
+
+  /** 发送前展开：`dsh-session:s1…` → `dsh-session:<真实 base64url>…`；未登记的别名原样保留（不猜）。 */
+  function expandSessionAliases(text) {
+    const raw = String(text == null ? "" : text);
+    if (!raw || !sessionAliasSeq) return raw;
+    return raw.replace(/dsh-session:(s\d+)/g, function (full, alias) {
+      for (const entry of sessionAliasById.entries()) {
+        if (entry[1] === alias) return sessionUri(entry[0]);
+      }
+      return full;
+    });
+  }
 
   return {
     init: init,
