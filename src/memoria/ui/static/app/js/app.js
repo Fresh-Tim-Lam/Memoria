@@ -1863,8 +1863,8 @@
         while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].trim().startsWith(">"))
           lineCount++;
       }
-      // else: heading / paragraph / image / hr → 1 line
-
+      // 真值优先：parser 落盘的块行区间（上方启发式仅作缺字段兜底；末块越界=公式归一化曾插行）
+      if (block.srcLine > 0 && block.srcLineEnd >= block.srcLine && doc.blocks[doc.blocks.length - 1].srcLineEnd <= srcLines.length) { srcIdx = block.srcLine - 1; lineCount = block.srcLineEnd - block.srcLine + 1; }
       _blockLineMap[blockIdx] = { startLine: srcIdx, endLine: srcIdx + lineCount - 1 };
       var el = preview.querySelector('.-src-block[data--block-index="' + blockIdx + '"]');
       if (el) {

@@ -291,6 +291,22 @@ window.MemoriaParser = (function () {
   }
 
   /**
+   * 落块 + 记录它的**源码行区间**（1-based 闭区间）。
+   * 这是"块 ↔ 源码行"的**单一事实源**：预览映射（`app.js stampBlockLines` 的
+   * `data--src-line`）、KP 范围带、预览编辑回写（`spliceBlockSource`）都直接消费它，
+   * 不得再各自复写一套块边界判定（历史上重复实现导致 223/274 份文档行号漂移）。
+   * @param {Array} blocks
+   * @param {object} blk — AST block
+   * @param {number} startIdx — 块首行（0-based）
+   * @param {number} i — 解析器当前下标：等于 startIdx 表示"尚未跨行"，否则为跨行后的下一行
+   */
+  function emit(blocks, blk, startIdx, i) {
+    blk.srcLine = startIdx + 1;
+    blk.srcLineEnd = i > startIdx ? i : startIdx + 1;
+    blocks.push(blk);
+  }
+
+  /**
    * 核心 block 解析
    * @param {string[]} lines — 所有行
    * @param {number} [startLine=0]
@@ -309,7 +325,7 @@ window.MemoriaParser = (function () {
 
       // ── 空行 ──
       if (rawLine.trim() === "") {
-        blocks.push(AST.blankLine());
+        emit(blocks, AST.blankLine(), lineNum, i);
         i++;
         continue;
       }
@@ -325,7 +341,7 @@ window.MemoriaParser = (function () {
           i++;
         }
         i++; // skip closing ---
-        blocks.push(AST.frontmatter(fmLines.join("\n")));
+        emit(blocks, AST.frontmatter(fmLines.join("\n")), lineNum, Math.min(i, endLine));
         continue;
       }
 
@@ -340,7 +356,8 @@ window.MemoriaParser = (function () {
           i++;
         }
         i++; // skip closing fence
-        blocks.push(AST.codeBlock(lang, codeLines.join("\n")));
+        // Math.min：围栏未闭合时上面的 while 会走到 endLine，末尾的 i++ 会越界一行
+        emit(blocks, AST.codeBlock(lang, codeLines.join("\n")), lineNum, Math.min(i, endLine));
         continue;
       }
 
@@ -353,7 +370,7 @@ window.MemoriaParser = (function () {
           i++;
         }
         i++; // skip closing $$
-        blocks.push(AST.mathBlock(mathLines.join("\n")));
+        emit(blocks, AST.mathBlock(mathLines.join("\n")), lineNum, Math.min(i, endLine));
         continue;
       }
 
@@ -361,7 +378,7 @@ window.MemoriaParser = (function () {
       // 只有整行首尾为 $$、且内容不含内嵌 $$ 时才视为块级公式，否则退回行内处理
       var sm = /^\$\$(.*)\$\$\s*$/.exec(rawLine.trim());
       if (sm && sm[1].indexOf("$$") === -1 && sm[1].trim() !== "") {
-        blocks.push(AST.mathBlock(sm[1].trim()));
+        emit(blocks, AST.mathBlock(sm[1].trim()), lineNum, i);
         i++;
         continue;
       }
@@ -372,14 +389,14 @@ window.MemoriaParser = (function () {
         var level = levelMatch ? levelMatch[0].length : 1;
         var inlineTokens = tokens.slice(1);
         var children = parseInline(inlineTokens);
-        blocks.push(AST.heading(level, children));
+        emit(blocks, AST.heading(level, children), lineNum, i);
         i++;
         continue;
       }
 
       // ── 水平线 ──
       if (rawLine.trim().match(/^([-*_]\s*){3,}$/) || rawLine.trim() === "***") {
-        blocks.push(AST.horizontalRule());
+        emit(blocks, AST.horizontalRule(), lineNum, i);
         i++;
         continue;
       }
@@ -397,7 +414,7 @@ window.MemoriaParser = (function () {
             }
           }
           if (imgTailBlank) {
-            blocks.push(AST.image(tokens[0].value, tokens[imgEndIdx].value, tokens[imgEndIdx].title));
+            emit(blocks, AST.image(tokens[0].value, tokens[imgEndIdx].value, tokens[imgEndIdx].title), lineNum, i);
             i++;
             continue;
           }
@@ -415,7 +432,7 @@ window.MemoriaParser = (function () {
           qBlocks.push(AST.paragraph(parseInline(qt.slice(1))));
           i++;
         }
-        if (qBlocks.length) blocks.push(AST.blockquote(qBlocks));
+        if (qBlocks.length) emit(blocks, AST.blockquote(qBlocks), lineNum, i);
         continue;
       }
 
@@ -441,7 +458,8 @@ window.MemoriaParser = (function () {
           items.push(AST.listItem(itemChildren2));
           scan++;
         }
-        blocks.push(AST.list(isOrdered, items, listStart));
+        // 注意：此处 i 仍等于块首行，跨行末端在 scan；若传 i 会退化成单行区间
+        emit(blocks, AST.list(isOrdered, items, listStart), lineNum, scan);
         i = scan;
         continue;
       }
@@ -467,13 +485,13 @@ window.MemoriaParser = (function () {
 
         var header = tableRows[0] || [];
         var dataRows = tableRows.slice(1);
-        blocks.push(AST.table(header, dataRows));
+        emit(blocks, AST.table(header, dataRows), lineNum, i);
         continue;
       }
 
       // ── 段落（默认） ──
       var children = parseInline(tokens);
-      blocks.push(AST.paragraph(children));
+      emit(blocks, AST.paragraph(children), lineNum, i);
       i++;
     }
 

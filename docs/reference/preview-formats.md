@@ -10,7 +10,7 @@
 
 ## 1. 总览
 
-- **主预览走 AST 渲染管线**，不是通用 Markdown 库：源码正文 → 图片路径重写（`app.js rewriteMdImagePaths`）→ `lexer.js` 词法 → `parser.js` 块/行内 AST → `renderer.js` AST→DOM（每块一个 `. -src-block`）→ 行号打标（`stampBlockLines`）→ 后处理（Mermaid、图片 Lightbox、MathJax 排版、链接解析）。
+- **主预览走 AST 渲染管线**，不是通用 Markdown 库：源码正文 → 图片路径重写（`app.js rewriteMdImagePaths`）→ `lexer.js` 词法 → `parser.js` 块/行内 AST → `renderer.js` AST→DOM（每块一个 `. -src-block`）→ 行号打标（`stampBlockLines` 取 **`parser.js` `emit()` 落盘的 `block.srcLine/srcLineEnd`**，2026-09-20 起为单一事实源）→ 后处理（Mermaid、图片 Lightbox、MathJax 排版、链接解析）。
 - **`markdown-preview.js`（marked / GFM 管线）在主预览中只被借用**三样能力：本地图片路径重写、Mermaid 渲染、图片 Lightbox。它自己的 `renderHtml` 只用于知识点范围预览的"Markdown 模式"（辅助面板），两者行为差异已在文中标注。
 - 主容器：`#preview`，类 `-preview markdown-body`（index.html）；内部内容容器 `. -preview-content`。
 - 编辑态（打开"编辑"开关）时 `#preview` 为 `contenteditable`，可直接在预览改正文；只读态仅供浏览（链接可点，右键无编辑菜单）。

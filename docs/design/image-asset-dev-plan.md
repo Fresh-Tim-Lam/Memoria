@@ -56,7 +56,7 @@ A/B 相互独立可并行；C 与 A/B 无耦合，可先做。
 |---------|------|------|
 | lexer.js:383-398 | `matchBracketLink` | 解析可选 title 段（`"..."`），返回 `{alt, url, title, fullLen}` |
 | lexer.js:119-128 | token 生成 | 把 title 写入 `image_close` token value（或挂到 token 属性） |
-| parser.js:92-103 / 378-383 | `parseInline` / `parseBlocks` 图片分支 | `AST.image(alt, url, title)` |
+| parser.js:92-103 / 405-422 | `parseInline` / `parseBlocks` 图片分支 | `AST.image(alt, url, title)` |
 | ast.js:176-179 | `image` 工厂 | 签名加 `title`，节点结构 `{type, alt, url, title}` |
 | renderer.js:84-93 | `T.IMAGE` | `img.title = block.title`（阶段 E 再扩展为 attrs） |
 | source-gen.js:64-65 | `T.IMAGE` 回写 | `"![" + alt + "](" + url + " \"" + title + "\")"` |

@@ -45,7 +45,7 @@
 | 前置归一（可选模块） | `MemoriaMathNormalize.normalize` 先做公式/定界符归一；模块缺失时原样透传 | `markdown-preview.js:44`-`49`；`math-normalize.js:4` |
 | 图片路径重写 | 在解析前把相对图片路径改写成 `/files/...` 编码路径（裸 URL 与 `<...>` 尖括号形式都覆盖） | `app.js:2000`-`2016`、`2018`-`2026` |
 | `lexer.js` | 单行源码 → Token 数组（行首标记、加粗/斜体/代码/公式/链接/图片/`[[…]]` 等），Token 带 `srcStart/srcEnd` 供位置映射 | `lexer.js:50`-`56`、`349`-`414` |
-| `parser.js` | Token[]（按行）→ AST：`parseInline` 处理行内配对，`parseBlocks` 处理块级（标题/列表/引用/表格/代码块/公式/图片），`parse/parseRange` 是入口 | `parser.js:39`、`300`-`481`、`276`、`288` |
+| `parser.js` | Token[]（按行）→ AST：`parseInline` 处理行内配对，`parseBlocks` 处理块级（标题/列表/引用/表格/代码块/公式/图片），`parse/parseRange` 是入口；块经 `emit()` 落盘源码行区间 | `parser.js:39`、`316`-`499`、`276`、`288` |
 | `ast.js` | 只定义节点类型契约与工厂函数（无依赖），是全链路共同的类型事实源 | `ast.js:9`-`46`、`48`-`120` |
 | `source-gen.js` | AST → 源码文本（Parser 的逆操作），单 block 生成用于写回源码行 | `source-gen.js:1`-`38` |
 | `renderer.js` | AST → DOM：每个 block 一个 `.-src-block` 元素，行内节点递归渲染；另提供 `renderRange` 做区间增量渲染 | `renderer.js:50`-`62`、`70`-`259`、`445`-`489` |
@@ -56,7 +56,7 @@
 
 ## 4. 渲染后的 DOM 与样式类
 
-所有块级元素带 `.-src-block` + `data--block-index`；渲染后再由 `stampBlockLines` 补 `data--src-line` / `data--src-line-end`（1-based，`app.js:1815`-`1820`）。
+所有块级元素带 `.-src-block` + `data--block-index`；渲染后由 `stampBlockLines` 补 `data--src-line` / `data--src-line-end`（1-based）——值**直接取自 `parser.js` 的 `emit()` 落盘区间** `block.srcLine` / `block.srcLineEnd`（**块↔源码行的单一事实源**，2026-09-20 起；此前是 `app.js` 就地复写一套块边界启发式，两套判定在「缩进列表项 / 引用块 / 围栏长度」等处不一致，实测 223/274 份文档行号漂移、最大 871 行 ⇒ 预览带与 KP 高亮落到错位置）。仅当块缺该字段、或末块行号超出当前 body 行数（公式归一化曾插行）时才退回启发式（`app.js:1866`-`1867`；`parser.js:293`-`307`）。
 
 | 渲染物 | DOM 结构 | 样式类 / 关键属性 | 锚点 |
 |---|---|---|---|
@@ -105,7 +105,7 @@
 
 ## 6. KP 范围高亮的两种语义
 
-源码行用 `#line-<n>` 的类切换，预览区用浮层条 `#-preview-range-band`（绝对定位，跟随 `[data--src-line]` 块的包围盒，`app.js:11149`-`11190`）。
+源码行用 `#line-<n>` 的类切换，预览区用浮层条 `#-preview-range-band`（绝对定位，跟随 `[data--src-line]` 块的包围盒，`app.js:11149`-`11190`）。**精度：块级**——带取的是「与查询行区间相交的块」的**并集包围盒**，块内不做行级细分；因此引用的行落在长块（代码块/表格/列表）内部时，带的起止会扩到整块（起始行号小于请求行号，属已知近似，非漂移）。
 
 | | `highlightRange`（跳转语义） | `markRangeQuiet`（静默标记） |
 |---|---|---|
@@ -174,7 +174,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | KP 高亮条布局与清除 | `app.js:11136`-`11208` |
 | KP 高亮 CSS | `app.css:3546`-`3591`、`3634`-`3691` |
 | `lexer.tokenize` | `lexer.js:50`-`56`；`349`-`414` |
-| `parser.parse/parseInline/parseBlocks` | `parser.js:276`、`39`、`300`-`481` |
+| `parser.parse/parseInline/parseBlocks` | `parser.js:276`、`39`、`316`-`499` |
 | AST 类型契约 | `ast.js:9`-`46` |
 | `source-gen` | `source-gen.js:13`-`38` |
 | `renderer.render/renderBlock/renderInline/renderRange` | `renderer.js:50`-`62`、`70`-`260`、`303`-`436`、`445`-`489` |

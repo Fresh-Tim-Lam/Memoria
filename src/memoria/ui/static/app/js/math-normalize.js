@@ -72,7 +72,10 @@ window.MemoriaMathNormalize = (function () {
   }
 
   function wrapDisplay(line) {
-    return `$$\n${toLatex(line)}\n$$`;
+    // 单行 `$$…$$`：parser 对单行与三行形式都产 mathBlock（渲染等价），
+    // 但单行**不插行** ⇒ 归一化保持行数不变 ⇒ 预览块行号（parser 落盘）仍与源文件对齐。
+    // 旧的三行写法每处插入 2 行，会让其下所有 `data--src-line` 与源码偏移。
+    return `$$${toLatex(line)}$$`;
   }
 
   function normalize(body) {
