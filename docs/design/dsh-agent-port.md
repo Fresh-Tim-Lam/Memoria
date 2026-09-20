@@ -129,7 +129,7 @@
 | `read_image` | `file_path`；PNG/JPEG/WebP/GIF，无扩展名按文件签名识别；仅当 `attachments` 挂载时注册（`dsh-src/packages/fs/tool-fs/README.md:47`、`src/index.ts:70-72`） | ⏸ **参数/校验已移植、能力未移植（2026-09-20，§6.16）**：扩展名 + 文件签名 + 「扩展名与签名不一致」三类校验照上游，随后因**缺「多媒体眼睛」插件**而明确拒绝（`UNSUPPORTED_IMAGE_INPUT`，`.../tools/kb.py:1088-1131`；声明 `:650-665`） | 读图归入**未来多媒体能力**（缺一个多媒体的「眼睛」插件，2026-09-20 设计改正）⇒ **不计入读面缺口**；当下的机制约束是 `llm/types.py:87` 的 `Message.content` 是纯文本、`providers/openai_compatible.py:396` 只写字符串；工具已注册但**永不返回图片**，一次调用=一次错误结果；待办措辞=「待『多媒体眼睛』插件」（§6.16） |
 | `glob` | `pattern` + `path?`；含隐藏/忽略文件、排除 VCS 元数据；`globMaxResults` 默认 **100**（`dsh-src/packages/fs/tool-fs-search/README.md:48`、`:59-60`） | ✅ **已移植（2026-09-20，§6.16）**：Python 实现、零依赖；上限 **100** 照上游（`.../tools/kb.py:690`、实现 `:911-946`、声明 `:610-627`）；匹配口径照上游（不含 `/` 比文件名/任意深度，含 `/` 比整条路径）；工具面 = **工作区根**（今天 = 库根）—— 结构上是**允许根列表**（`_read_roots()` 今天只含库根），将来支持越出根目录（外部拖入，只读/不可信），可见性/权限由程序施加：**只**排除 VCS 内部目录（`:692`）、`.memoria/**` 默认可见（2026-09-20 改正）；原有 `kb_overview` 仍只列前 **200** 篇（`:70`、`:377`） | 与上游差异：ripgrep glob 方言（`!` 取反、`**` 之外的深度修饰）未全量支持；无 spill 存储 ⇒ 超上限只报计数 + 收窄提示；排序方向取「新→旧」（依据上游单测注释，未真机对照） |
 | `grep` | `pattern` + `path?` + `include?`（ripgrep 正则，按文件分组返回 `Line N:` 预览）（`dsh-src/packages/fs/tool-fs-search/README.md:49`） | ✅ **已移植（2026-09-20，§6.16）**：Python `re` 而非 ripgrep；上限 `grepMaxMatches` = **250**、单行预览 **2000 字节**、协作预算 **30s** 照上游（`.../tools/kb.py:694-700`、实现 `:982-1072`、声明 `:628-649`）；原有 `search_kb` 的词法通道仍在（`:238`，命中面仍受 KP 索引限制） | **正则方言不同**（无 `\p{…}`、无 RE2 语义 ⇒ 同一 pattern 结果可能不同）；无 raw-output cap / spill（本地无子进程与 spill 存储），改以单文件 4 MiB 与超时兜底，跳过**报数不静默** |
-| 会话检索家族（5 个只读工具） | `session_search` / `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`；`maxSearchResults=100`、`searchTimeoutMs=30000`；跨会话需 `cwd` 精确相等（`dsh-src/packages/session-query/tool-session-query/README.md:38-39`、`:47-51`） | ⏸ 只移植 **1 个** `search_sessions`（`.../tools/kb.py:581-607`，本行锚点随 §6.16 的 `read_document` 声明区 **+15 行** 重取，旧值 `:566-592`）；每会话只取最强 1 条（`:460`）；默认 5 / 上限 20（`:83-84`）；作用域限本库 | 缺事件级检索与谱系/关系追溯；本地退化为一层「会话 → 最强一条」，无法下钻到「第几步」
+| 会话检索家族（5 个只读工具） | `session_search` / `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`；`maxSearchResults=100`、`searchTimeoutMs=30000`；跨会话需 `cwd` 精确相等（`dsh-src/packages/session-query/tool-session-query/README.md:38-39`、`:47-51`） | ✅ **5 个齐了（2026-09-20，§6.17）**：`search_sessions`（§6.9）＋本轮四个 `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`（四把只读工具，`.../tools/kb.py:1295-1603`；`KB_TOOL_NAMES` 13 个名字 `:73-80`，既有锚点未漂移）。上限照上游：命中 ≤ **100**（`SESSION_EVENT_HITS_CAP` `:1185`）、`before`/`after` ≤ **50**；`search_sessions` 仍每会话只取最强 1 条（`:460`）、默认 5 / 上限 20（`:83-84`）；作用域限本库 | 剩余缺口（逐条见 §6.17 偏差表）：`session_search` 的 11 个过滤器与 `surfaces` 维度未移植；四个工具的 `session_id` **本地必填**（无调用方会话身份）；`session_trace` 因本地无 `parentSession` 写入方而实际恒为「根 + 无后代」；`sourceEventSeqs` / `derivedEventSeqs` 本地无从计算（工具文本明说，不伪造）；上游 `PROMPT_TEXT` 固定指引段未注入；无游标分页与 `searchTimeoutMs` |
 | 其余读面（`str_replace_editor` 的 `view`、`todo_write`、`ask_user`、`skill`、web/computer-use/browser-use 等） | 分散在 `packages/fs/tool-str-replace-editor/src/index.ts`、`packages/todo/README.md`、`packages/interaction/tool-ask-user/README.md`、`packages/skill/tool-skill/README.md`、`packages/web/README.md` | ❌ 未移植（无执行面、无待办面、无技能工具、无外网工具） | 与 §5 第 118 行「执行与编排 ❌ 不吃」一致；`ask_user`（向用户提问）本地无，M3 的「逐条确认」交互尚无载体 |
 
 **引用与上下文**
@@ -190,7 +190,7 @@
 
 **② 本地替换了上游模型的**：① **写面** —— 上游是 `write`/`edit` 工具直接落盘，本地改为 **plan + 编译器 + 唯一写者**（`agent-capabilities.md:75`、`:223`），理由是「禁止 silent 写入」红线要求写路径可枚举、可审计；② **沙箱** —— 上游用内核级三档隔离，本地改为**声明式 `permissions` + realpath 前缀校验**（`agent-plugin-design.md:147`），理由是不引入执行面；③ **引用体系** —— 上游只有路径级 mention，本地另造 `[[id]]` 与 `文件:行号` 两种库内引用（`markdown-form-std.md:16-19`、`prompt.py:270`）。
 
-**③ 我们完全没设计 / 没移植的（gap 清单）**：**读面** `read` 分页、`glob`、`grep` **已于 2026-09-20 移植**（§6.16）⇒ 读面**无缺口**（图片不算读面缺口：缺的是**多媒体「眼睛」插件**，属未来多媒体能力，§6.16），只剩会话事件级检索与谱系（只做了 1/5）；**写面** 备份与撤销（有设计未实施）、「读后写」版本守卫、行/块级编辑 op；**把关** 沙箱（有意不吃）、权限预设组合档、命令注册表；**技能** frontmatter 契约 + 目录/正文两段式 + 调用策略 + `skill` 工具；**其它** 工具管线的瀑布/守卫/掩码扩展点、`ask_user` 提问面。其中 **①「备份 + 撤销」与 ②「沙箱」是本表唯一两处「本地与上游方向相反」的项**：前者我们比上游多设计了一层，后者我们主动放弃了上游的一层。
+**③ 我们完全没设计 / 没移植的（gap 清单）**：**读面** `read` 分页、`glob`、`grep` **已于 2026-09-20 移植**（§6.16）⇒ 读面**无缺口**（图片不算读面缺口：缺的是**多媒体「眼睛」插件**，属未来多媒体能力，§6.16）；**会话查询家族 5 个工具已于 2026-09-20 齐备**（§6.17：先前只有 1/5；该节偏差表逐条登记仍未移植的过滤器、`surfaces`、调用方会话身份与 `parentSession` 数据源）；**写面** 备份与撤销（有设计未实施）、「读后写」版本守卫、行/块级编辑 op；**把关** 沙箱（有意不吃）、权限预设组合档、命令注册表；**技能** frontmatter 契约 + 目录/正文两段式 + 调用策略 + `skill` 工具；**其它** 工具管线的瀑布/守卫/掩码扩展点、`ask_user` 提问面。其中 **①「备份 + 撤销」与 ②「沙箱」是本表唯一两处「本地与上游方向相反」的项**：前者我们比上游多设计了一层，后者我们主动放弃了上游的一层。
 
 ---
 
@@ -961,6 +961,152 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 
 ---
 
+### 6.17 会话查询五工具补全实施记录（2026-09-20：吃 `session-query/tool-session-query` 的其余四个工具 + `session-query/src/tracing.ts`，已落地）
+
+> 补上 §5.1 读工具组的最后一行：上游 `tool-session-query` 明说**五个**只读工具（`README.zh.md:12`、`:47-51`），本地此前只落了 `search_sessions` 一个（§6.9 明文「不移植 `lineage` / `trace`」）。本轮把**其余四个**（`session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`）按上游**名字、参数与结果形状**补齐；`search_sessions` 保留原名与既有行为（名字偏差见偏差 1）。
+
+**范围界定（先读上游源文件才动手）**：
+
+| 上游文件 | 吃否 | 理由 |
+|---|---|---|
+| `tool-session-query/src/index.ts` | ✅ 部分 | 五个工具名 / 描述 / 参数 / `isConcurrencySafe`（三个精确读取工具并行安全）；本地落**四个新工具**（`session_search` 早已以 `search_sessions` 之名落地）；`Config`（`maxSearchResults` / `searchTimeoutMs`）本地无配置面（偏差 6） |
+| `tool-session-query/src/input.ts` | ✅ 部分 | ISO 8601 时间戳口径（`ISO_TIMESTAMP` `:179-180`、逐项日历校验 `:188-221`、`from <= to` `:149`/`:170`、非负安全整数 `:278-285`、数组非空 `:287-294`）；`surfaces` / `availability` / `parent_session_ids` / `include_root_sessions` 无本地对应（偏差 4/5） |
+| `tool-session-query/src/operations.ts` | ✅ 部分 | 五个操作的编排次序（授权 → 规范化 → 过滤 → 收集）；`collectPages` 的**游标翻页**、调用方会话身份、`SESSION_QUERY_TOOL_*` 错误净化不移植（偏差 2/3/7） |
+| `tool-session-query/src/presentation.ts` | ✅ | 五个结果文本逐条落为中文（分组 / 每命中 `seq \| type \| time` + `Snippet:` / 上限提示 / `formatNeighbor()` 的邻接摘要） |
+| `session-query/src/tracing.ts` | ✅ 部分 | `traceSession()` 的祖先链（由近及远）+ 后代树 + 未解析父会话、`traceEvent()` 的替换链与直接替换；`foldSurface()` 表面折叠与 `sourceEventSeqs` **不移植**（本地无这些字段：偏差 3） |
+| `session-query/src/index.ts` 的 `traceSession` / `traceEvent` / `readEvent` | ✅ | 三个方法的语义与 `_readWindow()` 的 `0..SESSION_QUERY_READ_WINDOW_MAX` 上限（`config.ts:6`） |
+| `workspace-access.ts` / `service-boundary.ts` / `cursor.ts` / `session-query-sqlite` / `observation.ts` / `session-log-export` | ❌ | 调用方 `cwd` 授权、模型边界错误净化、提供方游标、SQLite FTS 索引、宿主可观测性、导出 UI —— 本地无对应（§6.9 已登记，本轮不变） |
+
+**上游关键事实（读码所得，不猜）**：① 五个工具名与描述逐字为 `session_search` / `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`（`index.ts:65-121`，生成目录见 `dsh-src/docs/tool-catalog.zh.md:1697-1928`）；② `session_id` **可省** = 当前会话，且事件检索在当前会话上截断到「执行本次调用的步骤之前」（`operations.ts:128-139`）；③ 上限：`maxSearchResults` 默认 **100**（部署侧，模型不可调，`index.ts:22`）、`before`/`after` 默认 0 且 ≤ **50**（`config.ts:6`、`index.ts:396-405` 的 `_readWindow`）、搜索协作截止 `searchTimeoutMs` 默认 **30000**（`index.ts:25`）；④ 搜索结果文本 = `Session <id> — <title>` + 每组 `seq \| type \| surface \| time` + `Snippet:` + 达上限时的 `Result cap reached. Narrow the query or add filters to find additional matches.`（`presentation.ts:48-106`）；⑤ 精读 = 目标**完整** JSON + `Before:` / `After:` 每条 `- seq N | type | time` + 语义文本缩进（空则 `(no semantic text)`，`presentation.ts:165-194`）；⑥ 谱系 = `Ancestors (nearest first)` / `Descendants`（树形按深度缩进）+ 越界边界标记（`presentation.ts:108-147`）；⑦ 事件溯源 = `Replaced by` / `Replacement chain` / `Events replaced by target` / `Events cited directly as sources` / `Direct derived events`，数据来自 `foldSurface()` 的 `replacements` 与事件的 `sourceEventSeqs`（`tracing.ts:86-110`、`:222-224`）；⑧ 模型永远看不到游标 / 偏移 / 分页大小 / 可控上限（`README.zh.md:53`）。
+
+**改动**（2 个既有源文件 + 1 个既有测试文件 + 1 个新测试文件，无新增模块）：
+
+- `services/agent/session/query.py`（**文件尾追加** 298 行 + 3 处等量改写，零锚点漂移）
+  - 新增库面：`require_session()`（`:462-470`，会话不存在 ⇒ `SessionQueryNotFound`；非法 id 仍由 `store.session_file()` 抛 `ValueError` ⇒ fail-closed）、`read_event()`（`:528-552`，窗口按事件下标取、两端夹紧）、`trace_event()`（`:555-573`）、`session_lineage()`（`:605-662`）；结果 dataclass `SessionEventWindowResult`（`:417-425`）/ `SessionEventTraceResult`（`:428-437`）/ `SessionLineageRecord`（`:441-448`）/ `SessionLineageResult`（`:452-459`）。
+  - 新增常量（`:400-409`）：`DEFAULT_READ_WINDOW` / `MAX_READ_WINDOW = 50`（上游 `SESSION_QUERY_READ_WINDOW_MAX`）/ `DEFAULT_SEARCH_RESULT_LIMIT = 100`（上游 `maxSearchResults`）/ `REPLACEMENT_TYPES = (compaction, compaction/prune)` / `HEADER_LINE_MAX_BYTES = 64 KiB`（本地新增：读 header 的单行上限）。
+  - 共用件：`_covered_seqs()` / `_replacement_maps()`（替换关系的本地口径）、`_window()`、`_header_of()`（只读首行 ⇒ 谱系不解码整份文件）、`_parent_of()`、`_lineage_record()`；`__all__ += [...]`（`:665-679`，不在文件头插行）。
+  - **3 处等量改写**：`read_session` 加入 `store` 导入行（`:76`）、模块 docstring 的「不移植」项由「`lineage` / `trace`」改述为「`tracing.ts` 的 `foldSurface` 表面折叠」（`:41-44`，行数不变）。
+- `services/agent/tools/kb.py`（**文件尾追加** 439 行 + 2 处等量改写，零锚点漂移）
+  - `KB_TOOL_NAMES` 由 9 个名字扩为 **13** 个（`:73-80`，**8 行等量改写**）；`build_kb_tools()` 返回元组末位同行改写为 `), *_session_query_tools(root),`（`:665`，**零行漂移**）；模块 docstring 的工具表行改为「会话查询家族（5 个）」（`:18`）。
+  - 新增四个工具实现 `_session_event_search()`（`:1297-1363`）、`_session_trace()`（`:1366-1413`）、`_session_event_trace()`（`:1416-1464`）、`_session_event_read()`（`:1467-1507`）与声明工厂 `_session_query_tools()`（`:1510-1605`，四把 `Tool` 全部默认 `read_only=True`）。
+  - 共用件：`_epoch_ms()`（`:1208-1240`，带时区限定的 ISO 8601 → **含端点** epoch 毫秒，逐项日历校验）、`_seq_arg()`（`:1243`）、`_event_types_arg()`（`:1252`）、`_session_arg()`（`:1266`）、`_title_of()`（`:1274`）、`_iso_ms()`（上游 `toISOString()` 形态）、`_neighbour_line()`（`:1286`）、`SESSION_EVENT_HITS_CAP = 100`（`:1185`）、`_SessionArgError`（`:1193`，参数/作用域错误 ⇒ `INVALID_ARGUMENTS`）。
+- 测试：新增 `tests/test_agent_session_query_trace.py`（**23 例**）；`tests/test_agent_tools_read.py:416` 一行断言由「末尾三工具」改为「读面三工具的相对次序」（新工具按追加顺序排在末尾；该断言无 `<文件>:<行号>` 锚点引用）。
+
+**模型看到的文本（逐字，实测输出；节选自仓库外临时脚本）**：
+
+```text
+# ① session_event_search（session_id=demo-s1, query=梯度）
+会话 demo-s1 — 梯度下降是什么
+
+事件命中 4 条：
+1. 第 0 条 | user/message | 2026-09-20T08:41:15Z
+   片段：梯度下降是什么
+2. 第 1 条 | assistant/message | 2026-09-20T08:41:15Z
+   片段：梯度下降是一种优化方法 search_kb {"query":"梯度"}
+3. 第 3 条 | tool/result | 2026-09-20T08:41:15Z
+   片段：命中：梯度下降 很长的工具输出 …
+4. 第 7 条 | compaction | 2026-09-20T08:41:15Z
+   片段：## 已完成 - 讲过梯度下降
+
+引用这些内容时写成「会话 demo-s1 第 N 条」，**不要**写成 `文件:行号`（那是知识库文档的形状）。
+
+# ② session_trace（有派生子会话 / 无亲无故）
+会话 demo-s1 — 梯度下降是什么
+创建时间：2026-09-20T08:41:41Z
+
+祖先（由近及远）：
+- 无（目标即根会话）
+
+后代：
+  - demo-child — 派生会话里的一问 | 2026-09-20T08:41:41Z
+
+会话 demo-solo — 孤零零的一轮
+创建时间：2026-09-20T08:41:41Z
+
+祖先（由近及远）：
+- 无（目标即根会话）
+
+后代：
+- 无
+
+（本地会话格式不记录 `parentSession`：没有 fork/派生会话 ⇒ 每个会话都是根、都没有后代。）
+
+# ③ session_event_trace（seq=0，被 compaction 替换）
+会话 demo-s1 — 梯度下降是什么
+目标：第 0 条 | user/message | 2026-09-20T08:41:15Z
+被替换为：第 7 条
+替换链：第 7 条
+被目标替换的事件：无
+直接引用的源事件：本地事件格式不记录 `sourceEventSeqs` ⇒ 无从给出（上游按该字段计算）
+由目标派生的事件：同上，本地不落盘任何派生/引用关系 ⇒ 无从给出
+
+（本地「替换」口径：`compaction` 的 `shadowed` 与 `compaction/prune` 的 `pruned[].seq` 覆盖的事件，与回放一致。）
+
+# ④ session_event_read（seq=3, before=1, after=1）
+会话 demo-s1 — 梯度下降是什么
+目标事件（第 3 条，完整未删节）：
+```json
+{ "v": 1, "seq": 3, "time": 1789893675747, "type": "tool/result", "data": { "id": "c1", "name": "search_kb", "content": "命中：梯度下降 …" } }
+```
+
+之前的事件：
+- 第 2 条 | tool/call | 2026-09-20T08:41:15Z | （无语义文本）
+
+之后的事件：
+- 第 4 条 | user/message | 2026-09-20T08:41:15Z
+  那学习率呢
+
+# ⑤ 失败码（逐条实测）
+[session_event_search] {"session_id": "nope"} -> NOT_FOUND：会话 'nope' 不存在
+[session_event_search] {"session_id": "../escape"} -> INVALID_ARGUMENTS：非法会话 id：'../escape'（只允许字母数字与 . _ -）
+[session_event_search] {"time_from": "2026-09-20T09:00:00"} -> INVALID_ARGUMENTS：必须是带时区限定的 ISO 8601 时间戳（`Z` 或 `±HH:MM`）
+[session_event_trace] {"seq": 42} -> NOT_FOUND：会话 "demo-s1" 没有第 42 条事件
+[session_event_read] {"before": 51} -> INVALID_ARGUMENTS：before 必须是 0..50 的整数（收到 51）
+[session_event_read] {} -> INVALID_ARGUMENTS：seq 必填
+
+# ⑥ 命中上限（105 条命中 ⇒ 只出 100 条 + 提示）
+事件命中 100 条：
+1. 第 0 条 | user/message | 2026-09-20T08:41:15Z
+…
+（已达结果上限 100 条：请收窄 query 或加过滤条件以看到其余。）
+```
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **`search_sessions` 保留原名（不新增 `session_search`）**：上游叫 `session_search`（单数）、返回**按会话分组的会话命中**；本地 §6.9 已落 `search_sessions`（复数）并带 `limit`。**取舍**：不并置两个近义工具（多付一份 schema token 且模型易混），故**只承认名字偏差**；上游 `session_search` 的 11 个过滤器（`session_ids` / `created_at_from|to` / `parent_session_ids` / `include_root_sessions` / `availability` / `event_*` 六项 / `event_surfaces`）**仍未移植**（本地只有 `query` + `limit`）。
+2. **无调用方会话身份 ⇒ 四个工具的 `session_id` 全部必填**：上游 `session_id` 可省（= 当前会话，`index.ts:84-86`）。本地 `Tool.handler` 只拿得到参数、拿不到「哪个会话在调用」，`build_kb_tools()` 也未绑定 session ⇒ 省略即**参数错误**（fail-closed），不猜一个会话。**连带**：事件检索「在当前会话上截断到本次调用之前」（`operations.ts:128-139`）与 `SESSION_QUERY_TOOL_NO_CURRENT_STEP` 都没有本地落点。
+3. **「替换关系」换了数据来源（本地缺 `foldSurface`）**：上游 `replacedBy` / `replacedEventSeqs` 来自表面折叠（影子事件 `surfaceOp: replace`，`tracing.ts:181-220`）；本地事件面**没有** surfaceOp/阴影语义，承载替换的是 `compaction.shadowed` 与 `compaction/prune.pruned[].seq`（口径与 `history.py` 回放一致：被覆盖的 seq 不再进模型请求）。**`sourceEventSeqs` / `derivedEventSeqs` 无从计算** ⇒ 返回 `None`，工具文本明说原因（**不伪造「无」**：与「确实没有」区分开）。
+4. **无 `surfaces` 过滤**：上游事件检索/会话检索都有 `current` / `shadowed` / `log-only` 三值；本地没有「表面」概念（§6.9 已登记），故该参数不出现。
+5. **无 `availability` / `parent_session_ids` / `include_root_sessions`**：上游按 live/persisted 双来源与父会话过滤；本地语料全是磁盘文件、且此前没有 `parentSession` 数据（见偏差 8）。
+6. **不移植配置面与协作截止**：上游 `maxSearchResults`（默认 100，部署可调）与 `searchTimeoutMs`（默认 30000）来自插件 `Config`；本地无 cordis.yml ⇒ 上限取**上游默认值**常量（`SESSION_EVENT_HITS_CAP = 100` / `SESSION_EVENT_HITS_CAP + 1` 的探针判 `capped`），**不做 30s 截止**（扫描已被「单文件 2 MiB × 跨会话份数」四重有界化约束，与既有 `search_sessions` 同口径）。**模型不可调上限**这一点与上游一致（schema 里没有 `limit`）。
+7. **无授权/净化层**：上游按调用方 `cwd` 精确相等授权（`workspace-access.ts`），越权是 `SESSION_QUERY_TOOL_UNAUTHORIZED`；本地工具面作用域天然 = 本库会话目录（`build_kb_tools(kb_path)` 已绑定），故不需要授权步与对应错误码。
+8. **`session_trace` 的「本地恒为根」是事实、不是伪造**：算法与上游逐条同构（`parentSession` 父链、未解析父会话 ⇒ `complete=false`、后代按 `createdAt` 再按 id 排序、成环报错）；但**本地没有任何写入方生产 `parentSession`** ⇒ 实际每个会话都是根、都没有后代。工具文本在两者皆空时补一句如实说明；一旦将来有写入方落该键（例如 fork），`session_trace` 无需改动即可给出真谱系。**偏差**：上游结果里的 `Availability`（live/persisted）与 `[outside workspace]` 边界标记不打印（本地无 live 源、无授权边界）。
+9. **ISO 8601 → 毫秒截断**：上游保留亚毫秒余数并用 `nextUp/nextDown` 夹紧端点（`input.ts:236-264`）；本地按**毫秒**截断、端点为闭区间 ⇒ 亚毫秒精度的边界可能有 1ms 级差异（事件时间本身就是整毫秒，实际不可见）。
+10. **结果文本落为中文、并保留本地「引用形状」约定**：`seq N` 写成「第 N 条」、`Snippet:` 写成「片段：」、`Session <id> — <title>` 写成「会话 <id> — <标题>」；两个搜索工具都带一句「引用时写成『会话 <id> 第 N 条』，**不要**写成 `文件:行号`」（与 §6.9 同一口径：对话命中不是文档出处）。**不移植**：上游的 surface 列、`Availability`、游标/偏移字面量（本地本就没有）。
+11. **精读窗口按事件下标取、两端夹紧**：上游 `startSeq = max(0, seq - before)`、`endSeq = min(len-1, seq + after)`（`index.ts:379-380`）——本地以**下标**实现同一语义（不假设 `seq == 下标`，逐条比对取出下标）；缺目标 ⇒ `SessionQueryNotFound` ⇒ 工具面 `NOT_FOUND`（上游 `SESSION_QUERY_EVENT_NOT_FOUND`）。
+12. **错误码取本地既有码族**：参数/作用域非法 ⇒ `INVALID_ARGUMENTS`、目标不存在 ⇒ `NOT_FOUND`（上游是 `SESSION_QUERY_INVALID_FILTER` / `SESSION_QUERY_INVALID_WINDOW` / `SESSION_QUERY_*_NOT_FOUND`）。**语义一致点**：坏作用域（目录穿越 `../x`、非法 id）一律**明确拒绝**，绝不静默返回空结果（有单测与实测输出为证）。
+13. **不移植上游的固定指引段**：上游在 system prompt 里注入一句固定指引（`PROMPT_TEXT`，`index.ts:51-54`、`:59-63`），本地 §6.9 起就**未**注入 ⇒ 本轮沿用（避免动 §6.14/§6.16 刚定的提示词段落与 KV 前缀）。**登记为剩余缺口**（见下「已知缺口」）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（`session/query.py` / `tools/kb.py` / 2 个测试文件） | 全过 |
+| `python -m pytest tests/ -q` | **308 passed**（原 285 + 本轮新增 **23** 例 `tests/test_agent_session_query_trace.py`；既有测试仅 1 处断言语义更新 —— `tests/test_agent_tools_read.py:416` 的「末尾三工具」改为「读面三工具相对次序」） |
+| 真实行为取证（Python 级；仓库外临时脚本，跑完即删） | 见上「模型看到的文本」六段；另实测：`KB_TOOL_NAMES` 与 `build_kb_tools()` 实际注册顺序**逐项一致**（13 个）、`read_only` 全为真、`before.maximum == MAX_READ_WINDOW == 50`、105 条命中只出 100 条 + 上限提示、`session_trace` 在有/无父会话两种会话上分别给出后代与「本地不记录 `parentSession`」说明、`session_event_trace` 对「被 compaction 覆盖」与「被 prune 覆盖」两种 seq 都给出正确替换链 |
+| 覆盖点 | 常量与上游一致（50 / 100 / `pruner.PRUNE`）；`read_event`（窗口夹紧、默认仅目标、左端夹 0、`True`/小数/字符串/越界窗口一律报错、目标与会话缺失、目录穿越）；`trace_event`（compaction 与 prune 两类替换、替换链、后写覆盖、引用字段恒 `None`）；`session_lineage`（根会话、父链「由近及远」、后代树按深度、未解析父会话、成环报错、目标缺失）；四个工具的模型可见文本（命中/片段/上限提示/完整 JSON/邻接摘要/`（无语义文本）`/谱系/替换关系/`无从给出`）；注册与 schema（必填项、`additionalProperties: false`、`before.maximum`、追加顺序在末尾）；fail-closed（`NOT_FOUND` / `INVALID_ARGUMENTS` 逐条） |
+| 依赖面 | **纯标准库**（`re` / `datetime` / `calendar` 均为函数内局部导入），零新依赖 ⇒ 打包体积不变 |
+| 行号 | 两个源文件**全部为文件尾追加 + 等量改写**（`query.py` 3 处、`kb.py` 2 处）⇒ §5.1/§6.9/§6.16 引用的既有 `file:line` **零漂移**；唯二重取的是 `reference/agent-guide/10` 里指向 `session/query.py` 的行范围块（旧 `1-380` → 新 `1-679`，见「文档」） |
+| 上游检出未被改 | `git -C dsh-src status --porcelain` **空**；`git -C dsh-src rev-parse HEAD` = `0d1f50007f9bca3f52b06e1c3074fa14d5fb0720` |
+
+**已知缺口（本轮未做）**：① 上游 `PROMPT_TEXT` 固定指引段仍未注入（偏差 13）；② `session_search` 的 11 个过滤器、`surfaces` 维度未移植（偏差 1/4/5）；③ `capped` 事实仍不进 `search_session()` 的返回（§6.9 偏差 6 未变；新工具靠「多要一条」探针自判）；④ 本地无 `parentSession` 写入方 ⇒ `session_trace` 实际恒为「根 + 无后代」（偏差 8）；⑤ 不移植上游游标分页与 `searchTimeoutMs`。
+
+**未实测**：① 真实模型端点下模型**是否会正确选工具**（该用 `session_event_search` 时不用 `search_sessions`、拿到命中后是否接着 `session_event_read` 取原文）—— 只做静态 + 单测 + Python 级真实调用；② 大库（数百份会话 / 数 MiB 会话文件）下 `session_lineage` 的**墙钟耗时**（有界性有设计约束，未做 A/B 计时）；③ 真机面板端到端（本轮零前端改动，且没有浏览器工具）；④ 上游 dsh 真机上的对照行为（未运行 `dsh`，全部依据只读检出）。
+
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行（`:162`）；`reference/agent-guide/10` 三处**等量改写**（工具面计数行 `181`「6 → 9 → **13**」、会话检索工具段 `226`、§6 证据锚行 `431` —— 三行都是单物理行改写 ⇒ **行号零漂移**）；本文件 §5.1 会话检索行 + 三段结论中的 ①③、§8「M2 已落地部分」与「已转 ✅」口径、§11 变更记录本轮行（`:1218`）。**锚点重取（old → new）**：`reference/agent-guide/10` 的 `services/agent/session/query.py:1-380` → **`:1-679`**（同块内新增 `read_event`/`trace_event`/`session_lineage` 与常量行）、`tools/kb.py:566-592` → **`:581-607`**（该行随 §6.16 重取，本轮沿用）；**§6.17 自身两次取号的更正**：本轮新增块 `_session_event_search` `:1295-1361` → **`:1297-1363`**、`_session_trace` `:1364-1411` → **`:1366-1413`**、`_session_event_trace` `:1414-1464` → **`:1416-1464`**、`_session_query_tools` `:1508-1603` → **`:1510-1605`**、`_epoch_ms` `:1207-1238` → **`:1208-1240`**（写作时点与验收时点的行号复取）。`tools/kb.py` 的**既有**引用（`:73-80`、`:83-84`、`:446-482`、`:581-607`、`:460`、`:523-550`、`:610-665`、`:688`、`:730-776`、`:793-839`、`:911-1072`、`:1088-1162`）**全部未动**（本轮对 `kb.py` 只有文件尾追加与等量改写）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
+
+---
+
 ## 7. 四条红线怎么落（逐条）
 
 | 红线（出处） | 本方案的落法 |
@@ -990,8 +1136,8 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
 > §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、§6.11（会话标题）、
 > §6.12（跨会话引用 `context/session-reference`）、§6.14（时间上下文 `context/time-context`）、
-> **§6.15（模型切换告知 `core/agent` 的 `model-selection`）**、**§6.16（上游读面：`read` 分页 / `glob` / `grep` / `read_image`，2026-09-20）**。
-> **§5 映射表里 `context/*` 三行的引用族（tmux 除外）与 `core/agent` 家族至此全部处置完毕**（吃 / 已覆盖 / 不适用 逐条有证据）；**§5.1 读工具组的四项已从 ❌/⏸ 收敛为 ✅（读图能力归未来多媒体「眼睛」插件，不计入读面缺口；工具面 = 工作区根，见 §6.16 偏差 1）**；下一阶段为 M3 写能力。
+> **§6.15（模型切换告知 `core/agent` 的 `model-selection`）**、**§6.16（上游读面：`read` 分页 / `glob` / `grep` / `read_image`，2026-09-20）**、**§6.17（会话查询五工具补全：`session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`，2026-09-20）**。
+> **§5 映射表里 `context/*` 三行的引用族（tmux 除外）与 `core/agent` 家族至此全部处置完毕**（吃 / 已覆盖 / 不适用 逐条有证据）；**§5.1 读工具组的四项已从 ❌/⏸ 收敛为 ✅（读图能力归未来多媒体「眼睛」插件，不计入读面缺口；工具面 = 工作区根，见 §6.16 偏差 1）；会话检索家族的第五项（`session-query` 五工具）也已 5/5（`search_sessions` 保留原名，见 §6.17）**；下一阶段为 M3 写能力。
 >
 > **M2 之后仍未做（按阶段）**：**M3** = 写能力（提议 → 确认 → 应用）+ 由它解锁的
 > `interaction/permission-presets`（要有第 2 个旋钮才有"档"可切）与 `interaction/commands`
@@ -1069,3 +1215,4 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 | 2026-09-20 | **§5.1 新增：上游读写面 vs 本地现状对照表（docs only，未改任何源码）**：只读上游检出 `dsh-src/`（pin `0d1f5000`，`git -C dsh-src status --porcelain` 空）读齐读面（`fs/tool-fs` 的 `read`/`read_image` + `fs/tool-fs-search` 的 `glob`/`grep` + `session-query/tool-session-query` 五个工具 + `context/*` 四包 + `core/tools` 注册表）、写面（`write`/`edit` 参数形态、`fs-local/fsio.ts` 原子写与版本令牌、`fs-observation-policy` 读后写守卫、`fs-sandbox`/`sandbox` 三档、`user-approval` waterfall、`permission-presets` 组合档）与 `skill` 形态（`skill-filesystem` 的 `SKILL.md`/平铺 `.md` + frontmatter + 目录/正文两段式 + 五根 rank + 两布尔调用策略）；逐条对照本地 `tools/kb.py`/`tools/registry.py`/`approvals.py`/`prompt.py`/`session/reference.py`/`document.py`。**表 30 行**（读工具 6 / 引用与上下文 7 / 写工具 4 / 把关 4 / 备份·审计·撤销 4 / 技能与命令 2 / 其它差距 3）+ 三段结论（已完全移植 / 本地替换 / 完全没设计）。**关键事实**：上游**有审计、无备份、无撤销**（`fs-local/src/win32.ts:20` backup 传 `null`），本地反之**设计了备份+撤销、无版本令牌**；本地写面已改为 plan + 编译器的模型（编译器未实施）。**已完全移植** 6 项、**本地替换** 3 项、**空白 gap** 5 类。**未实施任何代码**；`docs/todo.md` 未改动（另一写者并发重写中，本轮只报告不编辑）。抽查 file:line ≥8 处（`tool-fs/src/read.ts:15`、`read-render.ts:14`、`write.ts:114`、`fs-local/src/fsio.ts:620`、`win32.ts:20`、`user-approval/README.md:86`、`skill-filesystem/README.md:36`、`tools/kb.py:66`、`tools/registry.py:265-288`、`approvals.py:127-152`、`prompt.py:194-218`、`ask.py:421`） |
 | 2026-09-20 | **上游读面移植落地（§6.16）**：用户口径「上游的读先移植进来」⇒ 吃 `fs/tool-fs` 的 `read` 参数语义（offset 1-based / limit 默认且上限 2000 / 越界 `FS_NOT_FOUND`）/ 三重 cap / 续读 footer 与 `read_image` 的扩展名 + 文件签名校验，吃 `fs/tool-fs-search` 的 `glob`（100）/`grep`（250 处、单行 2000 字节、30s 预算）上限与输出形状。① `services/agent/tools/kb.py`：`read_document` 新增 `offset`/`limit`（默认且最多 **2000 行**、越界 `NOT_FOUND`、截断给「续读请把 offset 设为 N」；**不传参逐字兼容旧输出**）；新增三个只读工具 `glob`（匹配口径照上游「不含 `/` 比文件名/任意深度」）、`grep`（**Python `re` 而非 ripgrep**，零依赖）、`read_image`（**只做参数与校验；端点不支持图像输入 ⇒ 明确 `UNSUPPORTED_IMAGE_INPUT`，不伪造成功**）；路径校验复用 `_safe_rel` 系并扩展为「不限扩展名 + 两侧 realpath」（`.memoria/**` 与 VCS 元数据排除，符号链接越界**不列不读**）。② `services/agent/prompt.py`：`@路径` 段门控由「只认 `read_document`」放宽为**任一读取手段在场**（`FILE_REFERENCE_TOOLS`，零行漂移）。③ 测试：新增 `tests/test_agent_tools_read.py` **19 例**；`tests/test_agent_loop.py` 门控例语义更新 1 处。**验收**：`py_compile` 全过；`pytest -q` **284 passed**（原 265）；Python 级真实取证（续读提示可解析并续读成功、`glob` 列表、`grep` 分组命中、五类越界/库外拒绝逐项输出）；零新依赖、零前端 / 零 i18n 改动；`dsh-src` 检出未改。**偏差 12 条**（工具面=知识库 / Python `re` 方言 / `read_image` 只到校验 / 不逐行加行号 / 未截断无 footer / 字符非字节预算 / 无 spill / 排序取新→旧 / 门控放宽 / 注册条件 / glob 方言子集 / 不新增 `read` 工具）与 **7 条未实测**见 §6.16；**锚点重取** `tools/kb.py:566-592` → `:581-607`、`prompt.py:262-263` → `:261` + `:385-394`。④ 同轮在 §8 登记**用户优化项**（agent 靠 PowerShell 脚本化读写、语法错浪费 token ⇒ 优先原生工具 / 预置脚本模板 / 错误前置校验；**只登记不实现**）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
 | 2026-09-20 | **上游读面设计改正（工具面 = 工作区根 + 允许根列表 + 可见性/权限分离）**：用户口径「工具面应该是整个根目录的工作区，只是用户只能看见程序限制给他看的文件，甚至以后为了让 Windows 拖拽进对话栏，需要越出根目录」＋「无法识别照片是因为没装上多媒体的『眼睛』插件，留给以后」。① `services/agent/tools/kb.py`（**全部等量改写 + 文件尾追加 ⇒ 零锚点漂移**）：新增**允许根列表** `_read_roots()`（今天 = `(库根,)`）/ `_resolve_in_read_roots()`（`:1135-1162`），路径校验（`_safe_rel()` / `_safe_rel_any()`）与遍历（`_walk_kb_files()` 逐根）**都改走它**（行为等价）；`GLOB_EXCLUDED_DIRS` `:692` 收缩为**只跳 VCS 内部目录**（`.git`/`.svn`/`.hg`/`.bzr`/`.jj`/`.sl`，理由=非内容且会污染 glob/grep），**`.memoria/**` 改默认可见**（agent 维护 sidecar/manifest 需要看得见）；越界一律**明确的拒绝错误**（`INVALID_ARGUMENTS`，非「不存在」），将来把根加进列表即放行；`read_document`/`glob`/`grep`/`read_image` 的路径错误文案与工具描述改为「工作区（允许根）内」。② `read_image` **归类改正**：读不到图不是「provider 不支持 content part」，而是**缺一个多媒体的「眼睛」插件** ⇒ 归入**未来多媒体能力**、**从读面缺口移出**；待办措辞由「消息层图片支持」改为**「待『多媒体眼睛』插件」**（工具描述、错误文本、§5.1/§6.16 同步；错误码 `UNSUPPORTED_IMAGE_INPUT` 不变）。③ 测试：`tests/test_agent_tools_read.py` +1 例（允许根列表与越界错误码稳定，含「多根即放行」断言），2 例断言随 `.memoria/**` 可见性改写。**验收**：`py_compile` 全过；`pytest -q` **285 passed**（原 284）；仓库外临时脚本取证（`_read_roots()`/`_resolve_in_read_roots()` 输出、`.memoria` 可列可搜 vs `.git` 不可见、四类越界 `INVALID_ARGUMENTS`、符号链接越界不列不读）；零新依赖、零前端 / 零 i18n 改动；未碰 `agent-plugin-design.md`（人正在逐步对齐）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
+| 2026-09-20 | **会话查询五工具补全（§6.17）**：上游 `session-query/tool-session-query` 明说**五个**只读工具（`README.zh.md:12`、`:47-51`），本地此前只落 `search_sessions` 一个 ⇒ 本轮补上**其余四个**（`session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`），上游**名字、参数与结果形状**照搬，`search_sessions` 保留原名与既有行为（名字偏差见 §6.17 偏差 1）。① `services/agent/session/query.py`（**文件尾追加** + 3 处等量改写，零锚点漂移）：新增 `require_session()`（`:462-470`，会话不存在 ⇒ `SessionQueryNotFound`）/ `read_event()`（`:528-552`，窗口按事件下标取、两端夹紧）/ `trace_event()`（`:555-573`）/ `session_lineage()`（`:605-662`）＋四个结果 dataclass（`:417-459`）＋常量 `MAX_READ_WINDOW = 50`（上游 `SESSION_QUERY_READ_WINDOW_MAX`，`config.ts:6`）/ `DEFAULT_SEARCH_RESULT_LIMIT = 100`（上游 `maxSearchResults`，`index.ts:22`）/ `REPLACEMENT_TYPES`（本地承载替换的两类记录）。② `services/agent/tools/kb.py`（**文件尾追加** + 2 处等量改写，零锚点漂移）：`KB_TOOL_NAMES` 9 → **13**（`:73-80`）、`build_kb_tools()` 末位接 `*_session_query_tools(root)`（`:665`）、四个实现（`:1297-1363` / `:1366-1413` / `:1416-1464` / `:1467-1507`）与声明工厂（`:1510-1605`，四把 `Tool` 全 `read_only=True`、上限 `SESSION_EVENT_HITS_CAP = 100` `:1185`、`before`/`after` ≤ 50）；③ 测试：新增 `tests/test_agent_session_query_trace.py` **23 例**（`:1-522`），`tests/test_agent_tools_read.py:416` 一处断言语义更新。**验收**：`py_compile` 全过；`pytest -q` **308 passed**（原 285）；仓库外临时脚本 Python 级取证（四工具真实输出、105 条命中截到 100 + 上限提示、六类失败码 `NOT_FOUND` / `INVALID_ARGUMENTS`）；`git -C dsh-src status --porcelain` 空、HEAD 仍 `0d1f5000`。**偏差 13 条**（`session_id` 本地必填｜无调用方 `cwd` 授权与错误净化层｜替换关系改由 `compaction.shadowed`·`compaction/prune.pruned[].seq` 承载｜`sourceEventSeqs`/`derivedEventSeqs` 无从计算 ⇒ `None` 且文本明说、**不伪造「无」**｜无 `surfaces`/`availability`/`parent_session_ids`/`include_root_sessions` 过滤｜无 `Config` 与 `searchTimeoutMs`｜结果文本落为中文并保留本地「引用形状」约定｜ISO 8601 毫秒截断｜错误码取 `INVALID_ARGUMENTS`·`NOT_FOUND`｜不注入上游 `PROMPT_TEXT` 指引段）与 **4 条未实测**见 §6.17；**§5.1 会话检索行由 1/5 收敛为 5/5**。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |

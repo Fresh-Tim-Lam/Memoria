@@ -15,7 +15,7 @@
 | `read_kp` | `services/kp_index.py` + 正文切片 |
 | `kb_overview` | `storage.scanner.collect_md_files()` + sidecar 摘要 |
 | `validate_kb` | `services/document.DocumentService.validate_kb()`（内部经 `check_report.summarize_check_counts`） |
-| `search_sessions` | `services/agent/session/query.py`（本轮 M2 新增；**对话记录**而非知识库文档，故不产生 `文件:行号` 锚点） |
+| 会话查询家族（`search_sessions` 等 **5** 个） | `services/agent/session/query.py`（**对话记录**而非知识库文档，故不产生 `文件:行号` 锚点）；其余四个见文件末尾「会话查询家族」块（2026-09-20，§6.17） |
 
 两处必须说明的实现取舍：
 
@@ -71,12 +71,12 @@ MAX_FILES_IN_OVERVIEW = 200
 MAX_ISSUES_IN_REPORT = 20
 
 KB_TOOL_NAMES = (
-    "search_kb", "read_document",
-    "read_kp",
+    "search_kb", "read_document", "read_kp",
     "kb_overview",
     "validate_kb",
     "search_sessions",
     "glob", "grep", "read_image",
+    "session_event_search", "session_trace", "session_event_trace", "session_event_read",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -662,7 +662,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ),
+        ), *_session_query_tools(root),
     )
 
 
@@ -1160,3 +1160,446 @@ def _resolve_in_read_roots(roots: Sequence[str], path: str) -> tuple[str, str] |
         if full == root or full.startswith(root + os.sep):
             return root, norm
     return None
+
+
+# ── 会话查询家族：其余四个工具（2026-09-20；§6.17）──────────────────────────────────
+# 语义移植自 deepseek-harness `packages/session-query/tool-session-query`（`src/index.ts` 的五个工具
+# 声明与 `isConcurrencySafe`、`src/input.ts` 的参数与 ISO 8601 时间戳口径、`src/operations.ts` 的
+# 五个操作、`src/presentation.ts` 的结果文本）与 `packages/session-query/session-query`（`src/tracing.ts`、
+# `src/index.ts` 的三个方法、`config.ts:6` 的 `SESSION_QUERY_READ_WINDOW_MAX`），pin `0d1f5000`。
+#
+# 整块**追加在文件末尾**：`build_kb_tools()` 的返回元组已就地接上 `*_session_query_tools(root)`、
+# `KB_TOOL_NAMES` 已等量改写（两处都零行漂移）⇒ 上方既有 `<文件>:<行号>` 锚点全部未动。
+#
+# 与上游的四处结构性差异（逐条见 dsh-agent-port.md §6.17「语义偏差与取舍」）：
+# 1. **无调用方会话身份** ⇒ 四个工具的 `session_id` **全部必填**；上游「省略 = 当前会话」以及事件
+#    检索「在当前步骤之前截断」（`operations.ts:128-139`）都没有本地落点；
+# 2. **无工作区授权面**（上游按调用方 `cwd` 精确相等授权，`workspace-access.ts`）：本地语料就是
+#    本库会话目录，作用域天然限本库 ⇒ 没有 `SESSION_QUERY_TOOL_UNAUTHORIZED` 一类错误；
+# 3. **无 spill、无 `searchTimeoutMs`（30s 协作截止）**：与既有 `search_sessions` 一致，命中上限与
+#    四重有界化（`session/query.py`）已足够；上游「模型看不到游标/偏移/分页大小/可控上限」照做；
+# 4. **错误码取本地既有码族**：参数/作用域非法 ⇒ `INVALID_ARGUMENTS`（fail-closed，绝不「静默空」）、
+#    目标不存在 ⇒ `NOT_FOUND`（上游是 `SESSION_QUERY_INVALID_FILTER` / `SESSION_QUERY_*_NOT_FOUND`）。
+
+#: 事件级检索的命中上限（上游 `maxSearchResults` 默认 100，`tool-session-query/src/index.ts:22`）。
+SESSION_EVENT_HITS_CAP = 100
+#: 带时区限定的 ISO 8601（逐字对齐上游 `input.ts:179-180` 的 `ISO_TIMESTAMP`：秒与小数秒可省，偏移必需）。
+#: 存**模式串**而非编译结果：本模块顶层不导入 `re`（工具体内才用正则，见 `_translate_glob()` 等同款做法）。
+_ISO_TIMESTAMP_PATTERN = (
+    r"^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d+))?)?(Z|([+-])(\d{2}):(\d{2}))$"
+)
+
+
+class _SessionArgError(ValueError):
+    """会话查询工具的参数 / 作用域错误（一律转成 `INVALID_ARGUMENTS` 结果，fail-closed）。"""
+
+
+def _iso_ms(value: Any) -> str:
+    """epoch 毫秒 → 上游 `formatTime()` 的 `toISOString()` 形态（UTC，`Z` 结尾）。"""
+    import datetime
+
+    try:
+        moment = datetime.datetime.fromtimestamp(int(value) / 1000, tz=datetime.timezone.utc)
+    except (TypeError, ValueError, OSError, OverflowError):
+        return str(value)
+    return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _epoch_ms(value: Any, name: str) -> int | None:
+    """带时区限定的 ISO 8601 → **含端点**的 epoch 毫秒；省略 / 空串 ⇒ `None`（不过滤）。
+
+    口径对齐上游 `input.ts::parseIsoTimestamp()`：`Z` 或 `±HH:MM` 必需、秒与小数秒可省、逐项做
+    日历校验；**偏差**：上游保留亚毫秒余数并按 `nextUp/nextDown` 夹紧端点，本地按**毫秒**截断。
+    """
+    import calendar
+    import datetime
+    import re
+
+    text = str(value or "").strip()
+    if not text:
+        return None
+    match = re.match(_ISO_TIMESTAMP_PATTERN, text)
+    if match is None:
+        raise _SessionArgError(f"{name} 必须是带时区限定的 ISO 8601 时间戳（`Z` 或 `±HH:MM`）：{text!r}")
+    year, month, day, hour, minute = (int(match.group(index)) for index in range(1, 6))
+    second = int(match.group(6) or 0)
+    offset_hour = int(match.group(10) or 0)
+    offset_minute = int(match.group(11) or 0)
+    sign = -1 if match.group(9) == "-" else 1
+    if (
+        not 1 <= month <= 12
+        or not 1 <= day <= calendar.monthrange(year, month)[1]
+        or hour > 23
+        or minute > 59
+        or second > 59
+        or offset_hour > 23
+        or offset_minute > 59
+    ):
+        raise _SessionArgError(f"{name} 不是合法的 ISO 8601 时间戳：{text!r}")
+    zone = datetime.timezone(sign * datetime.timedelta(hours=offset_hour, minutes=offset_minute))
+    return int(datetime.datetime(year, month, day, hour, minute, second, tzinfo=zone).timestamp() * 1000)
+
+
+def _seq_arg(value: Any, name: str) -> int | None:
+    """`seq` / `seq_from` / `seq_to`：省略 ⇒ `None`；负数 / 布尔 / 非整数 ⇒ 参数错误（上游 `assertNonNegativeSafeInteger`）。"""
+    if value is None:
+        return None
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+        raise _SessionArgError(f"{name} 必须是 ≥ 0 的整数（收到 {value!r}）")
+    return value
+
+
+def _event_types_arg(value: Any) -> tuple[str, ...] | None:
+    """事件类型白名单：省略 ⇒ `None`；空数组 / 非字符串项 ⇒ 参数错误（上游 `assertNonEmptyArray`）。"""
+    if value is None:
+        return None
+    if not isinstance(value, list) or not value:
+        raise _SessionArgError("event_types 必须是至少含一个取值的字符串数组")
+    out: list[str] = []
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            raise _SessionArgError("event_types 的取值必须是非空字符串")
+        out.append(item)
+    return tuple(out)
+
+
+def _session_arg(arguments: Mapping[str, Any], tool: str) -> str:
+    """`session_id`（**本地必填**：没有「调用方会话」身份可用）。"""
+    value = arguments.get("session_id")
+    if not isinstance(value, str) or not value.strip():
+        raise _SessionArgError(f"{tool}: session_id 必填（本地没有「当前会话」身份，不能省略）")
+    return value.strip()
+
+
+def _title_of(kb_path: str, session_id: str) -> str:
+    """会话标题（与 `agent_sessions_list` / `search_sessions` 同一口径：`summarize_session_file` 的原始行扫描）。"""
+    from memoria.services.agent.session.history import summarize_session_file
+    from memoria.services.agent.session.store import session_file
+
+    return str(summarize_session_file(session_file(kb_path, session_id)).get("title") or "")
+
+
+def _seq_text(values: Sequence[int]) -> str:
+    return "无" if not values else "、".join(f"第 {value} 条" for value in values)
+
+
+def _neighbour_line(event: Mapping[str, Any]) -> str:
+    """事件精读的相邻事件摘要（上游 `presentation.ts::formatNeighbor()`：标题行 + 语义文本缩进两格）。"""
+    from memoria.services.agent.session.query import event_text
+
+    head = f"- 第 {event.get('seq')} 条 | {event.get('type')} | {_iso_ms(event.get('time'))}"
+    text = event_text(event)
+    if not text:
+        return head + " | （无语义文本）"
+    return head + "\n  " + text.replace("\n", "\n  ")
+
+
+def _session_event_search(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`session_event_search`：一个会话内的事件级检索（上游 `executeEventSearch`，作用域 = 本库会话）。"""
+    from memoria.services.agent.session.query import (
+        SessionQueryError,
+        SessionQueryNotFound,
+        require_session,
+        search_session,
+    )
+
+    tool = "session_event_search"
+    try:
+        session_id = _session_arg(arguments, tool)
+        query = str(arguments.get("query") or "")
+        if not query.strip():
+            raise _SessionArgError("query 不能为空")
+        seq_from = _seq_arg(arguments.get("seq_from"), "seq_from")
+        seq_to = _seq_arg(arguments.get("seq_to"), "seq_to")
+        if seq_from is not None and seq_to is not None and seq_from > seq_to:
+            raise _SessionArgError("seq_from 不得大于 seq_to")
+        time_from = _epoch_ms(arguments.get("time_from"), "time_from")
+        time_to = _epoch_ms(arguments.get("time_to"), "time_to")
+        if time_from is not None and time_to is not None and time_from > time_to:
+            raise _SessionArgError("time_from 不得大于 time_to")
+        types = _event_types_arg(arguments.get("event_types"))
+        require_session(root, session_id)  # 作用域坏掉 fail loud，不静默空
+        hits = search_session(
+            root,
+            session_id,
+            query,
+            limit=SESSION_EVENT_HITS_CAP + 1,
+            types=types,
+            time_from=time_from,
+            time_to=time_to,
+            seq_from=seq_from,
+            seq_to=seq_to,
+        )
+        title = _title_of(root, session_id)
+    except _SessionArgError as exc:
+        return _error(f"{tool}: {exc}")
+    except SessionQueryNotFound as exc:
+        return _error(f"{tool}: {exc}", "NOT_FOUND")
+    except SessionQueryError as exc:
+        return _error(f"{tool}: {exc}")
+    except ValueError as exc:  # 非法会话 id（`session_file()` 的 fail-closed 正则）
+        return _error(f"{tool}: {exc}")
+
+    capped = len(hits) > SESSION_EVENT_HITS_CAP
+    hits = hits[:SESSION_EVENT_HITS_CAP]
+    lines = [f"会话 {session_id} — {title}" if title else f"会话 {session_id}", ""]
+    if not hits:
+        lines.append(f"未在该会话里命中（query={query!r}）。")
+    else:
+        lines.append(f"事件命中 {len(hits)} 条：")
+        for index, hit in enumerate(hits, start=1):
+            lines.append(f"{index}. 第 {hit.seq} 条 | {hit.type} | {_iso_ms(hit.time)}")
+            lines.append(f"   片段：{hit.snippet}")
+        if capped:
+            lines.extend(
+                ["", f"（已达结果上限 {SESSION_EVENT_HITS_CAP} 条：请收窄 query 或加过滤条件以看到其余。）"]
+            )
+    lines.extend(
+        [
+            "",
+            f"引用这些内容时写成「会话 {session_id} 第 N 条」，**不要**写成 `文件:行号`（那是知识库文档的形状）。",
+        ]
+    )
+    return ToolOutput(text="\n".join(lines))
+
+
+def _session_trace(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`session_trace`：一个会话的谱系（上游 `executeSessionTrace` / `presentation.formatSessionTrace`）。"""
+    from memoria.services.agent.session.query import (
+        SessionQueryError,
+        SessionQueryNotFound,
+        session_lineage,
+    )
+
+    tool = "session_trace"
+    try:
+        session_id = _session_arg(arguments, tool)
+        lineage = session_lineage(root, session_id)
+    except _SessionArgError as exc:
+        return _error(f"{tool}: {exc}")
+    except SessionQueryNotFound as exc:
+        return _error(f"{tool}: {exc}", "NOT_FOUND")
+    except SessionQueryError as exc:
+        return _error(f"{tool}: {exc}")
+    except ValueError as exc:
+        return _error(f"{tool}: {exc}")
+
+    target = lineage.target
+    lines = [
+        f"会话 {target.session_id} — {target.title}" if target.title else f"会话 {target.session_id}",
+        f"创建时间：{_iso_ms(target.created_at)}",
+        "",
+        "祖先（由近及远）：",
+    ]
+    if not lineage.ancestors and lineage.unresolved_parent_id is None:
+        lines.append("- 无（目标即根会话）")
+    for record in lineage.ancestors:
+        lines.append(f"- {record.session_id} — {record.title} | {_iso_ms(record.created_at)}")
+    if lineage.unresolved_parent_id is not None:
+        lines.append(f"- [{lineage.unresolved_parent_id}] 不在本地会话目录里（父会话未解析）")
+    lines.append("")
+    lines.append("后代：")
+    if not lineage.descendants:
+        lines.append("- 无")
+    for depth, record in lineage.descendants:
+        lines.append(f"{'  ' * depth}- {record.session_id} — {record.title} | {_iso_ms(record.created_at)}")
+    if not lineage.ancestors and not lineage.descendants and lineage.complete:
+        lines.extend(
+            [
+                "",
+                "（本地会话格式不记录 `parentSession`：没有 fork/派生会话 ⇒ 每个会话都是根、都没有后代。）",
+            ]
+        )
+    return ToolOutput(text="\n".join(lines))
+
+
+def _session_event_trace(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`session_event_trace`：一条事件的替换关系与（缺失的）引用关系（上游 `executeEventTrace`）。"""
+    from memoria.services.agent.session.query import (
+        SessionQueryError,
+        SessionQueryNotFound,
+        trace_event,
+    )
+
+    tool = "session_event_trace"
+    try:
+        session_id = _session_arg(arguments, tool)
+        seq = _seq_arg(arguments.get("seq"), "seq")
+        if seq is None:
+            raise _SessionArgError("seq 必填")
+        trace = trace_event(root, session_id, seq)
+        title = _title_of(root, session_id)
+    except _SessionArgError as exc:
+        return _error(f"{tool}: {exc}")
+    except SessionQueryNotFound as exc:
+        return _error(f"{tool}: {exc}", "NOT_FOUND")
+    except SessionQueryError as exc:
+        return _error(f"{tool}: {exc}")
+    except ValueError as exc:
+        return _error(f"{tool}: {exc}")
+
+    target = trace.target
+    lines = [
+        f"会话 {session_id} — {title}" if title else f"会话 {session_id}",
+        f"目标：第 {target.get('seq')} 条 | {target.get('type')} | {_iso_ms(target.get('time'))}",
+        f"被替换为：{_seq_text([] if trace.replaced_by is None else [trace.replaced_by])}",
+        f"替换链：{_seq_text(trace.replacement_chain)}",
+        f"被目标替换的事件：{_seq_text(trace.replaced_seqs)}",
+    ]
+    if trace.source_seqs is None:
+        lines.append("直接引用的源事件：本地事件格式不记录 `sourceEventSeqs` ⇒ 无从给出（上游按该字段计算）")
+    else:
+        lines.append(f"直接引用的源事件：{_seq_text(trace.source_seqs)}")
+    if trace.derived_seqs is None:
+        lines.append("由目标派生的事件：同上，本地不落盘任何派生/引用关系 ⇒ 无从给出")
+    else:
+        lines.append(f"由目标派生的事件：{_seq_text(trace.derived_seqs)}")
+    lines.extend(
+        [
+            "",
+            "（本地「替换」口径：`compaction` 的 `shadowed` 与 `compaction/prune` 的 `pruned[].seq`"
+            " 覆盖的事件，与回放一致。）",
+        ]
+    )
+    return ToolOutput(text="\n".join(lines))
+
+
+def _session_event_read(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`session_event_read`：一条事件的**完整未删节**记录 + 可选相邻事件摘要（上游 `executeEventRead`）。"""
+    import json as _json
+
+    from memoria.services.agent.session.query import (
+        SessionQueryError,
+        SessionQueryNotFound,
+        read_event,
+    )
+
+    tool = "session_event_read"
+    try:
+        session_id = _session_arg(arguments, tool)
+        seq = _seq_arg(arguments.get("seq"), "seq")
+        if seq is None:
+            raise _SessionArgError("seq 必填")
+        window = read_event(root, session_id, seq, before=arguments.get("before"), after=arguments.get("after"))
+        title = _title_of(root, session_id)
+    except _SessionArgError as exc:
+        return _error(f"{tool}: {exc}")
+    except SessionQueryNotFound as exc:
+        return _error(f"{tool}: {exc}", "NOT_FOUND")
+    except SessionQueryError as exc:
+        return _error(f"{tool}: {exc}")
+    except ValueError as exc:
+        return _error(f"{tool}: {exc}")
+
+    lines = [
+        f"会话 {session_id} — {title}" if title else f"会话 {session_id}",
+        f"目标事件（第 {seq} 条，完整未删节）：",
+        "```json",
+        _json.dumps(dict(window.target), ensure_ascii=False, indent=2),
+        "```",
+    ]
+    before = [event for event in window.events if int(event.get("seq") or 0) < seq]
+    after = [event for event in window.events if int(event.get("seq") or 0) > seq]
+    if before:
+        lines.extend(["", "之前的事件：", *(_neighbour_line(event) for event in before)])
+    if after:
+        lines.extend(["", "之后的事件：", *(_neighbour_line(event) for event in after)])
+    return ToolOutput(text="\n".join(lines))
+
+
+def _session_query_tools(kb_path: str) -> tuple[Tool, ...]:
+    """会话查询家族的四把只读工具（`search_sessions` 之外的其余四个）；`build_kb_tools()` 末尾拼接。"""
+    from memoria.services.agent.session.query import MAX_READ_WINDOW
+
+    target_session = {
+        "type": "string",
+        "minLength": 1,
+        "description": "目标会话 id（本地必填：没有「当前会话」身份可用）",
+    }
+    seq_parameter = {"type": "integer", "minimum": 0, "description": "目标事件序号 seq（从 0 起）"}
+    return (
+        Tool(
+            name="session_event_search",
+            description=(
+                "在**指定会话**内按字面量检索事件（「上次那个结论是在第几步给的」这类问题用它）。"
+                f"最多返回 {SESSION_EVENT_HITS_CAP} 条命中，超限时提示收窄查询；"
+                "命中写成「会话 <id> 第 N 条」，**不要**写成 `文件:行号`（那是知识库文档的形状）。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "session_id": target_session,
+                    "query": {"type": "string", "minLength": 1, "description": "检索词（字面量匹配：空白弹性、大小写不敏感）"},
+                    "seq_from": {"type": "integer", "minimum": 0, "description": "事件 seq 下界（含）"},
+                    "seq_to": {"type": "integer", "minimum": 0, "description": "事件 seq 上界（含）"},
+                    "time_from": {"type": "string", "description": "事件时间下界（含）：带时区限定的 ISO 8601，例如 2026-09-20T09:00:00+08:00"},
+                    "time_to": {"type": "string", "description": "事件时间上界（含）：格式同 time_from"},
+                    "event_types": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": '事件类型白名单（子句内 OR），例如 ["user/message"]',
+                    },
+                },
+                "required": ["session_id", "query"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _session_event_search(kb_path, arguments),
+        ),
+        Tool(
+            name="session_trace",
+            description=(
+                "读取一个会话的**谱系**：祖先链（由近及远）与后代树。"
+                "想看某个会话从哪来、有没有派生会话时用它。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {"session_id": target_session},
+                "required": ["session_id"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _session_trace(kb_path, arguments),
+        ),
+        Tool(
+            name="session_event_trace",
+            description=(
+                "读取一条事件的**替换关系**：被谁替换、替换链、以及它替换掉了哪些事件。"
+                "想知道某个旧结论是否已被压缩/裁剪覆盖时用它。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {"session_id": target_session, "seq": seq_parameter},
+                "required": ["session_id", "seq"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _session_event_trace(kb_path, arguments),
+        ),
+        Tool(
+            name="session_event_read",
+            description=(
+                "读取一条事件的**完整未删节 JSON**，并可选给出前/后若干条相邻事件的摘要。"
+                "需要精确原文（而不是检索片段）时用它。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "session_id": target_session,
+                    "seq": seq_parameter,
+                    "before": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": MAX_READ_WINDOW,
+                        "description": f"额外摘要前多少条事件（默认 0，最多 {MAX_READ_WINDOW}）",
+                    },
+                    "after": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": MAX_READ_WINDOW,
+                        "description": f"额外摘要后多少条事件（默认 0，最多 {MAX_READ_WINDOW}）",
+                    },
+                },
+                "required": ["session_id", "seq"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _session_event_read(kb_path, arguments),
+        ),
+    )

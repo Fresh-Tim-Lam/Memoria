@@ -39,9 +39,9 @@
 - **排序口径**：上游按「该会话最强匹配事件」做**相关性**排序；本地没有相关度评分器，改为**按会话
   的 `modified_at` 倒序**（最近聊过的先出），组内按 `seq` 升序。已登记为偏差。
 - **不移植**：不透明游标 `SessionSearchCursor`（那是给 SQLite 分页用的，本地用显式 `limit`）、
-  `lineage` / `trace`（会话谱系与事件溯源：本地没有 fork/派生会话）、`tracing.ts` /
-  `observation.ts`（宿主可观测性）、`session-query-sqlite`（本地不引索引）、
-  `session-log-export`（导出 UI，本轮不做）。
+  `tracing.ts` 的 `foldSurface` 表面折叠（本地替换关系由 `compaction` / `compaction/prune`
+  记录给出，见文件尾「事件读取、事件溯源与会话谱系」）、`observation.ts`（宿主可观测性）、
+  `session-query-sqlite`（本地不引索引）、`session-log-export`（导出 UI）。
 - `snippet` 的**窗口算法未逐字对齐**：上游只说"匹配点附近的纯文本摘录"，此处实现为
   「首个匹配点前后各 `SNIPPET_WIDTH` 字符 + 被裁剪侧补省略号」，已登记为偏差。
 - **有界**（对齐上游「Apply bounds to the complete result」）：单份文件 `SESSION_QUERY_MAX_BYTES`
@@ -73,7 +73,7 @@ from memoria.services.agent.session.history import (
     USER_MESSAGE,
     summarize_session_file,
 )
-from memoria.services.agent.session.store import list_sessions, session_file
+from memoria.services.agent.session.store import list_sessions, read_session, session_file
 
 __all__ = [
     "DEFAULT_HIT_LIMIT",
@@ -378,3 +378,302 @@ def search_sessions(
             )
         )
     return out
+
+
+# ── 事件读取、事件溯源与会话谱系（2026-09-20；上游同包的 `tracing.ts` + `index.ts`，见 §6.17）──
+# 语义移植自上游 `packages/session-query/session-query` 的 `src/tracing.ts`（`traceSession()` /
+# `traceEvent()` 与返回结构 `SessionLineageTrace` / `SessionEventTrace`）与 `src/index.ts` 的
+# `traceSession()` / `traceEvent()` / `readEvent()`（含 `_readWindow()` 与 `config.ts:6` 的
+# `SESSION_QUERY_READ_WINDOW_MAX = 50`）；工具面文本由上层 `tools/kb.py` 按
+# `tool-session-query/src/presentation.ts` 逐条落为中文。
+#
+# 与上游的两处**结构性差异**（均为「本地事件格式缺字段」，一律如实声明、不伪造）：
+# 1. **替换关系**：上游由 `foldSurface()` 的 `replacements`（`surfaceOp: replace` 的影子事件）给出
+#    `replacedBy` / `replacedEventSeqs`；本地没有表面折叠，承载替换的两类记录是 `compaction`
+#    （`shadowed`）与 `compaction/prune`（`pruned[].seq`）—— 口径与 `history.py` 的回放一致
+#    （被覆盖的 seq 不再进模型请求）。
+# 2. **引用关系**：上游事件可带 `sourceEventSeqs`（被引用的来源事件），`traceEvent()` 据此给
+#    `sourceEventSeqs` 与 `derivedEventSeqs`；本地事件格式**没有**该字段、也没有任何派生关系的落盘
+#    形态 ⇒ 这两个字段恒为 `None`（=「无从计算」，与「确实没有」区分开），由工具文本明说。
+# 本块**追加在文件末尾**：`__all__` 用 `+=` 扩展（不在文件头插入行 ⇒ 上方 `<文件>:<行号>` 锚点零漂移）。
+
+#: `before` / `after` 的默认窗口（上游省略即 0）。
+DEFAULT_READ_WINDOW = 0
+#: `before` / `after` 的上限（上游 `SESSION_QUERY_READ_WINDOW_MAX`，`config.ts:6`）。
+MAX_READ_WINDOW = 50
+#: 单次搜索的命中上限（上游 `tool-session-query` 的 `maxSearchResults` 默认值，`src/index.ts:22`）。
+DEFAULT_SEARCH_RESULT_LIMIT = 100
+#: 读 header 时的单行字节上限（本地边界：防病态长行把谱系扫描拖垮）。
+HEADER_LINE_MAX_BYTES = 65_536
+#: 本地承载**替换关系**的记录类型（上位注释差异 1；取值同 `pruner.PRUNE`，写字面量避免反向依赖）。
+REPLACEMENT_TYPES = (COMPACTION, "compaction/prune")
+
+
+class SessionQueryNotFound(SessionQueryError):
+    """目标不存在（上游 `SESSION_QUERY_EVENT_NOT_FOUND` / `SESSION_QUERY_SESSION_NOT_FOUND`）。"""
+
+
+@dataclass(frozen=True, slots=True)
+class SessionEventWindowResult:
+    """事件精读窗口（上游 `SessionEventWindow`）。"""
+
+    session_id: str
+    target: Mapping[str, Any]
+    events: tuple[Mapping[str, Any], ...]
+    start_seq: int
+    end_seq: int
+
+
+@dataclass(frozen=True, slots=True)
+class SessionEventTraceResult:
+    """事件溯源（上游 `SessionEventTrace`）；`None` = 本地无从计算（见上方差异 2）。"""
+
+    session_id: str
+    target: Mapping[str, Any]
+    replaced_by: int | None
+    replacement_chain: tuple[int, ...]
+    replaced_seqs: tuple[int, ...]
+    source_seqs: tuple[int, ...] | None
+    derived_seqs: tuple[int, ...] | None
+
+
+@dataclass(frozen=True, slots=True)
+class SessionLineageRecord:
+    """谱系里的一条会话（上游 `SessionRecord` 的可观察子集：本地无 live 源、无 `cwd` 授权面）。"""
+
+    session_id: str
+    created_at: int
+    modified_at: int
+    title: str
+    parent_session_id: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class SessionLineageResult:
+    """会话谱系（上游 `SessionLineageTrace`）；`descendants` 是 `(深度, 记录)` 的 DFS 前序。"""
+
+    target: SessionLineageRecord
+    ancestors: tuple[SessionLineageRecord, ...]
+    descendants: tuple[tuple[int, SessionLineageRecord], ...]
+    complete: bool
+    unresolved_parent_id: str | None
+
+
+def require_session(kb_path: str, session_id: str) -> str:
+    """会话文件路径；**不存在 ⇒ `SessionQueryNotFound`**（不把「写错 id / 会话已删」静默当成空结果）。
+
+    非法 id（目录穿越等）由 `store.session_file()` 直接 `ValueError` —— fail closed，绝不当成「找不到」。
+    """
+    path = session_file(kb_path, session_id)
+    if not os.path.isfile(path):
+        raise SessionQueryNotFound(f"会话 {session_id!r} 不存在")
+    return path
+
+
+def _events_of(kb_path: str, session_id: str) -> list[Mapping[str, Any]]:
+    """会话的全部事件记录（无 header；header 没有 `seq`）。"""
+    require_session(kb_path, session_id)
+    return [row for row in read_session(kb_path, session_id) if isinstance(row.get("seq"), int)]
+
+
+def _index_of(events: Sequence[Mapping[str, Any]], session_id: str, seq: int) -> int:
+    for index, event in enumerate(events):
+        if event.get("seq") == seq:
+            return index
+    raise SessionQueryNotFound(f'会话 "{session_id}" 没有第 {seq} 条事件')
+
+
+def _covered_seqs(event: Mapping[str, Any]) -> tuple[int, ...]:
+    """该记录**替换掉**的 seq：`compaction.shadowed` 或 `compaction/prune.pruned[].seq`。"""
+    data = _data(event)
+    raw = data.get("shadowed") if str(event.get("type") or "") == COMPACTION else data.get("pruned")
+    if not isinstance(raw, Sequence) or isinstance(raw, (str, bytes)):
+        return ()
+    out: list[int] = []
+    for item in raw:
+        value = item.get("seq") if isinstance(item, Mapping) else item
+        if isinstance(value, int) and not isinstance(value, bool):
+            out.append(value)
+    return tuple(out)
+
+
+def _replacement_maps(
+    events: Sequence[Mapping[str, Any]],
+) -> tuple[dict[int, int], dict[int, tuple[int, ...]]]:
+    """`(被覆盖的 seq → 覆盖它的 seq, 覆盖者 seq → 它覆盖的 seq)`；同一 seq 被多条记录覆盖时后写胜出。"""
+    replaced_by: dict[int, int] = {}
+    replaced: dict[int, tuple[int, ...]] = {}
+    for event in events:
+        if str(event.get("type") or "") not in REPLACEMENT_TYPES:
+            continue
+        seq = event.get("seq")
+        covered = _covered_seqs(event)
+        if not isinstance(seq, int) or isinstance(seq, bool) or not covered:
+            continue
+        replaced[seq] = covered
+        for item in covered:
+            replaced_by[item] = seq
+    return replaced_by, replaced
+
+
+def _window(value: Any, name: str) -> int:
+    """有界化 `before` / `after`：`None` ⇒ 默认；越界/非整数 ⇒ 报错（上游 `SESSION_QUERY_INVALID_WINDOW`）。"""
+    if value is None:
+        return DEFAULT_READ_WINDOW
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0 or value > MAX_READ_WINDOW:
+        raise SessionQueryError(f"{name} 必须是 0..{MAX_READ_WINDOW} 的整数（收到 {value!r}）")
+    return value
+
+
+def read_event(
+    kb_path: str,
+    session_id: str,
+    seq: int,
+    *,
+    before: int | None = DEFAULT_READ_WINDOW,
+    after: int | None = DEFAULT_READ_WINDOW,
+) -> SessionEventWindowResult:
+    """精读一条事件：目标**完整未删节** + `before`/`after` 条相邻事件的原始记录（上游 `readEvent()`）。
+
+    窗口按**事件下标**取（`seq` 连续但此处不假设 `seq == 下标`），两端夹紧到会话实际范围。
+    """
+    head = _window(before, "before")
+    tail = _window(after, "after")
+    events = _events_of(kb_path, session_id)
+    index = _index_of(events, session_id, seq)
+    start = max(0, index - head)
+    end = min(len(events) - 1, index + tail)
+    return SessionEventWindowResult(
+        session_id=session_id,
+        target=events[index],
+        events=tuple(events[start : end + 1]),
+        start_seq=int(events[start].get("seq") or 0),
+        end_seq=int(events[end].get("seq") or 0),
+    )
+
+
+def trace_event(kb_path: str, session_id: str, seq: int) -> SessionEventTraceResult:
+    """事件溯源（上游 `traceEvent()`）：直接替换、替换链、被目标替换的事件；引用关系本地无从计算。"""
+    events = _events_of(kb_path, session_id)
+    index = _index_of(events, session_id, seq)
+    replaced_by, replaced = _replacement_maps(events)
+    chain: list[int] = []
+    cursor = replaced_by.get(seq)
+    while cursor is not None and cursor not in chain and cursor != seq:
+        chain.append(cursor)
+        cursor = replaced_by.get(cursor)
+    return SessionEventTraceResult(
+        session_id=session_id,
+        target=events[index],
+        replaced_by=replaced_by.get(seq),
+        replacement_chain=tuple(chain),
+        replaced_seqs=replaced.get(seq, ()),
+        source_seqs=None,
+        derived_seqs=None,
+    )
+
+
+def _header_of(path: str) -> Mapping[str, Any]:
+    """只读会话文件**首行**（header）—— 谱系只看 header，不解码整份文件（同去读放大口径）。"""
+    try:
+        with open(path, "rb") as handle:
+            line = handle.readline(HEADER_LINE_MAX_BYTES)
+        record = json.loads(line.decode("utf-8", errors="replace"))
+    except (OSError, ValueError):
+        return {}
+    return record if isinstance(record, Mapping) else {}
+
+
+def _parent_of(header: Mapping[str, Any]) -> str | None:
+    """header 的可选父会话 id（上游字段名 `parentSession`；**本地没有任何写入方生产它**）。"""
+    value = _data(header).get("parentSession")
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
+
+
+def _lineage_record(key: str, header: Mapping[str, Any], row: Mapping[str, Any]) -> SessionLineageRecord:
+    return SessionLineageRecord(
+        session_id=key,
+        created_at=int(_data(header).get("createdAt") or 0),
+        modified_at=int(row.get("modified_at") or 0),
+        title=str(summarize_session_file(str(row.get("path") or "")).get("title") or ""),
+        parent_session_id=_parent_of(header),
+    )
+
+
+def session_lineage(kb_path: str, session_id: str) -> SessionLineageResult:
+    """会话谱系（上游 `traceSession()`）：祖先链（由近及远）+ 后代树 + 是否完整。
+
+    语料 = 磁盘上全部会话的 **header**（`list_sessions()` + 只读首行）。父 id 取 header 的可选键
+    `parentSession`（上游同名字段）；**本地没有写入方生产该键** ⇒ 实际每个会话都是根、都没有后代
+    （如实返回，不伪造）。父 id 不在本地语料里 ⇒ `complete=False`（对齐上游「第一个解析不到的父
+    会话」）；祖先链成环 ⇒ 报错（上游 `SESSION_QUERY_INVALID_LINEAGE`）。
+    """
+    require_session(kb_path, session_id)
+    rows = list_sessions(kb_path)
+    headers: dict[str, Mapping[str, Any]] = {}
+    meta: dict[str, Mapping[str, Any]] = {}
+    for row in rows:
+        key = str(row.get("session_id") or "")
+        if not key or not str(row.get("path") or ""):
+            continue
+        headers[key] = _header_of(str(row["path"]))
+        meta[key] = row
+
+    ancestors: list[str] = []
+    seen = {session_id}
+    unresolved: str | None = None
+    parent = _parent_of(headers.get(session_id, {}))
+    while parent is not None:
+        if parent in seen:
+            raise SessionQueryError(f"会话谱系含环：{parent}")
+        seen.add(parent)
+        if parent not in headers:
+            unresolved = parent
+            break
+        ancestors.append(parent)
+        parent = _parent_of(headers[parent])
+
+    children: dict[str, list[str]] = {}
+    for key in headers:
+        parent = _parent_of(headers[key])
+        if parent is not None:
+            children.setdefault(parent, []).append(key)
+    for siblings in children.values():  # 上游按 createdAt、再按 id 排序
+        siblings.sort(key=lambda key: (int(_data(headers[key]).get("createdAt") or 0), key))
+    descendants: list[tuple[int, str]] = []
+    visited = {session_id}
+    stack = [(1, child) for child in reversed(children.get(session_id, []))]
+    while stack:
+        depth, key = stack.pop()
+        if key in visited:  # 环保护
+            continue
+        visited.add(key)
+        descendants.append((depth, key))
+        stack.extend((depth + 1, child) for child in reversed(children.get(key, [])))
+
+    return SessionLineageResult(
+        target=_lineage_record(session_id, headers.get(session_id, {}), meta.get(session_id, {})),
+        ancestors=tuple(_lineage_record(key, headers[key], meta[key]) for key in ancestors),
+        descendants=tuple((depth, _lineage_record(key, headers[key], meta[key])) for depth, key in descendants),
+        complete=unresolved is None,
+        unresolved_parent_id=unresolved,
+    )
+
+
+__all__ += [
+    "DEFAULT_READ_WINDOW",
+    "DEFAULT_SEARCH_RESULT_LIMIT",
+    "MAX_READ_WINDOW",
+    "REPLACEMENT_TYPES",
+    "SessionEventTraceResult",
+    "SessionEventWindowResult",
+    "SessionLineageRecord",
+    "SessionLineageResult",
+    "SessionQueryNotFound",
+    "read_event",
+    "require_session",
+    "session_lineage",
+    "trace_event",
+]
