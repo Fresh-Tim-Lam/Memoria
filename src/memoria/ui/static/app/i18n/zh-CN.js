@@ -580,7 +580,7 @@
         label: "网络",
         title: "允许本面板调用远端模型；关闭后禁用发送（配置项 enabled）",
       },
-      model: { none: "未配置模型", netOff: "网络已关" },
+      model: { none: "未配置模型", netOff: "断网" },
       settings: {
         toggle: "设置",
         baseUrl: "模型端点",
@@ -1318,5 +1318,13 @@
   // 末尾、每秒刷新秒数；状态行 `#agent-status` 同期只留基词 `agent.status.thinking`（不带秒数）⇒ 不重复。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
     generating: "生成中… {n}s",
+  });
+  // ===== 2026-09-20 追加：选区悬浮「加入对话」（`#-agent-sel-add`，逻辑见 js/agent-panel.js 末尾块）=====
+  // 同走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径：按钮只在**非空选区**落在预览区 / 源码区且已打开文件时出现；点它把**当前文件**的
+  // `@相对路径` 插到输入框上次光标处（`insertMention()` 同一条路径）。选中的**文字本身不进请求**。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    selAddAction: "加入对话",
+    selAddTitle: "把当前文件的 @路径 插入对话输入框（插在上次光标处；选中的文字本身不会进入请求）",
   });
 })(typeof window !== "undefined" ? window : globalThis);

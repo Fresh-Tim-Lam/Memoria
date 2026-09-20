@@ -5611,3 +5611,31 @@ html *::-webkit-scrollbar-thumb:active {
    「清晰 vs 暗淡」的口径保持不变（同一个 `opacity` 轴，只是数值），未新增类名/字形。
    本块**末尾追加**（同特异度靠后生效） ⇒ 既有行号锚点零漂移。 */
 .-tree-item.no-sidecar .-tree-icon { opacity: 0.55; }
+
+/* ===== 2026-09-20 追加：选区悬浮「加入对话」（`#-agent-sel-add`）=================
+   用户："我在文件内（不论源码或者预览区）拖拽选取之后，没有在选区附近悬浮显示
+   『添加到对话 chat』"。逻辑在 `js/agent-panel.js` 末尾块（选区命中 `#preview` / `#editor`
+   且非空 ⇒ 贴选区上方显示；点它 = 把当前文件作为 `@路径` 插到输入框上次光标位置）。
+   本块只负责外观：默认 `display:none`，加 `.-on` 才出现（JS 先加类再量尺寸，故定位准确）；
+   `position: fixed` + `z-index: 62`：浮在预览区/源码区之上、仍低于各模态层（1000+）。
+   刻意"压低"（次要色 + 细边 + 小字号），不抢正文注意力。
+   本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
+.-agent-sel-add {
+    position: fixed;
+    z-index: 62;
+    display: none;
+    padding: 0.0625rem 0.375rem;
+    font-family: inherit;
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    user-select: none;
+}
+.-agent-sel-add.-on { display: block; }
+.-agent-sel-add:hover { color: var(--theme-color); border-color: var(--theme-color); }

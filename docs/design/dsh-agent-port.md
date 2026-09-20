@@ -732,7 +732,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 |---|---|---|---|
 | **A. 文件内选区引用** | 预览/源码里拖选一段 → 生成引用 token，后端能定位到**具体区间** | 需要区间 token（如 `@路径#L12-L30`）；**必须先定"模型看到什么"**：只给区间（模型自己 `read_document`）还是把摘录直塞（像会话快照那样）。前置：**AG07**（引用/锚点合法性 —— 区间只跳起始行、`#L12-L30` 的解析与投影） | ⏳ 待规格化 |
 | **B. 对话内容引用** | 选中某条回复 / 某段对话 → 作为下一轮显式上下文 | 台账 **AG01** 已是同一诉求（"引用 agent 回复内容再追问，粒度/入口/请求形状未定"）⇒ 与本项**合并规格化**。实现上最自然的形态：给 `dsh-session:` 加片段维（`#msg:<seq>`）或复用会话快照的"单消息投影" | ⏳ 待规格化（并入 AG01） |
-| **C. 入口** | 选区之后如何"变成引用" | 复用既有链路：文件树拖拽已有先例（`file-tree.js` → `insertMention`）；对话面板同理 = 选中 → 悬浮动作/右键 → 把 token 插到输入框。**不做**隐式自动引用（保住上游"用户在消息里显式圈定"口径） | ⏳ 随 A/B 定 |
+| **C. 入口** | 选区之后如何"变成引用" | 复用既有链路：文件树拖拽已有先例（`file-tree.js` → `insertMention`）；对话面板同理 = 选中 → 悬浮动作/右键 → 把 token 插到输入框。**不做**隐式自动引用（保住上游"用户在消息里显式圈定"口径） | **v1 已落地（2026-09-20，§6.19.2）**：预览区 / 源码区**非空选区** → 选区上方悬浮「加入对话」→ 复用 `insertMention(state.currentPath,"file")` 把 **`@相对路径`** 插到上次光标处（**只到文件级**，不发明区间 token ⇒ A 项规格未定前不越界）；对话栏消息级入口仍 ⏳ |
 
 **共同约束**：① 片段若直塞内容，同样要过**不受信任**警告与 `<` 转义；② **不落盘**口径与 §6.12 偏差 1 一致（JSONL 只留 token）；③ 新 token 形态先写进本表与 `reference/agent-guide/01` §6 的 token 清单，再动手。
 
@@ -1226,7 +1226,102 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 
 **未实测**：① 真实模型端点下模型**是否会主动用**这两把工具（先 `resolve_reference` 自检再写 `文件:行号`）；② 大库（数千篇 md）下 `audit_references` 的墙钟耗时（有界性只体现在**输出条数**，**未做**文件数 / 字节级预算，也未做 A/B 计时 —— 已知取舍）；③ 真实用户库中「文件名含 CJK 标点 / 括号」与「`@路径` 紧跟中文标点」的实际分布（fixture 只覆盖构造样例）；④ 真机面板端到端（本轮零前端改动）；⑤ 与 `dsh` 真机的对照（**不适用**：上游没有引用解析能力，本板块是本地独有）。
 
-**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`reference/agent-guide/10` 工具面计数行 **等量改写**（13 → **15**）；`reference/agent-guide/06` 新增一节「引用解析与审计（agent 侧只读）」；本文件 §5.1 五行（`@路径` / 跨会话 / `[[id]]` / `文件:行号` / 块级·片段）+ §11 变更记录本轮行。**锚点重取（old → new）**：本轮 `kb.py` 只有文件尾追加与等量改写 ⇒ **无 old → new**；`reference/agent-guide/10` 里 `tools/kb.py:1608-2591` 是本轮新增块的**首次**取号（旧文未引用）；**本文件内部的旧锚 `:1218`（§6.17 轮次的 §11 行）→ `:1341`**（§6.18 在本文件内插入 122 行 ⇒ 其后行号整体下移，仅此一处需重取；`docs/design/dsh-agent-port.md:245`（§6.14 引用）在插入点**之前**，未动）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`reference/agent-guide/10` 工具面计数行 **等量改写**（13 → **15**）；`reference/agent-guide/06` 新增一节「引用解析与审计（agent 侧只读）」；本文件 §5.1 五行（`@路径` / 跨会话 / `[[id]]` / `文件:行号` / 块级·片段）+ §11 变更记录本轮行。**锚点重取（old → new）**：本轮 `kb.py` 只有文件尾追加与等量改写 ⇒ **无 old → new**；`reference/agent-guide/10` 里 `tools/kb.py:1608-2591` 是本轮新增块的**首次**取号（旧文未引用）；**本文件内部的旧锚 `:1218`（§6.17 轮次的 §11 行）→ `:1436`**（§6.18 插入 122 行、§6.19 再插入 95 行 ⇒ 其后行号整体下移，仅此一处需重取；`docs/design/dsh-agent-port.md:245`（§6.14 引用）在插入点**之前**，未动）。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中；建议台账行见本轮报告）。
+
+---
+
+### 6.19 用户报障修复：引用会话"解析不到任何东西" + 选区悬浮「加入对话」（2026-09-20）
+
+> 用户原话：「首先我尝试引用会话发给 agent，agent 的回复是解析不到任何东西；第二，我在文件内（不论源码或者预览区）
+> 以及对话栏拖拽选取之后，没有在选区附近悬浮显示『添加到对话 chat』」。本节记录**两条真实用户报障**的取证、根因与处置。
+
+#### 6.19.1 #1 引用会话 → 模型"解析不到任何东西"（P0）
+
+**全链路取证（真实数据，非推断）**——用用户的真实会话（`docs/example/AAA_Vocab/.memoria/agent/sessions/*.jsonl`）在仓库外临时脚本里跑真实管线：
+
+| 环节 | 实测结果 |
+|---|---|
+| 前端 token（`agent-panel.js` `sessionUri()` → `formatSessionMentionToken()`） | 与后端 `encode_session_uri()` **逐字节相同**（node 实算 `dsh-session:InNlc3Npb24tMjAyNjA5MThUMTYzMDE0Wi04YWMwNmVkNSI` vs Python 同值；无填充 base64url ✓） |
+| `parse_session_references()` | 命中并改写：`请参考 @[源会话标题](dsh-session:…) 总结一下` → `请参考 @源会话标题 总结一下`，`references=[{session_id, label}]` ✓ |
+| `build_snapshot()`（**同库、非自引用**） | 正常：快照含 `源会话的答案` 等真实正文 ✓ |
+| `ask()` 组装的请求 | `rendered_text + "\n\n" + snapshot + "\n\n" + 时间读数` ✓（`ask.py:421` 的既有拼装未变） |
+
+⇒ **正常路径完全没坏**。坏的是**两条"静默变空"路径**（同一根因：mention 留在了请求里，内容与说明都丢了）：
+
+1. **自引用**（引用"当前会话自己"）：`build_snapshot(exclude_session_id=…)` 走 `continue` 丢弃来源，`planned` 为空 ⇒ **直接返回 `None`** ⇒ `ask()` 只发 `rendered_text`。**改前实测（真实会话 id）**：
+   `请参考 @本轮会话 总结\n\n当前本地时间：2026-09-20T19:14:24+08:00`（**整段快照不存在** ⇒ 模型手里只有一个光秃秃的 `@标签`）。
+   **可达性**：面板会**自动恢复上次会话**（`restoreLastSession()`），该会话就是「历史」列表**第一行且带「当前」标记**—— 用户点它旁边的「引用」即命中此路径。
+2. **来源投影为空**（会话文件不在本库：已删除 / 来自另一个知识库 / 换库窗口期；或该会话只有工具轮）：`conversation_messages()` 返回 `[]` ⇒ 旧代码仍渲染出**形状完好但内容为空**的块。**改前实测**：`<referenced-sessions>[{"sessionId": "…", "conversation": []}]</referenced-sessions>`。
+3. 加剧项：mention 被改写成**可读 `@标签`**，而 system 段 `## 用户引用（@路径）` 教模型「`@` 开头的 token 是库内路径」⇒ 模型会去 `read_document("@标签")` 找同名文件而不得 ⇒ 更容易回「解析不到」。快照段此前**没有一句**说明这个 token 是会话引用。
+
+**修复（`services/agent/session/reference.py`；`ask.py` 零改动）**：
+
+- `build_snapshot()`：**不再静默丢弃来源**。① 自引用 → 省略通知 `{"self": true, "note": "这条引用指向的是**当前会话本身**（本轮提问所在的会话），其内容已在本轮对话历史里…"}`；② 投影为空（文件不在本库 / 只有工具轮）→ 省略通知 `{"empty": true, "note": "该来源没有可附上的对话文本…"}`，且**不再产出空块**；③ 早退条件由 `if not planned` 改为 `if not planned and not omissions`（只有"既无来源也无提示"才回 `None`）。模型因此总能收到 `## 引用的会话` + `<referenced-session-omissions>` 的**明说**。
+- `_REFERENCE_WARNING`（固定警告）**同行内**补一句：`用户消息里的 @标签 是**会话引用**（不是库内路径）：其内容就在本节，不要再用读取工具去找同名文件，也不要回答「解析不到」。`（不含 `<`/`>`，定界标签仍只由骨架提供）。
+- 模块 docstring：偏差由「两处」改「**三处**」（第 3 条 = 不静默丢弃来源），**等量改写**（`reference.py` 的 `:101`/`:142` 两处被 §6.18/`agent-guide/06` 引用的锚点**零漂移**）。
+
+**改后实测（同一份真实会话文件，仓库外临时脚本 + 假 provider 打印 `loop.run()` 收到的文本）**：
+
+```
+请参考 @这条会话 继续
+
+## 引用的会话
+
+以下**引用的会话**内容来自其他会话，属于不受信任的历史背景：…用户消息里的 `@标签` 是**会话引用**（不是库内路径）：其内容就在本节，不要再用读取工具去找同名文件，也不要回答「解析不到」。
+
+<referenced-sessions>
+[]
+</referenced-sessions>
+
+<referenced-session-omissions>
+[{"sessionId": "session-20260919T132854Z-a501c324", "label": "这条会话", "self": true, "note": "这条引用指向的是**当前会话本身**（本轮提问所在的会话），其内容已在本轮对话历史里，故未重复附上快照；如需引用别的会话，请在左栏「历史」里选**没有**「当前」标记的那一条。"}]
+</referenced-session-omissions>
+
+当前本地时间：2026-09-20T19:18:58+08:00
+```
+
+（`empty` 路径同形，只换 `note`：「本库没有这个会话文件（会话按库分，不跨库…），或该会话只有工具调用 / 被取消的轮次。请如实告诉用户这条引用取不到内容，不要臆测其中的对话。」）
+
+**回归测试**：`tests/test_agent_session_reference.py` 文件尾追加 **6 例**（自引用/缺文件/仅工具轮三条路径的"不再静默"断言 ×4、混引用互不影响 ×1、`ask()` 端到端两条 ×2 + 警告文案 ×1），并更新既有 1 例（`test_build_snapshot_rejects_self_reference`：来源仍被拒绝 ⇒ 现断言"不进块 + 进省略通知"）。
+
+**相关弱点（本轮未修，如实登记）**：① 自引用/空来源在**面板侧**没有即时反馈（用户点「引用」看不出这条会被忽略）—— 要修得靠前端 chip/提示，属 UI 项；② `conversation_messages()` 的投影**只出 user + 每轮最终 assistant**，工具轮与思考一律不进快照 ⇒ "只有工具轮的会话"内容上确实为空（本轮改为明说，不假装有内容）；③ 会话文件损坏（非撕裂尾行）仍会让 `read_session()` 抛 `ValueError` 冒泡到 RPC（fail-loud，未改成省略通知）。
+
+#### 6.19.2 #2 选区悬浮「加入对话」：**从未存在**，本轮补最小版
+
+**真相（grep 取证，非假设）**：全前端**不存在**该 affordance —— `加入对话` / `添加到对话` / `add-to-chat` / `selection-bubble` / `selAdd` 在 `app/**` **零命中**；`insertMention()` 的唯一调用点是**文件树拖拽**（`agent-panel.js:1401`）；`-sel-*` 仅 `app.css:4245` 的公式块选区高亮（`.-math.-sel-covered`）；`sel-source.js` 只做**选区渲染**（跨行拖拽/Shift 选择），没有任何"选区 → 对话"入口。⇒ 本条**不属于"坏了的既有功能"**，属**未实现**。
+
+**实现（最小版；1 个前端模块 + CSS + 2 个 i18n 键）**：
+`agent-panel.js` 文件尾追加块（`agent-panel.js:2964-3077`）+ `app.css` 文件尾追加块（`app.css:5615-5641`）+ `i18n/{zh-CN,en}.js` 尾部各 2 键（`agent.selAddAction` / `agent.selAddTitle`）。
+
+**交互契约（逐条）**：
+
+| 维度 | 行为 |
+|---|---|
+| 何时出现 | 选区**非空**（`getSelection()` 非折叠且 `toString().trim()` 非空）且 `range.commonAncestorContainer` 落在 `#preview`（预览区）或 `#editor`（源码区）内，且**已打开文件**（`state.currentPath` 非空）⇒ 在选区**上方居中**显示（贴视口顶时改落选区下方），`position: fixed; z-index: 62` |
+| 何时消失 | 选区变空 / 点别处（`mousedown` capture，点按钮自身除外）/ **任意滚动**（`scroll` capture，内层容器也算）/ `Esc` / 换文件（选区自然消失）/ 窗口 `resize` |
+| 点它做什么 | 复用**文件树拖拽那条** `insertMention(state.currentPath, "file")` ⇒ 把 **`@相对路径`** 插到输入框的**上次光标位置**（`inputCaret` 同一条语义、同一落点规则），随后收掉按钮 |
+| 产生的 token（**精确**） | **只有** `@相对路径`；路径含空格时为 `@"路径"`（与 `formatMention` 同口径）。**选中的文字本身不进请求、也不生成区间 token** —— 片段级引用（`@路径#L12-L30` / 摘录直塞）属 §6.13 A 项、规格未定，本版**不发明语法**（模型拿到 `@路径` 后自行 `read_document`） |
+| 不碰什么 | 文件树拖拽落点、既有选区渲染（`sel-source.js`）、消息气泡的 mention 渲染（`linkifyUser`）；本块只**读**选区 + 维护一个浮动按钮 |
+| 已知限制 | 面板 dock 处于折叠态时也照样插（token 在输入框里，展开即可见；**未**做自动展开或 toast 反馈）；预览区/源码区以外的选区（如对话栏消息区）**不支持** |
+
+**对话栏（消息级）选区**：**本轮明确不做** —— "选中某条回复 → 引用"需要新的片段 token（`dsh-session:<uri>#msg:<seq>` 一类）或"单消息投影"，即 §6.13 **B 项**（并入台账 AG01，仍 ⏳ 待规格化）。在规格拍板前**不发明**该 token。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（`session/reference.py` / 新测试） | 全过 |
+| `python -m pytest tests/ -q` | **326 passed**（原 **320** + 本轮新增 **6** 例；既有断言更新 **1** 处 = 自引用例） |
+| `node --check`（`agent-panel.js` / `zh-CN.js` / `en.js`） | 3/3 通过 |
+| `node scripts/i18n_selftest.js` | **12/12 PASS** |
+| `python scripts/scan_ui_strings.py`（本轮以临时脚本把 `OUT` 改到临时文件，**未覆盖** `docs/reference/i18n-inventory.md`） | `files=3 rows=5`（**无新增硬编码候选**） |
+| 真实数据复现（仓库外临时脚本，跑完即删） | #1 改前/改后请求文本见 §6.19.1（真实会话文件，非构造样例） |
+| HTTP 静态面（harness `http://127.0.0.1:8660/`，服务活文件） | `curl … /app/js/agent-panel.js` 含 `-agent-sel-add`（`:2980`）/`selAddAction`（`:3042`）；`/app/css/app.css` 含 `.-agent-sel-add`（`:5623`）；`/app/i18n/zh-CN.js` 含 `"加入对话"`（`:1327`） |
+| 依赖面 | 零新依赖（Python 侧纯标准库；前端纯原生 API） |
+
+**未实测**：① **浏览器 DOM 交互**（本轮**没有浏览器工具**）—— "拖选 → 按钮出现 → 点击 → token 落在上次光标处 / 滚动与 Esc 收掉 / 与文件树拖拽互不干扰"这五步只有静态与 HTTP 面证据，**留给协调者真机走查**；② 真实模型端点下自引用/空来源 notice 是否足以让模型如实回答（本地只保证"请求里有明说"）；③ 对话栏消息级选区（未做）。
+
+**文档**：本节 + `reference/agent-guide/01`「选区悬浮『加入对话』」行 + `conventions/docs-management.md §4.2` 本轮登记行 + §6.13 的 C 行状态推进 + §11 变更记录本轮行。**锚点重取（old → new）**：`reference/agent-guide/10` 的 `zh-CN.js:1322 / en.js:1410`（原为两语言包**末行**）→ `zh-CN.js:1320 / en.js:1408`（改为 `agent.generating` 键**声明行**，因两包末尾各追加了 8 行 `selAdd` 块）；`dsh-agent-port.md:1229`（§6.18 的「文档」行）内部锚 `:1341` → `:1436`（本节插入 95 行 ⇒ 其后行号整体下移）。**其余既有 `file:line` 零漂移**：`session/reference.py` 的两处被引用锚（`:101`/`:142`）在改动点**之前**、`ask.py` 本轮**未改一行**、`agent-panel.js`/`app.css`/两语言包均为**文件尾追加**。**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中）。
 
 ---
 
@@ -1339,4 +1434,4 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 | 2026-09-20 | **上游读面移植落地（§6.16）**：用户口径「上游的读先移植进来」⇒ 吃 `fs/tool-fs` 的 `read` 参数语义（offset 1-based / limit 默认且上限 2000 / 越界 `FS_NOT_FOUND`）/ 三重 cap / 续读 footer 与 `read_image` 的扩展名 + 文件签名校验，吃 `fs/tool-fs-search` 的 `glob`（100）/`grep`（250 处、单行 2000 字节、30s 预算）上限与输出形状。① `services/agent/tools/kb.py`：`read_document` 新增 `offset`/`limit`（默认且最多 **2000 行**、越界 `NOT_FOUND`、截断给「续读请把 offset 设为 N」；**不传参逐字兼容旧输出**）；新增三个只读工具 `glob`（匹配口径照上游「不含 `/` 比文件名/任意深度」）、`grep`（**Python `re` 而非 ripgrep**，零依赖）、`read_image`（**只做参数与校验；端点不支持图像输入 ⇒ 明确 `UNSUPPORTED_IMAGE_INPUT`，不伪造成功**）；路径校验复用 `_safe_rel` 系并扩展为「不限扩展名 + 两侧 realpath」（`.memoria/**` 与 VCS 元数据排除，符号链接越界**不列不读**）。② `services/agent/prompt.py`：`@路径` 段门控由「只认 `read_document`」放宽为**任一读取手段在场**（`FILE_REFERENCE_TOOLS`，零行漂移）。③ 测试：新增 `tests/test_agent_tools_read.py` **19 例**；`tests/test_agent_loop.py` 门控例语义更新 1 处。**验收**：`py_compile` 全过；`pytest -q` **284 passed**（原 265）；Python 级真实取证（续读提示可解析并续读成功、`glob` 列表、`grep` 分组命中、五类越界/库外拒绝逐项输出）；零新依赖、零前端 / 零 i18n 改动；`dsh-src` 检出未改。**偏差 12 条**（工具面=知识库 / Python `re` 方言 / `read_image` 只到校验 / 不逐行加行号 / 未截断无 footer / 字符非字节预算 / 无 spill / 排序取新→旧 / 门控放宽 / 注册条件 / glob 方言子集 / 不新增 `read` 工具）与 **7 条未实测**见 §6.16；**锚点重取** `tools/kb.py:566-592` → `:581-607`、`prompt.py:262-263` → `:261` + `:385-394`。④ 同轮在 §8 登记**用户优化项**（agent 靠 PowerShell 脚本化读写、语法错浪费 token ⇒ 优先原生工具 / 预置脚本模板 / 错误前置校验；**只登记不实现**）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
 | 2026-09-20 | **上游读面设计改正（工具面 = 工作区根 + 允许根列表 + 可见性/权限分离）**：用户口径「工具面应该是整个根目录的工作区，只是用户只能看见程序限制给他看的文件，甚至以后为了让 Windows 拖拽进对话栏，需要越出根目录」＋「无法识别照片是因为没装上多媒体的『眼睛』插件，留给以后」。① `services/agent/tools/kb.py`（**全部等量改写 + 文件尾追加 ⇒ 零锚点漂移**）：新增**允许根列表** `_read_roots()`（今天 = `(库根,)`）/ `_resolve_in_read_roots()`（`:1135-1162`），路径校验（`_safe_rel()` / `_safe_rel_any()`）与遍历（`_walk_kb_files()` 逐根）**都改走它**（行为等价）；`GLOB_EXCLUDED_DIRS` `:692` 收缩为**只跳 VCS 内部目录**（`.git`/`.svn`/`.hg`/`.bzr`/`.jj`/`.sl`，理由=非内容且会污染 glob/grep），**`.memoria/**` 改默认可见**（agent 维护 sidecar/manifest 需要看得见）；越界一律**明确的拒绝错误**（`INVALID_ARGUMENTS`，非「不存在」），将来把根加进列表即放行；`read_document`/`glob`/`grep`/`read_image` 的路径错误文案与工具描述改为「工作区（允许根）内」。② `read_image` **归类改正**：读不到图不是「provider 不支持 content part」，而是**缺一个多媒体的「眼睛」插件** ⇒ 归入**未来多媒体能力**、**从读面缺口移出**；待办措辞由「消息层图片支持」改为**「待『多媒体眼睛』插件」**（工具描述、错误文本、§5.1/§6.16 同步；错误码 `UNSUPPORTED_IMAGE_INPUT` 不变）。③ 测试：`tests/test_agent_tools_read.py` +1 例（允许根列表与越界错误码稳定，含「多根即放行」断言），2 例断言随 `.memoria/**` 可见性改写。**验收**：`py_compile` 全过；`pytest -q` **285 passed**（原 284）；仓库外临时脚本取证（`_read_roots()`/`_resolve_in_read_roots()` 输出、`.memoria` 可列可搜 vs `.git` 不可见、四类越界 `INVALID_ARGUMENTS`、符号链接越界不列不读）；零新依赖、零前端 / 零 i18n 改动；未碰 `agent-plugin-design.md`（人正在逐步对齐）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
 | 2026-09-20 | **会话查询五工具补全（§6.17）**：上游 `session-query/tool-session-query` 明说**五个**只读工具（`README.zh.md:12`、`:47-51`），本地此前只落 `search_sessions` 一个 ⇒ 本轮补上**其余四个**（`session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`），上游**名字、参数与结果形状**照搬，`search_sessions` 保留原名与既有行为（名字偏差见 §6.17 偏差 1）。① `services/agent/session/query.py`（**文件尾追加** + 3 处等量改写，零锚点漂移）：新增 `require_session()`（`:462-470`，会话不存在 ⇒ `SessionQueryNotFound`）/ `read_event()`（`:528-552`，窗口按事件下标取、两端夹紧）/ `trace_event()`（`:555-573`）/ `session_lineage()`（`:605-662`）＋四个结果 dataclass（`:417-459`）＋常量 `MAX_READ_WINDOW = 50`（上游 `SESSION_QUERY_READ_WINDOW_MAX`，`config.ts:6`）/ `DEFAULT_SEARCH_RESULT_LIMIT = 100`（上游 `maxSearchResults`，`index.ts:22`）/ `REPLACEMENT_TYPES`（本地承载替换的两类记录）。② `services/agent/tools/kb.py`（**文件尾追加** + 2 处等量改写，零锚点漂移）：`KB_TOOL_NAMES` 9 → **13**（`:73-80`）、`build_kb_tools()` 末位接 `*_session_query_tools(root)`（`:665`）、四个实现（`:1297-1363` / `:1366-1413` / `:1416-1464` / `:1467-1507`）与声明工厂（`:1510-1605`，四把 `Tool` 全 `read_only=True`、上限 `SESSION_EVENT_HITS_CAP = 100` `:1185`、`before`/`after` ≤ 50）；③ 测试：新增 `tests/test_agent_session_query_trace.py` **23 例**（`:1-522`），`tests/test_agent_tools_read.py:416` 一处断言语义更新。**验收**：`py_compile` 全过；`pytest -q` **308 passed**（原 285）；仓库外临时脚本 Python 级取证（四工具真实输出、105 条命中截到 100 + 上限提示、六类失败码 `NOT_FOUND` / `INVALID_ARGUMENTS`）；`git -C dsh-src status --porcelain` 空、HEAD 仍 `0d1f5000`。**偏差 13 条**（`session_id` 本地必填｜无调用方 `cwd` 授权与错误净化层｜替换关系改由 `compaction.shadowed`·`compaction/prune.pruned[].seq` 承载｜`sourceEventSeqs`/`derivedEventSeqs` 无从计算 ⇒ `None` 且文本明说、**不伪造「无」**｜无 `surfaces`/`availability`/`parent_session_ids`/`include_root_sessions` 过滤｜无 `Config` 与 `searchTimeoutMs`｜结果文本落为中文并保留本地「引用形状」约定｜ISO 8601 毫秒截断｜错误码取 `INVALID_ARGUMENTS`·`NOT_FOUND`｜不注入上游 `PROMPT_TEXT` 指引段）与 **4 条未实测**见 §6.17；**§5.1 会话检索行由 1/5 收敛为 5/5**。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
-| 2026-09-20 | **引用板块（R 线）落地（§6.18）**：用户口径「把引用板块做了」⇒ 交付两把**只读**工具 `resolve_reference`（解一条：类型 / 归一化目标 / 是否存在 / 指向什么 / 歧义候选 / 建议下一步）与 `audit_references`（查一批：检查名 / `文件:行` / 目标 / 问题 / 严重级，上限 100 + 已达上限提示），覆盖**库内五类引用** `@路径`（含 `@"带空格"`、目录尾斜杠）/ `@[label](dsh-session:…)` / `[[…]]` / `文件:行号`（含 `#L12-L30`）/ `![](...)`（`.memoria/images/**` + registry 登记态）。**路线照 [agent-capabilities.md §6.5](agent-capabilities.md) 的 AG07 已拍板三路线**：**P** 由既有 `FILE_REFERENCE_SECTION` 承载（不重复）、**V 本轮落地**（V1 归一化 NFKC/剥包裹/去 `./`；V2 分级收敛**精确 → 唯一 basename → 唯一后缀**，>1 即 `ambiguous` + 候选**绝不猜**；V3 `not_found` 当普通结果回灌、不自动重试）、**L 未实施** ⇒ 区间锚点如实回 `unsupported`（只核起始行、不假装能解）；§6.5「不要做」清单照办（不扩正则、不做编辑距离自动改写、不改会话/事件日志、不枚举全库 schema）。① `services/agent/tools/kb.py`（**文件尾追加 986 行（`git diff --numstat`：新增 991 / 删除 5）+ 2 处等量改写 ⇒ 既有 `file:line` 零漂移**）：新块 `:1608-2591`、`KB_TOOL_NAMES` 13 → **15**（`:73-80`）、`build_kb_tools()` 末位接 `*_reference_tools(root)`（`:665`）。② 复用而非重写（逐处实读）：`link_resolver.scan_wikilinks` / `resolve_link_target` / `build_link_overrides`、`link_instances.is_line_attached` / `line_at_offset`、`session/reference.decode_session_uri`（与其 `_MENTION_RE`，单一事实源）、`session/store.session_file`、`document.DocumentService` 的 `_parse_image_ref_url` / `diagnose_image_refs` / `_load_image_registry`（**只读不重建**）/ `_resolve_scan_link_entry`、`storage.scanner.collect_md_files`，以及 §6.16 的允许根（`_read_roots` / `_resolve_in_read_roots` / `_safe_rel_any` / `_walk_kb_files`）。**明确不做**：块级引用（代码块 / 表格 / 公式）与选区 / 片段引用（写进工具描述与 §6.18）。③ 测试：新增 `tests/test_agent_tools_reference.py` **12 例**（五类各有正常 / 悬空 / 多义 / 越界 + 逐检查名计数 + 零写入断言）；`tests/test_agent_session_query_trace.py:487` 一行断言更新。**验收**：`py_compile` 全过；`pytest -q` **320 passed**（原 308）；仓库外临时脚本 Python 级取证（五类逐条输出、fixture 库 16 条问题清单、上限提示、六类参数边界、两工具 `read_only=True` / schema `additionalProperties:false` / 注册顺序与 `KB_TOOL_NAMES` 逐项一致）；零新依赖（`re` / `unicodedata` 均函数内局部导入）、零前端 / 零 i18n 改动。**偏差 10 条**（三级收敛不含模糊级｜L 未实施 ⇒ 区间 `unsupported`｜别名与挂接只在审计侧｜终止字符截断的已知限制｜图片只覆盖 `.memoria/images/**` 且注册表只读｜会话引用限本库｜审计语料 = `collect_md_files()`｜上限 100 但计数完整｜错误码取本地码族、业务状态词表与错误码分离｜零写入）与 **5 条未实测**见 §6.18；**AG07 状态推进为「V 已落地（读侧）/ L 未实施」**（台账行未改写）。**`docs/todo.md` 未编辑**（另一写者并发重写中；建议台账行见本轮报告） |
+| 2026-09-20 | **用户报障修复 + 选区入口最小版（§6.19）**：用户两条报障 —— ①「引用会话发给 agent，agent 回复解析不到任何东西」；②「文件内（源码/预览区）拖拽选取后，选区附近没有悬浮『添加到对话』」。**①根因（真实数据复现，非构造样例）**：前端 token（`sessionUri()`）与后端 `encode_session_uri()` 逐字节一致、`parse_session_references()` 与**同库非自引用**的 `build_snapshot()` 全链路实测正常 ⇒ 坏的是两条**静默变空**路径：**自引用**（面板自动恢复的「当前」会话就在「历史」首行 ⇒ 点它旁边的「引用」即命中）走 `continue` 丢弃来源后 `build_snapshot` **返回 `None`**，`ask()` 只发 `rendered_text` ⇒ **改前实测** `请参考 @本轮会话 总结\n\n当前本地时间：…`（整段快照不存在）；**来源投影为空**（会话文件不在本库 / 只有工具轮）产出**空块** `[{"sessionId": "…", "conversation": []}]`；加剧项 = mention 被改写成可读 `@标签`，而 system 段 `## 用户引用（@路径）` 教模型「`@` 开头即库内路径」⇒ 模型去找同名文件而不得。**修复**（`session/reference.py`；`ask.py` **零改动**）：`build_snapshot()` 自引用记 `{"self": true, …}`、投影为空记 `{"empty": true, …}` 且**不再产空块**、早退条件改为 `if not planned and not omissions`（绝不产出"有 mention、无内容、无说明"的请求）；固定警告**同行内**补一句「`@标签` 是**会话引用**（不是库内路径）…不要回答「解析不到」」；模块 docstring 偏差「两处」→「**三处**」（**等量改写 ⇒ `:101`/`:142` 零漂移**）。**改后实测**（同一份真实会话，假 provider 打印 `loop.run()` 收到的文本）：`<referenced-sessions>[]</referenced-sessions>` + `<referenced-session-omissions>[{"self": true, "note": "这条引用指向的是**当前会话本身**…"}]</referenced-session-omissions>`。**②真相 = 从未存在**（grep 全前端零命中 `加入对话`/`添加到对话`/`add-to-chat`/`selection-bubble`/`selAdd`；`insertMention()` 唯一调用点是文件树拖拽 `:1401`；`-sel-*` 只有公式块高亮 `app.css:4245`；`sel-source.js` 只管选区渲染）⇒ 补**最小版**：`agent-panel.js` 文件尾追加块（`:2964-3077`，选区命中 `#preview`/`#editor` 且非空 + 已打开文件 ⇒ 贴选区上方显示；点它 = 复用 `insertMention(state.currentPath, "file")` 把 **`@相对路径`** 插到**上次光标位置**；点别处/滚动/Esc/resize/空选区即收）+ `app.css` 文件尾（`:5615-5641`）+ 两语言包尾部各 2 键（`agent.selAddAction`/`agent.selAddTitle`）。**token 口径**：v1 **只**产生 `@相对路径`（含空格 ⇒ `@"路径"`），**选中文字不进请求、不发明区间语法**（片段级引用属 §6.13 A/AG01 ⏳）。**对话栏消息级选区明确不做**（未定 token 不发明）。**验收**：`pytest -q` **326 passed**（原 320 + 新 6 例；既有 1 例断言更新 = 自引用例）、`py_compile` 全过、`node --check` 3/3、`i18n_selftest` 12/12、`scan_ui_strings` 仍 `files=3 rows=5`（本轮以临时脚本改 `OUT` ⇒ **未覆盖** inventory 文档）、HTTP 静态面复核（harness 8660 活文件）。**锚点重取**：`agent-guide/10` 的 `zh-CN.js:1322 / en.js:1410` → `zh-CN.js:1320 / en.js:1408`（改指键声明行）；本文件 `:1341` → `:1436`。**`docs/todo.md` 未编辑**（另一写者并发重写中） |

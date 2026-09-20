@@ -1407,4 +1407,13 @@
   Object.assign(g.MEMORIA_LOCALES["en"].agent, {
     generating: "Generating… {n}s",
   });
+  // ===== appended 2026-09-20: floating "Add to chat" bubble on text selection =====
+  // (`#-agent-sel-add`, logic in the tail block of js/agent-panel.js; styles at the end of app.css.)
+  // Shown only for a non-empty selection inside the preview / source area with a file open; clicking it
+  // inserts the **current file** as an `@path` token at the remembered caret. The selected text itself
+  // is not sent (fragment-level quoting is still a design item — see dsh-agent-port.md §6.13 A).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    selAddAction: "Add to chat",
+    selAddTitle: "Insert the current file as an @path token into the chat input (at the last caret; the selected text itself is not sent)",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

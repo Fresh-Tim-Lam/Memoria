@@ -224,7 +224,16 @@ def test_build_snapshot_dedupes_and_caps_at_max_references(kb: Path) -> None:
 
 def test_build_snapshot_rejects_self_reference(kb: Path) -> None:
     _session(kb, "session-self", [("user/message", {"text": "自引用"})])
-    assert build_snapshot(kb, [{"session_id": "session-self"}], exclude_session_id="session-self") is None
+    snapshot = build_snapshot(kb, [{"session_id": "session-self"}], exclude_session_id="session-self")
+    # 来源仍被拒绝（不进 `<referenced-sessions>`），但**不再静默**：省略通知里如实说明
+    # 「这条引用就是当前会话本身」（2026-09-20 修缺陷，见模块偏差 3）。
+    assert snapshot is not None
+    assert _block(snapshot, "referenced-sessions") == []
+    omissions = _block(snapshot, "referenced-session-omissions")
+    assert [item["sessionId"] for item in omissions] == ["session-self"]
+    assert omissions[0]["self"] is True
+    assert "当前会话本身" in omissions[0]["note"]
+    assert "自引用" not in snapshot  # 来源正文绝不进快照
 
 
 def test_build_snapshot_rejects_too_many_references(kb: Path) -> None:
@@ -388,3 +397,76 @@ def test_ask_without_mention_sends_plain_question(kb: Path) -> None:
     provider = _FakeProvider([[TextDelta("答"), FinishEvent(reason=FinishReason.STOP)]])
     ask(str(kb), "普通问题", provider=provider, model="fake-model", session_id="session-plain-0001")
     assert provider.requests[0].messages[-1].content.startswith("普通问题\n\n当前本地时间：")  # 读数见 §6.14
+
+
+# —— ⑩ 缺陷回归（2026-09-20：mention 不再静默变空）——
+# 实用户报障：「引用会话发给 agent，agent 回复解析不到任何东西」。根因 = 真实用例里
+# **有 mention、却没有任何内容也没有说明**的两条路径（自引用 / 来源投影为空）。
+# 本组断言：①快照不再静默返回 None 或空块；②模型收到的请求里必有 `referenced-session-omissions`
+# 说明；③固定的警告说明 `@标签` 是会话引用（不是库内路径），别去读同名文件。
+
+
+def test_snapshot_warning_tells_model_the_mention_is_not_a_file_path() -> None:
+    # 系统提示词里 `## 用户引用（@路径）` 教模型「@ 开头的 token 是库内路径」，
+    # 而 mention 被改写成可读 `@标签` ⇒ 必须由快照本段点明它不是路径（否则模型去找同名文件 → 报"解析不到"）。
+    from memoria.services.agent.session.reference import _REFERENCE_WARNING
+
+    assert "会话引用" in _REFERENCE_WARNING
+    assert "不是库内路径" in _REFERENCE_WARNING
+    assert "<" not in _REFERENCE_WARNING and ">" not in _REFERENCE_WARNING
+
+
+def test_build_snapshot_missing_source_is_reported_not_rendered_empty(kb: Path) -> None:
+    # 会话文件不在本库（已删除 / 来自别的知识库）：旧行为 = 空 conversation 块，模型看到"什么都没有"
+    snapshot = build_snapshot(kb, [{"session_id": "session-gone", "label": "已删除"}])
+    assert snapshot is not None
+    assert _block(snapshot, "referenced-sessions") == []
+    omissions = _block(snapshot, "referenced-session-omissions")
+    assert [item["sessionId"] for item in omissions] == ["session-gone"]
+    assert omissions[0]["empty"] is True
+    assert "没有可附上的对话文本" in omissions[0]["note"]
+
+
+def test_build_snapshot_tool_only_source_is_reported_not_rendered_empty(kb: Path) -> None:
+    # 只有工具轮的会话：投影（user + 每轮最终 assistant）为空，同样必须给说明而不是空块
+    _session(kb, "session-tools", [("tool/result", {"name": "search_kb", "content": "命中", "anchors": []})])
+    snapshot = build_snapshot(kb, [{"session_id": "session-tools"}])
+    assert snapshot is not None
+    assert _block(snapshot, "referenced-sessions") == []
+    assert _block(snapshot, "referenced-session-omissions")[0]["empty"] is True
+
+
+def test_build_snapshot_keeps_good_source_next_to_reported_bad_one(kb: Path) -> None:
+    # 混引用：好来源照常进快照，坏来源进省略通知（互不影响）
+    _session(kb, "session-ok", [("user/message", {"text": "好来源"})])
+    snapshot = build_snapshot(kb, [{"session_id": "session-ok"}, {"session_id": "session-gone", "label": "没了"}])
+    assert snapshot is not None
+    assert [block["sessionId"] for block in _block(snapshot, "referenced-sessions")] == ["session-ok"]
+    assert [item["sessionId"] for item in _block(snapshot, "referenced-session-omissions")] == ["session-gone"]
+
+
+def test_ask_self_reference_sends_explicit_notice_instead_of_bare_mention(kb: Path) -> None:
+    # 端到端：引用**当前会话自己**（面板会把最近一次会话自动恢复成「当前」，其行在「历史」顶部）
+    _session(kb, "session-self-0001", [("user/message", {"text": "早先问过什么"}),
+                                       ("assistant/message", {"content": "早先答过什么"})])
+    mention = format_session_mention("session-self-0001", "这条会话")
+    provider = _FakeProvider([[TextDelta("答"), FinishEvent(reason=FinishReason.STOP)]])
+    ask(str(kb), f"请参考 {mention} 继续", provider=provider, model="fake-model", session_id="session-self-0001")
+
+    sent = provider.requests[0].messages[-1].content
+    assert sent.startswith("请参考 @这条会话 继续\n\n## 引用的会话")
+    assert "<referenced-session-omissions>" in sent  # 旧行为：整段快照根本不存在
+    assert '"self": true' in sent
+    assert "当前会话本身" in sent
+
+
+def test_ask_missing_source_sends_explicit_notice(kb: Path) -> None:
+    mention = format_session_mention("session-not-in-this-kb", "别的库的会话")
+    provider = _FakeProvider([[TextDelta("答"), FinishEvent(reason=FinishReason.STOP)]])
+    ask(str(kb), f"参考 {mention}", provider=provider, model="fake-model", session_id="session-target-0002")
+
+    sent = provider.requests[0].messages[-1].content
+    assert '<referenced-sessions>\n[]\n</referenced-sessions>' in sent
+    assert '"empty": true' in sent
+    assert "没有可附上的对话文本" in sent
+

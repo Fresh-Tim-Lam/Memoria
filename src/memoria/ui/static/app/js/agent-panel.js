@@ -1598,7 +1598,7 @@ window.MemoriaAgentPanel = (function () {
     if (!dot || !facts) return;
     dot.setAttribute("data-state", statusBarDotState());
     const model = String(cfg.model || "") || T("agent.model.none");
-    // 网络：开时显示「网络」并**上绿**，关时显示既有的「网络已关」并**上红**（颜色由 CSS 的 `data-on` 决定）
+    // 网络：开时显示「网络」并**上绿**，关时显示既有的「断网」并**上红**（颜色由 CSS 的 `data-on` 决定）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
     // 第四槽（2026-09-19 由「历史（N 轮）」改为**本会话缓存命中率**）：数字来自只读 RPC
     // `agent_usage_stats(session_id)` 的 `summary.hit_rate`（口径同底部 `#status-agent`；未知即 `—`）
@@ -2896,7 +2896,7 @@ window.MemoriaAgentPanel = (function () {
   //      `usageText(st.usage)`（=「用量 18582+14=18596 tokens」）与上一轮新增的 `.-agent-usage`
   //      逐字重复，故就地改为空数组（函数 `usageText` 与键 `agent.status.usage` 保留，只是不再有
   //      调用方写进状态行）。状态行**仍在用**：错误/警告（`setStatusText(..., true)` 那批：
-  //      未开库 / 未输问题 / 网络已关 / 提交失败 / 轮询出错 / 超时 / 换库丢弃）、「已停止」，
+  //      未开库 / 未输问题 / 断网 / 提交失败 / 轮询出错 / 超时 / 换库丢弃）、「已停止」，
   //      生成期间的基词「生成中…」，以及被 `statusBarDotState()` 读的 `-agent-error` 类。
   //   ② 生成期间状态行只留基词（`agent.status.thinking`，**不带秒数**）；秒数只在气泡尾的
   //      `.-agent-generating`（`agent.generating` =「生成中… {n}s」）⇒ 两处不重复同一句。
@@ -2960,6 +2960,121 @@ window.MemoriaAgentPanel = (function () {
     clearGeneratingTail();
     return out;
   };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 选区悬浮「加入对话」（2026-09-20；用户报障："我在文件内（不论源码或者预览区）拖拽选取之后，
+  // 没有在选区附近悬浮显示『添加到对话 chat』"）。此前**不存在**该入口（全前端无此 affordance）。
+  // 契约：① 只在**非空**选区、且选区落在 `#preview`（预览区）或 `#editor`（源码区）内、并且有
+  //   当前打开的文件时出现（选区为空 / 选区在别处 / 没开文件 ⇒ 一律不出现或立刻消失）；
+  // ② 点它 = 把**当前打开文件**的 `@相对路径` token 插到输入框的「上次光标位置」——直接复用
+  //   文件树拖拽那条 `insertMention()`（同一 `inputCaret` 语义，不自造第二套插入逻辑）；
+  // ③ 点别处（含面板内）/ 任意滚动 / Esc / 换文件（选区自然消失）/ 窗口尺寸变化 ⇒ 隐藏；
+  // ④ 不碰文件树拖拽、不碰既有选区渲染（`sel-source.js`），本块只**读**选区 + 维护一个浮动按钮。
+  // v1 产生的 token **只有** `@相对路径`（路径含空格时为 `@"路径"`，与 `formatMention` 同口径）：
+  //   选中的**文本本身不进请求、也不生成区间 token** —— 片段级引用（区间/摘录）属设计 §6.13 A 项，
+  //   规格未定前不发明语法（模型拿到 `@路径` 后自行 `read_document` 取内容）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 浮动按钮的固定 id/类名（CSS 在 `app.css` 文件末尾同名块）。
+  const SEL_ADD_ID = "-agent-sel-add";
+  //: 允许出按钮的两个宿主：预览区与源码区（两处都是**真实** DOM 选区 ⇒ 一套逻辑通用）。
+  const SEL_ADD_HOSTS = ["#preview", "#editor"];
+
+  /** 当前选区是否落在允许宿主内且有内容；命中回 `{rect}`（`rect` = 选区包围盒，用于定位）。 */
+  function selAddHit() {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+    if (!String(sel.toString() || "").trim()) return null; // 只有空白字符不算"选了东西"
+    if (!state.currentPath) return null; // 没开文件 ⇒ 无 `@路径` 可引用
+    const range = sel.getRangeAt(0);
+    for (let i = 0; i < SEL_ADD_HOSTS.length; i += 1) {
+      const host = $(SEL_ADD_HOSTS[i]);
+      if (host && host.contains(range.commonAncestorContainer)) {
+        const rect = range.getBoundingClientRect();
+        if (rect && (rect.width || rect.height)) return { rect: rect };
+        return null;
+      }
+    }
+    return null;
+  }
+
+  /** 浮动按钮（惰性建、只建一个；`mousedown` 拦一下，别把用户刚拖出来的选区点没了）。 */
+  function selAddButton() {
+    let btn = document.getElementById(SEL_ADD_ID);
+    if (btn) return btn;
+    btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = SEL_ADD_ID;
+    btn.className = "-agent-sel-add";
+    btn.addEventListener("mousedown", function (ev) {
+      ev.preventDefault();
+    });
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      addSelectionToChat();
+    });
+    document.body.appendChild(btn);
+    return btn;
+  }
+
+  function hideSelAdd() {
+    const btn = document.getElementById(SEL_ADD_ID);
+    if (btn) btn.classList.remove("-on");
+  }
+
+  /** 把当前文件作为 `@路径` 引用加进输入框（插在**上次光标位置**），随后收掉按钮。 */
+  function addSelectionToChat() {
+    const path = state.currentPath || "";
+    hideSelAdd();
+    if (!path) return;
+    insertMention(path, "file"); // 与文件树拖拽同一落点逻辑（含 `inputCaret` 记账与焦点回填）
+  }
+
+  /** 选区变化后同步按钮：命中则贴到选区**上方**（挤不下时落下方），否则隐藏。 */
+  function syncSelAdd() {
+    const hit = selAddHit();
+    if (!hit) {
+      hideSelAdd();
+      return;
+    }
+    const btn = selAddButton();
+    btn.textContent = T("agent.selAddAction");
+    btn.title = T("agent.selAddTitle");
+    btn.classList.add("-on"); // 先显示再量尺寸（`display:none` 时 offsetWidth 为 0）
+    const w = btn.offsetWidth || 72;
+    const h = btn.offsetHeight || 20;
+    const rect = hit.rect;
+    let top = rect.top - h - 6;
+    if (top < 4) top = rect.bottom + 6; // 贴到视口顶时改落选区下方
+    const maxLeft = Math.max(4, window.innerWidth - w - 4);
+    const left = Math.max(4, Math.min(rect.left + rect.width / 2 - w / 2, maxLeft));
+    btn.style.left = Math.round(left) + "px";
+    btn.style.top = Math.round(top) + "px";
+  }
+
+  // 事件全部挂在 document/window 上（与面板初始化时机无关，也不动上方任何监听）：
+  // 选区变化 / 拖拽结束（mouseup）/ 点别处（capture，mousedown 早于新选区成立）/ 滚动 / Esc / 缩放。
+  document.addEventListener("selectionchange", syncSelAdd);
+  document.addEventListener("mouseup", syncSelAdd);
+  document.addEventListener(
+    "mousedown",
+    function (ev) {
+      const t = ev.target;
+      if (t && t.id === SEL_ADD_ID) return; // 点按钮本身：交给它的 click
+      hideSelAdd();
+    },
+    true
+  );
+  document.addEventListener(
+    "scroll",
+    hideSelAdd,
+    true // capture：预览区/源码区/任意内层滚动容器都能收到
+  );
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") hideSelAdd();
+  });
+  window.addEventListener("resize", hideSelAdd);
 
   return {
     init: init,
