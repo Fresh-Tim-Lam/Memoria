@@ -61,7 +61,7 @@
 | --- | --- | --- |
 | G01 | R07 图谱推理·新边提议（建议边不自动写入，用户逐条采纳/忽略；需先定边属性专章）+ 梳理现实阅读/学习/复习场景中的知识点边类型 | 🔄 K1（边类型体系 `graph/edge_types.py:10-29` + 手动建边 `ui.py:775` 已实现；无 `suggest_edge`/提议 RPC，新边提议未实现） |
 | G02 | Bug：边抑制之后点击构建/刷新，图谱仍然显示该边 | 🔴 |
-| G05 | 图谱节点渲染算法优化，提升渲染性能，设置benchmark单独对图谱引擎性能测试 | 🔄 K1（**主体已达成，待补最后一步**。规划与数据：[design/graph-benchmark.md](design/graph-benchmark.md)。**D1 帧预算化**：目标档整帧 p95 9252→710ms（−92%）。**X4 装载卡死已根治**（warmup 工作量上限 + worker 超时）：装载 136s→0.35s。**D2 Barnes-Hut 近似排斥已落地**（`graph-bh-tree.js`，θ=0.9，`bh:false` 保留精确路径供同 build A/B）+ **X3**（`distanceMin` 下限取代 `Math.random()` + 位移上限 → 边长 2.13e9 回落到 ~5000）：star 5000 单 tick **745→33.9ms（22×）**、整帧 **9108→41.5ms（212×，≈23fps）**，操作数降 67×。**未达标项**：单 tick ≤20ms 仅 partitioned 达标（13ms），small_world/star 仍 33–35ms —— 剖面已定位为 `nsPerBhInteraction=192ns`（精确路径的 3.5×，源于每 tick ~12k 格子对象分配）⇒ 下一步 **D2b 树扁平化/免分配**（估 2–3×，目标 ~10ms）。用户已定：不设节点间距指标、不作质量门禁） |
+| G05 | 图谱节点渲染算法优化，提升渲染性能，设置benchmark单独对图谱引擎性能测试 | 🔄 K1（**主体已达成，待补最后一步**；规划与逐项实测数据全部在 [design/graph-benchmark.md](design/graph-benchmark.md)。已落地：**D1 帧预算化**（目标档整帧 p95 大降）、**D2 Barnes-Hut 近似排斥**（`graph-bh-tree.js`，θ=0.9，`bh:false` 保留精确路径供同 build A/B）、**X3**（`distanceMin` 下限 + 位移上限取代 `Math.random()`）、**X4 装载卡死根治**（warmup 工作量上限 + worker 超时）。**未达标项**：单 tick ≤20ms 仅 partitioned 达标，small_world/star 仍 33–35ms ⇒ 下一步 **D2b 树扁平化/免分配**（估 2–3×，目标 ~10ms）。用户已定：不设节点间距指标、不作质量门禁） |
 
 ***
 
@@ -93,7 +93,7 @@ T01–T03 已按规则 8.4 出表（见 §10）。
 
 | ID | 任务 | 状态 |
 | --- | --- | --- |
-| T04 | 文件夹无法折叠（含当前文件时点折叠即回弹）+ 文件树 emoji 换 dsh 图标 | 🔄 K2 待真机验收（根因 `file-tree.js:451` 重渲时自动展开覆盖用户折叠；修复 = 用户折叠记忆 + 重渲守卫 + 真 reveal 清除（末尾块 539-557）；图标借 dsh `ui-primitives`（末尾块 521-716、`app.css` 5522-5583）；无验收落盘） |
+| T04 | 文件夹无法折叠（含当前文件时点折叠即回弹）+ 文件树 emoji 换 dsh 图标 | 🔄 K2 待真机验收（根因 `file-tree.js:451` 重渲时自动展开覆盖用户折叠；修复 = 用户折叠记忆 + 重渲守卫 + 真 reveal 清除（末尾块 539-557）；图标借 dsh `ui-primitives`（末尾块 521-716、`app.css` 5522-5583）；2026-09-20 无侧车「暗淡」态 0.45→0.55（`app.css` 5601-5613）；无验收落盘） |
 
 ***
 
@@ -257,15 +257,16 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG02 | 助手气泡渲染 Markdown + `文件:行号` 锚点 | ✅ 代码完成（harness 二十项断言，见 §4.2）；真机观感待验 |
 | AG03 | dsh M2 `session-reference`（跨会话引用） | ✅ K2（§4.2；harness 8660 端到端） |
 | AG04 | 工具与能力包路线图（写/联网/skill/宿主 + token 预算 + 基准集） | ⏳ K3 待评审（design/agent-capabilities.md，P1–P6 待拍板） |
-| AG05 | 状态栏/状态 bar（点绿/红 + 模型/网络绿红/**余额对数连续色**/**缓存命中率**；已去会话 id 与轮次） | 🔄 K1（harness 8653/8657/8660 实测；实现细节见 agent-guide/01 §7） |
+| AG05 | 状态栏/状态 bar（点绿/红 + 模型/网络绿红/**余额对数连续色**/**缓存命中率**；已去会话 id 与轮次） | 🔄 K1（实现与实测见 agent-guide/01 §7） |
 | AG06 | UI 视觉语言对照（借 dsh 观感）：A/B 档全收口（B-8 不做）+ **U4 分隔线专用档 `--border-sep`** | 🔄 K1（design/ui-visual-language.md §4/§7）；**U5 待选** |
 | AG07 | **引用/锚点合法性**（空格路径/非 md/全角括号中段/区间只跳起始行/`.md:L7`） | ⏳ K2 路线已定：P 收窄语法 + V 用库内清单分级收敛 + L 改读时投影（文献与"不要做"见 §6.5） |
-| AG08 | 面板看不到模型 **thinking** | ✅ K2：`ReasoningDelta` → `on_reasoning` → 折叠块 `.-agent-think*`（§7；真机未验） |
-| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size`；harness 8653 实测 15px→20px 联动；真机观感未验） |
+| AG08 | 面板看不到模型 **thinking** ＋其**展开三角**换 dsh 三角（2026-09-20，全库 details 同批） | ✅ K2：`ReasoningDelta` → `on_reasoning` → 折叠块 `.-agent-think*`（§7；真机未验） |
+| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄 K2（`display-settings.js` 打 `--agent-font-size`；harness 实测 15→20px 联动；真机未验） |
 | AG10 | dock 整理：会话选择**迁到左栏「历史」页签**；头部「出网」「设置」与「清空对话」**退役**，agent 设置**搬进设置弹窗「对话」页签** | 🔄 K2（harness 通过；真机未验；**退役残留已清**，见 01 §7、docs-management §4.2） |
 | AG11 | 流式**逐行渲染**（面板侧中间缓冲；代码块/公式未闭合时转圈） | ✅ K2：`agent-stream-buffer.js` + `.-agent-stream-wait*`（§7 取证；真机未验；图片渲染另立 AG12） |
 | AG12 | 图片渲染支持：在流式管线里渲染模型输出的图片（行内 `![]()` / 图片资产） | ⏳ K1（由 AG11 行内注记独立成条；无实现证据） |
-| AG13 | 思考不落盘的后果：重新载入旧会话 / 刷新页面看不到历史思考（AG08 偏差 1）——是否改为落盘 = JSONL 事件 + 回放 + 渲染三点，需另立规格 | ⏳ K1 待规格化（`ask_stream.py:29-34` 明示"只流式、不落盘"；落盘会牵动读路径成本） |
-| AG14 | 会话重命名（方案 D：给 `services/agent/title.py` 补 `user` 来源 + RPC + 左栏历史行的改名入口） | ⏳ K1（`title.py:40` 明示 `source.kind=="user"` 本地未移植；无 rename RPC） |
+| AG13 | 思考不落盘 ⇒ 重载旧会话/刷新看不到历史思考（AG08 偏差 1）：改落盘 = JSONL 事件 + 回放 + 渲染三点，需另立规格 | ⏳ K1 待规格化（`ask_stream.py:29-34`；落盘牵动读路径成本） |
+| AG14 | 会话重命名（`title.py` 补 `user` 来源 + RPC + 左栏历史行入口） | ⏳ K1（`title.py:40` 未移植；无 rename RPC） |
 | AG15 | 每轮 token 用量行：最后一轮助手气泡下显示「用量 {hit}(命中)+{miss}(未命中)={total} tokens」，旧副本随新一轮移除 | 🔄 K2 验收未闭环（实现 = `agent-panel.js` 末尾块 `.-agent-usage`；待真机 DOM 验收） |
 | AG16 | 状态 bar 刷新间隔可配：设置 → 对话，5s/15s/30s/1min/5min/10min/1h（默认 1min），改设置即重挂计时器 | 🔄 K2 验收未闭环（`agent.json` 的 `status_refresh_ms`；待真机 DOM 验收） |
+| AG17 | 「生成中…Ns」下沉末条助手气泡尾 + 状态行不再写用量文本（错/警告/已停止仍归它）+ 全库三角统一 dsh 三角 | 🔄 K2 验收未闭环（`agent-panel.js` 2820-2962、`app.css` 5585-5613；真机未验，见 01 §7） |

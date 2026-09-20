@@ -1314,4 +1314,11 @@
     refresh10m: "10 分钟",
     refresh1h: "1 小时",
   });
+  // ===== 2026-09-20 追加：助手气泡尾的「生成中… Ns」指示器（`.-agent-generating`）=====
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径（用户："把『生成中』放在 agent 最后一次对话进行时的末尾"）：本轮生成期间挂在**末条助手气泡**
+  // 末尾、每秒刷新秒数；状态行 `#agent-status` 同期只留基词 `agent.status.thinking`（不带秒数）⇒ 不重复。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    generating: "生成中… {n}s",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

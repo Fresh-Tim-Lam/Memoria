@@ -128,7 +128,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | 全量渲染进行中 | 先写入 `<p class="-preview-loading">渲染中…</p>` 占位，渲染完成后被替换 | `preview.rendering` | `app.js:1856`-`1858` |
 | 渲染抛异常 | 预览区显示失败文案（带异常串），并显示告警条 | `preview.renderFail`、`preview.selfcheck` | `app.js:1934`-`1938`、`2046`-`2082` |
 | 链接一致性告警 | `#preview-status` 加 `warn`，提示未挂接的配置入口 | `preview.linkAuditHint` | `app.js:2035`-`2044` |
-| TeX 错误 / 公式未渲染 | 仅当报告带 `messages`/`mathErrors` 时才出现 `<details><summary>TeX 错误</summary>`；**AST 主渲染路径不调用 `diagnose()`**，故主预览实际不会出现该详情块 | `preview.math.texError`、`preview.math.noRendered`、`preview.math.rawDelims` | `app.js:2062`-`2074`；`markdown-preview.js:1310`-`1350`（仅 `renderToElement`/`1398` 调用） |
+| TeX 错误 / 公式未渲染 | 仅当报告带 `messages`/`mathErrors` 时才出现 `<details><summary>TeX 错误</summary>`；**AST 主渲染路径不调用 `diagnose()`**，故主预览实际不会出现该详情块。**2026-09-20**：该块 `<summary>` 的展开标记不再用浏览器 UA 原生三角 —— 全库 `<details>/<summary>`（**含 `.markdown-body` 里用户自己写的 `<details>`**）统一换成 dsh 三角（闭合右向、`[open]` 旋转 90°），规则由 `agent-panel.js` 末尾块注入（唯一 path 见 [01 篇 §2.4 伪流式行与 §6](./01-shell-and-layout.md)） | `preview.math.texError`、`preview.math.noRendered`、`preview.math.rawDelims` | `app.js:2062`-`2074`；`markdown-preview.js:1310`-`1350`（仅 `renderToElement`/`1398` 调用） |
 | 渲染成功 | 隐藏告警条，状态栏右侧写公式统计 | `preview.okDetail` | `app.js:2052`-`2061` |
 | MathJax 未就绪 | 渲染流程 `await MathJax.startup.promise` + `await typesetPromise`，**主预览路径无超时**；公式会先以 `$…$` 源码文本显示，排版完成后替换为 `mjx-container` | `preview.math.timeout`（仅辅助预览路径用） | `app.js:1903`-`1910`；`markdown-preview.js:17`-`42`（400×50ms）、`app.js:11518`-`11520` |
 | Mermaid 渲染失败 | 该块变为 `.-mermaid-error` 红框块，内含错误文案 | `preview.mermaidFail` | `markdown-preview.js:214`-`223`；`app.css:4037`-`4073` |

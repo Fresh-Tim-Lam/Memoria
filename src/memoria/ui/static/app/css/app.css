@@ -5581,3 +5581,33 @@ html *::-webkit-scrollbar-thumb:active {
     height: 10px;
     opacity: 0.75;
 }
+
+/* ===== 2026-09-20 追加：助手气泡尾的「生成中… Ns」指示器（`.-agent-generating`）==========
+   用户："对话框下面这个不用保留，生成过程中这个位置会显示『生成中』，把『生成中』放在 agent
+   最后一次对话进行时的末尾"。挂点与生命周期见 `agent-panel.js` 末尾块：
+   - 位置 = 当前助手气泡（`.-agent-msg--assistant`）的**最后一个子节点**；同气泡内顺序为
+     角色 → AG08 思考块（正文之前）→ 正文 → AG11 等待区 `.-agent-stream-wait` → 本行 →
+     （定稿后才有）来源条 / 错误条 ⇒ 与等待区**各占一行**、互不覆盖；
+   - 视觉口径与相邻的 `.-agent-usage`（本轮用量行，本文件 5496-5506）一致：小字号 + 次要色 + 上间距，
+     节点复用只改 `textContent` ⇒ 不闪烁、不引起重排；
+   - 终止（定稿/超时/停止/清空/换库）由 `stopWait` 包装统一摘除；`.-muted` 已在 JS 侧一并挂上。
+   本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
+.-agent-generating {
+    margin-top: 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+
+/* ===== 2026-09-20 追加：无侧车文件图标的「暗淡」态按 dsh 单色 glyph 复校 ==========
+   用户："原 memoria markdown 文件在配置过和没有配置过会显示两种图标一个清晰一个暗淡，
+   请你延续这种设计"。该两态**不是**两个字形：状态来自后端 `list_files` 每项的 `has_sidecar`
+   （`file-tree.js:181` 无侧车 ⇒ 行加 `.no-sidecar`），亮度差**一直**由上方既有规则
+   `.-tree-item.no-sidecar .-tree-icon { opacity: 0.45 }`（本文件 3428）承载，本块只**调数值**。
+   为什么调：emoji 时代（📄 / 📝）字形是**不透明实色**，0.45 仍看清；换 dsh 单色 glyph 后
+   mark 层是细笔画（body 仅 `fill-opacity .18`），叠加 0.45 后在浅色主题下合成对比只剩约 2.5:1
+   （token 推算：`--text-primary #2f2f2f` 0.45 混合 `--bg-secondary #f6f6f6` ⇒ `#9c9c9c`），
+   偏"几乎看不见"；改 0.55 后约 3.3:1（深色主题 0.45→0.55 为 3.1→3.9:1），
+   清晰态仍是 0.85（深 7.3 / 浅 7.8:1）⇒ 两态对比依旧一眼可辨且暗淡态不再糊掉。
+   「清晰 vs 暗淡」的口径保持不变（同一个 `opacity` 轴，只是数值），未新增类名/字形。
+   本块**末尾追加**（同特异度靠后生效） ⇒ 既有行号锚点零漂移。 */
+.-tree-item.no-sidecar .-tree-icon { opacity: 0.55; }

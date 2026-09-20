@@ -1232,7 +1232,7 @@ window.MemoriaAgentPanel = (function () {
         renderedKb = kbAtStart;
         setLastSessionId(kbAtStart, sessionId);
       }
-      const parts = [usageText(st.usage)]; // 2026-09-19：不再把会话 id 拼进状态行（用户不需要）
+      const parts = []; // 2026-09-19：不再把会话 id 拼进状态行；2026-09-20：本轮用量也不再进状态行（改挂末条气泡尾 `.-agent-usage`）
       const ok = st.status === "done";
       const detail = ok ? "" : fullErrorText(st);
       setStatusText(ok ? statusLine(parts) : detail, !ok);
@@ -2814,6 +2814,150 @@ window.MemoriaAgentPanel = (function () {
     if (sel) sel.addEventListener("change", () => saveStatusRefresh(sel.value));
     syncRefreshSelect();
     armStatusRefresh();
+    return out;
+  };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 全库「三角形」统一（2026-09-20；用户："agent 思考过程展开的『三角形』字符也要换掉，
+  // 全仓库『三角形』都要换"）
+  //   ① **唯一 path 字面量**仍在 `file-tree.js` 的 `ICON_BODIES.triangleRight`（dsh `ui-primitives`
+  //      的 `IconTriangleRightFill14`，MIT，pin 0d1f5000；文件树 twisty 用它渲染，file-tree.js:169/629）。
+  //      本块**不改 file-tree.js 一行**，而是从 `window.MemoriaTreeIcons.icon("triangleRight")` 取回
+  //      同一份 SVG、抽出其 `d` 拼成 data-URI mask ⇒ 全库只有一份 path 数据（两个消费方共用）。
+  //   ② 消费方 = 所有**原生 `<details>/<summary>` 的 UA 三角标记**（AG08 思考块 `.-agent-think`、
+  //      Markdown 预览里的用户 `<details>`、公式诊断 `<details>`、链接「高级」与系统建议块），
+  //      加上格式栏两个下拉按钮文案里那个「小实心下三角」字符（U+25BE）——`index.html:168/180`
+  //      已把该字符删掉，改由 `::after` 用**同一枚**三角旋转 90° 指下 ⇒ 与"点开色板"的下拉语义一致。
+  //   ③ 规则**整条注入**（含 `content`/尺寸/mask）而不进 app.css 静态块：静态块只能给到
+  //      `mask-image`，一旦 JS 未运行（`--memoria-tri` 缺失）伪元素就会以 `currentColor` 画成
+  //      **实心方块**；整条注入则"JS 缺席 ⇒ 一条规则都没有 ⇒ 原生标记照旧"，是干净的优雅降级。
+  //   ④ 颜色一律 `currentColor`（深浅主题随所在行既有 token 走）；尺寸 0.5625rem 与文件树 twisty
+  //      同档（`.-tree-twisty > svg`）；展开语义不变（右向 → `[open]` 旋转 90° 指下）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 格式栏两个「点开色板」按钮（原文案「H + 小下三角」/「色 + 小下三角」，U+25BE）：caret 由 `::after` 画。
+  const FMT_CARET_BUTTONS =
+    '.-fmt-btn[data-fmt="highlight"]::after, .-fmt-btn[data-fmt="fontcolor"]::after';
+
+  /** 从文件树那枚三角 SVG 抽出 `d`，拼成 CSS `mask-image` 用的 data-URI；取不到返回 ""。 */
+  function triangleMaskUrl() {
+    const tree = window.MemoriaTreeIcons;
+    if (!tree || typeof tree.icon !== "function") return "";
+    const svg = tree.icon("triangleRight");
+    if (!svg) return "";
+    const d = /d="([^"]+)"/.exec(svg);
+    if (!d) return "";
+    const box = /viewBox="([^"]+)"/.exec(svg);
+    const src =
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' +
+      (box ? box[1] : "0 0 14 14") +
+      '"><path fill="#000" d="' +
+      d[1] +
+      '"/></svg>';
+    return 'url("data:image/svg+xml,' + encodeURIComponent(src).replace(/'/g, "%27") + '")';
+  }
+
+  /** 注入一次全局三角规则（幂等；同一份 mask 同时服务 `<details>` 标记与格式栏 caret）。 */
+  function installTriangleStyles() {
+    if (document.getElementById("-memoria-triangle")) return;
+    const mask = triangleMaskUrl();
+    if (!mask) return; // 图标模块缺席 ⇒ 不注入（原生标记照旧，绝不画方块）
+    const base =
+      "content: ''; display: inline-block; width: 0.5625rem; height: 0.5625rem;" +
+      " background-color: currentColor; -webkit-mask: " +
+      mask +
+      " center/contain no-repeat; mask: " +
+      mask +
+      " center/contain no-repeat; transition: transform 0.12s ease;";
+    const css =
+      "details > summary { list-style: none; }\n" +
+      "details > summary::-webkit-details-marker { display: none; }\n" +
+      "details > summary::before { " +
+      base +
+      " margin-right: 0.3125rem; vertical-align: -0.0625rem; }\n" +
+      "details[open] > summary::before { transform: rotate(90deg); }\n" +
+      FMT_CARET_BUTTONS +
+      " { " +
+      base +
+      " margin-left: 0.1875rem; vertical-align: -0.0625rem; transform: rotate(90deg); }\n";
+    const style = document.createElement("style");
+    style.id = "-memoria-triangle";
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+
+  installTriangleStyles();
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 「生成中… Ns」下沉到**末条助手气泡末尾**（2026-09-20；用户："对话框下面这个不用保留，
+  // 生成过程中这个位置会显示『生成中』，把『生成中』放在 agent 最后一次对话进行时的末尾"）
+  //   ① `#agent-status` **不再承载 token 用量文本**：原 `poll()` 定稿时写的
+  //      `usageText(st.usage)`（=「用量 18582+14=18596 tokens」）与上一轮新增的 `.-agent-usage`
+  //      逐字重复，故就地改为空数组（函数 `usageText` 与键 `agent.status.usage` 保留，只是不再有
+  //      调用方写进状态行）。状态行**仍在用**：错误/警告（`setStatusText(..., true)` 那批：
+  //      未开库 / 未输问题 / 网络已关 / 提交失败 / 轮询出错 / 超时 / 换库丢弃）、「已停止」，
+  //      生成期间的基词「生成中…」，以及被 `statusBarDotState()` 读的 `-agent-error` 类。
+  //   ② 生成期间状态行只留基词（`agent.status.thinking`，**不带秒数**）；秒数只在气泡尾的
+  //      `.-agent-generating`（`agent.generating` =「生成中… {n}s」）⇒ 两处不重复同一句。
+  //   ③ 挂载点 = **当前助手气泡（`.-agent-msg--assistant`）的最后一个子节点**。同气泡内最终顺序：
+  //      角色 → AG08 思考块（正文**之前**）→ 正文 → AG11 等待区（`.-agent-stream-wait`，插在正文之后）
+  //      →「生成中… Ns」→（定稿后才有）来源条/错误条。生成期间它与等待区**各占一行**、互不覆盖。
+  //   ④ 生命周期：只**包装** `tickWait`（每秒）与 `stopWait`（定稿/超时/停止/清空/换库等所有终止
+  //      路径都会调它）⇒ 本轮一结束指示器必被摘掉；`renderMessages()` 整串重绘也会把它一起换掉，
+  //      定时器若仍在跑，下一秒自会按新气泡重建（自愈，不留陈旧节点）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 当前（或末条）助手气泡容器：优先取流式正文元素之父，回落按 assistant 序位定位。 */
+  function generatingHost() {
+    if (streamingEl && streamingEl.parentElement) return streamingEl.parentElement;
+    const rec = currentAssistant();
+    if (!rec) return null;
+    const ordinal = assistantOrdinal(rec);
+    if (ordinal < 0) return null;
+    const box = $("#agent-messages");
+    if (!box) return null;
+    const wraps = box.querySelectorAll(".-agent-msg--assistant");
+    return ordinal < wraps.length ? wraps[ordinal] : null;
+  }
+
+  /** 清掉消息区里所有「生成中… Ns」指示器（幂等）。 */
+  function clearGeneratingTail() {
+    const box = $("#agent-messages");
+    if (!box) return;
+    const nodes = box.querySelectorAll(".-agent-generating");
+    for (let i = 0; i < nodes.length; i += 1) {
+      if (nodes[i].parentNode) nodes[i].parentNode.removeChild(nodes[i]);
+    }
+  }
+
+  /** 一帧：确保末条助手气泡尾部有唯一指示器并刷新秒数（节点复用 ⇒ 不闪烁、不重排）。 */
+  function renderGeneratingTail(secs) {
+    const host = generatingHost();
+    if (!host) return;
+    let el = host.querySelector(".-agent-generating");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "-agent-generating -muted";
+      host.appendChild(el); // 气泡**末尾**
+    }
+    el.textContent = T("agent.generating", { n: secs });
+  }
+
+  // 每秒一帧：状态行只留基词「生成中…」，秒数交给气泡尾（原函数体不再被调用 ⇒ 不写状态行秒数）。
+  tickWait = function () {
+    if (!waitStartedAt) return;
+    const secs = Math.max(0, Math.floor((Date.now() - waitStartedAt) / 1000));
+    setStatusText(T("agent.status.thinking"));
+    renderGeneratingTail(secs);
+  };
+
+  // 终止路径（定稿/超时/停止/清空/换库）都经 `stopWait` ⇒ 在此摘掉指示器。
+  const baseStopWaitForGenerating = stopWait;
+  stopWait = function () {
+    const out = baseStopWaitForGenerating.apply(null, arguments);
+    clearGeneratingTail();
     return out;
   };
 

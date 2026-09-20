@@ -10683,7 +10683,7 @@
       fmt === "bold" ? T("brush.style.bold") : T("brush.style.italic");
   }
 
-  /** 鼠标目标对应的样式类型（B/I/H▾/色▾/对应色块，含自定义色块），否则 null */
+  /** 鼠标目标对应的样式类型（B/I/H/色 两个色板按钮/对应色块，含自定义色块），否则 null */
   function _targetStyleFmt(t) {
     if (!t || !t.closest) return null;
     if (t.closest('.-fmt-btn[data-fmt="bold"]')) return "bold";

@@ -1401,4 +1401,12 @@
     refresh10m: "10 min",
     refresh1h: "1 h",
   });
+  // ===== appended 2026-09-20: "generating… Ns" indicator at the tail of the last assistant bubble =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>` anchor
+  // in the docs keeps pointing at the same declaration.
+  // Shown while the turn is running, one second tick; `#agent-status` keeps the bare
+  // `agent.status.thinking` word (no seconds) at the same time, so the two never repeat each other.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    generating: "Generating… {n}s",
+  });
 })(typeof window !== "undefined" ? window : globalThis);
