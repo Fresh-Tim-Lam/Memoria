@@ -11327,7 +11327,7 @@
     }
 
     band.style.top = `${Math.max(0, top)}px`;
-    band.style.height = `${bottom - top}px`;
+    band.style.height = `${bottom - top}px`; band.dataset.srcRange = startLine + "-" + endLine; // 记下行区间 ⇒ 布局后移时由「预览带跟随布局」重定位（见 app.js 末尾块）
     return first;
   }
 
@@ -12859,6 +12859,40 @@
       return state.graphGroupId || window.MemoriaGraphGroups?.ALL_GROUP_ID || "all";
     },
   };
+
+  /* ===== 预览高亮条「跟随布局」（2026-09-20）=============================================
+     用户报障：「预览区域高亮位置还是不对…偏移以前知识点点击跳转的时候也出现过，常常发生在
+     文件很长的情况」。根因（真机只读实测，非推断）：`#-preview-range-band` 是**一次性像素定位**
+     ——`layoutPreviewRangeBand()` 在渲染流程里量一次 `getBoundingClientRect()` 定下 `top/height`
+     就不再更新；而预览的最终布局此时并未定型：Mermaid 替换容器（`markdown-preview.js`）与
+     MathJax 排版在 `mermaid.render`/`typesetPromise` 的 promise 之后**还会继续改变高度**
+     （SVG 内文本量算、字体、图片解码、`foreignObject` 重排都会晚一拍），长文件里这些变化累积
+     在高亮行**上方**，于是 band 停在被抬升前的位置（实测 `test-content.md` 第 300 行偏移
+     **302px**：band 8678 vs 块 8980，且布局稳定后也不自恢复）。
+     修法 = 让 band 自己跟着布局走：band 上记下它当前代表的行区间（`dataset.srcRange`，在
+     `layoutPreviewRangeBand` 里写），此处用 **ResizeObserver 盯内容容器**（内容尺寸一变就按记下
+     的区间重算），并补一条图片 `load/error` 捕获（同尺寸替换时 RO 不触发）。band 被摘掉
+     （`clearPreviewHighlights`）后 RO 回调找不到 band 即空转 ⇒ 无需清理、也不会有脏状态。
+     幂等：重算只改 `top/height`，不碰滚动、不重建 DOM，因此不会与 `fade-out` 计时器打架。
+     落点纪律：本块**追加在 IIFE 末尾**（`window.MemoriaApp` 门面之后、`})();` 之前）⇒ 仅其后
+     的「顶部文件标签栏滚轮」块行号 +N（该块锚点已在 02 篇就地更新），其余锚点零漂移。 */
+  (function watchPreviewBandLayout() {
+    const preview = $("#preview");
+    if (!preview || typeof ResizeObserver === "undefined") return;
+    const retarget = function () {
+      const band = document.getElementById("-preview-range-band");
+      if (!band || !band.dataset.srcRange) return;
+      const parts = String(band.dataset.srcRange).split("-");
+      const s = Number(parts[0]);
+      const e = Number(parts[1]);
+      if (!(s > 0) || !(e >= s)) return;
+      layoutPreviewRangeBand(preview, s, e);
+    };
+    const target = preview.querySelector(".-preview-content") || preview;
+    new ResizeObserver(retarget).observe(target);
+    preview.addEventListener("load", retarget, true);
+    preview.addEventListener("error", retarget, true);
+  })();
 })();
 
 /* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================

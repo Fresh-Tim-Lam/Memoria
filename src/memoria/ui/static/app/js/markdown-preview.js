@@ -220,25 +220,25 @@ window.MemoriaMarkdownPreview = (function () {
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-container";
-        // 保留 -src-block 和 data--block-index 以便双击编辑
-        if (pre.classList.contains("-src-block")) {
-          div.classList.add("-src-block");
-          div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
-          div.setAttribute("data--src-line", pre.getAttribute("data--src-line") || "");
-          div.setAttribute("data--src-line-end", pre.getAttribute("data--src-line-end") || "");
-        }
+        // 保留 -src-block 与块属性：双击编辑靠 block-index，预览高亮/滚动定位靠 src-line(-end)
+        if (pre.classList.contains("-src-block")) div.classList.add("-src-block");
+        ["data--block-index", "data--src-line", "data--src-line-end"].forEach((k) => {
+          const v = pre.getAttribute(k);
+          if (v) div.setAttribute(k, v);
+        });
+        // 嵌套场景（引用/列表内的 mermaid）<pre> 无 -src-block，但行号属性同样要带过去
         div.innerHTML = svg;
         pre.replaceWith(div);
       } catch (e) {
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-error";
-        if (pre.classList.contains("-src-block")) {
-          div.classList.add("-src-block");
-          div.setAttribute("data--block-index", pre.getAttribute("data--block-index") || "");
-          div.setAttribute("data--src-line", pre.getAttribute("data--src-line") || "");
-          div.setAttribute("data--src-line-end", pre.getAttribute("data--src-line-end") || "");
-        }
+        if (pre.classList.contains("-src-block")) div.classList.add("-src-block");
+        ["data--block-index", "data--src-line", "data--src-line-end"].forEach((k) => {
+          const v = pre.getAttribute(k);
+          if (v) div.setAttribute(k, v);
+        });
+        // 同上：渲染失败换成短红框后行号属性仍要保留，否则该块对行号系消费者整块消失
         div.textContent = _t("preview.mermaidFail", { msg: e.message || e });
         pre.replaceWith(div);
       }

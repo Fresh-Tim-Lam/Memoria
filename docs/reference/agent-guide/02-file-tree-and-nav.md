@@ -101,7 +101,7 @@
 |---|---|---|
 | 数据结构 | app.js:1242-1265 | `{ path, kpId, label, pending, sourceScroll, previewScroll, kpListScroll }`；同一 `path` 复用条目，已存在时只更新 `kpId`/`label`/`pending` |
 | 渲染 | app.js:1345-1378 | `<div class="tab[ active| tab-pending]" data-tab-index title=path><span class="tab-label">…</span><span class="close-btn" data-tab-close="i">×</span></div>` |
-| 样式 | theme/memoria.css:423-465 | 标签条可横向滚动（`#tab-bar` 的 `overflow-x:auto` 在 428 行）；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框（445-449）；`.tab-pending` 斜体 + 顶部虚线边框（450-458）；标签名最大 8.75rem 省略（459-463）；关闭键 hover 变红（465）。**指针在标签条区域内的滚轮 = 横向滚动**（`app.js:12864-12888`，2026-09-19 新增；滚动条外观见 app.css 末尾块 5046-5104） |
+| 样式 | theme/memoria.css:423-465 | 标签条可横向滚动（`#tab-bar` 的 `overflow-x:auto` 在 428 行）；`.tab.active` 底色 `--bg-primary` + 顶部主题色边框（445-449）；`.tab-pending` 斜体 + 顶部虚线边框（450-458）；标签名最大 8.75rem 省略（459-463）；关闭键 hover 变红（465）。**指针在标签条区域内的滚轮 = 横向滚动**（`app.js:12898-12922`，2026-09-19 新增；滚动条外观见 app.css 末尾块 5046-5104） |
 | 打开 | app.js:1424-1435 | `openFile` 默认 `ensureOpenTab(..., {activate:true, pending:false})`；`skipTabUpsert` 时只就地清 `pending` |
 | 点击切换 | app.js:1365-1371 → 1326-1343 | 命中 `.close-btn` 则忽略；否则 `activateTab(path, kpId)`：先存当前标签三处滚动位，再 `ensureOpenTab(activate)`，再 `openFile(..., {fromNav: !!skipNav, skipTabUpsert:true, restoreScroll:true})` |
 | 关闭 | app.js:1372-1377 → 1291-1324 | 点 `×` → `closeTabAt(i)`。**关掉后仍有标签**：若关的是当前标签 → 激活 `openTabs[min(i, len-1)]`（即顶上的那个标签，或最后一个），且以 `skipNav:true` 激活（**不**产生导航历史）；否则只重绘标签条。**关掉最后一个标签**：清高亮/`currentPath`/`doc`/`activeKpId`，清空编辑器与预览与 `#file-meta`，`renderKpList(null)`（KP 面板显示"请选择文件"），同步搜索范围按钮，显示欢迎页 |
