@@ -536,3 +536,68 @@ def test_ask_end_to_end_offline_only_writes_session(kb: Path) -> None:
 def test_ask_rejects_missing_kb(tmp_path: Path) -> None:
     with pytest.raises(ValueError):
         ask(str(tmp_path / "nope"), "在吗？", provider=FakeProvider([]))
+
+
+# —— 附：时间上下文（`context/time-context`，见 design/dsh-agent-port.md §6.14）——
+# 本段用函数内 import：文件上半部的 `import` 段被 `<文件>:<行号>` 锚点占用（零行漂移，见 §6.14）。
+
+
+def test_system_prompt_time_context_section_is_not_tool_gated(kb: Path) -> None:
+    """时间上下文段**不**按工具门控：上游按「插件被挂载」启停（与 `FILE_REFERENCE_SECTION` 不同）。"""
+    from memoria.services.agent.prompt import TIME_CONTEXT_SECTION
+
+    schemas = kb_registry(kb).schemas()
+    with_kb_tools = build_system_prompt(str(kb), tools=schemas, model="m")
+    without_tools = build_system_prompt(str(kb), tools=(), model="m")
+
+    assert TIME_CONTEXT_SECTION in with_kb_tools
+    assert TIME_CONTEXT_SECTION in without_tools
+    assert "## 时间上下文" in without_tools
+    assert "先向用户澄清" in without_tools
+
+
+def test_system_prompt_carries_no_dynamic_time_reading(kb: Path) -> None:
+    """动态读数**不进** system 段：否则整段可复用前缀每轮变化，KV 缓存命中率归零。"""
+    sent = build_system_prompt(str(kb), tools=kb_registry(kb).schemas(), model="m")
+    assert "当前本地时间：" not in sent  # 读数前缀只由 render_time_context() 产出
+
+
+def test_time_context_reading_uses_documented_format(monkeypatch: pytest.MonkeyPatch) -> None:
+    """冻结时钟：读数格式为 `当前本地时间：YYYY-MM-DDTHH:MM:SS±HH:MM`（上游 `formatTimestamp()` 字段口径）。"""
+    import datetime
+
+    from memoria.services.agent import prompt as prompt_module
+
+    moment = datetime.datetime(
+        2026, 9, 20, 9, 37, 33, tzinfo=datetime.timezone(datetime.timedelta(hours=8))
+    )
+    monkeypatch.setattr(prompt_module, "_local_now", lambda: moment)
+
+    assert prompt_module.render_time_context() == "当前本地时间：2026-09-20T09:37:33+08:00"
+    assert prompt_module.format_time_context(moment) == "2026-09-20T09:37:33+08:00"
+    # 同一时刻重复渲染结果一致（读数不掺入任何隐藏状态）
+    assert prompt_module.render_time_context(moment) == prompt_module.render_time_context()
+
+
+def test_ask_appends_time_reading_to_request_only(kb: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """读数只进本轮请求：请求末尾有、system 段没有、会话 JSONL 里也没有（与 §6.12 偏差 1 同口径）。"""
+    import datetime
+
+    from memoria.services.agent import prompt as prompt_module
+
+    moment = datetime.datetime(
+        2026, 9, 20, 9, 37, 33, tzinfo=datetime.timezone(datetime.timedelta(hours=8))
+    )
+    monkeypatch.setattr(prompt_module, "_local_now", lambda: moment)
+    provider = FakeProvider([text_step("好的。")])
+
+    ask(str(kb), "现在几点？", provider=provider, model="fake-model", session_id="session-time-0001")
+
+    sent = provider.requests[0].messages
+    assert len(sent) == 1  # 无历史 ⇒ 请求里只有本轮提问（system 走 LlmRequest.system）
+    assert sent[-1].content.endswith("当前本地时间：2026-09-20T09:37:33+08:00")
+    assert "当前本地时间" not in (provider.requests[0].system or "")
+
+    user_rows = [row for row in read_session(str(kb), "session-time-0001") if row["type"] == "user/message"]
+    assert user_rows
+    assert all("当前本地时间" not in row["data"]["text"] for row in user_rows)

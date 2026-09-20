@@ -106,7 +106,7 @@
 | `session/session-persistence` + `-jsonl` + `session-format` | 158 ts（整组） | 会话持久化（jsonl）+ 格式定义 | ✅ 吃**当前格式**（迁移链 `v0→v3` ❌ 不吃） | `services/agent/session/store.py` | **M1** |
 | `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ✅ 吃**标题**（`session-title` + `-llm` + `-first-prompt-llm`，§6.11；`-all-prompts` ❌）；投影框架 / 统计 ⏳；**telemetry（OTel）❌ 不吃** | `services/agent/title.py` | **M2** |
 | `context/agent-instructions` | 39 ts | 工作区指令文件 → 上下文（**只加上下文、不加工具**） | ✅ 吃 | 对接既有 `.memoria/agent/kb-spec*.md` | **M1** |
-| `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ✅ 吃文件引用（§6.7）与会话引用（§6.12）；`time-context` ⏳、tmux ❌ | `services/agent/prompt.py`、`services/agent/session/reference.py` | **M2** |
+| `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ✅ 吃文件引用（§6.7）、会话引用（§6.12）与时间上下文（§6.14，只吃文本语义）；tmux ❌ | `services/agent/prompt.py`、`services/agent/session/reference.py` | **M2** |
 | `interaction/user-approval` · `tool-ask-user` | 24 ts | 一次性审批、向用户提问（fail-closed） | ✅ 吃最小面 | `services/agent/approvals.py` | **M1** |
 | `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M2/M3 | 前端指令 | M2 |
 | `credentials/credentials-local` | 19 ts | 本地密钥**引用**（配置写名不写值） | ✅ 吃 | `services/agent/credentials.py` | **M1** |
@@ -663,6 +663,69 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 
 ---
 
+### 6.14 M2 时间上下文实施记录（2026-09-20：吃 `context/time-context`，已落地）
+
+> 补上 §6.7 登记为「**未**顺带吃 `time-context`」的那一块（`docs/design/dsh-agent-port.md:245`）—— 它是 M2 引用家族里最后一个小项；§6.12 收掉 `session-reference` 后单独开工。
+
+**范围界定（先读上游四个源文件才动手）**：上游把读数作为**追加的一条 user 角色消息**写进持久历史（`src/index.ts:211-220`），**不进 system prompt**；本地只吃它的**文本语义**，监听器与调度器按本地架构重落：
+
+| 上游文件 | 吃否 | 理由 |
+|---|---|---|
+| `src/timestamp.ts` | ✅ | `Intl.DateTimeFormat` 的字段口径（年-月-日T时:分:秒 + 数字偏移，`hourCycle:'h23'`）逐位照搬 |
+| `src/request-zone.ts` | ⚠️ 收敛 | 三态时区策略（resolved / mixed / missing）本地没有对应通道 ⇒ 收敛成一条固定说明（偏差 3） |
+| `src/index.ts` | ⚠️ 部分 | 只取 `renderText()`（`index.ts:105-107`）的文本形态；`agent/pre-step` 监听器、`refreshIntervalMs` 到期调度、`sessionProjections` 注册不移植（本地无 agent 事件总线与投影服务；同步 `ask()` 一轮一次） |
+| `src/invariant.ts` | ❌ | 本地无 invariant 配套设施 |
+
+**上游关键事实（读码所得，不猜）**：① 每条读数三行 —— `Time sampled while preparing turn <turn>, step <step>: <ts>` / `Browser time zone for this request: …` / `Elapsed since the preceding model-visible message|step context: …`；② 时区取自**当前开放轮次**里经宿主校验的 `user-rpc.clientTimeZone`，**混杂或缺失就要求模型向用户澄清**（`request-zone.ts:66-80`），回退值不等于用户权威；③ 回退时区 = 配置 `timeZone`，省略则在**加载期**解析进程时区一次（`index.ts:129-142`）；④ 它是 **opt-in 插件**（默认组合不挂载，Schedule Web overlay 才挂），`refreshIntervalMs` 省略或 `0` ⇒ 每个合格步骤都注入；**不按工具门控**；⑤ README 明说 KV Cache 影响是"仅追加、不使既有条目失效"。
+
+**改动**（3 个既有源文件 + 3 个既有测试文件，无新增模块；`prompt.py` **零行漂移**：4 处同行内改写 + 文件尾追加 63 行）：
+
+- `services/agent/prompt.py`
+  - 新增常量 `TIME_CONTEXT_SECTION`（`prompt.py:295-320`）：上游 `renderBrowserTimeZoneContext()` 的**中文落法**，上游英文原文按 `FILE_REFERENCE_SECTION` 同例写在常量注释上方（`request-zone.ts:66-80`）。**门控对齐上游**：上游按「插件被挂载」启停（与 `FILE_REFERENCE_SECTION` 的工具门控不同）⇒ 本地对应「agent 功能已启用」（`build_system_prompt()` 被调用即"已挂载"），故**无条件注入**。
+  - `build_system_prompt()` 在**用户引用之后、回答要求之前**追加该段（`prompt.py:263`）—— 段落顺序变为「基础身份 → 运行环境 → 库内指令 → 可用工具 → 用户引用（`@路径`）→ 时间上下文 → 回答要求」。
+  - 新增 `_local_now()`（`prompt.py:323-330`，本模块**唯一**的时钟读取点；单测 monkeypatch 它来冻结时间）/ `format_time_context()`（`333-344`）/ `render_time_context()`（`347-355`）。
+- `services/agent/ask.py`：`prompt =（用户原文，或 原文 + 跨会话快照）+ "\n\n" + render_time_context()`（`ask.py:421` 同行内联改写，行号未变）；`ask.py:79` 的导入名同步扩为两个。
+- 测试：`tests/test_agent_loop.py` 文件尾追加 **4 例**（段落不按工具门控 / system 段里没有动态读数 / 冻结时钟的格式断言 / `ask()` 只把读数加进本轮请求且 JSONL 里没有）；`tests/test_agent_history.py` 新增 `sent_texts()` 小工具并更新 **4 处**断言、`tests/test_agent_session_reference.py` 更新 **1 处**断言（它们原本断言"请求里的 user 正文 == 提问原文"，读数追加后改为剥掉读数再比）。
+
+**模型看到的文本（逐字）** —— system 段的固定说明（每轮一致）：
+
+```markdown
+## 时间上下文
+
+宿主会在本轮请求末尾给出一条本机时钟读数，形如 `2026-09-20T09:37:33+08:00`（含数字偏移）：
+
+1. 用户**未限定**时区的日期与时间，按该读数所在时区解释；
+2. 该读数**只**用于指导自然语言解释，**不要**替用户或工具参数假定时区；
+3. 读数缺失、或与用户明说的时区相冲突时，**先向用户澄清**，不要猜一个时区。
+```
+
+本轮请求末尾追加的读数（一次提问恰好一条；下面是本机实测输出）：`当前本地时间：2026-09-20T09:51:44+08:00`
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **读数不落盘、且与本轮提问同处一条 user 文本**（与 §6.12 偏差 1 同口径）：上游把读数作为**独立的一条 user 角色消息**追加进请求与持久历史（可回放、随压缩累积）；本地 `loop.run()` 只收一条提问文本，故读数追加在**同一条 user 文本的尾段**（不改消息条数、不引 loop 改造），且**不进会话文件**。**理由**：本地会话文件同时是读取路径的事实源（列表预览 / 标题 / 回放都直接读它），而读数是**派生值**且每分钟不同，写进去会污染渲染视图与预览。**代价**：后续轮次不会重放旧读数（上游会一直累积到被 compaction 遮蔽）。
+2. **静态说明与动态读数拆成两半**：上游把时区策略行**写进每条读数**（每轮都变）；本地把**不变**的那半放进 system 段、**可变**的那半放在**可复用前缀之后**（请求末尾）。**理由**：整份读数若进 system 段，该段每轮都不同 ⇒ 整段 system 前缀失去复用价值；拆开后对齐上游 README 的"仅追加，不使既有 KV Cache 条目失效"。
+3. **三态时区收敛成一句**：上游时区来自开放轮次的 `user-rpc.clientTimeZone`（宿主校验；混杂/缺失 ⇒ 要求澄清）；本地**没有浏览器时区通道**（宿主就是本机），故 `resolved / mixed / missing` 收敛成"按读数所在时区解释 / 与用户明说冲突即澄清"。上游「仅限提示词来源信息」（不悄然替另一个工具填时区字段）这条限制**保留**为第 2 条。
+4. **时区来源 = 机器本地时区**：`datetime.now().astimezone()`（OS 本地时区；本机 Windows `Asia/Shanghai` ⇒ `+08:00`）。上游解析失败在**加载期** fail loud；本地每轮取一次，`astimezone()` 会给 naive 值补上本机偏移 ⇒ **读数恒带数字偏移**（`%z` 为空只可能出现在 naive 输入，而函数开头已补齐）。上游末尾另附 `[IANA 时区名]` 括注，本地**省略**（标准库无法从 OS 可靠取到 IANA 名，且不引新依赖）—— 数字偏移逐位一致，时区仍可解释。
+5. **无 turn/step、无经过时长**：上游读数首行带 `turn`/`step`，第三行是"自前一条模型可见消息（或前一条读数）起的经过时长"；本地同步 `ask()` 一轮一次、工具轮次不进 pre-step ⇒ 没有"步骤"概念，**也没有可用于 elapsed 的历史基线**（读数不落盘，见偏差 1）⇒ 首行退化为单个时间戳。
+6. **不移植 `refreshIntervalMs` / 投影框架 / invariant 配套 ⇒ 本地不新增配置项**：上游靠 `Config.timeZone` + `refreshIntervalMs` 两个字段调节；本地时区**就是**机器时区、节律**就是**每轮一次（= 上游默认值 `0`）。本地无 cordis.yml，故不新造设置面（上游「No hardcoded tunables」约束的是插件配置面）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（`prompt.py` / `ask.py` / 3 个测试文件） | 全过 |
+| `python -m pytest tests/ -q` | **258 passed**（原 254 + 本轮新增 4 例；另 5 处既有断言随读数更新：`tests/test_agent_history.py` 4 处、`tests/test_agent_session_reference.py` 1 处） |
+| 真实渲染（Python 级，非浏览器） | 段落文本见上；读数 `当前本地时间：2026-09-20T09:51:44+08:00`（`+08:00` = 本机 `Asia/Shanghai`）；`tools=()` 时 `TIME_CONTEXT_SECTION in system == True`、`FILE_REFERENCE_SECTION in system == False`（门控对照） |
+| `node --check` / `node scripts/i18n_selftest.js` | **不适用**：本轮零前端、零 i18n 改动 |
+| 依赖面 | 纯标准库（`datetime`），零新依赖 |
+
+**未实测**：① 真实模型端点对该读数的实际利用（如"今天是几号/现在几点"类问题的回答质量）；② 跨 DST 时区的偏移变化（本机 `Asia/Shanghai` 无夏令时，未构造其它时区跑过）；③ 真机面板端到端（本轮**没有浏览器工具**，只做到 Python 级渲染）；④ 上游 `time-context` 在 dsh 真机上的对照行为（未运行 dsh，只读码）。
+
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`reference/agent-guide/10` §6「系统提示组装」行与 `reference/agent-guide/01` §6 引用行的锚点重取（`门控 262-263` → `261-262`，新增 `295-355` 时间上下文块）；§5 映射表本行与 §8 阶段状态同步；§11 变更记录本轮行。**台账**：`docs/todo.md §13` 里**没有**本项对应行（AG07 / AG13–AG17 均非时间上下文）⇒ **未新增台账行**（该台账当时零字节余量；按本轮口径：不为没有对应行的落地项发明新条目）。
+
+---
+
 ## 7. 四条红线怎么落（逐条）
 
 | 红线（出处） | 本方案的落法 |
@@ -679,7 +742,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 阶段 | 范围 | 出口（门禁） |
 |---|---|---|
 | **M1** | 应用内对话 + 读库问答（只读工具、单一会话、jsonl 持久化、密钥本地引用、出网开关） | §6.4 全绿 + 用户真机走查 |
-| **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
+| **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference/time）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
 | **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路 | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
 
@@ -691,7 +754,13 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 >
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
 > §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、§6.11（会话标题）、
-> **§6.12（跨会话引用 `context/session-reference`）**。**M2 已全部落地**；下一阶段为 M3 写能力。
+> §6.12（跨会话引用 `context/session-reference`）、**§6.14（时间上下文 `context/time-context`）**。
+> **§5 映射表里 `context/*` 三行的引用族（tmux 除外）至此全部落地**；下一阶段为 M3 写能力。
+>
+> **仍标 ⏳ 的行（截至 2026-09-20）**：`core/agent` 家族（`agent-default-model` / `agent-tool-presentation`，按需）；
+> `session-projection*` 投影框架与 `stats` 统计（按需）；`interaction/commands` 与 `permission-presets`（slash 命令 / 权限预设，M2/M3）；
+> `credentials/authorization`（授权流程，需 OAuth 类端点）；`storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*`（⏸ 按需，M3 再评）。
+> ❌ 不吃者（tmux / telemetry / `api/*`·`sdk/*`·`bundle/*` / 沙箱与执行编排族 / `compaction` 的两个子包 / `file-reference-local`）不在计划内。
 
 ---
 
@@ -744,4 +813,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-19 | **M2 session-query 落地**（吃 `session-query/session-query` 的 `extraction.ts`+`filters.ts` + `session-query/tool-session-query`；**不吃** `session-query-sqlite`（不引索引）/ `session-log-export`（导出 UI））：新增 `services/agent/session/query.py`（语义文本抽取含**本地扩展**的 `compaction`→`summary`、字面量匹配的逐词转义防注入 + 空白弹性、摘要窗、`_Filters` 的「子句间 AND / 子句内 OR」、四重有界化、字节级预筛）；`tools/kb.py` 增 `search_sessions` 工具（只读，命中写成「会话 `<id>` 第 N 条」**且刻意不产生 `文件:行号` 锚点**）；新增 `tests/test_agent_session_query.py` 28 例。验收：`pytest -q` **132 passed**（原 104 + 28）；修掉一个真 bug（`limit=0` 仍返回 1 条）；零新依赖。偏差（语料无 live/SQLite 索引、排序由相关性改为 `modified_at` 倒序、`snippet` 窗口未逐字对齐、不移植游标/谱系/可观测性）、缺口与未实测见 §6.9 |
 | 2026-09-19 | **M2 工具结果裁剪落地**（吃 `compaction/compaction-tool-result-pruner` —— §6.8 曾登记为「留后」，本轮补上）：新增 `services/agent/pruner.py`（`PRUNE_MARKER` 逐字照抄、阈值/头/尾 = 8192/4096/1024 同上游、`PruneBudgets` 构造期校验保证**永不增长**、`prune_text`/`apply_budget`/`applied_chars`/`prune_plan`/`prune_records`/`prune_applied`）；`session/history.py` 新增事件表行 + 「工具结果裁剪回放」小节（`_tool_message`/`_replay`/`replay_events` 接裁剪表、`build_history` 自动应用、新增 `compaction_shadowed()`）；`compaction.py` 的 `event_chars`/`select_span` 新增 `effective_chars`（按**有效视图**计账，避免高估尾部）；`ask._compact_if_needed()` 改为**先裁、再压**（裁完够用即**免掉**一次摘要调用，仍是超则摘要器读裁剪视图），返回值语义放宽为「是否落了事件」。**落盘**：一条 `compaction/prune`（`{pruned:[{seq,id,chars_before,chars_after,head,tail}], chars_removed}`），回放期**就地**重建 —— 不像上游那样追加替换 `tool/result`（同一 `tool_call_id` 两条工具消息会被端点 400）。验收：`pytest -q` **153 passed**（原 132 + 21 例 `tests/test_agent_pruner.py`）；零新依赖。偏差（纯字符串内容模型、不移植影子定价/`surfaceOp`、检索仍走原文、字符非 token 预算）、缺口与未实测见 §6.10；§8「M2 剩余」同步更新 |
 | 2026-09-19 | **M2 会话标题落地**（吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`；**不吃** `all-prompts`（每轮一次调用不值）/ 投影框架 / `session/title-llm-request` 预派发记录 / `rename()`）：新增 `services/agent/title.py`（`session/title` **log-only** 事件；来源最新者胜：`fallback` 确定性兜底 = 首条人类消息前 8 词 / 96 字节、`provider` 模型标题、`user` 改名未移植；规范化照搬上游（OSC/CSI/ESC 序列、C0-C1、方向与隐形字符、空白折叠、**按 UTF-8 字节截断不切开码点**）；限额 8/96/120 + 调用策略 `maxInputBytes=32768` / `maxOutputTokens=96` / `timeout=20s`；`generate_title()` **fail-closed**（非 `stop` 的终止原因一律拒）；`auto_title()` = `first-prompt` 节律）；`history.py` 的 `summarize_events`/`summarize_session_file` 都改为**优先取折叠标题**（原始行扫描只对最后一个命中行解码，与折叠同口径）；`ask()` 两步接进（追加提问后落兜底、主回合后跑首轮一次的模型标题、**被取消的轮次跳过**、两步都 fail-open）；**顺带修掉"做完也看不见"**——前端 `#agent-history` 下拉标签由 `preview` 改为 `title || preview`（后端 `title` 字段此前从未被前端使用）。验收：`pytest -q` **184 passed**（原 153 + 31 例 `tests/test_agent_title.py`；`test_agent_history.py` 一处断言随之更新）；**浏览器实测**（harness 端口 8645、临时库 + 手写 `session/title`、不需要模型）：`agent_sessions_list.title = "多层感知机的要点"`、下拉选项文本 `多层感知机的要点（1 轮）`。偏差（**本地无异步服务 ⇒ 标题调用排在主回合之后**、仅首轮一次；被取消轮次不生成；用量记进事件但不进 benchmark）、缺口与未实测见 §6.11；§5 映射表与 §8「M2 剩余」同步更新 |
-| 2026-09-19 | **M2 跨会话引用落地**（吃 `context/session-reference` 的 `uri.ts` + `projection.ts` + `serialization.ts`；**不吃** `spill.ts`（无存储 ⇒ 省略通知写明"未保存"）/ pre-step 监听器 / 投影框架）：新增 `services/agent/session/reference.py`（`dsh-session:` URI 规范化编解码、mention 格式化与解析、`list_candidates`、字节预算快照 + `<`→`\u003c` 逃逸 + 省略通知）；`ask()` 把快照**只**加进本轮 `loop.run()`（**JSONL 仍落干净 `@label`**，见 §6.12 偏差 1）；前端历史行「引用」按钮 + 用户气泡会话 chip（点击切「历史」页签并高亮）。验收：`pytest -q` **245 passed**（原 212 + 33 例 `tests/test_agent_session_reference.py`）；`node --check` 3 文件、`i18n_selftest` 12/12、`scan_ui_strings` rows=5 无新增；**浏览器交互未实测**（本轮无浏览器工具）。偏差、缺口与未实测见 §6.12；§5 映射表与 §8「M2 剩余」同步更新，**M2 至此全部落地** |
+| 2026-09-20 | **M2 时间上下文落地**（吃 `context/time-context` 的 `timestamp.ts` 字段口径 + `request-zone.ts` 三态策略 + `index.ts` 的 `renderText()` 文本；**不吃** pre-step 监听器 / `refreshIntervalMs` 到期调度 / `sessionProjections` 投影 / `invariant.ts`）：`services/agent/prompt.py` 文件尾追加 `TIME_CONTEXT_SECTION`（中文落法，上游英文原文写在常量注释上方；**不按工具门控** —— 对齐上游「插件被挂载」）+ `_local_now()` / `format_time_context()` / `render_time_context()`，`build_system_prompt()` 在「用户引用」之后无条件追加该段（`prompt.py:263`）；`ask.py:421` 把读数追加在**本轮请求末尾**（不进 system 段、不落盘）。验收：`py_compile` 全过；`pytest -q` **258 passed**（原 254 + 本轮 4 例，另 3 处既有断言随读数更新）；Python 级真实渲染 `当前本地时间：2026-09-20T09:51:44+08:00`（本机 `Asia/Shanghai`）+ `tools=()` 门控对照（时间上下文段在、文件引用段不在）。有意偏差：读数不落盘（同 §6.12 偏差 1）、静态说明与动态读数两分（KV 前缀）、三态时区收敛为一句、省略 `[IANA]` 括注、无 turn/step 与 elapsed、不新增配置项。偏差、缺口与未实测见 §6.14；§5 映射表 + §8 阶段状态同步 |

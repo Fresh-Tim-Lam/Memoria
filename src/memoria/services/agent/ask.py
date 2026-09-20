@@ -76,7 +76,7 @@ from memoria.services.agent.loop import (
     StopReason,
     usage_payload,
 )
-from memoria.services.agent.prompt import build_system_prompt
+from memoria.services.agent.prompt import build_system_prompt, render_time_context
 from memoria.services.agent.pruner import (
     PRUNE,
     applied_chars,
@@ -393,7 +393,7 @@ def ask(
     # 有意偏差：上游把快照作为**第二条 user 消息**持久化进目标会话；本地会话文件同时是读取路径的
     # 事实源（`agent_sessions_list` 以 2 MiB 上限做原始行扫描、`agent_session_load` 直接回放成渲染
     # 视图），故 JSONL 里只留干净的 `@label` 原文，不受信背景不落盘（标题生成/日志也因此拿不到它）。
-    # 用户**再次 mention** 即可重新附带该会话 —— 这就是本地"重新挂载"的方式。
+    # 用户**再次 mention** 即可重新附带该会话 —— 这就是本地"重新挂载"的方式。另：本轮请求末尾还要追加一条本机时钟读数（`time-context`，语义与偏差见 `prompt.render_time_context()`）。
     rendered_text, references = parse_session_references(text)
     snapshot = (
         build_snapshot(root, references, exclude_session_id=session.session_id) if references else None
@@ -418,7 +418,7 @@ def ask(
         on_text=on_text, on_reasoning=on_reasoning,
         cancel=cancel,
     )
-    prompt = rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot
+    prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + render_time_context()
     result: LoopResult = loop.run(prompt, messages=history)
     session.flush()
     # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过

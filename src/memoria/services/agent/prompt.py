@@ -1,25 +1,25 @@
 # 语义移植自 deepseek-harness packages/core/system-prompt + packages/context/agent-instructions
-# + packages/context/file-reference（MIT / BSD-3-Clause）
+# + packages/context/file-reference + packages/context/time-context（MIT / BSD-3-Clause）
 # 上游：https://github.com/deepseek-ai/deepseek-harness @ 0d1f50007f9bca3f52b06e1c3074fa14d5fb0720
 # 版权归 DeepSeek；声明见仓库根 THIRD_PARTY_NOTICES.md
 
 """system prompt 组装：基础指令 + 知识库上下文 + 工具清单。
 
-对照上游三处语义：
+对照上游四处语义：
 
 1. `dsh-system-prompt`：提示词是**有序段落的组装结果**，工具 schema 属于同一份
    组装产物（"模型获知自己能做什么"是一个整体）。本地按
-   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 用户引用（`@路径`）→ 回答要求」
+   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 用户引用（`@路径`）→ 时间上下文 → 回答要求」
    的固定顺序拼接，工具段落由 `ToolSchema` 生成，工具集合为空时不产生该段（空段消失）。
 2. `dsh-agent-instructions`：把工作区指令文件（`AGENTS.md` 兼容）作为**注入的
    上下文**送达模型——**只加上下文、不加工具**。本地读取知识库内的
    `.memoria/agent/{kb-spec.zh-CN.md, preview-formats.md, prompt.zh-CN.md}`
    （事实源仍是这些文件本身，本模块只负责"发现并注入"，不另立副本）。
 3. `dsh-file-reference`：`@` 前缀 token 是用户**显式引用**的工作区路径，需要一份固定的
-   模型可见说明教模型怎么对待它们（见 `FILE_REFERENCE_SECTION`）。上游把它做成一个**独立
-   段落**并按「`read` 工具是否在场」门控；本地同构 —— 段落独立、同样按 `read_document`
-   是否在场门控。上游另有一半是给编辑器用的路径补全服务（`file-reference-local`），
-   本前端不用它（引用靠文件树拖拽产生，不需要 `@` 触发的补全弹层）。
+   模型可见说明（见 `FILE_REFERENCE_SECTION`）：上游做成**独立段落**并按「`read` 工具是否
+   在场」门控，本地同构（上游另一半是编辑器补全服务 `file-reference-local`，本前端不用）。
+4. `dsh-time-context`：上游按步骤注入「时间戳 + 浏览器时区策略 + 经过时长」读数；本地留**策略
+   段**（`TIME_CONTEXT_SECTION`）与**时间戳读数**（`render_time_context()`），偏差见两处注释。
 
 与上游的差异（已登记）：
 - 上游把指令作为**持久 user 角色消息**写入会话日志（可回放、可压缩）；M1 直接
@@ -57,7 +57,7 @@ __all__ = [
     "instruction_dir",
     "load_instructions",
     "prompt_debug_info",
-    "render_instructions",
+    "render_instructions", "TIME_CONTEXT_SECTION", "format_time_context", "render_time_context",
 ]
 
 #: 知识库内指令文件所在目录（相对库根）。
@@ -258,9 +258,9 @@ def build_system_prompt(
     if tool_section:
         sections.append(tool_section)
 
-    # `@路径` 引用说明：与上游同门控 —— 只在模型确实有读取手段时给出（见 FILE_REFERENCE_SECTION）
-    if _has_tool(tools, "read_document"):
+    if _has_tool(tools, "read_document"):  # `@路径` 说明：门控同上游（见 FILE_REFERENCE_SECTION）
         sections.append(FILE_REFERENCE_SECTION)
+    sections.append(TIME_CONTEXT_SECTION)  # 时间上下文：对应上游「插件被挂载」，不按工具门控
 
     sections.append(
         "\n".join(
@@ -290,3 +290,66 @@ def prompt_debug_info(sources: Sequence[InstructionSource]) -> Mapping[str, Any]
         "truncated": [source.name for source in sources if source.truncated],
         "omitted": [source.name for source in sources if source.omitted],
     }
+
+
+#: 时间上下文的**固定**模型可见说明。语义移植自上游 `context/time-context` 的
+#: `renderBrowserTimeZoneContext()`（`packages/context/time-context/src/request-zone.ts:66-80`，pin `0d1f5000`）原文：
+#:
+#:   Browser time zone for this request: <iana-zone>. Interpret otherwise-unqualified dates and times in this zone.
+#:   Browser time zone for this request: mixed [...]. Ask the user to clarify otherwise-unqualified dates and times.
+#:   Browser time zone for this request: unavailable. Ask the user to clarify otherwise-unqualified dates and times.
+#:
+#: 另见该包 README「仅限提示词来源信息」：这份上下文只指导自然语言解释，不会悄然填入另一工具所要求的时区字段。
+#:
+#: 上游把三态逐次写进**每条**读数（读数首行是时间戳、第二行才是这段策略）；本地没有「浏览器时区」这条通道
+#: （宿主就是本机、时区唯一、也不会缺）⇒ 三态收敛为**一条固定说明**，动态的那一半（时间戳本体）见
+#: `render_time_context()`。**静态说明进 system 段、动态读数进本轮请求末尾**：这样读数变化只追加在可复用
+#: 前缀之后，不会让整段 system 每轮失效（对齐上游 README「KV Cache 影响：仅追加」）。
+#: 门控：上游按「插件被挂载」启停（**不**按工具门控，与 `FILE_REFERENCE_SECTION` 不同）；本地对应
+#: 「agent 功能已启用」—— 即 `build_system_prompt()` 被调用，"挂载"已经发生，故**无条件注入**。
+TIME_CONTEXT_SECTION = "\n".join(
+    [
+        "## 时间上下文",
+        "",
+        "宿主会在本轮请求末尾给出一条本机时钟读数，形如 `2026-09-20T09:37:33+08:00`（含数字偏移）：",
+        "",
+        "1. 用户**未限定**时区的日期与时间，按该读数所在时区解释；",
+        "2. 该读数**只**用于指导自然语言解释，**不要**替用户或工具参数假定时区；",
+        "3. 读数缺失、或与用户明说的时区相冲突时，**先向用户澄清**，不要猜一个时区。",
+    ]
+)
+
+
+def _local_now() -> datetime.datetime:
+    """采样一次本机时钟（本模块**唯一**的时钟读取点；单测 monkeypatch 它来冻结时间）。
+
+    局部导入：模块顶层 import 段被 `<文件>:<行号>` 锚点占用，本轮不动（见 §6.14）。
+    """
+    import datetime
+
+    return datetime.datetime.now().astimezone()
+
+
+def format_time_context(now: datetime.datetime) -> str:
+    """把本机时刻渲染成上游 `formatTimestamp()` 的字段口径：`YYYY-MM-DDTHH:MM:SS±HH:MM`。
+
+    上游（`src/timestamp.ts:10-36`）用 `Intl.DateTimeFormat('en-US', {hourCycle: 'h23',
+    timeZoneName: 'longOffset'})` 产出同样的数字字段，末尾另附 `[IANA 时区名]`；本地**省略该括注**
+    （标准库无法从 OS 可靠取到 IANA 名，且不引新依赖），数字偏移逐位一致 ⇒ 时区仍可解释。
+    """
+    if now.tzinfo is None:
+        now = now.astimezone()
+    offset = now.strftime("%z")
+    colonized = f"{offset[:3]}:{offset[3:]}" if len(offset) == 5 else offset
+    return f"{now.strftime('%Y-%m-%dT%H:%M:%S')}{colonized}"
+
+
+def render_time_context(now: datetime.datetime | None = None) -> str:
+    """本轮请求末尾的时间读数（上游 `renderText()` 的本地落法，省略其 turn/step 与经过时长）。
+
+    调用点是 `ask()`：在 `loop.run()` 之前追加到本轮请求文本末尾（与跨会话引用快照同位置），
+    **不进 system 段**（KV 前缀理由见 `TIME_CONTEXT_SECTION` 注释），也**不落盘** ——
+    会话 JSONL 里仍是用户输入的原文（与 §6.12 偏差 1 同口径）。
+    """
+    moment = _local_now() if now is None else now
+    return f"当前本地时间：{format_time_context(moment)}"

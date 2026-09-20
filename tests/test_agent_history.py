@@ -279,6 +279,13 @@ def test_build_history_never_leads_with_tool_message(kb: Path) -> None:
 # —— ③④⑤⑥ 续聊回放（经 `ask()`，假 provider 捕获请求）——
 
 
+def sent_texts(provider: FakeProvider) -> list[str]:
+    """首条请求里各消息的**用户输入原文**（剥掉 `ask()` 追加的末尾时间读数，见 §6.14）。"""
+    return [
+        (message.content or "").split("\n\n当前本地时间：")[0] for message in provider.requests[0].messages
+    ]
+
+
 def test_resume_sends_previous_round_in_request(kb: Path) -> None:
     session_id = "session-resume-0001"
     first = FakeProvider([text_step("答案一")])
@@ -292,7 +299,8 @@ def test_resume_sends_previous_round_in_request(kb: Path) -> None:
 
     sent = list(second.requests[0].messages)
     assert [role_of(message) for message in sent] == ["user", "assistant", "user"]
-    assert [message.content for message in sent] == ["第一问", "答案一", "第二问"]
+    assert sent[-1].content.startswith("第二问\n\n当前本地时间：")  # §6.14：读数追加在本轮请求末尾
+    assert sent_texts(second) == ["第一问", "答案一", "第二问"]
     assert_legal_sequence(sent)
 
     events = session_events(kb, session_id)
@@ -307,7 +315,7 @@ def test_fresh_session_sends_no_history(kb: Path) -> None:
     result = ask(str(kb), "只有这一问", provider=provider, model="fake-model", session_id="session-fresh-0001")
 
     sent = list(provider.requests[0].messages)
-    assert len(sent) == 1 and sent[0].content == "只有这一问" and role_of(sent[0]) == "user"
+    assert len(sent) == 1 and sent_texts(provider) == ["只有这一问"] and role_of(sent[0]) == "user"
     assert result.session_id == "session-fresh-0001"
 
 
@@ -316,8 +324,7 @@ def test_unknown_session_id_is_a_fresh_session(kb: Path) -> None:
 
     ask(str(kb), "问题", provider=provider, model="fake-model", session_id=new_session_id())
 
-    sent = list(provider.requests[0].messages)
-    assert [message.content for message in sent] == ["问题"]  # 文件不存在 ⇒ 无历史
+    assert sent_texts(provider) == ["问题"]  # 文件不存在 ⇒ 无历史
 
 
 def test_replay_disabled_sends_only_current_question(kb: Path) -> None:
@@ -335,7 +342,7 @@ def test_replay_disabled_sends_only_current_question(kb: Path) -> None:
     )
 
     sent = list(third.requests[0].messages)
-    assert [message.content for message in sent] == ["第三问"]
+    assert sent_texts(third) == ["第三问"]  # 读数追加在本轮请求末尾（见 §6.14）
 
 
 # —— 会话列表/载入所依赖的只读视图 ——

@@ -387,4 +387,4 @@ def test_ask_augments_loop_text_and_keeps_jsonl_clean(kb: Path) -> None:
 def test_ask_without_mention_sends_plain_question(kb: Path) -> None:
     provider = _FakeProvider([[TextDelta("答"), FinishEvent(reason=FinishReason.STOP)]])
     ask(str(kb), "普通问题", provider=provider, model="fake-model", session_id="session-plain-0001")
-    assert provider.requests[0].messages[-1].content == "普通问题"
+    assert provider.requests[0].messages[-1].content.startswith("普通问题\n\n当前本地时间：")  # 读数见 §6.14
