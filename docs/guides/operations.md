@@ -177,6 +177,15 @@ Release 正文必须**中英双语**，且**上下排版**——中文段在前�
 - 该功能尚无截图时：先按 [readme-i18n.md §3.1](../conventions/readme-i18n.md) 入库（放入 `resources/screenshots/` + 两份 README 各加一张 + 登记），再在 Release 引用。
 - 纯内部重构 / 修复、无界面变化时可省略截图。
 
+### 5.3 网络与代理（连不上时先试代理）
+
+推 tag / 调 GitHub API / 下载依赖 / 上传发布资产时报 `Connection reset` 或 TCP 443 超时，**先改走本机代理重试**（已实测可用，均返回 200）：
+
+- HTTP 代理 `http://127.0.0.1:10809`；SOCKS5 代理 `socks5://127.0.0.1:10808`。
+- git（命令级临时生效）：`git -c http.proxy=http://127.0.0.1:10809 push origin <tag>`；或先设 `$env:HTTPS_PROXY="http://127.0.0.1:10809"` / `$env:ALL_PROXY="socks5://127.0.0.1:10808"` 再执行原命令。
+- curl / `Invoke-RestMethod`：`curl.exe --socks5-hostname 127.0.0.1:10808 https://api.github.com/rate_limit`（`--socks5-hostname` 让 DNS 也走代理）。
+- **不得修改 git config**，只做命令级临时生效；直接重试常能恢复（v0.4.0 发版 tag push 曾连续 `Connection reset`，重试 + 代理后成功）。
+
 ## 6. 发布态运行
 
 ```powershell
