@@ -1432,4 +1432,14 @@
     selAddActionSeq: "Quote this message",
     selAddTitleSeq: "Insert the selected part of this conversation as a session-fragment reference (`…#seq:<n>`; does not switch sessions)",
   });
+  // ===== appended 2026-09-20: start/end of a range reference (columns + in-chat chips) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>`
+  // anchor in the docs keeps pointing at the same declaration.
+  // Selection tokens may now carry **columns** (`@path#L3C2-L5C7`); user / assistant bubbles render
+  // them as chips whose text shows `path start–end`, with this key spelling out "from / to" on hover
+  // (when a column is omitted only the line number is shown).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    rangeChipTitle: "Reference: {path}, from {from} to {to} (columns are 1-based character positions; click to open the file at the start line)",
+    sessionChipTitleSeq: "Session fragment reference: message {seq} of {id} (click to highlight that session in History; does not switch sessions)",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

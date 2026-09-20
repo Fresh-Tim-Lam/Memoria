@@ -3391,6 +3391,452 @@ window.MemoriaAgentPanel = (function () {
   document.addEventListener("selectionchange", relabelSelAdd);
   document.addEventListener("mouseup", relabelSelAdd);
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-20 追加（三项；用户："显示区域引用定位得有开始行号字符号和结束行号字符号，而且在对话框
+  // 渲染是把引用视作一个块整体删除或者光标整体跳过，而且对话内的引用没有渲染，也没有开始结束的标记"）：
+  //   ① 选区 token 带**列号**：`@路径#L3C2-L5C7`（列可只写一端 ⇒ 另一端按行首 / 行末）；
+  //   ② 输入框里引用是**原子块**（Backspace / Delete 整体删、← / → 整体跳过、整块选中即高亮）；
+  //   ③ 对话气泡（user + assistant）把区间 / 会话片段引用渲染成 chip 并显示**起止**。
+  // 纪律：整块**追加在本 IIFE 末尾**（`return` 之前）⇒ 上方所有 `agent-panel.js:<行号>` 锚点零漂移；
+  // 需要改既有行为时**按名重绑**（本文件既有手法：`selAddHit` / `linkifyUser` / `renderMessages` 都这么改）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  // ── ① 列号：源码区端点 → 行内字符位置 ────────────────────────────────────────
+
+  /** 行内**字符偏移**：只数 `.-line-content` 内的文本节点（**不数行号列** `.-lineno`）。
+   *  `node` 是元素容器时按「子节点序号前已累计的文本」折算。取不到（端点不在本行内容里）回 `null`。 */
+  function lineContentOffset(node, offset) {
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const content = el && el.closest ? el.closest(".-line-content") : null;
+    if (!content || !document.createTreeWalker) return null;
+    const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, null);
+    let total = 0;
+    let cur = walker.nextNode();
+    if (node && node.nodeType === 3) {
+      while (cur) {
+        if (cur === node) return total + (offset || 0);
+        total += (cur.nodeValue || "").length;
+        cur = walker.nextNode();
+      }
+      return null;
+    }
+    if (node && node.nodeType === 1 && content.contains(node)) {
+      let before = 0;
+      let t = walker.nextNode();
+      while (t && !node.contains(t)) {
+        before += (t.nodeValue || "").length;
+        t = walker.nextNode();
+      }
+      let inner = 0;
+      let child = node.firstChild;
+      let idx = 0;
+      while (child && idx < offset) {
+        inner += child.textContent ? child.textContent.length : 0;
+        child = child.nextSibling;
+        idx += 1;
+      }
+      return before + inner;
+    }
+    return null;
+  }
+
+  /** 源码区端点 → `{line, col, lineStart}`；`col` = **1 起字符位置**（caret 语义：行首 1 / 行末 caret = 行长+1）。
+   *  行号取不到回 `null`；列取不到（端点落在行内容的强元素边界）回 `col: null`（⇒ token 里省略列，不猜）。 */
+  function editorPoint(node, offset) {
+    const line = sourceLineAt(node);
+    if (!line) return null;
+    const off = lineContentOffset(node, offset);
+    if (off === null) return { line: line, col: null, lineStart: false };
+    return { line: line, col: off + 1, lineStart: off === 0 };
+  }
+
+  /** 选区token 拼写的**纯函数**（不碰 DOM；列缺省就不写 `C<列>`，后端按行首 / 行末解）。
+   *  ⚠️ 与 `docs/design/dsh-agent-port.md §6.21` 的语法表逐字对应；测试 `tests/test_agent_panel_token.py`
+   *  从本文件抽出此函数体用 `node` 实跑（不是复制一份实现）。 */
+  function rangeTokenText(path, sLine, sCol, eLine, eCol) {
+    const p = String(path || "").replace(/\\/g, "/");
+    if (!p) return "";
+    const head = /\s/.test(p) ? '@"' + p + '"' : "@" + p;
+    if (!(sLine > 0)) return head;
+    const at = function (line, col) { return "L" + line + (col > 0 ? "C" + col : ""); };
+    const multi = eLine > sLine;
+    const sameLineRange = eLine === sLine && eCol > 0 && sCol > 0 && eCol > sCol;
+    if (multi || sameLineRange) return head + "#" + at(sLine, sCol) + "-" + at(eLine, eCol);
+    return head + "#" + at(sLine, sCol);
+  }
+
+  /** 选区位置（重绑 §6.20 版）：源码区**加列号**；预览区仍是**块级**近似（只给行，不给列 —— 诚实）。
+   *  终点恰停在**下一行行首**（源码区）⇒ 收回到上一行且列缺省（= 上一行行末），不多算一行。 */
+  selectionLocation = function (range) {
+    const anchor = range.commonAncestorContainer;
+    const editor = $("#editor");
+    if (editor && editor.contains(anchor)) {
+      const s = editorPoint(range.startContainer, range.startOffset);
+      if (!s) return null;
+      let e = editorPoint(range.endContainer, range.endOffset);
+      if (e && e.lineStart && e.line > 1) e = { line: e.line - 1, col: null };
+      if (!e || e.line < s.line) e = { line: s.line, col: null };
+      return { host: "editor", startLine: s.line, startCol: s.col, endLine: e.line, endCol: e.col };
+    }
+    const preview = $("#preview");
+    if (preview && preview.contains(anchor)) {
+      const a = previewBlockRange(range.startContainer);
+      let b = previewBlockRange(range.endContainer) || a;
+      if (a && b && b[0] > a[1] && range.endOffset === 0) {
+        const prev = prevPreviewBlockEnd(range.endContainer);
+        if (prev && prev >= a[0]) b = [prev, prev];
+      }
+      if (!a || !b) return null;
+      return {
+        host: "preview",
+        startLine: Math.min(a[0], b[0]),
+        startCol: null,
+        endLine: Math.max(a[1], b[1]),
+        endCol: null,
+      };
+    }
+    const box = $("#agent-messages");
+    if (box && box.contains(anchor)) {
+      const from = bubbleSeq(range.startContainer);
+      if (from === null) return null; // 气泡没有 seq（实时生成的当轮）⇒ 不产引用，也不出按钮
+      const to = bubbleSeq(range.endContainer);
+      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to };
+    }
+    return null;
+  };
+
+  /** 选区 → 输入框 token（重绑 §6.20 版，多带列号；`insertSessionToken` 落点规则一行未改）。 */
+  formatRangeMention = function (path, sLine, sCol, eLine, eCol) {
+    return rangeTokenText(path, sLine, sCol, eLine, eCol);
+  };
+
+  addSelectionToChat = function () {
+    const hit = selAddHit();
+    hideSelAdd();
+    if (!hit || !hit.loc) return;
+    const loc = hit.loc;
+    if (loc.host === "messages") {
+      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo);
+      if (token) insertSessionToken(token);
+      return;
+    }
+    const path = state.currentPath || "";
+    if (!path) return;
+    insertSessionToken(formatRangeMention(path, loc.startLine, loc.startCol, loc.endLine, loc.endCol));
+  };
+
+  // ── ② 输入框引用 = 原子块 ───────────────────────────────────────────────────
+
+  /** 当前输入框文本的 token 区间（与镜像层**同一解析器** `COMPOSER_TOKEN_RE`，含前导空白折算）。 */
+  function composerTokenSpans(text) {
+    const raw = String(text == null ? "" : text);
+    const spans = [];
+    COMPOSER_TOKEN_RE.lastIndex = 0;
+    for (const m of raw.matchAll(COMPOSER_TOKEN_RE)) {
+      const token = m[1] !== undefined ? m[1] : m[3] || "";
+      if (!token) continue;
+      const start = m[1] !== undefined ? m.index : m.index + (m[2] || "").length;
+      spans.push({ start: start, end: start + token.length, token: token });
+    }
+    return spans;
+  }
+
+  /** 落点 → token 下标：`"end"`/`"start"` = caret 恰好贴尾 / 贴首；`"left"`/`"right"` = caret 落在 token 内部。
+   *  找不到回 `-1`（绝不猜）。 */
+  function tokenAtCaret(spans, pos, mode) {
+    for (let i = 0; i < spans.length; i += 1) {
+      const s = spans[i];
+      if (mode === "end" && pos === s.end) return i;
+      if (mode === "start" && pos === s.start) return i;
+      if (mode === "left" && pos > s.start && pos <= s.end) return i;
+      if (mode === "right" && pos >= s.start && pos < s.end) return i;
+    }
+    return -1;
+  }
+
+  /** 一次编辑替换 `[start,end)`：优先 `execCommand("insertText")`（**浏览器原生撤销栈**里算一次编辑），
+   *  不支持时退回 `setRangeText`（内容正确，但能否单步撤销由浏览器定 —— 见报告"仍做不到的"）。 */
+  function replaceInputRange(input, start, end, text) {
+    let done = false;
+    try {
+      input.setSelectionRange(start, end);
+      done = !!(document.execCommand && document.execCommand("insertText", false, text));
+    } catch (_err) {
+      done = false;
+    }
+    if (!done) input.setRangeText(text, start, end, "end");
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  }
+
+  function afterComposerEdit(input, pos) {
+    inputCaret = pos;
+    syncComposerChips();
+  }
+
+  (function bindComposerAtomicTokens() {
+    const input = $("#agent-input");
+    if (!input) return;
+    input.addEventListener(
+      "keydown",
+      function (e) {
+        if (e.isComposing || e.keyCode === 229) return; // 输入法组字中：一行都不碰
+        if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return; // 带修饰键（含 Shift 选择）不碰
+        const key = e.key;
+        if (key !== "Backspace" && key !== "Delete" && key !== "ArrowLeft" && key !== "ArrowRight") return;
+        const spans = composerTokenSpans(input.value);
+        if (!spans.length) return;
+        const from = input.selectionStart;
+        const to = input.selectionEnd;
+        if (!Number.isInteger(from) || from !== to) return; // 有选区时交给浏览器默认行为（整体覆盖删除本就一次编辑）
+        if (key === "Backspace" || key === "Delete") {
+          const i = tokenAtCaret(spans, from, key === "Backspace" ? "end" : "start");
+          if (i < 0) return;
+          e.preventDefault();
+          replaceInputRange(input, spans[i].start, spans[i].end, "");
+          afterComposerEdit(input, spans[i].start);
+          return;
+        }
+        const j = tokenAtCaret(spans, from, key === "ArrowLeft" ? "left" : "right");
+        if (j < 0) return;
+        e.preventDefault();
+        const pos = key === "ArrowLeft" ? spans[j].start : spans[j].end;
+        input.setSelectionRange(pos, pos);
+        afterComposerEdit(input, pos);
+      },
+      true
+    );
+    ["select", "mouseup"].forEach(function (ev) {
+      input.addEventListener(ev, function () {
+        setTimeout(syncComposerChips, 0);
+      });
+    });
+  })();
+
+  /** 单个 token → chip HTML（**逐字保留原文** ⇒ 镜像与 textarea 同宽不错位；`active` = 整块被选中）。 */
+  function composerChipHtml(token, active) {
+    const cls = "-agent-composer-chip" + (active ? " -agent-composer-chip--active" : "");
+    const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
+    if (session) {
+      if (decodeSessionUri(session[1].split("#seq:")[0]) === null) return esc(token);
+      return '<span class="' + cls + ' -agent-composer-chip--session">' + esc(token) + "</span>";
+    }
+    const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:C\d+)?(?:-L\d+(?:C\d+)?)?)?$/.exec(token);
+    if (!file) return esc(token);
+    const body = (file[1] !== undefined ? file[1] : file[2]) || "";
+    if (!body) return esc(token);
+    const range = file[3] || "";
+    const head = range ? token.slice(0, token.length - range.length) : token;
+    return (
+      '<span class="' + cls + (range ? " -agent-composer-chip--range" : "") + '">' +
+      esc(head) +
+      (range ? '<span class="-agent-composer-chip-range">' + esc(range) + "</span>" : "") +
+      "</span>"
+    );
+  }
+
+  /** 全文 → chip HTML（逐段转义；`activeIndex` 那一个加 `--active`）。 */
+  function composerChipsHtmlWithActive(raw, spans, activeIndex) {
+    let out = "";
+    let last = 0;
+    for (let i = 0; i < spans.length; i += 1) {
+      const sp = spans[i];
+      if (sp.start < last) continue;
+      out += esc(raw.slice(last, sp.start)) + composerChipHtml(sp.token, i === activeIndex);
+      last = sp.end;
+    }
+    return out + esc(raw.slice(last));
+  }
+
+  /** 重算镜像（重绑 §6.20 版：多算一个「当前块」高亮；几何 / 零视觉差异口径一行未改）。 */
+  syncComposerChips = function () {
+    const input = $("#agent-input");
+    if (!input || !input.parentElement) return;
+    const mirror = composerMirrorEl(input);
+    const raw = String(input.value || "");
+    const spans = composerTokenSpans(raw);
+    if (!spans.length || !input.offsetWidth) {
+      mirror.classList.remove("-on");
+      input.classList.remove("-agent-chips-on");
+      return;
+    }
+    let active = -1;
+    const from = input.selectionStart;
+    const to = input.selectionEnd;
+    if (Number.isInteger(from)) {
+      for (let i = 0; i < spans.length; i += 1) {
+        const s = spans[i];
+        if (from === to && (from === s.start || from === s.end)) { active = i; break; } // caret 贴边
+        if (from === s.start && to === s.end) { active = i; break; } // 整块选中
+      }
+    }
+    mirror.innerHTML = composerChipsHtmlWithActive(raw, spans, active);
+    mirror.classList.add("-on");
+    input.classList.add("-agent-chips-on");
+    mirror.style.left = input.offsetLeft + "px";
+    mirror.style.top = input.offsetTop + "px";
+    mirror.style.width = input.offsetWidth + "px";
+    mirror.style.height = input.offsetHeight + "px";
+    mirror.scrollTop = input.scrollTop;
+    mirror.scrollLeft = input.scrollLeft;
+  };
+
+  // ── ③ 对话内引用渲染（起止可见） ─────────────────────────────────────────────
+
+  /** `@路径#L3C2-L5C7` / `@路径#L3-L5` / `@路径#L3` → `{path, sLine, sCol, eLine, eCol}`；不匹配回 `null`。 */
+  function rangeMentionParts(token) {
+    const m = /^@(?:"([^"]*)"?|([^\s"]+?))#L(\d+)(?:C(\d+))?(?:-L(\d+)(?:C(\d+))?)?$/.exec(String(token || ""));
+    if (!m) return null;
+    const path = (m[1] !== undefined ? m[1] : m[2]) || "";
+    if (!path) return null;
+    const num = function (v) { return v === undefined ? null : Number(v); };
+    return { path: path, sLine: Number(m[3]), sCol: num(m[4]), eLine: num(m[5]), eCol: num(m[6]) };
+  }
+
+  /** 起止的**可见**串：`12:5–14:20`（单行 `12:5`；缺列只写行）。 */
+  function rangeSpanText(parts) {
+    const one = function (line, col) { return String(line) + (col ? ":" + col : ""); };
+    const from = one(parts.sLine, parts.sCol);
+    const single = parts.eLine === null || parts.eLine === parts.sLine;
+    if (single) {
+      if (parts.eLine === null || !parts.eCol || parts.eCol === parts.sCol) return from;
+      return from + "–" + one(parts.eLine, parts.eCol);
+    }
+    return from + "–" + one(parts.eLine, parts.eCol);
+  }
+
+  /** 区间引用 chip（`-agent-mention--range`）：正文 = `路径 起–止`，title 里把「起 / 止」写全；
+   *  点击复用既有锚点委托（`data-agent-file` / `data-agent-line`）⇒ 打开文件并高亮起始行。 */
+  function rangeChipEl(parts) {
+    const from = String(parts.sLine) + (parts.sCol ? ":" + parts.sCol : "");
+    const to = parts.eLine === null ? from : String(parts.eLine) + (parts.eCol ? ":" + parts.eCol : "");
+    const el = document.createElement("span");
+    el.className = "-agent-mention -agent-mention--range";
+    el.setAttribute("role", "link");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("title", T("agent.rangeChipTitle", { path: parts.path, from: from, to: to }));
+    el.setAttribute("data-agent-file", parts.path);
+    el.setAttribute("data-agent-line", String(parts.sLine));
+    el.textContent = parts.path + " " + rangeSpanText(parts);
+    return el;
+  }
+
+  function rangeChipHtml(parts) {
+    return rangeChipEl(parts).outerHTML;
+  }
+
+  /** 会话**片段**引用 chip（`-agent-mention--session`）：正文 `@label` + 片段序号（起止可见），
+   *  title 写全会话 id 与 `#seq:` 区间；点击复用既有 `data-agent-session` 委托（切历史并高亮）。 */
+  function sessionFragmentChipEl(id, label, uri) {
+    const frag = /#seq:(\d+(?:-\d+)?)/.exec(String(uri || ""));
+    const seq = frag ? frag[1] : "";
+    const el = document.createElement("span");
+    el.className = "-agent-mention -agent-mention--session";
+    el.setAttribute("role", "link");
+    el.setAttribute("tabindex", "0");
+    el.setAttribute("title", seq ? T("agent.sessionChipTitleSeq", { id: id, seq: seq }) : T("agent.mention.sessionTitle", { id: id }));
+    el.setAttribute("data-agent-session", id);
+    el.textContent = "@" + label;
+    if (seq) {
+      const tail = document.createElement("span");
+      tail.className = "-agent-mention-seq";
+      tail.textContent = seq;
+      el.appendChild(tail);
+    }
+    return el;
+  }
+
+  /** 气泡引用扫描器：**只认** ① 会话片段 `@[label](dsh-session:…#seq:n)` ② 文件区间 `@path#L…`。
+   *  普通 `@路径` / 无片段会话仍交给既有 `linkifyUser`（不抢它的活）。 */
+  const REF_MENTION_RE = new RegExp(
+    "@\\[((?:\\\\.|[^\\\\\\]])*)\\]\\((dsh-session:[^\\s)]*#seq:\\d+(?:-\\d+)?)\\)" +
+      "|(^|\\s)(@(?:\"([^\"]*)\"?|(\\S+?))#L\\d+(?:C\\d+)?(?:-L\\d+(?:C\\d+)?)?)",
+    "g"
+  );
+
+  /** user 气泡：在既有（会话 aware 的）包装层**之外**再包一层，先切出片段 / 区间 token。 */
+  const baseLinkifyUserForRefs = linkifyUser;
+  linkifyUser = function (text) {
+    const raw = String(text == null ? "" : text);
+    let out = "";
+    let last = 0; REF_MENTION_RE.lastIndex = 0; // 全局正则：`matchAll` 继承当前 lastIndex ⇒ 先归零
+    for (const m of raw.matchAll(REF_MENTION_RE)) {
+      let html = "";
+      let start = m.index;
+      let end = m.index + m[0].length;
+      if (m[2] !== undefined) {
+        const id = decodeSessionUri(String(m[2]).split("#seq:")[0]);
+        if (id === null) continue; // 非规范 URI：退回既有渲染（绝不猜）
+        const label = m[1] === undefined ? id : String(m[1]).replace(/\\(.)/g, "$1");
+        html = sessionFragmentChipEl(id, label, m[2]).outerHTML;
+      } else {
+        const parts = rangeMentionParts(m[4]);
+        if (!parts) continue;
+        start = m.index + (m[3] || "").length;
+        html = rangeChipHtml(parts);
+      }
+      if (start < last) continue;
+      out += baseLinkifyUserForRefs(raw.slice(last, start));
+      out += html;
+      last = end;
+    }
+    out += baseLinkifyUserForRefs(raw.slice(last));
+    return out;
+  };
+
+  /** assistant 气泡：在**已净化**的 DOM 里把区间引用换成 chip（只动文本节点）。
+   *  **绝不碰** 代码块 / 行内代码（`code` / `pre` / `kbd` / `samp`）、脚本 / 样式、公式（katex / math 类）、
+   *  已完成锚点化的 `-agent-anchor`；raw HTML 在 `sanitizeHtmlInto` 阶段已按白名单拆壳，这里无需另判。 */
+  const REF_CHIP_SKIP_TAGS = { CODE: 1, PRE: 1, KBD: 1, SAMP: 1, SCRIPT: 1, STYLE: 1, TEXTAREA: 1 };
+  function chipRangeRefsInDom(root) {
+    if (!root || root.nodeType !== 1 || !document.createTreeWalker) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      const text = node.nodeValue || "";
+      REF_MENTION_RE.lastIndex = 0;
+      if (!REF_MENTION_RE.test(text)) return;
+      for (let el = node.parentElement; el && el !== root.parentElement; el = el.parentElement) {
+        if (REF_CHIP_SKIP_TAGS[el.tagName]) return;
+        if (el.classList && el.classList.contains("-agent-anchor")) return;
+        if (/katex|math/i.test(String(el.className || ""))) return;
+      }
+      REF_MENTION_RE.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      let m;
+      while ((m = REF_MENTION_RE.exec(text)) !== null) {
+        let chip = null;
+        let start = m.index;
+        let end = m.index + m[0].length;
+        if (m[2] !== undefined) {
+          const id = decodeSessionUri(String(m[2]).split("#seq:")[0]);
+          if (id === null) continue;
+          const label = m[1] === undefined ? id : String(m[1]).replace(/\\(.)/g, "$1");
+          chip = sessionFragmentChipEl(id, label, m[2]);
+        } else {
+          const parts = rangeMentionParts(m[4]);
+          if (!parts) continue;
+          start = m.index + (m[3] || "").length;
+          chip = rangeChipEl(parts);
+        }
+        if (start < last) continue;
+        if (start > last) frag.appendChild(document.createTextNode(text.slice(last, start)));
+        frag.appendChild(chip);
+        last = end;
+      }
+      if (!frag.childNodes.length || !node.parentNode) return;
+      if (last < text.length) frag.appendChild(document.createTextNode(text.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+  const baseRenderAssistantBodyForRefs = renderAssistantBody;
+  renderAssistantBody = function (el, text) {
+    baseRenderAssistantBodyForRefs(el, text);
+    chipRangeRefsInDom(el);
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

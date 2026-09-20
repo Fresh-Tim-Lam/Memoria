@@ -1670,15 +1670,15 @@ _REFERENCE_KIND_LABELS = {
 _FILE_MENTION_PATTERN = r'(?:^|\s)@(?:"([^"]*)"?|(\S+))'
 
 #: `文件:行号` / 区间锚点（文件字符类对齐前端 `ANCHOR_RE`，`agent-panel.js:117`；另补 `#L12-L30` 形态：
-#: 分隔符既可以是 `:` / `：`，也可以是 `#`）。字符类里的 CJK 标点全用 `\u` 转义写，
-#: 避免 `—～` 被 Python 解释成码点区间（JS 里的同类隐患）。
+#: 分隔符既可以是 `:` / `：`，也可以是 `#`；2026-09-20 起 `#` 形态两端可各带**可选列号** `C<列>`（1 起）。
+#: 字符类里的 CJK 标点全用 `\u` 转义写，避免 `—～` 被 Python 解释成码点区间（JS 里的同类隐患）。
 _ANCHOR_REF_PATTERN = (
     r"`?\"?'?"
     r"(?P<file>[^\s`\"'<>()\[\]#:：\uFF1A\uFF0C\u3001\u3002\uFF1B\uFF01\uFF1F\u300C\u300D\u300E\u300F"
     r"\u3010\u3011\uFF08\uFF09\u300A\u300B\u3008\u3009\u3014\u3015\u2026\u00B7\u2014\uFF5E]+?"
     r"\.(?:md|markdown))"
-    r"(?:[:：]|#)\s*#?L?(?P<start>\d+)"
-    r"(?:\s*[-\u2013\u2014~]\s*#?L?(?P<end>\d+))?"
+    r"(?P<sep>[:：]|#)\s*#?L?(?P<start>\d+)(?:C(?P<startcol>\d+))?"
+    r"(?:\s*[-\u2013\u2014~]\s*#?L?(?P<end>\d+)(?:C(?P<endcol>\d+))?)?"
     r"`?\"?'?"
 )
 
@@ -2014,13 +2014,13 @@ def _resolve_kp_link_reference(kb_path: str, token: str) -> dict[str, Any]:
 
 
 def _resolve_anchor_reference(kb_path: str, token: str) -> dict[str, Any]:
-    """`文件:行号` 锚点。单行与**区间**（`#L12-L30`）都解析到当前正文行并双向校验（L 路线，2026-09-20 起）。"""
+    """`文件:行号` 锚点。单行与**区间**（`#L12-L30`，可选列号 `#L3C2-L5C7`）都解析到当前正文行并双向校验。"""
     text = token.strip()
     ranged = _at_range_parts(text)
     if ranged is not None:
-        # 选区引用的规范 token `@路径#L12-L30` / `@"带空格 路径"#L12-L30`：剥掉 `@` 与引号后
-        # 与 `文档#L12-L30` 走**同一段**区间读时投影（含空格路径只能从这条入口进来）。
-        return _anchor_range_result(kb_path, ranged[0], ranged[1], ranged[2])
+        # 选区引用的规范 token `@路径#L12C5-L14C20` / `@"带空格 路径"#L12-L30`：剥掉 `@` 与引号后
+        # 与 `文档#L…` 走**同一段**区间读时投影（含空格路径只能从这条入口进来）。
+        return _anchor_range_result(kb_path, ranged[0], ranged[1], ranged[3], ranged[2], ranged[4])
     regex = _ref_re(_ANCHOR_REF_PATTERN)
     match = regex.fullmatch(text) or regex.search(text)
     if match is None:
@@ -2034,6 +2034,16 @@ def _resolve_anchor_reference(kb_path: str, token: str) -> dict[str, Any]:
     end_text = match.group("end")
     end = int(end_text) if end_text else None
     raw_file = match.group("file")
+    if match.group("sep") == "#" and (match.group("startcol") is not None or match.group("endcol") is not None):
+        # 列号只认 `#` 形态（`#L3C2-L5C7`）：`文件:3C2` 不是本块语法，绝不猜 ⇒ 与 `@路径#L…` 共用同一段投影
+        return _anchor_range_result(
+            kb_path,
+            raw_file,
+            start,
+            end,
+            int(match.group("startcol")) if match.group("startcol") is not None else None,
+            int(match.group("endcol")) if match.group("endcol") is not None else None,
+        )
     rel = _reference_rel_in_roots(kb_path, raw_file)
     display = f"{_reference_normalize(raw_file)}:{start}" + (f"-{end}" if end else "")
     if rel is None:
@@ -2306,7 +2316,9 @@ def _audit_document(
         token_text = match.group(1) if match.group(1) is not None else (match.group(2) or "")
         if token_text.startswith("[") or token_text.startswith("dsh-session:"):
             continue
-        if _at_range_parts("@" + token_text) is not None:
+        if _at_range_parts("@" + token_text) is not None or _at_range_parts(
+            "@" + token_text.rstrip("。，、；：！？）】」』》”’)]}")
+        ) is not None:
             continue  # `@路径#L12-L30`（选区区间引用）由 ④ 锚点扫描负责（含倒置 / 越界）
         raw = _reference_normalize(token_text)
         if not raw:
@@ -2394,12 +2406,23 @@ def _audit_document(
         end_text = match.group("end")
         end = int(end_text) if end_text else None
         raw_file = match.group("file")
+        col_only = match.group("sep") == "#" and match.group("startcol") is not None
         if raw_file.startswith("@"):
-            if end is None:
-                continue  # `@a.md:3`：文件引用类（① 负责），保持既有跳过
+            if end is None and not col_only:
+                continue  # `@a.md:3` / `@a.md#L3`：文件引用类（① 负责），保持既有跳过
             raw_file = raw_file.lstrip("@")  # `@路径#L12-L30`（选区引用 token）：剥 `@` 后按锚点校验
+        # 列号只认 `#` 形态（`#L3C2-L5C7`）；`文件:3C2` 不是本块语法 ⇒ 当作无列（绝不猜）
+        has_col = match.group("sep") == "#" and (
+            match.group("startcol") is not None or match.group("endcol") is not None
+        )
+        start_col = int(match.group("startcol")) if has_col and match.group("startcol") is not None else None
+        end_col = int(match.group("endcol")) if has_col and match.group("endcol") is not None else None
         line = line_at_offset(body, match.start())
         target = f"{raw_file}:{start}" + (f"-{end}" if end else "")
+        if start_col is not None or end_col is not None:
+            target = f"{raw_file}#L{start}" + (f"C{start_col}" if start_col is not None else "")
+            if end is not None:
+                target += f"-L{end}" + (f"C{end_col}" if end_col is not None else "")
         rel_target = _reference_rel_in_roots(kb_path, raw_file)
         if rel_target is None:
             add("anchor.outside_root", "error", line, target, "锚点路径在允许根之外或含上跳 `..`，fail-closed 拒绝")
@@ -2411,7 +2434,8 @@ def _audit_document(
         if status != "ok" or not converged:
             add("anchor.file_missing", "warning", line, target, "锚点文件在库内不存在（精确 / 唯一 basename / 唯一后缀三级都未命中）")
             continue
-        line_count = len(_read_body_lines(kb_path, converged)[1])
+        target_lines = _read_body_lines(kb_path, converged)[1]
+        line_count = len(target_lines)
         if end is not None and end < start:
             # 区间**倒置**（2026-09-20 起可校验：读时投影落地后才拿得到两端行空间）
             add(
@@ -2420,6 +2444,16 @@ def _audit_document(
                 line,
                 target,
                 f"区间锚点倒置：起点 L{start} 在终点 L{end} 之后（区间须 `#L<起>-L<止>` 且起 ≤ 止）",
+            )
+            continue
+        if end is not None and end == start and start_col is not None and end_col is not None and end_col < start_col:
+            # 列区间**倒置**（同一行内起列 > 止列；复现路径 = `resolve_reference` 的 `invalid`）
+            add(
+                "anchor.range_inverted",
+                "warning",
+                line,
+                target,
+                f"列区间倒置：同行起点第 {start_col} 列在终点第 {end_col} 列之后（同行内起列须 ≤ 止列）",
             )
             continue
         if start < 1 or start > line_count or (end is not None and end > line_count):
@@ -2431,6 +2465,21 @@ def _audit_document(
                 target,
                 f"第 {beyond} 行超出 `{converged}` 的正文范围（共 {line_count} 行）",
             )
+            continue
+        for at_line, at_col in ((start, start_col), (end if end is not None else start, end_col)):
+            if at_col is None:
+                continue
+            length = len(target_lines[at_line - 1]) if 1 <= at_line <= line_count else 0
+            if at_col < 1 or at_col > length + 1:
+                # 列越界（复用 `anchor.line_out_of_range` 这一检查名：复现路径 = `resolve_reference` 的 `not_found`）
+                add(
+                    "anchor.line_out_of_range",
+                    "warning",
+                    line,
+                    target,
+                    f"第 {at_line} 行第 {at_col} 列超出（该行共 {length} 个字符，合法列 1..{length + 1}）",
+                )
+                break
 
     # ⑤ 图片：注册规则识别性 / 文件存在性（复用 `diagnose_image_refs()` 的口径）+ registry 登记状态
     for item in image_problems.get("unregistered") or []:
@@ -2607,42 +2656,67 @@ def _reference_tools(kb_path: str) -> tuple[Tool, ...]:
 #   ② 本模块把该 token / `文档#L12-L30` 解析到**当前正文行**并双向校验（起/末存在、起 ≤ 止）。
 # **投影口径**：只回「解析到的行范围 + 首末行摘要」——**不把区间正文塞进结果**（正文仍由模型自己
 #   `read_document(offset, limit)` 取），与 §6.5「只允许读取时投影形态」一致；`#L` 语法**只有**
-#   `#L<起>-L<止>` / `#L<行>` 两种，不发明第三种（P 收窄语法的"保守"要求）。
+#   `#L<起>C<起列>?-L<止>C<止列>?` / `#L<行>C<列>?`（列可只写一端）两种，不发明第三种（P 收窄语法的"保守"要求）。
 # 整块追加在文件末尾 ⇒ 上方既有 `file:line` 锚点只受前面几处**等量/近似等量**改写影响（见本轮报告）。
 
-#: 选区引用的规范 token：`@路径#L12-L30` / `@路径#L12` / `@"含 空格"#L12-L30`。
-#: 只认 `#L<十进制>`（可带 `-L<十进制>`）；`@` 后允许上游同款的成对引号（`formatMention` 口径）。
+#: 选区引用的规范 token：`@路径#L12C5-L14C20` / `@路径#L12C5` / `@路径#L12-L30` / `@路径#L12`
+#: / `@"含 空格"#L12-L30`。两端各为 `L<行>` 或 `L<行>C<列>`（列 1 起，**可只写一端** ⇒ 缺列=行首/行末）；
+#: `@` 后允许上游同款的成对引号（`formatMention` 口径）。**不发明第三种分隔符**（P 收窄语法的保守要求）。
 _AT_RANGE_PATTERN = (
     r"`?\"?'?@(?:\"(?P<qpath>[^\"]*)\"|(?P<path>[^\s`\"']+?))"
-    r"#L(?P<from>\d+)(?:\s*[-\u2013\u2014~]\s*L?(?P<to>\d+))?`?\"?'?"
+    r"#L(?P<from>\d+)(?:C(?P<fromcol>\d+))?"
+    r"(?:\s*[-\u2013\u2014~]\s*L?(?P<to>\d+)(?:C(?P<tocol>\d+))?)?"
+    r"`?\"?'?"
 )
 
 
-def _at_range_parts(raw: str) -> tuple[str, int, int | None] | None:
-    """`@路径#L12-L30`（含单行 `#L12`、含空格 `@"…"#L12-L30`）⇒ `(路径原文, 起, 止或 None)`。
+def _at_range_parts(raw: str) -> tuple[str, int, int | None, int | None, int | None] | None:
+    """`@路径#L12C5-L14C20`（列号可缺；单行 `#L12` / `#L12C5`；含空格 `@"…"#L12-L30`）
+    ⇒ `(路径原文, 起行, 起列或 None, 止行或 None, 止列或 None)`。
 
     路径**不在这里归一化或校验**（是否库内由调用方走允许根 + 分级收敛）；不匹配回 `None` ——
-    识别不出就交给其它引用类型，**绝不猜**。
+    识别不出就交给其它引用类型，**绝不猜**。列的合法性（越界 / 倒置）由 `_anchor_range_result()` 校验。
     """
     match = _ref_re(_AT_RANGE_PATTERN).fullmatch(str(raw or "").strip())
     if match is None:
         return None
     path = match.group("qpath") if match.group("qpath") is not None else (match.group("path") or "")
     to_text = match.group("to")
-    return path, int(match.group("from")), (int(to_text) if to_text is not None else None)
+    from_col = match.group("fromcol")
+    to_col = match.group("tocol")
+    return (
+        path,
+        int(match.group("from")),
+        int(from_col) if from_col is not None else None,
+        int(to_text) if to_text is not None else None,
+        int(to_col) if to_col is not None else None,
+    )
 
 
-def _anchor_range_result(kb_path: str, raw_file: str, start: int, end: int | None) -> dict[str, Any]:
-    """`文档#L12-L30`（含选区 token `@路径#L12-L30`）的**行区间读时投影**（L 路线，2026-09-20）。
+def _anchor_range_result(
+    kb_path: str,
+    raw_file: str,
+    start: int,
+    end: int | None,
+    start_col: int | None = None,
+    end_col: int | None = None,
+) -> dict[str, Any]:
+    """`文档#L12C5-L14C20`（含选区 token `@路径#L…`）的**行 / 列区间读时投影**（L 路线，2026-09-20）。
 
     行号空间 = `_read_body_lines()` 剥掉 frontmatter 的**正文行**（与 `read_document` 同一口径）。
-    `end is None` 即单行锚点（走同一段校验，结果与既有单行口径逐字一致）。
+    列号 = **1 起的字符位置**（caret 语义：行首 = 1，行末 caret = 行长 + 1）⇒ 合法列 `1..len+1`；
+    缺列 = 「行首 / 行末」语义（不猜具体列）。`end is None` 即单行锚点（无列时结果与既有单行口径逐字一致）。
     返回 `_reference_result(...)`：
-      `rejected`（路径越界）/ `ambiguous` / `not_found`（文件级）→ `invalid`（区间倒置）
-      → `not_found`（任一端越界）→ `ok`（行范围 + 首末行摘要）。**不含正文**。
+      `rejected`（路径越界）/ `ambiguous` / `not_found`（文件级）→ `invalid`（行 / 列倒置）
+      → `not_found`（行 / 列越界）→ `ok`（起止 + 首末行摘要）。**不含正文**。
     """
     rel = _reference_rel_in_roots(kb_path, raw_file)
-    display = f"{_reference_normalize(raw_file)}:{start}" + (f"-{end}" if end is not None else "")
+    plain = start_col is None and end_col is None
+    display = (
+        f"{_reference_normalize(raw_file)}:{start}" + (f"-{end}" if end is not None else "")
+        if plain
+        else _range_col_display(raw_file, start, start_col, end, end_col)
+    )
     if rel is None:
         return _reference_result(
             "anchor",
@@ -2679,6 +2753,14 @@ def _anchor_range_result(kb_path: str, raw_file: str, start: int, end: int | Non
             reason=f"行区间倒置：起点 L{start} 在终点 L{end} 之后（区间须写成 `#L<起>-L<止>` 且起 ≤ 止）",
             next_step=f"改写成 `{target}#L{end}-L{start}`，或退回单行锚点 `{target}:{start}`",
         )
+    if end is not None and end == start and start_col is not None and end_col is not None and end_col < start_col:
+        return _reference_result(
+            "anchor",
+            status="invalid",
+            target=display,
+            reason=f"列区间倒置：同行起点第 {start_col} 列在终点第 {end_col} 列之后（同行内起列须 ≤ 止列）",
+            next_step=f"改写成 `{target}#L{start}C{end_col}-L{start}C{start_col}`，或退回单列锚点",
+        )
     last_line = start if end is None else end
     if start < 1 or last_line > total:
         beyond = start if (start < 1 or start > total) else last_line
@@ -2689,22 +2771,51 @@ def _anchor_range_result(kb_path: str, raw_file: str, start: int, end: int | Non
             reason=f"第 {beyond} 行超出 `{target}` 的正文范围（该文档正文共 {total} 行）",
             next_step=f'read_document(path="{target}") 取回真实行号（或按唯一 basename 收敛后的路径重试）',
         )
+    for line_no, col in ((start, start_col), (last_line, end_col)):
+        if col is None:
+            continue
+        length = len(lines[line_no - 1])
+        if col < 1 or col > length + 1:
+            return _reference_result(
+                "anchor",
+                status="not_found",
+                target=display,
+                reason=f"第 {line_no} 行第 {col} 列超出（该行共 {length} 个字符，合法列 1..{length + 1}）",
+                next_step=f'read_document(path="{target}", offset={line_no}, limit=1) 取回该行后按真实字符数重写列号',
+            )
     if end is None:
         snippet = lines[start - 1].strip()[:SNIPPET_CHARS]
+        where = f"第 {start} 行" if start_col is None else f"第 {start} 行第 {start_col} 列"
         return _reference_result(
             "anchor",
             status="ok",
             target=display,
-            detail=f"{target} 第 {start} 行：{snippet or '（该行为空行）'}",
+            detail=f"{target} {where}：{snippet or '（该行为空行）'}",
             next_step=f'read_document(path="{target}", offset={start}, limit=1)',
         )
     first = lines[start - 1].strip()[:SNIPPET_CHARS]
     last = lines[end - 1].strip()[:SNIPPET_CHARS]
+    if plain:
+        detail = f"{target} 第 {start}-{end} 行（{end - start + 1} 行）："
+    else:
+        start_txt = str(start_col) if start_col is not None else "行首"
+        end_txt = str(end_col) if end_col is not None else "行末"
+        detail = f"{target} 起 {start}:{start_txt} → 止 {end}:{end_txt}（{end - start + 1} 行）："
     return _reference_result(
         "anchor",
         status="ok",
         target=display,
-        detail=f"{target} 第 {start}-{end} 行（{end - start + 1} 行）："
-        f"首行 {first or '（空行）'} / 末行 {last or '（空行）'}",
+        detail=detail + f"首行 {first or '（空行）'} / 末行 {last or '（空行）'}",
         next_step=f'read_document(path="{target}", offset={start}, limit={end - start + 1})',
     )
+
+
+def _range_col_display(
+    raw_file: str, start: int, start_col: int | None, end: int | None, end_col: int | None
+) -> str:
+    """列号形态的目标串 = 与 token 同拼写（`a.md#L3C2-L5C7`）；无列时由调用方沿用既有 `:2-4` 口径。"""
+    head = _reference_normalize(raw_file)
+    out = f"{head}#L{start}" + (f"C{start_col}" if start_col is not None else "")
+    if end is not None:
+        out += f"-L{end}" + (f"C{end_col}" if end_col is not None else "")
+    return out

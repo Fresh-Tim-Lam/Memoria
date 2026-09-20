@@ -1217,7 +1217,7 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 | 真实行为取证（Python 级；仓库外临时脚本，跑完即删） | 见上「模型看到的文本」四段；另实测 `KB_TOOL_NAMES` 与 `build_kb_tools()` 实际注册顺序**逐项一致**（**15** 个）、两工具 `read_only=True`、`kind` 枚举 = 五类、`limit > 100` 与 `limit = 0`（直连工具体）都报错、`resolve_reference` 与 `audit_references` 调用前后 fixture 库文件清单**逐字不变** |
 | 覆盖点 | `@路径`（精确 / 唯一 basename 收敛 / `@"带空格"` / 目录尾斜杠 / 悬空 / 多义 / 上跳）；会话（规范 / 裸 URI / 悬空 / 坏 URI / 非法 id）；`[[…]]`（id / 悬空 / 跨文件同 id 歧义 / 未挂接）；锚点（精确 / 全角冒号 + `L` 前缀 / 越界行 / 区间 `unsupported` / 文件不存在 / 上跳）；图片（已登记 / 缺文件 / 不可注册 / 注册表缺失 / 非库内）；审计（14 类检查名的**逐条计数**、形状（检查名 / `文件:行` / 目标 / 问题）、上限提示、`path` 收窄、干净文档回「未发现问题」）；边界（空 / 未知 kind / 超长 / 未知形态 / 多余参数 / 越界 `path`） |
 | 依赖面 | **纯标准库**（`re` / `unicodedata` 均为函数内局部导入），零新依赖 ⇒ 打包体积不变 |
-| 行号 | `kb.py` 仅**文件尾追加**（`:1608-2591`；**§6.20 再追加至 `:2710`**）+ **2 处等量改写**（`:73-80`、`:665`）⇒ §5.1/§6.16/§6.17 引用的既有 `file:line` **零漂移**；本轮新增引用的外部行号已逐处实读（`agent-panel.js:117`/`:125`、`session/reference.py:101`/`:142`、`session/store.py:61`、`link_resolver.py:25`/`:41`、`link_instances.py:380`、`document.py:937`/`:987`/`:1151`/`:1167`/`:2145`） |
+| 行号 | `kb.py` 仅**文件尾追加**（`:1608-2591`；**§6.20 再追加至 `:2710`；§6.21 再追加至 `:2821`**）+ **2 处等量改写**（`:73-80`、`:665`）⇒ §5.1/§6.16/§6.17 引用的既有 `file:line` **零漂移**；本轮新增引用的外部行号已逐处实读（`agent-panel.js:117`/`:125`、`session/reference.py:101`/`:142`、`session/store.py:61`、`link_resolver.py:25`/`:41`、`link_instances.py:380`、`document.py:937`/`:987`/`:1151`/`:1167`/`:2145`） |
 | 上游检出未被改 | 本轮**未读**上游（R 线是本地独有能力的补齐，不是上游移植）；`dsh-src/` 未触碰 |
 
 **已知缺口（本轮未做）**：① **L 路线（读时投影）未实施** ⇒ 区间锚点只能 `unsupported`（偏差 2）；② 块级引用（代码块 / 表格 / 公式）与选区 / 片段引用**不在本期范围**（工具描述里已声明）；③ §6.5 的「模糊级收敛」按「不要做」清单**有意不采纳**；④ 别名 / 挂接的逐处判定只在 `audit_references` 侧（偏差 3）；⑤ 文件名含 CJK 标点时的截断限制（偏差 4）；⑥ **写侧不做** —— 本板块是 M3（plan + 编译器）的前置，写能力仍按 [agent-capabilities.md](agent-capabilities.md) 的插件契约走。
@@ -1354,10 +1354,10 @@ Error: read_image: 本端点暂不支持图像输入 —— pic.png 已通过格
 | 取不到行号 | 回 `@路径`（既有 `formatMention`），**不编造行号** | — |
 
 **后端（L 路线落地）**：`services/agent/tools/kb.py` 文件尾追加块 +
-`_resolve_anchor_reference()` 的区间分支改为**委托调用**（`kb.py:2067-2071`）：
+`_resolve_anchor_reference()` 的区间分支改为**委托调用**（`kb.py:2077-2081`，§6.21 重取：原 `:2067-2071`）：
 
-- `_at_range_parts()`（`kb.py:2621`）：识别 `@路径#L12-L30` / `@"含 空格"#L12-L30` / 单行 `#L12` ⇒ `(路径, 起, 止或 None)`；
-- `_anchor_range_result()`（`kb.py:2635`）：解析到 `_read_body_lines()` 的**当前正文行**并双向校验 ⇒
+- `_at_range_parts()`（`kb.py:2673`，§6.21 重取：原 `:2621`）：识别 `@路径#L12-L30` / `@"含 空格"#L12-L30` / 单行 `#L12` ⇒ `(路径, 起, 止或 None)`；
+- `_anchor_range_result()`（`kb.py:2696`，§6.21 重取：原 `:2635`）：解析到 `_read_body_lines()` 的**当前正文行**并双向校验 ⇒
   `ok`（`指向：<file> 第 12-30 行（N 行）：首行 … / 末行 …` + `read_document(path=…, offset=12, limit=19)`）/
   `invalid`（**倒置**）/ `not_found`（任一端越界，报出越界的那一端）/ `rejected` / `ambiguous` / `not_found`（文件级）；
 - `_detect_reference_kind()` 在 `@`→file 之前先判区间形态 ⇒ `@路径#L12-L30` 归 **anchor**；
@@ -1454,13 +1454,13 @@ textarea 自身文字**透明**（`color: transparent` + `caret-color` 保留 �
 
 **锚点重取**：
 
-- `services/agent/tools/kb.py:1608-2591` → **`:1608-2710`**（本轮 **+119 行**：文件尾追加块 `:2601-2710` **110 行** + 原位改写 **+9 行**；引用处 **2 个**：
+- `services/agent/tools/kb.py:1608-2591` → **`:1608-2821`**（§6.21 重取；本轮当时为 `:1608-2710`）（本轮 **+119 行**：文件尾追加块 `:2601-2710` **110 行** + 原位改写 **+9 行**；引用处 **2 个**：
   本文件 `:1220`、`agent-guide/06-links-and-graph.md:218`，均已就地更新）；
 - `agent-panel.js:2964-3077`（§6.19 的追加块）、`app.css:5615-5641`、`zh-CN.js:1320` / `en.js:1408`、
   `session/reference.py:101`、`prompt.py:208-218`/`:215`/`:261`/`:263`、`ask.py:421`、`session/history.py:261-299`、
   `tools/kb.py` 的 `:175`/`:665`/`:819`/`:1142`/`:1147`/`:1749` —— **全部零漂移**（本轮改动都落在其**之后**或为等量改写）；
 - **本轮新取的锚**：`agent-panel.js:3095`/`:3103`/`:3113`/`:3123`/`:3179`/`:3192`/`:3201`/`:3248`/`:3297`/`:3349-3367`、
-  `kb.py:2067-2071`/`:2621`/`:2635`、`reference.py:102`/`:145`/`:198`/`:525`/`:528`、`history.py:494-497`/`:506`/`:514`/`:527`；
+  `kb.py:2077-2081`/`:2673`/`:2696`（§6.21 重取：原 `2067-2071`/`2621`/`2635`）、`reference.py:102`/`:145`/`:198`/`:525`/`:528`、`history.py:494-497`/`:506`/`:514`/`:527`；
 - **校正一处既有 off-by-one**：`agent-guide/06:223` 的 `session/reference.py:142` → **`:143`**
   （`def decode_session_uri` 在本轮之前**已经在 143**，非本轮移动）。
 
@@ -1469,6 +1469,168 @@ textarea 自身文字**透明**（`color: transparent` + `caret-color` 保留 �
 
 **被本节取代的历史断言（只列出处，不改写历史行）**：§6.18 表格行的 `锚点 … **`unsupported`**`（本文件 `:1122`）、
 §6.19.2 的「token **只有** `@相对路径`…不生成区间 token」（`:1303`）与「对话栏消息区**不支持**」（`:1305`/`:1307`）。
+
+### 6.21 列号 + 输入框**原子块** + 对话内引用渲染（2026-09-20，三项一并落地）
+
+> 用户原话：「显示区域引用定位得有开始行号字符号和结束行号字符号，而且在对话框渲染是把引用视作一个块整体
+> 删除或者光标整体跳过，而且对话内的引用没有渲染，也没有开始结束的标记」。本节是 §6.20 的直接续写：
+> §6.20 的 token 只有**行**，本节把「位置」补到**行:列**，并解决输入框与气泡两侧的**呈现**问题。
+
+#### 6.21.1 A：选区引用带**列号**（P 线语法扩展 + V 线校验）
+
+**token 语法（最终形态；保守扩展，旧形态逐字兼容）**：两端各写成 `L<行>` 或 `L<行>C<列>`：
+
+| 形态 | 例子 | 说明 |
+|---|---|---|
+| 行+列区间 | `@docs/a.md#L3C2-L5C7` | 列 **1 起**，**字符位置**语义（行首 = 1，行末 caret = 行长 + 1） |
+| 混写（只写一端） | `@docs/a.md#L3C2-L5` | **缺列 = 行首 / 行末**（起端缺 ⇒ 行首；止端缺 ⇒ 行末），不猜具体列 |
+| 单点 | `@docs/a.md#L3C2` | 落在同一行的一个字符位 |
+| 向后兼容（不变） | `@docs/a.md#L12-L30` / `@docs/a.md#L12` | 老 token **逐字照旧**（列缺省 ⇒ 只投影行范围） |
+| 含空格路径 | `@"docs/A B.md"#L3C2-L5C7` | 引号只包**路径**，`#L…` 在引号之外（与 §6.20 同口径） |
+
+**不发明第三种分隔符**：仍然只有 `#L…`（P 收窄语法的"保守"要求）；`文件:3C2`（冒号形态带列）**不是**本块语法，
+`_resolve_anchor_reference()` 只在 `sep == "#"` 且带列时才走列分支 —— 认不出就交给别的引用类型，**绝不猜**。
+
+**前端产出（诚实分级；`agent-panel.js` 文件尾追加块）**：
+
+| 宿主 | 行 / 列来源 | 精度 |
+|---|---|---|
+| 源码区 `#editor` | 行 = `.-line[data-line]`（`sourceLineAt()`，`:3095`）；列 = **行内字符偏移 + 1**（`lineContentOffset()` `:3408` 只数 `.-line-content` 内的文本节点 —— **不数行号列** `.-lineno`，也不数 `. -sync-cursor` 之类视觉注入；`editorPoint()` `:3445`） | **行 + 列都精确**（列 = 1 起字符位置；与后端同一字符计数口径，CRLF 的 `\r` 与 `\n` 都不计、TAB 计 1） |
+| 预览区 `#preview` | 仍是块级 `[data--src-line][data--src-line-end]`（`previewBlockRange()` `:3113` / `prevPreviewBlockEnd()` `:3123`），**列恒缺省** | **行是块级近似、列明确不给**（字符级映射所需的 `annotateSegments()` 仍**全仓无调用点**）⇒ 产出 `#L12-L30`，不假装有列 |
+| 取不到行号 | 退回 `@路径`（既有 `formatMention` 口径，纯函数里同样兜底） | 不编造 |
+
+- 终点恰停在**下一行行首**（源码区）⇒ 收回到上一行且**列缺省**（= 上一行行末），不多算一行。
+- 拼写的**唯一事实源** = 纯函数 `rangeTokenText()`（`:3456`，不碰 DOM）；`formatRangeMention` 重绑为它的薄壳
+  （`:3509`），落点仍是既有 `insertSessionToken()`（上次光标处，规则一行未改）。
+
+**后端（`services/agent/tools/kb.py`）**：
+
+- `_AT_RANGE_PATTERN`（`:2665`）两端各加可选 `C(\d+)`；`_at_range_parts()`（`:2673`）返回 **5 元组**
+  `(路径, 起行, 起列或 None, 止行, 止列或 None)`（两个调用方只做 `is not None` 判断 ⇒ 不受影响）；
+- `_anchor_range_result()`（`:2696`）加两个可选列参数并**在原有行校验之后**加列校验：
+  **列越界**（`col < 1` 或 `col > 行长 + 1`）⇒ `not_found`（报出「第 X 行第 C 列超出（该行共 N 个字符，合法列 1..N+1）」）；
+  **同行列倒置**（`止列 < 起列`）⇒ `invalid`；行倒置仍优先于列（先判行）；
+- **输出**：带列时 `指向：<file> 起 3:2 → 止 5:4（3 行）：首行 … / 末行 …`（缺列那端写「行首 / 行末」）；
+  单点带列写 `第 3 行第 2 列：…`；**无列时输出与 §6.20 逐字一致**（有回归测试对照）；
+- `_detect_reference_kind()` 先判区间形态 ⇒ 带列 token 归 **anchor**（不会掉进 `@`→file 分支）；
+- `audit_references`：④ 锚点扫描改用同一 `_ANCHOR_REF_PATTERN`（新增 `sep` / `startcol` / `endcol` 组）⇒
+  **列越界复用 `anchor.line_out_of_range`**、**同行列倒置复用 `anchor.range_inverted`**（不新增检查名 ⇒
+  `_REFERENCE_AUDIT_CHECKS` 与既有台账零漂移）；① `@路径` 扫描对区间 token 的跳过**放宽到带列形态**，
+  并顺手剥掉紧贴 token 的中文标点再判（否则 `@a.md#L3C2-L5C4。` 会被误报 `file_reference.missing`）。
+- **投影口径不变**：只回「起止 + 首末行摘要 + `read_document(offset, limit)` 建议」，**不塞正文**。
+
+**提示词**：`prompt.FILE_REFERENCE_SECTION` 第 2 条**同行内**补列号说明（`prompt.py:215`，**行数不变**）。
+
+#### 6.21.2 B：输入框里的引用是**原子块**
+
+`agent-panel.js` 文件尾追加块（`bindComposerAtomicTokens()` `:3576`）：用**镜像层同一解析器**
+`COMPOSER_TOKEN_RE` 算 token 区间（`composerTokenSpans()` `:3531`），在 `#agent-input` 的 **capture 阶段** `keydown` 上拦截：
+
+| 键 / 状态 | 行为 |
+|---|---|
+| `Backspace`，caret **恰在** token 尾（`pos === span.end`） | **整体删掉这一个 token**（`replaceInputRange()`：`execCommand("insertText","")` ⇒ 浏览器撤销栈里算**一次**编辑；不可用时退回 `setRangeText`） |
+| `Delete`，caret **恰在** token 首（`pos === span.start`） | 同上（整体删） |
+| `←` / `→`，caret **落在 token 内部** | 整体跳到该 token 的**首 / 尾**（不在 token 中间停留） |
+| 整块被选中（`start===span.start && end===span.end`）或 caret **贴边** | 镜像层给该 chip 加 `.-agent-composer-chip--active`（原子块的视觉反馈） |
+| 有选区（非折叠）时按这些键 | **不拦**（交给浏览器：整体覆盖删除本就是一次编辑） |
+| `e.isComposing` / `keyCode === 229`（输入法组字中）、任何修饰键（`ctrl/meta/alt/shift`，含 Shift 选区） | **一律不碰** |
+| Enter 发送 / Shift+Enter 换行 | 不碰（原有 `keydown` 处理器一行未改） |
+| 粘贴 / 拖放 / `inputCaret` 记账 / 镜像几何同步 | 不碰；编辑后调 `afterComposerEdit()` 记 `inputCaret` 并同步镜像（另加 `select` / `mouseup` 监听以刷新高亮） |
+
+**`<textarea>` 下仍做不到的（如实登记）**：① 无法让**跨 chip 的选区**在视觉上只高亮 chip 部分（选区由 textarea 自绘，
+镜像层只能整体换色，`::selection` 会盖住 chip 文字色 —— §6.20 已记的同一取舍）；② 无法把 chip 变成**真正的不可分割对象**：
+`Home/End`、双击选词、`Ctrl+←/→` 按词跳、鼠标点击落在 chip 内部等路径**仍会在 token 中间落 caret**（本轮只覆盖
+Backspace / Delete / ← / → 四条主路径）；③ 撤销**粒度由浏览器定**（`execCommand` 路径能合并为一次，`setRangeText` 退回路径不保证）。
+
+#### 6.21.3 C：对话内引用渲染（user + assistant，含**起止**）
+
+**扫描器 `REF_MENTION_RE`（`:3750`）只认两种**：① 会话**片段** `@[label](dsh-session:…#seq:n)`；② 文件**区间**
+`@path#L…C…`（普通 `@路径` 与无片段会话仍交给既有 `linkifyUser` / `renderAssistantBody`，**不抢它们的活**）。
+
+| 侧 | 落法 | 覆盖 |
+|---|---|---|
+| **user 气泡** | 在既有（会话 aware 的）`linkifyUser` 包装层**之外**再包一层（`:3758`）；命中段直接出 chip，未命中段交给内层 | 区间引用 + 会话片段引用（**旧的「片段显示成裸文本 / 被误当文件 chip」由此修掉**） |
+| **assistant 气泡** | 包装 `renderAssistantBody`（`:3835`）：既有 marked→净化→锚点化**跑完**后，对**文本节点**做一次替换（`chipRangeRefsInDom()` `:3790`） | 同一批 token；**代码块 / 行内代码**（`code`/`pre`/`kbd`/`samp`）、`script`/`style`/`textarea`、**公式**（`katex`/`math` 类）与**已完成锚点化的 `-agent-anchor`** 之内的文本**一律跳过**；raw HTML 在 `sanitizeHtmlInto` 阶段已按白名单拆壳，故无需另判。流式渲染也走同一入口（§6.20 的 AG11 包装调的就是 `renderAssistantBody`） |
+
+**起止怎么展示**：chip 正文 = `路径 起–止`（如 `mlp.md 12:5–14:20`；单点只写一个；缺列只写行 —— 与 token 语义一致），
+`title` 用 `agent.rangeChipTitle`（zh：「引用：{path} 起 {from} → 止 {to}…」）把「起 / 止」写全；点击复用既有锚点委托
+（`data-agent-file` / `data-agent-line`）⇒ 打开文件并高亮**起始行**。会话片段 chip 追加 `.-agent-mention-seq`
+（`#seq:` 的起止序号），`title` 用 `agent.sessionChipTitleSeq`。
+
+#### 6.21.4 验收证据（本机实测）
+
+| 手段 | 结果 |
+|---|---|
+| `python -m pytest tests/ -q` | **341 passed**（原 **335** + 本轮新增 **6** 例：`tests/test_agent_tools_reference.py` 尾 **3** 例、新文件 `tests/test_agent_panel_token.py` **3** 例；既有断言**零改动**） |
+| `python -m py_compile`（`tools/kb.py` / `prompt.py` / 两个测试文件） | 4/4 过 |
+| `node --check`（`agent-panel.js` / `zh-CN.js` / `en.js`） | 3/3 过 |
+| `node scripts/i18n_selftest.js` | **12/12 PASS** |
+| `python scripts/scan_ui_strings.py` | `files=3 rows=5`（**无新增硬编码候选**；重生成的 `i18n-inventory.md` 只有「生成日期」变，**已还原**为 `2026-09-19` ⇒ diff-free） |
+| 行为取证（Python 级，仓库外临时库 `kbcol2`，跑完即删） | 见下方四段原始输出 + 审计两行 |
+| **前端 token 拼写单测**（`tests/test_agent_panel_token.py`，用 `node` eval **真源码**的 `rangeTokenText`） | 9 条形态逐字匹配；其中 6 条再喂给后端 `_at_range_parts()` **逐字解回**（前后端同一语法）；另有静态断言：`addSelectionToChat` 确实把 `startCol`/`endCol` 传给 `formatRangeMention`，且列来自 `.-line-content` 偏移 |
+| HTTP 静态面（harness `http://127.0.0.1:8660/`，服务活文件） | `/app/js/agent-panel.js` 200（**185986 B**：`rangeTokenText`×2 / `-agent-composer-chip--active` / `bindComposerAtomicTokens` / `REF_MENTION_RE`×7 / `chipRangeRefsInDom`×2 / `agent.rangeChipTitle`）、`/app/css/app.css` 200（**161747 B**：`.-agent-composer-chip--active`×2 / `.-agent-mention--range`×2 / `.-agent-mention-seq`×2）、`/app/i18n/zh-CN.js` 200（**63190 B**：`rangeChipTitle` / `sessionChipTitleSeq` / 「起 {from} → 止 {to}」）、`/app/i18n/en.js` 200（**70264 B**） |
+| 依赖面 | 零新依赖（Python 纯标准库；前端纯原生 API，`execCommand` 有 `setRangeText` 兜底） |
+
+**原始输出（行为取证）**：
+
+```
+### @notes/a.md#L3C2-L5C4
+- 状态：ok（已解析）
+- 指向：notes/a.md 起 3:2 → 止 5:4（3 行）：首行 abcdefghij / 末行 第三行内容
+- 建议下一步：read_document(path="notes/a.md", offset=3, limit=3)
+### @notes/a.md#L3C2-L4
+- 状态：ok（已解析）
+- 指向：notes/a.md 起 3:2 → 止 4:行末（2 行）：首行 abcdefghij / 末行 第二行正文
+### @notes/a.md#L5C4-L3C2
+- 状态：invalid（token 非法）
+- 原因：行区间倒置：起点 L5 在终点 L3 之后（区间须写成 `#L<起>-L<止>` 且起 ≤ 止）
+### @notes/a.md#L3C99
+- 状态：not_found（目标不存在）
+- 原因：第 3 行第 99 列超出（该行共 10 个字符，合法列 1..11）
+- 建议下一步：read_document(path="notes/a.md", offset=3, limit=1) 取回该行后按真实字符数重写列号
+
+### audit_references(path="notes/b.md")（同一文档里「正常 / 行倒置 / 列越界」三条 token）
+引用审计：扫描 指定文档 `notes/b.md`，发现 2 个引用问题（已列 2 条：error 0 / warning 2）。
+- [warning] anchor.range_inverted @ notes/b.md:1 目标 notes/a.md#L5C4-L3C2：区间锚点倒置：起点 L5 在终点 L3 之后（区间须 `#L<起>-L<止>` 且起 ≤ 止）
+- [warning] anchor.line_out_of_range @ notes/b.md:1 目标 notes/a.md#L3C99：第 3 行第 99 列超出（该行共 10 个字符，合法列 1..11）
+```
+
+（`normal` 那条**不报**、也不产生 `file_reference.*` 误报 ⇒ ①/④ 分工正确。）
+
+#### 6.21.5 未实测 / 未做
+
+① **浏览器 DOM 交互全线未实测**（本轮**没有浏览器工具**）：源码区拖选出的列号是否与用户肉眼一致、
+镜像层 `--active` 高亮的观感、Backspace/Delete/←/→ 四条原子路径的真机手感、`execCommand` 撤销粒度、
+气泡 chip 在窄栏里的换行 —— 这五项只有静态、单测与 HTTP 面证据，**留给协调者真机走查**；
+② 预览区仍是**块级**近似且**不给列**（诚实口径，非缺口）；③ `Home/End`、双击选词、`Ctrl+←/→`、鼠标点进 chip 内部
+仍会落在 token 中间（见 §6.21.2 末）；④ 跨 chip 的选区无法只高亮 chip 部分（textarea 自绘选区）；
+⑤ 块级引用（代码块 / 表格 / 公式）仍未解（§6.20.5 ⑤ 同）。
+
+#### 6.21.6 文档与锚点重取（old → new）
+
+**文档**：本节 + `reference/agent-guide/01`（前端：§6 新增一行）+ `conventions/docs-management.md §4.2` 本轮登记行。
+
+**锚点重取**（本文件下方编号一律为**改后**值）：
+
+- `services/agent/tools/kb.py:1608-2710` → **`:1608-2821`**（本轮 **+111 行**；`kb.py` 总行数 2710 → **2821**）；
+- `kb.py:2067-2071`（`_resolve_anchor_reference()` 区间分支）→ **`:2077-2081`**（上方 Edit 位前移 +10 行）；
+- `kb.py:2621`（`_at_range_parts`）→ **`:2673`**；`kb.py:2635`（`_anchor_range_result`）→ **`:2696`**；
+- §6.20.1 / §6.18 §「行号」行 / §6.20.6 的**就地更新**处：本文件 `:1357`/`:1359`/`:1360`/`:1220`/`:1457`/`:1463`；
+  `reference/agent-guide/06-links-and-graph.md:218`（`:1608-2710` → `:1608-2821`）；
+- **零漂移**：`agent-panel.js` 的上方所有锚点（`2964-3077`、`3095`、`3103`、`3113`、`3123`、`3179`、`3192`、`3201`、
+  `3248`、`3297`、`3349-3367`）—— 本轮前端改动**全部是文件尾追加**（`agent-panel.js` 3409 → **3855** 行）；
+  `app.css:5615-5641`/`5643-5691`（本轮只在其后追加，5691 → **5713** 行）；`zh-CN.js:1320`/`1331-1342`、
+  `en.js:1408`/`1420-1434`（本轮只在其后追加，1343 → **1352** / 1435 → **1445** 行）；
+  `prompt.py:208-218`/`:215`（同行内追加）与 `:261`/`:263`、`session/reference.py:101`/`:142`/`:143`/`:198`/`:525`/`:528`、
+  `session/history.py:261-299`/`:494-497`/`:506`/`:514`/`:527`、`ask.py:421`、`kb.py` 的 `:175`/`:665`/`:819`/`:1142`/`:1147`/`:1749`
+  —— **全部零漂移**；
+- **本轮新取的锚**：`agent-panel.js:3408`/`:3445`/`:3456`/`:3470`/`:3509`/`:3531`/`:3546`/`:3559`/`:3576`/`:3651`/`:3686`/`:3709`/`:3750`/`:3758`/`:3790`/`:3835`、
+  `app.css:5702`/`:5706`/`:5710`、`kb.py:2665`/`:2673`/`:2696`/`:2813`（`_range_col_display`）。
+
+**台账**：`docs/todo.md` **未编辑**（另一写者并发重写中）—— 建议 AG07 补一句「读侧投影已到**列**级（源码区精确；预览区仍块级不给列）」。
+
+**被本节取代的历史断言（只列出处，不改写历史行）**：§6.20.1 表「行区间 / 单行」两种形态（本文件 `:1340-1344`）、
+§6.20.3 的 token 形态行（`:1419`）。
 
 ---
 

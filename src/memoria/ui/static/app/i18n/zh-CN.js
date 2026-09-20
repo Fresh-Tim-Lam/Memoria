@@ -1340,4 +1340,13 @@
     selAddActionSeq: "引用本段",
     selAddTitleSeq: "把选中的这段对话作为会话片段引用插入输入框（`…#seq:<n>`；不会切换当前会话）",
   });
+  // ===== 2026-09-20 追加：区间引用的「起止」（列号 + 对话内 chip）=====
+  // 同走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径（用户："显示区域引用定位得有开始行号字符号和结束行号字符号…对话内的引用没有渲染，也没有开始结束的标记"）：
+  // 选区 token 现在可带**列号**（`@路径#L3C2-L5C7`）；user / assistant 气泡把它渲染成 chip，
+  // 正文显示 `路径 起–止`，悬停用本键把「起 / 止」写全（列缺省时只给行号）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    rangeChipTitle: "引用：{path} 起 {from} → 止 {to}（列号按 1 起字符位置；点击打开该文件并定位起始行）",
+    sessionChipTitleSeq: "会话片段引用：{id} 的第 {seq} 段对话（点击在「历史」里高亮该会话，不切换当前会话）",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

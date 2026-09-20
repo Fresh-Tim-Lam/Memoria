@@ -5689,3 +5689,25 @@ html *::-webkit-scrollbar-thumb:active {
 }
 .-agent-composer-chip-range { color: var(--theme-color); }
 .-agent-composer-chip--session { box-shadow: 0 0 0 1px var(--theme-color); }
+
+/* ===== 2026-09-20 追加：区间引用（列号 + 起止）+ 输入框「当前块」高亮 =================
+   用户："显示区域引用定位得有开始行号字符号和结束行号字符号…对话内的引用没有渲染，也没有开始结束的标记"。
+   ① `.-agent-mention--range`：user / assistant 气泡里的**区间**引用 chip（与 `.-agent-mention` 同族，
+      叠主题色描边区分「单文件引用」；正文由 JS 写成 `路径 起–止`，title 里把「起 / 止」写全）；
+   ② `.-agent-mention-seq`：会话**片段** chip 后面那截 `#seq:` 起止序号（次要色，不抢 `@label`）；
+   ③ `.-agent-composer-chip--active`：输入框里「光标贴边 / 整块被选中」的那个 token —— 按原子块高亮，
+      与 Backspace / Delete 整体删、← / → 整体跳过的口径一致（chip 逐字保留原文，故只改颜色 / 描边，
+      **不改字号与内距**，镜像层才不会与 textarea 错位）。
+   本块**末尾追加**（在打字框 chip 块之后）⇒ 既有行号锚点零漂移。 */
+.-agent-mention--range {
+    border-color: var(--theme-color);
+    color: var(--text-primary);
+}
+.-agent-mention-seq {
+    margin-left: 0.25em;
+    color: var(--text-secondary);
+}
+.-agent-composer-chip--active {
+    background: var(--accent-soft);
+    box-shadow: 0 0 0 1.5px var(--theme-color);
+}

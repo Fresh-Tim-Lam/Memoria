@@ -477,6 +477,94 @@ def test_reference_tools_registered_declared_and_read_only(kb: Path) -> None:
     assert schemas["audit_references"]["properties"]["limit"]["maximum"] == REFERENCE_AUDIT_MAX_ISSUES
 
 
+# —— ⑨ 区间**列号**（2026-09-20：选区引用 `#L3C2-L5C7`）——
+# 列号 = **1 起的字符位置**（caret 语义：行首 = 1，行末 caret = 行长 + 1）⇒ 合法列 `1..len+1`；
+# 缺列 = 「行首 / 行末」语义（不猜）；列越界 ⇒ `not_found`，同行起列 > 止列 ⇒ `invalid`。
+# 触发行号空间 = `sub/c.md` 的正文行（`# C 文档` / 空 / `第一行。` / `第二行。` / `第三行。` / `第四行。`）。
+
+
+def test_anchor_column_range_normal_mixed_inverted_and_out_of_range(kb: Path) -> None:
+    ok = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C2-L5C4")
+    assert "状态：ok" in ok.content
+    assert "sub/c.md 起 3:2 → 止 5:4（3 行）" in ok.content
+    assert "首行 第一行。" in ok.content and "末行 第三行。" in ok.content
+    assert 'read_document(path="sub/c.md", offset=3, limit=3)' in ok.content
+
+    # 混合（各只写一端）：止端缺列 ⇒ 行末；起端缺列 ⇒ 行首
+    tail_open = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C2-L5")
+    assert "状态：ok" in tail_open.content and "止 5:行末" in tail_open.content
+    head_open = invoke(kb, "resolve_reference", reference="@sub/c.md#L3-L5C4")
+    assert "状态：ok" in head_open.content and "起 3:行首" in head_open.content
+
+    # 行长 + 1（行末 caret）是合法列
+    eol = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C5-L5C5")
+    assert "状态：ok" in eol.content and "起 3:5 → 止 5:5" in eol.content
+
+    # 同行区间 + 同行列倒置
+    inline_ok = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C2-L3C4")
+    assert "状态：ok" in inline_ok.content and "起 3:2 → 止 3:4" in inline_ok.content
+    inline_bad = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C4-L3C2")
+    assert "状态：invalid" in inline_bad.content and "列区间倒置" in inline_bad.content
+
+    # 行倒置优先于列
+    rows_bad = invoke(kb, "resolve_reference", reference="@sub/c.md#L5C7-L3C2")
+    assert "状态：invalid" in rows_bad.content and "行区间倒置" in rows_bad.content
+
+    # 列越界 ⇒ not_found（报出「哪一行第几列」与合法区间）
+    col_bad = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C99")
+    assert "状态：not_found" in col_bad.content
+    assert "第 3 行第 99 列超出" in col_bad.content and "合法列 1..5" in col_bad.content
+    col_zero = invoke(kb, "resolve_reference", reference="@sub/c.md#L3C0")
+    assert "状态：not_found" in col_zero.content and "第 3 行第 0 列超出" in col_zero.content
+
+    # 非 `@` 形态（`文档#L…C…`）走同一段投影
+    plain = invoke(kb, "resolve_reference", reference="sub/c.md#L3C2-L4C4")
+    assert "状态：ok" in plain.content and "起 3:2 → 止 4:4" in plain.content
+
+    # 向后兼容：老 token（无列）逐字照旧
+    legacy = invoke(kb, "resolve_reference", reference="@sub/c.md#L3-L5")
+    assert "状态：ok" in legacy.content and "sub/c.md 第 3-5 行（3 行）" in legacy.content
+
+
+def test_anchor_column_counts_crlf_tabs_and_single_column(kb: Path) -> None:
+    # CRLF + TAB：列号按**去掉行尾 CR/LF** 的字符数算（与 `_read_body_lines().splitlines()` 同口径），
+    # TAB 计 1 个字符；第 1 行 `第一行` 共 3 字 ⇒ 行末 caret 列 = 4，第 5 列越界（证明 `\r` 没被算进去）。
+    (kb / "notes" / "crlf.md").write_bytes("第一行\r\nAB\tCD\r\n".encode("utf-8"))
+    eol = invoke(kb, "resolve_reference", reference="@notes/crlf.md#L1C1-L1C4")
+    assert "状态：ok" in eol.content and "起 1:1 → 止 1:4" in eol.content
+    tabbed = invoke(kb, "resolve_reference", reference="@notes/crlf.md#L2C3-L2C5")
+    assert "状态：ok" in tabbed.content and "起 2:3 → 止 2:5" in tabbed.content
+    beyond_crlf = invoke(kb, "resolve_reference", reference="@notes/crlf.md#L1C5")
+    assert "状态：not_found" in beyond_crlf.content and "该行共 3 个字符，合法列 1..4" in beyond_crlf.content
+
+    # 单列锚点（无区间）
+    single = invoke(kb, "resolve_reference", reference="@notes/crlf.md#L2C2")
+    assert "状态：ok" in single.content and "第 2 行第 2 列" in single.content
+
+
+def test_audit_flags_column_out_of_range_and_inverted_range(kb: Path) -> None:
+    doc = "\n".join(
+        [
+            "# 列号文档",
+            "",
+            "列越界 @sub/c.md#L3C99 与列倒置 @sub/c.md#L3C4-L3C2。",
+            "",
+            "正常 @sub/c.md#L3C2-L5C4。",
+            "",
+        ]
+    )
+    (kb / "notes" / "cols.md").write_text(doc, encoding="utf-8")
+    scoped = invoke(kb, "audit_references", path="notes/cols.md")
+    assert not scoped.is_error
+    counts = checks_of(scoped.content)
+    assert counts["anchor.line_out_of_range"] == 1  # 列越界（复用该检查名）
+    assert counts["anchor.range_inverted"] == 1  # 同行列倒置（复用该检查名）
+    assert counts["file_reference.missing"] == 0  # 区间 token 不被 ① 误报为悬空文件
+    rows = issue_rows(scoped.content)
+    assert any("第 3 行第 99 列超出" in row for row in rows)
+    assert any("列区间倒置" in row for row in rows)
+
+
 def test_reference_tools_do_not_write_the_kb(kb: Path) -> None:
     """零写入：两把工具调用前后，库内文件清单逐字不变。"""
     before = snapshot(kb)
