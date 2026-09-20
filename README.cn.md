@@ -7,7 +7,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.4.0-8A2BE2)](src/memoria/__version__.py)
+[![Version](https://img.shields.io/badge/Version-0.4.1-8A2BE2)](src/memoria/__version__.py)
 [![English](https://img.shields.io/badge/README-English-green)](README.md)
 
 **Memoria** 是一款面向个人知识库的本地知识图谱 IDE：Markdown 笔记 + 双向链接（`[[]]`）语义、荧光笔与富文本标记、LaTeX 公式、Mermaid 图表、2D/3D 知识图谱，配一个**纯离线**的检索内核。

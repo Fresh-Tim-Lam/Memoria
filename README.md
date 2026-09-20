@@ -9,7 +9,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.4.0-8A2BE2)](src/memoria/__version__.py)
+[![Version](https://img.shields.io/badge/Version-0.4.1-8A2BE2)](src/memoria/__version__.py)
 [![中文](https://img.shields.io/badge/README-中文-green)](README.cn.md)
 
 **Memoria** is a local-first knowledge-graph IDE for personal knowledge bases: Markdown notes with bidirectional `[[]]` links, highlighter & rich inline markup, LaTeX math, Mermaid diagrams, a 2D/3D knowledge graph, and a fully **offline retrieval kernel**.

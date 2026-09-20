@@ -7,7 +7,7 @@
 | 模块 | 上游 | 职责 |
 |---|---|---|
 | `registry.py` | `core/tools/src/{types,json-schema}.ts` | 工具定义、schema 投影、参数校验、调用与错误归一 |
-| `kb.py` | —（Memoria 侧工具，接既有服务层） | 只读知识库工具：检索/读文档/读知识点/概览/校验 |
+| `kb.py` | —（Memoria 侧工具，接既有服务层） | 只读工具：检索/读文档（可分页）/读知识点/概览/校验/会话检索 + 上游读面 `glob`/`grep`/`read_image`（2026-09-20，见 `docs/design/dsh-agent-port.md §6.16`） |
 
 M1 工具面**只读**：所有工具声明 `read_only=True`，写类调用由
 `memoria.services.agent.approvals` 的默认策略拒绝。导入本包不联网、不打印。

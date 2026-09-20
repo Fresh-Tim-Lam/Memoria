@@ -69,6 +69,10 @@ Write one Task‑2 sentence about whether governments should spend money on heri
 （中文说明：大作文写一句话，论述政府是否应投入资金保护遗产）
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "heritage", [[blend]] and [[renovation]].
+
+my answer[[\c:red|(not check yet!!!):]]
+that        heritage was   a blend of modern style and historical connotation
+
 （中文提示：用 heritage、a blend of、renovation 合成一句）
 ---
 ## 📌 Revision Tags

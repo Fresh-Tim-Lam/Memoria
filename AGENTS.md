@@ -25,7 +25,7 @@
 | 产品状态 | 各知识库 `.memoria/**`（manifest/sidecars/pending/images） | 应用代码 |
 | Agent 注册表 | `artifacts/agent/agents.json` | `registrar` |
 | Agent 事件流 | `artifacts/agent/events.jsonl` | 主控（追加） |
-
+| 会话历史 | `会话历史 →`<kb>/.memoria/agent/sessions/*.jsonl` | 主控（追加） |
 - 新增事实源必须先在本表登记；**禁止并行事实源**。`.memoria/cache/**` 视为**可再生缓存**，不作为事实源。
 
 ## 2. 基础 Agent 集（RISC，仅 3 个）

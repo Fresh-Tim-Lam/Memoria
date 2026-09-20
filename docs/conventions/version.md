@@ -8,7 +8,7 @@
 
 | 项 | 值 |
 |----|----|
-| 当前版本 | **0.4.0** |
+| 当前版本 | **0.4.1** |
 | 版本阶段 | 0.x（未稳定，接口可变更） |
 | 版本类型 | SemVer：`MAJOR.MINOR.PATCH` |
 
@@ -95,6 +95,7 @@ __version__.py
 
 | 版本 | 日期 | 变更 |
 |------|------|------|
+| 0.4.1 | 2026-09-20 | **知识库 Agent 面板（dsh 移植 M1–M2 收尾 + 引用板块 + 跳转高亮修复）**：① **上游读面** —— `read_document` 分页续读（`offset`/`limit`，默认且上限 2000 行）+ 新增只读 `glob` / `grep` / `read_image`（校验层；缺多媒体「眼睛」插件即明确报 `UNSUPPORTED_IMAGE_INPUT`，不伪造成功），工具面由「知识库根」改为**工作区允许根列表**（`.memoria/**` 默认可见，为将来越出根目录留位）；② **会话查询五工具补全** —— `session_event_search` / `session_trace` / `session_event_trace` / `session_event_read`（只读、限本库、`session_id` 必填）；③ **引用板块** —— 只读 `resolve_reference` / `audit_references`（五类引用逐条回「指向什么 / 歧义候选 / 建议下一步」，不猜）。④ **引用机制** —— 选区引用带**源码位置**（`@路径#L3C2-L5C7`，预览区已到字符级）、会话片段引用（`@[标题](dsh-session:s1#seq:3c12-3c48)`，输入框用短别名、发送前展开成完整 URI）、对话内引用渲染成 chip 并标出「起 / 止」、打字框镜像层把 token 渲染成引用块（可拖文件树 / 拖顶栏页签入对话栏）。⑤ **跳转高亮** —— 块↔源码行映射收敛到 parser **单一事实源**（修「预览高亮位置错、行号偏小」：274 份 md 中 223 份存在错位的根因）、高亮带跟随 Mermaid/MathJax 布局、预览「源坐标」改**按需现算**（不写 DOM，编辑态与只读态同一路径）。⑥ **历史行右键菜单**（重命名 / 删除 + 悬浮提示），删除改应用内确认弹窗；新增 RPC `agent_session_rename`（**追加**一条 `session/title`，最新者胜，回放零改动）。⑦ 上游引用类收尾：时间上下文（`context/time-context`）与模型切换告知（`core/agent` `model-selection`）。⑧ **文档** —— 新增多 Agent 协作契约 [`AGENTS.md`](../../AGENTS.md)、能力插件与写模块总设计 [`agent-plugin-design.md`](../design/agent-plugin-design.md)（活文档）、发布与「连不上先试本地代理」运维规范。`pytest -q` **356 passed** |
 | 0.4.0 | 2026-09-20 | **知识库 Agent 面板（dsh 移植 M1–M2）**：① **M1** —— 代码级移植 LLM 能力（纯标准库）+ Agent 主体只读竖切打通、多轮续聊与会话历史、真取消 / 恢复上次会话 / 删除会话；② **M2** —— `@路径` 上下文引用、跨会话引用（`context/session-reference`）、长会话自动压缩成 checkpoint、历史会话检索工具 `search_sessions`、会话标题（`session/title`）与免模型旧工具结果裁剪；③ **用量可视化** —— 状态栏余额槽 + 成本浮层（官方价目表 / 逐轮峰谷价）、每轮 token 用量行、状态栏刷新间隔可配。**UI 视觉收敛**：A/B 档 token 落地（圆角 4/6/8/12/999、描边 0.5px、三档阴影）、统一 `--bar-h` 栏高与 `--border-sep` 分隔线、滚动条变细并按需显形、状态 bar 四槽语义色、设置弹窗新增「对话」页签。**文件树 / 图标 / 流式渲染**：目录可折叠（记忆 + 重渲守卫）、借用 dsh 自有图标替换 emoji、文件树拖拽引用入对话栏、助手气泡渲染 Markdown（净化 + 锚点保留）+ 流式中间缓冲逐行渲染（AG11）。**打包分发修复**：P06 双击闪退根因 = Mark-of-the-Web（pythonnet / `Assembly.LoadFrom`），随包 `Memoria.exe.config`（`loadFromRemoteSources`）修复并重建 Release 资产（已在 0.3.4 行同名重构建登记）。**示例**：公开 IELTS 词汇库 `docs/example/AAA_Vocab/` 与上手 / 部署指引（`site/`） |
 | 0.3.4 | 2026-09-16 | **图谱性能（G05 主体，目标档 5000 节点）**：① **D1 帧预算化** —— `sim-core.runTicksWithBudget`（2D/3D/worker 共用，默认 8ms、至少 1 tick），帧时间从此有上界（目标档整帧 p95 9252→710ms）；② **D2 Barnes-Hut 近似排斥**（新 `graph-bh-tree.js`，2D 四叉树 / 3D 八叉树，θ=0.9，分组语义与 `skipPairRepulsion` 严格对齐；`bh:false` 保留精确 O(N²) 路径供同 build A/B）；③ **X3 数值稳健**（`distanceMin` 距离下限取代 `Math.random()` 抖动 + 每 tick 位移上限 ⇒ 消掉边长 2.13e9 的数值爆炸，布局确定性可复现）；④ **X4 装载卡死根治**（warmup 工作量上限 + worker 就绪超时 3s→15s）。合计：5000 节点整帧 **9108ms → 41.5ms（212×，≈23fps）**、装载 **136s → 0.35s**。新增图谱性能基准 L1 采集器 `scripts/benchmark/graph/`（结构 / 分项剖面 / θ / 同 build A/B / 对照判定）与设计稿 [docs/design/graph-benchmark.md](../design/graph-benchmark.md) |
 | 0.3.4 | 2026-09-16 | 图谱「分布模式」新增**「散落」**：孤立节点不再被固定在群组网格上，而是随机散落在圆盘/球内、只受"向原点中心力 + 节点间排斥"支配（连通群仍靠连边抱团、互相推开），避免节点多时聚成一个球；分布模式可持久化 |

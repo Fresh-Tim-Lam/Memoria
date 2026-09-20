@@ -1363,6 +1363,60 @@ class UIAPI:
             return {"status": "error", "code": "session_failed", "message": str(e)}
         return {"status": "ok", "deleted": True, "session_id": sid}
 
+    def agent_session_rename(self, session_id: str, title: str, kb_path: str | None = None) -> dict:
+        """给会话**改名**（历史列表右键菜单用）：本质是**追加**一条 `session/title` 事件（最新者胜）。
+
+        为什么"追加"而不是"就地改写文件"：`services/agent/title.py` 的设计口径就是
+        "任何 `session/title` 都算、**最新者胜**"（该模块政策一节明说"将来接改名 UI 无需改回放"），
+        `history.summarize_session_file()` 的原始行扫描也取**最后一个**命中行 ⇒ 追加即可：
+        **事件流只追加、历史不被改写**，回放与列表两侧零改动。
+
+        写入范围与 `agent_session_delete` 同级：只写 `<kb>/.memoria/agent/sessions/<id>.jsonl`，
+        不碰正文 / sidecar / manifest / 图片；id 与"目录归属"两道校验同前。标题经
+        `title.clean_title_text()` 规范化，并按 `title.TITLE_MAX_BYTES` 上限**拒绝**（不截断 —— 截断会
+        悄悄改掉用户输入；`fold_title()` 把空标题视作没有，故空标题一律拒写）。
+
+        返回 `{status:"ok", session_id, title}`；id 非法 / 会话不存在 ⇒ `code:"unknown_session"`；
+        标题为空 / 过长 / 写入失败 ⇒ `code:"session_failed"`。不抛裸异常。
+        """
+        from memoria.services.agent.session import SessionStore, session_file, sessions_dir
+        from memoria.services.agent.title import SESSION_TITLE, TITLE_MAX_BYTES, clean_title_text
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        if not sid:
+            return {"status": "error", "code": "unknown_session", "message": "会话 id 为空"}
+        cleaned = clean_title_text((title or "").strip())
+        if not cleaned:
+            return {"status": "error", "code": "session_failed", "message": "标题为空"}
+        if len(cleaned.encode("utf-8")) > TITLE_MAX_BYTES:
+            return {
+                "status": "error",
+                "code": "session_failed",
+                "message": f"标题过长（上限 {TITLE_MAX_BYTES} 字节）",
+            }
+        try:
+            path = session_file(kb, sid)
+        except ValueError as e:
+            return {"status": "error", "code": "unknown_session", "message": str(e)}
+        # 目录归属校验：只允许写会话目录内的文件（防穿越的第二道闸，与删除同口径）
+        if os.path.realpath(os.path.dirname(path)) != os.path.realpath(sessions_dir(kb)):
+            return {"status": "error", "code": "unknown_session", "message": f"非法会话路径：{sid}"}
+        if not os.path.isfile(path):
+            return {"status": "error", "code": "unknown_session", "message": f"会话不存在：{sid}"}
+        try:
+            store = SessionStore(kb, sid)
+            store.append(
+                SESSION_TITLE,
+                {"title": cleaned, "message_seqs": [], "source": {"kind": "user"}},
+            )
+            store.flush()  # 改名的即时性靠它：append 已尽力 flush，这里再上一道 fsync 屏障
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "session_failed", "message": str(e)}
+        return {"status": "ok", "session_id": sid, "title": cleaned}
+
     # ── Agent 用量报告（只读；为后续 token benchmark 前置）───────────────
 
     def agent_usage_stats(self, kb_path: str | None = None, session_id: str | None = None) -> dict:

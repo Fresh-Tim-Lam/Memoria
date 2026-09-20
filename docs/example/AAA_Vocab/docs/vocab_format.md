@@ -32,6 +32,14 @@ For each sense:
 - **Writing example** – English sentence  
   (中文翻译)
 ---
+## 🎯 Best Situation & Register Gate（何时该用 / 何时别用）
+> **为何放在这个位置**：它决定"这个词该不该用在这里"，必须在背搭配**之前**先过闸——中国考生最常见的失分不是用错词，而是**用词过头**（在该用 `difficult` 的地方用了 `perilous`）。
+- **✅ Best situation**: [3–5 个该词最适用的具体场景；须来自课件/语料，不得自撰]
+- **∇ Avoid**: [该词**不该**用的场景，并写明应替换成哪个词]
+- **强度标记 Strength**: [strong / neutral / weak；课件有原话（如 "Strong meaning: more serious than difficult"）则照录]
+- **语域三档 Register ladder**（多近义词时填）: 日常 `[word]` → 正式 `[word]` → 文学 `[word]`
+- **来源 Source**: [该判定取自哪份课件/词典，便于追溯]
+---
 ## 🧩 Word Family & Collocation Matrix
 ### Morphology / Root (memory aid)
 - Root `...` = meaning (English + 中文说明)

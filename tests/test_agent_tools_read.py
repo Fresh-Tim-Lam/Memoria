@@ -413,7 +413,9 @@ def test_new_read_tools_registered_and_read_only(kb: Path) -> None:
     registry = registry_for(kb)
 
     assert tuple(tool.name for tool in build_kb_tools(str(kb))) == KB_TOOL_NAMES
-    assert registry.names()[-3:] == ("glob", "grep", "read_image")
+    # 读面三工具的相对次序不变（2026-09-20 会话查询家族追加在末尾，见 design/dsh-agent-port.md §6.17）
+    read_face = ("glob", "grep", "read_image")
+    assert tuple(name for name in registry.names() if name in read_face) == read_face
     for name in KB_TOOL_NAMES:
         tool = registry.get(name)
         assert tool is not None and tool.read_only, name

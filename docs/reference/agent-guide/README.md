@@ -24,7 +24,7 @@
 | 03 | [03-editor-and-formatting.md](./03-editor-and-formatting.md) | 编辑器与格式：源码编辑 / 格式工具栏 / 编辑块工具栏 / 撤销重做 / 粘贴复制 | ✅ 240 行 |
 | 04 | [04-preview-and-rendering.md](./04-preview-and-rendering.md) | 预览与渲染：三视图切换 / 渲染管线 / 渲染后 DOM 与交互 / KP 高亮语义 | ✅ 194 行 |
 | 05 | [05-knowledge-points.md](./05-knowledge-points.md) | 知识点：KP 列表 / hover / KP 弹窗各页 / 配置窗三 Tab / 待确认 / 范围编辑 | ✅ 228 行 |
-| 06 | [06-links-and-graph.md](./06-links-and-graph.md) | 链接与图谱：链接创建·编辑·删除 / 边类型 / 2D·3D 图谱 / 样式与分组 | ✅ 235 行 |
+| 06 | [06-links-and-graph.md](./06-links-and-graph.md) | 链接与图谱：链接创建·编辑·删除 / 边类型 / 2D·3D 图谱 / 样式与分组 / **§2.10 引用解析与引用审计（agent 侧只读，2026-09-20）** | ✅ 319 行 |
 | 07 | [07-search-and-images.md](./07-search-and-images.md) | 检索与图片：搜索框与范围 / 结果跳转 / 图片插入·管理·属性·诊断 | ✅ 253 行 |
 | 08 | [08-import-export-and-check.md](./08-import-export-and-check.md) | 导入导出与检查：导入向导（三源/冲突/结果）/ 导出（预留）/ 检查面板与徽标 | ✅ 253 行 |
 | 09 | [09-settings-i18n-and-shortcuts.md](./09-settings-i18n-and-shortcuts.md) | 设置页签 / 语言切换 / 快捷键总表 | ✅ 260 行 |

@@ -35,9 +35,9 @@
  *
  * **会话历史（M1c；2026-09-19 起列表在左栏「历史」页签）**：由 `agent_sessions_list` 填充
  * （按修改时间倒序，最多 30 条），点某条 → `agent_session_load` 把消息灌进气泡区并把
- * `sessionId` 设为该会话（下一句即续聊）。列表/载入是**只读**；`agent_session_delete` 是
- * **本产品首次允许写知识库**（仅限会话目录 `.memoria/agent/sessions/<id>.jsonl`，
- * 见 10 篇 §2.15）。删除用**两次点击确认**（列表行内按钮），不弹窗。
+ * `sessionId` 设为该会话（下一句即续聊）。列表/载入是**只读**；写只发生在会话目录这一个产品
+ * 自管的运行时产物上（`.memoria/agent/sessions/<id>.jsonl`：删除 / 改名，见 10 篇 §2.15）；
+ * **2026-09-20 起**行动作改由**右键菜单**进入（重命名 / 删除，删除走确认弹窗），行内按钮退役。
  *
  * **恢复上次会话（M1 收尾；2026-09-18 起按库记）**：磁盘偏好
  * `config/ui-settings.json` 的**顶层 `agent` 段**里的 `lastSessionByKb`
@@ -67,10 +67,10 @@
  * ——文档区（`#content`）保底 `CONTENT_MIN_PX=360`，不够就让 dock 先缩到 16rem、
  * 再整体**临时自动隐藏**（加 `-agent-dock--auto-hidden`，不写盘、窗口变宽自动还原）。
  *
- * 与后端的分工（见 `presentation/api/ui.py` 的 9 个 RPC）：
+ * 与后端的分工（见 `presentation/api/ui.py` 的 10 个 RPC）：
  *   `agent_get_config` / `agent_save_config` / `agent_ask_start` / `agent_ask_poll` /
- *   `agent_ask_cancel` / `agent_sessions_list` / `agent_session_load` /
- *   `agent_session_delete` / （`get_ui_settings` / `save_ui_settings` 为通用偏好 RPC）。
+ *   `agent_ask_cancel` / `agent_sessions_list` / `agent_session_load` / `agent_session_delete` /
+ *   `agent_session_rename`（2026-09-20 新增，改名）；`get_ui_settings` / `save_ui_settings` 为通用偏好 RPC。
  * 伪流式：`agent_ask_start` 提交即返回 job_id，本模块每 250ms 轮询
  * `agent_ask_poll(job_id, cursor)` 取 `delta`（后端 worker 线程跑同步 `ask()`，
  * 增量来自 `ask(on_text=...)`），从而得到打字机效果；轮询期间状态行带「生成中… Ns」
@@ -4087,6 +4087,216 @@ window.MemoriaAgentPanel = (function () {
       return true;
     },
   };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 历史行「右键菜单」（2026-09-20；用户："历史对话栏的每一行的「删除」做到右键下拉菜单，
+  // 这个菜单还要添加「重命名」，然后鼠标悬浮在这些对话栏上悬浮提示右键更多操作"）
+  // ① **行内 `-hist-del` 按钮退役**：行动作（重命名 / 删除）统一收进右键菜单；菜单与确认弹窗
+  //    复用 app.js 的**通用** `.-context-menu` / `.-modal`（门面 `showTreeContextMenu` /
+  //    `confirmTreeAction`；file-tree.js 与 image-tools.js 亦共用同一对浮层）。
+  // ② **删除**改走应用内确认弹窗（菜单点一下即弹框，不再有"行内点两次"）。
+  // ③ **重命名**：后端 `agent_session_rename` **追加**一条 `session/title`（"最新者胜"）⇒
+  //    列表 / 回放 / 模型输入零改动（依据见 `services/agent/title.py` 政策一节）。
+  // ④ **零行漂移**：整块追加在 IIFE 末尾 ⇒ 上方所有 `agent-panel.js:<行号>` 锚点保持有效。
+  //    代价：旧的行内两段式确认（`histDelete()` 与 `histDeleteArmed` / `histDeleteTimer` /
+  //    `DELETE_CONFIRM_MS`）及其点击分支**原样保留但已不可达**（行内按钮在下面被即时摘除）——
+  //    这是"锚点优先"纪律下的刻意取舍，待允许行号漂移的批次再清理。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 悬浮提示 = 菜单的发现入口（菜单只能右键唤出 ⇒ 提示必须常显在行上）。 */
+  function histRowHint() {
+    return T("agent.historyList.rightClickMore");
+  }
+
+  /** 摘掉退役的行内「删除」按钮 + 给整行（含标题）挂「右键更多操作」悬浮提示。
+   *  在既有 `renderHistoryList` **之后**跑（包装调用）⇒ 既有渲染函数一个字符都没动。 */
+  function decorateHistoryRowMenu() {
+    const list = document.getElementById("hist-list");
+    if (!list) return;
+    const hint = histRowHint();
+    const rows = list.querySelectorAll("[data-hist-id]");
+    for (let i = 0; i < rows.length; i += 1) {
+      const row = rows[i];
+      const del = row.querySelector("[data-hist-del]");
+      if (del) del.remove(); // 行内「删除」退役（见块头 ①）
+      row.title = hint;
+      // 标题自带 `title`（长标题截断时可看全称）⇒ 把提示**并进**它，否则悬停在标题上看不到提示
+      const ttl = row.querySelector(".-hist-title");
+      if (ttl) {
+        const full = String(ttl.getAttribute("title") || ttl.textContent || "");
+        ttl.setAttribute("title", full ? full + "\n" + hint : hint);
+      }
+    }
+  }
+
+  const baseRenderHistoryListForMenu = renderHistoryList;
+  renderHistoryList = function () {
+    const pending = baseRenderHistoryListForMenu.apply(null, arguments);
+    decorateHistoryRowMenu();
+    return pending;
+  };
+
+  /** 生成中不给改当前会话：那个文件正被本轮作业的 `SessionStore` 追加写，
+   *  另开一个 store 去写会撞 `seq`（`store.py` 的 `_seq` 是构造时点数得出的）。 */
+  function histRowLocked(id) {
+    if (busy && String(id) === String(sessionId || "")) {
+      showFlashError(T("agent.history.busyLock"));
+      return true;
+    }
+    return false;
+  }
+
+  /** 右键某一行 ⇒ 打开行菜单（重命名 / 删除）。 */
+  function openHistRowMenu(x, y, id) {
+    if (!id) return;
+    A().showTreeContextMenu?.(x, y, [
+      {
+        label: T("agent.history.rename"),
+        action: function () {
+          histRename(id);
+        },
+      },
+      {
+        label: T("agent.history.delete"),
+        danger: true,
+        action: function () {
+          histDeleteWithConfirm(id);
+        },
+      },
+    ]);
+  }
+
+  /** 菜单「删除」：先弹应用内确认框（会话文件删掉不可恢复），确认后才真删并刷新列表。 */
+  function histDeleteWithConfirm(id) {
+    if (!id || histRowLocked(id)) return;
+    const row = histDataRow(id);
+    A().confirmTreeAction?.(
+      T("agent.history.deleteTitle"),
+      T("agent.history.deleteBody", { name: histTitle(row) || id }),
+      T("agent.history.delete"),
+      async function () {
+        const kb = state.kbPath || "";
+        let res;
+        try {
+          res = await call("agent_session_delete", id, kb || null);
+        } catch (e) {
+          res = { status: "error", message: String((e && e.message) || e) };
+        }
+        if (!res || res.status !== "ok") {
+          showFlashError(fullErrorText(res));
+          return;
+        }
+        if (sessionId === id) {
+          await clear(); // 删的是当前会话 ⇒ 回到「新会话」态
+          restoredKey = ""; // 该会话已不存在：清掉幂等键，避免下次误判
+        }
+        await refreshHistory();
+      }
+    );
+  }
+
+  /** 菜单「重命名」：输入新标题 ⇒ `agent_session_rename` 追加一条 `session/title`；随后刷新列表
+   *  （`fold_title()` 取最后一条非空 ⇒ 新标题即刻生效，回放与模型输入不受影响）。 */
+  function histRename(id) {
+    if (!id || histRowLocked(id)) return;
+    const row = histDataRow(id);
+    promptHistInput(
+      T("agent.history.renameTitle"),
+      T("agent.history.renamePh"),
+      histTitle(row),
+      T("agent.history.rename"),
+      async function (val) {
+        if (!val) return;
+        const kb = state.kbPath || "";
+        let res;
+        try {
+          res = await call("agent_session_rename", id, val, kb || null);
+        } catch (e) {
+          res = { status: "error", message: String((e && e.message) || e) };
+        }
+        if (!res || res.status !== "ok") {
+          showFlashError(fullErrorText(res) || T("agent.history.renameFail"));
+          return;
+        }
+        await refreshHistory(); // 列表标题与 dock「当前会话」随之更新
+      }
+    );
+  }
+
+  /** 轻量输入弹窗（`.-modal` 样式；pywebview 里 `prompt()` 是系统对话框，故自建。
+   *  与 file-tree.js 的 `promptTreeInput` 同形但**各持一份**（frontend-modules.md R5：不跨文件借私有符号）。 */
+  function promptHistInput(title, placeholder, initial, okLabel, cb) {
+    const overlay = document.createElement("div");
+    overlay.className = "-modal";
+    overlay.innerHTML =
+      '<div class="-modal-backdrop"></div>' +
+      '<div class="-modal-box" style="width:min(360px,92vw)">' +
+      '<div class="-modal-header" style="cursor:default"><span>' +
+      esc(title) +
+      "</span></div>" +
+      '<div class="-modal-body">' +
+      '<input data-role="hist-title" type="text" style="width:100%;box-sizing:border-box;padding:6px 8px;' +
+      "border:1px solid var(--border);background:var(--bg-primary);color:var(--text-primary);" +
+      'border-radius:4px;font-size:12px;outline:none" placeholder="' +
+      esc(placeholder || "") +
+      '" value="' +
+      esc(initial || "") +
+      '" /></div>' +
+      '<div class="-modal-footer -btn-bar">' +
+      '<span class="-modal-footer-spacer"></span>' +
+      '<button type="button" class="-btn" data-act="cancel">' +
+      T("common.cancel") +
+      "</button>" +
+      '<button type="button" class="-btn primary" data-act="ok">' +
+      esc(okLabel || T("common.ok")) +
+      "</button>" +
+      "</div></div>";
+    document.body.appendChild(overlay);
+    const input = overlay.querySelector('[data-role="hist-title"]');
+    const close = function (val) {
+      overlay.remove();
+      cb(val);
+    };
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", function () {
+      close(null);
+    });
+    overlay.querySelector('[data-act="cancel"]').addEventListener("click", function () {
+      close(null);
+    });
+    overlay.querySelector('[data-act="ok"]').addEventListener("click", function () {
+      close(input.value.trim() || null);
+    });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        close(input.value.trim() || null);
+      } else if (ev.key === "Escape") {
+        close(null);
+      }
+    });
+    setTimeout(function () {
+      input.focus();
+      input.select();
+    }, 30);
+  }
+
+  // 右键委托挂在**页签视图**上（不是 document）：`stopPropagation()` 才能拦住 app.js 那条
+  // 全局 contextmenu（它会关掉刚打开的菜单 —— 菜单不在它的目标里）。视图节点常驻 DOM
+  //（`ensureHistoryView()` 只换 innerHTML），故绑一次即可。
+  (function bindHistRowMenu() {
+    const view = historyViewEl();
+    if (!view || view.dataset.histCtxBound === "1") return;
+    view.dataset.histCtxBound = "1";
+    view.addEventListener("contextmenu", function (ev) {
+      const t = ev.target && ev.target.closest ? ev.target.closest("[data-hist-id]") : null;
+      if (!t) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      openHistRowMenu(ev.clientX, ev.clientY, t.getAttribute("data-hist-id") || "");
+    });
+  })();
+
+  renderHistoryList(); // 用包装后的版本重绘一次（把新提示与按钮摘除应用到当前列表）
 
   return {
     init: init,

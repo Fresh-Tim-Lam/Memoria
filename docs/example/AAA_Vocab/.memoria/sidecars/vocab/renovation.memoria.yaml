@@ -28,8 +28,23 @@ links:
   targets:
   - dilapidated
   edge_type: reference
+  target_edges:
+    dilapidated:
+      edge_type: reference
+      relevance: 0.7
   instances:
+  - line: 39
+    wrapped: true
+  - line: 48
+    wrapped: true
+  - line: 55
+    wrapped: true
   - line: 69
     wrapped: true
+  - line: 70
+    wrapped: true
+  pool:
+  - dilapidated
   source_id: renovation
+  excluded: []
 edges: []

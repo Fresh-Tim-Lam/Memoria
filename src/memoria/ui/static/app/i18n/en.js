@@ -1442,4 +1442,21 @@
     rangeChipTitle: "Reference: {path}, from {from} to {to} (columns are 1-based character positions; click to open the file at the start line)",
     sessionChipTitleSeq: "Session fragment reference: message {seq} of {id} (click to highlight that session in History; does not switch sessions)",
   });
+  // ===== appended 2026-09-20: history-row **context menu** (rename / delete) + hover hint =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>`
+  // anchor in the docs keeps pointing at the same declaration.
+  // The inline delete button is retired, so the context menu is the *only* way in; the hover hint
+  // (`rightClickMore`) is therefore always shown. Delete now asks in a modal instead of "click twice".
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.historyList, {
+    rightClickMore: "Right-click for more actions (rename / delete)",
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.history, {
+    rename: "Rename",
+    renameTitle: "Rename session",
+    renamePh: "New session title (up to 120 bytes)",
+    renameFail: "Rename failed",
+    deleteTitle: "Delete session",
+    deleteBody: "Delete session “{name}”? Its record on disk is removed and cannot be restored.",
+    busyLock: "Generating: stop or wait for this turn before changing this session",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

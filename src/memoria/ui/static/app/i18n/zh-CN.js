@@ -1349,4 +1349,21 @@
     rangeChipTitle: "引用：{path} 起 {from} → 止 {to}（列号按 1 起字符位置；点击打开该文件并定位起始行）",
     sessionChipTitleSeq: "会话片段引用：{id} 的第 {seq} 段对话（点击在「历史」里高亮该会话，不切换当前会话）",
   });
+  // ===== 2026-09-20 追加：历史行的**右键菜单**（重命名 / 删除）+ 悬浮提示 =====
+  // 同走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径（用户："每一行的「删除」做到右键下拉菜单，菜单还要添加「重命名」，悬浮提示右键更多操作"）：
+  // 行内按钮退役 ⇒ 行动作只能从右键菜单进入，故 `rightClickMore` 是**唯一的发现有入口**，必须常显；
+  // 删除由"行内点两次"改为**确认弹窗**（`deleteTitle` / `deleteBody`）；重命名追加一条 `session/title`。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.historyList, {
+    rightClickMore: "右键查看更多操作（重命名 / 删除）",
+  });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.history, {
+    rename: "重命名",
+    renameTitle: "重命名会话",
+    renamePh: "输入新的会话标题（最长 120 字节）",
+    renameFail: "重命名失败",
+    deleteTitle: "删除会话",
+    deleteBody: "删除会话「{name}」？该会话在磁盘上的记录会被移除，不可恢复。",
+    busyLock: "生成中：请先停止或等本轮结束，再改这段会话",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

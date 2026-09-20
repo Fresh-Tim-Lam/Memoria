@@ -254,3 +254,53 @@ def test_preview_annotation_wiring_is_intact() -> None:
     for forbidden in ("createElement", "replaceChild", "setAttribute", "appendChild", "insertBefore"):
         assert forbidden not in point, f"预览源坐标映射不得写 DOM（发现 {forbidden}）"
     assert "data--src-line" in point and "data--src-line-end" in point, "块行区间必须取自单一事实源属性"
+
+
+def test_history_row_context_menu_wiring_is_intact() -> None:
+    """历史行右键菜单（重命名 / 删除）+ 悬浮提示的接线 —— 实现全在 `agent-panel.js` 的末尾追加块。
+
+    守住四条：
+    ① 五个函数都在（菜单 / 删除 / 重命名 / 行装饰 / 输入弹窗）；
+    ② 菜单项**同时**有重命名与删除，且删除带 `danger`（误点保护）；两个 RPC 名必须复用既有的
+       `agent_session_rename` / `agent_session_delete`（不新造并行的写入口）；
+    ③ 行内 `-hist-del` 在追加块里被摘除、提示挂到**整行与标题**上 —— 菜单只能右键唤出，
+       悬浮提示是唯一的发现入口（用户原话："鼠标悬浮在这些对话栏上悬浮提示右键更多操作"）；
+    ④ 右键委托挂在**页签视图**上并 `stopPropagation()`：挂 `document` 的话，app.js 那条全局
+       contextmenu（"目标不在菜单里就 hide"）会立刻关掉刚打开的菜单。
+    """
+    src = panel_source()
+    for name in (
+        "openHistRowMenu",
+        "histDeleteWithConfirm",
+        "histRename",
+        "decorateHistoryRowMenu",
+        "promptHistInput",
+    ):
+        assert name in extract_function(name), f"缺少 {name}()"
+
+    menu = extract_function("openHistRowMenu")
+    assert 'T("agent.history.rename")' in menu and 'T("agent.history.delete")' in menu
+    assert "danger: true" in menu
+    assert 'call("agent_session_rename", id, val, kb || null)' in extract_function("histRename")
+    assert 'call("agent_session_delete", id, kb || null)' in extract_function("histDeleteWithConfirm")
+
+    decor = extract_function("decorateHistoryRowMenu")
+    assert 'row.querySelector("[data-hist-del]")' in decor and "del.remove()" in decor, "行内删除按钮须被摘除"
+    assert "row.title = hint" in decor, "整行悬浮提示（菜单发现入口）"
+    assert 'row.querySelector(".-hist-title")' in decor, "标题自带 title，提示须并进去才看得见"
+
+    bind = src.split("(function bindHistRowMenu()")[1].split("})();")[0]
+    assert 'view.addEventListener("contextmenu"' in bind, "右键委托必须挂在页签视图上（不是 document）"
+    assert "ev.stopPropagation()" in bind, "须拦住 app.js 的全局 contextmenu，否则菜单刚开就被关掉"
+    assert 'closest("[data-hist-id]")' in bind
+
+
+def test_history_row_menu_i18n_keys_exist_in_both_packages() -> None:
+    """新增键必须 `zh-CN` / `en` 成对（`docs/conventions/i18n.md` 规则 2），且追加在**文件末尾**。"""
+    app_dir = PANEL.parents[1]  # …/ui/static/app
+    for lang in ("zh-CN", "en"):
+        text = (app_dir / "i18n" / f"{lang}.js").read_text(encoding="utf-8")
+        assert 'agent.historyList, {\n    rightClickMore:' in text, f"{lang}.js：rightClickMore 位置/键名不对"
+        assert 'agent.history, {\n    rename:' in text, f"{lang}.js：agent.history.rename 位置/键名不对"
+        for key in ("renameTitle", "renamePh", "renameFail", "deleteTitle", "deleteBody", "busyLock"):
+            assert f"{key}:" in text, f"{lang}.js 缺键 {key}"

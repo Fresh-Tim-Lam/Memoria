@@ -515,3 +515,67 @@ def test_agent_session_delete_rejects_illegal_and_unknown_ids(
     assert _kb_snapshot(kb) == before  # 逐文件 SHA256 完全一致 ⇒ 未误删任何文件
     assert decoy_parent.is_file()
     assert os.path.isfile(session_file(str(kb), "session-delete-real"))
+
+
+# —— 2026-09-20 新增：会话改名（历史行右键菜单；**追加** `session/title`，最新者胜）——
+
+
+def test_agent_session_rename_appends_title_only(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """⑨ 改名 = 只追加一条 `session/title`：只动目标文件、既有事件逐条保留、折叠出**最新**标题。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.title import SESSION_TITLE, fold_title
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    target = "session-rename-0001"
+    SessionStore(str(kb), target).append("user/message", {"text": "旧问题"})
+    SessionStore(str(kb), target).append("assistant/message", {"content": "旧回答", "tool_calls": []})
+    SessionStore(str(kb), "session-rename-keep").append("user/message", {"text": "别的会话"})
+    api = UIAPI(kb_path=str(kb))  # 先实例化（服务初始化会补写元数据）再取快照
+    before = _kb_snapshot(kb)
+    before_events = SessionStore(str(kb), target).events()
+
+    res = api.agent_session_rename(target, "  新  标题  ")
+
+    assert res == {"status": "ok", "session_id": target, "title": "新 标题"}  # 空白已折叠
+    after = _kb_snapshot(kb)
+    assert set(after) == set(before)  # 不新建 / 不删除任何文件
+    changed = [rel for rel, digest in after.items() if before[rel] != digest]
+    assert changed == [f".memoria/agent/sessions/{target}.jsonl"]
+    events = SessionStore(str(kb), target).events()
+    assert events[: len(before_events)] == before_events  # append-only：既有事件逐条逐字节不变
+    added = events[len(before_events) :]
+    assert [row["type"] for row in added] == [SESSION_TITLE]
+    assert added[0]["data"]["source"] == {"kind": "user"}
+    assert added[0]["data"]["message_seqs"] == []
+    snap = fold_title(events)
+    assert snap is not None and snap.title == "新 标题" and snap.source == "user"
+
+    assert api.agent_session_rename(target, "第二版")["status"] == "ok"
+    again = fold_title(SessionStore(str(kb), target).events())
+    assert again is not None and again.title == "第二版"  # 最新者胜
+
+
+def test_agent_session_rename_rejects_bad_input(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """⑩ 空 / 超长标题、非法 id、未知会话 ⇒ 结构化错误，且**一个字节都不写**。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.title import TITLE_MAX_BYTES
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    SessionStore(str(kb), "session-rename-real").append("user/message", {"text": "保留"})
+    api = UIAPI(kb_path=str(kb))
+    before = _kb_snapshot(kb)
+
+    res = api.agent_session_rename("session-rename-real", "   ")
+    assert res["status"] == "error" and res["code"] == "session_failed"
+
+    too_long = "汉" * (TITLE_MAX_BYTES // 3 + 1)  # 每字 3 字节 ⇒ 必超 UTF-8 上限（拒绝而非截断）
+    res = api.agent_session_rename("session-rename-real", too_long)
+    assert res["status"] == "error" and res["code"] == "session_failed"
+    assert "上限" in res["message"]
+
+    for bad in ["../decoy", "a/b", "..", "", "   ", "不合法id", "session-does-not-exist"]:
+        res = api.agent_session_rename(bad, "新名字")
+        assert res["status"] == "error", bad
+        assert res["code"] == "unknown_session", bad
+
+    assert _kb_snapshot(kb) == before  # 全部拒绝路径都不写盘

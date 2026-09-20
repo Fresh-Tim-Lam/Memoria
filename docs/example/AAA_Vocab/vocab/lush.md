@@ -94,7 +94,7 @@ Describe a beautiful natural place you have visited. Focus on the plants and the
 Write one Task‑2 sentence about the impact of deforestation on areas of lush rainforest.
 （中文说明：大作文写一句话，论述砍伐森林对茂密雨林地区的影响）
 ### 4. Word‑weaving (advanced)
-Make one complex sentence using "lush", [[picturesque]] and [[secluded]].
+Make one complex sentence using "lush", [[picturesque]], [[secluded]] and [[perilous]].
 （中文提示：用 lush、picturesque、secluded 合成一句）
 ---
 ## 📌 Revision Tags

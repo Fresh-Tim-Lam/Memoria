@@ -36,7 +36,7 @@
 | verb | renovate | 翻新；整修 | Speaking/Writing (Both) |
 | noun | renovation | 翻新；整修；改造 | Speaking/Writing (Both) |
 | adj | renovated | 翻新过的 | Speaking/Writing |
-| adj | dilapidated | 破败的（改造的对象） | Writing |
+| adj | [[dilapidated]] | 破败的（改造的对象） | Writing |
 ---
 ## ⚔️ Confusion Matrix (with Chinese explanations)
 Compare with restoration, regeneration
@@ -45,14 +45,14 @@ Compare with restoration, regeneration
 | Core nuance (English + 中文) | repairing and **modernising** a building so it becomes usable again（翻新并现代化，使其重新可用） | returning a building or artwork to its **original condition**（把建筑或文物**还原到原貌**，强调保真） | reviving a whole **area** economically and socially（对**整个区域**进行经济社会层面的复兴） |
 | Formality (English + 中文) | neutral‑formal（中性偏正式） | formal（正式，多用于文物、古迹） | formal（正式，多用于政策、城市规划） |
 | Typical collocates (English + 中文) | undergo renovation；renovation project（经历翻新；改造项目） | restoration of a painting / temple；under restoration（画作、寺庙的修复；修复中） | urban regeneration；economic regeneration（城市更新；经济复兴） |
-| IELTS example (English + 中文翻译) | The government should invest more in renovating dilapidated housing in urban areas.（政府应投入更多资金翻新城市地区的破旧住房。） | The restoration of the ancient temple took over a decade.（这座古庙的修复耗时十余年。） | Urban regeneration has transformed the former industrial zone.（城市更新改造了这片昔日的工业区。） |
+| IELTS example (English + 中文翻译) | The government should invest more in renovating [[dilapidated]] housing in urban areas.（政府应投入更多资金翻新城市地区的破旧住房。） | The restoration of the ancient temple took over a decade.（这座古庙的修复耗时十余年。） | Urban regeneration has transformed the former industrial zone.（城市更新改造了这片昔日的工业区。） |
 > ⚠️ 常见误用：不要用 `overturn`（推翻、撤销判决）来表达“翻新”，二者语义完全不同。
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:
 > *Prompt*: Before‑and‑after composite of the same Victorian townhouse: left side crumbling with peeling paint and boarded windows, right side fully renovated with fresh brickwork, new windows and a small garden; clean daylight, architectural photo
 **Word‑family map prompt**:
-> *Prompt*: Minimalist mind map, centre word "renovation", branches: verb (renovate), adjective (renovated, dilapidated), collocations (undergo / under renovation), near‑synonyms (restoration, regeneration); icons of a paint roller and a crane, white background
+> *Prompt*: Minimalist mind map, centre word "renovation", branches: verb (renovate), adjective (renovated, [[dilapidated]]), collocations (undergo / under renovation), near‑synonyms (restoration, regeneration); icons of a paint roller and a crane, white background
 ---
 ## 🎯 Active Output Drills
 ### 1. Gap‑fill
@@ -67,7 +67,7 @@ Write one Task‑2 sentence about whether governments should renovate old buildi
 （中文说明：大作文写一句话，论述政府应翻新老建筑还是拆除重建）
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "undergo renovation", [[dilapidated]] and "heritage".
-（中文提示：用 undergo renovation、dilapidated、heritage 合成一句）
+（中文提示：用 undergo renovation、[[dilapidated]]、heritage 合成一句）
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#Place` `#C1`
