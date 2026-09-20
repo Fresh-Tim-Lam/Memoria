@@ -6,7 +6,7 @@
 
 """只读知识库工具：检索 / 读文档 / 读知识点 / 库概览 / 校验 / 检索历史会话。
 
-六个工具全部**复用 Memoria 既有服务层**（不重写检索、不另立索引）：
+六个知识库工具全部**复用 Memoria 既有服务层**（不重写检索、不另立索引）；另三个读面工具（`glob`/`grep`/`read_image`）见文件末尾「上游读面」块（2026-09-20，§6.16）：
 
 | 工具 | 复用 |
 |---|---|
@@ -71,12 +71,12 @@ MAX_FILES_IN_OVERVIEW = 200
 MAX_ISSUES_IN_REPORT = 20
 
 KB_TOOL_NAMES = (
-    "search_kb",
-    "read_document",
+    "search_kb", "read_document",
     "read_kp",
     "kb_overview",
     "validate_kb",
     "search_sessions",
+    "glob", "grep", "read_image",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -280,7 +280,7 @@ def _search_kb(kb_path: str, query: str, top_k: int) -> ToolOutput:
     return ToolOutput(text="\n".join([head, *rows]), anchors=tuple(anchors))
 
 
-def _read_document(kb_path: str, path: str) -> ToolOutput:
+def _read_document(kb_path: str, path: str, *, offset: int = 1, limit: int | None = None) -> ToolOutput:
     rel = _safe_rel(kb_path, path)
     if rel is None:
         return _error("read_document: path 必须是知识库内的相对 .md 路径（不得上跳）")
@@ -308,8 +308,7 @@ def _read_document(kb_path: str, path: str) -> ToolOutput:
         kp_rows.append(f"- {location}  {name}")
         anchors.append({"file": rel, "line": line, "kp_id": kp_id, "name": name, "snippet": _snippet(lines, line)})
 
-    truncated = len(body) > MAX_BODY_CHARS
-    shown = body[:MAX_BODY_CHARS]
+    window, footer = _read_window(lines, offset=offset, limit=limit, display=rel, body=body)
     parts = [
         f"文档 {rel}：共 {len(lines)} 行，{len(kps)} 个知识点。",
         "",
@@ -317,10 +316,11 @@ def _read_document(kb_path: str, path: str) -> ToolOutput:
         *(kp_rows or ["- （该文档没有 sidecar 知识点）"]),
         "",
         "正文：",
-        shown,
+        window,
     ]
-    if truncated:
-        parts.append(f"\n…（正文已截断，仅显示前 {MAX_BODY_CHARS} 字符）")
+    if footer:
+        parts.append(footer)
+
     return ToolOutput(text="\n".join(parts), anchors=tuple(anchors))
 
 
@@ -522,16 +522,31 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
         ),
         Tool(
             name="read_document",
-            description="读取知识库内一篇 Markdown 文档的正文与知识点清单（带 `文件:行号`）。",
+            description=(
+                "读取知识库内一篇 Markdown 文档的正文与知识点清单（带 `文件:行号`）。"
+                f"正文默认返回前 {DEFAULT_READ_LIMIT} 行；被截断时正文尾会给出一条续读提示，"
+                "按提示里的 offset 再调一次即可接着读。"
+            ),
             parameters={
                 "type": "object",
                 "properties": {
-                    "path": {"type": "string", "minLength": 1, "description": "知识库内相对路径，例如 neural-network.md"}
+                    "path": {"type": "string", "minLength": 1, "description": "知识库内相对路径，例如 neural-network.md"},
+                    "offset": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "description": "正文起始行（1-based，默认 1；行号口径与知识点锚点一致）",
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": DEFAULT_READ_LIMIT,
+                        "description": f"最多返回多少行正文（默认且最多 {DEFAULT_READ_LIMIT}）",
+                    },
                 },
                 "required": ["path"],
                 "additionalProperties": False,
             },
-            handler=lambda arguments: _read_document(root, str(arguments.get("path") or "")),
+            handler=lambda arguments: _read_document_call(root, arguments),
         ),
         Tool(
             name="read_kp",
@@ -590,4 +605,527 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
             },
             handler=_bound_search_sessions,
         ),
+        # —— 上游读面（2026-09-20，§6.16）：`glob` / `grep` / `read_image` ——
+        # 三者都只读；库外路径、`.memoria/**` 与 VCS 元数据目录一律排除（见文件末尾块）。
+        Tool(
+            name="glob",
+            description=(
+                "按 glob 模式列出**知识库内**的文件路径（只读，只列文件、不列目录）。"
+                "不含 `/` 的模式匹配任意深度的文件名（`*.md` 等于在全库找 .md）；"
+                f"最多返回 {GLOB_MAX_RESULTS} 条（按修改时间新→旧），超出时给出计数与收窄提示。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "pattern": {"type": "string", "minLength": 1, "description": "glob 模式，例如 **/*.md、vocab/*.md"},
+                    "path": {"type": "string", "description": "可选：库内相对目录（搜索根，默认库根）"},
+                },
+                "required": ["pattern"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _glob_tool(root, arguments),
+        ),
+        Tool(
+            name="grep",
+            description=(
+                "在**知识库内**按正则逐行搜索正文，按文件分组返回 `Line N: <片段>`（只读）。"
+                f"最多返回 {GREP_MAX_MATCHES} 处命中、单行预览 {GREP_MAX_LINE_BYTES} 字节，"
+                f"扫描超过 {GREP_TIMEOUT_S:.0f} 秒即中止。正则用 Python `re` 语法（非 ripgrep 方言）。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "pattern": {"type": "string", "description": "Python `re` 正则（空白本身是合法模式）"},
+                    "path": {"type": "string", "description": "可选：库内相对文件或目录（默认全库）"},
+                    "include": {
+                        "type": "string",
+                        "description": "可选：单个正向 glob 过滤文件名，例如 *.md、*.{md,markdown}（不支持 ! 取反与逗号列表）",
+                    },
+                },
+                "required": ["pattern"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _grep_tool(root, arguments),
+        ),
+        Tool(
+            name="read_image",
+            description=(
+                "读取知识库内的 PNG/JPEG/WebP/GIF 图片。**当前端点不支持图像输入**："
+                "调用只会做参数与格式校验并返回明确错误，不会返回图片内容 —— 需要图上的信息时请改用文字描述。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "file_path": {"type": "string", "minLength": 1, "description": "库内相对路径，例如 .memoria/images/x.png"}
+                },
+                "required": ["file_path"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _read_image_tool(root, arguments),
+        ),
+    )
+
+
+# ── 上游读面移植：`read_document` 分页 + `glob` / `grep` / `read_image`（2026-09-20；§6.16）──
+# 语义移植自 deepseek-harness `packages/fs/tool-fs`（`src/read.ts` 的 `offset`/`limit` 与三重 cap、
+# `src/read-render.ts` 的续读 footer 文案、`src/read-image.ts` 的扩展名/签名判定）与
+# `packages/fs/tool-fs-search`（`src/glob.ts` 的 `globMaxResults` 与 VCS 目录排除、`src/grep.ts`
+# 的 `grepMaxMatches`/`grepMaxLineBytes`/`include` 单 glob 校验），pin `0d1f5000`。
+#
+# 整块**追加在文件末尾**（上方既有 `<文件>:<行号>` 锚点零漂移；唯一例外是 `read_document`
+# 工具声明区因新增 `offset`/`limit` 两个参数 +15 行，其后锚点已重取，见 §6.16「文档」）。
+#
+# 与上游的三处结构性差异（详见 §6.16 偏差表）：
+# 1. 工具面是**知识库**不是工作区：所有路径经 `_safe_rel_any()` 限定库内，`.memoria/**` 与
+#    VCS 元数据目录一并跳过，解析到库外的符号链接条目不返回也不读；
+# 2. `grep` 用 Python `re` 而非 ripgrep：正则方言不同（无 `\p{…}`、无 `\z` 之外的 PCRE 扩展），
+#    结果上限与超时都在 Python 侧自持（`GREP_MAX_MATCHES` / `GREP_TIMEOUT_S`），零新依赖；
+# 3. 本地消息层**不能**承载图片内容块（`llm/types.py` 的 `Message.content` 是纯文本、
+#    `llm/providers/openai_compatible.py::_message_to_wire()` 只写 `{"role","content": <str>}`），
+#    故 `read_image` 只做参数/格式校验后**明确拒绝**，不伪造成功（见 `_read_image_tool()`）。
+
+#: 一次 `read_document` 返回的默认且最大正文行数（上游 `READ_LIMIT`，`tool-fs/src/read.ts:15`）。
+DEFAULT_READ_LIMIT = 2000
+#: 一次 `glob` 内联展示的路径上限（上游 `globMaxResults`，`tool-fs-search/src/glob.ts:25` + README.md:60）。
+GLOB_MAX_RESULTS = 100
+#: `glob`/`grep` 遍历跳过的目录名：上游 `GLOB_VCS_EXCLUDES`（`src/glob.ts:37`）+ 本地知识库元数据目录。
+GLOB_EXCLUDED_DIRS = (".git", ".svn", ".hg", ".bzr", ".jj", ".sl", ".memoria")
+#: 一次 `grep` 内联保留的命中数上限（上游 `grepMaxMatches`，`src/grep.ts:29` + README.md:61）。
+GREP_MAX_MATCHES = 250
+#: 单条命中行预览的字节上限（上游 `grepMaxLineBytes`，`src/grep.ts:35` + README.md:62）。
+GREP_MAX_LINE_BYTES = 2000
+#: `grep` 的协作式时间预算（秒），对齐上游 `timeoutMs` 默认 30000（README.md:64）。
+GREP_TIMEOUT_S = 30.0
+#: `grep` 单文件读取上限（**本地新增边界**：上游由 ripgrep 流式处理、无此上限）；超限文件跳过并计数。
+GREP_MAX_FILE_BYTES = 4 * 1024 * 1024
+#: 二进制探测的前导字节数（对齐 ripgrep 口径：前导含 NUL 即视为二进制并跳过）。
+GREP_BINARY_SNIFF_BYTES = 8192
+#: 图片签名探测需要的字节数（PNG 8 / JPEG 3 / GIF 6 / RIFF-WEBP 12）。
+IMAGE_SNIFF_BYTES = 16
+#: `read_image` 认的扩展名 → 媒体类型（逐字照抄上游 `IMAGE_EXTENSIONS`，`read-image.ts:25-31`）。
+IMAGE_EXTENSIONS = {
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".webp": "image/webp",
+    ".gif": "image/gif",
+}
+#: 「本端点不支持图像输入」的稳定错误码（本地新增；上游同类拒绝是普通错误、无专用码）。
+UNSUPPORTED_IMAGE_INPUT = "UNSUPPORTED_IMAGE_INPUT"
+
+
+class _ReadOffsetError(ValueError):
+    """`read_document` 的 `offset` 超出正文行数（上游抛 `FS_NOT_FOUND`，`read-render.ts:96-98`）。"""
+
+
+def _positive_int(raw: Any, default: int) -> int | None:
+    """`None`（未给）⇒ `default`；非整数 / 布尔 / < 1 ⇒ `None`（调用方据此出参数错误）。"""
+    if raw is None:
+        return default
+    if isinstance(raw, bool) or not isinstance(raw, int) or raw < 1:
+        return None
+    return raw
+
+
+def _read_window(
+    lines: Sequence[str],
+    *,
+    offset: int,
+    limit: int | None,
+    display: str,
+    body: str,
+) -> tuple[str, str]:
+    """按 `offset`/`limit`/字符预算取正文窗口，返回 `(窗口文本, 续读提示)`。
+
+    语义对齐上游 `buildWindow()` + `formatReadOutput()`（`read-render.ts:111-170`）：
+
+    - `offset` 是 **1-based 正文行号**（frontmatter 已剥离，与知识点锚点同一行空间）；
+    - `limit` 省略时取 `DEFAULT_READ_LIMIT`（上游「默认值 = 上限」的口径）；
+    - 字符预算仍是既有 `MAX_BODY_CHARS`（本地边界，上游对应 `readMaxBytes`）；
+    - 越界（`offset > 总行数`；空文件 + `offset=1` 除外）抛 `_ReadOffsetError`，消息对齐上游
+      `offset <offset> is out of range for "<path>" (<total> lines)`；
+    - 未截断时**不产出 footer**（保持旧调用逐字兼容），且正文末尾换行照旧保留。
+    """
+    cap = DEFAULT_READ_LIMIT if limit is None else limit
+    total = len(lines)
+    if offset > total and not (total == 0 and offset == 1):
+        raise _ReadOffsetError(f'offset {offset} 超出范围 —— "{display}" 正文共 {total} 行')
+    start = offset - 1
+    window: list[str] = []
+    used = 0
+    while start + len(window) < total and len(window) < cap:
+        text = lines[start + len(window)]
+        cost = len(text) + (1 if window else 0)
+        if used + cost > MAX_BODY_CHARS:
+            break
+        window.append(text)
+        used += cost
+    end = start + len(window)  # 末行的 1-based 行号；窗口为空时 = offset - 1
+    if end >= total:
+        tail = "\n" if window and start == 0 and body.endswith("\n") else ""
+        return "\n".join(window) + tail, ""
+    if not window:
+        footer = f"\n…（第 {offset} 行本身就超过 {MAX_BODY_CHARS} 字符的正文预算，未返回内容。）"
+    elif len(window) < cap:
+        footer = (
+            f"\n…（正文已达 {MAX_BODY_CHARS} 字符预算：显示第 {offset}-{end} 行，共 {total} 行；"
+            f"续读请把 offset 设为 {end + 1}。）"
+        )
+    else:
+        footer = f"\n…（已显示第 {offset}-{end} 行，共 {total} 行；续读请把 offset 设为 {end + 1}。）"
+    return "\n".join(window), footer
+
+
+def _read_document_call(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`read_document` 的工具包装层：解析 `offset`/`limit`，把越界转成 `NOT_FOUND` 结果。"""
+    offset = _positive_int(arguments.get("offset"), 1)
+    limit = _positive_int(arguments.get("limit"), DEFAULT_READ_LIMIT)
+    if offset is None:
+        return _error("read_document: offset 必须是 ≥ 1 的整数")
+    if limit is None or limit > DEFAULT_READ_LIMIT:
+        return _error(f"read_document: limit 必须是 1..{DEFAULT_READ_LIMIT} 的整数")
+    try:
+        return _read_document(kb_path, str(arguments.get("path") or ""), offset=offset, limit=limit)
+    except _ReadOffsetError as exc:
+        return _error(f"read_document: {exc}", "NOT_FOUND")
+
+
+def _safe_rel_any(kb_path: str, path: str) -> str | None:
+    """校验并归一化库内相对路径（**不限定扩展名**）；空 / 上跳 / 越界返回 None。
+
+    与 `_safe_rel()` 同源，只去掉 `.md` 后缀要求：`glob`/`grep` 要能指向任意文件与目录。
+    """
+    rel = (path or "").strip().replace("\\", "/").lstrip("/")
+    if not rel:
+        return None
+    norm = os.path.normpath(rel).replace(os.sep, "/")
+    if norm == ".." or norm.startswith("../"):
+        return None
+    full = os.path.abspath(os.path.join(kb_path, norm))
+    root = os.path.abspath(kb_path)
+    if full != root and not full.startswith(root + os.sep):
+        return None
+    return norm
+
+
+def _safe_rel_dir(kb_path: str, path: str) -> str | None:
+    """库内相对**目录**（`""` = 库根）；越界/非法返回 None。"""
+    norm = _safe_rel_any(kb_path, path)
+    if norm is None:
+        return None
+    return "" if norm == "." else norm
+
+
+def _walk_kb_files(kb_path: str, subdir: str = "") -> list[str]:
+    """库内文件清单（相对库根、`/` 分隔）：跳过 `GLOB_EXCLUDED_DIRS` 与解析到库外的条目。
+
+    越界判定在**两侧都先 `realpath`**：Windows 8.3 短名（`LAMTIM~1`）与 junction/符号链接会让
+    `realpath` 与 `abspath` 的书写形式不同 —— 只归一化一侧会把整个库误判成「库外」而**静默返回空**。
+    """
+    root = os.path.abspath(kb_path)
+    real_root = os.path.realpath(root)
+    base = os.path.join(root, subdir) if subdir else root
+    out: list[str] = []
+    for current, dirnames, filenames in os.walk(base):
+        dirnames[:] = sorted(name for name in dirnames if name not in GLOB_EXCLUDED_DIRS)
+        prefix = os.path.relpath(current, root).replace(os.sep, "/")
+        prefix = "" if prefix == "." else prefix + "/"
+        for name in filenames:
+            real = os.path.realpath(os.path.join(current, name))
+            if real != real_root and not real.startswith(real_root + os.sep):
+                continue  # 符号链接指向库外 ⇒ 不返回（后续也不会去读）
+            out.append(prefix + name)
+    return sorted(out)
+
+
+def _translate_glob(pattern: str) -> str:
+    """glob → 正则**主体**：`*` 不跨 `/`、`**` 跨目录（`**/` 可匹配零层）、`{a,b}` 择一、`[...]` 透传。
+
+    与上游 ripgrep 的 glob 方言有出入（见 §6.16 偏差 2）：不支持 `!` 取反、不支持 `**` 之外
+    的深度修饰；`{}` 只做单层展开（不嵌套）。
+    """
+    import re
+
+    out: list[str] = []
+    index = 0
+    while index < len(pattern):
+        char = pattern[index]
+        if char == "*":
+            if pattern.startswith("**", index):
+                index += 2
+                if index < len(pattern) and pattern[index] == "/":
+                    out.append("(?:.*/)?")
+                    index += 1
+                else:
+                    out.append(".*")
+            else:
+                out.append("[^/]*")
+                index += 1
+            continue
+        if char == "?":
+            out.append("[^/]")
+        elif char == "{":
+            end = pattern.find("}", index + 1)
+            if end < 0:
+                out.append(re.escape(char))
+            else:
+                options = pattern[index + 1 : end].split(",")
+                out.append("(?:" + "|".join(_translate_glob(option) for option in options) + ")")
+                index = end + 1
+                continue
+        elif char == "[":
+            end = pattern.find("]", index + 1)
+            if end < 0:
+                out.append(re.escape(char))
+            else:
+                out.append(pattern[index : end + 1])
+                index = end + 1
+                continue
+        else:
+            out.append(re.escape(char))
+        index += 1
+    return "".join(out)
+
+
+def _glob_matcher(pattern: str) -> Any:
+    """按上游口径构造匹配函数：模式含 `/` 时比「相对搜索根的整条路径」，否则比**文件名**（任意深度）。"""
+    import re
+
+    rx = re.compile(_translate_glob(pattern) + r"\Z", re.DOTALL)
+    by_name = "/" not in pattern
+
+    def matches(rel: str) -> bool:
+        target = rel.rsplit("/", 1)[-1] if by_name else rel
+        return rx.match(target) is not None
+
+    return matches
+
+
+def _mtime(kb_path: str, rel: str) -> float:
+    try:
+        return os.stat(os.path.join(kb_path, rel)).st_mtime
+    except OSError:
+        return 0.0
+
+
+def _glob_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`glob`：按 glob 模式列出库内文件（只读；库外与越界一律拒绝）。"""
+    pattern = str(arguments.get("pattern") or "").strip()
+    if not pattern:
+        return _error("glob: pattern 不能为空")
+    raw_path = str(arguments.get("path") or "").strip()
+    subdir = ""
+    if raw_path:
+        resolved = _safe_rel_dir(kb_path, raw_path)
+        if resolved is None:
+            return _error("glob: path 必须是知识库内的相对目录（不得上跳或越界）")
+        subdir = resolved
+        if not os.path.isdir(os.path.join(kb_path, subdir) if subdir else kb_path):
+            return _error(f"glob: 目录不存在：{raw_path}", "NOT_FOUND")
+    matches = _glob_matcher(pattern)
+    found = [
+        rel
+        for rel in _walk_kb_files(kb_path, subdir)
+        if matches(rel[len(subdir) + 1 :] if subdir else rel)
+    ]
+    if not found:
+        return ToolOutput(text=f"未匹配到文件（pattern={pattern!r}）。glob 只列库内文件，不列目录。")
+    # 上游 `--sort=modified`：按修改时间排序（方向取「新→旧」，证据见 §6.16 未实测第 ① 条）
+    found.sort(key=lambda rel: _mtime(kb_path, rel), reverse=True)
+    shown = found[:GLOB_MAX_RESULTS]
+    rows = list(shown)
+    if len(found) > len(shown):
+        rows.extend(
+            [
+                "",
+                f"（匹配 {len(found)} 个文件，仅显示最近修改的 {len(shown)} 个；"
+                "本库无 spill 存储，请收窄 pattern 或 path 以查看其余。）",
+            ]
+        )
+    return ToolOutput(text="\n".join(rows))
+
+
+def _check_include(include: str) -> str | None:
+    """校验 `include` 是**单个正向 glob**（对齐上游 `validateInclude()`，`grep.ts:67-78`）。"""
+    if not include.strip():
+        return "include 不能为空"
+    if include.startswith("!"):
+        return "include 只接受正向 glob；不支持 `!` 取反"
+    depth = 0
+    for char in include:
+        if char == "{":
+            depth += 1
+        elif char == "}":
+            depth = max(0, depth - 1)
+        elif char == "," and depth == 0:
+            return "include 只能是单个 glob（择一请写成 {a,b}，不要用逗号列表）"
+    return None
+
+
+def _preview_line(text: str, max_bytes: int = GREP_MAX_LINE_BYTES) -> str:
+    """按字节截断预览行，不切开 UTF-8 码点（上游 `previewLine()` 口径）。"""
+    raw = text.encode("utf-8")
+    if len(raw) <= max_bytes:
+        return text
+    return raw[:max_bytes].decode("utf-8", errors="ignore") + "…"
+
+
+def _grep_skipped_note(large: int, binary: int) -> str:
+    bits: list[str] = []
+    if large:
+        bits.append(f"{large} 个文件超过 {GREP_MAX_FILE_BYTES // (1024 * 1024)} MiB 未扫描")
+    if binary:
+        bits.append(f"{binary} 个二进制文件已跳过")
+    return f"（{'；'.join(bits)}）" if bits else ""
+
+
+def _grep_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`grep`：正则逐行搜库内正文，按文件分组返回 `Line N: <片段>`（只读）。"""
+    import re
+    import time
+
+    pattern = str(arguments.get("pattern") or "")
+    if pattern == "":
+        return _error("grep: pattern 不能为空（空白本身是合法正则）")
+    include = str(arguments.get("include") or "")
+    if include:
+        problem = _check_include(include)
+        if problem is not None:
+            return _error(f"grep: include 非法 —— {problem}")
+    try:
+        rx = re.compile(pattern)
+    except re.error as exc:
+        return _error(f"grep: 正则非法（本工具用 Python `re` 语法，非 ripgrep 方言）—— {exc}")
+
+    raw_path = str(arguments.get("path") or "").strip()
+    if raw_path:
+        resolved = _safe_rel_any(kb_path, raw_path)
+        if resolved is None:
+            return _error("grep: path 必须是知识库内的相对文件或目录（不得上跳或越界）")
+        full = os.path.join(kb_path, resolved)
+        if os.path.isdir(full):
+            targets = _walk_kb_files(kb_path, "" if resolved == "." else resolved)
+        elif os.path.isfile(full):
+            targets = [resolved]
+        else:
+            return _error(f"grep: 目标不存在：{resolved}", "NOT_FOUND")
+    else:
+        targets = _walk_kb_files(kb_path)
+    if include:
+        matches_include = _glob_matcher(include)
+        targets = [rel for rel in targets if matches_include(rel)]
+
+    deadline = time.monotonic() + GREP_TIMEOUT_S
+    hits: list[tuple[str, int, str]] = []
+    seen = 0
+    skipped_large = 0
+    skipped_binary = 0
+    for rel in targets:
+        if time.monotonic() > deadline:
+            return _error(
+                f"grep: 超过 {GREP_TIMEOUT_S:.0f} 秒协作预算已中止（已扫到 {seen} 处命中）——"
+                "请收窄 pattern / path / include 后重试",
+                "SEARCH_ABORTED",
+            )
+        full = os.path.join(kb_path, rel)
+        try:
+            if os.path.getsize(full) > GREP_MAX_FILE_BYTES:
+                skipped_large += 1
+                continue
+            with open(full, "rb") as handle:
+                head = handle.read(GREP_BINARY_SNIFF_BYTES)
+                if b"\x00" in head:
+                    skipped_binary += 1
+                    continue
+                payload = head + handle.read()
+        except OSError:
+            continue
+        for number, line in enumerate(payload.decode("utf-8", errors="replace").splitlines(), start=1):
+            if rx.search(line) is None:
+                continue
+            seen += 1
+            if len(hits) < GREP_MAX_MATCHES:
+                hits.append((rel, number, _preview_line(line)))
+
+    note = _grep_skipped_note(skipped_large, skipped_binary)
+    if not hits:
+        return ToolOutput(text=f"未匹配到内容（pattern={pattern!r}）。{note}")
+    grouped: dict[str, list[str]] = {}
+    for rel, number, text in hits:
+        grouped.setdefault(rel, []).append(f"Line {number}: {text}")
+    body = "\n\n".join(f"{rel}\n" + "\n".join(rows) for rel, rows in grouped.items())
+    header = (
+        f"命中 {len(hits)} 处（pattern={pattern!r}）"
+        if seen <= len(hits)
+        else f"命中 {len(hits)}/{seen} 处（pattern={pattern!r}）"
+    )
+    parts = [header, "", body]
+    if seen > len(hits):
+        parts.extend(
+            [
+                "",
+                f"（仅显示前 {len(hits)} 处；本库无 spill 存储，请收窄 pattern / path / include 以查看其余。）",
+            ]
+        )
+    if note:
+        parts.append(note)
+    return ToolOutput(text="\n".join(parts))
+
+
+def _sniff_image_media_type(data: bytes) -> str | None:
+    """按文件签名判定媒体类型（逐条对齐上游 `sniffImageMediaType()`，`read-image.ts:54-60`）。"""
+    if data.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if data.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    if data.startswith(b"GIF87a") or data.startswith(b"GIF89a"):
+        return "image/gif"
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        return "image/webp"
+    return None
+
+
+def _read_image_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`read_image`：参数与格式校验照上游，随后因**本端点不支持图像输入**而明确拒绝。
+
+    不伪造成功：本地消息层（`llm/types.py` 的纯文本 `Message.content`）无法把图片作为内容块
+    发出，故校验通过后仍返回 `UNSUPPORTED_IMAGE_INPUT`，并在文本里说明真实原因与替代做法。
+    校验顺序先参数/格式、后能力拒绝：这样模型能区分「文件不是图片」与「端点收不了图片」。
+    """
+    raw = str(arguments.get("file_path") or "")
+    if not raw.strip():
+        return _error("read_image: file_path 不能为空")
+    normalized = _safe_rel_any(kb_path, raw)
+    if normalized is None:
+        return _error("read_image: file_path 必须是知识库内的相对路径（不得上跳或越界）")
+    extension = os.path.splitext(normalized)[1].lower()
+    declared = IMAGE_EXTENSIONS.get(extension)
+    if declared is None and extension:
+        return _error(
+            f"read_image: 扩展名 {extension} 不是受支持的图片格式 —— read_image 只认 PNG/JPEG/WebP/GIF"
+            "（无扩展名的路径按文件签名判定）"
+        )
+    full = os.path.join(kb_path, normalized)
+    if not os.path.isfile(full):
+        return _error(f"read_image: 文件不存在：{normalized}", "NOT_FOUND")
+    try:
+        with open(full, "rb") as handle:
+            data = handle.read(IMAGE_SNIFF_BYTES)
+    except OSError as exc:
+        return _error(f"read_image: 读取失败 —— {exc}")
+    sniffed = _sniff_image_media_type(data)
+    if sniffed is None:
+        return _error(f"read_image: 文件内容不是受支持的图片格式（PNG/JPEG/WebP/GIF）：{normalized}")
+    if declared is not None and declared != sniffed:
+        # 上游同类拒绝：扩展名声明的类型与文件签名不一致（`read-image.ts` 的 IMAGE_TYPE_MISMATCH）。
+        return _error(
+            f"read_image: 扩展名 {extension} 声明 {declared}，但文件签名是 {sniffed} ——"
+            " 请把文件重命名成与内容一致的格式，或先转换成 PNG/JPEG/WebP/GIF"
+        )
+    media_type = declared or sniffed
+    return _error(
+        f"read_image: 本端点暂不支持图像输入 —— {normalized} 已通过格式校验（{media_type}），"
+        "但当前模型通道（`llm/types.py` 的纯文本 `Message.content`）无法把图片作为内容块发出，"
+        "故不返回图片本身；请改用文字描述该图，或等「消息层图片支持」落地（见 dsh-agent-port.md §6.16 待办）。",
+        UNSUPPORTED_IMAGE_INPUT,
     )

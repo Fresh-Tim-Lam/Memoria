@@ -42,7 +42,7 @@ from memoria.services.agent.llm import (
     UsageEvent,
 )
 from memoria.services.agent.loop import AgentLoop, StopReason
-from memoria.services.agent.prompt import build_system_prompt
+from memoria.services.agent.prompt import FILE_REFERENCE_TOOLS, build_system_prompt
 from memoria.services.agent.session.store import SessionStore, new_session_id, read_session
 from memoria.services.agent.tools import (
     DENIED_CODE,
@@ -483,10 +483,11 @@ def test_system_prompt_injects_kb_instructions_and_tools(kb: Path) -> None:
 
 
 def test_system_prompt_gates_file_reference_section_on_read_tool(kb: Path) -> None:
-    """`@路径` 引用说明与上游同门控：只在 `read_document` 在场时出现。
+    """`@路径` 引用说明与上游同门控：**任一读取手段在场**才出现。
 
     语义移植自 `context/file-reference`（上游 `ctx.tools.get('read') === undefined ? '' : ...`）：
-    模型没有读取手段时，教它"去读"没有意义。
+    模型没有读取手段时，教它"去读"没有意义。2026-09-20 起本地读取手段有四个
+    （`read_document` / `glob` / `grep` / `read_image`，见 `prompt.FILE_REFERENCE_TOOLS`）。
     """
     schemas = kb_registry(kb).schemas()
     with_read = build_system_prompt(str(kb), tools=schemas, model="m")
@@ -494,9 +495,17 @@ def test_system_prompt_gates_file_reference_section_on_read_tool(kb: Path) -> No
     assert '@"..."' in with_read
     assert "不得声称已经看过" in with_read
 
+    # 只剩 `glob`（读文档/检索/读图都不在场）⇒ 仍是"有读取手段"⇒ 注入
+    only_glob = build_system_prompt(
+        str(kb),
+        tools=tuple(s for s in schemas if s.name in ("glob", "search_kb", "kb_overview")),
+        model="m",
+    )
+    assert "用户引用（`@路径`）" in only_glob
+
     without_read = build_system_prompt(
         str(kb),
-        tools=tuple(s for s in schemas if s.name != "read_document"),
+        tools=tuple(s for s in schemas if s.name not in FILE_REFERENCE_TOOLS),
         model="m",
     )
     assert "用户引用（`@路径`）" not in without_read

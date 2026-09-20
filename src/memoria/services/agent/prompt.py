@@ -58,7 +58,7 @@ __all__ = [
     "load_instructions",
     "prompt_debug_info",
     "render_instructions", "TIME_CONTEXT_SECTION", "format_time_context", "render_time_context",
-    "MODEL_CHANGE_NOTICE", "render_model_change_notice"]
+    "MODEL_CHANGE_NOTICE", "render_model_change_notice", "FILE_REFERENCE_TOOLS"]
 
 #: 知识库内指令文件所在目录（相对库根）。
 AGENT_DIR = (".memoria", "agent")
@@ -203,8 +203,8 @@ def _render_tools(tools: Sequence[ToolSchema]) -> str:
 #: 否则是文件且"读过之前不得声称看过" / `@"..."` 表示含空格。
 #:
 #: 门控对齐上游（`ctx.tools.get('read') === undefined ? '' : FILE_REFERENCE_PROMPT`）：
-#: **只在 `read_document` 在场时注入** —— 模型没有读取手段时，教它"去读"没有意义。
-#: 语义偏差：上游目录一条是 "list it"（它有列目录工具），本地无列目录工具，故改指 `search_kb`。
+#: **任一读取工具在场即注入**（`read_document` / `glob` / `grep` / `read_image`，名单见文件末尾）—— 模型没有读取手段时，教它"去读"没有意义。
+#: 语义偏差：上游目录一条是 "list it"（它有列目录工具），本地无列目录工具，故改指 `search_kb` 与 `glob`（后者即本地"按模式列文件"的手段）。
 FILE_REFERENCE_SECTION = "\n".join(
     [
         "## 用户引用（`@路径`）",
@@ -258,7 +258,7 @@ def build_system_prompt(
     if tool_section:
         sections.append(tool_section)
 
-    if _has_tool(tools, "read_document"):  # `@路径` 说明：门控同上游（见 FILE_REFERENCE_SECTION）
+    if _has_read_tool(tools):  # `@路径` 说明：门控同上游「任一读取手段在场」（见 FILE_REFERENCE_SECTION）
         sections.append(FILE_REFERENCE_SECTION)
     sections.append(TIME_CONTEXT_SECTION)  # 时间上下文：对应上游「插件被挂载」，不按工具门控
 
@@ -380,3 +380,15 @@ def render_model_change_notice(previous: str, current: str) -> str:
     if not before or not after or before == after:
         return ""
     return MODEL_CHANGE_NOTICE.format(previous=before, current=after)
+
+
+# ── `@路径` 段的门控名单（2026-09-20；上游读面移植，见 dsh-agent-port.md §6.16）──────────
+# 定义在文件末尾：`build_system_prompt()` 在**调用期**取用，故顶层 import 段与其上方
+# `<文件>:<行号>` 锚点零漂移（同 §6.14 的 `_local_now()` 局部导入同款取舍）。
+#: 任一在场即注入 `FILE_REFERENCE_SECTION`（上游口径 = `read` 工具在场；本地读取手段有四个）。
+FILE_REFERENCE_TOOLS = ("read_document", "glob", "grep", "read_image")
+
+
+def _has_read_tool(tools: Sequence[ToolSchema]) -> bool:
+    """`@路径` 段的门控：工具集里**只要有一个读取手段**就注入说明。"""
+    return any(_has_tool(tools, name) for name in FILE_REFERENCE_TOOLS)
