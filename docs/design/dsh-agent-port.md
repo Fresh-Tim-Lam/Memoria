@@ -108,13 +108,13 @@
 | `context/agent-instructions` | 39 ts | 工作区指令文件 → 上下文（**只加上下文、不加工具**） | ✅ 吃 | 对接既有 `.memoria/agent/kb-spec*.md` | **M1** |
 | `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ✅ 吃文件引用（§6.7）、会话引用（§6.12）与时间上下文（§6.14，只吃文本语义）；tmux ❌ | `services/agent/prompt.py`、`services/agent/session/reference.py` | **M2** |
 | `interaction/user-approval` · `tool-ask-user` | 24 ts | 一次性审批、向用户提问（fail-closed） | ✅ 吃最小面 | `services/agent/approvals.py` | **M1** |
-| `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M3（**本轮已界定：两者都无本地落点** —— `commands` 的 registry 没有消费方（`ask()` 无命令入口，§5 的 `command-compact` 又是 ❌）、`permission-presets` 需要 ≥2 个可切旋钮而本地只有一条固定审批策略且无 sandbox；证据见 §6.15 表） | 前端指令 | M3 |
+| `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M3（**本轮已界定：两者都无本地落点** —— `commands` 的 registry 没有消费方（`ask()` 无命令入口，§5 的 `command-compact` 又是 ❌）、`permission-presets` 需要 ≥2 个可切旋钮而本地只有一条固定审批策略且无 sandbox；证据见 §6.15 表）。**M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板/待实施**：能力插件契约的 `approval` 档（`auto`/`confirm`/`never`）提供了第 2 个旋钮 ⇒ `permission-presets` 的对象侧已具备（待拍板 P11）；`commands` 仍缺真实需求 | 前端指令 | M3 |
 | `credentials/credentials-local` | 19 ts | 本地密钥**引用**（配置写名不写值） | ✅ 吃 | `services/agent/credentials.py` | **M1** |
-| `credentials/authorization` | 同上 | 授权流程 | ⏳ 需要 OAuth 类端点时（**本地不适用**：单端点单密钥，`llm/config.py` 已覆盖"写名不写值"；无 OAuth 端点可授权，§6.15 表） | — | M3 |
+| `credentials/authorization` | 同上 | 授权流程 | ⏳ 需要 OAuth 类端点时（**本地不适用**：单端点单密钥，`llm/config.py` 已覆盖"写名不写值"；无 OAuth 端点可授权，§6.15 表）；**M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板/待实施**（本轮 M3 设计未改变此判定） | — | M3 |
 | `compaction/*` | 33 ts | 长会话压缩、工具输出裁剪、`/compact` | ✅ 吃 `compaction` + `compaction-basic` + `compaction-tool-result-pruner`；`image-offload` / `command-compact` ❌ | `services/agent/compaction.py`、`services/agent/pruner.py` | **M2** |
 | `session-query/*` | 48 ts | 会话检索 | ✅ 吃 `session-query` 的 `extraction`+`filters` 与 `tool-session-query`；`session-query-sqlite` / `session-log-export` ❌ | `services/agent/session/query.py` | **M2** |
 | `api/*` · `sdk/*` · `bundle/*` | 162+21 ts | Client↔Host 远程层、JSON-RPC、profile 组合 | ❌ 不吃（若将来要对 Trae/ACP 对接，复用旧稿 D2 的 CLI 面即可） | — | — |
-| `storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*` | — | 非会话持久、技能、钩子、计划 | ⏸ 按需（`skill` 与既有 `.memoria/agent/` 提示词体系可能重合，M3 再评） | — | — |
+| `storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*` | — | 非会话持久、技能、钩子、计划 | ⏸ 按需（`skill` 与既有 `.memoria/agent/` 提示词体系可能重合，M3 再评）。**M3 已评**：`skill` 归入 [agent-capabilities.md §2.1](agent-capabilities.md) 的**同一份能力插件契约**（`kind: skill`，声明式、无执行体）；本行其余仍按需 | — | — |
 | `sandbox/*` · `shell/*` · `terminal/*` · `subprocess/*` · `ssh/*` · `lsp/*` · `mcp/*` · `browser-use/*` · `computer-use/*` · `subagent/*` · `workflow/*` · `jobs/*` · `schedule/*` · `native/*` | 大 | 执行与编排 | ❌ **不吃**（Memoria 不让它跑任意命令；也避免 CVE 面） | — | — |
 
 ---
@@ -797,7 +797,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 红线（出处） | 本方案的落法 |
 |---|---|
 | **离线优先**（designV0） | 应用**默认可用但可一键关**出网；模型仅走用户自配端点；不内嵌权重、不后台拉取任何东西；`.memoria/cache/**` 之外不新增缓存 |
-| **禁止 silent 写入**（designV0:254,911） | M1 工具面**只读**；写能力（M3）一律"提议 → 用户确认 → 应用"，且应用必须走既有服务层（原子写 A7 → 索引失效 G5.4 → manifest/sidecar 同步 A1/A2 → pending 同步 A3），**禁止旁路写文件** |
+| **禁止 silent 写入**（designV0:254,911） | M1 工具面**只读**；写能力（M3）一律"提议 → 用户确认 → 应用"，且应用必须走既有服务层（原子写 A7 → 索引失效 G5.4 → manifest/sidecar 同步 A1/A2 → pending 同步 A3），**禁止旁路写文件**。**M3 设计已完善**（[agent-capabilities.md §2.3.1](agent-capabilities.md)）：该红线在**插件边界物理可证** —— 插件不含可执行体（无 `open(...,"w")` 的机会）、核心写原语是唯一写者、落盘前做 realpath 前缀校验 |
 | **单一事实源**（AGENTS.md §1） | 会话数据落在新事实源（须先登记，见 P3）；提示词/规范仍只有 `.memoria/agent/**` 与 `resources/agent-prompts/**` 两处（后者是程序读取源） |
 | **免安装、可离线分发**（`build.py` 硬门禁） | 纯 Python 实现 ⇒ **不引 Node、不引新运行时**；新增依赖须过 `packaging/build.py` 的 `_REQUIRED_RELEASE_RESOURCES` 与体积预算（M1 目标：轻量包增量 < 2 MB） |
 
@@ -809,7 +809,7 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 |---|---|---|
 | **M1** | 应用内对话 + 读库问答（只读工具、单一会话、jsonl 持久化、密钥本地引用、出网开关） | §6.4 全绿 + 用户真机走查 |
 | **M2** | 长会话（compaction）+ 会话检索（session-query）+ 上下文引用（file/session reference/time）+ 标题 | M1 门禁 + 压缩前后 A/B（上下文长度、回答可回溯性） |
-| **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路 | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
+| **M3** | 写能力：提议 → 确认 → 应用（per-KB 开关 + 逐条确认）；对接既有写链路。**设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)：可插拔能力插件契约 + M3a/M3b 分期 + 安全门三条），待拍板（P7–P11）/ 待实施** | "无 silent 写入"专项验证：任一次拒绝都不改盘；`validate_kb` errors=0 |
 | **M4** | 对外契约（若届时 D2 仍在推进）：复用旧稿 §7 的 T1 CLI 面，把 M1–M3 的能力暴露给外部 agent | 契约文档 + 版本协商 + 只读默认 |
 
 > **M2 落盘口径（2026-09-18 拍板）**：compaction 的结果**持久化进会话 JSONL**（新增一种记录类型，由 `session/history.py::build_history()` 回放时把被覆盖区间替换为摘要），对齐上游「把摘要写进会话事件面」的做法；**不**采用「请求期变换 + `.memoria/cache/` 缓存摘要」那条路。
@@ -827,6 +827,9 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 > **M2 之后仍未做（按阶段）**：**M3** = 写能力（提议 → 确认 → 应用）+ 由它解锁的
 > `interaction/permission-presets`（要有第 2 个旋钮才有"档"可切）与 `interaction/commands`
 > （要有真实命令需求才有得注册）；**M4** = 对外契约（旧稿 §7 的 T1 CLI 面）。
+> **M3 设计已完善（见 [agent-capabilities.md §2](agent-capabilities.md)），待拍板（P7–P11）/ 待实施**：
+> 写能力改为「可插拔能力插件」形态（契约 + 装载器 + 写管线 + 权限矩阵），并给出 **M3a/M3b** 两个
+> 切片与安全门三条；`permission-presets` 所需的"第 2 个旋钮"由该契约的 `approval` 档提供（§2.1/P11）。
 > 另有两条**本模块级**待办（见 §6.15 末段）：`tool/call` 落盘位次对齐（`toolMs` 可测的前提）与逐轮成本按轮模型归属。
 >
 > **仍标 ⏳ 的行（截至 2026-09-20，已按 §6.15 的全量读码界定收敛）**：
@@ -891,3 +894,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-19 | **M2 会话标题落地**（吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`；**不吃** `all-prompts`（每轮一次调用不值）/ 投影框架 / `session/title-llm-request` 预派发记录 / `rename()`）：新增 `services/agent/title.py`（`session/title` **log-only** 事件；来源最新者胜：`fallback` 确定性兜底 = 首条人类消息前 8 词 / 96 字节、`provider` 模型标题、`user` 改名未移植；规范化照搬上游（OSC/CSI/ESC 序列、C0-C1、方向与隐形字符、空白折叠、**按 UTF-8 字节截断不切开码点**）；限额 8/96/120 + 调用策略 `maxInputBytes=32768` / `maxOutputTokens=96` / `timeout=20s`；`generate_title()` **fail-closed**（非 `stop` 的终止原因一律拒）；`auto_title()` = `first-prompt` 节律）；`history.py` 的 `summarize_events`/`summarize_session_file` 都改为**优先取折叠标题**（原始行扫描只对最后一个命中行解码，与折叠同口径）；`ask()` 两步接进（追加提问后落兜底、主回合后跑首轮一次的模型标题、**被取消的轮次跳过**、两步都 fail-open）；**顺带修掉"做完也看不见"**——前端 `#agent-history` 下拉标签由 `preview` 改为 `title || preview`（后端 `title` 字段此前从未被前端使用）。验收：`pytest -q` **184 passed**（原 153 + 31 例 `tests/test_agent_title.py`；`test_agent_history.py` 一处断言随之更新）；**浏览器实测**（harness 端口 8645、临时库 + 手写 `session/title`、不需要模型）：`agent_sessions_list.title = "多层感知机的要点"`、下拉选项文本 `多层感知机的要点（1 轮）`。偏差（**本地无异步服务 ⇒ 标题调用排在主回合之后**、仅首轮一次；被取消轮次不生成；用量记进事件但不进 benchmark）、缺口与未实测见 §6.11；§5 映射表与 §8「M2 剩余」同步更新 |
 | 2026-09-20 | **M2 时间上下文落地**（吃 `context/time-context` 的 `timestamp.ts` 字段口径 + `request-zone.ts` 三态策略 + `index.ts` 的 `renderText()` 文本；**不吃** pre-step 监听器 / `refreshIntervalMs` 到期调度 / `sessionProjections` 投影 / `invariant.ts`）：`services/agent/prompt.py` 文件尾追加 `TIME_CONTEXT_SECTION`（中文落法，上游英文原文写在常量注释上方；**不按工具门控** —— 对齐上游「插件被挂载」）+ `_local_now()` / `format_time_context()` / `render_time_context()`，`build_system_prompt()` 在「用户引用」之后无条件追加该段（`prompt.py:263`）；`ask.py:421` 把读数追加在**本轮请求末尾**（不进 system 段、不落盘）。验收：`py_compile` 全过；`pytest -q` **258 passed**（原 254 + 本轮 4 例，另 3 处既有断言随读数更新）；Python 级真实渲染 `当前本地时间：2026-09-20T09:51:44+08:00`（本机 `Asia/Shanghai`）+ `tools=()` 门控对照（时间上下文段在、文件引用段不在）。有意偏差：读数不落盘（同 §6.12 偏差 1）、静态说明与动态读数两分（KV 前缀）、三态时区收敛为一句、省略 `[IANA]` 括注、无 turn/step 与 elapsed、不新增配置项。偏差、缺口与未实测见 §6.14；§5 映射表 + §8 阶段状态同步 |
 | 2026-09-20 | **M2 模型切换落地 + ⏳ 候选全量界定**（吃 `core/agent` 的 `model-selection`；同一轮把 §5 全部 ⏳ 候选读码量过并逐条定性）：`loop.py` 的 `loop/end` 载荷新增 `"model"`（`loop.py:396`，**+1 行**）；`prompt.py` 文件尾追加 `MODEL_CHANGE_NOTICE` + `render_model_change_notice()`（上游 `modelSwitchNotice()` 的中文落法，英文原文写在常量注释上方）；`ask.py:421` 同行内联追加 `_model_notice(...)`（文件尾追加 `_last_recorded_model()` / `_model_notice()`）—— 续聊时「会话最后一条 `loop/end.model` ≠ 本轮模型」就在本轮请求里加一条告知（**不落盘**，同 §6.12/§6.14 口径）。验收：`py_compile` 全过；`pytest -q` **265 passed**（原 258 + 7 例，**无既有断言需要改**）；Python 级实请求逐字取证（`第二问\n\n[模型已更换：本轮之前的助手回复由 deepseek-chat 生成；本会话此后由 model-beta 继续]\n\n当前本地时间：…`；同模型续聊无告知；`loop/end.model=['deepseek-chat','model-beta','model-beta']`；JSONL 正文仍是用户原文）。**本轮把 6 个 ⏳ 候选定性为**：`core/agent` 的 registry/initiator 与 `session-projection*` 框架 = 不吃（Cordis 专有）、`agent-default-model` = 已覆盖（`llm/config.py`）、`agent-tool-presentation` = 本地恒 `native`、`session-stats` = 不吃（ttft/decode 无事件面、turns/steps 已覆盖、`toolMs` 因本地 `tool/call` 落盘位次而后测不准）、`commands`/`permission-presets` = 留 M3（无消费方 / 无第二个旋钮）、`credentials/authorization` = 条件性 ⏳。偏差（告知由日志派生而非持久消息、标签无 provider、基准是"最近一轮"、老会话不告知、`replay=False` 不告知、插入位次）与未实测见 §6.15；§5 四行 + §8 阶段状态同步 |
+| 2026-09-20 | **M3 设计完善（docs only，未实施）**：写能力改为「可插拔能力插件」形态并把四条线（W/N/S/H）收进**同一份契约**，详见 [agent-capabilities.md §2](agent-capabilities.md)（该文件本轮重写 §2 七小节 + 新增 §10 P7–P11 + §9 R8）。本文件同步：§5 `interaction/commands · permission-presets` 行（`approval` 档 = 第 2 个旋钮，待拍板 P11）、`credentials/authorization` 行、`storage/* · skill/* · hooks/*…` 行（`skill` 归入同一契约）；§7 红线「禁止 silent 写入」行（补"插件边界物理可证"）；§8 的 **M3 行**与 §8 表下注（M3 设计已完善，待拍板/待实施）。**未新增/修改任何源码**；`todo.md §13 AG04` 仍为 K3 待评审 |

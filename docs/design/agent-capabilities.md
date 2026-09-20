@@ -2,7 +2,7 @@
 
 > **用途**：把"让 agent 真正智能"的四条能力线（**W 写能力 / N 联网收集 / S skill 机制 / H 宿主接口**）与两条横向约束（**token 预算与工具元层 / 基准测试集**）收敛成**可施工的阶段表与验收口径**。
 > **关系**：调用面（循环、会话、工具注册表、只读工具、压缩/裁剪/标题/会话检索）已在 [dsh-agent-port.md](dsh-agent-port.md) 的 M1–M2 落地；本文只接它的 **M3（写能力）与 M4（对外契约）** 并展开。基准方法论复用 [maintenance-benchmark.md](maintenance-benchmark.md)（分层采集 / 确定性语料 / A/B 与门禁）。
-> **状态**：待评审（2026-09-19）。**实施状态的唯一来源是 [../todo.md §13](../todo.md) 的条目 ID**（本文不复制状态，遵守 [ledger-maintenance.md](../conventions/ledger-maintenance.md) 规则 1.2）。
+> **状态**：待评审（2026-09-19 初版；**2026-09-20 完善 M3**：把写能力提升为「可插拔能力插件」契约的第一个消费者，四条线由此共用同一装载器，见 §2）。**实施状态的唯一来源是 [../todo.md §13](../todo.md) 的条目 ID**（本文不复制状态，遵守 [ledger-maintenance.md](../conventions/ledger-maintenance.md) 规则 1.2）。
 
 ---
 
@@ -11,8 +11,8 @@
 | 红线 | 本路线图的落法 |
 |---|---|
 | **离线优先** | 只有 **N 线**引入出网，且**逐次显式**（默认只读、默认关；见 §3.1） |
-| **禁止 silent 写入** | **W 线**一律"提议 → 逐条确认 → 应用"，且只走既有服务层（§2.3）；**任何一次拒绝都不改盘** |
-| **单一事实源** | 能力包（skill）、工具元数据、基准产物都要先登记进事实源表，禁止并行副本 |
+| **禁止 silent 写入** | **W 线**一律"提议 → 逐条确认 → 应用"，且只走既有服务层（§2.3）；**任何一次拒绝都不改盘**。**2026-09-20 加强**：该红线改为在**插件边界物理可证**——插件不含可执行体、核心写原语是唯一写者、落盘前做 realpath 前缀校验（§2.3.1） |
+| **单一事实源** | 能力包（skill / 能力插件）、工具元数据、基准产物都要先登记进事实源表，禁止并行副本；**M3 新增的库级注册文件** `<kb>/.memoria/agent/capabilities.json` **须由人登记进 [AGENTS.md §1](../../AGENTS.md)**（见 §2.2） |
 
 ---
 
@@ -21,7 +21,7 @@
 | 能力 | 现状 | 缺口 |
 |---|---|---|
 | 只读知识库 | ✅ 六个工具：`search_kb` / `read_document` / `read_kp` / `kb_overview` / `validate_kb` / `search_sessions`（`services/agent/tools/kb.py`，零写入守卫 `kb_read_only`） | — |
-| **文件增删改** | ❌ | W 线：写工具 + 审批 + 回滚 |
+| **文件增删改** | ❌ | W 线：写工具 + 审批 + 回滚（**M3 起统一为「能力插件」形态**，见 §2） |
 | **建点 / 连边 / 改边类型** | ❌（只有 UI 手工入口：KP 面板、图谱面板） | W 线：同上；边类型改写在 sidecar 的 `links`/`edges` 面，需处理"边类型迁移"与既有 `path_cascade` 的边界 |
 | **联网资料拉取与收集** | ❌（只有"出网开关 + 自配模型端点"） | N 线：检索/抓取 + 落 `pending` 的收集链路 |
 | **用户自定义能力包** | ⚠️ 只有 `.memoria/agent/**` 的**指令文件**（语义上"只加上下文、不加工具"） | S 线：声明式 skill（发现/注入/权限/版本） |
@@ -32,39 +32,214 @@
 
 ---
 
-## 2. 能力线 W：写能力（文件增删改 / 建点 / 连边 / 改边类型）
+## 2. 能力线 W：写能力 —— 第一个**可插拔能力插件**（M3 完善设计）
 
-### 2.1 统一形态：提议 → 逐条确认 → 应用
+> 用户口径（2026-09-20）：「M3 需要完善设计，做成可插拔的机制」。本节因此**不只是**写工具清单：先把 **W/N/S/H 四条线共用的「能力插件契约」**定下来（2.1–2.2），再把**写能力作为该契约的第一个消费者**落地（2.3–2.4），最后说明四条线如何各自成为**同一条契约下的插件族**（2.5）与分期验收（2.6）。
+> **契约的模板**是 [AGENTS.md §6](../../AGENTS.md) 的 Agent 注册条目（声明式条目 + 单一注册文件 + 权限显式 + 禁项显式 + 提示词独立文件），实样见 `artifacts/agent/agents.json`；差别只在"扩展的是**产品内对话 Agent 的工具面**"而不是"仓库协作 Agent 的派发面"（边界措辞见 [dsh-agent-port.md §10](dsh-agent-port.md) 的待人工改动项）。
 
-- 模型**不直接写盘**：写工具只产出**提议**（结构化 diff 草案），由**人在面板上逐条确认**后才应用；
-- 一次确认 = 一个**事务**：应用前取受影响文件的快照（内容 + sidecar + manifest 基线），任一步失败即**整批回滚**；
-- 提议要**可读**：每条提议带"人话一句话 + 影响文件 + 前后差异"，不含原始 JSON；
-- **不做**"模型自动应用"（至少 W1–W2 不做）；也不做"按规则批量自动应用"（留到有基准能证明安全之后）。
+### 2.1 插件能力契约（capability plugin contract）
 
-### 2.2 工具清单（草案，按价值排序）
-
-| 工具 | 语义 | 幂等键 | 关键风险 |
+| 字段 | 必填 | 语义 | 装载期硬校验 |
 |---|---|---|---|
-| `create_kp` | 在指定文件建知识点（写 sidecar + 锚定 range） | `(file, kp_id)` | range 锚不稳 → 复用既有 KP 创建/确认链路 |
-| `link_kps` | 连边（含边类型） | `(from, to, type)` | 边类型词表必须与图谱面板同一份事实源 |
-| `set_link_type` | 改边类型 | 同上 | 与"边类型迁移"同一实现 |
-| `update_kp` | 改 KP 名/描述/标签 | `(file, kp_id)` | 图谱与 KP 面板的静默刷新 |
-| `create_file` / `rename_file` / `delete_file` | 文件级增删改 | `(path)` | 必须复用既有级联（rename/delete 已有 UI 实现） |
-| `move_file` | 移动（目录重命名已实现，文件移动待补） | `(from, to)` | 正文内相对链接改写（现有 `path_cascade` **不碰正文**，见 §9 风险 R2） |
+| `id` | ✅ | 英文标识（kebab-case，唯一） | 重复即**装载失败**（不静默取其一） |
+| `kind` | ✅ | `read` / `write` / `network` / `skill` / `host` | 必须是这五值之一；决定默认 `approval` 档与 UI 分组 |
+| `provides.tools[]` | ✅ | 它贡献的工具：`tool_id`（**必须**取自核心原语目录）+ 参数收紧 `constrain` + 门控 `gate` | `tool_id` 不在原语目录 → 拒绝装载 |
+| `provides.prompt` | ⬜ | 提示词段落文件（相对插件目录） | 与它的工具**同门控**；不得写进 `resources/agent-prompts/**`（那是既有事实源，见 [dsh-agent-port.md §6.3](dsh-agent-port.md)） |
+| `permissions.read` | ✅ | 可读路径 glob（相对库根） | `read` 之外的 `tool_id` 一律拒 |
+| `permissions.write` | ✅ | **可写**路径 glob；`kind=write` 必填且非空 | 空 ⇒ 该插件不可写（默认档） |
+| `permissions.exec` | ⬜ | 外部命令白名单 | **M3 恒为空**（见 2.6 不做清单） |
+| `forbidden` | ✅ | 与仓库/产品红线对齐的禁项文本 | 非空，且与 `permissions` 无自相矛盾 |
+| `approval` | ✅ | 按动作类分档：`auto` / `confirm` / `never` | `write` 类**不得**为 `auto`（硬校验，见 §10 P9） |
+| `config` | ⬜ | 参数 schema（`type`/`default`/边界）+ 库级启停默认值 | 参数名与类型必须过校验；持久化位置见 2.2 |
+| `emits` | ✅ | 它产生的审计/事件类型 | 只允许**追加**型事件名 |
+| `verify` | ✅ | 自证手段：`unit`（单测路径）+ `harness`（交互钩子） | 缺失不予装载（同 §6.3 原则 6「可观测」） |
+| `provenance` | ✅ | `none` 或 `ported-from-dsh@<pin>` | 非 `none` 必须同时出现在根目录 `THIRD_PARTY_NOTICES.md` |
+| `unload` | ✅ | 卸载语义：`restart`（默认）/ `hot` | 声明 `hot` 必须附卸载用例 |
 
-### 2.3 必须复用的写链路（禁止旁路）
+字段之外还有**一条铁律**（2.2 会反复引用）：**插件目录内不含可执行代码**（无 `.py` / `.js` / 脚本），只含**声明 JSON + 提示词 + 只读资源**。
 
-原子写 → 索引失效 → manifest/sidecar 同步 → pending 同步 → KP 重锚 →（必要时）图谱增量。对应实现集中在 `services/document.py`、`storage/{pending,sidecar,manifest,path_cascade}.py`、`services/kp_index.py`。**写工具只允许调这些服务的公开入口**，不允许 `open(...,"w")` 直接落盘。
+**内置声明实样**（`resources/agent-capabilities/kb-write.json`，随版本分发、只读）：
 
-### 2.4 审批与回滚
+```jsonc
+{
+  "v": 1,
+  "id": "kb-write",
+  "name": "写能力（建点 / 改点 / 连边 / 文件增删改）",
+  "kind": "write",
+  "provides": {
+    "tools": [
+      { "tool_id": "kb.kp.create",   "gate": "always" },
+      { "tool_id": "kb.kp.update",   "gate": "kb_has_sidecar" },
+      { "tool_id": "kb.link.create", "gate": "always", "constrain": { "type": { "enum_from": "graph.link_types" } } }
+    ],
+    "prompt": "prompt.zh-CN.md"
+  },
+  "permissions": {
+    "read":  [ "**/*.md", ".memoria/**" ],
+    "write": [ "**/*.md", ".memoria/sidecars/**", ".memoria/manifest.yaml", ".memoria/pending.json" ],
+    "exec":  []
+  },
+  "forbidden": [
+    "写入库外路径（含符号链接指向库外）",
+    "写入 .memoria/agent/sessions/**（会话事实源只由核心追加审计事件）",
+    "git commit / git push"
+  ],
+  "approval": { "read": "auto", "write": "confirm", "network": "never" },
+  "config": {
+    "max_files_per_apply": { "type": "integer", "default": 3, "minimum": 1, "maximum": 10 },
+    "allow_file_delete":   { "type": "boolean", "default": false }
+  },
+  "emits": [ "capability/proposal", "capability/apply", "capability/reject" ],
+  "verify": { "unit": "tests/test_agent_capabilities.py", "harness": "docs/example/rich-content-test/_harness.py#write-diff-card" },
+  "provenance": "ported-from-dsh@0d1f5000（只借 `fs/tool-fs` 的 diff 呈现契约；不移植其落盘路径）",
+  "unload": "restart"
+}
+```
 
-- 审批面沿用既有 `approvals.py` 的 **fail-closed** 语义：未获批 = 不执行；
-- 面板交互形态待定（见 §10 P1）：逐条 ✓/✗、批量"接受全部同类"；
-- 回滚：事务快照 + `git`-free 的本地副本（不改用户库结构，临时目录内存放）。
+**库级启用实样**（`<kb>/.memoria/agent/capabilities.json`，随库走、用户可改）：
 
-### 2.5 验收（M3 出口，沿用 dsh-agent-port §8）
+```jsonc
+{
+  "v": 1,
+  "enabled": [
+    { "id": "kb-write",       "on": true,  "config": { "max_files_per_apply": 3 } },
+    { "id": "web-fetch",      "on": false, "config": {} },
+    { "id": "kb-skill-local", "on": true,  "config": {} }
+  ]
+}
+```
 
-**"无 silent 写入"专项**：任一次拒绝/失败都不改盘（逐文件 SHA256 快照比对）；应用成功后 `memoria validate` **errors=0**；被写文件的 diff 只出现在"人确认过的那几条"上。
+> 注意 `kb-write` 的 `permissions.write` **不含** `.memoria/agent/sessions/**`：审计事件是**核心**写的，不是插件写的 —— 这正是 2.3.1「插件物理上不能越界」的一个可核实例。
+
+### 2.2 注册与装载
+
+- **两个位置，职责分开**（沿用既有的"程序读取源 vs 库内事实源"分工）：
+  1. **插件声明（随版本分发，只读）**：`resources/agent-capabilities/<id>.json` —— 与 `resources/agent-prompts/**` 同级的**程序读取源**，不含可执行代码；
+  2. **库级启用与参数（随库走，用户可改）**：`<kb>/.memoria/agent/capabilities.json` —— **单一注册文件**（形态对齐 `artifacts/agent/agents.json`）。**该文件是新增事实源，须由人登记进 [AGENTS.md §1](../../AGENTS.md) 单一事实源表**（Agent 只读那张表；先例见 [dsh-agent-port.md §10](dsh-agent-port.md) 的 P3 会话目录）。
+- **发现顺序**（顺序确定，冲突即失败）：① 内置声明按 `id` 字典序加载 → ② 用 `<kb>/.memoria/agent/capabilities.json` 的 `enabled[]` 求交集与启用位 → ③ `id` 未在声明里出现 / 校验失败 / `config` 超界 ⇒ **该条不装载 + 一条可见告警**，其余照常（**装载 fail-soft，执行 fail-closed**）。
+- **冲突与重名**：
+  - 两个声明同 `id` ⇒ 装载失败；
+  - 两个插件声明**同一 `tool_id` 的同一动作类** ⇒ 装载失败（沿用 `ToolRegistry.register()` 的既有语义：重名 `raise ValueError`，`services/agent/tools/registry.py:207`、`:212-213`）；
+  - `tool_id` 与原语目录不一致（未知动作）⇒ 拒绝该 `tool_id`，不静默降级。
+- **不变量「新增插件不改核心」**：装载器落地（M3a）之后，新增一个插件 **不得**改动下列任一文件 —— `services/agent/tools/registry.py`、`services/agent/tools/kb.py`、`services/agent/approvals.py`、`services/agent/ask.py`、`services/agent/llm/config.py`、`presentation/api/ui.py`、`services/document.py`、`storage/{sidecar,manifest,pending}.py`。新插件只需**两处新增**：`resources/agent-capabilities/<id>.json` +（若贡献提示词）同目录的 `prompt.*.md`；库级只改 `<kb>/.memoria/agent/capabilities.json`。
+  - **为什么不需动 `llm/config.py` 的键白名单**：库级启停状态落在**另一个文件**（`.memoria/agent/capabilities.json`），因此 `_WRITABLE_KEYS`（`services/agent/llm/config.py:87`）与全局 `config/agent.json` 的键集**不变** —— 避免了"per-KB 状态挤进全局配置"（全局/库级的分工口径见 [dsh-agent-port.md §10](dsh-agent-port.md) 的 P4）。
+- **工具原语（primitive）的归属**：`tool_id`（如 `kb.kp.create`）背后的**工具体**属**核心原语目录**，由 M3a 一次性加进目录（内部只调 `DocumentService` / `storage/**` 的公开入口，见 2.3.1）；插件只能**挑用 + 收紧参数 + 声明权限**，不能新增工具体。这条就是"物理上不能越界"的**根**：**插件不带代码 ⇒ 没有 `open(...,"w")` 的机会**。
+- **UI/RPC 面**：`UIAPI` 的公开方法即 RPC（`src/memoria/app/shell/pywebview.py:477` 的 `js_api=api`）。装载器只新增**一个通用网关方法**（如 `agent_capability_call(id, action, payload)`）+ 既有的配置读写面，**不按插件新增具名方法** —— 否则每加一个插件就要改 `presentation/api/ui.py`，与"不改核心"矛盾。
+
+### 2.3 写管线（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销）
+
+| 步 | 做什么 | 落在哪（**已存在**的接入口） |
+|---|---|---|
+| 1 **propose** | 模型调用写工具 ⇒ **只产提议**、不落盘。提议 = 人话一句 + 影响文件清单 + 结构化变更（不含原始 JSON） | 写工具声明 `read_only=False`（`services/agent/tools/registry.py:114`）⇒ 必过审批 |
+| 2 **dry-run diff** | 应用前算出"将改哪些文件、哪些行"：已有文件在**临时副本**上真跑一次并算 diff，新建/删除给整段或整文件 | 取原文用 `DocumentService.load_document()`（`services/document.py:1271`）；diff 只在内存/`tempfile` 临时目录算 |
+| 3 **逐条确认** | 逐条 ✓/✗；**未获批 = 不执行**（无应答者也拒） | `ToolRegistry.invoke()` 在**分发前**问策略（`registry.py:265-288`）→ `ApprovalPolicy.decide`（`services/agent/approvals.py:109-115`）→ 应答者走 `AskPolicy(answerer=…)`（`approvals.py:127-152`），无应答者 ⇒ `unavailable` ⇒ 拒绝 |
+| 4 **apply** | 获批后**一次性**转调既有服务层：原子写 → 索引失效 → manifest/sidecar 同步 → pending 同步 → KP 重锚 | 见 2.3.1 |
+| 5 **审计** | 追加事件 `capability/proposal` / `capability/apply` / `capability/reject`（含插件 id、`tool_id`、逐文件 ±行、幂等键、决定与时间） | 会话 JSONL `<kb>/.memoria/agent/sessions/*.jsonl`；**纯追加**，旧读者对未知 `type` 一律跳过（`services/agent/session/history.py:261-299`）⇒ **不 bump** `SESSION_FORMAT_VERSION`（同 [dsh-agent-port.md §6.8](dsh-agent-port.md) 的 compaction 口径） |
+| 6 **撤销** | 同一会话内"撤销上一次 apply"，口径见 §10 P10 | 由审计事件反向重放（或按快照目录，二者待拍板） |
+
+**统一形态的四条不变口径**（承 §2 初版，未放宽）：
+
+- 模型**不直接写盘**：写工具只产**提议**，人在面板上**逐条确认**后才应用；
+- 一次确认 = 一个**事务**：应用前取受影响文件的快照，任一步失败即**整批回滚**；
+- 提议**可读**：每条带"人话一句 + 影响文件 + 前后差异"；
+- **不做**"模型自动应用"（M3 不做，见 2.6）；也不做"按规则批量自动应用"（留到基准能证明安全之后）。
+
+#### 2.3.1 「禁止 silent 写入」在插件边界的落法（唯一写者）
+
+红线出处：[designV0.md:911](../designV0.md)（"所有结果 **提议 → 用户确认**，禁止 silent 写入"）与 [`designV0.md:254`](../designV0.md)（"**禁止静默写入**"）。落到**插件边界**＝三层同向：
+
+1. **没有代码 ⇒ 没有写入口**：插件目录不含可执行体（2.2 铁律），所以插件在物理上没有 `open(...,"w")` 的机会；它只能"挑用核心原语 + 声明权限"。
+2. **核心写原语是唯一写者**：每个写原语内部**只许**调既有服务层的公开入口 —— 正文 `DocumentService.save_document`（`services/document.py:317`，tmp + `os.replace`）与 `DocumentService._write_body`（`:2064`）；sidecar `storage/sidecar.py:120 save_sidecar_for_md`；manifest `storage/manifest.py:178 touch_manifest_entry` / `:102 flush_manifest_deferred` / `:136 save_manifest`；pending `storage/pending.py:273 sync_pending_for_file`。**原语之外不允许任何模块落盘**（本节 §2.3 初版口径不变：`open(...,"w")` 直接落盘即违规）。
+3. **写前必过滤、写后必自证**：原语在落盘前用 `permissions.write` 的 glob + `os.path.realpath` 做前缀校验（2.4）；落盘后由门禁做**逐文件 SHA256 全等**比对（拒绝/失败 ⇒ 全等；成功 ⇒ 差异只出现在人确认过的那几条）。
+
+> 一句话：`禁止 silent 写入` 不再只靠"施工纪律"，而是**结构上可证**——插件无代码、写原语唯一、路径校验前置。
+
+### 2.4 权限与越界（违约即硬拒 + 审计 + 零部分写）
+
+**权限矩阵**（行 = 路径域，列 = 插件 `kind`；风格同 [AGENTS.md §4](../../AGENTS.md)）：
+
+| 路径域 | `read` | `write` | `network` | `host` |
+|---|---|---|---|---|
+| `**/*.md`（库内正文） | R | **R/W**（`approval=confirm`） | R | R |
+| `.memoria/sidecars/**`、`.memoria/manifest.yaml`、`.memoria/pending.json` | R | **R/W**（**只经原语**，不直接写） | — | R |
+| `.memoria/agent/sessions/**` | R | R（**只由核心追加审计事件**） | R | R |
+| `.memoria/images/**` | R | R/W（仅 `kb.file.image_*` 原语） | R/W（先落 pending） | R |
+| `.memoria/cache/**`（可再生缓存） | R/W | R/W | R/W | R/W |
+| **库根之外**任意路径 | **Deny** | **Deny** | Deny | Deny |
+| 出网 | Deny | Deny（默认关） | **逐次显式**（除 `llm/config.py:83` 的全局 `enabled` 外，还要求本次意图） | Deny |
+| 执行外部命令 | Deny | Deny | Deny | Deny |
+
+**违约行为**（沿用 `ToolRegistry.invoke()` 的"失败也是结果"语义，`services/agent/tools/registry.py:232-302`）：
+
+- **硬拒**：越界的 `tool_id` / 路径 / `permissions` 之外的动作 ⇒ 工具结果文本 `Error: … (DENIED)`（稳定 code `DENIED_CODE`，`registry.py:55`），**不抛异常、不结束轮次**；
+- **审计**：写一条 `capability/reject`（插件 id、`tool_id`、拒绝原因、越界路径原文）；
+- **零部分写**：越界判定发生在**任何落盘之前**（apply 入口一次性做完校验）⇒ 不存在"写了一半"；第 4 步中途失败 ⇒ 按快照**整批回滚**。
+
+**路径逃逸**：一律 `os.path.realpath` 归一后判前缀，拒绝 ①含 `..` 的路径 ②归一后落在库根外的路径 ③**符号链接指向库外**（先解析链接再比库根 realpath）。`.md` 后缀与相对路径的既有判断照抄只读侧的 `_safe_rel()`（`services/agent/tools/kb.py:160-172`，已在生产只读工具里使用）。
+
+**库之外**：本设计**不提供任何**库外写能力 —— 不改程序目录（`config/agent.json` 由既有设置面写）、不写用户主目录；dry-run 用的临时目录走 `tempfile` 且随事务销毁。
+
+### 2.5 W/N/S/H 四条线如何落成插件族
+
+同一条契约、同一个装载器；四条线只是**四个 `kind` 不同的插件族**（各自一组 `permissions`）。下表右两列是**关键**：纯声明式的线可以完全不动核心，非纯声明式的线必须先有一次性挂载点。
+
+| 族 | `kind` | 首批插件 | `permissions` 要点 | 纯声明式？ | "不改核心"的前提 |
+|---|---|---|---|---|---|
+| **W 写** | `write` | `kb-write`（建点 / 改点 / 连边 / 文件增删改） | `write` 限库内正文 + `.memoria/**` 白名单；`approval=confirm` | ✅（工具体 = 核心原语） | M3a 一次性把写原语加进原语目录 |
+| **N 联网** | `network` | `web-search`、`web-fetch` | `network` 逐次显式；抓取结果**先进 pending**（`storage/pending.py:91 save_pending`） | ✅ | N1 一次性把 `net.*` 原语加进目录 + 域名/私网策略（§3.3） |
+| **S skill** | `skill` | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | S1 一次性把 `use_skill` 按需注入器加进目录 |
+| **H 宿主** | `host` | 悬浮卡片、定时唤醒（§5.2） | `host` 默认关、逐 KB 开关；RPC 侧走通用网关 | ⚠️ **否**：RPC 侧可声明式，**浮层组件**需要一个核心提供的前端挂载点 | H1 需先加挂载点；建议单独立项（§5.4） |
+
+> 结论要如实说：**能插的是"声明与权限"，不能插的是"新的执行体"**。这与 [AGENTS.md §6](../../AGENTS.md)（注册表条目 + 独立提示词文件、无执行体）和 §4.1「非目标：不做任意脚本执行」是同一条红线。
+
+**写能力作为第一个消费者**：它同时验证了三件对后面三族同样重要的事 —— ① 契约能表达"多动作类 + 分级审批"；② 权限矩阵能被装载器与写原语**双向**执行；③ 审计事件能被回放。N/S/H 后续只需新增各自的原语与插件声明，**契约与装载器不再改**。
+
+### 2.6 M3 分期与验收门（替代初版 W1/W2，对应 [dsh-agent-port.md §8](dsh-agent-port.md) 的 M3）
+
+| 切片 | 落什么 | K 级（[ledger-maintenance.md §2](../conventions/ledger-maintenance.md)） | 验收门 |
+|---|---|---|---|
+| **M3a**（骨架 + 首个写原语） | 契约校验器 + 装载器 + 库级注册文件 + 完整写管线（propose/dry-run/逐条确认/apply/审计）+ **原语目录头两个**：`kb.kp.create`、`kb.file.create` | 拍板前 **K3 待评审**；实施后 **K2 代码完成·验收未闭环**；三件证据齐 ⇒ **K4** | ① 单测 + ② harness DOM + ③ **安全门**（下列三条） |
+| **M3b**（族化收口） | 其余写原语（`kb.kp.update`、`kb.link.create`、`kb.link.set_type`、`kb.file.rename`、`kb.file.delete`）+ 撤销/回滚（§10 P10）+ `permission-presets` 的第二个旋钮 + **各一个"只声明不启用"的 N/S 样板插件**（验证契约通用性） | 同上 | M3a 门禁 + **越权次数 = 0** + L2 A/B（§7.4） |
+
+**安全门（三条缺一不可，产物落 `artifacts/agent/verify/**`）**：
+
+1. **无 silent 写**：任一次拒绝/失败后，受影响文件 + `.memoria/**` **逐文件 SHA256** 与事务前全等；
+2. **越界被拒**：`../escape.md`、库外绝对路径、指向库外的**符号链接**各一例 ⇒ `DENIED_CODE` 且零字节变化；
+3. **审计可回放**：**仅凭**会话 JSONL 的 `capability/apply` 事件即可重建"改了哪些文件、哪些行"（字段级断言，不依赖内存态）。
+
+**附：M3 首批写原语目录**（插件只能挑用这些；`幂等键` 是 §6.3 原则 5 的落实）：
+
+| 原语 `tool_id` | 语义 | 幂等键 | 复用（**唯一的落盘路径**） | 关键风险 |
+|---|---|---|---|---|
+| `kb.kp.create` | 建知识点（写 sidecar + 锚定 range） | `(file, kp_id)` | `services/document.py:1360 confirm_kp_range()` | range 锚不稳 → 走既有 KP 创建/确认链路 |
+| `kb.kp.update` | 改 KP 名/描述/标签 | `(file, kp_id)` | `services/document.py:1722 update_kp()` | 图谱与 KP 面板的刷新时机 |
+| `kb.link.create` | 连边（含边类型） | `(from, to, type)` | `services/document.py:2885 create_edge()` | 边类型词表须与图谱面板**同一份**事实源 |
+| `kb.link.set_type` | 改边类型 | 同上 | `services/document.py:2885 create_edge()` / `:2971 delete_edge()` | 与"边类型迁移"同一实现 |
+| `kb.file.create` | 新建 `.md` | `(path)` | `services/document.py:794 create_file()` | 目录自动创建须留在库内 |
+| `kb.file.rename` | 重命名/移动 | `(from, to)` | `services/document.py:583 rename_file()` | 级联复用既有实现 |
+| `kb.file.delete` | 删除 `.md` + sidecar | `(path)` | `services/document.py:782 delete_file()` | **默认关**（`config.allow_file_delete`） |
+| ~~`kb.file.move`~~ | 移动（目录重命名已实现，文件移动待补） | `(from, to)` | — | **M3 不进工具集**：正文内相对链接改写未落地（§9 R2） |
+
+**明确不做（M3 内）**：
+
+- ❌ **不做任意脚本/命令执行**：`permissions.exec` 恒为空；上游沙箱/执行族（`sandbox/*`、`shell/*`、`terminal/*` …）**不吃**（[dsh-agent-port.md §5](dsh-agent-port.md) ❌ 行，CVE 面见其 §9 P6）；
+- ❌ **不做"模型自动应用"**：`approval.write=confirm` 是**装载期硬校验**，插件无法自行降档（用户能否覆写见 §10 P9）；
+- ❌ **不做跨库写**：一次会话只绑一个库（`presentation/api/ui.py:1253 _agent_kb`），写原语的 `scope` 恒为当前库；
+- ❌ **不做库外写**（含程序目录与用户主目录，见 2.4）；
+- ❌ **不做 `kb.file.move`**（见上表）；
+- ❌ **不做 M4 对外契约**（旧稿 T1 CLI 面）：留 M4。
+
+### 2.7 与上游 dsh（pin `0d1f5000`）的关系：借什么 / 自己发明什么
+
+| 面 | 上游怎么做（对照物，只读码） | 本设计的处置 |
+|---|---|---|
+| 一次性审批、无应答即拒 | `interaction/user-approval`（已移植到 `approvals.py`） | ✅ **复用**：`AskPolicy(answerer=…)`（`services/agent/approvals.py:127`）就是"逐条确认"的接入口 |
+| 写工具的 **diff 呈现契约** | `fs/tool-fs/src/write.ts:98-103`（`presentationMeta` 出 `diffs`）与 `:134-150`（`card: 'diff'`） | ✅ **借呈现契约**（dry-run diff 给人看）；❌ **不移植**该包的落盘路径与 `fs/write-intent` 单槽（`:114`，本地无版本号 CAS ⇒ 改用幂等键 + 事务快照） |
+| 沙箱升级（"宽一点，再问一次"） | `fs/tool-fs/src/sandbox.ts`（`FsSandboxController`：`sandbox_permissions` + `justification` 一次性升级）+ `sandbox/sandbox`（`read-only` / `workspace-write` / `danger-full-access`） | ❌ **不吃**（`sandbox/*` 属"不吃"族）。本设计用**声明式 `permissions` + realpath 前缀校验**替代：等价于"只有一档 `workspace-write`、workspace = 库根、**没有**升级档" —— 这是**本地发明**，不是移植 |
+| 权限档（presets） | `interaction/permission-presets/src/index.ts`（把 sandbox 模式 + 审批策略两个旋钮打成一档） | ⏸ **条件性**：本设计提供了第二个旋钮（`approval`：`auto`/`confirm`/`never`）⇒ M3b 之后"档"才有对象可切（呼应 [dsh-agent-port.md §6.15](dsh-agent-port.md) 的"本地只有一条固定策略、无第二个旋钮"判定） |
+| 工具注册即发布 / 重名即错 | `core/tools`（已移植） | ✅ **复用**：`ToolRegistry.register()`（`services/agent/tools/registry.py:207`、`:212-213`）—— 装载器的冲突规则直接对齐它 |
+| 技能（skill） | `skill/skill`（provider registry：合并 catalog、按 rank 定胜负、`SkillSource` 分级） | ⏸ 留 S1；本设计只先定"skill 族 = 声明式插件 + 只读默认"（§4.4），不引 provider rank |
+| 会话投影/事件溯源审计 | `session-projection*`（❌ 不吃） | ❌ **不吃**：审计落在既有会话 JSONL 的**追加事件**上（`session/history.py:261-299` 的未知类型跳过语义），不引投影框架 |
 
 ---
 
@@ -96,14 +271,16 @@
 - **目标**：用户不改程序即可扩展 agent 能力（提示 + 工具声明 + 资源），且**扩展是声明式的**；
 - **非目标**：不做"任意脚本执行"（与仓库协作 agent 的沙箱/执行红线一致，见 [AGENTS.md §6](../../AGENTS.md)）。
 
-### 4.2 声明式形态（草案）
+### 4.2 声明式形态（= §2.1 契约的一个 `kind: skill` 插件）
 
 ```
 <kb>/.memoria/agent/skills/<name>/
   SKILL.md         # 何时用、怎么用（模型可读，按需注入）
-  manifest.json    # 声明：tools[]（名称/入参 schema/只读或写）、权限、依赖、版本
+  manifest.json    # = §2.1 的能力插件契约（id/kind=skill/provides.tools/permissions/approval/…）
   assets/**        # 可选：模板、词表（只读）
 ```
+
+> 与 §2.1 的对应：`manifest.json` 就是**同一份插件契约**，只是 `kind: skill` 且 `provides.prompt` 指向 `SKILL.md`；它的 `tool_id` 同样只能取自核心原语目录（**skill 不引入新的执行体**，见 §2.5 结论）。启用位与参数落在同一份库级注册文件 `<kb>/.memoria/agent/capabilities.json`。
 
 ### 4.3 发现与按需注入（token 是关键约束）
 
@@ -260,13 +437,13 @@
 |---|---|---|
 | **T1** | 记账口径补齐（标题/压缩/裁剪进报告）+ 工具调用可观测（name/参数摘要/耗时/字节数） | 一份报告能回答"这轮花了多少、花在谁身上" |
 | **B1** | L1 + L2 骨架（工具选择正确率、任务级 token、越权次数） | 有可复跑的对照表（先只用只读能力） |
-| **W1** | 提议 → 确认 → 应用骨架 + **`create_kp`** 单个写工具 | "无 silent 写入"专项通过 |
-| **W2** | `link_kps` / `set_link_type` / `update_kp` / 文件级写工具 + 回滚 | M3 出口（dsh-agent-port §8） |
-| **N1** | 出网一次 + `web_search`/`fetch_url` + 落 `pending` | 出网可审计、长文不进上下文 |
-| **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入） | 一个用户自定义 skill 端到端可用 |
-| **H1** | 最小宿主接口（悬浮卡片 + 定时唤醒，默认关） | 主动性三问有答案、可一键停 |
+| **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（提议 → dry-run diff → 逐条确认 → 应用 → 审计）+ **两个**写原语（`kb.kp.create`、`kb.file.create`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放（§2.6 安全门三条） |
+| **W2**（=`M3b`） | 其余写原语（`kb.kp.update` / `kb.link.*` / `kb.file.rename` / `kb.file.delete`）+ 撤销回滚 + `permission-presets` 第二旋钮 + N/S 各一个"只声明不启用"样板插件 | M3 出口（[dsh-agent-port §8](dsh-agent-port.md)）：越权次数 0 + L2 A/B |
+| **N1** | 出网一次 + `web_search`/`fetch_url` 原语 + 落 `pending` + `kind: network` 插件声明 | 出网可审计、长文不进上下文 |
+| **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ `kind: skill` 插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
+| **H1** | 最小宿主接口（悬浮卡片 + 定时唤醒，默认关）+ 核心侧前端挂载点 | 主动性三问有答案、可一键停 |
 
-> 建议顺序 **T1 → B1 → W1 → W2 → N1 → S1 → H1**：先有度量与写能力闭环，再放联网与扩展，最后才放开"主动"。
+> 建议顺序 **T1 → B1 → W1(M3a) → W2(M3b) → N1 → S1 → H1**：先有度量与写能力闭环，再放联网与扩展，最后才放开"主动"。**W1/W2 已按 §2 更名为 M3a/M3b**（同一切片，`M3` 编号对齐 [dsh-agent-port.md §8](dsh-agent-port.md)）；N1/S1/H1 的"不改核心"前提见 §2.5。
 
 ---
 
@@ -275,12 +452,13 @@
 | # | 风险 | 等级 | 处置 |
 |---|---|---|---|
 | R1 | **写能力毁用户库**（模型误解、range 锚错位） | 高 | 逐条确认 + 事务回滚 + 只走既有服务层 + 每轮 `validate` |
-| R2 | **正文内相对链接/引用未随文件移动改写**（`path_cascade` 明确不碰正文） | 中高 | W2 前补齐正文改写，否则 `move_file` 不进工具集 |
+| R2 | **正文内相对链接/引用未随文件移动改写**（`path_cascade` 明确不碰正文） | 中高 | M3b 前补齐正文改写，否则 `kb.file.move` 不进工具集（§2.6 不做清单） |
 | R3 | **出网泄露与"自动抓取"越界** | 中高 | 默认关 + 逐次显式 + 审计事件 + 私网地址拒绝 |
-| R4 | skill 变成任意代码执行面 | 高 | 只允许声明式；执行类需求单独评审（沙箱） |
+| R4 | skill / 能力插件变成任意代码执行面 | 高 | 契约**不含执行体**（插件只声明，工具体=核心原语）+ `permissions.exec` M3 恒空（§2.1/§2.5/§2.6）；执行类需求单独评审（沙箱，上游**不吃**） |
 | R5 | 主动性变成"烧 token 的玩具" | 中 | 默认关 + 频率/静默约束 + 预算上限（§6.1） |
 | R6 | 工具集膨胀导致选错率上升 | 中 | §6.3 原则 + L1 基准把"多余调用率"纳入门禁 |
 | R7 | 基准不可比（模型/端点漂移） | 中 | 报告必须带 commit + 模型名 + 是否真端点；离线用假 provider 的可复现档 |
+| R8 | **装载器成为新的越权写入面**（声明校验不严 ⇒ 插件拿到超出预期的写权限；`tool_id` 与原语不匹配被静默放宽） | 高 | 装载期硬校验（`write` 非空、`approval.write≠auto`、`forbidden` 非空、`tool_id` 必须在原语目录）+ 落盘前 realpath 前缀校验 + 安全门第 2 条专测越界；插件无代码 ⇒ 无写入口（§2.2/§2.3.1/§2.6） |
 
 ---
 
@@ -294,6 +472,11 @@
 | **P4** | skill 的承载位置 | ① `<kb>/.memoria/agent/skills/**`（随库走，推荐） ② 程序目录（跨库共享） | 分发与迁移 |
 | **P5** | 主动性由谁调度 | ① 最小独立调度器（推荐） ② 复用 `MaintenanceExecutor` ③ 前端 `scheduler.js` | H 线复杂度（§5.4） |
 | **P6** | 基准的"真端点"档是否纳入门禁 | ① 纳入（更真实但不可复现） ② 只作参考（推荐：门禁用假 provider 档） | 门禁可信度 |
+| **P7** | **能力插件注册表的承载位置**（§2.2） | ① 内置声明 `resources/agent-capabilities/**`（随版本）+ 库级启用 `<kb>/.memoria/agent/capabilities.json`（随库）（**推荐**：与既有"程序读取源 vs 库内事实源"分工一致，且不动 `config/agent.json` 键白名单）② 全部随库（`.memoria/agent/capabilities/**`，可分发，但升级要迁移）③ 全部在程序目录（跨库共享，但无法 per-KB 启停） | 决定是否需人工登记 `AGENTS.md §1` |
+| **P8** | **M3a 首批写原语个数** | ① 两个（`kb.kp.create` + `kb.file.create`，**推荐**：最小可证伪，先证"管线 + 安全门"）② 四个（再含 `kb.kp.update` + `kb.link.create`）③ 一个（只有 `kb.kp.create`，风险最低但契约的"多动作类 + 分级审批"未被验证） | M3a 工期与门禁覆盖 |
+| **P9** | **插件 `approval` 档是否允许用户覆写** | ① **不可覆写**：库级文件只接受启停与 `config` 参数，`approval` 由声明决定（**推荐**：审批档是安全不变量而非偏好）② 可覆写（用户可把某插件 `write` 降到 `auto`）—— 需醒目告警 + 额外审计，且与 §2.1 的装载期硬校验冲突 | 决定 `capabilities.json` 的字段面 |
+| **P10** | **撤销/回滚的实现口径**（§2.3 第 6 步） | ① **由审计事件反向重放**（**推荐**：零额外存储、天然可审计）② 落盘快照目录 `<kb>/.memoria/cache/capability/<txid>/`（大改动更稳，但引入新缓存与清理策略）③ 两者都做（先快照、重放兜底） | 存储与清理策略 |
+| **P11** | **`permission-presets`（权限档）是否随 M3b 落地** | ① 随 M3b 落地最小两档（**推荐**：`ask`＝写能力开、`never`＝全关；此时§2.1 的 `approval` 已是第 2 个旋钮）② 留到 M4（写能力已能用，档位只是便利） | 呼应 [dsh-agent-port §6.15](dsh-agent-port.md) 的"无第二个旋钮"判定 |
 
 ---
 
@@ -302,3 +485,4 @@
 | 日期 | 变更 |
 |---|---|
 | 2026-09-19 | 初版（待评审）：现状盘点（调用面已具备、能力面极窄）；四条能力线（W 写 / N 联网 / S skill / H 宿主）逐线给出形态、边界、风险与验收；两条横向约束（token 三级预算 + 工具元层六原则与反模式；基准三层 L1/L2/L3 + 指标 + 语料 + 门禁，复用 maintenance-benchmark 方法论）；阶段建议 T1→B1→W1→W2→N1→S1→H1；7 条风险；P1–P6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG04） |
+| 2026-09-20 | **完善 M3：写能力 → 可插拔能力插件机制**（用户口径「M3 需要完善设计，做成可插拔的机制」）。§2 由"写工具清单"重写为七小节：**2.1 插件能力契约**（14 个字段的硬校验表 + 内置声明与库级启用两份 JSON 实样；铁律 = 插件目录**不含可执行代码**）、**2.2 注册与装载**（内置声明 `resources/agent-capabilities/**` + 库级 `<kb>/.memoria/agent/capabilities.json` 两位置分工、发现顺序、冲突即失败、不变量"新增插件不改核心"逐个点名核心文件、UIAPI 只加**一个通用网关**）、**2.3 写管线**（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销六步，逐步标注**已存在**的接入函数）+ **2.3.1 唯一写者**（`DocumentService.save_document`(`document.py:317`) / `storage/sidecar.py:120` / `storage/manifest.py:178` / `storage/pending.py:273`）、**2.4 权限矩阵与越界**（realpath 前缀校验、硬拒 `DENIED_CODE`、零部分写、库外一律 Deny）、**2.5 四线 → 插件族**（W/N/S 纯声明式、H 需一个前端挂载点；如实说明"能插的是声明与权限，不能插的是执行体"）、**2.6 M3a/M3b 分期 + 安全门三条 + 首批写原语目录 + 不做清单**、**2.7 与上游关系**（借 `user-approval` 与 `tool-fs` 的 diff 呈现契约；**沙箱升级不吃**，本设计用声明式 permissions + realpath 校验替代 —— 本地发明）。同步：§0 红线「禁止 silent 写入」加强为"插件边界物理可证"、§0 单一事实源补库级注册文件须登记；§1 缺口行；§4.2 skill 归入同一契约；§8 `W1/W2` 更名 `M3a/M3b` 并补 N1/S1/H1 的不改核心前提；§9 新增 **R8**（装载器成为越权写入面）；§10 新增 **P7–P11**（注册表承载 / M3a 原语个数 / approval 可否覆写 / 回滚口径 / 权限档是否随 M3b）；全部锚点逐条读码核对（见 §2 各处的 `file:line`）。**未实施任何代码**（本轮 docs only）；`docs/todo.md §13 AG04` 行按规则 8 同义压缩后仍为 K3 待评审 |
