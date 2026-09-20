@@ -49,7 +49,7 @@
 | `ast.js` | 只定义节点类型契约与工厂函数（无依赖），是全链路共同的类型事实源 | `ast.js:9`-`46`、`48`-`120` |
 | `source-gen.js` | AST → 源码文本（Parser 的逆操作），单 block 生成用于写回源码行 | `source-gen.js:1`-`38` |
 | `renderer.js` | AST → DOM：每个 block 一个 `.-src-block` 元素，行内节点递归渲染；另提供 `renderRange` 做区间增量渲染 | `renderer.js:50`-`62`、`70`-`259`、`445`-`489` |
-| `mapper.js` | 三向坐标转换：`domToAst`（DOM 光标 → block/nodePath/offset）、`astToDom`（反向）、`astToSrc`/`srcToAst`（含 inline 语法前后缀长度换算），并持有当前 `_doc` | `mapper.js:424`、`559`、`781`、`299`、`1132`-`1142` |
+| `mapper.js` | 三向坐标转换：`domToAst`（DOM 光标 → block/nodePath/offset）、`astToDom`（反向）、`astToSrc`/`srcToAst`（含 inline 语法前后缀长度换算），并持有当前 `_doc` | `mapper.js:424`、`560`、`782`、`299`、`1133`-`1143` |
 | 渲染编排 | `renderPreview` 串联：归一 → `P.parse` → `M.setDoc` → `R.render` → 写 DOM → `stampBlockLines` → 禁编辑 → 链接后处理 → Mermaid/Lightbox → MathJax | `app.js:1828`-`1948` |
 
 **增量渲染**：预览区编辑提交后不重建整棵树，而是 `renderRange(doc, i, i+1, .-preview-content)` 替换单个 block，随后重新 `stampBlockLines`、重跑 `MathJax.typesetPromise`、`postProcessWikilinks` + `bindPreviewLinks`（`app.js:7714`-`7729`）。
@@ -178,7 +178,7 @@ hover 高亮是第四种轻量形态：`highlightKpHover` 加 `in-range kp-hover
 | AST 类型契约 | `ast.js:9`-`46` |
 | `source-gen` | `source-gen.js:13`-`38` |
 | `renderer.render/renderBlock/renderInline/renderRange` | `renderer.js:50`-`62`、`70`-`260`、`303`-`436`、`445`-`489` |
-| Mapper 三向转换 | `mapper.js:299`、`424`、`559`、`781`、`1132`-`1162` |
+| Mapper 三向转换 | `mapper.js:299`、`424`、`560`、`782`、`1133`-`1163` |
 | 增量渲染单块 | `app.js:7714`-`7729` |
 | Mermaid / Lightbox / MathJax 辅助 | `markdown-preview.js:182`-`225`、`496`-`519`、`17`-`42` |
 | 图片加载失败提示 | `image-tools.js:546`-`564` |
