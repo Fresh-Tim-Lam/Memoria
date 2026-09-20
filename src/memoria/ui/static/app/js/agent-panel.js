@@ -1240,7 +1240,7 @@ window.MemoriaAgentPanel = (function () {
       job = null;
       busy = false;
       renderComposer();
-      await refreshHistory(); // 新增/更新的会话进入历史列表，并选中当前会话
+      await refreshHistory(); await tagLiveBubblesWithSeqs(); // 会话进历史列表；并把事件 seq 标到刚生成的气泡上（拖拽引用靠它）
       return;
     }
     if (job) {
@@ -1475,11 +1475,10 @@ window.MemoriaAgentPanel = (function () {
 
   /** 一条消息正文的渲染入口：用户气泡走 `@引用` chip，助手气泡走 Markdown（含兜底）。 */
   function renderBody(el, role, text) {
-    if (role === "user") {
-      el.innerHTML = linkifyUser(text);
-      return;
-    }
-    renderAssistantBody(el, text);
+    if (role === "user") el.innerHTML = linkifyUser(text);
+    else renderAssistantBody(el, text);                    // 助手气泡：Markdown（含兜底）；用户气泡：`@引用` chip + 纯文本
+    // ★ 可寻址：给每段可见文本标出它在**消息原文**里的字符区间（拖拽引用靠它定位，见文件尾 `annotateMessageOffsets`）
+    annotateMessageOffsets(el, text);
   }
 
   /** `文件:行号` 的可点锚点节点（与 `linkify()` 产出**同一份 DOM 形状**，样式与点击委托共用）。 */
@@ -3168,9 +3167,9 @@ window.MemoriaAgentPanel = (function () {
     const box = $("#agent-messages");
     if (box && box.contains(anchor)) {
       const from = bubbleSeq(range.startContainer);
-      if (from === null) return null; // 气泡没有 seq（实时生成的当轮）⇒ 不产引用，也不出按钮
-      const to = bubbleSeq(range.endContainer);
-      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to };
+      const to = from === null ? null : bubbleSeq(range.endContainer); // 气泡无事件 seq（本 run 刚生成的当轮）也不再"不出入口"，落点由 addSelectionToChat 决定
+      // ↑ 仍返回 messages 宿主：入口照常出现；拿不到 seq 时写入**整会话**引用（不静默、不假装精确）
+      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to, offFrom: messageOffsetAt(range.startContainer, range.startOffset), offTo: messageOffsetAt(range.endContainer, range.endOffset) };
     }
     return null;
   }
@@ -3198,11 +3197,11 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /** 会话片段引用 token：`@[label](dsh-session:<base64url>#seq:<n>)`（跨气泡用 `#seq:<起>-<止>`）。 */
-  function sessionFragmentToken(from, to) {
+  function sessionFragmentToken(from, to, offFrom, offTo) {
     const id = sessionId ? String(sessionId) : "";
     if (!id || !Number.isInteger(from)) return "";
     const end = Number.isInteger(to) ? to : from;
-    const frag = end > from ? "#seq:" + from + "-" + end : "#seq:" + from;
+    const frag = fragmentSuffix(from, offFrom, end, offTo); // 纯函数（可单测）：序号区间 + 两端**消息内字符位**
     const row = histDataRow(id);
     const label = (row && histTitle(row)) || id;
     const head = formatSessionMentionToken(id, label); // 别名 URI（单一事实源）
@@ -3216,8 +3215,8 @@ window.MemoriaAgentPanel = (function () {
     if (!hit || !hit.loc) return;
     const loc = hit.loc;
     if (loc.host === "messages") {
-      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo);
-      if (token) insertSessionToken(token);
+      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo, loc.offFrom, loc.offTo); // 带**消息内字符区间**（对话栏里拖拽选取的起止）
+      if (token) insertSessionToken(token); else if (sessionId) quoteSession(String(sessionId)); // 无事件 seq（本 run 刚生成的当轮）⇒ 退回**整会话**引用，与历史行「引用」同一落法
       return;
     }
     const path = state.currentPath || "";
@@ -3498,9 +3497,9 @@ window.MemoriaAgentPanel = (function () {
     const box = $("#agent-messages");
     if (box && box.contains(anchor)) {
       const from = bubbleSeq(range.startContainer);
-      if (from === null) return null; // 气泡没有 seq（实时生成的当轮）⇒ 不产引用，也不出按钮
-      const to = bubbleSeq(range.endContainer);
-      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to };
+      const to = from === null ? null : bubbleSeq(range.endContainer); // 气泡无事件 seq（本 run 刚生成的当轮）也不再"不出入口"，落点由 addSelectionToChat 决定
+      // ↑ 仍返回 messages 宿主：入口照常出现；拿不到 seq 时写入**整会话**引用（不静默、不假装精确）
+      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to, offFrom: messageOffsetAt(range.startContainer, range.startOffset), offTo: messageOffsetAt(range.endContainer, range.endOffset) };
     }
     return null;
   };
@@ -3516,8 +3515,8 @@ window.MemoriaAgentPanel = (function () {
     if (!hit || !hit.loc) return;
     const loc = hit.loc;
     if (loc.host === "messages") {
-      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo);
-      if (token) insertSessionToken(token);
+      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo, loc.offFrom, loc.offTo); // 带**消息内字符区间**（对话栏里拖拽选取的起止）
+      if (token) insertSessionToken(token); else if (sessionId) quoteSession(String(sessionId)); // 无事件 seq（本 run 刚生成的当轮）⇒ 退回**整会话**引用，与历史行「引用」同一落法
       return;
     }
     const path = state.currentPath || "";
@@ -3727,8 +3726,8 @@ window.MemoriaAgentPanel = (function () {
   /** 会话**片段**引用 chip（`-agent-mention--session`）：正文 `@label` + 片段序号（起止可见），
    *  title 写全会话 id 与 `#seq:` 区间；点击复用既有 `data-agent-session` 委托（切历史并高亮）。 */
   function sessionFragmentChipEl(id, label, uri) {
-    const frag = /#seq:(\d+(?:-\d+)?)/.exec(String(uri || ""));
-    const seq = frag ? frag[1] : "";
+    const frag = /#seq:(\d+)(?:c(\d+))?(?:-(\d+)(?:c(\d+))?)?/.exec(String(uri || ""));
+    const seq = frag ? frag[0].slice("#seq:".length) : "";
     const el = document.createElement("span");
     el.className = "-agent-mention -agent-mention--session";
     el.setAttribute("role", "link");
@@ -3739,7 +3738,7 @@ window.MemoriaAgentPanel = (function () {
     if (seq) {
       const tail = document.createElement("span");
       tail.className = "-agent-mention-seq";
-      tail.textContent = seq;
+      tail.textContent = fragmentSpanText(frag[1], frag[2], frag[3], frag[4]); // 起–止（含消息内字符位，如 `3:12–3:48`）
       el.appendChild(tail);
     }
     return el;
@@ -3837,6 +3836,74 @@ window.MemoriaAgentPanel = (function () {
     chipRangeRefsInDom(el);
   };
 
+  /* ══ 气泡「可寻址」：消息原文 ↔ 可见文本的字符区间（2026-09-20；用户选 C「渲染也做可寻址结构」）══
+     目的：在对话栏里**拖拽选取某次回复（或某条提问）里的一段话**时给出精确「起–止」——与文件引用
+     `@路径#L3C2-L5C7` 同一套口径；落到会话片段 token 上就是 `#seq:<条>c<a>-<条>c<b>`。
+     为什么不换渲染管线（不把气泡改走 Memoria 的 lexer/parser/renderer）：助手气泡的 `sanitizeHtmlInto()`
+     是硬前置，它**丢弃全部属性**（只留白名单标签）⇒ 渲染时打的行号标记活不下来；助手输出又属不可信文本，
+     换掉净化链是安全回退。改用**渲染后反标**：可见文本一定是消息原文的有序子序列（Markdown 标记被消费掉），
+     逐文本节点在原文里从游标处向后找自己即可 —— 与渲染管线**解耦**（marked / 纯文本 + chip 都走这一条）。
+     找不到（MathJax 排版产物、表格补齐的空格等）⇒ 标 `data-md-drop="1"` 并**冻结游标**（不猜、不硬凑）。
+     本块追加在 IIFE 末尾（`return {…}` 之前）⇒ 仅门面行号变化，上方 anchor 零漂移。 */
+
+  /** 给气泡正文的每个可见文本节点套一层 `[data-md-from][data-md-to]`（0 基、半开区间；值为**消息原文**偏移）。 */
+  function annotateMessageOffsets(el, text) {
+    const raw = String(text == null ? "" : text);
+    if (!el || !raw || !document.createTreeWalker) return;
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    let node;
+    while ((node = walker.nextNode())) nodes.push(node);
+    let cursor = 0;
+    for (const tn of nodes) {
+      const piece = tn.nodeValue || "";
+      if (!piece.trim() || !tn.parentNode) continue; // 纯空白不动（表头补齐、缩进都属排版产物）
+      const at = raw.indexOf(piece, cursor);
+      const span = document.createElement("span");
+      span.className = "-md-off";
+      if (at < 0) {
+        span.setAttribute("data-md-drop", "1"); // 反标不到 ⇒ 明说"这段不可寻址"，调用方退回整条口径
+      } else {
+        span.setAttribute("data-md-from", String(at));
+        span.setAttribute("data-md-to", String(at + piece.length));
+        cursor = at + piece.length;
+      }
+      span.textContent = piece;
+      tn.parentNode.replaceChild(span, tn);
+    }
+  }
+
+  /** 气泡内某点 → **消息原文**里的 0 基字符偏移；落在未标注区域 ⇒ `null`（不猜）。 */
+  function messageOffsetAt(node, offset) {
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const seg = el && el.closest ? el.closest("[data-md-from]") : null;
+    if (!seg) return null;
+    const from = Number(seg.getAttribute("data-md-from"));
+    if (!Number.isFinite(from)) return null;
+    const length = (seg.textContent || "").length;
+    return from + Math.max(0, Math.min(Number(offset) || 0, length));
+  }
+
+  /** 片段后缀（纯函数，可单测）：`#seq:<条>[c<位>][-<条>[c<位>]]`。
+   *  字符位只在**两端都拿得到**时才写（缺一端 ⇒ 退回整条 / 整段口径，绝不半猜）；写就两端都写。 */
+  function fragmentSuffix(seqFrom, offFrom, seqTo, offTo) {
+    const start = Number(seqFrom);
+    if (!Number.isInteger(start) || start < 0) return ""; // 事件 seq 是 **0 起**（`conversation_messages()` 的 seq）
+    const end = typeof seqTo === "number" && Number.isInteger(seqTo) && seqTo >= start ? seqTo : start;
+    const cFrom = typeof offFrom === "number" && Number.isInteger(offFrom) && offFrom >= 0 ? offFrom + 1 : 0;
+    const cTo = typeof offTo === "number" && Number.isInteger(offTo) && offTo >= 1 ? offTo : 0;
+    if (!cFrom || !cTo || cTo < cFrom) return end > start ? "#seq:" + start + "-" + end : "#seq:" + start;
+    return "#seq:" + start + "c" + cFrom + "-" + end + "c" + cTo;
+  }
+
+  /** 片段 chip 可见串（纯函数）：`3` / `3–7` / `3:12–3:48` / `3:12–7:48`（与文件 chip 的 `12:5–14:20` 同风格）。 */
+  function fragmentSpanText(seqFrom, cFrom, seqTo, cTo) {
+    const one = function (seq, chr) { return String(seq) + (chr ? ":" + chr : ""); };
+    const last = seqTo ? String(seqTo) : String(seqFrom);
+    const tail = last === String(seqFrom) && !cTo ? "" : "–" + one(last, cTo);
+    return one(seqFrom, cFrom) + tail;
+  }
+
   /* ══ 会话引用「短别名」token（2026-09-20）══════════════════════════════════════════════
      用户口径：「会话引用不需要渲染会话id，太占地方，**实际要传入**」。
      做法：输入框里只写**别名** —— `@[标题](dsh-session:s1#seq:3-7)`（`s1`/`s2`… 每个真实会话 id
@@ -3887,6 +3954,63 @@ window.MemoriaAgentPanel = (function () {
       return full;
     });
   }
+
+  /** 把**事件 seq** 标到"本 run 刚生成"的实时气泡上（拖拽引用要它；载入历史会话时由 `loadSession` 回填）。
+   *  对齐方式：`messages[]` 与气泡 1:1（`renderMessages()` 逐条渲染）⇒ 数量一致就按序号对齐；不一致
+   *  （存在"已停止/报错"等不落盘的气泡）⇒ 退回**按角色 + 文本**匹配，仍对不上的气泡跳过（不猜）。
+   *  每轮结束静默跑一次（一次本地 RPC）；失败或换库就保持现状 —— 入口照常出现，只是退回整会话引用。 */
+  async function tagLiveBubblesWithSeqs() {
+    const id = sessionId ? String(sessionId) : "";
+    if (!id) return;
+    const bubbles = Array.from(document.querySelectorAll("#agent-messages .-agent-msg"));
+    if (!bubbles.length) return;
+    let res = null;
+    try {
+      res = await call("agent_session_load", id, state.kbPath || null);
+    } catch (_err) {
+      return;
+    }
+    const list = res && res.status === "ok" && Array.isArray(res.messages) ? res.messages : null;
+    if (!list || !list.length) return;
+    const tag = function (bubble, item) {
+      const seq = item && item.seq;
+      if (bubble && Number.isInteger(seq) && seq >= 0) bubble.setAttribute("data-agent-seq", String(seq));
+    };
+    if (list.length === messages.length && bubbles.length === messages.length) {
+      for (let i = 0; i < list.length; i += 1) tag(bubbles[i], list[i]);
+      return;
+    }
+    const used = new Set();
+    for (let i = 0; i < messages.length && i < bubbles.length; i += 1) {
+      const rec = messages[i];
+      if (!rec) continue;
+      const idx = list.findIndex(function (item, j) {
+        return !used.has(j) && item && item.role === rec.role && String(item.text || "") === String(rec.text || "");
+      });
+      if (idx < 0) continue;
+      used.add(idx);
+      tag(bubbles[i], list[idx]);
+    }
+  }
+
+  /** 拖拽载荷契约的**唯一生产者入口**：文件树 / 顶栏文件页签都走它 ⇒ MIME 与 JSON 形状只有一处定义。
+   *  接收端就是本模块的 `readMentionPayload()`（同一 MIME）；`text/plain` 副本供其它输入框或外部程序使用。 */
+  window.MemoriaMentionDrag = {
+    set: function (e, path, kind) {
+      const text = String(path == null ? "" : path).replace(/\\/g, "/");
+      const dt = e && e.dataTransfer;
+      if (!dt || !text) return false;
+      const isDir = kind === "dir";
+      dt.effectAllowed = "copy";
+      try {
+        dt.setData(DRAG_MIME, JSON.stringify({ path: text, kind: isDir ? "dir" : "file" }));
+      } catch (_err) {
+        // 个别宿主不接受自定义 MIME：此时对话栏接不到这次拖拽（text/plain 仍写，供其它消费方）
+      }
+      dt.setData("text/plain", isDir ? text.replace(/\/+$/, "") + "/" : text);
+      return true;
+    },
+  };
 
   return {
     init: init,

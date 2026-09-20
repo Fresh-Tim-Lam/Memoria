@@ -1385,7 +1385,7 @@
         let cls = "tab";
         if (active) cls += " active";
         else if (t.pending) cls += " tab-pending";
-        return `<div class="${cls}" data-tab-index="${i}" title="${esc(t.path)}">
+        return `<div class="${cls}" data-tab-index="${i}" title="${esc(t.path)}" draggable="true">
           <span class="tab-label">${esc(t.label || basename(t.path))}</span>
           <span class="close-btn" data-tab-close="${i}" title="${T("common.close")}">×</span>
         </div>`;
@@ -12919,4 +12919,26 @@
     },
     { passive: false }
   );
+})();
+
+/* ===== 顶栏文件页签 → 对话栏（2026-09-20）=====================================
+   用户：「显示区域的顶栏文件页签也支持拖拽到对话栏」。页签本来就是"打开的文件"，拖进对话栏
+   应当与文件树拖拽**完全等价**（同 MIME、同 JSON 形状、同落点语义）⇒ 载荷交给
+   `window.MemoriaMentionDrag.set()`（agent-panel 暴露的**唯一**生产者入口），接收端一行不改。
+   为什么读 `title` 而不是 `state.openTabs`：本块追加在 IIFE **之外**（app.js 末尾）拿不到闭包里的
+   state，而页签模板里 `title` 就是相对路径（`renderTabs()` 的 `esc(t.path)`）。
+   事件委托绑在 `#tabs` 容器上 ⇒ `renderTabs()` 重建内部节点也不会丢绑定。
+   零漂移：整块**追加在 app.js 末尾**（既有行号锚点不动）。 */
+(function bindTabDragToChat() {
+  const tabs = document.getElementById("tabs");
+  if (!tabs || tabs.dataset.dragBound) return;
+  tabs.dataset.dragBound = "1";
+  tabs.addEventListener("dragstart", (e) => {
+    const t = e.target;
+    if (!t || !t.closest || t.closest("[data-tab-close]")) return; // 拖「×」不算拖页签
+    const tab = t.closest("[data-tab-index]");
+    if (!tab || !window.MemoriaMentionDrag) return;
+    const path = tab.getAttribute("title") || "";
+    window.MemoriaMentionDrag.set(e, path, "file");
+  });
 })();

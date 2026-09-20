@@ -599,3 +599,143 @@ def test_ask_sends_fragment_snapshot_end_to_end(kb: Path) -> None:
     users = [row["data"]["text"] for row in records if row["type"] == "user/message"]
     assert users == ["只看这段 @片段"]  # JSONL 仍只留干净可读态，片段快照不落盘
 
+
+# ── 消息内字符区间（2026-09-20 追加；用户："拖拽选取的时候选不到某次回复内的内容起止么"）──────
+# 语法：`#seq:<起>c<a>-<止>c<b>`（`c<数字>` = **消息内字符位**，1 起闭区间，与文件引用 `#L3C2-L5C7` 同口径）。
+# 断言：解析三类写法 / 缺端语义 / 语法非法明确报错 / `split_session_fragment()` 签名与形状不变 /
+# 快照只投影该字符区间（同条内一次算完、跨条两端各裁、越界钳到边界、全空 ⇒ 既有省略通知）。
+
+
+def test_split_session_fragment_full_parses_char_offsets() -> None:
+    from memoria.services.agent.session.reference import split_session_fragment_full
+
+    uri = encode_session_uri("session-abc")
+    assert split_session_fragment_full(f"{uri}#seq:3") == (uri, {"seq_from": 3, "seq_to": 3})
+    assert split_session_fragment_full(f"{uri}#seq:2-5") == (uri, {"seq_from": 2, "seq_to": 5})
+    assert split_session_fragment_full(f"{uri}#seq:3c12-3c48") == (
+        uri,
+        {"seq_from": 3, "seq_to": 3, "char_from": 12, "char_to": 48},
+    )
+    assert split_session_fragment_full(f"{uri}#seq:3c12-7c48") == (
+        uri,
+        {"seq_from": 3, "seq_to": 7, "char_from": 12, "char_to": 48},
+    )
+    # 缺端：只给起端字符位 ⇒ 止端按该消息末尾（`char_to` 不设）；只给止端 ⇒ 起端按消息开头
+    assert split_session_fragment_full(f"{uri}#seq:3c12-7") == (uri, {"seq_from": 3, "seq_to": 7, "char_from": 12})
+    assert split_session_fragment_full(f"{uri}#seq:3-7c48") == (uri, {"seq_from": 3, "seq_to": 7, "char_to": 48})
+    # 老口径零感知：`split_session_fragment()` 只回序号区间，`decode_session_uri()` 照旧剥片段
+    assert split_session_fragment(f"{uri}#seq:3c12-3c48") == (uri, (3, 3))
+    assert decode_session_uri(f"{uri}#seq:3c12-3c48") == "session-abc"
+    # **事件 seq 是 0 起**（真机 E2E 实测 token `#seq:0c6-0c8`）⇒ 序号 0 必须合法（曾因"≥1"判据被静默退回）
+    assert split_session_fragment_full(f"{uri}#seq:0c6-0c8") == (
+        uri,
+        {"seq_from": 0, "seq_to": 0, "char_from": 6, "char_to": 8},
+    )
+
+
+@pytest.mark.parametrize(
+    "suffix",
+    [
+        "#seq:3c48-3c12",  # 同一条内字符位倒置
+        "#seq:3c0",  # 字符位从 1 起 ⇒ 0 非法
+        "#seq:3c12-3c0",
+        "#seq:9-3c5",  # 事件序号倒置
+    ],
+)
+def test_split_session_fragment_full_rejects_bad_char_syntax(suffix: str) -> None:
+    from memoria.services.agent.session.reference import split_session_fragment_full
+
+    uri = encode_session_uri("session-abc")
+    with pytest.raises(SessionReferenceError):
+        split_session_fragment_full(f"{uri}{suffix}")
+
+
+def test_parse_with_char_fragment_appends_offsets_only_when_given() -> None:
+    uri = encode_session_uri("session-abc")
+    text, refs = parse_session_references(f"看 @[这段]({uri}#seq:4c10-4c20) 与 @[整段]({uri})")
+    assert text == "看 @这段 与 @整段"
+    assert refs == [
+        {
+            "session_id": "session-abc",
+            "label": "这段",
+            "seq_from": 4,
+            "seq_to": 4,
+            "char_from": 10,
+            "char_to": 20,
+        },
+        {"session_id": "session-abc", "label": "整段"},  # 无片段 ⇒ 形状逐字不变
+    ]
+    # 裸 URI 形态（无 label）同样支持字符位
+    _t, bare = parse_session_references(f"{uri}#seq:4c10-4c20")
+    assert bare == [
+        {
+            "session_id": "session-abc",
+            "label": "session-abc",
+            "seq_from": 4,
+            "seq_to": 4,
+            "char_from": 10,
+            "char_to": 20,
+        }
+    ]
+
+
+def test_snapshot_slices_message_text_by_char_range(kb: Path) -> None:
+    _session(
+        kb,
+        "session-char",
+        [
+            ("user/message", {"text": "0123456789"}),
+            ("assistant/message", {"content": "abcdefghij"}),
+        ],
+    )
+    # 同一条内：只要 assistant 那条的第 3..6 字（1 起闭区间 ⇒ c,d,e,f）
+    one = build_snapshot(
+        kb,
+        [{"session_id": "session-char", "label": "这段", "seq_from": 1, "seq_to": 1, "char_from": 3, "char_to": 6}],
+    )
+    assert one is not None
+    assert _block(one, "referenced-sessions")[0]["conversation"] == [{"role": "assistant", "text": "cdef"}]
+
+    # 跨条：从第 1 条第 8 字到第 2 条（user 那条 seq=0）—— 起端只给字符位、止端整条
+    span = build_snapshot(
+        kb,
+        [{"session_id": "session-char", "label": "跨条", "seq_from": 0, "seq_to": 1, "char_from": 8, "char_to": 4}],
+    )
+    assert span is not None
+    assert [item["text"] for item in _block(span, "referenced-sessions")[0]["conversation"]] == ["789", "abcd"]
+
+    # 越界一律钳到边界（不报错、不猜）
+    clipped = build_snapshot(
+        kb,
+        [{"session_id": "session-char", "label": "越界", "seq_from": 1, "seq_to": 1, "char_from": 50, "char_to": 99}],
+    )
+    assert clipped is not None
+    assert _block(clipped, "referenced-sessions") == []  # 一个字符都不剩 ⇒ 走既有片段省略通知
+    assert "落不到任何对话消息" in clipped or "落不到任何对话消息" in str(clipped)
+
+
+def test_self_reference_fragment_is_attached_but_whole_session_is_not(kb: Path) -> None:
+    """引用**当前会话**：整会话仍按上游口径拒绝（附省略通知）；**带 `#seq:` 片段则照投影**。
+
+    口径来源：用户报障「我引用的对话片段根本看不到」（2026-09-20，真机后端取证：
+    自引用时 `<referenced-sessions>[]</referenced-sessions>` + 省略通知 ⇒ 模型手里一个字都没有）。
+    """
+    _session(
+        kb,
+        "session-self",
+        [
+            ("user/message", {"text": "第一问"}),
+            ("assistant/message", {"content": "第一答"}),
+        ],
+    )
+    uri = encode_session_uri("session-self")
+    _t, refs = parse_session_references(f"看 @[片段]({uri}#seq:1c2-1c4)")
+    snap = build_snapshot(kb, refs, exclude_session_id="session-self")
+    assert snap is not None
+    assert _block(snap, "referenced-sessions")[0]["conversation"] == [{"role": "assistant", "text": "一答"}]
+
+    whole = build_snapshot(kb, [{"session_id": "session-self", "label": "整段"}], exclude_session_id="session-self")
+    assert whole is not None
+    assert _block(whole, "referenced-sessions") == []  # 整会话自引用仍不重复附（内容已在本轮历史里）
+    assert "当前会话本身" in whole
+

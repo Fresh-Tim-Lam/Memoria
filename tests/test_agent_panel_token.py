@@ -175,3 +175,59 @@ console.log(JSON.stringify({
     assert "sessionAliasUri(id)" in extract_function("formatSessionMentionToken")
     assert "sessionAliasUri(id)" in extract_function("sessionFragmentToken")
     assert 'const text = expandSessionAliases(((input && input.value) || "").trim());' in src
+
+
+def test_session_fragment_token_carries_message_char_range():
+    """对话栏里拖拽选取「某次回复内的一段」⇒ token 带**消息内字符区间**（`#seq:3c12-3c48`）。
+
+    口径来源：用户「一次回复内信息不是结构化的吗，拖拽选取的时候选不到某次回复内的内容起止么」
+    ⇒ 选 C（渲染也做可寻址结构）。字符位 = **1 起闭区间**，与文件引用 `#L3C2-L5C7` 同一套；
+    只在两端都拿得到时才写（缺一端 / 倒置 ⇒ 退回整条，不半猜）。
+    """
+    src = panel_source()
+    fns = "\n".join(extract_function(name) for name in ("fragmentSuffix", "fragmentSpanText"))
+    script = (
+        fns
+        + """
+const suffixCases = [
+  [3, null, 3, null],
+  [3, null, 7, null],
+  [3, 11, 3, 48],
+  [3, 11, 7, 48],
+  [3, null, 7, 48],
+  [3, 11, 7, null],
+  [3, 47, 3, 12],
+  [0, 1, 0, 5],
+];
+const spanCases = [
+  [3, null, null, null],
+  [3, null, 7, null],
+  [3, 12, 3, 48],
+  [3, 12, 7, 48],
+  [3, null, 7, 48],
+];
+console.log(JSON.stringify({
+  suffix: suffixCases.map(c => fragmentSuffix(c[0], c[1], c[2], c[3])),
+  span: spanCases.map(c => fragmentSpanText(c[0], c[1], c[2], c[3])),
+}));
+"""
+    )
+    out = node_eval(script)
+    # `fragmentSuffix` 收 **0 基**偏移（`messageOffsetAt` 的产物），内部 +1 成 1 基字符位；
+    # 事件 seq 本身是 **0 起**（末条正是 `#seq:0c2-0c5`）；缺一端 / 倒置 ⇒ 退回整条（不半猜）。
+    assert out["suffix"] == [
+        "#seq:3",
+        "#seq:3-7",
+        "#seq:3c12-3c48",
+        "#seq:3c12-7c48",
+        "#seq:3-7",
+        "#seq:3-7",
+        "#seq:3",
+        "#seq:0c2-0c5",
+    ]
+    # `fragmentSpanText` 收 **1 基**字符位（token 里的原值），只负责显示成 `3:12–3:48` 这类串
+    assert out["span"] == ["3", "3–7", "3:12–3:48", "3:12–7:48", "3–7:48"]
+    # 接线（静态断言）：气泡渲染后**反标**消息原文偏移；选区落点把两端偏移一起传给 token 拼写
+    assert "annotateMessageOffsets(el, text);" in extract_function("renderBody")
+    assert "messageOffsetAt(range.startContainer, range.startOffset)" in src
+    assert "sessionFragmentToken(loc.seqFrom, loc.seqTo, loc.offFrom, loc.offTo)" in src
