@@ -2968,7 +2968,7 @@ window.MemoriaAgentPanel = (function () {
   //   当前打开的文件时出现（选区为空 / 选区在别处 / 没开文件 ⇒ 一律不出现或立刻消失）；
   // ② 点它 = 把**当前打开文件**的 `@相对路径` token 插到输入框的「上次光标位置」——直接复用
   //   文件树拖拽那条 `insertMention()`（同一 `inputCaret` 语义，不自造第二套插入逻辑）；
-  // ③ 点别处（含面板内）/ 任意滚动 / Esc / 换文件（选区自然消失）/ 窗口尺寸变化 ⇒ 隐藏；
+  // ③ 点别处（含面板内）/ Esc / 换文件（选区自然消失）/ 窗口尺寸变化 ⇒ 隐藏；**滚动 ⇒ 重算位置**（2026-09-20 修正：旧版"任意滚动即隐藏"会让跨行拖拽的自滚动把入口永久摘掉）；
   // ④ 不碰文件树拖拽、不碰既有选区渲染（`sel-source.js`），本块只**读**选区 + 维护一个浮动按钮。
   // v1 产生的 token **只有** `@相对路径`（路径含空格时为 `@"路径"`，与 `formatMention` 同口径）：
   //   选中的**文本本身不进请求、也不生成区间 token** —— 片段级引用（区间/摘录）属设计 §6.13 A 项，
@@ -3034,7 +3034,7 @@ window.MemoriaAgentPanel = (function () {
   /** 选区变化后同步按钮：命中则贴到选区**上方**（挤不下时落下方），否则隐藏。 */
   function syncSelAdd() {
     const hit = selAddHit();
-    if (!hit) {
+    if (!hit || hit.rect.bottom < 0 || hit.rect.top > window.innerHeight) { // 选区整体滚出视口 ⇒ 不显示
       hideSelAdd();
       return;
     }
@@ -3046,7 +3046,7 @@ window.MemoriaAgentPanel = (function () {
     const h = btn.offsetHeight || 20;
     const rect = hit.rect;
     let top = rect.top - h - 6;
-    if (top < 4) top = rect.bottom + 6; // 贴到视口顶时改落选区下方
+    if (top < 4) top = Math.min(rect.bottom + 6, Math.max(4, window.innerHeight - h - 4)); // 贴顶改落下方；仍越界（选区高过视口）则钉进视口
     const maxLeft = Math.max(4, window.innerWidth - w - 4);
     const left = Math.max(4, Math.min(rect.left + rect.width / 2 - w / 2, maxLeft));
     btn.style.left = Math.round(left) + "px";
@@ -3068,7 +3068,7 @@ window.MemoriaAgentPanel = (function () {
   );
   document.addEventListener(
     "scroll",
-    hideSelAdd,
+    syncSelAdd, // 重算位置而非隐藏：跨行拖拽/跨界选择常伴随自动滚动，隐藏会让入口再也回不来
     true // capture：预览区/源码区/任意内层滚动容器都能收到
   );
   document.addEventListener("keydown", function (ev) {
@@ -3251,7 +3251,7 @@ window.MemoriaAgentPanel = (function () {
   function composerTokenHtml(token) {
     const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
     if (session) {
-      if (decodeSessionUri(session[1].split("#seq:")[0]) === null) return esc(token);
+      if (decodeSessionUri(SESSION_URI_PREFIX + session[1].split("#seq:")[0]) === null) return esc(token);
       return '<span class="-agent-composer-chip -agent-composer-chip--session">' + esc(token) + "</span>";
     }
     const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:-L\d+)?)?$/.exec(token);
@@ -3389,7 +3389,7 @@ window.MemoriaAgentPanel = (function () {
 
   // 后注册的监听（基座先跑、本行后跑 ⇒ 能读到基座刚摆好的按钮）只做气泡文案修正。
   document.addEventListener("selectionchange", relabelSelAdd);
-  document.addEventListener("mouseup", relabelSelAdd);
+  ["mouseup", "scroll"].forEach(function (ev) { document.addEventListener(ev, relabelSelAdd); }); // scroll 同源：按钮由 syncSelAdd 重算，文案也得跟着重算
 
   // ══════════════════════════════════════════════════════════════════════════════
   // 2026-09-20 追加（三项；用户："显示区域引用定位得有开始行号字符号和结束行号字符号，而且在对话框
@@ -3617,7 +3617,7 @@ window.MemoriaAgentPanel = (function () {
     const cls = "-agent-composer-chip" + (active ? " -agent-composer-chip--active" : "");
     const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
     if (session) {
-      if (decodeSessionUri(session[1].split("#seq:")[0]) === null) return esc(token);
+      if (decodeSessionUri(SESSION_URI_PREFIX + session[1].split("#seq:")[0]) === null) return esc(token);
       return '<span class="' + cls + ' -agent-composer-chip--session">' + esc(token) + "</span>";
     }
     const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:C\d+)?(?:-L\d+(?:C\d+)?)?)?$/.exec(token);
