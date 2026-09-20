@@ -42,14 +42,13 @@
 | 字段 | 必填 | 语义 | 装载期硬校验 |
 |---|---|---|---|
 | `id` | ✅ | 英文标识（kebab-case，唯一） | 重复即**装载失败**（不静默取其一） |
-| `kind` | ✅ | `read` / `write` / `network` / `skill` / `host` | 必须是这五值之一；决定默认 `approval` 档与 UI 分组 |
 | `provides.tools[]` | ✅ | 它贡献的**领域动词**：`tool_id`（**必须**取自核心原语目录）+ 参数收紧 `constrain` + 门控 `gate`。**该工具只产出 plan、不落盘**（§2.3.3 / §2.1.1）；落盘由编译器在 apply 入口调用原语完成 | `tool_id` 不在原语目录 → 拒绝装载 |
 | `provides.prompt` | ⬜ | 提示词段落文件（相对插件目录） | 与它的工具**同门控**；不得写进 `resources/agent-prompts/**`（那是既有事实源，见 [dsh-agent-port.md §6.3](dsh-agent-port.md)） |
 | `permissions.read` | ✅ | 可读路径 glob（相对库根） | `read` 之外的 `tool_id` 一律拒 |
-| `permissions.write` | ✅ | **可写**路径 glob；`kind=write` 必填且非空 | 空 ⇒ 该插件不可写（默认档） |
+| `permissions.write` | ✅ | **可写**路径 glob；有写动作类时必填且非空 | 空 ⇒ 该插件不可写（默认档） |
 | `permissions.exec` | ⬜ | 外部命令白名单 | **M3 恒为空**（见 2.6 不做清单） |
 | `forbidden` | ✅ | 与仓库/产品红线对齐的禁项文本 | 非空，且与 `permissions` 无自相矛盾 |
-| `approval` | ✅ | 按动作类分档：`auto` / `confirm` / `never` | `write` 类**不得**为 `auto`（硬校验，见 §10 P9） |
+| `approval` | ✅ | **必须显式声明**，按动作类分档：`auto` / `confirm` / `never`（**不由分类字段推导**，见下方「字段演进暂缓」） | **安全下限**：`permissions` 含 `write` 或 `exec` ⇒ `approval` **不得为 `auto`**；唯一例外须在 `forbidden`/注释里写明理由，且该例外**必须落审计**（硬校验，见 §10 P9） |
 | `config` | ⬜ | 参数 schema（`type`/`default`/边界）+ 库级启停默认值 | 参数名与类型必须过校验；持久化位置见 2.2 |
 | `emits` | ✅ | 它产生的审计/事件类型 | 只允许**追加**型事件名 |
 | `verify` | ✅ | 自证手段：`unit`（单测路径）+ `harness`（交互钩子） | 缺失不予装载（同 §6.3 原则 6「可观测」） |
@@ -58,6 +57,8 @@
 
 字段之外还有**一条铁律**（2.2 会反复引用）：**插件目录内不含可执行代码**（无 `.py` / `.js` / 脚本），只含**声明 JSON + 提示词 + 只读资源**。
 
+**字段演进暂缓（2026-09-20）**：本表**已删除 `kind` 字段**（原取值 `read` / `write` / `network` / `skill` / `host`）。用户口径原话：「那就不要写这个 kind 的字段，我们慢慢攒插件，后面才能知道有没有必要保留这个字段，以及怎么划分」——即**暂不引入分类维度**，等**复评触发条件：攒够 3–5 个真实插件**时再决定"有没有必要、按什么划分"。`kind` 原本承担的两件事就地改为：① **默认 `approval` 档**：**不由分类推导**，改为 `approval` **必须显式声明**（按动作类）+ 上表的安全下限（`permissions` 含 `write`/`exec` ⇒ 不得 `auto`）；② **UI 分组**：**暂不由契约决定** —— **UI 先按插件来源目录/名单分组**（内置 `resources/agent-capabilities/**` vs 用户 `<kb>/.memoria/agent/skills/**`），是否需要分类维度等上述复评后再定。
+
 **内置声明实样**（`resources/agent-capabilities/kb-write.json`，随版本分发、只读）：
 
 ```jsonc
@@ -65,7 +66,6 @@
   "v": 1,
   "id": "kb-write",
   "name": "写能力（建点 / 改点 / 连边 / 文件增删改）",
-  "kind": "write",
   "provides": {
     "tools": [
       { "tool_id": "kb.kp.create",   "gate": "always" },
@@ -120,7 +120,7 @@
 |---|---|---|---|---|
 | **原语 primitive** | 核心内置的**写工具体**（`tool_id` 的落盘实现）；内部只调服务层公开入口（§2.3.1） | 核心：`provides.tools[].tool_id` 的**取值目录**（M3a 一次性加进原语目录） | ✅ 有（在**核心**内，不在插件目录） | **落盘**（只经 apply 入口 + 写前备份，§2.3.2） |
 | **领域动词 tool** | 插件声明挑用的那个 `tool_id` 的**模型可见调用面**（同一 id，经 `constrain` 收紧 + `gate` 门控）；即 `provides.tools[]` 的条目 | 插件声明 `resources/agent-capabilities/<id>.json` | ❌ **无代码**（只声明） | **plan（声明式，不落盘）**（§2.3.3） |
-| **技能 skill** | 用户自定义能力包（`SKILL.md` + `manifest.json`，§4.2），`kind: skill` | 用户：`<kb>/.memoria/agent/skills/**` | ❌ **无代码** | 提示注入 + 声明领域动词（同样只产 plan） |
+| **技能 skill** | 用户自定义能力包（`SKILL.md` + `manifest.json`，§4.2；即**用户技能类**插件） | 用户：`<kb>/.memoria/agent/skills/**` | ❌ **无代码** | 提示注入 + 声明领域动词（同样只产 plan） |
 
 **一句话**：**模型调领域动词 → 得到 plan → 编译器（§2.3.4）把 plan 编成对原语的有序调用 → 只有编译器在 apply 入口落盘**。三层里模型只见"领域动词"、用户只见"技能"，**代码只存在于核心**。
 
@@ -302,7 +302,7 @@ apply 入口（核心，M3a）
 
 ### 2.4 权限与越界（违约即硬拒 + 审计 + 零部分写）
 
-**权限矩阵**（行 = 路径域，列 = 插件 `kind`；风格同 [AGENTS.md §4](../../AGENTS.md)）：
+**权限矩阵**（行 = 路径域，列 = 插件声明的**动作类**（`read` / `write` / `network` / `host`）；风格同 [AGENTS.md §4](../../AGENTS.md)）：
 
 | 路径域 | `read` | `write` | `network` | `host` |
 |---|---|---|---|---|
@@ -328,14 +328,14 @@ apply 入口（核心，M3a）
 
 ### 2.5 W/N/S/H 四条线如何落成插件族
 
-同一条契约、同一个装载器；四条线只是**四个 `kind` 不同的插件族**（各自一组 `permissions`）。下表右两列是**关键**：纯声明式的线可以完全不动核心，非纯声明式的线必须先有一次性挂载点。
+同一条契约、同一个装载器；四条线 = 四个**插件族/目录**（**族 ≠ 枚举值**：族是按**目录与来源**的约定划分的 —— 内置 `resources/agent-capabilities/**` 按功能分目录、用户侧 `<kb>/.memoria/agent/skills/**`，**不是契约字段**；与 2026-09-20 删除 `kind` 的决定一致，见 §2.1「字段演进暂缓」）。下表右两列是**关键**：纯声明式的线可以完全不动核心，非纯声明式的线必须先有一次性挂载点。
 
-| 族 | `kind` | 首批插件 | `permissions` 要点 | 纯声明式？ | "不改核心"的前提 |
-|---|---|---|---|---|---|
-| **W 写** | `write` | `kb-write`（建点 / 改点 / 连边 / 文件增删改） | `write` 限库内正文 + `.memoria/**` 白名单；`approval=confirm` | ✅（工具体 = 核心原语） | M3a 一次性把写原语加进原语目录 |
-| **N 联网** | `network` | `web-search`、`web-fetch` | `network` 逐次显式；抓取结果**先进 pending**（`storage/pending.py:91 save_pending`） | ✅ | N1 一次性把 `net.*` 原语加进目录 + 域名/私网策略（§3.3） |
-| **S skill** | `skill` | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | S1 一次性把 `use_skill` 按需注入器加进目录 |
-| **H 宿主** | `host` | 悬浮卡片、定时唤醒（§5.2） | `host` 默认关、逐 KB 开关；RPC 侧走通用网关 | ⚠️ **否**：RPC 侧可声明式，**浮层组件**需要一个核心提供的前端挂载点 | H1 需先加挂载点；建议单独立项（§5.4） |
+| 族 | 首批插件 | `permissions` 要点 | 纯声明式？ | "不改核心"的前提 |
+|---|---|---|---|---|
+| **W 写** | `kb-write`（建点 / 改点 / 连边 / 文件增删改） | `write` 限库内正文 + `.memoria/**` 白名单；`approval=confirm` | ✅（工具体 = 核心原语） | M3a 一次性把写原语加进原语目录 |
+| **N 联网** | `web-search`、`web-fetch` | `network` 逐次显式；抓取结果**先进 pending**（`storage/pending.py:91 save_pending`） | ✅ | N1 一次性把 `net.*` 原语加进目录 + 域名/私网策略（§3.3） |
+| **S skill** | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | S1 一次性把 `use_skill` 按需注入器加进目录 |
+| **H 宿主** | 悬浮卡片、定时唤醒（§5.2） | `host` 默认关、逐 KB 开关；RPC 侧走通用网关 | ⚠️ **否**：RPC 侧可声明式，**浮层组件**需要一个核心提供的前端挂载点 | H1 需先加挂载点；建议单独立项（§5.4） |
 
 > 结论要如实说：**能插的是"声明与权限"，不能插的是"新的执行体"**。这与 [AGENTS.md §6](../../AGENTS.md)（注册表条目 + 独立提示词文件、无执行体）和 §4.1「非目标：不做任意脚本执行」是同一条红线。
 
@@ -424,16 +424,16 @@ apply 入口（核心，M3a）
 - **目标**：用户不改程序即可扩展 agent 能力（提示 + 工具声明 + 资源），且**扩展是声明式的**；
 - **非目标**：不做"任意脚本执行"（与仓库协作 agent 的沙箱/执行红线一致，见 [AGENTS.md §6](../../AGENTS.md)）。
 
-### 4.2 声明式形态（= §2.1 契约的一个 `kind: skill` 插件）
+### 4.2 声明式形态（= §2.1 契约的一个**用户技能类**插件，声明式、**不含代码**）
 
 ```
 <kb>/.memoria/agent/skills/<name>/
   SKILL.md         # 何时用、怎么用（模型可读，按需注入）
-  manifest.json    # = §2.1 的能力插件契约（id/kind=skill/provides.tools/permissions/approval/…）
+  manifest.json    # = §2.1 的能力插件契约（id/provides.tools/permissions/approval/…）
   assets/**        # 可选：模板、词表（只读）
 ```
 
-> 与 §2.1 的对应：`manifest.json` 就是**同一份插件契约**，只是 `kind: skill` 且 `provides.prompt` 指向 `SKILL.md`；它的 `tool_id` 同样只能取自核心原语目录（**skill 不引入新的执行体**，见 §2.5 结论）。启用位与参数落在同一份库级注册文件 `<kb>/.memoria/agent/capabilities.json`。
+> 与 §2.1 的对应：`manifest.json` 就是**同一份插件契约**，只是**用户技能类**（"类"由**来源目录** `<kb>/.memoria/agent/skills/**` 约定，不是契约字段；§2.1 已删除分类字段，见其「字段演进暂缓」）且 `provides.prompt` 指向 `SKILL.md`；它的 `tool_id` 同样只能取自核心原语目录（**skill 不引入新的执行体**，见 §2.5 结论）。启用位与参数落在同一份库级注册文件 `<kb>/.memoria/agent/capabilities.json`。
 
 ### 4.3 发现与按需注入（token 是关键约束）
 
@@ -592,8 +592,8 @@ apply 入口（核心，M3a）
 | **B1** | L1 + L2 骨架（工具选择正确率、任务级 token、越权次数） | 有可复跑的对照表（先只用只读能力） |
 | **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（propose=`plan` → `preview_plan` → 逐条确认 → 应用 → 审计）+ **计划 API**（§2.3.3/§2.3.4）+ **首批 3 个 op**（`upsert_kp`、`attach_links`、`detach_links`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放 + 备份可用可清（§2.6 安全门四条） |
 | **W2**（=`M3b`） | 其余 op（`set_kp_range`、`rename_kp`、`merge_kp`）+ 撤销回滚 + `permission-presets` 第二旋钮 + N/S 各一个"只声明不启用"样板插件 | M3 出口（[dsh-agent-port §8](dsh-agent-port.md)）：越权次数 0 + L2 A/B |
-| **N1** | 出网一次 + `web_search`/`fetch_url` 原语 + 落 `pending` + `kind: network` 插件声明 | 出网可审计、长文不进上下文 |
-| **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ `kind: skill` 插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
+| **N1** | 出网一次 + `web_search`/`fetch_url` 原语 + 落 `pending` + 联网类插件声明（族/来源目录约定，见 §2.5） | 出网可审计、长文不进上下文 |
+| **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ 用户技能类插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
 | **H1** | 最小宿主接口（悬浮卡片 + 定时唤醒，默认关）+ 核心侧前端挂载点 | 主动性三问有答案、可一键停 |
 
 > 建议顺序 **T1 → B1 → W1(M3a) → W2(M3b) → N1 → S1 → H1**：先有度量与写能力闭环，再放联网与扩展，最后才放开"主动"。**W1/W2 已按 §2 更名为 M3a/M3b**（同一切片，`M3` 编号对齐 [dsh-agent-port.md §8](dsh-agent-port.md)）；N1/S1/H1 的"不改核心"前提见 §2.5。
@@ -639,6 +639,7 @@ apply 入口（核心，M3a）
 | 日期 | 变更 |
 |---|---|
 | 2026-09-19 | 初版（待评审）：现状盘点（调用面已具备、能力面极窄）；四条能力线（W 写 / N 联网 / S skill / H 宿主）逐线给出形态、边界、风险与验收；两条横向约束（token 三级预算 + 工具元层六原则与反模式；基准三层 L1/L2/L3 + 指标 + 语料 + 门禁，复用 maintenance-benchmark 方法论）；阶段建议 T1→B1→W1→W2→N1→S1→H1；7 条风险；P1–P6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG04） |
-| 2026-09-20 | **完善 M3：写能力 → 可插拔能力插件机制**（用户口径「M3 需要完善设计，做成可插拔的机制」）。§2 由"写工具清单"重写为七小节：**2.1 插件能力契约**（14 个字段的硬校验表 + 内置声明与库级启用两份 JSON 实样；铁律 = 插件目录**不含可执行代码**）、**2.2 注册与装载**（内置声明 `resources/agent-capabilities/**` + 库级 `<kb>/.memoria/agent/capabilities.json` 两位置分工、发现顺序、冲突即失败、不变量"新增插件不改核心"逐个点名核心文件、UIAPI 只加**一个通用网关**）、**2.3 写管线**（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销六步，逐步标注**已存在**的接入函数）+ **2.3.1 唯一写者**（`DocumentService.save_document`(`document.py:317`) / `storage/sidecar.py:120` / `storage/manifest.py:178` / `storage/pending.py:273`）、**2.4 权限矩阵与越界**（realpath 前缀校验、硬拒 `DENIED_CODE`、零部分写、库外一律 Deny）、**2.5 四线 → 插件族**（W/N/S 纯声明式、H 需一个前端挂载点；如实说明"能插的是声明与权限，不能插的是执行体"）、**2.6 M3a/M3b 分期 + 安全门三条 + 首批写原语目录 + 不做清单**、**2.7 与上游关系**（借 `user-approval` 与 `tool-fs` 的 diff 呈现契约；**沙箱升级不吃**，本设计用声明式 permissions + realpath 校验替代 —— 本地发明）。同步：§0 红线「禁止 silent 写入」加强为"插件边界物理可证"、§0 单一事实源补库级注册文件须登记；§1 缺口行；§4.2 skill 归入同一契约；§8 `W1/W2` 更名 `M3a/M3b` 并补 N1/S1/H1 的不改核心前提；§9 新增 **R8**（装载器成为越权写入面）；§10 新增 **P7–P11**（注册表承载 / M3a 原语个数 / approval 可否覆写 / 回滚口径 / 权限档是否随 M3b）；全部锚点逐条读码核对（见 §2 各处的 `file:line`）。**未实施任何代码**（本轮 docs only）；`docs/todo.md §13 AG04` 行按规则 8 同义压缩后仍为 K3 待评审 |
+| 2026-09-20 | **完善 M3：写能力 → 可插拔能力插件机制**（用户口径「M3 需要完善设计，做成可插拔的机制」）。§2 由"写工具清单"重写为七小节：**2.1 插件能力契约**（硬校验表（14 个字段；`kind` 已于同日删去 ⇒ **13**，见本表末行）+ 内置声明与库级启用两份 JSON 实样；铁律 = 插件目录**不含可执行代码**）、**2.2 注册与装载**（内置声明 `resources/agent-capabilities/**` + 库级 `<kb>/.memoria/agent/capabilities.json` 两位置分工、发现顺序、冲突即失败、不变量"新增插件不改核心"逐个点名核心文件、UIAPI 只加**一个通用网关**）、**2.3 写管线**（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销六步，逐步标注**已存在**的接入函数）+ **2.3.1 唯一写者**（`DocumentService.save_document`(`document.py:317`) / `storage/sidecar.py:120` / `storage/manifest.py:178` / `storage/pending.py:273`）、**2.4 权限矩阵与越界**（realpath 前缀校验、硬拒 `DENIED_CODE`、零部分写、库外一律 Deny）、**2.5 四线 → 插件族**（W/N/S 纯声明式、H 需一个前端挂载点；如实说明"能插的是声明与权限，不能插的是执行体"）、**2.6 M3a/M3b 分期 + 安全门三条 + 首批写原语目录 + 不做清单**、**2.7 与上游关系**（借 `user-approval` 与 `tool-fs` 的 diff 呈现契约；**沙箱升级不吃**，本设计用声明式 permissions + realpath 校验替代 —— 本地发明）。同步：§0 红线「禁止 silent 写入」加强为"插件边界物理可证"、§0 单一事实源补库级注册文件须登记；§1 缺口行；§4.2 skill 归入同一契约；§8 `W1/W2` 更名 `M3a/M3b` 并补 N1/S1/H1 的不改核心前提；§9 新增 **R8**（装载器成为越权写入面）；§10 新增 **P7–P11**（注册表承载 / M3a 原语个数 / approval 可否覆写 / 回滚口径 / 权限档是否随 M3b）；全部锚点逐条读码核对（见 §2 各处的 `file:line`）。**未实施任何代码**（本轮 docs only）；`docs/todo.md §13 AG04` 行按规则 8 同义压缩后仍为 K3 待评审 |
 | 2026-09-20 | **为写能力补备份机制**（用户口径「写入技能还需要有备份机制」）。新增 **§2.3.2 备份（写前 pre-image）与撤销的数据面**（六小节）：① **时机/粒度** = apply 前、单文件 pre-image + 每轮一个批次快照（`txid`），覆盖 §2.3.1 四原语的**全部**落盘目标（md / sidecar / manifest / pending）；新建文件记 `{"existed": false}`（撤销=删除）；② **位置/命名/格式** = `<kb>/.memoria/agent/backups/<session_id>/<txid>/{journal.json,files/<原相对路径>}`，**原字节复制**（不做 diff/patch 存储，diff 只用于人看的 dry-run），逐字节/换行保真，单文件 >**8 MiB** 或单批 >**32 MiB** ⇒ 预检失败不写；③ **保留口径** = 每会话 **5** 批 / 每库 **10** 会话 / 总计 **64 MiB**，FIFO 淘汰且**永不删当前会话最新批次**，清理时机为 apply 后 / 打开 / 关库（不进读热路径），淘汰与失败**均可见**、**备份失败即不写（fail-closed）**；④ **唯一写者绑定点** = 备份是 apply 入口第一步（调用序 `路径校验 → snapshot_pre_images → 四原语 → 审计 → trimming`），插件无代码 + `permissions.write` 白名单不含 `backups/**` ⇒ 绕不过；⑤ **撤销** = 以事务为单位（M3a 只做撤上一批），入口走 §2.2 唯一通用网关 `agent_capability_call(action="undo")`（形态对齐 `ui.py:1329`），撤销**仍需审批 + 审计**，撤销前校验 sha256 防覆盖用户手改，撤销后跑 `validate_kb()`（`document.py:2001`）恢复一致性，**撤销失败不静默、保留备份、报错**；⑥ **与既有机制的关系** = 如实说明既有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）的 `.bak` 是 **fail-open、单版本、非事务**，本节 pre-image 与之**叠加**并**有意收紧**为 fail-closed（仅 M3 agent 路径）；git 库情形**不调 git**；**不构成新增事实源**（非权威可清理副本，与 `.memoria/cache/**` 同类，但**不**放 cache 下以免被静默清空），并给出"若升格为权威档案才需人工登记 `AGENTS.md §1`"的那一行原文。同步：§0 红线加"写前必留 pre-image、备份失败即不写"；§2.1 实样 `forbidden` 增 `backups/**`、`emits` 增 `capability/backup`/`capability/undo`；§2.3 表第 4/6 步与"四条不变口径"引 §2.3.2；§2.3.1 补"原语调用者唯一 = apply 入口"；§2.4 矩阵增 `backups/**` 行；§2.6 M3a 落点加"写前备份"、安全门**三条 → 四条**（新增"备份可用可清"+验证方式）、M3b 撤销范围标注"整轮/整会话"；§9 R1 处置加写前 pre-image；**§10 P10 重写**为三选项（①写前快照+会话内撤销+数字保留（推荐）②完整历史 ③仅审计重放） |
 | 2026-09-20 | **定死「写模块」接口形态 = 计划 API + 编译器**（用户口径：agent 只产出声明式 plan；Memoria 用编译器把 plan 变成具体编辑，并复用人类 UI 同一套校验器；格式演进不改提示词、幂等可验、审批粒度天然对齐）。**新增 §2.1.1 三层术语**（原语 / 领域动词 tool / 技能 skill，含"有无执行体""产出"两列，铁律 = **领域动词只产出 plan，不直接写盘**）；**§2.1 契约就地修正**：`provides.tools[]` 行改为"它贡献的**领域动词**……**该工具只产出 plan、不落盘**（§2.3.3/§2.1.1）"，并把实样里 `enum_from: graph.link_types` 更正为 `graph.edge_types.EDGE_TYPES`（真实常量 `src/memoria/graph/edge_types.py:14`）；§2.2 补"插件挑用的 `tool_id` 是领域动词、产出 plan"一句。**新增 §2.3.3 计划 API**：信封 `{v, txid, intent, ops[]}` + **op 表**（`upsert_kp` / `attach_links` / `detach_links` / `set_kp_range` / `rename_kp`，`merge_kp` 列第二批），每 op 给字段、校验规则（幂等键、"目标必须可解析"、越界/歧义如何拒）、编译器要解析什么（路径归一 `tools/kb.py:160-172`、KP id `check_kp_id`、`occurrences` 的"行+匹配文本"对齐 `scan_link_text_matches`/`wrap_plain_on_lines`）、编译到的**唯一实现**（`document.py:1360/1722/2493/2428/1937`），并给出**失败语义 = 拒整批（all-or-nothing）+ 三条理由**，另列 **4 条"需新增的最小能力"**（编译器本体、`occurrences.matched_text` 前置核对、`merge_kp` 合并动作、plan 版本承诺）。**新增 §2.3.4 编译器与校验器**：`validate_plan` / `preview_plan`（dry-run diff）/ `resolve` / `audit_kb` 四个只读面 + **硬不变量「同一套校验器，两个消费者（人 UI 与 agent）」**（逐 API 点名复用函数与行号，禁止另写宽松校验）+ 自检循环。**§2.3 管线第 1/5 步**改为产 `plan` 并按 plan 落审计。**§2.6** M3a 收敛为**计划 API 最小闭环**（首批 3 个 op + 只读面 + 完整管线），M3b 收其余 op；**安全门四条逐条给出 plan 架构下的"测什么/怎么测"**；附表下新增**原语目录与 op 的关系**（M3a 新增原语 `kb.link.attach`/`kb.link.detach`；`kb.link.create` 是纯边、`upsert_edge` 留 M3b）；不做清单新增 3 条（不做部分应用 / M3a 不做 `set_kp_range`·`rename_kp`·`merge_kp` / 不做版本协商）。**§8 W1/W2 行**同步为 plan 口径。**§10**：**P8 改为"首批 op 个数"**（①三个推荐 ②五个 ③一个）、**P9 补 plan 按 op 动作类分档**（推荐仍为不可覆写，理由补"双源与单一校验器冲突"）、**P10 补批粒度 = 一个 plan = 一个 `txid`**、**新增 P12**（plan 是否需独立版本号/兼容承诺：①自带 `v` 只增不改（推荐）②无版本号 ③完整协商）。**未实施任何代码**（本轮 docs only）；同步轻改 `dsh-agent-port.md` M3 行、`docs-management.md §4.2`、`todo.md §13 AG04`（字节门禁见验证） |
+| 2026-09-20 | **字段演进：删除 `kind`（不再用未经验证的枚举同时承担"权限域"与"来源/划分"两种语义）**（用户口径：「那就不要写这个 kind 的字段，我们慢慢攒插件，后面才能知道有没有必要保留这个字段，以及怎么划分」）。**docs only，未改任何源码**。① `design/agent-capabilities.md` **§2.1**：删 `kind` 行（原 `read` / `write` / `network` / `skill` / `host`）⇒ **字段数 14 → 13**；内置声明实样删 `"kind": "write"`；`permissions.write` 行"`kind=write` 必填"改为"**有写动作类时**必填且非空"；**`approval` 行改写**为"**必须显式声明**（按动作类分档，不由分类字段推导）"，硬校验列落**安全下限**：「`permissions` 含 `write` 或 `exec` ⇒ `approval` **不得为 `auto`**；唯一例外须在 `forbidden`/注释里写明理由，且该例外**必须落审计**」；新增段 **「字段演进暂缓（2026-09-20）」** = 原话要点 + **`kind` 两项职责的替代**（approval 改显式声明 + 安全下限；**UI 先按插件来源目录/名单分组，是否需分类维度暂不由契约决定**）+ **复评触发条件 = 攒够 3–5 个真实插件**。② `kind` 残留清扫（同文件）：§2.1.1 技能行、§2.4 权限矩阵列名（`插件 kind` → `插件声明的动作类`）、**§2.5 改写为"四线 = 四个插件族/目录（族 ≠ 枚举值，按目录与来源约定、不是契约字段）"并删表内 `kind` 列**、§4.2 标题与注（→"**用户技能类**插件（声明式、**不含代码**）"，不引枚举）、§8 N1/S1 行。③ 轻改 `design/dsh-agent-port.md` §5（`skill` 行去掉 `kind: skill`）与 `docs-management.md §4.2`（追加本轮登记）。④ **§10 无改动**：P7–P12 逐条核对，均不依赖 `kind`（P8 按 **op 个数**、P9 按 **op 动作类**分档、P11 指 `approval` 旋钮），**未新增**"分类维度"待拍板项（用户已决定延后）。**未实施任何代码**；`docs/todo.md` 本轮未改动（AG04 行不依赖 `kind`，字节中性） |
