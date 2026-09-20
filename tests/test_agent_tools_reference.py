@@ -4,7 +4,8 @@
 （台账行 `docs/todo.md:265` 的 AG07）。覆盖：
 
 ① 五类库内引用各有「可解析 / 悬空 / 多义 / 越界拒绝」样例：`@路径`（含 `@"带空格"` 与目录尾斜杠）、
-   `dsh-session:`、`[[…]]`、`文件:行号`（含区间锚点如实回 `unsupported`）、`![](...)`；
+   `dsh-session:`、`[[…]]`、`文件:行号`（含 `#L12-L30` 区间 —— **L 路线读时投影已落地**：正常回 `ok`、
+   倒置回 `invalid`、任一端越界回 `not_found`）、`![](...)`；
 ② V2 分级收敛（精确 → 唯一 basename → 唯一后缀）与「任一级 >1 即 `ambiguous` 并不猜」；
 ③ V1 归一化（NFKC / 剥包裹标点 / 去 `./`）与 `@a.md（说明）` 这类正文标注的截断；
 ④ `audit_references` 在 fixture 库上同时报出多种问题：条数、检查名、形状与「已达上限」提示；
@@ -65,6 +66,8 @@ DIRTY_MD = "\n".join(
         "",
         f"会话 @[上次]({URI_OK})、@[坏](dsh-session:%%%)、@[僵尸]({URI_ZOMBIE})、@[越界]({URI_ILLEGAL_ID})。",
         "",
+        "区间倒置 notes/c.md#L5-L3、区间越界 notes/c.md#L2-L999（末尾追加，不动上方行号锚）。",
+        "",
     ]
 )
 
@@ -79,8 +82,8 @@ EXPECTED_CHECKS = {
     "kp_link.body_not_attached": 3,  # [[b-kp]] / [[ghost]] / [[dup-kp]]
     "kp_link.unresolved_target": 1,  # [[ghost]]
     "kp_link.ambiguous_target": 1,  # [[dup-kp]]（两文件同 id）
-    "anchor.line_out_of_range": 1,  # notes/c.md:999
-    "anchor.range_unsupported": 1,  # notes/c.md#L2-L4
+    "anchor.line_out_of_range": 2,  # notes/c.md:999 + 区间末端越界 notes/c.md#L2-L999
+    "anchor.range_inverted": 1,  # 区间倒置 notes/c.md#L5-L3（L 路线落地后才可校验）
     "image.unregistered": 1,  # ![sp](.memoria/images/my pic.png)
     "image.missing": 1,  # ![gone](...)
     "image.not_registered": 1,  # ![unreg](.memoria/images/unregistered.png)
@@ -288,7 +291,7 @@ def test_kp_link_ok_unresolved_and_ambiguous(kb: Path) -> None:
 # —— ④ 锚点 ——
 
 
-def test_anchor_ok_out_of_range_range_unsupported_and_escape(kb: Path) -> None:
+def test_anchor_ok_range_ok_inverted_out_of_range_and_escape(kb: Path) -> None:
     ok = invoke(kb, "resolve_reference", reference="notes/c.md:3")
     assert "类型：anchor" in ok.content and "状态：ok" in ok.content
     assert "sub/c.md 第 3 行：第一行。" in ok.content
@@ -300,10 +303,31 @@ def test_anchor_ok_out_of_range_range_unsupported_and_escape(kb: Path) -> None:
     beyond = invoke(kb, "resolve_reference", reference="notes/c.md:999")
     assert "状态：not_found" in beyond.content and "正文共 6 行" in beyond.content
 
+    # L 路线（读时投影）：区间解析到**当前正文行**并校验两端（本轮从 `unsupported` 升级为 `ok`）
     ranged = invoke(kb, "resolve_reference", reference="notes/c.md#L2-L4")
-    assert "状态：unsupported" in ranged.content
-    assert "起始行 L2 在范围内" in ranged.content
-    assert "读时投影" in ranged.content and "不校验末端" in ranged.content
+    assert "状态：ok" in ranged.content
+    assert "sub/c.md 第 2-4 行（3 行）" in ranged.content
+    assert "末行 第二行。" in ranged.content
+    assert 'read_document(path="sub/c.md", offset=2, limit=3)' in ranged.content
+
+    # 选区引用 token：`@路径#L12-L30`（含单行 `#L12`）与 `@"带空格 路径"#L12-L30`
+    at_ranged = invoke(kb, "resolve_reference", reference="@notes/c.md#L2-L4")
+    assert "状态：ok" in at_ranged.content and "第 2-4 行" in at_ranged.content
+    at_single = invoke(kb, "resolve_reference", reference="@notes/c.md#L4")
+    assert "状态：ok" in at_single.content and "第 4 行：第二行。" in at_single.content
+    spaced = invoke(kb, "resolve_reference", reference='@"notes/A B.md"#L1-L2')
+    assert "状态：ok" in spaced.content and "notes/A B.md 第 1-2 行" in spaced.content
+
+    # 区间倒置 ⇒ `invalid`（明确报错，不猜）
+    inverted = invoke(kb, "resolve_reference", reference="notes/c.md#L5-L3")
+    assert "状态：invalid" in inverted.content and "行区间倒置" in inverted.content
+    assert "@notes/c.md#L5-L3" not in inverted.content  # 不含正文，只回行号与建议
+
+    # 区间任一端越界 ⇒ `not_found`（报出越界的那一端）
+    over_end = invoke(kb, "resolve_reference", reference="notes/c.md#L2-L999")
+    assert "状态：not_found" in over_end.content and "第 999 行超出" in over_end.content
+    over_start = invoke(kb, "resolve_reference", reference="notes/c.md#L0-L2")
+    assert "状态：not_found" in over_start.content and "第 0 行超出" in over_start.content
 
     escaped = invoke(kb, "resolve_reference", reference="../outside.md:3")
     assert "状态：rejected" in escaped.content
@@ -383,7 +407,7 @@ def test_audit_reports_every_reference_class_with_shape_and_cap_note(kb: Path) -
     assert dict(counts) == EXPECTED_CHECKS
     total = sum(EXPECTED_CHECKS.values())
     assert f"发现 {total} 个引用问题" in result.content
-    assert "error 7 / warning 10" in result.content
+    assert "error 7 / warning 11" in result.content
 
     # 每条问题的形状：检查名 / 位置（文件:行）/ 目标 / 问题
     rows = issue_rows(result.content)

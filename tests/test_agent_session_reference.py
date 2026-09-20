@@ -37,6 +37,7 @@ from memoria.services.agent.llm import (
     LlmRequest,
     TextDelta,
 )
+from memoria.services.agent.session.history import conversation_messages
 from memoria.services.agent.session.reference import (
     MAX_REFERENCES,
     SESSION_REFERENCE_SCHEME,
@@ -47,6 +48,7 @@ from memoria.services.agent.session.reference import (
     format_session_mention,
     list_candidates,
     parse_session_references,
+    split_session_fragment,
 )
 from memoria.services.agent.session.store import SessionStore, read_session
 
@@ -469,4 +471,131 @@ def test_ask_missing_source_sends_explicit_notice(kb: Path) -> None:
     assert '<referenced-sessions>\n[]\n</referenced-sessions>' in sent
     assert '"empty": true' in sent
     assert "没有可附上的对话文本" in sent
+
+
+# —— ⑪ 事件片段 `#seq:`（2026-09-20；用户："引用仍是 @ + 纯文本" / "对话栏气泡选区也要能加入对话"）——
+# 语法（保守，只有两种）：`dsh-session:<base64url>#seq:<n>`（单条）与 `…#seq:<起>-<止>`（区间）。
+# `<n>` = 会话 JSONL 的事件 `seq`；前端「气泡 → seq」映射 = `conversation_messages()` 每条记录的
+# `seq` 键（user 气泡 = 该轮 `user/message` 的 seq；assistant 气泡 = 该轮最后一条非空
+# `assistant/message` 的 seq）。本组断言：解析（带/不带片段）、语法越界报错、快照只投影该事件、
+# 无片段行为逐字不变、ask() 端到端请求文本里出现片段快照。
+
+
+def test_split_session_fragment_absent_and_present() -> None:
+    uri = encode_session_uri("session-abc")
+    assert split_session_fragment(uri) == (uri, None)  # 无片段 ⇒ 原样返回、第二项 None
+    assert split_session_fragment(f"{uri}#seq:3") == (uri, (3, 3))
+    assert split_session_fragment(f"{uri}#seq:2-5") == (uri, (2, 5))
+
+
+def test_decode_session_uri_tolerates_fragment() -> None:
+    uri = encode_session_uri("session-abc")
+    assert decode_session_uri(f"{uri}#seq:7") == "session-abc"
+    assert decode_session_uri(f"{uri}#seq:7-9") == "session-abc"
+
+
+def test_split_session_fragment_rejects_inverted_and_keeps_non_tail_literal() -> None:
+    uri = encode_session_uri("session-abc")
+    with pytest.raises(SessionReferenceError):
+        split_session_fragment(f"{uri}#seq:9-3")  # 倒置 ⇒ 明确报错（不猜）
+    # `#seq:` 不在 URI 末尾 ⇒ 不算片段（`$` 锚定），第二项仍为 None
+    assert split_session_fragment(f"{uri}#seq:1 trailing") == (f"{uri}#seq:1 trailing", None)
+
+
+def test_parse_with_and_without_fragment() -> None:
+    uri = encode_session_uri("session-abc")
+    text, refs = parse_session_references(f"看 @[片段]({uri}#seq:2-5) 与 @[整段]({uri})")
+    assert text == "看 @片段 与 @整段"
+    assert refs == [
+        {"session_id": "session-abc", "label": "片段", "seq_from": 2, "seq_to": 5},
+        {"session_id": "session-abc", "label": "整段"},  # 无片段 ⇒ 形状逐字不变
+    ]
+
+
+def test_parse_bare_uri_with_fragment() -> None:
+    uri = encode_session_uri("session-abc")
+    text, refs = parse_session_references(f"裸 {uri}#seq:1")
+    assert text == "裸 @session-abc"
+    assert refs == [{"session_id": "session-abc", "label": "session-abc", "seq_from": 1, "seq_to": 1}]
+
+
+def test_conversation_messages_carries_event_seq(kb: Path) -> None:
+    _session(
+        kb,
+        "session-seq",
+        [
+            ("user/message", {"text": "问一"}),
+            ("assistant/message", {"content": "答一草稿"}),
+            ("assistant/message", {"content": "答一"}),
+            ("user/message", {"text": "问二"}),
+        ],
+    )
+    view = conversation_messages(str(kb), "session-seq")
+    # assistant 气泡取**该轮最后一条非空** assistant/message 的 seq（与文本口径同源）
+    assert [(item["role"], item["seq"]) for item in view] == [("user", 0), ("assistant", 2), ("user", 3)]
+
+
+def test_snapshot_projects_only_the_fragment_and_leaves_plain_alone(kb: Path) -> None:
+    _session(
+        kb,
+        "session-frag",
+        [
+            ("user/message", {"text": "第一问"}),
+            ("assistant/message", {"content": "第一答"}),
+            ("user/message", {"text": "第二问"}),
+            ("assistant/message", {"content": "第二答"}),
+        ],
+    )
+    view = conversation_messages(str(kb), "session-frag")
+    assert [item["seq"] for item in view] == [0, 1, 2, 3]
+
+    only = build_snapshot(kb, [{"session_id": "session-frag", "label": "片段", "seq_from": 3, "seq_to": 3}])
+    assert only is not None
+    assert _block(only, "referenced-sessions")[0]["conversation"] == [{"role": "assistant", "text": "第二答"}]
+
+    span = build_snapshot(kb, [{"session_id": "session-frag", "label": "区间", "seq_from": 2, "seq_to": 3}])
+    assert [item["text"] for item in _block(span, "referenced-sessions")[0]["conversation"]] == ["第二问", "第二答"]
+
+    plain = build_snapshot(kb, [{"session_id": "session-frag"}])
+    assert [item["text"] for item in _block(plain, "referenced-sessions")[0]["conversation"]] == [
+        "第一问",
+        "第一答",
+        "第二问",
+        "第二答",
+    ]
+
+
+def test_snapshot_fragment_out_of_range_reports_omission(kb: Path) -> None:
+    _session(kb, "session-one", [("user/message", {"text": "只此一条"})])
+    snapshot = build_snapshot(kb, [{"session_id": "session-one", "label": "越界", "seq_from": 99, "seq_to": 120}])
+    assert snapshot is not None
+    assert _block(snapshot, "referenced-sessions") == []
+    omissions = _block(snapshot, "referenced-session-omissions")
+    assert [item["sessionId"] for item in omissions] == ["session-one"]
+    assert omissions[0]["fragment"] is True and omissions[0]["seq"] == "99-120"
+    assert "落不到任何对话消息" in omissions[0]["note"]
+
+
+def test_ask_sends_fragment_snapshot_end_to_end(kb: Path) -> None:
+    _session(
+        kb,
+        "session-src-0001",
+        [
+            ("user/message", {"text": "源问题"}),
+            ("assistant/message", {"content": "源答案 A"}),
+            ("assistant/message", {"content": "源答案 B"}),
+        ],
+    )
+    uri = encode_session_uri("session-src-0001")
+    provider = _FakeProvider([[TextDelta("好"), FinishEvent(reason=FinishReason.STOP)]])
+    ask(str(kb), f"只看这段 @[片段]({uri}#seq:2)", provider=provider, model="fake-model", session_id="session-dst-0001")
+
+    sent = provider.requests[0].messages[-1].content
+    assert sent.startswith("只看这段 @片段\n\n## 引用的会话")
+    assert _block(sent, "referenced-sessions")[0]["conversation"] == [{"role": "assistant", "text": "源答案 B"}]
+    assert "源答案 A" not in sent and "源问题" not in sent  # 其余仍照既有省略/边界口径
+
+    records = read_session(str(kb), "session-dst-0001")
+    users = [row["data"]["text"] for row in records if row["type"] == "user/message"]
+    assert users == ["只看这段 @片段"]  # JSONL 仍只留干净可读态，片段快照不落盘
 

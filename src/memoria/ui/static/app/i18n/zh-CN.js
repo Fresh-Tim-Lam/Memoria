@@ -1327,4 +1327,17 @@
     selAddAction: "加入对话",
     selAddTitle: "把当前文件的 @路径 插入对话输入框（插在上次光标处；选中的文字本身不会进入请求）",
   });
+
+  // ===== 2026-09-20 追加：选区引用的「位置」（覆写上面两条 `selAdd*` + 气泡片段两条新键）=====
+  // 同走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  // 口径变化（用户："实际写入对话的仍然只是 `@文件名`，根本没有标出对应内容的源码位置"）：
+  // 现在写入的是**带位置的引用 token** —— 源码区/预览区选区 ⇒ `@路径#L<起>-L<止>`（预览区按**块级**
+  // 源码行映射，见 `agent-panel.js` 末尾块）；消息气泡选区 ⇒ 会话片段引用
+  // `@[标题](dsh-session:…#seq:<n>)`。选中的**文字本身仍不进请求**（正文由模型自己 `read_document` 取）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    selAddAction: "加入对话",
+    selAddTitle: "把选中的位置作为引用插入输入框（写 `@路径#L12-L30` 行区间；选中的文字本身不会进入请求）",
+    selAddActionSeq: "引用本段",
+    selAddTitleSeq: "把选中的这段对话作为会话片段引用插入输入框（`…#seq:<n>`；不会切换当前会话）",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

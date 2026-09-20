@@ -3076,6 +3076,321 @@ window.MemoriaAgentPanel = (function () {
   });
   window.addEventListener("resize", hideSelAdd);
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 选区引用的「位置」＋ 消息气泡入口 ＋ 打字框 chip（2026-09-20；用户报障三连："实际写入对话的仍然
+  // 只是 `@文件名`，根本没有标出对应内容的源码位置…对话栏仍然不能悬浮显示加入对话…引用仍是 `@` +
+  // 纯文本而不是在打字框里面把引用渲染一下"）。整块追加在 IIFE 末尾（`return {}` 之前）：
+  //   ① 选区「加入对话」写出**带位置**的 token：源码区用真实行号（`.-line[data-line]`），
+  //      预览区用**块级源码行映射**（`[data--src-line][data--src-line-end]`，见 `prevPreviewBlockEnd`）；
+  //   ② 触发宿主扩到**消息气泡**（`#agent-messages`）：产出会话片段引用 token（`…#seq:<n>`）；
+  //   ③ `#agent-input` 背后加一层**镜像层**（追加在 `.-agent-composer` 末尾，靠 `z-index` 压到 textarea
+  //      之下），把 token 包成 chip —— textarea 自身文字透明、光标与选区仍归 textarea；无 token 时镜像
+  //      `display:none` 且 textarea 样式不变 ⇒ 零视觉差异。
+  // 纪律：**不改**既有 `syncSelAdd` / `insertMention` / `insertSessionToken` / `messageEl` / `loadSession`
+  // 的任何一行，只**包一层**或换个绑定（`selAddHit` / `addSelectionToChat` 是"按名调用"的，重绑可见；
+  // `syncSelAdd` 已作为监听器绑死 ⇒ 不改它，改用**后注册**的监听做文案修正）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 源码区：选区端点 → 该行**真实**行号（`.-line[data-line]`，1 起）；取不到回 0（不猜）。 */
+  function sourceLineAt(node) {
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const lineEl = el && el.closest ? el.closest("[data-line]") : null;
+    const n = lineEl ? Number(lineEl.getAttribute("data-line")) : 0;
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  }
+
+  /** 选区**终点**：若它恰好停在某行的**第一个文本节点**的 0 偏移，收回到上一行（别多算一行）。 */
+  function endLineAt(node, offset) {
+    const line = sourceLineAt(node);
+    if (!line || offset !== 0 || node.nodeType !== 3 || !document.createTreeWalker) return line;
+    const lineEl = node.parentElement && node.parentElement.closest ? node.parentElement.closest("[data-line]") : null;
+    if (!lineEl) return line;
+    const first = document.createTreeWalker(lineEl, NodeFilter.SHOW_TEXT).nextNode();
+    return first === node && line > 1 ? line - 1 : line;
+  }
+
+  /** 预览区：选区端点所属源码块 → `[起, 止]` 源码行区间（`data--src-line[-end]`）；取不到回 null。 */
+  function previewBlockRange(node) {
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const block = el && el.closest ? el.closest("[data--src-line]") : null;
+    if (!block) return null;
+    const start = Number(block.getAttribute("data--src-line")) || 0;
+    const end = Number(block.getAttribute("data--src-line-end")) || start;
+    return start > 0 ? [start, Math.max(start, end)] : null;
+  }
+
+  /** 预览区：选区终点恰在**下一个块的首字符**时，回"上一块的末行"（避免把整块多算进来）。 */
+  function prevPreviewBlockEnd(node) {
+    const preview = $("#preview");
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const block = el && el.closest ? el.closest("[data--src-line]") : null;
+    if (!preview || !block) return null;
+    const blocks = preview.querySelectorAll("[data--src-line]");
+    let prev = null;
+    for (let i = 0; i < blocks.length; i += 1) {
+      if (blocks[i] === block) break;
+      prev = blocks[i];
+    }
+    if (!prev) return null;
+    return Number(prev.getAttribute("data--src-line-end")) || Number(prev.getAttribute("data--src-line")) || null;
+  }
+
+  /** 消息气泡 → 事件 seq（`data-agent-seq`，由 `conversation_messages()` 的 `seq` 键标上）；无回 null。 */
+  function bubbleSeq(node) {
+    const el = node && node.nodeType === 1 ? node : node && node.parentElement;
+    const bubble = el && el.closest ? el.closest("[data-agent-seq]") : null;
+    const n = bubble ? Number(bubble.getAttribute("data-agent-seq")) : NaN;
+    return Number.isInteger(n) && n >= 0 ? n : null;
+  }
+
+  /** 选区所属**宿主与位置**：`{host:"editor"|"preview", startLine, endLine}` 或 `{host:"messages", seqFrom, seqTo}`。 */
+  function selectionLocation(range) {
+    const anchor = range.commonAncestorContainer;
+    const editor = $("#editor");
+    if (editor && editor.contains(anchor)) {
+      return {
+        host: "editor",
+        startLine: sourceLineAt(range.startContainer),
+        endLine: endLineAt(range.endContainer, range.endOffset),
+      };
+    }
+    const preview = $("#preview");
+    if (preview && preview.contains(anchor)) {
+      const a = previewBlockRange(range.startContainer);
+      let b = previewBlockRange(range.endContainer) || a;
+      if (a && b && b[0] > a[1] && range.endOffset === 0) {
+        const prev = prevPreviewBlockEnd(range.endContainer);
+        if (prev && prev >= a[0]) b = [prev, prev]; // 终点在下一块块首 ⇒ 上一块末行才是真正选中的末尾
+      }
+      if (!a || !b) return null;
+      return { host: "preview", startLine: Math.min(a[0], b[0]), endLine: Math.max(a[1], b[1]) };
+    }
+    const box = $("#agent-messages");
+    if (box && box.contains(anchor)) {
+      const from = bubbleSeq(range.startContainer);
+      if (from === null) return null; // 气泡没有 seq（实时生成的当轮）⇒ 不产引用，也不出按钮
+      const to = bubbleSeq(range.endContainer);
+      return { host: "messages", seqFrom: from, seqTo: to === null ? from : to };
+    }
+    return null;
+  }
+
+  // ① 宿主判定：在既有「预览区 / 源码区」之外**追加**消息气泡（其余判断逐条照旧）。
+  selAddHit = function () {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+    if (!String(sel.toString() || "").trim()) return null;
+    const range = sel.getRangeAt(0);
+    const loc = selectionLocation(range);
+    if (!loc) return null;
+    const rect = range.getBoundingClientRect();
+    if (!rect || (!rect.width && !rect.height)) return null;
+    return { rect: rect, loc: loc };
+  };
+
+  /** `@路径#L12-L30`（单行 `#L12`；含空白路径写 `@"…"#L12-L30`）；无行号 ⇒ 退回既有 `formatMention`。 */
+  function formatRangeMention(path, start, end) {
+    const p = String(path || "").replace(/\\/g, "/");
+    if (!p) return "";
+    if (!(start > 0)) return formatMention(p, "file");
+    const head = /\s/.test(p) ? '@"' + p + '"' : "@" + p;
+    return end > start ? head + "#L" + start + "-L" + end : head + "#L" + start;
+  }
+
+  /** 会话片段引用 token：`@[label](dsh-session:<base64url>#seq:<n>)`（跨气泡用 `#seq:<起>-<止>`）。 */
+  function sessionFragmentToken(from, to) {
+    const id = sessionId ? String(sessionId) : "";
+    if (!id || !Number.isInteger(from)) return "";
+    const end = Number.isInteger(to) ? to : from;
+    const frag = end > from ? "#seq:" + from + "-" + end : "#seq:" + from;
+    const row = histDataRow(id);
+    const label = (row && histTitle(row)) || id;
+    const head = formatSessionMentionToken(id, label); // label 转义与 URI 编码复用既有实现（单一事实源）
+    return head.replace("(" + sessionUri(id) + ")", "(" + sessionUri(id) + frag + ")");
+  }
+
+  // ② 落点：源码/预览 ⇒ 带行区间的文件 token；气泡 ⇒ 会话片段 token。落点仍走既有 `inputCaret` 语义。
+  addSelectionToChat = function () {
+    const hit = selAddHit();
+    hideSelAdd();
+    if (!hit || !hit.loc) return;
+    const loc = hit.loc;
+    if (loc.host === "messages") {
+      const token = sessionFragmentToken(loc.seqFrom, loc.seqTo);
+      if (token) insertSessionToken(token);
+      return;
+    }
+    const path = state.currentPath || "";
+    if (!path) return;
+    insertSessionToken(formatRangeMention(path, loc.startLine, loc.endLine));
+  };
+
+  /** 气泡选区的按钮文案（基座 `syncSelAdd` 已绑死为监听器 ⇒ 不能改它，改用**后注册**的监听补文案）。 */
+  function relabelSelAdd() {
+    const btn = document.getElementById(SEL_ADD_ID);
+    if (!btn || !btn.classList.contains("-on")) return;
+    const sel = window.getSelection();
+    const loc = sel && !sel.isCollapsed && sel.rangeCount ? selectionLocation(sel.getRangeAt(0)) : null;
+    const seq = !!(loc && loc.host === "messages");
+    if (seq === (btn.getAttribute("data-sel-ctx") === "seq")) return; // 已是该上下文的文案
+    if (seq) {
+      btn.textContent = T("agent.selAddActionSeq");
+      btn.title = T("agent.selAddTitleSeq");
+      btn.setAttribute("data-sel-ctx", "seq");
+    } else {
+      btn.textContent = T("agent.selAddAction");
+      btn.title = T("agent.selAddTitle");
+      btn.removeAttribute("data-sel-ctx");
+    }
+  }
+
+  // ③ 打字框引用 chip：镜像层（同字体/内距/换行 + 同步滚动与尺寸），textarea 文字透明、光标归它自己。
+  const COMPOSER_TOKEN_RE = /(@\[(?:\\.|[^\\\]])*\]\(dsh-session:[^\s)]*\))|(^|\s)(@"[^"]*"?|@\S+)/g;
+
+  /** 单个 token → chip HTML（**逐字保留 token 原文** ⇒ 与 textarea 里那串字符同宽，镜像才不会错位）。 */
+  function composerTokenHtml(token) {
+    const session = /^@\[(?:\\.|[^\\\]])*\]\(dsh-session:([^\s)]*)\)$/.exec(token);
+    if (session) {
+      if (decodeSessionUri(session[1].split("#seq:")[0]) === null) return esc(token);
+      return '<span class="-agent-composer-chip -agent-composer-chip--session">' + esc(token) + "</span>";
+    }
+    const file = /^@(?:"([^"]*)"?|([^\s"]+?))(#L\d+(?:-L\d+)?)?$/.exec(token);
+    if (!file) return esc(token);
+    const body = (file[1] !== undefined ? file[1] : file[2]) || "";
+    if (!body) return esc(token);
+    const range = file[3] || "";
+    const head = range ? token.slice(0, token.length - range.length) : token;
+    return (
+      '<span class="-agent-composer-chip' + (range ? " -agent-composer-chip--range" : "") + '">' +
+      esc(head) +
+      (range ? '<span class="-agent-composer-chip-range">' + esc(range) + "</span>" : "") +
+      "</span>"
+    );
+  }
+
+  /** 全文 → chip HTML（逐段转义，**不先整体 esc**，与 `linkifyUser` 同一手法）。 */
+  function composerChipsHtml(text) {
+    const raw = String(text == null ? "" : text);
+    let out = "";
+    let last = 0;
+    COMPOSER_TOKEN_RE.lastIndex = 0;
+    for (const m of raw.matchAll(COMPOSER_TOKEN_RE)) {
+      if (m[1] !== undefined) {
+        out += esc(raw.slice(last, m.index)) + composerTokenHtml(m[1]);
+        last = m.index + m[1].length;
+        continue;
+      }
+      const token = m[3] || "";
+      const start = m.index + (m[2] || "").length;
+      out += esc(raw.slice(last, start));
+      out += token ? composerTokenHtml(token) : "";
+      last = start + token.length;
+    }
+    return out + esc(raw.slice(last));
+  }
+
+  let composerMirror = null;
+
+  /** 惰性建镜像层；**追加在 `.-agent-composer` 末尾**（不插进 `#agent-statusbar` ↔ `#agent-input` 之间
+   *  —— 那一对紧邻关系是 01 篇已实测的 DOM 事实，`bar.nextElementSibling === input` 必须继续成立）。
+   *  绘制次序由 `z-index` 决定（镜像 0 / textarea 1），与 DOM 次序无关 ⇒ 视觉上镜像仍在 textarea 之下。 */
+  function composerMirrorEl(input) {
+    if (composerMirror && composerMirror.parentElement === input.parentElement) return composerMirror;
+    const el = document.createElement("div");
+    el.id = "-agent-composer-mirror";
+    el.className = "-agent-composer-mirror";
+    el.setAttribute("aria-hidden", "true");
+    input.parentElement.appendChild(el);
+    composerMirror = el;
+    return el;
+  }
+
+  /** 重算镜像内容与几何（输入 / 粘贴 / 滚动 / 换行 / resize / 字号变化 / 程序化插入后都调它）。 */
+  function syncComposerChips() {
+    const input = $("#agent-input");
+    if (!input || !input.parentElement) return;
+    const mirror = composerMirrorEl(input);
+    const raw = String(input.value || "");
+    COMPOSER_TOKEN_RE.lastIndex = 0;
+    const hasToken = COMPOSER_TOKEN_RE.test(raw);
+    if (!hasToken || !input.offsetWidth) {
+      // 无 token（或面板收起、量为 0）⇒ 覆盖层关掉、textarea 恢复原样式：**零视觉差异**
+      mirror.classList.remove("-on");
+      input.classList.remove("-agent-chips-on");
+      return;
+    }
+    mirror.innerHTML = composerChipsHtml(raw);
+    mirror.classList.add("-on");
+    input.classList.add("-agent-chips-on");
+    mirror.style.left = input.offsetLeft + "px";
+    mirror.style.top = input.offsetTop + "px";
+    mirror.style.width = input.offsetWidth + "px";
+    mirror.style.height = input.offsetHeight + "px";
+    mirror.scrollTop = input.scrollTop;
+    mirror.scrollLeft = input.scrollLeft;
+  }
+
+  (function bindComposerChips() {
+    const input = $("#agent-input");
+    if (!input) return;
+    ["input", "keyup", "change", "paste", "cut", "drop"].forEach(function (ev) {
+      input.addEventListener(ev, function () {
+        setTimeout(syncComposerChips, 0); // 让浏览器先把新值/新尺寸落定
+      });
+    });
+    input.addEventListener("scroll", syncComposerChips);
+    window.addEventListener("resize", syncComposerChips);
+    // 字号：`display-settings.js::applyFontSize` 把 `--agent-font-size` 打在 `#-agent-dock` 的行内 style 上
+    const dock = $("#-agent-dock");
+    if (dock && window.MutationObserver) {
+      new MutationObserver(syncComposerChips).observe(dock, { attributes: true, attributeFilter: ["style"] });
+    }
+    // 程序化插入（`insertMention` / `insertSessionToken`）与发送清空（`ask`）不触发 `input` 事件 ⇒ 包一层
+    const baseInsertMentionForChips = insertMention;
+    insertMention = function () {
+      const out = baseInsertMentionForChips.apply(null, arguments);
+      syncComposerChips();
+      return out;
+    };
+    const baseInsertSessionTokenForChips = insertSessionToken;
+    insertSessionToken = function () {
+      const out = baseInsertSessionTokenForChips.apply(null, arguments);
+      syncComposerChips();
+      return out;
+    };
+    const baseAskForChips = ask;
+    ask = function () {
+      const out = baseAskForChips.apply(null, arguments);
+      syncComposerChips();
+      return out;
+    };
+    syncComposerChips();
+  })();
+
+  // ④ 气泡 → seq：`agent_session_load` 回来的 `seq` 标到气泡 DOM 上（顺序与 `messages` 一一对应）。
+  const baseLoadSessionForSeq = loadSession;
+  loadSession = function () {
+    const pending = baseLoadSessionForSeq.apply(null, arguments);
+    return Promise.resolve(pending).then(function (res) {
+      if (res && res.status === "ok") {
+        const box = $("#agent-messages");
+        const list = res.messages;
+        if (box && Array.isArray(list)) {
+          const bubbles = box.querySelectorAll(".-agent-msg");
+          for (let i = 0; i < bubbles.length && i < list.length; i += 1) {
+            const seq = list[i] && list[i].seq;
+            if (Number.isInteger(seq) && seq >= 0) bubbles[i].setAttribute("data-agent-seq", String(seq));
+          }
+        }
+      }
+      return res;
+    });
+  };
+
+  // 后注册的监听（基座先跑、本行后跑 ⇒ 能读到基座刚摆好的按钮）只做气泡文案修正。
+  document.addEventListener("selectionchange", relabelSelAdd);
+  document.addEventListener("mouseup", relabelSelAdd);
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

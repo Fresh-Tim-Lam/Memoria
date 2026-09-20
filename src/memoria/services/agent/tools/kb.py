@@ -1617,16 +1617,17 @@ def _session_query_tools(kb_path: str) -> tuple[Tool, ...]:
 #       V2 分级收敛：精确 → 唯一 basename → 唯一后缀（`_reference_converge_file()`）；
 #          **任一级命中 >1 即 `ambiguous` 并回候选，绝不猜**；
 #       V3 回灌：`not_found` 当**普通结果**返回（「真实情况 + 下一步」），**不自动重试**；
-#   **L**（改读时投影）= **未实现** ⇒ 区间锚点（`x.md#L12-L30`）一律如实回 `unsupported`，
-#       **不假装能解**（§6.5 落地顺序第 5 条只允许「读取时投影」形态，本块没有该形态）。
+#   **L**（改读时投影）= **已落地**（2026-09-20）⇒ 区间锚点（`x.md#L12-L30`）解析到**当前正文行**
+#       并双向校验（起/末都存在、起 ≤ 止）：`ok`（含解析到的行范围 + 首末行摘要）/ `invalid`（倒置）/
+#       `not_found`（越界）；仍**不把正文塞进结果**（投影只给行号与首末行，正文由 `read_document` 取）。
 #
 # §6.5 的「不要做」清单照办：不靠扩正则修跳转、不做模糊编辑距离自动改写（实体解析共识：误并比漏并更糟）、
 # 不改写会话 JSONL / 事件日志、不为整库做路径枚举 schema（只在库内清单上分级收敛）。
 #
-# **本期只覆盖库内五类引用**：`@路径` / `@[label](dsh-session:…)` / `[[…]]` / `文件:行号` / `![](...)`。
-# **明确不做**（写进工具描述，避免模型误以为能解）：① 块级引用（代码块 / 表格 / 公式 —— 需要新的稳定块
-# 标识，属另一设计）；② 选区 / 片段引用（区间末端的读时投影与对话片段引用，属 `dsh-agent-port.md §6.13`
-# 的 A / B 子项）。
+# **本期只覆盖库内五类引用**：`@路径` / `@[label](dsh-session:…[#seq:…])` / `[[…]]` / `文件:行号` / `![](...)`。
+# **仍明确不做**（写进工具描述，避免模型误以为能解）：① 块级引用（代码块 / 表格 / 公式 —— 需要新的稳定块
+# 标识，属另一设计）；② 选区**文本**引用（`@路径#L12-L30` 只给行区间，正文仍由 `read_document` 取；
+# 对话片段引用 `…#seq:<n>` 由 `session/reference.py` 在快照侧投影，不经本块）。
 #
 # 两把工具都**只读**：路径一律走允许根列表（`_read_roots()` / `_resolve_in_read_roots()`）、会话 id 一律走
 # `session_file()`（非法 id 直接报错，fail-closed）、图片注册表只读不重建；工具体全程 `kb_read_only()` 守卫。
@@ -1699,7 +1700,7 @@ _REFERENCE_AUDIT_CHECKS = (
     "anchor.file_missing",
     "anchor.ambiguous_file",
     "anchor.line_out_of_range",
-    "anchor.range_unsupported",
+    "anchor.range_inverted",
     "anchor.outside_root",
     "image.missing",
     "image.unregistered",
@@ -2013,8 +2014,13 @@ def _resolve_kp_link_reference(kb_path: str, token: str) -> dict[str, Any]:
 
 
 def _resolve_anchor_reference(kb_path: str, token: str) -> dict[str, Any]:
-    """`文件:行号` 锚点。单行锚点做存在性 + 行号范围校验；**区间锚点回 `unsupported`**（无读时投影）。"""
+    """`文件:行号` 锚点。单行与**区间**（`#L12-L30`）都解析到当前正文行并双向校验（L 路线，2026-09-20 起）。"""
     text = token.strip()
+    ranged = _at_range_parts(text)
+    if ranged is not None:
+        # 选区引用的规范 token `@路径#L12-L30` / `@"带空格 路径"#L12-L30`：剥掉 `@` 与引号后
+        # 与 `文档#L12-L30` 走**同一段**区间读时投影（含空格路径只能从这条入口进来）。
+        return _anchor_range_result(kb_path, ranged[0], ranged[1], ranged[2])
     regex = _ref_re(_ANCHOR_REF_PATTERN)
     match = regex.fullmatch(text) or regex.search(text)
     if match is None:
@@ -2059,16 +2065,10 @@ def _resolve_anchor_reference(kb_path: str, token: str) -> dict[str, Any]:
     _, lines = _read_body_lines(kb_path, target)
     total = len(lines)
     if end is not None:
-        inside = "在范围内" if 1 <= start <= total else f"超出范围（共 {total} 行）"
-        return _reference_result(
-            "anchor",
-            status="unsupported",
-            target=display,
-            detail=f"起始行 L{start} {inside}（目标 `{target}`）",
-            reason="区间锚点本地无法可靠解析：没有「读时投影」能力（§6.5 L 路线未落地），"
-            "故只核起始行、**不校验末端**，也不声称区间语义已被解析",
-            next_step=f'改用单行锚点（如 `{target}:{start}`），或先 `read_document(path="{target}", offset={start})` 自行确认区间',
-        )
+        # L 路线（**读时投影**，2026-09-20 落地；此前一律回 `unsupported`）：区间解析到**当前正文行**
+        # 并双向校验 ⇒ `ok`（行范围 + 首末行摘要）/ `invalid`（倒置）/ `not_found`（越界）。
+        # 实现落在文件末尾 `_anchor_range_result()`（与 `@路径#L12-L30` 入口共用同一段代码）。
+        return _anchor_range_result(kb_path, raw_file, start, end)
     if start < 1 or start > total:
         return _reference_result(
             "anchor",
@@ -2202,6 +2202,8 @@ def _detect_reference_kind(token: str) -> str | None:
         return "session"
     if text.startswith("!["):
         return "image"
+    if _at_range_parts(text) is not None:
+        return "anchor"  # `@路径#L12-L30`（选区引用 token）：按**锚点**解，不按 `@路径` 文件引用
     if text.startswith("@"):
         return "file"
     if _ref_re(_ANCHOR_REF_PATTERN).fullmatch(text):
@@ -2304,6 +2306,8 @@ def _audit_document(
         token_text = match.group(1) if match.group(1) is not None else (match.group(2) or "")
         if token_text.startswith("[") or token_text.startswith("dsh-session:"):
             continue
+        if _at_range_parts("@" + token_text) is not None:
+            continue  # `@路径#L12-L30`（选区区间引用）由 ④ 锚点扫描负责（含倒置 / 越界）
         raw = _reference_normalize(token_text)
         if not raw:
             continue
@@ -2391,7 +2395,9 @@ def _audit_document(
         end = int(end_text) if end_text else None
         raw_file = match.group("file")
         if raw_file.startswith("@"):
-            continue
+            if end is None:
+                continue  # `@a.md:3`：文件引用类（① 负责），保持既有跳过
+            raw_file = raw_file.lstrip("@")  # `@路径#L12-L30`（选区引用 token）：剥 `@` 后按锚点校验
         line = line_at_offset(body, match.start())
         target = f"{raw_file}:{start}" + (f"-{end}" if end else "")
         rel_target = _reference_rel_in_roots(kb_path, raw_file)
@@ -2405,23 +2411,25 @@ def _audit_document(
         if status != "ok" or not converged:
             add("anchor.file_missing", "warning", line, target, "锚点文件在库内不存在（精确 / 唯一 basename / 唯一后缀三级都未命中）")
             continue
-        if end is not None:
+        line_count = len(_read_body_lines(kb_path, converged)[1])
+        if end is not None and end < start:
+            # 区间**倒置**（2026-09-20 起可校验：读时投影落地后才拿得到两端行空间）
             add(
-                "anchor.range_unsupported",
+                "anchor.range_inverted",
                 "warning",
                 line,
                 target,
-                "区间锚点：本地没有读时投影（§6.5 L 路线未落地）⇒ 只保证起始行、不校验末端（不假装能解）",
+                f"区间锚点倒置：起点 L{start} 在终点 L{end} 之后（区间须 `#L<起>-L<止>` 且起 ≤ 止）",
             )
             continue
-        _, target_lines = _read_body_lines(kb_path, converged)
-        if start < 1 or start > len(target_lines):
+        if start < 1 or start > line_count or (end is not None and end > line_count):
+            beyond = start if (start < 1 or start > line_count) else end
             add(
                 "anchor.line_out_of_range",
                 "warning",
                 line,
                 target,
-                f"第 {start} 行超出 `{converged}` 的正文范围（共 {len(target_lines)} 行）",
+                f"第 {beyond} 行超出 `{converged}` 的正文范围（共 {line_count} 行）",
             )
 
     # ⑤ 图片：注册规则识别性 / 文件存在性（复用 `diagnose_image_refs()` 的口径）+ registry 登记状态
@@ -2542,10 +2550,11 @@ def _reference_tools(kb_path: str) -> tuple[Tool, ...]:
             name="resolve_reference",
             description=(
                 "解析**一条**库内引用，回结构化结果：类型 / 归一化目标 / 是否存在 / 指向什么 / 歧义候选 / 建议下一步。"
-                "覆盖五类：`@相对路径`（含 `@\"带空格\"` 与目录尾斜杠）、`@[label](dsh-session:…)`、`[[知识点]]`、"
-                "`文件:行号`、`![](...)`（`.memoria/images/**`）。"
-                "多目标一律判 `ambiguous` 并回候选（**不猜**）；区间锚点回 `unsupported`（本地无读时投影）；"
-                "**不支持**块级引用（代码块 / 表格 / 公式）与选区 / 片段引用。写回答前可先核对自己的引用是否可用。"
+                "覆盖五类：`@相对路径`（含 `@\"带空格\"` 与目录尾斜杠）、`@[label](dsh-session:…[#seq:…])`、`[[知识点]]`、"
+                "`文件:行号`（含行区间 `文件#L12-L30`）、`![](...)`（`.memoria/images/**`）。"
+                "多目标一律判 `ambiguous` 并回候选（**不猜**）；行区间解析到**当前正文行**并校验两端"
+                "（倒置 ⇒ `invalid`；越界 ⇒ `not_found`），正文仍要自己去 `read_document` 读；"
+                "**不支持**块级引用（代码块 / 表格 / 公式）。写回答前可先核对自己的引用是否可用。"
             ),
             parameters={
                 "type": "object",
@@ -2588,4 +2597,114 @@ def _reference_tools(kb_path: str) -> tuple[Tool, ...]:
             },
             handler=_bound_audit,
         ),
+    )
+
+
+# ── 行区间（L 路线：读时投影）＋ 选区引用 token（2026-09-20；§6.20）───────────────────────────
+# 用户报障：「内容显示区可以拖拽选取加入对话了，但实际写入对话的仍然只是 `@文件名`，根本没有标出
+# 对应内容的源码位置」。本轮按 AG07 已定的 **L 路线（读时投影）** 落地两块：
+#   ① 前端写出规范 token `@路径#L12-L30`（含空格 `@"路径"#L12-L30`，单行 `#L12`）；
+#   ② 本模块把该 token / `文档#L12-L30` 解析到**当前正文行**并双向校验（起/末存在、起 ≤ 止）。
+# **投影口径**：只回「解析到的行范围 + 首末行摘要」——**不把区间正文塞进结果**（正文仍由模型自己
+#   `read_document(offset, limit)` 取），与 §6.5「只允许读取时投影形态」一致；`#L` 语法**只有**
+#   `#L<起>-L<止>` / `#L<行>` 两种，不发明第三种（P 收窄语法的"保守"要求）。
+# 整块追加在文件末尾 ⇒ 上方既有 `file:line` 锚点只受前面几处**等量/近似等量**改写影响（见本轮报告）。
+
+#: 选区引用的规范 token：`@路径#L12-L30` / `@路径#L12` / `@"含 空格"#L12-L30`。
+#: 只认 `#L<十进制>`（可带 `-L<十进制>`）；`@` 后允许上游同款的成对引号（`formatMention` 口径）。
+_AT_RANGE_PATTERN = (
+    r"`?\"?'?@(?:\"(?P<qpath>[^\"]*)\"|(?P<path>[^\s`\"']+?))"
+    r"#L(?P<from>\d+)(?:\s*[-\u2013\u2014~]\s*L?(?P<to>\d+))?`?\"?'?"
+)
+
+
+def _at_range_parts(raw: str) -> tuple[str, int, int | None] | None:
+    """`@路径#L12-L30`（含单行 `#L12`、含空格 `@"…"#L12-L30`）⇒ `(路径原文, 起, 止或 None)`。
+
+    路径**不在这里归一化或校验**（是否库内由调用方走允许根 + 分级收敛）；不匹配回 `None` ——
+    识别不出就交给其它引用类型，**绝不猜**。
+    """
+    match = _ref_re(_AT_RANGE_PATTERN).fullmatch(str(raw or "").strip())
+    if match is None:
+        return None
+    path = match.group("qpath") if match.group("qpath") is not None else (match.group("path") or "")
+    to_text = match.group("to")
+    return path, int(match.group("from")), (int(to_text) if to_text is not None else None)
+
+
+def _anchor_range_result(kb_path: str, raw_file: str, start: int, end: int | None) -> dict[str, Any]:
+    """`文档#L12-L30`（含选区 token `@路径#L12-L30`）的**行区间读时投影**（L 路线，2026-09-20）。
+
+    行号空间 = `_read_body_lines()` 剥掉 frontmatter 的**正文行**（与 `read_document` 同一口径）。
+    `end is None` 即单行锚点（走同一段校验，结果与既有单行口径逐字一致）。
+    返回 `_reference_result(...)`：
+      `rejected`（路径越界）/ `ambiguous` / `not_found`（文件级）→ `invalid`（区间倒置）
+      → `not_found`（任一端越界）→ `ok`（行范围 + 首末行摘要）。**不含正文**。
+    """
+    rel = _reference_rel_in_roots(kb_path, raw_file)
+    display = f"{_reference_normalize(raw_file)}:{start}" + (f"-{end}" if end is not None else "")
+    if rel is None:
+        return _reference_result(
+            "anchor",
+            status="rejected",
+            target=display,
+            reason="锚点路径在允许根之外或含上跳 `..` —— fail-closed 拒绝",
+            next_step="改用库内相对路径（工具结果里回显的 canonical 路径）",
+        )
+    status, target, candidates, matched = _reference_converge_file(kb_path, rel)
+    if status == "ambiguous":
+        return _reference_result(
+            "anchor",
+            status="ambiguous",
+            target=display,
+            reason=f"锚点文件有 {len(candidates)} 个同名 / 同后缀候选（{matched} 级命中 >1）—— 不猜",
+            candidates=candidates,
+            next_step="用候选里的完整相对路径重写锚点",
+        )
+    if status != "ok" or not target:
+        return _reference_result(
+            "anchor",
+            status="not_found",
+            target=display,
+            reason="锚点文件在库内不存在（精确 / 唯一 basename / 唯一后缀三级都未命中）",
+            next_step='用 `glob(pattern="**/*.md")` 核对真实路径',
+        )
+    _, lines = _read_body_lines(kb_path, target)
+    total = len(lines)
+    if end is not None and end < start:
+        return _reference_result(
+            "anchor",
+            status="invalid",
+            target=display,
+            reason=f"行区间倒置：起点 L{start} 在终点 L{end} 之后（区间须写成 `#L<起>-L<止>` 且起 ≤ 止）",
+            next_step=f"改写成 `{target}#L{end}-L{start}`，或退回单行锚点 `{target}:{start}`",
+        )
+    last_line = start if end is None else end
+    if start < 1 or last_line > total:
+        beyond = start if (start < 1 or start > total) else last_line
+        return _reference_result(
+            "anchor",
+            status="not_found",
+            target=display,
+            reason=f"第 {beyond} 行超出 `{target}` 的正文范围（该文档正文共 {total} 行）",
+            next_step=f'read_document(path="{target}") 取回真实行号（或按唯一 basename 收敛后的路径重试）',
+        )
+    if end is None:
+        snippet = lines[start - 1].strip()[:SNIPPET_CHARS]
+        return _reference_result(
+            "anchor",
+            status="ok",
+            target=display,
+            detail=f"{target} 第 {start} 行：{snippet or '（该行为空行）'}",
+            next_step=f'read_document(path="{target}", offset={start}, limit=1)',
+        )
+    first = lines[start - 1].strip()[:SNIPPET_CHARS]
+    last = lines[end - 1].strip()[:SNIPPET_CHARS]
+    return _reference_result(
+        "anchor",
+        status="ok",
+        target=display,
+        detail=f"{target} 第 {start}-{end} 行（{end - start + 1} 行）："
+        f"首行 {first or '（空行）'} / 末行 {last or '（空行）'}",
+        next_step=f'read_document(path="{target}", offset={start}, limit={end - start + 1})',
     )

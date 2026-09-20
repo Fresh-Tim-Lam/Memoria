@@ -491,6 +491,10 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
       该轮**最后一条非空** `assistant/message`（= 界面上的最终答案，与实时渲染一致）；
     - **锚点归属**：该轮全部 `tool/result` 的 `anchors` 汇总去重后，挂在该轮
       那条 assistant 气泡上（跨轮不混淆；轮内取并集）。
+    - **`seq`（2026-09-20 追加，供"气泡 → 事件 seq"映射）**：每条记录的 `seq` = 产生该气泡的
+      事件序号 —— user 气泡取该轮 `user/message` 的 seq；assistant 气泡取该轮**最后一条非空**
+      `assistant/message` 的 seq（即"最终答案"那条，与文本口径同源）。前端据此生成会话片段引用
+      `@[label](dsh-session:…#seq:<n>)`；`build_snapshot()` 的片段投影复用同一键。
     """
     events = _conversation_events(kb_path, session_id)
     out: list[dict[str, Any]] = []
@@ -499,7 +503,7 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
         kind = event.get("type")
         if kind == USER_MESSAGE:
             _flush_turn(out, turn)
-            turn = {"text": _text(event), "answer": "", "anchors": []}
+            turn = {"text": _text(event), "answer": "", "anchors": [], "seq": event.get("seq"), "answer_seq": None}
             continue
         if turn is None:
             continue
@@ -507,6 +511,7 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
             content = str(_data(event).get("content") or "")
             if content:
                 turn["answer"] = content
+                turn["answer_seq"] = event.get("seq")
             continue
         if kind == TOOL_RESULT:
             for anchor in _data(event).get("anchors") or ():
@@ -519,9 +524,13 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
 def _flush_turn(out: list[dict[str, Any]], turn: dict[str, Any] | None) -> None:
     if turn is None:
         return
-    out.append({"role": Role.USER.value, "text": turn["text"]})
+    out.append({"role": Role.USER.value, "text": turn["text"], "seq": turn.get("seq")})
     if turn["answer"]:
-        record: dict[str, Any] = {"role": Role.ASSISTANT.value, "text": turn["answer"]}
+        record: dict[str, Any] = {
+            "role": Role.ASSISTANT.value,
+            "text": turn["answer"],
+            "seq": turn.get("answer_seq"),
+        }
         anchors = _dedupe(turn["anchors"])
         if anchors:
             record["anchors"] = anchors

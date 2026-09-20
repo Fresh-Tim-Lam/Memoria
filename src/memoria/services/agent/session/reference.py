@@ -96,10 +96,10 @@ MAX_REFERENCES = 3
 #: 每个来源序列化 JSON 的默认字节预算（上游自动预算缺失时回落到 64 KiB）。
 REFERENCE_MAX_BYTES = 64 * 1024
 
-#: `parse_session_references()` 的匹配正则 —— 与上游 `uri.ts:71` **逐字一致**：
+#: `parse_session_references()` 的匹配正则 —— 与上游 `uri.ts:71` **逐字一致**（本地唯一扩展：裸 URI 尾部允许 `#seq:…` 片段，见文末「片段」块）：
 #: 组 1 = Markdown label（支持 `\\.` 转义）组 2 = Markdown URI 组 3 = 裸 URI。
 _MENTION_RE = re.compile(
-    r"@\[((?:\\.|[^\\\]])*)\]\((dsh-session:[^\s)]*)\)|(dsh-session:[A-Za-z0-9_-]+)",
+    r"@\[((?:\\.|[^\\\]])*)\]\((dsh-session:[^\s)]*)\)|(dsh-session:[A-Za-z0-9_-]+(?:#seq:\d+(?:-\d+)?)?)",
 )
 
 #: payload 的规范形状（上游 `^[A-Za-z0-9_-]+$`，即非空 base64url）。
@@ -141,8 +141,8 @@ def encode_session_uri(session_id: str) -> str:
 
 
 def decode_session_uri(uri: str) -> str:
-    """解码并**规范化**一个会话引用 URI；非规范输入一律 `SessionReferenceError`。"""
-    text = str(uri or "")
+    """解码并**规范化**一个会话引用 URI（可选 `#seq:` 片段先剥掉，其语法由 `split_session_fragment()` 校验）；非规范输入一律 `SessionReferenceError`。"""
+    text, _seq = split_session_fragment(uri)
     if not text.startswith(SESSION_REFERENCE_SCHEME):
         raise _invalid_uri(uri)
     payload = text[len(SESSION_REFERENCE_SCHEME) :]
@@ -179,7 +179,8 @@ def parse_session_references(text: str) -> tuple[str, list[dict[str, str]]]:
     """抽出文本里的会话 mention/裸 URI。
 
     返回 `(可读文本, 引用列表)`：命中一律改写为 `@label`（label 缺省 = 会话 id），
-    引用按**首次出现顺序**返回（`[{"session_id", "label"}]`）。显式 Markdown mention 的
+    引用按**首次出现顺序**返回（`[{"session_id", "label"}]`；带 `#seq:` 片段时**追加**
+    `seq_from` / `seq_to` 两个键，无片段的项**形状不变**）。显式 Markdown mention 的
     URI 格式错误、或裸候选不是规范 URI，都会 `SessionReferenceError`；空 / 只含标点符号的
     scheme mention 保持原样（是普通讨论文本）。
     """
@@ -194,7 +195,7 @@ def parse_session_references(text: str) -> tuple[str, list[dict[str, str]]]:
             raise SessionReferenceError("session reference URI is missing")
         session_id = decode_session_uri(uri)
         label = session_id if raw_label is None else _unescape_label(raw_label)
-        references.append({"session_id": session_id, "label": label})
+        references.append({"session_id": session_id, "label": label, **_fragment_fields(uri)})
         return f"@{label}"
 
     return _MENTION_RE.sub(_replace, str(text or "")), references
@@ -268,17 +269,24 @@ def build_snapshot(
     每个来源先丢较早消息、再头尾截断；放不进预算的来源记为 `unavailable`（不使整次准备失败）。
     **投影为空**的来源（本库没有该会话文件 / 该会话只有工具轮）同样记进省略通知，不再产出空块
     —— 旧行为让模型收到"有 mention、无内容、无说明"的请求，只能回"解析不到任何东西"。
+
+    **片段（2026-09-20 追加）**：引用带 `seq_from` / `seq_to` 时**只投影落进该区间的消息**
+    （复用 `conversation_messages()` 的 `seq` 键，口径与"气泡 → seq"同一份事实源）；去重键随之
+    升为 `(session_id, 片段)` —— **无片段引用的行为与键都逐字不变**。片段在会话里落不到任何
+    消息时，记一条 `fragment` 省略通知（越界 / 指向工具或推理事件），仍然**不静默**。
     """
     if max_references > MAX_REFERENCES:
         raise SessionReferenceError(f"max_references 不得超过 {MAX_REFERENCES}（收到 {max_references}）")
-    planned: list[tuple[str, str]] = []
-    seen: set[str] = set()
+    planned: list[tuple[str, str, tuple[int, int] | None]] = []
+    seen: set[tuple[str, tuple[int, int] | None]] = set()
     omissions: list[dict[str, Any]] = []
     for reference in references:
         session_id, label = _reference_parts(reference)
-        if not session_id or session_id in seen:
+        fragment = _reference_fragment(reference)
+        key = (session_id, fragment)
+        if not session_id or key in seen:
             continue
-        seen.add(session_id)
+        seen.add(key)
         if exclude_session_id and session_id == exclude_session_id:
             # 自引用：来源仍按上游口径被拒绝（不进快照），但**不静默**——模型必须知道
             # 这条 mention 指的就是本轮会话本身（内容已在本轮对话历史里），否则它会去"解析"一个空引用。
@@ -292,30 +300,48 @@ def build_snapshot(
                 }
             )
             continue
-        planned.append((session_id, label))
+        planned.append((session_id, label, fragment))
         if len(planned) >= max_references:
             break
     if not planned and not omissions:
         return None
 
     blocks: list[dict[str, Any]] = []
-    for session_id, label in planned:
+    for session_id, label, fragment in planned:
+        view = conversation_messages(kb_path, session_id)
+        if fragment is not None:
+            start, end = fragment
+            view = [item for item in view if isinstance(item.get("seq"), int) and start <= item["seq"] <= end]
         conversation = [
             {"role": str(item.get("role") or ""), "text": str(item.get("text") or "")}
-            for item in conversation_messages(kb_path, session_id)
+            for item in view
         ]
         if not conversation:
-            # 读不到任何可投影文本：本库会话目录里没有该会话文件（会话按库分、可能已删除或来自另一个库），
-            # 或该会话只有工具调用 / 被取消的轮次（投影只出 user 与每轮最终 assistant 文本）。
-            omissions.append(
-                {
-                    "sessionId": session_id,
-                    "label": label,
-                    "empty": True,
-                    "note": "该来源没有可附上的对话文本：本库没有这个会话文件（会话按库分，不跨库；可能已被删除或来自另一个知识库），"
-                    "或该会话只有工具调用 / 被取消的轮次。请如实告诉用户这条引用取不到内容，不要臆测其中的对话。",
-                }
-            )
+            if fragment is None:
+                # 读不到任何可投影文本：本库会话目录里没有该会话文件（会话按库分、可能已删除或来自另一个库），
+                # 或该会话只有工具调用 / 被取消的轮次（投影只出 user 与每轮最终 assistant 文本）。
+                omissions.append(
+                    {
+                        "sessionId": session_id,
+                        "label": label,
+                        "empty": True,
+                        "note": "该来源没有可附上的对话文本：本库没有这个会话文件（会话按库分，不跨库；可能已被删除或来自另一个知识库），"
+                        "或该会话只有工具调用 / 被取消的轮次。请如实告诉用户这条引用取不到内容，不要臆测其中的对话。",
+                    }
+                )
+            else:
+                # 片段落不到任何消息：seq 越界，或指向工具 / 推理 / 被取消的轮次（这些不进渲染视图）。
+                omissions.append(
+                    {
+                        "sessionId": session_id,
+                        "label": label,
+                        "seq": f"{start}-{end}" if start != end else str(start),
+                        "fragment": True,
+                        "note": f"这条引用带事件片段 `#seq:{start}-{end}`，但该片段在本会话里落不到任何对话消息"
+                        "（序号越界，或它指向的是工具调用 / 推理 / 被取消的轮次 —— 这些不进对话视图）。"
+                        "请如实告诉用户这条片段引用取不到内容，不要臆测其中的对话。",
+                    }
+                )
             continue
         retained = _retain_source(session_id, label, conversation, max_bytes)
         if retained is None:
@@ -485,3 +511,60 @@ def _tail_bytes(text: str, max_bytes: int) -> str:
         used += size
     out.reverse()
     return "".join(out)
+
+
+# ── 片段（2026-09-20 追加；用户："实际写入对话的仍然只是 `@文件名`，根本没有标出对应内容的位置"）──
+# 保守语法（**只有**这两种写法，不发明第三种）：`dsh-session:<base64url>#seq:<n>`（单条事件）与
+# `dsh-session:<base64url>#seq:<起>-<止>`（连续事件区间）。`<n>` = 会话 JSONL 里那条事件的 `seq`
+# （与 `session_event_read` 的 `seq` 同一坐标系）。整块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>`
+# 锚点零漂移；`decode_session_uri()` 只在**函数体内**换成 `split_session_fragment()`（等量行）。
+# 两层错误口径：**语法层**（非十进制 / 起 > 止）⇒ `SessionReferenceError`（明确报错）；
+# **存在层**（序号在该会话里落不到任何对话消息）⇒ `build_snapshot()` 记 `fragment` 省略通知。
+
+#: 片段标记（必须出现在 URI **末尾**；`$` 锚定 ⇒ 中段的 `#seq:` 不被当成片段）。
+_SEGMENT_RE = re.compile(r"#seq:(\d+)(?:-(\d+))?$")
+
+
+def split_session_fragment(uri: str) -> tuple[str, tuple[int, int] | None]:
+    """把 URI 尾部的 `#seq:` 片段拆出来：返回 `(去掉片段的 URI, (起, 止) 或 None)`。
+
+    **没有片段时原样返回**（第二项 `None`）⇒ 既有调用方的行为逐字不变。片段语法非法
+    （起 > 止）一律 `SessionReferenceError`——「片段越界 ⇒ 明确错误」里**语法层**的那一半。
+    """
+    text = str(uri or "")
+    match = _SEGMENT_RE.search(text)
+    if match is None:
+        return text, None
+    start = int(match.group(1))
+    end = int(match.group(2)) if match.group(2) is not None else start
+    if end < start:
+        raise SessionReferenceError(f"session reference fragment is inverted: {text!r}")
+    return text[: match.start()], (start, end)
+
+
+def _fragment_fields(uri: str) -> dict[str, int]:
+    """`parse_session_references()` 用：有片段回 `{"seq_from": 起, "seq_to": 止}`，否则回 `{}`。"""
+    _base, fragment = split_session_fragment(uri)
+    if fragment is None:
+        return {}
+    return {"seq_from": fragment[0], "seq_to": fragment[1]}
+
+
+def _reference_fragment(reference: Any) -> tuple[int, int] | None:
+    """`build_snapshot()` 用：从引用项取片段区间；**无片段 ⇒ `None`**（= 既有整会话口径）。
+
+    `seq_to` 缺省即单条（`seq_to = seq_from`）；区间倒置是调用方的编程错误 ⇒ 明确报错。
+    """
+    if not isinstance(reference, Mapping):
+        return None
+    start = reference.get("seq_from")
+    if not isinstance(start, int) or isinstance(start, bool) or start < 0:
+        return None
+    end = reference.get("seq_to", start)
+    if not isinstance(end, int) or isinstance(end, bool) or end < start:
+        raise SessionReferenceError(f"会话引用的片段区间非法：{reference!r}")
+    return (start, end)
+
+
+__all__ += ["split_session_fragment"]
+

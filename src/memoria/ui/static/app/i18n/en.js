@@ -1416,4 +1416,20 @@
     selAddAction: "Add to chat",
     selAddTitle: "Insert the current file as an @path token into the chat input (at the last caret; the selected text itself is not sent)",
   });
+
+  // ===== appended 2026-09-20: the *position* of a selection (overrides the two `selAdd*` keys above,
+  // plus two new keys for chat-bubble selections) =====
+  // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>` anchor
+  // in the docs keeps pointing at the same declaration.
+  // Behaviour change (user: "what actually lands in the chat is still just `@filename` with no position"):
+  // the inserted token now carries the position — source / preview selection ⇒ `@path#L12-L30`
+  // (preview maps at block granularity, see the tail block of `agent-panel.js`); a selection inside a
+  // chat bubble ⇒ a session-fragment reference `@[label](dsh-session:…#seq:<n>)`. The selected text
+  // itself is still not sent (the model reads it with `read_document`).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    selAddAction: "Add to chat",
+    selAddTitle: "Insert the selected position as a reference (`@path#L12-L30` line range; the selected text itself is not sent)",
+    selAddActionSeq: "Quote this message",
+    selAddTitleSeq: "Insert the selected part of this conversation as a session-fragment reference (`…#seq:<n>`; does not switch sessions)",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

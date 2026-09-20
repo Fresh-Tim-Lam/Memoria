@@ -215,17 +215,17 @@
 
 ### 2.10 引用解析与引用审计（agent 侧只读，2026-09-20）
 
-应用内对话的 agent 现在也能**只读地解析引用**（不是新的链接存储，也不改本文 §2.1–§2.9 的任何链路）：两把工具 `resolve_reference`（解一条）/ `audit_references`（查一批），实现 `services/agent/tools/kb.py:1608-2591`（追加块），口径见 [../../design/dsh-agent-port.md §6.18](../../design/dsh-agent-port.md)。
+应用内对话的 agent 现在也能**只读地解析引用**（不是新的链接存储，也不改本文 §2.1–§2.9 的任何链路）：两把工具 `resolve_reference`（解一条）/ `audit_references`（查一批），实现 `services/agent/tools/kb.py:1608-2710`（追加块），口径见 [../../design/dsh-agent-port.md §6.18](../../design/dsh-agent-port.md)（**区间读时投影见 §6.20**）。
 
 | 引用形态 | 与 UI 链路的对应 | 解析路径（复用件） |
 |---|---|---|
 | `@相对路径`（含 `@"带空格"`、目录尾斜杠） | 用户气泡里的 `@路径` chip（§2 之外的 `agent-panel.js` mention 渲染） | 正则对齐 `agent-panel.js:125` 的 `MENTION_RE`；路径走允许根（`tools/kb.py:1142`/`:1147`），库内清单 `:819`；分级收敛**精确 → 唯一 basename → 唯一后缀**，>1 即 `ambiguous` + 候选（`_reference_converge_file()`，`:1749`） |
-| `@[label](dsh-session:…)` | 会话 chip（`agent-panel.js:2214` 的 `SESSION_MENTION_RE` 同一语法） | `session/reference.py:142` `decode_session_uri()` + `session/store.py:61` `session_file()`（非法 id fail-closed） |
+| `@[label](dsh-session:…)`（含 `#seq:<n>` 片段） | 会话 chip（`agent-panel.js:2214` 的 `SESSION_MENTION_RE` 同一语法） | `session/reference.py:143` `decode_session_uri()`（容忍并剥掉 `#seq:` 片段）+ `session/store.py:61` `session_file()`（非法 id fail-closed）；片段只投影该事件，见 01 篇 |
 | `[[…]]`（id / 别名 / 文件名 / 多目标 / 正文未挂接） | 本文 §2.3 的实跳转·断链·多目标三态 | 全局解析复用 `services/link_resolver.py:41` `resolve_link_target()`；**别名（`links[].anchor_text`）与「正文出现但未挂接」需要文档上下文**，只在 `audit_references` 侧判（`document.py:2145` `_resolve_scan_link_entry()` + `services/link_instances.py:380` `is_line_attached()`） |
-| `文件:行号`（含 `#L12-L30`） | 答案里的 `-agent-anchor`（`agent-panel.js:117` 的 `ANCHOR_RE` 同源字符类） | 行号对照剥 frontmatter 的正文行（`tools/kb.py:175`）；**区间锚点一律回 `unsupported`**（本地无读时投影，只核起始行） |
+| `文件:行号`（含 `#L12-L30`） | 答案里的 `-agent-anchor`（`agent-panel.js:117` 的 `ANCHOR_RE` 同源字符类）；源码/预览选区的「加入对话」写 `@路径#L12-L30`（`agent-panel.js:3191` `formatRangeMention()`） | 行号对照剥 frontmatter 的正文行（`tools/kb.py:175`）；**区间回 `ok`（含解析到的行范围 + 首末行摘要）、倒置回 `invalid`、任一端越界回 `not_found`**（L 路线读时投影，2026-09-20 起，`_anchor_range_result()`，`tools/kb.py:2635`） |
 | `![](...)`（`.memoria/images/**`） | §2 之外的图片引用与注册表（见 07 篇） | `document.py:1151` `_parse_image_ref_url()`（可注册性）+ `:1167` `diagnose_image_refs()` + `:987` `_load_image_registry()`（**只读不重建**） |
 
-**三条落到语义上的后果**（与本文其它节一致，不是新规则）：① **多目标一律不猜**：`[[…]]` 命中 >1 或同名文件 >1 ⇒ 只回候选清单，与 §2.2 的 `showLinkPicker` 同一立场；② **「正文出现但未挂接」是审计项**：`audit_references` 用 sidecar 的 `instances`/`excluded` 判该行是否挂接（与 §2.3 预览的挂接口径同一事实源），报 `kp_link.body_not_attached`；③ **块级 / 片段引用不在范围**：代码块 / 表格 / 公式与「区间末端投影」都不解析（工具描述里已声明），仍是 §5 第 12 条之外的一块**共同空白**。
+**三条落到语义上的后果**（与本文其它节一致，不是新规则）：① **多目标一律不猜**：`[[…]]` 命中 >1 或同名文件 >1 ⇒ 只回候选清单，与 §2.2 的 `showLinkPicker` 同一立场；② **「正文出现但未挂接」是审计项**：`audit_references` 用 sidecar 的 `instances`/`excluded` 判该行是否挂接（与 §2.3 预览的挂接口径同一事实源），报 `kp_link.body_not_attached`；③ **块级引用不在范围，区间读时投影已落地（2026-09-20）**：代码块 / 表格 / 公式仍不解析，但 `文档#L12-L30` 已能解析到**当前正文行**并双向校验（`ok` / `invalid` 倒置 / `not_found` 越界）—— 投影**只回行号与首末行**，正文仍由模型 `read_document(offset, limit)` 取，仍是 §5 第 12 条之外的一块**共同空白**（仅剩块级形态未解）。
 
 `audit_references` 一次最多列 **100** 条问题（到顶给「已达上限」提示 + 用 `path` 收窄），每条 = 检查名 / 位置（`文件:行`）/ 目标 / 问题 / 严重级；检查名共 **17** 个（`file_reference.*` / `session_reference.*` / `kp_link.*` / `anchor.*` / `image.*`，文本末尾一次列出，可用 `resolve_reference` 逐个复现）。
 

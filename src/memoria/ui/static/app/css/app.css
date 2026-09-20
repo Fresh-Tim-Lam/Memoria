@@ -5639,3 +5639,53 @@ html *::-webkit-scrollbar-thumb:active {
 }
 .-agent-sel-add.-on { display: block; }
 .-agent-sel-add:hover { color: var(--theme-color); border-color: var(--theme-color); }
+
+/* ===== 2026-09-20 追加：打字框引用 chip 镜像层（`#-agent-composer-mirror`）=================
+   用户："引用仍是 `@` + 纯文本而不是在打字框里面把引用渲染一下"。方案 = **镜像层**（不破坏
+   textarea 语义）：JS 在 `.-agent-composer` 末尾追加一个绝对定位的 `.-agent-composer-mirror`，用**同一套**
+   字体 / 字号（`--agent-font-size`）/ 行高 / 内距 / 换行规则渲染同一段文本，并把 token 包成 chip；
+   textarea 自身文字**透明**（`caret-color` 保留 ⇒ 光标仍闪）、光标 / 选区 / 输入法仍由 textarea 负责。
+   为什么 chip **不缩短 token 文本**：镜像只有与 textarea **逐字同宽**才不会错位 ⇒ chip 只做
+   `background` / `box-shadow` 装饰（不加 padding、不改字号），显示的文字仍是 token 原文。
+   无 token 时 JS 摘掉 `.-on` 与 `.-agent-chips-on` ⇒ 覆盖层隐藏、textarea 恢复原样式（**零视觉差异**）。
+   `.-agent-composer` 的 `position: relative` 让镜像按 textarea 的 `offsetLeft/Top` 精确定位（JS 同步）。
+   本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
+.-agent-composer { position: relative; }
+.-agent-composer-mirror {
+    position: absolute;
+    display: none;
+    z-index: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0.3125rem 8px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    word-break: normal;
+    font-family: inherit;
+    font-size: var(--agent-font-size, 0.8125rem);
+    line-height: 1.45;
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+    border: 0.5px solid transparent;
+    border-radius: 4px;
+    pointer-events: none;
+    user-select: none;
+}
+.-agent-composer-mirror.-on { display: block; }
+#agent-input.-agent-chips-on {
+    position: relative;
+    z-index: 1;
+    color: transparent;
+    background: transparent;
+    caret-color: var(--text-primary);
+}
+#agent-input.-agent-chips-on::selection { background: var(--theme-color); color: transparent; }
+.-agent-composer-chip {
+    color: var(--text-primary);
+    background: var(--accent-soft);
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px var(--accent-soft);
+}
+.-agent-composer-chip-range { color: var(--theme-color); }
+.-agent-composer-chip--session { box-shadow: 0 0 0 1px var(--theme-color); }
