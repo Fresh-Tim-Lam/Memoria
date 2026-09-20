@@ -1,10 +1,11 @@
-# 能力插件最小协议 v1（capability plugin protocol）
+# 能力插件与写模块总设计（协议 · 写场景 · 模块设计）
 
-> **用途**：承载产品内 Agent 的**能力插件契约**本身 —— 字段集、暂缓字段、上游对照事实与待讨论项。本文件是该契约的**唯一事实源**；其他文档（含 [agent-capabilities.md](./agent-capabilities.md) §2.1）只留**指针**，**不得复制字段表**。
-> **关联文档**：[agent-capabilities.md](./agent-capabilities.md)（**模块设计**：注册与装载 / 写管线与计划 API / 唯一写者 / 备份与撤销 / 权限矩阵 / 四线落法 / M3a 分期）、[dsh-agent-port.md](./dsh-agent-port.md)（**移植总纲**：M1–M2 已落地，M3 写能力待拍板/待实施）。
-> **状态**：**活文档 —— 由人逐步对齐**（2026-09-20 建立）。
-> **治理约定**：**人主导、逐步对齐**。Agent **只在被明确要求时追加**，**不得改写人已确认的条目**（字段、选项、结论一并适用）；每次改动经人确认后**由人自行定稿**。讨论未完的地方留在 §4，只写"问题 + 可选项"，不代替人下结论。
-> 本文表内出现的 `§x` / `P9` 等编号，指 [agent-capabilities.md](./agent-capabilities.md) 的对应小节与待拍板编号。
+> **用途**：承载产品内 Agent **能力插件与写模块的全部相关设计** —— ① **插件契约**（字段集 §1、暂缓字段 §2、上游对照 §3、待讨论 §4）；② **写场景清单**（今天 Memoria 到底支持哪些「写入形态」、哪些不支持、各落到哪个 op/原语，见 §7；场景间关系与排序见 §8）；③ **模块设计**（注册与装载 / 写管线 / 唯一写者 / 备份与撤销 / 计划 API / 编译器与校验器 / 权限与越界 / 四线落法 / M3 分期与安全门：**逐节自 [agent-capabilities.md](./agent-capabilities.md) §2 迁入**，迁移状态见 §6）。本文件是相关设计的**唯一事实源**；其他文档只留**指针**，**不得复制字段表**。
+> **关联文档**：[agent-capabilities.md](./agent-capabilities.md)（**历史 / 路线图 —— 自 2026-09-20 起不再是事实源**；其 M3 模块设计将逐步迁入本文，见 §6）、[dsh-agent-port.md](./dsh-agent-port.md)（**移植总纲**：M1–M2 已落地，M3 写能力待拍板/待实施）、[preview-formats.md](../reference/preview-formats.md)（**正文书写格式与渲染语法权威**，§7 的「今天支持什么」逐处据它核对）、[agent-guide/README.md](../reference/agent-guide/README.md)（人 UI 现有写入路径的取证文档）。
+> **状态**：**活文档 —— 由人逐步对齐**（2026-09-20 建立；同日由「最小协议」**重定位为「协议 + 场景 + 模块设计」总设计文档**）。
+> **治理约定**：**人主导、逐步对齐；Agent 只追加、不改人已确认的条目**。Agent **只在被明确要求时追加**，**不得改写人已确认的条目**（字段、选项、结论一并适用）；每次改动经人确认后**由人自行定稿**。讨论未完的地方留在 §4 与 §7 / §8，只写"问题 + 可选项"，不代替人下结论。
+> **事实源口径（2026-09-20）**：本文是能力插件与写模块相关设计的**唯一事实源**；[agent-capabilities.md](./agent-capabilities.md) **不再是事实源**（降级为**历史 / 路线图**，其 M3 部分将**逐步迁入**本文，见 §6）。**迁移完成前**，凡两份文档冲突处，**一律以本文为准**。
+> 本文表内出现的 `§x` / `P9` 等编号，指 [agent-capabilities.md](./agent-capabilities.md) 的对应小节与待拍板编号（§6 迁移完成后改指本文）。
 
 ---
 
@@ -121,3 +122,132 @@
 | 日期 | 变更 |
 |---|---|
 | 2026-09-20 | 本轮建立。契约正文自 [agent-capabilities.md](./agent-capabilities.md) §2.1 **迁出**：6 字段最小可用契约 v1 + 准入规则（§1）、10 条暂缓字段（§2）、上游事实三条 + `ApprovalOutcome`（§3）、待讨论 Q1–Q6（§4）；两份 JSON 实样与 `kind` 删除演进随迁。`agent-capabilities.md` §2.1 只留指针，§11 追加说明；登记 `conventions/docs-management.md §4.2` |
+| 2026-09-20 | **重定位为「协议 + 写场景 + 模块设计」总设计文档**（用户口径：「这个文件不是只用于协议，所有相关设计都放在这，旧的我们不作为事实源；先讨论插件几种写场景……」）。① 标题由「能力插件最小协议 v1」改为「能力插件与写模块总设计」；头部「用途 / 关联文档 / 状态 / 治理约定」相应改写，并新增**事实源口径**一句：本文为**唯一事实源**，[agent-capabilities.md](./agent-capabilities.md) **不再是事实源**（降级为**历史 / 路线图**，M3 逐步迁入本文；**迁移完成前冲突处一律以本文为准**）。② 新增 **§6 迁移清单**（15 行：§2.1.1 / §2.2 / §2.3 / §2.3.1 / §2.3.2 / §2.3.3 / §2.3.4 / §2.4 / §2.5 / §2.6 / §2.7 与 §8 / §9 / §10 中与写模块相关的行，逐行标 `未迁`；**本轮不搬**）。③ 新增 **§7 写场景清单（讨论中，2026-09-20）**：一张表 **44 行**（1.x 九行 / 2.x 八行 / 3.x 五行 / 4.x 八行 / 5.x 五行 / 6.x 九行），覆盖纯知识库维护 / 文件内容增删改 / 字体样式 / 图片引用 / 代码块书写 / 读码新发现的写入形态（侧车重建、pending、锚点重锚、路径级联、会话与配置面），每行给「现状（`file:line` 或"无"）+ 落到哪个 op / 原语 + 是否需新原语（暂定名）+ 审批档建议（标"待定"）+ 归属」。④ 新增 **§8 场景间的关系与排序建议（讨论用）**：共用原语分组、依赖关系（连边依赖 KP 存在等）、候选第一批（标"待你拍板"）、以及**判断今天不该给 agent 做**的场景及理由。⑤ **§1–§5 编号与内容不变**（新增节追加在 §5 之后，编号连续）。**docs only，未改任何源码**；`agent-capabilities.md` 仅 §2.1 指针补一句 + §11 追加一行；登记 `conventions/docs-management.md §4.2`；`docs/todo.md` **未改动**（AG04 行引用的 §2/§10 内容仍在原文，字节中性） |
+
+---
+
+## 6. 迁移清单（自 [agent-capabilities.md](./agent-capabilities.md) 迁入本文）
+
+> **兜底规则（迁移完成前一律适用）**：凡两份文档**冲突**处，**以本文为准**；本节标 `未迁` 的内容**仍以 `agent-capabilities.md` 原文为工作依据**（本文只登记"要迁什么"，不复制正文 —— 禁并行事实源）。
+> **本轮（2026-09-20）不搬任何正文**：先讨论 §7 的写场景；迁移动作由人逐步发起，每迁一节把该行改为 `已迁` 并在本节末尾登记日期。
+> **编号纪律**：本文 §1–§5 **不复用、不重排**；迁入内容一律**追加**为 §9 起的**新节**（或并入现有新节），**不插进 §1–§5**。若某节迁入时确需重排 `agent-capabilities.md` 的编号，**旧 → 新编号映射必须写在本节该行里**。
+
+| # | 来源（`agent-capabilities.md`） | 要迁入的内容（一句话） | 状态 |
+|---|---|---|---|
+| 1 | §2.1.1 | 三层术语（**原语 / 领域动词 tool / 技能 skill**）与"领域动词只产出 plan、不落盘"铁律 | 未迁 |
+| 2 | §2.2 | **注册与装载**：两个位置（内置声明 `resources/agent-capabilities/<id>.json` / 库级 `<kb>/.memoria/agent/capabilities.json`）、发现顺序、冲突与重名、**不变量「新增插件不改核心」**、UIAPI 只加一个通用网关 | 未迁 |
+| 3 | §2.3 | **写管线**六步（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销）+ 四条不变口径 | 未迁 |
+| 4 | §2.3.1 | **唯一写者**：四原语（`save_document` / `save_sidecar_for_md` / `touch_manifest_entry` / `sync_pending_for_file`）+ realpath 前缀校验 | 未迁 |
+| 5 | §2.3.2 | **备份与撤销**：pre-image 时机与粒度、`<txid>` 目录与格式、保留口径（5 批 / 10 会话 / 64 MiB）、撤销与外部改动保护 | 未迁 |
+| 6 | §2.3.3 | **计划 API**：`{v,txid,intent,ops[]}` 信封、op 表与校验规则、**拒整批**失败语义、需新增的最小能力清单 | 未迁 |
+| 7 | §2.3.4 | **编译器与校验器**：`validate_plan` / `preview_plan` / `resolve` / `audit_kb` 四个只读面 + "同一套校验器、两个消费者"硬不变量 | 未迁 |
+| 8 | §2.4 | **权限与越界**：权限矩阵（含 `backups/**`、`images/**` 行）、违约硬拒 + 审计 + 零部分写、路径逃逸判定 | 未迁 |
+| 9 | §2.5 | **W/N/S/H 四线如何落成插件族**（族 ≠ 枚举值；"能插的是声明与权限，不能插的是执行体"） | 未迁 |
+| 10 | §2.6 | **M3 分期与验收门**：M3a/M3b 切片表 + **四条安全门** + 首批写原语目录 + "明确不做"清单 | 未迁 |
+| 11 | §2.7 | **与上游 dsh 的关系**：借什么 / 本地发明什么（含"沙箱升级不吃、用声明式 `permissions` + realpath 替代"） | 未迁 |
+| 12 | §8 阶段建议 | 与写模块相关的两行：**W1 = M3a**（计划 API 最小闭环）、**W2 = M3b**（其余 op + 撤销 + 权限档） | 未迁 |
+| 13 | §9 风险 | 与写模块相关的四条：**R1**（写能力毁用户库）、**R2**（正文内相对链接未随文件移动改写 ⇒ 影响 §7 的 2.6 / 4.5）、**R4**（skill/插件变成任意代码执行面）、**R8**（装载器成为新的越权写入面） | 未迁 |
+| 14 | §10 待拍板 | 与写模块相关的项：**P1**（确认交互）、**P2**（批量提议）、**P7**（注册表承载位置）、**P8**（首批 op 个数，本文 §4 Q3 已引）、**P9**（`approval` 可否覆写，本文 §4 Q4 已引）、**P10**（撤销口径，本文 §4 Q5 已引）、**P11**（权限档是否随 M3b）、**P12**（plan 版本，本文 §4 Q6 已引）；**P3–P6 属 N/S/H 与基准线，不迁** | 未迁 |
+| 15 | §0 / §1 中与写模块相关行 | §0 红线的"写前必留 pre-image、备份失败即不写"与"插件边界物理可证"两处；§1 现状盘点的"能力面极窄"结论（作为 §7 现状表的背景） | 未迁 |
+
+---
+
+## 7. 写场景清单（讨论中，2026-09-20）
+
+> **这一节是本轮的主交付：只做讨论材料，不预设结论。**每行的「审批档」一律是**建议**且**待定**；「归属」是**建议切片**，不是承诺。
+> **取证口径**：现状列全部**读码得到**（`file:line` 以仓库根为基准；`ui.py` = `src/memoria/presentation/api/ui.py`；前端 = `src/memoria/ui/static/app/**`）。渲染/书写格式的**语法权威**是 [preview-formats.md](../reference/preview-formats.md)，人 UI 的写入路径取证见 [agent-guide](../reference/agent-guide/README.md)。
+> **两个反复出现的"底座"（本节多处引用）**：
+> - **通用行级原语**（暂定 `kb.file.edit`）：按行区间替换/插入/删除正文行 —— 今天只存在**整篇**入口 `DocumentService.save_document`（`document.py:317`；RPC `ui.py:200`），**没有**行级/区间级入口。
+> - **整块原语**（暂定 `kb.block.upsert`）：按块类型（code / table / math / mermaid）重建某个块 —— 今天**没有后端入口**，块编辑面板在前端用 `blockEl.textContent` + 下拉选择重建源码行（`edit-handler.js:1710-1744`）。
+
+| # | 场景（用户 / AI 想做什么） | 今天 Memoria 的支持现状（`file:line` 或"无"） | 落到哪个 op / 需要哪个原语 | 是否需要**新原语**（暂定名） | 审批档（建议，**待定**） | 归属（建议） |
+|---|---|---|---|---|---|---|
+| 1.1 | 连边：把正文某处 `[[…]]` 挂到某个 KP | ✅ 有：`apply_link_instances`（`document.py:2493`，RPC `ui.py:564`）；目标不可解析即拒（`document.py:2536` 扫描 + 逐目标校验）；单点解挂 `detach_link_instance`（`document.py:2428`，RPC `ui.py:537`） | `attach_links` / `detach_links` → 薄包装原语 `kb.link.attach` / `kb.link.detach` | 否（原著 M3a 已定为新增薄包装） | `confirm` | **M3a** |
+| 1.2 | 连边：建 KP↔KP 的**纯边**（不写正文） | ✅ 有：`create_edge`（`document.py:2885`，RPC `ui.py:780`），只写 sidecar `edges[]`；`reference` / `extend` 两型（`contain` 只由范围嵌套推导，`edge_types.py:61-66`） | `upsert_edge` → 原语 `kb.link.create` / `kb.link.set_type` | 否（原著 §2.6 附表已列，M3b 启用） | `confirm` | M3b |
+| 1.3 | 创建知识点（建 KP + 锚定 range） | ✅ 有：`confirm_kp_range`（`document.py:1360`，RPC `ui.py:220`）；起止行**非空**硬校验（`:1386-1399`）、跨库 id 唯一复核（`:1414-1419`）、终校 `validate_sidecar`（`sidecar_validate.py:133`） | `upsert_kp` → 原语 `kb.kp.create` | 否 | `confirm` | **M3a** |
+| 1.4 | 改知识点：名称 / 区间 / 描述 | ✅ 有：`update_kp`（`document.py:1722`，RPC `ui.py:296`）改 name/description；`confirm_kp_range` 改区间；`set_kp_range` 属 M3b | `upsert_kp` / `set_kp_range` → 原语 `kb.kp.update` | 否 | `confirm` | M3a（名称）· M3b（单独调区间） |
+| 1.5 | 完善 tag（选 tag / 加候选 / 调别名） | ✅ 有：`update_kp`（`document.py:1722`）整体覆写 `tags` / `tag_candidates` / `aliases` / `alias_candidates` / `description_candidates`（`:1769-1820`）；建议侧 `suggest_tags_api`（`document.py:1515`）、`suggest_description_api`（`:1544`）**只给建议** | `upsert_kp`（`tags`/`aliases` 字段） | ⚠️ **建议新增** `kb.kp.tag.set`（**增删单个 tag** vs 整体覆写，待定） | `confirm` | M3a（整体覆写）· M3b（增量） |
+| 1.6 | 合并近重复 KP | ⚠️ **只有建议、无动作**：`suggest_kp_merge`（`document.py:1497` → `search_kernel.py:136`）；人 UI 也只展示建议（[05 §5 第 3 条](../reference/agent-guide/05-knowledge-points.md)） | `merge_kp`（第二批） | ✅ **需要**：`kb.kp.merge`（新 id + 重指 `links`/`edges` + 删源 KP） | `confirm` | M3b |
+| 1.7 | 删除知识点（只删配置、不改正文） | ✅ 有：`delete_kp`（`document.py:1875`，RPC `ui.py:336`）；同时解除 `links[].source_id` 引用（`:1892-1896`） | `delete_kp` | ✅ **需要**：`kb.kp.delete` | `confirm`（删除类建议不设 `auto`） | M3b |
+| 1.8 | 改知识点名称 / id（**全库级联**） | ✅ 有：`rename_kp_id`（`document.py:1937` → `services/kp_rename.py`；RPC `ui.py:342`），影响面全库 | `rename_kp` | ✅ **需要**：`kb.kp.rename`（预览须给受影响文件清单，`services/kp_index.py:37` 的 `build_kp_index`） | `confirm` | M3b |
+| 1.9 | 处理待确认提议（确认 / 忽略 / 刷新） | ✅ 有：`sync_pending_for_file`（`storage/pending.py:273`）、`sync_kb_pending`（`:172`）、`dismiss_pending_item`（`:317`）；确认仍走 `confirm_kp_range` | `confirm_pending` / `dismiss_pending` | ⚠️ **建议新增**：`kb.pending.confirm` / `kb.pending.dismiss`（或复用 `upsert_kp` + 一个 dismiss 原语） | `confirm`（dismiss 建议 `confirm`） | M3b |
+| 2.1 | 改正文段落（替换若干行） | ✅ 有**整篇**入口 `save_document`（`document.py:317`；RPC `ui.py:200`；tmp + `os.replace` `:341-347`，保留 frontmatter `:337`）；**无行级入口** | `replace_lines` → **通用行级原语** `kb.file.edit` | ✅ **需要** | `confirm` | M3b |
+| 2.2 | 插入新段落（不覆盖他人内容） | ⚠️ 只能整篇重写（`save_document` `document.py:317`）；无插入原语 | `insert_block` / `insert_lines` → 复用 `kb.file.edit` | ✅ **需要**（若 `kb.file.edit` 已按行区间设计则可复用） | `confirm` | M3b |
+| 2.3 | 删除段落 | ⚠️ 同 2.2：只能整篇重写 | `delete_lines` → 复用 `kb.file.edit` | ✅ **需要**（同上） | `confirm` | M3b |
+| 2.4 | 新建 `.md` 文件 | ✅ 有：`create_file`（`document.py:794`；RPC `file_create` `ui.py:149`；父目录自动创建、自动补 `.md`、`touch_manifest_entry`） | `create_file` → 原语 `kb.file.create` | 否（原著附表已列，M3a 不进工具集） | `confirm` | M3b |
+| 2.5 | 删除整文件（`.md` + sidecar） | ✅ 有：`delete_file`（`document.py:782`；RPC `file_delete` `ui.py:143`） | `delete_file` → 原语 `kb.file.delete` | 否（原著附表已列，**默认关**，开关属 `config` 暂缓字段） | `confirm`（**建议不设 `auto`**） | M3b |
+| 2.6 | 重命名 / 移动文件 | ✅ 有：`rename_file`（`document.py:583`；RPC `file_rename` `ui.py:137`）——**含全库 `[[stem]]` 改写级联**（`:629-648`）与 sidecar/manifest/pending 迁移；目录重命名 `rename_dir`（`:697`，RPC `ui.py:161`） | `rename_file` → 原语 `kb.file.rename` | 否（原著附表已列）；`kb.file.move` 仍**不做**（见 §6 第 13 行 R2） | `confirm` | M3b |
+| 2.7 | 改 frontmatter | ❌ **无**：`save_document` 只**原样保留** frontmatter（`document.py:337` `strip_frontmatter` → `compose_markdown`），没有写 frontmatter 的入口；且 KP 元数据权威是 sidecar、frontmatter **不参与解析**（[05 §5 第 10 条](../reference/agent-guide/05-knowledge-points.md)） | `set_frontmatter` → 原语 `kb.file.frontmatter.set` | ✅ **需要**（且需先定"frontmatter 与 sidecar 谁是权威"，[05 篇] 已判 sidecar） | 建议 `confirm`（**待定**） | 后线 |
+| 2.8 | 新建 / 重命名目录 | ✅ 有：`create_dir`（`document.py:812`；RPC `dir_create` `ui.py:155`）、`rename_dir`（`document.py:697`；RPC `dir_rename` `ui.py:161`） | `create_dir` / `rename_dir` | ✅ **需要**：`kb.dir.create` / `kb.dir.rename` | `confirm` | M3b |
+| 3.1 | 字体样式：粗体 / 斜体（md 原生） | ✅ 有：`format_text`（`document.py:2078`，RPC `ui.py:548`）支持 `bold`（`**…**` `:2098`）与 `italic`（`*…*` `:2100`）；**无**删除线、**无**行内代码 | `apply_style` → 原语 `kb.style.apply` | ✅ **需要**（今天只有人 UI 单行/单列区间调用，无 agent 面） | `confirm` | M3b |
+| 3.2 | 字体样式：高亮 / 字色（**本地扩展语法**） | ✅ **是本地扩展、且可渲染**：`[[\h\|…]]` / `[[\h:bg\|…]]` / `[[\h:bg:fg\|…]]` / `[[\c:color\|…]]`（[preview-formats.md §4.2](../reference/preview-formats.md)）；写入侧 `format_text` 覆盖 `highlight`（`:2102-2107`）与 `fontcolor`（`:2108-2110`） | `apply_style` → `kb.style.apply` | ✅ **需要**（同上；注意 `[[\…]]` **不嵌套**，`]]` 按行内第一个收尾） | `confirm` | M3b |
+| 3.3 | 字体样式：字号 / 下划线 / 上标 / 下标 | ⚠️ **能渲染、不能写**：`[[\s:size\|…]]` / `[[\u\|…]]` / `[[\sup\|…]]` / `[[\sub\|…]]` 只存在于**渲染侧**（`renderer.js:352-384`；语法见 [preview-formats.md §4.2](../reference/preview-formats.md)）；**`format_text` 的 `format_type` 枚举里没有它们**（`document.py:2098-2112`）⇒ 今天连人 UI 也无法应用这几种 | `apply_style` → `kb.style.apply`（扩枚举） | ✅ **需要**（且**先要补** `format_text` 的 `format_type`，否则连人 UI 也不支持） | `confirm` | 后线（先补人 UI） |
+| 3.4 | 字体样式：**sidecar 记录样式**（带名高亮等） | ❌ **无**：全库 `src/**` 无 `highlights` 写入/校验路径（`sidecar_validate.py` 只校验 `knowledge_points` / `edges` / `links`，`sidecar_validate.py:180/283/327`）；`markdown-form-std.md:78` 与 `preview-formats.md §4.2` 提到的 sidecar `highlights[]` 在当前代码中**没有实现**（⚠️ 既有文档与代码的又一处不一致，如实记录） | 无 op（先定契约） | ✅ **需要**：**新存储**（sidecar `styles[]` / `highlights[]` 的字段契约）；按 [AGENTS.md §1](../../AGENTS.md) 若成为事实源须**先由人登记** | 建议 `confirm`（**待定**） | 后线 |
+| 3.5 | 字体样式：整文级字号 / 字色 | ❌ **不是内容**：字号是**视图偏好** `--preview-font-size`，由「设置 → 显示 → 文字」滑块写 `ui-settings.json`（[preview-formats.md §5](../reference/preview-formats.md)；`display-settings.js:79-85`） | —（无 op） | ❌ 不建议 | — | **不建议给 agent 做** |
+| 4.1 | 插入图片引用（正文新增 `![](…)` 行） | ⚠️ **仅前端**：`image-tools.js:108-161` 按锚点插入源码行（`![alt](<relPath>)`，尖括号包裹 `:83-90`）；**无后端入口** | `insert_image_ref` → 复用**通用行级原语** `kb.file.edit` | ✅ **需要**（行级原语）；另需 `kb.image.import` 入库 | `confirm` | M3b |
+| 4.2 | 图片登记进 `.memoria/images/**`（与 manifest） | ⚠️ **部分**：`import_image`（`document.py:833`；RPC `ui.py:851`）做扩展名白名单 + **MD5 内容去重** + 重名编号，**只复制文件**；manifest **不索引图片**（`manifest.py:47 entry_for_md` 只对 `.md` 取值）；图片另有**独立注册表** `registry.json`，由 `rebuild_image_registry`（`document.py:1014`）重建、`_update_registry_for_doc`（`:1027`）增量维护 | `import_image` → 原语 `kb.image.import` | ✅ **需要**：`kb.image.attach`（入库 + 登记注册表）。⚠️ 澄清：**manifest 里没有图片条目**，别把"登记进 manifest"当成既有能力 | `confirm` | M3b |
+| 4.3 | 改图片说明 / 替代文本（alt） | ⚠️ **仅前端**：`image-tools.js:515-519` 只改 `![…]` 内的 alt（保留 url 与 title），直接整行替换源码；**无后端入口** | `set_image_alt` → 复用 `kb.file.edit` 或 `kb.image.set_alt` | ✅ **需要**（可复用行级原语） | `confirm` | M3b |
+| 4.4 | 改图片属性（`width` / `align` / `name-size` / `name`） | ⚠️ **仅前端**：`image-tools.js:486-512` 解析行尾 `"k=v,…"` 做**键级合并**（保序、保留未知键）后整行替换；语法权威见 [preview-formats.md §4.3](../reference/preview-formats.md) | `set_image_attrs` → 复用 `kb.file.edit` 或 `kb.image.set_attrs` | ✅ **需要**（可复用行级原语） | `confirm` | M3b |
+| 4.5 | 移动 / 重命名图片资产（改路径） | ❌ **无**：图片侧只有 `import_image`（增）、`cleanup_unused_images`（`document.py:1104`，删）、`fix_unregistered_image_refs`（`:1236`，改引用格式）；**没有**改图片文件名的动作 | `move_image` → `kb.image.move` | ✅ **需要**（且需同步全部引用正文，属 [§6 第 13 行 R2] 未落地项） | `confirm`（**待定**） | 后线 |
+| 4.6 | 删除图片引用（仅删引用行 / 删未引用文件） | ⚠️ **部分**：前端"删除引用"只删当前文档的引用行（`image-tools.js:410-436`，别处仍引用则**拒绝**）；真删磁盘文件走 `cleanup_unused_images`（`document.py:1104`，RPC `ui.py:872`）**不可恢复** | `detach_image_ref` / `delete_image` → `kb.image.detach` / `kb.image.delete` | ✅ **需要** | "仅删引用"建议 `confirm`；"真删文件"建议 `confirm` 且**默认关**（同 `kb.file.delete` 口径） | M3b |
+| 4.7 | 修复"已引用但未注册"的图片引用（补尖括号） | ✅ 有：`diagnose_image_refs`（`document.py:1168`，RPC `ui.py:886`）+ `fix_unregistered_image_refs`（`document.py:1236`，RPC `ui.py:893`），把裸 URL 改写为 `<…>` 形式 | `fix_image_refs` | ⚠️ **建议新增**（可复用行级原语做等价改写） | 建议 `confirm`（**待定**，可用 dry-run diff 先行） | M3b |
+| 4.8 | 清理未引用图片（真删文件） | ✅ 有：`unused_images`（`document.py:1082`）/ `cleanup_unused_images`（`:1104`）；另有**后台自动**路径 `image_registry_auto_check`（`:1047`，6 小时宽限 `:1071`） | — | ❌ 不建议 | — | **不建议给 agent 做**（见 §8 理由） |
+| 5.1 | 插入 / 更新代码块（含语言标注） | ⚠️ **仅前端**：块编辑面板 `_BLOCK_TOOLS`（`edit-handler.js:1169` 起；语言下拉读取 `:1599-1604`）在退出块编辑时重建围栏行（`:1734-1740`）；**无后端入口**。渲染为 `<pre class="-code-block">` + `language-<lang>`，**无语法高亮**（[preview-formats.md §2](../reference/preview-formats.md)） | `upsert_block(kind=code, lang)` → **整块原语** `kb.block.upsert` | ✅ **需要** | `confirm` | M3b |
+| 5.2 | 表格（新建 / 改单元格 / 加行列） | ❌ **人 UI 也不支持写**：块编辑的「+行 / +列」按钮（`edit-handler.js:1217-1218`）**无任何事件绑定**，退出块编辑时表格分支**显式不处理内容更新**（`edit-handler.js:1712-1714`）、且不标脏（`:1784`）；渲染侧支持 `<table>`（`renderer.js:207-235`） | `upsert_block(kind=table)` → `kb.block.upsert` | ✅ **需要**（且**先要补人 UI 的表格写回**） | `confirm`（**待定**） | 后线（先补人 UI） |
+| 5.3 | 公式块 `$$…$$` | ⚠️ **能写但已知有缺陷**：块编辑退出时用 `blockEl.textContent` 取内容（`edit-handler.js:1710-1717`）重建 `$$…$$`（`:1741-1744`），而该 DOM 在 MathJax 排版后已被 `mjx-container` 替换 ⇒ 写回内容可能不是原始 TeX（[04 §10 第 1 条](../reference/agent-guide/04-preview-and-rendering.md)，**待运行时确认**） | `upsert_block(kind=math)` → `kb.block.upsert` | ✅ **需要**（且**先修人 UI 的写回缺陷**） | `confirm`（**待定**） | 后线（先修缺陷） |
+| 5.4 | `<details>` 折叠块（及任意原始 HTML） | ❌ **不支持**：正文里的原始 HTML 标签**按字面文本显示、不生成 DOM**（[preview-formats.md §2](../reference/preview-formats.md)）；仅**渲染侧**对用户自己写的 `<details>/<summary>` 加了三角样式（`agent-panel.js` 末尾块，[04 §7](../reference/agent-guide/04-preview-and-rendering.md)） | — | ❌ 不建议（要先改渲染器放行 HTML） | — | **不建议给 agent 做** |
+| 5.5 | Mermaid 图块 | ⚠️ **仅前端**：类型下拉（`edit-handler.js:1184` 起）；源码走 `code_block + lang=mermaid` 归一（`edit-handler.js:1332-1333`），重建与代码块同一分支（`:1734-1740`）；后端无入口。失败给红框（`preview.mermaidFail`） | `upsert_block(kind=mermaid)` → `kb.block.upsert` | ✅ **需要** | `confirm` | 后线 |
+| 6.1 | KP 范围重锚（正文编辑后自动校正） | ✅ 有：`_resync_kp_ranges_after_edit`（`document.py:420`），在 `save_document` 内**自动**触发（`:376`）；编辑期另有 `resolve_kp_ranges` RPC（`ui.py:206`） | 派生动作 | ❌ 不新增（应**隐式发生**，不作为独立场景暴露） | — | 不作为独立场景 |
+| 6.2 | pending 同步（KP 变更后刷新待确认） | ✅ 有：`sync_pending_for_file`（`storage/pending.py:273`），在 `confirm_kp_range` / `delete_kp` 内**自动**调用（`document.py:1440`、`:1913`）；全库 `sync_kb_pending`（`pending.py:172`） | 派生动作 | ❌ 不新增（同上，隐式发生） | — | 不作为独立场景 |
+| 6.3 | 重建 / 同步 manifest（文件清单） | ✅ 有：`rebuild_manifest`（`manifest.py:183`）经 `sync_manifest`（`document.py:2120`，RPC `ui.py:414`）；⚠️ 被**路径移动**阻断（`document.py:2123-2131`，先要求"修复路径"）；读侧有 pending overlay（`manifest.py:86-99`） | `rebuild_manifest` | ✅ **需要**：`kb.manifest.rebuild` | 建议 `confirm`（且**先要求无 path_moves**） | M3b |
+| 6.4 | 路径级联修复（批量改正文 + sidecar 路径） | ✅ 有：`repair_path_cascade`（`document.py:2054`，RPC `ui.py:426`），**默认 dry-run**（`apply=False`）；`reconcile_path_cascade` 实现 | `repair_paths` | ✅ **需要**：`kb.paths.repair` | `confirm`（**必须逐条预览**） | M3b |
+| 6.5 | 批量重命名级联（改文件名 → 全库 `[[stem]]` 改写） | ✅ 有：见 2.6（`document.py:583`，含 `replace_link_id_in_markdown` 级联 `:637`） | 见 2.6 | ❌（复用 2.6） | `confirm` | M3b |
+| 6.6 | KP id 全库级联改（正文 `[[id]]` + 各 sidecar 引用） | ✅ 有：见 1.8（`document.py:1937`） | 见 1.8 | ❌（复用 1.8） | `confirm` | M3b |
+| 6.7 | 安装 / 刷新 KB Agent 文件（写 `<kb>/.memoria/agent/**`） | ⚠️ 有但**不同性质**：`install_kb_agent`（RPC `ui.py:1100`）向库内写提示词/规范文件，属**程序安装面**；且打开知识库时会**自动补写/刷新**，是**有意例外于"禁止 silent 写入"**（`docs-management.md §4.2` 2026-09-10 行） | — | ❌ 不建议 | — | **不建议给 agent 做** |
+| 6.8 | 会话 / 偏好 / 模型配置类写入 | ⚠️ 存在但**不在内容面**：`agent_session_delete`（`ui.py:1329`，删会话 JSONL）、`save_ui_settings`（`ui.py:769`）、`agent_save_config`（`ui.py:1184`，写 `config/agent.json`）；会话目录与备份目录都**不在** §2.4 的插件 `permissions.write` 白名单内 | — | ❌ 不建议 | — | **不建议给 agent 做** |
+| 6.9 | 备份与撤销（写前 pre-image / 撤销上一批） | ❌ **尚无**（M3a 待实现）：既有只有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）留下的**单版本 `.bak`**，且 **fail-open**（`:41-43`），不按事务聚合；正文 `.md` 路径**完全没有**这层 | 由 apply 入口隐式做（§6 第 5 行） | ✅ **需要**（`snapshot_pre_images` + `agent_capability_call(action="undo")`） | 撤销本身仍 `confirm` | M3a |
+
+---
+
+## 8. 场景间的关系与排序建议（讨论用）
+
+> 全部为**建议 / 待定**，**不替人定案**；本节只给讨论用的分组、依赖与候选顺序。
+
+**A. 共用同一原语的场景（先定底座，多数场景不必各造原语）**
+
+| 原语（暂定） | 被哪些场景共用 | 说明 |
+|---|---|---|
+| **通用行级原语** `kb.file.edit` | 2.1 / 2.2 / 2.3 / 3.1 / 3.2 / 3.3 / 4.1 / 4.3 / 4.4 / 4.7 | 这些场景在实现上**都只是"改写某几行"**（今天的写入口 `save_document` 是整篇，`document.py:317`）。若先有行级原语，字体样式与图片属性**无需各自的后端原语** |
+| **整块原语** `kb.block.upsert` | 5.1 / 5.2 / 5.3 / 5.5 | 按块类型重建（code / table / math / mermaid）；5.2 / 5.3 先要修人 UI 的写回缺陷 |
+| `kb.kp.*`（create/update/delete/rename/merge） | 1.3 / 1.4 / 1.5 / 1.7 / 1.8 / 1.6 | 1.5 建议先做"整体覆写"，"增删单个 tag"待定 |
+| `kb.link.*`（attach/detach/create） | 1.1 / 1.2 | attach/detach 写正文，create 是纯边 |
+| `kb.image.*` | 4.1 / 4.2 / 4.5 / 4.6 | 4.1–4.4 多数可落到行级原语 |
+
+**B. 依赖关系（做后者之前前者必须成立）**
+
+- **1.1 连边 → 依赖 1.3 / 1.4（KP 存在）**：`attach_links` 的每个 target 必须**可解析**（`document.py:2536`），否则整批拒。
+- **2.6 / 6.5 文件改名 → 依赖正文改写能力**：`rename_file` 已含全库 `[[stem]]` 改写（`document.py:629-648`），但**正文内相对链接/图片路径**不在其中（§6 第 13 行 R2）⇒ `kb.file.move` 因此**不进工具集**。
+- **4.x 全部 → 依赖 2.1–2.3 的行级原语**（插入/改写图片引用行）。
+- **1.6 合并 KP → 依赖 1.8 改名 + 1.7 删除**（合并 = 新 id + 重指 `links`/`edges` + 删源 KP）。
+- **3.4 sidecar 记录样式 → 依赖"新存储契约"**：且按 [AGENTS.md §1](../../AGENTS.md)，若成为**事实源**须**先由人登记**；否则不得落盘。
+- **6.3 manifest 重建 → 依赖 6.4 路径修复**：有 `path_moves` 时 `sync_manifest` **拒绝执行**（`document.py:2123-2131`）。
+- **6.9 备份/撤销 → 是所有写场景的前置**（§6 第 5 行；apply 入口第一步取 pre-image）。
+
+**C. 候选第一批（待你拍板）**
+
+1. **1.3 建点 + 1.4 改点 + 1.1 连边（含解挂）** —— 即原著已定的 M3a 三个 op（`upsert_kp` / `attach_links` / `detach_links`，§4 Q3）。理由：三条都**映射既有服务层入口**（`document.py:1360/1722/2493/2428`）、可**幂等**证伪、可写前备份，且已覆盖"KP + 链接两个动作类、两个方向"。
+2. **（可加）1.5 完善 tag 的"整体覆写"分支** —— 复用 `update_kp`（`document.py:1722`），增量原语留后。
+3. **建议在建第二批之前先拍板"通用行级原语"** —— 它是字体样式、图片属性、段落增删三类场景的**共同底座**，先定它可一次性解掉 §7 的十余行。
+
+**D. 建议今天不该给 agent 做的场景（各一句理由）**
+
+| 场景 | 理由 |
+|---|---|
+| **4.8 未引用图片清理** | 真删磁盘文件**不可恢复**，且已有"6 小时宽限 + 后台自动"的路径（`document.py:1047-1078`）；让模型参与只会放大 data-loss 面 |
+| **5.4 `<details>` / 任意原始 HTML** | 渲染器**按字面文本显示原始 HTML**（[preview-formats.md §2](../reference/preview-formats.md:36)）⇒ 写了也不生效；属"要先改渲染器"的前置问题 |
+| **6.7 安装 / 刷新 KB Agent 文件** | 属**程序安装面**（写 `.memoria/agent/**`），且现路径是**有意例外于"禁止 silent 写入"**的自动补写；交给 agent 会与"边界可证"的口径冲突 |
+| **6.8 会话 / 偏好 / 配置写** | 这些文件**不在** §2.4 的 `permissions.write` 白名单内（会话、备份目录都被显式排除），且属库外/程序面 |
+| **3.5 整文级字号 / 字色** | 它是**视图偏好**（`ui-settings.json` 的 `--preview-font-size`），不是知识库内容；agent 改它=改用户界面设置，不是"写知识" |
+| **2.7 frontmatter（可暂缓）** | KP 元数据权威是 **sidecar**、frontmatter **不参与解析** ⇒ 写入价值低、且要先定"谁权威"；建议留到 §7 其他场景之后 |
+| **6.1 / 6.2（派生动作）** | 范围重锚与 pending 同步应**隐式发生**在写入事务内，不该作为独立 agent 场景暴露（否则出现"绕开事务的第二个写者"） |
+| **5.2 表格 / 5.3 公式块（暂缓）** | 人 UI 自身尚未写好（表格无事件绑定 `edit-handler.js:1451-1452`；公式块写回可能损坏 TeX）⇒ **先修人 UI**，再考虑 agent 面 |
