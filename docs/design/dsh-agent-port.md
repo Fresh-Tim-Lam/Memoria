@@ -102,15 +102,15 @@
 | `core/system-prompt` | 同上 | system prompt 组装 | ✅ 吃 | `services/agent/prompt.py` | **M1** |
 | `core/tools` | 同上 | 工具注册表与调用语义 | ✅ 吃 | `services/agent/tools/` | **M1** |
 | `core/session` · `core/scope` | 同上 | 会话与作用域 | ✅ 吃（子集） | `services/agent/session/` | **M1** |
-| `core/agent` · `agent-default-model` · `agent-tool-presentation` | 同上 | agent 定义、默认模型、工具呈现 | ⏳ 按需 | 同上 | M1/M2 |
+| `core/agent` · `agent-default-model` · `agent-tool-presentation` | 同上 | agent 定义、默认模型、工具呈现 | ✅ 吃 `core/agent` 的 `model-selection`（**模型切换告知**，§6.15）；`agent-default-model` = 已覆盖、`agent-tool-presentation` = **本地不适用**、`core/agent` 的 registry/initiator（Cordis 专有）不吃 —— 逐条证据见 §6.15 | 同上 | **M2** |
 | `session/session-persistence` + `-jsonl` + `session-format` | 158 ts（整组） | 会话持久化（jsonl）+ 格式定义 | ✅ 吃**当前格式**（迁移链 `v0→v3` ❌ 不吃） | `services/agent/session/store.py` | **M1** |
-| `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ✅ 吃**标题**（`session-title` + `-llm` + `-first-prompt-llm`，§6.11；`-all-prompts` ❌）；投影框架 / 统计 ⏳；**telemetry（OTel）❌ 不吃** | `services/agent/title.py` | **M2** |
+| `session/session-projection*` · `stats` · `title*` · `telemetry*` | 同上 | 投影/统计/标题/遥测 | ✅ 吃**标题**（`session-title` + `-llm` + `-first-prompt-llm`，§6.11；`-all-prompts` ❌）；**投影框架与 `stats` ❌ 不吃**（框架是 Cordis registry + 持久缓存 + change feed；`stats` 的 ttft/decode 本地无对应事件面，`turns/steps` 已由 `usage_report`/`summarize` 覆盖 —— 逐条见 §6.15 表）；**telemetry（OTel）❌ 不吃** | `services/agent/title.py` | **M2** |
 | `context/agent-instructions` | 39 ts | 工作区指令文件 → 上下文（**只加上下文、不加工具**） | ✅ 吃 | 对接既有 `.memoria/agent/kb-spec*.md` | **M1** |
 | `context/*-reference` · `time-context` · `tmux-context` | 同上 | 文件/会话引用、时间、tmux | ✅ 吃文件引用（§6.7）、会话引用（§6.12）与时间上下文（§6.14，只吃文本语义）；tmux ❌ | `services/agent/prompt.py`、`services/agent/session/reference.py` | **M2** |
 | `interaction/user-approval` · `tool-ask-user` | 24 ts | 一次性审批、向用户提问（fail-closed） | ✅ 吃最小面 | `services/agent/approvals.py` | **M1** |
-| `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M2/M3 | 前端指令 | M2 |
+| `interaction/commands` · `permission-presets` | 同上 | slash 命令、权限预设 | ⏳ M3（**本轮已界定：两者都无本地落点** —— `commands` 的 registry 没有消费方（`ask()` 无命令入口，§5 的 `command-compact` 又是 ❌）、`permission-presets` 需要 ≥2 个可切旋钮而本地只有一条固定审批策略且无 sandbox；证据见 §6.15 表） | 前端指令 | M3 |
 | `credentials/credentials-local` | 19 ts | 本地密钥**引用**（配置写名不写值） | ✅ 吃 | `services/agent/credentials.py` | **M1** |
-| `credentials/authorization` | 同上 | 授权流程 | ⏳ 需要 OAuth 类端点时 | — | M3 |
+| `credentials/authorization` | 同上 | 授权流程 | ⏳ 需要 OAuth 类端点时（**本地不适用**：单端点单密钥，`llm/config.py` 已覆盖"写名不写值"；无 OAuth 端点可授权，§6.15 表） | — | M3 |
 | `compaction/*` | 33 ts | 长会话压缩、工具输出裁剪、`/compact` | ✅ 吃 `compaction` + `compaction-basic` + `compaction-tool-result-pruner`；`image-offload` / `command-compact` ❌ | `services/agent/compaction.py`、`services/agent/pruner.py` | **M2** |
 | `session-query/*` | 48 ts | 会话检索 | ✅ 吃 `session-query` 的 `extraction`+`filters` 与 `tool-session-query`；`session-query-sqlite` / `session-log-export` ❌ | `services/agent/session/query.py` | **M2** |
 | `api/*` · `sdk/*` · `bundle/*` | 162+21 ts | Client↔Host 远程层、JSON-RPC、profile 组合 | ❌ 不吃（若将来要对 Trae/ACP 对接，复用旧稿 D2 的 CLI 面即可） | — | — |
@@ -726,6 +726,72 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 
 ---
 
+### 6.15 M2 模型切换实施记录（2026-09-20：吃 `core/agent` 的 `model-selection`，已落地）
+
+> 用户拍板：**先吃 ⏳ 里最省的一块**。故本轮先按「成本 / 收益 / 风险」把 §5 里**全部 ⏳ 候选**逐条读码量过，再动手；判定为「已覆盖 / 本地不适用 / 无消费方」的**不强 port**，只逐条登记证据（与 §5 里既有 ❌ 行同一处置方式）。
+
+**候选逐条界定（读上游源码所得，不猜）**：
+
+| 候选（§5 行） | 上游做什么（文件:行） | 本地现状（文件:行） | 判定 |
+|---|---|---|---|
+| **`core/agent` 的 `model-selection`** | 把 agent 级 provider/model/effort 绑到请求；**换模型时**向下一次请求追加一条 durable user-role 告知（`packages/core/agent/src/model-selection.ts:41-56` `modelSwitchNotice()`、:108-121 pre-step 挂载） | **缺**：`loop/end` 不记模型（`usage_report.py:20` 把"未记模型名"列为已知限制），换模型后 system 段「运行环境 · 模型」直接改写（`prompt.py:248`）⇒ 同一会话里的历史轮次**无声易主**，且事后不可查 | ✅ **吃**（本轮） |
+| `core/agent` 的 registry / initiator | `AgentRegistry`：live agent 表 + `AsyncLocalStorage` 发起者链 + Cordis `Service`/`FiberState`/`typert` 注册（`agent/src/index.ts:245-684`） | 本地是同步 `ask()`、单会话单进程，没有 agent 注册表/生命周期/发起者链的消费方 | ❌ 不吃（Cordis 专有） |
+| `core/agent-default-model` | 默认模型的 settings 段 + `currentSelection()` / `saveSelection()`（`agent-default-model/src/index.ts:64-107`） | **已覆盖**：`DEFAULT_MODEL` + `config/agent.json` 的 `model` 键 + `load_config()` 每次现读 / `save_config()` 原子写（`llm/config.py:80`、`202-241`、`284-333`）；余下差异只有 `provider` 路由与 `reasoningEffort` 两个字段，而本地只有一个端点、请求也没有 effort 旋钮（`llm/types.py` 的 `LlmRequest`） | 已覆盖 |
+| `core/agent-tool-presentation` | 在 `native` / `ptc` / `both` 之间选**工具呈现**（`agent-tool-presentation/src/index.ts:50-72`；`ptc` 需 PTC runtime） | 本地恒为 `native`（`tools/registry.py` 把全部可见 schema 直接发给模型，无 PTC runtime 也无此旋钮） | 本地不适用 |
+| `session-projection` 框架（含 `-cache`） | Cordis 服务：registry + `stateVersion` 校验 + 可持久化的折叠状态 + change feed（`session-projection/src/index.ts`、`session-projection-cache`） | 本地单进程单视图，没有"多订阅者 + 持久化折叠状态"的消费方 | ❌ 不吃 |
+| `session-stats` 单元 | 折叠 `step/start`→`assistant/message`（`llmMs`/`ttftMs`/`decodeMs`）与 `tool/call`→`tool/result`（`toolMs`）（`session-stats/src/projection.ts:130-198`，字段见 :32-49） | ① `ttftMs`/`decodeMs` 要**逐片首 token 时间**与**逐步 usage**，本地 usage 只在轮边界、思考与分片时刻都不落盘；② `turns`/`steps` 已被 `usage_report.py`（逐轮）与 `summarize_session*()`（轮数）覆盖；③ 唯一未覆盖的 `toolMs` 本地读出来恒 ≈0 —— 本地 `tool/call` 是**工具跑完之后**才落盘（`loop.py:362-368`），上游是分发**之前**落盘（`agent-loop/src/tool-calls.ts:168` `appendToolCall()` 先于 `:174` `dispatch()`）⇒ 该偏差属另一件事，已记入 §8 待办 | ❌ 不吃（口径不匹配，见下「未做」） |
+| `interaction/commands` | 插件级 slash 命令 registry：注册 / 发现 / 执行 + `command/run`、`command/done` 生命周期事件（`commands/src/index.ts:263-431`，语法 `parseCommand()` :125-132） | **无消费方**：`ask()` 无命令入口、前端无命令输入面；唯一够格的命令 `/compact` 在 §5 已判 ❌（`command-compact`） | ⏳ 留 M3（待真实命令需求出现） |
+| `interaction/permission-presets` | 把 sandbox 模式 + 审批策略两个旋钮打成一档（`permission-presets/src/index.ts:177-287`），带 `/permission` 命令与 `permissions` 投影 | 本地只有**一条固定**审批策略（`approvals.py:101-124`：只读免审批、写类拒绝），既无 sandbox 也没有第二个旋钮可切；写能力（M3）落地前无"档"可切 | ⏳ 留 M3 |
+| `credentials/authorization` | OAuth 类端点授权流程（`authorization/src/index.ts`） | 本地单端点单密钥，"写名不写值"已由 `llm/config.py` 覆盖（§6.6 偏差 ⑧），无 OAuth 端点可授权 | 本地不适用 |
+
+**为什么吃 `model-selection`**：6 个候选里**唯一**同时满足「有模型可见文本」「有真实本地缺口」「不需要新 UI / 新依赖 / 新格式」的一份；改动面也最小（3 个既有源文件：1 处文件尾追加 + 2 处同行内联改写）。
+
+**改动**（3 个既有源文件 + 1 个测试文件，无新增模块；`prompt.py` / `ask.py` 零行漂移，`loop.py` +1 行）：
+
+- `services/agent/loop.py`：`loop/end` 载荷新增 `"model": self.model`（`loop.py:396`）—— 每轮一条的**模型事实**（含 `aborted` / `error` 结束的轮次）；除 `usage_payload()` 的键外，旧读者对未知键一律忽略（AGENTS.md §3「payload 只增不改」）。
+- `services/agent/prompt.py` 文件尾追加 `MODEL_CHANGE_NOTICE` + `render_model_change_notice()`（`prompt.py:358-382`）：上游 `modelSwitchNotice()` 的**中文落法**，上游英文原文按 `FILE_REFERENCE_SECTION` / `TIME_CONTEXT_SECTION` 同例写在常量注释上方；`__all__` 在既有行内联追加两个名字（`prompt.py:60-61`，行数不变）。
+- `services/agent/ask.py`：`prompt = … + _model_notice(…) + render_time_context()`（`ask.py:421` 同行内联改写，行数不变；导入名扩为三个，`ask.py:79`）；文件尾追加 `_last_recorded_model()` / `_model_notice()`（`ask.py:458-495`）—— 取会话里**最后一条 `loop/end.model`** 与本轮模型比对，不同才追加告知。
+- 测试：`tests/test_agent_loop.py` 文件尾追加 **7 例**（告知文本逐字 / `loop/end` 记模型 / 换模型续聊请求里出现且不落盘 / 同模型不告知 / a→b→a 仍告知 / 老会话无模型记录不告知 / `replay=False` 不告知）。
+
+**模型看到的文本（逐字）** —— 换模型续聊时，本轮请求的最后一条 user 消息（实测输出）：
+
+```text
+第二问
+
+[模型已更换：本轮之前的助手回复由 deepseek-chat 生成；本会话此后由 model-beta 继续]
+
+当前本地时间：2026-09-20T10:21:18+08:00
+```
+
+同模型续聊则只有 `第三问\n\n当前本地时间：…`（无告知、无多余空行）。
+
+**语义偏差与取舍（上游 → 本地）**：
+
+1. **告知是"从日志派生的"而非新增持久消息**：上游把它作为**一条 user 角色消息**追加进请求并写进会话历史（可回放、随压缩累积）；本地按 §6.12/§6.14 同口径只加进**本轮请求文本**（不落盘、不改消息条数）。**理由**：本地 `user/message` 事件 = **一个用户轮次**（`summarize_events()` 的 `turn_count`、`conversation_messages()` 的气泡、检索语料都直接读它）⇒ 把插件告知写成 `user/message` 会污染轮数、左栏历史与对话渲染视图。**代价**：告知不会随历史被重放（下一轮由"最后一条 `loop/end.model`"重新派生 ⇒ 语义等价，且模型换回旧模型时会**再次**告知）。
+2. **模型标签只有模型名**：上游 `routeLabel()` 在 provider 不同时写 `provider/model`；本地没有 provider 概念（单端点）⇒ 标签就是模型名。
+3. **比对基准是"最近一轮"而不是"请求 header"**：上游比 `selection.assembled` 与 `session.requestHeader()?.config`（每次请求都落一份请求配置）；本地没有请求记录（`loop.py` 模块 docstring 早已登记"未移植请求 header 冻结"）⇒ 基准改为**会话里最后一条 `loop/end.model`**。**老会话**（本字段之前落盘）读不到模型 ⇒ 按「未知」处理、**不**告知（fail-safe），代价是"换模型后第一次续聊老会话"不提醒。
+4. **`replay=False` 不告知**：此时本轮请求里没有历史，告知"上面的回复出自别的模型"没有对象；上游无此开关。
+5. **插入位置**：夹在**用户文本之后、时间读数之前**（时间读数仍是请求末尾，§6.14 位置未变）；上游是 pre-step 链上 `{prepend: true}` 追加的消息，与 time-context 的先后由监听器序决定，本地取"告知在前"的固定序。
+6. **不移植的事**：（a）`installModelSelection()` 的另外两条语义 —— 把选中模型写进 `system-prompt/assemble` 的 `variables`（本地 system 段本就带"模型："一行，`prompt.py:248`）与把 provider/model/effort 覆写进请求配置（本地 `LlmRequest` 只有单一 `model`，无 effort 旋钮）；（b）**effort-only 变化不告知**（本地无 effort）；（c）`agent-default-model.saveSelection()` 这条写侧（本地写侧就是 `save_config({"model": …})`）。
+
+**验收证据**：
+
+| 手段 | 结果 |
+|---|---|
+| `py_compile`（`prompt.py` / `ask.py` / `loop.py`） | 全过 |
+| `python -m pytest tests/ -q` | **265 passed**（原 258 + 本轮新增 7 例；**无既有断言需要改动** —— 告知只在"续聊且模型变"时出现） |
+| 真实请求文本（Python 级，临时脚本 + 假 provider，仓库外跑完即删） | 见上「模型看到的文本」；另打印：同模型续聊**无**告知、全新会话请求条数 = 1 且无告知、`loop/end.model` = `['deepseek-chat', 'model-beta', 'model-beta']`、会话 JSONL 里 `user/message` 正文仍是 `['第一问','第二问','第三问']`、JSONL 中**出现告知字样 = False** |
+| `node --check` / `node scripts/i18n_selftest.js` / `scan_ui_strings.py` | **不适用**：本轮零前端、零 i18n 改动 |
+| 依赖面 / 行号 | 纯标准库，零新依赖；`prompt.py`、`ask.py`、测试文件均为**文件尾追加 + 同行内联**；`loop.py` **+1 行**（`loop/end` 事件 `390-398` → `390-399`，其后行号 +1，已重取的锚点见下「文档」） |
+
+**未实测**：① 真实模型端点对这条告知的利用（如换模型后是否还会把旧回复记成自己写的）；② 真机面板端到端（本轮**没有浏览器工具**，只做到 Python 级请求文本）；③ 上游 `model-selection` 在 dsh 真机上的对照行为（未运行 dsh，只读码）。
+
+**文档**：`conventions/docs-management.md §4.2` 本轮登记行；`reference/agent-guide/10` 会话事实源 / `loop/end` 载荷 / 锚点表三处（`loop.py:390-398` → `390-399`、`loop.py:302-398` → `302-399`）+ 新增「模型切换告知」一条；§5 映射表本行与 §8 阶段状态同步；§11 变更记录本轮行。**台账**：`docs/todo.md §13` 里**没有**本项对应行 ⇒ **未新增台账行**（该台账零字节余量，按 §6.14 同口径处置）。
+
+**本轮未做（如实登记，勿当成已实现）**：① `toolMs` 所需的事件次序对齐（把 `loop.py` 的 `tool/call` 从"工具跑完后"提到"分发前"，对齐上游 `tool-calls.ts:168`）—— 它牵动现有日志次序与回放口径，需单独一轮；② 按轮模型做**逐轮成本归属**（`pricing.estimate()` 现在用"当前模型"给所有历史轮定价，`ui.py:1441`）—— `loop/end.model` 现已具备前提，改 `usage_report.turn_from_event()` + 定价调用即可，亦留后。
+
+---
+
 ## 7. 四条红线怎么落（逐条）
 
 | 红线（出处） | 本方案的落法 |
@@ -754,12 +820,22 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 >
 > **M2 已落地部分**：§6.7（上下文引用 `context/file-reference`）、§6.8（compaction）、
 > §6.9（session-query）、§6.10（`compaction-tool-result-pruner`）、§6.11（会话标题）、
-> §6.12（跨会话引用 `context/session-reference`）、**§6.14（时间上下文 `context/time-context`）**。
-> **§5 映射表里 `context/*` 三行的引用族（tmux 除外）至此全部落地**；下一阶段为 M3 写能力。
+> §6.12（跨会话引用 `context/session-reference`）、§6.14（时间上下文 `context/time-context`）、
+> **§6.15（模型切换告知 `core/agent` 的 `model-selection`）**。
+> **§5 映射表里 `context/*` 三行的引用族（tmux 除外）与 `core/agent` 家族至此全部处置完毕**（吃 / 已覆盖 / 不适用 逐条有证据）；下一阶段为 M3 写能力。
 >
-> **仍标 ⏳ 的行（截至 2026-09-20）**：`core/agent` 家族（`agent-default-model` / `agent-tool-presentation`，按需）；
-> `session-projection*` 投影框架与 `stats` 统计（按需）；`interaction/commands` 与 `permission-presets`（slash 命令 / 权限预设，M2/M3）；
-> `credentials/authorization`（授权流程，需 OAuth 类端点）；`storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*`（⏸ 按需，M3 再评）。
+> **M2 之后仍未做（按阶段）**：**M3** = 写能力（提议 → 确认 → 应用）+ 由它解锁的
+> `interaction/permission-presets`（要有第 2 个旋钮才有"档"可切）与 `interaction/commands`
+> （要有真实命令需求才有得注册）；**M4** = 对外契约（旧稿 §7 的 T1 CLI 面）。
+> 另有两条**本模块级**待办（见 §6.15 末段）：`tool/call` 落盘位次对齐（`toolMs` 可测的前提）与逐轮成本按轮模型归属。
+>
+> **仍标 ⏳ 的行（截至 2026-09-20，已按 §6.15 的全量读码界定收敛）**：
+> `interaction/commands` · `permission-presets`（**留 M3**，本地当前无消费方 / 无第二个旋钮）；
+> `credentials/authorization`（**条件性 ⏳**：本地无 OAuth 端点、单密钥已由 `llm/config.py` 覆盖 ⇒ 现在不适用，
+> 只有将来接授权类端点时才回来吃）；`storage/*` · `skill/*` · `hooks/*` · `guard/*` · `plan/*` · `goal/*` · `todo/*`（⏸ 按需，M3 再评）。
+> 已转为**已覆盖 / 不适用 / 不吃**（本轮界定，证据见 §6.15 表）：`core/agent-default-model`（已覆盖）、
+> `core/agent-tool-presentation`（本地恒 `native`）、`core/agent` 的 registry/initiator（Cordis 专有）、
+> `session-projection*` 框架（Cordis 专有）与 `session-stats`（ttft/decode 无对应事件面，`turns/steps` 已覆盖）。
 > ❌ 不吃者（tmux / telemetry / `api/*`·`sdk/*`·`bundle/*` / 沙箱与执行编排族 / `compaction` 的两个子包 / `file-reference-local`）不在计划内。
 
 ---
@@ -814,3 +890,4 @@ token」只能按字符量近似；② 裁剪**只作用于 `tool/result` 的正
 | 2026-09-19 | **M2 工具结果裁剪落地**（吃 `compaction/compaction-tool-result-pruner` —— §6.8 曾登记为「留后」，本轮补上）：新增 `services/agent/pruner.py`（`PRUNE_MARKER` 逐字照抄、阈值/头/尾 = 8192/4096/1024 同上游、`PruneBudgets` 构造期校验保证**永不增长**、`prune_text`/`apply_budget`/`applied_chars`/`prune_plan`/`prune_records`/`prune_applied`）；`session/history.py` 新增事件表行 + 「工具结果裁剪回放」小节（`_tool_message`/`_replay`/`replay_events` 接裁剪表、`build_history` 自动应用、新增 `compaction_shadowed()`）；`compaction.py` 的 `event_chars`/`select_span` 新增 `effective_chars`（按**有效视图**计账，避免高估尾部）；`ask._compact_if_needed()` 改为**先裁、再压**（裁完够用即**免掉**一次摘要调用，仍是超则摘要器读裁剪视图），返回值语义放宽为「是否落了事件」。**落盘**：一条 `compaction/prune`（`{pruned:[{seq,id,chars_before,chars_after,head,tail}], chars_removed}`），回放期**就地**重建 —— 不像上游那样追加替换 `tool/result`（同一 `tool_call_id` 两条工具消息会被端点 400）。验收：`pytest -q` **153 passed**（原 132 + 21 例 `tests/test_agent_pruner.py`）；零新依赖。偏差（纯字符串内容模型、不移植影子定价/`surfaceOp`、检索仍走原文、字符非 token 预算）、缺口与未实测见 §6.10；§8「M2 剩余」同步更新 |
 | 2026-09-19 | **M2 会话标题落地**（吃 `session-title` + `session-title-llm` + `session-title-first-prompt-llm`；**不吃** `all-prompts`（每轮一次调用不值）/ 投影框架 / `session/title-llm-request` 预派发记录 / `rename()`）：新增 `services/agent/title.py`（`session/title` **log-only** 事件；来源最新者胜：`fallback` 确定性兜底 = 首条人类消息前 8 词 / 96 字节、`provider` 模型标题、`user` 改名未移植；规范化照搬上游（OSC/CSI/ESC 序列、C0-C1、方向与隐形字符、空白折叠、**按 UTF-8 字节截断不切开码点**）；限额 8/96/120 + 调用策略 `maxInputBytes=32768` / `maxOutputTokens=96` / `timeout=20s`；`generate_title()` **fail-closed**（非 `stop` 的终止原因一律拒）；`auto_title()` = `first-prompt` 节律）；`history.py` 的 `summarize_events`/`summarize_session_file` 都改为**优先取折叠标题**（原始行扫描只对最后一个命中行解码，与折叠同口径）；`ask()` 两步接进（追加提问后落兜底、主回合后跑首轮一次的模型标题、**被取消的轮次跳过**、两步都 fail-open）；**顺带修掉"做完也看不见"**——前端 `#agent-history` 下拉标签由 `preview` 改为 `title || preview`（后端 `title` 字段此前从未被前端使用）。验收：`pytest -q` **184 passed**（原 153 + 31 例 `tests/test_agent_title.py`；`test_agent_history.py` 一处断言随之更新）；**浏览器实测**（harness 端口 8645、临时库 + 手写 `session/title`、不需要模型）：`agent_sessions_list.title = "多层感知机的要点"`、下拉选项文本 `多层感知机的要点（1 轮）`。偏差（**本地无异步服务 ⇒ 标题调用排在主回合之后**、仅首轮一次；被取消轮次不生成；用量记进事件但不进 benchmark）、缺口与未实测见 §6.11；§5 映射表与 §8「M2 剩余」同步更新 |
 | 2026-09-20 | **M2 时间上下文落地**（吃 `context/time-context` 的 `timestamp.ts` 字段口径 + `request-zone.ts` 三态策略 + `index.ts` 的 `renderText()` 文本；**不吃** pre-step 监听器 / `refreshIntervalMs` 到期调度 / `sessionProjections` 投影 / `invariant.ts`）：`services/agent/prompt.py` 文件尾追加 `TIME_CONTEXT_SECTION`（中文落法，上游英文原文写在常量注释上方；**不按工具门控** —— 对齐上游「插件被挂载」）+ `_local_now()` / `format_time_context()` / `render_time_context()`，`build_system_prompt()` 在「用户引用」之后无条件追加该段（`prompt.py:263`）；`ask.py:421` 把读数追加在**本轮请求末尾**（不进 system 段、不落盘）。验收：`py_compile` 全过；`pytest -q` **258 passed**（原 254 + 本轮 4 例，另 3 处既有断言随读数更新）；Python 级真实渲染 `当前本地时间：2026-09-20T09:51:44+08:00`（本机 `Asia/Shanghai`）+ `tools=()` 门控对照（时间上下文段在、文件引用段不在）。有意偏差：读数不落盘（同 §6.12 偏差 1）、静态说明与动态读数两分（KV 前缀）、三态时区收敛为一句、省略 `[IANA]` 括注、无 turn/step 与 elapsed、不新增配置项。偏差、缺口与未实测见 §6.14；§5 映射表 + §8 阶段状态同步 |
+| 2026-09-20 | **M2 模型切换落地 + ⏳ 候选全量界定**（吃 `core/agent` 的 `model-selection`；同一轮把 §5 全部 ⏳ 候选读码量过并逐条定性）：`loop.py` 的 `loop/end` 载荷新增 `"model"`（`loop.py:396`，**+1 行**）；`prompt.py` 文件尾追加 `MODEL_CHANGE_NOTICE` + `render_model_change_notice()`（上游 `modelSwitchNotice()` 的中文落法，英文原文写在常量注释上方）；`ask.py:421` 同行内联追加 `_model_notice(...)`（文件尾追加 `_last_recorded_model()` / `_model_notice()`）—— 续聊时「会话最后一条 `loop/end.model` ≠ 本轮模型」就在本轮请求里加一条告知（**不落盘**，同 §6.12/§6.14 口径）。验收：`py_compile` 全过；`pytest -q` **265 passed**（原 258 + 7 例，**无既有断言需要改**）；Python 级实请求逐字取证（`第二问\n\n[模型已更换：本轮之前的助手回复由 deepseek-chat 生成；本会话此后由 model-beta 继续]\n\n当前本地时间：…`；同模型续聊无告知；`loop/end.model=['deepseek-chat','model-beta','model-beta']`；JSONL 正文仍是用户原文）。**本轮把 6 个 ⏳ 候选定性为**：`core/agent` 的 registry/initiator 与 `session-projection*` 框架 = 不吃（Cordis 专有）、`agent-default-model` = 已覆盖（`llm/config.py`）、`agent-tool-presentation` = 本地恒 `native`、`session-stats` = 不吃（ttft/decode 无事件面、turns/steps 已覆盖、`toolMs` 因本地 `tool/call` 落盘位次而后测不准）、`commands`/`permission-presets` = 留 M3（无消费方 / 无第二个旋钮）、`credentials/authorization` = 条件性 ⏳。偏差（告知由日志派生而非持久消息、标签无 provider、基准是"最近一轮"、老会话不告知、`replay=False` 不告知、插入位次）与未实测见 §6.15；§5 四行 + §8 阶段状态同步 |

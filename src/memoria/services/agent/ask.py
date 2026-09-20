@@ -76,7 +76,7 @@ from memoria.services.agent.loop import (
     StopReason,
     usage_payload,
 )
-from memoria.services.agent.prompt import build_system_prompt, render_time_context
+from memoria.services.agent.prompt import build_system_prompt, render_model_change_notice, render_time_context
 from memoria.services.agent.pruner import (
     PRUNE,
     applied_chars,
@@ -418,7 +418,7 @@ def ask(
         on_text=on_text, on_reasoning=on_reasoning,
         cancel=cancel,
     )
-    prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + render_time_context()
+    prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + _model_notice(root, session.session_id, active_model, replayed=history is not None) + render_time_context()
     result: LoopResult = loop.run(prompt, messages=history)
     session.flush()
     # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过
@@ -453,3 +453,43 @@ def ask(
         iterations=result.iterations,
         error=result.error,
     )
+
+
+# ── 模型切换告知（2026-09-20；`core/agent` 的 model-selection，见 §6.15）──────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _last_recorded_model(events: Sequence[Mapping[str, Any]]) -> str:
+    """会话里**最后一条** `loop/end.model`（= 上一轮实际用的模型）；没有记录 ⇒ 空串。
+
+    `loop/end` 每轮恰一条（含 `aborted` / `error` 结束的轮次，见 `loop.py`），故倒序取首个带
+    非空 `model` 的事件即可。本字段是 **2026-09-20 起**才写入的 ⇒ 更早落盘的老会话读不到模型，
+    按「未知」处理（不告知，见 §6.15 偏差 3）。
+    """
+    for event in reversed(list(events)):
+        if event.get("type") != "loop/end":
+            continue
+        data = event.get("data")
+        value = data.get("model") if isinstance(data, Mapping) else None
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return ""
+
+
+def _model_notice(kb_path: str, session_id: str, model: str, *, replayed: bool) -> str:
+    """本轮请求里的模型切换告知；返回**含尾分隔的整段**（`""` = 不追加）。
+
+    与 §6.14 的时间读数同位置（用户文本之后、读数之前）、同口径（**只进本轮请求、不落盘**：
+    会话文件同时是读取路径的事实源）。语义为上游 `model-selection` 的
+    「换模型 ⇒ 在下一次请求里告知模型此前的助手回复出自另一个模型」（`prompt.render_model_change_notice`），
+    本地按「会话里最后一条 `loop/end.model` vs 本轮 `active_model`」比对 —— 上游比的是
+    **请求 header 里的上一次 selection**（本地无请求记录，偏差见 §6.15）。
+
+    `replayed=False`（全新会话，或调用方显式 `replay=False`）⇒ 本轮请求里根本没有历史，
+    告知「上面的回复出自别的模型」没有对象，故不追加。
+    """
+    if not replayed:
+        return ""
+    notice = render_model_change_notice(_last_recorded_model(conversation_events(kb_path, session_id)), model)
+    # 空告知不带分隔：否则本轮请求会比现在多出一行空行（既有断言与 KV 前缀都按「读数紧随用户文本」）
+    return f"{notice}\n\n" if notice else ""

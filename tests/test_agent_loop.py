@@ -601,3 +601,110 @@ def test_ask_appends_time_reading_to_request_only(kb: Path, monkeypatch: pytest.
     user_rows = [row for row in read_session(str(kb), "session-time-0001") if row["type"] == "user/message"]
     assert user_rows
     assert all("当前本地时间" not in row["data"]["text"] for row in user_rows)
+
+
+# —— 附：模型切换告知（`core/agent` 的 model-selection，见 design/dsh-agent-port.md §6.15）——
+# 本段同样用函数内 import：文件上半部的 `import` 段被 `<文件>:<行号>` 锚点占用（零行漂移）。
+
+NOTICE_HEAD = "[模型已更换："
+
+
+def test_render_model_change_notice_text() -> None:
+    """告知文本逐字钉住（上游 `modelSwitchNotice()` 的中文落法）；同模型或缺一边 ⇒ 空串。"""
+    from memoria.services.agent.prompt import MODEL_CHANGE_NOTICE, render_model_change_notice
+
+    assert render_model_change_notice("m1", "m2") == (
+        "[模型已更换：本轮之前的助手回复由 m1 生成；本会话此后由 m2 继续]"
+    )
+    assert MODEL_CHANGE_NOTICE.format(previous="m1", current="m2") == render_model_change_notice("m1", "m2")
+    assert render_model_change_notice("m1", "m1") == ""
+    assert render_model_change_notice("", "m2") == ""
+    assert render_model_change_notice("m1", "") == ""
+    assert render_model_change_notice("   ", "m2") == ""
+
+
+def test_loop_end_records_model(kb: Path) -> None:
+    """`loop/end` 记本轮模型（切换告知与成本归属的比对基准）。"""
+    provider = FakeProvider([text_step("好的。")])
+
+    ask(str(kb), "记一下模型", provider=provider, model="model-alpha", session_id="session-model-0001")
+
+    ends = [row for row in read_session(str(kb), "session-model-0001") if row["type"] == "loop/end"]
+    assert [row["data"]["model"] for row in ends] == ["model-alpha"]
+
+
+def test_resuming_with_new_model_appends_notice_to_request_only(kb: Path) -> None:
+    """续聊换模型：本轮请求里出现告知（两端模型名都在、排在时间读数之前），且**不进会话 JSONL**。"""
+    ask(
+        str(kb), "第一问", provider=FakeProvider([text_step("第一轮。")]),
+        model="model-alpha", session_id="session-model-0002",
+    )
+    second = FakeProvider([text_step("第二轮。")])
+
+    ask(str(kb), "第二问", provider=second, model="model-beta", session_id="session-model-0002")
+
+    sent = second.requests[0].messages[-1].content
+    assert NOTICE_HEAD in sent
+    assert "model-alpha" in sent and "model-beta" in sent
+    assert sent.startswith("第二问")  # 告知加在用户原文之后（本轮请求文本不动）
+    assert sent.index("模型已更换") < sent.index("当前本地时间")  # 告知在前、读数在末尾（§6.14 位置不变）
+
+    rows = read_session(str(kb), "session-model-0002")
+    assert all("模型已更换" not in str(row.get("data")) for row in rows)
+    questions = [row["data"]["text"] for row in rows if row["type"] == "user/message"]
+    assert questions == ["第一问", "第二问"]  # 会话文件里仍是用户输入的原文
+
+
+def test_resuming_with_same_model_adds_no_notice(kb: Path) -> None:
+    """模型没换 ⇒ 不告知（上游：provider/model 未变则不加 notice），请求里紧跟用户原文。"""
+    ask(
+        str(kb), "第一问", provider=FakeProvider([text_step("第一轮。")]),
+        model="model-alpha", session_id="session-model-0003",
+    )
+    second = FakeProvider([text_step("第二轮。")])
+
+    ask(str(kb), "第二问", provider=second, model="model-alpha", session_id="session-model-0003")
+
+    sent = second.requests[0].messages[-1].content
+    assert not sent.startswith(NOTICE_HEAD)
+    assert sent.startswith("第二问")
+
+
+def test_notice_compares_with_latest_recorded_model(kb: Path) -> None:
+    """比对基准是**最近一轮**的模型：a→b→a 时第三次仍要告知（上游比的是最近一次 selection）。"""
+    sid = "session-model-0004"
+    ask(str(kb), "一", provider=FakeProvider([text_step("A1")]), model="model-alpha", session_id=sid)
+    ask(str(kb), "二", provider=FakeProvider([text_step("B1")]), model="model-beta", session_id=sid)
+    third = FakeProvider([text_step("A2")])
+
+    ask(str(kb), "三", provider=third, model="model-alpha", session_id=sid)
+
+    sent = third.requests[0].messages[-1].content
+    assert NOTICE_HEAD in sent
+    assert "model-beta" in sent and "model-alpha" in sent
+
+
+def test_no_notice_for_session_without_recorded_model(kb: Path) -> None:
+    """老会话（本字段之前落盘）没有模型记录 ⇒ 按「未知」处理，不告知（fail-safe）。"""
+    store = SessionStore(str(kb), "session-model-0005")
+    store.append("user/message", {"text": "老会话的第一问"})
+    store.append("loop/end", {"stop_reason": "final-answer"})  # 无 model 键 = 本字段之前落盘的老会话
+    provider = FakeProvider([text_step("续聊。")])
+
+    ask(str(kb), "接着问", provider=provider, model="model-beta", session_id="session-model-0005")
+
+    sent = provider.requests[0].messages[-1].content
+    assert not sent.startswith(NOTICE_HEAD)
+    assert sent.startswith("接着问")
+
+
+def test_no_notice_when_replay_disabled(kb: Path) -> None:
+    """`replay=False`（显式关闭回放）⇒ 请求里没有历史，告知无对象，故不追加。"""
+    sid = "session-model-0006"
+    ask(str(kb), "一", provider=FakeProvider([text_step("A1")]), model="model-alpha", session_id=sid)
+    provider = FakeProvider([text_step("A2")])
+
+    ask(str(kb), "二", provider=provider, model="model-beta", session_id=sid, replay=False)
+
+    assert len(provider.requests[0].messages) == 1
+    assert not provider.requests[0].messages[-1].content.startswith(NOTICE_HEAD)

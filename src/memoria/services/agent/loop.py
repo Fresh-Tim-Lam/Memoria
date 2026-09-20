@@ -393,6 +393,7 @@ class AgentLoop:
                 "stop_reason": stop_reason.value,
                 "iterations": iterations,
                 "usage": usage_payload(usage),
+                "model": self.model,  # 上游记在**请求 header**（session-format 的 request-config）；本地无请求记录 ⇒ 记在轮边界（§6.15）
                 "error": error,
             },
         )
