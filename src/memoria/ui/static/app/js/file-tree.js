@@ -234,7 +234,7 @@ window.MemoriaFileTree = (function () {
       const path = item ? item.dataset.path : head ? head.dataset.dirToggle : "";
       if (!path) return;
       const kind = item ? "file" : "dir";
-      if (e.dataTransfer) {
+      if (window.MemoriaMentionDrag) { window.MemoriaMentionDrag.set(e, path, kind); } else if (e.dataTransfer) {
         e.dataTransfer.effectAllowed = "copy";
         try {
           e.dataTransfer.setData(DRAG_MIME, JSON.stringify({ path, kind }));

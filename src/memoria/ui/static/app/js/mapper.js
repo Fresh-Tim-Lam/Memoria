@@ -301,17 +301,18 @@ window.MemoriaMapper = (function () {
     var doc = _currentDoc;
     if (!doc || !doc.blocks) return null;
 
-    // 找到包含该行的 block
+    // 找到包含该行的 block：**优先**用块自带源码行区间（parser 落的 `srcLine`/`srcLineEnd` = 单一事实源）；
+    // 缺字段才退回按 `blockLineCount` 逐块累加（历史口径，仅兜底）。`lineCount` 语义 = 该块 0 基首行。
     var blockIndex = -1;
     var lineCount = 0;
     for (var i = 0; i < doc.blocks.length; i++) {
       var b = doc.blocks[i];
-      var bLines = blockLineCount(b);
-      if (line >= lineCount && line < lineCount + bLines) {
-        blockIndex = i;
-        break;
+      var bLines = b && b.srcLineEnd >= b.srcLine ? b.srcLineEnd - b.srcLine + 1 : blockLineCount(b);
+      var bStart = b && b.srcLine > 0 ? b.srcLine - 1 : lineCount;
+      if (line >= bStart && line < bStart + bLines) {
+        blockIndex = i; lineCount = bStart; break;
       }
-      lineCount += bLines;
+      lineCount = bStart + bLines;
     }
 
     if (blockIndex === -1) return null;
@@ -428,10 +429,10 @@ window.MemoriaMapper = (function () {
 
     var block = doc.blocks[blockIndex];
 
-    // 计算 line
-    var line = 0;
-    for (var i = 0; i < blockIndex; i++) {
-      line += blockLineCount(doc.blocks[i]);
+    // 计算 line：**优先**用块自带源码行区间（parser 的 `srcLine` = 单一事实源）；缺字段才退回累加兜底
+    var line = block.srcLine > 0 ? block.srcLine - 1 : 0; // 1 基 ⇒ −1 得 0 基行号
+    for (var i = 0; !(block.srcLine > 0) && i < blockIndex; i++) {
+      line += blockLineCount(doc.blocks[i]); // 兜底：块缺 `srcLine` 时逐块累加（历史口径）
     }
 
     // LIST block: 使用 items，每个 item 占一行，前缀 "- " (2字符)

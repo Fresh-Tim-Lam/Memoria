@@ -231,3 +231,25 @@ console.log(JSON.stringify({
     assert "annotateMessageOffsets(el, text);" in extract_function("renderBody")
     assert "messageOffsetAt(range.startContainer, range.startOffset)" in src
     assert "sessionFragmentToken(loc.seqFrom, loc.seqTo, loc.offFrom, loc.offTo)" in src
+
+
+def test_preview_annotation_wiring_is_intact() -> None:
+    """预览区「源坐标反标」的接线必须在位 —— 本轮**唯一**没能在 harness 里端到端驱动到的部分。
+
+    为什么只做静态断言：`annotatePreviewSourcePositions()` 需要真实预览 DOM + 真实选区，而自动化上下文里
+    `Selection.toString()` 恒为空（`isCollapsed=false` 但 `String(sel).length == 0`），选区悬浮入口的前置
+    （`selAddHit()` 读它）永远不满足 ⇒ 预览分支驱动不到（该入口真机可用，只是自动化测不到）。这里守住五条
+    **接线** —— 任一条被拆掉都会让预览区引用**静默**退回块级近似（不报错、不提示，只有肉眼能看出列号没了）：
+    ① 三支函数都在；② `selectionLocation` 的**两处**预览分支都走 `previewRangeEndpoints`（"按名调用"的副本，
+    漏改一处就会出现"有时精确、有时块级"的漂移）；③ 编辑态守卫在（编辑态插入包裹节点会破坏 `mapper` 的
+    DOM↔AST 光标映射）；④ 打标替换后能用 `_previewAnnMap` 追回端点（否则**第一次**选区必然映射失败 ——
+    打标正是被那次选区触发的）；⑤ 列号一路传到 token 拼写（`previewRangeEndpoints` 供 `startCol`/`endCol`）。
+    """
+    src = panel_source()
+    for name in ("annotatePreviewSourcePositions", "previewSourcePoint", "previewRangeEndpoints"):
+        assert name in extract_function(name), f"缺少 {name}()"
+    assert src.count("...previewRangeEndpoints(range, a, b)") == 2, "两处预览分支必须都走 previewRangeEndpoints"
+    assert "window.MemoriaEditHandler.editMode) return false" in extract_function("annotatePreviewSourcePositions")
+    assert "_previewAnnMap.set(tn, span)" in extract_function("annotatePreviewSourcePositions")
+    assert "_previewAnnMap.get(node)" in extract_function("previewSourcePoint")
+    assert "startCol: ps ? ps.col : null" in extract_function("previewRangeEndpoints")

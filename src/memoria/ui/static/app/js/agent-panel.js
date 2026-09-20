@@ -3162,7 +3162,7 @@ window.MemoriaAgentPanel = (function () {
         if (prev && prev >= a[0]) b = [prev, prev]; // 终点在下一块块首 ⇒ 上一块末行才是真正选中的末尾
       }
       if (!a || !b) return null;
-      return { host: "preview", startLine: Math.min(a[0], b[0]), endLine: Math.max(a[1], b[1]) };
+      return { host: "preview", ...previewRangeEndpoints(range, a, b) }; // 反标命中 ⇒ 精确行:列；否则退回块级近似
     }
     const box = $("#agent-messages");
     if (box && box.contains(anchor)) {
@@ -3488,10 +3488,10 @@ window.MemoriaAgentPanel = (function () {
       if (!a || !b) return null;
       return {
         host: "preview",
-        startLine: Math.min(a[0], b[0]),
-        startCol: null,
-        endLine: Math.max(a[1], b[1]),
-        endCol: null,
+        ...previewRangeEndpoints(range, a, b), // 反标命中 ⇒ 精确行:列；否则退回块级近似
+        // 说明（占位保持行号零漂移）：本分支原为 startLine/startCol/endLine/endCol 四个显式字段，
+        // 现统一由 previewRangeEndpoints() 产出 —— 单一事实源，避免两处预览分支各自演化；
+        // 未反标时 col 为 null（行为与改前逐字一致）。
       };
     }
     const box = $("#agent-messages");
@@ -3953,6 +3953,97 @@ window.MemoriaAgentPanel = (function () {
       }
       return full;
     });
+  }
+
+  /* ══ 预览区「源坐标反标」（2026-09-20；把气泡那套原样搬到预览区）══════════════════════════════
+     目的：预览区拖拽选取也产出**精确的 `行:列`**（`@路径#L3C2-L5C7`）—— 此前预览只给块级行区间
+     （"列明确不给"）。做法与气泡反标同一套：渲染后的可见文本一定是**源文本的有序子序列**（Markdown
+     标记被消费掉），逐文本节点在源码里从游标处向后找自己即可；找不到就标 `data-src-drop="1"` 并冻结游标。
+     **三条纪律**：① **惰性**（只在只读态第一次用到时打一次，`previewToken` 变了才重打）—— 不给渲染流程
+     加任何开销；② **不碰编辑态 DOM**（编辑态走 `mapper` 的 DOM↔AST 映射，插入包裹节点会破坏光标映射 ⇒
+     编辑态一律直接返回，退回块级近似）；③ 块的**源行范围**取自 `data--src-line(-end)`（单一事实源），
+     反标只在这些行里找，绝不跨块乱窜。 */
+
+  let _previewAnnToken = -1; // 已打标的渲染 token（`MemoriaApp.state.previewToken`，每次全量渲染递增）
+  let _previewAnnMap = new Map(); // 原文本节点 → 包裹它的 `-src-seg`（打标会替换节点，端点得能追过去）
+
+  /** 预览区可见文本节点 → `[data-src-line][data-src-col]`（1 起；`col` = 该节点首字符在该源行的列）。 */
+  function annotatePreviewSourcePositions() {
+    const A = window.MemoriaApp;
+    const doc = A && A.state ? A.state.doc : null;
+    const preview = document.getElementById("preview");
+    if (!doc || !preview || !doc.body) return false;
+    const token = A.state.previewToken;
+    if (_previewAnnToken === token) return true; // 同一渲染只打一次
+    if (window.MemoriaEditHandler && window.MemoriaEditHandler.editMode) return false; // 编辑态绝不动 DOM
+    const lines = String(doc.body).split("\n");
+    _previewAnnMap = new Map(); // 本轮替换表重建（token 变了 ⇒ 上一次的旧节点引用一律作废）
+    let done = 0;
+    for (const block of preview.querySelectorAll("[data--src-line]")) {
+      const start = Number(block.getAttribute("data--src-line")) || 0;
+      const end = Number(block.getAttribute("data--src-line-end")) || start;
+      if (!start) continue;
+      const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      let node;
+      while ((node = walker.nextNode())) nodes.push(node);
+      let line = start - 1;  // 0 基行下标
+      let col = 0;           // 该行内已消费到的字符下标（0 基）
+      for (const tn of nodes) {
+        const piece = tn.nodeValue || "";
+        if (!piece.trim() || !tn.parentNode) continue; // 纯空白是排版产物（表格补齐、缩进）
+        let at = -1;
+        let hit = -1;
+        while (line < Math.min(end, lines.length)) {
+          const idx = lines[line].indexOf(piece, col);
+          if (idx >= 0) { at = idx; hit = line; break; }
+          line += 1;
+          col = 0;
+        }
+        const span = document.createElement("span");
+        span.className = "-src-seg";
+        if (at < 0) {
+          span.setAttribute("data-src-drop", "1"); // 反标不到（MathJax 产物、图片 alt 等）⇒ 明说不可寻址
+        } else {
+          span.setAttribute("data-src-line", String(hit + 1));
+          span.setAttribute("data-src-col", String(at + 1));
+          line = hit;
+          col = at + piece.length;
+          done += 1;
+        }
+        span.textContent = piece;
+        tn.parentNode.replaceChild(span, tn);
+        _previewAnnMap.set(tn, span); // 端点若落在旧节点上（打标由这次选区触发）⇒ 由它追到新 span
+      }
+    }
+    _previewAnnToken = token;
+    return done > 0;
+  }
+
+  /** 预览区某点 → `{line, col}`（1 起源码行列）；落在未反标区域 ⇒ `null`（不猜）。 */
+  function previewSourcePoint(node, offset) {
+    annotatePreviewSourcePositions(); // 惰性：用到才打（只读态；同一渲染只打一次）
+    const target = (_previewAnnMap && _previewAnnMap.get(node)) || node; // 打标替换过 ⇒ 先追到新 span
+    const el = target && target.nodeType === 1 ? target : target && target.parentElement;
+    const seg = el && el.closest ? el.closest("[data-src-line]") : null;
+    if (!seg) return null;
+    const line = Number(seg.getAttribute("data-src-line"));
+    const from = Number(seg.getAttribute("data-src-col"));
+    if (!Number.isFinite(line) || !Number.isFinite(from)) return null;
+    const inner = Math.max(0, Math.min(Number(offset) || 0, (seg.textContent || "").length));
+    return { line: line, col: from + inner };
+  }
+
+  /** 预览区选区 → `{startLine,startCol,endLine,endCol}`：反标命中 ⇒ 精确；否则退回块级近似（列给 null）。 */
+  function previewRangeEndpoints(range, a, b) {
+    const ps = previewSourcePoint(range.startContainer, range.startOffset);
+    const pe = previewSourcePoint(range.endContainer, range.endOffset);
+    return {
+      startLine: ps ? ps.line : Math.min(a[0], b[0]),
+      startCol: ps ? ps.col : null,
+      endLine: pe ? pe.line : Math.max(a[1], b[1]),
+      endCol: pe ? pe.col : null,
+    };
   }
 
   /** 把**事件 seq** 标到"本 run 刚生成"的实时气泡上（拖拽引用要它；载入历史会话时由 `loadSession` 回填）。
