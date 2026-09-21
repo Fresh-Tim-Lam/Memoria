@@ -101,8 +101,10 @@ def edit_range(edit: Mapping) -> tuple[int, int]:
 
 def _check_expect(plain: Sequence[str], start: int, end: int, expect: str, label: str) -> None:
     actual = "\n".join(plain[start - 1 : end])
-    want = str(expect or "").replace("\r\n", "\n").strip("\n")
-    if actual != want:
+    want = str(expect or "").replace("\r\n", "\n")
+    # **只**容忍"模型多写了一个结尾换行"这一种；**不许** strip 掉开头的空行 ——
+    # 否则"正文第 1 行是空行"这种文件（真实遇到过）永远匹配不上（见 2026-09-21 的 `expect_mismatch` 事故）。
+    if actual != want and actual != want.rstrip("\n"):
         raise EditError(
             "expect_mismatch",
             f"{label}：第 {start}-{end} 行的原文与 expect 不符（盘上现在是：{_clip(actual)}）",
@@ -195,6 +197,17 @@ def splice(body: str, edits: Sequence[Mapping]) -> tuple[str, list[int], list[di
     changed: set[int] = set()
     diff: list[dict[str, Any]] = []
     trailing = body.endswith(("\n", "\r", "\v", "\f", "\u2028", "\u2029"))
+    # 末尾换行：**一旦原来有就保留**（未触及的部分不动）；反过来，`text` 显式以换行结尾 ⇒ 补上。
+    # 口径：`text` 是"这些行的逐字内容"，写到文件末尾时自然表达"我要不要一个收尾换行"。
+    eof_text: str | None = None
+    for edit in ordered:
+        if edit["mode"] == MODE_INSERT:
+            if int(edit["after"]) >= total:
+                eof_text = str(edit["text"])
+        elif int(edit["end"]) >= total:
+            eof_text = str(edit["text"]) if edit["mode"] == MODE_REPLACE else ""
+    if eof_text is not None and eof_text.endswith("\n"):
+        trailing = True
 
     for edit in ordered:
         mode = edit["mode"]

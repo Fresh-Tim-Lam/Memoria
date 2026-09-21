@@ -295,7 +295,7 @@ class ToolRegistry:
                 call.id,
                 tool.name,
                 ToolOutput(
-                    text=error_text(f"{tool.name}: 执行失败 —— {exc}", TOOL_FAILED_CODE),
+                    text=error_text(f"{tool.name}: 执行失败（{type(exc).__name__}）—— {exc}", TOOL_FAILED_CODE),
                     error=True,
                     code=TOOL_FAILED_CODE,
                 ),

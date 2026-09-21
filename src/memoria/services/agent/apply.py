@@ -62,7 +62,10 @@ class _ApplyError(RuntimeError):
 
 
 def _rel(kb_path: str, full_path: str) -> str:
-    return os.path.relpath(full_path, os.path.realpath(kb_path)).replace("\\", "/")
+    """库内相对路径。两侧都过 `realpath` —— Windows 的 **8.3 短名**（`LAMTIM~1`）、大小写、
+    目录联结都会让"短名根 + 长名目标"的 `relpath` 算出 `../../..` 这种越界结果（实测踩过）。"""
+    root = os.path.realpath(kb_path)
+    return os.path.relpath(os.path.realpath(full_path), root).replace("\\", "/")
 
 
 def affected_files(kb_path: str, rel_paths: Sequence[str]) -> list[str]:
@@ -70,15 +73,16 @@ def affected_files(kb_path: str, rel_paths: Sequence[str]) -> list[str]:
 
     sidecar 路径走 `sidecar_path_for()`（与存储层同一映射），**不另写一份**。
     """
+    root = os.path.realpath(kb_path)
     out: list[str] = []
     for rel in rel_paths:
         text = str(rel or "").strip().replace("\\", "/")
         if not text:
             continue
         out.append(text)
-        out.append(_rel(kb_path, sidecar_path_for(os.path.join(kb_path, text), kb_path)))
-    out.append(_rel(kb_path, manifest_path(kb_path)))
-    out.append(_rel(kb_path, pending_path(kb_path)))
+        out.append(_rel(root, sidecar_path_for(os.path.join(root, text), root)))
+    out.append(_rel(root, manifest_path(root)))
+    out.append(_rel(root, pending_path(root)))
     deduped: list[str] = []
     for item in out:
         if item and item not in deduped:

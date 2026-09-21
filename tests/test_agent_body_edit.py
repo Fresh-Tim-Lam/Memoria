@@ -437,7 +437,79 @@ def test_upsert_block_runs_through_the_same_edit_body_primitive(tmp_path: Path) 
     assert [call["primitive"] for call in compiled["calls"]] == ["edit_body"]
 
 
-# ── ⑦ RPC 面：卡片走的正是这三个 op ───────────────────────────────────────
+# ── ⑦ `expect` 的两条边界（2026-09-21 真机事故后补）──────────────────────────────
+
+
+def test_expect_can_address_a_leading_empty_line(tmp_path: Path) -> None:
+    """正文**第 1 行是空行**时也必须能匹配（旧实现 `strip("\\n")` ⇒ 这种文件永远对不上）。
+
+    真机事故：用户 `trial.md` 的正文是 `"\\n相关"`（第 1 行空、第 2 行「相关」），
+    `expect: "\\n相关"` 被判 `expect_mismatch`（盘上回显也是 `⏎相关`），人看着"两边一模一样却不通过"。
+    """
+    root = _kb_with(tmp_path, "\n相关")  # 无 frontmatter、首行空、结尾无换行
+    service = DocumentService(kb_path=str(root))
+    body = "## 天气\n今天天气好好\n相关：[[mcdonalds|麦当劳]]\n\n## 麦当劳\n我想要吃麦当劳\n相关：[[weather|天气]]\n"
+    plan = _plan(
+        {
+            "op": "replace_lines",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "range": {"start": {"line": 1}, "end": {"line": 2}},
+            "expect": "\n相关",
+            "text": body,
+        }
+    )
+    checked = validate_plan(str(root), plan, service=service)
+    assert checked["status"] == "ok", checked
+    done = apply_plan(str(root), plan, session_id=SESSION, txid="20260921T101505Z-06", service=service)
+    assert done["status"] == "ok", done
+    assert (root / "notes" / "c.md").read_text(encoding="utf-8") == body
+
+
+def test_expect_tolerates_a_trailing_newline_but_not_a_leading_one(tmp_path: Path) -> None:
+    """只容忍"多写了一个**结尾**换行"；开头多一个换行必须报错（否则会静默改到邻行）。"""
+    root = _kb_with(tmp_path, "a\nb\n")
+    service = DocumentService(kb_path=str(root))
+
+    def _op(expect: str) -> dict:
+        return {
+            "op": "replace_lines",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "range": {"start": {"line": 2}, "end": {"line": 2}},
+            "expect": expect,
+            "text": "B",
+        }
+
+    assert validate_plan(str(root), _plan(_op("b\n")), service=service)["status"] == "ok"
+    bad = validate_plan(str(root), _plan(_op("\nb")), service=service)
+    assert bad["status"] == "error" and bad["errors"][0]["code"] == "expect_mismatch"
+
+
+# ── ⑧ 路径归一（8.3 短名事故后补）：受影响文件集必须是**库内相对路径** ────────────────
+
+
+def test_affected_files_are_always_kb_relative() -> None:
+    """受影响文件集里不许出现 `..` / 绝对路径。
+
+    真机事故：`%TEMP%` 在 Windows 上是 **8.3 短名**（`C:\\Users\\LAMTIM~1\\…`），而服务层内部把
+    路径规范化成长名 ⇒ "短名根 + 长名目标"的 `relpath` 算出 `../../../../…`，apply 判 `path_rejected`
+    （正文那一批因此整批拒）。修法是 `_rel()` 两侧都过 `realpath`。
+    """
+    import tempfile
+
+    from memoria.services.agent.apply import affected_files
+
+    root = tempfile.mkdtemp()  # 本机 TEMP 即短名形式 ⇒ 这条在本机就是那次事故的回归测试
+    (Path(root) / "notes").mkdir()
+    (Path(root) / "notes" / "a.md").write_text("x\n", encoding="utf-8", newline="")
+    affected = affected_files(root, ["notes/a.md"])
+    assert affected, affected
+    for item in affected:
+        assert not item.startswith("/") and not item.startswith("..") and ":" not in item, (item, affected)
+
+
+# ── ⑨ RPC 面：卡片走的正是这三个 op ───────────────────────────────────────
 
 
 def test_preview_rpc_renders_body_edit_diff(kb: Path, api: UIAPI) -> None:
