@@ -18,7 +18,7 @@ import pytest
 
 from memoria.presentation.api.ui import UIAPI
 from memoria.services.agent.apply import apply_plan, compile_plan
-from memoria.services.agent.backup import backups_root
+from memoria.services.agent.backup import backups_root, restore_batch
 from memoria.services.agent.plan import preview_plan
 from memoria.storage.file_version import file_version, rel_version
 
@@ -107,6 +107,28 @@ def test_save_document_without_version_keeps_legacy_behaviour(api: UIAPI, kb: Pa
     assert (kb / "notes" / "a.md").read_text(encoding="utf-8") == "# 不带版本照写\n"
 
 
+def test_force_save_backs_up_disk_version_before_overwriting(api: UIAPI, kb: Path) -> None:
+    """「以我为准」（`force=True`）：**先把盘上那一版抄进备份**（可撤销），再覆盖写。"""
+    external = "# 别的窗口写的这一版\n"
+    (kb / "notes" / "a.md").write_text(external, encoding="utf-8")
+
+    res = api.save_document("notes/a.md", "# 我的这一版\n", "", True)
+    assert res["status"] == "ok", res
+    assert res["version"] == rel_version(str(kb), "notes/a.md")
+    assert (kb / "notes" / "a.md").read_text(encoding="utf-8") == "# 我的这一版\n"
+
+    info = res["force_backup"]
+    assert info["session_id"] == "manual-force"
+    batch = Path(info["dir"])
+    assert (batch / "journal.json").is_file() and (batch / "post.json").is_file()
+    # 备份里存的是**被覆盖掉的那一版**，且能直接回滚（复用备份子系统的撤销）
+    copied = (batch / "files" / "notes" / "a.md").read_text(encoding="utf-8")
+    assert copied == external
+    undone = restore_batch(str(kb), "manual-force", info["txid"])
+    assert undone["status"] == "ok", undone
+    assert (kb / "notes" / "a.md").read_text(encoding="utf-8") == external
+
+
 def test_preview_plan_hands_out_base_versions(kb: Path, api: UIAPI) -> None:
     """`preview_plan()` 返回 `base_versions`：这就是"用户看过的那一版"的凭据。"""
     preview = preview_plan(str(kb), _plan(), service=api._svc)
@@ -148,3 +170,42 @@ def test_apply_plan_proceeds_when_versions_match(kb: Path, api: UIAPI) -> None:
     assert res["status"] == "ok", res
     assert res["backup"]["txid"] == "20260920T021100Z-07"
     assert compile_plan(str(kb), _plan(), service=api._svc)["base_versions"]  # 编译产物也带基准
+
+
+# ── 前端接线不变量（JS）：这套令牌"通没通电"全靠这几行，回归时最容易被静默改坏 ──
+
+_ROOT = Path(__file__).resolve().parents[1]
+_APP_JS = _ROOT / "src" / "memoria" / "ui" / "static" / "app" / "js" / "app.js"
+_LOCALES = [
+    _ROOT / "src" / "memoria" / "ui" / "static" / "app" / "i18n" / "zh-CN.js",
+    _ROOT / "src" / "memoria" / "ui" / "static" / "app" / "i18n" / "en.js",
+]
+_CONFLICT_KEYS = ("title", "body", "reload", "force", "later", "reloaded", "forced", "forceFail")
+
+
+def test_frontend_wires_version_token_and_conflict_dialog() -> None:
+    """`app.js`：保存带版本 + 成功后滚动基线 + `stale_write` 走三选一 + apply 忙位让路。"""
+    src = _APP_JS.read_text(encoding="utf-8")
+    assert 'call("save_document", state.currentPath, body, state.doc?.version || "")' in src
+    assert "if (state.doc && res.version) state.doc.version = res.version;" in src
+    assert "window.MemoriaWriteGuard?.onSaveFailed?.(res, state.currentPath, body)" in src
+    assert "window.MemoriaWriteGuard?.deferIfBusy?.(markDirty)" in src
+
+    block = src[src.index("(function memoriaWriteGuard()") :]
+    for needle in (
+        'data-act="reload"',
+        'data-act="force"',
+        'data-act="later"',
+        'A().call?.("save_document", path, body, "", true)',  # 「以我为准」= force（后端先备份）
+        "setBusy: (v) => { busy = !!v; }",
+    ):
+        assert needle in block, f"冲突保护块缺少：{needle}"
+
+
+@pytest.mark.parametrize("locale", _LOCALES, ids=lambda p: p.name)
+def test_conflict_dialog_keys_exist_in_every_locale(locale: Path) -> None:
+    """中英必须成对（缺一个键 ⇒ 弹窗会出现裸 key）。"""
+    src = locale.read_text(encoding="utf-8")
+    assert "writeConflict: {" in src
+    for key in _CONFLICT_KEYS:
+        assert f"{key}:" in src, f"{locale.name} 缺 writeConflict.{key}"

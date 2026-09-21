@@ -197,9 +197,9 @@ class UIAPI:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-    def save_document(self, rel_path: str, body: str, base_version: str = "") -> dict:
+    def save_document(self, rel_path: str, body: str, base_version: str = "", force: bool = False) -> dict:
         try:
-            return guard_save(self._svc, rel_path, body, base_version)
+            return guard_save(self._svc, rel_path, body, base_version, force)
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 

@@ -1366,4 +1366,19 @@
     deleteBody: "删除会话「{name}」？该会话在磁盘上的记录会被移除，不可恢复。",
     busyLock: "生成中：请先停止或等本轮结束，再改这段会话",
   });
+  // ===== 2026-09-20 追加：写冲突保护（§9）—— stale_write 三选一弹窗文案 =====
+  // 口径见 docs/design/agent-plugin-design.md §9（人已拍板）：盘上版本权威、人的当下操作最高、
+  // 冲突由人**明示**决定（重载 / 以我为准 / 稍后）；`force` 覆盖前会先备份，故文案里点明"可撤销"。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"], {
+    writeConflict: {
+      title: "文件已被改动",
+      body: "{path} 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。",
+      reload: "重载（丢弃我的编辑）",
+      force: "以我为准（先备份再覆盖）",
+      later: "稍后",
+      reloaded: "已重新载入磁盘上的版本",
+      forced: "已按你的版本覆盖；原磁盘版本已备份，可撤销",
+      forceFail: "覆盖失败",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import time
 from typing import Any
 
 
@@ -53,14 +54,18 @@ def with_version(doc: Any, kb_path: str | None, rel_path: str) -> Any:
     return doc
 
 
-def guard_save(service: Any, rel_path: str, body: str, base_version: str = "") -> dict:
+def guard_save(service: Any, rel_path: str, body: str, base_version: str = "", force: bool = False) -> dict:
     """带版本校验的保存：不一致 ⇒ **拒写**并回报 `stale_write`（不改盘上内容）。
 
     `base_version` 为空串 ⇒ **不做校验**（既有调用方的旧行为逐字不变）。
+    `force=True` ⇒ 用户明示「以我为准」：**先把盘上那一版抄进备份**（可撤销），再覆盖写；
+    备份失败即拒（**不降级为"无备份的覆盖"**）。
     成功时在返回值里追加 `version` = 写后新版本，供调用方更新自己的基线。
     """
     kb_path = getattr(service, "kb_path", None)
     want = (base_version or "").strip()
+    if force and kb_path:
+        return _force_save_with_backup(service, rel_path, body, kb_path)
     if want and kb_path:
         current = rel_version(kb_path, rel_path)
         if current != want:
@@ -74,4 +79,39 @@ def guard_save(service: Any, rel_path: str, body: str, base_version: str = "") -
     result = service.save_document(rel_path, body)
     if isinstance(result, dict) and result.get("status") == "ok" and kb_path:
         result["version"] = rel_version(kb_path, rel_path)
+    return result
+
+
+#: 「以我为准」的手工备份落在哪个会话目录下（复用备份子系统的保留/撤销口径）
+FORCE_SESSION = "manual-force"
+
+
+def _force_txid(now: float | None = None) -> str:
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime(now if now is not None else time.time()))
+    return f"{stamp}-01"
+
+
+def _force_save_with_backup(service: Any, rel_path: str, body: str, kb_path: str) -> dict:
+    """把盘上现版**抄进备份**（走 `services/agent/backup`，因此天然可 `restore_batch` 撤销）后覆盖写。"""
+    from memoria.services.agent import backup
+
+    txid = _force_txid()
+    for attempt in range(2):  # 同一秒内第二次覆盖：换个 txid 后缀，避免"批次已存在"
+        txid = _force_txid() if attempt == 0 else txid.replace("-01", "-02")
+        snap = backup.snapshot_pre_images(
+            kb_path, FORCE_SESSION, txid, [rel_path], tool_id="force_save"
+        )
+        if snap["status"] == "ok" or snap.get("code") != "backup_failed":
+            break
+    if snap["status"] != "ok":
+        return {
+            "status": "error",
+            "code": snap.get("code") or "backup_failed",
+            "message": "强制覆盖前的备份失败，已放弃写入：" + str(snap.get("message") or ""),
+        }
+    result = service.save_document(rel_path, body)
+    if isinstance(result, dict) and result.get("status") == "ok":
+        backup.record_post_images(kb_path, FORCE_SESSION, txid)  # 撤销时的"写后哈希"凭据
+        result["version"] = rel_version(kb_path, rel_path)
+        result["force_backup"] = {"session_id": FORCE_SESSION, "txid": txid, "dir": snap["dir"]}
     return result

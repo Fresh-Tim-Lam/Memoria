@@ -1459,4 +1459,19 @@
     deleteBody: "Delete session “{name}”? Its record on disk is removed and cannot be restored.",
     busyLock: "Generating: stop or wait for this turn before changing this session",
   });
+  // ===== 2026-09-20 appended: write-conflict protection (§9) — stale_write 3-way dialog =====
+  // Policy: docs/design/agent-plugin-design.md §9 — disk version wins, the human's current action
+  // has priority, and conflicts are resolved **explicitly by the human** (reload / force / later).
+  Object.assign(g.MEMORIA_LOCALES["en"], {
+    writeConflict: {
+      title: "File changed",
+      body: "{path} was modified on disk by another window or the agent; your edit is based on an older version and was not written.",
+      reload: "Reload (discard my edit)",
+      force: "Keep mine (backup, then overwrite)",
+      later: "Later",
+      reloaded: "Reloaded the version on disk",
+      forced: "Overwrote with your version; the previous on-disk version was backed up (undoable)",
+      forceFail: "Overwrite failed",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -121,7 +121,7 @@
   /** 将当前内存内容写回磁盘（始终从源码编辑器收集，保证 markdown 格式完整） */
   async function syncToDisk() {
     syncLog("syncToDisk: dirty=", _dirty, "path=", state.currentPath);
-    if (!state.currentPath || !_dirty) {
+    if (!state.currentPath || !_dirty || window.MemoriaWriteGuard?.deferIfBusy?.(markDirty)) {
       syncLog("syncToDisk: 跳过 (无路径或无修改)");
       return;
     }
@@ -130,11 +130,11 @@
     _dirty = false;
     syncLog("syncToDisk: 写入文件", state.currentPath, ", body长度", body.length, ", 前80字:", body.substring(0, 80));
     try {
-      const res = await call("save_document", state.currentPath, body);
+      const res = await call("save_document", state.currentPath, body, state.doc?.version || "");
       if (res.status !== "ok") {
-        console.warn("[SYNC] 保存失败:", res.message);
+        window.MemoriaWriteGuard?.onSaveFailed?.(res, state.currentPath, body) || console.warn("[SYNC] 保存失败:", res.message);
       } else {
-        syncLog("syncToDisk: 保存成功");
+        if (state.doc && res.version) state.doc.version = res.version; syncLog("syncToDisk: 保存成功");
         if (res.cleanedImages && res.cleanedImages.length) {
           showFlashInfo(
             T("img.cleanup.doneList", {
@@ -12942,3 +12942,83 @@
     window.MemoriaMentionDrag.set(e, path, "file");
   });
 })();
+
+/* ===== 写冲突保护（§9 口径，2026-09-20）============================================
+   策略：`docs/design/agent-plugin-design.md §9`（人已拍板）——
+   ① **盘上版本 = 唯一权威**（不一致即拒写，绝不基于过期版本写）；
+   ② **人的当下操作最高**（agent 批量写期间，人机保存重新入队让路）；
+   ③ **冲突由人明示决定**：本块给「重载 / 以我为准 / 稍后」三选一 ——
+   **agent 不自动合并、不静默赢；人的过期 buffer 也不自动赢**（否则会静默抹掉对方）。
+
+   为什么整块追加在 app.js 末尾（IIFE **之外**）：零行漂移纪律 —— 既有 `app.js:<行>` 锚点
+   （670 / 721 / 1388 / 1866 / 12794 / 12924 …）一个都不动；IIFE 内只做**三处同行内替换**
+   （`syncToDisk` 的守卫行 / 保存调用行 / 成功行）。跨闭包只经 `window.MemoriaApp` 门面，
+   而门面导出的 `state` 是同一对象引用 ⇒ `state.doc.version` 可直接读写。
+
+   版本从哪来：后端 `load_document` 现在**追加** `version`（文件内容 sha256，只增不改），
+   `save_document` 追加可选 `base_version`（空串 = 不校验）与 `force`（覆盖前先备份，可撤销）。 */
+(function memoriaWriteGuard() {
+  const A = () => window.MemoriaApp || {};
+  const T = (k, p) => (A().T ? A().T(k, p) : k);
+  const esc = (s) => (A().esc ? A().esc(s) : String(s == null ? "" : s));
+  let busy = false;        // agent 批量写（apply）期间置位 ⇒ 人机保存重新入队（规则 ②）
+  let dialogOpen = false;  // 同时只弹一个冲突框（自动保存可能连续触发）
+
+  function showConflictDialog(path, res, body) {
+    if (dialogOpen) return;
+    dialogOpen = true;
+    const overlay = document.createElement("div");
+    overlay.className = "-modal";
+    overlay.innerHTML = `
+      <div class="-modal-backdrop"></div>
+      <div class="-modal-box" style="width:min(460px,92vw)">
+        <div class="-modal-header" style="cursor:default"><span>${esc(T("writeConflict.title"))}</span></div>
+        <div class="-modal-body">${esc(T("writeConflict.body", { path }))}</div>
+        <div class="-modal-footer -btn-bar">
+          <span class="-modal-footer-spacer"></span>
+          <button type="button" class="-btn" data-act="later">${esc(T("writeConflict.later"))}</button>
+          <button type="button" class="-btn danger" data-act="force">${esc(T("writeConflict.force"))}</button>
+          <button type="button" class="-btn" data-act="reload">${esc(T("writeConflict.reload"))}</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const close = () => { dialogOpen = false; overlay.remove(); };
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", close);
+    overlay.querySelector('[data-act="later"]').addEventListener("click", close);
+    overlay.querySelector('[data-act="reload"]').addEventListener("click", async () => {
+      close();
+      await A().openFile?.(path);  // 丢弃本地编辑、跟盘上走（openFile 会重设 state.doc 含新 version）
+      A().setStatus?.(T("writeConflict.reloaded"), path);
+    });
+    overlay.querySelector('[data-act="force"]').addEventListener("click", async () => {
+      close();
+      const r = await A().call?.("save_document", path, body, "", true);  // force ⇒ 后端先备份再覆盖
+      const st = A().state;
+      if (r && r.status === "ok") {
+        if (st && st.doc) st.doc.version = r.version || "";
+        A().setStatus?.(T("writeConflict.forced"), path);
+      } else {
+        A().showFlashError?.(T("writeConflict.forceFail"), (r && r.message) || "");
+      }
+    });
+  }
+
+  window.MemoriaWriteGuard = {
+    isBusy: () => busy,
+    /** agent 批量写前后调用：apply 期间人机保存让路（§9 规则 ②） */
+    setBusy: (v) => { busy = !!v; },
+    /** IIFE 内 `syncToDisk` 守卫：忙 ⇒ 重新入队（`rearm` = `markDirty`）并跳过本次 */
+    deferIfBusy: (rearm) => {
+      if (!busy) return false;
+      try { rearm && rearm(); } catch (e) { /* 入队失败也不能让保存直接冲进去 */ }
+      return true;
+    },
+    /** IIFE 内保存失败的唯一出口：返回 true = 已接管（不再 `console.warn`） */
+    onSaveFailed: (res, path, body) => {
+      if (!res || res.code !== "stale_write") return false;
+      showConflictDialog(path, res, body);
+      return true;
+    },
+  };
+})();
+
