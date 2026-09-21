@@ -114,4 +114,13 @@ def _force_save_with_backup(service: Any, rel_path: str, body: str, kb_path: str
         backup.record_post_images(kb_path, FORCE_SESSION, txid)  # 撤销时的"写后哈希"凭据
         result["version"] = rel_version(kb_path, rel_path)
         result["force_backup"] = {"session_id": FORCE_SESSION, "txid": txid, "dir": snap["dir"]}
+        # 审计：用户**明示**的覆盖尤其要留痕（写已完成 ⇒ 审计失败不回滚，只如实带回）
+        from memoria.services.agent import audit as audit_mod
+
+        result["audit"] = audit_mod.append(
+            kb_path,
+            FORCE_SESSION,
+            audit_mod.EVENT_FORCE_SAVE,
+            {"status": "ok", "rel_path": rel_path, "txid": txid, "backup_dir": snap["dir"]},
+        )
     return result

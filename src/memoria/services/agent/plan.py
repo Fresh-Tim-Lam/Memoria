@@ -40,7 +40,7 @@ from memoria.graph.edge_types import EDGE_EXTEND, EDGE_REFERENCE, normalize_link
 from memoria.range.constants import SNIPPET_MAX_LEN
 from memoria.range.locator import resolve_range
 from memoria.services.agent.tools.kb import _safe_rel
-from memoria.services.link_instances import find_plain_text_in_line, wrap_plain_on_lines
+from memoria.services.link_instances import find_plain_text_in_line, unwrap_lines, wrap_plain_on_lines
 from memoria.services.link_resolver import resolve_link_target
 from memoria.storage.file_version import rel_version
 from memoria.storage.markdown import strip_frontmatter
@@ -444,10 +444,9 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
 def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
     """**dry-run**：在内存里算出"将改哪些文件、哪些行"，**零落盘**。
 
-    先跑 `validate_plan`，有错就原样返回（不预览一个非法 plan）。能算出行级 diff 的 op
-    （`upsert_kp` / `attach_links`）给出 `lines_changed` + 逐行 before/after；算不出的
-    （`detach_links`，其落盘动作在 `detach_link_instance` 内）如实标 `diff_available: false`，
-    只给"将作用于哪些行"。
+    先跑 `validate_plan`，有错就原样返回（不预览一个非法 plan）。三个 M3a op 都给出
+    `lines_changed` + 逐行 before/after：`attach_links` 用 `wrap_plain_on_lines()`、
+    `detach_links` 用 `unwrap_lines()` —— **与落地路径同一个原子函数** ⇒ 预览不可能漂移。
     """
     checked = validate_plan(kb_path, plan, service=service)
     if checked["status"] != "ok":
@@ -485,9 +484,20 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             ]
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
         elif parsed.get("op") == OP_DETACH_LINKS:
-            entry["diff_available"] = False  # 落盘动作在 detach_link_instance 内，本片不试算其正文结果
-            entry["lines"] = parsed.get("lines")
-            bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(_as_list(parsed.get("lines"))))
+            lines = _body_lines(kb_path, rel)
+            anchor = str(parsed.get("anchor_text") or "")
+            chosen = [int(x) for x in _as_list(parsed.get("lines"))]
+            # 与 `detach_link_instance()` 内部同一个原子函数（`unwrap_lines`）⇒ 预览不可能与落地漂移
+            new_body, unwrapped = unwrap_lines("\n".join(lines), anchor, chosen)
+            new_lines = new_body.split("\n")
+            changed = [i + 1 for i in range(min(len(lines), len(new_lines))) if lines[i] != new_lines[i]]
+            entry["diff_available"] = True
+            entry["unwrapped"] = unwrapped
+            entry["lines_changed"] = changed
+            entry["diff"] = [
+                {"line": ln, "before": lines[ln - 1], "after": new_lines[ln - 1]} for ln in changed
+            ]
+            bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
         bucket["ops"].append(entry)
     return {
         **checked,

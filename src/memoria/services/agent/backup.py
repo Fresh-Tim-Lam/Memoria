@@ -401,6 +401,7 @@ def restore_batch(
     *,
     rel_paths: Sequence[str] | None = None,
     allow_unverified: bool = False,
+    audit: bool = True,
 ) -> dict:
     """撤销一个批次（**把 pre-image 逐字节写回**）；`txid` 缺省 = 该会话最新批次。
 
@@ -482,9 +483,15 @@ def restore_batch(
     except OSError as e:
         return {"status": "error", "code": "restore_failed", "message": str(e), "written": written}
 
-    return {
+    result = {
         "status": "ok",
         "txid": target_txid,
         "verified": posts is not None,
         "files": written,
     }
+    if audit:
+        # 审计（§2.3.2 第 5 条）：撤销**同样要留痕**；写已完成 ⇒ 审计失败不回滚，只如实带回
+        from memoria.services.agent import audit as audit_mod
+
+        result["audit"] = audit_mod.append(kb_path, sid, audit_mod.EVENT_UNDO, result)
+    return result

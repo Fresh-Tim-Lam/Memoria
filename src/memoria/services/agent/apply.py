@@ -34,7 +34,7 @@ import os
 from collections.abc import Mapping, Sequence
 from typing import Any, Callable
 
-from memoria.services.agent import backup
+from memoria.services.agent import audit, backup
 from memoria.services.agent.plan import (
     OP_ATTACH_LINKS,
     OP_DETACH_LINKS,
@@ -257,15 +257,45 @@ def _raw_op(plan: Any, op_id: str) -> dict | None:
     return None
 
 
-def _stale_error(stale: Sequence[str]) -> dict:
+def _stale_error(stale: Sequence[str], *, kb_path: str | None = None, session_id: str | None = None) -> dict:
     """版本不一致 ⇒ 结构化 `stale_write`（供前端弹「重载 / 以我为准」；此刻零写入）。"""
-    return {
+    result = {
         "status": "error",
         "code": "stale_write",
         "message": "这些文件在校验之后被改动，整批拒绝（请重新校验 plan）：" + "、".join(sorted(stale)),
         "files": sorted(stale),
         "applied": [],
         "rolled_back": False,
+    }
+    result["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, result)
+    return result
+
+
+def recover_after_write(kb_path: str, rel_paths: Sequence[str] | None = None, *, service: Any = None) -> dict:
+    """写/撤销之后的一致性恢复（§2.3.2 第 5 条）：**清该文件的解析缓存** + 跑 `validate_kb()`。
+
+    撤销（`backup.restore_batch()`）是**直接写盘**、不走 `DocumentService.save_document()`，
+    所以应用侧那份 `_cache` 会残留撤销前的解析 ⇒ 必须显式失效，否则界面显示的还是旧内容。
+
+    注：`_cache` 是 `DocumentService` 的私有字段（同文件内的 `repair_path_cascade` 也这么清），
+    这里从网关侧访问属**已知的私有触碰** —— 更干净的做法是加一个公开失效 API，已登记待办。
+    """
+    from memoria.services.document import DocumentService
+
+    svc = service or DocumentService(kb_path=kb_path)
+    cleared: list[str] = []
+    cache = getattr(svc, "_cache", None)
+    if isinstance(cache, dict):
+        for rel in rel_paths or []:
+            key = str(rel).replace("\\", "/")
+            if cache.pop(key, None) is not None:
+                cleared.append(key)
+    report = svc.validate_kb()
+    return {
+        "status": "ok",
+        "cache_cleared": cleared,
+        "errors": report.get("errors"),
+        "warnings": report.get("warnings"),
     }
 
 
@@ -293,7 +323,7 @@ def apply_plan(
     if base_versions:
         stale = [rel for rel, want in base_versions.items() if rel_version(kb_path, rel) != want]
         if stale:
-            return _stale_error(stale)
+            return _stale_error(stale, kb_path=kb_path, session_id=session_id)
     compiled = compile_plan(kb_path, plan, service=service)
     if compiled["status"] != "ok":
         return {**compiled, "applied": [], "rolled_back": False}
@@ -309,7 +339,7 @@ def apply_plan(
             if rel_version(kb_path, rel) != want
         ]
         if stale:
-            return _stale_error(stale)
+            return _stale_error(stale, kb_path=kb_path, session_id=session_id)
 
     clean_txid = str(txid or compiled.get("txid") or "").strip()
     snapshot = backup.snapshot_pre_images(
@@ -317,7 +347,7 @@ def apply_plan(
     )
     if snapshot["status"] != "ok":
         # 备份失败 ⇒ **不写**（fail-closed；不降级为"无备份的写入"）
-        return {
+        refused = {
             "status": "error",
             "code": snapshot.get("code") or "backup_failed",
             "message": snapshot.get("message") or "写前备份失败",
@@ -325,6 +355,8 @@ def apply_plan(
             "applied": [],
             "rolled_back": False,
         }
+        refused["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, refused)
+        return refused
 
     applied: list[dict] = []
     try:
@@ -351,8 +383,9 @@ def apply_plan(
             # 事务中途回滚：此刻**还没有** post.json（它由本函数最后一步落），
             # 且自快照以来唯一的写者就是本事务自己 ⇒ 显式跳过"外部改动保护"。
             allow_unverified=True,
+            audit=False,  # 事务内回滚不是"用户撤销" ⇒ 不记 capability/undo（apply 失败事件已记全貌）
         )
-        return {
+        failed = {
             "status": "error",
             "code": "apply_failed",
             "message": str(exc),
@@ -362,10 +395,12 @@ def apply_plan(
             "rolled_back": rollback.get("status") == "ok",
             "rollback": rollback,
         }
+        failed["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, failed)
+        return failed
 
     posts = backup.record_post_images(kb_path, session_id, clean_txid)
     trim = backup.trim_backups(kb_path, session_id)
-    return {
+    done = {
         "status": "ok",
         "txid": clean_txid,
         "dir": snapshot["dir"],
@@ -377,3 +412,6 @@ def apply_plan(
         "trimmed": trim.get("evicted", []),
         "warnings": compiled.get("warnings", []),
     }
+    # 审计（§2.3.2 第 8 步）：写已完成 ⇒ 审计失败**不回滚**，但如实带回结果
+    done["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, done)
+    return done
