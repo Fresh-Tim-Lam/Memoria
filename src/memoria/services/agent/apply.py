@@ -38,11 +38,14 @@ from memoria.services.agent import audit, backup
 from memoria.services.agent.plan import (
     BODY_EDIT_OPS,
     OP_ATTACH_LINKS,
+    OP_CREATE_FILE,
     OP_DETACH_LINKS,
+    OP_RENAME_FILE,
     OP_UPSERT_KP,
     base_versions as plan_base_versions,
     validate_plan,
 )
+from memoria.storage.constants import MEMORIA_DIR
 from memoria.storage.file_version import rel_version
 from memoria.storage.manifest import manifest_path
 from memoria.storage.pending import pending_path
@@ -129,6 +132,20 @@ def _call_edit_body(service: Any, args: Mapping) -> dict:
     return body_edit.apply_body_edits(service, args["rel_path"], list(args["edits"]))
 
 
+def _call_create_file(service: Any, args: Mapping) -> dict:
+    """原语 `kb.file.create`（§7 的 2.4）：新建 `.md`（可带初始正文）。"""
+    from memoria.services.agent import file_ops
+
+    return file_ops.apply_create_file(service, args["rel_path"], str(args.get("body") or ""))
+
+
+def _call_rename_file(service: Any, args: Mapping) -> dict:
+    """原语 `kb.file.rename`（§7 的 2.6）：重命名 `.md` + 全库 `[[stem]]` 级联。"""
+    from memoria.services.agent import file_ops
+
+    return file_ops.apply_rename_file(service, args["rel_path"], str(args["new_name"]))
+
+
 #: 原语白名单：**只有**这些方法是 agent 写路径的落点（§2.3.1）
 PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "confirm_kp_range": _call_confirm_kp_range,
@@ -137,6 +154,8 @@ PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "detach_link_instance": _call_detach_link_instance,
     "delete_link_route": _call_delete_link_route,
     "edit_body": _call_edit_body,
+    "create_file": _call_create_file,
+    "rename_file": _call_rename_file,
 }
 
 
@@ -250,6 +269,36 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             if isinstance(parsed.get("edit"), Mapping):
                 bucket["op_ids"].append(op_id)
                 bucket["edits"].append(dict(parsed["edit"]))
+        elif verb == OP_CREATE_FILE:
+            raw_op = _raw_op(plan, op_id) or {}
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "create_file",
+                    "args": {"rel_path": rel, "body": str(raw_op.get("body") or "")},
+                }
+            )
+        elif verb == OP_RENAME_FILE:
+            resolved = parsed.get("resolved") or {}
+            # 备份集必须**含级联牵动的全部文件**：否则整批回滚/撤销无法把它们逐一还原。
+            # 另加图片注册表（`_update_registry_for_doc()` 会碰它；存在才加，避免无谓备份）。
+            extra = [str(item) for item in (resolved.get("affected") or [])]
+            registry = os.path.join(kb_path, MEMORIA_DIR, "images", "registry.json")
+            if os.path.isfile(registry):
+                extra.append(_rel(kb_path, registry))
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "rename_file",
+                    "args": {
+                        "rel_path": rel,
+                        "new_name": str((_raw_op(plan, op_id) or {}).get("new_name") or ""),
+                        "affected": extra,
+                    },
+                }
+            )
     for rel, bucket in body_edits.items():
         if not bucket["edits"]:
             continue
@@ -261,7 +310,11 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                 "args": {"rel_path": rel, "edits": bucket["edits"]},
             }
         )
-    rels = [str(call["args"].get("rel_path") or "") for call in calls]
+    rels: list[str] = []
+    for call in calls:
+        rels.append(str(call["args"].get("rel_path") or ""))
+        # `rename_file` 的备份集：级联牵动的正文/侧车也必须在列（否则撤销不完整）
+        rels.extend(str(item) for item in (call["args"].get("affected") or []))
     # 记下**校验时**每个受影响正文的版本：apply 之前再比一次 ⇒ "校验与落地之间被人改过"就整批拒
     # （§9 口径：盘上版本权威、不许基于过期版本写）。侧车/manifest/pending 由原语内部读写，
     # 它们的版本基准不适用同一套语义，故这里只钉正文。

@@ -68,6 +68,9 @@ OP_RENAME_KP = "rename_kp"
 OP_REPLACE_LINES = "replace_lines"
 OP_INSERT_LINES = "insert_lines"
 OP_DELETE_LINES = "delete_lines"
+#: 文件级（§7 的 2.4 / 2.6）：新建 `.md` / 重命名（含全库引用级联）—— 落点 `services/agent/file_ops.py`
+OP_CREATE_FILE = "create_file"
+OP_RENAME_FILE = "rename_file"
 
 #: 全部已知 op（**只增不改**）；不在表内 ⇒ 拒整批
 KNOWN_OPS: tuple[str, ...] = (
@@ -79,6 +82,8 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_REPLACE_LINES,
     OP_INSERT_LINES,
     OP_DELETE_LINES,
+    OP_CREATE_FILE,
+    OP_RENAME_FILE,
 )
 
 #: M3a 首批（§10 P8 推荐①：三个 op 覆盖 KP 与链接两个动作类、两个方向；`set_kp_range` /
@@ -87,10 +92,15 @@ M3A_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
 
 #: 编译器**已实现**的 op（其余 `KNOWN_OPS` 只登记不编译：出现即警告，编译不出任何原语调用，
 #: apply 判 `empty_plan`）
-COMPILED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS) + (
+COMPILED_OPS: tuple[str, ...] = (
+    OP_UPSERT_KP,
+    OP_ATTACH_LINKS,
+    OP_DETACH_LINKS,
     OP_REPLACE_LINES,
     OP_INSERT_LINES,
     OP_DELETE_LINES,
+    OP_CREATE_FILE,
+    OP_RENAME_FILE,
 )
 
 #: **改正文行**的 op（会改变行数/行内容）
@@ -98,6 +108,8 @@ BODY_EDIT_OPS: tuple[str, ...] = (OP_REPLACE_LINES, OP_INSERT_LINES, OP_DELETE_L
 #: **按行号锚定**的 op（行号以"当前正文"为准；`attach_links` / `detach_links` 的 lines、
 #: `upsert_kp` 的 range）。它们**不改行数** ⇒ 只要排在改正文之前，行号语义就仍然一致。
 LINE_ANCHORED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
+#: **文件级** op（新增/改名）。它们改变"路径"或"全库引用" ⇒ 必须**单独成一批**（`file_op_alone`）。
+FILE_OPS: tuple[str, ...] = (OP_CREATE_FILE, OP_RENAME_FILE)
 
 
 #: 事务 id 形态（`<YYYYMMDD>T<HHMMSS>Z-<n>`；与 §2.3.2 的备份目录 `<txid>` 同格式同来源）
@@ -438,6 +450,36 @@ def _validate_body_edit(op: Mapping, verb: str, lines: Sequence[str], op_id: str
     return {"action": normalized["mode"], "edit": normalized}
 
 
+def _validate_create_file(kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
+    """新建 `.md`：文件**必须不存在**，`body` 可选（初始正文）。"""
+    if os.path.exists(os.path.join(kb_path, rel)):
+        errors.append(_err(op_id, "file_exists", f"文件已存在（新建请换路径）：{rel}"))
+        return {"action": "invalid"}
+    body = str(op.get("body") or "")
+    return {"action": "create", "resolved": {"path": rel, "lines": len(body.splitlines())}}
+
+
+def _validate_rename_file(kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
+    """重命名 `.md`：预演（`file_ops.rename_plan()`）给出的就是**落地时会牵动的文件集**。"""
+    from memoria.services.agent.file_ops import rename_plan
+
+    plan = rename_plan(kb_path, rel, str(op.get("new_name") or ""))
+    if not plan.get("ok"):
+        errors.append(_err(op_id, str(plan.get("code") or "rename_rejected"), str(plan.get("message") or "")))
+        return {"action": "invalid"}
+    return {
+        "action": "rename",
+        "resolved": {
+            "from": plan["from"],
+            "to": plan["to"],
+            "kp_shadow": plan["kp_shadow"],
+            "md_files": plan["md_files"],
+            "sidecar_files": plan["sidecar_files"],
+            "affected": plan["affected"],
+        },
+    }
+
+
 def _validate_op(
     kb_path: str, op: Any, service: Any, errors: list[dict], warnings: list[dict], pending_ids: set[str]
 ) -> dict:
@@ -459,6 +501,8 @@ def _validate_op(
     if rel is None:
         errors.append(_err(op_id, "path_rejected", f"file 不在允许根内或不是 .md：{data.get('file')!r}"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
+    if verb == OP_CREATE_FILE:  # 新建：文件**不**应存在 ⇒ 不能走下面的"必须已存在"检查
+        return {"op": verb, "op_id": op_id, "file": rel, **_validate_create_file(kb_path, rel, data, op_id, errors)}
     if not os.path.isfile(os.path.join(kb_path, rel)):
         errors.append(_err(op_id, "file_not_found", f"文件不存在：{rel}"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
@@ -471,6 +515,8 @@ def _validate_op(
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     elif verb in BODY_EDIT_OPS:
         detail = _validate_body_edit(data, verb, lines, op_id, errors)
+    elif verb == OP_RENAME_FILE:
+        detail = _validate_rename_file(kb_path, rel, data, op_id, errors)
     else:
         detail = {"action": "uncompiled"}  # set_kp_range / rename_kp：M3b 才编译
     return {"op": verb, "op_id": op_id, "file": rel, **detail}
@@ -505,6 +551,7 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         if parsed.get("op") == OP_UPSERT_KP and parsed.get("kp_id"):
             pending_ids.add(str(parsed["kp_id"]))
         ops.append(parsed)
+    _check_file_op_alone(ops, errors)
     _check_body_edit_groups(ops, errors)
     return {
         "status": "error" if errors else "ok",
@@ -515,6 +562,24 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         "warnings": warnings,
         "ops": ops,
     }
+
+
+def _check_file_op_alone(ops: Sequence[Mapping], errors: list[dict]) -> None:
+    """**文件级 op 必须单独成一批**：`create_file` / `rename_file` 会新增文件或改路径，而重命名还会
+    **全库改写** `[[stem]]` 引用 ⇒ 同批里别的 op 的行号与"引用是否还能解析"都可能被它牵动。
+    与其替模型猜顺序，不如明确拒绝、让它分两批提（每一批仍然逐条确认）。
+    """
+    for parsed in ops:
+        verb = str(parsed.get("op") or "")
+        if verb in FILE_OPS and len(ops) > 1:
+            errors.append(
+                _err(
+                    str(parsed.get("op_id") or ""),
+                    "file_op_alone",
+                    f"{verb} 改变路径 / 全库引用 ⇒ 必须**单独成一批**（同一 plan 里不能再有别的 op）。"
+                    "要写初始正文请直接给 `create_file` 的 `body`；其余改动另提一批。",
+                )
+            )
 
 
 def _check_body_edit_groups(ops: Sequence[Mapping], errors: list[dict]) -> None:
@@ -627,6 +692,24 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["mode"] = edit.get("mode")
             entry["lines_after"] = len(new_body.splitlines())
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
+        elif parsed.get("op") == OP_CREATE_FILE:
+            resolved = parsed.get("resolved") or {}
+            body = str((by_id.get(op_id) or {}).get("body") or "")
+            entry["diff_available"] = True
+            entry["created"] = resolved.get("path") or rel
+            entry["diff"] = [
+                {"line": index + 1, "before": None, "after": line}
+                for index, line in enumerate(body.splitlines())
+            ]
+        elif parsed.get("op") == OP_RENAME_FILE:
+            resolved = parsed.get("resolved") or {}
+            cascade = list(resolved.get("md_files") or [])
+            entry["diff_available"] = False  # 没有"行级"变化可算：给的是路径级 + 被牵连的正文清单
+            entry["rename"] = {"from": resolved.get("from"), "to": resolved.get("to")}
+            entry["cascade"] = cascade
+            entry["diff"] = [{"line": None, "before": resolved.get("from"), "after": resolved.get("to")}] + [
+                {"line": None, "before": None, "after": f"引用将改写：{item}"} for item in cascade
+            ]
         bucket["ops"].append(entry)
     return {
         **checked,
