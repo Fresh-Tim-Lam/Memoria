@@ -39,6 +39,15 @@ from typing import Any
 from memoria.graph.edge_types import EDGE_EXTEND, EDGE_REFERENCE, normalize_link_edge_type
 from memoria.range.constants import SNIPPET_MAX_LEN
 from memoria.range.locator import resolve_range
+from memoria.services.agent.body_edit import (
+    MODE_DELETE,
+    MODE_INSERT,
+    MODE_REPLACE,
+    EditError,
+    check_edit,
+    normalize_edits,
+    splice,
+)
 from memoria.services.agent.tools.kb import _safe_rel
 from memoria.services.link_instances import find_plain_text_in_line, unwrap_lines, wrap_plain_on_lines
 from memoria.services.link_resolver import resolve_link_target
@@ -54,6 +63,11 @@ OP_ATTACH_LINKS = "attach_links"
 OP_DETACH_LINKS = "detach_links"
 OP_SET_KP_RANGE = "set_kp_range"
 OP_RENAME_KP = "rename_kp"
+#: W 线第二步：**改正文行**（§7 的 2.1 / 2.2 / 2.3）—— 落点是原语 `kb.file.edit`
+#: （`services/agent/body_edit.py`，薄包装 `DocumentService.save_document()`）
+OP_REPLACE_LINES = "replace_lines"
+OP_INSERT_LINES = "insert_lines"
+OP_DELETE_LINES = "delete_lines"
 
 #: 全部已知 op（**只增不改**）；不在表内 ⇒ 拒整批
 KNOWN_OPS: tuple[str, ...] = (
@@ -62,11 +76,29 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_DETACH_LINKS,
     OP_SET_KP_RANGE,
     OP_RENAME_KP,
+    OP_REPLACE_LINES,
+    OP_INSERT_LINES,
+    OP_DELETE_LINES,
 )
 
 #: M3a 首批（§10 P8 推荐①：三个 op 覆盖 KP 与链接两个动作类、两个方向；`set_kp_range` /
 #: `rename_kp` 留 M3b —— 后者影响**全库**，门禁面过大）
 M3A_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
+
+#: 编译器**已实现**的 op（其余 `KNOWN_OPS` 只登记不编译：出现即警告，编译不出任何原语调用，
+#: apply 判 `empty_plan`）
+COMPILED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS) + (
+    OP_REPLACE_LINES,
+    OP_INSERT_LINES,
+    OP_DELETE_LINES,
+)
+
+#: **改正文行**的 op（会改变行数/行内容）
+BODY_EDIT_OPS: tuple[str, ...] = (OP_REPLACE_LINES, OP_INSERT_LINES, OP_DELETE_LINES)
+#: **按行号锚定**的 op（行号以"当前正文"为准；`attach_links` / `detach_links` 的 lines、
+#: `upsert_kp` 的 range）。它们**不改行数** ⇒ 只要排在改正文之前，行号语义就仍然一致。
+LINE_ANCHORED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
+
 
 #: 事务 id 形态（`<YYYYMMDD>T<HHMMSS>Z-<n>`；与 §2.3.2 的备份目录 `<txid>` 同格式同来源）
 TXID_RE = re.compile(r"^\d{8}T\d{6}Z-\d+$")
@@ -365,6 +397,47 @@ def _validate_detach_links(kb_path: str, op: Mapping, lines: Sequence[str], side
     return {"action": mode, "anchor_text": anchor, "lines": sorted(chosen)}
 
 
+def _range_line(value: Any) -> Any:
+    """`range.start` / `range.end` 取行号：`{"line": n}` 与裸 `n` 都接受（同 `upsert_kp` 的宽容口径）。"""
+    return value.get("line") if isinstance(value, Mapping) else value
+
+
+def _body_edit_spec(verb: str, op: Mapping) -> dict[str, Any]:
+    """plan op → `body_edit` 的编辑形态（**只做形状映射**；结构/内容级自检都交给 body_edit）。"""
+    if verb == OP_INSERT_LINES:
+        return {
+            "mode": MODE_INSERT,
+            "after": op.get("after"),
+            "expect": op.get("expect") or "",
+            "text": str(op.get("text") or ""),
+        }
+    rng = _as_dict(op.get("range"))
+    return {
+        "mode": MODE_REPLACE if verb == OP_REPLACE_LINES else MODE_DELETE,
+        "start": _range_line(rng.get("start")),
+        "end": _range_line(rng.get("end")),
+        "expect": op.get("expect") or "",
+        "text": str(op.get("text") or ""),
+    }
+
+
+def _validate_body_edit(op: Mapping, verb: str, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
+    """`replace_lines` / `insert_lines` / `delete_lines` 的共同校验。
+
+    两段自检**都复用 `body_edit` 的同一批函数**（`normalize_edits` 结构级 + `check_edit` 内容级），
+    因此"校验时能过"与"落盘时能过"是同一套判据 —— 包含 `expect` 与**盘上原文**逐字相符这一条
+    （与 `attach_links` 的 `anchor_text` 同款口径：**不猜**）。
+    """
+    spec = _body_edit_spec(verb, op)
+    try:
+        normalized = normalize_edits([spec])[0]
+        check_edit(normalized, list(lines))
+    except EditError as e:
+        errors.append(_err(op_id, e.code, str(e)))
+        return {"action": "invalid"}
+    return {"action": normalized["mode"], "edit": normalized}
+
+
 def _validate_op(
     kb_path: str, op: Any, service: Any, errors: list[dict], warnings: list[dict], pending_ids: set[str]
 ) -> dict:
@@ -380,8 +453,8 @@ def _validate_op(
         # 未知即拒（P12 推荐①）：不静默忽略，否则"旧编译器偷偷少做一步"不可见
         errors.append(_err(op_id, "unknown_op", f"未知 op：{verb!r}"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
-    if verb not in M3A_OPS:
-        warnings.append(_warn(op_id, "op_not_in_m3a", f"{verb} 不在 M3a 首批（本轮只读骨架不编译它）"))
+    if verb not in COMPILED_OPS:
+        warnings.append(_warn(op_id, "op_not_compiled", f"{verb} 尚未实现编译器分支（本轮只登记，不编译）"))
     rel = _safe_rel(kb_path, str(data.get("file") or ""))
     if rel is None:
         errors.append(_err(op_id, "path_rejected", f"file 不在允许根内或不是 .md：{data.get('file')!r}"))
@@ -396,6 +469,8 @@ def _validate_op(
         detail = _validate_attach_links(kb_path, data, lines, op_id, errors, warnings, pending_ids)
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
+    elif verb in BODY_EDIT_OPS:
+        detail = _validate_body_edit(data, verb, lines, op_id, errors)
     else:
         detail = {"action": "uncompiled"}  # set_kp_range / rename_kp：M3b 才编译
     return {"op": verb, "op_id": op_id, "file": rel, **detail}
@@ -430,6 +505,7 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         if parsed.get("op") == OP_UPSERT_KP and parsed.get("kp_id"):
             pending_ids.add(str(parsed["kp_id"]))
         ops.append(parsed)
+    _check_body_edit_groups(ops, errors)
     return {
         "status": "error" if errors else "ok",
         "v": data.get("v"),
@@ -439,6 +515,48 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         "warnings": warnings,
         "ops": ops,
     }
+
+
+def _check_body_edit_groups(ops: Sequence[Mapping], errors: list[dict]) -> None:
+    """**跨 op** 的两条硬规矩（单条看不懂、只能整批看）：
+
+    1. **同一文件里，改正文的 op 必须排在按行号锚定的 op 之后**。锚定 op 的行号与改正文的行号
+       都以"编辑前的正文"为准；锚定 op 不改行数（包裹正文 / 写 sidecar 都不增删行），所以只要
+       它们先跑，改正文再跑，两边行号就都成立。反过来（先改行数、再按旧行号挂跳转）就会错位 ⇒
+       这里**明确拒绝**并让模型调顺序，而不是替它猜。
+    2. **同一文件的多条改正文，区间不得重叠**（重叠时"谁先谁后"会改变结果）⇒ 拒绝。
+    """
+    order: dict[str, list[dict]] = {}
+    for parsed in ops:
+        rel = str(parsed.get("file") or "")
+        verb = str(parsed.get("op") or "")
+        if not rel or verb not in (BODY_EDIT_OPS + LINE_ANCHORED_OPS):
+            continue
+        order.setdefault(rel, []).append({"op_id": str(parsed.get("op_id") or ""), "verb": verb})
+    for rel, rows in order.items():
+        verbs = [row["verb"] for row in rows]
+        last_anchor = max((i for i, v in enumerate(verbs) if v in LINE_ANCHORED_OPS), default=-1)
+        first_edit = min((i for i, v in enumerate(verbs) if v in BODY_EDIT_OPS), default=len(verbs))
+        if last_anchor > first_edit:
+            bad = rows[last_anchor]["op_id"]
+            errors.append(
+                _err(
+                    bad,
+                    "body_edit_order",
+                    f"{rel}：改正文的 op 必须排在按行号锚定的 op（{bad}）**之后** —— "
+                    "锚定 op 的行号以编辑前的正文为准，先改行数会让它错位。请调整 ops 顺序后重提。",
+                )
+            )
+        edits = [
+            parsed.get("edit")
+            for parsed in ops
+            if str(parsed.get("file") or "") == rel and isinstance(parsed.get("edit"), Mapping)
+        ]
+        if len(edits) > 1:
+            try:
+                normalize_edits(edits)
+            except EditError as e:
+                errors.append(_err(rows[0]["op_id"], e.code, f"{rel}：{e}"))
 
 
 def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
@@ -497,6 +615,17 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["diff"] = [
                 {"line": ln, "before": lines[ln - 1], "after": new_lines[ln - 1]} for ln in changed
             ]
+            bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
+        elif parsed.get("op") in BODY_EDIT_OPS:
+            body = "\n".join(_body_lines(kb_path, rel))
+            edit = parsed.get("edit") or {}
+            # 与落地**同一个** `splice()`（`body_edit`）⇒ 预览给出的一定是真正会写下去的那几行
+            new_body, changed, diff = splice(body, [edit])
+            entry["diff_available"] = True
+            entry["lines_changed"] = changed
+            entry["diff"] = diff
+            entry["mode"] = edit.get("mode")
+            entry["lines_after"] = len(new_body.splitlines())
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
         bucket["ops"].append(entry)
     return {

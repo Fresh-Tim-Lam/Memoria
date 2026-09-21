@@ -158,9 +158,9 @@ def test_validate_plan_accepts_a_minimal_plan(kb: Path, service: DocumentService
     assert op["op"] == "upsert_kp" and op["file"] == "notes/a.md"
     assert op["action"] == "create"
     assert op["resolved"] == {"start_line": 1, "end_line": 3}
-    # 非首批 op 只警告、不报错（M3b 才编译）
+    # 未实现编译器的 op 只警告、不报错（`set_kp_range` / `rename_kp` 属后续批次）
     lazy = validate_plan(str(kb), _plan({"op": "set_kp_range", "op_id": "o9", "file": "notes/a.md", "kp_id": "x"}), service=service)
-    assert any(w["code"] == "op_not_in_m3a" for w in lazy["warnings"])
+    assert any(w["code"] == "op_not_compiled" for w in lazy["warnings"])
     assert lazy["ops"][0]["action"] == "uncompiled"  # 本片不编译它，也不假装编译过
 
 

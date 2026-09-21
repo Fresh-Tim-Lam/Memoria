@@ -36,6 +36,7 @@ from typing import Any, Callable
 
 from memoria.services.agent import audit, backup
 from memoria.services.agent.plan import (
+    BODY_EDIT_OPS,
     OP_ATTACH_LINKS,
     OP_DETACH_LINKS,
     OP_UPSERT_KP,
@@ -121,13 +122,21 @@ def _call_delete_link_route(service: Any, args: Mapping) -> dict:
     return service.delete_link_route(args["rel_path"], args["anchor_text"], occurrence=args.get("occurrence", 0))
 
 
-#: 原语白名单：**只有**这四个 `DocumentService` 方法是 agent 写路径的落点（§2.3.1）
+def _call_edit_body(service: Any, args: Mapping) -> dict:
+    """原语 `kb.file.edit`（§7 的 2.1/2.2/2.3）：行级改正文，落盘仍走 `save_document()`。"""
+    from memoria.services.agent import body_edit
+
+    return body_edit.apply_body_edits(service, args["rel_path"], list(args["edits"]))
+
+
+#: 原语白名单：**只有**这些方法是 agent 写路径的落点（§2.3.1）
 PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "confirm_kp_range": _call_confirm_kp_range,
     "update_kp": _call_update_kp,
     "apply_link_instances": _call_apply_link_instances,
     "detach_link_instance": _call_detach_link_instance,
     "delete_link_route": _call_delete_link_route,
+    "edit_body": _call_edit_body,
 }
 
 
@@ -144,6 +153,10 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             "files": [],
         }
     calls: list[dict] = []
+    #: 改正文的 op 按文件收集，循环结束后**每个文件合成一次** `edit_body`（`body_edit.splice`
+    #: 内部按行号从大到小应用 ⇒ 每条的行号都以"编辑前"的正文为准，不需要调用方倒序）。
+    #: 校验期已保证它们排在按行号锚定的 op **之后**（`body_edit_order`）⇒ 追加在 `calls` 末尾。
+    body_edits: dict[str, dict[str, Any]] = {}
     for parsed in checked["ops"]:
         verb = str(parsed.get("op") or "")
         op_id = str(parsed.get("op_id") or "")
@@ -232,6 +245,22 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                             "args": {"rel_path": rel, "anchor_text": parsed.get("anchor_text"), "line_number": int(line)},
                         }
                     )
+        elif verb in BODY_EDIT_OPS:
+            bucket = body_edits.setdefault(rel, {"op_ids": [], "edits": []})
+            if isinstance(parsed.get("edit"), Mapping):
+                bucket["op_ids"].append(op_id)
+                bucket["edits"].append(dict(parsed["edit"]))
+    for rel, bucket in body_edits.items():
+        if not bucket["edits"]:
+            continue
+        calls.append(
+            {
+                "op_id": "+".join(bucket["op_ids"]),
+                "op": "edit_body",
+                "primitive": "edit_body",
+                "args": {"rel_path": rel, "edits": bucket["edits"]},
+            }
+        )
     rels = [str(call["args"].get("rel_path") or "") for call in calls]
     # 记下**校验时**每个受影响正文的版本：apply 之前再比一次 ⇒ "校验与落地之间被人改过"就整批拒
     # （§9 口径：盘上版本权威、不许基于过期版本写）。侧车/manifest/pending 由原语内部读写，

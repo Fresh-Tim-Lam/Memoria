@@ -110,16 +110,19 @@
     return `<div class="${className}" title="${esc(full)}"${extra || ""}>${esc(full)}</div>`;
   }
 
+  /** 一行 diff：`before` 有就是删除行、`after` 有就是新增行（改正文时只来一边，包裹时两边都有）。 */
+  function diffRow(row) {
+    const where = row && row.line != null ? "L" + row.line + " " : "";
+    let out = "";
+    if (row && row.before != null) out += clipped("plan-diff-line plan-diff-del", "- " + where + row.before);
+    if (row && row.after != null) out += clipped("plan-diff-line plan-diff-add", "+ " + where + row.after);
+    return out;
+  }
+
   function opRow(entry) {
     const rows = Array.isArray(entry.diff) ? entry.diff : [];
     const body = rows.length
-      ? rows
-          .map(
-            (r) =>
-              clipped("plan-diff-line plan-diff-del", "- " + r.before) +
-              clipped("plan-diff-line plan-diff-add", "+ " + r.after)
-          )
-          .join("")
+      ? rows.map(diffRow).join("")
       : `<div class="plan-diff-none">${esc(T("plan.noDiff"))}</div>`;
     const opId = String(entry.op_id || "");
     const label = opLabel(entry);
