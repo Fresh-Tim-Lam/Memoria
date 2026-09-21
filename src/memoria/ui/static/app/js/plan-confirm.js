@@ -16,7 +16,9 @@
  *    apply 之后被改过的文件会被后端 `external_change` 拦下，不静默覆盖）。
  *
  * **卡片放在对话栏里**（与问答/工具调用同一条流）：渲染进 `#agent-messages` 成为一条聊天项，
- * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话（一张卡一条，追加不替换）。
+ * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话。
+ * **一份计划一张卡，状态在原地推进**：预览 → （点「应用」）→「已写入 …· 撤销这一批」→（点撤销）→
+ * 「已撤销」；确认之后**不再留一张还能点的旧卡**（否则会诱导重复应用）。新计划才追加新卡。
  * 对话栏不可用时（面板收起 / 没有对话栏）自动**回落成弹窗**，绝不出现"点了没反应"。
  *
  * **计划从哪来**（两条路，同一张卡）：
@@ -80,10 +82,38 @@
     keep.forEach(renderState);
   }
 
+  /** 按状态重画一张卡（切语言用；不带 `into` ⇒ 追加成新的一条，顺序由 `keep` 保证）。 */
   function renderState(state) {
     if (state.kind === "preview") renderPreview(state.plan, state.preview);
     else if (state.kind === "problems") showPreviewProblems(state.plan, state.preview);
     else showResult(state.res, state.plan);
+  }
+
+  /**
+   * 把某张卡**原地换内容**（一张卡一个计划：预览 → 已写入 → 已撤销）：位置留在对话里，
+   * 但旧的"应用"按钮随之消失（避免同一批被重复点；`base_versions` 也会拦，但界面不该留坑）。
+   */
+  function renderInto(el, inner, state) {
+    const index = cards.indexOf(el);
+    if (index >= 0) states[index] = state;
+    el.innerHTML = `<span class="-agent-msg-role">${esc(T("plan.role"))}</span>${inner}`;
+    bind(el, null);
+    el.__plan = state.plan || null;
+    el.__preview = state.preview || null;
+    el.__applyResult = state.res || null;
+    const box = chatBox();
+    if (box && el.parentElement === box) box.scrollTop = box.scrollHeight;
+    return el;
+  }
+
+  /** 卡片内容的统一出口：`into` 给了就原地换，否则追加成新的一条。 */
+  function place(inner, state, into) {
+    if (into) return renderInto(into, inner, state);
+    const el = mount(inner, state);
+    el.__plan = state.plan || null;
+    el.__preview = state.preview || null;
+    el.__applyResult = state.res || null;
+    return el;
   }
 
   /** 有界等待"当前编辑/预览同步收敛"；返回 false 表示仍在编辑（此时**不写**）。 */
@@ -206,11 +236,12 @@
     };
     if (backdrop) backdrop.addEventListener("click", close);
     on("discard", () => removeCard(root));
-    on("repreview", () => root.__plan && open(root.__plan));
+    on("repreview", () => root.__plan && open(root.__plan, { into: root }));
     on("undo", async () => {
       const btn = root.querySelector('[data-act="undo"]');
       if (btn) btn.disabled = true;
-      showResult(await doUndo(root.__applyResult || {}, root.__plan || null));
+      const undone = await doUndo(root.__applyResult || {}, root.__plan || null);
+      showResult(undone, root.__plan || null, root); // 原地换成「已撤销」
     });
     on("apply", async () => {
       const plan = root.__plan;
@@ -226,7 +257,7 @@
       }
       const res = await doApply(plan, preview, checked);
       if (res && res.status === "ok") refreshOpenDoc(res.files);
-      showResult(res);
+      showResult(res, plan, root); // 原地换成「已写入 …」：旧的应用按钮随之消失，不会重复点
     });
     const cbAll = Array.from(root.querySelectorAll('input[type="checkbox"][data-op-id]'));
     if (cbAll.length) {
@@ -241,23 +272,8 @@
     }
   }
 
-  /** 预览失败 / 计划非法：只展示，**没有任何写**（后端在这一步之前不会建备份）。 */
-  function showPreviewProblems(plan, preview) {
-    const el = mount(
-      `<div class="plan-summary">${esc(T("plan.rejected"))}</div>` +
-        listBlock("plan-errors", T("plan.errorsTitle"), (preview && preview.errors) || []) +
-        listBlock("plan-warnings", T("plan.warningsTitle"), (preview && preview.warnings) || []) +
-        buttons([
-          { act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") },
-          { act: "discard", label: T("plan.discard") },
-        ]),
-      { kind: "problems", plan: plan, preview: preview }
-    );
-    el.__plan = plan;
-    return el;
-  }
-
-  function showResult(res, plan) {
+  /** 结果内容：已写入 / 已撤销 / 失败（含 `stale_write` 时的「重新预览」明路）。 */
+  function resultInner(res, plan) {
     const r = res || { status: "error", code: "unknown" };
     const ok = r.status === "ok";
     const undone = ok && r.undone;
@@ -266,22 +282,41 @@
         ? T("plan.undone")
         : T("plan.done", { n: (r.applied || []).length, txid: r.txid || "" })
       : T("plan.failed") + "：" + (r.message || r.code || "");
-    const el = mount(
+    return (
       `<div class="plan-summary" title="${esc(head)}">${esc(head)}</div>` +
-        (r.rolled_back ? `<div class="plan-note">${esc(T("plan.rollback"))}</div>` : "") +
-        listBlock("plan-errors", T("plan.errorsTitle"), r.errors) +
-        listBlock("plan-warnings", T("plan.warningsTitle"), r.warnings) +
-        buttons(
-          (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : [])
-            // 盘上变了（`stale_write`）⇒ 给一条明路：按**当前**磁盘内容重新 dry-run（§9 规则 ①）
-            .concat(r.code === "stale_write" && plan ? [{ act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") }] : [])
-            .concat([{ act: "discard", label: T("plan.close") }])
-        ),
-      { kind: "result", plan: plan || null, res: r }
+      (r.rolled_back ? `<div class="plan-note">${esc(T("plan.rollback"))}</div>` : "") +
+      listBlock("plan-errors", T("plan.errorsTitle"), r.errors) +
+      listBlock("plan-warnings", T("plan.warningsTitle"), r.warnings) +
+      buttons(
+        (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : [])
+          // 盘上变了（`stale_write`）⇒ 给一条明路：按**当前**磁盘内容重新 dry-run（§9 规则 ①）
+          .concat(
+            r.code === "stale_write" && plan
+              ? [{ act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") }]
+              : []
+          )
+          .concat([{ act: "discard", label: T("plan.close") }])
+      )
     );
-    el.__plan = plan || null;
-    el.__applyResult = r;
-    return el;
+  }
+
+  /** 预览失败 / 计划非法：只展示，**没有任何写**（后端在这一步之前不会建备份）。 */
+  function showPreviewProblems(plan, preview, into) {
+    return place(
+      `<div class="plan-summary">${esc(T("plan.rejected"))}</div>` +
+        listBlock("plan-errors", T("plan.errorsTitle"), (preview && preview.errors) || []) +
+        listBlock("plan-warnings", T("plan.warningsTitle"), (preview && preview.warnings) || []) +
+        buttons([
+          { act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") },
+          { act: "discard", label: T("plan.discard") },
+        ]),
+      { kind: "problems", plan: plan, preview: preview },
+      into
+    );
+  }
+
+  function showResult(res, plan, into) {
+    return place(resultInner(res, plan), { kind: "result", plan: plan || null, res: res || {} }, into);
   }
 
   function refreshOpenDoc(files) {
@@ -340,22 +375,22 @@
       .call("agent_plan_preview", plan, o.kbPath || null)
       .catch((e) => ({ status: "error", code: "rpc_failed", message: String(e) }));
     if (!preview || preview.status !== "ok" || !preview.previewed) {
-      showPreviewProblems(plan, preview || {});
+      showPreviewProblems(plan, preview || {}, o.into);
       return;
     }
-    renderPreview(plan, preview);
+    renderPreview(plan, preview, o.into);
   }
 
   /** 纯渲染（不打 RPC）：预览结果 → 卡片；也是切语言时那个"原地重绘"的目标。 */
-  function renderPreview(plan, preview) {
+  function renderPreview(plan, preview, into) {
     const files = preview.files || [];
     const total = files.reduce((n, f) => n + ((f.ops || []).length), 0);
     if (!total) {
-      showResult({ status: "error", code: "empty_plan", message: T("plan.empty") }, plan);
+      showResult({ status: "error", code: "empty_plan", message: T("plan.empty") }, plan, into);
       return;
     }
     const intent = String(preview.intent || "");
-    const el = mount(
+    place(
       `<div class="plan-summary" title="${esc(intent)}">${esc(T("plan.summary", { ops: total, files: files.length }))}</div>` +
         (intent ? clipped("plan-intent", intent) : "") +
         listBlock("plan-errors", T("plan.errorsTitle"), preview.errors) +
@@ -365,11 +400,9 @@
           { act: "apply", label: T("plan.apply", { n: total }), cls: "primary -btn--sm" },
           { act: "discard", label: T("plan.discard") },
         ]),
-      { kind: "preview", plan: plan, preview: preview }
+      { kind: "preview", plan: plan, preview: preview },
+      into
     );
-    el.__plan = plan;
-    el.__preview = preview;
-    return el;
   }
 
   /** 便捷入口：直接喂一段 plan JSON 文本（临时入口与调试用）。 */
