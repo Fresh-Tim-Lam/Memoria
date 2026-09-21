@@ -296,6 +296,8 @@ def test_plan_card_wiring_invariants() -> None:
         "function renderInto(el, inner, state)",  # 一份计划一张卡：确认后**原地**换成结果
         "showResult(res, plan, root)",  # apply/undo 都原地推进（不留能重复点的旧卡）
         "showResult(undone, root.__plan || null, root)",
+        "drainProposals(res.session_id)",  # 这批提议属于**这次对话** ⇒ 审计也落这里
+        "agent_plan_apply\", cropped, null, sessionId",  # 应用时带上会话 id（不是 ui-plan 伪会话）
         "openFile?.(cur, { skipNav: true })",  # 写后重开当前文件（不产生新的导航栈条目）
         'clipped("plan-file-path"',  # ④ 长文本"单行省略 + 悬浮看全"
         'clipped("plan-diff-line plan-diff-del"',
@@ -402,6 +404,8 @@ def test_propose_tool_text_forbids_claiming_a_write(kb: Path) -> None:
     """提示词纪律：工具结果必须写明「尚未写入」，并禁止模型谎称已写入。"""
     result = _invoke_propose(kb, _propose_args())
     assert "尚未写入" in result.content and "不要声称已经写入" in result.content
+    # 「分批」必须明说：应用卡片是用户手动点的，不会自动开启下一轮（真机撞过：agent 提完正文就停）
+    assert "回复「继续」" in result.content
 
 
 def test_plan_pending_rpc_drains_once(kb: Path, api: UIAPI) -> None:

@@ -255,7 +255,7 @@
         btn.disabled = true;
         btn.textContent = T("plan.applying");
       }
-      const res = await doApply(plan, preview, checked);
+      const res = await doApply(plan, preview, checked, root.__session || null);
       if (res && res.status === "ok") refreshOpenDoc(res.files);
       showResult(res, plan, root); // 原地换成「已写入 …」：旧的应用按钮随之消失，不会重复点
     });
@@ -348,7 +348,7 @@
     });
   }
 
-  async function doApply(plan, preview, checked) {
+  async function doApply(plan, preview, checked, sessionId) {
     // 勾选 = **编译前**的选择：未勾的 op 从 plan.ops 去掉（后端仍然整批 all-or-nothing）
     const cropped = Object.assign({}, plan, { ops: (plan.ops || []).filter((op) => checked.has(String(op.op_id))) });
     // §9 规则 ②：人的当下操作最高 —— 编辑还没落盘就等一会儿，仍脏则**拒写**
@@ -358,7 +358,7 @@
     WR().setBusy?.(true); // 写期间人机保存 deferIfBusy 重新入队（§9）
     try {
       return await A()
-        .call("agent_plan_apply", cropped, null, null, preview.base_versions || null)
+        .call("agent_plan_apply", cropped, null, sessionId || null, preview.base_versions || null)
         .catch((e) => ({ status: "error", code: "rpc_failed", message: String(e) }));
     } finally {
       WR().setBusy?.(false);
@@ -375,10 +375,14 @@
       .call("agent_plan_preview", plan, o.kbPath || null)
       .catch((e) => ({ status: "error", code: "rpc_failed", message: String(e) }));
     if (!preview || preview.status !== "ok" || !preview.previewed) {
-      showPreviewProblems(plan, preview || {}, o.into);
+      const bad = showPreviewProblems(plan, preview || {}, o.into);
+      if (bad) bad.__session = o.sessionId || null;
       return;
     }
-    renderPreview(plan, preview, o.into);
+    const el = renderPreview(plan, preview, o.into);
+    // 这批是谁提的 ⇒ 应用时把**同一个会话 id** 带上：写入审计落在**那次对话**里，
+    // 而不是落到 `ui-plan` 伪会话（审计要能跟"谁提的、谁确认的"对上）。
+    if (el) el.__session = o.sessionId || null;
   }
 
   /** 纯渲染（不打 RPC）：预览结果 → 卡片；也是切语言时那个"原地重绘"的目标。 */
@@ -390,7 +394,7 @@
       return;
     }
     const intent = String(preview.intent || "");
-    place(
+    return place(
       `<div class="plan-summary" title="${esc(intent)}">${esc(T("plan.summary", { ops: total, files: files.length }))}</div>` +
         (intent ? clipped("plan-intent", intent) : "") +
         listBlock("plan-errors", T("plan.errorsTitle"), preview.errors) +
@@ -461,13 +465,16 @@
 
   // ── 智能体自己提出的计划（`propose_write` 工具）⇒ 直接落进对话栏 ──────────────────────
 
-  /** 取走后端排队的提议并逐张开卡（取走即清空；返回开了几张）。 */
-  async function drainProposals() {
+  /** 取走后端排队的提议并逐张开卡（取走即清空；返回开了几张）。
+   *  `sessionId` 由调用方（问答收尾那一次 poll）带进来 ⇒ 应用时写入审计落在**这次对话**里，
+   *  而不是落到 `ui-plan` 伪会话（审计要能跟"谁提的、谁确认的"对上）。 */
+  async function drainProposals(sessionId) {
     const res = await A()
       .call("agent_plan_pending", null)
       .catch(() => null);
     const plans = (res && res.status === "ok" && res.plans) || [];
-    plans.forEach((plan) => open(plan));
+    const sid = sessionId || null;
+    plans.forEach((plan) => open(plan, { sessionId: sid }));
     return plans.length;
   }
 
@@ -486,7 +493,9 @@
       const pending = inner.apply(this, arguments);
       if (fn !== "agent_ask_poll" || !pending || typeof pending.then !== "function") return pending;
       return pending.then((res) => {
-        if (res && (res.status === "done" || res.status === "error")) drainProposals();
+        if (res && (res.status === "done" || res.status === "error")) {
+          drainProposals(res.session_id); // 这批提议属于**这次对话** ⇒ 审计也落这里
+        }
         return res;
       });
     };
