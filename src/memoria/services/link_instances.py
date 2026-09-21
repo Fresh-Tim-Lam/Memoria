@@ -394,3 +394,26 @@ def is_line_attached(link: dict | None, line: int, body: str, lines: list[str]) 
         if m["line"] == line and not m.get("excluded"):
             return m.get("wrapped") or True
     return False
+
+
+def merge_pinned_spans(
+    body: str, anchor: str, selected_spans: dict | None, line_spans: dict
+) -> dict:
+    """把调用方给的**精确列 span**（`{line: (start0, end0)}`，0 基行内偏移）并进 `line_spans`。
+
+    **为什么需要它**：`apply_link_instances()` 只收 `selected_lines`（行号），同一行里锚文本
+    出现多处时，包哪一处由 `line_matched_spans()` 的"同键后写覆盖"决定 ⇒ 调用方无法指定。
+    给了 `selected_spans` 就能精确指定（plan 的 `occurrences[].col` 走这条）。
+
+    约定：给的 span 必须与锚文本**逐字相符**，不符即抛 `ValueError`（**可见报错**）——
+    绝不猜、也不悄悄退回"按行取值"。返回并入后的 `line_spans`（原对象）。
+    """
+    rows = body.split("\n")
+    for raw_line, span in (selected_spans or {}).items():
+        line_no = int(raw_line)
+        start, end = int(span[0]), int(span[1])
+        row = rows[line_no - 1] if 0 < line_no <= len(rows) else ""
+        if not row or start < 0 or end <= start or row[start:end] != anchor:
+            raise ValueError(f"指定位置与锚文本不符：L{line_no}C{start + 1}")
+        line_spans[line_no] = (start, "", end)
+    return line_spans

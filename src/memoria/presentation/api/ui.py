@@ -575,8 +575,7 @@ class UIAPI:
         pool_ids: list[str] | None = None,
         search_options: dict | None = None,
         target_edges: dict | None = None,
-        relevance: float | None = None,
-        selected_spans: dict | None = None,
+        relevance: float | None = None, selected_spans: dict | None = None,
     ) -> dict:
         try:
             return self._svc.apply_link_instances(
@@ -592,8 +591,7 @@ class UIAPI:
                 old_anchor_text=old_anchor_text or None,
                 occurrence=occurrence,
                 pool_ids=pool_ids,
-                search_options=search_options,
-                selected_spans=selected_spans,
+                search_options=search_options, selected_spans=selected_spans,
             )
         except (RuntimeError, FileNotFoundError, ValueError) as e:
             return {"status": "error", "message": str(e)}

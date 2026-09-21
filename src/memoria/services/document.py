@@ -30,7 +30,7 @@ from memoria.services.link_instances import (
     add_excluded_lines,
     audit_link_consistency,
     build_preview_body,
-    migrate_link_instances,
+    merge_pinned_spans, migrate_link_instances,  # 同行：保住零行漂移（见 docs-management §4.2）
     scan_link_text_matches,
     sync_instances_from_selection,
     unwrap_lines,
@@ -2496,8 +2496,7 @@ class DocumentService:
         anchor_text: str,
         target_ids: list[str],
         selected_lines: list[int],
-        *,
-        selected_spans: dict | None = None,
+        *, selected_spans: dict | None = None,
         old_anchor_text: str | None = None,
         display_text: str | None = None,
         edge_type: str | None = None,
@@ -2608,25 +2607,9 @@ class DocumentService:
             for ln in to_wrap
             if ln in match_by_line and not match_by_line[ln].get("wrapped")
         )
-        # 调用方可给**精确列 span**（`selected_spans: {line: (start0, end0)}`，0 基行内偏移）：
-        # 同一行里锚文本出现多处时，这是**唯一**能指定"包哪一处"的手段（只给行号时按行取值，
-        # 同行多处的取舍由 `line_matched_spans()` 的后写覆盖决定）。给了 span 就必须与锚文本
-        # **逐字相符** —— 不符即拒（可见报错），绝不猜、也不悄悄退回按行取值。
-        if selected_spans:
-            _rows = body.split("\n")
-            for _ln, _span in selected_spans.items():
-                _line_no = int(_ln)
-                _start, _end = int(_span[0]), int(_span[1])
-                _row = _rows[_line_no - 1] if 0 < _line_no <= len(_rows) else ""
-                if not _row or _start < 0 or _end <= _start or _row[_start:_end] != anchor_text:
-                    return {
-                        "status": "error",
-                        "message": f"指定位置与锚文本不符：L{_line_no}C{_start + 1}",
-                    }
-                line_spans[_line_no] = (_start, "", _end)
+        # 精确列 span（`selected_spans`）由 `merge_pinned_spans()` 并入；不符锚文本即抛 ValueError
         body, wrap_count = wrap_plain_on_lines(
-            body, anchor_text, to_wrap, line_spans=line_spans
-        )
+            body, anchor_text, to_wrap, line_spans=merge_pinned_spans(body, anchor_text, selected_spans, line_spans))
         if need_wrap > 0 and wrap_count < need_wrap:
             return {
                 "status": "error",

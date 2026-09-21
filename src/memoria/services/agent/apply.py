@@ -333,7 +333,11 @@ def apply_plan(
             handler = PRIMITIVES.get(primitive)
             if handler is None:  # 白名单之外的落点不存在（防御未来误加）
                 raise _ApplyError(call, {"status": "error", "message": f"未登记的原语：{primitive}"})
-            result = handler(service, call["args"])
+            try:
+                result = handler(service, call["args"])
+            except (ValueError, RuntimeError) as e:
+                # 原语的"拒绝"也可以**抛**而不是返回错误字典（如精确 span 与锚文本不符）⇒ 同样整批回滚
+                raise _ApplyError(call, {"status": "error", "message": str(e)}) from e
             if not isinstance(result, Mapping) or result.get("status") != "ok":
                 raise _ApplyError(call, result if isinstance(result, Mapping) else {"message": str(result)})
             applied.append({"op_id": call["op_id"], "primitive": primitive, "status": "ok"})
