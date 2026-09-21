@@ -145,11 +145,41 @@ def test_apply_attach_links_wraps_and_is_idempotent(kb: Path, service: DocumentS
     assert "[[[[" not in body2
 
 
-def test_attach_links_is_line_granular(kb: Path, service: DocumentService) -> None:
-    """**行粒度限制（如实钉住）**：`apply_link_instances()` 只收 `selected_lines`（**没有列**），
-    故同一行有多处出现时只能包裹其中一处（由 canonical 链路选定）—— 本用例把"只包一处、
-    且正文完好"钉死；**设计稿的 `occurrences[].matched_text` 在 M3a 内落不到列级**
-    （要列级得改原语签名，属后续批次，不在"唯一写者/不改原语"的约束内做）。
+def test_attach_links_col_precision(kb: Path, service: DocumentService) -> None:
+    """**列级精度**：`occurrences[].col`（1 起）能指定同一行里的**哪一处**被包裹。
+
+    第 3 行有两个「注意力机制」：C1 与 C10 —— 这正是"只给行号"区分不了的那种情况。
+    """
+    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
+    first = apply_plan(
+        str(kb),
+        _plan(_attach(occurrences=[{"line": 3, "col": 1}]), txid="20260920T021101Z-08"),
+        session_id=SESSION,
+        service=service,
+    )
+    assert first["status"] == "ok", first
+    body = (kb / "notes" / "a.md").read_text(encoding="utf-8")
+    assert "[[注意力机制]]是核心。注意力机制也出现在别处。" in body  # 包的是**第一处**
+
+
+def test_attach_links_col_precision_second_occurrence(kb: Path, service: DocumentService) -> None:
+    """同一行改钉**第二处**（C10）⇒ 包的就是第二处（证明列号真的生效，不是碰巧）。"""
+    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
+    res = apply_plan(
+        str(kb),
+        _plan(_attach(occurrences=[{"line": 3, "col": 10}]), txid="20260920T021101Z-08"),
+        session_id=SESSION,
+        service=service,
+    )
+    assert res["status"] == "ok", res
+    body = (kb / "notes" / "a.md").read_text(encoding="utf-8")
+    assert "注意力机制是核心。[[注意力机制]]也出现在别处。" in body
+
+
+def test_attach_links_without_col_falls_back_to_line_granularity(kb: Path, service: DocumentService) -> None:
+    """**不给 col** ⇒ 维持旧行为（按行取值、只包一处），且正文逐字完好。
+
+    这条是"人机 UI 旧路径"的等价口径：`apply_link_instances()` 不传 `selected_spans` 时一字未变。
     """
     assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
     res = apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), session_id=SESSION, service=service)

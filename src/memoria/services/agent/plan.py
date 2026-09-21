@@ -189,8 +189,27 @@ def _validate_upsert_kp(kb_path: str, op: Mapping, lines: Sequence[str], service
     }
 
 
+def _count_plain_occurrences(row: str, anchor: str) -> int:
+    """该行里锚文本的**可挂接处数**（用与包裹同一个原子函数枚举，口径一致）。"""
+    count = 0
+    offset = 0
+    while offset <= len(row):
+        idx = find_plain_text_in_line(row[offset:], anchor)
+        if idx < 0:
+            break
+        count += 1
+        offset += idx + len(anchor)
+    return count
+
+
 def _validate_attach_links(
-    kb_path: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict], pending_ids: set[str]
+    kb_path: str,
+    op: Mapping,
+    lines: Sequence[str],
+    op_id: str,
+    errors: list[dict],
+    warnings: list[dict],
+    pending_ids: set[str],
 ) -> dict:
     anchor = str(op.get("anchor_text") or "").strip()
     if not anchor:
@@ -229,6 +248,7 @@ def _validate_attach_links(
     wrapped_lines = [idx for idx, row in enumerate(lines, start=1) if "[[" + anchor + "]]" in row]
     matched_lines = set(plain_lines) | set(wrapped_lines)
     occurrences = op.get("occurrences")
+    pinned_spans: dict[int, tuple[int, int]] = {}
     if occurrences is None:
         chosen = sorted(plain_lines)
         if not chosen:
@@ -251,13 +271,44 @@ def _validate_attach_links(
                 # 故 plan 声明的 matched_text 必须与锚文本逐字相同（子串/近似一律拒）。
                 errors.append(_err(op_id, "occurrence_mismatch", f"第 {line} 行匹配文本不符：plan={expected!r} 实际={anchor!r}"))
                 continue
+            raw_col = row.get("col")
+            if raw_col is not None:
+                # **列级指定**（1 起列号）：同一行里锚文本出现多处时，只有它能说清"包哪一处"。
+                # 这里就核对"该列起恰好是锚文本"——不符即拒（后端还会再核一次，双保险）。
+                try:
+                    col = int(raw_col)
+                except (TypeError, ValueError):
+                    errors.append(_err(op_id, "missing_field", "occurrences[].col 必须是整数（1 起列号）"))
+                    continue
+                start0 = col - 1
+                text = lines[line - 1]
+                if start0 < 0 or text[start0 : start0 + len(anchor)] != anchor:
+                    errors.append(_err(op_id, "col_mismatch", f"第 {line} 行 C{col} 处不是锚文本：{anchor}"))
+                    continue
+                pinned_spans[line] = (start0, start0 + len(anchor))
             chosen.append(line)
+    # 同行多处且**没给列** ⇒ 只能按行取值（哪一处由后端决定）：如实警告，不假装精确
+    ambiguous = sorted(
+        ln
+        for ln in set(chosen)
+        if ln not in pinned_spans and _count_plain_occurrences(lines[ln - 1], anchor) > 1
+    )
+    if ambiguous:
+        warnings.append(
+            _warn(
+                op_id,
+                "ambiguous_occurrence",
+                f"这些行里锚文本出现多处且未给 col（{ambiguous}）⇒ 包裹哪一处由后端按行取值决定；"
+                "要精确到某一处请给 occurrences[].col（1 起列号）",
+            )
+        )
     return {
         "action": "wrap" if chosen else "noop",
         "anchor_text": anchor,
         "targets": targets,
         "edge_type": edge_type or None,
         "lines": sorted(chosen),
+        "pinned_spans": pinned_spans,
         "candidates": sorted(plain_lines),
     }
 
@@ -332,7 +383,7 @@ def _validate_op(
     if verb == OP_UPSERT_KP:
         detail = _validate_upsert_kp(kb_path, data, lines, service, op_id, errors)
     elif verb == OP_ATTACH_LINKS:
-        detail = _validate_attach_links(kb_path, data, lines, op_id, errors, pending_ids)
+        detail = _validate_attach_links(kb_path, data, lines, op_id, errors, warnings, pending_ids)
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     else:
@@ -404,9 +455,16 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             lines = _body_lines(kb_path, rel)
             anchor = str(parsed.get("anchor_text") or "")
             chosen = [int(x) for x in _as_list(parsed.get("lines"))]
-            # 不传 `line_spans`：包裹位置由 `wrap_plain_on_lines()` 内部用 `find_plain_text_in_line()`
-            # 自己定位 —— 与校验阶段的候选行判定**同一个原子函数**，构造上不可能漂移。
-            new_body, wrapped = wrap_plain_on_lines("\n".join(lines), anchor, chosen)
+            # plan 给了 `occurrences[].col` ⇒ 用**钉住的 span**试算（与 apply 阶段给后端的
+            # `selected_spans` 同一份数据 ⇒ 预览与落地不可能漂移）；没给就交给包裹函数自己定位
+            # （`find_plain_text_in_line()`，与校验阶段的候选行判定同一个原子函数）。
+            pinned = {
+                int(k): (int(v[0]), "", int(v[1]))
+                for k, v in _as_dict(parsed.get("pinned_spans")).items()
+            }
+            new_body, wrapped = wrap_plain_on_lines(
+                "\n".join(lines), anchor, chosen, line_spans=pinned or None
+            )
             new_lines = new_body.split("\n")
             changed = [i + 1 for i in range(min(len(lines), len(new_lines))) if lines[i] != new_lines[i]]
             entry["diff_available"] = True

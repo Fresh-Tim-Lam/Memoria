@@ -106,6 +106,8 @@ def _call_apply_link_instances(service: Any, args: Mapping) -> dict:
         edge_type=args.get("edge_type"),
         relevance=args.get("relevance"),
         source_id=args.get("source_id"),
+        # 同行多处时**唯一**能指定"包哪一处"的手段（plan 给了 `occurrences[].col` 才有）
+        selected_spans=args.get("selected_spans") or None,
     )
 
 
@@ -194,6 +196,7 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                         "anchor_text": parsed.get("anchor_text"),
                         "target_ids": parsed.get("targets") or [],
                         "selected_lines": parsed.get("lines") or [],
+                        "selected_spans": parsed.get("pinned_spans") or None,
                         "display_text": parsed.get("display_text"),
                         "edge_type": parsed.get("edge_type"),
                         "relevance": parsed.get("relevance"),

@@ -217,6 +217,34 @@ def test_validate_plan_lets_later_ops_see_earlier_new_ids(kb: Path, service: Doc
     assert "target_not_found" in _codes(bad)
 
 
+def test_validate_plan_col_pins_one_occurrence(kb: Path, service: DocumentService) -> None:
+    """**列级指定**（`occurrences[].col`，1 起）：同行多处时能精确钉住某一处。
+
+    本 fixture 第 3 行是 `注意力机制是核心。注意力机制也出现在别处。` ⇒ C1 与 C10 各是一处。
+    """
+    first = validate_plan(str(kb), _plan(_attach(occurrences=[{"line": 3, "col": 1}])), service=service)
+    assert first["status"] == "ok", first["errors"]
+    assert first["ops"][0]["pinned_spans"] == {3: (0, 5)}
+
+    second = validate_plan(str(kb), _plan(_attach(occurrences=[{"line": 3, "col": 10}])), service=service)
+    assert second["status"] == "ok", second["errors"]
+    assert second["ops"][0]["pinned_spans"] == {3: (9, 14)}
+
+    # 列号对不上锚文本 ⇒ 拒（不猜、不悄悄退回按行取值）
+    wrong = validate_plan(str(kb), _plan(_attach(occurrences=[{"line": 3, "col": 3}])), service=service)
+    assert "col_mismatch" in _codes(wrong)
+
+
+def test_validate_plan_warns_when_occurrence_is_ambiguous(kb: Path, service: DocumentService) -> None:
+    """同行多处**且没给 col** ⇒ 给 `ambiguous_occurrence` 警告（按行取值，哪一处由后端决定）。"""
+    loose = validate_plan(str(kb), _plan(_attach(occurrences=[{"line": 3}])), service=service)
+    assert loose["status"] == "ok"
+    assert any(w["code"] == "ambiguous_occurrence" for w in loose["warnings"])
+
+    pinned = validate_plan(str(kb), _plan(_attach(occurrences=[{"line": 3, "col": 10}])), service=service)
+    assert not any(w["code"] == "ambiguous_occurrence" for w in pinned["warnings"])
+
+
 def test_validate_plan_link_targets_must_be_resolvable(kb: Path, service: DocumentService) -> None:
     """⑦ 目标**必须可解析**：唯一命中放行；多义/不存在一律拒（带各自的 code）。"""
     ok = validate_plan(str(kb), _plan(_attach()), service=service)

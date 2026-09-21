@@ -576,6 +576,7 @@ class UIAPI:
         search_options: dict | None = None,
         target_edges: dict | None = None,
         relevance: float | None = None,
+        selected_spans: dict | None = None,
     ) -> dict:
         try:
             return self._svc.apply_link_instances(
@@ -592,6 +593,7 @@ class UIAPI:
                 occurrence=occurrence,
                 pool_ids=pool_ids,
                 search_options=search_options,
+                selected_spans=selected_spans,
             )
         except (RuntimeError, FileNotFoundError, ValueError) as e:
             return {"status": "error", "message": str(e)}
