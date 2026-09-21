@@ -1385,13 +1385,16 @@
   // ===== 2026-09-20 追加：计划确认卡（M3a ④，`js/plan-confirm.js`）=====
   // 口径见 docs/design/agent-plugin-design.md §9：先看（dry-run 逐行 diff）后写、逐条勾选、
   // 盘上版本一变即整批拒、写期间人机保存让路、写完可撤销。
+  // 卡片挂在**对话栏**里（`#agent-messages` 一条聊天项），对话栏不可用时回落弹窗。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"], {
     plan: {
+      role: "计划确认",
       title: "计划确认",
       summary: "共 {ops} 项操作、影响 {files} 个文件",
       apply: "应用选中的 {n} 项",
       applying: "正在写入…",
       needSelect: "至少勾选一项",
+      discard: "放弃",
       dirty: "当前文件有未保存的修改，已拒绝写入；请等保存完成后再试",
       doneTitle: "已写入",
       done: "已完成 {n} 项操作（txid {txid}）",
@@ -1402,11 +1405,20 @@
       undo: "撤销这一批",
       undoFail: "撤销失败",
       rollback: "已整批回滚（磁盘回到写入前状态）",
+      rejected: "计划未通过校验，未写盘",
       rePreview: "重新预览",
+      rePreviewTitle: "按磁盘当前内容重新校验并试算（不写盘）",
       close: "关闭",
-      errorsTitle: "计划被拒（未写盘）",
+      errorsTitle: "错误",
+      warningsTitle: "提示",
       noDiff: "（无正文行变化）",
       empty: "计划里没有可执行的操作",
+      badJson: "不是合法的 JSON",
+      entry: "计划",
+      entryTitle: "从计划 JSON 写入知识库：先预览、逐条勾选、可撤销（智能体能自己出计划后会直接出现在对话里）",
+      pasteTitle: "粘贴计划 JSON",
+      pasteHint: "工具面接入前的临时入口：把模型给出的计划 JSON 贴进来，先 dry-run 预览，确认后才会写盘。",
+      preview: "预览",
       op: {
         upsert_kp: "新建 / 更新知识点",
         attach_links: "挂接跳转（包裹正文）",

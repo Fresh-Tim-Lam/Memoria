@@ -1477,14 +1477,17 @@
   // ===== 2026-09-20 appended: plan confirmation card (M3a ④, `js/plan-confirm.js`) =====
   // Policy: docs/design/agent-plugin-design.md §9 — look first (dry-run line diff), write after the
   // human ticks the items; any disk change since the preview rejects the whole batch; human saves are
-  // deferred while writing; the batch stays undoable.
+  // deferred while writing; the batch stays undoable. The card lives **in the chat pane**
+  // (`#agent-messages` item) and falls back to a modal when the pane is unavailable.
   Object.assign(g.MEMORIA_LOCALES["en"], {
     plan: {
+      role: "Plan confirmation",
       title: "Confirm plan",
       summary: "{ops} operation(s) across {files} file(s)",
       apply: "Apply {n} selected",
       applying: "Writing…",
       needSelect: "Select at least one",
+      discard: "Discard",
       dirty: "The current file has unsaved edits; write refused — wait for the save to finish and retry",
       doneTitle: "Applied",
       done: "Applied {n} operation(s) (txid {txid})",
@@ -1495,11 +1498,20 @@
       undo: "Undo this batch",
       undoFail: "Undo failed",
       rollback: "Whole batch rolled back (disk restored to its pre-write state)",
+      rejected: "The plan failed validation; nothing was written",
       rePreview: "Preview again",
+      rePreviewTitle: "Re-validate and re-simulate against what is on disk now (no write)",
       close: "Close",
-      errorsTitle: "Plan rejected (nothing written)",
+      errorsTitle: "Errors",
+      warningsTitle: "Warnings",
       noDiff: "(no body line changed)",
       empty: "The plan contains no executable operation",
+      badJson: "Not valid JSON",
+      entry: "Plan",
+      entryTitle: "Write from a plan JSON: preview first, tick the items, undoable afterwards (once the agent can emit plans itself, cards appear right in the conversation)",
+      pasteTitle: "Paste plan JSON",
+      pasteHint: "Temporary entry until the tool surface lands: paste the plan JSON the model produced; it is only previewed (dry-run) and written after you confirm.",
+      preview: "Preview",
       op: {
         upsert_kp: "Create / update knowledge point",
         attach_links: "Attach links (wrap text)",

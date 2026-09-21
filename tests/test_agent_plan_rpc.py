@@ -34,26 +34,33 @@ _LOCALES = [_APP / "i18n" / "zh-CN.js", _APP / "i18n" / "en.js"]
 
 #: 确认卡用到的全部 i18n 键（中英必须成对，缺一个界面就会漏出裸 key）
 _PLAN_KEYS = (
-    "title",
+    "role",
     "summary",
     "apply",
     "applying",
     "needSelect",
+    "discard",
     "dirty",
-    "doneTitle",
     "done",
-    "failedTitle",
     "failed",
-    "undoneTitle",
     "undone",
     "undo",
     "undoFail",
     "rollback",
+    "rejected",
     "rePreview",
+    "rePreviewTitle",
     "close",
     "errorsTitle",
+    "warningsTitle",
     "noDiff",
     "empty",
+    "badJson",
+    "entry",
+    "entryTitle",
+    "pasteTitle",
+    "pasteHint",
+    "preview",
 )
 
 
@@ -259,10 +266,18 @@ def test_plan_card_is_loaded_by_index_html() -> None:
 
 
 def test_plan_card_wiring_invariants() -> None:
-    """卡片必须同时满足：dry-run 先行、勾选在编译前、忙位包住 apply、脏编辑拒写、写完可撤销。"""
+    """卡片必须同时满足：**挂在对话栏里**、dry-run 先行、勾选在编译前、忙位包住 apply、脏编辑拒写、可撤销。
+
+    "挂在对话栏里"= 渲染进 `#agent-messages` 的一条聊天项（`.-agent-msg`），对话栏不可用才回落弹窗；
+    "长文本悬浮看全"= 被截断的文本都带 `title`（`cursor: help` 由 CSS 给）。
+    """
     src = _PLAN_JS.read_text(encoding="utf-8")
     for needle in (
-        '"agent_plan_preview"',  # ① 先预览（零落盘）
+        'document.getElementById("agent-messages")',  # ① 卡片落在对话栏，不是盖住界面的弹窗
+        '"-agent-msg -agent-msg--assistant -agent-plan-msg"',
+        "box.scrollTop = box.scrollHeight",  # 与问答流同款：新卡片滚进视野
+        '"-modal-backdrop"',  # ② 对话栏不可用时的回落
+        '"agent_plan_preview"',  # ③ 先预览（零落盘）
         '"agent_plan_apply"',
         '"agent_plan_undo"',
         "preview.base_versions || null",  # §9 规则 ①：人看过的那一版原样回传
@@ -272,6 +287,12 @@ def test_plan_card_wiring_invariants() -> None:
         "__memoriaHasPendingEdits",  # 当前编辑未落盘 ⇒ 先等（有界）再拒写
         'code: "editing"',
         "openFile?.(cur, { skipNav: true })",  # 写后重开当前文件（不产生新的导航栈条目）
+        'clipped("plan-file-path"',  # ④ 长文本"单行省略 + 悬浮看全"
+        'clipped("plan-diff-line plan-diff-del"',
+        "title=\"${esc(full)}\"",
+        'actions.querySelector("#agent-plan-open")',  # ⑤ 对话栏输入区的入口按钮（幂等）
+        "global.MemoriaBridge?.onReady?.(",  # 门面就绪后才装入口（否则拿到裸 i18n key）
+        "global.MemoriaI18n?.addRefresh?.(",
     ):
         assert needle in src, f"plan-confirm.js 缺接线：{needle}"
 
@@ -285,3 +306,16 @@ def test_plan_card_keys_exist_in_every_locale(locale: Path) -> None:
         assert f"{key}:" in src, f"{locale.name} 缺 plan.{key}"
     for op in ("upsert_kp", "attach_links", "detach_links"):
         assert f"{op}:" in src, f"{locale.name} 缺 plan.op.{op}"
+
+
+def test_plan_card_css_truncates_with_a_tooltip() -> None:
+    """CSS 侧：被截断的那几类文本必须"单行 + 省略号 + 可悬浮"，且卡片在聊天气泡里不继承 `pre-wrap`。"""
+    css = (_APP / "css" / "app.css").read_text(encoding="utf-8")
+    for needle in (
+        ".-agent-plan-msg { white-space: normal;",
+        ".plan-file-path,",
+        "text-overflow: ellipsis;",
+        "cursor: help;",
+        ".plan-actions {",
+    ):
+        assert needle in css, f"app.css 缺计划卡样式：{needle}"

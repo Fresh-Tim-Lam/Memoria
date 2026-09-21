@@ -5713,10 +5713,10 @@ html *::-webkit-scrollbar-thumb:active {
 }
 
 /* ===== 2026-09-20 追加：计划确认卡（M3a ④，`js/plan-confirm.js`）========================
-   写路径上唯一的人机界面：dry-run 预览 + 人逐条勾选 + 整批 apply + 可撤销。
-   结构复用既有 `.-modal` 族（backdrop / box / header / body / footer），本块只给"计划专用"的
-   差异展示：`.-plan-file` 文件分组、`.-plan-op` 勾选行、`.-plan-diff-*` 行级 before/after。
-   末行字色按 `--danger` / 成功色区分增删（**只改颜色**，不引入新的边框/阴影语汇）。
+   **卡片就挂在对话栏里**（`#agent-messages` 的一条聊天项 `.-agent-plan-msg`，与问答/工具调用同流）；
+   对话栏不可用时由 JS 回落成弹窗（复用 `.-modal` 族），两处共用本块的 `.plan-*` 样式。
+   长文本一律"**单行省略 + 悬浮看全**"：`.plan-file-path` / `.plan-intent` / 差异行都带 `title`
+   （`cursor: help`），栏窄时截断但不丢信息。
    本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
 .plan-box { width: min(760px, 94vw); }
 .plan-box .-modal-body { max-height: 62vh; overflow: auto; }
@@ -5729,9 +5729,34 @@ html *::-webkit-scrollbar-thumb:active {
 .plan-file { margin-bottom: 0.75rem; }
 .plan-file-path { font-family: ui-monospace, monospace; color: var(--theme-color); margin-bottom: 0.25rem; }
 .plan-op { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9em; cursor: pointer; }
-.plan-op-id { color: var(--text-secondary); font-family: ui-monospace, monospace; font-size: 0.85em; }
+.plan-op-id { color: var(--text-secondary); font-family: ui-monospace, monospace; font-size: 0.85em; flex: 0 0 auto; }
 .plan-op-body { margin: 0.2rem 0 0.5rem 1.4rem; }
-.plan-diff { display: flex; flex-direction: column; font-family: ui-monospace, monospace; font-size: 0.85em; }
-.plan-diff-del { color: var(--error); white-space: pre-wrap; }
-.plan-diff-add { color: var(--theme-color); white-space: pre-wrap; }
+.plan-actions { display: flex; flex-wrap: wrap; gap: 0.375rem; margin-top: 0.5rem; }
+.plan-diff-del { color: var(--error); }
+.plan-diff-add { color: var(--theme-color); }
 .plan-diff-none { color: var(--text-secondary); font-size: 0.85em; }
+
+/* 卡片挂在对话栏里时（`.-agent-msg` 自带 `pre-wrap`）⇒ 卡片内部按块排版，别继承"逐字换行"；
+   左侧主题色细边把它与普通问答气泡区分开。 */
+.-agent-plan-msg { white-space: normal; border-left: 2px solid var(--theme-color); }
+/* "单行省略 + 悬浮看全"：这几类文本可能很长（路径 / 意图 / 操作名 / 正文行），
+   栏窄时截断但不丢信息（JS 在 `title` 里给全文，游标为 `help`）。 */
+.plan-intent,
+.plan-file-path,
+.plan-op-name,
+.plan-diff-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: help;
+}
+.plan-diff-line { font-family: ui-monospace, monospace; font-size: 0.85em; }
+/* 勾选行是 flex：省略号要生效必须允许收缩（`min-width: 0`），否则长操作名把行撑破 */
+.plan-op-name { flex: 1 1 auto; min-width: 0; }
+.plan-paste {
+    width: 100%;
+    min-height: 8rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.8rem;
+    resize: vertical;
+}

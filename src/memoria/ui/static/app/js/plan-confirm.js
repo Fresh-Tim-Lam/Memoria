@@ -15,7 +15,17 @@
  * 5. **可撤销**：成功后卡片给出 txid 与「撤销这一批」→ `agent_plan_undo`（pre-image 逐字节写回；
  *    apply 之后被改过的文件会被后端 `external_change` 拦下，不静默覆盖）。
  *
- * 只依赖应用门面（`window.MemoriaApp`）与写守卫（`window.MemoriaWriteGuard`），**不改 app.js**。
+ * **卡片放在对话栏里**（与问答/工具调用同一条流）：渲染进 `#agent-messages` 成为一条聊天项，
+ * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话。对话栏不可用时
+ * （面板收起 / 没有对话栏）自动**回落成弹窗**，绝不出现"点了没反应"。入口按钮也装在对话栏的
+ * 输入区（`. -agent-composer-actions` 里追加一个「计划」按钮），本模块**自带入口**（不改
+ * `app.js` / `agent-panel.js` / `index.html` ⇒ 既有行号锚点零漂移）。
+ *
+ * **长文本一律"单行省略 + 悬浮看全"**：文件名 / 操作名 / 差异行都带 `title`（`cursor: help`），
+ * 栏窄时截断但不丢信息。
+ *
+ * 依赖：应用门面 `window.MemoriaApp`（`call` / `T` / `esc` / `state` / `openFile`）与写守卫
+ * `window.MemoriaWriteGuard`（§9 的忙位）；两者缺席时按"不可用"降级，不抛异常。
  */
 (function (global) {
   const A = () => global.MemoriaApp || {};
@@ -27,17 +37,36 @@
   const IDLE_WAIT_MS = 3000;
   const IDLE_POLL_MS = 150;
 
-  let overlay = null; // 当前卡片（同一时刻只允许一张）
-
-  function close() {
-    if (overlay) {
-      overlay.remove();
-      overlay = null;
-    }
-  }
+  let card = null; // 当前卡片（对话栏里的一条聊天项，或回落时的弹窗）
+  let lastState = null; // 当前卡片的重绘状态（切语言时原地重绘，不再打 RPC）
 
   function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
+  }
+
+  /** 对话栏的消息容器；面板收起 / 没有对话栏 ⇒ `null`（调用方回落成弹窗）。 */
+  function chatBox() {
+    const box = document.getElementById("agent-messages");
+    if (!box || !box.isConnected) return null;
+    if (!box.clientHeight && !box.offsetParent) return null;
+    return box;
+  }
+
+  function close() {
+    if (card) {
+      card.remove();
+      card = null;
+    }
+    lastState = null;
+  }
+
+  /** 切语言时原地重绘当前卡片（纯前端重排，**不再打 RPC**）；没有卡片则什么都不做。 */
+  function redraw() {
+    const s = lastState;
+    if (!s || !card) return;
+    if (s.kind === "preview") renderPreview(s.plan, s.preview);
+    else if (s.kind === "problems") showPreviewProblems(s.plan, s.preview);
+    else showResult(s.res, s.plan);
   }
 
   /** 有界等待"当前编辑/预览同步收敛"；返回 false 表示仍在编辑（此时**不写**）。 */
@@ -58,20 +87,29 @@
     return text === key ? String(entry.op || "") : text;
   }
 
-  function opRow(opId, entry) {
+  /** 一行"被截断但有悬浮全文"的文本（栏窄时省略号，`title` 里给全）。 */
+  function clipped(className, text, extra) {
+    const full = String(text == null ? "" : text);
+    return `<div class="${className}" title="${esc(full)}"${extra || ""}>${esc(full)}</div>`;
+  }
+
+  function opRow(entry) {
     const rows = Array.isArray(entry.diff) ? entry.diff : [];
     const body = rows.length
       ? rows
           .map(
             (r) =>
-              `<div class="plan-diff"><span class="plan-diff-del">- ${esc(r.before)}</span>` +
-              `<span class="plan-diff-add">+ ${esc(r.after)}</span></div>`
+              clipped("plan-diff-line plan-diff-del", "- " + r.before) +
+              clipped("plan-diff-line plan-diff-add", "+ " + r.after)
           )
           .join("")
       : `<div class="plan-diff-none">${esc(T("plan.noDiff"))}</div>`;
+    const opId = String(entry.op_id || "");
+    const label = opLabel(entry);
     return (
-      `<label class="plan-op"><input type="checkbox" data-op-id="${esc(opId)}" checked>` +
-      `<span class="plan-op-name">${esc(opLabel(entry))}</span>` +
+      `<label class="plan-op" title="${esc(label + " · " + opId)}">` +
+      `<input type="checkbox" data-op-id="${esc(opId)}" checked>` +
+      `<span class="plan-op-name">${esc(label)}</span>` +
       `<span class="plan-op-id">${esc(opId)}</span></label>` +
       `<div class="plan-op-body">${body}</div>`
     );
@@ -80,89 +118,146 @@
   function fileBlocks(preview) {
     return (preview.files || [])
       .map((file) => {
-        const ops = (file.ops || []).map((entry) => opRow(entry.op_id, entry)).join("");
-        return `<div class="plan-file"><div class="plan-file-path">${esc(file.file)}</div>${ops}</div>`;
+        const ops = (file.ops || []).map(opRow).join("");
+        return `<div class="plan-file">${clipped("plan-file-path", file.file)}${ops}</div>`;
       })
       .join("");
   }
 
-  function errLines(errors) {
-    if (!errors || !errors.length) return "";
-    const items = errors
-      .map((e) => `<li>[${esc(e.op_id || "-")}] ${esc(e.message || e.code || "")}</li>`)
+  function listBlock(kind, title, rows) {
+    if (!rows || !rows.length) return "";
+    const items = rows
+      .map((row) => `<li title="${esc(row.message || row.code || "")}">[${esc(row.op_id || "-")}] ${esc(row.message || row.code || "")}</li>`)
       .join("");
-    return `<div class="plan-errors"><div class="plan-errors-title">${esc(T("plan.errorsTitle"))}</div><ul>${items}</ul></div>`;
+    return `<div class="${kind}"><div class="${kind}-title">${esc(title)}</div><ul>${items}</ul></div>`;
   }
 
-  function warnLines(warnings) {
-    if (!warnings || !warnings.length) return "";
-    const items = warnings
-      .map((w) => `<li>[${esc(w.op_id || "-")}] ${esc(w.message || w.code || "")}</li>`)
-      .join("");
-    return `<div class="plan-warnings"><ul>${items}</ul></div>`;
+  function buttons(items) {
+    return (
+      `<div class="plan-actions">` +
+      items
+        .map(
+          (it) =>
+            `<button type="button" class="-btn ${it.cls || "-btn--sm"}" data-act="${it.act}"` +
+            `${it.title ? ` title="${esc(it.title)}"` : ""}>${esc(it.label)}</button>`
+        )
+        .join("") +
+      `</div>`
+    );
   }
 
-  function mount(html) {
+  /**
+   * 把一段卡片内容挂到**对话栏**（成一条聊天项）；对话栏不可用时回落成弹窗。
+   * 返回可交互的根元素。
+   */
+  function mount(inner) {
     close();
-    overlay = document.createElement("div");
+    const box = chatBox();
+    if (box) {
+      const el = document.createElement("div");
+      el.className = "-agent-msg -agent-msg--assistant -agent-plan-msg";
+      el.innerHTML = `<span class="-agent-msg-role">${esc(T("plan.role"))}</span>${inner}`;
+      const empty = box.querySelector(".-agent-empty");
+      if (empty) empty.remove();
+      box.appendChild(el);
+      box.scrollTop = box.scrollHeight; // 与问答流同款：新内容滚进视野
+      card = el;
+      bind(el, null);
+      return el;
+    }
+    const overlay = document.createElement("div");
     overlay.className = "-modal";
-    overlay.innerHTML = html;
+    overlay.innerHTML =
+      `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">` +
+      `<div class="-modal-header" style="cursor:default"><span>${esc(T("plan.role"))}</span></div>` +
+      `<div class="-modal-body">${inner}</div></div>`;
     document.body.appendChild(overlay);
-    const box = overlay.querySelector(".-modal-box");
-    const cancel = overlay.querySelector('[data-act="cancel"]');
-    const backdrop = overlay.querySelector(".-modal-backdrop");
-    if (cancel) cancel.addEventListener("click", close);
+    card = overlay;
+    bind(overlay, overlay.querySelector(".-modal-backdrop"));
+    return overlay;
+  }
+
+  /** 绑定卡片里的按钮（`data-act`）；重绘后的新卡片要重新调用。 */
+  function bind(root, backdrop) {
+    const on = (act, handler) => {
+      const el = root.querySelector(`[data-act="${act}"]`);
+      if (el) el.addEventListener("click", handler);
+    };
     if (backdrop) backdrop.addEventListener("click", close);
-    return { box, overlay };
+    on("discard", () => close());
+    on("repreview", () => root.__plan && open(root.__plan));
+    on("undo", async () => {
+      const btn = root.querySelector('[data-act="undo"]');
+      if (btn) btn.disabled = true;
+      showResult(await doUndo(root.__applyResult || {}, root.__plan || null));
+    });
+    on("apply", async () => {
+      const plan = root.__plan;
+      const preview = root.__preview;
+      if (!plan || !preview) return;
+      const checked = new Set(
+        Array.from(root.querySelectorAll('input[type="checkbox"][data-op-id]:checked')).map((cb) => cb.dataset.opId)
+      );
+      const btn = root.querySelector('[data-act="apply"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = T("plan.applying");
+      }
+      const res = await doApply(plan, preview, checked);
+      if (res && res.status === "ok") refreshOpenDoc(res.files);
+      showResult(res);
+    });
+    const cbAll = Array.from(root.querySelectorAll('input[type="checkbox"][data-op-id]'));
+    if (cbAll.length) {
+      const applyBtn = root.querySelector('[data-act="apply"]');
+      const sync = () => {
+        const n = cbAll.filter((cb) => cb.checked).length;
+        applyBtn.textContent = n ? T("plan.apply", { n }) : T("plan.needSelect");
+        applyBtn.disabled = !n;
+      };
+      cbAll.forEach((cb) => cb.addEventListener("change", sync));
+      sync();
+    }
   }
 
   /** 预览失败 / 计划非法：只展示，**没有任何写**（后端在这一步之前不会建备份）。 */
   function showPreviewProblems(plan, preview) {
-    const { box } = mount(
-      `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">
-         <div class="-modal-header" style="cursor:default"><span>${esc(T("plan.title"))}</span></div>
-         <div class="-modal-body">${errLines(preview.errors)}${warnLines(preview.warnings)}</div>
-         <div class="-modal-footer -btn-bar"><span class="-modal-footer-spacer"></span>
-           <button type="button" class="-btn" data-act="cancel">${esc(T("common.cancel"))}</button>
-           <button type="button" class="-btn primary" data-act="repreview">${esc(T("plan.rePreview"))}</button>
-         </div>
-       </div>`
+    const el = mount(
+      `<div class="plan-summary">${esc(T("plan.rejected"))}</div>` +
+        listBlock("plan-errors", T("plan.errorsTitle"), (preview && preview.errors) || []) +
+        listBlock("plan-warnings", T("plan.warningsTitle"), (preview && preview.warnings) || []) +
+        buttons([
+          { act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") },
+          { act: "discard", label: T("plan.discard") },
+        ])
     );
-    const again = box.querySelector('[data-act="repreview"]');
-    if (again) again.addEventListener("click", () => open(plan));
+    el.__plan = plan;
+    lastState = { kind: "problems", plan: plan, preview: preview };
   }
 
-  function showResult(result, plan) {
-    const res = result || { status: "error", code: "unknown" };
-    const ok = res.status === "ok";
-    const undone = ok && res.undone;
-    const title = ok ? (undone ? T("plan.undoneTitle") : T("plan.doneTitle")) : T("plan.failedTitle");
+  function showResult(res, plan) {
+    const r = res || { status: "error", code: "unknown" };
+    const ok = r.status === "ok";
+    const undone = ok && r.undone;
     const head = ok
       ? undone
         ? T("plan.undone")
-        : T("plan.done", { n: (res.applied || []).length, txid: res.txid || "" })
-      : T("plan.failed") + "：" + (res.message || res.code || "");
-    const rollback = res.rolled_back ? `<div class="plan-note">${esc(T("plan.rollback"))}</div>` : "";
-    const { box } = mount(
-      `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">
-         <div class="-modal-header" style="cursor:default"><span>${esc(title)}</span></div>
-         <div class="-modal-body">
-           <div class="plan-summary">${esc(head)}</div>${rollback}
-           ${errLines(res.errors)}${warnLines(res.warnings)}
-         </div>
-         <div class="-modal-footer -btn-bar"><span class="-modal-footer-spacer"></span>
-           ${ok && !undone ? `<button type="button" class="-btn danger" data-act="undo">${esc(T("plan.undo"))}</button>` : ""}
-           <button type="button" class="-btn" data-act="cancel">${esc(T("plan.close"))}</button>
-         </div>
-       </div>`
+        : T("plan.done", { n: (r.applied || []).length, txid: r.txid || "" })
+      : T("plan.failed") + "：" + (r.message || r.code || "");
+    const el = mount(
+      `<div class="plan-summary" title="${esc(head)}">${esc(head)}</div>` +
+        (r.rolled_back ? `<div class="plan-note">${esc(T("plan.rollback"))}</div>` : "") +
+        listBlock("plan-errors", T("plan.errorsTitle"), r.errors) +
+        listBlock("plan-warnings", T("plan.warningsTitle"), r.warnings) +
+        buttons(
+          (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : []).concat([
+            { act: "discard", label: T("plan.close") },
+          ])
+        )
     );
-    const undo = box.querySelector('[data-act="undo"]');
-    if (undo) {
-      undo.addEventListener("click", async () => {
-        undo.disabled = true;
-        showResult(await doUndo(res, plan), plan);
-      });
-    }
+    el.__plan = plan || null;
+    el.__applyResult = r;
+    lastState = { kind: "result", plan: plan || null, res: r };
   }
 
   function refreshOpenDoc(files) {
@@ -189,7 +284,9 @@
         verified: res.verified,
       };
     }
-    return Object.assign({ status: "error", code: "undo_failed" }, res || {}, { message: (res && res.message) || T("plan.undoFail") });
+    return Object.assign({ status: "error", code: "undo_failed" }, res || {}, {
+      message: (res && res.message) || T("plan.undoFail"),
+    });
   }
 
   async function doApply(plan, preview, checked) {
@@ -222,57 +319,101 @@
       showPreviewProblems(plan, preview || {});
       return;
     }
+    renderPreview(plan, preview);
+  }
+
+  /** 纯渲染（不打 RPC）：预览结果 → 卡片；也是切语言时那个"原地重绘"的目标。 */
+  function renderPreview(plan, preview) {
     const files = preview.files || [];
     const total = files.reduce((n, f) => n + ((f.ops || []).length), 0);
     if (!total) {
       showResult({ status: "error", code: "empty_plan", message: T("plan.empty") }, plan);
       return;
     }
-    const { box } = mount(
-      `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">
-         <div class="-modal-header" style="cursor:default"><span>${esc(T("plan.title"))} · ${esc(preview.intent || "")}</span></div>
-         <div class="-modal-body">
-           <div class="plan-summary">${esc(T("plan.summary", { ops: total, files: files.length }))}</div>
-           ${errLines(preview.errors)}${warnLines(preview.warnings)}
-           <div class="plan-files">${fileBlocks(preview)}</div>
-         </div>
-         <div class="-modal-footer -btn-bar"><span class="-modal-footer-spacer"></span>
-           <button type="button" class="-btn" data-act="cancel">${esc(T("common.cancel"))}</button>
-           <button type="button" class="-btn primary" data-act="apply"></button>
-         </div>
-       </div>`
+    const intent = String(preview.intent || "");
+    const el = mount(
+      `<div class="plan-summary" title="${esc(intent)}">${esc(T("plan.summary", { ops: total, files: files.length }))}</div>` +
+        (intent ? clipped("plan-intent", intent) : "") +
+        listBlock("plan-errors", T("plan.errorsTitle"), preview.errors) +
+        listBlock("plan-warnings", T("plan.warningsTitle"), preview.warnings) +
+        `<div class="plan-files">${fileBlocks(preview)}</div>` +
+        buttons([
+          { act: "apply", label: T("plan.apply", { n: total }), cls: "primary -btn--sm" },
+          { act: "discard", label: T("plan.discard") },
+        ])
     );
-    const applyBtn = box.querySelector('[data-act="apply"]');
-    const syncBtn = () => {
-      const n = box.querySelectorAll('input[type="checkbox"][data-op-id]:checked').length;
-      applyBtn.textContent = n ? T("plan.apply", { n }) : T("plan.needSelect");
-      applyBtn.disabled = !n;
-    };
-    box.querySelectorAll('input[type="checkbox"][data-op-id]').forEach((cb) => cb.addEventListener("change", syncBtn));
-    syncBtn();
-    applyBtn.addEventListener("click", async () => {
-      const checked = new Set(
-        Array.from(box.querySelectorAll('input[type="checkbox"][data-op-id]:checked')).map((cb) => cb.dataset.opId)
-      );
-      applyBtn.disabled = true;
-      applyBtn.textContent = T("plan.applying");
-      const res = await doApply(plan, preview, checked);
-      if (res && res.status === "ok") refreshOpenDoc(res.files);
-      showResult(res || { status: "error" }, plan);
-    });
+    el.__plan = plan;
+    el.__preview = preview;
+    lastState = { kind: "preview", plan: plan, preview: preview };
   }
 
-  /** 便捷入口：直接喂一段 plan JSON 文本（调试/手工验证用）。 */
+  /** 便捷入口：直接喂一段 plan JSON 文本（临时入口与调试用）。 */
   function openFromText(text, opts) {
     let plan = null;
     try {
       plan = JSON.parse(text);
     } catch (e) {
-      showResult({ status: "error", code: "bad_json", message: String(e) }, null);
+      showResult({ status: "error", code: "bad_json", message: T("plan.badJson") + "：" + e.message });
       return;
     }
     open(plan, opts);
   }
 
-  global.MemoriaPlan = { open, openFromText, close, undo: doUndo };
+  // ── 对话栏里的入口按钮（工具面接入前的临时入口：粘贴 plan JSON → 预览 → 卡片）──────
+
+  function askForPlan() {
+    const overlay = document.createElement("div");
+    overlay.className = "-modal";
+    overlay.innerHTML =
+      `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">` +
+      `<div class="-modal-header" style="cursor:default"><span>${esc(T("plan.pasteTitle"))}</span></div>` +
+      `<div class="-modal-body"><div class="plan-note">${esc(T("plan.pasteHint"))}</div>` +
+      `<textarea class="plan-paste" spellcheck="false" rows="10" placeholder='{"v":1,"intent":"…","ops":[…]}'></textarea></div>` +
+      `<div class="-modal-footer -btn-bar"><span class="-modal-footer-spacer"></span>` +
+      `<button type="button" class="-btn" data-act="cancel">${esc(T("common.cancel"))}</button>` +
+      `<button type="button" class="-btn primary" data-act="ok">${esc(T("plan.preview"))}</button>` +
+      `</div></div>`;
+    document.body.appendChild(overlay);
+    const area = overlay.querySelector(".plan-paste");
+    const done = (go) => {
+      const text = area.value;
+      overlay.remove();
+      if (go) openFromText(text);
+    };
+    overlay.querySelector(".-modal-backdrop").addEventListener("click", () => done(false));
+    overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => done(false));
+    overlay.querySelector('[data-act="ok"]').addEventListener("click", () => done(true));
+    if (area) area.focus();
+  }
+
+  /** 在对话栏输入区装一个「计划」入口（幂等：已装过就复用）。 */
+  function mountEntry() {
+    const actions = document.querySelector(".-agent-composer-actions");
+    if (!actions || actions.querySelector("#agent-plan-open")) return false;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.id = "agent-plan-open";
+    btn.className = "-btn secondary -btn--sm";
+    btn.title = T("plan.entryTitle");
+    btn.textContent = T("plan.entry");
+    btn.addEventListener("click", askForPlan);
+    actions.insertBefore(btn, actions.firstChild);
+    return true;
+  }
+
+  global.MemoriaPlan = { open, openFromText, close, undo: doUndo, mountEntry, askForPlan, redraw };
+
+  // 入口按钮要在**应用门面就绪之后**装（早装会拿不到 i18n ⇒ 按钮显示裸 key）；
+  // 切语言时同步按钮文案并**原地重绘**已打开的卡片（不打 RPC）。
+  global.MemoriaBridge?.onReady?.(() => {
+    mountEntry();
+    global.MemoriaI18n?.addRefresh?.(() => {
+      const btn = document.getElementById("agent-plan-open");
+      if (btn) {
+        btn.textContent = T("plan.entry");
+        btn.title = T("plan.entryTitle");
+      }
+      redraw();
+    });
+  });
 })(typeof window !== "undefined" ? window : globalThis);
