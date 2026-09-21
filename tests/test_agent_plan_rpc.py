@@ -286,6 +286,7 @@ def test_plan_card_wiring_invariants() -> None:
         "WR().setBusy?.(false)",
         "__memoriaHasPendingEdits",  # 当前编辑未落盘 ⇒ 先等（有界）再拒写
         'code: "editing"',
+        'r.code === "stale_write"',  # stale_write 时给「重新预览」这条明路（§9 规则 ①）
         "openFile?.(cur, { skipNav: true })",  # 写后重开当前文件（不产生新的导航栈条目）
         'clipped("plan-file-path"',  # ④ 长文本"单行省略 + 悬浮看全"
         'clipped("plan-diff-line plan-diff-del"',

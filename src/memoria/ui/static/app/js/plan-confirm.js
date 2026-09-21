@@ -250,9 +250,10 @@
         listBlock("plan-errors", T("plan.errorsTitle"), r.errors) +
         listBlock("plan-warnings", T("plan.warningsTitle"), r.warnings) +
         buttons(
-          (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : []).concat([
-            { act: "discard", label: T("plan.close") },
-          ])
+          (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : [])
+            // 盘上变了（`stale_write`）⇒ 给一条明路：按**当前**磁盘内容重新 dry-run（§9 规则 ①）
+            .concat(r.code === "stale_write" && plan ? [{ act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") }] : [])
+            .concat([{ act: "discard", label: T("plan.close") }])
         )
     );
     el.__plan = plan || null;
