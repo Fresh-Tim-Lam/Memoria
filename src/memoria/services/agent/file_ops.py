@@ -91,6 +91,39 @@ def rename_plan(kb_path: str, old_rel: str, new_name: str) -> dict:
     }
 
 
+# ── 图片引用行（§7 的 4.1）：**只写正文那一行**，图片入库不归这里 ─────────────────────────
+# 语法权威是 `docs/reference/preview-formats.md` §4.2/§4.3（人 UI 的 `image-tools.js` 是既有实现）：
+# 路径 = **知识库根相对**（推荐 `.memoria/images/x.png`）；含空格/中文用尖括号 `<…>` 包；
+# 显示属性写在 **title 位**：`![alt](url "width=300,align=center")`。
+# 本函数只**拼这一行**，然后把行交给 `body_edit` 的 `insert`（行级原语）落地 ⇒ 备份/回滚/审计/
+# 撤销/预览全部沿用。
+#
+# **本轮不做**（如实登记）：① **图片入库**（`import_image` 有"目标文件名要先去重才知道"的时序问题，
+# 备份集在写前拿不到目标名 ⇒ 需要一个设计决定，先不开）；② **改 alt / 属性**（属性语法权威在人 UI，
+# 后端没有同一份实现，重写一份会漂移）；③ **移动 / 删除图片**（§7 4.5/4.6 属后线、删除类默认关）。
+
+#: 允许作为图片引用的扩展名（与 `DocumentService._IMAGE_EXTENSIONS` 同一集合，**不另写一份**）
+IMAGE_EXTENSIONS: frozenset[str] = frozenset((".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".ico"))
+
+
+def image_ref_line(kb_path: str, path: str, alt: str = "", attrs: str = "") -> str:
+    """拼一行图片引用（`![alt](<路径> "属性")`）；路径非法/文件不存在即抛 `EditError`。"""
+    from memoria.services.agent.body_edit import EditError
+
+    raw = (path or "").strip().replace("\\", "/")
+    if not raw:
+        raise EditError("missing_field", "缺 path（库内相对图片路径）")
+    if raw.startswith("/") or ".." in raw.split("/"):
+        raise EditError("path_rejected", f"图片路径必须是**库内相对**路径（不许绝对路径或 ..）：{path!r}")
+    if os.path.splitext(raw)[1].lower() not in IMAGE_EXTENSIONS:
+        raise EditError("bad_field", f"不是图片扩展名（允许 {sorted(IMAGE_EXTENSIONS)}）：{raw!r}")
+    if not os.path.isfile(os.path.join(kb_path, raw)):
+        raise EditError("image_not_found", f"库内找不到这张图片：{raw}")
+    target = f"<{raw}>" if (" " in raw or any(ord(ch) > 127 for ch in raw)) else raw
+    title = f' "{str(attrs).strip()}"' if str(attrs or "").strip() else ""
+    return f"![{str(alt or '').strip()}]({target}{title})"
+
+
 def apply_create_file(service: Any, rel_path: str, body: str = "") -> dict:
     """新建 `.md`（父目录自动建、缺 `.md` 后缀自动补）—— 薄包装 `DocumentService.create_file()`。"""
     result = service.create_file(rel_path, body or "")

@@ -74,6 +74,8 @@ OP_DELETE_LINES = "delete_lines"
 #: 块级（§7 的 5.1 / 5.3 / 5.5）：**整块重建**代码块 / mermaid / 公式块 —— 语义上是"按整块替换"，
 #: 因此复用 `body_edit` 的 `replace` 落地（不新增落盘原语；表格见 §7 5.2，本轮不给）
 OP_UPSERT_BLOCK = "upsert_block"
+#: 图片（§7 的 4.1）：**只插图片引用那一行**（图片入库/改属性/移动删除本轮不做，见 `file_ops`）
+OP_INSERT_IMAGE_REF = "insert_image_ref"
 #: 文件级（§7 的 2.4 / 2.6）：新建 `.md` / 重命名（含全库引用级联）—— 落点 `services/agent/file_ops.py`
 OP_CREATE_FILE = "create_file"
 OP_RENAME_FILE = "rename_file"
@@ -89,6 +91,7 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_INSERT_LINES,
     OP_DELETE_LINES,
     OP_UPSERT_BLOCK,
+    OP_INSERT_IMAGE_REF,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
 )
@@ -107,13 +110,20 @@ COMPILED_OPS: tuple[str, ...] = (
     OP_INSERT_LINES,
     OP_DELETE_LINES,
     OP_UPSERT_BLOCK,
+    OP_INSERT_IMAGE_REF,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
 )
 
-#: **改正文行**的 op（会改变行数/行内容）。`upsert_block` 语义上是"整块替换" ⇒ 同族：
-#: 走同一套结构/内容级自检、同一份顺序规矩、同一个 `edit_body` 落地、同一套预览 diff。
-BODY_EDIT_OPS: tuple[str, ...] = (OP_REPLACE_LINES, OP_INSERT_LINES, OP_DELETE_LINES, OP_UPSERT_BLOCK)
+#: **改正文行**的 op（会改变行数/行内容）。`upsert_block` / `insert_image_ref` 语义上是"整块替换 /
+#: 插一行" ⇒ 同族：走同一套结构/内容级自检、同一份顺序规矩、同一个 `edit_body` 落地、同一套预览 diff。
+BODY_EDIT_OPS: tuple[str, ...] = (
+    OP_REPLACE_LINES,
+    OP_INSERT_LINES,
+    OP_DELETE_LINES,
+    OP_UPSERT_BLOCK,
+    OP_INSERT_IMAGE_REF,
+)
 #: **按行号锚定**的 op（行号以"当前正文"为准；`attach_links` / `detach_links` 的 lines、
 #: `upsert_kp` 的 range）。它们**不改行数** ⇒ 只要排在改正文之前，行号语义就仍然一致。
 LINE_ANCHORED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
@@ -459,6 +469,33 @@ def _validate_body_edit(op: Mapping, verb: str, lines: Sequence[str], op_id: str
     return {"action": normalized["mode"], "edit": normalized}
 
 
+def _validate_insert_image_ref(kb_path: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
+    """图片引用（§7 4.1）：把 `![alt](<路径> "属性")` 插在某行之后 —— 行由 `file_ops` 拼、落地走 `insert`。"""
+    from memoria.services.agent.file_ops import image_ref_line
+
+    spec: dict[str, Any] = {
+        "mode": MODE_INSERT,
+        "after": op.get("after"),
+        "expect": op.get("expect") or "",
+        "text": "",
+    }
+    try:
+        if spec["after"] is None:
+            raise EditError("missing_field", "缺 after（插在这一行之后；0 = 正文最前）")
+        spec["text"] = image_ref_line(
+            kb_path,
+            str(op.get("path") or ""),
+            str(op.get("alt") or ""),
+            str(op.get("attrs") or ""),
+        )
+        normalized = normalize_edits([spec])[0]
+        check_edit(normalized, list(lines))
+    except EditError as e:
+        errors.append(_err(op_id, e.code, str(e)))
+        return {"action": "invalid"}
+    return {"action": "insert_image_ref", "edit": normalized, "image": str(op.get("path") or "")}
+
+
 def _validate_upsert_block(op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
     """块级重建（§7 5.1 / 5.3 / 5.5）：先核"这段区间**恰好**是个 `kind` 类围栏块"，
     再把 `content` 重建成含围栏的整块文本，之后**完全按改正文那一套**自检与落地（`replace`）。
@@ -556,11 +593,12 @@ def _validate_op(
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     elif verb in BODY_EDIT_OPS:
-        detail = (
-            _validate_upsert_block(data, lines, op_id, errors)
-            if verb == OP_UPSERT_BLOCK
-            else _validate_body_edit(data, verb, lines, op_id, errors)
-        )
+        if verb == OP_UPSERT_BLOCK:
+            detail = _validate_upsert_block(data, lines, op_id, errors)
+        elif verb == OP_INSERT_IMAGE_REF:
+            detail = _validate_insert_image_ref(kb_path, data, lines, op_id, errors)
+        else:
+            detail = _validate_body_edit(data, verb, lines, op_id, errors)
     elif verb == OP_RENAME_FILE:
         detail = _validate_rename_file(kb_path, rel, data, op_id, errors)
     else:
@@ -739,6 +777,8 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["lines_after"] = len(new_body.splitlines())
             if parsed.get("kind"):  # `upsert_block`：让卡片能显示"整块重建（kind / lang）"
                 entry["block"] = {"kind": parsed.get("kind"), "lang": parsed.get("lang") or ""}
+            if parsed.get("image"):  # `insert_image_ref`：卡片显示引用的是哪张图
+                entry["image"] = parsed.get("image")
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
         elif parsed.get("op") == OP_CREATE_FILE:
             resolved = parsed.get("resolved") or {}

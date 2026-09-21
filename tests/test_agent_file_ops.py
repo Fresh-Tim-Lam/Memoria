@@ -212,7 +212,69 @@ def test_delete_file_is_not_a_known_op(kb: Path, service: DocumentService) -> No
     assert _facts(kb) == before
 
 
-# ── ⑤ 工具面 / RPC 往返 ─────────────────────────────────────────────────
+# ── ⑥ 图片引用行（§7 4.1：只插引用，不做入库/属性/删除）──────────────────────────────
+
+
+def test_insert_image_ref_writes_one_line_and_undo_restores(kb: Path, service: DocumentService) -> None:
+    images = kb / ".memoria" / "images"
+    images.mkdir(parents=True, exist_ok=True)
+    (images / "结构图.png").write_bytes(b"\x89PNG\r\n\x1a\n")  # 名字含中文 ⇒ 应写成尖括号形式
+    before = _facts(kb)
+
+    plan = _plan(
+        {
+            "op": "insert_image_ref",
+            "op_id": "o1",
+            "file": "notes/a.md",
+            "after": 1,
+            "expect": "# A 文档",
+            "path": ".memoria/images/结构图.png",
+            "alt": "结构图",
+            "attrs": "width=300,align=center",
+        }
+    )
+    preview = preview_plan(str(kb), plan, service=service)
+    entry = preview["files"][0]["ops"][0]
+    assert entry["image"] == ".memoria/images/结构图.png"
+    added = [row["after"] for row in entry["diff"] if row["after"] is not None]
+    assert added == ['![结构图](<.memoria/images/结构图.png> "width=300,align=center")']
+
+    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T200002Z-03", service=service)
+    assert done["status"] == "ok", done
+    text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
+    assert '![结构图](<.memoria/images/结构图.png> "width=300,align=center")' in text
+    assert text.splitlines()[0] == "# A 文档" and text.splitlines()[1].startswith("![结构图]")
+
+    undone = restore_batch(str(kb), SESSION, "20260921T200002Z-03")
+    assert undone["status"] == "ok" and _facts(kb) == before
+
+
+@pytest.mark.parametrize(
+    ("patch", "code"),
+    [
+        ({"path": "../secret.png"}, "path_rejected"),
+        ({"path": "/abs/x.png"}, "path_rejected"),
+        ({"path": ".memoria/images/none.png"}, "image_not_found"),
+        ({"path": "notes/a.md"}, "bad_field"),  # 不是图片扩展名
+        ({"path": ""}, "missing_field"),
+    ],
+)
+def test_insert_image_ref_rejects_bad_path(kb: Path, service: DocumentService, patch: dict, code: str) -> None:
+    op = {
+        "op": "insert_image_ref",
+        "op_id": "o1",
+        "file": "notes/a.md",
+        "after": 1,
+        "expect": "# A 文档",
+        "path": ".memoria/images/x.png",
+    }
+    op.update(patch)
+    checked = validate_plan(str(kb), _plan(op), service=service)
+    assert checked["status"] == "error"
+    assert checked["errors"][0]["code"] == code, checked["errors"]
+
+
+# ── ⑦ 工具面 / RPC 往返 ─────────────────────────────────────────────────
 
 
 def test_propose_tool_documents_file_ops(kb: Path) -> None:
