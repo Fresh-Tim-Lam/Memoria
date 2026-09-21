@@ -209,3 +209,69 @@ def test_conflict_dialog_keys_exist_in_every_locale(locale: Path) -> None:
     assert "writeConflict: {" in src
     for key in _CONFLICT_KEYS:
         assert f"{key}:" in src, f"{locale.name} 缺 writeConflict.{key}"
+
+
+# --- `os.replace` 的有界退避重试（写路径的瞬时锁；口径见 atomic_write.py 模块 docstring）---
+
+
+def _win_error(code: int, src: str = "a", dst: str = "b") -> OSError:
+    """构造带 `winerror` 的 `OSError`（Windows 上 `os.replace` 的失败形态）。"""
+    exc = OSError(13, "拒绝访问。", src, code)
+    exc.winerror = code  # type: ignore[attr-defined]
+    return exc
+
+
+def test_replace_with_retry_survives_transient_winerror(monkeypatch: pytest.MonkeyPatch) -> None:
+    """`WinError 5` 是该重试的（瞬时锁）：前两次失败、第三次成功 ⇒ 不抛出、最终替换完成。"""
+    from memoria.storage import atomic_write
+
+    calls: list[tuple[str, str]] = []
+    sleeps: list[float] = []
+
+    def flaky(src: str, dst: str) -> None:
+        calls.append((src, dst))
+        if len(calls) < 3:
+            raise _win_error(5)
+
+    monkeypatch.setattr(atomic_write.os, "replace", flaky)
+    monkeypatch.setattr(atomic_write.time, "sleep", lambda s: sleeps.append(s))
+
+    atomic_write.replace_with_retry("t.tmp", "t.md")  # 不抛 = 救回来了
+
+    assert len(calls) == 3 and sleeps == [atomic_write.DELAY] * 2
+
+
+def test_replace_with_retry_raises_non_transient_without_retrying(monkeypatch: pytest.MonkeyPatch) -> None:
+    """非瞬时错误（如 `WinError 3` 路径不存在）**立刻抛**，不被重试掩盖。"""
+    from memoria.storage import atomic_write
+
+    calls: list[int] = []
+
+    def boom(src: str, dst: str) -> None:
+        calls.append(1)
+        raise _win_error(3)
+
+    monkeypatch.setattr(atomic_write.os, "replace", boom)
+    monkeypatch.setattr(atomic_write.time, "sleep", lambda s: pytest.fail("不该重试"))
+
+    with pytest.raises(OSError):
+        atomic_write.replace_with_retry("t.tmp", "t.md")
+    assert len(calls) == 1
+
+
+def test_replace_with_retry_gives_up_after_bounded_attempts(monkeypatch: pytest.MonkeyPatch) -> None:
+    """重试**有界**：一直 `WinError 32` ⇒ 用满次数后**仍然抛**（绝不吞成静默失败）。"""
+    from memoria.storage import atomic_write
+
+    calls: list[int] = []
+
+    def always_locked(src: str, dst: str) -> None:
+        calls.append(1)
+        raise _win_error(32)
+
+    monkeypatch.setattr(atomic_write.os, "replace", always_locked)
+    monkeypatch.setattr(atomic_write.time, "sleep", lambda s: None)
+
+    with pytest.raises(OSError):
+        atomic_write.replace_with_retry("t.tmp", "t.md")
+    assert len(calls) == atomic_write.ATTEMPTS

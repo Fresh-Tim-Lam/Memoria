@@ -344,7 +344,7 @@ class DocumentService:
             f.flush()
             if mode == "inline":
                 os.fsync(f.fileno())
-        os.replace(tmp_full, full)
+        replace_with_retry(tmp_full, full)
         if mode != "inline":
             self._dirty_fsync.add(rel_norm)
         # 清除缓存，下次 load 时重新解析
@@ -2071,7 +2071,7 @@ class DocumentService:
             f.write(text)
             f.flush()
             os.fsync(f.fileno())
-        os.replace(tmp, full)
+        replace_with_retry(tmp, full)
         touch_manifest_entry(self.kb_path, rel_path.replace("\\", "/"))
         self._rebuild_lexical_index()
 
@@ -3121,3 +3121,6 @@ class DocumentService:
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
         self._cache.pop(rel_path, None)
         return {"status": "ok", "no_build": no_build}
+
+
+from memoria.storage.atomic_write import replace_with_retry  # noqa: E402  （随写路径追加在文件末尾：保住零行漂移）
