@@ -461,7 +461,7 @@ def test_audit_path_scope_and_argument_errors(kb: Path) -> None:
 def test_reference_tools_registered_declared_and_read_only(kb: Path) -> None:
     built = build_kb_tools(str(kb))
     assert tuple(tool.name for tool in built) == KB_TOOL_NAMES
-    assert KB_TOOL_NAMES[-2:] == ("resolve_reference", "audit_references")
+    assert KB_TOOL_NAMES[-3:] == ("resolve_reference", "audit_references", "propose_write")
 
     registry = registry_for(kb)
     for name in ("resolve_reference", "audit_references"):

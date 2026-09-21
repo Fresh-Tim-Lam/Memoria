@@ -485,8 +485,9 @@ def test_new_session_query_tools_registered_and_read_only(tmp_path: Path) -> Non
 
     assert tuple(tool.name for tool in build_kb_tools(str(root))) == KB_TOOL_NAMES
     # 本轮的四个工具仍**连续**追加在原工具面之后（§6.17 零锚点漂移）；其后再接 R 线引用板块两工具（§6.18）
-    assert registry.names()[-6:-2] == SESSION_TOOLS, "会话查询四工具仍连续追加在工具面里"
-    assert registry.names()[-2:] == ("resolve_reference", "audit_references")
+    # 与 W 线提议工具（`propose_write`，只产 plan、不落盘）⇒ 现在尾部是「会话四 + 引用两 + 提议一」。
+    assert registry.names()[-7:-3] == SESSION_TOOLS, "会话查询四工具仍连续追加在工具面里"
+    assert registry.names()[-3:] == ("resolve_reference", "audit_references", "propose_write")
     for name in SESSION_TOOLS:
         tool = registry.get(name)
         assert tool is not None and tool.read_only and tool.parameters["additionalProperties"] is False

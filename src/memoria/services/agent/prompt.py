@@ -236,8 +236,8 @@ def build_system_prompt(
             [
                 "你是 Memoria 的本地知识库助手：面向当前打开的知识库回答用户的问题。",
                 "你的知识来源只有两处：本地知识库内容（通过工具读取）与用户在本轮对话中给出的信息。",
-                "当前能力是**只读**的：你可以检索与阅读知识库，但不能修改、创建或删除任何文件；",
-                "如果用户要求写入，请明确说明本阶段不支持写入，并给出建议的改动清单。",
+                _CAPABILITY_RO if not _has_write_tool(tools) else _CAPABILITY_WRITE,
+                _WRITE_HINT_RO if not _has_write_tool(tools) else _WRITE_HINT_WRITE,
             ]
         ),
         "\n".join(
@@ -392,3 +392,33 @@ FILE_REFERENCE_TOOLS = ("read_document", "glob", "grep", "read_image")
 def _has_read_tool(tools: Sequence[ToolSchema]) -> bool:
     """`@路径` 段的门控：工具集里**只要有一个读取手段**就注入说明。"""
     return any(_has_tool(tools, name) for name in FILE_REFERENCE_TOOLS)
+
+
+# ── 能力自述：**只读** ↔ **可提议**（2026-09-20，W 线第一步）─────────────────────────────
+# `build_system_prompt()` 的同一行按"提议工具在不在场"二选一（**等量替换**，上方 `<文件>:<行号>`
+# 锚点零漂移）。口径：工具面只给到「提议」，**落盘权仍在人手里**（对话栏确认卡逐条确认才 apply）
+# ⇒ 自述必须同时说清"能提什么"与"你自己没写权限"，否则模型会 ① 拒绝配合 或 ② 谎称已写入。
+# 判据是工具名（`tools/kb.py` 的 `PROPOSE_TOOL_NAME`，延迟 import ⇒ 不成环、不引顶层 import）。
+
+#: 工具面**没有**提议工具时的自述（M1/M2 原样口径，逐字未改）
+_CAPABILITY_RO = "当前能力是**只读**的：你可以检索与阅读知识库，但不能修改、创建或删除任何文件；"
+_WRITE_HINT_RO = "如果用户要求写入，请明确说明本阶段不支持写入，并给出建议的改动清单。"
+
+#: 工具面**有**提议工具时的自述（"可提议、须人工确认、你没有落盘权"）
+_CAPABILITY_WRITE = (
+    "你可以**提议**对知识库的修改（改正文、建/改知识点、挂接或拆除跳转）：用 `propose_write` 产出计划，"
+    "用户在对话栏的确认卡上逐条确认后才真正写入（写入前自动备份、之后可撤销）。"
+    "**你自己没有落盘权**：不要声称「已写入」，也不要用其它方式绕过确认；"
+    "能否写入、写成什么，最终由用户决定。"
+)
+_WRITE_HINT_WRITE = (
+    "用户要求修改/写入时：先 `read_document` 读清目标原文与行号（不要凭印象写），再用 `propose_write` "
+    "提一批（同一意图放同一个 ops）；提议被拒就按返回的 `op_id` 与错误码修正后**重提整批**。"
+)
+
+
+def _has_write_tool(tools: Sequence[ToolSchema]) -> bool:
+    """能力自述的门控：工具面里有没有**提议类**工具（今天 = `propose_write`）。"""
+    from memoria.services.agent.tools.kb import PROPOSE_TOOL_NAME
+
+    return _has_tool(tools, PROPOSE_TOOL_NAME)

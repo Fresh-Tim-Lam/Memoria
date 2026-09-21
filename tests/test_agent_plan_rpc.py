@@ -15,13 +15,19 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import pytest
 
 from memoria.presentation.api.ui import UIAPI
 from memoria.services.agent.backup import backups_root
+from memoria.services.agent.llm.types import ToolCall
+from memoria.services.agent.prompt import build_system_prompt
 from memoria.services.agent.session.store import session_file
+from memoria.services.agent.tools.kb import PROPOSE_TOOL_NAME, build_kb_tools, take_proposals
+from memoria.services.agent.tools.registry import ToolRegistry
+from memoria.services.agent.approvals import DEFAULT_POLICY, ApprovalRequest
 
 A_MD = "# A 文档\n\n注意力机制是核心。\n\n末尾一行。\n"
 UI_SESSION = "ui-plan"  # RPC 未给 session_id 时的伪会话（备份/审计都落它名下）
@@ -292,6 +298,10 @@ def test_plan_card_wiring_invariants() -> None:
         'clipped("plan-diff-line plan-diff-del"',
         "title=\"${esc(full)}\"",
         'actions.querySelector("#agent-plan-open")',  # ⑤ 对话栏输入区的入口按钮（幂等）
+        '"agent_plan_pending"',  # ⑥ 智能体自己提的计划：问答收尾时取一次
+        "const inner = app.call;",  # 包装门面 `call`（与 agent-panel.js 同款做法）
+        "installProposalDrain()",
+        'res.status === "done" || res.status === "error"',  # 只在轮次收尾取，不额外轮询
         "global.MemoriaBridge?.onReady?.(",  # 门面就绪后才装入口（否则拿到裸 i18n key）
         "global.MemoriaI18n?.addRefresh?.(",
     ):
@@ -320,3 +330,92 @@ def test_plan_card_css_truncates_with_a_tooltip() -> None:
         ".plan-actions {",
     ):
         assert needle in css, f"app.css 缺计划卡样式：{needle}"
+
+
+# ── ⑤ 工具面（W 线第一步）：`propose_write` 只提议、不落盘 ──────────────────────────
+
+
+def _propose_args(**over: object) -> dict:
+    args: dict = {
+        "intent": "给「注意力机制」建档",
+        "ops": [
+            {
+                "op": "upsert_kp",
+                "file": "notes/a.md",
+                "kp_id": "attention",
+                "name": "注意力机制",
+                "range": {"start": {"line": 1}, "end": {"line": 3}},
+            }
+        ],
+    }
+    args.update(over)
+    return args
+
+
+def _invoke_propose(kb: Path, args: dict):
+    """走**真注册表**调用（含参数校验与审批）—— 保证"工具在场 + 默认策略放行"这条链是通的。"""
+    registry = ToolRegistry(build_kb_tools(str(kb)))
+    return registry.invoke(ToolCall(id="c1", name=PROPOSE_TOOL_NAME, arguments=json.dumps(args)))
+
+
+def test_propose_tool_present_and_read_only_by_declaration(kb: Path) -> None:
+    """工具在场、按 `read_only=True` 声明（口径：它**不改动知识库**，落盘权在人）⇒ 默认策略放行。"""
+    tools = {tool.name: tool for tool in build_kb_tools(str(kb))}
+    assert PROPOSE_TOOL_NAME in tools
+    assert tools[PROPOSE_TOOL_NAME].read_only is True
+    assert DEFAULT_POLICY.decide(ApprovalRequest(tool=PROPOSE_TOOL_NAME, read_only=True)).allowed
+
+
+def test_propose_tool_queues_a_plan_and_writes_nothing(kb: Path) -> None:
+    """提议成功 ⇒ 排进信箱（程序补 `v`/`txid`/`op_id`），而**知识库逐字节不变**。"""
+    before = _facts(kb, with_audit=True)
+    result = _invoke_propose(kb, _propose_args())
+    assert result.is_error is False, result.content
+    assert _facts(kb, with_audit=True) == before  # 零落盘（提议还没到写那一步）
+
+    plans = take_proposals(str(kb))
+    assert len(plans) == 1
+    plan = plans[0]
+    assert plan["v"] == 1 and plan["intent"] == "给「注意力机制」建档"
+    assert re.match(r"^\d{8}T\d{6}Z-\d+$", plan["txid"])
+    assert plan["ops"][0]["op_id"] == "o1"  # 模型没写 op_id 时由程序补齐
+    assert take_proposals(str(kb)) == []  # 取走即清空
+
+
+def test_propose_tool_rejects_bad_op_without_queueing(kb: Path) -> None:
+    """越界路径 ⇒ `INVALID_PLAN` + 按 `op_id` 定位，且**不进信箱**（让模型重写整批再提）。"""
+    bad = _propose_args(ops=[{**_propose_args()["ops"][0], "file": "../escape.md"}])
+    result = _invoke_propose(kb, bad)
+    assert result.is_error is True
+    assert result.output.code == "INVALID_PLAN"
+    assert "o1" in result.content and "什么都没写" in result.content
+    assert take_proposals(str(kb)) == []
+
+
+def test_propose_tool_text_forbids_claiming_a_write(kb: Path) -> None:
+    """提示词纪律：工具结果必须写明「尚未写入」，并禁止模型谎称已写入。"""
+    result = _invoke_propose(kb, _propose_args())
+    assert "尚未写入" in result.content and "不要声称已经写入" in result.content
+
+
+def test_plan_pending_rpc_drains_once(kb: Path, api: UIAPI) -> None:
+    """RPC 取走即清空（第二次为空表）；没有提议时也回 `ok`（不是错误）。"""
+    assert api.agent_plan_pending() == {"status": "ok", "plans": []}
+    _invoke_propose(kb, _propose_args())
+    first = api.agent_plan_pending()
+    assert first["status"] == "ok" and len(first["plans"]) == 1
+    assert api.agent_plan_pending()["plans"] == []
+
+
+def test_capability_self_report_follows_tool_presence(kb: Path) -> None:
+    """提示词的"只读"那句按**工具是否在场**二选一：没有提议工具时逐字保持原口径。"""
+    registry = ToolRegistry(build_kb_tools(str(kb)))
+    assert "不能修改、创建或删除任何文件" in build_system_prompt(str(kb), tools=())
+
+    tool = registry.get(PROPOSE_TOOL_NAME)
+    assert tool is not None
+    write_prompt = build_system_prompt(str(kb), tools=(tool.schema(),))
+    assert "不能修改、创建或删除任何文件" not in write_prompt
+    assert "你可以**提议**对知识库的修改" in write_prompt
+    assert "你自己没有落盘权" in write_prompt
+

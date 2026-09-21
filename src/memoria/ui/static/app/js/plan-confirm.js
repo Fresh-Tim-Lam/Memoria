@@ -16,10 +16,14 @@
  *    apply 之后被改过的文件会被后端 `external_change` 拦下，不静默覆盖）。
  *
  * **卡片放在对话栏里**（与问答/工具调用同一条流）：渲染进 `#agent-messages` 成为一条聊天项，
- * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话。对话栏不可用时
- * （面板收起 / 没有对话栏）自动**回落成弹窗**，绝不出现"点了没反应"。入口按钮也装在对话栏的
- * 输入区（`. -agent-composer-actions` 里追加一个「计划」按钮），本模块**自带入口**（不改
- * `app.js` / `agent-panel.js` / `index.html` ⇒ 既有行号锚点零漂移）。
+ * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话（一张卡一条，追加不替换）。
+ * 对话栏不可用时（面板收起 / 没有对话栏）自动**回落成弹窗**，绝不出现"点了没反应"。
+ *
+ * **计划从哪来**（两条路，同一张卡）：
+ * ① **智能体自己提**：模型调 `propose_write` 工具（只产 plan、不落盘）⇒ 后端排进进程内信箱 ⇒
+ *    前端在每轮问答收尾（`agent_ask_poll` 报 done/error）顺手 `agent_plan_pending` 取一次；
+ * ② 人工兜底：对话栏输入区的「计划」按钮（本模块自己装的入口，不改 `app.js` / `agent-panel.js` /
+ *    `index.html` ⇒ 既有行号锚点零漂移），粘贴 plan JSON 预览。
  *
  * **长文本一律"单行省略 + 悬浮看全"**：文件名 / 操作名 / 差异行都带 `title`（`cursor: help`），
  * 栏窄时截断但不丢信息。
@@ -37,8 +41,8 @@
   const IDLE_WAIT_MS = 3000;
   const IDLE_POLL_MS = 150;
 
-  let card = null; // 当前卡片（对话栏里的一条聊天项，或回落时的弹窗）
-  let lastState = null; // 当前卡片的重绘状态（切语言时原地重绘，不再打 RPC）
+  let cards = []; // 已挂出的卡片节点（对话栏里的聊天项，或回落弹窗），按追加顺序 = 对话流的自然顺序
+  let states = []; // 与 `cards` 平行的重绘状态（切语言时原地重建，**不再打 RPC**）
 
   function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
@@ -52,21 +56,34 @@
     return box;
   }
 
+  /** 关掉本模块挂出的**所有**卡片（`卡片的「放弃」按钮只移除自己`）。 */
   function close() {
-    if (card) {
-      card.remove();
-      card = null;
-    }
-    lastState = null;
+    cards.forEach((el) => el.remove());
+    cards = [];
+    states = [];
   }
 
-  /** 切语言时原地重绘当前卡片（纯前端重排，**不再打 RPC**）；没有卡片则什么都不做。 */
+  function removeCard(el) {
+    const index = cards.indexOf(el);
+    if (index >= 0) {
+      cards.splice(index, 1);
+      states.splice(index, 1);
+    }
+    el.remove();
+  }
+
+  /** 切语言时原地重建已挂出的卡片（顺序不变；纯前端重排，不打 RPC）。 */
   function redraw() {
-    const s = lastState;
-    if (!s || !card) return;
-    if (s.kind === "preview") renderPreview(s.plan, s.preview);
-    else if (s.kind === "problems") showPreviewProblems(s.plan, s.preview);
-    else showResult(s.res, s.plan);
+    if (!cards.length) return;
+    const keep = states.slice();
+    close();
+    keep.forEach(renderState);
+  }
+
+  function renderState(state) {
+    if (state.kind === "preview") renderPreview(state.plan, state.preview);
+    else if (state.kind === "problems") showPreviewProblems(state.plan, state.preview);
+    else showResult(state.res, state.plan);
   }
 
   /** 有界等待"当前编辑/预览同步收敛"；返回 false 表示仍在编辑（此时**不写**）。 */
@@ -147,11 +164,10 @@
   }
 
   /**
-   * 把一段卡片内容挂到**对话栏**（成一条聊天项）；对话栏不可用时回落成弹窗。
-   * 返回可交互的根元素。
+   * 把一段卡片内容挂到**对话栏**（成一条聊天项，**追加**不替换 —— 卡片是对话流的一部分）；
+   * 对话栏不可用时回落成弹窗。`state` 是它的重绘状态（切语言用）。返回可交互的根元素。
    */
-  function mount(inner) {
-    close();
+  function mount(inner, state) {
     const box = chatBox();
     if (box) {
       const el = document.createElement("div");
@@ -161,7 +177,8 @@
       if (empty) empty.remove();
       box.appendChild(el);
       box.scrollTop = box.scrollHeight; // 与问答流同款：新内容滚进视野
-      card = el;
+      cards.push(el);
+      states.push(state);
       bind(el, null);
       return el;
     }
@@ -172,7 +189,8 @@
       `<div class="-modal-header" style="cursor:default"><span>${esc(T("plan.role"))}</span></div>` +
       `<div class="-modal-body">${inner}</div></div>`;
     document.body.appendChild(overlay);
-    card = overlay;
+    cards.push(overlay);
+    states.push(state);
     bind(overlay, overlay.querySelector(".-modal-backdrop"));
     return overlay;
   }
@@ -184,7 +202,7 @@
       if (el) el.addEventListener("click", handler);
     };
     if (backdrop) backdrop.addEventListener("click", close);
-    on("discard", () => close());
+    on("discard", () => removeCard(root));
     on("repreview", () => root.__plan && open(root.__plan));
     on("undo", async () => {
       const btn = root.querySelector('[data-act="undo"]');
@@ -229,10 +247,11 @@
         buttons([
           { act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") },
           { act: "discard", label: T("plan.discard") },
-        ])
+        ]),
+      { kind: "problems", plan: plan, preview: preview }
     );
     el.__plan = plan;
-    lastState = { kind: "problems", plan: plan, preview: preview };
+    return el;
   }
 
   function showResult(res, plan) {
@@ -254,11 +273,12 @@
             // 盘上变了（`stale_write`）⇒ 给一条明路：按**当前**磁盘内容重新 dry-run（§9 规则 ①）
             .concat(r.code === "stale_write" && plan ? [{ act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") }] : [])
             .concat([{ act: "discard", label: T("plan.close") }])
-        )
+        ),
+      { kind: "result", plan: plan || null, res: r }
     );
     el.__plan = plan || null;
     el.__applyResult = r;
-    lastState = { kind: "result", plan: plan || null, res: r };
+    return el;
   }
 
   function refreshOpenDoc(files) {
@@ -341,11 +361,12 @@
         buttons([
           { act: "apply", label: T("plan.apply", { n: total }), cls: "primary -btn--sm" },
           { act: "discard", label: T("plan.discard") },
-        ])
+        ]),
+      { kind: "preview", plan: plan, preview: preview }
     );
     el.__plan = plan;
     el.__preview = preview;
-    lastState = { kind: "preview", plan: plan, preview: preview };
+    return el;
   }
 
   /** 便捷入口：直接喂一段 plan JSON 文本（临时入口与调试用）。 */
@@ -402,12 +423,57 @@
     return true;
   }
 
-  global.MemoriaPlan = { open, openFromText, close, undo: doUndo, mountEntry, askForPlan, redraw };
+  // ── 智能体自己提出的计划（`propose_write` 工具）⇒ 直接落进对话栏 ──────────────────────
+
+  /** 取走后端排队的提议并逐张开卡（取走即清空；返回开了几张）。 */
+  async function drainProposals() {
+    const res = await A()
+      .call("agent_plan_pending", null)
+      .catch(() => null);
+    const plans = (res && res.status === "ok" && res.plans) || [];
+    plans.forEach((plan) => open(plan));
+    return plans.length;
+  }
+
+  /**
+   * 包装门面 `call`：**只在**问答收尾那一次（`agent_ask_poll` 报 done/error）顺手取一次提议。
+   *
+   * 为什么包这里：工具面产 plan 之后没有别的"推送"通道，而前端本来就在轮询 `agent_ask_poll`
+   * （轮次结束才停）—— 借它一次往返，既不用新增轮询循环，也不用改 `agent-panel.js`。
+   * 包装门面 `call` 是本仓既有做法（`agent-panel.js` 同样包它以追加思考游标）。
+   */
+  function installProposalDrain() {
+    const app = global.MemoriaApp;
+    if (!app || app.__planDrain || typeof app.call !== "function") return false;
+    const inner = app.call;
+    app.call = function (fn) {
+      const pending = inner.apply(this, arguments);
+      if (fn !== "agent_ask_poll" || !pending || typeof pending.then !== "function") return pending;
+      return pending.then((res) => {
+        if (res && (res.status === "done" || res.status === "error")) drainProposals();
+        return res;
+      });
+    };
+    app.__planDrain = true;
+    return true;
+  }
+
+  global.MemoriaPlan = {
+    open,
+    openFromText,
+    close,
+    undo: doUndo,
+    mountEntry,
+    askForPlan,
+    redraw,
+    drainProposals,
+  };
 
   // 入口按钮要在**应用门面就绪之后**装（早装会拿不到 i18n ⇒ 按钮显示裸 key）；
-  // 切语言时同步按钮文案并**原地重绘**已打开的卡片（不打 RPC）。
+  // 切语言时同步按钮文案并**原地重建**已挂出的卡片（不打 RPC）。
   global.MemoriaBridge?.onReady?.(() => {
     mountEntry();
+    installProposalDrain();
     global.MemoriaI18n?.addRefresh?.(() => {
       const btn = document.getElementById("agent-plan-open");
       if (btn) {

@@ -76,7 +76,7 @@ KB_TOOL_NAMES = (
     "glob", "grep", "read_image",
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
-    "audit_references",
+    "audit_references", "propose_write",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -662,7 +662,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_session_query_tools(root), *_reference_tools(root),
+        ), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root),
     )
 
 
@@ -2819,3 +2819,173 @@ def _range_col_display(
     if end is not None:
         out += f"-L{end}" + (f"C{end_col}" if end_col is not None else "")
     return out
+
+
+# ── W 线第一步：**提议**工具（M3a 工具面；2026-09-20）────────────────────────────────────────
+# 口径：`agent-capabilities.md` §2.3 第 1 步「propose = 模型调用写工具 ⇒ **只产 plan、不落盘**；
+# 提议卡片 = `intent` + `preview_plan()` 算出的影响文件/行」。真正的写闸门在人确认那一步：
+# 对话栏确认卡（`js/plan-confirm.js`）→ `agent_plan_apply`（写前备份 → 原语 → 审计 → 可撤销）。
+#
+# **为什么声明 `read_only=True`**（与设计稿的一处偏差，如实登记）：`registry.Tool.read_only` 的定义是
+# 「该工具**不改动知识库**」（`tools/registry.py:106`）。本工具只做三件事：① 结构/语义校验
+# ② dry-run（整段由 `kb_read_only()` 包裹 ⇒ 连可再生缓存都不落库）③ 把 plan 排进**进程内信箱**
+# 给前端取走 —— 一个字节都不落盘，字面成立。设计稿那句「写工具声明 `read_only=False` ⇒ 必过审批」
+# 假定的是"工具 = 落盘那一步"；本架构把落盘推到人手确认之后，**审批面没有被放宽**
+# （`DefaultApprovalPolicy` 对任何 `read_only=False` 工具照旧一律拒绝，本轮未改它一行）。
+# M3b 的真写原语工具仍须 `read_only=False` 并走审批。
+#
+# 信封里的 `v` / `txid` / `op_id` 由**程序**填（模型只给 `intent` + `ops`）：`txid` 有严格形态
+# （`plan.TXID_RE`）、`op_id` 要求 plan 内唯一 —— 交给模型最易错，且错了也帮不上它。
+# **整块追加在文件末尾** ⇒ 上方既有 `file:line` 锚点零漂移。
+
+#: 提议工具的稳定名（提示词门控与前端都认它；**只增不改**）
+PROPOSE_TOOL_NAME = "propose_write"
+
+#: 计划没过校验/试算时的错误码：让模型按 `op_id` **重写整批**再提（而不是逐条打补丁）
+INVALID_PLAN_CODE = "INVALID_PLAN"
+
+#: 进程内信箱 `{库根绝对路径: [plan, …]}`；RPC `agent_plan_pending` 取走即清空
+#  （**不落盘**：进程重启即丢。提议本来就是"等人确认"的瞬时物，不是事实源）
+_PROPOSALS: dict[str, list[dict[str, Any]]] = {}
+
+
+def take_proposals(kb_path: str) -> list[dict[str, Any]]:
+    """取走某库**已提议但尚未展示**的 plan（取走即清空；没有就回空表）。"""
+    return _PROPOSALS.pop(os.path.abspath(kb_path or ""), [])
+
+
+class _ValidationService:
+    """给 plan 校验用的**最小只读服务**：只提供 `kb_path`，方法**借用 `DocumentService` 的实现**。
+
+    为什么不直接 `DocumentService(kb_path=…)`（本模块 docstring 第 2 条已定此口径）：
+    其 `__post_init__` 会走 `set_kb_path()` ⇒ 写库引导 + `remember_last_kb_path()` 改用户的
+    `config/ui-settings.json`。在"每次提议"的热路径上既重又有副作用。这里**只借实现、不建实例**
+    （`check_kp_id` 的唯一依赖是 `self.kb_path` 与模块级缓存的 `build_kp_index()`）。
+    """
+
+    def __init__(self, kb_path: str) -> None:
+        self.kb_path = kb_path
+
+    def check_kp_id(self, kp_id: str, rel_path: str | None = None) -> dict:
+        from memoria.services.document import DocumentService
+
+        return DocumentService.check_kp_id(self, kp_id, rel_path)
+
+    def __getattr__(self, name: str) -> Any:
+        # plan 校验将来新增对 service 的依赖时**立刻可见**，而不是静默降级成"没校验"
+        raise AttributeError(
+            f"提议工具只提供最小只读服务（当前只有 check_kp_id）；plan 校验新增了对 {name} 的依赖 ⇒ "
+            "请在 _ValidationService 里显式借用 DocumentService 的**同一实现**（不要另写一份校验）"
+        )
+
+
+def _propose_write(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """校验 + dry-run（**零落盘**）后把 plan 排进信箱；不过校验就回错误（模型据此重写整批）。"""
+    import time
+
+    from memoria.services.agent.plan import PLAN_VERSION, preview_plan, validate_plan
+
+    intent = str(arguments.get("intent") or "").strip()
+    ops: list[dict[str, Any]] = []
+    for index, item in enumerate(arguments.get("ops") or [], start=1):
+        if not isinstance(item, Mapping):
+            continue
+        row = {str(key): value for key, value in item.items()}
+        row.setdefault("op_id", f"o{index}")  # 缺省由程序补齐（plan 内唯一性由校验器兜底）
+        ops.append(row)
+    plan: dict[str, Any] = {
+        "v": PLAN_VERSION,
+        "txid": time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-01",
+        "intent": intent,
+        "ops": ops,
+    }
+    service = _ValidationService(kb_path)
+    with kb_read_only(kb_path):
+        checked = validate_plan(kb_path, plan, service=service)
+        if checked.get("status") != "ok":
+            detail = "\n".join(
+                f"- [{row.get('op_id') or '-'}] {row.get('code')}: {row.get('message')}"
+                for row in (checked.get("errors") or [])
+            )
+            return ToolOutput(
+                text=error_text(
+                    "计划未通过校验，**什么都没写**。请按下面的问题修正后**重提整批** ops：\n" + detail,
+                    INVALID_PLAN_CODE,
+                ),
+                error=True,
+                code=INVALID_PLAN_CODE,
+            )
+        preview = preview_plan(kb_path, plan, service=service)
+    if preview.get("status") != "ok" or not preview.get("previewed"):
+        return ToolOutput(
+            text=error_text("计划试算（dry-run）失败，请稍后重提：计划本身没有落盘", INVALID_PLAN_CODE),
+            error=True,
+            code=INVALID_PLAN_CODE,
+        )
+    _PROPOSALS.setdefault(os.path.abspath(kb_path), []).append(plan)
+    files = [row for row in (preview.get("files") or []) if isinstance(row, Mapping)]
+    total = sum(len(row.get("ops") or []) for row in files)
+    lines = [
+        f"- {row.get('file')}：{len(row.get('ops') or [])} 项操作，改 {len(row.get('lines_changed') or [])} 行"
+        for row in files
+    ]
+    return ToolOutput(
+        text=(
+            f"已**提议**（尚未写入）{total} 项操作，影响 {len(files)} 个文件：\n"
+            + "\n".join(lines)
+            + "\n用户会在对话栏看到一张**确认卡**，逐条勾选并点「应用」之后才会真正写入"
+            "（写入前自动备份、之后可撤销）。在用户明确告诉你结果之前，**不要声称已经写入**，"
+            "也不要重复提议同一批改动。"
+        )
+    )
+
+
+def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
+    """W 线第一把工具（**只提议、不落盘**）；`build_kb_tools()` 末尾拼接。"""
+
+    def _bound(arguments: Mapping[str, Any]) -> ToolOutput:
+        return _propose_write(kb_path, arguments)
+
+    return (
+        Tool(
+            name=PROPOSE_TOOL_NAME,
+            description=(
+                "**提议**一批对知识库的修改，交给用户在对话栏的确认卡上逐条确认。"
+                "**本工具不写盘**：只有用户勾选并点「应用」之后才会真正写入（写入前自动备份、之后可撤销）。"
+                "用户要求修改/写入知识库时用它，一次提一批（同一意图的多处改动放进同一个 ops 数组）。"
+                "`ops[]` 支持的 op 与字段："
+                "① `upsert_kp`（建/改知识点）—— `file`、`kp_id`、`name`（可选 `description`/`tags`）、"
+                "`range`=`{start:{line[,col]},end:{line[,col]}}`（1 起行号，可省列）；"
+                "② `attach_links`（把正文里的纯文本挂成跳转并把锚文本包成 `[[id]]`）—— `file`、"
+                "`anchor_text`（必须与正文**逐字**相同的纯文本，且**尚未**被 `[[…]]` 包过）、"
+                "`targets`=`[知识点 id 或文件名]`（可省 `edge_type`=`reference`|`extend`）、"
+                "可选 `occurrences`=`[{line[,col]}]`（同行出现多处且要给 col 时必须给）；"
+                "③ `detach_links`（拆掉跳转、还原纯文本）—— `file`、`anchor_text`、"
+                "`occurrences`=`[{line}]`（该行确实挂着这个锚文本）、`mode`=`detach`（默认）。"
+                "提议前先 `read_document` 读清目标原文与行号，不要凭印象写；"
+                "提议被拒时按返回的 `op_id` 与错误码修正后**重提整批**；"
+                "提议成功后，在用户回来告诉你结果之前**不要声称已写入**。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "intent": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 200,
+                        "description": "一句话说明这批改动要做什么（人话；会显示在确认卡上）",
+                    },
+                    "ops": {
+                        "type": "array",
+                        "minItems": 1,
+                        "maxItems": 20,
+                        "description": "要改的条目（字段随 op，见工具说明）",
+                        "items": {"type": "object", "additionalProperties": True},
+                    },
+                },
+                "required": ["intent", "ops"],
+                "additionalProperties": False,
+            },
+            handler=_bound,
+        ),
+    )

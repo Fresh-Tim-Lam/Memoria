@@ -1627,6 +1627,20 @@ class UIAPI:
             result["recover"] = recover_after_write(kb, rels, service=service)
         return result
 
+    def agent_plan_pending(self, kb_path: str | None = None) -> dict:
+        """取走 agent 侧**已提议但尚未展示**的写计划（确认卡的入口；工具面只有提议权，没有落盘权）。
+
+        提议由 `propose_write` 工具（`services/agent/tools/kb.py`）在问答作业里排队，**不落盘**
+        （进程内信箱）；前端在每轮问答收尾（`agent_ask_poll` 报 `done`/`error`）时取一次，
+        **取走即清空**。返回 `{status:"ok", plans:[plan, …]}`（没有提议就是空表）。
+        """
+        from memoria.services.agent.tools.kb import take_proposals
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        return {"status": "ok", "plans": take_proposals(kb)}
+
 
 # ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点
 #    （docs 里引用的 384 / 647-684 / 769 / 867 / 1015-1454 等）因此零漂移。
