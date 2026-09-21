@@ -130,6 +130,7 @@
 | 2026-09-20 | **备份子系统落地（第二片 ①：写前 pre-image + 保留 + 撤销的数据面，Q5 = ① 已拍板）**：新增 `src/memoria/services/agent/backup.py` + `tests/test_agent_backup.py`（**9 例**）。**① 逐条照 §2.3.2 落地**：目录 `<kb>/.memoria/agent/backups/<session_id>/<txid>/{journal.json, files/<原相对路径>}`；粒度 = 一个 `txid` 一个批次；新建文件记 `{"existed": false}` 且**不留字节**（撤销 = 删除）；**原字节复制**（不存 diff，不重新编码/不规范化换行）；上限 **8 MiB / 32 MiB** 超限即**预检失败且不留半个批次**（不降级为"无备份的写入"）；保留 **5 批/会话**、**10 个会话目录/库**、**64 MiB/库**，FIFO 且**永不淘汰当前会话最新批次**；撤销前比对 sha256，不符即**拒绝**（不静默覆盖用户手改）；撤销失败**保留备份 + 如实报错**。**② 两处本地补充（请人复核后并入 §2.3.2 正文）**：㈠ **批次目录整体原子落位**（先在 `<txid>.tmp-<pid>` 建齐 `files/**` 与 journal，再 `os.replace()` 整目录改名 ⇒ 任何失败都只需删临时目录，**不会留半个批次**）；㈡ **新增 `post.json`** —— §2.3.2 第 2 条列的 journal 字段只有 **pre-image** 哈希，而第 5 条要求"撤销前校验当前 sha256 == **apply 时**记录的 sha256"，apply 又发生在 journal 落盘**之后** ⇒ pre-image 哈希当不了这个凭据；故增 `record_post_images()`（apply 四原语后由 apply 入口调用一次，落**写后**逐文件哈希），撤销自动读它校验，**缺 `post.json` 默认拒绝撤销**（fail-closed；`allow_unverified=True` 仅供人工处置且如实标 `verified:false`）。**③ 测试自己抓到两个真问题（已修）**：㈠ **整批全是新建文件时临时目录没建** ⇒ journal 写不进去（补 `os.makedirs(tmp_dir, exist_ok=True)`）；㈡ 绝对路径被 `lstrip("/")` 后**悄悄当相对路径用**（`/etc/passwd` → `<kb>/etc/passwd`，静默改语义）⇒ 改为**绝对路径一律拒**，且调用方不再做"宽容归一化"。**④ 验收**：`pytest tests/test_agent_backup.py -q` **9 passed**、`pytest -q` **375 passed**（原 366）；测试逐条钉住"除 `.memoria/agent/backups/**` 外逐文件不变""字节级撤销往返""apply 后被手改 ⇒ 拒绝且不覆盖""缺 post.json 默认拒""FIFO 淘汰且最新永不淘汰"。**⑤ 未做（如实）**：`capability/backup` / `capability/undo` 事件与审计、撤销的 `approval=confirm`、打开/关库时的 trimming 挂点（属第二片 ③④）；撤销后的一致性恢复（清 `DocumentService._cache` + `validate_kb()`）留给 apply 网关。登记 `conventions/docs-management.md §4.2`；`docs/todo.md` 未编辑（另一写者并发重写中） |
 | 2026-09-20 | **② apply 入口落地 + 修掉一个阻塞它的产品缺陷**：新增 `src/memoria/services/agent/apply.py`（编译器 + apply 入口 + 整批回滚）+ `tests/test_agent_apply.py`（8 例）。**调用序**照 §2.3.2 第 4 条：`validate_plan` → `snapshot_pre_images` → **原语白名单**（`confirm_kp_range` / `update_kp` / `apply_link_instances` / `detach_link_instance` / `delete_link_route` 五个落点，别的一律不可达）→ `record_post_images` → 机会式 `trim_backups`；任一步失败 ⇒ 用该批次 pre-image **整批回滚**并如实回报。**三条实证发现（请人复核后并入设计正文）**：① **产品缺陷（非 M3 引入，人机 UI 同链路）** —— `link_text_search` 纯文本分支把 **body 绝对偏移**当**行内**偏移去查 `view_to_orig`，返回的 span 整体右移且 `matched_text` 不等于锚文本（最小复现：`前缀文字注意力机制后缀文字。` ⇒ `col=9, '后缀文字。'`，应为 `col=4, '注意力机制'`）⇒ `apply_link_instances()` 会把正文改坏（实测曾产出 `注意力机制是核心[[。注意力机]]制也出现在别处。`）。**已修**（等量替换、行号零漂移）：`row_pos = pos - (body.rfind("\n", 0, pos) + 1)` 后再查映射；新增 `tests/test_link_text_search.py`（13 例：三例最小复现 + 通用不变量 `row[replace_start:replace_end] == matched_text`）。② **§2.3.3 缺一条前置**：同一 plan 内「先建点、后连边」要求**前序 op 的结果对后序 op 的 `attach_links` 目标解析可见**（信封注释已写"前 op 的结果对后 op 可见"，但校验列未落实）—— 否则最常见的 plan 恒被 `target_not_found` 拒；已在 `validate_plan` 里补 `pending_ids` 集合 + 回归用例。③ **`attach_links` 在 M3a 内只能到行粒度**：`apply_link_instances()` 只收 `selected_lines`（**没有列**），同一行多处出现时只能包裹其中一处（实测包最后一处）⇒ 设计稿 op 字段 `occurrences[].matched_text` **落不到列级**（要列级得改原语签名，属后续批次）。**测试自己抓到的**：`upsert_kp`+`attach_links` 同 plan 的 5 个用例先失败（即发现 ②）；`instances` 按出现处记（同行两处 ⇒ 两条 `{line:3}`）。**验收**：`pytest -q` **393 passed**（原 375；无 xfail 残留）。**未做**：③ 审批 + 审计（`capability/apply`/`capability/backup`/`capability/undo`）、④ RPC 与前端确认卡；撤销的网关侧一致性恢复（清 `_cache` + `validate_kb`）。**另记一条工具链教训**：测试若构造 `DocumentService` 而不隔离 `MEMORIA_CONFIG_DIR`，会经「记录最近打开」写**真实** `config/ui-settings.json`（本轮实测把 8 条临时库写进 `recent_kbs`，已清理并给两个 fixture 补隔离）—— 建议加 `tests/conftest.py` autouse 隔离，待人拍板。登记 `conventions/docs-management.md §4.2`；`docs/todo.md` 未编辑 |
 | 2026-09-20 | **更正上一条的「行粒度」结论 + 给原语补列级 span（人已拍板）**：用户追问「原本 memoria 就是可以选中一行内任意文字建跳转，怎么现在颗粒度就变成行？」—— **追问成立，我上一条的说法不准确**。**① 查清人机 UI 真实路径**（读码）：选中文字 ⇒ `wrap_text_as_link()`（`document.py:2821`，**只建 sidecar 路由、不碰正文**，`update_markdown=False`；锚文本 = 选中的那段文字）⇒ 随后**匹配面板**确认包裹位置 ⇒ `apply_link_instances(…, [...m.selected], …)`（`app.js:6025`，`m.selected` 是**行号集合**，`app.js:5963`）。⇒ 所以"字符级"的真正来源是**锚文本本身**（选中哪段文字，锚就是哪段）；只有"**同一行里该文字重复出现**"时，锚文本与行号两条信息都相同、才是定位极限 —— 而**人机 UI 在那种情形下同样只包一处**（同函数同参数）。**② 拍板：补列级参数**。`DocumentService.apply_link_instances()` 新增关键字参数 `selected_spans: dict | None = None`（**默认 None ⇒ 旧行为逐字不变**，人机 UI 与既有调用者零影响）；给了 span 就**必须先与锚文本逐字相符**，不符即 `{status:"error"}`（`document.py:2611-2626`）—— 与 `plan.py` 校验形成**双保险**。RPC `apply_link_instances`（`ui.py:564`）追加同名可选参数并透传。**③ plan 侧扩字段**：`occurrences[].col`（**1 起列号**，与 `#L3C2` 同口径）⇒ 校验核对该列起确为锚文本（新错误码 `col_mismatch`），并产出 `pinned_spans: {line: (start0, end0)}`；编译期把它作为 `selected_spans` 传给原语；`preview_plan()` 用**同一份 pinned span** 试算 ⇒ 预览与落地不可能漂移。同行多处**且没给 col** ⇒ 新警告 `ambiguous_occurrence`（不拒，如实说明"哪一处由后端按行取值决定"）。**④ 设计稿 §2.3.3「需新增的最小能力」第 2 条**（`occurrences[].matched_text` 前置核对）**据此升级为"行 + 列"双核对**，请人复核后并入该节正文。**⑤ 顺带（未做，可选后续）**：人机 UI 的匹配面板其实已列出**每一处**，只是确认时把列丢了 —— 前端接上 `selected_spans` 后即可区分同行两处；本轮**未改前端**。**⑥ 验收**：`pytest -q` **397 passed**（原 393；+4 例：C1/C10 两个方向各包对一处、列号不符即拒、不给 col 的旧口径回归、`ambiguous_occurrence` 警告）；三个原语锚点行号未动（`confirm_kp_range` 1360 / `detach_link_instance` 2428 / `apply_link_instances` 2493）。登记 `conventions/docs-management.md §4.2` |
+| 2026-09-20 | **新增 §9「写冲突优先级与并发保护」（人已拍板）+ 落后端一半实现**：用户问「用户修改和 agent 修改哪个定位更高优先？」⇒ 结论**不是"某一方优先"**，而是三条规则：① **盘上版本 = 唯一权威**（任何写者写前必须确认"我读到的版本 == 盘上版本"，不一致即拒写并回报 `stale_write`）② **人的当下操作最高**（agent 不得趁人正在编辑同一文件时抢写）③ **冲突由人明示决定**（前端弹「重载 / 以我为准 / 看差异」，**agent 不自动合并、不静默赢，人的过期 buffer 也不自动赢**）。**明确否掉**多线程（写路径本是无锁同步短事务，开线程只会引入进程内竞态）与增量修改（对 lost update 不免疫，属优化后置）。**实现（本轮只做后端一半）**：新模块 `storage/file_version.py`（`file_version`=内容 sha256 / `rel_version` / `with_version` / `guard_save`）；`ui.py` 的 `load_document` **追加** `version`（只增不改）、`save_document` 追加可选 `base_version`（**空串 = 不校验 ⇒ 旧行为逐字不变**）—— 两处都是**等量替换**委托进新模块，`services/document.py` **一行未动**（零行漂移）；`preview_plan()` 返回 `base_versions`（= 用户看过的那一版），`apply_plan()` **先比版本再谈 plan**（文件变了还报"plan 非法"是误导），不一致 ⇒ `stale_write` 且**尚未建备份**。**验收**：新增 `tests/test_write_conflicts.py`（8 例：版本=字节 sha256、`load_document` 带版本、版本匹配才写且回写新版本、**过期保存被拒且不覆盖**、不传版本=旧行为、`preview_plan` 交基准、**预览后被改 ⇒ 整批拒且不建备份不写盘**、版本一致正常落地）；`pytest -q` **405 passed**（原 397）。**未做（下一步）**：前端保存带 `version` + `stale_write` 三选一弹窗（含 i18n 中英）、apply 期间前端忙位与"当前文件正被编辑 ⇒ 拒 apply"。**另记**：`_write_body` 的 `os.replace` 偶发 `WinError 5`（外部瞬时持锁，非句柄泄漏）—— 是否加短退避重试仍待人拍板。登记 `conventions/docs-management.md §4.2` |
 
 ---
 
@@ -258,3 +259,57 @@
 | **2.7 frontmatter（可暂缓）** | KP 元数据权威是 **sidecar**、frontmatter **不参与解析** ⇒ 写入价值低、且要先定"谁权威"；建议留到 §7 其他场景之后 |
 | **6.1 / 6.2（派生动作）** | 范围重锚与 pending 同步应**隐式发生**在写入事务内，不该作为独立 agent 场景暴露（否则出现"绕开事务的第二个写者"） |
 | **5.2 表格 / 5.3 公式块（暂缓）** | 人 UI 自身尚未写好（表格无事件绑定 `edit-handler.js:1451-1452`；公式块写回可能损坏 TeX）⇒ **先修人 UI**，再考虑 agent 面 |
+
+---
+
+## 9. 写冲突优先级与并发保护（口径，2026-09-20 人已拍板）
+
+> **触发**：用户问「你把用户修改和 agent 修改哪个定位更高优先？」。本节是**结论口径**。
+> **实现落点**：`memoria/storage/file_version.py`（版本令牌）+ `services/agent/apply.py`（整批拒）；
+> 口径条目属**人已确认**，Agent 只追加、不改写。
+
+**三条规则（不设"谁的内容优先"，只设"不许基于过期版本写"）**
+
+1. **盘上版本 = 唯一权威**：任何写者（人机保存 / agent apply / 级联修复）写之前必须确认
+   "我读到的版本 == 盘上版本"；不一致 ⇒ **拒写**并回报结构化 `stale_write`（带期望/当前版本）。
+2. **人的当下操作最高**：agent 的整批写不得趁人正在编辑同一文件时抢写 —— 该文件有未落盘编辑时，
+   apply 应**等或拒**（不抢、不覆盖）。
+3. **冲突由人明示决定**：`stale_write` 交前端弹三选一 —— ① 重载（丢弃我的编辑，跟盘上走）
+   ② 以我为准（**覆盖前先把盘上那一版存进备份目录**，保证仍可回滚）③ 看差异（可后置）。
+   **agent 不自动合并、不静默赢；人的过期 buffer 也不自动赢**。
+
+**为什么不是"某一方优先"**：优先的是**人**，不是**人的过期 buffer**。让人的过期保存自动赢 =
+静默抹掉 agent 那个**已审计、可撤销的事务**（审计链与盘上现实脱节）；让 agent 自动赢 = 吞掉人的
+编辑意图。两者都禁止 ⇒ 只剩"**拒绝 + 明示选择**"。
+
+| 场景 | 谁赢 | 依据 |
+|---|---|---|
+| 用户正在编辑 F，agent apply 改 F | **用户**（agent 等 / 拒） | 规则 2 |
+| 用户 buffer 落后（F 已被 agent 改过），用户点保存 | **都不自动赢**：拒保存 + 弹冲突 | 规则 1 + 3 |
+| 两个窗口（`open_new_window` = **独立进程**）同时保存 | 后写者被拒 + 提示 | 规则 1 |
+| 两个 agent 会话同时 apply | 先到先得，后到拒 | 规则 1（版本令牌天然覆盖） |
+| 用户手改后点「撤销」 | **拒绝撤销**（保留备份） | 与规则 1 同向；`post.json` 写后哈希校验（已实现） |
+
+**实现形状（本轮已落后端一半）**
+
+- **版本令牌**：`storage/file_version.py` 提供 `file_version` / `rel_version` / `with_version` /
+  `guard_save`；`ui.py` 的 `load_document` 追加 `version` 字段（**只增不改**，旧读者忽略），
+  `save_document` 追加可选 `base_version`（**空串 = 不校验 ⇒ 旧行为逐字不变**）。
+  `services/document.py` **一行未动** —— 两个 RPC 用**等量替换**委托进新模块（零行漂移）。
+- **agent 侧**：`preview_plan()` 返回 `base_versions`（= 用户看过的那一版）⇒ apply 时原样传回；
+  `apply_plan()` **先比版本再谈 plan**（文件都变了还报"plan 非法"是误导），不一致 ⇒ `stale_write`
+  且**尚未建备份、未写盘**；调用方没给基准时退化为"本次编译时那份"的最低限度自检。
+- **未做（下一步）**：前端保存路径带上 `version` 并处理 `stale_write`（三选一弹窗 + i18n 中英）；
+  apply 期间的前端忙位与"当前文件正被编辑 ⇒ 拒 apply"。
+
+**明确否掉的两条路（防复发）**
+
+- **多线程**：写路径本身就是**同步短事务**，现状**没有写锁**（现有锁只覆盖词法索引 / executor /
+  kp_index / embedding / agent 作业）。开多线程只会把"文件级并发"升级成"进程内竞态 + 部分写"
+  ⇒ **不做**；正确方向是**串行 + 版本校验**。
+- **增量修改**：行级 patch 同样基于某个基准版本、对 lost update **不免疫**；它的价值在写入量 /
+  备份体积 / diff 可读性 ⇒ 属优化，**后置**。
+
+**已知环境噪声（与本口径无关，如实记录）**：`_write_body` 的 `os.replace` 偶发 `WinError 5`
+（外部 AV / 索引器瞬时持锁；`_write_body` 自身无句柄泄漏：`with` + flush + fsync → close → replace）。
+是否加"瞬时锁短退避重试"**待人拍板**（本轮未改）。

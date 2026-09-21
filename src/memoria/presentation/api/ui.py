@@ -166,7 +166,7 @@ class UIAPI:
 
     def load_document(self, rel_path: str) -> dict:
         try:
-            return self._svc.load_document(rel_path)
+            return with_version(self._svc.load_document(rel_path), self._svc.kb_path, rel_path)
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
@@ -197,9 +197,9 @@ class UIAPI:
         except Exception as e:
             return {"status": "error", "message": str(e)}
 
-    def save_document(self, rel_path: str, body: str) -> dict:
+    def save_document(self, rel_path: str, body: str, base_version: str = "") -> dict:
         try:
-            return self._svc.save_document(rel_path, body)
+            return guard_save(self._svc, rel_path, body, base_version)
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
@@ -1500,4 +1500,11 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001 —— 成本是附加信息，取不到不该影响界面主流程
             return {"status": "error", "code": "cost_failed", "message": str(e)}
         return {"status": "ok", "kb_path": kb, "session_id": sid or None, "cost": cost}
+
+
+# ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点
+#    （docs 里引用的 384 / 647-684 / 769 / 867 / 1015-1454 等）因此零漂移。
+#    口径见 `docs/design/agent-plugin-design.md §9`；实现见 `memoria/storage/file_version.py`。
+from memoria.storage.file_version import guard_save, with_version  # noqa: E402
+
 

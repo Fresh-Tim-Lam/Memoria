@@ -42,6 +42,7 @@ from memoria.range.locator import resolve_range
 from memoria.services.agent.tools.kb import _safe_rel
 from memoria.services.link_instances import find_plain_text_in_line, wrap_plain_on_lines
 from memoria.services.link_resolver import resolve_link_target
+from memoria.storage.file_version import rel_version
 from memoria.storage.markdown import strip_frontmatter
 from memoria.storage.sidecar import load_sidecar_for_md
 
@@ -72,6 +73,15 @@ TXID_RE = re.compile(r"^\d{8}T\d{6}Z-\d+$")
 
 #: 可由 plan 声明的边类型（`contain` 不由 plan 写 —— 它由"知识点包含关系"派生）
 PLAN_EDGE_TYPES = frozenset({EDGE_REFERENCE, EDGE_EXTEND})
+
+
+def base_versions(kb_path: str, rel_paths: Sequence[str]) -> dict[str, str]:
+    """受影响正文的**当前版本快照**（§9 冲突保护的基准）。
+
+    `preview_plan()` 把它发给调用方（前端/上层），apply 时再原样传回 ⇒ "看过预览的那一版"
+    与"落地时的盘上版本"必须一致，否则整批拒（人不基于过期版本写、agent 同样不）。
+    """
+    return {rel: rel_version(kb_path, rel) for rel in sorted({str(r) for r in rel_paths if str(r)})}
 
 
 def _err(op_id: str, code: str, message: str) -> dict[str, str]:
@@ -483,6 +493,8 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         **checked,
         "previewed": True,
         "files": [files[key] for key in sorted(files)],
+        # 版本基准：调用方拿着它去 apply（apply 会再比一次 ⇒ 预览与落地之间被改过就整批拒）
+        "base_versions": base_versions(kb_path, [str(op.get("file") or "") for op in checked["ops"]]),
     }
 
 

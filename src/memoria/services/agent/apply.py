@@ -39,8 +39,10 @@ from memoria.services.agent.plan import (
     OP_ATTACH_LINKS,
     OP_DETACH_LINKS,
     OP_UPSERT_KP,
+    base_versions as plan_base_versions,
     validate_plan,
 )
+from memoria.storage.file_version import rel_version
 from memoria.storage.manifest import manifest_path
 from memoria.storage.pending import pending_path
 from memoria.storage.sidecar import sidecar_path_for
@@ -231,12 +233,17 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                         }
                     )
     rels = [str(call["args"].get("rel_path") or "") for call in calls]
+    # 记下**校验时**每个受影响正文的版本：apply 之前再比一次 ⇒ "校验与落地之间被人改过"就整批拒
+    # （§9 口径：盘上版本权威、不许基于过期版本写）。侧车/manifest/pending 由原语内部读写，
+    # 它们的版本基准不适用同一套语义，故这里只钉正文。
+    base_versions = plan_base_versions(kb_path, [r for r in rels if r])
     return {
         "status": "ok",
         "txid": checked.get("txid"),
         "intent": checked.get("intent"),
         "calls": calls,
         "files": affected_files(kb_path, rels),
+        "base_versions": base_versions,
         "warnings": checked.get("warnings", []),
     }
 
@@ -250,12 +257,25 @@ def _raw_op(plan: Any, op_id: str) -> dict | None:
     return None
 
 
+def _stale_error(stale: Sequence[str]) -> dict:
+    """版本不一致 ⇒ 结构化 `stale_write`（供前端弹「重载 / 以我为准」；此刻零写入）。"""
+    return {
+        "status": "error",
+        "code": "stale_write",
+        "message": "这些文件在校验之后被改动，整批拒绝（请重新校验 plan）：" + "、".join(sorted(stale)),
+        "files": sorted(stale),
+        "applied": [],
+        "rolled_back": False,
+    }
+
+
 def apply_plan(
     kb_path: str,
     plan: Any,
     *,
     session_id: str,
     txid: str | None = None,
+    base_versions: dict | None = None,
     plugin: str | None = None,
     tool_id: str | None = None,
     service: Any = None,
@@ -268,11 +288,28 @@ def apply_plan(
     from memoria.services.document import DocumentService
 
     service = service or DocumentService(kb_path=kb_path)
+    # **写冲突保护（§9）**：调用方给了"用户看过的那一版"（`preview_plan()` 返回的 `base_versions`）
+    # ⇒ **先比版本再谈 plan**：文件都变了，报"plan 非法"是误导（真实原因是内容过期）。
+    if base_versions:
+        stale = [rel for rel, want in base_versions.items() if rel_version(kb_path, rel) != want]
+        if stale:
+            return _stale_error(stale)
     compiled = compile_plan(kb_path, plan, service=service)
     if compiled["status"] != "ok":
         return {**compiled, "applied": [], "rolled_back": False}
     if not compiled["calls"]:
         return {"status": "error", "code": "empty_plan", "message": "plan 未编译出任何原语调用", "applied": []}
+
+    # 调用方没给基准 ⇒ 用本次编译时记的那份做最低限度自检（等价于"单次 RPC 内没人插队"）。
+    # 此时**尚未建备份、未写盘** —— agent 不基于过期版本写、也不静默赢。
+    if not base_versions:
+        stale = [
+            rel
+            for rel, want in (compiled.get("base_versions") or {}).items()
+            if rel_version(kb_path, rel) != want
+        ]
+        if stale:
+            return _stale_error(stale)
 
     clean_txid = str(txid or compiled.get("txid") or "").strip()
     snapshot = backup.snapshot_pre_images(
