@@ -189,7 +189,9 @@ def _validate_upsert_kp(kb_path: str, op: Mapping, lines: Sequence[str], service
     }
 
 
-def _validate_attach_links(kb_path: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
+def _validate_attach_links(
+    kb_path: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict], pending_ids: set[str]
+) -> dict:
     anchor = str(op.get("anchor_text") or "").strip()
     if not anchor:
         errors.append(_err(op_id, "missing_field", "缺 anchor_text"))
@@ -199,6 +201,10 @@ def _validate_attach_links(kb_path: str, op: Mapping, lines: Sequence[str], op_i
         errors.append(_err(op_id, "missing_field", "targets 必须是非空数组"))
         return {"action": "invalid"}
     for target in targets:
+        # 同一 plan 内**前序** `upsert_kp` 刚建的点对后 op 可见（§2.3.3 信封注释："前 op 的结果
+        # 对后 op 可见（可'先建点、后连边'）"）—— 否则"建点 + 连边"这种最常见的 plan 永远校验不过。
+        if target in pending_ids:
+            continue
         # 「目标必须可解析」：ambiguous / not_found 一律拒整批（§2.3.3 校验列）
         resolved = resolve_link_target(kb_path, target)
         if resolved.get("status") != "ok":
@@ -298,7 +304,9 @@ def _validate_detach_links(kb_path: str, op: Mapping, lines: Sequence[str], side
     return {"action": mode, "anchor_text": anchor, "lines": sorted(chosen)}
 
 
-def _validate_op(kb_path: str, op: Any, service: Any, errors: list[dict], warnings: list[dict]) -> dict:
+def _validate_op(
+    kb_path: str, op: Any, service: Any, errors: list[dict], warnings: list[dict], pending_ids: set[str]
+) -> dict:
     if not isinstance(op, Mapping):
         errors.append(_err("", "bad_envelope", "ops[] 的元素必须是对象"))
         return {"op": "", "op_id": "", "action": "invalid"}
@@ -324,7 +332,7 @@ def _validate_op(kb_path: str, op: Any, service: Any, errors: list[dict], warnin
     if verb == OP_UPSERT_KP:
         detail = _validate_upsert_kp(kb_path, data, lines, service, op_id, errors)
     elif verb == OP_ATTACH_LINKS:
-        detail = _validate_attach_links(kb_path, data, lines, op_id, errors)
+        detail = _validate_attach_links(kb_path, data, lines, op_id, errors, pending_ids)
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     else:
@@ -349,13 +357,17 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         service = DocumentService(kb_path=kb_path)
     seen: set[str] = set()
     ops: list[dict] = []
+    #: 同一 plan 内**前序** op 新建的 KP id（"先建点、后连边"的可见性集合；§2.3.3）
+    pending_ids: set[str] = set()
     for raw in _as_list(data.get("ops")):
-        parsed = _validate_op(kb_path, raw, service, errors, warnings)
+        parsed = _validate_op(kb_path, raw, service, errors, warnings, pending_ids)
         oid = str(parsed.get("op_id") or "")
         if oid and oid in seen:
             errors.append(_err(oid, "duplicate_op_id", f"op_id 在 plan 内重复：{oid}"))
         if oid:
             seen.add(oid)
+        if parsed.get("op") == OP_UPSERT_KP and parsed.get("kp_id"):
+            pending_ids.add(str(parsed["kp_id"]))
         ops.append(parsed)
     return {
         "status": "error" if errors else "ok",

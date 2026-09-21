@@ -666,12 +666,12 @@ def _exact_scan(
         ln = line_at_offset(body, pos)
         if 0 < ln <= len(lines):
             row = lines[ln - 1]
-            view, v2o = build_search_view(
-                row, anchor, options=options, link_entry=link_entry
-            )
+            # `pos` 是原文(body)偏移、`v2o` 是**行内**偏移表 ⇒ 必须先换算成行内下标（旧实现直接拿 body 偏移去比，命中错误下标 ⇒ span 右移、包裹到错误子串）
+            row_pos = pos - (body.rfind("\n", 0, pos) + 1)
+            view, v2o = build_search_view(row, anchor, options=options, link_entry=link_entry)
             view_hit = -1
             for vi, oi in enumerate(v2o):
-                if oi == pos:
+                if oi == row_pos:
                     view_hit = vi
                     break
             if view_hit < 0:

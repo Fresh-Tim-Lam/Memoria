@@ -98,8 +98,13 @@ def kb(tmp_path: Path) -> Path:
 
 
 @pytest.fixture()
-def service(kb: Path) -> DocumentService:
-    """先装载一次（既有装载语义会补写 manifest/pending），此后快照才可比对"零写入"。"""
+def service(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> DocumentService:
+    """先装载一次（既有装载语义会补写 manifest/pending），此后快照才可比对"零写入"。
+
+    **同时隔离配置目录**：装载会走「记录最近打开」链路（`ui_settings.remember_last_kb_path`）
+    ⇒ 不隔离就会写真实 `config/ui-settings.json`（实测踩到）。
+    """
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
     return DocumentService(kb_path=str(kb))
 
 
@@ -196,6 +201,20 @@ def test_validate_plan_range_rules(kb: Path, service: DocumentService) -> None:
     assert "range_invalid" in _codes(inverted)
     out_of_range = validate_plan(str(kb), _plan(_upsert(start=99)), service=service)
     assert "bad_field" in _codes(out_of_range)
+
+
+def test_validate_plan_lets_later_ops_see_earlier_new_ids(kb: Path, service: DocumentService) -> None:
+    """同一 plan 内「**先建点、后连边**」必须可行（§2.3.3 信封注释：前 op 的结果对后 op 可见）。
+
+    否则最常见的 plan（建点 + 把正文挂到它）永远校验不过 —— 目标解析只看盘上状态时会报
+    `target_not_found`。本用例是那个缺口的回归钉。
+    """
+    plan = _plan(_upsert(kp_id="fresh-kp", name="新建点"), _attach(targets=["fresh-kp"]))
+    checked = validate_plan(str(kb), plan, service=service)
+    assert checked["status"] == "ok", checked["errors"]
+    # 反向：引用一个**既不来自前序 op、盘上也不存在**的 id ⇒ 仍然拒（不能把闸门放太松）
+    bad = validate_plan(str(kb), _plan(_attach(targets=["not-created-anywhere"])), service=service)
+    assert "target_not_found" in _codes(bad)
 
 
 def test_validate_plan_link_targets_must_be_resolvable(kb: Path, service: DocumentService) -> None:
