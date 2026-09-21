@@ -299,7 +299,145 @@ def test_propose_tool_documents_body_edit_ops(kb: Path) -> None:
     assert "尚未写入" in result.content
 
 
-# ── ⑤ RPC 面：卡片走的正是这三个 op ───────────────────────────────────────
+# ── ⑥ 块级：`upsert_block`（§7 5.1 / 5.3 / 5.5；表格不做）────────────────────────────────
+
+
+CODE_MD = "# C 文档\n\n示例：\n\n```python\nprint(1)\n```\n\n完。\n"
+MATH_MD = "# M 文档\n\n公式：\n\n$$\na = b + c\n$$\n\n完。\n"
+
+
+def _kb_with(tmp_path: Path, text: str) -> Path:
+    """按正文指纹建一个独立小库（同一测试里建多个也不撞目录）。"""
+    root = tmp_path / f"kb-{abs(hash(text)) % 100000}"
+    (root / "notes").mkdir(parents=True)
+    (root / ".memoria").mkdir()
+    (root / "notes" / "c.md").write_text(text, encoding="utf-8", newline="")
+    return root
+
+
+def test_upsert_block_rebuilds_code_fence(tmp_path: Path) -> None:
+    """整块重建代码块：围栏由程序重建（保留/替换语言），撤销逐字节还原。"""
+    root = _kb_with(tmp_path, CODE_MD)
+    service = DocumentService(kb_path=str(root))
+    body_lines = CODE_MD.splitlines()
+    plan = _plan(
+        {
+            "op": "upsert_block",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "kind": "code",
+            "range": {"start": {"line": 5}, "end": {"line": 7}},
+            "expect": "```python\nprint(1)\n```",
+            "content": "print(2)\nprint(3)",
+            "lang": "python",
+        }
+    )
+    preview = preview_plan(str(root), plan, service=service)
+    entry = preview["files"][0]["ops"][0]
+    assert entry["diff_available"] is True and entry["block"] == {"kind": "code", "lang": "python"}
+    assert [row["before"] for row in entry["diff"] if row["before"] is not None] == ["```python", "print(1)", "```"]
+
+    done = apply_plan(
+        str(root), plan, session_id=SESSION, txid="20260921T101502Z-03", service=service
+    )
+    assert done["status"] == "ok", done
+    text = (root / "notes" / "c.md").read_text(encoding="utf-8")
+    assert "```python\nprint(2)\nprint(3)\n```" in text
+    assert text.count("```") == 2  # 围栏没有被多加/漏掉
+    assert len(body_lines) == 9
+
+    undone = restore_batch(str(root), SESSION, "20260921T101502Z-03")
+    assert undone["status"] == "ok" and (root / "notes" / "c.md").read_text(encoding="utf-8") == CODE_MD
+
+
+MERMAID_MD = "# D 文档\n\n图：\n\n```mermaid\ngraph TD\nA-->B\n```\n\n完。\n"
+
+
+def test_upsert_block_math_and_mermaid(tmp_path: Path) -> None:
+    root = _kb_with(tmp_path, MATH_MD)
+    service = DocumentService(kb_path=str(root))
+    plan = _plan(
+        {
+            "op": "upsert_block",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "kind": "math",
+            "range": {"start": {"line": 5}, "end": {"line": 7}},
+            "expect": "$$\na = b + c\n$$",
+            "content": "E = mc^2",
+        }
+    )
+    assert apply_plan(str(root), plan, session_id=SESSION, txid="20260921T101503Z-04", service=service)["status"] == "ok"
+    assert "$$\nE = mc^2\n$$" in (root / "notes" / "c.md").read_text(encoding="utf-8")
+
+    mroot = _kb_with(tmp_path, MERMAID_MD)  # 同一 fixture 目录下的另一个库
+    service = DocumentService(kb_path=str(mroot))
+    plan = _plan(
+        {
+            "op": "upsert_block",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "kind": "mermaid",
+            "range": {"start": {"line": 5}, "end": {"line": 8}},  # 该 mermaid 块是 5..8 行（内容两行）
+            "expect": "```mermaid\ngraph TD\nA-->B\n```",
+            "content": "graph LR\nX-->Y",
+        }
+    )
+    assert apply_plan(str(mroot), plan, session_id=SESSION, txid="20260921T101504Z-05", service=service)["status"] == "ok"
+    text = (mroot / "notes" / "c.md").read_text(encoding="utf-8")
+    assert "```mermaid\ngraph LR\nX-->Y\n```" in text  # 语言标记由程序保留（不用模型重复写）
+
+
+@pytest.mark.parametrize(
+    ("op_patch", "code"),
+    [
+        ({"kind": "table"}, "unsupported_kind"),  # 表格本轮不给（人 UI 尚不能写）
+        ({"kind": "mermaid"}, "block_kind_mismatch"),  # 声明 mermaid 但围栏是 python
+        ({"range": {"start": {"line": 4}, "end": {"line": 7}}}, "block_not_fenced"),  # 区间没对齐块首
+        ({"content": "print(1)\n```\nprint(2)"}, "content_breaks_fence"),  # 内容会提前收尾
+        ({"content": "   "}, "empty_text"),
+        ({"expect": "我猜的整块原文"}, "expect_mismatch"),
+    ],
+)
+def test_upsert_block_rejects_bad_input(tmp_path: Path, op_patch: dict, code: str) -> None:
+    root = _kb_with(tmp_path, CODE_MD)
+    service = DocumentService(kb_path=str(root))
+    op = {
+        "op": "upsert_block",
+        "op_id": "o1",
+        "file": "notes/c.md",
+        "kind": "code",
+        "range": {"start": {"line": 5}, "end": {"line": 7}},
+        "expect": "```python\nprint(1)\n```",
+        "content": "print(2)",
+    }
+    op.update(op_patch)
+    checked = validate_plan(str(root), _plan(op), service=service)
+    assert checked["status"] == "error", checked
+    assert checked["errors"][0]["code"] == code, checked["errors"]
+
+
+def test_upsert_block_runs_through_the_same_edit_body_primitive(tmp_path: Path) -> None:
+    """块级**不新增落盘原语**：编译出来仍是 `edit_body`（备份/回滚/审计/撤销全部沿用）。"""
+    root = _kb_with(tmp_path, CODE_MD)
+    service = DocumentService(kb_path=str(root))
+    plan = _plan(
+        {
+            "op": "upsert_block",
+            "op_id": "o1",
+            "file": "notes/c.md",
+            "kind": "code",
+            "range": {"start": {"line": 5}, "end": {"line": 7}},
+            "expect": "```python\nprint(1)\n```",
+            "content": "print(2)",
+            "lang": "python",
+        }
+    )
+    compiled = compile_plan(str(root), plan, service=service)
+    assert [call["primitive"] for call in compiled["calls"]] == ["edit_body"]
+
+
+# ── ⑦ RPC 面：卡片走的正是这三个 op ───────────────────────────────────────
 
 
 def test_preview_rpc_renders_body_edit_diff(kb: Path, api: UIAPI) -> None:

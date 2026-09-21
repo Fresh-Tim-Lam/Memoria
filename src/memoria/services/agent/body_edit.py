@@ -31,6 +31,7 @@
 from __future__ import annotations
 
 import os
+import re
 from collections.abc import Mapping, Sequence
 from typing import Any
 
@@ -227,6 +228,82 @@ def splice(body: str, edits: Sequence[Mapping]) -> tuple[str, list[int], list[di
             new_body = new_body.rstrip("\r\n")
     diff.sort(key=lambda row: (int(row["line"]), 0 if row["before"] is not None else 1))
     return new_body, sorted(changed), diff
+
+
+# ── 块级：围栏块（代码 / mermaid / 公式）重建（§7 的 5.1 / 5.3 / 5.5）──────────────────────
+# 设计里这一族要的是**整块原语** `kb.block.upsert`。本地做法：**不新增落盘原语** —— 本函数把
+# "整块"重建成**含围栏的完整文本**，再交给上面同一个 `splice()`（`replace`）落地 ⇒ 备份 / 整批回滚 /
+# 预览 / 审计 / 撤销全部沿用既有链路，"预览 = 落地"也仍由同一函数保证。
+# **表格（§7 5.2）本轮不做**：设计写明"人 UI 也还不支持表格写回，先补人 UI"；给 agent 单开一条
+# 人却改不动的写入路径，只会制造"坏了没法修"的死角。
+
+#: 支持的围栏块类型（**只增不改**）。表格按上条理由不在内。
+BLOCK_KINDS: tuple[str, ...] = ("code", "mermaid", "math")
+
+_FENCE_RE = re.compile(r"^\s{0,3}```+\s*([^\s`]*)\s*$")
+
+
+def _fence_line(row: str) -> tuple[bool, str]:
+    """一行是不是开围栏（``` 开头，其后最多一个语言标记）；返回 `(是否围栏, 语言)`。"""
+    match = _FENCE_RE.match(row or "")
+    return (True, match.group(1)) if match else (False, "")
+
+
+def _is_closing_fence(row: str) -> bool:
+    """一行是不是闭围栏（**整行只有反引号**，≥3 个）。"""
+    stripped = (row or "").strip()
+    return len(stripped) >= 3 and set(stripped) == {"`"}
+
+
+def block_bounds(plain: Sequence[str], start: int, end: int, kind: str) -> dict:
+    """检查 `[start..end]`（1 起、含端点）是否**恰好**是一个 `kind` 类围栏块。
+
+    返回 `{"lang": <原语言>}`；不合法即抛 `EditError`。**不猜**：区间必须严丝合缝地覆盖
+    "开围栏 → 内容 → 闭围栏"，多一行少一行都拒（否则会静默吃掉邻行）。
+    """
+    if kind not in BLOCK_KINDS:
+        raise EditError(
+            "unsupported_kind",
+            f"不支持的块类型 {kind!r}（只允许 {BLOCK_KINDS}；表格见 §7 5.2 —— 人 UI 尚不能写，本轮不给 agent 开）",
+        )
+    total = len(plain)
+    _bounds(start, total, "upsert_block")
+    _bounds(end, total, "upsert_block")
+    if end - start < 2:
+        raise EditError("block_not_fenced", "块至少要 3 行：开围栏 / 内容 / 闭围栏")
+    head, tail = str(plain[start - 1]), str(plain[end - 1])
+    if kind == "math":
+        if head.strip() != "$$" or tail.strip() != "$$":
+            raise EditError("block_kind_mismatch", "kind=math 的块必须以 `$$` 开头、以 `$$` 结尾")
+        return {"lang": ""}
+    is_fence, lang = _fence_line(head)
+    if not is_fence:
+        raise EditError("block_not_fenced", "块首必须是 ``` 围栏行")
+    if not _is_closing_fence(tail):
+        raise EditError("block_not_fenced", "块尾必须是闭合围栏（```）")
+    if kind == "mermaid" and lang != "mermaid":
+        raise EditError("block_kind_mismatch", f"kind=mermaid 的块首语言应为 mermaid，现在是 {lang!r}")
+    if kind == "code" and lang == "mermaid":
+        raise EditError("block_kind_mismatch", "这是 mermaid 块，请用 kind=mermaid")
+    return {"lang": lang}
+
+
+def rebuild_block(kind: str, content: str, lang: str = "") -> str:
+    """把块内容重建成**含围栏的完整文本**（`content` 不含围栏）。
+
+    内容里若出现会**提前收尾**的行（``` / `$$`）⇒ 拒（`content_breaks_fence`）：那种内容会静默
+    改变文档结构，必须让调用方换写法，而不是替它转义。
+    """
+    rows = str(content or "").splitlines()
+    if not rows or all(not row.strip() for row in rows):
+        raise EditError("empty_text", "content 不能为空（要清空块请用 delete_lines）")
+    if kind == "math":
+        if any(row.strip() == "$$" for row in rows):
+            raise EditError("content_breaks_fence", "公式内容里不能再出现 `$$`（会提前收尾）")
+        return "$$\n" + "\n".join(rows).rstrip("\n") + "\n$$"
+    if any(_is_closing_fence(row) or _fence_line(row)[0] for row in rows):
+        raise EditError("content_breaks_fence", "代码块内容里不能出现围栏行（```）")
+    return "```" + str(lang or "").strip() + "\n" + "\n".join(rows).rstrip("\n") + "\n```"
 
 
 def apply_body_edits(service: Any, rel_path: str, edits: Sequence[Mapping]) -> dict:

@@ -40,12 +40,15 @@ from memoria.graph.edge_types import EDGE_EXTEND, EDGE_REFERENCE, normalize_link
 from memoria.range.constants import SNIPPET_MAX_LEN
 from memoria.range.locator import resolve_range
 from memoria.services.agent.body_edit import (
+    BLOCK_KINDS,
     MODE_DELETE,
     MODE_INSERT,
     MODE_REPLACE,
     EditError,
+    block_bounds,
     check_edit,
     normalize_edits,
+    rebuild_block,
     splice,
 )
 from memoria.services.agent.tools.kb import _safe_rel
@@ -68,6 +71,9 @@ OP_RENAME_KP = "rename_kp"
 OP_REPLACE_LINES = "replace_lines"
 OP_INSERT_LINES = "insert_lines"
 OP_DELETE_LINES = "delete_lines"
+#: 块级（§7 的 5.1 / 5.3 / 5.5）：**整块重建**代码块 / mermaid / 公式块 —— 语义上是"按整块替换"，
+#: 因此复用 `body_edit` 的 `replace` 落地（不新增落盘原语；表格见 §7 5.2，本轮不给）
+OP_UPSERT_BLOCK = "upsert_block"
 #: 文件级（§7 的 2.4 / 2.6）：新建 `.md` / 重命名（含全库引用级联）—— 落点 `services/agent/file_ops.py`
 OP_CREATE_FILE = "create_file"
 OP_RENAME_FILE = "rename_file"
@@ -82,6 +88,7 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_REPLACE_LINES,
     OP_INSERT_LINES,
     OP_DELETE_LINES,
+    OP_UPSERT_BLOCK,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
 )
@@ -99,12 +106,14 @@ COMPILED_OPS: tuple[str, ...] = (
     OP_REPLACE_LINES,
     OP_INSERT_LINES,
     OP_DELETE_LINES,
+    OP_UPSERT_BLOCK,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
 )
 
-#: **改正文行**的 op（会改变行数/行内容）
-BODY_EDIT_OPS: tuple[str, ...] = (OP_REPLACE_LINES, OP_INSERT_LINES, OP_DELETE_LINES)
+#: **改正文行**的 op（会改变行数/行内容）。`upsert_block` 语义上是"整块替换" ⇒ 同族：
+#: 走同一套结构/内容级自检、同一份顺序规矩、同一个 `edit_body` 落地、同一套预览 diff。
+BODY_EDIT_OPS: tuple[str, ...] = (OP_REPLACE_LINES, OP_INSERT_LINES, OP_DELETE_LINES, OP_UPSERT_BLOCK)
 #: **按行号锚定**的 op（行号以"当前正文"为准；`attach_links` / `detach_links` 的 lines、
 #: `upsert_kp` 的 range）。它们**不改行数** ⇒ 只要排在改正文之前，行号语义就仍然一致。
 LINE_ANCHORED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
@@ -450,6 +459,39 @@ def _validate_body_edit(op: Mapping, verb: str, lines: Sequence[str], op_id: str
     return {"action": normalized["mode"], "edit": normalized}
 
 
+def _validate_upsert_block(op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
+    """块级重建（§7 5.1 / 5.3 / 5.5）：先核"这段区间**恰好**是个 `kind` 类围栏块"，
+    再把 `content` 重建成含围栏的整块文本，之后**完全按改正文那一套**自检与落地（`replace`）。
+
+    这样"块级"只多一条**语义校验**（块边界 / 类型 / 内容不许提前收尾），落盘仍是同一个
+    `edit_body` ⇒ 备份、整批回滚、审计、撤销、预览一致性的口径**一处都不用另写**。
+    """
+    kind = str(op.get("kind") or "").strip()
+    rng = _as_dict(op.get("range"))
+    spec: dict[str, Any] = {
+        "mode": MODE_REPLACE,
+        "start": _range_line(rng.get("start")),
+        "end": _range_line(rng.get("end")),
+        "expect": op.get("expect") or "",
+    }
+    try:
+        start = int(spec["start"])
+        end = int(spec["end"])
+    except (TypeError, ValueError):
+        errors.append(_err(op_id, "missing_field", "range.start.line / range.end.line 必须是整数（1 起行号）"))
+        return {"action": "invalid"}
+    try:
+        bounds = block_bounds(list(lines), start, end, kind)
+        want_lang = str(op.get("lang") or "").strip() or str(bounds.get("lang") or "")
+        spec["text"] = rebuild_block(kind, str(op.get("content") or ""), want_lang)
+        normalized = normalize_edits([spec])[0]
+        check_edit(normalized, list(lines))
+    except EditError as e:
+        errors.append(_err(op_id, e.code, str(e)))
+        return {"action": "invalid"}
+    return {"action": "upsert_block", "kind": kind, "lang": want_lang, "edit": normalized}
+
+
 def _validate_create_file(kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
     """新建 `.md`：文件**必须不存在**，`body` 可选（初始正文）。"""
     if os.path.exists(os.path.join(kb_path, rel)):
@@ -514,7 +556,11 @@ def _validate_op(
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     elif verb in BODY_EDIT_OPS:
-        detail = _validate_body_edit(data, verb, lines, op_id, errors)
+        detail = (
+            _validate_upsert_block(data, lines, op_id, errors)
+            if verb == OP_UPSERT_BLOCK
+            else _validate_body_edit(data, verb, lines, op_id, errors)
+        )
     elif verb == OP_RENAME_FILE:
         detail = _validate_rename_file(kb_path, rel, data, op_id, errors)
     else:
@@ -691,6 +737,8 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["diff"] = diff
             entry["mode"] = edit.get("mode")
             entry["lines_after"] = len(new_body.splitlines())
+            if parsed.get("kind"):  # `upsert_block`：让卡片能显示"整块重建（kind / lang）"
+                entry["block"] = {"kind": parsed.get("kind"), "lang": parsed.get("lang") or ""}
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
         elif parsed.get("op") == OP_CREATE_FILE:
             resolved = parsed.get("resolved") or {}
