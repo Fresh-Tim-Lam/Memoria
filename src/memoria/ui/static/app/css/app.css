@@ -5711,3 +5711,27 @@ html *::-webkit-scrollbar-thumb:active {
     background: var(--accent-soft);
     box-shadow: 0 0 0 1.5px var(--theme-color);
 }
+
+/* ===== 2026-09-20 追加：计划确认卡（M3a ④，`js/plan-confirm.js`）========================
+   写路径上唯一的人机界面：dry-run 预览 + 人逐条勾选 + 整批 apply + 可撤销。
+   结构复用既有 `.-modal` 族（backdrop / box / header / body / footer），本块只给"计划专用"的
+   差异展示：`.-plan-file` 文件分组、`.-plan-op` 勾选行、`.-plan-diff-*` 行级 before/after。
+   末行字色按 `--danger` / 成功色区分增删（**只改颜色**，不引入新的边框/阴影语汇）。
+   本块**末尾追加** ⇒ 既有行号锚点零漂移。 */
+.plan-box { width: min(760px, 94vw); }
+.plan-box .-modal-body { max-height: 62vh; overflow: auto; }
+.plan-summary { color: var(--text-secondary); margin-bottom: 0.5rem; }
+.plan-note { color: var(--text-secondary); margin-bottom: 0.5rem; }
+.plan-errors ul, .plan-warnings ul { margin: 0 0 0.5rem 1.1rem; padding: 0; }
+.plan-errors { color: var(--error); margin-bottom: 0.5rem; }
+.plan-warnings { color: var(--text-secondary); margin-bottom: 0.5rem; }
+.plan-errors-title { font-weight: 600; }
+.plan-file { margin-bottom: 0.75rem; }
+.plan-file-path { font-family: ui-monospace, monospace; color: var(--theme-color); margin-bottom: 0.25rem; }
+.plan-op { display: flex; align-items: center; gap: 0.4rem; font-size: 0.9em; cursor: pointer; }
+.plan-op-id { color: var(--text-secondary); font-family: ui-monospace, monospace; font-size: 0.85em; }
+.plan-op-body { margin: 0.2rem 0 0.5rem 1.4rem; }
+.plan-diff { display: flex; flex-direction: column; font-family: ui-monospace, monospace; font-size: 0.85em; }
+.plan-diff-del { color: var(--error); white-space: pre-wrap; }
+.plan-diff-add { color: var(--theme-color); white-space: pre-wrap; }
+.plan-diff-none { color: var(--text-secondary); font-size: 0.85em; }

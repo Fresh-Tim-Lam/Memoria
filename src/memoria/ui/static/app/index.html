@@ -484,5 +484,8 @@
   <script src="/app/js/keys-debug.js"></script>
   <!-- 流式中间缓冲（AG11）：纯分割器，须在 agent-panel.js 使用前加载；追加为最后一个 script 标签 -->
   <script src="/app/js/agent-stream-buffer.js"></script>
+  <!-- M3a ④ 计划确认卡（写路径唯一人机界面）：只依赖 `window.MemoriaApp` 门面与写守卫，不改 app.js；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/plan-confirm.js"></script>
 </body>
 </html>

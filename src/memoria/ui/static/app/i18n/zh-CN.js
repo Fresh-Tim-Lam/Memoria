@@ -1381,4 +1381,37 @@
       forceFail: "覆盖失败",
     },
   });
+
+  // ===== 2026-09-20 追加：计划确认卡（M3a ④，`js/plan-confirm.js`）=====
+  // 口径见 docs/design/agent-plugin-design.md §9：先看（dry-run 逐行 diff）后写、逐条勾选、
+  // 盘上版本一变即整批拒、写期间人机保存让路、写完可撤销。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"], {
+    plan: {
+      title: "计划确认",
+      summary: "共 {ops} 项操作、影响 {files} 个文件",
+      apply: "应用选中的 {n} 项",
+      applying: "正在写入…",
+      needSelect: "至少勾选一项",
+      dirty: "当前文件有未保存的修改，已拒绝写入；请等保存完成后再试",
+      doneTitle: "已写入",
+      done: "已完成 {n} 项操作（txid {txid}）",
+      failedTitle: "写入失败",
+      failed: "写入失败",
+      undoneTitle: "已撤销",
+      undone: "该批次已撤销，文件逐字节还原到写入前的状态",
+      undo: "撤销这一批",
+      undoFail: "撤销失败",
+      rollback: "已整批回滚（磁盘回到写入前状态）",
+      rePreview: "重新预览",
+      close: "关闭",
+      errorsTitle: "计划被拒（未写盘）",
+      noDiff: "（无正文行变化）",
+      empty: "计划里没有可执行的操作",
+      op: {
+        upsert_kp: "新建 / 更新知识点",
+        attach_links: "挂接跳转（包裹正文）",
+        detach_links: "拆除跳转（还原正文）",
+      },
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

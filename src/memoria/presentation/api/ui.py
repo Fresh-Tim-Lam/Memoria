@@ -1499,6 +1499,134 @@ class UIAPI:
             return {"status": "error", "code": "cost_failed", "message": str(e)}
         return {"status": "ok", "kb_path": kb, "session_id": sid or None, "cost": cost}
 
+    # ── M3a ④：计划 API 的 RPC 暴露（四个只读面 + apply + undo）───────────────────
+    # 前端唯一消费者是 `js/plan-confirm.js`：preview（dry-run）→ 人**逐条勾选** → apply → 可撤销。
+    # §9 的两条硬规矩由「preview 下发 `base_versions` + apply 原样传回」与「apply 期间前端忙位」共同
+    # 兑现：盘上版本一变就**整批拒**（`stale_write`，且此刻**尚未建备份**）；勾选是**编译前**的选择
+    # （未勾的 op 由前端从 plan.ops 里去掉），因此不引入"部分执行"。只读面**零落盘**，且一律复用
+    # `plan.py` 的同一套校验器（不另写宽松判断 —— 否则会出现"人 UI 拒绝、agent 放行"的漂移）。
+
+    def _plan_service(self, kb: str):
+        """当前库 ⇒ 复用应用侧 `DocumentService`（同一份缓存与 KP 唯一性判定）；别的库 ⇒ `None`（plan 层自建）。"""
+        return self._svc if kb == self._svc.kb_path else None
+
+    def agent_plan_validate(self, plan: dict | None = None, kb_path: str | None = None) -> dict:
+        """**只读面①**：结构 + 语义校验（**不碰盘**）；错误按 `op_id` 返回，有错即**拒整批**（§2.3.3）。"""
+        from memoria.services.agent.plan import validate_plan
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        try:
+            return validate_plan(kb, plan if isinstance(plan, dict) else None, service=self._plan_service(kb))
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "validate_failed", "message": str(e)}
+
+    def agent_plan_preview(self, plan: dict | None = None, kb_path: str | None = None) -> dict:
+        """**只读面②**：dry-run —— 将改哪些文件、哪些行 + 逐行 before/after + `base_versions`。
+
+        `base_versions` 是"人看过的那一版"；确认后**原样**交给 `agent_plan_apply`（§9 规则 ①）。
+        """
+        from memoria.services.agent.plan import preview_plan
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        try:
+            return preview_plan(kb, plan if isinstance(plan, dict) else None, service=self._plan_service(kb))
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "preview_failed", "message": str(e)}
+
+    def agent_plan_resolve(self, target: str = "", kb_path: str | None = None) -> dict:
+        """**只读面③**：目标解析（KP id / 文件 stem → `ok` / `ambiguous` / `not_found` + 候选）。"""
+        from memoria.services.agent.plan import resolve_target
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        try:
+            return resolve_target(kb, target or "")
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "resolve_failed", "message": str(e)}
+
+    def agent_plan_audit(self, kb_path: str | None = None) -> dict:
+        """**只读面④**：全库一致性审计（复用 `DocumentService.validate_kb()`，不另写一份）。
+
+        只支持**当前已打开**的库（审计要复用应用侧那份已装载的服务；换库请先 `open_kb`）。
+        `errors` / `warnings` 是**条数**，明细在 `files` / `kb_integrity` / `graph_audit` 里。
+        """
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        if kb != self._svc.kb_path:
+            return {"status": "error", "code": "kb_mismatch", "message": "全库审计只支持当前已打开的知识库"}
+        try:
+            return {**self._svc.validate_kb(), "kb_path": kb}
+        except (OSError, RuntimeError) as e:
+            return {"status": "error", "code": "audit_failed", "message": str(e)}
+
+    def agent_plan_apply(
+        self,
+        plan: dict | None = None,
+        kb_path: str | None = None,
+        session_id: str | None = None,
+        base_versions: dict | None = None,
+    ) -> dict:
+        """执行整批（**all-or-nothing**）：写前备份 → 原语 → 写后哈希 → 审计 → 一致性恢复。
+
+        `session_id` 省略 ⇒ 归入 `ui-plan` 伪会话（备份目录与审计都用它，**返回值里带回**
+        `session_id`/`txid` ⇒ 撤销时原样传回即可）。`base_versions` 用 `agent_plan_preview` 给的那份。
+        失败语义：校验/编译不过 ⇒ 未建备份未写盘；备份失败 ⇒ **零写入**；任一原语失败 ⇒ 整批回滚。
+        """
+        from memoria.services.agent.apply import apply_plan, recover_after_write
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip() or "ui-plan"
+        service = self._plan_service(kb)
+        try:
+            result = apply_plan(
+                kb,
+                plan if isinstance(plan, dict) else None,
+                session_id=sid,
+                base_versions=base_versions if isinstance(base_versions, dict) else None,
+                service=service,
+            )
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "apply_failed", "message": str(e), "session_id": sid}
+        result["session_id"] = sid
+        if result.get("status") == "ok":
+            # 一致性恢复（§2.3.2 第 5 条）：清受影响文件的解析缓存 + 全库校验（缓存不清则界面显示旧正文）
+            result["recover"] = recover_after_write(kb, result.get("files") or [], service=service)
+        return result
+
+    def agent_plan_undo(self, kb_path: str | None = None, session_id: str | None = None, txid: str | None = None) -> dict:
+        """撤销一个批次：把 pre-image **逐字节写回** + 一致性恢复 + 审计（`capability/undo`）。
+
+        **外部改动保护（fail-closed）**：apply 之后文件被改过（含人机编辑）⇒ 整批拒
+        （`external_change`），**不静默覆盖**；缺 `post.json` 同样默认拒（`unverified`）。
+        `txid` 省略 ⇒ 撤销该会话的**最新**批次。
+        """
+        from memoria.services.agent.apply import recover_after_write
+        from memoria.services.agent.backup import restore_batch
+
+        kb = self._agent_kb(kb_path)
+        if kb is None:
+            return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+        sid = (session_id or "").strip()
+        if not sid:
+            return {"status": "error", "code": "no_session", "message": "撤销需要 session_id（apply 的返回值里有）"}
+        service = self._plan_service(kb)
+        try:
+            result = restore_batch(kb, sid, txid or None)
+        except (OSError, ValueError) as e:
+            return {"status": "error", "code": "undo_failed", "message": str(e)}
+        if result.get("status") == "ok":
+            rels = [str(row.get("rel_path") or "") for row in (result.get("files") or []) if isinstance(row, dict)]
+            result["recover"] = recover_after_write(kb, rels, service=service)
+        return result
+
 
 # ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点
 #    （docs 里引用的 384 / 647-684 / 769 / 867 / 1015-1454 等）因此零漂移。

@@ -1474,4 +1474,37 @@
       forceFail: "Overwrite failed",
     },
   });
+  // ===== 2026-09-20 appended: plan confirmation card (M3a ④, `js/plan-confirm.js`) =====
+  // Policy: docs/design/agent-plugin-design.md §9 — look first (dry-run line diff), write after the
+  // human ticks the items; any disk change since the preview rejects the whole batch; human saves are
+  // deferred while writing; the batch stays undoable.
+  Object.assign(g.MEMORIA_LOCALES["en"], {
+    plan: {
+      title: "Confirm plan",
+      summary: "{ops} operation(s) across {files} file(s)",
+      apply: "Apply {n} selected",
+      applying: "Writing…",
+      needSelect: "Select at least one",
+      dirty: "The current file has unsaved edits; write refused — wait for the save to finish and retry",
+      doneTitle: "Applied",
+      done: "Applied {n} operation(s) (txid {txid})",
+      failedTitle: "Write failed",
+      failed: "Write failed",
+      undoneTitle: "Undone",
+      undone: "The batch was undone; files were restored byte-for-byte",
+      undo: "Undo this batch",
+      undoFail: "Undo failed",
+      rollback: "Whole batch rolled back (disk restored to its pre-write state)",
+      rePreview: "Preview again",
+      close: "Close",
+      errorsTitle: "Plan rejected (nothing written)",
+      noDiff: "(no body line changed)",
+      empty: "The plan contains no executable operation",
+      op: {
+        upsert_kp: "Create / update knowledge point",
+        attach_links: "Attach links (wrap text)",
+        detach_links: "Detach links (unwrap text)",
+      },
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);
