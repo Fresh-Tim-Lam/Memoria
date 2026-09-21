@@ -392,6 +392,9 @@ def test_propose_tool_rejects_bad_op_without_queueing(kb: Path) -> None:
     assert result.is_error is True
     assert result.output.code == "INVALID_PLAN"
     assert "o1" in result.content and "什么都没写" in result.content
+    # 恢复指引（真机取证后补）：先重新读一遍拿当前行号，再**重提整批**、别把出错的 op 删掉
+    assert "read_document" in result.content
+    assert "别把它删掉" in result.content
     assert take_proposals(str(kb)) == []
 
 

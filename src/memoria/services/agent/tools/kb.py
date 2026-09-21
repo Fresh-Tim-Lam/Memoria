@@ -2909,7 +2909,10 @@ def _propose_write(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
             )
             return ToolOutput(
                 text=error_text(
-                    "计划未通过校验，**什么都没写**。请按下面的问题修正后**重提整批** ops：\n" + detail,
+                    "计划未通过校验，**什么都没写**。最常见的原因是行号 / 原文取自**旧内容**（文件刚被改过）。"
+                    "请按两步重来：① 先 `read_document` 重新读该文件，拿到**当前**行号与逐字原文；"
+                    "② 按下面的问题修正后**重提整批** —— 出错的 op 要改对，**别把它删掉**，"
+                    "也别把没出错的 op 丢掉：\n" + detail,
                     INVALID_PLAN_CODE,
                 ),
                 error=True,
@@ -2971,7 +2974,9 @@ def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
                 "改正文的 op **必须排在挂/拆跳转、建点之后**（那些 op 的行号以编辑前的正文为准），"
                 "同一文件的多条改正文区间不得重叠。"
                 "提议前先 `read_document` 读清目标原文与行号，不要凭印象写；"
-                "提议被拒时按返回的 `op_id` 与错误码修正后**重提整批**；"
+                "提议被拒时：**若原因是行号/原文过期**（文件刚被人改过），先 `read_document` 重新读一遍拿到"
+                "当前行号，再按返回的 `op_id` 与错误码修正后**重提整批** —— 出错的 op 要改对，"
+                "**别把它删掉**，也别把没出错的 op 丢掉；"
                 "提议成功后，在用户回来告诉你结果之前**不要声称已写入**。"
             ),
             parameters={
