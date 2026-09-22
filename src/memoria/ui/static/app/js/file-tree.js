@@ -180,7 +180,7 @@ window.MemoriaFileTree = (function () {
     const active = f.path === state.currentPath ? " active" : "";
     const side = f.has_sidecar ? "" : " no-sidecar";
     const iconName = FT_CATEGORY_ICON[classifyFileType(f.path)] || "ftOther";
-    const pad = 12 + depth * 14;
+    const pad = 4 + depth * 14; // 2026-09-22：折角槽 = 1 整格(14px) ⇒ 行首字形必须落在**槽的右缘**（= 4+depth×14）才紧贴折角；旧值 12+depth×14 让文件图标偏右 8px（人：折角应紧贴文件图标）
     const label = basename(f.path);
     return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" draggable="true" style="padding-left:${pad}px">${treeGuides(depth)}
       <span class="-tree-icon">${icon(iconName)}</span>

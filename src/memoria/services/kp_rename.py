@@ -91,8 +91,14 @@ def migrate_sidecar_kp_refs(sidecar: dict, old_id: str, new_id: str) -> int:
     return changes
 
 
-def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str) -> dict[str, Any]:
-    """全库重命名 KP id：所有侧车 + 所有 md 正文 wikilink。"""
+def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str, dry_run: bool = False) -> dict[str, Any]:
+    """全库重命名 KP id：所有侧车 + 所有 md 正文 wikilink。
+
+    `dry_run=True`（2026-09-22 追加，供 agent 写路径的**校验期预演**用）：走**同一份实现**、
+    算出**同一份** `md_files` / `sidecar_files` / `md_replacements`，只是**一处都不落盘**
+    （不 `os.replace`、不 `save_sidecar_for_md`、不 `touch_manifest_entry`）⇒ 校验期给出的
+    "会改哪些文件"就是 apply 的 pre-image 备份集，预演与落地不可能漂移。
+    """
     old_id = (old_id or "").strip()
     new_id = (new_id or "").strip()
     if not old_id:
@@ -121,15 +127,22 @@ def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str) -> dict[str, Any]:
         new_body, n = replace_link_id_in_markdown(body, old_id, new_id)
         if n:
             text = compose_markdown(new_body, fm)
-            tmp = full + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as f:
-                f.write(text)
-                f.flush()
-                os.fsync(f.fileno())
-            os.replace(tmp, full)
+            if not dry_run:
+                tmp = full + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    f.write(text)
+                    f.flush()
+                    os.fsync(f.fileno())
+                # 2026-09-22：与 `document.py` 的批量替换**同一形状**（tmp + fsync + 裸 replace）——
+                # 这条级联也要改多篇 .md，同属 Windows 瞬时锁（`WinError 5`）的风险面 ⇒ 统一走带退避版。
+                # 局部导入：本文件顶部行号不动（零漂移）。
+                from memoria.storage.atomic_write import replace_with_retry
+
+                replace_with_retry(tmp, full)
             md_replacements += n
             md_files.append({"path": rel_norm, "replacements": n})
-            touch_manifest_entry(kb_path, rel_norm)
+            if not dry_run:
+                touch_manifest_entry(kb_path, rel_norm)
 
     known_ids = set(index["by_id"].keys())
     known_ids.discard(old_id)
@@ -146,39 +159,44 @@ def rename_kp_in_kb(kb_path: str, old_id: str, new_id: str) -> dict[str, Any]:
             continue
         sidecar["schema_version"] = sidecar.get("schema_version") or 1
         sidecar["file"] = rel_norm
-        # NOTE: Do NOT abort the whole rename when an unrelated sidecar
-        # validation error exists (e.g. pre-existing orphan links). The
-        # rename operation itself only touches old_id→new_id references;
-        # any pre-existing validation issues should be surfaced separately
-        # by the audit panel, not block the rename. We still run the
-        # validator to collect warnings but only fail on errors directly
-        # caused by the rename (duplicate id, missing target).
-        with open(full, "r", encoding="utf-8") as f:
-            raw = f.read()
-        body, _fm = strip_frontmatter(raw)
-        lines = body.splitlines()
-        validation = validate_sidecar(
-            sidecar, rel_norm, lines, known_kp_ids=known_ids
-        )
-        # Only block on hard errors that are directly rename-caused:
-        # duplicate new_id reference or empty id. Other pre-existing
-        # validation issues (orphan links, range warnings) should not
-        # abort the rename.
-        rename_errors = []
-        for e in (validation.get("errors") or []):
-            msg = e.get("message", "") if isinstance(e, dict) else str(e)
-            if new_id in msg or "重复" in msg or "empty" in msg.lower():
-                rename_errors.append(msg)
-        if rename_errors:
-            return {
-                "status": "error",
-                "message": "重命名引入冲突: "
-                + "; ".join(rename_errors),
-                "path": rel_norm,
-                "validation": validation,
-            }
-        save_sidecar_for_md(full, kb_path, sidecar)
-        touch_manifest_entry(kb_path, rel_norm)
+        # `dry_run` 只算清单、不落盘 ⇒ 也**跳过校验**：正文此刻还是旧 id，而内存里的 sidecar 已经
+        # 指向 new_id，拿这两份去 `validate_sidecar()` 会报出"new_id 解析不到"这类**假冲突**
+        # （真实落地时正文先改、再校 sidecar，不会出现这个中间态）。真正的硬闸（old_id 不存在 /
+        # new_id 已存在）在进入循环**之前**就用 `build_kp_index()` 判完了，预演不漏。
+        if not dry_run:
+            # NOTE: Do NOT abort the whole rename when an unrelated sidecar
+            # validation error exists (e.g. pre-existing orphan links). The
+            # rename operation itself only touches old_id→new_id references;
+            # any pre-existing validation issues should be surfaced separately
+            # by the audit panel, not block the rename. We still run the
+            # validator to collect warnings but only fail on errors directly
+            # caused by the rename (duplicate id, missing target).
+            with open(full, "r", encoding="utf-8") as f:
+                raw = f.read()
+            body, _fm = strip_frontmatter(raw)
+            lines = body.splitlines()
+            validation = validate_sidecar(
+                sidecar, rel_norm, lines, known_kp_ids=known_ids
+            )
+            # Only block on hard errors that are directly rename-caused:
+            # duplicate new_id reference or empty id. Other pre-existing
+            # validation issues (orphan links, range warnings) should not
+            # abort the rename.
+            rename_errors = []
+            for e in (validation.get("errors") or []):
+                msg = e.get("message", "") if isinstance(e, dict) else str(e)
+                if new_id in msg or "重复" in msg or "empty" in msg.lower():
+                    rename_errors.append(msg)
+            if rename_errors:
+                return {
+                    "status": "error",
+                    "message": "重命名引入冲突: "
+                    + "; ".join(rename_errors),
+                    "path": rel_norm,
+                    "validation": validation,
+                }
+            save_sidecar_for_md(full, kb_path, sidecar)
+            touch_manifest_entry(kb_path, rel_norm)
         sidecar_files.append(rel_norm)
 
     return {

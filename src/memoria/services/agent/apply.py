@@ -39,8 +39,14 @@ from memoria.services.agent.plan import (
     BODY_EDIT_OPS,
     OP_ATTACH_LINKS,
     OP_CREATE_FILE,
+    OP_DELETE_FILE,
+    OP_DELETE_KP,
     OP_DETACH_LINKS,
+    OP_MOVE_FILE,
+    OP_REBUILD_MANIFEST,
     OP_RENAME_FILE,
+    OP_RENAME_KP,
+    OP_UPSERT_EDGE,
     OP_UPSERT_KP,
     base_versions as plan_base_versions,
     validate_plan,
@@ -150,6 +156,55 @@ def _call_rename_file(service: Any, args: Mapping) -> dict:
     return file_ops.apply_rename_file(service, args["rel_path"], str(args["new_name"]))
 
 
+def _call_delete_file(service: Any, args: Mapping) -> dict:
+    """原语 `kb.file.delete`（§7 的 2.5）：删整篇 `.md` + 其侧车。"""
+    from memoria.services.agent import file_ops
+
+    return file_ops.apply_delete_file(service, args["rel_path"])
+
+
+def _call_move_file(service: Any, args: Mapping) -> dict:
+    """原语 `kb.file.move`（§7 的 2.6 后半）：把整篇 `.md` 移到另一目录（保持文件名）。"""
+    from memoria.services.agent import file_ops
+
+    return file_ops.apply_move_file(service, args["rel_path"], str(args.get("to_dir") or ""))
+
+
+# ── 2026-09-22 追加：三个 sidecar 结构原语（§7 的 1.2 / 1.7 / 1.8）────────────────────────────
+# 薄包装既有服务方法（`DocumentService.create_edge()` / `delete_kp()` / `rename_kp_id()`）——
+# 与其它原语同一纪律：**不自己开文件**，落盘一律经服务层（§2.3.1）。
+
+
+def _call_create_edge(service: Any, args: Mapping) -> dict:
+    """原语 `kb.link.create`（§7 的 1.2）：写一条 KP↔KP 的**纯边**（只动 sidecar `edges[]`）。"""
+    return service.create_edge(
+        args["rel_path"],
+        args["source_id"],
+        args["target_id"],
+        args["edge_type"],
+        relevance=args.get("relevance"),
+    )
+
+
+def _call_delete_kp(service: Any, args: Mapping) -> dict:
+    """原语 `kb.kp.delete`（§7 的 1.7）：删一个 KP 的 sidecar 配置（**不改正文**）。"""
+    return service.delete_kp(args["rel_path"], args["kp_id"])
+
+
+def _call_rename_kp_id(service: Any, args: Mapping) -> dict:
+    """原语 `kb.kp.rename`（§7 的 1.8）：全库改 KP id（正文 wikilink + 各侧车引用**一起**改）。"""
+    return service.rename_kp_id(args["old_id"], args["new_id"])
+
+
+def _call_rebuild_manifest(service: Any, args: Mapping) -> dict:
+    """原语 `kb.manifest.rebuild`（§7 的 6.3）：全库重扫磁盘、重写 `.memoria/manifest.yaml`。
+
+    复用 `DocumentService.sync_manifest()` —— 它自带**前置硬闸**（有未修复的路径变更即拒），
+    与界面上那个「构建」按钮走**同一份实现**（本地不另写一套重建逻辑）。
+    """
+    return service.sync_manifest()
+
+
 #: 原语白名单：**只有**这些方法是 agent 写路径的落点（§2.3.1）
 PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "confirm_kp_range": _call_confirm_kp_range,
@@ -160,6 +215,12 @@ PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "edit_body": _call_edit_body,
     "create_file": _call_create_file,
     "rename_file": _call_rename_file,
+    "delete_file": _call_delete_file,
+    "move_file": _call_move_file,
+    "create_edge": _call_create_edge,
+    "delete_kp": _call_delete_kp,
+    "rename_kp_id": _call_rename_kp_id,
+    "rebuild_manifest": _call_rebuild_manifest,
 }
 
 
@@ -176,10 +237,10 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             "files": [],
         }
     calls: list[dict] = []
-    #: 改正文的 op 按文件收集，循环结束后**每个文件合成一次** `edit_body`（`body_edit.splice`
-    #: 内部按行号从大到小应用 ⇒ 每条的行号都以"编辑前"的正文为准，不需要调用方倒序）。
-    #: 校验期已保证它们排在按行号锚定的 op **之后**（`body_edit_order`）⇒ 追加在 `calls` 末尾。
-    body_edits: dict[str, dict[str, Any]] = {}
+    #: 改正文的 op **一 op 一次** `edit_body`，且**就排在它本来的位置**上 —— 与校验期 `_View`
+    #: 的推进顺序逐条对齐：每条编辑面对的都是"前序 op 落地之后"的盘上正文（`body_edit.splice()`
+    #: 每次现读盘）。旧实现把同文件的编辑攒到末尾合成一次（当时规定"锚定 op 必须在改正文之前"），
+    #: 那条规矩已随"写机制全线放开"删除。
     for parsed in checked["ops"]:
         verb = str(parsed.get("op") or "")
         op_id = str(parsed.get("op_id") or "")
@@ -269,10 +330,15 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                         }
                     )
         elif verb in BODY_EDIT_OPS:
-            bucket = body_edits.setdefault(rel, {"op_ids": [], "edits": []})
             if isinstance(parsed.get("edit"), Mapping):
-                bucket["op_ids"].append(op_id)
-                bucket["edits"].append(dict(parsed["edit"]))
+                calls.append(
+                    {
+                        "op_id": op_id,
+                        "op": verb,
+                        "primitive": "edit_body",
+                        "args": {"rel_path": rel, "edits": [dict(parsed["edit"])]},
+                    }
+                )
         elif verb == OP_CREATE_FILE:
             raw_op = _raw_op(plan, op_id) or {}
             calls.append(
@@ -303,17 +369,84 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                     },
                 }
             )
-    for rel, bucket in body_edits.items():
-        if not bucket["edits"]:
-            continue
-        calls.append(
-            {
-                "op_id": "+".join(bucket["op_ids"]),
-                "op": "edit_body",
-                "primitive": "edit_body",
-                "args": {"rel_path": rel, "edits": bucket["edits"]},
-            }
-        )
+        elif verb == OP_DELETE_FILE:
+            resolved = parsed.get("resolved") or {}
+            # 备份集必须**含被删正文自己的侧车**（它随文件一起消失，撤销要靠 pre-image 写回来）。
+            # 引用它的正文**不在**备份集里 —— 删除不改写它们，只是让它们失去落点。
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "delete_file",
+                    "args": {
+                        "rel_path": rel,
+                        "affected": [str(item) for item in (resolved.get("affected") or [])],
+                    },
+                }
+            )
+        elif verb == OP_MOVE_FILE:
+            resolved = parsed.get("resolved") or {}
+            # 备份集必须**含源与目标两侧**（源正文+侧车会消失、目标正文+侧车会出现）⇒ 否则撤销不完备
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "move_file",
+                    "args": {
+                        "rel_path": rel,
+                        "to_dir": str((_raw_op(plan, op_id) or {}).get("to_dir") or ""),
+                        "affected": [str(item) for item in (resolved.get("affected") or [])],
+                    },
+                }
+            )
+        elif verb == OP_UPSERT_EDGE:
+            resolved = parsed.get("resolved") or {}
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "create_edge",
+                    "args": {
+                        "rel_path": rel,
+                        "source_id": resolved.get("source_id"),
+                        "target_id": resolved.get("target_id"),
+                        "edge_type": resolved.get("edge_type"),
+                        "relevance": (_raw_op(plan, op_id) or {}).get("relevance"),
+                    },
+                }
+            )
+        elif verb == OP_DELETE_KP:
+            resolved = parsed.get("resolved") or {}
+            # 备份集 = 这篇正文 + 它的侧车（KP 配置就在侧车里）⇒ `rel_path` 已能让 `affected_files()` 带出侧车
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "delete_kp",
+                    "args": {"rel_path": rel, "kp_id": resolved.get("kp_id")},
+                }
+            )
+        elif verb == OP_RENAME_KP:
+            resolved = parsed.get("resolved") or {}
+            # **没有 `rel_path`**（全库级联）⇒ 备份集只能靠 `affected` 自报：`_validate_rename_kp()`
+            # 用 `dry_run=True` 走**同一份** `rename_kp_in_kb()` 算出"会改哪些文件"，那份清单就是
+            # apply 的 pre-image 备份集（正文 + 各侧车都要能逐篇还原）。
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "rename_kp_id",
+                    "args": {
+                        "old_id": resolved.get("old_id"),
+                        "new_id": resolved.get("new_id"),
+                        "affected": [str(item) for item in (resolved.get("affected") or [])],
+                    },
+                }
+            )
+        elif verb == OP_REBUILD_MANIFEST:
+            # 整库一件事：**没有 `rel_path`**（也不需要自报 `affected` —— `affected_files()` 无论
+            # 有没有 `rel_path` 都会带上 manifest + pending，pre-image 因此完备）
+            calls.append({"op_id": op_id, "op": verb, "primitive": "rebuild_manifest", "args": {}})
     rels: list[str] = []
     for call in calls:
         rels.append(str(call["args"].get("rel_path") or ""))
@@ -343,7 +476,9 @@ def _raw_op(plan: Any, op_id: str) -> dict | None:
     return None
 
 
-def _stale_error(stale: Sequence[str], *, kb_path: str | None = None, session_id: str | None = None) -> dict:
+def _stale_error(
+    stale: Sequence[str], *, kb_path: str | None = None, session_id: str | None = None, auto: bool = False
+) -> dict:
     """版本不一致 ⇒ 结构化 `stale_write`（供前端弹「重载 / 以我为准」；此刻零写入）。"""
     result = {
         "status": "error",
@@ -352,6 +487,7 @@ def _stale_error(stale: Sequence[str], *, kb_path: str | None = None, session_id
         "files": sorted(stale),
         "applied": [],
         "rolled_back": False,
+        "auto": bool(auto),
     }
     result["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, result)
     return result
@@ -395,21 +531,26 @@ def apply_plan(
     plugin: str | None = None,
     tool_id: str | None = None,
     service: Any = None,
+    auto: bool = False,
 ) -> dict:
     """执行整批（all-or-nothing）。返回 `{status, txid, dir, applied[], files, warnings}`。
 
     失败语义：① 校验/编译不过 ⇒ **未建备份、未写盘**；② 备份预检失败 ⇒ **零写入**；
     ③ 任一原语失败 ⇒ 用该批次 pre-image **整批回滚**（回滚结果一并返回，不静默）。
+
+    `auto`（2026-09-21 追加，可选）：本次写入是**没有人工闸门**的（agent 工具调用内直接落盘，
+    见设计 §4 Q7）。只影响返回与审计里的标注（`auto: true`），不改变任何写入语义。
     """
     from memoria.services.document import DocumentService
 
     service = service or DocumentService(kb_path=kb_path)
+    auto_flag = bool(auto)
     # **写冲突保护（§9）**：调用方给了"用户看过的那一版"（`preview_plan()` 返回的 `base_versions`）
     # ⇒ **先比版本再谈 plan**：文件都变了，报"plan 非法"是误导（真实原因是内容过期）。
     if base_versions:
         stale = [rel for rel, want in base_versions.items() if rel_version(kb_path, rel) != want]
         if stale:
-            return _stale_error(stale, kb_path=kb_path, session_id=session_id)
+            return _stale_error(stale, kb_path=kb_path, session_id=session_id, auto=auto_flag)
     compiled = compile_plan(kb_path, plan, service=service)
     if compiled["status"] != "ok":
         return {**compiled, "applied": [], "rolled_back": False}
@@ -425,7 +566,7 @@ def apply_plan(
             if rel_version(kb_path, rel) != want
         ]
         if stale:
-            return _stale_error(stale, kb_path=kb_path, session_id=session_id)
+            return _stale_error(stale, kb_path=kb_path, session_id=session_id, auto=auto_flag)
 
     clean_txid = str(txid or compiled.get("txid") or "").strip()
     snapshot = backup.snapshot_pre_images(
@@ -440,6 +581,24 @@ def apply_plan(
             "txid": clean_txid,
             "applied": [],
             "rolled_back": False,
+            "auto": auto_flag,
+        }
+        refused["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, refused)
+        return refused
+
+    # **起点快照**（人 2026-09-21）：把"这次对话开始前的那一版"固化一份，且**不参与批次 FIFO 淘汰**
+    # ⇒ 撤销总能回到**对话起点**（不再"最多回退到保留窗口"）。这一层就是 git 里那个稳定的 base。
+    # fail-closed：写不进去就整批不写 —— 否则会出现"能写、却撤不回"。
+    origin = backup.ensure_origin(kb_path, session_id, clean_txid, compiled["files"])
+    if origin.get("status") != "ok":
+        refused = {
+            "status": "error",
+            "code": origin.get("code") or "backup_failed",
+            "message": f"起点快照写入失败 ⇒ 本次不写（避免“能写却撤不回”）：{origin.get('message') or ''}",
+            "txid": clean_txid,
+            "applied": [],
+            "rolled_back": False,
+            "auto": auto_flag,
         }
         refused["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, refused)
         return refused
@@ -480,11 +639,26 @@ def apply_plan(
             "applied": applied,
             "rolled_back": rollback.get("status") == "ok",
             "rollback": rollback,
+            "auto": auto_flag,
         }
         failed["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, failed)
         return failed
 
     posts = backup.record_post_images(kb_path, session_id, clean_txid)
+    # **写后镜像**（人 2026-09-21）：给本批存一份"写完之后的样子" ⇒ 栈里「重做一步」的依据。
+    # 近邻几步保持原始文件（redo 零解压），更深的由 `compact_after_images()` 压成 zip。
+    # **fail-open**：写已成功、无法回滚 ⇒ 失败只记 warnings（后果是"这一步不可重做"，撤销仍可用）。
+    after = backup.snapshot_after_images(kb_path, session_id, clean_txid)
+    # **压栈**：新写入从当前指针处**截断**（丢掉旧的 redo 分支）再压入 ⇒ 指针 = 最新一步
+    push = backup.push_stack(kb_path, session_id, clean_txid)
+    compact = backup.compact_after_images(kb_path, session_id)
+    after_warnings: list[str] = []
+    if after.get("status") != "ok":
+        after_warnings.append(
+            f"写后镜像未存成（这一步将无法「重做」）：{after.get('message') or after.get('code') or ''}"
+        )
+    if push.get("status") != "ok":
+        after_warnings.append(f"栈指针未落盘（下次按批次表推断）：{push.get('message') or ''}")
     trim = backup.trim_backups(kb_path, session_id)
     done = {
         "status": "ok",
@@ -496,7 +670,12 @@ def apply_plan(
         "backup": {"txid": clean_txid, "files": [row["rel_path"] for row in snapshot["files"]], "bytes": snapshot["bytes"]},
         "post_images": posts.get("status") == "ok",
         "trimmed": trim.get("evicted", []),
-        "warnings": compiled.get("warnings", []),
+        "warnings": list(compiled.get("warnings", [])) + after_warnings,
+        # 栈式撤销 / 重做（只增字段）：这一步在栈里的坐标 + 写后镜像是否就绪 + 本轮压缩了哪几批
+        "after_images": after.get("status") == "ok",
+        "stack": {"cursor": push.get("cursor"), "total": push.get("total"), "dropped": push.get("dropped", [])},
+        "compacted": compact.get("compacted", []),
+        "auto": auto_flag,
     }
     # 审计（§2.3.2 第 8 步）：写已完成 ⇒ 审计失败**不回滚**，但如实带回结果
     done["audit"] = audit.append(kb_path, session_id, audit.EVENT_APPLY, done)

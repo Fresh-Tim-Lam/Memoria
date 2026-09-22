@@ -1382,7 +1382,7 @@
   // endpoint reports no cache fields the frontend writes "—" for both and `{total}` falls back to the
   // endpoint-reported `total_tokens` (never fabricating a 0).
   Object.assign(g.MEMORIA_LOCALES["en"].agent, {
-    usage: { line: "Usage {hit} cached + {miss} uncached = {total} tokens" },
+    usage: { line: "Usage {hit} cached + {miss} uncached = {total} tokens", rate: "cache hit {rate}" },
   });
 
   // ===== appended 2026-09-19: status-bar refresh interval (settings → Chat tab, `#agent-refresh`) =====
@@ -1402,8 +1402,8 @@
   // ===== appended 2026-09-20: "generating… Ns" indicator at the tail of the last assistant bubble =====
   // Same "Object.assign at the very end of the file" trick as above, so that every `en.js:<line>` anchor
   // in the docs keeps pointing at the same declaration.
-  // Shown while the turn is running, one second tick; `#agent-status` keeps the bare
-  // `agent.status.thinking` word (no seconds) at the same time, so the two never repeat each other.
+  // Shown while the turn is running, one second tick; the bare `agent.status.thinking` word used to sit
+  // on `#agent-status` below, but that row was retired on 2026-09-21 — this indicator is now the only place.
   Object.assign(g.MEMORIA_LOCALES["en"].agent, {
     generating: "Generating… {n}s",
   });
@@ -1493,9 +1493,8 @@
       done: "Applied {n} operation(s) (txid {txid})",
       failedTitle: "Write failed",
       failed: "Write failed",
-      undoneTitle: "Undone",
-      undone: "The batch was undone; files were restored byte-for-byte",
-      undo: "Undo this batch",
+      undo: "Undo one step",
+      undoTitle: "Undo the last write (cursor −1; the current revision is saved as a backup batch first)",
       undoFail: "Undo failed",
       rollback: "Whole batch rolled back (disk restored to its pre-write state)",
       rejected: "The plan failed validation; nothing was written",
@@ -1516,7 +1515,148 @@
         upsert_kp: "Create / update knowledge point",
         attach_links: "Attach links (wrap text)",
         detach_links: "Detach links (unwrap text)",
+        replace_lines: "Rewrite prose (replace lines)",
+        insert_lines: "Insert prose",
+        delete_lines: "Delete prose lines",
+        upsert_block: "Rebuild a code / diagram / math block",
+        insert_image_ref: "Insert an image reference",
+        create_file: "Create a file",
+        rename_file: "Rename a file (library-wide cascade)",
+        delete_file: "Delete a whole file",
+        move_file: "Move to another folder",
+        upsert_edge: "Create an edge between knowledge points",
+        delete_kp: "Delete a knowledge point",
+        rename_kp: "Rename a knowledge point id (library-wide cascade)",
+        rebuild_manifest: "Rebuild the file manifest",
       },
     },
+  });
+
+  // Buttons on the action row **below** each message + the write status bar (2026-09-21): copy the
+  // answer's source (Markdown) and undo / redo **one step** (stack semantics; to get back to the start
+  // of the conversation, undo the whole stack). Appended at the end of file
+  // (not inserted into the `agent` literal) ⇒ existing `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    // Hover text for the copy icon button (human: "hover shows Copy")
+    copy: "Copy",
+    copyDone: "Copied",
+    copyFail: "Copy failed",
+    // Stack semantics (2026-09-21): both undo and redo move exactly **one step**
+    undo: "Undo step",
+    undoTitle: "Undo the last write (cursor −1; the current revision is saved as a backup batch first)",
+    undoing: "Undoing…",
+    undoDone: "Undid one step",
+    undoFail: "Undo failed",
+    redo: "Redo step",
+    redoTitle: "Redo the next write (restored from that step's after-image)",
+    redoing: "Redoing…",
+    redoDone: "Redid one step",
+    redoFail: "Redo failed",
+    // Stack position and trace (bar shows "stack p/t"; expanded lists each step)
+    stackPos: "stack {p}/{t}",
+    stackStep: "step {i} · {n} file(s)",
+    stackHere: "here",
+    // Write status bar on the top subhead row (`.-agent-subhead`): two states (nothing is rendered when
+    // there are no changes; a failure reads "Write failed"). The old "Undone" flash state was removed on
+    // 2026-09-21 because it took the redo entry away with it.
+    writeIdle: "No changes",
+    writeSummary: "{n} file(s) changed",
+    writeLines: "{n} line(s)",
+    writeFailed: "Write failed",
+  });
+  // ===== appended 2026-09-21: honest note when the turn produced no final answer (`agent.stop.*`) =====
+  // Trigger: when the backend's `loop/end.stop_reason` is not a normal finish, the turn has **no final
+  // answer at all** — previously the frontend ignored `stop_reason`, so the bubble stayed empty and it
+  // looked like the agent "got stuck thinking" (third issue reported 2026-09-21; evidence = AAA_Vocab
+  // session `session-20260921T111525Z-ab1ac72c`, two consecutive `max-iterations` with an empty
+  // `assistant/message.content`).
+  // Shape: one sentence saying **what happened** + one saying **what the user can do now**.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    stop: {
+      maxIterations: "(Tool calls hit this turn's cap ({n} rounds) with no final answer — reply \"continue\" and I'll carry on.)",
+      maxTokens: "(This answer was cut off by the length limit — reply \"continue\" and I'll go on.)",
+      filtered: "(The model stopped this turn due to content policy; try rephrasing.)",
+      emptyAnswer: "(This turn produced no answer text — reply \"continue\" and I'll give it another go.)",
+    },
+  });
+  // ===== appended 2026-09-22: one turn's "process content" (`agent.process.*` / `agent.tool.*`) =====
+  // Mirrors upstream dsh's Turn Process Folding: the thinking row is **always collapsed by default**
+  // (its summary follows the last line while streaming, the first line once finalized); tool rows
+  // **appear as they run** (one line = state dot + `tool name · argument summary`; `running`→"Running…",
+  // `error`→"Failed (code)", `ok` adds nothing); on `compact` a finished turn folds its process into one
+  // container with a count summary at the top of the bubble. The old `agent.tools.*` strip was removed.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    process: {
+      tools: "{n} tool call(s)",
+      messages: "{n} process message(s)",
+      failed: "{n} failed",
+      thought: "Thought for a while",
+      toggleTitle: "Expand / collapse this turn's process",
+    },
+    tool: {
+      running: "Running…",
+      failed: "Failed",
+      output: "Output",
+      inspectTitle: "Expand this tool call's output",
+    },
+  });
+  // ===== appended 2026-09-22: the "Conversation display" setting (`#agent-transcript`) =====
+  // The two options map 1:1 to `agent-panel.js::TRANSCRIPT_CHOICES` (value = `config/agent.json: transcript_mode`).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.settings, {
+    transcriptLabel: "Conversation display",
+    transcriptNormal: "Normal",
+    transcriptCompact: "Compact",
+  });
+  // ===== appended 2026-09-22: permission presets (upstream `dsh-permission-presets`) + per-call approval =====
+  // The machine keys are stable English (`manual-approval` / `auto-approval` / `all-access`, plus the
+  // derived read-only `custom`) and go into session events (replayable); only the labels live here.
+  // Keys map 1:1 to `agent-panel.js::PERMISSION_KEYS` / `permText()`.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.settings, {
+    permissionLabel: "Approval for new sessions",
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    permission: {
+      sessionTitle: "Approval tier for this session (whether writes ask you first)",
+      needSession: "No session yet — ask something first, then switch the tier",
+      failed: "Could not change the approval tier",
+      switched: "This session's approval tier is now “{name}”",
+      defaultSaved: "New sessions will use the approval tier “{name}”",
+      manual: { name: "Manual approval", desc: "Every write waits for your confirmation before it lands." },
+      auto: { name: "Auto approval", desc: "Routine writes go through; destructive edits still ask once." },
+      all: { name: "All access", desc: "No tool call ever asks (writes are still backed up and undoable)." },
+      custom: { name: "Custom", desc: "The approval knob matches no presets (cannot be picked)." },
+    },
+    approve: {
+      title: "Wants to write: {tool}",
+      ops: "{n} change(s) in this batch",
+      noIntent: "(the model gave no summary for this batch)",
+      allow: "Allow once",
+      deny: "Reject",
+      sending: "Submitting…",
+      done: "Handled",
+      allowed: "Allowed once",
+      denied: "Rejected",
+      failed: "Could not submit the decision",
+    },
+  });
+
+  // Slash commands (2026-09-22; minimal port of upstream `interaction/commands`, see
+  // `services/agent/commands.py`). Command **names and descriptions are not in this table** — their
+  // source of truth is the backend (`agent_command_list`), so only the "no match" line lives here;
+  // the hint text therefore shows up in the backend language for now (registered deviation, §6.23).
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    command: {
+      none: "No matching command (Enter still sends it to the model as an ordinary question)",
+    },
+  });
+
+  // ===== appended 2026-09-22: the three words for the reworked thinking row =====
+  // The summary line sits **outside** the bubble and the bubble can grow taller
+  // (`agent.thinkMore` / `agent.thinkLess`, capped at 20rem); `agent.thinkLive` fills the bubble first.
+  // `agent.think` itself is a **string**, so these are flat keys rather than a `think.*` sub-object.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    thinkMore: "Expand",
+    thinkLess: "Collapse",
+    thinkLive: "Thinking…",
   });
 })(typeof window !== "undefined" ? window : globalThis);

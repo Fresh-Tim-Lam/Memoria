@@ -74,6 +74,8 @@ Write one Task‑2 sentence about whether there should be a legal limit on execu
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "remuneration package", "well‑remunerated" and "skilled workers".
 （中文提示：用 remuneration package、well-remunerated、skilled workers 合成一句）
+
+> 🔗 **关联**：`remuneration` 是**账面上的报酬**，`rewarding`（[[rewarding]]）是**心里的回报**——讨论「选喜欢的工作还是高薪工作」时正好成对：*The pay was modest, but the work was rewarding.*（薪水不算高，但这份工作很有意义。）
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Writing` `#Speaking` `#ActiveVocabulary` `#UserDefined` `#Work` `#Employment` `#Formal` `#C1`

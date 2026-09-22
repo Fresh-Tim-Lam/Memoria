@@ -12,11 +12,11 @@
 | `finish.kind === 'max-tokens'` ⇒ 终止 | `StopReason.MAX_TOKENS` |
 | `toolCalls.length === 0` ⇒ `{ kind: 'completed' }` | `StopReason.FINAL_ANSWER` |
 | 工具结果一律回填进会话日志，下一步据此重建请求 | 结果以 `role=tool` 消息追加，下一步整份历史重发 |
-| 没有内置轮次预算（上游已知限制：靠 `agent/turn-stopping` 取消） | `max_iterations`（默认 8）硬上限 ⇒ `StopReason.MAX_ITERATIONS` |
+| 没有内置轮次预算（上游已知限制：靠 `agent/turn-stopping` 取消） | **对齐上游**：`max_iterations` **默认 0 = 无上限**（失控由用户「停止」= 真取消兜底）；非 0 时才是调用方给的硬上限 ⇒ `StopReason.MAX_ITERATIONS` |
 | 流内失败以带 `failure` 的终止事件投递 | 同样：终止事件带 `failure` ⇒ `StopReason.ERROR`，已投递文本保留 |
 
 未移植：并行工具调度与独占屏障（`maxParallelToolCalls`/`tool-calls.ts`）、
-会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结。**有意偏差（AG08）**：模型的思考流（`ReasoningDelta`）只经 `on_reasoning` **实时送前端**，**不落会话文件** —— 故重载页面/载入旧会话都看不到过往思考（上游 dsh 会持久化），口径与后果见 `ask_stream.py` 模块 docstring。
+会话（`session`/`inbox`）、runtime context 快照、请求 header 冻结。**思考流（AG08，2026-09-22 口径更新）**：模型的思考（`ReasoningDelta`）既经 `on_reasoning` **实时送前端**，也**随该步 `assistant/message` 落盘**（`data.reasoning`，空则不写该键）⇒ 重载页面/载入旧会话**可回放**；但仍**不进模型请求**（回放只读 `content`/`tool_calls`，见 `session/history.py::build_history`），口径见 `ask_stream.py` 模块 docstring。
 M1 串行执行工具、同步阻塞；**取消为协作式**（M1 收尾新增 `CancelToken`，
 见其 docstring）：只在三个检查点观察（每轮迭代前、流式逐事件、每次工具调用后），
 故"取消"不打断正在阻塞的 socket 读，但会**立即停止消费生成器**（`stream.close()`
@@ -66,8 +66,8 @@ __all__ = [
     "usage_payload",
 ]
 
-#: 单次提问允许的最大模型步数（上游无内置预算，此处是 M1 的安全上界）。
-DEFAULT_MAX_ITERATIONS = 8
+#: 单次提问允许的最大模型步数；**0 = 无上限**（= 上游口径：上游没有内置轮次预算，失控由用户取消兜底）。
+DEFAULT_MAX_ITERATIONS = 0
 
 
 class CancelToken:
@@ -171,8 +171,8 @@ class AgentLoop:
         on_event: Callable[[str, Mapping[str, Any]], None] | None = None,
         cancel: CancelToken | None = None,
     ) -> None:
-        if max_iterations < 1:
-            raise ValueError("max_iterations 必须为正整数")
+        if max_iterations < 0:
+            raise ValueError("max_iterations 必须 ≥ 0（0 = 无上限，与上游一致）")
         self.provider = provider
         self.tools = tools
         self.model = model
@@ -219,8 +219,8 @@ class AgentLoop:
 
     def _stream_once(
         self, request: LlmRequest, retry_counter: list[int]
-    ) -> tuple[str, Usage | None, FinishEvent | None]:
-        """跑完一次模型流；返回（文本, 用量, 终止事件）。
+    ) -> tuple[str, Usage | None, FinishEvent | None, str]:
+        """跑完一次模型流；返回（文本, 用量, 终止事件, 思考全文=供 `run()` 写进 `assistant/message.reasoning`，空则不写该键）。
 
         `retry_counter`（单元素列表，调用方持有）记录本步**已发生的重试次数**：
         `iter_with_retry` 重试发生在流内部，抛错时无法从返回值带回，故用计数器
@@ -269,7 +269,7 @@ class AgentLoop:
         if usage is None:
             usage = estimate_usage(request, text, reasoning_text="".join(reasoning_parts))
             self.meter.add(usage)
-        return text, usage, finish
+        return text, usage, finish, "".join(reasoning_parts)
 
     # —— 主流程 ——
 
@@ -292,7 +292,7 @@ class AgentLoop:
         stop_reason = StopReason.MAX_ITERATIONS
         iterations = 0
 
-        for iteration in range(1, self.max_iterations + 1):
+        for iteration in range(1, (self.max_iterations or UNBOUNDED_ITERATIONS) + 1):
             # 取消检查点①：每轮迭代开始前
             if self._cancelled():
                 stop_reason = StopReason.ABORTED
@@ -302,7 +302,7 @@ class AgentLoop:
             self._emit("step/start", {"iteration": iteration, "message_count": len(history)})
             retry_counter = [0]
             try:
-                text, step_usage, finish = self._stream_once(request, retry_counter)
+                text, step_usage, finish, reasoning_text = self._stream_once(request, retry_counter)
             except AgentLlmError as exc:
                 self._emit(
                     "step/error",
@@ -337,17 +337,17 @@ class AgentLoop:
                 break
 
             history.append(Message(role=Role.ASSISTANT, content=text, tool_calls=finish.tool_calls))
-            self._emit(
-                "assistant/message",
-                {
-                    "iteration": iteration,
-                    "content": text,
-                    "tool_calls": [
-                        {"id": call.id, "name": call.name, "arguments": call.arguments}
-                        for call in finish.tool_calls
-                    ],
-                },
-            )
+            message: dict[str, Any] = {
+                "iteration": iteration,
+                "content": text,
+                "tool_calls": [
+                    {"id": call.id, "name": call.name, "arguments": call.arguments}
+                    for call in finish.tool_calls
+                ],
+            }
+            if reasoning_text:
+                message["reasoning"] = reasoning_text
+            self._emit("assistant/message", message)
 
             if finish.reason is FinishReason.MAX_TOKENS:
                 # 对齐上游：max-tokens 是终止条件，先于工具分发判定
@@ -359,13 +359,13 @@ class AgentLoop:
 
             aborted = False
             for call in finish.tool_calls:
+                self._emit("tool/call", {"id": call.id, "name": call.name, "arguments": call.arguments})  # 先于分发：见文件尾「tool/call 位次」注
                 result = self.tools.invoke(call, approval=self.approval)
                 tool_results.append(result)
                 anchors.extend(result.output.anchors)
                 history.append(
                     Message(role=Role.TOOL, content=result.content, tool_call_id=call.id, name=result.name)
                 )
-                self._emit("tool/call", {"id": call.id, "name": call.name, "arguments": call.arguments})
                 self._emit(
                     "tool/result",
                     {
@@ -413,11 +413,44 @@ class AgentLoop:
     def _note_reasoning(self, parts: list[str], piece: str) -> None:
         """记录一片思考增量并**实时**投递（`on_reasoning` 未接线时只记录）。
 
-        与 `on_text` 同节拍、同粒度（provider 每片 `ReasoningDelta` 调一次）；
-        记录只为无 usage 时 `estimate_usage` 计账，**不落会话文件**（有意偏差，
-        口径与后果见 `ask_stream.py` 模块 docstring）。
+        与 `on_text` 同节拍、同粒度（provider 每片 `ReasoningDelta` 调一次）；记录既为无
+        usage 时 `estimate_usage` 计账，也是该步 `assistant/message.reasoning` 的正文来源
+        （**随步骤落盘、可回放**）；但**不进模型请求** —— 回放只读 `content`/`tool_calls`，
+        见 `session/history.py::build_history`。口径见 `ask_stream.py` 模块 docstring。
         """
         parts.append(piece)
         if self.on_reasoning is not None:
             self.on_reasoning(piece)
+
+
+# ── 2026-09-22 追加：无上限轮次（人：「怎么有连续调用工具的 8 轮上限，上游都没有」）──────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。上游口径（`agent-loop/README.zh.md:200`）：
+# 「**没有内置轮次预算**：工具调用或 steering 会让当前轮次继续；限制失控轮次的策略必须从既有生命周期
+# 扩展点（如 `agent/turn-stopping`）执行取消」。本地此前把 `max_iterations` 默认 8 当安全上界，真机上
+# 表现为"连着调几次工具就被切断"，与上游不一致 ⇒ 现在**默认 0 = 无上限**（对齐上游），
+# 失控由前端「停止」按钮（真取消，`CancelToken`）兜底；`max_iterations > 0` 仍是调用方给的硬上限
+# （测试与特殊场景继续用它）。
+
+#: `max_iterations = 0`（无上限）时给 `range()` 的**实际**上界：一个永远到不了的数
+#: （每轮都是一次模型调用）。保留它 = 保留 `StopReason.MAX_ITERATIONS` 这条**防御性**出口，
+#: 同时不引入 `while True` 那种"忘了写退出条件"的结构。
+UNBOUNDED_ITERATIONS = 1_000_000
+
+
+# ── 2026-09-22 追加：`tool/call` 落盘**先于分发**（对齐上游；见本轮 §8 待办）──────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移；改动本身是**等量换位**
+# （把那一行 `self._emit("tool/call", …)` 上移到 `self.tools.invoke(…)` 之前，总行数不变）。
+#
+# **上游口径**：`dsh-src/packages/core/agent-loop/src/tool-calls.ts:168` 的 `appendToolCall()` **先于**
+# `:174` 的 `dispatch()` —— 即"**先记账，再干活**"。本地原先反了（工具跑完才写 `tool/call`），后果两条：
+#
+# 1. **崩在工具里 = 没有任何记录**：那条 `tool/call` 从未落盘，日志看不出"它被调用过"（只有下一轮的
+#    `assistant/message.tool_calls` 里还留着它，但那是**上一轮**的模型输出，不是调用记录）。
+# 2. **`toolMs` 恒 ≈0**：`tool/call.time` 与 `tool/result.time` 是背靠背两次写入（`SessionStore.append()`
+#    给每条打 `time`，见 `session/store.py:215`）⇒ 两者之差测的是"写盘间隔"而不是"工具耗时"。
+#    按事件时间算 `toolMs` 的消费方（`session-stats` 那类，见 `dsh-agent-port.md §8` 本条待办）因此读不到真值。
+#
+# **配对不变量不受影响**：`registry.invoke()` 把任何失败（未知工具 / 参数非法 / 审批拒绝 / 异常）
+# 都转成带错误文本的 `ToolResult`（`tools/registry.py:226`）⇒ 「`tool/call` 之后必有 `tool/result`」照旧成立，
+# 回放侧（`session/history.py` 跳过 `tool/call`）与过程行（`turn_process.tool_row()` 按到达序补状态）也都不看位次。
 

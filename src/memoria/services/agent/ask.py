@@ -41,7 +41,7 @@ M1 无新增价值，故此处只引用 `load_config()` / `create_provider()`；
 本地分两步、都在 `ask()` 里：① 追加本轮 `user/message` **之后**立刻补一条**确定性兜底**标题
 （零模型调用、零网络，会话已有标题则跳过）；② 主回合结束后跑**首轮一次**的模型标题
 （`first-prompt` 节律：会话里恰好一条合格人类消息时；**被取消的轮次跳过**）。两步都 fail-open
-（失败只记 warning）；代价是「面板的 `done` 会晚一个极小辅助调用的时间，仅每会话首轮一次」。**思考流（AG08）**：模型的思考增量（`ReasoningDelta`）经 `on_reasoning` 实时送前端、**不落会话文件**（会话文件同时是读取路径的事实源 ⇒ 重载页面/载入旧会话都不显示过往思考；上游 dsh 会持久化；口径见 `ask_stream.py` 模块 docstring）。
+（失败只记 warning）；代价是「面板的 `done` 会晚一个极小辅助调用的时间，仅每会话首轮一次」。**思考流（AG08，2026-09-22 口径更新）**：模型的思考增量（`ReasoningDelta`）既经 `on_reasoning` 实时送前端，也**随该步 `assistant/message` 落盘**（`data.reasoning`，空则不写该键）⇒ 重载页面/载入旧会话**可回放**思考；但仍**不进模型请求**（回放只读 `content`/`tool_calls`；口径见 `ask_stream.py` 模块 docstring）。
 """
 
 from __future__ import annotations
@@ -76,7 +76,7 @@ from memoria.services.agent.loop import (
     StopReason,
     usage_payload,
 )
-from memoria.services.agent.prompt import build_system_prompt, render_model_change_notice, render_time_context
+from memoria.services.agent.prompt import build_system_prompt, render_model_change_notice, render_skill_invocation, render_time_context
 from memoria.services.agent.pruner import (
     PRUNE,
     applied_chars,
@@ -143,17 +143,20 @@ def build_loop(
     temperature: float | None = None,
     max_tokens: int | None = None,
     timeout_s: float | None = None,
-    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None,
+    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None, on_event: Callable[[str, Mapping[str, Any]], None] | None = None,
     cancel: CancelToken | None = None,
 ) -> AgentLoop:
     """组装一个绑定了知识库只读工具的循环（供 `ask()` 与测试复用）。
 
     `registry` / `system` 可**预置**：`ask()` 为了让压缩调用与主回合共用同一份 system + 工具集
     （KV 前缀缓存对齐，见 `_compact_if_needed()`）而先建一次再传进来。省略时按
-    `kb_path` + `model` 就地构建，与 M1 行为完全一致。
+    `kb_path` + `model` 就地构建，与 M1 行为完全一致。`on_event`（**追加的可选参数**）是循环事件的外部消费者（面板实时过程行）：与「落盘 `session.append`」链式合并（先落盘、再回调，面板异常不漏落盘），见 `_chained_event()`。
     """
     if registry is None:
-        registry = ToolRegistry(build_kb_tools(kb_path, top_k=top_k))
+        # 写入要落在**这次对话**里（`propose_write` 直接落盘），故把会话 id 一并交给工具集
+        registry = ToolRegistry(
+            build_kb_tools(kb_path, top_k=top_k, session_id=session.session_id if session is not None else None)
+        )
     if system is None:
         system = build_system_prompt(kb_path, tools=registry.schemas(), model=model)
     return AgentLoop(
@@ -168,7 +171,7 @@ def build_loop(
         approval=approval if approval is not None else DEFAULT_POLICY,
         retry_policy=retry_policy,
         on_text=on_text, on_reasoning=on_reasoning,
-        on_event=session.append if session is not None else None,
+        on_event=_chained_event(session, on_event),
         cancel=cancel,
     )
 
@@ -193,10 +196,12 @@ def _compact_if_needed(
     tools: Sequence[Any],
     model: str,
     timeout_s: float | None,
-    retry_policy: RetryPolicy | None,
-    cancel: CancelToken | None,
+    retry_policy: RetryPolicy | None, cancel: CancelToken | None, force: bool = False,
 ) -> bool:
     """历史超过预算时**先裁旧工具输出、再按需压成 checkpoint**；返回是否落了事件。
+
+    `force=True`（2026-09-22 追加，供 `/compact` 命令用）：**跳过阈值判断**，按用户明示"现在就压"
+    执行 —— 之后的路线（先裁后压、`select_span()` 选区间、fail-open）**逐字不变**。
 
     顺序对齐上游 `compaction-basic`：压力确认后**先**跑工具结果裁剪（免模型），**再**选择压缩
     区间 —— 裁剪可能已把压力降到阈值之下，那就**免掉这次摘要调用**（上游：*trimming may relieve
@@ -207,7 +212,7 @@ def _compact_if_needed(
     抛 `CompactionError`，不产出半份摘要），这里只记一条 warning，让本轮按**未压缩**的历史继续
     走 —— 压缩是优化，不该让用户的问题问不出去。
     """
-    if _history_chars(history) <= compact_threshold_chars():
+    if not force and _history_chars(history) <= compact_threshold_chars():
         return False
     events = conversation_events(root, session.session_id)
     changed = False
@@ -337,9 +342,10 @@ def ask(
     temperature: float | None = None,
     max_tokens: int | None = None,
     timeout_s: float | None = None,
-    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None,
+    on_text: Callable[[str], None] | None = None, on_reasoning: Callable[[str], None] | None = None, on_event: Callable[[str, Mapping[str, Any]], None] | None = None,
     replay: bool = True,
     cancel: CancelToken | None = None,
+    service: Any = None,
 ) -> AskResult:
     """问一个关于知识库的问题；返回答案、锚点、工具调用、用量与会话位置。
 
@@ -348,7 +354,7 @@ def ask(
 
     `cancel`（M1 收尾**追加的可选参数**，不影响既有调用）：取消令牌透传到
     `AgentLoop`；取消时本轮以 `stop_reason="aborted"` 结束、**保留已生成的部分
-    文本**作为 `answer`，并照常落盘 `loop/end`（不抛异常）。
+    文本**作为 `answer`，并照常落盘 `loop/end`（不抛异常）。`on_event`（**追加的可选参数**）把循环事件（`assistant/message` / `tool/call` / `tool/result` …）实时交给调用方（面板过程行）；先落盘、再回调，面板回调抛异常也不漏落盘（见 `_chained_event()`）。
     """
     root = os.path.abspath(kb_path or "")
     if not os.path.isdir(root):
@@ -361,9 +367,10 @@ def ask(
     active_provider = provider if provider is not None else create_provider(None, config=settings)
     active_model = model or (settings.model if settings is not None else "")
 
-    # 压缩与主回合**共用**同一份 system + 工具集（KV 前缀对齐，见模块 docstring 的 M2 段）
-    registry = ToolRegistry(build_kb_tools(root, top_k=top_k))
-    system = build_system_prompt(root, tools=registry.schemas(), model=active_model)
+    # 会话先建：agent 现在是**直接写库**的（`propose_write` 落盘时用它当审计归属），
+    # `build_kb_tools` 需要它的 id；顺带把应用侧已装载的 `service` 交给写入路径复用
+    # （写后清其解析缓存 ⇒ 面板重开文件看到新内容；也避免每次写入新建实例而重复写用户 config）。
+    session = SessionStore(root, session_id or new_session_id())
 
     history: list[Message] | None = None
     if replay and session_id:
@@ -374,7 +381,24 @@ def ask(
         if resumed:
             history = build_history(root, session_id)
 
-    session = SessionStore(root, session_id or new_session_id())
+    # 压缩与主回合**共用**同一份 system + 工具集（KV 前缀对齐，见模块 docstring 的 M2 段）
+    registry = ToolRegistry(
+        build_kb_tools(root, top_k=top_k, session_id=session.session_id, service=service)
+    )
+    system = build_system_prompt(root, tools=registry.schemas(), model=active_model)
+
+    # 斜杠命令（上游 `interaction/commands` 的最小面，见 `commands.py`）：整行 `/name` 且名字**已注册**
+    # ⇒ 宿主侧直接执行、**不产生模型消息**（不落 `user/message`、不进 loop）；未注册的名字原样当普通提问。
+    # 挂这里是因为上下文（会话 / provider / system / 工具集 / 历史）此刻**刚好齐了** ⇒ 与主回合同参。
+    from memoria.services.agent import commands as commands_mod
+
+    handled = commands_mod.handle_command_line(
+        root, session, text,
+        history=history, provider=active_provider, system=system, model=active_model,
+        tools=registry.schemas(), timeout_s=timeout_s, retry_policy=retry_policy, cancel=cancel,
+    )
+    if handled is not None:
+        return handled
     if history and _compact_if_needed(
         root,
         session,
@@ -410,15 +434,15 @@ def ask(
         system=system,
         max_iterations=max_iterations,
         top_k=top_k,
-        approval=approval,
+        approval=_bind_permission(root, session, approval),
         retry_policy=retry_policy,
         temperature=temperature,
         max_tokens=max_tokens,
         timeout_s=timeout_s,
-        on_text=on_text, on_reasoning=on_reasoning,
+        on_text=on_text, on_reasoning=on_reasoning, on_event=on_event,
         cancel=cancel,
     )
-    prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + _model_notice(root, session.session_id, active_model, replayed=history is not None) + render_time_context()
+    prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + _model_notice(root, session.session_id, active_model, replayed=history is not None) + render_time_context() + render_skill_invocation(root, text)  # 末项 = `/name` 技能手势注入（扫**用户原文**，位次在**最末**；见 §6.22）
     result: LoopResult = loop.run(prompt, messages=history)
     session.flush()
     # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过
@@ -438,7 +462,7 @@ def ask(
             "id": call.call_id,
             "name": call.name,
             "is_error": call.is_error,
-            "code": call.output.code,
+            "code": call.output.code, "message": _tool_message(call.content),
         }
         for call in result.tool_calls
     )
@@ -493,3 +517,86 @@ def _model_notice(kb_path: str, session_id: str, model: str, *, replayed: bool) 
     notice = render_model_change_notice(_last_recorded_model(conversation_events(kb_path, session_id)), model)
     # 空告知不带分隔：否则本轮请求会比现在多出一行空行（既有断言与 KV 前缀都按「读数紧随用户文本」）
     return f"{notice}\n\n" if notice else ""
+
+
+# ── 工具结果摘要（2026-09-21；给前端"这次动作成没成"）─────────────────────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（本行的 `_tool_message` 由上方
+# `tool_calls` 载荷组装处按模块名调用，不构成前向引用问题）。
+
+
+def _tool_message(content: Any) -> str:
+    """工具结果的**首段**（空白折叠、截断 240 字）—— 前端展示失败原因用。
+
+    真机（AAA_Vocab，2026-09-21）：`propose_write` 因备份目录 rename 撞 `WinError 5` 而失败，
+    工具回的是 `Error: 写入**失败**（backup_failed）：[WinError 5] 拒绝访问…`；但轮询载荷里的
+    `tool_calls[]` 过去只有 `{id, name, is_error, code}` ⇒ 前端**完全不渲染**它 ⇒ 人只看到模型说
+    "我按模板写入"，实际一个字节都没写（这正是"agent 没有做出行动"的来源）。这里补一截**可读的
+    原因**：只取首段，不把整篇工具输出（可能是整篇文档）塞进轮询载荷。
+    """
+    return " ".join(str(content or "").split())[:240]
+
+
+# ── 过程事件的链式发射（2026-09-22；面板实时工具/步骤行）──────────────────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`build_loop()` 按模块名调用
+# `_chained_event()`，不构成前向引用问题）。
+
+
+def _chained_event(
+    session: SessionStore | None, panel: Callable[[str, Mapping[str, Any]], None] | None
+) -> Callable[[str, Mapping[str, Any]], None] | None:
+    """把「落盘」与「面板实时回调」串成一个 `on_event`：**先落盘、再回调**。
+
+    两条纪律：① 只先 `session.append()` 落盘 —— 面板回调抛异常也**绝不漏掉落盘**（会话文件
+    是读取路径的事实源，不能因展示层故障而缺事件）；② 面板回调自身 try/except 是**有意冗余**
+    （`loop._emit` 也会兜一层），保证"面板坏了"永远只影响那一个作业的可见性。两者都为 None
+    时返回 None（`loop` 的 `_emit` 直接短路，零开销）。
+    """
+    if session is None and panel is None:
+        return None
+
+    def emit(event_type: str, data: Mapping[str, Any]) -> None:
+        if session is not None:
+            session.append(event_type, data)
+        if panel is not None:
+            try:
+                panel(event_type, data)
+            except Exception as exc:  # noqa: BLE001 —— 面板回调失败不得影响落盘/循环
+                logger.warning("[agent-ask] 过程事件回调失败（%s）：%r", event_type, exc)
+
+    return emit
+
+
+# ── 审批档位（2026-09-22；会话级「手动 / 自动 / 完全访问」）─────────────────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`ask()` 里只有一处**等量替换**：
+# `approval=approval` → `approval=_bind_permission(...)`，行数不变）。
+
+
+def _bind_permission(kb_path: str, session: SessionStore, approval: ApprovalPolicy | None) -> ApprovalPolicy:
+    """解析并**钉住**本次会话的审批档，返回对应策略（语义见 `permission_presets.py`）。
+
+    显式传入 `approval` 的调用方（测试 / 特殊路径）优先级最高，绝不覆盖；否则按会话事件折叠出
+    生效档（`permission/preset` + `approval/policy`，缺失时补默认档的整值事件），再取策略实例：
+
+    - `manual-approval` ⇒ `AskPolicy`（每个写类调用挂起等面板应答）；
+    - `auto-approval`（默认）⇒ `GuardedPolicy`（常规写自动放行，命中风险才问）；
+    - `all-access` ⇒ `DefaultApprovalPolicy`（不问、一律放行）。
+
+    档位面自身出故障（读配置/写事件抛错）时不外抛、也不放宽：回落**默认档**（`auto-approval`）
+    的策略，问答照常进行。
+    """
+    if approval is not None:
+        return approval
+    from memoria.services.agent import approval_bridge, permission_presets
+
+    # 审批审计落盘（上游 `approval/asked` / `approval/decided`，log-only）：把本次会话的 `append`
+    # 交给审批桥，人工确认的"问过 / 裁决了"就会随会话日志可回放（2026-09-22 补，见设计 §5）。
+    approval_bridge.attach_audit(kb_path, session.append)
+    try:
+        name = permission_presets.pin_and_current(session)
+        policy = permission_presets.policy_for(name, kb_path)
+    except Exception as exc:  # noqa: BLE001 — 档位面故障不得让提问抛错
+        logger.warning("[agent-permission] 档位解析失败，回落默认档：%r", exc)
+        name = permission_presets.DEFAULT_PRESET
+        policy = permission_presets.policy_for(name, kb_path)
+    logger.debug("[agent-permission] 本次会话审批档：%s", name)
+    return policy

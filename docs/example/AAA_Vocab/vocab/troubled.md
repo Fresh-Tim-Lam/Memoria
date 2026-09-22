@@ -76,7 +76,7 @@
 | Core nuance (English + 中文) | **持续存在严重问题**，含情感、关系、制度层面的困扰（a troubled period） | **难度高、不易完成**，客观描述任务（a difficult test） | **给人造成压力**，强调主观感受（a stressful job） |
 | Formality (English + 中文) | neutral，但语感偏重（中性偏重） | neutral（中性，最常用） | neutral（中性） |
 | Typical collocates (English + 中文) | a troubled period / relationship / teenager / past（艰难的时期、有问题的关系、问题少年、动荡的过去） | a difficult question / decision / time（难题、难决定、难熬的时光） | a stressful job / situation / week（高压工作、情境、一周） |
-| IELTS example (English + 中文翻译) | He wrote his best work during a troubled period.（他最好的作品写于一段艰难的时期。） | It was a difficult decision to leave my hometown.（离开家乡是个艰难的决定。） | Nursing is a rewarding but stressful career.（护理是有意义但高压的职业。） |
+| IELTS example (English + 中文翻译) | He wrote his best work during a troubled period.（他最好的作品写于一段艰难的时期。） | It was a difficult decision to leave my hometown.（离开家乡是个艰难的决定。） | Nursing is a [[rewarding]] but stressful career.（护理是有意义但高压的职业。） |
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

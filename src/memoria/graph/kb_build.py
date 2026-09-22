@@ -108,6 +108,7 @@ def sync_file_sidecar_links(
             "targets_set": 0,
             "skipped_unresolved": 0,
             "skipped_outside_kp": 0,
+            "pruned_style_links": 0,
         }
 
     links = sidecar.setdefault("links", [])
@@ -117,6 +118,26 @@ def sync_file_sidecar_links(
     skipped_unresolved = 0
     skipped_outside_kp = 0
     changed = False
+
+    # 2026-09-22 追加：**清掉"字样式命令"被误收进来的 links[] 存量**（`anchor_text` 以 `\` 开头，
+    # 如 `\h:green` / `\c:red`）。它们由本函数 2026-09-22 **之前**的版本写入 —— 当时
+    # `link_resolver.scan_wikilinks()` 把 `[[\h|…]]` 当成了 wikilink。扫描侧已排除 `\`（那条修在
+    # `link_resolver._WIKILINK_RE`）⇒ 不再新增；但**构建只增不删**，不打这个补丁存量就永远留着
+    # （每条都贡献一个 `link_no_targets` 警告，真机库实测 5 条）。
+    # 判据刻意收得很窄：**只看 `anchor_text` 开头是不是 `\`**（KP id 是 kebab-case，绝不以 `\` 开头）
+    # ⇒ 不会误删"目标尚未创建"的合法虚链（那种 `targets: []` 是有意义的待绑定状态）。
+    pruned_style_links = 0
+    if links:
+        kept = [
+            ln
+            for ln in links
+            if not (isinstance(ln, dict) and str(ln.get("anchor_text") or "").lstrip().startswith("\\"))
+        ]
+        if len(kept) != len(links):
+            pruned_style_links = len(links) - len(kept)
+            sidecar["links"] = kept
+            links = kept
+            changed = True
 
     for wl in scan_wikilinks(body or ""):
         line = _line_from_offset(body, wl["start"])
@@ -212,6 +233,7 @@ def sync_file_sidecar_links(
         "targets_set": targets_set,
         "skipped_unresolved": skipped_unresolved,
         "skipped_outside_kp": skipped_outside_kp,
+        "pruned_style_links": pruned_style_links,
     }
 
 
@@ -242,6 +264,7 @@ def build_knowledge_base(kb_path: str) -> dict:
         "instances_added": 0,
         "targets_set": 0,
         "skipped_unresolved": 0,
+        "pruned_style_links": 0,
         "validation_errors": 0,
     }
 
@@ -293,6 +316,7 @@ def build_knowledge_base(kb_path: str) -> dict:
         totals["instances_added"] += sync["instances_added"]
         totals["targets_set"] += sync["targets_set"]
         totals["skipped_unresolved"] += sync["skipped_unresolved"]
+        totals["pruned_style_links"] += int(sync.get("pruned_style_links") or 0)
 
         if sync["changed"]:
             file_reports.append({**sync, "saved": True})

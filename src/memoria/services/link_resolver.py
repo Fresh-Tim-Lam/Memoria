@@ -6,8 +6,16 @@ import re
 
 from memoria.services.kp_index import build_kp_index, entry_to_dict
 
+#: wikilink 形态：`[[目标]]` / `[[目标#边类型]]` / `[[目标|显示文本]]`。
+#:
+#: **目标段排除反斜杠**（2026-09-22 修）：`[[\h|…]]` / `[[\c:red|…]]` / `[[\s:20px|…]]` 这些是
+#: **字样式命令**、不是链接（语法权威 = [preview-formats.md §4.2](../../docs/reference/preview-formats.md)，
+#: `[[\` 前缀、`]]` 收尾、不嵌套）。此前把它们当成了 wikilink ⇒ `target_id` 成了 `\h:green`
+#: 这类"目标"，构建期被写进 sidecar `links[]` 且 `targets: []` ⇒ 每一条都留一个 `link_no_targets`
+#: 警告（真机库实测 5 条），`audit_references` 也把它们全报成断链。KP id 是 kebab-case、
+#: 绝不以 `\` 开头 ⇒ 这条排除不会误伤任何真实目标。
 _WIKILINK_RE = re.compile(
-    r"\[\[([^\]|#\]]+)(?:#([^\]|#]+))?(?:\|([^\]]+))?\]\]"
+    r"\[\[([^\]|#\\]+)(?:#([^\]|#]+))?(?:\|([^\]]+))?\]\]"
 )
 
 

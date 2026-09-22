@@ -15,6 +15,9 @@
 ⑥ 新工具注册与 `read_only`、`@路径` 段门控不回归；
 ⑦ 工具面 = 工作区根（**允许根列表**，今天 `[库根]`）：可见性由程序施加 —— `.memoria/**` 默认
    可见、VCS 内部目录（`.git` 等）仍不可见、允许根之外一律明确拒绝（错误码稳定）。
+⑧ **非 markdown 文本文件也能读**（2026-09-22 人报障「我发现 agent 读不了非 markdown 文件」）：
+   `.txt`/`.csv`/源码走纯文本窗口（无 frontmatter 剥离、无知识点段）、行号与续读口径与 md 一致、
+   二进制明确拒绝并指路 `read_image`、GBK 编码可读、超限只读前缀且如实标注、越界仍拒。
 """
 
 from __future__ import annotations
@@ -28,6 +31,7 @@ from typing import Any
 import pytest
 
 from memoria.services.agent.llm import ToolCall
+from memoria.services.agent.prompt import FILE_REFERENCE_SECTION
 from memoria.services.agent.tools import (
     INVALID_ARGUMENTS_CODE,
     KB_TOOL_NAMES,
@@ -418,7 +422,9 @@ def test_new_read_tools_registered_and_read_only(kb: Path) -> None:
     assert tuple(name for name in registry.names() if name in read_face) == read_face
     for name in KB_TOOL_NAMES:
         tool = registry.get(name)
-        assert tool is not None and tool.read_only, name
+        assert tool is not None, name
+        # `propose_write` 2026-09-21 起**会**落盘（写机制全线放开）⇒ 它声明 `read_only=False`；其余全只读
+        assert tool.read_only is (name != "propose_write"), name
 
     unknown = registry.invoke(ToolCall(id="c", name="read_file", arguments="{}"))
     assert unknown.is_error and unknown.output.code == UNKNOWN_TOOL_CODE
@@ -428,3 +434,126 @@ def test_new_read_tools_registered_and_read_only(kb: Path) -> None:
     assert set(schemas["grep"]["properties"]) == {"pattern", "path", "include"}
     assert set(schemas["read_image"]["properties"]) == {"file_path"}
     assert schemas["read_document"]["properties"]["limit"]["maximum"] == DEFAULT_READ_LIMIT
+
+
+# —— ⑧ 非 markdown 文本文件也能读（2026-09-22 人报障）——
+
+
+def _description_of(kb: Path, name: str) -> str:
+    for schema in registry_for(kb).schemas():
+        if schema.name == name:
+            return str(schema.description or "")
+    raise AssertionError(f"未注册工具 {name}")
+
+
+def test_tool_texts_tell_the_model_non_markdown_is_readable(kb: Path) -> None:
+    """模型看得到的文案必须说清"不限 .md" —— 否则它根本不会去试（本轮报障的一半原因）。"""
+    description = _description_of(kb, "read_document")
+    assert "文本文件" in description and "Markdown（`.md`/`.markdown`）额外给知识点清单" in description
+    path_desc = next(
+        schema.parameters["properties"]["path"]["description"]
+        for schema in registry_for(kb).schemas()
+        if schema.name == "read_document"
+    )
+    assert "不限扩展名" in path_desc
+    assert "**不限 `.md`**" in FILE_REFERENCE_SECTION, "`@路径` 段的说明同步（否则模型仍以为只认 md）"
+
+
+def test_read_document_reads_plain_text_files(kb: Path) -> None:
+    """`.txt`：给纯文本窗口（**无**知识点段），不再被"只认 .md"挡掉。"""
+    result = invoke(kb, "read_document", path="notes.txt")
+
+    assert not result.is_error, result.content
+    assert "文件 notes.txt：共 1 行（非 markdown ⇒ 无知识点段）。" in result.content
+    assert result.content.endswith("正文：\n多层感知机在这里出现一次\n")
+    assert "知识点（`文件:行号`）：" not in result.content
+
+
+def test_plain_text_does_not_strip_frontmatter(kb: Path) -> None:
+    """非 markdown **不剥 frontmatter**：`.txt` 开头的 `---` 就是正文第一行。"""
+    (kb / "fm.txt").write_text("---\ntitle: 不是 frontmatter\n---\n正文\n", encoding="utf-8")
+
+    result = invoke(kb, "read_document", path="fm.txt")
+
+    assert not result.is_error
+    assert "文件 fm.txt：共 4 行" in result.content
+    assert result.content.endswith("正文：\n---\ntitle: 不是 frontmatter\n---\n正文\n")
+
+
+def test_plain_text_paginates_and_out_of_range_still_fails(kb: Path) -> None:
+    """非 markdown 的分页 / 续读 / 越界与 md **同一套** `_read_window()` 语义。"""
+    (kb / "data.csv").write_text("".join(f"第{index},值{index}\n" for index in range(1, 31)), encoding="utf-8")
+
+    first = invoke(kb, "read_document", path="data.csv", offset=1, limit=5)
+    assert not first.is_error
+    assert "文件 data.csv：共 30 行" in first.content
+    assert "续读请把 offset 设为 6" in first.content
+
+    second = invoke(kb, "read_document", path="data.csv", offset=6, limit=5)
+    assert "第6,值6" in second.content
+
+    beyond = invoke(kb, "read_document", path="data.csv", offset=31)
+    assert beyond.is_error and beyond.output.code == "NOT_FOUND"
+    assert "offset 31 超出范围" in beyond.content and "共 30 行" in beyond.content
+
+
+def test_plain_text_binary_is_refused_and_pointed_at_read_image(kb: Path) -> None:
+    """二进制（含 NUL）明确拒绝并把图片指给 `read_image` —— 不把 PNG 当文本灌给模型。"""
+    blob = invoke(kb, "read_document", path="sub/blob.bin")
+    assert blob.is_error and blob.output.code == "BINARY_FILE"
+    assert "二进制" in blob.content and "read_image" in blob.content
+
+    png = invoke(kb, "read_document", path="img.png")
+    assert png.is_error and png.output.code == "BINARY_FILE"
+    assert "read_image" in png.content
+
+
+def test_plain_text_gbk_file_decodes(kb: Path) -> None:
+    """GBK（Windows 中文文本的常见编码）能读出来，不因 UTF-8 解不开就报错。"""
+    (kb / "gbk.txt").write_bytes("多层感知机（GBK 编码）\n".encode("gbk"))
+
+    result = invoke(kb, "read_document", path="gbk.txt")
+
+    assert not result.is_error
+    assert "多层感知机（GBK 编码）" in result.content
+
+
+def test_plain_text_utf8_bom_is_stripped(kb: Path) -> None:
+    """UTF-8 BOM 不留进正文（Windows 侧写出的 .csv/.txt 常带 BOM；L4 实测首行会多一个 `\\ufeff`）。"""
+    (kb / "bom.csv").write_bytes(b"\xef\xbb\xbfname,score\n" + "alpha,91\n".encode("utf-8"))
+
+    result = invoke(kb, "read_document", path="bom.csv")
+
+    assert not result.is_error
+    assert "\ufeff" not in result.content
+    assert result.content.endswith("正文：\nname,score\nalpha,91\n")
+
+
+def test_plain_text_oversize_is_truncated_and_said_so(kb: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """大文件只读前缀并**如实标注**（`.md` 之外可以是任意大文件）。"""
+    from memoria.services.agent.tools import kb as kb_module
+
+    monkeypatch.setattr(kb_module, "PLAIN_READ_MAX_BYTES", 24)
+    (kb / "big.log").write_text("".join(f"line {index:03d}\n" for index in range(1, 21)), encoding="utf-8")
+
+    result = invoke(kb, "read_document", path="big.log")
+
+    assert not result.is_error
+    assert "只读了前 24 字节" in result.content
+    assert "line 001" in result.content and "line 020" not in result.content
+
+
+def test_plain_text_path_guards_hold(kb: Path) -> None:
+    """越界 / 不存在 / 目录：与 md 同一套拒绝口径（不因为放宽扩展名就放宽路径）。"""
+    escape = invoke(kb, "read_document", path="../outside.txt")
+    assert escape.is_error and escape.output.code == INVALID_ARGUMENTS_CODE
+    assert "工作区（允许根）内的相对路径" in escape.content
+
+    absolute = invoke(kb, "read_document", path="C:/windows/win.ini")
+    assert absolute.is_error
+
+    missing = invoke(kb, "read_document", path="nope.txt")
+    assert missing.is_error and missing.output.code == "NOT_FOUND"
+
+    folder = invoke(kb, "read_document", path="sub")
+    assert folder.is_error

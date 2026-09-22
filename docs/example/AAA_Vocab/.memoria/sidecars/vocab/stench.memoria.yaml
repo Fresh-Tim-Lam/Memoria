@@ -1,0 +1,54 @@
+schema_version: 1
+file: vocab/stench.md
+knowledge_points:
+- id: stench
+  name: stench
+  range:
+    start:
+      snippet: '# stench'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The **dilapidated** warehouses by the river
+        had stood'
+      line_hint: 104
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - ActiveVocabulary
+  - UserDefined
+  - Senses
+  - Environment
+  - C1
+links:
+- anchor_text: picturesque
+  occurrence: 0
+  targets:
+  - picturesque
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  source_id: stench
+- anchor_text: dilapidated
+  occurrence: 0
+  targets:
+  - dilapidated
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  - line: 96
+    wrapped: true
+  source_id: stench
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  - line: 96
+    wrapped: true
+  source_id: stench

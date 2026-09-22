@@ -73,7 +73,7 @@ MAX_ISSUES_IN_REPORT = 20
 KB_TOOL_NAMES = (
     "search_kb", "read_document", "read_kp", "kb_overview",
     "validate_kb", "search_sessions",
-    "glob", "grep", "read_image",
+    "glob", "grep", "read_image", "skill",
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write",
@@ -283,7 +283,7 @@ def _search_kb(kb_path: str, query: str, top_k: int) -> ToolOutput:
 def _read_document(kb_path: str, path: str, *, offset: int = 1, limit: int | None = None) -> ToolOutput:
     rel = _safe_rel(kb_path, path)
     if rel is None:
-        return _error("read_document: path 必须是工作区（允许根）内的相对 .md 路径（不得上跳）")
+        return _error("read_document: path 必须是工作区（允许根）内的相对路径（不得上跳）")
     full = os.path.join(kb_path, rel)
     if not os.path.isfile(full):
         return _error(f"read_document: 文档不存在：{rel}", "NOT_FOUND")
@@ -482,8 +482,15 @@ def _search_session_history(kb_path: str, query: str, limit: int) -> ToolOutput:
     return ToolOutput(text="\n".join(lines))
 
 
-def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, ...]:
-    """绑定到某个知识库的只读工具集；全部声明 `read_only=True`。"""
+def build_kb_tools(
+    kb_path: str, *, top_k: int = DEFAULT_TOP_K, session_id: str | None = None, service: Any = None
+) -> tuple[Tool, ...]:
+    """绑定到某个知识库的工具集（只读工具 + **一把会落盘的写工具**）。
+
+    `session_id` / `service`（2026-09-21 追加，可选）：`propose_write` **直接落盘**时用它们 ——
+    会话 id 决定审计归属（缺省 `agent-auto`）；`service` 是应用侧已装载的 `DocumentService`，
+    复用它 ⇒ 写后能清它的解析缓存（否则面板重开文件读到的还是旧解析）。
+    """
     root = os.path.abspath(kb_path)
 
     def _bound_search(arguments: Mapping[str, Any]) -> ToolOutput:
@@ -523,14 +530,14 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
         Tool(
             name="read_document",
             description=(
-                "读取知识库内一篇 Markdown 文档的正文与知识点清单（带 `文件:行号`）。"
-                f"正文默认返回前 {DEFAULT_READ_LIMIT} 行；被截断时正文尾会给出一条续读提示，"
-                "按提示里的 offset 再调一次即可接着读。"
+                "读取工作区内一篇**文本文件**的正文与行号：Markdown（`.md`/`.markdown`）额外给知识点清单，"
+                f"其它文本（`.txt`/`.csv`/`.json`/源码…）给纯文本窗口；正文默认返回前 {DEFAULT_READ_LIMIT} 行，"
+                "被截断时正文尾会给出一条续读提示，按提示里的 offset 再调一次即可接着读。"
             ),
             parameters={
                 "type": "object",
                 "properties": {
-                    "path": {"type": "string", "minLength": 1, "description": "知识库内相对路径，例如 neural-network.md"},
+                    "path": {"type": "string", "minLength": 1, "description": "工作区内相对路径（不限扩展名），例如 neural-network.md、data/scores.csv"},
                     "offset": {
                         "type": "integer",
                         "minimum": 1,
@@ -546,7 +553,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "required": ["path"],
                 "additionalProperties": False,
             },
-            handler=lambda arguments: _read_document_call(root, arguments),
+            handler=lambda arguments: _read_document_call(root, arguments, session_id=session_id),
         ),
         Tool(
             name="read_kp",
@@ -557,7 +564,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "required": ["id"],
                 "additionalProperties": False,
             },
-            handler=lambda arguments: _read_kp(root, str(arguments.get("id") or "")),
+            handler=lambda arguments: _read_kp_call(root, arguments, session_id=session_id),
         ),
         Tool(
             name="kb_overview",
@@ -662,7 +669,7 @@ def build_kb_tools(kb_path: str, *, top_k: int = DEFAULT_TOP_K) -> tuple[Tool, .
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service),
     )
 
 
@@ -776,7 +783,7 @@ def _read_window(
     return "\n".join(window), footer
 
 
-def _read_document_call(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+def _read_document_call(kb_path: str, arguments: Mapping[str, Any], *, session_id: str | None = None) -> ToolOutput:
     """`read_document` 的工具包装层：解析 `offset`/`limit`，把越界转成 `NOT_FOUND` 结果。"""
     offset = _positive_int(arguments.get("offset"), 1)
     limit = _positive_int(arguments.get("limit"), DEFAULT_READ_LIMIT)
@@ -785,7 +792,7 @@ def _read_document_call(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutpu
     if limit is None or limit > DEFAULT_READ_LIMIT:
         return _error(f"read_document: limit 必须是 1..{DEFAULT_READ_LIMIT} 的整数")
     try:
-        return _read_document(kb_path, str(arguments.get("path") or ""), offset=offset, limit=limit)
+        return _read_text_or_document(kb_path, str(arguments.get("path") or ""), offset=offset, limit=limit, session_id=session_id)
     except _ReadOffsetError as exc:
         return _error(f"read_document: {exc}", "NOT_FOUND")
 
@@ -2844,13 +2851,20 @@ PROPOSE_TOOL_NAME = "propose_write"
 #: 计划没过校验/试算时的错误码：让模型按 `op_id` **重写整批**再提（而不是逐条打补丁）
 INVALID_PLAN_CODE = "INVALID_PLAN"
 
-#: 进程内信箱 `{库根绝对路径: [plan, …]}`；RPC `agent_plan_pending` 取走即清空
-#  （**不落盘**：进程重启即丢。提议本来就是"等人确认"的瞬时物，不是事实源）
+#: 写入失败（原语拒绝 / 备份失败 / 与盘上版本冲突）：整批已回滚、库未变
+WRITE_FAILED_CODE = "WRITE_FAILED"
+
+#: agent **直接写入**时，若调用方没给会话 id（离线调用 / 测试），写入审计落这个会话
+AUTO_SESSION_ID = "agent-auto"
+
+#: 进程内信箱 `{库根绝对路径: [记录, …]}`（**不落盘**：进程重启即丢，不是事实源）。
+#: 2026-09-21 起语义变更：写入在**工具调用内直接落盘**，这里排的是发给前端的**回执**
+#: （`{plan, preview, result, session_id}`）—— 回执卡上不再有「应用」，只有「撤销这一批」。
 _PROPOSALS: dict[str, list[dict[str, Any]]] = {}
 
 
 def take_proposals(kb_path: str) -> list[dict[str, Any]]:
-    """取走某库**已提议但尚未展示**的 plan（取走即清空；没有就回空表）。"""
+    """取走某库**刚写完、尚未展示**的执行记录（取走即清空；没有就回空表）。"""
     return _PROPOSALS.pop(os.path.abspath(kb_path or ""), [])
 
 
@@ -2879,10 +2893,23 @@ class _ValidationService:
         )
 
 
-def _propose_write(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
-    """校验 + dry-run（**零落盘**）后把 plan 排进信箱；不过校验就回错误（模型据此重写整批）。"""
+def _propose_write(
+    kb_path: str,
+    arguments: Mapping[str, Any],
+    *,
+    session_id: str | None = None,
+    service: Any = None,
+) -> ToolOutput:
+    """校验 + dry-run 之后**直接落盘**（写前自动备份、失败零写入），并把回执排给前端。
+
+    2026-09-21 人拍板"全线放开写机制"：不再走"提议 → 人点确认 → 应用"这条两步路，**工具调用内即写入**
+    （审批默认策略同步改为放行，见 `approvals.DefaultApprovalPolicy`）。安全兜底换成**备份 + 撤销**：
+    写前 pre-image 快照（失败即**不写**）、整批 all-or-nothing、会话里留 `capability/apply` 审计、
+    回执卡上可「撤销这一批」。要更严的档位（逐条确认）以后按设计 §4 Q7 的审批档注入策略。
+    """
     import time
 
+    from memoria.services.agent.apply import apply_plan, recover_after_write
     from memoria.services.agent.plan import PLAN_VERSION, preview_plan, validate_plan
 
     intent = str(arguments.get("intent") or "").strip()
@@ -2895,13 +2922,13 @@ def _propose_write(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
         ops.append(row)
     plan: dict[str, Any] = {
         "v": PLAN_VERSION,
-        "txid": time.strftime("%Y%m%dT%H%M%SZ", time.gmtime()) + "-01",
+        "txid": _next_txid(kb_path, str(session_id or "").strip() or AUTO_SESSION_ID, time.gmtime()),
         "intent": intent,
         "ops": ops,
     }
-    service = _ValidationService(kb_path)
+    checker = _ValidationService(kb_path)  # 只借它的 check_kp_id 做校验（局部名，勿与写入用的 service 混淆）
     with kb_read_only(kb_path):
-        checked = validate_plan(kb_path, plan, service=service)
+        checked = validate_plan(kb_path, plan, service=checker)
         if checked.get("status") != "ok":
             detail = "\n".join(
                 f"- [{row.get('op_id') or '-'}] {row.get('code')}: {row.get('message')}"
@@ -2918,55 +2945,110 @@ def _propose_write(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
                 error=True,
                 code=INVALID_PLAN_CODE,
             )
-        preview = preview_plan(kb_path, plan, service=service)
+        preview = preview_plan(kb_path, plan, service=checker)
     if preview.get("status") != "ok" or not preview.get("previewed"):
         return ToolOutput(
             text=error_text("计划试算（dry-run）失败，请稍后重提：计划本身没有落盘", INVALID_PLAN_CODE),
             error=True,
             code=INVALID_PLAN_CODE,
         )
-    _PROPOSALS.setdefault(os.path.abspath(kb_path), []).append(plan)
-    files = [row for row in (preview.get("files") or []) if isinstance(row, Mapping)]
+    sid = str(session_id or "").strip() or AUTO_SESSION_ID
+    # 写入**不**在 `kb_read_only()` 里：那层上下文专门屏蔽库内落盘（缓存 / manifest），而写入正要落盘。
+    result = apply_plan(
+        kb_path,
+        plan,
+        session_id=sid,
+        txid=plan["txid"],
+        base_versions=preview.get("base_versions"),
+        auto=True,
+        service=service,
+    )
+    _PROPOSALS.setdefault(os.path.abspath(kb_path), []).append(
+        {"plan": plan, "preview": preview, "result": result, "session_id": sid}
+    )
+    files = _refresh_observations(kb_path, session_id, preview)  # 写成功后**刷新**观察版本（上游 `fs/observed` 同口径）
+    remaining = _remaining_issues(kb_path, files)  # 写成功后重跑校验 ⇒ 如实回报"库里还剩的既有问题"（见文件尾注释）
     total = sum(len(row.get("ops") or []) for row in files)
     lines = [
         f"- {row.get('file')}：{len(row.get('ops') or [])} 项操作，改 {len(row.get('lines_changed') or [])} 行"
         for row in files
     ]
+    if result.get("status") != "ok":
+        return ToolOutput(
+            text=error_text(
+                f"写入**失败**（{result.get('code') or 'error'}）：{result.get('message') or ''}\n"
+                "本批**整批回滚**，知识库内容没有变化。\n"
+                + "\n".join(lines)
+                + "\n按情况处理：① `stale_write`（文件在你读取之后被人改过）⇒ 先 `read_document` 重新读，"
+                "拿到**当前**行号与逐字原文后重提整批；② `backup_failed` / `path_rejected` ⇒ 稍后重试或换路径；"
+                "③ 其余情况原样告诉用户，**不要**反复重试同一批。",
+                WRITE_FAILED_CODE,
+            ),
+            error=True,
+            code=WRITE_FAILED_CODE,
+        )
+    if service is not None:
+        # 让应用侧那份解析缓存失效（否则面板重开文件读到的还是旧内容）。收尾动作失败不影响"已写入"这个事实。
+        try:
+            recover_after_write(kb_path, [str(row.get("file") or "") for row in files], service=service)
+        except Exception:  # noqa: BLE001
+            logger.warning("[agent-write] 写后一致性恢复失败（不影响已落盘的内容）", exc_info=True)
     return ToolOutput(
         text=(
-            f"已**提议**（尚未写入）{total} 项操作，影响 {len(files)} 个文件：\n"
+            f"**已写入** {total} 项操作，影响 {len(files)} 个文件（txid {result.get('txid') or plan['txid']}）：\n"
             + "\n".join(lines)
-            + "\n用户会在对话栏看到一张**确认卡**，逐条勾选并点「应用」之后才会真正写入"
-            "（写入前自动备份、之后可撤销）。在用户明确告诉你结果之前，**不要声称已经写入**，"
-            "也不要重复提议同一批改动。"
-            "\n若这批只是**第一步**（例如先改正文、知识点要按改写后的行号下一批再建），"
-            "请在回答里**明确请用户应用后回复「继续」** —— 应用卡片不会自动开启你的下一轮。"
+            + "\n写入前已自动备份；用户可在对话栏的**回执卡**上「撤销这一批」。"
+            "**不要**重复提同一批改动；要接着改就按**写后**的内容重新 `read_document` 再提。"
+            "\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是"
+            "前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → "
+            "再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**"
+            "（`rename_file` / `delete_file` 例外：它们必须是最后一条）。"
+            + remaining_issues_text(remaining)
         )
     )
 
 
-def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
-    """W 线第一把工具（**只提议、不落盘**）；`build_kb_tools()` 末尾拼接。"""
+def _write_proposal_tools(
+    kb_path: str, session_id: str | None = None, service: Any = None
+) -> tuple[Tool, ...]:
+    """写工具（**调用内直接落盘**）；`build_kb_tools()` 末尾拼接。
+
+    声明 `read_only=False`（它确实改知识库）；默认审批策略已**全线放行**（`approvals.py`），
+    更严的档位（逐条确认 / 确定性拒绝）由调用方注入 `AskPolicy` / `NeverPolicy`。
+    """
 
     def _bound(arguments: Mapping[str, Any]) -> ToolOutput:
-        return _propose_write(kb_path, arguments)
+        blocked = _observation_block(kb_path, session_id, arguments)
+        if blocked is not None:
+            return blocked
+        return _propose_write(kb_path, arguments, session_id=session_id, service=service)
 
     return (
         Tool(
             name=PROPOSE_TOOL_NAME,
             description=(
-                "**提议**一批对知识库的修改，交给用户在对话栏的确认卡上逐条确认。"
-                "**本工具不写盘**：只有用户勾选并点「应用」之后才会真正写入（写入前自动备份、之后可撤销）。"
-                "用户要求修改/写入知识库时用它，一次提一批（同一意图的多处改动放进同一个 ops 数组）。"
-                "`ops[]` 支持的 op 与字段："
+                "**直接写入**知识库（一次调用即落盘）：校验 + 试算通过后立刻写，**不需要**用户再点确认。"
+                "写入前自动做 pre-image 备份，失败则整批回滚、库内容不变；写完后用户可在对话栏的**回执卡**上"
+                "「撤销这一批」。用户要求修改/写入知识库时用它，一次提一批"
+                "（同一意图的多处改动放进同一个 ops 数组）。"
+                "`ops[]` 支持的 op 与字段（**每一项都必须有 `op`（动词）与 `op_id`** —— 缺 `op` 会被拒，"
+                "回的是 `unknown_op`）："
                 "① `upsert_kp`（建/改知识点）—— `file`、`kp_id`、`name`（可选 `description`/`tags`）、"
-                "`range`=`{start:{line[,col]},end:{line[,col]}}`（1 起行号，可省列）；"
+                "`range`=`{start:{line[,col]},end:{line[,col]}}`（1 起行号，可省列）。"
+                "**`range` 的两条硬约束**（真机实测最常踩的两条）：起止行都必须是**非空正文行**"
+                "（落在空行上会被拒 `range_line_empty`）、且**不得超过文件总行数**（越界回 `bad_field` "
+                "并告知总行数）⇒ 行号一律照**刚刚 `read_document` 拿到的**那份来，不要估算或沿用记忆。"
+                "`kp_id` 全库唯一：已存在于**别的**文档会被拒（`kp_id_taken`，错误里点明它在哪一篇 —— "
+                "要改它就把 `file` 指向那一篇）；"
                 "② `attach_links`（把正文里的纯文本挂成跳转并把锚文本包成 `[[id]]`）—— `file`、"
                 "`anchor_text`（必须与正文**逐字**相同的纯文本，且**尚未**被 `[[…]]` 包过）、"
                 "`targets`=`[知识点 id 或文件名]`（可省 `edge_type`=`reference`|`extend`）、"
                 "可选 `occurrences`=`[{line[,col]}]`（同行出现多处且要给 col 时必须给）；"
                 "③ `detach_links`（拆掉跳转、还原纯文本）—— `file`、`anchor_text`、"
                 "`occurrences`=`[{line}]`（该行确实挂着这个锚文本）、`mode`=`detach`（默认）；"
+                "**常见意图对照**：要改一条已有链接的「目标」或「类型」——本版**没有**就地改的 op"
+                "（别去猜 `set_link_targets` 这类名字）⇒ 拆了重挂：同一批里先 `detach_links` 再 "
+                "`attach_links`（两处 `anchor_text` 一致）；"
                 "④ `replace_lines`（**改正文**：替换若干行）—— `file`、"
                 "`range`=`{start:{line},end:{line}}`（1 起、**含端点**）、`expect`（这几行**现在**的"
                 "逐字原文，多行用 `\\n` 连接；对不上就拒）、`text`（替换成的新正文，可多行）；"
@@ -2989,16 +3071,48 @@ def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
                 "可选 `attrs`（显示属性，如 `width=300,align=center`，写在 title 位）。"
                 "**图片入库 / 改属性 / 移动删除本轮不提供**（入库的备份集有先有鸡还是先有蛋的问题、"
                 "属性语法权威在人 UI、删除属默认关）。"
-                "改正文的 op **必须排在挂/拆跳转、建点之后**（那些 op 的行号以编辑前的正文为准），"
-                "同一文件的多条改正文区间不得重叠；"
-                "`create_file` / `rename_file` 改变路径或全库引用 ⇒ **必须单独成一批**"
-                "（同一 plan 里不能再有别的 op）。"
-                "**删除文件本轮不提供**（设计里属「默认关」，等权限档定案）。"
+                "⑪ `delete_file`（**删除整篇 .md 及其侧车**）—— 只需 `file`。**破坏性且不可恢复** ⇒ "
+                "会走逐条确认。正文里还写着 `[[它]]` 的**别的**文档会让这条删除被**拒**（`delete_referenced`）："
+                "那种引用删了就是悬空 —— 要一起处理就先在同一批里把这些引用摘掉 / 改掉（**排在删除之前**）；"
+                "若只是想拆掉链接，用 `detach_links`。侧车里还挂着指向它的链接/边只**警告**"
+                "（`delete_leaves_edges`，`validate_kb` 会报出来）。"
+                "⑫ `move_file`（**把整篇 .md 移到另一个目录**，保持文件名）—— `file`、"
+                "`to_dir`（目标**目录**，库内相对；**`\"\"` / `.` / `./` 都表示库根**；目录不存在会自动建）。"
+                "它与 `rename_file` 是两件事：**改名用 `rename_file`**（会级联改写全库 `[[旧名]]`），"
+                "**换目录用 `move_file`**（名字不变 ⇒ 不改写任何引用；`[[id]]` 与库根相对的图片引用都不受影响）。"
+                "**会被拒**（`move_breaks_relative_refs`）：正文里有**按文件所在目录**解析的链接/图片"
+                "（如 `![x](img/a.png)`）—— 那些移动后会断，请先把它们改成**库根相对**"
+                "（如 `.memoria/images/x.png`）或换成 `[[id]]` 再移。"
+                "⑬ `upsert_edge`（**建一条 KP↔KP 的纯边**，只写侧车 `edges[]`、**不碰正文**）—— "
+                "`file`（边的**起点**所在那篇）、`source_id`（必须是**该文档**的知识点）、"
+                "`target_id`（另一知识点 id 或文件名，全库可解析即可）、"
+                "可选 `edge_type`=`reference`（默认）|`extend`（`contain` 由标题层级自动推导，禁手标）。"
+                "**要在正文里也留下跳转就用 `attach_links`**（它会包 `[[…]]`）；这条只建图谱上的边。"
+                "⑭ `delete_kp`（**删知识点配置**）—— `file`、`kp_id`。只删侧车里那一条，**正文一字不改** ⇒ "
+                "别处还写着 `[[kp_id]]` 的地方会变成悬空虚链（库规允许；工具回执会警告出来）。"
+                "**要连正文引用一起清**就先 `detach_links` 或把引用改掉，再删。"
+                "⑮ `rename_kp`（**全库改 KP id**）—— `old_id`、`new_id`（**不带 `file`**）。它会把"
+                "**全库正文**里的 `[[旧 id]]` 与**所有侧车**里的引用一起改掉（会改哪些文件由预演给出，"
+                "那份清单就是备份集）。**它必须收尾**（其后只允许再排文件级 op）；"
+                "**改 id ≠ 改显示名**：显示名用 `upsert_kp` 的 `name`。"
+                "⑯ `rebuild_manifest`（**重建文件清单 `manifest.yaml`**，**无参数**）—— 全库重扫磁盘，"
+                "把清单与指纹整体重写一遍。**「清单陈旧」那一类问题只能靠它消**：新文档未记入清单 / "
+                "指纹（sha）过期 / 历史改名留下的陈旧条目（`manifest_removed`）。它**必须收尾**"
+                "（记的是本批之后那一刻的文件集）。**会被拒**（`manifest_blocked_by_path_moves`）：库里"
+                "还有**未修复的路径变更** —— 那种状态下重建会把「文件搬到哪儿去了」这条元数据抹掉；"
+                "请先用同一批的 `move_file`/`rename_file` 把路径定下来，或请人在界面上点「修复路径」。"
+                "**它等价于界面上的「构建」**，只是让你不必等人去点那个按钮。"
+                "**ops 按数组顺序执行**：后面的 op 看到的是前面 op 生效**之后**的正文与文件集 ——"
+                "所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp → 再 attach_links」、"
+                "「先 create_file 新建 → 再给它建点 / 挂链」都放**同一批**，不要拆批。"
+                "**`move_file` / `rename_file` / `delete_file` / `rename_kp` 一律排在末尾**："
+                "`move_file` 可以**连排多条**（一批移 N 篇是安全的），而 `rename_file` / `delete_file` "
+                "必须是本批**最后一条**（`rename_kp` 之后也只剩文件级 op，`rebuild_manifest` 必须**收尾**）。"
                 "提议前先 `read_document` 读清目标原文与行号，不要凭印象写；"
-                "提议被拒时：**若原因是行号/原文过期**（文件刚被人改过），先 `read_document` 重新读一遍拿到"
-                "当前行号，再按返回的 `op_id` 与错误码修正后**重提整批** —— 出错的 op 要改对，"
-                "**别把它删掉**，也别把没出错的 op 丢掉；"
-                "提议成功后，在用户回来告诉你结果之前**不要声称已写入**。"
+                "写入失败时：**若原因是行号 / 原文过期**（`stale_write`：文件刚被人改过），先 `read_document` "
+                "重新读一遍拿到**当前**行号与逐字原文，再按返回的 `op_id` 与错误码修正后**重提整批** —— "
+                "出错的 op 要改对，**别把它删掉**，也别把没出错的 op 丢掉。"
+                "**成败以工具回文为准**（成功回「已写入 … txid …」），不要凭记忆声称写入。"
             ),
             parameters={
                 "type": "object",
@@ -3007,7 +3121,7 @@ def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 200,
-                        "description": "一句话说明这批改动要做什么（人话；会显示在确认卡上）",
+                        "description": "一句话说明这批改动要做什么（人话；会显示在回执卡上）",
                     },
                     "ops": {
                         "type": "array",
@@ -3021,5 +3135,321 @@ def _write_proposal_tools(kb_path: str) -> tuple[Tool, ...]:
                 "additionalProperties": False,
             },
             handler=_bound,
+            read_only=False,  # 它**会**改知识库（写前备份 + 可撤销）；审批档见 approvals.py
         ),
     )
+
+
+# ── 2026-09-22 追加：非 markdown 文件也能读（人：「我发现 agent 读不了非 markdown 文件」）────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移；`read_document` 本体一行未改
+# （`_read_document_call()` 里**等量替换 1 行**，改走本段的分流函数）。
+#
+# 读面原有一处**不对称**：`glob`/`grep` 能看见任意文件（`_walk_kb_files()` + `_safe_rel_any()`），
+# 而 `read_document` 只认 `.md`（`_safe_rel()` 的后缀要求）⇒ 模型"看得见" `data.csv` 却读不出内容。
+# 本段按同一个**允许根**口径补上文本文件的读：
+#   · `.md` / `.markdown`：语义**逐字不变**（frontmatter 剥离 + sidecar 知识点清单 + 行号锚点）；
+#   · 其它文件：纯文本窗口（**不剥 frontmatter、不查 sidecar** ⇒ `.txt` 开头的 `---` 就是正文），
+#     窗口 / 续读提示沿用 `_read_window()`，行号口径一致；
+#   · **二进制**（含 NUL 字节）明确拒绝并指路（图片用 `read_image`），不把 PNG 当文本灌给模型；
+#   · 编码：先 UTF-8（仓库统一口径），失败再 GB18030（Windows 中文文本的常见编码），最后才有损兜底；
+#   · 大文件：只读前 `PLAIN_READ_MAX_BYTES` 字节并在输出里如实说明（`.md` 之外可以是任意大文件）。
+# 与上游的关系：上游 `read` 也吃任意路径，但"文本 / 图片"的分流由媒体类型表与
+# `fs-observation-policy` 决定；本地没有那套，故用最小可用判据（NUL 字节 = 二进制；图片交给
+# `read_image` 那条已有的扩展名 + 文件签名校验）。
+
+#: 非 markdown 文件的**原始读取**上限（字节）；超过则只看前缀并如实标注。
+PLAIN_READ_MAX_BYTES = 1 << 20
+
+#: 除 `.md` 外仍按 markdown 语义处理的扩展名（与引用层认的两种一致）。
+_MARKDOWN_EXTS = (".md", ".markdown")
+
+
+def _is_markdown_rel(rel: str) -> bool:
+    """该相对路径是否走 markdown 语义（`.md` / `.markdown`）。"""
+    return str(rel or "").lower().endswith(_MARKDOWN_EXTS)
+
+
+def _decode_text(raw: bytes) -> str:
+    """字节 → 文本：UTF-8（**带 BOM 也吃掉**）→ GB18030（Windows 中文文本常见）→ 有损兜底。
+
+    第一档用 `utf-8-sig`：无 BOM 时与 `utf-8` 逐字等价，有 BOM 时把 `\\ufeff` 去掉
+    —— 否则 Windows 侧写出的 `.csv`/`.txt` 会让正文首行多一个不可见字符（L4 实测到）。
+    """
+    for encoding in ("utf-8-sig", "gb18030"):
+        try:
+            return raw.decode(encoding)
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", errors="replace")
+
+
+def _read_plain_text(kb_path: str, rel: str, *, offset: int = 1, limit: int | None = None) -> ToolOutput:
+    """非 markdown 文本文件的读取：纯文本窗口（无 frontmatter 剥离、无 sidecar / KP 段）。
+
+    `_read_window()` 的越界语义原样保留（`_ReadOffsetError` 由调用方转 `NOT_FOUND`）。
+    """
+    full = os.path.join(kb_path, rel)
+    if not os.path.isfile(full):
+        return _error(f"read_document: 文件不存在：{rel}", "NOT_FOUND")
+    try:
+        with open(full, "rb") as handle:
+            raw = handle.read(PLAIN_READ_MAX_BYTES + 1)
+    except OSError as exc:
+        return _error(f"read_document: 读取失败（{type(exc).__name__}）：{exc}", "NOT_FOUND")
+    truncated = len(raw) > PLAIN_READ_MAX_BYTES
+    raw = raw[:PLAIN_READ_MAX_BYTES]
+    if b"\x00" in raw:
+        return _error(
+            f"read_document: {rel} 看着是**二进制**文件（含 NUL 字节），不能按文本读；"
+            "图片请用 `read_image`，其它二进制请交给外部工具处理。",
+            "BINARY_FILE",
+        )
+    body = _decode_text(raw)
+    lines = body.splitlines() or [""]
+    window, footer = _read_window(lines, offset=offset, limit=limit, display=rel, body=body)
+    parts = [f"文件 {rel}：共 {len(lines)} 行（非 markdown ⇒ 无知识点段）。", "", "正文：", window]
+    if truncated:
+        parts.append(f"…（文件大于 {PLAIN_READ_MAX_BYTES} 字节，只读了前 {PLAIN_READ_MAX_BYTES} 字节。）")
+    if footer:
+        parts.append(footer)
+    return ToolOutput(text="\n".join(parts))
+
+
+def _read_text_or_document(
+    kb_path: str, path: str, *, offset: int = 1, limit: int | None = None, session_id: str | None = None
+) -> ToolOutput:
+    """`read_document` 的分流：`.md`/`.markdown` 走既有 `_read_document()`（标记文件的语义一行未改），
+    其它路径走 `_read_plain_text()`；越界 / 不存在 / 二进制由各分支自己给结构化错误。
+
+    **读成功即记一次观察**（`observation.record_read()`）⇒ 供「读后写」闸（`_observation_block()`）判定
+    "这个会话读过没有、读的是哪一版"；`NOT_FOUND` 记成"确认不存在"（上游同口径，授权之后的 `create_file`）。
+    """
+    rel = _safe_rel_any(kb_path, path)
+    if rel and not rel.endswith("/") and not _is_markdown_rel(rel):
+        out = _read_plain_text(kb_path, rel, offset=offset, limit=limit)
+    else:
+        out = _read_document(kb_path, path, offset=offset, limit=limit)
+    _record_observation(kb_path, session_id, rel, out)
+    return out
+
+
+def _record_observation(kb_path: str, session_id: str | None, rel: str | None, out: ToolOutput) -> None:
+    """把一次读取记进观察表：成功记 `present@version`，`NOT_FOUND` 记"确认不存在"，其它错误不记。"""
+    from memoria.services.agent import observation
+    from memoria.storage.file_version import rel_version
+
+    if not rel:
+        return
+    if not out.error:
+        observation.record_read(kb_path, session_id, rel, present=True, version=rel_version(kb_path, rel))
+    elif getattr(out, "code", None) == "NOT_FOUND":
+        observation.record_absent(kb_path, session_id, rel)
+
+
+def _read_kp_call(
+    kb_path: str, arguments: Mapping[str, Any], *, session_id: str | None = None
+) -> ToolOutput:
+    """`read_kp` 的包装：失败原样回；成功把命中文件记进观察表（它给的是该文件的**正文片段**）。"""
+    from memoria.services.agent import observation
+    from memoria.storage.file_version import rel_version
+
+    out = _read_kp(kb_path, str(arguments.get("id") or ""))
+    if not out.error:
+        for anchor in getattr(out, "anchors", ()) or ():
+            rel = str((anchor or {}).get("file") or "") if isinstance(anchor, Mapping) else ""
+            if rel:
+                observation.record_read(kb_path, session_id, rel, present=True, version=rel_version(kb_path, rel))
+    return out
+
+
+def _observation_block(
+    kb_path: str, session_id: str | None, arguments: Mapping[str, Any]
+) -> ToolOutput | None:
+    """**读后写闸**（`fs-observation-policy` 的本地落点）：未读 / 读过但当时不存在 / 读后被改 ⇒ 拒。
+
+    语义与偏差见 `services/agent/observation.py` 模块头；这里只做"把裁决翻成工具错误"。
+    """
+    from memoria.services.agent import observation
+
+    verdict = observation.gate_ops(kb_path, session_id, arguments.get("ops") or [])
+    if verdict is None:
+        return None
+    code, message = verdict
+    return ToolOutput(text=error_text(f"{PROPOSE_TOOL_NAME}: {message}", code), error=True, code=code)
+
+
+def _refresh_observations(
+    kb_path: str, session_id: str | None, preview: Mapping[str, Any]
+) -> list[Mapping[str, Any]]:
+    """写成功后**刷新**观察版本（上游 `fs/observed` 同口径：成功的改动本身会更新观察记录）。
+
+    **为什么不能省**：不刷新的话，模型"改完接着改同一个文件"会撞上**自己造成的** `FS_STALE_VERSION`
+    （观察还停在自己写之前那一版），只能白跑一次重读 —— 那是本闸自造的假故障。
+    返回 `preview["files"]` 的行（保持调用点原来的语义）。
+    """
+    from memoria.services.agent import observation
+    from memoria.storage.file_version import rel_version
+
+    files = [row for row in (preview.get("files") or []) if isinstance(row, Mapping)]
+    for row in files:
+        rel = str(row.get("file") or "").strip().replace("\\", "/")
+        if not rel:
+            continue
+        if os.path.isfile(os.path.join(kb_path, rel)):
+            observation.record_read(kb_path, session_id, rel, present=True, version=rel_version(kb_path, rel))
+        else:
+            observation.record_absent(kb_path, session_id, rel)  # 被删 / 改名前的旧路径 ⇒ 记"不存在"
+    return files
+
+
+def _remaining_issues(kb_path: str, files: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    """写成功后重跑一遍 sidecar 校验，列出**库里还剩的既有问题**（本次新引入的已被写闸门拦住）。
+
+    **为什么在写之后重跑**（而不是把闸门内部的 `pre_existing[]` 透出来）：写闸门跑在"内存已改完、还没落盘"
+    的时刻，且 13 个调用点都只关心 `ok`；而写成功后**盘上那份** sidecar 的 error，按写前基线规则
+    （`validate_sidecar(baseline=…)`）**只可能是既有问题**。重跑是**只读**的：路径最短、无状态，
+    也不去动那条已被 L4 验证过的写闸门。收尾动作失败绝不影响"已写入"这个事实。
+    """
+    from memoria.storage.sidecar import load_sidecar_for_md
+    from memoria.storage.sidecar_validate import validate_sidecar
+
+    out: list[dict[str, Any]] = []
+    for row in files:
+        rel = str(row.get("file") or "").strip().replace("\\", "/")
+        if not rel:
+            continue
+        full = os.path.join(kb_path, rel)
+        try:
+            lines = None
+            if os.path.isfile(full):
+                with open(full, "r", encoding="utf-8") as handle:
+                    lines = handle.read().splitlines()
+            sidecar = load_sidecar_for_md(full, kb_path) or {}
+            for issue in validate_sidecar(sidecar, rel, lines).get("errors") or []:
+                out.append(
+                    {
+                        "file": rel,
+                        "code": str(issue.get("code") or ""),
+                        "message": str(issue.get("message") or ""),
+                    }
+                )
+        except Exception:  # noqa: BLE001 —— 回报既有问题失败不影响"已写入"
+            logger.warning("[agent-write] 写后既有问题回报失败：%s", rel, exc_info=True)
+    return out
+
+
+#: 写后回执里最多列几条既有问题（避免把回执撑爆；总数照实写）。
+REMAINING_ISSUES_MAX = 5
+
+
+def remaining_issues_text(remaining: Sequence[Mapping[str, Any]]) -> str:
+    """把既有问题回报成一段**可选**文字：没有就一个字都不加（正常批次回执逐字不变）。"""
+    if not remaining:
+        return ""
+    shown = remaining[:REMAINING_ISSUES_MAX]
+    rows = [f"- {row.get('file')}：{row.get('message')}（`{row.get('code')}`）" for row in shown]
+    tail = f"，只列前 {len(shown)} 条" if len(remaining) > len(shown) else ""
+    return (
+        f"\n\n**库里还有一些既有问题**（与本批无关、写前就在；共 {len(remaining)} 条{tail}）：\n"
+        + "\n".join(rows)
+        + "\n这些是**用户**的存量问题，不是你这次造成的；要不要顺手修由用户决定，"
+        "**不要**因为这几条就重提本批。"
+    )
+
+
+def _next_txid(kb_path: str, session_id: str, now: Any) -> str:
+    """同一秒内的**下一批** txid（`<UTC 秒>-NN`）：扫本会话既有备份批次目录，取该秒内未占用的最小编号。
+
+    **为什么必须有它**（2026-09-22 实测）：txid 原先写死 `+ "-01"` ⇒ 同一秒里第二次 `propose_write`
+    会撞上已存在的批次目录，备份层以 `batch_exists` 拒（对外表现成
+    `WRITE_FAILED (backup_failed)：批次已存在：…` —— 又一个"写入莫名失败"的假故障；追本轮的
+    "读后写"闸之后，模型"读一次改一次"的往返更密，撞秒的概率也更高）。
+    """
+    import time
+
+    from memoria.services.agent.backup import session_dir
+
+    stamp = time.strftime("%Y%m%dT%H%M%SZ", now)
+    try:
+        used = set(os.listdir(session_dir(kb_path, session_id)))
+    except (OSError, ValueError):
+        used = set()
+    index = 1
+    while f"{stamp}-{index:02d}" in used:
+        index += 1
+    return f"{stamp}-{index:02d}"
+
+
+# ── 技能（skill）：声明式目录包 + 渐进披露（2026-09-22；§6.22）─────────────────────────────
+# 语义移植自 deepseek-harness `packages/skill` 的 `skill`（注册表）/ `skill-filesystem`（本地目录
+# provider）/ `tool-skill`（模型面）；**规则与本地偏差逐条登记在 `services/agent/skills.py` 模块头**，
+# 本块只做"把规则接成一把工具 + 说明它为什么不落盘"。
+#
+# 上游模型面是两件套：① **目录消息**（`<available_skills>`，由 `tool-skill` 在 `agent/pre-step` 瀑布里
+# 发布，且**只在 `skill` 工具对本 agent 可见时**发布 —— 工具被 restrict 掉则目录与指引一起消失）；
+# ② **`skill` 工具**（按**精确名**加载，返回 `<skill_content>`：资源提示在前、正文逐字在后）。
+# 本地没有 pre-step 挂钩 ⇒ 目录改由 `prompt.build_system_prompt()` 注入（**同一套门控**：`skill` 工具
+# 在场**且有技能**才出段），工具的名称 / 参数 / 三类错误形状照搬。
+#
+# `read_only=True` 的理由：它只读库内技能文件（不碰正文、不碰 sidecar、不碰可再生缓存）⇒ 与其余读面
+# 工具同档，审批策略照旧免审批。
+
+#: 「不可模型调用」的稳定错误码（上游没有码，只有一句 message；本地给它一个可 grep 的名字）。
+SKILL_NOT_INVOCABLE_CODE = "SKILL_NOT_INVOCABLE"
+
+
+def _skill_tools(kb_path: str) -> tuple[Tool, ...]:
+    """技能工具（今天只有一把 `skill`）：按精确名加载技能说明书。"""
+    return (
+        Tool(
+            name="skill",
+            description=(
+                "加载某个**可用技能**的完整说明书（可用技能清单见系统提示的「可用技能」段，若该段存在）。"
+                "当用户点名某个技能、或当前任务明显匹配某条技能描述时，**先**用它按**精确技能名**加载，"
+                "再照加载到的说明行事。清单里**只有摘要** —— 加载之前不要照摘要臆测技能内容。"
+                "一次加载一个；确有多个匹配就分别加载。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "「可用技能」段里的**精确**技能名（kebab-case，例如 weekly-review）",
+                    }
+                },
+                "required": ["name"],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _skill_tool(kb_path, arguments),
+        ),
+    )
+
+
+def _skill_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`skill` 工具实现：非法名 / 未知名 / 不允许模型调用 ⇒ 结构化错误（上游三类错误照搬）。"""
+    from memoria.services.agent import skills as skills_mod
+
+    name = str(arguments.get("name") or "").strip()
+    if not skills_mod.is_skill_name(name):
+        return _error(
+            f"skill: 技能名非法：{name!r}。技能名必须是 kebab-case（小写字母/数字用 `-` 连接），"
+            "请照「可用技能」段里的名字**逐字**填写。",
+            INVALID_ARGUMENTS_CODE,
+        )
+    found = skills_mod.load_skill(kb_path, name)
+    if found is None:
+        available = [skill.name for skill in skills_mod.discover_skills(kb_path) if skill.model_invocable]
+        hint = (
+            "本轮可用技能：" + "、".join(available)
+            if available
+            else "本库当前没有可用技能（技能放在 `<库>/.memoria/agent/skills/` 下：`<name>.md` 或 `<name>/SKILL.md`）"
+        )
+        return _error(f"skill: 没有这个技能：{name}。{hint}", "NOT_FOUND")
+    if not found.model_invocable:
+        return _error(
+            f"skill: 技能 {name} 在 frontmatter 里声明了 `disable-model-invocation` ⇒ 不允许由模型加载。"
+            "本地暂无用户调用面（该字段要等 slash 命令面落地才生效）；需要用它就请用户去掉该字段。",
+            SKILL_NOT_INVOCABLE_CODE,
+        )
+    return ToolOutput(text=skills_mod.render_skill_content(found))

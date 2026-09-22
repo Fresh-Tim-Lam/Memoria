@@ -482,7 +482,7 @@ def summarize_session_file(
 
 
 def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]:
-    """会话的**渲染视图**（`agent_session_load` 用）：`[{role, text, anchors?}]`。
+    """会话的**渲染视图**（`agent_session_load` 用）：`[{role, text, anchors?, process?}]`（`process` = 本轮过程行，见 `turn_process.py`；无过程内容时不出现该键）。
 
     与 `build_history()` 的差别（供 UI 恢复气泡，故不按 LLM 协议形状）：
 
@@ -499,29 +499,29 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
     events = _conversation_events(kb_path, session_id)
     out: list[dict[str, Any]] = []
     turn: dict[str, Any] | None = None
-    for event in events:
+    for index, event in enumerate(events):
         kind = event.get("type")
         if kind == USER_MESSAGE:
-            _flush_turn(out, turn)
-            turn = {"text": _text(event), "answer": "", "anchors": [], "seq": event.get("seq"), "answer_seq": None}
+            _flush_turn(out, turn, events, index)
+            turn = {"text": _text(event), "answer": "", "anchors": [], "seq": event.get("seq"), "answer_seq": None, "start": index}
             continue
         if turn is None:
             continue
         if kind == ASSISTANT_MESSAGE:
             content = str(_data(event).get("content") or "")
             if content:
-                turn["answer"] = content
-                turn["answer_seq"] = event.get("seq")
+                turn["answer"] = content; turn["answer_seq"] = event.get("seq")
+                turn["answer_reasoning"] = str(_data(event).get("reasoning") or "")
             continue
         if kind == TOOL_RESULT:
             for anchor in _data(event).get("anchors") or ():
                 if isinstance(anchor, Mapping):
                     turn["anchors"].append(dict(anchor))
-    _flush_turn(out, turn)
+    _flush_turn(out, turn, events, len(events))
     return out
 
 
-def _flush_turn(out: list[dict[str, Any]], turn: dict[str, Any] | None) -> None:
+def _flush_turn(out: list[dict[str, Any]], turn: dict[str, Any] | None, events: Sequence[Mapping[str, Any]] = (), end: int | None = None) -> None:
     if turn is None:
         return
     out.append({"role": Role.USER.value, "text": turn["text"], "seq": turn.get("seq")})
@@ -534,6 +534,15 @@ def _flush_turn(out: list[dict[str, Any]], turn: dict[str, Any] | None) -> None:
         anchors = _dedupe(turn["anchors"])
         if anchors:
             record["anchors"] = anchors
+        # 思考随步骤落盘（AG08/2026-09-21）：**最终答复那一步**的 `reasoning` 不属于"过程行"
+        # （`turn_process.process_items()` 有意跳过最终答复，免得正文在过程列表里重复一遍），
+        # 但它同样是"这一步的思考" ⇒ 单列到气泡记录上（前端 `msgReasoning()` 读它）。
+        # 少了这一条，**单步回合**（只有一条 assistant/message，它既是过程又是答复）的思考会整体丢失。
+        if turn.get("answer_reasoning"):
+            record["reasoning"] = turn["answer_reasoning"]
+        process = _turn_process(events, turn.get("start"), end)
+        if process:
+            record["process"] = process
         out.append(record)
 
 
@@ -548,3 +557,22 @@ def _dedupe(anchors: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
         seen.add(key)
         out.append(dict(anchor))
     return out
+
+
+# ── 回合过程行（2026-09-22；回放侧的形状由 `turn_process.py` 单一提供）────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _turn_process(
+    events: Sequence[Mapping[str, Any]], start: Any, end: Any
+) -> list[dict[str, Any]]:
+    """把一轮在 `events[start:end]` 上的事件折成**过程行**（形状见 `turn_process.py`）。
+
+    延迟导入 `turn_process`（理由同 `_summary_message`：保持导入图单向、不新增模块级依赖）。
+    越界 / 缺参（`start` / `end` 非整数）⇒ 空列表（调用方据此**不写** `process` 键）。
+    """
+    from memoria.services.agent.turn_process import process_items
+
+    if not isinstance(start, int) or not isinstance(end, int) or end <= start:
+        return []
+    return process_items(events[start:end])

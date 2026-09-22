@@ -131,7 +131,7 @@ def _parse_args(argv: list[str] | None) -> argparse.Namespace:
     parser.add_argument("--kb", required=True, help="知识库目录（含 .memoria/）")
     parser.add_argument("--mock", action="store_true", help="离线：内置脚本化假 provider（不联网）")
     parser.add_argument("--model", default="", help="覆盖模型名")
-    parser.add_argument("--max-iterations", type=int, default=8, help="模型步数上限（默认 8）")
+    parser.add_argument("--max-iterations", type=int, default=0, help="模型步数上限（默认 0 = 无上限，与上游一致）")
     parser.add_argument("--top-k", type=int, default=5, help="search_kb 默认返回条数")
     parser.add_argument("--session-id", default="", help="复用/指定会话 id（默认新建）")
     parser.add_argument("--no-stream", action="store_true", help="不逐片打印回答，只在结束时打印")

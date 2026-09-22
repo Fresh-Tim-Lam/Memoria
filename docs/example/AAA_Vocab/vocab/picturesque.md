@@ -62,6 +62,7 @@ The village is so __________ that it looks like a postcard.
 Describe a beautiful place you have visited. Describe what you saw there and how you felt.
 （中文说明：口语 Part 2 地点题，描述一处你去过的美丽之地，说明所见与感受）
 > 💡 Use picturesque and at least two sense details (sight, sound, smell).
+> 🔗 **嗅觉细节**：写气味要按褒贬选词——好闻用 `fragrant` / `a sweet scent`，刺鼻的恶臭用 `a stench`（[[stench]]）；给地点补一句气味，画面立刻立体。
 ### 3. Writing scenario
 Write one Task‑2 sentence about the impact of tourism on picturesque old towns.
 （中文说明：大作文写一句话，论述旅游业对风景如画老城的影响）

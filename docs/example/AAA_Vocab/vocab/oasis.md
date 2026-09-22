@@ -71,6 +71,7 @@ Write one Task‑2 sentence about the role of urban green spaces.
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "an oasis of calm", [[secluded]] and [[breathtaking]].
 （中文提示：用 an oasis of calm、secluded、breathtaking 合成一句）
+> 🔗 **相关词**：[[scorch]]（`scorching` ＝ 酷热）——写沙漠或热带旅行时二者常同框：*After hours in the scorching desert, the oasis felt like a miracle.*（在酷热的沙漠里走了几个小时后，那片绿洲简直像奇迹。）
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#Place` `#Nature` `#B2`

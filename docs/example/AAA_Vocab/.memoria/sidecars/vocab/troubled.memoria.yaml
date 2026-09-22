@@ -9,7 +9,8 @@ knowledge_points:
   - troublesome
   - 有严重问题的
   - 忧心忡忡的
-  description: troubled（有严重问题的；忧心忡忡的）——含核心规则「一次性事件应用 difficult / stressful」、Best Situation（家庭冲突、情绪压力、长期艰难时期）、troubled 与 troubling 的方向辨析、与 difficult / stressful 的辨析矩阵，以及口语 Part 2 故事框架用法
+  description: troubled（有严重问题的；忧心忡忡的）——含核心规则「一次性事件应用 difficult / stressful」、Best Situation（家庭冲突、情绪压力、长期艰难时期）、troubled
+    与 troubling 的方向辨析、与 difficult / stressful 的辨析矩阵，以及口语 Part 2 故事框架用法
   tags:
   - IELTS
   - Speaking
@@ -24,7 +25,50 @@ knowledge_points:
       snippet: '# troubled'
       line_hint: 1
     end:
-      snippet: '- Answer: troubled（有严重问题的；忧心忡忡的）—— 核心：**持续存在的问题**才用它；一次性事件用 difficult / stressful'
+      snippet: '- Answer: troubled（有严重问题的；忧心忡忡的）—— 核心：**持续存在的问题**才用它；一次性事件用 difficult
+        / stressful'
       line_hint: 108
-links: []
+links:
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  target_edges:
+    rewarding:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 79
+    wrapped: true
+  excluded: []
+  pool:
+  - rewarding
+- anchor_text: flail
+  occurrence: 0
+  targets:
+  - flail
+  edge_type: reference
+  instances:
+  - line: 35
+    wrapped: true
+  source_id: troubled
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  source_id: troubled
+- anchor_text: promising
+  occurrence: 0
+  targets:
+  - promising
+  edge_type: reference
+  instances:
+  - line: 100
+    wrapped: true
+  source_id: troubled
 edges: []

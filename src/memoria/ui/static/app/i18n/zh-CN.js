@@ -1296,7 +1296,7 @@
   // 口径：`{hit}`=本轮缓存命中 token、`{miss}`=本轮未命中 token、`{total}`=两者之和；端点未上报
   // 缓存字段时前端把前两项写成「—」，`{total}` 回落为端点上报的 `total_tokens`（绝不臆造 0）。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
-    usage: { line: "用量 {hit}(命中)+{miss}(未命中)={total} tokens" },
+    usage: { line: "用量 {hit}(命中)+{miss}(未命中)={total} tokens", rate: "命中率 {rate}" },
   });
 
   // ===== 2026-09-19 追加：状态 bar 的刷新间隔（设置弹窗「对话」页签，`#agent-refresh`）=====
@@ -1315,7 +1315,7 @@
   // ===== 2026-09-20 追加：助手气泡尾的「生成中… Ns」指示器（`.-agent-generating`）=====
   // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
   // 口径（用户："把『生成中』放在 agent 最后一次对话进行时的末尾"）：本轮生成期间挂在**末条助手气泡**
-  // 末尾、每秒刷新秒数；状态行 `#agent-status` 同期只留基词 `agent.status.thinking`（不带秒数）⇒ 不重复。
+  // 末尾、每秒刷新秒数。原下方状态行 `#agent-status` 的基词「生成中…」已于 2026-09-21 随该行撤除 ⇒ 只剩这一处。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
     generating: "生成中… {n}s",
   });
@@ -1400,9 +1400,8 @@
       done: "已完成 {n} 项操作（txid {txid}）",
       failedTitle: "写入失败",
       failed: "写入失败",
-      undoneTitle: "已撤销",
-      undone: "该批次已撤销，文件逐字节还原到写入前的状态",
-      undo: "撤销这一批",
+      undo: "撤销一步",
+      undoTitle: "撤销上一步写入（栈指针 −1；会先把当前版本另存为一个备份批次，覆盖不等于丢数据）",
       undoFail: "撤销失败",
       rollback: "已整批回滚（磁盘回到写入前状态）",
       rejected: "计划未通过校验，未写盘",
@@ -1423,7 +1422,144 @@
         upsert_kp: "新建 / 更新知识点",
         attach_links: "挂接跳转（包裹正文）",
         detach_links: "拆除跳转（还原正文）",
+        replace_lines: "改写正文（替换若干行）",
+        insert_lines: "插入正文",
+        delete_lines: "删除正文若干行",
+        upsert_block: "整块重建代码块 / 图表 / 公式",
+        insert_image_ref: "插入图片引用",
+        create_file: "新建文件",
+        rename_file: "重命名文件（全库级联）",
+        delete_file: "删除整篇文件",
+        move_file: "移动到另一目录",
+        upsert_edge: "新建知识点之间的边",
+        delete_kp: "删除知识点",
+        rename_kp: "改知识点 id（全库级联）",
+        rebuild_manifest: "重建文件清单（manifest）",
       },
     },
+  });
+
+  // 消息**下方**操作行的按钮 + 写入状态条（2026-09-21）：复制该条回话的**原文**（Markdown）、
+  // 撤销 / 重做**一步**（栈语义；想回对话开始前就把栈撤空）。追加在文件末尾（不插进 `agent` 字面量）⇒ 上方锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    // 「复制」图标按钮的悬停提示（人：「鼠标悬浮显示复制」）；成功 / 失败时临时改成下面两条
+    copy: "复制",
+    copyDone: "已复制",
+    copyFail: "复制失败",
+    // 栈语义（2026-09-21 第四版，人定稿）：「撤销 / 重做」都是**一步**；想回对话开始前就把栈撤空
+    undo: "撤销一步",
+    undoTitle: "撤销上一步写入（栈指针 −1；会先把当前版本另存为一个备份批次，覆盖不等于丢数据）",
+    undoing: "撤销中…",
+    undoDone: "已撤销一步",
+    undoFail: "撤销失败",
+    redo: "重做一步",
+    redoTitle: "重做下一步写入（用该步的写后镜像还原）",
+    redoing: "重做中…",
+    redoDone: "已重做一步",
+    redoFail: "重做失败",
+    // 栈位置与轨迹（状态栏 bar 态显示"栈 p/t"，展开态逐行列出每一步）
+    stackPos: "栈 {p}/{t}",
+    stackStep: "第 {i} 步 · {n} 个文件",
+    stackHere: "在这里",
+    // 顶部副标题行（`.-agent-subhead`）的写入状态栏：文案两态（无改动不渲染「已修改 N 个文件」
+    // 写成功；失败写「写入失败」）。原「已撤销」短显态已于 2026-09-21 删除：它会把重做入口一起收掉。
+    writeIdle: "无改动",
+    writeSummary: "已修改 {n} 个文件",
+    writeLines: "{n} 行",
+    writeFailed: "写入失败",
+  });
+  // ===== 2026-09-21 追加：「没有最终答复」的如实说明（`agent.stop.*`）=====
+  // 触发点：后端 `loop/end.stop_reason` 不是正常收尾时，这一轮**根本没有最终答复** —— 原先前端
+  // 完全不看 `stop_reason`，气泡是空的，看着就像"卡在思考没有后文"（人 2026-09-21 报的第三条；
+  // 真机取证 = AAA_Vocab 会话 `session-20260921T111525Z-ab1ac72c` 连续两次 `max-iterations`，
+  // 最后一轮 `assistant/message.content` 是空串、只有 tool_calls）。
+  // 口径：一句话说明**发生了什么** + 一句**人现在能做什么**（回复「继续」即可接着做）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    stop: {
+      maxIterations: "（本轮连续调用工具 {n} 轮已达上限，尚未给出最终答复 —— 回复「继续」我可以接着做。）",
+      maxTokens: "（本轮回答被长度上限截断 —— 回复「继续」我接着说。）",
+      filtered: "（模型因内容策略中止了本轮回答，换个说法再问一次即可。）",
+      emptyAnswer: "（本轮没有正文回答 —— 回复「继续」我可以重新给一次。）",
+    },
+  });
+  // ===== 2026-09-22 追加：一次回合的「过程内容」（`agent.process.*` / `agent.tool.*`）=====
+  // 对齐上游 dsh 的 Turn Process Folding：思考行**始终默认折叠**（摘要流式跟末行、定稿取首行）；
+  // 工具行**边跑边出现**（一行 = 状态点 + `工具名 · 参数摘要`；`running`→「运行中…」、`error`→「失败（code）」、
+  // `ok` 不加字）；回合结束在 compact 档把过程折进一个容器，气泡顶部给一行计数摘要（`agent.process.*`）。
+  // 旧的 `agent.tools.*`（气泡末尾的工具摘要条）已随 `toolsStrip()` 一并删除，失败可见性改由本组键承担。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    process: {
+      tools: "工具调用 {n} 次",
+      messages: "过程消息 {n} 条",
+      failed: "{n} 次失败",
+      thought: "思考了一会儿",
+      toggleTitle: "展开 / 收起这一轮的过程",
+    },
+    tool: {
+      running: "运行中…",
+      failed: "失败",
+      output: "输出",
+      inspectTitle: "展开这一次工具调用的输出",
+    },
+  });
+  // ===== 2026-09-22 追加：设置弹窗「对话」页签的「对话显示」（`#agent-transcript`）=====
+  // 两项与 `agent-panel.js::TRANSCRIPT_CHOICES` 一一对应（值即 `config/agent.json: transcript_mode`）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.settings, {
+    transcriptLabel: "对话显示",
+    transcriptNormal: "完整（不折叠）",
+    transcriptCompact: "紧凑（回合结束折叠过程）",
+  });
+  // ===== 2026-09-22 追加：审批档位（上游 `dsh-permission-presets`）+ 逐条确认 =========
+  // 档位**机器键**是稳定英文（`manual-approval` / `auto-approval` / `all-access`，外加派生只读的
+  // `custom`），进会话事件 ⇒ 可回放；显示名在本表里翻译（后端中文名只作回退事实源）。
+  // 键名与 `agent-panel.js` 的 `PERMISSION_KEYS` / `permText()` 一一对应。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.settings, {
+    permissionLabel: "新会话审批档",
+  });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    permission: {
+      sessionTitle: "本次会话的审批档（写库前要不要问你）",
+      needSession: "还没有会话，先提一个问题再改档",
+      failed: "改审批档失败",
+      switched: "本次会话的审批档已切到「{name}」",
+      defaultSaved: "新会话的默认审批档已设为「{name}」",
+      manual: { name: "手动审批", desc: "每次写入都等你确认后才落盘。" },
+      auto: { name: "自动审批", desc: "常规写入自动放行；含删除类改动时仍会问你一次。" },
+      all: { name: "完全访问", desc: "任何工具调用都不再询问（仍写前备份、可整批撤销）。" },
+      custom: { name: "自定义", desc: "当前审批旋钮不匹配任何档位（不可直接选中）。" },
+    },
+    approve: {
+      title: "要写库：{tool}",
+      ops: "这一批共 {n} 个改动",
+      noIntent: "（模型没给这一批的说明）",
+      allow: "允许一次",
+      deny: "拒绝",
+      sending: "提交中…",
+      done: "已处理",
+      allowed: "已允许一次",
+      denied: "已拒绝",
+      failed: "提交裁决失败",
+    },
+  });
+
+  // 斜杠命令（2026-09-22；上游 `interaction/commands` 的最小面，见 `services/agent/commands.py`）。
+  // **名字与描述不在此表**：它们的事实源在后端（`agent_command_list` 返回的命令表），这里只加
+  // "没有匹配" 这一句 —— 命令提示暂以后端语言显示（登记为本地偏差，见 design §6.23）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    command: {
+      none: "没有匹配的命令（回车会照常当普通提问发给模型）",
+    },
+  });
+
+  // ===== 2026-09-22 追加：思考行改版的三个词（AG32 后续）=====
+  // 人：「思考和三角符号应该不在圆角气泡内，而点击思考之后才展开在下方出现圆角气泡显示思考或者正在
+  // 思考的内容，而且这个圆角气泡可以进一步展开直接显示全部」⇒ `.-agent-think-bubble` 的截断开关
+  // （`agent.thinkMore` / `agent.thinkLess`；**展开态有上限 20rem**，不是"展开全部"）与占位（`agent.thinkLive`）。
+  // `agent.think` 本身是**字符串**（"思考过程"）⇒ 这三个走扁平键，不做成 `think.*` 子对象。
+  // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    thinkMore: "展开",
+    thinkLess: "收起",
+    thinkLive: "正在思考…",
   });
 })(typeof window !== "undefined" ? window : globalThis);

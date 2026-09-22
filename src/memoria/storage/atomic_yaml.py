@@ -53,7 +53,13 @@ def atomic_write_yaml(path: str | Path, data: dict) -> None:
         yaml.safe_dump(data, f, allow_unicode=True, sort_keys=False)
         f.flush()
         os.fsync(f.fileno())
-    tmp.replace(path)
+    # 2026-09-22：原来这里是裸 `tmp.replace(path)` ⇒ 侧车写没有退避重试（`replace_with_retry` 的
+    # docstring 第一句就写着它是为"写路径的原子替换"存在的）——实测 `pytest -q` 全量跑时在
+    # `sidecars/notes/a.memoria.yaml.tmp → a.memoria.yaml` 上偶发 `[WinError 5] 拒绝访问`（当天两次）。
+    # 局部导入：本文件顶部行号不动（零漂移）。
+    from memoria.storage.atomic_write import replace_with_retry
+
+    replace_with_retry(str(tmp), str(path))
 
 
 def restore_from_backup(path: str | Path) -> bool:

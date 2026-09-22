@@ -13,9 +13,10 @@
 | 应答者缺失、抛错或返回词汇外取值 ⇒ `unavailable` ⇒ 按拒绝关闭 | `AskPolicy.decide` 的三条 fail-closed 分支 |
 | 服务自身绝不提示人类 | 本模块不打印、不读终端；应答者由调用方注入 |
 
-**本阶段的默认策略更严**：只读工具免审批，任何声明 `read_only=False` 的工具
-一律拒绝（`rejected`）。M1 没有写工具，因此这里主要提供接口与默认策略，
-供 M3「提议 → 确认 → 应用」复用同一 seam。
+**本阶段的默认策略**：**全线放行**（读类、写类都放行）—— 2026-09-21 人拍板"搁置审计（审批）的
+设计、全线放开写机制"，审批档位（`manual approval` / `auto approval` / `custom` / `all access`）
+作为**以后的运行模式**。更严的档位由调用方**注入**：逐条确认用 `AskPolicy`（无应答者即拒绝）、
+确定性拒绝用 `NeverPolicy`。写路径的安全兜底是**备份 + 可撤销**，不是这道闸门。
 
 `dsh-tool-ask-user`（`ask_user_question` 工具）依赖 UI 问答 seam，M1 无
 前端交互面，故只取其 fail-closed 结论（无应答者 = 拒绝），不注册该工具。
@@ -40,8 +41,8 @@ __all__ = [
     "ApprovalOutcome",
     "ApprovalPolicy",
     "ApprovalRequest",
-    "AskPolicy",
-    "DefaultApprovalPolicy",
+    "AskPolicy", "GuardedPolicy",
+    "DefaultApprovalPolicy", "RISKY_OPS", "write_is_risky",
     "NeverPolicy",
 ]
 
@@ -99,20 +100,20 @@ class ApprovalPolicy(Protocol):
 
 
 class DefaultApprovalPolicy:
-    """M1 默认策略：只读免审批；写类一律拒绝。
+    """本阶段默认策略：**全线放行**（读类、写类都 `allowed-once`）。
 
-    只读工具不改动知识库，按上游「只对需要审批的操作发起询问」的语义直接
-    放行；其余（含未来新增但忘记声明 `read_only=False` 的工具）**拒绝**，
-    而不是默认放行——这正是 fail-closed 的含义。
+    2026-09-21 人拍板：「搁置审计（审批）的设计，全线放开写机制；审计作为**以后的运行模式之一**
+    （`manual approval` / `auto approval` / `custom` / `all access`）」。⇒ 默认档 = **自动放行**。
+
+    **兜底不靠闸门、靠备份**：任何写入都必须先落 pre-image 快照（备份失败即**不写**），写入可
+    整批撤销、外部改动受保护（`services/agent/backup.py`、设计 §4 Q7 与 §9）。
+
+    要更严的档位请**注入**策略：逐条确认用 `AskPolicy`（无应答者即拒绝）、确定性拒绝用
+    `NeverPolicy`。本类不再自行拒绝写工具（旧行为：`read_only=False` 一律 `rejected`）。
     """
 
     def decide(self, request: ApprovalRequest) -> ApprovalDecision:
-        if request.read_only:
-            return ALLOWED_ONCE
-        return ApprovalDecision(
-            ApprovalOutcome.REJECTED,
-            f"本阶段只提供只读工具，{request.tool} 属于写类操作，已按默认策略拒绝",
-        )
+        return ALLOWED_ONCE
 
 
 class NeverPolicy:
@@ -154,3 +155,65 @@ class AskPolicy:
 
 #: M1 生产默认策略（`ask.py` 在调用方未注入策略时使用它）。
 DEFAULT_POLICY: ApprovalPolicy = DefaultApprovalPolicy()
+
+
+# ── 2026-09-22 追加：`auto` 档策略（「自动放行但保留闸门」，人拍板的档位语义之一）──────
+# 本块是**末尾追加** ⇒ 上方 `ApprovalOutcome`(50) / `DefaultApprovalPolicy`(102) /
+# `AskPolicy`(128) 等既有行号锚点零漂移。
+
+#: 「风险条件」命中的 op 动词：**动"路径/归属"这个坐标系、或整篇消失**的动作（`rename_file`
+#: 改名并级联改写全库 `[[…]]`、`delete_file` 删整篇 + 其侧车、`move_file` 跨目录搬整篇）。
+#: 词表取自计划层的 op 全集（`services/agent/plan.py::KNOWN_OPS`）。批量大小**不算**风险 ——
+#: 每批都是 all-or-nothing + 写前备份 + 可整批撤销（人 2026-09-22 口径）。
+#:
+#: **2026-09-22 补两个 sidecar 结构 op**（同日新增，设计 §7 的 1.7 / 1.8）：
+#: `delete_kp` 会让**别的**文档里的 `[[id]]` 变成悬空虚链（影响面超出本文档）、`rename_kp` 是**全库**
+#: 级联改名（与 `rename_file` 同级）⇒ 两者都进风险表（设计里这两行的「审批档」建议就是 `confirm`，
+#: 且删除类不设 `auto`）。`upsert_edge` 只往本文档的 sidecar 加一条边、完全自包含 ⇒ **不进**
+#: （它连"牵连别的文件"都算不上）。
+#:
+#: **2026-09-22 订正（人点名"删行要人点确认"这条摩擦）**：`delete_lines` **移出**风险表。
+#: 理由两条：① 与本块既有的判据自相矛盾 —— 判据是"不可逆"，而 `delete_lines` 有逐字 `expect`
+#: 前置校验 + 写前备份 + 整批撤销，可逆性与 `replace_lines`（一直免问）**没有区别**
+#: （把整段替换成空串同样是删）；② 与设计口径冲突 —— 设计里"不设 `auto`"针对的是**删除类**
+#: （`kb.file.delete` / `kb.kp.delete`，§7 2.5），不是"改正文"。真机后果：整理教材残渣这类
+#: **纯删行**任务会**每批**都弹确认卡、没人点就挂满 `APPROVAL_TIMEOUT_S`(120s) 后按拒绝关闭 ⇒
+#: agent 反复"写不进去"（`D:\AAA_Courses\软件工程概论` 2026-09-22 会话实测到连续 3 次 120s 超时）。
+RISKY_OPS = frozenset({"rename_file", "delete_file", "move_file", "delete_kp", "rename_kp"})
+
+
+def write_is_risky(request: ApprovalRequest) -> bool:
+    """写类调用是否命中「风险条件」；**形状不认识一律按风险**（fail-closed）。
+
+    只对「能识别的写计划」免问：`arguments["ops"]` 必须是**非空**列表，且每一项都能读出
+    `op` 动词 —— 认不出（新写工具 / 参数换了形状）就当作危险，交给应答者。
+    """
+    arguments = request.arguments if isinstance(request.arguments, Mapping) else {}
+    ops = arguments.get("ops")
+    if not isinstance(ops, (list, tuple)) or not ops:
+        return True
+    for row in ops:
+        if not isinstance(row, Mapping):
+            return True
+        verb = str(row.get("op") or "").strip()
+        if not verb or verb in RISKY_OPS:  # 读不出动词（形状变了）也算风险
+            return True
+    return False
+
+
+class GuardedPolicy:
+    """`auto` 档：读类免审批；常规写自动放行；命中风险条件才交给应答者逐条确认。
+
+    无应答者（CLI / 面板未挂载）⇒ 风险分支走 `AskPolicy(None)` ⇒ `unavailable` ⇒ **拒绝**
+    （fail-closed；见 `services/agent/approval_bridge.py` 的四条关闭路径）。
+    """
+
+    def __init__(self, answerer: Callable[[ApprovalRequest], ApprovalOutcome | None] | None = None) -> None:
+        self._answerer = answerer
+
+    def decide(self, request: ApprovalRequest) -> ApprovalDecision:
+        if request.read_only:
+            return ALLOWED_ONCE
+        if not write_is_risky(request):
+            return ALLOWED_ONCE
+        return AskPolicy(self._answerer).decide(request)

@@ -82,7 +82,7 @@ DEFAULT_TIMEOUT_S = 60.0
 #: 「允许出网」开关的 JSON 键（缺省视为开）。
 ENABLED_KEY = "enabled"
 
-_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", "status_refresh_ms", ENABLED_KEY)
+_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", "status_refresh_ms", "transcript_mode", ENABLED_KEY, "permission")
 #: UI 可写键白名单（`save_config` 只接受这些键）。
 _WRITABLE_KEYS = frozenset(_JSON_KEYS)
 #: 文本类键（trim 后原样存）。
@@ -290,7 +290,7 @@ def save_config(
     约定（与桌面端配置面板一致）：
 
     - 只接受白名单键 `base_url` / `api_key` / `model` / `timeout_s` / `enabled`
-      以及 `status_refresh_ms`，其它键报 `ConfigError`（绝不写文件）；
+      以及 `status_refresh_ms` / `transcript_mode` / `permission`，其它键报 `ConfigError`（绝不写文件）；
     - `api_key` **仅在传入非空新值时覆盖**——面板回显的是掩码，空值表示"不修改"；
     - `timeout_s` 空值同样表示"不修改"，非空则沿用 `load_config()` 的同一套校验
       （正数），非法值不落盘；`status_refresh_ms` 同口径（正整数毫秒）；
@@ -325,6 +325,12 @@ def save_config(
         # 追加键（2026-09-19）：放在分支链末位 ⇒ 既有键的处理行号零漂移
         if name == "status_refresh_ms" and value not in (None, ""):
             current[name] = _coerce_status_refresh_ms(value, origin=str(path))
+        # 追加键（2026-09-22）：过程内容呈现模式，仅 normal / compact
+        if name == "transcript_mode" and value not in (None, ""):
+            current[name] = _coerce_transcript_mode(value, origin=str(path))
+        # 追加键（2026-09-22）：审批档位（按 agent 配，`{agent_id: 档位名}`）
+        if name == PERMISSION_KEY and value is not None:
+            current[name] = _coerce_permission(value, origin=str(path))
 
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
@@ -367,3 +373,75 @@ def _coerce_status_refresh_ms(value: Any, origin: str) -> int:
     if ms <= 0:
         raise ConfigError(f"{origin} 的刷新间隔必须为正数，收到 {ms!r}")
     return ms
+
+
+# ── 过程内容呈现模式（2026-09-22；桌面端 UI 旋钮）────────────────────────────────
+# **与 `enabled` / `status_refresh_ms` 同类**：它是 UI 旋钮、不是模型调用参数，故不进
+# `AgentConfig`、也不参与 `load_config()` 的逐字段回退；由 `transcript_mode()` / `save_config()`
+# 读写同一份 JSON。取值只允许 `normal`（过程内容常显）/ `compact`（回合结束后折叠为摘要行）。
+# 本段整体追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+#: 过程内容呈现模式的 JSON 键。
+_TRANSCRIPT_MODE_KEY = "transcript_mode"
+#: 缺省 / 非法值一律回落此值（对齐上游 Turn Process Folding 的默认折叠）。
+DEFAULT_TRANSCRIPT_MODE = "compact"
+#: 允许的取值（写侧**严格**拒绝其它值，不落盘）。
+_TRANSCRIPT_MODES = ("normal", "compact")
+
+
+def transcript_mode(env: Mapping[str, str] | None = None) -> str:
+    """过程内容呈现模式；缺省 / 非法值一律回退 `DEFAULT_TRANSCRIPT_MODE`。
+
+    宽松口径与 `is_enabled()` / `status_refresh_ms()` 一致（手改坏值不该让配置视图 RPC 失败）；
+    **严格校验在写侧**（`save_config` 走 `_coerce_transcript_mode`）。
+    """
+    raw = read_raw_config(env).get(_TRANSCRIPT_MODE_KEY)
+    value = str(raw).strip().lower() if raw is not None else ""
+    return value if value in _TRANSCRIPT_MODES else DEFAULT_TRANSCRIPT_MODE
+
+
+def _coerce_transcript_mode(value: Any, origin: str) -> str:
+    """写侧校验：只接受 `normal` / `compact`（大小写与首尾空白归一），其它值报 `ConfigError`。"""
+    text = str(value).strip().lower()
+    if text not in _TRANSCRIPT_MODES:
+        raise ConfigError(f"{origin} 的 {_TRANSCRIPT_MODE_KEY} 只允许 normal / compact，收到 {value!r}")
+    return text
+
+
+# ── 2026-09-22 追加：审批档位段（`config/agent.json: permission`）────────────────────────
+# 本块是**末尾追加** ⇒ 上方既有行号锚点零漂移。段值形状 `{agent_id: 档位名}`（人 2026-09-22
+# 口径：「档位配置跟随 agent，后续会有多种 agent 的设计」）——当前只有主 agent（`main`）。
+# **档位名的封闭词表不在本层**：那是 agent 语义（`services/agent/permission_presets.py`），
+# 写侧只做形状校验，免得配置层反向依赖 agent 包（`permission_presets` 已正向依赖本模块）。
+
+#: 审批档位段的键名；与 `_JSON_KEYS` 里的同名字面量是同一个键（该行在 `PERMISSION_KEY`
+#: 定义之前求值，故那边只能写字面量）。
+PERMISSION_KEY = "permission"
+
+
+def permission_presets_map(env: Mapping[str, str] | None = None) -> dict[str, str]:
+    """读审批档位段（`{agent_id: 档位名}`）；缺省 / 形状不对一律回空表（宽松口径）。
+
+    **严格校验在写侧**（`_coerce_permission`）；档位名是否合法由 `permission_presets` 模块的
+    `default_preset()` 判定（未知名回落默认档）。
+    """
+    raw = read_raw_config(env).get(PERMISSION_KEY)
+    if not isinstance(raw, Mapping):
+        return {}
+    return {str(k).strip(): str(v).strip() for k, v in raw.items() if str(k).strip()}
+
+
+def _coerce_permission(value: Any, origin: str) -> dict[str, str]:
+    """写侧校验：`{agent_id: 档位名}`（键值都归一为字符串）；非映射报 `ConfigError`。
+
+    空值键/空值档位一律丢弃（等价于"不配这一项"）；档位名的合法词表由调用方（UI RPC 层）
+    先行校验，本层不认识 agent 语义。
+    """
+    if not isinstance(value, Mapping):
+        raise ConfigError(f"{origin} 的 {PERMISSION_KEY} 必须是 {{agent: 档位名}} 的键值对象")
+    out: dict[str, str] = {}
+    for agent, name in value.items():
+        key = str(agent or "").strip()
+        text = str(name or "").strip()
+        if key and text:
+            out[key] = text
+    return out

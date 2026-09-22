@@ -95,6 +95,8 @@ Create a short paragraph (4–5 sentences) using **at least three** of the follo
 > （中文提示：描述一个社区决定改造一片破败的旧工厂区）
 
 
+> 🔗 **关联**：破败的地方往往先被**鼻子**发现——旧楼漏雨发霉、垃圾成堆，都能用 `a stench`（[[stench]]）收一笔：*The dilapidated building gave off a stench of damp and rot.*（那栋破败的楼房散发着潮湿腐败的臭味。）
+
 ## 📌 Revision Tags
 
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#C1`

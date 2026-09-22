@@ -79,6 +79,26 @@ OP_INSERT_IMAGE_REF = "insert_image_ref"
 #: 文件级（§7 的 2.4 / 2.6）：新建 `.md` / 重命名（含全库引用级联）—— 落点 `services/agent/file_ops.py`
 OP_CREATE_FILE = "create_file"
 OP_RENAME_FILE = "rename_file"
+#: 删除整篇文档（2026-09-22 新增）：**风险 op** + 悬空引用先拦，见 `_validate_delete_file()`。
+OP_DELETE_FILE = "delete_file"
+#: 把整篇文档移到**另一个目录**（2026-09-22 新增）：只改目录、**保持文件名** ⇒ 不改写任何 `[[…]]`
+#: 引用（id/stem 寻址不受路径影响）；正文里的**文件相对**链接/图片会被预演拦下（见 `_validate_move_file()`）。
+OP_MOVE_FILE = "move_file"
+#: KP↔KP 的**纯边**（2026-09-22 新增；设计 §7 1.2 的 `upsert_edge` → 原语 `kb.link.create`）：只写
+#: sidecar 的 `edges[]`、**不碰正文**（要写正文锚点用 `attach_links`）。边类型只收 `reference` / `extend`
+#: —— `contain` 由标题层级自动推导、**禁手标**（`<库>/.memoria/agent/kb-spec.zh-CN.md` §4）。
+OP_UPSERT_EDGE = "upsert_edge"
+#: 删除知识点（2026-09-22 新增；设计 §7 1.7 的 `delete_kp` → 原语 `kb.kp.delete`）：只删 sidecar 里的
+#: KP 配置、**不改正文** ⇒ 正文里的 `[[id]]` 会变成悬空虚链。库规明确允许虚链（kb-spec §4）⇒ 只**警告**
+#: 不拦（与 `delete_file` 对正文引用硬拦的分层理由：那里整篇消失、这里只是少一个可解析目标）。
+OP_DELETE_KP = "delete_kp"
+#: 重建 / 同步 **`manifest.yaml`**（2026-09-22 新增；设计 §7 6.3 的 `kb.manifest.rebuild`）：全库重扫磁盘、
+#: 把文件清单与指纹整体重写一遍 —— 「清单陈旧」那一类（新文档未记入 / 指纹过期 / 历史错拼留下的陈旧
+#: 条目）**只能靠它消**，此前 agent 侧一个能碰 manifest 的 op 都没有（真机报告原话："只能点构建"）。
+#: **不带 `file`**（整库一件事）；**必须收尾**（它记录的是"这一批之后"的文件集）。
+#: **前置硬闸**：库里有未修复的**路径变更** ⇒ 拒（先「修复路径」）—— 判定直接调
+#: `document.sync_manifest()` 用的同一个 `detect_path_moves()`（单一事实源，不另写宽松判断）。
+OP_REBUILD_MANIFEST = "rebuild_manifest"
 
 #: 全部已知 op（**只增不改**）；不在表内 ⇒ 拒整批
 KNOWN_OPS: tuple[str, ...] = (
@@ -94,6 +114,11 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_INSERT_IMAGE_REF,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
+    OP_DELETE_FILE,
+    OP_MOVE_FILE,
+    OP_UPSERT_EDGE,
+    OP_DELETE_KP,
+    OP_REBUILD_MANIFEST,
 )
 
 #: M3a 首批（§10 P8 推荐①：三个 op 覆盖 KP 与链接两个动作类、两个方向；`set_kp_range` /
@@ -101,7 +126,8 @@ KNOWN_OPS: tuple[str, ...] = (
 M3A_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
 
 #: 编译器**已实现**的 op（其余 `KNOWN_OPS` 只登记不编译：出现即警告，编译不出任何原语调用，
-#: apply 判 `empty_plan`）
+#: apply 判 `empty_plan`）。**2026-09-22**：`rename_kp`（全库改 id）、`upsert_edge`（纯边）、
+#: `delete_kp`（删 KP）三个 sidecar 结构 op 从"只登记"转为"已编译"，见各 `_validate_*` / `compile_plan` 分支。
 COMPILED_OPS: tuple[str, ...] = (
     OP_UPSERT_KP,
     OP_ATTACH_LINKS,
@@ -113,6 +139,12 @@ COMPILED_OPS: tuple[str, ...] = (
     OP_INSERT_IMAGE_REF,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
+    OP_DELETE_FILE,
+    OP_MOVE_FILE,
+    OP_RENAME_KP,
+    OP_UPSERT_EDGE,
+    OP_DELETE_KP,
+    OP_REBUILD_MANIFEST,
 )
 
 #: **改正文行**的 op（会改变行数/行内容）。`upsert_block` / `insert_image_ref` 语义上是"整块替换 /
@@ -125,10 +157,18 @@ BODY_EDIT_OPS: tuple[str, ...] = (
     OP_INSERT_IMAGE_REF,
 )
 #: **按行号锚定**的 op（行号以"当前正文"为准；`attach_links` / `detach_links` 的 lines、
-#: `upsert_kp` 的 range）。它们**不改行数** ⇒ 只要排在改正文之前，行号语义就仍然一致。
+#: `upsert_kp` 的 range）。它们不改行数；**顺序不再受限** —— 行号按批内视图里"那一刻的正文"算。
 LINE_ANCHORED_OPS: tuple[str, ...] = (OP_UPSERT_KP, OP_ATTACH_LINKS, OP_DETACH_LINKS)
-#: **文件级** op（新增/改名）。它们改变"路径"或"全库引用" ⇒ 必须**单独成一批**（`file_op_alone`）。
-FILE_OPS: tuple[str, ...] = (OP_CREATE_FILE, OP_RENAME_FILE)
+#: **文件级** op（新增/改名/删除/移动）。`create_file` 由**批内视图**顺手造出（同批后面的 op 立刻能按这个
+#: 新文件算行号）；`rename_file` 会重写全库引用并搬路径、`delete_file` 会让指向它的引用变悬空
+#: ⇒ 两者只允许**收尾**；`move_file` 只动**自己那一篇**（含它的侧车）⇒ 可以**连排多条**（见 `_check_rename_last()`）。
+FILE_OPS: tuple[str, ...] = (OP_CREATE_FILE, OP_RENAME_FILE, OP_DELETE_FILE, OP_MOVE_FILE)
+#: `FILE_OPS` 里**会动"路径"这个坐标系**的那些（`create_file` **不算**：它只是把新文件"种"进批内视图，
+#: 同批后面的 op 照旧可以按它算行号 / 建点 / 挂链 —— 这条放行不能丢）。顺序规矩按本表判（见 `_check_rename_last()`）。
+#: **2026-09-22** 追加 `rename_kp`：它不改路径，但会**全库改写正文**（`[[旧 id]]` → `[[新 id]]`），
+#: 而批内视图并不跟着改写 ⇒ 它之后再按行/按原文校验的 op 都会基于**过期文本**（校验过、落地才对不上）。
+#: 故与"动路径"同待遇：出现后只允许再排 `FILE_OPS`（见 `_check_rename_last()` 的两条规矩）。
+PATH_MOVING_OPS: tuple[str, ...] = (OP_MOVE_FILE, OP_RENAME_FILE, OP_DELETE_FILE, OP_RENAME_KP)
 
 
 #: 事务 id 形态（`<YYYYMMDD>T<HHMMSS>Z-<n>`；与 §2.3.2 的备份目录 `<txid>` 同格式同来源）
@@ -178,6 +218,53 @@ def _body_lines(kb_path: str, rel: str) -> list[str]:
 def _sidecar_of(kb_path: str, rel: str) -> dict:
     sidecar = load_sidecar_for_md(os.path.join(kb_path, rel), kb_path)
     return dict(sidecar) if isinstance(sidecar, Mapping) else {}
+
+
+class _View:
+    """**批内顺序视图**（`validate_plan()` / `preview_plan()` 共用）：把**前序 op 的效果**在内存里
+    叠起来，让后面的 op 看见"这一刻的正文与文件存在性"。
+
+    为什么要有它：真实意图常常**天然有先后** —— 先把正文写进去、再按**新**行号建知识点、再挂跳转；
+    新建一个文件之后紧接着给它建点。旧实现每个 op 都只对着**盘上原文**校验，于是这类意图只能拆成
+    两批提，而确认卡是人工点的 ⇒ "半路停下"。有了视图，**一批就能写完**；`apply.compile_plan()`
+    也改成按 op 顺序逐条落地（同一条纪律）⇒ 校验期算出的行号与落地时逐 op 看到的行号是**同一套语义**。
+
+    视图只管两件事：**正文行**与**文件是否存在**。sidecar（KP/links）与"前序 upsert_kp 建过的 id"
+    分别由 `DocumentService.check_kp_id()` 与 `pending_ids` 负责，不在这里重复建模。
+    """
+
+    def __init__(self, kb_path: str) -> None:
+        self._kb = kb_path
+        self._lines: dict[str, list[str]] = {}
+        self._created: set[str] = set()
+
+    def exists(self, rel: str) -> bool:
+        """视图里的存在性：本批 `create_file` 造出来的文件**立刻**算存在。"""
+        return rel in self._created or os.path.isfile(os.path.join(self._kb, rel))
+
+    @property
+    def created(self) -> set[str]:
+        """本批 `create_file` 建出来的相对路径（供"新文件的 stem 也算可解析"用）。"""
+        return set(self._created)
+
+    def lines(self, rel: str) -> list[str]:
+        """这一刻的正文行：首次访问读盘，之后读视图（与 `_body_lines` 同一行空间）。"""
+        if rel not in self._lines:
+            self._lines[rel] = _body_lines(self._kb, rel)
+        return list(self._lines[rel])
+
+    def put(self, rel: str, lines: Sequence[str]) -> None:
+        self._lines[rel] = list(lines) or [""]
+
+    def seed(self, rel: str, body: str) -> None:
+        """`create_file`：用初始正文把文件"种"进视图（同批后面的 op 立刻能按它算行号）。"""
+        self._created.add(rel)
+        self.put(rel, body.splitlines())
+
+    def put_edit(self, rel: str, edit: Mapping) -> None:
+        """把一条**已通过自检**的编辑施加到视图（与落地用的是**同一个** `splice()`）。"""
+        text, _, _ = splice("\n".join(self.lines(rel)), [dict(edit)])
+        self.put(rel, text.splitlines())
 
 
 def _normalize_range_spec(spec: Any, lines: Sequence[str], *, what: str, op_id: str, errors: list[dict]) -> dict:
@@ -240,7 +327,20 @@ def _validate_upsert_kp(kb_path: str, op: Mapping, lines: Sequence[str], service
         # 复用人类 UI 的同一函数：全局唯一；**本文件已有同 id ⇒ 可更新**（幂等键 `(file, kp_id)`）
         checked = service.check_kp_id(kp_id, str(op.get("file") or ""))
         if not checked.get("available", False):
-            errors.append(_err(op_id, "kp_id_taken", str(checked.get("message") or f"目标 id 已存在：{kp_id}")))
+            # 2026-09-22：把"它在哪篇"一并说出来 —— `check_kp_id()` 本来就回了 `files`，此前只用了
+            # `message` ⇒ 模型读到"目标 id 已存在"却不知道**该把 `file` 指向哪里**，真机里它反复用
+            # 同一个错的 `file` 重提（`kp_id_taken` ×2）。
+            where = "、".join(f"`{item}`" for item in (checked.get("files") or [])[:3])
+            errors.append(
+                _err(
+                    op_id,
+                    "kp_id_taken",
+                    f"id `{kp_id}` 已经存在**在别的文档**里"
+                    + (f"：{where}" if where else "")
+                    + " —— 要**改**那个知识点，把 `file` 指向它所在的那一篇（本文件已有同 id 时可直接改）；"
+                    "要**新建**，换一个 id。",
+                )
+            )
     start = _normalize_range_spec(_as_dict(op.get("range")).get("start"), lines, what="range.start", op_id=op_id, errors=errors)
     end = _normalize_range_spec(_as_dict(op.get("range")).get("end"), lines, what="range.end", op_id=op_id, errors=errors)
     if start and end and start["line_hint"] > end["line_hint"]:
@@ -282,7 +382,7 @@ def _validate_attach_links(
     op_id: str,
     errors: list[dict],
     warnings: list[dict],
-    pending_ids: set[str],
+    pending_targets: set[str],
 ) -> dict:
     anchor = str(op.get("anchor_text") or "").strip()
     if not anchor:
@@ -293,9 +393,10 @@ def _validate_attach_links(
         errors.append(_err(op_id, "missing_field", "targets 必须是非空数组"))
         return {"action": "invalid"}
     for target in targets:
-        # 同一 plan 内**前序** `upsert_kp` 刚建的点对后 op 可见（§2.3.3 信封注释："前 op 的结果
+        # 同一批内**前序** op 刚建出来的目标对后 op 可见（§2.3.3 信封注释："前 op 的结果
         # 对后 op 可见（可'先建点、后连边'）"）—— 否则"建点 + 连边"这种最常见的 plan 永远校验不过。
-        if target in pending_ids:
+        # 两类：① 前序 `upsert_kp` 建的 KP id；② 前序 `create_file` 新建文件的 stem（视图口径）。
+        if target in pending_targets:
             continue
         # 「目标必须可解析」：ambiguous / not_found 一律拒整批（§2.3.3 校验列）
         resolved = resolve_link_target(kb_path, target)
@@ -529,9 +630,9 @@ def _validate_upsert_block(op: Mapping, lines: Sequence[str], op_id: str, errors
     return {"action": "upsert_block", "kind": kind, "lang": want_lang, "edit": normalized}
 
 
-def _validate_create_file(kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
-    """新建 `.md`：文件**必须不存在**，`body` 可选（初始正文）。"""
-    if os.path.exists(os.path.join(kb_path, rel)):
+def _validate_create_file(view: _View, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
+    """新建 `.md`：文件**必须不存在**（按**批内视图**判 —— 本批刚建过的也算已存在），`body` 可选。"""
+    if view.exists(rel):
         errors.append(_err(op_id, "file_exists", f"文件已存在（新建请换路径）：{rel}"))
         return {"action": "invalid"}
     body = str(op.get("body") or "")
@@ -559,8 +660,277 @@ def _validate_rename_file(kb_path: str, rel: str, op: Mapping, op_id: str, error
     }
 
 
+#: 探测"这篇文档还写着 `[[stem]]` 吗"用的哨兵 id（`replace_link_id_in_markdown()` 在 old == new 时
+#: **短路返回 0**，所以数引用必须传一个不可能撞上的名字；替换出来的文本直接丢掉）。
+_DELETE_REF_PROBE = "\x00memoria-delete-probe"
+
+
+def _still_references_ids(view: _View, other: str, ids: Sequence[str]) -> bool:
+    """**批内视图**里这篇文档是否仍写着 `[[id]]`（任一命中即可）—— 同批前面的 op 可能已经改掉它。"""
+    from memoria.services.kp_rename import replace_link_id_in_markdown
+
+    if not view.exists(other):
+        return False
+    text = "\n".join(view.lines(other))
+    return any(replace_link_id_in_markdown(text, target, _DELETE_REF_PROBE)[1] for target in ids)
+
+
+def _validate_delete_file(
+    kb_path: str, rel: str, op_id: str, errors: list[dict], warnings: list[dict], view: _View
+) -> dict:
+    """删除整篇 `.md`：**悬空正文引用先拦**（按批内视图算），侧车引用只**警告**。
+
+    语义与取舍见 `services/agent/file_ops.delete_plan()` 头注（三条硬约束：引用先拦 / 侧车警告 /
+    风险 op + 备份可撤销）。为什么正文引用要**按视图**再判一次：`delete_plan()` 读的是**盘上**原文，
+    而同批前面的 op 完全可能已经把引用改掉了（比如先 `replace_lines` 摘掉 `[[旧名]]`）⇒ 只看盘上
+    会误杀这个合法意图。
+    """
+    from memoria.services.agent.file_ops import delete_plan
+
+    plan = delete_plan(kb_path, rel)
+    if not plan.get("ok"):
+        errors.append(_err(op_id, str(plan.get("code") or "delete_rejected"), str(plan.get("message") or "")))
+        return {"action": "invalid"}
+    ids = [str(item) for item in (plan.get("ids") or [])] or [str(plan.get("stem") or "")]
+    ids_text = "、".join(f"`[[{item}]]`" for item in ids[:4])
+    blockers = [other for other in (plan.get("referrers_md") or []) if _still_references_ids(view, other, ids)]
+    if blockers:
+        shown = "、".join(blockers[:5])
+        more = f"（共 {len(blockers)} 篇）" if len(blockers) > 5 else ""
+        errors.append(
+            _err(
+                op_id,
+                "delete_referenced",
+                f"还有文档用 {ids_text} 指向它{more}：{shown}。删除会让这些引用变成悬空 —— "
+                "请先把这些引用删掉或改掉（**放在同一批里、这条删除之前**），再删这个文件。",
+            )
+        )
+        return {"action": "invalid"}
+    sidecars = list(plan.get("referrers_sidecar") or [])
+    if sidecars:
+        warnings.append(
+            _warn(
+                op_id,
+                "delete_leaves_edges",
+                f"{len(sidecars)} 篇文档的侧车里还挂着指向这儿列出的 id 的链接/边 —— 删除后它们会变成"
+                "悬空目标（`validate_kb` / `audit_kb` 会报出来）。要一起清理就先 `detach_links`。",
+            )
+        )
+    return {
+        "action": "delete",
+        "resolved": {"path": rel, "ids": ids, "affected": plan.get("affected") or []},
+    }
+
+
+def _validate_move_file(kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
+    """移动到另一目录：预演（`file_ops.move_plan()`）判定"能不能移"。**不猜**。
+
+    唯一会拦人的语义条件是**正文里的"文件相对"链接/图片**（`move_breaks_relative_refs`）：移动只改目录、
+    不改 stem ⇒ `[[id]]` 与库根相对的图片引用都不受影响，但按文件所在目录解析的写法会断 —— 那正是设计
+    §6 R2 未落地的部分，所以宁可让模型先把引用改成库根相对，也不"移动后悄悄断掉"。
+    """
+    from memoria.services.agent.file_ops import move_plan
+
+    plan = move_plan(kb_path, rel, str(op.get("to_dir") or ""))
+    if not plan.get("ok"):
+        errors.append(_err(op_id, str(plan.get("code") or "move_rejected"), str(plan.get("message") or "")))
+        return {"action": "invalid"}
+    return {
+        "action": "move",
+        "resolved": {"from": plan["from"], "to": plan["to"], "affected": plan["affected"]},
+    }
+
+
+# ── 2026-09-22 追加：三个 sidecar 结构 op 的校验（设计 §7 的 1.2 / 1.7 / 1.8）──────────────────
+# 三者都只动 sidecar（`edges[]` / `knowledge_points[]`）或"KP id 这个名字"，**不改正文行数**；
+# `rename_kp` 例外地会**全库改写正文里的 `[[旧 id]]`**（同一行内替换、行数不变，故它只受
+# `PATH_MOVING_OPS` 的顺序规矩约束）。
+#
+# 校验一律**转调既有原子函数**（`resolve_link_target` / `file_ops.kp_referrers` /
+# `kp_rename.rename_kp_in_kb(dry_run=True)`），不另写宽松判断（模块头纪律 2）。
+
+
+def _edge_targets_of(edge: Mapping) -> list[str]:
+    """一条边的目标列表（`targets` 允许是字符串或数组 —— 与 `document.create_edge()` 同口径）。"""
+    raw = edge.get("targets")
+    if isinstance(raw, str):
+        return [raw.strip()] if raw.strip() else []
+    return [str(item).strip() for item in _as_list(raw) if str(item).strip()]
+
+
+def _validate_upsert_edge(
+    kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict], pending_targets: set[str]
+) -> dict:
+    """建一条 KP↔KP 的**纯边**（只写 sidecar `edges[]`，不碰正文）。
+
+    四条前置全部在**计划期**说出来（别等落盘才报）：① `source_id` 必须是**本文档**的定义（
+    `document.create_edge()` 的硬约束 —— 边只能从本文档的点出发）；② `target_id` 必须可解析
+    （同批前序 `upsert_kp` 刚建出来的算数）；③ 边类型只收 `reference` / `extend`
+    （`contain` 由标题层级自动推导、禁手标）；④ 同型同源同目标已存在 ⇒ 先拒（否则落到
+    `create_edge()` 才报，整批回滚、信息不聚焦）。
+    """
+    source_id = str(op.get("source_id") or "").strip()
+    target_id = str(op.get("target_id") or "").strip()
+    raw_edge = op.get("edge_type")
+    if not source_id:
+        errors.append(_err(op_id, "missing_field", "缺 source_id（边从哪个 KP 出发）"))
+    if not target_id:
+        errors.append(_err(op_id, "missing_field", "缺 target_id（边指向哪个 KP / 文件）"))
+    if source_id and source_id == target_id:
+        errors.append(_err(op_id, "bad_field", "source_id 与 target_id 不能相同（边不指向自己）"))
+    edge_type = EDGE_REFERENCE
+    if raw_edge not in (None, ""):
+        raw_key = str(raw_edge).strip().lower()
+        if raw_key not in PLAN_EDGE_TYPES:
+            errors.append(_err(op_id, "bad_edge_type", f"edge_type 只接受 reference / extend：{raw_edge!r}"))
+        else:
+            edge_type = normalize_link_edge_type(raw_key)
+    if errors:
+        return {"action": "invalid"}
+    kp_ids = {
+        str(kp.get("id") or "").strip()
+        for kp in _as_list(_sidecar_of(kb_path, rel).get("knowledge_points"))
+        if isinstance(kp, Mapping)
+    }
+    if source_id not in kp_ids and source_id not in pending_targets:
+        errors.append(
+            _err(op_id, "source_not_in_file", f"source_id 不是本文档的知识点：{source_id}（边只能从本文档的点出发）")
+        )
+    if target_id not in pending_targets and resolve_link_target(kb_path, target_id).get("status") != "ok":
+        errors.append(_err(op_id, "target_not_found", f"边的目标不可解析：{target_id}"))
+    if errors:
+        return {"action": "invalid"}
+    for edge in _as_list(_sidecar_of(kb_path, rel).get("edges")):
+        if not isinstance(edge, Mapping):
+            continue
+        if (
+            str(edge.get("source_id") or "").strip() == source_id
+            and target_id in _edge_targets_of(edge)
+            and not edge.get("no_build")
+        ):
+            errors.append(
+                _err(op_id, "edge_exists", f"已经有 {source_id} → {target_id} 的边了（要改类型请先 `detach_edge`）")
+            )
+            break
+    if errors:
+        return {"action": "invalid"}
+    return {
+        "action": "upsert_edge",
+        "resolved": {"source_id": source_id, "target_id": target_id, "edge_type": edge_type},
+    }
+
+
+def _validate_delete_kp(
+    kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict], warnings: list[dict]
+) -> dict:
+    """删一个 KP（只删 sidecar 里的配置、**不改正文**）。
+
+    悬空引用**只警告不拦** —— 库规明确允许虚链（`kb-spec` §4「指向尚不存在的 id：保留为虚链」），
+    这与 `delete_file` 对正文引用硬拦是**有意不同的分层**：那里整篇文件消失，这里只是少一个
+    可解析目标。警告照旧给出可行动的清理手段（`detach_links` / 改引用）。
+    """
+    from memoria.services.agent.file_ops import kp_referrers
+
+    kp_id = str(op.get("kp_id") or "").strip()
+    if not kp_id:
+        errors.append(_err(op_id, "missing_field", "缺 kp_id"))
+        return {"action": "invalid"}
+    kp = next(
+        (
+            item
+            for item in _as_list(_sidecar_of(kb_path, rel).get("knowledge_points"))
+            if isinstance(item, Mapping) and str(item.get("id") or "").strip() == kp_id
+        ),
+        None,
+    )
+    if kp is None:
+        errors.append(_err(op_id, "kp_not_found", f"本文档的侧车里没有这个知识点：{kp_id}"))
+        return {"action": "invalid"}
+    hits = kp_referrers(kb_path, kp_id, owner=rel)
+    targets = sorted(set(hits["md"]) | set(hits["sidecar"]))
+    if targets:
+        shown = "、".join(f"`{item}`" for item in targets[:5])
+        more = f"（共 {len(targets)} 篇）" if len(targets) > 5 else ""
+        warnings.append(
+            _warn(
+                op_id,
+                "delete_leaves_dangling",
+                f"还有 {len(targets)} 篇文档指向 `{kp_id}`{more}：{shown} —— 删除后它们会变成**悬空虚链**"
+                "（库规允许，`validate_kb` 会报出来）。要一起清理就先 `detach_links` 或把引用改掉。",
+            )
+        )
+    return {"action": "delete_kp", "resolved": {"kp_id": kp_id}}
+
+
+def _validate_rename_kp(kb_path: str, op: Mapping, op_id: str, errors: list[dict]) -> dict:
+    """KP id 全库改名（正文 `[[旧 id]]` + 各 sidecar 引用**一起**改）。**不带 `file`**。
+
+    预演走 `kp_rename.rename_kp_in_kb(dry_run=True)` —— **同一份实现**、只是不落盘 ⇒ 校验期给出的
+    "会改哪些文件"与落地时改的必然是同一份清单；那份清单也就是 apply 的 **pre-image 备份集**
+    （全库级联会把正文与侧车一起改掉，撤销必须能逐篇还原）。
+    """
+    from memoria.services.kp_rename import rename_kp_in_kb
+
+    old_id = str(op.get("old_id") or "").strip()
+    new_id = str(op.get("new_id") or "").strip()
+    if not old_id or not new_id:
+        errors.append(_err(op_id, "missing_field", "缺 old_id / new_id（全库改 KP id）"))
+        return {"action": "invalid"}
+    preview = rename_kp_in_kb(kb_path, old_id, new_id, dry_run=True)
+    if preview.get("status") != "ok":
+        errors.append(_err(op_id, "rename_kp_rejected", str(preview.get("message") or "改名被拒")))
+        return {"action": "invalid"}
+    affected = [str(row.get("path") or "") for row in _as_list(preview.get("md_files")) if isinstance(row, Mapping)]
+    affected += [str(item) for item in _as_list(preview.get("sidecar_files"))]
+    return {
+        "action": "rename_kp",
+        "resolved": {
+            "old_id": old_id,
+            "new_id": new_id,
+            "md_files": _as_list(preview.get("md_files")),
+            "sidecar_files": _as_list(preview.get("sidecar_files")),
+            "affected": sorted({item for item in affected if item}),
+        },
+    }
+
+
+def _validate_rebuild_manifest(kb_path: str, op_id: str, errors: list[dict]) -> dict:
+    """重建 `manifest.yaml`（`kb.manifest.rebuild`）。**不带 `file`**。零参数。
+
+    前置硬闸与界面「构建」按钮**完全同一道**：库里有**未修复的路径变更** ⇒ 拒（`detect_path_moves()`
+    会按内容 hash 把 manifest 的"删了 + 加了"配对成 rename/move —— 那种状态下直接重建，等于把
+    "文件搬到哪儿去了"这条元数据抹掉）。挡在**计划期**比落到 `apply` 才整批回滚好：模型能拿着
+    这条错误直接改意图（先 `move_file`/`rename_file` 把路径定下来，或请人点「修复路径」）。
+    """
+    from memoria.storage.path_cascade import detect_path_moves
+
+    moves = detect_path_moves(kb_path)
+    if moves:
+        shown = "、".join(
+            f"`{row.get('from')}` → `{row.get('to')}`" for row in moves[:3] if isinstance(row, Mapping)
+        )
+        more = f"（共 {len(moves)} 处）" if len(moves) > 3 else ""
+        errors.append(
+            _err(
+                op_id,
+                "manifest_blocked_by_path_moves",
+                f"库里有 {len(moves)} 处**未修复的路径变更**{more}：{shown} —— 先把路径定下来"
+                "（同一批里用 `move_file` / `rename_file`，或请人在界面上点「修复路径」）再重建清单；"
+                "这种状态下直接重建会让这些文件的元数据路径无法恢复。",
+            )
+        )
+        return {"action": "invalid"}
+    return {"action": "rebuild_manifest", "resolved": {"path": ".memoria/manifest.yaml"}}
+
+
 def _validate_op(
-    kb_path: str, op: Any, service: Any, errors: list[dict], warnings: list[dict], pending_ids: set[str]
+    kb_path: str,
+    op: Any,
+    service: Any,
+    errors: list[dict],
+    warnings: list[dict],
+    pending_targets: set[str],
+    view: _View,
 ) -> dict:
     if not isinstance(op, Mapping):
         errors.append(_err("", "bad_envelope", "ops[] 的元素必须是对象"))
@@ -572,24 +942,45 @@ def _validate_op(
         errors.append(_err("", "missing_field", "op 缺 op_id"))
     if verb not in KNOWN_OPS:
         # 未知即拒（P12 推荐①）：不静默忽略，否则"旧编译器偷偷少做一步"不可见
-        errors.append(_err(op_id, "unknown_op", f"未知 op：{verb!r}"))
+        # 2026-09-22：**空动词单列一句** —— 真机里模型真发了不带 `op` 的项，回的是
+        # `未知 op：''`（它读不出"我少写了一个字段"）⇒ 现在是点名的字段级指引。
+        if not verb:
+            errors.append(
+                _err(op_id, "unknown_op", "这一项缺 `op` 字段 —— 每个 `ops[]` 元素都必须写明动词（见工具说明 ①–⑯）与 `op_id`")
+            )
+        else:
+            errors.append(_err(op_id, "unknown_op", f"未知 op：{verb!r}（本版支持的动词见工具说明 ①–⑯）"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
     if verb not in COMPILED_OPS:
         warnings.append(_warn(op_id, "op_not_compiled", f"{verb} 尚未实现编译器分支（本轮只登记，不编译）"))
+    if verb in (OP_RENAME_KP, OP_REBUILD_MANIFEST):
+        # 两个**库级 op**：都**没有 `file` 字段**（它们不是一个文档的事）⇒ 必须在 `_safe_rel()` 之前
+        # 分流，否则空路径会被判 `path_rejected`（同 `OP_CREATE_FILE` 之所以要提前分流的位置理由）。
+        # 观察闸对它们**天然豁免**（`observation.write_targets()` 按 `file` 收集目标，空 `file` 不入表）——
+        # 那道闸管"别盲写你没读过的那个文件"，而全库级动作不可能要求模型读完库里每一篇；
+        # 它们各自的闸是：`rename_kp` = 审批卡（在 `RISKY_OPS` 里）+ 收尾规矩；
+        # `rebuild_manifest` = 前置硬闸（有未修复路径变更即拒）+ 收尾规矩。
+        if verb == OP_RENAME_KP:
+            return {"op": verb, "op_id": op_id, **_validate_rename_kp(kb_path, data, op_id, errors)}
+        return {"op": verb, "op_id": op_id, **_validate_rebuild_manifest(kb_path, op_id, errors)}
     rel = _safe_rel(kb_path, str(data.get("file") or ""))
     if rel is None:
         errors.append(_err(op_id, "path_rejected", f"file 不在允许根内或不是 .md：{data.get('file')!r}"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
     if verb == OP_CREATE_FILE:  # 新建：文件**不**应存在 ⇒ 不能走下面的"必须已存在"检查
-        return {"op": verb, "op_id": op_id, "file": rel, **_validate_create_file(kb_path, rel, data, op_id, errors)}
-    if not os.path.isfile(os.path.join(kb_path, rel)):
+        detail = _validate_create_file(view, rel, data, op_id, errors)
+        if detail.get("action") == "create":
+            # 把文件"种"进视图 ⇒ 同批后面按它算行号的 op（建点 / 挂链 / 改正文）立刻成立
+            view.seed(rel, str(data.get("body") or ""))
+        return {"op": verb, "op_id": op_id, "file": rel, **detail}
+    if not view.exists(rel):
         errors.append(_err(op_id, "file_not_found", f"文件不存在：{rel}"))
         return {"op": verb, "op_id": op_id, "action": "invalid"}
-    lines = _body_lines(kb_path, rel)
+    lines = view.lines(rel)  # **这一刻**的正文（含本批前序 op 的效果）
     if verb == OP_UPSERT_KP:
         detail = _validate_upsert_kp(kb_path, data, lines, service, op_id, errors)
     elif verb == OP_ATTACH_LINKS:
-        detail = _validate_attach_links(kb_path, data, lines, op_id, errors, warnings, pending_ids)
+        detail = _validate_attach_links(kb_path, data, lines, op_id, errors, warnings, pending_targets)
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
     elif verb in BODY_EDIT_OPS:
@@ -601,16 +992,31 @@ def _validate_op(
             detail = _validate_body_edit(data, verb, lines, op_id, errors)
     elif verb == OP_RENAME_FILE:
         detail = _validate_rename_file(kb_path, rel, data, op_id, errors)
+    elif verb == OP_DELETE_FILE:
+        detail = _validate_delete_file(kb_path, rel, op_id, errors, warnings, view)
+    elif verb == OP_MOVE_FILE:
+        detail = _validate_move_file(kb_path, rel, data, op_id, errors)
+    elif verb == OP_UPSERT_EDGE:
+        detail = _validate_upsert_edge(kb_path, rel, data, op_id, errors, pending_targets)
+    elif verb == OP_DELETE_KP:
+        detail = _validate_delete_kp(kb_path, rel, data, op_id, errors, warnings)
     else:
-        detail = {"action": "uncompiled"}  # set_kp_range / rename_kp：M3b 才编译
-    return {"op": verb, "op_id": op_id, "file": rel, **detail}
+        detail = {"action": "uncompiled"}  # set_kp_range：M3b 才编译
+    parsed = {"op": verb, "op_id": op_id, "file": rel, **detail}
+    if isinstance(parsed.get("edit"), Mapping):
+        view.put_edit(rel, parsed["edit"])  # 视图推进：后面的 op 按**改写后**的行号算
+    return parsed
 
 
 def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
-    """结构 + 语义校验（**不碰盘**），错误按 `op_id` 返回；两条都会导致"拒整批"。
+    """结构 + 语义校验（**不碰盘**），错误按 `op_id` 返回；任一错误都会导致"拒整批"。
 
     `service` 传 `DocumentService` 时复用其 `check_kp_id()`（人类 UI 同一条唯一性判定）；
     缺省自建一个（会走既有的首次装载语义 —— 调用方在应用内应传已装载实例）。
+
+    **按 op 顺序校验**（`_View`）：每个 op 面对的是"前序 op 生效之后"的正文与文件集，
+    因此"先改正文 → 再按新行号建知识点 → 再挂跳转"、"先新建文件 → 再给它建点"这类天然有先后的
+    意图都能**在一批里**写完（旧实现只对着盘上原文校验，硬要拆成两批 ⇒ 确认卡人手点，必然半路停下）。
     """
     errors: list[dict] = []
     warnings: list[dict] = []
@@ -623,20 +1029,25 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         service = DocumentService(kb_path=kb_path)
     seen: set[str] = set()
     ops: list[dict] = []
-    #: 同一 plan 内**前序** op 新建的 KP id（"先建点、后连边"的可见性集合；§2.3.3）
-    pending_ids: set[str] = set()
+    #: 同一批内**前序** op 建出来的"可解析目标"（"先建点、后连边"的可见性集合；§2.3.3）：
+    #: ① 前序 `upsert_kp` 的 KP id；② 前序 `create_file` 新建文件的 **stem**（视图口径）。
+    pending_targets: set[str] = set()
+    view = _View(kb_path)
     for raw in _as_list(data.get("ops")):
-        parsed = _validate_op(kb_path, raw, service, errors, warnings, pending_ids)
+        parsed = _validate_op(kb_path, raw, service, errors, warnings, pending_targets, view)
         oid = str(parsed.get("op_id") or "")
         if oid and oid in seen:
             errors.append(_err(oid, "duplicate_op_id", f"op_id 在 plan 内重复：{oid}"))
         if oid:
             seen.add(oid)
         if parsed.get("op") == OP_UPSERT_KP and parsed.get("kp_id"):
-            pending_ids.add(str(parsed["kp_id"]))
+            pending_targets.add(str(parsed["kp_id"]))
+        elif parsed.get("op") == OP_CREATE_FILE and parsed.get("action") == "create":
+            rel = str(parsed.get("file") or "")
+            if rel:
+                pending_targets.add(os.path.splitext(os.path.basename(rel))[0])
         ops.append(parsed)
-    _check_file_op_alone(ops, errors)
-    _check_body_edit_groups(ops, errors)
+    _check_rename_last(ops, errors)
     return {
         "status": "error" if errors else "ok",
         "v": data.get("v"),
@@ -648,64 +1059,88 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
     }
 
 
-def _check_file_op_alone(ops: Sequence[Mapping], errors: list[dict]) -> None:
-    """**文件级 op 必须单独成一批**：`create_file` / `rename_file` 会新增文件或改路径，而重命名还会
-    **全库改写** `[[stem]]` 引用 ⇒ 同批里别的 op 的行号与"引用是否还能解析"都可能被它牵动。
-    与其替模型猜顺序，不如明确拒绝、让它分两批提（每一批仍然逐条确认）。
+def _check_rename_last(ops: Sequence[Mapping], errors: list[dict]) -> None:
+    """文件级 op / 全库 op 的**顺序规矩**（`move_file` / `rename_file` / `delete_file` / `rename_kp`）。
+
+    两条，都由**语义**决定（不是审批）：
+
+    1. **一旦出现这类 op，其后不得再出现非文件级 op** —— `move_file` / `rename_file` / `delete_file`
+       改的是"路径"这个坐标系；`rename_kp`（2026-09-22 并入本表）改的是**全库正文里的 id 字符串**，
+       而批内视图并不跟着改写 ⇒ 后面的按行号 / 按 `expect` 原文的 op 会同时活在两套坐标系里。
+       **`move_file` 之间可以连排**：每篇只动自己那一篇与它的侧车，**不改写别人的正文**（名字没变 ⇒
+       `[[…]]` 不用改）⇒ 一批移 N 篇是安全的。
+    2. `rename_file` / `delete_file` 必须是**最后一条**：它们在语义上还会牵动**别的**文档
+       （前者改写全库 `[[旧stem]]`、后者让指向它的引用失去落点）⇒ 只允许收尾。
+       它之前的 op 照常可以与它同批（先写正文 / 建点 / 挂链，最后定名或删除）。
+       `rename_kp` 只受第 1 条约束（它后面仍可跟文件级 op，比如"先改 id 再挪目录"）。
+    3. **`rebuild_manifest` 必须是最后一条**（2026-09-22 增加）：它把磁盘上"这一刻的文件集"写成清单，
+       之后任何改文件集的 op（`create_file` / `rename_file` / `delete_file` / `move_file`）都会让它
+       立刻过期 —— 那正是它要消掉的那类警告。故与"收尾"同级，不许有后继。
+
+    旧的另外两条约束**已删除**（写机制全线放开，2026-09-21）：
+    - `file_op_alone`：`create_file` 不再要求单独成批 —— `_View` 会把新文件"种"进批内视图，
+      同批后面按它算行号的 op（建点 / 挂链 / 改正文）立刻成立；
+    - `body_edit_order`：改正文不再必须排在按行号锚定的 op 之后 —— 行号一律按**批内顺序视图**
+      里"那一刻的正文"算，`compile_plan()` 也按同一顺序逐条落地；顺带取消了"同文件多条改正文
+      区间不得重叠"（按序施加时重叠是有定义的：第二条面向第一条的结果）。
     """
-    for parsed in ops:
-        verb = str(parsed.get("op") or "")
-        if verb in FILE_OPS and len(ops) > 1:
+    first_file_op = next(
+        (index for index, parsed in enumerate(ops) if str(parsed.get("op") or "") in PATH_MOVING_OPS), None
+    )
+    if first_file_op is not None:
+        for parsed in list(ops)[first_file_op + 1 :]:
+            verb = str(parsed.get("op") or "")
+            if verb in FILE_OPS:
+                continue
             errors.append(
                 _err(
                     str(parsed.get("op_id") or ""),
-                    "file_op_alone",
-                    f"{verb} 改变路径 / 全库引用 ⇒ 必须**单独成一批**（同一 plan 里不能再有别的 op）。"
-                    "要写初始正文请直接给 `create_file` 的 `body`；其余改动另提一批。",
+                    "file_ops_must_be_last",
+                    "`move_file` / `rename_file` / `delete_file` / `rename_kp` 之后不能再有别的 op —— "
+                    "前三个改的是「路径」坐标系、`rename_kp` 会全库改写正文里的 id，"
+                    "后面的 op 会活在两套坐标系里（要移多篇可以**连排**多条 `move_file`）。"
+                    "请把这些 op 挪到 ops 末尾后重提。",
                 )
             )
-
-
-def _check_body_edit_groups(ops: Sequence[Mapping], errors: list[dict]) -> None:
-    """**跨 op** 的两条硬规矩（单条看不懂、只能整批看）：
-
-    1. **同一文件里，改正文的 op 必须排在按行号锚定的 op 之后**。锚定 op 的行号与改正文的行号
-       都以"编辑前的正文"为准；锚定 op 不改行数（包裹正文 / 写 sidecar 都不增删行），所以只要
-       它们先跑，改正文再跑，两边行号就都成立。反过来（先改行数、再按旧行号挂跳转）就会错位 ⇒
-       这里**明确拒绝**并让模型调顺序，而不是替它猜。
-    2. **同一文件的多条改正文，区间不得重叠**（重叠时"谁先谁后"会改变结果）⇒ 拒绝。
-    """
-    order: dict[str, list[dict]] = {}
-    for parsed in ops:
-        rel = str(parsed.get("file") or "")
+            break
+    for index, parsed in enumerate(ops):
         verb = str(parsed.get("op") or "")
-        if not rel or verb not in (BODY_EDIT_OPS + LINE_ANCHORED_OPS):
+        if verb not in (OP_RENAME_FILE, OP_DELETE_FILE):
             continue
-        order.setdefault(rel, []).append({"op_id": str(parsed.get("op_id") or ""), "verb": verb})
-    for rel, rows in order.items():
-        verbs = [row["verb"] for row in rows]
-        last_anchor = max((i for i, v in enumerate(verbs) if v in LINE_ANCHORED_OPS), default=-1)
-        first_edit = min((i for i, v in enumerate(verbs) if v in BODY_EDIT_OPS), default=len(verbs))
-        if last_anchor > first_edit:
-            bad = rows[last_anchor]["op_id"]
+        if index != len(ops) - 1:
+            op_id = str(parsed.get("op_id") or "")
+            if verb == OP_RENAME_FILE:
+                errors.append(
+                    _err(
+                        op_id,
+                        "rename_must_be_last",
+                        "rename_file 会重写全库引用并搬动路径 ⇒ 它必须是本批**最后一个** op"
+                        "（它之前的改动可以与它同批）。请把这条改名挪到 ops 末尾后重提。",
+                    )
+                )
+            else:
+                errors.append(
+                    _err(
+                        op_id,
+                        "delete_must_be_last",
+                        "delete_file 会让指向它的引用一起失去落点 ⇒ 它必须是本批**最后一个** op"
+                        "（要清理的引用放在它之前）。请把这条删除挪到 ops 末尾后重提。",
+                    )
+                )
+    # 2026-09-22 增加：`rebuild_manifest` 也要收尾（它把"这一刻的文件集"写成清单，后继任何改文件集的
+    # op 都会让它立刻过期 —— 那正是它要消掉的那类警告）。
+    for index, parsed in enumerate(ops):
+        if str(parsed.get("op") or "") != OP_REBUILD_MANIFEST:
+            continue
+        if index != len(ops) - 1:
             errors.append(
                 _err(
-                    bad,
-                    "body_edit_order",
-                    f"{rel}：改正文的 op 必须排在按行号锚定的 op（{bad}）**之后** —— "
-                    "锚定 op 的行号以编辑前的正文为准，先改行数会让它错位。请调整 ops 顺序后重提。",
+                    str(parsed.get("op_id") or ""),
+                    "manifest_must_be_last",
+                    "rebuild_manifest 记的是「**这一刻**磁盘上的文件集」 ⇒ 它必须是本批**最后一个** op"
+                    "（建/改名/删除/移动都放在它之前）。请把它挪到 ops 末尾后重提。",
                 )
             )
-        edits = [
-            parsed.get("edit")
-            for parsed in ops
-            if str(parsed.get("file") or "") == rel and isinstance(parsed.get("edit"), Mapping)
-        ]
-        if len(edits) > 1:
-            try:
-                normalize_edits(edits)
-            except EditError as e:
-                errors.append(_err(rows[0]["op_id"], e.code, f"{rel}：{e}"))
 
 
 def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
@@ -720,6 +1155,7 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         return {**checked, "previewed": False, "files": []}
     by_id = {str(op.get("op_id") or ""): op for op in _as_list(_as_dict(plan).get("ops"))}
     files: dict[str, dict] = {}
+    view = _View(kb_path)  # 与校验同一套顺序视图 ⇒ diff 里每行都是**落地时那一刻**的行
     for parsed in checked["ops"]:
         op_id = str(parsed.get("op_id") or "")
         rel = str(parsed.get("file") or "")
@@ -728,7 +1164,7 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
         if parsed.get("op") == OP_UPSERT_KP:
             entry["resolved"] = parsed.get("resolved")
         elif parsed.get("op") == OP_ATTACH_LINKS:
-            lines = _body_lines(kb_path, rel)
+            lines = view.lines(rel)  # **这一刻**的正文（本批前序 op 的效果已叠加）
             anchor = str(parsed.get("anchor_text") or "")
             chosen = [int(x) for x in _as_list(parsed.get("lines"))]
             # plan 给了 `occurrences[].col` ⇒ 用**钉住的 span**试算（与 apply 阶段给后端的
@@ -750,8 +1186,9 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                 {"line": ln, "before": lines[ln - 1], "after": new_lines[ln - 1]} for ln in changed
             ]
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
+            view.put(rel, new_lines)  # 视图推进：后面的 op 看到的是包裹之后的正文
         elif parsed.get("op") == OP_DETACH_LINKS:
-            lines = _body_lines(kb_path, rel)
+            lines = view.lines(rel)
             anchor = str(parsed.get("anchor_text") or "")
             chosen = [int(x) for x in _as_list(parsed.get("lines"))]
             # 与 `detach_link_instance()` 内部同一个原子函数（`unwrap_lines`）⇒ 预览不可能与落地漂移
@@ -765,8 +1202,9 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                 {"line": ln, "before": lines[ln - 1], "after": new_lines[ln - 1]} for ln in changed
             ]
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
+            view.put(rel, new_lines)
         elif parsed.get("op") in BODY_EDIT_OPS:
-            body = "\n".join(_body_lines(kb_path, rel))
+            body = "\n".join(view.lines(rel))  # **这一刻**的正文（前序 op 的效果已叠加）
             edit = parsed.get("edit") or {}
             # 与落地**同一个** `splice()`（`body_edit`）⇒ 预览给出的一定是真正会写下去的那几行
             new_body, changed, diff = splice(body, [edit])
@@ -775,6 +1213,7 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["diff"] = diff
             entry["mode"] = edit.get("mode")
             entry["lines_after"] = len(new_body.splitlines())
+            view.put(rel, new_body.splitlines())
             if parsed.get("kind"):  # `upsert_block`：让卡片能显示"整块重建（kind / lang）"
                 entry["block"] = {"kind": parsed.get("kind"), "lang": parsed.get("lang") or ""}
             if parsed.get("image"):  # `insert_image_ref`：卡片显示引用的是哪张图
@@ -789,6 +1228,7 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                 {"line": index + 1, "before": None, "after": line}
                 for index, line in enumerate(body.splitlines())
             ]
+            view.seed(rel, body)  # 视图推进：同批后面按这个新文件算行号的 op 才有 diff 可算
         elif parsed.get("op") == OP_RENAME_FILE:
             resolved = parsed.get("resolved") or {}
             cascade = list(resolved.get("md_files") or [])
@@ -797,6 +1237,21 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["cascade"] = cascade
             entry["diff"] = [{"line": None, "before": resolved.get("from"), "after": resolved.get("to")}] + [
                 {"line": None, "before": None, "after": f"引用将改写：{item}"} for item in cascade
+            ]
+        elif parsed.get("op") == OP_DELETE_FILE:
+            resolved = parsed.get("resolved") or {}
+            loss = [str(item) for item in (resolved.get("ids") or [])]
+            entry["diff_available"] = False  # 没有"行级"变化可算：给的是路径级 + 将失去落点的 id
+            entry["delete"] = {"path": resolved.get("path") or rel, "ids": loss}
+            entry["diff"] = [{"line": None, "before": rel, "after": None}] + [
+                {"line": None, "before": None, "after": f"将失去落点：[[{item}]]"} for item in loss
+            ]
+        elif parsed.get("op") == OP_MOVE_FILE:
+            resolved = parsed.get("resolved") or {}
+            entry["diff_available"] = False  # 没有"行级"变化可算：给的是路径级（正文一字未改）
+            entry["move"] = {"from": resolved.get("from"), "to": resolved.get("to")}
+            entry["diff"] = [
+                {"line": None, "before": resolved.get("from"), "after": resolved.get("to")}
             ]
         bucket["ops"].append(entry)
     return {

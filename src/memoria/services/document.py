@@ -642,7 +642,7 @@ class DocumentService:
                         f.write(text)
                         f.flush()
                         os.fsync(f.fileno())
-                    os.replace(tmp, full)
+                    replace_with_retry(tmp, full)  # 2026-09-22：带退避重试（模块末尾 :3126 已导入）；原为裸 os.replace
                     md_replacements += n
                     md_files.append(rel_norm)
                     touched = True
@@ -1007,7 +1007,7 @@ class DocumentService:
             tmp = path + ".tmp"
             with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(reg, f, ensure_ascii=False, indent=1)
-            os.replace(tmp, path)
+            replace_with_retry(tmp, path)  # 2026-09-22：带退避重试（本函数外层 `except OSError: pass` ⇒ 瞬时锁不会再被静默吞掉）
         except OSError:
             pass
 
@@ -1286,7 +1286,7 @@ class DocumentService:
             if migrated:
                 sidecar = dict(sidecar)
                 sidecar["links"] = new_links
-                validation = validate_sidecar(sidecar, rel_path.replace("\\", "/"), lines)
+                validation = validate_sidecar(sidecar, rel_path.replace("\\", "/"), lines, baseline=_sidecar_on_disk(self.kb_path, rel_path.replace("\\", "/")))
                 if validation["ok"]:
                     self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
         kps = resolve_knowledge_points(body, sidecar)
@@ -1424,7 +1424,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -1704,7 +1704,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -1821,7 +1821,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -1897,7 +1897,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -2315,7 +2315,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -2476,7 +2476,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             return {
                 "status": "error",
@@ -2688,7 +2688,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             return {
                 "status": "error",
@@ -2756,7 +2756,7 @@ class DocumentService:
         ]
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             return {
                 "status": "error",
@@ -2947,7 +2947,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -3025,7 +3025,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -3106,7 +3106,7 @@ class DocumentService:
 
         sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
         sidecar["file"] = rel_path.replace("\\", "/")
-        validation = validate_sidecar(sidecar, sidecar["file"], lines)
+        validation = validate_sidecar(sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"]))
         if not validation["ok"]:
             err_msgs = [
                 e.get("message", str(e)) if isinstance(e, dict) else str(e)
@@ -3124,3 +3124,117 @@ class DocumentService:
 
 
 from memoria.storage.atomic_write import replace_with_retry  # noqa: E402  （随写路径追加在文件末尾：保住零行漂移）
+
+
+def _sidecar_on_disk(kb_path: str, rel_path: str) -> dict:  # noqa: E402
+    """读**盘上那份** sidecar，当写闸门的"写前基线"（配合 `validate_sidecar(baseline=…)`）。
+
+    为什么要从盘上读：这些闸门都跑在「内存里的 sidecar 已就地改完、但还没落盘」的时刻 —— 内存那份拿不到
+    写前状态，而**盘上那份此刻必然还是写前状态**（写总在校验之后）。读不到 / 读坏了都返回空 dict：
+    `validate_sidecar({})` 是"无错误"，等价于**退回旧口径**（任何 error 都拒写，宁严不松）。
+
+    背景（2026-09-21 真机）：闸门逐原语跑在整份 sidecar 上，若"任何 error 都拒写"，那么库里**早已存在**
+    的一处残缺（典型：某 KP 的 `end.snippet` 丢了）就会让**所有修复性写入都写不进去** ⇒ 库不可修的死锁。
+    规则见 `storage/sidecar_validate.py` 末尾「写前基线」一段：**只拦本次新引入的问题**。
+    """
+    try:
+        return load_sidecar_for_md(os.path.join(kb_path, rel_path), kb_path) or {}
+    except Exception:
+        return {}
+
+
+# ── `move_file`：把一篇 `.md` 移到库内**另一个目录**（2026-09-22；agent 写面 `kb.file.move`）──
+# **为什么写成模块级函数而不是类方法**：`DocumentService` 的类体从 `:223` 一直铺到文件末附近，往里插
+# 一个方法会让其下**全部** `document.py:<行号>` 锚点漂移（`docs/**` 里约 30 处，含被反复引用的
+# `rename_file`(:583) / `delete_file`(:782) / `create_file`(:794) / `save_document`(:317)）。
+# 故按本文件既有做法（`replace_with_retry` 的 import、`_sidecar_on_disk`）**追加在文件末尾**，
+# 由 `services/agent/file_ops.py` 薄包装调用 —— 第一参就是那个 service，语义与方法无差别。
+#
+# 与 `rename_file` 的分工：`rename_file` 只改**文件名**、保持所在目录（并改写全库 `[[旧stem]]`）；
+# `move_file` 只改**所在目录**、**保持文件名**。
+#
+# **为什么移动不需要改写正文引用**（与设计 §6 R2 的关系，逐条说清）：
+#   · `[[id]]` / `[[stem]]` 都是**按 id / stem 寻址**的 ⇒ 移动不改这两者，引用天然不断；
+#   · 图片引用按规范是**库根相对**（`.memoria/images/x.png`）⇒ 移动也不影响；
+#   · **唯一会断的是"文件相对"写法**（`![x](img/a.png)`、`[y](../b.md)`）—— 那正是 §6 R2 未落地的部分。
+# ⇒ 本函数**不猜**：调用方（`services/agent/file_ops.move_plan()`）在写前把它**拦下来**（`move_breaks_relative_refs`），
+#   这里只处理"没有任何文件相对引用"前提下的物理移动 + 级联。
+
+
+def move_file_document(service: "DocumentService", rel_path: str, target_dir: str) -> dict:
+    """把 `rel_path` 移到库内目录 `target_dir`（**保持文件名**）。落盘入口唯一在这里。
+
+    级联照 `rename_dir` 的同一套：物理 `os.rename` → `path_cascade.apply_path_move()`
+    （侧车镜像迁移 + sidecar `file:` 字段 + pending 项 + manifest `files_by_path`）
+    → 图片注册表增量（旧路径剔除 / 新路径重扫）→ 内存解析缓存失效 → KP 目标快照标记陈旧。
+    目标目录**自动创建**（与 `create_file()` 的"父目录自动建"同口径）。
+    """
+    from memoria.storage.path_cascade import apply_path_move
+
+    if not service.kb_path:
+        return {"status": "error", "message": "未打开知识库"}
+    old = service._resolve_rel_path(rel_path)
+    if not old.lower().endswith(".md"):
+        return {"status": "error", "message": "只支持移动 .md 文档"}
+    old_full = service._full_path(old)
+    if not os.path.isfile(old_full):
+        return {"status": "error", "message": "文件不存在"}
+    raw_dir = (target_dir or "").strip().replace("\\", "/").strip("/")
+    if ".." in raw_dir.split("/"):
+        return {"status": "error", "message": "目标目录无效"}
+    if raw_dir.startswith(".") or raw_dir == MEMORIA_DIR:
+        return {"status": "error", "message": "不能移动到系统/隐藏目录"}
+    parent = old.rsplit("/", 1)[0] if "/" in old else ""
+    if raw_dir == parent:
+        return {"status": "error", "message": "目标目录与当前目录相同（只想改文件名请用 rename_file）"}
+    new = f"{raw_dir}/{os.path.basename(old)}" if raw_dir else os.path.basename(old)
+    new_full = service._full_path(new)
+    if os.path.exists(new_full):
+        return {"status": "error", "message": f"目标已存在：{new}"}
+    try:
+        os.makedirs(os.path.dirname(new_full), exist_ok=True)  # 目标目录自动建（同 create_file）
+        os.rename(old_full, new_full)
+    except OSError as exc:  # noqa: BLE001
+        return {"status": "error", "message": f"移动文件失败: {exc}"}
+    if not os.path.isfile(new_full):
+        return {"status": "error", "message": "移动后文件不存在（可能被占用），请检查后重试"}
+    service._cache.pop(old, None)
+    service._cache.pop(new, None)
+    # 旧版**同目录**布局的侧车 `path_cascade` 不搬（它只搬镜像布局）⇒ 这里补齐：否则那几篇的 KPs 会
+    # 留在旧路径成孤儿（`validate_kb` 会报"侧车没有对应 md"）。与 `rename_file()` 的 `_move_sidecar()`
+    # 同口径（两种布局都跟着走，读时仍优先镜像）。
+    try:
+        legacy_old = legacy_sidecar_path_for(old_full)
+        legacy_new = legacy_sidecar_path_for(new_full)
+        if os.path.isfile(legacy_old) and not os.path.isfile(legacy_new):
+            os.makedirs(os.path.dirname(legacy_new), exist_ok=True)
+            os.rename(legacy_old, legacy_new)
+    except OSError:  # noqa: BLE001 —— 侧车搬迁失败不改变"正文已移动"这个事实，交由 validate_kb 报出来
+        pass
+    cascade = apply_path_move(service.kb_path, old, new)
+    if cascade.get("status") != "ok":
+        # 物理移动**已经发生** ⇒ 如实报"部分完成"，不假装没动过（与 `rename_dir()` 的 partial 同口径）
+        return {
+            "status": "error",
+            "message": f"文件已移动到 {new}，但注册信息级联失败：{cascade.get('message') or cascade.get('code')}",
+            "path": new,
+            "cascade": cascade,
+            "partial": True,
+        }
+    try:
+        service._update_registry_for_doc(old)  # 旧路径的图片引用剔除
+        service._update_registry_for_doc(new)  # 新路径重扫
+    except Exception:  # noqa: BLE001 —— 图片注册表是**派生数据**，失败不改变"已移动"这个事实
+        pass
+    try:
+        invalidate_kp_targets(service.kb_path)  # G5：路径变了 ⇒ KP 目标快照陈旧（只标记，重建留读路径惰性触发）
+    except Exception:  # noqa: BLE001
+        pass
+    return {
+        "status": "ok",
+        "path": new,
+        "from": old,
+        "sidecar_moved": bool(cascade.get("sidecar_moved")),
+        "sidecar_updated": bool(cascade.get("sidecar_updated")),
+        "pending_updated": int(cascade.get("pending_updated") or 0),
+    }

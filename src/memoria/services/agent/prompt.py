@@ -9,15 +9,16 @@
 
 1. `dsh-system-prompt`：提示词是**有序段落的组装结果**，工具 schema 属于同一份
    组装产物（"模型获知自己能做什么"是一个整体）。本地按
-   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 用户引用（`@路径`）→ 时间上下文 → 回答要求」
-   的固定顺序拼接，工具段落由 `ToolSchema` 生成，工具集合为空时不产生该段（空段消失）。
+   「基础身份 → 运行环境 → 知识库指令文件 → 可用工具 → 用户引用（`@路径`）→ 可用技能 → 时间上下文 → 回答要求」
+   的固定顺序拼接，工具段落由 `ToolSchema` 生成，工具集合为空时不产生该段（空段消失）。「可用技能」段见 `skills.py`（2026-09-22 追加：门控同 `skill` 工具在场，落点见文件末）。
+
 2. `dsh-agent-instructions`：把工作区指令文件（`AGENTS.md` 兼容）作为**注入的
    上下文**送达模型——**只加上下文、不加工具**。本地读取知识库内的
    `.memoria/agent/{kb-spec.zh-CN.md, preview-formats.md, prompt.zh-CN.md}`
    （事实源仍是这些文件本身，本模块只负责"发现并注入"，不另立副本）。
 3. `dsh-file-reference`：`@` 前缀 token 是用户**显式引用**的工作区路径，需要一份固定的
    模型可见说明（见 `FILE_REFERENCE_SECTION`）：上游做成**独立段落**并按「`read` 工具是否
-   在场」门控，本地同构（上游另一半是编辑器补全服务 `file-reference-local`，本前端不用）。
+   在场」门控，本地同构（上游另一半是编辑器补全服务 `file-reference-local`，本前端不用）；2026-09-22 起另有「可用技能」段（`skills.py`，上游 `packages/skill`，门控同款："`skill` 工具在场**且有技能**"）。
 4. `dsh-time-context`：上游按步骤注入「时间戳 + 浏览器时区策略 + 经过时长」读数；本地留**策略
    段**（`TIME_CONTEXT_SECTION`）与**时间戳读数**（`render_time_context()`），偏差见两处注释。
 
@@ -30,8 +31,8 @@
   整文件，最后一个可截断；
 - 上游注入的框架文本里的字面 `</system-reminder>` 会被转义；本地同样转义。
 
-导入本模块不读文件；只有显式调用 `load_instructions` / `build_system_prompt`
-才会读知识库（只读）。
+导入本模块不读文件；只有显式调用 `load_instructions` / `build_system_prompt` /
+`render_skill_invocation` 才会读知识库（只读）。
 """
 
 from __future__ import annotations
@@ -58,7 +59,7 @@ __all__ = [
     "load_instructions",
     "prompt_debug_info",
     "render_instructions", "TIME_CONTEXT_SECTION", "format_time_context", "render_time_context",
-    "MODEL_CHANGE_NOTICE", "render_model_change_notice", "FILE_REFERENCE_TOOLS"]
+    "MODEL_CHANGE_NOTICE", "render_model_change_notice", "FILE_REFERENCE_TOOLS", "render_skill_invocation"]
 
 #: 知识库内指令文件所在目录（相对库根）。
 AGENT_DIR = (".memoria", "agent")
@@ -212,7 +213,7 @@ FILE_REFERENCE_SECTION = "\n".join(
         "用户消息里以 `@` 开头的 token 是他**明确圈定**的库内路径（相对知识库根）：",
         "",
         "1. 结尾带 `/` 表示**目录**：只在其内容确实相关时才去检索（`search_kb`），不要臆测目录内容；",
-        "2. 其余表示**文件**：需要其内容时用 `read_document` 读取；**在真正读过之前，不得声称已经看过**；结尾的 `#L12-L30` 是**行区间**（`#L12` 为单行），两端还可各带 1 起**列号**（`#L12C5-L14C20`；只写一端即另一端按**行首/行末**）—— 应当用 `read_document` 的 `offset`/`limit` 去读那一段，而不是假设自己看过了；",
+        "2. 其余表示**文件**：需要其内容时用 `read_document` 读取（**不限 `.md`** —— `.txt`/`.csv`/`.json`/源码等文本文件都能读，`.md` 额外给知识点清单）；**在真正读过之前，不得声称已经看过**；结尾的 `#L12-L30` 是**行区间**（`#L12` 为单行），两端还可各带 1 起**列号**（`#L12C5-L14C20`；只写一端即另一端按**行首/行末**）—— 应当用 `read_document` 的 `offset`/`limit` 去读那一段，而不是假设自己看过了；",
         '3. `@"..."` 表示路径中含空格，例如 `@"docs/IELTS vocab.md"`。',
     ]
 )
@@ -260,7 +261,7 @@ def build_system_prompt(
 
     if _has_read_tool(tools):  # `@路径` 说明：门控同上游「任一读取手段在场」（见 FILE_REFERENCE_SECTION）
         sections.append(FILE_REFERENCE_SECTION)
-    sections.append(TIME_CONTEXT_SECTION)  # 时间上下文：对应上游「插件被挂载」，不按工具门控
+    sections.extend(_skill_and_time_sections(kb_path, tools))  # 可用技能（`skill` 工具在场且有技能才出）+ 时间上下文（无条件，见文件末）
 
     sections.append(
         "\n".join(
@@ -404,19 +405,20 @@ def _has_read_tool(tools: Sequence[ToolSchema]) -> bool:
 _CAPABILITY_RO = "当前能力是**只读**的：你可以检索与阅读知识库，但不能修改、创建或删除任何文件；"
 _WRITE_HINT_RO = "如果用户要求写入，请明确说明本阶段不支持写入，并给出建议的改动清单。"
 
-#: 工具面**有**提议工具时的自述（"可提议、须人工确认、你没有落盘权"）
+#: 工具面**有**写工具时的自述（2026-09-21 起：**直接写**、不需人工确认；兜底是备份 + 撤销）
 _CAPABILITY_WRITE = (
-    "你可以**提议**对知识库的修改（改正文、建/改知识点、挂接或拆除跳转）：用 `propose_write` 产出计划，"
-    "用户在对话栏的确认卡上逐条确认后才真正写入（写入前自动备份、之后可撤销）。"
-    "**你自己没有落盘权**：不要声称「已写入」，也不要用其它方式绕过确认；"
-    "能否写入、写成什么，最终由用户决定。"
+    "你可以**直接写入**知识库（改正文、建/改知识点、挂接或拆除跳转、新建或重命名文件）："
+    "用 `propose_write`，**一次调用即落盘** —— 写入前自动备份、失败整批回滚、"
+    "写完后用户可在对话栏的**回执卡**上「撤销这一批」。"
+    "**以工具回文为准**：回文说「已写入 …（txid）」才算写成；被拒时如实说没写成，不要假装写过。"
 )
 _WRITE_HINT_WRITE = (
     "用户要求修改/写入时：先 `read_document` 读清目标原文与行号（不要凭印象写），再用 `propose_write` "
-    "提一批（同一意图放同一个 ops）；提议被拒就按返回的 `op_id` 与错误码修正后**重提整批**。"
-    "**应用卡片是用户手动点的，不会自动开启你的下一轮**：若这批只是第一步（例如先改正文、"
-    "知识点要按改写后的行号下一批再建），请在回答里明确请用户**应用后回复「继续」**，"
-    "否则这一轮就到此为止、用户会以为你没做完。"
+    "提一批（同一意图放同一个 ops）—— 它会**直接写入**。被拒就按返回的 `op_id` 与错误码修正后"
+    "**重提整批**（`stale_write` ⇒ 先重读文件拿到**当前**行号与逐字原文）。"
+    "**一批里按顺序把有先后的动作写全**：后面的 op 看到的是前面 op 生效**之后**的正文 —— "
+    "「先改正文 → 再按新行号建知识点 → 再挂跳转」「先新建文件 → 再给它建点」都放**同一个 ops[]**"
+    "（`rename_file` 例外：它必须是最后一条）。"
 )
 
 
@@ -425,3 +427,48 @@ def _has_write_tool(tools: Sequence[ToolSchema]) -> bool:
     from memoria.services.agent.tools.kb import PROPOSE_TOOL_NAME
 
     return _has_tool(tools, PROPOSE_TOOL_NAME)
+
+
+# ── 「可用技能」段 + 时间上下文（2026-09-22；上游 `packages/skill` 的目录消息，见 §6.22）───────
+# 这两段的**顺序**：可用工具 → 用户引用 → **可用技能** → 时间上下文 → 回答要求。
+# 门控与上游同款：**只在 `skill` 工具对本 agent 可见时才给目录**（上游是 `ctx.tools.get('skill') === tool`
+# 的精确身份比对 —— 工具被 restrict 掉则目录与调用指引一起消失）；本地另加一条：**目录为空就不出段**
+# （上游"首次发布且零技能"同样不发目录）。空段消失由 `build_system_prompt()` 末尾统一处理。
+# 定义在**文件末尾**、由 `build_system_prompt()` **调用期**取用 ⇒ 顶层 import 段与其上方
+# `<文件>:<行号>` 锚点零漂移（同 `FILE_REFERENCE_TOOLS` / `_has_read_tool` 的取舍）；
+# `skills` 走**函数内延迟导入**，理由同上（它只读库内技能文件，不引缓存/服务）。
+# 时间上下文那条注释原样保留：上游按「插件被挂载」启停（**不**按工具门控），本地对应
+# 「agent 功能已启用」—— `build_system_prompt()` 被调用即"已挂载"，故**无条件注入**。
+
+
+def _skill_and_time_sections(kb_path: str, tools: Sequence[ToolSchema]) -> list[str]:
+    """`build_system_prompt()` 的末两段：可用技能（有则给）+ 时间上下文（无条件）。"""
+    from memoria.services.agent import skills as skills_mod
+
+    out: list[str] = []
+    if _has_tool(tools, "skill"):
+        catalog = skills_mod.render_skill_catalog(skills_mod.discover_skills(kb_path))
+        if catalog:
+            out.append(catalog)
+    out.append(TIME_CONTEXT_SECTION)
+    return out
+
+
+# ── `/name` 用户手势的注入块（2026-09-22；上游 `tool-skill` 的 pre-step 注入，见 §6.22）────────────
+# 定义在**文件末尾**、由 `ask()` 在拼装本轮请求时取用 ⇒ 顶层 import 段与其上方 `<文件>:<行号>`
+# 锚点零漂移；`skills` 走**函数内延迟导入**，理由同 `_skill_and_time_sections`。
+# **位次对齐上游**（`tool-skill/src/index.ts:163-170`）：注入块拼在**本轮请求最末**（时间读数之后）
+# —— 背景在前（工作区规则 / 运行策略 / 技能目录 / 时间），**要模型照做的材料在最末**，最贴近它的答复。
+
+
+def render_skill_invocation(kb_path: str, user_text: str) -> str:
+    """文本里的 `/name` 手势 → 本轮请求末尾的注入块（无命中 ⇒ `""`，含前导空行的分隔）。
+
+    扫的是**用户原文**（`ask()` 收到的 `text`，即 `@提及` 改写**之前**的那份）：会话标题之类
+    由宿主/模型产出的文本因此**伪造不了**手势（上游同口径：只扫 `source.kind === 'user'` 的文本块）。
+    未知名 / `user-invocable: false` 的技能**保持普通散文**（不报错、不注入），理由见 `skills.render_invocations()`。
+    """
+    from memoria.services.agent import skills as skills_mod
+
+    block = skills_mod.render_invocations(kb_path, user_text)
+    return f"\n\n{block}" if block else ""

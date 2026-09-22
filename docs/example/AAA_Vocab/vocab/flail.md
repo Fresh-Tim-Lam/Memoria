@@ -90,6 +90,7 @@
 | IELTS example (English + 中文翻译) | The company is flailing as sales collapse.（销售额崩塌，公司在苦苦挣扎。） | He floundered for words during the presentation.（他做报告时支吾其词。） | The fish thrashed in the net.（鱼在网中猛烈翻腾。） |
 
 > ⚠️ **顺带记住一对高频易混**：**`founder` vs `flounder`** —— `founder` ＝ （船）沉没；（计划）**彻底失败**；`flounder` ＝ **挣扎、支吾、不知所措**。`The project foundered.`（项目失败了）≠ `The project floundered.`（项目陷入挣扎）。
+> 🔗 **相关词**：[[plummet]]（价格／水平**骤降**）——Task 1 写“急剧下跌”用它；它与 `flailing` 常出现在同一画面：*Sales plummeted, and the company was left flailing.*（销量暴跌，公司陷于徒劳挣扎。）
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

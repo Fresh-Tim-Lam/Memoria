@@ -23,6 +23,8 @@ from memoria.services.agent.plan import (
     resolve_target,
     validate_plan,
 )
+from memoria.services.agent.tools import ToolRegistry, build_kb_tools
+from memoria.services.agent.tools.kb import PROPOSE_TOOL_NAME
 from memoria.services.document import DocumentService
 
 A_MD = "\n".join(
@@ -325,3 +327,40 @@ def test_resolve_target_shapes(kb: Path) -> None:
     missing = resolve_target(str(kb), "ghost")
     assert missing["status"] == "not_found" and missing["candidates"] == []
     assert resolve_target(str(kb), "  ")["status"] == "not_found"
+
+
+# ── 失败信息"能不能照做"（2026-09-22：真机会话取证后逐条改）──────────────────────────────
+# 来源：扒真机会话（`propose_write` 失败 21 次）发现三条**模型自己写错、但错误信息没教会它**的：
+# ① `unknown_op：''`（它少写了 `op` 字段，读不出"缺字段"）；② `kp_id_taken` 只说"已存在"、
+# 不说**在哪一篇**（它拿着同一个错的 `file` 反复重提）；③ `range` 落在空行 / 越界，而工具说明
+# 从没写过这两条硬约束。这里把三条各自钉住。
+
+
+def test_missing_op_verb_is_reported_as_a_missing_field(kb: Path, service: DocumentService) -> None:
+    checked = validate_plan(str(kb), _plan({"op_id": "o1", "file": "notes/a.md"}), service=service)
+    assert _codes(checked) == {"unknown_op"}
+    message = checked["errors"][0]["message"]
+    assert "缺 `op`" in message and "op_id" in message, "空动词必须说成'缺字段'，不是'未知 op'"
+
+
+def test_kp_id_taken_names_the_document_that_owns_it(kb: Path, service: DocumentService) -> None:
+    """`b-kp` 定义在 `notes/b.md`：错误里必须点名那一篇 + 告诉它怎么改（`file` 指过去）。"""
+    checked = validate_plan(str(kb), _plan(_upsert(kp_id="b-kp")), service=service)
+    assert _codes(checked) == {"kp_id_taken"}
+    message = checked["errors"][0]["message"]
+    assert "notes/b.md" in message and "`file`" in message
+
+
+def test_propose_tool_description_teaches_the_two_range_rules(kb: Path) -> None:
+    registry = ToolRegistry(build_kb_tools(str(kb)))
+    tool = registry.get(PROPOSE_TOOL_NAME)
+    assert tool is not None
+    for needle in ("range_line_empty", "kp_id_taken", "非空正文行", "总行数", "缺 `op`"):
+        assert needle in tool.description, f"提议工具说明里缺 {needle}"
+
+
+def test_propose_tool_description_maps_the_change_link_target_intent(kb: Path) -> None:
+    """真机里模型拿 `set_link_targets` 这种**猜出来的**动词撞过墙 ⇒ 说明里点明该怎么干。"""
+    tool = ToolRegistry(build_kb_tools(str(kb))).get(PROPOSE_TOOL_NAME)
+    assert tool is not None
+    assert "set_link_targets" in tool.description and "拆了重挂" in tool.description

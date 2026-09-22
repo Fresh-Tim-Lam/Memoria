@@ -8,7 +8,9 @@
 
 1. **只有被点名的行会变**：其余行**逐字节**保持（含行尾风格、末尾有无换行、"最后一行没有换行"）；
 2. **`expect` 是硬门槛**：与盘上原文不符即拒（`expect_mismatch`），不猜、不改、不写；
-3. **多条编辑按行号从大到小应用** ⇒ 每条的行号都以"编辑前"的正文为准；重叠即拒；
+3. **批内按 op 顺序推进**（`plan._View`）：每条编辑面对的是"前序 op 生效之后"的正文 ——
+   一批里可以先插一段、再按**新**行号删一行；同一文件的多条编辑区间重叠也不再是错误
+   （第二条面向第一条的结果）。
 4. **预览与落地同一函数**（`body_edit.splice`）⇒ 卡片上看到的就是要写下去的那几行。
 """
 
@@ -176,10 +178,49 @@ def test_validate_rejects_wrong_expect(kb: Path, service: DocumentService) -> No
     assert "注意力机制是核心。" in checked["errors"][0]["message"]
 
 
-def test_validate_requires_body_edits_after_anchor_ops(kb: Path, service: DocumentService) -> None:
-    """同一文件里"先改正文、后按行号挂跳转" ⇒ 拒（`body_edit_order`），并说明怎么改。"""
+def test_body_edit_then_anchor_op_uses_the_new_line_numbers(kb: Path, service: DocumentService) -> None:
+    """**批内顺序视图**：先改正文、再按**新**行号挂跳转 ⇒ 放行（旧实现在这里报 `body_edit_order`）。
+
+    这就是"先把正文写进去、再按改写后的行号建点 / 挂链"的真实意图（`trial.md` 那次就是这样被拆成
+    两批、卡在半路的）。`notes/a.md` 在第 1 行后插入一行之后，`注意力机制` 从第 3 行挪到第 4 行。
+    """
     plan = _plan(
-        _replace(3, 3, "注意力机制是核心。", "注意力机制是核心机制。"),
+        {
+            "op": "insert_lines",
+            "op_id": "o1",
+            "file": "notes/a.md",
+            "after": 1,
+            "expect": "# A 文档",
+            "text": "插入的一行。",
+        },
+        {
+            "op": "attach_links",
+            "op_id": "o2",
+            "file": "notes/a.md",
+            "anchor_text": "注意力机制",
+            "targets": ["a"],
+            "occurrences": [{"line": 4}],
+        },
+    )
+    checked = validate_plan(str(kb), plan, service=service)
+    assert checked["status"] == "ok", checked
+    assert checked["ops"][1]["lines"] == [4]
+
+
+def test_anchor_op_with_the_old_line_number_is_rejected(kb: Path, service: DocumentService) -> None:
+    """同上，但锚定 op 写的是**旧**行号（3）⇒ 拒（`occurrence_not_found`）。
+
+    视图是"**按序推进**"，不是"新旧行号都认"：这一刻第 3 行已经是空行 ⇒ 不猜、不写。
+    """
+    plan = _plan(
+        {
+            "op": "insert_lines",
+            "op_id": "o1",
+            "file": "notes/a.md",
+            "after": 1,
+            "expect": "# A 文档",
+            "text": "插入的一行。",
+        },
         {
             "op": "attach_links",
             "op_id": "o2",
@@ -191,7 +232,7 @@ def test_validate_requires_body_edits_after_anchor_ops(kb: Path, service: Docume
     )
     checked = validate_plan(str(kb), plan, service=service)
     assert checked["status"] == "error"
-    assert [e["code"] for e in checked["errors"]] == ["body_edit_order"]
+    assert [e["code"] for e in checked["errors"]] == ["occurrence_not_found"]
 
 
 def test_validate_allows_anchor_ops_before_body_edits(kb: Path, service: DocumentService) -> None:
@@ -241,10 +282,26 @@ def test_apply_body_edit_writes_only_that_line_and_undo_restores(kb: Path, servi
 
 def test_apply_delete_and_insert_lines(kb: Path, service: DocumentService) -> None:
     plan = _plan(
-        {"op": "insert_lines", "op_id": "o1", "file": "notes/a.md", "after": 1, "expect": "# A 文档", "text": "新增一段。"},
         {"op": "delete_lines", "op_id": "o2", "file": "notes/a.md", "range": {"start": 5, "end": 5}, "expect": "末尾一行。"},
+        {"op": "insert_lines", "op_id": "o1", "file": "notes/a.md", "after": 1, "expect": "# A 文档", "text": "新增一段。"},
     )
     done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T101501Z-02", service=service)
+    assert done["status"] == "ok", done
+    text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
+    assert text == "# A 文档\n新增一段。\n\n注意力机制是核心。\n\n"
+
+
+def test_apply_uses_the_batch_view_line_numbers(kb: Path, service: DocumentService) -> None:
+    """一批内"先插一段、再按**新**行号删一行" ⇒ 落地结果与校验期视图一致（真正的"一批写完"）。
+
+    插入之后 `末尾一行。` 从第 5 行挪到第 6 行；`o2` 写的就是 6。旧实现把同文件的编辑攒到末尾
+    合成一次、行号一律以编辑前正文为准，这条 plan 会被算成"删空行"。
+    """
+    plan = _plan(
+        {"op": "insert_lines", "op_id": "o1", "file": "notes/a.md", "after": 1, "expect": "# A 文档", "text": "新增一段。"},
+        {"op": "delete_lines", "op_id": "o2", "file": "notes/a.md", "range": {"start": 6, "end": 6}, "expect": "末尾一行。"},
+    )
+    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T101503Z-01", service=service)
     assert done["status"] == "ok", done
     text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert text == "# A 文档\n新增一段。\n\n注意力机制是核心。\n\n"
@@ -275,6 +332,9 @@ def test_propose_tool_documents_body_edit_ops(kb: Path) -> None:
     for needle in ("replace_lines", "insert_lines", "delete_lines", "expect", "after"):
         assert needle in tool.description, f"提议工具说明里缺 {needle}"
 
+    # 2026-09-22 起有**读后写闸**（`fs-observation-policy` 端口）：先按真实回合顺序读一遍
+    registry.invoke(ToolCall(id="r1", name="read_document", arguments=json.dumps({"path": "notes/a.md"})))
+
     result = registry.invoke(
         ToolCall(
             id="c1",
@@ -296,7 +356,7 @@ def test_propose_tool_documents_body_edit_ops(kb: Path) -> None:
         )
     )
     assert result.is_error is False, result.content
-    assert "尚未写入" in result.content
+    assert result.content.startswith("**已写入**")  # 写机制放开后：一次调用即落盘
 
 
 # ── ⑥ 块级：`upsert_block`（§7 5.1 / 5.3 / 5.5；表格不做）────────────────────────────────

@@ -1,0 +1,39 @@
+schema_version: 1
+file: expressions/patterns/concessive-inversion.md
+knowledge_points:
+- id: concessive-inversion
+  name: hard though ... may be（让步倒装）
+  range:
+    start:
+      snippet: '# hard though ... may be（让步倒装）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: Perilous though the route was, the trip
+        turned out to'
+      line_hint: 114
+  tags:
+  - 句式
+  - 让步
+  - 倒装
+  - 语法
+  - 写作
+  - 口语
+links:
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  instances:
+  - line: 102
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 102
+    wrapped: true
+  source_id: concessive-inversion

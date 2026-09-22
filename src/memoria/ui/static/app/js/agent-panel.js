@@ -7,7 +7,7 @@
  *   - `#agent-dock-resizer` 向左拖拽调宽（rem）→ 落盘 `layout.agentDockWidth`
  *   - `#agent-settings`（端点/模型/密钥/超时/出网）**2026-09-19 搬进设置弹窗「对话」页签**（`#settings-body-agent`）；`#agent-save-config` 保存端点配置
  *   - `#agent-net-toggle`「网络」开关（写 `config/agent.json` 的 enabled；2026-09-19 前文案是「出网」）
- *   - `#agent-input` Enter 发送 / Shift+Enter 换行；`#agent-send` 发送
+ *   - `#agent-input` Enter 发送 / Shift+Enter 换行（浏览器默认）/ Ctrl（Cmd）+Enter **自己插**换行（2026-09-22：真机实测 Windows Chromium 对 Ctrl+Enter 没有默认动作）/ 空框时 ↑↓ 翻"发过的内容"；`#agent-send` 发送
  *   - `#agent-stop`「停止」（**真取消**：调 `agent_ask_cancel`，保留已生成的部分文本）
  *   - 开新会话：**无独立按钮**（原「清空对话」按钮已退役；左栏「历史」页签的「＋ 新会话」= 下方 `clear()`）
  *   - 会话列表在左栏「历史」页签（`#sidebar-view-history`）；dock 头部只留「当前会话 + 历史按钮」
@@ -101,7 +101,7 @@ window.MemoriaAgentPanel = (function () {
     const a = A();
     return a.call ? a.call(...args) : undefined;
   };
-  const showFlashError = (...args) => {
+  let showFlashError = (...args) => {
     A().showFlashError?.(...args);
   };
   const showFlashInfo = (...args) => {
@@ -111,7 +111,7 @@ window.MemoriaAgentPanel = (function () {
 
   // ── 轮询参数（与 kb-check.js 的静默作业同套路）────────────────────────
   const POLL_INTERVAL_MS = 250;
-  const POLL_TIMEOUT_MS = 300000; // 5 分钟兜底；模型长回答不会被误判超时
+  const POLL_TIMEOUT_MS = 1800000; // 30 分钟兜底：轮次不再有上限（对齐上游）后，长任务可能是几十轮工具调用；失控由「停止」按钮兜底
 
   // 答案里的 `文件:行号`（允许全角冒号 `：`、支持 `7-9` 区间；路径须排除中日韩标点 —— 原因与实测见 agent-guide/01 §7）
   const ANCHOR_RE = /`?"?'?([^\s`"'<>()[\]:：，、。；！？「」『』【】（）《》〈〉〔〕…·—～]+\.(?:md|markdown))[:：](\d+(?:[-–—~]\d+)?)`?"?'?/g;
@@ -198,7 +198,7 @@ window.MemoriaAgentPanel = (function () {
   // 底部状态栏用量格（`#status-agent`）：最近一轮 usage + **本会话累计**
   // （面板自持累加；**不**为此新增任何 RPC 轮询）。`null` = 尚无（该格为空、不占位）。
   let lastUsage = null;
-  let sessionUsage = null;
+  let sessionUsage = null, lastStatusText = "", lastStatusError = false; // 后两项 = 状态行撤除后（2026-09-21）只留状态：判重 / 判红
 
   // 等待计时：轮询期间状态行显示「生成中… Ns」（每秒刷新，结束/出错即停）
   let waitStartedAt = 0;
@@ -459,9 +459,9 @@ window.MemoriaAgentPanel = (function () {
 
   // ── 渲染 ────────────────────────────────────────────────────────────
 
-  function scrollToBottom() {
+  function scrollToBottom(force) {
     const box = $("#agent-messages");
-    if (box) box.scrollTop = box.scrollHeight;
+    if (box) messageBoxScrollTo(box, force === true);
   }
 
   /** 把纯文本里的 `文件:行号` 变成可点击锚点（先转义再匹配，避免注入）。 */
@@ -665,7 +665,7 @@ window.MemoriaAgentPanel = (function () {
     messages.forEach(function (rec) {
       box.appendChild(messageEl(rec));
     });
-    scrollToBottom();
+    scrollToBottom(true);
   }
 
   function currentAssistant() {
@@ -900,7 +900,7 @@ window.MemoriaAgentPanel = (function () {
         text: String(rec.text || ""),
         anchors: Array.isArray(rec.anchors) ? rec.anchors : [],
         error: "",
-        stopped: false,
+        stopped: false, process: msgProcess(rec), reasoning: msgReasoning(rec),
       });
     });
     streamingEl = null;
@@ -1097,7 +1097,7 @@ window.MemoriaAgentPanel = (function () {
       const el = messageEl(rec);
       box.appendChild(el);
       streamingEl = el.querySelector(".-agent-msg-body");
-      scrollToBottom();
+      scrollToBottom(true);
     }
     return rec;
   }
@@ -1116,16 +1116,17 @@ window.MemoriaAgentPanel = (function () {
   function finalizeMessage(result) {
     const rec = currentAssistant();
     if (!rec) return;
-    // 后端 `answer` 是权威最终答案（loop 每轮以当轮文本覆盖 answer），
-    // 流式累积可能含工具轮的前言，故非空时以 answer 为准
+    // 后端 `answer` 是权威最终答案（loop 以当轮文本覆盖 answer）；本轮**没有最终答复**时补一句说明，
+    // 否则气泡是空的、看着像"卡在思考没有后文"（真机：AAA_Vocab 连续两次 `max-iterations`）。
     if (result.answer) rec.text = result.answer;
-    rec.anchors = Array.isArray(result.anchors) ? result.anchors : [];
+    if (!rec.text && result.status !== "error") rec.text = stopNote(result);
+    rec.anchors = Array.isArray(result.anchors) ? result.anchors : []; rec.tools = Array.isArray(result.tool_calls) ? result.tool_calls : [];
     rec.error = result.status === "error" ? fullErrorText(result) : "";
     const box = $("#agent-messages");
     if (box && streamingEl) {
       const wrap = streamingEl.parentElement;
       const rebuilt = messageEl(rec);
-      if (wrap) box.replaceChild(rebuilt, wrap);
+      if (wrap && wrap.parentNode) wrap.parentNode.replaceChild(rebuilt, wrap);
     }
     streamingEl = null;
     scrollToBottom();
@@ -1364,7 +1365,7 @@ window.MemoriaAgentPanel = (function () {
     const input = $("#agent-input");
     if (input) {
       input.addEventListener("keydown", (e) => {
-        if (e.key !== "Enter" || e.shiftKey || e.isComposing) return;
+        if (composerEnterKey(e, input)) return; // Ctrl/Cmd+Enter = 自己插换行；Shift/Alt+Enter 放行给浏览器
         e.preventDefault();
         ask();
       });
@@ -1459,14 +1460,14 @@ window.MemoriaAgentPanel = (function () {
   // 注：**2026-09-19（AG11）起生成期间也走本函数**——末尾块把 `applyDelta` 包成"按 `MemoriaStreamBuffer`
   // 的 `safe` 前缀渲染、未成型尾部进等待区"（逐行渲染）；上面这段是兜底（无缓冲模块时仍为纯文本）。
 
-  //: 整棵丢弃的标签（脚本 / 内嵌文档 / 表单 / 媒体 / **远程图片**——后者还会顺带出网）。
+  //: 整棵丢弃的标签（脚本 / 内嵌文档 / 表单 / 媒体 —— 图片除外：**库内图片**要渲染，见 `appendLocalImage()`）。
   const MD_DROP_TAGS = new Set([
     "SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "LINK", "META", "BASE", "TEMPLATE",
     "FORM", "INPUT", "BUTTON", "SELECT", "OPTION", "TEXTAREA", "NOSCRIPT",
-    "IMG", "PICTURE", "VIDEO", "AUDIO", "SOURCE", "TRACK", "CANVAS", "SVG", "MATH",
+    "PICTURE", "VIDEO", "AUDIO", "SOURCE", "TRACK", "CANVAS", "SVG", "MATH",
   ]);
-  //: 允许保留的标签。其余一律「拆外壳、留文字」；**所有属性一律丢弃**（顺带消灭 `on*`、
-  //: `href`、`src` —— 应用里没有任何外链跳转通道，留 `href` 只会让 webview 被导航走）。
+  //: 允许保留的标签。其余一律「拆外壳、留文字」；**属性一律丢弃**（顺带消灭 `on*`、`href`、`src`
+  //: —— 应用里没有外链跳转通道，留 `href` 只会让 webview 被导航走）；唯一例外是库内 `<img src>`。
   const MD_KEEP_TAGS = new Set([
     "P", "BR", "HR", "H1", "H2", "H3", "H4", "H5", "H6",
     "UL", "OL", "LI", "BLOCKQUOTE", "PRE", "CODE", "STRONG", "EM", "DEL", "S",
@@ -1504,7 +1505,7 @@ window.MemoriaAgentPanel = (function () {
       const tag = node.tagName;
       if (MD_DROP_TAGS.has(tag)) return;
       if (!MD_KEEP_TAGS.has(tag)) {
-        sanitizeHtmlInto(target, node); // 未知或降级标签：拆外壳、保住里面的文字
+        if (tag === "IMG") appendLocalImage(target, node); else sanitizeHtmlInto(target, node); // 图片只放行库内；其余拆壳留字
         return;
       }
       const el = document.createElement(tag);
@@ -1546,11 +1547,12 @@ window.MemoriaAgentPanel = (function () {
     }
     try {
       const tpl = document.createElement("template"); // template 内容惰性：脚本/图片不会先跑起来
-      tpl.innerHTML = md.parse(src, { gfm: true, breaks: true });
+      tpl.innerHTML = agentRichHtml(src); // 公式先归一化 + 库内图片路径改写（都与预览同源）
       el.innerHTML = "";
       el.classList.add("markdown-body"); // 排版沿用预览的 .markdown-body（窄栏覆盖见 app.css）
       sanitizeHtmlInto(el, tpl.content);
       linkifyNodes(el);
+      attachAgentImages(el); typesetAgentMath(el); // 净化**之后**：先挂图片灯箱、再排版公式（产物都不进净化器）
     } catch (e) {
       el.classList.remove("markdown-body");
       el.innerHTML = linkify(src);
@@ -1560,8 +1562,8 @@ window.MemoriaAgentPanel = (function () {
 
   // ── 输入框上方的状态 bar（首版）────────────────────────────────────────
   // 结构 = 状态点（idle / busy / error / off）+ 一条「事实」串（模型 · 出网 · 会话 · 轮次）。
-  // 分工：**事实与运行态**在这里常显；消息级长文案（「生成中… Ns」/ 错误原文 / 已停止）仍归
-  // 下方 `#agent-status`，两者不重复同一句话。
+  // 分工：**事实与运行态**在这里常显；消息级长文案（「生成中… Ns」）归气泡尾，错误归顶部浮层
+  // （`#agent-status` 已于 2026-09-21 撤除 —— 见文件末尾「状态行撤除」块），不重复同一句话。
   //
   // 挂接方式（刻意）：在模块尾部**包装本模块自己的 `renderMessages()` / `setStatusText()` /
   // `applyConfigToForm()`** —— 这三个入口已覆盖面板的全部状态流转（提交 / 轮询 / 定稿 / 出错 /
@@ -1574,13 +1576,13 @@ window.MemoriaAgentPanel = (function () {
    *
    * 「出网关」刻意排在「出错」之前：关闭出网时 `toggleNet()` 会把状态行置红（`agent.err.net_disabled`，
    * 见 `setStatusText(..., !cfg.enabled)`），若按"红字=出错"判，圆点会显示成故障 —— 但用户此刻看到的
-   * 事实是「出网已关、不能发」，不是"出错了"。错误态直接读 `#agent-status` 的类，不新起状态变量。
+   * 事实是「出网已关、不能发」，不是"出错了"。错误态改读 `lastStatusError`（见文件末「状态行撤除」块）。
    */
   function statusBarDotState() {
     if (busy) return "busy";
     if (!cfg.enabled) return "off";
-    const st = $("#agent-status");
-    if (st && st.classList.contains("-agent-error")) return "error";
+    // 状态行 `#agent-status` 已从 index.html 撤掉 ⇒ 改读内部状态（原先读它的 `-agent-error` 类）。
+    if (lastStatusError) return "error";
     return "idle";
   }
 
@@ -2384,69 +2386,147 @@ window.MemoriaAgentPanel = (function () {
   //    基座 `poll()` 只认文本的 `delta`/`cursor`（一行未改），故在**门面 `call`** 上包一层：
   //    发 `agent_ask_poll` 时补上第三个位置参数（思考游标），收到响应先落思考增量再交还原逻辑。
   // ② 思考渲染成助手气泡里的**折叠块**（`<details class="-agent-think">`），排在答案正文之前：
-  //    流式期间展开、跟随增量实时更新（`textContent`，与流式正文同一条插入路径，不新造渲染器）；
-  //    定稿后**默认折叠但常驻 DOM**，用户可随时展开（`messageEl` 包装负责重建）。
+  //    流式期间**始终默认折叠**（创建即折叠），摘要跟**末行**并随增量实时更新（`textContent`，
+  //    与流式正文同一条插入路径，不新造渲染器）；定稿后摘要取**首行**、常驻 DOM，用户可随时展开。
   // ③ **无思考则整块不存在**（首个非空增量才创建，`rec.reasoning` 为空时不插入 ⇒ 无空块、无跳变）。
-  // ④ 思考**不落会话文件**：会话文件同时是读取路径的事实源（列表 2 MiB 扫描、`agent_session_load`
-  //    直接回放成渲染视图）⇒ 重载页面或载入旧会话都**不显示过往思考**（有意偏差，上游 dsh 会持久化；
-  //    口径见 services/agent/ask_stream.py 模块 docstring）。
+  // ④ 思考**随 `assistant/message` 落会话文件**（2026-09-22 起）：回放（`agent_session_load` 的
+  //    `process` 行）能重建同样的思考行；旧的会话文件没有 `reasoning` ⇒ 照旧不显示过往思考（不报错）。
+  //    形状的单一来源见 services/agent/turn_process.py 与 session/history.py::conversation_messages。
   // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
   // ══════════════════════════════════════════════════════════════════════════════
 
   //: 已投递的思考字符数（**与文本游标完全独立**）；每轮提问由 `ask()` 包装重置。
   let reasoningCursor = 0;
 
-  /** 思考折叠块骨架；`open` = 流式期间展开、定稿后折叠；`text` = 定稿重绘时回填的已有思考。 */
-  function thinkEl(open, text) {
+  /** 思考行的**骨架**（2026-09-22 改版，人：「思考和三角符号应该不在圆角气泡内，而点击思考之后
+   *  才展开在下方出现圆角气泡显示思考或者正在思考的内容，而且这个圆角气泡可以进一步展开直接显示全部」）：
+   *
+   *  ```
+   *  <details class="-agent-think">             ← **无底色/无边框**：只有那一行摘要，不算气泡
+   *    <summary class="-agent-think-summary">   ← 「思考」+ 三角（CSS 画）；**旁边不放任何摘要文字**
+   *    <div class="-agent-think-bubble">        ← **圆角气泡**：点开后才出现（默认 `max-height` 截断）
+   *      <div class="-agent-think-body">…思考原文…</div>
+   *      <button class="-agent-think-more">展开 / 收起</button>
+   *  ```
+   *  `live` = 还在生成（正文为空时显示「正在思考…」占位）；`text` = 已有思考正文（一律**渲染**，非裸文本）。 */
+  function thinkEl(text, live) {
     const box = document.createElement("details");
     box.className = "-agent-think";
-    if (open) box.open = true;
     const summary = document.createElement("summary");
     summary.className = "-agent-think-summary";
-    summary.textContent = T("agent.think");
+    const label = document.createElement("span"); label.className = "-agent-think-label"; label.textContent = T("agent.think");
+    // 2026-09-22：摘要 tip 撤除（人：「思考过程旁边不用展示文字」）⇒ 等量占位，保下方锚点不推位。
+    summary.appendChild(label);
     box.appendChild(summary);
-    const body = document.createElement("div");
-    body.className = "-agent-think-body";
-    body.textContent = text || "";
-    box.appendChild(body);
+
+    const bubble = document.createElement("div"); bubble.className = "-agent-think-bubble";
+    const body = document.createElement("div"); body.className = "-agent-think-body";
+    // 有正文 ⇒ 走与助手正文**同一条 markdown 管线**（公式 / 代码 / 列表都渲染，2026-09-21 的口径：
+    // 「思考可以渲染吧，不然公式这些用户都看不懂」）；**流式同样走渲染**（见 `updateThinkRowEl()`）。
+    if (String(text || "").trim()) { renderAssistantBody(body, text); body.__thinkText = String(text); }
+    else if (live) { body.__thinkText = T("agent.thinkLive"); body.textContent = body.__thinkText; }
+    bubble.appendChild(body);
+    const more = document.createElement("button");
+    more.type = "button";
+    more.className = "-agent-think-more";
+    more.addEventListener("click", function (ev) {
+      ev.preventDefault(); // 别把 <details> 一起开合
+      const full = bubble.classList.toggle("-agent-think-bubble--full");
+      more.textContent = full ? T("agent.thinkLess") : T("agent.thinkMore");
+    });
+    bubble.appendChild(more);
+    box.appendChild(bubble);
+    refreshThinkMore(bubble, body, more);
     return box;
   }
 
-  /** 流式期间确保当前助手气泡里有思考块（首个非空增量才创建 ⇒ 无思考则完全无此节点）。 */
-  function ensureThinkBlock() {
-    if (!streamingEl) return null;
-    const wrap = streamingEl.parentElement;
-    if (!wrap) return null;
-    let box = wrap.querySelector(".-agent-think");
-    if (!box) {
-      box = thinkEl(true); // 生成中：展开跟随
-      wrap.insertBefore(box, streamingEl); // 排在答案正文**之前**
-      scrollToBottom();
+  /** 「展开」按钮只在正文真的放不下时出现（截断阈值见样式块的 `max-height`：8rem ⇒ 展开 20rem）。
+   *  不量 DOM 尺寸（渲染时可能还没进文档）：按**行数 / 字符数**判定 ⇒ 纯函数、可单测。 */
+  function thinkNeedsMore(text) {
+    const s = String(text == null ? "" : text);
+    return s.split(/\r?\n/).length > 5 || s.length > 240;
+  }
+
+  function refreshThinkMore(bubble, body, more) {
+    const needed = thinkNeedsMore(body ? body.textContent : "");
+    more.hidden = !needed;
+    if (needed) {
+      // **两个分支都要写文案**：只写 `!needed` 分支会让长正文（= 真需要按钮的那些）露出**空白按钮**
+      // —— 真机 L4 实测到的缺陷（101 个按钮文案为空、高度 3px，点了才出现「收起」）。
+      // 已展开（`--full`）时保留「收起」，别被后续增量改回「展开」。
+      if (!bubble.classList.contains("-agent-think-bubble--full")) more.textContent = T("agent.thinkMore");
+      return;
     }
-    return box;
+    bubble.classList.remove("-agent-think-bubble--full");
+    more.textContent = T("agent.thinkMore");
   }
 
-  /** 把一片思考增量追加到当前助手气泡（复用流式正文的 `textContent` 路径，纯文本、无 HTML 注入）。 */
+  /** 流式期间：找到**当前这一步**还没收尾的思考行（`state:"live"`），没有就**新开一段**——
+   *  行落在 `rec.process` 末尾（⇒ 排在本步工具行之前），并**立即建好 DOM 节点**（新的一段思考）。
+   *  收尾由 `applyProcessDelta()` 在收到本步 `step` 行时做 ⇒ **多段思考**、段与段之间有工具行。 */
+  function openThinkRow() {
+    const rec = currentAssistant();
+    if (!rec || rec.role !== "assistant") return null;
+    if (!Array.isArray(rec.process)) rec.process = [];
+    const last = rec.process[rec.process.length - 1];
+    if (last && last.kind === "think" && last.state === "live") return last;
+    const row = { kind: "think", text: "", state: "live", iteration: 0 };
+    rec.process.push(row);
+    const wrap = streamingEl && streamingEl.parentElement;
+    if (wrap) processBox(wrap).appendChild(thinkEl("", true));
+    return row;
+  }
+
+  /** 把一片思考增量追加到**当前这一步**的思考行（纯文本、无 HTML 注入；DOM 就地更新，不重建）。 */
   function applyReasoningDelta(delta) {
     const rec = currentAssistant();
     if (!rec) return;
     rec.reasoning = (rec.reasoning || "") + delta;
-    const box = ensureThinkBlock();
-    if (!box) return;
-    const body = box.querySelector(".-agent-think-body");
-    if (body) body.textContent = rec.reasoning;
+    const row = openThinkRow();
+    if (!row) return;
+    row.text = String(row.text || "") + delta;
+    const wrap = streamingEl && streamingEl.parentElement;
+    if (wrap) {
+      const nodes = wrap.querySelectorAll(".-agent-process .-agent-think");
+      const el = nodes[nodes.length - 1];
+      if (el) updateThinkRowEl(el, row);
+    }
     scrollToBottom();
   }
 
-  // 定稿/重绘都经 `messageEl`：思考非空才在正文前插入**折叠**常驻块（`rec.reasoning` 由增量累积）。
+  /** 过程容器里**最后一条**思考行的节点（流式更新用；没有 ⇒ `null`）。 */
+  function lastThinkRowEl(wrap) {
+    if (!wrap) return null;
+    const nodes = wrap.querySelectorAll(".-agent-process .-agent-think");
+    return nodes.length ? nodes[nodes.length - 1] : null;
+  }
+
+  /** 就地更新一条思考行（流式中每次增量）：正文、摘要、按钮可见性；收尾（`done`）时改走 markdown 管线。 */
+  function updateThinkRowEl(el, row) {
+    if (!el || !row) return;
+    el.setAttribute("data-state", String(row.state || "done"));
+    const body = el.querySelector(".-agent-think-body");
+    const text = String(row.text || "");
+    if (body) {
+      // 2026-09-22：**流式也走渲染**（人：「思考过程里面要渲染，不是裸文本」）—— 与助手正文的流式同口径：每次都重渲染（见 `renderAssistantBody(streamingEl, parts.safe)`），`__thinkText` 去重免掉无谓重渲染。
+      const shown = text || T("agent.thinkLive");
+      if (body.__thinkText !== shown) {
+        renderAssistantBody(body, shown);
+        body.__thinkText = shown;
+      }
+    }
+    // 2026-09-22：摘要 tip 撤除（见 `thinkEl()`）⇒ 不再同步那个已删掉的预览节点。本行等量占位，保下方锚点。
+    const bubble = el.querySelector(".-agent-think-bubble");
+    const more = el.querySelector(".-agent-think-more");
+    if (bubble && more) refreshThinkMore(bubble, body, more);
+  }
+
+  // 定稿/重绘都经 `messageEl`；**2026-09-22 起不再往正文前插"整轮一条"的思考块** ——
+  // 思考改成**按步**的过程行（`kind: "think"`，见 `openThinkRow()` 与过程渲染那条路径），
+  // 由过程容器按事件顺序渲染 ⇒ 多段思考与工具行天然交错。这里只保留 `rec.reasoning`（兼容字段）。
   const baseMessageEl = messageEl;
   messageEl = function (rec) {
-    const wrap = baseMessageEl.apply(null, arguments);
-    if (rec && rec.role === "assistant" && rec.reasoning) {
-      const body = wrap.querySelector(".-agent-msg-body");
-      if (body) wrap.insertBefore(thinkEl(false, rec.reasoning), body);
-    }
-    return wrap;
+    return baseMessageEl.apply(null, arguments);
   };
 
   // 每轮提问重置思考游标（基座 `ask()` 的 job 游标是每轮新建，思考游标同口径）。
@@ -2463,13 +2543,13 @@ window.MemoriaAgentPanel = (function () {
     facade.call = function (fnName) {
       if (fnName !== "agent_ask_poll") return baseFacadeCall.apply(this, arguments);
       const args = Array.prototype.slice.call(arguments);
-      args.push(reasoningCursor); // 第 3 个位置参数 = 思考游标（后端 AG08 追加的可选参数）
+      args.push(reasoningCursor); args.push(processCursor); // 第 3/4 个位置参数 = 思考游标 / 过程游标（后端追加的可选参数）
       const pending = baseFacadeCall.apply(this, args);
       return Promise.resolve(pending).then(function (res) {
         if (res && typeof res.reasoning_cursor === "number") reasoningCursor = res.reasoning_cursor;
-        if (res && typeof res.reasoning_delta === "string" && res.reasoning_delta) {
-          applyReasoningDelta(res.reasoning_delta);
-        }
+        if (res && typeof res.process_cursor === "number") processCursor = res.process_cursor;
+        if (res && typeof res.reasoning_delta === "string" && res.reasoning_delta) applyReasoningDelta(res.reasoning_delta);
+        if (res && Array.isArray(res.process_delta) && res.process_delta.length) applyProcessDelta(res.process_delta);
         return res;
       });
     };
@@ -2631,17 +2711,16 @@ window.MemoriaAgentPanel = (function () {
     return lang === "en" ? n.toLocaleString("en-US") : String(n);
   }
 
-  /** 本轮用量行文案；无总量（无本轮 usage）返回 ""（调用方据此不挂节点）。 */
+  /** 本轮用量行文案（**含命中率**）；无总量（无本轮 usage）返回 ""（调用方据此不挂节点）。
+   *  命中率口径 = `hit / prompt`（与底部 `#status-agent` 同源）；`hit` 未知时**不写这一句**（不瞎报 0%）。 */
   function usageLineText(u) {
     if (!u || !u.total_tokens) return "";
     const hit = usageInt(u.cache_read_tokens);
     const miss = usageInt(u.cache_miss_tokens);
     const total = hit !== null && miss !== null ? hit + miss : usageInt(u.total_tokens);
-    return T("agent.usage.line", {
-      hit: usageNumText(hit),
-      miss: usageNumText(miss),
-      total: usageNumText(total),
-    });
+    const line = T("agent.usage.line", { hit: usageNumText(hit), miss: usageNumText(miss), total: usageNumText(total) });
+    const rate = hitRateText(hit, u.prompt_tokens || 0);
+    return rate ? line + " · " + T("agent.usage.rate", { rate: rate }) : line;
   }
 
   // 哪条助手消息"拥有"当前 `lastUsage`。**按消息对象记录**（而不是"DOM 里最后一条助手气泡"）：
@@ -2662,15 +2741,15 @@ window.MemoriaAgentPanel = (function () {
     }
   }
 
-  /** `rec` 在「助手消息」里的序位（0 起）；不在 `messages` 里返回 -1。 */
-  function assistantOrdinal(rec) {
-    let ordinal = -1;
-    for (let i = 0; i < messages.length; i += 1) {
-      if (messages[i].role !== "assistant") continue;
-      ordinal += 1;
-      if (messages[i] === rec) return ordinal;
-    }
-    return -1;
+  /** 取 `rec` 对应的消息元素（按 `data-msg-index` 稳定定位）；未渲染 / 不在 `messages` 里 ⇒ `null`。
+   *
+   *  刻意**不用**"assistant 序位 + `querySelectorAll(".-agent-msg--assistant")`"：计划/写入回执卡也带
+   *  这个类却**不在** `messages` 里（`plan-confirm.js`）⇒ 一旦出现过写入卡，序位整体错位，本轮用量行
+   *  与「生成中… Ns」尾标都会挂到那张卡上（真机症状：最后那条回话下方看不到用量与命中率）。 */
+  function assistantWrapFor(rec) {
+    const idx = messages.indexOf(rec), box = $("#agent-messages");
+    if (idx < 0 || !box) return null;
+    return box.querySelector('.-agent-msg[data-msg-index="' + idx + '"]');
   }
 
   /** 重绘用量行：只挂在**拥有该 usage 的那条助手气泡**末尾（全面板最多一份）；无则只清不挂。 */
@@ -2678,20 +2757,18 @@ window.MemoriaAgentPanel = (function () {
     clearUsageLines();
     const text = usageLineText(lastUsage);
     if (!text || !usageOwner) return;
-    const ordinal = assistantOrdinal(usageOwner);
-    if (ordinal < 0) {
-      usageOwner = null; // 那条消息已被清空/换会话 ⇒ 不再有归属
+    // 定位一律走 `assistantWrapFor()`（`data-msg-index`）：**不能**用"assistant 序位 +
+    // `querySelectorAll(".-agent-msg--assistant")`"——计划 / 写入回执卡也带这个类却不在 `messages`
+    // 里（`plan-confirm.js`），一旦出现过写入卡，序位整体错位（真机症状：用量行挂到了那张回执卡上，
+    // 而最后那条回话下方**什么都没有** —— 人 2026-09-21 报的正是这个）。
+    const wrap = assistantWrapFor(usageOwner);
+    if (!wrap) {
+      usageOwner = null; // 那条消息已被清空 / 换会话 / 尚未渲染 ⇒ 不再有归属
       return;
     }
-    const box = $("#agent-messages");
-    if (!box) return;
-    const wraps = box.querySelectorAll(".-agent-msg--assistant");
-    const wrap = ordinal < wraps.length ? wraps[ordinal] : null;
-    if (!wrap) return;
-    const line = document.createElement("div");
+    const line = usageRowEl(wrap); // **操作行**里那一格（与「复制」同一行 —— 人 2026-09-22：「对话底部除了显示用量信息还需要复制按钮」）
     line.className = "-agent-usage -muted";
     line.textContent = text;
-    wrap.appendChild(line);
   }
 
   // 本轮 usage 落定（`poll()` 更新 `lastUsage` 后调 `renderStatusUsage()`）⇒ 记归属并同步刷新用量行；
@@ -2894,11 +2971,11 @@ window.MemoriaAgentPanel = (function () {
   //   ① `#agent-status` **不再承载 token 用量文本**：原 `poll()` 定稿时写的
   //      `usageText(st.usage)`（=「用量 18582+14=18596 tokens」）与上一轮新增的 `.-agent-usage`
   //      逐字重复，故就地改为空数组（函数 `usageText` 与键 `agent.status.usage` 保留，只是不再有
-  //      调用方写进状态行）。状态行**仍在用**：错误/警告（`setStatusText(..., true)` 那批：
-  //      未开库 / 未输问题 / 断网 / 提交失败 / 轮询出错 / 超时 / 换库丢弃）、「已停止」，
-  //      生成期间的基词「生成中…」，以及被 `statusBarDotState()` 读的 `-agent-error` 类。
-  //   ② 生成期间状态行只留基词（`agent.status.thinking`，**不带秒数**）；秒数只在气泡尾的
-  //      `.-agent-generating`（`agent.generating` =「生成中… {n}s」）⇒ 两处不重复同一句。
+  //      调用方写进状态行）。**2026-09-21 起该状态行整行撤除**（人：「对话框下面这个能不能去掉」）：
+  //      错误 / 提示改走顶部浮层、状态点改读 `lastStatusError`，`setStatusText()` 只剩"记状态"职责
+  //      —— 接管代码见文件末尾「状态行撤除」块（本段保留原貌以存史，勿按它判断现状）。
+  //   ② 生成期间**只剩气泡尾这一处**写「生成中…」：原状态行的基词 `agent.status.thinking` 随该行
+  //      一起撤除；秒数只在 `.-agent-generating`（`agent.generating` =「生成中… {n}s」）。
   //   ③ 挂载点 = **当前助手气泡（`.-agent-msg--assistant`）的最后一个子节点**。同气泡内最终顺序：
   //      角色 → AG08 思考块（正文**之前**）→ 正文 → AG11 等待区（`.-agent-stream-wait`，插在正文之后）
   //      →「生成中… Ns」→（定稿后才有）来源条/错误条。生成期间它与等待区**各占一行**、互不覆盖。
@@ -2908,17 +2985,17 @@ window.MemoriaAgentPanel = (function () {
   // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
   // ══════════════════════════════════════════════════════════════════════════════
 
-  /** 当前（或末条）助手气泡容器：优先取流式正文元素之父，回落按 assistant 序位定位。 */
+  /** 当前（或末条）助手气泡容器：优先取流式正文元素之父，回落按**稳定索引**定位。 */
   function generatingHost() {
     if (streamingEl && streamingEl.parentElement) return streamingEl.parentElement;
     const rec = currentAssistant();
     if (!rec) return null;
-    const ordinal = assistantOrdinal(rec);
-    if (ordinal < 0) return null;
-    const box = $("#agent-messages");
-    if (!box) return null;
-    const wraps = box.querySelectorAll(".-agent-msg--assistant");
-    return ordinal < wraps.length ? wraps[ordinal] : null;
+    // 回落定位同样走 `assistantWrapFor()`（`data-msg-index`）而不是"assistant 序位 +
+    // `querySelectorAll`"：写入回执卡也带 `-agent-msg--assistant` 却不在 `messages` 里 ⇒ 序位法会把
+    // 「生成中… Ns」挂到那张卡尾部（与用量行同一个坑）。该消息尚未渲染 ⇒ `null`，本帧不画尾标，
+    // 下一帧（`tickWait` 每秒一次）自会重建。
+    const wrap = assistantWrapFor(rec);
+    return wrap;
   }
 
   /** 清掉消息区里所有「生成中… Ns」指示器（幂等）。 */
@@ -3323,8 +3400,8 @@ window.MemoriaAgentPanel = (function () {
     input.classList.add("-agent-chips-on");
     mirror.style.left = input.offsetLeft + "px";
     mirror.style.top = input.offsetTop + "px";
-    mirror.style.width = input.offsetWidth + "px";
-    mirror.style.height = input.offsetHeight + "px";
+    mirror.style.width = composerMirrorWidth(input) + "px";
+    mirror.style.height = composerMirrorHeight(input) + "px";
     mirror.scrollTop = input.scrollTop;
     mirror.scrollLeft = input.scrollLeft;
   }
@@ -3673,8 +3750,8 @@ window.MemoriaAgentPanel = (function () {
     input.classList.add("-agent-chips-on");
     mirror.style.left = input.offsetLeft + "px";
     mirror.style.top = input.offsetTop + "px";
-    mirror.style.width = input.offsetWidth + "px";
-    mirror.style.height = input.offsetHeight + "px";
+    mirror.style.width = composerMirrorWidth(input) + "px";
+    mirror.style.height = composerMirrorHeight(input) + "px";
     mirror.scrollTop = input.scrollTop;
     mirror.scrollLeft = input.scrollLeft;
   };
@@ -4298,6 +4375,1722 @@ window.MemoriaAgentPanel = (function () {
 
   renderHistoryList(); // 用包装后的版本重绘一次（把新提示与按钮摘除应用到当前列表）
 
+  /* ══ 消息下方的操作行 + 写入状态条（2026-09-21 第二版，人定稿）══════════════════════════
+     人：「撤销按钮和复制按钮都放在每个对话气泡的下方，不是气泡内，或者说 agent 回复甚至不需要气泡框住」
+        「用户只能在最后一次对话下方撤销，而且只能撤销不能 redo」
+        「文件修改状态可以效仿 trae 的做法，给一个状态栏可以展开」
+
+     结构（`#agent-messages` 的直接子元素由 `.-agent-msg` 变成 `.-agent-turn`）：
+       .-agent-turn[--assistant|--user]
+         ├ .-agent-msg           ← 内容（助手不再有边框/底色；用户保留浅底，见 `app.css` 末尾那块）
+         ├ .-agent-msg-actions   ← **气泡外面**的操作行：[复制]（每条助手消息）
+         └ .-agent-write         ← **只挂在最新一条助手消息下**：可展开的写入状态条 + [撤销]
+
+     为什么用"重新赋值包装"而不是改函数内部：`pushMessage` / `renderMessages` / `finalizeMessage`
+     都是同作用域的函数声明、按**名字**调用 ⇒ 一次赋值三处生效，`agent-panel.js` 上方所有
+     `<行号>` 锚点**零漂移**。 */
+
+  /** 复制一条消息的**原文**（Markdown）：clipboard API 优先，被拒（失焦 / 无权限）时回退
+   *  `execCommand`（与 `kb-check.js` 同款两段式）；按钮上给一次「已复制 / 复制失败」反馈。 */
+  async function copyMessageText(rec, btn) {
+    const text = String((rec && rec.text) || "");
+    if (!text) return;
+    let ok = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        ok = true;
+      }
+    } catch (e) {
+      ok = false;
+    }
+    if (!ok) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        ok = document.execCommand("copy");
+      } catch (e2) {
+        ok = false;
+      }
+      ta.remove();
+    }
+    if (!btn) return;
+    // 图标按钮：不改文字，改用**悬停提示 + 变色**给一次成败反馈
+    const restoreTitle = T("agent.copy");
+    btn.title = ok ? T("agent.copyDone") : T("agent.copyFail");
+    btn.classList.toggle("-agent-act--done", !!ok);
+    setTimeout(function () {
+      btn.title = restoreTitle;
+      btn.classList.remove("-agent-act--done");
+    }, 1200);
+  }
+
+  /** 「复制」的图标（内联 SVG，不依赖任何图标集）：人要求「改成复制的图标，鼠标悬浮显示复制」。 */
+  const COPY_ICON_SVG =
+    '<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">' +
+    '<rect x="5.75" y="5.75" width="8.25" height="8.25" rx="1.6" fill="none" stroke="currentColor" stroke-width="1.3"/>' +
+    '<path d="M3.4 10.25V3.6A1.6 1.6 0 0 1 5 2h6.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>' +
+    "</svg>";
+
+  /** 一条消息下方的操作行（**在气泡外面**）：目前是「复制」，只给助手消息。
+   *
+   *  注意"有正文才建按钮"这条守卫只在**建行那一刻**成立；助手消息是**空文本**建的
+   *  （`pushMessage("assistant", "")`）⇒ 实时那一轮建行时它必然返回空行，终答后要靠
+   *  `syncTurnActions()` 补上（2026-09-22 L4 抓到的真 bug，见该函数注释）。 */
+  function actionsEl(rec) {
+    const box = document.createElement("div");
+    box.className = "-agent-msg-actions";
+    if (!rec || rec.role === "user" || !String(rec.text || "").trim()) return box;
+    box.appendChild(copyButtonEl(rec));
+    return box;
+  }
+
+  /** 把一条消息的 DOM 包进 `.-agent-turn`（内容 + 操作行）；已经包过就复用原容器。 */
+  function wrapTurn(rec, msgEl) {
+    const box = $("#agent-messages");
+    if (!box) return null;
+    const msg = msgEl || box.lastElementChild;
+    if (!msg || !msg.classList || !msg.classList.contains("-agent-msg")) return null;
+    const parent = msg.parentElement;
+    if (parent && parent.classList && parent.classList.contains("-agent-turn")) return parent;
+    const turn = document.createElement("div");
+    turn.className =
+      "-agent-turn " + (rec && rec.role === "user" ? "-agent-turn--user" : "-agent-turn--assistant");
+    box.replaceChild(turn, msg);
+    turn.appendChild(msg);
+    turn.appendChild(actionsEl(rec));
+    return turn;
+  }
+
+  const pushMessageBase = pushMessage;
+  pushMessage = function (role, text) {
+    const rec = pushMessageBase(role, text);
+    wrapTurn(rec);
+    renderWriteState(); // 「撤销只在最后一次对话下方」⇒ 每次追加消息后重挂
+    return rec;
+  };
+
+  const renderMessagesBase = renderMessages;
+  renderMessages = function () {
+    renderMessagesBase();
+    const box = $("#agent-messages");
+    if (!box) return;
+    // 按文档序取"消息"（排除计划卡片 `.-agent-plan-msg` 与空态），与 `messages` 一一对应
+    const msgs = Array.prototype.slice.call(box.querySelectorAll(".-agent-msg:not(.-agent-plan-msg)"));
+    msgs.forEach(function (msg, index) {
+      wrapTurn(messages[index] || null, msg);
+    });
+    renderWriteState();
+  };
+
+  const finalizeMessageBase = finalizeMessage;
+  finalizeMessage = function (result) {
+    finalizeMessageBase(result);
+    renderWriteState(); // 正文变了 ⇒ 重挂状态条（消息仍是最新那一条）
+    refreshAfterTurn(result); // 回合收尾**无条件刷工作区**（人 2026-09-21：结束时不刷新）
+  };
+
+  /** 回合结束后的**工作区刷新**（人 2026-09-21：「每次对话结束 memoria 没有刷新，程序上先挂一个刷新」）。
+   *
+   *  为什么需要它：原来只有"写入回执"那条路会刷（`plan-confirm.syncAfterWrite()`），而 agent 现在是
+   *  **调用内直接落盘**、回执链路任何一环没走到（本回合只是读+答、提议没被 drain…）时，文件树 /
+   *  待确认 / 图谱 / 当前文档就停在本回合之前的样子。⇒ 在**每回合收尾**（`finalizeMessage()`，`done`
+   *  与 `error` 都走）无条件刷一次。
+   *
+   *  口径：① 三个 KB 视图（树 / 待确认 / 图谱）**无条件**刷；② 当前文件**只在"本回合确实写过库"
+   *  且没有未保存编辑时**重开（`.-agent-turn` 里人的脏编辑绝不覆盖）；③ 与 `syncAfterWrite()` 用
+   *  `A().__kbRefreshAt` 做 **1.5s 去重** —— 两者谁先跑到都不会把图谱连算两遍（`syncAfterWrite`
+   *  的去重只跳"三个视图"，它那条**精确**的"确知被写就重开"永远执行）。 */
+  function shouldSkipKbRefresh(now, lastAt) {
+    return now - (Number(lastAt) || 0) < 1500;
+  }
+
+  /** 本回合是否**写过库**：`propose_write` 成功过一次就算（它是唯一的写工具，调用内即落盘）。 */
+  function turnWroteSomething(result) {
+    const rows = result && Array.isArray(result.tool_calls) ? result.tool_calls : [];
+    return rows.some(function (row) {
+      return !!row && row.name === "propose_write" && !row.is_error;
+    });
+  }
+
+  async function refreshAfterTurn(result) {
+    const app = A();
+    if (shouldSkipKbRefresh(Date.now(), app.__kbRefreshAt)) return;
+    app.__kbRefreshAt = Date.now();
+    try {
+      await app.refreshFiles?.();
+    } catch (e) {
+      /* 刷不动不影响对话本身 */
+    }
+    try {
+      await app.refreshKbPendingSummary?.();
+    } catch (e) {
+      /* 同上 */
+    }
+    try {
+      await app.loadGraphData?.();
+    } catch (e) {
+      /* 同上 */
+    }
+    if (!turnWroteSomething(result)) return; // 没写过库 ⇒ 不动编辑器（不打断人正在看的东西）
+    try {
+      if (window.__memoriaHasPendingEdits && window.__memoriaHasPendingEdits()) return; // 有脏编辑 ⇒ 不覆盖
+      const cur = (state && state.currentPath) || "";
+      if (cur) await app.openFile?.(cur, { skipNav: true });
+    } catch (e) {
+      /* 同上 */
+    }
+  }
+
+  /* ── 顶部**副标题行**里的写入状态栏（人 2026-09-21 定稿）──────────────────────────────────
+     位置：`.-agent-subhead`（就是原来的 `.-agent-history` 那一行；会话名与「历史」按钮已搬到
+     `.-agent-head`，见 `restructureHeader()`）。**撤销 / 重做只在这里出现一次**，不再挂在每条消息下方。
+     两态：**纯 bar**（一行摘要 + 撤销一步 / 重做一步）/ **点击展开**（栈轨迹 + 本步文件明细）。
+     文案两态：**已修改 N 个文件 /（无 state 时不渲染）**—— 原先还有个「已撤销」短显态，2026-09-21
+     已**删除**：它会在"撤到最底"时把整条状态栏收掉，连**重做入口一起收掉**（人报：「撤销之后栈状态栏
+     就没了，我无法重做」）。栈里只要有步骤就该显示，可用性交给 `can_undo` / `can_redo`。
+     `state` 形状：`{files: [{path, lines}], failed, txid, stack, onUndo, onRedo}`；`null` = 无改动。 */
+  let writeState = null;
+
+  /** 副标题行（状态栏宿主）；首次访问时补上新名 `-agent-subhead`。 */
+  function subheadEl() {
+    const dock = document.getElementById("-agent-dock");
+    if (!dock) return null;
+    const hist = dock.querySelector(".-agent-history");
+    if (hist && !hist.classList.contains("-agent-subhead")) hist.classList.add("-agent-subhead");
+    return hist;
+  }
+
+  /** 顶栏重排（人：「当前会话的名称改成在 head 显示（纯会话名）…历史按钮放这里，不用显示模型行名，
+   *  history 这栏显示状态，而且改名不叫 history 叫 subhead」）。**只搬 DOM、不动 `index.html`** ⇒ 零行漂移。 */
+  function restructureHeader() {
+    const dock = document.getElementById("-agent-dock");
+    if (!dock) return;
+    const head = dock.querySelector(".-agent-head");
+    const sub = subheadEl();
+    if (!head || !sub || head.dataset.restructured === "1") return;
+    const model = head.querySelector("#agent-model-label");
+    if (model) model.hidden = true; // 不显示模型名（DOM 保留，切模型的逻辑照旧）
+    const label = sub.querySelector(".-agent-history-label");
+    if (label) label.hidden = true; // 不显示"当前会话"这几个字
+    const current = sub.querySelector("#agent-history-current");
+    const openBtn = sub.querySelector("#agent-history-open");
+    if (current) head.appendChild(current); // 会话名 → head
+    if (openBtn) head.appendChild(openBtn); // 「历史」按钮 → head
+    head.dataset.restructured = "1";
+  }
+
+  /** 「撤销一步」/「重做一步」按钮（栈语义：一步一退 / 一步一进）。可用性由栈指针决定。 */
+  function stepButton(direction, st, stack) {
+    const isRedo = direction === "redo";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "-agent-act " + (isRedo ? "-agent-write-redo" : "-agent-write-undo");
+    btn.title = T(isRedo ? "agent.redoTitle" : "agent.undoTitle");
+    btn.textContent = T(isRedo ? "agent.redo" : "agent.undo");
+    const can =
+      !!st && !st.failed && stack
+        ? isRedo
+          ? !!stack.can_redo
+          : !!stack.can_undo
+        : false;
+    btn.disabled = !can;
+    btn.addEventListener("click", async function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      btn.disabled = true;
+      btn.textContent = T(isRedo ? "agent.redoing" : "agent.undoing");
+      const handler = isRedo ? st && st.onRedo : st && st.onUndo;
+      const done = await (handler ? handler() : Promise.resolve(false));
+      if (!done) {
+        // 失败或没有回调 ⇒ 复位（成功的路径由调用方重新取栈后整体重绘）
+        btn.textContent = T(isRedo ? "agent.redo" : "agent.undo");
+        btn.disabled = false;
+      }
+    });
+    return btn;
+  }
+
+  /** 状态栏元素（两态：纯 bar / 点击展开；含「撤销一步 / 重做一步」与栈轨迹）。 */
+  function writeBarEl() {
+    const st = writeState;
+    const stack = (st && st.stack) || null;
+    const wrap = document.createElement("div");
+    wrap.className = "-agent-write-bar";
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "-agent-act -agent-write-toggle";
+    toggle.setAttribute("aria-expanded", "false");
+    const summary = st && st.failed
+      ? T("agent.writeFailed")
+      : st
+        ? T("agent.writeSummary", { n: (st.files || []).length })
+        : T("agent.writeIdle");
+    // 栈位置（人：「采用 stack 设计」）⇒ bar 态就能看到"第几步 / 共几步"
+    toggle.textContent =
+      stack && stack.total ? summary + "  " + T("agent.stackPos", { p: stack.position, t: stack.total }) : summary;
+    wrap.appendChild(toggle);
+    wrap.appendChild(stepButton("undo", st, stack));
+    wrap.appendChild(stepButton("redo", st, stack));
+    if (st && !st.failed) {
+      const body = document.createElement("div");
+      body.className = "-agent-write-body";
+      body.hidden = true;
+      // ① 栈轨迹（每步一行；当前指针高亮）——这是"展开态"的主要信息
+      const steps = (stack && stack.steps) || [];
+      if (steps.length) {
+        const trace = document.createElement("div");
+        trace.className = "-agent-write-trace";
+        steps.forEach(function (step, index) {
+          const row = document.createElement("div");
+          row.className =
+            "-agent-write-step" + (step.current ? " is-current" : "") + (step.applied ? " is-applied" : "");
+          row.textContent =
+            T("agent.stackStep", { i: index + 1, n: step.files || 0 }) + (step.current ? "  ← " + T("agent.stackHere") : "");
+          trace.appendChild(row);
+        });
+        body.appendChild(trace);
+      }
+      // ② 本步（最近一次写入）的文件明细
+      (st.files || []).forEach(function (row) {
+        const line = document.createElement("div");
+        line.className = "-agent-write-file";
+        line.title = String(row.path || "");
+        line.textContent =
+          String(row.path || "") + (row.lines ? "  " + T("agent.writeLines", { n: row.lines }) : "");
+        body.appendChild(line);
+      });
+      toggle.addEventListener("click", function () {
+        body.hidden = !body.hidden;
+        toggle.setAttribute("aria-expanded", body.hidden ? "false" : "true");
+        wrap.classList.toggle("-agent-write--open", !body.hidden);
+        // 宿主（`.-agent-subhead`）被 `--bar-h-b` 钉成一行高 ⇒ 展开时改由内容撑开，否则会溢出盖住
+        // `.-agent-head` 与消息区顶部（L4 实测过）。
+        if (wrap.parentElement) {
+          wrap.parentElement.classList.toggle("-agent-write-host--open", !body.hidden);
+        }
+      });
+      wrap.appendChild(body);
+    }
+    return wrap;
+  }
+
+  /** 把状态栏渲染进**副标题行**（无改动且不在"已撤销"提示期 ⇒ 该行留空）。 */
+  function renderWriteState() {
+    restructureHeader();
+    const sub = subheadEl();
+    if (!sub) return;
+    Array.prototype.slice.call(sub.querySelectorAll(".-agent-write-bar")).forEach(function (el) {
+      el.remove();
+    });
+    sub.classList.remove("-agent-write-host--open"); // 每次重绘都回到"一行高"（折叠态为常态）
+    if (!writeState) return;
+    sub.appendChild(writeBarEl());
+  }
+
+  /** 告知"这次对话写了什么"（`null` = 无改动）。撤销按钮由本模块渲染，点击回调交回调用方。
+   *
+   *  ⚠️ **必须经由下面的 `return {...}` 暴露**，不能在 IIFE 内部 `Object.assign` 到那个全局名：
+   *  本文件是 `window.MemoriaAgentPanel = (function () { … })()` 形式，IIFE 内部执行时那个全局名**还没被赋值**
+   *  ⇒ `Object.assign` 只会创建一个**临时对象**，随后被 `return` 的对象覆盖 ⇒ 方法丢失（实测踩过：
+   *  状态条/撤销按钮完全不出现，且无任何报错）。 */
+  function setWriteState(next) {
+    writeState = next || null;
+    renderWriteState();
+  }
+
+  // 页面一加载就把顶栏按人定稿重排（会话名 / 「历史」→ `.-agent-head`；`.-agent-history` 兼作
+  // `-agent-subhead`，用来放写入状态栏）。放在 IIFE 末尾 ⇒ `index.html` 零改动、锚点零漂移。
+  restructureHeader();
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 状态行撤除 + 用量行定位修正 + 「没有最终答复」如实说明（2026-09-21，人报三件事）
+  //   ① 「对话框下面这个（`#agent-status`）能不能去掉」⇒ `index.html` 那行**改成注释**（保留行数 ⇒
+  //      不动 index.html 既有行号锚点），元素就此消失。原 `setStatusText()` 因为取不到元素而自动变成
+  //      空操作，故这里**接管**它：只记状态（`statusBarDotState()` 判红点用），并把原本**只**显示在
+  //      那行的提示（未输问题 / 换库丢弃 / 超时 / 配置读取失败）改走顶部浮层，不让它们**彻底消失**。
+  //      「断网」**不弹**：它是**状态**（状态 bar 有红字槽、发送键已禁用 + 悬停说明），不是一次出错。
+  //   ② 「agent 最后一次回话下方没有显示 token 使用情况以及命中率」⇒ 根因是**序位错位**：计划 / 写入
+  //      回执卡也带 `-agent-msg--assistant`（`plan-confirm.js`）却不在 `messages` 里 ⇒ 按 assistant
+  //      序位取 DOM 会整体偏一格。这里给每个消息元素打 `data-msg-index`，与上面两处 `assistantWrapFor()`
+  //      配对使用；用量行同时补上命中率（键 `agent.usage.rate`）。
+  //   ③ 「agent 有时候思考就卡在思考了，然后没有后文」⇒ 真机取证（AAA_Vocab 会话
+  //      `session-20260921T111525Z-ab1ac72c`）：`loop/end {stop_reason:"max-iterations", iterations:8}`，
+  //      而最后一轮 `assistant/message` 的 `content` 是**空串**（只调工具）⇒ 后端 `answer=""`，前端过去
+  //      完全不看 `stop_reason` ⇒ 气泡全空，看着就像"卡住了"。`stopNote()` 把这种"没有最终答复"如实
+  //      写成一句可行动的话（`agent.stop.*`），不再让人对着空气猜。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 同一次失败只弹一次浮层：`setStatusText(..., true)` 与显式 `showFlashError()` 常成对出现（两种
+   *  先后顺序都有）⇒ 300ms 内只放行第一个，否则一次失败会弹两个 toast。 */
+  let flashGuardAt = 0;
+  function flashOnce(fn, args) {
+    if (Date.now() - flashGuardAt < 300) return undefined;
+    flashGuardAt = Date.now();
+    return fn.apply(null, args);
+  }
+
+  /** 顶部浮层入口（包装）：只加"去重闸门"，其余与原行为逐字一致。 */
+  const baseShowFlashErrorBeforeStatus = showFlashError;
+  showFlashError = function () {
+    return flashOnce(baseShowFlashErrorBeforeStatus, arguments);
+  };
+
+  /** 接管状态行写入：可见状态行已撤 ⇒ 只记状态；"会消失的"错误改走顶部浮层（见本块顶注 ①）。 */
+  const baseSetStatusTextBeforeStatus = setStatusText;
+  setStatusText = function (msg, error) {
+    const text = String(msg == null ? "" : msg);
+    const isNew = text !== lastStatusText; // 配置刷新 / 整串重绘会重复设同一句 ⇒ 不再弹一次
+    lastStatusText = text;
+    lastStatusError = !!error;
+    if (error && isNew && text && text !== T("agent.err.net_disabled")) {
+      flashOnce(baseShowFlashErrorBeforeStatus, [text]);
+    }
+    return baseSetStatusTextBeforeStatus.apply(null, arguments);
+  };
+
+  /** 本轮**没有最终答复**时的说明（工具轮达上限 / 输出被长度截断 / 内容策略 / 只出思考没正文）。 */
+  function stopNote(result) {
+    const reason = String((result && result.stop_reason) || "");
+    if (reason === "max-iterations") return T("agent.stop.maxIterations", { n: (result && result.iterations) || 0 });
+    if (reason === "max-tokens") return T("agent.stop.maxTokens");
+    if (reason === "content-filter") return T("agent.stop.filtered");
+    // 正常收尾却**没有正文**（例如只流了思考块、正文为空）：同样要说一句，否则气泡空白、
+    // 人看到的仍是"卡在思考没有后文"（`test_agent_thinking_stream.py` 明确允许 `answer==""`）。
+    return T("agent.stop.emptyAnswer");
+  }
+
+  /** 给每个消息元素打**稳定索引**（`assistantWrapFor()` 的定位依据），并渲染本回合的**过程内容**
+   *  （思考行 + 过程行；compact 档在构成最终答复时折叠）。只包装 `messageEl()`、不改它本体
+   *  ⇒ 上方锚点零漂移。旧的 `toolsStrip()`（气泡末尾的工具摘要条）已由本块取代（见文件末尾块）。 */
+  const baseMessageElForIndex = messageEl;
+  messageEl = function (rec) {
+    const el = baseMessageElForIndex.apply(null, arguments);
+    const idx = messages.indexOf(rec);
+    if (el && idx >= 0) el.dataset.msgIndex = String(idx);
+    renderProcessInto(el, rec);
+    return el;
+  };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 一次回合的「过程内容」（2026-09-22；对齐上游 dsh 的 Turn Process Folding）+ 对话显示档
+  //   ① 思考行：**始终默认折叠**（AG08 的 `thinkEl()` 创建即折叠），摘要流式跟**末行**、定稿取**首行**；
+  //   ② 工具行：`process_delta` 边到边追加 / 同 `id` 的结果行**就地**更新（不重建整块 ⇒ 不闪烁、不打断
+  //      滚动），一行 = 状态点 + `工具名 · 参数摘要`；`running`→「运行中…」、`error`→「失败（code）」红字、
+  //      `ok` 不加字（避免噪声，状态点由 CSS 按 `data-state` 着色）；
+  //   ③ 回合结束（`finalizeMessage`）：**compact 档**且末步构成最终答复 ⇒ 把过程收进折叠容器、气泡
+  //      **顶部**给一行计数摘要按钮（`N 次工具调用 · N 条过程消息 · N 次失败`，全 0 回落「思考了一会儿」）；
+  //      不是最终答复（只调工具 / 出错）⇒ 整轮过程**全部保留可见**；`normal` 档**永不折叠**、也不渲染
+  //      摘要行；展开态按轮记忆（`rec.processOpen`）、新回合默认折叠。正文 / 锚点条 / 错误条 /
+  //      「（已停止）」标记都**留在折叠容器之外**（它们是独立节点，永远不折）。
+  //   ④ 设置项 `#agent-transcript`（`normal` / `compact`，落 `config/agent.json: transcript_mode`）
+  //      在设置弹窗「对话」页签（`#agent-refresh` 旁），改动即保存并**立即重绘**（折叠态随之改变）；
+  //   ⑤ 回放：`agent_session_load` 的记录带 `process` 时按**同一套**渲染（`loadSession` 把行与思考灌进
+  //      `rec`；旧的会话没有该键 ⇒ 保持现状、不报错、不留空壳）；
+  //   ⑥ 旧的 `toolsStrip()`（气泡末尾的工具摘要条）已删除并被本块取代 —— **失败可见性不退化**：
+  //      折叠态有摘要里的「N 次失败」，展开后有红字「失败（code）」+ 输出；没有实时过程通道时（例如
+  //      `result.tool_calls` 有、`rec.process` 为空）用 `result.tool_calls[]` 合成过程行。
+  //   落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 已投递的过程行**条数**（与文本游标、思考游标**完全独立**）；每轮提问由 `ask()` 包装重置。
+  let processCursor = 0;
+
+  /** 回放记录里的过程行（`agent_session_load` 的 `process` 键）；没有该键 ⇒ `null`（旧会话不动形状）。 */
+  function msgProcess(rec) {
+    return rec && Array.isArray(rec.process) ? rec.process : null;
+  }
+
+  /** 回放记录里的思考文本：把各 `step` 行的 `reasoning` 按顺序拼起来（无 ⇒ 空串；**仅兼容字段**，
+   *  渲染已改为按步的 `kind:"think"` 行，见 `withThinkRows()`）。 */
+  function msgReasoning(rec) {
+    const parts = [];
+    // **最终答复那一步**的思考（回放记录上的 `reasoning` 字段，见 `history._flush_turn()`）：它不在
+    // `process` 里（过程列表有意跳过最终答复，免得正文重复）⇒ 少了这一行，单步回合的思考会整块丢。
+    if (rec && typeof rec.reasoning === "string" && rec.reasoning.trim()) parts.push(rec.reasoning);
+    (rec && Array.isArray(rec.process) ? rec.process : []).forEach(function (row) {
+      if (row && row.kind === "step" && typeof row.reasoning === "string" && row.reasoning.trim()) parts.push(row.reasoning);
+    });
+    return parts.join("\n");
+  }
+
+  /** **按步**把思考插进过程行（2026-09-22 改版）：每个带 `reasoning` 的 `step` 行**前面**插一条
+   *  `kind:"think"`；**最终答复那一步**的思考（`rec.reasoning`）**排在最后**（它就是"最终答复之前
+   *  的那次思考"，天然在末尾）。
+   *
+   *  为什么这么摆（人：「agent 回话都是上面一个思考，然后产出总结并结束，但 dsh 里思考是**多次开展
+   *  多次结束**的」）：思考本来就是**随步**产生的（`turn_process.step_row()` 把 `reasoning` 挂在
+   *  `step` 上、`session/history` 按步存），拼成一条会丢掉"第几步在想什么"以及它与工具行的交替关系。
+   *  纯函数（不改入参、可单测）。 */
+  function withThinkRows(rows, rec) {
+    const out = [];
+    (Array.isArray(rows) ? rows : []).forEach(function (row) {
+      if (row && row.kind === "step" && typeof row.reasoning === "string" && row.reasoning.trim()) {
+        out.push({ kind: "think", text: row.reasoning, state: "done", iteration: row.iteration || 0 });
+      }
+      out.push(row);
+    });
+    if (rec && typeof rec.reasoning === "string" && rec.reasoning.trim()) {
+      out.push({ kind: "think", text: rec.reasoning, state: "done", iteration: 0 });
+    }
+    return out;
+  }
+
+  /** 回合内的过程行缓冲（实时 `process_delta` 与回放记录**共用同一形状**，见 turn_process.py）。 */
+  function procRows(rec) {
+    return rec && Array.isArray(rec.process) ? rec.process : [];
+  }
+
+  /** 末条 `step` 行是否构成**最终答复**（正文非空白且无工具调用）；尾部的工具行不参与判定。 */
+  function finalAnswerFromRows(rows) {
+    const list = Array.isArray(rows) ? rows : [];
+    for (let i = list.length - 1; i >= 0; i -= 1) {
+      const row = list[i];
+      if (!row || row.kind !== "step") continue;
+      return !!String(row.text || "").trim() && !Number(row.tool_calls || 0);
+    }
+    return false;
+  }
+
+  /** 该回合在 compact 档下是否**可折叠**：实时侧由 `finalizeMessage` 判定后写进 `rec.processFinal`；
+   *  回放记录没有实时帧 ⇒ 按行形状推 —— 末行是**已收尾的工具行**说明「最终答复那条 `step`」已被后端
+   *  `turn_process.process_items()` 从 `process` 里跳过；末行是 `step` 或**未收尾**的工具行 ⇒ 不可折。 */
+  function processFoldable(rec, rows) {
+    if (rec && rec.processFinal === true) return true;
+    if (rec && rec.processFinal === false) return false;
+    const last = rows && rows.length ? rows[rows.length - 1] : null;
+    return !!(last && last.kind === "tool" && String(last.state || "") !== "running");
+  }
+
+  /** 对话显示档（`transcript_mode`）：只认 `normal` / `compact`，其余（含缺省）一律 `compact`。 */
+  function transcriptMode() {
+    return cfg && cfg.transcript_mode === "normal" ? "normal" : "compact";
+  }
+
+  /** 工具行状态文案：`running` → 「运行中…」、`error` → 「失败（code）」、`ok` → 空串（不加噪声）。 */
+  function toolStateText(row) {
+    const state = String((row && row.state) || "");
+    if (state === "running") return T("agent.tool.running");
+    if (state === "error") {
+      const code = String((row && row.code) || "");
+      return T("agent.tool.failed") + (code ? "（" + code + "）" : "");
+    }
+    return "";
+  }
+
+  /** 工具行的**原生悬停提示** = 工具名 + 参数摘要 + 输出全文。 */
+  function toolRowTitle(row) {
+    return [
+      String((row && row.name) || ""),
+      String((row && row.summary) || ""),
+      String((row && row.detail) || ""),
+    ].filter(function (bit) { return !!bit; }).join(" · ");
+  }
+
+  /** 就地刷新一条工具行（同 `id` 的结果行到达时用；**不重建节点** ⇒ 不闪烁、不打断滚动）。 */
+  function updateToolRowEl(line, row) {
+    if (!line) return;
+    const detail = String((row && row.detail) || "");
+    const state = String((row && row.state) || "");
+    line.setAttribute("data-state", state);
+    const st = line.querySelector(".-agent-tool-state");
+    if (st) {
+      st.textContent = toolStateText(row);
+      st.classList.toggle("-agent-tool-state--error", state === "error");
+    }
+    let out = line.querySelector(".-agent-tool-output");
+    if (!detail) {
+      if (out) out.remove();
+      line.classList.remove("-agent-tool--expandable"); // 没有输出 ⇒ 不给展开入口（cursor: default）
+    } else {
+      if (!out) {
+        out = document.createElement("div");
+        out.className = "-agent-tool-output";
+        const label = document.createElement("div");
+        label.className = "-agent-tool-output-label";
+        label.textContent = T("agent.tool.output");
+        const pre = document.createElement("pre");
+        pre.className = "-agent-tool-output-body";
+        out.appendChild(label);
+        out.appendChild(pre);
+        out.hidden = true;
+        line.appendChild(out);
+        // 点这一行开合输出（行的 `title` 已给全文；展开区是等宽小字 + `pre-wrap`）
+        line.addEventListener("click", function () {
+          if (!line.classList.contains("-agent-tool--expandable")) return;
+          out.hidden = !out.hidden;
+          line.classList.toggle("-agent-tool--open", !out.hidden);
+        });
+      }
+      line.classList.add("-agent-tool--expandable");
+      const pre = out.querySelector(".-agent-tool-output-body");
+      if (pre) pre.textContent = detail;
+    }
+    line.title = toolRowTitle(row);
+  }
+
+  /** 工具行 DOM（**一行**）：状态点 + `工具名 · 参数摘要` + 状态文案；有输出时可点开。 */
+  function toolRowEl(row) {
+    const line = document.createElement("div");
+    line.className = "-agent-tool";
+    line.setAttribute("data-tool-id", String((row && row.id) || ""));
+    const dot = document.createElement("span");
+    dot.className = "-agent-tool-dot";
+    dot.setAttribute("aria-hidden", "true");
+    const name = document.createElement("span");
+    name.className = "-agent-tool-name";
+    name.textContent = String((row && row.name) || "");
+    const summary = document.createElement("span");
+    summary.className = "-agent-tool-summary";
+    summary.textContent = String((row && row.summary) || "");
+    const state = document.createElement("span");
+    state.className = "-agent-tool-state";
+    line.appendChild(dot);
+    line.appendChild(name);
+    if (summary.textContent) {
+      const sep = document.createElement("span");
+      sep.className = "-agent-tool-sep";
+      sep.textContent = "·";
+      line.appendChild(sep);
+      line.appendChild(summary);
+    }
+    line.appendChild(state);
+    updateToolRowEl(line, row);
+    return line;
+  }
+
+  /** 同一工具调用的两行（`tool/call` / `tool/result`，**同 `id`**）合并成一行（L4 实测的必要步骤：
+   *  结果行的 `summary` 是空串 —— 结果事件没有参数 ⇒ 摘要必须取**先到**那行，状态 / code / detail
+   *  取**后到**那行；不合并会让一次调用在回放里显示成两行、其中一行没有参数摘要）。 */
+  function mergeToolRows(rows) {
+    const out = [];
+    const seen = {};
+    (Array.isArray(rows) ? rows : []).forEach(function (row) {
+      if (!row) return;
+      if (row.kind !== "tool") { out.push(row); return; }
+      const id = String(row.id || "");
+      const prev = id ? seen[id] : null;
+      if (!prev) {
+        const copy = Object.assign({}, row);
+        if (id) seen[id] = copy;
+        out.push(copy);
+        return;
+      }
+      if (!String(prev.summary || "").trim()) prev.summary = String(row.summary || "");
+      prev.state = row.state;
+      if (row.code) prev.code = row.code;
+      if (String(row.detail || "")) prev.detail = row.detail;
+      if (row.name) prev.name = row.name;
+    });
+    return out;
+  }
+
+  /** 过程行节点序列（**按步的思考行** + `step` 的「更早的助手正文」+ 工具行，按事件 / 到达顺序）。 */
+  function processRowsEl(rows) {
+    const box = document.createElement("div");
+    box.className = "-agent-process";
+    (Array.isArray(rows) ? rows : []).forEach(function (row) {
+      if (!row) return;
+      if (row.kind === "think") {
+        if (String(row.text || "").trim()) box.appendChild(thinkEl(row.text, row.state === "live"));
+        return;
+      }
+      if (row.kind === "tool") {
+        box.appendChild(toolRowEl(row));
+        return;
+      }
+      if (row.kind !== "step") return;
+      const text = String(row.text || "").trim();
+      if (!text) return;
+      const step = document.createElement("div");
+      step.className = "-agent-step";
+      renderAssistantBody(step, text); // 与助手正文同一条管线（公式 / 代码 / 列表都渲染）
+      box.appendChild(step);
+    });
+    return box;
+  }
+
+  /** 折叠摘要文案：`N 次工具调用 · N 条过程消息`（为 0 的段省略）+（有失败时）` · N 次失败`；
+   *  三段全 0 ⇒ 「思考了一会儿」。工具数按 `id` 去重（同一次调用有 `call` / `result` 两行）。 */
+  function processSummaryText(rows) {
+    const seen = {};
+    const seenFailed = {};
+    let tools = 0;
+    let failed = 0;
+    let messages = 0;
+    (Array.isArray(rows) ? rows : []).forEach(function (row) {
+      if (!row) return;
+      if (row.kind === "tool") {
+        const id = String(row.id || "");
+        if (!seen[id]) { seen[id] = 1; tools += 1; }
+        if (String(row.state || "") === "error" && !seenFailed[id]) { seenFailed[id] = 1; failed += 1; }
+        return;
+      }
+      if (row.kind === "step" && String(row.text || "").trim()) messages += 1;
+    });
+    const parts = [];
+    if (tools) parts.push(T("agent.process.tools", { n: tools }));
+    if (messages) parts.push(T("agent.process.messages", { n: messages }));
+    if (failed) parts.push(T("agent.process.failed", { n: failed }));
+    return parts.length ? parts.join(" · ") : T("agent.process.thought");
+  }
+
+  /** 没有实时过程通道时的兜底过程行（`result.tool_calls[]` → 行）：**工具失败不可能隐形**。
+   *  字段 `{id,name,is_error,code,message}` 已在载荷里 ⇒ `message` 当 `detail`、`is_error` 定 `state`。 */
+  function synthesizeRows(rec) {
+    const calls = rec && Array.isArray(rec.tools) ? rec.tools : [];
+    return calls.map(function (call, index) {
+      const isError = !!(call && call.is_error);
+      return {
+        kind: "tool",
+        id: String((call && call.id) || "call-" + index),
+        name: String((call && call.name) || ""),
+        summary: String((call && call.summary) || ""),
+        state: isError ? "error" : "ok",
+        code: (call && call.code) || null,
+        detail: String((call && call.message) || ""),
+        iteration: 0,
+      };
+    });
+  }
+
+  /** 过程容器（`.-agent-process`）：正文**之前**（流式期间思考行 / 工具行的落点）。
+   *  **2026-09-22 起思考行在容器内部**（按步、与工具行交错）⇒ 不再需要"把外层思考块拽到容器之前"。
+   *  `wrap.querySelector(".-agent-process")` 可能命中**上一次渲染的折叠容器内的**那个：只有它还在
+   *  `wrap` 的直接子级里才复用，否则新造一个（避免把新行塞进折叠体里）。 */
+  function processBox(wrap) {
+    const body = wrap.querySelector(".-agent-msg-body");
+    let box = null;
+    for (let i = 0; i < wrap.children.length; i += 1) {
+      if (wrap.children[i].classList && wrap.children[i].classList.contains("-agent-process")) {
+        box = wrap.children[i];
+        break;
+      }
+    }
+    if (!box) {
+      box = document.createElement("div");
+      box.className = "-agent-process";
+      if (body) wrap.insertBefore(box, body); else wrap.appendChild(box);
+    }
+    return box;
+  }
+
+  /** 把一帧 `process_delta` 交给当前助手记录与 DOM：新增行 append；同 `id` 的结果行**就地**更新。
+   *  **本步思考的收尾点**（2026-09-22）：`step` 行到达即把当前那段"实时思考"冻结成 `done`，并用后端
+   *  给的**权威全文**覆盖增量拼接的结果（同一份文本，避免边界处少一片/多一片）⇒ 下一片增量会**另开
+   *  一段**（`openThinkRow()`）⇒ 一段思考后面跟它那一步的工具行。 */
+  function applyProcessDelta(rows) {
+    const rec = currentAssistant();
+    if (!rec || !Array.isArray(rows) || !rows.length) return;
+    if (!Array.isArray(rec.process)) rec.process = [];
+    const wrap = streamingEl && streamingEl.parentElement;
+    let box = null;
+    rows.forEach(function (row) {
+      if (!row || typeof row !== "object") return;
+      if (row.kind === "step" && typeof row.reasoning === "string" && row.reasoning.trim()) {
+        const prev = rec.process[rec.process.length - 1];
+        if (prev && prev.kind === "think" && prev.state === "live") {
+          prev.text = row.reasoning;
+          prev.state = "done";
+          if (wrap) updateThinkRowEl(lastThinkRowEl(wrap), prev);
+        } else {
+          // 该步没有实时增量（例如回放灌进来的过程行）⇒ 补一段，别丢这一步的思考
+          const think = { kind: "think", text: row.reasoning, state: "done", iteration: row.iteration || 0 };
+          rec.process.push(think);
+          if (wrap) processBox(wrap).appendChild(thinkEl(row.reasoning, false));
+        }
+      }
+      rec.process.push(row);
+      // `step` 行不单独出节点：生成期间正文本身就在流式渲染（回合结束后才折进过程区）
+      if (!wrap || row.kind !== "tool") return;
+      box = box || processBox(wrap);
+      const id = String(row.id || "");
+      let line = null;
+      if (id) {
+        const nodes = box.querySelectorAll(".-agent-tool");
+        for (let i = 0; i < nodes.length; i += 1) {
+          if (nodes[i].getAttribute("data-tool-id") === id) { line = nodes[i]; break; }
+        }
+      }
+      if (line) updateToolRowEl(line, row);
+      else box.appendChild(toolRowEl(row));
+    });
+    scrollToBottom();
+  }
+
+  /** 渲染一个回合的过程内容（重绘**幂等**）：**按步的思考行 + 过程行**；compact 档在**构成最终
+   *  答复**时整块收进折叠容器、气泡顶部给计数摘要按钮（真实 `<button>` + `aria-expanded`，按轮记忆展开态）。 */
+  function renderProcessInto(wrap, rec) {
+    if (!wrap || !rec || rec.role !== "assistant") return;
+    const body = wrap.querySelector(".-agent-msg-body");
+    Array.prototype.slice.call(wrap.querySelectorAll(".-agent-process, .-agent-process-fold")).forEach(function (node) {
+      node.remove();
+    });
+    let rows = procRows(rec);
+    if (!rows.length) rows = synthesizeRows(rec);
+    rows = mergeToolRows(rows); // 同 id 的调用 / 结果两行合成一行（摘要取调用那行、状态取结果那行）
+    rows = withThinkRows(rows, rec); // **按步**插思考行（最终答复那一步的思考排最后）
+    if (!rows.length) return;
+    const nodes = [processRowsEl(rows)];
+    if (transcriptMode() !== "compact" || !processFoldable(rec, rows)) {
+      // normal 档 / 不是最终答复：过程**全部可见**（不渲染摘要行）
+      const frag = document.createDocumentFragment();
+      nodes.forEach(function (node) { frag.appendChild(node); });
+      if (body) wrap.insertBefore(frag, body); else wrap.appendChild(frag);
+      return;
+    }
+    const box = document.createElement("div");
+    box.className = "-agent-process-fold";
+    const open = rec.processOpen === true;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "-agent-act -agent-process-toggle";
+    btn.title = T("agent.process.toggleTitle");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = processSummaryText(rows);
+    const inner = document.createElement("div");
+    inner.className = "-agent-process-fold-body";
+    inner.hidden = !open;
+    nodes.forEach(function (node) { inner.appendChild(node); });
+    btn.addEventListener("click", function () {
+      const next = inner.hidden; // 当前收起 ⇒ 这次点击的意图是展开
+      inner.hidden = !next;
+      rec.processOpen = next;
+      btn.setAttribute("aria-expanded", next ? "true" : "false");
+      box.classList.toggle("-agent-process-fold--open", next);
+    });
+    box.classList.toggle("-agent-process-fold--open", open);
+    box.appendChild(btn);
+    box.appendChild(inner);
+    if (body) wrap.insertBefore(box, body); else wrap.appendChild(box);
+  }
+
+  /** 定稿：判定「末步是否构成最终答复」（compact 档据此折叠），并**摘掉**末条最终答复 `step` 行
+   *  （= 它已作为气泡正文渲染；摘掉后 `rec.process` 与后端回放记录的形状一致）。 */
+  const baseFinalizeForProcess = finalizeMessage;
+  finalizeMessage = function (result) {
+    const rec = currentAssistant();
+    if (rec) {
+      const rows = procRows(rec);
+      rec.processFinal = rows.length
+        ? finalAnswerFromRows(rows)
+        : !!String((result && result.answer) || "").trim() && !(result && result.status === "error");
+      if (Array.isArray(rec.process)) {
+        const last = rec.process[rec.process.length - 1];
+        if (last && last.kind === "step" && finalAnswerFromRows([last])) rec.process = rec.process.slice(0, -1);
+      }
+    }
+    return baseFinalizeForProcess.apply(null, arguments);
+  };
+
+  // 每轮提问重置过程游标（基座 `ask()` 的 job 游标是每轮新建，过程游标同口径；不重置会漏行/重放）。
+  const baseAskForProcess = ask;
+  ask = function () {
+    processCursor = 0;
+    return baseAskForProcess.apply(null, arguments);
+  };
+
+  // ── 设置项：对话显示 Normal / Compact（`transcript_mode`）────────────────────────
+
+  //: 白名单（与后端 `llm/config.py` 的 `transcript_mode` 一致；发别的值后端报 `ConfigError`）。
+  const TRANSCRIPT_CHOICES = ["normal", "compact"];
+  const TRANSCRIPT_KEYS = { normal: "agent.settings.transcriptNormal", compact: "agent.settings.transcriptCompact" };
+
+  /** 重填 `<select id="agent-transcript">` 的选项（含语言切换后的文案）并对齐当前值。 */
+  function syncTranscriptSelect() {
+    const sel = $("#agent-transcript");
+    if (!sel) return;
+    sel.innerHTML = "";
+    TRANSCRIPT_CHOICES.forEach(function (value) {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = T(TRANSCRIPT_KEYS[value]);
+      sel.appendChild(opt);
+    });
+    sel.value = transcriptMode();
+  }
+
+  /** 选中即保存（与 `#agent-refresh` 同套路）：写 `transcript_mode` 并**立即重绘**（折叠态随之改变）。 */
+  async function saveTranscriptMode(value) {
+    const mode = String(value || "");
+    if (TRANSCRIPT_CHOICES.indexOf(mode) === -1) {
+      syncTranscriptSelect(); // 非法取值：回滚显示
+      return;
+    }
+    let res;
+    try {
+      res = await call("agent_save_config", { transcript_mode: mode });
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(T("agent.settings.saveFailed"), errorDetail(res) || errorText(res));
+      syncTranscriptSelect();
+      return;
+    }
+    cfg = res;
+    applyConfigToForm(); // 内含 syncTranscriptSelect
+    renderMessages(); // 立即生效：按新档重绘（折叠 / 展开随之改变）
+  }
+
+  // 表单回填 / 配置落定后同步选择框（`refreshConfig` / `saveConfig` / 语言切换都经此）。
+  const baseApplyConfigToFormForTranscript = applyConfigToForm;
+  applyConfigToForm = function () {
+    const out = baseApplyConfigToFormForTranscript.apply(null, arguments);
+    syncTranscriptSelect();
+    return out;
+  };
+
+  // 装配：绑选择框 + 首帧对齐（与基座同判据：页面未登记停靠栏则整体不介入）。
+  const baseInitForTranscript = init;
+  init = function () {
+    const out = baseInitForTranscript.apply(null, arguments);
+    if (!$("#-agent-dock")) return out;
+    const sel = $("#agent-transcript");
+    if (sel) sel.addEventListener("change", () => saveTranscriptMode(sel.value));
+    syncTranscriptSelect();
+    return out;
+  };
+
+  // ── 助手气泡里的**公式**（人 2026-09-21：「agent 回复的内容公式没有被渲染，它的渲染不是采用和
+  //    memoria 一样的吗」）────────────────────────────────────────────────────────────────
+  // 现状与缺口：气泡只走 `marked.parse()`（`renderAssistantBody()`），**没有**预览那条"公式"管线 ⇒
+  //   `$…$` / `$$…$$` 原样留在文本里。而 MathJax 的**全局配置本来就认这两个定界符**
+  //   （`index.html:24-33` 的 `inlineMath` / `displayMath`），**且 `skipHtmlTags` 已排除 `pre`/`code`**
+  //   ⇒ 缺的只是"归一化 + 排版"两步。这里两步都**复用预览那一份实现**（不复制第二套规则）：
+  //   ① 归一化 = `MemoriaMathNormalize.normalize()`（`markdown-preview.js::normalizeBody()` 用的同一个；
+  //      顺带把"没写定界符的旧式公式"按同一标准收进 `$$…$$`）；
+  //   ② 排版 = `MemoriaMarkdownPreview.initMathJax()`（同一个 MathJax 实例 / 同一份配置）。
+  // 为什么**防抖 300ms**：流式期间每帧都会重渲染正文（250ms 轮询）—— 每帧都排版会把 MathJax 拖死；
+  //   防抖 + `isConnected` 守卫 ⇒ 只在"这一帧停下来之后"排一次，节点已被重建则直接跳过。
+  // 为什么在**净化之后**排：`sanitizeHtmlInto()` 会剥掉所有未知标签与属性（模型输出不受信），
+  //   而 MathJax 生成的 `<mjx-container>` 是它自己的产物 ⇒ 必须排在净化之后（否则会被剥掉）。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ─────────────────────────────────────────────────────────────────────────────────────────
+
+  const AGENT_MATH_DEBOUNCE_MS = 300;
+  const agentMathTimers = new WeakMap();
+
+  /** 交给 `marked` 之前先把公式归一化（取不到归一化模块 / 抛错 ⇒ 原样返回，绝不吞正文）。 */
+  function agentMathSource(text) {
+    const src = String(text == null ? "" : text);
+    const norm = typeof window !== "undefined" ? window.MemoriaMathNormalize : null;
+    if (!norm || typeof norm.normalize !== "function") return src;
+    try {
+      return norm.normalize(src);
+    } catch (e) {
+      console.warn("agent-math-normalize:", e);
+      return src;
+    }
+  }
+
+  /** 给一个**已净化**的气泡正文排一次公式（防抖、fail-open：拿不到 MathJax 就保持源码文本）。 */
+  function typesetAgentMath(el) {
+    if (!el) return;
+    const preview = typeof window !== "undefined" ? window.MemoriaMarkdownPreview : null;
+    if (!preview || typeof preview.initMathJax !== "function") return;
+    const timer = agentMathTimers.get(el);
+    if (timer) clearTimeout(timer);
+    agentMathTimers.set(
+      el,
+      setTimeout(function () {
+        agentMathTimers.delete(el);
+        if (!el.isConnected) return; // 已被整串重绘换掉 ⇒ 别再排版一个游离节点
+        Promise.resolve(preview.initMathJax())
+          .then(function () {
+            if (window.MathJax?.typesetClear) window.MathJax.typesetClear([el]);
+            if (window.MathJax?.typesetPromise) return window.MathJax.typesetPromise([el]);
+            return null;
+          })
+          .catch(function (e) {
+            console.warn("agent-math:", e);
+          });
+      }, AGENT_MATH_DEBOUNCE_MS)
+    );
+  }
+
+  /** 交给 `marked` 的完整管线（与预览同源的**前两步**）：① 公式归一化；② 库内图片路径改写。
+   *  `rewriteLocalImagePaths()` 是 `markdown-preview.js` 的导出（同一份实现、同一个「库根」）——
+   *  它把 `.memoria/images/x.png` 这类**库内相对路径**改写成 `/files/...`，远程 / `data:` 一律不动
+   *  （随后被 `appendLocalImage()` 丢掉）。人 2026-09-21：「img 怎么会被丢，都是交给 memoria 渲染管线
+   *  渲染的，只要有本地图片文件就会渲染出来」—— 对：库内图片本来就该走同一通路。 */
+  function agentRichHtml(src) {
+    const html = window.marked.parse(agentMathSource(src), { gfm: true, breaks: true });
+    const preview = window.MemoriaMarkdownPreview;
+    try {
+      if (preview && typeof preview.rewriteLocalImagePaths === "function") {
+        return preview.rewriteLocalImagePaths(html);
+      }
+    } catch (e) {
+      console.warn("agent-img-rewrite:", e);
+    }
+    return html;
+  }
+
+  /** 是不是**库内**图片（改写后的 `/files/...`）；其它（`http(s)` / `data:` / `javascript:` / 空）一律拒。
+   *  纯函数 ⇒ 可被单测直接跑（安全边界就写在它一处）。 */
+  function isLocalImageSrc(src) {
+    return /^\/files\//.test(String(src == null ? "" : src));
+  }
+
+  /** 净化期放行**库内**图片：只搬运 `src`（必须本地）+ `alt`/`title`，其它属性（`on*` 等）一律不抄。 */
+  function appendLocalImage(target, node) {
+    const src = String((node && node.getAttribute && node.getAttribute("src")) || "");
+    if (!isLocalImageSrc(src)) return; // 远程 / data: / javascript: ⇒ 丢（不静默放行）
+    const img = document.createElement("img");
+    img.setAttribute("src", src);
+    const alt = node.getAttribute("alt");
+    if (alt) img.setAttribute("alt", alt);
+    const title = node.getAttribute("title");
+    if (title) img.setAttribute("title", title);
+    img.setAttribute("loading", "lazy");
+    target.appendChild(img);
+  }
+
+  /** 给气泡里的库内图片挂上预览那套**灯箱**（双击放大）；同一个实现，不另写一套。 */
+  function attachAgentImages(el) {
+    const preview = window.MemoriaMarkdownPreview;
+    if (!preview || typeof preview.attachImageLightbox !== "function") return;
+    try {
+      preview.attachImageLightbox(el);
+    } catch (e) {
+      console.warn("agent-img-lightbox:", e);
+    }
+  }
+
+  // ── 输入框：空框时 ↑/↓ 翻「发过的内容」（人 2026-09-21：「输入框空的时候按上下键要可以切换“发过的内容”」）
+  //   口径：① **只有空输入框**才翻历史（有草稿就交给浏览器默认的上下移动，绝不吞掉人的编辑）；
+  //   ② ↑ 往旧、↓ 往新；已到最旧停在最旧，越过最新 ⇒ 回到空框并退出历史模式；③ 落点光标在**末尾**；
+  //   ④ 手动敲字或 `ask()` 之后游标复位（否则刚发完再按 ↑ 会从"倒数第二条"开始，与直觉不符）。
+  //   落点纪律：整块追加在 IIFE 末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  let composerHistCursor = null; // null = 不在历史模式；数字 = 在 `sentTexts()` 里的下标
+
+  /** 本会话（含载入的历史会话）里"人发过的内容"，按发送先后。 */
+  function sentTexts() {
+    return messages
+      .filter(function (rec) {
+        return rec && rec.role === "user";
+      })
+      .map(function (rec) {
+        return String(rec.text == null ? "" : rec.text);
+      })
+      .filter(function (t) {
+        return t.trim() !== "";
+      });
+  }
+
+  /** 纯函数：算翻一步之后的历史下标（`null` = 退出历史模式回到空框）。`dir` = -1 旧 / +1 新。 */
+  function composerHistNext(cursor, dir, n) {
+    if (!n) return null;
+    if (cursor === null || cursor < 0 || cursor >= n) return dir < 0 ? n - 1 : null; // 首次 ↑ = 最新那条
+    const next = cursor + dir;
+    if (next < 0) return 0; // 已到最旧：停在最旧（不退出，免得"再按一下框就空了"）
+    if (next >= n) return null; // 越过最新：退出历史 ⇒ 空框
+    return next;
+  }
+
+  /** 空框时翻历史；返回 true 表示"这次按键我处理了"（调用方 preventDefault）。 */
+  function composerHistStep(dir) {
+    const input = $("#agent-input");
+    if (!input) return false;
+    // 有**人打的**草稿 ⇒ 一概不动（交给浏览器默认的上下移动）。注意判据**不是"框空不空"**：
+    // 历史填充进去的文本也非空，若只判空则第一次 ↑ 之后后续 ↑↓ 全被挡掉（真机 L4 实测到的一次性 bug）。
+    if (String(input.value || "") !== "" && composerHistCursor === null) return false;
+    const texts = sentTexts();
+    const next = composerHistNext(composerHistCursor, dir, texts.length);
+    if (next === null && texts.length === 0) return false;
+    composerHistCursor = next;
+    const text = next === null ? "" : texts[next];
+    input.value = text;
+    const end = text.length;
+    try {
+      input.setSelectionRange(end, end); // 光标落在末尾，方便接着改
+    } catch (e) {
+      /* 老 webview 没有 setSelectionRange：不上报、不影响取值 */
+    }
+    afterComposerEdit(input, end); // chip / 提及块与被替换的文本同步
+    return true;
+  }
+
+  (function bindComposerHistory() {
+    const input = $("#agent-input");
+    if (!input) return;
+    input.addEventListener("keydown", function (e) {
+      if (e.isComposing || e.keyCode === 229) return; // 输入法组字中不碰（与原子块处理同一口径）
+      if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      if (!composerHistStep(e.key === "ArrowUp" ? -1 : 1)) return;
+      e.preventDefault();
+    });
+    input.addEventListener("input", function () {
+      composerHistCursor = null; // 手动敲字 ⇒ 离开历史模式
+    });
+    const askBase = ask;
+    ask = function () {
+      composerHistCursor = null; // 发出去之后重新从最新那条开始
+      return askBase.apply(this, arguments);
+    };
+  })();
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-22 追加：审批档位（上游 `dsh-permission-presets`）+ 逐条确认（上游 `user-approval`）
+  //
+  // 人：「继续移植上游」。三档的**机器键**是稳定英文（进会话事件 ⇒ 可回放、可审计），显示名走
+  // i18n（后端中文名只作回退事实源）。本块**整段追加在 `return {` 之前** ⇒ 既有行号锚点零漂移。
+  //
+  // 四个落点：
+  //   ① 输入区档位选择器 `#agent-permission`（挂到 `.-agent-composer-actions`，与 `plan-confirm.js`
+  //      的计划入口同一扩容点，无 HTML 改动）——切**当前会话**的档（落 `permission/preset` 事件）；
+  //   ② 设置面板「新会话审批档」`#agent-permission-default`（HTML 已就位）——写
+  //      `config/agent.json: permission.<agent>`，只影响**以后新建**的会话；
+  //   ③ 轮询载荷 `pending_approvals` ⇒ 逐条确认卡（允许一次 / 拒绝），回填走 `agent_approval_answer`；
+  //   ④ 会话改变（首轮结束 / 换库 / 清空 / 整串重绘）时重读或重填档位面。
+  //
+  // 兜底口径：**卡只在"待批"期间可点**；不在待批帧里的卡一律标「已处理」并禁用按钮（面板与后端
+  // 各自收敛，绝不出现"点了没反应"）。派生态 `custom` 只展示、不可选（对齐上游）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 档位机器键 → i18n 键后缀（`agent.permission.<后缀>.name` / `.desc`）。 */
+  const PERMISSION_KEYS = {
+    "manual-approval": "manual",
+    "auto-approval": "auto",
+    "all-access": "all",
+    custom: "custom",
+  };
+  //: 派生态（当前旋钮不匹配任何档）：**可展示、不可作切换目标**。
+  const PERMISSION_CUSTOM = "custom";
+  //: 逐条确认卡的两个按钮 → 后端封闭词汇（`unavailable` 不是人能点的裁决）。
+  const APPROVAL_ACT = { allow: "allowed-once", deny: "rejected" };
+
+  let permOptions = []; // 后端 `options[]`（含派生态），每次读档位面时整体替换
+  let permCurrent = "";
+  let permDefault = "";
+  let permAgent = "main"; // 档位归属的 agent（当前只有主 agent；见 permission_presets.MAIN_AGENT）
+  //: 待批卡：**键 = call id + created_at**（不是 call id 一个键，理由见 `approvalCardKey()`）。
+  const approvalCards = {};
+
+  function permKey(value) {
+    return PERMISSION_KEYS[String(value == null ? "" : value)] || "";
+  }
+
+  /** 档位文案：优先本地语言；缺键时回退后端给的中文名/描述。 */
+  function permText(value, field, fallback) {
+    const key = permKey(value);
+    if (!key) return String(fallback == null ? (value == null ? "" : value) : fallback);
+    const full = "agent.permission." + key + "." + field;
+    const text = T(full);
+    if (text && text !== full) return text;
+    return String(fallback == null ? "" : fallback);
+  }
+
+  /** 重填一个档位选择器；派生态作为**禁用项**保留（否则"当前值"会显示成别的档 ⇒ 说谎）。 */
+  function fillPermissionSelect(sel, current) {
+    if (!sel) return;
+    sel.innerHTML = "";
+    permOptions.forEach(function (opt) {
+      if (!opt || !opt.value) return;
+      const value = String(opt.value);
+      const el = document.createElement("option");
+      el.value = value;
+      el.textContent = permText(value, "name", opt.name);
+      const tip = permText(value, "desc", opt.description);
+      if (tip) el.title = tip;
+      if (value === PERMISSION_CUSTOM) el.disabled = true;
+      sel.appendChild(el);
+    });
+    const wanted = String(current == null ? "" : current);
+    if (wanted && sel.querySelector('option[value="' + wanted.replace(/"/g, '\\"') + '"]')) sel.value = wanted;
+    else if (!sel.value && sel.options.length) sel.selectedIndex = 0;
+  }
+
+  /** 后端档位面 → 两个选择器 + 缓存（一次 RPC 同时喂"当前会话"与"新会话默认"）。 */
+  function paintPermission(st) {
+    if (!st || st.status !== "ok") return false;
+    permOptions = Array.isArray(st.options) ? st.options : [];
+    permCurrent = String(st.current || "");
+    permDefault = String(st.default || permCurrent);
+    permAgent = String(st.agent || permAgent);
+    fillPermissionSelect($("#agent-permission"), permCurrent);
+    fillPermissionSelect($("#agent-permission-default"), permDefault);
+    return true;
+  }
+
+  /** 读档位面（库/会话都可有可无：没有会话时 `current` = 该 agent 的默认档）。 */
+  async function refreshPermission() {
+    let res;
+    try {
+      res = await call("agent_permission_get", state.kbPath || null, sessionId || null);
+    } catch (e) {
+      return; // 档位面读失败保持上一次显示：它不该打断对话
+    }
+    paintPermission(res);
+  }
+
+  /** 把选择器挂进输入区（幂等；与计划入口共用 `.-agent-composer-actions`）。 */
+  function mountPermissionSelect() {
+    const actions = document.querySelector(".-agent-composer-actions");
+    if (!actions) return false;
+    if (actions.querySelector("#agent-permission")) return true;
+    const sel = document.createElement("select");
+    sel.id = "agent-permission";
+    sel.className = "-agent-permission";
+    sel.title = T("agent.permission.sessionTitle");
+    sel.addEventListener("change", function () {
+      const value = String(sel.value || "");
+      if (!value || value === PERMISSION_CUSTOM) return;
+      saveSessionPermission(value);
+    });
+    actions.insertBefore(sel, actions.firstChild);
+    return true;
+  }
+
+  /** 设置面板那一个（`#agent-permission-default`）只绑一次 change。 */
+  function bindPermissionDefault() {
+    const sel = $("#agent-permission-default");
+    if (!sel || sel.__permBound) return;
+    sel.__permBound = true;
+    sel.addEventListener("change", function () {
+      saveDefaultPermission(String(sel.value || ""));
+    });
+  }
+
+  /** 切**当前会话**的档（落 `permission/preset` + 变化的 `approval/policy` 事件）。 */
+  async function saveSessionPermission(value) {
+    if (!sessionId) {
+      showFlashError(T("agent.permission.needSession"), "");
+      refreshPermission(); // 回滚显示
+      return;
+    }
+    let res;
+    try {
+      res = await call("agent_permission_set_session", value, state.kbPath || null, sessionId);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(T("agent.permission.failed"), errorDetail(res) || errorText(res));
+      refreshPermission();
+      return;
+    }
+    paintPermission(res);
+    showFlashInfo(T("agent.permission.switched", { name: permText(value, "name", value) }));
+  }
+
+  /** 改该 agent 的**默认档**（新会话用；当前会话不受影响）。 */
+  async function saveDefaultPermission(value) {
+    let res;
+    try {
+      res = await call("agent_permission_set_default", value, permAgent);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok") {
+      showFlashError(T("agent.permission.failed"), errorDetail(res) || errorText(res));
+      refreshPermission();
+      return;
+    }
+    paintPermission(res);
+    showFlashInfo(T("agent.permission.defaultSaved", { name: permText(value, "name", value) }));
+  }
+
+  // —— 逐条确认卡（`pending_approvals` → 允许一次 / 拒绝）——
+
+  function approvalBox() {
+    const box = $("#agent-messages");
+    return box && box.isConnected ? box : null;
+  }
+
+  /** 卡片随对话流一起被重绘/清空 ⇒ 丢掉已脱离文档的元素（否则会一直"待批"下去）。 */
+  function pruneApprovalCards() {
+    Object.keys(approvalCards).forEach(function (key) {
+      const el = approvalCards[key];
+      if (!el || !el.isConnected) delete approvalCards[key];
+    });
+  }
+
+  /** 一张待批卡的键：**call id + created_at**。
+   *
+   *  为什么不用 call id 单键（L4 实测到的事故）：call id 只保证**一轮内**唯一，网关/上游会跨轮
+   *  复用同一个 id（脚本化 provider 就每轮发 `call-l4-1`）。若同 id 的**新**待批项因"表里已有"
+   *  而被跳过，面板就不会出卡 ⇒ 没人应答 ⇒ 挂起 120s 后被判 `unavailable` 拒绝：**写入静默死掉**。
+   *  `created_at` 由后端按待批项生成（每条唯一）⇒ 同一条跨帧反复出现只建一张卡，新的待批项必出新卡。 */
+  function approvalCardKey(row) {
+    const id = String(row && row.id ? row.id : "");
+    const at = String(row && row.created_at ? row.created_at : "");
+    return id + "@" + at;
+  }
+
+  function setApprovalState(el, text) {
+    const state = el && el.querySelector(".-agent-approve-state");
+    if (state) state.textContent = String(text || "");
+  }
+
+  /** 该卡到此为止：禁用两个按钮并给出终态文案（**卡保留**当过程痕迹）。
+   *
+   *  已有终态就**不覆盖**：`applyPendingApprovals()` 每帧都会对"不再待批"的卡补一次通用
+   *  「已处理」，若不过滤就会把点按钮时写下的「已允许一次 / 已拒绝」盖掉（L4 实测）。 */
+  function markApprovalCardDone(key, label) {
+    const el = approvalCards[String(key == null ? "" : key)];
+    if (!el) return;
+    if (el.classList.contains("-agent-approve--done")) return;
+    el.classList.add("-agent-approve--done");
+    setApprovalState(el, label || T("agent.approve.done"));
+    Array.prototype.forEach.call(el.querySelectorAll("button"), function (btn) {
+      btn.disabled = true;
+    });
+  }
+
+  function approvalIntent(row) {
+    const args = row && row.arguments && typeof row.arguments === "object" ? row.arguments : {};
+    const intent = String(args.intent == null ? "" : args.intent).trim();
+    return intent || T("agent.approve.noIntent");
+  }
+
+  function approvalOpCount(row) {
+    const args = row && row.arguments && typeof row.arguments === "object" ? row.arguments : {};
+    return Array.isArray(args.ops) ? args.ops.length : 0;
+  }
+
+  function approvalCardEl(row) {
+    const el = document.createElement("div");
+    const key = approvalCardKey(row);
+    el.className = "-agent-msg -agent-msg--assistant -agent-approve-msg";
+    el.setAttribute("data-approval-id", String(row.id || ""));
+    el.setAttribute("data-approval-key", key);
+    const ops = approvalOpCount(row);
+    el.innerHTML =
+      '<span class="-agent-msg-role">' +
+      esc(T("agent.role.assistant")) +
+      "</span>" +
+      '<div class="-agent-approve">' +
+      '<div class="-agent-approve-title">' +
+      esc(T("agent.approve.title", { tool: String(row.tool || "") })) +
+      "</div>" +
+      '<div class="-agent-approve-intent">' +
+      esc(approvalIntent(row)) +
+      "</div>" +
+      (ops ? '<div class="-agent-approve-meta -muted">' + esc(T("agent.approve.ops", { n: ops })) + "</div>" : "") +
+      '<div class="plan-actions">' +
+      '<button type="button" class="-btn primary -btn--sm" data-act="allow">' +
+      esc(T("agent.approve.allow")) +
+      "</button>" +
+      '<button type="button" class="-btn -btn--sm" data-act="deny">' +
+      esc(T("agent.approve.deny")) +
+      "</button>" +
+      '<span class="-agent-approve-state -muted"></span>' +
+      "</div></div>";
+    const allow = el.querySelector('[data-act="allow"]');
+    const deny = el.querySelector('[data-act="deny"]');
+    if (allow)
+      allow.addEventListener("click", function () {
+        answerApproval(key, "allow");
+      });
+    if (deny)
+      deny.addEventListener("click", function () {
+        answerApproval(key, "deny");
+      });
+    return el;
+  }
+
+  function upsertApprovalCard(row) {
+    const key = approvalCardKey(row);
+    if (!key || approvalCards[key]) return; // 同一条待批项跨帧反复出现 ⇒ 只建一张
+    const box = approvalBox();
+    if (!box) return;
+    const empty = box.querySelector(".-agent-empty");
+    if (empty) empty.remove();
+    const el = approvalCardEl(row);
+    box.appendChild(el);
+    approvalCards[key] = el;
+    scrollToBottom(true); // 要人点确认的卡必须进视野（唯一"强制滚底"的新增场合）
+  }
+
+  /** 一帧 `pending_approvals`：新增的建卡；不再待批的标「已处理」（后端已收敛，这里只同步显示）。 */
+  function applyPendingApprovals(rows) {
+    const list = Array.isArray(rows) ? rows : [];
+    pruneApprovalCards();
+    const live = {};
+    list.forEach(function (row) {
+      if (row) live[approvalCardKey(row)] = true;
+    });
+    Object.keys(approvalCards).forEach(function (key) {
+      if (!live[key]) markApprovalCardDone(key, T("agent.approve.done"));
+    });
+    list.forEach(upsertApprovalCard);
+  }
+
+  /** 回填一次裁决（成功即禁用该卡；失败恢复可点，绝不留"点了没反应"）。 */
+  async function answerApproval(key, act) {
+    const outcome = APPROVAL_ACT[String(act || "")] || "";
+    if (!outcome) return;
+    const el = approvalCards[String(key == null ? "" : key)];
+    const callId = String((el && el.getAttribute("data-approval-id")) || "");
+    if (!callId) return; // 卡片已随对话流被清掉：没有可回填的对象
+    setApprovalState(el, T("agent.approve.sending"));
+    let res;
+    try {
+      res = await call("agent_approval_answer", callId, outcome, state.kbPath || null);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok" || !res.answered) {
+      showFlashError(T("agent.approve.failed"), errorDetail(res) || errorText(res));
+      setApprovalState(el, "");
+      return;
+    }
+    markApprovalCardDone(key, act === "allow" ? T("agent.approve.allowed") : T("agent.approve.denied"));
+  }
+
+  (function bindPermissionFacade() {
+    const facade = A();
+    const base = facade && facade.call;
+    if (typeof base !== "function") return;
+    facade.call = function (fnName) {
+      const pending = base.apply(this, arguments);
+      if (fnName !== "agent_ask_poll") return pending;
+      return Promise.resolve(pending).then(function (res) {
+        if (res && res.pending_approvals) applyPendingApprovals(res.pending_approvals);
+        return res;
+      });
+    };
+  })();
+
+  (function bindPermissionHooks() {
+    const initBase = init;
+    init = function () {
+      const out = initBase.apply(this, arguments);
+      mountPermissionSelect();
+      bindPermissionDefault();
+      refreshPermission();
+      return out;
+    };
+    const renderBase = renderMessages; // 语言切换 / 整串重绘后按缓存重填两个选择器（纯 DOM，无 RPC）
+    renderMessages = function () {
+      const out = renderBase.apply(this, arguments);
+      if (permOptions.length) {
+        fillPermissionSelect($("#agent-permission"), permCurrent);
+        fillPermissionSelect($("#agent-permission-default"), permDefault);
+      }
+      return out;
+    };
+    const pollBase = poll; // 回合收尾：会话 id（可能刚新建）已写回 ⇒ 重读档位面
+    poll = function () {
+      return Promise.resolve(pollBase.apply(this, arguments)).then(function (out) {
+        refreshPermission();
+        return out;
+      });
+    };
+    const clearBase = clear;
+    clear = function () {
+      const out = clearBase.apply(this, arguments);
+      refreshPermission();
+      return out;
+    };
+    const kbBase = onKbChanged;
+    onKbChanged = function () {
+      const out = kbBase.apply(this, arguments);
+      refreshPermission();
+      return out;
+    };
+  })();
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-22 追加（人报障三条）：Ctrl+Enter 不换行 / 输入框文字与光标错位几格 / 生成中无法上翻
+  //
+  // ① **Ctrl+Enter 真机不换行**：Windows Chromium 的 textarea 对 Ctrl+Enter **没有**默认动作
+  //    ⇒ 过去那条"不 preventDefault、交给浏览器默认"的注释是错的，实际什么都不会发生。
+  //    改为**自己插**：`composerInsertLineBreak()` 在光标处插入 `\n`、把光标移到其后，并派发
+  //    `input`（镜像层同步、历史游标复位、chip 高亮都挂在既有 `input` 监听上，一并跑）。
+  // ② **输入框内文字与光标错位几格**：镜像层原先用 `offsetWidth/offsetHeight` 定尺寸，而 textarea
+  //    一旦出现**滚动条**（内容超过 `max-height: 10rem`），可用文本宽度就窄了一个滚动条（≈17px）
+  //    ⇒ 镜像的换行点与 textarea 不一致，光标落在可见文字右侧几格。改用 `clientWidth/clientHeight`
+  //    （已排除滚动条）**加上两侧边框宽** ⇒ 与 textarea 的**内容盒**逐像素一致。
+  // ③ **生成中无法向上滚动**：每个文本分片 / 过程行都无条件 `scrollTop = scrollHeight`，把用户往回
+  //    翻的动作每一帧又拽回底部。改为**粘底**语义：`stickToBottom` 只由**位置上移**（= 用户上翻）关掉、
+  //    由"回到近底"打开（见 `stickAfterScroll()`），非强制调用只在粘底时跟随；`scrollToBottom(true)`
+  //    只留给"必须看到"的场合（用户发问、整串重绘、确认卡进场），且会**重挂**粘底。
+  //    为什么不用"离底 < N px"直接判"用户上翻了"：滚动事件是**异步**派发的，事件到达时内容可能又长
+  //    了一截 —— L4 实测：发问后"生成中"尾行 ≈50px 落地，距离 51 > 48 ⇒ 把"一直在底部"的人误判成
+  //    "上翻了" ⇒ 整轮回答都不再跟随（含用户根本没碰滚轮的情况）。
+  //
+  // 整块**追加在 `return {` 之前** ⇒ 既有行号锚点零漂移（①②③ 动到的既有行全部是**等量改写**）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 「离底」容差（px）：滚动后离底小于它就算"用户还在看底部" ⇒ 恢复自动跟随。 */
+  const STICK_SLOP_PX = 48;
+
+  //: 粘底开关：true = 新内容自动跟随到底；false = 用户正在往上翻，**别抢**。
+  let stickToBottom = true;
+  //: 上一次观察到的滚动位置（`stickAfterScroll()` 用它判"位置上移"）。
+  let lastBoxScrollTop = 0;
+
+  /** 纯函数版粘底判据（只吃三个数，便于 node 实跑）。 */
+  function boxAtBottom(scrollHeight, scrollTop, clientHeight) {
+    return Number(scrollHeight) - Number(scrollTop) - Number(clientHeight) <= STICK_SLOP_PX;
+  }
+
+  function messageBoxAtBottom(box) {
+    return boxAtBottom(box.scrollHeight, box.scrollTop, box.clientHeight);
+  }
+
+  /** 一次滚动事件 → 新的粘底状态（纯函数，`[新状态, 新 lastTop]`，便于 node 实跑）。
+   *
+   *  判据刻意**不**是"离底距离"：滚动事件是**异步派发**的，事件到达时内容可能又长了一截
+   *  （L4 实测：发问后"生成中"尾行 ≈50px 落地 ⇒ 距离 51 > 48 ⇒ 把"一直在底部"的人误判成
+   *  "上翻了" ⇒ 整轮不再跟随）。只有**位置上移**才算"用户要读历史"：
+   *  - `top` 明显小于上次 ⇒ 用户上翻 ⇒ 停止跟随；
+   *  - 否则若已在近底 ⇒ 恢复跟随（含程序化滚底、用户拖回底部）；
+   *  - 其余（位置下移但还没到底、内容变长引起的同一位置）⇒ **保持原状态**。
+   */
+  function stickAfterScroll(wasStick, lastTop, top, atBottom) {
+    if (top < Number(lastTop) - 1) return [false, top];
+    if (atBottom) return [true, top];
+    return [wasStick, top];
+  }
+
+  /** 粘底语义的**唯一**落点：`force` = 必须看到的场合（重挂粘底并滚到底），否则只在粘底时跟随。 */
+  function messageBoxScrollTo(box, force) {
+    if (force) stickToBottom = true;
+    if (force || stickToBottom) box.scrollTop = box.scrollHeight;
+  }
+
+  (function bindStickyScroll() {
+    const box = $("#agent-messages");
+    if (!box) return;
+    lastBoxScrollTop = box.scrollTop;
+    box.addEventListener("scroll", function () {
+      const top = box.scrollTop;
+      const next = stickAfterScroll(stickToBottom, lastBoxScrollTop, top, messageBoxAtBottom(box));
+      stickToBottom = next[0];
+      lastBoxScrollTop = next[1];
+    });
+  })();
+
+  /** 输入框 → 光标处插入换行（Ctrl/Cmd+Enter；不依赖浏览器默认动作）。 */
+  function composerInsertLineBreak(input) {
+    if (!input) return false;
+    const value = String(input.value || "");
+    const from = Number.isInteger(input.selectionStart) ? input.selectionStart : value.length;
+    const to = Number.isInteger(input.selectionEnd) ? input.selectionEnd : from;
+    input.value = value.slice(0, from) + "\n" + value.slice(to);
+    try {
+      input.setSelectionRange(from + 1, from + 1);
+    } catch (e) { /* 非文本控件忽略 */ }
+    try {
+      input.dispatchEvent(new Event("input", { bubbles: true })); // 镜像同步 / 历史游标复位随既有监听
+    } catch (e) { /* 无 Event 构造器的环境忽略 */ }
+    return true;
+  }
+
+  /** 输入框 Enter 语义：返回 true = 本次事件已处理（或该放行给浏览器），false = 该发送。 */
+  function composerEnterKey(e, input) {
+    if (e.key !== "Enter" || e.isComposing) return true; // 输入法组字中不碰（与原子块处理同一口径）
+    if (e.ctrlKey || e.metaKey) {
+      if (e.altKey || e.shiftKey) return true;
+      e.preventDefault(); // 我们自己插，别让浏览器再动一次
+      composerInsertLineBreak(input);
+      return true;
+    }
+    if (e.shiftKey || e.altKey) return true; // Shift+Enter：交给浏览器默认（原生插换行）
+    return false; // 裸 Enter = 发送
+  }
+
+  /** 镜像层尺寸：对齐 textarea 的**内容盒**（`clientWidth/Height` 已排除滚动条；再加两侧边框）。 */
+  function composerMirrorWidth(input) {
+    const cs = window.getComputedStyle ? window.getComputedStyle(input) : null;
+    const border = cs ? (parseFloat(cs.borderLeftWidth) || 0) + (parseFloat(cs.borderRightWidth) || 0) : 1;
+    return input.clientWidth + border;
+  }
+
+  function composerMirrorHeight(input) {
+    const cs = window.getComputedStyle ? window.getComputedStyle(input) : null;
+    const border = cs ? (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.borderBottomWidth) || 0) : 1;
+    return input.clientHeight + border;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-22 追加：回复末尾那一行 =「用量 + 复制」同一行
+  //   人：「对话底部除了显示用量信息还需要复制按钮」。原先用量文本挂在**气泡内**（`.-agent-msg` 末尾），
+  //   而复制是气泡外那一行（`.-agent-msg-actions`）里的**纯图标**（`opacity .55`、文案只在悬停时给）
+  //   ⇒ 人根本没把它当按钮看。现在两件事合并到**同一行**：用量在前、复制（图标 + 「复制」二字）在后，
+  //   且按钮常显。整块追加在 `return {` 之前 ⇒ 既有行号锚点零漂移（`renderTurnUsage()` 只做**等量改写**）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 一个助手回合的**底部行**宿主：气泡外面那一行 `.-agent-msg-actions`（放「复制」）。
+   *  取不到（异常 DOM / 尚未包进 `.-agent-turn`）时退化为消息元素本身 —— **绝不丢用量信息**。 */
+  function usageRowHost(wrap) {
+    const turn = wrap && wrap.closest ? wrap.closest(".-agent-turn") : null;
+    const actions = turn ? turn.querySelector(".-agent-msg-actions") : null;
+    return actions || wrap;
+  }
+
+  /** 底部行里的用量格（幂等）：没有就建一个并插在该行**最前**（复制按钮留在其后）。 */
+  function usageRowEl(wrap) {
+    const host = usageRowHost(wrap);
+    let el = host.querySelector(".-agent-usage");
+    if (!el) {
+      el = document.createElement("span");
+      el.className = "-agent-usage -muted";
+      host.insertBefore(el, host.firstChild);
+    }
+    return el;
+  }
+
+  /** 「复制」按钮（图标 + 「复制」二字）；`actionsEl()` 与 `syncTurnActions()` 共用同一构造。 */
+  function copyButtonEl(rec) {
+    const copy = document.createElement("button");
+    copy.type = "button";
+    copy.className = "-agent-act -agent-act--icon -agent-act--copy";
+    copy.title = T("agent.copy"); // 悬停提示就一个字：复制（人：「鼠标悬浮显示复制」）
+    copy.setAttribute("aria-label", T("agent.copy"));
+    copy.innerHTML = COPY_ICON_SVG + '<span class="-agent-act-label">' + esc(T("agent.copy")) + "</span>";
+    copy.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      copyMessageText(rec, copy); // 取 `rec.text` 的**当前值**（流式期间会变）⇒ 按钮可以早建
+    });
+    return copy;
+  }
+
+  /** 让某个回合的底部操作行**反映消息的当前状态**：有正文就该有「复制」，没正文就摘掉。
+   *
+   *  **为什么必须有它（2026-09-22 L4 抓到的真 bug）**：助手消息是 `pushMessage("assistant", "")`
+   *  **空文本**建的，`actionsEl()` 那一刻按"没正文不建按钮"返回空行；终答后 `finalizeMessage()`
+   *  只换气泡正文、`wrapTurn()` 又复用既有 `.-agent-turn` ⇒ **实时那一轮永远长不出复制按钮**
+   *  （只有刷新页面走 `renderMessages()` 才有）。人看到的正是"底部只有用量、没有复制"。
+   */
+  function syncTurnActions(rec) {
+    const wrap = assistantWrapFor(rec);
+    if (!wrap) return;
+    const host = usageRowHost(wrap);
+    if (host === wrap) return; // 没有独立操作行（异常 DOM）：不往气泡里塞按钮
+    const btn = host.querySelector("button.-agent-act--copy");
+    const want = !!String((rec && rec.text) || "").trim();
+    if (want && !btn) host.appendChild(copyButtonEl(rec));
+    else if (!want && btn) btn.remove();
+  }
+
+  // 终答落定（正文已写进 `rec.text`）⇒ 补齐底部操作行。包装成链式（既有包装先跑）⇒ 不动其函数体。
+  const finalizeTurnActionsBase = finalizeMessage;
+  finalizeMessage = function (result) {
+    const out = finalizeTurnActionsBase.apply(this, arguments);
+    try {
+      syncTurnActions(currentAssistant());
+    } catch (e) {
+      console.warn("agent-actions:", e);
+    }
+    return out;
+  };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 斜杠命令（2026-09-22；上游 `interaction/commands` 的最小面，见 `services/agent/commands.py`）
+  //   后端契约：整行 `/name` 且**名字已注册** ⇒ 宿主侧执行、**不进模型** ⇒ 那一轮回
+  //   `stop_reason:"command"`、`answer` = 命令回文、`usage` 是空表；**未注册的名字照旧走模型**
+  //   （所以 `/usr/bin`、`5/8` 这类不会被吃掉）。前端只做两件事：① 那一轮**看起来不是模型说的话**
+  //   （气泡加 `-agent-msg--command`，且**没有用量、没有可复制的"回答"** —— 命令零 token、也没回答）；
+  //   ② 输入 `/` 时给一行**可用命令提示**（发现面，数据来自 `agent_command_list`）。
+  //   **不做** `/` 补全弹层与键盘选择（上游把它留给"capable clients"）—— 未移植，见 design §6.23 偏差表。
+  //   落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）、只**包装**既有函数 ⇒ 上方锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  function isCommandTurn(result) {
+    return !!result && String(result.stop_reason || "") === "command";
+  }
+
+  // ① 气泡标记：标记落在**消息记录**上（刷新重绘走 `messageEl()` 也保留）⇒ 不是只改一次 DOM。
+  const baseMessageElForCommand = messageEl;
+  messageEl = function (rec) {
+    const el = baseMessageElForCommand.apply(null, arguments);
+    if (el && rec && rec.command) el.classList.add("-agent-msg--command");
+    return el;
+  };
+
+  // ② 终答落定：标 `command` ⇒ 摘掉用量行与复制按钮。
+  //    **本块在文件末** ⇒ 这个包装是**最外层**（跑在「用量 + 复制」那两处包装**之后**）⇒ 摘除生效。
+  const finalizeForCommandBase = finalizeMessage;
+  finalizeMessage = function (result) {
+    const out = finalizeForCommandBase.apply(this, arguments);
+    if (isCommandTurn(result)) {
+      try {
+        const rec = currentAssistant();
+        if (rec) {
+          rec.command = true;
+          const wrap = assistantWrapFor(rec);
+          if (wrap) {
+            const copy = wrap.querySelector("button.-agent-act--copy");
+            if (copy) copy.remove();
+            const usage = wrap.querySelector(".-agent-usage");
+            if (usage) usage.remove();
+          }
+        }
+      } catch (e) {
+        console.warn("agent-command:", e);
+      }
+    }
+    return out;
+  };
+
+  // ③ 输入 `/` 时的可用命令提示（发现面）：只列名字 + 输入提示 + 一句描述（**不可点**，纯提示）。
+  let commandCatalog = null; // null = 还没拉过；[] = 拉过但为空
+  function commandHintEl() {
+    const composer = document.querySelector(".-agent-composer");
+    if (!composer) return null;
+    let el = composer.querySelector(".-agent-cmd-hint");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "-agent-cmd-hint -muted";
+      composer.appendChild(el);
+    }
+    return el;
+  }
+  async function refreshCommandHint() {
+    const input = $("#agent-input");
+    const el = commandHintEl();
+    if (!input || !el) return;
+    const value = String(input.value || "");
+    if (!value.trimStart().startsWith("/")) {
+      el.textContent = "";
+      el.hidden = true;
+      return;
+    }
+    if (commandCatalog === null) {
+      try {
+        const res = await call("agent_command_list");
+        commandCatalog = res && Array.isArray(res.commands) ? res.commands : [];
+      } catch (e) {
+        commandCatalog = [];
+      }
+    }
+    const typed = value.trimStart().slice(1).split(/\s/)[0].toLowerCase();
+    const rows = commandCatalog
+      .filter((row) => !typed || String(row.name || "").startsWith(typed))
+      .map((row) => {
+        const hint = row.input && row.input.hint ? " " + row.input.hint : "";
+        return "/" + String(row.name || "") + hint + " — " + String(row.description || "");
+      });
+    if (!rows.length) {
+      el.textContent = commandCatalog.length ? T("agent.command.none") : "";
+      el.hidden = !commandCatalog.length;
+      return;
+    }
+    el.textContent = rows.join("\n");
+    el.hidden = false;
+  }
+  (function wireCommandHint() {
+    const input = $("#agent-input");
+    if (!input || input.dataset.cmdHintWired === "1") return;
+    input.dataset.cmdHintWired = "1";
+    input.addEventListener("input", function () {
+      void refreshCommandHint();
+    });
+  })();
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
@@ -4312,5 +6105,8 @@ window.MemoriaAgentPanel = (function () {
     // 知识库切换钩子（app.js 在 openKbAt/closeKb 处调用）：作废跨库会话并重试恢复
     onKbChanged: onKbChanged,
     clear: clear,
+    // 写入状态栏入口（`plan-confirm.js` 调用）：告知"这次对话写了什么"，本模块渲染在顶部
+    // **副标题行**（`.-agent-subhead`）——「已修改 N 个文件（可展开）+ 撤销一步 / 重做一步」。
+    setWriteState: setWriteState,
   };
 })();

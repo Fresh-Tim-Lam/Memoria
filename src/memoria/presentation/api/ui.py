@@ -1155,7 +1155,7 @@ class UIAPI:
     def _agent_config_view(self) -> dict:
         """端点配置的对外视图：**只出掩码，绝不出明文密钥**。"""
         from memoria.services.agent.llm import load_config, mask_secret, read_raw_config
-        from memoria.services.agent.llm.config import config_file_path, is_enabled, status_refresh_ms
+        from memoria.services.agent.llm.config import config_file_path, is_enabled, status_refresh_ms, transcript_mode
 
         config = load_config()
         path = config_file_path()
@@ -1165,7 +1165,7 @@ class UIAPI:
             "enabled": is_enabled(),
             "base_url": config.base_url,
             "model": config.model,
-            "timeout_s": config.timeout_s, "status_refresh_ms": status_refresh_ms(),
+            "timeout_s": config.timeout_s, "status_refresh_ms": status_refresh_ms(), "transcript_mode": transcript_mode(),
             "has_key": config.has_api_key,
             "key_masked": mask_secret(config.api_key),
             "source": config.source,
@@ -1209,19 +1209,19 @@ class UIAPI:
             from memoria.services.agent.ask_stream import CODE_NO_KB
 
             return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
-        return get_ask_jobs().start(kb, question, session_id=session_id)
+        return get_ask_jobs().start(kb, question, session_id=session_id, service=self._svc)
 
-    def agent_ask_poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0) -> dict:
+    def agent_ask_poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0, process_cursor: int = 0) -> dict:
         """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
 
-        返回 `{status:"running"|"done"|"error", delta, cursor, reasoning_delta,
-        reasoning_cursor, answer, anchors, tool_calls, usage, session_id, stop_reason,
+        返回 `{status:"running"|"done"|"error", delta, cursor, reasoning_delta, process_delta,
+        reasoning_cursor, process_cursor, answer, anchors, tool_calls, usage, session_id, stop_reason,
         cancelled, error, ...}`；`status:"error"` 含稳定 `code`。被「停止」后为 `status:"done"` +
-        `stop_reason:"aborted"`（`answer` 为已生成的部分文本、`cancelled:true`）；`reasoning_delta` / `reasoning_cursor` 为 AG08 追加（只增不改；思考与正文各自独立游标，仅流式可见、不落盘 —— 见 `ask_stream.py`）。
+        `stop_reason:"aborted"`（`answer` 为已生成的部分文本、`cancelled:true`）；`reasoning_delta` / `process_delta` / 对应游标为 AG08 与 2026-09-22 追加（只增不改；思考、正文、过程行各自独立游标；思考与过程行**随会话落盘、可回放** —— 见 `ask_stream.py`）。
         """
         from memoria.services.agent.ask_stream import get_ask_jobs
 
-        return get_ask_jobs().poll(job_id, cursor, reasoning_cursor)
+        return get_ask_jobs().poll(job_id, cursor, reasoning_cursor, process_cursor)
 
     def agent_ask_cancel(self, job_id: str) -> dict:
         """**真取消**一个在飞问答作业（M1 收尾新增，幂等）。
@@ -1301,7 +1301,7 @@ class UIAPI:
     def agent_session_load(self, session_id: str, kb_path: str | None = None) -> dict:
         """载入一个会话的渲染视图（**只读**，不写盘）。
 
-        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?}]}`。
+        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?, process?}]}`（`process` = 该轮过程行：更早助手正文/思考/工具行，无过程内容时不出现该键）。
         锚点归属：按轮汇总该轮 `tool/result.anchors`，去重后挂在该轮 assistant 气泡上
         （口径见 `services/agent/session/history.py::conversation_messages`）。
         未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。
@@ -1602,14 +1602,18 @@ class UIAPI:
         return result
 
     def agent_plan_undo(self, kb_path: str | None = None, session_id: str | None = None, txid: str | None = None) -> dict:
-        """撤销一个批次：把 pre-image **逐字节写回** + 一致性恢复 + 审计（`capability/undo`）。
+        """撤销：**一键回到这次对话开始前**（人 2026-09-21 定稿：「一键生效，不再有被阻止」）。
 
-        **外部改动保护（fail-closed）**：apply 之后文件被改过（含人机编辑）⇒ 整批拒
-        （`external_change`），**不静默覆盖**；缺 `post.json` 同样默认拒（`unverified`）。
-        `txid` 省略 ⇒ 撤销该会话的**最新**批次。
+        目标状态 = 会话**起点快照**（`<session>/origin/`，第一次写入前拍下、**不参与 FIFO 淘汰**）
+        —— 与 git 的 `revert` 同构：指向一个状态，而不是回放路径。覆盖前**自动兜底**（把将被覆盖的
+        当前版本另存为 `manual-force` 批次）⇒ 覆盖 ≠ 丢数据，因此**不再有 `external_change` 这类
+        "被拒绝"**（人点撤销即明示决定，§9 规则 ③）。
+
+        给了 `txid` 则只撤那一批（细粒度入口，留给调试与将来的手动档）。成功后跑一致性恢复
+        （清解析缓存 + `validate_kb()`）。
         """
         from memoria.services.agent.apply import recover_after_write
-        from memoria.services.agent.backup import restore_batch
+        from memoria.services.agent.backup import restore_batch, restore_session
 
         kb = self._agent_kb(kb_path)
         if kb is None:
@@ -1619,7 +1623,7 @@ class UIAPI:
             return {"status": "error", "code": "no_session", "message": "撤销需要 session_id（apply 的返回值里有）"}
         service = self._plan_service(kb)
         try:
-            result = restore_batch(kb, sid, txid or None)
+            result = restore_batch(kb, sid, txid) if txid else restore_session(kb, sid)
         except (OSError, ValueError) as e:
             return {"status": "error", "code": "undo_failed", "message": str(e)}
         if result.get("status") == "ok":
@@ -1628,23 +1632,232 @@ class UIAPI:
         return result
 
     def agent_plan_pending(self, kb_path: str | None = None) -> dict:
-        """取走 agent 侧**已提议但尚未展示**的写计划（确认卡的入口；工具面只有提议权，没有落盘权）。
+        """取走 agent 侧**已写入、尚未展示**的写回执（回执卡的入口）。
 
-        提议由 `propose_write` 工具（`services/agent/tools/kb.py`）在问答作业里排队，**不落盘**
-        （进程内信箱）；前端在每轮问答收尾（`agent_ask_poll` 报 `done`/`error`）时取一次，
-        **取走即清空**。返回 `{status:"ok", plans:[plan, …]}`（没有提议就是空表）。
+        2026-09-21 起 agent **直接落盘**（`propose_write` 在工具调用内写入，见设计 §4 Q7），
+        这里排的是"刚写完什么"的回执 `{plan, preview, result, session_id}`；前端在每轮问答收尾
+        （`agent_ask_poll` 报 `done`/`error`）取一次，**取走即清空**。
+        返回 `{status:"ok", records:[…], plans:[…]}`（`plans` 是同批记录的 plan 列表，
+        为旧调用方保留；没有记录就是两个空表）。
         """
         from memoria.services.agent.tools.kb import take_proposals
 
         kb = self._agent_kb(kb_path)
         if kb is None:
             return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
-        return {"status": "ok", "plans": take_proposals(kb)}
+        records = take_proposals(kb)
+        return {"status": "ok", "records": records, "plans": [row.get("plan") for row in records]}
 
 
 # ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点
 #    （docs 里引用的 384 / 647-684 / 769 / 867 / 1015-1454 等）因此零漂移。
 #    口径见 `docs/design/agent-plugin-design.md §9`；实现见 `memoria/storage/file_version.py`。
 from memoria.storage.file_version import guard_save, with_version  # noqa: E402
+
+
+# ── 栈式撤销 / 重做（人 2026-09-21 定稿：「采用 stack 设计，这样可以 undo/redo」「撤销一步 / 重做一步」）──
+# 三个新 RPC 用「**追加在文件末尾 + 运行期挂到 `UIAPI`**」的方式提供：
+#   · 在类内插入会移动其后的所有行 ⇒ `ui.py:<行号>` 锚点漂移（docs 引用的最大行号是 `:1454`）;
+#   · 模块加载**早于** `create_window()` 枚举 js_api 方法 ⇒ 这里挂上去的同样会被暴露给前端。
+# 口径：**撤销一步** = 栈指针 −1（用该批 **pre-image** 写回）；**重做一步** = 指针 +1（用该批**写后镜像**）。
+
+
+def _agent_step_impl(self, kb_path, session_id, direction: str) -> dict:
+    """撤销 / 重做一步的公共实现（差别只在 backup 层用哪份镜像）。"""
+    from memoria.services.agent.apply import recover_after_write
+    from memoria.services.agent.backup import redo_step, undo_step
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    sid = (session_id or "").strip()
+    if not sid:
+        return {"status": "error", "code": "no_session", "message": "需要 session_id（apply 的返回值里有）"}
+    service = self._plan_service(kb)
+    try:
+        result = redo_step(kb, sid) if direction == "redo" else undo_step(kb, sid)
+    except (OSError, ValueError) as e:
+        return {"status": "error", "code": f"{direction}_failed", "message": str(e)}
+    if result.get("status") == "ok":
+        # 一致性恢复（与 apply / undo 同口径）：清解析缓存 + 全库校验，否则界面显示旧正文
+        rels = [str(row.get("rel_path") or "") for row in (result.get("files") or []) if isinstance(row, dict)]
+        result["recover"] = recover_after_write(kb, rels, service=service)
+    return result
+
+
+def _agent_plan_stack(self, kb_path: str | None = None, session_id: str | None = None) -> dict:
+    """读**会话栈**现状（给对话栏顶部的写入状态栏）：
+
+    `{status, cursor, position, total, can_undo, can_redo, steps:[{txid, ts, files, applied, current, has_after}]}`。
+    `cursor = -1` 表示"全部已撤销"（回到对话起点）；`position = cursor + 1` 是给人看的位置（从 1 起）。
+    """
+    from memoria.services.agent.backup import stack_state
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    sid = (session_id or "").strip()
+    if not sid:
+        return {"status": "error", "code": "no_session", "message": "需要 session_id"}
+    return stack_state(kb, sid)
+
+
+def _agent_plan_undo_step(self, kb_path: str | None = None, session_id: str | None = None) -> dict:
+    """**撤销一步**（栈语义）：把栈指针那一批的 pre-image 写回，指针 −1。覆盖前自动兜底备份。"""
+    return _agent_step_impl(self, kb_path, session_id, "undo")
+
+
+def _agent_plan_redo(self, kb_path: str | None = None, session_id: str | None = None) -> dict:
+    """**重做一步**（栈语义）：把指针 +1 那一批的**写后镜像**写回。没有写后镜像 ⇒ 如实回 `no_after`。"""
+    return _agent_step_impl(self, kb_path, session_id, "redo")
+
+
+# 挂到类上：模块加载时执行 ⇒ `create_window(js_api=UIAPI())` 枚举方法时已经可见
+UIAPI.agent_plan_stack = _agent_plan_stack
+UIAPI.agent_plan_undo_step = _agent_plan_undo_step
+UIAPI.agent_plan_redo = _agent_plan_redo
+
+
+# ── 审批档位（人 2026-09-22：「继续移植上游」⇒ 移植 `dsh-permission-presets` 的会话级档位）──
+# 同样用「**追加在文件末尾 + 运行期挂到 `UIAPI`**」提供（口径见上方栈式撤销那一段注释）。
+# 语义全在 `services/agent/permission_presets.py`（档位表 / 事件折叠 / 生效值 / 策略），本层只做
+# 「读会话事件 → 视图」与「校验 → 落事件 / 写配置」的 RPC 适配。三档的**机器键**是稳定英文，
+# 显示名走前端 i18n（后端中文名只作回退事实源）。
+
+
+def _agent_permission_events(self, kb_path, session_id):
+    """（内部）读某会话的**事件流**给档位折叠；库/会话缺失或非法 ⇒ `None`（回落默认档）。"""
+    from memoria.services.agent.session.store import read_session
+
+    kb = self._agent_kb(kb_path)
+    sid = (session_id or "").strip()
+    if not kb or not sid:
+        return None
+    try:
+        return read_session(kb, sid)
+    except (OSError, ValueError):
+        return None
+
+
+def _agent_permission_get(self, kb_path: str | None = None, session_id: str | None = None) -> dict:
+    """读档位面：`{status, current, agent, default, options:[{value,name,description}]}`。
+
+    `current` 可能是派生态 `custom`（当前旋钮不匹配任何档）：**可展示、不可切换**。
+    没有会话（首次提问前）时 `current` = 该 agent 的默认档。
+    """
+    from memoria.services.agent import permission_presets as pp
+
+    try:
+        return {"status": "ok", **pp.state_view(_agent_permission_events(self, kb_path, session_id))}
+    except Exception as e:  # noqa: BLE001 — 档位面读失败不该让面板崩
+        return {"status": "error", "code": "permission_failed", "message": str(e)}
+
+
+def _agent_permission_set_session(
+    self, preset: str, kb_path: str | None = None, session_id: str | None = None
+) -> dict:
+    """切换**当前会话**的档位：落 `permission/preset` + 变化的 `approval/policy` 事件（可回放）。
+
+    未知档 / 派生态 `custom` / 会话不存在一律拒（结构化错误，不抛）；切到已是生效档 ⇒ **不落任何事件**。
+    """
+    import os
+
+    from memoria.services.agent import permission_presets as pp
+    from memoria.services.agent.session.store import SessionStore, session_file
+
+    kb = self._agent_kb(kb_path)
+    sid = (session_id or "").strip()
+    if not kb:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    if not sid:
+        return {"status": "error", "code": "no_session", "message": "还没有会话（先提一个问题）"}
+    name = str(preset or "").strip()
+    if name not in pp.PRESETS:
+        return {
+            "status": "error",
+            "code": "bad_preset",
+            "message": f"未知审批档：{name!r}（可选：{', '.join(pp.PRESET_NAMES)}）",
+        }
+    try:
+        if not os.path.isfile(session_file(kb, sid)):
+            return {"status": "error", "code": "no_session", "message": f"会话不存在：{sid}"}
+        session = SessionStore(kb, sid)
+        pp.set_preset(session, name)
+        session.flush()
+    except (OSError, ValueError) as e:
+        return {"status": "error", "code": "permission_failed", "message": str(e)}
+    return {"status": "ok", **pp.state_view(session.events())}
+
+
+def _agent_permission_set_default(self, preset: str, agent: str | None = None) -> dict:
+    """改某 agent 的**默认档**（新会话用）：写 `config/agent.json: permission.<agent>`。
+
+    只影响**以后新建**的会话；当前会话要立刻换档请用 `agent_permission_set_session`。
+    """
+    from memoria.services.agent import permission_presets as pp
+    from memoria.services.agent.llm.config import PERMISSION_KEY, read_raw_config, save_config
+
+    name = str(preset or "").strip()
+    if name not in pp.PRESETS:
+        return {
+            "status": "error",
+            "code": "bad_preset",
+            "message": f"未知审批档：{name!r}（可选：{', '.join(pp.PRESET_NAMES)}）",
+        }
+    key = str(agent or "").strip() or pp.MAIN_AGENT
+    try:
+        raw = read_raw_config().get(PERMISSION_KEY)
+        merged = dict(raw) if isinstance(raw, dict) else {}
+        merged[key] = name
+        save_config({PERMISSION_KEY: merged})
+    except Exception as e:  # noqa: BLE001 — 配置层异常统一转结构化错误
+        return {"status": "error", "code": "permission_failed", "message": str(e)}
+    return {"status": "ok", **pp.state_view(None, key), "preset": name}
+
+
+def _agent_approval_answer(self, call_id: str, outcome: str, kb_path: str | None = None) -> dict:
+    """回填一次**逐条确认**的裁决：`outcome` ∈ `allowed-once` / `rejected` / `cancelled`。
+
+    `unavailable` 不接受（那是"没有应答者"的内部终态，不是人能点的按钮）；未知 `call_id`
+    或已处理的项 ⇒ `{status:"ok", answered:false}`（幂等，不抛）。
+    """
+    from memoria.services.agent import approval_bridge
+    from memoria.services.agent.approvals import ApprovalOutcome
+
+    kb = self._agent_kb(kb_path)
+    if not kb:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    try:
+        value = ApprovalOutcome(str(outcome or "").strip())
+    except ValueError:
+        return {"status": "error", "code": "bad_outcome", "message": f"未知裁决：{outcome!r}"}
+    if value is ApprovalOutcome.UNAVAILABLE:
+        return {"status": "error", "code": "bad_outcome", "message": "unavailable 不是可选裁决"}
+    return {"status": "ok", "answered": approval_bridge.answer(kb, call_id, value)}
+
+
+UIAPI.agent_permission_get = _agent_permission_get
+UIAPI.agent_permission_set_session = _agent_permission_set_session
+UIAPI.agent_permission_set_default = _agent_permission_set_default
+UIAPI.agent_approval_answer = _agent_approval_answer
+
+
+# ── 斜杠命令（2026-09-22；上游 `interaction/commands` 的最小面，见 `services/agent/commands.py`）──
+# 追加在**文件末尾**并在此处挂到 `UIAPI` 上 ⇒ 上方既有 `<文件>:<行号>` 锚点零漂移（同上面四个 RPC）。
+# **注意这里只有"列出"**：命令的**执行**走 `agent_ask_start` —— `ask()` 拿到整行后会先试命令、
+# 命中就直接执行并回 `stop_reason:"command"`（上游同形：未命中即回 undefined、该行照旧交给模型）。
+
+
+def _agent_command_list(self) -> dict:
+    """列出可用斜杠命令：`{status:"ok", commands:[{name,description,input?{hint}}]}`（名字排序）。
+
+    **纯只读**：不碰知识库、不建会话、不落任何事件 —— `command/run` / `command/done` 只在**执行**时落。
+    """
+    from memoria.services.agent import commands as commands_mod
+
+    return {"status": "ok", "commands": commands_mod.default_registry().descriptors()}
+
+
+UIAPI.agent_command_list = _agent_command_list
 
 

@@ -134,9 +134,9 @@ def validate_sidecar(
     data: dict | None,
     rel_path: str,
     lines: list[str] | None = None,
-    known_kp_ids: set[str] | None = None,
+    known_kp_ids: set[str] | None = None, baseline: dict | None = None,
 ) -> dict:
-    """返回 {ok, errors[], warnings[]}。
+    """返回 {ok, errors[], warnings[], pre_existing[]}（`pre_existing` 见文件末尾「写前基线」一段）。
 
     errors/warnings 中每个元素是 ``{message, code, params?, kp_id?, line?, kind?}``：
     - ``message``：中文原文（回退/CLI 展示）
@@ -411,4 +411,31 @@ def validate_sidecar(
                 errors.extend(link_errors)
                 warnings.extend(link_warnings)
 
-    return {"ok": not errors, "errors": errors, "warnings": warnings}
+    # ── 写前基线 `baseline`：**只拦"本次新引入的"问题**，既有问题降级到 `pre_existing` ─────────────
+    # 为什么要有这条：写闸门是**逐原语**跑在**整份** sidecar 上的（`document.py` 里 11 处同形闸门 +
+    # `save_document`），而库里可能**早已**有一处残缺（典型：某个 KP 的 `end.snippet` 早年丢了）。
+    # 「任何 error 都拒写」的后果是：那一处残缺会让**所有修复性写入都写不进去** —— 库变成不可修的死锁。
+    # 真机取证（2026-09-21）：agent 连提 4 批 `propose_write` 全 `WRITE_FAILED`，报的永远是**同一批既有
+    # 问题**；而"只更新一个 KP"的探针批在报错里"放行"了它，只是因为它自己的问题不再被列出（写入仍被整批
+    # 拒掉）⇒ 假象。规则改为：与基线**同签名**（`code` + 目标 + `params`）的问题不算"引入的" ⇒ 放行，并
+    # 如实放进 `pre_existing`（**不静默**：调用方/工具可以把它们报给人）。
+    # 签名**刻意不含 `line`**：正文一改，行号天然会漂，把行号算进去会把"既有问题"误判成"新引入"。
+    pre_existing: list[dict] = []
+    if baseline and errors:
+        pre_sigs = {_issue_sig(e) for e in validate_sidecar(baseline, rel_path, lines, known_kp_ids)["errors"]}
+        pre_existing = [e for e in errors if _issue_sig(e) in pre_sigs]
+        errors = [e for e in errors if _issue_sig(e) not in pre_sigs]
+
+    return {"ok": not errors, "errors": errors, "warnings": warnings, "pre_existing": pre_existing}
+
+
+def _issue_sig(issue_item: dict) -> tuple:
+    """一条 issue 的**可比签名**：同一处问题在"写前 / 写后"两次校验里应当得到同一个签名。
+
+    取 ``code`` + ``kp_id`` + ``kind`` + ``params``（键值都转字符串、排序后拼）—— 刻意**不含 `line`**
+    与 `message`：行号会随正文编辑漂移，`message` 里也含行号（`KP x range 缺少 end snippet` 这类反而稳定，
+    但"第 N 行"会变）。用于 `validate_sidecar(baseline=…)` 判定"这问题是既有的还是在写里新引入的"。
+    """
+    params = issue_item.get("params") or {}
+    flat = "|".join(sorted(f"{k}={v}" for k, v in params.items())) if isinstance(params, dict) else repr(params)
+    return (issue_item.get("code"), issue_item.get("kp_id"), issue_item.get("kind"), flat)

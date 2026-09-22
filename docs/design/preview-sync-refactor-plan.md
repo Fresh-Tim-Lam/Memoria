@@ -831,8 +831,13 @@ const MAP_LOG = true;
 ### 日志文件
 
 ```
-{kb_path}/mapping-debug.log
+{kb_path}/.memoria/cache/mapping-debug.log      # 2026-09-22 起：原先写库根，污染知识库目录
+{kb_path}/.memoria/cache/undo-debug.log         # 同上（撤销/重做日志）
 ```
+
+> **为什么搬**：这两个调试文件原先落在**知识库根目录**，真机库根被 1000+ 行 debug 文本占据；
+> 它们不是 `.md`、也不在「检查」范围内 ⇒ agent 的工具删不掉，只能靠人手工清。
+> 改落 `.memoria/cache/**`（AGENTS.md §1：再生缓存，不作事实源）⇒ 调试能力不变、库根干净。
 
 ### 日志事件类型
 

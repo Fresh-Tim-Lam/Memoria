@@ -7615,7 +7615,12 @@
   const MAP_LOG = true;
   let _logBuf = [];
   let _logTimer = null;
-  const LOG_FILE = "mapping-debug.log";
+  // 2026-09-22 修：调试浮窗日志原先写 `mapping-debug.log` / `undo-debug.log` 到**知识库根目录**
+  // （`write_map_log` 按 `kb_path + rel_path` 落盘）⇒ 真机库根被 1000+ 行 debug 文件污染
+  // （每个库都躺着一份，还不属于"检查"范围、也不是 `.md` ⇒ agent 的工具删不掉）。
+  // 改落 `.memoria/cache/`（AGENTS.md §1：`.memoria/cache/**` 是**可再生缓存**、不作事实源）⇒
+  // 调试能力不变，但库根干净。目录由 `write_map_log` 自行 `makedirs`。
+  const LOG_FILE = ".memoria/cache/mapping-debug.log";
 
   function ts() { const d = new Date(); return "[" + String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0") + ":" + String(d.getSeconds()).padStart(2, "0") + "." + String(d.getMilliseconds()).padStart(3, "0") + "]"; }
   function log(tag, msg) { if (!MAP_LOG) return; const l = ts() + " [" + tag + "] " + msg; console.log(l); _logBuf.push(l); _scheduleFlush(); }
@@ -7661,7 +7666,9 @@
   window.MemoriaEditSync = (function () {
     "use strict";
 
-    // ── 独立撤销/重做日志：单独写 undo-debug.log，避免与 mapping 日志混杂 ──
+    // ── 独立撤销/重做日志：单独写一份，避免与 mapping 日志混杂 ──
+    // 落点同 `LOG_FILE`（`.memoria/cache/**`，可再生缓存）—— 不写知识库根目录（2026-09-22 修）
+    var UNDO_LOG_FILE = ".memoria/cache/undo-debug.log";
     var _hlogBuf = [];
     var _hlogTimer = null;
     function hlog(msg) {
@@ -7676,7 +7683,7 @@
       if (!_hlogBuf.length) return;
       var c = _hlogBuf.join("\n") + "\n";
       _hlogBuf = [];
-      call("write_map_log", "undo-debug.log", c).catch(function () { });
+      call("write_map_log", UNDO_LOG_FILE, c).catch(function () { });
     }
     window.addEventListener("beforeunload", function () { _hlogFlush(); });
 

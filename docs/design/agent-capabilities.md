@@ -296,14 +296,17 @@ apply 入口（核心，M3a）
 |---|---|---|---|---|
 | `kb.kp.create` | 建知识点（写 sidecar + 锚定 range） | `(file, kp_id)` | `services/document.py:1360 confirm_kp_range()` | range 锚不稳 → 走既有 KP 创建/确认链路 |
 | `kb.kp.update` | 改 KP 名/描述/标签 | `(file, kp_id)` | `services/document.py:1722 update_kp()` | 图谱与 KP 面板的刷新时机 |
-| `kb.link.create` | 连边（含边类型） | `(from, to, type)` | `services/document.py:2885 create_edge()` | 边类型词表须与图谱面板**同一份**事实源 |
+| `kb.kp.delete` | 删知识点（**只删 sidecar 配置、不改正文**） | `(file, kp_id)` | `services/document.py:1875 delete_kp()` | 别处的 `[[id]]` 会变**悬空虚链**（库规允许）⇒ 进 `RISKY_OPS`（逐条确认）；**2026-09-22 已落地**（op `delete_kp`） |
+| `kb.kp.rename` | 改 KP id（**全库级联**：正文 wikilink + 各侧车引用） | `(old_id, new_id)` | `services/document.py:1937 rename_kp_id()` → `services/kp_rename.py:94 rename_kp_in_kb()`（**加 `dry_run`** 供校验期预演） | 影响**全库** ⇒ 进 `RISKY_OPS` + 必须**收尾**；**2026-09-22 已落地**（op `rename_kp`） |
+| `kb.link.create` | 连边（含边类型） | `(from, to, type)` | `services/document.py:2885 create_edge()` | 边类型词表须与图谱面板**同一份**事实源；**2026-09-22 已落地**（op `upsert_edge`，只写 sidecar `edges[]`、不碰正文） |
 | `kb.link.set_type` | 改边类型 | 同上 | `services/document.py:2885 create_edge()` / `:2971 delete_edge()` | 与"边类型迁移"同一实现 |
 | `kb.file.create` | 新建 `.md` | `(path)` | `services/document.py:794 create_file()` | 目录自动创建须留在库内 |
 | `kb.file.rename` | 重命名/移动 | `(from, to)` | `services/document.py:583 rename_file()` | 级联复用既有实现 |
-| `kb.file.delete` | 删除 `.md` + sidecar | `(path)` | `services/document.py:782 delete_file()` | **默认关**（该开关属 §2.1 暂缓的 `config` 参数面，随 M3b 复评引入） |
-| ~~`kb.file.move`~~ | 移动（目录重命名已实现，文件移动待补） | `(from, to)` | — | **M3 不进工具集**：正文内相对链接改写未落地（§9 R2） |
+| `kb.file.delete` | 删除 `.md` + sidecar | `(path)` | `services/document.py:782 delete_file()` | **2026-09-22 已落地**（op `delete_file`）：进 `RISKY_OPS`（逐条确认）、正文里的悬空引用先拦（`delete_referenced`）、只允许收尾 |
+| `kb.file.move` | 移动（换目录、保持文件名） | `(from, to)` | `services/document.py` 末尾 `move_file_document()` | **2026-09-22 已落地**（op `move_file`）：进 `RISKY_OPS`；「正文里的**文件相对**引用」仍**不自动改写** ⇒ 预演直接拦（`move_breaks_relative_refs`，§9 R2 只落"拦"这一半） |
+| `kb.manifest.rebuild` | 重建 / 同步 `manifest.yaml`（清单 + 指纹整体重写） | 全库一件事（**无参数**） | `services/document.py:2120 sync_manifest()` → `storage/manifest.py:183 rebuild_manifest()` | **2026-09-22 已落地**（op `rebuild_manifest`）：复用界面「构建」的**同一份实现**；前置硬闸 = `detect_path_moves()` 非空即拒（`manifest_blocked_by_path_moves`，先「修复路径」）；**必须收尾**（`manifest_must_be_last`）；**不进** `RISKY_OPS` |
 
-> **与原语目录的关系（2026-09-20，plan 架构）**：本表是**原语**（编译器的调用目标），不是模型可见的 op；plan 的 op（§2.3.3）编译到它们。M3a 首批 3 个 op 启用的是：`upsert_kp` → `kb.kp.create` / `kb.kp.update`；`attach_links` / `detach_links` → **新增原语** `kb.link.attach` / `kb.link.detach`（薄包装 `services/document.py:2493 apply_link_instances` / `:2428 detach_link_instance`，落盘仍只经原语）。本表 `kb.link.create`（`:2885 create_edge`，**纯边、不写正文**）与之**不是同一个动作**，其 op 形态（`upsert_edge`）留 M3b；`kb.file.*` 三个原语 M3a 不进工具集。
+> **与原语目录的关系（2026-09-20，plan 架构）**：本表是**原语**（编译器的调用目标），不是模型可见的 op；plan 的 op（§2.3.3）编译到它们。M3a 首批 3 个 op 启用的是：`upsert_kp` → `kb.kp.create` / `kb.kp.update`；`attach_links` / `detach_links` → **新增原语** `kb.link.attach` / `kb.link.detach`（薄包装 `services/document.py:2493 apply_link_instances` / `:2428 detach_link_instance`，落盘仍只经原语）。本表 `kb.link.create`（`:2885 create_edge`，**纯边、不写正文**）与之**不是同一个动作**：它的 op 形态 `upsert_edge` **2026-09-22 已落地**（同轮还落了 `delete_kp` / `rename_kp`，见上表）；`kb.file.*` 三个原语 M3a 不进工具集。
 
 **明确不做（M3 内）**：
 
@@ -313,7 +316,7 @@ apply 入口（核心，M3a）
 - ❌ **不做库外写**（含程序目录与用户主目录，见 2.4）；
 - ❌ **不做 `kb.file.move`**（见上表）；
 - ❌ **不做 plan 的"部分应用"**：一律**拒整批**（§2.3.3 失败语义）；逐条 ✗ 属**编译前**选择、不是编译后的部分执行；
-- ❌ **M3a 不做 `set_kp_range` / `rename_kp` / `merge_kp`**：`set_kp_range` 可由 `upsert_kp` 覆盖；`rename_kp` 影响**全库**、门禁面过大；`merge_kp` 本地无动作实现 ⇒ 全部留 M3b；
+- ❌ **M3a 不做 `set_kp_range` / ~~`rename_kp`~~ / `merge_kp`**（**2026-09-22 更新**：`rename_kp` 已在 M3b 落地、`delete_kp` / `upsert_edge` 同批落地；`set_kp_range` 仍可由 `upsert_kp` 覆盖 ⇒ 保留只登记不编译；`merge_kp` 本地**仍无动作实现**（只有 `suggest_kp_merge` 建议面），且"合并后用哪个 id / range / tags 合一"属产品语义 ⇒ **留待拍板**）；
 - ❌ **不做 plan 版本协商**（`v` + `min_compiler` 区间等）：见 §10 P12；
 - ❌ **不做 M4 对外契约**（旧稿 T1 CLI 面）：留 M4。
 
@@ -423,7 +426,7 @@ apply 入口（核心，M3a）
 | 级别 | 约束 | 超限行为 |
 |---|---|---|
 | 单次工具结果 | 已有：`read_document ≤ 20k 字符`、检索 `top_k=5`；待补：统一 `max_result_chars` | 截断 + 明确标注"已截断" |
-| 单轮工具调用 | 已有：`max_iterations=8` | 停止并如实回答"没查完" |
+| 单轮工具调用 | 已有：`max_iterations`（**默认 0 = 无上限**，与上游一致；`>0` 时才是硬上限，2026-09-22 起） | 停止并如实回答"没查完"（仅在显式设了正数上限时才会发生） |
 | 单会话累计 | 新增：按库可配的预算（token 或字符） | 提示用户并**停止**，不静默继续烧 |
 
 ### 6.2 记账口径必须补齐（当前缺口）

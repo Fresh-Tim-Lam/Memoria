@@ -47,3 +47,9 @@ def append(kb_path: str | None, session_id: str | None, event_type: str, payload
     except (OSError, ValueError) as e:
         return {"status": "error", "message": str(e)}
     return {"status": "ok", "seq": record.get("seq"), "type": event_type}
+
+
+#: 「重做一步」（栈语义，2026-09-21）：与 `capability/undo` 并列的审计事件 —— 撤销/重做**都要留痕**
+#: （沿用 §2.6 的"审计 fail-open 但如实"口径）。
+#: **追加在文件末尾**（不插进上面的常量区）⇒ 上方 `<文件>:<行号>` 锚点零漂移。
+EVENT_REDO = "capability/redo"

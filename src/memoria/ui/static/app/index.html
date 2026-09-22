@@ -236,7 +236,7 @@
             <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
             <button type="button" id="agent-stop" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.stopTitle"><span data-i18n="agent.stop">停止</span></button>
           </div>
-          <div id="agent-status" class="-agent-status -muted" aria-live="polite"></div>
+          <!-- 2026-09-21 撤除 `#agent-status`（人：「对话框下面这个能不能去掉」）：生成中由气泡尾「生成中… Ns」承担，错误改走顶部浮层（见 `agent-panel.js` 末尾「状态行撤除」块）。这行**保留为注释**以维持既有行号（文档锚点引用 index.html:<行号>）。 -->
         </div>
       </aside>
     </div>
@@ -342,7 +342,7 @@
           <label class="-agent-field">
             <span data-i18n="agent.settings.timeout">超时（秒）</span>
             <input type="text" id="agent-timeout" inputmode="decimal" data-i18n-attr="placeholder:agent.settings.timeoutPh">
-          </label><label class="-agent-field"><span data-i18n="agent.settings.refreshLabel">刷新间隔</span><select id="agent-refresh"></select></label>
+          </label><label class="-agent-field"><span data-i18n="agent.settings.refreshLabel">刷新间隔</span><select id="agent-refresh"></select></label><label class="-agent-field"><span data-i18n="agent.settings.transcriptLabel">对话显示</span><select id="agent-transcript"></select></label><label class="-agent-field"><span data-i18n="agent.settings.permissionLabel">新会话审批档</span><select id="agent-permission-default"></select></label>
           <label class="-agent-net" data-i18n-attr="title:agent.net.title">
             <input type="checkbox" id="agent-net-toggle">
             <span data-i18n="agent.net.label">网络</span>

@@ -14,7 +14,7 @@
   工作线程（后者只服务库维护类作业，见 `services/executor.py` 模块说明）；
   已有 ask 在飞时再次提交返回 `busy` 结构化错误（不抛异常、不排队）；
 - **增量缓冲**：`on_text` 把片段追加进缓冲区，`poll(cursor)` 只返回
-  `cursor` 之后的新增文本，前端无需重放全文；
+  `cursor` 之后的新增文本，前端无需重放全文；`on_event` 另把循环事件折成**过程行**（工具/步骤）追加进第三条缓冲，`poll(..., process_cursor)` 同样按游标增量投递（形状见 `turn_process.py`）；
 - **真取消（M1 收尾）**：每个作业持一枚 `CancelToken`（`loop.py`），`cancel(job_id)`
   置位令牌并**立即**把作业收敛为 `done` + `stop_reason="aborted"`（保留已生成的
   部分文本为 `answer`）⇒ `busy` 立刻释放、可马上发起新提问；工作线程在下个检查点
@@ -26,12 +26,12 @@
   （`UNREACHABLE`）不重试，故面板对"必拒连端点"是**立即失败**；
 - **密钥不落本模块**：端点配置由 `llm/config.py` 读取，异常消息由
   `llm/errors.py` 保证不含凭据取值；
-- **思考流只流式、不落盘（AG08；有意偏差）**：模型的 `ReasoningDelta` 经
-  `ask(on_reasoning=…)` 追进 `reasoning_parts`，由 `poll` 以**独立游标**增量投递
-  （`reasoning_delta` / `reasoning_cursor`，与文本游标互不影响）⇒ 面板生成中实时显示
-  思考块。**不写进会话 JSONL**：该文件同时是读取路径的事实源（列表扫描 2 MiB 上限、
-  `agent_session_load` 直接回放成渲染视图）⇒ **重载页面或载入旧会话都不显示过往思考**
-  （上游 dsh 会持久化思考，本地刻意不持久化以保住读路径的形状与成本）。
+- **思考流既流式、又随步骤落盘（AG08，2026-09-22 口径更新）**：模型的 `ReasoningDelta`
+  经 `ask(on_reasoning=…)` 追进 `reasoning_parts`，由 `poll` 以**独立游标**增量投递
+  （`reasoning_delta` / `reasoning_cursor`，与文本游标互不影响）⇒ 面板生成中实时显示思考块；
+  该步思考全文同时写进 `assistant/message.reasoning` **落盘** ⇒ 重载页面或载入旧会话**可回放**
+  （回放按 `step.reasoning` 呈现）。但思考**仍不进模型请求**：`session/history.py::build_history`
+  只读 `content`/`tool_calls`，新键被回放忽略（详见该模块「事件 → 消息」表）。
 
 本模块不联网（联网只发生在注入的 provider 内）、不打印；`logging` 只记失败。
 """
@@ -49,6 +49,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from memoria.services.agent.ask import ask
+from memoria.services.agent.approval_bridge import abort, attach, detach, pending_for
 from memoria.services.agent.llm import RetryPolicy
 from memoria.services.agent.loop import CancelToken, StopReason
 
@@ -121,11 +122,16 @@ class AskJob:
     model: str = ""
     #: 本轮要**续接**的会话 id（前端带上上一轮 `session_id`）；None = 全新会话。
     resume_session_id: str | None = None
+    #: 应用侧已装载的 `DocumentService`（2026-09-21 追加，可选）：agent **直接写入**时用它 ——
+    #: 写后清它的解析缓存 ⇒ 前端重开文件看到的是新内容；也避免每次写入新建实例（那会写用户 config）。
+    service: Any = None
     lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
     cancel_token: CancelToken = field(default_factory=CancelToken, repr=False)
     status: str = RUNNING
     parts: list[str] = field(default_factory=list, repr=False)
     reasoning_parts: list[str] = field(default_factory=list, repr=False)
+    #: 本轮**过程行**（工具/步骤，形状见 `turn_process.py`）；与另两条缓冲同一把锁。
+    process: list[dict[str, Any]] = field(default_factory=list, repr=False)
     answer: str = ""
     anchors: list[dict[str, Any]] = field(default_factory=list)
     tool_calls: list[dict[str, Any]] = field(default_factory=list)
@@ -158,6 +164,17 @@ class AskJob:
             return
         with self.lock:
             self.reasoning_parts.append(piece)
+
+    def note_process(self, item: Mapping[str, Any]) -> None:
+        """`ask(on_event=...)` 回调：追加一条**过程行**（工具/步骤；空项忽略）。
+
+        与 `note_delta` / `note_reasoning` 同一把锁、同一节奏；过程缓冲独立 ⇒
+        `poll` 的第三个游标 `process_cursor` 可各自前进、互不影响。
+        """
+        if not item:
+            return
+        with self.lock:
+            self.process.append(dict(item))
 
     def fail(self, error: str, code: str) -> None:
         with self.lock:
@@ -206,19 +223,22 @@ class AskJob:
             self.code = None
             self.error = None
             self.finished_at = time.time()
+            abort(self.kb_path)  # 唤醒挂起等确认的工具线程（按 cancelled 收敛，见 approval_bridge）
             return True
 
-    def snapshot(self, cursor: int = 0, reasoning_cursor: int = 0) -> dict[str, Any]:
-        """轮询快照：`delta` / `reasoning_delta` = 各自 `cursor` 之后的新增文本（不重放历史）。
+    def snapshot(self, cursor: int = 0, reasoning_cursor: int = 0, process_cursor: int = 0) -> dict[str, Any]:
+        """轮询快照：`delta` / `reasoning_delta` / `process_delta` = 各自 `cursor` 之后的新增（不重放历史）。
 
-        两个游标**完全独立**：思考游标只在自己那条缓冲上推进，文本游标的语义
-        （`0 < cursor <= len` 时切片、越界回落到 0 重放）在此**逐字保持不变**。
+        三条游标**完全独立**：思考游标只在自己那条缓冲上推进，过程游标只在**过程行**缓冲上推进；
+        文本游标的语义（`0 < cursor <= len` 时切片、越界回落到 0 重放）在此**逐字保持不变**
+        （过程游标同口径）。
         """
         with self.lock:
             text = "".join(self.parts)
             start = cursor if 0 < cursor <= len(text) else 0
             reasoning = "".join(self.reasoning_parts)
             r_start = reasoning_cursor if 0 < reasoning_cursor <= len(reasoning) else 0
+            p_start = process_cursor if 0 < process_cursor <= len(self.process) else 0
             out: dict[str, Any] = {
                 "status": self.status,
                 "job_id": self.job_id,
@@ -226,6 +246,10 @@ class AskJob:
                 "cursor": len(text),
                 "reasoning_delta": reasoning[r_start:],
                 "reasoning_cursor": len(reasoning),
+                "process_delta": [dict(item) for item in self.process[p_start:]],
+                "process_cursor": len(self.process),
+                # 追加键（2026-09-22）：待人工确认的写类调用（逐条确认卡；只增不改）
+                "pending_approvals": pending_for(self.kb_path),
                 "answer": self.answer,
                 "anchors": [dict(anchor) for anchor in self.anchors],
                 "tool_calls": [dict(call) for call in self.tool_calls],
@@ -264,10 +288,13 @@ class AskJobManager:
         session_id: str | None = None,
         model: str = "",
         env: Mapping[str, str] | None = None,
+        service: Any = None,
     ) -> dict:
         """校验并提交一次提问；返回 `{status:"ok", job_id}` 或结构化错误。
 
         `session_id` 非空 ⇒ 续聊（后端按会话文件回放历史，见 `ask()`）。
+        `service`（2026-09-21 追加，可选）⇒ 应用侧已装载的 `DocumentService`，
+        交给 agent 的**写入**路径复用（写后清解析缓存、避免新建实例）。
         """
         from memoria.services.agent.llm.config import is_enabled, load_config
 
@@ -304,6 +331,7 @@ class AskJobManager:
                 question=text,
                 model=model,
                 resume_session_id=resume,
+                service=service,
             )
             self._jobs[job.job_id] = job
             self._order.append(job.job_id)
@@ -313,7 +341,33 @@ class AskJobManager:
         return {"status": "ok", "job_id": job.job_id, "job_status": RUNNING}
 
     def _run(self, job: AskJob) -> None:
-        """工作线程：跑一次同步 ask，增量经 `on_text` 流入作业缓冲。"""
+        """工作线程：跑一次同步 ask，增量经 `on_text` 流入作业缓冲、过程行经 `on_event` 流入过程缓冲。"""
+        from memoria.services.agent import turn_process
+
+        current = 0  # 最近一次 `assistant/message` 的 iteration（工具行沿用）
+        args_by_id: dict[str, Any] = {}  # id → tool/call 的参数（用于给最终 tool_calls 补 summary）
+        # 挂载本库的审批信道：只有走到这里的（=有面板轮询的）作业才允许 `manual`/`auto` 档
+        # 挂起等人；CLI 直接调 `ask()` 不经过本类 ⇒ 无应答者 ⇒ 立即 fail-closed 拒绝。
+        attach(job.kb_path)
+
+        def on_event(event_type: str, data: Mapping[str, Any]) -> None:
+            nonlocal current
+            if event_type == "assistant/message":
+                current = int(data.get("iteration") or current)
+                job.note_process(
+                    turn_process.step_row(current, data.get("content"), data.get("tool_calls"), data.get("reasoning"))
+                )
+            elif event_type == "tool/call":
+                args_by_id[str(data.get("id") or "")] = data.get("arguments")
+                job.note_process(turn_process.tool_row(data, state="running", iteration=current))
+            elif event_type == "tool/result":
+                job.note_process(
+                    turn_process.tool_row(
+                        data, state="error" if data.get("is_error") else "ok", iteration=current
+                    )
+                )
+            # 其它事件类型（step/start、usage、loop/end 等）一律丢弃：不发往前端
+
         try:
             result = ask(
                 job.kb_path,
@@ -323,14 +377,26 @@ class AskJobManager:
                 retry_policy=PANEL_RETRY_POLICY,
                 on_text=job.note_delta,
                 on_reasoning=job.note_reasoning,
+                on_event=on_event,
                 cancel=job.cancel_token,
+                service=job.service,
             )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
             code = getattr(exc, "code", None) or CODE_ASK_FAILED
             logger.warning("[agent-ask] 作业 %s 失败（code=%s）", job.job_id, code)
             job.fail(str(exc), str(code))
+            detach(job.kb_path)
             return
         job.succeed(result)
+        # 最终 `tool_calls` 载荷补一截**可读摘要**（来源是 `tool/call` 的 arguments；只增不改）；
+        # 取消的作业 `succeed()` 早退、`tool_calls` 可能为空 ⇒ 自然跳过。
+        with job.lock:
+            for call in job.tool_calls:
+                arguments = args_by_id.get(str(call.get("id") or ""))
+                if arguments is None:
+                    continue
+                call.setdefault("summary", turn_process.arg_summary(str(call.get("name") or ""), arguments))
+        detach(job.kb_path)
 
     # —— 取消 ——
 
@@ -354,12 +420,13 @@ class AskJobManager:
 
     # —— 查询 ——
 
-    def poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0) -> dict:
+    def poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0, process_cursor: int = 0) -> dict:
         """轮询作业：返回增量、状态与最终产物；未知 job 返回 `unknown_job`。
 
-        `reasoning_cursor` 是**追加的可选参数**（AG08）：既有两参调用的返回里
-        只是多出 `reasoning_delta` / `reasoning_cursor` 两个字段（**只增不改**），
-        文本侧的 `delta` / `cursor` 语义与形状完全不变。
+        `reasoning_cursor` / `process_cursor` 是**追加的可选参数**（AG08 / 2026-09-22）：
+        既有两参调用的返回里只是多出 `reasoning_delta` / `reasoning_cursor` /
+        `process_delta` / `process_cursor` 字段（**只增不改**），文本侧的 `delta` / `cursor`
+        语义与形状完全不变。
         """
         with self._lock:
             job = self._jobs.get(job_id) if job_id else None
@@ -373,7 +440,11 @@ class AskJobManager:
             r_offset = max(0, int(reasoning_cursor))
         except (TypeError, ValueError):
             r_offset = 0
-        return job.snapshot(offset, r_offset)
+        try:
+            p_offset = max(0, int(process_cursor))
+        except (TypeError, ValueError):
+            p_offset = 0
+        return job.snapshot(offset, r_offset, p_offset)
 
     def active_job_id(self) -> str | None:
         """当前在飞作业 id（无则 None）；供诊断/测试观察并发约束。"""

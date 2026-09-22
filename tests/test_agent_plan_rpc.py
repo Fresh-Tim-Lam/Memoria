@@ -49,8 +49,8 @@ _PLAN_KEYS = (
     "dirty",
     "done",
     "failed",
-    "undone",
     "undo",
+    "undoTitle",
     "undoFail",
     "rollback",
     "rejected",
@@ -208,6 +208,65 @@ def test_preview_then_apply_round_trips_and_undo_restores_bytes(kb: Path, api: U
     assert "notes/a.md" not in getattr(api._svc, "_cache", {})
 
 
+def test_undo_returns_to_the_conversation_start(kb: Path, api: UIAPI) -> None:
+    """一键撤销：一次对话写两批 ⇒ 一次撤销回到**对话开始前**（起点快照），且**幂等**。
+
+    人 2026-09-21 定稿：「一键生效，不再有被阻止」⇒ 后端只保留"回到起点"这一种语义（`txid` 参数
+    留给调试）。`apply_plan` 会在**第一次写入前**把那一版固化进 `<session>/origin/`。
+    """
+    before = _tracked(kb)
+    first = api.agent_plan_apply(_plan(), None, None, None)
+    assert first["status"] == "ok", first
+
+    second_plan = _plan()
+    second_plan["txid"] = "20260920T021200Z-08"
+    second_plan["ops"] = [
+        {
+            "op": "upsert_kp",
+            "op_id": "o1",
+            "file": "notes/a.md",
+            "kp_id": "tail",
+            "name": "末尾",
+            "range": {"start": {"line": 5}, "end": {"line": 5}},
+        }
+    ]
+    second = api.agent_plan_apply(second_plan, None, None, None)
+    assert second["status"] == "ok", second
+    assert first["session_id"] == second["session_id"] == UI_SESSION
+    assert _tracked(kb) != before
+    assert (Path(backups_root(str(kb))) / UI_SESSION / "origin" / "journal.json").is_file()
+
+    undone = api.agent_plan_undo(None, UI_SESSION, None)
+    assert undone["status"] == "ok", undone
+    assert _tracked(kb) == before  # 逐字节回到**对话开始前**
+    assert undone["recover"]["errors"] == 0
+
+    # 幂等：再点一次仍然成功（回到同一个状态），不会出现"没有批次 / 被拒绝"
+    again = api.agent_plan_undo(None, UI_SESSION, None)
+    assert again["status"] == "ok", again
+    assert _tracked(kb) == before
+
+
+def test_undo_never_blocks_even_after_external_change(kb: Path, api: UIAPI) -> None:
+    """盘上被别的写者改过 ⇒ 撤销**仍然成功**（自动先兜底那一版），不再有 `external_change` 拒绝。
+
+    真机路径（人："仍然撤销失败"）：agent 写完 → 人跑产品「构建」（产品改 sidecar / pending）⇒
+    旧实现判 `external_change` 整批拒、连点两次都失败。现在覆盖前先把当前版本另存 `manual-force`
+    批次 ⇒ 可以直接撤，且那份改动没丢。
+    """
+    before = _tracked(kb)
+    done = api.agent_plan_apply(_plan(), None, None, None)
+    assert done["status"] == "ok", done
+    changed = (kb / "notes" / "a.md").read_text(encoding="utf-8") + "\n产品构建改的一行。\n"
+    (kb / "notes" / "a.md").write_text(changed, encoding="utf-8")
+
+    undone = api.agent_plan_undo(None, UI_SESSION, None)
+
+    assert undone["status"] == "ok", undone
+    assert _tracked(kb) == before  # 回到对话开始前
+    assert undone["safety_backup"]["txid"]  # 被覆盖掉的那一版已另存（覆盖 ≠ 丢数据）
+
+
 def test_apply_refuses_when_disk_changed_after_preview(kb: Path, api: UIAPI) -> None:
     """§9 规则 ①：看过预览之后文件被改过 ⇒ **整批拒**、**未建备份**、**零写入**。"""
     preview = api.agent_plan_preview(_plan())
@@ -285,7 +344,6 @@ def test_plan_card_wiring_invariants() -> None:
         '"-modal-backdrop"',  # ② 对话栏不可用时的回落
         '"agent_plan_preview"',  # ③ 先预览（零落盘）
         '"agent_plan_apply"',
-        '"agent_plan_undo"',
         "preview.base_versions || null",  # §9 规则 ①：人看过的那一版原样回传
         "ops: (plan.ops || []).filter(",  # 勾选 = 编译前的选择（未勾的 op 直接去掉）
         "WR().setBusy?.(true)",  # §9 规则 ② 的另一半：写期间人机保存 deferIfBusy 让路
@@ -294,11 +352,34 @@ def test_plan_card_wiring_invariants() -> None:
         'code: "editing"',
         'r.code === "stale_write"',  # stale_write 时给「重新预览」这条明路（§9 规则 ①）
         "function renderInto(el, inner, state)",  # 一份计划一张卡：确认后**原地**换成结果
-        "showResult(res, plan, root)",  # apply/undo 都原地推进（不留能重复点的旧卡）
-        "showResult(undone, root.__plan || null, root)",
+        "showResult(res, plan, root)",  # apply 后原地推进（不留能重复点的旧卡）
         "drainProposals(res.session_id)",  # 这批提议属于**这次对话** ⇒ 审计也落这里
         "agent_plan_apply\", cropped, null, sessionId",  # 应用时带上会话 id（不是 ui-plan 伪会话）
-        "openFile?.(cur, { skipNav: true })",  # 写后重开当前文件（不产生新的导航栈条目）
+        # 撤销 / 重做：**栈语义**（人 2026-09-21 定稿「撤销一步 / 重做一步」「采用 stack 设计」）
+        'agent_plan_undo_step", null, sid',  # 撤销**一步**（指针 −1，用该批 pre-image）
+        'agent_plan_redo", null, sid',  # 重做**一步**（指针 +1，用该批写后镜像）
+        'agent_plan_stack", null, sid',  # 取栈现状 ⇒ 状态栏显示"栈 p/t"与按钮可用性
+        "async function undoWrite(sessionId)",
+        "async function redoWrite(sessionId)",
+        "async function refreshStack(sessionId)",
+        "async function afterStep(res, sessionId)",  # 一步之后：同步界面 + 重取栈 + 重绘状态栏
+        # **栈里还有步骤 ⇒ 状态栏必须留着**（人 2026-09-21：「撤销之后栈状态栏就没了，我无法重做」）。
+        # 曾经的条件是 `stack.cursor < 0 → markWriteUndone()`：撤到最底时把整条状态栏连同重做入口一起
+        # 收掉。现在只有"栈里真的没有步骤"（total === 0）才清；`markWriteUndone` 已整体删除。
+        "if (stack && !stack.total)",
+        "panel?.setWriteState?.(null)",
+        # 写入回执 ⇒ 交给对话栏**顶部副标题行**的写入状态栏（撤销只在那里出现一次）
+        "function publishWriteState(rec, sessionId)",
+        "function publishRecord(rec, sessionId)",
+        "panel.setWriteState({",
+        'esc(roleLabel(state))',  # 手动预览卡的角色标签
+        # 写 / 撤销后的**界面同步**（人："agent 对话之后自动刷新渲染"）：文件树 + 当前文件重载 +
+        # 待确认摘要 + 图谱 ⇒ 不必手动重开或切页
+        "async function syncAfterWrite(files)",
+        "await app.refreshFiles?.()",
+        "await app.openFile?.(cur, { skipNav: true })",  # 重开当前文件（不产生新的导航栈条目）
+        "await app.refreshKbPendingSummary?.()",
+        "await app.loadGraphData?.()",
         'clipped("plan-file-path"',  # ④ 长文本"单行省略 + 悬浮看全"
         'clipped("plan-diff-line plan-diff-del"',
         "title=\"${esc(full)}\"",
@@ -311,6 +392,18 @@ def test_plan_card_wiring_invariants() -> None:
         "global.MemoriaI18n?.addRefresh?.(",
     ):
         assert needle in src, f"plan-confirm.js 缺接线：{needle}"
+    # 反向：**不许**再用「已撤销」短显态把状态栏收掉 —— 它会连重做入口一起收（人 2026-09-21 报障）。
+    assert "panel?.markWriteUndone?.()" not in src
+    assert "stack.cursor < 0" not in src, "撤到最底 ≠ 该收起来：那时 can_redo 才刚变成可用"
+    # **手动应用**这条路径也要把回执交给状态栏（否则没有栈位置、也没有重做入口），且会话 id 必须
+    # 回落到后端同一个伪会话 `ui-plan`（少这一环 ⇒ 查不到栈 ⇒ 状态栏空有壳）。
+    assert "publishWriteState({ preview: preview, result: res || {} }, root.__session || null);" in src
+    assert 'const sid = sessionId || (rec && rec.session_id) || result.session_id || "ui-plan";' in src
+    # 卡片上的撤销入口与状态栏**同一语义**（都是"一步"）：不许再出现"回到对话开始前"那种措辞
+    # （它做的是 `agent_plan_undo_step`，说出来就是谎）。
+    zh = (_APP / "i18n" / "zh-CN.js").read_text(encoding="utf-8")
+    en = (_APP / "i18n" / "en.js").read_text(encoding="utf-8")
+    assert "撤销这次对话的改动" not in zh and "this conversation's writes" not in en
 
 
 @pytest.mark.parametrize("locale", _LOCALES, ids=lambda p: p.name)
@@ -358,38 +451,89 @@ def _propose_args(**over: object) -> dict:
 
 
 def _invoke_propose(kb: Path, args: dict):
-    """走**真注册表**调用（含参数校验与审批）—— 保证"工具在场 + 默认策略放行"这条链是通的。"""
+    """走**真注册表**调用（含参数校验与审批）—— 保证"工具在场 + 默认策略放行"这条链是通的。
+
+    2026-09-22 起多了一道**读后写闸**（`fs-observation-policy` 端口，`services/agent/observation.py`）⇒
+    这里按**真实回合**的顺序，先把本批要改的文件各读一遍（模型也是先读后写）。
+    """
     registry = ToolRegistry(build_kb_tools(str(kb)))
+    targets = {
+        str(op.get("file") or "")
+        for op in (args.get("ops") or [])
+        if isinstance(op, dict) and str(op.get("op") or "") != "create_file"
+    }
+    for rel in sorted(targets - {""}):
+        registry.invoke(ToolCall(id="r", name="read_document", arguments=json.dumps({"path": rel})))
     return registry.invoke(ToolCall(id="c1", name=PROPOSE_TOOL_NAME, arguments=json.dumps(args)))
 
 
-def test_propose_tool_present_and_read_only_by_declaration(kb: Path) -> None:
-    """工具在场、按 `read_only=True` 声明（口径：它**不改动知识库**，落盘权在人）⇒ 默认策略放行。"""
+def test_propose_tool_is_a_write_tool_and_default_policy_allows_it(kb: Path) -> None:
+    """按 `read_only=False` 声明（它**确实会落盘**）⇒ 默认策略**全线放行**（人 2026-09-21 拍板）。
+
+    旧口径是"它不改动知识库、落盘权在人"，故声明 `read_only=True`；写机制放开后不再成立。
+    """
     tools = {tool.name: tool for tool in build_kb_tools(str(kb))}
     assert PROPOSE_TOOL_NAME in tools
-    assert tools[PROPOSE_TOOL_NAME].read_only is True
-    assert DEFAULT_POLICY.decide(ApprovalRequest(tool=PROPOSE_TOOL_NAME, read_only=True)).allowed
+    assert tools[PROPOSE_TOOL_NAME].read_only is False
+    assert DEFAULT_POLICY.decide(ApprovalRequest(tool=PROPOSE_TOOL_NAME, read_only=False)).allowed
 
 
-def test_propose_tool_queues_a_plan_and_writes_nothing(kb: Path) -> None:
-    """提议成功 ⇒ 排进信箱（程序补 `v`/`txid`/`op_id`），而**知识库逐字节不变**。"""
+def test_propose_tool_writes_immediately_and_queues_a_receipt(kb: Path) -> None:
+    """提议成功 ⇒ **当场落盘**（侧车写了、备份批次与审计都在），并排一条**回执**进信箱供前端展示。"""
     before = _facts(kb, with_audit=True)
     result = _invoke_propose(kb, _propose_args())
     assert result.is_error is False, result.content
-    assert _facts(kb, with_audit=True) == before  # 零落盘（提议还没到写那一步）
+    assert result.content.startswith("**已写入**")
 
-    plans = take_proposals(str(kb))
-    assert len(plans) == 1
-    plan = plans[0]
+    after = _facts(kb, with_audit=True)
+    sidecar = ".memoria/sidecars/notes/a.memoria.yaml"
+    assert sidecar not in before and sidecar in after  # 知识点（侧车）真的写进去了
+    assert after != before
+
+    records = take_proposals(str(kb))
+    assert len(records) == 1
+    rec = records[0]
+    plan = rec["plan"]
     assert plan["v"] == 1 and plan["intent"] == "给「注意力机制」建档"
     assert re.match(r"^\d{8}T\d{6}Z-\d+$", plan["txid"])
     assert plan["ops"][0]["op_id"] == "o1"  # 模型没写 op_id 时由程序补齐
+    assert rec["result"]["status"] == "ok" and rec["result"]["auto"] is True
+    assert rec["session_id"] == "agent-auto"  # 调用方没给会话 id ⇒ 审计落 auto 会话
+    assert rec["preview"]["previewed"] is True
     assert take_proposals(str(kb)) == []  # 取走即清空
 
 
 def test_propose_tool_rejects_bad_op_without_queueing(kb: Path) -> None:
-    """越界路径 ⇒ `INVALID_PLAN` + 按 `op_id` 定位，且**不进信箱**（让模型重写整批再提）。"""
+    """越界路径 ⇒ 被**读后写闸**更早拦下（fail-closed），且**不进信箱**。
+
+    2026-09-22 起 `propose_write` 先在工具处理器过「读后写闸」（`fs-observation-policy` 端口）：
+    `../escape.md` 连"读过"都做不到 ⇒ 直接 `FS_NOT_OBSERVED`，比计划编译器更早关门（恢复指引照旧：
+    先 `read_document`、再重提整批）。编译器那一层仍由下一个用例覆盖。
+    """
     bad = _propose_args(ops=[{**_propose_args()["ops"][0], "file": "../escape.md"}])
+    result = _invoke_propose(kb, bad)
+    assert result.is_error is True
+    assert result.output.code == "FS_NOT_OBSERVED"
+    assert "read_document" in result.content
+    assert take_proposals(str(kb)) == []
+
+
+def test_propose_tool_rejects_bad_plan_with_guidance(kb: Path) -> None:
+    """**过闸之后**的语义错误仍由计划编译器拦：`INVALID_PLAN` + 按 `op_id` 定位 + 「别把它删掉」的恢复指引。
+
+    用"引用了文件里不存在的原文"（最常见的真机错误：模型照着旧内容写 `expect`）来触发。
+    """
+    bad = _propose_args(
+        ops=[
+            {
+                "op": "replace_lines",
+                "file": "notes/a.md",
+                "range": {"start": {"line": 3}, "end": {"line": 3}},
+                "expect": "这句原文在文件里根本不存在",
+                "text": "改后的正文。",
+            }
+        ]
+    )
     result = _invoke_propose(kb, bad)
     assert result.is_error is True
     assert result.output.code == "INVALID_PLAN"
@@ -400,25 +544,27 @@ def test_propose_tool_rejects_bad_op_without_queueing(kb: Path) -> None:
     assert take_proposals(str(kb)) == []
 
 
-def test_propose_tool_text_forbids_claiming_a_write(kb: Path) -> None:
-    """提示词纪律：工具结果必须写明「尚未写入」，并禁止模型谎称已写入。"""
+def test_propose_tool_text_reports_the_write(kb: Path) -> None:
+    """回文必须**如实报结果**：写明「已写入 … txid …」与撤销入口，并提醒别重复提同一批。"""
     result = _invoke_propose(kb, _propose_args())
-    assert "尚未写入" in result.content and "不要声称已经写入" in result.content
-    # 「分批」必须明说：应用卡片是用户手动点的，不会自动开启下一轮（真机撞过：agent 提完正文就停）
-    assert "回复「继续」" in result.content
+    assert "已写入" in result.content and "txid" in result.content
+    assert "撤销" in result.content
+    assert "重复" in result.content
 
 
 def test_plan_pending_rpc_drains_once(kb: Path, api: UIAPI) -> None:
-    """RPC 取走即清空（第二次为空表）；没有提议时也回 `ok`（不是错误）。"""
-    assert api.agent_plan_pending() == {"status": "ok", "plans": []}
+    """RPC 取走即清空（第二次为空表）；没有记录时也回 `ok`（不是错误）。"""
+    assert api.agent_plan_pending() == {"status": "ok", "records": [], "plans": []}
     _invoke_propose(kb, _propose_args())
     first = api.agent_plan_pending()
-    assert first["status"] == "ok" and len(first["plans"]) == 1
-    assert api.agent_plan_pending()["plans"] == []
+    assert first["status"] == "ok" and len(first["records"]) == 1
+    assert first["records"][0]["result"]["status"] == "ok"
+    assert first["plans"][0]["intent"] == "给「注意力机制」建档"
+    assert api.agent_plan_pending()["records"] == []
 
 
 def test_capability_self_report_follows_tool_presence(kb: Path) -> None:
-    """提示词的"只读"那句按**工具是否在场**二选一：没有提议工具时逐字保持原口径。"""
+    """提示词的"只读"那句按**工具是否在场**二选一：没有写工具时逐字保持原口径。"""
     registry = ToolRegistry(build_kb_tools(str(kb)))
     assert "不能修改、创建或删除任何文件" in build_system_prompt(str(kb), tools=())
 
@@ -426,6 +572,6 @@ def test_capability_self_report_follows_tool_presence(kb: Path) -> None:
     assert tool is not None
     write_prompt = build_system_prompt(str(kb), tools=(tool.schema(),))
     assert "不能修改、创建或删除任何文件" not in write_prompt
-    assert "你可以**提议**对知识库的修改" in write_prompt
-    assert "你自己没有落盘权" in write_prompt
+    assert "你可以**直接写入**知识库" in write_prompt
+    assert "以工具回文为准" in write_prompt
 

@@ -616,13 +616,13 @@
     align-items: center;
     gap: 0.375rem;
 }
-.-agent-status {
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
-}
-.-agent-status.-agent-error {
-    color: var(--error);
-}
+/* 2026-09-21 撤除「对话输入框下方那行状态文本」的样式（类名 `-agent-status`，含它的
+   `-agent-error` 变体）：生成中已由气泡尾「生成中… Ns」承担
+   （`agent-panel.js::renderGeneratingTail()`），错误改走顶部浮层（`#-flash-host`，
+   样式见本文件的 flash 块）。原两条规则随之作废，**原地留注释、不删行** ——
+   本文件多处文档锚点引用 app.css:<行号>（如 5160 / 5615-5641 / 5817+），删行会让它们整体上移。
+   若将来要复用该状态行，请连同 index.html 那行注释一起恢复：两处都是"保留行数"的注释，
+   不是可以随手删掉的死代码。 */
 
 .-graph-root {
     flex: 1;
@@ -4923,8 +4923,8 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 
 /* ========== 对话面板：输入框上方的状态 bar ==========
    结构 = 状态点（idle / busy / error / off）+ 一条「事实」串（模型 · 出网 · 会话 · 轮次）。
-   它是**操作面事实**的常显区；消息级长文案（「生成中… Ns」/ 错误原文 / 已停止）仍在下方
-   `#agent-status`，两者分工不同、不重复同一句话。 */
+   它是**操作面事实**的常显区；消息级长文案（「生成中… Ns」）归气泡尾、错误归顶部浮层
+   （`#agent-status` 已于 2026-09-21 撤除），分工不同、不重复同一句话。 */
 .-agent-statusbar {
     display: flex;
     align-items: center;
@@ -5412,8 +5412,8 @@ html *::-webkit-scrollbar-thumb:active {
 
 /* ===== 2026-09-19 追加（AG08）：助手气泡内的思考折叠块（`.-agent-think*`）=====
    只在模型确实吐思考流时出现（无思考则整块不存在 ⇒ 无空块、无布局跳变）。
-   视觉刻意"压低"（次要色 + 等宽 + 左侧线），一眼区分于答案正文；默认折叠，
-   流式期间展开跟随增量（`<details>` 原生开合，逻辑见 agent-panel.js 末尾块）。
+   视觉刻意"压低"（次要色 + 等宽 + 左侧线），一眼区分于答案正文；**始终默认折叠**
+   （永不自动展开），摘要行 = 固定标签 + `.-agent-think-tip`（逻辑见 agent-panel.js 末尾块）。
    本块末尾追加 ⇒ 既有行号锚点零漂移。 */
 .-agent-think {
     align-self: stretch;
@@ -5505,11 +5505,11 @@ html *::-webkit-scrollbar-thumb:active {
     color: var(--text-secondary);
 }
 
-/* ===== 2026-09-19 追加：状态 bar 刷新间隔选择框（设置 → 对话，`#agent-refresh`）=====
-   `.-agent-field` 只给 `input` 定了外观（见上方 408-428 的 `.` `-agent-field input`），
-   故这里为同族的 `<select>` 补一套等价样式（同内边距/边框/底色/圆角；仅控件自带字号）。
-   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
-#settings-body-agent #agent-refresh {
+/* ===== 2026-09-19 追加：状态 bar 刷新间隔 / 对话显示档两个选择框（设置 → 对话）=====
+   `.-agent-field` 只给 `input` 定了外观（见上方 408-428），故这里为同族的 `<select>` 补一套
+   等价样式（同内边距/边框/底色/圆角；仅控件自带字号）。2026-09-21 选择器补上 `#agent-transcript`：
+   原来只写死 `#agent-refresh` 一个 id，新控件因此露出浏览器原生外观（人报"违反 ui 设计主题"）。 */
+#settings-body-agent #agent-refresh, #settings-body-agent #agent-transcript {
     padding: 0.3125rem 8px;
     font-family: inherit;
     font-size: 0.8125rem;
@@ -5759,4 +5759,459 @@ html *::-webkit-scrollbar-thumb:active {
     font-family: ui-monospace, monospace;
     font-size: 0.8rem;
     resize: vertical;
+}
+
+/* ===== 2026-09-21 追加（第二版，人定稿）：消息**下方**的操作行 + 写入状态条 ==================
+   人：「撤销按钮和复制按钮都放在每个对话气泡的下方，不是气泡内，或者说 agent 回复甚至不需要气泡框住」
+       「用户只能在最后一次对话下方撤销」「文件修改状态可以效仿 trae 的做法，给一个状态栏可以展开」
+   ⇒ ① 助手消息**去掉气泡外观**（无边框、无底色，像文档一样铺开）；用户消息保留浅底便于分辨；
+      ② 每条消息外面包一层 `.-agent-turn`：[内容][操作行]，操作行在**气泡外面**；
+      ③ 写入状态条 `.-agent-write`（可展开）**只挂最新一条助手消息下方**，撤销按钮就在那一行。 */
+.-agent-turn { display: flex; flex-direction: column; max-width: 100%; }
+.-agent-turn--user { align-self: flex-end; max-width: 85%; }
+
+/* 助手：去框（人：「agent 回复甚至不需要气泡框住」） */
+.-agent-msg--assistant {
+    border: 0;
+    background: transparent;
+    padding: 0.125rem 0 0;
+}
+/* 用户：浅底保留；"靠右 + 85% 宽"改由 `.-agent-turn--user` 承担（见上） */
+.-agent-msg--user { max-width: 100%; }
+
+/* 操作行（**气泡外面**）：默认弱显，悬浮该条消息时提亮 */
+.-agent-msg-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin: 0.125rem 0 0.25rem;
+    min-height: 1.25rem;
+}
+.-agent-act {
+    padding: 0.0625rem 0.375rem;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    border: 0.5px solid transparent;
+    border-radius: 6px; /* 主题档位（ui-visual-language：4/6/8/12/999）；原 3px 方角（人：「button 改成圆角」）；同族复制/撤销/写入栏/折叠一起跟到 6px */
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    opacity: 0.55;
+}
+.-agent-turn:hover .-agent-act { opacity: 1; }
+.-agent-act:hover { color: var(--text-primary); border-color: var(--theme-color); background: var(--bg-tertiary); }
+.-agent-act.-agent-act--done { opacity: 1; color: var(--theme-color); border-color: var(--theme-color); }
+.-agent-act:disabled { opacity: 0.5; cursor: default; }
+
+/* 顶栏重排（人定稿）：`.-agent-head` = 会话名 + 「历史」按钮；模型名不再显示（JS 搬 DOM，index.html 零改动） */
+.-agent-head { display: flex; align-items: center; gap: 0.375rem; }
+#agent-history-current {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.-agent-head #agent-history-open { flex: 0 0 auto; }
+
+/* 副标题行（原 `.-agent-history`，兼名 `.-agent-subhead`）= **写入状态栏**的宿主 */
+.-agent-subhead { display: flex; align-items: center; gap: 0.5rem; min-height: 1.5rem; }
+
+/* 图标按钮（复制）：方形、紧凑；悬停才显形（文案在 `title` 里） */
+.-agent-act--icon { display: inline-flex; align-items: center; justify-content: center; padding: 0.1875rem; }
+.-agent-act--icon svg { display: block; }
+
+/* 写入状态栏（两态）：bar 一行摘要 + 撤销；点 ▾ 展开明细 */
+.-agent-write-bar { display: flex; align-items: center; gap: 0.375rem; width: 100%; flex-wrap: wrap; }
+.-agent-write-toggle::after { content: "▾"; margin-left: 0.25rem; }
+.-agent-write--open .-agent-write-toggle::after { content: "▴"; }
+.-agent-write-undo { color: var(--error); }
+.-agent-write-redo { margin-left: auto; }
+/* 栈轨迹（展开态上半）：每步一行；已应用的高亮，当前指针再加左侧色条 + 加粗 */
+.-agent-write-trace { display: flex; flex-direction: column; gap: 0.0625rem; margin-bottom: 0.25rem; }
+.-agent-write-step { padding-left: 0.5rem; border-left: 2px solid var(--border); color: var(--text-secondary); opacity: 0.55; }
+.-agent-write-step.is-applied { opacity: 1; }
+.-agent-write-step.is-current {
+    border-left-color: var(--theme-color);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+.-agent-write-body {
+    flex: 1 0 100%;
+    border-top: 0.5px solid var(--border);
+    margin-top: 0.125rem;
+    padding: 0.25rem 0.125rem 0;
+}
+.-agent-write-file {
+    font-family: ui-monospace, monospace;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: help;
+}
+/* **展开态必须撑开那一行**：`.-agent-history`（= `.-agent-subhead`）被 `--bar-h-b` 钉成 34px 高
+   （app.css:5160），而展开出来的 `.-agent-write-body` 是一行行静态流 ⇒ 之前会**溢出**盖住
+   `.-agent-head` 与消息区顶部（L4 实测：bar 高 121px、上下各溢出约 45px）。
+   修法：展开时由 JS 在宿主上打 `-agent-write-host--open`（本块 CSS 在 5160 之后，同特异度后者胜），
+   行高交给内容、并把交叉轴改为顶对齐；消息区是 `flex:1; min-height:0` ⇒ 自然让出空间。 */
+.-agent-write-host--open { height: auto; align-items: flex-start; }
+
+/* ===== 2026-09-22 追加：一次回合的「过程内容」+ 回合结束的折叠摘要 ==========================
+   对齐上游 dsh 的 Turn Process Folding（`agent-panel.js` 末尾块 `renderProcessInto()` /
+   `applyProcessDelta()`）：
+     - `.-agent-process`：思考行之后、正文之前的过程区（`step` 的「更早的助手正文」+ 工具行）；
+     - `.-agent-step`：更早的助手正文（次要色）；
+     - `.-agent-tool`：**一行** = 状态点 + 工具名 · 参数摘要 + 状态文案（状态点按 `data-state` 着色：
+       `running` 主色 / `ok` 成功色 / `error` 红）；有输出时点行展开 `.-agent-tool-output`
+       （等宽小字、`pre-wrap`；没有输出 ⇒ 无 `--expandable` ⇒ `cursor: default`，不给入口）；
+     - `.-agent-process-fold`：compact 档回合结束时的折叠容器；`.-agent-process-toggle` 是**真实
+       `<button>`**（`aria-expanded`，键盘可达）—— 摘要 = `agent.process.*` 计数文案，样式与
+       `.-agent-act` 家族一致；展开态按轮记忆（JS 侧 `rec.processOpen`）。
+   旧的 `.-agent-tools` / `.-agent-tool-row`（气泡末尾的工具摘要条）已随 `toolsStrip()` 删除；
+   失败可见性不退化：折叠态摘要里有「N 次失败」、展开后有红字「失败（code）」+ 输出。
+   本块在文件末尾 ⇒ 既有行号锚点（`app.css` ≤ 5702）零漂移。 */
+.-agent-process {
+    display: flex;
+    flex-direction: column;
+    gap: 0.0625rem;
+    margin: 0 0 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+.-agent-step {
+    white-space: pre-wrap;
+    word-break: break-word;
+    opacity: 0.9;
+}
+.-agent-tool {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem;
+    cursor: default;
+}
+.-agent-tool--expandable { cursor: pointer; }
+.-agent-tool-dot {
+    flex: 0 0 auto;
+    align-self: center;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+    background: var(--text-secondary);
+}
+.-agent-tool[data-state="running"] .-agent-tool-dot { background: var(--theme-color); }
+.-agent-tool[data-state="ok"] .-agent-tool-dot { background: var(--success); }
+.-agent-tool[data-state="error"] .-agent-tool-dot { background: var(--error); }
+.-agent-tool-name { font-family: var(--font-mono); }
+.-agent-tool-sep { opacity: 0.6; }
+.-agent-tool-summary {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-agent-tool-state { margin-left: 0.0625rem; }
+.-agent-tool-state--error { color: var(--error); }
+.-agent-tool-output {
+    flex: 0 0 100%;
+    margin-top: 0.125rem;
+}
+.-agent-tool-output-label { opacity: 0.7; }
+.-agent-tool-output-body {
+    margin: 0.0625rem 0 0;
+    padding: 0.125rem 0 0.125rem 0.375rem;
+    border-left: 2px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 10rem;
+    overflow: auto;
+}
+.-agent-process-fold { margin: 0 0 0.375rem; }
+/* 宿主是 `.-agent-msg`（`.-agent-turn` 之外），故 3 类选择器与 `.-agent-turn:hover .-agent-act`
+   同特异度、本块更靠后 ⇒ 摘要按钮**常显**（它是折叠内容的唯一入口，不该等悬停）。 */
+.-agent-msg .-agent-process-fold > .-agent-process-toggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+    opacity: 1;
+    padding: 0.1875rem 0.375rem;
+    background: var(--bg-tertiary);
+}
+.-agent-process-fold-body { margin-top: 0.25rem; }
+/* 2026-09-22：`.-agent-think-tip`（摘要行旁的预览文字）**已撤除**（人：「思考过程旁边不用展示文字」）——
+   摘要行现在只有标签 + 自画三角（`thinkEl()` 里已不再建该节点），故 `.-agent-think-tip` 的
+   `margin-left` / `opacity` 两条规则一并撤掉（连同 `updateThinkRowEl()` 里的同步逻辑与
+   `thinkSummaryLine()` 纯函数）。本块空置 = 等量占位，保下方锚点不推位。 */
+.-agent-think-label { user-select: none; }
+
+/* ===== 2026-09-21 追加：设置 → 对话 里两个同族 `<select>` 的**聚焦态** ==================
+   上面 5512 那条只补了外观（内距/边框/底色/圆角），漏了聚焦：不写的话 Tab 进来会露出
+   浏览器默认焦点环，与 `.-agent-field input:focus`（app.css:419）的主题色描边不一致。
+   两个控件（`#agent-refresh` / `#agent-transcript`）共用同一条 ⇒ 以后再加同族控件自动跟上。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+#settings-body-agent select:focus {
+    border-color: var(--theme-color);
+    outline: none;
+}
+
+/* ===== 2026-09-21 追加：思考行 / 过程行的「更早助手正文」也走 markdown（公式 / 代码 / 列表）=====
+   人：「思考可以渲染吧，不然公式这些用户都看不懂」（顺带把过程行里的更早助手正文也一起走同一管线）。
+   这两个容器原本是 white-space: pre-wrap 的纯文本（见 5437 / 5883）⇒ 与 .-agent-msg-body.markdown-body
+   同口径地撤掉它（见上方 4883），否则块级元素之间的换行会被 pre-wrap 再放大一倍。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-think-body.markdown-body,
+.-agent-step.markdown-body {
+    white-space: normal;
+}
+.-agent-think-body.markdown-body > :first-child,
+.-agent-step.markdown-body > :first-child { margin-top: 0; }
+.-agent-think-body.markdown-body > :last-child,
+.-agent-step.markdown-body > :last-child { margin-bottom: 0; }
+.-agent-think-body.markdown-body p,
+.-agent-step.markdown-body p { margin: 0 0 0.375rem; }
+
+/* ===== 2026-09-21 追加：气泡里的图片按**对话栏宽度**自适应缩放 ==================
+   人：「agent 对话的图片自动按照对话栏宽度对图片大小后处理自适应缩放」。真机症状（L4）：库内图按
+   **原始像素**铺开（1920x1080 的图在 ~350px 宽的对话栏里仍按 1920px 渲染 ⇒ 横向溢出/被裁）。
+   口径：max-width:100% 撑满但不越界、height:auto 保比例；圆角取预览 .-preview img 同一档
+   （4px，见上方 4255）。三处容器（正文 / 思考行 / 过程行里的更早正文）共用一条。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-msg-body.markdown-body img,
+.-agent-think-body.markdown-body img,
+.-agent-step.markdown-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* ===== 2026-09-22 追加：审批档位（上游 `dsh-permission-presets`）+ 逐条确认卡 =========
+   人：「继续移植上游」。三处新控件：① 输入区 `#agent-permission`（切当前会话的档）；
+   ② 设置页 `#agent-permission-default`（改新会话默认档）；③ 逐条确认卡（`manual-approval`
+   档的每次写入 / `auto-approval` 档的风险写入）。
+   注意 5512 那条外观规则是**按 id 写死**的 ⇒ 新 `<select>` 必须自己接一条，否则会露出浏览器
+   原生外观（2026-09-21 人已就 `#agent-transcript` 报过同一个问题）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+#settings-body-agent #agent-permission-default {
+    padding: 0.3125rem 8px;
+    font-family: inherit;
+    font-size: 0.8125rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-radius: 4px;
+}
+/* 输入区那一个：挤在按钮排左侧 ⇒ 比设置页更紧凑；`max-width` + 省略避免长档名把按钮挤走 */
+.-agent-permission {
+    padding: 0.1875rem 6px;
+    font-family: inherit;
+    font-size: 0.75rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    max-width: 9rem;
+}
+.-agent-permission:focus {
+    border-color: var(--theme-color);
+    outline: none;
+}
+/* 确认卡：与计划卡同族（`.-agent-plan-msg`，见 5741）——左侧主题色细边把"要你拍板"与普通问答
+   分开；卡内按块排版（气泡默认 `pre-wrap` 会把意图里的换行放大一倍）。 */
+.-agent-approve-msg {
+    white-space: normal;
+    border-left: 2px solid var(--theme-color);
+}
+.-agent-approve {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.-agent-approve-title {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.-agent-approve-intent {
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.-agent-approve-state {
+    font-size: 0.8125rem;
+    margin-left: auto; /* 终态文案靠右，与两个按钮同一行 */
+}
+/* 已处理（裁决已回填 / 本轮结束）：整卡降透明度并禁用按钮，保留当过程痕迹 */
+.-agent-approve--done {
+    opacity: 0.65;
+}
+
+/* ===== 2026-09-22 追加：回复末尾那一行 =「用量 + 复制」同一行 ==========================
+   人：「对话底部除了显示用量信息还需要复制按钮」。两处调整：
+   ① 用量文本不再挂进气泡内，改挂 `.-agent-msg-actions`（气泡外那一行）的**最前** ⇒ 与复制同一行；
+   ② 复制按钮从"纯图标 + 悬停才显形"改为**常显的图标 + 「复制」二字**（原 `opacity: .55` 太隐形，
+      人没把它当成按钮）。`.-agent-usage` 的既有规则（见 5502：上间距 / 小字号 / 次要色）保持不变，
+      这里只补"行内布局"（用量文本可收缩、复制按钮不收缩，窄栏也不会把按钮挤没）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-msg-actions .-agent-usage {
+    margin-top: 0; /* 5502 那条的上间距是"气泡内"口径；同一 flex 行里要去掉 */
+    min-width: 0;
+    flex: 0 1 auto;
+}
+.-agent-msg-actions .-agent-act {
+    opacity: 0.8; /* 常显（悬停到整回合时提到 1，见 5801） */
+    flex: 0 0 auto;
+}
+.-agent-act-label {
+    margin-left: 0.25rem; /* 图标与「复制」二字之间的间距 */
+}
+
+/* ── 斜杠命令（2026-09-22；上游 `interaction/commands` 的最小面，见 agent-panel.js 末尾块）──────────
+   ① `.-agent-msg--command`：命令那一轮**不是模型说的话** ⇒ 一道左侧竖线 + 弱底色 + 等宽字
+      （只加视觉标记，不动 `.-agent-msg--assistant` 的排版）；
+   ② `.-agent-cmd-hint`：composer 下方的可用命令提示（纯文本、可换行、弱色）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-msg--command {
+    border-left: 2px solid var(--border);
+    background: var(--bg-tertiary);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.78rem;
+}
+.-agent-cmd-hint {
+    white-space: pre-wrap;
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    padding: 0.25rem 0.5rem 0;
+    color: var(--text-secondary);
+}
+.-agent-cmd-hint[hidden] {
+    display: none;
+}
+
+/* ===== 2026-09-22 追加：文件树图标「已配置元数据 / 未配置」两态按**颜色**区分 ================
+   人：「缺少元数据配置的 md 文档和已经配置的 md 文档的图标区分开（以前是另一个文档图标：
+   配置过的有颜色，没配置的没颜色、浅一点）」。
+   改前只有**亮度**一个轴：`.-tree-icon` 基础 `opacity: .85`（本文件 3426）→ 无侧车 0.45 → 0.55
+   （3428 / 5613），而**颜色两支都沿行的 `--text-primary`**（3410）⇒ 同一字形、同一颜色，
+   只有 0.85 vs 0.55 的差别，扫一眼分不出「这篇还没建 KP」。
+   本块只补**颜色轴**（图标全部 `currentColor` + `fill-opacity`，见 `file-tree.js::ftGlyph()`
+   与本文件 5524 的块注 ⇒ 着色只能走 `color`，不需要滤镜）：
+   - **已配置（有侧车）**：图标着 `--theme-color`（与 active 行 / 链接同一支主题色）；
+   - **未配置（无侧车）**：图标**不着色**，落 `--text-secondary` 灰 + 保持原有 0.55 的浅。
+   ⇒ 「有色 vs 灰且浅」，两态一眼可辨。**不新增字形与资源**（图标集里 markdown 只有一个字形
+   `ftMarkdown`，见 `file-tree.js:683` 的 `FT_CATEGORY_ICON`），深浅两主题都成立
+   （`--theme-color` 定义在 `theme/memoria.css:21`，`--text-secondary` 各主题都有）。
+   状态源仍是后端 `list_files` 每项的 `has_sidecar`（`document.py:511`）⇒ `file-tree.js:181` 加类。
+   本块**末尾追加**（同特异度靠后生效）⇒ 既有行号锚点零漂移。 */
+.-tree-item:not(.no-sidecar) .-tree-icon {
+    color: var(--theme-color);
+}
+.-tree-item.no-sidecar .-tree-icon {
+    color: var(--text-secondary);
+    opacity: 0.55;
+}
+
+/* ===== 2026-09-22 追加（思考行改版）：**摘要行在气泡外** + 点开后在**下方**出圆角气泡 ==========
+   人：「思考和三角符号应该不在圆角气泡内，而点击思考之后才展开在下方出现圆角气泡显示思考或者
+   正在思考的内容，而且这个圆角气泡可以进一步展开直接显示全部」。
+   改前（AG08 块 5418-5442）：`.-agent-think` **整块**带底色 `--bg-tertiary` + 左侧 2px 线 + 圆角
+   ⇒ 摘要行（「思考」+ 三角）被包在气泡里。本块只改**外观分层**（DOM 见 `agent-panel.js::thinkEl()`）：
+   `.-agent-think`（**无底色/无边框**，只有那一行）
+     ├ `.-agent-think-summary`（点它开合；三角用 CSS 画，撤掉原生 marker）
+     └ `.-agent-think-bubble`（**圆角气泡**：默认 `max-height` 截断 + 底部「展开全部 / 收起」）
+   本块末尾追加（同特异度靠后生效）⇒ 既有行号锚点零漂移。 */
+.-agent-think {
+    border-left: 0;
+    border-radius: 0;
+    background: transparent;
+    margin-bottom: 0.25rem;
+}
+.-agent-think-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    padding: 0.125rem 0 0.125rem 0.125rem;
+    cursor: pointer;
+    list-style: none; /* 撤掉原生 marker，下面的 ::before 自画三角 */
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.-agent-think-summary::-webkit-details-marker { display: none; }
+.-agent-think-summary::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 0;
+    height: 0;
+    border-left: 5px solid currentColor;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    transition: transform 0.12s ease;
+}
+.-agent-think[open] .-agent-think-summary::before { transform: rotate(90deg); }
+.-agent-think-bubble {
+    /* flex 列 + 正文可收缩 ⇒ 「展开全部」**钉在气泡底边**，不会被 `overflow: hidden` 一起裁掉。
+       真机 L4 复验发现（2026-09-22）：按钮排正文**之后**、又同处被裁区 ⇒ 长正文时 101 个按钮里
+       98 个落在可见带**外**（用户根本点不到"展开全部"）。 */
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 0.375rem 0.875rem;
+    padding: 0.375rem 0.5rem;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+    max-height: 8rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+/* 2026-09-22：**展开态有上限**（人：「思考气泡要滑倒最底下才能收起很麻烦，不全部展示，改成展开后变高一点」）
+   —— 原为 `max-height: none`（`2840px` 甚至上万 px），按钮被顶到内容末尾 ⇒ 想收起得先滑到底。现在只「变高一点」：
+   8rem → **20rem**（≈2.5 倍，仍留内部滚动看全部）⇒ 按钮始终就在气泡底边，不用滑。 */
+.-agent-think-bubble--full { max-height: 20rem; }
+/* 2026-09-22：正文改**内部滚动**（人：「思考过程没展开鼠标在气泡内区域应该可以滚轮滚动内部信息」）——
+   气泡仍由 `max-height` 截断，但超出部分**不再裁掉**：`overflow-y: auto` ⇒ 鼠标悬在正文上即可滚轮翻看
+   （原为 `overflow: hidden`，只能靠「展开全部」）；`min-height: 0` 是 flex 子项能收缩到内容高度以下的前提 */
+.-agent-think-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+    scrollbar-width: thin; /* 8rem 的气泡里不放大滚动条 */
+}
+.-agent-think-more {
+    flex: 0 0 auto; /* 永不被压缩 ⇒ 始终可见可点 */
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.125rem 0 0;
+    border: 0;
+    border-top: 0.5px solid var(--border);
+    background: transparent;
+    color: var(--theme-color);
+    font-size: 0.6875rem;
+    text-align: center;
+    cursor: pointer;
+}
+.-agent-think-more[hidden] { display: none; }
+
+/* ===== 2026-09-22 追加：文件树「折角」到行首图标之间的空档补上 ============================
+   人：「你之前设计的那个『折角』符号应该紧贴『文件图标』，而不是空一点位置」。
+   折角字形 `IconTreeCorner8x10` 只有 **8px** 宽，而它所在的槽是 **1 整格 14px**（见上方 5570，与
+   `padding-left = 4 + depth×14` 的步长对齐）⇒ 槽内右侧天然空出 6px，观感就是折角"没画到"图标；
+   文件行还额外偏右 8px（旧 `12 + depth×14`，已由 `file-tree.js` 改回 `4 + depth×14`）。
+   修法（**不动字形**：`preserveAspectRatio: none` 拉宽会把 1px 竖笔画变成 1.7px，与 1px 导轨粗细不一致）：
+   给槽补一段 **1px 横线**，把折角的横段**延长到槽的右缘** —— 也就是行首字形（文件 = 类型图标 /
+   目录 = 展开三角）的起点。坐标直接取自字形 viewBox `-0.5 0 8.5 10.5` 的横段（`M3 10 … L8 10`）：
+     · 横段在 10px 高盒里 y ≈ 9.5 / 10.5 ⇒ 盒垂直居中 ⇒ 距行中线 **+4.5px**；
+     · 横段右端 = 8 / 8.5 ⇒ 8px 宽盒里 x ≈ 7.5px（盒左缘即槽左缘，svg 为 `left: 0`）⇒ 延长线自
+       `left: 7px` 起（与字形**重叠约 0.5px**，不留缝）。
+   颜色与透明度跟字形一致（`currentColor` + `.75`，同上方 5582）。本块**末尾追加** ⇒ 既有锚点零漂移。 */
+.-tree-guide-corner::after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    right: 0;
+    top: calc(50% + 4.5px);
+    border-top: 1px solid currentColor;
+    opacity: 0.75;
 }

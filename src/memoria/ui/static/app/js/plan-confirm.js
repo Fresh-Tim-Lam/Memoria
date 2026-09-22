@@ -12,8 +12,8 @@
  *    （有界，≤3s），仍脏就**拒写**并说明 —— 绝不趁人正在编辑时抢写。
  * 4. **写期间让人机保存让路**：`MemoriaWriteGuard.setBusy(true)` 包住整个 apply（人机保存经
  *    `deferIfBusy` 重新入队），`finally` 里一定解除。
- * 5. **可撤销**：成功后卡片给出 txid 与「撤销这一批」→ `agent_plan_undo`（pre-image 逐字节写回；
- *    apply 之后被改过的文件会被后端 `external_change` 拦下，不静默覆盖）。
+ * 5. **可撤销**：成功后给出「撤销一步 / 重做一步」→ `agent_plan_undo_step` / `agent_plan_redo`
+ *    （撤销用该批 pre-image、重做用写后镜像；覆盖前自动兜底，因此不会被"外部改动"拦下）。
  *
  * **卡片放在对话栏里**（与问答/工具调用同一条流）：渲染进 `#agent-messages` 成为一条聊天项，
  * 而不是弹窗盖住界面 —— 计划是"智能体提出、人确认"的东西，它就属于那条对话。
@@ -82,6 +82,11 @@
     keep.forEach(renderState);
   }
 
+  /** 角色标签：人工确认的卡是「计划确认」；agent **已经写完**的回执是「已写入」。 */
+  function roleLabel(state) {
+    return state && state.res ? T("plan.doneTitle") : T("plan.role");
+  }
+
   /** 按状态重画一张卡（切语言用；不带 `into` ⇒ 追加成新的一条，顺序由 `keep` 保证）。 */
   function renderState(state) {
     if (state.kind === "preview") renderPreview(state.plan, state.preview);
@@ -96,7 +101,7 @@
   function renderInto(el, inner, state) {
     const index = cards.indexOf(el);
     if (index >= 0) states[index] = state;
-    el.innerHTML = `<span class="-agent-msg-role">${esc(T("plan.role"))}</span>${inner}`;
+    el.innerHTML = `<span class="-agent-msg-role">${esc(roleLabel(state))}</span>${inner}`;
     bind(el, null);
     el.__plan = state.plan || null;
     el.__preview = state.preview || null;
@@ -205,7 +210,7 @@
     if (box) {
       const el = document.createElement("div");
       el.className = "-agent-msg -agent-msg--assistant -agent-plan-msg";
-      el.innerHTML = `<span class="-agent-msg-role">${esc(T("plan.role"))}</span>${inner}`;
+      el.innerHTML = `<span class="-agent-msg-role">${esc(roleLabel(state))}</span>${inner}`;
       const empty = box.querySelector(".-agent-empty");
       if (empty) empty.remove();
       box.appendChild(el);
@@ -219,7 +224,7 @@
     overlay.className = "-modal";
     overlay.innerHTML =
       `<div class="-modal-backdrop"></div><div class="-modal-box plan-box">` +
-      `<div class="-modal-header" style="cursor:default"><span>${esc(T("plan.role"))}</span></div>` +
+      `<div class="-modal-header" style="cursor:default"><span>${esc(roleLabel(state))}</span></div>` +
       `<div class="-modal-body">${inner}</div></div>`;
     document.body.appendChild(overlay);
     cards.push(overlay);
@@ -237,11 +242,13 @@
     if (backdrop) backdrop.addEventListener("click", close);
     on("discard", () => removeCard(root));
     on("repreview", () => root.__plan && open(root.__plan, { into: root }));
+    // 撤销：**撤销一步**（栈语义）。手动预览卡上留一个就在回执旁的快捷入口，**与顶部状态栏同一语义**；
+    // 状态栏才是"常驻 + 显示栈位置 + 提供重做"的那个（见 `afterStep()` / `publishWriteState()`）。
     on("undo", async () => {
       const btn = root.querySelector('[data-act="undo"]');
       if (btn) btn.disabled = true;
-      const undone = await doUndo(root.__applyResult || {}, root.__plan || null);
-      showResult(undone, root.__plan || null, root); // 原地换成「已撤销」
+      const done = await undoWrite(root.__session || null);
+      if (!done && btn) btn.disabled = false;
     });
     on("apply", async () => {
       const plan = root.__plan;
@@ -256,8 +263,11 @@
         btn.textContent = T("plan.applying");
       }
       const res = await doApply(plan, preview, checked, root.__session || null);
-      if (res && res.status === "ok") refreshOpenDoc(res.files);
+      if (res && res.status === "ok") syncAfterWrite(res.files);
       showResult(res, plan, root); // 原地换成「已写入 …」：旧的应用按钮随之消失，不会重复点
+      // 手动应用也要把回执交给**顶部状态栏**：否则这条路径既看不到栈位置、也**没有重做入口**
+      // （人 2026-09-21：「撤销之后栈状态栏就没了，我无法重做」—— 同一条栈，两个路径都得接上）。
+      publishWriteState({ preview: preview, result: res || {} }, root.__session || null);
     });
     const cbAll = Array.from(root.querySelectorAll('input[type="checkbox"][data-op-id]'));
     if (cbAll.length) {
@@ -272,15 +282,13 @@
     }
   }
 
-  /** 结果内容：已写入 / 已撤销 / 失败（含 `stale_write` 时的「重新预览」明路）。 */
+  /** 结果内容：已写入 / 失败（手动预览卡用；对话栏那条走"写入状态条"，见 `publishWriteState()`）。
+   *  `stale_write` 时给「重新预览」这条明路（§9 规则 ①）。 */
   function resultInner(res, plan) {
     const r = res || { status: "error", code: "unknown" };
     const ok = r.status === "ok";
-    const undone = ok && r.undone;
     const head = ok
-      ? undone
-        ? T("plan.undone")
-        : T("plan.done", { n: (r.applied || []).length, txid: r.txid || "" })
+      ? T("plan.done", { n: (r.applied || []).length, txid: r.txid || "" })
       : T("plan.failed") + "：" + (r.message || r.code || "");
     return (
       `<div class="plan-summary" title="${esc(head)}">${esc(head)}</div>` +
@@ -288,8 +296,7 @@
       listBlock("plan-errors", T("plan.errorsTitle"), r.errors) +
       listBlock("plan-warnings", T("plan.warningsTitle"), r.warnings) +
       buttons(
-        (ok && !undone ? [{ act: "undo", label: T("plan.undo"), cls: "danger -btn--sm" }] : [])
-          // 盘上变了（`stale_write`）⇒ 给一条明路：按**当前**磁盘内容重新 dry-run（§9 规则 ①）
+        (ok ? [{ act: "undo", label: T("plan.undo"), title: T("plan.undoTitle"), cls: "danger -btn--sm" }] : [])
           .concat(
             r.code === "stale_write" && plan
               ? [{ act: "repreview", label: T("plan.rePreview"), title: T("plan.rePreviewTitle") }]
@@ -319,32 +326,154 @@
     return place(resultInner(res, plan), { kind: "result", plan: plan || null, res: res || {} }, into);
   }
 
-  function refreshOpenDoc(files) {
-    const cur = A().state && A().state.currentPath;
-    if (!cur) return;
-    const norm = String(cur).replace(/\\/g, "/");
-    if ((files || []).map(String).some((f) => f.replace(/\\/g, "/") === norm)) {
-      A().openFile?.(cur, { skipNav: true });
+  /** 写入/撤销之后的**界面同步**（人 2026-09-21："agent 对话之后自动刷新渲染"）：让各视图跟上盘面，
+   *  不必手动重开文件或切页。四件事，逐条独立 try（任一项失败都不该影响其它项与卡片结果）：
+   *  ① **文件树** —— 新建 / 改名 / 删除会改变它（`refreshFiles`）；
+   *  ② **当前打开的文件**（只有它**被写**时才动）—— 重载 + 重绘编辑器 / 预览 / KP 列表
+   *     （走 `openFile(skipNav)`，与人在树里点开同一条路 ⇒ 不会多插一条导航历史）；
+   *  ③ **待确认摘要**（`pending.json` 变了）；
+   *  ④ **图谱**（sidecar / links 变了 ⇒ 边也变了）。
+   *  被写的**不是**当前文件时**不动编辑器** —— 不打断人正在看的东西。 */
+  async function syncAfterWrite(files) {
+    const app = A();
+    const rels = (files || []).map((f) => String(f).replace(/\\/g, "/")).filter(Boolean);
+    if (!rels.length) return;
+    // 与 `agent-panel.refreshAfterTurn()` 的 **1.5s 去重窗口**共用（人 2026-09-21：「每次对话结束
+    // memoria 没有刷新，程序上先挂一个刷新」—— 那个**无条件**收尾刷新在 agent-panel 侧）。同一回合里
+    // 两者谁先跑到都不该把图谱连算两遍 ⇒ 视图可跳；但下面那条**精确**的"确知被写就重开当前文件"
+    // 永远执行（自动写库后编辑器必须看到新内容）。
+    const fresh = Date.now() - (Number(app.__kbRefreshAt) || 0) < 1500;
+    if (!fresh) {
+      try {
+        await app.refreshFiles?.();
+      } catch (e) {
+        /* 同步失败不阻塞结果展示 */
+      }
     }
+    const cur = app.state && app.state.currentPath;
+    if (cur && rels.includes(String(cur).replace(/\\/g, "/"))) {
+      try {
+        await app.openFile?.(cur, { skipNav: true });
+      } catch (e) {
+        /* 同上 */
+      }
+    }
+    if (!fresh) {
+      try {
+        await app.refreshKbPendingSummary?.();
+      } catch (e) {
+        /* 同上 */
+      }
+      try {
+        await app.loadGraphData?.();
+      } catch (e) {
+        /* 同上 */
+      }
+    }
+    app.__kbRefreshAt = Date.now();
   }
 
-  async function doUndo(applyResult, plan) {
+  // 最近一次写入的文件明细（状态栏展开态用）。撤销 / 重做一步之后**仍显示它** ——
+  // 后端栈里只有"每步改了几个文件"的计数，没有逐文件明细（明细只在 apply 回执里给一次）。
+  let lastWriteFiles = [];
+
+  /** 取**会话栈**现状（给状态栏显示"第几步 / 共几步"与按钮可用性）；失败回 `null`。 */
+  async function refreshStack(sessionId) {
+    const sid = String(sessionId || "").trim();
+    if (!sid) return null;
     const res = await A()
-      .call("agent_plan_undo", null, applyResult.session_id || "ui-plan", applyResult.txid || null)
+      .call("agent_plan_stack", null, sid)
+      .catch(() => null);
+    return res && res.status === "ok" ? res : null;
+  }
+
+  /** 撤销 / 重做**一步**成功后的统一收尾：各视图跟上盘面 → 重取栈 → 重绘状态栏（按钮可用性随之更新）。
+   *
+   *  **绝不能**拿"指针到 −1"当"该收起来"（人 2026-09-21 报：「撤销之后栈状态栏就没了，我无法重做」）：
+   *  撤到最底时步骤**全都还在栈里**（`total > 0`）且 `can_redo === true` —— 收起状态栏等于把重做入口
+   *  一起收掉。⇒ **只要栈里还有步骤就照常显示**，撤销 / 重做的可用性交给 `can_undo` / `can_redo`；
+   *  只有**栈里真的没有步骤**（`total === 0`）才清掉状态栏（没有状态可展示，也没有可撤可重做的东西）。 */
+  async function afterStep(res, sessionId) {
+    syncAfterWrite((res.files || []).map((row) => (row && row.rel_path) || ""));
+    const stack = await refreshStack(sessionId);
+    const panel = global.MemoriaAgentPanel;
+    if (stack && !stack.total) {
+      panel?.setWriteState?.(null); // 全会话没有写入步骤 ⇒ 无可展示（也不留「已撤销」这种假象）
+      return true;
+    }
+    // 展开态的明细沿用**这次写入的清单**（`preview.files`，见 `publishWriteState()`）：`res.files` 是
+    // 这一步真正写回的文件集（含 `manifest.yaml` / `pending.json` 等派生文件）⇒ 同一个动作的计数会
+    // 从「1 个文件」跳成「4 个文件」（L4 实测到），对人没有意义。逐**步**的差异去展开态的栈轨迹看。
+    panel?.setWriteState?.({
+      files: lastWriteFiles,
+      failed: false,
+      txid: (res && res.txid) || "",
+      stack: stack,
+      onUndo: () => undoWrite(sessionId),
+      onRedo: () => redoWrite(sessionId),
+    });
+    return true;
+  }
+
+  /** **撤销一步**（栈语义，人 2026-09-21 定稿）：指针 −1，用该批 **pre-image** 写回。
+   *  覆盖前由后端**自动兜底**（把当前那版另存 `manual-force` 批次）⇒ 覆盖 ≠ 丢数据。
+   *  返回 `true` = 已完成（调用方据此复位按钮）。 */
+  async function undoWrite(sessionId) {
+    const sid = String(sessionId || "ui-plan");
+    const res = await A()
+      .call("agent_plan_undo_step", null, sid)
       .catch((e) => ({ status: "error", code: "rpc_failed", message: String(e) }));
     if (res && res.status === "ok") {
-      const files = (res.files || []).map((row) => (row && row.rel_path) || "");
-      refreshOpenDoc(files);
-      return {
-        status: "ok",
-        undone: true,
-        txid: res.txid,
-        applied: files.map((rel_path) => ({ rel_path })),
-        verified: res.verified,
-      };
+      A().showFlashInfo?.(T("agent.undoDone"));
+      return afterStep(res, sid);
     }
-    return Object.assign({ status: "error", code: "undo_failed" }, res || {}, {
-      message: (res && res.message) || T("plan.undoFail"),
+    A().showFlashError?.(T("agent.undoFail"), (res && res.message) || "");
+    return false;
+  }
+
+  /** **重做一步**：指针 +1，用该批**写后镜像**写回；该步没有写后镜像时后端如实回 `no_after`。 */
+  async function redoWrite(sessionId) {
+    const sid = String(sessionId || "ui-plan");
+    const res = await A()
+      .call("agent_plan_redo", null, sid)
+      .catch((e) => ({ status: "error", code: "rpc_failed", message: String(e) }));
+    if (res && res.status === "ok") {
+      A().showFlashInfo?.(T("agent.redoDone"));
+      return afterStep(res, sid);
+    }
+    A().showFlashError?.(T("agent.redoFail"), (res && res.message) || "");
+    return false;
+  }
+
+  /** 把"刚写完什么"交给 `agent-panel`，渲染成**顶部副标题行**的写入状态栏（含撤销一步 / 重做一步）。
+   *  人定稿（2026-09-21）：状态栏在 `.-agent-subhead`；它是**常驻 + 显示栈位置 + 提供重做**的那个入口。
+   *  会话 id 的解析顺序 = 调用方给的 → 记录里的 → **回执里的**（后端 apply 会带回它解析后的 id）→
+   *  `ui-plan`（后端 `agent_plan_apply` 在省略 session_id 时的伪会话，见 `ui.py`）—— 少这一环就会
+   *  "查不到栈 ⇒ 状态栏没有栈位置、也没有可用的重做按钮"。 */
+  async function publishWriteState(rec, sessionId) {
+    const preview = (rec && rec.preview) || null;
+    const result = (rec && rec.result) || {};
+    const sid = sessionId || (rec && rec.session_id) || result.session_id || "ui-plan";
+    const panel = global.MemoriaAgentPanel;
+    if (!panel || typeof panel.setWriteState !== "function") {
+      // 面板模块没加载 / 接口没暴露 ⇒ 状态栏与撤销入口都不会出现：必须**可见**（曾经静默失过一次，
+      // 表现是"agent 回话下面只有复制、没有撤销"，且控制台一片干净）
+      console.warn("[plan] MemoriaAgentPanel.setWriteState 不可用：本次写入的回执无法展示");
+      return;
+    }
+    lastWriteFiles = ((preview && preview.files) || []).map((row) => ({
+      path: String((row && row.file) || ""),
+      lines: (((row && row.lines_changed) || []).length),
+    }));
+    // 栈位置：写入成功才查（失败没有栈可谈）
+    const stack = result.status === "ok" ? await refreshStack(sid) : null;
+    panel.setWriteState({
+      files: lastWriteFiles,
+      failed: result.status !== "ok",
+      txid: result.txid || "",
+      stack: stack,
+      onUndo: () => undoWrite(sid),
+      onRedo: () => redoWrite(sid),
     });
   }
 
@@ -463,19 +592,25 @@
     return true;
   }
 
-  // ── 智能体自己提出的计划（`propose_write` 工具）⇒ 直接落进对话栏 ──────────────────────
+  // ── 智能体写完之后：把"写了什么"交给对话栏的**写入状态条**（人定稿 2026-09-21）──────────
+  //    不再单独插一张回执卡 —— 撤销按钮只在**最新一条回复下方**出现（由 `agent-panel.js` 渲染）。
 
-  /** 取走后端排队的提议并逐张开卡（取走即清空；返回开了几张）。
-   *  `sessionId` 由调用方（问答收尾那一次 poll）带进来 ⇒ 应用时写入审计落在**这次对话**里，
-   *  而不是落到 `ui-plan` 伪会话（审计要能跟"谁提的、谁确认的"对上）。 */
+  /** 一条写入回执 ⇒ 状态条（`MemoriaAgentPanel.setWriteState()`）。 */
+  function publishRecord(rec, sessionId) {
+    if (!rec || !rec.plan) return;
+    publishWriteState(rec, sessionId || rec.session_id || null);
+  }
+
+  /** 取走后端排队的**写回执**并发布到对话栏（取走即清空；返回条数）。
+   *  `sessionId` 由调用方（问答收尾那一次 poll）带进来 ⇒ 撤销时写入审计能落回**这次对话**。 */
   async function drainProposals(sessionId) {
     const res = await A()
       .call("agent_plan_pending", null)
       .catch(() => null);
-    const plans = (res && res.status === "ok" && res.plans) || [];
+    const records = (res && res.status === "ok" && res.records) || [];
     const sid = sessionId || null;
-    plans.forEach((plan) => open(plan, { sessionId: sid }));
-    return plans.length;
+    records.forEach((rec) => publishRecord(rec, sid));
+    return records.length;
   }
 
   /**
@@ -507,7 +642,7 @@
     open,
     openFromText,
     close,
-    undo: doUndo,
+    undo: undoWrite,
     mountEntry,
     askForPlan,
     redraw,
