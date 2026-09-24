@@ -81,11 +81,33 @@ class ToolSchema:
 
 
 @dataclass(frozen=True, slots=True)
+class ImagePart:
+    """随一条消息发出的**图片引用**（2026-09-23 新增，图像输入）。
+
+    `rel_path` = **库内相对路径**（`.memoria/agent/attachments/<sha8>-<名>.png`）：会话日志只落这个，
+    **不落 base64**（对齐上游"日志只存引用"的原则，见 `attachments.py` 模块注释）。
+
+    `data_url` 是**瞬时**字段：只在真正发请求前由 `ask` 层读文件填上（provider 层与 KB 无关、拿不到根），
+    它**不落盘、不参与相等比较**（`compare=False`）。
+    """
+
+    rel_path: str
+    media_type: str = ""
+    name: str = ""
+    data_url: str = field(default="", compare=False, repr=False)
+
+
+@dataclass(frozen=True, slots=True)
 class Message:
-    """一条对话消息；`content` 为纯文本（M1 收敛面，见 notes 偏差表）。"""
+    """一条对话消息；`content` 为纯文本（M1 收敛面，见 notes 偏差表）。
+
+    `images`（2026-09-23 追加字段，**只增不改**）：仅在有图时才让 wire 层把 `content` 写成块数组；
+    纯文本消息的线格式**逐字不变**（仍是 `{"role":…,"content":"…"}`）。
+    """
 
     role: Role | str
     content: str = ""
+    images: tuple[ImagePart, ...] = ()
     tool_calls: tuple[ToolCall, ...] = ()
     tool_call_id: str | None = None
     name: str | None = None

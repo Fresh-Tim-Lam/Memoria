@@ -53,3 +53,18 @@ def append(kb_path: str | None, session_id: str | None, event_type: str, payload
 #: （沿用 §2.6 的"审计 fail-open 但如实"口径）。
 #: **追加在文件末尾**（不插进上面的常量区）⇒ 上方 `<文件>:<行号>` 锚点零漂移。
 EVENT_REDO = "capability/redo"
+
+#: **出网审计**（N 线，2026-09-23；实现记录见 `docs/design/dsh-agent-port.md` §6.28）：
+#: 每次联网工具调用（`web_search` / `fetch_url`）追加一条，载荷只有可公开的事实
+#: `{tool, host, url, status, bytes}` —— **不含密钥、不含正文**。写入口仍是本模块的 `append()`
+#: （同一套 fail-open 语义）；回放 / 压缩 / 语义抽取对未知 type 一律跳过 ⇒ 同 `session/title` 的既有性质。
+#: 与上一条同因**追加在文件末尾**（不插进上面的常量区与事件表）⇒ 零锚点漂移。
+EVENT_NET_REQUEST = "net/request"
+
+#: **脚本执行审计**（脚本工作区，2026-09-24；设计见 `docs/design/agent-capabilities.md §3.4`）：
+#: 每次**人在面板点「运行」**追加一条，载荷只有 `{script, interpreter, source, exit_code, timed_out,
+#: duration_ms, bytes, digest}` —— **不含 stdout 全文、不含密钥**（脚本能读到的环境变量走白名单，
+#: 见 `services/agent/scratch.py::_child_env`；脚本自身的输出可能含敏感信息 ⇒ 只记字节数，正文只回面板）。
+#: 事件类型只增不改；回放 / 压缩 / 语义抽取对未知 type 一律跳过（同 `session/title`）。
+EVENT_SCRATCH_RUN = "scratch/run"
+

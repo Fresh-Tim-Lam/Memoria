@@ -43,6 +43,7 @@ __all__ = [
     "GATE_VALUES",
     "PLUGIN_ID_RE",
     "TOOL_CATALOG",
+    "ActivePlugins", "OP_TOOL_IDS", "active_plugins", "builtin_dir", "capability_note", "user_dir",
     "LoadResult",
     "PluginDeclaration",
     "ToolDeclaration",
@@ -122,8 +123,13 @@ class ToolDeclaration:
 
     @property
     def primitive(self) -> str:
-        """该 `tool_id` 对应的**核心原语名**（落盘实现；插件自己不写盘）。"""
-        return TOOL_CATALOG[self.tool_id]
+        """该 `tool_id` 对应的**核心原语名**（落盘实现；插件自己不写盘）。
+
+        2026-09-24：**出网族（`net.*`）没有落盘原语** —— 它在 `NET_CATALOG` 里指向实现入口
+        （`web.WebClient.search` / `.fetch`）。两张表**并集**才是"合法 `tool_id`"的全集（见文件尾
+        「出网原语目录」块）。
+        """
+        return TOOL_CATALOG.get(self.tool_id) or NET_CATALOG[self.tool_id]
 
 
 @dataclass(frozen=True, slots=True)
@@ -227,12 +233,13 @@ def parse_declaration(raw: Any, *, source: str, path: str = "") -> tuple[PluginD
                     )
                 )
                 continue
-            if tool_id not in TOOL_CATALOG:
+            if tool_id not in TOOL_CATALOG and tool_id not in NET_CATALOG:
                 errors.append(
                     _issue(
                         "unknown_tool",
                         plugin_id,
-                        f"`tool_id` 不在核心原语目录里：{tool_id!r}（可选：{', '.join(sorted(TOOL_CATALOG))}）",
+                        f"`tool_id` 不在核心原语目录（写族 `kb.*` + 出网族 `net.*`）里：{tool_id!r}"
+                        f"（可选：{', '.join(sorted(TOOL_CATALOG | NET_CATALOG))}）",
                         path,
                     )
                 )
@@ -404,7 +411,8 @@ def kb_enablement(kb_path: str) -> dict[str, dict[str, Any]]:
         if not plugin_id:
             continue
         config = item.get("config")
-        out[plugin_id] = {"on": bool(item.get("on", True)), "config": dict(config) if isinstance(config, Mapping) else {}}
+        normalized, _issues = normalize_plugin_config(plugin_id, config)
+        out[plugin_id] = {"on": bool(item.get("on", True)), "config": normalized}
     return out
 
 
@@ -412,8 +420,20 @@ def set_enabled(kb_path: str, plugin_id: str, on: bool, config: Mapping[str, Any
     """写回库级 `enabled[]`（**条目存在即启用**；`on=False` 时保留条目但置假，便于回切）。
 
     **只动 `enabled[]`**：文件里其它键（未来可能有的库级扩展位）原样保留 ⇒ 不做"整文件覆写"。
+
+    `config`（2026-09-24 起**有了第一例 schema**，见文件尾「库级参数 schema」块）：形状非法
+    ⇒ **拒写**（返回 `{status:"error", code:"bad_plugin_config"}`，不静默丢字段）。
     """
     import tempfile
+
+    normalized, issues = normalize_plugin_config(plugin_id, config)
+    if issues:
+        return {
+            "status": "error",
+            "code": "bad_plugin_config",
+            "message": str(issues[0].get("message") or "参数形状非法"),
+            "issues": issues,
+        }
 
     path = kb_registry_path(kb_path)
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -428,7 +448,7 @@ def set_enabled(kb_path: str, plugin_id: str, on: bool, config: Mapping[str, Any
             existing = {}
     entries = existing.get("enabled")
     rows: list[dict[str, Any]] = [dict(item) for item in entries if isinstance(item, Mapping)] if isinstance(entries, list) else []
-    merged = {"on": bool(on), "config": dict(config or {})}
+    merged = {"on": bool(on), "config": normalized}
     for row in rows:
         if str(row.get("id") or "") == str(plugin_id):
             row.update(merged)
@@ -443,3 +463,237 @@ def set_enabled(kb_path: str, plugin_id: str, on: bool, config: Mapping[str, Any
         handle.write("\n")
     os.replace(tmp, path)
     return {"status": "ok", "path": path, "id": str(plugin_id), "on": bool(on)}
+
+
+# ── 2026-09-22 追加：**契约接线** —— 让声明面真正生效（`active_plugins()`）──────────────────────
+#
+# 为什么加这一段：上面那套（解析 / 校验 / 三来源发现 / 库级启停）此前**没有任何生产调用者**
+# ⇒ 声明文件写不写、库里启不启用，对"模型此刻能用哪些能力"毫无影响（`docs/design/dsh-agent-port.md §8`
+# 记的欠债：**「`capabilities.json` 零命中 ⇒ 今天是『直接工具』而非声明式插件」**）。本段把三件事接上：
+# ① **算能力面** = `active_plugins(kb_path)`；② **闸 op** = `plan.validate_plan()` 用 `ActivePlugins.op_available()`；
+# ③ **告诉模型** = `propose_write` 的工具描述末尾附 `capability_note()`。
+#
+# 三条口径（本地判断，已登记进 `agent-plugin-design.md §5` 同日至此行）：
+#   1. **库级注册表缺失 ⇒ 内置默认全启用**（fail-open）：注册表随库走、可后补，而内置声明**随版本分发**
+#      ⇒ 存量库（今天全都没有 `capabilities.json`）不会因为这次接线突然写不了。文件一旦存在，
+#      **以它为准**（`enabled[]` 条目存在即启用；`on: false` = 停用；没列到的内置插件 = 停用）。
+#   2. **一份声明都没有 ⇒ 不闸**（只告警）：契约没参与（例如从残缺拷贝里跑），此时行为 = 接线之前。
+#   3. **声明装载出错 ⇒ 闸到底**（fail-closed）：`errors` 非空时 `tool_ids` 为空 ⇒ 所有写 op 被拒，
+#      并把错误原样带出去。内置声明是随版本分发的，其破绽由单测拦（`tests/test_agent_plugins.py`
+#      钉住"随包那份声明零 error 零 warning"）⇒ 不该在生产里以"写不了"的形式暴露。
+
+#: **能力动作类（`kb.*`）↔ 写入 op 动词**（`plan.py::KNOWN_OPS`）—— 命名桥的**第二半**
+#: （第一半 = `TOOL_CATALOG`：`kb.*` → 落盘原语）。契约用 `kb.*` 说话，校验/落盘用 op 动词说话，
+#: 这两张表就是唯一的翻译处。一个 op 可落在**多个**动作类上（`upsert_kp`：建点走 `kb.kp.create`、
+#: 改点走 `kb.kp.update`）⇒ 值为元组，门控判据 = **任一门动作类启用即可用**（见 `op_available()`）。
+OP_TOOL_IDS: dict[str, tuple[str, ...]] = {
+    "upsert_kp": ("kb.kp.create", "kb.kp.update"),
+    "attach_links": ("kb.link.attach",),
+    "detach_links": ("kb.link.detach",),
+    "set_kp_range": ("kb.kp.update",),
+    "rename_kp": ("kb.kp.rename",),
+    "delete_kp": ("kb.kp.delete",),
+    "upsert_edge": ("kb.link.create",),
+    "replace_lines": ("kb.file.edit",),
+    "insert_lines": ("kb.file.edit",),
+    "delete_lines": ("kb.file.edit",),
+    "upsert_block": ("kb.file.edit",),
+    "insert_image_ref": ("kb.file.edit",),
+    "create_file": ("kb.file.create",),
+    "rename_file": ("kb.file.rename",),
+    "delete_file": ("kb.file.delete",),
+    "move_file": ("kb.file.move",),
+    "rebuild_manifest": ("kb.manifest.rebuild",),
+}
+
+
+@dataclass(frozen=True, slots=True)
+class ActivePlugins:
+    """某个库**此刻生效**的能力面（`active_plugins()` 的产物）。"""
+
+    declarations: tuple[PluginDeclaration, ...] = ()
+    """**已启用**的声明（按装载顺序）。"""
+    tool_ids: frozenset[str] = frozenset()
+    """已启用的能力动作类（`kb.*`）—— 这张集合就是本库的写能力面。"""
+    warnings: tuple[Mapping[str, Any], ...] = ()
+    errors: tuple[Mapping[str, Any], ...] = ()
+    registry_present: bool = False
+    """库级注册表（`<库>/.memoria/agent/capabilities.json`）是否存在 —— 决定上面口径 1 走哪条分支。"""
+    declarations_seen: int = 0
+    """装载到的声明条数（含全部来源）—— 用它区分"契约没参与"与"参与了但一条都没启用"。"""
+    configs: Mapping[str, Mapping[str, Any]] = field(default_factory=dict)
+    """库级参数（2026-09-24）：`{插件 id: 归一后的 config}`（schema 见文件尾「库级参数 schema」块）。
+
+    只有"注册表在且该插件被启用"时才有条目；注册表缺失（fail-open 分支）⇒ 空表 —— 此时
+    **逐库参数不存在**，消费方（如出网域名名单）应回落到机器级默认。
+    """
+
+    @property
+    def enforced(self) -> bool:
+        """能力闸是否**生效**（口径 2/3：有声明 ⇒ 生效；装载出错 ⇒ 也生效且更该闸）。"""
+        return self.declarations_seen > 0 or bool(self.errors)
+
+    def op_available(self, verb: str) -> bool:
+        """这个 op 动作类在本库**可用吗**（未登记动作类 / 闸未生效 ⇒ 放行；未知 op 由 `plan.py` 自己拒）。"""
+        ids = OP_TOOL_IDS.get(str(verb))
+        if not ids or not self.enforced:
+            return True
+        return any(tool_id in self.tool_ids for tool_id in ids)
+
+
+def builtin_dir() -> str:
+    """内置声明目录（随版本分发、只读）：`resources/agent-capabilities/`；不存在 ⇒ 空串。"""
+    try:
+        from memoria.app.runtime import resources_dir
+
+        path = str(resources_dir() / "agent-capabilities")
+    except Exception:  # 运行期目录解析失败不应成为致命错误（口径 2 会兜住"没有声明"）
+        return ""
+    return path if os.path.isdir(path) else ""
+
+
+def user_dir() -> str:
+    """用户导入目录：`<配置目录>/plugins`（与 `config/agent.json` 同一层）；不存在 ⇒ 空串。"""
+    try:
+        from memoria.services.agent.llm.config import config_file_path
+
+        path = str(config_file_path().parent / USER_PLUGINS_DIRNAME)
+    except Exception:
+        return ""
+    return path if os.path.isdir(path) else ""
+
+
+def active_plugins(kb_path: str, *, builtin: str | None = None, user: str | None = None) -> ActivePlugins:
+    """算本库的能力面：**发现 → 与库级 `enabled[]` 求交 → 得 `tool_ids`**（口径见本节头注三条）。"""
+    result = load_declarations(
+        str(kb_path),
+        builtin_dir=builtin_dir() if builtin is None else builtin,
+        user_dir=user_dir() if user is None else user,
+    )
+    registry_present = os.path.isfile(kb_registry_path(str(kb_path)))
+    seen = len(result.declarations)
+    if result.errors:  # 口径 3：装载出错 ⇒ 闸到底（`tool_ids` 为空 ⇒ 写 op 全拒）
+        return ActivePlugins(
+            declarations=(),
+            tool_ids=frozenset(),
+            warnings=result.warnings,
+            errors=result.errors,
+            registry_present=registry_present,
+            declarations_seen=seen,
+        )
+    if registry_present:  # 口径 1 后半：注册表在 ⇒ 以它为准（条目存在即启用；没列到 = 停用）
+        enablement = kb_enablement(str(kb_path))
+        enabled = tuple(d for d in result.declarations if bool((enablement.get(d.id) or {}).get("on", False)))
+        configs = {d.id: dict((enablement.get(d.id) or {}).get("config") or {}) for d in enabled}
+    else:  # 口径 1 前半：注册表缺失 ⇒ 内置默认全启用（存量库不被这次接线掐断写能力）
+        enabled = result.declarations
+        configs = {}
+    return ActivePlugins(
+        declarations=enabled,
+        tool_ids=frozenset(tool.tool_id for decl in enabled for tool in decl.tools),
+        warnings=result.warnings,
+        errors=(),
+        registry_present=registry_present,
+        declarations_seen=seen,
+        configs=configs,
+    )
+
+
+def capability_note(active: ActivePlugins) -> str:
+    """给**模型**看的能力面说明（附在 `propose_write` 的描述末尾）；闸未生效 ⇒ 空串（行为同接线前）。"""
+    if not active.enforced:
+        return ""
+    if not active.tool_ids:
+        loaded = "、".join(f"{d.id}（{d.name}）" for d in active.declarations) or "无"
+        return (
+            "\n\n**本库的写能力当前未启用**：已装载的声明里没有任何启用条目（" + loaded + "）"
+            "⇒ 本会话**所有写入 op 都会被拒**，错误码 `capability_disabled`。"
+            "需要写时，请让用户在库设置里启用相应能力插件（库级 `enabled[]`），不要绕路。"
+        )
+    return (
+        "\n\n**本库已启用的能力动作**："
+        + "、".join(f"`{tool_id}`" for tool_id in sorted(active.tool_ids))
+        + "。未列出的动作类会被拒（错误码 `capability_disabled`）—— 遇到它请如实告诉用户"
+        "「这个能力在本库没启用」，不要改用别的 op 硬凑。"
+    )
+
+
+# ── 出网原语目录 + 库级参数 schema（2026-09-24；N 线插件化第二片，对应 [agent-capabilities.md §2.5/§2.6]
+#    的 N1 行「一次性把 `net.*` 原语加进目录」）────────────────────────────────────────────────
+# 这一块落两件**契约外但必要**的接线（都已登记进设计文档与变更台账）：
+# ① **出网原语目录 `NET_CATALOG`**：写族 `TOOL_CATALOG` 的值是**落盘原语名**，而 `net.*` 没有落盘
+#    原语（它不写盘）—— 实现入口是 `services/agent/web.py::WebClient.search/.fetch`。故单列一张表，
+#    由 `parse_declaration()` 与 `ToolDeclaration.primitive` 取**并集**（写族 + 出网族）；
+# ② **"工具级能力闸"的参数/schema 之一半**：N 的两把工具**不走 plan**（见 §2.3 的写管线），所以
+#    `plan.validate_plan()` 那道闸够不到它们 ⇒ 闸改落在 `tools/kb.py::_outbound_guard()`（按
+#    `active_plugins(kb).tool_ids` 判），命名桥就是下面的 `NET_TOOL_IDS`；
+# ③ **库级参数 schema 的第一例**：库级注册表 `{id, on, config}` 的 `config` 位此前"保留但不校验"
+#    （§2.1 v1 无参数 schema）⇒ 这里给 `web-fetch` 定义第一个 `{allow?: str[], deny?: str[]}`，
+#    归一化复用 `web.parse_domains()`（**同一份判据**，绝不另立一套）。读侧归一（坏值丢弃、不静默
+#    生效），写侧拒写（`set_enabled()` 见 issues 即返回 `bad_plugin_config`）。
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+#: 出网族 `tool_id` → 实现入口（**无落盘**；与 `TOOL_CATALOG` 的语义差别就在这句注释里）。
+NET_CATALOG: dict[str, str] = {
+    "net.search": "web.WebClient.search",
+    "net.fetch": "web.WebClient.fetch",
+}
+
+#: 库级参数 schema（**第一例**）：`{插件 id: (参数名, …)}`。没列到的插件 = 不接受任何参数
+#: （写侧给 `config` 会被拒 —— 免得出现"配了但没人消费"的死参数位）。
+PARAM_SCHEMAS: dict[str, tuple[str, ...]] = {"web-fetch": ("allow", "deny")}
+
+#: 本地工具名 → 出网 `tool_id`（工具级闸的命名桥；与 `OP_TOOL_IDS` 同族，只是那边的值域是写 op）。
+NET_TOOL_IDS: dict[str, str] = {"web_search": "net.search", "fetch_url": "net.fetch"}
+
+
+def normalize_plugin_config(plugin_id: str, config: Any) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """库级 `config` 归一 + 校验 ⇒ `(归一后的 dict, issues)`；`issues` 非空 ⇒ 调用方**应拒写**。
+
+    规则（schema 见 `PARAM_SCHEMAS`）：
+
+    · **不在 schema 里的插件** ⇒ **原样保留**、不校验（"只增不改"：未来插件先能把参数存进来，
+      等它自己的 schema 落地再消费）；
+    · **在 schema 里的插件**：值按 `web.parse_domains()` 归一（字符串或字符串数组都收；非法写法
+      丢弃并**如实报条数**）；多余/未知的键 ⇒ `unknown_param`（拒写）。
+    """
+    if config in (None, ""):
+        return {}, []
+    if not isinstance(config, Mapping):
+        return {}, [_cfg_issue(plugin_id, "bad_config", "`config` 必须是对象")]
+    data = {str(key): value for key, value in config.items()}
+    if not data:
+        return {}, []
+    allowed = PARAM_SCHEMAS.get(plugin_id)
+    if allowed is None:
+        return dict(data), []  # 没 schema 的插件：值位保留、原样透传（不消费、不校验）
+    issues: list[dict[str, Any]] = [
+        _cfg_issue(plugin_id, "unknown_param", f"未知参数 `{key}`（可用：{', '.join(allowed)}）")
+        for key in sorted(set(data) - set(allowed))
+    ]
+    out: dict[str, Any] = {}
+    from memoria.services.agent.web import parse_domains  # 延迟导入：web 层不反向依赖本模块
+
+    for key in allowed:
+        if key not in data:
+            continue
+        raw = data[key]
+        if isinstance(raw, (list, tuple)):
+            items = [str(item) for item in raw]
+        elif isinstance(raw, str):
+            items = [raw]
+        else:
+            issues.append(_cfg_issue(plugin_id, "bad_config", f"`config.{key}` 必须是字符串数组"))
+            continue
+        parsed = parse_domains(" ".join(items))
+        dropped = len([item for item in items if item.strip()]) - len(parsed)
+        if dropped > 0:
+            issues.append(
+                _cfg_issue(plugin_id, "bad_config", f"`config.{key}` 有 {dropped} 条无法识别的写法（域名写错了）")
+            )
+        out[key] = list(parsed)
+    return out, issues
+
+
+def _cfg_issue(plugin_id: str, kind: str, message: str) -> dict[str, Any]:
+    return {"kind": kind, "id": plugin_id, "message": message, "path": ""}

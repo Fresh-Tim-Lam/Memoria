@@ -90,7 +90,7 @@ import os
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-from memoria.services.agent.llm import Message, Role, ToolCall
+from memoria.services.agent.llm import ImagePart, Message, Role, ToolCall
 from memoria.services.agent.pruner import apply_budget, prune_applied
 from memoria.services.agent.session.store import read_session
 from memoria.services.agent.title import fold_title
@@ -153,6 +153,32 @@ def _data(event: Mapping[str, Any]) -> Mapping[str, Any]:
 
 def _text(event: Mapping[str, Any]) -> str:
     return str(_data(event).get("text") or "")
+
+
+def _images(event: Mapping[str, Any]) -> tuple[ImagePart, ...]:
+    """`user/message.images` → `ImagePart` 元组（2026-09-23 图像输入）。
+
+    日志里只有 `rel_path/media_type/name`（**没有 base64**）；`data_url` 留空，等真正发请求前
+    由 `ask` 层按库根读回（见 `attachments.hydrate_messages`）。坏形状一律跳过，不抛。
+    """
+    raw = _data(event).get("images")
+    if not isinstance(raw, (list, tuple)):
+        return ()
+    parts = []
+    for item in raw:
+        if not isinstance(item, Mapping):
+            continue
+        rel = str(item.get("rel_path") or "").strip()
+        if not rel:
+            continue
+        parts.append(
+            ImagePart(
+                rel_path=rel,
+                media_type=str(item.get("media_type") or ""),
+                name=str(item.get("name") or ""),
+            )
+        )
+    return tuple(parts)
 
 
 def _tool_call(raw: Any) -> ToolCall | None:
@@ -260,7 +286,7 @@ def _replay(
             continue
         kind = event.get("type")
         if kind == USER_MESSAGE:
-            messages.append(Message(role=Role.USER, content=_text(event)))
+            messages.append(Message(role=Role.USER, content=_text(event), images=_images(event)))
             index += 1
             continue
         if kind == ASSISTANT_MESSAGE:
@@ -503,9 +529,15 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
         kind = event.get("type")
         if kind == USER_MESSAGE:
             _flush_turn(out, turn, events, index)
-            turn = {"text": _text(event), "answer": "", "anchors": [], "seq": event.get("seq"), "answer_seq": None, "start": index}
+            turn = {"text": _text(event), "answer": "", "anchors": [], "seq": event.get("seq"), "answer_seq": None, "start": index, "images": [{"rel_path": p.rel_path, "media_type": p.media_type, "name": p.name} for p in _images(event)]}  # 2026-09-23：带图的那轮把附件清单一起带回给面板（只增键；无图时为空列表，_flush_turn 会省掉它）
             continue
         if turn is None:
+            continue
+        if kind == LOOP_END:
+            # 2026-09-24：**本轮的 token 用量**（`loop/end.usage`，形状与 `loop.usage_payload()` 逐键一致）
+            # 一并带回渲染视图 —— 面板据此在**重载 / 重启 / 切回会话**后仍能显示末条回话的用量行
+            # （此前它被整类跳过，历史视图里没有任何 usage ⇒ 用量行只在"刚答完的那一轮"可见）。
+            turn["usage"] = _usage(event)
             continue
         if kind == ASSISTANT_MESSAGE:
             content = str(_data(event).get("content") or "")
@@ -524,12 +556,13 @@ def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]
 def _flush_turn(out: list[dict[str, Any]], turn: dict[str, Any] | None, events: Sequence[Mapping[str, Any]] = (), end: int | None = None) -> None:
     if turn is None:
         return
-    out.append({"role": Role.USER.value, "text": turn["text"], "seq": turn.get("seq")})
+    out.append({"role": Role.USER.value, "text": turn["text"], "seq": turn.get("seq"), **({"images": turn["images"]} if turn.get("images") else {})})  # 2026-09-23：只在**确实带图**时才加 `images` 键（其余记录逐字不变）
     if turn["answer"]:
         record: dict[str, Any] = {
             "role": Role.ASSISTANT.value,
             "text": turn["answer"],
             "seq": turn.get("answer_seq"),
+            **({"usage": turn["usage"]} if turn.get("usage") else {}),  # 2026-09-24：本轮的 token 用量（只在该轮确实落过 `loop/end.usage` 时出现；形状同 `AskJob.usage`，面板直接复用 `.-agent-usage` 那条渲染路径）
         }
         anchors = _dedupe(turn["anchors"])
         if anchors:
@@ -576,3 +609,32 @@ def _turn_process(
     if not isinstance(start, int) or not isinstance(end, int) or end <= start:
         return []
     return process_items(events[start:end])
+
+
+# ── 逐轮 token 用量回放（2026-09-24；整段追加在文件末尾 ⇒ 上方锚点零漂移）────────────
+# 与模块 docstring 那张「事件 → 消息」表的关系：**只对渲染视图（`conversation_messages()`）生效**。
+# `_replay()`（喂模型用的 LLM 消息序列）照旧**跳过** `loop/end` —— 用量不是对话内容，绝不进请求。
+#
+# 为什么需要它（人 2026-09-24：「每个对话末尾的 token 使用详情又没了」）：用量原本只在**刚答完
+# 那一轮**由 `agent_ask_poll` 的 `usage` 带进面板（`AskJob.usage ← LoopResult.usage`），而重载 /
+# 重启 / 切回会话走的是**会话日志回放**——回放视图里一个 usage 都没有 ⇒ 末条回话下方那行用量
+# 整体消失（连底部状态栏的"最近一轮"也一起空掉）。数据其实一直都在：`loop/end` 事件的
+# `data.usage` 就是 `loop.usage_payload()` 的逐键载荷，与本模块**同一次读盘**顺手带出即可。
+
+#: `loop/end`（一轮结束事件；载荷见 `loop.py::usage_payload()`）。
+#: 定义在文件末尾而不是常量区 —— 常量区在 119-124 行，加在那里会让下方所有 `<文件>:<行号>` 锚点
+#: 整体位移；本常量只被上面那段回放代码使用，运行时写在哪儿都不影响。
+LOOP_END = "loop/end"
+
+
+def _usage(event: Mapping[str, Any]) -> dict[str, Any]:
+    """`loop/end.usage` → 可直接回给面板的字典（拿不到就返回 `{}`，调用方据此**不写** `usage` 键）。
+
+    只做形状兜底（非 mapping / 缺键 ⇒ 空表 / 空串），**不改数值、不补 0**：命中 / 未命中的
+    `None` 必须原样保留 —— 面板据此显示「—」而不是假装 0（口径见 `usage_report.py` 的模块 docstring）。
+    """
+    value = _data(event).get("usage")
+    if not isinstance(value, Mapping):
+        return {}
+    return {str(key): value[key] for key in value}
+

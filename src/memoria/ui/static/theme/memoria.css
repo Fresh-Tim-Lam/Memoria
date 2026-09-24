@@ -544,12 +544,12 @@ body {
 .markdown-body h3 { font-size: 1rem; margin: 1rem 0 8px; color: var(--text-bright); }
 .markdown-body p { line-height: 1.7; margin-bottom: 0.75rem; }
 .markdown-body code {
-    background: var(--bg-tertiary);
+    background: var(--code-inline-bg, var(--bg-tertiary));
     padding: 0.125rem 5px;
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.9em;
-    color: var(--warning);
+    color: inherit;
 }
 .markdown-body pre { background: var(--bg-tertiary); padding: 0.75rem; border-radius: 4px; overflow-x: auto; margin-bottom: 1rem; }
 .markdown-body pre code { background: none; padding: 0; color: var(--text-primary); }
@@ -668,4 +668,22 @@ body {
    ⇒ 没有本令牌的主题/文件自动退回旧观感。浅色主题的对应取值见 `light.css` 末尾。 */
 :root {
     --border-sep: #303030;
+}
+
+/* ===== 行内 `` `文字` `` 的底色档 `--code-inline-bg`（2026-09-23）=========================
+   人：「对于 `文字` 这种样式，memoria 统一把他颜色改一下，和上游的这个样式的颜色对齐」。
+   上游口径（`deepseek-harness` 的 web 客户端，本地检出可查）—— 行内代码**只声明底色、不声明文字色**：
+     `packages/client/ui-primitives/src/markdown/MarkdownText.module.css:146-156`
+       `.markdown :not(pre) > code { background-color: var(--dsw-alias-markdown-inline-code); … }`
+     `packages/client/ui-theme/src/styles/design-platform.css:215`（亮）`:307`（暗）
+       亮 `--dsw-alias-markdown-inline-code = --dsw-static-neutral-bluish-100` = `rgb(235, 238, 242)`
+       暗 `… -850` = `rgb(44, 44, 46)`
+   ⇒ 本地**逐字取其色值**（不是"看着差不多"）：暗色 = `rgb(44, 44, 46)`、亮色见 `light.css` 末尾；
+   **文字颜色改为随正文**（`color: inherit`）—— 旧值 `var(--warning)` 的橙色是本地自创、上游没有，
+   正是人看到的那处不一致。写法 `var(--code-inline-bg, var(--bg-tertiary))`
+   ⇒ 没有本令牌的主题/文件自动退回旧观感（同 `--border-sep` 的写法）。
+   消费点**只有** `.markdown-body code` 一处（预览 / 对话正文 / 计划卡都走同一个渲染器）⇒ 改一处即"统一"；
+   块级代码（`.markdown-body pre code`）本就随正文色，未动。 */
+:root {
+    --code-inline-bg: rgb(44, 44, 46);
 }

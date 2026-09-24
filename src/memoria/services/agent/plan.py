@@ -1033,7 +1033,21 @@ def validate_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
     #: ① 前序 `upsert_kp` 的 KP id；② 前序 `create_file` 新建文件的 **stem**（视图口径）。
     pending_targets: set[str] = set()
     view = _View(kb_path)
+    # 2026-09-22（§6.25）：**能力插件闸的一次性求值** —— 本库此刻启用了哪些动作类，整批共用一个答案。
+    # 函数内局部导入：本文件顶部行号不动（零漂移），且 `plugins.py` 不反向依赖 `plan.py`（无环）。
+    from memoria.services.agent import plugins as _plugins
+
+    active = _plugins.active_plugins(kb_path)
     for raw in _as_list(data.get("ops")):
+        # 能力闸：op 的动作类在本库没启用 ⇒ 拒（fail-closed，理由与口径见 `plugins.py` 末尾「契约接线」）
+        verb = str((raw or {}).get("op") or "").strip() if isinstance(raw, Mapping) else ""
+        if verb in KNOWN_OPS and not active.op_available(verb):
+            oid = str((raw or {}).get("op_id") or "")
+            errors.append(
+                _err(oid, "capability_disabled", f"{verb} 的动作类在本库**未启用**（能力插件闸）—— 见工具说明末尾「本库已启用的能力动作」")
+            )
+            ops.append({"op": verb, "op_id": oid, "action": "invalid"})
+            continue
         parsed = _validate_op(kb_path, raw, service, errors, warnings, pending_targets, view)
         oid = str(parsed.get("op_id") or "")
         if oid and oid in seen:

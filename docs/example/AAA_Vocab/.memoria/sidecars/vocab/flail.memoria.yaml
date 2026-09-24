@@ -30,7 +30,7 @@ knowledge_points:
       line_hint: 1
     end:
       snippet: '- 一分钟自测（前一节）：① **flailing**（还在挣扎，仍有机会）② **failing**（已在失败）'
-      line_hint: 124
+      line_hint: 126
 links:
 - anchor_text: plummet
   occurrence: 0
@@ -49,7 +49,7 @@ links:
   instances:
   - line: 109
     wrapped: true
-  - line: 115
+  - line: 116
     wrapped: true
   source_id: flail
 - anchor_text: troubled
@@ -58,7 +58,22 @@ links:
   - troubled
   edge_type: reference
   instances:
-  - line: 115
+  - line: 116
     wrapped: true
   source_id: flail
+- anchor_text: rafting-whirlpool-rescue
+  occurrence: 0
+  targets:
+  - rafting-whirlpool-rescue
+  edge_type: reference
+  target_edges:
+    rafting-whirlpool-rescue:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 110
+    wrapped: true
+  excluded: []
+  pool:
+  - rafting-whirlpool-rescue
 edges: []

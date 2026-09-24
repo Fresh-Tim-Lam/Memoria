@@ -76,6 +76,10 @@ class ToolOutput:
     error: bool = False
     code: str | None = None
     anchors: tuple[Mapping[str, Any], ...] = ()
+    #: 2026-09-23 图像输入：工具**产出的图片**（`read_image` 用）。`text` 仍是回填给模型的内容；
+    #: 图片不塞进 `tool` 消息（Chat Completions 的 tool 结果只收字符串），而是由循环作为
+    #: **一条延迟的 user 消息**带进上下文（对齐上游 `read_image` 的 `deferContext`）。
+    images: tuple[Any, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

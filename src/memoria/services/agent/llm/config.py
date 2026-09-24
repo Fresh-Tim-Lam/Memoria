@@ -82,13 +82,41 @@ DEFAULT_TIMEOUT_S = 60.0
 #: 「允许出网」开关的 JSON 键（缺省视为开）。
 ENABLED_KEY = "enabled"
 
-_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", "status_refresh_ms", "transcript_mode", ENABLED_KEY, "permission")
+_JSON_KEYS = ("base_url", "api_key", "model", "timeout_s", "status_refresh_ms", "transcript_mode", ENABLED_KEY, "permission", "search_base_url", "search_max_results", "fetch_max_bytes", "search_timeout_s", "fetch_timeout_s", "fetch_allow_domains", "fetch_deny_domains", "script_interpreter", "script_use_bundled", "script_timeout_s")
 #: UI 可写键白名单（`save_config` 只接受这些键）。
 _WRITABLE_KEYS = frozenset(_JSON_KEYS)
 #: 文本类键（trim 后原样存）。
-_TEXT_KEYS = frozenset({"base_url", "model"})
+_TEXT_KEYS = frozenset({"base_url", "model", "search_base_url", "fetch_allow_domains", "fetch_deny_domains", "script_interpreter"})
 #: HTTP 头可原样承载、且各端点密钥实际使用的字符集（上游 `LEGAL_API_KEY`）。
 _LEGAL_API_KEY = re.compile(r"^[\x21-\x7E]+$")
+
+# ── 联网（N 线，2026-09-23；§6.28）：出网基址与限额 ──────────────────────────────
+# **与 `enabled` 不同**：这几组键是**调用参数**（联网工具要用）⇒ 进 `AgentConfig`，也进
+# `save_config()` 的键白名单；`enabled` 仍是"UI 旋钮、不进调用参数"（见其段注）。默认值来源：
+# 结果条数 **5**（与 `tools/kb.py` 的 `DEFAULT_TOP_K` 同值：一次检索回给模型的条目数与检索
+# 命中数同一量级）、抓取字节 **2 MiB**（对齐 `SESSION_SCAN_MAX_BYTES` 的量级）、两侧超时
+# **30s**（对齐上游 `searchTimeoutMs` 默认 30000）。基址推导见 `services/agent/web.py::
+# anthropic_base_url`（缺省 = 从 `base_url` 推导；非 DeepSeek 端点须显式给 `search_base_url`）。
+DEFAULT_SEARCH_MAX_RESULTS = 5
+DEFAULT_FETCH_MAX_BYTES = 2 * 1024 * 1024
+DEFAULT_SEARCH_TIMEOUT_S = 30.0
+DEFAULT_FETCH_TIMEOUT_S = 30.0
+#: 正整数类联网键（写侧校验用）。
+_WEB_POSITIVE_KEYS = frozenset({"search_max_results", "fetch_max_bytes"})
+#: 秒数类联网键（写侧校验用；与 `timeout_s` 同一套 `_coerce_timeout`）。
+_WEB_TIMEOUT_KEYS = frozenset({"search_timeout_s", "fetch_timeout_s"})
+
+# ── 脚本工作区（人 2026-09-24 拍板；`services/agent/scratch.py`）──────────────────
+# 三个键都是**脚本工作区**设置（设计见 `docs/design/agent-capabilities.md §3.4`）：
+#   · `script_interpreter` 解释器显式路径（空 = 依次回落"发布包内置 → 系统"）；
+#   · `script_use_bundled` 是否允许用发布包内置的那一份（关掉即只用系统解释器）；
+#   · `script_timeout_s` 单次执行超时（`scratch.MIN/MAX_TIMEOUT_S` 会再夹一次）。
+# 与 `enabled` 不同 ⇒ 它们是**调用参数**，进 `AgentConfig`、也进写白名单。
+DEFAULT_SCRIPT_TIMEOUT_S = 60.0
+#: 秒数类脚本键（写侧校验用）。
+_SCRIPT_TIMEOUT_KEYS = frozenset({"script_timeout_s"})
+#: 布尔类脚本键（写侧只做真值化）。
+_SCRIPT_BOOL_KEYS = frozenset({"script_use_bundled"})
 
 
 def mask_secret(secret: str | None) -> str:
@@ -133,6 +161,23 @@ class AgentConfig:
     timeout_s: float = DEFAULT_TIMEOUT_S
     #: 诊断用：各字段最终来源（`env` / `file:<path>` / `default`），不含敏感值。
     source: str = "default"
+    #: 联网（N 线，2026-09-23；§6.28）：Anthropic 兼容面基址（空 = 按 `base_url` 推导）、
+    #: 单次检索的条目上限、单次抓取的字节上限、检索与抓取各自的超时（秒）。
+    search_base_url: str = ""
+    search_max_results: int = DEFAULT_SEARCH_MAX_RESULTS
+    fetch_max_bytes: int = DEFAULT_FETCH_MAX_BYTES
+    search_timeout_s: float = DEFAULT_SEARCH_TIMEOUT_S
+    fetch_timeout_s: float = DEFAULT_FETCH_TIMEOUT_S
+    #: 抓取**域名名单**（2026-09-24；§3.3 的"域名单"落点）：逗号/空白分隔的域列表。
+    #: `fetch_deny_domains` 命中即拒（优先）；`fetch_allow_domains` 非空 ⇒ 只允许列内（含子域）。
+    #: 两者都为空 = 不限域名（仍受"拒私网/回环…"与出网总闸约束）。解析口径见 `web.py::parse_domains()`。
+    fetch_allow_domains: str = ""
+    fetch_deny_domains: str = ""
+    #: 脚本工作区（人 2026-09-24 拍板）：解释器显式路径（空 = 发布包内置 → 系统）、
+    #: 是否允许用内置解释器、单次执行超时（秒）。
+    script_interpreter: str = ""
+    script_use_bundled: bool = True
+    script_timeout_s: float = DEFAULT_SCRIPT_TIMEOUT_S
 
     def __repr__(self) -> str:
         return (
@@ -178,7 +223,11 @@ def _read_file_config(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {}
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        # `utf-8-sig` 而不是 `utf-8`（2026-09-24 真机踩到）：`config/agent.json` 是**人也会手改**的文件，
+        # Windows 记事本 / PowerShell `Set-Content -Encoding utf8` 会写 **UTF-8 BOM** ⇒ 用 `utf-8` 读会把
+        # `\ufeff` 留在串首、`json.loads` 报 `Unexpected UTF-8 BOM` ⇒ 整个配置读不出来（面板一片空、
+        # 出网闸与名单全部回落默认，看着像"设置没生效"）。`utf-8-sig` 对**无 BOM** 的文件行为完全一致。
+        raw = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ConfigError(f"本地配置 {path} 无法解析为 JSON：{exc}") from exc
     if not isinstance(raw, dict):
@@ -238,6 +287,8 @@ def load_config(env: Mapping[str, str] | None = None) -> AgentConfig:
         if timeout is not None
         else DEFAULT_TIMEOUT_S,
         source=source,
+        **_web_config_values(file_values, source_file),
+        **_script_config_values(file_values, source_file),
     )
 
 
@@ -255,7 +306,7 @@ def read_raw_config(env: Mapping[str, str] | None = None) -> dict[str, Any]:
     if not path.is_file():
         return {}
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(path.read_text(encoding="utf-8-sig"))  # 容忍手改文件带 BOM（见 `_read_file_config()` 注释）
     except (OSError, json.JSONDecodeError):
         logger.warning("[agent-llm] 本地配置无法解析，按空配置处理：%s", path)
         return {}
@@ -331,6 +382,18 @@ def save_config(
         # 追加键（2026-09-22）：审批档位（按 agent 配，`{agent_id: 档位名}`）
         if name == PERMISSION_KEY and value is not None:
             current[name] = _coerce_permission(value, origin=str(path))
+        # 追加键（2026-09-23）：联网（N 线，§6.28）—— 正整数（条数 / 字节）与秒数（两侧超时）；
+        # `search_base_url` 走上面的 `_TEXT_KEYS`（trim 后原样存，空串 = 回落自动推导）。
+        if name in _WEB_POSITIVE_KEYS and value not in (None, ""):
+            current[name] = _coerce_positive_int(value, origin=str(path), what=name)
+        if name in _WEB_TIMEOUT_KEYS and value not in (None, ""):
+            current[name] = _coerce_timeout(value, origin=f"{path} 的 {name}")
+        # 追加键（2026-09-24）：脚本工作区（`script_interpreter` 走上面的 `_TEXT_KEYS`；
+        # `script_use_bundled` 只做真值化；`script_timeout_s` 与其它秒数键同一套校验）。
+        if name in _SCRIPT_BOOL_KEYS and value is not None:
+            current[name] = bool(value)
+        if name in _SCRIPT_TIMEOUT_KEYS and value not in (None, ""):
+            current[name] = _coerce_timeout(value, origin=f"{path} 的 {name}")
 
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_name(path.name + ".tmp")
@@ -445,3 +508,77 @@ def _coerce_permission(value: Any, origin: str) -> dict[str, str]:
         if key and text:
             out[key] = text
     return out
+
+
+# ── 联网（N 线，2026-09-23；§6.28）：读侧取值 + 正整数校验 ─────────────────────────
+# 整段**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`load_config()` 里只**展开一行**
+# `**_web_config_values(...)`，`save_config()` 的键分支追加在既有分支链**末位**）。
+# 口径：①空串 / 缺省 = **默认值**（与 `timeout_s` 的 "空值不修改" 写侧语义配套）；②键**在文件里但
+# 非法** ⇒ 报 `ConfigError`（与 `timeout_s` 同口径：坏值不静默吞掉）；③`search_base_url` 是文本，
+# 不做更多校验 —— 它是不是能用的 Anthropic 面由 `services/agent/web.py::anthropic_base_url` 判定。
+
+
+def _coerce_positive_int(value: Any, origin: str, what: str) -> int:
+    """严格正整数（读写共用，口径同 `_coerce_status_refresh_ms`：先 `float` 再 `int`）。"""
+    try:
+        number = int(float(value))
+    except (TypeError, ValueError) as exc:
+        raise ConfigError(f"{origin} 的 {what} 必须是整数，收到 {value!r}") from exc
+    if number <= 0:
+        raise ConfigError(f"{origin} 的 {what} 必须为正整数，收到 {number!r}")
+    return number
+
+
+def _web_config_values(file_values: Mapping[str, Any], source: str) -> dict[str, Any]:
+    """从本地 JSON 取联网七键（缺省 ⇒ 默认值；非法 ⇒ `ConfigError`）；供 `load_config()` 展开。"""
+
+    def present(key: str) -> Any:
+        raw = file_values.get(key)
+        if raw is None or (isinstance(raw, str) and not raw.strip()):
+            return None
+        return raw
+
+    base_url = present("search_base_url")
+    count = present("search_max_results")
+    size = present("fetch_max_bytes")
+    timeout = present("search_timeout_s")
+    fetch_timeout = present("fetch_timeout_s")
+    allow = file_values.get("fetch_allow_domains")
+    deny = file_values.get("fetch_deny_domains")
+    return {
+        "search_base_url": "" if base_url is None else str(base_url).strip(),
+        "search_max_results": DEFAULT_SEARCH_MAX_RESULTS
+        if count is None
+        else _coerce_positive_int(count, source, "search_max_results"),
+        "fetch_max_bytes": DEFAULT_FETCH_MAX_BYTES
+        if size is None
+        else _coerce_positive_int(size, source, "fetch_max_bytes"),
+        "search_timeout_s": DEFAULT_SEARCH_TIMEOUT_S
+        if timeout is None
+        else _coerce_timeout(timeout, origin=f"{source} 的 search_timeout_s"),
+        "fetch_timeout_s": DEFAULT_FETCH_TIMEOUT_S
+        if fetch_timeout is None
+        else _coerce_timeout(fetch_timeout, origin=f"{source} 的 fetch_timeout_s"),
+        # 域名名单两键：**空串是合法值**（= 不限），故只做 trim、不做"缺省回落"式的丢弃
+        "fetch_allow_domains": "" if allow is None else str(allow).strip(),
+        "fetch_deny_domains": "" if deny is None else str(deny).strip(),
+    }
+
+
+def _script_config_values(file_values: Mapping[str, Any], source: str) -> dict[str, Any]:
+    """从本地 JSON 取脚本工作区三键（缺省 ⇒ 默认值；非法 ⇒ `ConfigError`）；供 `load_config()` 展开。
+
+    口径：`script_interpreter` 空串是**合法值**（= 依次回落"发布包内置 → 系统"）；`script_use_bundled`
+    只做真值化（JSON 里写 `false` 即关掉内置解释器）；`script_timeout_s` 与其它秒数键同一套校验。
+    """
+    raw_path = file_values.get("script_interpreter")
+    raw_bundled = file_values.get("script_use_bundled")
+    raw_timeout = file_values.get("script_timeout_s")
+    return {
+        "script_interpreter": "" if raw_path is None else str(raw_path).strip(),
+        "script_use_bundled": True if raw_bundled is None else bool(raw_bundled),
+        "script_timeout_s": DEFAULT_SCRIPT_TIMEOUT_S
+        if raw_timeout is None or (isinstance(raw_timeout, str) and not raw_timeout.strip())
+        else _coerce_timeout(raw_timeout, origin=f"{source} 的 script_timeout_s"),
+    }
+

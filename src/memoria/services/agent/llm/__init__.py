@@ -59,6 +59,7 @@ from memoria.services.agent.llm.retry import (
 from memoria.services.agent.llm.types import (
     FinishEvent,
     FinishReason,
+    ImagePart,
     LlmRequest,
     Message,
     ReasoningDelta,
@@ -81,6 +82,7 @@ __all__ = [
     "DEFAULT_PROVIDER_NAME",
     "FinishEvent",
     "FinishReason",
+    "ImagePart",
     "LlmProvider",
     "LlmRequest",
     "LlmTimeoutError",

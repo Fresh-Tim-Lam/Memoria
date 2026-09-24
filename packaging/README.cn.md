@@ -45,6 +45,7 @@ Package/
 |---|---|---|
 | `resources/icons` → `resources/icons` | 必带 | 图标 |
 | `resources/agent-prompts` → `resources/agent-prompts` | **必带** | `get_agent_prompt`（程序内 Agent 整理提示词，单一事实源） |
+| `resources/agent-capabilities` → `resources/agent-capabilities` | **必带** | `plugins.builtin_dir()`（**能力插件内置声明**；缺则契约未参与、能力闸不生效，见 `dsh-agent-port.md §6.25`） |
 | `docs/reference`（白名单） → `resources/docs` | **必带** | `get_reference_doc`（弹窗"查看格式说明"，单一事实源） |
 | `docs/example/showcase` → `resources/examples` | **必带** | 官方展示样例库（机器学习导论，打开知识库试用；仅正文/侧车/图片随包，cache 等剔除） |
 
@@ -53,7 +54,7 @@ Package/
 - 构建后自检（无需完整重打包）：
 
 ```powershell
-python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| docs:', (p/'docs'/'preview-formats.md').is_file(), '| examples:', (p/'examples'/'README.md').is_file(), (p/'examples'/'overview.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file())"
+python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| agent-capabilities:', (p/'agent-capabilities'/'kb-write.json').is_file(), (p/'agent-capabilities'/'web-search.json').is_file(), (p/'agent-capabilities'/'web-fetch.json').is_file(), '| docs:', (p/'docs'/'preview-formats.md').is_file(), '| examples:', (p/'examples'/'README.md').is_file(), (p/'examples'/'overview.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file())"
 ```
 
 ## 本地运行

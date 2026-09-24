@@ -120,7 +120,7 @@ window.MemoriaRenderer = (function () {
         el = document.createElement("p");
         el.className = "-src-block -image-block";
         el.setAttribute("data--block-index", blockIndex);
-        var img = document.createElement("img");
+        var img = document.createElement("img"); img.loading = "lazy"; // 2026-09-23 性能：预览里动辄数百张图，惰性加载（视口附近才请求/解码）
         img.src = block.url;
         img.alt = block.alt;
         img.className = "-preview-image";
@@ -404,7 +404,7 @@ window.MemoriaRenderer = (function () {
       case T.IMAGE:
         // 行内图片兜底渲染（段落内图片 / 行尾带空白未判为图片块的场景）；
         // 独立图片块走 renderBlock 的 T.IMAGE 分支（带 align/名称等完整处理）。
-        var imgEl = document.createElement("img");
+        var imgEl = document.createElement("img"); imgEl.loading = "lazy"; // 2026-09-23 性能：同上（行内图片兜底分支）
         imgEl.src = node.url;
         imgEl.alt = node.alt;
         imgEl.className = "-preview-image";

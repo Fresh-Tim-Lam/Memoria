@@ -35,7 +35,7 @@
 | 位置锚点 | 切换前记录 `anchorLine = _getViewTopSrcLine(prevMode)`（视图顶部对应的**源码行号**） | `app.js:1596`-`1600`、`1632`-`1656` |
 | 位置恢复 | 目标为 `split` → 两侧都 `_scrollToSrcLine(anchor)`；否则先试 `_scrollToSrcLine(mode, anchor)`，成功即跳过，失败才回退按 `scrollTop` 数值恢复 | `app.js:1613`-`1628`、`1659`-`1687`、`1689`-`1715` |
 | 分栏滚动同步 | `#editor-pane` / `#preview-pane` 的 `scroll` 双向联动，用 `splitSyncLock` + `requestAnimationFrame` 防回环；**无条件启用** | `app.js:1517`-`1540`、`12416`-`12417` |
-| **「分栏自动定位」配置项** | **没有**。设置四页（显示/搜索/检查/图谱）与 `ui-settings.json` 中都没有分栏同步/自动定位开关；`splitSyncLock` 也非持久化状态 | `display-settings.js:9`-`20`、`241`-`251`；`search-settings.js`/`check-settings.js` 无相关键（grep `split` 仅命中 `app.js:1518`-`1537`） |
+| **「分栏自动定位」配置项** | **没有**。设置四页（显示/搜索/检查/图谱）与 `ui-settings.json` 中都没有分栏同步/自动定位开关；`splitSyncLock` 也非持久化状态 | `display-settings.js:9`-`31`、`333`-`348`；`search-settings.js`/`check-settings.js` 无相关键（grep `split` 仅命中 `app.js:1518`-`1537`） |
 | 源码↔预览光标互指 | 仅分栏下生效：源码光标 → 预览块 `.-preview-cursor`；预览光标 → 源码行 `.-sync-cursor` 假光标 | `edit-handler.js:192`-`206`、`293`-`302` |
 
 ## 3. 渲染管线（各层职责）
@@ -73,7 +73,7 @@
 | frontmatter | `<pre class="-src-block -frontmatter">` | 无专属 CSS | `renderer.js:237`-`242` |
 | 图片块 | `<p class="-src-block -image-block">` + `<img class="-preview-image">` + `<span class="-image-caption" data--image-caption>` | 对齐加 `-image-align-left/center/right`；默认 `max-width:35%`，有 width/height 属性时内联尺寸 + `max-width:100%`；`name=hide` → caption `display:none` | `renderer.js:116`-`160`；`app.css:3812`-`3850`、`3988`-`3997` |
 | 行内加粗/斜体/删除线 | `<strong>` / `<em>` / `<strong><em>` / `<del>` | — | `renderer.js:310`-`330` |
-| 行内代码 | `<code>` | 主题底色 | `renderer.js:332`-`335` |
+| 行内代码 | `<code>` | 主题底色 `--code-inline-bg`（**2026-09-23 起对齐上游 dsh**：暗 `rgb(44,44,46)` / 亮 `rgb(235,238,242)`，文字**随正文**而非旧的 `--warning` 橙） | `renderer.js:332`-`335`；`theme/memoria.css` 末尾同令牌注释 |
 | 荧光笔 | `<span class="-hl -hl-<color>" style="background-color:…">`（带前景色时再加 `style.color`） | 颜色由 renderer 内联样式决定，CSS 类仅作 fallback | `renderer.js:337`-`344`；`app.css:3795`-`3830` |
 | 字体色 | `<span style="color:…">`（**无 class**） | — | `renderer.js:346`-`350` |
 | 字号/`[[\b]]`/`[[\i]]`/`[[\u]]`/上下标 | `<span style="font-size/font-weight/font-style/text-decoration">`、`<sup>`、`<sub>` | — | `renderer.js:352`-`384` |

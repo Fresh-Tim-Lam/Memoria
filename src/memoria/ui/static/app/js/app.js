@@ -134,7 +134,7 @@
       if (res.status !== "ok") {
         window.MemoriaWriteGuard?.onSaveFailed?.(res, state.currentPath, body) || console.warn("[SYNC] 保存失败:", res.message);
       } else {
-        if (state.doc && res.version) state.doc.version = res.version; syncLog("syncToDisk: 保存成功");
+        if (state.doc && res.version) state.doc.version = res.version; syncLog("syncToDisk: 保存成功"); _previewCacheDrop(state.currentPath); // 2026-09-23 性能：写盘成功 ⇒ 该路径的预览缓存按新版本作废（下次切走时再存）
         if (res.cleanedImages && res.cleanedImages.length) {
           showFlashInfo(
             T("img.cleanup.doneList", {
@@ -157,7 +157,7 @@
   /** 标记文档为脏（有未保存编辑），启动写盘防抖计时器 */
   function markDirty() {
     syncLog("markDirty: _dirty", _dirty, "→ true, 将在", SAVE_DEBOUNCE_MS, "ms 后写盘");
-    _dirty = true;
+    _dirty = true; _previewCacheDrop(state.currentPath); _previewDomKey = null; _preloadStop("edit"); // 2026-09-23 性能：本地编辑 ⇒ 当前文档的预览缓存作废，并中止在跑的后台预渲染
     clearTimeout(_saveTimer);
     clearTimeout(_durableTimer); // 有新编辑则推迟 durable_flush 兜底
     _saveTimer = setTimeout(() => {
@@ -514,7 +514,7 @@
     }
   }
 
-  function resetOpenDocumentUi() {
+  function resetOpenDocumentUi() { _previewCacheClear(); _preloadResetForNewKb(); // 2026-09-23 性能：换库 ⇒ 预览缓存整库作废（路径键换了一套命名空间）
     cancelKpHighlightTimers();
     clearHighlights();
     clearPreviewHighlights();
@@ -605,7 +605,7 @@
     state.currentPath = null;
     state.doc = null;
     state.activeKpId = null;
-    state.openTabs = [];
+    state.openTabs = []; _previewCacheClear(); _preloadResetForNewKb(); // 2026-09-23 性能：关库 ⇒ 预览缓存整体作废（并与换库同一套复位口径）
     state.graphData = null;
     state.graphAudit = null;
     state.kbValidateReport = null;
@@ -649,7 +649,7 @@
       return;
     }
     state.files = res.files || [];
-    state.dirs = res.dirs || [];
+    state.dirs = res.dirs || []; _previewCacheClear(); // 2026-09-23 性能：文件集合变了（重命名/删除/新建/导入/刷新）⇒ 预览缓存整体作废（避免留下失效的路径键）
     updateSidebarTabCounts();
     window.MemoriaFileTree?.render?.();
   }
@@ -1323,6 +1323,7 @@
     if (!tab) return;
     const wasActive = tab.path === state.currentPath;
     state.openTabs.splice(index, 1);
+    _previewCacheDrop(tab.path); // 2026-09-23 性能：页签关闭 ⇒ 立刻丢掉它的预览缓存条目（不留下无主的 DocumentFragment）
     if (!state.openTabs.length) {
       cancelKpHighlightTimers();
       clearHighlights();
@@ -1411,7 +1412,7 @@
 
   async function openFile(relPath, opts = {}) {
     // 文件上下文切换 → 提升调度 epoch，使基于旧文件的排队作业（如 kp_panel）陈旧可弃
-    window.MemoriaScheduler?.bumpEpoch?.();
+    window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）
     // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
     // 旧尾、插入本次切换目标并把指针移到新顶（因此前进随之不可用）。后退/前进按钮
     // （fromNav=true）与程序内部重载（skipNav=true）不产生新条目。
@@ -1436,7 +1437,7 @@
     clearHighlights();
     clearPreviewHighlights();
     clearGraphLinkHighlight();
-    clearGraphKpHover();
+    clearGraphKpHover(); if (state.currentPath && state.currentPath !== relPath) _previewCacheStash(state.currentPath); // 2026-09-23 性能：切页签前把当前预览 DOM 整体搬进缓存（移动节点，见文件末尾「预览 DOM 缓存 + 后台预渲染」块）
     setStatus(T("app.loading"), relPath);
     const res = await call("load_document", relPath);
     if (res.status !== "ok") {
@@ -1479,8 +1480,8 @@
         kpList.scrollTop = tab.kpListScroll;
       }
     }
-    setViewMode(state.viewMode, { skipSave: true });
-    await renderPreview(res);
+    await setViewMode(state.viewMode, { skipSave: true }); // 内部已按当前视图渲染过一次预览（源码视图下不渲染）
+    // 2026-09-23 性能：此处**不再**二次 `renderPreview(res)` —— 原写法被重入保护排成"重跑"，整篇解析/渲染/MathJax 全做两遍（实测 2712 行文档 mathjax 4.2s→见 §性能取证）。
     // 渲染可能因重入保护被"排队重跑"（重跑会重建 preview DOM 并清掉高亮），
     // 等最终一轮渲染结束再执行下方的高亮/定位，否则 band 会被重跑清掉
     await _waitRenderSettled();
@@ -1541,7 +1542,7 @@
     setStatus(relPath, stats);
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
-    window.MemoriaToolbarSearch?.syncScope?.();
+    window.MemoriaToolbarSearch?.syncScope?.(); _lastSwitch.ms = Math.round(performance.now() - _t0Switch); // 2026-09-23 性能：记录本次切页签耗时（`hit=true` = 走的是缓存搬回路径）
   }
 
   // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
@@ -1625,7 +1626,7 @@
       localStorage.setItem("-view", mode);
     }
     // 页签切换前：将源码编辑器内容同步到内存，刷新两个视图
-    if (prevMode !== mode) {
+    if (prevMode !== mode) { _previewCacheDrop(state.currentPath); _previewDomKey = null; // 2026-09-23 性能：视图模式变了 ⇒ 当前文档的预览缓存作废（渲染差异与视图模式相关）
       clearTimeout(_renderTimer);
       _renderTimer = null;
       syncLog("setViewMode:", prevMode, "→", mode, "| dirty=", _dirty);
@@ -1793,7 +1794,7 @@
    */
   function stampBlockLines(preview, doc) {
     if (!doc || !doc.blocks) return;
-    _blockLineMap = [];
+    _blockLineMap = []; var byIdx = new Map(); preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) { byIdx.set(el.getAttribute("data--block-index"), el); }); // 2026-09-23 性能：一次建好 block-index → 元素 索引，替代下方逐块全 DOM querySelector（原为 O(块数×DOM)，2003 块时是主要卡顿源）
 
     var srcLines = state.doc.body ? state.doc.body.split("\n") : [];
     var srcIdx = 0;
@@ -1866,7 +1867,7 @@
       // 真值优先：parser 落盘的块行区间（上方启发式仅作缺字段兜底；末块越界=公式归一化曾插行）
       if (block.srcLine > 0 && block.srcLineEnd >= block.srcLine && doc.blocks[doc.blocks.length - 1].srcLineEnd <= srcLines.length) { srcIdx = block.srcLine - 1; lineCount = block.srcLineEnd - block.srcLine + 1; }
       _blockLineMap[blockIdx] = { startLine: srcIdx, endLine: srcIdx + lineCount - 1 };
-      var el = preview.querySelector('.-src-block[data--block-index="' + blockIdx + '"]');
+      var el = byIdx.get(String(blockIdx));
       if (el) {
         el.setAttribute("data--src-line", srcIdx + 1);
         el.setAttribute("data--src-line-end", srcIdx + lineCount);
@@ -1890,7 +1891,7 @@
     }
     _renderingPreview = true;
     const incremental = options?.incremental;
-    const afterSync = options?.afterSync;
+    const afterSync = options?.afterSync; if (!incremental && _previewCacheRestore(doc)) { _renderingPreview = false; return; } // 2026-09-23 性能：命中预览 DOM 缓存 ⇒ 直接搬回，跳过 parse/render/插 DOM/stamp/MathJax（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）
     if (window.MemoriaMarkdownPreview?.setCurrentFileDir && state.currentPath) {
       const parts = state.currentPath.replace(/\\/g, "/").split("/");
       const dir = parts.length > 1 ? parts.slice(0, -1).join("/") + "/" : "";
@@ -1959,7 +1960,7 @@
         try { await MathJax.startup.promise; } catch (e) { log("render", "MathJax startup: " + e.message); }
       }
       if (window.MathJax?.typesetPromise) {
-        try { await MathJax.typesetPromise([preview]); } catch (e) { log("render", "MathJax: " + e.message); }
+        queuePreviewMathTypeset(preview, token); // 2026-09-23 性能：**不再 await**（实测 2.0–2.2 s）⇒ 后台跑，文件/编辑器/KP 立刻可用；排版完后由下方 `_tagInlineMathContainers` 的补跑打标记（公式"晚一拍"升级为渲染态）
       }
 
       // 7. Mermaid/MathJax 可能创建了新元素，重新设置 contentEditable=false
@@ -1979,7 +1980,7 @@
       // 8. 标记行内公式 mjx-container — MathJax 会替换 .-math span，
       //    导致 dblclick 无法通过 .-math class 找到行内公式。
       //    遍历 AST，将 MATH_INLINE 公式按顺序匹配到可编辑 block 内的 mjx-container
-      _tagInlineMathContainers(preview, _doc);
+      _tagInlineMathContainers(preview, _doc); if (state._mathPending) state._mathPending.then(function () { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); }); // 2026-09-23 性能：MathJax 现在是后台跑的 ⇒ 排版完成后再补一次标记（`token` 守卫：只给"仍是最新一轮"的预览打）
 
       if (token !== state.previewToken) { _renderingPreview = false; return; }
       showPreviewReport({ ok: true });
@@ -1997,7 +1998,7 @@
       renderPreview(state.doc);
       return; // 新一轮渲染完成时会再次走本收尾并通知 _renderSettledWaiters
     }
-    _notifyRenderSettled();
+    _notifyRenderSettled(); _preloadSchedule(); _markPreviewDomCurrent(doc); // 2026-09-23 性能：渲染收尾 ⇒ 登记这份预览 DOM 的（路径, 版本）「可缓存」指纹，并排一次后台预渲染（「后台预加载」关闭时为空操作）
   }
 
   /**
@@ -2008,7 +2009,7 @@
    */
   function _tagInlineMathContainers(preview, doc) {
     if (!doc || !doc.blocks) return;
-    var _nonEdTypes = { code_block: 1, math_block: 1, mermaid: 1, table: 1, frontmatter: 1 };
+    var _nonEdTypes = { code_block: 1, math_block: 1, mermaid: 1, table: 1, frontmatter: 1 }; var byIdx = new Map(); preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) { byIdx.set(el.getAttribute("data--block-index"), el); }); // 2026-09-23 性能：一次建索引（原为逐块全 DOM querySelector，3206 块时很贵）
 
     function collectFormulas(block) {
       var formulas = [];
@@ -2035,7 +2036,7 @@
       if (_nonEdTypes[block.type]) continue; // 非可编辑 block 中的 MathJax 是 block math
       var formulas = collectFormulas(block);
       if (formulas.length === 0) continue;
-      var blockEl = preview.querySelector('.-src-block[data--block-index="' + bi + '"]');
+      var blockEl = byIdx.get(String(bi));
       if (!blockEl) continue;
       var mjxEls = blockEl.querySelectorAll('mjx-container');
       for (var mi = 0; mi < mjxEls.length && mi < formulas.length; mi++) {
@@ -12900,6 +12901,406 @@
     preview.addEventListener("load", retarget, true);
     preview.addEventListener("error", retarget, true);
   })();
+
+  /**
+   * 2026-09-23 性能：预览的 MathJax 排版改为**后台跑**，且**只给「最新一轮渲染」做**。
+   *
+   * 为什么不能简单地 await 掉：实测一篇 2712 行的教材，`MathJax.typesetPromise` 要约 **2.0–2.2 s**；
+   * 它以前被 `renderPreview` 等着，整条「切文件」链路被拖长同样多。改成不 await 后，文件正文 / 编辑器 /
+   * KP 列表立刻可用，公式在随后「晚一拍」升级成渲染态（期间看到的是 `$…$` 原文）。
+   *
+   * 为什么还要「链在前一个后面 + 比 token」：MathJax 内部是**串行队列**，连点几个文件会排成一长串
+   * 各自的排版（旧预览的 DOM 早被换掉了，纯属白干）⇒ 先等前一个跑完，再比 `token` 与
+   * `state.previewToken`：**已经不是最新一轮的直接跳过**。
+   *
+   * 定义必须留在本 IIFE 内（`state` / `log` 都在这儿）—— 2026-09-23 实测踩过一次坑：把它追加到文件
+   * 末尾的**另一个** IIFE 里 ⇒ `renderPreview` 报 `ReferenceError`，整个预览被错误条替换。
+   */
+  function queuePreviewMathTypeset(preview, token) {
+    const run = () => {
+      if (token !== state.previewToken) return Promise.resolve(); // 已被更新的一轮取代 ⇒ 不排了
+      if (!window.MathJax?.typesetPromise) return Promise.resolve();
+      return MathJax.typesetPromise([preview]).catch((e) => log("render", "MathJax: " + e.message));
+    };
+    const prev = state._mathPending;
+    const chain = prev && typeof prev.then === "function" ? prev.catch(() => {}) : Promise.resolve();
+    state._mathPending = chain.then(run);
+    return state._mathPending;
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-23 追加：**页签切换提速** —— 预览 DOM 缓存 + 可选后台预渲染
+  //
+  // 背景（人：「出现在页签的文件能不能内存预加载减小切换速度？或者后台提供 后台预加载开关，
+  // 并且说明更大的硬件开销和更流畅的体验（推荐大型知识库）」）：
+  // 实测一篇 2712 行 / 2003 块的文档切页签约 1.5 s —— 其中后端 `load_document` 仅 ~49 ms
+  // （且已服务端缓存），MathJax ~2.0–2.2 s（已改为后台跑），**主耗时在预览渲染链**：
+  // `Parser.parse` → `Renderer.render` → 插 DOM → `stampBlockLines` → contentEditable 处理 → 布局。
+  // 因此这里缓存的是**渲染好的预览 DOM 本身**（节点整体搬移，不是克隆 ⇒ 已挂的事件监听与已排版好的
+  // MathJax/Mermaid 产物一并保留）。**不做第二份文档数据缓存**：后端已按 (路径, mtime, size) 缓存，
+  // 前端再来一份只会多一处过期风险，而收益只有几十毫秒。
+  //
+  // 三条不变量（宁可慢一次，也绝不显示过期内容）：
+  //   ① 有条目 ⇒ 它的 DOM 一定**不在** `#preview` 里（切走时搬出、切回时搬回并删除条目）；
+  //   ② 条目里同时存 **正文指纹**（`_bodyFingerprint`）与后端 **版本号**（`load_document` 追加的
+  //      `version` = 文件内容 sha256）—— 任一不符立即丢弃，重走全量渲染；
+  //   ③ 只在「本会话内从未编辑过该文档」（`doc.preview_body` 仍在）且已写盘干净时缓存。
+  //
+  // 本块必须留在既有 IIFE **内部**（要用闭包里的 `state` / `_doc` / `_blockLineMap` / `M` / `P` / `R`；
+  // 同文件 12904 行那条教训说的就是这个）。位置选在 IIFE 收尾之前 ⇒ 只推动其后的末尾块（见交付说明）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  // 本块的位置在 `MemoriaBridge.onReady(...)` 调用点**之后**，而 bridge 在 api 已装好时会**同步**
+  // 回调（`bridge.js:62-65`）⇒ 极端情况下（桥存在但缺 `get_ui_settings`）`applyAll()` 会同步跑到
+  // `setBackgroundPreload(false)`。故这里一律用 `var`（提升到 undefined，不落 TDZ）：那条路径下
+  // 各值是 undefined，函数体自然变成空操作，不会抛 ReferenceError。
+  var PREVIEW_CACHE_MAX = 8;         // 最多缓存 8 个「非当前」页签的预览 DOM，超出按 LRU 逐出
+  var PREVIEW_CACHE_MAX_LINES = 4000; // 超过该行数的文档不缓存：单页 DOM 太大，省下的时间抵不上内存
+  var PRELOAD_MAX_LINES = 1200;      // 后台预渲染只做中小文档（大文档的渲染本身就是一次长任务）
+  var PRELOAD_MAX_TABS = 4;          // 单次会话最多后台预渲染 4 个页签（避免打开大库后长时间占着 CPU）
+  var _previewDomCache = new Map();  // relPath → { frag, map, ast, version, fp, scrollTop, bytes, prerendered }
+  var _preloadTried = new Set();     // 后台预渲染试过的路径（跳过的/失败的都不再重试）
+  var _previewDomKey = null;         // `#preview` 里这份 DOM 对应的 { path, version }；null = 当前不可缓存
+  var _preloadEnabled = false;       // 「后台预加载」开关（由 display-settings 经 applyAll 通告）
+  var _preloadAbort = 0;             // 递增即中止在跑的预渲染
+  var _preloadIdle = null;           // requestIdleCallback / setTimeout 句柄
+  var _preloadRunning = false;       // 一次空闲回调只做一个页签 ⇒ 用它防重入
+  var _preloadDone = 0;              // 本次会话已成功预渲染的页签数（上限 PRELOAD_MAX_TABS）
+  var _lastSwitch = { ms: 0, hit: false }; // 最近一次切页签耗时 / 是否走了缓存搬回（诊断用）
+
+  /** 预览 DOM 缓存条目的版本号（后端 `load_document` 追加的 sha256；缺失一律当空串）。 */
+  function _docVersionOf(doc) {
+    return doc && typeof doc.version === "string" ? doc.version : "";
+  }
+
+  /** 正文快速指纹（djb2，32 位）：长度 + 哈希 —— 确认"缓存的预览 DOM 还对应这份正文"。
+   *  为什么不直接比字符串：条目里再存一份正文（每页签 ~100 KB）纯属浪费；指纹一趟 O(n) 只花零点几毫秒。 */
+  function _bodyFingerprint(body) {
+    const s = body == null ? "" : String(body);
+    let h = 5381;
+    for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0;
+    return s.length + ":" + (h >>> 0).toString(36);
+  }
+
+  /** 渲染前喂给解析器的正文（与 `renderPreview` 内一致）。**不含图片路径重写** —— 重写结果由文件路径
+   *  唯一决定、且已烘进缓存的 DOM，不需要（也不能）参与指纹计算：它依赖模块级的"当前文件目录"，
+   *  在页签切换的瞬间那份目录还停在上一篇上。 */
+  function _previewSourceBody(doc) {
+    if (!doc) return "";
+    const body = doc.preview_body || doc.body || "";
+    const MP = window.MemoriaMarkdownPreview;
+    return MP && typeof MP.normalizeBody === "function" ? MP.normalizeBody(body) : body;
+  }
+
+  /** 库内相对路径所在目录（与 `renderPreview` 里算 `currentFileDir` 的口径一致）。 */
+  function _relDirOf(relPath) {
+    const parts = String(relPath || "").replace(/\\/g, "/").split("/");
+    return parts.length > 1 ? parts.slice(0, -1).join("/") + "/" : "";
+  }
+
+  /** 缓存条目的粗略内存占用（节点数 × 经验单节点开销 + 文本字符数 × 2）。**只是估算**，用于诊断展示。 */
+  function _estimatePreviewBytes(root) {
+    let nodes = 0;
+    let chars = 0;
+    const walk = (el) => {
+      for (let n = el.firstChild; n; n = n.nextSibling) {
+        nodes++;
+        if (n.nodeType === 3) chars += (n.nodeValue || "").length;
+        else if (n.nodeType === 1) walk(n);
+      }
+    };
+    walk(root);
+    return nodes * 120 + chars * 2;
+  }
+
+  /** 丢掉某路径的缓存条目；若它正是"当前可见 DOM 的登记项"则一并注销（该 DOM 不再可作为缓存源）。 */
+  function _previewCacheDrop(path) {
+    if (!path) return;
+    _previewDomCache.delete(path);
+    if (_previewDomKey && _previewDomKey.path === path) _previewDomKey = null;
+  }
+
+  /** 整体作废：既丢他页签的条目，也注销当前 DOM（换库 / 重命名 / 删除 / 导入后走这条）。 */
+  function _previewCacheClear() {
+    _previewDomCache.clear();
+    _previewDomKey = null;
+  }
+
+  /** 渲染成功后登记「这份 `#preview` DOM 对应哪份文档的哪个版本」。
+   *  失败 / 占位（`.-preview-loading`）不算有效渲染 ⇒ 不登记，绝不把错误页缓存起来。 */
+  function _markPreviewDomCurrent(doc) {
+    const pv = $("#preview");
+    const first = pv && pv.firstElementChild;
+    if (!first || first.classList.contains("-preview-loading")) { _previewDomKey = null; return; }
+    _previewDomKey = { path: (doc && doc.path) || state.currentPath, version: _docVersionOf(doc) };
+  }
+
+  /** 只丢他页签的条目、保留当前 DOM 的可缓存性（语言 / 主题变化走这条：可见 DOM 与恢复后的观感一致）。 */
+  function _previewCachePurge() {
+    _previewDomCache.clear();
+  }
+
+  /**
+   * 切走页签前：把当前预览 DOM **整体搬进**缓存。
+   * 任一"不安全"条件命中就直接不缓存 —— 切页签慢一次无所谓，显示过期内容是不可接受的。
+   */
+  function _previewCacheStash(path) {
+    if (!path || !state.doc || state.currentPath !== path) return;
+    if (_dirty) return;                                       // 有未写盘编辑 ⇒ 盘面与 DOM 可能不一致
+    if (!state.doc.preview_body) return;                      // 本会话编辑过该文档 ⇒ 一律不缓存
+    if (state.viewMode === "source") return;                  // 源码视图不渲染预览 ⇒ 预览区内容陈旧
+    if (!_previewDomKey || _previewDomKey.path !== path) return;
+    if (_previewDomKey.version !== _docVersionOf(state.doc)) return;
+    if ((state.doc.lines || []).length > PREVIEW_CACHE_MAX_LINES) return;
+    const preview = $("#preview");
+    if (!preview || !preview.firstChild) return;
+    // 后台 mermaid 可能还没写回就被切走：清掉一次性标记，下次恢复时重试（否则该块永远停在源码态）
+    preview.querySelectorAll("code.language-mermaid").forEach(function (code) {
+      const pre = code.parentElement;
+      if (pre) delete pre.dataset.mermaidRendered;
+    });
+    const frag = document.createDocumentFragment();
+    while (preview.firstChild) frag.appendChild(preview.firstChild);
+    const pane = $("#preview-pane");
+    _previewCacheDrop(path);
+    _previewDomCache.set(path, {
+      frag: frag,
+      map: _blockLineMap,
+      ast: _doc,
+      version: _docVersionOf(state.doc),
+      fp: _bodyFingerprint(_previewSourceBody(state.doc)),
+      scrollTop: pane ? pane.scrollTop : 0,
+      bytes: _estimatePreviewBytes(frag),
+      prerendered: false,
+    });
+    while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);
+    _previewDomKey = null;   // 预览区已空 ⇒ 等新文档渲染完成后重新登记
+  }
+
+  /** 预览的"静态收尾"：禁止特殊元素编辑 + 行内公式标记。
+   *  普通（切走时缓存）条目的这些属性随节点一并保留，无需重做；只有后台预渲染的条目要在恢复时补做。 */
+  function _applyPreviewStaticPass(preview, ast) {
+    preview.querySelectorAll('mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay').forEach(function (el) { el.contentEditable = "false"; });
+    const nonEditable = { code_block: 1, math_block: 1, mermaid: 1, table: 1, frontmatter: 1 };
+    preview.querySelectorAll(".-src-block").forEach(function (blkEl) {
+      const bi = parseInt(blkEl.getAttribute("data--block-index"), 10);
+      if (!isNaN(bi) && ast && ast.blocks[bi] && nonEditable[ast.blocks[bi].type]) {
+        blkEl.contentEditable = "false";
+        blkEl.querySelectorAll("pre, code, table, svg, mjx-container, .-mermaid-container, .-mermaid-error").forEach(function (el) { el.contentEditable = "false"; });
+      }
+    });
+    _tagInlineMathContainers(preview, ast);
+  }
+
+  /**
+   * 命中缓存 ⇒ 把整棵预览 DOM 搬回 `#preview`，并回填 `_blockLineMap` / `window.__blockLineMap` / AST。
+   * 返回 true = 已接管本轮渲染（调用方直接返回，跳过 parse / render / 插 DOM / stamp / 等待 MathJax）。
+   */
+  function _previewCacheRestore(doc) {
+    if (!doc || !doc.path || state.currentPath !== doc.path) return false;
+    if (state.viewMode === "source") return false;
+    const entry = _previewDomCache.get(doc.path);
+    if (!entry) return false;
+    if (entry.version !== _docVersionOf(doc) || entry.fp !== _bodyFingerprint(_previewSourceBody(doc))) {
+      _previewCacheDrop(doc.path);   // 盘上内容或正文变了 ⇒ 丢弃
+      return false;
+    }
+    const preview = $("#preview");
+    if (!preview) return false;
+    _previewDomCache.delete(doc.path);   // 节点即将回到可见区 ⇒ 条目作废（下次切走时重新存）
+    // 换一轮 token：作废在跑的旧排版（MathJax 的 token 守卫会跳过非最新一轮）
+    state.previewToken = (state.previewToken || 0) + 1;
+    const token = state.previewToken;
+    // 本次渲染被整段跳过 ⇒ `renderPreview` 里那段 `setCurrentFileDir` 没机会跑，这里补上；
+    // 否则后续编辑的本地图片路径重写仍会按**上一篇**的目录算。
+    const MP0 = window.MemoriaMarkdownPreview;
+    if (MP0 && MP0.setCurrentFileDir) MP0.setCurrentFileDir(_relDirOf(doc.path));
+    _blockLineMap = entry.map || [];
+    window.__blockLineMap = _blockLineMap;
+    _doc = entry.ast;
+    if (M && typeof M.setDoc === "function") M.setDoc(_doc);
+    preview.innerHTML = "";
+    preview.appendChild(entry.frag);
+    preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
+    _previewDomKey = { path: doc.path, version: entry.version };
+    if (entry.prerendered) _applyPreviewStaticPass(preview, _doc);   // 预渲染时未做：非编辑标记 + 行内公式
+    postProcessWikilinks();      // 幂等：链接目标集合可能在上次渲染之后才加载完（-link-pending → 实链接）
+    bindPreviewLinks();          // 幂等：靠 data--bound 去重
+    if (entry.prerendered) {
+      // 灯箱 / 图片双击绑定**不是**幂等的 ⇒ 只给预渲染条目补绑（切走时缓存的条目早就绑过，监听随节点保留）
+      const MP = window.MemoriaMarkdownPreview;
+      if (MP && MP.attachImageLightbox) { try { MP.attachImageLightbox(preview); } catch (_) { /* 可选增强 */ } }
+    }
+    // 两件"可晚一拍"的事一律后台补做：mermaid（预渲染时跳过 / 被切走时的半成品重试）与 MathJax
+    // （缓存时刻可能正排版到一半；已排版好的部分是 mjx-container，再跑一遍只会空扫描一遍）。
+    const MP2 = window.MemoriaMarkdownPreview;
+    if (MP2 && MP2.renderMermaidBlocks) { try { MP2.renderMermaidBlocks(preview); } catch (_) { /* 失败由错误块兜底 */ } }
+    if (window.MathJax?.typesetPromise) queuePreviewMathTypeset(preview, token);
+    showPreviewReport({ ok: true });
+    showLinkAuditPreviewHint(doc);
+    const pane = $("#preview-pane");
+    if (pane && entry.scrollTop) pane.scrollTop = entry.scrollTop;
+    _lastSwitch.hit = true;
+    _preloadSchedule();
+    return true;
+  }
+
+  /** 预览缓存的诊断快照（`MemoriaApp.previewCacheStats()`；用于设置页文案取证与人工排查）。 */
+  function previewCacheStats() {
+    let bytes = 0;
+    for (const entry of _previewDomCache.values()) bytes += entry.bytes || 0;
+    return {
+      entries: _previewDomCache.size,
+      bytes: bytes,
+      paths: Array.from(_previewDomCache.keys()),
+      enabled: _preloadEnabled,
+      prerendered: _preloadDone,
+      lastSwitchMs: _lastSwitch.ms,
+      lastSwitchHit: _lastSwitch.hit,
+    };
+  }
+
+  // ── B 档：后台预渲染（设置 →「显示」→「性能」开关；关掉时下面的函数全是空操作） ──
+
+  function _preloadCancelIdle() {
+    if (_preloadIdle == null) return;
+    if (typeof window.cancelIdleCallback === "function") { try { window.cancelIdleCallback(_preloadIdle); } catch (_) { /* 句柄可能已消费 */ } }
+    else clearTimeout(_preloadIdle);
+    _preloadIdle = null;
+  }
+
+  /** 中止在跑的预渲染（切页签 / 开始编辑 / 关开关 / 换库都走这里）。 */
+  function _preloadStop(reason) {
+    const wasPending = _preloadIdle != null || _preloadRunning;   // 只在真的打断了一次作业时才打日志（markDirty 每敲一键都会进来）
+    _preloadAbort++;
+    _preloadCancelIdle();
+    if (reason && wasPending) syncLog("[preload] 中止：", reason);
+  }
+
+  /** 换库时复位预渲染会话状态（已预渲染计数与"试过"清单都属于上一本库）。 */
+  function _preloadResetForNewKb() {
+    _preloadStop("kb-change");
+    _preloadTried.clear();
+    _preloadDone = 0;
+  }
+
+  /** 下一个可预渲染的页签：非当前、未缓存、未试过。 */
+  function _nextPreloadCandidate() {
+    const tabs = state.openTabs || [];
+    for (let i = 0; i < tabs.length; i++) {
+      const path = tabs[i] && tabs[i].path;
+      if (!path || path === state.currentPath) continue;
+      if (_previewDomCache.has(path) || _preloadTried.has(path)) continue;
+      return path;
+    }
+    return null;
+  }
+
+  /** 本轮渲染收尾后：有空闲就排一次"预渲染一个页签"的作业。 */
+  function _preloadSchedule() {
+    if (!_preloadEnabled || _preloadIdle != null || _preloadRunning) return;
+    if (_preloadDone >= PRELOAD_MAX_TABS) return;
+    if (_nextPreloadCandidate() === null) return;
+    const fire = function () { _preloadIdle = null; _preloadTick(); };
+    if (typeof window.requestIdleCallback === "function") _preloadIdle = window.requestIdleCallback(fire, { timeout: 1200 });
+    else _preloadIdle = setTimeout(fire, 300);   // 无 requestIdleCallback 时的兜底
+  }
+
+  /** 一个空闲回调只做一个页签：做完再排下一个，任何时候被中止都立刻停手。 */
+  async function _preloadTick() {
+    if (!_preloadEnabled) return;
+    if (_dirty || _renderingPreview || document.hidden) return;   // 正在编辑 / 正在渲染 / 窗口不可见 ⇒ 本轮放弃，等下一次渲染收尾再排
+    const path = _nextPreloadCandidate();
+    if (!path) return;
+    _preloadTried.add(path);
+    const token = _preloadAbort;
+    _preloadRunning = true;
+    let ok = false;
+    try { ok = await _preloadOne(path); } catch (_) { ok = false; }
+    _preloadRunning = false;
+    if (_preloadAbort !== token || !_preloadEnabled) return;   // 期间被中止 ⇒ 不再续排
+    if (ok) _preloadDone++;
+    _preloadSchedule();
+  }
+
+  /**
+   * 预渲染一个页签：解析 → 渲染 → 打行号 → 静态收尾，全部在**脱离文档**的容器里完成，
+   * 结束后整棵树搬进缓存条目。全程不碰 `#preview` / `#editor` / 撤销栈 / 滚动位置。
+   * 异步部分（mermaid / MathJax / 图片灯箱）留给恢复时补做 —— 见 `_previewCacheRestore`。
+   */
+  async function _preloadOne(path) {
+    let res;
+    try { res = await call("load_document", path); } catch (_) { return false; }
+    // await 期间用户可能已切到该页签 / 开始编辑 / 关掉开关 / 关掉该页签 ⇒ 立即放弃（不写缓存、不打扰可见界面）
+    if (!_preloadEnabled || path === state.currentPath || _dirty) return false;
+    if (!(state.openTabs || []).some(function (t) { return t && t.path === path; })) return false;
+    if (!res || res.status !== "ok" || !(res.blocks && res.blocks.length)) return false;
+    if ((res.lines || []).length > PRELOAD_MAX_LINES) return false;
+    if (_previewDomCache.has(path)) return true;   // 已被普通切换缓存过
+    if (!P || !R || !M) return false;
+
+    const MP = window.MemoriaMarkdownPreview;
+    const holder = document.createElement("div");
+    const savedDoc = state.doc;
+    const savedMap = _blockLineMap;
+    const savedMapperDoc = typeof M.getDoc === "function" ? M.getDoc() : null;
+    const savedDir = _relDirOf(state.currentPath);
+    const rawBody = _previewSourceBody(res);
+    const fp = _bodyFingerprint(rawBody);
+    let ast = null;
+    let map = null;
+    try {
+      if (MP && MP.setCurrentFileDir) MP.setCurrentFileDir(_relDirOf(path));
+      ast = P.parse(rewriteMdImagePaths(rawBody));
+      holder.appendChild(R.render(ast));
+      // 行号映射：`stampBlockLines` 读的是 `state.doc.body`（**当前**文档）⇒ 临时换成被预渲染的那份。
+      // 本段同步执行（解析 / 渲染 / 打标记都不 await）⇒ 不会与任何渲染或编辑交错；finally 里立刻还原。
+      state.doc = res;
+      stampBlockLines(holder, ast);
+      map = _blockLineMap;
+      _applyPreviewStaticPass(holder, ast);
+    } catch (_) {
+      return false;
+    } finally {
+      state.doc = savedDoc;
+      _blockLineMap = savedMap;
+      if (typeof M.setDoc === "function") M.setDoc(savedMapperDoc);
+      if (MP && MP.setCurrentFileDir) MP.setCurrentFileDir(savedDir);
+    }
+    const frag = document.createDocumentFragment();
+    while (holder.firstChild) frag.appendChild(holder.firstChild);
+    _previewCacheDrop(path);
+    _previewDomCache.set(path, {
+      frag: frag,
+      map: map,
+      ast: ast,
+      version: _docVersionOf(res),
+      fp: fp,
+      scrollTop: 0,
+      bytes: _estimatePreviewBytes(frag),
+      prerendered: true,
+    });
+    while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);
+    return true;
+  }
+
+  /** 「后台预加载」开关（设置 →「显示」→「性能」）：由 display-settings 的 `applyAll()` 每次设置变更时通告。 */
+  function setBackgroundPreload(on) {
+    const next = !!on;
+    if (next === _preloadEnabled) return;
+    _preloadEnabled = next;
+    if (!next) { _preloadStop("toggle-off"); return; }
+    _preloadAbort++;          // 新会话：让上一轮可能残留的续排失效
+    _preloadTried.clear();
+    _preloadDone = 0;
+    _preloadSchedule();
+  }
+
+  window.MemoriaApp.setBackgroundPreload = setBackgroundPreload;
+  window.MemoriaApp.previewCacheStats = previewCacheStats;
+  // 语言 / 主题变了：已缓存的他页签预览里含本地化文案与 mermaid 主题色 ⇒ 整体作废重渲染
+  window.addEventListener("memoria:langchange", function () { _previewCachePurge(); });
+  window.addEventListener("memoria:themechange", function () { _previewCachePurge(); });
 })();
 
 /* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================

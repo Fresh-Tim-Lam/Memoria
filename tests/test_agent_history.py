@@ -579,3 +579,44 @@ def test_agent_session_rename_rejects_bad_input(kb: Path, tmp_path: Path, monkey
         assert res["code"] == "unknown_session", bad
 
     assert _kb_snapshot(kb) == before  # 全部拒绝路径都不写盘
+
+
+# —— 2026-09-24 新增：逐轮 token 用量随渲染视图回放（面板重载/重启后末轮用量行仍在）——
+
+
+def test_conversation_view_carries_the_turn_usage(kb: Path) -> None:
+    """人 2026-09-24：「每个对话末尾的 token 使用详情又没了」。
+
+    用量原本只有 `agent_ask_poll.usage`（= 刚答完那一轮）一条来源，而**重载 / 重启 / 切回会话**
+    走的是会话日志回放 ⇒ 渲染视图里一个 usage 都没有，末条回话下方的用量行与状态栏"最近一轮"一起空掉。
+    数据一直在 `loop/end.usage` 里 ⇒ 本视图把它随该轮的 assistant 气泡带回（形状与 `loop.usage_payload()`
+    逐键同源，面板直接复用既有渲染路径）。
+    """
+    session_id = "session-usage-0001"
+    provider = FakeProvider([text_step("回答。")])
+    ask(str(kb), "问题？", provider=provider, model="fake-model", session_id=session_id)
+
+    view = conversation_messages(str(kb), session_id)
+    assert [item["role"] for item in view] == ["user", "assistant"]
+    assert "usage" not in view[0], "user 气泡不带用量"
+    usage = view[1]["usage"]
+    assert usage["prompt_tokens"] == 10 and usage["completion_tokens"] == 5
+    assert usage["total_tokens"] == 15
+    assert usage["cache_read_tokens"] is None and usage["cache_miss_tokens"] is None, "未知就保持 None（不写 0）"
+
+    # 喂模型的那条路径照旧**跳过** `loop/end`：用量绝不进请求（`build_history` 不受本改动影响）
+    history = build_history(str(kb), session_id)
+    assert [role_of(message) for message in history] == ["user", "assistant"]
+
+
+def test_conversation_view_omits_usage_without_loop_end(kb: Path) -> None:
+    """没落过 `loop/end` 的轮次**不出现** `usage` 键（fail-safe：不许凭空写 0）。"""
+    session_id = "session-usage-0002"
+    store = SessionStore(str(kb), session_id)
+    store.append("user/message", {"text": "问题"})
+    store.append("assistant/message", {"content": "回答", "tool_calls": []})
+
+    view = conversation_messages(str(kb), session_id)
+    assert [item["role"] for item in view] == ["user", "assistant"]
+    assert "usage" not in view[1]
+

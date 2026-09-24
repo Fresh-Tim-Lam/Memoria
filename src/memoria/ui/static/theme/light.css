@@ -111,3 +111,12 @@ html[data-theme="light"] .-stat-error {
 html[data-theme="light"] {
     --border-sep: #e8e8e8;
 }
+
+/* ===== 行内 `` `文字` `` 底色档 `--code-inline-bg` 的浅色取值（2026-09-23）==========
+   上游对应令牌与两套取值见 `memoria.css` 末尾同令牌的注释
+   （`--dsw-alias-markdown-inline-code` = `--dsw-static-neutral-bluish-100`）；
+   此处**逐字取上游亮色值** `rgb(235, 238, 242)`，与 `--bg-tertiary (#ececec)` 同亮度档、
+   更偏蓝，故在 `--bg-primary (#ffffff)` 的正文底上是**很淡**的一块（上游同样是淡的）。 */
+html[data-theme="light"] {
+    --code-inline-bg: rgb(235, 238, 242);
+}

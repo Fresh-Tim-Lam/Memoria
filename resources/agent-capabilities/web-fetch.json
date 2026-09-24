@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "id": "web-fetch",
+  "name": "网页抓取（fetch_url）",
+  "provides": {
+    "tools": [
+      { "tool_id": "net.fetch", "gate": "always" }
+    ]
+  },
+  "permissions": {
+    "read": [],
+    "write": []
+  },
+  "approval": {
+    "read": "auto",
+    "write": "auto"
+  }
+}

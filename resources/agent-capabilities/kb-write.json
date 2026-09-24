@@ -1,0 +1,27 @@
+{
+  "v": 1,
+  "id": "kb-write",
+  "name": "写能力（知识点 / 跳转 / 边 / 文件 / 清单）",
+  "provides": {
+    "tools": [
+      { "tool_id": "kb.kp.create", "gate": "always" },
+      { "tool_id": "kb.kp.update", "gate": "always" },
+      { "tool_id": "kb.kp.delete", "gate": "always" },
+      { "tool_id": "kb.kp.rename", "gate": "always" },
+      { "tool_id": "kb.link.attach", "gate": "always" },
+      { "tool_id": "kb.link.detach", "gate": "always" },
+      { "tool_id": "kb.link.create", "gate": "always" },
+      { "tool_id": "kb.file.create", "gate": "always" },
+      { "tool_id": "kb.file.rename", "gate": "always" },
+      { "tool_id": "kb.file.delete", "gate": "always" },
+      { "tool_id": "kb.file.move", "gate": "always" },
+      { "tool_id": "kb.file.edit", "gate": "always" },
+      { "tool_id": "kb.manifest.rebuild", "gate": "always" }
+    ]
+  },
+  "permissions": {
+    "read": [ "**/*.md", ".memoria/**" ],
+    "write": [ "**/*.md", ".memoria/sidecars/**", ".memoria/manifest.yaml", ".memoria/pending.json" ]
+  },
+  "approval": { "read": "auto", "write": "confirm" }
+}

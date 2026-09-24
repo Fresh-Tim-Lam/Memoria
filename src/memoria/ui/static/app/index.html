@@ -231,7 +231,7 @@
         </div>
         <div id="agent-messages" class="-agent-messages" role="log" aria-live="polite" data-i18n-attr="aria-label:agent.messagesAria"></div>
         <div class="-agent-composer"><div id="agent-statusbar" class="-agent-statusbar"><span id="agent-statusbar-dot" class="-agent-statusbar-dot" data-state="idle"></span><span id="agent-statusbar-facts" class="-agent-statusbar-facts"></span></div>
-          <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea>
+          <textarea id="agent-input" class="-agent-input" rows="2" data-i18n-attr="placeholder:agent.input.ph;aria-label:agent.input.aria"></textarea><div id="agent-attachments" class="-agent-attachments" hidden></div>
           <div class="-agent-composer-actions">
             <button type="button" id="agent-send" class="-btn primary -btn--sm" data-i18n="agent.send">发送</button>
             <button type="button" id="agent-stop" class="-btn secondary -btn--sm hidden" data-i18n-attr="title:agent.stopTitle"><span data-i18n="agent.stop">停止</span></button>
@@ -487,5 +487,20 @@
   <!-- M3a ④ 计划确认卡（写路径唯一人机界面）：只依赖 `window.MemoriaApp` 门面与写守卫，不改 app.js；
        末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
   <script src="/app/js/plan-confirm.js"></script>
+  <!-- 能力插件面板（设置 →「能力」页签）：只调后端网关 `agent_plugins` / `agent_plugin_set`；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/plugins-settings.js"></script>
+  <!-- 待答卡（`ask_user_question`：模型中途提问 → 人在面板作答）：只消费 `agent_ask_poll` 的
+       `pending_questions` 与 RPC `agent_question_answer`，不改 app.js / agent-panel.js；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/agent-question.js"></script>
+  <!-- 脚本工作区面板（人 2026-09-24 拍板，设计见 agent-capabilities.md §3.4）：agent 写，
+       **人在面板点「运行」**才执行；DOM 由该模块自建后插在输入区之前，不改 app.js / agent-panel.js；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/agent-scratch.js"></script>
+  <!-- 联网「域名名单」设置两行（2026-09-24；设计见 agent-capabilities.md §3.3）：只消费
+       `agent_net_domains` / `agent_save_config`，DOM 自建后追加进 `#agent-settings`；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/net-settings.js"></script>
 </body>
 </html>

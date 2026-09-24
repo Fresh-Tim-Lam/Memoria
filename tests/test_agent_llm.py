@@ -517,6 +517,25 @@ def test_config_from_env_and_file(tmp_path: Any, monkeypatch: pytest.MonkeyPatch
         config_module.load_config()
 
 
+def test_config_file_with_utf8_bom_is_tolerated(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> None:
+    """手改 `config/agent.json` 常带 **UTF-8 BOM**（记事本 / `Set-Content -Encoding utf8`）。
+
+    2026-09-24 真机踩到：用 `utf-8` 读会把 `\\ufeff` 留在串首、`json.loads` 报 `Unexpected UTF-8 BOM`
+    ⇒ 整个配置读不出来（面板一片空、地名名单/出网闸全部回落默认，看着像"设置没生效"）。
+    """
+    from memoria.services.agent.llm import config as config_module
+
+    config_file = tmp_path / "agent.json"
+    payload = {"base_url": "http://bom.example/v1", "model": "bom-model", "fetch_deny_domains": "ads.example.com"}
+    config_file.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8-sig")
+
+    monkeypatch.setenv("MEMORIA_AGENT_CONFIG", str(config_file))
+    loaded = config_module.load_config()
+    assert loaded.base_url == "http://bom.example/v1" and loaded.model == "bom-model"
+    assert loaded.fetch_deny_domains == "ads.example.com"
+    assert config_module.read_raw_config()["model"] == "bom-model", "宽松读（面板回填）也要吃 BOM"
+
+
 def test_status_refresh_ms_default_and_roundtrip(tmp_path: Any, monkeypatch: pytest.MonkeyPatch) -> None:
     """状态 bar 刷新间隔（`status_refresh_ms`）：默认 1min、白名单往返、非法值不落盘、读侧宽松。"""
     from memoria.services.agent.llm import config as config_module

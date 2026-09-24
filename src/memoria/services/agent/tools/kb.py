@@ -76,7 +76,8 @@ KB_TOOL_NAMES = (
     "glob", "grep", "read_image", "skill",
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
-    "audit_references", "propose_write",
+    "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -669,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root),
     )
 
 
@@ -1131,11 +1132,28 @@ def _read_image_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
             " 请把文件重命名成与内容一致的格式，或先转换成 PNG/JPEG/WebP/GIF"
         )
     media_type = declared or sniffed
-    return _error(
-        f"read_image: 本端点暂不支持图像输入 —— {normalized} 已通过格式校验（{media_type}），"
-        "但缺『多媒体眼睛』插件（属未来多媒体能力）：当前模型通道（纯文本 `Message.content`）"
-        "无法把图片作为内容块发出，故不返回图片本身；请改用文字描述该图（见 dsh-agent-port.md §6.16）。",
-        UNSUPPORTED_IMAGE_INPUT,
+    # 2026-09-23：**真读图**（原先恒返回 `UNSUPPORTED_IMAGE_INPUT`）—— 消息层已支持 `image_url` 内容块。
+    # 与上游同构：工具只回文本 + 一个图片引用，图片由循环作为**延迟的 user 消息**带进下一轮上下文
+    # （`loop.py` 的 deferContext 等价分支）；不塞进 `tool` 消息（Chat Completions 的 tool 结果只收字符串）。
+    from memoria.services.agent.attachments import to_data_url
+    from memoria.services.agent.llm.types import ImagePart
+
+    data_url = to_data_url(kb_path, normalized, media_type)
+    if not data_url:
+        return _error(f"read_image: 读取图片内容失败（越界或内容不是受支持的图片）：{normalized}")
+    return ToolOutput(
+        text=(
+            f"已读入图片 {normalized}（{media_type}）：它会作为一条附带该图的用户消息进入上下文，"
+            "你可以直接描述/解读它。"
+        ),
+        images=(
+            ImagePart(
+                rel_path=normalized,
+                media_type=media_type,
+                name=os.path.basename(normalized),
+                data_url=data_url,
+            ),
+        ),
     )
 
 
@@ -3016,6 +3034,9 @@ def _write_proposal_tools(
     声明 `read_only=False`（它确实改知识库）；默认审批策略已**全线放行**（`approvals.py`），
     更严的档位（逐条确认 / 确定性拒绝）由调用方注入 `AskPolicy` / `NeverPolicy`。
     """
+    # 2026-09-22（§6.25）：**能力面随库走** —— 描述末尾附上"本库已启用的能力动作"（`plugins.py` 末尾
+    # 的「契约接线」），让模型自己就知道哪些动作类在本库没启用，而不是撞 `capability_disabled` 才回头。
+    from memoria.services.agent import plugins as _plugins
 
     def _bound(arguments: Mapping[str, Any]) -> ToolOutput:
         blocked = _observation_block(kb_path, session_id, arguments)
@@ -3113,6 +3134,7 @@ def _write_proposal_tools(
                 "重新读一遍拿到**当前**行号与逐字原文，再按返回的 `op_id` 与错误码修正后**重提整批** —— "
                 "出错的 op 要改对，**别把它删掉**，也别把没出错的 op 丢掉。"
                 "**成败以工具回文为准**（成功回「已写入 … txid …」），不要凭记忆声称写入。"
+                + _plugins.capability_note(_plugins.active_plugins(kb_path))
             ),
             parameters={
                 "type": "object",
@@ -3453,3 +3475,486 @@ def _skill_tool(kb_path: str, arguments: Mapping[str, Any]) -> ToolOutput:
             SKILL_NOT_INVOCABLE_CODE,
         )
     return ToolOutput(text=skills_mod.render_skill_content(found))
+
+
+# ── 向用户提问（上游 `interaction/tool-ask-user` + `interaction/user-questions`；2026-09-23；§6.26）──
+# 模型**中途**挂起、等人作答，答案作为**普通工具结果**回到循环（不改 `tool/call` ↔ `tool/result`
+# 的配对：它只是一把会阻塞一会儿的工具）。工具声明逐字段照搬上游
+# `defineTool({ name: 'ask_user_question', … })`（仅文案本地化 + 必填/空值加固，见下），执行体走
+# `services/agent/questions.py` 的 seam；四类失败码（`NO_PROVIDER` / `EMPTY_QUESTIONS` /
+# `ASK_ABORTED` / `NO_ANSWER`）原样回给模型，绝不拿空答案冒充"问过了"。
+#
+# `read_only=True`：它**不改知识库**，唯一"副作用"是本轮挂起等人 ⇒ 不走审批闸（上游同样不过审批）。
+# 本地加固（上游把"必填"写在**属性描述符里**的 `required: true`，本地的 JSON Schema 子集只认对象级
+# `required: [...]` ⇒ 照上游意图翻写）：`questions[].required = [id, question]`、
+# `options[].required = [label]`，另给 `id`/`question`/`label` 加 `minLength: 1` —— 空 id 会让答案
+# 无法与问题对应，空 label 是无法点击的按钮。
+
+
+def _question_tools(kb_path: str) -> tuple[Tool, ...]:
+    """向用户提问的工具（`ask_user_question`）；`build_kb_tools()` 末尾拼接（§6.26）。"""
+
+    def _bound_ask(arguments: Mapping[str, Any]) -> ToolOutput:
+        from memoria.services.agent import questions as questions_mod
+
+        raw = arguments.get("questions")
+        try:
+            answers = questions_mod.ask(kb_path, raw if isinstance(raw, (list, tuple)) else [])
+        except questions_mod.QuestionError as exc:
+            return _error(f"ask_user_question: {exc}", exc.code)
+        return ToolOutput(text=json.dumps({"answers": answers}, ensure_ascii=False))
+
+    return (
+        Tool(
+            name="ask_user_question",
+            description=(
+                "在继续之前需要**确认**、**做选择**或**补信息**时，向用户提一个简短的问题。"
+                "可一次提多个问题，每个问题带一个稳定 id —— 答案里会原样回显该 id，据此对应。"
+                "问题要具体、可回答；有明确候选就给 `options`（若你推荐其中一项，把它放**第一个**并在标签后加「（推荐）」）。"
+                "**等人作答期间本轮会挂起**；没有问答面（或没人答）时你会拿到一条错误结果，据它决定是继续还是换个做法。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "questions": {
+                        "type": "array",
+                        "description": "要在继续之前向用户问的问题（至少一个）。",
+                        "items": {
+                            "type": "object",
+                            "required": ["id", "question"],
+                            "additionalProperties": True,
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "该问题的稳定 id；答案里会原样回显。",
+                                },
+                                "question": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "要问用户的具体问题。",
+                                },
+                                "header": {
+                                    "type": "string",
+                                    "description": "可选短标题，例如「确认」「选择模式」。",
+                                },
+                                "options": {
+                                    "type": "array",
+                                    "description": (
+                                        "可选候选项。若你推荐某一项，把它放**第一个**并在标签后加「（推荐）」。"
+                                    ),
+                                    "items": {
+                                        "type": "object",
+                                        "required": ["label"],
+                                        "additionalProperties": True,
+                                        "properties": {
+                                            "label": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "description": "给用户看的短标签。",
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "description": "一句话说明取舍或影响。",
+                                            },
+                                        },
+                                    },
+                                },
+                                "multi_select": {
+                                    "type": "boolean",
+                                    "description": "是否允许用户多选，默认单选。",
+                                },
+                            },
+                        },
+                    }
+                },
+                "required": ["questions"],
+                "additionalProperties": False,
+            },
+            handler=_bound_ask,
+        ),
+    )
+
+
+# ── 联网（N 线）：`web_search` / `fetch_url`（2026-09-23；§6.28）────────────────────────────
+# 整段**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`KB_TOOL_NAMES` 与
+# `build_kb_tools()` 那两处都是**同行追加**）。上游模型面 = `packages/web/tool-web`
+# （`web_search(query)` / `web_fetch(url)`，结果归一成 `{sources[], truncated}`）；本地 provider
+# 与安全层（私网拒绝 / 同源重定向 / 字节与字符上限）全在 `services/agent/web.py`，本段只做三件事：
+#
+# ① **出网闸**：全局开关 = 既有的 `config/agent.json: enabled`（默认开、可一键关）。关着 ⇒ 两把工具
+#    **一律不执行**（连 DNS 都不做）并回可照做的提示；本段**没有任何后台/自动抓取路径**；
+# ② **审计**：每次出网追加一条 `net/request` 会话事件（`audit.EVENT_NET_REQUEST`，log-only、只增不改；
+#    载荷只有 `{tool, host, url, status, bytes}` —— **不含密钥、不含正文**），供复盘"这轮出网了没"；
+# ③ **落 pending**：抓到的正文只进 `.memoria/pending.json` 的待确认条目（草案态、等人确认），
+#    回给模型的只有「路径 + 摘要 + 长度」⇒ **长文不进上下文**（上游同口径的 token 策略）。
+#
+# `read_only=True`（**默认值，故不显式传**）：两把工具都不改知识库正文（`pending` 是既有的草案清单，
+# 不是正文/图谱）⇒ 与其余读面同档 ⇒ 按既有策略**免审批**（`approvals.py` / `approval_bridge.py` 未改一行；
+# 草案原文即"当只读、免审批"）。**已知代价**：一次检索 = 一次完整模型调用（上游 README 明写）⇒ 额外 token 费。
+
+#: 出网闸关闭时的稳定错误码（与上游 `WEB_*` 词汇同族）。
+WEB_DISABLED_CODE = "WEB_DISABLED"
+#: 库级能力未启用时的错误码（与写路径 `capability_disabled` **同一码**：都是"这个能力在本库没启用"）。
+CAPABILITY_DISABLED_CODE = "capability_disabled"
+
+
+def _outbound_guard(kb_path: str, tool_name: str) -> ToolOutput | None:
+    """出网闸：关着 / 本库没启用对应能力 ⇒ 返回**可照做**的错误（`None` = 放行）。
+
+    两道闸，顺序固定（都不做任何网络动作 ⇒ "被拒时一次 DNS 都不发"）：
+
+    1. **全局出网开关**（既有）：`llm/config.py::is_enabled`（缺省视为开）；
+    2. **工具级能力闸（2026-09-24 新增）**：N 的两把工具**不走 plan** ⇒ `plan.validate_plan()` 那道闸
+       够不到它们，故这里按 `active_plugins(kb).tool_ids` 判（命名桥 `plugins.NET_TOOL_IDS`）。口径与
+       §6.25 的三条完全一致：**注册表缺失 ⇒ 内置默认全启用**（fail-open）／**一份声明都没有 ⇒ 不闸**
+       （行为同接线前）／**装载出错 ⇒ 闸到底**。⇒ 库级注册表里把 `web-search` / `web-fetch` 关掉，
+       这个库就真的抓不了、搜不了（设置 →「Agent」→「能力插件」里逐库开关）。
+    """
+    from memoria.services.agent.llm.config import is_enabled
+
+    if not is_enabled():
+        return _error(
+            "出网已关闭：联网工具（`web_search` / `fetch_url`）只在**用户显式开启出网**后可用。"
+            "请在设置 → Agent 里打开出网开关，或把 `config/agent.json` 的 `enabled` 设为 true 后重试。",
+            WEB_DISABLED_CODE,
+        )
+    from memoria.services.agent import plugins as plugins_mod
+
+    tool_id = plugins_mod.NET_TOOL_IDS.get(str(tool_name or ""), "")
+    if not tool_id:
+        return None
+    active = plugins_mod.active_plugins(kb_path)
+    if not active.enforced or tool_id in active.tool_ids:
+        return None
+    label = "联网检索" if tool_id == "net.search" else "网页抓取"
+    return _error(
+        f"本库没有启用「{label}」能力（`{tool_id}`）⇒ `{tool_name}` 被拒。"
+        "请在设置 →「Agent」→「能力插件」里为本库启用它（逐库开关），或换一个不需要联网的做法。",
+        CAPABILITY_DISABLED_CODE,
+    )
+
+
+def _record_net(kb_path: str, session_id: str | None, meta: Mapping[str, Any]) -> None:
+    """一次出网 → 一条会话审计事件（`net/request`；与写审计共用 `audit.append()` 的 fail-open 语义）。"""
+    from memoria.services.agent import audit
+
+    audit.append(
+        kb_path,
+        session_id,
+        audit.EVENT_NET_REQUEST,
+        {
+            "tool": str(meta.get("tool") or ""),
+            "host": str(meta.get("host") or ""),
+            "url": str(meta.get("url") or ""),
+            "status": int(meta.get("status") or 0),
+            "bytes": int(meta.get("bytes") or 0),
+        },
+    )
+
+
+def _web_client(kb_path: str, session_id: str | None) -> Any:
+    """按**当前配置**建一个联网客户端（每次调用一个：无跨调用状态），并把审计回调挂上。
+
+    域名名单在这里**合并**（2026-09-24）：机器级两键（`config/agent.json`）与库级参数
+    （能力插件 `web-fetch.config`，见 `plugins.kb_enablement()`）→ `web.merge_domain_rules()`
+    ⇒ **库级只能收紧**（`deny` 并集 / `allow` 交集）。库没有注册表/没配参数 ⇒ 就是机器级那份。
+    """
+    from memoria.services.agent import plugins as plugins_mod
+    from memoria.services.agent.llm.config import load_config
+    from memoria.services.agent.web import WebClient, merge_domain_rules
+
+    config = load_config()
+    kb_rules = plugins_mod.kb_enablement(str(kb_path)).get("web-fetch", {}).get("config") or {}
+    allow, deny = merge_domain_rules(
+        getattr(config, "fetch_allow_domains", ""),
+        getattr(config, "fetch_deny_domains", ""),
+        kb_rules.get("allow") or (),
+        kb_rules.get("deny") or (),
+    )
+    return WebClient(
+        config,
+        on_outbound=lambda meta: _record_net(kb_path, session_id, meta),
+        allow_domains=allow,
+        deny_domains=deny,
+    )
+
+
+def _web_search(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`web_search` 执行体：只回标题 + URL + 摘要（**不回正文**）。"""
+    from memoria.services.agent import web as web_mod
+    from memoria.services.agent.llm.errors import AgentLlmError
+
+    gate = _outbound_guard(kb_path, "web_search")
+    if gate is not None:
+        return gate
+    query = str(arguments.get("query") or "").strip()
+    if not query:
+        return _error("web_search: query 不能为空")
+    raw = arguments.get("max_results")
+    try:
+        limit = int(raw) if raw is not None else None
+    except (TypeError, ValueError):
+        return _error(f"web_search: max_results 必须是整数，收到 {raw!r}")
+    try:
+        result = _web_client(kb_path, session_id).search(query, max_results=limit)
+    except (web_mod.WebError, AgentLlmError) as exc:
+        return _error(f"web_search: {exc}", exc.code)
+
+    sources = list(result.get("sources") or [])
+    header = (
+        f"联网检索「{query}」：{len(sources)} 条来源（只给标题 + URL + 摘要，**不给正文**；"
+        "要正文请挑一条 URL 用 `fetch_url`）。"
+    )
+    if result.get("truncated"):
+        header += f"（已按上限截断到 {len(sources)} 条）"
+    if not sources:
+        return ToolOutput(text=header + "\n（端点的结果块里没有可用条目。）")
+    # 域名名单（2026-09-24）：**搜索**由模型端点执行、我们拦不住，但能在这里把"抓不了的"标出来
+    # —— 省掉模型"试抓 → 被拒 → 再试"的往返 token；判据与 `fetch_url` 完全同一份（`web.py` 的两个纯函数）。
+    import urllib.parse
+
+    from memoria.services.agent.llm.config import load_config
+
+    config = load_config()
+    allow = web_mod.parse_domains(getattr(config, "fetch_allow_domains", ""))
+    deny = web_mod.parse_domains(getattr(config, "fetch_deny_domains", ""))
+    lines = [header]
+    for index, source in enumerate(sources, start=1):
+        url = str(source.get("url") or "")
+        lines.append(f"{index}. {url}")
+        host = (urllib.parse.urlsplit(url).hostname or "").lower()
+        allowed, _reason = web_mod.domain_allowed(host, allow, deny)
+        if not allowed:
+            lines.append("   ⚠ 该域不在可抓取名单里（`fetch_url` 会被拒；要抓请让用户在设置 → Agent 里放行）")
+        title = str(source.get("title") or "").strip()
+        if title:
+            lines.append(f"   标题：{title}")
+        snippet = str(source.get("snippet") or "").strip()
+        lines.append(f"   摘要：{snippet}" if snippet else "   摘要：（端点未给引文）")
+    return ToolOutput(text="\n".join(lines))
+
+
+def _web_fetch(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`fetch_url` 执行体：抓正文 → 落 `pending` → 只回「路径 + 摘要 + 长度」。"""
+    from memoria.services.agent import web as web_mod
+    from memoria.services.agent.llm.errors import AgentLlmError
+
+    gate = _outbound_guard(kb_path, "fetch_url")
+    if gate is not None:
+        return gate
+    url = str(arguments.get("url") or "").strip()
+    if not url:
+        return _error("fetch_url: url 不能为空")
+    try:
+        fetched = _web_client(kb_path, session_id).fetch(url)
+        saved = web_mod.save_fetched_page(kb_path, str(fetched.get("url") or url), fetched)
+    except (web_mod.WebError, AgentLlmError) as exc:
+        return _error(f"fetch_url: {exc}", exc.code)
+    except OSError as exc:
+        return _error(f"fetch_url: 落库失败（{type(exc).__name__}）：{exc}", WRITE_FAILED_CODE)
+
+    summary = str(saved.get("summary") or "")
+    suffix = "，已截断" if saved.get("truncated") else ""
+    return ToolOutput(
+        text="\n".join(
+            [
+                f"已抓取 {fetched.get('url')}（HTTP {fetched.get('status_code')}，"
+                f"{saved.get('chars')} 字符{suffix}）。",
+                f"落库路径：{saved.get('path')}（待确认条目 {saved.get('pending_id')}，kind=web）",
+                f"摘要：{summary or '（正文为空）'}",
+                f"长度：{saved.get('chars')} 字符（正文只在待确认清单里、**不进上下文**；要引用请先让用户在面板确认）。",
+            ]
+        )
+    )
+
+
+def _web_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """联网两把工具（`web_search` / `fetch_url`）；`build_kb_tools()` 末位拼接（§6.28）。"""
+
+    def _bound_search(arguments: Mapping[str, Any]) -> ToolOutput:
+        return _web_search(kb_path, session_id, arguments)
+
+    def _bound_fetch(arguments: Mapping[str, Any]) -> ToolOutput:
+        return _web_fetch(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="web_search",
+            description=(
+                "联网检索（**只在用户明确让你上网查**时用；它不做后台检索）。只返回标题 + URL + 摘要，"
+                "**不返回正文** —— 要正文请挑一条 URL 再用 `fetch_url`。一次检索 = 一次完整的模型调用"
+                "（有额外 token 费）⇒ 关键词要写具体、别反复扫。出网总开关关闭时本工具直接报错"
+                "（`WEB_DISABLED`），照提示让用户去设置里打开。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "检索词；写具体（例如「Memoria 知识图谱 行号锚点」）",
+                    },
+                    "max_results": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 20,
+                        "description": "返回条数上限（默认 5）",
+                    },
+                },
+                "required": ["query"],
+                "additionalProperties": False,
+            },
+            handler=_bound_search,
+        ),
+        Tool(
+            name="fetch_url",
+            description=(
+                "抓取一个网页的正文，并**落进库内待确认清单**（`.memoria/pending.json`，草案态），"
+                "只回「路径 + 摘要 + 长度」—— 正文**不进上下文**（省 token），要引用请先让用户在面板确认。"
+                "只支持 http / https 且只抓公网地址（私网 / 本机 / 内网地址一律拒绝），只跟随同源重定向。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "minLength": 1,
+                        "description": "要抓的网页 URL（`web_search` 结果里的那条，或用户明确给出的）",
+                    }
+                },
+                "required": ["url"],
+                "additionalProperties": False,
+            },
+            handler=_bound_fetch,
+        ),
+    )
+
+
+# ── 脚本工作区（人 2026-09-24 拍板；设计见 `docs/design/agent-capabilities.md §3.4`）──────
+# 四把工具：**读写删 + 列**。**没有"运行"工具** —— 执行只能由人在面板点「运行」（`ui.py` 的 RPC），
+# 这是本轮拍板的边界（原红线「不做任意脚本/命令执行」由 §3.4 就地改写为"人点才跑"）。
+# 落点 = `<kb>/.memoria/agent/scratch/`（应用管理目录，同 `.memoria/agent/attachments/` 的先例）⇒
+# **不走** M3 的 plan/审批管线、也不进 `pending.json`（避免被 `sync_kb_pending` 全量重算清掉）。
+# **四把都按默认 `read_only=True` 声明**（含写 / 删）：`registry.py:110` 对该字段的定义是
+# 「不改动**知识库**」（正文 / sidecar / manifest / pending），而工作区是**应用管理的临时目录**
+# （同会话 JSONL 与附件目录的待遇）⇒ 字面成立、免审批。若将来工作区被当作"库内容"，
+# 这一条必须跟着改（届时工具要 `read_only=False` 并走确认卡）。
+# 整块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+SCRATCH_DIR_HINT = ".memoria/agent/scratch/"
+
+
+def _scratch_note(kb_path: str) -> str:
+    """给模型的一句工作区现状（文件数 / 解释器是否就绪）——每把工具的结果都带上，省一次调用。"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    try:
+        entries = scratch_mod.list_entries(kb_path)
+    except scratch_mod.ScratchError:
+        return ""
+    parts = [f"工作区现有 {len(entries)} 个文件"]
+    try:
+        resolved = scratch_mod.resolve_interpreter()
+        parts.append(
+            f"解释器 = {resolved['path']}（{resolved['source']}）"
+            if resolved["path"]
+            else "**解释器未就绪**：运行会失败，请让用户去设置里指定路径或安装 Python"
+        )
+    except scratch_mod.ScratchError as exc:
+        parts.append(f"**解释器不可用**（{exc}）")
+    return "（" + "；".join(parts) + "）"
+
+
+def _scratch_call(kb_path: str, action: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """四把工具的执行体（错误一律转成带稳定 code 的工具结果，不抛）。"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    try:
+        if action == "list":
+            entries = scratch_mod.list_entries(kb_path)
+            if not entries:
+                return ToolOutput(text=f"工作区是空的（`{SCRATCH_DIR_HINT}`）。{_scratch_note(kb_path)}")
+            lines = [f"工作区 `{SCRATCH_DIR_HINT}` 共 {len(entries)} 个文件："]
+            lines.extend(f"- {item['path']}（{item['size']} 字节）" for item in entries)
+            lines.append("要正文用 `scratch_read`；要执行**只能请用户在面板上点「运行」**。")
+            return ToolOutput(text="\n".join(lines))
+        if action == "read":
+            data = scratch_mod.read_text(kb_path, arguments.get("path"))
+            tail = "（已按上限截断）" if data["truncated"] else ""
+            return ToolOutput(text=f"`{data['path']}`（{data['size']} 字节）{tail}：\n\n{data['text']}")
+        if action == "write":
+            saved = scratch_mod.write_text(kb_path, arguments.get("path"), arguments.get("text"))
+            verb = "已新建" if saved["created"] else "已覆盖"
+            return ToolOutput(
+                text=(
+                    f"{verb} `{SCRATCH_DIR_HINT}{saved['path']}`（{saved['size']} 字节）。"
+                    f"{_scratch_note(kb_path)} 若这是要跑的脚本，请在回答里说明用途，**请用户在面板点「运行」**。"
+                )
+            )
+        removed = scratch_mod.delete_entry(kb_path, arguments.get("path"))
+        return ToolOutput(text=f"已删除 `{SCRATCH_DIR_HINT}{removed['path']}`（{removed['kind']}）。{_scratch_note(kb_path)}")
+    except scratch_mod.ScratchError as exc:
+        return _error(f"{action}: {exc}", exc.code)
+
+
+def _scratch_tools(kb_path: str) -> tuple[Tool, ...]:
+    """脚本工作区四把工具（读写删 + 列）；`build_kb_tools()` 末位拼接（§3.4）。"""
+
+    def _bound(action: str):
+        return lambda arguments: _scratch_call(kb_path, action, arguments)
+
+    return (
+        Tool(
+            name="scratch_list",
+            description=(
+                f"列出**脚本工作区**（`{SCRATCH_DIR_HINT}`，库内的临时区）里的文件。联网/多步任务的中间产物"
+                "（抓下来的正文、抽出的表格、写好的脚本）都放这里，别塞进正文目录。"
+            ),
+            parameters={"type": "object", "properties": {}, "additionalProperties": False},
+            handler=_bound("list"),
+        ),
+        Tool(
+            name="scratch_read",
+            description=(
+                f"读**脚本工作区**（`{SCRATCH_DIR_HINT}`）里某个文件的正文（超过 20000 字符截断）。"
+                "只读工作区内的相对路径，跳不出去。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {"path": {"type": "string", "minLength": 1, "description": "工作区内的相对路径"}},
+                "required": ["path"],
+                "additionalProperties": False,
+            },
+            handler=_bound("read"),
+        ),
+        Tool(
+            name="scratch_write",
+            description=(
+                f"在**脚本工作区**（`{SCRATCH_DIR_HINT}`）写一个文件（自动建中间目录、同路径覆盖，单文件 ≤1 MiB）。"
+                "用途：放抓取结果、中间 JSON/CSV、以及**要交给用户运行的脚本**。"
+                "**你无法执行脚本** —— 写完后请在回答里说明它做什么，请用户在面板上点「运行」。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "minLength": 1, "description": "工作区内的相对路径（如 `fetch/parse.py`）"},
+                    "text": {"type": "string", "description": "文件正文（UTF-8）"},
+                },
+                "required": ["path", "text"],
+                "additionalProperties": False,
+            },
+            handler=_bound("write"),
+        ),
+        Tool(
+            name="scratch_delete",
+            description=f"删**脚本工作区**（`{SCRATCH_DIR_HINT}`）里的文件或目录（目录递归删除；不存在会报错）。",
+            parameters={
+                "type": "object",
+                "properties": {"path": {"type": "string", "minLength": 1, "description": "工作区内的相对路径"}},
+                "required": ["path"],
+                "additionalProperties": False,
+            },
+            handler=_bound("delete"),
+        ),
+    )
+

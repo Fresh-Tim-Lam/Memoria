@@ -3403,7 +3403,7 @@ body.-win-dragging {
 .-tree-item {
     display: flex;
     align-items: center;
-    gap: 0.375rem;
+    gap: 0.25rem; /* 2026-09-22：**与 `.-tree-dir-head` 同值**（原 0.375rem）—— 「标记位 → 图标 / 图标 → 文字」两段间距一致，两种行的图标与文字才逐列对齐（人：「保证文件夹和子文件对齐」） */
     padding: 0.1875rem 8px 3px 12px;
     cursor: pointer;
     font-size: 0.75rem;
@@ -5567,20 +5567,20 @@ html *::-webkit-scrollbar-thumb:active {
     border-left: 1px solid currentColor;
     opacity: 0.55;
 }
-.-tree-guide-corner {
-    position: relative;
-    flex: 0 0 14px;
-    width: 14px;
-}
-.-tree-guide-corner > svg {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 10px;
-    opacity: 0.75;
-}
+/* ===== 2026-09-22：`.-tree-guide-corner`（折角字形 `IconTreeCorner8x10`）**已退役** ==================
+   人：「你不用折角了，仿照 trae 文件树的显示，展开文件夹后，子文件夹和文件前面都有「|」，文件前面
+   是一个点，而文件夹就是一个三角，保证文件夹和子文件对齐」⇒ 竖导轨（`.-tree-guide-rail`）保留，
+   **折角不再渲染**（`treeGuides()` 只发导轨），行首标记改由行自己出：
+   目录 = `.-tree-twisty`（展开三角）、文件 = `.-tree-dot`（点），两者同宽 0.875rem 落在**同一标记位**。
+   **对齐怎么来的**：两种行的缩进都是 `4 + depth×14`（`file-tree.js` 同一个公式），标记位占**最后一格**，
+   图标/文字都在标记位之后 ⇒ 逐列对齐；两行的 `gap` 也统一成 0.25rem（`.-tree-item` 原 0.375rem）。
+   本块 14 行**等量占位**（原为 `.-tree-guide-corner` + 它的 `> svg` 两条规则）——
+   后续行号（`app.css:6091-6112` 等文档锚点）因此不推位。
+   新规则见**文末追加块**（`.-tree-dot`）；旧折角的两条 `::after` 规则也一并从文末块移除。
+   验证：`tests/test_file_tree_icons.py` + `file_tree_icons_test.js`（E1–E3 改为「只有导轨、无折角」）。 */
+/* 占位（原规则一：`.-tree-guide-corner {` + `position: relative;` + `flex: 0 0 14px;` + `width: 14px;` + `}`） */
+/* 占位（原规则二：`.-tree-guide-corner > svg {` + `position: absolute;` + `left: 0;` + `top: 50%;`
+   + `transform: translateY(-50%);` + `width: 8px;` + `height: 10px;` + `opacity: 0.75;` + `}`） */
 
 /* ===== 2026-09-20 追加：助手气泡尾的「生成中… Ns」指示器（`.-agent-generating`）==========
    用户："对话框下面这个不用保留，生成过程中这个位置会显示『生成中』，把『生成中』放在 agent
@@ -6194,24 +6194,633 @@ html *::-webkit-scrollbar-thumb:active {
 }
 .-agent-think-more[hidden] { display: none; }
 
-/* ===== 2026-09-22 追加：文件树「折角」到行首图标之间的空档补上 ============================
-   人：「你之前设计的那个『折角』符号应该紧贴『文件图标』，而不是空一点位置」。
-   折角字形 `IconTreeCorner8x10` 只有 **8px** 宽，而它所在的槽是 **1 整格 14px**（见上方 5570，与
-   `padding-left = 4 + depth×14` 的步长对齐）⇒ 槽内右侧天然空出 6px，观感就是折角"没画到"图标；
-   文件行还额外偏右 8px（旧 `12 + depth×14`，已由 `file-tree.js` 改回 `4 + depth×14`）。
-   修法（**不动字形**：`preserveAspectRatio: none` 拉宽会把 1px 竖笔画变成 1.7px，与 1px 导轨粗细不一致）：
-   给槽补一段 **1px 横线**，把折角的横段**延长到槽的右缘** —— 也就是行首字形（文件 = 类型图标 /
-   目录 = 展开三角）的起点。坐标直接取自字形 viewBox `-0.5 0 8.5 10.5` 的横段（`M3 10 … L8 10`）：
-     · 横段在 10px 高盒里 y ≈ 9.5 / 10.5 ⇒ 盒垂直居中 ⇒ 距行中线 **+4.5px**；
-     · 横段右端 = 8 / 8.5 ⇒ 8px 宽盒里 x ≈ 7.5px（盒左缘即槽左缘，svg 为 `left: 0`）⇒ 延长线自
-       `left: 7px` 起（与字形**重叠约 0.5px**，不留缝）。
-   颜色与透明度跟字形一致（`currentColor` + `.75`，同上方 5582）。本块**末尾追加** ⇒ 既有锚点零漂移。 */
-.-tree-guide-corner::after {
+/* ===== 2026-09-22 追加：文件树行首「标记位」= 目录的三角 / 文件的点（**折角已退役**）============
+   人：「你不用折角了，仿照 trae 文件树的显示，展开文件夹后，子文件夹和文件前面都有「|」，文件前面
+   是一个点，而文件夹就是一个三角，保证文件夹和子文件对齐」。
+   **三种元素各就各位**：① 竖导轨 `.-tree-guide-rail`（每层一条 = 「|」，`1px solid currentColor` @.55）；
+   ② 目录行的标记位 = `.-tree-twisty`（dsh 三角，展开转 90°）；③ 文件行的标记位 = `.-tree-dot`
+   （本块新增，小圆点、**贴右** ⇒ 紧邻文件图标，读作"文件前面一个点"）。
+   **对齐**：`.-tree-dot` 与 `.-tree-twisty` **同宽 0.875rem**（= 一格），两种行的缩进又是**同一个公式**
+   `4 + depth×14`（标记位占最后一格），`gap` 也统一 0.25rem（`.-tree-item` 已由 0.375rem 改为 0.25rem，
+   见上方 3406）⇒ 图标与文字逐列对齐（人：「保证文件夹和子文件对齐」）。
+   点的颜色与导轨同源（`--border`），透明度 `.75`（导轨是 `.55`：点属"本行标记"，略亮一档更好认）。
+   本块**末尾追加** ⇒ 既有锚点零漂移。 */
+.-tree-dot {
+    flex: 0 0 0.875rem;
+    width: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1px;
+    color: var(--border);
+}
+.-tree-dot::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.75;
+}
+/* 2026-09-22 续：**竖导轨对齐母文件夹的三角**（人：「竖线应该保持和母文件夹的三角符号对齐」）——
+   导轨槽 14px、`.-tree-guides` 起点 4px，而三角字形是**居中**在它自己那 14px 格里的（`.-tree-twisty`
+   `text-align: center` ⇒ 字形中心 = 格中心）。原来把 1px 线画在槽的**左缘**（`border-left`）⇒ 比三角
+   中心偏左 7px；现改为画在**槽中心**（`left: 7px` 的 `::before`）⇒ 线正好穿过上级目录三角的中心
+   （VS Code / Trae 同款）。槽宽不变（`theme/memoria.css` 全局 `box-sizing: border-box` ⇒ 去掉 border
+   不改 14px 盒宽，后面的标记位/图标列不动）。`opacity: .55` 由基规则继承（伪元素在元素子树内）。 */
+.-tree-guide-rail {
+    position: relative;
+    border-left: 0;
+}
+.-tree-guide-rail::before {
     content: "";
     position: absolute;
     left: 7px;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid currentColor;
+}
+
+/* ===== 2026-09-22 追加：设置 →「能力」页签的**能力插件面板**（`plugins-settings.js`）=============
+   只调后端网关 `agent_plugins` / `agent_plugin_set`（`plugins.py` 末尾「契约接线」）。样式一律用既有
+   令牌（`--border` / `--bg-tertiary` / `--text-secondary` / `--accent-soft`），不引新组件库；
+   本块**末尾追加** ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-plugins-panel { display: flex; flex-direction: column; gap: 0.5rem; }
+.-plugins-hint { margin: 0; font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+.-plugins-status { min-height: 1em; font-size: 0.75rem; color: var(--text-secondary); }
+.-plugins-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.-plugins-empty { margin: 0; font-size: 0.75rem; color: var(--text-secondary); }
+.-plugins-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.25rem 0.5rem;
+    padding: 0.5rem 0.625rem;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+}
+.-plugins-switch {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    cursor: pointer;
+    min-width: 0;
+}
+.-plugins-switch input { cursor: pointer; }
+.-plugins-name {
+    font-size: 0.8125rem;
+    color: var(--text-bright);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-plugins-id, .-plugins-src {
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+    border-radius: 999px;
+    padding: 0 0.375rem;
+    white-space: nowrap;
+}
+.-plugins-src { background: var(--accent-soft); }
+.-plugins-tools, .-plugins-perms {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: help;
+}
+.-plugins-k { color: var(--text-secondary); margin-right: 0.25rem; }
+.-plugins-k:not(:first-child) { margin-left: 0.5rem; }
+.-plugins-meta, .-plugins-path {
+    margin: 0;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: help;
+}
+.-plugins-warn, .-plugins-err {
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    padding: 0.375rem 0.5rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+.-plugins-err { border-color: var(--danger, #c0392b); }
+.-plugins-warn-title { margin: 0 0 0.25rem; color: var(--text-bright); }
+.-plugins-warn ul, .-plugins-err ul { margin: 0; padding-left: 1rem; }
+
+/* ===== 2026-09-23 追加：勾选框 / 单选框统一改「圆点」（人：「把所有的方框打勾选择 ui 改成圆点 ui，
+   原本空，点了就变蓝色」；后补：「保持单选的多选的圆 ui 一致，单选多选都可以用 input，你只需要在这
+   说明单选多选 span」）⇒ 覆盖 **checkbox 与 radio 两者、同一套圆点** ========================
+   一处覆盖全部原生 `input[type="checkbox"]` **与** `input[type="radio"]`：设置各区（检查 / 搜索 /
+   显示 / 能力）· 计划确认卡 · 链接匹配候选行 · 搜索选项 · 智能体联网开关 · 待答卡……
+   **未选中 = 空心圆，选中 = 实心蓝点**；**单选与多选外观一致**，区别只在文案处 —— 待答卡用
+   `.-agent-question-mode` 徽标写明「单选」/「多选」，不以控件长相区分。
+   作用域为何是 `:is(#app, .-modal)`：`#app` 在 index.html **250 行就闭合**，各弹窗
+   （`.-modal`：设置 / 链接 / 导入 / 检查 / 创建智能体 …）是它的**兄弟**、在 `#app` **之外**
+   （见 252 行那条注释：「浮层统一放 body 层（`#app` 外）」）⇒ 只写 `#app` 会漏掉设置面板里所有勾选框。
+   `:is()` 的权重取**最具体**的那个参数（`#app` = 1,0,0）⇒ 整体 (1,1,1)，一处即可压住既有的
+   `.-agent-net input[type="checkbox"]` / `.toggle-setting …` / `.-settings-field--inline …`（均 0,2,1），
+   **不需要 `!important`**。尺寸 `--checkbox-size: 0.7rem`（2026-09-23 人：「所有原点都做太大了，变为原来
+   0.8」⇒ 由此前 0.875rem × 0.8 得来 ≈ 11.2px；想再改只动这一个数），另补两条 `appearance: none` 丢掉的禁用/聚焦表现。本块**末尾追加** ⇒ 零漂移。 */
+:is(#app, .-modal) input:is([type="checkbox"], [type="radio"]) {
+    --checkbox-size: 0.7rem;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+:is(#app, .-modal) input:is([type="checkbox"], [type="radio"]):hover:not(:disabled) { border-color: var(--theme-color); }
+:is(#app, .-modal) input:is([type="checkbox"], [type="radio"]):checked {
+    border-color: var(--theme-color);
+    background: var(--theme-color);
+}
+:is(#app, .-modal) input:is([type="checkbox"], [type="radio"]):focus-visible {
+    outline: 1px solid var(--theme-color);
+    outline-offset: 1px;
+}
+:is(#app, .-modal) input:is([type="checkbox"], [type="radio"]):disabled { cursor: not-allowed; opacity: 0.55; }
+
+/* ===== 2026-09-23 追加：**待答卡**（`ask_user_question`：模型中途提问 → 人在面板作答）==========
+   卡片 = `js/agent-question.js`，在对话栏里与问答/工具调用同一条流（`.−agent-msg` 家族），
+   样式一律用既有令牌（`--bg-tertiary` / `--border` / `--text-secondary` / `--accent-soft`），
+   不引新组件库；单选（radio）与多选（checkbox）的圆点外观由上面那块「勾选框 / 单选框统一改圆点」负责
+   —— 两者**长相一致**，单选/多选的区别只由 `.−agent-question-mode` 徽标说明（见 `js/agent-question.js`）。
+   本块**末尾追加** ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-agent-question {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0.625rem;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+}
+.-agent-question-head { font-size: 0.75rem; color: var(--text-secondary); }
+.-agent-question-item { display: flex; flex-direction: column; gap: 0.25rem; }
+.-agent-question-title { font-size: 0.8125rem; color: var(--text-bright); line-height: 1.5; }
+.-agent-question-mode {
+    margin-left: 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+    border-radius: 999px;
+    padding: 0 0.375rem;
+}
+.-agent-question-opts { display: flex; flex-direction: column; gap: 0.25rem; }
+.-agent-question-opt {
+    display: flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    padding: 0.25rem 0.375rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    color: var(--text-primary);
+}
+.-agent-question-opt:hover { background: var(--bg-hover); }
+.-agent-question-opt-label { flex: 0 0 auto; }
+.-agent-question-opt-desc { flex: 1 1 auto; min-width: 0; font-size: 0.6875rem; line-height: 1.4; }
+.-agent-question-custom {
+    font: inherit;
+    font-size: 0.75rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.25rem 0.375rem;
+    color: var(--text-primary);
+    background: var(--bg-primary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+}
+.-agent-question-custom:focus { outline: none; border-color: var(--theme-color); }
+.-agent-question-state { font-size: 0.6875rem; }
+.-agent-question--done .-agent-question-item { opacity: 0.72; }
+.-agent-question--done .-agent-question-custom { background: transparent; }
+
+/* ===== 2026-09-23 追加：设置页签条**可横向滚动 + 滚条隐藏**；「Agent」页两个**可折叠子版块** =====
+   人：「`div` 这一栏页签支持鼠标滚动，滚条越细越好，最好看不到；`button` 把 capability 做到 chat，
+   chat 页内分两个子版块，并且可以折叠，页签 chat 改名为 Agent，子版块名字你来定」。
+   · 滚动容器 = `#settings-tabs`（= `.-settings-tabs-wrap`，index.html:325）：页签由
+     `graph-settings.js::renderTabsHtml()` **动态渲染**、版本会加页签 ⇒ 窄窗口下溢出。滚条**整条隐藏**
+     （不是"再细一档"）：滚轮已能滚（绑定在 `graph-settings.js` 末尾，同 `#tabs` 的写法），
+     留 2px 滑块只占视觉；想恢复可见删这两行即可。`flex-wrap: nowrap` 必加 —— 否则 flex 会换行、
+     永远不溢出（也就不需要滚动）。
+   · `.-settings-section` = 「Agent」页里的可折叠子版块（`<details>`，装配见 `ensureAgentSections()`）；
+     三角标记由 `agent-panel.js` 注入的全局 `details > summary::before` 提供（2026-09-20 那轮），
+     此处只补间距与层次。本块**末尾追加** ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+#settings-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+#settings-tabs::-webkit-scrollbar { width: 0; height: 0; display: none; }
+#settings-tabs .-config-tabs { flex-wrap: nowrap; }
+.-settings-section { border-top: 0.5px solid var(--border-sep, var(--border)); }
+#agent-sections > .-settings-section:first-child { border-top: none; }
+.-settings-section-head {
+    padding: 0.5rem 0 0.25rem;
+    font-size: 0.8125rem;
+    color: var(--text-bright);
+    cursor: pointer;
+    user-select: none;
+}
+.-settings-section-body { padding-bottom: 0.5rem; }
+
+/* ===== 2026-09-23 追加：**字体**设置的落点（人：「设置中 文字还要添加字体类型，这个字体是 markdown
+   预览的文字和 agent 对话栏中渲染的文字，还支持修改顶栏 "MEMORIA" 的字体，不同语言可以设置不同字体」）=
+   两个变量由 `display-settings.js::applyFonts()` 挂在 `<html>` 上（设置 →「显示」→「文字」页签）：
+   · `--font-content` = 按语言拼的正文栈 ⇒ 作用**正文**：`.-preview.markdown-body`（Markdown 预览）
+     与 `.-agent-msg-body.markdown-body`（对话栏里渲染的正文）**共用 `.markdown-body` 这一个类**，
+     故一条规则即覆盖两处；`pre`/`code` 有自己的 `--font-mono`，不受影响。
+   · `--font-brand` = 顶栏 "MEMORIA" 专用档；留空 ⇒ 由 `var()` 的兜底链回落到正文字体、再回落到
+     `--font-sans`（`memoria.css:650-651`）—— 即"没设过就与现状完全一致"。
+   本块**末尾追加** ⇒ 既有 `app.css:<行号>` 锚点零漂移（同特异性下靠后生效，故能盖住 memoria.css 的继承）。 */
+.markdown-body { font-family: var(--font-content, var(--font-sans)); }
+.toolbar-left .logo { font-family: var(--font-brand, var(--font-content, var(--font-sans))); }
+
+/* ===== 2026-09-23 追加：字体档**下拉浮层限高 + 滚条**（人：「下拉不用全展开，可以加滚条」）=====
+   一档 15 个候选、原样展开会有十几行高；这里把**浮层**限到 8.75rem（与既有的可滚浮层
+   `.-edge-target-datalist`（app.css:1259-1268）同档），超出部分滚动。
+   做法 = 用 `appearance: base-select` 打开「可定制 select」（Chromium 135+；本机 WebView2 为 153），
+   再用 `::picker(select)` 拿到浮层本身来限高、上色与加圆角/阴影。
+   **为何不用自造下拉**：这是原生控件，`base-select` 只是"可样式化"，键盘/输入法/无障碍语义全部由浏览器提供；
+   自造一套会丢掉这些，且要另写 `position: fixed` + 视口避让（设置弹窗的 `#settings-body` 是 overflow:hidden、
+   `.-settings-form` 是 overflow-y:auto，绝对定位浮层会被裁）。
+   **作用域刻意收窄**：只命中字体那两个（`[data-display-font-lang]` / `[data-display-setting="fontBrand"]`），
+   其它原生下拉（主题 / 语言 / 历史…）外观与行为一行不变。
+   `@supports` 兜底：不支持 `base-select` 的浏览器整块失效 ⇒ 退回改动前的原生浮层（不会坏）。
+   末块追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+@supports (appearance: base-select) {
+    select[data-display-font-lang],
+    select[data-display-setting="fontBrand"] {
+        appearance: base-select;
+    }
+    select[data-display-font-lang]::picker(select),
+    select[data-display-setting="fontBrand"]::picker(select) {
+        appearance: base-select;
+        max-height: 8.75rem;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: var(--bg-secondary);
+        color: var(--text-primary);
+        border: 0.5px solid var(--border);
+        border-radius: 4px;
+        box-shadow: var(--shadow-float);
+        padding: 0.25rem 0;
+    }
+    /* 浮层**自己的**滚条：全局那条 `html *::-webkit-scrollbar`（app.css:5082-5108）**够不到**它 ——
+       picker 是 top layer 里的伪元素，实测浮层自身滚条一直是平台默认 15px（改全局规则的宽度也不动它）。
+       ⇒ 这里**显式镜像同一套令牌与几何**：10px 命中区 + 4px 两侧透明内缩 = **可见 2px 滑块**，
+       三档不透明度（静止 / 指针进入该区域 / 压在滑块上或拖拽）与作用域同全局，故外观逐项一致。
+       两条实测约束（探针，harness 8660）：
+       · **必须带 `::picker(select)`** —— 只写 `select…::-webkit-scrollbar` 对浮层无效（实测仍是 15px）；
+       · **不能**再写 `scrollbar-width/scrollbar-color` —— 这两个标准属性一旦非 `auto`，Chromium 会整块
+         忽略 `::-webkit-scrollbar`（实测 466px vs 443px），就只能得到"细+单色"、丢掉内缩与三档。 */
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar {
+        width: var(--scrollbar-hit);
+        background: transparent;
+    }
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-track,
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-corner,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-track,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-button,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-button {
+        display: none;
+    }
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-thumb,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb-idle);
+        background-clip: content-box;
+        border-width: 0 var(--scrollbar-inset) 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: 999px;
+    }
+    /* 指针进入该滚动区域 ⇒ 明显（同全局：同特异度，靠"后出现"取胜） */
+    select[data-display-font-lang]::picker(select):hover::-webkit-scrollbar-thumb,
+    select[data-display-setting="fontBrand"]::picker(select):hover::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb-hover);
+    }
+    /* 指针压在滑块上 / 正在拖拽 ⇒ 最明显 */
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-thumb:hover,
+    select[data-display-font-lang]::picker(select)::-webkit-scrollbar-thumb:active,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-thumb:hover,
+    select[data-display-setting="fontBrand"]::picker(select)::-webkit-scrollbar-thumb:active {
+        background-color: var(--scrollbar-thumb-drag);
+    }
+}
+
+/* 同轮追加：`base-select` 会让 select **继承父级字体**（原生控件默认吃 UA 的 `Arial` —— 表单控件不继承
+   `font-family`），于是同一页里「字体」这两个下拉的文字与「主题 / 语言」两个下拉就对不齐了，而这正是
+   人上一条抱怨的同一类问题。给设置区**所有** `.-settings-field` 里的下拉统一指定应用字体 ⇒ 5 个下拉
+   彼此一致，也与它们自己的标签（本来就是应用字体）一致。
+   `min-height` 是同一问题的另一半：可定制 select 是 **flex 盒**，闭合态自然高比原生矮 2px
+   （实测 root 16px 下 26 vs 28）⇒ 钉一个下界把两者对齐（原生本就 ≥ 该值，不受影响）。
+   追加在文件末尾 ⇒ 既有锚点零漂移。 */
+.-settings-field select {
+    font-family: var(--font-sans);
+    min-height: 1.75rem;
+}
+
+/* ===== 2026-09-23 追加：**折叠子版块的标题定为一套规范**（人：「设置其他地方也可也效仿 Agent 页签的
+   子版块设计可展缩」+「纳入 ui 设计规范」）=====
+   设置各页原先用 `<h3 class="-settings-heading">`（`app.css:912-917`：0.75rem / 600 / `--text-bright` /
+   `margin: 0 0 8px`）当小标题；本次把这些 section 统一折叠化（`graph-settings.js::foldSettingsSections()`），
+   标题改由 `.-settings-section-head`（`<summary>`）承担。此处把它的排版**对齐到既有标题那一档**
+   —— 于是「折叠后的头」与「折叠前的 `<h3>`」逐项一致（只有 `padding: 0.5rem 0` 取代了原来的
+   `margin-bottom: 8px`，上下 8px 同时把点击热区撑开），Agent 页那两个头也随之并入同一规范。
+   追加在文件末尾、同特异性 ⇒ 靠后生效；既有锚点零漂移。 */
+.-settings-section-head {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0;
+}
+
+/* ===== 2026-09-23 追加：**对话栏图片附件**（草稿预览条 `#agent-attachments` + 气泡内缩略图
+   `.-agent-attach-row` / `.-agent-attach-thumb`）=====
+   装配见 `agent-panel.js` 末尾「图片附件」块：OS 拖入 / 剪贴板粘贴 → `agent_attach_image` 上传 →
+   chip 预览；发送后草稿清空，气泡改渲染库内 `/files/...` 缩略图。
+   只用既有令牌（`--border` / `--bg-tertiary` / `--bg-primary` / `--text-secondary` / `--text-bright`）
+   ⇒ 随主题与深色模式自动变，无硬编码颜色。追加在文件末尾 ⇒ 上方既有 `app.css:<行号>` 锚点零漂移。 */
+#agent-attachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    padding: 0.25rem 0;
+}
+#agent-attachments[hidden] {
+    display: none;
+}
+
+/* 一张草稿：缩略图铺满 + 右上角 `×` 移除；上传中降透明度提示"还没就位" */
+.-agent-attach-chip {
+    position: relative;
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-tertiary);
+    overflow: hidden;
+}
+.-agent-attach-chip--pending {
+    opacity: 0.55;
+}
+.-agent-attach-chip .-agent-attach-thumb {
+    width: 100%;
+    height: 100%;
+}
+.-agent-attach-remove {
+    position: absolute;
+    top: 0;
     right: 0;
-    top: calc(50% + 4.5px);
-    border-top: 1px solid currentColor;
-    opacity: 0.75;
+    width: 0.875rem;
+    height: 0.875rem;
+    padding: 0;
+    border: 0;
+    border-radius: 0 4px 0 4px;
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.-agent-attach-remove:hover {
+    color: var(--text-bright);
+}
+
+/* 气泡里的附件缩略图行（在正文上方）；点击/双击放大交给预览那套灯箱（双击） */
+.-agent-attach-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin: 0 0 0.25rem;
+}
+.-agent-attach-thumb {
+    height: 96px;
+    max-width: 100%;
+    object-fit: cover;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+}
+
+/* ===== 2026-09-24 追加：**预览里的链接（`memoria-link`）文本可被选中/复制** ==================
+   人：「选区复制的时候，"跳转"的文本没有被复制进去」。根因 = 3945-3949 的
+   `.-preview .memoria-link { user-select: none }`：Chromium 会把 `user-select: none` 的元素
+   **排除在选区之外** ⇒ 跨过链接拉选再复制，链接自身的可见文字（锚文本）整段丢掉。
+   改成 `text`（恢复默认可选）；`cursor: pointer` 与点击跳转行为**不受影响**（选中不阻止 click）。
+   追加在文件末尾、同特异性靠后生效 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-preview .memoria-link {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
+/* ===== 2026-09-24 追加：**「思考过程」那一行的小三角放大 + 与文字贴近** ====================
+   人：「"思考过程"左侧的小三角符号太小了，而且距离有点远，中间有空」（DOM 见
+   `agent-panel.js::thinkEl()`：`<summary class="-agent-think-summary"><span class="-agent-think-label">…`）。
+   两个根因（都在既有规则里量出来的，不是猜的）：
+   ① **太小**：`agent-panel.js::installTriangleStyles()`（2026-09-20 注入的全局 `details > summary::before`）
+      给所有 `<details>` 标记画的是**文件树那枚 9×9 mask 三角**；而 6140-6150 的
+      `.-agent-think-summary::before`（类选择器，特异性更高）把它改写成 `border-left: 5px` + 上下 `4px`
+      的**5×8 小三角** ⇒ 只有这一处比别处小一圈。
+   ② **远 + 中间空**：注入规则还给了 `margin-right: 0.3125rem`（5px），而 `.-agent-think-summary` 是
+      flex + `gap: 0.375rem`（6px）⇒ 两者**叠加成 11px**（既有注释只提到 gap，故此前没人发现）。
+   本块只改三件事：① 三角恢复成**与文件树/设置子版块同一枚**（9×9，关掉 border 那套）；
+   ② `margin-right: 0` 去掉叠加；③ `gap` 收到 `0.25rem`、对齐由 `baseline` 改 `center`
+   （三角本来按基线对齐，与文字视觉中线不齐）。追加在文件末尾、同特异性靠后生效
+   ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-agent-think-summary {
+    align-items: center;
+    gap: 0.25rem;
+}
+.-agent-think-summary::before {
+    width: 0.5625rem;
+    height: 0.5625rem;
+    border: 0;
+    margin-right: 0;
+}
+
+/* ===== 2026-09-24 追加：**脚本工作区**面板（`js/agent-scratch.js`；设计见
+   `docs/design/agent-capabilities.md §3.4`）===============================================
+   位置：对话栏里、输入区**之上**的一块可折叠区（DOM 由 JS 自建后插在 `.-agent-composer` 之前
+   ⇒ `index.html` 一行未改）。列表与输出各自限高独立滚动，不挤压输入框。
+   颜色一律用既有令牌（`--bg-tertiary` / `--border` / `--text-secondary` / `--text-bright` /
+   `--theme-color` / `--danger`）⇒ 随主题自动变，无硬编码色值。
+   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-agent-scratch {
+    border-top: 0.5px solid var(--border-sep, var(--border));
+    background: var(--bg-secondary);
+    flex: 0 0 auto;
+}
+.-agent-scratch[data-state="no-interpreter"] .-agent-scratch-summary { color: var(--text-secondary); }
+.-agent-scratch-summary {
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-bright);
+    cursor: pointer;
+    user-select: none;
+}
+.-agent-scratch-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0 0.5rem 0.375rem;
+}
+.-agent-scratch-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+.-agent-scratch-meta {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+    cursor: help;
+}
+.-agent-scratch-meta--bad { color: var(--warning); }
+.-agent-scratch-warn {
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    background: var(--bg-tertiary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0.25rem 0.375rem;
+}
+.-agent-scratch-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 9rem;
+    overflow-y: auto;
+}
+.-agent-scratch-row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0;
+    font-size: 0.75rem;
+}
+.-agent-scratch-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+}
+.-agent-scratch-size { flex: 0 0 auto; font-size: 0.6875rem; color: var(--text-secondary); }
+.-agent-scratch-empty { font-size: 0.6875rem; color: var(--text-secondary); line-height: 1.45; }
+.-agent-scratch-out-wrap { display: flex; flex-direction: column; gap: 0.125rem; }
+.-agent-scratch-out-head { font-size: 0.6875rem; color: var(--text-secondary); }
+.-agent-scratch-out-bad { color: var(--error); }
+.-agent-scratch-out {
+    margin: 0;
+    padding: 0.25rem 0.375rem;
+    max-height: 12rem;
+    overflow: auto;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-primary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ===== 2026-09-24 追加：联网「域名名单」设置两行（`js/net-settings.js`，追加进 `#agent-settings`）=====
+   两行输入框本身复用既有的 `.-agent-field`（与同页端点/模型/超时一致，不再另立一套控件样式），
+   这里只补标题与两行小字说明的排版；颜色全用既有令牌（`--text-secondary` / `--warning`）。
+   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-net-domains {
+    display: flex;
+    flex-direction: column;
+}
+.-net-domains .-settings-section-head {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0 0.25rem;
+    color: var(--text-bright);
+    cursor: default;
+}
+.-net-hint,
+.-net-parsed {
+    margin: 0.125rem 0 0;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+.-net-parsed--bad {
+    color: var(--warning);
+}
+
+/* ===== 2026-09-24 追加：能力插件行的**库级参数**（`config` 值位的第一例）+ 域名名单的作用域小字 ====
+   `js/plugins-settings.js::configHtml()` 渲染（当前只有 `web-fetch` 有参数：允许/禁止抓取的域）；
+   `js/net-settings.js` 末尾那行"以上是机器级默认"用 `.-net-scope`。颜色全用既有令牌。
+   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-plugins-config {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin: 0.125rem 0 0;
+    padding-top: 0.25rem;
+    border-top: 0.5px dashed var(--border);
+}
+.-plugins-cfg-field {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+.-plugins-cfg-field > span {
+    flex: 0 0 auto;
+    min-width: 6rem;
+}
+.-plugins-cfg-field > input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 0.1875rem 0.375rem;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+}
+.-plugins-cfg-hint,
+.-net-scope {
+    margin: 0;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
 }

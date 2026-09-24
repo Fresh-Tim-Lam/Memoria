@@ -1,7 +1,7 @@
 """引用板块（R 线）的离线单测：只读引用解析 `resolve_reference` + 只读引用审计 `audit_references`。
 
 口径来源：`docs/design/agent-capabilities.md` §6.5「引用完整性：让模型写的路径真的可用（P / V / L 三路线）」
-（台账行 `docs/todo.md:265` 的 AG07）。覆盖：
+（台账 `docs/todo.md` §13 索引的 AG07 行；逐条叙述 2026-09-24 起移入 `docs/design/agent-panel-batches.md`）。覆盖：
 
 ① 五类库内引用各有「可解析 / 悬空 / 多义 / 越界拒绝」样例：`@路径`（含 `@"带空格"` 与目录尾斜杠）、
    `dsh-session:`、`[[…]]`、`文件:行号`（含 `#L12-L30` 区间 —— **L 路线读时投影已落地**：正常回 `ok`、
@@ -461,7 +461,13 @@ def test_audit_path_scope_and_argument_errors(kb: Path) -> None:
 def test_reference_tools_registered_declared_and_read_only(kb: Path) -> None:
     built = build_kb_tools(str(kb))
     assert tuple(tool.name for tool in built) == KB_TOOL_NAMES
-    assert KB_TOOL_NAMES[-3:] == ("resolve_reference", "audit_references", "propose_write")
+    # 末尾秩序：引用两把 → `propose_write` → `ask_user_question` → 联网两把（2026-09-23，§6.28）
+    # → 脚本工作区四把（2026-09-24，§3.4）
+    assert KB_TOOL_NAMES[-10:] == (
+        "resolve_reference", "audit_references", "propose_write", "ask_user_question",
+        "web_search", "fetch_url",
+        "scratch_list", "scratch_read", "scratch_write", "scratch_delete",
+    )
 
     registry = registry_for(kb)
     for name in ("resolve_reference", "audit_references"):

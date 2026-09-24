@@ -72,6 +72,7 @@
 - **来源 Source**: 用户课件 `docs/ref/ppt/54e96fa342c79306197e56ef0430c197.png`
 
 > 一句话判定：**"会不会出大事、甚至出人命？"** 会 → `perilous`；不会 → `dangerous` 或 `difficult`。
+> 🔗 **反面对照**：`perilous` 说的是「可能出大事」；等险情过去、消息转好，接住它的形容词是 `reassuring`（[[reassuring]]）——*The news from the summit team was reassuring.*（登山队传来的消息让人放心。）
 
 ## 🎚️ 语域三档对照（日常 / 正式 / 文学）
 
@@ -152,6 +153,7 @@ Without proper safety equipment, the descent became __________ and the guides de
 - where you were ｜ what happened ｜ how you dealt with it ｜ what you learned from it
 （中文说明：口语 Part 2，按课件的 **DANGER → ACTION → RESULT** 三槽位组织）
 > 💡 在 **DANGER** 槽位用上 "perilous"；再用一个 [[lush]] 里的景色词做反差。
+> 📎 库内实作：`speaking/part2/2.md`（[[rafting-whirlpool-rescue]]）——本话题（Direction 2）的三槽位示范作答。
 ### 3. Writing scenario
 Write one Task‑2 sentence about the risks of relying on artificial intelligence in critical decisions.
 （中文说明：大作文写一句话，论述在关键决策中依赖人工智能的风险）

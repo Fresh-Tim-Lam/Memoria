@@ -38,7 +38,7 @@ check("A2 file-tree.js 仍导出 window.MemoriaFileTree（render/expandToPath/re
 
 // ---- 1) 图标齐全 -----------------------------------------------------------
 const REQUIRED = [
-  // 树结构：展开三角 / 目录 close+open / 缩进折角
+  // 树结构：展开三角 / 目录 close+open / 缩进折角（**2026-09-22 退役，字形仍在注册表**，故仍算"必需存在"）
   "triangleRight", "folderClose", "folderOpen", "treeCorner",
   // 文件类型类目（dsh FileTypeIcon 口径；folder 另见 ftFolder）
   "ftMarkdown", "ftCode", "ftImage", "ftHtml", "ftPdf", "ftPpt", "ftVideo", "ftWord", "ftExcel", "ftOther", "ftFolder",
@@ -92,18 +92,17 @@ check("D1 扩展名/文件名 → 类目映射全部正确", bad.length === 0, {
 const catBad = Object.keys(I.categories).filter((c) => typeof I.categories[c] !== "string" || !I.names.includes(I.categories[c]));
 check("D2 每个类目都指向已定义图标", catBad.length === 0, { catBad });
 
-// ---- 4) 缩进连接线 ---------------------------------------------------------
+// ---- 4) 缩进连接线（2026-09-22 起：只有竖导轨，**折角退役**）------------------
 check("E1 depth 0 不产出连接线", I.treeGuides(0) === "");
 const g2 = I.treeGuides(2);
-check("E2 depth 2 = 1 段导轨 + 1 个折角 + 1 个 treeCorner svg",
-  (g2.match(/-tree-guide-rail/g) || []).length === 1
-  && (g2.match(/-tree-guide-corner/g) || []).length === 1
-  && (g2.match(/<svg\b/g) || []).length === 1
-  && g2.indexOf('viewBox="-0.5 0 8.5 10.5"') >= 0,
+check("E2 depth 2 = 2 段导轨、无折角、不夹 SVG",
+  (g2.match(/-tree-guide-rail/g) || []).length === 2
+  && (g2.match(/-tree-guide-corner/g) || []).length === 0
+  && (g2.match(/<svg\b/g) || []).length === 0,
   g2);
 const g3 = I.treeGuides(3);
-check("E3 depth 3 = 2 段导轨 + 1 个折角",
-  (g3.match(/-tree-guide-rail/g) || []).length === 2 && (g3.match(/-tree-guide-corner/g) || []).length === 1);
+check("E3 depth 3 = 3 段导轨、无折角",
+  (g3.match(/-tree-guide-rail/g) || []).length === 3 && (g3.match(/-tree-guide-corner/g) || []).length === 0);
 
 console.log(failures ? `\n文件树图标 VM 单测：${failures} 项失败` : "\n文件树图标 VM 单测：全 PASS（图标清单 / 单 currentColor / 分类器 / 连接线）");
 process.exit(failures ? 1 : 0);

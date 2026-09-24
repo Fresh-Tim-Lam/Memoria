@@ -86,6 +86,7 @@ At weekends I __________ in a long lie‑in and a huge breakfast.
 Describe how you like to relax after a busy week.
 （中文说明：口语 Part 1／2 休闲题——用 `indulge in ...` 说出你「明知该克制却仍会放纵」的那件事）
 > 💡 Use "indulge in ..." and "a guilty indulgence" once each.
+> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——一顿接一顿的家庭聚餐：I **indulged** myself with one family dinner after another。
 ### 3. Writing scenario
 Write one Task‑2 sentence on whether advertising persuades people to buy things they do not need.
 （中文说明：大作文写一句话，论述广告是否说服人们购买并不需要的东西）

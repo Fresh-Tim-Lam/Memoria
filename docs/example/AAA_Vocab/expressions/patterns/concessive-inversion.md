@@ -95,6 +95,7 @@ __________ the journey was, we would do it all over again.
 ### 2. Speaking scenario
 Describe a difficult decision you once made.（口语 Part 2 决定题）
   （中文说明：用一句让步倒装收尾——先摆「难」，再给「为什么值得」）
+> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——把反思收进一句话的收尾：**Frustrating though it was**, it taught me to plan around the time I really have。
 ### 3. Writing scenario
 Write one Task-2 sentence admitting that a policy may be costly, then arguing that it is still worth adopting.
   （中文说明：大作文写一句话——先承认政策可能有代价，再论证仍值得采纳；用 may 让让步显得克制）

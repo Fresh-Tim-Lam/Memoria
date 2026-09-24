@@ -107,6 +107,8 @@ He __________ his arms wildly as he lost his balance on the ice.
 - where you were ｜ what happened ｜ how you dealt with it ｜ what you learned from it
 （中文说明：口语 Part 2，按课件的 **DANGER → ACTION → RESULT** 三槽位组织）
 > 💡 **DANGER** 槽位写动作可用 `flail`（*I flailed my arms to stay afloat*），同时用 [[perilous]] 定性整个处境（*a perilous situation*）；**ACTION** 槽位写"不再乱扑腾"的转折（*I stopped flailing and let the current carry me*）—— 这正是课件的 ACTION 与 DANGER 形成对照。
+> 📎 库内实作：`speaking/part2/2.md`（[[rafting-whirlpool-rescue]]）——贵州漂流翻船那次，落水后正是 flailing 的画面。
+> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——想靠刷手机把状态捡回来、结果在手机上乱耗两小时：I ended up **flailing** around on it for two hours。（与前一条不同：这里用的是「徒劳挣扎」的比喻义）
 ### 3. Writing scenario
 Write one Task‑2 sentence about a public service that is failing to cope.
 （中文说明：大作文写一句话，论述某个应对不力的公共服务）

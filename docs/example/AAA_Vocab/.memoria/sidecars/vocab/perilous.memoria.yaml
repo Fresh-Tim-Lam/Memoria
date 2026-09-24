@@ -28,7 +28,7 @@ knowledge_points:
       line_hint: 1
     end:
       snippet: '- Answer: perilous（危险的；凶险的）；名词形式 peril（危险；险境）'
-      line_hint: 168
+      line_hint: 170
 links:
 - anchor_text: promising
   occurrence: 0
@@ -36,7 +36,7 @@ links:
   - promising
   edge_type: reference
   instances:
-  - line: 78
+  - line: 79
     wrapped: true
   source_id: perilous
 - anchor_text: troubled
@@ -45,7 +45,7 @@ links:
   - troubled
   edge_type: reference
   instances:
-  - line: 78
+  - line: 79
     wrapped: true
   source_id: perilous
 - anchor_text: favourable
@@ -54,7 +54,7 @@ links:
   - favourable
   edge_type: reference
   instances:
-  - line: 78
+  - line: 79
     wrapped: true
   source_id: perilous
 - anchor_text: flail
@@ -63,7 +63,7 @@ links:
   - flail
   edge_type: reference
   instances:
-  - line: 78
+  - line: 79
     wrapped: true
   source_id: perilous
 - anchor_text: lush
@@ -72,9 +72,24 @@ links:
   - lush
   edge_type: reference
   instances:
-  - line: 154
+  - line: 155
     wrapped: true
-  - line: 160
+  - line: 162
     wrapped: true
   source_id: perilous
+- anchor_text: rafting-whirlpool-rescue
+  occurrence: 0
+  targets:
+  - rafting-whirlpool-rescue
+  edge_type: reference
+  target_edges:
+    rafting-whirlpool-rescue:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 156
+    wrapped: true
+  excluded: []
+  pool:
+  - rafting-whirlpool-rescue
 edges: []

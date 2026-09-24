@@ -18,8 +18,8 @@
 作为**以后的运行模式**。更严的档位由调用方**注入**：逐条确认用 `AskPolicy`（无应答者即拒绝）、
 确定性拒绝用 `NeverPolicy`。写路径的安全兜底是**备份 + 可撤销**，不是这道闸门。
 
-`dsh-tool-ask-user`（`ask_user_question` 工具）依赖 UI 问答 seam，M1 无
-前端交互面，故只取其 fail-closed 结论（无应答者 = 拒绝），不注册该工具。
+`dsh-tool-ask-user`（`ask_user_question` 工具）**2026-09-23 已注册**：待答信道与待答卡都在场
+（见 `questions.py` 与 `approval_bridge.py` 末尾「待答信道」）；其 fail-closed 结论与本模块共用。
 """
 
 from __future__ import annotations

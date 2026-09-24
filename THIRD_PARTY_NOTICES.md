@@ -28,6 +28,7 @@
 | `src/memoria/services/agent/compaction.py`、`pruner.py` | `compaction/compaction`、`compaction-basic`、`compaction-tool-result-pruner` |
 | `src/memoria/ui/static/app/js/agent-panel.js` 中的 `@路径` / `dsh-session:` mention 语义 | `context/file-reference`、`context/session-reference`（`uri.ts`） |
 | `src/memoria/ui/static/app/js/file-tree.js`（末尾追加块 B：文件树图标） | `client/ui-primitives`（`src/icons/index.tsx`、`src/FileTypeIcon.tsx`） |
+| `src/memoria/services/agent/web.py`（N 线联网，2026-09-23；§6.28） | `web/web-search-deepseek`（Anthropic 面的请求线格式与 `web_search_tool_result` / `citations[]` 结果归一）、`web/web-fetch-http`（仅 http(s)/拒凭据/同源重定向/内容类型分类；**上游在此留 SSRF 防护为 deferred，本地自补私网拒绝与逐跳校验**）、`web/tool-web`（`{sources[], truncated}` 归一形状与模型面文案） |
 
 ### 图标移植落点（`client/ui-primitives`，2026-09-19）
 

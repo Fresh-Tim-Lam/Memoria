@@ -394,6 +394,18 @@ def _message_to_wire(message: Message) -> dict[str, Any]:
     """中立消息 → OpenAI 兼容 `messages[]` 条目。"""
     role = message.role.value if isinstance(message.role, Role) else str(message.role)
     entry: dict[str, Any] = {"role": role, "content": message.content}
+    # 2026-09-23 图像输入：**仅 `user`（含 `developer`）且真有图**时，才把 content 换成内容块数组
+    # （官方口径：`image_url` 块 + base64 data URL；且**只有 user/developer 消息**允许带图，
+    # system/assistant/tool 里带图会被 400）。纯文本消息**逐字不变**（仍是字符串）。
+    # `data_url` 为空（文件缺失/越界）的图直接跳过；一张都不剩时也**不制造**纯文本块数组。
+    if message.images and role in ("user", "developer"):
+        image_blocks = [
+            {"type": "image_url", "image_url": {"url": part.data_url}}
+            for part in message.images
+            if part.data_url
+        ]
+        if image_blocks:
+            entry["content"] = ([{"type": "text", "text": message.content}] if message.content else []) + image_blocks
     if message.name:
         entry["name"] = message.name
     if message.tool_call_id:

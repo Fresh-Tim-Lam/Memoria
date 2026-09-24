@@ -805,11 +805,11 @@
     if (!tabsEl || !bodyEl) return;
     tabsEl.innerHTML = renderTabsHtml(tab);
     tabsEl.querySelectorAll("[data-settings-tab]").forEach((btn) => btn.addEventListener("click", () => setSettingsTab(btn.dataset.settingsTab)));
-    // 「对话」页签是**静态体**（index.html 的 `#settings-body-agent`，内含 `#agent-settings`，由 agent-panel.js 绑定）
+    // 「Agent」页签是**静态体**（index.html 的 `#settings-body-agent`，内含 `#agent-settings`，由 agent-panel.js 绑定）；2026-09-23 起页内再分两个**可折叠子版块**（「对话」+「能力插件」，装配见本文件末尾 `ensureAgentSections()`）
     const agentBody = document.getElementById("settings-body-agent"), isAgent = tab === "agent";
     if (agentBody) agentBody.classList.toggle("hidden", !isAgent);
     bodyEl.classList.toggle("hidden", isAgent); // 两块都是 flex:1，同时显示会平分高度 ⇒ 必须互相排斥
-    if (isAgent) { teardownPreview(); stopPreview(); bodyEl.innerHTML = ""; }
+    if (isAgent) { teardownPreview(); stopPreview(); bodyEl.innerHTML = ""; ensureAgentSections(); }
     else if (tab === "graph2d") {
       teardownPreview();
       bodyEl.innerHTML = renderSettingsBody2d();
@@ -839,7 +839,12 @@
       teardownPreview(); stopPreview();
       bodyEl.innerHTML = global.MemoriaDisplaySettings.renderSettingsBody();
       global.MemoriaDisplaySettings.bindSettingsForm(bodyEl);
-    }
+    // 2026-09-23：「能力插件」**不再单独占一个页签** —— 它已并入「Agent」页签的第二个可折叠子版块
+    // （装配在 `ensureAgentSections()`，见本文件末尾）。原动态体分支 `else if (tab === "plugins" …)`
+    // 随之退役：面板仍在、仍只调后端网关，只是宿主从 `#settings-body` 换成子版块里的容器。
+    // 下面这行 `}` 是**最后一个 `else if`（view 块）**的收尾、必须保留；为避免推位下方的
+    // `bindSettingsForm` 与既有 `graph-settings.js:<行号>` 文档锚点，用五行注释**等量占位**（同 app.css 折角那轮写法）。
+    } foldSettingsSections(bodyEl); // 2026-09-23：六页统一折叠化（同行追加 ⇒ 下方锚点零漂移；装配见本文件末尾）
   }
 
   function bindSettingsForm(root) {
@@ -1015,4 +1020,105 @@
     deactivateSidebarGraphSplit: clearSidebarNavKpSplit,
     SAMPLE_GRAPH: buildSampleGraph,
   };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-23 追加（**末尾追加** ⇒ 上方所有 `graph-settings.js:<行号>` 文档锚点零漂移）：
+  //   ① 设置弹窗页签条**滚轮 → 横向滚动**：页签由 `renderTabsHtml()` 动态渲染、版本会加页签，
+  //      窄窗口下溢出；滚条**整条隐藏**见 `app.css` 末尾同轮那块。写法与 `#tabs`（app.js 末尾）
+  //      和 `bindGraphGroupTabWheel` 一致：横向增量优先、不需要滚动时不吞事件、Ctrl+滚轮不抢。
+  //   ② 「Agent」页内的**两个可折叠子版块**（`ensureAgentSections()`）：
+  //      「对话」= 原 `#agent-settings`（**移动节点**而不是重建 ⇒ `agent-panel.js` 的事件绑定与
+  //      全部字段 id 原样保留）；「能力插件」= `MemoriaPluginSettings` 的面板（仍只调后端网关
+  //      `agent_plugins` / `agent_plugin_set`）。子版块名由人授权自定 ⇒ 取「对话」「能力插件」。
+  //      每次进入该页签都会刷新（标题跟语言走、面板重渲染 —— 与本文件其它页签同口径）。
+
+  function settingsSectionEl(labelKey, id, open) {
+    const T = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
+    const box = document.createElement("details");
+    box.className = "-settings-section";
+    box.id = id;
+    box.open = !!open;
+    const head = document.createElement("summary");
+    head.className = "-settings-section-head";
+    head.textContent = T(labelKey); // 三角标记由 agent-panel.js 注入的全局 `details > summary::before` 提供
+    const body = document.createElement("div");
+    body.className = "-settings-section-body";
+    box.appendChild(head);
+    box.appendChild(body);
+    return box;
+  }
+
+  function ensureAgentSections() {
+    const env = document.getElementById("settings-body-agent");
+    if (!env) return;
+    const T = (k) => (global.MemoriaI18n ? global.MemoriaI18n.t(k) : k);
+    if (!env.querySelector("#agent-sections")) {
+      const wrap = document.createElement("div");
+      wrap.id = "agent-sections";
+      const chat = settingsSectionEl("settings.section.chat", "agent-section-chat", true);
+      const caps = settingsSectionEl("settings.section.caps", "agent-section-caps", false);
+      // 移动（不是重建）：`#agent-settings` 连同字段与监听器整体进「对话」子版块
+      const chatBody = chat.querySelector(".-settings-section-body");
+      while (env.firstChild) chatBody.appendChild(env.firstChild);
+      wrap.appendChild(chat);
+      wrap.appendChild(caps);
+      env.appendChild(wrap);
+    }
+    // 每次进入都刷新：两块标题跟语言走；「能力插件」面板重渲染一次（与本文件其它页签同口径）
+    const chatSection = document.getElementById("agent-section-chat");
+    const capsSection = document.getElementById("agent-section-caps");
+    if (chatSection) chatSection.querySelector(".-settings-section-head").textContent = T("settings.section.chat");
+    if (!capsSection) return;
+    capsSection.querySelector(".-settings-section-head").textContent = T("settings.section.caps");
+    const capsBody = capsSection.querySelector(".-settings-section-body");
+    if (global.MemoriaPluginSettings) {
+      capsBody.innerHTML = global.MemoriaPluginSettings.renderSettingsBody();
+      global.MemoriaPluginSettings.bindSettingsForm(capsBody);
+    }
+  }
+
+  /** 2026-09-23 追加：把设置各页的 `.-settings-section` **统一折叠化**（人：「设置其他地方也可也效仿
+   *  Agent 页签的子版块设计可展缩」）。
+   *  做法 = **移动节点**（不是重建 HTML）⇒ 六个 renderer（2D / 3D / 节点群 / 检索 / 检查 / 显示）**一行未改**，
+   *  字段 id 与既有事件绑定原样保留；只把「标题 `<h3>` + 其余内容」重排进 `<details><summary>+<div>`。
+   *  默认**展开** —— 是"可收起"，不是"默认藏起来"（全收起会让页面像空的，与折叠前的观感差太远）。
+   *  `section` 标签守卫 ⇒ 对 `<details>`（Agent 页两个）与重复调用都幂等；折叠头样式与三角标记复用
+   *  `.-settings-section-head`（`app.css` 末尾）与 `agent-panel.js` 注入的全局 `details > summary::before`。 */
+  function foldSettingsSections(root) {
+    if (!root) return;
+    root.querySelectorAll("section.-settings-section").forEach((sec) => {
+      const box = document.createElement("details");
+      box.className = "-settings-section";
+      box.open = true;
+      const head = document.createElement("summary");
+      head.className = "-settings-section-head";
+      const h3 = sec.querySelector(":scope > .-settings-heading");
+      head.textContent = h3 ? h3.textContent : "";
+      if (h3) h3.remove();
+      const body = document.createElement("div");
+      body.className = "-settings-section-body";
+      box.appendChild(head);
+      box.appendChild(body);
+      while (sec.firstChild) body.appendChild(sec.firstChild);
+      sec.replaceWith(box);
+    });
+  }
+
+  (function bindSettingsTabWheelScroll() {
+    const tabsEl = document.getElementById("settings-tabs");
+    if (!tabsEl || tabsEl.dataset.wheelBound) return;
+    tabsEl.dataset.wheelBound = "1";
+    tabsEl.addEventListener(
+      "wheel",
+      (e) => {
+        if (e.ctrlKey) return; // Ctrl+滚轮是缩放，不抢
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        if (!delta) return;
+        if (tabsEl.scrollWidth - tabsEl.clientWidth <= 0) return; // 无需横向滚动 ⇒ 交还默认行为
+        e.preventDefault();
+        tabsEl.scrollLeft += delta;
+      },
+      { passive: false }
+    );
+  })();
 })(typeof window !== "undefined" ? window : globalThis);

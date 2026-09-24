@@ -40,6 +40,7 @@ from memoria.services.agent.llm import (
     AgentLlmError,
     FinishEvent,
     FinishReason,
+    ImagePart,
     LlmRequest,
     Message,
     ReasoningDelta,
@@ -278,11 +279,12 @@ class AgentLoop:
         question: str | None = None,
         *,
         messages: Sequence[Message] | None = None,
+        images: Sequence[ImagePart] = (),
     ) -> LoopResult:
         """跑一轮问答：从（可选）新提问开始，直到给出最终答案或触发终止条件。"""
         history: list[Message] = list(messages or ())
         if question is not None:
-            history.append(Message(role=Role.USER, content=question))
+            history.append(Message(role=Role.USER, content=question, images=tuple(images)))
 
         tool_results: list[ToolResult] = []
         anchors: list[Mapping[str, Any]] = []
@@ -366,6 +368,12 @@ class AgentLoop:
                 history.append(
                     Message(role=Role.TOOL, content=result.content, tool_call_id=call.id, name=result.name)
                 )
+                # 2026-09-23 图像输入：工具**产出的图片**（`read_image`）走"延迟的 user 消息"进上下文 ——
+                # 对齐上游 `deferContext`；不塞进上面那条 `tool` 消息（Chat Completions 的 tool 结果只收字符串）。
+                if result.output.images:
+                    deferred = Message(role=Role.USER, content=f"（read_image 已读入图片：{result.name}）", images=tuple(result.output.images))
+                    history.append(deferred)
+                    self._emit("user/message", {"text": deferred.content, "images": [{"rel_path": p.rel_path, "media_type": p.media_type, "name": p.name} for p in deferred.images]})
                 self._emit(
                     "tool/result",
                     {

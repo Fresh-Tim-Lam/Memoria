@@ -78,7 +78,7 @@
 |---|---|---|
 | 1 **propose** | 模型调用写工具 ⇒ **只产 plan**（`{v,txid,intent,ops[]}`，§2.3.3）、不落盘。提议卡片 = `intent` + 由 `preview_plan`（§2.3.4）算出的影响文件/行清单 | 写工具声明 `read_only=False`（`services/agent/tools/registry.py:114`）⇒ 必过审批 |
 | 2 **dry-run diff** | 应用前算出"将改哪些文件、哪些行"：已有文件在**临时副本**上真跑一次并算 diff，新建/删除给整段或整文件 | 取原文用 `DocumentService.load_document()`（`services/document.py:1271`）；diff 只在内存/`tempfile` 临时目录算 |
-| 3 **逐条确认** | 逐条 ✓/✗；**未获批 = 不执行**（无应答者也拒） | `ToolRegistry.invoke()` 在**分发前**问策略（`registry.py:265-288`）→ `ApprovalPolicy.decide`（`services/agent/approvals.py:109-115`）→ 应答者走 `AskPolicy(answerer=…)`（`approvals.py:127-152`），无应答者 ⇒ `unavailable` ⇒ 拒绝 |
+| 3 **逐条确认** | 逐条 ✓/✗；**未获批 = 不执行**（无应答者也拒） | `ToolRegistry.invoke()` 在**分发前**问策略（`registry.py:269-292`）→ `ApprovalPolicy.decide`（`services/agent/approvals.py:109-115`）→ 应答者走 `AskPolicy(answerer=…)`（`approvals.py:127-152`），无应答者 ⇒ `unavailable` ⇒ 拒绝 |
 | 4 **apply** | 获批后**先取写前 pre-image（§2.3.2）**，再**一次性**转调既有服务层：原子写 → 索引失效 → manifest/sidecar 同步 → pending 同步 → KP 重锚 | 见 2.3.1、2.3.2 |
 | 5 **审计** | 追加事件 `capability/proposal` / `capability/apply` / `capability/reject`（含插件 id、`tool_id`、逐文件 ±行、幂等键、决定与时间；**plan 架构下另含 `plan.v` / `txid` / `intent` / 逐 `op_id`**，§2.3.3） | 会话 JSONL `<kb>/.memoria/agent/sessions/*.jsonl`；**纯追加**，旧读者对未知 `type` 一律跳过（`services/agent/session/history.py:261-299`）⇒ **不 bump** `SESSION_FORMAT_VERSION`（同 [dsh-agent-port.md §6.8](dsh-agent-port.md) 的 compaction 口径） |
 | 6 **撤销** | 同一会话内"撤销上一次 apply"，数据面见 §2.3.2、选项见 §10 P10 | 按**写前快照**（§2.3.2）逐字节回滚；审计事件只作可回放证据，不作唯一回滚源 |
@@ -167,12 +167,12 @@ apply 入口（核心，M3a）
 | 面 | 口径 |
 |---|---|
 | 粒度 | **以事务（批次）为单位**（一次 apply = 一个 `txid`）；"单条提议"= 该提议单独成批时即一批；**整轮** = 该轮各批次倒序；**整会话** = 会话内全部批次倒序。M3a 只做**撤销上一批**；整轮 / 整会话留 M3b（§2.6） |
-| 入口 | 走 §2.2 的**唯一通用网关**：`agent_capability_call(id, action="undo", payload={txid?})`（缺省 = 该会话最新批次），形态对齐既有 `agent_session_delete`（`presentation/api/ui.py:1329`）；**不新增具名方法**（§2.2 口径） |
+| 入口 | 走 §2.2 的**唯一通用网关**：`agent_capability_call(id, action="undo", payload={txid?})`（缺省 = 该会话最新批次），形态对齐既有 `agent_session_delete`（`presentation/api/ui.py:1376`）；**不新增具名方法**（§2.2 口径） |
 | UI | 紧挨面板里每条 `capability/apply` 审计卡片的「撤销」按钮（复用同一张 apply/reject 卡片，不新开面板） |
 | 审批 | 撤销本身是**写**（会覆盖当前盘上内容）⇒ 仍需 `approval=confirm` 逐条确认，**不因"是撤销"免审** |
 | 审计 | 追加 `capability/undo`（含 `txid`、逐文件 sha256 前后、结果）；纯追加，旧读者对未知 type 跳过 |
 | **外部改动保护** | 撤销前**必须**校验目标文件当前 sha256 == apply 时记录的 sha256；任一不符 ⇒ **拒绝撤销**（**不静默覆盖用户手改**），可见报错并保留备份 |
-| 一致性恢复 | 覆盖回 md + sidecar + manifest + pending 后，清 `DocumentService._cache` 并跑 `DocumentService.validate_kb()`（`services/document.py:2001`；RPC `presentation/api/ui.py:384`）⇒ errors 应为 0；词法索引按 `_write_body` 既有做法重建（`document.py:2076`） |
+| 一致性恢复 | 覆盖回 md + sidecar + manifest + pending 后，清 `DocumentService._cache` 并跑 `DocumentService.validate_kb()`（`services/document.py:2022`；RPC `presentation/api/ui.py:384`）⇒ errors 应为 0；词法索引按 `_write_body` 既有做法重建（`document.py:2099`） |
 | **撤销失败** | **不静默、保留备份、报错**：不删 `txid` 目录、失败即停（不二次自动恢复），追加 `capability/undo{result:"failed"}`，由用户重试或人工处置 |
 
 **6. 与既有机制的关系**
@@ -204,30 +204,30 @@ apply 入口（核心，M3a）
 
 | op | 字段 | 校验规则（幂等 / 可解析 / 歧义） | 编译器要解析 | 编译到（**唯一实现**） | 失败语义 |
 |---|---|---|---|---|---|
-| **`upsert_kp`** | `op_id`、`file`、`kp_id`、`name`、`range{start{line,snippet?},end{line,snippet?}}`、`tags[]?`、`description?`、`aliases[]?` | `start.line ≤ end.line` 且两端行**非空**（对齐 `kp_range_start_empty`/`kp_range_end_empty`）；新建时 `kp_id` 跨库唯一；**幂等键 `(file, kp_id)`** ⇒ 同 id 已存在走**更新**分支，不新建 | 行号 → snippet：`lines[ln-1].strip()[:80]`（`SNIPPET_MAX_LEN=80`，`src/memoria/range/constants.py:1`）；`range_resolved` 在预览/审计时由 `resolve_range`（`src/memoria/range/locator.py:67`）算 | `confirm_kp_range()`（`src/memoria/services/document.py:1360`；幂等更新分支 `:1406-1412`、id 唯一复核 `:1414-1419`）+（有 tags/description/aliases 时）`update_kp()`（`:1722`）；终校 `validate_sidecar`（`src/memoria/storage/sidecar_validate.py:133`） | **拒整批** |
-| **`attach_links`** | `op_id`、`file`、`anchor_text`、`targets[]`、`occurrences[{line,matched_text}]?`（缺省 = 编译器扫出的全部候选）、`display_text?`、`edge_type?`、`relevance?`、`source_id?` | `targets` 逐个**必须可解析**（`ok`；`ambiguous`/`not_found` ⇒ 拒）；`edge_type ∈ {reference,extend}`（`contain` 不由 plan 写）；`occurrences[].line` 必须在扫描结果中命中且 `matched_text` **与命中文本一致**、非子串、无 `blocked`；**幂等键 `(file, anchor_text, occurrence, targets)`** ⇒ 已挂接处不二次包裹（`instances` 去重） | 复用**人 UI 同一条链路**：匹配 `scan_link_text_matches`（`src/memoria/services/link_text_search.py:825`，经 `services/link_instances.py:15` 转发）→ canonical 锚/列跨度 `resolve_canonical_anchor`、`line_matched_spans`（`document.py:2569-2570`）→ 正文包裹 `wrap_plain_on_lines`（`src/memoria/services/link_instances.py:72`，在 `document.py:2611` 调用） | `apply_link_instances()`（`src/memoria/services/document.py:2493`，写 sidecar + `_write_body` `:2699`；内部 `invalid` 判定 `:2547-2567`） | **拒整批** |
-| **`detach_links`** | `op_id`、`file`、`anchor_text`、`occurrences[{line}]`、`mode:"detach"｜"remove_route"` | `anchor_text` 必须在 sidecar `links[]` 命中；`line` 必须存在且当前为 `[[…]]` 或已在 `instances`；**幂等**：已 `excluded` 的行再 detach ⇒ no-op（`add_excluded_lines` 去重，`link_instances.py:182`） | 路由定位 `_sidecar_entry_for_anchor`（`document.py:2134`）；行合法性同 `detach_link_instance` 内判定（`:2452-2458`） | `detach_link_instance()`（`document.py:2428`）；`mode=remove_route` → `delete_link_route()`（`:2709`）/ `remove_link()`（`:2773`） | **拒整批** |
-| **`set_kp_range`** | `op_id`、`file`、`kp_id`、`range{start{line},end{line}}` | 行号/非空/顺序同 `upsert_kp`；`kp_id` 必须已存在于该文件；**幂等**：解析后 `range_resolved` 相同即视为无变化（`line_hint`/`snippet` 重算不算变更） | 同 `upsert_kp`（`resolve_range`） | `confirm_kp_range()`（`document.py:1360`）；单端微调 `pick_snippet_line()`（`:1665`） | **拒整批** |
-| **`rename_kp`** | `op_id`、`kp_id`、`new_kp_id`、`new_name?` | 旧 id 必须可解析；新 id 必须可用（跨库唯一，`exists_in_file` 亦拒）；**幂等**：重放时旧 id 已不存在 ⇒ 按"旧 id 不可解析"**拒**（fail-closed，不静默 no-op） | 影响面**全库** ⇒ 预览必须给出受影响文件清单（`build_kp_index`，`services/link_resolver.py:47`） | `rename_kp_id()`（`document.py:1937` → `services/kp_rename.py`）+（改 name 时）`update_kp()` | **拒整批** |
+| **`upsert_kp`** | `op_id`、`file`、`kp_id`、`name`、`range{start{line,snippet?},end{line,snippet?}}`、`tags[]?`、`description?`、`aliases[]?` | `start.line ≤ end.line` 且两端行**非空**（对齐 `kp_range_start_empty`/`kp_range_end_empty`）；新建时 `kp_id` 跨库唯一；**幂等键 `(file, kp_id)`** ⇒ 同 id 已存在走**更新**分支，不新建 | 行号 → snippet：`lines[ln-1].strip()[:80]`（`SNIPPET_MAX_LEN=80`，`src/memoria/range/constants.py:1`）；`range_resolved` 在预览/审计时由 `resolve_range`（`src/memoria/range/locator.py:67`）算 | `confirm_kp_range()`（`src/memoria/services/document.py:1381`；幂等更新分支 `:1406-1412`、id 唯一复核 `:1414-1419`）+（有 tags/description/aliases 时）`update_kp()`（`:1722`）；终校 `validate_sidecar`（`src/memoria/storage/sidecar_validate.py:133`） | **拒整批** |
+| **`attach_links`** | `op_id`、`file`、`anchor_text`、`targets[]`、`occurrences[{line,matched_text}]?`（缺省 = 编译器扫出的全部候选）、`display_text?`、`edge_type?`、`relevance?`、`source_id?` | `targets` 逐个**必须可解析**（`ok`；`ambiguous`/`not_found` ⇒ 拒）；`edge_type ∈ {reference,extend}`（`contain` 不由 plan 写）；`occurrences[].line` 必须在扫描结果中命中且 `matched_text` **与命中文本一致**、非子串、无 `blocked`；**幂等键 `(file, anchor_text, occurrence, targets)`** ⇒ 已挂接处不二次包裹（`instances` 去重） | 复用**人 UI 同一条链路**：匹配 `scan_link_text_matches`（`src/memoria/services/link_text_search.py:825`，经 `services/link_instances.py:15` 转发）→ canonical 锚/列跨度 `resolve_canonical_anchor`、`line_matched_spans`（`document.py:2592-2593`）→ 正文包裹 `wrap_plain_on_lines`（`src/memoria/services/link_instances.py:72`，在 `document.py:2634` 调用） | `apply_link_instances()`（`src/memoria/services/document.py:2514`，写 sidecar + `_write_body` `:2699`；内部 `invalid` 判定 `:2547-2567`） | **拒整批** |
+| **`detach_links`** | `op_id`、`file`、`anchor_text`、`occurrences[{line}]`、`mode:"detach"｜"remove_route"` | `anchor_text` 必须在 sidecar `links[]` 命中；`line` 必须存在且当前为 `[[…]]` 或已在 `instances`；**幂等**：已 `excluded` 的行再 detach ⇒ no-op（`add_excluded_lines` 去重，`link_instances.py:182`） | 路由定位 `_sidecar_entry_for_anchor`（`document.py:2157`）；行合法性同 `detach_link_instance` 内判定（`:2452-2458`） | `detach_link_instance()`（`document.py:2449`）；`mode=remove_route` → `delete_link_route()`（`:2709`）/ `remove_link()`（`:2773`） | **拒整批** |
+| **`set_kp_range`** | `op_id`、`file`、`kp_id`、`range{start{line},end{line}}` | 行号/非空/顺序同 `upsert_kp`；`kp_id` 必须已存在于该文件；**幂等**：解析后 `range_resolved` 相同即视为无变化（`line_hint`/`snippet` 重算不算变更） | 同 `upsert_kp`（`resolve_range`） | `confirm_kp_range()`（`document.py:1381`）；单端微调 `pick_snippet_line()`（`:1665`） | **拒整批** |
+| **`rename_kp`** | `op_id`、`kp_id`、`new_kp_id`、`new_name?` | 旧 id 必须可解析；新 id 必须可用（跨库唯一，`exists_in_file` 亦拒）；**幂等**：重放时旧 id 已不存在 ⇒ 按"旧 id 不可解析"**拒**（fail-closed，不静默 no-op） | 影响面**全库** ⇒ 预览必须给出受影响文件清单（`build_kp_index`，`services/link_resolver.py:47`） | `rename_kp_id()`（`document.py:1960` → `services/kp_rename.py`）+（改 name 时）`update_kp()` | **拒整批** |
 | ~~`merge_kp`~~（**第二批**） | `op_id`、`keep_kp_id`、`merge_kp_ids[]`、`new_name?` | 各 id 可解析、互不相同；合并后 range/tags 冲突需人工拍板 | 近重复**建议** `suggest_kp_merge`（`src/memoria/services/search_kernel.py:135`，**只给建议**） | ⚠️ **本地无合并动作实现** ⇒ 需新增最小能力（见下） | **拒整批** |
 
 **需新增的最小能力**（映射不到既有机制的，如实列出，不假装存在）：
 
 1. **plan schema + 编译器 + `validate_plan`/`preview_plan` 本身**：新模块（只读面 + 编译，不含落盘）；
-2. **`occurrences[].matched_text` 的前置核对**：既有 `apply_link_instances` 只收 `selected_lines`（`document.py:2498`）⇒ 编译器需先用 `scan_link_text_matches` 的 `matched_text` 比对 plan 给的行，再折算 `selected_lines`（薄胶水，只读）；
+2. **`occurrences[].matched_text` 的前置核对**：既有 `apply_link_instances` 只收 `selected_lines`（`document.py:2514`）⇒ 编译器需先用 `scan_link_text_matches` 的 `matched_text` 比对 plan 给的行，再折算 `selected_lines`（薄胶水，只读）；
 3. **`merge_kp` 的合并动作**：本地只有**建议**（`suggest_kp_merge` `search_kernel.py:135`；人 UI 也只展示建议，见 [agent-guide/05 §7](../reference/agent-guide/05-knowledge-points.md) 第 3 条）——合并 = 新 id + 重指 `links`/`edges` + 删源 KP，属**第二批新增**；
 4. **plan 版本号 / 兼容承诺**：见 §10 **P12**（待拍板）。
 
-**失败语义：拒整批（all-or-nothing）**。理由三条：① 一次确认 = 一个事务 = 一个 `txid`（§2.3 / §2.3.2 已定），若允许部分应用，"整批回滚"与"部分成功"两种语义并存，备份的 sha256 全等断言（§2.6 安全门 1/4）无法成立；② 下游 `apply_link_instances` 本身已是"要么全包裹、要么报错"（`document.py:2613-2620`），逐条放行会引入更细的中间态；③ 逐条 ✗ 仍可用（§2.3 第 3 步）——那是**编译前**的选择，不是编译后的部分执行。`validate_plan` 的 errors 按 `op_id` 定位（便于模型自查并**重写整批**），**不下发**"只应用合法子集"。
+**失败语义：拒整批（all-or-nothing）**。理由三条：① 一次确认 = 一个事务 = 一个 `txid`（§2.3 / §2.3.2 已定），若允许部分应用，"整批回滚"与"部分成功"两种语义并存，备份的 sha256 全等断言（§2.6 安全门 1/4）无法成立；② 下游 `apply_link_instances` 本身已是"要么全包裹、要么报错"（`document.py:2636-2643`），逐条放行会引入更细的中间态；③ 逐条 ✗ 仍可用（§2.3 第 3 步）——那是**编译前**的选择，不是编译后的部分执行。`validate_plan` 的 errors 按 `op_id` 定位（便于模型自查并**重写整批**），**不下发**"只应用合法子集"。
 
 #### 2.3.4 编译器与校验器（只读面：给 agent 自检，也给人 UI 复用）
 
 | API | 语义 | 复用（**唯一实现**，不另写一份） |
 |---|---|---|
-| `validate_plan(plan)` | 结构 + 语义校验，按 `op_id` 返回 errors/warnings；**不碰盘** | 路径 `_safe_rel`（`tools/kb.py:160-172`）；KP id `check_kp_id`（`document.py:1444`）；目标 `resolve_link_target`（`services/link_resolver.py:41`）；匹配 `scan_link_text_matches`（`link_text_search.py:825`）；终校 `validate_sidecar`（`sidecar_validate.py:133`） |
+| `validate_plan(plan)` | 结构 + 语义校验，按 `op_id` 返回 errors/warnings；**不碰盘** | 路径 `_safe_rel`（`tools/kb.py:160-172`）；KP id `check_kp_id`（`document.py:1467`）；目标 `resolve_link_target`（`services/link_resolver.py:41`）；匹配 `scan_link_text_matches`（`link_text_search.py:825`）；终校 `validate_sidecar`（`sidecar_validate.py:133`） |
 | `preview_plan(plan)` | **dry-run diff**：在内存 / `tempfile` 副本上真跑编译器，出"将改哪些文件、哪些行"；**零落盘** | 读原文 `load_document()`（`document.py:1271`）/ `_read_body()`（`:1259`）；范围解析 `resolve_range`（`range/locator.py:67`）；包裹试算 `wrap_plain_on_lines`（`link_instances.py:72`） |
-| `resolve(target)` | KP id / 文件 stem → 候选；`ok` / `ambiguous` / `not_found` | `resolve_link_target`（`link_resolver.py:41`）、`resolve_links`（`document.py:1954`） |
-| `audit_kb()` | 全库一致性审计（errors / warnings） | `DocumentService.validate_kb()`（`document.py:2001`；RPC `presentation/api/ui.py:384`） |
+| `resolve(target)` | KP id / 文件 stem → 候选；`ok` / `ambiguous` / `not_found` | `resolve_link_target`（`link_resolver.py:41`）、`resolve_links`（`document.py:1977`） |
+| `audit_kb()` | 全库一致性审计（errors / warnings） | `DocumentService.validate_kb()`（`document.py:2022`；RPC `presentation/api/ui.py:384`） |
 
 > **硬不变量：同一套校验器，两个消费者（人 UI 与 agent）。** 上表四个 API **不得**另写宽松校验，必须**转调人类 UI 已走的同一批函数**（右列即"唯一实现"）。反例（禁止）：在编译器里自建"边类型白名单"或"路径合法性"判断 —— 那会与 `normalize_link_edge_type`（`src/memoria/graph/edge_types.py:61-66`）/ `_safe_rel` 漂移，出现"人 UI 拒绝、agent 放行"的不一致。
 >
@@ -268,11 +268,16 @@ apply 入口（核心，M3a）
 | 族 | 首批插件 | `permissions` 要点 | 纯声明式？ | "不改核心"的前提 |
 |---|---|---|---|---|
 | **W 写** | `kb-write`（建点 / 改点 / 连边 / 文件增删改） | `write` 限库内正文 + `.memoria/**` 白名单；`approval=confirm` | ✅（工具体 = 核心原语） | M3a 一次性把写原语加进原语目录 |
-| **N 联网** | `web-search`、`web-fetch` | 出网**逐次显式**（默认关；`network` 动作类是 N1 才引入的声明面，§2.1 暂缓清单）；抓取结果**先进 pending**（`storage/pending.py:91 save_pending`） | ✅ | N1 一次性把 `net.*` 原语加进目录 + 域名/私网策略（§3.3） |
+| **N 联网** | `web-search`、`web-fetch` | 出网**逐次显式**（默认关；`network` 动作类仍是 §2.1 暂缓字段 —— **2026-09-24 落地时没扩它**，改用"族目录 + 库级参数"两条接线，见下） | ✅（**2026-09-24 已落地**：`resources/agent-capabilities/web-search.json` / `web-fetch.json`） | M3a 一次性把写原语加进原语目录 |
 | **S skill** | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | S1 一次性把 `use_skill` 按需注入器加进目录 |
 | **H 宿主** | 悬浮卡片、定时唤醒（§5.2） | 宿主能力**默认关、逐 KB 开关**（`host` 动作类是 H1 才引入的声明面，§2.1 暂缓清单）；RPC 侧走通用网关 | ⚠️ **否**：RPC 侧可声明式，**浮层组件**需要一个核心提供的前端挂载点 | H1 需先加挂载点；建议单独立项（§5.4） |
 
 > 结论要如实说：**能插的是"声明与权限"，不能插的是"新的执行体"**。这与 [AGENTS.md §6](../../AGENTS.md)（注册表条目 + 独立提示词文件、无执行体）和 §4.1「非目标：不做任意脚本执行」是同一条红线。
+
+> **N 族落地时新增的两条接线点（2026-09-24，超出原契约字段，故在此登记）**：
+> ① **出网原语目录 `NET_CATALOG`**（`services/agent/plugins.py` 文件尾）：`TOOL_CATALOG` 的值语义是"**落盘**原语名"，而 `net.*` 不落盘 ⇒ 单列一张表，`parse_declaration()` 与 `ToolDeclaration.primitive` 取**并集**（写族 + 出网族）；`PLANNED_TOOLS` 未含 `net.*`，故无需移出。
+> ② **工具级能力闸**：N 的两把工具**不走 plan** ⇒ `plan.validate_plan()` 那道闸够不到它们；闸改落在 `tools/kb.py::_outbound_guard(kb_path, tool_name)`（命名桥 `NET_TOOL_IDS`，判据 `active_plugins(kb).tool_ids`），三条口径与 §6.25 完全一致（注册表缺失 ⇒ fail-open；无声明 ⇒ 不闸；装载出错 ⇒ 闸到底），失败码复用写路径的 `capability_disabled`。
+> ③ **库级参数 schema 的第一例**：库级注册表 `{id, on, config}` 的 `config` 值位此前"保留但不校验"（§2.1 无一例 schema）⇒ 现在给 `web-fetch` 定义 `{allow?: str[], deny?: str[]}`（`PARAM_SCHEMAS`，归一化复用 `web.parse_domains()`）：**读侧归一**（坏值丢弃、不静默生效）、**写侧拒写**（`bad_plugin_config` + 逐条 `issues`）；`ActivePlugins.configs` 只带**启用**插件的参数（工具面用），而**面板回填**不分启用（否则停用插件里改一个键会覆盖丢掉另一个 —— 真机踩到并已修）。
 
 **写能力作为第一个消费者**：它同时验证了三件对后面三族同样重要的事 —— ① 契约能表达"多动作类 + 分级审批"；② 权限矩阵能被装载器与写原语**双向**执行；③ 审计事件能被回放。N/S/H 后续只需新增各自的原语与插件声明，**契约与装载器不再改**。
 
@@ -294,25 +299,25 @@ apply 入口（核心，M3a）
 
 | 原语 `tool_id` | 语义 | 幂等键 | 复用（**唯一的落盘路径**） | 关键风险 |
 |---|---|---|---|---|
-| `kb.kp.create` | 建知识点（写 sidecar + 锚定 range） | `(file, kp_id)` | `services/document.py:1360 confirm_kp_range()` | range 锚不稳 → 走既有 KP 创建/确认链路 |
-| `kb.kp.update` | 改 KP 名/描述/标签 | `(file, kp_id)` | `services/document.py:1722 update_kp()` | 图谱与 KP 面板的刷新时机 |
-| `kb.kp.delete` | 删知识点（**只删 sidecar 配置、不改正文**） | `(file, kp_id)` | `services/document.py:1875 delete_kp()` | 别处的 `[[id]]` 会变**悬空虚链**（库规允许）⇒ 进 `RISKY_OPS`（逐条确认）；**2026-09-22 已落地**（op `delete_kp`） |
-| `kb.kp.rename` | 改 KP id（**全库级联**：正文 wikilink + 各侧车引用） | `(old_id, new_id)` | `services/document.py:1937 rename_kp_id()` → `services/kp_rename.py:94 rename_kp_in_kb()`（**加 `dry_run`** 供校验期预演） | 影响**全库** ⇒ 进 `RISKY_OPS` + 必须**收尾**；**2026-09-22 已落地**（op `rename_kp`） |
-| `kb.link.create` | 连边（含边类型） | `(from, to, type)` | `services/document.py:2885 create_edge()` | 边类型词表须与图谱面板**同一份**事实源；**2026-09-22 已落地**（op `upsert_edge`，只写 sidecar `edges[]`、不碰正文） |
-| `kb.link.set_type` | 改边类型 | 同上 | `services/document.py:2885 create_edge()` / `:2971 delete_edge()` | 与"边类型迁移"同一实现 |
+| `kb.kp.create` | 建知识点（写 sidecar + 锚定 range） | `(file, kp_id)` | `services/document.py:1381 confirm_kp_range()` | range 锚不稳 → 走既有 KP 创建/确认链路 |
+| `kb.kp.update` | 改 KP 名/描述/标签 | `(file, kp_id)` | `services/document.py:1745 update_kp()` | 图谱与 KP 面板的刷新时机 |
+| `kb.kp.delete` | 删知识点（**只删 sidecar 配置、不改正文**） | `(file, kp_id)` | `services/document.py:1898 delete_kp()` | 别处的 `[[id]]` 会变**悬空虚链**（库规允许）⇒ 进 `RISKY_OPS`（逐条确认）；**2026-09-22 已落地**（op `delete_kp`） |
+| `kb.kp.rename` | 改 KP id（**全库级联**：正文 wikilink + 各侧车引用） | `(old_id, new_id)` | `services/document.py:1960 rename_kp_id()` → `services/kp_rename.py:94 rename_kp_in_kb()`（**加 `dry_run`** 供校验期预演） | 影响**全库** ⇒ 进 `RISKY_OPS` + 必须**收尾**；**2026-09-22 已落地**（op `rename_kp`） |
+| `kb.link.create` | 连边（含边类型） | `(from, to, type)` | `services/document.py:2908 create_edge()` | 边类型词表须与图谱面板**同一份**事实源；**2026-09-22 已落地**（op `upsert_edge`，只写 sidecar `edges[]`、不碰正文） |
+| `kb.link.set_type` | 改边类型 | 同上 | `services/document.py:2908 create_edge()` / `:2971 delete_edge()` | 与"边类型迁移"同一实现 |
 | `kb.file.create` | 新建 `.md` | `(path)` | `services/document.py:794 create_file()` | 目录自动创建须留在库内 |
 | `kb.file.rename` | 重命名/移动 | `(from, to)` | `services/document.py:583 rename_file()` | 级联复用既有实现 |
 | `kb.file.delete` | 删除 `.md` + sidecar | `(path)` | `services/document.py:782 delete_file()` | **2026-09-22 已落地**（op `delete_file`）：进 `RISKY_OPS`（逐条确认）、正文里的悬空引用先拦（`delete_referenced`）、只允许收尾 |
 | `kb.file.move` | 移动（换目录、保持文件名） | `(from, to)` | `services/document.py` 末尾 `move_file_document()` | **2026-09-22 已落地**（op `move_file`）：进 `RISKY_OPS`；「正文里的**文件相对**引用」仍**不自动改写** ⇒ 预演直接拦（`move_breaks_relative_refs`，§9 R2 只落"拦"这一半） |
-| `kb.manifest.rebuild` | 重建 / 同步 `manifest.yaml`（清单 + 指纹整体重写） | 全库一件事（**无参数**） | `services/document.py:2120 sync_manifest()` → `storage/manifest.py:183 rebuild_manifest()` | **2026-09-22 已落地**（op `rebuild_manifest`）：复用界面「构建」的**同一份实现**；前置硬闸 = `detect_path_moves()` 非空即拒（`manifest_blocked_by_path_moves`，先「修复路径」）；**必须收尾**（`manifest_must_be_last`）；**不进** `RISKY_OPS` |
+| `kb.manifest.rebuild` | 重建 / 同步 `manifest.yaml`（清单 + 指纹整体重写） | 全库一件事（**无参数**） | `services/document.py:2143 sync_manifest()` → `storage/manifest.py:183 rebuild_manifest()` | **2026-09-22 已落地**（op `rebuild_manifest`）：复用界面「构建」的**同一份实现**；前置硬闸 = `detect_path_moves()` 非空即拒（`manifest_blocked_by_path_moves`，先「修复路径」）；**必须收尾**（`manifest_must_be_last`）；**不进** `RISKY_OPS` |
 
-> **与原语目录的关系（2026-09-20，plan 架构）**：本表是**原语**（编译器的调用目标），不是模型可见的 op；plan 的 op（§2.3.3）编译到它们。M3a 首批 3 个 op 启用的是：`upsert_kp` → `kb.kp.create` / `kb.kp.update`；`attach_links` / `detach_links` → **新增原语** `kb.link.attach` / `kb.link.detach`（薄包装 `services/document.py:2493 apply_link_instances` / `:2428 detach_link_instance`，落盘仍只经原语）。本表 `kb.link.create`（`:2885 create_edge`，**纯边、不写正文**）与之**不是同一个动作**：它的 op 形态 `upsert_edge` **2026-09-22 已落地**（同轮还落了 `delete_kp` / `rename_kp`，见上表）；`kb.file.*` 三个原语 M3a 不进工具集。
+> **与原语目录的关系（2026-09-20，plan 架构）**：本表是**原语**（编译器的调用目标），不是模型可见的 op；plan 的 op（§2.3.3）编译到它们。M3a 首批 3 个 op 启用的是：`upsert_kp` → `kb.kp.create` / `kb.kp.update`；`attach_links` / `detach_links` → **新增原语** `kb.link.attach` / `kb.link.detach`（薄包装 `services/document.py:2514 apply_link_instances` / `:2428 detach_link_instance`，落盘仍只经原语）。本表 `kb.link.create`（`:2885 create_edge`，**纯边、不写正文**）与之**不是同一个动作**：它的 op 形态 `upsert_edge` **2026-09-22 已落地**（同轮还落了 `delete_kp` / `rename_kp`，见上表）；`kb.file.*` 三个原语 M3a 不进工具集。
 
 **明确不做（M3 内）**：
 
-- ❌ **不做任意脚本/命令执行**：`permissions.exec` 属 §2.1 **暂缓字段**（v1 无 exec 声明面；引入它时 `approval` 的安全下限随之扩到 `exec`）；上游沙箱/执行族（`sandbox/*`、`shell/*`、`terminal/*` …）**不吃**（[dsh-agent-port.md §5](dsh-agent-port.md) ❌ 行，CVE 面见其 §9 P6）；
+- ⚠️ **不做任意脚本/命令执行（2026-09-24 部分修订，见 §3.6）**：`permissions.exec` 仍属 §2.1 **暂缓字段**（v1 无 exec 声明面）；上游沙箱/执行族（`sandbox/*`、`shell/*`、`terminal/*` …）**仍不吃**（[dsh-agent-port.md §5](dsh-agent-port.md) ❌ 行，CVE 面见其 §9 P6）。**唯一开口**：库内脚本工作区里**由人在面板点「运行」**才执行的脚本 —— 模型面**没有**任何执行工具（见 §3.6）；"模型自动执行"依然明确不做；
 - ❌ **不做"模型自动应用"**：`approval.write=confirm` 是**装载期硬校验**，插件无法自行降档（用户能否覆写见 §10 P9）；
-- ❌ **不做跨库写**：一次会话只绑一个库（`presentation/api/ui.py:1253 _agent_kb`），写原语的 `scope` 恒为当前库；
+- ❌ **不做跨库写**：一次会话只绑一个库（`presentation/api/ui.py:1300 _agent_kb`），写原语的 `scope` 恒为当前库；
 - ❌ **不做库外写**（含程序目录与用户主目录，见 2.4）；
 - ❌ **不做 `kb.file.move`**（见上表）；
 - ❌ **不做 plan 的"部分应用"**：一律**拒整批**（§2.3.3 失败语义）；逐条 ✗ 属**编译前**选择、不是编译后的部分执行；
@@ -338,20 +343,54 @@ apply 入口（核心，M3a）
 
 ### 3.1 边界（离线优先怎么落）
 
-- **默认关**（沿用现有出网开关 `agent.json: enabled`）；**每一次**出网调用都要有**用户显式意图**（"去查一下 X"），不做后台轮询/自动抓取；
-- 抓取结果**先进 `pending`**（草案态），不直接进正文/图谱 —— 用户确认后才成为知识。
+- ✅ **已落地（2026-09-23，见 [dsh-agent-port.md §6.28](dsh-agent-port.md)）**：**默认关**（沿用现有出网开关 `agent.json: enabled`）；**每一次**出网调用都要有**用户显式意图**（"去查一下 X"），不做后台轮询/自动抓取；
+- 抓取结果**先进 `pending`**（草案态），不直接进正文/图谱 —— 用户确认后才成为知识。（**落地口径**：进 `.memoria/pending.json` 的 `kind=web` 待确认条目，**不是** md + sidecar 草案 —— 有意偏差，理由见 §6.28）
 
-### 3.2 工具（草案）
+### 3.2 工具（草案 → **2026-09-23 前两把已落地**）
 
 | 工具 | 语义 | token 策略 |
 |---|---|---|
-| `web_search` | 检索（返回标题 + URL + 摘要，**不回正文**） | 结果条数上限（默认 5）、每条摘要字节上限 |
-| `fetch_url` | 抓正文 → **落 `pending` md + sidecar 草案**，只回"路径 + 摘要 + 长度" | **长文不进上下文**；模型需要时再用 `read_document` |
-| `save_to_pending` | 把模型整理过的内容写进 pending | 与 W 线同一套确认/回滚 |
+| `web_search` | ✅ **已落地**：检索（返回标题 + URL + 摘要，**不回正文**） | 结果条数上限（默认 5，`search_max_results`）、每条摘要字符上限 |
+| `fetch_url` | ✅ **已落地**：抓正文 → **落 `pending` 的 `kind=web` 条目**，只回"路径 + 摘要 + 长度" | **长文不进上下文**（正文只存库里）；~~模型需要时再用 `read_document`~~ **本地不成立**（条目不是 md 文件，`read_document` 读不到 ⇒ 走"先让用户确认"） |
+| `save_to_pending` | ⏸ **本轮未做**：把模型整理过的内容写进 pending | 与 W 线同一套确认/回滚 |
 
 ### 3.3 审计与安全
 
-单次字节上限 + 超时 + 域名策略（黑/白名单，默认黑名单空、白名单空=只允许 http(s) 且拒绝私网地址）；**把"这次出网"记进会话事件**（可审计、可复盘），并在面板上可见。
+单次字节上限 + 超时 + 域名策略（黑/白名单，默认黑名单空、白名单空=只允许 http(s) 且拒绝私网地址）；**把"这次出网"记进会话事件**（可审计、可复盘），并在面板上可见。（**2026-09-23 落地**：字节 + 字符双上限与两侧超时、**逐地址**拒私网/回环/链路本地/组播/保留/未指定 + 只跟同源重定向（白名单面本轮未做）、会话事件 `net/request`；"面板可见"只到"事件在会话 JSONL 里" —— 面板渲染留后续，见 §6.28 偏差 ④）**2026-09-24 补：域名名单已落地** —— 两个设置键 `fetch_allow_domains` / `fetch_deny_domains`（`config/agent.json`，设置 →「Agent」页有两行输入框 + 归一化回显），判据 = `web.py::parse_domains()` / `domain_allowed()`（`deny` 优先、`allow` 非空只放行列内**及子域**、写错的项忽略并计数），落点 = `WebClient._assert_domain()` 在**每一跳**（含重定向）先于 DNS 校验，被拒码 **`WEB_BLOCKED_DOMAIN`**（与"地址类别"的 `WEB_BLOCKED_URL` 分开）；`web_search` 的结果里也会给"抓不了"的来源标注一行（省"试抓→被拒→再试"的 token）。**仍未做**：`search` 侧本身不受名单约束（检索由模型端点执行，我们只标注结果）—— 这是"工具级能力闸"（§2.6 N1）要解决的下一件事。**同日续（第二片）**：名单分**两层** —— **机器级** `config/agent.json` 两键（全局默认，设置 →「Agent」页两行）与**库级** 能力插件 `web-fetch.config`（逐库可不同，设置 →「Agent」→「能力插件」里 web-fetch 行的「本库参数」）；**合并口径 = 库级只能收紧**（`deny` 取并集、`allow` 取交集；都为空的 allow = 不限）⇒ "某个库把机器级禁止的域放开"在结构上不可能，合并实现在 `web.merge_domain_rules()`（纯函数、单测直取），消费点 = `tools/kb.py::_web_client()`；`agent_net_domains` 一次回**三层**（机器级 / 本库级 / 合并后 + 本库能力启停），面板据此回显。<br>**2026-09-24 补（第二片 N 族落地）**：`web_search` / `fetch_url` 已可**逐库启停**（`web-search.json` / `web-fetch.json` + 工具级闸，见 §2.5 尾注）；同时修掉一个真机踩到的容错 bug —— 手改 `config/agent.json` 若带 **UTF-8 BOM**（记事本 / `Set-Content -Encoding utf8` 的默认行为），`load_config()` 会整份解析失败（`Unexpected UTF-8 BOM`）⇒ 所有联网设置回落默认、看着像"设置没生效"；读取改用 `utf-8-sig`（`llm/config.py` 两处读点，对无 BOM 文件行为不变）。
+
+### 3.4 脚本工作区：agent 写、**人点「运行」**（2026-09-24 落地）
+
+> **来源** = 人：「web 搜索能力……涉及脚本，所以 agent 需要一个内置的临时脚本区给他工作，这样才是完整的联网搜索能力」。
+> **三问拍板**（`AskUserQuestion`）：能力面 = **工作区 + agent 写脚本 + 人在面板点「运行」**；落点 = **库内 `.memoria/agent/scratch/`**；解释器 = **设置里可显式指定 → 为空则系统 PATH → 也能切换"发布包内置"那一份**。
+> 这一条**部分修订**了本文件原先的「❌ 不做任意脚本/命令执行」—— §2.6「明确不做」、§4.1 非目标、§9 R4 三处已就地标注并指向本节。
+
+**为什么需要**（能力缺口，不是顺手加的）：联网的多步工作（抓多页 → 抽表 → 聚合成报告）靠"模型读一遍正文"做不完整 —— `fetch_url` 只把正文落进 `pending` 草案、回给模型的是「路径 + 摘要 + 长度」；没有落点与脚本，中间产物无处安放。工作区把"抓到的 / 抽出的 / 写好的"统一收在一处，而且人**看得见、审得了、点得动**。
+
+**边界（v1 三条，写死在代码里，不是建议）**：
+
+1. **写面限于工作区**：`services/agent/scratch.py` 用 `safe_rel()` + `realpath` 前缀双校验 ⇒ 逃不出 `<kb>/.memoria/agent/scratch/`（拒绝对路径 / `..` / 盘符 / NUL / 过深路径）；单文件 ≤ 1 MiB、总量 ≤ 20 MiB、≤ 200 个文件；
+2. **执行只能由人触发**：模型面**没有**执行工具（`KB_TOOL_NAMES` 里只有 `scratch_list / read / write / delete` 四把）；面板「运行」按钮 → RPC `agent_scratch_run`。**它不是沙箱**：脚本以当前用户身份运行、能读写文件与网络 ⇒ 面板常显一行警告，"点「运行」"即视为知晓。三项兜底：超时（设置 `script_timeout_s`，夹到 5–300s，超时杀进程）、stdout/stderr **各 64 KiB 上限**（超限即杀）、子进程环境变量**白名单**（`MEMORIA_AGENT_API_KEY` 等密钥一律不传；`cwd` 锁在脚本所在目录）；
+3. **工作区是应用管理目录**（同 `.memoria/agent/attachments/` 与会话 JSONL 的待遇）：模型写入**不走** M3 的 plan/审批管线、也不进 `pending.json`（避免被 `sync_kb_pending()` 全量重算清掉）⇒ 四把工具按 `tools/registry.py:110` 对该字段的定义（"不改动**知识库**"：正文 / sidecar / manifest / pending）声明 `read_only=True`、免审批。**若将来工作区被当作"库内容"，这一条必须跟着改**（届时工具要 `read_only=False` 并走确认卡）。
+
+**落点（实现，全零锚点漂移）**：
+
+| 面 | 位置 |
+|---|---|
+| 工作区内核 | `src/memoria/services/agent/scratch.py`（路径校验 / 读写删 / 解释器解析 / 执行；**纯标准库**） |
+| 模型面 | `tools/kb.py` 末尾 `_scratch_tools()`：`scratch_list` / `scratch_read` / `scratch_write` / `scratch_delete`（工具面 **20 → 24**；四把都是 `read_only=True`，**没有** `scratch_run`） |
+| 面板面 | `ui.py` 末尾五条 RPC：`agent_scratch_status` / `_read` / `_write` / `_delete` / `_run`（与 `agent_plugins` 同法：模块级函数挂类上 ⇒ 不推位既有锚点） |
+| 审计 | `audit.EVENT_SCRATCH_RUN = "scratch/run"`：每次运行一条 `{script, interpreter, source, exit_code, timed_out, duration_ms, bytes, digest}` —— **不含 stdout 全文、不含密钥** |
+| 面板 | `js/agent-scratch.js`（DOM 自建后插在输入区之前；`index.html` 只多一行 `<script>`）+ 两份 i18n + `app.css` 末尾块 |
+| 设置 | `config/agent.json` 三键：`script_interpreter`（空 = 回落）/ `script_use_bundled` / `script_timeout_s` |
+
+**解释器解析顺序**（`scratch.resolve_interpreter()`）：**显式路径**（设置项；填了但不存在 ⇒ 报错，**不静默回落**）→ **发布包内置**（`resources/python/`，开关可关）→ **系统 PATH**（`python` / `python3` / `py`）→ 当前解释器；都拿不到 ⇒ `interpreter=""` + `source="none"`：面板**禁用**「运行」并给出可照做的提示。
+
+**未做（如实；v1 之后的下一片）**：
+
+① **打包内置解释器**（`packaging/build.py` 登记 `resources/python/` + python.org **embeddable** 包 + `THIRD_PARTY_NOTICES.md` 记 PSF 许可）—— 已答人「可以内置」：代价约 **+25 MB**（现发布包 **1.3 GB**，占比可忽略）；
+② **设置界面**（三键目前只能改 `config/agent.json`，设置页「Agent」里还没有输入框）；
+③ 工作区**清理策略**（保留上限 / 一键清空）与面板里**直接编辑**脚本；
+④ 真机上长输出、多脚本协作与 PowerShell 场景的观感未验。
 
 ---
 
@@ -360,7 +399,7 @@ apply 入口（核心，M3a）
 ### 4.1 目标与非目标
 
 - **目标**：用户不改程序即可扩展 agent 能力（提示 + 工具声明 + 资源），且**扩展是声明式的**；
-- **非目标**：不做"任意脚本执行"（与仓库协作 agent 的沙箱/执行红线一致，见 [AGENTS.md §6](../../AGENTS.md)）。
+- **非目标**：不做"任意脚本执行"（与仓库协作 agent 的沙箱/执行红线一致，见 [AGENTS.md §6](../../AGENTS.md)）—— **例外见 §3.6**：库内脚本工作区里由**人点「运行」**触发的一次执行（模型仍无执行工具）。
 
 ### 4.2 声明式形态（= §2.1 契约的一个**用户技能类**插件，声明式、**不含代码**）
 
@@ -530,7 +569,7 @@ apply 入口（核心，M3a）
 | **B1** | L1 + L2 骨架（工具选择正确率、任务级 token、越权次数） | 有可复跑的对照表（先只用只读能力） |
 | **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（propose=`plan` → `preview_plan` → 逐条确认 → 应用 → 审计）+ **计划 API**（§2.3.3/§2.3.4）+ **首批 3 个 op**（`upsert_kp`、`attach_links`、`detach_links`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放 + 备份可用可清（§2.6 安全门四条） |
 | **W2**（=`M3b`） | 其余 op（`set_kp_range`、`rename_kp`、`merge_kp`）+ 撤销回滚 + `permission-presets` 第二旋钮 + N/S 各一个"只声明不启用"样板插件 | M3 出口（[dsh-agent-port §8](dsh-agent-port.md)）：越权次数 0 + L2 A/B |
-| **N1** | 出网一次 + `web_search`/`fetch_url` 原语 + 落 `pending` + 联网类插件声明（族/来源目录约定，见 §2.5） | 出网可审计、长文不进上下文 |
+| **N1** | ✅ **2026-09-23 已落地**（`services/agent/web.py` + `tools/kb.py` 的 `web_search` / `fetch_url`，见 [dsh-agent-port.md §6.28](dsh-agent-port.md)）：出网一次 + 两把原语 + 落 `pending`；~~联网类插件声明（族/来源目录约定，见 §2.5）~~ **本轮未做**（`permissions.network` 仍不在 v1 契约内，工具直接注册） | 出网可审计、长文不进上下文 —— **已验**（`net/request` 会话事件 + `tests/test_agent_web.py` **49 例**；真机出网未验） |
 | **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ 用户技能类插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
 | **H1** | 最小宿主接口（悬浮卡片 + 定时唤醒，默认关）+ 核心侧前端挂载点 | 主动性三问有答案、可一键停 |
 
@@ -545,7 +584,7 @@ apply 入口（核心，M3a）
 | R1 | **写能力毁用户库**（模型误解、range 锚错位） | 高 | 逐条确认 + 写前 pre-image / 事务回滚（§2.3.2）+ 只走既有服务层 + 每轮 `validate`；备份失败即不写（fail-closed） |
 | R2 | **正文内相对链接/引用未随文件移动改写**（`path_cascade` 明确不碰正文） | 中高 | M3b 前补齐正文改写，否则 `kb.file.move` 不进工具集（§2.6 不做清单） |
 | R3 | **出网泄露与"自动抓取"越界** | 中高 | 默认关 + 逐次显式 + 审计事件 + 私网地址拒绝 |
-| R4 | skill / 能力插件变成任意代码执行面 | 高 | 契约**不含执行体**（插件只声明，工具体=核心原语）+ `permissions.exec` 属暂缓字段、v1 无 exec 声明面（§2.1/§2.5/§2.6）；执行类需求单独评审（沙箱，上游**不吃**） |
+| R4 | skill / 能力插件变成任意代码执行面 | 高 | 契约**不含执行体**（插件只声明，工具体=核心原语）+ `permissions.exec` 属暂缓字段、v1 无 exec 声明面（§2.1/§2.5/§2.6）；执行类需求单独评审（沙箱，上游**不吃**）。**2026-09-24 新增的开口**按 §3.6 收口：执行只在库内脚本工作区、**只能由人在面板点「运行」**，模型面无执行工具；脚本以当前用户身份运行（**不是沙箱**，面板常显警告）+ 超时 / 输出上限 / 子进程环境白名单（密钥不传）+ `scratch/run` 审计 |
 | R5 | 主动性变成"烧 token 的玩具" | 中 | 默认关 + 频率/静默约束 + 预算上限（§6.1） |
 | R6 | 工具集膨胀导致选错率上升 | 中 | §6.3 原则 + L1 基准把"多余调用率"纳入门禁 |
 | R7 | 基准不可比（模型/端点漂移） | 中 | 报告必须带 commit + 模型名 + 是否真端点；离线用假 provider 的可复现档 |
@@ -559,7 +598,7 @@ apply 入口（核心，M3a）
 |---|---|---|---|
 | **P1** | 写能力的确认交互 | ① 面板内逐条 ✓/✗（推荐） ② 系统弹窗逐条 ③ 批量"接受同类" | 前端工作量与可读性 |
 | **P2** | 写工具是否允许"批量提议"（一次提议多条变更） | ① 允许但逐条确认（推荐） ② 只允许单条 | 事务复杂度 |
-| **P3** | 出网工具的实现面 | ① 复用模型端点的联网能力（若端点支持） ② 应用自己抓（标准库 urllib + 白名单）（推荐） | 隐私面与实现量 |
+| **P3** | 出网工具的实现面 | ✅ **已拍板（2026-09-23）= ① 复用模型端点的联网能力**（检索走 DeepSeek 的 Anthropic 兼容面 + 原生 server tool `web_search_20250305`，复用现有 key）；**② 仍由应用自己抓**（标准库 urllib + 私网拒绝）⇒ 检索与抓取各取一半，理由与落地见 [dsh-agent-port.md §6.28](dsh-agent-port.md)。原选项：① 复用模型端点的联网能力（若端点支持） ② 应用自己抓（标准库 urllib + 白名单）（原推荐） | 隐私面与实现量 |
 | **P4** | skill 的承载位置 | ① `<kb>/.memoria/agent/skills/**`（随库走，推荐） ② 程序目录（跨库共享） | 分发与迁移 |
 | **P5** | 主动性由谁调度 | ① 最小独立调度器（推荐） ② 复用 `MaintenanceExecutor` ③ 前端 `scheduler.js` | H 线复杂度（§5.4） |
 | **P6** | 基准的"真端点"档是否纳入门禁 | ① 纳入（更真实但不可复现） ② 只作参考（推荐：门禁用假 provider 档） | 门禁可信度 |
@@ -578,8 +617,8 @@ apply 入口（核心，M3a）
 |---|---|
 | 2026-09-19 | 初版（待评审）：现状盘点（调用面已具备、能力面极窄）；四条能力线（W 写 / N 联网 / S skill / H 宿主）逐线给出形态、边界、风险与验收；两条横向约束（token 三级预算 + 工具元层六原则与反模式；基准三层 L1/L2/L3 + 指标 + 语料 + 门禁，复用 maintenance-benchmark 方法论）；阶段建议 T1→B1→W1→W2→N1→S1→H1；7 条风险；P1–P6 待拍板。登记 `docs-management.md §4.2`，状态行落在 `todo.md §13`（AG04） |
 | 2026-09-20 | **完善 M3：写能力 → 可插拔能力插件机制**（用户口径「M3 需要完善设计，做成可插拔的机制」）。§2 由"写工具清单"重写为七小节：**2.1 插件能力契约**（硬校验表（14 个字段；`kind` 已于同日删去 ⇒ **13**，见本表末行）+ 内置声明与库级启用两份 JSON 实样；铁律 = 插件目录**不含可执行代码**）、**2.2 注册与装载**（内置声明 `resources/agent-capabilities/**` + 库级 `<kb>/.memoria/agent/capabilities.json` 两位置分工、发现顺序、冲突即失败、不变量"新增插件不改核心"逐个点名核心文件、UIAPI 只加**一个通用网关**）、**2.3 写管线**（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销六步，逐步标注**已存在**的接入函数）+ **2.3.1 唯一写者**（`DocumentService.save_document`(`document.py:317`) / `storage/sidecar.py:120` / `storage/manifest.py:178` / `storage/pending.py:273`）、**2.4 权限矩阵与越界**（realpath 前缀校验、硬拒 `DENIED_CODE`、零部分写、库外一律 Deny）、**2.5 四线 → 插件族**（W/N/S 纯声明式、H 需一个前端挂载点；如实说明"能插的是声明与权限，不能插的是执行体"）、**2.6 M3a/M3b 分期 + 安全门三条 + 首批写原语目录 + 不做清单**、**2.7 与上游关系**（借 `user-approval` 与 `tool-fs` 的 diff 呈现契约；**沙箱升级不吃**，本设计用声明式 permissions + realpath 校验替代 —— 本地发明）。同步：§0 红线「禁止 silent 写入」加强为"插件边界物理可证"、§0 单一事实源补库级注册文件须登记；§1 缺口行；§4.2 skill 归入同一契约；§8 `W1/W2` 更名 `M3a/M3b` 并补 N1/S1/H1 的不改核心前提；§9 新增 **R8**（装载器成为越权写入面）；§10 新增 **P7–P11**（注册表承载 / M3a 原语个数 / approval 可否覆写 / 回滚口径 / 权限档是否随 M3b）；全部锚点逐条读码核对（见 §2 各处的 `file:line`）。**未实施任何代码**（本轮 docs only）；`docs/todo.md §13 AG04` 行按规则 8 同义压缩后仍为 K3 待评审 |
-| 2026-09-20 | **为写能力补备份机制**（用户口径「写入技能还需要有备份机制」）。新增 **§2.3.2 备份（写前 pre-image）与撤销的数据面**（六小节）：① **时机/粒度** = apply 前、单文件 pre-image + 每轮一个批次快照（`txid`），覆盖 §2.3.1 四原语的**全部**落盘目标（md / sidecar / manifest / pending）；新建文件记 `{"existed": false}`（撤销=删除）；② **位置/命名/格式** = `<kb>/.memoria/agent/backups/<session_id>/<txid>/{journal.json,files/<原相对路径>}`，**原字节复制**（不做 diff/patch 存储，diff 只用于人看的 dry-run），逐字节/换行保真，单文件 >**8 MiB** 或单批 >**32 MiB** ⇒ 预检失败不写；③ **保留口径** = 每会话 **5** 批 / 每库 **10** 会话 / 总计 **64 MiB**，FIFO 淘汰且**永不删当前会话最新批次**，清理时机为 apply 后 / 打开 / 关库（不进读热路径），淘汰与失败**均可见**、**备份失败即不写（fail-closed）**；④ **唯一写者绑定点** = 备份是 apply 入口第一步（调用序 `路径校验 → snapshot_pre_images → 四原语 → 审计 → trimming`），插件无代码 + `permissions.write` 白名单不含 `backups/**` ⇒ 绕不过；⑤ **撤销** = 以事务为单位（M3a 只做撤上一批），入口走 §2.2 唯一通用网关 `agent_capability_call(action="undo")`（形态对齐 `ui.py:1329`），撤销**仍需审批 + 审计**，撤销前校验 sha256 防覆盖用户手改，撤销后跑 `validate_kb()`（`document.py:2001`）恢复一致性，**撤销失败不静默、保留备份、报错**；⑥ **与既有机制的关系** = 如实说明既有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）的 `.bak` 是 **fail-open、单版本、非事务**，本节 pre-image 与之**叠加**并**有意收紧**为 fail-closed（仅 M3 agent 路径）；git 库情形**不调 git**；**不构成新增事实源**（非权威可清理副本，与 `.memoria/cache/**` 同类，但**不**放 cache 下以免被静默清空），并给出"若升格为权威档案才需人工登记 `AGENTS.md §1`"的那一行原文。同步：§0 红线加"写前必留 pre-image、备份失败即不写"；§2.1 实样 `forbidden` 增 `backups/**`、`emits` 增 `capability/backup`/`capability/undo`；§2.3 表第 4/6 步与"四条不变口径"引 §2.3.2；§2.3.1 补"原语调用者唯一 = apply 入口"；§2.4 矩阵增 `backups/**` 行；§2.6 M3a 落点加"写前备份"、安全门**三条 → 四条**（新增"备份可用可清"+验证方式）、M3b 撤销范围标注"整轮/整会话"；§9 R1 处置加写前 pre-image；**§10 P10 重写**为三选项（①写前快照+会话内撤销+数字保留（推荐）②完整历史 ③仅审计重放） |
-| 2026-09-20 | **定死「写模块」接口形态 = 计划 API + 编译器**（用户口径：agent 只产出声明式 plan；Memoria 用编译器把 plan 变成具体编辑，并复用人类 UI 同一套校验器；格式演进不改提示词、幂等可验、审批粒度天然对齐）。**新增 §2.1.1 三层术语**（原语 / 领域动词 tool / 技能 skill，含"有无执行体""产出"两列，铁律 = **领域动词只产出 plan，不直接写盘**）；**§2.1 契约就地修正**：`provides.tools[]` 行改为"它贡献的**领域动词**……**该工具只产出 plan、不落盘**（§2.3.3/§2.1.1）"，并把实样里 `enum_from: graph.link_types` 更正为 `graph.edge_types.EDGE_TYPES`（真实常量 `src/memoria/graph/edge_types.py:14`）；§2.2 补"插件挑用的 `tool_id` 是领域动词、产出 plan"一句。**新增 §2.3.3 计划 API**：信封 `{v, txid, intent, ops[]}` + **op 表**（`upsert_kp` / `attach_links` / `detach_links` / `set_kp_range` / `rename_kp`，`merge_kp` 列第二批），每 op 给字段、校验规则（幂等键、"目标必须可解析"、越界/歧义如何拒）、编译器要解析什么（路径归一 `tools/kb.py:160-172`、KP id `check_kp_id`、`occurrences` 的"行+匹配文本"对齐 `scan_link_text_matches`/`wrap_plain_on_lines`）、编译到的**唯一实现**（`document.py:1360/1722/2493/2428/1937`），并给出**失败语义 = 拒整批（all-or-nothing）+ 三条理由**，另列 **4 条"需新增的最小能力"**（编译器本体、`occurrences.matched_text` 前置核对、`merge_kp` 合并动作、plan 版本承诺）。**新增 §2.3.4 编译器与校验器**：`validate_plan` / `preview_plan`（dry-run diff）/ `resolve` / `audit_kb` 四个只读面 + **硬不变量「同一套校验器，两个消费者（人 UI 与 agent）」**（逐 API 点名复用函数与行号，禁止另写宽松校验）+ 自检循环。**§2.3 管线第 1/5 步**改为产 `plan` 并按 plan 落审计。**§2.6** M3a 收敛为**计划 API 最小闭环**（首批 3 个 op + 只读面 + 完整管线），M3b 收其余 op；**安全门四条逐条给出 plan 架构下的"测什么/怎么测"**；附表下新增**原语目录与 op 的关系**（M3a 新增原语 `kb.link.attach`/`kb.link.detach`；`kb.link.create` 是纯边、`upsert_edge` 留 M3b）；不做清单新增 3 条（不做部分应用 / M3a 不做 `set_kp_range`·`rename_kp`·`merge_kp` / 不做版本协商）。**§8 W1/W2 行**同步为 plan 口径。**§10**：**P8 改为"首批 op 个数"**（①三个推荐 ②五个 ③一个）、**P9 补 plan 按 op 动作类分档**（推荐仍为不可覆写，理由补"双源与单一校验器冲突"）、**P10 补批粒度 = 一个 plan = 一个 `txid`**、**新增 P12**（plan 是否需独立版本号/兼容承诺：①自带 `v` 只增不改（推荐）②无版本号 ③完整协商）。**未实施任何代码**（本轮 docs only）；同步轻改 `dsh-agent-port.md` M3 行、`docs-management.md §4.2`、`todo.md §13 AG04`（字节门禁见验证） |
+| 2026-09-20 | **为写能力补备份机制**（用户口径「写入技能还需要有备份机制」）。新增 **§2.3.2 备份（写前 pre-image）与撤销的数据面**（六小节）：① **时机/粒度** = apply 前、单文件 pre-image + 每轮一个批次快照（`txid`），覆盖 §2.3.1 四原语的**全部**落盘目标（md / sidecar / manifest / pending）；新建文件记 `{"existed": false}`（撤销=删除）；② **位置/命名/格式** = `<kb>/.memoria/agent/backups/<session_id>/<txid>/{journal.json,files/<原相对路径>}`，**原字节复制**（不做 diff/patch 存储，diff 只用于人看的 dry-run），逐字节/换行保真，单文件 >**8 MiB** 或单批 >**32 MiB** ⇒ 预检失败不写；③ **保留口径** = 每会话 **5** 批 / 每库 **10** 会话 / 总计 **64 MiB**，FIFO 淘汰且**永不删当前会话最新批次**，清理时机为 apply 后 / 打开 / 关库（不进读热路径），淘汰与失败**均可见**、**备份失败即不写（fail-closed）**；④ **唯一写者绑定点** = 备份是 apply 入口第一步（调用序 `路径校验 → snapshot_pre_images → 四原语 → 审计 → trimming`），插件无代码 + `permissions.write` 白名单不含 `backups/**` ⇒ 绕不过；⑤ **撤销** = 以事务为单位（M3a 只做撤上一批），入口走 §2.2 唯一通用网关 `agent_capability_call(action="undo")`（形态对齐 `ui.py:1376`），撤销**仍需审批 + 审计**，撤销前校验 sha256 防覆盖用户手改，撤销后跑 `validate_kb()`（`document.py:2022`）恢复一致性，**撤销失败不静默、保留备份、报错**；⑥ **与既有机制的关系** = 如实说明既有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）的 `.bak` 是 **fail-open、单版本、非事务**，本节 pre-image 与之**叠加**并**有意收紧**为 fail-closed（仅 M3 agent 路径）；git 库情形**不调 git**；**不构成新增事实源**（非权威可清理副本，与 `.memoria/cache/**` 同类，但**不**放 cache 下以免被静默清空），并给出"若升格为权威档案才需人工登记 `AGENTS.md §1`"的那一行原文。同步：§0 红线加"写前必留 pre-image、备份失败即不写"；§2.1 实样 `forbidden` 增 `backups/**`、`emits` 增 `capability/backup`/`capability/undo`；§2.3 表第 4/6 步与"四条不变口径"引 §2.3.2；§2.3.1 补"原语调用者唯一 = apply 入口"；§2.4 矩阵增 `backups/**` 行；§2.6 M3a 落点加"写前备份"、安全门**三条 → 四条**（新增"备份可用可清"+验证方式）、M3b 撤销范围标注"整轮/整会话"；§9 R1 处置加写前 pre-image；**§10 P10 重写**为三选项（①写前快照+会话内撤销+数字保留（推荐）②完整历史 ③仅审计重放） |
+| 2026-09-20 | **定死「写模块」接口形态 = 计划 API + 编译器**（用户口径：agent 只产出声明式 plan；Memoria 用编译器把 plan 变成具体编辑，并复用人类 UI 同一套校验器；格式演进不改提示词、幂等可验、审批粒度天然对齐）。**新增 §2.1.1 三层术语**（原语 / 领域动词 tool / 技能 skill，含"有无执行体""产出"两列，铁律 = **领域动词只产出 plan，不直接写盘**）；**§2.1 契约就地修正**：`provides.tools[]` 行改为"它贡献的**领域动词**……**该工具只产出 plan、不落盘**（§2.3.3/§2.1.1）"，并把实样里 `enum_from: graph.link_types` 更正为 `graph.edge_types.EDGE_TYPES`（真实常量 `src/memoria/graph/edge_types.py:14`）；§2.2 补"插件挑用的 `tool_id` 是领域动词、产出 plan"一句。**新增 §2.3.3 计划 API**：信封 `{v, txid, intent, ops[]}` + **op 表**（`upsert_kp` / `attach_links` / `detach_links` / `set_kp_range` / `rename_kp`，`merge_kp` 列第二批），每 op 给字段、校验规则（幂等键、"目标必须可解析"、越界/歧义如何拒）、编译器要解析什么（路径归一 `tools/kb.py:160-172`、KP id `check_kp_id`、`occurrences` 的"行+匹配文本"对齐 `scan_link_text_matches`/`wrap_plain_on_lines`）、编译到的**唯一实现**（`document.py:1381/1722/2493/2428/1937`），并给出**失败语义 = 拒整批（all-or-nothing）+ 三条理由**，另列 **4 条"需新增的最小能力"**（编译器本体、`occurrences.matched_text` 前置核对、`merge_kp` 合并动作、plan 版本承诺）。**新增 §2.3.4 编译器与校验器**：`validate_plan` / `preview_plan`（dry-run diff）/ `resolve` / `audit_kb` 四个只读面 + **硬不变量「同一套校验器，两个消费者（人 UI 与 agent）」**（逐 API 点名复用函数与行号，禁止另写宽松校验）+ 自检循环。**§2.3 管线第 1/5 步**改为产 `plan` 并按 plan 落审计。**§2.6** M3a 收敛为**计划 API 最小闭环**（首批 3 个 op + 只读面 + 完整管线），M3b 收其余 op；**安全门四条逐条给出 plan 架构下的"测什么/怎么测"**；附表下新增**原语目录与 op 的关系**（M3a 新增原语 `kb.link.attach`/`kb.link.detach`；`kb.link.create` 是纯边、`upsert_edge` 留 M3b）；不做清单新增 3 条（不做部分应用 / M3a 不做 `set_kp_range`·`rename_kp`·`merge_kp` / 不做版本协商）。**§8 W1/W2 行**同步为 plan 口径。**§10**：**P8 改为"首批 op 个数"**（①三个推荐 ②五个 ③一个）、**P9 补 plan 按 op 动作类分档**（推荐仍为不可覆写，理由补"双源与单一校验器冲突"）、**P10 补批粒度 = 一个 plan = 一个 `txid`**、**新增 P12**（plan 是否需独立版本号/兼容承诺：①自带 `v` 只增不改（推荐）②无版本号 ③完整协商）。**未实施任何代码**（本轮 docs only）；同步轻改 `dsh-agent-port.md` M3 行、`docs-management.md §4.2`、`todo.md §13 AG04`（字节门禁见验证） |
 | 2026-09-20 | **字段演进：删除 `kind`（不再用未经验证的枚举同时承担"权限域"与"来源/划分"两种语义）**（用户口径：「那就不要写这个 kind 的字段，我们慢慢攒插件，后面才能知道有没有必要保留这个字段，以及怎么划分」）。**docs only，未改任何源码**。① `design/agent-capabilities.md` **§2.1**：删 `kind` 行（原 `read` / `write` / `network` / `skill` / `host`）⇒ **字段数 14 → 13**；内置声明实样删 `"kind": "write"`；`permissions.write` 行"`kind=write` 必填"改为"**有写动作类时**必填且非空"；**`approval` 行改写**为"**必须显式声明**（按动作类分档，不由分类字段推导）"，硬校验列落**安全下限**：「`permissions` 含 `write` 或 `exec` ⇒ `approval` **不得为 `auto`**；唯一例外须在 `forbidden`/注释里写明理由，且该例外**必须落审计**」；新增段 **「字段演进暂缓（2026-09-20）」** = 原话要点 + **`kind` 两项职责的替代**（approval 改显式声明 + 安全下限；**UI 先按插件来源目录/名单分组，是否需分类维度暂不由契约决定**）+ **复评触发条件 = 攒够 3–5 个真实插件**。② `kind` 残留清扫（同文件）：§2.1.1 技能行、§2.4 权限矩阵列名（`插件 kind` → `插件声明的动作类`）、**§2.5 改写为"四线 = 四个插件族/目录（族 ≠ 枚举值，按目录与来源约定、不是契约字段）"并删表内 `kind` 列**、§4.2 标题与注（→"**用户技能类**插件（声明式、**不含代码**）"，不引枚举）、§8 N1/S1 行。③ 轻改 `design/dsh-agent-port.md` §5（`skill` 行去掉 `kind: skill`）与 `docs-management.md §4.2`（追加本轮登记）。④ **§10 无改动**：P7–P12 逐条核对，均不依赖 `kind`（P8 按 **op 个数**、P9 按 **op 动作类**分档、P11 指 `approval` 旋钮），**未新增**"分类维度"待拍板项（用户已决定延后）。**未实施任何代码**；`docs/todo.md` 本轮未改动（AG04 行不依赖 `kind`，字节中性） |
 | 2026-09-20 | **契约收缩为「最小可用契约 v1」（字段 13 → 6）**（用户口径：「能力契约我们慢慢完善，我们先以第一个写模块进行设计，只需要满足『最小可用契约字段集』，不要上来就框住，除非 dsh 上游有成熟的设计」）。**docs only，未改任何源码**。① `design/agent-capabilities.md` **§2.1 重写**：标题改「**最小可用契约 v1**」+ 写入**准入规则**（字段要么**有真实消费者点名**、要么**照搬上游成熟设计并点名 `file:line`**，两条都不满足即移出）；v1 字段表 **6 个** = `id`（有据：`dsh-src/packages/fs/tool-fs/src/index.ts:19`、`apps/cli/src/profile-boot.ts:173`）/ `name`（有据：`interaction/permission-presets/src/index.ts:62-71`）/ `provides.tools[]`（**本地自定**：上游是运行时 `ctx.tools.register()`，`core/tools/src/index.ts:1043`；仅取值语义对齐 `ToolSchema`，`core/tools/src/schema.ts:483-498`）/ `permissions.read`·`permissions.write`（**本地自定**：上游只有执行器档 `SandboxMode`，`packages/sandbox/sandbox/src/index.ts:29`）/ `approval`（**本地自定字段**，词汇对齐 `ApprovalOutcome`，`interaction/user-approval/src/types.ts:32`；上游档位是会话级 `ApprovalPolicy`，`interaction/user-approval/src/index.ts:60`），每行给"消费者是谁 / 上游对照 / 校验规则"；② **新增「暂缓字段（不在 v1）」清单**（10 条，逐条给**移出理由 + 再引入触发条件**）：`provides.prompt`、`permissions.exec`、`permissions.network`·`host`、`forbidden`、`config`（参数 schema）、`emits`、`verify`、`provenance`、`unload`、`enabled`（**契约层冗余** —— 库级注册表 `enabled[]` 的条目存在性即开关）；③ 两份 JSON 实样同步为 v1 字段集（并注 `v` 是信封版本、不占字段位）；④ **一致性清扫**：§2 引言（"禁项显式/提示词独立文件"标注已移出）、§2.2（"`config` 超界" → "v1 字段校验不过"；"两处新增" → **一处**）、§2.4（新增 **v1 声明面**注：只开 `read`/`write`，`network`/`host`/`exec` 三列不发生效）、§2.5（N/H 行的动作类改标"随 N1/H1 引入"）、§2.6（M3a 落点标 v1；`kb.file.delete` 开关与 `permissions.exec` 改按暂缓口径）、§4.2（去掉 `provides.prompt` 依赖）、§9 R4·R8（去掉 `exec` 恒空、`forbidden` 非空表述）、§10 **P9**（库级"只接受启停位与 `config` 值"）；**`approval` 安全下限**统一为「`permissions` 含 `write` ⇒ 不得 `auto`；**引入 `exec` 时该条随之生效**」；⑤ 轻改 `design/dsh-agent-port.md` §8 **M3 行**（标注 v1 字段集）与 `conventions/docs-management.md §4.2`（追加本行）。**`docs/todo.md` 未改动**（AG04 行不依赖被移出字段，状态仍 **K3 待评审**，字节中性） |
 | 2026-09-20 | **契约迁出：新增活文档 [agent-plugin-design.md](agent-plugin-design.md)，本文只留指针**（用户口径：「我要一个新的文档写这些内容，所有内容都由我来慢慢对齐；先把上面确定的 6 字段最小协议记录进去，然后我们讨论写组件的细节」）。**docs only，未改任何源码**。① **新文档** `docs/design/agent-plugin-design.md`（**唯一事实源**）= 头部（用途 / 关联文档 / 状态=**活文档、由人逐步对齐** / **治理约定=Agent 只追加、不改写人已确认条目**）+ §1 最小可用契约 v1（6 字段表 + 准入规则 + **两份 JSON 实样**，均**逐字照抄**自本文收缩前的 §2.1）+ §2 暂缓字段 10 条 + §3 上游事实（三条结论 + `ApprovalOutcome` 含 `unavailable` ⇒ fail-closed，`file:line` 已逐条复验）+ §4 待讨论 Q1–Q6（`name` 去留 / `constrain`·`gate` 去留 / P8 首批 op 个数 / P9 `approval` 覆写 / P10 备份保留 / P12 plan 版本与兼容；只写问题 + 可选项）+ §5 变更记录；② **本文 §2.1** 的字段表、暂缓清单、`kind` 删除演进与两份 JSON 实样**全部迁出**，改为 **2 行指针**，只保留**模块侧**内容（铁律"插件目录内不含可执行代码"）与"其余各节原引 `§2.1` 字段表/暂缓清单/实样一律以该文为准"一句（**禁并行事实源**）；③ 登记 `conventions/docs-management.md §4.2`。**`docs/todo.md` 未改动**（AG04 行不引用 §2.1 字段表，字节中性） |

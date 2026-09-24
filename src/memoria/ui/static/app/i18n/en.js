@@ -1331,12 +1331,13 @@
     daysAgo: "{n} d ago",
   };
 
-  // ===== appended 2026-09-19: new "Chat" tab in the settings dialog =====
+  // ===== appended 2026-09-19: new "Chat" tab in the settings dialog; 2026-09-23 the tab is renamed "Agent" =====
   // Same "Object.assign at the very end of the file" trick as above, so that every
   // `en.js:<line>` anchor in the docs keeps pointing at the same declaration.
-  // All other strings inside the tab reuse existing keys (`agent.settings.*`, `agent.net.*`).
+  // All other strings inside the tab reuse existing keys (`agent.settings.*`, `agent.net.*`);
+  // the two collapsible sub-section titles are `settings.section.*` (see the file tail).
   Object.assign(g.MEMORIA_LOCALES["en"].settings.tab, {
-    agent: "Chat",
+    agent: "Agent",
   });
 
   // ===== appended 2026-09-19: 4th slot of the status bar = session cache hit rate =====
@@ -1658,5 +1659,182 @@
     thinkMore: "Expand",
     thinkLess: "Collapse",
     thinkLive: "Thinking…",
+  });
+  // ===== appended 2026-09-22: capability-plugin panel (2026-09-23 it moved into the "Agent" tab's "Capabilities" sub-section) =====
+  // The panel is `plugins-settings.js`; it only calls the backend gateway
+  // `agent_plugins` / `agent_plugin_set` (see `plugins.py`'s trailing "contract wiring" note).
+  // The copy says three things on purpose: the switch is **per-KB**, turning it off makes those
+  // action classes unavailable in this KB, and the declaration list itself is read-only.
+  // The tab key `settings.tab.plugins` is retired with the merge; the two lines below are an
+  // equal-length placeholder so that every `en.js:<line>` anchor below keeps its number.
+  //
+  Object.assign(g.MEMORIA_LOCALES["en"].settings, {
+    plugins: {
+      hint: "These are this knowledge base's capability plugins (declarations ship with the build and are read-only). The switches are stored in `<kb>/.memoria/agent/capabilities.json` and travel with the KB; once off, those actions are unavailable here — the agent's write proposals of that kind are refused (code capability_disabled).",
+      loading: "Loading…",
+      empty: "No capability-plugin declarations are available for this knowledge base (the capability gate is inert).",
+      failed: "Failed to load",
+      noKb: "Open a knowledge base first",
+      toolsLabel: "Actions",
+      readLabel: "Read",
+      writeLabel: "Write",
+      approvalLabel: "Approval",
+      enforced: "Capability gate",
+      enforcedOn: "active (action classes limited by this KB's enablement)",
+      enforcedOff: "inactive (no declarations were loaded)",
+      registry: "KB registry",
+      warnTitle: "Load warnings",
+      errTitle: "Load errors",
+      saving: "Saving…",
+      savedOn: "Enabled",
+      savedOff: "Disabled",
+      saved: "Saved",
+      configLabel: "Per-KB parameters",
+      configHint: "Applies to this knowledge base only, and can only be stricter than the machine-wide default (allow = intersection, deny = union). Empty = inherit the default.",
+      param: {
+        allow: "Allowed domains",
+        deny: "Blocked domains",
+      },
+      source: {
+        builtin: "Built-in",
+        user: "User import",
+        kb: "In-KB declaration",
+      },
+    },
+  });
+
+  // User questions (`ask_user_question` cards; 2026-09-23, upstream `interaction/tool-ask-user`).
+  // Appended at the tail -> existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    question: {
+      role: "Waiting for you",
+      title: "The model asks {n} question(s) before continuing",
+      single: "single",
+      multi: "multiple",
+      custom: "Other (type your own)",
+      submit: "Submit",
+      sending: "Submitting…",
+      failed: "Failed to submit the answer",
+      needAnswer: "Answer every question: pick an option or type your own",
+      answered: "Answered",
+      done: "Question closed",
+    },
+  });
+
+  // 2026-09-23: titles of the two collapsible sub-sections inside the "Agent" tab
+  // (assembled by `ensureAgentSections()` at the tail of `graph-settings.js`).
+  // Appended at the tail -> existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].settings, {
+    section: {
+      chat: "Chat",
+      caps: "Capabilities",
+    },
+  });
+
+  // 2026-09-23: the font fields under Settings -> "View" -> "Text" (one slot per language + a top-bar slot).
+  // Both are **dropdowns** (the empty first entry = follow the default); appended at the tail ->
+  // existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].settings.display, {
+    fontLangNote: "One font per language: body text (the Markdown preview and the agent transcript) is picked by glyph — Chinese from the Chinese slot, Latin from the English slot. \"Default font\" follows the built-in font.",
+    fontSlotDefault: "Default font",
+    fontBrandLabel: "Top bar MEMORIA",
+    fontBrandDefault: "Follow the body font",
+    fontBrandNote: "Changes only the top-bar wordmark; \"Follow the body font\" keeps it in step with the body option above.",
+  });
+
+  // 2026-09-23: strings for **image attachments** in the chat dock (OS drag & drop / clipboard paste ->
+  // sent to the model as image input). Wired by the "image attachments" block at the tail of
+  // `agent-panel.js`. Appended at the tail -> existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    attach: {
+      failed: "Failed to upload the image",
+      badType: "Only JPEG / PNG / GIF / WebP images are supported: {name}",
+      tooLarge: "Each image must be at most {max} MiB: {name}",
+      tooMany: "At most {max} images per message",
+      remove: "Remove this image",
+      dropHint: "Drop or paste an image to attach it to this message",
+      uploading: "Uploading…",
+    },
+  });
+
+  // 2026-09-23: the "Performance" sub-section under Settings -> "View" (the **background preload**
+  // toggle). Assembled by `preloadSection()` at the tail of `display-settings.js`; the behaviour lives in
+  // the "preview DOM cache + background pre-render" block at the tail of `app.js`.
+  // Appended at the tail -> existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].settings.display, {
+    perfGroup: "Performance",
+    preloadLabel: "Background preload",
+    preloadNote: "Once the current document is rendered, idle time is used to pre-render the preview of the other open tabs (one tab per idle callback, skipping documents over 1200 lines, up to 4 per session), so tab switching feels instant. The cost is higher memory and CPU: every cached tab keeps a whole preview DOM alive (a few MB per tab for long documents — an estimate; up to 8 tabs are cached), i.e. smoother switching paid for in hardware. Recommended for large knowledge bases; the gain is small on small ones.",
+    preloadFootprint: " {n} tab(s) cached right now, estimated at about {mb} MB.",
+  });
+
+  // 2026-09-23: the pending-question card is dismissed once answered; the Q&A record moves to the tool row.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.question, {
+    recordAsk: "Q: ",
+    recordAnswer: "A: ",
+    recordNth: "Question {n}",
+  });
+
+  // 2026-09-24: **script workspace** panel (`js/agent-scratch.js`; design: `agent-capabilities.md §3.4`).
+  // Appended at the tail -> existing keys and line numbers do not shift.
+  g.MEMORIA_LOCALES["en"].agent.scratch = {
+    title: "Script workspace",
+    summary: "{n} file(s)",
+    empty: "empty",
+    emptyHint: "No files yet. Anything the agent fetches or writes (scripts included) shows up here; you can view, run and delete it from here.",
+    warn: "⚠ Not a sandbox: a script runs as your own user and can read/write files and use the network. It only runs when you click \u201cRun\u201d (the agent has no execution rights).",
+    refresh: "Refresh",
+    view: "View",
+    run: "Run",
+    runTitle: "Run this script as the current user (files + network; your API key is not passed to it)",
+    delete: "Delete",
+    deleteConfirm: "Delete {path} from the workspace?",
+    interpreter: "Interpreter: {path} ({source})",
+    interpreterNone: "No script interpreter found — set a path in Settings \u2192 Agent, or install Python",
+    viewed: "Read {path}",
+    exit: "exit {code} · {ms} ms",
+    timeout: "timed out ({s}s) and was killed",
+    truncated: "output exceeded the cap and was truncated",
+    noOutput: "(no output)",
+    failed: "Workspace operation failed",
+    source: { explicit: "from settings", bundled: "bundled", system: "system", none: "—" },
+    code: {
+      SCRATCH_BAD_PATH: "Invalid path: relative paths inside the workspace only",
+      SCRATCH_NOT_FOUND: "No such file in the workspace",
+      SCRATCH_NO_INTERPRETER: "No usable script interpreter: set one in Settings, or install Python",
+      SCRATCH_TIMEOUT: "The script timed out and was killed",
+      SCRATCH_RUN_FAILED: "Could not start the script",
+      no_kb: "Open a knowledge base first",
+      scratch_failed: "Workspace read/write failed",
+    },
+  };
+
+  // 2026-09-24: web **domain rules** settings (`js/net-settings.js`; the gate lives in
+  // `services/agent/web.py::WebClient._assert_domain()`, checked on every hop -> `WEB_BLOCKED_DOMAIN`).
+  // Appended at the tail -> existing keys and line numbers do not shift.
+  Object.assign(g.MEMORIA_LOCALES["en"].settings, {
+    net: {
+      title: "Fetch domain rules",
+      allowLabel: "Allowed domains (empty = any)",
+      allowPh: "e.g. example.com, docs.python.org",
+      denyLabel: "Blocked domains (take precedence)",
+      denyPh: "e.g. ads.example.com",
+      hint:
+        "Comma separated. Writing example.com also covers all of its subdomains; *.example.com, " +
+        "https://example.com/x and example.com:8443 are all normalised to the bare domain, and entries that " +
+        "cannot be parsed are ignored (the count shows up below). The rule is re-checked on every redirect hop; " +
+        "a blocked fetch returns WEB_BLOCKED_DOMAIN.",
+      empty: "No domain restriction right now (loopback / private / link-local addresses are still refused).",
+      parsedAllow: "Allowed: {list}",
+      parsedDeny: "Blocked: {list}",
+      merged: "This KB, merged -> allowed: {allow} / blocked: {deny}",
+      capabilityOff: "⚠ This KB has the “web fetch” capability turned off (enable it under Capability plugins)",
+      scopeNote: "The lines above are the machine-wide default (shared by every knowledge base). For a stricter rule in one KB, set the web-fetch “Per-KB parameters” above — a KB can only tighten, never loosen.",
+      any: "any",
+      none: "none",
+      ignored: "{n} unparsable entry(ies) ignored",
+      saved: "Domain rules saved",
+      failed: "Could not save the domain rules",
+    },
   });
 })(typeof window !== "undefined" ? window : globalThis);

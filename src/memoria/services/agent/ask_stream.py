@@ -49,7 +49,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from memoria.services.agent.ask import ask
-from memoria.services.agent.approval_bridge import abort, attach, detach, pending_for
+from memoria.services.agent.approval_bridge import abort, attach, detach, pending_for, pending_questions_for
 from memoria.services.agent.llm import RetryPolicy
 from memoria.services.agent.loop import CancelToken, StopReason
 
@@ -125,6 +125,9 @@ class AskJob:
     #: 应用侧已装载的 `DocumentService`（2026-09-21 追加，可选）：agent **直接写入**时用它 ——
     #: 写后清它的解析缓存 ⇒ 前端重开文件看到的是新内容；也避免每次写入新建实例（那会写用户 config）。
     service: Any = None
+    #: 本轮附带的图片附件（2026-09-23 图像输入，追加式可选）：`(({rel_path, media_type, name}), …)`。
+    #: 字节早在上传时落进 `<kb>/.memoria/agent/attachments/`，这里只带引用（见 `attachments.py`）。
+    attachments: tuple[Mapping[str, Any], ...] = ()
     lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
     cancel_token: CancelToken = field(default_factory=CancelToken, repr=False)
     status: str = RUNNING
@@ -249,7 +252,7 @@ class AskJob:
                 "process_delta": [dict(item) for item in self.process[p_start:]],
                 "process_cursor": len(self.process),
                 # 追加键（2026-09-22）：待人工确认的写类调用（逐条确认卡；只增不改）
-                "pending_approvals": pending_for(self.kb_path),
+                "pending_approvals": pending_for(self.kb_path), "pending_questions": pending_questions_for(self.kb_path),
                 "answer": self.answer,
                 "anchors": [dict(anchor) for anchor in self.anchors],
                 "tool_calls": [dict(call) for call in self.tool_calls],
@@ -289,6 +292,7 @@ class AskJobManager:
         model: str = "",
         env: Mapping[str, str] | None = None,
         service: Any = None,
+        attachments: Sequence[Mapping[str, Any]] | None = None,
     ) -> dict:
         """校验并提交一次提问；返回 `{status:"ok", job_id}` 或结构化错误。
 
@@ -332,6 +336,7 @@ class AskJobManager:
                 model=model,
                 resume_session_id=resume,
                 service=service,
+                attachments=tuple(attachments or ()),
             )
             self._jobs[job.job_id] = job
             self._order.append(job.job_id)
@@ -380,6 +385,7 @@ class AskJobManager:
                 on_event=on_event,
                 cancel=job.cancel_token,
                 service=job.service,
+                attachments=list(job.attachments),
             )
         except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
             code = getattr(exc, "code", None) or CODE_ASK_FAILED

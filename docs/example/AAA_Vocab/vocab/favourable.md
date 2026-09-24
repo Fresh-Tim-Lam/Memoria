@@ -98,6 +98,7 @@ The weather conditions were __________, so we decided to continue the outdoor ev
 - what the news was ｜ when and where you received it ｜ who told you ｜ how you felt about it
 （中文说明：口语 Part 2，用 **SETTING → CHANGE → FEELING** 三槽位）
 > 💡 课件示范句直接用到了本词：*I received a **favourable** response and realised that the opportunity looked [[promising]].*（CHANGE 槽位）
+> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——假期只剩几天、条件已经不利的那句：the conditions were clearly not **favourable**。
 ### 3. Writing scenario
 Write one Task‑2 sentence about what helps a new business succeed.
 （中文说明：大作文写一句话，论述什么有助于新企业成功）

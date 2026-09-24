@@ -602,10 +602,10 @@ window.MemoriaMarkdownPreview = (function () {
     container.querySelectorAll("img").forEach((img) => {
       if (img.closest(".-lightbox-overlay")) return;
       img.style.cursor = "zoom-in";
-      // 诊断：检查图片加载状态
-      console.log("[img-debug] src:", img.src, "naturalWidth:", img.naturalWidth, "complete:", img.complete, "display:", getComputedStyle(img).display, "width:", getComputedStyle(img).width, "height:", getComputedStyle(img).height, "maxWidth:", getComputedStyle(img).maxWidth);
-      img.addEventListener("error", () => console.error("[img-debug] LOAD ERROR:", img.src));
-      img.addEventListener("load", () => console.log("[img-debug] LOAD OK:", img.src, "naturalWidth:", img.naturalWidth));
+      // 2026-09-23 性能：原先这里有一条 `console.log`，内含 4 次 `getComputedStyle(img)`（每张图都会强制
+      // 样式计算 + 布局）⇒ 实测 270 图的文档切一次文件刷出上千条日志、并明显拖慢渲染，已整体删除。
+      // 同理删掉只做打印的 `error` / `load` 两条诊断监听；`dblclick` 放大逻辑保留（见下）。
+      // 需要排查图片加载时用 DevTools 的 Network 面板，别再往热路径塞日志。
       // 双击放大（阶段 F 交互：单击进入图片编辑工具栏，双击 Lightbox 放大）
       img.addEventListener("dblclick", (e) => {
         // 双击放大时退出已进入的图片编辑模式（由 edit-handler 的 preview dblclick 处理，
@@ -622,8 +622,8 @@ window.MemoriaMarkdownPreview = (function () {
   function setKbRootForImages(root) { _kbRootForImages = root; }
   function setCurrentFileDir(dir) { _currentFileDir = dir; }
   function rewriteLocalImagePaths(html) {
-    if (!_kbRootForImages) { console.log("[img-rewrite] SKIP: _kbRootForImages 未设置"); return html; }
-    console.log("[img-rewrite] _kbRootForImages=" + _kbRootForImages + " _currentFileDir=" + (_currentFileDir || "(root)"));
+    if (!_kbRootForImages) { return html; } // 2026-09-23 性能：原在此打一条 SKIP 日志；本函数**每张图调用一次** ⇒ 改成静默
+    // 2026-09-23 性能：原在此打印 kbRoot/currentFileDir（每图一次），已删
     // Match any <img src="..."> and rewrite relative paths.
     return html.replace(
       /(<img\s[^>]*src=")([^"]+)"/g,
@@ -650,7 +650,7 @@ window.MemoriaMarkdownPreview = (function () {
         const encoded = relPath.replace(/\\/g, "/").split("/").map(encodeSeg).join("/");
         const apiBase = window.MemoriaBridge?.apiBase || "";
         const url = apiBase + "/files/" + encoded;
-        console.log("[img-rewrite]", src, "→", url, "(relPath=" + relPath + ")");
+        // 2026-09-23 性能：原在此逐图 `console.log(src → url)`，已删（它是"每图一条"噪声的主要来源）
         return prefix + url + '"';
       }
     );

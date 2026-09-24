@@ -195,7 +195,7 @@
 | 格式栏 / 块编辑栏 / 视图切换 / 编辑模式开关 | `index.html:152`-`196` |
 | `#editor-wrap`/`#editor-header` 布局 | `app.css:3053`-`3103` |
 | 视图容器与三态显隐 | `app.css:3413`-`3459` |
-| `.-editor` 字号变量 | `app.css:3433`-`3468`；`display-settings.js:79`-`85` |
+| `.-editor` 字号变量 | `app.css:3433`-`3468`；`display-settings.js:137`-`144` |
 | 行 / 行号 / 行内容样式 | `app.css:3570`-`3636` |
 | 格式按钮 / 分隔 / 下拉 / 色块样式 | `app.css:3108`-`3234` |
 | 画笔光标与 `brush-armed` | `app.css:3402`-`3439` |

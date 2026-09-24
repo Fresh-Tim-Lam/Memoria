@@ -1247,12 +1247,12 @@
     daysAgo: "{n} 天前",
   };
 
-  // ===== 2026-09-19 追加：设置弹窗新增「对话」页签（原 dock 头部那个「设置」内嵌面板搬来）=====
+  // ===== 2026-09-19 追加：设置弹窗新增「对话」页签（原 dock 头部那个「设置」内嵌面板搬来）；2026-09-23 **页签改名「Agent」** =====
   // 同样走"文件末尾 Object.assign"，避免推位上半部所有 `zh-CN.js:<行号>` 锚点。
   // 页签内其余文案**复用既有键**（`agent.settings.baseUrl|model|apiKey|timeout|save|path|apiKeySet`、
-  // `agent.net.label|title`）—— 尤其 `agent.net.title` 已写明"关闭后禁用发送"，故不再新造说明文案。
+  // `agent.net.label|title`）—— 尤其 `agent.net.title` 已写明"关闭后禁用发送"，故不再新造说明文案；页内两个可折叠子版块的标题键见文件末尾 `settings.section.*`。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.tab, {
-    agent: "对话",
+    agent: "Agent",
   });
 
   // ===== 2026-09-19 追加：状态 bar 第四槽由「历史（N 轮）」改为**本会话缓存命中率** =====
@@ -1561,5 +1561,176 @@
     thinkMore: "展开",
     thinkLess: "收起",
     thinkLive: "正在思考…",
+  });
+  // ===== 2026-09-22 追加：能力插件面板（2026-09-23 起并入「Agent」页签的「能力插件」子版块）=====
+  // 面板 = `plugins-settings.js`，只调后端网关 `agent_plugins` / `agent_plugin_set`（`plugins.py` 末尾
+  // 「契约接线」）。文案里刻意讲清三件事：**库级**开关、关掉即"该动作类在本库不可用"、清单只读。
+  // 页签名 `settings.tab.plugins`（原「能力」）**随合并退役** ⇒ 不再声明；下面两行是等量占位，
+  // 只为让下方 `settings.plugins.*`（及其后 `<文件>:<行号>` 锚点）保持零漂移（同 app.css 折角那轮写法）。
+  //
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings, {
+    plugins: {
+      hint: "这是本库的能力插件清单（声明随版本分发、只读）。开关写在 `<库>/.memoria/agent/capabilities.json` 里、随库走；关掉后对应动作在本库不可用 —— 智能体提这类写入会被拒（错误码 capability_disabled）。",
+      loading: "加载中…",
+      empty: "本库没有可用的能力插件声明（此时能力闸不生效）。",
+      failed: "读取失败",
+      noKb: "请先打开一个知识库",
+      toolsLabel: "动作类",
+      readLabel: "可读",
+      writeLabel: "可写",
+      approvalLabel: "审批",
+      enforced: "能力闸",
+      enforcedOn: "生效（按本库启用位限定动作类）",
+      enforcedOff: "未生效（没装载到任何声明）",
+      registry: "库级注册表",
+      warnTitle: "装载告警",
+      errTitle: "装载错误",
+      saving: "保存中…",
+      savedOn: "已启用",
+      savedOff: "已停用",
+      saved: "已保存",
+      configLabel: "本库参数",
+      configHint: "只对本库生效，且只能比机器级默认更严（允许取交集、禁止取并集）；留空 = 沿用默认。",
+      param: {
+        allow: "允许抓取的域",
+        deny: "禁止抓取的域",
+      },
+      source: {
+        builtin: "内置",
+        user: "用户导入",
+        kb: "库内声明",
+      },
+    },
+  });
+
+  // 向用户提问（`ask_user_question` 的待答卡；2026-09-23，上游 `interaction/tool-ask-user`）。
+  // 末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    question: {
+      role: "待你作答",
+      title: "模型在继续之前想问你 {n} 个问题",
+      single: "单选",
+      multi: "多选",
+      custom: "其他（自己写一句）",
+      submit: "提交",
+      sending: "提交中…",
+      failed: "提交作答失败",
+      needAnswer: "每个问题都要选一项，或自己写一句",
+      answered: "已作答",
+      done: "问题已收起",
+    },
+  });
+
+  // 2026-09-23 追加：「Agent」页内**两个可折叠子版块**的标题（装配见 `graph-settings.js` 末尾
+  // `ensureAgentSections()`；人授权"子版块名字你来定"）⇒ 取「对话」（原 Chat 页内容）与
+  // 「能力插件」（原独立页签，本轮并进来）。末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings, {
+    section: {
+      chat: "对话",
+      caps: "能力插件",
+    },
+  });
+
+  // 2026-09-23 追加：设置 →「显示」→「文字」里的**字体**字段（按语言分档 + 顶栏单独一档）。
+  // 两处都是**下拉**（首项空值 = 跟随默认）；末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.display, {
+    fontLangNote: "按语言各设一种字体：正文（Markdown 预览与对话栏里渲染的文字）会按字形自动选用 —— 中文用中文那档、英文用英文那档；选「默认」= 跟随默认字体。",
+    fontSlotDefault: "默认字体",
+    fontBrandLabel: "顶栏 MEMORIA",
+    fontBrandDefault: "跟随正文字体",
+    fontBrandNote: "只改顶栏那个字标的字体；选「跟随正文字体」即与上面的正文一致。",
+  });
+
+  // 2026-09-23 追加：对话栏**图片附件**（OS 拖入 / 剪贴板粘贴 → 随消息作为图像输入发给模型）的文案。
+  // 装配见 `agent-panel.js` 末尾「图片附件」块。末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    attach: {
+      failed: "图片上传失败",
+      badType: "只支持 JPEG / PNG / GIF / WebP 图片：{name}",
+      tooLarge: "单张图片不能超过 {max} MiB：{name}",
+      tooMany: "一条消息最多 {max} 张图片",
+      remove: "移除这张图片",
+      dropHint: "拖入或粘贴图片即可附到这条消息",
+      uploading: "上传中…",
+    },
+  });
+
+  // 2026-09-23 追加：设置 →「显示」→「性能」子版块（**后台预加载**开关；装配见 `display-settings.js`
+  // 末尾 `preloadSection()`，生效逻辑见 `app.js` 末尾「预览 DOM 缓存 + 后台预渲染」块）。
+  // 末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.display, {
+    perfGroup: "性能",
+    preloadLabel: "后台预加载",
+    preloadNote: "当前文档渲染完后，用空闲时间把其它已打开的页签提前渲染好（一次一个页签，跳过超过 1200 行的文档，每次会话最多 4 个）⇒ 切页签几乎瞬开。代价是更大的内存与 CPU 占用：每个被缓存的页签都要留住一整棵预览 DOM（长文档量级为数 MB/页签，此为估算值；最多缓存 8 个页签）—— 属「以硬件换流畅」。推荐大型知识库开启；小库收益有限。",
+    preloadFootprint: " 当前已缓存 {n} 个页签，估算占用约 {mb} MB。",
+  });
+
+  // 2026-09-23：待答卡答完即收起，问答改由工具行显示 ⇒ 那三行人话文案（末尾追加，上方零漂移）。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.question, {
+    recordAsk: "问：",
+    recordAnswer: "答：",
+    recordNth: "第 {n} 题",
+  });
+
+  // 2026-09-24 追加：**脚本工作区**面板（`js/agent-scratch.js`；设计见 `agent-capabilities.md §3.4`）。
+  // 末尾追加 ⇒ 上方既有键与行号零漂移。
+  g.MEMORIA_LOCALES["zh-CN"].agent.scratch = {
+    title: "脚本工作区",
+    summary: "{n} 个文件",
+    empty: "空",
+    emptyHint: "还没有文件。让 agent 抓网页或写脚本后，会出现在这里；你也可以在这里查看、运行、删除它写的东西。",
+    warn: "⚠ 这不是沙箱：脚本以你自己的身份运行，能读写文件与网络；只有你点「运行」它才会跑（agent 没有执行权）。",
+    refresh: "刷新",
+    view: "查看",
+    run: "运行",
+    runTitle: "以当前用户身份运行这个脚本（能读写文件与网络；密钥不会传给它）",
+    delete: "删除",
+    deleteConfirm: "删除工作区里的 {path}？",
+    interpreter: "解释器：{path}（{source}）",
+    interpreterNone: "未找到脚本解释器 —— 请在设置 →「Agent」里指定路径，或安装 Python",
+    viewed: "已读 {path}",
+    exit: "退出码 {code} · {ms} ms",
+    timeout: "超时（{s}s）已终止",
+    truncated: "输出超上限已截断",
+    noOutput: "（没有输出）",
+    failed: "工作区操作失败",
+    source: { explicit: "设置指定", bundled: "发布包内置", system: "系统", none: "—" },
+    code: {
+      SCRATCH_BAD_PATH: "路径不合法：只能用工作区内的相对路径",
+      SCRATCH_NOT_FOUND: "工作区里没有这个文件",
+      SCRATCH_NO_INTERPRETER: "没有可用的脚本解释器：请在设置里指定，或安装 Python",
+      SCRATCH_TIMEOUT: "脚本超时已被终止",
+      SCRATCH_RUN_FAILED: "启动脚本失败",
+      no_kb: "请先打开知识库",
+      scratch_failed: "工作区读写失败",
+    },
+  };
+
+  // 2026-09-24 追加：联网「**域名名单**」设置（`js/net-settings.js`；闸在
+  // `services/agent/web.py::WebClient._assert_domain()`，**逐跳**校验，被拒返回 `WEB_BLOCKED_DOMAIN`）。
+  // 末尾追加 ⇒ 上方既有键与行号零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings, {
+    net: {
+      title: "联网域名名单",
+      allowLabel: "允许抓取的域（留空 = 不限）",
+      allowPh: "例如 example.com, docs.python.org",
+      denyLabel: "禁止抓取的域（优先于允许）",
+      denyPh: "例如 ads.example.com",
+      hint:
+        "逗号分隔。写 example.com 即含其全部子域；*.example.com、https://example.com/x、example.com:8443 " +
+        "这些写法都会被归一成裸域，写错的项会被忽略（下面会告诉你忽略了几处）。抓取时逐跳校验，" +
+        "被拒时工具返回 WEB_BLOCKED_DOMAIN。",
+      empty: "当前不限域名（仍拒绝回环 / 私网 / 链路本地等地址）。",
+      parsedAllow: "允许：{list}",
+      parsedDeny: "禁止：{list}",
+      merged: "本库合并后 允许：{allow} / 禁止：{deny}",
+      capabilityOff: "⚠ 本库没启用「网页抓取」能力（去「能力插件」里打开才有用）",
+      scopeNote: "以上是「机器级默认」（所有库共用）。某个库想更严，去上面的「能力插件」里给 web-fetch 填「本库参数」—— 库级只能收紧、不能放宽。",
+      any: "不限",
+      none: "无",
+      ignored: "已忽略 {n} 处无法识别的写法",
+      saved: "域名名单已保存",
+      failed: "域名名单保存失败",
+    },
   });
 })(typeof window !== "undefined" ? window : globalThis);

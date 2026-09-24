@@ -1269,6 +1269,22 @@ class DocumentService:
         return body, fm, body.splitlines() or [""]
 
     def load_document(self, rel_path: str) -> dict:
+        # 2026-09-23（页签提速 A 档）：**把这本"伪缓存"变成真缓存** —— 原先 `self._cache` 只写不读，
+        # 每次开文件都重算全量（读文件 + YAML + 三处全篇扫描）。现在按 **(rel_path, mtime_ns, size)**
+        # 取键：应用内写入与外部改盘都会让 mtime/size 变化 ⇒ 自动失效，不需要依赖各处 `_cache.pop()`。
+        # 容量有上限（见 `_CACHE_MAX`），超出按最旧逐出 —— 大文件单条就 ~3× 文件大小（body+preview_body+lines）。
+        cache_key: tuple[str, int, int] | None = None
+        try:
+            stat = os.stat(os.path.join(self.kb_path, rel_path))
+            cache_key = (rel_path, stat.st_mtime_ns, stat.st_size)
+        except OSError:
+            cache_key = None
+        if cache_key is not None:
+            cached = self._cache.get(rel_path)
+            # 值形如 `(键, doc)`：**外层仍按路径**存，这样既有各处 `self._cache.pop(rel_path)` 的失效
+            # 契约一字不改；`(mtime, size)` 只是"这条还新不新"的判据（外部改盘也能自动失效）。
+            if isinstance(cached, tuple) and len(cached) == 2 and cached[0] == cache_key:
+                return cached[1]
         body, fm, lines = self._read_body(rel_path)
         full = os.path.join(self.kb_path, rel_path)
         sidecar = load_sidecar_for_md(full, self.kb_path)
@@ -1354,7 +1370,12 @@ class DocumentService:
             "link_index_ready": bool(_snap["ready"]),
             "lines": lines,
         }
-        self._cache[rel_path] = doc
+        if cache_key is not None:
+            # 有界缓存：超过 24 条就丢掉最早插入的那条（Python 3.7+ dict 保序）。
+            # 单条 ≈ 3× 文件大小；24 条足以覆盖"打开着的页签 + 最近翻过的几篇"，又不会无界吃内存。
+            if len(self._cache) >= 24:
+                self._cache.pop(next(iter(self._cache)), None)
+            self._cache[rel_path] = (cache_key, doc)
         return doc
 
     def confirm_kp_range(

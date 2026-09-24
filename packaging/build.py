@@ -205,10 +205,13 @@ def _stage_runtime_resources() -> None:
       发布态读取；**必须**随包。
     - examples：官方展示样例库（docs/example/showcase，机器学习导论），随包分发
       供用户打开试用；**必须**随包（正文/侧车/图片随包，运行时产物剔除）。
+    - resources/agent-capabilities：**能力插件内置声明**（`plugins.py::builtin_dir()` 运行态读取；
+      漏拷 ⇒ 契约未参与 ⇒ 能力闸不生效，agent 的"按能力插件启停"就形同虚设）；**必须**随包。
     """
     targets = [
         (ROOT / "resources" / "icons", RELEASE_RES / "icons", ICONS_IGNORE),
         (ROOT / "resources" / "agent-prompts", RELEASE_RES / "agent-prompts", None),
+        (ROOT / "resources" / "agent-capabilities", RELEASE_RES / "agent-capabilities", None),
         (ROOT / "docs" / "example" / "showcase", RELEASE_RES / "examples", EXAMPLES_IGNORE),
     ]
     for src, dest, ignore in targets:
@@ -229,6 +232,9 @@ _REQUIRED_RELEASE_RESOURCES = (
     "agent-prompts/kb-spec.zh-CN.md",  # 知识库编撰/维护规范（同上，独立随版本升级）
     "agent-prompts/kb-agent-readme.md",  # .memoria/agent/README.md 模板
     "agent-prompts/fsrs.py",  # 确定性 FSRS 调度脚本（随包分发）
+    "agent-capabilities/kb-write.json",  # 能力插件内置声明（契约接线的装载源，缺则能力闸不生效）
+    "agent-capabilities/web-search.json",  # N 线联网检索的声明（2026-09-24；逐库启停的对象）
+    "agent-capabilities/web-fetch.json",  # N 线网页抓取的声明（同上；其 config 是库级域名名单）
     "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
     "examples/README.md",  # 官方展示样例库入口（机器学习导论，随包可试用）
     "icons/Memoria.ico",

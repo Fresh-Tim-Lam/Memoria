@@ -539,8 +539,9 @@ def test_turn_process_rows_render_so_a_failed_write_cannot_hide() -> None:
     assert "applyProcessDelta(res.process_delta)" in src, "过程增量先喂给 applyProcessDelta"
     assert "let processCursor = 0;" in src and "processCursor = 0;" in src, "每轮提问重置过程游标"
     assert 'if (line) updateToolRowEl(line, row);' in src and "else box.appendChild(toolRowEl(row));" in src, "同 id 就地更新"
-    # 兜底：无实时过程通道时由 `result.tool_calls` 合成
-    assert 'detail: String((call && call.message) || ""),' in src
+    # 兜底：无实时过程通道时由 `result.tool_calls` 合成（2026-09-23：`ask_user_question` 这一路先过
+    # `askRecordText` 转成人话「问→答」，其余工具仍是原样的 `call.message` —— 见本轮改动）。
+    assert 'detail: String((call && call.name) === "ask_user_question" ? askRecordText((call && call.message) || "") : (call && call.message) || ""),' in src
     assert 'state: isError ? "error" : "ok",' in src
     # 旧实现不许复活
     assert "function toolsStrip" not in src and '"-agent-tools"' not in src
@@ -1175,4 +1176,29 @@ def test_replay_renders_process_rows_with_the_same_renderer() -> None:
     assert "return rec && Array.isArray(rec.process) ? rec.process : null;" in src, "没有 process 键 ⇒ null（旧会话保持现状）"
     assert src.count("renderProcessInto(") == 2, "定义 1 处 + `messageEl` 包装调用 1 处（回放/实时共用一个渲染器）"
     assert "renderProcessInto(el, rec);" in src
+
+
+def test_history_load_restores_the_last_turn_usage() -> None:
+    """人 2026-09-24：「每个对话末尾的 token 使用详情又没了」。
+
+    真机取证（桩端点 + harness 8667）：同一轮刚答完**有**用量行（含命中率），但**重载后**
+    `.-agent-usage` 计数 0、`#status-agent` 文本为空 —— 用量只有 `agent_ask_poll.usage` 一条来源，
+    而重载/重启/切回会话走会话日志回放。后端已把 `loop/end.usage` 随渲染视图带回
+    （`session/history.py` 末尾「逐轮 token 用量回放」），前端此处只负责**认领**。
+    """
+    src = panel_source()
+    # ① 载入的记录把该轮 usage 带住（文件尾 `restoreTurnUsage()` 的认领依据）
+    assert 'usage: rec.usage && typeof rec.usage === "object" ? rec.usage : null,' in src
+    # ② 认领函数：只认**末条助手回话**，且必须真的有总量
+    assert "function restoreTurnUsage() {" in src
+    assert "const owner = last && last.role === \"assistant\" && last.usage && last.usage.total_tokens ? last : null;" in src
+    assert "usageSeen = lastUsage;" in src, "身份标记：别让 `renderStatusUsage` 的包装层改写归属"
+    assert "usageOwner = owner;" in src
+    # ③ 调用点必须在**整串重绘之后**（`data-msg-index` 要先落到 DOM 上才定位得到气泡）
+    load = src.index("resetStatusUsage(); // 历史会话的旧用量无法回算")
+    render = src.index("renderMessages();", load)
+    call = src.index("restoreTurnUsage(); // 2026-09-24", load)
+    assert load < render < call, "`restoreTurnUsage()` 必须在 `renderMessages()` 之后"
+    assert src.count("restoreTurnUsage(); // 2026-09-24") == 1, "调用点只有一处（载入会话）"
+
 

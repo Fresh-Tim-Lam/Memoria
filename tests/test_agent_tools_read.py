@@ -373,12 +373,19 @@ def test_grep_direct_call_shares_semantics(kb: Path) -> None:
 # —— ⑤ `read_image` ——
 
 
-def test_read_image_validates_then_refuses(kb: Path) -> None:
-    """校验通过也**不伪造成功**：缺『多媒体眼睛』插件（非读面缺口）⇒ 明确错误。"""
+def test_read_image_returns_the_image_as_a_deferred_block(kb: Path) -> None:
+    """**真读图**（2026-09-23 起）：校验通过后返回**图片块**，由循环当一条延迟 user 消息带进上下文。
+
+    改动前这里钉的是"缺多媒体眼睛 ⇒ 明确拒绝"；图像能力就位后语义翻转，
+    但**不塞进 `tool` 消息**（Chat Completions 的 tool 结果只收字符串）这一点仍要钉住。
+    """
     ok = invoke(kb, "read_image", file_path="img.png")
-    assert ok.is_error and ok.output.code == UNSUPPORTED_IMAGE_INPUT
-    assert "本端点暂不支持图像输入" in ok.content and "image/png" in ok.content
-    assert "多媒体眼睛" in ok.content  # 原因归类：缺多媒体插件（不是「provider 不支持 content part」）
+    assert not ok.is_error and ok.output.code is None
+    assert "已读入图片 img.png" in ok.content and "image/png" in ok.content
+    assert len(ok.output.images) == 1
+    part = ok.output.images[0]
+    assert part.rel_path == "img.png" and part.media_type == "image/png" and part.name == "img.png"
+    assert part.data_url.startswith("data:image/png;base64,")
 
 
 def test_read_image_rejects_bad_extension_missing_and_escape(kb: Path) -> None:
@@ -406,8 +413,19 @@ def test_read_image_rejects_bad_extension_missing_and_escape(kb: Path) -> None:
 def test_read_image_detects_extension_less_signature(kb: Path) -> None:
     (kb / "noext").write_bytes(PNG_BYTES)
     result = invoke(kb, "read_image", file_path="noext")
-    assert result.is_error and result.output.code == UNSUPPORTED_IMAGE_INPUT
+    assert not result.is_error
+    assert result.output.images[0].media_type == "image/png"
     assert "image/png" in result.content
+
+
+def test_read_image_text_file_is_not_sent_as_an_image(kb: Path) -> None:
+    """安全闸：**内容不是图片**的文件绝不会被 base64 成 `data:` URL 发出去。"""
+    from memoria.services.agent.attachments import to_data_url
+
+    (kb / "note.md").write_text("正文", encoding="utf-8")
+    assert to_data_url(kb, "note.md") == ""
+    assert to_data_url(kb, "../outside.png") == ""
+    assert to_data_url(kb, "nope.png") == ""
 
 
 # —— ⑥ 注册与门控 ——

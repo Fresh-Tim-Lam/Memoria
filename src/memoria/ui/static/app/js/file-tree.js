@@ -180,10 +180,10 @@ window.MemoriaFileTree = (function () {
     const active = f.path === state.currentPath ? " active" : "";
     const side = f.has_sidecar ? "" : " no-sidecar";
     const iconName = FT_CATEGORY_ICON[classifyFileType(f.path)] || "ftOther";
-    const pad = 4 + depth * 14; // 2026-09-22：折角槽 = 1 整格(14px) ⇒ 行首字形必须落在**槽的右缘**（= 4+depth×14）才紧贴折角；旧值 12+depth×14 让文件图标偏右 8px（人：折角应紧贴文件图标）
+    const pad = 4 + depth * 14; // 2026-09-22：**与目录行同一个公式**（人：「保证文件夹和子文件对齐」）—— 缩进 = 竖导轨槽数×14，行首「标记位」（目录 = 展开三角 / 文件 = 点）占**最后一格**，图标从标记位之后开始 ⇒ 两种行的图标、文字逐列对齐
     const label = basename(f.path);
     return `<div class="-tree-item${active}${side}" data-path="${esc(f.path)}" title="${esc(f.path)}" draggable="true" style="padding-left:${pad}px">${treeGuides(depth)}
-      <span class="-tree-icon">${icon(iconName)}</span>
+      <span class="-tree-dot" aria-hidden="true"></span><span class="-tree-icon">${icon(iconName)}</span>
       <span class="-tree-label">${esc(label)}</span>
     </div>`;
   }
@@ -694,14 +694,15 @@ window.MemoriaFileTree = (function () {
   }
 
   /* ---------------------------------------------------------------------------
-   * D. 缩进连接线：IconTreeCorner8x10（icons/index.tsx:692）逐层画竖直导轨，末层画折角。
-   *    颜色走 CSS 的 --border，深浅主题同源。
+   * D. 缩进连接线：**每层一条竖导轨「|」**（仿 Trae 文件树；2026-09-22 起**不再画折角** —— 折角退役，
+   *    行首标记 = 目录的展开三角 / 文件的点）。颜色走 CSS 的 --border，深浅主题同源。
    */
   function treeGuides(depth) {
     if (!depth) return "";
     let inner = "";
-    for (let i = 1; i < depth; i++) inner += '<span class="-tree-guide-rail"></span>';
-    inner += `<span class="-tree-guide-corner">${icon("treeCorner")}</span>`;
+    for (let i = 0; i < depth; i++) inner += '<span class="-tree-guide-rail"></span>';
+    // 2026-09-22：**不再画折角**（人：「你不用折角了，仿照 trae 文件树的显示」）—— 每层就一条竖导轨「|」，
+    // 「行首标记」（目录 = 展开三角 / 文件 = 点）改由**行自己**渲染在标记位上（见 `.-tree-dot`）。
     return `<span class="-tree-guides" aria-hidden="true">${inner}</span>`;
   }
 

@@ -1,5 +1,5 @@
 /**
- * 显示设置：预览区字号 + 界面整体缩放
+ * 显示设置：预览区字号 + 界面整体缩放 + **字体**（按语言各一档 / 顶栏单独一档）
  * 配置入口：设置 → "显示" 页签；界面缩放另支持 Ctrl+= / Ctrl+- / Ctrl+0。
  * 持久化：localStorage（"-display-settings"）+ 磁盘 ui-settings.json（display 段，可选）。
  */
@@ -11,7 +11,18 @@
   const DEFAULTS = {
     previewFontSize: 14, // 预览区正文字号（px）
     uiScale: 1.0,        // 界面整体缩放倍率
+    //: 按语言的**正文字体**（`{"zh-CN": "Microsoft YaHei", "en": "Comic Sans MS"}`；空串/缺键 = 该语言跟随默认）
+    fonts: {},
+    //: 顶栏 "MEMORIA" 的字体（空 = 跟随正文字体）
+    fontBrand: "", backgroundPreload: false, // 顶栏字体 / 后台预加载（2026-09-23 追加，见文件末尾「后台预加载」块）
   };
+
+  //: 字体名候选（下拉的选项；用户只能从这些里选 —— 人 2026-09-23：「你应该给下拉可选样式而不是输入」）
+  const FONT_CHOICES = [
+    "Segoe UI", "Microsoft YaHei", "Microsoft YaHei UI", "SimSun", "SimHei", "KaiTi",
+    "PingFang SC", "Noto Sans SC", "Source Han Sans SC",
+    "Consolas", "Georgia", "Cambria", "Times New Roman", "Arial", "Comic Sans MS",
+  ];
 
   const FONT_MIN = 12;
   const FONT_MAX = 28;
@@ -55,11 +66,56 @@
     return Math.round(x * 10) / 10;
   }
 
-  /** 仅保留本模块管理的两个键，避免 display 等脏键污染 load/save 结果 */
+  function esc(s) {
+    const app = global.MemoriaApp;
+    return app && app.esc ? app.esc(s) : String(s == null ? "" : s);
+  }
+
+  /** 界面支持的语言列表（`MemoriaI18n` 缺席时退回 zh-CN）。 */
+  function langs() {
+    const i18n = global.MemoriaI18n;
+    const list = i18n && i18n.SUPPORTED ? i18n.SUPPORTED : ["zh-CN"];
+    return Array.isArray(list) && list.length ? list : ["zh-CN"];
+  }
+
+  /** 规范化「按语言的字体」：**覆盖全部支持的语言**（缺的填空串）、非字符串一律丢成空串。
+   *  为什么要把空档也显式写出来：后端 `save_ui_settings` 是**浅合并**（`{**old, **new}`，
+   *  `storage/ui_settings.py:56-63`）⇒ 直接"删键"清不掉磁盘上的旧值，会把旧字体在下次启动带回来。
+   */
+  function normalizeFonts(raw) {
+    const out = {};
+    for (const code of langs()) {
+      const value = raw && typeof raw === "object" ? raw[code] : "";
+      out[code] = typeof value === "string" ? value.trim() : "";
+    }
+    return out;
+  }
+
+  /** 单个字体名 → CSS 片段：含空格/逗号时补引号（否则 `Comic Sans MS` 会被当成三个 family）。 */
+  function quoteFont(name) {
+    const value = String(name || "").trim();
+    if (!value) return "";
+    if (/^'.*'$/.test(value) || /^".*"$/.test(value)) return value;
+    return /[\s,]/.test(value) ? '"' + value.replace(/"/g, "") + '"' : value;
+  }
+
+  /** 正文用字体栈：**当前界面语言优先**，其余语言按支持顺序跟上（浏览器按字形逐字选用）。 */
+  function fontStack(fonts) {
+    const i18n = global.MemoriaI18n;
+    const cur = (i18n && i18n.currentLang ? i18n.currentLang() : "") || langs()[0];
+    const order = [cur].concat(langs().filter((code) => code !== cur));
+    return order.map((code) => quoteFont((fonts || {})[code])).filter(Boolean).join(", ");
+  }
+
+  /** 仅保留本模块管理的键，避免脏键污染 load/save 结果 */
   function pickKnown(data) {
     const out = {};
     if (data && data.previewFontSize !== undefined) out.previewFontSize = data.previewFontSize;
     if (data && data.uiScale !== undefined) out.uiScale = data.uiScale;
+    if (data && data.fonts !== undefined) out.fonts = normalizeFonts(data.fonts); if (data && data.backgroundPreload !== undefined) out.backgroundPreload = !!data.backgroundPreload;
+    if (data && data.fontBrand !== undefined) {
+      out.fontBrand = typeof data.fontBrand === "string" ? data.fontBrand.trim() : "";
+    }
     return out;
   }
 
@@ -73,6 +129,8 @@
     if (fs !== null) merged.previewFontSize = Math.round(fs);
     const sc = clamp(merged.uiScale, SCALE_MIN, SCALE_MAX);
     if (sc !== null) merged.uiScale = round1(sc);
+    merged.fonts = normalizeFonts(merged.fonts);
+    merged.fontBrand = typeof merged.fontBrand === "string" ? merged.fontBrand.trim() : "";
     return pickKnown(merged);
   }
 
@@ -98,10 +156,28 @@
     window.dispatchEvent(new Event("resize"));
   }
 
+  /**
+   * 字体：把两个 CSS 变量挂到 `<html>` 上（`app.css` 末尾那两条规则读它们 ⇒ 一处设置全站生效）：
+   * - `--font-content` = 按语言拼的正文栈 ⇒ 作用 `.markdown-body`（**Markdown 预览**与**对话栏里渲染的正文**
+   *   共用同一个类）；
+   * - `--font-brand` = 顶栏 "MEMORIA" 专用档（留空 ⇒ 由 CSS 兜底回正文字体）。
+   * 空值一律**移除**变量（而不是写空串）⇒ 回落到 `--font-sans`（默认字体）。
+   */
+  function applyFonts(s) {
+    const root = document.documentElement;
+    const stack = fontStack(s.fonts);
+    if (stack) root.style.setProperty("--font-content", stack);
+    else root.style.removeProperty("--font-content");
+    const brand = quoteFont(s.fontBrand);
+    if (brand) root.style.setProperty("--font-brand", brand);
+    else root.style.removeProperty("--font-brand");
+  }
+
   function applyAll() {
     const s = load();
     applyFontSize(s.previewFontSize);
     applyUiScale(s.uiScale);
+    applyFonts(s); announcePreload(s.backgroundPreload); // 2026-09-23 追加：把「后台预加载」开关同步给 app.js 的预览预渲染调度器（见文件末尾「后台预加载」块）
   }
 
   function scheduleDiskSave() {
@@ -206,6 +282,13 @@
       <h3 class="-settings-heading">${T("settings.display.text")}</h3>
       <p class="-muted -settings-note">${T("settings.display.fontNote")}</p>
       ${rangeField("previewFontSize", T("settings.display.fontSize"), FONT_MIN, FONT_MAX, 1, s.previewFontSize, T("settings.display.fontDefault", { def: DEFAULTS.previewFontSize, min: FONT_MIN, max: FONT_MAX }))}
+      ${fontRows(s, T)}
+      <p class="-muted -settings-note">${T("settings.display.fontLangNote")}</p>
+      <label class="-settings-field">
+        <span>${T("settings.display.fontBrandLabel")}</span>
+        ${fontSelect('data-display-setting="fontBrand"', s.fontBrand, T("settings.display.fontBrandDefault"))}
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.fontBrandNote")}</p>
     </section>
     <section class="-settings-section">
       <h3 class="-settings-heading">${T("settings.display.uiScaleGroup")}</h3>
@@ -214,7 +297,7 @@
       <div class="-settings-actions">
         <button type="button" class="-btn secondary" id="display-ui-scale-reset">${T("settings.display.resetScale")}</button>
       </div>
-    </section></div></div>`;
+    </section>${preloadSection(T, s)}</div></div>`;
   }
 
   function bindSettingsForm(root) {
@@ -222,7 +305,7 @@
     root.querySelectorAll("[data-display-setting]").forEach((el) => {
       const key = el.dataset.displaySetting;
       const handler = () => {
-        let val = el.value;
+        let val = el.type === "checkbox" ? !!el.checked : el.value;   // 2026-09-23 追加：勾选框取 checked（`el.value` 恒为 "on"）
         if (el.type === "range") {
           val =
             el.step && String(el.step).indexOf(".") !== -1
@@ -232,6 +315,17 @@
           if (out) out.textContent = String(val);
         }
         save({ [key]: val });
+      };
+      el.addEventListener("input", handler);
+      el.addEventListener("change", handler);
+    });
+    // 按语言的字体：每档一个输入框；空值 ⇒ 写空串（`normalizeFonts` 覆盖全部语言 ⇒ 后端浅合并能真正清掉旧值）
+    root.querySelectorAll("[data-display-font-lang]").forEach((el) => {
+      const code = el.dataset.displayFontLang;
+      const handler = () => {
+        const fonts = normalizeFonts(load().fonts);
+        fonts[code] = String(el.value || "").trim();
+        save({ fonts });
       };
       el.addEventListener("input", handler);
       el.addEventListener("change", handler);
@@ -256,11 +350,94 @@
     if (langSel && global.MemoriaI18n) {
       langSel.addEventListener("change", () => {
         global.MemoriaI18n.setLang(langSel.value);
+        // 界面语言变了 ⇒ 正文字体栈的**优先级**要重算（当前语言那档排最前），否则中英档的顺序还停在旧语言
+        applyAll();
         if (global.MemoriaGraphSettings && global.MemoriaGraphSettings.rerenderCurrentTab) {
           global.MemoriaGraphSettings.rerenderCurrentTab();
         }
       });
     }
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-23 追加：**按语言的字体**的下拉行（人：「设置中 文字还要添加字体类型，这个字体是 markdown
+  //   预览的文字和 agent 对话栏中渲染的文字，还支持修改顶栏 "MEMORIA" 的字体，不同语言可以设置不同字体」）。
+  //   一行 = 一种界面语言（`MemoriaI18n.SUPPORTED`，标签直接用 `langDisplay()`），顶栏字标另有一行。
+  //   两处都是**下拉**（`<select>`）—— 人 2026-09-23 复审：「你新添加的这些框的 ui 样式违反整体设计……
+  //   你应该给下拉可选样式而不是输入」⇒ 走既有的 `.-settings-field select` 规则，外观与「主题/语言」
+  //   两个下拉完全一致；首项空值 = 跟随默认，选项来自 `FONT_CHOICES`。
+  //   声明写在 `bindSettingsForm` 之后不影响上方的 `renderSettingsBody()`：函数声明会提升。
+
+  /** 一档字体的下拉：首项「默认」（空值），其后是 `FONT_CHOICES`。
+   *  **存档值不在候选表里也补进选项并选中** —— 否则旧存档（或手改过的 ui-settings.json）会回显成空白，
+   *  看起来像"字体被清掉了"，而 `applyFonts()` 其实仍在用它。 */
+  function fontSelect(attrs, value, noneLabel) {
+    const cur = String(value || "").trim();
+    const names = cur && FONT_CHOICES.indexOf(cur) === -1 ? [cur].concat(FONT_CHOICES) : FONT_CHOICES;
+    const options = [`<option value=""${cur ? "" : " selected"}>${esc(noneLabel)}</option>`]
+      .concat(names.map((name) => `<option value="${esc(name)}"${name === cur ? " selected" : ""}>${esc(name)}</option>`))
+      .join("");
+    return `<select ${attrs}>${options}</select>`;
+  }
+
+  function fontRows(s, T) {
+    const i18n = global.MemoriaI18n;
+    return langs()
+      .map((code) => {
+        const label = i18n && i18n.langDisplay ? i18n.langDisplay(code) : code;
+        const value = ((s && s.fonts) || {})[code] || "";
+        return `<label class="-settings-field">
+        <span>${esc(label)}</span>
+        ${fontSelect(`data-display-font-lang="${esc(code)}"`, value, T("settings.display.fontSlotDefault"))}
+      </label>`;
+      })
+      .join("");
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-23 追加：**后台预加载**开关（设置 →「显示」→「性能」子版块）。
+  // 人：「出现在页签的文件能不能内存预加载减小切换速度？或者后台提供 后台预加载开关，并且说明更大的
+  // 硬件开销和更流畅的体验（推荐大型知识库）」。
+  //
+  // 分工：本文件只管**字段与持久化**（`DEFAULTS.backgroundPreload` → `pickKnown` → 既有的
+  // localStorage `-display-settings` + 磁盘 `ui-settings.json` 的 `display` 段，与字号/字体同一条
+  // `save_ui_settings` 通道），生效逻辑全在 app.js 末尾「预览 DOM 缓存 + 后台预渲染」块里；
+  // 两边只经 `window.MemoriaApp.setBackgroundPreload(bool)` 这一个门面交互（`applyAll()` 每次设置
+  // 变更都会通告一次，函数在开关未变时是空操作）。
+  //
+  // 声明紧挨在 `global.MemoriaDisplaySettings = {...}` **之前**（与上方 `fontSelect` / `fontRows` 同一手法：
+  // 函数声明会提升，`applyAll()` 与 `renderSettingsBody()` 在运行时都能取到），只推动其后的导出行。
+
+  /** 「性能」子版块：只放一个勾选框，说明文案见 `settings.display.preloadNote`。
+   *  用 `<section class="-settings-section">` + `<h3 class="-settings-heading">` 的既有骨架 —— 设置弹窗
+   *  打开时 `graph-settings.js::foldSettingsSections()` 会把它与其它页签的版块一起折成可展缩的 `<details>`。 */
+  function preloadSection(T, s) {
+    return `<section class="-settings-section">
+      <h3 class="-settings-heading">${T("settings.display.perfGroup")}</h3>
+      <label class="-settings-field -settings-field--inline">
+        <input type="checkbox" data-display-setting="backgroundPreload"${s && s.backgroundPreload ? " checked" : ""}>
+        <span>${T("settings.display.preloadLabel")}</span>
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.preloadNote")}${preloadFootprintNote(T)}</p>
+    </section>`;
+  }
+
+  /** 说明文案后附一句"当前实际占了多少"（用 app.js 缓存的自身估算口径；未开启或无缓存时不附）。
+   *  为什么附实时值：开销是随"缓存了几个页签、各多大"变的常量说明说不准，现场读数最有说服力。 */
+  function preloadFootprintNote(T) {
+    const app = global.MemoriaApp;
+    const stats = app && typeof app.previewCacheStats === "function" ? app.previewCacheStats() : null;
+    if (!stats || !stats.enabled || !stats.entries) return "";
+    return T("settings.display.preloadFootprint", {
+      n: stats.entries,
+      mb: (stats.bytes / 1048576).toFixed(1),
+    });
+  }
+
+  /** 把开关同步给 app.js 的预览预渲染调度器（app.js 缺席时静默跳过：本模块可独立加载）。 */
+  function announcePreload(on) {
+    const app = global.MemoriaApp;
+    if (app && typeof app.setBackgroundPreload === "function") app.setBackgroundPreload(!!on);
   }
 
   global.MemoriaDisplaySettings = {

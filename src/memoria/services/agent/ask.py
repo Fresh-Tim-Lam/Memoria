@@ -53,6 +53,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from memoria.services.agent.approvals import DEFAULT_POLICY, ApprovalPolicy
+from memoria.services.agent import attachments as attachments_mod  # 2026-09-23 图像输入：附件的落库/读回（本地取舍见该模块 docstring）
 from memoria.services.agent.compaction import (
     CompactionError,
     compact_threshold_chars,
@@ -95,6 +96,15 @@ from memoria.services.agent.session.store import SessionStore, new_session_id, s
 from memoria.services.agent.tools.kb import DEFAULT_TOP_K, build_kb_tools
 from memoria.services.agent.tools.registry import ToolRegistry
 from memoria.services.agent.title import TitleError, auto_title, ensure_fallback
+
+
+def _attachment_list(items: Sequence[Mapping[str, Any]] | None) -> list[dict[str, str]]:
+    """规范化附件清单（形状 + 准入校验）；空 ⇒ `[]`。
+
+    这里是**第二道**校验：RPC 层已挡过一遍并给出可展示错误码；`ask()` 作为库内入口再兜一次，
+    免得 CLI / 测试直接调用时把坏形状写进会话日志。
+    """
+    return attachments_mod.normalize(items)
 
 logger = logging.getLogger(__name__)
 
@@ -346,6 +356,7 @@ def ask(
     replay: bool = True,
     cancel: CancelToken | None = None,
     service: Any = None,
+    attachments: Sequence[Mapping[str, Any]] | None = None,
 ) -> AskResult:
     """问一个关于知识库的问题；返回答案、锚点、工具调用、用量与会话位置。
 
@@ -422,7 +433,7 @@ def ask(
     snapshot = (
         build_snapshot(root, references, exclude_session_id=session.session_id) if references else None
     )
-    session.append("user/message", {"text": rendered_text})
+    session.append("user/message", {"text": rendered_text, **({"images": [{"rel_path": i["rel_path"], "media_type": i["media_type"], "name": i["name"]} for i in _attachment_list(attachments)]} if attachments else {})})  # 2026-09-23 图像输入：**只增字段**（无附件时逐字不变）；日志里只落 rel_path，不落 base64
     # 标题（M2）第 1 步：兜底标题 —— 零成本、零模型调用，先落一条（对齐上游 onUserMessage 的节律）
     _append_fallback_title(root, session)
     loop = build_loop(
@@ -443,7 +454,7 @@ def ask(
         cancel=cancel,
     )
     prompt = (rendered_text if snapshot is None else rendered_text + "\n\n" + snapshot) + "\n\n" + _model_notice(root, session.session_id, active_model, replayed=history is not None) + render_time_context() + render_skill_invocation(root, text)  # 末项 = `/name` 技能手势注入（扫**用户原文**，位次在**最末**；见 §6.22）
-    result: LoopResult = loop.run(prompt, messages=history)
+    result: LoopResult = loop.run(prompt, messages=attachments_mod.hydrate_messages(root, history), images=attachments_mod.turn_images(root, attachments))  # 2026-09-23 图像输入：历史里的图与**本轮**的图都在这里才读成 data URL（provider 层与 KB 无关，拿不到库根）
     session.flush()
     # 标题（M2）第 2 步：模型标题 —— 只跑首轮一次、fail-open、被取消的轮次跳过
     _maybe_generate_title(

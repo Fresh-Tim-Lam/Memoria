@@ -900,7 +900,7 @@ window.MemoriaAgentPanel = (function () {
         text: String(rec.text || ""),
         anchors: Array.isArray(rec.anchors) ? rec.anchors : [],
         error: "",
-        stopped: false, process: msgProcess(rec), reasoning: msgReasoning(rec),
+        stopped: false, process: msgProcess(rec), reasoning: msgReasoning(rec), images: Array.isArray(rec.images) ? rec.images : [], usage: rec.usage && typeof rec.usage === "object" ? rec.usage : null, // 2026-09-24：该轮的 token 用量（后端从 `loop/end.usage` 带回）⇒ 重载/重启后用量行仍在（见文件尾 `restoreTurnUsage()`）
       });
     });
     streamingEl = null;
@@ -910,6 +910,7 @@ window.MemoriaAgentPanel = (function () {
     resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
     setStatusText(""); // 2026-09-19：状态行不再显示会话 id（用户不需要；会话身份在左栏「历史」列表里）
+    restoreTurnUsage(); // 2026-09-24：**末轮的用量**后端已从 `loop/end` 带回（见文件尾）⇒ 重载/重启后用量行照旧显示；必须在 `renderMessages()` 之后（要按 `data-msg-index` 定位气泡）
     setLastSessionId(kb, sessionId); // 记住**本库**的会话，供下次自动恢复（并清掉旧全局键）
     return res;
   }
@@ -1087,8 +1088,8 @@ window.MemoriaAgentPanel = (function () {
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  function pushMessage(role, text) {
-    const rec = { role: role, text: text || "", anchors: [], error: "", stopped: false };
+  function pushMessage(role, text, images) {
+    const rec = { role: role, text: text || "", anchors: [], error: "", stopped: false, images: Array.isArray(images) ? images : [] };
     messages.push(rec);
     const box = $("#agent-messages");
     if (box) {
@@ -1158,11 +1159,11 @@ window.MemoriaAgentPanel = (function () {
     // 本问的世代号：清空/忽略/换库会递增 epoch，使本次提交与轮询结果一律作废
     const myEpoch = ++epoch;
 
-    pushMessage("user", text);
+    pushMessage("user", text, attachPayloads()); // 图片附件快照进气泡（发送成功后才清草稿，见文件末「图片附件」块）
     if (input) input.value = "";
     let res;
     try {
-      res = await call("agent_ask_start", text, kb || null, sessionForKb);
+      res = await callAskStart(text, kb || null, sessionForKb); // 有附件才带第 4 参；无附件严格保持既有 4 参调用形状
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
@@ -4468,8 +4469,8 @@ window.MemoriaAgentPanel = (function () {
   }
 
   const pushMessageBase = pushMessage;
-  pushMessage = function (role, text) {
-    const rec = pushMessageBase(role, text);
+  pushMessage = function (role, text, images) {
+    const rec = pushMessageBase(role, text, images);
     wrapTurn(rec);
     renderWriteState(); // 「撤销只在最后一次对话下方」⇒ 每次追加消息后重挂
     return rec;
@@ -4896,7 +4897,7 @@ window.MemoriaAgentPanel = (function () {
   /** 就地刷新一条工具行（同 `id` 的结果行到达时用；**不重建节点** ⇒ 不闪烁、不打断滚动）。 */
   function updateToolRowEl(line, row) {
     if (!line) return;
-    const detail = String((row && row.detail) || "");
+    const detail = toolDisplayDetail(row); // 2026-09-23：`ask_user_question` 在这一行只显示「问→答」人话
     const state = String((row && row.state) || "");
     line.setAttribute("data-state", state);
     const st = line.querySelector(".-agent-tool-state");
@@ -5054,7 +5055,7 @@ window.MemoriaAgentPanel = (function () {
         summary: String((call && call.summary) || ""),
         state: isError ? "error" : "ok",
         code: (call && call.code) || null,
-        detail: String((call && call.message) || ""),
+        detail: String((call && call.name) === "ask_user_question" ? askRecordText((call && call.message) || "") : (call && call.message) || ""), // 2026-09-23：同一处理，见 toolDisplayDetail
         iteration: 0,
       };
     });
@@ -6091,6 +6092,362 @@ window.MemoriaAgentPanel = (function () {
     });
   })();
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-23 追加：**图片附件**（从系统拖入 / 剪贴板粘贴 → 随下一条消息作为图像输入发给模型）。
+  //   后端契约（并行实现，前端只按此编码）：
+  //     · RPC `agent_attach_image(name, data)`：`data` 是**纯 base64**（不带 `data:` 前缀）；
+  //         成功 → `{status:"ok", rel_path, media_type, name, bytes, deduped}`；
+  //         失败 → `{status:"error", code, message}`（IMAGE_TOO_LARGE / UNSUPPORTED_IMAGE_TYPE /
+  //         INVALID_IMAGE_BASE64 / NO_KB / BAD_FIELD）。
+  //     · 发送：`agent_ask_start(text, kb, sessionId, attachments)`，attachments =
+  //         `[{rel_path, media_type, name}]`；**无附件时严格只传原有 4 个参数**（见 `callAskStart`）。
+  //     · 载入历史会话：消息可带 `images`（同形状）⇒ 气泡同样渲染缩略图。
+  //   落点纪律：整块追加在 IIFE 末尾（`return {}` 之前）；需要改既有行为处一律**按名包装**
+  //   （`messageEl`）或**同行改写**（`pushMessage` / `loadSession` / `ask` 内各一行）⇒ 上方所有
+  //   `agent-panel.js:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 单张图片上限（5 MiB）；与后端 IMAGE_TOO_LARGE 同口径，前端先拦是为了不白传一遍字节。
+  const ATTACH_MAX_BYTES = 5 * 1024 * 1024;
+  //: 单条消息最多 20 张（整批校验：超一点就整批拒绝，不做"截断到 20 张"的静默妥协）。
+  const ATTACH_MAX_COUNT = 20;
+  //: 允许的图片 MIME（模型/后端支持的四类）。
+  const ATTACH_TYPES = { "image/jpeg": true, "image/png": true, "image/gif": true, "image/webp": true };
+
+  //: 草稿附件（内存态）：`{name, previewUrl, state:"pending"|"ready", rel_path, media_type, cancelled}`。
+  //: 发送成功后才整体清空；上传失败/被取消的就地移除。
+  const attachItems = [];
+
+  /** 附件预览条 `#agent-attachments`（index.html 里静态节点；缺节点则整套降级为无 UI，不抛）。 */
+  function attachStripEl() {
+    return $("#agent-attachments");
+  }
+
+  /** 把库内相对路径转成静态服务 URL（与 `markdown-preview.js::rewriteLocalImagePaths` 同一编码口径）。 */
+  function attachFileUrl(relPath) {
+    const apiBase = (window.MemoriaBridge && window.MemoriaBridge.apiBase) || "";
+    const encoded = String(relPath || "")
+      .replace(/\\/g, "/")
+      .split("/")
+      .map(function (seg) {
+        let raw = seg;
+        try {
+          raw = decodeURIComponent(seg); // 已编码段先解码，避免 `%` 被二次编码
+        } catch (e) {
+          /* 孤立 `%` 等无法解码的情况：原样再编码 */
+        }
+        return encodeURIComponent(raw);
+      })
+      .join("/");
+    return apiBase + "/files/" + encoded;
+  }
+
+  /** 气泡里的附件缩略图行（用户消息带 `images` 时渲染）；复用预览那套灯箱 —— 双击放大。 */
+  function attachThumbsEl(images) {
+    const row = document.createElement("div");
+    row.className = "-agent-attach-row";
+    (images || []).forEach(function (img) {
+      const rel = String((img && img.rel_path) || "");
+      if (!rel) return;
+      const thumb = document.createElement("img");
+      thumb.className = "-agent-attach-thumb";
+      thumb.src = attachFileUrl(rel);
+      thumb.alt = String((img && img.name) || "");
+      thumb.title = thumb.alt;
+      thumb.setAttribute("loading", "lazy");
+      row.appendChild(thumb);
+    });
+    attachAgentImages(row); // 既有库内图片灯箱（`attachImageLightbox`，双击放大）；模块缺失时静默跳过
+    return row;
+  }
+
+  /** 当前草稿里**已上传成功**的附件 → 发给后端的载荷数组（每次调用都新建数组/对象，供气泡持有快照）。 */
+  function attachPayloads() {
+    return attachItems
+      .filter(function (it) {
+        return it && it.state === "ready" && !it.cancelled && it.rel_path;
+      })
+      .map(function (it) {
+        return { rel_path: it.rel_path, media_type: it.media_type, name: it.name };
+      });
+  }
+
+  /** `agent_ask_start`：**有附件才带第 4 参**；无附件严格保持既有 4 参（不传 undefined/null）。 */
+  function callAskStart(text, kb, sessionForKb) {
+    const atts = attachPayloads();
+    const p = atts.length
+      ? call("agent_ask_start", text, kb || null, sessionForKb, atts)
+      : call("agent_ask_start", text, kb || null, sessionForKb);
+    return Promise.resolve(p).then(function (res) {
+      // 提交成功才清草稿（失败——如 MODEL_DOES_NOT_SUPPORT_IMAGES——保留图片让用户换模型重试）
+      if (res && res.status === "ok" && atts.length) clearAttachItems();
+      return res;
+    });
+  }
+
+  /** ArrayBuffer → 纯 base64。**分块** 走 `String.fromCharCode`：整块 `apply(null, bytes)` 在几 MB 图上会爆栈。 */
+  function bufferToBase64(buffer) {
+    const bytes = new Uint8Array(buffer);
+    const CHUNK = 0x8000;
+    let binary = "";
+    for (let i = 0; i < bytes.length; i += CHUNK) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+    }
+    return btoa(binary);
+  }
+
+  /** 是否受支持的图片：先看 `file.type`；MIME 为空（部分平台拖入不带）时按扩展名兜底。 */
+  function isImageFile(file) {
+    const type = String((file && file.type) || "").toLowerCase();
+    if (type) return !!ATTACH_TYPES[type];
+    return /\.(jpe?g|png|gif|webp)$/.test(String((file && file.name) || "").toLowerCase());
+  }
+
+  /** 附件类错误统一走顶部浮层（与 `ask()` 同口径）。 */
+  function showAttachError(msg) {
+    showFlashError(msg);
+    setStatusText(msg, true);
+  }
+
+  /** 后端稳定 code → 文案（未登记的回退后端 message → 通用「上传失败」）。 */
+  function attachErrorText(res) {
+    const code = String((res && res.code) || "");
+    if (code === "IMAGE_TOO_LARGE") return T("agent.attach.tooLarge", { name: "", max: 5 });
+    if (code === "UNSUPPORTED_IMAGE_TYPE") return T("agent.attach.badType", { name: "" });
+    if (code === "NO_KB") return T("agent.err.no_kb");
+    return String((res && res.message) || "") || T("agent.attach.failed");
+  }
+
+  /** 重绘草稿预览条：一张 chip = 缩略图（本地 objectURL）+ `×` 移除；空则整条隐藏。 */
+  function renderAttachStrip() {
+    const strip = attachStripEl();
+    if (!strip) return;
+    strip.title = T("agent.attach.dropHint");
+    strip.innerHTML = "";
+    if (!attachItems.length) {
+      strip.hidden = true;
+      return;
+    }
+    strip.hidden = false;
+    attachItems.forEach(function (it, idx) {
+      const chip = document.createElement("span");
+      chip.className = "-agent-attach-chip" + (it.state === "pending" ? " -agent-attach-chip--pending" : "");
+      const thumb = document.createElement("img");
+      thumb.className = "-agent-attach-thumb";
+      thumb.src = it.previewUrl;
+      thumb.alt = it.name || "";
+      chip.appendChild(thumb);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "-agent-attach-remove";
+      remove.setAttribute("data-idx", String(idx));
+      remove.setAttribute("aria-label", T("agent.attach.remove"));
+      remove.title = it.state === "pending" ? T("agent.attach.uploading") : T("agent.attach.remove");
+      remove.textContent = "×";
+      chip.appendChild(remove);
+      strip.appendChild(chip);
+    });
+  }
+
+  /** 移除第 idx 张草稿（取消上传 / 撤销已传）。 */
+  function removeAttachAt(idx) {
+    const it = attachItems[idx];
+    if (!it) return;
+    it.cancelled = true;
+    try {
+      URL.revokeObjectURL(it.previewUrl);
+    } catch (e) {
+      /* 非 blob URL：忽略 */
+    }
+    attachItems.splice(idx, 1);
+    renderAttachStrip();
+  }
+
+  /** 清空草稿并释放预览（发送成功后调用）。 */
+  function clearAttachItems() {
+    attachItems.forEach(function (it) {
+      try {
+        URL.revokeObjectURL(it.previewUrl);
+      } catch (e) {
+        /* 非 blob URL：忽略 */
+      }
+    });
+    attachItems.length = 0;
+    renderAttachStrip();
+  }
+
+  /** 上传一张（异步）：先占位 pending chip，成功转 ready、失败移除并报错。 */
+  async function uploadAttachment(file) {
+    const item = {
+      name: String((file && file.name) || ""),
+      previewUrl: URL.createObjectURL(file),
+      state: "pending",
+      rel_path: "",
+      media_type: String((file && file.type) || ""),
+      cancelled: false,
+    };
+    attachItems.push(item);
+    renderAttachStrip();
+    const send = $("#agent-send");
+    if (send) send.disabled = true; // 上传期间不给发（附件还没就位）
+    let res;
+    try {
+      const buf = await file.arrayBuffer();
+      res = await call("agent_attach_image", item.name, bufferToBase64(buf));
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (item.cancelled) return; // 上传期间被移除 ⇒ 丢弃结果
+    if (!res || res.status !== "ok" || !res.rel_path) {
+      const at = attachItems.indexOf(item);
+      if (at >= 0) attachItems.splice(at, 1);
+      try {
+        URL.revokeObjectURL(item.previewUrl);
+      } catch (e) {
+        /* 非 blob URL：忽略 */
+      }
+      renderAttachStrip();
+      showAttachError(attachErrorText(res));
+      if (!attachItems.some(function (it) { return it.state === "pending"; })) renderComposer(); // 还有别的图在传就先别放开发送
+      return;
+    }
+    item.state = "ready";
+    item.rel_path = String(res.rel_path);
+    item.media_type = String(res.media_type || item.media_type || "image/png");
+    item.name = String(res.name || item.name || "");
+    renderAttachStrip();
+    if (!attachItems.some(function (it) { return it.state === "pending"; })) renderComposer(); // 整批传完才恢复发送
+  }
+
+  /** 收一批文件（拖入 / 粘贴）：**整批校验**，任一违规即整批拒绝、一张都不附。 */
+  function intakeImageFiles(fileList) {
+    const files = Array.prototype.slice.call(fileList || []).filter(Boolean);
+    if (!files.length) return false;
+    if (attachItems.length + files.length > ATTACH_MAX_COUNT) {
+      showAttachError(T("agent.attach.tooMany", { max: ATTACH_MAX_COUNT }));
+      return false;
+    }
+    for (let i = 0; i < files.length; i += 1) {
+      if (!isImageFile(files[i])) {
+        showAttachError(T("agent.attach.badType", { name: String(files[i].name || "") }));
+        return false;
+      }
+      if (Number(files[i].size) > ATTACH_MAX_BYTES) {
+        showAttachError(T("agent.attach.tooLarge", { name: String(files[i].name || ""), max: 5 }));
+        return false;
+      }
+    }
+    files.forEach(function (f) {
+      void uploadAttachment(f);
+    });
+    return true;
+  }
+
+  /** 拖拽载荷里是否含 `Files`（系统文件拖入）；只认这一项，文本/自定义 MIME 一律不碰。 */
+  function hasFilesPayload(e) {
+    const dt = e && e.dataTransfer;
+    if (!dt || !dt.types) return false;
+    return Array.from(dt.types).indexOf("Files") >= 0;
+  }
+
+  // 用户消息气泡里的附件缩略图：包装 `messageEl`（不改本体 ⇒ 行号锚点不动）。
+  const baseMessageElForImages = messageEl;
+  messageEl = function (rec) {
+    const el = baseMessageElForImages.apply(null, arguments);
+    try {
+      if (el && rec && rec.role === "user" && Array.isArray(rec.images) && rec.images.length) {
+        const row = attachThumbsEl(rec.images);
+        const body = el.querySelector(".-agent-msg-body");
+        if (body && body.parentNode === el) el.insertBefore(row, body); // 缩略图行在正文**上方**
+        else el.appendChild(row);
+      }
+    } catch (e) {
+      console.warn("agent-attach:", e);
+    }
+    return el;
+  };
+
+  // 事件接线：OS 拖入（对话栏）+ 全窗口兜底 + 剪贴板粘贴（输入框）。与既有 `@路径` 拖拽同一元素、**各自独立监听**。
+  (function wireAttachmentIntake() {
+    const dock = $("#-agent-dock");
+    const input = $("#agent-input");
+    const strip = $("#agent-attachments");
+    if (dock) {
+      dock.addEventListener("dragover", function (e) {
+        if (!hasFilesPayload(e)) return; // 自定义 MIME（`@路径`）由既有监听处理
+        e.preventDefault(); // 不 preventDefault 就不会触发 drop
+        if (e.dataTransfer) e.dataTransfer.dropEffect = "copy";
+        dock.classList.add("-agent-dock--drop");
+      });
+      dock.addEventListener("dragleave", function (e) {
+        if (dock.contains(e.relatedTarget)) return; // 子元素之间移动不清高亮
+        dock.classList.remove("-agent-dock--drop");
+      });
+      dock.addEventListener("drop", function (e) {
+        dock.classList.remove("-agent-dock--drop");
+        if (!hasFilesPayload(e)) return;
+        e.preventDefault();
+        if (e.dataTransfer) intakeImageFiles(e.dataTransfer.files);
+      });
+    }
+    // 全窗口兜底：图片拖到窗口别处时 WebView 会直接导航到该图片（页面被顶掉）⇒ 带 Files 一律拦下。
+    // 只 preventDefault（**不**改 dropEffect）：否则会覆盖上面 `dragover` 设的 copy，光标显示禁止。
+    function windowDragGuard(e) {
+      if (!hasFilesPayload(e)) return;
+      e.preventDefault();
+    }
+    window.addEventListener("dragover", windowDragGuard);
+    window.addEventListener("drop", windowDragGuard);
+    if (input) {
+      // 与既有的 paste 监听（重绘输入镜像）**并存**：命中图片时额外收附件
+      input.addEventListener("paste", function (e) {
+        const files = e.clipboardData && e.clipboardData.files;
+        if (!files || !files.length) return;
+        e.preventDefault();
+        intakeImageFiles(files);
+      });
+    }
+    if (strip) {
+      strip.addEventListener("click", function (e) {
+        const btn = e.target && e.target.closest ? e.target.closest(".-agent-attach-remove") : null;
+        if (!btn) return;
+        removeAttachAt(parseInt(btn.getAttribute("data-idx") || "", 10));
+      });
+    }
+    if (window.MemoriaI18n && window.MemoriaI18n.addRefresh) {
+      window.MemoriaI18n.addRefresh(() => renderAttachStrip()); // 语言切换后重刷预览条（含 title / aria-label）
+    }
+    renderAttachStrip();
+  })();
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-24 追加：**载入会话后恢复「末轮用量」**（人：「每个对话末尾的 token 使用详情又没了」）
+  //   病根：用量原本只有 `agent_ask_poll` 的 `usage` 这一条来源（= 刚答完那一轮），而**重载 /
+  //   重启 / 切回会话**走的是会话日志回放 ⇒ 一条 usage 都没有：末条回话下方那行用量、以及底部
+  //   状态栏的"最近一轮"**一起空掉**（真机取证：重载后 `.-agent-usage` 计数 0、`#status-agent` 文本为空）。
+  //   数据一直都有：`loop/end.usage`（形状与本模块读的 `AskJob.usage` 逐键同源）。后端已把它随
+  //   渲染视图带回（`session/history.py` 末尾「逐轮 token 用量回放」），这里只负责**认领**：
+  //   · **只认末条助手回话**：与实时路径"用量行只挂最后一条回话"的口径一致（历史里更早的轮次
+  //     仍不带行；要改成"每轮都带"只需在这里遍历，后端数据已经齐了）；
+  //   · **末条不是助手 / 它没有 usage**（例如最后一轮是斜杠命令、或被取消在模型调用之前）⇒ 什么都不做，
+  //     绝不把**上一轮**的用量挪到别的气泡上；
+  //   · 认领后走既有 `renderStatusUsage()`（包装层据此刷新 `.-agent-usage` 与 `#status-agent`），
+  //     故**不需要**任何新的渲染代码。
+  //   调用点：`loadSession()` 里 `renderMessages()` **之后**（要按 `data-msg-index` 定位气泡）。
+  //   落点纪律：整块追加在 IIFE 末尾（`return {` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 把**末条助手回话**身上的 `usage`（来自历史回放）认领为"最近一轮"，并重绘用量行与状态栏格。 */
+  function restoreTurnUsage() {
+    const last = messages.length ? messages[messages.length - 1] : null;
+    const owner = last && last.role === "assistant" && last.usage && last.usage.total_tokens ? last : null;
+    if (!owner) return;
+    lastUsage = owner.usage;
+    usageSeen = lastUsage; // 身份相同 ⇒ `renderStatusUsage` 的包装层不再改写归属（否则会去认 `currentAssistant()`）
+    usageOwner = owner;
+    renderStatusUsage();
+  }
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
@@ -6109,4 +6466,43 @@ window.MemoriaAgentPanel = (function () {
     // **副标题行**（`.-agent-subhead`）——「已修改 N 个文件（可展开）+ 撤销一步 / 重做一步」。
     setWriteState: setWriteState,
   };
+
+  /**
+   * `ask_user_question` 那一行**只显示人话**（人 2026-09-23：「不显示背后的 json 等只显示文本」）。
+   *
+   * 工具输出是给模型看的 `{"answers":[{"id","selected","custom"}]}` ⇒ 这里转成
+   * `问：<题干>` + `答：<选项…>` 的多行文本；题干取自待答卡留下的 `MemoriaAgentQuestion.questionText()`
+   * （同一会话内必定拿得到）。**绝不把内部 id 露给人**：题干取不到时退化成「第 N 题」。
+   */
+  function askRecordText(message) {
+    var raw = String(message == null ? "" : message);
+    var rows = null;
+    try {
+      var parsed = JSON.parse(raw);
+      rows = parsed && parsed.answers;
+    } catch (e) {
+      rows = null;
+    }
+    if (!rows || !rows.length) return raw; // 不是我们认识的形状 ⇒ 原样（别的工具/坏数据）
+    var ask = T("agent.question.recordAsk");
+    var answer = T("agent.question.recordAnswer");
+    var nth = T("agent.question.recordNth");
+    return rows
+      .map(function (row, i) {
+        var parts = (row && row.selected ? row.selected : []).slice();
+        if (row && row.custom) parts.push(row.custom);
+        var text = parts.join("、") || "—";
+        var q = window.MemoriaAgentQuestion && window.MemoriaAgentQuestion.questionText
+          ? window.MemoriaAgentQuestion.questionText(row && row.id)
+          : "";
+        return (q ? ask + q : ask + nth.replace("{n}", String(i + 1))) + "\n" + answer + text;
+      })
+      .join("\n");
+  }
+
+  /** 工具行要显示的正文：`ask_user_question` 走人话，其余原样。 */
+  function toolDisplayDetail(row) {
+    if (String((row && row.name) || "") !== "ask_user_question") return String((row && row.detail) || "");
+    return askRecordText((row && row.detail) || "");
+  }
 })();

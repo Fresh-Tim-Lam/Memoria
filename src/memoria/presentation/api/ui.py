@@ -1191,7 +1191,7 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001 —— 配置非法（如超时非正数）以结构化错误返回
             return {"status": "error", "code": "config_error", "message": str(e)}
 
-    def agent_ask_start(self, question: str, kb_path: str | None = None, session_id: str | None = None) -> dict:
+    def agent_ask_start(self, question: str, kb_path: str | None = None, session_id: str | None = None, attachments: list[dict] | None = None) -> dict:
         """提交一次只读问答作业：立即返回 `{status, job_id}`（不阻塞 RPC 线程）。
 
         前置校验（未开库 / 问题为空 / 出网已关 / 未配置端点 / 已有 ask 在飞）
@@ -1209,7 +1209,54 @@ class UIAPI:
             from memoria.services.agent.ask_stream import CODE_NO_KB
 
             return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
-        return get_ask_jobs().start(kb, question, session_id=session_id, service=self._svc)
+        if attachments:
+            # 2026-09-23 图像输入：附件两道关 —— ① 形状/准入（是否落在附件目录、数量上限）；
+            # ② 模型门禁（官方口径：deepseek-flash 支持图像理解、deepseek-v4-pro 不支持，
+            #    未收录一律按"不收图"）。都在**提交作业之前**挡，用户立刻拿到可操作提示。
+            from memoria.services.agent import attachments as attachments_mod
+            from memoria.services.agent.llm.config import load_config
+            from memoria.services.agent.llm.vision import CODE_NO_IMAGE_SUPPORT, gate_message, supports_image_input
+
+            try:
+                atts = attachments_mod.normalize(attachments)
+            except attachments_mod.AttachmentError as exc:
+                return {"status": "error", "code": exc.code, "message": exc.message}
+            try:
+                model = (load_config().model or "").strip()
+            except Exception:  # noqa: BLE001 —— 读配置失败时按"未知模型 = 不收图"处理（fail-closed）
+                model = ""
+            if atts and not supports_image_input(model):
+                return {"status": "error", "code": CODE_NO_IMAGE_SUPPORT, "message": gate_message(model)}
+        else:
+            atts = None
+        return get_ask_jobs().start(kb, question, session_id=session_id, service=self._svc, attachments=atts)
+
+    def agent_attach_image(self, name: str, data: str) -> dict:
+        """把一张图片落到 `<kb>/.memoria/agent/attachments/`，返回可随提问发出的引用（2026-09-23）。
+
+        `data` = **纯 base64**（不带 `data:` 前缀）；`name` = 原始文件名（服务端会清洗）。
+        返回 `{status:"ok", rel_path, media_type, name, bytes, deduped}`；
+        失败一律结构化 `{status:"error", code, message}`（`IMAGE_TOO_LARGE` / `UNSUPPORTED_IMAGE_TYPE` /
+        `INVALID_IMAGE_BASE64` / `NO_KB` / `BAD_FIELD`）。
+
+        为什么要这条 RPC：WebView 里 `dataTransfer.files` 拿不到真实磁盘路径 ⇒ 只能把字节传进来落库。
+        **按内容去重**（同名摘要直接复用），故重复拖同一张图不会占双份盘。
+        """
+        from memoria.services.agent import attachments as attachments_mod
+        from memoria.services.agent.ask_stream import CODE_NO_KB
+
+        kb = self._svc.kb_path
+        if not kb:
+            return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
+        if not isinstance(name, str) or not isinstance(data, str):
+            return {"status": "error", "code": "BAD_FIELD", "message": "参数必须是字符串"}
+        try:
+            raw = attachments_mod.decode_base64(data)
+            return {"status": "ok", **attachments_mod.save_image(kb, name, raw)}
+        except attachments_mod.AttachmentError as exc:
+            return {"status": "error", "code": exc.code, "message": exc.message}
+        except OSError as exc:  # 落盘失败（权限/盘满）也要给可展示错误
+            return {"status": "error", "code": "BAD_FIELD", "message": f"写入附件目录失败：{exc}"}
 
     def agent_ask_poll(self, job_id: str, cursor: int = 0, reasoning_cursor: int = 0, process_cursor: int = 0) -> dict:
         """轮询问答作业：返回 `cursor` 之后的增量文本与最终产物（伪流式）。
@@ -1301,7 +1348,7 @@ class UIAPI:
     def agent_session_load(self, session_id: str, kb_path: str | None = None) -> dict:
         """载入一个会话的渲染视图（**只读**，不写盘）。
 
-        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?, process?}]}`（`process` = 该轮过程行：更早助手正文/思考/工具行，无过程内容时不出现该键）。
+        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?, process?, usage?, reasoning?, images?}]}`（`process` = 该轮过程行：更早助手正文/思考/工具行，无过程内容时不出现该键；`usage` = 该轮的 token 用量，取自 `loop/end.usage`，**没落过就不出现该键** —— 面板据此在重载/重启后仍能显示末条回话的用量行，见 `history.py` 末尾「逐轮 token 用量回放」）。
         锚点归属：按轮汇总该轮 `tool/result.anchors`，去重后挂在该轮 assistant 气泡上
         （口径见 `services/agent/session/history.py::conversation_messages`）。
         未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。
@@ -1842,6 +1889,48 @@ UIAPI.agent_permission_set_default = _agent_permission_set_default
 UIAPI.agent_approval_answer = _agent_approval_answer
 
 
+def _agent_question_answer(self, question_id: str, answers: Any = None, kb_path: str | None = None) -> dict:
+    """回填一次**向用户提问**的作答（`ask_user_question` 的作答面；2026-09-23）。
+
+    载荷 = 上游 `AskUserQuestionAnswerItem[]` 的 JSON 形态：`[{id, selected: [...], custom?}]`。
+    前端传来的东西按**边界**校验一次（`id` 非空字符串、`selected` 是字符串数组、`custom` 可选字符串），
+    不合格一律 `bad_field`、不静默丢字段 —— 答案是要回给模型的，缺字段比报错更糟。
+    未知 `question_id` / 已回答过 ⇒ `{status:"ok", answered:false}`（幂等，不抛）。
+    """
+    from memoria.services.agent import approval_bridge
+
+    kb = self._agent_kb(kb_path)
+    if not kb:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    qid = str(question_id or "").strip()
+    if not qid:
+        return {"status": "error", "code": "bad_field", "message": "question_id 不能为空"}
+    rows = answers if isinstance(answers, list) else []
+    clean: list[dict] = []
+    for row in rows:
+        if not isinstance(row, dict):
+            return {"status": "error", "code": "bad_field", "message": "answers 的每一项必须是对象"}
+        item_id = str(row.get("id") or "").strip()
+        if not item_id:
+            return {"status": "error", "code": "bad_field", "message": "answers[].id 不能为空"}
+        selected = row.get("selected")
+        if selected is None:
+            selected = []
+        if not isinstance(selected, list) or any(not isinstance(value, str) for value in selected):
+            return {"status": "error", "code": "bad_field", "message": "answers[].selected 必须是字符串数组"}
+        item: dict = {"id": item_id, "selected": [str(value) for value in selected]}
+        custom = row.get("custom")
+        if custom is not None:
+            item["custom"] = str(custom)
+        clean.append(item)
+    if not clean:
+        return {"status": "error", "code": "bad_field", "message": "answers 不能为空"}
+    return {"status": "ok", "answered": approval_bridge.answer_question(kb, qid, clean)}
+
+
+UIAPI.agent_question_answer = _agent_question_answer
+
+
 # ── 斜杠命令（2026-09-22；上游 `interaction/commands` 的最小面，见 `services/agent/commands.py`）──
 # 追加在**文件末尾**并在此处挂到 `UIAPI` 上 ⇒ 上方既有 `<文件>:<行号>` 锚点零漂移（同上面四个 RPC）。
 # **注意这里只有"列出"**：命令的**执行**走 `agent_ask_start` —— `ask()` 拿到整行后会先试命令、
@@ -1859,5 +1948,310 @@ def _agent_command_list(self) -> dict:
 
 
 UIAPI.agent_command_list = _agent_command_list
+
+
+# ── 2026-09-22 追加：**能力插件网关**（"UIAPI 只加一个通用网关"，见 `dsh-agent-port.md §6.25`）──────
+# 前端今天还没有插件面板，但契约要有一个**人可用的口岸**：列出声明的插件 + 本库启用位 + 装载告警，
+# 并能做库级启停（写 `<库>/.memoria/agent/capabilities.json` 的 `enabled[]`）。
+# 设计口径见 `docs/design/agent-plugin-design.md §1/§2`；接线实现见 `services/agent/plugins.py` 末尾「契约接线」。
+
+
+def _agent_plugins(self, kb_path: str | None = None) -> dict:
+    """列出**本库**的能力插件：声明（来源 / 动作类 / 权限 / 审批档）+ 启用位 + 装载告警与错误。
+
+    `tool_ids` = **此刻生效**的能力动作类（闸就用它）；`plugins[].enabled` 与之对应 ——
+    两者一起看才分得清"声明了但被库级关掉"和"压根没声明"。
+    """
+    from memoria.services.agent import plugins as plugins_mod
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    active = plugins_mod.active_plugins(kb)
+    raw = plugins_mod.load_declarations(
+        kb, builtin_dir=plugins_mod.builtin_dir(), user_dir=plugins_mod.user_dir()
+    )
+    enabled_ids = {decl.id for decl in active.declarations}
+    # 库级参数**不分启用与否都要回填**（2026-09-24 真机踩到）：此前只在启用的插件上带 `config`
+    # ⇒ 插件被停用时面板拿到空 config，人在其中一个框里改一下、保存，另一个已存的键就被
+    # "以空为底"覆盖丢掉了（库级参数的静默数据丢失）。工具面仍用 `active.configs`（只认启用者）。
+    enablement = plugins_mod.kb_enablement(kb)
+    return {
+        "status": "ok",
+        "registry_present": active.registry_present,
+        "enforced": active.enforced,
+        "registry_path": plugins_mod.kb_registry_path(kb),
+        "tool_ids": sorted(active.tool_ids),
+        "plugins": [
+            {
+                "id": decl.id,
+                "name": decl.name,
+                "source": decl.source,
+                "enabled": decl.id in enabled_ids,
+                "tools": [tool.tool_id for tool in decl.tools],
+                "read": list(decl.read),
+                "write": list(decl.write),
+                "approval": dict(decl.approval),
+                "writable": decl.writable,
+                # 2026-09-24：库级参数（`config` 值位的第一例）与**该插件有哪些参数位** ——
+                # 面板据此就地给出编辑框（当前只有 `web-fetch` 有 `allow`/`deny` 两个）。
+                "config": dict((enablement.get(decl.id) or {}).get("config") or {}),
+                "params": list(plugins_mod.PARAM_SCHEMAS.get(decl.id) or ()),
+            }
+            for decl in raw.declarations
+        ],
+        "warnings": [dict(item) for item in raw.warnings],
+        "errors": [dict(item) for item in active.errors or raw.errors],
+    }
+
+
+def _agent_plugin_set(self, plugin_id: str, on: bool = True, kb_path: str | None = None, config: dict | None = None) -> dict:
+    """库级启停一个能力插件（**条目存在即启用**）+ 可选写**库级参数**；返回写后**重算**的能力面。
+
+    `config`（2026-09-24 起有第一例 schema，见 `plugins.PARAM_SCHEMAS`）：只有该插件**有参数位**时才接受；
+    形状非法（未知键 / 域名写法坏）⇒ **拒写**并原样回 `bad_plugin_config` 与逐条 `issues`，不静默丢字段。
+    `config=None` ⇒ 只改启用位、**不动**已存参数（面板的开关不该顺手清掉参数）。
+    """
+    from memoria.services.agent import plugins as plugins_mod
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    pid = str(plugin_id or "").strip()
+    if not pid:
+        return {"status": "error", "code": "bad_field", "message": "plugin_id 不能为空"}
+    existing = (plugins_mod.kb_enablement(kb).get(pid) or {}).get("config") or {}
+    payload = existing if config is None else config
+    result = plugins_mod.set_enabled(kb, pid, bool(on), payload)
+    if isinstance(result, dict) and result.get("status") == "error":
+        return result
+    return _agent_plugins(self, kb)  # 直接调本函数（不是 `self._agent_plugins`：那是模块级函数，只挂在类上）
+
+
+UIAPI.agent_plugins = _agent_plugins
+UIAPI.agent_plugin_set = _agent_plugin_set
+
+
+# ── 脚本工作区（人 2026-09-24 拍板；设计见 `docs/design/agent-capabilities.md §3.4`）──────────
+# 面板面五条：状态 / 读 / 写 / 删 / **运行**。**"运行"只在这里**（模型面没有执行工具），
+# 是本轮拍板的边界；每次运行都落一条 `scratch/run` 审计（不含 stdout 全文，见 `audit.py`）。
+# 与 `agent_plugins` 同法：模块级函数 + 挂在类上 ⇒ 不推位上方的任何 `<文件>:<行号>` 锚点。
+
+
+def _scratch_ctx(self, kb_path: str | None) -> tuple[str | None, dict]:
+    """取（kb, 脚本工作区设置）；kb 缺失 ⇒ `(None, {})`。设置读取失败 ⇒ 用默认值（面板仍要可用）。"""
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return None, {}
+    try:
+        from memoria.services.agent.llm.config import load_config
+
+        cfg = load_config()
+        return kb, {
+            "interpreter": getattr(cfg, "script_interpreter", "") or "",
+            "use_bundled": bool(getattr(cfg, "script_use_bundled", True)),
+            "timeout_s": float(getattr(cfg, "script_timeout_s", 0) or 0) or None,
+        }
+    except Exception:  # noqa: BLE001 —— 配置读不到不该让面板瘫掉（用默认：内置 → 系统）
+        return kb, {"interpreter": "", "use_bundled": True, "timeout_s": None}
+
+
+def _agent_scratch_status(self, kb_path: str | None = None) -> dict:
+    """工作区状态（面板初始化用）：文件清单 + 解释器解析 + 各项上限。**不执行任何东西。**"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    kb, options = _scratch_ctx(self, kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    try:
+        report = scratch_mod.run_status(
+            kb, interpreter=options["interpreter"], use_bundled=options["use_bundled"]
+        )
+    except scratch_mod.ScratchError as exc:
+        return {"status": "error", "code": exc.code, "message": str(exc)}
+    except OSError as exc:
+        return {"status": "error", "code": "scratch_failed", "message": f"读取工作区失败：{exc}"}
+    return {"status": "ok", **report}
+
+
+def _agent_scratch_read(self, path: str, kb_path: str | None = None) -> dict:
+    """读工作区一个文件（面板的「查看」）。返回 `{status, path, size, text, truncated}`。"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    kb, _options = _scratch_ctx(self, kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    try:
+        return {"status": "ok", **scratch_mod.read_text(kb, path)}
+    except scratch_mod.ScratchError as exc:
+        return {"status": "error", "code": exc.code, "message": str(exc)}
+    except OSError as exc:
+        return {"status": "error", "code": "scratch_failed", "message": f"读文件失败：{exc}"}
+
+
+def _agent_scratch_write(self, path: str, text: str, kb_path: str | None = None) -> dict:
+    """面板直接写/编辑工作区里的文件（人也是作者之一）。路径与限额同模型面（`scratch.write_text`）。"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    kb, _options = _scratch_ctx(self, kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    try:
+        return {"status": "ok", **scratch_mod.write_text(kb, path, text)}
+    except scratch_mod.ScratchError as exc:
+        return {"status": "error", "code": exc.code, "message": str(exc)}
+    except OSError as exc:
+        return {"status": "error", "code": "scratch_failed", "message": f"写文件失败：{exc}"}
+
+
+def _agent_scratch_delete(self, path: str, kb_path: str | None = None) -> dict:
+    """删工作区里的文件/目录（面板的「删除」；目录递归）。返回 `{status, path, kind}`。"""
+    from memoria.services.agent import scratch as scratch_mod
+
+    kb, _options = _scratch_ctx(self, kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    try:
+        return {"status": "ok", **scratch_mod.delete_entry(kb, path)}
+    except scratch_mod.ScratchError as exc:
+        return {"status": "error", "code": exc.code, "message": str(exc)}
+    except OSError as exc:
+        return {"status": "error", "code": "scratch_failed", "message": f"删除失败：{exc}"}
+
+
+def _agent_scratch_run(
+    self,
+    path: str,
+    timeout_s: float | None = None,
+    session_id: str | None = None,
+    kb_path: str | None = None,
+) -> dict:
+    """**运行**工作区里的一个脚本 —— 必须由人在面板上显式点击（模型面没有执行工具）。
+
+    ⚠️ **这不是沙箱**：脚本以当前用户身份运行，能读写整个文件系统与网络。因此本 RPC 只做三件事：
+    超时（设置项 `script_timeout_s`，再夹到 5–300s）、stdout/stderr 各 64 KiB 上限（超限杀进程）、
+    子进程环境变量**白名单**（`MEMORIA_AGENT_API_KEY` 等密钥一律不传）。
+
+    返回 `{status:"ok", path, interpreter, source, exit_code, stdout, stderr, timed_out, truncated,
+    duration_ms, timeout_s, digest, audit}`；解释器缺失 ⇒ `SCRATCH_NO_INTERPRETER`（面板据此禁用按钮）；
+    超时 ⇒ `status:"ok"` + `timed_out:true`（已捕获的输出照常回给面板，不算错误）。
+    """
+    from memoria.services.agent import audit as audit_mod
+    from memoria.services.agent import scratch as scratch_mod
+
+    kb, options = _scratch_ctx(self, kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    timeout = timeout_s if timeout_s else options.get("timeout_s")
+    try:
+        result = scratch_mod.run_script(
+            kb,
+            path,
+            interpreter=options["interpreter"],
+            use_bundled=options["use_bundled"],
+            timeout_s=timeout,
+        )
+    except scratch_mod.ScratchError as exc:
+        return {"status": "error", "code": exc.code, "message": str(exc)}
+    except OSError as exc:
+        return {"status": "error", "code": "scratch_failed", "message": f"执行失败：{exc}"}
+    audit = audit_mod.append(
+        kb,
+        session_id,
+        audit_mod.EVENT_SCRATCH_RUN,
+        {
+            "script": result["path"],
+            "interpreter": result["interpreter"],
+            "source": result["source"],
+            "exit_code": result["exit_code"],
+            "timed_out": result["timed_out"],
+            "duration_ms": result["duration_ms"],
+            "bytes": len(result["stdout"].encode("utf-8")) + len(result["stderr"].encode("utf-8")),
+            "digest": result["digest"],
+        },
+    )
+    return {"status": "ok", **result, "audit": audit}
+
+
+UIAPI.agent_scratch_status = _agent_scratch_status
+UIAPI.agent_scratch_read = _agent_scratch_read
+UIAPI.agent_scratch_write = _agent_scratch_write
+UIAPI.agent_scratch_delete = _agent_scratch_delete
+UIAPI.agent_scratch_run = _agent_scratch_run
+
+
+# ── 联网域名名单（2026-09-24；设计见 `docs/design/agent-capabilities.md §3.3`）──────────────
+# 为什么单开一条 RPC 而不并进 `_agent_config_view()`：那份视图在 `ui.py` 中段（1155-1175），
+# 往里加键会让**下方所有 `ui.py:<行号>` 锚点整体位移**；而本函数按既有惯例追加在文件末尾、
+# 以模块级函数挂到类上 ⇒ 零漂移。前端读这条拿"现状 + **归一化结果**"（写错的写法一眼可见）。
+
+
+def _agent_net_domains(self, kb_path: str | None = None) -> dict:
+    """读「抓取域名名单」的**三层**：机器级 / 本库级 / **合并后**（面板据此回显，人一眼看出配没配上）。
+
+    分层的理由与合并口径见 [agent-capabilities.md §3.3](../design/agent-capabilities.md) 与文件尾
+    「出网原语目录 + 库级参数 schema」块：**机器级**是 `config/agent.json` 的两键（全局默认），
+    **本库级**是能力插件 `web-fetch.config`（逐库可不同），**合并后**才是抓取时真正生效的那一套
+    —— `deny` 并集、`allow` 交集 ⇒ **库级只能收紧**。
+
+    返回 `{status, allow, deny, allow_rules[], deny_rules[], ignored:{allow,deny},
+    kb:{on, allow[], deny[]}, merged:{allow[], deny[]}, capability:{enforced, fetch_enabled,
+    search_enabled, registry_present}, code}`；解析口径 = `services/agent/web.py::parse_domains()`。
+    """
+    from memoria.services.agent import plugins as plugins_mod
+    from memoria.services.agent import web as web_mod
+    from memoria.services.agent.llm import load_config
+
+    try:
+        config = load_config()
+    except Exception as exc:  # noqa: BLE001 —— 配置读不到也要让设置页可用
+        return {"status": "error", "code": "config_error", "message": str(exc)}
+    allow = getattr(config, "fetch_allow_domains", "") or ""
+    deny = getattr(config, "fetch_deny_domains", "") or ""
+    allow_rules = web_mod.parse_domains(allow)
+    deny_rules = web_mod.parse_domains(deny)
+
+    kb = self._agent_kb(kb_path)
+    entry = (plugins_mod.kb_enablement(kb).get("web-fetch") or {}) if kb else {}
+    kb_config = entry.get("config") or {}
+    kb_allow = [str(item) for item in (kb_config.get("allow") or [])]
+    kb_deny = [str(item) for item in (kb_config.get("deny") or [])]
+    merged_allow, merged_deny = web_mod.merge_domain_rules(allow, deny, kb_allow, kb_deny)
+
+    capability: dict[str, Any] = {"enforced": False, "registry_present": False, "fetch_enabled": True, "search_enabled": True}
+    if kb:
+        try:
+            active = plugins_mod.active_plugins(kb)
+            capability = {
+                "enforced": bool(active.enforced),
+                "registry_present": bool(active.registry_present),
+                "fetch_enabled": ("net.fetch" in active.tool_ids) or not active.enforced,
+                "search_enabled": ("net.search" in active.tool_ids) or not active.enforced,
+            }
+        except Exception as exc:  # noqa: BLE001 —— 能力面读不到不该让设置页瘫掉
+            capability["error"] = str(exc)
+
+    return {
+        "status": "ok",
+        "allow": allow,
+        "deny": deny,
+        "allow_rules": list(allow_rules),
+        "deny_rules": list(deny_rules),
+        "ignored": {"allow": _raw_rule_count(allow) - len(allow_rules), "deny": _raw_rule_count(deny) - len(deny_rules)},
+        "kb": {"present": bool(entry), "on": bool(entry.get("on", False)), "allow": kb_allow, "deny": kb_deny},
+        "merged": {"allow": list(merged_allow), "deny": list(merged_deny)},
+        "capability": capability,
+        "code": web_mod.CODE_BLOCKED_DOMAIN,
+    }
+
+
+def _raw_rule_count(value: str) -> int:
+    """用户那一行里"看起来有 N 条"的计数（与 `parse_domains()` 用同一套分隔符）。"""
+    import re
+
+    return len([item for item in re.split(r"[,;，；、\s]+", str(value or "")) if item.strip()])
+
+
+UIAPI.agent_net_domains = _agent_net_domains
 
 

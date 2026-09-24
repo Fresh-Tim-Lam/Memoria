@@ -21,15 +21,18 @@
 │   │   ├── .-settings-form            app.css:901-906       表单列（纵向滚动，overscroll 隔离）
 │   │   └── .-settings-preview-col     app.css:952-… / graph-settings.js:607-620  仅 2D/3D 页：示例图画布 + 竖直分栏柄
 │   └── .-settings-layout--solo        app.css:897-899       单列（节点群 / 检索 / 检查 / 显示页）
-├── #settings-body-agent               index.html:328-355   **静态体**（2026-09-19 新增）：「对话」页签的字段常驻此处，
-│                                                         与上行动态体 `hidden` **互斥**（见 graph-settings.js:807-812）
+├── #settings-body-agent               index.html:328-355   **静态体**（2026-09-19 新增）：「Agent」页签的字段常驻此处，
+│                                                         与上行动态体 `hidden` **互斥**（见 graph-settings.js:807-812）；
+│                                                         2026-09-23 起页内再分**两个可折叠子版块**（`#agent-sections` 装配在 JS 里）
 └── #settings-config-path               index.html:356       底部一行：settings.configPath「设置保存在程序目录：{path}」（graph-settings.js:883-906）
 └── .-modal-footer                      index.html:357-362   「恢复默认」#settings-reset + 「关闭」#settings-dismiss
 ```
 
-页签集合是 **7 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示` / **`对话`**（graph-settings.js:789-799；文案 `settings.tab.*`，`settings.tab.agent` 追加在 zh-CN.js:1256-1258 / en.js:1340-1342）。**顺序即上表顺序**——「显示」在第 6 位、「对话」在最后（第 7 位），「检索」在「检查」之前。**「对话」是唯一的静态体页签**：内容（`#settings-body-agent`，端点/模型/密钥/超时/出网）常驻 index.html，由 `setSettingsTab()` 显隐，与其它页签的动态体 `#settings-body` **互斥**。
+页签集合是 **7 个具名页签**：`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示` / **`Agent`**（graph-settings.js:789-799；文案 `settings.tab.*`，`settings.tab.agent` 追加在 zh-CN.js:1254-1256 / en.js:1339-1341）。**顺序即上表顺序**——「显示」在第 6 位、「Agent」在最后（第 7 位），「检索」在「检查」之前。**「Agent」是唯一的静态体页签**：内容（`#settings-body-agent`，端点/模型/密钥/超时/出网）常驻 index.html，由 `setSettingsTab()` 显隐，与其它页签的动态体 `#settings-body` **互斥**。**2026-09-23 两处变化**：① 页签名由「对话」改为 **`Agent`**（人：「页签 chat 改名为 Agent」）；② 原「能力」页签**并入本页**，页内分成**两个可折叠子版块** ——「对话」（默认展开，装着原 `#agent-settings`）与「能力插件」（默认折叠，装着能力面板）⇒ 页签总数由 8 回到 **7**。**页签条可横向滚动**：`#settings-tabs` `overflow-x: auto` + 滚条整条隐藏（`scrollbar-width: none` + `::-webkit-scrollbar` 归零），滚轮绑定见 `graph-settings.js` 末尾 `bindSettingsTabWheelScroll()`（写法同 `#tabs`）。
 
-> ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另**当前不存在任何「高级选项」折叠区**：设置页只有具名页签，全前端检索「高级 / advanced」只命中链接编辑器的 `.-link-advanced`（app.css:2782-2792），不在设置窗口内。
+> ⚠️ 常见的四种归纳（显示 / 图谱 / 检索 / 检查）与实际不符：图谱被拆成 3 个独立页签（2D、3D、节点群）。另设置窗口内**没有**「高级选项」这一层：只有具名页签 +（2026-09-23 起）**「Agent」页内的两个可折叠子版块**（「对话」/「能力插件」；全前端检索「高级 / advanced」仍只命中链接编辑器的 `.-link-advanced`，app.css:2782-2792）。
+
+**2026-09-23：设置区的「折叠子版块」已成为统一组件**（人：「设置其他地方也可也效仿 Agent 页签的子版块设计可展缩」）。六个**动态体**页签（`2D 图谱` / `3D 图谱` / `节点群` / `检索` / `检查` / `显示`）里的每一个 `.-settings-section` 都被折成 **`<details class="-settings-section" open>` + `<summary class="-settings-section-head">` + `<div class="-settings-section-body">`**：折叠由 `graph-settings.js::foldSettingsSections()` 在 `setSettingsTab()` 写完 `bodyEl.innerHTML` 之后**就地移动节点**完成 —— 各页 renderer **一行未改**（字段 id 与各 settings 模块 / `agent-panel.js` 的事件绑定原样保留），`section` 标签守卫 ⇒ 对 Agent 页已有的两个 `<details>` 与重复调用**幂等**；**默认全部展开**（提供的是"可收起"，不是"默认藏起来"）。三角标记复用 `agent-panel.js` 注入的**全局** `details > summary::before`（不另画），标题排版对齐既有 `.-settings-heading` 那一档（`app.css` 末尾追加块）。实测（harness 8663 + `AAA_Vocab` 临时副本）：六页 `details` 数 = **3 / 3 / 1 / 1 / 1 / 4**、残留 `<section>` **0**、全部 `open=true`、summary 文本 = 原 `<h3>` 文本；**真实点击 `<summary>`** ⇒ `open` true→false、该块高 **124 → 33**、后续小节整体上移 91px、`elementFromPoint` 同点由 `SELECT` 变下一节 `SUMMARY`；`.-settings-form` 仍可滚（`scrollHeight 891 > clientHeight 519`），折叠后 `#display-theme → light` 仍写盘。规范口径与未取证项见 [ui-visual-language.md §4「实施记录 C」](../../design/ui-visual-language.md)。
 
 ## 2. 逐处细节
 
@@ -46,16 +49,18 @@
 
 ### 2.2 「显示」页（`settings.tab.view`）
 
-渲染：`MemoriaDisplaySettings.renderSettingsBody()`（display-settings.js:167-199）；绑定：display-settings.js:201-239。四个 section：主题 / 语言 / 文字 / 界面整体缩放。**2026-09-19 修（滚不动）**：显示页原先是**唯一**没有 `-settings-layout--solo > -settings-form` 包裹的页签（检索 / 检查 / 节点群 都有），而弹窗体 `#settings-body` 是 `overflow: hidden` ⇒ 内容一旦高于弹窗体就**整块裁掉、滚轮无效、下半截看不到**（用户报："这个页签下的配置项没有办法滚轮滚动，底下的看不到"）。现按同款结构包一层（`return` 模板的首尾**原位各加一层**，**行号零漂移**）⇒ 滚动交给 `.-settings-form`（实测 `#settings-body` 448=448 不再溢出、`.-settings-form` 428→550 可滚、`scrollTop` 可写到底且末节可见）。
+渲染：`MemoriaDisplaySettings.renderSettingsBody()`（display-settings.js:250-301）；绑定：display-settings.js:303-360。四个 section：主题 / 语言 / 文字 / 界面整体缩放 —— **2026-09-23 起四者（以及其它五个页签的每个 section）都被折成可折叠的 `<details open>`**（见 §1 末尾的折叠说明，默认展开、可点标题收起）。**2026-09-19 修（滚不动）**：显示页原先是**唯一**没有 `-settings-layout--solo > -settings-form` 包裹的页签（检索 / 检查 / 节点群 都有），而弹窗体 `#settings-body` 是 `overflow: hidden` ⇒ 内容一旦高于弹窗体就**整块裁掉、滚轮无效、下半截看不到**（用户报："这个页签下的配置项没有办法滚轮滚动，底下的看不到"）。现按同款结构包一层（`return` 模板的首尾**原位各加一层**，**行号零漂移**）⇒ 滚动交给 `.-settings-form`（实测 `#settings-body` 448=448 不再溢出、`.-settings-form` 428→550 可滚、`scrollTop` 可写到底且末节可见）。
 
 | 项（i18n key） | 控件 / 选择器 | 取值与默认值 | 即时生效 | 落盘 |
 |---|---|---|---|---|
-| 界面语言 `settings.display.langLabel` | `<select id="display-language">`（display-settings.js:180-183）；选项文案 `langs.*` | `zh-CN` / `en`（i18n.js:15、zh-CN.js:420）；默认 `zh-CN`（i18n.js:14） | 是：`setLang()` → 刷新静态节点 + 派发刷新回调（i18n.js:117-135） | 本地 `localStorage["-i18n"]`（i18n.js:13、119）+ 磁盘 `i18n.lang`（i18n.js:142-151） |
-| 字号 `settings.display.fontSize` | `input[type=range][data-display-setting="previewFontSize"]`（display-settings.js:189） | **12–28，步长 1，默认 14**（display-settings.js:16-17、11-12） | 是：`save()` → `applyAll()`（display-settings.js:140-145） | `localStorage["-display-settings"]` + 磁盘 `display.previewFontSize`（display-settings.js:114-118） |
-| 缩放比例 `settings.display.uiScale` | `input[type=range][data-display-setting="uiScale"]`（display-settings.js:194） | **0.8–1.5，步长 0.1，默认 1.0**（display-settings.js:18-20） | 是（同上） | 同上，键 `display.uiScale` |
-| 复位为 100% `settings.display.resetScale` | `<button id="display-ui-scale-reset">`（display-settings.js:196） | — | 是：`resetUiScale()`（display-settings.js:155-157、220-229） | 同上 |
+| 界面语言 `settings.display.langLabel` | `<select id="display-language">`（display-settings.js:255-260）；选项文案 `langs.*` | `zh-CN` / `en`（i18n.js:15、zh-CN.js:420）；默认 `zh-CN`（i18n.js:14） | 是：`setLang()` → 刷新静态节点 + 派发刷新回调（i18n.js:117-135）；**切完调 `applyAll()`** 重算正文字体栈的语言优先级（display-settings.js:354） | 本地 `localStorage["-i18n"]`（i18n.js:13、119）+ 磁盘 `i18n.lang`（i18n.js:142-151） |
+| 字号 `settings.display.fontSize` | `input[type=range][data-display-setting="previewFontSize"]`（display-settings.js:284） | **12–28，步长 1，默认 14**（display-settings.js:27-28、12） | 是：`save()` → `applyAll()`（display-settings.js:217-222） | `localStorage["-display-settings"]` + 磁盘 `display.previewFontSize`（display-settings.js:191-195） |
+| 缩放比例 `settings.display.uiScale` | `input[type=range][data-display-setting="uiScale"]`（display-settings.js:296） | **0.8–1.5，步长 0.1，默认 1.0**（display-settings.js:29-31） | 是（同上） | 同上，键 `display.uiScale` |
+| 复位为 100% `settings.display.resetScale` | `<button id="display-ui-scale-reset">`（display-settings.js:298） | — | 是：`resetUiScale()`（display-settings.js:232-234、333-342） | 同上 |
+| **按语言的正文字体** `settings.display.fontLangNote`（**2026-09-23 新增**） | 每种界面语言一个**下拉** `select[data-display-font-lang="<lang>"]`（生成器 `fontSelect()` display-settings.js:374-381、逐行装配 `fontRows()` display-settings.js:383-395，语言表 = `MemoriaI18n.SUPPORTED`） | 选项 = 首项**空值**（文案 `settings.display.fontSlotDefault`「默认字体」）+ `FONT_CHOICES` 15 个常见字体名（display-settings.js:21-25）；**存档值不在表里会补成选项并选中**（否则回显成空白）；选「默认字体」= 该语言跟随默认 | 是：`change` → `save({fonts})` → `applyAll()` → `applyFonts()` 写 `--font-content`（display-settings.js:166-174、323-332） | `localStorage["-display-settings"]` + 磁盘 `display.fonts`（**按语言全覆盖**写、空档写空串 —— 后端浅合并删不掉键，见 display-settings.js:85-92） |
+| **顶栏字标字体** `settings.display.fontBrandLabel`（**2026-09-23 新增**） | 同一个下拉形状：`select[data-display-setting="fontBrand"]`（display-settings.js:289），走既有 `[data-display-setting]` 绑定通道 | 选项 = 首项空值（文案 `settings.display.fontBrandDefault`「跟随正文字体」）+ 同一张候选表；选空值 = **跟随正文字体** | 是（同上，另写 `--font-brand`；落点见 display-settings.js:166-174） | 同上，键 `display.fontBrand` |
 
-**作用范围**：字号（display-settings.js:79-85）只写 `#preview` 的 `--preview-font-size` 与 `#editor` 的 `--editor-font-size` 两处内联变量，**两者同值**（源码区与分栏区一起变）；缩放（display-settings.js:87-98）设 `document.documentElement.style.fontSize = 16 × scale + "px"`（等于 1.0 时清空回默认），因样式表尺寸绝大多数是 `rem`，等价于整体等比缩放，改完**主动派发一次 `resize`**（display-settings.js:97）让侧栏按钮对齐、图谱容器等重算——**不是** `#app` 的 `zoom`。
+**作用范围**：字号（display-settings.js:137-144）只写 `#preview` 的 `--preview-font-size` 与 `#editor` 的 `--editor-font-size` 两处内联变量，**两者同值**（源码区与分栏区一起变）；缩放（display-settings.js:146-157）设 `document.documentElement.style.fontSize = 16 × scale + "px"`（等于 1.0 时清空回默认），因样式表尺寸绝大多数是 `rem`，等价于整体等比缩放，改完**主动派发一次 `resize`**（display-settings.js:156）让侧栏按钮对齐、图谱容器等重算——**不是** `#app` 的 `zoom`。**字体**（display-settings.js:166-174）写 `<html>` 上的两个变量，落点在 `app.css` 末尾：`--font-content` → `.markdown-body`（**Markdown 预览**与**对话栏里渲染的正文**共用这一个类，故一处设置两处生效）、`--font-brand` → `.toolbar-left .logo`（`var(--font-brand, var(--font-content, var(--font-sans)))` 三级兜底）；**两个字体档都选「默认/跟随」** ⇒ 变量被**移除**（不是写空串）、回到默认字体（详见 [01-shell-and-layout.md §2.10](01-shell-and-layout.md)）。**控件形状（人 2026-09-23 复审指定）**：字体档一律是 `.-settings-field` 里的原生 `<select>`（与「主题 / 语言」两个下拉同一套 `.-settings-field select` 规则，实测 9 项计算样式逐项相等），**不用**自造的文本框 / `datalist`。
 
 ### 2.3 「2D 图谱」/「3D 图谱」页
 
@@ -143,7 +148,7 @@
 |---|---|---|
 | `data-i18n="key"` | index.html 全篇（如 index.html:47、100、146） | 刷新时写 `el.textContent`（i18n.js:100-103）→ **会清空子元素**，只适合纯文本节点 |
 | `data-i18n-attr="attr:key;attr2:key2"` | 如 index.html:44、77、87-90 | 以 `;` 分隔多对；每对用**第一个 `:`** 切分（`idx <= 0` 跳过），故属性名不可含 `:`、键可含 `.`；写入用 `setAttribute`（i18n.js:104-113） |
-| JS 侧 `T(key, params)` | 各模块取 `MemoriaI18n.t`（graph-settings.js:9、display-settings.js:169、check-settings.js:148-152） | 动态渲染内容**不走** `data-i18n`，两套机制互不覆盖 |
+| JS 侧 `T(key, params)` | 各模块取 `MemoriaI18n.t`（graph-settings.js:9、display-settings.js:252、check-settings.js:148-152） | 动态渲染内容**不走** `data-i18n`，两套机制互不覆盖 |
 | 查找与回退 | i18n.js:55-78 | 顺序：**当前语言 → `zh-CN` → 键名本身**；点路径逐段下钻；值必须是 `string`，否则视为缺失 |
 | 参数填充 | i18n.js:66-71 | 正则 `\{(\w+)\}`；参数缺失时**保留原字面量**（不置空） |
 | CSS 文案 / 语言自述名 | i18n.js:96-98、86-89 | 伪元素无法挂 `data-i18n`：整页刷新时同步 `--memoria-i18n-range`（取自 `assist.rangeTag`）；语言名取 `langs.<code>`（zh-CN.js:420），取不到回显语言代码 |
@@ -195,11 +200,11 @@
 
 ## 3. 交互流程
 
-**3.1 打开 → 改一项 → 关闭**：`#btn-settings` click → `openModal()`（graph-settings.js:851-857）→ 注入页签与当前页内容 → 用户拖 range：`input` + `change` 双事件都触发同一个 handler（graph-settings.js:842-843；display-settings.js:217-218）→ `save({key:val})` → ① 写 `localStorage` ② 去抖 280ms 排一次磁盘写 ③ `notifyChange()`：同步表单 + 刷新示例图预览 + 通知订阅方（graph-settings.js:220-228、286-290）→ 关闭时再无条件 `persistToDisk()`（graph-settings.js:884-888）。
+**3.1 打开 → 改一项 → 关闭**：`#btn-settings` click → `openModal()`（graph-settings.js:851-857）→ 注入页签与当前页内容 → 用户拖 range：`input` + `change` 双事件都触发同一个 handler（graph-settings.js:842-843；display-settings.js:319-320）→ `save({key:val})` → ① 写 `localStorage` ② 去抖 280ms 排一次磁盘写 ③ `notifyChange()`：同步表单 + 刷新示例图预览 + 通知订阅方（graph-settings.js:220-228、286-290）→ 关闭时再无条件 `persistToDisk()`（graph-settings.js:884-888）。
 
 **3.2 切页签**：点 `[data-settings-tab]` → `setSettingsTab(tab)`（graph-settings.js:777-785）：**整页重建**（`tabsEl.innerHTML` + `bodyEl.innerHTML`）→ 按页签重新绑定表单 → 2D/3D 额外 `bindPreviewResize()` + 建预览引擎。
 
-**3.3 切语言**：`#display-language` change（display-settings.js:230-238）→ `MemoriaI18n.setLang(code)` → ① 写本地 ② 排磁盘写 ③ `applyStatic()` 全文档刷新 ④ `dispatchEvent("memoria:langchange")` ⑤ 逐个执行 `_refreshFns` → 最后设置弹窗自身调 `rerenderCurrentTab()` 重绘（display-settings.js:234-236）——故设置窗内文案立即变。
+**3.3 切语言**：`#display-language` change（display-settings.js:350-358）→ `MemoriaI18n.setLang(code)` → ① 写本地 ② 排磁盘写 ③ `applyStatic()` 全文档刷新 ④ `dispatchEvent("memoria:langchange")` ⑤ 逐个执行 `_refreshFns` ⑥ `applyAll()` 重算字体栈优先级 ⑦ 最后设置弹窗自身调 `rerenderCurrentTab()` 重绘（display-settings.js:352-356）——故设置窗内文案立即变。
 
 **3.4 恢复默认**：`#settings-reset` click（graph-settings.js:953-956）→ `reset()`（清理图谱键、侧栏分栏键，重置检查设置并排盘）→ `setSettingsTab(settingsTab)` 重绘当前页。若当前页是「显示」或「检索」，**看起来点了没反应**（它们不在重置范围内）。
 
@@ -210,7 +215,7 @@
 | 前缀 | 覆盖 | 代表键（zh-CN.js 行号） |
 |---|---|---|
 | `settings.` | 设置弹窗骨架与页签 | `settings.tab.{graph2d,graph3d,groups,search,check,view}`（642-649）、`settings.reset`（650）、`settings.configPath`（651） |
-| `settings.display.*` | 「显示」页各项与说明 | `langGroup/langLabel/langNote`（653-655）、`text/fontNote/fontSize/fontDefault`（656-659）、`uiScaleGroup/uiScaleNote/uiScale/uiScaleHint/resetScale`（660-664） |
+| `settings.display.*` | 「显示」页各项与说明 | `langGroup/langLabel/langNote`（653-655）、`text/fontNote/fontSize/fontDefault`（656-659）、`uiScaleGroup/uiScaleNote/uiScale/uiScaleHint/resetScale`（660-664）、**2026-09-23 追加 5 键** `fontLangNote/fontSlotDefault/fontBrandLabel/fontBrandDefault/fontBrandNote`（**文末 `Object.assign` 块** ⇒ 上方行号零漂移：zh-CN.js:1630-1634、en.js:1731-1735） |
 | `graph.settings.*` | 2D/3D/节点群三页 + 预览列 | `nodeLabel.*`（941-946）、`layout.*`（947-964）、`style.*`、`groups.*`、`preview.*` |
 | `graph.labelModes.*` / `graph.sample.*` | 标签模式选项 / 示例图节点文案 | graph-label.js:8-11；zh-CN.js:928-932 |
 | `search.settings.*` / `check.settings.*` | 「检索」页 / 「检查」页 | `search.settings.{heading,noteMain,enableEmbedding,noteEmbedding,bodyLocate,noteBodyLocate}`；`check.settings.{heading,noteMain,interval,enabled,noteOff,off,seconds,minutes}`（746-755） |
@@ -231,7 +236,7 @@
 9. **`F2` 有全局互斥但只检查弹窗**：存在任一可见 `.-modal` 即不劫持（file-tree.js:453-457）；但**不检查**取色面板、色块菜单等非 `.-modal` 浮层。
 10. **语言切换不改 md 正文，也不改壳端原生对话框标题**（pywebview_host.py:152/171/194；pyqt6_host.py:55/65/74 硬编码中文），也不改窗口标题 `Memoria v{版本}`（window-chrome.js:305，与 i18n 无关）。
 11. **两处"看起来没生效"的正常现象**：检索页开关要到**下次检索**才反映（toolbar-search.js:151）；检查页改间隔后仅在下次定时点或重启定时器时体现（check-settings.js:134-146）。
-12. **滑块拖动的落盘节奏**：拖动期间 `input` 事件高频触发 `save()`，本地写即时、磁盘写去抖 280ms（display-settings.js:106-112；graph-settings.js:148-154），关闭弹窗时再兜底一次全量写（graph-settings.js:887）。
+12. **滑块拖动的落盘节奏**：拖动期间 `input` 事件高频触发 `save()`，本地写即时、磁盘写去抖 280ms（display-settings.js:183-189；graph-settings.js:148-154），关闭弹窗时再兜底一次全量写（graph-settings.js:887）。
 
 ## 6. 代码锚点表
 
@@ -240,8 +245,8 @@
 | 设置弹窗结构 / 尺寸 / 布局 grid | index.html:285-301；app.css:439-447、526-578 |
 | 入口 / 打开 / 关闭 / 恢复默认 / 拖动 / 路径提示 | graph-settings.js:950、851-857、884-889、953-961、859-882；app.js:12560-12624 |
 | 页签清单与整页重建 | graph-settings.js:765-785、786-818、111 |
-| 显示页渲染 / 绑定 / 默认值与范围 / 持久化 | display-settings.js:167-239、11-20、106-138 |
-| 字号与缩放的应用范围 | display-settings.js:79-104 |
+| 显示页渲染 / 绑定 / 默认值与范围 / 持久化 | display-settings.js:250-360、11-18、27-31、183-222 |
+| 字号、缩放与字体的应用范围 | display-settings.js:137-181 |
 | 缩放快捷键 | app.js:12201-12217 |
 | 图谱设置默认值 / 载入 / 存盘 / 侧栏分栏比例 | graph-settings.js:11-46、143-176、220-228、338-359、891-947 |
 | 2D/3D/节点群页渲染与范围 | graph-settings.js:504-605、629-654 |
@@ -263,3 +268,11 @@
 - ⚠️ 待确认（未能取证）：设置页签按钮只有 `role="tab"`，未见 `aria-selected`/`aria-controls`/`tabpanel` 关联（graph-settings.js:789-799），屏幕阅读器表现未验证。
 - ⚠️ 待确认（未能取证）：`#edit-mode-toggle` 键盘不可达为**代码推断**（无 keydown 绑定），未在真实窗口中按 Enter/Space 复验。
 - ⚠️ 待确认（未能取证）：`F2` 在「取色面板打开」等非 `.-modal` 浮层下的行为（前置检查只看 `.-modal`），未真机验证。
+
+## 2.22 设置 →「Agent」→「联网域名名单」（2026-09-24；设计见 [design/agent-capabilities.md §3.3](../../design/agent-capabilities.md)）
+
+- **两行输入**（DOM 由 `js/net-settings.js` **自建后追加**进 `#agent-settings` ⇒ `index.html` 一行未改）：**允许抓取的域**（留空 = 不限）与**禁止抓取的域**（优先于允许）。`change`（失焦 / 回车）即保存，走既有 `agent_save_config` 浅合并（`fetch_allow_domains` / `fetch_deny_domains` 两个键），不碰同页其它设置。
+- **归一化回显**：输入下方那行小字直接告诉你**最终生效的规则**（`允许：example.com、sub.example.org · 禁止：ads.example.com`）；写不出来的项会被忽略并**计数**（`已忽略 N 处无法识别的写法`，此时该行转成警示色）—— 不让"看起来配了其实没配"这种情况静默发生。可选写法：`example.com`（含全部子域）、`*.example.com`、`https://example.com/x`、`example.com:8443`、逗号 / 分号 / 空白分隔。
+- **执行面**：`services/agent/web.py::WebClient._assert_domain()` 在**每一跳**（含重定向）**先于 DNS** 校验；被拒 ⇒ 工具结果带 **`WEB_BLOCKED_DOMAIN`**（与"地址类别"的 `WEB_BLOCKED_URL` 分开）。`web_search` 的结果里也会给"抓不了"的来源标一行提示（省掉"试抓→被拒→再试"的 token）。
+- **读现状的 RPC**：`agent_net_domains`（`{allow, deny, allow_rules[], deny_rules[], ignored:{allow,deny}, code}`）—— 设置页与将来的「能力插件」面板共用同一份判据。
+- **仍未做**：`web-search` / `web-fetch` 的**声明式样板**与**工具级能力闸**（`web_search` 本身不受名单约束：检索由模型端点执行，我们只标注结果）、N 线 skill 提示词包。

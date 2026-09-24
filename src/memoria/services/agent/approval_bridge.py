@@ -142,7 +142,7 @@ def detach(kb_path: str) -> None:
             _attached[key] = left
             return
         _attached.pop(key, None)
-        _resolve_locked(key, ApprovalOutcome.UNAVAILABLE)
+        _close_questions_locked(key, "closed"); _resolve_locked(key, ApprovalOutcome.UNAVAILABLE)
 
 
 def is_attached(kb_path: str) -> bool:
@@ -152,10 +152,14 @@ def is_attached(kb_path: str) -> bool:
 
 
 def abort(kb_path: str) -> None:
-    """中止某库的全部待批项（本轮被取消时调用）：一律按 `cancelled` 收敛。"""
+    """中止某库的全部待批项（本轮被取消时调用）：一律按 `cancelled` 收敛。
+
+    **待答项同办**（2026-09-23）：本轮被取消时，挂起等用户作答的 `ask_user_question` 也必须被唤醒，
+    否则那条工具线程会一直挂到超时（`approval_bridge.py` 末尾「待答信道」）。
+    """
     key = os.path.abspath(kb_path or "")
     with _lock:
-        _resolve_locked(key, ApprovalOutcome.CANCELLED)
+        _close_questions_locked(key, "aborted"); _resolve_locked(key, ApprovalOutcome.CANCELLED)
 
 
 def _resolve_locked(key: str, outcome: ApprovalOutcome) -> None:
@@ -235,3 +239,128 @@ def answer(kb_path: str, call_id: str, outcome: ApprovalOutcome) -> bool:
                 logger.info("[agent-approval] %s 裁决：%s", item.tool, outcome.value)
                 return True
     return False
+
+
+# ── 2026-09-23 追加：**待答信道**（上游 `packages/interaction/user-questions` 的本地面）─────
+# 上游把"模型中途问人"做成一条 UI 能力 seam：`ctx.userQuestions.ask()` 登记提问 → 等 UI 作答 →
+# 把答案当**普通工具结果**送回循环（`tool-ask-user` 只是它的模型面消费者）。本地面复用上面那条
+# **进程内信箱**与**同一套挂载生命周期**（`attach()` / `detach()` / `abort()`），只多一张表与一条
+# 等待出口 —— 两条信道共用 `_lock` 与 `_attached`，因此"面板还在不在轮询"只有一个答案。
+#
+# | 情形 | 收敛为 | 调用方（`questions.ask`）映射 |
+# |---|---|---|
+# | 面板作答 | `answered` | 原样返回答案 |
+# | 超时（`QUESTION_TIMEOUT_S`） | `timeout` | `NO_ANSWER`（**本地新增**：上游无超时，只等 signal） |
+# | 本轮被取消（`abort()`） | `aborted` | `ASK_ABORTED` |
+# | 摘除挂载（`detach()`） | `closed` | `NO_PROVIDER` |
+# | **未挂载**（CLI 等无面板进程） | `unavailable` | `NO_PROVIDER`（**不登记、不等待**，立刻失败） |
+#
+# 最后两行是 fail-closed 的关键：没有面板就**没有人能作答**，所以宁可让模型立刻拿到明确错误，
+# 也不要空挂 180 秒。答案本身不做二次校验（与上游同口径：提供方返回什么就是什么）。
+
+#: 等待用户作答的上限（秒）。上游无超时（等 `signal`）；本地必须有界（面板可能消失）⇒ 取 180s：
+#: 读题 + 作答足够宽裕，又远小于面板轮询的 30 分钟兜底（`agent-panel.js::POLL_TIMEOUT_MS`）。
+#: 超时按 fail-closed 收成错误结果（`NO_ANSWER`），模型据此可以再问一次。
+QUESTION_TIMEOUT_S = 180.0
+
+
+@dataclass
+class _PendingQuestion:
+    """一条待答项（一次 `ask()` = 一批问题 = 一条待答项，与上游 `ask(request)` 同粒度）。"""
+
+    qid: str
+    questions: tuple[dict[str, Any], ...]
+    created_at: float
+    event: threading.Event = field(default_factory=threading.Event, repr=False)
+    answers: list[dict[str, Any]] | None = None
+    closed: str = ""  # 未决为空串；"timeout" / "aborted" / "closed" 见上表
+
+    def view(self) -> dict[str, Any]:
+        """给面板的只读视图（**只含问题本体**，不含任何密钥面）。"""
+        return {
+            "id": self.qid,
+            "questions": [dict(item) for item in self.questions],
+            "created_at": int(self.created_at * 1000),
+        }
+
+
+#: 库根 → 待答项（按到达顺序；与 `_pending` 平行、同一把锁）。
+_questions: dict[str, list[_PendingQuestion]] = {}
+
+
+def _close_questions_locked(key: str, reason: str) -> None:
+    """（持锁）把该库所有未决待答项按 `reason` 收敛并唤醒等待线程。"""
+    for item in _questions.pop(key, []):
+        item.closed = reason
+        item.event.set()
+
+
+def wait_for_question_answer(
+    kb_path: str,
+    questions: list[dict[str, Any]],
+    *,
+    timeout_s: float = QUESTION_TIMEOUT_S,
+) -> tuple[str, list[dict[str, Any]]]:
+    """登记一批问题并阻塞等待用户作答；返回 `(status, answers)`。
+
+    `status` ∈ `answered` / `timeout` / `aborted` / `closed` / `unavailable`（见上表）；
+    只有 `answered` 时第二个元素非空。未挂载 ⇒ 立刻返回 `unavailable`（不登记、不等待）。
+    """
+    key = os.path.abspath(kb_path or "")
+    if not key or not is_attached(key):
+        logger.info("[agent-question] 无面板进程挂载，按无应答者失败（fail-closed）")
+        return "unavailable", []
+    item = _PendingQuestion(
+        qid="q" + os.urandom(6).hex(),
+        questions=tuple(dict(row) for row in questions),
+        created_at=time.time(),
+    )
+    with _lock:
+        _questions.setdefault(key, []).append(item)
+    logger.info("[agent-question] 等待用户作答：%d 个问题（%s）", len(item.questions), item.qid)
+    deadline = time.monotonic() + max(0.0, float(timeout_s))
+    try:
+        while not item.event.wait(_POLL_STEP_S):
+            if time.monotonic() >= deadline:
+                item.closed = "timeout"
+                logger.warning("[agent-question] 等待作答超时（%.0fs），按未作答收敛", timeout_s)
+                break
+    finally:
+        with _lock:
+            bucket = _questions.get(key)
+            if bucket and item in bucket:
+                bucket.remove(item)
+            if bucket is not None and not bucket:
+                _questions.pop(key, None)
+    if item.answers is not None:
+        return "answered", item.answers
+    return (item.closed or "closed"), []
+
+
+def pending_questions_for(kb_path: str) -> list[dict[str, Any]]:
+    """该库当前**未决**的待答项（面板轮询载荷 `pending_questions` 的来源）。"""
+    key = os.path.abspath(kb_path or "")
+    with _lock:
+        return [item.view() for item in _questions.get(key, [])]
+
+
+def answer_question(kb_path: str, question_id: str, answers: list[dict[str, Any]]) -> bool:
+    """回填一批答案；未知/已处理的 `question_id` 返回 False（幂等、不抛）。"""
+    key = os.path.abspath(kb_path or "")
+    wanted = str(question_id or "")
+    with _lock:
+        for item in _questions.get(key, []):
+            if item.qid == wanted and not item.event.is_set():
+                item.answers = [dict(row) for row in answers]
+                item.event.set()
+                logger.info("[agent-question] 收到作答：%s（%d 条）", item.qid, len(item.answers))
+                return True
+    return False
+
+
+__all__ += [
+    "QUESTION_TIMEOUT_S",
+    "answer_question",
+    "pending_questions_for",
+    "wait_for_question_answer",
+]

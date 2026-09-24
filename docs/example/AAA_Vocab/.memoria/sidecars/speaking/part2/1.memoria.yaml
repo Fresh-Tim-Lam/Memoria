@@ -1,0 +1,69 @@
+schema_version: 1
+file: speaking/part2/1.md
+knowledge_points:
+- id: good-news-flight-transfer
+  name: Describe a time you received some good news
+  range:
+    start:
+      snippet: '# Describe a time you received some good news'
+      line_hint: 1
+    end:
+      snippet: '**🔑 一句话结构速记**：模板开场 → SETTING（晚起飞、只剩 50 分钟）→ CHANGE（取行李＋跨航站楼狂奔）→ 好消息（航班延误一小时）→
+        FE'
+      line_hint: 223
+  tags:
+  - IELTS
+  - Speaking
+  - Part2
+  - 经历题
+  - 好消息
+  - 旅行
+  - 转机
+links:
+- anchor_text: sprinting
+  occurrence: 0
+  targets:
+  - sprint
+  edge_type: reference
+  target_edges:
+    sprint:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 62
+    wrapped: true
+  excluded: []
+  pool:
+  - sprint
+- anchor_text: bumping along behind
+  occurrence: 0
+  targets:
+  - bump-along
+  edge_type: reference
+  target_edges:
+    bump-along:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 62
+    wrapped: true
+  excluded: []
+  pool:
+  - bump-along
+- anchor_text: queuing for ages
+  occurrence: 0
+  targets:
+  - queue-for-ages
+  edge_type: reference
+  target_edges:
+    queue-for-ages:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - queue-for-ages
+  instances:
+  - line: 46
+    wrapped: true
+  - line: 58
+    wrapped: true
+  excluded: []

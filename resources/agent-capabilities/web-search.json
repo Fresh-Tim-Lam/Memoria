@@ -1,0 +1,18 @@
+{
+  "v": 1,
+  "id": "web-search",
+  "name": "联网检索（web_search）",
+  "provides": {
+    "tools": [
+      { "tool_id": "net.search", "gate": "always" }
+    ]
+  },
+  "permissions": {
+    "read": [],
+    "write": []
+  },
+  "approval": {
+    "read": "auto",
+    "write": "auto"
+  }
+}
