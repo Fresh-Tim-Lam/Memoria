@@ -53,6 +53,7 @@ The release package's `resources/` content is collected centrally by the **`_sta
 | `resources/icons` → `resources/icons` | Required | Icons |
 | `resources/agent-prompts` → `resources/agent-prompts` | **Required** | `get_agent_prompt` (in-app agent-organization prompts; single source of truth) |
 | `resources/agent-capabilities` → `resources/agent-capabilities` | **Required** | `plugins.builtin_dir()` (**built-in capability-plugin declarations**; without them the contract is not in play and the capability gate is inert — see `dsh-agent-port.md §6.25`) |
+| `resources/agent-skills` → `resources/agent-skills` | **Required** | `skills.py::_all_roots()` (the `bundled` read-only skill root: **built-in skills** such as the N-line web-research playbook; if not copied the built-in skill silently disappears) |
 | `docs/reference` (whitelist) → `resources/docs` | **Required** | `get_reference_doc` (the "view format guide" popup; single source of truth) |
 | `docs/example/showcase` → `resources/examples` | **Required** | Official showcase sample library (Introduction to Machine Learning — open a knowledge base to try it; only bodies / sidecars / images ship with the package; cache and the like are excluded) |
 
@@ -61,7 +62,7 @@ The release package's `resources/` content is collected centrally by the **`_sta
 - Post-build self-check (no need to fully re-package):
 
 ```powershell
-python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| agent-capabilities:', (p/'agent-capabilities'/'kb-write.json').is_file(), (p/'agent-capabilities'/'web-search.json').is_file(), (p/'agent-capabilities'/'web-fetch.json').is_file(), '| docs:', (p/'docs'/'preview-formats.md').is_file(), '| examples:', (p/'examples'/'README.md').is_file(), (p/'examples'/'overview.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file())"
+python -c "from pathlib import Path; p=Path('Package/resources'); print('agent-prompts:', (p/'agent-prompts'/'organize.zh-CN.md').is_file(), '| agent-capabilities:', (p/'agent-capabilities'/'kb-write.json').is_file(), (p/'agent-capabilities'/'web-search.json').is_file(), (p/'agent-capabilities'/'web-fetch.json').is_file(), '| agent-skills:', (p/'agent-skills'/'web-research'/'SKILL.md').is_file(), '| docs:', (p/'docs'/'preview-formats.md').is_file(), '| examples:', (p/'examples'/'README.md').is_file(), (p/'examples'/'overview.md').is_file(), '| icons:', (p/'icons'/'Memoria.ico').is_file())"
 ```
 
 ## Running Locally

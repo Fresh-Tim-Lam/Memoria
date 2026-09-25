@@ -29,10 +29,12 @@
 
 ## 本地偏差（有意，逐条登记）
 
-1. **只吃一个根**：`<库>/.memoria/agent/skills/**`（source `kb`，rank 100）。上游按 cwd **向上找 `.git`** 定"工程根"，
-   再叠 `~/.dsh`、`~/.agents` —— Memoria 没有"工程根"概念（app 从任意 cwd 启动，**库才是边界**），
-   而库外根会破坏"允许根"纪律（`tools/kb.py::_read_roots()` 今天只有库根）⇒ 全局根**留待拍板**。
-   根表仍按上游形状写成表，将来加根是一行的事。
+1. **两个根，无"工程根"**：库内 `<库>/.memoria/agent/skills/**`（source `kb`，rank 100）+ **随包内置**
+   `resources/agent-skills/**`（source `bundled`，rank 600；**2026-09-24 按 `agent-capabilities.md` §10 P4
+   拍板开出**，落地见文件末 `_all_roots()`）。上游按 cwd **向上找 `.git`** 定"工程根"、再叠 `~/.dsh` / `~/.agents`
+   —— Memoria 没有"工程根"概念（app 从任意 cwd 启动，**库才是边界**），故内置根取**应用资源目录**
+   （`runtime.resources_dir()`，同 `agent-prompts/` 先例）而**不是**"库外用户目录"⇒ 不触"允许根"纪律；
+   同名按 rank 遮蔽 ⇒ **库内永远能盖掉内置**（改内置请在库内建同名技能，别指望改随包文件）。
 2. **不做 watcher**：上游 `skill-filesystem` 用 ~350 行 Chokidar（root/ancestor 双模、rewatch、stability/poll、
    maxProjects 淘汰）做失效通知。本地无 fs 事件服务，而技能目录小、frontmatter 解析便宜 ⇒ **每轮重建目录**
    （`build_system_prompt()` 每轮都调）。
@@ -67,6 +69,9 @@ import yaml
 logger = logging.getLogger(__name__)
 
 __all__ = [
+    "BUNDLED_RANK",
+    "BUNDLED_SOURCE",
+    "BUILTIN_SKILLS_DIRNAME",
     "CATALOG_DESCRIPTION_MAX_LENGTH",
     "MAX_SKILL_BYTES",
     "SKILLS_DIR",
@@ -142,12 +147,12 @@ def is_skill_name(name: str) -> bool:
 
 
 def skill_roots(kb_path: str) -> tuple[SkillRoot, ...]:
-    """扫描根表（**按 rank 升序**，rank 小者优先）。
+    """扫描根表（**按 rank 升序**，rank 小者优先）：库内（100）→ 随包内置（600）。
 
-    本地今天只有一个根（库内），表形状照上游保留 ⇒ 将来要加"全局技能根"只需在此追加一行
-    （但库外根要先过"允许根"这道纪律，见模块头偏差 1）。
+    表体在**文件末** `_all_roots()`（照上游"根表集中一处"的形状；放末段是为了本模块上方
+    所有 `<文件>:<行号>` 引用零漂移）。同名按 rank 遮蔽 ⇒ 库内永远盖得住内置。
     """
-    return (SkillRoot(path=os.path.join(os.path.abspath(kb_path), *SKILLS_DIR), source="kb", rank=100),)
+    return _all_roots(kb_path)
 
 
 def parse_frontmatter(raw: str) -> tuple[Mapping[str, object], str] | None:
@@ -482,3 +487,46 @@ def render_invocations(kb_path: str, text: str) -> str:
             continue
         blocks.append(render_skill_content(skill))
     return "\n\n".join(blocks)
+
+
+# ── 内置只读根（2026-09-24；N 线技能包随包分发，见 `docs/design/agent-capabilities.md` §4.6 / §10 P4）──
+# **为什么要有它**：本机制此前只吃库内根（模块头偏差 1），而"什么时候该联网、抓完怎么落工作区、什么时候
+# 必须停下来问用户"这份说明书是**产品自带**的 —— 要求每个用户自己先在库里建一遍，既不现实、也会随版本漂移。
+# 于是开出**第二个根**：随包资源目录 `resources/agent-skills/**`（source `bundled`，rank 600）。
+#
+# 三条边界（都沿用既有契约，不新造机制）：
+# ① **只读**：内置根是随包资源（发布态在 `Package/resources/` 下），发现 / 加载**从不写它**。用户要改，
+#    就在库内建同名技能 —— rank 100 < 600 ⇒ **库内永远遮蔽内置**（上游 rank 语义，见 `skill_roots` 根表）。
+# ② **缺失即降级、不报错**：目录不存在就只给库内根（`discover_skills()` 对不可读的根本就静默跳过）⇒
+#    老发布包 / 被裁剪过的安装不会因为少这个目录而坏；"漏拷"由发布侧 `packaging/build.py` 的
+#    `_REQUIRED_RELEASE_RESOURCES` 硬门禁拦住，两条一硬一软、各管一段。
+# ③ **取应用资源目录，不取"库外用户目录"**：`runtime.resources_dir()` 与 `agent-prompts/` /
+#    `agent-capabilities/` 同一处 ⇒ 不触"允许根"纪律（`tools/kb.py::_read_roots()` 仍只有库根）。
+#
+# **已知限制（未做，如实记）**：`render_skill_content()` 对每个技能都印一句「本技能的资源基目录：… 按需
+# 再读取其中的资源」，而内置技能的基目录在**库外** ⇒ 模型用读取工具读不到它。今天的内置技能
+# （`web-research`）不带资源文件、正文自足、且正文里已写明"别去读它的目录"，故无实际影响；
+# **将来若要给内置技能配 `assets/**`，必须先解决这个读取口径**（或把该目录也纳入允许根）。
+# 整段追加在文件末尾 ⇒ 上方所有引用零漂移。
+
+#: 内置根在资源目录下的子目录名（`resources/agent-skills/`）。
+BUILTIN_SKILLS_DIRNAME = "agent-skills"
+#: 内置根的来源标签（落在 `SkillSummary.source` / `SkillDefinition.source`）。与库内根的 `kb` 同族、小写。
+BUNDLED_SOURCE = "bundled"
+#: 内置根的 rank（照上游 `bundled` 档 = 600 ⇒ 优先级最低，库内任何根都能遮蔽它）。
+BUNDLED_RANK = 600
+
+
+def _all_roots(kb_path: str) -> tuple[SkillRoot, ...]:
+    """`skill_roots()` 的表体：库内（100）→ 随包内置（600；目录不存在就不给这一项）。
+
+    `resources_dir()` 走**函数内延迟导入**（同 `_skill_and_time_sections` 的取舍）：本模块顶层
+    不依赖 `memoria.app`，测试也能只 monkeypatch `memoria.app.runtime.resources_dir` 就把内置根隔离掉。
+    """
+    from memoria.app.runtime import resources_dir
+
+    roots = [SkillRoot(path=os.path.join(os.path.abspath(kb_path), *SKILLS_DIR), source="kb", rank=100)]
+    bundled = resources_dir() / BUILTIN_SKILLS_DIRNAME
+    if bundled.is_dir():
+        roots.append(SkillRoot(path=str(bundled), source=BUNDLED_SOURCE, rank=BUNDLED_RANK))
+    return tuple(roots)

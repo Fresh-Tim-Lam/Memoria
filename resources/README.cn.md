@@ -13,6 +13,8 @@
 | `icons/` | 应用图标（`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`），用于窗口、任务栏与打包产物 |
 | `screenshots/` | 项目演示截图（`demo-*.png`），README（中/英）配图；由打包脚本**不纳入**发布包 |
 | `agent-prompts/` | 随应用分发的 Agent 提示词模板：`organize.zh-CN.md`（导入整理，程序内单一事实源）、`kb-agent.zh-CN.md`（知识库智能体**指令**，粘贴进 Trae 一次）、`kb-spec.zh-CN.md`（知识库**编撰/维护规范**，供 agent 按需读、独立随版本升级，见 [docs/design/kb-agent.md](../docs/design/kb-agent.md)） |
+| `agent-capabilities/` | **能力插件**内置声明（`kb-write.json` / `web-search.json` / `web-fetch.json`），运行态由 `plugins.py::builtin_dir()` 读取；随包分发，缺则能力闸不生效（见 [docs/design/agent-plugin-design.md](../docs/design/agent-plugin-design.md)） |
+| `agent-skills/` | **内置技能**（`web-research/SKILL.md` = N 线联网工作法），运行态由 `skills.py::_all_roots()` 的 `bundled` 只读根读取；库内建同名技能即可遮蔽它（见 [docs/design/agent-capabilities.md](../docs/design/agent-capabilities.md) §4.6） |
 
 ## 目录变更约定
 

@@ -6824,3 +6824,114 @@ html *::-webkit-scrollbar-thumb:active {
     line-height: 1.5;
     color: var(--text-secondary);
 }
+
+/* ===== 2026-09-24 追加：脚本工作区设置的三个键（`js/scratch-settings.js`）=====
+   解释器路径 / 「允许用发布包内置解释器」/ 单次执行超时 + 一行「最终会用哪个解释器」的回显
+   （`-script-resolved--bad` 是"路径不存在"或"没找到解释器"的警示态）。
+   `-script-switch` 刻意**不复用** `-agent-field`：那条 `.-agent-field input` 会给出文本框的
+   padding，套到勾选框上会把方框撑大（插件面板的 `-plugins-switch` 也是同样的取舍）。
+   颜色全用既有令牌。末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-script-settings {
+    display: flex;
+    flex-direction: column;
+}
+.-script-settings .-settings-section-head {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.5rem 0 0.25rem;
+    color: var(--text-bright);
+    cursor: default;
+}
+.-script-switch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.375rem;
+    margin-bottom: 0.4375rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+.-script-hint,
+.-script-resolved {
+    margin: 0.125rem 0 0;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+.-script-resolved--bad {
+    color: var(--warning);
+}
+
+/* ===== 2026-09-24 追加：设置 →「显示」→「性能」里**预览池智能替换**的权重与公式
+   （`js/display-settings.js` 末尾「性能版块」块渲染；算法与常量见 `js/preview-cache-policy.js`）。
+   数値框补一条与既有 `.-settings-field select` 同档的样式（原本只给 select / range 定过宽高）；
+   公式块用 `white-space: pre-wrap` 以便中英两种语序都能自然换行。颜色全用既有令牌。
+   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-settings-field input[type="number"] {
+    width: 100%;
+    padding: 0.25rem 6px;
+    font-size: 0.75rem;
+    border: 0.5px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-radius: 4px;
+}
+.-perf-title {
+    margin: 0.75rem 0 0.25rem;
+    font-weight: 600;
+    color: var(--text-bright);
+}
+.-perf-formula {
+    margin: 0.5rem 0 0;
+}
+.-perf-formula-line {
+    display: block;
+    margin: 0.25rem 0 0.375rem;
+    padding: 0.5rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: var(--bg-tertiary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-primary);
+}
+/* 现场读数：最近一次切换耗时 / 生效门槛 / 池内逐条分数（等宽小字，便于比对数字） */
+.-perf-live {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    margin: 0.25rem 0 0.5rem;
+    padding: 0.5rem 0.625rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    line-height: 1.6;
+    background: var(--bg-tertiary);
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+.-perf-live-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* ===== 2026-09-24 追加：**窗口化渲染**的占位块（`app.js` 末尾 `memoriaPreviewWindow`；设计与三条入口见
+   `docs/design/preview-render-pipeline.md §3.4 / §4 K4a`）=======================================
+   窗口外的块被摘走，原位留一个空 `div.-pv-spacer`：**高度由 JS 写死**（已量过的真高 / 否则按块类型估）
+   ⇒ 滚动条长度与"跳到第 N 行"的像素口径保持自洽（这就是为什么不复用 `contain-intrinsic-size`：
+   空元素的高度可以直接写真值，更确定）。它只是"占位"，不参与交互。
+   **注**：同日更早那版 `content-visibility: auto`（§3.2）已**删除** —— 真机读数证明它搬不动那 ~1.45 s
+   （`paint` 1833 → 1788 ms，节点仍全在 DOM 里），而且与窗口化**冲突**：被 `content-visibility` 跳过的块
+   `offsetHeight` 返回的是**估值**，窗口化正靠量真高来让滚动条越用越准。
+   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
+.-pv-spacer {
+    display: block;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}

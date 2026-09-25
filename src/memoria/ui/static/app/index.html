@@ -502,5 +502,18 @@
        `agent_net_domains` / `agent_save_config`，DOM 自建后追加进 `#agent-settings`；
        末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
   <script src="/app/js/net-settings.js"></script>
+  <!-- 脚本工作区设置的三个键（2026-09-24；设计见 agent-capabilities.md §3.4）：只消费
+       `agent_script_settings` / `agent_save_config`，DOM 自建后追加进 `#agent-settings`；
+       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/scratch-settings.js"></script>
+  <!-- 预览池的智能替换策略（2026-09-24）：纯函数、无 DOM 依赖 ⇒ 可单独 `node` 跑分；app.js 末尾
+       「预览池智能替换」块与设置页（显示 →「性能」）都只在**调用期**取 `window.MemoriaPreviewPolicy`
+       ⇒ 放末尾不影响加载顺序；末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
+  <script src="/app/js/preview-cache-policy.js"></script>
+  <!-- 导航模型（2026-09-24）：纯函数算法 + 包装 nav-stack 的预测器 ⇒ 顺序必须在 nav-stack.js 之后
+       （它包装 `MemoriaNavStack` 的 push / openFileFromTree / navBack / navForward / clear）。
+       两者都无 DOM 依赖的主逻辑 ⇒ `nav-model.js` 可单独 `node` 跑分；末尾追加 ⇒ 上方锚点零漂移。 -->
+  <script src="/app/js/nav-model.js"></script>
+  <script src="/app/js/nav-predictor.js"></script>
 </body>
 </html>

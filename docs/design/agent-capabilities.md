@@ -269,7 +269,7 @@ apply 入口（核心，M3a）
 |---|---|---|---|---|
 | **W 写** | `kb-write`（建点 / 改点 / 连边 / 文件增删改） | `write` 限库内正文 + `.memoria/**` 白名单；`approval=confirm` | ✅（工具体 = 核心原语） | M3a 一次性把写原语加进原语目录 |
 | **N 联网** | `web-search`、`web-fetch` | 出网**逐次显式**（默认关；`network` 动作类仍是 §2.1 暂缓字段 —— **2026-09-24 落地时没扩它**，改用"族目录 + 库级参数"两条接线，见下） | ✅（**2026-09-24 已落地**：`resources/agent-capabilities/web-search.json` / `web-fetch.json`） | M3a 一次性把写原语加进原语目录 |
-| **S skill** | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | S1 一次性把 `use_skill` 按需注入器加进目录 |
+| **S skill** | `<kb>/.memoria/agent/skills/<name>/`（`SKILL.md` + `manifest.json`，§4.2）+ **随包内置只读根** `resources/agent-skills/**`（§4.6；2026-09-24 开出，库内同名可遮蔽） | 默认只读；声明写权限仍 `confirm`（§4.4 不放宽） | ✅（skill 本就是声明式） | ~~S1 一次性把 `use_skill` 按需注入器加进目录~~ ✅ **2026-09-22 已落**（注入器 = `skill` 工具 + `/name` 手势）；内置根 **2026-09-24 已落**（§4.6）；**仍缺** `manifest.json` 的"声明领域动词"面 |
 | **H 宿主** | 悬浮卡片、定时唤醒（§5.2） | 宿主能力**默认关、逐 KB 开关**（`host` 动作类是 H1 才引入的声明面，§2.1 暂缓清单）；RPC 侧走通用网关 | ⚠️ **否**：RPC 侧可声明式，**浮层组件**需要一个核心提供的前端挂载点 | H1 需先加挂载点；建议单独立项（§5.4） |
 
 > 结论要如实说：**能插的是"声明与权限"，不能插的是"新的执行体"**。这与 [AGENTS.md §6](../../AGENTS.md)（注册表条目 + 独立提示词文件、无执行体）和 §4.1「非目标：不做任意脚本执行」是同一条红线。
@@ -382,13 +382,14 @@ apply 入口（核心，M3a）
 | 审计 | `audit.EVENT_SCRATCH_RUN = "scratch/run"`：每次运行一条 `{script, interpreter, source, exit_code, timed_out, duration_ms, bytes, digest}` —— **不含 stdout 全文、不含密钥** |
 | 面板 | `js/agent-scratch.js`（DOM 自建后插在输入区之前；`index.html` 只多一行 `<script>`）+ 两份 i18n + `app.css` 末尾块 |
 | 设置 | `config/agent.json` 三键：`script_interpreter`（空 = 回落）/ `script_use_bundled` / `script_timeout_s` |
+| 设置界面 | `ui.py` 末尾一条 RPC `agent_script_settings`（**不收 `kb_path`** —— 解释器是**机器级**设置，没开库也要能改；也**不并进** `_agent_config_view()`，那会推位中段锚点）+ `js/scratch-settings.js`（DOM 自建后追加进 `#agent-settings`，与 `net-settings.js` 同款；**回显"当前会用哪个解释器 + 来源四态"**）。**2026-09-24 追加**，写侧仍走 `agent_save_config` 的浅合并 |
 
 **解释器解析顺序**（`scratch.resolve_interpreter()`）：**显式路径**（设置项；填了但不存在 ⇒ 报错，**不静默回落**）→ **发布包内置**（`resources/python/`，开关可关）→ **系统 PATH**（`python` / `python3` / `py`）→ 当前解释器；都拿不到 ⇒ `interpreter=""` + `source="none"`：面板**禁用**「运行」并给出可照做的提示。
 
 **未做（如实；v1 之后的下一片）**：
 
 ① **打包内置解释器**（`packaging/build.py` 登记 `resources/python/` + python.org **embeddable** 包 + `THIRD_PARTY_NOTICES.md` 记 PSF 许可）—— 已答人「可以内置」：代价约 **+25 MB**（现发布包 **1.3 GB**，占比可忽略）；
-② **设置界面**（三键目前只能改 `config/agent.json`，设置页「Agent」里还没有输入框）；
+② ~~**设置界面**（三键目前只能改 `config/agent.json`，设置页「Agent」里还没有输入框）~~ ✅ **2026-09-24 已落**：设置 →「Agent」→「对话」里三行（解释器路径 / 允许用发布包内置 / 单次执行超时）+ 一行"当前会用哪个解释器、来源是哪一档"的回显（见上表「设置界面」行；台账 `docs/todo.md §13` **AG63**）；
 ③ 工作区**清理策略**（保留上限 / 一键清空）与面板里**直接编辑**脚本；
 ④ 真机上长输出、多脚本协作与 PowerShell 场景的观感未验。
 
@@ -410,11 +411,13 @@ apply 入口（核心，M3a）
   assets/**        # 可选：模板、词表（只读）
 ```
 
-> 与 §2.1 的对应：`manifest.json` 就是**同一份插件契约**（**v1 字段集**，§2.1），只是**用户技能类**（"类"由**来源目录** `<kb>/.memoria/agent/skills/**` 约定，不是契约字段；§2.1 已删除分类字段，见其「字段演进（一）」）；技能正文 `SKILL.md` 由 §4.3 的 `use_skill` 按需注入（**不依赖** `provides.prompt`，该字段属 §2.1 暂缓）；它的 `tool_id` 同样只能取自核心原语目录（**skill 不引入新的执行体**，见 §2.5 结论）。启用位与参数值落在同一份库级注册文件 `<kb>/.memoria/agent/capabilities.json`。
+> 与 §2.1 的对应：`manifest.json` 就是**同一份插件契约**（**v1 字段集**，§2.1），只是**用户技能类**（"类"由**来源目录** `<kb>/.memoria/agent/skills/**` 约定，不是契约字段；§2.1 已删除分类字段，见其「字段演进（一）」）；技能正文 `SKILL.md` 由 §4.3 的 `skill` 工具按需注入（**不依赖** `provides.prompt`，该字段属 §2.1 暂缓）；它的 `tool_id` 同样只能取自核心原语目录（**skill 不引入新的执行体**，见 §2.5 结论）。启用位与参数值落在同一份库级注册文件 `<kb>/.memoria/agent/capabilities.json`。
 
 ### 4.3 发现与按需注入（token 是关键约束）
 
-**不把全部 skill 说明塞进 system 提示**（会随 skill 数量线性膨胀）。两段式：system 里只放"有哪些 skill + 一句话用途"；模型决定要用时，用 `use_skill(name)` 把该 skill 的 `SKILL.md` 正文**按需注入**（一次注入、当轮有效）。这条与横向 A（§6）直接相关。
+**不把全部 skill 说明塞进 system 提示**（会随 skill 数量线性膨胀）。两段式：system 里只放"有哪些 skill + 一句话用途"；模型决定要用时，用 `skill` 工具把该 skill 的 `SKILL.md` 正文**按需注入**（一次注入、当轮有效）。这条与横向 A（§6）直接相关。
+
+> **落地订正（2026-09-24）**：工具名是 **`skill`**（不是本节早期写的 `use_skill`），另有一条 `/name` 用户手势走同一注入路径；两段式的门控是"`skill` 工具在场**且**目录非空才出段"，正文**从不进 system 提示**。实现见 `services/agent/skills.py`、`tools/kb.py`、`prompt.py`（§4.6）。
 
 ### 4.4 权限模型
 
@@ -423,7 +426,25 @@ apply 入口（核心，M3a）
 
 ### 4.5 复用与维护
 
-版本（`manifest.version`）、依赖（`requires`）、冲突（同名工具优先级：内置 > skill，且冲突要**显式报错**而不是静默覆盖）、卸载（删目录即停用，与会话数据无关）。
+- 版本（`manifest.version`）、依赖（`requires`）、冲突（同名工具优先级：内置 > skill，且冲突要**显式报错**而不是静默覆盖）、卸载（删目录即停用，与会话数据无关）。
+
+### 4.6 内置只读根：随包技能（2026-09-24 落地）
+
+> **来源 = 人对 §10 Q「skill 的承载位置」（P4）与"N 线要不要做成技能包"的回答**：**开出内置根**。此前本机制**只吃库内一个根**（模块头偏差 1 原话："全局根留待拍板"），于是"产品自带的说明书"没有发法 —— 要求每个用户先在库里手建一遍，既不现实、也必然随版本漂移。
+
+| 维度 | 库内根（原有） | **内置根（本轮新增）** |
+|---|---|---|
+| 路径 | `<kb>/.memoria/agent/skills/**` | `resources/agent-skills/**`（随包 → 发布态 `Package/resources/agent-skills/`） |
+| `source` / `rank` | `kb` / 100 | **`bundled` / 600** |
+| 谁写 | 用户（技能是用户的） | **只读**（随包资源，发现/加载从不写它） |
+| 遮蔽关系 | rank 小者胜 ⇒ **库内同名永远盖得住内置**（用户要改内置技能就在库内建同名那份） | —— |
+| 缺失时 | —— | **静默降级**（目录不在就只剩库内根，不报错）；"漏拷"由 `packaging/build.py` 的 `_REQUIRED_RELEASE_RESOURCES` 硬门禁拦 |
+
+- **不新造机制**：只多一个 `SkillRoot` 条目（`skills.py::_all_roots()`）。两段式、frontmatter 契约、`/name` 手势、`skill` 工具、只读纪律**全部沿用**。
+- **为什么不取"库外用户目录"**（上游 `~/.dsh` / `~/.agents` 那套）：本地没有"工程根"概念（app 从任意 cwd 启动、**库才是边界**）；内置根取的是 `runtime.resources_dir()`，与 `agent-prompts/` / `agent-capabilities/` 同一处 ⇒ 不触"允许根"纪律（`tools/kb.py::_read_roots()` 仍只有库根）。
+- **首个随包技能**：`resources/agent-skills/web-research/SKILL.md` = **N 线联网工作法**（先判断该不该查 → 两把工具怎么取舍 → 抓完落脚本工作区 → 四种情况必须停下问用户 → 引用口径 → 不许做的事）。它是 §4.3"按需注入"的**第一个真实样本**，也是 N 线"完整联网能力"缺的那一半（工具在那儿，工作法原先没有）。
+- **已知限制（未做，如实记）**：`render_skill_content()` 对每个技能都印一句"本技能的资源基目录：… 按需再读取其中的资源"，而内置技能的基目录在**库外**（读取工具到不了）⇒ 今天靠"正文自足 + 正文里自己声明别去读"绕过；**要给内置技能配 `assets/**` 必须先解决这个读取口径**。
+- **未做**：用户技能类插件的 `manifest.json`（声明领域动词）与 §4.4 的库级权限登记仍在 S1 后半段；内置技能不进"能力插件"面板（它没有 `manifest.json` ⇒ 不参与启停，属 `kb`/`bundled` 根的**只读文本**）。
 
 ---
 
@@ -570,7 +591,7 @@ apply 入口（核心，M3a）
 | **W1**（=`M3a`） | 能力插件契约 + 装载器 + 库级注册文件 + 写管线（propose=`plan` → `preview_plan` → 逐条确认 → 应用 → 审计）+ **计划 API**（§2.3.3/§2.3.4）+ **首批 3 个 op**（`upsert_kp`、`attach_links`、`detach_links`） | "无 silent 写入"专项通过 + 越界被拒 + 审计可回放 + 备份可用可清（§2.6 安全门四条） |
 | **W2**（=`M3b`） | 其余 op（`set_kp_range`、`rename_kp`、`merge_kp`）+ 撤销回滚 + `permission-presets` 第二旋钮 + N/S 各一个"只声明不启用"样板插件 | M3 出口（[dsh-agent-port §8](dsh-agent-port.md)）：越权次数 0 + L2 A/B |
 | **N1** | ✅ **2026-09-23 已落地**（`services/agent/web.py` + `tools/kb.py` 的 `web_search` / `fetch_url`，见 [dsh-agent-port.md §6.28](dsh-agent-port.md)）：出网一次 + 两把原语 + 落 `pending`；~~联网类插件声明（族/来源目录约定，见 §2.5）~~ **本轮未做**（`permissions.network` 仍不在 v1 契约内，工具直接注册） | 出网可审计、长文不进上下文 —— **已验**（`net/request` 会话事件 + `tests/test_agent_web.py` **49 例**；真机出网未验） |
-| **S1** | 声明式 skill（只读工具 + `use_skill` 按需注入）+ 用户技能类插件声明（§4.2） | 一个用户自定义 skill 端到端可用 |
+| **S1** | ⏳ **机制已落地、声明面未做**：`skills.py`（2026-09-22：两段式发现 + `skill` 工具 + 目录段 + `/name` 手势）+ **内置只读根**（2026-09-24：`resources/agent-skills/**`，首个随包技能 `web-research`，§4.6）；**仍缺**用户技能类插件的 `manifest.json`（用 `tool_id` 声明领域动词）与 §4.4 的库级权限/启停 | 一个用户自定义 skill 端到端可用 —— **今天**：正文 + `/name` + 按需加载可用；**"声明工具"未通** |
 | **H1** | 最小宿主接口（悬浮卡片 + 定时唤醒，默认关）+ 核心侧前端挂载点 | 主动性三问有答案、可一键停 |
 
 > 建议顺序 **T1 → B1 → W1(M3a) → W2(M3b) → N1 → S1 → H1**：先有度量与写能力闭环，再放联网与扩展，最后才放开"主动"。**W1/W2 已按 §2 更名为 M3a/M3b**（同一切片，`M3` 编号对齐 [dsh-agent-port.md §8](dsh-agent-port.md)）；N1/S1/H1 的"不改核心"前提见 §2.5。
@@ -599,7 +620,7 @@ apply 入口（核心，M3a）
 | **P1** | 写能力的确认交互 | ① 面板内逐条 ✓/✗（推荐） ② 系统弹窗逐条 ③ 批量"接受同类" | 前端工作量与可读性 |
 | **P2** | 写工具是否允许"批量提议"（一次提议多条变更） | ① 允许但逐条确认（推荐） ② 只允许单条 | 事务复杂度 |
 | **P3** | 出网工具的实现面 | ✅ **已拍板（2026-09-23）= ① 复用模型端点的联网能力**（检索走 DeepSeek 的 Anthropic 兼容面 + 原生 server tool `web_search_20250305`，复用现有 key）；**② 仍由应用自己抓**（标准库 urllib + 私网拒绝）⇒ 检索与抓取各取一半，理由与落地见 [dsh-agent-port.md §6.28](dsh-agent-port.md)。原选项：① 复用模型端点的联网能力（若端点支持） ② 应用自己抓（标准库 urllib + 白名单）（原推荐） | 隐私面与实现量 |
-| **P4** | skill 的承载位置 | ① `<kb>/.memoria/agent/skills/**`（随库走，推荐） ② 程序目录（跨库共享） | 分发与迁移 |
+| **P4** | skill 的承载位置 | ✅ **已拍板（2026-09-24）= ①+② 并存**：库内 `<kb>/.memoria/agent/skills/**`（用户技能，rank 100）+ **随包内置只读根** `resources/agent-skills/**`（产品自带技能，rank 600，库内同名可遮蔽，§4.6）。**不**改成"只有程序目录"、**不**引入库外用户目录（上游 `~/.dsh` 那套）。原选项：① `<kb>/.memoria/agent/skills/**`（随库走，推荐） ② 程序目录（跨库共享） | 分发与迁移 → **已定**：内置技能随版本升级、用户技能随库走；"用户技能类插件的声明面"仍属 S1 后半段 |
 | **P5** | 主动性由谁调度 | ① 最小独立调度器（推荐） ② 复用 `MaintenanceExecutor` ③ 前端 `scheduler.js` | H 线复杂度（§5.4） |
 | **P6** | 基准的"真端点"档是否纳入门禁 | ① 纳入（更真实但不可复现） ② 只作参考（推荐：门禁用假 provider 档） | 门禁可信度 |
 | **P7** | **能力插件注册表的承载位置**（§2.2） | ① 内置声明 `resources/agent-capabilities/**`（随版本）+ 库级启用 `<kb>/.memoria/agent/capabilities.json`（随库）（**推荐**：与既有"程序读取源 vs 库内事实源"分工一致，且不动 `config/agent.json` 键白名单）② 全部随库（`.memoria/agent/capabilities/**`，可分发，但升级要迁移）③ 全部在程序目录（跨库共享，但无法 per-KB 启停） | 决定是否需人工登记 `AGENTS.md §1` |
@@ -623,3 +644,4 @@ apply 入口（核心，M3a）
 | 2026-09-20 | **契约收缩为「最小可用契约 v1」（字段 13 → 6）**（用户口径：「能力契约我们慢慢完善，我们先以第一个写模块进行设计，只需要满足『最小可用契约字段集』，不要上来就框住，除非 dsh 上游有成熟的设计」）。**docs only，未改任何源码**。① `design/agent-capabilities.md` **§2.1 重写**：标题改「**最小可用契约 v1**」+ 写入**准入规则**（字段要么**有真实消费者点名**、要么**照搬上游成熟设计并点名 `file:line`**，两条都不满足即移出）；v1 字段表 **6 个** = `id`（有据：`dsh-src/packages/fs/tool-fs/src/index.ts:19`、`apps/cli/src/profile-boot.ts:173`）/ `name`（有据：`interaction/permission-presets/src/index.ts:62-71`）/ `provides.tools[]`（**本地自定**：上游是运行时 `ctx.tools.register()`，`core/tools/src/index.ts:1043`；仅取值语义对齐 `ToolSchema`，`core/tools/src/schema.ts:483-498`）/ `permissions.read`·`permissions.write`（**本地自定**：上游只有执行器档 `SandboxMode`，`packages/sandbox/sandbox/src/index.ts:29`）/ `approval`（**本地自定字段**，词汇对齐 `ApprovalOutcome`，`interaction/user-approval/src/types.ts:32`；上游档位是会话级 `ApprovalPolicy`，`interaction/user-approval/src/index.ts:60`），每行给"消费者是谁 / 上游对照 / 校验规则"；② **新增「暂缓字段（不在 v1）」清单**（10 条，逐条给**移出理由 + 再引入触发条件**）：`provides.prompt`、`permissions.exec`、`permissions.network`·`host`、`forbidden`、`config`（参数 schema）、`emits`、`verify`、`provenance`、`unload`、`enabled`（**契约层冗余** —— 库级注册表 `enabled[]` 的条目存在性即开关）；③ 两份 JSON 实样同步为 v1 字段集（并注 `v` 是信封版本、不占字段位）；④ **一致性清扫**：§2 引言（"禁项显式/提示词独立文件"标注已移出）、§2.2（"`config` 超界" → "v1 字段校验不过"；"两处新增" → **一处**）、§2.4（新增 **v1 声明面**注：只开 `read`/`write`，`network`/`host`/`exec` 三列不发生效）、§2.5（N/H 行的动作类改标"随 N1/H1 引入"）、§2.6（M3a 落点标 v1；`kb.file.delete` 开关与 `permissions.exec` 改按暂缓口径）、§4.2（去掉 `provides.prompt` 依赖）、§9 R4·R8（去掉 `exec` 恒空、`forbidden` 非空表述）、§10 **P9**（库级"只接受启停位与 `config` 值"）；**`approval` 安全下限**统一为「`permissions` 含 `write` ⇒ 不得 `auto`；**引入 `exec` 时该条随之生效**」；⑤ 轻改 `design/dsh-agent-port.md` §8 **M3 行**（标注 v1 字段集）与 `conventions/docs-management.md §4.2`（追加本行）。**`docs/todo.md` 未改动**（AG04 行不依赖被移出字段，状态仍 **K3 待评审**，字节中性） |
 | 2026-09-20 | **契约迁出：新增活文档 [agent-plugin-design.md](agent-plugin-design.md)，本文只留指针**（用户口径：「我要一个新的文档写这些内容，所有内容都由我来慢慢对齐；先把上面确定的 6 字段最小协议记录进去，然后我们讨论写组件的细节」）。**docs only，未改任何源码**。① **新文档** `docs/design/agent-plugin-design.md`（**唯一事实源**）= 头部（用途 / 关联文档 / 状态=**活文档、由人逐步对齐** / **治理约定=Agent 只追加、不改写人已确认条目**）+ §1 最小可用契约 v1（6 字段表 + 准入规则 + **两份 JSON 实样**，均**逐字照抄**自本文收缩前的 §2.1）+ §2 暂缓字段 10 条 + §3 上游事实（三条结论 + `ApprovalOutcome` 含 `unavailable` ⇒ fail-closed，`file:line` 已逐条复验）+ §4 待讨论 Q1–Q6（`name` 去留 / `constrain`·`gate` 去留 / P8 首批 op 个数 / P9 `approval` 覆写 / P10 备份保留 / P12 plan 版本与兼容；只写问题 + 可选项）+ §5 变更记录；② **本文 §2.1** 的字段表、暂缓清单、`kind` 删除演进与两份 JSON 实样**全部迁出**，改为 **2 行指针**，只保留**模块侧**内容（铁律"插件目录内不含可执行代码"）与"其余各节原引 `§2.1` 字段表/暂缓清单/实样一律以该文为准"一句（**禁并行事实源**）；③ 登记 `conventions/docs-management.md §4.2`。**`docs/todo.md` 未改动**（AG04 行不引用 §2.1 字段表，字节中性） |
 | 2026-09-20 | **本文降级为历史 / 路线图，不再是事实源**（用户口径：「这个文件不是只用于协议，所有相关设计都放在这，旧的我们不作为事实源」）。[agent-plugin-design.md](agent-plugin-design.md) 同日由「能力插件最小协议 v1」**重定位为「能力插件与写模块总设计」（协议 + 写场景 + 模块设计）**，并新增 §6 迁移清单（登记本文 §2.1.1/§2.2/§2.3/§2.3.1/§2.3.2/§2.3.3/§2.3.4/§2.4/§2.5/§2.6/§2.7 与 §8/§9/§10 中与写模块相关的行，逐行标状态）、§7 写场景清单（44 行，读码取证）、§8 场景关系与排序建议。**本文本轮只做两处最小改动**：§2.1 指针处补一句「契约与相关设计以 agent-plugin-design.md 为准；本文不再作为事实源」，以及本行。**未搬任何内容、未实施任何代码**；登记 `conventions/docs-management.md §4.2`；`docs/todo.md` 未改动 |
+| 2026-09-24 | **开启 skill 的「内置只读根」：N 线技能包随包分发**（用户口径：对「N 线要不要做成技能包」与 §10 P4 拍板 **开出内置根**）。本轮只动本文四处 + 一个随包技能，**未改任何既有机制**：① **新增 §4.6**（两根对照表 `kb`/100 vs `bundled`/600 / 只多一个 `SkillRoot` 条目不新造机制 / 为何取 `runtime.resources_dir()` 而非库外用户目录 / 首个随包技能 `resources/agent-skills/web-research/SKILL.md` = N 线联网工作法 / **已知限制** = `render_skill_content()` 的资源提示对库外基目录读不到，配 `assets/**` 前必须先解决 / 未做 = 用户技能类 `manifest.json`）；② **§4.2 与 §4.3 的 `use_skill` 就地订正为 `skill`**（实现里的真名，自 2026-09-22 起；§4.3 补一段"落地订正"说明两段式门控），**§8 S1 行**的 `use_skill` 一并订正；③ **§8 S1 行**改为"机制已落地、声明面未做"（正文 + `/name` + 按需加载可用；"声明工具"未通）；④ **§10 P4** 标记 **已拍板（2026-09-24）= ①+② 并存**。设计侧的完整落地与真机取证见 `conventions/docs-management.md §4.2` 同日至此行；状态行 `docs/todo.md §13` **AG62** |

@@ -1836,5 +1836,93 @@
       saved: "Domain rules saved",
       failed: "Could not save the domain rules",
     },
+    script: {
+      title: "Script workspace",
+      interpreterLabel: "Interpreter path (empty = automatic)",
+      interpreterPh: "e.g. D:\\Python\\python.exe; leave empty to use bundled → system PATH",
+      useBundledLabel: "Allow the interpreter bundled with the release package",
+      timeoutLabel: "Per-run timeout (seconds)",
+      hint:
+        "This only decides which interpreter to use and how long one run may take — scripts never run by " +
+        "themselves: only you can run one, from the Run button in the composer's workspace panel, and it runs " +
+        "as the current user (not a sandbox; the panel always shows that warning).",
+      resolved: "Will use: {path} ({source})",
+      source: { explicit: "set here", bundled: "bundled", system: "system", none: "not found" },
+      noInterpreter: "⚠ No usable interpreter found — the workspace Run button will be greyed out (set an absolute path, or ship the bundled interpreter)",
+      badPath: "⚠ The interpreter path set here does not exist (no silent fallback): {error}",
+      bundledPresent: "Bundled interpreter: {dir}",
+      bundledMissing: "No bundled interpreter shipped (falling back to the system one; directory name resources/{name}/)",
+      timeoutRange: "allowed {min}–{max} s",
+      clamped: "Timeout clamped to {value} s",
+      badTimeout: "The timeout must be a positive number of seconds",
+      noBridge: "Bridge unavailable",
+      saved: "Script workspace settings saved",
+      failed: "Could not save the script workspace settings",
+    },
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].settings.display, {
+    perfPolicyLabel: "Smart replacement for the preview pool (weights & formula)",
+    perfField: {
+      previewCacheMax: "Pool size (max cached tabs)",
+      previewCacheMaxLines: "Cache line limit (no caching above this)",
+      preloadMaxLines: "Preload line limit (no prerendering above this)",
+      preloadMaxTabs: "Preload quota (per session)",
+      perfTimeWeight: "Load-time weight",
+      perfFreqWeight: "Open-count weight",
+      perfRecencyWeight: "Freshness weight",
+      perfSizeWeight: "Footprint-penalty weight",
+      perfAgingWeight: "Aging weight",
+      perfHalfLifeH: "Freshness half-life (hours)",
+      perfAdmission: "Background preload must pass the admission gate",
+      navPredictor: "What to prerender next (predictor)",
+      navHalfLifeDays: "Navigation-habit half-life (days)",
+    },
+    perfAdmissionNote:
+      "On: a newly prerendered tab only replaces the lowest-scoring entry when it scores higher — that is the gate " +
+      "that stops a folder scan from flushing every hot tab. Off: the pool is filled first-come-first-served. " +
+      "The tab you are looking at always enters the pool regardless.",
+    perfFormulaTitle: "Ranking score (higher = keep; the lowest score is replaced first)",
+    perfFormula: "S = {wt}×load + {wf}×opens + {wr}×freshness − {ws}×footprint − {wa}×aging",
+    perfFormulaTerms:
+      "where load = ln(1 + ms/{ref}) / ln2 (0–1); opens = lg(1 + count) (log-damped so a past hotspot cannot live forever); " +
+      "freshness = 2^(−idle hours/{tau}); footprint = estimated bytes / {mb} MiB (0–1); " +
+      "aging = evictions inside the pool since that tab was last used (capped at {cap}). " +
+      "A newly inserted entry re-initialises to opens 0 / idle 0 / aging 0 / load = the latest measurement. " +
+      "Model sources: GDSF aging + TinyLFU admission + hyperbolic footprint weighting (see the module header).",
+    perfReset: "Restore defaults",
+    perfLiveTitle: "Live readings (only meaningful while the toggle above is on)",
+    perfLiveNone: "No readings available (app.js not loaded, or version mismatch).",
+    perfLiveLast: "Last tab switch: script {js} ms · frame {paint} ms ({how})",
+    perfLiveHit: "served from the cache",
+    perfLiveMiss: "cold render (no hit)",
+    perfLiveLimits:
+      "Effective thresholds: pool {pool} · cache line limit {cacheLines} · preload line limit {preloadLines} · preload quota {done}/{tabs} · evictions so far {evicts}",
+    perfLiveEmpty: "The pool is empty (switch away from a tab and an entry appears).",
+    perfLiveRow: "{path} — score {score} (opens {hits} · idle {idle} h · load term {load})",
+    perfRefresh: "Refresh readings",
+    perfNavMode: {
+      off: "Off (tab order only)",
+      markov: "Markov chain (follows your navigation habits)",
+    },
+    perfNavNote:
+      "On: learn a file-level transition graph from **the jumps you make yourself** (nodes carry their knowledge points), then use a " +
+      "**random walk with restart** to guess which files you are most likely to open within the next few hops, and multiply by how long " +
+      "each one takes to render — slow files deserve the head start, fast ones are not worth the CPU. Automatic reopens after a refresh " +
+      "or a write, and prerendering itself, are never recorded (otherwise the model would learn its own tail). Below 50 samples it falls " +
+      "back to \"neighbouring chapters first\". The model lives in the knowledge base at `.memoria/cache/nav/` (regenerable cache) and can be cleared at any time.",
+    perfLiveNav: "Navigation model: {nodes} nodes / {edges} edges / {samples} samples (prediction starts at {min}) · prerender hit rate {rate}% ({hits} hit / {misses} missed)",
+    perfLiveStale: "Stale speculative prerenders dropped: {n} (reconciled against the new candidate set after each file switch; anything you actually opened is kept)",
+    perfLivePool: "Pool footprint (measured node count): {entries} entries / {nodes} nodes / {chars} chars ⇒ estimated {est} (at 120 B/node) · live-DOM band {live} · serialized HTML ≈ {html}; plus {ast} resident AST blocks",
+    perfLiveParts: "Tab-switch breakdown (the cached-hit one, incremental ms): {list}",
+    perfLivePhases: "Tab-switch phases (**whole pipeline**, incremental ms): {list}",
+    perfLiveAsync: "Tab-switch async marks (ms since the click): {list}",
+    perfLiveWin: "Windowing: took over {attach}× · last skip: {skip} · wheel {wheel} · scroll {scrolls} · fallback {fb} · window {from}–{to}/{slots} (real {shown}) · scrollTop {top}/{max} · anchorLine {line}→hit {jump}",
+    perfLiveWinLog: "Windowing log (last 8): {list}",
+    perfLiveEdit: "Edit render (#{n}): wait {wait} · full re-render {render} · take-over {attach} · links {links} · typeset {math} ms",
+    perfLiveRender: "Render segments (slowest run {total} ms total, ms since first mark): {list}",
+    perfLiveDrift: "Scroll drift (#{n}): before {before} → after {after} (Δ {delta}) · cumulative {sum} · compensation {comp} · anchor line {line} (in-block offset {off})",
+    perfRenderPart: { entry: "entry", parse: "parse", dom: "build DOM", stamp: "stamp lines", mermaid: "mermaid", mjStart: "MathJax startup", audit: "wrap-up" },
+    perfNavReset: "Clear navigation model",
+    perfNavResetDone: "Navigation model cleared",
   });
 })(typeof window !== "undefined" ? window : globalThis);

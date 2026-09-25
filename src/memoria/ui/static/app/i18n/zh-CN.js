@@ -1732,5 +1732,94 @@
       saved: "域名名单已保存",
       failed: "域名名单保存失败",
     },
+    // 脚本工作区三个键的界面（2026-09-24；`js/scratch-settings.js` 消费。执行权不在设置里：
+    // 模型没有运行工具，脚本只能由人在工作区面板点「运行」，且以当前用户身份运行 = 不是沙箱）。
+    script: {
+      title: "脚本工作区",
+      interpreterLabel: "解释器路径（留空 = 自动）",
+      interpreterPh: "例如 D:\\Python\\python.exe；留空则依次用「发布包内置 → 系统 PATH」",
+      useBundledLabel: "允许使用发布包内置的解释器",
+      timeoutLabel: "单次执行超时（秒）",
+      hint:
+        "这里只决定「用哪个解释器」与「一次最长跑多久」—— 脚本不会自己跑：只有你在对话栏的「工作区」面板" +
+        "点「运行」才会执行，且以当前用户身份运行（不是沙箱，面板常显那条警告）。",
+      resolved: "当前会使用：{path}（{source}）",
+      source: { explicit: "设置里指定", bundled: "发布包内置", system: "系统", none: "未找到" },
+      noInterpreter: "⚠ 没找到可用的解释器 ⇒ 工作区面板的「运行」会是灰的（填一个绝对路径，或把内置解释器随包分发）",
+      badPath: "⚠ 设置里的解释器路径不存在（不静默回落）：{error}",
+      bundledPresent: "内置解释器：{dir}",
+      bundledMissing: "未随包分发内置解释器（当前回落到系统解释器；目录名 resources/{name}/）",
+      timeoutRange: "允许 {min}–{max} 秒",
+      clamped: "超时已夹到 {value} 秒",
+      badTimeout: "超时必须是一个正数（秒）",
+      noBridge: "桥不可用",
+      saved: "脚本工作区设置已保存",
+      failed: "脚本工作区设置保存失败",
+    },
+  });
+  // 2026-09-24 追加：设置 →「显示」→「性能」里**预览池智能替换**的权重与公式（算法见
+  // `js/preview-cache-policy.js`，接线见 `app.js` 末尾「预览池智能替换」块；说明见
+  // `docs/reference/agent-guide/09-settings-i18n-and-shortcuts.md` §2.24）。末尾追加 ⇒ 上方零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings.display, {
+    perfPolicyLabel: "预览池的智能替换（权重与公式）",
+    perfField: {
+      previewCacheMax: "池容量（最多缓存几个页签）",
+      previewCacheMaxLines: "缓存行数上限（超过就不建缓存）",
+      preloadMaxLines: "预渲染行数上限（超过就不预渲染）",
+      preloadMaxTabs: "预渲染次数上限（每次会话）",
+      perfTimeWeight: "加载耗时权重",
+      perfFreqWeight: "打开次数权重",
+      perfRecencyWeight: "新鲜度权重",
+      perfSizeWeight: "占用惩罚权重",
+      perfAgingWeight: "老化权重",
+      perfHalfLifeH: "新鲜度半衰期（小时）",
+      perfAdmission: "后台预加载要过「入场闸」",
+      navPredictor: "下一个预渲染谁（预测器）",
+      navHalfLifeDays: "跳转习惯半衰期（天）",
+    },
+    perfAdmissionNote:
+      "开：后台预加载的新页签先与「当前分最低的那条」比分，赢了才换入 —— 这是防「扫一遍目录把热页签全冲掉」的那道闸。" +
+      "关：只看池满不满。**你正在看的页签永远直接入池**，不受这道闸影响。",
+    perfFormulaTitle: "排名分（越大越该留；**分最低的先被替换**）",
+    perfFormula: "S = {wt}×加载 + {wf}×打开次数 + {wr}×新鲜度 − {ws}×占用 − {wa}×老化",
+    perfFormulaTerms:
+      "其中：加载 = ln(1 + 毫秒/{ref}) / ln2（0–1）；打开次数 = lg(1 + 次数)（对数压 ⇒ 历史热点不会永生）；" +
+      "新鲜度 = 2^(−闲置小时/{tau})；占用 = 估算字节 / {mb} MiB（0–1）；老化 = 距它上次被使用、池内发生过的淘汰次数（夹 {cap}）。" +
+      "新入池的条目按「次数 0 / 闲置 0 / 老化 0 / 加载 = 本次实测」重新初始化。" +
+      "模型来处：GDSF 的老化 + TinyLFU 的入场闸 + Hyperbolic 的按占用折算（详见该模块文件头）。",
+    perfReset: "恢复默认",
+    perfLiveTitle: "现场读数（下面的开关打开后才会有数）",
+    perfLiveNone: "拿不到读数（app.js 未加载或版本不匹配）。",
+    perfLiveLast: "最近一次切页签：脚本 {js} ms · 画面 {paint} ms（{how}）",
+    perfLiveHit: "走了缓存搬回",
+    perfLiveMiss: "冷渲染（没命中）",
+    perfLiveLimits:
+      "生效门槛：池 {pool} 条 · 缓存行数上限 {cacheLines} · 预渲染行数上限 {preloadLines} · 预渲染配额 {done}/{tabs} · 累计淘汰 {evicts} 次",
+    perfLiveEmpty: "池是空的（切走一个页签后就会有条目）。",
+    perfLiveRow: "{path} — 分 {score}（次数 {hits} · 闲置 {idle} h · 加载项 {load}）",
+    perfRefresh: "刷新读数",
+    perfNavMode: {
+      off: "关（只按页签顺序）",
+      markov: "马尔可夫链（按你的跳转习惯）",
+    },
+    perfNavNote:
+      "开：从**你主动的跳转**里学一张文件级转移图（节点自带知识点），用**带重启的随机游走**猜「接下来几跳最可能打开谁」，" +
+      "再乘「打开它要花多久」决定预渲染的顺序 —— 慢文件更要提前做，快文件不值得抢 CPU。" +
+      "刷新/写盘后的自动重开、预渲染自身都**不记**（否则模型学的是自己的尾巴）；样本不足 50 次时自动退化为「目录相邻优先」；" +
+      "模型落在库内 `.memoria/cache/nav/`（可再生缓存），可随时清空。",
+    perfLiveNav: "导航模型：{nodes} 个节点 / {edges} 条边 / 样本 {samples}（≥{min} 才启用预测）· 预渲染命中率 {rate}%（{hits} 中 / {misses} 未中）",
+    perfLiveStale: "已清掉的过期投机预渲染：{n} 条（切换文件后按新候选集比对删除；你真正打开过的一律保留）",
+    perfLivePool: "池占用（实测节点数）：{entries} 条 / {nodes} 节点 / 文本 {chars} 字符 ⇒ 估值 {est}（按 120 B/节点）· 活 DOM 区间 {live} · 若改存序列化 HTML 约 {html}；另含常驻 AST {ast} 块",
+    perfLiveParts: "切页签分段（命中那次，各段增量 ms）：{list}",
+    perfLivePhases: "切页签阶段（**全程**，各段增量 ms）：{list}",
+    perfLiveAsync: "切页签异步（相对点击起点 ms）：{list}",
+    perfLiveWin: "窗口化：接管 {attach} 次 · 上次跳过：{skip} · 滚轮 {wheel} · 滚动 {scrolls} · 兜底 {fb} · 窗口 {from}–{to}/{slots}（真身 {shown}）· scrollTop {top}/{max} · 锚点行 {line}→命中 {jump}",
+    perfLiveWinLog: "窗口化日志（最近 8 条）：{list}",
+    perfLiveEdit: "编辑渲染（第 {n} 次）：等待 {wait} · 全量重渲染 {render} · 接管 {attach} · 补链接 {links} · 排版 {math} ms",
+    perfLiveRender: "渲染分段（最慢一次共 {total} ms，距第一个打点）：{list}",
+    perfLiveDrift: "位置漂移（第 {n} 次）：渲染前 {before} → 渲染后 {after}（Δ {delta}）· 累计 {sum} · 补偿 {comp} · 锚点行 {line}（块内偏移 {off}）",
+    perfRenderPart: { entry: "入口", parse: "解析", dom: "建 DOM", stamp: "打行号", mermaid: "mermaid", mjStart: "MathJax 启动", audit: "收尾报告" },
+    perfNavReset: "清空导航模型",
+    perfNavResetDone: "已清空导航模型",
   });
 })(typeof window !== "undefined" ? window : globalThis);

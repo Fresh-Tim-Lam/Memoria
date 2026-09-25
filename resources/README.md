@@ -13,6 +13,8 @@
 | `icons/` | App icons (`Memoria.ico` / `Memoria-big.ico` / `Memoria.png`), used for the window, the taskbar, and packaged artifacts |
 | `screenshots/` | Project demo screenshots (`demo-*.png`) used as images in the READMEs (EN / CN); **not included** in the release package by the packaging script |
 | `agent-prompts/` | Agent prompt templates shipped with the app: `organize.zh-CN.md` (import/organize single source of truth in-app), `kb-agent.zh-CN.md` (knowledge-base agent **instruction**, pasted into Trae once), `kb-spec.zh-CN.md` (knowledge-base **authoring/maintenance spec**, read by the agent, versioned independently — see [docs/design/kb-agent.md](../docs/design/kb-agent.md)) |
+| `agent-capabilities/` | **Capability-plugin declarations** shipped with the app (`kb-write.json` / `web-search.json` / `web-fetch.json`), read at runtime by `plugins.py::builtin_dir()`; if missing the capability gate is inert (see [docs/design/agent-plugin-design.md](../docs/design/agent-plugin-design.md)) |
+| `agent-skills/` | **Built-in skills** (`web-research/SKILL.md` = the N-line web-research playbook), read at runtime by the `bundled` read-only root in `skills.py::_all_roots()`; a same-named skill in the KB shadows it (see [docs/design/agent-capabilities.md](../docs/design/agent-capabilities.md) §4.6) |
 
 ## Directory-Change Conventions
 

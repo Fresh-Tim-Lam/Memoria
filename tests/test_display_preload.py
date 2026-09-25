@@ -48,9 +48,10 @@ def test_default_is_off_and_flows_through_the_shared_save_path() -> None:
 
 
 def test_checkbox_reads_checked_not_value() -> None:
-    """勾选框必须取 `el.checked`：`el.value` 恒为 `"on"`，会把开关永远存成真。"""
+    """勾选框必须取 `el.checked`：`el.value` 恒为 `"on"`，会把开关永远存成真。
+    （2026-09-24 起同一行还给**数字框**取 `Number`：性能版块的权重键不能以字符串存进盘。）"""
     src = _display()
-    assert 'let val = el.type === "checkbox" ? !!el.checked : el.value;' in src
+    assert 'let val = el.type === "checkbox" ? !!el.checked : el.type === "number" ? Number(el.value) : el.value;' in src
 
 
 def test_section_reuses_the_house_markup_and_the_shared_fold_path() -> None:
@@ -98,7 +99,9 @@ def test_cache_moves_nodes_instead_of_cloning() -> None:
     assert "if (!incremental && _previewCacheRestore(doc)) { _renderingPreview = false; return; }" in js
     # 渲染成功后才登记"这份 DOM 对应哪份文档的哪个版本"（没有这一步就永远存不进缓存）
     assert "function _markPreviewDomCurrent(doc)" in js
-    assert "_notifyRenderSettled(); _preloadSchedule(); _markPreviewDomCurrent(doc);" in js
+    assert "_notifyRenderSettled(); _preloadPruneStale(); _preloadSchedule(); _markPreviewDomCurrent(doc);" in js, (
+        "渲染收尾的顺序：通知 → **先按新候选集清掉过期的投机预渲染**（2026-09-24 规则）→ 再排预渲染 → 登记指纹"
+    )
     assert 'if (!first || first.classList.contains("-preview-loading")) { _previewDomKey = null; return; }' in js, (
         "失败/占位（.-preview-loading）不算有效渲染，绝不能把错误页缓存起来"
     )
@@ -127,18 +130,36 @@ def test_every_invalidation_trigger_is_wired() -> None:
     # ⑦⑧ 语言 / 主题（已缓存条目的本地化文案与 mermaid 主题色会过期）
     assert 'window.addEventListener("memoria:langchange", function () { _previewCachePurge(); });' in js
     assert 'window.addEventListener("memoria:themechange", function () { _previewCachePurge(); });' in js
-    # 容量上限（LRU）与关闭页签即丢，避免泄漏 DocumentFragment
-    assert "while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);" in js
+    # 容量上限与淘汰：**统一走 `_previewCacheAfterInsert`**（2026-09-24 起：评分 + 老化 + 入场闸；
+    # 策略模块缺席时它内部仍回落到"按插入序逐出最旧" ⇒ 行为不比接线前差）
+    assert "while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);" not in js, (
+        "淘汰必须统一走 _previewCacheAfterInsert（旧的行内 LRU 已退役）"
+    )
+    assert js.count('_previewCacheAfterInsert(path, "foreground");') == 1, "切走入库那条没接线"
+    assert js.count('_previewCacheAfterInsert(path, "preload");') == 1, "后台预渲染那条没接线"
 
 
 def test_preload_is_idle_bounded_and_abortable() -> None:
-    """预渲染：空闲回调驱动、一次一个页签、有行数/次数上限、任何中止信号立即停手。"""
+    """预渲染：空闲回调驱动、一次一个页签、有行数/次数上限、任何中止信号立即停手。
+    （2026-09-24 AG65：三个上限**搬进设置 →「性能」可配**（生效值默认 4000 行 / 8 次），
+    `app.js` 里那几个 `var` 退成"策略模块缺席时的兜底" ⇒ 这里改钉"取值函数 + 兜底常量仍在"。）"""
     js = _app()
-    assert "window.requestIdleCallback(fire, { timeout: 1200 })" in js
-    assert "_preloadIdle = setTimeout(fire, 300);" in js, "缺 requestIdleCallback 时的兜底"
-    assert "var PRELOAD_MAX_TABS = 4;" in js and "if (_preloadDone >= PRELOAD_MAX_TABS) return;" in js
+    assert "if (typeof window.requestIdleCallback === \"function\") _preloadIdle = window.requestIdleCallback(fire, { timeout: 4000 }); else _preloadIdle = setTimeout(fire, 600);" in js, (
+        "2026-09-24：预渲染是**整篇 parse+render**（≈1 s 主线程长任务）⇒ timeout 放宽到 4 s，"
+        "并且下面还要先等两帧 —— 否则它会压在**刚切过去的那一帧**上（真机读数 paint 1788 ms 而脚本只花 335 ms）"
+    )
+    assert "_preloadIdle = -1; if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(arm); }); else arm();" in js, (
+        "先等两帧再排（`-1` 是「arm 排队中」的占位 ⇒ 窗口期内重入调度不会重复排队）"
+    )
+    assert "const arm = function () { if (_preloadIdle !== -1) return;" in js, (
+        "2026-09-24 真机读数跟进：`cancelIdleCallback` **取消不了**已经排进 rAF 的那一步 ⇒ `arm` 必须自己认出"
+        "「已被取消」（`_preloadIdle` 不再等于 -1 就直接退出）；否则切页签之后还会冒出一次 ~1 s 的主线程长任务"
+        "（真机：`frame1` 迟至 1504 ms、期间滚轮与输入全冻）"
+    )
+    assert "var PRELOAD_MAX_TABS = 4;" in js and "if (_preloadDone >= _preloadTabLimit()) return;" in js
     assert "var PRELOAD_MAX_LINES = 1200;" in js
-    assert "if ((res.lines || []).length > PRELOAD_MAX_LINES) return false;" in js
+    assert 'return _previewLimitOf("preloadMaxLines", PRELOAD_MAX_LINES);' in js, "缺可配的预渲染行数上限"
+    assert "if ((res.lines || []).length > _preloadLineLimit()) return false;" in js
     # 跳过当前页签与已缓存页签
     assert "if (!path || path === state.currentPath) continue;" in js
     assert "if (_previewDomCache.has(path) || _preloadTried.has(path)) continue;" in js
@@ -157,9 +178,17 @@ def test_preload_renders_off_screen_without_touching_the_visible_ui() -> None:
     assert "state.doc = savedDoc;" in js and "_blockLineMap = savedMap;" in js
     assert "M.setDoc(savedMapperDoc);" in js, "mapper 的当前文档也要还原，否则编辑映射会错到预渲染那篇上"
     # 预渲染跳过的异步部分（mermaid / MathJax / 图片灯箱）在恢复时补做
-    assert "if (entry.prerendered) _applyPreviewStaticPass(preview, _doc);" in js
+    assert "if (entry.prerendered) _retagInlineMathOnly(preview, _doc);" not in js, (
+        "2026-09-24 二次修正：**恢复时先补标记是空跑** —— 预渲染刻意不跑 MathJax ⇒ 此刻 DOM 里还没有 "
+        "`mjx-container` 可打标记（`contentEditable` 早已随节点搬回）；真正的补标记在 MathJax 落定之后"
+        "（真机读数：这一行曾占 `static` 349 ms）"
+    )
+    assert "function _retagInlineMathOnly(preview, ast) {" in js
     assert "if (MP && MP.attachImageLightbox) { try { MP.attachImageLightbox(preview); } catch (_)" in js
-    assert "if (window.MathJax?.typesetPromise) queuePreviewMathTypeset(preview, token);" in js
+    assert "if (window.MathJax?.typesetPromise) { const _orgH = _switchAbs; const _runMathH = function () { if (token !== state.previewToken) return; const _mp = queuePreviewMathTypeset(preview, token); _markAsyncAfter(\"mathjax\", _mp, _orgH); _mp.then(function () { if (token === state.previewToken) _retagInlineMathOnly(preview, _doc); }); };" in js, (
+        "2026-09-24：命中缓存这条路要**自己补**行内公式标记（常规路径在 `app.js:1983` 有那一步，而这条路提前 return）；"
+        "并把排队挪到两帧之后（MathJax 是主线程重活，紧贴恢复末尾会挡住第一帧）"
+    )
 
 
 def test_toggle_keys_exist_in_both_locales_and_state_the_trade_off() -> None:

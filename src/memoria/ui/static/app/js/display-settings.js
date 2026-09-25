@@ -113,6 +113,7 @@
     if (data && data.previewFontSize !== undefined) out.previewFontSize = data.previewFontSize;
     if (data && data.uiScale !== undefined) out.uiScale = data.uiScale;
     if (data && data.fonts !== undefined) out.fonts = normalizeFonts(data.fonts); if (data && data.backgroundPreload !== undefined) out.backgroundPreload = !!data.backgroundPreload;
+    if (data) for (const k of PERF_KEYS) if (data[k] !== undefined) out[k] = k === "perfAdmission" ? !!data[k] : clampPerf(k, data[k]); // 2026-09-24 追加：预览池智能替换的权重（见文件末尾「性能版块」块）
     if (data && data.fontBrand !== undefined) {
       out.fontBrand = typeof data.fontBrand === "string" ? data.fontBrand.trim() : "";
     }
@@ -177,7 +178,7 @@
     const s = load();
     applyFontSize(s.previewFontSize);
     applyUiScale(s.uiScale);
-    applyFonts(s); announcePreload(s.backgroundPreload); // 2026-09-23 追加：把「后台预加载」开关同步给 app.js 的预览预渲染调度器（见文件末尾「后台预加载」块）
+    applyFonts(s); announcePreload(s.backgroundPreload); announcePerfPolicy(s); // 2026-09-23 追加：把「后台预加载」开关同步给 app.js 的预览预渲染调度器（见文件末尾「后台预加载」块）
   }
 
   function scheduleDiskSave() {
@@ -305,7 +306,7 @@
     root.querySelectorAll("[data-display-setting]").forEach((el) => {
       const key = el.dataset.displaySetting;
       const handler = () => {
-        let val = el.type === "checkbox" ? !!el.checked : el.value;   // 2026-09-23 追加：勾选框取 checked（`el.value` 恒为 "on"）
+        let val = el.type === "checkbox" ? !!el.checked : el.type === "number" ? Number(el.value) : el.value;   // 2026-09-23 追加：勾选框取 checked（`el.value` 恒为 "on"）；2026-09-24 追加：数字框取 Number（性能版块的权重）
         if (el.type === "range") {
           val =
             el.step && String(el.step).indexOf(".") !== -1
@@ -408,9 +409,11 @@
   // 声明紧挨在 `global.MemoriaDisplaySettings = {...}` **之前**（与上方 `fontSelect` / `fontRows` 同一手法：
   // 函数声明会提升，`applyAll()` 与 `renderSettingsBody()` 在运行时都能取到），只推动其后的导出行。
 
-  /** 「性能」子版块：只放一个勾选框，说明文案见 `settings.display.preloadNote`。
+  /** 「性能」子版块：后台预加载开关 + **预览池智能替换**的权重 / 公式 / 恢复默认。
    *  用 `<section class="-settings-section">` + `<h3 class="-settings-heading">` 的既有骨架 —— 设置弹窗
-   *  打开时 `graph-settings.js::foldSettingsSections()` 会把它与其它页签的版块一起折成可展缩的 `<details>`。 */
+   *  打开时 `graph-settings.js::foldSettingsSections()` 会把它与其它页签的版块一起折成可展缩的 `<details>`。
+   *  2026-09-24 起下半段（`perfPolicyHtml`）是本文件末尾「性能版块」块声明的：公式里的数字取自
+   *  `js/preview-cache-policy.js` 的常量 + **当前生效的权重** ⇒ 面板上看到的就是真正在算的那条式子。 */
   function preloadSection(T, s) {
     return `<section class="-settings-section">
       <h3 class="-settings-heading">${T("settings.display.perfGroup")}</h3>
@@ -419,6 +422,7 @@
         <span>${T("settings.display.preloadLabel")}</span>
       </label>
       <p class="-muted -settings-note">${T("settings.display.preloadNote")}${preloadFootprintNote(T)}</p>
+      ${perfPolicyHtml(T, s)}
     </section>`;
   }
 
@@ -450,5 +454,399 @@
     resetUiScale,
     renderSettingsBody,
     bindSettingsForm,
+  };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-24 追加：「性能」版块的下半段 —— **预览池智能替换**的权重、公式与「恢复默认」。
+  //
+  // 人：「……一些权重参数应该支持设置内「性能」板块调整，显示计算公式，支持恢复默认」。
+  // 分工与上一条「后台预加载」完全同款：**本文件只管字段与持久化**（`PERF_DEFAULTS` → `pickKnown`
+  // → 既有的 localStorage + 磁盘 `display` 段同一条 `save_ui_settings` 通道），**算法与生效逻辑**在
+  // `js/preview-cache-policy.js`（纯函数）+ `app.js` 末尾「预览池智能替换」块；两边只经
+  // `window.MemoriaApp.setPreviewCachePolicy(policy)` 这一个门面交互。
+  //
+  // **为什么这组声明放在导出行之后**：① `PERF_KEYS` / `clampPerf` 被上面的 `pickKnown`（第 116 行）
+  // 引用，而 `pickKnown` 只在 `load()` / `hydrateFromDisk()` 里被调用、都不发生在模块体执行期间
+  // ⇒ 跑到那里时本段必然已就绪（用 `var` 而不是 `const`，以防将来有人把它挪到模块体里调用而踩 TDZ）；
+  // ② 包装 `bindSettingsForm` 必须发生在**导出之后**（否则包装会被导出对象覆盖）。
+  // 函数声明一律提升 ⇒ `preloadSection` 与 `applyAll` 运行时都取得到（与上一条「后台预加载」同一手法）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 这组键的默认值。**必须与 `js/preview-cache-policy.js::DEFAULTS` 逐字相等**
+   *  （有一条跨文件钉子测试逐键核对两边 —— 两处都写其实是"设置侧默认"与"算法侧默认"的边界，改了要一起改）。 */
+  var PERF_DEFAULTS = {
+    previewCacheMax: 8,
+    previewCacheMaxLines: 8000,
+    preloadMaxLines: 4000,
+    preloadMaxTabs: 8,
+    perfTimeWeight: 1.0,
+    perfFreqWeight: 0.5,
+    perfRecencyWeight: 0.6,
+    perfSizeWeight: 0.4,
+    perfAgingWeight: 0.05,
+    perfHalfLifeH: 12,
+    perfAdmission: true,
+    // 导航预测器（§3.5）：`markov` = 只用跳转行为训练马尔可夫链（样本不足自动退化为启发式）
+    navPredictor: "markov",
+    navHalfLifeDays: 14,
+  };
+
+  /** 这组键的合法区间（与策略模块的 `RANGES` 同源）。设置侧也夹一次 ⇒ 坏值进不了盘。 */
+  var PERF_RANGES = {
+    previewCacheMax: [1, 32],
+    previewCacheMaxLines: [200, 200000],
+    preloadMaxLines: [200, 200000],
+    preloadMaxTabs: [1, 64],
+    perfTimeWeight: [0, 5],
+    perfFreqWeight: [0, 5],
+    perfRecencyWeight: [0, 5],
+    perfSizeWeight: [0, 5],
+    perfAgingWeight: [0, 5],
+    perfHalfLifeH: [0.5, 168],
+    navHalfLifeDays: [0.5, 365],
+  };
+
+  var PERF_KEYS = Object.keys(PERF_DEFAULTS);
+  Object.assign(DEFAULTS, PERF_DEFAULTS);   // `DEFAULTS` 是 const 声明的**对象** ⇒ 可变；补键不动上方任何一行
+
+  /** 本段自己的取词（`renderSettingsBody` 里的 `T` 只在那个函数作用域内；导出后拿不到）。 */
+  function perfT(key, params) {
+    const i18n = global.MemoriaI18n;
+    return i18n && typeof i18n.t === "function" ? i18n.t(key, params) : key;
+  }
+
+  /** 单键归一：布尔化 / 枚举 / 夹到区间；非法值回落默认（**绝不写怪值**，与算法侧 `sanitize` 同一口径）。 */
+  function clampPerf(key, value) {
+    if (key === "perfAdmission") return !!value;
+    if (key === "navPredictor") {
+      // 枚举键：只认 `MemoriaNavModel.MODES`（模块在末尾才加载 ⇒ **调用期**取值，缺席时用同一份字面量兜底）
+      const mod = global.MemoriaNavModel;
+      const modes = mod && mod.MODES ? mod.MODES : ["off", "markov"];
+      const text = String(value == null ? "" : value);
+      return modes.indexOf(text) >= 0 ? text : PERF_DEFAULTS.navPredictor;
+    }
+    const range = PERF_RANGES[key] || [0, 1];
+    const n = typeof value === "number" ? value : parseFloat(String(value == null ? "" : value));
+    if (!Number.isFinite(n)) return PERF_DEFAULTS[key];
+    return Math.min(Math.max(n, range[0]), range[1]);
+  }
+
+  /** 数值输入框（既有 `-settings-field` 骨架 + `data-display-setting` ⇒ 走同一条保存链路）。 */
+  function perfNumberField(key, T, s) {
+    const range = PERF_RANGES[key] || [0, 1];
+    const step = key === "previewCacheMax" || key === "preloadMaxTabs" ? 1 : key === "perfHalfLifeH" ? 0.5 : key.endsWith("Lines") ? 500 : 0.05;
+    const value = s && s[key] !== undefined ? s[key] : PERF_DEFAULTS[key];
+    return `<label class="-settings-field">
+      <span>${T("settings.display.perfField." + key)}</span>
+      <input type="number" data-display-setting="${key}" min="${range[0]}" max="${range[1]}" step="${step}" value="${value}">
+    </label>`;
+  }
+
+  /** 公式块：字母是符号，**数字全部取自代码常量 + 当前生效的权重** ⇒ 显示的就是真正在算的那条式子。 */
+  function perfFormulaHtml(T, s) {
+    const mod = global.MemoriaPreviewPolicy || {};
+    const at = (key) => String(s && s[key] !== undefined ? s[key] : PERF_DEFAULTS[key]);
+    const line = T("settings.display.perfFormula", {
+      wt: at("perfTimeWeight"),
+      wf: at("perfFreqWeight"),
+      wr: at("perfRecencyWeight"),
+      ws: at("perfSizeWeight"),
+      wa: at("perfAgingWeight"),
+    });
+    const terms = T("settings.display.perfFormulaTerms", {
+      ref: mod.LOAD_REF_MS || 8000,
+      mb: Math.round((mod.BYTES_REF || 4194304) / 1048576),
+      cap: mod.AGING_CAP || 20,
+      tau: at("perfHalfLifeH"),
+    });
+    return `<div class="-perf-formula">
+      <p class="-muted -settings-note -perf-title">${T("settings.display.perfFormulaTitle")}</p>
+      <code class="-perf-formula-line">${line}</code>
+      <p class="-muted -settings-note">${terms}</p>
+    </div>`;
+  }
+
+  /** 「性能」版块的下半段：一组门槛与权重 + 入场闸 + 公式 + **导航预测器** + 现场读数 + 按钮。 */
+  function perfPolicyHtml(T, s) {
+    const fields = [
+      "previewCacheMax",
+      "previewCacheMaxLines",
+      "preloadMaxLines",
+      "preloadMaxTabs",
+      "perfTimeWeight",
+      "perfFreqWeight",
+      "perfRecencyWeight",
+      "perfSizeWeight",
+      "perfAgingWeight",
+      "perfHalfLifeH",
+      "navHalfLifeDays",
+    ]
+      .map((key) => perfNumberField(key, T, s))
+      .join("");
+    const on = s && s.perfAdmission !== undefined ? !!s.perfAdmission : PERF_DEFAULTS.perfAdmission;
+    const navMode = s && s.navPredictor !== undefined ? s.navPredictor : PERF_DEFAULTS.navPredictor;
+    const modes = global.MemoriaNavModel && global.MemoriaNavModel.MODES ? global.MemoriaNavModel.MODES : ["off", "markov"];
+    const navOptions = modes
+      .map((mode) => `<option value="${mode}"${mode === navMode ? " selected" : ""}>${T("settings.display.perfNavMode." + mode)}</option>`)
+      .join("");
+    return `<p class="-muted -settings-note -perf-title">${T("settings.display.perfPolicyLabel")}</p>
+      ${fields}
+      <label class="-settings-field -settings-field--inline">
+        <input type="checkbox" data-display-setting="perfAdmission"${on ? " checked" : ""}>
+        <span>${T("settings.display.perfField.perfAdmission")}</span>
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.perfAdmissionNote")}</p>
+      ${perfFormulaHtml(T, s)}
+      <label class="-settings-field">
+        <span>${T("settings.display.perfField.navPredictor")}</span>
+        <select data-display-setting="navPredictor">${navOptions}</select>
+      </label>
+      <p class="-muted -settings-note">${T("settings.display.perfNavNote")}</p>
+      <p class="-muted -settings-note -perf-title">${T("settings.display.perfLiveTitle")}</p>
+      <div class="-perf-live" data-perf-live>${perfLiveHtml(T)}</div>
+      <div class="-settings-actions">
+        <button type="button" class="-btn secondary" data-perf-refresh>${T("settings.display.perfRefresh")}</button>
+        <button type="button" class="-btn secondary" data-perf-reset>${T("settings.display.perfReset")}</button>
+        <button type="button" class="-btn secondary" data-nav-reset>${T("settings.display.perfNavReset")}</button>
+      </div>`;
+  }
+
+  /** 读数里的用户可控文本（路径）做最小转义 —— 别让文件名里的尖括号变成标签。 */
+  function perfEsc(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  /** **现场读数**：最近一次切页签的耗时与是否命中 + 池内逐条分数（含路径）+ 三个生效门槛。
+   *  为什么给读数：门槛/权重的效果只能靠现场数字判断 —— 真机反馈"教材第 8 章切得慢"就是靠
+   *  "它到底进没进池、分多少"定位的（第 8 章 3983 行 > 当时 1200 行的预渲染上限 ⇒ 从未被预渲染）。 */
+  function perfLiveHtml(T) {
+    const app = global.MemoriaApp;
+    if (!app || typeof app.previewCacheScores !== "function") return T("settings.display.perfLiveNone");
+    let data = null;
+    try { data = app.previewCacheScores(); } catch (_) { data = null; }
+    if (!data) return T("settings.display.perfLiveNone");
+    const lim = data.limits && typeof data.limits === "object" ? data.limits : {};
+    const lines = [
+      T("settings.display.perfLiveLast", {
+        js: Math.round(Number(data.lastSwitchMs) || 0), paint: (data.lastSwitchAsync && typeof data.lastSwitchAsync.paint === "number") ? Math.round(data.lastSwitchAsync.paint) : "—",   // 2026-09-24：**脚本耗时 ≠ 体感**（真机读数：脚本 335 ms 而画面 1788 ms，人反馈"和实际感受不一致"）⇒ 两个都摊开
+        how: data.lastSwitchHit ? T("settings.display.perfLiveHit") : T("settings.display.perfLiveMiss"),
+      }),
+      T("settings.display.perfLiveLimits", {
+        pool: data.limit || 0,
+        cacheLines: lim.cacheLines || 0,
+        preloadLines: lim.preloadLines || 0,
+        done: lim.preloadDone || 0,
+        tabs: lim.preloadTabs || 0,
+        evicts: data.evicts || 0,
+      }),
+    ];
+    const rows = Array.isArray(data.rows) ? data.rows : [];
+    if (!rows.length) lines.push(T("settings.display.perfLiveEmpty"));
+    else {
+      rows.forEach((row) => {
+        lines.push(
+          T("settings.display.perfLiveRow", {
+            path: perfEsc(row.path),
+            score: (Number(row.score) || 0).toFixed(2),
+            hits: row.hits || 0,
+            idle: (Number(row.idleH) || 0).toFixed(1),
+            load: (Number(row.t) || 0).toFixed(2),
+          })
+        );
+      });
+    }
+    // 导航模型（§3.5）：节点/边/样本数 + 预渲染命中率（"我们猜的下一个"到底猜中过几次）
+    const nav = data.nav && typeof data.nav === "object" ? data.nav : null;
+    if (nav) {
+      lines.push(
+        T("settings.display.perfLiveNav", {
+          nodes: nav.nodes || 0,
+          edges: nav.edges || 0,
+          samples: nav.samples || 0,
+          min: nav.minSamples || 0,
+          rate: Math.round((Number(nav.hitRate) || 0) * 100),
+          hits: nav.hits || 0,
+          misses: nav.misses || 0,
+        })
+      );
+    }
+    // 全程五阶段（绝对增量 ⇒ 这里两两相减，得到每段自己的耗时）：stash · load · editor · view · tail
+    if (data.lastSwitchPhases && typeof data.lastSwitchPhases === "object") {
+      const ph = data.lastSwitchPhases;
+      let prev = 0;
+      const list = [];
+      for (const key of PERF_PHASE_ORDER) {
+        if (typeof ph[key] !== "number") continue;
+        list.push(key + " " + (ph[key] - prev));
+        prev = ph[key];
+      }
+      if (list.length) lines.push(T("settings.display.perfLivePhases", { list: list.join(" · ") }));
+    }
+    // 命中恢复的**分段耗时**（增量 ms）：直接指出那几百毫秒花在哪一段（attach / wikilinks / mermaid / scroll …）
+    if (data.lastSwitchHit && data.lastSwitchParts && typeof data.lastSwitchParts === "object") {
+      const parts = data.lastSwitchParts;
+      const list = Object.keys(parts).map((key) => key + " " + parts[key]).join(" · ");
+      if (list) lines.push(T("settings.display.perfLiveParts", { list: list }));
+    }
+    // **异步**标记（相对本次切换起点 ms）：`paint` = 双 rAF（画面真的更新了）/ `mathjax` = 排版跑完
+    if (data.lastSwitchAsync && typeof data.lastSwitchAsync === "object") {
+      const asyncMarks = data.lastSwitchAsync;
+      const list = Object.keys(asyncMarks).map((key) => key + " " + asyncMarks[key]).join(" · ");
+      if (list) lines.push(T("settings.display.perfLiveAsync", { list: list }));
+    }
+    // **窗口化调试**（2026-09-24 AG76；人：「仍然无法滚动，要调试日志」）⇒ 两行：
+    // 计数行（`wheel` 到了没 / `scrolls` 滚了没 / `fallback` 原生滚动生效没 / `max` 能不能滚 / 跳转锚点命中没）
+    // + 轨迹行（最近 8 条：`attach` / `anchorLine` / `move` / `wheel`）。
+    const win = data.win && typeof data.win === "object" ? data.win : null;
+    if (win) {
+      lines.push(T("settings.display.perfLiveWin", {
+        attach: win.attach || 0, skip: win.skip || "—",
+        wheel: win.wheel || 0, scrolls: win.scrolls || 0, fb: win.fallback || 0,
+        from: win.from, to: win.to, slots: win.slots, shown: win.shown,
+        top: win.top, max: win.max, line: win.anchorLine || 0, jump: win.jumpIdx,
+      }));
+      lines.push(T("settings.display.perfLiveWinLog", {
+        list: (Array.isArray(win.log) && win.log.length) ? win.log.join(" · ") : "—",
+      }));
+      // **编辑路径读数**（人 2026-09-24：「按回车会卡顿一下，现在添加日志我们集中精力优化这个」）：
+      //   等待（去抖+事件循环被占）/ 全量重渲染（同步 parse+render+stamp）/ 接管 / 补链接 / 排版（异步）
+      const ed = win.edit && typeof win.edit === "object" ? win.edit : null;
+      if (ed && ed.n) {
+        lines.push(T("settings.display.perfLiveEdit", {
+          n: ed.n, wait: ed.wait || 0, render: ed.render || 0, attach: ed.attach || 0,
+          links: ed.links || 0, math: ed.math || 0,
+        }));
+      }
+      // **渲染分段**（人 2026-09-24：`postRender 26679 / 58698` 只说明"卡在 renderPreview 里"，需要看到里面哪一步）
+      //   ⚠️ 优先显示 **`rpWorst`（最慢那一次）**：编辑会把"最近一次"覆盖掉，而要看的是那个几十秒的冷渲染。
+      const rp = win.rp && typeof win.rp === "object" ? win.rp : null;
+      const rpWorst = win.rpWorst && typeof win.rpWorst === "object" ? win.rpWorst : null;
+      const useWorst = !!(rpWorst && rpWorst.parts && (rpWorst.total || 0) > ((rp && rp.parts && (rp.parts.audit || rp.parts.mjStart)) || 0));
+      const use = useWorst ? rpWorst : rp;
+      if (use && use.parts && Object.keys(use.parts).length) {
+        const rlist = [];
+        for (const key of PERF_RENDER_ORDER) {
+          if (typeof use.parts[key] !== "number") continue;
+          rlist.push(T("settings.display.perfRenderPart." + key) + " " + use.parts[key]);
+        }
+        if (rlist.length) lines.push(T("settings.display.perfLiveRender", { total: use.parts.audit || use.parts.mjStart || 0, list: rlist.join(" · ") }));
+      }
+      // **位置漂移读数**（人 2026-09-24：「我每次回车画面都往上跑」）——
+      //   渲染前 → 渲染后 的 `scrollTop` 差、会话累计、以及 `_move` 里补偿的合计。
+      const dr = win.drift && typeof win.drift === "object" ? win.drift : null;
+      if (dr && dr.n) {
+        const sign = (v) => (v > 0 ? "+" : "") + perfCount(v);
+        lines.push(T("settings.display.perfLiveDrift", {
+          n: dr.n, before: perfCount(dr.before), after: perfCount(dr.after),
+          delta: sign(dr.delta), sum: sign(dr.sum), comp: sign(dr.comp), line: dr.line || 0, off: dr.off || 0,
+        }));
+      }
+    }
+    // 池占用（**实测节点数**）⇒ 直接回答"要不要改缓存形态"：活 DOM 区间 vs 序列化 HTML 区间（设计 §3.3 第一组数）
+    const pool = data.pool && typeof data.pool === "object" ? data.pool : null;
+    if (pool) {
+      const mod = global.MemoriaPreviewPolicy;
+      const band = mod && typeof mod.estimateBand === "function" ? mod.estimateBand(pool.nodes, pool.chars) : null;
+      lines.push(
+        T("settings.display.perfLivePool", {
+          entries: pool.entries || 0,
+          nodes: perfCount(pool.nodes),
+          chars: perfCount(pool.chars),
+          est: perfMB(pool.bytes),
+          live: band ? perfMB(band.live[0]) + " – " + perfMB(band.live[1]) : "—",
+          html: band ? perfMB(band.html[0]) + " – " + perfMB(band.html[1]) : "—",
+          ast: perfCount(pool.astBlocks),
+        })
+      );
+    }
+    // 滞留清理（切换文件后按新候选集比对删除的投机条目数）
+    if (typeof data.stalePruned === "number") {
+      lines.push(T("settings.display.perfLiveStale", { n: data.stalePruned }));
+    }
+    return lines.map((line) => `<div class="-perf-live-line">${line}</div>`).join("");
+  }
+
+  /** 「全程阶段」的固定顺序（读数要两两相减 ⇒ 顺序必须与 `app.js` 里 `_markPhase` 的调用次序一致）。
+   *  2026-09-24 加 `rpEnd`：它打在 `setViewMode` 里（`app.js` 文件里位置更靠后，但**执行时在 `render` 之前**）
+   *  ⇒ 不能按"源码出现顺序"推断，测试改成逐字核对本清单。作用是把 `render` 那一段从中间切开：
+   *  `editor→postRender` = 冷渲染整条流水线（parse→render→插 DOM→stamp→静态收尾），`postRender→rpEnd` = `attach`（窗口化，含它自己那点几何读），`rpEnd→render` 应≈0；**命中路径没有 `postRender`**（那段整段跳过）⇒ 读数侧跳过缺的键，两两相减仍成立。 */
+  var PERF_PHASE_ORDER = ["stash", "load", "editor", "viewIn", "viewPre", "postRender", "rpEnd", "render", "settle", "tail"];
+  var PERF_RENDER_ORDER = ["entry", "parse", "dom", "stamp", "mermaid", "mjStart", "audit"];   // `renderPreview()` 内部分段（跨文件顺序钉子核对，同 `PERF_PHASE_ORDER`）
+
+  /** 千分位（读数用；没有 `toLocaleString` 就退回原值）。 */
+  function perfCount(value) {
+    const n = Math.round(Number(value) || 0);
+    return typeof n.toLocaleString === "function" ? n.toLocaleString("en-US") : String(n);
+  }
+
+  /** 字节 → "X.X MB" / "X KB"（读数用；估算值不需要更高精度）。 */
+  function perfMB(bytes) {
+    const n = Math.max(0, Number(bytes) || 0);
+    if (n >= 1048576) return (n / 1048576).toFixed(1) + " MB";
+    if (n >= 1024) return (n / 1024).toFixed(0) + " KB";
+    return Math.round(n) + " B";
+  }
+
+  /** 刷新读数：只换读数容器的 **innerHTML**（按钮在容器外 ⇒ 不会连带丢掉监听器）。 */
+  function refreshPerfLive(root) {
+    const box = root && root.querySelector("[data-perf-live]");
+    if (box) box.innerHTML = perfLiveHtml(perfT);
+  }
+
+  /** 「恢复默认」：**只重置这一组键**（不动字号 / 缩放 / 字体 / 后台预加载开关）。 */
+  function resetPerfDefaults(root) {
+    const next = {};
+    for (const key of PERF_KEYS) next[key] = PERF_DEFAULTS[key];
+    save(next);   // 走同一条 `save` ⇒ 本地即时 + 磁盘去抖 + `applyAll()` 通告新策略
+    if (!root) return;
+    // 就地回填控件值（**不重渲染**：重渲染会丢监听器，重绑又会叠出重复 handler）
+    for (const key of PERF_KEYS) {
+      const el = root.querySelector('[data-display-setting="' + key + '"]');
+      if (!el) continue;
+      if (el.type === "checkbox") el.checked = !!next[key];
+      else el.value = String(next[key]);
+    }
+    const formula = root.querySelector(".-perf-formula");
+    if (formula) formula.outerHTML = perfFormulaHtml(perfT, next);   // 公式里含权重 ⇒ 换掉（块内无控件，不需重绑）
+  }
+
+  /** 把这组键（缺失即默认）通告给 app.js；策略模块缺席时直接给原始对象，由 app.js 自行兜底。 */
+  function announcePerfPolicy(s) {
+    const app = global.MemoriaApp;
+    if (!app || typeof app.setPreviewCachePolicy !== "function") return;
+    const src = {};
+    for (const key of PERF_KEYS) src[key] = s && s[key] !== undefined ? s[key] : PERF_DEFAULTS[key];
+    const mod = global.MemoriaPreviewPolicy;
+    app.setPreviewCachePolicy(mod ? mod.sanitize(src) : src);
+  }
+
+  /** 清空导航模型（**可再生缓存**，清了只损失一点预测质量 ⇒ 不做二次确认，但给回执）。 */
+  function resetNavModel() {
+    const nav = global.MemoriaNavPredictor;
+    if (!nav || typeof nav.clearModel !== "function") return;
+    Promise.resolve(nav.clearModel()).then(function () {
+      const info = global.MemoriaApp && global.MemoriaApp.showFlashInfo;
+      if (info) info(perfT("settings.display.perfNavResetDone"));
+    }).catch(function () { /* 缓存清不掉不影响使用 */ });
+  }
+
+  /** 绑定「刷新读数」「恢复默认」「清空导航模型」三个按钮（在既有 `bindSettingsForm` **之后**跑 ⇒ 不改中段）。 */
+  function bindPerfExtra(root) {
+    if (!root) return;
+    const refresh = root.querySelector("[data-perf-refresh]");
+    if (refresh) refresh.addEventListener("click", function () { refreshPerfLive(root); });
+    const reset = root.querySelector("[data-perf-reset]");
+    if (reset) reset.addEventListener("click", function () { resetPerfDefaults(root); });
+    const navReset = root.querySelector("[data-nav-reset]");
+    if (navReset) navReset.addEventListener("click", function () { resetNavModel(); refreshPerfLive(root); });
+  }
+
+  var _bindSettingsFormBase = global.MemoriaDisplaySettings.bindSettingsForm;
+  global.MemoriaDisplaySettings.bindSettingsForm = function (root) {
+    _bindSettingsFormBase(root);
+    bindPerfExtra(root);
   };
 })(window);

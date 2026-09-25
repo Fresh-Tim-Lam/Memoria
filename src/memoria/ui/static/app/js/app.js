@@ -1314,7 +1314,7 @@
     const previewPane = $("#preview-pane");
     const kpList = $("#kp-list");
     if (editorPane && tab.sourceScroll != null) editorPane.scrollTop = tab.sourceScroll;
-    if (previewPane && tab.previewScroll != null) previewPane.scrollTop = tab.previewScroll;
+    if (previewPane && tab.previewScroll != null && !(window.MemoriaPreviewWindow && window.MemoriaPreviewWindow.claimScroll())) previewPane.scrollTop = tab.previewScroll;   // ↑ 窗口化已按锚点定过位置 ⇒ 裸像素别覆盖
     if (kpList && tab.kpListScroll != null) kpList.scrollTop = tab.kpListScroll;
   }
 
@@ -1412,7 +1412,7 @@
 
   async function openFile(relPath, opts = {}) {
     // 文件上下文切换 → 提升调度 epoch，使基于旧文件的排队作业（如 kp_panel）陈旧可弃
-    window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）
+    window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); _switchAbs = _t0Switch; _switchPhases = {}; // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；2026-09-24：把起点交给**外层阶段计时**（`_markPhase`，读数里的「切页签阶段」）
     // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
     // 旧尾、插入本次切换目标并把指针移到新顶（因此前进随之不可用）。后退/前进按钮
     // （fromNav=true）与程序内部重载（skipNav=true）不产生新条目。
@@ -1437,9 +1437,9 @@
     clearHighlights();
     clearPreviewHighlights();
     clearGraphLinkHighlight();
-    clearGraphKpHover(); if (state.currentPath && state.currentPath !== relPath) _previewCacheStash(state.currentPath); // 2026-09-23 性能：切页签前把当前预览 DOM 整体搬进缓存（移动节点，见文件末尾「预览 DOM 缓存 + 后台预渲染」块）
+    clearGraphKpHover(); if (state.currentPath && state.currentPath !== relPath) _previewCacheStash(state.currentPath); _markPhase("stash"); // 2026-09-23 性能：切页签前把当前预览 DOM 整体搬进缓存（移动节点，见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；`stash` = 这段 + 之前那点收尾（含 `_estimatePreviewBytes` 的整树遍历）
     setStatus(T("app.loading"), relPath);
-    const res = await call("load_document", relPath);
+    const res = await call("load_document", relPath); _markPhase("load");   // `load` = 后端读文件 + 解析 AST + sha256 的 IPC 往返（有 FIFO 24 条文档缓存）
     if (res.status !== "ok") {
       setStatus(res.message || T("app.loadFailed"));
       return;
@@ -1470,7 +1470,7 @@
     renderTabs();
     renderEditor(res);
     srcResetUndo();
-    renderKpList(res);
+    renderKpList(res); _markPhase("editor"); if (window.MemoriaPreviewWindow) { const _jId = opts.kpId || (opts.errorHighlight && opts.errorHighlight.kpId); const _jKp = _jId ? (res.knowledge_points || []).find((k) => k.id === _jId) : null; const _jLine = (_jKp && _jKp.range_resolved && _jKp.range_resolved.ok) ? _jKp.range_resolved.start_line : parseInt(String(opts.lineHint || ""), 10); if (Number.isFinite(_jLine) && _jLine > 0) window.MemoriaPreviewWindow.setAnchorLine(_jLine); }   // 2026-09-24 窗口化（入口 ③）：跳转进入时把**目标行**先交给窗口 ⇒ 第一屏直接是目标那一窗，定位动效就从这一窗的开头"播放"（原来先渲开头、再卡一会、再跳过去）
     // 恢复左侧知识点栏滚动位置（除非有 KP 跳转目标会滚动到特定 KP）
     const hasKpJump = opts.kpId || opts.errorHighlight?.kpId;
     if (!hasKpJump) {
@@ -1480,11 +1480,11 @@
         kpList.scrollTop = tab.kpListScroll;
       }
     }
-    await setViewMode(state.viewMode, { skipSave: true }); // 内部已按当前视图渲染过一次预览（源码视图下不渲染）
+    _markPhase("viewIn"); await setViewMode(state.viewMode, { skipSave: true }); _markPhase("render"); // `render` = `setViewMode`（含其内部的预览渲染 ⇒ 命中时即上面的「切页签分段」）；减去它才知道下面 `settle` 里剩什么
     // 2026-09-23 性能：此处**不再**二次 `renderPreview(res)` —— 原写法被重入保护排成"重跑"，整篇解析/渲染/MathJax 全做两遍（实测 2712 行文档 mathjax 4.2s→见 §性能取证）。
     // 渲染可能因重入保护被"排队重跑"（重跑会重建 preview DOM 并清掉高亮），
     // 等最终一轮渲染结束再执行下方的高亮/定位，否则 band 会被重跑清掉
-    await _waitRenderSettled();
+    await _waitRenderSettled(); _markPhase("settle");   // `settle` = 等同步渲染那一轮落定（**不等 MathJax**）。真机读数里这 729 ms 既不在恢复、也不在 MathJax ⇒ 看下面两个**异步标记**（paint / mathjax）
     // 切换文件：预览区是全新 DOM，旧文件的编辑光标不继承（selection 可能残留，显式清空）
     if (window.MemoriaEditHandler) window.MemoriaEditHandler._caretInPreview = false;
     window.MemoriaImageTools?.refreshImageInsertAvailability?.();
@@ -1542,7 +1542,7 @@
     setStatus(relPath, stats);
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
-    window.MemoriaToolbarSearch?.syncScope?.(); _lastSwitch.ms = Math.round(performance.now() - _t0Switch); // 2026-09-23 性能：记录本次切页签耗时（`hit=true` = 走的是缓存搬回路径）
+    window.MemoriaToolbarSearch?.syncScope?.(); _markPhase("tail"); _lastSwitch.ms = Math.round(performance.now() - _t0Switch); _previewCacheNoteLoad(_lastSwitch.ms); // 2026-09-24 追加：把本次**冷加载**耗时交给池（切走时挂到该条画像上）；`tail` 前一步先落表 ⇒ 阶段表给出的就是"从点击到状态栏收尾"的完整账
   }
 
   // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
@@ -1640,6 +1640,7 @@
       }
       // 从内存重新渲染两个视图
       syncLog("setViewMode: 重新渲染编辑器和预览");
+      if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.keepPosition();   // 2026-09-24 窗口化（K4a）：**重渲染前**把"视口顶部那一行"交给窗口 —— 否则下面这次冷渲染会把预览锚回**文档头**，随后才量顶部行 ⇒ 量到的已是第一行 ⇒ 切模式"漂移或回开头"
       renderEditor(state.doc);
       await renderPreview(state.doc);
       alreadyRendered = true;
@@ -1661,7 +1662,8 @@
     // 视图切换后预览区可见性变化，刷新图片插入按钮的可用状态
     window.MemoriaImageTools?.refreshImageInsertAvailability?.();
     if (mode !== "source" && state.doc && !alreadyRendered) {
-      await renderPreview(state.doc);
+      _markPhase("viewPre");   // 2026-09-24 读数：`渲染分段` 全程只有 100 ms 而 `postRender` 三万 ms ⇒ 那 33 s 在 `renderPreview` **之前**；这一段（`setViewMode` 里 `await renderPreview` 之前）由 `editor→viewIn`→`viewPre` 两次打点切开
+      await renderPreview(state.doc); _markPhase("rpEnd");   // 2026-09-24：把 `render` 那一段从中间切开 —— 到这里 = `setViewMode` 里除"换类名"之外的全部（命中时即恢复那 390 ms）；它到 `render` 之间应≈0，否则说明慢在 `renderPreview` 之外
     }
     // Restore scroll position of the incoming view after render
     if (prevMode !== mode) {
@@ -1722,7 +1724,7 @@
         return true;
       }
     }
-    if ((mode === "preview" || mode === "split") && previewPane) {
+    if ((mode === "preview" || mode === "split") && previewPane) { if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.ensureLine(lineNum);   // 2026-09-24 窗口化：目标块可能还是占位块 ⇒ 先物化再量（否则量到的是估值位置）
       const blocks = [...previewPane.querySelectorAll("[data--src-line]")];
       let target = null;
       for (const block of blocks) {
@@ -1764,7 +1766,7 @@
       if (editorPane && tab.sourceScroll != null) editorPane.scrollTop = tab.sourceScroll;
     }
     if (mode === "preview" || mode === "split") {
-      if (previewPane && tab.previewScroll != null) previewPane.scrollTop = tab.previewScroll;
+      if (previewPane && tab.previewScroll != null && !(window.MemoriaPreviewWindow && window.MemoriaPreviewWindow.claimScroll())) previewPane.scrollTop = tab.previewScroll;   // 2026-09-24 窗口化（K4a）：与上面那处同样加 `claimScroll()` 守卫 —— 裸像素在高度估值下会飘（这是第 1317 行之外**漏掉**的一处）
     }
   }
 
@@ -1880,7 +1882,7 @@
   }
 
   async function renderPreview(doc, options) {
-    if (!doc || state.viewMode === "source") return;
+    if (!doc || state.viewMode === "source") return; if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("entry");   // 渲染分段读数：**入口**（`parse` 之前那一段也要能看见 —— 真机 `最慢 89 ms` 说明 33 s 落在我没打点的地方）
     if (_renderingPreview) {
       // 上次全量渲染未完成（含 await MathJax/Mermaid 挂起窗口）：
       // 直接跳过会让"源码已更新但预览不刷新"（如预览区连续 Enter 拆行）。
@@ -1906,8 +1908,8 @@
       _renderingPreview = false;
       return;
     }
-    const token = ++state.previewToken;
-    if (!incremental) {
+    const token = ++state.previewToken; if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.keepPosition();   // 2026-09-24 窗口化（K4a）：**下面那行 `preview.innerHTML` 会把预览清成一行、滚动位置被夹到 0** ⇒ 凡走全量重渲染的入口（编辑去抖同步 / 切视图模式 / 刷新）都要在**清 DOM 之前**把"视口顶部那一块的源码行"交给窗口（`attach` 随即以它定锚）
+    if (!incremental && !(window.MemoriaPreviewWindow && window.MemoriaPreviewWindow.carrying())) {   // 2026-09-24 窗口化（K4a）：**同文档重渲染不清屏**（见 `MemoriaPreviewWindow.carrying()`）—— 否则整篇高度塌成一行、滚动位置被夹到 0，大文档要 ~700 ms 才补回来 ⇒ 编辑时"上下闪动"（人实测）
       preview.innerHTML = '<p class="-preview-loading">' + T("preview.rendering") + '</p>';
     }
     preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
@@ -1923,18 +1925,17 @@
       body = rewriteMdImagePaths(body);
 
       // 2. AST 解析
-      _doc = P.parse(body);
+      _doc = P.parse(body); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("parse");   // 渲染分段读数（人 2026-09-24：`postRender 26679` 需要再切开）
       M.setDoc(_doc);
 
       // 3. AST → DOM 渲染
-      const content = R.render(_doc);
+      const content = R.render(_doc); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("dom");
       preview.innerHTML = "";
       preview.appendChild(content);
 
       // 3b. 构建 block→源行映射，给每个 DOM 元素标记 data--src-line
-      stampBlockLines(preview, _doc);
+      stampBlockLines(preview, _doc); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("stamp");
 
-      // 4. 存储 blockLineMap 供 Mapper 使用
       window.__blockLineMap = _blockLineMap;
 
       // 4. 禁止特殊元素编辑
@@ -1951,16 +1952,16 @@
       // 6. Post-process: MathJax, Mermaid, Lightbox
       if (window.MemoriaMarkdownPreview) {
         const MP = MemoriaMarkdownPreview;
-        if (MP.renderMermaidBlocks) { try { await MP.renderMermaidBlocks(preview); } catch (e) { log("render", "Mermaid: " + e.message); } }
+        if (MP.renderMermaidBlocks && !(window.MemoriaPreviewWindow && window.MemoriaPreviewWindow.willTakeOver())) { try { await MP.renderMermaidBlocks(preview); } catch (e) { log("render", "Mermaid: " + e.message); } } if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("mermaid");   // 2026-09-24 窗口化：**接管时跳过"整篇 mermaid"** —— 它是 `await` 逐块渲染（冷渲染时整篇都在 DOM 里），真机 `postRender 26679 / 58698` 的头号嫌疑；跳过之后由 `_afterMaterialize()` 只对**窗口内**的块按需渲染
         if (MP.attachImageLightbox) { try { MP.attachImageLightbox(preview); } catch (e) { log("render", "Lightbox: " + e.message); } }
       }
       // 6.5 等 MathJax 真正就绪再排版（typesetPromise 在 startup 完成后才存在，
       //    加载慢时直接调用会被空值守卫跳过，导致公式一直以 $…$ 源码显示）
       if (window.MathJax?.startup?.promise) {
-        try { await MathJax.startup.promise; } catch (e) { log("render", "MathJax startup: " + e.message); }
+        try { await MathJax.startup.promise; } catch (e) { log("render", "MathJax startup: " + e.message); } if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("mjStart");
       }
-      if (window.MathJax?.typesetPromise) {
-        queuePreviewMathTypeset(preview, token); // 2026-09-23 性能：**不再 await**（实测 2.0–2.2 s）⇒ 后台跑，文件/编辑器/KP 立刻可用；排版完后由下方 `_tagInlineMathContainers` 的补跑打标记（公式"晚一拍"升级为渲染态）
+      if (window.MathJax?.typesetPromise) {   // 2026-09-24 真机读数：**别再紧贴渲染末尾排队** —— MathJax 是主线程上的重活，而它原来在 `attach`（窗口化）**之前**执行 ⇒ 会把**整篇 22 万节点**都排一遍（真机 ≈1.8 s），既挡住第一帧、又把下一次切换也拖住（`mathjax` 打点正好等于 `render` 累计 = 它在等这条链）。挪到"两帧之后"：窗口已定、第一帧已画 ⇒ 只排**窗口内**那点公式
+        const _orgC = _switchAbs; const _runMath = function () { if (token !== state.previewToken) return; const _mp = queuePreviewMathTypeset(preview, token); _markAsyncAfter("mathjax", _mp, _orgC); _mp.then(function () { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); }); }; if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(_runMath); }); else _runMath();   // 公式"晚一拍"升级为渲染态是既有取舍（原注释同款）
       }
 
       // 7. Mermaid/MathJax 可能创建了新元素，重新设置 contentEditable=false
@@ -1984,7 +1985,7 @@
 
       if (token !== state.previewToken) { _renderingPreview = false; return; }
       showPreviewReport({ ok: true });
-      showLinkAuditPreviewHint(doc);
+      showLinkAuditPreviewHint(doc); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.markRender("audit");   // 渲染分段读数：`mjStart → audit` = 可编辑性遍历 + 行内公式标记 + 两份报告（若这一段大 ⇒ 就是它们）
     } catch (e) {
       if (token !== state.previewToken) { _renderingPreview = false; return; }
       preview.innerHTML = '<p class="-preview-loading">' + T("preview.renderFail", { e: esc(String(e)) }) + '</p>';
@@ -1998,7 +1999,7 @@
       renderPreview(state.doc);
       return; // 新一轮渲染完成时会再次走本收尾并通知 _renderSettledWaiters
     }
-    _notifyRenderSettled(); _preloadSchedule(); _markPreviewDomCurrent(doc); // 2026-09-23 性能：渲染收尾 ⇒ 登记这份预览 DOM 的（路径, 版本）「可缓存」指纹，并排一次后台预渲染（「后台预加载」关闭时为空操作）
+    _notifyRenderSettled(); _preloadPruneStale(); _preloadSchedule(); _markPreviewDomCurrent(doc); _markPhase("postRender"); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.attach(preview, {}); if (window.requestAnimationFrame) { const _o = _switchAbs; window.requestAnimationFrame(function () { _markAsync("frame1", _o); window.requestAnimationFrame(function () { _markAsync("paint", _o); }); }); } // 2026-09-23 性能：渲染收尾 ⇒ 登记「可缓存」指纹并排一次后台预渲染；2026-09-24：**先**按新候选集清掉过期的投机预渲染（避免滞留），**再**排新的；2026-09-24 窗口化（K4a）：冷渲染收尾也接管（入口 ② 锚点 = 文档头）；2026-09-24 读数：**冷渲染**这一路原本没有 `frame1`/`paint`（它们只打在那条"命中恢复"里）⇒ 一旦未命中，读数就成了瞎的（真机：`画面 — ms`、`render 1837` 无从归因）⇒ 这里补同款双 rAF；`postRender` 阶段把 `renderPreview` 本体与"attach + `setViewMode` 收尾"切开
   }
 
   /**
@@ -11342,7 +11343,7 @@
   function highlightPreviewRange(startLine, endLine, opts) {
     if (!state.doc) return;
     const preview = $("#preview");
-    if (!preview) return;
+    if (!preview) return; if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.ensureLine(startLine);   // 2026-09-24 窗口化（K4a）：KP/搜索跳转的目标块可能还是占位块 ⇒ 先物化（人拍板："定位过程可以在已经渲染的窗口里播放"）
     if (opts?.flash !== false) {
       clearPreviewHighlights();
     }
@@ -12954,10 +12955,10 @@
   // 回调（`bridge.js:62-65`）⇒ 极端情况下（桥存在但缺 `get_ui_settings`）`applyAll()` 会同步跑到
   // `setBackgroundPreload(false)`。故这里一律用 `var`（提升到 undefined，不落 TDZ）：那条路径下
   // 各值是 undefined，函数体自然变成空操作，不会抛 ReferenceError。
-  var PREVIEW_CACHE_MAX = 8;         // 最多缓存 8 个「非当前」页签的预览 DOM，超出按 LRU 逐出
-  var PREVIEW_CACHE_MAX_LINES = 4000; // 超过该行数的文档不缓存：单页 DOM 太大，省下的时间抵不上内存
-  var PRELOAD_MAX_LINES = 1200;      // 后台预渲染只做中小文档（大文档的渲染本身就是一次长任务）
-  var PRELOAD_MAX_TABS = 4;          // 单次会话最多后台预渲染 4 个页签（避免打开大库后长时间占着 CPU）
+  var PREVIEW_CACHE_MAX = 8;         // 兜底（生效值 = 设置 →「显示」→「性能」的「池容量」）：超出按分逐出
+  var PREVIEW_CACHE_MAX_LINES = 4000; // 兜底（生效值 = 「缓存行数上限」，默认 8000）：超过该行数的文档不建缓存
+  var PRELOAD_MAX_LINES = 1200;      // 兜底（生效值 = 「预渲染行数上限」，默认 4000）：后台预渲染只做中小文档
+  var PRELOAD_MAX_TABS = 4;          // 兜底（生效值 = 「预渲染次数上限」，默认 8）：单次会话最多预渲染几个页签
   var _previewDomCache = new Map();  // relPath → { frag, map, ast, version, fp, scrollTop, bytes, prerendered }
   var _preloadTried = new Set();     // 后台预渲染试过的路径（跳过的/失败的都不再重试）
   var _previewDomKey = null;         // `#preview` 里这份 DOM 对应的 { path, version }；null = 当前不可缓存
@@ -13022,7 +13023,7 @@
 
   /** 整体作废：既丢他页签的条目，也注销当前 DOM（换库 / 重命名 / 删除 / 导入后走这条）。 */
   function _previewCacheClear() {
-    _previewDomCache.clear();
+    _previewDomCache.clear(); _previewForgetAll(); // 2026-09-24：换库/重命名/删除/导入 ⇒ 历史画像也一并作废
     _previewDomKey = null;
   }
 
@@ -13051,9 +13052,9 @@
     if (state.viewMode === "source") return;                  // 源码视图不渲染预览 ⇒ 预览区内容陈旧
     if (!_previewDomKey || _previewDomKey.path !== path) return;
     if (_previewDomKey.version !== _docVersionOf(state.doc)) return;
-    if ((state.doc.lines || []).length > PREVIEW_CACHE_MAX_LINES) return;
+    if ((state.doc.lines || []).length > _previewCacheLineLimit()) return;
     const preview = $("#preview");
-    if (!preview || !preview.firstChild) return;
+    if (!preview || !preview.firstChild) return; var _pvAnchor = window.MemoriaPreviewWindow ? window.MemoriaPreviewWindow.captureAnchor($("#preview-pane"), preview) : null; if (window.MemoriaPreviewWindow) { window.MemoriaPreviewWindow.detach(preview); window.MemoriaPreviewWindow.markLoad(); }   // 切走：全量物化交还控制权，并把**下一次渲染**标成"加载"（窗口化只做这个"体验过渡"）   // 2026-09-24 窗口化（K4a）：**先在"窗口态"上量锚点**（占位块的位置与恢复时那套估值同口径 ⇒ 前后自洽；且不读整棵树 —— 若等 `detach()` 把整篇物化回去再量，那一次几何读就是一次**全量强制布局**），然后才全量物化（`_previewCacheStash` 因此一行未改）
     // 后台 mermaid 可能还没写回就被切走：清掉一次性标记，下次恢复时重试（否则该块永远停在源码态）
     preview.querySelectorAll("code.language-mermaid").forEach(function (code) {
       const pre = code.parentElement;
@@ -13069,11 +13070,11 @@
       ast: _doc,
       version: _docVersionOf(state.doc),
       fp: _bodyFingerprint(_previewSourceBody(state.doc)),
-      scrollTop: pane ? pane.scrollTop : 0,
+      scrollTop: pane ? pane.scrollTop : 0, anchor: _pvAnchor,   // 2026-09-24 窗口化：锚点「槽下标 + 块内偏移」在**上面**（窗口态下）就量好了 —— 裸 `scrollTop` 像素在高度估值下会飘，而锚点在两套口径下都自洽
       bytes: _estimatePreviewBytes(frag),
       prerendered: false,
     });
-    while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);
+    _previewCacheAfterInsert(path, "foreground");
     _previewDomKey = null;   // 预览区已空 ⇒ 等新文档渲染完成后重新登记
   }
 
@@ -13092,6 +13093,19 @@
     _tagInlineMathContainers(preview, ast);
   }
 
+  /** 预渲染条目恢复时**只补"行内公式标记"那一半**（2026-09-24 真机读数跟进）。
+   *
+   * `_applyPreviewStaticPass()` 做两件事：① 把公式/代码/表格/图形标成 `contentEditable="false"`；
+   * ② `_tagInlineMathContainers()` 给行内公式的 `mjx-container` 打 `data--inline-math`。
+   * ① 在**预渲染阶段就做过了**（`_preloadOne` 里对 holder 调过同一个函数），而 `contentEditable` 会落到
+   * **属性**上 ⇒ 随节点一起搬回来 ⇒ 恢复时重跑它是白做。整轮重跑在真机上是 **354 ms**（占那次切换 26%）。
+   * ② **必须**留到恢复后：它靠 `mjx-container` 与 AST 的**顺序对应**来认哪一个是行内公式，而预渲染时刻意
+   * 不跑 MathJax（没有 `mjx-container`）⇒ 那一半在预渲染阶段本就做不到。
+   * ⇒ 恢复时只做 ②。抛错不影响预览（标记只是增强）。 */
+  function _retagInlineMathOnly(preview, ast) {
+    try { _tagInlineMathContainers(preview, ast); } catch (_) { /* 标记失败不该影响预览 */ }
+  }
+
   /**
    * 命中缓存 ⇒ 把整棵预览 DOM 搬回 `#preview`，并回填 `_blockLineMap` / `window.__blockLineMap` / AST。
    * 返回 true = 已接管本轮渲染（调用方直接返回，跳过 parse / render / 插 DOM / stamp / 等待 MathJax）。
@@ -13106,7 +13120,7 @@
       return false;
     }
     const preview = $("#preview");
-    if (!preview) return false;
+    if (!preview) return false; _beginSwitchTiming();   // 2026-09-24：从这里起给"命中恢复"分段计时（读数里看 `切页签分段`）
     _previewDomCache.delete(doc.path);   // 节点即将回到可见区 ⇒ 条目作废（下次切走时重新存）
     // 换一轮 token：作废在跑的旧排版（MathJax 的 token 守卫会跳过非最新一轮）
     state.previewToken = (state.previewToken || 0) + 1;
@@ -13120,12 +13134,15 @@
     _doc = entry.ast;
     if (M && typeof M.setDoc === "function") M.setDoc(_doc);
     preview.innerHTML = "";
-    preview.appendChild(entry.frag);
-    preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
+    preview.appendChild(entry.frag); _markSwitch("attach"); if (window.MemoriaPreviewWindow) window.MemoriaPreviewWindow.attach(preview, { anchor: entry.anchor, scrollTop: entry.scrollTop });   // 2026-09-24 窗口化（K4a）：挂上去的**只有锚点那一窗**，其余换成占位块 ⇒ 帧不再对 30 万节点计价（入口 ①：锚点 = 上次位置、双向）
+    const _wantEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false"; if (preview.contentEditable !== _wantEditable) preview.contentEditable = _wantEditable; // 2026-09-24：**只在真变时才写** —— 写同值也会让 Blink 走一遍"可编辑性"样式传播（30 万节点真机实测 ~351 ms，正是下面 `static` 那一段）
     _previewDomKey = { path: doc.path, version: entry.version };
-    if (entry.prerendered) _applyPreviewStaticPass(preview, _doc);   // 预渲染时未做：非编辑标记 + 行内公式
+    // 2026-09-24 二次修正：这一行**曾经**调 `_retagInlineMathOnly()`，但它注定空跑 —— 预渲染刻意不跑 MathJax ⇒ 此刻 DOM 里还没有 `mjx-container` 可打标记（而 `contentEditable` 早已随节点搬回）；真正的补标记在下面 MathJax 落定之后那一行（`_markAsyncAfter("mathjax", …)`）。真机读数：这一行曾占 `static` 349 ms（28%）。
+    _markSwitch("static");
     postProcessWikilinks();      // 幂等：链接目标集合可能在上次渲染之后才加载完（-link-pending → 实链接）
+    _markSwitch("wikilinks");    // ↑ 上面这两步都是**全量 O(n) 扫描**（25 万节点时是主要嫌疑之一）
     bindPreviewLinks();          // 幂等：靠 data--bound 去重
+    _markSwitch("bind");
     if (entry.prerendered) {
       // 灯箱 / 图片双击绑定**不是**幂等的 ⇒ 只给预渲染条目补绑（切走时缓存的条目早就绑过，监听随节点保留）
       const MP = window.MemoriaMarkdownPreview;
@@ -13135,12 +13152,26 @@
     // （缓存时刻可能正排版到一半；已排版好的部分是 mjx-container，再跑一遍只会空扫描一遍）。
     const MP2 = window.MemoriaMarkdownPreview;
     if (MP2 && MP2.renderMermaidBlocks) { try { MP2.renderMermaidBlocks(preview); } catch (_) { /* 失败由错误块兜底 */ } }
-    if (window.MathJax?.typesetPromise) queuePreviewMathTypeset(preview, token);
+    _markSwitch("mermaid");      // ↑ 同步渲染 mermaid（这章有 19 个图）—— 另一个主要嫌疑
+    // 2026-09-24 修既有缺口：常规渲染路径在 `app.js:1983` 有"MathJax 打完之后再补一次行内公式标记"，
+    // 但**命中缓存这条路提前 return、从没走到那行**。对预渲染条目尤其致命 —— 它的 `mjx-container` 是恢复后才
+    // 由 MathJax 生成的 ⇒ 此前**没人给它们打 `data--inline-math`**（双击定位/编辑受影响）。这里按同样的 `token` 守卫补上。
+    if (window.MathJax?.typesetPromise) { const _orgH = _switchAbs; const _runMathH = function () { if (token !== state.previewToken) return; const _mp = queuePreviewMathTypeset(preview, token); _markAsyncAfter("mathjax", _mp, _orgH); _mp.then(function () { if (token === state.previewToken) _retagInlineMathOnly(preview, _doc); }); }; if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(_runMathH); }); else _runMathH(); }   // 2026-09-24 修既有缺口 + 读数跟进：常规渲染路径在 `app.js:1983` 有"MathJax 打完后补一次行内公式标记"，而**命中缓存这条路提前 return、从没走到那行** ⇒ 预渲染条目的 `mjx-container` 此前没人打 `data--inline-math`；同时把排队挪到**两帧之后**（同冷路径：MathJax 是主线程重活，紧贴恢复末尾排队会挡住第一帧；真机读数里 `mathjax` 打点==`render` 累计就是它在等链）
+    _markSwitch("math");         // ↑ 只是**排队**（异步），这里应该接近 0
     showPreviewReport({ ok: true });
     showLinkAuditPreviewHint(doc);
     const pane = $("#preview-pane");
-    if (pane && entry.scrollTop) pane.scrollTop = entry.scrollTop;
-    _lastSwitch.hit = true;
+    if (pane && entry.scrollTop && !(window.MemoriaPreviewWindow && window.MemoriaPreviewWindow.claimScroll())) pane.scrollTop = entry.scrollTop;   // ↑ 窗口化已按「锚点块 + 块内偏移」定过位置 ⇒ 裸像素别覆盖（像素在高度估值下会飘）
+    _markSwitch("scroll");       // ↑ 写 `scrollTop` 会**强制同步布局**（25 万节点时可能是大头）
+    // 2026-09-24：**异步标记** —— 双 rAF 拆成两段：`frame1` = "渲染时机到了"（若**主线程**被别的东西占住，这里就会晚 ——
+    // 真机读数 `paint 1788` 而脚本只花 335 ms ⇒ 必须先分清"帧慢"还是"线程被别人占"）；`paint` = 这一帧真的画完
+    // ⇒ **两者之差**才是帧自己的样式/布局/绘制耗时。起点**在注册时**捕获（原来在回调里读 `_switchAbs`，恒等于自己 ⇒ 旧一轮永远丢不掉）。
+    if (window.requestAnimationFrame) { const _org = _switchAbs;
+      window.requestAnimationFrame(function () {
+        _markAsync("frame1", _org); window.requestAnimationFrame(function () { _markAsync("paint", _org); });
+      });
+    }
+    _lastSwitch.hit = true; _previewCacheTouch(doc.path); // 2026-09-24 追加：命中即刷新该条画像（次数 + 新鲜度 + 老化戳）
     _preloadSchedule();
     return true;
   }
@@ -13184,32 +13215,36 @@
     _preloadDone = 0;
   }
 
-  /** 下一个可预渲染的页签：非当前、未缓存、未试过。 */
+  /** 下一个可预渲染的目标：**候选池按"预期收益"排序**取第一（2026-09-24 起）。
+   *
+   * **候选池有两个来源**（见 `_preloadPool`）：① 打开着的页签（非当前、未缓存、未试过）；
+   * ② **导航预测里收益最高的那几个文件 —— 可以是还没打开的**（第二层的意义就在这儿：不是重排页签，
+   * 而是把"你下一步最可能看的那一章"先渲染好）。规则见 `docs/design/preview-render-pipeline.md` §3.5。
+   *
+   * 排序：① 有导航模型 ⇒ `S(文件) × T̂(加载耗时)`（慢文件更要提前做，快文件不值得抢 CPU）；
+   * ② 模型没热（样本 < `MIN_SAMPLES`）或模块缺席 ⇒ 回退**启发式**（目录相邻 > 最近打开 > 页签顺序），
+   * 同样乘 `T̂`；③ 全都排不出分 ⇒ **保持原来的页签顺序** ⇒ 行为与接线前一致，不会更差。
+   * 排序细节见 `_preloadRanked()` / `_preloadGain()`。 */
   function _nextPreloadCandidate() {
-    const tabs = state.openTabs || [];
-    for (let i = 0; i < tabs.length; i++) {
-      const path = tabs[i] && tabs[i].path;
-      if (!path || path === state.currentPath) continue;
-      if (_previewDomCache.has(path) || _preloadTried.has(path)) continue;
-      return path;
-    }
-    return null;
+    const pool = _preloadPool();
+    if (!pool.length) return null;
+    return _preloadRanked(pool)[0] || pool[0];
   }
 
   /** 本轮渲染收尾后：有空闲就排一次"预渲染一个页签"的作业。 */
   function _preloadSchedule() {
-    if (!_preloadEnabled || _preloadIdle != null || _preloadRunning) return;
-    if (_preloadDone >= PRELOAD_MAX_TABS) return;
+    if (!_preloadEnabled || _preloadIdle != null || _preloadRunning || !_preloadDocumentOpen()) return;
+    if (_preloadDone >= _preloadTabLimit()) return;
     if (_nextPreloadCandidate() === null) return;
     const fire = function () { _preloadIdle = null; _preloadTick(); };
-    if (typeof window.requestIdleCallback === "function") _preloadIdle = window.requestIdleCallback(fire, { timeout: 1200 });
-    else _preloadIdle = setTimeout(fire, 300);   // 无 requestIdleCallback 时的兜底
+    const arm = function () { if (_preloadIdle !== -1) return; if (typeof window.requestIdleCallback === "function") _preloadIdle = window.requestIdleCallback(fire, { timeout: 4000 }); else _preloadIdle = setTimeout(fire, 600); };   // 2026-09-24 真机读数：预渲染是**整篇 parse + render**（约 1 s 的**主线程长任务**），而原来 `timeout` 只有 1200 ⇒ 浏览器还没真正空闲就把它强行拉起来，正好压在**刚切过去的那一帧**上（`paint 1788 ms` 而脚本只花 335 ms）。⇒ ① 先等**两帧**（下面 rAF）再排，② timeout 放宽到 4 s：宁可少做几次，也别抢用户这一帧。**③ 首行那个守卫是必须的**：`cancelIdleCallback` 取消不了已经排进 rAF 的那一步 ⇒ 切页签时 `_preloadStop` 把 `_preloadIdle` 置 null 后，这个 `arm` 仍会被 rAF 调到；没有守卫时它照样排一次空闲回调 ⇒ 切完之后又冒出一次 ~1 s 的主线程长任务（真机：`frame1` 迟至 1504 ms、期间**滚轮/输入全冻**）
+    _preloadIdle = -1; if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(arm); }); else arm();   // `-1` 是"arm 排队中"的占位（arm 要两帧后才登记真句柄），否则窗口期内重入调度会重复排队
   }
 
   /** 一个空闲回调只做一个页签：做完再排下一个，任何时候被中止都立刻停手。 */
   async function _preloadTick() {
     if (!_preloadEnabled) return;
-    if (_dirty || _renderingPreview || document.hidden) return;   // 正在编辑 / 正在渲染 / 窗口不可见 ⇒ 本轮放弃，等下一次渲染收尾再排
+    if (_dirty || _renderingPreview || document.hidden || !_preloadDocumentOpen()) return;   // 正在编辑 / 正在渲染 / 窗口不可见 / **文件还没打开**（规则见 `_preloadDocumentOpen`）⇒ 本轮放弃，等下一次渲染收尾再排
     const path = _nextPreloadCandidate();
     if (!path) return;
     _preloadTried.add(path);
@@ -13233,9 +13268,9 @@
     try { res = await call("load_document", path); } catch (_) { return false; }
     // await 期间用户可能已切到该页签 / 开始编辑 / 关掉开关 / 关掉该页签 ⇒ 立即放弃（不写缓存、不打扰可见界面）
     if (!_preloadEnabled || path === state.currentPath || _dirty) return false;
-    if (!(state.openTabs || []).some(function (t) { return t && t.path === path; })) return false;
+    if (!_preloadStillWanted(path)) return false;
     if (!res || res.status !== "ok" || !(res.blocks && res.blocks.length)) return false;
-    if ((res.lines || []).length > PRELOAD_MAX_LINES) return false;
+    if ((res.lines || []).length > _preloadLineLimit()) return false;
     if (_previewDomCache.has(path)) return true;   // 已被普通切换缓存过
     if (!P || !R || !M) return false;
 
@@ -13280,7 +13315,7 @@
       bytes: _estimatePreviewBytes(frag),
       prerendered: true,
     });
-    while (_previewDomCache.size > PREVIEW_CACHE_MAX) _previewCacheDrop(_previewDomCache.keys().next().value);
+    _previewCacheAfterInsert(path, "preload");
     return true;
   }
 
@@ -13296,11 +13331,501 @@
     _preloadSchedule();
   }
 
-  window.MemoriaApp.setBackgroundPreload = setBackgroundPreload;
+  window.MemoriaApp.setBackgroundPreload = setBackgroundPreload; window.MemoriaApp.pvPostWikilinks = postProcessWikilinks; window.MemoriaApp.pvBindLinks = bindPreviewLinks;   // 2026-09-24 窗口化（K4a）：新块进窗时要就地补链接 —— 文末那个 IIFE 拿不到本闭包，只经这两个**幂等函数的引用**（两个都是幂等的既有函数，整体重跑也只扫"窗口里这些"）
   window.MemoriaApp.previewCacheStats = previewCacheStats;
   // 语言 / 主题变了：已缓存的他页签预览里含本地化文案与 mermaid 主题色 ⇒ 整体作废重渲染
   window.addEventListener("memoria:langchange", function () { _previewCachePurge(); });
   window.addEventListener("memoria:themechange", function () { _previewCachePurge(); });
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-09-24 追加：预览池的**智能替换**（评分 + 老化 + 后台预渲染的入场闸）
+  //
+  // 人：「后台预加载的加载池需要有一个智能替换机制，我们给资源计算优先级……优先级最低的优先被替换，
+  // 新入池的资源优先级都重新初始化……权重参数应该在设置内「性能」板块调整，显示计算公式，支持恢复默认」。
+  // **模型与公式的来处**（GDSF 的老化 / TinyLFU 的入场闸 / Hyperbolic 的按占用折算）见
+  // `js/preview-cache-policy.js` 文件头；本块只负责把它接到**真实的池**上。
+  //
+  // 三条边界（不新造机制）：
+  //   ① 算法是**纯函数**（`window.MemoriaPreviewPolicy`）⇒ 可单独测、可单独解释；它缺席时
+  //      `_previewCacheEvict()` **回落**到原来的"按插入序逐出最旧"（宁可没优化，也不许坏）；
+  //   ② 画像（`hits` / `lastOpenAt` / `loadMs` / 老化戳）按**路径**存活，**不随"出池"清掉** ——
+  //      切走再切回本来就是一次"出池 → 入池"，若跟着清零，`hits` 恒为 0、频次项就废了（评分会退化成
+  //      只按耗时/占用排序）。"新入池重新初始化"指的是**首次见到这个路径**（`_previewForgetAll()` 之后同理）；
+  //   ③ 人**当前看着**的页签走 `"foreground"` ⇒ **不进入场闸**（它正被付代价，不该被投机项挤掉）；
+  //      只有后台预渲染那条**投机**路径走 `"preload"` ⇒ 过闸，不够格就地丢掉（而不是先挤掉别人再留下自己）。
+  //
+  // 位置：仍在既有 IIFE **内部**（要用闭包里的 `_previewDomCache` / `_previewCacheDrop` 等），
+  // 追加在最末 ⇒ 只把 `})();` 往后推一行，其上所有引用零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  var PREVIEW_META_MAX = 64;     // 画像条数上限：用户可能翻过几百个文件，画像不能无限堆积
+  var _previewMeta = new Map();  // relPath → { hits, lastOpenAt, loadMs, agingStamp }
+  var _previewEvicts = 0;        // 池内累计淘汰次数（老化那个离散时钟；`_previewForgetAll` 归零）
+  var _previewPendingLoad = 0;   // 最近一次**冷加载**的实测耗时（`_previewCacheNoteLoad` 记，切走时挂到画像上）
+  var _previewPolicy = null;     // display-settings 通告的已清洗策略；null ⇒ 用策略模块的 DEFAULTS
+
+  /** 策略模块（缺席 ⇒ null，各调用方自行回落）。 */
+  function _previewPolicyMod() { return window.MemoriaPreviewPolicy || null; }
+
+  /** 当前生效的策略（模块缺席 ⇒ null ⇒ 各调用方用旧常量兜底）。 */
+  function _previewPolicyOf() { return _previewPolicy || (_previewPolicyMod() ? _previewPolicyMod().DEFAULTS : null); }
+
+  /** 从策略里取一个**正整数**上限（缺失/非法 ⇒ 用兜底常量 ⇒ 策略模块缺席时行为与接线前一致）。 */
+  function _previewLimitOf(key, fallback) {
+    const p = _previewPolicyOf();
+    const n = p ? Number(p[key]) : NaN;
+    return Number.isFinite(n) && n >= 1 ? Math.round(n) : fallback;
+  }
+
+  /** 池的**有效**条数上限（设置可调；缺失/非法 ⇒ 旧常量 `PREVIEW_CACHE_MAX`）。 */
+  function _previewLimit() { return _previewLimitOf("previewCacheMax", PREVIEW_CACHE_MAX); }
+
+  /** 生效的**缓存行数上限**（超过就不建缓存条目：单页 DOM 太大，省下的时间抵不上内存）。 */
+  function _previewCacheLineLimit() { return _previewLimitOf("previewCacheMaxLines", PREVIEW_CACHE_MAX_LINES); }
+
+  /** 生效的**预渲染行数上限**（超过就不预渲染：大文档的渲染本身就是一次长任务）。 */
+  function _preloadLineLimit() { return _previewLimitOf("preloadMaxLines", PRELOAD_MAX_LINES); }
+
+  /** 生效的**单会话预渲染次数上限**（避免打开大库后长时间占着 CPU）。 */
+  function _preloadTabLimit() { return _previewLimitOf("preloadMaxTabs", PRELOAD_MAX_TABS); }
+
+  /** 取（或**首次创建**）某路径的画像 —— 首次创建即"新入池的优先级重新初始化"（全零 + 当前老化戳）。 */
+  function _previewMetaOf(path) {
+    let meta = _previewMeta.get(path);
+    if (meta) return meta;
+    meta = { hits: 0, lastOpenAt: Date.now(), loadMs: 0, agingStamp: _previewEvicts };
+    _previewMeta.set(path, meta);
+    if (_previewMeta.size > PREVIEW_META_MAX) {
+      // 画像只服务于"哪些页签值得留" ⇒ 超限就丢**最久没被碰到**的那个（它多半早不在池里了）
+      let oldestPath = null;
+      let oldestAt = Infinity;
+      for (const [p, m] of _previewMeta) {
+        if (p !== path && m.lastOpenAt < oldestAt) { oldestAt = m.lastOpenAt; oldestPath = p; }
+      }
+      if (oldestPath) _previewMeta.delete(oldestPath);
+    }
+    return meta;
+  }
+
+  /** 整体作废画像（换库 / 重命名 / 删除 / 导入，由 `_previewCacheClear()` 调）。 */
+  function _previewForgetAll() {
+    _previewMeta.clear();
+    _previewEvicts = 0;
+    _previewPendingLoad = 0;
+  }
+
+  /** 命中缓存 ⇒ 刷新该条画像：次数 +1、新鲜度归零、老化戳跳到当前淘汰总数。 */
+  function _previewCacheTouch(path) {
+    if (!path) return;
+    const meta = _previewMetaOf(path);
+    meta.hits += 1;
+    meta.lastOpenAt = Date.now();
+    meta.agingStamp = _previewEvicts;
+  }
+
+  /** 记下最近一次**冷加载**（未命中）的实测耗时；切走入库时由 `_previewCacheAfterInsert` 挂到画像上。 */
+  function _previewCacheNoteLoad(ms) {
+    const value = Number(ms);
+    if (Number.isFinite(value) && value > 0) _previewPendingLoad = value;
+  }
+
+  /** 池内条目 → 交给算法的输入（`bytes` 取条目、其余取画像；可排除某条，入场闸要排除候选自己）。 */
+  function _previewPoolEntries(exceptPath) {
+    const out = [];
+    for (const [path, entry] of _previewDomCache) {
+      if (path === exceptPath) continue;
+      const meta = _previewMeta.get(path);
+      out.push({
+        path: path,
+        bytes: (entry && entry.bytes) || 0,
+        hits: meta ? meta.hits : 0,
+        lastOpenAt: meta ? meta.lastOpenAt : 0,
+        loadMs: meta ? meta.loadMs : 0,
+        agingStamp: meta ? meta.agingStamp : _previewEvicts,
+      });
+    }
+    return out;
+  }
+
+  /** 按当前策略淘汰到上限。**策略模块缺席 ⇒ 回落"按插入序逐出最旧"**（与接线前的行为一致）。 */
+  function _previewCacheEvict() {
+    const mod = _previewPolicyMod();
+    const limit = _previewLimit();
+    while (_previewDomCache.size > limit) {
+      if (!mod) {
+        _previewCacheDrop(_previewDomCache.keys().next().value);
+        continue;
+      }
+      const victim = mod.pickVictim(_previewPoolEntries(), _previewPolicyOf(), Date.now(), _previewEvicts);
+      if (!victim) return;
+      _previewEvicts += 1;              // 老化时钟：淘汰一次上浮一格（所有仍驻留的条目相对地更"旧"了）
+      _previewCacheDrop(victim.path);
+    }
+  }
+
+  /**
+   * 新条目入池后的统一收口：**先落画像，再决定去留**。
+   * `kind` = `"foreground"`（人看过的页签被切走 ⇒ 无条件入池）或 `"preload"`（后台预渲染 ⇒ 过入场闸）。
+   */
+  function _previewCacheAfterInsert(path, kind) {
+    const meta = _previewMetaOf(path);
+    meta.lastOpenAt = Date.now();
+    meta.agingStamp = _previewEvicts;
+    if (kind === "foreground") {
+      if (_previewPendingLoad > 0) {
+        // EWMA(α=0.3)：一次异常快/慢的加载不该把它钉死
+        meta.loadMs = meta.loadMs > 0 ? meta.loadMs * 0.7 + _previewPendingLoad * 0.3 : _previewPendingLoad;
+      }
+    }
+    // 无论哪条路都清掉待挂样本：它不是这个页签的（预渲染路径**没有**冷加载计时点，如实不编数）
+    _previewPendingLoad = 0;
+    const mod = _previewPolicyMod();
+    const policy = _previewPolicyOf();
+    if (kind === "preload" && mod && policy && policy.perfAdmission) {
+      const entry = _previewDomCache.get(path);
+      const candidate = {
+        path: path,
+        bytes: (entry && entry.bytes) || 0,
+        hits: meta.hits,
+        lastOpenAt: meta.lastOpenAt,
+        loadMs: meta.loadMs,
+        agingStamp: meta.agingStamp,
+      };
+      const pool = _previewPoolEntries(path);   // 排除候选自己，否则"跟比自己"永远不成立
+      if (!mod.admits(candidate, pool, policy, Date.now(), _previewEvicts, _previewLimit())) {
+        _previewCacheDrop(path);                // 不够格 ⇒ 就地丢掉（不挤别人）
+        return;
+      }
+    }
+    _previewCacheEvict();
+    // 后台预渲染的条目**确实留在池里**才算"预渲染过" ⇒ 用它当预测命中率的分母（§3.5 的线上读数）
+    if (kind === "preload" && _previewDomCache.has(path) && window.MemoriaNavPredictor
+      && typeof window.MemoriaNavPredictor.notePreloaded === "function") {
+      try { window.MemoriaNavPredictor.notePreloaded(path); } catch (_) { /* 预测器可选 */ }
+    }
+  }
+
+  /** 「性能」设置通告：清洗 + 立即生效（池上限可能被调小 ⇒ 当场收口）。
+   *
+   * 门槛**变了**（尤其"预渲染行数上限"放大）⇒ 还要让之前被门槛挡下的页签**重新有机会**预渲染：
+   * `_preloadTried` 是"试过就不再试"的清单，不清掉的话用户放宽门槛后**什么都看不到**
+   * （真机反馈"教材第 8 章切得慢"时，它整章就是被 1200 行的门槛挡在门外、并已记进该清单）。 */
+  function setPreviewCachePolicy(policy) {
+    const mod = _previewPolicyMod();
+    const next = mod ? mod.sanitize(policy) : (policy || null);
+    const changed = JSON.stringify(next) !== JSON.stringify(_previewPolicy);
+    _previewPolicy = next;
+    _previewCacheEvict();   // 池上限可能被调小 ⇒ 当场收口
+    // 导航预测器（§3.5）与缓存策略同一份设置来源 ⇒ 顺手转发（它自己会清洗）
+    if (window.MemoriaNavPredictor && typeof window.MemoriaNavPredictor.setPolicy === "function") {
+      try { window.MemoriaNavPredictor.setPolicy(next || {}); } catch (_) { /* 预测器可选 */ }
+    }
+    if (changed) {
+      _preloadTried.clear();
+      _preloadDone = 0;
+      _preloadSchedule();
+    }
+  }
+
+  /** 预测目标预渲染的**上限**（只做收益最高的这几个；再多就是烧 CPU 赌运气，与其猜不如让位给页签）。 */
+  var PRELOAD_PREDICT_MAX = 2;
+  /** 累计清掉的过期投机条目（读数用）。 */
+  var _preloadPrunedStale = 0;
+
+  /** 「文件已打开」：当前文档已加载完成，且处于三种视图之一（预览 / 源码 / 分栏）。
+   *
+   * **规则（人 2026-09-24）**：「预渲染要在文件（预览或者源码或者分栏模式）打开之后」——
+   * 打开过程中抢 CPU 会拖慢你正要看的这一份；没有打开任何文件时更不该预渲染。
+   * 与视图模式**无关**（三种都算"打开"），只要求"这份文档确实是当前文档、且视图已就绪"。 */
+  function _preloadDocumentOpen() {
+    if (!state.currentPath) return false;
+    const doc = state.doc;
+    if (!doc || doc.path !== state.currentPath) return false;
+    const mode = state.viewMode;
+    return mode === "preview" || mode === "source" || mode === "split";
+  }
+
+  /** 导航预测给出的、**值得提前渲染**的文件（`收益 = 概率分 × T̂`，降序；**可含还没打开的**）。
+   *  排除已在池的与当前文件（那些没必要再预渲染）。这是第二层的意义所在：把"你下一步要看的那一章"先渲染好。 */
+  function _preloadPredictedFiles() {
+    const nav = window.MemoriaNavPredictor;
+    if (!nav || typeof nav.predictNext !== "function") return [];
+    let predicted = null;
+    try {
+      const exclude = new Set(_previewDomCache.keys());
+      if (state.currentPath) exclude.add(state.currentPath);
+      predicted = nav.predictNext({ exclude: exclude });
+    } catch (_) { return []; }
+    if (!predicted || !predicted.length) return [];
+    const open = new Set();
+    for (const tab of state.openTabs || []) if (tab && tab.path) open.add(tab.path);
+    return predicted
+      .map(function (item) { return { path: item.file, gain: _preloadGain(item.file, item.score) }; })
+      .filter(function (item) { return item.gain > 0 && !open.has(item.path) && item.path !== state.currentPath; })
+      .sort(function (a, b) { return b.gain - a.gain; });
+  }
+
+  /** 预渲染**候选池**（`_preloadRanked` 排序前的集合）：① 打开着的页签 + ② **预测目标**（限 `PRELOAD_PREDICT_MAX` 个）。
+   *  两条来源都要过"未在池、未试过"这关；预测那条**可以不在页签里**（第二层要提前渲染"你还没打开的下一章"）。 */
+  function _preloadPool() {
+    const pool = [];
+    for (const tab of state.openTabs || []) {
+      const path = tab && tab.path;
+      if (!path || path === state.currentPath) continue;
+      if (_previewDomCache.has(path) || _preloadTried.has(path)) continue;
+      pool.push(path);
+    }
+    for (const item of _preloadPredictedFiles().slice(0, PRELOAD_PREDICT_MAX)) {
+      if (pool.indexOf(item.path) >= 0) continue;
+      if (_previewDomCache.has(item.path) || _preloadTried.has(item.path)) continue;
+      pool.push(item.path);
+    }
+    return pool;
+  }
+
+  /** `_preloadOne` 的守卫：这个路径**还值得**预渲染吗（打开着的页签，**或仍在预测目标里**）。
+   *  `await load_document` 期间用户可能换了文件 / 关了页签 / 预测变了 ⇒ 那些就不该再往池里塞。 */
+  function _preloadStillWanted(path) {
+    if (!path) return false;
+    for (const tab of state.openTabs || []) if (tab && tab.path === path) return true;
+    return _preloadPredictedFiles().some(function (item) { return item.path === path; });
+  }
+
+  /** **规则（人 2026-09-24）**：当前显示的文件切换之后，把**投机的预渲染产物**与**新的候选集比对**，删掉不再需要的，避免滞留。
+   *
+   * - 只动 `prerendered === true` 的条目 —— 那是"我们替你提前渲染、你还没看过"的**投机产物**；
+   *   人**真正打开过**的条目在 `_previewCacheStash` 里被写成 `prerendered: false` ⇒ **一律保留**（那是第一层的正经缓存）。
+   * - 保留集 = `openTabs` ∪ **仍被预测的文件** ⇒ 只有"预测变了 / 那块地不再要了"的才会被清 —— 正是"避免滞留"。
+   * - 返回清掉的条数（`previewCacheScores().stalePruned` 累计值供读数）。 */
+  function _preloadPruneStale() {
+    let dropped = 0;
+    if (!_previewDomCache.size) return dropped;
+    const keep = new Set();
+    for (const tab of state.openTabs || []) if (tab && tab.path) keep.add(tab.path);
+    if (state.currentPath) keep.add(state.currentPath);
+    for (const item of _preloadPredictedFiles()) keep.add(item.path);
+    for (const path of Array.from(_previewDomCache.keys())) {
+      const entry = _previewDomCache.get(path);
+      if (!entry || !entry.prerendered) continue;   // 只清投机产物，绝不碰人看过的那条
+      if (keep.has(path)) continue;
+      _previewCacheDrop(path);
+      dropped += 1;
+    }
+    if (dropped) _preloadPrunedStale += dropped;
+    return dropped;
+  }
+
+  /** **外层阶段计时**：`openFile` 全程（点击 → 状态栏收尾）的五段，与上面的「切页签分段」互补。
+   *
+   * 真机读数（2026-09-24）：`最近一次切页签 1571 ms`，而命中恢复的分段之和只有 **428 ms** ⇒
+   * **大头在恢复之外**。`_lastSwitch.ms` 的起点在 `openFile` 开头（`_t0Switch`），所以那 1571 覆盖的是
+   * 整条打开流水线：切走时的 stash（含 `_estimatePreviewBytes` 整树遍历）/ `load_document` 的 IPC 与后端解析 /
+   * **源码编辑器整篇填充** + 知识点列表 / 预览渲染（含「切页签分段」）/ 状态栏与图审计收尾。
+   * 只靠"命中恢复分段"会把这 1143 ms 误读成"预览的问题" ⇒ 必须把全程也拆开。
+   *
+   * 口径：存的是**距 `_t0Switch` 的绝对增量**（读数侧再做两两相减 ⇒ 每段自己的耗时）。 */
+  var _switchAbs = 0;
+  var _switchPhases = null;
+
+  function _markPhase(name) {
+    if (!_switchPhases || !_switchAbs) return;
+    const now = (window.performance && performance.now) ? performance.now() : Date.now();
+    _switchPhases[name] = Math.round(now - _switchAbs);
+    _lastSwitch.phases = _switchPhases;
+  }
+
+  // ── **异步标记**（2026-09-24）：同步分段/阶段抓不到的那些时刻 ────────────────────────────────
+  //
+  // 真机读数：`切页签阶段 view 1104 ms`，但恢复内的同步分段只有 **375 ms** ⇒ 剩 729 ms
+  // **既不在恢复的同步代码里、也不在 MathJax 里**（`_waitRenderSettled` 只等同步那一轮）。
+  // 唯一解释：**浏览器对新挂上来的 30 万节点做布局/绘制的时间，落在两次 `await` 之间**。
+  // ⇒ 用双 `requestAnimationFrame`（≈"这一帧含布局绘制真的画完了"）与"MathJax promise 落定"两个**异步**标记来量它。
+  // 口径：都是**相对本次切换起点**（`_switchAbs`）的绝对 ms；旧一轮的异步回调（起点已不同）**丢弃**，避免读成怪数。
+  var _switchAsync = null;
+
+  function _asyncStamp(name, origin) {
+    if (!origin || origin !== _switchAbs) return;
+    const now = (window.performance && performance.now) ? performance.now() : Date.now();
+    if (!_switchAsync) _switchAsync = {};
+    _switchAsync[name] = Math.round(now - origin);
+    _lastSwitch.async = _switchAsync;
+  }
+
+  function _markAsync(name, origin) {   // 2026-09-24：起点**由调用方传入**（注册时捕获）—— 原来在这里读 `_switchAbs` 恒等于自己，上面那条"旧一轮丢弃"守卫永远不生效
+    _asyncStamp(name, origin == null ? _switchAbs : origin);
+  }
+
+  function _markAsyncAfter(name, promise, origin) {   // `origin` 可选：**注册时**捕获的起点（见下）。不传 ⇒ 用当前起点
+    if (!promise || typeof promise.then !== "function") return; if (origin == null) origin = _switchAbs;
+    promise.then(function () { _asyncStamp(name, origin); }).catch(function () { /* 排版失败不该影响读数 */ });
+  }
+
+  /** 「缓存命中」那次切页签的**分段计时**（2026-09-24 追加）。
+   *
+   * **动机（真机读数）**：池里 2 条、每条约 **25 万节点**，读数给出"走了缓存搬回**还要 360 ms**"。
+   * 命中已经跳过了 markdown 解析与 MathJax 重排 ⇒ 这笔钱只可能花在**挂进可见文档之后的收尾**上：
+   * 两轮全量 O(n) 扫描（`postProcessWikilinks` / `bindPreviewLinks`）、同步渲染 mermaid、
+   * 以及写 `scrollTop` 触发的**强制同步布局**。**猜测不算数 ⇒ 分段量出来**。
+   *
+   * 口径：每段是**距上一段的增量**（ms，四舍五入），所以"各段之和 ≈ `lastSwitchMs`"；
+   * 只在**命中**路径打点（未命中是整篇渲染，另有 `lastSwitchMs` 兜着），开销 = 8 次 `performance.now()`。 */
+  var _switchT0 = 0;
+  var _switchParts = null;
+
+  function _beginSwitchTiming() {
+    _switchT0 = (window.performance && performance.now) ? performance.now() : Date.now();
+    _switchParts = {};
+    _lastSwitch.parts = _switchParts;
+  }
+
+  function _markSwitch(name) {
+    if (!_switchParts) return;
+    const now = (window.performance && performance.now) ? performance.now() : Date.now();
+    _switchParts[name] = Math.round(now - _switchT0);
+    _switchT0 = now;
+  }
+
+  /** 池的**实测占用**：条目数 / 节点数（真数，遍历缓存子树数出来的）/ 文本字符数 / 各条目已存的估算字节。
+   *
+   * - 节点数是**数出来的**，不是估的 ⇒ 配合 `MemoriaPreviewPolicy.estimateBand()` 就能回答
+   *   "改成序列化 HTML 能省多少"（设计 §3.3 要的第一组数），不必先做完整实测。
+   * - `astBlocks` 是**附带常驻**的块数：条目里还留着 `ast`（恢复时直接用，不必重解析）——
+   *   它也是池的成本，且**改存 HTML 时正好可以一并放掉**（那一项省不省取决于要不要按需重解析）。
+   * - 只在点「刷新读数」时算一次（8 条 × 几千节点，遍历几十毫秒级）⇒ 不进热路径。 */
+  function _previewPoolFootprint() {
+    let nodes = 0;
+    let chars = 0;
+    let bytes = 0;
+    let astBlocks = 0;
+    for (const path of Array.from(_previewDomCache.keys())) {
+      const entry = _previewDomCache.get(path);
+      if (!entry) continue;
+      bytes += Number(entry.bytes) || 0;
+      if (entry.ast && Array.isArray(entry.ast.blocks)) astBlocks += entry.ast.blocks.length;
+      if (!entry.frag) continue;
+      nodes += 1;   // 条目根（DocumentFragment）
+      const walk = function (el) {
+        for (let n = el.firstChild; n; n = n.nextSibling) {
+          nodes += 1;
+          if (n.nodeType === 3) chars += (n.nodeValue || "").length;
+          else if (n.nodeType === 1) walk(n);
+        }
+      };
+      walk(entry.frag);
+    }
+    return { entries: _previewDomCache.size, nodes: nodes, chars: chars, bytes: bytes, astBlocks: astBlocks };
+  }
+
+  /** 目录相邻的**启发式**分（模型未热 / 模块缺席时的回退）：同章上下节 1.0 > 隔一节 0.4 > 隔几节 0.15 > 同目录 0.2。 */
+  function _preloadAdjacency(path, current) {
+    if (!path || !current) return 0;
+    const leafNum = function (p) {
+      const leaf = String(p || "").split(/[\\/]/).pop() || "";
+      const m = /^(\d+)/.exec(leaf);
+      return m ? parseInt(m[1], 10) : null;
+    };
+    const a = leafNum(path);
+    const b = leafNum(current);
+    if (a !== null && b !== null) {
+      const gap = Math.abs(a - b);
+      if (gap === 1) return 1;
+      if (gap === 2) return 0.4;
+      if (gap <= 4) return 0.15;
+    }
+    const dirOf = function (p) {
+      const s = String(p || "");
+      const i = Math.max(s.lastIndexOf("/"), s.lastIndexOf("\\"));
+      return i < 0 ? "" : s.slice(0, i);
+    };
+    const dir = dirOf(path);
+    return dir && dir === dirOf(current) ? 0.2 : 0;
+  }
+
+  /** 单个候选的**预期收益** = 概率分 × `T̂(加载耗时)`（`T̂` 就是 AG64 那个因子；没样本 ⇒ 中性值）。 */
+  function _preloadGain(path, probability) {
+    const mod = _previewPolicyMod();
+    const meta = _previewMeta.get(path);
+    const t = mod ? mod.costTerm(meta ? meta.loadMs : 0, _previewPolicyOf()) : 0.5;
+    return Math.max(0, probability) * t;
+  }
+
+  /** 给候选池排序（**只改顺序，不改集合**）：导航模型优先，排不出分的保持原页签顺序在后面。 */
+  function _preloadRanked(pool) {
+    if (!pool || !pool.length) return [];
+    const nav = window.MemoriaNavPredictor;
+    if (nav && typeof nav.predictNext === "function") {
+      let predicted = null;
+      try {
+        const exclude = new Set(_previewDomCache.keys());
+        if (state.currentPath) exclude.add(state.currentPath);
+        predicted = nav.predictNext({ exclude: exclude });
+      } catch (_) { predicted = null; }
+      if (predicted && predicted.length) {
+        const scoreOf = Object.create(null);
+        for (const item of predicted) scoreOf[item.file] = item.score;
+        const scored = pool
+          .map(function (path) { return { path: path, gain: _preloadGain(path, scoreOf[path] || 0) }; })
+          .filter(function (item) { return item.gain > 0; })
+          .sort(function (a, b) { return b.gain - a.gain; });
+        const head = scored.map(function (item) { return item.path; });
+        const rest = pool.filter(function (path) { return head.indexOf(path) < 0; });
+        if (head.length) return head.concat(rest);
+      }
+    }
+    const ranked = pool.map(function (path, index) {
+      const meta = _previewMeta.get(path);
+      const recent = meta && meta.lastOpenAt ? 0.3 : 0;
+      return { path: path, index: index, gain: _preloadGain(path, _preloadAdjacency(path, state.currentPath) + recent) };
+    }).sort(function (a, b) { return (b.gain - a.gain) || (a.index - b.index); });
+    return ranked.map(function (item) { return item.path; });
+  }
+
+  /** 逐条分数快照（设置页"当前池内排名"与人工排查用；按分升序 ⇒ **第一行就是下一个被淘汰的**）。 */
+  function previewCacheScores() {
+    const mod = _previewPolicyMod();
+    const policy = _previewPolicyOf();
+    const now = Date.now();
+    const rows = _previewPoolEntries().map(function (item) {
+      return {
+        path: item.path,
+        bytes: item.bytes,
+        hits: item.hits,
+        idleH: item.lastOpenAt > 0 ? Math.round((now - item.lastOpenAt) / 36000) / 100 : 0,
+        loadMs: item.loadMs,
+        t: mod ? mod.costTerm(item.loadMs, policy) : 0,
+        score: mod ? mod.score(item, policy, now, _previewEvicts) : 0,
+      };
+    });
+    rows.sort(function (a, b) { return a.score - b.score; });
+    return {
+      evicts: _previewEvicts,
+      limit: _previewLimit(),
+      limits: {
+        cacheLines: _previewCacheLineLimit(),
+        preloadLines: _preloadLineLimit(),
+        preloadTabs: _preloadTabLimit(),
+        preloadDone: _preloadDone,
+      },
+      lastSwitchMs: _lastSwitch.ms,
+      lastSwitchHit: _lastSwitch.hit,
+      lastSwitchParts: _lastSwitch.parts || null,   // 命中时的**分段耗时**（各段增量 ms）⇒ 看那几百毫秒花在哪
+      lastSwitchPhases: _lastSwitch.phases || null, // 全程五阶段（绝对增量 ms，含 stash/load/editor/render/settle/tail）⇒ 看那 1406 ms 花在哪
+      lastSwitchAsync: _lastSwitch.async || null,   // **异步**标记（相对起点 ms）：`paint`（双 rAF ≈ 画面更新）/ `mathjax`（排版跑完）
+      entries: _previewDomCache.size,
+      enabled: _preloadEnabled,
+      stalePruned: _preloadPrunedStale,
+      predictMax: PRELOAD_PREDICT_MAX,
+      pool: _previewPoolFootprint(),   // 池的**实测**占用（节点数是数出来的）⇒ 决定"要不要改缓存形态"的第一组数
+      nav: (window.MemoriaNavPredictor && typeof window.MemoriaNavPredictor.stats === "function")
+        ? window.MemoriaNavPredictor.stats()
+        : null,
+      policy: policy,
+      rows: rows, win: (window.MemoriaPreviewWindow && typeof window.MemoriaPreviewWindow.stats === "function") ? window.MemoriaPreviewWindow.stats() : null,   // 2026-09-24 窗口化**调试读数**（AG76）：滚轮/滚动/兜底计数 + 换窗轨迹 + 跳转锚点 ⇒ 见设置「性能」底部那两行
+    };
+  }
+
+  window.MemoriaApp.setPreviewCachePolicy = setPreviewCachePolicy;
+  window.MemoriaApp.previewCacheScores = previewCacheScores;
 })();
 
 /* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================
@@ -13427,6 +13952,688 @@
       showConflictDialog(path, res, body);
       return true;
     },
+  };
+})();
+
+/* ===== 预览的**窗口化渲染**（K4a，2026-09-24）================================================
+   人：「能不能做成先渲染看的到的部分，然后再渲染看不到的部分，这样切换文件不就快了……」并给出三条入口的
+   期望行为（有页签的文件按上次位置双向渲染 / 新打开从头上往下 / 跳转进入以目标点为中心双向）；滚条口径问
+   我，拍板为：**按屏数**（上下各 2 屏）、**拖动时松手才渲**、本期先接受「原生 Ctrl+F 只搜得到已渲染窗口」。
+
+   **为什么这是治本的那一刀**：真机读数里脚本只花 335 ms，而 `paint` 等到 **1788 ms** —— 那 ~1.45 s 是浏览器
+   对**整篇 30 万节点**做样式/布局/绘制。`content-visibility: auto`（设计 §3.2）只让浏览器**跳过**屏幕外的活，
+   节点仍全在文档里（所以 `paint` 仍是 1788 ms）；**把未渲染的块换成占位块**才能把帧成本从"3200 块"降到
+   "窗口内几十块"。顺带把池内存与 MathJax 的排版量一起降下来。
+
+   机制（四件套）：
+     ① **占位块**：未渲染的块从 DOM 摘走，原位放一个空 `div.-pv-spacer`，**高度显式写死**（量过就用真高，
+        没量过用估值）⇒ `scrollHeight` 与"跳到第 N 行"的像素口径始终自洽；占位块**照样带**
+        `data--block-index` / `data--src-line` / `data--src-line-end` ⇒ 行号定位的**查找**不会"找不到"
+        （找到后由 `ensureLine()` 把真身换回来）。
+     ② **窗口**：上下各 `SCREENS` 屏 —— 按高度表累加算，**不按块数**（与字号/缩放无关）。
+     ③ **双向扩张**：滚动撞到窗口边缘前 `MARGIN_SCREENS` 屏就补，一次把窗口搬到"视口 ± 边距"。
+     ④ **高度回填补偿**：块的**真高**与估值不等时，按"第一个仍物化的槽"的 `offsetTop` 差值补偿 `scrollTop`
+        ⇒ 补齐时画面不跳（手工版 scroll anchoring，不依赖浏览器的 `overflow-anchor`）。
+
+   三条入口（人拍板）：① 有页签（缓存命中）⇒ 锚点 = **上次位置**（`captureAnchor()` 在切走时二分测出
+   「槽下标 + 块内偏移」，比裸 `scrollTop` 像素可靠：高度是估值时像素会飘），**双向**；② 新打开（冷渲染）⇒
+   锚点 = 文档头，**单向向下**；③ 跳转进入（wikilink / KP / 搜索 / 检查面板）⇒ `ensureLine(目标行)` 先把
+   目标块物化，**双向**，定位动效就在这一窗里播（绝不等全文 —— 人：「定位过程可以在已经渲染的窗口里播放」）。
+
+   滚条（人拍板「松手才渲」）：普通滚动按 `rAF` 节流**即时**补齐；**跳变**（一次滚过一屏以上 ⇒ 拖滚条 /
+   PageDown）只在 `scrollend`（无该事件则 150 ms 静默兜底）才搬窗。**永不禁止拖拽** —— 拖拽是最明确的意图
+   信号，禁止拖拽会被读成"卡死"。
+
+   **本期明确不做**（如实登记）：① **编辑模式不窗口化**（`#preview[contenteditable="true"]` 直接返回，与
+   §3.2 / R3 同一条政策：光标与选区风险未知）；② 原生 `Ctrl+F` 只能搜到已渲染窗口（K4c 补自带查找）；
+   ③ 还没有"全量物化"出口（导出 / 打印 / 整篇复制，K4c）；④ `detach()` 会把整篇重新物化 —— 这是**故意的**：
+   `_previewCacheStash()` 一行未改 ⇒ 池的条目格式、`_estimatePreviewBytes`、既有考古工具全不受影响，
+   代价只是切走时多 ~3200 次节点搬移（毫秒级）。
+
+   位置：整块**追加在 app.js 末尾**（既有 `app.js:<行号>` 锚点零漂移）；本块拿不到主 IIFE 的闭包，跨闭包只经
+   `window.MemoriaApp` 上新增的两个**幂等函数引用**（`pvPostWikilinks` / `pvBindLinks`）。 */
+(function memoriaPreviewWindow() {
+  "use strict";
+  const SCREENS = 2;              // 窗口 = 锚点上下各 2 屏（人拍板"按屏数"）
+  const MARGIN_SCREENS = 1;       // 距窗口边缘还剩 1 屏就开始补
+  const EST_PX = 96;              // 未测量块的估值高度（与 §3.2 那版 `contain-intrinsic-size` 同一口径）
+  const BLANK_EST_PX = 18;        // 空行块矮得多，不能按正文估（否则总高被吹成好几倍）
+  const MIN_SLOTS = 120;          // 槽位少于这么多就不窗口化（小文档全量渲染更简单、也够快）
+  const DRAG_SILENCE_MS = 150;    // 没有 `scrollend` 时，"松手"的判定兜底
+  const JUMP_SCREENS = 1;         // 一次滚过一屏以上 ⇒ 视为"跳变"（拖滚条/PageDown）
+  const HYST_SLOTS = 6;           // **迟滞**：窗口只差不到这么多槽就不重排（防"边界上左右来回换窗"，见 `_cover()` 护栏 ②）
+  const TYPESET_DEBOUNCE_MS = 60; // 新块进窗后补排版的去抖
+  const TRANSITION_MS = 1200;     // "加载过渡"持续多久 ⇒ 到点全量物化 + 交还控制权（人 2026-09-24：窗口化只为加载做体验过渡）
+
+  var st = null;        // 当前窗口状态；null = 未接管（未接管时所有 API 都是空操作）
+  var anchored = false; // 本次恢复是否已由本块自己定了滚动位置（`claimScroll()` 据此让像素写让路）
+  var typesetTimer = null;
+  var transitionTimer = null;   // "加载过渡"结束的定时器（到点把整篇物化、交还控制权）
+  var pendingLine = 0;  // **跳转目标行**（人 2026-09-24 的口径）：入口 ③ 要先按它定锚再渲染，而不是"先渲开头、卡一会、再跳过去"
+  var pendingOff = 0;   // 与 `pendingLine` 配对：**块内偏移**（跳转 = 0 落块首；**位置携带** = 真实偏移 —— 否则每次重渲都把块顶对齐到视口顶 ⇒ 真机"每次回车画面都往上跑"）
+  var drift = null;     // 位置漂移读数别名（**在 `dbg` 定义之后**赋值 —— 反过来的话加载期就会抛 TypeError，整块 IIFE 挂不上：真机表现是"窗口化全失效、不能跳转/不能滚动"）
+  var carry = false;    // **本次渲染要不要保住位置**（`keepPosition()` 置位 / `attach()` 消费后清）
+  /** **是否"新一次加载"**（人 2026-09-24 的口径：「窗口化是为了给整文件渲染做『体验过渡』的，整文件加载完之后，
+   *  编辑同步用之前的逻辑正常」）⇒ **只有加载路径才窗口化**；同文档的重渲染（编辑同步 / 切模式）一律不接管、
+   *  走回老逻辑（整篇真 DOM + 轻量位置恢复，没有高度估值也没有补偿 ⇒ 不会漂）。 */
+  var pendingLoad = true;   // 模块启动算一次；切走/换文件时由 `markLoad()` 重新置位
+  // **调试日志**（人 2026-09-24：「仍然无法滚动，要调试日志」）—— 有界环形缓冲（最近 8 条）+ 几个计数器，
+  // 经 `stats()` 进设置面板读数。它回答三个问题：滚轮事件**到了没**（`wheel`）/ 窗格**滚了没**（`scrolls`）/
+  // 原生滚动**生效没**（`fallback` > 0 就说明原生滚动没生效、是我们自己补的那一下）；另记跳转锚点与换窗轨迹。
+  //
+  // **纪律（2026-09-24 第二次修）**：这个环形缓冲**只放"生命周期"事件**（`boot` / `attach?` / `attach✗` /
+  // `anchorLine` / `move` / `兜底`）—— 滚轮与滚动**只计数、不进日志**。上一版把每次滚轮都写进日志，
+  // 真机上 149 次滚轮把 8 条缓冲**全占满**，把最关键的 `attach?`/`attach✗` 挤出去了 ⇒ 读数等于白读。
+  var dbg = { wheel: 0, scrolls: 0, fallback: 0, attach: 0, skip: "", anchorLine: 0, jumpIdx: -1, top: 0, max: 0, log: [],
+              rp: { t0: 0, parts: {} }, rpWorst: { total: 0, parts: {} },
+              drift: { n: 0, open: false, line: 0, off: 0, before: 0, after: 0, delta: 0, comp: 0, sum: 0 },
+              edit: { n: 0, in: 0, t0: 0, a0: 0, m0: 0, wait: 0, render: 0, attach: 0, links: 0, math: 0 } };
+  // `dbg.drift`：**位置漂移读数**（人 2026-09-24：「我每次回车画面都往上跑」+ 圈了"补漂移读数"）——
+  //   渲染前 scrollTop → 渲染后 scrollTop 的差 = `delta`；`sum` = 本次会话**累计**（直接量化"往上飘多远"）；
+  //   `comp` = 这一轮 `_move` 里 `scrollTop` 补偿的**合计**（补偿本身也可能是漂移源）。
+  // `dbg.rp`：**渲染分段**（人 2026-09-24：「集中精力优化这个」时，`postRender 26679` 只告诉我们"卡在 renderPreview 里"，
+  //   但里面 parse / DOM 构建 / 打行号 / mermaid / MathJax 启动 哪一步吃掉的 26 s 看不出来）⇒ 由 app 侧那几行**同行追加**
+  //   `markRender("parse" | "dom" | "stamp" | "mermaid" | "mjStart")` 打点，读数按"距第一个打点的毫秒"显示。
+  // `dbg.edit`：**编辑路径专用读数**（人 2026-09-24：「还是有略微闪动，特别是按回车，会卡顿一下，现在添加日志我们集中精力优化这个」）。
+  //   等待 = 从 `input` 事件到"开始重渲染"（去抖 + 事件循环被占的时间）
+  //   重渲染 = 从"清屏前量锚点"到 `attach` 进来（**同步** parse+render+stamp+挂窗的整段，最可能是卡顿本体）
+  //   接管 = `attach` 内部（建槽位表 + 首趟换窗 + 绑监听）
+  //   补链接 = 新块进窗后就地补 wikilink/mermaid（幂等，只扫窗口内）
+  //   排版 = 从排 MathJax 到它落定（异步，不该挡帧）
+  var pendingWheel = null;
+  drift = dbg.drift;   // ← 必须在 `dbg` 之后（见上面那行的注释）
+
+  /** **控制台日志**（人 2026-09-24：「请你采用控制台日志输出」）—— 面板读数要点"刷新读数"才看，控制台是**实时**的。
+   *  教训（AG91）：一个**加载期** TypeError 会让整块没挂上，面板上只表现为"少了几行"，肉眼极难发现 ⇒
+   *  从此本模块的一切日志与异常都同时进控制台（`_log` → console.log；跳过/异常 → console.error）。 */
+  var CON = "🪟 pvwin";
+  function _con(msg, isErr) { try { const c = window.console; if (!c) return; (isErr ? (c.error || c.log) : c.log).call(c, CON, msg); } catch (_) { /* 日志不许影响功能 */ } }
+  function _log(s) { _con(String(s)); try { dbg.log.push(String(s)); if (dbg.log.length > 8) dbg.log.shift(); } catch (_) { /* 同上 */ } }
+
+  /** 记一次「为什么没接管」（人 2026-09-24 实测：读数里 `窗口 -1–-1/0` 却看不出是哪一步退的 ⇒ 每个早退分支都留一行）。
+   *  同时把它写进 **`dbg.skip`（一个不会被环形缓冲挤掉的字段）** —— 读数上一定看得见。 */
+  function _skip(why, extra) { const s = why + (extra == null ? "" : " " + extra); dbg.skip = s; _con("attach✗ " + s, true); _log("attach✗ " + s); }
+
+  function _pane() { return document.getElementById("preview-pane"); }
+  function _editing(pv) { return !!pv && pv.contentEditable === "true"; }
+  function _screenH() { const p = (st && st.pane) || _pane(); return Math.max(120, (p && p.clientHeight) || 800); }
+  /** 某槽的占位高度：量过用真高，否则按"是不是空行块"给估值。 */
+  function _h(slot) { return slot.h > 0 ? slot.h : (slot.blank ? BLANK_EST_PX : EST_PX); }
+
+  /** 占位块：**空 div + 显式高度**（不用 `contain-intrinsic-size` —— 空元素的高度可以直接写真值，更确定）。
+   *  `contentEditable=false` + CSS 的 `user-select:none`：**光标放不进去、也选不中** —— 编辑模式下窗口化时
+   *  这是防"往占位块里打字"的安全阀（否则用户点一下占位块就能把内容写进一个随时被丢掉的盒子里）。 */
+  function _spacer(slot) {
+    if (!slot.spacer) {
+      const d = document.createElement("div");
+      d.className = "-pv-spacer";
+      d.contentEditable = "false";
+      d.setAttribute("data--block-index", slot.bi);
+      if (slot.line != null) { d.setAttribute("data--src-line", slot.line); d.setAttribute("data--src-line-end", slot.lineEnd); }
+      d.setAttribute("aria-hidden", "true");
+      slot.spacer = d;
+    }
+    slot.spacer.style.height = _h(slot) + "px";
+    return slot.spacer;
+  }
+
+  /** **光标/选区所在的块 ⇒ 永不摘走**（人 2026-09-24：他的工作方式就是编辑模式，而编辑模式下摘掉光标所在块
+   *  = 丢光标、丢 IME 组合、丢正在输入的那一段）。返回到槽下标的集合（拿不到选区 ⇒ 空集）。 */
+  function _caretSlots(s) {
+    const keep = new Set();
+    try {
+      const sel = window.getSelection && window.getSelection();
+      if (!sel || !sel.anchorNode) return keep;
+      const idx = new Map();
+      for (let i = 0; i < s.slots.length; i++) idx.set(s.slots[i].node, i);
+      const mark = function (node) {
+        let n = node;
+        while (n && !idx.has(n)) n = n.parentNode;   // 块可能包在 `.-preview-content` 里 ⇒ 一直上溯到"某个块"为止
+        if (n) keep.add(idx.get(n));
+      };
+      mark(sel.anchorNode); mark(sel.focusNode);
+    } catch (_) { /* 选区拿不到就不设保留集（宁可不优化，不许丢光标） */ }
+    return keep;
+  }
+
+  /** 槽位表 = **块元素**按文档序（`.-src-block[data--block-index]`）。
+   *
+   * **为什么不能按 `#preview` 的直接子节点摊**（2026-09-24 实测踩到）：渲染器把整篇包在**一个**
+   * `<div class="-preview-content">` 里（`renderer.js:52`）⇒ `#preview` 永远只有 1 个子节点 ⇒ 那样摊只摊出
+   * 1 个槽，于是 `slots<120` 直接早退、窗口化**一次都没生效**（真机日志：`attach✗ slots<120 1`）。
+   * ⇒ 现在按**块元素**摊，并且 `_move` / `detach` 一律走**每个槽自己的父节点**搬（容器包在哪儿都不影响）。 */
+  function _slots(preview) {
+    const out = [];
+    const nodes = preview.querySelectorAll(".-src-block[data--block-index]");
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+      out.push({
+        node: node,
+        bi: node.getAttribute("data--block-index"),
+        blank: !!(node.classList && node.classList.contains("-blank-block")),
+        line: node.getAttribute("data--src-line"),
+        lineEnd: node.getAttribute("data--src-line-end"),
+        h: 0,
+      });
+    }
+    return out;
+  }
+
+  /** 高度表累加 ⇒ 像素 → 槽下标（找不到就夹到末槽）。表就是占位块用的那份 ⇒ 与浏览器算出来的位置自洽。 */
+  function _indexAt(slots, px) {
+    let off = 0;
+    for (let i = 0; i < slots.length; i++) { const h = _h(slots[i]); if (off + h > px) return i; off += h; }
+    return Math.max(0, slots.length - 1);
+  }
+
+  /** `count` 屏 ≈ 多少个槽（按当前高度表算）⇒ 窗口按**屏**定尺寸（人拍板），不按块数。 */
+  function _screenSlots(slots, count) {
+    const budget = _screenH() * count;
+    let off = 0;
+    for (let i = 0; i < slots.length; i++) { off += _h(slots[i]); if (off >= budget) return Math.max(1, i + 1); }
+    return Math.max(1, slots.length);
+  }
+
+  /** 换窗：物化 `[from, to]`（含端点），其余换占位块。返回是否真的动过。 */
+  function _move(from, to) {
+    const s = st; if (!s) return false;
+    const slots = s.slots;
+    from = Math.max(0, from); to = Math.min(slots.length - 1, to);
+    if (from > to || (s.from === from && s.to === to)) return false;
+    s.moving = true;   // ← 本趟换窗期间**抑制再入**（见 `_cover()` 的护栏 ①：收了尾的 `_afterMaterialize()` 会再调 `_cover()`）
+    // ④ 的测量基准：取"改动前后都仍物化"的第一个槽（改动只发生在视口上方时才需要补偿）
+    const firstSweep = (s.from === 0 && s.to === slots.length - 1); const refIdx = Math.max(0, Math.min(s.from, from));   // **首次换窗**时整篇都还在 DOM 里 ⇒ 任何几何读都会**强制布局整棵树**（正是窗口化要避免的那件事，也是它白做的原因）⇒ 本趟一律不读
+    const ref = firstSweep ? null : ((slots[refIdx] && slots[refIdx].node.parentNode) ? slots[refIdx].node : null);
+    const before = ref ? ref.offsetTop : 0;
+    // 离开窗口的先**量真高**再换占位（一趟读 ⇒ 一次布局；写死在占位块上 ⇒ 滚动条越用越准）
+    const keepSet = s.editing ? _caretSlots(s) : null;   // 编辑模式：**光标/选区所在块永不摘走**（见 `_caretSlots`）
+    const leaving = [];
+    for (let i = 0; i < slots.length; i++) {
+      const slot = slots[i];
+      if (!slot.node.parentNode) continue;                 // 已不在 DOM（= 已经是占位块状态）
+      if (keepSet && keepSet.has(i)) continue;
+      if (i < from || i > to) leaving.push(slot);
+    }
+    for (let k = 0; k < leaving.length; k++) { if (firstSweep) break; const h = leaving[k].node.offsetHeight; if (h > 0) leaving[k].h = h; }   // 首次换窗同样跳过：那时读的是"整棵树的高度"，代价就是全量布局（未量到的块先按估值，等它下次出窗时再量）
+    for (let k = 0; k < leaving.length; k++) { const host = leaving[k].node.parentNode; if (host) host.replaceChild(_spacer(leaving[k]), leaving[k].node); }   // **走各自的父节点**（块包在 `.-preview-content` 里）
+    const entering = [];
+    for (let i = from; i <= to; i++) {
+      const slot = slots[i];
+      if (!slot || slot.node.parentNode) continue;         // 已在 DOM
+      const host = slot.spacer && slot.spacer.parentNode;  // 占位块当初插在哪儿，就换回哪儿
+      if (!host) continue;
+      host.replaceChild(slot.node, _spacer(slot));
+      entering.push(slot);
+    }
+    s.from = from; s.to = to;
+    _log("move " + from + "-" + to + "/" + slots.length);   // 调试读数：换窗轨迹（最近 8 条）
+    if (ref && ref.parentNode) {   // ④ 补偿：基准块视觉位置不动
+      const after = ref.offsetTop;
+      if (after !== before) { s.pane.scrollTop += after - before; if (drift.open) drift.comp += Math.round(after - before); }   // 漂移读数：补偿量合计
+    }
+    for (let k = 0; k < entering.length; k++) { const h = entering[k].node.offsetHeight; if (h > 0) entering[k].h = h; }
+    _afterMaterialize(entering.length > 0);
+    s.moving = false;
+    return true;
+  }
+
+  /** 新块进窗：链接与公式都要**就地**处理（都幂等，且只扫"窗口里这些"⇒ 成本 ∝ 窗口而不是全文）。 */
+  function _afterMaterialize(hasNew) {
+    const s = st; if (!s) return;
+    if (hasNew) {
+      const tLinks = now();   // 编辑/滚动读数：这一段的**同步**耗时（只扫窗口内 ⇒ 应很小）
+      const A = window.MemoriaApp || {};
+      try { if (typeof A.pvPostWikilinks === "function") A.pvPostWikilinks(); } catch (_) { /* 链接增强，失败不影响 */ }
+      try { if (typeof A.pvBindLinks === "function") A.pvBindLinks(); } catch (_) { /* 同上 */ }
+      const MP = window.MemoriaMarkdownPreview;
+      try { if (MP && MP.renderMermaidBlocks) MP.renderMermaidBlocks(s.preview); } catch (_) { /* 失败由错误块兜底 */ }
+      dbg.edit.links = Math.round(now() - tLinks);
+      if (typesetTimer) clearTimeout(typesetTimer);
+      dbg.edit.m0 = now();   // 编辑读数：从"排队排版"到"排版落定"（异步，不该挡帧；挡了就是它在长任务里）
+      typesetTimer = setTimeout(function () {   // 公式"晚一拍"排版：新块刚进来时先让它上屏，再排版（避免排版卡住滚动）
+        typesetTimer = null;
+        const w = st; if (!w || !window.MathJax || !MathJax.typesetPromise) return;
+        try {
+          const mp = MathJax.typesetPromise([w.preview]);
+          if (mp && mp.then) mp.then(function () { if (dbg.edit.m0) { dbg.edit.math = Math.round(now() - dbg.edit.m0); dbg.edit.m0 = 0; } }).catch(function () { /* 排版失败不该影响预览 */ });
+        } catch (_) { /* 同上 */ }
+      }, TYPESET_DEBOUNCE_MS);
+    }
+    _cover();   // 物化会改变总高（估值 → 真高）⇒ 顺手把窗口/视口关系再校一次
+  }
+
+  /** 让窗口覆盖「视口上下各 `MARGIN_SCREENS` 屏」。
+   *
+   * **两条护栏（2026-09-24 真机踩到的"卡住 + 比全量渲染还慢"）**：
+   *   ① **防重入**：`_move()` 收尾会调 `_afterMaterialize()`，而它收尾又会调 `_cover()` ⇒ 一次滚轮下去会在**同一次
+   *      调用栈里**接着算下一趟。差一个槽就再换一趟，而每趟都要"一次布局 + 30 万节点里补链接 + 排版" ⇒ 自转。
+   *   ② **迟滞**：窗口只差一两个槽就不动它（真机日志正是 `move 2872-2911` 与 `move 2872-2912` **交替**）。
+   *      窗口本来留了 `MARGIN_SCREENS` 屏余量，忽略这点漂移很安全。
+   */
+  function _cover() {
+    const s = st; if (!s) return false;
+    if (s.moving) return false;
+    const vh = _screenH();
+    const top = s.pane.scrollTop;
+    const i0 = _indexAt(s.slots, Math.max(0, top - vh * MARGIN_SCREENS));
+    const i1 = _indexAt(s.slots, top + vh * (1 + MARGIN_SCREENS));
+    if (Math.abs(i0 - s.from) < HYST_SLOTS && Math.abs(i1 - s.to) < HYST_SLOTS) return false;
+    return _move(i0, i1);
+  }
+
+  function _onScroll(s) {
+    if (st !== s) return;
+    const top = s.pane.scrollTop;   // 计数放在**模块级**监听里（`_boot()`）⇒ 没接管时也照样有数
+    const jump = Math.abs(top - (s.lastTop || 0)) > _screenH() * JUMP_SCREENS;
+    s.lastTop = top;
+    if (s.raf) return;
+    s.raf = window.requestAnimationFrame(function () {
+      s.raf = 0;
+      if (st !== s) return;
+      if (jump) { _armSettle(s); return; }   // **跳变**（拖滚条 / PageDown）⇒ 等松手（人拍板"松手才渲"）
+      _cover();
+    });
+  }
+
+  function _armSettle(s) {
+    if (s.timer) clearTimeout(s.timer);
+    s.timer = setTimeout(function () { s.timer = null; _settle(s); }, DRAG_SILENCE_MS);
+  }
+
+  function _settle(s) {
+    if (st !== s) return;
+    if (s.timer) { clearTimeout(s.timer); s.timer = null; }
+    s.lastTop = s.pane.scrollTop;
+    _cover();
+  }
+
+  function _bind(s) {
+    s.onScroll = function () { _onScroll(s); };
+    s.onWheel = function (e) { _onWheel(s, e); };
+    s.onEnd = function () { _settle(s); };
+    s.smooth = false;   // 平滑滚动（`scroll-behavior: smooth`）下"原生滚动有没有生效"当帧看不出来 ⇒ 兜底要跳过，避免与它打架
+    try { s.smooth = window.getComputedStyle(s.pane).scrollBehavior === "smooth"; } catch (_) { /* 拿不到就按非平滑处理 */ }
+    _boot();   // 事件监听是**模块级**的（见 `_boot()`）：不依赖"是否接管" ⇒ 没接管时读数照样能说清"事件到了没"
+  }
+
+  /** 统一的时钟（读数用；没有高精度计时就退回 `Date`）。 */
+  function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+
+  /** 本次即将交给窗口接管吗？（渲染侧据此**跳过"整篇"的那几样重活** —— 目前只有 mermaid 用）
+   *
+   * 依据：人 2026-09-24 读数里 `postRender 26679` → `58698`（同类文档 27 s / 59 s），而 `renderPreview()` 里的
+   * `await MP.renderMermaidBlocks(preview)` 是**整篇逐块**等待（冷渲染时整篇都在 DOM 里，mermaid 的 `render()`
+   * 就按块 await）。窗口接管后，`_afterMaterialize()` 已经会**只对窗口内**的块补 mermaid ⇒ 这一步完全可以跳过。 */
+  function willTakeOver() {
+    try {
+      const pv = document.getElementById("preview");
+      if (!pv || !_pane()) return false;
+      return _slots(pv).length >= MIN_SLOTS;
+    } catch (_) { return false; }   // 拿不准 ⇒ 交给老路（宁可慢，不许白屏）
+  }
+
+  /** 一次渲染的分段计时：**`parse` 即新的一轮**（它必然最先打）⇒ 不需要别处再清；同名再打就覆盖。 */
+  function markRender(name) {
+    try {
+      const t = now();
+      if (name === "entry" || name === "parse" || !dbg.rp.t0) { dbg.rp.parts = {}; dbg.rp.t0 = t; }   // 2026-09-24 修：`attach()` 内部会调 `detach()`，若在 `detach()` 里清就会把**刚采集的分段抹掉**（真机读数里"渲染分段"整行消失就是这条）⇒ 改由 `parse` 自己开新一轮
+      dbg.rp.parts[name] = Math.round(t - dbg.rp.t0);
+      // **另存一份"最慢那次"的分段**：编辑会把最近一次覆盖掉，而我们要看的恰恰是那个几十秒的**冷渲染**落在哪一段
+      // （真机教训：等看到读数时它已经被后面的编辑渲染冲掉了 —— 那一份只显示 parse 0 / dom 9 / … / mjStart 35）
+      if (name === "audit" && dbg.rp.parts.audit > (dbg.rpWorst.total || 0)) {
+        dbg.rpWorst.total = dbg.rp.parts.audit;
+        dbg.rpWorst.parts = Object.assign({}, dbg.rp.parts);
+      }
+    } catch (_) { /* 读数不许影响渲染 */ }
+  }
+  /** 新一次渲染开始 ⇒ 清掉上一轮的分段（`keepPosition()` 与 `detach()` 都会调）。 */
+  function resetRender() { dbg.rp.t0 = 0; dbg.rp.parts = {}; }
+
+  /** **模块级的滚动/滚轮探针**（`AG76` 的教训：原来监听只在接管后绑，于是"没接管"和"事件没到"在读数里长得一模一样）。
+   *  一次绑定、常驻；接管了就驱动窗口，没接管就**只记数 + 记一行日志**（`wheel(未接管)`）。 */
+  var booted = false;
+  function _boot() {
+    if (booted) return;
+    const p = _pane();
+    if (!p) { _log("boot✗ no-pane"); return; }
+    booted = true;
+    p.addEventListener("wheel", function (e) {
+      dbg.wheel++;   // 只计数（日志留给"生命周期"事件；上一版把滚轮写进日志，把关键行冲掉了）
+      const dy = e.deltaMode === 1 ? e.deltaY * 40 : (e.deltaMode === 2 ? e.deltaY * _screenH() : e.deltaY);
+      if (st) _onWheel(st, e, dy);
+    }, { passive: true });
+    p.addEventListener("scroll", function () {
+      dbg.scrolls++; dbg.top = Math.round(p.scrollTop);
+      if (st) _onScroll(st);
+    }, { passive: true });
+    p.addEventListener("scrollend", function () { if (st) _settle(st); }, { passive: true });
+    p.addEventListener("input", function () { dbg.edit.in = now(); }, { passive: true });   // 编辑读数：记下"最后一次输入"的时刻（`keepPosition()` 拿它算"等待"）
+    _log("boot ok");
+  }
+
+  /** 滚轮：**计数 + 记意图 + 兜底检查**（`dy` 已由调用方折算好）。 */
+  function _onWheel(s, e, dy) {
+    if (st !== s) return;
+    const d = (typeof dy === "number") ? dy : (e.deltaMode === 1 ? e.deltaY * 40 : (e.deltaMode === 2 ? e.deltaY * _screenH() : e.deltaY));
+    const from = s.pane.scrollTop;
+    // **兜底**：滚轮事件到了、但本回合窗格**没动**（原生滚动被什么挡掉 / 主线程刚被长任务占过）⇒ 我们自己滚一下。
+    // 它同时是判据的取证：读数里「兜底 N 次」> 0 就说明原生滚动确实没生效；若 `滚轮` 也不涨，说明事件压根没到预览区。
+    pendingWheel = { pane: s.pane, from: from, dy: d, s: s };
+    setTimeout(function () {   // **等一帧再看**：`setTimeout(0)` 会赶在浏览器"应用滚动"之前跑 ⇒ 误判"没滚"、于是双重滚动
+      window.requestAnimationFrame(function () {   // （真机读数里 `兜底 82 / 滚轮 98` 就是这么来的：那 82 次多半是误报）
+        const pw = pendingWheel; pendingWheel = null;
+        if (!pw || pw.s !== s || st !== s) return;
+        if (Math.abs(pw.pane.scrollTop - pw.from) >= 1) return;   // 原生滚动生效了（含平滑滚动的首帧）⇒ 不插手
+        if (s.smooth) return;   // 平滑滚动：当帧的 scrollTop 还没到目标位置，判断不了 ⇒ 不插手
+        dbg.fallback++;
+        _log("wheel→兜底 " + Math.round(pw.dy));
+        pw.pane.scrollTop = Math.max(0, pw.from + pw.dy);
+      });
+    }, 0);
+  }
+
+  /** 交还控制权：只清本轮的定时器/句柄 —— **模块级监听不动**（它要继续替"未接管"状态计数）。 */
+  /** 标记"接下来这一次渲染是加载"（由 `_previewCacheStash` 那一行调用 = 换文件/切走时）。 */
+  function markLoad() { pendingLoad = true; }
+
+  /** **非窗口路径的轻量位置恢复**（编辑同步 / 切模式）：整篇都是真 DOM ⇒ 直接按源码行定位，
+   *  **不用高度估值、也不做补偿** ⇒ 既保住位置，又不会引入"估值/补偿"造成的漂移。 */
+  function _restorePlainPosition() {
+    const line = pendingLine, off = pendingOff; pendingLine = 0; pendingOff = 0;
+    const pane = _pane(); const pv = document.getElementById("preview");
+    if (!line || !pane || !pv) return 0;
+    const els = pv.querySelectorAll("[data--src-line]");
+    for (let i = 0; i < els.length; i++) {
+      const s = +(els[i].getAttribute("data--src-line") || 0), e = +(els[i].getAttribute("data--src-line-end") || s);
+      if (s <= line && e >= line) { pane.scrollTop = Math.max(0, els[i].offsetTop + off); return line; }
+    }
+    return 0;
+  }
+
+  function _unbind(s) {
+    if (s.raf) { try { window.cancelAnimationFrame(s.raf); } catch (_) { /* 已消费 */ } s.raf = 0; }
+    if (s.raf2) { try { window.cancelAnimationFrame(s.raf2); } catch (_) { /* 同上 */ } s.raf2 = 0; }
+    if (s.timer) { clearTimeout(s.timer); s.timer = null; }
+  }
+
+  /** 全量物化并交还控制权（切走前必须调：`_previewCacheStash()` 一行未改，靠这一步还原"整篇都在 DOM 里"）。 */
+  function detach(preview) {
+    const s = st; st = null; anchored = false;
+    carry = false;   // 交还控制权时一并清掉（免得残留的 `true` 让下一次换文件也不显示"渲染中"）
+    if (!s) return;
+    _unbind(s);
+    const pv = preview || s.preview;
+    if (!pv) return;
+    for (let i = 0; i < s.slots.length; i++) {
+      const slot = s.slots[i];
+      if (slot.node.parentNode) continue;                                  // 已在 DOM 里
+      const sp = slot.spacer;
+      // **槽位表可能来自"已作废的旧 DOM"**（编辑重渲染会把整篇换掉，而 `detach()` 仍握着旧槽位表）⇒ 那种槽位块
+      // 的占位块早已不在文档里，`replaceChild` 会抛 `not a child of this node`（**真机日志实证**：`attach✗ throw …`，
+      // 那一次就整篇没接管）。⇒ 只处理"仍连着当前 DOM 的占位块"，其余一概不碰。
+      if (!sp || !sp.parentNode || !pv.contains(sp)) continue;
+      sp.parentNode.replaceChild(slot.node, sp);
+    }
+    for (let i = 0; i < s.slots.length; i++) {
+      const sp = s.slots[i].spacer;
+      if (sp && sp.parentNode) sp.parentNode.removeChild(sp);
+    }
+  }
+
+  /** 入口 ③ 的**前置锚点**：跳转进入时先把目标行交给窗口 ⇒ **第一屏就是目标所在那一窗**（人 2026-09-24 的口径：
+   *  「直接渲染对应位置的窗口，从该窗口的开头『播放』定位」，而不是"先渲染文件开头、卡一会、再定位过去"）。
+   *  调用点：`openFile` 里、`setViewMode`（它会触发渲染与 `attach`）**之前**；`attach` 用完即清（一次跳转只生效一次）。 */
+  function setAnchorLine(line) {
+    const n = Math.round(Number(line));
+    pendingLine = Number.isFinite(n) && n > 0 ? n : 0;
+    pendingOff = 0;   // **跳转一律落块首**（`keepPosition()` 会在调用本函数之后把真实偏移覆盖回来）
+    dbg.anchorLine = pendingLine;
+    _log("anchorLine=" + pendingLine);
+  }
+
+  /** **重渲染前保住位置**（人 2026-09-24：「从预览切换到其它模式比如分栏、源码，位置就会漂移或者回到文件开头」）。
+   *
+   * 机制：`setViewMode()` 切模式时会**重渲染预览**（`renderEditor()` + `renderPreview()`），而那次渲染的收尾走的是
+   * **冷渲染**那条 `attach(preview, {})` —— 锚点是**文档头** ⇒ 预览先回到开头；之后 `setViewMode()` 才去量
+   * 「当前顶部对应哪一行」⇒ 量到的已经是第一行 ⇒ 于是"漂移或回开头"。
+   * ⇒ 在重渲染**之前**调本函数：把"视口顶部那一块的源码行"记进 `pendingLine`，紧接着的 `attach` 就会以它定锚
+   * （`pendingLine` 用完即清 ⇒ 只影响这一次渲染，不会污染换文件；换文件走 `openFile`，不经过这里）。 */
+  function keepPosition() {
+    const pv = document.getElementById("preview");
+    if (!pv) return 0;
+    const pane = _pane();
+    carry = true;   // 告诉渲染侧"这是一次**同文档**的重渲染" ⇒ 别再插那句"渲染中"占位行（见 `carrying()` 的注释）
+    resetRender();  // 新一次渲染 = 新的一轮分段计时
+    const e = dbg.edit;
+    if (e.in) { e.n++; e.wait = Math.round(now() - e.in); e.in = 0; }   // 编辑读数：`input` → 本次重渲染开始
+    e.t0 = now();   // 编辑读数：重渲染起点（到 `attach` 进来为止 = 那一整段同步渲染）
+    let line = 0, off = 0;
+    if (st && st.preview === pv) {
+      // ① **窗口态**：用槽位表（最便宜，且与恢复同口径）
+      const a = captureAnchor(pane, pv);
+      const slot = a ? st.slots[a.i] : null;
+      line = (slot && slot.line != null) ? parseInt(slot.line, 10) : 0;
+      off = (a && typeof a.off === "number") ? a.off : 0;
+      if (!line) {   // 兜底：量不到顶部块就用**光标/选区所在块**
+        const caret = _caretSlots(st);
+        if (caret.size) {
+          const cs = st.slots[caret.values().next().value];
+          line = (cs && cs.line != null) ? parseInt(cs.line, 10) : 0;
+          if (line > 0) _log("anchorLine=" + line + " (caret)");
+        }
+      }
+    } else if (pane) {
+      // ② **纯 DOM 态**（窗口已交还 / "过渡"已结束）：直接扫 `[data--src-line]` 找视口顶部那一块
+      //    ⇒ 同样记"行 + 块内偏移"，之后由 `_restorePlainPosition()` 按真几何还原（**零估值、零补偿**）
+      const top = pane.getBoundingClientRect().top;
+      const els = pv.querySelectorAll("[data--src-line]");
+      for (let i = 0; i < els.length; i++) {
+        const r = els[i].getBoundingClientRect();
+        if (r.bottom >= top) { line = +(els[i].getAttribute("data--src-line") || 0); off = Math.max(0, Math.round(top - r.top)); break; }
+      }
+    }
+    if (line > 0) setAnchorLine(line);
+    pendingOff = off;
+    {   // 漂移读数：记"渲染前"的位置与锚点（"渲染后"在 `attach` 里用双 rAF 补记）
+      drift.n++; drift.open = true; drift.comp = 0;
+      drift.before = pane ? Math.round(pane.scrollTop) : 0;
+      drift.line = line || 0; drift.off = pendingOff;
+    }
+    return line || 0;
+  }
+
+  /** 本次渲染是否"需要保住位置"（由 `keepPosition()` 置位，`attach()` 消费后清掉）。
+   *
+   * 用途：`renderPreview()` 原来会先把预览换成一句"渲染中…"（`preview.innerHTML = '<p class="-preview-loading">'`）
+   * ⇒ **整篇高度瞬间塌成一行、滚动位置被夹到 0**，等渲染完再跳回去 —— 大文档这一段 ~700 ms，肉眼就是
+   * **上下闪动**（人 2026-09-24：「显示编辑中回车仍然有问题，会导致上下闪动」）。
+   * ⇒ 同文档重渲染时**不清屏**：旧内容留到新内容就绪那一刻（同一任务内 `innerHTML=""` + `appendChild`，浏览器不会
+   * 画中间态）⇒ 位置不塌、也就不会闪。换文件不走 `keepPosition()` ⇒ 占位行照旧显示。 */
+  function carrying() { return carry; }
+
+  /** 按行号把目标块先物化（跳转入口用：wikilink / KP / 搜索 / 检查面板定位）。 */
+  function ensureLine(line) {
+    const s = st; if (!s || !line) return false;
+    const idx = _slotOfLine(s.slots, +line);
+    if (idx < 0 || (idx >= s.from && idx <= s.to)) return false;
+    const span = _screenSlots(s.slots, SCREENS);
+    return _move(Math.max(0, idx - span), idx + span);
+  }
+
+  /** 行号 → 槽下标（与 `_scrollToSrcLine` 同一口径：块上的 `data--src-line` 区间）。 */
+  function _slotOfLine(slots, line) {
+    for (let i = 0; i < slots.length; i++) {
+      const a = +(slots[i].line || 0);
+      if (!a) continue;
+      const b = +(slots[i].lineEnd || a);
+      if (a <= line && b >= line) return i;
+      if (a > line) return i;
+    }
+    return -1;
+  }
+
+  /** 接管一次"预览已就位"（缓存命中恢复后 / 冷渲染收尾）。任何异常都退回全量渲染 —— 宁可慢，不许坏。 */
+  function attach(preview, opts) {
+    try {
+      // **每次都先记一行"进来了什么"**（人 2026-09-24 实测：读数里 `窗口 -1–-1/0` 而日志只有 `anchorLine`
+      // ⇒ `attach` 一路没走到，且**看不出是哪一步退的** ⇒ 从此每个早退分支都留一行原因）
+      dbg.attach++; dbg.skip = ""; carry = false;   // 计数器 + "上次跳过原因"（后者**不会被环形缓冲挤掉** ⇒ 读数上一定看得见）；`carry` 到这里就算消费掉了
+      if (!pendingLoad) {   // **同文档重渲染（编辑同步 / 切模式）⇒ 回老逻辑**：不接管、整篇真 DOM、轻量位置恢复
+        _skip("same-doc"); detach(preview); _restorePlainPosition(); dbg.edit.a0 = 0; return false;
+      }
+      pendingLoad = false;   // 本次是"加载" ⇒ 允许窗口化（消费掉）
+      if (dbg.edit.t0) { dbg.edit.render = Math.round(now() - dbg.edit.t0); dbg.edit.t0 = 0; }   // 编辑读数：从"清屏前量锚点"到接管 = **那一整段同步渲染**
+      dbg.edit.a0 = now();   // 编辑读数：接管本身耗时（收尾算）
+      _log("attach? edit=" + (preview ? String(preview.contentEditable) : "-") + " children=" + (preview ? preview.childNodes.length : -1));
+      if (!preview) { _skip("no-preview"); return false; }
+      const editing = _editing(preview);   // 2026-09-24：**编辑模式也接管**（人实测：他的工作方式就是编辑模式 —— 原来在这里早退，于是窗口化在他那儿**一次都没生效**，跳转/滚动/MathJax 全走老路）。风险由两条安全阀兜住：占位块不可编辑不可选中 + **光标/选区所在块永不摘走**（`_caretSlots`）
+      detach(preview);
+      const pane = _pane();
+      if (!pane) { _skip("no-pane"); return false; }
+      const slots = _slots(preview);
+      if (slots.length < MIN_SLOTS) { _skip("slots<" + MIN_SLOTS, slots.length); return false; }   // 小文档不值得多一层间接
+      st = { preview: preview, pane: pane, slots: slots, from: 0, to: slots.length - 1, lastTop: -1, raf: 0, timer: null, editing: editing };
+      const o = opts || {}; const a = o.anchor;
+      const _jumpIdx = pendingLine ? _slotOfLine(slots, pendingLine) : -1; pendingLine = 0;   // **跳转优先于"恢复上次位置"**（人 2026-09-24 实测：文件看过一次时，命中缓存那条路的锚点把目标行顶掉了 ⇒ 于是"先渲旧位置、再跳过去"）
+      const anchorIdx = (_jumpIdx >= 0) ? _jumpIdx : ((a && typeof a.i === "number") ? Math.max(0, Math.min(slots.length - 1, a.i)) : _indexAt(slots, Math.max(0, Number(o.scrollTop) || 0)));
+      const off = (_jumpIdx >= 0) ? pendingOff : ((a && typeof a.off === "number") ? a.off : 0); pendingOff = 0;   // 跳转落**块首**（`pendingOff=0`，人：「从该窗口的开头播放定位」）；**位置携带**落"块 + 块内偏移"（人 2026-09-24：「我每次回车画面都往上跑…实际上往上跑的漂了」就是这里把偏移写死成 0、每次重渲都把块顶对齐到视口顶）
+      dbg.wheel = 0; dbg.scrolls = 0; dbg.fallback = 0;    // 计数器按"本次接管之后"统计（换一次文件即归零，读数才有意义）
+      dbg.jumpIdx = _jumpIdx;
+      _log("attach jump=" + _jumpIdx + " anchor=" + anchorIdx + "/" + slots.length + " top=" + Math.round(Number(o.scrollTop) || 0));
+      const span = _screenSlots(slots, SCREENS + (editing ? 1 : 0));   // 编辑模式多留一屏（少搬窗 ⇒ 少打扰光标）
+      _move(Math.max(0, anchorIdx - span), anchorIdx + span);   // 双向：锚点窗先出
+      // 落点：让锚点块回到"视口顶部 ± 块内偏移"。**与高度估值自洽** —— 上面的位置就是按同一张高度表排的
+      // ⇒ 内容对得上（绝对像素与"整篇真布局"下不同，这是不知道远处真高时无法避免的，见块头 ④）。
+      const slot = slots[anchorIdx];
+      const box = slot ? (slot.node.parentNode ? slot.node : slot.spacer) : null;
+      pane.scrollTop = Math.max(0, (box ? box.offsetTop : 0) + off);
+      _bind(st);
+      anchored = true;
+      if (dbg.edit.a0) { dbg.edit.attach = Math.round(now() - dbg.edit.a0); dbg.edit.a0 = 0; }   // 编辑读数：接管耗时（建槽位表 + 首趟换窗 + 绑监听）
+      // **过渡结束**：这次"加载"已经看得见了 ⇒ 稍后把整篇物化回去、交还控制权 ⇒ 之后编辑/滚动全是**老逻辑**
+      // （人 2026-09-24 的口径："窗口化是为了给整文件渲染做"体验过渡"的，整文件加载完之后，编辑同步用之前的逻辑正常"）
+      if (transitionTimer) clearTimeout(transitionTimer);
+      transitionTimer = setTimeout(function () {
+        transitionTimer = null;
+        // **分帧分块**物化（人 2026-09-24：整篇一次性物化 = 5879 次 `replaceChild` ⇒ 超长任务、**直接卡死**）：
+        // 每帧 300 槽；一旦编辑先到（`attach` 会调 `detach()` ⇒ `st = null`）或换文件 ⇒ 本循环自动中止。
+        let i = 0;
+        const step = function () {
+          const s2 = st; if (!s2) return;                       // 已被编辑/换文件接管 ⇒ 收手
+          const end = Math.min(s2.slots.length, i + 300);
+          for (; i < end; i++) {
+            const slot = s2.slots[i];
+            if (slot.node.parentNode) continue;
+            const sp = slot.spacer;
+            if (!sp || !sp.parentNode || !s2.preview.contains(sp)) continue;
+            sp.parentNode.replaceChild(slot.node, sp);
+          }
+          if (i < s2.slots.length) { s2.raf2 = window.requestAnimationFrame(step); return; }
+          for (let k = 0; k < s2.slots.length; k++) { const sp = s2.slots[k].spacer; if (sp && sp.parentNode) sp.parentNode.removeChild(sp); }
+          _unbind(s2); st = null; anchored = false; carry = false;
+          _restorePlainPosition();     // 用真几何把位置放回去（零估值、零补偿）
+          _con("transition done · control handed back to plain DOM");
+        };
+        if (window.requestAnimationFrame) window.requestAnimationFrame(step); else detach(st && st.preview);
+      }, TRANSITION_MS);
+      // 漂移读数：**等两帧**再记"渲染后"的位置（补偿与浏览器夹取都在这之前落定）
+      if (drift.open && window.requestAnimationFrame) {
+        window.requestAnimationFrame(function () { window.requestAnimationFrame(function () {
+          if (!drift.open) return;
+          const p = _pane();
+          drift.after = p ? Math.round(p.scrollTop) : 0;
+          drift.delta = drift.after - drift.before;
+          drift.sum += drift.delta;
+          drift.open = false;
+        }); });
+      }
+      return true;
+    } catch (e) {
+      _skip("throw", (e && e.message) || String(e));   // 异常也要留证（AG76：原来这里静默退回，读数里看不出）
+      detach(preview);
+      return false;
+    }
+  }
+
+  /** 本块是否已自己定过滚动位置（恢复路径与 `_restoreTabScroll` 的裸像素写据此让路）。 */
+  function claimScroll() { return !!(st && anchored); }
+
+  /** 切走前记录锚点：**槽下标 + 块内偏移**（二分定位；裸 `scrollTop` 像素在高度估值下不可靠）。 */
+  function captureAnchor(pane, preview) {
+    try {
+      if (!pane || !preview) return null;
+      const slots = (st && st.preview === preview) ? st.slots : _slots(preview);
+      if (!slots.length) return null;
+      const paneTop = pane.getBoundingClientRect().top;
+      const boxOf = function (slot) { return slot.node.parentNode ? slot.node : (slot.spacer || slot.node); };
+      let lo = 0, hi = slots.length - 1, idx = 0;
+      while (lo <= hi) {   // 块按文档序排 ⇒ 顶边单调 ⇒ 可二分（~12 次读，且此刻布局是干净的）
+        const mid = (lo + hi) >> 1;
+        const box = boxOf(slots[mid]);
+        const top = box ? box.getBoundingClientRect().top - paneTop : 0;
+        if (top <= 0) { idx = mid; lo = mid + 1; } else { hi = mid - 1; }
+      }
+      const box = boxOf(slots[idx]);
+      if (!box) return null;
+      return { i: idx, off: Math.max(0, Math.round(paneTop - box.getBoundingClientRect().top)) };
+    } catch (_) { return null; }
+  }
+
+  /** 读数（设置面板「性能」底部的**窗口化调试**行；`previewCacheScores().win`）。
+   *
+   * 判据（人 2026-09-24：「仍然无法滚动，要调试日志」）：
+   *   · `wheel` 不涨 ⇒ 滚轮事件**没到预览区**（被谁拦了 / 指针不在预览区）；
+   *   · `wheel` 涨而 `scrolls` 不涨 ⇒ 事件到了、窗格**没滚**（原生滚动没生效，`fallback` 会 > 0 —— 那是我们补的）；
+   *   · 两者都涨但画面不动 ⇒ 是**窗口没跟随**（看 `log` 里的 `move` 轨迹）；
+   *   · `max` 为 0 ⇒ 窗格根本不可滚（占位块高度没生效）。
+   *   另含跳转取证：`anchorLine`（交给窗口的目标行）与 `jump`（它在槽位表里命中的下标；-1 = 没找到 ⇒ 落回旧位置/文档头）。 */
+  function stats() {
+    const s = st;
+    let shown = 0;
+    if (s) for (let i = s.from; i <= s.to; i++) { const slot = s.slots[i]; if (slot && slot.node.parentNode) shown++; }
+    const pane = (s && s.pane) || _pane();
+    if (pane) { dbg.max = Math.max(0, pane.scrollHeight - pane.clientHeight); dbg.top = Math.round(pane.scrollTop); }
+    return {
+      active: !!s,
+      edit: dbg.edit,
+      rp: dbg.rp,
+      rpWorst: dbg.rpWorst,
+      drift: dbg.drift,
+      attach: dbg.attach,
+      skip: dbg.skip,
+      slots: s ? s.slots.length : 0,
+      from: s ? s.from : -1,
+      to: s ? s.to : -1,
+      shown: shown,
+      wheel: dbg.wheel,
+      scrolls: dbg.scrolls,
+      fallback: dbg.fallback,
+      anchorLine: dbg.anchorLine,
+      jumpIdx: dbg.jumpIdx,
+      top: dbg.top,
+      max: dbg.max,
+      smooth: !!(s && s.smooth),
+      log: dbg.log.slice(),
+    };
+  }
+
+  _boot();   // **模块加载即绑好探针**（即使窗口化一次都没接管，读数也能回答"滚轮/滚动事件到了没"）
+  _con("module loaded · attach/keepPosition/markRender/drift ready");   // 控制台**加载成功**的凭据（若看不到这一行 ⇒ 模块挂了，赶紧看报错）
+
+  window.MemoriaPreviewWindow = {
+    attach: attach,
+    detach: detach,
+    ensureLine: ensureLine,
+    setAnchorLine: setAnchorLine,
+    keepPosition: keepPosition,
+    carrying: carrying,
+    markRender: markRender,
+    willTakeOver: willTakeOver,
+    markLoad: markLoad,
+    drift: dbg.drift,   // 漂移读数（控制台里可直接 `MemoriaPreviewWindow.drift` 看）
+    claimScroll: claimScroll,
+    captureAnchor: captureAnchor,
+    stats: stats,
   };
 })();
 

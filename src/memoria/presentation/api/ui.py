@@ -2255,3 +2255,130 @@ def _raw_rule_count(value: str) -> int:
 UIAPI.agent_net_domains = _agent_net_domains
 
 
+# ── 脚本工作区设置（2026-09-24 追加；设计见 `docs/design/agent-capabilities.md §3.4`）────────────
+# AG59 落了三个键 `script_interpreter` / `script_use_bundled` / `script_timeout_s`，但**只能手改
+# `config/agent.json`**（台账里如实记着"暂无界面"）⇒ 这里给设置页补一个**只读**面，写侧照旧走
+# 既有 `agent_save_config` 的浅合并（与 net-settings 的两个域名键同一条路）。
+#
+# 两条取舍（都跟 `agent_net_domains` 同款）：
+#   · **单开一条 RPC**，不并进 `_agent_config_view()`：那是中段函数，往里加键会推位 `ui.py` 中段
+#     所有 `<文件>:<行号>` 锚点；
+#   · **不吃 `agent_scratch_status()`**：那条要 `kb_path`（工作区是库内目录），而设置页在**没开库**时
+#     也要能改解释器 —— 解释器是**机器级**设置，不属于任何库。
+# 解析结果**如实回三态**（`explicit` / `bundled` / `system`）；设置里填了不存在的路径 ⇒ 不静默回落，
+# 直接带 `error` 回来（`resolve_interpreter()` 的口径，`SCRATCH_NO_INTERPRETER`）。
+
+
+def _agent_script_settings(self) -> dict:
+    """脚本工作区三个设置键的现状 + **解释器解析结果**（设置页用；不需要知识库）。"""
+    from memoria.services.agent import scratch as scratch_mod
+    from memoria.services.agent.llm.config import load_config
+
+    try:
+        cfg = load_config()
+    except Exception as exc:  # noqa: BLE001 —— 配置读不到：如实报错，别让设置页瘫掉
+        return {"status": "error", "code": "config_error", "message": str(exc)}
+    interpreter = str(getattr(cfg, "script_interpreter", "") or "")
+    use_bundled = bool(getattr(cfg, "script_use_bundled", True))
+    timeout_s = float(getattr(cfg, "script_timeout_s", 0) or 0) or float(scratch_mod.DEFAULT_TIMEOUT_S)
+    resolved: dict[str, str] = {"path": "", "source": "none"}
+    error = ""
+    try:
+        resolved = dict(scratch_mod.resolve_interpreter(explicit=interpreter, use_bundled=use_bundled))
+    except scratch_mod.ScratchError as exc:  # 显式路径不存在：如实报错，不静默回落
+        error = str(exc)
+    return {
+        "status": "ok",
+        "interpreter": interpreter,
+        "use_bundled": use_bundled,
+        "timeout_s": timeout_s,
+        "default_timeout_s": float(scratch_mod.DEFAULT_TIMEOUT_S),
+        "resolved": {"path": resolved.get("path", ""), "source": resolved.get("source", "none")},
+        "bundled_dir": scratch_mod.bundled_dir() or "",
+        "bundled_name": scratch_mod.BUNDLED_DIR_NAME,
+        "error": error,
+        "code": scratch_mod.CODE_NO_INTERPRETER,
+        "limits": {
+            "min_timeout_s": float(scratch_mod.MIN_TIMEOUT_S),
+            "max_timeout_s": float(scratch_mod.MAX_TIMEOUT_S),
+        },
+    }
+
+
+UIAPI.agent_script_settings = _agent_script_settings
+
+
+# ── 导航模型落盘（2026-09-24 追加；设计见 `docs/design/preview-render-pipeline.md` §3.5 / §3.6）────────
+# 前端「导航预测器」（`js/nav-predictor.js`）把**用户发起的跨文件跳转**记成一行 JSONL，追加到这里；
+# 载入时整份读回、逐行重放。**只用两条 RPC、且路径写死**（不收任何路径参数）⇒ 没有目录穿越面：
+#   · 落点固定 `<kb>/.memoria/cache/nav/transitions.jsonl` —— `.memoria/cache/**` 在 `AGENTS.md §1` 里
+#     明确是**可再生缓存**（不作事实源、不进 manifest/sidecar、不被 `validate_kb` 审计）；
+#   · 为什么不用现成的 `write_map_log`：那条只追加、且语义是"映射调试日志"；这里需要**重写模式**
+#     （紧凑化时重写整份），两件事混在一条 RPC 里会让两边都别扭；
+#   · 为什么不让前端直接拼路径落盘：前端不该拿到写盘能力（与 AG59 脚本工作区同一条纪律）。
+# 上限两道：单次写入 ≤ `_NAV_LOG_MAX_WRITE_BYTES`；追加模式下累计超过 `_NAV_LOG_MAX_BYTES` ⇒
+# 明确回 `nav_log_too_large`（让前端去紧凑化重写，而不是我们偷偷丢数据或无限膨胀）。
+
+_NAV_LOG_REL = ".memoria/cache/nav/transitions.jsonl"
+_NAV_LOG_MAX_BYTES = 8 * 1024 * 1024
+_NAV_LOG_MAX_WRITE_BYTES = 2 * 1024 * 1024
+
+
+def _nav_log_path(self) -> str | None:
+    """当前库的导航日志绝对路径（没开库 ⇒ None）。"""
+    import os
+
+    kb = getattr(self._svc, "kb_path", None)
+    if not kb:
+        return None
+    return os.path.join(kb, _NAV_LOG_REL.replace("/", os.sep))
+
+
+def _nav_model_read(self) -> dict:
+    """整份读回导航日志（不存在 ⇒ 空串，不报错 —— 首次使用就是这个状态）。"""
+    import os
+
+    full = _nav_log_path(self)
+    if not full:
+        return {"status": "error", "code": "no_kb", "message": "未打开知识库"}
+    try:
+        if not os.path.isfile(full):
+            return {"status": "ok", "text": "", "bytes": 0}
+        size = os.path.getsize(full)
+        with open(full, encoding="utf-8") as fh:
+            text = fh.read()
+        return {"status": "ok", "text": text, "bytes": size}
+    except Exception as e:  # noqa: BLE001 —— 读不到就是"没有模型"，不该让前端崩
+        return {"status": "error", "code": "nav_log_unreadable", "message": str(e)}
+
+
+def _nav_model_write(self, text: str, append: bool = True) -> dict:
+    """写入导航日志：`append=True` 追加（默认），`False` 重写整份（紧凑化用）。"""
+    import os
+
+    full = _nav_log_path(self)
+    if not full:
+        return {"status": "error", "code": "no_kb", "message": "未打开知识库"}
+    body = text if isinstance(text, str) else ""
+    if len(body.encode("utf-8")) > _NAV_LOG_MAX_WRITE_BYTES:
+        return {"status": "error", "code": "nav_log_too_large", "message": "单次写入超过 2 MiB"}
+    try:
+        os.makedirs(os.path.dirname(full), exist_ok=True)
+        if append:
+            size = os.path.getsize(full) if os.path.isfile(full) else 0
+            if size + len(body.encode("utf-8")) > _NAV_LOG_MAX_BYTES:
+                return {"status": "error", "code": "nav_log_too_large", "message": "追加后会超过 8 MiB"}
+            with open(full, "a", encoding="utf-8") as fh:
+                fh.write(body)
+        else:
+            with open(full, "w", encoding="utf-8") as fh:
+                fh.write(body)
+        return {"status": "ok", "bytes": os.path.getsize(full)}
+    except Exception as e:  # noqa: BLE001
+        return {"status": "error", "code": "nav_log_unwritable", "message": str(e)}
+
+
+UIAPI.nav_model_read = _nav_model_read
+UIAPI.nav_model_write = _nav_model_write
+
+

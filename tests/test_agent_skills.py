@@ -20,7 +20,10 @@
 ⑩ 提示词门控：`skill` 工具在场**且目录非空**才出「可用技能」段（空段消失）；
 ⑪ 只读纪律：发现 / 加载 / 调工具之后，整库**逐字节不变**；
 ⑫ `/name` 用户手势：正则边界（空白包围、不吃路径与分数）、first-seen 去重、未知名与
-   `user-invocable: false` 一律**保持普通散文**、注入位次在**本轮请求最末**且**不落盘**。
+   `user-invocable: false` 一律**保持普通散文**、注入位次在**本轮请求最末**且**不落盘**；
+⑬ **内置只读根**（2026-09-24，随包 `resources/agent-skills/**`，source `bundled` / rank 600）：
+   第二个根就位、缺失即降级、库内同名永远遮蔽它、随包技能正文自足、随包清单带上它。
+   —— ①–⑫ 走**隔离态**（`_no_bundled_root` 把内置根指到空目录），⑬ 才用真实的随包目录。
 """
 
 from __future__ import annotations
@@ -33,6 +36,8 @@ from typing import Any
 
 import pytest
 
+from memoria.app import runtime
+from memoria.app.runtime import resources_dir as real_resources_dir
 from memoria.services.agent import prompt, skills
 from memoria.services.agent.ask import ask
 from memoria.services.agent.llm import FinishEvent, FinishReason, LlmRequest, TextDelta, ToolCall
@@ -90,6 +95,29 @@ def kb(tmp_path: Path) -> Path:
     )
     (bucket / "readme.txt").write_text("不是 md，不参与发现", encoding="utf-8")
     return root
+
+
+# —— 内置技能根（2026-09-24，`docs/design/agent-capabilities.md` §4.6）的测试隔离 ——
+# 本文件 ①–⑫ 讲的是**库内技能**的规则，不该随"随包内容"漂移 ⇒ 默认把内置根隔离成空目录；
+# 内置根自己的行为在 ⑬ 里用**真实的** `resources/agent-skills/` 验（请求 `with_bundled_root`）。
+
+_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(autouse=True)
+def _no_bundled_root(monkeypatch: pytest.MonkeyPatch, tmp_path_factory: pytest.TempPathFactory) -> None:
+    """把 `resources_dir()` 指到空目录 ⇒ `_all_roots()` 见目录不存在就不给内置根（只剩库内根）。
+
+    打的是 `memoria.app.runtime.resources_dir`（`_all_roots()` 在**调用期**取它）⇒ 不需要为测试
+    在源码里留注入参数。
+    """
+    monkeypatch.setattr(runtime, "resources_dir", lambda: tmp_path_factory.mktemp("no-bundled"))
+
+
+@pytest.fixture()
+def with_bundled_root(monkeypatch: pytest.MonkeyPatch, _no_bundled_root: None) -> None:
+    """还原**真实**的 `resources/`（供 ⑬ 用；依赖 `_no_bundled_root` 保证两次 `setattr` 的顺序）。"""
+    monkeypatch.setattr(runtime, "resources_dir", real_resources_dir)
 
 
 def _facts(root: Path) -> dict[str, str]:
@@ -445,3 +473,85 @@ def test_ask_leaves_a_plain_question_with_slashes_untouched(kb: Path) -> None:
     provider = FakeProvider()
     ask(str(kb), "讲讲 /usr/bin 是什么", provider=provider, model="fake-model")
     assert "<skill_content" not in provider.requests[0].messages[-1].content
+
+
+# ── ⑬ 内置只读根（2026-09-24；随包 `resources/agent-skills/**`）────────────────────────────────
+
+BUNDLED_SKILL = "web-research"
+
+
+def _fresh_kb(tmp_path: Path) -> Path:
+    """一个**没有任何技能**的库（只有 `.memoria/agent`）—— 用来验"用户什么都没做也能看到内置技能"。"""
+    root = tmp_path / "fresh-kb"
+    (root / ".memoria" / "agent").mkdir(parents=True)
+    return root
+
+
+def test_bundled_root_is_the_second_root_and_ranks_last(with_bundled_root: None, tmp_path: Path) -> None:
+    roots = skills.skill_roots(str(_fresh_kb(tmp_path)))
+    assert [root.source for root in roots] == ["kb", skills.BUNDLED_SOURCE]
+    assert roots[0].rank == 100 and roots[1].rank == skills.BUNDLED_RANK == 600, "库内 rank 小 ⇒ 优先"
+    assert Path(roots[1].path).name == skills.BUILTIN_SKILLS_DIRNAME
+
+
+def test_bundled_root_degrades_when_the_directory_is_missing(tmp_path: Path) -> None:
+    """**隔离态就是"目录不存在"** ⇒ 只剩库内根：内置根缺失是降级、不是报错（老发布包不该因此坏）。"""
+    assert [root.source for root in skills.skill_roots(str(_fresh_kb(tmp_path)))] == ["kb"]
+
+
+def test_shipped_skill_shows_up_in_a_kb_that_has_none(with_bundled_root: None, tmp_path: Path) -> None:
+    found = skills.discover_skills(str(_fresh_kb(tmp_path)))
+    assert [skill.name for skill in found] == [BUNDLED_SKILL]
+    assert found[0].source == skills.BUNDLED_SOURCE and found[0].rank == skills.BUNDLED_RANK
+    assert found[0].model_invocable is True and found[0].user_invocable is True
+    section = skills.render_skill_catalog(found)
+    assert f"- `{BUNDLED_SKILL}`：" in section and "何时用：" in section
+
+
+def test_shipped_skill_body_is_loadable_and_self_contained(with_bundled_root: None, tmp_path: Path) -> None:
+    """正文必须**自足** —— 内置技能的基目录在库外、读取工具到不了它，所以四件事都得写在正文里：
+    何时该查 / 两把工具怎么取舍 / 抓完落哪 / 何时停下问用户。"""
+    loaded = skills.load_skill(str(_fresh_kb(tmp_path)), BUNDLED_SKILL)
+    assert loaded is not None
+    assert loaded.description.strip() and loaded.when_to_use.strip(), "frontmatter 两字段都不能空"
+    for marker in (
+        "该不该查",
+        "web_search",
+        "fetch_url",
+        "scratch_write",
+        "pending",
+        "WEB_DISABLED",
+        "capability_disabled",
+        "WEB_BLOCKED_DOMAIN",
+    ):
+        assert marker in loaded.content, f"正文缺 {marker}"
+    assert "没有运行工具" in loaded.content, "必须写明执行权在人手上（`scratch_*` 里没有运行工具）"
+    assert "库外路径会被读取工具拒绝" in loaded.content, "必须自己声明'别去读我的资源目录'（基目录在库外）"
+
+
+def test_kb_skill_shadows_the_bundled_one(with_bundled_root: None, kb: Path) -> None:
+    """rank 100 < 600 ⇒ **库内同名永远盖得住内置**（用户要改内置技能就在库内建同名的那份）。"""
+    (kb / ".memoria" / "agent" / "skills" / f"{BUNDLED_SKILL}.md").write_text(
+        _pack(BUNDLED_SKILL, "库内自己的版本", "库内正文"), encoding="utf-8"
+    )
+    winners = [skill for skill in skills.discover_skills(str(kb)) if skill.name == BUNDLED_SKILL]
+    assert len(winners) == 1, "同名只留一个（rank 小者胜）"
+    assert winners[0].source == "kb"
+    loaded = skills.load_skill(str(kb), BUNDLED_SKILL)
+    assert loaded is not None and loaded.description == "库内自己的版本"
+
+
+def test_shipped_skill_loads_through_the_tool_and_writes_nothing(with_bundled_root: None, tmp_path: Path) -> None:
+    root = _fresh_kb(tmp_path)
+    before = _facts(root)
+    result = invoke_skill(root, name=BUNDLED_SKILL)
+    assert result.is_error is False, result.content
+    assert f'<skill_content name="{BUNDLED_SKILL}">' in result.content
+    assert _facts(root) == before, "加载内置技能是只读的：库内逐字节不变"
+
+
+def test_shipped_skill_is_registered_as_a_required_release_resource() -> None:
+    """随包清单必须带上它：漏拷时内置根**静默降级**（不报错），只有发布侧硬门禁拦得住。"""
+    build_py = (_ROOT / "packaging" / "build.py").read_text(encoding="utf-8")
+    assert f'"agent-skills/{BUNDLED_SKILL}/SKILL.md"' in build_py, "没进 _REQUIRED_RELEASE_RESOURCES"
+    assert 'RELEASE_RES / "agent-skills"' in build_py, "没进 _stage_runtime_resources()` 的登记表"

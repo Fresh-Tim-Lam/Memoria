@@ -7,7 +7,9 @@
 同目录还需要保留（不可单独拷贝 exe）：
 
   lib/              程序依赖
-  resources/        示例知识库、图标、内置 Agent 整理提示词（agent-prompts/）、格式说明（docs/）
+  resources/        示例知识库、图标、内置 Agent 整理提示词（agent-prompts/）、
+                    能力插件声明（agent-capabilities/）、内置技能（agent-skills/）、
+                    格式说明（docs/）
 
 首次运行后自动生成：
 
