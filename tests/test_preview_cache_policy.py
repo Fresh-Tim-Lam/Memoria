@@ -455,19 +455,21 @@ def test_readout_separates_script_time_from_frame_time() -> None:
         assert "{ms}" not in line, f"{path.name} 的 perfLiveLast 还在用旧的 `{{ms}}` 占位"
 
 
-def test_offscreen_blocks_now_use_the_window_instead_of_content_visibility() -> None:
-    """2026-09-24 **换代**：`content-visibility` 那版（设计 §3.2）已删，改用**窗口化 + 占位块**（K4a）。
+def test_offscreen_blocks_revert_wiped_every_windowing_artifact() -> None:
+    """2026-09-25 **回退**（人：「回退到落地窗口化之前，我们回到全量渲染」）：预览回到**整篇渲染 + 原生滚动**。
 
-    为什么删：真机读数里 `paint` 只从 1833 降到 **1788 ms** —— C-V 只是让浏览器**跳过**屏幕外的活，
-    30 万节点仍全在 DOM 里；而且它与窗口化**冲突**：被 C-V 跳过的块 `offsetHeight` 返回的是**估值**，
-    而窗口化正靠量真高让滚动条越用越准。
-    注：本文件只查**声明**是否还在 —— `app.css` 的注释里保留着「为什么删」的说明（那是事实记录）。"""
+    这一段的历史：`content-visibility` 那版（设计 §3.2）先被真机读数否掉（`paint` 只从 1833 降到 1788 ms —— C-V
+    只让浏览器**跳过**屏幕外的活，30 万节点仍全在 DOM 里），随后换成 **窗口化 + 占位块（K4a）**；K4a 又在多轮
+    真机里暴露出"定位错 / 编辑卡死 / 滚不动 / 卡在一窗里"等一连串问题 ⇒ **整体回退**。
+    ⇒ 本用例把"回退干净"钉住：`app.css` 里**既没有** C-V 那版、**也没有** 占位块样式；`app.js` 里**不再有**
+    `memoriaPreviewWindow` 模块与任何 `MemoriaPreviewWindow` 调用点。"""
     css = _CSS.read_text(encoding="utf-8")
     assert "content-visibility: auto;" not in css, "C-V 那版已判死并删除（真机读数：paint 1833 → 1788 ms）"
     assert "contain-intrinsic-size: auto 96px;" not in css
-    assert ".-pv-spacer {\n    display: block;\n    width: 100%;\n    pointer-events: none;\n    user-select: none;\n    -webkit-user-select: none;\n}" in css, (
-        "占位块的样式要在（空 div + JS 写死高度；不参与交互，且**不可选中** —— 编辑模式下防往占位块里打字）"
-    )
+    assert ".-pv-spacer" not in css, "窗口化（K4a）已整体回退 ⇒ 占位块样式必须一并删除（不留半活状态）"
+    js = _app()
+    assert "memoriaPreviewWindow" not in js, "窗口化模块已整体删除（不是「禁用」）"
+    assert "MemoriaPreviewWindow" not in js, "所有调用点也已清掉（免得将来有人再挂一个同名全局就把它激活）"
 
 
 def test_phase_order_matches_the_readout_side() -> None:
@@ -508,8 +510,6 @@ def test_copy_exists_in_both_locales() -> None:
         "perfLiveParts",
         "perfLivePhases",
         "perfLiveAsync",
-        "perfLiveWin",
-        "perfLiveWinLog",
         "perfRefresh",
     )
     fields = (

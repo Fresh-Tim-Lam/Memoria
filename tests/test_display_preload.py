@@ -95,7 +95,7 @@ def test_cache_moves_nodes_instead_of_cloning() -> None:
     assert "function _previewCacheStash(path)" in js
     assert "while (preview.firstChild) frag.appendChild(preview.firstChild);" in js, "必须是移动（appendChild），不能 clone"
     assert "function _previewCacheRestore(doc)" in js and "preview.appendChild(entry.frag);" in js
-    # 命中即接管本轮渲染：不重跑 parse / render / MathJax
+    # 命中即接管本轮渲染：不重跑 parse / render / MathJax（2026-09-25 AG97：窗口化回退 ⇒ 回到最朴素的写法）
     assert "if (!incremental && _previewCacheRestore(doc)) { _renderingPreview = false; return; }" in js
     # 渲染成功后才登记"这份 DOM 对应哪份文档的哪个版本"（没有这一步就永远存不进缓存）
     assert "function _markPreviewDomCurrent(doc)" in js

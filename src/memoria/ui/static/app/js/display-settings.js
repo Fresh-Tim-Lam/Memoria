@@ -697,54 +697,6 @@
       const list = Object.keys(asyncMarks).map((key) => key + " " + asyncMarks[key]).join(" · ");
       if (list) lines.push(T("settings.display.perfLiveAsync", { list: list }));
     }
-    // **窗口化调试**（2026-09-24 AG76；人：「仍然无法滚动，要调试日志」）⇒ 两行：
-    // 计数行（`wheel` 到了没 / `scrolls` 滚了没 / `fallback` 原生滚动生效没 / `max` 能不能滚 / 跳转锚点命中没）
-    // + 轨迹行（最近 8 条：`attach` / `anchorLine` / `move` / `wheel`）。
-    const win = data.win && typeof data.win === "object" ? data.win : null;
-    if (win) {
-      lines.push(T("settings.display.perfLiveWin", {
-        attach: win.attach || 0, skip: win.skip || "—",
-        wheel: win.wheel || 0, scrolls: win.scrolls || 0, fb: win.fallback || 0,
-        from: win.from, to: win.to, slots: win.slots, shown: win.shown,
-        top: win.top, max: win.max, line: win.anchorLine || 0, jump: win.jumpIdx,
-      }));
-      lines.push(T("settings.display.perfLiveWinLog", {
-        list: (Array.isArray(win.log) && win.log.length) ? win.log.join(" · ") : "—",
-      }));
-      // **编辑路径读数**（人 2026-09-24：「按回车会卡顿一下，现在添加日志我们集中精力优化这个」）：
-      //   等待（去抖+事件循环被占）/ 全量重渲染（同步 parse+render+stamp）/ 接管 / 补链接 / 排版（异步）
-      const ed = win.edit && typeof win.edit === "object" ? win.edit : null;
-      if (ed && ed.n) {
-        lines.push(T("settings.display.perfLiveEdit", {
-          n: ed.n, wait: ed.wait || 0, render: ed.render || 0, attach: ed.attach || 0,
-          links: ed.links || 0, math: ed.math || 0,
-        }));
-      }
-      // **渲染分段**（人 2026-09-24：`postRender 26679 / 58698` 只说明"卡在 renderPreview 里"，需要看到里面哪一步）
-      //   ⚠️ 优先显示 **`rpWorst`（最慢那一次）**：编辑会把"最近一次"覆盖掉，而要看的是那个几十秒的冷渲染。
-      const rp = win.rp && typeof win.rp === "object" ? win.rp : null;
-      const rpWorst = win.rpWorst && typeof win.rpWorst === "object" ? win.rpWorst : null;
-      const useWorst = !!(rpWorst && rpWorst.parts && (rpWorst.total || 0) > ((rp && rp.parts && (rp.parts.audit || rp.parts.mjStart)) || 0));
-      const use = useWorst ? rpWorst : rp;
-      if (use && use.parts && Object.keys(use.parts).length) {
-        const rlist = [];
-        for (const key of PERF_RENDER_ORDER) {
-          if (typeof use.parts[key] !== "number") continue;
-          rlist.push(T("settings.display.perfRenderPart." + key) + " " + use.parts[key]);
-        }
-        if (rlist.length) lines.push(T("settings.display.perfLiveRender", { total: use.parts.audit || use.parts.mjStart || 0, list: rlist.join(" · ") }));
-      }
-      // **位置漂移读数**（人 2026-09-24：「我每次回车画面都往上跑」）——
-      //   渲染前 → 渲染后 的 `scrollTop` 差、会话累计、以及 `_move` 里补偿的合计。
-      const dr = win.drift && typeof win.drift === "object" ? win.drift : null;
-      if (dr && dr.n) {
-        const sign = (v) => (v > 0 ? "+" : "") + perfCount(v);
-        lines.push(T("settings.display.perfLiveDrift", {
-          n: dr.n, before: perfCount(dr.before), after: perfCount(dr.after),
-          delta: sign(dr.delta), sum: sign(dr.sum), comp: sign(dr.comp), line: dr.line || 0, off: dr.off || 0,
-        }));
-      }
-    }
     // 池占用（**实测节点数**）⇒ 直接回答"要不要改缓存形态"：活 DOM 区间 vs 序列化 HTML 区间（设计 §3.3 第一组数）
     const pool = data.pool && typeof data.pool === "object" ? data.pool : null;
     if (pool) {
@@ -772,9 +724,9 @@
   /** 「全程阶段」的固定顺序（读数要两两相减 ⇒ 顺序必须与 `app.js` 里 `_markPhase` 的调用次序一致）。
    *  2026-09-24 加 `rpEnd`：它打在 `setViewMode` 里（`app.js` 文件里位置更靠后，但**执行时在 `render` 之前**）
    *  ⇒ 不能按"源码出现顺序"推断，测试改成逐字核对本清单。作用是把 `render` 那一段从中间切开：
-   *  `editor→postRender` = 冷渲染整条流水线（parse→render→插 DOM→stamp→静态收尾），`postRender→rpEnd` = `attach`（窗口化，含它自己那点几何读），`rpEnd→render` 应≈0；**命中路径没有 `postRender`**（那段整段跳过）⇒ 读数侧跳过缺的键，两两相减仍成立。 */
+   *  `editor→postRender` = 冷渲染整条流水线（parse→render→插 DOM→stamp→静态收尾），其余几段是 `setViewMode` 的收尾；**命中路径没有 `postRender`**（那段整段跳过）⇒ 读数侧跳过缺的键，两两相减仍成立。 */
   var PERF_PHASE_ORDER = ["stash", "load", "editor", "viewIn", "viewPre", "postRender", "rpEnd", "render", "settle", "tail"];
-  var PERF_RENDER_ORDER = ["entry", "parse", "dom", "stamp", "mermaid", "mjStart", "audit"];   // `renderPreview()` 内部分段（跨文件顺序钉子核对，同 `PERF_PHASE_ORDER`）
+  // 2026-09-25 AG97：`PERF_RENDER_ORDER`（渲染分段）随窗口化一起删除 —— 它的数据源是窗口模块的 `markRender()` 打点，整块已回退
 
   /** 千分位（读数用；没有 `toLocaleString` 就退回原值）。 */
   function perfCount(value) {

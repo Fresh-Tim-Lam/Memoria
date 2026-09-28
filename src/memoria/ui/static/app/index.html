@@ -481,6 +481,8 @@
   <script src="/app/js/file-tree.js"></script>
   <script src="/app/js/agent-panel.js"></script>
   <!-- 临时诊断埋点（键盘选区/删除），定位完成后删除本行与本文件 -->
+  <!-- 2026-09-25 AG102：keys-debug 是**临时诊断埋点**，现在**默认关闭**（它猴补 console.log，并在每次输入后做两趟整篇 diff
+       ⇒ 开着会拖慢编辑手感）。要开：控制台 `localStorage["-keys-debug"]="1"` 后刷新，或本页 URL 加 `?kdbg=1`。 -->
   <script src="/app/js/keys-debug.js"></script>
   <!-- 流式中间缓冲（AG11）：纯分割器，须在 agent-panel.js 使用前加载；追加为最后一个 script 标签 -->
   <script src="/app/js/agent-stream-buffer.js"></script>

@@ -6918,20 +6918,3 @@ html *::-webkit-scrollbar-thumb:active {
     white-space: pre-wrap;
     word-break: break-all;
 }
-
-/* ===== 2026-09-24 追加：**窗口化渲染**的占位块（`app.js` 末尾 `memoriaPreviewWindow`；设计与三条入口见
-   `docs/design/preview-render-pipeline.md §3.4 / §4 K4a`）=======================================
-   窗口外的块被摘走，原位留一个空 `div.-pv-spacer`：**高度由 JS 写死**（已量过的真高 / 否则按块类型估）
-   ⇒ 滚动条长度与"跳到第 N 行"的像素口径保持自洽（这就是为什么不复用 `contain-intrinsic-size`：
-   空元素的高度可以直接写真值，更确定）。它只是"占位"，不参与交互。
-   **注**：同日更早那版 `content-visibility: auto`（§3.2）已**删除** —— 真机读数证明它搬不动那 ~1.45 s
-   （`paint` 1833 → 1788 ms，节点仍全在 DOM 里），而且与窗口化**冲突**：被 `content-visibility` 跳过的块
-   `offsetHeight` 返回的是**估值**，窗口化正靠量真高来让滚动条越用越准。
-   末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移。 */
-.-pv-spacer {
-    display: block;
-    width: 100%;
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-select: none;
-}

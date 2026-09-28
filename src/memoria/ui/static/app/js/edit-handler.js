@@ -926,7 +926,7 @@
       EH.cursorAST = EH._composeStartAST;
 
       if (committed) {
-        EditSync.insertText(committed, true);
+        EditSync.insertText(committed, true, true);   // 2026-09-25 AG105：第三参 `nativeDone` —— DOM 里的字是浏览器**原生**敲进去的，预览那一格不用我们再画（只推迟"归一"），否则会打断下一次 IME 组合
       } else if (typeof EditSync.revertBlock === "function") {
         // 空提交（用户取消选词）：仅回滚被污染的前端 DOM
         EditSync.revertBlock();

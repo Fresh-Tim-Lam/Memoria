@@ -1916,12 +1916,7 @@
     perfLiveParts: "Tab-switch breakdown (the cached-hit one, incremental ms): {list}",
     perfLivePhases: "Tab-switch phases (**whole pipeline**, incremental ms): {list}",
     perfLiveAsync: "Tab-switch async marks (ms since the click): {list}",
-    perfLiveWin: "Windowing: took over {attach}× · last skip: {skip} · wheel {wheel} · scroll {scrolls} · fallback {fb} · window {from}–{to}/{slots} (real {shown}) · scrollTop {top}/{max} · anchorLine {line}→hit {jump}",
-    perfLiveWinLog: "Windowing log (last 8): {list}",
-    perfLiveEdit: "Edit render (#{n}): wait {wait} · full re-render {render} · take-over {attach} · links {links} · typeset {math} ms",
-    perfLiveRender: "Render segments (slowest run {total} ms total, ms since first mark): {list}",
-    perfLiveDrift: "Scroll drift (#{n}): before {before} → after {after} (Δ {delta}) · cumulative {sum} · compensation {comp} · anchor line {line} (in-block offset {off})",
-    perfRenderPart: { entry: "entry", parse: "parse", dom: "build DOM", stamp: "stamp lines", mermaid: "mermaid", mjStart: "MathJax startup", audit: "wrap-up" },
+    perfLiveNav: "Nav predictor: {nodes} nodes / {edges} edges / {samples} samples (min {min}) · hit rate {rate}% ({hits} hit / {misses} miss)",
     perfNavReset: "Clear navigation model",
     perfNavResetDone: "Navigation model cleared",
   });

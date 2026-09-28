@@ -1813,12 +1813,7 @@
     perfLiveParts: "切页签分段（命中那次，各段增量 ms）：{list}",
     perfLivePhases: "切页签阶段（**全程**，各段增量 ms）：{list}",
     perfLiveAsync: "切页签异步（相对点击起点 ms）：{list}",
-    perfLiveWin: "窗口化：接管 {attach} 次 · 上次跳过：{skip} · 滚轮 {wheel} · 滚动 {scrolls} · 兜底 {fb} · 窗口 {from}–{to}/{slots}（真身 {shown}）· scrollTop {top}/{max} · 锚点行 {line}→命中 {jump}",
-    perfLiveWinLog: "窗口化日志（最近 8 条）：{list}",
-    perfLiveEdit: "编辑渲染（第 {n} 次）：等待 {wait} · 全量重渲染 {render} · 接管 {attach} · 补链接 {links} · 排版 {math} ms",
-    perfLiveRender: "渲染分段（最慢一次共 {total} ms，距第一个打点）：{list}",
-    perfLiveDrift: "位置漂移（第 {n} 次）：渲染前 {before} → 渲染后 {after}（Δ {delta}）· 累计 {sum} · 补偿 {comp} · 锚点行 {line}（块内偏移 {off}）",
-    perfRenderPart: { entry: "入口", parse: "解析", dom: "建 DOM", stamp: "打行号", mermaid: "mermaid", mjStart: "MathJax 启动", audit: "收尾报告" },
+    perfLiveNav: "导航预测：{nodes} 节点 / {edges} 边 / 样本 {samples}（门槛 {min}）· 命中率 {rate}%（{hits} 中 / {misses} 未中）",
     perfNavReset: "清空导航模型",
     perfNavResetDone: "已清空导航模型",
   });

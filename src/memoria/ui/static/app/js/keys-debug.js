@@ -11,6 +11,19 @@
 (function () {
   "use strict";
 
+  // ── 0) **默认关闭**（2026-09-25 AG102；人：「输入内容的操作，仍然是等好一会才加载输入的内容」）──
+  //     本文件是"临时诊断埋点"，但它有两笔**每次输入都要付**的代价：
+  //       ① 猴补 `console.log`（全应用每一次日志都要过它的过滤 + `JSON.stringify` 拼接）；
+  //       ② 每次 input 之后做 **300 ms / 1000 ms 两趟整篇正文 diff**（`collectEditorBody` × 2 趟）。
+  //     平时开着会实打实拖慢编辑手感 ⇒ 改成**按需开启**：
+  //       · 控制台 `localStorage["-keys-debug"] = "1"` 后刷新页面，或
+  //       · URL 加 `?kdbg=1`
+  //     关闭状态：直接退出，不猴补 console、不装任何监听（应用自己的日志同时恢复可见）。
+  var __kdbgOn = false;
+  try { __kdbgOn = localStorage.getItem("-keys-debug") === "1"; } catch (_e0) { /* 隐私模式等 */ }
+  try { if (!__kdbgOn && /[?&]kdbg=1(?:&|$)/.test(location.search)) __kdbgOn = true; } catch (_e1) { /* 无 location */ }
+  if (!__kdbgOn) return;
+
   // ── 0) 控制台降噪：默认只保留 [KDBG] 行，屏蔽应用噪声 ──
   //     （[SYNC] [MAP] [CTX] [STYLE] [EH] [UNDO] [job] [img-*] ... 全部丢弃）
   //     需要恢复全量日志：控制台执行  window.__KDBG_FILTER = false
