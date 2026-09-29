@@ -457,6 +457,99 @@ scroll anchoring，不依赖浏览器的 `overflow-anchor`）。
 
 
 
+### 3.9 K5：底层渲染重构 —— 窗口化的**正确形态**（2026-09-28，调研后方案；**待拍板，未施工**）
+
+> 来源 = 人：「我们先不管（打字当帧），先 commit 当前版本，然后我们**着手关于窗口化渲染的研究和底层渲染重构**」。
+> 调研对象：**CodeMirror 6 / ProseMirror / Lexical / Monaco / Ace** 的 view 层 + 只读虚拟列表四库 + 规范（Input Events Level 2）。
+> **核心判断：K4a 的失败不等于"窗口化不可行"** —— 业界唯一把"可编辑 + 只渲染视口"做成的实现是 CM6，它的解是**一套七件配套件**；我们当年只做了其中两件（"按屏定窗" + "占位块"），另外五件缺失，于是每个子系统各自翻车（§3.8 ① 的清单逐条都能对上）。**逐文件实施方案见 [preview-render-refactor.md](preview-render-refactor.md)**（K5a–K5c 步骤 + 验收 + 回滚 + R12–R15 汇总）。
+
+#### ① 三家可编辑实现的共识（都有源码/文档出处）
+
+| 共识 | CodeMirror 6 | ProseMirror | Lexical |
+|---|---|---|---|
+| **输入的所有权归浏览器** | `beforeinput` 只把 `insertingText` 记进 `InputState`，**不 `preventDefault`**；DOM 变了再 `DOMObserver.flush() → readChange() → applyDOMChange()` 读回 | `DOMObserver`（MutationObserver）→ `readDOMChange` → transform step | 官方明确反对用 `input`/`beforeinput` 判断插入（拼写检查/扩展/IME/读屏都可能不发标准事件）；`MutationObserver` 兜底：能解释成意图就转 update，否则**用 state 覆盖 DOM** |
+| **组合（IME）期间冻结** | `InputState.composing`（= 本次组合已产生的变更数）；组合段 DOM 标 `Reused.DOM` **禁止重建**；`flush()` 在 `delayedFlush`/`delayedAndroidKey` 时**直接 `return false`**（这帧不同步模型） | `flush()` 守卫：有 pending 的 key/composition 就**完全暂停**把 DOM 读回 state | reconcile 走 `queueMicrotask` 批处理；`discrete:true` 才同步 |
+| **DOM 更新是算出来的 diff，不是"重渲"** | `changedRanges`；`TileFlag.Synced && changedRanges.length == 0 → return false`（**一个 DOM 操作都不做**） | `ViewDesc` 树递归 `updateChildren()`（Marijn 自己说这是启发式、不保证最小） | 「**知道自己改了什么**」⇒ 跳过大部分 diff |
+| **读回时机用 rAF**，不写在 mutation 回调的同步栈里 | `flushSoon()` = rAF 后 flush | `delayedFlush` = rAF | microtask |
+| **位置↔像素的映射挂在中间层** | `lineBlockAt` / `posAtCoords` / `elementAtHeight`（未渲染区域走高度表估算） | `ViewDesc.posAtStart/posAtEnd/domFromPos/localPosFromDOM` | 节点类自己 `createDOM/updateDOM` |
+| **不做窗口化** | ❌（它**做**，是唯一做的） | ✅ ProseMirror 明确不虚拟化（大文档代价：打开时间线性增长、滚动抖动；第三方架构文档有实证） | ❌ 但也不虚拟化 |
+
+#### ② CM6 的窗口化七件套 ↔ K4a 的逐条对照（**这是本节的关键**）
+
+| 件 | CM6 的机制 | K4a 的对应物 | 判定 |
+|---|---|---|---|
+| **高度账本** | `HeightMap` 一棵持久化树，**估算与实测共存**：`HeightMapGap`（未测量，按 `perLine`/`perChar` 插值）↔ `HeightMapText`（已测量）；`HeightOracle.heightForLine()` 是估算公式，`heightSamples` 判断"这个高度值见过没" | 「占位块高度估算表」 | ❌ 我们的账本**只用来撑滚动条**，不是"位置↔像素"的唯一事实源 |
+| **视口 = 可见区 ± Margin** | `VP.Margin = 1000`（上下各约 500px 缓冲带） | 我们按"屏数"定窗 | ⚠️ 方向对，但下一条是致命的 |
+| **迟滞（hysteresis）** | `viewportIsAppropriate()`：窗口**必须包住可见区**（`top <= visibleTop - min(MinCoverMargin, -bias)`）；只有"快撞边"或"窗口比需要的大出 2×Margin"才重算；`bias` 让缓冲带**朝滚动方向倾斜**；`MinCoverMargin=10`/`MaxCoverMargin=250` | 无（AG81 才补了 6 槽迟滞） | ❌ **"窗口小于可见区"正是「卡在一窗里出不去 / 滚不动」的机制** |
+| **滚动锚定** | `scrollAnchorPos` + `scrollAnchorHeight`（顶部锚点行的**文档内 top**）；高度表更新后用 `newTop - oldTop` 补 `scrollTop`；`scrolledToBottom` 时不补（官方 commit 标题就是 *Stabilize scroll position for height information changes*） | 手工的"真高回填后补偿" | ❌ 我们是散落的手工补偿；CM6 是**每轮统一做一次** |
+| **定位先查账本** | `getViewport(bias, scrollTarget)`：目标不在窗口里 ⇒ 按 y 策略把 `scrollTarget` 换算成 `topPos`，**再**用 `[topPos-Margin/2, topPos+vh+Margin/2]` 建新窗口 | 我们「**先物化目标块再量**」 | ❌ 这正是"跳转定位错"的来源（"文件没打开过时位置不对"同源） |
+| **从不整篇物化** | 只有 `printing` 标志下才关窗口化 | 我们有"过渡终点 24 槽/帧整篇物化" | ❌ 5879 次 `replaceChild` = **一个超长任务** = 真机"直接卡死" |
+| **超高文档兜底** | `VP.MaxDOMHeight = 7e6`（浏览器用定点数存尺寸，超了布局就坏）；超了走 `BigScaler` 把总高压缩进可靠范围 | 无 | ⏳ 30 万节点时总高可能触顶（"跳到底部"失效）⇒ 记为 K5d |
+| （附带）**选区不落缺口** | `updateForViewport()`：主选区的 anchor/head 若不在主视口内，**额外建单行视口**，免得选区落在未渲染的空隙里 | 无 | ❌ 多块选区时"非光标侧那几块被摘"是同源问题 |
+
+#### ③ 明确**不抄**的（省一轮试错）
+
+- **只读虚拟列表**（`react-window` / `@tanstack/virtual` / `virtua` / `Clusterize.js`）：它们的模型是 `position:absolute + translateY + unmount/remount`，**与"永不替换光标所在的 DOM 节点"直接对立**（`window.getSelection()` 持有的是节点引用）；且**不提供** `posAtCoords` / `scrollIntoView` 这类位置↔像素双向映射。**可抄的只有两条**：① **估算先行**（先给出完整滚动范围，不等渲染完再量）；② **锚点用稳定 key**（块身份，不用 index —— index key 在插入/删除后错配正是"上下飘"的常见成因）。
+- **`content-visibility: auto`**：已判死（K2，§4）—— 只跳过屏幕外的绘制，30 万节点仍全在 DOM；且不提供位置映射。
+- **`canvas` 渲染**（Google Docs / Figma 路线）：要自己实现全部选区、IME、可访问性。**注意 Monaco 默认路径其实是 DOM**（`ViewLayerRenderer` 用 `StringBuilder` 拼 HTML，canvas/GPU 只是可选 fallback）⇒ **DOM + 窗口化 + 高度账本**是与我们技术栈距离最小的路径。
+
+#### ④ Monaco 的三招（比 CM6 朴素，可直接抄）
+
+1. `ViewLayerRenderer.render()`：**只在窗口两端增删，中间一律复用**（`_insertLinesBefore/After` / `_removeLinesBefore/After`，`_renderUntouchedLines` 只调 `layoutLine()`）；**完全不重叠**时才整窗重建。→ K4a 是"每次滚动重建整窗"，这才是"滚轮滚不动"的正解。
+2. `ViewportData.relativeVerticalOffset[]`：**可见行的 top 由模型一次算好**，绝不在渲染循环里读 `getBoundingClientRect()`（强制同步布局）。
+3. `CustomLine.prefixSum` + `_invalidIndex`：变高行用**有序数组 + 前缀和 + 失效点增量重算**——比 CM6 的高度树更朴素，够我们用。
+
+#### ⑤ 我们热路径上**还剩下的**成本（代码事实，带行号 —— K5a 的靶子）
+
+> AG103/AG105 已把"重渲"与"源码面板"降到 O(改动)，但**同步链本身**仍是 O(文档)、或"每次按键都付的白工"。
+
+| # | 位置 | 成本 | 判定 |
+|---|---|---|---|
+| 1 | `spliceBlockSource()`（`app.js:7699-7708`） | `state.doc.body.split("\n")` → `slice`/`concat` → `join("\n")`，**整篇**（5900 行 / 200 KB）**每键一次** | ❌ O(文档) |
+| 2 | `commit()` → `restoreCursor()`（`app.js:7743-7759`） | `M.astToDom()` 每键建 Range + `sel.removeAllRanges() + addRange()`（可能打断 IME / 选区） | ⚠️ 需按"原生路 / 非原生路"分开 |
+| 3 | `beforeinput` → `syncFromSelection()`（`edit-handler.js:860` → `485`） | 每次按键都 `logCursorContext()`：`document.querySelector('.-src-block[data--block-index="N"]')`（**全篇属性选择器扫描**）+ TreeWalker + 块文本拼接 + 两条日志字符串拼接；**无任何开关** | ❌ 白工 + O(块数) |
+| 4 | `commit()`（`app.js:8180-8190`） | `beforeinput` 路径仍 `preventDefault()` ⇒ **字符要等我们改完 DOM 才画出来**（AG105 只让 IME 那条路当帧可见） | ❌ 与 ① 的三家共识相反 |
+| 5 | `R.renderRange()`（`reRenderBlock`，`app.js:7720-7738`） | 已经块级，但**块内仍是整块重建**（换掉整个块的 DOM 子树，含 MathJax 节点） | ⏳ 下一刀 = 块内文本节点级复用 |
+| 6 | `renderPreview()` 第 6 步（`app.js:1959`） | `await MP.renderMermaidBlocks(preview)` **整篇逐块 await**（曾测 27 s / 59 s） | ⏳ 编辑期已不再走整篇；但仍是**切文件**那一次的墙 |
+| 7 | `queuePreviewMathTypeset()`（`app.js:1967-1968`） | 整篇 `typesetPromise`（≈1.8 s；转后台但占主线程分片） | ⏳ 同上 |
+
+#### ⑥ 方案：三期（K5a → K5b → K5c），**每期可单独验证、可整体关闭**
+
+> 顺序原则：**先把"账本"与"所有权"做对，再谈窗口**。窗口化是这两件的**附属品**，不是先行件。
+
+**K5a｜输入所有权反转 + 块内复用 + 热路径去 O(文档)**（**不需要窗口化**，收益立刻可见）
+1. **所有权**：`beforeinput` 对 `insertText` **不再 `preventDefault()`** —— 让浏览器插入（**当帧可见**）⇒ rAF 里读回（`input` / `MutationObserver`）→ 更新 AST + 源码面板（**预览在前、模型在后**）。
+   - 配套**必须**写一份 **flush 清单**：所有读 `state.doc` / `EH.cursorAST` 的入口（`EditSync.*` 每个出口、`getEditContext()`、undo/redo、写盘、切模式、换文件、KP 范围解析、`_previewCacheStash()`）在执行前先 `flushPendingSync()`。
+   - **组合期间（`_composing`）完全冻结**：不读回、不重渲、不动选区（三家共识一致）。
+   - `deleteContentBackward` **暂不反转**（删除可能跨块合并，读回语义复杂）⇒ 仍 `preventDefault` + 当刻画。
+2. **块内 DOM 复用**：`R.renderRange()` 前置一步"**同类型块 ⇒ 只改文本节点与属性，不重建元素**"；结构不同才整块重建。
+3. **热路径**：`spliceBlockSource` 改成 `state.doc.lines` **原地 `splice`**（不重建数组）+ `body` **惰性重建**（只在真被读时才 `join`）；`logCursorContext` 加开关（默认关，`localStorage["-ctx-debug"]`）。
+- **验收**：真机"打字当帧出现"＝**是**；`[EDIT] 按键提交` ≤ 8 ms（5900 行文档）；`ada⏎…` 行首退格仍正确；`pytest` 不掉。
+- **风险**：flush 清单漏一处 ⇒ AST 落后 ⇒ 编辑错位。**对策**：清单白名单化 + 一个开发期断言（`window.__memoriaHasPendingEdits()` 已有同类语义可扩展）。
+
+**K5b｜高度账本**（**不做窗口化也吃一半收益**）
+- 新建 `js/block-metrics.js`（**纯函数**，可 node 直跑）：把 `_blockLineMap`（块 → 源行）升级成 **`{blockIndex, srcStart, srcEnd, estHeight, realHeight?}`** 账本；`estHeight` 由**块类型 + 文本长度**估算（`HeightOracle.heightForLine()` 的思路），实测后回填并**只重算失效点之后的前缀和**（Monaco `CustomLine.prefixSum` 的朴素做法）。
+- **先只用它替换既有落点逻辑**：`_restorePlainPosition()` / `_scrollToSrcLine()` / `_getViewTopSrcLine()` 改走账本（不再逐块 `getBoundingClientRect` 探）⇒ **AG104 那种"二次校准"补丁就可以撤掉**（落点由账本保证，不靠事后补）。
+- **落点**：内存 only；持久化到 `<kb>/.memoria/cache/**` 为可选项（`AGENTS.md §1` 的"可再生缓存"）——见 R14。
+- **验收**：跳转 / 切模式落点在 5900 行文档上不漂（**不再需要二次校准**）；"估算 vs 实测"的自洽性有 node 单测。
+
+**K5c｜视口化（窗口化的正确形态）**
+- 在 K5a（块内复用）+ K5b（账本）都成立之后，把"窗口"做成 CM6 式 `viewport`：
+  - `viewport = 可见区 ± Margin`，**必须包住可见区**；
+  - **迟滞**：`viewportIsAppropriate()` 式判定（快撞边、或窗口大出 2×Margin 才重算）+ `bias` 朝滚动方向偏置；
+  - **窗口移动只处理两端进出的块**（Monaco `ViewLayerRenderer`），**不重建整窗**；
+  - **滚动锚定**：顶部锚点行 + 文档内 top，**每轮统一补偿一次** `scrollTop`；滚到底不补；
+  - **定位先查账本**（`getViewport(bias, scrollTarget)`），**禁止"先物化再量"**；
+  - **composition / 光标所在块永不摘走**；主选区不在窗口内时**为其额外建单行窗口**；
+  - **不做"过渡终点整篇物化"**；
+  - 先答"**谁拥有 DOM**"—— K5a 已经答了（**模型拥有结构、浏览器拥有当帧输入**）。
+- **验收（三条同时成立，缺一不算）**：真机**滚动流畅 + 编辑不卡 + 跳转准**；**且设置里能一键关掉回到整篇渲染，关掉不改变正确性**（AG96 的逃生门口径）。
+- **未做前不许动**：不新造"占位块"以外的机制；**不许在半所有权状态下再做一遍 K4a**。
+
+**K5d（可选，最后）**：`MaxDOMHeight` 兜底（总高超浏览器可靠范围时的压缩）+ 打印 / 导出 / 整篇复制的**一次性全量出口**（= CM6 `printing` 的对应物）。
+
+---
+
 ## 4. 分期与验收（建议顺序：K1 → K1'a → K3 → K1'b → K1'c → **K4a → K4b → K4c** → K4；**K2 已判死删除**；**K4a 已于 2026-09-25 整体回退，见 §3.7 / §3.8**）
 
 | 期 | 内容 | 出口（可验证） |
@@ -472,6 +565,10 @@ scroll anchoring，不依赖浏览器的 `overflow-anchor`）。
 | **K4a** | **窗口化渲染**（§3.7；L2′） | ⛔ **2026-09-25 整体回退（AG97）**：人拍板「回退到落地窗口化之前，我们回到全量渲染」。代码侧已删干净（`memoriaPreviewWindow` 模块 / 全部挂钩调用点 / `.-pv-spacer` / 设置开关 / 策略键 / `tests/test_preview_window.py`），预览回到**整篇渲染 + 原生滚动**。**回退前实测过的好与坏**：好 = 切页签 1.3–3.4 s → **311/352 ms**、池占用 35.7 MB → 3.4 MB（真机两次）；坏 = 定位错 / 编辑卡死 / 滚不动 / "卡在一窗里出不去"**反复出现**（子系统清单见 §3.8 ①）。**结论**：手写这套虚拟滚动引擎不划算 ⇒ 改走 §3.8 ④（**块级增量重渲**优先） |
 | **K4b** | 缓存条目改存「块级片段 + 高度表 + 锚点」（池内存与预渲染长任务一起降） | ⏸ **随 K4a 回退一并搁置**（它依赖"窗口化/块级渲染"这套前提；要重启就得先按 §3.8 ④ 定"谁拥有 DOM"） |
 | **K4c** | 自带查找（按块扫 AST + 命中即跳窗）+「全量物化」出口（导出 / 打印 / 整篇复制） | ⏸ **随 K4a 回退一并搁置**（"全量物化出口"只对窗口化有意义；回退后预览本来就是整篇真 DOM） |
+| **K5a** | **输入所有权反转 + 块内 DOM 复用 + 热路径去 O(文档)**（§3.9 ⑥；**不需要窗口化**） | ⏳ **待拍板（R12/R13）**。出口：真机"打字当帧出现"＝**是**；`[EDIT] 按键提交` ≤ 8 ms（5900 行文档）；`ada⏎…` 行首退格仍正确；`pytest` 不掉 |
+| **K5b** | **高度账本 `js/block-metrics.js`**（估算先行 + 实测回填 + 前缀和增量重算；先只用于替换落点逻辑） | ⏳ **待拍板（R14）**。出口：跳转 / 切模式落点不漂（**不再需要 AG104 那种二次校准**）；估算/实测自洽性有 node 单测 |
+| **K5c** | **视口化（窗口化的正确形态）**：CM6 式 `viewport`（必包住可见区 + 迟滞 + `bias`）+ Monaco 式"只动两端" + 滚动锚定 + 定位先查账本 | ⏳ **待 K5a/K5b 落地后**（R15）。出口（三条同时成立）：真机**滚动流畅 + 编辑不卡 + 跳转准**；且设置里能一键关掉回到整篇渲染，**关掉不改变正确性** |
+| **K5d** | `MaxDOMHeight` 兜底 + 打印 / 导出 / 整篇复制的**一次性全量出口** | ⏳ 可选、最后 |
 
 ---
 
@@ -490,6 +587,10 @@ scroll anchoring，不依赖浏览器的 `overflow-anchor`）。
 | **R9** | 预测建在哪一层图（§3.6） | ① **先文件层跑通（K1'b），再上 KP 层（K1'c）**（**推荐**：小步可验证）② 直接上 KP 层 ③ 只做文件层 | 收益 vs 复杂度 |
 | **R10** | KP 层的先验构成（§3.6） | ① **结构边 + 行为边，按样本量收缩平滑**（**推荐**：冷启动也有先验）② 只用行为边 ③ 只用结构边 | 新库 / 零历史时的表现 |
 | **R11** | 复习队列（FSRS）是否作为 KP 层的一档先验 | ① 是（**推荐**，可配开关）：先把"该复习的那批"预渲染好 ② 否，复习与预渲染解耦 | 与记忆主线的耦合度 |
+| **R12** | K5a 里"输入所有权反转"的**范围**（§3.9 ⑥） | ① **只 `insertText`**（**推荐**：读回语义最简单 —— 纯插入，位置就是光标处）② 连 `deleteContentBackward` 一起（删除可能跨块合并 ⇒ 读回要处理块合并/拆分）③ 连 `insertParagraph` 一起（回车，结构性） | 复杂度 vs 手感收益；**范围越大，flush 清单越长** |
+| **R13** | 块内 DOM 复用的**判据**（§3.9 ⑥-2） | ① **同 `type` 且 inline 结构同构 ⇒ 只改文本节点**（**推荐**：`# `→标题 这类类型变化自然退化成整块重建）② 更激进：文本节点级 diff（自己写 inline diff）③ 不做（保持"块内整块重建"） | 复杂度 vs 每次按键的实际工作量 |
+| **R14** | 高度账本是否**持久化** | ① **内存 only**（**推荐**：先简单；冷启动重估一次的成本可接受）② 落 `<kb>/.memoria/cache/**`（`AGENTS.md §1` 的"可再生缓存"，恢复会话/切文档不跳）③ 落机器级 `config/` | 冷启动是否跳动 vs 缓存一致性 |
+| **R15** | K5c 的"谁拥有 DOM"最终口径 | ① **模型拥有结构、浏览器拥有当帧输入**（**推荐**，= K5a 的结论；与 CM6 同构）③ 框架完全拥有（`preventDefault` 一切，自己改 DOM —— 与 R12 的 ① 冲突，不推荐） | 决定 K5c 能不能成立 |
 
 ---
 
@@ -520,3 +621,4 @@ scroll anchoring，不依赖浏览器的 `overflow-anchor`）。
 | 2026-09-25 | **按键热路径再瘦身（AG102）：跳过 O(文档) 重算 + 诊断埋点默认关** —— 人给 `[KDBG]` 日志 +「**输入内容的操作，仍然是等好一会才加载输入的内容**」（日志全是 `inputType=insertCompositionText` = 中文 IME）。**两处真凶**：① **每次按键都白付一趟 O(文档) 的 `stampBlockLines()`** —— 打字/行内格式化**不改"块→行"映射**（行数没变 ⇒ 映射逐字不动），却每键重算（5888 行逐行走正则 + 4000 块写 `data--src-line`）⇒ `reRenderBlock(blockIndex, keepLineMap)` 加旁路，`commit`/`commitSelection` 在 `oldCount === newCount` 时跳过；② **`keys-debug.js` 常驻**（文件头自称"临时文件，定位完即删"）：**猴补 `console.log`**（全应用日志都要过它）+ 每次输入后**两趟整篇正文 diff**（`@300ms` / `@1000ms`）⇒ 改**按需开启**（`localStorage["-keys-debug"]="1"` 或 URL `?kdbg=1`；关闭时在猴补之前 `return`，应用自己的日志恢复可见），`index.html` 那行加注释。另：`commit()` 里加"按键 → 预览更新"整链计时（**> 20 ms 才打** `[EDIT] 按键提交 …`）。钉子 `test_the_keystroke_path_skips_the_o_document_restamp`。验收：`pytest -q` **1395 → 1397 passed**、`node --check` ×2、`i18n_selftest` PASS。**未取证**：真机手感（建议关掉 DevTools 再判断） |
 | 2026-09-25 | **原生优先编辑（AG103）+ 跳转落点二次校准（AG104）** —— 人：「**看到预览区域输入的时候，是先在源码区域输入的，这个是不对的，因为我们基础设施是双向映射，可以双向同步，你这个南辕北辙会导致输入卡顿，而且现在仍然是输入等一会才有反应；现在预览区域知识点跳转定位位置又不准了**」。**① AG103（方向纠错）**：预览里敲字时**浏览器已把字原生写进 DOM、那一刻就是对的**，而旧路径每键把该块整块重渲（解析→建 DOM→替换节点→MathJax→补链接）⇒ 顺序成了"AST→源码→回写预览"，既占满这一帧，又打断 IME/光标。**改法（双向映射的正确姿势）**：预览侧保留原生结果，只同步**另一侧（AST + 源码面板）**；该块的"渲染态归一"（`**粗**` 记号、`# ` 自动转换）**推迟到停手 ~180 ms 渲一次**（`_scheduleBlockRepaint()` / `_flushBlockRepaint()`）。四道护栏：① IME 组合中不渲；② 停手期间又敲 ⇒ 计时重来；③ 渲完若光标仍在块内 ⇒ 按 `EH.cursorAST` 放回；④ 结构性提交（回车/合并/跨块删除）先 `_cancelBlockRepaint()`；另：暂存预览缓存前先 `flushRepaint()`（别把未归一的 DOM 存进池）。离散操作（格式/样式 ⇒ `commitSelection`）仍立即重渲。**② AG104**：`highlightPreviewRange()` 的 `scrollIntoView` 发生在**排版未落**时（MathJax 排队跑、`loading="lazy"` 图 0 高）⇒ 落点漂（"差一截"）；新增 `_reanchorJumpScroll()`，于 **~350 ms / ~1.4 s** 各**再对准一次**（`behavior:"auto"`；窗口期内用户 `wheel`/`mousedown`/`touchstart`/`keydown` 即放弃，**不抢滚动条**）。钉子：`test_preview_typing_is_native_first_and_the_jump_re_anchors`。验收：`pytest -q` **1398 passed**、`node --check` 静默。**未取证（如实）**：真机手感与跳转落点 |
 | 2026-09-25 | **切模式锚点回归修复 + 输入不再"先源码后预览"（AG105）** —— 人两条真机复测反馈：①「**从预览区域切换分栏等其他模式仍有位置漂移**」；②对"打字是否当帧出现"答**否**（重申「**是先在源码区域输入的**…现在仍然是输入等一会才有反应」）。**① 漂移是回归**：`setViewMode()` 切模式会 `renderEditor()` + `await renderPreview()`，**两个视图都被刷回顶部**，而锚点原来在**之后**才量（`_getViewTopSrcLine(prevMode)`）⇒ 永远量到"第一行"。这正是 **AG82 用 `keepPosition()` 修过、又随 K4a 窗口化被 AG97 一起删掉**的那一条 ⇒ 与窗口化无关的旧 bug 回归。**修法**：在重渲染**之前**采锚点与滚动位置（`var _viewAnchorBeforeRerender = _getViewTopSrcLine(prevMode); _saveCurrentViewScroll(prevMode);`），重渲后用它恢复；`_saveCurrentViewScroll(prevMode)` 原来在重渲之后调（存到的是 0）⇒ 一并上移。**② 输入"先源码、后预览"**：`commit()` 对**所有**入口都推迟 180 ms 才重渲预览那一块，而 `beforeinput` 那条路我们 `preventDefault()` 了（DOM 由**我们**负责更新）⇒ 那 180 ms 里源码面板已变、预览未动（AG103 的"原生优先"只对 IME 的 `compositionend` 成立）。**修法**：新增 `nativeDone` 实参，原生路只推迟"渲染态归一"（不在组合里动 DOM）；其余入口 `reRenderBlock()` + `patchEditorLines()`，**预览在前、源码面板在后**。另：`_flushBlockRepaint()` 到点时**再查一次 `EH._composing`**（可能又开了一次组合 ⇒ 重渲会换掉正在组合的 DOM 节点、浏览器中断组合 ⇒ 再往后推 180 ms）。钉子：`test_the_view_anchor_is_taken_before_the_rerender_and_only_native_typing_defers`。验收：`pytest -q` **1399 passed**、`node --check` ×2。**未取证（如实）**：真机手感与切模式落点 |
+| 2026-09-28 | **K5：底层渲染重构 —— 窗口化的正确形态（调研后方案，待拍板）** —— 人：「先 commit 当前版本，然后我们**着手关于窗口化渲染的研究和底层渲染重构**」。**调研**（CodeMirror 6 / ProseMirror / Lexical / Monaco / Ace 的 view 层 + 只读虚拟列表四库 + Input Events Level 2）**结论**：K4a 的失败 ≠ 窗口化不可行 —— CM6 是业界唯一把"可编辑 + 只渲染视口"做成的实现，它的解是**七件配套件**，我们当年只做了两件（按屏定窗 + 占位块）。**新写 §3.9**：① 三家可编辑实现的共识（输入所有权归浏览器 / 组合期冻结 / DOM 更新是算出来的 diff / 读回用 rAF / 位置映射挂中间层）；② **CM6 七件套 ↔ K4a 逐条对照**（高度账本 / 视口 ± Margin / **迟滞 —— 窗口必须包住可见区** / 滚动锚定 / **定位先查账本** / **从不整篇物化** / MaxDOMHeight；外加"选区不落缺口"）—— K4a 每个失败子系统都能对上；③ 明确**不抄**的（只读虚拟列表的 remount 模型 / `content-visibility` / canvas 路线；**Monaco 默认路径其实是 DOM**）；④ Monaco 三招（只动两端 / `relativeVerticalOffset` 预算好 / 前缀和增量）；⑤ **我们热路径还剩下的 7 笔成本**（带行号：`spliceBlockSource` 整篇 split/join、`restoreCursor`、`logCursorContext` 无开关的全篇属性选择器扫描、`beforeinput` 仍 `preventDefault`、块内整块重建、整篇 mermaid、整篇 MathJax）；⑥ **三期方案 K5a（输入所有权反转 + 块内复用 + 去 O(文档)，不需要窗口化）/ K5b（高度账本，不做窗口化也吃一半收益）/ K5c（视口化）/ K5d（可选兜底）**，每期可单独验证、可整体关闭。§4 新增 K5a–K5d 行；§5 新增 **R12–R15**。**未施工**：等 R12–R15 拍板 |
