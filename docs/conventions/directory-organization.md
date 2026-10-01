@@ -11,7 +11,7 @@
 | 路径 | 职责 | 可否放临时文件 |
 |------|------|:---:|
 | `src/` | 源码（Python + UI 静态资源） | ❌ |
-| `tests/` | 单元/集成测试 | ❌ |
+| `tests/` | 单元/集成测试（含 **`tests/probe-kb/` 显示子系统探针语料库**，用途与用法见 [docs/design/view-surface-contract.md §5](../design/view-surface-contract.md)；体量已由人拍板入库） | ❌ |
 | `docs/` | 文档（规范/设计/交接/示例知识库） | ⚠️ 仅 `docs/tmp/` |
 | `site/` | **公开静态站点**（对外指引页；GitHub Pages 的站点源，由 `.github/workflows/pages.yml` **只上传本目录**） | ❌ |
 | `scripts/` | **正式可复用**的开发者工具（启动/基准/数据生成） | ❌ |

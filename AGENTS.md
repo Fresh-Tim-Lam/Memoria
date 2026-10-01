@@ -105,6 +105,7 @@
 | `artifacts/agent/events.jsonl` | R | R | R | **R/W** |
 | `artifacts/agent/agents.json` | R | R | **R/W** | R |
 | `Package/**`、`pyproject.toml`(version)、`__version__.py` | — Never — | — Never — | — Never — | — Never — |
+| `scripts/benchmark/**/results/**`   (verifier R/W)
 
 ## 5. 一致性校验（漂移处理）
 
