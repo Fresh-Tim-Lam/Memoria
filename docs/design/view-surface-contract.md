@@ -194,7 +194,7 @@ surface.capabilities -> {
 |---|---|---|
 | **C1** | 块 id 稳定 | 改一处文本 → 其余块的 id 全部不变 |
 | **C2** | 文本保真 | 打开 + 不编辑 + 保存 ⇒ 磁盘文件**逐字不变** |
-| **C3** | 打字当帧可见 | 预览栏打字，**同一帧**读 DOM 已含该字符 |
+| **C3** | 打字当帧可见（**两条都要**） | ① **硬指标**：预览栏受信任单键输入时 **`beforeinput.defaultPrevented === false`**（= 原生插入被允许 ⇒ 那一刻 DOM 归浏览器）；② 输入后同帧读 DOM 已含该字符 —— ⚠️ **2026-09-28 基线实测确认：② 单独用不具区分力**（legacy 在同一任务内同步写 DOM，也能过），故 **① 才是判据** |
 | **C4** | 真源不落后 | 打字后立刻 `getSrcRangeForSelection()`，坐标与 DOM 一致 |
 | **C5** | 冻结不破 | 块编辑中触发块级重渲 ⇒ `textarea` 仍在文档里、内容不丢 |
 | **C6** | 落点准确 | `revealRange(L, L)` ⇒ 首屏第一块的 `srcStart ≤ L ≤ srcEnd`（±1 行） |
@@ -224,4 +224,5 @@ surface.capabilities -> {
 
 | 日期 | 变更 |
 |---|---|
+| 2026-09-28 | **首次「legacy 契约基线」体检完成**（`scripts/benchmark/surface/run_probe.py --label legacy-baseline`，产物 `results/probe-legacy-baseline_43ee02c7.{json,md}` + 中间证据 `raw-probe-legacy-baseline_43ee02c7.json`）。**绿**：C2 文本保真（逐字 485 B == 磁盘）、C3、C4。**红**：**C6 落点**（头/中命中，**尾目标因"文档末尾滚动钳制"无法置顶** —— 已区分"落点错"与"钳制"）、**C7 切模式锚点漂 Δ=2 行**、**C9 性能**（`scale-5k` 5000 行打 30 字：**median 17.5 ms / p95 23.7 / max 46.7**，预算 ≤16 ms ⇒ 超；页面 `[EDIT]` 与读数互证）。**未测**：C1（legacy 无块 id，`data--block-index` 是位置下标）、C5、C8、C10、C11/C12（`new` 插头不存在）—— **未默认成绿**。**两条由基线逼出的修正**：① **C3 的口径改了**（见上表）—— 原断言"同帧读 DOM 已含该字符"对 legacy 也成立（它同任务内同步写 DOM），**不具区分力** ⇒ 判据改为 `beforeinput.defaultPrevented === false`；② 记录一条**应用侧潜在缺陷**：增量重渲 `reRenderBlock → renderRange` 会**换掉块节点**，而行数不变时 `keepLineMap` 会**跳过 `stampBlockLines`** ⇒ 被编辑块节点**瞬时不带 `data--src-line`**（探针读取需用编辑前捕获的行号）。**环境事实**：驱动 = **Node 24 内置 `WebSocket`/`fetch` 直连 Edge CDP**（`scripts/benchmark/surface/cdp.mjs`），**零新依赖**；`selenium` 因本机网络受限未用 |
 | 2026-09-28 | 初稿：两层（RenderCore / EditSurface）+ 双插头协议 + 时序契约（flush 清单 F1–F8）+ 冻结规则 + 契约测试 C1–C12 + 不承诺清单。**未施工** |
