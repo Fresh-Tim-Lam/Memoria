@@ -14212,3 +14212,27 @@
     },
   };
 })();
+
+/* ===== 显示子系统插口（Surface 插头骨架，2026-10-02）===========================
+   只立「插口 + 注册 + 切换协议 + 如实声明能力」；**不迁移**任何既有调用路径 ——
+   app.js 现有调用照旧（把现有调用改成"经插口调用"会在宿主侧留下"半所有权"状态，
+   是本仓已知红线；留待 NewSurface 能跑时再迁）。契约：docs/design/view-surface-contract.md §4。
+
+   零行漂移：整块**追加在 app.js 最末尾**（主 IIFE 之外）⇒ 其上既有 `app.js:<行>` 锚点
+   一个不动。本块只用全局入口（`window.MemoriaSurface` / `window.createLegacySurface`），
+   `#editor-split` 此时已存在（脚本在 body 末尾加载）。
+   ⚠️ 主 IIFE 内的闭包（setViewMode / highlightRange / _getViewTopSrcLine …）在此**不可见**、
+   也不通过门面暴露 ⇒ legacy 适配器改用等价的全局/真实入口（见 surface/legacy-surface.js 头部说明）。 */
+(function initSurfaceSocket() {
+  var S = window.MemoriaSurface;
+  if (!S || !S.registry || typeof window.createLegacySurface !== "function") return;
+
+  // ① 注册 legacy 插头（工厂按 deps 造一个薄适配器）
+  S.registry.register("legacy", function (deps) { return window.createLegacySurface(deps); });
+
+  // ② 默认走 legacy；首次挂载＝采用宿主现存状态（不重放 setText/setMode ⇒ 加载期零重渲）
+  S.switchTo("legacy", { container: document.getElementById("editor-split") })
+    .catch(function (e) { try { console.warn("[MemoriaSurface] switchTo('legacy') 失败:", (e && e.message) || e); } catch (_) { /* noop */ } });
+
+  // ③ `window.MemoriaSurface` 已由 surface/registry.js 暴露（控制台可用 current() / switchTo()）
+})();
