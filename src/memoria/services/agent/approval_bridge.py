@@ -258,10 +258,13 @@ def answer(kb_path: str, call_id: str, outcome: ApprovalOutcome) -> bool:
 # 最后两行是 fail-closed 的关键：没有面板就**没有人能作答**，所以宁可让模型立刻拿到明确错误，
 # 也不要空挂 180 秒。答案本身不做二次校验（与上游同口径：提供方返回什么就是什么）。
 
-#: 等待用户作答的上限（秒）。上游无超时（等 `signal`）；本地必须有界（面板可能消失）⇒ 取 180s：
-#: 读题 + 作答足够宽裕，又远小于面板轮询的 30 分钟兜底（`agent-panel.js::POLL_TIMEOUT_MS`）。
-#: 超时按 fail-closed 收成错误结果（`NO_ANSWER`），模型据此可以再问一次。
-QUESTION_TIMEOUT_S = 180.0
+#: 等待用户作答的上限（秒）；**2026-09-28 起默认 `None` = 无限等待**（人：「可以无限等待」）。
+#: 原值 180s。改成无上限的理由：「面板消失」这条路由 `detach()` / `abort()` 唤醒
+#: （收敛为 `closed` / `aborted`），**并不依赖超时兜底** ⇒ 超时是冗余的；
+#: 而它唯一的实际效果是在人还没读完题时把提问收成 `NO_ANSWER` —— 模型拿到它之后
+#: 常径直按自己的推荐继续，正是要消除的「超时自动按推荐走」。
+#: 仍需上限的调用方可显式传 `timeout_s=<秒>`。
+QUESTION_TIMEOUT_S = None
 
 
 @dataclass
@@ -299,12 +302,14 @@ def wait_for_question_answer(
     kb_path: str,
     questions: list[dict[str, Any]],
     *,
-    timeout_s: float = QUESTION_TIMEOUT_S,
+    timeout_s=None,
 ) -> tuple[str, list[dict[str, Any]]]:
     """登记一批问题并阻塞等待用户作答；返回 `(status, answers)`。
 
     `status` ∈ `answered` / `timeout` / `aborted` / `closed` / `unavailable`（见上表）；
     只有 `answered` 时第二个元素非空。未挂载 ⇒ 立刻返回 `unavailable`（不登记、不等待）。
+    `timeout_s` 默认取 `QUESTION_TIMEOUT_S`（现为 `None` = **无限等待**，只由
+    `answered` / `detach()` / `abort()` 结束等待）；显式传秒数时任旧有超时语义。
     """
     key = os.path.abspath(kb_path or "")
     if not key or not is_attached(key):
@@ -318,10 +323,11 @@ def wait_for_question_answer(
     with _lock:
         _questions.setdefault(key, []).append(item)
     logger.info("[agent-question] 等待用户作答：%d 个问题（%s）", len(item.questions), item.qid)
-    deadline = time.monotonic() + max(0.0, float(timeout_s))
+    _limit = QUESTION_TIMEOUT_S if timeout_s is None else timeout_s
+    deadline = None if _limit is None else time.monotonic() + max(0.0, float(_limit))
     try:
         while not item.event.wait(_POLL_STEP_S):
-            if time.monotonic() >= deadline:
+            if deadline is not None and time.monotonic() >= deadline:
                 item.closed = "timeout"
                 logger.warning("[agent-question] 等待作答超时（%.0fs），按未作答收敛", timeout_s)
                 break

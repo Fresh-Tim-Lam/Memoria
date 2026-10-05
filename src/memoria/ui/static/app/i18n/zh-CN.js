@@ -986,7 +986,7 @@
       },
       mermaidFail: "Mermaid 渲染失败: {msg}",
       markedMissing: "marked 未加载",
-      lightboxHint: "滚轮缩放 · 左键拖拽平移 · Esc 或右键退出",
+      lightboxHint: "滚轮缩放 · 左键拖拽平移 · Esc 或右键退出", mermaidZoom: "放大查看（点击）", mermaidZoomIn: "放大", mermaidZoomOut: "缩小", mermaidFit: "适配", mermaidFullscreen: "全屏", mermaidZoomLevel: "缩放 {p}%",
       link: {
         unresolved: "未绑定目标 · {key}（{total} 个目标均无法解析）",
         multi: "多目标链接 · {resolved}/{total} 可跳转",

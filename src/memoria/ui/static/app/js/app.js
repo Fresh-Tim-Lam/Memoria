@@ -14084,6 +14084,64 @@
 
   window.MemoriaApp.setPreviewCachePolicy = setPreviewCachePolicy;
   window.MemoriaApp.previewCacheScores = previewCacheScores;
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-04 追加：显示子系统 · mermaid 视图交互的**块级写回门面**
+  //
+  // 用途（只服务 Surface / mermaid-view，不外泄内部函数名）：
+  //   预览区 mermaid 图支持「图内平移 / 右下把手改尺寸 / 把手双击复位」，交互层见
+  //   `markdown-preview.js` 的 `_attachMermaidView`。这些改动要**写进文档**（跟文件走）：
+  //   围栏内首行指令 `%% memoria-view: zoom=<float> [pan=<x>,<y>]`（2026-10-04 起；旧 `w=/h=` 兼容读取、只取 pan）。
+  //   块级写回管线（`spliceBlockSource` + 撤销快照 + 重渲 + 标脏）都在 `MemoriaEditSync`
+  //   的**内层闭包**里，模块外拿不到 ⇒ 在此暴露三件**契约语义**：
+  //     setBlockSource(bi, src)  替换第 bi 块源码（记撤销 → 更新真源 → 重渲 → 标脏）
+  //     getBlockSourceRange(bi)  返回 {startLine,endLine}（0-based，含端点）或 null
+  //     getBlockSourceText(bi)   返回第 bi 块当前源码文本 或 null
+  //
+  // 实现（零行漂移）：`spliceBlockSource` 在内层闭包、外部不可达，故本门面用等价全局出口复现：
+  //   块→行映射取 `window.__blockLineMap`（app.js 渲染链已导出），真源取 `MemoriaApp.state`，
+  //   撤销走 `MemoriaEditSync.beginUndoGroup/endUndoGroup`（同一份预览撤销栈；edit-handler 的
+  //   Ctrl+Z 即 `EditSync.undo`），重渲走 `renderEditor` + `renderPreview({incremental:true})`
+  //   （**重解析** ⇒ `_doc`/映射/DOM 一致；与既有 `legacy-surface.setText` 同口径）。
+  //   位置在**主 IIFE 收尾之前** ⇒ 只把 `})();` 往后推，其上既有 `app.js:<行>` 锚点一个不动
+  //   （其后的文件末尾装配块整体后移，无锚点引用）。
+  // ══════════════════════════════════════════════════════════════════════════════
+  window.MemoriaApp.surface = {
+    setBlockSource: function (blockIndex, newBlockSrc) {
+      var es = window.MemoriaEditSync;
+      var bi = Number(blockIndex);
+      var map = window.__blockLineMap;
+      if (!state.doc || !map || !map[bi]) return false;
+      var src = String(newBlockSrc == null ? "" : newBlockSrc);
+      try { if (es && typeof es.flushRepaint === "function") es.flushRepaint(); } catch (_) { /* 挂起重渲冲掉失败不阻断写回 */ }
+      if (es && typeof es.beginUndoGroup === "function") { try { es.beginUndoGroup(); } catch (_) { /* noop */ } }
+      var rawLines = (state.doc.body || "").split("\n");
+      var range = map[bi];
+      var start = range.startLine;
+      var endExcl = range.endLine + 1;
+      var newLines = src.split("\n");
+      state.doc.body = rawLines.slice(0, start).concat(newLines, rawLines.slice(endExcl)).join("\n");
+      state.doc.lines = state.doc.body.split("\n");
+      state.doc.preview_body = null;
+      if (es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
+      try { renderEditor(state.doc); } catch (e) { log("render", "surface.setBlockSource renderEditor: " + ((e && e.message) || e)); }
+      try { var p = renderPreview(state.doc, { incremental: true }); if (p && typeof p.catch === "function") p.catch(function () { }); } catch (e2) { log("render", "surface.setBlockSource renderPreview: " + ((e2 && e2.message) || e2)); }
+      markDirty();
+      return true;
+    },
+    getBlockSourceRange: function (blockIndex) {
+      var map = window.__blockLineMap;
+      var range = map && map[Number(blockIndex)];
+      if (!range) return null;
+      return { startLine: range.startLine, endLine: range.endLine };
+    },
+    getBlockSourceText: function (blockIndex) {
+      var map = window.__blockLineMap;
+      var range = map && map[Number(blockIndex)];
+      if (!range || !state.doc || !state.doc.lines) return null;
+      return state.doc.lines.slice(range.startLine, range.endLine + 1).join("\n");
+    },
+  };
 })();
 
 /* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================

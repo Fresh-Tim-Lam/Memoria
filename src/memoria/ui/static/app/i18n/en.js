@@ -1070,7 +1070,7 @@
       },
       mermaidFail: "Mermaid render failed: {msg}",
       markedMissing: "marked not loaded",
-      lightboxHint: "Wheel to zoom · Drag with left button to pan · Esc or right-click to exit",
+      lightboxHint: "Wheel to zoom \u00b7 Drag with left button to pan \u00b7 Esc or right-click to exit", mermaidZoom: "Zoom in (click)", mermaidZoomIn: "Zoom in", mermaidZoomOut: "Zoom out", mermaidFit: "Fit", mermaidFullscreen: "Fullscreen", mermaidZoomLevel: "Zoom {p}%",
       link: {
         unresolved: "Unbound target \u00b7 {key} (none of {total} targets can be resolved)",
         multi: "Multi-target link \u00b7 {resolved}/{total} resolvable",

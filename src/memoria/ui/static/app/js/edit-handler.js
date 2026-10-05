@@ -1387,8 +1387,8 @@
       return;
     }
 
-    // 其余块类型：原始可编辑内容即块内纯文本（代码/公式不含围栏）
-    var originalContent = blockEl.textContent || "";
+    // 其余块类型：代码块 DOM 即纯文本；mermaid/公式块 DOM 是渲染结果 ⇒ 取真源文本回填（prepareBlockEditContent）
+    var originalContent = prepareBlockEditContent(blockType, blockEl, srcStart, srcEnd);
 
     EH.blockEditMode = { blockIndex: blockIndex, blockEl: blockEl, blockType: blockType, srcStart: srcStart, srcEnd: srcEnd, originalContent: originalContent };
 
@@ -1710,9 +1710,9 @@
     // 获取编辑后的纯文本内容
     var newContent = "";
     if (ctx.blockType === "table") {
-      // 表格编辑暂不处理内容更新
+      // 表格块 DOM 是 <table>（textContent 非源码）；原逻辑走「行数变化」分支会把整块真源清空 ⇒ 只复原不提交
+      blockEl.contentEditable = "false"; blockEl.classList.remove("-block-editing"); _restoreToolbar(); EH.blockEditMode = null; if (typeof window._scheduleRender === "function") window._scheduleRender(); return;
     } else {
-      // 获取纯文本
       newContent = blockEl.textContent || "";
     }
 
@@ -1965,3 +1965,30 @@
   };
 
 })();
+
+/* ===== 块编辑：mermaid / 公式块的「真源回填」（2026-10-04）=========================
+   代码块渲染成 <pre><code> 纯文本 ⇒ 块编辑直接编辑 blockEl.textContent 即可；
+   但 **mermaid 块**渲染成 `.-mermaid-container > <svg>`（含内嵌 <style> 的 CSS 文本 + 节点/边标签）、
+   **公式块**渲染成 MathJax `mjx-container`（字形文本）。这两类块的 `blockEl.textContent`
+   读到的是**渲染结果而非源码**：退出提交时被当成源码加围栏/$$ 写回，会污染真源 ——
+   实测「双击 mermaid 块 → 点框外」后真源被写成 SVG 的 `<style>` CSS + 标签文字，
+   再次渲染即 `No diagram type detected` ⇒ `.-mermaid-error`（公式块同理被写成 MathJax 字形）。
+   本函数对这两类块从源码编辑器逐行取「去最外层围栏 / $$」的原始文本，回填进块元素供编辑；
+   退出时原逻辑读 `blockEl.textContent` 即得源码，加围栏/$$ 写回 ⇒ 与代码块走同一路径。
+   保留 `%% memoria-view:` 等原样注释行（逐行取连续源码行，不解析、不剥离）。
+   零行漂移：本块**追加在 edit-handler.js 末尾**（IIFE 之外），既有行号锚点一个不动。 */
+function prepareBlockEditContent(blockType, blockEl, srcStart, srcEnd) {
+  if (blockType !== "mermaid" && blockType !== "math_block") return blockEl.textContent || "";
+  var editor = document.getElementById("editor");
+  var inner = [];
+  if (editor) {
+    var lineEls = editor.querySelectorAll(".-line-content");
+    for (var i = srcStart + 1; i <= srcEnd - 1; i++) {
+      var el = lineEls[i - 1];
+      inner.push(el ? (el.textContent || "") : "");
+    }
+  }
+  var text = inner.join("\n");
+  blockEl.textContent = text;
+  return text;
+}

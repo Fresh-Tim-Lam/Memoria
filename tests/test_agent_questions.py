@@ -199,8 +199,8 @@ def test_timeout_is_fail_closed(attached: Path) -> None:
 
 
 def test_default_timeout_is_the_bridge_constant(attached: Path) -> None:
-    """不传 `timeout_s` 时用的就是 `QUESTION_TIMEOUT_S` 那个上界（180s：够读题作答，远小于面板 30 分钟兜底）。"""
-    assert approval_bridge.QUESTION_TIMEOUT_S == 180.0
+    """不传 `timeout_s` 时用的就是 `QUESTION_TIMEOUT_S`；**2026-09-28 起为 `None` = 无限等待**（人：「可以无限等待」）。"""
+    assert approval_bridge.QUESTION_TIMEOUT_S is None
     assert questions.ask.__kwdefaults__["timeout_s"] is None, "默认让桥去取那个常量（不在 seam 里硬编一个数）"
 
 

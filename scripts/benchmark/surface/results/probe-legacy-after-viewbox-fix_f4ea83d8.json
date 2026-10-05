@@ -1,0 +1,707 @@
+{
+  "schema": "surface-probe-report/1",
+  "surface": "legacy",
+  "label": "after-viewbox-fix",
+  "gitSha": "f4ea83d8",
+  "generatedAt": "2026-10-05T06:58:29Z",
+  "contract": "docs/design/view-surface-contract.md#5（契约测试清单 C1–C12）",
+  "casesFile": "tests/probe-kb/cases/cases.json",
+  "environment": {
+    "browser": "Edg/154.0.4258.53",
+    "edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "node": "v24.19.0",
+    "kbServed": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_probe_kb",
+    "kbSource": "D:\\AAA_Jupyter\\Memoria\\tests\\probe-kb",
+    "kbSourceHasMemoria": "否（已用副本让应用自初始化）",
+    "casesFile": "tests/probe-kb/cases/cases.json",
+    "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
+    "scaleDocLines": 5000,
+    "appReady": true,
+    "runDurationMs": 21522
+  },
+  "coverage": {
+    "green": [
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "red": [
+      "C6",
+      "C7",
+      "C9"
+    ],
+    "untested": [
+      "C1",
+      "C5",
+      "C8",
+      "C10",
+      "C11",
+      "C12"
+    ]
+  },
+  "verdicts": {
+    "C1": {
+      "title": "块 id 稳定",
+      "status": "untested",
+      "reading": "legacy 无 RenderCore「块 id」概念（`data--block-index` 是**位置下标**、随块序重编，非稳定 id）⇒ 契约 C1 在 legacy 无对应实现，无法测。",
+      "detail": {}
+    },
+    "C2": {
+      "title": "文本保真",
+      "status": "green",
+      "reading": "打开 01-ime-zh.md 不编辑：state.doc.body 逐字等于 磁盘文件（len body=485 / disk=485）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "C3": {
+      "title": "打字当帧可见",
+      "status": "green",
+      "reading": "受信任输入 keyDown(text='a') 后**不等 rAF** 立刻读 DOM：块文本 已含 'a'",
+      "detail": {
+        "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+        "domHasChar": true,
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。"
+      }
+    },
+    "C4": {
+      "title": "真源不落后",
+      "status": "green",
+      "reading": "同一次按键后立刻读真源：state.doc.lines[L] 已含字符；caret→块映射 正确（行号取自编辑前捕获：增量重渲后新块节点不带 data--src-line）",
+      "detail": {
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+        "srcHasChar": true,
+        "caretMapsToBlock": true,
+        "srcLineFromCaptured": true
+      }
+    },
+    "C5": {
+      "title": "冻结不破",
+      "status": "untested",
+      "reading": "需「块编辑中（textarea 在文档内）+ 触发块级重渲」两步：双击进块编辑可用，但驱动块级重渲需要一个**未暴露的应用入口**；本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C6": {
+      "title": "落点准确",
+      "status": "red",
+      "reading": "目标-头 L=5 首屏块=[5,5] ✓；目标-中 L=19 首屏块=[18,18] ✓；目标-尾 L=29 首屏块=[26,26] ✗（文档末尾滚动钳制：目标块[29,29]已渲染且可见，但无法置顶）",
+      "detail": {
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 5,
+              "end": 5,
+              "text": "目标-头"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 257,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 18,
+              "end": 18,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 771,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 26,
+              "end": 26,
+              "text": ""
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 92,
+              "relBottom": 136,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1068,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": true
+            }
+          }
+        ],
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange"
+      }
+    },
+    "C7": {
+      "title": "切模式不漂",
+      "status": "red",
+      "reading": "锚点行 preview#0=7 → preview#1=4，Δ=3（≤1 判绿）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 7,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 473
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 5,
+            "sourceTopSrcLine": 6,
+            "scrollTop": 757
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 5,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 4,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 345
+          }
+        ],
+        "anchor0": 7,
+        "anchorFinal": 4,
+        "delta": 3
+      }
+    },
+    "C8": {
+      "title": "交互存活",
+      "status": "untested",
+      "reading": "需断言 onLinkActivate 回调、图片双击进编辑、KP band 定位三件交互存活；回调断言需在页面侧挂测试钩子，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C9": {
+      "title": "性能预算",
+      "status": "red",
+      "reading": "文档 scale-5k.md（5000 行）键入 30 字：按键→真源 median=23.1 ms / p95=25 ms / max=25.7 ms（预算 ≤16 ms）",
+      "detail": {
+        "keyToSource": {
+          "n": 31,
+          "min": 3.3,
+          "median": 23.1,
+          "p95": 25,
+          "max": 25.7,
+          "mean": 22.781
+        },
+        "insertOnly": {
+          "n": 31,
+          "min": 2.1,
+          "median": 22.6,
+          "p95": 24.4,
+          "max": 25.2,
+          "mean": 22.229
+        },
+        "budgetMs": 16,
+        "docLines": 5000
+      }
+    },
+    "C10": {
+      "title": "两消费者一致",
+      "status": "untested",
+      "reading": "两消费者一致需同时渲染「预览栏（可编辑）」与「对话栏气泡（只读流式）」并比对块序列；气泡渲染驱动成本高，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C11": {
+      "title": "插头等价",
+      "status": "untested",
+      "reading": "`new` 插头尚不存在（契约 §4 双插头未施工）⇒ 无法跑 legacy vs new 等价对比。",
+      "detail": {}
+    },
+    "C12": {
+      "title": "无损切换",
+      "status": "untested",
+      "reading": "`SurfaceRegistry.switchTo('new')` 不存在（`new` 插头未施工）⇒ 无损切换无法测。",
+      "detail": {}
+    }
+  },
+  "rawCases": {
+    "sel_text_fidelity": {
+      "status": "ran",
+      "covers": [
+        "C2"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "sel_typing_ascii": {
+      "status": "ran",
+      "covers": [
+        "C3",
+        "C4"
+      ],
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "matchText": "这是加粗之前可以打字的一句",
+        "key": "a",
+        "setup": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "offset": 0,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 4,
+            "nodePath": [
+              0
+            ],
+            "offset": 0
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 33,
+          "blockTextHead": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。"
+        },
+        "before": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": "5",
+          "srcLineFromCaptured": false,
+          "domText": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 33,
+          "srcLineLen": 37
+        },
+        "after": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": null,
+          "srcLineFromCaptured": true,
+          "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 34,
+          "srcLineLen": 38,
+          "domHasChar": true,
+          "srcHasChar": true,
+          "domStartsWithChar": true,
+          "srcStartsWithChar": true
+        },
+        "edits": [
+          {
+            "insertMs": 2.1000000089406967,
+            "fromKeyMs": 3.300000011920929
+          }
+        ],
+        "immediateRead": true,
+        "note": "typeText 用 Input.dispatchKeyEvent(keyDown+keyUp, text) 注入受信任输入；读 DOM 未等 rAF。"
+      }
+    },
+    "sel_jump_head_mid_tail": {
+      "status": "ran",
+      "covers": [
+        "C6"
+      ],
+      "evidence": {
+        "file": "corpus/06-links-and-kp.md",
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange",
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 5,
+              "end": 5,
+              "text": "目标-头"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 257,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 18,
+              "end": 18,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 771,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 26,
+              "end": 26,
+              "text": ""
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 92,
+              "relBottom": 136,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1068,
+              "scrollHeight": 1408,
+              "clientHeight": 340,
+              "maxScroll": 1068,
+              "clampedAtBottom": true
+            }
+          }
+        ]
+      }
+    },
+    "sel_switch_mode": {
+      "status": "ran",
+      "covers": [
+        "C7"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 7,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 473
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 5,
+            "sourceTopSrcLine": 6,
+            "scrollTop": 757
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 5,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 4,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 345
+          }
+        ],
+        "anchor0": 7,
+        "anchorFinal": 4,
+        "delta": 3
+      }
+    },
+    "sel_scroll_stress": {
+      "status": "ran",
+      "covers": [
+        "C9"
+      ],
+      "evidence": {
+        "file": "scale/scale-5k.md",
+        "docLines": 5000,
+        "typedChars": 30,
+        "setup": {
+          "ok": true,
+          "blockIndex": 21,
+          "srcLine": 36,
+          "offset": 23,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 21,
+            "nodePath": [
+              4
+            ],
+            "offset": 1
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 23,
+          "blockTextHead": "跳转示例：目标-规模-0 与 另一个链接-0。"
+        },
+        "keyToSource": {
+          "n": 31,
+          "min": 3.3,
+          "median": 23.1,
+          "p95": 25,
+          "max": 25.7,
+          "mean": 22.781
+        },
+        "insertOnly": {
+          "n": 31,
+          "min": 2.1,
+          "median": 22.6,
+          "p95": 24.4,
+          "max": 25.2,
+          "mean": 22.229
+        },
+        "editsRaw": [
+          {
+            "insertMs": 2.1000000089406967,
+            "fromKeyMs": 3.300000011920929
+          },
+          {
+            "insertMs": 23.900000005960464,
+            "fromKeyMs": 24.600000008940697
+          },
+          {
+            "insertMs": 23.5,
+            "fromKeyMs": 24.299999997019768
+          },
+          {
+            "insertMs": 24.30000001192093,
+            "fromKeyMs": 25
+          },
+          {
+            "insertMs": 23.099999994039536,
+            "fromKeyMs": 23.700000002980232
+          },
+          {
+            "insertMs": 22.299999997019768,
+            "fromKeyMs": 22.900000005960464
+          },
+          {
+            "insertMs": 25.200000002980232,
+            "fromKeyMs": 25.700000002980232
+          },
+          {
+            "insertMs": 24.099999994039536,
+            "fromKeyMs": 24.599999994039536
+          },
+          {
+            "insertMs": 23,
+            "fromKeyMs": 23.599999994039536
+          },
+          {
+            "insertMs": 22.599999994039536,
+            "fromKeyMs": 23.099999994039536
+          },
+          {
+            "insertMs": 22.099999994039536,
+            "fromKeyMs": 22.399999991059303
+          },
+          {
+            "insertMs": 22.5,
+            "fromKeyMs": 23
+          },
+          {
+            "insertMs": 21.400000005960464,
+            "fromKeyMs": 21.900000005960464
+          },
+          {
+            "insertMs": 22,
+            "fromKeyMs": 22.69999998807907
+          },
+          {
+            "insertMs": 24.200000002980232,
+            "fromKeyMs": 24.700000002980232
+          },
+          {
+            "insertMs": 23.399999991059303,
+            "fromKeyMs": 23.899999991059303
+          },
+          {
+            "insertMs": 24.399999991059303,
+            "fromKeyMs": 24.899999991059303
+          },
+          {
+            "insertMs": 24.200000002980232,
+            "fromKeyMs": 24.700000002980232
+          },
+          {
+            "insertMs": 22.299999997019768,
+            "fromKeyMs": 22.700000002980232
+          },
+          {
+            "insertMs": 23,
+            "fromKeyMs": 23.400000005960464
+          },
+          {
+            "insertMs": 21.900000005960464,
+            "fromKeyMs": 22.5
+          },
+          {
+            "insertMs": 21.799999997019768,
+            "fromKeyMs": 22.200000002980232
+          },
+          {
+            "insertMs": 23.5,
+            "fromKeyMs": 24.099999994039536
+          },
+          {
+            "insertMs": 23.599999994039536,
+            "fromKeyMs": 24.099999994039536
+          },
+          {
+            "insertMs": 22.299999997019768,
+            "fromKeyMs": 22.799999997019768
+          },
+          {
+            "insertMs": 22.400000005960464,
+            "fromKeyMs": 22.900000005960464
+          },
+          {
+            "insertMs": 21.200000002980232,
+            "fromKeyMs": 21.599999994039536
+          },
+          {
+            "insertMs": 20.900000005960464,
+            "fromKeyMs": 21.30000001192093
+          },
+          {
+            "insertMs": 21.900000005960464,
+            "fromKeyMs": 22.400000005960464
+          },
+          {
+            "insertMs": 21.900000005960464,
+            "fromKeyMs": 22.700000002980232
+          },
+          {
+            "insertMs": 24.100000008940697,
+            "fromKeyMs": 24.5
+          }
+        ],
+        "wallMs": 1024,
+        "budgetMs": 16,
+        "note": "keyToSource = keydown 时刻 → insertText 返回（真源/预览已更新）。"
+      }
+    }
+  },
+  "console": {
+    "editLogs": [
+      "[14:58:28.391] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.428] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.465] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.502] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.540] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.580] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.614] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.672] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.704] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.738] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.769] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.799] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.831] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.864] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.895] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.928] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.961] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:28.992] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.026] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.057] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.089] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.123] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.157] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.190] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.222] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.254] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.284] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.316] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.347] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5001 行）",
+      "[14:58:29.380] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5001 行）"
+    ],
+    "errors": [],
+    "total": 505
+  },
+  "notes": [
+    "绿/红按契约判，不按与老实现一致判。",
+    "未测项已写明原因，未默认成绿。",
+    "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
+    "C9 读数有运行间波动（同机同档多次实测落在 budget 之上；引用须连同档位/运行环境一起）。",
+    "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
+    "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
+    "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。"
+  ]
+}

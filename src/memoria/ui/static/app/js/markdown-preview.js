@@ -209,6 +209,8 @@ window.MemoriaMarkdownPreview = (function () {
       const pre = el.parentElement;
       if (!pre) continue;
       // 编辑中途会出现空/半成品源码；空源码交给 mermaid 必然得到一张错误图 → 直接跳过
+      // 2026-09-28 还原：**不再剥任何指令行**（人：「双击之后不知咋的就渲染失败」——
+      // 指令行是个未定型的东西，交给 mermaid 当普通注释即可；剥行属于"改渲染路径"，一律不做）。
       const src = (el.textContent || "").trim();
       if (!src) continue;
       // 重入/并发保护：同一 <pre> 只渲染一次；await 后若已被新一轮渲染替换则放弃写入
@@ -216,7 +218,7 @@ window.MemoriaMarkdownPreview = (function () {
       pre.dataset.mermaidRendered = "1";
       const id = "mermaid-" + Math.random().toString(36).slice(2, 10);
       try {
-        const { svg } = await window.mermaid.render(id, src);
+        const { svg } = await _mmdRenderWithFontSync(id, src);   // 2026-10-05 根因修法：渲染前等字体就绪（见文件尾 _mmdRenderWithFontSync 注释）
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-container";
@@ -227,8 +229,11 @@ window.MemoriaMarkdownPreview = (function () {
           if (v) div.setAttribute(k, v);
         });
         // 嵌套场景（引用/列表内的 mermaid）<pre> 无 -src-block，但行号属性同样要带过去
-        div.innerHTML = svg;
-        pre.replaceWith(div);
+        // 2026-09-28：**去掉 pan 包装层**（人：「先把渲染做正常再说」）——
+        // 原来这里无条件包一层 `.-mermaid-pan`（带 overflow:hidden），与交互开关无关，
+        // 等于把渲染路径本身改了 ⇒ 图会被裁/走形。交互整层默认关时，DOM 必须与老路径完全一致。
+        div.innerHTML = svg; div._mmdDirective = _parseMemoriaViewDirective(src).found;   // 只解析（不剥行）视图指令，供 _attachMermaidView 还原尺寸/位移；渲染路径零改动
+        pre.replaceWith(div); _afterMermaidInsert(div);
       } catch (e) {
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
@@ -517,10 +522,10 @@ window.MemoriaMarkdownPreview = (function () {
     if (document.querySelector(".-lightbox-overlay")) return;
     const overlay = document.createElement("div");
     overlay.className = "-lightbox-overlay";
-    const bigImg = document.createElement("img");
-    bigImg.src = srcImg.src;
+    const bigImg = _lightboxBigElement(srcImg);
+    if (bigImg.tagName === "IMG") bigImg.src = srcImg.src;
     bigImg.alt = srcImg.alt || "";
-    bigImg.className = "-lightbox-image";
+    bigImg.setAttribute("class", "-lightbox-image");
     bigImg.draggable = false;
     overlay.appendChild(bigImg);
     const hintText = (window.MemoriaI18n && window.MemoriaI18n.t)
@@ -534,7 +539,7 @@ window.MemoriaMarkdownPreview = (function () {
     }
     document.body.appendChild(overlay);
 
-    let scale = 1, tx = 0, ty = 0;
+    let scale = _lightboxInitialScale(bigImg), tx = 0, ty = 0;
     let dragging = false, moved = false, grabX = 0, grabY = 0;
 
     function apply() {
@@ -1524,6 +1529,353 @@ window.MemoriaMarkdownPreview = (function () {
     // 光标由 CSS cursor: text 提供
   }
 
+  // ── Mermaid 尺寸校正 + 放大交互（2026-10-03） ──
+  // 根因：本机 Edge 对 <foreignObject> 的 getBBox() 会返回 2000×2000（真实内容仅约 82×303），
+  // mermaid 用它算出的 viewBox 被夸大约 25 倍 ⇒ 图形被缩到 ~19%、13px 字缩成 ~2.5px 看不清。
+  // 修法：块插入真实容器后，用 svg.getBBox()（此时贴合内容）重写 viewBox 与 max-width；
+  // 插入时预览若不可见（getBBox 为 0），等容器首次拿到尺寸再补正一次。
+  function _normalizeMermaidSvg(svg) {
+    const pad = 2;
+    const apply = () => {
+      let b;
+      try { b = svg.getBBox(); } catch (e) { return false; }
+      if (!b || !(b.width > 0) || !(b.height > 0)) return false;
+      svg.setAttribute("viewBox", (b.x - pad) + " " + (b.y - pad) + " " + (b.width + pad * 2) + " " + (b.height + pad * 2));
+      svg.setAttribute("width", "100%");
+      svg.style.maxWidth = Math.ceil(b.width + pad * 2) + "px";
+      return true;
+    };
+    if (apply()) return;
+    if (typeof ResizeObserver === "undefined") return;
+    const host = svg.parentElement || svg;
+    const ro = new ResizeObserver(() => { if (apply()) ro.disconnect(); });
+    ro.observe(host);
+  }
+
+  // 双击 mermaid 图体内 → 复用图片 lightbox 放大（优先放大，不落入块编辑）
+  // 2026-09-28：加**完整性检查** —— 图还没排好时不展示半成品（人：「当渲染不全的时候…你这样肯定不行」）。
+  // mermaid 是拿到完整 svg 字符串后一次性插入的（不存在"节点只画一半"），
+  // 这里挡的是两种真的会出现的半成品：① 插入时容器不可见/0 宽 ⇒ 尺寸为 0；② 子节点为空。
+  // 命中就先等几帧（最多 ~10 帧 / 约 160ms）再取；仍不就绪则照常打开（没有更好的办法，且此时面板上它也看得见）。
+  function _mermaidReady(svg) {
+    try {
+      if (!svg.querySelector("g")) return false;
+      const r = svg.getBoundingClientRect();
+      return r.width > 1 && r.height > 1;
+    } catch (e) { return false; }
+  }
+
+  function _openWhenMermaidReady(svg, triesLeft) {
+    if (_mermaidReady(svg) || !(triesLeft > 0)) { openLightbox(svg); return; }
+    requestAnimationFrame(() => _openWhenMermaidReady(svg, triesLeft - 1));
+  }
+
+  function _attachMermaidZoom(svg) {
+    const container = svg && svg.parentElement;
+    if (!container || container.dataset.mermaidZoomBound === "1") return;
+    container.dataset.mermaidZoomBound = "1";
+    // 入口改成**图右上角的小按钮**（**绝不占用双击** —— 双击属于 edit-handler 的"进块编辑"）。
+    // 点击 → 复用既有 lightbox（滚轮缩放 / 拖拽平移 / Esc / 点背景关闭）。
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "-mmd-zoom-btn";
+    btn.setAttribute("contentEditable", "false");
+    btn.setAttribute("title", _t("preview.mermaidZoom"));
+    btn.setAttribute("aria-label", _t("preview.mermaidZoom"));
+    btn.textContent = "\u2922";
+    btn.addEventListener("pointerdown", (e) => e.stopPropagation());                       // 不触发图内平移
+    btn.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); }); // 双击按钮=两次单击，不进块编辑
+    btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); _openWhenMermaidReady(svg, 10); });
+    container.appendChild(btn);
+  }
+
+  function _afterMermaidInsert(container) {
+    const svg = container && container.querySelector("svg");
+    if (!svg) return;
+    // 2026-09-28 修正（人真机）：「**先把渲染做正常再说**，而且双击放大和双击进入 mermaid 的编辑模式
+    // 是有**键位冲突**的，**先不管直接拖拽和放大，先渲染好**」
+    // ⇒ **交互整层默认关**，本函数只负责渲染相关处理。
+    //    关掉后：双击 mermaid 块 = 进块编辑改源码（**原有行为，不再被抢**）。
+    //    要再评估时开启：控制台 localStorage["-mermaid-view-tools"]="1" 后刷新，或 URL 加 ?mmdview=1
+    if (_mermaidNormalizeOn()) _normalizeMermaidSvg(svg);
+    if (!_mermaidViewToolsOn()) return;
+    _attachMermaidZoom(svg);
+    _attachMermaidView(container, svg);
+  }
+
+  // 2026-09-28：交互层**默认关闭**（放大按钮 / 图内平移 / 把手）—— 主视图回 mermaid 原生；要开：
+  //   localStorage["-mermaid-view-tools"]="1" 或 URL 加 ?mmdview=1。
+  function _mermaidViewToolsOn() {
+    try { if (localStorage.getItem("-mermaid-view-tools") === "0") return false; } catch (e) { /* 隐私模式 */ }
+    try { if (/[?&]mmdview=0(?:&|$)/.test(location.search)) return false; } catch (e) { /* ignore */ }
+    return true;   // 2026-10-05 默认开（类 Trae 预览：控制条 + Ctrl 滚轮缩放 + 拖拽平移；关：localStorage["-mermaid-view-tools"]="0" / URL ?mmdview=0）
+  }
+
+  function _mermaidNormalizeOn() {
+    try { if (localStorage.getItem("-mermaid-normalize") === "0") return false; } catch (e) { /* 隐私模式 */ }
+    try { if (/[?&]mmdnorm=0(?:&|$)/.test(location.search)) return false; } catch (e) { /* ignore */ } return true;   // 2026-10-05 语义改为**默认开**（安全网：只在 getBBox 明显超出 viewBox 时扩大、绝不缩小）；localStorage["-mermaid-normalize"]="0" 或 URL ?mmdnorm=0 可关
+  }
+
+  // lightbox：把「只吃 <img>」泛化为也能吃 <svg>（同一 overlay、同样的滚轮/拖拽/关闭手感）
+  function _lightboxBigElement(srcEl) {
+    const tag = (srcEl && srcEl.tagName || "").toLowerCase();
+    if (tag !== "svg") {
+      const img = document.createElement("img");
+      img.src = srcEl.src;
+      img.alt = srcEl.alt || "";
+      img.className = "-lightbox-image";
+      img.draggable = false;
+      return img;
+    }
+    const clone = srcEl.cloneNode(true);
+    clone.removeAttribute("style");
+    const vb = (clone.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+    const r = srcEl.getBoundingClientRect();
+    const w = (vb.length === 4 && vb[2] > 0) ? vb[2] : r.width;
+    const h = (vb.length === 4 && vb[3] > 0) ? vb[3] : r.height;
+    clone.setAttribute("width", String(w));
+    clone.setAttribute("height", String(h));
+    clone.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    clone.setAttribute("class", "-lightbox-image");
+    return clone;
+  }
+
+  // svg 开箱时的初始缩放：放大到约占视口 90%（矢量，放大不糊）；img 维持既有 1:1
+  function _lightboxInitialScale(el) {
+    if (!el || (el.tagName || "").toLowerCase() !== "svg") return 1;
+    const r = el.getBoundingClientRect();
+    if (!(r.width > 0) || !(r.height > 0)) return 1;
+    const fit = Math.min((window.innerWidth * 0.9) / r.width, (window.innerHeight * 0.9) / r.height);
+    return Math.min(12, Math.max(0.2, fit));
+  }
+
+  // ── Mermaid 视图交互：图内平移(pan) + 右下把手**等比缩放**(zoom) + 把手双击复位（2026-10-04 语义修正）─
+  // 视图模型：容器**永不裁切**（`-mmd-viewport` = overflow:auto 的可滚区，不是"画框"）
+  //          └ `-mermaid-pan`（translate(panX,panY)）└ svg（无 zoom=自然尺寸；有 zoom=自然尺寸×zoom，等比）
+  // 视图态落盘为围栏内首行指令 `%% memoria-view: zoom=<float> [pan=<x>,<y>]`（旧 `w=/h=` 兼容：忽略、不裁切）
+  //（`renderMermaidBlocks` 交给 mermaid.render 之前用 `_parseMemoriaViewDirective` 剥掉该行；
+  // 只在拖动结束且数值真变时经门面 `window.MemoriaApp.surface.setBlockSource` 写回 —— 可撤销、
+  // 会重渲、跟文件走；把手双击 = 删指令行回到自然尺寸）。
+  const _MV_RE = /^\s*%%\s*memoria-view:\s*(?:zoom=(?<z>\d*\.?\d+)(?:\s+pan=(?<npx>-?\d+)\s*,\s*(?<npy>-?\d+))?|w=(?<w>-?\d+)\s+h=(?<h>-?\d+)\s+pan=(?<opx>-?\d+)\s*,\s*(?<opy>-?\d+))\s*$/;   // 新 zoom(z|npx|npy) 与旧 w/h/pan(w|opx|opy) 都匹配
+
+  /** 剥掉 `%% memoria-view` 指令行；返回 { code, found:{hasView,legacy,zoom,panX,panY}|null }（旧格式 ⇒ zoom:null）。 */
+  function _parseMemoriaViewDirective(text) {
+    const lines = String(text == null ? "" : text).split("\n");
+    const out = [];
+    let found = null;
+    for (const ln of lines) {
+      const m = _MV_RE.exec(ln);
+      const g = (m && m.groups) ? m.groups : null;
+      if (g && !found) { found = _mvFoundFromGroups(g); continue; }
+      out.push(ln);
+    }
+    return { code: out.join("\n"), found };
+  }
+
+  function _formatMemoriaViewDirective(zoom, px, py) {
+    return "%% memoria-view: zoom=" + (Math.round((Number(zoom) || 1) * 1000) / 1000) +
+      (((px || py) ? (" pan=" + Math.round(px) + "," + Math.round(py)) : ""));
+  }
+
+  /** 在块源码围栏内首行插入/替换 `%% memoria-view` 指令行；dirLine=null ⇒ 删除该行。 */
+  function _upsertMemoriaViewLine(text, dirLine) {
+    const kept = String(text == null ? "" : text).split("\n").filter((ln) => !_MV_RE.test(ln));
+    if (dirLine != null) kept.splice(1, 0, dirLine);
+    return kept.join("\n");
+  }
+
+  function _mmdBlockIndex(el) {
+    const bi = parseInt(el && el.getAttribute && el.getAttribute("data--block-index"), 10);
+    return isFinite(bi) ? bi : null;
+  }
+
+  /**
+   * 把视图态（尺寸/位移）落到 DOM。
+   *  · 无视图态 ⇒ **完全恢复 mermaid 自然渲染**：svg 回到 `width="100%"` + mermaid 自己的
+   *    `max-width`（= 该图自然宽）。这是"小图自然宽、不被拉伸 / 宽图贴合面板不越界"的关键：
+   *    旧实现把 max-width 清成 "" ⇒ CSS `max-width:100%` 生效 ⇒ **小图被拉满面板**（实测 116→399px）。
+   *  · 视图态 ⇒ 容器 = 画框（尺寸 w×h，CSS `max-width:100%` 保证不超出面板），
+   *    svg 按**自然像素尺寸**绘制（viewBox 宽高）⇒ 超出画框由 overflow 裁掉，靠 pan 平移看。
+   */
+  function _applyMermaidView(container, svg, pan, st) {
+    if (st.hasView) {
+      container.classList.add("-mmd-viewport");
+      container.style.width = Math.round(st.w) + "px";
+      container.style.height = Math.round(st.h) + "px";
+      svg.style.width = Math.round(st.fullW || st.w) + "px";
+      svg.style.height = Math.round(st.fullH || st.h) + "px";
+      svg.style.maxWidth = "none";
+    } else {
+      container.classList.remove("-mmd-viewport");
+      container.style.width = "";
+      container.style.height = "";
+      svg.style.width = "";
+      svg.style.height = "auto";
+      svg.style.maxWidth = st.naturalMaxW || "";
+    }
+    pan.style.transform = (st.panX || st.panY)
+      ? "translate(" + Math.round(st.panX) + "px," + Math.round(st.panY) + "px)" : "";
+  }
+
+  /**
+   * 给一个已渲染的 mermaid 容器挂视图交互（幂等）：
+   *  · 图体按住拖动（超过 4px 才算）⇒ 图内平移；
+   *  · 右下把手拖动 ⇒ 改显示宽高；把手双击 ⇒ 复位自然尺寸（删指令行）；
+   *  · 拖动结束后把尺寸/位移经门面写回文档（数值没变则不写）。
+   * 只有该容器带 `data--block-index`（顶层块）才可写回；嵌套图只读。
+   */
+  function _attachMermaidView(container, svg) {
+    if (!container || !svg || container.dataset.mermaidViewBound === "1") return;
+    const bi = _mmdBlockIndex(container);
+    const surface = (window.MemoriaApp && window.MemoriaApp.surface) || null;
+
+    let pan = container.querySelector(".-mermaid-pan");
+    if (!pan) { pan = document.createElement("div"); pan.className = "-mermaid-pan"; container.insertBefore(pan, svg); pan.appendChild(svg); }
+    let handle = container.querySelector(".-mermaid-resize");
+    if (!handle) {
+      handle = document.createElement("div");
+      handle.className = "-mermaid-resize";
+      handle.setAttribute("contentEditable", "false");
+      container.appendChild(handle);
+    }
+    container.dataset.mermaidViewBound = "1";
+
+    const d = container._mmdDirective || null;
+    const st = { fullW: 0, fullH: 0, naturalMaxW: "", w: d ? d.w : 0, h: d ? d.h : 0, panX: d ? d.panX : 0, panY: d ? d.panY : 0, hasView: !!d };
+    container._mmdState = st;   // 调试/诊断用（探针读尺寸/位移）
+
+    let inited = false;
+    function init() {
+      if (inited) return true;
+      const r = svg.getBoundingClientRect();
+      if (!(r.width > 1 && r.height > 1)) return false;   // 容器不可见/未排版 ⇒ 等下一拍
+      const vb = (svg.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+      // 图的**自然像素尺寸**取自 viewBox（mermaid `useMaxWidth` 下 = 图自身的自然宽高）；
+      // `naturalMaxW` = mermaid 写进 svg.style 的自然上限（无视图态恢复用，防小图被拉满）。
+      st.fullW = (vb.length === 4 && vb[2] > 0) ? vb[2] : Math.round(r.width);
+      st.fullH = (vb.length === 4 && vb[3] > 0) ? vb[3] : Math.round(r.height);
+      st.naturalMaxW = svg.style.maxWidth || "";
+      if (st.hasView) {
+        if (!st.w) st.w = Math.round(Math.min(st.fullW, container.clientWidth || st.fullW));
+        if (!st.h) st.h = Math.round(st.fullH);
+      }
+      _applyMermaidView(container, svg, pan, st);
+      inited = true;
+      return true;
+    }
+    if (!init() && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(function () { if (init()) ro.disconnect(); });
+      ro.observe(container);
+    }
+
+    function setFrozen(on) { if (on) container.dataset.mermaidInteracting = "1"; else delete container.dataset.mermaidInteracting; }
+    function curW() { return st.hasView && st.w ? st.w : Math.round(Math.min(st.fullW || 0, container.clientWidth || st.fullW || 0)); }
+    function curH() { return st.hasView && st.h ? st.h : Math.round(st.fullH || 0); }
+
+    // ── 块级写回（只在数值真变时；经门面 → 撤销栈 + 重解析重渲）──
+    function writeBack() {
+      if (!surface || bi == null || !st.hasView) return;
+      const cur = surface.getBlockSourceText(bi);
+      if (cur == null) return;
+      const line = _formatMemoriaViewDirective(curW(), curH(), st.panX, st.panY);
+      const m = _MV_RE.exec(cur.split("\n")[1] || "");
+      if (m && m[0].trim() === line) return;                  // 与指令行现值一致 ⇒ 不写
+      const next = _upsertMemoriaViewLine(cur, line);
+      if (next === cur) return;
+      surface.setBlockSource(bi, next);
+    }
+
+    // ── 复位：删指令行 + 回到自然尺寸 ──
+    function resetView() {
+      st.hasView = false; st.panX = 0; st.panY = 0;
+      _applyMermaidView(container, svg, pan, st);
+      if (!surface || bi == null) return;
+      const cur = surface.getBlockSourceText(bi);
+      if (cur == null) return;
+      const next = _upsertMemoriaViewLine(cur, null);
+      if (next === cur) return;                               // 本来就没指令行 ⇒ 无需写盘
+      surface.setBlockSource(bi, next);
+    }
+
+    // ── 图内平移（指针事件；>4px 才算拖动，否则当点击/双击）──
+    // move/up 挂到 window（不靠 setPointerCapture：合成指针/跨元素拖动都能收到），结束时移除。
+    const THRESHOLD = 4;
+    let drag = null;
+    function panMove(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved) {
+        if (dx * dx + dy * dy < THRESHOLD * THRESHOLD) return;   // 未过阈值 ⇒ 当点击/双击，不 pan
+        drag.moved = true; setFrozen(true);
+      }
+      e.preventDefault();
+      st.hasView = true;
+      if (!st.w) st.w = curW();
+      if (!st.h) st.h = curH();
+      st.panX = drag.px0 + dx; st.panY = drag.py0 + dy;
+      _applyMermaidView(container, svg, pan, st);
+    }
+    function panEnd(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const moved = drag.moved; drag = null;
+      window.removeEventListener("pointermove", panMove);
+      window.removeEventListener("pointerup", panEnd);
+      window.removeEventListener("pointercancel", panEnd);
+      setFrozen(false);
+      if (moved) { container._mmdDraggedAt = Date.now(); writeBack(); }   // 只有真拖过才写回
+    }
+    container.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest(".-mermaid-resize")) return;   // 把手区不参与平移
+      if (e.target && e.target.closest && e.target.closest(".-mmd-zoom-btn")) return;     // 放大按钮不参与平移
+      if (!inited) init();
+      // 图**没超出视口** ⇒ 拖动无效（不拦截点击/双击，让"进块编辑"等照常）。
+      // "超出"按图的自然尺寸（viewBox）比视口内容盒判定。
+      if (!(st.fullW > container.clientWidth + 1 || st.fullH > container.clientHeight + 1)) return;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, px0: st.panX, py0: st.panY, moved: false };
+      window.addEventListener("pointermove", panMove);
+      window.addEventListener("pointerup", panEnd);
+      window.addEventListener("pointercancel", panEnd);
+    });
+    // 拖动后短暂窗口内屏蔽双击（避免"拖完立刻双击"被当作进 lightbox）
+    container.addEventListener("dblclick", function (e) {
+      if (container._mmdDraggedAt && (Date.now() - container._mmdDraggedAt) < 500) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    // ── 右下把手：拖拽改宽高；双击复位 ──
+    let rs = null;
+    function rsMove(e) {
+      if (!rs || e.pointerId !== rs.id) return;
+      e.preventDefault();
+      st.hasView = true;
+      st.w = Math.max(40, Math.round(rs.w0 + (e.clientX - rs.x)));
+      st.h = Math.max(40, Math.round(rs.h0 + (e.clientY - rs.y)));
+      handle._mmdResized = true;
+      _applyMermaidView(container, svg, pan, st);
+    }
+    function rsEnd(e) {
+      if (!rs || e.pointerId !== rs.id) return;
+      const changed = handle._mmdResized; rs = null;
+      window.removeEventListener("pointermove", rsMove);
+      window.removeEventListener("pointerup", rsEnd);
+      window.removeEventListener("pointercancel", rsEnd);
+      setFrozen(false);
+      if (changed) { container._mmdDraggedAt = Date.now(); writeBack(); }
+    }
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      e.stopPropagation();                                   // 不触发图体平移（也不进块编辑）
+      if (!inited) init();
+      rs = { id: e.pointerId, x: e.clientX, y: e.clientY, w0: curW(), h0: curH() };
+      handle._mmdResized = false;
+      setFrozen(true);
+      window.addEventListener("pointermove", rsMove);
+      window.addEventListener("pointerup", rsEnd);
+      window.addEventListener("pointercancel", rsEnd);
+    });
+    handle.addEventListener("dblclick", function (e) { e.preventDefault(); e.stopPropagation(); resetView(); });
+  }
+
   return {
     renderHtml,
     renderToElement,
@@ -1540,4 +1892,467 @@ window.MemoriaMarkdownPreview = (function () {
     parseInlineTokens,
     annotateSegments,
   };
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-04 语义修正：mermaid「调整大小」= **等比整体缩放**，主视图**永不裁切**
+  //   人（真机）：「你还是做成一个截图，导致越界的没有显示，我不要截图」
+  //   ⇒ 旧"画框态"（`-mmd-viewport` 设 overflow:hidden + content-box + 固定 w×h）会把越界部分
+  //     隐藏掉、只能靠拖拽找回来 —— 体验上等价"固定在框里的一张图"。本块把它改掉：
+  //     · 容器**不再**设固定宽高、**不再** overflow:hidden（app.css 末尾覆盖 ⇒ overflow:auto）；
+  //     · 无 zoom ⇒ mermaid 自然尺寸（小图自然宽居中、宽图 max-width:100% 适配面板，均不裁切）；
+  //     · 有 zoom ⇒ svg 铺设 自然尺寸×zoom（等比）；宽/高超面板 ⇒ 容器滚动条保证**内容可达**；
+  //     · 右下把手拖动改 **zoom**（等比，宽高比恒等于 viewBox 比），双击复位（删指令行）；
+  //     · 旧指令 `%% memoria-view: w=… h=… pan=…` **兼容**：忽略 w/h（绝不裁切），仅取 pan。
+  //   以下函数与文件上方旧实现**同名**（JS 函数声明后者覆盖前者）—— 刻意"文件尾追加"以满足
+  //   「零行漂移」：既有 `markdown-preview.js:<行号>` 锚点一个不动。
+  // ══════════════════════════════════════════════════════════════════════════════
+  /** 由 `_MV_RE` 命名分组生成视图态：新格式取 zoom；旧格式 zoom=null（不裁切，仅取 pan）。 */
+  function _mvFoundFromGroups(g) {
+    return {
+      hasView: true,
+      legacy: g.w != null,
+      zoom: (g.z != null) ? Number(g.z) : null,
+      panX: (g.npx != null) ? Number(g.npx) : (g.opx != null ? Number(g.opx) : 0),
+      panY: (g.npy != null) ? Number(g.npy) : (g.opy != null ? Number(g.opy) : 0),
+    };
+  }
+
+  /** 等比缩放系数夹取：保证显示宽 ≥ 约 40px、上限 20×。 */
+  function _mmdClampZoom(z, fullW) {
+    const minZ = fullW > 0 ? Math.max(0.02, 40 / fullW) : 0.02;
+    return Math.max(minZ, Math.min(20, Number(z) || 1));
+  }
+
+  /**
+   * 把视图态落到 DOM（**永不裁切**）。
+   *  · 无 zoom（含仅旧指令/仅 pan）⇒ 完全恢复 mermaid 自然渲染：svg width="100%" + 内联 `max-width`
+   *    （= 该图自然宽）⇒ 小图自然宽居中、宽图贴合面板；容器不固定尺寸 ⇒ 不裁切。
+   *  · 有 zoom ⇒ svg 显式 width=自然宽×zoom、height=自然高×zoom（等比）；`max-width:none` 允许超出面板，
+   *    由容器 `overflow:auto` 出滚动条 ⇒ 越界内容**始终可达**。
+   */
+  function _applyMermaidView(container, svg, pan, st) {
+    const zoomed = !!(st.hasView && st.zoom != null && st.zoom > 0);
+    container.classList.toggle("-mmd-viewport", !!st.hasView);
+    container.style.width = "";   // 不再固定"画框"尺寸（画框=裁切之源）
+    container.style.height = "";
+    if (zoomed) {
+      svg.style.width = ((st.fullW || 0) * st.zoom) + "px";    // 用小数 px（不取整）⇒ 宽高比严格守恒
+      svg.style.height = ((st.fullH || 0) * st.zoom) + "px";
+      svg.style.maxWidth = "none";
+    } else {
+      svg.style.width = "";
+      svg.style.height = "";
+      svg.style.maxWidth = st.naturalMaxW || "";
+    }
+    pan.style.transform = (st.panX || st.panY)
+      ? "translate(" + Math.round(st.panX) + "px," + Math.round(st.panY) + "px)" : "";
+  }
+
+  /**
+   * 给一个已渲染的 mermaid 容器挂视图交互（幂等）：
+   *  · 图体拖动（>4px，且**确实超出可视区**）⇒ 图内平移；否则不拦截（双击仍进块编辑）；
+   *  · 右下把手拖动 ⇒ 改 **zoom**（等比例，指针到锚点距离比）；把手双击 ⇒ 复位自然尺寸（删指令行）；
+   *  · 拖动结束且数值真变时经门面写回（可撤销、跟文件走）。仅 `data--block-index`（顶层块）可写回。
+   */
+  function _attachMermaidView(container, svg) {
+    if (!container || !svg || container.dataset.mermaidViewBound === "1") return;
+    const bi = _mmdBlockIndex(container);
+    const surface = (window.MemoriaApp && window.MemoriaApp.surface) || null;
+
+    let pan = container.querySelector(".-mermaid-pan");
+    if (!pan) { pan = document.createElement("div"); pan.className = "-mermaid-pan"; container.insertBefore(pan, svg); pan.appendChild(svg); }
+    let handle = container.querySelector(".-mermaid-resize");
+    if (!handle) {
+      handle = document.createElement("div");
+      handle.className = "-mermaid-resize";
+      handle.setAttribute("contentEditable", "false");
+      container.appendChild(handle);
+    }
+    container.dataset.mermaidViewBound = "1";
+
+    const d = container._mmdDirective || null;
+    const st = {
+      fullW: 0, fullH: 0, naturalMaxW: "",
+      hasView: !!(d && d.hasView),
+      zoom: (d && d.zoom != null) ? d.zoom : null,   // 旧格式(w/h) ⇒ null（不裁切，仅取 pan）
+      panX: d ? (d.panX || 0) : 0,
+      panY: d ? (d.panY || 0) : 0,
+    };
+    container._mmdState = st;   // 调试/诊断用（探针读尺寸/位移）
+
+    let inited = false;
+    function init() {
+      if (inited) return true;
+      const r = svg.getBoundingClientRect();
+      if (!(r.width > 1 && r.height > 1)) return false;
+      const vb = (svg.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+      st.fullW = (vb.length === 4 && vb[2] > 0) ? vb[2] : Math.round(r.width);
+      st.fullH = (vb.length === 4 && vb[3] > 0) ? vb[3] : Math.round(r.height);
+      st.naturalMaxW = svg.style.maxWidth || "";
+      if (st.zoom != null) st.zoom = _mmdClampZoom(st.zoom, st.fullW);
+      _applyMermaidView(container, svg, pan, st);
+      inited = true;
+      return true;
+    }
+    if (!init() && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(function () { if (init()) ro.disconnect(); });
+      ro.observe(container);
+    }
+
+    function setFrozen(on) { if (on) container.dataset.mermaidInteracting = "1"; else delete container.dataset.mermaidInteracting; }
+    function dispW() { try { return svg.getBoundingClientRect().width; } catch (e) { return st.fullW; } }
+    function dispH() { try { return svg.getBoundingClientRect().height; } catch (e) { return st.fullH; } }
+    // 写回用 zoom：显式 zoom 优先；仅 pan/旧格式 ⇒ 用"当前显示宽 / 自然宽"固化成新格式
+    function curZoom() { return (st.zoom != null) ? st.zoom : (st.fullW > 0 ? dispW() / st.fullW : 1); }
+
+    function writeBack() {
+      if (!surface || bi == null || !st.hasView) return;
+      const cur = surface.getBlockSourceText(bi);
+      if (cur == null) return;
+      const line = _formatMemoriaViewDirective(curZoom(), st.panX, st.panY);
+      const m = _MV_RE.exec(cur.split("\n")[1] || "");
+      if (m && m[0].trim() === line) return;
+      const next = _upsertMemoriaViewLine(cur, line);
+      if (next === cur) return;
+      surface.setBlockSource(bi, next);
+    }
+
+    function resetView() {
+      st.hasView = false; st.zoom = null; st.panX = 0; st.panY = 0;
+      _applyMermaidView(container, svg, pan, st);
+      if (!surface || bi == null) return;
+      const cur = surface.getBlockSourceText(bi);
+      if (cur == null) return;
+      const next = _upsertMemoriaViewLine(cur, null);
+      if (next === cur) return;
+      surface.setBlockSource(bi, next);
+    }
+
+    // ── 图内平移（仅在**确实超出可视区**时生效；>4px 才算拖动）──
+    const THRESHOLD = 4;
+    let drag = null;
+    function panMove(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved) {
+        if (dx * dx + dy * dy < THRESHOLD * THRESHOLD) return;
+        drag.moved = true; setFrozen(true);
+      }
+      e.preventDefault();
+      st.hasView = true;
+      st.panX = drag.px0 + dx; st.panY = drag.py0 + dy;
+      _applyMermaidView(container, svg, pan, st);
+    }
+    function panEnd(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const moved = drag.moved; drag = null;
+      window.removeEventListener("pointermove", panMove);
+      window.removeEventListener("pointerup", panEnd);
+      window.removeEventListener("pointercancel", panEnd);
+      setFrozen(false);
+      if (moved) { container._mmdDraggedAt = Date.now(); writeBack(); }
+    }
+    container.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest(".-mermaid-resize")) return;
+      if (e.target && e.target.closest && e.target.closest(".-mmd-zoom-btn")) return;
+      if (!inited) init();
+      // 只有**当前显示尺寸确实超出可视区**才允许平移（缩放适配/自然尺寸下拖动无效 ⇒ 不拦截双击）
+      if (!(dispW() > container.clientWidth + 1 || dispH() > container.clientHeight + 1)) return;
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, px0: st.panX, py0: st.panY, moved: false };
+      window.addEventListener("pointermove", panMove);
+      window.addEventListener("pointerup", panEnd);
+      window.addEventListener("pointercancel", panEnd);
+    });
+    container.addEventListener("dblclick", function (e) {
+      if (container._mmdDraggedAt && (Date.now() - container._mmdDraggedAt) < 500) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    // ── 右下把手：拖动 = **等比整体缩放**（指针到锚点距离比）；双击 = 复位回 mermaid 自然尺寸 ──
+    let rs = null;
+    function rsMove(e) {
+      if (!rs || e.pointerId !== rs.id) return;
+      e.preventDefault();
+      const cur = Math.hypot(e.clientX - rs.ax, e.clientY - rs.ay);
+      if (!(rs.dist0 > 0)) return;
+      st.hasView = true;
+      st.zoom = _mmdClampZoom(rs.z0 * (cur / rs.dist0), st.fullW);
+      handle._mmdResized = true;
+      _applyMermaidView(container, svg, pan, st);
+    }
+    function rsEnd(e) {
+      if (!rs || e.pointerId !== rs.id) return;
+      const changed = handle._mmdResized; rs = null;
+      window.removeEventListener("pointermove", rsMove);
+      window.removeEventListener("pointerup", rsEnd);
+      window.removeEventListener("pointercancel", rsEnd);
+      setFrozen(false);
+      if (changed) { container._mmdDraggedAt = Date.now(); writeBack(); }
+    }
+    handle.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      e.stopPropagation();
+      if (!inited) init();
+      const pr = pan.getBoundingClientRect();
+      rs = { id: e.pointerId, ax: pr.left, ay: pr.top, dist0: Math.hypot(e.clientX - pr.left, e.clientY - pr.top), z0: curZoom() };
+      handle._mmdResized = false;
+      setFrozen(true);
+      window.addEventListener("pointermove", rsMove);
+      window.addEventListener("pointerup", rsEnd);
+      window.addEventListener("pointercancel", rsEnd);
+    });
+    handle.addEventListener("dblclick", function (e) { e.preventDefault(); e.stopPropagation(); resetView(); });
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-05 mermaid viewBox 裁切修复（真机确诊：viewBox 比实际内容小 ⇒ 溢出部分被裁）
+  //   证据：同图 viewBox=595×667.5 而 getBBox=759×984（右溢约 220 / 下溢约 352）；
+  //         容器 clientWidth==scrollWidth、面板/整页尺寸均正常 ⇒ 无撑破、无横滚 ⇒ 问题只在 viewBox 与内容不匹配。
+  //   两条修法（都可单独关，便于对照）：
+  //     ① 根因：`_mmdRenderWithFontSync` —— render 前等字体就绪（mermaid 用测量结果算 viewBox，
+  //        字体未就绪时量到的是**回退字体**宽度 ⇒ viewBox 偏小 ⇒ 真字体渲染后文字变宽溢出）；
+  //     ② 安全网：`_normalizeMermaidSvg`（覆盖文件上方同名旧实现）—— 排版稳定后，仅当 getBBox
+  //        明显超出 viewBox 才**扩大**到恰好包住（+padding）；框内则不动（绝不缩小、绝不拉伸小图）。
+  //   「文件尾追加」以满足「零行漂移」：既有 `markdown-preview.js:<行号>` 锚点一个不动。
+  // ══════════════════════════════════════════════════════════════════════════════
+  /** ① 根因修法：render 前 `await document.fonts.ready`（try/catch + 1.5s 超时，拿不到就继续渲染，绝不卡住）。
+   *  理由：mermaid 用**测量结果**算 viewBox；若 render 当刻真实字体尚未应用/加载，量到的是**回退字体**的字号
+   *  宽度 ⇒ viewBox 偏小 ⇒ 真字体渲染后文字变宽、内容溢出框外（实测 viewBox 595×667.5 vs getBBox 759×984，
+   *  宽高比 1.276 与 1.475 不一致，符合"文字回流导致长宽**不同比例**增大"）。 */
+  function _mmdRenderWithFontSync(id, src) {
+    let on = true;   // 可单独关（对照用）：localStorage["-mermaid-font-sync"]="0" 或 URL ?mmdfont=0
+    try { if (localStorage.getItem("-mermaid-font-sync") === "0") on = false; } catch (e) { /* 隐私模式 */ }
+    try { if (/[?&]mmdfont=0(?:&|$)/.test(location.search)) on = false; } catch (e) { /* ignore */ }
+    if (!on) return window.mermaid.render(id, src);   // 关掉时不加任何等待（零延迟）
+    let ready = null;
+    try { ready = (typeof document !== "undefined" && document.fonts && document.fonts.ready) ? document.fonts.ready : null; } catch (e) { ready = null; }
+    const timeout = new Promise(function (r) { setTimeout(r, 1500); });
+    const gate = ready ? Promise.race([ready, timeout]) : timeout;
+    return gate.catch(function () { /* 字体就绪等待失败/超时 ⇒ 直接继续渲染，绝不卡住 */ }).then(function () { return window.mermaid.render(id, src); });
+  }
+
+  /** ② 安全网（覆盖文件上方同名旧实现）：**只扩大以容纳内容，绝不缩小**。
+   *  旧实现在"插入当刻就量"且无条件重写 viewBox/max-width（会缩小、也会在未排版时误判）。
+   *  新语义：
+   *   · 排版稳定后再量（rAF×2；量到 b 为 0/NaN 说明未排版 ⇒ ResizeObserver/延时**有界重试**，几次后放弃）；
+   *   · 仅当 getBBox() 明显超出 current viewBox（任一边溢出 > 1px）才把 viewBox **扩大**到包住 bbox（+2px padding）；
+   *   · bbox 完全在 viewBox 内 ⇒ **什么都不做**（小图保持 mermaid 自然宽居中，绝不拉伸）；
+   *   · 扩大时同步 `style.max-width` = 扩大后宽度（否则框变宽而显示宽度不变，仍会挤压）。
+   *  开关：localStorage["-mermaid-normalize"]="0" 或 URL ?mmdnorm=0 可关（见 _mermaidNormalizeOn，默认开）。 */
+  function _normalizeMermaidSvg(svg) {
+    if (!svg || typeof svg.getBBox !== "function") return;
+    const PAD = 2, MAX_TRIES = 8;
+    let tries = 0;
+    const attempt = function () {
+      let b;
+      try { b = svg.getBBox(); } catch (e) { return false; }
+      if (!b || !(b.width > 0) || !(b.height > 0)) return false;   // 未排版/不可见 ⇒ 交还重试
+      const vb = (svg.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+      if (vb.length !== 4 || !vb.every(function (n) { return isFinite(n); }) || !(vb[2] > 0) || !(vb[3] > 0)) return false;
+      const right = vb[0] + vb[2], bottom = vb[1] + vb[3];
+      const over = Math.max(vb[0] - b.x, vb[1] - b.y, (b.x + b.width) - right, (b.y + b.height) - bottom);
+      if (!(over > 1)) return true;                                // 内容已在框内（含略小）⇒ 不动，绝不缩小
+      const nx = Math.min(vb[0], b.x - PAD), ny = Math.min(vb[1], b.y - PAD);
+      const nw = Math.max(right, b.x + b.width + PAD) - nx, nh = Math.max(bottom, b.y + b.height + PAD) - ny;
+      svg.setAttribute("viewBox", nx + " " + ny + " " + nw + " " + nh);
+      svg.style.maxWidth = Math.ceil(nw) + "px";                  // 同步显示上限 = 扩大后宽度
+      return true;
+    };
+    const retry = function () {
+      if (attempt()) return;
+      if (++tries >= MAX_TRIES) return;                            // 有界：几次后放弃，绝不无限等
+      if (typeof ResizeObserver !== "undefined") {
+        const ro = new ResizeObserver(function () { if (attempt() || ++tries >= MAX_TRIES) ro.disconnect(); });
+        ro.observe(svg.parentElement || svg);
+        return;
+      }
+      setTimeout(function () { requestAnimationFrame(retry); }, 80);
+    };
+    requestAnimationFrame(function () { requestAnimationFrame(retry); });
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-05「类 Trae 预览」：mermaid 控制条（−/＋/百分比/适配/全屏）+ Ctrl 滚轮缩放 + 拖拽平移
+  //   · **纯视图态**：不写文档、不产生指令行、刷新或重开文件即回默认；缩放/平移不触发任何重渲。
+  //   · 缩放上下限 0.1×~8×、按钮与 Ctrl+滚轮步进 1.2×；到边界即止（不无限）。
+  //   · 平移仅在**当前显示尺寸超出可视区**时启用（>4px 才算拖动）；未超出不拦截点击/双击。
+  //   · 控制条 = 装饰层（`.-mmd-zoombar`，`contentEditable=false`），浮在图右上角、不进可编辑内容路径。
+  //   · 覆盖文件上方同名 `_attachMermaidZoom` / `_attachMermaidView`（JS 函数声明后者覆盖前者）；
+  //     文件尾追加 ⇒ 既有 `markdown-preview.js:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  /** 旧实现（右上角单个放大按钮）已被下方控制条取代；保留同签名空实现以兼容 `_afterMermaidInsert` 调用点。 */
+  function _attachMermaidZoom() { /* noop: 控制条并入下方 _attachMermaidView */ }
+
+  /**
+   * 给一个已渲染的 mermaid 容器挂「控制条 + 缩放 + 平移」（幂等）：控制条在容器右上角；
+   * `−`/`＋` 与 Ctrl+滚轮改缩放（0.1×~8×）；仅显示尺寸超出可视区时按住拖动平移（>4px）；
+   * `适配` 复位到初始态（mermaid 自然尺寸 / 适配面板宽）；`⤢` 复用 lightbox 全屏。
+   * **不写文档**：全部为视图态，刷新/重开即回默认。
+   */
+  function _attachMermaidView(container, svg) {
+    if (!container || !svg || container.dataset.mermaidViewBound === "1") return;
+    container.dataset.mermaidViewBound = "1";
+
+    let pan = container.querySelector(".-mermaid-pan");
+    if (!pan) { pan = document.createElement("div"); pan.className = "-mermaid-pan"; container.insertBefore(pan, svg); pan.appendChild(svg); }
+
+    // ── 控制条（装饰层）──
+    let bar = container.querySelector(".-mmd-zoombar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.className = "-mmd-zoombar";
+      bar.setAttribute("contentEditable", "false");
+      bar.setAttribute("data--decoration", "mermaid-view");
+      bar.addEventListener("pointerdown", (e) => e.stopPropagation());
+      bar.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); });
+      container.appendChild(bar);
+    }
+    const mkBtn = (text, key) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "-mmd-zoom-btn";
+      b.setAttribute("contentEditable", "false");
+      b.setAttribute("title", _t(key));
+      b.setAttribute("aria-label", _t(key));
+      b.textContent = text;
+      b.addEventListener("pointerdown", (e) => e.stopPropagation());
+      b.addEventListener("dblclick", (e) => { e.preventDefault(); e.stopPropagation(); });
+      return b;
+    };
+    let pct = bar.querySelector(".-mmd-zoom-pct");
+    if (!pct) {
+      const btnOut = mkBtn("\u2212", "preview.mermaidZoomOut");
+      const btnIn = mkBtn("\uFF0B", "preview.mermaidZoomIn");
+      pct = document.createElement("span");
+      pct.className = "-mmd-zoom-pct";
+      pct.setAttribute("contentEditable", "false");
+      const btnFit = mkBtn(_t("preview.mermaidFit"), "preview.mermaidFit");
+      const btnFull = mkBtn("\u2922", "preview.mermaidFullscreen");
+      bar.append(btnOut, btnIn, pct, btnFit, btnFull);
+      btnOut.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); zoomBy(1 / STEP); });
+      btnIn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); zoomBy(STEP); });
+      btnFit.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); fit(); });
+      btnFull.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); _openWhenMermaidReady(svg, 10); });
+    }
+
+    const MINZ = 0.1, MAXZ = 8, STEP = 1.2, THRESHOLD = 4;
+    const st = { fullW: 0, fullH: 0, naturalMaxW: "", zoom: null, panX: 0, panY: 0 };   // zoom=null ⇒ 初始态（自然尺寸 / 适配面板宽）
+    container._mmdState = st;   // 调试/诊断用（探针读尺寸/位移/缩放）
+
+    let inited = false;
+    const fitScale = () => { const cw = container.clientWidth || 0; return (st.fullW > 0 && cw > 0) ? Math.min(1, cw / st.fullW) : 1; };
+    const effZoom = () => (st.zoom != null ? st.zoom : fitScale());
+
+    /** 重新读「自然尺寸/自然 max-width」。用于：init 及**首次进入缩放**前 —— 因为 `_normalizeMermaidSvg`
+     *  可能在我们 init 之后（rAF×2）才把 viewBox/max-width 扩大；不刷新的话 `zoom=1` 会比初始态还小。 */
+    function refreshNatural() {
+      const vb = (svg.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number);
+      if (vb.length === 4 && vb[2] > 0) st.fullW = vb[2];
+      if (vb.length === 4 && vb[3] > 0) st.fullH = vb[3];
+      st.naturalMaxW = svg.style.maxWidth || "";
+    }
+
+    function apply() {
+      const z = effZoom();
+      container.classList.add("-mmd-viewport");
+      if (st.zoom != null) {
+        svg.style.width = (st.fullW * z) + "px";
+        svg.style.height = (st.fullH * z) + "px";
+        svg.style.maxWidth = "none";
+      } else {
+        svg.style.width = "";   // 恢复 mermaid 自然渲染（宽 100% + 自然 max-width）⇒ 不裁、不拉伸
+        svg.style.height = "";
+        svg.style.maxWidth = st.naturalMaxW || "";
+      }
+      pan.style.transform = (st.panX || st.panY) ? "translate(" + Math.round(st.panX) + "px," + Math.round(st.panY) + "px)" : "";
+      const p = Math.round(z * 100);
+      if (pct) { pct.textContent = p + "%"; pct.setAttribute("aria-label", _t("preview.mermaidZoomLevel", { p: p })); }
+    }
+
+    function init() {
+      if (inited) return true;
+      const r = svg.getBoundingClientRect();
+      if (!(r.width > 1 && r.height > 1)) return false;   // 容器不可见/未排版 ⇒ 等下一拍
+      refreshNatural();
+      if (!(st.fullW > 0)) st.fullW = Math.round(r.width);
+      if (!(st.fullH > 0)) st.fullH = Math.round(r.height);
+      apply();
+      inited = true;
+      return true;
+    }
+    if (!init() && typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(function () { if (init()) ro.disconnect(); });
+      ro.observe(container);
+    }
+
+    function setFrozen(on) { if (on) container.dataset.mermaidInteracting = "1"; else delete container.dataset.mermaidInteracting; }
+    function dispW() { try { return svg.getBoundingClientRect().width; } catch (e) { return st.fullW; } }
+    function dispH() { try { return svg.getBoundingClientRect().height; } catch (e) { return st.fullH; } }
+    const overflow = () => dispW() > container.clientWidth + 1 || dispH() > container.clientHeight + 1;
+
+    /** 设定绝对缩放（夹到 0.1×~8×）；从初始态首次进入缩放时**先刷新**自然尺寸/max-width。 */
+    function setZoom(z) {
+      if (!init() || !(st.fullW > 0)) return;
+      if (st.zoom == null) refreshNatural();
+      st.zoom = Math.max(MINZ, Math.min(MAXZ, z));
+      apply();
+    }
+    function zoomBy(k) { if (st.zoom == null) refreshNatural(); setZoom(effZoom() * k); }
+    function fit() { st.zoom = null; st.panX = 0; st.panY = 0; apply(); }
+
+    // ── Ctrl+滚轮：只处理 Ctrl（**普通滚轮不拦截** ⇒ 交还页面/容器滚动）──
+    container.addEventListener("wheel", function (e) {
+      if (!e.ctrlKey) return;
+      if (!init() || !(st.fullW > 0)) return;
+      if (st.zoom == null) refreshNatural();
+      const z1 = effZoom();
+      const z2 = Math.max(MINZ, Math.min(MAXZ, z1 * (e.deltaY < 0 ? STEP : 1 / STEP)));
+      e.preventDefault();
+      if (z2 === z1) return;   // 到边界 ⇒ 停住，不无限
+      // 光标锚定：让光标下的内容点缩放前后不动（容器滚动坐标）
+      const cr = container.getBoundingClientRect();
+      const cx = container.scrollLeft + (e.clientX - cr.left), cy = container.scrollTop + (e.clientY - cr.top);
+      const natX = (cx - (st.panX || 0)) / z1, natY = (cy - (st.panY || 0)) / z1;
+      st.panX = cx - natX * z2; st.panY = cy - natY * z2;
+      st.zoom = z2;
+      apply();
+    }, { passive: false });
+
+    // ── 拖拽平移：仅当**显示尺寸确实超出可视区**时启用；>4px 才算拖动 ──
+    let drag = null;
+    function panMove(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved) {
+        if (dx * dx + dy * dy < THRESHOLD * THRESHOLD) return;   // 未过阈值 ⇒ 当点击/双击，不 pan
+        drag.moved = true; setFrozen(true);
+        try { if (container.setPointerCapture) container.setPointerCapture(e.pointerId); } catch (_) { /* 合成事件无活动指针 */ }
+      }
+      e.preventDefault();
+      st.panX = drag.px0 + dx; st.panY = drag.py0 + dy;
+      apply();
+    }
+    function panEnd(e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      const moved = drag.moved; drag = null;
+      try { if (container.releasePointerCapture) container.releasePointerCapture(e.pointerId); } catch (_) { /* noop */ }
+      setFrozen(false);
+      if (moved) container._mmdDraggedAt = Date.now();   // 拖动后短窗口内屏蔽双击（**不写文档**）
+    }
+    container.addEventListener("pointerdown", function (e) {
+      if (e.button !== 0) return;
+      if (e.target && e.target.closest && e.target.closest(".-mmd-zoombar")) return;   // 控制条不参与平移
+      if (!init()) return;
+      if (!overflow()) return;   // 未超出 ⇒ 不 pan、不拦截点击/双击（**双击仍进块编辑**）
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, px0: st.panX, py0: st.panY, moved: false };
+    });
+    container.addEventListener("pointermove", panMove);
+    container.addEventListener("pointerup", panEnd);
+    container.addEventListener("pointercancel", panEnd);
+    // 拖动后短暂窗口内屏蔽双击（避免"拖完立刻双击"被当作进块编辑/放大）
+    container.addEventListener("dblclick", function (e) {
+      if (container._mmdDraggedAt && (Date.now() - container._mmdDraggedAt) < 500) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+  }
 })();

@@ -44,7 +44,7 @@
       suppressErrorRendering: true,
       // base：只有它会完全采用下面的 themeVariables（default/forest/dark 会覆盖一部分）
       theme: "base",
-      fontFamily: "inherit",
+      fontFamily: "inherit", htmlLabels: false,   // 2026-09-28 顶层键：mermaid v11 忽略 flowchart.htmlLabels（实测仍产出 <foreignObject> ⇒ viewBox 被污染）；顶层关掉才是真的不用 foreignObject
       themeVariables: {
         darkMode: v("--mmd-dark", "1") === "1",
         background: bg,
@@ -94,7 +94,7 @@
         rankSpacing: 48,
         diagramPadding: 6,
         useMaxWidth: true,
-        htmlLabels: true,
+        htmlLabels: false,   // 2026-09-28：改 false —— <foreignObject> 的 getBBox() 返回 2000×2000（真实标签仅几十 px）污染 mermaid 自身 viewBox ⇒ 所有图被缩到 ~19%、字变 ~2.5px「小到不可见」；关掉后标签改用 <text>，从根上不经 <foreignObject>。台账见 docs-management §4.2
       },
       sequence: { useMaxWidth: true, actorMargin: 56, messageMargin: 34, mirrorActors: false },
       state: { useMaxWidth: true },
