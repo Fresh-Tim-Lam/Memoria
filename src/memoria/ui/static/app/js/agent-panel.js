@@ -6448,6 +6448,27 @@ window.MemoriaAgentPanel = (function () {
     renderStatusUsage();
   }
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 终止路径收尾：移除仍"活着"的提问卡片（2026-10-05；人拍板「对话结束就把它移除、不保留痕迹」）
+  //   现象：人没答 → agent 按推荐继续 → **对话结束后那张提问卡仍留在对话里**。
+  //   病根：卡片状态只在轮询到 `pending_questions` 时才更新（`agent-question.js`），而轮询**跟着作业跑**
+  //         ⇒ 作业一结束就没有下一帧，卡停在"活的、可点"的状态（后端**无问题**：待答项已 detach/abort 收敛）。
+  //   收口：`stopWait` 是**所有终止路径**（定稿/超时/停止/清空/换库）的唯一收口（见上文两处包装的注释）
+  //         ⇒ 在此（排在既有两次包装**之后**，保证最后生效）调 `MemoriaAgentQuestion.removeLive()`
+  //         把残留的活卡移出 DOM；已作答/已收起的卡不动。
+  //   纪律：只**包装**、不改既有函数体；无卡时是空操作；模块缺件（未加载）时跳过，绝不因缺件而坏。
+  // 落点纪律：整块追加在 IIFE 末尾（`return {` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  // 终止路径：先跑既有两次包装（清等待区 + 摘指示器），再移除残留的"活"待答卡（无卡 ⇒ 空操作）。
+  const baseStopWaitForQuestion = stopWait;
+  stopWait = function () {
+    const out = baseStopWaitForQuestion.apply(null, arguments);
+    const q = window.MemoriaAgentQuestion;
+    if (q && typeof q.removeLive === "function") q.removeLive();
+    return out;
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
