@@ -15,7 +15,7 @@
 | `NO_PROVIDER`（无应答者）/ `EMPTY_QUESTIONS`（空批次）/ `ASK_ABORTED`（提问前已中止） | 同名同义（`QuestionError.code`）；`ASK_ABORTED` 本地兼表"本轮被取消"（上游该码就是 abort 语义） |
 | `CALLER_NOT_LIVE` / `DELEGATED_CALLER`（agent 归属校验） | **不适用**：本地无多 agent 归属模型（单一会话 + 单飞作业，不存在"子 agent 无人可问"） |
 | `BAD_INTENT` / `detail` / `intent`（plan-review 展示意图） | **未移植**：本地计划确认走 M3a 自己的卡片（`js/plan-confirm.js`），不引第二条计划审批路径；按上游口径"不认识的 intent 走通用流程"，这里就是不认它（收到也忽略） |
-| 无超时（只等 `signal`） | **本地新增** `NO_ANSWER`：等待上限 `approval_bridge.QUESTION_TIMEOUT_S`（180s），超时按 fail-closed 收成错误结果，模型可再问一次 |
+| 无超时（只等 `signal`） | **本地新增** `NO_ANSWER`：等待上限 `approval_bridge.QUESTION_TIMEOUT_S`（**2026-09-28 起为 `None` = 无限等待**，原 180s），超时按 fail-closed 收成错误结果，模型可再问一次 |
 | 工具**只读**、不走审批 | 同（唯一"副作用"是本轮挂起等人；故与审批共用 `attach`/`detach`/`abort` 生命周期） |
 
 **模型可见文本**：成功 = `{"answers": [{"id": …, "selected": […], "custom": …}]}`（上游 `render` 就是

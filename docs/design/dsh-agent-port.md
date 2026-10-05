@@ -1964,12 +1964,12 @@ provider → 解析 → 审计 → `pending`），只打印安全事实（**从�
 **落地五处**（源码全零漂移：末尾追加 / 等量替换 / 函数内局部导入）：
 
 1. **`approval_bridge.py` 末尾追加「待答信道」**：`_PendingQuestion` + `_questions` + `_close_questions_locked()`
-   + `wait_for_question_answer()` + `pending_questions_for()` + `answer_question()` + `QUESTION_TIMEOUT_S = 180.0`
-   （取值理由写在常量旁：够读题 + 作答，且远小于面板轮询的 30 分钟兜底）；`detach()` / `abort()` 各**等量替换一行**，
-   把未决提问一并收敛（`closed` / `aborted`）—— 否则被取消的提问会一直挂到超时。
+   + `wait_for_question_answer()` + `pending_questions_for()` + `answer_question()` + `QUESTION_TIMEOUT_S`（**2026-09-28 起 = `None` 无限等待**；原 `180.0`）
+   （取值理由写在常量旁）；`detach()` / `abort()` 各**等量替换一行**，
+   把未决提问一并收敛（`closed` / `aborted`）—— 加上"用户作答"，这是**仅有的三条**能结束等待的路。
 2. **新 `services/agent/questions.py`**（seam 语义，上游对照表写在模块 docstring）：`QuestionError` + 四码
    `NO_PROVIDER` / `EMPTY_QUESTIONS` / `ASK_ABORTED`（前三与上游 `UserQuestionError.code` **逐字同名**）
-   + 本地新增 `NO_ANSWER`（上游无超时、只等 `signal`；本地必须有界）+ `wire_questions()`（线上结构：
+   + 本地新增 `NO_ANSWER`（上游无超时、只等 `signal`；本地 **2026-09-28 起默认也不设超时**，仅在显式传 `timeout_s` 时才有界）+ `wire_questions()`（线上结构：
    工具参数的 `multi_select` → `multiSelect`，与上游 `execute` 的映射一致；只搬已知键）+ `ask()`。
 3. **`tools/kb.py`**：`_question_tools(root)` 定义 `ask_user_question`（`read_only=True` ⇒ **不过审批闸**；
    三处本地加固 —— `questions[].required = [id, question]`、`options[].required = [label]`、三者 `minLength: 1`：
@@ -1986,9 +1986,9 @@ provider → 解析 → 审计 → `pending`），只打印安全事实（**从�
    「提交」，成功即写人的答案摘要并收起；`index.html` 末尾追加 script、`app.css` 末尾追加样式块、
    两份 i18n 末尾 `Object.assign`（`agent.question.*` 十一个键（含 2026-09-23 补的 `single`），中英成对）。
 
-**四条失败路径全部 fail-closed**：**未挂载**（CLI / 无面板进程）⇒ `NO_PROVIDER` 且**不登记、不等待**（不空挂 180s）；
+**四条失败路径全部 fail-closed**：**未挂载**（CLI / 无面板进程）⇒ `NO_PROVIDER` 且**不登记、不等待**（不空挂，2026-09-28 起默认无限等待）；
 **空批次** ⇒ `EMPTY_QUESTIONS`（先校验再登记，与上游 `ask()` 同序）；**本轮取消** ⇒ `ASK_ABORTED`；
-**等人超时**（180s）⇒ `NO_ANSWER`。任何一种都不会拿空答案冒充"问过了"。
+**等人超时**（仅在显式传 `timeout_s` 时可能发生）⇒ `NO_ANSWER`。任何一种都不会拿空答案冒充"问过了"。
 
 **语义偏差与取舍（上游 → 本地）**（同一张表也在 `questions.py` 的 docstring 里）：① `CALLER_NOT_LIVE` /
 `DELEGATED_CALLER` **不适用** —— 本地无多 agent 归属模型（单一会话 + 单飞作业，不存在"子 agent 无人可问"）；
