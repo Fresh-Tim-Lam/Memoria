@@ -1333,6 +1333,7 @@ function parseArgs(argv) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   try {
+    if (args['facade-probe']) { if (!args.url || !args.out) throw new Error('--facade-probe 需要 --url/--out（--kb-root 默认 cwd，--file 默认 corpus/01-ime-zh.md）'); const r = await runFacadeProbe({ url: args.url, kbRoot: args['kb-root'] || process.cwd(), file: args.file || 'corpus/01-ime-zh.md', out: args.out, screenshotsDir: args.screenshots ? path.dirname(args.out) : null }); fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(r, null, 2), 'utf8'); process.stdout.write('__FACADE_PROBE__' + JSON.stringify({ ok: !r.error, out: args.out, currentPlug: r.steps && r.steps.surface && r.steps.surface.currentPlug }) + '\n'); process.exit(r.error ? 1 : 0); }
     if (args.selftest) {
       const r = await selftest();
       process.stdout.write(JSON.stringify(r, null, 2) + '\n');
@@ -1382,7 +1383,7 @@ async function main() {
       process.stdout.write('__MERMAID_VIEW__' + JSON.stringify({ ok: !r.error, out: args.out, steps: Object.keys(r.steps) }) + '\n');
       process.exit(r.error ? 1 : 0);
     }
-    process.stderr.write('用法: node cdp.mjs --selftest | --probe --url ... --kb-root ... --cases ... --out ... | --mermaid-diag --url ... --out ... | --mermaid-view --url ... --kb-root ... --out ...\n');
+    process.stderr.write('用法: node cdp.mjs --selftest | --probe --url ... --kb-root ... --cases ... --out ... | --facade-probe --url ... --kb-root ... --out ... | --mermaid-diag --url ... --out ... | --mermaid-view --url ... --kb-root ... --out ...\n');
     process.exit(2);
   } catch (e) {
     process.stdout.write('__PROBE_JSON__' + JSON.stringify({ ok: false, error: String(e && e.message || e) }) + '\n');
@@ -1392,3 +1393,148 @@ async function main() {
 }
 
 main();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 6c. facade probe：驱动 MemoriaSurface（插口）与门面契约键（2026-10-05 追加）
+//
+//   node scripts/benchmark/surface/cdp.mjs --facade-probe \
+//        --url http://127.0.0.1:8643/ --kb-root <kb 目录> --file corpus/01-ime-zh.md \
+//        --out <raw.json> [--screenshots]
+//
+// 断言（对应「门面暴露」任务）：
+//   · MemoriaSurface.current() === 'legacy'；列出 MemoriaApp.surface 的实际键；
+//   · 插头 revealRange(L,L) ⇒ DOM 出现高亮 band（选择器 #-preview-range-band）+ 落点行号命中；
+//   · 插头 applyEdit {kind:'replaceRange'|'deleteRange'} ⇒ 真源按预期变化、返回 true（不再 false）；
+//   · 不支持的 op ⇒ 返回 false（如实）。
+// 说明：registry 未暴露「当前实例」访问器 ⇒ 本探针用同一工厂 createLegacySurface 另建一实例驱动
+//       （接口一致）；current() 仍单独断言。
+// ─────────────────────────────────────────────────────────────────────────────
+async function runFacadeProbe({ url, kbRoot, file, out, screenshotsDir }) {
+  const edge = await launchEdge({ headless: true });
+  const cdp = await CDP.connect(edge.wsUrl);
+  const result = {
+    schema: 'surface-facade-raw/1',
+    browser: edge.browser, edgePath: findEdge(), url, kbRoot, file,
+    startedAt: new Date().toISOString(),
+    steps: {}, console: { errors: [], total: 0 },
+  };
+  const t0 = Date.now();
+  try {
+    await cdp.send('Page.enable');
+    await cdp.send('Runtime.enable');
+    cdp.on('Runtime.consoleAPICalled', (p) => {
+      const text = (p.args || []).map((a) => (a.value !== undefined ? String(a.value) : (a.description || ''))).join(' ');
+      result.console.total++;
+      if (p.type === 'error') result.console.errors.push(text);
+    });
+    cdp.on('Runtime.exceptionThrown', (p) => {
+      const d = p.exceptionDetails || {};
+      result.console.errors.push('[exception] ' + (d.text || '') + ' ' + ((d.exception && d.exception.description) || ''));
+    });
+
+    const loaded = cdp.waitEvent('Page.loadEventFired', 30000);
+    await cdp.send('Page.navigate', { url });
+    await loaded.catch(() => {});
+    await cdp.waitFor(
+      `!!(window.MemoriaApp && window.state && window.MemoriaSurface && window.SurfaceRegistry && window.createLegacySurface && window.state.kbPath)`,
+      { timeout: 60000, label: 'app-ready' }
+    );
+    await cdp.waitFor(`window.MemoriaSurface.current() === 'legacy'`, { timeout: 30000, label: 'plug-legacy' });
+    await cdp.evalJS('(' + PAGE_HELPERS.toString() + ')()');
+
+    // ── 0) 插口 / 门面现状 ─────────────────────────────────────────────────
+    result.steps.surface = {
+      currentPlug: await cdp.evalJS('window.MemoriaSurface.current()'),
+      registered: await cdp.evalJS('window.MemoriaSurface.list()'),
+      facadeKeys: await cdp.evalJS('Object.keys((window.MemoriaApp && window.MemoriaApp.surface) || {})'),
+    };
+
+    await openFile(cdp, file, { skipNav: true });
+    await cdp.waitFor(`window.state.currentPath === ${js(file)} && !!window.state.doc`, { label: 'open' });
+    await ensurePreview(cdp);
+
+    // ── 1) revealRange：band + 落点（band 同步生成；AG104 二次校准在 ~350/~1400ms）──
+    const diskLines = fs.readFileSync(path.join(kbRoot, file), 'utf8').split('\n');
+    let L = null;
+    for (let i = 0; i < diskLines.length; i++) { if (/^##\s+\S/.test(diskLines[i])) { L = i + 1; break; } }
+    if (L == null) L = Math.min(5, diskLines.length);
+    await cdp.evalJS(`window.__fsPlug = window.createLegacySurface({ container: document.getElementById('editor-split'), host: window.MemoriaSurface.host });`);
+    result.steps.reveal = { targetLine: L, plugRevealType: await cdp.evalJS('typeof (window.__fsPlug && window.__fsPlug.revealRange)') };
+    result.steps.reveal.facadeRet = await cdp.evalJS(`window.MemoriaApp.surface.revealRange(${L}, ${L})`);
+    result.steps.reveal.band = await cdp.evalJS(`(function(){
+      var b = document.getElementById('-preview-range-band');
+      if (!b) return { present: false };
+      var r = b.getBoundingClientRect();
+      return { present: true, selector: '#-preview-range-band', className: b.className, srcRange: b.dataset.srcRange || null, top: Math.round(r.top), height: Math.round(r.height) };
+    })()`);
+    await waitScrollSettled(cdp);
+    const fb1 = await cdp.evalJS('window.__probe.firstScreenBlock("preview")');
+    const sc1 = await cdp.evalJS('window.__probe.scrollInfo()');
+    await sleep(1700);   // 越过 AG104 的 350ms/1400ms 二次校准
+    await waitScrollSettled(cdp);
+    const fb2 = await cdp.evalJS('window.__probe.firstScreenBlock("preview")');
+    const sc2 = await cdp.evalJS('window.__probe.scrollInfo()');
+    const band2 = await cdp.evalJS(`(function(){var b=document.getElementById('-preview-range-band');return b?{present:true,srcRange:b.dataset.srcRange||null}:{present:false};})()`);
+    const hit = (fb) => !!(fb && fb.start != null && fb.start <= (L + 1) && fb.end >= (L - 1));
+    result.steps.reveal.firstScreenBlock = fb1;
+    result.steps.reveal.scrollAfterSettle = sc1;
+    result.steps.reveal.hit = hit(fb1);
+    result.steps.reveal.firstScreenBlockAfterCalibration = fb2;
+    result.steps.reveal.scrollAfterCalibration = sc2;
+    result.steps.reveal.hitAfterCalibration = hit(fb2);
+    result.steps.reveal.bandAfterCalibration = band2;
+    await sleep(1900);   // 再等布局（MathJax/懒图）落定，长稳定后再读一次落点
+    await waitScrollSettled(cdp);
+    const fb3 = await cdp.evalJS('window.__probe.firstScreenBlock("preview")');
+    const sc3 = await cdp.evalJS('window.__probe.scrollInfo()');
+    result.steps.reveal.firstScreenBlockAfterLongSettle = fb3;
+    result.steps.reveal.scrollAfterLongSettle = sc3;
+    result.steps.reveal.hitAfterLongSettle = hit(fb3);
+
+    // 对照：**门面不在** ⇒ 适配器退回「滚动到位」（不画 band、不校准）—— 用来证明"band 是门面路径带来的"
+    await cdp.evalJS(`(function(){ window.__origReveal = window.MemoriaApp.surface.revealRange; window.MemoriaApp.surface.revealRange = undefined; var b = document.getElementById('-preview-range-band'); if (b) b.remove(); })()`);
+    await cdp.evalJS(`window.__fsPlug.revealRange(${L}, ${L})`);
+    await sleep(200);
+    result.steps.reveal.fallbackControl = await cdp.evalJS(`(function(){return { facadePresent: !!(window.MemoriaApp.surface && typeof window.MemoriaApp.surface.revealRange === 'function'), bandPresent: !!document.getElementById('-preview-range-band') };})()`);
+    await cdp.evalJS(`window.MemoriaApp.surface.revealRange = window.__origReveal;`);
+
+    // ── 2) applyEdit：replaceRange / deleteRange / 不支持 op（页内原子读 before/after）──
+    await openFile(cdp, file, { skipNav: true });
+    await cdp.waitFor(`window.state.currentPath === ${js(file)} && !!window.state.doc`, { label: 're-open' });
+    const editRes = await cdp.evalJS(`(function(){
+      var plug = window.__fsPlug;
+      var replText = 'FACADE-REPLACE-OK';
+      var before = window.state.doc.body;
+      var beforeLines = before.split('\\n');
+      var r1 = plug.applyEdit({ kind: 'replaceRange', range: { startLine: 1, endLine: 1 }, text: replText, cause: 'user' });
+      var mid = window.state.doc.body;
+      var midLines = mid.split('\\n');
+      var r2 = plug.applyEdit({ kind: 'deleteRange', range: { startLine: 2, endLine: 2 }, cause: 'user' });
+      var after = window.state.doc.body;
+      var afterLines = after.split('\\n');
+      var r3 = plug.applyEdit({ kind: 'noSuchOp' });
+      return {
+        beforeHead: beforeLines.slice(0, 4), beforeLines: beforeLines.length,
+        replaceRange: { ret: r1, expectedLine1: replText, actualLine1: midLines[0], changed: midLines[0] === replText, deltaLines: midLines.length - beforeLines.length, afterHead: midLines.slice(0, 4), afterLines: midLines.length },
+        deleteRange: { ret: r2, removedLine2Was: midLines[1], afterLine2Now: afterLines[1], lineRemoved: afterLines.length === midLines.length - 1, deltaLines: afterLines.length - midLines.length, afterHead: afterLines.slice(0, 4), afterLines: afterLines.length },
+        unsupportedOpRet: r3,
+      };
+    })()`);
+    result.steps.applyEdit = editRes;
+
+    if (screenshotsDir) {
+      try {
+        fs.mkdirSync(screenshotsDir, { recursive: true });
+        result.screenshot = await cdp.screenshot(path.join(screenshotsDir, 'facade-probe.png'));
+      } catch (e) { result.screenshotError = e.message; }
+    }
+  } catch (e) {
+    result.error = String((e && e.message) || e);
+  } finally {
+    result.durationMs = Date.now() - t0;
+    result.finishedAt = new Date().toISOString();
+    cdp.close();
+    edge.cleanup();
+  }
+  return result;
+}

@@ -14141,7 +14141,92 @@
       if (!range || !state.doc || !state.doc.lines) return null;
       return state.doc.lines.slice(range.startLine, range.endLine + 1).join("\n");
     },
+
+    // ── 2026-10-05 追加：显示子系统契约（view-surface-contract.md）§3.1 的**语义键** ──
+    // 只挂契约语义（不吐内部函数名）；供 surface/legacy-surface.js 适配器取用「门面在就用门面」。
+    // 这些闭包（setViewMode/collectEditorBody/highlightRange/_getViewTopSrcLine/_scrollToSrcLine）
+    // 都在本主 IIFE 内、从外面够不着 ⇒ 在此开窗；**不改动任何既有调用路径**（只开窗，不迁移）。
+
+    /** 契约 §3.1 setMode(mode)：视图模式 source | split | preview（内部 setViewMode）。 */
+    setMode: function (mode) { return setViewMode(mode); },
+
+    /** 契约 §3.1 的真源文本读数（§3.2 onTextChange 的来源）：内部 collectEditorBody()。 */
+    collectText: function () { return collectEditorBody(); },
+
+    /** 契约 §3.1 revealRange(startLine, endLine, opts)：跳转落点 —— **真实高亮路径**
+     *  （内部 highlightRange → highlightPreviewRange：band + flash + AG104 二次校准）。
+     *  opts.scroll === false（如切换插头恢复光标）⇒ 走 markRangeQuiet：只标范围、不滚动不闪。 */
+    revealRange: function (startLine, endLine, opts) {
+      var a = Number(startLine);
+      var b = (endLine == null) ? a : Number(endLine);
+      if (!isFinite(a) || !isFinite(b)) return false;
+      if (a > b) { var t = a; a = b; b = t; }
+      if (opts && opts.scroll === false) { markRangeQuiet(a, b); return true; }
+      highlightRange(a, b);
+      return true;
+    },
+
+    /** 契约 §3.1 getScrollAnchor()：当前视图顶部源码行（内部 _getViewTopSrcLine；按当前视图模式）。 */
+    getScrollAnchor: function () {
+      var m = state.viewMode || "preview";
+      return { mode: m, srcLine: _getViewTopSrcLine(m) };
+    },
+
+    /** 契约 §3.1 setScrollAnchor(a)：滚到锚点源码行（内部 _scrollToSrcLine；按锚点/当前视图模式）。 */
+    setScrollAnchor: function (a) {
+      if (!a || a.srcLine == null) return false;
+      var m = a.mode || state.viewMode || "preview";
+      return _scrollToSrcLine(m, a.srcLine);
+    },
+
+    /** 契约 §3.1 EditOp kind:'deleteRange' —— 行区间删除（**等价入口**，见下方 _surfaceSpliceRange；text=null 表示不插入新行）。 */
+    deleteRange: function (range) { return _surfaceSpliceRange(range, null); },
+
+    /** 契约 §3.1 EditOp kind:'replaceRange' —— 行区间替换（**等价入口**，见下方 _surfaceSpliceRange）。 */
+    replaceRange: function (range, text) { return _surfaceSpliceRange(range, text == null ? "" : String(text)); },
+
+    /** 契约 §3.1 样式类编辑（内部 MemoriaEditSync.applyStyle ⇒ commitSelection；range 为 DOM Range）。 */
+    applySelectionStyle: function (formatType, color, range, forceApply) {
+      var es = window.MemoriaEditSync;
+      return (es && typeof es.applyStyle === "function") ? es.applyStyle(formatType, color, range, forceApply) : { ok: false };
+    },
   };
+
+  /** 行区间拼接（`MemoriaApp.surface.replaceRange/deleteRange` 的**等价入口**）。
+   *  为什么不用 `MemoriaEditSync.commitRange`：其签名 (startLine,endLine,newLines,newCursor,preCursor,kind) 需要
+   *  **AST 光标**（`beginUndo` 的 preCursor 走 cloneCursor，传 null 会抛）⇒ 契约的文本坐标无法无损构造；
+   *  故沿用 `surface.setBlockSource`（mermaid 门面）的同一管线：beginUndoGroup → 改真源 → renderEditor + renderPreview → markDirty。
+   *  口径：`range = {startLine, endLine}` **1-based 含端点**（与 data--src-line / getSrcRangeForSelection / revealRange 一致）；
+   *  粒度为**整行**（列信息 startCol/endCol 忽略）。 */
+  function _surfaceSpliceRange(range, text) {
+    if (!range || range.startLine == null) return false;
+    var s = state;
+    if (!s || !s.doc || typeof s.doc.body !== "string") return false;
+    var start1 = Number(range.startLine);
+    var end1 = (range.endLine == null) ? start1 : Number(range.endLine);
+    if (!isFinite(start1) || !isFinite(end1)) return false;
+    if (start1 > end1) { var t = start1; start1 = end1; end1 = t; }
+    var rawLines = s.doc.body.split("\n");
+    var start0 = start1 - 1;          // 1-based 含端点 → 0-based
+    var endExcl = end1;               // 含端点：end1(1-based) 对应排他下标
+    if (start0 < 0 || start0 > rawLines.length) return false;
+    if (endExcl > rawLines.length) endExcl = rawLines.length;
+    if (start0 > endExcl) return false;
+    var es = window.MemoriaEditSync;
+    try { if (es && typeof es.flushRepaint === "function") es.flushRepaint(); } catch (_) { /* 挂起重渲冲掉失败不阻断写回 */ }
+    if (es && typeof es.beginUndoGroup === "function") { try { es.beginUndoGroup(); } catch (_) { /* noop */ } }
+    var newLines = (text == null) ? [] : String(text).split("\n");   // null = 删除（不插入新行）；"" = 替换为一个空行
+    var merged = rawLines.slice(0, start0).concat(newLines, rawLines.slice(endExcl));
+    if (!merged.length) merged = [""];                               // 整篇删空 ⇒ 保留一个空行
+    s.doc.body = merged.join("\n");
+    s.doc.lines = merged.slice();
+    s.doc.preview_body = null;
+    if (es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
+    try { renderEditor(s.doc); } catch (e) { log("render", "surface.spliceRange renderEditor: " + ((e && e.message) || e)); }
+    try { var p = renderPreview(s.doc, { incremental: true }); if (p && typeof p.catch === "function") p.catch(function () { }); } catch (e2) { log("render", "surface.spliceRange renderPreview: " + ((e2 && e2.message) || e2)); }
+    markDirty();
+    return true;
+  }
 })();
 
 /* ===== 顶部文件标签栏：滚轮 → 横向滚动（2026-09-19）=========================

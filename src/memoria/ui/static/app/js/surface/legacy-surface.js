@@ -18,18 +18,18 @@
  *   · window.MemoriaEditHandler —— 编辑态（cursorAST / blockEditMode / _captionEditingEl / _composing）
  *   · window.MemoriaMapper      —— 坐标映射（domToAst / astToSrc）
  *
- * 如实声明（本刀范围；以下均为「查得到的事实」，不是猜测）：
- *   1) app.js 的 `setViewMode` / `collectEditorBody` / `highlightRange` / `highlightPreviewRange` /
- *      `_getViewTopSrcLine` / `_scrollToSrcLine` **都是主 IIFE 内的闭包、未挂到 `window.MemoriaApp` 门面**
- *      ⇒ 适配器改用**等价的真实入口**（视图按钮点击 = 真实用户路径）或**就地读 DOM**。
- *      `getScrollAnchor` / `setScrollAnchor` 的 DOM 读数**镜像** app.js:1690 `_getViewTopSrcLine` /
- *      app.js:1717 `_scrollToSrcLine`（零行漂移纪律下无法从门面取到这两处闭包）。若 app.js 那两处改了，
- *      这里需同步。
- *   2) `MemoriaEditSync` 只导出 insertText / flushRepaint / backspace / deleteForward / splitParagraph /
+ * 如实声明（2026-10-05 更新；以下均为「查得到的事实」，不是猜测）：
+ *   1) app.js 已开**门面窗口** `window.MemoriaApp.surface`：`setMode` / `collectText` / `revealRange` /
+ *      `getScrollAnchor` / `setScrollAnchor` / `replaceRange` / `deleteRange` / `applySelectionStyle`
+ *      （挂在**同一对象**上，内部闭包 setViewMode / collectEditorBody / highlightRange / _getViewTopSrcLine / _scrollToSrcLine）。
+ *      **门面在 ⇒ 用门面；门面不在（独立运行）⇒ 退回本文件内的等价实现**（DOM 读数镜像 app.js:1690/1717）。
+ *   2) `MemoriaEditSync` 导出 insertText / flushRepaint / backspace / deleteForward / splitParagraph /
  *      revertBlock / applyStyle / getSelectionStyles / deleteSelection / beginUndoGroup / endUndoGroup /
- *      undo / redo / resetHistory；**commit / commitRange / commitSelection 未导出**（内部闭包）。
- *   3) `revealRange`：legacy 真正的「跳转落点」是闭包 `highlightRange`（band + flash + 二次校准），
- *      门面取不到 ⇒ 适配器只能做到**滚动到位**（不画 band、不闪、不做二次校准）。这是能力缺口，如实标注。
+ *      undo / redo / resetHistory；**commit / commitRange / commitSelection 仍未导出**（内部闭包，签名需
+ *      AST 光标 / preCursor，无法从文本坐标无损构造）⇒ 范围类 op 走门面 `replaceRange`/`deleteRange`
+ *      （**行级**拼接：等价入口，与 `setBlockSource` 同一「beginUndoGroup → 改真源 → 重渲 → 标脏」管线）。
+ *   3) `revealRange` 现走门面 = **真实高亮路径**（`highlightRange` → `highlightPreviewRange`：band + flash +
+ *      AG104 二次校准）；门面不在时退回**滚动到位**（不画 band、不闪、不校准）。
  *   4) 冻结判定 `isBlockFrozen` 用现有可查的编辑态实现；查不到的（如 caption 不落在任何块上）**保守返回 true**。
  */
 window.createLegacySurface = function createLegacySurface(deps) {
@@ -175,11 +175,11 @@ window.createLegacySurface = function createLegacySurface(deps) {
           return typeof es.splitParagraph === "function" ? es.splitParagraph() : false;
         case "mergeBlock":
           return typeof es.backspace === "function" ? es.backspace() : false;
-        case "deleteRange":
-        case "replaceRange":
-          // legacy 的范围删除入口 `deleteSelection(range)` 需要**浏览器 Range**（不是文本坐标），
-          // 且 commitRange 未导出 ⇒ 契约的文本坐标 op 在此无法无损映射；如实返回 false。
-          return false;
+        case "deleteRange": {
+          var sDel = _app() && _app().surface;
+          return !!(sDel && typeof sDel.deleteRange === "function" && sDel.deleteRange(op.range || op.at || op));
+        }
+        case "replaceRange": { var sRep = _app() && _app().surface; return !!(sRep && typeof sRep.replaceRange === "function" && sRep.replaceRange(op.range || op.at || op, op.text)); }
         default:
           return false;
       }
@@ -189,33 +189,33 @@ window.createLegacySurface = function createLegacySurface(deps) {
     undo: function () { _settle(); var es = _es(); return es && typeof es.undo === "function" ? es.undo() : false; },
     redo: function () { _settle(); var es = _es(); return es && typeof es.redo === "function" ? es.redo() : false; },
 
-    /** §3.1 跳转落点。F5：先落定。
-     *  ⚠️ 能力缺口（见文件头 3)）：真正的 `highlightRange` 是闭包、门面取不到 ⇒ 这里只做**滚动到位**
-     *  （不画 band、不闪、不做 AG104 的二次校准）。 */
+    /** §3.1 跳转落点。F5：先落定。门面在 ⇒ 走门面（真实高亮：band + flash + AG104 二次校准）；不在 ⇒ 退回滚动到位。 */
     revealRange: function (startLine, endLine, opts) {
       _settle();
       var s = _st();
       if (!s || !s.doc || startLine == null) return;
+      var surf = _app() && _app().surface;
+      if (surf && typeof surf.revealRange === "function") { surf.revealRange(startLine, endLine == null ? startLine : endLine, opts); return; }
       var mode = s.viewMode || "preview";
       if (opts && opts.scroll === false) return;
       _scrollToSrcLine(mode === "preview" ? "preview" : mode, startLine);
     },
 
-    /** §3.1 取滚动锚点（切模式 / 换文件时取）。F4：先落定。 */
+    /** §3.1 取滚动锚点（切模式 / 换文件时取）。F4：先落定。门面在 ⇒ 用门面（内部 _getViewTopSrcLine）。 */
     getScrollAnchor: function () {
-      _settle();
-      var s = _st();
-      var mode = s ? s.viewMode : null;
-      return { mode: mode, srcLine: _topSrcLine(mode) };
+      _settle(); var s = _st();
+      var surf = _app() && _app().surface;
+      if (surf && typeof surf.getScrollAnchor === "function") return surf.getScrollAnchor();
+      var mode = s ? s.viewMode : null; return { mode: mode, srcLine: _topSrcLine(mode) };
     },
 
-    /** §3.1 设滚动锚点。F4：先落定。 */
+    /** §3.1 设滚动锚点。F4：先落定。门面在 ⇒ 用门面（内部 _scrollToSrcLine）。 */
     setScrollAnchor: function (a) {
       _settle();
       if (!a || a.srcLine == null) return;
-      var s = _st();
-      var mode = a.mode || (s ? s.viewMode : null);
-      _scrollToSrcLine(mode, a.srcLine);
+      var s = _st(); var surf = _app() && _app().surface;
+      if (surf && typeof surf.setScrollAnchor === "function") { surf.setScrollAnchor(a); return; }
+      _scrollToSrcLine(a.mode || (s ? s.viewMode : null), a.srcLine);
     },
 
     /** §3.1 选区 → 源码坐标。F3：返回坐标必须与真源一致 ⇒ 先落定。
