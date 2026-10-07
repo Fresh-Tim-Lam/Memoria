@@ -1333,7 +1333,7 @@ function parseArgs(argv) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   try {
-    if (args['facade-probe']) { if (!args.url || !args.out) throw new Error('--facade-probe 需要 --url/--out（--kb-root 默认 cwd，--file 默认 corpus/01-ime-zh.md）'); const r = await runFacadeProbe({ url: args.url, kbRoot: args['kb-root'] || process.cwd(), file: args.file || 'corpus/01-ime-zh.md', out: args.out, screenshotsDir: args.screenshots ? path.dirname(args.out) : null }); fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(r, null, 2), 'utf8'); process.stdout.write('__FACADE_PROBE__' + JSON.stringify({ ok: !r.error, out: args.out, currentPlug: r.steps && r.steps.surface && r.steps.surface.currentPlug }) + '\n'); process.exit(r.error ? 1 : 0); }
+    if (args['facade-probe']) { if (!args.url || !args.out) throw new Error('--facade-probe 需要 --url/--out（--kb-root 默认 cwd，--file 默认 corpus/01-ime-zh.md）'); const r = await runFacadeProbe({ url: args.url, kbRoot: args['kb-root'] || process.cwd(), file: args.file || 'corpus/01-ime-zh.md', out: args.out, screenshotsDir: args.screenshots ? path.dirname(args.out) : null }); fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(r, null, 2), 'utf8'); process.stdout.write('__FACADE_PROBE__' + JSON.stringify({ ok: !r.error, out: args.out, currentPlug: r.steps && r.steps.surface && r.steps.surface.currentPlug }) + '\n'); process.exit(r.error ? 1 : 0); } if (args['nav-probe']) { if (!args.url || !args.out) throw new Error('--nav-probe 需要 --url/--out（--kb-root 默认 cwd，--file-a/--file-b 可选）'); const r = await runNavProbe({ url: args.url, kbRoot: args['kb-root'] || process.cwd(), out: args.out, shotsDir: args.shots ? path.resolve(args.shots) : null, fileA: args['file-a'] || 'scale/scale-1k.md', fileB: args['file-b'] || 'scale/scale-5k.md' }); fs.mkdirSync(path.dirname(args.out), { recursive: true }); fs.writeFileSync(args.out, JSON.stringify(r, null, 2), 'utf8'); process.stdout.write('__NAV_PROBE__' + JSON.stringify({ ok: !r.error, out: args.out, pass: r.summary && r.summary.allPass }) + '\n'); process.exit(r.error ? 1 : 0); }
     if (args.selftest) {
       const r = await selftest();
       process.stdout.write(JSON.stringify(r, null, 2) + '\n');
@@ -1531,6 +1531,230 @@ async function runFacadeProbe({ url, kbRoot, file, out, screenshotsDir }) {
   } catch (e) {
     result.error = String((e && e.message) || e);
   } finally {
+    result.durationMs = Date.now() - t0;
+    result.finishedAt = new Date().toISOString();
+    cdp.close();
+    edge.cleanup();
+  }
+  return result;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 6d. nav probe：前进/后退 + 按文件的位置记忆（2026-10-06）
+//
+//   node scripts/benchmark/surface/cdp.mjs --nav-probe \
+//        --url http://127.0.0.1:8643/ --kb-root <kb 目录> \
+//        --out <raw.json> [--shots <目录>] [--file-a ... --file-b ...]
+//
+// 断言（人报障：「前进/后退跳转文件后从头看，不回到旧位置」）：
+//   S1 (b) A@L → 打开 B → 顶栏「后退」⇒ A 首屏第一块 data--src-line 命中 L(±1)；
+//           再「前进」⇒ B 亦回到离开时位置(±1)。
+//   S2 (b) 同一文件两个不同位置：A@L1 → A@L2（同文件新帧）→ 去 B →
+//          后退两次 ⇒ 分别命中 L2、L1。
+//   S3 (a) 文件树打开也回原处：A@L → 打开 B → 文件树点 A ⇒ 命中 L(±1)。
+// 驱动：CDP 真机 Edge + harness；顶栏按钮/文件树项用**真实鼠标点按**（Input.dispatchMouseEvent），
+//       内容用真实入口 `MemoriaApp.openFile` / `MemoriaNavStack.clear`。非单元级。
+// ─────────────────────────────────────────────────────────────────────────────
+async function runNavProbe({ url, kbRoot, out, shotsDir, fileA, fileB }) {
+  const edge = await launchEdge({ headless: true });
+  const cdp = await CDP.connect(edge.wsUrl);
+  const result = {
+    schema: 'surface-nav-restore-raw/1',
+    browser: edge.browser, edgePath: findEdge(), url, kbRoot, fileA, fileB,
+    startedAt: new Date().toISOString(),
+    scenarios: {}, summary: {}, navDiagLog: [], console: { errors: [], total: 0 },
+  };
+  const t0 = Date.now();
+
+  async function realClick(selector, nth = 0) {
+    const box = await cdp.evalJS(`(function(){var el=document.querySelectorAll(${js(selector)})[${nth}];if(!el)return null;if(el.scrollIntoView)el.scrollIntoView({block:'nearest'});var r=el.getBoundingClientRect();return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2),w:Math.round(r.width),h:Math.round(r.height)};})()`);
+    if (!box || !box.w) return { ok: false, reason: 'not-found-or-zero-size', box };
+    const base = { x: box.x, y: box.y, button: 'left' };
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', ...base, buttons: 1, clickCount: 1 });
+    await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', ...base, buttons: 0, clickCount: 1 });
+    return { ok: true, box };
+  }
+  async function openFileRaw(file, opts = {}) {
+    await cdp.evalJS(`window.MemoriaApp.openFile(${js(file)}, ${js(opts)})`);
+    await cdp.waitFor(`window.state.currentPath === ${js(file)} && !!window.state.doc`, { label: 'open ' + file });
+  }
+  async function openFileAwait(file, opts = {}) {
+    await openFileRaw(file, opts);
+    await cdp.waitFor(`document.querySelectorAll('#preview .-src-block').length > 0`, { timeout: 45000, label: 'blocks ' + file });
+  }
+  async function settle(ms = 2000) { await sleep(ms); await waitScrollSettled(cdp); }
+  async function firstBlock() { return await cdp.evalJS('window.__probe.firstScreenBlock(window.state.viewMode)'); }
+  async function topLine() { return await cdp.evalJS('window.__probe.topSrcLine(window.state.viewMode)'); }
+  async function lineToTop(L) {
+    const r = await cdp.evalJS(`(function(L){var pane=document.getElementById('preview-pane');if(!pane)return null;var bs=pane.querySelectorAll('[data--src-line]');for(var i=0;i<bs.length;i++){var s=+(bs[i].dataset.SrcLine||0),e=+(bs[i].dataset.SrcLineEnd||s);if(s<=L&&e>=L){bs[i].scrollIntoView({block:'start'});return {start:s,end:e};}}return null;})(${L})`);
+    if (r) return r;
+    // 兜底：用应用自身的 scrollToSrcLine（与恢复同一条路径）
+    const ok = await cdp.evalJS(`!!window.MemoriaApp.scrollToSrcLine(window.state.viewMode, ${L})`);
+    const info = await cdp.evalJS(`window.__probe.blockInfoForLine(${L})`);
+    return info ? { start: info.start, end: info.end, viaFallback: ok } : (ok ? { start: L, end: L, viaFallback: true } : null);
+  }
+  async function srcLineCount() { return await cdp.evalJS(`document.querySelectorAll('#preview [data--src-line]').length`); }
+  // 从**实际已渲染**的块里按比例挑一个源码行（=某块的起始行）作为目标 L，保证 L 必被某块覆盖
+  async function pickRenderedLine(fraction) {
+    const v = await cdp.evalJS(`(function(f){var bs=document.querySelectorAll('#preview [data--src-line]');if(!bs.length)return null;var el=bs[Math.min(bs.length-1,Math.max(0,Math.floor(bs.length*f)))];return +(el.dataset.SrcLine||0)||null;})(${fraction})`);
+    return v || null;
+  }
+  async function blockStartForLine(L) { const b = await cdp.evalJS(`window.__probe.blockInfoForLine(${L})`); return b && b.start ? b.start : L; }
+  function covers(block, L) { return !!(block && block.start != null && block.start <= L + 1 && block.end >= L - 1); }
+  async function navDiag() { return await cdp.evalJS(`(function(){var b=document.getElementById('btn-nav-back');return {path:window.state.currentPath, canBack:window.MemoriaNavStack.canBack(), canForward:window.MemoriaNavStack.canForward(), disabled:b?b.disabled:null, maxScroll:(function(){var p=document.getElementById('preview-pane');return p?Math.round(p.scrollHeight-p.clientHeight):null;})()};})()`); }
+  // 真实鼠标点按顶栏按钮；记录前后导航状态（不改变应用行为的诊断）
+  async function navClick(selector, expectPath) {
+    const before = await navDiag();
+    const click = await realClick(selector);
+    const entry = { selector, expectPath, before, click };
+    result.navDiagLog.push(entry);
+    if (before.path === expectPath) { await sleep(3000); entry.after = await navDiag(); return entry; }
+    try { await cdp.waitFor(`window.state.currentPath === ${js(expectPath)}`, { timeout: 8000, interval: 100, label: selector }); }
+    catch (_) { entry.after = await navDiag(); throw new Error('nav 未生效 ' + selector + '：' + JSON.stringify(entry)); }
+    entry.after = await navDiag();
+    return entry;
+  }
+
+  try {
+    await cdp.send('Page.enable');
+    await cdp.send('Runtime.enable');
+    cdp.on('Runtime.consoleAPICalled', (p) => {
+      const text = (p.args || []).map((a) => (a.value !== undefined ? String(a.value) : (a.description || ''))).join(' ');
+      result.console.total++;
+      if (p.type === 'error') result.console.errors.push(text);
+    });
+    cdp.on('Runtime.exceptionThrown', (p) => {
+      const d = p.exceptionDetails || {};
+      result.console.errors.push('[exception] ' + (d.text || '') + ' ' + ((d.exception && d.exception.description) || ''));
+    });
+
+    const loaded = cdp.waitEvent('Page.loadEventFired', 30000);
+    await cdp.send('Page.navigate', { url });
+    await loaded.catch(() => {});
+    await cdp.waitFor(
+      `!!(window.MemoriaApp && window.state && window.state.kbPath && window.state.files && window.state.files.length > 0 && window.MemoriaPositionMemory && window.MemoriaNavStack && typeof window.MemoriaNavStack.rememberAnchor === 'function')`,
+      { timeout: 60000, label: 'app-ready' }
+    );
+    await cdp.evalJS('(' + PAGE_HELPERS.toString() + ')()');
+    // 页内埋点：记录 push/clear 调用（诊断导航栈）
+    await cdp.evalJS(`(function(){if(window.__navPushLog)return; window.__navPushLog=[]; var ns=window.MemoriaNavStack; ['push','clear','navBack','navForward'].forEach(function(k){var o=ns[k]; ns[k]=function(){window.__navPushLog.push({k:k, args:Array.prototype.slice.call(arguments).map(function(a){return a&&a.file?a.file:a;}), canBack:ns.canBack(), cursor:undefined}); return o.apply(ns,arguments);};});})()`);
+    await cdp.send('Emulation.setDeviceMetricsOverride', { width: 1440, height: 900, deviceScaleFactor: 1, mobile: false });
+    // 先打开 A（默认可能 source 模式；state.doc 为空时点预览按钮会让 renderEditor(null) 崩）
+    await openFileRaw(fileA, {});
+    await clickView(cdp, 'preview');
+    await cdp.waitFor(`window.state.viewMode === 'preview'`, { label: 'viewMode=preview' });
+    try {
+      await cdp.waitFor(`document.querySelectorAll('#preview .-src-block').length > 0`, { timeout: 45000, label: 'A blocks' });
+    } catch (e) {
+      result.diag = await cdp.evalJS(`(function(){var p=document.getElementById('preview');return {viewMode:window.state.viewMode, hasPreview:!!p, previewChildCount:p?p.children.length:-1, previewHTMLHead:p?p.innerHTML.slice(0,300):null, srcBlocks:document.querySelectorAll('#preview .-src-block').length, srcLineCount:document.querySelectorAll('#preview [data--src-line]').length, docBlockCount:(window.state.doc&&window.state.doc.blocks)?window.state.doc.blocks.length:-1, currentPath:window.state.currentPath};})()`);
+      throw new Error('A blocks 未出现：' + JSON.stringify(result.diag));
+    }
+
+    // 预热：先切到 B 再回 A，逼出一次完整预览渲染（首次渲染常被 mermaid/初始化并发挡成半截）
+    await openFileAwait(fileB, {});
+    await openFileAwait(fileA, {});
+    await settle(1200);
+
+    // 用 A 探一次行数，以便取「中部」行
+    const metaA = await cdp.evalJS('window.__probe.docLines()');
+    const midA = Math.max(6, Math.floor(metaA * 0.5));
+    const midA2 = Math.max(6, Math.floor(metaA * 0.75));
+
+    // ── S1：(b) 跨文件后退/前进 ─────────────────────────────────────────────
+    await cdp.evalJS('window.MemoriaNavStack.clear(); true');
+    await openFileAwait(fileA, {});
+    const s1LinesBeforeScroll = await srcLineCount();
+    const LA = (await pickRenderedLine(0.5)) || (await blockStartForLine(midA));
+    const scrolledA = await lineToTop(LA);
+    const anchorA = await topLine();
+    await openFileAwait(fileB, {});
+    const metaB = await cdp.evalJS('window.__probe.docLines()');
+    const midB = Math.max(4, Math.floor(metaB * 0.4));
+    const LB = await blockStartForLine(midB);
+    const scrolledB = await lineToTop(LB);
+    const anchorB = await topLine();
+    const clickBack = await navClick('#btn-nav-back', fileA);
+    await settle();
+    const backA = { first: await firstBlock(), top: await topLine(), scroll: await cdp.evalJS('window.__probe.scrollInfo()') };
+    const clickFwd = await navClick('#btn-nav-forward', fileB);
+    await settle();
+    const fwdB = { first: await firstBlock(), top: await topLine(), scroll: await cdp.evalJS('window.__probe.scrollInfo()') };
+    result.scenarios.S1_back_forward = {
+      linesA: metaA, linesB: metaB, LA, LB, s1LinesBeforeScroll, scrolledA, scrolledB, anchorA, anchorB,
+      clickBack, clickForward: clickFwd,
+      afterBack: { path: fileA, ...backA, hitL: covers(backA.first, LA) },
+      afterForward: { path: fileB, ...fwdB, hitL: covers(fwdB.first, LB) },
+    };
+
+    // ── S2：(b) 同一文件两个不同位置（openFile 非 fromNav ⇒ 同文件也入新帧）──
+    await cdp.evalJS('window.MemoriaNavStack.clear(); true');
+    await openFileAwait(fileA, {});
+    const L1 = (await pickRenderedLine(0.5)) || (await blockStartForLine(midA));
+    await lineToTop(L1);
+    const anchor1 = await topLine();
+    await openFileAwait(fileA, { kpId: '__probe_pos2_' + Date.now() });
+    const L2 = (await pickRenderedLine(0.75)) || (await blockStartForLine(midA2));
+    await lineToTop(L2);
+    const anchor2 = await topLine();
+    await openFileAwait(fileB, {});
+    const s2back1Click = await navClick('#btn-nav-back', fileA);
+    await settle(2200);
+    const s2back1 = { path: await cdp.evalJS('window.state.currentPath'), first: await firstBlock(), top: await topLine() };
+    const s2back2Click = await navClick('#btn-nav-back', fileA);
+    await settle(2200);
+    const s2back2 = { path: await cdp.evalJS('window.state.currentPath'), first: await firstBlock(), top: await topLine() };
+    result.scenarios.S2_same_file_two_positions = {
+      L1, L2, anchor1, anchor2, clickBack1: s2back1Click, clickBack2: s2back2Click,
+      back1: { ...s2back1, hitL2: covers(s2back1.first, L2) },
+      back2: { ...s2back2, hitL1: covers(s2back2.first, L1) },
+    };
+
+    // ── S3：(a) 文件树打开也回原处 ─────────────────────────────────────────
+    await cdp.evalJS('window.MemoriaNavStack.clear(); true');
+    await openFileAwait(fileA, {});
+    const LFT = (await pickRenderedLine(0.5)) || (await blockStartForLine(midA));
+    await lineToTop(LFT);
+    const anchorFT = await topLine();
+    await openFileAwait(fileB, {});
+    const treeSel = `.-tree-item[data-path="${fileA}"]`;
+    let treeClick = await realClick(treeSel);
+    if (!treeClick.ok) {
+      await cdp.evalJS(`window.MemoriaFileTree && window.MemoriaFileTree.expandToPath && window.MemoriaFileTree.expandToPath(${js(fileA)})`);
+      await sleep(400);
+      treeClick = await realClick(treeSel);
+    }
+    await cdp.waitFor(`window.state.currentPath === ${js(fileA)}`, { timeout: 30000, label: 'tree→A' }).catch(() => {});
+    await settle();
+    const treeFirst = { first: await firstBlock(), top: await topLine() };
+    result.scenarios.S3_file_tree_open = {
+      L: LFT, anchor: anchorFT, treeSelector: treeSel, treeClick,
+      afterTreeOpen: { path: await cdp.evalJS('window.state.currentPath'), ...treeFirst, hitL: covers(treeFirst.first, LFT) },
+    };
+
+    const s1 = result.scenarios.S1_back_forward;
+    const s2 = result.scenarios.S2_same_file_two_positions;
+    const s3 = result.scenarios.S3_file_tree_open;
+    result.summary = {
+      S1_back_hitLA: s1.afterBack.hitL,
+      S1_forward_hitLB: s1.afterForward.hitL,
+      S2_back1_hitL2: s2.back1.hitL2,
+      S2_back2_hitL1: s2.back2.hitL1,
+      S3_tree_hitL: s3.afterTreeOpen.hitL,
+      driver: 'CDP 真机 Edge + harness；顶栏按钮/文件树项=真实鼠标点按；打开=MemoriaApp.openFile 真实入口',
+      level: 'end-to-end（应用级集成，非单元级）',
+    };
+    result.summary.allPass = !!(result.summary.S1_back_hitLA && result.summary.S1_forward_hitLB && result.summary.S2_back1_hitL2 && result.summary.S2_back2_hitL1 && result.summary.S3_tree_hitL);
+
+    if (shotsDir) {
+      try {
+        fs.mkdirSync(shotsDir, { recursive: true });
+        result.screenshot = await cdp.screenshot(path.join(shotsDir, 'nav-probe-final.png'));
+      } catch (e) { result.screenshotError = e.message; }
+    }
+  } catch (e) {
+    result.error = String((e && e.message) || e);
+  } finally {
+    try { result.navPushLog = await cdp.evalJS('window.__navPushLog'); } catch (_) { /* noop */ }
     result.durationMs = Date.now() - t0;
     result.finishedAt = new Date().toISOString();
     cdp.close();

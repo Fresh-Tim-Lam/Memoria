@@ -1,0 +1,250 @@
+{
+  "schema": "surface-nav-restore-report/1",
+  "label": "nav-restore",
+  "gitSha": "2b9a5b1b",
+  "generatedAt": "2026-10-06T08:06:12Z",
+  "environment": {
+    "browser": "Edg/154.0.4258.53",
+    "edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "node": "v24.19.0",
+    "kbServed": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_nav_probe_kb",
+    "kbSource": "D:\\AAA_Jupyter\\Memoria\\tests\\probe-kb",
+    "kbSourceHasMemoria": "否（已用副本让应用自初始化）",
+    "fileA": "scale/scale-1k.md",
+    "fileB": "scale/scale-5k.md",
+    "durationMs": 34886,
+    "consoleErrors": 0
+  },
+  "summary": {
+    "S1_back_hitLA": true,
+    "S1_forward_hitLB": true,
+    "S2_back1_hitL2": true,
+    "S2_back2_hitL1": true,
+    "S3_tree_hitL": true,
+    "driver": "CDP 真机 Edge + harness；顶栏按钮/文件树项=真实鼠标点按；打开=MemoriaApp.openFile 真实入口",
+    "level": "end-to-end（应用级集成，非单元级）",
+    "allPass": true
+  },
+  "scenarios": {
+    "S1_back_forward": {
+      "linesA": 1000,
+      "linesB": 5000,
+      "LA": 504,
+      "LB": 2000,
+      "s1LinesBeforeScroll": 623,
+      "scrolledA": {
+        "start": 504,
+        "end": 504
+      },
+      "scrolledB": {
+        "start": 2000,
+        "end": 2000
+      },
+      "anchorA": 504,
+      "anchorB": 1999,
+      "clickBack": {
+        "selector": "#btn-nav-back",
+        "expectPath": "scale/scale-1k.md",
+        "before": {
+          "path": "scale/scale-5k.md",
+          "canBack": true,
+          "canForward": false,
+          "disabled": false,
+          "maxScroll": 166698
+        },
+        "click": {
+          "ok": true,
+          "box": {
+            "x": 256,
+            "y": 19,
+            "w": 36,
+            "h": 39
+          }
+        },
+        "after": {
+          "path": "scale/scale-1k.md",
+          "canBack": false,
+          "canForward": true,
+          "disabled": true,
+          "maxScroll": 32826
+        }
+      },
+      "clickForward": {
+        "selector": "#btn-nav-forward",
+        "expectPath": "scale/scale-5k.md",
+        "before": {
+          "path": "scale/scale-1k.md",
+          "canBack": false,
+          "canForward": true,
+          "disabled": true,
+          "maxScroll": 32826
+        },
+        "click": {
+          "ok": true,
+          "box": {
+            "x": 292,
+            "y": 19,
+            "w": 36,
+            "h": 39
+          }
+        },
+        "after": {
+          "path": "scale/scale-5k.md",
+          "canBack": true,
+          "canForward": false,
+          "disabled": false,
+          "maxScroll": 166698
+        }
+      },
+      "afterBack": {
+        "path": "scale/scale-1k.md",
+        "first": {
+          "pane": "preview",
+          "start": 504,
+          "end": 504,
+          "text": ""
+        },
+        "top": 504,
+        "scroll": {
+          "scrollTop": 16831,
+          "scrollHeight": 33578,
+          "clientHeight": 752,
+          "maxScroll": 32826,
+          "clampedAtBottom": false
+        },
+        "hitL": true
+      },
+      "afterForward": {
+        "path": "scale/scale-5k.md",
+        "first": {
+          "pane": "preview",
+          "start": 1999,
+          "end": 1999,
+          "text": "规模档位 · 单元 54"
+        },
+        "top": 1999,
+        "scroll": {
+          "scrollTop": 66903,
+          "scrollHeight": 167450,
+          "clientHeight": 752,
+          "maxScroll": 166698,
+          "clampedAtBottom": false
+        },
+        "hitL": true
+      }
+    },
+    "S2_same_file_two_positions": {
+      "L1": 504,
+      "L2": 749,
+      "anchor1": 504,
+      "anchor2": 749,
+      "clickBack1": {
+        "selector": "#btn-nav-back",
+        "expectPath": "scale/scale-1k.md",
+        "before": {
+          "path": "scale/scale-5k.md",
+          "canBack": true,
+          "canForward": false,
+          "disabled": false,
+          "maxScroll": 166698
+        },
+        "click": {
+          "ok": true,
+          "box": {
+            "x": 256,
+            "y": 19,
+            "w": 36,
+            "h": 39
+          }
+        },
+        "after": {
+          "path": "scale/scale-1k.md",
+          "canBack": true,
+          "canForward": true,
+          "disabled": false,
+          "maxScroll": 32826
+        }
+      },
+      "clickBack2": {
+        "selector": "#btn-nav-back",
+        "expectPath": "scale/scale-1k.md",
+        "before": {
+          "path": "scale/scale-1k.md",
+          "canBack": true,
+          "canForward": true,
+          "disabled": false,
+          "maxScroll": 32826
+        },
+        "click": {
+          "ok": true,
+          "box": {
+            "x": 256,
+            "y": 19,
+            "w": 36,
+            "h": 39
+          }
+        },
+        "after": {
+          "path": "scale/scale-1k.md",
+          "canBack": false,
+          "canForward": true,
+          "disabled": true,
+          "maxScroll": 32826
+        }
+      },
+      "back1": {
+        "path": "scale/scale-1k.md",
+        "first": {
+          "pane": "preview",
+          "start": 749,
+          "end": 749,
+          "text": ""
+        },
+        "top": 749,
+        "hitL2": true
+      },
+      "back2": {
+        "path": "scale/scale-1k.md",
+        "first": {
+          "pane": "preview",
+          "start": 504,
+          "end": 504,
+          "text": ""
+        },
+        "top": 504,
+        "hitL1": true
+      }
+    },
+    "S3_file_tree_open": {
+      "L": 504,
+      "anchor": 504,
+      "treeSelector": ".-tree-item[data-path=\"scale/scale-1k.md\"]",
+      "treeClick": {
+        "ok": true,
+        "box": {
+          "x": 116,
+          "y": 177,
+          "w": 233,
+          "h": 28
+        }
+      },
+      "afterTreeOpen": {
+        "path": "scale/scale-1k.md",
+        "first": {
+          "pane": "preview",
+          "start": 504,
+          "end": 504,
+          "text": ""
+        },
+        "top": 504,
+        "hitL": true
+      }
+    }
+  },
+  "console": {
+    "errors": [],
+    "total": 125
+  },
+  "error": null,
+  "rawPath": "scripts\\benchmark\\surface\\results\\raw-probe-nav-restore_2b9a5b1b.json"
+}

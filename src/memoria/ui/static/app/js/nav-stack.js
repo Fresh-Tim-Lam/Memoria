@@ -74,5 +74,5 @@ window.MemoriaNavStack = (function () {
     navForward,
     canBack,
     canForward,
-  };
+    rememberAnchor: function (file, line) { for (var i = cursor; i >= 0; i--) { if (stack[i].file === file) { stack[i].anchorLine = line; return stack[i]; } } return null; }, };
 })();

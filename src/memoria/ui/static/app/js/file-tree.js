@@ -329,7 +329,7 @@ window.MemoriaFileTree = (function () {
   }
 
   async function navigateToFile(relPath) {
-    if (window.MemoriaNavStack) {
+    window.MemoriaPositionMemory?.remember?.(); if (window.MemoriaNavStack) {
       window.MemoriaNavStack.openFileFromTree(relPath);
       updateNavButtons();
     }

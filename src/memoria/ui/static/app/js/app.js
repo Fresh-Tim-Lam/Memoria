@@ -1412,7 +1412,7 @@
 
   async function openFile(relPath, opts = {}) {
     // 文件上下文切换 → 提升调度 epoch，使基于旧文件的排队作业（如 kp_panel）陈旧可弃
-    window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); _switchAbs = _t0Switch; _switchPhases = {}; // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；2026-09-24：把起点交给**外层阶段计时**（`_markPhase`，读数里的「切页签阶段」）
+    window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); _switchAbs = _t0Switch; _switchPhases = {}; if (!opts.fromNav && window.MemoriaPositionMemory) window.MemoriaPositionMemory.remember(); // 2026-10-06 位置记忆：**在 push/换文件之前**采当前视口顶部源码行（AG105 纪律）；fromNav 由调用方采 // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；2026-09-24：把起点交给**外层阶段计时**（`_markPhase`，读数里的「切页签阶段」）
     // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
     // 旧尾、插入本次切换目标并把指针移到新顶（因此前进随之不可用）。后退/前进按钮
     // （fromNav=true）与程序内部重载（skipNav=true）不产生新条目。
@@ -1528,7 +1528,7 @@
         highlightRange(line, line);
       }
     }
-    let stats = T("app.stat.kpLines", {
+    if (window.MemoriaPositionMemory) window.MemoriaPositionMemory.restoreForOpen(opts); let stats = T("app.stat.kpLines", {
       kp: res.knowledge_points.length,
       lines: res.lines.length,
     });
@@ -4836,7 +4836,7 @@
 
   async function jumpToTarget(candidate, opts = {}) {
     if (!candidate?.file) return;
-    if (!opts.skipNav && window.MemoriaNavStack) {
+    window.MemoriaPositionMemory?.remember?.(); if (!opts.skipNav && window.MemoriaNavStack) {
       MemoriaNavStack.push({
         file: candidate.file,
         kpId: candidate.kp_id || null,
@@ -6259,16 +6259,16 @@
 
   async function navBack() {
     if (!window.MemoriaNavStack || !MemoriaNavStack.canBack()) return;
-    const frame = MemoriaNavStack.navBack();
+    window.MemoriaPositionMemory?.remember?.(); const frame = MemoriaNavStack.navBack();
     updateNavButtons();
-    if (frame) await openFile(frame.file, { fromNav: true, kpId: frame.kpId });
+    if (frame) await openFile(frame.file, { fromNav: true, kpId: frame.kpId, navAnchor: frame.anchorLine });
   }
 
   async function navForward() {
     if (!window.MemoriaNavStack || !MemoriaNavStack.canForward()) return;
-    const frame = MemoriaNavStack.navForward();
+    window.MemoriaPositionMemory?.remember?.(); const frame = MemoriaNavStack.navForward();
     updateNavButtons();
-    if (frame) await openFile(frame.file, { fromNav: true, kpId: frame.kpId });
+    if (frame) await openFile(frame.file, { fromNav: true, kpId: frame.kpId, navAnchor: frame.anchorLine });
   }
 
   function linkContextPayload(linkEl) {
@@ -11126,7 +11126,7 @@
   function onKpClick(kpId, opts = {}) {
     const kp = (state.doc.knowledge_points || []).find((k) => k.id === kpId);
     if (!kp) return;
-    if (!opts.skipNav && state.currentPath && window.MemoriaNavStack) {
+    window.MemoriaPositionMemory?.remember?.(); if (!opts.skipNav && state.currentPath && window.MemoriaNavStack) {
       MemoriaNavStack.push({
         file: state.currentPath,
         kpId,
@@ -12927,7 +12927,7 @@
     localizeCheckIssue,
     renderStatusStats,
     normRelPath,
-    remapOpenTabsAfterPathRepair,
+    remapOpenTabsAfterPathRepair, getViewTopSrcLine: _getViewTopSrcLine, scrollToSrcLine: _scrollToSrcLine,
   };
 
   window.MemoriaBridge?.onReady?.(() => {
@@ -14365,7 +14365,7 @@
    一个不动。本块只用全局入口（`window.MemoriaSurface` / `window.createLegacySurface`），
    `#editor-split` 此时已存在（脚本在 body 末尾加载）。
    ⚠️ 主 IIFE 内的闭包（setViewMode / highlightRange / _getViewTopSrcLine …）在此**不可见**、
-   也不通过门面暴露 ⇒ legacy 适配器改用等价的全局/真实入口（见 surface/legacy-surface.js 头部说明）。 */
+   也不通过门面暴露 ⇒ legacy 适配器改用等价的全局/真实入口（见 surface/legacy-surface.js 头部说明）。（2026-10-06 例外：`_getViewTopSrcLine` / `_scrollToSrcLine` 两个**只读视图入口**已单独经 `window.MemoriaApp` 门面暴露，供本文件末尾 `memoriaPositionMemory()` 块复用；legacy 适配器仍走其原有等价入口。） */
 (function initSurfaceSocket() {
   var S = window.MemoriaSurface;
   if (!S || !S.registry || typeof window.createLegacySurface !== "function") return;
@@ -14378,4 +14378,99 @@
     .catch(function (e) { try { console.warn("[MemoriaSurface] switchTo('legacy') 失败:", (e && e.message) || e); } catch (_) { /* noop */ } });
 
   // ③ `window.MemoriaSurface` 已由 surface/registry.js 暴露（控制台可用 current() / switchTo()）
+})();
+
+/* ===== 前进/后退 + 按文件的位置记忆（2026-10-06）=====================================
+   人报障：「memoria 的『前进/后退』按钮跳转文件之后**从头开始看**，而不是文件的旧位置，不好」。
+   根因：位置记忆只接在「切模式」链路（`setViewMode` 的 `_saveCurrentViewScroll` / `_scrollToSrcLine`），
+   而 `navBack/navForward → openFile` 这条路**既不按文件存、打开时也不恢复**（frame 里也不带位置）；
+   文件树双击（`openFileFromTree → openFile`）同样从头。
+   本块（**整块追加在 app.js 最末尾**，主 IIFE 之外；跨闭包只经 `window.MemoriaApp` + `window.MemoriaNavStack`：
+    (b) 每次「离开当前文件/帧之前」把视口顶部源码行写进导航栈**该帧自己的** `anchorLine`
+        （`MemoriaNavStack.rememberAnchor`）；后退/前进时把该帧的 `anchorLine` 经 `openFile({navAnchor})`
+        恢复（复用 `_scrollToSrcLine`）⇒ 同一文件的不同位置也能像浏览器一样分别记住。
+    (a) 另存一张**内存**表 `kbPath\\0路径 → 顶部源码行`（不写盘、不进 `.memoria/**`）；`openFile` 无显式
+        跳转目标（kpId/errorHighlight/lineHint）时据此恢复 ⇒ 文件树双击/重开也回到原处。
+   采集纪律（AG105 老坑）：`remember()` 一律在**重渲染/换文件/入栈之前**被调用（见各调用点的行内插入）。
+   零行漂移：主 IIFE 内只做**同行内替换**；本块整块末尾追加；`nav-stack.js` 只加一个同行方法。 */
+(function memoriaPositionMemory() {
+  var memo = Object.create(null);   // kbPath \u0000 路径 → 顶部源码行（内存 only）
+  var guard = null;                 // 二次校准守卫（与 AG104 同款：人一动就放弃校正，不抢滚动条）
+
+  function key(path) {
+    var st = window.state || {};
+    return String(st.kbPath || "") + "\u0000" + String(path || "");
+  }
+
+  // 当前视口顶部对应的源码行（复用主 IIFE 的 _getViewTopSrcLine，经门面）
+  function topLine() {
+    var A = window.MemoriaApp;
+    if (!A || typeof A.getViewTopSrcLine !== "function") return null;
+    var st = window.state;
+    var line = null;
+    try { line = A.getViewTopSrcLine(st ? st.viewMode : "preview"); } catch (e) { line = null; }
+    return line || null;
+  }
+
+  /** 采当前视口位置：写入内存表 + 写进导航栈**当前那个文件所在的帧**。返回行号（无则 null）。 */
+  function remember() {
+    var st = window.state;
+    if (!st || !st.currentPath) return null;
+    var line = topLine();
+    if (!line) return null;
+    memo[key(st.currentPath)] = line;
+    if (window.MemoriaNavStack && typeof window.MemoriaNavStack.rememberAnchor === "function") {
+      window.MemoriaNavStack.rememberAnchor(st.currentPath, line);
+    }
+    return line;
+  }
+
+  function applyLine(line) {
+    var A = window.MemoriaApp;
+    var st = window.state;
+    if (!A || typeof A.scrollToSrcLine !== "function" || !st) return false;
+    var ok = false;
+    try { ok = !!A.scrollToSrcLine(st.viewMode, line); } catch (e) { ok = false; }
+    scheduleReanchor(line);
+    return ok;
+  }
+
+  // AG104 教训：后面 MathJax/懒图结算会改变行高 ⇒ 落点先定一次、布局落定后再校两次；人一动就不校。
+  function scheduleReanchor(line) {
+    var st = window.state;
+    if (!st) return;
+    var path = st.currentPath;
+    var g = { cancelled: false };
+    guard = g;
+    var mark = function () { g.cancelled = true; };
+    ["preview-pane", "editor-pane"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      ["wheel", "mousedown", "touchstart", "keydown"].forEach(function (ev) {
+        el.addEventListener(ev, mark, { passive: true, once: true });
+      });
+    });
+    [350, 1400].forEach(function (delay) {
+      setTimeout(function () {
+        if (g.cancelled || guard !== g) return;
+        if (window.state.currentPath !== path) return;
+        try { window.MemoriaApp.scrollToSrcLine(window.state.viewMode, line); } catch (e) { /* noop */ }
+      }, delay);
+    });
+  }
+
+  /** `openFile` 收尾调用：恢复本帧（b）/本文件（a）的位置。 */
+  function restoreForOpen(opts) {
+    var st = window.state;
+    if (!st || !st.currentPath) return false;
+    var line = (opts && opts.navAnchor) || null;                                    // (b) 帧内记录优先
+    var hasJump = !!(opts && (opts.kpId || opts.errorHighlight || opts.lineHint));  // 显式跳转目标优先于按文件记忆
+    if (!line && !hasJump && !(opts && opts.restoreScroll)) {
+      line = memo[key(st.currentPath)] || null;                                     // (a) 按文件
+    }
+    if (!line) return false;
+    return applyLine(line);
+  }
+
+  window.MemoriaPositionMemory = { remember: remember, restoreForOpen: restoreForOpen };
 })();
