@@ -62,9 +62,9 @@ __all__ = [
 EVENT_ASKED = "approval/asked"
 EVENT_DECIDED = "approval/decided"
 
-#: 人工确认的等待上限（秒）；超时按 `unavailable` 拒绝。取值远大于正常思考时间、
-#: 又小于面板轮询的 5 分钟兜底（`agent-panel.js::POLL_TIMEOUT_MS`）。
-APPROVAL_TIMEOUT_S = 120.0
+#: 人工确认的等待上限（秒）；**2026-10-09 起为 `None` = 无限等待**（人拍板「等人无限等待」；原值 120s，超时按 `unavailable` 拒绝）。
+#: 面板轮询兜底（`agent-panel.js::POLL_TIMEOUT_MS = 1800000` = **30 分钟**，非 5 分钟）**对"有未决项"的情形不适用**、会继续等待；仍需上限的调用方可显式传 `timeout_s=<秒>`。
+APPROVAL_TIMEOUT_S = None
 
 #: 阻塞等待的轮询步长（秒）：只为周期性复核超时/中止，不产生忙等。
 _POLL_STEP_S = 0.25
@@ -185,7 +185,7 @@ def wait_for_answer(
     kb_path: str,
     request: ApprovalRequest,
     *,
-    timeout_s: float = APPROVAL_TIMEOUT_S,
+    timeout_s: float | None = None,
 ) -> ApprovalOutcome:
     """登记待批项并阻塞等待裁决；超时 ⇒ `unavailable`（拒绝），无应答者路径见模块 docstring。"""
     key = os.path.abspath(kb_path or "")
@@ -200,12 +200,12 @@ def wait_for_answer(
         _pending.setdefault(key, []).append(item)
     logger.info("[agent-approval] 等待人工确认：%s（call_id=%s）", item.tool, item.call_id or "-")
     _emit_audit(key, EVENT_ASKED, {"id": item.call_id, "tool": item.tool, "reason": item.reason})
-    deadline = time.monotonic() + max(0.0, float(timeout_s))
+    _limit = APPROVAL_TIMEOUT_S if timeout_s is None else timeout_s; deadline = None if _limit is None else time.monotonic() + max(0.0, float(_limit))
     try:
         while not item.event.wait(_POLL_STEP_S):
-            if time.monotonic() >= deadline:
+            if deadline is not None and time.monotonic() >= deadline:
                 item.outcome = ApprovalOutcome.UNAVAILABLE
-                logger.warning("[agent-approval] %s 等待确认超时（%.0fs），按拒绝关闭", item.tool, timeout_s)
+                logger.warning("[agent-approval] %s 等待确认超时（%.0fs），按拒绝关闭", item.tool, _limit)
                 break
     finally:
         with _lock:

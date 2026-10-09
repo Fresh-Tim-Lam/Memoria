@@ -111,7 +111,7 @@ window.MemoriaAgentPanel = (function () {
 
   // ── 轮询参数（与 kb-check.js 的静默作业同套路）────────────────────────
   const POLL_INTERVAL_MS = 250;
-  const POLL_TIMEOUT_MS = 1800000; // 30 分钟兜底：轮次不再有上限（对齐上游）后，长任务可能是几十轮工具调用；失控由「停止」按钮兜底
+  const POLL_TIMEOUT_MS = 1800000; // 30 分钟兜底适用于**长任务**（轮次不再有上限后，长任务可能是几十轮工具调用）；**存在未决项（待审批 / 待作答）时不适用、会继续等待**；失控仍由「停止」按钮兜底
 
   // 答案里的 `文件:行号`（允许全角冒号 `：`、支持 `7-9` 区间；路径须排除中日韩标点 —— 原因与实测见 agent-guide/01 §7）
   const ANCHOR_RE = /`?"?'?([^\s`"'<>()[\]:：，、。；！？「」『』【】（）《》〈〉〔〕…·—～]+\.(?:md|markdown))[:：](\d+(?:[-–—~]\d+)?)`?"?'?/g;
@@ -1186,7 +1186,7 @@ window.MemoriaAgentPanel = (function () {
 
   async function poll() {
     const myEpoch = epoch; // 本次轮询所属世代：epoch 一旦被递增，本次结果一律作废
-    const deadline = Date.now() + POLL_TIMEOUT_MS;
+    let deadline = Date.now() + POLL_TIMEOUT_MS;
     const kbAtStart = state.kbPath || "";
     startWait();
     while (job && epoch === myEpoch && Date.now() < deadline) {
@@ -1217,7 +1217,7 @@ window.MemoriaAgentPanel = (function () {
       if (typeof st.cursor === "number") job.cursor = st.cursor;
       if (st.status === "running") {
         tickWait();
-        continue;
+        if ((st.pending_approvals && st.pending_approvals.length) || (st.pending_questions && st.pending_questions.length)) deadline = Date.now() + POLL_TIMEOUT_MS; continue;
       }
       stopWait();
       finalizeMessage(st);
