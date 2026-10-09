@@ -486,7 +486,7 @@ def test_tools_are_registered_read_only(tmp_path: Path, name: str) -> None:
     (root / ".memoria").mkdir(parents=True)
     registry = _registry(root)
 
-    assert KB_TOOL_NAMES[-6:-4] == ("web_search", "fetch_url"), "其后另有脚本工作区四把（2026-09-24，§3.4）"
+    assert KB_TOOL_NAMES[-8:-6] == ("web_search", "fetch_url"), "其后再有脚本工作区四把与库内执行两把（`pwsh`/`cmd`，附录 Z）"
     tool = registry.get(name)
     assert tool is not None and tool.read_only, "只读 ⇒ 按既有策略免审批"
     assert tool.parameters["additionalProperties"] is False

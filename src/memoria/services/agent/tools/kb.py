@@ -77,7 +77,7 @@ KB_TOOL_NAMES = (
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
-    "scratch_list", "scratch_read", "scratch_write", "scratch_delete",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id),
     )
 
 
@@ -3955,6 +3955,164 @@ def _scratch_tools(kb_path: str) -> tuple[Tool, ...]:
                 "additionalProperties": False,
             },
             handler=_bound("delete"),
+        ),
+    )
+
+
+# ── 库内命令执行（第一期，2026-10-06；设计见 `docs/design/agent-capabilities.md` 附录 Z）────────
+# 两把执行工具 `pwsh` / `cmd`（Z.10 Q2：两个都要）。**非只读**（`read_only=False`）⇒ 由
+# `registry.invoke()` 在**分发前**过审批门：`manual-approval` / `auto-approval` 档经
+# `approval_bridge` 挂起等面板应答，**无应答 / 超时 / 拒绝 ⇒ 工具体根本不被调用 ⇒ 绝不启动进程**
+#（Z.11 Q6：agent 触发的那次也要人确认；Z.7：执行工具不得绕过审批桥）。
+# 内核在 `services/agent/shell_exec.py`（cwd 限库内 / 超时杀进程树 / 输出合计 200 KB 截断 / 非交互 /
+# 不接 stdin / 无 PTY / 不做后台 / 并发 1 / 不限制联网）；每次调用落一条 `exec/run` 审计
+#（**不含 stdout 全文**，只记字节与 digest）。
+# **整块追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _exec_params() -> dict[str, Any]:
+    """`pwsh` / `cmd` 两把工具**同一套**参数（对齐上游 `bash`/`pwsh` 的 `command`/`description`/
+    `timeoutMs`/`workdir`；`cmd` 上游无对应物，见 Z.10 工程风险）。"""
+    return {
+        "type": "object",
+        "properties": {
+            "command": {"type": "string", "minLength": 1, "description": "要执行的命令字符串"},
+            "description": {
+                "type": "string",
+                "minLength": 1,
+                "description": "5–10 词的祈使短语，说明这条命令做什么（显示在审批卡上）",
+            },
+            "timeoutMs": {
+                "type": "number",
+                "minimum": 1000,
+                "maximum": 600000,
+                "description": "超时（毫秒，默认 120000；到点杀死进程并返回 timedOut=true）",
+            },
+            "workdir": {
+                "type": "string",
+                "description": "工作目录；**必须在本知识库内**（含 `.memoria/agent/scratch/`），越界会被拒绝；缺省 = 库根",
+            },
+        },
+        "required": ["command", "description"],
+        "additionalProperties": False,
+    }
+
+
+def _render_exec_result(result: Mapping[str, Any]) -> str:
+    """把结构化执行结果投影为模型可见文本（非零退出 / 超时都如实呈现，不当作工具错误）。"""
+    interpreter = f"{result.get('interpreterKind', '')} {result.get('interpreterVersion', '')}".strip()
+    head = f"`{result['shell']}` 执行完成：解释器 {interpreter}（{result['interpreter']}）"
+    if result.get("fallback"):
+        head += "［回退：未装 PowerShell 7，用的是 Windows PowerShell 5.1］"
+    head += f"；退出码 {result['exitCode']}"
+    if result.get("timedOut"):
+        head += "；**超时被杀**（timedOut=true）"
+    if result.get("truncated"):
+        head += f"；输出已截断（原始 {result['bytes']} 字节）"
+    lines = [
+        head,
+        f"cwd: {result['workdir']}",
+        f"耗时: {result['durationMs']} ms",
+        "",
+        "--- stdout ---",
+        result["stdout"] or "（空）",
+    ]
+    if result["stderr"]:
+        lines += ["", "--- stderr ---", result["stderr"]]
+    lines += ["", "（退出码非 0 是**执行结果**，不是工具错误；本次已过用户审批。）"]
+    return "\n".join(lines)
+
+
+def _exec_call(kb_path: str, session_id: str | None, shell: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """两把执行工具的执行体：**过审后**的真实执行 + 落 `exec/run` 审计（错误一律转工具结果，不抛）。"""
+    from memoria.services.agent import audit as audit_mod
+    from memoria.services.agent import shell_exec
+
+    command = str(arguments.get("command") or "")
+    description = str(arguments.get("description") or "")
+    raw_workdir = arguments.get("workdir")
+    base_audit: dict[str, Any] = {
+        "command": command,
+        "description": description,
+        "workdir": str(raw_workdir or ""),
+        "shell": shell,
+        "source": "agent",
+    }
+    try:
+        result = shell_exec.run_command(
+            kb_path, shell=shell, command=command, workdir=raw_workdir, timeout_ms=arguments.get("timeoutMs")
+        )
+    except shell_exec.ShellExecError as exc:
+        # 编译期边界（cwd 越界 / 解释器缺失 / 启动失败）：**没有进程被启动**，仍留一条审计（denied）。
+        base_audit.update(
+            {
+                "interpreter": "", "interpreterPath": "", "interpreterVersion": "",
+                "exitCode": None, "timedOut": False, "durationMs": 0, "bytes": 0,
+                "truncated": False, "digest": "", "denied": True, "code": exc.code,
+            }
+        )
+        audit_mod.append(kb_path, session_id, audit_mod.EVENT_EXEC_RUN, base_audit)
+        return _error(f"{shell}: {exc}", exc.code)
+    version = str(result.get("interpreterVersion") or "")
+    kind = str(result.get("interpreterKind") or shell)
+    audit_mod.append(
+        kb_path,
+        session_id,
+        audit_mod.EVENT_EXEC_RUN,
+        {
+            **base_audit,
+            "workdir": result["workdir"],
+            "interpreter": f"{kind} {version}".strip(),
+            "interpreterPath": result["interpreter"],
+            "interpreterVersion": version,
+            "exitCode": result["exitCode"],
+            "timedOut": result["timedOut"],
+            "durationMs": result["durationMs"],
+            "bytes": result["bytes"],
+            "truncated": result["truncated"],
+            "digest": result["digest"],
+        },
+    )
+    return ToolOutput(text=_render_exec_result(result))
+
+
+def _exec_tools(kb_path: str, session_id: str | None) -> tuple[Tool, ...]:
+    """库内命令执行两把工具（`pwsh` / `cmd`）；`build_kb_tools()` 末位拼接。
+
+    **非只读**（`read_only=False`）是刻意的：审批策略据此**必问**（`AskPolicy`/`GuardedPolicy`
+    对 `read_only=False` 一律走应答者），无应答者 / 拒绝 ⇒ fail-closed（见 `approvals.py` / Z.11 Q6）。
+    """
+
+    def _bound(shell: str):
+        return lambda arguments: _exec_call(kb_path, session_id, shell, arguments)
+
+    params = _exec_params()
+    return (
+        Tool(
+            name="pwsh",
+            description=(
+                "在**知识库内**执行一条 PowerShell 命令并返回 stdout/stderr 与退出码（**每次执行都要用户审批**）。"
+                "解释器优先 `pwsh`（PowerShell 7+），缺失时自动回退 `powershell.exe`（5.1）并在结果里如实标注。"
+                "每次都在**新进程**里跑（cwd / 变量不跨调用保持，用 `workdir` 而非 `cd`）；默认 cwd = 库根。"
+                "**非零退出是执行结果、不是错误**；超时（`timeoutMs`，默认 120s）会杀死进程并回 `timedOut=true`；"
+                "输出合计超过 200 KB 会截断（`truncated=true` 并给出原始字节数）。**谨慎使用**：不是沙箱。"
+            ),
+            parameters=params,
+            handler=_bound("pwsh"),
+            read_only=False,
+        ),
+        Tool(
+            name="cmd",
+            description=(
+                "在**知识库内**执行一条 `cmd.exe` 命令并返回 stdout/stderr 与退出码（**每次执行都要用户审批**）。"
+                '调用形式 `cmd.exe /d /s /c "<command>"`；退出码取 `cmd.exe` 本身（`exit /b N` ⇒ N）。'
+                "每次都在**新进程**里跑（用 `workdir` 而非 `cd`）；默认 cwd = 库根。"
+                "**非零退出是执行结果、不是错误**；超时（`timeoutMs`，默认 120s）会杀死进程并回 `timedOut=true`；"
+                "输出合计超过 200 KB 会截断（`truncated=true` 并给出原始字节数）。**谨慎使用**：不是沙箱。"
+            ),
+            parameters=params,
+            handler=_bound("cmd"),
+            read_only=False,
         ),
     )
 

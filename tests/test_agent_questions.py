@@ -234,13 +234,13 @@ def test_tool_is_registered_last_and_only_once(kb: Path) -> None:
     """注册只一次（`KB_TOOL_NAMES` 与实建工具集**逐项一致**；次序漂移会被这里与旧测试双杀）。
 
     2026-09-23 起 `ask_user_question` **不再是末位**（其后另有联网两把工具，见 §6.28）；
-    2026-09-24 起其后再接脚本工作区四把（§3.4）⇒ 钉子改为「在联网两把之前、且只出现一次」。
+    2026-09-24 起其后再接脚本工作区四把（§3.4）、2026-10-06 再接着库内执行两把（`pwsh`/`cmd`，附录 Z）⇒ 钉子改为「在联网两把之前、且只出现一次」。
     """
     built = tuple(tool.name for tool in build_kb_tools(str(kb)))
     assert built == KB_TOOL_NAMES
-    assert KB_TOOL_NAMES[-7] == "ask_user_question"
-    assert KB_TOOL_NAMES[-6:-4] == ("web_search", "fetch_url")
-    assert KB_TOOL_NAMES[-4:] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
+    assert KB_TOOL_NAMES[-9] == "ask_user_question"
+    assert KB_TOOL_NAMES[-8:-6] == ("web_search", "fetch_url")
+    assert KB_TOOL_NAMES[-6:] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
     assert KB_TOOL_NAMES.count("ask_user_question") == 1
 
 

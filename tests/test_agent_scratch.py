@@ -5,8 +5,8 @@
 ① **路径边界**：绝对路径 / `..` / 盘符 / NUL / 过深一律 `SCRATCH_BAD_PATH`；写删只在
    `<kb>/.memoria/agent/scratch/` 之内；
 ② **文件面**：列 / 读（截断）/ 写（覆盖、建中间目录）/ 删（文件与目录）；单文件上限与总量上限；
-③ **模型面四把工具**：注册进 `KB_TOOL_NAMES` 末四位、`read_only=True`（免审批的依据见 `kb.py` 块注）、
-   参数 schema 收口；工具结果里**没有执行能力**（那只能由人点面板的「运行」）；
+③ **模型面四把工具**：注册进 `KB_TOOL_NAMES`（其后另接执行两把 `pwsh`/`cmd`）、`read_only=True`（免审批的依据见 `kb.py` 块注）、
+   参数 schema 收口；这四把工作区工具**自身不执行**（执行改由过审批门的 `pwsh`/`cmd` 承担）；
 ④ **执行面**（只由 `agent_scratch_run` 触发）：cwd 锁在工作区、**环境变量白名单**（密钥不进子进程）、
    超时、输出上限、审计事件 `scratch/run`、解释器解析三档（显式 / 内置 / 系统）。
 """
@@ -134,14 +134,14 @@ def test_total_size_quota_is_enforced(kb: Path) -> None:
 
 
 def test_scratch_tools_are_registered_read_only_and_closed(kb: Path) -> None:
-    assert KB_TOOL_NAMES[-4:] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
+    assert KB_TOOL_NAMES[-6:-2] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
     registry = _registry(kb)
     for name in ("scratch_list", "scratch_read", "scratch_write", "scratch_delete"):
         tool = registry.get(name)
         assert tool is not None, name
         assert tool.read_only, f"{name} 声明只读（不改知识库 ⇒ 免审批；依据见 kb.py 块注）"
         assert tool.parameters["additionalProperties"] is False
-    assert registry.get("scratch_run") is None, "模型面**没有**执行工具（执行只由人点面板触发）"
+    assert registry.get("scratch_run") is None, "模型面没有 `scratch_run`（Python 直跑脚本）；执行改由 `pwsh`/`cmd` 承担（过审批门，附录 Z）"
 
 
 def test_tools_write_read_and_report_the_workspace(kb: Path) -> None:

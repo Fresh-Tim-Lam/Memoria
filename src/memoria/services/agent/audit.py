@@ -68,3 +68,14 @@ EVENT_NET_REQUEST = "net/request"
 #: 事件类型只增不改；回放 / 压缩 / 语义抽取对未知 type 一律跳过（同 `session/title`）。
 EVENT_SCRATCH_RUN = "scratch/run"
 
+#: **库内命令执行审计**（第一期：`pwsh` / `cmd` 两把执行工具，2026-10-06；设计见
+#: `docs/design/agent-capabilities.md` 附录 Z）。每次**工具被调用**追加一条（含边界拒绝：workdir
+#: 越界 / 解释器缺失等 ⇒ 工具体执行到但未启动进程），载荷 `{command, description, workdir, shell,
+#: interpreter(实际解释器+版本), interpreterPath, interpreterVersion, exitCode, timedOut, durationMs,
+#: bytes, truncated, digest, source}` —— **不含 stdout/stderr 全文**（只记 `bytes` 与 `digest`）。
+#: 审批**被拒**的那次工具体不被调用 ⇒ 无此事件（由 `approval/asked`/`approval/decided` 留痕，
+#: 与 Z.6-④「拒绝审批 ⇒ 无 exec/run 审计」一致）。事件类型只增不改；回放 / 压缩 / 语义抽取对
+#: 未知 type 一律跳过（同 `session/title`）。与上几条同因**追加在文件末尾** ⇒ 零锚点漂移。
+EVENT_EXEC_RUN = "exec/run"
+
+
