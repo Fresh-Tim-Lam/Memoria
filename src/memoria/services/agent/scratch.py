@@ -312,7 +312,7 @@ def resolve_interpreter(*, explicit: str = "", use_bundled: bool = True) -> dict
     return {"path": "", "source": "none"}
 
 
-# ── 执行（**只能由人触发**：`ui.py::agent_scratch_run`）─────────────────────
+# ── 执行内核（UI 工作区已拆；`run_script()` 保留复用）─────────────────────
 
 
 def _child_env(root: str) -> dict[str, str]:

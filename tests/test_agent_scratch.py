@@ -7,22 +7,19 @@
 ② **文件面**：列 / 读（截断）/ 写（覆盖、建中间目录）/ 删（文件与目录）；单文件上限与总量上限；
 ③ **模型面四把工具**：注册进 `KB_TOOL_NAMES`（其后另接执行两把 `pwsh`/`cmd`）、`read_only=True`（免审批的依据见 `kb.py` 块注）、
    参数 schema 收口；这四把工作区工具**自身不执行**（执行改由过审批门的 `pwsh`/`cmd` 承担）；
-④ **执行面**（只由 `agent_scratch_run` 触发）：cwd 锁在工作区、**环境变量白名单**（密钥不进子进程）、
-   超时、输出上限、审计事件 `scratch/run`、解释器解析三档（显式 / 内置 / 系统）。
+④ **执行面**（直接测 `scratch.run_script()` 内核）：cwd 锁在工作区、**环境变量白名单**（密钥不进子进程）、
+   超时、输出上限、解释器解析三档（显式 / 内置 / 系统）。
 """
 
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 from typing import Any
 
 import pytest
 
-from memoria.presentation.api.ui import UIAPI
-from memoria.services.agent import audit as audit_mod
 from memoria.services.agent import scratch as scratch_mod
 from memoria.services.agent.llm.types import ToolCall
 from memoria.services.agent.tools import KB_TOOL_NAMES, ToolRegistry, build_kb_tools
@@ -35,13 +32,6 @@ def kb(tmp_path: Path) -> Path:
     root = tmp_path / "kb"
     (root / ".memoria" / "agent").mkdir(parents=True)
     return root
-
-
-@pytest.fixture()
-def api(kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> UIAPI:
-    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
-    monkeypatch.delenv("MEMORIA_AGENT_CONFIG", raising=False)
-    return UIAPI(kb_path=str(kb))
 
 
 def _registry(kb: Path) -> ToolRegistry:
@@ -228,43 +218,3 @@ def test_run_script_reports_missing_interpreter(kb: Path) -> None:
         scratch_mod.run_script(str(kb), "x.py", interpreter="definitely-not-a-real-interpreter-xyz")
     assert caught.value.code == scratch_mod.CODE_NO_INTERPRETER
 
-
-# ── 面板面 RPC ──────────────────────────────────────────────────────────────
-
-
-def test_status_rpc_reports_files_and_interpreter(api: UIAPI, kb: Path) -> None:
-    _write_script(kb, "a.py", "print(1)")
-    res = api.agent_scratch_status()
-    assert res["status"] == "ok"
-    assert res["rel_dir"] == scratch_mod.SCRATCH_DIR
-    assert [item["path"] for item in res["files"]] == ["a.py"]
-    assert res["total_bytes"] > 0 and res["limits"]["output_bytes"] == scratch_mod.MAX_RUN_OUTPUT_BYTES
-    assert res["interpreter"], "本机应有可用解释器（系统 python）"
-
-
-def test_run_rpc_requires_a_human_click_and_writes_an_audit_event(api: UIAPI, kb: Path) -> None:
-    """`agent_scratch_run` 是**唯一**执行入口（模型面没有执行工具）⇒ 顺带钉住审计落盘。"""
-    _write_script(kb, "hello.py", "print('hello from scratch')\n")
-    res = api.agent_scratch_run("hello.py", session_id=SESSION_ID)
-
-    assert res["status"] == "ok" and res["exit_code"] == 0
-    assert "hello from scratch" in res["stdout"]
-    assert res["audit"]["status"] == "ok"
-
-    session_file = kb / ".memoria" / "agent" / "sessions" / f"{SESSION_ID}.jsonl"
-    events = [json.loads(line) for line in session_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-    runs = [event for event in events if event.get("type") == audit_mod.EVENT_SCRATCH_RUN]
-    assert len(runs) == 1
-    payload = runs[0]["data"]
-    assert payload["script"] == "hello.py" and payload["exit_code"] == 0
-    assert "hello from scratch" not in json.dumps(payload, ensure_ascii=False), "审计不含 stdout 全文"
-    assert os.sep not in payload["script"], "审计里的脚本路径是工作区内相对路径"
-
-
-def test_panel_rpcs_read_write_delete(api: UIAPI, kb: Path) -> None:
-    assert api.agent_scratch_write("note.md", "内容")["status"] == "ok"
-    assert api.agent_scratch_read("note.md")["text"] == "内容"
-    assert api.agent_scratch_delete("note.md")["status"] == "ok"
-    assert api.agent_scratch_status()["files"] == []
-    bad = api.agent_scratch_read("../escape.md")
-    assert bad["status"] == "error" and bad["code"] == scratch_mod.CODE_BAD_PATH

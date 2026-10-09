@@ -1775,40 +1775,6 @@
     recordNth: "Question {n}",
   });
 
-  // 2026-09-24: **script workspace** panel (`js/agent-scratch.js`; design: `agent-capabilities.md §3.4`).
-  // Appended at the tail -> existing keys and line numbers do not shift.
-  g.MEMORIA_LOCALES["en"].agent.scratch = {
-    title: "Script workspace",
-    summary: "{n} file(s)",
-    empty: "empty",
-    emptyHint: "No files yet. Anything the agent fetches or writes (scripts included) shows up here; you can view, run and delete it from here.",
-    warn: "⚠ Not a sandbox: a script runs as your own user and can read/write files and use the network. It only runs when you click \u201cRun\u201d (the agent has no execution rights).",
-    refresh: "Refresh",
-    view: "View",
-    run: "Run",
-    runTitle: "Run this script as the current user (files + network; your API key is not passed to it)",
-    delete: "Delete",
-    deleteConfirm: "Delete {path} from the workspace?",
-    interpreter: "Interpreter: {path} ({source})",
-    interpreterNone: "No script interpreter found — set a path in Settings \u2192 Agent, or install Python",
-    viewed: "Read {path}",
-    exit: "exit {code} · {ms} ms",
-    timeout: "timed out ({s}s) and was killed",
-    truncated: "output exceeded the cap and was truncated",
-    noOutput: "(no output)",
-    failed: "Workspace operation failed",
-    source: { explicit: "from settings", bundled: "bundled", system: "system", none: "—" },
-    code: {
-      SCRATCH_BAD_PATH: "Invalid path: relative paths inside the workspace only",
-      SCRATCH_NOT_FOUND: "No such file in the workspace",
-      SCRATCH_NO_INTERPRETER: "No usable script interpreter: set one in Settings, or install Python",
-      SCRATCH_TIMEOUT: "The script timed out and was killed",
-      SCRATCH_RUN_FAILED: "Could not start the script",
-      no_kb: "Open a knowledge base first",
-      scratch_failed: "Workspace read/write failed",
-    },
-  };
-
   // 2026-09-24: web **domain rules** settings (`js/net-settings.js`; the gate lives in
   // `services/agent/web.py::WebClient._assert_domain()`, checked on every hop -> `WEB_BLOCKED_DOMAIN`).
   // Appended at the tail -> existing keys and line numbers do not shift.
@@ -1835,29 +1801,6 @@
       ignored: "{n} unparsable entry(ies) ignored",
       saved: "Domain rules saved",
       failed: "Could not save the domain rules",
-    },
-    script: {
-      title: "Script workspace",
-      interpreterLabel: "Interpreter path (empty = automatic)",
-      interpreterPh: "e.g. D:\\Python\\python.exe; leave empty to use bundled → system PATH",
-      useBundledLabel: "Allow the interpreter bundled with the release package",
-      timeoutLabel: "Per-run timeout (seconds)",
-      hint:
-        "This only decides which interpreter to use and how long one run may take — scripts never run by " +
-        "themselves: only you can run one, from the Run button in the composer's workspace panel, and it runs " +
-        "as the current user (not a sandbox; the panel always shows that warning).",
-      resolved: "Will use: {path} ({source})",
-      source: { explicit: "set here", bundled: "bundled", system: "system", none: "not found" },
-      noInterpreter: "⚠ No usable interpreter found — the workspace Run button will be greyed out (set an absolute path, or ship the bundled interpreter)",
-      badPath: "⚠ The interpreter path set here does not exist (no silent fallback): {error}",
-      bundledPresent: "Bundled interpreter: {dir}",
-      bundledMissing: "No bundled interpreter shipped (falling back to the system one; directory name resources/{name}/)",
-      timeoutRange: "allowed {min}–{max} s",
-      clamped: "Timeout clamped to {value} s",
-      badTimeout: "The timeout must be a positive number of seconds",
-      noBridge: "Bridge unavailable",
-      saved: "Script workspace settings saved",
-      failed: "Could not save the script workspace settings",
     },
   });
   Object.assign(g.MEMORIA_LOCALES["en"].settings.display, {

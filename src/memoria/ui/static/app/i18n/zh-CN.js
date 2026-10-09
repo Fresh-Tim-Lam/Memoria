@@ -1672,40 +1672,6 @@
     recordNth: "第 {n} 题",
   });
 
-  // 2026-09-24 追加：**脚本工作区**面板（`js/agent-scratch.js`；设计见 `agent-capabilities.md §3.4`）。
-  // 末尾追加 ⇒ 上方既有键与行号零漂移。
-  g.MEMORIA_LOCALES["zh-CN"].agent.scratch = {
-    title: "脚本工作区",
-    summary: "{n} 个文件",
-    empty: "空",
-    emptyHint: "还没有文件。让 agent 抓网页或写脚本后，会出现在这里；你也可以在这里查看、运行、删除它写的东西。",
-    warn: "⚠ 这不是沙箱：脚本以你自己的身份运行，能读写文件与网络；只有你点「运行」它才会跑（agent 没有执行权）。",
-    refresh: "刷新",
-    view: "查看",
-    run: "运行",
-    runTitle: "以当前用户身份运行这个脚本（能读写文件与网络；密钥不会传给它）",
-    delete: "删除",
-    deleteConfirm: "删除工作区里的 {path}？",
-    interpreter: "解释器：{path}（{source}）",
-    interpreterNone: "未找到脚本解释器 —— 请在设置 →「Agent」里指定路径，或安装 Python",
-    viewed: "已读 {path}",
-    exit: "退出码 {code} · {ms} ms",
-    timeout: "超时（{s}s）已终止",
-    truncated: "输出超上限已截断",
-    noOutput: "（没有输出）",
-    failed: "工作区操作失败",
-    source: { explicit: "设置指定", bundled: "发布包内置", system: "系统", none: "—" },
-    code: {
-      SCRATCH_BAD_PATH: "路径不合法：只能用工作区内的相对路径",
-      SCRATCH_NOT_FOUND: "工作区里没有这个文件",
-      SCRATCH_NO_INTERPRETER: "没有可用的脚本解释器：请在设置里指定，或安装 Python",
-      SCRATCH_TIMEOUT: "脚本超时已被终止",
-      SCRATCH_RUN_FAILED: "启动脚本失败",
-      no_kb: "请先打开知识库",
-      scratch_failed: "工作区读写失败",
-    },
-  };
-
   // 2026-09-24 追加：联网「**域名名单**」设置（`js/net-settings.js`；闸在
   // `services/agent/web.py::WebClient._assert_domain()`，**逐跳**校验，被拒返回 `WEB_BLOCKED_DOMAIN`）。
   // 末尾追加 ⇒ 上方既有键与行号零漂移。
@@ -1731,30 +1697,6 @@
       ignored: "已忽略 {n} 处无法识别的写法",
       saved: "域名名单已保存",
       failed: "域名名单保存失败",
-    },
-    // 脚本工作区三个键的界面（2026-09-24；`js/scratch-settings.js` 消费。执行权不在设置里：
-    // 模型没有运行工具，脚本只能由人在工作区面板点「运行」，且以当前用户身份运行 = 不是沙箱）。
-    script: {
-      title: "脚本工作区",
-      interpreterLabel: "解释器路径（留空 = 自动）",
-      interpreterPh: "例如 D:\\Python\\python.exe；留空则依次用「发布包内置 → 系统 PATH」",
-      useBundledLabel: "允许使用发布包内置的解释器",
-      timeoutLabel: "单次执行超时（秒）",
-      hint:
-        "这里只决定「用哪个解释器」与「一次最长跑多久」—— 脚本不会自己跑：只有你在对话栏的「工作区」面板" +
-        "点「运行」才会执行，且以当前用户身份运行（不是沙箱，面板常显那条警告）。",
-      resolved: "当前会使用：{path}（{source}）",
-      source: { explicit: "设置里指定", bundled: "发布包内置", system: "系统", none: "未找到" },
-      noInterpreter: "⚠ 没找到可用的解释器 ⇒ 工作区面板的「运行」会是灰的（填一个绝对路径，或把内置解释器随包分发）",
-      badPath: "⚠ 设置里的解释器路径不存在（不静默回落）：{error}",
-      bundledPresent: "内置解释器：{dir}",
-      bundledMissing: "未随包分发内置解释器（当前回落到系统解释器；目录名 resources/{name}/）",
-      timeoutRange: "允许 {min}–{max} 秒",
-      clamped: "超时已夹到 {value} 秒",
-      badTimeout: "超时必须是一个正数（秒）",
-      noBridge: "桥不可用",
-      saved: "脚本工作区设置已保存",
-      failed: "脚本工作区设置保存失败",
     },
   });
   // 2026-09-24 追加：设置 →「显示」→「性能」里**预览池智能替换**的权重与公式（算法见

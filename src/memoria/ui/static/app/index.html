@@ -501,18 +501,10 @@
        `pending_questions` 与 RPC `agent_question_answer`，不改 app.js / agent-panel.js；
        末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
   <script src="/app/js/agent-question.js"></script>
-  <!-- 脚本工作区面板（人 2026-09-24 拍板，设计见 agent-capabilities.md §3.4）：agent 写，
-       **人在面板点「运行」**才执行；DOM 由该模块自建后插在输入区之前，不改 app.js / agent-panel.js；
-       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
-  <script src="/app/js/agent-scratch.js"></script>
   <!-- 联网「域名名单」设置两行（2026-09-24；设计见 agent-capabilities.md §3.3）：只消费
        `agent_net_domains` / `agent_save_config`，DOM 自建后追加进 `#agent-settings`；
        末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
   <script src="/app/js/net-settings.js"></script>
-  <!-- 脚本工作区设置的三个键（2026-09-24；设计见 agent-capabilities.md §3.4）：只消费
-       `agent_script_settings` / `agent_save_config`，DOM 自建后追加进 `#agent-settings`；
-       末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
-  <script src="/app/js/scratch-settings.js"></script>
   <!-- 预览池的智能替换策略（2026-09-24）：纯函数、无 DOM 依赖 ⇒ 可单独 `node` 跑分；app.js 末尾
        「预览池智能替换」块与设置页（显示 →「性能」）都只在**调用期**取 `window.MemoriaPreviewPolicy`
        ⇒ 放末尾不影响加载顺序；末尾追加为最后一个 script 标签 ⇒ 既有 `index.html:<行>` 锚点零漂移 -->
