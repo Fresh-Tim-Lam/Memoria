@@ -178,7 +178,7 @@ DEFAULT_POLICY: ApprovalPolicy = DefaultApprovalPolicy()
 #: （把整段替换成空串同样是删）；② 与设计口径冲突 —— 设计里"不设 `auto`"针对的是**删除类**
 #: （`kb.file.delete` / `kb.kp.delete`，§7 2.5），不是"改正文"。真机后果：整理教材残渣这类
 #: **纯删行**任务会**每批**都弹确认卡、没人点就挂满 `APPROVAL_TIMEOUT_S`(120s) 后按拒绝关闭 ⇒
-#: agent 反复"写不进去"（`D:\AAA_Courses\软件工程概论` 2026-09-22 会话实测到连续 3 次 120s 超时）。
+#: agent 反复"写不进去"（`D:\AAA_Courses\软件工程概论` 2026-09-22 会话实测到连续 3 次 120s 超时）；该上限已于 2026-10-09 改为 `None`（无限等待），上文的 120s 仅为当时实测、不再是当前默认值。
 RISKY_OPS = frozenset({"rename_file", "delete_file", "move_file", "delete_kp", "rename_kp"})
 
 

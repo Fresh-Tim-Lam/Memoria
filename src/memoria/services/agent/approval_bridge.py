@@ -24,7 +24,7 @@
 | 应答者返回词汇外取值 / 抛错 | `unavailable` ⇒ 拒绝（`approvals.AskPolicy` 归一） |
 
 「挂载」是显式动作（`attach()` / `detach()`）：只有把待批项交给面板的进程才登记，因此 CLI
-（`scripts/agent_ask.py`）不会在写工具上白等 120 秒，而是立刻以「无应答者」拒绝。
+（`scripts/agent_ask.py`）不会在写工具上白等，而是立刻以「无应答者」拒绝；挂载后**默认无限等待**，只由作答 / `detach()` / `abort()` 收敛，显式传 `timeout_s` 才有界。
 """
 
 from __future__ import annotations

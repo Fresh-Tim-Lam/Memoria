@@ -710,3 +710,12 @@ def test_locales_have_every_new_key(locale: Path) -> None:
     for key in _PERMISSION_KEYS:
         leaf = key.rsplit(".", 1)[-1]
         assert leaf + ":" in text, f"{locale.name} 缺少键：{key}"
+
+
+# ── ⑫ 默认超时口径（与 `tests/test_agent_questions.py` 的提问钉子同构）────────────
+
+
+def test_default_approval_timeout_is_the_bridge_constant() -> None:
+    """不传 `timeout_s` 时用的就是 `APPROVAL_TIMEOUT_S`；**2026-10-09 起为 `None` = 无限等待**（人：「等人无限等待」）。"""
+    assert approval_bridge.APPROVAL_TIMEOUT_S is None
+    assert approval_bridge.wait_for_answer.__kwdefaults__["timeout_s"] is None, "默认让桥去取那个常量（不在接口上硬编一个数）"
