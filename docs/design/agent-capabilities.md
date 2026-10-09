@@ -645,3 +645,273 @@ apply 入口（核心，M3a）
 | 2026-09-20 | **契约迁出：新增活文档 [agent-plugin-design.md](agent-plugin-design.md)，本文只留指针**（用户口径：「我要一个新的文档写这些内容，所有内容都由我来慢慢对齐；先把上面确定的 6 字段最小协议记录进去，然后我们讨论写组件的细节」）。**docs only，未改任何源码**。① **新文档** `docs/design/agent-plugin-design.md`（**唯一事实源**）= 头部（用途 / 关联文档 / 状态=**活文档、由人逐步对齐** / **治理约定=Agent 只追加、不改写人已确认条目**）+ §1 最小可用契约 v1（6 字段表 + 准入规则 + **两份 JSON 实样**，均**逐字照抄**自本文收缩前的 §2.1）+ §2 暂缓字段 10 条 + §3 上游事实（三条结论 + `ApprovalOutcome` 含 `unavailable` ⇒ fail-closed，`file:line` 已逐条复验）+ §4 待讨论 Q1–Q6（`name` 去留 / `constrain`·`gate` 去留 / P8 首批 op 个数 / P9 `approval` 覆写 / P10 备份保留 / P12 plan 版本与兼容；只写问题 + 可选项）+ §5 变更记录；② **本文 §2.1** 的字段表、暂缓清单、`kind` 删除演进与两份 JSON 实样**全部迁出**，改为 **2 行指针**，只保留**模块侧**内容（铁律"插件目录内不含可执行代码"）与"其余各节原引 `§2.1` 字段表/暂缓清单/实样一律以该文为准"一句（**禁并行事实源**）；③ 登记 `conventions/docs-management.md §4.2`。**`docs/todo.md` 未改动**（AG04 行不引用 §2.1 字段表，字节中性） |
 | 2026-09-20 | **本文降级为历史 / 路线图，不再是事实源**（用户口径：「这个文件不是只用于协议，所有相关设计都放在这，旧的我们不作为事实源」）。[agent-plugin-design.md](agent-plugin-design.md) 同日由「能力插件最小协议 v1」**重定位为「能力插件与写模块总设计」（协议 + 写场景 + 模块设计）**，并新增 §6 迁移清单（登记本文 §2.1.1/§2.2/§2.3/§2.3.1/§2.3.2/§2.3.3/§2.3.4/§2.4/§2.5/§2.6/§2.7 与 §8/§9/§10 中与写模块相关的行，逐行标状态）、§7 写场景清单（44 行，读码取证）、§8 场景关系与排序建议。**本文本轮只做两处最小改动**：§2.1 指针处补一句「契约与相关设计以 agent-plugin-design.md 为准；本文不再作为事实源」，以及本行。**未搬任何内容、未实施任何代码**；登记 `conventions/docs-management.md §4.2`；`docs/todo.md` 未改动 |
 | 2026-09-24 | **开启 skill 的「内置只读根」：N 线技能包随包分发**（用户口径：对「N 线要不要做成技能包」与 §10 P4 拍板 **开出内置根**）。本轮只动本文四处 + 一个随包技能，**未改任何既有机制**：① **新增 §4.6**（两根对照表 `kb`/100 vs `bundled`/600 / 只多一个 `SkillRoot` 条目不新造机制 / 为何取 `runtime.resources_dir()` 而非库外用户目录 / 首个随包技能 `resources/agent-skills/web-research/SKILL.md` = N 线联网工作法 / **已知限制** = `render_skill_content()` 的资源提示对库外基目录读不到，配 `assets/**` 前必须先解决 / 未做 = 用户技能类 `manifest.json`）；② **§4.2 与 §4.3 的 `use_skill` 就地订正为 `skill`**（实现里的真名，自 2026-09-22 起；§4.3 补一段"落地订正"说明两段式门控），**§8 S1 行**的 `use_skill` 一并订正；③ **§8 S1 行**改为"机制已落地、声明面未做"（正文 + `/name` + 按需加载可用；"声明工具"未通）；④ **§10 P4** 标记 **已拍板（2026-09-24）= ①+② 并存**。设计侧的完整落地与真机取证见 `conventions/docs-management.md §4.2` 同日至此行；状态行 `docs/todo.md §13` **AG62** |
+
+---
+
+## 附录 Z：脚本执行 —— §3.4 / §3.6 修订提案（待拍板，2026-10-06）
+
+> **状态**：**提案，供人拍板**。本轮 **docs only** —— 只在本文件**末尾追加**本节；**未改任何既有行、未改 `src/**`/`tests/**`/`scripts/**`/其它 `docs/**`、未 git 提交**（零行漂移自检见 Z.9）。
+> **上游口径**：`dsh-src/`（检出 pin `0d1f50007f9bca3f52b06e1c3074fa14d5fb0720`，见 [dsh-agent-port.md](dsh-agent-port.md) 头）。本节所有 `<文件>:<行号>` 为 **2026-10-06 读码实况**；上游路径以 `dsh-src/` 为根、本地路径以仓库根为根。
+> **待定/未找到**：逐条落在 Z.3.2 / Z.4 各小节与 Z.9 汇总；**未取证处如实标注**，不编造。
+
+### Z.1 决定与来源（人的原话，逐字）
+
+> 「库内 cmd 直接从上游挖过来，支持用户直接点 agent 发过来的 powershell 或者 cmd 代码，agent 也可以自己跑，不需要管运行按钮，不要"ui 的工作区"这个设计了，直接让 agent 自己管理工作区」
+
+| # | 决定 | 一句话 |
+|---|---|---|
+| ① | **库内 cmd 执行从上游挖取** | 不再"自建 scratch 执行器"，改吃上游 `bash`/`pwsh` 工具 + `ctx.shell`/`ctx.sandbox` 语义（Z.3） |
+| ② | **用户可点 agent 消息里的 ```powershell / ```cmd 代码块去跑** | 消息里的代码围栏 → 一个「运行」手势（Z.4.2） |
+| ③ | **agent 自己也能跑** | 给产品内 agent **一把执行工具**（模型面首次有执行体，Z.4.1） |
+| ④ | **取消「UI 工作区」与「运行」按钮，工作区由 agent 自管** | 拆掉 §3.4 的 scratch 面板与面板「运行」按钮；工作区落点改由 agent 自管（Z.4.3 / Z.4.4） |
+
+> **口径校准（本轮须先钉死，避免施工歧义）**：④ 的"不要运行按钮"指**§3.4 那个工作区面板里的「运行」按钮**（`ui.py::agent_scratch_run`，`ui.py:2120-2171`）；② 另立一个**消息代码块**上的运行手势。两者若被读成同一条，会自相矛盾 ⇒ 记为**待拍板（Z.9-Q1）**。
+
+### Z.2 现状与根因
+
+**现状（读码实况）**：
+
+| 维度 | 现状 | 依据 |
+|---|---|---|
+| §3.4 设计口径 | 「脚本工作区：agent 写、**人点「运行」**」，边界三条写死："执行只能由人触发……模型面**没有**执行工具" | `docs/design/agent-capabilities.md:361`（§3.4 标题）、`:369-373` |
+| 工具面 | `KB_TOOL_NAMES` 四把 scratch 工具（`scratch_list/read/write/delete`），**没有** `scratch_run`；四把 `read_only=True`（免审批） | `src/memoria/services/agent/tools/kb.py:73-80`（名单）、`:3900-3955`（`_scratch_tools`）、`:373`（工具面 20→24） |
+| 工具文案 | 工具结果里写死"要执行**只能请用户在面板上点「运行」**" | `src/memoria/services/agent/tools/kb.py:3879`、`:3891` |
+| 执行内核 | `scratch.run_script()`：Python 解释器直跑 `.py`（`python <script> [args]`），超时/输出上限/环境白名单 | `src/memoria/services/agent/scratch.py:357-433`、`:378`（`cmd=[解释器, path, *args]`） |
+| 执行入口 | **唯一**入口 = 面板 RPC `agent_scratch_run`（其余四条 `_status/_read/_write/_delete`） | `src/memoria/presentation/api/ui.py:2120-2171`、`:2174-2180` |
+| 工作区落点 | `<kb>/.memoria/agent/scratch/`（应用管理目录） | `src/memoria/services/agent/scratch.py:79` |
+| 设置面板 | 三键 `script_interpreter`/`script_use_bundled`/`script_timeout_s`；RPC `agent_script_settings`（不收 `kb_path`）+ `js/scratch-settings.js` | `src/memoria/presentation/api/ui.py:2272-2308`、`src/memoria/ui/static/app/js/scratch-settings.js`、`src/memoria/services/agent/llm/config.py:85`、`:178-180` |
+| 面板 | `js/agent-scratch.js`：每文件「查看 / **运行** / 删除」，只消费五条 RPC；点「运行」即视为已知警告 | `src/memoria/ui/static/app/js/agent-scratch.js:9`、`:85-88`（运行按钮 markup）、`:265-301`（`runFile`） |
+| 契约钉子 | 设置面板五件套由单测钉住；工具面末尾次序由单测钉住 | `tests/test_scratch_settings_panel.py`、`tests/test_agent_web.py:489`、`tests/test_agent_tools_reference.py:465-470` |
+| 审批桥（可复用） | 逐条确认桥 `approval_bridge.py`：挂起等面板应答、无应答即拒绝（fail-closed），RPC `agent_ask_poll` / `agent_approval_answer` | `src/memoria/services/agent/approval_bridge.py`（全文件）、`ui.py:1261`、`ui.py:1865-1889` |
+| 审计 | `EVENT_SCRATCH_RUN = "scratch/run"`，经 `audit.append()` 追加 | `src/memoria/services/agent/audit.py:69`、`:32` |
+| 上游关系 | 上游"执行与编排"整族（`sandbox/*`·`shell/*`·`subprocess/*`…）标注 **❌ 不吃**；本地自建 scratch 仅"局部开口"，**仍未吃上游任何执行族** | `docs/design/dsh-agent-port.md:118` |
+| agent-guide | 两节产品文档描述"面板点运行"与三键设置 | `docs/reference/agent-guide/09-settings-i18n-and-shortcuts.md:280-288`、`10-data-layout-and-host-embedding.md:526-533` |
+
+**根因（前提失效）**：§3.4 的设计前提是**"人看得懂脚本、会填参数、愿意按运行"**（"人点「运行」即视为知晓" `agent-capabilities.md:372`）。但人的实际口径是**不懂脚本**；且 `run_script()` 只接受 `[解释器, path, *args]`（`scratch.py:378`，`arguments` 在工具面**无处传入** —— 面 RPC `agent_scratch_run` 也不收 `arguments`，见 `ui.py:2120-2126`）⇒ **带参数的脚本 agent 发出去跑不了**。设计假设不成立 ⇒ 决定 ③（agent 自己跑）+ ①（从上游挖执行）替代"人在场才跑"。
+
+### Z.3 上游挖取（先做功课，再写设计）
+
+#### Z.3.1 找到了什么 —— 上游**有**完整的"库内执行"实现
+
+| 维度 | 上游实现 | 依据（`dsh-src/` 为根） |
+|---|---|---|
+| 工具名 | `bash`（POSIX）/ `pwsh`（Windows）；另有持久版 `bash`/`pwsh`（PTY）与 PTC 的 `run_code`。**没有 `cmd`** | `docs/tool-catalog.md:525-527`、`:612-614`、`:27-28`、`:450-452` |
+| 参数（`bash`） | `command`(必) / `description`(必，5–10 词 active voice) / `timeoutMs` / `workdir` / `run_in_background`；沙箱执行器在场时**追加** `sandbox_permissions`(enum `workspace-write`\|`danger-full-access`) + `justification` | `docs/tool-catalog.md:531-560`；`packages/shell/bash-sandbox/README.md:126`；`packages/shell/tool-bash/README.md:63` |
+| 参数（`pwsh`） | 与 `bash` 逐字段对齐（差在 `pwsh -Command` 方言与 Windows 沙箱契约） | `docs/tool-catalog.md:618-647`；`packages/shell/tool-pwsh/README.md:12,54,58` |
+| 协议（执行器 seam） | `ShellExecRequest{command, workdir?, timeoutMs?, stdoutMaxBytes?, signal?, stdin?, env?, dshEnv?, sandboxPolicy?}` → `resolve()` → `ShellExecSpec{command, workdir, timeoutMs, stdoutMaxBytes, sandboxPolicy, …}`；服务三法 `resolve/run/start` | `docs/subsystems/shell.md:24-65`、`:74-98`、`:13-15`、`:240-271` |
+| 返回 | `ShellRunResult{exitCode, signal, timedOut, aborted, timeoutMs, stdout, stderr, sandbox?}`；**非零退出是结果、不是错误**；退出标记 `[exit code: N]` / `[killed by signal: X]` 由 `dsh-shell` 的 `parseExitStatus` 统一 | `docs/subsystems/shell.md:111-136`；`packages/shell/shell/README.md:60`；`packages/shell/tool-bash/README.md:54,163` |
+| 输出上限 | 超限**截尾** + 全量落 **spill 文件**，结果行 `[output truncated; full output: <path-or-(unavailable)>]` | `packages/shell/tool-bash/README.md:54,163`；`docs/subsystems/shell.md:206-219` |
+| 非交互 | `stdin` 写一次即关、**无 PTY、无交互输入通道** | `packages/shell/shell/README.md:129`；`docs/subsystems/shell.md:39-46` |
+| 边界（沙箱） | 三档 `read-only`(默认) / `workspace-write` / `danger-full-access`，**只管文件写**（网络不受限）；无 runner 能强制 ⇒ fail-closed `SANDBOX_UNAVAILABLE` | `packages/sandbox/README.md:12`；`packages/shell/bash-sandbox/README.md:36-40,64,171` |
+| 审批 | 被拒命令作为**结果事实**回报（`sandbox:{mode,denied:true}`）⇒ 模型可在**同一轮**用"最窄的更宽档 + 一句 `justification`"**重试一次** ⇒ 该次经 `ctx.approval` **用户批准后**才执行；无真实前置拒绝 / 未严格更宽 / 用户拒绝 ⇒ **fail-closed，不执行** | `packages/shell/bash-sandbox/README.md:60`；`packages/shell/tool-bash/README.md:63`；`docs/subsystems/shell.md:165` |
+| 后台 | `run_in_background:true` ⇒ 立即回 job id；`job_output`/`job_list`/`job_kill` 控制；**后台无执行超时** | `packages/shell/tool-bash/README.md:59`；`docs/subsystems/shell.md:71-72` |
+| 受管环境 | 每次调用注入 managed `DSH_*`（`ctx.shellEnv`），且**显式覆盖**继承来的同名值 | `packages/shell/README.md:32`；`docs/subsystems/shell.md:9-11,277-306` |
+| executor 组合 | **每次组合恰好挂一个** executor（POSIX 用 bash 行、Windows 用 pwsh 行；`sandbox` 版 or `local` 版） | `packages/shell/README.md:12,38` |
+| workspace 概念 | 上游 `workspace`（`ctx.workspaceRegistry`）= **产品级"命名项目 + 按目录分组的会话"**，**不**向模型暴露工具/提示词/事件；执行侧 `workdir` 默认 = **会话工作目录**，沙箱 `workspace-write` 写根 = **policy 的 workspace root** | `packages/workspace/README.md:12,27`；`docs/tool-catalog.md:549`；`packages/shell/bash-sandbox/README.md:39` |
+
+> **上游"workspace"的含义** = **会话/项目工作目录（= 沙箱写根）**；与"给 agent 的 scratch 中间产物区"**不是一回事**（见 Z.3.2）。
+
+#### Z.3.2 没找到什么（**如实**；这几条必须本地另行定义）
+
+| # | 课题 | 结论 |
+|---|---|---|
+| ① | 上游**没有 `cmd.exe` 工具** | 工具目录只有 `bash` / `pwsh`（及持久版）/ `run_code`（`docs/tool-catalog.md` 全表）⇒ 人的「**cmd 代码**」**上游无对应物，需本地另行定义**（建议 `shell=cmd` ⇒ `cmd.exe /c <command>`） |
+| ② | 上游**没有"agent 自管脚本工作区（scratch）"概念** | 上游 agent 直接在会话 `workdir` 跑 `bash`/`pwsh`，中间产物落哪由脚本自决（沙箱把它限在 workspace root）；**没有**"专给 agent 的 scratch 区"抽象 ⇒ 决定 ④「工作区由 agent 自管」**上游无对应物，需本地定义**（Z.4.4） |
+| ③ | 上游**没有"用户点消息里代码块执行"的手势** | 审批只在**工具调用**路径（`ctx.approval`）上门；没有"消息 UI 里对代码块点一下就跑"的产品面 ⇒ 决定 ② 的点跑手势**需本地定义**（Z.4.2） |
+| ④ | 上游**不区分"库内/库外"** | 上游是通用 harness、无"知识库"概念 ⇒ "库内 cmd"边界是**本地语境**，需本地定义（Z.4.4 / Z.4.5） |
+
+#### Z.3.3 对照（上游 / 本地现状 §3.4 / 本提案）
+
+| 维度 | 上游 | 本地现状（§3.4） | 本提案 |
+|---|---|---|---|
+| 模型面执行 | **有**（`bash`/`pwsh` 工具） | **无**（四把 scratch 工具皆免审批只读） | **加**（Z.4.1，过审批门） |
+| 语言 | `bash -c` / `pwsh -Command` | 只 Python 解释器直跑 `.py` | `shell=cmd\|powershell`（`python` 是否保留 **待定**） |
+| 参数透传 | 无（模型写命令） | **无**（`arguments` 工具面无处传入） | 命令即参数（`command` 字符串内自带） |
+| 审批门 | 逐次（升级路径） | 无（"人点运行"当审批） | **逐次**（Z.4.5） |
+| 沙箱 | 三档（文件写冲突域） | 无（明说"不是沙箱"，`scratch.py:21-25`） | 本地 v1：**不做内核沙箱**（与 `dsh-agent-port.md:160` 本地口径一致）——用"逐次审批 + 边界声明"替代，**待拍板（Z.9-Q4）** |
+| 工作区 | 会话 `workdir`（= 沙箱写根） | 库内 scratch（应用管理目录） | agent 自管（落点 **待定**，Z.4.4） |
+| UI | 无"工作区面板" | scratch 面板 + 运行按钮 | 拆面板；消息代码块点跑 |
+
+### Z.4 新设计（能定即定，不能定即标「待定」）
+
+#### Z.4.1 执行工具（给 agent）
+
+**工具名**：建议 **`run_command`**（备选 `shell_exec` / `exec`）—— **待定（Z.9-Q2）**。
+
+| 参数 | 必填 | 语义 | 对齐上游 |
+|---|---|---|---|
+| `command` | ✔ | 要执行的命令字符串 | 同 `bash.command` |
+| `cwd` | ✘ | 工作目录；默认 = 库工作目录（或 agent 自管工作区，**待定**） | 同 `bash.workdir` |
+| `shell` | ✘ | `cmd` \| `powershell`（枚举，默认按平台）；**`cmd` 为本地新增** | 上游无 `cmd`（Z.3.2①） |
+| `timeout_s` | ✘ | 覆盖默认；服务端再夹取 | 同 `bash.timeoutMs` |
+| `description` | ✘ | 5–10 词 active voice，供 UI | 同 `bash.description` |
+| `run_in_background` | ✘ | 是否后台（**待定**：本地是否引入 job 运行时） | 同 `bash.run_in_background` |
+
+**返回**：`{stdout, stderr, exitCode, timedOut, duration_ms, truncated, spillPath?}` —— 字段命名**对齐上游 `ShellRunResult`**（`docs/subsystems/shell.md:111-136`）；`exitCode != 0` 是**结果**、不是工具错误（同上游口径）。
+
+**上限与并发**：可**复用** `scratch.py` 现有内核常量（超时 5–300s、stdout/stderr 各 64 KiB、环境白名单）——`scratch.py:90-110`、`:349-354`、`:318-324`；**并发上限、是否引入 spill 文件、输出上限是否放宽** ⇒ **待定（Z.9-Q3）**。
+
+#### Z.4.2 用户点击运行（消息代码块 → 同一执行通道）
+
+- **手势**：agent 消息里的 ```powershell / ```cmd 围栏 → 渲染出一个「运行」按钮；点击 ⇒ 走**与 Z.4.1 完全相同**的执行内核与审批桥（`approval_bridge.py`）。
+- **复用**：后端执行内核（`scratch.run_script()` 扩展后的统一执行器）+ 审批桥（`approval_bridge.py`，挂起等面板应答、fail-closed）+ 面板轮询（`agent_ask_poll` / `agent_approval_answer`，`ui.py:1261`/`:1865-1889`）。
+- **前端**：复用既有消息渲染管线，在围栏代码块上挂按钮——**具体文件/行需施工前定位（本轮未读码取证）**，记为**待定（Z.9-Q5）**。
+- **与 [AGENTS.md §2](../../AGENTS.md) 相容**：本提案新增的是**产品内 Agent 的一把工具**（`tools/kb.py` 的 KB 工具面），**不是**在 `artifacts/agent/agents.json` 新增一个 Agent ⇒ 与 §2「业务关注点一律作为 builder 的**作业或工具**，**永不新增独立 Agent**」相符；施工本身（若走仓库协作）作为 `builder` 的一个作业登记进 [maintenance-jobs.md §5](maintenance-jobs.md)。
+- **待定**：人自己点跑是否还需再过一次审批（建议：人点 = 一次显式批准；**agent 自己跑**必过审批）—— **Z.9-Q6**。
+
+#### Z.4.3 取消 UI 工作区 —— 现有资产逐项处置（**只写提案，不真删**）
+
+| 资产 | 位置（锚点） | 建议处置 |
+|---|---|---|
+| 四把 scratch 工具 | `tools/kb.py:73-80`、`:3900-3955` | **删**（写/读/删改由执行工具 + agent 自管工作区承担）或**保留为只读** `scratch_list/read` —— **待定（Z.9-Q7）** |
+| 工具面名单/次序钉子 | `tests/test_agent_web.py:489`、`tests/test_agent_tools_reference.py:465-470` | **随之改**（名单末尾次序断言） |
+| 面板「运行」RPC | `ui.py:2120-2171`（`_agent_scratch_run`）、`:2178` | **迁移**：并进统一执行通道（agent 执行工具 + 代码块点跑共用） |
+| 面板其余四 RPC | `ui.py:2059-2119`、`:2174-2177`、`:2179-2180` | 随面板一起去留 —— **待定（随 Q7）** |
+| 面板前端 | `src/memoria/ui/static/app/js/agent-scratch.js` | **删** |
+| 设置面板 | `src/memoria/ui/static/app/js/scratch-settings.js`、`ui.py:2272-2308`、`llm/config.py:85,178-180` | **保留/改语义/删** 取决于是否保留"解释器"概念 —— **待定（Z.9-Q8）** |
+| 设置面板契约钉子 | `tests/test_scratch_settings_panel.py` | 随设置面一起去留 |
+| 工作区内核 | `src/memoria/services/agent/scratch.py`（路径校验 + 执行内核） | **保留复用**：路径校验 `:132-175`、执行内核 `:357-433` 迁为通用执行器 |
+| 审计事件 | `audit.py:69`（`scratch/run`） | **迁移**为通用执行事件（如 `exec/run`），载荷沿用 `ui.py:2160-2169` |
+| agent-guide 两节 | `09-…md:280-288`（§2.23）、`10-…md:526-533`（§2.21） | **重写**为"执行工具 + 点跑 + 自管工作区"新口径 |
+
+#### Z.4.4 agent 自管工作区
+
+| 议题 | 候选 / 口径 | 状态 |
+|---|---|---|
+| 落点 | 候选：`<kb>/.memoria/agent/scripts/**`（沿用应用管理目录）/ 库内普通目录（如 `<kb>/.memoria/agent/workspace/**`）/ 其它 | **待定（Z.9-Q9）** |
+| **写路径约束** | 若选 `.memoria/**`：按 [AGENTS.md §1](../../AGENTS.md)"产品状态由**应用代码**写" ⇒ agent **不得直写**，必须经**应用侧 API**（现成范例 = `scratch.py` 的 `safe_rel()+realpath` 写面 `:132-175`） | **待定（Z.9-Q10）** |
+| 命名规范 | —— | **待定** |
+| 清理策略 | 上限 / 一键清空 / 随会话回收 | **待定** |
+| 留痕 | 每次落盘/执行落审计事件（Z.4.6） | 建议（沿用现状口径） |
+
+#### Z.4.5 审批与边界（**每一次执行过审批门** = "不做任意执行"的替代守则）
+
+| 边界项 | 建议 | 状态 |
+|---|---|---|
+| 逐次审批 | **是**：每次执行（尤其 agent 主动执行）过 `approval_bridge`，无应答/超时/拒绝 ⇒ **不执行**（fail-closed，`approval_bridge.py` 四条关闭路径） | **定**（原则） |
+| 联网 | —— | **待定（Z.9-Q4a）** |
+| 可写库内 | —— | **待定** |
+| 可写库外 | 建议默认 **否**（对齐 `scratch.py` 的"逃不出工作区"写面 + 执行 cwd 锁定） | **待定** |
+| 允许装依赖 | 建议默认 **否**（不可逆动作，见 Z.7） | **待定** |
+| 超时 | 沿用 `scratch.py` 5–300s（`scratch.py:93-95`） | 建议 |
+| 输出上限 | 沿用 stdout/stderr 各 64 KiB（`scratch.py:91`） | 建议 |
+| 非交互 | **stdin 关闭**（`stdin=subprocess.DEVNULL`，`scratch.py:385`；对齐上游"无交互输入"） | 建议 |
+| 拒绝审批 | **绝不执行** | **定** |
+
+#### Z.4.6 留痕与回滚
+
+- **留痕**：每次执行追加一条会话事件（复用 `audit.append()` `audit.py:32`）；载荷建议沿用现状（`script/interpreter/source/exit_code/timed_out/duration_ms/bytes/digest`，`ui.py:2160-2169`）**并补** `command` 摘要与 `shell`（**待定**：是否记 `command` 全文 —— 有泄露面）。
+- **回滚边界**：**执行不改文档 ⇒ 不进撤销栈** —— `services/agent/backup.py` / `undo`/`redo` 只覆盖"写文档"的 plan/apply 路径（见 §2.3.2）；执行产生的文件副作用（若允许写盘）**不在** undo 范围。**这是有意边界，须在文档里写明**。
+
+### Z.5 契约改动清单（**只写建议，不改**）
+
+| 目标 | 现状锚 | 建议措辞（要点） |
+|---|---|---|
+| `agent-capabilities.md §3.4` | `:361-394` | 标题与结论由「agent 写、**人点「运行」**」改为「agent 写 + **agent 可执行**（逐次审批）+ 消息代码块可点跑」；§3.4「边界 v1 三条」第 2 条"**执行只能由人触发**、模型面无执行工具"（`:372`）整条**废弃**，替换为 Z.4.5 的"逐次审批 + fail-closed"|
+| `agent-capabilities.md §3.6` | **不存在**（`:403` 引用的 `§3.6` 是**悬空引用**，真实目标为 §3.4） | 建议：若拟单列"执行"小节，**新增 §3.6**；否则把 `:403` 的"例外见 §3.6"改为"例外见 §3.4"。**见 Z.9 矛盾项-①** |
+| `agent-capabilities.md §4.1` | `:403` | 非目标句"不做『任意脚本执行』……**例外见 §3.6**：……由**人点「运行」**触发（模型仍无执行工具）"改为"……例外见 §3.4：**库内执行由 agent 逐次申请、经审批门执行**（非任意执行；见附录 Z）" |
+| `agent-capabilities.md §9 R4` | `:607` | "模型面无执行工具"整句失效；改为"模型面**有**执行工具，但**逐次过审批门**且默认边界见附录 Z；**仍不是内核沙箱**" |
+| `agent-capabilities.md §2.6` | `:316-318` | "明确不做"里与"执行"相关的项就地指向附录 Z |
+| `agent-capabilities.md §2.5` | `:275` | "不能插的是'新的执行体'"一句就地补"(执行体以工具 + 审批门形式开放在附录 Z)" |
+| `dsh-agent-port.md §5` 第 118 行 | `:118` | "❌ 不吃…… **2026-09-24 局部开口**：本地自建脚本工作区…… 模型面无执行工具"改为"…… **2026-10-06 再开口**：**吃上游 `bash`/`pwsh` 工具 + `ctx.shell`/`ctx.sandbox` 语义**（见附录 Z）" |
+| `AGENTS.md §6`（沙箱与执行红线） | `AGENTS.md §6` | 建议补一行口径：**产品内 Agent 的执行工具**是产品能力，不是仓库协作 Agent 的能力；执行红线（逐次审批、不绕过 `approval_bridge`、不复用为任意执行面）落 `agent-capabilities.md 附录 Z`。**注**：`AGENTS.md §6` 现文其实是"扩展接口：新增可插拔 Agent"（`agents.json` + `prompt_ref` + `io`/`permissions`/`forbidden`）；"不新增独立 Agent"实为 `§2`。**见 Z.9 矛盾项-②** |
+
+### Z.6 验收口径（可跑）
+
+| # | 用例 | 期望 | 落点 |
+|---|---|---|---|
+| ① | agent 执行一次**带参数**脚本 | `stdout` / `exitCode` 对 agent **可见**（即 `ui.py:2120-2126` 当前"不收 arguments"的缺口被补） | CDP 驱动：`scripts/benchmark/surface/`（`probe_nav_restore.py` / `cdp.mjs` 同款编排）+ `docs/example/rich-content-test/_harness.py`（bottle + `/rpc` + 注入桥） |
+| ② | 点消息里的代码块 | 走**同一通道**并可见输出 | 同上（前端交互） |
+| ③ | 超时与失败路径 | `timedOut=true`（`status:"ok"`，不算错误，对齐 `ui.py:2135`）与失败码可见 | 同上 |
+| ④ | **拒绝审批 ⇒ 绝不执行** | 无应答/超时/拒绝 ⇒ 不产生任何子进程、无 `exec/run` 审计 | 单测优先（`approval_bridge` 四条关闭路径）+ 探针 |
+
+> 本轮**未实现探针**；仅给落点。**未做验证**（无真机一轮）。
+
+### Z.7 风险与红线
+
+- **为什么"逐次审批"≠"任意执行"**：任意执行 = 模型**无需同意**即可执行任意命令；逐次审批 = 每一次执行**悬停在人面前**、无应答即 fail-closed（`approval_bridge.py`：`UNAVAILABLE`/`CANCELLED`/未挂载/超时**四种路径全部拒绝**）。差别是**"人能否按停"**，而不是"命令能不能任意"。
+- **模型不得自改审批策略**：审批档/策略是安全不变量，模型面**不得**有"改 `approval` 档"的工具；不得把"人已批准一次"泛化为"此后放行同类"。
+- **执行工具不得绕过 `approval_bridge`**：执行入口**唯一**，且强制过桥；`approval_bridge` 的"未挂载即拒绝"是一条 **fail-closed 红线**（CLI 等无面板进程 → 立刻拒绝，`approval_bridge.py:22-23`）。
+- **不可逆动作的额外保护**：联网 / 装依赖 / 删文件属不可逆 ⇒ 建议**额外**提示与更高审批（甚至默认禁止）；**未定项全标待定**（Z.4.5）。
+- **不是沙箱**：本地不引内核级隔离（`dsh-agent-port.md:160`，本地口径）⇒ 执行以**当前用户身份**运行、能读写文件与网络；面板/文档须**常显**该警告（现状已如此，`scratch.py:21-25`、`agent-scratch.js:11-13`）。
+
+### Z.8 分期（建议顺序；每期一句话给验收与回滚）
+
+| 期 | 范围 | 验收 | 回滚 |
+|---|---|---|---|
+| P1 | **执行工具 + 审批门**（Z.4.1 + Z.4.5）：`run_command` + 过 `approval_bridge` | Z.6-①③④ 通过、审计可见 | 摘掉工具注册即可（旧 scratch 仍在） |
+| P2 | **消息代码块点跑**（Z.4.2） | Z.6-② 通过 | 前端开关关掉按钮 |
+| P3 | **拆 UI 工作区**（Z.4.3） | 面板与四/五条 RPC 移除、无残留引用 | 恢复面板模块与 RPC 注册 |
+| P4 | **迁移文档/测试/审计**（Z.4.3 表尾 + §3.4/§4.1/§9 文案） | `pytest -k doc_anchor` 绿 + 相关单测更新 | 文档/测试回退 |
+
+### Z.9 待拍板 / 待定 / 未找到（汇总）
+
+**待拍板（Q）**：
+
+| ID | 问题 |
+|---|---|
+| Q1 | "取消运行按钮"（④）与"消息代码块点跑"（②）的关系：面板按钮删、消息按钮加？ |
+| Q2 | 执行工具名（`run_command` / `shell_exec` / `exec`？） |
+| Q3 | 输出上限 / 是否引入 spill 文件 / 并发上限 / 是否支持后台 |
+| Q4 | 本地 v1 是否**不**引内核沙箱（本提案假设"不引"，与 `dsh-agent-port.md:160` 一致）；Q4a 是否允许联网 |
+| Q5 | 消息代码块点跑的前端落点（渲染管线文件/行） |
+| Q6 | 人自己点跑是否还需再过一次审批 |
+| Q7 | 四把 scratch 工具：**删** or **保留为只读** |
+| Q8 | 设置面板三键（解释器概念）随执行改为 shell 分派后：保留/改语义/删 |
+| Q9 | agent 自管工作区落点 |
+| Q10 | `.memoria/**` 若选为落点，agent 经**哪个应用侧 API** 写（不得直写） |
+
+**未找到（上游无对应物，需本地定义）**：`cmd` 工具（Z.3.2①）、agent 自管 scratch 工作区（Z.3.2②）、消息代码块点跑手势（Z.3.2③）、"库内/库外"边界（Z.3.2④）。
+
+**与既有文档矛盾/存疑（如实，本轮**未改**正文）**：
+
+1. **`§3.6` 悬空引用**：全文**无** `## 3.6` 标题（§3 只有 3.1–3.4，`docs/design/agent-capabilities.md:342-396`），但 `:403`（在 §4.1 内）写"例外见 §3.6"⇒ 该引用**指向不存在的小节**（真实目标应为 §3.4）。
+2. **`AGENTS.md §6` 的表述**：`:275`/`:403` 把"沙箱/执行红线"归于 `AGENTS.md §6`，但 `AGENTS.md §6` 现文是"扩展接口：新增可插拔 Agent"；"不新增独立 Agent"实为 `AGENTS.md §2`。
+3. **`ui.py` 路径**：§3.4 与各文档以 `ui.py` 指代，实际文件在 `src/memoria/presentation/api/ui.py`（非仓库根 `ui.py`）—— 现状文档用简名，**未歧义但需留意**。
+4. **"运行按钮"语义冲突**：人原话"不需要管运行按钮" vs 决定 ②"支持用户直接点……代码块"—— 见 Q1。
+
+**本轮未做到 / 不确定（如实）**：
+
+- **未做任何代码改动、未做真机/浏览器验证**（本提案仅文档；Z.6 探针为落点建议，未实现）。
+- 前端消息渲染含围栏代码块的**具体文件与行号未读码取证**（Q5）。
+- 上游 `dsh-src/` 为**只读检出**；本节引用均为其 `README`/`docs` 文本（**未逐个复核其 `src/*.ts` 源码实现**）。
+- 载荷是否记 `command` 全文、并发/后台/依赖安装等边界 **待定**。
+
+### Z.10 拍板记录（2026-10-06，人）
+
+Z.9 的 **Q1 / Q2 / Q6 由"待定"转"已定"**：
+
+| # | 议题 | **已定** |
+|---|---|---|
+| **Q1** | UI 工作区 与 "点代码块运行" 的关系 | **UI 上的脚本工作区直接取消**；**消息里的代码块要能点击运行**。二者不矛盾：取消的是"面向人的工作区面板 + 它的运行按钮"，保留并新增的是"**消息内**代码块的运行入口" |
+| **Q2** | 执行工具覆盖哪些 shell | **`pwsh` + `cmd` 两个都要**（人：命令行工具最主要是这俩） |
+| **Q6** | 人自己点跑是否过审批 | **要**，与 agent 同口径 —— 否则"点一下就执行"等于把红线拆了 |
+
+**据此新增两条工程风险（是事实，不是待定）**：
+- Windows 自带的是 `powershell.exe`（5.1），**`pwsh.exe`（PowerShell 7+）需另装** ⇒ `pwsh` 工具**必须**在缺失时回退到 `powershell.exe`，并在返回里**如实标注实际使用的解释器与版本**；否则在未装 PS7 的机器上直接失败。
+- 上游只有 `pwsh`（**无 `cmd`**）⇒ **`cmd` 这一把是本地新增**，其 `ShellExecSpec` 映射需自行定义（`cmd /c` 调用形式、参数转义、退出码语义）。
+
+**仍未定**：Q3（输出上限 / 并发 / 后台）、Q4（是否引入沙箱内核、是否联网）、Q5（前端消息围栏的落点）、Q7（四把 scratch 工具去留）、Q8（设置面板三键去留）、Q9（agent 自管工作区落点）、Q10（`.memoria/**` 经哪个应用侧 API 写）。
+
+### Z.11 拍板记录（二）（2026-10-06，人：「沙箱先搁置，其他按照你推荐的做」）
+
+**至此全部议题已定**（Z.9 的 Q3–Q10 全部收口）：
+
+| # | 议题 | **已定** |
+|---|---|---|
+| Q1 | UI 工作区 / 点代码块运行 | **取消 UI 工作区**；**消息代码块可点击运行** |
+| Q2 | shell 覆盖 | **`pwsh` + `cmd`**（`pwsh` 缺失回退 `powershell.exe` 并如实标注） |
+| Q3 | 输出 / 并发 / 后台 | 输出**上限 200 KB**（超限截断并标注）；**并发 1**；**不做后台** |
+| Q4 | 沙箱内核 | **搁置**（实测 `dsh-src/packages/sandbox` = 72 文件 / 481 KB / **7,635 行 TS**，另有 native runner，且依赖上游 ~50 个包）⇒ 不移植 |
+| Q4b | 联网 | **允许**（审批卡如实显示命令） |
+| Q5 | 前端"运行"落点 | **待读码取证后定**（唯一未取证项） |
+| Q6 | 审批 | **两种触发都过审批** —— agent 触发的那次**也要人确认** |
+| Q7 | scratch 四把工具 | **保留**（`scratch_list/read/write/delete` 即"agent 自管工作区"的手段；只去掉 UI） |
+| Q8 | 设置面板三键 | **删**（随 UI 工作区一起） |
+| Q9 | 工作区落点 | **沿用 `<kb>/.memoria/agent/scratch/` 不变**（现状即此处，零迁移） |
+| Q10 | `.memoria/**` 写入 | 走**应用侧 API**（`scratch_*` 四把），agent **不直写** |
+
+**性质提醒（写死，防以后误解）**：「**逐次审批**」与「**沙箱**」是**替代关系，不是叠加** ⇒ 因为沙箱搁置，**审批就是当前唯一的守则**；**哪天要让 agent 不逐次问人地自主执行，那一天必须先把沙箱补上。**
+
+**施工分期**（验收与回滚见 Z.8）：一期 执行工具（pwsh/cmd + 回退 + 审批 + 超时 + 输出上限 + cwd 限库内 + 审计）→ 二期 消息代码块"运行" → 三期 拆 UI 工作区（面板/设置三键/前端 + 同步测试断言）→ 四期 文档与契约（§3.4 / 悬空 §3.6 / `AGENTS.md` 误引：**由人来改**）。
+

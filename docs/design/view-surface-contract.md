@@ -100,6 +100,33 @@ destroy() -> void
   ```
 - **宿主永远不传"像素"或"DOM 节点"**，只传**文本坐标**。
 
+### 3.1bis 门面键名对照（实现现状）
+
+> **为什么单列**：宿主（`surface/legacy-surface.js`）经 `MemoriaApp.surface` 门面取用引擎能力，而门面受"零行漂移"约束只能**追加新键**，且部分能力在实现里是「`EditOp` 的 `kind`」或「§3.1 未列的方法」⇒ 门面**键名与 §3.1 方法名并非 100% 同名**。本小节把「门面键 ↔ 契约位置 ↔ 内部实现」列为事实，**只为消歧义，不改动 §3.1 语义**。
+
+`MemoriaApp.surface` 共 **11 键**（定义于 `src/memoria/ui/static/app/js/app.js` 的 `window.MemoriaApp.surface = { … }`）：
+
+| # | 门面键 | 契约位置 | 映射到的内部实现 |
+|---|---|---|---|
+| 1 | `setBlockSource(blockIndex, src)` | §3.1 无（`applyEdit` 的**块级等价入口**，源自 mermaid 门面） | `window.__blockLineMap` + 改 `state.doc` + `renderEditor` + `renderPreview({incremental})` |
+| 2 | `getBlockSourceRange(blockIndex)` | §3.1 无（只读读数） | `window.__blockLineMap[i]` → `{startLine, endLine}` |
+| 3 | `getBlockSourceText(blockIndex)` | §3.1 无（只读读数） | `state.doc.lines.slice(startLine, endLine + 1)` |
+| 4 | `setMode(mode)` | §3.1 `setMode(mode)` | `setViewMode(mode)` |
+| 5 | `collectText()` | **§3.1 无对应方法**（是 §3.2 `onTextChange` 的真源读数来源） | `collectEditorBody()` |
+| 6 | `revealRange(startLine, endLine, opts)` | §3.1 `revealRange(startLine, endLine, opts)` | `highlightRange`（band + flash，含 AG104 二次校准）；`opts.scroll === false` ⇒ `markRangeQuiet` |
+| 7 | `getScrollAnchor()` | §3.1 `getScrollAnchor()` | `_getViewTopSrcLine(state.viewMode)` |
+| 8 | `setScrollAnchor(a)` | §3.1 `setScrollAnchor(a)` | `_scrollToSrcLine(a.mode, a.srcLine)` |
+| 9 | `deleteRange(range)` | **§3.1 无此方法**：对应 `EditOp` 的 `kind: 'deleteRange'` | `_surfaceSpliceRange(range, null)` |
+| 10 | `replaceRange(range, text)` | **§3.1 无此方法**：对应 `EditOp` 的 `kind: 'replaceRange'` | `_surfaceSpliceRange(range, text)` |
+| 11 | `applySelectionStyle(formatType, color, range, force)` | **§3.1 无此方法**（样式类编辑，非文本坐标 op） | `MemoriaEditSync.applyStyle(...)` |
+
+**四个非同名键的归属**（消除"契约与实现命名不一致"这一未来分歧点）：
+
+- `collectText` —— §3.1 **无**对应方法名；它是 §3.1「真源」的对外读数出口，§3.2 `onTextChange(text, cause)` 的 `text` 即取自它。
+- `replaceRange` / `deleteRange` —— **不是 §3.1 的方法名，而是 `EditOp` 的 `kind` 取值**（§3.1：`op.kind ∈ { insertText, deleteRange, splitBlock, mergeBlock, replaceRange }`）。门面把这两个 `kind` 提为方法，属"等价入口"，粒度 = **整行、1-based 含端点**（列信息忽略）。
+- `applySelectionStyle` —— §3.1 **无**此方法；样式类编辑在契约里归 §3.1 `applyEdit(op)` 的语义面，实现走 `MemoriaEditSync.applyStyle`（`range` 为 DOM `Range`），故以独立键暴露。
+- 另注：§3.1 中的 `mount` / `setText` / `applyEdit` / `undo` / `redo` / `getSrcRangeForSelection` / `isBlockFrozen` / `destroy` **不在** `MemoriaApp.surface` 门面上（由插头适配器按契约直连，或尚未开窗）。
+
 ### 3.2 宿主回调（引擎 → 宿主）
 
 | 回调 | 时机 | 宿主该做什么 |
