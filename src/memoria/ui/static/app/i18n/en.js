@@ -1920,4 +1920,19 @@
     perfNavReset: "Clear navigation model",
     perfNavResetDone: "Navigation model cleared",
   });
+
+  // ===== 2026-10-06 appended: "run" button on message code blocks (phase 2, Appendix Z.4.2 / Z.11) =====
+  // Clicking a ```powershell / ```pwsh / ```cmd fence in an agent message runs it **after approval**.
+  // Appended at file end ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    exec: {
+      run: "Run",
+      running: "Running…",
+      description: "Run code block from message",
+      failed: "Run failed",
+      approveCommand: "Command to run",
+      approveWorkdir: "cwd: {path}",
+      approveTimeout: "timeout {s}s",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

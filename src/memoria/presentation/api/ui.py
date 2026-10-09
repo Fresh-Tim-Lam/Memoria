@@ -2382,3 +2382,58 @@ UIAPI.nav_model_read = _nav_model_read
 UIAPI.nav_model_write = _nav_model_write
 
 
+# ── 第二期（附录 Z.4.2）：消息代码块「运行」的两条 RPC ──────────────────────────────
+# `agent_exec_start` 提交一次「运行」作业（后台过审 + 执行，审计 `source="user"`）；`agent_exec_poll`
+# 轮询状态、待批项与结果。**与 ask 面同构但独立**：独立线程池 ⇒ 人在读答案时也能点运行（不争单飞）。
+# 审批同口径（Z.11 Q6）：`agent_exec_start` 只提交，确认卡由轮询载荷 `pending_approvals` 呈现、
+# 由既有 `agent_approval_answer` 回填；拒绝 / 超时 / 无应答 ⇒ `registry.invoke()` 于分发前收敛为
+# `DENIED`，**工具体根本不被调用 ⇒ 绝不启动进程**（`approval_bridge` 四条关闭路径）。
+# 本块**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _agent_exec_start(
+    self,
+    shell: str,
+    command: str,
+    description: str = "",
+    workdir: str | None = None,
+    timeout_ms: float | None = None,
+    session_id: str | None = None,
+    kb_path: str | None = None,
+) -> dict:
+    """提交一次「人点运行」：`{status:"ok", job_id}` 或结构化错误（**不阻塞** RPC 线程）。
+
+    `shell` ∈ `pwsh` / `cmd`（前端只在 ```powershell / ```pwsh / ```cmd 代码块上给按钮）；
+    `session_id` 供审批档解析（与 agent 同口径，见 `ask_stream._exec_policy`）。
+    """
+    from memoria.services.agent.ask_stream import get_exec_jobs
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    return get_exec_jobs().start(
+        kb,
+        shell=shell,
+        command=command,
+        description=description,
+        workdir=workdir,
+        timeout_ms=timeout_ms,
+        session_id=session_id,
+    )
+
+
+def _agent_exec_poll(self, job_id: str) -> dict:
+    """轮询一次「运行」作业：`{status, text, error, code, pending_approvals, pending_questions, …}`。
+
+    未知 job ⇒ `unknown_job`（与 ask 面同口径）。`status` ∈ `running` / `done` / `error`；
+    `text` 是**过审后**执行结果经 `_render_exec_result` 的人读文本（含退出码 / 耗时 / 截断 / stdout / stderr）。
+    """
+    from memoria.services.agent.ask_stream import get_exec_jobs
+
+    return get_exec_jobs().poll(job_id)
+
+
+UIAPI.agent_exec_start = _agent_exec_start
+UIAPI.agent_exec_poll = _agent_exec_poll
+
+

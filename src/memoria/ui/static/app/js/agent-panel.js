@@ -6469,6 +6469,263 @@ window.MemoriaAgentPanel = (function () {
     return out;
   };
 
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-06 追加（第二期，`docs/design/agent-capabilities.md` 附录 Z：Z.4.2 / Z.11）：
+  // **agent 消息里的 ```powershell / ```pwsh / ```cmd 代码块 → 一个「运行」按钮**。
+  //   ① 只在上面三种语言标注的围栏上给按钮（其它语言**不给**）；语言取自 `marked.lexer()` 的
+  //      `code.lang`（净化器 `sanitizeHtmlInto()` 会**丢光属性**，`language-*` 类名活不下来，
+  //      故必须回到**消息原文**取语言，再按"第 N 个 code 块"与 DOM 的 `pre > code` 一一对齐）；
+  //   ② 点击 ⇒ RPC `agent_exec_start`（**与 agent 同一条通道**：`shell_exec.run_command` +
+  //      `registry`/审批桥；审计 `source="user"`）⇒ 确认卡显示完整命令 ⇒ 人点允许才执行；
+  //      拒绝 / 超时 / 无应答 ⇒ 后端 fail-closed，**绝不启动进程**；
+  //   ③ 结果回写在**该代码块下方**（`exitCode`/耗时/`truncated`/stdout/stderr 由后端渲染文本承载），
+  //      限高可滚动（见 app.css `.-agent-run-out`），不把消息撑爆；
+  //   ④ 并发 1：执行中**所有**运行按钮禁用（后端也是并发 1 锁，别让用户排出一串）。
+  //   纪律：只**包装**既有函数（`renderBody` / `upsertApprovalCard`）、只**追加**新函数，
+  //   不改任何既有函数体 ⇒ `agent-guide` 里那些 `agent-panel.js:<行号>` 锚点零漂移。
+  //   落点纪律：整块追加在 IIFE 末尾（`return {` 之前）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 语言标注 → 执行 shell（大小写不敏感）；其余语言**不**给运行按钮。
+  const RUN_LANGS = { powershell: "pwsh", pwsh: "pwsh", cmd: "cmd" };
+  //: 结果缓存：`shell\u0000command` → `{state, text}`（整串重绘后据此重建结果块，结果不会被重绘冲掉）。
+  const execResults = Object.create(null);
+  //: 在飞作业（并发 1）：`{jobId, key}`；非空 ⇒ 所有运行按钮禁用。
+  let execJob = null;
+
+  /** 结果键：shell + NUL + 命令原文（同一消息里两条**完全相同**的命令会共用同一份结果，如实标注）。 */
+  function execResultKey(shell, command) {
+    return String(shell || "") + "\u0000" + String(command == null ? "" : command);
+  }
+
+  /** 从助手消息**原文**里取出可运行的围栏块：`[{shell, command, codeIndex}]`（按出现顺序）。
+   *  `codeIndex` = 该 `code` token 在**全部** code token 里的序号（含不带语言的缩进块），
+   *  用来与 DOM 的 `pre > code` 顺序对齐。soft 失败（无 marked / 解析异常）⇒ 空表（不注入）。 */
+  function runnableFences(text) {
+    const md = window.marked;
+    if (!md || typeof md.lexer !== "function") return [];
+    let tokens;
+    try {
+      tokens = md.lexer(agentMathSource(String(text == null ? "" : text)), { gfm: true, breaks: true });
+    } catch (e) {
+      return [];
+    }
+    const out = [];
+    let codeIndex = 0;
+    (tokens || []).forEach(function (tok) {
+      if (!tok || tok.type !== "code") return;
+      const idx = codeIndex;
+      codeIndex += 1;
+      const shell = RUN_LANGS[String(tok.lang || "").trim().toLowerCase()] || "";
+      if (!shell) return;
+      out.push({ shell: shell, command: String(tok.text || "").replace(/\n$/, ""), codeIndex: idx });
+    });
+    return out;
+  }
+
+  /** 按当前状态重画一个运行宿主（按钮禁用态 / 文案 + 结果块）。幂等；纯读 `execJob` / `execResults`。 */
+  function paintExecHost(host) {
+    const key = host.getAttribute("data-exec-key") || "";
+    const running = !!(execJob && execJob.key === key);
+    const btn = host.querySelector("button.-agent-act--run");
+    if (btn) {
+      btn.disabled = !!execJob; // 并发 1：只要有一个在跑，全部禁用
+      btn.textContent = running ? T("agent.exec.running") : T("agent.exec.run");
+      btn.setAttribute("aria-label", btn.textContent);
+    }
+    const result = host.querySelector(".-agent-run-result");
+    if (!result) return;
+    const rec = execResults[key];
+    result.innerHTML = "";
+    if (!rec || !rec.text) {
+      result.hidden = true;
+      return;
+    }
+    result.hidden = false;
+    const pre = document.createElement("pre");
+    pre.className = rec.state === "error" ? "-agent-run-out -agent-run-out--err" : "-agent-run-out";
+    pre.textContent = rec.text;
+    result.appendChild(pre);
+  }
+
+  /** 重画所有同键宿主（同一命令可能出现多次）；换语言 / 结果回写后调用。 */
+  function refreshExecHosts(key) {
+    const box = $("#agent-messages");
+    if (!box) return;
+    const hosts = box.querySelectorAll("[data-exec-key]");
+    for (let i = 0; i < hosts.length; i += 1) {
+      if ((hosts[i].getAttribute("data-exec-key") || "") === key) paintExecHost(hosts[i]);
+    }
+  }
+
+  /** 点击「运行」：提交作业（后台过审 + 执行），随后按 300ms 轮询直到收敛。 */
+  function onRunClick(ev, host) {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
+    if (execJob) return; // 并发 1：已有执行在飞 ⇒ 不重复提交
+    const shell = host.getAttribute("data-exec-shell") || "";
+    const command = host.getAttribute("data-exec-cmd") || "";
+    const key = host.getAttribute("data-exec-key") || "";
+    if (!shell || !command) return;
+    startExec(shell, command, key);
+  }
+
+  /** 提交一次运行作业；确认卡由轮询载荷 `pending_approvals` 呈现（走既有 `agent_approval_answer`）。 */
+  async function startExec(shell, command, key) {
+    const kb = state.kbPath || "";
+    let res;
+    try {
+      res = await call("agent_exec_start", shell, command, T("agent.exec.description"), null, null, sessionId || null, kb || null);
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok" || !res.job_id) {
+      showFlashError(T("agent.exec.failed"), errorDetail(res) || errorText(res));
+      return;
+    }
+    execJob = { jobId: String(res.job_id), key: key };
+    execResults[key] = { state: "running", text: "" };
+    refreshExecHosts(key);
+    pollExec(execJob.jobId, key);
+  }
+
+  /** 轮询运行作业：把 `pending_approvals` 交给既有确认卡渲染；收敛后把结果写进缓存并回写消息。 */
+  async function pollExec(jobId, key) {
+    const kbAtStart = state.kbPath || "";
+    const deadline = Date.now() + 600000; // 10 分钟兜底（审批本身另有 120s 超时）
+    while (execJob && execJob.jobId === jobId && Date.now() < deadline) {
+      await sleep(300);
+      if (!execJob || execJob.jobId !== jobId) return;
+      if ((state.kbPath || "") !== kbAtStart) {
+        execJob = null; // 换库 / 关库：本次结果与当前库无关，丢弃（不谎称已取消）
+        return;
+      }
+      let st;
+      try {
+        st = await call("agent_exec_poll", jobId);
+      } catch (e) {
+        st = { status: "error", message: String((e && e.message) || e) };
+      }
+      if (!execJob || execJob.jobId !== jobId) return;
+      if (st && st.pending_approvals) applyPendingApprovals(st.pending_approvals);
+      if (!st || st.status === "running") continue;
+      execResults[key] = {
+        state: st.status === "error" ? "error" : "done",
+        text: String(st.text || st.error || ""),
+      };
+      execJob = null;
+      refreshExecHosts(key);
+      return;
+    }
+    if (execJob && execJob.jobId === jobId) {
+      execJob = null; // 兜底超时：解锁按钮，不再挂着
+      refreshExecHosts(key);
+    }
+  }
+
+  /** 给一个气泡正文挂运行按钮：按 `marked.lexer()` 的 code 序号与 DOM 的 `pre > code` 对齐。
+   *  宿主 `<div class="-agent-run-host">` 就插在 `<pre>` 原位，再把 `<pre>` 移进宿主 ⇒
+   *  **文档序不变**（`annotateMessageOffsets` 的字符区间反标不受影响）。 */
+  function injectRunButtons(el, text) {
+    if (!el) return;
+    const fences = runnableFences(text);
+    if (!fences.length) return;
+    const codeEls = el.querySelectorAll("pre > code");
+    fences.forEach(function (fence) {
+      const codeEl = codeEls[fence.codeIndex];
+      if (!codeEl) return;
+      const pre = codeEl.parentElement;
+      if (!pre || !pre.parentNode || pre.getAttribute("data-exec-host")) return;
+      const key = execResultKey(fence.shell, fence.command);
+      const host = document.createElement("div");
+      host.className = "-agent-run-host";
+      host.setAttribute("data-exec-key", key);
+      host.setAttribute("data-exec-shell", fence.shell);
+      host.setAttribute("data-exec-cmd", fence.command);
+      pre.setAttribute("data-exec-host", "1");
+      pre.parentNode.insertBefore(host, pre);
+      const bar = document.createElement("div");
+      bar.className = "-agent-run-bar";
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "-agent-act -agent-act--run";
+      btn.textContent = T("agent.exec.run");
+      btn.setAttribute("aria-label", T("agent.exec.run"));
+      btn.addEventListener("click", function (ev) {
+        onRunClick(ev, host);
+      });
+      bar.appendChild(btn);
+      host.appendChild(bar);
+      host.appendChild(pre); // 把 pre 移进宿主（位置不变、只多一层）
+      const result = document.createElement("div");
+      result.className = "-agent-run-result";
+      result.hidden = true;
+      host.appendChild(result);
+      paintExecHost(host);
+    });
+  }
+
+  // 包装 `renderBody`（**只在助手气泡**上注入；用户气泡走 `linkifyUser`，无围栏可跑）。
+  // 在 `renderBody` 之后跑 ⇒ 排在 `annotateMessageOffsets` **之后**，注入节点不进字符区间反标。
+  const baseRenderBodyForExec = renderBody;
+  renderBody = function (el, role, text) {
+    const out = baseRenderBodyForExec(el, role, text);
+    if (role !== "user") {
+      try {
+        injectRunButtons(el, text);
+      } catch (e) {
+        console.warn("agent-exec:", e);
+      }
+    }
+    return out;
+  };
+
+  // 确认卡：执行类的工具名（`pwsh` / `cmd`）时，把**完整命令 / workdir / 超时**显示在意图行下方。
+  // 只包装 `upsertApprovalCard`（建卡后补一块），不改 `approvalCardEl` 本体 ⇒ 行号锚点零漂移。
+  function annotateExecApproval(row) {
+    const tool = String((row && row.tool) || "");
+    if (tool !== "pwsh" && tool !== "cmd") return;
+    const args = row && row.arguments && typeof row.arguments === "object" ? row.arguments : {};
+    const el = approvalCards[approvalCardKey(row)];
+    if (!el || el.querySelector(".-agent-approve-cmd")) return;
+    const intent = el.querySelector(".-agent-approve-intent");
+    if (intent && String(args.description || "").trim()) intent.textContent = String(args.description);
+    const intentHost = intent || el.querySelector(".-agent-approve");
+    if (!intentHost || !intentHost.parentNode) return;
+    const wrap = document.createElement("div");
+    wrap.className = "-agent-approve-cmd";
+    const label = document.createElement("div");
+    label.className = "-agent-approve-cmd-label -muted";
+    label.textContent = T("agent.exec.approveCommand");
+    const pre = document.createElement("pre");
+    pre.className = "-agent-approve-cmd-body";
+    pre.textContent = String(args.command || "");
+    const meta = document.createElement("div");
+    meta.className = "-agent-approve-cmd-meta -muted";
+    const bits = [];
+    if (args.workdir) bits.push(T("agent.exec.approveWorkdir", { path: String(args.workdir) }));
+    const seconds = Math.round(Number(args.timeoutMs || 120000) / 1000);
+    if (Number.isFinite(seconds)) bits.push(T("agent.exec.approveTimeout", { s: String(seconds) }));
+    meta.textContent = bits.join(" · ");
+    wrap.appendChild(label);
+    wrap.appendChild(pre);
+    wrap.appendChild(meta);
+    intentHost.parentNode.insertBefore(wrap, intentHost.nextSibling);
+  }
+
+  const baseUpsertApprovalCardForExec = upsertApprovalCard;
+  upsertApprovalCard = function (row) {
+    const out = baseUpsertApprovalCardForExec.apply(this, arguments);
+    try {
+      annotateExecApproval(row);
+    } catch (e) {
+      console.warn("agent-exec-approve:", e);
+    }
+    return out;
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；

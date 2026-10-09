@@ -1817,4 +1817,19 @@
     perfNavReset: "清空导航模型",
     perfNavResetDone: "已清空导航模型",
   });
+
+  // ===== 2026-10-06 追加：消息代码块「运行」（第二期，附录 Z.4.2 / Z.11）=====
+  // 人点 agent 消息里的 ```powershell / ```pwsh / ```cmd 代码块 → 「运行」按钮 → 过审批后执行。
+  // 走"文件末尾 Object.assign"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    exec: {
+      run: "运行",
+      running: "执行中…",
+      description: "运行消息代码块",
+      failed: "运行失败",
+      approveCommand: "将执行的命令",
+      approveWorkdir: "cwd：{path}",
+      approveTimeout: "超时 {s} 秒",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

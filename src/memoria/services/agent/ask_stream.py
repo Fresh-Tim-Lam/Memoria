@@ -475,3 +475,196 @@ def get_ask_jobs() -> AskJobManager:
         if _MANAGER is None:
             _MANAGER = AskJobManager()
         return _MANAGER
+
+
+# ── 第二期（附录 Z.4.2 / Z.11）：**消息代码块「运行」**的后端作业面 ─────────────────────
+# 人点 agent 消息里的 ```powershell / ```pwsh / ```cmd 代码块 ⇒ 前端 RPC `agent_exec_start` ⇒ 本类。
+# 与"模型自己跑"走**同一条通道**：`ToolRegistry.invoke()` 于**分发前**过审批桥（策略 = 该会话的档案，
+# 与 `ask._bind_permission` 同源），过审后工具体 `_exec_call` 走同一个 `shell_exec.run_command`。
+# **唯一差异**是审计字段 `source="user"`（模型那条是 `"agent"`，见 Z.11「审计 source 字段」）。
+# 审批同口径（Z.11 Q6：人点也要过审批）：执行前**挂起等人点确认**；无面板应答 / 超时 / 拒绝 ⇒
+# fail-closed，工具体根本不被调用 ⇒ **绝不启动进程**（`approval_bridge` 四条关闭路径）。
+# 本块**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+EXEC_SHELLS = ("pwsh", "cmd")
+
+
+def _exec_policy(kb_path: str, session_id: str | None) -> Any:
+    """人点运行的审批策略：按**该会话**的审批档解析（复用 `ask._bind_permission`，与 agent 同口径）。
+
+    无会话 id（还没提过问）⇒ 用**默认档**的策略；档位面故障 ⇒ 回落默认档（同 `_bind_permission` 的口径）。
+    """
+    from memoria.services.agent import permission_presets
+
+    try:
+        if session_id:
+            from memoria.services.agent.ask import _bind_permission
+            from memoria.services.agent.session.store import SessionStore
+
+            return _bind_permission(kb_path, SessionStore(kb_path, str(session_id)), None)
+        return permission_presets.policy_for(permission_presets.default_preset(), kb_path)
+    except Exception as exc:  # noqa: BLE001 —— 档位面故障不得让「运行」起不来
+        logger.warning("[agent-exec] 审批档解析失败，用默认档：%r", exc)
+        return permission_presets.policy_for(permission_presets.DEFAULT_PRESET, kb_path)
+
+
+@dataclass
+class ExecJob:
+    """一次「人点运行」作业：后台线程里过审 + 执行，前端按 `job_id` 轮询。"""
+
+    job_id: str
+    kb_path: str
+    shell: str
+    command: str
+    description: str
+    workdir: str | None
+    timeout_ms: Any
+    session_id: str | None
+    status: str = RUNNING
+    text: str = ""
+    error: str = ""
+    code: str = ""
+    lock: threading.Lock = field(default_factory=threading.Lock)
+
+    def fail(self, message: str, code: str) -> None:
+        with self.lock:
+            self.status = ERROR
+            self.error = str(message)
+            self.code = str(code)
+            self.text = str(message)
+
+    def succeed(self, text: str) -> None:
+        with self.lock:
+            self.status = DONE
+            self.text = str(text)
+
+    def snapshot(self) -> dict[str, Any]:
+        with self.lock:
+            return {
+                "status": self.status,
+                "job_id": self.job_id,
+                "shell": self.shell,
+                "command": self.command,
+                "text": self.text,
+                "error": self.error,
+                "code": self.code,
+                "pending_approvals": pending_for(self.kb_path),
+                "pending_questions": pending_questions_for(self.kb_path),
+            }
+
+
+class ExecJobManager:
+    """单任务「运行」管理器：提交即返回 job_id，执行在独立单线程池（与 ask 作业并行、互不排队）。"""
+
+    KEEP = 8
+
+    def __init__(self) -> None:
+        self._pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="agent-exec")
+        self._lock = threading.RLock()
+        self._jobs: dict[str, ExecJob] = {}
+        self._order: list[str] = []
+
+    def start(
+        self,
+        kb_path: str,
+        *,
+        shell: str,
+        command: str,
+        description: str = "",
+        workdir: Any = None,
+        timeout_ms: Any = None,
+        session_id: str | None = None,
+    ) -> dict:
+        """校验并提交一次「运行」；返回 `{status:"ok", job_id}` 或结构化错误。"""
+        kb = os.path.abspath(kb_path or "")
+        if not kb or not os.path.isdir(kb):
+            return _error(CODE_NO_KB, "未打开知识库（或知识库目录不存在）")
+        name = str(shell or "").strip().lower()
+        if name not in EXEC_SHELLS:
+            return _error("bad_shell", f"不支持的 shell：{shell!r}（可选 {list(EXEC_SHELLS)}）")
+        text = str(command if command is not None else "")
+        if not text.strip():
+            return _error("empty_command", "命令不能为空")
+        job = ExecJob(
+            job_id=uuid.uuid4().hex[:12],
+            kb_path=kb,
+            shell=name,
+            command=text,
+            description=str(description or "").strip() or "运行消息代码块",
+            workdir=(str(workdir) if workdir not in (None, "") else None),
+            timeout_ms=timeout_ms,
+            session_id=(str(session_id) if session_id else None),
+        )
+        with self._lock:
+            self._jobs[job.job_id] = job
+            self._order.append(job.job_id)
+            self._evict_locked()
+        self._pool.submit(self._run, job)
+        return {"status": "ok", "job_id": job.job_id, "job_status": RUNNING}
+
+    def _run(self, job: ExecJob) -> None:
+        """工作线程：挂审批信道 → `registry.invoke()`（分发前过审）→ 过审后工具体执行。
+
+        **拒绝 / 超时 / 无应答 ⇒ `registry.invoke()` 直接返回 `DENIED` 结果，工具体不被调用**
+        ⇒ 本线程不启动任何进程（审计也无 `exec/run`，由 `approval/asked`+`decided` 留痕）。
+        """
+        import json
+
+        from memoria.services.agent.llm.types import ToolCall
+        from memoria.services.agent.tools.kb import _exec_tools
+        from memoria.services.agent.tools.registry import ToolRegistry
+
+        attach(job.kb_path)
+        try:
+            policy = _exec_policy(job.kb_path, job.session_id)
+            registry = ToolRegistry(_exec_tools(job.kb_path, job.session_id, "user"))
+            arguments: dict[str, Any] = {"command": job.command, "description": job.description}
+            if job.workdir:
+                arguments["workdir"] = job.workdir
+            if job.timeout_ms not in (None, ""):
+                arguments["timeoutMs"] = job.timeout_ms
+            call = ToolCall(id="exec-" + job.job_id, name=job.shell, arguments=json.dumps(arguments))
+            result = registry.invoke(call, approval=policy)
+            if result.is_error:
+                job.fail(result.content, result.output.code or "exec_failed")
+            else:
+                job.succeed(result.content)
+        except Exception as exc:  # noqa: BLE001 —— 失败只影响本作业
+            logger.warning("[agent-exec] 作业 %s 失败：%r", job.job_id, exc)
+            job.fail(str(exc), getattr(exc, "code", None) or "exec_failed")
+        finally:
+            detach(job.kb_path)
+
+    def poll(self, job_id: str) -> dict[str, Any]:
+        """轮询一次「运行」作业；未知 job 返回 `unknown_job`（与 ask 面同口径）。"""
+        key = str(job_id or "")
+        with self._lock:
+            job = self._jobs.get(key)
+        if job is None:
+            return _error(CODE_UNKNOWN_JOB, "未知任务（可能已重启或已被清理）", job_id=key)
+        return job.snapshot()
+
+    def _evict_locked(self) -> None:
+        """只淘汰**已结束**的最旧作业（在飞 / 待批作业留着，否则面板就轮询不到它的确认卡）。"""
+        while len(self._order) > self.KEEP:
+            stale = self._order[0]
+            running = self._jobs.get(stale)
+            if running is not None and running.status == RUNNING:
+                return
+            self._order.pop(0)
+            self._jobs.pop(stale, None)
+
+
+_EXEC_MANAGER: ExecJobManager | None = None
+_EXEC_MANAGER_LOCK = threading.Lock()
+
+
+def get_exec_jobs() -> ExecJobManager:
+    """进程内单例（桌面应用共用一个「运行」作业面；测试可另建实例）。"""
+    global _EXEC_MANAGER  # noqa: PLW0603
+    with _EXEC_MANAGER_LOCK:
+        if _EXEC_MANAGER is None:
+            _EXEC_MANAGER = ExecJobManager()
+        return _EXEC_MANAGER
+
+
+__all__ += ["EXEC_SHELLS", "ExecJob", "ExecJobManager", "get_exec_jobs"]

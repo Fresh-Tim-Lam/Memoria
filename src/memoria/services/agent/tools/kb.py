@@ -4023,8 +4023,8 @@ def _render_exec_result(result: Mapping[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _exec_call(kb_path: str, session_id: str | None, shell: str, arguments: Mapping[str, Any]) -> ToolOutput:
-    """两把执行工具的执行体：**过审后**的真实执行 + 落 `exec/run` 审计（错误一律转工具结果，不抛）。"""
+def _exec_call(kb_path: str, session_id: str | None, shell: str, arguments: Mapping[str, Any], source: str = "agent") -> ToolOutput:
+    """两把执行工具的执行体：**过审后**的真实执行 + 落 `exec/run` 审计（错误一律转工具结果，不抛）；`source` = agent（模型自调）/ user（人点消息代码块的「运行」，二期 Z.4.2）。"""
     from memoria.services.agent import audit as audit_mod
     from memoria.services.agent import shell_exec
 
@@ -4036,7 +4036,7 @@ def _exec_call(kb_path: str, session_id: str | None, shell: str, arguments: Mapp
         "description": description,
         "workdir": str(raw_workdir or ""),
         "shell": shell,
-        "source": "agent",
+        "source": source,
     }
     try:
         result = shell_exec.run_command(
@@ -4076,15 +4076,15 @@ def _exec_call(kb_path: str, session_id: str | None, shell: str, arguments: Mapp
     return ToolOutput(text=_render_exec_result(result))
 
 
-def _exec_tools(kb_path: str, session_id: str | None) -> tuple[Tool, ...]:
+def _exec_tools(kb_path: str, session_id: str | None, source: str = "agent") -> tuple[Tool, ...]:
     """库内命令执行两把工具（`pwsh` / `cmd`）；`build_kb_tools()` 末位拼接。
 
     **非只读**（`read_only=False`）是刻意的：审批策略据此**必问**（`AskPolicy`/`GuardedPolicy`
     对 `read_only=False` 一律走应答者），无应答者 / 拒绝 ⇒ fail-closed（见 `approvals.py` / Z.11 Q6）。
-    """
+    `source` 只透传给 `_exec_call` 的审计字段（`agent` / `user`）。"""
 
     def _bound(shell: str):
-        return lambda arguments: _exec_call(kb_path, session_id, shell, arguments)
+        return lambda arguments: _exec_call(kb_path, session_id, shell, arguments, source)
 
     params = _exec_params()
     return (

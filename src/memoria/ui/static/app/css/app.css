@@ -7058,3 +7058,51 @@ html *::-webkit-scrollbar-thumb:active {
     cursor: default;
     user-select: none;
 }
+
+/* ===== 2026-10-06 追加：消息代码块「运行」（第二期，附录 Z.4.2 / Z.11）=====================
+   宿主 `.-agent-run-host` 包住 `<pre>`：bar（运行按钮）在上、代码在中、结果在下；
+   按钮复用 `.-agent-act` 家族但**常显**（复制按钮那套 `opacity:.55` 太隐形，见 6061 的教训）；
+   结果 `.-agent-run-out` **限高可滚动**，不把消息撑爆。本块末尾追加 ⇒ 上方行号锚点零漂移。 */
+.-agent-run-host { display: block; margin: 0.25rem 0; }
+.-agent-run-bar { display: flex; align-items: center; gap: 0.375rem; margin-bottom: 0.125rem; }
+.-agent-run-bar .-agent-act {
+    opacity: 1;
+    border-color: var(--border);
+    background: var(--bg-tertiary);
+}
+.-agent-run-result { margin-top: 0.25rem; }
+.-agent-run-out {
+    max-height: 14rem;
+    overflow: auto;
+    margin: 0;
+    padding: 0.5rem 0.625rem;
+    background: var(--bg-tertiary);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text-secondary);
+}
+.-agent-run-out--err { color: var(--error); border-color: var(--error); }
+/* 确认卡里的「将执行的命令」（执行类工具才出现；见 agent-panel.js 末尾 `annotateExecApproval`） */
+.-agent-approve-cmd { display: flex; flex-direction: column; gap: 0.25rem; }
+.-agent-approve-cmd-label { font-size: 0.75rem; }
+.-agent-approve-cmd-body {
+    max-height: 10rem;
+    overflow: auto;
+    margin: 0;
+    padding: 0.375rem 0.5rem;
+    background: var(--bg-tertiary);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text-primary);
+}
+.-agent-approve-cmd-meta { font-size: 0.75rem; }
