@@ -186,7 +186,7 @@ def save_progress(kb, progress: dict) -> None:
 
 
 def load_card_ids(kb):
-    """读取 cards.json 中的全部 card_id（保持文件内顺序）。"""
+    """读取 cards.json 中的全部 card_id（保持文件内顺序）；**fail-closed**：坏条目不静默跳过。"""
     path = _review_dir(kb) / "cards.json"
     if not path.is_file():
         raise FsrsError("cards.json 不存在")
@@ -198,10 +198,10 @@ def load_card_ids(kb):
     cards = data.get("cards") if isinstance(data, dict) else None
     if not isinstance(cards, list):
         raise FsrsError("cards.json 结构非法：应为 {\"cards\": [...]}")
-    ids = []
-    for item in cards:
-        if isinstance(item, dict) and isinstance(item.get("card_id"), str):
-            ids.append(item["card_id"])
+    ids = [item["card_id"] for item in cards if isinstance(item, dict) and isinstance(item.get("card_id"), str)]
+    skip = [i for i, item in enumerate(cards) if not (isinstance(item, dict) and isinstance(item.get("card_id"), str))]
+    if skip:
+        raise FsrsError("cards.json 结构非法：以下条目缺 \"card_id\"（须为 str）：" + ", ".join(str(i) for i in skip))
     return ids
 
 

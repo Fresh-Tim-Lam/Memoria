@@ -441,8 +441,8 @@ def test_new_read_tools_registered_and_read_only(kb: Path) -> None:
     for name in KB_TOOL_NAMES:
         tool = registry.get(name)
         assert tool is not None, name
-        # `propose_write` 2026-09-21 起**会**落盘 ⇒ `read_only=False`；库内执行 `pwsh`/`cmd`（附录 Z）同为 False；其余全只读
-        assert tool.read_only is (name not in ("propose_write", "pwsh", "cmd")), name
+        # `propose_write` 2026-09-21 起**会**落盘 ⇒ `read_only=False`；库内执行 `pwsh`/`cmd`（附录 Z）与 review 领域五把（R2）同为 False；其余全只读
+        assert tool.read_only is (name not in ("propose_write", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add")), name
 
     unknown = registry.invoke(ToolCall(id="c", name="read_file", arguments="{}"))
     assert unknown.is_error and unknown.output.code == UNKNOWN_TOOL_CODE

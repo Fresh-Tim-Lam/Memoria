@@ -77,7 +77,7 @@ KB_TOOL_NAMES = (
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
-    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id),
     )
 
 
@@ -4112,6 +4112,678 @@ def _exec_tools(kb_path: str, session_id: str | None, source: str = "agent") -> 
             ),
             parameters=params,
             handler=_bound("cmd"),
+            read_only=False,
+        ),
+    )
+
+
+# ── R2：`review/**` 事实源的领域工具（5 把，2026-10-10；需求单 §3）────────────────────────────
+# 现场证据与验收见 `docs/example/AAA_Vocab/docs/memoria_feature_requests.md`（§2.1 / §2.2 / §2.4 / §3 / §5）。
+# **只开放这 5 个领域动作，不做通用 JSON 写入**（事实源一旦能被任意写，schema 就没人守了）。
+# 开发者已裁定的 schema：`type ∈ {basic, cloze, reverse}`；cloze 卡 `front` 用 `{{c1::…}}` 挖空、
+# `back` 放完整原文；`source` 为自由追溯标签（允许 `agent:errors.json` 这类命名空间）；`kp_id` / `file`
+# **允许空串 ""（不是 null）**；顶层 `{schema_version, updated_at, cards[]}`，每条 8 个字段 + 可选 `disabled`。
+#
+# 写入三把（`review_cards_upsert` / `review_card_disable` / `review_error_add`）**复用既有备份子系统**
+# （`services/agent/backup.py`：pre-image → 原子写 → 写后哈希 → 会话撤销栈）⇒「撤销这一批」直接走
+# 既有 `restore_batch()` / `undo_step()` 与面板 `agent_plan_undo`，**不自造备份格式**。
+# 调度两把（`review_due_list` / `review_grade`）**内部走该库的 `.memoria/agent/fsrs.py`**（subprocess），
+# **绝不自行推算日期 / 复算 FSRS**。
+# **整块追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`KB_TOOL_NAMES` 与 `build_kb_tools()`
+# 的返回元组已按"同行追加"扩容，见 73-81 / 673 行）。
+
+REVIEW_CARDS_REL = ".memoria/agent/review/cards.json"
+REVIEW_PROGRESS_REL = ".memoria/agent/review/progress.json"
+REVIEW_ERRORS_REL = ".memoria/agent/review/errors.json"
+REVIEW_CARD_TYPES: tuple[str, ...] = ("basic", "cloze", "reverse")
+REVIEW_ERROR_SKILLS: tuple[str, ...] = ("speaking", "writing")
+REVIEW_ERROR_MODES: tuple[str, ...] = ("translation", "production", "recognition")
+REVIEW_ERROR_STATUSES: tuple[str, ...] = ("open", "reviewing", "resolved")
+#: 错题 `issues[].type` 的 9 个合法枚举（**没有 `punctuation`** —— 需求单 §2.4 点名的既有违规根因）。
+REVIEW_ERROR_ISSUE_TYPES: tuple[str, ...] = (
+    "spelling", "grammar", "collocation", "word_choice", "tense",
+    "article_plural", "capitalization", "word_form", "register",
+)
+
+
+def _review_now_utc() -> str:
+    """cards.json 的 `updated_at` 口径：UTC ISO-8601（秒级，`Z` 结尾）—— 与 fsrs.py 的 `_utc_now()` 一致。"""
+    import datetime as _dt
+
+    return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def _review_now_local() -> str:
+    """errors.json 的 `updated_at` / `ts` 口径：本地 ISO-8601 带时区偏移（本库为 +08:00，见 error_log_format.md §2.5）。"""
+    import datetime as _dt
+
+    return _dt.datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def _review_path(kb_path: str, rel: str) -> str:
+    return os.path.join(kb_path, *rel.split("/"))
+
+
+def _review_load_json(kb_path: str, rel: str) -> tuple[Any, str | None]:
+    """读库内 JSON；返回 `(data, error)`。文件不存在 ⇒ `(None, None)`（调用方按"新建"处理）。"""
+    path = _review_path(kb_path, rel)
+    if not os.path.isfile(path):
+        return None, None
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            return json.load(fh), None
+    except (OSError, json.JSONDecodeError) as exc:
+        return None, str(exc)
+
+
+def _review_write_json_atomic(kb_path: str, rel: str, data: Any) -> None:
+    """原子写库内 JSON（同目录临时文件 → flush/fsync → `replace_with_retry`），不重新编码。"""
+    from memoria.storage.atomic_write import replace_with_retry
+
+    path = _review_path(kb_path, rel)
+    parent = os.path.dirname(path)
+    os.makedirs(parent, exist_ok=True)
+    fd, tmp = tempfile.mkstemp(dir=parent, prefix=os.path.basename(path) + ".", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            json.dump(data, fh, ensure_ascii=False, indent=2)
+            fh.write("\n")
+            fh.flush()
+            os.fsync(fh.fileno())
+        replace_with_retry(tmp, path)
+    except BaseException:
+        try:
+            os.unlink(tmp)
+        except OSError:
+            pass
+        raise
+
+
+def _review_commit(kb_path: str, session_id: str | None, tool_id: str, rel: str, data: Any) -> tuple[bool, dict]:
+    """写前备份 → 原子写 → 记录写后哈希 → 压会话撤销栈（**复用 `services/agent/backup.py`**）。
+
+    返回 `(ok, payload)`；失败时 `payload = {code, message}`，且**库内容不变**（备份失败即不写、写失败即回滚）。
+    """
+    import time
+
+    from memoria.services.agent import backup
+
+    sid = str(session_id or "").strip() or AUTO_SESSION_ID
+    txid = _next_txid(kb_path, sid, time.gmtime())
+    snap = backup.snapshot_pre_images(kb_path, sid, txid, [rel], tool_id=tool_id)
+    if snap.get("status") != "ok":
+        return False, {"code": snap.get("code") or "backup_failed", "message": snap.get("message") or ""}
+    try:
+        _review_write_json_atomic(kb_path, rel, data)
+    except OSError as exc:
+        # 原子写失败 ⇒ 用本批 pre-image 回滚（此时尚无 post.json，allow_unverified）
+        backup.restore_batch(kb_path, sid, txid, allow_unverified=True, audit=False)
+        return False, {"code": "write_failed", "message": str(exc)}
+    warnings: list[str] = []
+    post = backup.record_post_images(kb_path, sid, txid)
+    if post.get("status") != "ok":
+        warnings.append(f"写后哈希记录失败（{post.get('code') or 'error'}）⇒ 该批撤销会走未校验分支")
+    if backup.push_stack(kb_path, sid, txid).get("status") != "ok":
+        warnings.append("压入会话撤销栈失败（仍可用 txid 直接撤销）")
+    backup.trim_backups(kb_path, sid)  # 机会式清理（同 apply 入口）
+    return True, {"txid": txid, "session_id": sid, "warnings": warnings}
+
+
+def _review_audit(kb_path: str, session_id: str | None, tool_id: str, rel: str, payload: dict) -> None:
+    """成功落盘后追加一条 `review/write` 审计（fail-open but 如实：不抛、不影响已写入）。"""
+    from memoria.services.agent import audit
+
+    audit.append(
+        kb_path,
+        str(session_id or "").strip() or AUTO_SESSION_ID,
+        audit.EVENT_REVIEW_WRITE,
+        {"tool": tool_id, "rel_path": rel, **payload},
+    )
+
+
+def _review_cloze_re():
+    """cloze 挖空标记：`{{c1::…}}`（序号可多个，如 `{{c2::…}}`）。"""
+    import re
+
+    return re.compile(r"\{\{c\d+::.+?\}\}", re.S)
+
+
+def _review_card_problems(card: Any, index: int) -> list[str]:
+    """单张卡的领域硬校验；返回该卡的问题清单（空 = 合规）。**任意一条坏 ⇒ 调用方拒绝整批。**"""
+    tag = f"cards[{index}]"
+    if not isinstance(card, Mapping):
+        return [f"{tag}: 必须是 JSON 对象"]
+    problems: list[str] = []
+    cid = card.get("card_id")
+    if not isinstance(cid, str) or not cid.strip():
+        problems.append(f'{tag}: 缺 card_id（须为非空 str）')
+    for key in ("kp_id", "file"):
+        if key in card and not isinstance(card.get(key), str):
+            problems.append(f'{tag}.{key}: 须为 str（无锚点用空串 ""，不要 null）')
+    ctype = card.get("type")
+    if ctype not in REVIEW_CARD_TYPES:
+        problems.append(f"{tag}.type: 须为 {list(REVIEW_CARD_TYPES)} 之一，实际 {ctype!r}")
+    for key in ("front", "back", "source"):
+        if not isinstance(card.get(key), str):
+            problems.append(f"{tag}.{key}: 须为 str（缺省无意义，请显式给出）")
+    created = card.get("created_at")
+    if created is not None and not isinstance(created, str):
+        problems.append(f"{tag}.created_at: 须为 str（可省，程序按 UTC 补齐）")
+    if "disabled" in card and not isinstance(card.get("disabled"), bool):
+        problems.append(f"{tag}.disabled: 须为 bool")
+    front = card.get("front")
+    if ctype == "cloze" and isinstance(front, str) and not _review_cloze_re().search(front):
+        problems.append(f'{tag}: cloze 卡的 front 必须含挖空标记 `{{{{c1::…}}}}`')
+    return problems
+
+
+def _review_normalize_card(card: Mapping[str, Any]) -> dict:
+    """把合规入参规整成落盘形态（补齐空串锚点与 `created_at`，只保留 schema 字段 + 可选 disabled）。"""
+    row = {
+        "card_id": str(card["card_id"]),
+        "kp_id": str(card.get("kp_id") or ""),
+        "file": str(card.get("file") or ""),
+        "type": str(card["type"]),
+        "front": str(card["front"]),
+        "back": str(card.get("back") or ""),
+        "source": str(card["source"]),
+        "created_at": str(card.get("created_at") or "") or _review_now_utc(),
+    }
+    if "disabled" in card:
+        row["disabled"] = bool(card["disabled"])
+    if "disabled_next_due" in card:
+        row["disabled_next_due"] = str(card["disabled_next_due"])
+    return row
+
+
+def _review_next_due(kb_path: str, card_id: str) -> str | None:
+    """读 progress.json 里该卡的下一次到期日（**只读**，progress.json 只由 fsrs.py 写）。"""
+    data, err = _review_load_json(kb_path, REVIEW_PROGRESS_REL)
+    if err or not isinstance(data, dict):
+        return None
+    cards = data.get("cards")
+    row = cards.get(card_id) if isinstance(cards, dict) else None
+    return row.get("due") if isinstance(row, Mapping) else None
+
+
+def _review_disabled_ids(kb_path: str) -> set[str]:
+    """cards.json 里被禁用的 card_id 集合（禁卡只停调度、不删定义）。"""
+    data, err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if err or not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return set()
+    return {str(c["card_id"]) for c in data["cards"] if isinstance(c, Mapping) and c.get("disabled") and isinstance(c.get("card_id"), str)}
+
+
+def _review_run_fsrs(kb_path: str, argv: list[str]) -> tuple[dict | None, str | None]:
+    """在**该库的** `.memoria/agent/fsrs.py` 上跑一条子命令并解析其 JSON 输出（**不自行算日期**）。
+
+    **为什么用 subprocess 而不是 import**：① 与验收 A1/A5 使用同一 CLI（`fsrs.py due --date`）⇒ 工具结果
+    与手工运行**逐字节同源**，不存在"第二条算法路径"；② 该库的 `fsrs.py` 是用户可改的**库内副本**，
+    以子进程运行可把它隔离在应用进程之外（与 `scratch`/`shell_exec` 的"出进程执行"一致）；
+    ③ `--date` / `--card` / `--grade` 原样透传，工具侧一个日期都不判。
+    """
+    import subprocess
+
+    from memoria.services.agent import scratch as scratch_mod
+
+    script = os.path.join(kb_path, ".memoria", "agent", "fsrs.py")
+    if not os.path.isfile(script):
+        return None, f"该库缺少调度脚本 `.memoria/agent/fsrs.py`：{script}"
+    try:
+        resolved = scratch_mod.resolve_interpreter()
+    except scratch_mod.ScratchError as exc:
+        return None, f"找不到 Python 解释器：{exc}"
+    if not resolved.get("path"):
+        return None, "找不到可用的 Python 解释器（设置里未指定、PATH 与内置都没有）"
+    try:
+        proc = subprocess.run(
+            [resolved["path"], script, *argv],
+            cwd=kb_path,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=60,
+            env=scratch_mod._child_env(kb_path),  # 复用工作区的环境白名单（不泄漏密钥）
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        return None, f"调用 fsrs.py 失败：{exc}"
+    out = (proc.stdout or "").strip()
+    line = out.splitlines()[-1] if out else ""
+    try:
+        data = json.loads(line) if line else {}
+    except json.JSONDecodeError:
+        detail = out[:400] or (proc.stderr or "").strip()[:400]
+        return None, f"fsrs.py 未返回合法 JSON（exit {proc.returncode}）：{detail}"
+    if proc.returncode != 0 or data.get("status") != "ok":
+        return None, str(data.get("error") or f"fsrs.py 退出码 {proc.returncode}")
+    return data, None
+
+
+def _review_validate_date(value: Any) -> tuple[str | None, str | None]:
+    """`--date` 透传值：缺省 = 本地当天；给出则必须是合法 `YYYY-MM-DD`（不在工具侧做任何日期推算）。"""
+    import datetime as _dt
+
+    text = str(value or "").strip()
+    if not text:
+        return _dt.date.today().isoformat(), None
+    try:
+        _dt.date.fromisoformat(text)
+    except ValueError:
+        return None, f"date 必须是 YYYY-MM-DD，实际 {value!r}"
+    return text, None
+
+
+def _review_cards_upsert(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """建/改卡：**收数组、按 card_id 幂等、任一条坏即拒绝整批、写前备份、可撤销**。"""
+    raw = arguments.get("cards")
+    cards = raw if isinstance(raw, list) else []
+    problems: list[str] = []
+    if not cards:
+        problems.append("cards 不能为空（一次至少一张；60+ 张请放同一个数组）")
+    for index, card in enumerate(cards):
+        problems.extend(_review_card_problems(card, index))
+    if problems:
+        return _error(
+            "review.cards_upsert: schema 校验未通过 —— **拒绝整批，一张都没写**（对照 §2.1 的静默坑）：\n"
+            + "\n".join(f"- {p}" for p in problems),
+            INVALID_ARGUMENTS_CODE,
+        )
+
+    existing, read_err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if read_err is not None:
+        return _error(f"review.cards_upsert: 现有 cards.json 读取失败，未写入：{read_err}", INVALID_ARGUMENTS_CODE)
+    if existing is None:
+        doc: dict[str, Any] = {"schema_version": 1, "updated_at": _review_now_utc(), "cards": []}
+    elif isinstance(existing, dict) and isinstance(existing.get("cards"), list):
+        doc = existing
+    else:
+        return _error('review.cards_upsert: 现有 cards.json 结构非法（应为 {"cards": [...]}），未写入', INVALID_ARGUMENTS_CODE)
+
+    by_id = {str(c["card_id"]): i for i, c in enumerate(doc["cards"]) if isinstance(c, Mapping) and isinstance(c.get("card_id"), str)}
+    added = updated = 0
+    for card in cards:
+        row = _review_normalize_card(card)
+        cid = row["card_id"]
+        if cid in by_id:
+            doc["cards"][by_id[cid]] = row
+            updated += 1
+        else:
+            by_id[cid] = len(doc["cards"])
+            doc["cards"].append(row)
+            added += 1
+    doc["schema_version"] = int(doc.get("schema_version") or 1)
+    doc["updated_at"] = _review_now_utc()
+
+    ok, payload = _review_commit(kb_path, session_id, "review.cards_upsert", REVIEW_CARDS_REL, doc)
+    if not ok:
+        return _error(
+            f"review.cards_upsert: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）",
+            WRITE_FAILED_CODE,
+        )
+    _review_audit(kb_path, session_id, "review.cards_upsert", REVIEW_CARDS_REL, {"txid": payload["txid"], "added": added, "updated": updated, "total": len(doc["cards"])})
+    warn = ("；".join(payload["warnings"]) + "。") if payload["warnings"] else ""
+    return ToolOutput(
+        text=(
+            f"**已写入 cards.json**：新增 {added} 张、更新 {updated} 张，当前共 {len(doc['cards'])} 张。\n"
+            f"txid {payload['txid']}（会话 {payload['session_id']}）；写入前已自动备份，用户可「撤销这一批」。{warn}\n"
+            "看今日到期请用 `review_due_list`（内部走该库 fsrs.py，**不要**自己推算日期）。"
+        )
+    )
+
+
+def _review_card_disable(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """禁卡 / 恢复：只改 `disabled` 标记，**不删定义**；下一次到期日留在 progress.json（fsrs 所有）不动。"""
+    cid = str(arguments.get("card_id") or "").strip()
+    if not cid:
+        return _error("review.card_disable: card_id 不能为空", INVALID_ARGUMENTS_CODE)
+    disabled = arguments.get("disabled", True)
+    if not isinstance(disabled, bool):
+        disabled = True
+
+    doc, read_err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if read_err is not None:
+        return _error(f"review.card_disable: cards.json 读取失败：{read_err}", INVALID_ARGUMENTS_CODE)
+    if not isinstance(doc, dict) or not isinstance(doc.get("cards"), list):
+        return _error("review.card_disable: cards.json 不存在或结构非法", INVALID_ARGUMENTS_CODE)
+    target = next((c for c in doc["cards"] if isinstance(c, Mapping) and c.get("card_id") == cid), None)
+    if target is None:
+        return _error(f"review.card_disable: 未找到卡片 {cid}（禁卡不改定义，先 upsert 再禁用）", INVALID_ARGUMENTS_CODE)
+
+    next_due = _review_next_due(kb_path, cid)
+    if disabled:
+        target["disabled"] = True
+        if next_due:
+            target["disabled_next_due"] = next_due  # 保留下一次到期日以便恢复（progress.json 里的值仍不动）
+    else:
+        target.pop("disabled", None)
+        target.pop("disabled_next_due", None)
+    doc["updated_at"] = _review_now_utc()
+
+    ok, payload = _review_commit(kb_path, session_id, "review.card_disable", REVIEW_CARDS_REL, doc)
+    if not ok:
+        return _error(f"review.card_disable: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）", WRITE_FAILED_CODE)
+    _review_audit(kb_path, session_id, "review.card_disable", REVIEW_CARDS_REL, {"txid": payload["txid"], "card_id": cid, "disabled": disabled})
+    verb = "已禁用" if disabled else "已恢复调度"
+    return ToolOutput(
+        text=(
+            f"{verb}卡片 `{cid}`（定义保留）。下一次到期日：{next_due or '（progress.json 尚无记录）'}"
+            "（该日期由 fsrs.py 持有、本次未改动，恢复后照常调度）。\n"
+            f"txid {payload['txid']}；可「撤销这一批」。"
+        )
+    )
+
+
+def _review_due_list(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """今日到期清单：**内部调该库 fsrs.py `due`**（不自行算日期）；默认滤掉被禁用的卡。"""
+    date, date_err = _review_validate_date(arguments.get("date"))
+    if date_err:
+        return _error(f"review.due_list: {date_err}", INVALID_ARGUMENTS_CODE)
+    data, err = _review_run_fsrs(kb_path, ["due", "--kb", kb_path, "--date", date])
+    if err:
+        return _error(f"review.due_list: {err}", INVALID_ARGUMENTS_CODE)
+    due = [str(x) for x in (data.get("due") or [])]
+    include_disabled = bool(arguments.get("include_disabled"))
+    excluded = 0
+    if not include_disabled:
+        disabled = _review_disabled_ids(kb_path)
+        kept = [c for c in due if c not in disabled]
+        excluded = len(due) - len(kept)
+        due = kept
+    lines = [f"{date} 到期 **{len(due)}** 张（由 `{'.memoria/agent/fsrs.py'}` 计算）" + (f"，已滤掉 {excluded} 张禁卡" if excluded else "") + "："]
+    lines.extend(f"- {c}" for c in due) if due else lines.append("- （无）")
+    lines.append("评分用 `review_grade`（幂等键 = card_id + 评审日，重复评分不叠加）。")
+    return ToolOutput(text="\n".join(lines))
+
+
+def _review_grade(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """评分 1..4：**内部调该库 fsrs.py `grade`**（幂等；不自行复算 FSRS）。"""
+    cid = str(arguments.get("card_id") or "").strip()
+    if not cid:
+        return _error("review.grade: card_id 不能为空", INVALID_ARGUMENTS_CODE)
+    grade = arguments.get("grade")
+    if grade not in (1, 2, 3, 4):
+        return _error("review.grade: grade 须为 1（Again）/ 2（Hard）/ 3（Good）/ 4（Easy）", INVALID_ARGUMENTS_CODE)
+    if cid in _review_disabled_ids(kb_path):
+        return _error(f"review.grade: 卡片 {cid} 已被禁用（先 review_card_disable disabled=false 恢复）", INVALID_ARGUMENTS_CODE)
+    date, date_err = _review_validate_date(arguments.get("date"))
+    if date_err:
+        return _error(f"review.grade: {date_err}", INVALID_ARGUMENTS_CODE)
+    data, err = _review_run_fsrs(kb_path, ["grade", "--card", cid, "--grade", str(int(grade)), "--kb", kb_path, "--date", date])
+    if err:
+        return _error(f"review.grade: {err}", INVALID_ARGUMENTS_CODE)
+    return ToolOutput(
+        text=(
+            f"已评分 `{cid}` = {grade}（评审日 {date}）：状态 {data.get('state')}、"
+            f"下次到期 {data.get('due')}（间隔 {data.get('scheduled_days')} 天）"
+            f"{'，本次为幂等重放（同日同卡不叠加）' if data.get('idempotent') else ''}。"
+        )
+    )
+
+
+def _review_error_problems(arguments: Mapping[str, Any]) -> list[str]:
+    """错题领域硬校验（按 `docs/error_log_format.md`）：skill / type 枚举、kp_refs 非空、from ⊆ original。"""
+    problems: list[str] = []
+    skill = arguments.get("skill")
+    if skill not in REVIEW_ERROR_SKILLS:
+        problems.append(f"skill: 须为 {list(REVIEW_ERROR_SKILLS)} 之一，实际 {skill!r}")
+    if "mode" in arguments and arguments.get("mode") not in REVIEW_ERROR_MODES:
+        problems.append(f"mode: 若给出须为 {list(REVIEW_ERROR_MODES)} 之一，实际 {arguments.get('mode')!r}")
+    if "status" in arguments and arguments.get("status") not in REVIEW_ERROR_STATUSES:
+        problems.append(f"status: 若给出须为 {list(REVIEW_ERROR_STATUSES)} 之一，实际 {arguments.get('status')!r}")
+    original = arguments.get("original")
+    if not isinstance(original, str) or not original:
+        problems.append("original: 须为非空 str（用户原话，逐字保留）")
+    issues = arguments.get("issues")
+    if not isinstance(issues, list) or not issues:
+        problems.append("issues: 至少一条")
+    else:
+        for i, issue in enumerate(issues):
+            if not isinstance(issue, Mapping):
+                problems.append(f"issues[{i}]: 须为对象")
+                continue
+            itype = issue.get("type")
+            if itype not in REVIEW_ERROR_ISSUE_TYPES:
+                problems.append(f"issues[{i}].type: 须为 {list(REVIEW_ERROR_ISSUE_TYPES)} 之一（枚举外一律拒绝，例如没有 punctuation），实际 {itype!r}")
+            frag = issue.get("from")
+            if not isinstance(frag, str) or not frag:
+                problems.append(f"issues[{i}].from: 须为非空 str")
+            elif isinstance(original, str) and frag not in original:
+                problems.append(f"issues[{i}].from 必须逐字出现在 original 里（只圈最小错误单位，别整句照抄）：{frag!r}")
+            for key in ("to", "note"):
+                if not isinstance(issue.get(key), str):
+                    problems.append(f"issues[{i}].{key}: 须为 str")
+    kp_refs = arguments.get("kp_refs")
+    if not isinstance(kp_refs, list) or not kp_refs or not all(isinstance(x, str) and x for x in kp_refs):
+        problems.append("kp_refs: 至少一条非空 str（指向已存在的 KP id，严禁虚构）")
+    return problems
+
+
+def _review_missing_kps(kb_path: str, kp_refs: list[str]) -> list[str]:
+    """`kp_refs` 里**不存在**的 KP id（`check_kp_id` 的 `available=True` ⇒ 不存在）。"""
+    checker = _ValidationService(kb_path)
+    missing: list[str] = []
+    with kb_read_only(kb_path):
+        for ref in kp_refs:
+            try:
+                res = checker.check_kp_id(ref)
+            except Exception:  # noqa: BLE001 — 校验器异常按"查不到"处理（fail-closed）
+                missing.append(ref)
+                continue
+            if res.get("available"):
+                missing.append(ref)
+    return missing
+
+
+def _review_generate_error_id(doc: Mapping[str, Any], stamp: str) -> str:
+    """生成全库唯一的 `err-YYYYMMDD-NNN`（扫既有 id 取最小空号）。"""
+    existing = {str(e.get("id")) for e in doc.get("errors", []) if isinstance(e, Mapping)}
+    n = 1
+    while f"err-{stamp}-{n:03d}" in existing:
+        n += 1
+    return f"err-{stamp}-{n:03d}"
+
+
+def _review_error_add(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """追加一条错题：**只 append + 更新 updated_at**，`spec_ref` / `sessions` 一字不动；写前备份、可撤销。"""
+    problems = _review_error_problems(arguments)
+    if problems:
+        return _error(
+            "review.error_add: 校验未通过 —— **未追加任何错题**：\n" + "\n".join(f"- {p}" for p in problems),
+            INVALID_ARGUMENTS_CODE,
+        )
+    kp_refs = [str(x) for x in arguments["kp_refs"]]
+    missing = _review_missing_kps(kb_path, kp_refs)
+    if missing:
+        return _error(f"review.error_add: kp_refs 指向不存在的 KP（严禁虚构，先补 KP 再记错题）：{missing}", INVALID_ARGUMENTS_CODE)
+
+    doc, read_err = _review_load_json(kb_path, REVIEW_ERRORS_REL)
+    if read_err is not None:
+        return _error(f"review.error_add: errors.json 读取失败，未写入：{read_err}", INVALID_ARGUMENTS_CODE)
+    if not isinstance(doc, dict) or not isinstance(doc.get("errors"), list):
+        return _error("review.error_add: errors.json 结构非法（缺 errors[]），未写入", INVALID_ARGUMENTS_CODE)
+
+    now_local = _review_now_local()
+    stamp = now_local[:10].replace("-", "")
+    entry = {
+        "id": str(arguments.get("id") or "").strip() or _review_generate_error_id(doc, stamp),
+        "ts": str(arguments.get("ts") or "").strip() or now_local,
+        "session": str(arguments.get("session") or ""),
+        "source": str(arguments.get("source") or ""),
+        "mode": str(arguments.get("mode") or ""),
+        "skill": str(arguments["skill"]),
+        "original": arguments["original"],
+        "issues": [
+            {"type": str(i.get("type")), "from": str(i.get("from")), "to": str(i.get("to")), "note": str(i.get("note"))}
+            for i in arguments["issues"]
+        ],
+        "correction": str(arguments.get("correction") or ""),
+        "kp_refs": kp_refs,
+        "status": str(arguments.get("status") or "open"),
+    }
+    doc["errors"].append(entry)  # 只追加（不改写历史条目）
+    doc["updated_at"] = now_local
+
+    ok, payload = _review_commit(kb_path, session_id, "review.error_add", REVIEW_ERRORS_REL, doc)
+    if not ok:
+        return _error(f"review.error_add: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）", WRITE_FAILED_CODE)
+    _review_audit(kb_path, session_id, "review.error_add", REVIEW_ERRORS_REL, {"txid": payload["txid"], "error_id": entry["id"]})
+    return ToolOutput(
+        text=(
+            f"**已追加 1 条错题** `{entry['id']}`（skill={entry['skill']}，mode={entry['mode'] or '-'}，kp_refs={kp_refs}）。\n"
+            "errors.json 仍为合法 JSON；顶层 `spec_ref` / `sessions` 未改动。\n"
+            f"txid {payload['txid']}；用户可「撤销这一批」。"
+        )
+    )
+
+
+def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """`review/**` 事实源的五把领域工具（R2）；`build_kb_tools()` 末位拼接。
+
+    **五把都 `read_only=False`** ⇒ `registry.invoke()` 在分发前一律过审批门（同 `pwsh`/`cmd`；
+    `AskPolicy` 无应答者 / `NeverPolicy` ⇒ fail-closed，工具体**根本不被调用**）。
+    写入三把复用 `services/agent/backup.py`（pre-image + 栈式撤销）；调度两把复用该库 `fsrs.py`（subprocess）。
+    """
+
+    def _bound(fn):
+        return lambda arguments: fn(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="review_cards_upsert",
+            description=(
+                "**建 / 改复习卡**（写入 `.memoria/agent/review/cards.json`，**每次调用都要用户审批**）。"
+                "一次收一个 `cards` 数组（60+ 张放同一批，别一张一调用）；按 `card_id` **幂等**（同 id 覆盖、异 id 追加）。"
+                "**schema 硬校验**：任一张不合规即**拒绝整批、一张都不写**（绝不静默跳过）。"
+                "每张卡的字段：`card_id`、`type`∈{basic,cloze,reverse}、`front`、`back`、`source`（自由追溯标签，可带命名空间如 `agent:errors.json`）；"
+                "`kp_id` / `file` **允许空串 \"\"（不是 null）**，空串 = 无知识点锚点（如错题卡）；`created_at` 可省（程序按 UTC 补齐）。"
+                "`cloze` 卡：`front` 里用 `{{c1::…}}` 标记挖空，`back` 放完整原文。写入前自动备份、可撤销。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "cards": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "card_id": {"type": "string", "minLength": 1},
+                                "kp_id": {"type": "string", "description": '知识点 id；无锚点用空串 ""'},
+                                "file": {"type": "string", "description": '来源文件；无锚点用空串 ""'},
+                                "type": {"type": "string", "enum": list(REVIEW_CARD_TYPES)},
+                                "front": {"type": "string", "minLength": 1},
+                                "back": {"type": "string"},
+                                "source": {"type": "string", "minLength": 1},
+                                "created_at": {"type": "string"},
+                                "disabled": {"type": "boolean"},
+                                "disabled_next_due": {"type": "string"},
+                            },
+                            "required": ["card_id", "type", "front", "back", "source"],
+                            "additionalProperties": False,
+                        },
+                        "description": "整批卡片（任一条坏 ⇒ 拒绝整批）",
+                    }
+                },
+                "required": ["cards"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_cards_upsert),
+            read_only=False,
+        ),
+        Tool(
+            name="review_card_disable",
+            description=(
+                "**禁卡 / 恢复调度**（改 `cards.json`，**每次调用都要用户审批**）：只停调度、**不删定义**。"
+                "`disabled=true`（默认）置禁用标记；`disabled=false` 恢复。下一次到期日由 fsrs.py 留在 `progress.json`、本次不动，恢复即生效。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "card_id": {"type": "string", "minLength": 1},
+                    "disabled": {"type": "boolean", "description": "true=禁用（默认），false=恢复"},
+                },
+                "required": ["card_id"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_card_disable),
+            read_only=False,
+        ),
+        Tool(
+            name="review_due_list",
+            description=(
+                "**列出某日到期卡片**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，"
+                "**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）。`date` 可省（默认当天）。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "date": {"type": "string", "description": "评审日 YYYY-MM-DD（缺省=本地当天）"},
+                    "include_disabled": {"type": "boolean", "description": "是否包含被禁用的卡（默认 false）"},
+                },
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_due_list),
+            read_only=False,
+        ),
+        Tool(
+            name="review_grade",
+            description=(
+                "**给一张卡评分 1..4**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py grade`，"
+                "幂等键 = `card_id + 评审日`（同日同卡重复评分不叠加）；**不自行复算 FSRS**。被禁用的卡拒绝评分。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "card_id": {"type": "string", "minLength": 1},
+                    "grade": {"type": "integer", "enum": [1, 2, 3, 4], "description": "1=Again 2=Hard 3=Good 4=Easy"},
+                    "date": {"type": "string", "description": "评审日 YYYY-MM-DD（缺省=本地当天）"},
+                },
+                "required": ["card_id", "grade"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_grade),
+            read_only=False,
+        ),
+        Tool(
+            name="review_error_add",
+            description=(
+                "**追加一条错题** 到 `.memoria/agent/review/errors.json`（**每次调用都要用户审批**）。"
+                "按 `docs/error_log_format.md` 校验：`skill`∈{speaking,writing}；`issues[].type`∈9 枚举"
+                "（**没有 `punctuation`**）；`original` 逐字保留且 `issues[].from` 必须逐字出现在其中；"
+                "`kp_refs` 至少一条且**指向已存在的 KP**。只追加、不改写历史条目，`spec_ref`/`sessions` 一字不动；写前备份、可撤销。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string", "description": "错题 id（缺省自动生成 err-YYYYMMDD-NNN）"},
+                    "ts": {"type": "string", "description": "记录时间（缺省=本地 ISO-8601 带偏移）"},
+                    "session": {"type": "string", "description": "所属场次 id（如 sess-20260910-01）"},
+                    "source": {"type": "string", "description": "题号 / 来源标记（如 B1、C）"},
+                    "mode": {"type": "string", "enum": list(REVIEW_ERROR_MODES)},
+                    "skill": {"type": "string", "enum": list(REVIEW_ERROR_SKILLS)},
+                    "original": {"type": "string", "minLength": 1, "description": "用户原始表达，逐字保留（含错误）"},
+                    "issues": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "type": {"type": "string", "enum": list(REVIEW_ERROR_ISSUE_TYPES)},
+                                "from": {"type": "string", "minLength": 1},
+                                "to": {"type": "string"},
+                                "note": {"type": "string"},
+                            },
+                            "required": ["type", "from", "to", "note"],
+                            "additionalProperties": False,
+                        },
+                    },
+                    "correction": {"type": "string", "description": "订正后的目标表达"},
+                    "kp_refs": {"type": "array", "items": {"type": "string"}, "description": "关联的已有 KP id（至少一条）"},
+                    "status": {"type": "string", "enum": list(REVIEW_ERROR_STATUSES)},
+                },
+                "required": ["skill", "original", "issues", "kp_refs"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_error_add),
             read_only=False,
         ),
     )

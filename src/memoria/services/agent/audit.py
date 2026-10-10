@@ -78,4 +78,11 @@ EVENT_SCRATCH_RUN = "scratch/run"
 #: 未知 type 一律跳过（同 `session/title`）。与上几条同因**追加在文件末尾** ⇒ 零锚点漂移。
 EVENT_EXEC_RUN = "exec/run"
 
+#: **复习事实源写入审计**（R2：`review/**` 领域工具，2026-10-10；需求单 `memoria_feature_requests.md` §3）。
+#: 每次 `review_cards_upsert` / `review_card_disable` / `review_error_add` **成功落盘后**追加一条，载荷只有
+#: `{tool, txid, session_id, rel_path, added, updated, total}` —— **不含卡面 / 错题正文**（同 `exec/run` 的"只记事实"口径）。
+#: 事件类型只增不改；回放 / 压缩 / 语义抽取对未知 type 一律跳过（同 `session/title`）。
+#: 与上几条同因**追加在文件末尾** ⇒ 零锚点漂移。
+EVENT_REVIEW_WRITE = "review/write"
+
 

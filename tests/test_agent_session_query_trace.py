@@ -488,12 +488,12 @@ def test_new_session_query_tools_registered_and_read_only(tmp_path: Path) -> Non
     # 与 W 线提议工具（`propose_write`，只产 plan、不落盘）、问答工具（`ask_user_question`，2026-09-23）、
     # 联网两工具（`web_search` / `fetch_url`，2026-09-23，§6.28）、脚本工作区四把（2026-09-24，§3.4）
     # ⇒ 现在尾部是「会话四 + 引用两 + 提议一 + 问答一 + 联网二 + 工作区四 + 库内执行两（`pwsh`/`cmd`，附录 Z）」。
-    assert registry.names()[-16:-12] == SESSION_TOOLS, "会话查询四工具仍连续追加在工具面里"
-    assert registry.names()[-12:-8] == (
+    assert registry.names()[-21:-17] == SESSION_TOOLS, "会话查询四工具仍连续追加在工具面里"
+    assert registry.names()[-17:-13] == (
         "resolve_reference", "audit_references", "propose_write", "ask_user_question"
     )
-    assert registry.names()[-8:-6] == ("web_search", "fetch_url")
-    assert registry.names()[-6:] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
+    assert registry.names()[-13:-11] == ("web_search", "fetch_url")
+    assert registry.names()[-11:-5] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
     for name in SESSION_TOOLS:
         tool = registry.get(name)
         assert tool is not None and tool.read_only and tool.parameters["additionalProperties"] is False
