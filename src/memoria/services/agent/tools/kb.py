@@ -4120,7 +4120,7 @@ def _exec_tools(kb_path: str, session_id: str | None, source: str = "agent") -> 
 # ── R2：`review/**` 事实源的领域工具（5 把，2026-10-10；需求单 §3）────────────────────────────
 # 现场证据与验收见 `docs/example/AAA_Vocab/docs/memoria_feature_requests.md`（§2.1 / §2.2 / §2.4 / §3 / §5）。
 # **只开放这 5 个领域动作，不做通用 JSON 写入**（事实源一旦能被任意写，schema 就没人守了）。
-# 开发者已裁定的 schema：`type ∈ {basic, cloze, reverse}`；cloze 卡 `front` 用 `{{c1::…}}` 挖空、
+# 开发者已裁定的 schema：`type ∈ {basic, cloze, reverse, mcq, gapfill, short, produce}`（R4 扩型）；cloze 卡 `front` 用 `{{c1::…}}` 挖空、
 # `back` 放完整原文；`source` 为自由追溯标签（允许 `agent:errors.json` 这类命名空间）；`kp_id` / `file`
 # **允许空串 ""（不是 null）**；顶层 `{schema_version, updated_at, cards[]}`，每条 8 个字段 + 可选 `disabled`。
 #
@@ -4135,7 +4135,7 @@ def _exec_tools(kb_path: str, session_id: str | None, source: str = "agent") -> 
 REVIEW_CARDS_REL = ".memoria/agent/review/cards.json"
 REVIEW_PROGRESS_REL = ".memoria/agent/review/progress.json"
 REVIEW_ERRORS_REL = ".memoria/agent/review/errors.json"
-REVIEW_CARD_TYPES: tuple[str, ...] = ("basic", "cloze", "reverse")
+REVIEW_CARD_TYPES: tuple[str, ...] = ("basic", "cloze", "reverse", "mcq", "gapfill", "short", "produce")
 REVIEW_ERROR_SKILLS: tuple[str, ...] = ("speaking", "writing")
 REVIEW_ERROR_MODES: tuple[str, ...] = ("translation", "production", "recognition")
 REVIEW_ERROR_STATUSES: tuple[str, ...] = ("open", "reviewing", "resolved")
@@ -4274,7 +4274,7 @@ def _review_card_problems(card: Any, index: int) -> list[str]:
     front = card.get("front")
     if ctype == "cloze" and isinstance(front, str) and not _review_cloze_re().search(front):
         problems.append(f'{tag}: cloze 卡的 front 必须含挖空标记 `{{{{c1::…}}}}`')
-    return problems
+    return problems + _review_type_extra_problems(card, tag)
 
 
 def _review_normalize_card(card: Mapping[str, Any]) -> dict:
@@ -4293,7 +4293,7 @@ def _review_normalize_card(card: Mapping[str, Any]) -> dict:
         row["disabled"] = bool(card["disabled"])
     if "disabled_next_due" in card:
         row["disabled_next_due"] = str(card["disabled_next_due"])
-    return row
+    return _review_apply_extra_fields(row, card)
 
 
 def _review_next_due(kb_path: str, card_id: str) -> str | None:
@@ -4655,9 +4655,9 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
                 "**建 / 改复习卡**（写入 `.memoria/agent/review/cards.json`，**每次调用都要用户审批**）。"
                 "一次收一个 `cards` 数组（60+ 张放同一批，别一张一调用）；按 `card_id` **幂等**（同 id 覆盖、异 id 追加）。"
                 "**schema 硬校验**：任一张不合规即**拒绝整批、一张都不写**（绝不静默跳过）。"
-                "每张卡的字段：`card_id`、`type`∈{basic,cloze,reverse}、`front`、`back`、`source`（自由追溯标签，可带命名空间如 `agent:errors.json`）；"
+                "每张卡的字段：`card_id`、`type`∈{basic,cloze,reverse,mcq,gapfill,short,produce}、`front`、`back`、`source`（自由追溯标签，可带命名空间如 `agent:errors.json`）；"
                 "`kp_id` / `file` **允许空串 \"\"（不是 null）**，空串 = 无知识点锚点（如错题卡）；`created_at` 可省（程序按 UTC 补齐）。"
-                "`cloze` 卡：`front` 里用 `{{c1::…}}` 标记挖空，`back` 放完整原文。写入前自动备份、可撤销。"
+                "`cloze` 卡：`front` 里用 `{{c1::…}}` 标记挖空，`back` 放完整原文。可选判分字段：`judge`(auto/agent/self，缺省派生)、`options`(mcq 必填，≥2 去重非空)、`answer`(mcq 必填且 ∈ options；cloze/gapfill 可选)、`accept`(cloze/gapfill 白名单)、`explain`、`input`(single/multi)。写入前自动备份、可撤销。"
             ),
             parameters={
                 "type": "object",
@@ -4676,7 +4676,7 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
                                 "source": {"type": "string", "minLength": 1},
                                 "created_at": {"type": "string"},
                                 "disabled": {"type": "boolean"},
-                                "disabled_next_due": {"type": "string"},
+                                "disabled_next_due": {"type": "string"}, **_REVIEW_CARD_EXTRA_PROPS,
                             },
                             "required": ["card_id", "type", "front", "back", "source"],
                             "additionalProperties": False,
@@ -4712,7 +4712,7 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
             name="review_due_list",
             description=(
                 "**列出某日到期卡片**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）、`date` 可省（默认当天）。"
-                "**返回值是一整段 JSON**（可直接 `json.loads`），顶层 `{date, due, count, filtered_disabled, cards}`：`due`=到期 card_id 列表（顺序即 fsrs 输出、`count`=其长度）、`filtered_disabled`=被滤掉的禁卡数、`cards`=逐张卡面+调度状态（每张必有 `card_id`，另含源文件里存在的 `front`/`back`/`type`/`kp_id`/`file`/`source`/`disabled` 与调度 `due`/`state`/`stability`/`difficulty`/`reps`/`lapses`/`last_review`）。**缺字段即该项不含该键**（如实缺省、不编造）；`cards.json` 找不到的 id 带 `missing_in_cards: true` 保留（**不静默丢弃**）。**无需再自行解析 `cards.json`**。"
+                "**返回值是一整段 JSON**（可直接 `json.loads`），顶层 `{date, due, count, filtered_disabled, cards}`：`due`=到期 card_id 列表（顺序即 fsrs 输出、`count`=其长度）、`filtered_disabled`=被滤掉的禁卡数、`cards`=逐张卡面+调度状态（每张必有 `card_id`，另含源文件里存在的 `front`/`back`/`type`/`kp_id`/`file`/`source`/`disabled`/`judge`/`options`/`answer`/`accept`/`explain`/`input` 与调度 `due`/`state`/`stability`/`difficulty`/`reps`/`lapses`/`last_review`）。**缺字段即该项不含该键**（如实缺省、不编造）；`cards.json` 找不到的 id 带 `missing_in_cards: true` 保留（**不静默丢弃**）。**无需再自行解析 `cards.json`**。"
             ),
             parameters={
                 "type": "object",
@@ -4846,7 +4846,7 @@ def _review_due_cards(kb_path: str, due: list[str]) -> list[dict]:
         if card is None:
             row["missing_in_cards"] = True
         else:
-            for key in ("front", "back", "type", "kp_id", "file", "source"):
+            for key in ("front", "back", "type", "kp_id", "file", "source", "judge", "options", "answer", "accept", "explain", "input"):
                 if key in card and card.get(key) is not None:
                     row[key] = card[key]
             if "disabled" in card and card.get("disabled") is not None:
@@ -4860,4 +4860,110 @@ def _review_due_cards(kb_path: str, due: list[str]) -> list[dict]:
                 row["last_review"] = state["last_review"]
         rows.append(row)
     return rows
+
+
+# ── R4（2026-10-11）：题型扩型 + 判分字段（P0 解阻塞）────────────────────────────
+# 背景：`type` 原为硬枚举 3 种 ⇒ 知识库 agent 写不进任何新题型卡（见
+# `docs/example/AAA_Vocab/docs/review_card_requirements.md`，只读参考）。本次按人已拍板的裁定：
+# ① `type` 放开为 7 种（`REVIEW_CARD_TYPES` 已改）；② 判分分两路（规则 / agent）⇒ 新增 `judge`
+#    （缺省派生：mcq、带 answer|accept 的 cloze|gapfill ⇒ auto；short|produce ⇒ agent；basic|reverse ⇒ self）；
+# ③ 新增可选字段 `options` / `answer` / `accept` / `explain` / `input`（未提供则按规则派生，见下）。
+# 保持不变：任一张坏 ⇒ 拒绝整批（**不静默跳过**）；`cloze` 的 `{{c1::…}}` 硬校验照旧；同一 `kp_id` 多卡**不设上限**；
+# 作答用时 `elapsed_ms` **不进卡定义**（属"作答记录"，将来落 `attempts.jsonl`）。整块追加在文件末尾 ⇒
+# 上方所有 `<文件>:<行号>` 锚点零漂移（新增字面量经同行 `**_REVIEW_CARD_EXTRA_PROPS` 注入 card schema）。
+
+REVIEW_CARD_JUDGES: tuple[str, ...] = ("auto", "agent", "self")
+REVIEW_CARD_INPUTS: tuple[str, ...] = ("single", "multi")
+#: 追加进 `review_cards_upsert` 的 card-item schema（`additionalProperties: False` ⇒ 必须显式声明）。
+_REVIEW_CARD_EXTRA_PROPS: dict[str, Any] = {
+    "judge": {"type": "string", "enum": list(REVIEW_CARD_JUDGES)},
+    "options": {"type": "array", "items": {"type": "string"}},
+    "answer": {"type": "string"},
+    "accept": {"type": "array", "items": {"type": "string"}},
+    "explain": {"type": "string"},
+    "input": {"type": "string", "enum": list(REVIEW_CARD_INPUTS)},
+}
+
+
+def _review_derive_judge(ctype: str, card: Mapping[str, Any]) -> str:
+    """未给 `judge` 时的派生规则（人已拍板）：mcq / 带 `answer`|`accept` 的 cloze|gapfill ⇒ auto；
+    short / produce ⇒ agent；basic / reverse ⇒ self（cloze 无 answer|accept 也归 self，维持揭晓式自评）。"""
+    if ctype == "mcq":
+        return "auto"
+    if ctype in ("gapfill", "cloze"):
+        return "auto" if (card.get("answer") is not None or card.get("accept") is not None) else "self"
+    if ctype in ("short", "produce"):
+        return "agent"
+    return "self"
+
+
+def _review_derive_input(ctype: str) -> str | None:
+    """未给 `input` 时的派生规则：short ⇒ single、produce ⇒ multi；其余类型不派生（不落该键）。"""
+    if ctype == "short":
+        return "single"
+    if ctype == "produce":
+        return "multi"
+    return None
+
+
+def _review_type_extra_problems(card: Any, tag: str) -> list[str]:
+    """R4 新增字段的**按类型**硬校验（返回问题清单，空 = 合规；**任一坏 ⇒ 上层拒绝整批**）。
+
+    规则（照人已拍板的裁定）：
+    - `judge` 若给出 ∈ {auto,agent,self}；`input` 若给出 ∈ {single,multi}；`explain` 若给出须为 str；
+    - `options` 若给出须为 ≥2 项非空字符串数组且**不得重复**；`accept` 若给出须为非空字符串数组；`answer` 若给出须为 str；
+    - `mcq`：**必给** `options`（≥2 去重非空）与 `answer`（str），且 `answer` 必须 ∈ `options`；
+    - `gapfill`：`answer` 或 `accept` **至少给一个**（否则规则判不了）。
+    """
+    problems: list[str] = []
+    judge = card.get("judge")
+    if judge is not None and judge not in REVIEW_CARD_JUDGES:
+        problems.append(f"{tag}.judge: 若给出须为 {list(REVIEW_CARD_JUDGES)} 之一，实际 {judge!r}")
+    inp = card.get("input")
+    if inp is not None and inp not in REVIEW_CARD_INPUTS:
+        problems.append(f"{tag}.input: 若给出须为 {list(REVIEW_CARD_INPUTS)} 之一，实际 {inp!r}")
+    explain = card.get("explain")
+    if explain is not None and not isinstance(explain, str):
+        problems.append(f"{tag}.explain: 若给出须为 str")
+    options = card.get("options")
+    if options is not None:
+        if not (isinstance(options, list) and len(options) >= 2 and all(isinstance(o, str) and o for o in options)):
+            problems.append(f"{tag}.options: 若给出须为至少 2 项非空字符串的数组")
+        elif len(set(options)) != len(options):
+            problems.append(f"{tag}.options: 选项不得重复（去重后须仍 ≥2 项）")
+    answer = card.get("answer")
+    if answer is not None and not isinstance(answer, str):
+        problems.append(f"{tag}.answer: 若给出须为 str")
+    accept = card.get("accept")
+    if accept is not None and not (isinstance(accept, list) and accept and all(isinstance(a, str) and a for a in accept)):
+        problems.append(f"{tag}.accept: 若给出须为非空字符串数组（可接受答案白名单）")
+    ctype = card.get("type")
+    if ctype == "mcq":
+        if options is None:
+            problems.append(f"{tag}: mcq 卡必须给 options（至少 2 项去重非空）")
+        if answer is None:
+            problems.append(f"{tag}: mcq 卡必须给 answer（正确选项，须在 options 中）")
+        elif isinstance(answer, str) and isinstance(options, list) and answer not in options:
+            problems.append(f"{tag}: mcq 的 answer {answer!r} 不在 options 里")
+    elif ctype == "gapfill":
+        if not (isinstance(answer, str) and answer) and not (isinstance(accept, list) and accept):
+            problems.append(f"{tag}: gapfill 卡至少要给 answer 或 accept 之一（否则无法规则判分）")
+    return problems
+
+
+def _review_apply_extra_fields(row: dict, card: Mapping[str, Any]) -> dict:
+    """把 R4 新增字段写进落盘行：`judge` **总是**落盘（缺省按规则派生）；`input` 缺省时仅 short/produce
+    派生（其余不落该键）；`options`/`answer`/`accept`/`explain` 仅当给出时原样保留（未给不编造）。"""
+    ctype = str(row.get("type") or "")
+    judge = card.get("judge")
+    row["judge"] = str(judge) if judge else _review_derive_judge(ctype, card)
+    inp = card.get("input")
+    if inp is None:
+        inp = _review_derive_input(ctype)
+    if inp is not None:
+        row["input"] = str(inp)
+    for key in ("options", "answer", "accept", "explain"):
+        if card.get(key) is not None:
+            row[key] = card[key]
+    return row
 

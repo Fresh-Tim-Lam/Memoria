@@ -330,3 +330,113 @@ def test_review_due_list_returns_json_with_card_faces(kb: Path) -> None:
     after = {p.name: p.read_bytes() for p in review_dir.iterdir() if p.is_file()}
     assert before == after, "review_due_list 不得写盘"
 
+
+# ── ⑦ R4：题型扩型（7 种）+ 判分字段（2026-10-11，P0 解阻塞）───────────────────────
+# `type` 放开为 7 种；新增可选 `judge`/`options`/`answer`/`accept`/`explain`/`input`；
+# `judge` 缺省按规则派生；按类型硬校验（任一张坏 ⇒ 拒绝整批）；同一 `kp_id` 多卡**不设上限**。
+
+
+def _cards_file(kb: Path) -> Path:
+    return kb / ".memoria" / "agent" / "review" / "cards.json"
+
+
+def test_review_cards_upsert_accepts_seven_types_and_derives_judge(kb: Path) -> None:
+    """7 种 type 一次写入全部成功；`judge` 缺省按裁定派生（mcq/gapfill/带 accept 的 cloze ⇒ auto；
+    short/produce ⇒ agent；basic/reverse ⇒ self），`input` 缺省仅 short⇒single、produce⇒multi。"""
+    cards = [
+        {"card_id": "t-basic", "kp_id": "k", "file": "", "type": "basic", "front": "f", "back": "b", "source": "t"},
+        {"card_id": "t-cloze", "kp_id": "k", "file": "", "type": "cloze", "front": "{{c1::x}} y", "back": "x y", "source": "t"},
+        {"card_id": "t-reverse", "kp_id": "k", "file": "", "type": "reverse", "front": "x", "back": "y", "source": "t"},
+        {"card_id": "t-mcq", "kp_id": "k", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t", "options": ["a", "b"], "answer": "a"},
+        {"card_id": "t-gapfill", "kp_id": "k", "file": "", "type": "gapfill", "front": "f", "back": "b", "source": "t", "accept": ["a"]},
+        {"card_id": "t-short", "kp_id": "k", "file": "", "type": "short", "front": "f", "back": "b", "source": "t"},
+        {"card_id": "t-produce", "kp_id": "k", "file": "", "type": "produce", "front": "f", "back": "b", "source": "t"},
+    ]
+    out = _invoke(kb, "review_cards_upsert", cards=cards)
+    assert out.output.error is False, out.output.text
+
+    rows = {c["card_id"]: c for c in json.loads(_cards_file(kb).read_text(encoding="utf-8"))["cards"]}
+    assert set(rows) == {"t-basic", "t-cloze", "t-reverse", "t-mcq", "t-gapfill", "t-short", "t-produce"}
+    assert rows["t-mcq"]["judge"] == "auto"
+    assert rows["t-gapfill"]["judge"] == "auto"
+    assert rows["t-cloze"]["judge"] == "self"  # 无 answer/accept ⇒ 维持自评
+    assert rows["t-basic"]["judge"] == "self" and rows["t-reverse"]["judge"] == "self"
+    assert rows["t-short"]["judge"] == "agent" and rows["t-short"]["input"] == "single"
+    assert rows["t-produce"]["judge"] == "agent" and rows["t-produce"]["input"] == "multi"
+    assert "input" not in rows["t-mcq"]  # 非 short/produce 不派生 input
+
+
+def test_review_cards_upsert_cloze_with_accept_derives_auto(kb: Path) -> None:
+    out = _invoke(kb, "review_cards_upsert", cards=[
+        {"card_id": "c-accept", "kp_id": "k", "file": "", "type": "cloze", "front": "{{c1::x}} y", "back": "x y", "source": "t", "accept": ["x"]},
+    ])
+    assert out.output.error is False, out.output.text
+    row = json.loads(_cards_file(kb).read_text(encoding="utf-8"))["cards"][0]
+    assert row["judge"] == "auto"
+
+
+@pytest.mark.parametrize(
+    "cards",
+    [
+        [{"card_id": "b1", "kp_id": "", "file": "", "type": "typo", "front": "f", "back": "b", "source": "t"}],
+        [{"card_id": "b2", "kp_id": "", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t", "answer": "x"}],
+        [{"card_id": "b3", "kp_id": "", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t", "options": ["a", "b"], "answer": "z"}],
+        [{"card_id": "b4", "kp_id": "", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t", "options": ["only"], "answer": "only"}],
+        [{"card_id": "b5", "kp_id": "", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t", "options": ["a", "a"], "answer": "a"}],
+        [{"card_id": "b6", "kp_id": "", "file": "", "type": "gapfill", "front": "f", "back": "b", "source": "t"}],
+        [{"card_id": "b7", "kp_id": "", "file": "", "type": "cloze", "front": "no mark", "back": "b", "source": "t"}],
+    ],
+)
+def test_review_cards_upsert_rejections_are_all_or_nothing(kb: Path, cards: list[dict[str, Any]]) -> None:
+    """坏卡（非法 type / mcq 缺 options / answer 不在 options / options <2 / options 重复 /
+    gapfill 无 answer 也无 accept / cloze 无挖空标记）⇒ 拒绝整批，**一张都不写**（先写一张好卡再比对哈希）。"""
+    good = _invoke(kb, "review_cards_upsert", cards=[
+        {"card_id": "good", "kp_id": "", "file": "", "type": "basic", "front": "f", "back": "b", "source": "t"},
+    ])
+    assert good.output.error is False
+    before = _cards_file(kb).read_bytes()
+    out = _invoke(kb, "review_cards_upsert", cards=cards)
+    assert out.output.error is True and out.output.code == "INVALID_ARGUMENTS"
+    assert _cards_file(kb).read_bytes() == before, "拒绝整批 ⇒ cards.json 逐字节不变"
+
+
+def test_review_cards_upsert_same_kp_many_cards_no_cap(kb: Path) -> None:
+    """同一 `kp_id` 连写 5 张 ⇒ 全部成功（`kp_id` 天然支持多卡，**不设数量上限**）。"""
+    cards = [{"card_id": f"m-{i}", "kp_id": "samekp", "file": "", "type": "basic", "front": f"f{i}", "back": f"b{i}", "source": "t"} for i in range(5)]
+    out = _invoke(kb, "review_cards_upsert", cards=cards)
+    assert out.output.error is False, out.output.text
+    rows = json.loads(_cards_file(kb).read_text(encoding="utf-8"))["cards"]
+    assert len([c for c in rows if c["kp_id"] == "samekp"]) == 5
+
+
+def test_review_due_list_returns_new_card_fields(kb: Path) -> None:
+    """`review_due_list` 把新增字段一并返回（`judge`/`options`/`answer`/`accept`/`explain`/`input`）。"""
+    import json as _json
+
+    from memoria.services.agent.tools.kb import _review_due_list
+
+    agent_dir = kb / ".memoria" / "agent"
+    review_dir = agent_dir / "review"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    (agent_dir / "fsrs.py").write_text(
+        "import json\nprint(json.dumps({'status': 'ok', 'date': '2026-01-02', 'due': ['m1', 'g1'], 'count': 2}))\n",
+        encoding="utf-8",
+    )
+    (review_dir / "cards.json").write_text(
+        _json.dumps({"schema_version": 1, "cards": [
+            {"card_id": "m1", "kp_id": "k", "file": "", "type": "mcq", "front": "f", "back": "b", "source": "t",
+             "judge": "auto", "options": ["a", "b"], "answer": "a", "explain": "e"},
+            {"card_id": "g1", "kp_id": "k", "file": "", "type": "gapfill", "front": "f", "back": "b", "source": "t",
+             "judge": "auto", "accept": ["a"], "input": "single"},
+        ]}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    out = _review_due_list(str(kb), None, {"date": "2026-01-02"})
+    assert out.error is False
+    payload = _json.loads(out.text)
+    m1 = payload["cards"][0]
+    assert m1["options"] == ["a", "b"] and m1["answer"] == "a" and m1["explain"] == "e" and m1["judge"] == "auto"
+    g1 = payload["cards"][1]
+    assert g1["accept"] == ["a"] and g1["input"] == "single" and g1["judge"] == "auto"
+
+

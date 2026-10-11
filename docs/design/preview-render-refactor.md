@@ -851,7 +851,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 | 取今日到期 | `review_due_list` | `src/memoria/services/agent/tools/kb.py:4712`（定义）、`:4477`（实现） | 内部走该库 `.memoria/agent/fsrs.py due`（`:4482`）；**默认滤掉禁卡**（`:4486-4492`） |
 | 评分 1..4 | `review_grade` | `kb.py:4729`（定义）、`:4499`（实现） | 幂等键 = `card_id + 评审日`（`:4732`）；禁用卡拒评（`:4507`） |
 | 禁卡 | `review_card_disable` | `kb.py:4693` | 本期**不接**（R3b） |
-| 卡型 schema | `type ∈ {basic, cloze, reverse}` | `kb.py:4138`、`:4658-4660` | `cloze` 的 `front` 用 `{{c1::…}}` 挖空、`back` 放完整原文 |
+| 卡型 schema | `type ∈ {basic, cloze, reverse, mcq, gapfill, short, produce}` | `kb.py:4138`、`:4658-4660` | `cloze` 的 `front` 用 `{{c1::…}}` 挖空、`back` 放完整原文 |
 
 **关键取证（缺口，须人拍板）**：
 1. **`review_due_list` 只回 `card_id` 列表，不含 `front` / `back` / `type`** —— 实现 `kb.py:4485-4494`：`due = [str(x) for x in data.get("due")]` 后逐行 `- {c}`，只有 id；该库 `fsrs.py` 的 `due` 子命令同样只回 id（`docs/example/AAA_Vocab/.memoria/agent/fsrs.py:6-7` 注明 `cards.json` 由脚本**只读**、`:189-204` 仅取 `card_id`）。⇒ **要渲染卡面，界面必须另取卡片定义**。提案：**只读**拉 `.memoria/agent/review/cards.json`（`REVIEW_CARDS_REL`，`kb.py:4135`）—— 前端已有通用只读文件通道（`markdown-preview.js:656-657` 的 `/files/<encoded>`）。**待定 A**：是否接受「界面只读 `cards.json`」，还是要求新增一把只读工具（**本提案默认前者**）。
@@ -1079,3 +1079,21 @@ function flushPendingSync() {                          // ★ flush 清单里的
 | F | i18n 键名空间 | 独立 `review.*` | **已落定（默认）**：采用 `review.*` |
 
 > **仍待定**：C（UI→工具的桥）—— 唯一尚未拍板的**接口层**选择；此外 A 的 R2 增补施工亦尚未开始。
+
+## 附 R4：题型扩型与作答交互（进行中）
+
+> **状态**：进行中。**P0 已交付**；R4.2 / R4.3 待施工。本附节为**设计记录**（人已拍板），非门禁收口。
+
+1. **P0 已交付**：`type` 放开为 7 种（`basic` / `cloze` / `reverse` / `mcq` / `gapfill` / `short` / `produce`）；新增可选字段 `judge` / `options` / `answer` / `accept` / `explain` / `input`；按类型校验（`mcq` 必 `options` ≥ 2 去重非空 + `answer` 必须 ∈ `options`；`gapfill` 必 `answer` 或 `accept` 之一；`cloze` 保留挖空硬校验）；`judge` / `input` 缺省**派生**（`mcq` → auto、带 `answer`/`accept` 的 `cloze`/`gapfill` → auto、`short`/`produce` → agent、`basic`/`reverse` → self；`short` → single、`produce` → multi）。**不做模糊匹配 / 词形归一化**（交 agent 判）。
+
+2. **R4.2 前置规则（人已批准）**：**答案不回前端** —— 前端**从不**收到 `answer` / `accept` / `explain`；判分放**后端**（`auto`：精确匹配或 `accept` 白名单命中）或**交 agent**（`judge: agent`）。理由：靠「UI 自己藏住答案」太容易漏，从**结构上**消除泄题。
+   - **现状缺口（如实标注）**：`review_due_list` **目前确实会返回**这些答案字段（P0 已交付即如此）⇒ **待 R4.2 改掉**（二选一：默认不含答案；或给 agent 单独入口）。**尚未解决**，勿写成「已解决」。
+
+3. **UI 形态变更（人已拍板）**：复习卡的**主形态 = 可被 agent 呼出的悬浮矩形卡**；已交付的**模态面板退为手动兜底入口**（agent 未及时回复时，用户可自己点进去看「agent 设好的卡」）；**悬浮卡可撤回 / 可不显示**。
+   - **技术前提（待设计，勿当已完成）**：agent → UI **目前只有轮询、没有推送**；「呼出」可低成本实现（轮询响应里带回待呼出卡），但「**撤回要及时生效**」需要额外设计。
+
+4. **分期**：**P0** ✅（枚举 + 字段）· **P1** 作答记录落 `.memoria/agent/review/attempts.jsonl`（含 `elapsed_ms`，见下）+ 只读工具 `review_attempts_list` · **P2** 工具 `review_feedback_add` 把反馈写回卡面 · **R4.2** 后端判分 + 答案隔离 · **R4.3** 各题型作答交互（`mcq` 选项按钮 / `gapfill` 输入框 / `short` / `produce` 输入 / `judge` 分支）。
+
+5. **两条口径（人已拍板）**：**③ 作答用时** `elapsed_ms` 落 **`attempts.jsonl`**，**不进卡定义**（卡 schema 里没有该字段，`additionalProperties:false` 会拒）；**④ 同一 `kp_id` 多卡不设上限**（无数量校验）。
+
+6. **既有规格呼应**：该库 `docs/agent_specification.md` §2.3（`:34-52`）/ §3.2（`:92`）/ §5.2（`:176`）**早就定义了** MCQ / Short Answer / Fill-in-blank 与「作答后立即给答案与解释」—— **R4 是补齐既有规格，不是新起**。**注意：该文件在知识库内，`docs/example/**` 为禁改区，此处只记录引用。**
