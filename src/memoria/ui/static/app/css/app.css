@@ -7049,3 +7049,54 @@ html *::-webkit-scrollbar-thumb:active {
     color: var(--text-secondary);
 }
 body.-review-modal-open { overflow: hidden; }
+
+/* ===== 2026-10-11 追加：R4.3 作答交互（`js/review-modal.js`）===============================
+   只 `auto` 判分三型（mcq / gapfill / 带 accept|answer 的 cloze）用；作答区在卡面与提示之间。
+   本块**文件末尾追加** ⇒ 上方所有 `app.css:<行号>` 锚点零漂移。 */
+.-review-answer { display: flex; flex-direction: column; gap: 0.5rem; }
+.-review-mcq { gap: 0.375rem; }
+.-review-option {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    text-align: left;
+    padding: 0.4rem 0.75rem;
+    background: var(--bg-tertiary);
+    color: var(--text-bright);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8125rem;
+}
+.-review-option:hover:not(:disabled) { border-color: var(--theme-color); }
+.-review-option:disabled { opacity: 0.55; cursor: default; }
+.-review-opt-key {
+    font-family: ui-monospace, monospace;
+    font-size: 0.625rem;
+    padding: 0 0.3125rem;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+.-review-inputs { flex-direction: row; align-items: center; }
+.-review-input {
+    flex: 1;
+    padding: 0.4rem 0.625rem;
+    background: var(--bg-tertiary);
+    color: var(--text-bright);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.8125rem;
+}
+.-review-input:focus { outline: none; border-color: var(--theme-color); }
+.-review-verdict { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.8125rem; }
+.-review-verdict-label { font-weight: 600; }
+.-review-verdict-ok { color: var(--theme-color); }
+.-review-verdict-bad { color: var(--error); }
+.-review-verdict-wait { color: var(--text-secondary); }
+.-review-verdict-line { color: var(--text-bright); overflow-wrap: anywhere; }
+.-review-verdict-tag {
+    margin-right: 0.375rem;
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
+}

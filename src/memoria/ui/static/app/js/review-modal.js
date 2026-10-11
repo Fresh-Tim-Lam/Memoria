@@ -40,7 +40,7 @@
     unreviewed: [],
     flipped: false,
     retried: null,
-    date: "",
+    date: "", auto: false, judged: null, choice: null,
   };
 
   function call(method, ...args) {
@@ -235,7 +235,7 @@
     const f = $("#-review-footer");
     if (!f) return;
     const btns = f.querySelectorAll(".-review-grade-btn");
-    for (let i = 0; i < btns.length; i += 1) btns[i].disabled = !(!on && S.flipped);
+    for (let i = 0; i < btns.length; i += 1) btns[i].disabled = !(!on && (S.flipped || !!S.judged));
   }
 
   // ── 视图切换 ────────────────────────────────────────────────────────────────
@@ -243,7 +243,7 @@
   async function showCard() {
     const body = $("#-review-body");
     if (!body) return;
-    S.flipped = false;
+    S.flipped = false; S.judged = null; S.choice = null;
     S.item = S.queue[S.pos] || null;
     S.card = S.item ? S.item.card : null;
     if (!S.card) {
@@ -252,15 +252,15 @@
     }
     // 重试项（队尾重排的"暂时性失败"卡）：直接按**已选的分**再试一次，**不要求再翻面**
     // （评分幂等 ⇒ 安全；不做乐观更新，仍以返回为准）。
-    const retryGrade = S.item.autoGrade;
+    const retryGrade = S.item.autoGrade; S.auto = retryGrade == null && isAutoCard(S.card);
     paintProgress();
     body.innerHTML =
-      '<div class="-review-face" id="-review-face"></div>' +
-      '<div class="-review-hint">' + esc(T("review.flipHint")) + "</div>";
-    renderGradeBar(retryGrade != null);
+      '<div class="-review-face" id="-review-face"></div>' + (S.auto ? answerUIHtml() : "") +
+      '<div class="-review-hint">' + esc(T(S.auto ? "review.answerHint" : "review.flipHint")) + "</div>";
+    renderGradeBar(retryGrade != null || !!S.judged);
     S.flipped = retryGrade != null;
     await paintFace($("#-review-face"), S.card, S.flipped);
-    focusBox();
+    if (S.auto) setupAnswerUI(); else focusBox();
     if (retryGrade != null) grade(retryGrade);
   }
 
@@ -402,7 +402,7 @@
   function onKeyDown(e) {
     if (!S.open) return;
     if (e.isComposing || e.keyCode === 229) return; // IME 组字中：一行都不碰
-    if (inEditable()) return; // 输入控件聚焦：交还各自处理
+    if (inEditable()) return; if (S.auto && handleAutoKey(e)) return; // 输入框聚焦交还；R4.3 作答交互优先（作答前不翻面）
     if (e.key === "Escape") {
       e.preventDefault();
       e.stopPropagation();
@@ -443,7 +443,7 @@
     S.total = 0;
     S.done = 0;
     S.unreviewed = [];
-    S.flipped = false;
+    S.flipped = false; S.auto = false; S.judged = null; S.choice = null;
     S.retried = Object.create(null);
     buildModal();
     document.body.classList.add("-review-modal-open");
@@ -501,9 +501,9 @@
     if (global.MemoriaI18n && global.MemoriaI18n.applyStatic) global.MemoriaI18n.applyStatic(box);
     paintProgress();
     if (S.card) {
-      renderGradeBar(!!S.flipped);
+      renderGradeBar(!!S.flipped || !!S.judged);
       const hint = box.querySelector(".-review-hint");
-      if (hint) hint.textContent = T("review.flipHint");
+      if (hint) hint.textContent = T(S.auto ? "review.answerHint" : "review.flipHint");
     }
   }
 
@@ -526,6 +526,165 @@
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
     else boot();
     global.addEventListener("pywebviewready", boot);
+  }
+
+  // ── R4.3（2026-10-11）：作答交互（**只** auto 判分那三型）──────────────────────────
+  // 设计见 `docs/design/preview-render-refactor.md` 附 R4（R4.3）。**范围收窄**：只有
+  // `mcq` / `gapfill` / 带 `answer|accept` 的 `cloze`（即 `judge:auto`）有作答交互；`basic` /
+  // `reverse` / `judge:self` 的 `cloze` / `short` / `produce` **维持现状**（题面 → 翻面 → 1..4 自评）。
+  // **判分走后端** `review_submit_one`（只读；作答后才揭晓 `answer`/`explain`）；**写评分仍走**
+  // `review_grade_one`。**不做乐观更新**：以返回 verdict 为准（失败 / unjudged / unreviewable 如实显示）。
+  // 整块追加在模块尾 ⇒ 上方所有 `review-modal.js:<行号>` 锚点零漂移。
+
+  /** 该卡是否走作答交互：`judge:auto`（后端已持久化该字段）；兜底 `mcq`+`options`。 */
+  function isAutoCard(card) {
+    if (!card) return false;
+    if (String(card.judge || "") === "auto") return true;
+    return String(card.type || "") === "mcq" && Array.isArray(card.options) && card.options.length >= 2;
+  }
+
+  /** 作答区 HTML（mcq 的选项按钮由 `setupAnswerUI` 用 DOM 建；输入型在此给 input + 提交按钮）。 */
+  function answerUIHtml() {
+    const t = String((S.card && S.card.type) || "");
+    const inner = t === "mcq"
+      ? '<div class="-review-answer -review-mcq" id="-review-answer" role="group"></div>'
+      : '<div class="-review-answer -review-inputs"><input type="text" class="-review-input" id="-review-input" ' +
+        'autocomplete="off" spellcheck="false" placeholder="' + esc(T("review.inputPlaceholder")) + '">' +
+        '<button type="button" class="-btn primary" id="-review-submit">' + esc(T("review.submit")) + "</button></div>";
+    return inner + '<div class="-review-verdict" id="-review-verdict" aria-live="polite"></div>';
+  }
+
+  function optionKeyLabel(i) { return i < 9 ? String(i + 1) : String.fromCharCode(97 + i); }
+
+  /** 绑定作答区事件并聚焦（gapfill/cloze 直接聚焦输入框）。 */
+  function setupAnswerUI() {
+    const t = String((S.card && S.card.type) || "");
+    if (t === "mcq") {
+      const box = $("#-review-answer");
+      const opts = Array.isArray(S.card && S.card.options) ? S.card.options : [];
+      if (box) {
+        opts.forEach(function (opt, i) {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "-review-option";
+          btn.setAttribute("data-choice", String(opt));
+          btn.setAttribute("data-idx", String(i));
+          btn.innerHTML = '<span class="-review-opt-key">' + esc(optionKeyLabel(i)) + '</span>' +
+            '<span class="-review-opt-text">' + esc(opt) + "</span>";
+          btn.addEventListener("click", function () { submitAnswer(String(opt), null); });
+          box.appendChild(btn);
+        });
+      }
+      focusBox();
+      return;
+    }
+    const inp = $("#-review-input");
+    if (inp) {
+      inp.addEventListener("keydown", function (e) {
+        if (e.isComposing || e.keyCode === 229) return; // IME 组字中：一行都不碰
+        if (e.key === "Escape") { e.preventDefault(); close(); return; }
+        if (e.key === "Enter") { e.preventDefault(); submitAnswer(null, inp.value); }
+      });
+      setTimeout(function () {
+        try { inp.focus({ preventScroll: true }); } catch (_e) { try { inp.focus(); } catch (_e2) { /* noop */ } }
+      }, 30);
+    }
+    const submitBtn = $("#-review-submit");
+    if (submitBtn) {
+      submitBtn.addEventListener("click", function () {
+        const el = $("#-review-input");
+        submitAnswer(null, el ? el.value : "");
+      });
+    }
+  }
+
+  /** 作答控件的忙碌态（只碰作答区，不动评分条 / S.busy）。 */
+  function setAnswerBusy(on) {
+    const root = $("#-review-answer");
+    if (!root) return;
+    const els = root.querySelectorAll("button,input");
+    for (let i = 0; i < els.length; i += 1) els[i].disabled = !!on;
+  }
+
+  /** 键盘（`auto` 卡）：作答前选/答；判分后 1..4 评分。返回 true 表示已处理（勿再走翻面分支）。 */
+  function handleAutoKey(e) {
+    if (!S.auto || !S.card || S.busy) return false;
+    if (S.judged) {
+      if (/^[1-4]$/.test(e.key)) { e.preventDefault(); grade(Number(e.key)); return true; }
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); return true; } // 已判分：不翻面
+      return false;
+    }
+    if (String(S.card.type || "") === "mcq") {
+      const opts = Array.isArray(S.card.options) ? S.card.options : [];
+      let idx = -1;
+      if (/^[1-9]$/.test(e.key)) idx = Number(e.key) - 1;
+      else if (/^[a-z]$/i.test(e.key)) idx = e.key.toLowerCase().charCodeAt(0) - 97;
+      if (idx >= 0 && idx < opts.length) { e.preventDefault(); submitAnswer(String(opts[idx]), null); return true; }
+      if (e.key === " ") { e.preventDefault(); return true; } // 作答前不翻面
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const ae = document.activeElement;
+        if (ae && ae.classList && ae.classList.contains("-review-option")) submitAnswer(String(ae.getAttribute("data-choice") || ""), null);
+        return true; // 消费：不翻面
+      }
+      return false;
+    }
+    // gapfill / cloze：作答在输入框里（输入框聚焦时不会走到这）；空格/回车留给自己，不翻面
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); return true; }
+    return false;
+  }
+
+  /** 提交作答给后端只读判分入口（`choice` 与 `text` 按题型二选一）。 */
+  async function submitAnswer(choice, text) {
+    if (!S.card || S.busy || S.judged) return;
+    const cid = S.card.card_id;
+    S.busy = true;
+    setAnswerBusy(true);
+    let res;
+    try {
+      res = await call("review_submit_one", cid, choice, text, null, kbPath());
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    S.busy = false;
+    if (!S.open || !S.card || S.card.card_id !== cid) return; // 已切卡 / 已关闭
+    if (!res || res.status !== "ok") {
+      setAnswerBusy(false); // 允许重试
+      showVerdictError((res && (res.message || res.code)) || "");
+      return;
+    }
+    revealVerdict(res); // 判分完成 ⇒ 作答控件保持禁用
+  }
+
+  /** 判分后揭晓：verdict + `answer`（若回）+ `explain`（若回）；随后开放 1..4 评分。 */
+  function revealVerdict(res) {
+    S.judged = { verdict: String(res.verdict || ""), answer: res.answer, explain: res.explain };
+    const box = $("#-review-verdict");
+    if (!box) return;
+    const v = String(res.verdict || "");
+    const cls = v === "correct" ? "-review-verdict-ok" : (v === "wrong" ? "-review-verdict-bad" : "-review-verdict-wait");
+    const label = v === "correct" ? T("review.verdictCorrect") : (v === "wrong" ? T("review.verdictWrong") : T("review.verdictUnjudged"));
+    let html = '<div class="-review-verdict-label ' + cls + '">' + esc(label) + "</div>";
+    if (typeof res.answer === "string" && res.answer) {
+      html += '<div class="-review-verdict-line"><span class="-review-verdict-tag">' + esc(T("review.revealAnswer")) +
+        "</span>" + esc(res.answer) + "</div>";
+    }
+    if (typeof res.explain === "string" && res.explain) {
+      html += '<div class="-review-verdict-line"><span class="-review-verdict-tag">' + esc(T("review.explainLabel")) +
+        "</span>" + esc(res.explain) + "</div>";
+    }
+    box.innerHTML = html;
+    renderGradeBar(true); // 判分后开放 1..4（用户可覆盖）
+    focusBox();
+  }
+
+  /** 提交失败 / 无法判分：如实显示，不假装判过。 */
+  function showVerdictError(msg) {
+    const box = $("#-review-verdict");
+    if (!box) return;
+    box.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">' +
+      esc(T("review.submitFailed", { msg: String(msg || "") })) + "</div>";
+    focusBox();
   }
 
   global.MemoriaReviewModal = { open: open, close: close };

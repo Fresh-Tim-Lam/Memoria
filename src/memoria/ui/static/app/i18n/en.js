@@ -1905,6 +1905,15 @@
       gradeFailed: "Grade failed: {card}",
       retry: "Grade not confirmed, retrying at queue end: {card}",
       blankAria: "blank",
+      answerHint: "Answer, then submit",
+      submit: "Submit",
+      inputPlaceholder: "Type your answer",
+      verdictCorrect: "Correct",
+      verdictWrong: "Wrong",
+      verdictUnjudged: "Awaiting review",
+      revealAnswer: "Answer",
+      explainLabel: "Explanation",
+      submitFailed: "Submit failed: {msg}",
     },
   });
 })(typeof window !== "undefined" ? window : globalThis);

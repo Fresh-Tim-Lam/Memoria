@@ -1801,6 +1801,15 @@
       gradeFailed: "评分失败：{card}",
       retry: "评分未确认，已排到队尾重试：{card}",
       blankAria: "挖空",
+      answerHint: "作答后提交",
+      submit: "提交",
+      inputPlaceholder: "在此输入答案",
+      verdictCorrect: "正确",
+      verdictWrong: "错误",
+      verdictUnjudged: "待判",
+      revealAnswer: "参考答案",
+      explainLabel: "解析",
+      submitFailed: "判分失败：{msg}",
     },
   });
 })(typeof window !== "undefined" ? window : globalThis);

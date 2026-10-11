@@ -320,3 +320,59 @@ def test_review_submit_one_is_read_only(kb: Path) -> None:
     after = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
     assert before == after
     assert not (review / "progress.json").exists()
+
+
+# ── ⑦ R4.3（2026-10-11）：作答交互（只 auto 三型）────────────────────────────────
+# 范围收窄：mcq / gapfill / 带 accept|answer 的 cloze 才渲染作答区；basic/reverse/self-cloze/short/produce
+# 维持现状。判分走后端只读入口 `review_submit_one`；界面只在作答后才揭晓 answer/explain（不乐观、不藏前端）。
+
+
+def test_review_r43_mcq_renders_options_and_submits_via_rpc() -> None:
+    """钉住：mcq 卡渲染选项按钮，提交走 `review_submit_one`（不是前端自判）。"""
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    assert 'call("review_submit_one"' in src, "作答提交必须实际调后端只读判分入口（不是注释/前端自判）"
+    for fn in ("isAutoCard", "answerUIHtml", "setupAnswerUI", "handleAutoKey", "submitAnswer", "revealVerdict"):
+        assert f"function {fn}" in src, f"缺 R4.3 函数 {fn}"
+    assert "-review-option" in src and "data-choice" in src, "mcq 必须建选项按钮"
+
+
+def test_review_r43_answers_not_revealed_before_submit() -> None:
+    """钉住：界面**只在** `review_submit_one` 返回后揭晓 `answer`/`explain`；绝不从卡面取（判分前无答案）。"""
+    import re
+
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    # 任何 `.answer` / `.explain` 访问都必须来自 RPC 返回 `res.*`（即卡面字段从不被读取）
+    assert re.search(r"(?<!res)\.answer\b", src) is None, "不得从卡面读 answer"
+    assert re.search(r"(?<!res)\.explain\b", src) is None, "不得从卡面读 explain"
+    assert "res.answer" in src and "res.explain" in src
+    # 作答区 HTML 构建函数体内不得渲染答案/解析
+    seg = src[src.index("function answerUIHtml"): src.index("function optionKeyLabel")]
+    assert "res.answer" not in seg and "answer:" not in seg and "explain" not in seg
+
+
+def test_review_r43_auto_scope_and_only_rpc_writes() -> None:
+    """钉住：作答交互门是 `judge:auto`；界面写路径只有两条 RPC，绝不直写 cards.json / progress.json。"""
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    assert 'String(card.judge || "") === "auto"' in src, "作答交互只给 auto 判分卡"
+    assert 'call("review_grade_one"' in src and 'call("review_submit_one"' in src, "写评分/判分只走 RPC 调用点"
+    # 界面不做任何直接的网络/存储写入，只经应用门面 RPC
+    for bad in ("fetch(", "XMLHttpRequest", "localStorage.setItem", "indexedDB"):
+        assert bad not in src, f"界面不得直连 {bad}"
+    # JS 语法（node --check 等价）
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node:
+        proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],
+                              capture_output=True, text=True, encoding="utf-8")
+        assert proc.returncode == 0, proc.stderr
+
+
+def test_review_r43_i18n_keys_present_in_both_locales() -> None:
+    keys = ("answerHint", "submit", "inputPlaceholder", "verdictCorrect", "verdictWrong",
+            "verdictUnjudged", "revealAnswer", "explainLabel", "submitFailed")
+    for name, rel in (("zh-CN", "i18n/zh-CN.js"), ("en", "i18n/en.js")):
+        text = (_APP / rel).read_text(encoding="utf-8")
+        for key in keys:
+            assert f"{key}:" in text, f"{name} 缺 review.{key}"
