@@ -6973,3 +6973,79 @@ html *::-webkit-scrollbar-thumb:active {
     color: var(--text-primary);
 }
 .-agent-approve-cmd-meta { font-size: 0.75rem; }
+
+/* ===== 2026-10-11 追加：R3a 复习界面（模态弹窗，`js/review-modal.js`）=======================
+   骨架复用既有 `.-modal` 一族（不是图片 lightbox）；结果 / 长正文**限高可滚**，不撑爆弹窗。
+   本块**文件末尾追加** ⇒ 上方所有 `app.css:<行号>` 锚点零漂移。 */
+.-review-box { width: min(720px, 94vw); max-height: 86vh; }
+.-review-progress {
+    flex: 1;
+    text-align: center;
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+}
+.-review-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: 8rem;
+    font-size: 0.8125rem;
+}
+.-review-face { line-height: 1.8; overflow-wrap: anywhere; }
+.-review-face img { max-width: 100%; }
+.-review-face pre,
+.-review-face table { max-width: 100%; max-height: 40vh; overflow: auto; }
+/* cloze 挖空：占位框（未翻面）与填回答案（翻面） */
+.-review-blank {
+    display: inline-block;
+    min-width: 4rem;
+    margin: 0 0.15rem;
+    border-bottom: 2px solid var(--theme-color);
+    vertical-align: baseline;
+}
+.-review-cloze-ans {
+    color: var(--theme-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--theme-color);
+}
+.-review-hint { color: var(--text-secondary); font-size: 0.6875rem; }
+.-review-grade-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; width: 100%; }
+.-review-grade-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    background: var(--bg-tertiary);
+    color: var(--text-bright);
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+.-review-grade-btn:hover:not(:disabled) { border-color: var(--theme-color); }
+.-review-grade-btn:disabled { opacity: 0.45; cursor: default; }
+.-review-kbd {
+    font-family: ui-monospace, monospace;
+    font-size: 0.625rem;
+    padding: 0 0.3125rem;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+}
+.-review-empty,
+.-review-error,
+.-review-summary { padding: 1rem 0; text-align: center; color: var(--text-secondary); }
+.-review-summary { color: var(--text-bright); font-size: 0.875rem; }
+.-review-unreviewed-title { margin-top: 0.25rem; color: var(--text-secondary); font-size: 0.75rem; }
+.-review-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    max-height: 30vh;
+    overflow: auto;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-secondary);
+}
+body.-review-modal-open { overflow: hidden; }

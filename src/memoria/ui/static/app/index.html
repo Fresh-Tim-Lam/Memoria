@@ -79,7 +79,7 @@
         <span class="-toolbar-btn-wrap">
           <button id="btn-check" type="button" title="知识库完整性检查" data-i18n="toolbar.check" data-i18n-attr="title:toolbar.checkTitle">检查</button>
           <span id="btn-check-badge" class="-toolbar-badge hidden" aria-hidden="true"></span>
-        </span>
+        </span><button id="btn-review" type="button" title="复习（今日到期）" data-i18n="review.button" data-i18n-attr="title:review.buttonTitle">复习</button>
         <button id="btn-settings" type="button" title="设置" data-i18n="toolbar.settings" data-i18n-attr="title:toolbar.settingsTitle">设置</button>
       </div>
       <div class="-titlebar-drag-spacer pywebview-drag-region" aria-hidden="true"></div>
@@ -514,5 +514,9 @@
        两者都无 DOM 依赖的主逻辑 ⇒ `nav-model.js` 可单独 `node` 跑分；末尾追加 ⇒ 上方锚点零漂移。 -->
   <script src="/app/js/nav-model.js"></script>
   <script src="/app/js/nav-predictor.js"></script>
+  <!-- R3a 复习界面（模态弹窗，2026-10-11）：只调 UI RPC `review_due_start` / `review_grade_one`（人驱动·免审批），
+       正文复用 `window.MemoriaMarkdownPreview`、骨架复用既有 `.-modal` 一族；不改 app.js / agent-panel.js。
+       末尾追加为最后一个 script 标签（`#btn-review` 在工具栏**同行追加**，不新增行）⇒ 既有 `index.html:<行>` 锚点零漂移。 -->
+  <script src="/app/js/review-modal.js"></script>
 </body>
 </html>

@@ -1878,4 +1878,33 @@
       approveTimeout: "timeout {s}s",
     },
   });
+
+  // ===== 2026-10-11 appended: R3a review modal (`js/review-modal.js`) =====
+  // Toolbar "Review" opens a modal; grading goes through the UI RPC only (no per-call approval).
+  // Appended at file end (new `review.*` namespace) ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"], {
+    review: {
+      button: "Review",
+      buttonTitle: "Review (due today)",
+      title: "Review",
+      dueCount: "{n} due today",
+      progress: "Due {total} / Done {done}",
+      flipHint: "Space / Enter to flip",
+      grade: {
+        again: "Again",
+        hard: "Hard",
+        good: "Good",
+        easy: "Easy",
+      },
+      empty: "Nothing due today 🎉",
+      doneAll: "Review complete ✓",
+      donePartial: "Reviewed {done}, {left} left (unreviewed stay due tomorrow)",
+      unreviewedTitle: "Unreviewed ({n}):",
+      unavailable: "Review not available in this app version",
+      loadFailed: "Failed to load review data: {msg}",
+      gradeFailed: "Grade failed: {card}",
+      retry: "Grade not confirmed, retrying at queue end: {card}",
+      blankAria: "blank",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

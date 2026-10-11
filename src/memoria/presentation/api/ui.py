@@ -2236,3 +2236,123 @@ UIAPI.agent_exec_start = _agent_exec_start
 UIAPI.agent_exec_poll = _agent_exec_poll
 
 
+# ── R3a：复习界面（模态弹窗）的两条 UI RPC（**人驱动 · 免审批**）─────────────────────────────
+# 口径（R3a-2.5 拍板）：审批门是防"**模型不可信**"；按按钮的是**人**、且正看着卡面 ⇒ 人驱动的
+# 评分**免逐次审批**。**具体做法**：这两条**不注册成工具**（不进 `KB_TOOL_NAMES` / `ToolRegistry`），
+# 只在 `UIAPI` 上追加方法 ⇒ agent 的工具分发（`ToolRegistry.invoke()` 按**注册名**解析）**根本取不到
+# 它们**；agent 仍只能走 `review_grade` 工具（`read_only=False` ⇒ 逐次审批）。两条 RPC 内部**直接复用**
+# `services/agent/tools/kb.py` 的领域实现（同一份 fsrs 逻辑，**没有第二条算法路径**），不经注册表、不弹审批；
+# 写路径**仍**做**写前备份 + 可撤销 + 审计**（与 `_review_commit` 同口径，复用 `services/agent/backup.py`）。
+# 返回里的 `category` 供前端做失败分类（`unavailable`/`load_failed` ⇒ 提示；`unreviewable` ⇒ 跳过不重试；
+# `temporary` ⇒ 队尾重试一次），口径见 `docs/design/preview-render-refactor.md` 附 R3a-2.2。
+# **本块追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+#: UI 复习评分的会话 id（备份/审计落这里；`[A-Za-z0-9][A-Za-z0-9._-]{0,127}` 合法）。
+REVIEW_UI_SESSION_ID = "ui-review"
+
+
+def _review_ui_error(code: str, message: str, category: str) -> dict:
+    return {"status": "error", "code": code, "message": message, "category": category}
+
+
+def _review_ui_due(self, date: str | None = None, kb_path: str | None = None) -> dict:
+    """取今日到期清单（**只读**）：复用 `_review_due_list` 的领域实现（内部走该库 `fsrs.py due`）。
+
+    成功 ⇒ **整个 dict 即 `review_due_list` 的 JSON 载荷**（`{date, due, count, filtered_disabled, cards, status:"ok"}`）。
+    失败 ⇒ 结构化错误（`category="unavailable"` 无库 / `"load_failed"` 工具不可用或数据非法）。
+    """
+    import json as _json
+
+    from memoria.services.agent.tools.kb import _review_due_list
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    args: dict = {}
+    if isinstance(date, str) and date.strip():
+        args["date"] = date.strip()
+    out = _review_due_list(kb, None, args)
+    if out.error:
+        return _review_ui_error(out.code or "review_failed", str(out.text), "load_failed")
+    try:
+        payload = _json.loads(out.text)
+    except (TypeError, ValueError):
+        return _review_ui_error("bad_payload", "复习数据解析失败（fsrs.py 未返回合法 JSON）", "load_failed")
+    if not isinstance(payload, dict):
+        return _review_ui_error("bad_payload", "复习数据格式非法", "load_failed")
+    payload["status"] = "ok"
+    return payload
+
+
+def _review_ui_grade(
+    self,
+    card_id: str,
+    grade: int,
+    date: str | None = None,
+    kb_path: str | None = None,
+) -> dict:
+    """给一张卡评分 1..4（**人驱动 · 免审批**；写前备份 + 可撤销 + 审计）。
+
+    先做与 `review_grade` 工具**同源**的 `_review_grade_precheck`（卡不存在 / 被禁 / cards.json 结构非法
+    ⇒ `category="unreviewable"`，前端跳过不重试）；再过 **写前备份**（`snapshot_pre_images`）→ 复用
+    `_review_grade`（内部走该库 `fsrs.py grade`）→ 成功则**记写后哈希 + 压撤销栈 + 审计**（同 `_review_commit`）。
+    评分写失败（只读 / 解释器不可用 / 结果不明）⇒ `category="temporary"`，前端**队尾重试一次**（评分幂等）。
+    """
+    import time
+
+    from memoria.services.agent import backup
+    from memoria.services.agent.tools.kb import (
+        REVIEW_PROGRESS_REL,
+        _next_txid,
+        _review_audit,
+        _review_grade,
+        _review_grade_precheck,
+    )
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    if grade not in (1, 2, 3, 4):
+        return _review_ui_error("bad_args", "grade 须为 1（Again）/ 2（Hard）/ 3（Good）/ 4（Easy）", "unreviewable")
+    problem = _review_grade_precheck(kb, cid)
+    if problem is not None:
+        return _review_ui_error("unreviewable", problem, "unreviewable")
+
+    sid = REVIEW_UI_SESSION_ID
+    txid = _next_txid(kb, sid, time.gmtime())
+    snap = backup.snapshot_pre_images(kb, sid, txid, [REVIEW_PROGRESS_REL], tool_id="review.grade.ui")
+    if snap.get("status") != "ok":
+        return _review_ui_error(snap.get("code") or "backup_failed", snap.get("message") or "写前备份失败", "temporary")
+
+    args: dict = {"card_id": cid, "grade": int(grade)}
+    if isinstance(date, str) and date.strip():
+        args["date"] = date.strip()
+    out = _review_grade(kb, sid, args)
+    if out.error:
+        return _review_ui_error(out.code or "grade_failed", str(out.text), "temporary")
+
+    warnings: list[str] = []
+    post = backup.record_post_images(kb, sid, txid)
+    if post.get("status") != "ok":
+        warnings.append("写后哈希记录失败（该批撤销会走未校验分支）")
+    if backup.push_stack(kb, sid, txid).get("status") != "ok":
+        warnings.append("压入撤销栈失败（仍可用 txid 直接撤销）")
+    backup.trim_backups(kb, sid)
+    _review_audit(kb, sid, "review.grade.ui", REVIEW_PROGRESS_REL, {"txid": txid, "card_id": cid, "grade": int(grade)})
+    return {
+        "status": "ok",
+        "txid": txid,
+        "session_id": sid,
+        "card_id": cid,
+        "grade": int(grade),
+        "warnings": warnings,
+    }
+
+
+UIAPI.review_due_start = _review_ui_due
+UIAPI.review_grade_one = _review_ui_grade
+
+

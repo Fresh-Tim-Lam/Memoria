@@ -78,7 +78,7 @@ window.MemoriaMathNormalize = (function () {
     return `$$${toLatex(line)}$$`;
   }
 
-  function normalize(body) {
+  function normalize(body, options) {
     if (!body) return body;
     const docHasExplicitMath = /\$/.test(body);
     const lines = body.split("\n");
@@ -108,7 +108,7 @@ window.MemoriaMathNormalize = (function () {
 
         if (hasInlineOrBlockDelimiters(line)) return line;
 
-        if (!docHasExplicitMath && isLegacyFormulaLine(line)) {
+        if (options?.legacyMath !== false && !docHasExplicitMath && isLegacyFormulaLine(line)) {
           return wrapDisplay(line);
         }
         return line;

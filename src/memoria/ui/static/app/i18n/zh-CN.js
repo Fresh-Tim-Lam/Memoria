@@ -1774,4 +1774,33 @@
       approveTimeout: "超时 {s} 秒",
     },
   });
+
+  // ===== 2026-10-11 追加：R3a 复习界面（模态弹窗，`js/review-modal.js`）=====
+  // 人点顶栏「复习」→ 模态逐张翻面评分（写评分只经 UI RPC，免审批）。
+  // 走"文件末尾 Object.assign（新命名空间 review.*）"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"], {
+    review: {
+      button: "复习",
+      buttonTitle: "复习（今日到期）",
+      title: "复习",
+      dueCount: "今日到期 {n} 张",
+      progress: "今日到期 {total} / 已完成 {done}",
+      flipHint: "空格 / 回车 翻面",
+      grade: {
+        again: "重来",
+        hard: "困难",
+        good: "良好",
+        easy: "简单",
+      },
+      empty: "今日无到期卡片 🎉",
+      doneAll: "今日复习完成 ✓",
+      donePartial: "今日已评 {done} 张，还剩 {left} 张未评（未评的明天照样到期）",
+      unreviewedTitle: "未评（{n}）：",
+      unavailable: "当前应用版本不支持复习，请升级",
+      loadFailed: "复习数据加载失败：{msg}",
+      gradeFailed: "评分失败：{card}",
+      retry: "评分未确认，已排到队尾重试：{card}",
+      blankAria: "挖空",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

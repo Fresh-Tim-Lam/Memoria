@@ -136,11 +136,12 @@ def test_a_pending_item_that_vanishes_is_marked_closed() -> None:
 
 def test_index_loads_the_card_as_the_last_script() -> None:
     """末尾追加 ⇒ 既有 `index.html:<行>` 锚点零漂移（2026-09-24 起其后又有五个模块：脚本工作区面板、
-       联网域名名单设置、脚本工作区设置、预览池替换策略、导航预测器 —— 同样末尾追加；新模块落地时只需更新这一行断言）。"""
+       联网域名名单设置、脚本工作区设置、预览池替换策略、导航预测器、R3a 复习界面 —— 同样末尾追加；
+       新模块落地时只需更新这一行断言）。"""
     html = _INDEX.read_text(encoding="utf-8")
     assert '<script src="/app/js/agent-question.js"></script>' in html
     scripts = re.findall(r"<script src=\"([^\"]+)\"></script>", html.split("</body>")[0])
-    assert scripts and scripts[-1] == "/app/js/nav-predictor.js", f"最后一个 script 是 {scripts[-1] if scripts else None}"
+    assert scripts and scripts[-1] == "/app/js/review-modal.js", f"最后一个 script 是 {scripts[-1] if scripts else None}"
     assert "/app/js/agent-question.js" in scripts[-7:], "待答卡模块仍在末尾区块里"
 
 

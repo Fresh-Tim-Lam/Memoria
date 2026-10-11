@@ -41,9 +41,9 @@ window.MemoriaMarkdownPreview = (function () {
     return mathJaxReady;
   }
 
-  function normalizeBody(body) {
+  function normalizeBody(body, options) {
     if (window.MemoriaMathNormalize) {
-      return MemoriaMathNormalize.normalize(body);
+      return MemoriaMathNormalize.normalize(body, options);
     }
     return body;
   }
@@ -1459,7 +1459,7 @@ window.MemoriaMarkdownPreview = (function () {
     const knownTargets = options?.knownTargets || null;
     const linkOverrides = options?.linkOverrides || null;
     const sidecarLinks = options?.sidecarLinks || null;
-    const normalized = normalizeBody(body);
+    const normalized = normalizeBody(body, options);
     return splitSourceBlocks(normalized)
       .map((block) => {
         if (block.kind === "blank") {

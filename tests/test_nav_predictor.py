@@ -326,7 +326,7 @@ def test_index_loads_nav_modules_after_tab_order() -> None:
     scripts = re.findall(r"<script src=\"([^\"]+)\"></script>", html.split("</body>")[0])
     assert scripts.index("/app/js/nav-stack.js") < scripts.index("/app/js/nav-model.js")
     assert scripts.index("/app/js/nav-model.js") < scripts.index("/app/js/nav-predictor.js")
-    assert scripts[-1] == "/app/js/nav-predictor.js", f"最后一个 script 是 {scripts[-1]}"
+    assert scripts[-1] == "/app/js/review-modal.js", f"最后一个 script 是 {scripts[-1]}"
 
 
 def test_copy_exists_in_both_locales() -> None:
