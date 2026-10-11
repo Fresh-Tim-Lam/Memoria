@@ -9,7 +9,7 @@ knowledge_points:
       line_hint: 1
     end:
       snippet: '- Answer: delinquency（违法行为；拖欠；失职）—— 记固定搭配 `juvenile delinquency`'
-      line_hint: 107
+      line_hint: 108
   tags:
   - IELTS
   - Speaking
@@ -20,3 +20,24 @@ knowledge_points:
   - Crime
   - Law
   - C1
+links:
+- anchor_text: rebel
+  occurrence: 0
+  targets:
+  - rebel
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  source_id: delinquency
+- anchor_text: indulge
+  occurrence: 0
+  targets:
+  - indulge
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  - line: 99
+    wrapped: true
+  source_id: delinquency

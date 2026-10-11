@@ -1,0 +1,82 @@
+schema_version: 1
+file: vocab/speculation.md
+knowledge_points:
+- id: speculation
+  name: speculation
+  range:
+    start:
+      snippet: '# speculation'
+      line_hint: 1
+    end:
+      snippet: '- Answer: speculation（推测、猜测；投机）／动词 speculate（推测；猜测）／形容词 speculative（推测的；投机性的）'
+      line_hint: 146
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - ActiveVocabulary
+  - UserDefined
+  - News
+  - Uncertainty
+  - C1
+links:
+- anchor_text: mainstream
+  occurrence: 0
+  targets:
+  - mainstream
+  edge_type: reference
+  target_edges:
+    mainstream:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 116
+    wrapped: true
+  excluded: []
+  pool:
+  - mainstream
+- anchor_text: plummet
+  occurrence: 0
+  targets:
+  - plummet
+  edge_type: reference
+  target_edges:
+    plummet:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 116
+    wrapped: true
+  excluded: []
+  pool:
+  - plummet
+- anchor_text: household-spending-rewrite
+  occurrence: 0
+  targets:
+  - household-spending-rewrite
+  edge_type: reference
+  target_edges:
+    household-spending-rewrite:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 116
+    wrapped: true
+  excluded: []
+  pool:
+  - household-spending-rewrite
+- anchor_text: rumour has it
+  occurrence: 0
+  targets:
+  - rumour-has-it
+  edge_type: reference
+  target_edges:
+    rumour-has-it:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 113
+    wrapped: true
+  excluded: []
+  pool:
+  - rumour-has-it

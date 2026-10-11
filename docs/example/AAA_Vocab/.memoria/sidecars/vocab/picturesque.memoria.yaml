@@ -59,4 +59,19 @@ links:
   - line: 70
     wrapped: true
   source_id: picturesque
+- anchor_text: places great pressure on
+  occurrence: 0
+  targets:
+  - put-pressure-on
+  edge_type: reference
+  target_edges:
+    put-pressure-on:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 15
+    wrapped: true
+  excluded: []
+  pool:
+  - put-pressure-on
 edges: []

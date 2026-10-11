@@ -123,7 +123,7 @@ The test results were __________, so the doctor said I could go back to work.
 - what you were worried about ｜ who helped ｜ what they said or did ｜ how you felt afterwards
 （中文说明：按 **SETTING → CHANGE → FEELING** 三槽位组织）
 > 💡 可用句式：*I was worried that …, and then someone said something so **reassuring** that I stopped worrying.*（正是本次订正后的句型）
-> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——计划被打乱后「唯一让人安心的一点」：The only **reassuring** part was that at least one thing on the list got done。
+> 📎 库内实作（原素材）：原 `speaking/part2/3.md`（现 `speaking/part2/experience_3.md`；2026-09-30 已整体替换为新故事）——计划被打乱后「唯一让人安心的一点」：The only **reassuring** part was that at least one thing on the list got done。（新素材里没有该词的自然落点，此行保留作历史记录，不再挂链接）
 ### 3. Writing scenario
 Write one Task‑2 sentence about how governments should communicate with the public in a crisis.
 （中文说明：大作文写一句话，论述危机中政府应如何与公众沟通）

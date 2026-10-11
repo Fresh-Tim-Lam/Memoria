@@ -96,6 +96,7 @@ Create a short paragraph (4–5 sentences) using **at least three** of the follo
 
 
 > 🔗 **关联**：破败的地方往往先被**鼻子**发现——旧楼漏雨发霉、垃圾成堆，都能用 `a stench`（[[stench]]）收一笔：*The dilapidated building gave off a stench of damp and rot.*（那栋破败的楼房散发着潮湿腐败的臭味。）
+> 🔗 **房产语境搭配**：`a dilapidated bungalow`（一栋破败的平房）——地图题写「旧房改造」时，[[bungalow]] 与 [[renovation]] 常和本词同现：*They bought a dilapidated bungalow and spent two years renovating it.*（他们买下一栋破败的平房，花了两年翻新。）
 
 ## 📌 Revision Tags
 

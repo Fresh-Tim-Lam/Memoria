@@ -14,7 +14,7 @@
   (中文释义：**本条核心用法**——indulge 单独用时句子不完整，必须接 `in + 名词／动名词`：`indulge in fast food`、`indulge in self‑pity`)
 - **Speaking example** – At weekends I indulge in a long lie‑in and a huge breakfast.
   （周末我会放纵一下：睡个懒觉，再吃一顿丰盛早餐。）
-- **Writing example** – Consumers are encouraged to indulge in the latest gadgets long before they need them.
+- **Writing example** – Consumers are encouraged to indulge in the latest [[gadgets]] long before they need them.
   （消费者被鼓动着，在真正需要之前就纵情购买最新小玩意。）
 
 - **[verb, transitive] indulge sb / indulge yourself** – to let someone (or yourself) have or do what they want, often too much（迁就；纵容；让自己享受一下）
@@ -29,7 +29,7 @@
 - **∇ Avoid**:
   - ✗ 想说「从事某项活动／做违法的事」→ 用 `engage in` / `be involved in` / `drift into`；`indulge in` 自带「享受、放纵」色彩，接 `crime` / `delinquency` 会读成「把犯罪当享受」
   - ✗ 漏掉介词（❌ `indulge fast food`）→ 及物义只用于「迁就人／自己」，不用于「享受某物」
-  - ✗ 只想说「我喜欢看电影」→ 用 `enjoy` / `I'm into`（indulge 含**过量、放纵**、常带自责的意味）
+  - ✗ 只想说「我喜欢看电影」→ 用 `enjoy` / [[ways-to-say-you-like-something|I'm into]]（indulge 含**过量、放纵**、常带自责的意味）
 - **强度标记 Strength**: **medium → strong**——不是中性「享受」，而是「明知不该还放任自己」
 - **语域三档 Register ladder**: 日常 `treat myself` → 通用 **`indulge (in / yourself)`** → 正式／书面 `yield to temptation`
 - **来源 Source**: 用户本次输出句 ＋ Oxford / Cambridge（库内 data/sources/** 仅 1 条含 indulge 的例句）
@@ -86,7 +86,7 @@ At weekends I __________ in a long lie‑in and a huge breakfast.
 Describe how you like to relax after a busy week.
 （中文说明：口语 Part 1／2 休闲题——用 `indulge in ...` 说出你「明知该克制却仍会放纵」的那件事）
 > 💡 Use "indulge in ..." and "a guilty indulgence" once each.
-> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——一顿接一顿的家庭聚餐：I **indulged** myself with one family dinner after another。
+> 📎 库内实作（原素材）：原 `speaking/part2/3.md`（现 `speaking/part2/experience_3.md`；2026-09-30 已整体替换为新故事）——一顿接一顿的家庭聚餐：I **indulged** myself with one family dinner after another。（新素材里没有该词的落点，此行保留作历史记录，不再挂链接）
 ### 3. Writing scenario
 Write one Task‑2 sentence on whether advertising persuades people to buy things they do not need.
 （中文说明：大作文写一句话，论述广告是否说服人们购买并不需要的东西）

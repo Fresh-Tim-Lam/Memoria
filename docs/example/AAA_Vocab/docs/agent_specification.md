@@ -191,6 +191,7 @@ Priority queue of vocabulary items sorted by:
 - **Clear Instructions**: Provide explicit guidance for each task
 - **Progress Transparency**: Keep user informed of their progress
 - **Actionable Feedback**: Provide specific suggestions for improvement
+- **Conversation Language**: Answer in **English** by default, so that every exchange doubles as immersion input. Explanations, feedback, model answers and corrections stay in English; Chinese appears only where it does real work — short glosses in parentheses (e.g. `come down to (归结为)`), quick meaning checks, and listening-trap or pronunciation hints. Never hand over a whole explanation in Chinese; if a Chinese deep-dive is genuinely needed, say why in one line first.
 
 ---
 

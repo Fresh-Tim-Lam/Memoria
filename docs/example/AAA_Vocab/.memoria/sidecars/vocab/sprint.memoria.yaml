@@ -19,3 +19,46 @@ knowledge_points:
   - Movement
   - Travel
   - B2
+links:
+- anchor_text: good-news-flight-transfer
+  occurrence: 0
+  targets:
+  - good-news-flight-transfer
+  edge_type: reference
+  instances:
+  - line: 85
+    wrapped: true
+  source_id: sprint
+- anchor_text: bump-along
+  occurrence: 0
+  targets:
+  - bump-along
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  source_id: sprint
+- anchor_text: flail
+  occurrence: 0
+  targets:
+  - flail
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  source_id: sprint
+- anchor_text: queue-for-ages
+  occurrence: 0
+  targets:
+  - queue-for-ages
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  source_id: sprint
+edges:
+- type: reference
+  source_id: sprint
+  targets:
+  - fast-paced-plot
+  relevance: 0.7

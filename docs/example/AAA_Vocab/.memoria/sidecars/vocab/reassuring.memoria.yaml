@@ -19,3 +19,57 @@ knowledge_points:
   - Emotion
   - Reassurance
   - B2
+links:
+- anchor_text: promising
+  occurrence: 0
+  targets:
+  - promising
+  edge_type: reference
+  instances:
+  - line: 43
+    wrapped: true
+  - line: 95
+    wrapped: true
+  - line: 109
+    wrapped: true
+  - line: 132
+    wrapped: true
+  source_id: reassuring
+- anchor_text: favourable
+  occurrence: 0
+  targets:
+  - favourable
+  edge_type: reference
+  instances:
+  - line: 109
+    wrapped: true
+  source_id: reassuring
+- anchor_text: troubled
+  occurrence: 0
+  targets:
+  - troubled
+  edge_type: reference
+  instances:
+  - line: 109
+    wrapped: true
+  source_id: reassuring
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 109
+    wrapped: true
+  - line: 132
+    wrapped: true
+  source_id: reassuring
+- anchor_text: holiday-plan-derailed
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 126
+    wrapped: true
+  source_id: reassuring

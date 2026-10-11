@@ -153,7 +153,7 @@ Without proper safety equipment, the descent became __________ and the guides de
 - where you were ｜ what happened ｜ how you dealt with it ｜ what you learned from it
 （中文说明：口语 Part 2，按课件的 **DANGER → ACTION → RESULT** 三槽位组织）
 > 💡 在 **DANGER** 槽位用上 "perilous"；再用一个 [[lush]] 里的景色词做反差。
-> 📎 库内实作：`speaking/part2/2.md`（[[rafting-whirlpool-rescue]]）——本话题（Direction 2）的三槽位示范作答。
+> 📎 库内实作：`speaking/part2/experience_2.md`（[[rafting-whirlpool-rescue]]）——本话题（Direction 2）的三槽位示范作答。
 ### 3. Writing scenario
 Write one Task‑2 sentence about the risks of relying on artificial intelligence in critical decisions.
 （中文说明：大作文写一句话，论述在关键决策中依赖人工智能的风险）

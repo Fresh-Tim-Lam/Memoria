@@ -252,6 +252,9 @@ adjusted_interval = base_interval / penalty_factor
 
 ## 4. Data Persistence Specifications
 
+> ⚠ **历史设计稿，从未实现（2026-10-10 经 Memoria 开发者裁定）**：本节描述的 `.memoria/learning_records/*.yaml`、`progress_summary.json`、`mastery_level`（0-5）在实现中**均不存在**，**不要照本节创建文件**。
+> **权威**：卡片定义存 `.memoria/agent/review/cards.json`、复习进度存 `.memoria/agent/review/progress.json`、错题存 `.memoria/agent/review/errors.json`；算法为 **FSRS-5**（`.memoria/agent/fsrs.py`）。契约见 `docs/error_log_format.md`。
+
 ### 4.1 Storage Location
 
 **DP-LOC-001**: All learning data MUST be stored in `.memoria/learning_records/` directory.

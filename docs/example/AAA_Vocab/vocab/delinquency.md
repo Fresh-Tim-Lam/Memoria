@@ -31,6 +31,7 @@
 - **强度标记 Strength**: formal、偏学术；违法程度**轻于** `crime`
 - **语域三档 Register ladder**: 日常 `getting into trouble` → 通用 `youth crime` → 正式／学术 **`juvenile delinquency`**
 - **来源 Source**: 用户本次输出句 ＋ Oxford / Cambridge（库内语料仅 1 条含 delinquent 的条目注）
+- **🔗 相关表达**: 想表达「这个议题至今让人费解」，口语可用 [[a-real-head-scratcher]]；正式立论句改用 a vexing question（别在正式写作里用口语调侃词）
 ---
 ## 🧩 Word Family & Collocation Matrix
 ### Morphology / Root (memory aid)

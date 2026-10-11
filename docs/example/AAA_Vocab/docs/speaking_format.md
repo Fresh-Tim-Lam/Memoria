@@ -24,7 +24,7 @@
 | 2 | 元信息引言块 | `**来源**` / `**素材**` / `**题型**` / `**说明**` 四行 |
 | 3 | `## 📋 题目 / Task` | 题干 + 4 条 `You should say` + 课件 Useful language 表 |
 | 4 | `## 🧭 三/四槽位规划 / Planning Frame` | 课件框架（如 SETTING→CHANGE→FEELING、DANGER→ACTION→RESULT、SETTING→CHANGE→ACTION→RESULT）+ 关键英文词块 + 四问覆盖检查 |
-| 5 | `## 🗣️ 固定开场模板 / Fixed Opening` | 老师给的模板原文（代码块）+ 本故事填空版 + 语法开关说明 + **≥ 2 个备用开场句式**（如 `if I had to pick one that stands out, it would be ...`、`the most ... one was ...`） |
+| 5 | `## 🗣️ 固定开场模板 / Fixed Opening` | 老师给的模板原文（代码块）+ 本故事填空版 + 语法开关说明 + **≥ 2 个备用开场句式**（如 `if I had to pick one that stands out, it would be ...`、`the most ... one was ...`）+ **`such as` 后举 2–3 个例子**（都是名词短语；只举一个撑不起「不止一次」的语气） |
 | 6 | `## ✍️ 示范作答 / Model Answer` | 升级版，**约 230–260 词**、对应 1′40″–2′00″（按实考语速 120–130 wpm 反推：2 分钟能说的上限 ≈ 240–260 词，**固定开场模板独占 55–60 词**，正文四问只剩 175–190 词的额度，所以正文要精炼到「一个转折点＋一个收尾感想」）；**题干原词一律换成同义表达**（题干写 `good news`，答案里就不许再出现 `good news`——照抄题干**很扣分**，开场与收尾呼应同样适用） |
 | 7 | `## 🔁 平实版对照 / Say It in Plain English` | **必须有**，见 §3 |
 | 8 | `## 🔍 高分句` | 4 条，句子上高亮、后面讲它为什么好 |
@@ -59,9 +59,9 @@
 
 ## 5. 命名 / KP / 挂链
 
-- 路径：`speaking/part<1|2|3>/<序号>.md`（同一题型内按建立顺序递增）。
+- 路径：`speaking/part<1|2|3>/<类型>_<序号>.md` —— `<类型>` 为**题型类**英文 slug（如 `experience` ＝ 经历／事件题），`<序号>` 沿用同题型内的建立顺序；例 `speaking/part2/experience_1.md`。⚠️ 分隔符用**下划线**，是本目录对 kebab-case 命名规则的**例外**（见 `docs/directory_scope.md` §4）。
 - KP：全篇一个知识点；`id` = 内容 slug（如 `good-news-flight-transfer`、`rafting-whirlpool-rescue`）；`name` = H1 逐字；`range` = 整篇首行到末行。
-- 挂链：示范作答里的升级词条**都要**挂知识点跳转（双方括号包住词条 id，语法见 `.memoria/agent/kb-spec.zh-CN.md` §4）；词条侧也补一条「📎 库内实作：`speaking/partN/M.md`」反向指引。
+- 挂链：示范作答里的升级词条**都要**挂知识点跳转（双方括号包住词条 id，语法见 `.memoria/agent/kb-spec.zh-CN.md` §4）；词条侧也补一条「📎 库内实作：`speaking/partN/<类型>_<序号>.md`」反向指引。
 - 平实版一节里**不**挂链（见 §3.6）。
 
 ## 6. 样式
@@ -77,12 +77,15 @@
 5. H1 = sidecar `name`？KP id 全库唯一？升级词条都挂了跳转？词条侧有没有反向指引？
 6. 样式用量是否合规（`docs/style_format.md` §4）？
 7. 交付后提示用户在 Memoria 执行「构建」「检查」。
+8. 固定开场模板与示范作答里的 `such as` 是否**举了 2–3 个例子**（且都是名词短语）？平实版对照 ① 是否同步改了？
 
 ## 8. 变更记录
 
 | 日期 | 变更 |
 |---|---|
-| 2026-09-23 | 初版；由用户「很多专有词汇都不会……写在对应句子后面——after all, I should use the words I know to express myself」驱动建立；同时给 `speaking/part2/1.md`、`speaking/part2/2.md` 补「逐句平实版 + 难词速查」 |
+| 2026-09-23 | 初版；由用户「很多专有词汇都不会……写在对应句子后面——after all, I should use the words I know to express myself」驱动建立；同时给 `speaking/part2/experience_1.md`、`speaking/part2/experience_2.md` 补「逐句平实版 + 难词速查」 |
 | 2026-09-23 | 补两条硬要求：① 示范作答**不得照抄题干原词**（题干 key words 必须换同义说法）；② 固定开场模板须给 **≥ 2 个备用句式**。由用户指正驱动：`good news` 原词照搬扣分，并给出 `if I had to pick one that stands out …` / `the most … one` 两个版本 |
-| 2026-09-23 | 第 4 段标题放宽为 `## 🧭 三/四槽位规划 / Planning Frame`（槽位数以课件为准，如本题 SETTING→CHANGE→ACTION→RESULT 为四槽位）；新建 `speaking/part2/3.md`（首次按新规执行：题干原词换同义说法、开场给备用句式） |
-| 2026-09-24 | 示范作答长度下调：**`290–330 词` → `230–260 词`**（对应 1′40″–2′00″）。由用户「2 分钟根本说不完这么多」驱动——按实考语速 120–130 wpm 反推，2 分钟上限约 240–260 词，而固定开场模板独占 55–60 词、正文只剩 175–190 词；已同步压缩 `speaking/part2/1.md`（约 245 词）、`2.md`（约 250 词）、`3.md`（约 260 词）三篇的示范作答与逐句平实版 |
+| 2026-09-23 | 第 4 段标题放宽为 `## 🧭 三/四槽位规划 / Planning Frame`（槽位数以课件为准，如本题 SETTING→CHANGE→ACTION→RESULT 为四槽位）；新建 `speaking/part2/experience_3.md`（首次按新规执行：题干原词换同义说法、开场给备用句式） |
+| 2026-09-24 | 示范作答长度下调：**`290–330 词` → `230–260 词`**（对应 1′40″–2′00″）。由用户「2 分钟根本说不完这么多」驱动——按实考语速 120–130 wpm 反推，2 分钟上限约 240–260 词，而固定开场模板独占 55–60 词、正文只剩 175–190 词；已同步压缩 `speaking/part2/experience_1.md`（约 245 词）、`experience_2.md`（约 250 词）、`experience_3.md`（约 260 词）三篇的示范作答与逐句平实版 |
+| 2026-09-30 | 文件命名改版：`speaking/part2/` 三篇由 `1.md`／`2.md`／`3.md` 改为 `类型_序号` 式命名 —— `experience_1.md`（经历题·好消息／赶转机）、`experience_2.md`（经历题·漂流翻船）、`experience_3.md`（经历题·计划被打乱）；§5 与 `docs/directory_scope.md` §4 同步补命名约定。由用户「划分主题，文件用『类型_x』格式命名，方便我定位」驱动 |
+| 2026-09-30 | **`such as` 一律举 2–3 个例子**（此前各篇只写 1 个）：§2 第 5 段补要求、§7 自检加一条；`speaking/part2/experience_1 / 2 / 3.md` 的填空版、示范作答、平实版对照 ① 同步改写（例 `such as missing a bus, or having a flight delayed`）。由用户「such 都要举2-3个例子」驱动。⚠️ 副作用：三篇示范作答各增 2–6 词，均已顶破 §2 第 6 段的 230–260 词上限，待压缩正文虚词 |

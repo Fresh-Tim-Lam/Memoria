@@ -78,6 +78,7 @@
 | IELTS example (English + 中文翻译) | We spent the afternoon on a scorching beach.（我们在烈日灼人的海滩上待了一下午。） | The classroom was sweltering, so nobody could concentrate.（教室闷热难耐，谁都无法集中注意力。） | Blistering heat has hit southern Europe this summer.（今年夏天酷热袭击了南欧。） |
 
 > 🔗 **关联**：`scorching` 说天气**热到烤人**，`temperatures plummeted`（[[plummet]]）说温度**骤降**——天气话题里的两极；若写“暑热中人／机构苦苦支撑”，可与 `flailing`（[[flail]]）同框：*Farmers were left flailing in the scorching heat.*（农民在酷热中徒劳挣扎。）
+> 🔗 **选词地图**：本词是「描述『热』选词地图」（[[describing-heat]]）里**① 天气·干晒烤**轴的首选词；那张地图把干热／闷热／人觉得热／物体烫四轴分开，并交代 `scorching` 何时**该换成 `sweltering`**。
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

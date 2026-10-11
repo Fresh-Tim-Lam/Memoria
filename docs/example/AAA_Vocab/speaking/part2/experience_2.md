@@ -2,7 +2,7 @@
 
 > **来源**：课件 PPT「PRACTICE TOPIC 02 · Direction 2: a dangerous or difficult situation」——题干、4 条提示、DANGER / ACTION / RESULT 规划框架与关键词（[[perilous]] situation ／ remain calm, assess the risk ／ underestimate …）；OCR 全文见 `docs/ref/ppt/ocr.md`（幻灯片 8），原图 `docs/ref/ppt/f4a919e4a1ba026421a65e1596083317.jpg`。
 > **素材**：用户本人口述（2026-09-23）——在贵州与朋友玩漂流，行程里安排的那一段当时以为很普通（至少对比贵州其他漂流来说）；在一条很宽的河上漂，朋友觉得不刺激没意思，用木棍撑到河道中的石头上、让水流冲他们的橡皮艇；随后碰到一块更大的石头，那里形成强烈水涡，撑不出去，船就翻了；朋友被船盖住，用户被水冲到河的中央、漂到很远；万幸救生员跳到一个橡皮艇上站着拼命撑木棍，伸出木棍把用户救上来，随后又让用户坐在橡皮艇上、自己游上岸；剩下的一段路很害怕，好在后面没有石头、水流很平缓，最终到达终点；朋友激动到哭，说以后都不会玩这种，两人学到敬畏生命。
-> **题型**：Speaking Part 2 经历题（difficult / dangerous situation）｜目标时长 1′40″–2′00″（约 250 词 @ 120–130 wpm）｜示范作答约 250 词。
+> **题型**：Speaking Part 2 经历题（difficult / dangerous situation）｜目标时长 1′40″–2′00″（约 230–260 词 @ 120–130 wpm）｜示范作答约 264 词（⚠ 比 260 词上限多 4 词，待压缩）（全篇第一人称叙述）。
 > **说明**：情节按用户口述逐条保留；英文为示范转写（非用户原文）；示范作答中的升级词块按库内词条组织，对应关系见「词块与升级」。
 
 ---
@@ -33,7 +33,7 @@ You should say:
 
 | 槽位 | 本故事对应内容 | 关键英文词块 |
 |:---|:---|:---|
-| **DANGER** | 贵州一条很宽的河上漂流；行程里安排的这一段当时以为很普通；朋友嫌不刺激，用木棍把船撑到河道中的石头上让水流冲船；随后撞上更大的石头，那里形成强烈水涡，撑不出去，船翻；朋友被船盖住，我被冲到河中央、漂到很远 | a very wide river / a wooden pole / a rock in the middle of the river / a powerful whirlpool / we couldn't pole our way out of it / the raft flipped over / trapped underneath the raft / carried a long way downstream |
+| **DANGER** | 贵州一条很宽的河上漂流；**我**订的时候以为这一段很普通（ordinary, gentle）；朋友嫌不刺激，用木棍把船撑到河道中的石头上让水流冲船；**我**当时没觉得危险（It did not feel dangerous at first）；随后撞上更大的石头，水涡把我们困住，撑不出去，船翻；朋友被船盖住，**我**被冲到河中央、漂到很远 | a very wide river / a wooden pole / I had booked it as an ordinary, gentle trip / It did not feel dangerous at first / a rock in the middle of the river / a whirlpool we could not pole out of / the raft flipped over / trapped underneath the raft / carried a long way downstream |
 | **ACTION** | 我尽量保持冷静、把头顶在水面上，不跟水流硬抗；救生员跳到橡皮艇上站起来拼命撑木棍，靠近后伸出木棍把我拉上来；随后他让我坐在艇上，自己游上岸 | stay calm / keep my head above the water / the lifeguard poled desperately / he held out his pole / he pulled me up / he left me on the raft and swam to the bank himself |
 | **RESULT** | 剩下的一段很害怕，但没有石头、水流平缓，最终到达终点；朋友激动到哭，说以后都不会玩这种；两人学到敬畏生命 | no more rocks / the water stayed calm / made it to the finishing point / burst into tears / never again / respect life |
 
@@ -46,16 +46,16 @@ You should say:
 > 老师给的固定开头，**答题第一句就得说它**；`...` 处按自己的素材填空：
 
 ```text
-Well, before talking about this topic, I would like to say there are/were ... , such as ... . However, if I had to choose one / pick one, I would say that is/was ...  /  I would definitely go for ...
+Well, before talking about this topic, I would like to say there are/were ... , such as ... . However, if I had to / were to choose one / pick one, I would say that is/was ...  /  I would definitely go for ...
 ```
 
 **本故事的填空版**：
 
-Well, before talking about this topic, I would like to say there **have been a few risky moments in my life**, such as **getting caught in a sudden storm, or getting lost with my family in a foreign country**. However, **if I had to pick one, I would say that was the time my friend and I went rafting in Guizhou and our raft flipped over in a whirlpool.**
+Well, before talking about this topic, I would like to say there **have been a few risky moments in my life**, such as **getting caught in a sudden storm**, or **getting lost in the mountains**. However, **if I had to pick one, I would say that was the time my friend and I went rafting in Guizhou and our raft flipped over in a whirlpool.**
 
-<!-- ⚠ 来源待核实：`such as` 后的两个备选经历（a sudden storm ／ getting lost in the mountains）是按课件词卡 BEST SITUATION 列表（a storm ／ getting lost ／ extreme weather）填的示例，非用户亲历；实际作答请换成自己的经历 -->
+<!-- ⚠ 来源待核实：`such as` 后的两个例子（a sudden storm ／ getting lost in the mountains）是按课件词卡 BEST SITUATION 列表（a storm ／ getting lost ／ extreme weather）填的示例，非用户亲历；实际作答请换成自己的经历 -->
 
-> 💡 模板的语法开关：素材讲**一般情况／多个例子** → `there are` + `that is`；素材讲**一件过去的事** → `there were` + `that was`。本故事前半句用 `there have been`（到现在为止的经历），结尾落在一件具体的事上，所以用 `that was`。`such as` 后面只接**名词短语**，不要接完整句子。
+> 💡 模板的语法开关：素材讲**一般情况／多个例子** → `there are` + `that is`；素材讲**一件过去的事** → `there were` + `that was`。本故事前半句用 `there have been`（到现在为止的经历），结尾落在一件具体的事上，所以用 `that was`。`such as` 后面只接**名词短语**，不要接完整句子；**例子举 2–3 个**——前面说的是 `a few risky moments`，只举一个撑不起来。
 
 ---
 
@@ -63,15 +63,17 @@ Well, before talking about this topic, I would like to say there **have been a f
 
 Well, before talking about this topic, I would like to say there have been a few risky moments in my life, such as getting caught in a sudden storm, or getting lost in the mountains. However, if I had to pick one, I would say that was the time my friend and I went rafting in Guizhou and our raft flipped over in a whirlpool.
 
-It happened on a very wide river in Guizhou. We had booked it as an ordinary, gentle trip, but my friend thought it was too tame and far too boring.
+It happened on a very wide river in Guizhou. I had booked it as an ordinary, gentle trip, but my friend thought it was too tame and far too boring — and I let him do it.
 
-So he poled our raft onto a rock in the middle of the river, so that the current would slam into us. But then we hit a much bigger rock, where the water had carved out a powerful whirlpool, and we could not pole our way out. The raft flipped over, my friend was trapped underneath it, and I was [[hurled]] into the middle of the river and carried a long way downstream.
+So he poled our raft onto a rock in the middle of the river so the current would slam into us. It did not feel dangerous at first — then we hit a much bigger rock, and we could not pole out of the whirlpool behind it. The raft flipped over, my friend was trapped underneath it, and I was [[hurled]] into the middle of the river and carried a long way downstream.
 
-We found ourselves in a genuinely [[perilous]] situation. All I could do was stay calm and keep my head above the water. What saved us was a lifeguard: he poled his raft over and pulled me out of the water, which was deeply [[reassuring]].
+We were in a [[perilous]] situation. All I could do was stay calm and keep my head above the water. What saved us was a lifeguard: he poled his raft over and pulled me out of the water, which was deeply [[reassuring]].
 
 The rest of the ride was calmer, and I finally made it to the finishing point. My friend burst into tears and said he would never do anything like that again.
 
-Terrifying though it was, it taught me something I have never forgotten: you have to respect the water, and respect life itself.
+[[concessive-inversion|Terrifying though it was]], it taught me something I have never forgotten: respect the water, respect life itself.
+
+> 💡 **视角提示（第一人称）**：老师爱听的是「我」在经历，而不是「事情」在发生。凡是能让「我」去经历的，就别让物当主语说完整句——❌ `We had booked it as an ordinary, gentle trip.` → ✅ `I had booked it as an ordinary, gentle trip … and I let him do it.`（把「我当时没拦」也交代出来）；❌ `But then we hit a much bigger rock.` → ✅ `It did not feel dangerous at first — then we hit a much bigger rock.`（先给「我」的判断，再翻盘）。
 
 <!-- ⚠ 来源待核实：ACTION 槽位里「我尽量保持冷静、把头顶在水面上」是用户口述未明说的部分，示范作答按课件的 ACTION 槽位（remain calm ／ assess the risk）合理复原；请按当时真实情况改写。其余情节均逐条对应口述原文 -->
 
@@ -86,7 +88,7 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 
 **①** Well, before talking about this topic, I would like to say there have been a few risky moments in my life, such as getting caught in a sudden storm, or getting lost in the mountains.
 
-↩︎ **平实版**：原样照说即可——这是老师给的固定模板，本身就是常见词。
+↩︎ **平实版**：原样照说即可——这是老师给的固定模板，本身就是常见词（`such as` 后举两三个例子：只说一个撑不起前面的 `a few risky moments`，接名词短语、不接句子）。
 
 **②** However, if I had to pick one, I would say that was the time my friend and I went rafting in Guizhou and our raft flipped over in a whirlpool.
 
@@ -96,25 +98,25 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 
 ↩︎ **平实版**：原样说（这句没有难词）。
 
-**④** We had booked it as an ordinary, gentle trip, but my friend thought it was too tame and far too boring.
+**④** I had booked it as an ordinary, gentle trip, but my friend thought it was too tame and far too boring — and I let him do it.
 
-↩︎ **平实版**：We booked it as a normal, easy trip, but my friend thought it was too easy and much too boring.（`ordinary, gentle` → `normal, easy`；`too tame` → `too easy`；`far` 这类加强词不会用就**直接删掉**，句子照样成立）
+↩︎ **平实版**：I booked it as a normal, easy trip, but my friend thought it was too easy and much too boring, and I did not say no.（`I had booked it` 这个第一人称的主语留着；`I let him do it` 是「我当时没拦」的自我交代，换成 `I did not say no` 也行；`far` 这类加强词不会用就**直接删掉**，句子照样成立）
 
-**⑤** So he poled our raft onto a rock in the middle of the river, so that the current would slam into us.
+**⑤** So he poled our raft onto a rock in the middle of the river so the current would slam into us.
 
 ↩︎ **平实版**：So he pushed our boat onto a rock in the middle of the river with a long stick, so that the water would hit us hard.（`poled` → `pushed … with a long stick`；`the current would slam into us` → `the water would hit us hard`）
 
-**⑥** But then we hit a much bigger rock, where the water had carved out a powerful whirlpool, and we could not pole our way out.
+**⑥** It did not feel dangerous at first — then we hit a much bigger rock, and we could not pole out of the whirlpool behind it.
 
-↩︎ **平实版**：But then we hit a bigger rock. The water there turned round and round very fast, and we could not push our boat out of it with the stick.（`carved out a powerful whirlpool` → `turned round and round very fast`；`pole our way out` → `push our boat out with the stick`）
+↩︎ **平实版**：At first I did not think it was dangerous — then we hit a bigger rock. The water there turned round and round very fast, and we could not push our boat out of it with the stick.（`It did not feel dangerous at first` → `At first I did not think it was dangerous`；`the whirlpool behind it` → `the water that turned round and round very fast`；`pole out of` → `push our boat out with the stick`）
 
 **⑦** The raft flipped over, my friend was trapped underneath it, and I was hurled into the middle of the river and carried a long way downstream.
 
 ↩︎ **平实版**：Our boat turned over, my friend was under it, and I was thrown out into the middle of the river and carried a long way away.（`flipped over` → `turned over`；`trapped underneath it` → `under it`；`was hurled` → `was thrown`；`downstream` → `away`／`with the water`）
 
-**⑧** We found ourselves in a genuinely perilous situation.
+**⑧** We were in a perilous situation.
 
-↩︎ **平实版**：We were in a really dangerous situation.（`found ourselves in` → `were in`；`genuinely perilous` → `really dangerous`）
+↩︎ **平实版**：We were in a really dangerous situation.（`perilous` → `really dangerous`；`We were in` 这个第一人称的主语留着——「我们身处险境」比「险境出现了」更像人在讲故事）
 
 **⑨** All I could do was stay calm and keep my head above the water.
 
@@ -132,7 +134,7 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 
 ↩︎ **平实版**：My friend cried and said he would never do anything like that again.（`burst into tears` → `cried`／`started crying`）
 
-**⑬** Terrifying though it was, it taught me something I have never forgotten: you have to respect the water, and respect life itself.
+**⑬** Terrifying though it was, it taught me something I have never forgotten: respect the water, respect life itself.
 
 ↩︎ **平实版**：It was very frightening, but it taught me something I will never forget: you have to respect the water, and respect life itself.（让步倒装 `Terrifying though it was` → 平铺 `It was very frightening, but …`）
 
@@ -151,14 +153,13 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 | be trapped underneath（被压在船下） | be under the boat |
 | be hurled out（被猛甩出去） | be thrown out |
 | downstream（往下游漂） | far away / with the water |
-| pole one's way out（撑出去） | push the boat out with the stick |
+| pole out of sth（从……里撑出去） | push the boat out with the stick |
 | tame（不刺激） | too easy / not exciting |
 | remain calm（保持冷静） | stay calm |
-| assess the risk（先看危险有多大） | think about how dangerous it is |
-| underestimate（低估） | think it is less dangerous than it really is |
+| assess the risk（课件词：先看危险有多大） | think about how dangerous it is |
+| underestimate（课件词：低估） | think it is less dangerous than it really is |
 | reassuring（让人安心） | making you feel safe / better |
 | terrified（非常害怕） | very scared |
-| overwhelmed（情绪冲垮） | so frightened / so excited that … |
 | burst into tears（落泪） | cried |
 | finishing point（终点） | the end (of the trip) |
 | respect life（敬畏生命） | understand that life is precious |
@@ -167,7 +168,7 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 
 ## 🔍 高分句（背下来就能用）
 
-1. [[\h|we could not pole our way out]] —— 用 `pole one's way out` 说「撑不出去」，比 `we couldn't move` 具体得多，`pole` 也把「用杆撑船」这个画面钉住。
+1. [[\h|we could not pole out of the whirlpool behind it]] —— 用 `pole out` 说「撑不出去」，比 `we couldn't move` 具体得多，`pole` 把「用杆撑船」这个画面钉住，`behind it` 又顺手交代了漩涡在大石后面。
 2. [[\h|the raft flipped over, my friend was trapped underneath it]] —— 两个动词短语把事故讲清：`flip over`（翻）＋ `be trapped underneath`（被压在下面）；`underneath` 比 `under` 多一层「在船底、看不见人」的画面感。
 3. [[\h|he poled his raft over and pulled me out of the water]] —— 救援动作有**顺序感**（先撑过来、再拉人），`out of the water` 收尾让画面完整。
 4. [[\h|Terrifying though it was, it taught me something I have never forgotten]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]），把刚才的惊险一句话收成感想，是 Part 2 最划算的加分句型。
@@ -180,7 +181,7 @@ Terrifying though it was, it taught me something I have never forgotten: you hav
 
 | 课件写的 | 读法要点 | 在答案里怎么用 |
 |:---|:---|:---|
-| **perilous situation** | /ˈperələs/，重音在 **PER-**，中间音节 /ə/ 几乎被吞掉 | We found ourselves in a **perilous situation** when the raft flipped over.（DANGER 定调句） |
+| **perilous situation** | /ˈperələs/，重音在 **PER-**，中间音节 /ə/ 几乎被吞掉 | We were in a **perilous situation** the moment the raft flipped over.（DANGER 定调句） |
 | **remain calm** | /rɪˈmeɪn kɑːm/，重音落在 calm | I tried to **remain calm** and keep my head above the water.（ACTION 的第一句） |
 | **assess the risk** | /əˈses ðə rɪsk/，重音落 **‑SESS** | Nobody stopped to **assess the risk** — that is how the whole thing started.（反思句） |
 | **underestimate** | /ˌʌndərˈestɪmeɪt/，重音落 **‑ES-** | The experience taught me never to **underestimate** the power of a river.（RESULT 定调句） |

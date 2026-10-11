@@ -58,6 +58,8 @@ For each sense:
 | verb | ... | 中文 | Speaking/Writing/Both |
 | noun | ... | 中文 | ... |
 | adj | ... | 中文 | ... |
+### ⚠️ 常见误用（有实据才写；没实据整节省略）
+- ✗ `[错误写法]` —— [错因一句]（出处：[批改稿行号 / `err-*` / 材料行号]）
 ---
 ## ⚔️ Confusion Matrix (with Chinese explanations)
 Compare with 1–2 near‑synonyms.
@@ -93,3 +95,15 @@ Compare with 1–2 near‑synonyms.
 ---
 **🔑 Answer Key**
 - Answer: [English word] (中文)
+---
+# ⚠️ 常见误用：收录口径（硬性）
+
+**只写有实据的**（满足其一即可）：
+1. 用户**实际犯过**——能指到 `writing/**`、`speaking/**` 的批改行号，或 `.memoria/agent/review/errors.json` 里的 `err-*` id；
+2. 材料 / 课件 / 词典**明写过**——能指到 `data/sources/**`、`docs/ref/**` 的行号。
+
+**不写**：用户没犯过、材料里也没有的臆造误用（如「考生常误写成 ×××」这类自撰条目）；为凑数而写的同义重复；拿不准的。
+
+**没有实据时整节直接省略**——不留空标题、不写「暂无」。
+
+**与错题本分工**：只在用户个人身上出现过、且对该词无普遍警示价值的错误 → 记 `docs/error_log_format.md` 的错题本，不写进词条。

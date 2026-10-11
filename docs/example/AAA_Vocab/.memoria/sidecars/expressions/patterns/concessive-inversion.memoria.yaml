@@ -10,7 +10,7 @@ knowledge_points:
     end:
       snippet: '- **Word-weaving sample**: Perilous though the route was, the trip
         turned out to'
-      line_hint: 115
+      line_hint: 116
   tags:
   - 句式
   - 让步
@@ -25,7 +25,7 @@ links:
   - rewarding
   edge_type: reference
   instances:
-  - line: 102
+  - line: 104
     wrapped: true
   source_id: concessive-inversion
 - anchor_text: perilous
@@ -34,6 +34,39 @@ links:
   - perilous
   edge_type: reference
   instances:
-  - line: 102
+  - line: 104
     wrapped: true
   source_id: concessive-inversion
+- anchor_text: holiday-plan-derailed
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 99
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: missed-train-plan-change
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 99
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: on the fence
+  occurrence: 0
+  targets:
+  - on-the-fence
+  edge_type: reference
+  target_edges:
+    on-the-fence:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 42
+    wrapped: true
+  excluded: []
+  pool:
+  - on-the-fence

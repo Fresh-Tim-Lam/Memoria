@@ -32,7 +32,7 @@
 
 | 语义 | 本库写法 | 现有落点 |
 |---|---|---|
-| 重点 / 该回看 | `[[\h\|…]]` | `speaking/part2/1.md:68-71`、`writing/part2/1.md:47-50` |
+| 重点 / 该回看 | `[[\h\|…]]` | `speaking/part2/experience_1.md:68-71`、`writing/part2/1.md:47-50` |
 | 建议替换 / 正确写法 | `[[\h:#14532d:#a7f3d0\|…]]` | `writing/part2/1.md:35` 起（旧写法 `[[\h:green\|…]]` 只给底色、字色继承主题，深色主题下读不清） |
 | 例句焦点表达 | `[[\c:blue\|…]]` | `expressions/phrases/queue-for-ages.md:16`、`:53` |
 | 待核实 / 待办 / 未确认 | `[[\c:red\|…]]` | `vocab/heritage.md:73` |

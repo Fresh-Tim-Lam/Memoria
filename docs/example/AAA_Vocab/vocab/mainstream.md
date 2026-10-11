@@ -85,6 +85,8 @@
 | Formality (English + 中文) | neutral（中性，口语书面皆可） | formal（正式，学术与新闻高频） | neutral‑formal（中性偏正式） |
 | Typical collocates (English + 中文) | mainstream media / culture；enter the mainstream（主流媒体、文化；进入主流） | prevailing view / opinion / wind（主流观点；盛行风） | conventional wisdom / method / family（传统观念、常规方法、传统家庭） |
 | IELTS example (English + 中文翻译) | Electric vehicles have entered the mainstream.（电动车已进入主流。） | The prevailing view is that education should be free.（当前主流观点是教育应当免费。） | Conventional teaching methods are being replaced by online learning.（传统教学方法正被线上学习取代。） |
+
+> 🔗 **关联**：媒体语境里，[[speculation]] 最典型的形式就是它与 `mainstream` 同框：*mainstream media* 加本词构成的搭配；写「未经证实的报道」时，可从「谁在猜」（本词）与「谁在传」（rumour）两个角度切入。
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

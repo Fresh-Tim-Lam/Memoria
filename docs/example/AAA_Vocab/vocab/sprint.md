@@ -29,7 +29,7 @@
 - **∇ Avoid**: 长距离慢跑、日常散步一律用 `jog` / `walk`；抽象“高速发展”用 `race ahead`，不要套 sprint。
 - **强度标记 Strength**: **neutral**（中性）—— 只描述“快”，不含褒贬；要慌张感用 `dash madly` / `bolt`。
 - **语域三档 Register ladder**: 日常 `run` → 中性有力 `sprint` → 文学 `bolt` / `dash`
-- **来源 Source**: 库内口语素材 [`speaking/part2/1.md`](speaking/part2/1.md) 第 58 行的原句 + 词典释义
+- **来源 Source**: 库内口语素材 [`speaking/part2/experience_1.md`](speaking/part2/experience_1.md) 第 58 行的原句 + 词典释义
 ---
 ## 🧩 Word Family & Collocation Matrix
 ### Morphology / Root (memory aid)

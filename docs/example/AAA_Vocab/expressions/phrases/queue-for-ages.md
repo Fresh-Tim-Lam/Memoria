@@ -22,6 +22,7 @@
 > ③ spend ages + V-ing —— I spent ages queuing for tickets.（我花了好久排队买票。）
 > ⚠️ 介词与 such as 后面必须接 **-ing**：✗ after queue for ages ／ ✗ such as queue for ages
 > ⚠️ for ages 属英式口语；正式书面（Task 1/2）改用 for a long time ／ for hours。
+> 🔗 按**词**查：「把票搞定」这半句 `get sth sorted out` 收在 [[get]]（以 `get` 为轴的词组总表）。
 ---
 ## 🧩 Word Family & Collocation Matrix
 ### Morphology / Root (memory aid)

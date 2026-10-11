@@ -39,9 +39,10 @@
   - **别在同一个分句里重复说「难」**：~~hard though experiencing new things is hard~~ —— `hard though ...` 已经说了「难」，后面直接接结果即可（用户原句正是此误，订正版为 `Hard though the experience may be, it is ultimately rewarding.`）。
   - **别与 although 混搭**：~~Hard although it was~~。
   - **非正式闲聊**：日常口语里 `even though it was hard` 更自然；此句式偏正式 / 书面。
+  - **别把「让步」写成「骑墙」**：让步之后必须落到结论；若你只是想说「我还没拿定主意、两边都不站」，那不是本句式，而是 [[on the fence]] 这个说法（口语）。
 - **强度标记 Strength**: neutral-formal（偏正式）；Task 2 中属**句型加分项**，一篇用一次足够。
 - **语域三档 Register ladder**: 日常 `even though it was hard` → 正式 `hard though it may be` → 文学 `hard though it be`（虚拟式，极少见）
-- **来源 Source**: 用户输出句与订正版（`vocab/rewarding.md` §5）；∇ Avoid 三条由整理者按常见误用补写。
+- **来源 Source**: 用户输出句与订正版（`vocab/rewarding.md` §5）；∇ Avoid 四条由整理者按常见误用补写。
 
 ---
 
@@ -95,7 +96,7 @@ __________ the journey was, we would do it all over again.
 ### 2. Speaking scenario
 Describe a difficult decision you once made.（口语 Part 2 决定题）
   （中文说明：用一句让步倒装收尾——先摆「难」，再给「为什么值得」）
-> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——把反思收进一句话的收尾：**Frustrating though it was**, it taught me to plan around the time I really have。
+> 📎 库内实作：`speaking/part2/experience_3.md`（[[missed-train-plan-change|holiday-plan-derailed]]）——把反思收进一句话的收尾：**Promising though the timetable looked on paper**, it had no room for anything to go wrong。
 ### 3. Writing scenario
 Write one Task-2 sentence admitting that a policy may be costly, then arguing that it is still worth adopting.
   （中文说明：大作文写一句话——先承认政策可能有代价，再论证仍值得采纳；用 may 让让步显得克制）

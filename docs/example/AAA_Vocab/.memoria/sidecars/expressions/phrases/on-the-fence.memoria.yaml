@@ -1,0 +1,53 @@
+schema_version: 1
+file: expressions/phrases/on-the-fence.md
+knowledge_points:
+- id: on-the-fence
+  name: on the fence
+  range:
+    start:
+      snippet: '# on the fence'
+      line_hint: 1
+    end:
+      snippet: '- Answer: be on the fence about sth（拿不定主意）；sit on the fence（骑墙，多带贬义）'
+      line_hint: 106
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - ActiveVocabulary
+  - UserDefined
+  - Idiom
+  - Chunk
+  - Register
+  - B2
+links:
+- anchor_text: a real head-scratcher
+  occurrence: 0
+  targets:
+  - a-real-head-scratcher
+  edge_type: reference
+  target_edges:
+    a-real-head-scratcher:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 29
+    wrapped: true
+  excluded: []
+  pool:
+  - a-real-head-scratcher
+- anchor_text: speculation
+  occurrence: 0
+  targets:
+  - speculation
+  edge_type: reference
+  target_edges:
+    speculation:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 98
+    wrapped: true
+  excluded: []
+  pool:
+  - speculation

@@ -1,0 +1,150 @@
+schema_version: 1
+file: speaking/part2/experience_1.md
+knowledge_points:
+- id: good-news-flight-transfer
+  name: Describe a time you received some good news
+  range:
+    start:
+      snippet: '# Describe a time you received some good news'
+      line_hint: 1
+    end:
+      snippet: '**🔑 一句话结构速记**：模板开场 → SETTING（和家人旅行归来、没有直飞、晚起飞、只剩 50 分钟）→ CHANGE（拎随身行李、跨航站楼狂奔）→
+        好'
+      line_hint: 220
+  tags:
+  - IELTS
+  - Speaking
+  - Part2
+  - 经历题
+  - 好消息
+  - 旅行
+  - 转机
+links:
+- anchor_text: sprinting
+  occurrence: 0
+  targets:
+  - sprint
+  edge_type: reference
+  target_edges:
+    sprint:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 63
+    wrapped: true
+  excluded: []
+  pool:
+  - sprint
+- anchor_text: bumping along behind
+  occurrence: 0
+  targets:
+  - bump-along
+  edge_type: reference
+  target_edges:
+    bump-along:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 63
+    wrapped: true
+  excluded: []
+  pool:
+  - bump-along
+- anchor_text: queuing for ages
+  occurrence: 0
+  targets:
+  - queue-for-ages
+  edge_type: reference
+  target_edges:
+    queue-for-ages:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - queue-for-ages
+  instances:
+  - line: 46
+    wrapped: true
+  - line: 59
+    wrapped: true
+  excluded: []
+- anchor_text: Perilous
+  occurrence: 0
+  targets: []
+  edge_type: reference
+  instances:
+  - line: 67
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 150
+    wrapped: true
+  - line: 177
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 67
+    wrapped: true
+  - line: 172
+    wrapped: true
+  - line: 209
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: reassuring
+  occurrence: 0
+  targets:
+  - reassuring
+  edge_type: reference
+  instances:
+  - line: 173
+    wrapped: true
+  - line: 209
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: promising
+  occurrence: 0
+  targets:
+  - promising
+  edge_type: reference
+  instances:
+  - line: 174
+    wrapped: true
+  - line: 209
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: favourable
+  occurrence: 0
+  targets:
+  - favourable
+  edge_type: reference
+  instances:
+  - line: 175
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: hustle-and-bustle
+  occurrence: 0
+  targets:
+  - hustle-and-bustle
+  edge_type: reference
+  instances:
+  - line: 176
+    wrapped: true
+  source_id: good-news-flight-transfer
+- anchor_text: troubled
+  occurrence: 0
+  targets:
+  - troubled
+  edge_type: reference
+  instances:
+  - line: 209
+    wrapped: true
+  source_id: good-news-flight-transfer

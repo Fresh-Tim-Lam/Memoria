@@ -92,7 +92,7 @@ The interview had a __________ start because the manager responded positively to
 - what the news was ｜ when and where you received it ｜ who told you ｜ how you felt about it
 （中文说明：口语 Part 2，按课件的 **SETTING → CHANGE → FEELING** 三槽位组织）
 > 💡 课件示范：*I had just finished an interview and was waiting nervously for a response.*（SETTING）→ *I received a favourable response and realised that the opportunity looked **promising**.*（CHANGE）→ *I felt relieved because months of preparation had finally paid off.*（FEELING）。可同时用 [[favourable]]。
-> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——假期计划开场看着有戏：The plan looked **promising**, and the first day or two went well。
+> 📎 库内实作：`speaking/part2/experience_3.md`（[[missed-train-plan-change|holiday-plan-derailed]]）——出门时纸面上的时间安排看着可行：On paper, the timing looked **promising**: a short walk, a thirty-minute ride, and half an hour to spare。
 ### 3. Writing scenario
 Write one Task‑2 sentence about the prospects of a new technology.
 （中文说明：大作文写一句话，论述某项新技术的前景）

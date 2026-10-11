@@ -12,7 +12,7 @@
 - **[adjective]** (of a place, building or view) pretty and charming, like a picture（风景如画的；优美的）
 - **Speaking example** – There is a picturesque fishing village on the coast where the houses are painted in bright colours.
   （海边有个风景如画的渔村，房屋都刷成鲜艳的颜色。）
-- **Writing example** – The picturesque old town attracts millions of visitors, which places great pressure on its narrow streets.
+- **Writing example** – The picturesque old town attracts millions of visitors, which [[places great pressure on]] its narrow streets.
   （这座风景如画的老城吸引数百万游客，给狭窄的街道带来巨大压力。）
 ---
 ## 🧩 Word Family & Collocation Matrix

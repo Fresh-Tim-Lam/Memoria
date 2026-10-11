@@ -1,0 +1,64 @@
+schema_version: 1
+file: expressions/phrases/at-every-turn.md
+knowledge_points:
+- id: at-every-turn
+  name: at every turn
+  range:
+    start:
+      snippet: '# at every turn'
+      line_hint: 1
+    end:
+      snippet: '- Answer: at every turn（每次；动辄｜处处）——被动式最常用：be blocked / interrupted
+        / helped **at'
+      line_hint: 103
+  tags:
+  - 英语
+  - 短语
+  - 频率
+  - 口语
+  - 写作
+  - IELTS
+  - 中性偏强
+links:
+- anchor_text: holiday-plan-derailed
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 88
+    wrapped: true
+  - line: 90
+    wrapped: true
+  source_id: at-every-turn
+- anchor_text: bump-along
+  occurrence: 0
+  targets:
+  - bump-along
+  edge_type: reference
+  instances:
+  - line: 89
+    wrapped: true
+  - line: 95
+    wrapped: true
+  source_id: at-every-turn
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 95
+    wrapped: true
+  source_id: at-every-turn
+- anchor_text: missed-train-plan-change
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 88
+    wrapped: true
+  - line: 90
+    wrapped: true
+  source_id: at-every-turn

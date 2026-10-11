@@ -30,7 +30,7 @@
 - **∇ Avoid**: 描述**平稳**移动用 `roll along` / `glide along`；强调**声音**则用 `rattle along`（哐当作响）。
 - **强度标记 Strength**: **neutral‑vivid**（中性但画面感强）—— 口语叙事很好用；正式写作改用 `lurch along` / `move unsteadily`。
 - **语域三档 Register ladder**: 日常 `bump along` → 正式 `lurch along` / `jolt along` → 文学 `rattle and judder along`。
-- **来源 Source**: 库内口语素材 [`speaking/part2/1.md`](speaking/part2/1.md) 第 58 行的原句；释义据 Oxford / Longman。
+- **来源 Source**: 库内口语素材 [`speaking/part2/experience_1.md`](speaking/part2/experience_1.md) 第 58 行的原句；释义据 Oxford / Longman。
 ---
 ## 🧩 Word Family & Collocation Matrix
 ### Morphology / Root (memory aid)
@@ -80,7 +80,8 @@ We were sprinting the whole way through the crowd, with a suitcase __________ al
 Tell the story of a rushed journey —— 用 "with + 名词 + bumping along behind me" 给画面补一笔。
 （中文说明：接 [[good-news-flight-transfer]] 的素材，插在 CHANGE 槽位）
 > 💡 与 [[sprint]] 同用：`with a suitcase bumping along behind us` 紧跟 `we were sprinting` 之后，快与笨重形成对比。
-> 📎 库内实作：`speaking/part2/3.md`（[[holiday-plan-derailed]]）——计划被一件件打断着往前挑（比喻义：勉强撑着往前走）：the plan simply **bumped along** from one interruption to the next。
+> 📎 库内实作（原素材）：原 `speaking/part2/3.md`（现 `speaking/part2/experience_3.md`；2026-09-30 已整体替换为新故事）——计划被一件件打断着往前挑（比喻义：勉强撑着往前走）：the plan simply **bumped along** from one interruption to the next。（新素材里没有该词的落点，此行保留作历史记录，不再挂链接）
+> 🔗 同场搭档：[[at-every-turn]]——同一段故事里，「计划被一件件打断」也可以升格说成 the plan was **derailed at every turn**（每一次都躲不开）。
 ### 3. Writing scenario
 Write one Task‑1 sentence describing public transport on a rural road.
 （中文说明：小作文写一句话，描述乡间道路上的公共交通）

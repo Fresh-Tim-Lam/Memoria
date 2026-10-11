@@ -1,0 +1,39 @@
+schema_version: 1
+file: expressions/words/get.md
+knowledge_points:
+- id: get
+  name: get
+  range:
+    start:
+      snippet: '# get'
+      line_hint: 1
+    end:
+      snippet: '- [[good-news-flight-transfer]] —— 口语素材里 `get sth sorted out` 的落点。'
+      line_hint: 145
+  tags:
+  - 口语
+  - 短语动词
+  - 词组
+  - 一词一文件
+  - B1-B2
+links:
+- anchor_text: queue-for-ages
+  occurrence: 0
+  targets:
+  - queue-for-ages
+  edge_type: reference
+  instances:
+  - line: 79
+    wrapped: true
+  - line: 144
+    wrapped: true
+  source_id: get
+- anchor_text: good-news-flight-transfer
+  occurrence: 0
+  targets:
+  - good-news-flight-transfer
+  edge_type: reference
+  instances:
+  - line: 145
+    wrapped: true
+  source_id: get

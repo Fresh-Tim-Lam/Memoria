@@ -19,3 +19,46 @@ knowledge_points:
   - Behaviour
   - Lifestyle
   - B2
+links:
+- anchor_text: holiday-plan-derailed
+  occurrence: 0
+  targets:
+  - missed-train-plan-change
+  edge_type: reference
+  instances:
+  - line: 89
+    wrapped: true
+  source_id: indulge
+- anchor_text: juvenile
+  occurrence: 0
+  targets:
+  - juvenile
+  edge_type: reference
+  instances:
+  - line: 95
+    wrapped: true
+  source_id: indulge
+- anchor_text: delinquency
+  occurrence: 0
+  targets:
+  - delinquency
+  edge_type: reference
+  instances:
+  - line: 95
+    wrapped: true
+  source_id: indulge
+- anchor_text: gadgets
+  occurrence: 0
+  targets:
+  - gadget
+  edge_type: reference
+  target_edges:
+    gadget:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 17
+    wrapped: true
+  excluded: []
+  pool:
+  - gadget
