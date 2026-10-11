@@ -4490,10 +4490,10 @@ def _review_due_list(kb_path: str, _session_id: str | None, arguments: Mapping[s
         kept = [c for c in due if c not in disabled]
         excluded = len(due) - len(kept)
         due = kept
-    lines = [f"{date} 到期 **{len(due)}** 张（由 `{'.memoria/agent/fsrs.py'}` 计算）" + (f"，已滤掉 {excluded} 张禁卡" if excluded else "") + "："]
-    lines.extend(f"- {c}" for c in due) if due else lines.append("- （无）")
-    lines.append("评分用 `review_grade`（幂等键 = card_id + 评审日，重复评分不叠加）。")
-    return ToolOutput(text="\n".join(lines))
+    cards = _review_due_cards(kb_path, due)
+    payload = {"date": date, "due": due, "count": len(due), "filtered_disabled": excluded, "cards": cards}
+    text = json.dumps(payload, ensure_ascii=False)
+    return ToolOutput(text=text)
 
 
 def _review_grade(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
@@ -4711,8 +4711,8 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
         Tool(
             name="review_due_list",
             description=(
-                "**列出某日到期卡片**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，"
-                "**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）。`date` 可省（默认当天）。"
+                "**列出某日到期卡片**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）、`date` 可省（默认当天）。"
+                "**返回值是一整段 JSON**（可直接 `json.loads`），顶层 `{date, due, count, filtered_disabled, cards}`：`due`=到期 card_id 列表（顺序即 fsrs 输出、`count`=其长度）、`filtered_disabled`=被滤掉的禁卡数、`cards`=逐张卡面+调度状态（每张必有 `card_id`，另含源文件里存在的 `front`/`back`/`type`/`kp_id`/`file`/`source`/`disabled` 与调度 `due`/`state`/`stability`/`difficulty`/`reps`/`lapses`/`last_review`）。**缺字段即该项不含该键**（如实缺省、不编造）；`cards.json` 找不到的 id 带 `missing_in_cards: true` 保留（**不静默丢弃**）。**无需再自行解析 `cards.json`**。"
             ),
             parameters={
                 "type": "object",
@@ -4810,4 +4810,54 @@ def _review_grade_precheck(kb_path: str, card_id: str) -> str | None:
     if card_id in {str(c["card_id"]) for c in rows if c.get("disabled")}:
         return f"review.grade: 卡片 {card_id} 已被禁用（先 review_card_disable disabled=false 恢复）"
     return None
+
+
+# ── R2 增补①（2026-10-11）：`review_due_list` 直接回卡面 + 状态字段 ────────────────
+# `review_due_list` **整个返回值就是一段 JSON**（`{date, due, count, filtered_disabled, cards}`；人读文本段已去掉），
+# 让 UI / 知识库 agent 直接 `json.loads`，不必再绕道自行解析 `cards.json`（`filtered_disabled`=被滤掉的禁卡数）。
+# 事实源与边界不变：到期集合**只**来自该库 `.memoria/agent/fsrs.py due`（本文件一个日期都不判）；
+# `cards.json` / `progress.json` 全程**只读**（fsrs.py 才是 progress.json 的唯一写者）。
+# 缺字段**如实缺省**（源没有该键 ⇒ 结果也不加该键，不编造）；某 id 在 cards.json 找不到 ⇒
+# **如实标记 `missing_in_cards: true` 且保留在结果里**（不静默丢弃）。整块追加在文件末尾 ⇒ 上方
+# 所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _review_due_cards(kb_path: str, due: list[str]) -> list[dict]:
+    """按 `due` 顺序逐张装配「卡面（cards.json）+ 调度状态（progress.json）」（**只读**）。
+
+    - 顺序 = `fsrs.py due` 返回的 id 顺序（本函数不重排）；
+    - 某 id 不在 `cards.json` ⇒ 该项只含 `card_id` 且 `missing_in_cards: true`（**保留，不丢弃**）；
+    - 源文件缺某键（如无 `front`）⇒ 该项**不加该键**（如实缺省，不编造）；
+    - 任一来源缺失 / 结构非法 / 读取失败 ⇒ 该来源按空处理（不抛、不影响到期清单本身）。
+    """
+    cards_doc, _ = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    by_id: dict[str, Mapping[str, Any]] = {}
+    if isinstance(cards_doc, Mapping) and isinstance(cards_doc.get("cards"), list):
+        for c in cards_doc["cards"]:
+            if isinstance(c, Mapping) and isinstance(c.get("card_id"), str):
+                by_id.setdefault(c["card_id"], c)  # 同 id 去重取首条（不重排 due）
+    prog_doc, _ = _review_load_json(kb_path, REVIEW_PROGRESS_REL)
+    prog_cards = prog_doc.get("cards") if isinstance(prog_doc, Mapping) else None
+    prog_cards = prog_cards if isinstance(prog_cards, dict) else {}
+    rows: list[dict] = []
+    for cid in due:
+        row: dict[str, Any] = {"card_id": cid}
+        card = by_id.get(cid)
+        if card is None:
+            row["missing_in_cards"] = True
+        else:
+            for key in ("front", "back", "type", "kp_id", "file", "source"):
+                if key in card and card.get(key) is not None:
+                    row[key] = card[key]
+            if "disabled" in card and card.get("disabled") is not None:
+                row["disabled"] = bool(card["disabled"])
+        state = prog_cards.get(cid)
+        if isinstance(state, Mapping):
+            for key in ("due", "state", "stability", "difficulty", "reps", "lapses"):
+                if key in state:
+                    row[key] = state[key]
+            if "last_review" in state:
+                row["last_review"] = state["last_review"]
+        rows.append(row)
+    return rows
 

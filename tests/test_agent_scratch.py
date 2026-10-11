@@ -250,3 +250,83 @@ def test_review_grade_rejects_unknown_card_id(kb: Path) -> None:
     assert "不在 cards.json" in out.text
     assert not (review_dir / "progress.json").exists(), "被拒的评分不得建幻影卡 / 写 progress.json"
 
+
+# ── ⑥ `review_due_list` 直出卡面（R2 增补①）：整个返回即 JSON ──────────────────
+
+
+def test_review_due_list_returns_json_with_card_faces(kb: Path) -> None:
+    """工具层：`review_due_list` **整个返回值就是一段 JSON**（整串可 `json.loads`，不是"文本里夹一段"）。
+
+    顶层 `{date, due, count, filtered_disabled, cards}`；每张卡**直出卡面**（存在的
+    `front`/`back`/`type`/`kp_id`/`file`/`source`）+ 调度状态。缺字段**如实缺省**（源没有该键 ⇒
+    结果也不加该键，不编造）；`cards.json` 找不到的 id **不静默丢弃**（带 `missing_in_cards: true`）。
+    默认滤掉禁卡并计入 `filtered_disabled`；`include_disabled=true` 则禁卡回到 `due` 且计数归 0。
+    **只读**：不得写 progress.json / cards.json。
+    """
+    import json as _json
+
+    from memoria.services.agent.tools.kb import _review_due_list
+
+    agent_dir = kb / ".memoria" / "agent"
+    review_dir = agent_dir / "review"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    # 该库 fsrs.py 桩件：只回到期 id（工具侧不判日期）；含一张不在 cards.json 的 ghost、一张禁卡 off1
+    (agent_dir / "fsrs.py").write_text(
+        "import json\n"
+        "print(json.dumps({'status': 'ok', 'date': '2026-01-02', 'due': ['ok1', 'nofront', 'ghost', 'off1'], 'count': 4}))\n",
+        encoding="utf-8",
+    )
+    (review_dir / "cards.json").write_text(
+        _json.dumps({"schema_version": 1, "cards": [
+            {"card_id": "ok1", "kp_id": "kp1", "file": "a.md", "type": "basic", "front": "F1", "back": "B1", "source": "t"},
+            {"card_id": "nofront", "kp_id": "", "file": "", "type": "basic", "back": "B2", "source": "t"},  # 缺 front
+            {"card_id": "off1", "kp_id": "kp2", "file": "b.md", "type": "basic", "front": "F3", "back": "B3", "source": "t", "disabled": True},
+        ]}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    (review_dir / "progress.json").write_text(
+        _json.dumps({"schema_version": 1, "cards": {
+            "ok1": {"state": "review", "due": "2026-01-01", "stability": 1.5, "difficulty": 5.0, "reps": 3, "lapses": 1, "last_review": "2025-12-30"},
+            "ghost": {"state": "new", "due": "2026-01-02", "reps": 0, "lapses": 0},  # 只在 progress.json
+        }}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    before = {p.name: p.read_bytes() for p in review_dir.iterdir() if p.is_file()}
+
+    out = _review_due_list(str(kb), None, {"date": "2026-01-02"})
+
+    assert out.error is False
+    # 整个返回值就是 JSON：整串直接 loads（不是"文本里夹一段 JSON"）
+    payload = _json.loads(out.text)
+    assert payload["date"] == "2026-01-02"
+    # 默认滤掉禁卡：due 里没有 off1，filtered_disabled 记下被滤数
+    assert payload["due"] == ["ok1", "nofront", "ghost"] and payload["count"] == 3
+    assert payload["filtered_disabled"] == 1
+    assert [c["card_id"] for c in payload["cards"]] == ["ok1", "nofront", "ghost"]
+    # 卡面齐全（每张含 front/back/type/kp_id/file/source）
+    ok1 = payload["cards"][0]
+    assert ok1["front"] == "F1" and ok1["back"] == "B1" and ok1["type"] == "basic"
+    assert ok1["kp_id"] == "kp1" and ok1["file"] == "a.md" and ok1["source"] == "t"
+    # 调度状态齐全（只读自 progress.json）
+    assert ok1["due"] == "2026-01-01" and ok1["state"] == "review" and ok1["stability"] == 1.5
+    assert ok1["difficulty"] == 5.0 and ok1["reps"] == 3 and ok1["lapses"] == 1 and ok1["last_review"] == "2025-12-30"
+    # 缺字段如实缺省：nofront 无 front 键（不编造）、无调度状态 ⇒ 无 state/reps 键
+    nofront = payload["cards"][1]
+    assert "front" not in nofront
+    assert "state" not in nofront and "reps" not in nofront
+    # 找不到的 id 如实标记、不丢弃
+    ghost = payload["cards"][2]
+    assert ghost["card_id"] == "ghost" and ghost["missing_in_cards"] is True and "front" not in ghost
+
+    # include_disabled=true：禁卡回到 due、filtered_disabled 归 0、卡面含 disabled
+    all_out = _review_due_list(str(kb), None, {"date": "2026-01-02", "include_disabled": True})
+    all_payload = _json.loads(all_out.text)
+    assert all_payload["due"] == ["ok1", "nofront", "ghost", "off1"] and all_payload["count"] == 4
+    assert all_payload["filtered_disabled"] == 0
+    assert [c["card_id"] for c in all_payload["cards"]] == ["ok1", "nofront", "ghost", "off1"]
+    assert all_payload["cards"][3]["disabled"] is True
+
+    # 只读：cards.json / progress.json 逐字节未变
+    after = {p.name: p.read_bytes() for p in review_dir.iterdir() if p.is_file()}
+    assert before == after, "review_due_list 不得写盘"
+
