@@ -366,3 +366,5 @@
 - 引用同步：`README.md`、`README.cn.md` 全部 `<img src="docs/screenshots/…">` → `resources/screenshots/…`（14 处）。
 - 目录登记同步：docs-management.md §4.1 删除 `screenshots/` 行（docs 不存二进制截图）；docs/README.md 子目录导航删除该行；resources/README.md 内容表补充 `screenshots/`。
 - 新增规范 [conventions/readme-i18n.md](./readme-i18n.md)：README 双语（`README.md`↔`README.cn.md`）与截图收录/存放的维护规则（含自查清单）。
+
+> **勘误（2026-10-11 补记，不改写上方任何历史行）**：① 上方 2026-10-10 的 R2 行所写 `type ∈ {basic,cloze,reverse}` 系**当时**裁决 —— 该枚举已于 2026-10-11 的 R4（`da433b3b`）放开为七种（`basic`/`cloze`/`reverse`/`mcq`/`gapfill`/`short`/`produce`，见 `src/memoria/services/agent/tools/kb.py` 的 `REVIEW_CARD_TYPES`）。② 上方 2026-09-25 的 AG92 行两处 `_restorePlainPosition()` 系**笔误**——仓内无此函数，真实实现为 `_saveCurrentViewScroll()` / `_restoreCurrentViewScroll()`（`src/memoria/ui/static/app/js/app.js`；同款更正另见 2026-10-09「导航位置恢复」行的备注）。

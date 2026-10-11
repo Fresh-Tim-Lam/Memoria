@@ -82,7 +82,7 @@
 **它解决三件事**：
 
 1. **总高** ⇒ 滚动条长度（不用把整篇挂进 DOM 也能有正确的滚动范围）；
-2. **位置 ↔ 像素双向换算** ⇒ 跳转落点 / `scrollIntoView` / `_getViewTopSrcLine` / `_restorePlainPosition`；
+2. **位置 ↔ 像素双向换算** ⇒ 跳转落点 / `scrollIntoView` / `_getViewTopSrcLine` / `_restoreCurrentViewScroll`；
 3. **高度变化后补 `scrollTop`**（滚动锚定）⇒ 这是"上下飘"的正解。
 
 **为什么现在必需**：MathJax 排版与懒加载图片都是**后到**的 ⇒ 你量到的高度**不是最终高度**（AG104 那次"二次校准"就是在给这个打补丁）。
@@ -733,7 +733,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 |---|---|---|
 | `_getViewTopSrcLine(mode)`（`app.js:1690`） | 从容器 top 起 **逐块 `getBoundingClientRect` 探** | 查账本 `atHeight(scrollTop)` |
 | `_scrollToSrcLine(mode, line)`（`app.js:1717`） | 找到目标块再 `getBoundingClientRect` 差值 | `scrollTop = ledger.topOf(block) - 容器偏移` |
-| `_restorePlainPosition()` | 按源码行定位（同款逐块探） | 同上 |
+| `_restoreCurrentViewScroll()` | 按源码行定位（同款逐块探） | 同上 |
 | **`_reanchorJumpScroll()`（AG104）** | 事后 ~350 ms / ~1.4 s **再对准两次** | **可以撤掉** —— 落点由账本保证；账本在实测回填时**补 `scrollTop`** |
 
 **落点**：内存 only（R14 推荐）；持久化到 `<kb>/.memoria/cache/**` 是可选项（`AGENTS.md §1` 的"可再生缓存"）。
@@ -854,7 +854,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 | 卡型 schema | `type ∈ {basic, cloze, reverse, mcq, gapfill, short, produce}` | `kb.py:4138`、`:4658-4660` | `cloze` 的 `front` 用 `{{c1::…}}` 挖空、`back` 放完整原文 |
 
 **关键取证（缺口，须人拍板）**：
-1. **`review_due_list` 只回 `card_id` 列表，不含 `front` / `back` / `type`** —— 实现 `kb.py:4485-4494`：`due = [str(x) for x in data.get("due")]` 后逐行 `- {c}`，只有 id；该库 `fsrs.py` 的 `due` 子命令同样只回 id（`docs/example/AAA_Vocab/.memoria/agent/fsrs.py:6-7` 注明 `cards.json` 由脚本**只读**、`:189-204` 仅取 `card_id`）。⇒ **要渲染卡面，界面必须另取卡片定义**。提案：**只读**拉 `.memoria/agent/review/cards.json`（`REVIEW_CARDS_REL`，`kb.py:4135`）—— 前端已有通用只读文件通道（`markdown-preview.js:656-657` 的 `/files/<encoded>`）。**待定 A**：是否接受「界面只读 `cards.json`」，还是要求新增一把只读工具（**本提案默认前者**）。
+1. **`review_due_list` 只回 `card_id` 列表，不含 `front` / `back` / `type`（⚠️ 已过时：`7609c763` 起 `review_due_list` 直返卡面与状态字段，见 §R3a-2.4）** —— 实现 `kb.py:4485-4494`：`due = [str(x) for x in data.get("due")]` 后逐行 `- {c}`，只有 id；该库 `fsrs.py` 的 `due` 子命令同样只回 id（`docs/example/AAA_Vocab/.memoria/agent/fsrs.py:6-7` 注明 `cards.json` 由脚本**只读**、`:189-204` 仅取 `card_id`）。⇒ **要渲染卡面，界面必须另取卡片定义**。提案：**只读**拉 `.memoria/agent/review/cards.json`（`REVIEW_CARDS_REL`，`kb.py:4135`）—— 前端已有通用只读文件通道（`markdown-preview.js:656-657` 的 `/files/<encoded>`）。**待定 A**：是否接受「界面只读 `cards.json`」，还是要求新增一把只读工具（**本提案默认前者**）。
 2. **五把 review 工具都 `read_only=False`**（`kb.py:4642-4644`：`registry.invoke()` 分发前一律过审批门）⇒ **每次 `review_due_list` / `review_grade` 都会弹审批**。对「每天高频复习」是重大 UX 摩擦。**待定 B**：是否为 UI 发起的 review 调用走一条**免逐次审批**的通道（或一次性授权），否则每次翻面评分都需人再点一次「允许」。
 3. **UI → 工具尚无现成 RPC**：`src/memoria/presentation/api/ui.py` 里没有任何 `review_*` RPC；最接近的先例是消息代码块「运行」的两条 RPC `agent_exec_start` / `agent_exec_poll`（`ui.py:2193-2236`，前端调用 `agent-panel.js:6578-6580`），同样是「提交后台作业 + 轮询 + 审批卡」。**待定 C**：复用 exec 面那条通道，还是**追加**一对 `review_due` / `review_grade` RPC（追加在 `ui.py` 末尾，遵守零行漂移）。
 
@@ -905,7 +905,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 ```
 进入模态
-  └─(1) RPC 调 review_due_list（取一次全量） ⇒ card_id[]（+ 只读 cards.json 补 front/back/type）
+  └─(1) RPC 调 review_due_list（取一次全量） ⇒ 整段 JSON（每张含 card_id + 卡面 front/back/type 等 + FSRS 状态）
         └─(2) 建本地队列 queue = [...cards]
              └─(3) 逐张消费：翻面 → 评分
                   └─(4) 每评分调一次 review_grade(card_id, grade)（幂等）
@@ -994,7 +994,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 | # | 待定项 | 选项 | 建议 |
 |---|---|---|---|
-| A | 卡面内容从哪来（`review_due_list` 只回 id） | 界面只读 `cards.json` vs 新增只读工具 | 界面只读 `cards.json` |
+| A | 卡面内容从哪来（`review_due_list` 现直返卡面） | 界面只读 `cards.json` vs 新增只读工具 | **已定案并交付**：`review_due_list` 直返卡面（R3a-2.4；`7609c763`） |
 | B | 逐次审批的 UX 摩擦 | 保持逐次审批 vs UI 通道一次性授权 | 待定（直接影响「每天高频用」可行性） |
 | C | UI → 工具的桥 | 复用 `agent_exec_*` 通道 vs 新增 `review_*` RPC | 新增 `review_due` / `review_grade` RPC（末尾追加） |
 | D | 评分失败重试策略 | 队尾重试 1 次 vs 直接标记未评 | 队尾重试 1 次 |
@@ -1022,7 +1022,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 | `cards.json` 半坏 → 跑 `due` | 是 | exit 1：`{"status":"error","error":"cards.json 结构非法：以下条目缺 \"card_id\"（须为 str）：1"}` | 不变 | **不可评**（结构性：整队列 fail-closed 并列出坏下标） |
 | 被禁用卡（`disabled:true`） | 未在 fsrs 层复现 | 判定在**工具层**：`review.grade: 卡片 <id> 已被禁用…`（`kb.py:4507-4508`）；fsrs **不读** `disabled` | 不变 | **不可评**（跳过、不重试） |
 
-> **关键结论**：**"不在到期里"的卡不会被拒** —— `fsrs.py grade` 只做 `(card_id, review_date)` 幂等判断，**从不**校验 `due`，也**不校验** `card_id` 是否存在于 `cards.json`（拼错 id 反而静默新建）。因此队列/UI **必须自己**用 `review_due_list` 的结果界定"可评集合"，**不能**指望 `grade` 兜底。
+> **关键结论**：**"不在到期里"的卡不会被拒** —— `fsrs.py grade` 只做 `(card_id, review_date)` 幂等判断，**从不**校验 `due`。至于 `card_id` 存在性：**已于 `1bbe6036` 修正** —— 工具层 `_review_grade_precheck` + `fsrs.py op_grade` **双层 fail-closed**，拼错/不存在的 `card_id` 一律拒绝（不再静默新建幻影卡；上方 §R3a-2.1 中该读数为**修复前**行为）。因此队列/UI **仍应**用 `review_due_list` 的结果界定"可评集合"，但其坏 id 已由 `grade` 兜底拒绝。
 
 其余两类实测条件：
 - **暂时性**：见"只读"行；"找不到 Python 解释器"由 `_review_run_fsrs`（`kb.py:4333-4337`）归为同类。
@@ -1033,7 +1033,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 | 失败分类 | 处理 | 依据 |
 |---|---|---|
-| **不可评**（卡不存在 / 被禁） | **跳过并记下，不重试** | 重试也不会成功。被禁由工具层拒绝；卡不存在在 fsrs 层会静默新建 ⇒ **必须先在队列构建时用 `review_due_list` 的 id 集合过滤**，别把坏 id 交给 `grade` |
+| **不可评**（卡不存在 / 被禁） | **跳过并记下，不重试** | 重试也不会成功。被禁由工具层拒绝；卡不存在现由工具层 + fsrs 层 fail-closed 拒绝（`1bbe6036`）⇒ **仍建议在队列构建时用 `review_due_list` 的 id 集合过滤** |
 | **暂时性**（写不进去 / 解释器不可用） | **队尾重试一次** | 多为例外而非永久错；只读实测 exit 1、`progress.json` 未变，重试有意义 |
 | **结果不明**（超时 / 中断） | **也重试**（安全） | 评分按 `(card_id, review_date)` **幂等**：实测同日同卡连评不叠加（见下） |
 | 最终仍未评 | **退出时汇总列出**，提示"未评的明天照样到期" | 与 `review.donePartial` 文案一致（R3a.9） |
@@ -1051,12 +1051,12 @@ function flushPendingSync() {                          // ★ flush 清单里的
 - **未返回成功即显示「未评」**，**绝不**先把卡面翻到下一张、也不先把计数 +1（**不做乐观更新**）。
 - 依据 R3a-2.1：`grade` 可能 exit 0 却写进"不该评的卡"（无 `due` / 存在性校验），也可能 exit 1；界面若自行假设成功，会与 `progress.json` 真相不一致。
 
-### R3a-2.4 卡面来源修正（对 R3a.1 待定 A 的修正，**R2 增补·待施工**）
+### R3a-2.4 卡面来源修正（对 R3a.1 待定 A 的修正，**R2 增补·已交付 `7609c763`**）
 
 - 原 R3a 方案（待定 A）写的是"界面**绕道只读 `cards.json`**"。
-- **修正为**：由 **`review_due_list` 直接返回卡面与状态字段** —— `front` / `back` / `type` / `kp_id` / `file` / `disabled` + FSRS 状态（`state` / `due` / `reps` …）。
-- **理由**：现实现只回 `card_id`（`src/memoria/services/agent/tools/kb.py:4477-4496` 的 `_review_due_list`，把 `fsrs.py due` 的 id 列表拼成 `- <id>` 文本），导致 **UI 与 agent 都得**另行读 `cards.json` / `progress.json` 才能拿到卡面。扩展 `review_due_list` 的返回即可**一处修好两条路**，并让 UI 少直读事实源、与 R3a.8「不写用户数据」更一致。
-- **标注**：此为一**R2 增补（待施工）**，不在本期 UI 实现内；落地前 UI 仍按待定 A 的现方案。
+- **修正为（已交付 `7609c763`）**：由 **`review_due_list` 直接返回卡面与状态字段** —— `front` / `back` / `type` / `kp_id` / `file` / `disabled` + FSRS 状态（`state` / `due` / `reps` …）。
+- **理由（修复前的依据）**：原 `_review_due_list`（`src/memoria/services/agent/tools/kb.py:4477-4496`）把 `fsrs.py due` 的 id 列表拼成 `- <id>` 文本、只回 `card_id`，导致 **UI 与 agent 都得**另行读 `cards.json` / `progress.json` 才能拿到卡面；`7609c763` 改为直返整段 JSON 后**一处修好两条路**，并让 UI 少直读事实源、与 R3a.8「不写用户数据」更一致。
+- **标注**：此为一 **R2 增补**，**已于 `7609c763` 交付**；UI 不再需要绕道只读 `cards.json`（待定 A 的旧方案作废）。
 
 ### R3a-2.5 审批分层（拍板记录）
 
@@ -1071,7 +1071,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 | # | 项 | 原建议 | 现状 |
 |---|---|---|---|
-| A | 卡面来源 | 界面只读 `cards.json` | **方向已修正**：见 R3a-2.4（改由 `review_due_list` 直返卡面；**R2 增补，待施工**） |
+| A | 卡面来源 | 界面只读 `cards.json` | **已定案并交付**：见 R3a-2.4（改由 `review_due_list` 直返卡面；`7609c763`） |
 | B | 逐次审批 UX 摩擦 | 待定 | **已拍板**：见 R3a-2.5（agent 逐次审批 / 人驱动免审批） |
 | C | UI→工具的桥 | 新增 `review_*` RPC | **仍待定**（复用 `agent_exec_*` vs 新增 `review_*` RPC） |
 | D | 评分失败重试策略 | 队尾重试 1 次 | **已定**：见 R3a-2.2（分类处理 + 幂等安全重试） |
