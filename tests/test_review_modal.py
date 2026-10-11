@@ -237,3 +237,86 @@ def test_review_face_render_disables_legacy_math() -> None:
     # legacyMath:false ⇒ 原样（复习卡面走这条 ⇒ 不产生 mjx-container）
     assert out[1] == "a_1 = b"
     assert out[3] == "The ratio x = 1 for this case."
+
+
+# ── ⑥ R4.2（2026-10-11）：答案隔离 + 后端判分 ────────────────────────────────────
+# 人已批准：**答案不回前端**（UI 取卡剔除 `answer`/`accept`/`explain`；`options` 保留），判分放**后端**
+# （`auto`：精确匹配 / `accept` 白名单命中；**不做归一化**）或交 agent（`judge: agent` ⇒ `unjudged`）；
+# **agent 的 `review_due_list` 工具仍回答案**（agent 是判分方），该钉子见 `test_agent_scratch.py`。
+
+
+def _answer_cards() -> list[dict]:
+    """含 mcq（auto，带 options/answer/explain）、gapfill（auto，answer + accept 白名单）、short（agent）。"""
+    return [
+        {"card_id": "m1", "kp_id": "k", "file": "", "type": "mcq", "front": "f", "back": "b",
+         "source": "t", "judge": "auto", "options": ["a", "b"], "answer": "a", "explain": "e-mcq"},
+        {"card_id": "g1", "kp_id": "k", "file": "", "type": "gapfill", "front": "f", "back": "b",
+         "source": "t", "judge": "auto", "answer": "cat", "accept": ["Cat"], "explain": "e-gap"},
+        {"card_id": "s1", "kp_id": "k", "file": "", "type": "short", "front": "f", "back": "b",
+         "source": "t", "judge": "agent", "answer": "some answer", "explain": "e-short"},
+    ]
+
+
+def test_review_due_start_hides_answer_fields_but_keeps_options(kb: Path) -> None:
+    """**UI 取卡不带答案**：逐卡无 `answer`/`accept`/`explain`；`options`（选项文本）保留（mcq 可作答）。"""
+    from memoria.presentation.api.ui import _review_ui_due
+
+    _write_kb(kb, _answer_cards())
+    res = _review_ui_due(_Stub(kb), "2026-01-02", None)
+    assert res["status"] == "ok"
+    by_id = {c["card_id"]: c for c in res["cards"]}
+    assert set(by_id) == {"m1", "g1", "s1"}
+    for card in by_id.values():
+        assert "answer" not in card and "accept" not in card and "explain" not in card
+    assert by_id["m1"]["options"] == ["a", "b"]  # 选项文本必须在 ⇒ mcq 能作答
+    # 只读：不产生 progress.json
+    assert not (kb / ".memoria" / "agent" / "review" / "progress.json").exists()
+
+
+def test_review_submit_one_is_ui_only_not_a_tool(kb: Path) -> None:
+    """`review_submit_one` 是 `UIAPI` 方法，**不进 `KB_TOOL_NAMES` / 注册表** ⇒ agent 取不到。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.tools import KB_TOOL_NAMES, ToolRegistry, build_kb_tools
+
+    assert callable(getattr(UIAPI, "review_submit_one", None))
+    assert "review_submit_one" not in KB_TOOL_NAMES
+    assert ToolRegistry(build_kb_tools(str(kb))).get("review_submit_one") is None
+
+
+def test_review_submit_one_auto_verdict_and_reveal(kb: Path) -> None:
+    """`auto` 判分：**精确匹配 / accept 白名单**；对错都揭晓 `answer`/`explain`；
+    **不做归一化**（大小写/空白不同 ⇒ `wrong`，有意行为）；`judge: agent` ⇒ `unjudged`（不揭晓）。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+
+    _write_kb(kb, _answer_cards())
+    stub = _Stub(kb)
+    # mcq 正确 / 错误（都揭晓 answer + explain）
+    ok = _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None)
+    assert ok["verdict"] == "correct" and ok["answer"] == "a" and ok["explain"] == "e-mcq"
+    bad = _review_ui_submit_one(stub, "m1", "b", None, "2026-01-02", None)
+    assert bad["verdict"] == "wrong" and bad["answer"] == "a" and bad["explain"] == "e-mcq"
+    # gapfill：answer 逐字精确命中
+    assert _review_ui_submit_one(stub, "g1", None, "cat", "2026-01-02", None)["verdict"] == "correct"
+    # gapfill：accept 白名单逐字命中（含大小写）
+    assert _review_ui_submit_one(stub, "g1", None, "Cat", "2026-01-02", None)["verdict"] == "correct"
+    # gapfill：白名单外的近似写法（大小写不同 / 多空白）⇒ **有意行为：wrong**（不归一化，交 agent 判）
+    assert _review_ui_submit_one(stub, "g1", None, "CAT", "2026-01-02", None)["verdict"] == "wrong"
+    assert _review_ui_submit_one(stub, "g1", None, "cat ", "2026-01-02", None)["verdict"] == "wrong"
+    # judge: agent ⇒ 不在此判（unjudged，不揭晓）
+    un = _review_ui_submit_one(stub, "s1", None, "x", "2026-01-02", None)
+    assert un["verdict"] == "unjudged" and "answer" not in un and "explain" not in un
+
+
+def test_review_submit_one_is_read_only(kb: Path) -> None:
+    """只读：判分前后 `cards.json` 逐字节一致；不得建 `progress.json`。"""
+    import hashlib
+
+    from memoria.presentation.api.ui import _review_ui_submit_one
+
+    _write_kb(kb, _answer_cards())
+    review = kb / ".memoria" / "agent" / "review"
+    before = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
+    _review_ui_submit_one(_Stub(kb), "m1", "a", None, "2026-01-02", None)
+    after = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
+    assert before == after
+    assert not (review / "progress.json").exists()

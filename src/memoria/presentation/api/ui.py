@@ -2258,7 +2258,7 @@ def _review_ui_error(code: str, message: str, category: str) -> dict:
 def _review_ui_due(self, date: str | None = None, kb_path: str | None = None) -> dict:
     """取今日到期清单（**只读**）：复用 `_review_due_list` 的领域实现（内部走该库 `fsrs.py due`）。
 
-    成功 ⇒ **整个 dict 即 `review_due_list` 的 JSON 载荷**（`{date, due, count, filtered_disabled, cards, status:"ok"}`）。
+    成功 ⇒ **整个 dict 即 `review_due_list` 的 JSON 载荷**（`{date, due, count, filtered_disabled, cards, status:"ok"}`），但 `cards` 已**剔除答案字段**（`answer`/`accept`/`explain`，见 `_review_ui_hide_answers`；`options` 保留）。
     失败 ⇒ 结构化错误（`category="unavailable"` 无库 / `"load_failed"` 工具不可用或数据非法）。
     """
     import json as _json
@@ -2280,7 +2280,7 @@ def _review_ui_due(self, date: str | None = None, kb_path: str | None = None) ->
         return _review_ui_error("bad_payload", "复习数据解析失败（fsrs.py 未返回合法 JSON）", "load_failed")
     if not isinstance(payload, dict):
         return _review_ui_error("bad_payload", "复习数据格式非法", "load_failed")
-    payload["status"] = "ok"
+    payload = _review_ui_hide_answers(payload)
     return payload
 
 
@@ -2354,5 +2354,87 @@ def _review_ui_grade(
 
 UIAPI.review_due_start = _review_ui_due
 UIAPI.review_grade_one = _review_ui_grade
+
+
+# ── R4.2（2026-10-11）：**答案隔离 + 后端判分** ────────────────────────────────────
+# 人已批准规则：**答案不回前端**（取卡路径逐卡剔除 `answer`/`accept`/`explain`），判分放**后端**
+# （`auto`：精确匹配或 `accept` 白名单命中）或**交 agent**（`judge: agent`）。**后端就剔除**，
+# 不依赖"前端不渲染"这种隐性契约。agent 的**工具** `review_due_list` **继续回答案**（agent 是判分方）。
+# 本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（同上面两条 UI RPC）。
+
+#: UI 取卡路径**不回前端**的答案字段（唯一被藏的三键；`options` 选项文本保留 ⇒ mcq 可作答）。
+_REVIEW_UI_HIDDEN_KEYS: tuple[str, ...] = ("answer", "accept", "explain")
+
+
+def _review_ui_hide_answers(payload: dict) -> dict:
+    """`review_due_start` 的**答案隔离**：逐卡 `pop` 掉 `answer`/`accept`/`explain`，其余字段（含 `options`）原样。"""
+    cards = payload.get("cards")
+    if isinstance(cards, list):
+        for card in cards:
+            if isinstance(card, dict):
+                for key in _REVIEW_UI_HIDDEN_KEYS:
+                    card.pop(key, None)
+    payload["status"] = "ok"
+    return payload
+
+
+def _review_ui_submit_one(
+    self,
+    card_id: str,
+    choice: str | None = None,
+    text: str | None = None,
+    date: str | None = None,
+    kb_path: str | None = None,
+) -> dict:
+    """UI 专用**后端判分**入口（**只读**）：`auto` 卡当场判对错，`agent`/`self` 卡回 `unjudged`。
+
+    - `mcq` ⇒ 传 `choice`（选项文本），与卡面 `answer` **逐字精确匹配**；
+    - 带 `answer`/`accept` 的 `gapfill`/`cloze` ⇒ 传 `text`，**逐字精确匹配** `answer` 或命中 `accept` 白名单；
+    - **不做模糊匹配 / 词形 / 大小写归一化**（人已拍板：那部分交 agent 判）；`date` 仅为将来留痕，判分不依赖日期；
+    - `judge` 为 `agent`/`self` ⇒ `{"verdict": "unjudged"}`（不在此判，交 agent 或自评）；
+    - **只读**：不写 `cards.json` / `progress.json`（评分写回仍走 `review_grade_one`）；
+    - `answer`/`explain` **只在判分之后**（本调用返回里）揭晓；`unjudged` 不揭晓。
+    """
+    from memoria.services.agent.tools.kb import (
+        REVIEW_CARDS_REL,
+        _review_derive_judge,
+        _review_load_json,
+    )
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    data, err = _review_load_json(kb, REVIEW_CARDS_REL)
+    if err is not None:
+        return _review_ui_error("load_failed", f"cards.json 读取失败：{err}", "load_failed")
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return _review_ui_error("bad_payload", "cards.json 不存在或结构非法", "load_failed")
+    card = next((c for c in data["cards"] if isinstance(c, dict) and c.get("card_id") == cid), None)
+    if card is None:
+        return _review_ui_error("unreviewable", f"卡片 {cid} 不在 cards.json 中（疑似拼错的 card_id）", "unreviewable")
+    ctype = str(card.get("type") or "")
+    judge = card.get("judge") or _review_derive_judge(ctype, card)
+    if judge != "auto":
+        return {"status": "ok", "card_id": cid, "judge": str(judge), "verdict": "unjudged"}
+    answer = card.get("answer")
+    accept = card.get("accept")
+    submitted = choice if ctype == "mcq" else text
+    submitted = submitted if isinstance(submitted, str) else ""
+    correct = (isinstance(answer, str) and submitted == answer) or (
+        isinstance(accept, list) and submitted in accept
+    )
+    out: dict = {"status": "ok", "card_id": cid, "judge": "auto", "verdict": "correct" if correct else "wrong"}
+    if isinstance(answer, str):
+        out["answer"] = answer
+    explain = card.get("explain")
+    if isinstance(explain, str):
+        out["explain"] = explain
+    return out
+
+
+UIAPI.review_submit_one = _review_ui_submit_one
 
 
