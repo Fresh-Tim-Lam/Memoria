@@ -833,3 +833,249 @@ function flushPendingSync() {                          // ★ flush 清单里的
 - **可编辑外壳 → `EditSurface` 侧**：**单卡编辑**（front/back）与**禁卡 / 删除** —— 走 `applyEdit` 语义（对数据的一次变更），须过审批与备份 / 撤销。
 
 > **说明**：本节为**需求登记**，不改动本文 §0–§6 的任何口径；接口细节（`RenderCore` / `EditSurface` / 双插头）仍以 [view-surface-contract.md](view-surface-contract.md) 为准。**未施工**。
+
+## 附 R3a：复习界面（模态弹窗 · 待拍板）
+
+> **编号**：**R3a**。**状态**：**待拍板 · 未施工**（本节只出设计，施工前请人裁「R3a.13 待定清单」）。
+> **来源**：上节 `## 附 R3：复习卡管理视图` 的**拆分**。**拆分口径**：**R3a = 复习界面**（**高频 · 每天用**，人期望「弹出来可交互」）；**R3b = 卡片管理视图**（**低频 · 修卡用**：列表 / 单卡编辑 / 禁卡 / 删除）。二者共用同一事实源与同一批工具，但**交互频次与归属完全不同**，故拆开排期。
+> **已拍板形态（人已选 A）**：**模态弹窗** —— 全屏遮罩遮住主预览；键盘 `1/2/3/4` 评分、`空格` 翻面、`Esc` 退出。
+
+### R3a.0 一句话
+
+复习卡从「对话里出题作答」搬进**独立模态弹窗**：进入时一次性拉今日到期，本地成队列逐张翻面评分；评分**只过 `review_grade`**，绝不直写 `progress.json` / `cards.json`。
+
+### R3a.1 数据通路（复用，不新增）
+
+| 用途 | 工具 | 取证 | 备注 |
+|---|---|---|---|
+| 取今日到期 | `review_due_list` | `src/memoria/services/agent/tools/kb.py:4712`（定义）、`:4477`（实现） | 内部走该库 `.memoria/agent/fsrs.py due`（`:4482`）；**默认滤掉禁卡**（`:4486-4492`） |
+| 评分 1..4 | `review_grade` | `kb.py:4729`（定义）、`:4499`（实现） | 幂等键 = `card_id + 评审日`（`:4732`）；禁用卡拒评（`:4507`） |
+| 禁卡 | `review_card_disable` | `kb.py:4693` | 本期**不接**（R3b） |
+| 卡型 schema | `type ∈ {basic, cloze, reverse}` | `kb.py:4138`、`:4658-4660` | `cloze` 的 `front` 用 `{{c1::…}}` 挖空、`back` 放完整原文 |
+
+**关键取证（缺口，须人拍板）**：
+1. **`review_due_list` 只回 `card_id` 列表，不含 `front` / `back` / `type`** —— 实现 `kb.py:4485-4494`：`due = [str(x) for x in data.get("due")]` 后逐行 `- {c}`，只有 id；该库 `fsrs.py` 的 `due` 子命令同样只回 id（`docs/example/AAA_Vocab/.memoria/agent/fsrs.py:6-7` 注明 `cards.json` 由脚本**只读**、`:189-204` 仅取 `card_id`）。⇒ **要渲染卡面，界面必须另取卡片定义**。提案：**只读**拉 `.memoria/agent/review/cards.json`（`REVIEW_CARDS_REL`，`kb.py:4135`）—— 前端已有通用只读文件通道（`markdown-preview.js:656-657` 的 `/files/<encoded>`）。**待定 A**：是否接受「界面只读 `cards.json`」，还是要求新增一把只读工具（**本提案默认前者**）。
+2. **五把 review 工具都 `read_only=False`**（`kb.py:4642-4644`：`registry.invoke()` 分发前一律过审批门）⇒ **每次 `review_due_list` / `review_grade` 都会弹审批**。对「每天高频复习」是重大 UX 摩擦。**待定 B**：是否为 UI 发起的 review 调用走一条**免逐次审批**的通道（或一次性授权），否则每次翻面评分都需人再点一次「允许」。
+3. **UI → 工具尚无现成 RPC**：`src/memoria/presentation/api/ui.py` 里没有任何 `review_*` RPC；最接近的先例是消息代码块「运行」的两条 RPC `agent_exec_start` / `agent_exec_poll`（`ui.py:2193-2236`，前端调用 `agent-panel.js:6578-6580`），同样是「提交后台作业 + 轮询 + 审批卡」。**待定 C**：复用 exec 面那条通道，还是**追加**一对 `review_due` / `review_grade` RPC（追加在 `ui.py` 末尾，遵守零行漂移）。
+
+### R3a.2 模态骨架（复用既有 `.-modal`，不另造）
+
+**结论：用既有 `.-modal` 一族，不用 lightbox。** 理由：lightbox（`markdown-preview.js:520-622`）是为**单张图片缩放/平移**定制的（`wheel`/`pointer` 拖拽、命中移动即不关），与「翻面 + 评分按钮 + 进度条」的卡片布局不匹配；而 `.-modal` 已有 header/body/footer 三栏与统一按钮规范，最省。
+
+| 候选 | 取证 | 结论 |
+|---|---|---|
+| `.-modal` 对话框族 | CSS `css/app.css:4558-4611`（`.-modal` / `.-modal-backdrop` / `.-modal-box` / `.-modal-header` / `.-modal-body` / `.-modal-footer`）；构建范式 `app.js:720-743`（`confirmTreeAction`）、`file-tree.js:292-329`（`promptTreeInput`）、`agent-panel.js:4306-4359`（`promptHistInput`） | **选它**：`document.createElement("div").className="-modal"` → `innerHTML` 含 `-modal-backdrop` + `-modal-box` → `document.body.appendChild(overlay)`；backdrop 点击关闭（`app.js:740`） |
+| `.-lightbox-overlay` 全屏遮罩 | `markdown-preview.js:520-622`；CSS `app.css:4443-4486`（`position:fixed; inset:0; z-index:99999`） | **仅借其**遮罩/z-index 思路，不直接复用其图片交互 |
+| 焦点管理 / 焦点陷阱 / 背景滚动锁 | 全仓**未取证到既有做法**（`aria-modal` / `role="dialog"` / `body.style.overflow` 锁 均无命中）；仅有 `document.body.classList` 挂状态类的先例（`app.js:10804/10813` 的 `-brush-active`、`window-chrome.js:111` 的 `-win-resizing`） | **本提案新增**（见 R3a.5）：打开时给 `body` 加 `-review-modal-open` 类锁滚动（末尾追加策略）；焦点 `setTimeout(el.focus, 30)`（沿用 `agent-panel.js:4355-4358` / `file-tree.js:328`）；**焦点陷阱为新增，标「未取证」** |
+
+- `Esc` 关闭沿用**捕获阶段**监听：`window.addEventListener("keydown", onKey, true)`，关闭时 `removeEventListener`（范式 `markdown-preview.js:587/602`）。
+
+### R3a.3 键盘映射与冲突规避
+
+| 键 | 动作 | 依据 |
+|---|---|---|
+| `空格` / `回车` | 翻面（正面↔背面） | 与 `agent-panel.js:1413` 的「Enter/Space 激活」同感 |
+| `1` / `2` / `3` / `4` | Again / Hard / Good / Easy | 与 `review_grade` 的 `grade ∈ {1,2,3,4}` 对齐（`kb.py:4738`） |
+| `Esc` | 退出模态 | 捕获阶段（`markdown-preview.js:590-592`） |
+| 角标 | 按钮上标 `1`…`4`、`Space`、`Esc` | 新增 i18n（R3a.9） |
+
+**冲突规避（取证）**：
+- **输入控件聚焦时一律不拦**：全仓范式 `app.js:7044-7047` —— 全局 keydown 先 `const ae = document.activeElement; if (ae.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) return;`，再 `if (ae.closest(".-modal")) return;`；`file-tree.js:479-486` 亦以 `tagName ∈ {INPUT,TEXTAREA,SELECT}` + 「已有 `.-modal` 打开」为前置闸。**本提案照抄此闸**：review 键盘处理的**第一行**即校验 activeElement 不在输入框、且模态确在最上层。
+- **输入法组字中不碰**：`agent-panel.js:3659-3660`（`if (e.isComposing || e.keyCode === 229) return;`）。
+- **未打开不挂全局监听**：模态打开即挂、关闭即卸（`markdown-preview.js:587/602`）；只拦自己的键（`app.js:7038` 式「先判状态再 `preventDefault`」）。
+- **与编辑器快捷键隔离**：因 `Esc / 1-4 / Space` 仅在模态打开且焦点不在输入框时 `preventDefault`，文档编辑态既有快捷键不受影响。
+
+### R3a.4 三种卡型渲染（归 `RenderCore` 侧 · 只读）
+
+**结论：新增一个极小的 `review-card` 渲染器**（挂在既有 `window.MemoriaMarkdownPreview` 面或并列新模块），**正文 markdown 复用既有管线**，仅 `cloze` 挖空需自定义分词。
+
+- **既有渲染入口（取证）**：`window.MemoriaMarkdownPreview` IIFE（`markdown-preview.js:5`），导出 `renderHtml` / `renderToElement` / `normalizeBody` / `parseInlineTokens` 等（`markdown-preview.js:1879-1894`）。卡面 `front` / `back` 先经此管线渲染（复用公式、高亮、链接），**不另写 markdown 解析**。
+- **各卡型**：
+
+| type | 正面 | 背面 | 渲染 |
+|---|---|---|---|
+| `basic` | `front` | `back` | 正面 → 翻面 → 背面 |
+| `cloze` | `front` 中 `{{c1::…}}`（可多段 `{{c2::…}}`）替换为**占位**（下划线/空框），其余照常 | 显示答案：占位处填回 `…` 原文 | 需一个**挖空分词器**：按 `/\{\{c\d+::(.*?)\}\}/g` 切，非挖空段走 `renderHtml` |
+| `reverse` | `back` | `front` | 方向由卡定义**互换**（渲染同 basic，仅取值互换） |
+
+- **挖空标记事实源**：`kb.py:4244-4245`（`_review_cloze_re`，注释「`{{c1::…}}`，序号可多个」）、`:4275-4276`（cloze 卡 `front` **必须**含 `{{c1::…}}`）⇒ 分词器正则与后端校验**同源**。
+- **只读纪律**：渲染不产生任何写，符合 `RenderCore` 语义（本文 §1.10 A′ / [view-surface-contract.md](view-surface-contract.md)）。
+
+### R3a.5 数据流、失败与重试
+
+```
+进入模态
+  └─(1) RPC 调 review_due_list（取一次全量） ⇒ card_id[]（+ 只读 cards.json 补 front/back/type）
+        └─(2) 建本地队列 queue = [...cards]
+             └─(3) 逐张消费：翻面 → 评分
+                  └─(4) 每评分调一次 review_grade(card_id, grade)（幂等）
+                        ├─成功：出队，M+1，渲染下一张
+                        └─失败：见下「失败与重试」
+  └─(5) 退出：汇总（完成 M / 未评 K）
+```
+
+- **一次全量**：仅进入时调 1 次 `review_due_list`，避免「每张一次请求」（正面回应本提案约束）。
+- **每评分一次 `review_grade`**：幂等键 = `card_id + 评审日`（`kb.py:4732`），同日同卡重复评分不叠加。
+- **失败与重试（提案，待定 D）**：评分调用失败 → **不静默丢弃**：① 该卡**留在队列**并标记「未评」，**队尾重试**一次；② 仍失败则**跳过并在结束页计入「未评 K」**（不伪造完成）；③ 审批被拒/超时/无应答 → toast 提示，**不推进进度**（后端 fail-closed，见 `kb.py:4643-4644`）。
+  - **待定 D**：重试次数（建议 1 次）与「失败卡是否插队尾」。
+
+### R3a.6 进度与结束态
+
+- **顶部**：「今日到期 N / 已完成 M」——N 来自 `review_due_list` 返回数量（`kb.py:4493` 的 `len(due)`），M 为本地成功 `review_grade` 计数。
+- **结束页两文案**：
+  - **全部清完**（`N == M`）：「今日复习完成 ✓」。
+  - **还剩 K 张未评**（`K = N - M > 0`）：「今日已评 M 张，还剩 K 张未评」。**须明示**：「**未评的明天照样到期**」—— 未评分不改 `progress.json` 状态，次日仍 `due`（由 `fsrs.py due` 决定，`fsrs.py:351-375`）。
+
+### R3a.7 入口与空态
+
+- **入口（取证）**：主工具栏 `#toolbar > .toolbar-actions`（`index.html:56-83`），现有按钮 `#btn-refresh` / `#btn-build` / `#btn-check` / `#btn-settings`（`index.html:77-83`）。**建议**：在 `#btn-check` 之后新增 `#btn-review`（`title` 走 i18n），镜像 `#btn-agent`（`index.html:99`）的图标按钮风格；handler 参照 `agent-panel.js:1423-1424`（`toolbarBtn.addEventListener("click", …)`）。
+- **可选快捷键**：建议 `Ctrl/Cmd+Shift+R`（避开已用的 `Ctrl/Cmd+Enter` 发送、`Alt+←/→` 导航，见 `index.html:57-58`）。**待定 E**：是否要快捷键。
+- **空态**：`review_due_list` 返回 0 张 → 「今日无到期卡片 🎉」，不建队列、不弹评分条。
+- **工具不可用（旧版应用）**：`review_*` RPC 不存在 / 返回 `no_kb` / 工具未注册 → **明确提示**（如「当前应用版本不支持复习，请升级」），**绝不静默失败**（沿用 `ui.py:2211-2212` 的 `{status:"error", code:"no_kb"}` 结构化错误风格）。
+
+### R3a.8 不写用户数据（红线）
+
+- 界面**只经 `review_grade` 写评分**；**绝不**直接改 `progress.json` / `cards.json`。
+  - `progress.json`：**只由** `fsrs.py` 写（`fsrs.py:8`「本脚本读写」；`kb.py:4130`「调度两把内部走 fsrs.py」）。
+  - `cards.json`：界面**只读**（若采纳 R3a.1 待定 A）；任何改卡走 `review_cards_upsert` / `review_card_disable`（R3b，且需审批）。
+- 模态打开**不触发任何写**；仅当用户按 `1..4` 才发生一次 `review_grade`。
+
+### R3a.9 i18n（新增键，走既有机制）
+
+- **机制（取证）**：文件级 IIFE `(function (g) { … })(typeof window !== "undefined" ? window : globalThis);`，**末尾**用 `Object.assign(g.MEMORIA_LOCALES["<lang>"].<ns>, { … })` 追加（`zh-CN.js:1766-1777`、`en.js:1870-1881`）。落点 = **文件末尾 Object.assign**，与「零行漂移」一致。
+- **计划新增键（命名空间 `review.*`，中英同步）**：
+
+| key | zh-CN | en |
+|---|---|---|
+| `review.buttonTitle` | 复习（今日到期） | Review (due today) |
+| `review.dueCount` | 今日到期 {n} 张 | {n} due today |
+| `review.progress` | 今日到期 {total} / 已完成 {done} | Due {total} / Done {done} |
+| `review.flipHint` | 空格 / 回车 翻面 | Space / Enter to flip |
+| `review.grade.again` / `.hard` / `.good` / `.easy` | 重来 / 困难 / 良好 / 简单 | Again / Hard / Good / Easy |
+| `review.empty` | 今日无到期卡片 🎉 | Nothing due today 🎉 |
+| `review.doneAll` | 今日复习完成 ✓ | Review complete ✓ |
+| `review.donePartial` | 今日已评 {done} 张，还剩 {left} 张未评（未评的明天照样到期） | Reviewed {done}, {left} left (unreviewed stay due tomorrow) |
+| `review.unavailable` | 当前应用版本不支持复习，请升级 | Review not available in this app version |
+| `review.loadFailed` | 复习数据加载失败：{msg} | Failed to load review data: {msg} |
+| `review.gradeFailed` | 评分失败：{card} | Grade failed: {card} |
+
+- **待定 F**：最终键名（是否并入既有 `preview.*` 命名空间，还是独立 `review.*`）。
+
+### R3a.10 零行漂移与锚点
+
+- 本次实现统一遵守：**同行替换（等量）或文件末尾追加**；严禁在既有函数中间插行。
+- 先例：`markdown-preview.js:1906-1908`（「以下函数与文件上方旧实现同名…刻意文件尾追加以满足零行漂移」）、`kb.py:4132-4133`、`agent-panel.js:2396`（「整块追加在 IIFE 末尾…⇒ 上方所有 `<文件>:<行号>` 锚点零漂移」）。
+- 本文档本身：**只追加本节**，不改 `## 附 R3` 及以上任何行。
+
+### R3a.11 验收口径（可跑）
+
+- **探针**：复用 `scripts/benchmark/surface/cdp.mjs`（Node 内置 `WebSocket` 直连 Edge CDP，`cdp.mjs:1-17`；打字走 `Input.dispatchKeyEvent` 出**真实** `keydown`，`cdp.mjs:13-16`）与交互阶梯 `docs/example/rich-content-test/_harness.py`（[AGENT.md](AGENT.md) Always）。
+- **断言**：
+
+| # | 步骤 | 断言 | 取证方式 |
+|---|---|---|---|
+| 1 | 打开模态 | `.-modal` 在 DOM、`body` 有滚动锁类 | DOM 查询 |
+| 2 | 按 `空格` | 卡从正面翻到背面（占位/答案切换） | 文案/类变化 |
+| 3 | 按 `1..4` | **`review_grade` 被调用**且 `progress.json` 前后变化 | 后端调用计数 + 读 `.memoria/agent/review/progress.json` 前后 hash（`REVIEW_PROGRESS_REL`，`kb.py:4136`） |
+| 4 | 按 `Esc` | 模态移除、监听卸载（再按 `1` 无反应） | DOM + 无副作用 |
+| 5 | 输入框聚焦时按 `1/2/3/4` | **不被截获**（焦点/输入不变） | 复用 `app.js:7044-7047` 的 activeElement 闸 |
+| 6 | 无可评卡 | 空态提示、无评分条 | DOM |
+
+  - **注**：因 `review_*` 需审批（`kb.py:4642-4644`），探针须能应答审批卡（参照 `agent-panel.js` 的审批轮询），或依赖 R3a.1 待定 B 结论。
+
+### R3a.12 明确不做（本期）
+
+- **不做**：卡片管理视图（= **R3b**：列表 / 单卡编辑 / 禁卡 / 删除）；
+- **不做**：统计图表（上节 R3 已列「非必需」）；
+- **不做**：任何**写 `cards.json`** 的能力（R3b 且须审批）；
+- **不做**：直写 `progress.json`（**永久红线**，只由 `fsrs.py` 写）。
+
+### R3a.13 待定清单（需人拍板）
+
+| # | 待定项 | 选项 | 建议 |
+|---|---|---|---|
+| A | 卡面内容从哪来（`review_due_list` 只回 id） | 界面只读 `cards.json` vs 新增只读工具 | 界面只读 `cards.json` |
+| B | 逐次审批的 UX 摩擦 | 保持逐次审批 vs UI 通道一次性授权 | 待定（直接影响「每天高频用」可行性） |
+| C | UI → 工具的桥 | 复用 `agent_exec_*` 通道 vs 新增 `review_*` RPC | 新增 `review_due` / `review_grade` RPC（末尾追加） |
+| D | 评分失败重试策略 | 队尾重试 1 次 vs 直接标记未评 | 队尾重试 1 次 |
+| E | 是否给快捷键 | 无 vs `Ctrl/Cmd+Shift+R` | 可选 |
+| F | i18n 键名空间 | `review.*` vs 并入 `preview.*` | 独立 `review.*` |
+
+> **说明**：本节为**设计提案**，不改动本文 §0–§6 与上节 `## 附 R3` 的任何口径；接口细节仍以 [view-surface-contract.md](view-surface-contract.md) 为准。**未施工**。
+
+## 附 R3a-2：拍板补录与失败边界验证（真实读数）
+
+> 本节**只追加**在文末，不改动上文任何一行（零行漂移）。下列验证均在**临时库** `artifacts/_review_fsrs_verify/`（自造 `.memoria/agent/review/cards.json` + 拷贝 `resources/agent-prompts/fsrs.py`）内以真实 subprocess 复现，**未触碰** `docs/example/AAA_Vocab`。命令、退出码、报错文本均为原始读数。
+
+### R3a-2.1 失败边界实测（真实读数）
+
+被测命令统一形如 `python <KB>/.memoria/agent/fsrs.py <cmd> --kb <KB> --date <D>`（即 `review_grade` 内部所走的**同一条** CLI）。
+
+| 场景 | 是否可复现 | 原始报错 / 输出 | 对 `progress.json` 的影响 | 分类 |
+|---|---|---|---|---|
+| 评"当前不在到期"的卡（`due --date` 不含它） | 是 | 无错误，exit 0：`{"status":"ok",...,"due":"2026-01-08","reps":2,...,"idempotent":false}` | **改写**：c1 `due` 2026-01-04→2026-01-08、`reps` 1→2、`stability` 3.173→5.869142，新增 1 条 log | 非失败（`grade` **不看** `due`） |
+| `card_id` 不存在（拼错 `c999`） | 是 | 无错误，exit 0：`{"status":"ok","card_id":"c999",...,"reps":1,...,"idempotent":false}` | **新增**幻影卡 c999 状态 + log 条目（无存在性校验） | 非失败（但为隐患） |
+| `progress.json` 只读（`attrib +R`） | 是 | exit 1：`{"status":"error","error":"[WinError 5] 拒绝访问。: '…progress.json.<rand>.tmp' -> '…progress.json'"}` | **不变**（`os.replace` 失败即回滚；无 `.tmp` 遗留） | **暂时性** |
+| 同日同卡第 2 次、**同分**（3→3） | 是 | 无错误，exit 0，`"idempotent":true` | 不变（`due`/`reps`/`log` 长度均不动） | 非失败（幂等） |
+| 同日同卡第 2 次、**不同分**（3→1） | 是 | 无错误，exit 0，`idempotent:true` 且回 `"grade":3`（**第一次的分**） | 不变 | 非失败（幂等，首分胜出） |
+| `cards.json` 半坏（删某条 `card_id`）→ 跑 `grade` | 是 | 无错误，exit 0（`grade` **不读** `cards.json`），正常改写 c1 | 正常改写（c1 `due`→2026-03-24、`reps`→3） | 非失败（见下一行） |
+| `cards.json` 半坏 → 跑 `due` | 是 | exit 1：`{"status":"error","error":"cards.json 结构非法：以下条目缺 \"card_id\"（须为 str）：1"}` | 不变 | **不可评**（结构性：整队列 fail-closed 并列出坏下标） |
+| 被禁用卡（`disabled:true`） | 未在 fsrs 层复现 | 判定在**工具层**：`review.grade: 卡片 <id> 已被禁用…`（`kb.py:4507-4508`）；fsrs **不读** `disabled` | 不变 | **不可评**（跳过、不重试） |
+
+> **关键结论**：**"不在到期里"的卡不会被拒** —— `fsrs.py grade` 只做 `(card_id, review_date)` 幂等判断，**从不**校验 `due`，也**不校验** `card_id` 是否存在于 `cards.json`（拼错 id 反而静默新建）。因此队列/UI **必须自己**用 `review_due_list` 的结果界定"可评集合"，**不能**指望 `grade` 兜底。
+
+其余两类实测条件：
+- **暂时性**：见"只读"行；"找不到 Python 解释器"由 `_review_run_fsrs`（`kb.py:4333-4337`）归为同类。
+- **结果不明**：`grade` 的 subprocess `timeout=60`（`kb.py:4346`）或进程被杀时，可能"已写盘但未返回"；临时库**未能稳定造出**该条件（见 R3a-2.6 说明）。
+- **审批被拒**：五把 `review_*` 工具 `read_only=False` ⇒ 分发前过审批门（`kb.py:4640-4644`）；审批被拒时工具体**根本不被调用** ⇒ 算"未评"，**不是失败**。
+
+### R3a-2.2 `review_grade` 的队列处理策略（待定 D 的定案）
+
+| 失败分类 | 处理 | 依据 |
+|---|---|---|
+| **不可评**（卡不存在 / 被禁） | **跳过并记下，不重试** | 重试也不会成功。被禁由工具层拒绝；卡不存在在 fsrs 层会静默新建 ⇒ **必须先在队列构建时用 `review_due_list` 的 id 集合过滤**，别把坏 id 交给 `grade` |
+| **暂时性**（写不进去 / 解释器不可用） | **队尾重试一次** | 多为例外而非永久错；只读实测 exit 1、`progress.json` 未变，重试有意义 |
+| **结果不明**（超时 / 中断） | **也重试**（安全） | 评分按 `(card_id, review_date)` **幂等**：实测同日同卡连评不叠加（见下） |
+| 最终仍未评 | **退出时汇总列出**，提示"未评的明天照样到期" | 与 `review.donePartial` 文案一致（R3a.9） |
+
+**幂等复验（"结果不明可安全重试"的实证）**：临时库对 c3 连做三次**同日**评分——
+1. `grade 3 @2026-02-01` ⇒ `due=2026-02-04, stability=3.173, reps=1`，`log` 长度 3→4；
+2. 再 `grade 3 @2026-02-01` ⇒ `idempotent:true`，`due` / `stability` / `reps` 与 `log` 长度**全不变**；
+3. `grade 1 @2026-02-01`（**不同分**）⇒ 仍 `idempotent:true` 且回 `"grade":3`，状态**全不变**。
+
+⇒ 同一 `(card, day)` 无论重试几次、分是否变化，`progress.json` 只落**第一条**；"结果不明"重试**不会**把评分算两遍。**注意**：该幂等只在**同一天**成立，跨天重试 = 次日新评（这不是重试，是新的一天）。
+
+### R3a-2.3 设计红线：**不做乐观更新**（写死）
+
+- 界面**以工具返回为准**：只有 `review_grade` 返回成功，才把该卡计为"已评"并前移进度。
+- **未返回成功即显示「未评」**，**绝不**先把卡面翻到下一张、也不先把计数 +1（**不做乐观更新**）。
+- 依据 R3a-2.1：`grade` 可能 exit 0 却写进"不该评的卡"（无 `due` / 存在性校验），也可能 exit 1；界面若自行假设成功，会与 `progress.json` 真相不一致。
+
+### R3a-2.4 卡面来源修正（对 R3a.1 待定 A 的修正，**R2 增补·待施工**）
+
+- 原 R3a 方案（待定 A）写的是"界面**绕道只读 `cards.json`**"。
+- **修正为**：由 **`review_due_list` 直接返回卡面与状态字段** —— `front` / `back` / `type` / `kp_id` / `file` / `disabled` + FSRS 状态（`state` / `due` / `reps` …）。
+- **理由**：现实现只回 `card_id`（`src/memoria/services/agent/tools/kb.py:4477-4496` 的 `_review_due_list`，把 `fsrs.py due` 的 id 列表拼成 `- <id>` 文本），导致 **UI 与 agent 都得**另行读 `cards.json` / `progress.json` 才能拿到卡面。扩展 `review_due_list` 的返回即可**一处修好两条路**，并让 UI 少直读事实源、与 R3a.8「不写用户数据」更一致。
+- **标注**：此为一**R2 增补（待施工）**，不在本期 UI 实现内；落地前 UI 仍按待定 A 的现方案。
+
+### R3a-2.5 审批分层（拍板记录）
+
+| 触发者 | 是否审批 | 理由 |
+|---|---|---|
+| **agent 驱动** | **逐次审批（保持现状）** | 审批门是防"**模型不可信**"；模型连评多张卡时风险面最大 |
+| **人驱动（点 UI 按钮）** | **免审批** | 按按钮的是**人**，且**正看着卡面**做决定，不存在被模型诱导的空间 |
+
+**与命令执行的对照**：`pwsh` / `cmd`（`kb.py:4107-4116`）"人点也审批"之所以**不能**免，是因为**命令危险且不可逆**（可删文件、改系统）；而"给一张卡评一个分"**幂等、可撤销**（同日重评不叠加、跨天可再评）、且只动**一张卡**的调度状态 ⇒ 人的一次点击即可直接生效。
+
+### R3a-2.6 待定清单更新
+
+| # | 项 | 原建议 | 现状 |
+|---|---|---|---|
+| A | 卡面来源 | 界面只读 `cards.json` | **方向已修正**：见 R3a-2.4（改由 `review_due_list` 直返卡面；**R2 增补，待施工**） |
+| B | 逐次审批 UX 摩擦 | 待定 | **已拍板**：见 R3a-2.5（agent 逐次审批 / 人驱动免审批） |
+| C | UI→工具的桥 | 新增 `review_*` RPC | **仍待定**（复用 `agent_exec_*` vs 新增 `review_*` RPC） |
+| D | 评分失败重试策略 | 队尾重试 1 次 | **已定**：见 R3a-2.2（分类处理 + 幂等安全重试） |
+| E | 是否给快捷键 | 可选 | **已落定（默认给）**：`Ctrl/Cmd+Shift+R` |
+| F | i18n 键名空间 | 独立 `review.*` | **已落定（默认）**：采用 `review.*` |
+
+> **仍待定**：C（UI→工具的桥）—— 唯一尚未拍板的**接口层**选择；此外 A 的 R2 增补施工亦尚未开始。
