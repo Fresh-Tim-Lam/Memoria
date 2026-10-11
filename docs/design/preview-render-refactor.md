@@ -1082,18 +1082,20 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 ## 附 R4：题型扩型与作答交互（进行中）
 
-> **状态**：进行中。**P0 已交付**；R4.2 / R4.3 待施工。本附节为**设计记录**（人已拍板），非门禁收口。
+> **状态**：进行中。**P0 已交付**；**R4.2 已落地**（接口就位、界面未接，见下）；R4.3 待施工。本附节为**设计记录**（人已拍板），非门禁收口。
 
 1. **P0 已交付**：`type` 放开为 7 种（`basic` / `cloze` / `reverse` / `mcq` / `gapfill` / `short` / `produce`）；新增可选字段 `judge` / `options` / `answer` / `accept` / `explain` / `input`；按类型校验（`mcq` 必 `options` ≥ 2 去重非空 + `answer` 必须 ∈ `options`；`gapfill` 必 `answer` 或 `accept` 之一；`cloze` 保留挖空硬校验）；`judge` / `input` 缺省**派生**（`mcq` → auto、带 `answer`/`accept` 的 `cloze`/`gapfill` → auto、`short`/`produce` → agent、`basic`/`reverse` → self；`short` → single、`produce` → multi）。**不做模糊匹配 / 词形归一化**（交 agent 判）。
 
-2. **R4.2 前置规则（人已批准）**：**答案不回前端** —— 前端**从不**收到 `answer` / `accept` / `explain`；判分放**后端**（`auto`：精确匹配或 `accept` 白名单命中）或**交 agent**（`judge: agent`）。理由：靠「UI 自己藏住答案」太容易漏，从**结构上**消除泄题。
-   - **现状缺口（如实标注）**：`review_due_list` **目前确实会返回**这些答案字段（P0 已交付即如此）⇒ **待 R4.2 改掉**（二选一：默认不含答案；或给 agent 单独入口）。**尚未解决**，勿写成「已解决」。
+2. **R4.2 已落地（人已批准）**：**答案不回前端** —— UI 取卡路径（`review_due_start`）在**后端**即逐卡剔除 `answer` / `accept` / `explain`（**保留 `options`**），**不依赖"前端不渲染"这种隐性契约**；判分放**后端**（`auto`：精确匹配或 `accept` 白名单命中）或**交 agent**（`judge: agent`）。理由：靠「UI 自己藏住答案」太容易漏，从**结构上**消除泄题。
+   - **已落地（如实标注）**：UI 取卡路径已在后端剔除答案；**agent 工具 `review_due_list` 保留答案** —— 依据是「**判分方 vs 答题方**」的**角色差**（**不是**前后端划分）：agent 是**判分方**（`judge: agent` 的开放题本该它判，必须看到参考答案），UI 是**答题方**。新增 UI 专用、只挂 `UIAPI` 的后端判分入口 **`review_submit_one`**（**未注册为工具**、**只读**、**作答后才揭晓** `answer`/`explain`；`judge` 为 `agent`/`self` ⇒ 返回 `unjudged`；未知 `card_id` ⇒ `unreviewable`）。**有意不做归一化**：白名单外仅大小写不同、或多一个尾空格 ⇒ 判 `wrong`（那部分交 agent 判）—— 这是**有意行为**，勿当 bug 修掉。**如实**：`review_submit_one` **目前没有 UI 调用方**（作答交互属 **R4.3**）⇒ **接口就位、界面未接**，只在传输层验证过，**不是**端到端可用的用户功能。若将来 agent 把答案贴进对话，那是 **agent 行为问题**，不在本次范围。
 
 3. **UI 形态变更（人已拍板）**：复习卡的**主形态 = 可被 agent 呼出的悬浮矩形卡**；已交付的**模态面板退为手动兜底入口**（agent 未及时回复时，用户可自己点进去看「agent 设好的卡」）；**悬浮卡可撤回 / 可不显示**。
    - **技术前提（待设计，勿当已完成）**：agent → UI **目前只有轮询、没有推送**；「呼出」可低成本实现（轮询响应里带回待呼出卡），但「**撤回要及时生效**」需要额外设计。
 
-4. **分期**：**P0** ✅（枚举 + 字段）· **P1** 作答记录落 `.memoria/agent/review/attempts.jsonl`（含 `elapsed_ms`，见下）+ 只读工具 `review_attempts_list` · **P2** 工具 `review_feedback_add` 把反馈写回卡面 · **R4.2** 后端判分 + 答案隔离 · **R4.3** 各题型作答交互（`mcq` 选项按钮 / `gapfill` 输入框 / `short` / `produce` 输入 / `judge` 分支）。
+4. **分期**：**P0** ✅（枚举 + 字段）· **P1** 作答记录落 `.memoria/agent/review/attempts.jsonl`（含 `elapsed_ms`，见下）+ 只读工具 `review_attempts_list` · **P2** 工具 `review_feedback_add` 把反馈写回卡面 · **R4.2** ✅（后端答案隔离 + 后端判分入口 `review_submit_one`，UI 未接） · **R4.3** 各题型作答交互（`mcq` 选项按钮 / `gapfill` 输入框 / `short` / `produce` 输入 / `judge` 分支）。
 
 5. **两条口径（人已拍板）**：**③ 作答用时** `elapsed_ms` 落 **`attempts.jsonl`**，**不进卡定义**（卡 schema 里没有该字段，`additionalProperties:false` 会拒）；**④ 同一 `kp_id` 多卡不设上限**（无数量校验）。
 
 6. **既有规格呼应**：该库 `docs/agent_specification.md` §2.3（`:34-52`）/ §3.2（`:92`）/ §5.2（`:176`）**早就定义了** MCQ / Short Answer / Fill-in-blank 与「作答后立即给答案与解释」—— **R4 是补齐既有规格，不是新起**。**注意：该文件在知识库内，`docs/example/**` 为禁改区，此处只记录引用。**
+
+7. **R4.2 验收读数（照实搬，2026-10-11 · 提交 `7d56514e`）**：传输层直证 `review_due_start` 返回里 `answer` / `accept` / `explain` 命中 **0** 且含 `options`；修前对照同一库的**领域源载荷**命中 **9**（证明剔除发生在 UI 层）；agent 工具 `review_due_list` 直调仍命中 **9**（保留）。后端判分表：`mcq` 对/错 ⇒ `correct`/`wrong`（均揭晓 `answer` + `explain`）；`gapfill` 精确答案与 `accept` 白名单命中 ⇒ `correct`；白名单外仅大小写不同 ⇒ `wrong`、多一个尾空格 ⇒ `wrong`（**有意行为**，不做归一化）；`cloze` ⇒ `correct`；`judge: agent` ⇒ `unjudged`（不揭晓）；未知 `card_id` ⇒ `unreviewable`。**只读**：`cards.json` sha256 前后一致、`progress.json` 前后均不存在。端到端：console 错误 **0**、uncaught **0**（7 张卡走完取卡/翻面/评分，mcq 正常无报错）。**反向验证**：把隐藏键常量 `_REVIEW_UI_HIDDEN_KEYS` 临时置空 ⇒ 钉子 **FAIL**，恢复 ⇒ **passed**。`pytest` **1410 → 1414**（新增四条钉子，见 `tests/test_review_modal.py`）。
