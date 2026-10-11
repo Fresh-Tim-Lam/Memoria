@@ -238,10 +238,11 @@ def test_tool_is_registered_last_and_only_once(kb: Path) -> None:
     """
     built = tuple(tool.name for tool in build_kb_tools(str(kb)))
     assert built == KB_TOOL_NAMES
-    assert KB_TOOL_NAMES[-15] == "ask_user_question"
-    assert KB_TOOL_NAMES[-14:-12] == ("web_search", "fetch_url")
-    assert KB_TOOL_NAMES[-12:-6] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
-    assert KB_TOOL_NAMES[-6:] == ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list")
+    assert KB_TOOL_NAMES[-16] == "ask_user_question"
+    assert KB_TOOL_NAMES[-15:-13] == ("web_search", "fetch_url")
+    assert KB_TOOL_NAMES[-13:-7] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
+    assert KB_TOOL_NAMES[-7:-1] == ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list")
+    assert KB_TOOL_NAMES[-1] == "review_feedback_add"
     assert KB_TOOL_NAMES.count("ask_user_question") == 1
 
 

@@ -124,7 +124,7 @@ def test_total_size_quota_is_enforced(kb: Path) -> None:
 
 
 def test_scratch_tools_are_registered_read_only_and_closed(kb: Path) -> None:
-    assert KB_TOOL_NAMES[-12:-8] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
+    assert KB_TOOL_NAMES[-13:-9] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
     registry = _registry(kb)
     for name in ("scratch_list", "scratch_read", "scratch_write", "scratch_delete"):
         tool = registry.get(name)

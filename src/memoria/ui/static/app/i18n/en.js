@@ -1931,4 +1931,14 @@
     recordedPending: "Recorded — awaiting agent grading",
     recordFailed: "Failed to record attempt: {msg}",
   });
+
+  // ===== 2026-10-12 appended: R4 P2 feedback write-back (`js/review-modal.js` `feedbackHtml`; feedback is
+  // written back by the agent tool `review_feedback_add` into `attempts.jsonl` and returned with the card face
+  // via `review_due_start`) =====
+  // Shows the latest feedback under the card face; cards without feedback render nothing.
+  // Appended via end-of-file `Object.assign` ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].review, {
+    feedbackLabel: "Previous feedback",
+    feedbackScore: "Score {score}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

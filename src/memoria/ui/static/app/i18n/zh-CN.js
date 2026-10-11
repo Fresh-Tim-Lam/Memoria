@@ -1827,4 +1827,12 @@
     recordedPending: "已记录，待智能体判分",
     recordFailed: "作答记录失败：{msg}",
   });
+
+  // ===== 2026-10-12 追加：R4 P2 反馈写回（`js/review-modal.js` 的 `feedbackHtml`；反馈由 agent 工具
+  // `review_feedback_add` 写回 `attempts.jsonl`，经 `review_due_start` 随卡面带回）=====
+  // 卡面下方显示「最近一条反馈」；无反馈的卡不显示该块。走"文件末尾 `Object.assign`"⇒ 上方锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].review, {
+    feedbackLabel: "上次反馈",
+    feedbackScore: "得分 {score}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

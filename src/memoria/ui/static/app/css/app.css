@@ -7100,3 +7100,24 @@ body.-review-modal-open { overflow: hidden; }
     color: var(--text-secondary);
     font-size: 0.6875rem;
 }
+/* R4 P2（2026-10-12）：卡面下方「最近一条反馈」小块（反馈经 review_due_start 带回；无反馈不渲染）。
+   样式复用既有 token（border/bg-tertiary/text-*/theme-color）；长文本限高可滚（max-height + overflow:auto）。 */
+.-review-feedback {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.625rem;
+    border: 0.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+}
+.-review-feedback-head { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.25rem; }
+.-review-feedback-label { color: var(--text-secondary); font-size: 0.6875rem; font-weight: 600; }
+.-review-feedback-score { color: var(--theme-color); font-size: 0.6875rem; }
+.-review-feedback-text {
+    color: var(--text-bright);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    max-height: 8rem;
+    overflow: auto;
+}

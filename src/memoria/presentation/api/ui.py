@@ -2280,7 +2280,7 @@ def _review_ui_due(self, date: str | None = None, kb_path: str | None = None) ->
         return _review_ui_error("bad_payload", "复习数据解析失败（fsrs.py 未返回合法 JSON）", "load_failed")
     if not isinstance(payload, dict):
         return _review_ui_error("bad_payload", "复习数据格式非法", "load_failed")
-    payload = _review_ui_hide_answers(payload)
+    payload = _review_ui_attach_feedback(payload, kb)
     return payload
 
 
@@ -2564,5 +2564,51 @@ def _review_ui_reveal(
 
 
 UIAPI.review_reveal_one = _review_ui_reveal
+
+
+# ── R4 P2（2026-10-12）：**把该卡最近一条反馈带回取卡响应**（只读）──────────────────────────
+# 设计见 `docs/design/preview-render-refactor.md` 附 R4（P2：feedback 写回卡面）。**选择在既有 RPC
+# `review_due_start` 的返回里带反馈**（不新增 RPC、不新增事实源）—— 理由：① 它**已经**一次性返回本次复习
+# 全部卡面，前端渲染卡面即用它 ⇒ 反馈与卡面**同一份载荷**、无需第二次往返；② 覆盖**所有题型的卡**
+# （mcq/short/produce/… 都在这里），而 `review_reveal_one` **只对 cloze 卡翻面时**才调（覆盖不全）。
+# **只读**：读 `attempts.jsonl`（`_review_load_attempts`）按 card_id 取「最近一条 `kind:"feedback"`」挂到卡上；
+# 旧记录（无 `kind`）按 `answer` 计（`_review_record_kind`）⇒ **不会被误当反馈显示**。数据源只有这一份文件。
+
+def _review_ui_attach_feedback(payload: dict, kb_path: str) -> dict:
+    """取卡载荷：先做**答案隔离**，再把每张卡的「最近一条 feedback」挂成 `card["feedback"]`（**只读**）。
+
+    - 先 `_review_ui_hide_answers(payload)`（答案隔离照旧，`options` 保留）；
+    - 再读 `.memoria/agent/review/attempts.jsonl`，只取 `kind=="feedback"` 的记录（`_review_record_kind`），
+      按 `card_id` 留**最后一条**（文件顺序 = 时间顺序）⇒ 挂 `card["feedback"] = {feedback, verdict?, score?, ts?, attempt_id?}`；
+    - 无反馈的卡**不加该键**（前端据此不显示该块）；读失败/文件不存在 ⇒ 只是没有反馈（**不报错、不影响取卡**）。
+    """
+    from memoria.services.agent.tools.kb import (
+        _review_load_attempts,
+        _review_record_kind,
+    )
+
+    payload = _review_ui_hide_answers(payload)
+    cards = payload.get("cards")
+    if not isinstance(cards, list):
+        return payload
+    latest: dict[str, dict] = {}
+    try:
+        rows, _invalid = _review_load_attempts(kb_path)
+    except OSError:
+        rows = []
+    for row in rows:
+        if not isinstance(row, dict) or _review_record_kind(row) != "feedback":
+            continue
+        cid = str(row.get("card_id") or "")
+        if cid:
+            latest[cid] = row  # 文件顺序 ⇒ 后到覆盖 ⇒ 留下最近一条
+    for card in cards:
+        if not isinstance(card, dict):
+            continue
+        fb = latest.get(str(card.get("card_id") or ""))
+        if fb is None:
+            continue
+        card["feedback"] = {k: fb[k] for k in ("feedback", "verdict", "score", "ts", "attempt_id") if k in fb}
+    return payload
 
 

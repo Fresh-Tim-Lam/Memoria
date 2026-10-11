@@ -256,7 +256,7 @@
     paintProgress();
     body.innerHTML =
       '<div class="-review-face" id="-review-face"></div>' + (S.auto || S.agentInput ? answerUIHtml() : "") +
-      '<div class="-review-hint">' + esc(T(S.auto || S.agentInput ? "review.answerHint" : "review.flipHint")) + "</div>";
+      '<div class="-review-hint">' + esc(T(S.auto || S.agentInput ? "review.answerHint" : "review.flipHint")) + "</div>" + feedbackHtml();
     renderGradeBar(retryGrade != null || !!S.judged);
     S.flipped = retryGrade != null;
     await paintFace($("#-review-face"), S.card, S.flipped); S.shownAt = Date.now();
@@ -746,6 +746,22 @@
     return multi
       ? '<textarea class="-review-input" id="-review-input" rows="3" spellcheck="false" placeholder="' + ph + '"></textarea>'
       : '<input type="text" class="-review-input" id="-review-input" autocomplete="off" spellcheck="false" placeholder="' + ph + '">';
+  }
+
+  // ── R4 P2（2026-10-12）：**卡面下方显示该卡最近一条反馈** ──────────────────────────────
+  // 反馈由 agent 工具 `review_feedback_add` 写回 `attempts.jsonl`（`kind:"feedback"`），经只读 RPC
+  // `review_due_start` 随卡面带回（`card.feedback`）。**无反馈的卡 ⇒ 返回空串**（不显示该块）；
+  // 文案走 `review.*` i18n；样式复用既有 token（`app.css` 的 `.-review-feedback*`，长文本限高可滚）。
+  // 整块追加在 IIFE 末尾 ⇒ 上方所有 `review-modal.js:<行号>` 锚点零漂移。
+  function feedbackHtml() {
+    const fb = S.card && S.card.feedback;
+    if (!fb || typeof fb !== "object" || typeof fb.feedback !== "string" || !fb.feedback) return "";
+    const score = (typeof fb.score === "number")
+      ? '<span class="-review-feedback-score">' + esc(T("review.feedbackScore", { score: fb.score })) + "</span>"
+      : "";
+    return '<div class="-review-feedback" id="-review-feedback">' +
+      '<div class="-review-feedback-head"><span class="-review-feedback-label">' + esc(T("review.feedbackLabel")) + "</span>" + score + "</div>" +
+      '<div class="-review-feedback-text">' + esc(fb.feedback) + "</div></div>";
   }
 
   global.MemoriaReviewModal = { open: open, close: close };

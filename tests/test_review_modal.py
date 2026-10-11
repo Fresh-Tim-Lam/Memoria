@@ -602,7 +602,7 @@ def test_review_attempts_list_read_only_registered_and_others_still_approved(kb:
     assert tool is not None and tool.read_only is True, "只读 ⇒ 免审批（与 scratch_read 同类）"
     assert tool.parameters["additionalProperties"] is False
     assert not hasattr(UIAPI, "review_attempts_list"), "它是 agent 工具，不是 UI RPC"
-    for name in ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add"):
+    for name in ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_feedback_add"):
         t = reg.get(name)
         assert t is not None and t.read_only is False, name
 
@@ -658,3 +658,157 @@ def test_review_r4p1_short_produce_input_and_frontend_wiring() -> None:
         proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],
                               capture_output=True, text=True, encoding="utf-8")
         assert proc.returncode == 0, proc.stderr
+
+
+# ── ⑪ R4 P2（2026-10-12）：反馈写回（工具 `review_feedback_add`）+ 读出闭环 + UI 可见 ──────────────
+# 判定/反馈以 `kind:"feedback"` 追加进**同一份** `attempts.jsonl`（不新增事实源）；`review_attempts_list` 加
+# `kind`/`verdict` 过滤；`review_due_start` 随卡面带回「最近一条反馈」。**旧记录（无 `kind`）按 `answer` 计**。
+
+
+def _feedback_lines(kb: Path) -> list[dict]:
+    return [r for r in _attempt_lines(kb) if r.get("kind") == "feedback"]
+
+
+def test_review_feedback_add_writes_kind_feedback_with_backup_and_audit(kb: Path) -> None:
+    """`review_feedback_add` 追加一条 `kind:"feedback"` 记录；写前备份（可撤销点）+ 审计；**不碰** cards/progress。"""
+    import hashlib
+
+    from memoria.services.agent.tools.kb import _review_feedback_add
+
+    _write_kb(kb, _answer_cards())
+    review = kb / ".memoria" / "agent" / "review"
+    cards_before = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
+
+    out = _review_feedback_add(str(kb), None, {
+        "card_id": "s1", "feedback": "时态错了：应用过去式。", "verdict": "partial",
+        "score": 0.5, "attempt_id": "att_deadbeef1234",
+    })
+    assert not out.error
+    rows = _feedback_lines(kb)
+    assert len(rows) == 1
+    rec = rows[0]
+    assert rec["kind"] == "feedback" and rec["card_id"] == "s1" and rec["verdict"] == "partial"
+    assert rec["score"] == 0.5 and rec["attempt_id"] == "att_deadbeef1234" and rec["source"] == "agent"
+    assert rec["ts"].endswith("Z") and isinstance(rec["date"], str)
+    # 写前备份（可撤销点：backups/<session>/<txid>/journal.json）
+    assert list((kb / ".memoria" / "agent" / "backups").glob("*/*/journal.json")), "写前必须留下可撤销的备份批次"
+    # 审计（review/write）
+    audit = (kb / ".memoria" / "agent" / "sessions" / "agent-auto.jsonl").read_text(encoding="utf-8")
+    assert "review/write" in audit
+    # 不影响 cards.json / progress.json（学习进度仍只由评分写）
+    assert hashlib.sha256((review / "cards.json").read_bytes()).hexdigest() == cards_before
+    assert not (review / "progress.json").exists()
+
+
+def test_review_feedback_add_rejects_bad_args_and_missing_card(kb: Path) -> None:
+    """缺 `card_id` / 缺 `feedback` / `verdict` 越枚举 / `score` 非数 / 卡不存在 ⇒ 拒绝，**文件不变**。"""
+    from memoria.services.agent.tools.kb import _review_feedback_add
+
+    _write_kb(kb, _answer_cards())
+    path = kb / ".memoria" / "agent" / "review" / "attempts.jsonl"
+    for args in (
+        {"feedback": "x"},
+        {"card_id": "s1"},
+        {"card_id": "s1", "feedback": "x", "verdict": "nope"},
+        {"card_id": "s1", "feedback": "x", "score": "oops"},
+        {"card_id": "NOPE", "feedback": "x"},
+    ):
+        out = _review_feedback_add(str(kb), None, args)
+        assert out.error, args
+    assert not path.exists(), "非法参数 / 卡不存在 ⇒ 一行都不写"
+
+
+def test_review_attempts_list_filters_by_kind_and_reads_back_feedback(kb: Path) -> None:
+    """`kind:"feedback"` 读回反馈；`verdict:"unjudged"` 找出待判作答；缺省 = 全部记录。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+    from memoria.services.agent.tools.kb import _review_attempts_list, _review_feedback_add
+
+    _write_kb(kb, _answer_cards())
+    stub = _Stub(kb)
+    _review_ui_submit_one(stub, "s1", None, "my essay", "2026-01-02", None, 9)  # judge:agent ⇒ unjudged
+    _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, 9)         # auto ⇒ correct
+    _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "good", "verdict": "correct"})
+
+    allrows = json.loads(_review_attempts_list(str(kb), None, {}).text)
+    assert allrows["total"] == 3, "缺省返回全部记录（作答 + 反馈）"
+    fb = json.loads(_review_attempts_list(str(kb), None, {"kind": "feedback"}).text)
+    assert fb["total"] == 1 and fb["attempts"][0]["feedback"] == "good"
+    ans = json.loads(_review_attempts_list(str(kb), None, {"kind": "answer"}).text)
+    assert ans["total"] == 2
+    unj = json.loads(_review_attempts_list(str(kb), None, {"verdict": "unjudged"}).text)
+    assert unj["total"] == 1 and unj["attempts"][0]["card_id"] == "s1"
+
+
+def test_review_attempts_list_legacy_record_without_kind_is_answer(kb: Path) -> None:
+    """**向后兼容**：无 `kind` 字段的旧记录读出来仍被视作 `answer`（`kind:"answer"` 过滤能取到它）。"""
+    from memoria.services.agent.tools.kb import _review_attempts_list
+
+    review = kb / ".memoria" / "agent" / "review"
+    review.mkdir(parents=True, exist_ok=True)
+    legacy = {
+        "ts": "2026-01-01T00:00:00Z", "date": "2026-01-01", "card_id": "legacy1", "type": "short",
+        "judge": "agent", "input": "old", "verdict": "unjudged", "elapsed_ms": None, "source": "ui",
+    }
+    (review / "attempts.jsonl").write_text(json.dumps(legacy, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    out = json.loads(_review_attempts_list(str(kb), None, {"kind": "answer"}).text)
+    assert out["total"] == 1 and out["attempts"][0]["card_id"] == "legacy1"
+    assert json.loads(_review_attempts_list(str(kb), None, {"kind": "feedback"}).text)["total"] == 0
+
+
+def test_review_due_start_attaches_latest_feedback_only_when_present(kb: Path) -> None:
+    """`review_due_start`：有反馈的卡带 `feedback`（最近一条）；无反馈的卡**不带**该键；答案隔离不受影响。"""
+    from memoria.presentation.api.ui import _review_ui_due
+    from memoria.services.agent.tools.kb import _review_feedback_add
+
+    _write_kb(kb, _answer_cards())
+    _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "first"})
+    _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "latest", "score": 3})
+
+    by = {c["card_id"]: c for c in _review_ui_due(_Stub(kb), "2026-01-02", None)["cards"]}
+    assert by["s1"]["feedback"]["feedback"] == "latest" and by["s1"]["feedback"]["score"] == 3
+    assert "feedback" not in by["m1"] and "feedback" not in by["g1"]
+    assert "answer" not in by["m1"] and "explain" not in by["m1"]  # 答案隔离照旧
+
+
+def test_review_p2_frontend_feedback_block_and_i18n() -> None:
+    """前端：`feedbackHtml` 存在、卡面下方渲染、文案走 `review.feedbackLabel/feedbackScore`（双语）。"""
+    import shutil
+    import subprocess
+
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    assert "function feedbackHtml" in src
+    assert 'id="-review-feedback"' in src
+    assert "+ feedbackHtml();" in src
+    assert 'T("review.feedbackLabel")' in src
+    css = (_APP / "css" / "app.css").read_text(encoding="utf-8")
+    assert ".-review-feedback-text" in css and "max-height" in css, "反馈长文本限高可滚"
+    for name, rel in (("zh-CN", "i18n/zh-CN.js"), ("en", "i18n/en.js")):
+        text = (_APP / rel).read_text(encoding="utf-8")
+        assert "feedbackLabel:" in text and "feedbackScore:" in text, name
+    node = shutil.which("node")
+    if node:
+        proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],
+                              capture_output=True, text=True, encoding="utf-8")
+        assert proc.returncode == 0, proc.stderr
+
+
+def test_review_p2_reverse_verification_kind_default_is_answer(kb: Path) -> None:
+    """**反向验证**（防回归）：把 `_review_record_kind` 缺省从 `answer` 临时改成 `feedback` ⇒ 旧记录被
+    误判成反馈（`kind:"answer"` 过滤命中 0）；恢复 ⇒ 命中 1。**两次读数**证明「缺省 = answer」是真钉子。"""
+    from memoria.services.agent.tools import kb as kb_mod
+    from memoria.services.agent.tools.kb import _review_attempts_list
+
+    review = kb / ".memoria" / "agent" / "review"
+    review.mkdir(parents=True, exist_ok=True)
+    legacy = {"ts": "2026-01-01T00:00:00Z", "date": "2026-01-01", "card_id": "c", "verdict": "unjudged"}
+    (review / "attempts.jsonl").write_text(json.dumps(legacy, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    assert json.loads(_review_attempts_list(str(kb), None, {"kind": "answer"}).text)["total"] == 1
+    original = kb_mod._review_record_kind
+    kb_mod._review_record_kind = lambda row: str(row.get("kind") or "feedback")  # 临时破坏缺省
+    try:
+        assert json.loads(_review_attempts_list(str(kb), None, {"kind": "answer"}).text)["total"] == 0
+    finally:
+        kb_mod._review_record_kind = original
+    assert json.loads(_review_attempts_list(str(kb), None, {"kind": "answer"}).text)["total"] == 1

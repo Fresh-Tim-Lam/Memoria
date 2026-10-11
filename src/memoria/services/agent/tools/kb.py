@@ -77,7 +77,7 @@ KB_TOOL_NAMES = (
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
-    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list", "review_feedback_add",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id),
     )
 
 
@@ -5017,7 +5017,7 @@ def _review_append_attempt(
 
     day = str(date or "").strip() or _dt.date.today().isoformat()
     record = {
-        "ts": _review_now_utc(),
+        "ts": _review_now_utc(), "attempt_id": _review_new_attempt_id(),
         "date": day,
         "card_id": str(card_id),
         "type": str(ctype),
@@ -5089,7 +5089,7 @@ def _review_attempts_list(kb_path: str, _session_id: str | None, arguments: Mapp
         return _error(f"review.attempts_list: limit 须为 ≥1 的整数（缺省 {DEFAULT_ATTEMPT_LIMIT}）", INVALID_ARGUMENTS_CODE)
     limit = min(limit, MAX_ATTEMPT_LIMIT)
 
-    rows, invalid = _review_load_attempts(kb_path)
+    rows, invalid = _review_attempts_prefilter(kb_path, arguments)
     matched: list[dict] = []
     for row in rows:
         if card_filter and str(row.get("card_id") or "") != card_filter:
@@ -5141,7 +5141,7 @@ def _review_attempts_tools(kb_path: str, session_id: str | None = None) -> tuple
             parameters={
                 "type": "object",
                 "properties": {
-                    "card_id": {"type": "string", "description": "按卡过滤（缺省=全部）"},
+                    "card_id": {"type": "string", "description": "按卡过滤（缺省=全部）"}, "kind": {"type": "string", "enum": ["answer", "feedback"], "description": "记录类型：answer=作答（缺 kind 的旧记录按 answer 计）/ feedback=反馈"}, "verdict": {"type": "string", "description": "按判定过滤（如 unjudged ⇒ 只列待判作答）"},
                     "since": {"type": "string", "description": "起始日期 YYYY-MM-DD（含当天）"},
                     "limit": {"type": "integer", "minimum": 1, "maximum": MAX_ATTEMPT_LIMIT, "description": f"返回条数上限（缺省 {DEFAULT_ATTEMPT_LIMIT}）"},
                 },
@@ -5149,6 +5149,244 @@ def _review_attempts_tools(kb_path: str, session_id: str | None = None) -> tuple
             },
             handler=_bound(_review_attempts_list),
             read_only=True,
+        ),
+    )
+
+
+# ── R4 P2（2026-10-12）：**反馈写回**（判定/反馈）──────────────────────────────────────
+# 设计见 `docs/design/preview-render-refactor.md` 附 R4（P2 / 条目 4「工具 `review_feedback_add` 把反馈写回卡面」）。
+# **不新增第二个事实源**（`AGENTS.md §1` 要求新事实源先登记；`attempts.jsonl` 已登记一行）：判定/反馈**追加进同一个**
+# `attempts.jsonl`，用 `kind` 字段区分记录类型：
+#   · `kind` 缺省 / 显式 `"answer"` ⇒ **作答记录**（P1 既有，只由 UI 路径 `review_submit_one` 写；本块**不改**其判定逻辑）；
+#   · `kind` = `"feedback"` ⇒ **判定/反馈记录**（由本块的工具 `review_feedback_add` 追加）。
+# **向后兼容（逐字）**：P1 之前落盘的作答记录**没有 `kind` 字段** ⇒ 读端一律**缺省视作 `"answer"`**
+# （`_review_record_kind()`）；本块**不写迁移脚本**、不改写任何历史行（append-only）。
+# **反馈记录字段（逐字段）**：`kind`（固定 `"feedback"`）、`ts`（UTC ISO-8601，秒级 `Z`）、`date`（`YYYY-MM-DD`）、
+#   `card_id`（被判定卡）、`feedback`（必填文本）、`verdict`（可选，`REVIEW_FEEDBACK_VERDICTS`）、`score`（可选，数值）、
+#   `attempt_id`（可选，指回某次作答 —— 取 `review_attempts_list` 输出里该条的 `attempt_id` 字段）、
+#   `source`（可选，缺省 `"agent"`）。作答记录新增 `attempt_id`（`att_<hex12>`；`_review_new_attempt_id`）供反馈精确回指。
+# **写路径**：与 `review_cards_upsert`/`review_grade` **同族**（`_review_commit` 口径）—— 写前备份
+#   （`snapshot_pre_images`）→ 追加一行（`_review_append_feedback`）→ 记写后哈希 + 压会话撤销栈
+#   （`record_post_images` / `push_stack` / `trim_backups`）→ 审计（`_review_audit`，`tool="review.feedback_add"`）。
+# **不影响 FSRS 调度**：本块**只**写 `attempts.jsonl`，**不碰** `cards.json`/`progress.json`/`errors.json`
+#   ⇒ 学习进度**仍只由** `review_grade_one`（`fsrs.py grade`）改。
+# **`review_attempts_list` 扩展**：新增 `kind` / `verdict` 过滤参数（同行追加进其 schema、经 `_review_attempts_prefilter`
+#   预过滤）—— `verdict:"unjudged"` ⇒ 找出「该我判的」作答；`kind:"feedback"` ⇒ 读回反馈；缺省 = 全部记录。
+# 整块**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+#: 反馈 `verdict` 的合法枚举（人已拍板：correct / wrong / partial）。
+REVIEW_FEEDBACK_VERDICTS: tuple[str, ...] = ("correct", "wrong", "partial")
+
+
+def _review_new_attempt_id() -> str:
+    """生成一次作答的唯一标识（`att_` + 12 位十六进制）；供反馈记录 `attempt_id` 精确指回该次作答。"""
+    import uuid
+
+    return "att_" + uuid.uuid4().hex[:12]
+
+
+def _review_record_kind(row: Mapping[str, Any]) -> str:
+    """一条 `attempts.jsonl` 记录的 `kind`（**缺省视作 `"answer"`** —— 向后兼容 P1 之前无 `kind` 字段的记录）。"""
+    return str(row.get("kind") or "answer")
+
+
+def _review_attempts_prefilter(kb_path: str, arguments: Mapping[str, Any]) -> tuple[list[dict], int]:
+    """读 `attempts.jsonl`（**只读**）并按 `kind` / `verdict` 预过滤；返回 `(记录列表, 坏行数)`。
+
+    - `kind`（可选）：给出即只留该 kind（缺 `kind` 的旧记录按 `"answer"` 计）；
+    - `verdict`（可选）：给出即只留 `verdict` 精确相等的记录（如 `"unjudged"` ⇒ 只列待判作答）；
+    - 二者缺省 ⇒ 不过滤（返回全部记录，含作答与反馈）。
+    其余口径（文件不存在 ⇒ `([], 0)`；坏行跳过并计数）由 `_review_load_attempts` 承担。
+    """
+    rows, invalid = _review_load_attempts(kb_path)
+    kind = arguments.get("kind")
+    if isinstance(kind, str) and kind.strip():
+        want = kind.strip()
+        rows = [r for r in rows if _review_record_kind(r) == want]
+    verdict = arguments.get("verdict")
+    if isinstance(verdict, str) and verdict.strip():
+        want_v = verdict.strip()
+        rows = [r for r in rows if str(r.get("verdict") or "") == want_v]
+    return rows, invalid
+
+
+def _review_feedback_problems(arguments: Mapping[str, Any]) -> list[str]:
+    """反馈记录的**领域硬校验**（返回问题清单，空 = 合规；任一条坏 ⇒ 上层拒绝、一行都不写）。"""
+    problems: list[str] = []
+    cid = arguments.get("card_id")
+    if not isinstance(cid, str) or not cid.strip():
+        problems.append("card_id: 必填，须为非空 str")
+    feedback = arguments.get("feedback")
+    if not isinstance(feedback, str) or not feedback.strip():
+        problems.append("feedback: 必填，须为非空 str（判定/反馈正文）")
+    verdict = arguments.get("verdict")
+    if verdict is not None and verdict not in REVIEW_FEEDBACK_VERDICTS:
+        problems.append(f"verdict: 若给出须为 {list(REVIEW_FEEDBACK_VERDICTS)} 之一，实际 {verdict!r}")
+    score = arguments.get("score")
+    if score is not None and (isinstance(score, bool) or not isinstance(score, (int, float))):
+        problems.append("score: 若给出须为数值")
+    attempt_id = arguments.get("attempt_id")
+    if attempt_id is not None and not isinstance(attempt_id, str):
+        problems.append("attempt_id: 若给出须为 str（取作答记录的 attempt_id）")
+    source = arguments.get("source")
+    if source is not None and not isinstance(source, str):
+        problems.append("source: 若给出须为 str")
+    return problems
+
+
+def _review_feedback_card_problem(kb_path: str, card_id: str) -> str | None:
+    """反馈指向的卡必须已存在（**fail-closed**）：cards.json 读取失败/结构非法/卡不存在 ⇒ 返回错误信息。
+
+    与 `review_grade_precheck` 的取卡口径同源，但**不**检查 `disabled`（反馈独立于调度，禁卡也能收反馈）。
+    """
+    data, err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if err is not None:
+        return f"review.feedback_add: cards.json 读取失败：{err}"
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return "review.feedback_add: cards.json 不存在或结构非法"
+    rows = data["cards"]
+    if any(not (isinstance(c, Mapping) and isinstance(c.get("card_id"), str)) for c in rows):
+        return "review.feedback_add: cards.json 结构非法（存在缺 card_id 的条目），拒绝写入"
+    if card_id not in {str(c["card_id"]) for c in rows}:
+        return f"review.feedback_add: 卡片 {card_id} 不在 cards.json 中（疑似拼错的 card_id；先 review_cards_upsert 建卡）"
+    return None
+
+
+def _review_append_feedback(kb_path: str, record: Mapping[str, Any]) -> None:
+    """向 `attempts.jsonl` **追加一条**记录（append-only JSONL）；写失败**抛 `OSError`**（不假装成功）。"""
+    path = _review_path(kb_path, REVIEW_ATTEMPTS_REL)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(dict(record), ensure_ascii=False) + "\n")  # 单次写一整行（降低并发交错）
+        fh.flush()
+
+
+def _review_feedback_commit(kb_path: str, session_id: str | None, record: Mapping[str, Any]) -> tuple[bool, dict]:
+    """反馈写路径的**写前备份 + 追加 + 撤销点**（与 `_review_commit` 同族，只是落盘为"追加一行"）。
+
+    返回 `(ok, payload)`；失败时 `payload = {code, message}` 且**库内容不变**（备份失败即不写、写失败即回滚）。
+    """
+    import time
+
+    from memoria.services.agent import backup
+
+    sid = str(session_id or "").strip() or AUTO_SESSION_ID
+    txid = _next_txid(kb_path, sid, time.gmtime())
+    snap = backup.snapshot_pre_images(kb_path, sid, txid, [REVIEW_ATTEMPTS_REL], tool_id="review.feedback_add")
+    if snap.get("status") != "ok":
+        return False, {"code": snap.get("code") or "backup_failed", "message": snap.get("message") or ""}
+    try:
+        _review_append_feedback(kb_path, record)
+    except OSError as exc:
+        # 追加失败 ⇒ 用本批 pre-image 回滚（此时尚无 post.json，allow_unverified）
+        backup.restore_batch(kb_path, sid, txid, allow_unverified=True, audit=False)
+        return False, {"code": "write_failed", "message": str(exc)}
+    warnings: list[str] = []
+    post = backup.record_post_images(kb_path, sid, txid)
+    if post.get("status") != "ok":
+        warnings.append(f"写后哈希记录失败（{post.get('code') or 'error'}）⇒ 该批撤销会走未校验分支")
+    if backup.push_stack(kb_path, sid, txid).get("status") != "ok":
+        warnings.append("压入会话撤销栈失败（仍可用 txid 直接撤销）")
+    backup.trim_backups(kb_path, sid)  # 机会式清理（同 apply 入口）
+    return True, {"txid": txid, "session_id": sid, "warnings": warnings}
+
+
+def _review_feedback_add(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """**追加一条判定/反馈**（`kind:"feedback"`）到 `attempts.jsonl`；写前备份、可撤销、审计。
+
+    非法参数（缺 `card_id`/`feedback`、`verdict` 越枚举、`score` 非数）或卡不存在 ⇒ **结构化错误，不写垃圾**。
+    **不影响 FSRS**：只写 `attempts.jsonl`，不碰 `cards.json`/`progress.json`。
+    """
+    problems = _review_feedback_problems(arguments)
+    if problems:
+        return _error(
+            "review.feedback_add: 校验未通过 —— **未写入任何记录**：\n" + "\n".join(f"- {p}" for p in problems),
+            INVALID_ARGUMENTS_CODE,
+        )
+    cid = str(arguments.get("card_id")).strip()
+    card_problem = _review_feedback_card_problem(kb_path, cid)
+    if card_problem is not None:
+        return _error(card_problem, INVALID_ARGUMENTS_CODE)
+
+    import datetime as _dt
+
+    record: dict[str, Any] = {
+        "kind": "feedback",
+        "ts": _review_now_utc(),
+        "date": _dt.date.today().isoformat(),
+        "card_id": cid,
+        "feedback": str(arguments["feedback"]),
+    }
+    if arguments.get("verdict") is not None:
+        record["verdict"] = str(arguments["verdict"])
+    if arguments.get("score") is not None:
+        record["score"] = arguments["score"]
+    if arguments.get("attempt_id") is not None:
+        record["attempt_id"] = str(arguments["attempt_id"])
+    record["source"] = str(arguments.get("source") or "agent")
+
+    ok, payload = _review_feedback_commit(kb_path, session_id, record)
+    if not ok:
+        return _error(
+            f"review.feedback_add: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）",
+            WRITE_FAILED_CODE,
+        )
+    _review_audit(
+        kb_path,
+        session_id,
+        "review.feedback_add",
+        REVIEW_ATTEMPTS_REL,
+        {"txid": payload["txid"], "card_id": cid, "verdict": record.get("verdict"), "attempt_id": record.get("attempt_id")},
+    )
+    warn = ("；".join(payload["warnings"]) + "。") if payload["warnings"] else ""
+    verdict_note = f"，verdict={record['verdict']}" if "verdict" in record else ""
+    attempt_note = f"，attempt_id={record['attempt_id']}" if "attempt_id" in record else ""
+    return ToolOutput(
+        text=(
+            f"**已追加 1 条反馈** 到 `attempts.jsonl`（`kind:\"feedback\"`）：card_id={cid}{verdict_note}{attempt_note}。\n"
+            f"txid {payload['txid']}（会话 {payload['session_id']}）；写入前已自动备份、可「撤销这一批」。"
+            "**不影响复习进度**（学习进度仍只由 fsrs 评分写）。" + warn
+        )
+    )
+
+
+def _review_feedback_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """`review_feedback_add`（R4 P2）：**非只读**（`read_only=False`）⇒ 逐次审批（同 `pwsh`/`cmd` 与 review 写五把）。
+
+    写路径复用 `services/agent/backup.py`（pre-image + 栈式撤销）与 `_review_audit`；**不新建事实源** ——
+    判定/反馈以 `kind:"feedback"` 追加进既有 `attempts.jsonl`（与 `review_attempts_list` 同一份流水）。
+    """
+
+    def _bound(fn):
+        return lambda arguments: fn(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="review_feedback_add",
+            description=(
+                "**把判定/反馈写回某张卡**（追加一条 `kind:\"feedback\"` 记录到 `.memoria/agent/review/attempts.jsonl`，"
+                "**每次调用都要用户审批**）。用于闭环 `short`/`produce` 等 `judge:agent` 卡的 `unjudged` 作答 —— 先"
+                "`review_attempts_list`（`verdict:\"unjudged\"`）找出待判作答、拿到其 `attempt_id`，再用本工具写回判定。"
+                "参数：`card_id`（必填）、`feedback`（必填，判定/反馈正文）、`verdict`∈{correct,wrong,partial}（可选）、"
+                "`score`（可选，数值）、`attempt_id`（可选，指回某次作答）、`source`（可选）。"
+                "**只写 `attempts.jsonl`，不碰 `cards.json`/`progress.json`** ⇒ **不影响 FSRS 调度与学习进度**。"
+                "参数非法 / 卡不存在 ⇒ 结构化错误、**不写垃圾**；写入前自动备份、可「撤销这一批」。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "card_id": {"type": "string", "minLength": 1, "description": "被判定/反馈的卡 id（须已存在于 cards.json）"},
+                    "feedback": {"type": "string", "minLength": 1, "description": "判定/反馈正文（会显示在卡面下方）"},
+                    "verdict": {"type": "string", "enum": list(REVIEW_FEEDBACK_VERDICTS), "description": "判定结论（可选）"},
+                    "score": {"type": "number", "description": "得分（可选，数值）"},
+                    "attempt_id": {"type": "string", "description": "指回某次作答（取 review_attempts_list 里该条的 attempt_id）"},
+                    "source": {"type": "string", "description": "来源标记（可选，缺省 agent）"},
+                },
+                "required": ["card_id", "feedback"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_feedback_add),
+            read_only=False,
         ),
     )
 
