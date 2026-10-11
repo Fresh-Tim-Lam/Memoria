@@ -252,15 +252,15 @@
     }
     // 重试项（队尾重排的"暂时性失败"卡）：直接按**已选的分**再试一次，**不要求再翻面**
     // （评分幂等 ⇒ 安全；不做乐观更新，仍以返回为准）。
-    const retryGrade = S.item.autoGrade; S.auto = retryGrade == null && isAutoCard(S.card);
+    const retryGrade = S.item.autoGrade; S.auto = retryGrade == null && isAutoCard(S.card); S.agentInput = retryGrade == null && isAgentInputCard(S.card);
     paintProgress();
     body.innerHTML =
-      '<div class="-review-face" id="-review-face"></div>' + (S.auto ? answerUIHtml() : "") +
-      '<div class="-review-hint">' + esc(T(S.auto ? "review.answerHint" : "review.flipHint")) + "</div>";
+      '<div class="-review-face" id="-review-face"></div>' + (S.auto || S.agentInput ? answerUIHtml() : "") +
+      '<div class="-review-hint">' + esc(T(S.auto || S.agentInput ? "review.answerHint" : "review.flipHint")) + "</div>";
     renderGradeBar(retryGrade != null || !!S.judged);
     S.flipped = retryGrade != null;
-    await paintFace($("#-review-face"), S.card, S.flipped);
-    if (S.auto) setupAnswerUI(); else focusBox();
+    await paintFace($("#-review-face"), S.card, S.flipped); S.shownAt = Date.now();
+    if (S.auto || S.agentInput) setupAnswerUI(); else focusBox();
     if (retryGrade != null) grade(retryGrade);
   }
 
@@ -416,7 +416,7 @@
     }
     if (e.key === "1" || e.key === "2" || e.key === "3" || e.key === "4") {
       e.preventDefault();
-      if (S.flipped) grade(Number(e.key));
+      if (S.flipped || S.judged) grade(Number(e.key));
     }
   }
 
@@ -548,9 +548,9 @@
     const t = String((S.card && S.card.type) || "");
     const inner = t === "mcq"
       ? '<div class="-review-answer -review-mcq" id="-review-answer" role="group"></div>'
-      : '<div class="-review-answer -review-inputs"><input type="text" class="-review-input" id="-review-input" ' +
-        'autocomplete="off" spellcheck="false" placeholder="' + esc(T("review.inputPlaceholder")) + '">' +
-        '<button type="button" class="-btn primary" id="-review-submit">' + esc(T("review.submit")) + "</button></div>";
+      : '<div class="-review-answer -review-inputs">' + inputFieldHtml() +
+        '<button type="button" class="-btn primary" id="-review-submit">' +
+        esc(T("review.submit")) + "</button></div>";
     return inner + '<div class="-review-verdict" id="-review-verdict" aria-live="polite"></div>';
   }
 
@@ -583,7 +583,7 @@
       inp.addEventListener("keydown", function (e) {
         if (e.isComposing || e.keyCode === 229) return; // IME 组字中：一行都不碰
         if (e.key === "Escape") { e.preventDefault(); close(); return; }
-        if (e.key === "Enter") { e.preventDefault(); submitAnswer(null, inp.value); }
+        if (e.key === "Enter") { if (inp.tagName === "TEXTAREA" && !(e.ctrlKey || e.metaKey)) return; e.preventDefault(); submitAnswer(null, inp.value); }
       });
       setTimeout(function () {
         try { inp.focus({ preventScroll: true }); } catch (_e) { try { inp.focus(); } catch (_e2) { /* noop */ } }
@@ -642,7 +642,7 @@
     setAnswerBusy(true);
     let res;
     try {
-      res = await call("review_submit_one", cid, choice, text, null, kbPath());
+      res = await call("review_submit_one", cid, choice, text, null, kbPath(), S.shownAt ? (Date.now() - S.shownAt) : null);
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
@@ -650,7 +650,7 @@
     if (!S.open || !S.card || S.card.card_id !== cid) return; // 已切卡 / 已关闭
     if (!res || res.status !== "ok") {
       setAnswerBusy(false); // 允许重试
-      showVerdictError((res && (res.message || res.code)) || "");
+      showVerdictError((res && (res.message || res.code)) || "", (res && res.code) || "");
       return;
     }
     revealVerdict(res); // 判分完成 ⇒ 作答控件保持禁用
@@ -663,7 +663,7 @@
     if (!box) return;
     const v = String(res.verdict || "");
     const cls = v === "correct" ? "-review-verdict-ok" : (v === "wrong" ? "-review-verdict-bad" : "-review-verdict-wait");
-    const label = v === "correct" ? T("review.verdictCorrect") : (v === "wrong" ? T("review.verdictWrong") : T("review.verdictUnjudged"));
+    const label = v === "correct" ? T("review.verdictCorrect") : (v === "wrong" ? T("review.verdictWrong") : T(res.recorded ? "review.recordedPending" : "review.verdictUnjudged"));
     let html = '<div class="-review-verdict-label ' + cls + '">' + esc(label) + "</div>";
     if (typeof res.answer === "string" && res.answer) {
       html += '<div class="-review-verdict-line"><span class="-review-verdict-tag">' + esc(T("review.revealAnswer")) +
@@ -678,12 +678,12 @@
     focusBox();
   }
 
-  /** 提交失败 / 无法判分：如实显示，不假装判过。 */
-  function showVerdictError(msg) {
+  /** 提交失败 / 无法判分 / 记录落盘失败：如实显示，不假装判过（`code` 决定文案，`record_failed` 单独提示）。 */
+  function showVerdictError(msg, code) {
     const box = $("#-review-verdict");
     if (!box) return;
-    box.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">' +
-      esc(T("review.submitFailed", { msg: String(msg || "") })) + "</div>";
+    const label = (code === "record_failed") ? T("review.recordFailed", { msg: String(msg || "") }) : T("review.submitFailed", { msg: String(msg || "") });
+    box.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">' + esc(label) + "</div>";
     focusBox();
   }
 
@@ -722,6 +722,30 @@
     if (typeof res.back === "string") full.back = res.back;
     revealCache[id] = full;
     return full;
+  }
+
+  // ── R4 P1（2026-10-12）：`short`/`produce` 作答输入（`judge:agent` ⇒ 提交后 `unjudged` 待 agent 判）─────
+  // 设计见 `docs/design/preview-render-refactor.md` 附 R4（P1）。R4.3 只给 `auto` 三型（mcq/gapfill/cloze）
+  // 作答交互；本轮**解锁** `short`/`produce` 的输入框 —— 它们 `judge:agent`，「没有去处就不能收」的前提已由
+  // **P1 的作答记录**（`review_submit_one` 落 `attempts.jsonl`）补上 ⇒ **有去处，可收**。提交沿用同一条 UI RPC
+  // （不新增写路径）；`input:single` ⇒ 单行 input，`input:multi`（produce）⇒ 多行 textarea（Enter 换行、
+  // Ctrl/Cmd+Enter 提交）。整块**追加在模块尾** ⇒ 上方所有 `review-modal.js:<行号>` 锚点零漂移。
+
+  /** 该卡是否需要输入型作答区：`short`/`produce` 且非 `auto` 判分（即 `judge:agent`）。 */
+  function isAgentInputCard(card) {
+    if (!card || isAutoCard(card)) return false;
+    const t = String(card.type || "");
+    return t === "short" || t === "produce";
+  }
+
+  /** 输入型作答控件 HTML：`input:multi`（produce）⇒ 多行 textarea；否则单行 input。 */
+  function inputFieldHtml() {
+    const t = String((S.card && S.card.type) || "");
+    const multi = String((S.card && S.card.input) || (t === "produce" ? "multi" : "single")) === "multi";
+    const ph = esc(T("review.inputPlaceholder"));
+    return multi
+      ? '<textarea class="-review-input" id="-review-input" rows="3" spellcheck="false" placeholder="' + ph + '"></textarea>'
+      : '<input type="text" class="-review-input" id="-review-input" autocomplete="off" spellcheck="false" placeholder="' + ph + '">';
   }
 
   global.MemoriaReviewModal = { open: open, close: close };

@@ -307,8 +307,9 @@ def test_review_submit_one_auto_verdict_and_reveal(kb: Path) -> None:
     assert un["verdict"] == "unjudged" and "answer" not in un and "explain" not in un
 
 
-def test_review_submit_one_is_read_only(kb: Path) -> None:
-    """只读：判分前后 `cards.json` 逐字节一致；不得建 `progress.json`。"""
+def test_review_submit_one_appends_attempt_but_not_cards_or_progress(kb: Path) -> None:
+    """R4 P1 起 `review_submit_one` **不再是只读**：它**追加写** `attempts.jsonl`；但仍**不写**
+    `cards.json`/`progress.json`（学习进度仍只由 `review_grade_one` 改 ⇒ 进度可撤销，作答记录不可撤销）。"""
     import hashlib
 
     from memoria.presentation.api.ui import _review_ui_submit_one
@@ -316,10 +317,12 @@ def test_review_submit_one_is_read_only(kb: Path) -> None:
     _write_kb(kb, _answer_cards())
     review = kb / ".memoria" / "agent" / "review"
     before = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
-    _review_ui_submit_one(_Stub(kb), "m1", "a", None, "2026-01-02", None)
+    res = _review_ui_submit_one(_Stub(kb), "m1", "a", None, "2026-01-02", None)
     after = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
-    assert before == after
-    assert not (review / "progress.json").exists()
+    assert res["status"] == "ok" and res.get("recorded") is True
+    assert before == after, "cards.json 逐字节不变"
+    assert not (review / "progress.json").exists(), "仍不建 progress.json（进度只由 review_grade_one 改）"
+    assert (review / "attempts.jsonl").is_file(), "append-only：落一条作答记录"
 
 
 # ── ⑦ R4.3（2026-10-11）：作答交互（只 auto 三型）────────────────────────────────
@@ -528,6 +531,128 @@ def test_review_reveal_on_demand_only_on_flip_for_cloze() -> None:
     import shutil
     import subprocess
 
+    node = shutil.which("node")
+    if node:
+        proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],
+                              capture_output=True, text=True, encoding="utf-8")
+        assert proc.returncode == 0, proc.stderr
+
+
+# ── ⑩ R4 P1（2026-10-12）：作答记录（`attempts.jsonl`）+ 只读工具 `review_attempts_list` ──────────
+# `review_submit_one` 判分后**追加**写一条作答记录（含前端自测的 `elapsed_ms`）；`short`/`produce`（`judge:agent`）
+# 本轮**解锁输入框** ⇒ 提交落 `unjudged`。agent 侧新增**只读**工具 `review_attempts_list`（免审批；截断如实标注）。
+
+
+def _attempt_lines(kb: Path) -> list[dict]:
+    path = kb / ".memoria" / "agent" / "review" / "attempts.jsonl"
+    return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+
+
+def test_review_submit_one_records_attempt_with_verdict_and_elapsed(kb: Path) -> None:
+    """`auto` 对/错与 `judge:agent`（unjudged）各落一条；含前端传来的 `elapsed_ms`、`source:"ui"`、`ts/date`。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+
+    _write_kb(kb, _answer_cards())
+    stub = _Stub(kb)
+    _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, 1234)
+    _review_ui_submit_one(stub, "g1", None, "CAT", "2026-01-02", None, 50)
+    _review_ui_submit_one(stub, "s1", None, "my essay", "2026-01-02", None, 9999)
+    rows = _attempt_lines(kb)
+    assert [r["verdict"] for r in rows] == ["correct", "wrong", "unjudged"]
+    assert [r["card_id"] for r in rows] == ["m1", "g1", "s1"]
+    assert [r["elapsed_ms"] for r in rows] == [1234, 50, 9999]
+    assert all(r["source"] == "ui" for r in rows)
+    assert rows[0]["type"] == "mcq" and rows[0]["judge"] == "auto" and rows[0]["input"] == "a"
+    assert rows[2]["judge"] == "agent" and rows[2]["input"] == "my essay"
+    assert rows[0]["date"] == "2026-01-02" and rows[0]["ts"].endswith("Z")
+
+
+def test_review_submit_one_normalizes_bad_elapsed_to_null(kb: Path) -> None:
+    """非法 `elapsed_ms`（负数 / 非数值 / 缺省）⇒ 记 `null`（**不写垃圾**）。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+
+    _write_kb(kb, _answer_cards())
+    stub = _Stub(kb)
+    _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, -5)
+    _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, "oops")
+    _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, None)
+    assert [r["elapsed_ms"] for r in _attempt_lines(kb)] == [None, None, None]
+
+
+def test_review_submit_one_record_failure_is_honest(kb: Path) -> None:
+    """落盘失败（`attempts.jsonl` 被占成目录 ⇒ `open(...,"a")` 抛 OSError）⇒ 结构化错误 `record_failed`，
+    **不假装已记录**（沿用"不做乐观更新"红线）。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+
+    _write_kb(kb, _answer_cards())
+    review = kb / ".memoria" / "agent" / "review"
+    (review / "attempts.jsonl").mkdir()  # 让 append 触发 OSError
+    res = _review_ui_submit_one(_Stub(kb), "m1", "a", None, "2026-01-02", None, 10)
+    assert res["status"] == "error" and res["code"] == "record_failed" and res["category"] == "temporary"
+
+
+def test_review_attempts_list_read_only_registered_and_others_still_approved(kb: Path) -> None:
+    """`review_attempts_list` 注册进工具面、`read_only=True`（免审批 ⇒ 不落审批审计）；其余 review 工具仍 `read_only=False`。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.tools import KB_TOOL_NAMES, ToolRegistry, build_kb_tools
+
+    assert "review_attempts_list" in KB_TOOL_NAMES
+    reg = ToolRegistry(build_kb_tools(str(kb)))
+    tool = reg.get("review_attempts_list")
+    assert tool is not None and tool.read_only is True, "只读 ⇒ 免审批（与 scratch_read 同类）"
+    assert tool.parameters["additionalProperties"] is False
+    assert not hasattr(UIAPI, "review_attempts_list"), "它是 agent 工具，不是 UI RPC"
+    for name in ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add"):
+        t = reg.get(name)
+        assert t is not None and t.read_only is False, name
+
+
+def test_review_attempts_list_filters_and_labels_truncation(kb: Path) -> None:
+    """整段 JSON：`card_id` / `since` 过滤；`limit` 截断**如实**标注 `truncated: true` 与真数 `total`。"""
+    from memoria.presentation.api.ui import _review_ui_submit_one
+    from memoria.services.agent.tools.kb import _review_attempts_list
+
+    _write_kb(kb, _answer_cards())
+    stub = _Stub(kb)
+    for _ in range(3):
+        _review_ui_submit_one(stub, "m1", "a", None, "2026-01-02", None, 7)
+    _review_ui_submit_one(stub, "g1", None, "cat", "2026-01-03", None, 7)
+
+    out = json.loads(_review_attempts_list(str(kb), None, {}).text)
+    assert out["status"] == "ok" and out["total"] == 4 and out["count"] == 4 and out["truncated"] is False
+    only_m1 = json.loads(_review_attempts_list(str(kb), None, {"card_id": "m1"}).text)
+    assert only_m1["total"] == 3 and all(a["card_id"] == "m1" for a in only_m1["attempts"])
+    since = json.loads(_review_attempts_list(str(kb), None, {"since": "2026-01-03"}).text)
+    assert since["total"] == 1 and since["attempts"][0]["card_id"] == "g1"
+    trunc = json.loads(_review_attempts_list(str(kb), None, {"limit": 2}).text)
+    assert trunc["truncated"] is True and trunc["total"] == 4 and trunc["count"] == 2
+    assert [a["card_id"] for a in trunc["attempts"]] == ["m1", "g1"]  # 最近 2 条（时间顺序）
+
+
+def test_review_attempts_list_rejects_bad_args(kb: Path) -> None:
+    from memoria.services.agent.tools.kb import _review_attempts_list
+
+    assert _review_attempts_list(str(kb), None, {"limit": 0}).error
+    assert _review_attempts_list(str(kb), None, {"limit": "x"}).error
+    assert _review_attempts_list(str(kb), None, {"since": "not-a-date"}).error
+
+
+def test_review_r4p1_short_produce_input_and_frontend_wiring() -> None:
+    """前端：`short`/`produce` 输入框解锁（`isAgentInputCard`/`inputFieldHtml`，produce 走 textarea）、
+    提交带**前端自测**的 `elapsed_ms`、`unjudged` 显示 `recordedPending`、记录失败显示 `recordFailed`。"""
+    import shutil
+    import subprocess
+
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    assert "function isAgentInputCard" in src and "function inputFieldHtml" in src
+    assert "<textarea" in src, "produce（input:multi）⇒ 多行输入框"
+    assert "S.shownAt ? (Date.now() - S.shownAt) : null" in src, "提交必须带作答用时（前端自测）"
+    assert 'T(res.recorded ? "review.recordedPending"' in src
+    assert 'T("review.recordFailed"' in src
+    for name, rel in (("zh-CN", "i18n/zh-CN.js"), ("en", "i18n/en.js")):
+        text = (_APP / rel).read_text(encoding="utf-8")
+        assert "recordedPending:" in text, f"{name} 缺 review.recordedPending"
+        assert "recordFailed:" in text, f"{name} 缺 review.recordFailed"
     node = shutil.which("node")
     if node:
         proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],

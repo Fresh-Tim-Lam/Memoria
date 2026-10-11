@@ -463,11 +463,12 @@ def test_reference_tools_registered_declared_and_read_only(kb: Path) -> None:
     assert tuple(tool.name for tool in built) == KB_TOOL_NAMES
     # 末尾秩序：引用两把 → `propose_write` → `ask_user_question` → 联网两把（2026-09-23，§6.28）
     # → 脚本工作区四把（2026-09-24，§3.4）→ 库内执行两把（`pwsh`/`cmd`，2026-10-06，附录 Z）
-    assert KB_TOOL_NAMES[-17:] == (
+    assert KB_TOOL_NAMES[-18:] == (
         "resolve_reference", "audit_references", "propose_write", "ask_user_question",
         "web_search", "fetch_url",
         "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd",
         "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add",
+        "review_attempts_list",
     )
 
     registry = registry_for(kb)

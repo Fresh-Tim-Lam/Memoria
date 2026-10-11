@@ -1819,4 +1819,12 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].review, {
     revealFailed: "揭晓失败：{card}",
   });
+
+  // ===== 2026-10-12 追加：R4 P1 作答记录（`js/review-modal.js`，`review_submit_one` 落 `attempts.jsonl`）=====
+  // 提交 `short`/`produce`（`judge:agent`）⇒ 后端记录一条（`unjudged`）；记录落盘失败 ⇒ 如实提示（不假装已记录）。
+  // 走"文件末尾 `Object.assign`（补 `review.*`）"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].review, {
+    recordedPending: "已记录，待智能体判分",
+    recordFailed: "作答记录失败：{msg}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -1923,4 +1923,12 @@
   Object.assign(g.MEMORIA_LOCALES["en"].review, {
     revealFailed: "Reveal failed: {card}",
   });
+
+  // ===== 2026-10-12 appended: R4 P1 attempt log (`js/review-modal.js`; `review_submit_one` writes `attempts.jsonl`) =====
+  // Submitting `short`/`produce` (`judge:agent`) records one attempt (`unjudged`); if writing fails, say so honestly.
+  // Appended via end-of-file `Object.assign` (extends `review.*`) ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].review, {
+    recordedPending: "Recorded — awaiting agent grading",
+    recordFailed: "Failed to record attempt: {msg}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -77,7 +77,7 @@ KB_TOOL_NAMES = (
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
-    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id),
     )
 
 
@@ -4966,4 +4966,189 @@ def _review_apply_extra_fields(row: dict, card: Mapping[str, Any]) -> dict:
         if card.get(key) is not None:
             row[key] = card[key]
     return row
+
+
+# ── R4 P1（2026-10-12）：**作答记录** `attempts.jsonl` + 只读工具 `review_attempts_list` ─────────
+# 设计见 `docs/design/preview-render-refactor.md` 附 R4（P1 / 条目 4 / 条目 5 的 ③ 作答用时）。**追加式 JSONL**：
+# 每行一条作答记录（**只追加、不改写、不删除**）。事实源边界（AGENTS.md §1）：`.memoria/**` 由**应用代码**写
+# ⇒ 本文件提供**领域写入口** `_review_append_attempt`，**只被 UI 路径**（`presentation/api/ui.py` 的
+# `review_submit_one`）调用；agent 取不到写入口，只有**只读**工具 `review_attempts_list`。
+# **不碰** `cards.json`/`progress.json`/`errors.json`（学习进度仍可撤销；作答记录本身 append-only、无撤销意义）。
+# `elapsed_ms` 由**前端自测**（该卡呈现给用户 → 提交之间的毫秒数），后端只做**兜底校验**（非法 ⇒ 置 null，不写垃圾）。
+# 整块**追加在文件末尾** ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`KB_TOOL_NAMES` 与 `build_kb_tools()`
+# 已按"同行追加"扩容，见 73-81 / 673 行的注释更新）。
+
+#: 作答记录文件（与 `cards.json`/`progress.json`/`errors.json` **同目录**）。
+REVIEW_ATTEMPTS_REL = ".memoria/agent/review/attempts.jsonl"
+#: `review_attempts_list` 默认返回条数（最近 N 条）。
+DEFAULT_ATTEMPT_LIMIT = 50
+#: `review_attempts_list` 单次返回条数上限。
+MAX_ATTEMPT_LIMIT = 500
+
+
+def _review_normalize_elapsed(value: Any) -> int | None:
+    """`elapsed_ms` 兜底校验：合法的非负数值（`bool` 除外）⇒ 取整返回；否则 **None**（不写垃圾）。"""
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    if value < 0:
+        return None
+    return int(value)
+
+
+def _review_append_attempt(
+    kb_path: str,
+    *,
+    card_id: str,
+    ctype: str,
+    judge: str,
+    input_value: Any,
+    verdict: str,
+    elapsed_ms: Any = None,
+    date: str | None = None,
+) -> dict:
+    """向 `attempts.jsonl` **追加一条**作答记录（**追加式 JSONL**；只由 UI 路径调用）。
+
+    返回落盘的那条记录（dict）。写失败**抛 `OSError`** ⇒ 调用方如实报错（**不假装已记录**）。
+    字段：`ts`（UTC ISO-8601）、`date`（评审日 YYYY-MM-DD，缺省=本地当天）、`card_id`、`type`、`judge`、
+    `input`（**作答内容**：mcq=所选项文本，其余=输入框文本）、`verdict`（correct|wrong|unjudged）、
+    `elapsed_ms`（作答用时；非法 ⇒ null）、`source`（固定 `"ui"`）。
+    """
+    import datetime as _dt
+
+    day = str(date or "").strip() or _dt.date.today().isoformat()
+    record = {
+        "ts": _review_now_utc(),
+        "date": day,
+        "card_id": str(card_id),
+        "type": str(ctype),
+        "judge": str(judge),
+        "input": input_value if isinstance(input_value, str) else str(input_value or ""),
+        "verdict": str(verdict),
+        "elapsed_ms": _review_normalize_elapsed(elapsed_ms),
+        "source": "ui",
+    }
+    path = _review_path(kb_path, REVIEW_ATTEMPTS_REL)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(record, ensure_ascii=False) + "\n")  # 单次写一整行（降低并发交错）
+        fh.flush()
+    return record
+
+
+def _review_load_attempts(kb_path: str) -> tuple[list[dict], int]:
+    """读 `attempts.jsonl`（**只读**）：返回 `(记录列表[按文件顺序=时间顺序], 无法解析的行数)`。
+
+    文件不存在 ⇒ `([], 0)`（视作"尚无作答记录"）。逐行 `json.loads`；坏行**跳过并计数**（如实，不静默）。
+    """
+    path = _review_path(kb_path, REVIEW_ATTEMPTS_REL)
+    if not os.path.isfile(path):
+        return [], 0
+    rows: list[dict] = []
+    invalid = 0
+    with open(path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            text = line.strip()
+            if not text:
+                continue
+            try:
+                obj = json.loads(text)
+            except json.JSONDecodeError:
+                invalid += 1
+                continue
+            if isinstance(obj, dict):
+                rows.append(obj)
+            else:
+                invalid += 1
+    return rows, invalid
+
+
+def _review_attempts_list(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """列出作答记录（**只读**）：按 `card_id` / `since` 过滤，`limit` 截断**如实标注**。
+
+    **整个返回值就是一段 JSON**（可直接 `json.loads`），顶层 `{status, count, total, truncated, invalid, attempts}`：
+    `total`=过滤后总条数（**截断前的真数**）、`count`=`attempts` 条数、`truncated`=是否因 `limit` 截断、
+    `invalid`=无法解析被跳过的行数、`attempts`=记录（**文件顺序=时间顺序**；截断时取**最近** `limit` 条）。
+    **绝不静默截断**：`limit` 命中即 `truncated: true` 且 `total` 给真数。
+    """
+    cid = arguments.get("card_id")
+    if cid is not None and not isinstance(cid, str):
+        return _error("review.attempts_list: card_id 须为字符串", INVALID_ARGUMENTS_CODE)
+    card_filter = str(cid).strip() if isinstance(cid, str) else ""
+    since = arguments.get("since")
+    since_date: str | None = None
+    if since is not None:
+        if not isinstance(since, str) or not since.strip():
+            return _error("review.attempts_list: since 须为 YYYY-MM-DD", INVALID_ARGUMENTS_CODE)
+        since_date, since_err = _review_validate_date(since.strip())
+        if since_err:
+            return _error(f"review.attempts_list: {since_err}", INVALID_ARGUMENTS_CODE)
+    limit = arguments.get("limit")
+    if limit is None:
+        limit = DEFAULT_ATTEMPT_LIMIT
+    if isinstance(limit, bool) or not isinstance(limit, int) or limit < 1:
+        return _error(f"review.attempts_list: limit 须为 ≥1 的整数（缺省 {DEFAULT_ATTEMPT_LIMIT}）", INVALID_ARGUMENTS_CODE)
+    limit = min(limit, MAX_ATTEMPT_LIMIT)
+
+    rows, invalid = _review_load_attempts(kb_path)
+    matched: list[dict] = []
+    for row in rows:
+        if card_filter and str(row.get("card_id") or "") != card_filter:
+            continue
+        if since_date is not None:
+            row_date = str(row.get("date") or "")
+            if not row_date or row_date < since_date:
+                continue
+        matched.append(row)
+    total = len(matched)
+    truncated = total > limit
+    shown = matched[-limit:] if truncated else matched
+    payload = {
+        "status": "ok",
+        "count": len(shown),
+        "total": total,
+        "truncated": truncated,
+        "invalid": invalid,
+        "attempts": shown,
+    }
+    return ToolOutput(text=json.dumps(payload, ensure_ascii=False))
+
+
+def _review_attempts_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """`review_attempts_list`（R4 P1）：**只读**工具 ⇒ `read_only=True`（免审批，与 `scratch_read` 同类）。
+
+    **只读 ⇒ 免审批**的依据：它只读 `.memoria/agent/review/attempts.jsonl`（不改知识库、无副作用），
+    `registry.invoke()` 对 `read_only=True` 不弹审批 ⇒ **不落审批审计**（与 `scratch_read` 同口径）。写入口
+    `_review_append_attempt` **不注册为工具**，只被 UI 路径调用（agent 取不到）。
+    """
+
+    def _bound(fn):
+        return lambda arguments: fn(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="review_attempts_list",
+            description=(
+                "**列出作答记录**（`.memoria/agent/review/attempts.jsonl`，**只读 · 免审批**）。"
+                "参数：`card_id`（可选，按卡过滤）、`since`（可选，`YYYY-MM-DD`，只取该日及之后）、"
+                f"`limit`（可选，缺省 {DEFAULT_ATTEMPT_LIMIT}，上限 {MAX_ATTEMPT_LIMIT}）。"
+                "**返回值是一整段 JSON**（可直接 `json.loads`），顶层 "
+                "`{status, count, total, truncated, invalid, attempts}`：`total`=过滤后总数（截断前真数）、"
+                "`count`=本次返回条数、`truncated`=是否因 `limit` 截断（**绝不静默截断**）、"
+                "`invalid`=无法解析被跳过的行数、`attempts`=记录（时间顺序，每条形如 "
+                "`{ts,date,card_id,type,judge,input,verdict,elapsed_ms,source}`；截断时取最近 `limit` 条）。"
+                "记录由**作答界面**（UI 路径）写入，本工具**只读**、不写任何文件。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "card_id": {"type": "string", "description": "按卡过滤（缺省=全部）"},
+                    "since": {"type": "string", "description": "起始日期 YYYY-MM-DD（含当天）"},
+                    "limit": {"type": "integer", "minimum": 1, "maximum": MAX_ATTEMPT_LIMIT, "description": f"返回条数上限（缺省 {DEFAULT_ATTEMPT_LIMIT}）"},
+                },
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_attempts_list),
+            read_only=True,
+        ),
+    )
 

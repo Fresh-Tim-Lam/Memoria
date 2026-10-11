@@ -2360,7 +2360,10 @@ UIAPI.review_grade_one = _review_ui_grade
 # 人已批准规则：**答案不回前端**（取卡路径逐卡剔除 `answer`/`accept`/`explain`），判分放**后端**
 # （`auto`：精确匹配或 `accept` 白名单命中）或**交 agent**（`judge: agent`）。**后端就剔除**，
 # 不依赖"前端不渲染"这种隐性契约。agent 的**工具** `review_due_list` **继续回答案**（agent 是判分方）。
-# 本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（同上面两条 UI RPC）。
+# **R4 P1（2026-10-12）语义变化**：`review_submit_one` **不再是只读** —— 判分后追加写一条作答记录到
+# `<kb>/.memoria/agent/review/attempts.jsonl`（`_review_append_attempt`）。它**仍不写** `cards.json`/
+# `progress.json`（学习进度照旧只由 `review_grade_one` 改），故**作答记录无撤销**（append-only 记录，
+# 撤销一条作答无意义；进度仍可撤销）。本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
 
 #: UI 取卡路径**不回前端**的答案字段（唯一被藏的三键；`options` 选项文本保留 ⇒ mcq 可作答）。
 _REVIEW_UI_HIDDEN_KEYS: tuple[str, ...] = ("answer", "accept", "explain")
@@ -2385,20 +2388,30 @@ def _review_ui_submit_one(
     text: str | None = None,
     date: str | None = None,
     kb_path: str | None = None,
+    elapsed_ms: int | float | None = None,
 ) -> dict:
-    """UI 专用**后端判分**入口（**只读**）：`auto` 卡当场判对错，`agent`/`self` 卡回 `unjudged`。
+    """UI 专用**后端判分 + 作答记录**入口：`auto` 卡当场判对错，`agent`/`self` 卡回 `unjudged`。
 
     - `mcq` ⇒ 传 `choice`（选项文本），与卡面 `answer` **逐字精确匹配**；
-    - 带 `answer`/`accept` 的 `gapfill`/`cloze` ⇒ 传 `text`，**逐字精确匹配** `answer` 或命中 `accept` 白名单；
-    - **不做模糊匹配 / 词形 / 大小写归一化**（人已拍板：那部分交 agent 判）；`date` 仅为将来留痕，判分不依赖日期；
-    - `judge` 为 `agent`/`self` ⇒ `{"verdict": "unjudged"}`（不在此判，交 agent 或自评）；
-    - **只读**：不写 `cards.json` / `progress.json`（评分写回仍走 `review_grade_one`）；
+    - 带 `answer`/`accept` 的 `gapfill`/`cloze` / `short`/`produce` ⇒ 传 `text`，**逐字精确匹配** `answer`
+      或命中 `accept` 白名单（`short`/`produce` 为 `judge: agent` ⇒ 不在此判，见下）；
+    - **不做模糊匹配 / 词形 / 大小写归一化**（人已拍板：那部分交 agent 判）；`date` 仅为留痕（也写进记录）；
+    - `judge` 为 `agent`/`self` ⇒ `verdict="unjudged"`（不在此判，交 agent 或自评）；
+    - **不只是只读**（R4 P1 起语义变化）：判分后**追加**写一条作答记录到 `.memoria/agent/review/attempts.jsonl`
+      （`_review_append_attempt`；`elapsed_ms` 由前端自测、后端兜底校验，非法 ⇒ null）；它**仍不写**
+      `cards.json`/`progress.json` ⇒ 学习进度照旧只由 `review_grade_one` 改（**作答记录不做撤销**，见块注）；
+    - **落盘失败** ⇒ 结构化错误（`code="record_failed"`，`category="temporary"`）⇒ 界面如实显示失败，
+      **不假装已记录**（沿用"不做乐观更新"红线）；
     - `answer`/`explain` **只在判分之后**（本调用返回里）揭晓；`unjudged` 不揭晓。
     """
     from memoria.services.agent.tools.kb import (
+        REVIEW_ATTEMPTS_REL,
         REVIEW_CARDS_REL,
+        _review_append_attempt,
+        _review_audit,
         _review_derive_judge,
         _review_load_json,
+        _review_normalize_elapsed,
     )
 
     kb = self._agent_kb(kb_path)
@@ -2417,21 +2430,46 @@ def _review_ui_submit_one(
         return _review_ui_error("unreviewable", f"卡片 {cid} 不在 cards.json 中（疑似拼错的 card_id）", "unreviewable")
     ctype = str(card.get("type") or "")
     judge = card.get("judge") or _review_derive_judge(ctype, card)
-    if judge != "auto":
-        return {"status": "ok", "card_id": cid, "judge": str(judge), "verdict": "unjudged"}
-    answer = card.get("answer")
-    accept = card.get("accept")
     submitted = choice if ctype == "mcq" else text
     submitted = submitted if isinstance(submitted, str) else ""
-    correct = (isinstance(answer, str) and submitted == answer) or (
-        isinstance(accept, list) and submitted in accept
+    out: dict = {"status": "ok", "card_id": cid, "judge": str(judge)}
+    if judge == "auto":
+        answer = card.get("answer")
+        accept = card.get("accept")
+        correct = (isinstance(answer, str) and submitted == answer) or (
+            isinstance(accept, list) and submitted in accept
+        )
+        out["verdict"] = "correct" if correct else "wrong"
+        if isinstance(answer, str):
+            out["answer"] = answer
+        explain = card.get("explain")
+        if isinstance(explain, str):
+            out["explain"] = explain
+    else:
+        out["verdict"] = "unjudged"
+
+    # R4 P1：判分后**追加**一条作答记录（**只由本 UI 路径写**；失败即报错，不假装已记录）
+    try:
+        _review_append_attempt(
+            kb,
+            card_id=cid,
+            ctype=ctype,
+            judge=str(judge),
+            input_value=submitted,
+            verdict=out["verdict"],
+            elapsed_ms=elapsed_ms,
+            date=date,
+        )
+    except OSError as exc:
+        return _review_ui_error("record_failed", f"作答记录落盘失败：{exc}", "temporary")
+    out["recorded"] = True
+    _review_audit(
+        kb,
+        REVIEW_UI_SESSION_ID,
+        "review.attempt.ui",
+        REVIEW_ATTEMPTS_REL,
+        {"card_id": cid, "verdict": out["verdict"], "elapsed_ms": _review_normalize_elapsed(elapsed_ms)},
     )
-    out: dict = {"status": "ok", "card_id": cid, "judge": "auto", "verdict": "correct" if correct else "wrong"}
-    if isinstance(answer, str):
-        out["answer"] = answer
-    explain = card.get("explain")
-    if isinstance(explain, str):
-        out["explain"] = explain
     return out
 
 
@@ -2495,7 +2533,8 @@ def _review_ui_reveal(
       （不挖空、不剔 `back`，含 `{{cN::答案}}` 明文）；`answer`/`accept`/`explain` 有则一并回（不裁剪）；
     - **只对 cloze 卡 · 用户翻面时**调（`auto` 卡揭晓仍走 `review_submit_one`；`basic`/`reverse`/`short`/
       `produce` 的 `back` 本就到前端 ⇒ 不调本入口）；
-    - **只读**：不写 `cards.json` / `progress.json`（同 `review_submit_one`）；`date` 仅为将来留痕，不参与；
+    - **只读**：不写 `cards.json` / `progress.json` / `attempts.jsonl`（本入口**纯读**，与 `review_submit_one`
+      不同 —— 后者 R4 P1 起会追加写 `attempts.jsonl`）；`date` 仅为将来留痕，不参与；
     - `card_id` 未找到 ⇒ 结构化错误（`category="unreviewable"`，**不静默**、不伪造空卡面）。
     """
     from memoria.services.agent.tools.kb import (
