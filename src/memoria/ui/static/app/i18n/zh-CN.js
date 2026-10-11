@@ -1812,4 +1812,11 @@
       submitFailed: "判分失败：{msg}",
     },
   });
+
+  // ===== 2026-10-11 追加：R4.3 收尾「按需揭晓」（`js/review-modal.js` 的 `revealForFlip`）=====
+  // cloze 卡翻面时按需取完整卡面失败 ⇒ 如实提示，不假装有答案。
+  // 走"文件末尾 `Object.assign`（补 `review.*`）"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].review, {
+    revealFailed: "揭晓失败：{card}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

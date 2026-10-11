@@ -266,11 +266,11 @@
 
   async function flip() {
     if (!S.card || S.busy || S.flipped) return;
+    S.busy = true; const card = await revealForFlip(S.card); S.busy = false; if (!card || !S.open || !S.card || S.card.card_id !== card.card_id) return;
     S.flipped = true;
     const face = $("#-review-face");
-    if (face) await paintFace(face, S.card, true);
-    renderGradeBar(true);
-    focusBox();
+    if (face) await paintFace(face, card, true);
+    renderGradeBar(true); focusBox();
   }
 
   function dedupe(list) {
@@ -444,7 +444,7 @@
     S.done = 0;
     S.unreviewed = [];
     S.flipped = false; S.auto = false; S.judged = null; S.choice = null;
-    S.retried = Object.create(null);
+    S.retried = Object.create(null); revealCache = Object.create(null); // 截断本次会话的揭晓缓存（见模块尾 revealForFlip）
     buildModal();
     document.body.classList.add("-review-modal-open");
     window.addEventListener("keydown", onKeyDown, true); // 捕获阶段（Esc 同范式）
@@ -685,6 +685,43 @@
     box.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">' +
       esc(T("review.submitFailed", { msg: String(msg || "") })) + "</div>";
     focusBox();
+  }
+
+  // ── R4.3 收尾（2026-10-11）：**按需揭晓**（修 `judge:self` cloze 翻面看不到答案）────────────────
+  // 回归：`judge:self` 的 cloze **没有 `answer`/`accept`** ⇒ 答案只在 `front` 的 `{{cN::答案}}` 里；
+  // R4.2 收尾把 `front` 挖空（`{{cN::}}`）⇒ 界面翻面靠**回填 token 文本** ⇒ 一片空白。修法（人已拍板
+  // 方案 B）：**只对 cloze 卡 · 翻面时**调只读 UI RPC `review_reveal_one` 取**完整卡面**（回填挖空 token）。
+  // 每卡在**本次复习会话内**缓存一次（`open()` 重置）⇒ **不翻面就不请求**、同卡不重复请求。
+  // `auto` 卡仍走 `review_submit_one`（不改）；`basic`/`reverse`/`short`/`produce` 不调（`back` 本就到前端）。
+  // 整块追加在模块尾 ⇒ 上方所有 `review-modal.js:<行号>` 锚点零漂移。
+
+  /** 本次复习会话的揭晓缓存（`card_id -> 完整卡面`；`open()` 重置 ⇒ 不跨会话残留）。 */
+  let revealCache = Object.create(null);
+
+  /**
+   * cloze 卡翻面时**按需**取完整卡面：调只读 RPC `review_reveal_one` 拿**未挖空**的 `front`（顺带 `back`）⇒
+   * `faceSource`/`fillCloze` 才能在翻面时把 `{{cN::答案}}` 回填出答案。**其它类型 / auto 卡 / 无 id 原样返回**
+   * （即不请求）。失败 ⇒ 如实提示（`review.revealFailed`）并返回原（挖空）卡 ⇒ **不假装有答案**（不做乐观更新）。
+   */
+  async function revealForFlip(card) {
+    if (!card || String(card.type || "") !== "cloze" || isAutoCard(card)) return card;
+    const id = String(card.card_id || "");
+    if (!id) return card;
+    if (revealCache[id]) return revealCache[id];
+    let res;
+    try {
+      res = await call("review_reveal_one", id, null, kbPath());
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (!res || res.status !== "ok" || typeof res.front !== "string") {
+      toast(T("review.revealFailed", { card: id }), (res && (res.message || res.code)) || "");
+      return card;
+    }
+    const full = Object.assign({}, card, { front: res.front });
+    if (typeof res.back === "string") full.back = res.back;
+    revealCache[id] = full;
+    return full;
   }
 
   global.MemoriaReviewModal = { open: open, close: close };

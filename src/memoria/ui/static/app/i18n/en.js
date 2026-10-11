@@ -1916,4 +1916,11 @@
       submitFailed: "Submit failed: {msg}",
     },
   });
+
+  // ===== 2026-10-11 appended: R4.3 tail "reveal on demand" (`js/review-modal.js` `revealForFlip`) =====
+  // If fetching the full card face fails when flipping a cloze card, say so honestly (never fake an answer).
+  // Appended via end-of-file `Object.assign` (extends `review.*`) ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].review, {
+    revealFailed: "Reveal failed: {card}",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

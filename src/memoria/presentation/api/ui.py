@@ -2367,13 +2367,13 @@ _REVIEW_UI_HIDDEN_KEYS: tuple[str, ...] = ("answer", "accept", "explain")
 
 
 def _review_ui_hide_answers(payload: dict) -> dict:
-    """`review_due_start` 的**答案隔离**：逐卡 `pop` 掉 `answer`/`accept`/`explain`，其余字段（含 `options`）原样。"""
+    """`review_due_start` 的**答案隔离**：逐卡 `pop` 掉 `answer`/`accept`/`explain`，`cloze` 卡另挖空 `front`/`back` 里的答案；其余字段（含 `options`）原样。"""
     cards = payload.get("cards")
     if isinstance(cards, list):
         for card in cards:
             if isinstance(card, dict):
-                for key in _REVIEW_UI_HIDDEN_KEYS:
-                    card.pop(key, None)
+                for key in _REVIEW_UI_HIDDEN_KEYS: card.pop(key, None)
+                _review_ui_blank_cloze_card(card)
     payload["status"] = "ok"
     return payload
 
@@ -2436,5 +2436,94 @@ def _review_ui_submit_one(
 
 
 UIAPI.review_submit_one = _review_ui_submit_one
+
+
+# ── R4.2 收尾（2026-10-11）：**cloze 答案隔离**（补 `front`/`back` 漏洞）────────────────
+# 漏洞：cloze 卡的答案天然写在 `front` 的挖空标记里（`{{c1::答案}}`）；R4.2 原先只删 `answer`/`accept`/
+# `explain`，`front`/`back` 原样回前端 ⇒ 网络响应里能搜到答案（"答案不回前端"对 cloze 不成立）。
+# 修法：`cloze` 卡（或 front 含挖空标记的卡）把 `front` 里 `{{cN::答案}}` 挖空成 `{{cN::}}` —— **保留标记
+# 与编号**（界面 `review-modal.js` 靠它定位挖空、渲染 `.-review-blank`）；`back` 按 schema 是**完整原文**
+# （含明文答案，非挖空标记，纯"挖空标记"规则对它无效），且界面渲染 cloze **只用 `front`**（见
+# `review-modal.js` `faceSource`）⇒ 把 `back` **整键剔除**（同"答案不回前端"的隐藏口径）。判分揭晓仍走
+# `review_submit_one`（读**未改**的 cards.json）⇒ 判分后仍能拿到 `answer`/`explain`。`gapfill`/`mcq` 的
+# 答案在 `answer` 字段（已剔除），**不动**。本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _review_ui_blank_cloze(text):
+    """把 cloze 文本里 `{{cN::答案}}` 挖空成 `{{cN::}}`（**保留标记与编号**，界面据此定位挖空）；
+    对不含 `::` 的 `{{cN}}` 原样保留；非字符串原样返回。用非贪婪 `[\\s\\S]*?` 兼容跨行与多空挖空。"""
+    import re
+
+    if not isinstance(text, str):
+        return text
+    return re.sub(r"\{\{(c\d+)::[\s\S]*?\}\}", lambda m: "{{%s::}}" % m.group(1), text)
+
+
+def _review_ui_blank_cloze_card(card: dict) -> None:
+    """`cloze` 卡（或 `front` 含挖空标记的卡）：`front` 挖空答案（保留 `{{cN::}}` 供界面定位挖空）；
+    `back`（schema 定义 = 完整原文，含明文答案）**整键剔除** ⇒ 不回前端。其余类型的卡**不动**。"""
+    import re
+
+    front = card.get("front")
+    is_cloze = str(card.get("type") or "") == "cloze" or (
+        isinstance(front, str) and re.search(r"\{\{c\d+::", front) is not None
+    )
+    if is_cloze:
+        card["front"] = _review_ui_blank_cloze(front)
+        card.pop("back", None)
+
+
+# ── R4.3 收尾（2026-10-11）：**按需揭晓入口**（修 `judge:self` cloze 翻面看不到答案的回归）─────────
+# 回归：`judge:self` 的 cloze **没有 `answer`/`accept`** ⇒ 答案**只**在 `front` 的 `{{cN::答案}}` 里；
+# R4.2 收尾把 `front` 挖空（`{{cN::}}`）⇒ 界面翻面靠**回填 token 文本** ⇒ 一片空白。
+# 修法（人已拍板 方案 B）：新增 **UI 专用 · 只读** 揭晓入口 `review_reveal_one`：用户**主动要揭晓**
+# 时才把**完整卡面**（`cards.json` 原样读，**不挖空、不剔 back**；`answer`/`accept`/`explain` 有则一并回）
+# 送前端。**只挂 `UIAPI`、不注册为工具**（agent 取不到 ⇒ 保持"agent 是判分方、UI 是答题方"的分层）。
+# 前端 `review-modal.js` **只对 cloze 卡 · 翻面时**调（每卡一次缓存）；`auto` 卡揭晓仍走 `review_submit_one`。
+# 本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+
+def _review_ui_reveal(
+    self,
+    card_id: str,
+    date: str | None = None,
+    kb_path: str | None = None,
+) -> dict:
+    """UI 专用**按需揭晓**入口（**只读**）：从 `cards.json` **原样读**该卡的完整卡面送前端。
+
+    - 返回 `{status:"ok", card_id, front, back, answer?, accept?, explain?}`：`front`/`back` **原样**
+      （不挖空、不剔 `back`，含 `{{cN::答案}}` 明文）；`answer`/`accept`/`explain` 有则一并回（不裁剪）；
+    - **只对 cloze 卡 · 用户翻面时**调（`auto` 卡揭晓仍走 `review_submit_one`；`basic`/`reverse`/`short`/
+      `produce` 的 `back` 本就到前端 ⇒ 不调本入口）；
+    - **只读**：不写 `cards.json` / `progress.json`（同 `review_submit_one`）；`date` 仅为将来留痕，不参与；
+    - `card_id` 未找到 ⇒ 结构化错误（`category="unreviewable"`，**不静默**、不伪造空卡面）。
+    """
+    from memoria.services.agent.tools.kb import (
+        REVIEW_CARDS_REL,
+        _review_load_json,
+    )
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    data, err = _review_load_json(kb, REVIEW_CARDS_REL)
+    if err is not None:
+        return _review_ui_error("load_failed", f"cards.json 读取失败：{err}", "load_failed")
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return _review_ui_error("bad_payload", "cards.json 不存在或结构非法", "load_failed")
+    card = next((c for c in data["cards"] if isinstance(c, dict) and c.get("card_id") == cid), None)
+    if card is None:
+        return _review_ui_error("unreviewable", f"卡片 {cid} 不在 cards.json 中（疑似拼错的 card_id）", "unreviewable")
+    out: dict = {"status": "ok", "card_id": cid, "front": card.get("front"), "back": card.get("back")}
+    for key in ("answer", "accept", "explain"):
+        if key in card:
+            out[key] = card[key]
+    return out
+
+
+UIAPI.review_reveal_one = _review_ui_reveal
 
 

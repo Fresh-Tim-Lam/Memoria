@@ -169,7 +169,7 @@ def test_review_module_honors_no_optimistic_and_key_gates() -> None:
 def test_review_i18n_keys_present_in_both_locales() -> None:
     keys = ("button", "buttonTitle", "title", "dueCount", "progress", "flipHint", "empty",
             "doneAll", "donePartial", "unreviewedTitle", "unavailable", "loadFailed",
-            "gradeFailed", "retry", "blankAria")
+            "gradeFailed", "retry", "blankAria", "revealFailed")
     grades = ("again", "hard", "good", "easy")
     for name, rel in (("zh-CN", "i18n/zh-CN.js"), ("en", "i18n/en.js")):
         text = (_APP / rel).read_text(encoding="utf-8")
@@ -376,3 +376,160 @@ def test_review_r43_i18n_keys_present_in_both_locales() -> None:
         text = (_APP / rel).read_text(encoding="utf-8")
         for key in keys:
             assert f"{key}:" in text, f"{name} 缺 review.{key}"
+
+
+# ── ⑧ R4.2 收尾（2026-10-11）：cloze 答案隔离（front 挖空，back 隐藏）──────────────
+# 漏洞：cloze 答案天然写在 `front` 的 `{{cN::答案}}` 里，R4.2 原先只剔 `answer`/`accept`/`explain`
+# ⇒ 网络响应可搜到答案。修法：`front` 挖空答案但**保留 `{{cN::}}` 标记**（界面靠它定位挖空）；
+# `back`（schema 定义 = 完整原文，含明文答案）**整键不回前端**。`gapfill`/`mcq` 不受影响。
+
+
+def _cloze_cards() -> list[dict]:
+    return [
+        {"card_id": "cz1", "kp_id": "k", "file": "", "type": "cloze",
+         "front": "巴黎是{{c1::法国}}的首都", "back": "巴黎是法国的首都，答案是法国",
+         "source": "t", "answer": "法国", "accept": ["法国"], "explain": "France 的解释"},
+        {"card_id": "cz2", "kp_id": "k", "file": "", "type": "cloze",
+         "front": "多空{{c1::aa}}与\n{{c2::bb}}", "back": "多空 aa 与 bb",
+         "source": "t", "answer": "aa", "accept": ["aa"]},
+    ]
+
+
+def test_review_due_start_blank_cloze_front_answers_but_keeps_markers(kb: Path) -> None:
+    """**cloze 答案隔离**：UI 取卡返回的 cloze `front` **不含答案文本**、且**仍含 `{{cN::}}` 标记**；
+    `back`（完整原文含明文答案）整键不回前端；`answer`/`accept`/`explain` 仍被剔除。"""
+    from memoria.presentation.api.ui import _review_ui_due, _review_ui_submit_one
+
+    _write_kb(kb, _cloze_cards())
+    by = {c["card_id"]: c for c in _review_ui_due(_Stub(kb), "2026-01-02", None)["cards"]}
+    # 单空：答案文本被挖掉，标记与编号保留
+    assert by["cz1"]["front"] == "巴黎是{{c1::}}的首都"
+    assert "法国" not in by["cz1"]["front"] and "{{c1::}}" in by["cz1"]["front"]
+    # 多空 / 跨行：两个答案都挖空，标记都保留
+    assert by["cz2"]["front"] == "多空{{c1::}}与\n{{c2::}}"
+    assert "aa" not in by["cz2"]["front"] and "bb" not in by["cz2"]["front"]
+    assert "{{c1::}}" in by["cz2"]["front"] and "{{c2::}}" in by["cz2"]["front"]
+    # back（完整原文）不回前端；answer/accept/explain 仍被剔除
+    for card in by.values():
+        assert "back" not in card
+        assert "answer" not in card and "accept" not in card and "explain" not in card
+    # 判分揭晓仍可用（读未改的 cards.json）
+    out = _review_ui_submit_one(_Stub(kb), "cz1", None, "法国", "2026-01-02", None)
+    assert out["verdict"] == "correct" and out["answer"] == "法国" and out["explain"] == "France 的解释"
+
+
+def test_review_due_start_gapfill_mcq_back_untouched(kb: Path) -> None:
+    """对照：`gapfill`/`mcq` 的 `back` **原样保留**（只 cloze 走挖空/隐藏），其答案在已剔除的 `answer` 字段。"""
+    from memoria.presentation.api.ui import _review_ui_due
+
+    gap = {"card_id": "g1", "kp_id": "k", "file": "", "type": "gapfill",
+           "front": "The animal", "back": "b", "source": "t", "answer": "cat", "accept": ["Cat"]}
+    mcq = {"card_id": "m1", "kp_id": "k", "file": "", "type": "mcq",
+           "front": "Which?", "back": "b", "source": "t", "options": ["alpha", "beta"], "answer": "alpha"}
+    _write_kb(kb, [gap, mcq])
+    by = {c["card_id"]: c for c in _review_ui_due(_Stub(kb), "2026-01-02", None)["cards"]}
+    assert by["g1"]["front"] == "The animal" and by["g1"]["back"] == "b"
+    assert by["m1"]["back"] == "b" and by["m1"]["options"] == ["alpha", "beta"]
+    for card in by.values():
+        assert "answer" not in card and "accept" not in card
+
+
+def test_review_ui_blank_cloze_tokenizer_edges() -> None:
+    """分词器边界：多空 / 无 `::` 的 `{{cN}}` 原样 / 跨行 / 非字符串原样。"""
+    from memoria.presentation.api.ui import _review_ui_blank_cloze
+
+    assert _review_ui_blank_cloze("{{c1::a}}{{c2::b}}") == "{{c1::}}{{c2::}}"
+    assert _review_ui_blank_cloze("{{c1}}") == "{{c1}}"  # 无 `::` ⇒ 原样保留
+    assert _review_ui_blank_cloze("x{{c1::答\n案}}y") == "x{{c1::}}y"  # 跨行
+    assert _review_ui_blank_cloze(None) is None
+
+
+# ── ⑨ R4.3 收尾（2026-10-11）：按需揭晓（修 judge:self cloze 翻面看不到答案）──────────
+# 取卡路径（`_review_ui_due`）把 cloze 的 `front` 挖空、`back` 剔除 ⇒ `judge:self` 的 cloze 没
+# `answer`/`accept`，答案只在 `front` 的 `{{cN::答案}}` 里 ⇒ 翻面回填 token 时一片空白。
+# 修法（人已拍板 方案 B）：新增 **UI 专用 · 只读** 入口 `review_reveal_one`（读未改的 cards.json 原样卡面），
+# 前端**只对 cloze 卡 · 翻面时**调（不翻面不请求）；`auto` 卡揭晓仍走 `review_submit_one`。
+
+
+def test_review_reveal_one_returns_full_raw_card_restores_cloze_answer(kb: Path) -> None:
+    """**回归直证（后端层）**：取卡把 cloze 的 `front` 挖空、`back` 剔除；`review_reveal_one` 返回**原样**卡面
+    ⇒ 前端翻面能回填出答案（`{{c1::法国}}`）。"""
+    from memoria.presentation.api.ui import _review_ui_due, _review_ui_reveal
+
+    _write_kb(kb, _cloze_cards())
+    stub = _Stub(kb)
+    due = {c["card_id"]: c for c in _review_ui_due(stub, "2026-01-02", None)["cards"]}
+    # 取卡路径：答案被挖空、back 被剔除（回归的成因）
+    assert due["cz1"]["front"] == "巴黎是{{c1::}}的首都" and "back" not in due["cz1"]
+    # 揭晓入口：原样卡面（含明文答案）；token 回填后即为答案来源
+    rev = _review_ui_reveal(stub, "cz1", "2026-01-02", None)
+    assert rev["status"] == "ok" and rev["card_id"] == "cz1"
+    assert rev["front"] == "巴黎是{{c1::法国}}的首都" and "法国" in rev["front"]
+    assert rev["back"] == "巴黎是法国的首都，答案是法国"
+    assert rev["answer"] == "法国" and rev["accept"] == ["法国"] and rev["explain"] == "France 的解释"
+    # 多空 / 跨行也原样回来
+    rev2 = _review_ui_reveal(stub, "cz2", None, None)
+    assert rev2["front"] == "多空{{c1::aa}}与\n{{c2::bb}}"
+
+
+def test_review_reveal_one_is_ui_only_not_a_tool(kb: Path) -> None:
+    """`review_reveal_one` 是 `UIAPI` 方法，**不进 `KB_TOOL_NAMES` / 注册表** ⇒ agent 取不到。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.tools import KB_TOOL_NAMES, ToolRegistry, build_kb_tools
+
+    assert callable(getattr(UIAPI, "review_reveal_one", None))
+    assert "review_reveal_one" not in KB_TOOL_NAMES
+    assert ToolRegistry(build_kb_tools(str(kb))).get("review_reveal_one") is None
+
+
+def test_review_reveal_one_is_read_only(kb: Path) -> None:
+    """只读：揭晓前后 `cards.json` 逐字节一致；不得建 `progress.json`。"""
+    import hashlib
+
+    from memoria.presentation.api.ui import _review_ui_reveal
+
+    _write_kb(kb, _cloze_cards())
+    review = kb / ".memoria" / "agent" / "review"
+    before = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
+    _review_ui_reveal(_Stub(kb), "cz1", "2026-01-02", None)
+    after = hashlib.sha256((review / "cards.json").read_bytes()).hexdigest()
+    assert before == after
+    assert not (review / "progress.json").exists()
+
+
+def test_review_reveal_one_unreviewable_for_unknown_card(kb: Path) -> None:
+    """未找到 card_id ⇒ 结构化错误（不静默、不伪造空卡面）。"""
+    from memoria.presentation.api.ui import _review_ui_reveal
+
+    _write_kb(kb, _cloze_cards())
+    res = _review_ui_reveal(_Stub(kb), "NOPE", None, None)
+    assert res["status"] == "error" and res["category"] == "unreviewable"
+
+
+def test_review_reveal_on_demand_only_on_flip_for_cloze() -> None:
+    """**按需性（前端静态钉）**：`review_reveal_one` 只在 `revealForFlip` 里调；`revealForFlip` 只在 `flip()`
+    里调 ⇒ 取卡（`open`/`showCard`）**不请求** reveal；且只对 cloze 卡（`auto` 卡不调）。"""
+    src = (_APP / "js" / "review-modal.js").read_text(encoding="utf-8")
+    assert src.count('call("review_reveal_one"') == 1, "揭晓 RPC 只应有一个调用点"
+    # 调用点落在 flip()：flip 体里出现 revealForFlip(S.card)
+    flip_seg = src[src.index("async function flip() {"): src.index("function dedupe")]
+    assert "revealForFlip(S.card)" in flip_seg
+    # 取卡 / 渲染路径不得请求 reveal
+    open_seg = src[src.index("async function open() {"): src.index("function close()")]
+    show_seg = src[src.index("async function showCard"): src.index("async function flip()")]
+    for seg, tag in ((open_seg, "open"), (show_seg, "showCard")):
+        assert 'call("review_reveal_one"' not in seg and "revealForFlip(" not in seg, f"{tag} 不得请求 reveal"
+    # 只对 cloze 卡（auto 卡维持现状：不调 reveal）
+    rf_seg = src[src.index("async function revealForFlip"): src.index("global.MemoriaReviewModal")]
+    assert 'String(card.type || "") !== "cloze"' in rf_seg and "isAutoCard(card)" in rf_seg
+    # 失败如实提示（不假装有答案）
+    assert 'T("review.revealFailed"' in rf_seg
+    # JS 语法（node --check 等价）
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node:
+        proc = subprocess.run([node, "--check", str(_APP / "js" / "review-modal.js")],
+                              capture_output=True, text=True, encoding="utf-8")
+        assert proc.returncode == 0, proc.stderr
