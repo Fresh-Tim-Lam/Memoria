@@ -1082,7 +1082,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 
 ## 附 R4：题型扩型与作答交互（进行中）
 
-> **状态**：进行中。**P0 已交付**；**P1 已落地**（作答记录 `attempts.jsonl` + 只读工具 `review_attempts_list` + `short`/`produce` 输入框解锁，见条目 11）；**R4.2 已落地**（后端答案隔离 + 后端判分入口 `review_submit_one`，已由 R4.3 接上界面）；**R4.3 已落地**（作答交互，见条目 8）；另有 **R4.2 补记**（cloze 泄漏与按需揭晓，见条目 9）与**残留风险**（见条目 10）。本附节为**设计记录**（人已拍板），非门禁收口。
+> **状态**：进行中。**P0 已交付**；**P1 已落地**（作答记录 `attempts.jsonl` + 只读工具 `review_attempts_list` + `short`/`produce` 输入框解锁，见条目 11）；**P2 已落地**（反馈写回 `review_feedback_add` + 作答 `attempt_id` + `review_attempts_list` 预过滤 + UI 显示上次反馈，见条目 12）；**R4.2 已落地**（后端答案隔离 + 后端判分入口 `review_submit_one`，已由 R4.3 接上界面）；**R4.3 已落地**（作答交互，见条目 8）；另有 **R4.2 补记**（cloze 泄漏与按需揭晓，见条目 9）与**残留风险**（见条目 10）。本附节为**设计记录**（人已拍板），非门禁收口。
 
 1. **P0 已交付**：`type` 放开为 7 种（`basic` / `cloze` / `reverse` / `mcq` / `gapfill` / `short` / `produce`）；新增可选字段 `judge` / `options` / `answer` / `accept` / `explain` / `input`；按类型校验（`mcq` 必 `options` ≥ 2 去重非空 + `answer` 必须 ∈ `options`；`gapfill` 必 `answer` 或 `accept` 之一；`cloze` 保留挖空硬校验）；`judge` / `input` 缺省**派生**（`mcq` → auto、带 `answer`/`accept` 的 `cloze`/`gapfill` → auto、`short`/`produce` → agent、`basic`/`reverse` → self；`short` → single、`produce` → multi）。**不做模糊匹配 / 词形归一化**（交 agent 判）。
 
@@ -1092,7 +1092,7 @@ function flushPendingSync() {                          // ★ flush 清单里的
 3. **UI 形态变更（人已拍板）**：复习卡的**主形态 = 可被 agent 呼出的悬浮矩形卡**；已交付的**模态面板退为手动兜底入口**（agent 未及时回复时，用户可自己点进去看「agent 设好的卡」）；**悬浮卡可撤回 / 可不显示**。
    - **技术前提（待设计，勿当已完成）**：agent → UI **目前只有轮询、没有推送**；「呼出」可低成本实现（轮询响应里带回待呼出卡），但「**撤回要及时生效**」需要额外设计。
 
-4. **分期**：**P0** ✅（枚举 + 字段）· **P1** ✅ 作答记录落 `.memoria/agent/review/attempts.jsonl`（含 `elapsed_ms`，见下）+ 只读工具 `review_attempts_list`（见条目 11） · **P2** 工具 `review_feedback_add` 把反馈写回卡面 · **R4.2** ✅（后端答案隔离 + 后端判分入口 `review_submit_one`，已由 R4.3 接上界面） · **R4.3** ✅ 各题型作答交互（`mcq` 选项按钮 / `gapfill` 输入框 / `short` / `produce` 输入 / `judge` 分支）。
+4. **分期**：**P0** ✅（枚举 + 字段）· **P1** ✅ 作答记录落 `.memoria/agent/review/attempts.jsonl`（含 `elapsed_ms`，见下）+ 只读工具 `review_attempts_list`（见条目 11） · **P2** ✅ 工具 `review_feedback_add` 把反馈写回卡面（已落地，见条目 12） · **R4.2** ✅（后端答案隔离 + 后端判分入口 `review_submit_one`，已由 R4.3 接上界面） · **R4.3** ✅ 各题型作答交互（`mcq` 选项按钮 / `gapfill` 输入框 / `short` / `produce` 输入 / `judge` 分支）。
 
 5. **两条口径（人已拍板）**：**③ 作答用时** `elapsed_ms` 落 **`attempts.jsonl`**，**不进卡定义**（卡 schema 里没有该字段，`additionalProperties:false` 会拒）；**④ 同一 `kp_id` 多卡不设上限**（无数量校验）。
 
@@ -1115,3 +1115,15 @@ function flushPendingSync() {                          // ★ flush 清单里的
     - **如实欠账（别美化）**：① `attempts.jsonl` **无轮转 / 无上限 ⇒ 会无限增长**（建议后续按天或按条数轮转，**本轮未做**）；② **并发追加无跨进程锁**（`open(...,"a")` 单次 `write` + `flush`；桌面单进程单库几乎不并发，但**无原子保证**）；③ `short` / `produce` **现在没人判**（**P2 才接 agent**）⇒ 若 agent 长期不回判，这些卡会一直 `unjudged`；④ **落盘失败后重试成功会再写一条**（append-only，**不去重**）。
     - **待办（需人做）**：`attempts.jsonl` 是**新增事实源**，按 `AGENTS.md §1`「新增事实源必须先登记」应在该表登记；经取证该表**只存在于 `AGENTS.md`（人写文件）**，`docs/conventions/**` **无副本**，故本仓**未擅自改动登记表**。建议追加一行：
       > `| 复习作答记录 | <kb>/.memoria/agent/review/attempts.jsonl | 应用代码（UI 路径 review_submit_one；append-only，不撤销） |`
+
+12. **R4 P2 已落地：agent 反馈写回 `review_feedback_add` + 作答 `attempt_id` + `review_attempts_list` 预过滤 + UI 显示上次反馈（2026-10-12 · 提交 `bf854d9b`）**：
+    - **取向：不新增事实源** —— 反馈**追加进同一份 `attempts.jsonl`**，用 `kind` 字段区分记录类型：**作答记录不带 `kind` 字段**（`P1` 原样，**读端缺省视作 `answer`**，**不写迁移脚本**）；**反馈记录带 `kind:"feedback"`**。理由：**作答与判定是同一条流水**，且 `AGENTS.md §1` 要求**新增事实源必须先登记**，不该为反馈再登记一次。
+    - **新增 agent 工具 `review_feedback_add`（过审批）**：`read_only=False` ⇒ **必过审批**；参数 `card_id`（**必填**）/ `feedback`（**必填**）/ `verdict`（可选，枚举 `correct`｜`wrong`｜`partial`）/ `score`（可选）/ `attempt_id`（可选）/ `source`（可选）；**写路径与既有 review 写入同族**（**写前备份 + 可撤销 + 审计**，实测产物 `backups/agent-auto/<txid>/journal.json` / `post.json` / `stack.json`）。
+    - **新增 `attempt_id`（`att_<12位hex>`）到作答记录** —— 原因：`ts` 只有**秒级**、**同卡同秒会撞**；流程由此变为「**先 `review_attempts_list` 拿 `id` → 再回写判定**」。**这是对 P1 的追加字段（向后兼容，读端不报错）**。
+    - **`review_attempts_list` 增加 `kind` / `verdict` 预过滤**（agent 据此找「**该我判的**」`unjudged` 并**读回反馈**）。
+    - **UI：反馈随既有 `review_due_start` 一并返回**（**不新增 RPC**，理由：它已**一次性返回本次复习全部卡面、零额外往返**、且**覆盖所有题型**；而 `review_reveal_one` **只在 cloze 翻面时调用、覆盖不全**）⇒ 复习时**卡面下方显示该卡最近一条反馈**，长文本**限高可滚**；**无反馈不显示该块**。
+    - **如实说明（别美化）**：
+      - **不影响 FSRS 调度** —— 本块**只写 `attempts.jsonl`**；`cards.json` **逐字节不变**、**不建 `progress.json`**；学习进度仍**只由** `review_grade_one` 写。
+      - **两种记录混存不污染统计** —— 全仓该文件**只有两个读端**（工具预过滤与 UI 挂载），**都按 `kind` 分流**；UI **只取 `feedback` 显示、绝不当作一次作答计数**，无其它计数消费者。**唯一边界**：`review_attempts_list` **缺省返回两种记录** ⇒ `total` **含反馈**，**需按 `kind` 过滤**（已在工具 description 与代码注释写明）。
+      - **P1 的两条欠账仍在** —— `attempts.jsonl` **无轮转 / 无上限**、**无跨进程锁**（本轮未动）。
+    - **证据（实测，2026-10-12 · 提交 `bf854d9b`）**：**审批拒绝不写**（`file_exists_after_reject` 为 `false`）；**允许写入**（给出**含 `kind` 为 `feedback` 的新行原文**）；**非法参数五种全部拒绝且文件一字未变**（缺 `feedback` / 缺 `card_id` / 卡不存在 / `verdict` 越枚举 / `score` 非数）；**读出闭环三种过滤**（`kind` / `verdict` / `card_id`）均正确；**向后兼容**（手工造无 `kind` 的旧记录 ⇒ `kind` 为 `answer` 命中、`kind` 为 `feedback` 命中零）并有**反向验证**（把缺省改错 ⇒ 命中零，恢复 ⇒ 命中一）；**端到端**有反馈的卡显示上次反馈与得分、无反馈的卡不显示、console 错误与 uncaught 均为 `0`。`pytest 1433 → 1440 passed`（新增七条钉子）；`i18n_selftest` 12 行全 PASS；`node --check` 静默。
