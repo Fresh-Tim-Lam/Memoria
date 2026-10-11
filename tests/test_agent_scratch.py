@@ -218,3 +218,35 @@ def test_run_script_reports_missing_interpreter(kb: Path) -> None:
         scratch_mod.run_script(str(kb), "x.py", interpreter="definitely-not-a-real-interpreter-xyz")
     assert caught.value.code == scratch_mod.CODE_NO_INTERPRETER
 
+
+# ── ⑤ `review_grade` 硬校验：不存在的 card_id 必须被拒（R2 增补②）─────────────
+
+
+def test_review_grade_rejects_unknown_card_id(kb: Path) -> None:
+    """工具层：card_id 不在 cards.json ⇒ **拒绝评分**（挡"拼错 id ⇒ fsrs.py 静默建幻影卡"）。"""
+    import json as _json
+
+    from memoria.app.runtime import resources_dir
+    from memoria.services.agent.tools.kb import _review_grade
+
+    agent_dir = kb / ".memoria" / "agent"
+    agent_dir.mkdir(parents=True, exist_ok=True)
+    (agent_dir / "fsrs.py").write_bytes((resources_dir() / "agent-prompts" / "fsrs.py").read_bytes())
+    review_dir = agent_dir / "review"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    (review_dir / "cards.json").write_text(
+        _json.dumps(
+            {"schema_version": 1, "cards": [
+                {"card_id": "real1", "kp_id": "", "file": "", "type": "basic", "front": "f", "back": "b", "source": "t"},
+            ]},
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    out = _review_grade(str(kb), None, {"card_id": "NOT_EXIST", "grade": 3})
+
+    assert out.error is True
+    assert "不在 cards.json" in out.text
+    assert not (review_dir / "progress.json").exists(), "被拒的评分不得建幻影卡 / 写 progress.json"
+

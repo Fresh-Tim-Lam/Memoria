@@ -4504,8 +4504,8 @@ def _review_grade(kb_path: str, _session_id: str | None, arguments: Mapping[str,
     grade = arguments.get("grade")
     if grade not in (1, 2, 3, 4):
         return _error("review.grade: grade 须为 1（Again）/ 2（Hard）/ 3（Good）/ 4（Easy）", INVALID_ARGUMENTS_CODE)
-    if cid in _review_disabled_ids(kb_path):
-        return _error(f"review.grade: 卡片 {cid} 已被禁用（先 review_card_disable disabled=false 恢复）", INVALID_ARGUMENTS_CODE)
+    if (_grade_problem := _review_grade_precheck(kb_path, cid)) is not None:
+        return _error(_grade_problem, INVALID_ARGUMENTS_CODE)
     date, date_err = _review_validate_date(arguments.get("date"))
     if date_err:
         return _error(f"review.grade: {date_err}", INVALID_ARGUMENTS_CODE)
@@ -4787,4 +4787,27 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
             read_only=False,
         ),
     )
+
+
+def _review_grade_precheck(kb_path: str, card_id: str) -> str | None:
+    """`review_grade` 评分前的硬校验（**fail-closed**）：通过返回 None，否则返回错误信息。
+
+    与 fsrs.py `load_card_ids`（"取卡路径"）同源同口径：cards.json 读取失败 / 结构非法 /
+    条目缺 `card_id` 一律拒绝；`card_id` 不存在 / 已被禁用同样拒绝 ⇒ 挡掉"拼错 card_id ⇒
+    fsrs.py grade 静默建幻影卡、污染 progress.json"这一类静默污染（R2 增补②）。
+    """
+    data, err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if err is not None:
+        return f"review.grade: cards.json 读取失败：{err}"
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return "review.grade: cards.json 不存在或结构非法"
+    rows = data["cards"]
+    if any(not (isinstance(c, Mapping) and isinstance(c.get("card_id"), str)) for c in rows):
+        return "review.grade: cards.json 结构非法（存在缺 card_id 的条目），拒绝评分"
+    ids = {str(c["card_id"]) for c in rows}
+    if card_id not in ids:
+        return f"review.grade: 卡片 {card_id} 不在 cards.json 中（疑似拼错的 card_id；请先用 review_cards_upsert 建卡）"
+    if card_id in {str(c["card_id"]) for c in rows if c.get("disabled")}:
+        return f"review.grade: 卡片 {card_id} 已被禁用（先 review_card_disable disabled=false 恢复）"
+    return None
 

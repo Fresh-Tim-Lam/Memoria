@@ -426,10 +426,10 @@ def op_grade(kb, card_id: str, grade: int, review_date: _dt.date) -> dict:
     幂等键 = (card_id, review_date)：若 log 中已存在同 card_id 且同 review_date 的记录，
     则不重复施加，直接返回该记录对应的结果（``idempotent`` = true）。
     """
-    progress = load_progress(kb)
-    params = progress["params"]
-    retention = float(progress["request_retention"])
-    today = review_date.isoformat()
+    if card_id not in load_card_ids(kb):
+        raise FsrsError(f"cards.json 中不存在卡片 {card_id}：拒绝评分（不建幻影卡，请核对 card_id）")
+    progress = load_progress(kb); params = progress["params"]
+    retention = float(progress["request_retention"]); today = review_date.isoformat()
 
     # 幂等：命中同日同卡的历史记录
     for entry in reversed(progress["log"]):
