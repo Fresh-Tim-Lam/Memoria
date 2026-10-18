@@ -489,6 +489,13 @@
       },
       kpListSelectFile: "Select a file",
       kpListNoKp: "No knowledge points \u00b7 right-click an entry or open \u201cConfiguration\u201d",
+      jump: {
+        kpDegraded: "Knowledge point range could not be resolved; jumped to line {line}",
+        kpUnresolved: "Knowledge point range could not be resolved and no line is available; cannot position",
+        kpNotFound: "Jump failed: knowledge point not found",
+        kpResolveFailed: "Knowledge point range could not be resolved",
+        kpReason: "Reason: {reason}",
+      },
       kpListOnlyProposals: "No approved KP \u00b7 {n} heading proposals",
       kpListOnlyProposalsHint: "Open \u201cConfiguration\u201d \u2192 Pending",
     },

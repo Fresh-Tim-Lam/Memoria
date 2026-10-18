@@ -489,6 +489,12 @@
       },
       kpListSelectFile: "请选择文件",
       kpListNoKp: "无知识点 · 右键条目或点「配置」",
+      jump: {
+        kpDegraded: "知识点范围解析失败，已跳到第 {line} 行",
+        kpUnresolved: "知识点范围解析失败，且无可用行号，无法定位",
+        kpNotFound: "跳转失败：未找到该知识点",
+        kpResolveFailed: "知识点范围未能解析",        kpReason: "原因：{reason}",
+      },
       kpListOnlyProposals: "无正式 KP · {n} 个标题提议",
       kpListOnlyProposalsHint: "点「配置」→ 待确认",
     },

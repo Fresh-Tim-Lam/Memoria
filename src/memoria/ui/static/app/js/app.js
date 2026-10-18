@@ -1515,10 +1515,37 @@
         highlightRangeWithError(eh.line, eh.line);
       }
     } else if (opts.kpId) {
+      // 知识点跳转（搜索/链接/审计/stale 重放）。2026-10-19 修「静默失败」：
+      // 原写法只在 `rr?.ok` 时 `highlightRange`，失败（后端 `{ok:false,error}`，见 range/locator.py、
+      // services/kp_resolver.py 的 `missing_snippet`）或 KP 不存在时**什么都不做** ⇒ 用户只看到停在文档顶部。
+      // 现在：成功=现状；失败/找不到 ⇒ 有合法 `lineHint` 就降级为单行定位，并**一律**给底栏可见提示。
+      // 注意：不改动上方 `restoreScroll` / `errorHighlight` 两条既有优先级（各有独立用途）。
       const kp = (res.knowledge_points || []).find((k) => k.id === opts.kpId);
       const rr = kp?.range_resolved;
       if (rr?.ok) {
         highlightRange(rr.start_line, rr.end_line);
+      } else {
+        // 降级目标行：优先 opts.lineHint，其次 KP 配置里的 line_hint（`range.start.line_hint`）
+        const hintRaw = opts.lineHint != null && opts.lineHint !== "" ? opts.lineHint : kp?.range?.start?.line_hint;
+        const hintLine = parseInt(String(hintRaw == null ? "" : hintRaw), 10);
+        const hasHint = Number.isFinite(hintLine) && hintLine > 0;
+        if (hasHint) {
+          // 未解析的 KP 没有可信区间 ⇒ 只定到起始提示行（单行），不误标整段
+          highlightRange(hintLine, hintLine);
+        }
+        // 未找到该 KP（无 kp / 无 range_resolved）≠ 范围解析失败，分开措辞
+        const rrMissing = !kp || rr == null;
+        if (!rrMissing) {
+          // 范围解析失败：错误码经既有 errorLabel 本地化（start/end_snippet_not_found 等），只进 flash 详情
+          showFlashInfo(
+            T("app.jump.kpReason", { reason: rr.error ? errorLabel(rr.error) : T("app.jump.kpResolveFailed") })
+          );
+        }
+        setStatusError(
+          rrMissing || !hasHint
+            ? T(rrMissing ? "app.jump.kpNotFound" : "app.jump.kpUnresolved")
+            : T("app.jump.kpDegraded", { line: hintLine })
+        );
       }
       // 左侧知识点栏定位到对应 KP（搜索跳转/直接跳转）
       scrollKpListItemIntoView(opts.kpId);
