@@ -1835,4 +1835,15 @@
     feedbackLabel: "上次反馈",
     feedbackScore: "得分 {score}",
   });
+
+  // ===== 2026-10-12 追加：R4-3 v1 悬浮卡（`js/review-summon.js`）=====
+  // 走"文件末尾 `Object.assign`"⇒ 上方锚点零漂移；卡片标题/收起/翻面等文案。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].review, {
+    summonTitle: "复习提醒",
+    summonAria: "复习卡片",
+    summonIgnore: "收起/忽略",
+    summonFlip: "翻面",
+    next: "下一张",
+    openSource: "打开来源",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

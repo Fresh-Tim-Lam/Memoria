@@ -2411,7 +2411,7 @@ def _review_ui_submit_one(
         _review_audit,
         _review_derive_judge,
         _review_load_json,
-        _review_normalize_elapsed,
+        _review_normalize_elapsed, _review_auto_rating,
     )
 
     kb = self._agent_kb(kb_path)
@@ -2440,6 +2440,8 @@ def _review_ui_submit_one(
             isinstance(accept, list) and submitted in accept
         )
         out["verdict"] = "correct" if correct else "wrong"
+        # R4-3 v1 收尾：auto 卡自适应折算 1-4（对错 + 作答时长），前端据此**自动落调度**、不再显示 1-4。
+        out["rating"] = _review_auto_rating(kb, ctype, out["verdict"], elapsed_ms)
         if isinstance(answer, str):
             out["answer"] = answer
         explain = card.get("explain")
@@ -2610,5 +2612,214 @@ def _review_ui_attach_feedback(payload: dict, kb_path: str) -> dict:
             continue
         card["feedback"] = {k: fb[k] for k in ("feedback", "verdict", "score", "ts", "attempt_id") if k in fb}
     return payload
+
+
+# ── R4-3 v1（2026-10-12）：悬浮卡取卡面 ─────────────────────────────────────────
+# 悬浮卡就地作答需要**单张卡**的隔离卡面；复用 `_review_ui_attach_feedback`（内部先 `_review_ui_hide_answers`
+# 剔答案 + cloze 挖空，再挂最近一条反馈）⇒ 与模态 `review_due_start` **同一条隔离点、不新增泄题面**。
+# 只读（不写任何 `review/**`）。本块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+
+def _review_ui_summon_card(self, card_id: str, kb_path: str | None = None) -> dict:
+    """取**单张卡**的隔离卡面（悬浮卡就地作答用）。复用 `review_due_start` 同一条答案隔离 + 反馈挂载；只读。"""
+    from memoria.services.agent.tools.kb import REVIEW_CARDS_REL, _review_load_json
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    data, err = _review_load_json(kb, REVIEW_CARDS_REL)
+    if err is not None:
+        return _review_ui_error("load_failed", f"cards.json 读取失败：{err}", "load_failed")
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return _review_ui_error("load_failed", "cards.json 不存在或结构非法", "load_failed")
+    card = next((c for c in data["cards"] if isinstance(c, dict) and c.get("card_id") == cid), None)
+    if card is None:
+        return _review_ui_error("unreviewable", f"卡片 {cid} 不在 cards.json 中", "unreviewable")
+    payload = _review_ui_attach_feedback({"cards": [dict(card)]}, kb)
+    cards = payload.get("cards")
+    if not isinstance(cards, list) or not cards:
+        return _review_ui_error("load_failed", "卡面加工失败", "load_failed")
+    return {"status": "ok", "card": cards[0]}
+
+
+UIAPI.review_summon_card = _review_ui_summon_card
+
+
+# ── 复习卡管理页（2026-10-12）：列表 + 增删改/禁用 UI RPC ──────────────────────
+# 管理页（替代旧模态）需要「看所有卡 + 增删改」。列表**不做答案隔离**（管理场景、用户是卡的主人）；
+# 增删改/禁用复用 agent 工具同一条领域实现（`_review_cards_upsert`/`_review_card_disable`/`_review_card_delete`，
+# 均已写前备份+可撤销+审计），UI 侧只做入参校验 + 错误转 `status/code/category`。本块追加在文件末尾 ⇒ 锚点零漂移。
+
+def _review_ui_cards_list(self, kb_path: str | None = None) -> dict:
+    """管理页：列出**所有**复习卡（含未到期、含答案、不做隔离）。只读。"""
+    from memoria.services.agent.tools.kb import REVIEW_CARDS_REL, _review_load_json
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    data, err = _review_load_json(kb, REVIEW_CARDS_REL)
+    if err is not None:
+        return _review_ui_error("load_failed", f"cards.json 读取失败：{err}", "load_failed")
+    if data is None:
+        return {"status": "ok", "cards": [], "count": 0, "updated_at": ""}
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        return _review_ui_error("bad_payload", "cards.json 结构非法", "load_failed")
+    cards = [c for c in data["cards"] if isinstance(c, dict)]
+    return {"status": "ok", "cards": cards, "count": len(cards), "updated_at": data.get("updated_at") or ""}
+
+
+def _review_ui_cards_upsert(self, cards: Any, kb_path: str | None = None) -> dict:
+    """管理页：建/改卡（复用 agent 工具同一条领域实现，写前备份+可撤销+审计）。"""
+    from memoria.services.agent.tools.kb import _review_cards_upsert
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    if not isinstance(cards, list) or not cards:
+        return _review_ui_error("bad_args", "cards 不能为空", "unreviewable")
+    out = _review_cards_upsert(kb, REVIEW_UI_SESSION_ID, {"cards": cards})
+    if out.error:
+        return _review_ui_error(out.code or "upsert_failed", str(out.text), "unreviewable")
+    return {"status": "ok", "message": out.text}
+
+
+def _review_ui_card_delete(self, card_id: str, kb_path: str | None = None) -> dict:
+    """管理页：硬删一张卡（复用领域实现；进度 progress.json 保留）。"""
+    from memoria.services.agent.tools.kb import _review_card_delete
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    out = _review_card_delete(kb, REVIEW_UI_SESSION_ID, {"card_id": cid})
+    if out.error:
+        return _review_ui_error(out.code or "delete_failed", str(out.text), "unreviewable")
+    return {"status": "ok", "message": out.text}
+
+
+def _review_ui_card_disable(self, card_id: str, disabled: bool = True, kb_path: str | None = None) -> dict:
+    """管理页：禁用/恢复调度（复用领域实现；只改 disabled 标记、不删定义）。"""
+    from memoria.services.agent.tools.kb import _review_card_disable
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    out = _review_card_disable(kb, REVIEW_UI_SESSION_ID, {"card_id": cid, "disabled": bool(disabled)})
+    if out.error:
+        return _review_ui_error(out.code or "disable_failed", str(out.text), "unreviewable")
+    return {"status": "ok", "message": out.text}
+
+
+UIAPI.review_cards_list = _review_ui_cards_list
+UIAPI.review_cards_upsert = _review_ui_cards_upsert
+UIAPI.review_card_delete = _review_ui_card_delete
+UIAPI.review_card_disable = _review_ui_card_disable
+
+
+# ── 聊天拖入文档资源（2026-10-13）：外部文件落临时区 / KB 内文件直接引用 ──────────
+# 对齐图片附件 `agent_attach_image` 的同款口径，但落**子目录** `attachments/resources/`、
+# 走 `resources.py`（pdf/docx/txt/md → 解析成文本供 `read_resource` 读）。KB 内文件（文件树拖入）
+# 传 `rel_path` 直接引用、不复制。本块追加在文件末尾 ⇒ 锚点零漂移。
+
+def agent_attach_resource(self, name: str | None = None, data: str | None = None, rel_path: str | None = None) -> dict:
+    """拖入文档资源：外部文件（`data`=纯 base64）落临时区；KB 内文件（`rel_path`）直接引用。"""
+    from memoria.services.agent import resources as resources_mod
+    from memoria.services.agent.ask_stream import CODE_NO_KB
+
+    kb = self._svc.kb_path
+    if not kb:
+        return {"status": "error", "code": CODE_NO_KB, "message": "请先打开知识库"}
+    if rel_path:
+        try:
+            return resources_mod.reference_kb_file(kb, str(rel_path))
+        except resources_mod.ResourceError as exc:
+            return {"status": "error", "code": exc.code, "message": exc.message}
+    if not isinstance(name, str) or not isinstance(data, str):
+        return {"status": "error", "code": "BAD_FIELD", "message": "name/data 必须是字符串"}
+    try:
+        raw = resources_mod.decode_base64(data)
+        return {"status": "ok", **resources_mod.save_resource(kb, name, raw)}
+    except resources_mod.ResourceError as exc:
+        return {"status": "error", "code": exc.code, "message": exc.message}
+    except OSError as exc:  # 落盘失败（权限/盘满）也要给可展示错误
+        return {"status": "error", "code": "BAD_FIELD", "message": f"写入资源目录失败：{exc}"}
+
+
+UIAPI.agent_attach_resource = agent_attach_resource
+
+
+# ── 开放题判分回显（2026-10-13）：读单卡最近一条 agent 反馈 ─────────────────────
+# 开放题（short/produce）提交后自动触发 agent 判分；卡片轮询本 RPC 拿最新分析回显。
+# 复用 `_review_ui_attach_feedback` 同一条读法（只读 attempts.jsonl、取 `kind=="feedback"` 最后一条）。
+
+def review_feedback_latest(self, card_id: str, kb_path: str | None = None) -> dict:
+    """读某卡**最近一条 agent 反馈**（开放题判分回显轮询用）。只读；无反馈返回 `feedback: null`。"""
+    from memoria.services.agent.tools.kb import _review_load_attempts, _review_record_kind
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    try:
+        rows, _invalid = _review_load_attempts(kb)
+    except OSError:
+        rows = []
+    latest = None
+    for row in rows:
+        if not isinstance(row, dict) or _review_record_kind(row) != "feedback":
+            continue
+        if str(row.get("card_id") or "") == cid and str(row.get("source") or "") != "user":
+            latest = row
+    if latest is None:
+        return {"status": "ok", "feedback": None}
+    return {"status": "ok", "feedback": {k: latest[k] for k in ("feedback", "verdict", "score", "ts", "attempt_id") if k in latest}}
+
+
+UIAPI.review_feedback_latest = review_feedback_latest
+
+
+# ── 开放题多轮（2026-10-13）：记录用户对判分的进一步反馈 ─────────────────────────
+# 卡片内多轮对话：用户对 agent 分析再回一句 ⇒ 记成 `kind:"feedback", source:"user"`（复用
+# `_review_feedback_commit` 同一条写路径：写前备份、可撤销、审计），随后前端再触发 agent 回应。
+
+def review_feedback_reply(self, card_id: str, reply: str, kb_path: str | None = None) -> dict:
+    """记录用户对某卡判分的**进一步反馈**（`kind:"feedback"`, `source:"user"`）。追加式、可撤销、审计。"""
+    import datetime as _dt
+
+    from memoria.services.agent.tools.kb import _review_feedback_commit, _review_now_utc
+
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return _review_ui_error("no_kb", "请先打开知识库", "unavailable")
+    cid = str(card_id or "").strip()
+    text = str(reply or "").strip()
+    if not cid:
+        return _review_ui_error("bad_args", "card_id 不能为空", "unreviewable")
+    if not text:
+        return _review_ui_error("bad_args", "反馈内容不能为空", "unreviewable")
+    record = {
+        "kind": "feedback",
+        "ts": _review_now_utc(),
+        "date": _dt.date.today().isoformat(),
+        "card_id": cid,
+        "feedback": text,
+        "source": "user",
+    }
+    ok, payload = _review_feedback_commit(kb, REVIEW_UI_SESSION_ID, record, rating=None)
+    if not ok:
+        return _review_ui_error(payload.get("code") or "write_failed", payload.get("message") or "写入失败", "unreviewable")
+    return {"status": "ok", "message": "已记录反馈"}
+
+
+UIAPI.review_feedback_reply = review_feedback_reply
 
 

@@ -160,6 +160,7 @@
       '<div class="-modal-header">' +
       '<span class="-review-head-title" data-i18n="review.title"></span>' +
       '<span class="-review-progress" id="-review-progress"></span>' +
+      '<button type="button" class="-btn -btn--sm" id="-review-open-source" title="打开来源" aria-label="打开来源">' + esc(T("review.openSource")) + "</button>" +
       '<button type="button" class="-icon-btn" id="-review-close" title="关闭" data-i18n-attr="title:dialog.closeTitle">×</button>' +
       "</div>" +
       '<div class="-modal-body -review-body" id="-review-body"></div>' +
@@ -168,6 +169,7 @@
     document.body.appendChild(overlay);
     overlay.querySelector(".-modal-backdrop").addEventListener("click", close);
     $("#-review-close").addEventListener("click", close);
+    $("#-review-open-source").addEventListener("click", openSource);
     if (global.MemoriaI18n && global.MemoriaI18n.applyStatic) global.MemoriaI18n.applyStatic(overlay);
   }
 
@@ -196,6 +198,10 @@
   function renderGradeBar(enabled) {
     const f = $("#-review-footer");
     if (!f) return;
+    if (S.card && (isAutoCard(S.card) || isAgentInputCard(S.card))) {
+      f.innerHTML = ""; // auto/agent 型不显示 1-4（判分由后端/agent，不由用户评熟悉度）
+      return;
+    }
     const rows = [
       [1, "review.grade.again"],
       [2, "review.grade.hard"],
@@ -444,7 +450,7 @@
     S.done = 0;
     S.unreviewed = [];
     S.flipped = false; S.auto = false; S.judged = null; S.choice = null;
-    S.retried = Object.create(null); revealCache = Object.create(null); // 截断本次会话的揭晓缓存（见模块尾 revealForFlip）
+    S.retried = Object.create(null); revealCache = Object.create(null); judgeRequested = Object.create(null); // 截断本次会话的揭晓缓存/判分触发集（见模块尾）
     buildModal();
     document.body.classList.add("-review-modal-open");
     window.addEventListener("keydown", onKeyDown, true); // 捕获阶段（Esc 同范式）
@@ -513,7 +519,14 @@
     const btn = document.getElementById("btn-review");
     if (btn && !btn.__reviewBound) {
       btn.__reviewBound = true;
-      btn.addEventListener("click", open);
+      // R4-3 后续：顶栏「复习」优先开管理页（review-manage.js）；缺省回退旧模态（批量复习）。
+      btn.addEventListener("click", function () {
+        if (global.MemoriaReviewManage && typeof global.MemoriaReviewManage.open === "function") {
+          global.MemoriaReviewManage.open();
+        } else {
+          open();
+        }
+      });
     }
     if (!bound) {
       bound = true;
@@ -653,7 +666,7 @@
       showVerdictError((res && (res.message || res.code)) || "", (res && res.code) || "");
       return;
     }
-    revealVerdict(res); // 判分完成 ⇒ 作答控件保持禁用
+    S.lastAnswer = String(text || ""); revealVerdict(res); // 保留作答文本 + 判分完成 ⇒ 作答控件保持禁用
   }
 
   /** 判分后揭晓：verdict + `answer`（若回）+ `explain`（若回）；随后开放 1..4 评分。 */
@@ -674,8 +687,40 @@
         "</span>" + esc(res.explain) + "</div>";
     }
     box.innerHTML = html;
-    renderGradeBar(true); // 判分后开放 1..4（用户可覆盖）
+    if (typeof res.rating === "number") {
+      scheduleQuiet(res.rating); // auto 卡：后端已自适应折算 1-4，后台落调度（不自动翻页）
+      renderNextFooter();        // 显示「下一张」，让用户读 verdict 后手动翻页
+      focusBox();
+      return;
+    }
+    if (String(res.verdict || "") === "unjudged") {
+      triggerJudge(S.card); renderNextFooter(); var _b = $("#-review-verdict"); if (_b) _b.innerHTML = '<div class="-review-verdict-label -review-verdict-wait"><span class="-review-spinner"></span>判分中…</div>'; // 自动触发判分（内部 pollJudgeJob 驱动）+spinner
+      focusBox();
+      return;
+    }
+    renderGradeBar(true); // self 卡：仍走 1-4 手评
     focusBox();
+  }
+
+  /** auto 卡自适应评分：后台落调度（**不自动翻页**），成功计入完成数。 */
+  async function scheduleQuiet(rating) {
+    const card = S.card;
+    if (!card) return;
+    try {
+      const res = await call("review_grade_one", card.card_id, rating, null, kbPath());
+      if (res && res.status === "ok") S.done += 1;
+    } catch (e) { /* 调度失败不阻塞：该卡仍会到期 */ }
+  }
+
+  /** 判分/记录后的「下一张」页脚（auto 卡与 agent 卡用；self 卡仍走 1-4）。 */
+  function renderNextFooter() {
+    const f = $("#-review-footer");
+    if (!f) return;
+    f.innerHTML =
+      '<span class="-modal-footer-spacer"></span>' +
+      '<button type="button" class="-btn primary" id="-review-next">' + esc(T("review.next")) + "</button>";
+    const btn = $("#-review-next");
+    if (btn) btn.addEventListener("click", advance);
   }
 
   /** 提交失败 / 无法判分 / 记录落盘失败：如实显示，不假装判过（`code` 决定文案，`record_failed` 单独提示）。 */
@@ -764,5 +809,158 @@
       '<div class="-review-feedback-text">' + esc(fb.feedback) + "</div></div>";
   }
 
-  global.MemoriaReviewModal = { open: open, close: close };
+  // R4-3 v1：导出**纯渲染原语**（取 `card` 参数、不依赖本模块队列态）供悬浮卡复用 —— 共享渲染/作答/评分，
+  // 不另写第二套卡面渲染（markdown + 公式 + cloze）。作答/评分仍走同一套 RPC（review_submit_one / review_grade_one / review_reveal_one）。
+  global.MemoriaReviewModal = { open: open, close: close, faceSource: faceSource, paintFace: paintFace, isAutoCard: isAutoCard, isAgentInputCard: isAgentInputCard, revealForFlip: revealForFlip };
+
+  // ── R4-3 后续（2026-10-13）：开放题提交后**自动触发 agent 判分 + 轮询回显** ─────────
+  // short/produce（judge:agent）提交 → `unjudged` ⇒ 立刻 `agent_ask_start` 起一条判分请求（新会话、不进主聊天面板），
+  // 并轮询 `review_feedback_latest` 直到 agent 写回分析，就地回显判分结论 + 分析段落。
+  // 判分/落调度仍走 agent 工具 `review_feedback_add`（turn 30 已通）。整块追加在模块尾 ⇒ 上方锚点零漂移。
+
+  //: 本次复习会话内已触发判分的卡（防重复触发）
+  let judgeRequested = Object.create(null);
+
+  function triggerJudge(card) {
+    const cid = String((card && card.card_id) || "");
+    const kb = kbPath();
+    if (!cid || !kb) return;
+    if (judgeRequested[cid]) return;
+    judgeRequested[cid] = true;
+    const front = String((card && card.front) || "").slice(0, 2000);
+    const answer = String((S.lastAnswer) || "").slice(0, 4000);
+    const prompt =
+      "请判分复习卡 `" + cid + "`（开放题，judge:agent）。\n【题目】\n" + front + "\n\n【用户作答】\n" + (answer || "（无）") + "\n\n" +
+      "请分析作答质量、给出判分，然后用 `review_feedback_add` 写入 feedback（你的分析文字）、verdict（correct/partial/wrong）、score（1-4）。若需参考该卡答案/知识点，可用 `review_due_list` 读取完整数据。";
+    call("agent_ask_start", prompt, kb, null).then(function (res) {
+      if (res && res.status === "ok" && res.job_id) {
+        pollJudgeJob(cid, res.job_id); // 轮询判分任务直到 done，再读回反馈
+      } else if (res && res.status !== "ok") {
+        var _b = $("#-review-verdict"); if (_b) _b.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">判分触发失败：' + esc((res && (res.message || res.code)) || "未知") + "</div>";
+      }
+    }).catch(function (e) {
+      var _b = $("#-review-verdict"); if (_b) _b.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">判分触发失败：' + esc(String((e && e.message) || e)) + "</div>";
+    });
+  }
+
+  /** 轮询判分任务 job_id 直到 done/error，再读回反馈（比固定 60s 轮 attempts.jsonl 更可靠）。 */
+  function pollJudgeJob(cid, jobId) {
+    const kb = kbPath();
+    if (!kb) return;
+    let cursor = 0;
+    let tries = 0;
+    const timer = setInterval(function () {
+      if (!S.open || !S.card || String(S.card.card_id || "") !== cid) { clearInterval(timer); return; }
+      tries += 1;
+      call("agent_ask_poll", jobId, cursor).then(function (r) {
+        cursor = (r && r.cursor) || cursor;
+        console.log("[judge] job poll", cid, "status:", r && r.status, "code:", r && r.code);
+        if (r && (r.status === "done" || r.status === "error")) {
+          clearInterval(timer);
+          // 任务结束（成功/失败都）再读一次反馈；失败则读完可能有/可能没有
+          pollJudgeFeedback(cid, 6, 2000); // 再给 12s 兜底读反馈
+        }
+      }).catch(function (e) { /* 静默 */ });
+      if (tries >= 40) { // 40 * 3s = 120s 上限
+        clearInterval(timer);
+        showJudgeTimeout(cid);
+      }
+    }, 3000);
+  }
+
+  function showJudgeTimeout(cid) {
+    const _b = $("#-review-verdict");
+    if (_b && S.card && String(S.card.card_id || "") === cid) {
+      _b.innerHTML = '<div class="-review-verdict-label -review-verdict-bad">判分超时：agent 未返回分析，请到会话查看</div>';
+    }
+  }
+
+  function pollJudgeFeedback(cid, maxTries, intervalMs) {
+    const kb = kbPath();
+    if (!kb) return;
+    const cap = maxTries || 12; const iv = intervalMs || 5000;
+    let tries = 0;
+    const timer = setInterval(function () {
+      if (!S.open || !S.card || String(S.card.card_id || "") !== cid) { clearInterval(timer); return; }
+      tries += 1;
+      call("review_feedback_latest", cid, kb).then(function (res) {
+        if (res && res.status === "ok" && res.feedback && typeof res.feedback.feedback === "string" && res.feedback.feedback) {
+          clearInterval(timer);
+          renderJudgeFeedback(cid, res.feedback);
+        }
+      }).catch(function (e) { /* 静默 */ });
+      if (tries >= cap) {
+        clearInterval(timer);
+        showJudgeTimeout(cid);
+      }
+    }, iv);
+  }
+
+  function renderJudgeFeedback(cid, fb) {
+    if (!S.card || String(S.card.card_id || "") !== cid) return;
+    S.judged = { verdict: String(fb.verdict || ""), answer: null, explain: null };
+    const box = $("#-review-verdict");
+    if (!box) return;
+    const v = String(fb.verdict || "");
+    const cls = v === "correct" ? "-review-verdict-ok" : (v === "wrong" ? "-review-verdict-bad" : "-review-verdict-wait");
+    const label = v === "correct" ? T("review.verdictCorrect") : (v === "wrong" ? T("review.verdictWrong") : T("review.feedbackLabel"));
+    let html = '<div class="-review-verdict-label ' + cls + '">' + esc(label) + "</div>";
+    if (typeof fb.feedback === "string" && fb.feedback) {
+      html += '<div class="-review-verdict-line -review-feedback-text">' + esc(fb.feedback) + "</div>";
+    }
+    html += replyFieldHtml();
+    box.innerHTML = html;
+    const send = $("#-review-feedback-reply-send");
+    if (send) send.addEventListener("click", function () {
+      const ta = $("#-review-feedback-reply");
+      submitReply(cid, ta ? ta.value : "");
+    });
+  }
+
+  function replyFieldHtml() {
+    return '<div class="-review-feedback-reply">' +
+      '<textarea class="-review-input" id="-review-feedback-reply" rows="2" placeholder="进一步反馈…"></textarea>' +
+      '<button type="button" class="-btn primary" id="-review-feedback-reply-send">发送</button>' +
+      "</div>";
+  }
+
+  function triggerJudgeReply(cid, reply) {
+    const kb = kbPath();
+    if (!kb) return;
+    const prompt =
+      "用户对复习卡 `" + cid + "` 的判分给出了进一步反馈：\n" + reply +
+      "\n请用 `review_attempts_list` 读取该卡完整记录，回应这条反馈（可修正判分），并用 `review_feedback_add` 写入新的 feedback（你的回应/修正分析）、verdict 和 score。";
+    try { call("agent_ask_start", prompt, kb, null).catch(function () { /* 静默 */ }); } catch (e) { /* 静默 */ }
+  }
+
+  async function submitReply(cid, reply) {
+    const text = String(reply || "").trim();
+    if (!text) return;
+    const kb = kbPath();
+    if (!kb) return;
+    let res;
+    try { res = await call("review_feedback_reply", cid, text, kb); } catch (e) { res = { status: "error" }; }
+    if (!res || res.status !== "ok") {
+      showVerdictError("反馈记录失败", "");
+      return;
+    }
+    const box = $("#-review-verdict");
+    if (box) box.innerHTML = '<div class="-review-verdict-label -review-verdict-wait"><span class="-review-spinner"></span>判分中…</div>';
+    triggerJudgeReply(cid, text);
+    pollJudgeFeedback(cid);
+  }
+
+  /** 打开当前卡所属来源文件（定位到 `kp_id` 知识点）。卡面带 `file` 才可跳；无 `file` 静默。 */
+  function openSource() {
+    const card = S.card;
+    if (!card) return;
+    const file = String(card.file || "").trim();
+    if (!file) return; // 无源文件（如错题卡 kp_id 空）⇒ 不跳
+    const app = A();
+    if (app && typeof app.openFile === "function") {
+      try {
+        app.openFile(file, { kpId: (card.kp_id && String(card.kp_id).trim()) || null });
+      } catch (e) { /* 静默 */ }
+    }
+  }
 })(window);

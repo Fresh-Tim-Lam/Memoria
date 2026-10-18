@@ -77,7 +77,7 @@ KB_TOOL_NAMES = (
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
-    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list", "review_feedback_add",
+    "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list", "review_feedback_add", "review_summon", "review_revoke", "read_resource",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id),
     )
 
 
@@ -4640,8 +4640,8 @@ def _review_error_add(kb_path: str, session_id: str | None, arguments: Mapping[s
 def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
     """`review/**` 事实源的五把领域工具（R2）；`build_kb_tools()` 末位拼接。
 
-    **五把都 `read_only=False`** ⇒ `registry.invoke()` 在分发前一律过审批门（同 `pwsh`/`cmd`；
-    `AskPolicy` 无应答者 / `NeverPolicy` ⇒ fail-closed，工具体**根本不被调用**）。
+    **写/改三把（`review_cards_upsert` / `review_card_disable` / `review_grade` / `review_error_add`）`read_only=False`** ⇒ `registry.invoke()` 在分发前一律过审批门（同 `pwsh`/`cmd`；
+    `AskPolicy` 无应答者 / `NeverPolicy` ⇒ fail-closed，工具体**根本不被调用**）；**`review_due_list` 只读 ⇒ `read_only=True`（免审批）**。
     写入三把复用 `services/agent/backup.py`（pre-image + 栈式撤销）；调度两把复用该库 `fsrs.py`（subprocess）。
     """
 
@@ -4711,7 +4711,7 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
         Tool(
             name="review_due_list",
             description=(
-                "**列出某日到期卡片**（**每次调用都要用户审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）、`date` 可省（默认当天）。"
+                "**列出某日到期卡片**（**只读、免审批**）。内部调**该库的** `.memoria/agent/fsrs.py due`，**不自行推算日期**；默认滤掉被禁用的卡（`include_disabled=true` 可包含）、`date` 可省（默认当天）。"
                 "**返回值是一整段 JSON**（可直接 `json.loads`），顶层 `{date, due, count, filtered_disabled, cards}`：`due`=到期 card_id 列表（顺序即 fsrs 输出、`count`=其长度）、`filtered_disabled`=被滤掉的禁卡数、`cards`=逐张卡面+调度状态（每张必有 `card_id`，另含源文件里存在的 `front`/`back`/`type`/`kp_id`/`file`/`source`/`disabled`/`judge`/`options`/`answer`/`accept`/`explain`/`input` 与调度 `due`/`state`/`stability`/`difficulty`/`reps`/`lapses`/`last_review`）。**缺字段即该项不含该键**（如实缺省、不编造）；`cards.json` 找不到的 id 带 `missing_in_cards: true` 保留（**不静默丢弃**）。**无需再自行解析 `cards.json`**。"
             ),
             parameters={
@@ -4723,7 +4723,7 @@ def _review_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ..
                 "additionalProperties": False,
             },
             handler=_bound(_review_due_list),
-            read_only=False,
+            read_only=True,
         ),
         Tool(
             name="review_grade",
@@ -5261,10 +5261,12 @@ def _review_append_feedback(kb_path: str, record: Mapping[str, Any]) -> None:
         fh.flush()
 
 
-def _review_feedback_commit(kb_path: str, session_id: str | None, record: Mapping[str, Any]) -> tuple[bool, dict]:
+def _review_feedback_commit(kb_path: str, session_id: str | None, record: Mapping[str, Any], rating: int | None = None) -> tuple[bool, dict]:
     """反馈写路径的**写前备份 + 追加 + 撤销点**（与 `_review_commit` 同族，只是落盘为"追加一行"）。
 
-    返回 `(ok, payload)`；失败时 `payload = {code, message}` 且**库内容不变**（备份失败即不写、写失败即回滚）。
+    `rating`（1-4）给定时，追加反馈后**顺带折算落调度**（`_review_grade` 写 `progress.json`），与反馈**同一批**
+    备份/撤销；落调度失败只记进 `warnings`（反馈仍已写入、库可整批撤销）。返回 `(ok, payload)`；失败时
+    `payload = {code, message}` 且**库内容不变**（备份失败即不写、写失败即回滚）。
     """
     import time
 
@@ -5272,7 +5274,8 @@ def _review_feedback_commit(kb_path: str, session_id: str | None, record: Mappin
 
     sid = str(session_id or "").strip() or AUTO_SESSION_ID
     txid = _next_txid(kb_path, sid, time.gmtime())
-    snap = backup.snapshot_pre_images(kb_path, sid, txid, [REVIEW_ATTEMPTS_REL], tool_id="review.feedback_add")
+    rels = [REVIEW_ATTEMPTS_REL] + ([REVIEW_PROGRESS_REL] if rating else [])
+    snap = backup.snapshot_pre_images(kb_path, sid, txid, rels, tool_id="review.feedback_add")
     if snap.get("status") != "ok":
         return False, {"code": snap.get("code") or "backup_failed", "message": snap.get("message") or ""}
     try:
@@ -5282,20 +5285,27 @@ def _review_feedback_commit(kb_path: str, session_id: str | None, record: Mappin
         backup.restore_batch(kb_path, sid, txid, allow_unverified=True, audit=False)
         return False, {"code": "write_failed", "message": str(exc)}
     warnings: list[str] = []
+    schedule_note: str | None = None
+    if rating:
+        out = _review_grade(kb_path, sid, {"card_id": str(record.get("card_id") or ""), "grade": int(rating)})
+        if out.error:
+            warnings.append(f"落调度失败（{out.code or 'grade_failed'}）：{out.text}")
+        else:
+            schedule_note = out.text
     post = backup.record_post_images(kb_path, sid, txid)
     if post.get("status") != "ok":
         warnings.append(f"写后哈希记录失败（{post.get('code') or 'error'}）⇒ 该批撤销会走未校验分支")
     if backup.push_stack(kb_path, sid, txid).get("status") != "ok":
         warnings.append("压入会话撤销栈失败（仍可用 txid 直接撤销）")
     backup.trim_backups(kb_path, sid)  # 机会式清理（同 apply 入口）
-    return True, {"txid": txid, "session_id": sid, "warnings": warnings}
+    return True, {"txid": txid, "session_id": sid, "warnings": warnings, "schedule_note": schedule_note}
 
 
 def _review_feedback_add(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
     """**追加一条判定/反馈**（`kind:"feedback"`）到 `attempts.jsonl`；写前备份、可撤销、审计。
 
     非法参数（缺 `card_id`/`feedback`、`verdict` 越枚举、`score` 非数）或卡不存在 ⇒ **结构化错误，不写垃圾**。
-    **不影响 FSRS**：只写 `attempts.jsonl`，不碰 `cards.json`/`progress.json`。
+    带 `verdict`/1-4 `score` 时**折算 1-4 落调度**（写 `progress.json`，与反馈同一批备份/撤销）；皆无 ⇒ 只写反馈、不影响进度。
     """
     problems = _review_feedback_problems(arguments)
     if problems:
@@ -5325,7 +5335,8 @@ def _review_feedback_add(kb_path: str, session_id: str | None, arguments: Mappin
         record["attempt_id"] = str(arguments["attempt_id"])
     record["source"] = str(arguments.get("source") or "agent")
 
-    ok, payload = _review_feedback_commit(kb_path, session_id, record)
+    rating = _review_feedback_rating(arguments)
+    ok, payload = _review_feedback_commit(kb_path, session_id, record, rating=rating)
     if not ok:
         return _error(
             f"review.feedback_add: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）",
@@ -5341,11 +5352,13 @@ def _review_feedback_add(kb_path: str, session_id: str | None, arguments: Mappin
     warn = ("；".join(payload["warnings"]) + "。") if payload["warnings"] else ""
     verdict_note = f"，verdict={record['verdict']}" if "verdict" in record else ""
     attempt_note = f"，attempt_id={record['attempt_id']}" if "attempt_id" in record else ""
+    schedule_line = f"\n已折算落调度：{payload['schedule_note']}" if payload.get("schedule_note") else ""
+    progress_line = "" if rating else "（未给 verdict/score，未落调度，不影响复习进度）"
     return ToolOutput(
         text=(
             f"**已追加 1 条反馈** 到 `attempts.jsonl`（`kind:\"feedback\"`）：card_id={cid}{verdict_note}{attempt_note}。\n"
             f"txid {payload['txid']}（会话 {payload['session_id']}）；写入前已自动备份、可「撤销这一批」。"
-            "**不影响复习进度**（学习进度仍只由 fsrs 评分写）。" + warn
+            + schedule_line + progress_line + warn
         )
     )
 
@@ -5369,7 +5382,7 @@ def _review_feedback_tools(kb_path: str, session_id: str | None = None) -> tuple
                 "`review_attempts_list`（`verdict:\"unjudged\"`）找出待判作答、拿到其 `attempt_id`，再用本工具写回判定。"
                 "参数：`card_id`（必填）、`feedback`（必填，判定/反馈正文）、`verdict`∈{correct,wrong,partial}（可选）、"
                 "`score`（可选，数值）、`attempt_id`（可选，指回某次作答）、`source`（可选）。"
-                "**只写 `attempts.jsonl`，不碰 `cards.json`/`progress.json`** ⇒ **不影响 FSRS 调度与学习进度**。"
+                "**带 `verdict`（correct/partial/wrong）或 1-4 的 `score` 时，会折算 1-4 落调度**（写 `progress.json`，与反馈同一批备份/撤销）；无 `verdict`/`score` 则只写反馈、不影响进度。**判定要视情况而定**：别机械给 correct/wrong —— 结合该次作答的 `elapsed_ms`（用时，见 `review_attempts_list`）、答成的完整度（部分对 ⇒ `partial`）、表达质量与上下文，给最贴切的 `verdict`；理由写进 `feedback`。"
                 "参数非法 / 卡不存在 ⇒ 结构化错误、**不写垃圾**；写入前自动备份、可「撤销这一批」。"
             ),
             parameters={
@@ -5387,6 +5400,264 @@ def _review_feedback_tools(kb_path: str, session_id: str | None = None) -> tuple
             },
             handler=_bound(_review_feedback_add),
             read_only=False,
+        ),
+    )
+
+
+# ── R4-3 v1（2026-10-12）：悬浮卡呼出/撤回 ──────────────────────────────────────
+# 见 `docs/design/review-cards-handoff.md`。呼出/撤回是**瞬时 UI 交互**（不写库、不新增事实源）：
+# 信箱为**进程内存态**（重启/换库即丢）；**答案隔离不在此**（agent 是判分方、工具面保留答案），
+# 隔离在 UI 取卡路径（`presentation/api/ui.py::_review_ui_summon_card`）复用 `_review_ui_hide_answers`。
+# 两道限流（内存态）：同卡 ≥ `SUMMON_SAME_CARD_COOLDOWN_S`、全局相邻 ≥ `SUMMON_GLOBAL_COOLDOWN_S`；
+# 用户「收起/忽略」的 snooze 由前端内存态自行挡（后端不感知）。
+# 整块追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点零漂移（`KB_TOOL_NAMES` 与 `build_kb_tools()` 各同行等量替换）。
+
+#: 同卡呼出冷却（秒）
+SUMMON_SAME_CARD_COOLDOWN_S = 300.0
+#: 全局相邻呼出冷却（秒）—— 已放宽为 0（R4-3 后续：批量复习不需全局节流，保留同卡 5min 防骚扰）
+SUMMON_GLOBAL_COOLDOWN_S = 0.0
+
+#: 呼出信箱 {库根绝对路径: [事件, …]}；事件 = `{"card_id", "ts"}` 或 `{"revoke": true, "ts"}`。不落盘。
+_SUMMONS: dict[str, list[dict[str, Any]]] = {}
+#: 同卡最近呼出时间 {库根: {card_id: epoch}}
+_SUMMON_LAST_SAME: dict[str, dict[str, float]] = {}
+#: 全局最近呼出时间 {库根: epoch}
+_SUMMON_LAST_GLOBAL: dict[str, float] = {}
+
+
+def take_summons(kb_path: str) -> list[dict[str, Any]]:
+    """取走某库**尚未被 UI 消费**的呼出/撤回事件（取走即清空；没有就回空表）。只读、不落盘。"""
+    return _SUMMONS.pop(os.path.abspath(kb_path or ""), [])
+
+
+def _review_summon(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """呼出一张卡悬浮显示：`card_id` 可省（缺省 = 从今日到期里挑第一张）；也接受任意已存在的卡。
+    两道限流（同卡 / 全局）命中 ⇒ 结构化拒绝（no-op）。**不写库**。"""
+    import json as _json
+    import time as _time
+
+    kb = os.path.abspath(kb_path)
+    cid = str(arguments.get("card_id") or "").strip()
+    now = _time.time()
+    if now - _SUMMON_LAST_GLOBAL.get(kb, 0.0) < SUMMON_GLOBAL_COOLDOWN_S:
+        return _error(
+            "review.summon: 呼出过于频繁（相邻呼出至少间隔 30 秒），请稍后再试", INVALID_ARGUMENTS_CODE
+        )
+    if cid:
+        data, err = _review_load_json(kb, REVIEW_CARDS_REL)
+        if err is not None:
+            return _error(f"review.summon: cards.json 读取失败：{err}", INVALID_ARGUMENTS_CODE)
+        if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+            return _error("review.summon: cards.json 不存在或结构非法", INVALID_ARGUMENTS_CODE)
+        if not any(isinstance(c, dict) and c.get("card_id") == cid for c in data["cards"]):
+            return _error(f"review.summon: card_id `{cid}` 不在 cards.json 中", INVALID_ARGUMENTS_CODE)
+    else:
+        out = _review_due_list(kb, _session_id, {})
+        if out.error:
+            return _error(f"review.summon: 今日到期清单读取失败：{out.text}", INVALID_ARGUMENTS_CODE)
+        try:
+            due = (_json.loads(out.text) or {}).get("due") or []
+        except (TypeError, ValueError):
+            return _error("review.summon: 到期清单不是合法 JSON", INVALID_ARGUMENTS_CODE)
+        if not due:
+            return _error("review.summon: 今日没有到期卡", INVALID_ARGUMENTS_CODE)
+        cid = str(due[0])
+    if now - _SUMMON_LAST_SAME.setdefault(kb, {}).get(cid, 0.0) < SUMMON_SAME_CARD_COOLDOWN_S:
+        return _error(
+            f"review.summon: 卡 `{cid}` 呼出过频（同卡至少间隔 5 分钟），请稍后再试", INVALID_ARGUMENTS_CODE
+        )
+    _SUMMONS.setdefault(kb, []).append({"card_id": cid, "ts": now})
+    _SUMMON_LAST_SAME.setdefault(kb, {})[cid] = now
+    _SUMMON_LAST_GLOBAL[kb] = now
+    return ToolOutput(text=f"已请求呼出卡片 `{cid}` 悬浮显示（用户可收起/忽略；作业结束后不再投递，属 v1 能力边界）。")
+
+
+def _review_revoke(kb_path: str, _session_id: str | None, _arguments: Mapping[str, Any]) -> ToolOutput:
+    """撤回当前被呼出的悬浮卡（下一次轮询内生效）。**不写库**。"""
+    import time as _time
+
+    kb = os.path.abspath(kb_path)
+    _SUMMONS.setdefault(kb, []).append({"revoke": True, "ts": _time.time()})
+    return ToolOutput(text="已请求撤回当前悬浮卡（下一次轮询内消失）。")
+
+
+def _review_summon_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """R4-3 v1 的呼出/撤回两把工具（`build_kb_tools()` 末位拼接）。
+    **都 `read_only=True`（免审批）**：不写库、只产生瞬时 UI 交互（与 `review_attempts_list` 同口径）。"""
+
+    def _bound(fn):
+        return lambda arguments: fn(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="review_summon",
+            description=(
+                "**呼出一张复习卡悬浮显示**（免审批；只产生 UI 交互、不写库）。"
+                "`card_id` 可省：缺省从**今日到期**里挑第一张；也可指定任意已存在的卡（预习/追问用）。"
+                "用于「主动提醒用户复习 / 就地提问这张卡」。同卡 5 分钟内不可重复呼出。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "card_id": {"type": "string", "description": "要呼出的卡 id（缺省=今日到期第一张；可传任意已存在的卡）"},
+                },
+                "additionalProperties": False,
+            },
+            handler=_bound(_review_summon),
+            read_only=True,
+        ),
+        Tool(
+            name="review_revoke",
+            description="**撤回当前被呼出的悬浮卡**（免审批；只产生 UI 交互、不写库）。无参数。",
+            parameters={"type": "object", "properties": {}, "additionalProperties": False},
+            handler=_bound(_review_revoke),
+            read_only=True,
+        ),
+    )
+
+
+# ── R4-3 v1 收尾（2026-10-12）：auto 卡自适应评分 Score(t) ─────────────────────
+# 人拍板：客观题（judge=auto 的 mcq/gapfill/带答案 cloze）判分后**不显示 1-4**，由后端按「对错 + 作答时长」
+# 自适应折算 1-4 直接落调度（self 型仍 1-4 手评、agent 型交 agent 判）。基线 = 最近 N 次**同题型**作答
+# `elapsed_ms` 的**中位数**（从既有 `attempts.jsonl` 派生，**不新增事实源**），冷启动（样本不足）用每题型默认
+# 先验；随作答自动滑动 ⇒ 门槛动态适应、不写死。整块追加在文件末尾 ⇒ 上方锚点零漂移。
+
+#: 每题型冷启动先验（ms；样本不足 REVIEW_SCORE_MIN_SAMPLES 时用）
+REVIEW_SCORE_DEFAULTS_MS: dict[str, int] = {"mcq": 3000, "gapfill": 6000, "cloze": 8000, "short": 10000, "produce": 15000}
+#: 基线窗口 = 最近 N 次同题型作答
+REVIEW_SCORE_WINDOW = 20
+#: 「快」系数：t < k · 中位数 才算快
+REVIEW_SCORE_K = 0.6
+#: 样本不足此数 ⇒ 冷启动用默认先验（中位数不稳，别拿一两次作答定门槛）
+REVIEW_SCORE_MIN_SAMPLES = 3
+
+
+def _review_median_elapsed_ms(kb_path: str, ctype: str) -> int | None:
+    """最近 `REVIEW_SCORE_WINDOW` 次**同题型**作答的 `elapsed_ms` 中位数；样本不足 → `None`（调用方用默认先验）。
+
+    只取 `kind=answer` 且 `elapsed_ms` 为有效非负整数的记录（反馈 / 非法时长不参与基线）。"""
+    ctype = str(ctype or "")
+    rows, _invalid = _review_load_attempts(kb_path)
+    samples: list[int] = []
+    for row in rows:
+        if not isinstance(row, dict) or _review_record_kind(row) != "answer":
+            continue
+        if str(row.get("type") or "") != ctype:
+            continue
+        v = _review_normalize_elapsed(row.get("elapsed_ms"))
+        if v is None:
+            continue
+        samples.append(v)
+    tail = samples[-REVIEW_SCORE_WINDOW:]
+    if len(tail) < REVIEW_SCORE_MIN_SAMPLES:
+        return None
+    ordered = sorted(tail)
+    n = len(ordered)
+    return ordered[n // 2] if n % 2 == 1 else (ordered[n // 2 - 1] + ordered[n // 2]) // 2
+
+
+def _review_auto_rating(kb_path: str, ctype: str, verdict: str, elapsed_ms: Any) -> int:
+    """auto 卡自适应折算 1..4：错 → 1(Again)；对且快（`t < k·中位数`）→ 4(Easy)；对 → 3(Good)。"""
+    if verdict != "correct":
+        return 1
+    med = _review_median_elapsed_ms(kb_path, ctype)
+    if med is None:
+        med = REVIEW_SCORE_DEFAULTS_MS.get(ctype, 6000)
+    t = _review_normalize_elapsed(elapsed_ms)
+    if t is not None and t < REVIEW_SCORE_K * med:
+        return 4
+    return 3
+
+
+# ── R4-3 v1 收尾（2026-10-12）：agent 判分 → 折算 1-4 → 落调度 ─────────────────
+# 人拍板：`short`/`produce` 等 `judge:agent` 卡，agent 用 `review_feedback_add` 写回 `verdict`/`score` 时，
+# **顺带折算 FSRS 1-4 落调度**（写 `progress.json`）——否则这些卡永远停在「今日到期」。折算口径：
+# `score` 为 1-4 整数时**直接取**；否则 `verdict` correct→3(Good) / partial→2(Hard) / wrong→1(Again)；
+# 两者皆无 ⇒ `None`（只写反馈、不落调度）。落调度与反馈写**同一批**备份/撤销（见 `_review_feedback_commit`）。
+
+def _review_feedback_rating(arguments: Mapping[str, Any]) -> int | None:
+    """agent 判分 → FSRS 1-4 折算。`score` 为 1-4 整数直接取；否则 `verdict` correct/partial/wrong → 3/2/1；皆无 → None。"""
+    score = arguments.get("score")
+    if isinstance(score, (int, float)) and not isinstance(score, bool):
+        s = int(score)
+        if 1 <= s <= 4:
+            return s
+    return {"correct": 3, "partial": 2, "wrong": 1}.get(arguments.get("verdict"))
+
+
+# ── 复习卡管理页（2026-10-12）：硬删一张卡 ─────────────────────────────────────
+# 管理页需要「删」；既有工具只有「禁用」（软删不删定义）。硬删从 cards.json 移除定义，
+# 学习进度 progress.json **不动**（与 disable 同口径：进度只由 fsrs.py 持有）。
+
+def _review_card_delete(kb_path: str, session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """**硬删一张卡**（从 cards.json 移除定义；progress.json 的学习进度不动）。写前备份、可撤销、审计。"""
+    cid = str(arguments.get("card_id") or "").strip()
+    if not cid:
+        return _error("review.card_delete: card_id 不能为空", INVALID_ARGUMENTS_CODE)
+    doc, read_err = _review_load_json(kb_path, REVIEW_CARDS_REL)
+    if read_err is not None:
+        return _error(f"review.card_delete: cards.json 读取失败：{read_err}", INVALID_ARGUMENTS_CODE)
+    if not isinstance(doc, dict) or not isinstance(doc.get("cards"), list):
+        return _error("review.card_delete: cards.json 不存在或结构非法", INVALID_ARGUMENTS_CODE)
+    before = len(doc["cards"])
+    doc["cards"] = [c for c in doc["cards"] if not (isinstance(c, Mapping) and c.get("card_id") == cid)]
+    if len(doc["cards"]) == before:
+        return _error(f"review.card_delete: 未找到卡片 {cid}", INVALID_ARGUMENTS_CODE)
+    doc["updated_at"] = _review_now_utc()
+    ok, payload = _review_commit(kb_path, session_id, "review.card_delete", REVIEW_CARDS_REL, doc)
+    if not ok:
+        return _error(
+            f"review.card_delete: 写入失败（{payload['code']}）：{payload['message']}（库内容未变）",
+            WRITE_FAILED_CODE,
+        )
+    _review_audit(kb_path, session_id, "review.card_delete", REVIEW_CARDS_REL, {"txid": payload["txid"], "card_id": cid})
+    return ToolOutput(text=f"已删除卡片 `{cid}`（学习进度 progress.json 保留）。txid {payload['txid']}；可「撤销这一批」。")
+
+
+# ── 聊天拖入文档资源（2026-10-13）：read_resource 只读工具 ───────────────────────
+# 读用户拖入的资源（pdf/docx/txt/md）→ 解析成纯文本。解析按读时做（惰性 import pypdf/docx），
+# 复用 `services/agent/resources.py::extract_text`。`read_only=True`（免审批，只读、不写库）。
+
+def _read_resource(kb_path: str, _session_id: str | None, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`read_resource`：读拖入资源（pdf/docx/txt/md）并解析成文本；资源子目录与 KB 内文件都能读。"""
+    from memoria.services.agent import resources as resources_mod
+
+    rel = str(arguments.get("rel_path") or "").strip()
+    if not rel:
+        return _error("read_resource: rel_path 不能为空", INVALID_ARGUMENTS_CODE)
+    try:
+        text = resources_mod.extract_text(kb_path, rel)
+    except resources_mod.ResourceError as exc:
+        return _error(f"read_resource: {exc.message}", exc.code or INVALID_ARGUMENTS_CODE)
+    if not text.strip():
+        return ToolOutput(text="（该资源解析出的文本为空，可能是不含可提取正文的扫描版 PDF 或空文档）")
+    return ToolOutput(text=text)
+
+
+def _read_resource_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
+    """聊天拖入文档资源的只读工具（`build_kb_tools()` 末位拼接）。`read_only=True`（免审批）。"""
+
+    def _bound(fn):
+        return lambda arguments: fn(kb_path, session_id, arguments)
+
+    return (
+        Tool(
+            name="read_resource",
+            description=(
+                "**读取用户拖入的文档资源**（免审批、只读）：PDF / Word(.docx) / TXT / Markdown，"
+                "解析成纯文本返回。`rel_path` 是资源在知识库内的相对路径（用户拖入时已在消息里给出，"
+                "或落在 `.memoria/agent/attachments/resources/` 子目录）。用于「读用户拖进来的资料文件」。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "rel_path": {"type": "string", "description": "资源在知识库内的相对路径（如 .memoria/agent/attachments/resources/<sha>-<名>.pdf 或库内 <doc>.pdf）"},
+                },
+                "required": ["rel_path"],
+                "additionalProperties": False,
+            },
+            handler=_bound(_read_resource),
+            read_only=True,
         ),
     )
 

@@ -247,6 +247,47 @@ window.MemoriaParser = (function () {
   }
 
   /**
+   * 表格行切分：把一行按「单元格边界」的 `|` 切分，但**跳过公式（`$...$`/`$$...$$`）
+   * 与行内代码（` ` `...` ` `）内部的竖线**——避免 `$|x|$`、`\|` 这类被误当分隔符。
+   * 返回单元格字符串数组（含前导/尾随空串，由调用方再 trim/shift/pop，语义与旧 split("|") 对齐）。
+   */
+  function splitTableRow(raw) {
+    var cells = [];
+    var buf = "";
+    var i = 0;
+    var n = raw.length;
+    while (i < n) {
+      var ch = raw[i];
+      // 转义竖线 \| ：字面竖线，不是边界
+      if (ch === "\\" && raw[i + 1] === "|") { buf += "\\|"; i += 2; continue; }
+      // 行内公式 $...$（或 $$...$$）：跳到配对的结束
+      if (ch === "$") {
+        var dbl = raw[i + 1] === "$";
+        var close = dbl ? "$$" : "$";
+        buf += (dbl ? "$$" : "$");
+        i += (dbl ? 2 : 1);
+        var closeIdx = raw.indexOf(close, i);
+        if (closeIdx >= 0) { buf += raw.slice(i, closeIdx + close.length); i = closeIdx + close.length; }
+        continue;
+      }
+      // 行内代码 `...`：跳到配对反引号
+      if (ch === "`") {
+        buf += "`";
+        i += 1;
+        var bt = raw.indexOf("`", i);
+        if (bt >= 0) { buf += raw.slice(i, bt + 1); i = bt + 1; }
+        continue;
+      }
+      // 单元格边界
+      if (ch === "|") { cells.push(buf); buf = ""; i += 1; continue; }
+      buf += ch;
+      i += 1;
+    }
+    cells.push(buf);
+    return cells.map(function (c) { return c.trim(); });
+  }
+
+  /**
    * 在 tokens 中从 start 开始查找匹配的关闭 token
    * @returns {number} index 或 -1
    */
@@ -467,7 +508,7 @@ window.MemoriaParser = (function () {
       // ── 表格 ──
       if (rawLine.indexOf("|") >= 0 && i + 1 < endLine && lines[i + 1].trim().match(/^\|?[\s\-:|]+\|?$/)) {
         var tableRows = [];
-        var row = rawLine.split("|").map(function (c) { return c.trim(); });
+        var row = splitTableRow(rawLine);
         if (row[0] === "") row.shift();
         if (row[row.length - 1] === "") row.pop();
         tableRows.push(row);
@@ -476,7 +517,7 @@ window.MemoriaParser = (function () {
         i++; // move to first data row
 
         while (i < endLine && lines[i].indexOf("|") >= 0) {
-          var dr = lines[i].split("|").map(function (c) { return c.trim(); });
+          var dr = splitTableRow(lines[i]);
           if (dr[0] === "") dr.shift();
           if (dr[dr.length - 1] === "") dr.pop();
           tableRows.push(dr);

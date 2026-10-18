@@ -1941,4 +1941,15 @@
     feedbackLabel: "Previous feedback",
     feedbackScore: "Score {score}",
   });
+
+  // ===== 2026-10-12 appended: R4-3 v1 floating card (`js/review-summon.js`) =====
+  // Appended via end-of-file `Object.assign` ⇒ all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].review, {
+    summonTitle: "Review",
+    summonAria: "Review card",
+    summonIgnore: "Dismiss",
+    summonFlip: "Flip",
+    next: "Next",
+    openSource: "Open source",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

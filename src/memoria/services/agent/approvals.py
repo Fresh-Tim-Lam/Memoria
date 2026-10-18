@@ -188,6 +188,8 @@ def write_is_risky(request: ApprovalRequest) -> bool:
     只对「能识别的写计划」免问：`arguments["ops"]` 必须是**非空**列表，且每一项都能读出
     `op` 动词 —— 认不出（新写工具 / 参数换了形状）就当作危险，交给应答者。
     """
+    if request.tool == "review_feedback_add":
+        return False  # 复习反馈写（追加 attempts.jsonl + 可选落调度）：低风险、有写前备份+整批撤销，免审批
     arguments = request.arguments if isinstance(request.arguments, Mapping) else {}
     ops = arguments.get("ops")
     if not isinstance(ops, (list, tuple)) or not ops:
