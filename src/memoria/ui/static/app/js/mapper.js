@@ -278,16 +278,71 @@ window.MemoriaMapper = (function () {
   /**
    * 获取 block 的源码前缀长度（标题 #、引用 >、列表 - 等）
    * @param {object} block
+   * @param {number} [itemIdx=0] — LIST_ITEM 专用：该项在所属 LIST 中的下标；
+   *   有序列表的序号宽度随项变化（`9. ` 3 列 / `10. ` 4 列 / `100. ` 5 列），
+   *   必须按真实序号位数计算，不能硬编码 2 列。
    * @returns {number}
    */
-  function blockPrefixLen(block) {
+  function blockPrefixLen(block, itemIdx) {
     if (!block) return 0;
     switch (block.type) {
       case T.HEADING: return block.level + 1; // "## " = 3
       case T.BLOCKQUOTE: return 2;            // "> "
-      case T.LIST_ITEM: return 2;             // "- " or "1. "
+      case T.LIST_ITEM: return listItemPrefixLen(block, itemIdx); // "- " 或 "N. "
       default: return 0;
     }
+  }
+
+  /**
+   * 列表项源码前缀长度：`"- "` = 2；有序列表按**真实序号位数**计算 `"N. "`。
+   *
+   * 口径必须与 lexer 一致（`lexer.js` 有序列表分支按 `om[2].length + 2` 推进列号），
+   * 即「原始源码」列号。序号按 AST 的渲染语义取号：`block.items[i]` 的序号 =
+   * `(block.start || 1) + i` —— 这正是 renderer 用 `<ol start=N>` 呈现的序号
+   * （parser 的 `emit()` 把 `srcLine/srcLineEnd` 落在真实行区间、`items` 与行一一对应，
+   * 因此第 i 个 item 落在 `srcLine + i` 行，其行首序号就是基准 + i）。
+   *
+   * 已知偏差（不在本修复范围，属规划期问题）：若源文档各列表项序号不连续/不从
+   * 基准递增（如 `5. a` 后接 `12. b`），parser 只保留首项编号、丢弃后续原始数字，
+   * 映射器无法恢复中间项的真实位数 —— 这需要在 AST/parser 层保留每个 item 的
+   * 原始标记文本，超出本轮只改 mapper/source-gen 的修复边界。
+   *
+   * @param {object} item — LIST_ITEM 节点
+   * @param {number} [itemIdx=0]
+   * @returns {number}
+   */
+  function listItemPrefixLen(item, itemIdx) {
+    var idx = (typeof itemIdx === "number" && isFinite(itemIdx) && itemIdx >= 0) ? Math.floor(itemIdx) : 0;
+    // 行内带 `ordered` 标记的 item（非 parser 标准产物，防御性支持）
+    if (item && item.ordered === false) return 2;
+    // 位于 LIST 上（parser 标准结构：item 自身不带 ordered/start）
+    if (item && typeof item.ordered === "boolean") {
+      return item.ordered ? String((item.start || 1) + idx).length + 2 : 2;
+    }
+    return 2;
+  }
+
+  /**
+   * 由 LIST block + item 下标求该项的源码前缀长度（`"- "` 或 `"N. "`）
+   * @param {object} listBlock — LIST 节点
+   * @param {number} itemIdx
+   * @returns {number}
+   */
+  function listPrefixLen(listBlock, itemIdx) {
+    if (!listBlock) return 2;
+    var idx = (typeof itemIdx === "number" && isFinite(itemIdx) && itemIdx > 0) ? Math.floor(itemIdx) : 0;
+    var item = (listBlock.items && listBlock.items[idx]) || null;
+    if (item) {
+      // item 自带 ordered 标记时以其为准（防御性）；否则用列表头
+      if (typeof item.ordered !== "boolean" && typeof listBlock.ordered === "boolean") {
+        return listBlock.ordered ? String((listBlock.start || 1) + idx).length + 2 : 2;
+      }
+      return listItemPrefixLen(item, idx);
+    }
+    if (typeof listBlock.ordered === "boolean") {
+      return listBlock.ordered ? String((listBlock.start || 1) + idx).length + 2 : 2;
+    }
+    return 2;
   }
 
   /**
@@ -327,6 +382,12 @@ window.MemoriaMapper = (function () {
 
     // 在 inline 节点中查找
     var prefix = blockPrefixLen(block);
+    // 注：LIST/BLOCKQUOTE 是**块级**节点（内容在 items/children 里，不在 children 上），
+    // 它们的源码带多行 `- `/`N. `/`> ` 前缀，**不适用**下面这套「单行 inline + 块级前缀」
+    // 口径 —— 真实行列在各自的专用分支里算（LIST 用 `listPrefixLen(block, itemIdx)`，
+    // 逐项按真实序号位数，与 lexer 的 `om[2].length + 2` 对齐）。这里生成单行源码仅为
+    // 兜底「光标在内容之后」的列号，不参与 LIST/BLOCKQUOTE 分支。
+    // （生成器会对有序列表按解析序号连续编号，但该产物只影响无 nodePath 的兜底路径。）
     var srcLine = sourceGen.generateBlock(block);
     // 对于多行 block，使用该行的起始位置
     var blockLineStart = 0;
@@ -384,6 +445,12 @@ window.MemoriaMapper = (function () {
     }
 
     // 超出范围
+    // （防跌进：LIST/BLOCKQUOTE 的源码行只含行首前缀 + inline 内容，不满足上面"单行"
+    //  假设；它们在上方已由专用分支处理。走到这里 ⇒ 这两个分支被跳过（如 block 缺
+    //  `children`），返回块级位置而非越界下标，避免 nodePath[0] 指向不存在的项。）
+    if (block.type === T.LIST || block.type === T.BLOCKQUOTE) {
+      return { blockIndex: blockIndex, nodePath: [], offset: col };
+    }
     return { blockIndex: blockIndex, nodePath: [inlineNodes.length - 1], offset: 0 };
   }
 
@@ -435,7 +502,8 @@ window.MemoriaMapper = (function () {
       line += blockLineCount(doc.blocks[i]); // 兜底：块缺 `srcLine` 时逐块累加（历史口径）
     }
 
-    // LIST block: 使用 items，每个 item 占一行，前缀 "- " (2字符)
+    // LIST block: 使用 items，每个 item 占一行，前缀 "- "（无序，2 字符）
+    // 或 "N. "（有序，宽度随真实序号位数变化：`10. ` = 4、`100. ` = 5）
     if (block.type === T.LIST) {
       if (!block.items || block.items.length === 0) {
         return { line: line, col: 0 };
@@ -447,7 +515,10 @@ window.MemoriaMapper = (function () {
       if (itemIdx >= block.items.length) return { line: line, col: 0 };
       // 每个 item 在自己的源码行上
       line += itemIdx;
-      var liCol = 2; // "- " 前缀
+      // 前缀列宽按该项真实序号位数计算：无序 "- " = 2；有序按 `"N. "` 宽度
+      // （`10. ` = 4 列，`100. ` = 5 列）。口径与 lexer 的 `om[2].length + 2` 一致，
+      // 硬编码 2 会让 ≥10 项的有序列表光标/列号少算位数（R3）。
+      var liCol = listPrefixLen(block, itemIdx);
       if (nodePath.length === 1) {
         return { line: line, col: liCol + offset };
       }
