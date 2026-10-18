@@ -36,12 +36,12 @@
         renderActions: { addMenu: [0, "", ""] },
       },
       startup: { typeset: false },
-      chtml: { scale: 1, minScale: 0.5, matchFontHeight: true },
+      svg: { fontCache: "local" },
     };
   </script>
   <script defer src="/vendor/marked.min.js"></script>
   <script defer src="/app/vendor/mermaid.min.js"></script>
-  <script defer src="/vendor/mathjax/es5/tex-chtml-full.js"></script>
+  <script defer src="/vendor/mathjax/es5/tex-svg.js"></script>
 </head>
 <body>
   <div id="app">
@@ -518,5 +518,7 @@
        正文复用 `window.MemoriaMarkdownPreview`、骨架复用既有 `.-modal` 一族；不改 app.js / agent-panel.js。
        末尾追加为最后一个 script 标签（`#btn-review` 在工具栏**同行追加**，不新增行）⇒ 既有 `index.html:<行>` 锚点零漂移。 -->
   <script src="/app/js/review-modal.js"></script>
+  <script src="/app/js/review-summon.js"></script>
+  <script src="/app/js/review-manage.js"></script>
 </body>
 </html>
