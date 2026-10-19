@@ -105,7 +105,7 @@
 | Owner | 确认领域 | 自报的最大未解决问题 | 建议下一工作单元 |
 |---|---|---|---|
 | `render-perf` | 渲染性能 | **预览缓存命中率 0%**：`_previewCacheStash` 早退条件（`app.js:13134` 的 `!state.doc.preview_body`、`:13133` 的 `_dirty`）让正在编辑的大文件永远进不了预览池 ⇒ 整篇解析 ~1s 纯亏 | 改早退为按 `fp` 指纹判失效，并用度量协议验命中率上升 |
-| `render-impl` | 渲染实现 | ~~tex-svg.js 未落盘~~ **（已证伪，见 §9）** | 待重新界定（见 §9） |
+| `render-impl` | 渲染实现 | CHTML→SVG 切换**已完成**（含 mapper/app/edit-handler 复核：`_isAtomElement` 用非结构化信号，SVG 下无需改动）。真实未收口仅剩 1 项：`app.js:11751` 导出路径 `svg.fontCache="local"` + `typesetClear` 可能致 `<defs>` 未重建、导出公式空（待真机验证）。另一条同批待验风险：SVG 用 `ex` 度量替代 `matchFontHeight`，字高/基线可能有细微差异 | 真机验证导出公式 + 公式行高抽查（该项需人在真机执行，非 agent 可闭环） |
 | `sync-mapper` | 编辑-预览同步 | **R1 是单点放大器**：`app.js:1872` 末块判据全有或全无，一旦失效全文退回与 parser 平行的第二套启发式，R2/R5/R6 全在此时显形 | R1 改逐块守卫（`block.srcLineEnd <= srcLines.length`）+ 退化时打 `log("STAMP","fallback")` |
 | `mapper-fix` | 映射实现 | `srcToAst` 的 LIST/BLOCKQUOTE 无专用分支（走单行 inline 口径、`nodePath` 可越界）；rawMarker 残余降 P2 | 补 LIST/BLOCKQUOTE 专用分支 + 纯 Node 验证（与 R3 同族） |
 | `jump-fix` | 导航与跳转 | 4 条已知不准：重命名不重映射导航栈（`file-tree.js:51-73`）、导航失败不回滚 cursor（`app.js:6228-6240`）、树内点击回卷丢尾（`nav-stack.js:38-46`）、文档锚点已 +27 漂移 | 重命名后重映射 `MemoriaNavStack` 帧路径（含 `filePointer`） |
@@ -132,4 +132,8 @@ SHA256 `D4295DC3…A882` 与源一致），探针残留已清，并已入 commit
 - Owner 回报**未复核**的事实型结论时，Lead 必须**先验证再采信**（本次一验即破）；
 - 给长期在岗的 Owner 派新活前，先下**上下文压缩指令**：让它保留「角色 + 已证实的结论 + 未解决问题」，
   **显式丢弃已被证伪/已由他人完成的旧结论**，避免用旧记忆否定新事实。
+
+**压缩指令已实测有效（2026-10-19）**：对 `render-impl` 下达「作废旧结论 → 固化角色与已证实结论 → 重新回答未收口项」后，
+它**自我纠错成功**并给出准确的剩余项（导出公式 `<defs>` 重建待验 + SVG `ex` 度量行高风险）。
+⇒ **该指令应成为「Owner 长期在岗后接手新任务」的标准前置步骤。**
 
