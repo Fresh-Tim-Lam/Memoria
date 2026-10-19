@@ -105,8 +105,21 @@ def test_cache_moves_nodes_instead_of_cloning() -> None:
     assert 'if (!first || first.classList.contains("-preview-loading")) { _previewDomKey = null; return; }' in js, (
         "失败/占位（.-preview-loading）不算有效渲染，绝不能把错误页缓存起来"
     )
-    # 缓存条目只对"本会话未编辑过"且已写盘干净的文档建立
-    assert "if (_dirty) return;" in js and "if (!state.doc.preview_body) return;" in js
+    # 缓存判据（2026-10-19 修订）：**有效性 = 这份 DOM 的出身指纹 == 切走那一刻的正文指纹**。
+    # 旧写法 `if (_dirty) return; if (!state.doc.preview_body) return;` 让"编辑过的文档"永远进不了池
+    # （编辑路径一律把 preview_body 置 null）⇒ 教材场景命中率恒 0，整篇 parse/render 全是净亏。
+    # 正确性由 `version + fp` 双校验封底（上面那条断言已钉住），不再需要 dirty/preview_body 这条代理判据。
+    # 判据必须落在**函数体内的代码行**上，不能只看"全文里出现过/没出现过"——注释里会提到这两个词。
+    _stash_body = js[js.index("function _previewCacheStash(path)"):js.index("function _applyPreviewStaticPass")]
+    _stash_code = "\n".join(
+        line for line in _stash_body.splitlines() if not line.strip().startswith("//")
+    )
+    assert "\n    if (_dirty) return;" not in _stash_code, "脏标记不得作为缓存失效判据（正确性已由 version+fp 双校验封底）"
+    assert "\n    if (!state.doc.preview_body) return;" not in _stash_code, "preview_body 缺席不得阻止缓存（它只在编辑路被置 null）"
+    assert "const fpNow = _bodyFingerprint(_previewSourceBody(state.doc));" in js
+    assert "if (_previewDomKey.fp !== fpNow) return;" in js, "DOM 出身与当前正文不符（渲染后又编辑过）⇒ 不得缓存"
+    assert "fp: _bodyFingerprint(_previewSourceBody(state.doc))," not in js, "条目 fp 必须复用 fpNow 同一口径"
+    assert "fp: fpNow," in js
     # 整段渲染被跳过 ⇒ 要自己补上 renderPreview 里那段"当前文件目录"（否则后续编辑的图片路径会按上一篇算）
     assert "if (MP0 && MP0.setCurrentFileDir) MP0.setCurrentFileDir(_relDirOf(doc.path));" in js
 

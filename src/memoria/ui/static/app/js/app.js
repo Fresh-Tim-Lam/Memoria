@@ -13055,7 +13055,12 @@
   //   ① 有条目 ⇒ 它的 DOM 一定**不在** `#preview` 里（切走时搬出、切回时搬回并删除条目）；
   //   ② 条目里同时存 **正文指纹**（`_bodyFingerprint`）与后端 **版本号**（`load_document` 追加的
   //      `version` = 文件内容 sha256）—— 任一不符立即丢弃，重走全量渲染；
-  //   ③ 只在「本会话内从未编辑过该文档」（`doc.preview_body` 仍在）且已写盘干净时缓存。
+  //   ③ （2026-10-19 修订）**缓存有效性 = 渲染那一刻的正文指纹**，不再是"本会话没编辑过"这条代理判据。
+  //      旧写法 `if (_dirty) return; if (!state.doc.preview_body) return;` 让**任何编辑过的文档永远进不了池**
+  //      （编辑路径一律把 `preview_body` 置 null，见 `state.doc.preview_body = null;` 各处）⇒ 教材场景命中率恒 0，
+  //      整篇 parse/render 全是净亏。新判据：只要 `#preview` 里那份 DOM **确实**是由指纹为 `fpNow` 的正文渲染出来的，
+  //      它就可以缓存 —— `_markPreviewDomCurrent()` 在渲染收尾时记下 `fpNow`（即"这棵 DOM 的出身"）。
+  //      `_dirty` 不再参与：它只代表"有未写盘编辑"，而缓存命中的正确性由 **version + fp 双校验**（见 ②）封底。
   //
   // 本块必须留在既有 IIFE **内部**（要用闭包里的 `state` / `_doc` / `_blockLineMap` / `M` / `P` / `R`；
   // 同文件 12904 行那条教训说的就是这个）。位置选在 IIFE 收尾之前 ⇒ 只推动其后的末尾块（见交付说明）。
@@ -13071,7 +13076,7 @@
   var PRELOAD_MAX_TABS = 4;          // 兜底（生效值 = 「预渲染次数上限」，默认 8）：单次会话最多预渲染几个页签
   var _previewDomCache = new Map();  // relPath → { frag, map, ast, version, fp, scrollTop, bytes, prerendered }
   var _preloadTried = new Set();     // 后台预渲染试过的路径（跳过的/失败的都不再重试）
-  var _previewDomKey = null;         // `#preview` 里这份 DOM 对应的 { path, version }；null = 当前不可缓存
+  var _previewDomKey = null;         // `#preview` 里这份 DOM 对应的 { path, version, fp }；null = 当前不可缓存。`fp` = **这棵 DOM 的出身**（2026-10-19）
   var _preloadEnabled = false;       // 「后台预加载」开关（由 display-settings 经 applyAll 通告）
   var _preloadAbort = 0;             // 递增即中止在跑的预渲染
   var _preloadIdle = null;           // requestIdleCallback / setTimeout 句柄
@@ -13138,12 +13143,21 @@
   }
 
   /** 渲染成功后登记「这份 `#preview` DOM 对应哪份文档的哪个版本」。
-   *  失败 / 占位（`.-preview-loading`）不算有效渲染 ⇒ 不登记，绝不把错误页缓存起来。 */
+   *  失败 / 占位（`.-preview-loading`）不算有效渲染 ⇒ 不登记，绝不把错误页缓存起来。
+   *
+   *  `fp`（2026-10-19）：**这棵 DOM 的出身指纹** —— 必须是 `renderPreview` **喂给解析器的那份正文**的指纹
+   *  （`_previewSourceBody(doc)`，含 `normalizeBody`），因为 DOM 就是从它渲染出来的。
+   *  `_previewCacheStash` 拿它与"切走那一刻的正文指纹"比对：相等 ⇒ 这份 DOM 没过期，可以缓存；
+   *  不等 ⇒ 期间正文变过（编辑 / 撤销）⇒ 不缓存（下一个判据 `fp` 双校验也封得住，两道保险）。 */
   function _markPreviewDomCurrent(doc) {
     const pv = $("#preview");
     const first = pv && pv.firstElementChild;
     if (!first || first.classList.contains("-preview-loading")) { _previewDomKey = null; return; }
-    _previewDomKey = { path: (doc && doc.path) || state.currentPath, version: _docVersionOf(doc) };
+    _previewDomKey = {
+      path: (doc && doc.path) || state.currentPath,
+      version: _docVersionOf(doc),
+      fp: doc === state.doc ? _bodyFingerprint(_previewSourceBody(doc)) : "",
+    };
   }
 
   /** 只丢他页签的条目、保留当前 DOM 的可缓存性（语言 / 主题变化走这条：可见 DOM 与恢复后的观感一致）。 */
@@ -13157,10 +13171,13 @@
    */
   function _previewCacheStash(path) {
     if (!path || !state.doc || state.currentPath !== path) return;
-    if (_dirty) return;                                       // 有未写盘编辑 ⇒ 盘面与 DOM 可能不一致
-    if (!state.doc.preview_body) return;                      // 本会话编辑过该文档 ⇒ 一律不缓存
+    // 2026-10-19：**不再用 `_dirty` / `preview_body` 当判据**（见块首 ③）。改为"这份 DOM 的出身 == 此刻正文"
+    // —— 二者都是"渲染/暂存这一刻的正文指纹"，不走 `state.doc.body.split()`，所以**不受 `body` 可能落步影响**：
+    // 渲染收尾那一次有 `doc === state.doc` 校验，这里的 `fpNow` 由 `_previewSourceBody` 现算，同源同口径。
     if (state.viewMode === "source") return;                  // 源码视图不渲染预览 ⇒ 预览区内容陈旧
     if (!_previewDomKey || _previewDomKey.path !== path) return;
+    const fpNow = _bodyFingerprint(_previewSourceBody(state.doc));
+    if (_previewDomKey.fp !== fpNow) return;                   // 渲染之后正文又变过（编辑/撤销）⇒ 这份 DOM 已过期，不缓存
     if (_previewDomKey.version !== _docVersionOf(state.doc)) return;
     if ((state.doc.lines || []).length > _previewCacheLineLimit()) return;
     const preview = $("#preview");
@@ -13179,7 +13196,7 @@
       map: _blockLineMap,
       ast: _doc,
       version: _docVersionOf(state.doc),
-      fp: _bodyFingerprint(_previewSourceBody(state.doc)),
+      fp: fpNow,   // 2026-10-19：与 `_previewDomKey.fp` 同一口径（上面刚比对过相等）
       scrollTop: pane ? pane.scrollTop : 0,   // 2026-09-25 AG97：窗口化回退 ⇒ 条目里不再存"槽锚点"（`anchor`），只留裸像素（老口径）
       bytes: _estimatePreviewBytes(frag),
       prerendered: false,
@@ -13247,7 +13264,7 @@
     preview.innerHTML = "";
     preview.appendChild(entry.frag); _markSwitch("attach");   // 2026-09-25 AG97：窗口化回退 ⇒ 搬回的就是整篇真 DOM（老口径），不再"只挂一窗"
     const _wantEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false"; if (preview.contentEditable !== _wantEditable) preview.contentEditable = _wantEditable; // 2026-09-24：**只在真变时才写** —— 写同值也会让 Blink 走一遍"可编辑性"样式传播（30 万节点真机实测 ~351 ms，正是下面 `static` 那一段）
-    _previewDomKey = { path: doc.path, version: entry.version };
+    _previewDomKey = { path: doc.path, version: entry.version, fp: entry.fp };   // 2026-10-19：`fp` 必须一起搬回（这棵 DOM 的出身仍是 `entry.fp`）⇒ 再切走时还能连续命中
     // 2026-09-24 二次修正：这一行**曾经**调 `_retagInlineMathOnly()`，但它注定空跑 —— 预渲染刻意不跑 MathJax ⇒ 此刻 DOM 里还没有 `mjx-container` 可打标记（而 `contentEditable` 早已随节点搬回）；真正的补标记在下面 MathJax 落定之后那一行（`_markAsyncAfter("mathjax", …)`）。真机读数：这一行曾占 `static` 349 ms（28%）。
     _markSwitch("static");
     postProcessWikilinks();      // 幂等：链接目标集合可能在上次渲染之后才加载完（-link-pending → 实链接）
