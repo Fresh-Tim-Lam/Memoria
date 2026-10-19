@@ -526,6 +526,8 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 
 ## 2.21 脚本工作区（2026-09-24；设计见 [design/agent-capabilities.md §3.4](../../design/agent-capabilities.md)）
 
+> ⚠️ **功能已删除（2026-10-09 `ed5964c9`）**：面板脚本工作区整体移除，`js/agent-scratch.js` 与 `agent_scratch_*` RPC 已不存在。本节仅作历史留档，**勿按此实现/集成**。
+
 - **落点 = `<kb>/.memoria/agent/scratch/`**（**应用管理目录**，同 `.memoria/agent/attachments/` 与会话 JSONL 的待遇）：agent 抓到的页面、抽出的表格、写好的脚本都放这里；**不进 `pending.json`**（否则会被 `sync_kb_pending()` 的全量重算清掉），也不走 M3 的 plan/审批管线。工作区随库走、换库不串；建议在库的 `.gitignore` 里忽略它。
 - **模型面四把工具**（`tools/kb.py` 末尾 `_scratch_tools()`，工具面 20 → 24，四把都是 `read_only=True` ⇒ 按 `registry.py:110` 的定义"不改动知识库"、免审批）：`scratch_list` / `scratch_read` / `scratch_write`（≤1 MiB，自动建中间目录）/ `scratch_delete`（目录递归）。路径过 `safe_rel()` + `realpath` 前缀双校验 ⇒ 逃不出工作区；单文件 1 MiB / 总量 20 MiB / ≤200 个文件。
 - **执行只能由人触发**：模型面**没有**执行工具。面板「工作区」区（`js/agent-scratch.js`，DOM 自建后插在输入区之前）的「运行」→ RPC `agent_scratch_run`（另四条：`agent_scratch_status` / `_read` / `_write` / `_delete`）。**不是沙箱**：脚本以当前用户身份运行、能读写文件与网络 ⇒ 面板常显警告；后端只兜三件事 —— 超时（`script_timeout_s`，夹 5–300s，超时杀进程）、stdout/stderr **各 64 KiB**（超限即杀）、子进程**环境变量白名单**（`MEMORIA_AGENT_API_KEY` 等密钥不传；`cwd` 锁脚本所在目录）。

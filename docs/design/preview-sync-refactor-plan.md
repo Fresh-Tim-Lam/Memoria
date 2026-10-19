@@ -1,5 +1,7 @@
 # 预览区编辑同步 — 编译器基础设施重构方案
 
+> ⚠️ **已过时（2026-10-19 标）**：本方案核心主张「AST 是唯一真理 + SourceGen 反向写源」已被 [render-refactor-battlemap.md](render-refactor-battlemap.md) §1 裁决 B **半推翻**——正确口径是「AST 为**内存运行时**唯一坐标系 + `.md` 磁盘持久真相」（分层锚定，而非 AST 取代磁盘）。**勿按本稿施工**；当前施工图见 battlemap + [preview-render-refactor.md](preview-render-refactor.md)。
+
 ---
 
 ## 0. 为什么旧方案不成立
