@@ -1959,4 +1959,15 @@
     next: "Next",
     openSource: "Open source",
   });
+
+  // ===== 2026-10-19 appended: file-tree "Delete folder" (`js/file-tree.js` `deleteTreeDir`, RPC `dir_delete`) =====
+  // Same family as `tree.delete` (delete file); the confirm body must warn that the folder and all its files go, irreversibly.
+  // Appended via end-of-file `Object.assign` (extends `tree.*`) => all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].tree, {
+    deleteDir: "Delete Folder",
+    deleteDirTitle: "Delete Folder",
+    deleteDirBody: "Delete folder \u201c{name}\u201d?\n\nThis deletes the folder and every file inside it, and cannot be undone.",
+    deleteDirFail: "Failed to delete folder",
+    deletedDir: "Folder deleted",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

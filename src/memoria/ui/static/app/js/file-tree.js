@@ -247,7 +247,7 @@ window.MemoriaFileTree = (function () {
       _lastSel = { type: kind, path };
     };
     // 右键菜单（事件委托，属性赋值避免 render 重建重复绑定）：
-    // 文件 → 重命名/删除；文件夹 → 重命名/新建文件/新建文件夹；空白区 → 根目录下新建
+    // 文件 → 重命名/删除；文件夹 → 重命名/新建文件/新建文件夹/删除；空白区 → 根目录下新建
     el.oncontextmenu = (e) => {
       const t = e.target;
       if (!t || !t.closest) return;
@@ -273,6 +273,8 @@ window.MemoriaFileTree = (function () {
           { divider: true },
           { label: T("tree.newFile"), action: () => createTreeFile(base) },
           { label: T("tree.newFolder"), action: () => createTreeDir(base) },
+          { divider: true },
+          { label: T("tree.deleteDir"), danger: true, action: () => deleteTreeDir(base) },
         ]);
         return;
       }
@@ -404,6 +406,32 @@ window.MemoriaFileTree = (function () {
         const tabIdx = state.openTabs.findIndex((t) => t.path === relPath);
         if (tabIdx >= 0) {
           closeTabAt(tabIdx);
+        }
+        await refreshFiles();
+      }
+    );
+  }
+
+  async function deleteTreeDir(relPath) {
+    confirmTreeAction(
+      T("tree.deleteDirTitle"),
+      T("tree.deleteDirBody", { name: basename(relPath) }),
+      T("tree.deleteDir"),
+      async () => {
+        const res = await call("dir_delete", relPath);
+        if (!res || res.status !== "ok") {
+          setStatus((res && res.message) || T("tree.deleteDirFail"));
+          return;
+        }
+        setStatus(T("tree.deletedDir"), basename(relPath));
+        // 被删目录内若有打开的页签，落盘文件已不存在 → 一并关闭
+        const prefix = relPath.replace(/\/+$/, "") + "/";
+        const doomed = state.openTabs.filter(
+          (t) => t.path === relPath || String(t.path || "").startsWith(prefix)
+        );
+        for (const tab of doomed) {
+          const idx = state.openTabs.findIndex((t) => t.path === tab.path);
+          if (idx >= 0) closeTabAt(idx);
         }
         await refreshFiles();
       }

@@ -1852,4 +1852,15 @@
     next: "下一张",
     openSource: "打开来源",
   });
+
+  // ===== 2026-10-19 追加：文件树「删除文件夹」（`js/file-tree.js` 的 `deleteTreeDir`，RPC `dir_delete`）=====
+  // 与 `tree.delete`（删文件）同族；弹窗正文必须明确「删除该文件夹及其中的全部文件，不可撤销」。
+  // 走"文件末尾 `Object.assign`"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].tree, {
+    deleteDir: "删除文件夹",
+    deleteDirTitle: "删除文件夹",
+    deleteDirBody: "确定删除文件夹「{name}」？\n\n将删除该文件夹及其中的全部文件，不可撤销。",
+    deleteDirFail: "删除文件夹失败",
+    deletedDir: "已删除文件夹",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

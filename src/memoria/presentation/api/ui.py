@@ -164,6 +164,12 @@ class UIAPI:
         except RuntimeError as e:
             return {"status": "error", "message": str(e)}
 
+    def dir_delete(self, rel_path: str) -> dict:
+        try:
+            return self._svc.delete_dir(rel_path)
+        except RuntimeError as e:
+            return {"status": "error", "message": str(e)}
+
     def load_document(self, rel_path: str) -> dict:
         try:
             return with_version(self._svc.load_document(rel_path), self._svc.kb_path, rel_path)

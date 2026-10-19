@@ -791,6 +791,52 @@ class DocumentService:
         touch_manifest_entry(self.kb_path, rel)
         return {"status": "ok"}
 
+    def delete_dir(self, rel_path: str) -> dict:
+        """删除文件夹（含全部子项）及其镜像布局侧车。
+
+        与 delete_file 同一安全范式：
+        1) 拒绝 KB 根 / `.memoria` 元数据目录 / 隐藏目录（与 rename_dir 对齐）；
+        2) `_resolve_rel_path` 规范化 + 防穿越，`_full_path` 再防越界；
+        3) 删除前先收集目录内全部 .md 的绝对路径（rmtree 之后无法再枚举）；
+        4) `shutil.rmtree` 删除目录树（md + 目录内非 md 资产一并删除）；
+        5) 侧车在 `.memoria/sidecars` 镜像树里，rmtree 不会带走 → 逐个清孤儿侧车；
+        6) 全库 KP 标记陈旧（重建留到读路径惰性触发）。
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        rel = self._resolve_rel_path(rel_path).strip("/")
+        if not rel or rel == ".":
+            return {"status": "error", "message": "不能删除知识库根目录"}
+        if rel == MEMORIA_DIR or rel.startswith(MEMORIA_DIR + "/"):
+            return {"status": "error", "message": "不能删除 .memoria 元数据目录"}
+        if rel.startswith(".") or "/." in rel:
+            return {"status": "error", "message": "不能删除系统/隐藏目录"}
+        full = self._full_path(rel)
+        if not os.path.isdir(full):
+            return {"status": "error", "message": "目录不存在"}
+        # 3) 先收集（rmtree 后目录已不存在，无法再枚举）
+        md_files: list[str] = []
+        for dirpath, _dirnames, filenames in os.walk(full):
+            for fn in filenames:
+                if fn.lower().endswith(".md"):
+                    md_files.append(os.path.join(dirpath, fn))
+        # 4) 删除目录树
+        try:
+            shutil.rmtree(full)
+        except OSError as e:  # noqa: BLE001
+            return {"status": "error", "message": f"删除文件夹失败: {e}"}
+        if os.path.exists(full):
+            return {"status": "error", "message": "删除后目录仍存在（可能被占用），请检查后重试"}
+        # 5) 清镜像布局侧车（防止 .memoria/sidecars 下留孤儿）；_remove_sidecar 内已标记 KP 陈旧
+        for md_full in md_files:
+            self._remove_sidecar(md_full)
+            self._cache.pop(
+                os.path.relpath(md_full, self.kb_path).replace("\\", "/"), None
+            )
+        # 6) 兜底：目录内无 md 时也需标记陈旧（配置/索引可能引用该前缀）
+        invalidate_kp_targets(self.kb_path)
+        return {"status": "ok", "files": len(md_files)}
+
     def create_file(self, rel_path: str, body: str = "") -> dict:
         """新建 .md 文件（父目录自动创建，缺 .md 后缀自动补齐），返回相对路径。"""
         rel = self._resolve_rel_path(rel_path)
