@@ -51,4 +51,4 @@
 3. **不重复权威**：渲染语法 → [preview-formats.md](../preview-formats.md)；导入格式 → [import-spec.md](../import-spec.md)；文案键 → [i18n-inventory.md](../i18n-inventory.md)；红线 → [hard-constraints.md](../hard-constraints.md)。本套只做**引用 + 补充界面/交互层**。
 4. **新增区域即登记**：新界面区域/弹窗/快捷键 → 在对应篇补一节，并在本文 §2 篇目表更新。
 5. **本套不是契约**：对外契约（双方必须遵守的约定）放 [docs/conventions/](../../conventions/README.md)；本套是"理解性参考"。
-6. **改动登记**：批量修订本套时，在 [docs-management.md §4.2](../../conventions/docs-management.md) 追加一行。
+6. **改动登记**：批量修订本套时，在 [documentation-changelog.md](../../design/documentation-changelog.md) 追加一行（§4.2 修订流水已从 docs-management 拆出）。

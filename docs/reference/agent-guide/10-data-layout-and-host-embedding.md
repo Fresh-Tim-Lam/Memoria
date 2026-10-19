@@ -24,8 +24,8 @@
     ├── pending.json                       待确认提议队列（事实源 ③-候选）storage/pending.py:33-35
     ├── pending.yaml                       旧格式（只读兼容：读到即迁移为 JSON 并删除）pending.py:54-77
     ├── kp_targets.json                    派生索引（打开库可秒读）services/kp_index.py:162-183
-    ├── images/                            图片资产（正文以相对 KB 根路径引用）document.py:828-833
-    │   └── registry.json                  运行期图片注册表（打开图片管理器时全量重建）document.py:976-1040
+    ├── images/                            图片资产（正文以相对 KB 根路径引用）document.py:874-879
+    │   └── registry.json                  运行期图片注册表（打开图片管理器时全量重建）document.py:1022-1086
     ├── cache/                             可再生缓存，**可整目录删**（hard-constraints.md:50）
     │   ├── lexical/index.json + jieba/    lexical 倒排 + 分词缓存：lexical_index.py:58、lexical_tokenizer.py:17
     │   ├── embeddings/index.json          向量索引：embedding_provider.py:42
@@ -54,7 +54,7 @@
 | 派生索引 | `.memoria/kp_targets.json`、`.memoria/cache/**`、`.memoria/build/**` | 产品（可重建） | 可删，下次读写自动重建 | ❌ |
 | 图片资产 | `.memoria/images/**`（含 registry.json） | 产品（插入/清理 RPC） | 图片文件删=正文引用悬空（检查会报）；registry 可删（重建） | 图片本体≈事实源 |
 | 工具包 | `.memoria/agent/{README,prompt,kb-spec,preview-formats,fsrs.py,.kit.json}` | 产品（`install_kb_agent`，升级时覆盖） | 可删：删目录即完全回滚（kb-agent.md:252） | ❌ 分发物 |
-| 对话会话 | `.memoria/agent/sessions/*.jsonl` | 产品服务层（应用内对话 `ask()` → `SessionStore`，session/store.py:169-237；**M1 收尾起亦可由 `agent_session_delete` 删除**） | 可删：丢对话记录（过程数据，非知识） | ⚠️ 会话事实源（对话自身的权威记录；**不是**知识事实源）。M1c 起由 `agent_sessions_list` / `agent_session_load` **只读**列出与载入（ui.py:1305-1375），并作为续聊的上下文来源（history.py:333-348，**M2 起先应用 `compaction` 压缩、再兜底截断**）；**M1 收尾起 `agent_session_delete` 可删单份会话**（ui.py:1376-1414，会话目录是产品自己管理的运行时产物 ⇒ 这是**产品首次允许写知识库**，范围仅限该目录） |
+| 对话会话 | `.memoria/agent/sessions/*.jsonl` | 产品服务层（应用内对话 `ask()` → `SessionStore`，session/store.py:169-237；**M1 收尾起亦可由 `agent_session_delete` 删除**） | 可删：丢对话记录（过程数据，非知识） | ⚠️ 会话事实源（对话自身的权威记录；**不是**知识事实源）。M1c 起由 `agent_sessions_list` / `agent_session_load` **只读**列出与载入（ui.py:1311-1381），并作为续聊的上下文来源（history.py:333-348，**M2 起先应用 `compaction` 压缩、再兜底截断**）；**M1 收尾起 `agent_session_delete` 可删单份会话**（ui.py:1382-1420，会话目录是产品自己管理的运行时产物 ⇒ 这是**产品首次允许写知识库**，范围仅限该目录） |
 | UI 偏好 | `config/ui-settings.json`（`layout` 段 + **M1 收尾新增的顶层 `agent` 段**；2026-09-18 起 `agent.lastSessionByKb` 为**按库**记的「上次会话」映射，见 §2.15） | 前端 → `save_ui_settings` | 可删（回默认值） | ❌ |
 | 端点配置 | `config/agent.json` | 前端（对话面板）→ `agent_save_config` → `llm/config.py::save_config` | 可删（回默认端点，需重新配置） | ❌（含密钥，**仅本地文件**） |
 
@@ -63,9 +63,9 @@
 ### 2.1 `*.md`（知识正文）
 
 - **扫描口径**：`SKIP_DIR_NAMES = {".memoria", ".git", ".build", "__pycache__", "node_modules"}`（constants.py:11-17）；`.memoria/` 不进文件树、不参与构建与校验（kb-agent.md:39）。
-- **写入链路（唯一合法路径）**：RPC `save_document`（ui.py:200）→ `DocumentService.save_document`（document.py:317-384）：读原文件保留 frontmatter（335-338）→ **tmp + `os.replace` 原子写**（341-347，`MEMORIA_FSYNC` 等策略见 `durable_flush`）→ 清内存缓存（351）→ 更新 manifest（353-359，M6a 走延迟 pending）→ 增量维护图片注册表（365）→ 重新锚定 KP range（376）。
+- **写入链路（唯一合法路径）**：RPC `save_document`（ui.py:206）→ `DocumentService.save_document`（document.py:317-430）：读原文件保留 frontmatter（335-338）→ **tmp + `os.replace` 原子写**（341-347，`MEMORIA_FSYNC` 等策略见 `durable_flush`）→ 清内存缓存（351）→ 更新 manifest（353-359，M6a 走延迟 pending）→ 增量维护图片注册表（365）→ 重新锚定 KP range（376）。
 - 重命名/移动/删除走各自 RPC（`rename_*` / `delete_*` / 路径级联修复），不是直接改文件名。
-- ⚠️ **文档与代码相反的一处**：[../hard-constraints.md](../hard-constraints.md):31 写"`save_document` 成功后清理全库未引用图片（物理删除）"，代码注释与实现**明确不做**：清理只在用户显式调用 `cleanup_unused_images`（document.py:317-322；ui.py:867；前端 image-tools.js:443、474）。
+- ⚠️ **文档与代码相反的一处**：[../hard-constraints.md](../hard-constraints.md):31 写"`save_document` 成功后清理全库未引用图片（物理删除）"，代码注释与实现**明确不做**：清理只在用户显式调用 `cleanup_unused_images`（document.py:317-368；ui.py:873；前端 image-tools.js:443、474）。
 
 ### 2.2 `.memoria/manifest.yaml`（快照，不是知识源）
 
@@ -94,9 +94,9 @@
 
 ### 2.6 `.memoria/images/**`
 
-- 目录：`<kb>/.memoria/images/`（document.py:828-833）；入库规则：复制本地图片，**内容去重（MD5）+ 重名追加序号 + 永不覆盖**（hard-constraints.md:30）。
+- 目录：`<kb>/.memoria/images/`（document.py:874-879）；入库规则：复制本地图片，**内容去重（MD5）+ 重名追加序号 + 永不覆盖**（hard-constraints.md:30）。
 - 正文引用写**相对 KB 根的路径**（如 `.memoria/images/x.png`），渲染前由 `rewriteLocalImagePaths` 改写为 `/files/...`（hard-constraints.md:32）。
-- `registry.json` 是运行期注册表：打开图片管理器触发全量扫描重建（document.py:899、976-1040）；`save_document` 只做**增量**维护（document.py:365）。删未引用图片只在显式 RPC（ui.py:867）。
+- `registry.json` 是运行期注册表：打开图片管理器触发全量扫描重建（document.py:945、976-1040）；`save_document` 只做**增量**维护（document.py:411）。删未引用图片只在显式 RPC（ui.py:873）。
 
 ### 2.7 `.memoria/cache/**` 与 `.memoria/build/**`
 
@@ -113,14 +113,14 @@
 
 - 定位顺序：`MEMORIA_CONFIG_DIR` → `install_root()/config/`（ui_settings.py:18-25）；`settings_path()` 为唯一入口（27-28）。
 - 写入：**浅合并**（嵌套 dict 也按一层合并）+ `tmp` + `os.replace`（ui_settings.py:58-75）。
-- 读接口 `get_ui_settings()` 返回 `{status, settings, config_dir, settings_file, settings_rel}`（ui.py:647-658）→ 设置弹窗底部那行"设置保存在程序目录：{path}"就是这么来的（graph-settings.js:859-882）。
+- 读接口 `get_ui_settings()` 返回 `{status, settings, config_dir, settings_file, settings_rel}`（ui.py:653-664）→ 设置弹窗底部那行"设置保存在程序目录：{path}"就是这么来的（graph-settings.js:859-882）。
 - **已知顶层键**：`layout`（`sidebarWidth` / `agentDockWidth` / `agentDockCollapsed` 等）、`last_kb_path` / `recent_kbs`、主题与显示设置、`check`/`graph`/`search` 设置段，以及 **M1 收尾新增的 `agent` 段**（对话面板偏好，见 §2.15）。**2026-09-18 起** `agent` 段的「上次会话」由全局单键 `lastSessionId` 改为**按库映射** `lastSessionByKb`（`{ "<库标识>": "<会话 id>" }`，库标识由 `kbKey()` 归一化；旧键读取时一次性迁移并删除）。**浅合并的坑**：直接传 `{layout:{agentDockWidth}}` 会整段替换 `layout`（抹掉 `sidebarWidth`）；`{agent:{…}}` 同理会替换 `agent` 段。前端因此统一走「先 `get_ui_settings` 读旧段 → 合并 → `save_ui_settings`」。⚠️ 嵌套浅合并**无法删除键**，而面板需要移除旧键/陈旧库条目 ⇒ `agent` 段改走**两步写**「先置 `agent:null`（非 dict ⇒ 后端整体替换）再写目标对象」（`writeAgentPrefs()`，agent-panel.js:359-364）。`layout` 走 `saveDockLayout()`（agent-panel.js:302-313），两者都绝不触碰对方的顶层段。
 
 ### 2.10 写入纪律（红线）
 
 1. **三个事实源**：`*.md`（正文）＋ `.memoria/sidecars/**`（KP 元数据）＋ `agent/review/**`（学习状态），职责分离，学习状态**不得**写进 sidecar（kb-agent.md:70）。
 2. **禁止 silent 写入**：未定稿内容进 `pending.json` 走确认流程（import-spec.md:47）；外部 agent **不得**直写 `*.md` / `sidecars/**` / `manifest.yaml` / `pending.json`（deepseek-harness-integration.md:166）。
-3. **原子写 + 写后索引失效**：md 走 tmp+replace（document.py:317-347）；yaml/json 走 `atomic_write_yaml` / `_atomic_write_json`（带 `.bak`）；KP 写入后索引失效（kp_index.py:153-159）。
+3. **原子写 + 写后索引失效**：md 走 tmp+replace（document.py:317-393）；yaml/json 走 `atomic_write_yaml` / `_atomic_write_json`（带 `.bak`）；KP 写入后索引失效（kp_index.py:153-159）。
 4. **外部 agent 的会话/日志属"过程数据（可删）"，不是知识事实源**（deepseek-harness-integration.md:87、114、268）。
 5. ⚠️ **口径不一致（须知情）**：`AGENTS.md §1` 按"产品状态＝各知识库 `.memoria/**`"归类；kb-agent.md:70 说三源是 md+sidecars+review；deepseek-harness-integration.md:87 说"知识库事实源 = sidecars + manifest + pending"。**代码事实**：sidecar＝KP 权威、manifest＝磁盘快照、pending＝提议队列、review＝学习状态，四者性质不同，任何单一列表都会以偏概全。
 
@@ -159,7 +159,7 @@
 | 真实调用路径 A | pywebview.py:471-484 | `webview.create_window(url=create_app(), js_api=api, …)`：WSGI app 交给 pywebview 托管，方法经 **`window.pywebview.api`** 暴露（非 HTTP） |
 | 真实调用路径 B | pyqt6.py:224-273、api_rpc.py:14-67 | `StaticServerThread` 起本地 HTTP 只提供**静态资源**；方法经 **QWebChannel 单槽** `UIAPIRpc.invoke(method: str, args_json: str) -> str`（JSON 入、JSON 出、`default=str` 兜底） |
 | 端口/绑定 | static_server_thread.py:11-35 | pyqt6：`_free_port()` 先 `bind(("127.0.0.1", 0))` 取随机端口，再 `make_server("127.0.0.1", port)`，daemon 线程 `memoria-static` |
-| 单进程单库 | static_server.py:31、46-53；ui.py:34-35、126-127 | `_kb_root` 是**模块级全局**，由 `UIAPI` 在开库/关库时 `set_kb_root(...)` → 一个后端进程同时只能服务**一个**知识库 |
+| 单进程单库 | static_server.py:31、46-53；ui.py:40-41、126-127 | `_kb_root` 是**模块级全局**，由 `UIAPI` 在开库/关库时 `set_kb_root(...)` → 一个后端进程同时只能服务**一个**知识库 |
 
 ### 2.14 无窗口模式现状（对外部宿主是硬约束）
 
@@ -172,10 +172,10 @@
 ### 2.15 应用内对话：10 个 RPC、会话事实源、多轮续聊、长会话压缩、工具结果裁剪、会话标题、会话检索与「停止/删除/改名」（2026-09-17 落地，2026-09-18 增补 M1c、M1 收尾与用量统计，2026-09-19 增补 M2 压缩、裁剪、会话标题与会话检索工具，2026-09-20 增补会话改名）
 
 M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，前端见 [01 篇 §2.4](./01-shell-and-layout.md)）共 10 个 RPC：
-**4 个为 2026-09-17 新增**（`presentation/api/ui.py:1177-1272`：`agent_get_config` 1177-1183、`agent_save_config` 1184-1193、`agent_ask_start` 1194-1213、`agent_ask_poll` 1214-1225），**2 个为 2026-09-18（M1c）新增的只读会话历史**（ui.py:1305-1375：`agent_sessions_list` 1258-1300、`agent_session_load` 1301-1328），
-**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1273-1299、`agent_session_delete` ui.py:1376-1412），
-**1 个为 2026-09-20（会话改名）新增**（`agent_session_rename` ui.py:1413-1466，历史行右键菜单的「重命名」；**追加**一条 `session/title`，最新者胜，见下行），
-**1 个为 2026-09-18（用量可视化）新增的只读用量统计**（`agent_usage_stats` ui.py:1469-1501，见 §2.17）；
+**4 个为 2026-09-17 新增**（`presentation/api/ui.py:1183-1278`：`agent_get_config` 1177-1183、`agent_save_config` 1184-1193、`agent_ask_start` 1194-1213、`agent_ask_poll` 1214-1225），**2 个为 2026-09-18（M1c）新增的只读会话历史**（ui.py:1311-1381：`agent_sessions_list` 1258-1300、`agent_session_load` 1301-1328），
+**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1279-1305、`agent_session_delete` ui.py:1382-1418），
+**1 个为 2026-09-20（会话改名）新增**（`agent_session_rename` ui.py:1419-1472，历史行右键菜单的「重命名」；**追加**一条 `session/title`，最新者胜，见下行），
+**1 个为 2026-09-18（用量可视化）新增的只读用量统计**（`agent_usage_stats` ui.py:1475-1507，见 §2.17）；
 **行号重取说明（2026-09-20）**：`agent_session_rename` 插在 `agent_session_delete` 之后 ⇒ **`agent_usage_stats` 及其后的行号整体 +54**（`1368-1400` → `1422-1454`）；`agent_session_delete` 与更上方的方法**零漂移**（顺带按实读校正：`agent_session_delete` 旧记 `1329-1367`，实测 `def` 1329、末行 `}` 1365）。
 除下表中 `agent_ask_start` 的**追加可选参数**（`session_id`）、`agent_ask_poll` 的**追加字段**（`cancelled`）、
 `agent_sessions_list` 的**追加字段**（`capped`）、`loop/end.usage` 的**追加字段**（三个 cache 字段，见 §2.17）外，
@@ -189,7 +189,7 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 | `agent_ask_start` | `(question: str, kb_path: str \| None = None, session_id: str \| None = None)` | `{status:"ok", job_id, job_status:"running"}` 或 `{status:"error", code, message}`（`no_kb`/`empty_question`/`net_disabled`/`no_base_url`/`busy`）。**`session_id` 为 M1c 追加的可选参数**：省略/为空 ⇒ 全新会话（与原语义完全一致）；非空 ⇒ **续聊**（见下方「多轮续聊」）。**单飞 `busy` 可被 `agent_ask_cancel` 立即解除** |
 | `agent_ask_poll` | `(job_id: str, cursor: int = 0, reasoning_cursor: int = 0)` | `{status:"running"\|"done"\|"error", job_id, delta, cursor, reasoning_delta, reasoning_cursor, answer, anchors, tool_calls, usage, session_id, stop_reason, iterations, error, code, cancelled, elapsed_ms}`；未知作业返回 `code:"unknown_job"`。**`cancelled` 为 M1 收尾追加字段**（只增）：被停止的作业为 `status:"done"` + `stop_reason:"aborted"` + `cancelled:true` + `answer`=已生成片段。**`reasoning_cursor` / `reasoning_delta` 为 AG08 追加**（只增不改）：模型的思考增量与正文**各自独立游标**（文本侧 `delta`/`cursor` 语义一行未改）；思考**只在流式期间可见、不落会话文件** ⇒ 重载页面/载入旧会话都不显示过往思考（有意偏差，上游 dsh 会持久化；见 [01 篇 §2.4](./01-shell-and-layout.md)） |
 | `agent_ask_cancel` | `(job_id: str)` | **M1 收尾新增**。真取消：置取消令牌 ⇒ 后端停止消费模型流（关闭底层 HTTP 响应）、**立即**释放单飞 busy。`{status:"ok", job_id, cancelled, job_status}`；未知作业 ⇒ `{status:"error", code:"unknown_job", message, job_id, cancelled:false}`；**已结束的作业 ⇒ `{status:"ok", cancelled:false}`**（幂等，不抛异常） |
-| `agent_sessions_list` | `(kb_path: str \| None = None)` | `{status:"ok", sessions:[{session_id, modified_at(epoch 毫秒), turn_count, preview(前 80 字), title, capped}], count}`；按文件修改时间倒序、**最多 30 条**（`SESSION_LIST_LIMIT`，ui.py:1298）；`capped` 为 **M1 收尾追加字段**（见下「去读放大」）。**`title` 的语义在 M2 变了**（值更短更贴题）：优先是**折叠出的会话标题**（`session/title` 事件 —— 模型标题或确定性兜底），没有标题事件时才回落到「首条提问前 40 字」（M1 行为）；口径见下「会话标题」。单份会话损坏只跳过该条。**只读、不写盘** |
+| `agent_sessions_list` | `(kb_path: str \| None = None)` | `{status:"ok", sessions:[{session_id, modified_at(epoch 毫秒), turn_count, preview(前 80 字), title, capped}], count}`；按文件修改时间倒序、**最多 30 条**（`SESSION_LIST_LIMIT`，ui.py:1304）；`capped` 为 **M1 收尾追加字段**（见下「去读放大」）。**`title` 的语义在 M2 变了**（值更短更贴题）：优先是**折叠出的会话标题**（`session/title` 事件 —— 模型标题或确定性兜底），没有标题事件时才回落到「首条提问前 40 字」（M1 行为）；口径见下「会话标题」。单份会话损坏只跳过该条。**只读、不写盘** |
 | `agent_session_load` | `(session_id: str, kb_path: str \| None = None)` | `{status:"ok", session_id, messages:[{role:"user"\|"assistant", text, anchors?}]}`；未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。**只读、不写盘** |
 | `agent_session_delete` | `(session_id: str, kb_path: str \| None = None)` | **M1 收尾新增，产品首次允许写知识库**。只删 `<kb>/.memoria/agent/sessions/<id>.jsonl`；id 由 `session_file()` 的正则校验（防目录穿越）+ 一道**目录归属校验**（`realpath(父目录) == realpath(sessions_dir)`）双保险。`{status:"ok", deleted:true, session_id}`；id 非法/会话不存在 ⇒ `code:"unknown_session"`；删除失败（占用/权限）⇒ `code:"session_failed"` |
 | `agent_session_rename` | `(session_id: str, title: str, kb_path: str \| None = None)` | **2026-09-20 新增（历史行右键菜单的「重命名」）**。**只追加**一条 `session/title`（`data = {title, message_seqs: [], source: {kind: "user"}}`）—— `title.fold_title()` 取**最后一条非空**（最新者胜）⇒ 列表/回放/模型输入三侧零改动（`title.py` 政策一节明言"将来接改名 UI 无需改回放"），**历史不被改写**（append-only）。写入范围与两道校验与删除同口径；标题先过 `title.clean_title_text()`（去控制序列/折叠空白），再按 `title.TITLE_MAX_BYTES`（120 字节）**拒绝**（不截断）。`{status:"ok", session_id, title}`；id 非法/会话不存在 ⇒ `code:"unknown_session"`；标题为空/过长/写入失败 ⇒ `code:"session_failed"` |
@@ -292,7 +292,7 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 `{prompt_tokens, completion_tokens, total_tokens, estimated, cache_read_tokens, cache_write_tokens, cache_miss_tokens}`
 （前 4 键既有，后 3 键本轮起随 `loop/end` 与 `agent_ask_poll.usage` 一并返回；`AskResult` 的公开字段未改）。另有一个**兄弟键 `model`**（不在 `usage` 内）：2026-09-20 起 `loop/end.data.model` 记**本轮实际使用的模型**（`loop.py:404`），消费者是「模型切换告知」与将来的逐轮成本归属；旧读者忽略未知键即可（payload 只增不改）。
 
-**4) RPC `agent_usage_stats`**（ui.py:1469-1501）—— **只读**，见 §2.15 表；
+**4) RPC `agent_usage_stats`**（ui.py:1475-1507）—— **只读**，见 §2.15 表；
 实现是 `services/agent/usage_report.py::usage_stats()`，与 CLI 报告脚本同一份口径。
 
 **5) 报告脚本** `scripts/benchmark/usage/report_usage.py`（目录与命名对齐 `scripts/benchmark/graph/`，README 中文单语）
@@ -334,7 +334,7 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 **3.2 一次 RPC 往返**：前端 `call("name", ...)`（app.js:385-387）→ `window.memoria.api.name(...args)`：
 - pywebview：直接调用宿主对象方法（pywebview 内部完成序列化）；
 - PyQt6：`bridge.invoke("name", JSON.stringify(args))` → 后端 `UIAPIRpc.invoke` 解析 args、`getattr(UIAPI, method)(*args)`、`json.dumps(result, ensure_ascii=False, default=str)`（api_rpc.py:44-67）→ 前端 `parseRpcResult` 反序列化（bridge.js:9-20）。
-- 返回约定：业务失败统一 `{status: "error", message}`（各 API 方法一致，如 ui.py:659-660、766-771）；前端 `call()` 在方法不存在时抛 `app.apiUnavailable`。
+- 返回约定：业务失败统一 `{status: "error", message}`（各 API 方法一致，如 ui.py:665-666、766-771）；前端 `call()` 在方法不存在时抛 `app.apiUnavailable`。
 
 **3.3 嵌入时序要点**：宿主应先起后端与静态服务，**再去加载页面**；桥必须在 `bridge.js` 执行前或 `memoriaready` 派发前就绪，否则只能靠两条兜底（pywebview 的 `pywebviewready`；Qt 的 25ms×400 轮询）。开库后才会 `set_kb_root`，故 `/files/...` 在开库前一律 404（static_server.py:56-61）。
 
@@ -383,7 +383,7 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 ### 5.3 已知坑
 
 1. **`/rpc` 不存在、且无 headless 入口**（本篇两处关键矛盾）：[../architecture.md](../architecture.md):21-23、44 与 deepseek-harness-integration.md:96、150 的"`/rpc` 暴露 UIAPI 93 方法"是**过时描述**——当前只有 `/` 与 `/<path:path>`，方法调用走 pywebview `js_api` 或 QWebChannel `invoke`，故"HTTP POST /rpc 驱动 Memoria"现在跑不通；而"只跑服务不跑窗口"必须新增代码（deepseek-harness-integration.md:151 与代码一致）。
-2. **"保存自动清理图片"是错的**：hard-constraints.md:31 与代码相反（document.py:317-322；ui.py:867）。
+2. **"保存自动清理图片"是错的**：hard-constraints.md:31 与代码相反（document.py:317-368；ui.py:873）。
 3. **事实源口径三处不一致**（AGENTS.md §1 / kb-agent.md:70 / deepseek-harness-integration.md:87）——按 §2.10 第 5 条理解。
 4. **一个进程只能服务一个库**：`_kb_root` 模块全局（static_server.py:31）。
 5. **KB 文件响应没有 `no-store`**：`/files/` 只设 Content-Type/Length（static_server.py:91），外部宿主可能缓存图片；静态资源则有 no-store。
@@ -395,7 +395,7 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 
 ### 5.4 宿主窗口最小尺寸（2026-09-18 起 1000×600）
 
-- **单一事实源**：`src/memoria/app/shell/host.py:7-15` 的 `WINDOW_MIN_WIDTH = 1000` / `WINDOW_MIN_HEIGHT = 600`（宿主协议模块，与 `WindowHost` 同文件）。**三处引用**：pywebview 壳 `create_window(min_size=(…))`（pywebview.py:480）、PyQt6 壳 `window.setMinimumSize(…)`（pyqt6.py:233）、`UIAPI.get_window_chrome()` 的 `min_width/min_height`（ui.py:662-675）与 `window_resize_to()` 的下限夹取（ui.py:677-684）；`scripts/diag_webview.py:98` 亦用同一常量；前端 `window-chrome.js:16` 的兜底默认值同步为 `{w:1000,h:600}`（RPC 不可用时才生效）。**改一处即全局一致**，不要再散落硬编码。
+- **单一事实源**：`src/memoria/app/shell/host.py:7-15` 的 `WINDOW_MIN_WIDTH = 1000` / `WINDOW_MIN_HEIGHT = 600`（宿主协议模块，与 `WindowHost` 同文件）。**三处引用**：pywebview 壳 `create_window(min_size=(…))`（pywebview.py:480）、PyQt6 壳 `window.setMinimumSize(…)`（pyqt6.py:233）、`UIAPI.get_window_chrome()` 的 `min_width/min_height`（ui.py:668-681）与 `window_resize_to()` 的下限夹取（ui.py:683-690）；`scripts/diag_webview.py:98` 亦用同一常量；前端 `window-chrome.js:16` 的兜底默认值同步为 `{w:1000,h:600}`（RPC 不可用时才生效）。**改一处即全局一致**，不要再散落硬编码。
 - **取 1000 的理由**：三栏并排所需宽度 = 左栏默认 17.5rem(280) + 右栏 dock 默认 22rem(352) + 文档区保底 `CONTENT_MIN_PX=360` ≈ 992 ⇒ 取整 1000，使最小窗口下 dock 仍正常显示（不触发 `-agent-dock--auto-hidden`）。高度沿用 600。
 - **由谁执行**：最小尺寸是**窗口管理器层**的约束（pywebview `min_size` / Qt `setMinimumSize` 最终交给 OS），**不是** CSS 或 JS 能强制的；`get_window_chrome` 里的数值只是给前端在 JS 侧拖拽缩放时做同样的夹取，二者需保持同值。宿主自建（iframe 嵌入）时须自行声明；浏览器/CDP 环境下的"视口"不受它限制（见 01 篇 §7 本轮"未取证"条）。
 
@@ -404,28 +404,28 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 | 要点 | 锚点 |
 |---|---|
 | 知识库目录约定 / 跳过目录 | storage/constants.py:1-17 |
-| md 保存链路（原子写 + 缓存 + manifest + 图片注册表 + KP 重锚） | services/document.py:317-384 |
-| 图片清理只在显式 RPC | services/document.py:317-322、1104；presentation/api/ui.py:867；js/image-tools.js:443、474 |
+| md 保存链路（原子写 + 缓存 + manifest + 图片注册表 + KP 重锚） | services/document.py:317-430 |
+| 图片清理只在显式 RPC | services/document.py:317-368、1104；presentation/api/ui.py:873；js/image-tools.js:443、474 |
 | manifest 结构 / 原子写 / 基线重建 | storage/manifest.py:35-62、111-152；storage/atomic_yaml.py:46-56 |
 | sidecar 路径与旧路径回退 | storage/sidecar.py:66-98、116-117 |
 | pending JSON 与旧 YAML 迁移 | storage/pending.py:33-93 |
 | kp_targets 派生索引 | services/kp_index.py:139-183；services/document.py:248-265 |
-| 图片目录 / 注册表 / 入库规则 | services/document.py:828-833、896-1040 |
+| 图片目录 / 注册表 / 入库规则 | services/document.py:874-879、896-1040 |
 | cache 与 build 子目录 | services/lexical_index.py:58；lexical_tokenizer.py:17；embedding_provider.py:42；search_aux.py:26；model_router.py:59；graph/kb_build.py:218-231 |
 | 智能体工具包安装（幂等 / 不覆盖 review） | services/kb_agent.py:20-31、40-42、56-81、84-145 |
-| UI 偏好磁盘文件与迁移 | storage/ui_settings.py:11-75；presentation/api/ui.py:647-658 |
+| UI 偏好磁盘文件与迁移 | storage/ui_settings.py:11-75；presentation/api/ui.py:653-664 |
 | 前端桥（READY / pywebview / QWebChannel / 代理） | js/bridge.js:7、9-20、22-27、29-49、56-67、69-111、113-119 |
 | 启动顺序与 boot 唯一入口 | js/app.js:12676-12687；js/index.html:372-415 |
 | 无桥时的窗口三键处理 | js/window-chrome.js:301-308、330-337 |
-| 窗口最小尺寸常量（唯一事实源） | src/memoria/app/shell/host.py:7-15（引用：pywebview.py:480、pyqt6.py:233、ui.py:662-684、window-chrome.js:16；见 §5.4） |
+| 窗口最小尺寸常量（唯一事实源） | src/memoria/app/shell/host.py:7-15（引用：pywebview.py:480、pyqt6.py:233、ui.py:668-690、window-chrome.js:16；见 §5.4） |
 | 静态服务路由 / no-store / 资源版本注入 | presentation/static_server.py:94-156 |
 | `/files/` 防穿越与 MIME | presentation/static_server.py:19-28、56-91 |
 | PyQt6 静态服务线程与随机端口 | app/shell/static_server_thread.py:11-35；app/shell/pyqt6.py:224-225、268-273 |
 | pywebview 启动（WSGI + js_api） | app/shell/pywebview.py:455-509 |
 | QWebChannel 单槽 RPC 契约 | app/shell/api_rpc.py:14-67 |
-| 对话面板 10 个 RPC（**+ 2026-09-22 追加在文件尾的四个审批档位 RPC：`agent_permission_get` / `_set_session` / `_set_default` / `agent_approval_answer`，见 §2.20**） / 伪流式作业 / 真取消 / 配置与偏好读写 / 会话历史与删除·改名 / 用量统计 | presentation/api/ui.py:1155-1501（配置 1155-1193、问答 1194-1225、取消 1226-1252、会话列表 1258-1300、载入 1301-1328、删除 1329-1365、**改名 1366-1419（2026-09-20 增）**、用量统计 1422-1454）；services/agent/ask_stream.py:1-400；services/agent/llm/config.py:164-174、247-330；storage/ui_settings.py:58-75（顶层 `agent` 段） |
+| 对话面板 10 个 RPC（**+ 2026-09-22 追加在文件尾的四个审批档位 RPC：`agent_permission_get` / `_set_session` / `_set_default` / `agent_approval_answer`，见 §2.20**） / 伪流式作业 / 真取消 / 配置与偏好读写 / 会话历史与删除·改名 / 用量统计 | presentation/api/ui.py:1161-1507（配置 1155-1193、问答 1194-1225、取消 1226-1252、会话列表 1258-1300、载入 1301-1328、删除 1329-1365、**改名 1366-1419（2026-09-20 增）**、用量统计 1422-1454）；services/agent/ask_stream.py:1-400；services/agent/llm/config.py:164-174、247-330；storage/ui_settings.py:58-75（顶层 `agent` 段） |
 | **重试与失败分类**（确定性立即失败 / 瞬时重试 / 面板等待上限 / 错误串带重试次数） | services/agent/llm/errors.py:62、70、87、96、205、247、345-347；services/agent/llm/providers/openai_compatible.py:272-277、281、303、485-497；services/agent/llm/retry.py:52-56；services/agent/ask_stream.py:96-98；services/agent/loop.py:146-150、238-246、307-311（§2.16） |
-| **Agent 用量**（`Usage` 缓存字段 / 端点字段映射 / `loop/end.usage` / 只读 RPC / 报告脚本） | services/agent/llm/types.py:109-152（`Usage`，`cache_miss_tokens`）、132-145（`plus()`）；services/agent/llm/usage.py:105-159（`UsageMeter`）；services/agent/llm/providers/openai_compatible.py:428-464（`_usage_from_wire`）；services/agent/loop.py:133-143（`usage_payload()`）、390-399（`loop/end`，含 `model`）；services/agent/usage_report.py:1-225；presentation/api/ui.py:1469-1501；scripts/benchmark/usage/report_usage.py（§2.17） |
+| **Agent 用量**（`Usage` 缓存字段 / 端点字段映射 / `loop/end.usage` / 只读 RPC / 报告脚本） | services/agent/llm/types.py:109-152（`Usage`，`cache_miss_tokens`）、132-145（`plus()`）；services/agent/llm/usage.py:105-159（`UsageMeter`）；services/agent/llm/providers/openai_compatible.py:428-464（`_usage_from_wire`）；services/agent/loop.py:133-143（`usage_payload()`）、390-399（`loop/end`，含 `model`）；services/agent/usage_report.py:1-225；presentation/api/ui.py:1475-1507；scripts/benchmark/usage/report_usage.py（§2.17） |
 | **系统提示组装**（固定段落顺序 / 「用户引用（`@路径`）」段与其门控 / 「时间上下文」段不按工具门控 / 模型切换告知文本） | services/agent/prompt.py:12（段落顺序）、194-218（`FILE_REFERENCE_SECTION`）、221-222（`_has_tool`）、225-283（`build_system_prompt`，文件引用门控 261-262、时间上下文段 263）、286-292（`prompt_debug_info`）、295-320（`TIME_CONTEXT_SECTION`）、323-355（`_local_now` / `format_time_context` / `render_time_context`）、358-382（`MODEL_CHANGE_NOTICE` / `render_model_change_notice`）；services/agent/ask.py:445（时间读数 + 模型告知追加在本轮请求末尾，不落盘）、479-495（`_model_notice`）；tests/test_agent_loop.py:489-506、539-603、606-709（§2.15、§6.15） |
 | 对话会话 JSONL 存储 / 历史重建（压缩 + 裁剪 + 回放与截断）/ 摘要扫描（去读放大）/ 续聊入口 | services/agent/session/store.py:56-66、169-237；services/agent/session/history.py:1-541（`COMPACTION` 124、`_TITLE_TYPE_MARK` 141、`_tool_message` 168-183、`_compaction_plan` 203-229、`compaction_shadowed` 231-233、`_replay` 236-300、`_truncate` 308-322、`conversation_events` 325-327、`replay_events` 330-350、`build_history` 353-372、`summarize_session` 398-400、`_title_from_line` 409-412、`summarize_session_file` 423-481、`conversation_messages` 484-516）；services/agent/ask.py:110-444（`build_loop` 130-173、`_history_chars` 175-183、`_compact_if_needed` 185-274、`_append_fallback_title` 276-286、`_maybe_generate_title` 288-322、`ask` 324-444、`replay` 340、`cancel` 341、回放注入 374、`messages=history` 411）、462-495（`_last_recorded_model` / `_model_notice`：读上一条 `loop/end.model` 产模型切换告知） |
 | **长会话压缩（M2，`compaction` 事件）**（阈值/保留字符预算 / 区域选择与工具配对 / 摘要调用与 KV 前缀 / fail-closed / 落盘形状与回放口径） | services/agent/compaction.py:1-381（常量 105-172、`compact_threshold_chars` 188-190、`retain_chars` 193-197、`frame_summary` 201-203、`event_chars` 219-251、`balanced_cuts` 253-269、`select_span` 272-312、`summarize_span` 315-381）；services/agent/session/history.py:124、203-229、353-372；services/agent/ask.py:185-274、377-390；services/agent/loop.py:133-143（`usage_payload()`）；services/agent/session/store.py:49-50（`SESSION_FORMAT_VERSION`，**不 bump**）；tests/test_agent_compaction.py:1-465（§2.15、§7） |

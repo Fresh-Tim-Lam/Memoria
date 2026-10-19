@@ -49,11 +49,10 @@ ANCHORS: list[tuple[str, str, list[str]]] = [
         "src/memoria/services/document.py",
         "def save_document",
         [
-            "docs/conventions/docs-management.md",
+            "docs/design/documentation-changelog.md",
             "docs/design/agent-capabilities.md",
             "docs/design/agent-plugin-design.md",
             "docs/reference/hard-constraints.md",
-            "docs/reference/agent-guide/README.md",
             "docs/reference/agent-guide/10-data-layout-and-host-embedding.md",
         ],
     ),
