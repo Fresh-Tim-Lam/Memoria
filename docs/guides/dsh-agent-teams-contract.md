@@ -17,6 +17,24 @@
 **结论**：两套是「协作思想一致、执行载体不同」。AGENTS.md 的「三角色职责 + 不经对话记忆交接 + 单一事实源」
 这三条铁律**在 DSH 下依然成立**，只是载体从「事件流」换成「任务板 + 磁盘报告」。
 
+## 0.5 派发前必读「对象认知」——这是 token 效率的第一道闸（2026-10-19 新增，最高优先级）
+
+**反面教训（删文件夹，耗 ~15M token）**：Lead 自己 grep 了 file-tree.js / document.py / sidecar.py，
+又把同样几份文件塞进 subagent 的 prompt 让它**再读一遍** ⇒ 同一份知识被读两次、传两次。
+而这些知识**早就在** `docs/reference/agent-guide/02-file-tree-and-nav.md` 里写到了「可据以定位实现」的粒度
+（右键菜单结构、`deleteTreeFile`、确认弹窗、sidecar 镜像布局、路径安全范式），Lead 却没先读它。
+
+**铁律（派发任何 agent 前，Lead 必须先做）**：
+1. 按任务归属定位对应的对象认知：`docs/reference/agent-guide/0X-*.md`
+   （01-shell / **02-file-tree-and-nav** / 03-editor / 04-preview / 05-kp / 06-links-graph /
+   07-search-images / 08-import-export / 09-settings-i18n / 10-data-layout），
+   以及 `docs/design/preview-render-refactor.md` 等设计稿。
+2. **Lead 先读这份认知**，把它里的「现状 + 行号 + 历史决策」直接写进派发 prompt，**agent 只读增量、不重 grep 全貌**。
+3. 做完改动后，**同步更新对应这份对象认知**（功能变了，认知必须跟着变）——否则认知再次漂移，下一次又得重 grep。
+
+**这一条是 §2「索引分层」的补全**：对象认知（agent-guide）是「人可读的项目内投影」，
+AOCI 是「机器索引」，两者都服务于「各看自己那份、不读全量」。派发不读对象认知 = token 浪费的直接来源。
+
 ## 1. 硬分工：Lead 负责「需扩权的原子操作」，teammate 负责「逻辑 + 复核」
 
 **本轮实测结论（2026-10-19，最重要的一条）**：

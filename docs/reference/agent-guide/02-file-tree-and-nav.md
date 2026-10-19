@@ -70,7 +70,7 @@
 | 上下文 | 触发条件 | 菜单项（顺序） | 证据 |
 |---|---|---|---|
 | 文件 | `target.closest(".-tree-item")` | `重命名` → `renameTreeFile`；`删除`（`.danger` 红） → `deleteTreeFile` | file-tree.js:225-235 |
-| 文件夹 | `target.closest(".-tree-dir-head")` | `重命名` → `renameTreeDir`；**分隔线**；`新建文件` → `createTreeFile(base)`；`新建文件夹` → `createTreeDir(base)` | file-tree.js:236-249 |
+| 文件夹 | `target.closest(".-tree-dir-head")` | `重命名` → `renameTreeDir`；**分隔线**；`新建文件` → `createTreeFile(base)`；`新建文件夹` → `createTreeDir(base)`；**分隔线**；`删除文件夹`（`.danger` 红） → `deleteTreeDir(base)` | file-tree.js:236-249 |
 | 空白区（`#file-tree` 内非上述两者） | `target.closest("#file-tree")` | `新建文件` → `createTreeFile("")`；`新建文件夹` → `createTreeDir("")`；`图片管理` | file-tree.js:250-258 |
 
 菜单行为与关闭规则：
@@ -151,6 +151,7 @@
 | 重命名文件 | `file_rename(relPath, 新名)`；新名与旧名相同则直接返回 | `已重命名`；若后端 `synced` 再补一条 `已重命名并同步 {n} 处链接引用（{m} 个文件正文、{s} 个侧车）`；随后 `applyRenameUi` → 刷新树 → 重开重映射后的当前文件 | file-tree.js:310-332 |
 | 重命名文件夹 | `dir_rename(relPath, 新名)`；后端可能返回 `partial`（部分文档级联失败）——代码**同样当失败**处理并提示，不误判为成功（注释明示） | `已重命名文件夹` + `并已同步 {files} 个文档、{sidecars} 个侧车、{pending} 条待确认` | file-tree.js:334-361 |
 | 删除文件 | 先弹确认框（danger 按钮），确认后 `file_delete(relPath)` | `已删除`；若该文件在标签页中打开则 `closeTabAt` 对应下标；随后刷新树 | file-tree.js:363-382；app.js:706-728 |
+| 删除文件夹 | 先弹确认框（danger 按钮，文案含「不可撤销」警告），确认后 `dir_delete(relPath)` | `已删除文件夹`；关闭所有位于该目录下的打开页签（按 `<rel>/` 前缀匹配）；随后刷新树。后端 `DocumentService.delete_dir`：拒绝删根 / `.memoria` / 隐藏目录 / 越界；`os.walk` 先收集目录下全部 `.md` → `shutil.rmtree` → 逐个 `_remove_sidecar` 清镜像孤儿侧车 → `invalidate_kp_targets` | file-tree.js:383-410；document.py `delete_dir`；ui.py `dir_delete` |
 
 **`applyRenameUi(oldPath, newPath)` 做了什么**（file-tree.js:51-73）：
 
