@@ -3,15 +3,18 @@
 > **用途**：定义 Memoria 仓库内多 Agent 协作的**最小基础集**、事件契约、权限隔离与**可插拔扩展接口**。
 > **目标读者**：SOLO 主控 Agent（Trae）与所有子 Agent；人维护者可据此复核。
 > **关联文档**：[AGENT.md](AGENT.md)（边界/单一事实源/常见陷阱）、[collaboration.md](docs/guides/collaboration.md)（协作规则）、[maintenance-jobs.md §5](docs/design/maintenance-jobs.md)（作业登记表）、[todo.md §12](docs/todo.md)（门禁台账）。
-> **状态**：生效中，2026-09-10。本文件不重复既有规范；冲突时以 `docs/conventions/**` 与 [AGENT.md](AGENT.md) 为准。
+> **状态**：生效中，2026-09-10（DSH 载体适配 2026-10-19）。本文件不重复既有规范；冲突时以 `docs/conventions/**` 与 [AGENT.md](AGENT.md) 为准。
+> **执行载体说明**：本契约的「单一事实源 / 三角色职责 / 验证阶梯 / 权限隔离」骨架在**两种执行载体**下都成立，仅「怎么派发、怎么交接」随载体而变：
+> - **Trae/SOLO 载体（历史）**：SOLO 主控 + 静态三角色 + `events.jsonl` 事件流；
+> - **DSH 载体（当前）**：Lead + 动态 `spawn_teammate` + 共享任务板 + `send_message` + 磁盘报告。实操见 [dsh-agent-teams-contract.md](docs/guides/dsh-agent-teams-contract.md)。
 
 ---
 
 ## 0. 平台硬约束（不可绕过）
 
-- 只有 **SOLO 主控 Agent** 能识别触发条件并调用子 Agent；**子 Agent 不得调用其它子 Agent**。
-- 每个子 Agent 拥有**独立隔离上下文**；其内部推理**不会回传**主控。跨 Agent 交接**只能**通过「磁盘产物 + 事件记录」完成，**禁止依赖对话记忆**。
-- 因此"事件订阅"是**声明式**的：子 Agent 在注册表声明订阅，由**主控**在事件到达时派发。
+- **派发权单一**：只有**主控**（Trae/SOLO 载体）或 **Lead**（DSH 载体）能识别触发条件并调用子 Agent；**子 Agent 不得调用其它子 Agent**。
+- 每个子 Agent 拥有**独立隔离上下文**；其内部推理**不会回传**主控。跨 Agent 交接**只能**通过「磁盘产物 + 事件记录」（或 DSH 的共享任务板 + 磁盘报告）完成，**禁止依赖对话记忆**。
+- "事件订阅"是**声明式**的：子 Agent 在注册表声明订阅，由**主控**在事件到达时派发。（DSH 载体下的派发见 [dsh-agent-teams-contract.md](docs/guides/dsh-agent-teams-contract.md)）
 
 ## 1. 单一事实源（Single Source of Truth）
 
@@ -24,7 +27,7 @@
 | 版本号 | `src/memoria/__version__.py` | 人（Agent 只读） |
 | 产品状态 | 各知识库 `.memoria/**`（manifest/sidecars/pending/images） | 应用代码 |
 | Agent 注册表 | `artifacts/agent/agents.json` | `registrar` |
-| Agent 事件流 | `artifacts/agent/events.jsonl` | 主控（追加） |
+| Agent 事件流 | `artifacts/agent/events.jsonl`（**契约预留，当前未落盘**；DSH 载体用共享任务板 + 磁盘报告，见 dsh-agent-teams-contract.md） | 主控（追加） |
 | 会话历史 | `会话历史 →`<kb>/.memoria/agent/sessions/*.jsonl` | 主控（追加） |
 | 复习作答记录 | `<kb>/.memoria/agent/review/attempts.jsonl` | 应用代码（UI 路径 review_submit_one；append-only，不撤销） |
 - 新增事实源必须先在本表登记；**禁止并行事实源**。`.memoria/cache/**` 视为**可再生缓存**，不作为事实源。
