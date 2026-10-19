@@ -37,7 +37,7 @@
 | 位置 | 文档说法 | 代码事实 | 影响 |
 |---|---|---|---|
 | [deepseek-harness-integration.md](../../design/deepseek-harness-integration.md) §4.2/§7.1、[architecture.md](../architecture.md):21-23,44 | 「`static_server` 的 **`/rpc`** 暴露 UIAPI」 | `static_server.py` 只有 `@app.get("/")`(:114) 与 `@app.get("/<path:path>")`(:130)，**无 `/rpc`**。真实调用链：pywebview `js_api`（`app/shell/pywebview.py:471-484`）或 PyQt6 QWebChannel 单槽 `UIAPIRpc.invoke`（`presentation/api/api_rpc.py:44-67`） | ⚠️ **高**：任何"HTTP POST /rpc 驱动 Memoria"的集成方案**现在跑不通**。注意：`/rpc` 是**测试 harness**（`docs/example/rich-content-test/_harness.py`，本地忽略目录）自建的端点，不是产品能力 —— 本套 10 篇中凡提 `/rpc` 均指 harness |
-| [hard-constraints.md](../hard-constraints.md):31 | 「保存自动清理未引用图片（物理删除）」 | `services/document.py:317-323` 明确：保存**不触发**图片清理；清理只在显式 RPC `cleanup_unused_images`（`ui.py:867`） | ⚠️ 中：按该条设计实现会**误删仍被引用的图片** |
+| ~~[hard-constraints.md](../hard-constraints.md):31~~ | ~~「保存自动清理未引用图片」~~ | **已修（2026-09-15）**：正文已更正为「保存不清理图片」，行尾附更正注记 | ✅ 已结案 |
 | [AGENTS.md](../../../AGENTS.md) §1、[kb-agent.md](../../design/kb-agent.md):70、deepseek-harness-integration.md 「事实源」口径 | 三处表述不一致 | 以 AGENTS.md §1 为单一事实源表，另两处需对齐 | ⚠️ 低：口径漂移 |
 
 > 以上**本次未擅自修改**（涉及项目负责人维护的契约与参考文档）。

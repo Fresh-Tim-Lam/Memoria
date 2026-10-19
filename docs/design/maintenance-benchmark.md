@@ -2,7 +2,7 @@
 
 > **用途**：为「维护机制改进」建立可量化的**改造前后（A/B）对照**：定义受控基准知识库、指标与采集点、A/B 流程，以及"每阶段改善必须附基准对照"的门禁规则。回答"加了调度内核/静默刷新/索引作业化后，比之前改善了多少"。当前（2026-09-09）B0/B1 基线已落地、B2 部分（L1 采样 + L2 前端插桩）、KP 创建链路归因闭环（§6.5）；其余按 §7 推进。
 > **目标读者**：项目负责人（评审指标/流程）；实施 Agent（按 §7 落地生成器与采集）；验收者（跑 A/B 出对照报告）。
-> **关联文档**：[to-dolist.md §12](../to-dolist.md)（施工总表/阶段门禁/验证机制分配）；[maintenance-jobs.md](./maintenance-jobs.md)（作业模型与指标挂钩）；[rename-test 生成器](../../docs/example/rename-test/_gen_rename_test_kb.py)（语料生成范式）；[import-plan.md](../reference/import-plan.md)（headless harness 先例）。
+> **关联文档**：[todo.md §12](../todo.md)（施工总表/阶段门禁/验证机制分配）；[maintenance-jobs.md](./maintenance-jobs.md)（作业模型与指标挂钩）；[rename-test 生成器](../../docs/example/rename-test/_gen_rename_test_kb.py)（语料生成范式）；[import-plan.md](../reference/import-plan.md)（headless harness 先例）。
 > **状态**：草稿（待评审），2026-09-09。
 
 ---

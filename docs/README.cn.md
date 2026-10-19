@@ -36,7 +36,7 @@
 
 `docs/` 根只允许以下文件：
 - `README.md`（本页，总索引）
-- `to-dolist.md`（活跃工作清单/待办）
+- `todo.md`（活跃工作清单/待办）
 
 其余文档一律归入上表子目录；新增子目录须登记到 [conventions/docs-management.md](conventions/docs-management.md#4-自维护机制) 目录登记表。
 

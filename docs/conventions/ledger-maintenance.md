@@ -221,7 +221,7 @@
 
 | 漂移 | 现状 | 处置建议 | 责任人 |
 |---|---|---|---|
-| 台账文件名不一致 | [AGENTS.md](../../AGENTS.md) 单一事实源表与 [docs/README.md](../README.md) 均引用 `docs/to-dolist.md`，磁盘实际为 `docs/todo.md` | 统一命名（建议改引用为 `todo.md`） | 项目负责人（AGENTS.md 属人维护） |
+| 台账文件名不一致 | [AGENTS.md](../../AGENTS.md) 单一事实源表与 [docs/README.md](../README.md) 均引用 `docs/todo.md`，磁盘实际为 `docs/todo.md` | 统一命名（建议改引用为 `todo.md`） | 项目负责人（AGENTS.md 属人维护） |
 | Agent 契约产物空转 | `artifacts/agent/` 仅有 `agents.json` + `prompts/*.md`；`events.jsonl`、`verify/**`、`register/**`、`drift-report.json` 均不存在 | [AGENTS.md §5](../../AGENTS.md) 的一致性校验当前无可校验对象；要么落盘事件流，要么在 AGENTS.md 标注"契约预留未启用" | 项目负责人 |
 | `maintenance-jobs.md` §4/§5 状态不一致 | §4 已 ✅（`preview_range_redraw`），§5 仍写"未实现" | 已于 2026-09-14 对账修正 | registrar |
 

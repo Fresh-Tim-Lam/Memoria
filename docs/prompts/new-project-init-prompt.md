@@ -105,7 +105,7 @@
 | `docs/prompts/` | [可选] 可复用提示词模板 | 本文件的同类 |
 | `docs/tmp/` | 少量诊断记录 | 调试会话 |
 
-**docs 根目录只允许**：`README.md`（总索引）+ `to-dolist.md`（活跃待办）。其余文档按上表唯一落位。
+**docs 根目录只允许**：`README.md`（总索引）+ `todo.md`（活跃待办）。其余文档按上表唯一落位。
 
 **决策表**（写入 docs-management）：`契约规则?→conventions | how-to?→guides | 理解系统?→reference | 设计决策?→design | 示例?→example | 会话?→sessions | 提示词?→prompts | 参考?→refs`
 

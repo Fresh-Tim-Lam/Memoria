@@ -36,7 +36,7 @@ For the detailed decision process, see [conventions/docs-management.md](conventi
 
 Only the following files are allowed at the `docs/` root:
 - `README.md` (this page, master index)
-- `to-dolist.md` (active work list / todo)
+- `todo.md` (active work list / todo)
 
 All other documents must go into one of the subdirectories in the table above; a new subdirectory must be registered in the directory registry table of [conventions/docs-management.md](conventions/docs-management.md#4-自维护机制).
 

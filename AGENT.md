@@ -135,4 +135,4 @@ app.py → app/desktop.py（DPI/UTF-8 兜底）→ app/shell/（壳选择：pywe
 - [reference/image-features.md](docs/reference/image-features.md) — 图片功能机制
 - [design/system-design.md](docs/design/system-design.md) — 设计文档
 - [guides/operations.md](docs/guides/operations.md) — 开发/发布/验证操作手册
-- [docs/to-dolist.md](docs/to-dolist.md) — 活跃待办清单
+- [docs/todo.md](docs/todo.md) — 活跃待办清单

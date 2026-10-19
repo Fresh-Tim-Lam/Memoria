@@ -4,7 +4,7 @@
 > **目标读者**：项目负责人（用户，评审范围与拍板打开问题）；实施 Agent（按本方案分阶段落地）。
 > **关联文档**：[import-spec.md](../reference/import-spec.md)（**bundle 布局单一事实源**——本方案不重复定义包结构，只定义"导出行为"）；[import-plan.md](../reference/import-plan.md)（导入分阶段实施与验证范式）；[dicussion.md](./dicussion.md)（R12/R14 路线图出处）；[docs-management.md](../conventions/docs-management.md)（登记与索引）。
 > **状态**：草稿（待评审），2026-09-08 建立；2026-09-09 复核恢复（此前一度缺失致引用悬空）。
-> **施工挂接**：见 [to-dolist.md §12 B7](../to-dolist.md)（导出知识库包，⏳ 待评审）。
+> **施工挂接**：见 [todo.md §12 B7](../todo.md)（导出知识库包，⏳ 待评审）。
 
 ---
 

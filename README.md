@@ -196,7 +196,7 @@ Memoria's documentation is designed for human + agent collaboration: every top-l
 - Docs hub: [docs/README.md](docs/README.md)
 - Architecture: [docs/reference/architecture.md](docs/reference/architecture.md), [docs/design/system-design.md](docs/design/system-design.md)
 - Design milestone: [docs/design/designV0.md](docs/design/designV0.md)
-- Single source of truth for the version: [src/memoria/\_\_version\_\_.py](src/memoria/__version__.py) (currently **0.3.2**)
+- Single source of truth for the version: [src/memoria/\_\_version\_\_.py](src/memoria/__version__.py) (currently **0.4.3**)
 
 ---
 

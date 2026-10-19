@@ -2,7 +2,7 @@
 
 > **用途**：定义 Memoria 0.3.0 导入模块的目标场景、统一内容模型、三种导入源及其格式、增量与冲突策略、导入前清单预览，以及预留的 Agent 自调（harness）结构化反馈接口。作为实现、文档与验收的统一依据。
 > **目标读者**：项目负责人 / AI Agent（实现导入模块、扩充导入源、对接外部整理流程）。
-> **关联文档**：[to-dolist.md 附录 A/B](../to-dolist.md)（整理提示词与平面文件格式，本文收编并成为其事实来源）；[i18n.md](../conventions/i18n.md)（界面文案走语言包）；[architecture.md](../reference/architecture.md)（数据模型）。
+> **关联文档**：[todo.md 附录 A/B](../todo.md)（整理提示词与平面文件格式，本文收编并成为其事实来源）；[i18n.md](../conventions/i18n.md)（界面文案走语言包）；[architecture.md](../reference/architecture.md)（数据模型）。
 > **状态**：场景已对齐（2026-09-04）；实现随 0.3.0 版本进行。
 > 制定日期：2026-09-04。
 

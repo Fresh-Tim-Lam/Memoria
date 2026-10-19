@@ -196,7 +196,7 @@ Memoria 的文档体系专为人机协作设计：每个一级目录顶部有 `R
 - 文档中心：[docs/README.md](docs/README.md)（含目录导航）
 - 架构说明：[docs/reference/architecture.md](docs/reference/architecture.md)、[docs/design/system-design.md](docs/design/system-design.md)
 - 设计里程碑：[docs/design/designV0.md](docs/design/designV0.md)
-- 版本号唯一事实源：[src/memoria/\_\_version\_\_.py](src/memoria/__version__.py)（当前 **0.3.2**）
+- 版本号唯一事实源：[src/memoria/\_\_version\_\_.py](src/memoria/__version__.py)（当前 **0.4.3**）
 
 ---
 

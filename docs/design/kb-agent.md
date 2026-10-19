@@ -2,7 +2,7 @@
 
 > **用途**：定义"把知识库目录变成可被 Trae 智能体直接学习/维护/复习"的设计——知识库侧契约、状态布局、FSRS 确定性调度、三条工作流，以及 Memoria 产品需内置的资源与入口。
 > **目标读者**：项目负责人（评审范围与取舍）；实施 Agent（按 §7 落地产品侧改动）；使用者（按 §8 在 Trae 中创建智能体）。
-> **关联文档**：[usage-agent-workflow.md](../guides/usage-agent-workflow.md)（导入流水线角色 A/B）、[import-format.md](../conventions/import-format.md)（平面格式）、[markdown-form-std.md](../conventions/markdown-form-std.md)（`[[]]` 语法）、[context-key.md](../conventions/context-key.md)（上下文防火墙）、[AGENT.md](../../AGENT.md)（边界与 Ask First）、[to-dolist.md](../to-dolist.md)（V02 遗忘曲线·主动复习）。
+> **关联文档**：[usage-agent-workflow.md](../guides/usage-agent-workflow.md)（导入流水线角色 A/B）、[import-format.md](../conventions/import-format.md)（平面格式）、[markdown-form-std.md](../conventions/markdown-form-std.md)（`[[]]` 语法）、[context-key.md](../conventions/context-key.md)（上下文防火墙）、[AGENT.md](../../AGENT.md)（边界与 Ask First）、[todo.md](../todo.md)（V02 遗忘曲线·主动复习）。
 > **状态**：草稿（待评审），2026-09-10。
 
 ---
@@ -234,7 +234,7 @@ python .memoria/agent/fsrs.py init  --card <id> [--date YYYY-MM-DD]
 ### 7.4 验收与门禁
 - **自动**：T2 `--selftest`；`python -m py_compile` / `node --check`（涉及前端时）；T3 幂等断言；T5 兼容性断言。
 - **真机**：打开示例库 → 点按钮 → 核对 `.memoria/agent/` 齐备且二次点击不覆盖 `review/`；在 Trae 粘贴提示词后跑通"讲解 / 撰写 / 复习"各一条。
-- **A/B 对照**：本项为**新能力**（非"改善"），依 [to-dolist §12](../to-dolist.md) 铁律**不强制** A/B；但 T5 须留验证记录。
+- **A/B 对照**：本项为**新能力**（非"改善"），依 [to-dolist §12](../todo.md) 铁律**不强制** A/B；但 T5 须留验证记录。
 
 **已执行（2026-09-10）**
 
