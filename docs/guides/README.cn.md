@@ -15,3 +15,5 @@
 | [collaboration.md](./collaboration.md) | AI 编程协作规范：架构讨论/模块开发/测试/Debug/代码审查 | 任何开发场景 |
 | [usage-agent-workflow.md](./usage-agent-workflow.md) | 知识库生产流水线：内容生成 Agent → 用户转贴 → 转换 Agent | 生产/转换知识库 |
 | [operations.md](./operations.md) | 开发/发布/构建/harness 验证操作手册 | 本地开发与打包 |
+| [agent-team-org.md](./agent-team-org.md) | **Agent 团队组织**：三层结构、常驻领域 Owner、派发规则、知识落点、成本模型 | 组织/派发 agent；工程维护 |
+| [dsh-agent-teams-contract.md](./dsh-agent-teams-contract.md) | **DSH Agent Teams 实操契约**：派发前对象认知、Lead/teammate 沙箱分工、证据分级、token 纪律 | 在 DSH 里跑多 agent |

@@ -15,3 +15,5 @@
 | [collaboration.md](./collaboration.md) | AI coding-collaboration conventions: architecture discussion / module development / testing / debugging / code review | Any development scenario |
 | [usage-agent-workflow.md](./usage-agent-workflow.md) | Knowledge-base production pipeline: content generation Agent → user pastes back → conversion Agent | Producing/converting knowledge base |
 | [operations.md](./operations.md) | Development/release/build/harness-validation operations manual | Local development and packaging |
+| [agent-team-org.md](./agent-team-org.md) | **Agent team organization**: three-layer structure, standing domain owners, dispatch rules, knowledge placement, cost model | Organizing/spawning agents; engineering maintenance |
+| [dsh-agent-teams-contract.md](./dsh-agent-teams-contract.md) | **DSH Agent Teams practical contract**: pre-dispatch object cognition, Lead/teammate sandbox split, evidence grading, token discipline | Running multi-agent work in DSH |
