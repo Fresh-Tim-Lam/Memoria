@@ -39,6 +39,23 @@ CDP_MJS = HERE / "cdp.mjs"
 RESULTS_DIR = HERE / "results"
 
 CONTRACT = "docs/design/view-surface-contract.md#5（契约测试清单 C1–C12）"
+# 性能度量口径契约（C9 的 warmup/逐键/多轮/离散度/判据）
+MEASUREMENT_PROTOCOL = "docs/design/benchmark-measurement-protocol.md"
+
+# C9 默认参数。**必须与 cdp.mjs 的 C9_DEFAULTS 逐字一致**（协议 §9）。
+C9_DEFAULTS = {
+    "warmupKeys": 5,
+    "rounds": 5,
+    "keysPerRound": 10,
+    "settleTimeoutMs": 1500,
+}
+C9_NOISE_DEFAULTS = {
+    "maxIqrOverMedian": 0.25,
+    "maxP95OverMedian": 1.60,
+    "maxRoundSpread": 0.20,
+    "minLiveKeys": 20,
+}
+C9_BUDGET_MS = 16.0
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -90,6 +107,121 @@ def wait_port(port: int, timeout: float = 20.0) -> bool:
 def _ev(raw: dict, case_id: str) -> dict:
     c = (raw.get("cases") or {}).get(case_id) or {}
     return c.get("evidence") or {}
+
+
+def _fmt(v, nd=1, unit=" ms"):
+    if v is None:
+        return "—"
+    try:
+        return ("%." + str(nd) + "f") % float(v) + unit
+    except (TypeError, ValueError):
+        return str(v)
+
+
+def judge_c9(ev: dict) -> dict:
+    """C9 判定：**先噪声、后预算**（协议 §6）。
+
+    返回的 status ∈ {green, red, untested}；其中「测量无效」不新增 status 值，
+    而是以 status="untested" + conclude=false 表达 —— 这样 C1–C12 的三态词汇
+    （绿/红/未测）**不被破坏**，同时报告里明确写「不确定」。
+    """
+    if not ev:
+        return {"status": "untested", "conclude": False,
+                "reading": "用例未跑出读数", "detail": {}}
+
+    measurement = ev.get("measurement")
+    verdict = ev.get("verdict") or {}
+
+    # ── v1 旧证据：一次性连发 30 键的批量口径 ⇒ 按契约**不可判**，绝不回退到 max<=16 ──
+    if not measurement:
+        kts = ev.get("keyToSource") or {}
+        legacy = ""
+        if kts:
+            legacy = ("（该 raw 为 v1 批量口径：median %s / p95 %s / max %s，n=%s —— 一次性连发 30 键，"
+                      "测的是批量排队时延，**不可判**绿/红）"
+                      % (_fmt(kts.get("median")), _fmt(kts.get("p95")), _fmt(kts.get("max")), kts.get("n")))
+        return {
+            "status": "untested", "conclude": False,
+            "reading": ("**不确定（v1 批量口径，不可判）**：该 raw 缺逐键多轮度量，按协议 §10 不判绿/红。" + legacy +
+                        "需用 v2 探针重测（见 %s）。" % MEASUREMENT_PROTOCOL),
+            "detail": {"reason": "v1-legacy-batch-evidence", "legacyKeyToSource": kts or None,
+                       "protocol": MEASUREMENT_PROTOCOL},
+        }
+
+    cfg = measurement.get("config") or {}
+    prim = measurement.get("primary") or {}
+    pk = prim.get("perKey") or {}
+    pr = prim.get("rounds") or {}
+    ctrl = measurement.get("control") or {}
+    cnt = measurement.get("counts") or {}
+    clean = measurement.get("cleanKeys") or {}
+    lower_bound = clean.get("median")          # 干净键 median = 单键成本**下界**（真值，协议 §6.6）
+    noise = verdict.get("noise") or {}
+    th = noise.get("thresholds") or C9_NOISE_DEFAULTS
+    obs = noise.get("observed") or {}
+    decision = verdict.get("decision")
+    reasons = verdict.get("reasons") or []
+
+    header = "文档 scale-5k.md（%s 行）逐键采样：n=%s（R=%s × %s 键）× warmup %s" % (
+        ev.get("docLines"), pk.get("n"), pr.get("R"), cfg.get("keysPerRound"), cnt.get("warmup"))
+    stats = "min %s / median %s / p95 %s / max %s；IQR %s，IQR/median %s，p95/median %s，轮间极差 %s" % (
+        _fmt(pk.get("min")), _fmt(pk.get("median")), _fmt(pk.get("p95")), _fmt(pk.get("max")),
+        _fmt(pk.get("iqr"), 2), _fmt(pk.get("iqrOverMedian"), 3, ""),
+        _fmt(pk.get("p95OverMedian"), 3, ""), _fmt(pr.get("spread"), 3, ""))
+    budget_ms = verdict.get("budgetMs", C9_BUDGET_MS)
+    # 判定由分位数**现场重判**（不照抄 raw 的 withinBudget）：这样 python 侧是"独立复核"而非"复述"。
+    med = pr.get("median")
+    within_budget = (med is not None and float(med) <= float(budget_ms))
+    budget = "预算 ≤%s ⇒ median-of-medians %s ⇒ %s" % (
+        _fmt(budget_ms, 0), _fmt(med), "在预算内" if within_budget else "**超预算**")
+    ctrltxt = ""
+    if ctrl.get("perKeyMin") is not None:
+        ctrltxt = "；对照口径 fromKeyMs 的键内最小值 %s（仅参考，**不作判据**）" % _fmt(ctrl.get("perKeyMin"))
+    if lower_bound is not None and clean.get("n"):
+        ctrltxt += "；干净键 %s 个给出**下界** %s（真值，§6.6）" % (clean.get("n"), _fmt(lower_bound))
+
+    base_detail = {
+        "decision": decision,
+        "conclude": decision in ("green", "red"),
+        "budgetMs": budget_ms,
+        "medianOfMedians": med,
+        "withinBudget": within_budget,
+        "lowerBoundMs": lower_bound,
+        "cleanKeys": {"n": clean.get("n"), "median": clean.get("median"), "keys": clean.get("keys")},
+        "crossCheck": verdict.get("crossCheck"),
+        "rawDecision": decision,
+        "rawMedianOfMedians": verdict.get("medianOfMedians"),
+        "primary": {"metric": prim.get("metric"), "perKey": pk, "rounds": pr},
+        "control": {"metric": ctrl.get("metric"), "perKey": ctrl.get("perKey"), "perKeyMin": ctrl.get("perKeyMin")},
+        "config": cfg, "counts": cnt,
+        "noise": {"thresholds": th, "observed": obs},
+        "reasons": reasons,
+        "docLines": ev.get("docLines"),
+        "protocol": MEASUREMENT_PROTOCOL,
+        "reproduce": ("node scripts/benchmark/surface/cdp.mjs --probe … --c9-warmup %s --c9-rounds %s --c9-keys %s"
+                      % (cfg.get("warmupKeys"), cfg.get("rounds"), cfg.get("keysPerRound"))),
+    }
+
+    if decision == "gray":
+        return {
+            "status": "untested", "conclude": False,
+            "reading": ("**不确定（inconclusive）—— 本次度量无效，不作绿/红**。%s；%s；%s。噪声门未过：%s。"
+                        "处置：同机同档位重测。" % (header, stats, budget, "；".join(reasons))),
+            "detail": dict(base_detail, inconclusive=True),
+        }
+    if decision == "red":
+        return {
+            "status": "red", "conclude": True,
+            "reading": ("%s；%s；%s。噪声门通过（%s）%s。"
+                        % (header, stats, budget, "；".join(reasons), ctrltxt)),
+            "detail": base_detail,
+        }
+    return {
+        "status": "green", "conclude": True,
+        "reading": ("%s；%s；%s。噪声门通过（%s）%s。"
+                    % (header, stats, budget, "；".join(reasons), ctrltxt)),
+        "detail": base_detail,
+    }
 
 
 def judge(raw: dict):
@@ -176,21 +308,15 @@ def judge(raw: dict):
     else:
         verdicts["C7"] = {"status": "untested", "reading": "用例未跑出读数", "detail": {}}
 
-    # C9 性能预算
-    ev = _ev(raw, "sel_scroll_stress")
-    kts = ev.get("keyToSource")
-    if kts:
-        mx = kts.get("max")
-        ok = (mx is not None and mx <= 16)
-        verdicts["C9"] = {
-            "status": "green" if ok else "red",
-            "reading": ("文档 scale-5k.md（%s 行）键入 %s 字：按键→真源 median=%s ms / p95=%s ms / max=%s ms（预算 ≤16 ms）"
-                        % (ev.get("docLines"), ev.get("typedChars"), kts.get("median"), kts.get("p95"), mx)),
-            "detail": {"keyToSource": kts, "insertOnly": ev.get("insertOnly"),
-                       "budgetMs": 16, "docLines": ev.get("docLines")},
-        }
-    else:
-        verdicts["C9"] = {"status": "untested", "reading": "用例未跑出读数", "detail": {}}
+    # ── C9 性能预算 ────────────────────────────────────────────────────────
+    #
+    # 口径契约：docs/design/benchmark-measurement-protocol.md
+    #   旧判据 `max <= 16` 已废止（顺序错误：max 对一次 GC 即红；且与契约 §3.3 的
+    #   「median ≤ 16」不是同一个统计量）。新判据：
+    #     ① 先过噪声门（键间 IQR/median、p95/median、轮间相对极差、样本量、死键）
+    #     ② 再判 median-of-medians ≤ budget
+    #     ③ 任一步不过 ⇒ inconclusive（度量状态，不得表述为通过/失败）
+    verdicts["C9"] = judge_c9(_ev(raw, "sel_scroll_stress"))
 
     # 未测（如实 + 原因）
     verdicts["C1"] = {
@@ -328,11 +454,46 @@ def build_report_md(meta, verdicts, raw):
 
     ev = _ev(raw, "sel_scroll_stress")
     if ev:
-        kts = ev.get("keyToSource") or {}
-        ins = ev.get("insertOnly") or {}
-        L.append("### C9 性能（scale-5k.md，%s 行；键 %s 个）" % (ev.get("docLines"), ev.get("typedChars")))
-        L.append("- 按键→真源(ms)：median=%s p95=%s max=%s min=%s n=%s" % (kts.get("median"), kts.get("p95"), kts.get("max"), kts.get("min"), kts.get("n")))
-        L.append("- 仅 insertText(ms)：median=%s p95=%s max=%s" % (ins.get("median"), ins.get("p95"), ins.get("max")))
+        L.append("### C9 性能（协议 v%s：逐键 / warmup / 多轮）" % ((raw.get("measurementProtocol") or {}).get("version", "?")))
+        m = ev.get("measurement") or {}
+        if m:
+            cfg = m.get("config") or {}
+            pk = (m.get("primary") or {}).get("perKey") or {}
+            pr = (m.get("primary") or {}).get("rounds") or {}
+            ck = (m.get("control") or {}).get("perKey") or {}
+            cnt = m.get("counts") or {}
+            v = ev.get("verdict") or {}
+            L.append("- **采集参数**：R=%s 轮 × %s 键，warmup=%s（丢弃），单键落定超时 %s ms；输入通道 `%s`"
+                     % (cfg.get("rounds"), cfg.get("keysPerRound"), cfg.get("warmupKeys"),
+                        cfg.get("settleTimeoutMs"), cfg.get("inputChannel")))
+            L.append("- **样本**：正式 n=%s，落定 %s，死键 %s，落定超时 %s"
+                     % (cnt.get("live"), cnt.get("settledKeys"), cnt.get("deadKeys"), cnt.get("settleTimeouts")))
+            L.append("- **主口径 `appendMs`（按键→真源落定，逐键百分位估计）**："
+                     "min %s / median %s / p95 %s / max %s"
+                     % (_fmt(pk.get("min")), _fmt(pk.get("median")), _fmt(pk.get("p95")), _fmt(pk.get("max"))))
+            L.append("- **离散度**：IQR %s ｜ IQR/median %s ｜ p95/median %s ｜ 轮间相对极差 %s"
+                     % (_fmt(pk.get("iqr"), 2), _fmt(pk.get("iqrOverMedian"), 3, ""),
+                        _fmt(pk.get("p95OverMedian"), 3, ""), _fmt(pr.get("spread"), 3, "")))
+            L.append("- **每轮 median**：%s ⇒ **median-of-medians %s**（预算 ≤%s）"
+                     % (" / ".join(_fmt(x) for x in (pr.get("perRoundMedian") or [])) or "—",
+                        _fmt(pr.get("median")), _fmt(v.get("budgetMs", C9_BUDGET_MS), 0)))
+            L.append("- **对照口径**（不作判据）：`fromKeyMs` median %s ｜ **干净键** %s 个 ⇒ 单键成本**下界** %s（真值）｜ 键内最小值 %s"
+                     % (_fmt(ck.get("median")), (m.get("cleanKeys") or {}).get("n", 0),
+                        _fmt((m.get("cleanKeys") or {}).get("median")), _fmt((m.get("control") or {}).get("perKeyMin"))))
+            cc = v.get("crossCheck")
+            if cc:
+                L.append("- 口径对账（§6.6 自校验）：cleanMedian %s / appendMedian %s = **%s**（期望 ≈1.429）"
+                         % (_fmt(cc.get("cleanMedianMs")), _fmt(cc.get("appendMedianMs")), cc.get("ratio")))
+            L.append("- **结论**：`%s` %s —— %s"
+                     % (v.get("decision"), ("（%s）" % "；".join(v.get("reasons") or [])) if v.get("reasons") else "",
+                        {"green": "达标", "red": "超标", "gray": "**不确定**：噪声超过阈值，本次读数**不作**绿/红，需重测"}.get(v.get("decision"), "—")))
+            L.append("- 口径契约：[benchmark-measurement-protocol.md](../../../docs/design/benchmark-measurement-protocol.md)\n")
+        else:
+            kts = ev.get("keyToSource") or {}
+            L.append("- ⚠️ **该 raw 为 v1 批量口径**（一次性连发 30 键，无 warmup/多轮）："
+                     "median %s / p95 %s / max %s / n=%s —— 按协议 §10 **不可判**，需用 v2 探针重测。"
+                     % (_fmt(kts.get("median")), _fmt(kts.get("p95")), _fmt(kts.get("max")), kts.get("n")))
+            L.append("- 口径契约：[benchmark-measurement-protocol.md](../../../docs/design/benchmark-measurement-protocol.md)\n")
         L.append("- 页面 `[EDIT]`（>20ms 才打）日志条数：%s\n" % len((raw.get("console") or {}).get("editLogs") or []))
 
     L.append("## 未能做到的事（如实）\n")
@@ -360,6 +521,16 @@ def main():
     ap.add_argument("--surface", default="legacy", help="插头名（默认 legacy）")
     ap.add_argument("--work-kb", default="artifacts/_probe_kb", help="临时语料副本目录（默认 artifacts/_probe_kb）")
     ap.add_argument("--timeout", type=int, default=900, help="node 子进程超时秒数")
+    # ── C9 度量协议参数（协议 §9；默认值必须与 cdp.mjs C9_DEFAULTS 一致）──
+    g = ap.add_argument_group("C9 度量协议参数（docs/design/benchmark-measurement-protocol.md §9）")
+    g.add_argument("--c9-warmup", type=int, default=C9_DEFAULTS["warmupKeys"], help="预热键数（丢弃，默认 5）")
+    g.add_argument("--c9-rounds", type=int, default=C9_DEFAULTS["rounds"], help="轮数 R（默认 5）")
+    g.add_argument("--c9-keys", type=int, default=C9_DEFAULTS["keysPerRound"], help="每轮键数（默认 10）")
+    g.add_argument("--c9-settle-timeout", type=int, default=C9_DEFAULTS["settleTimeoutMs"], help="单键落定超时 ms（默认 1500）")
+    g.add_argument("--c9-max-iqr-over-median", type=float, default=C9_NOISE_DEFAULTS["maxIqrOverMedian"], help="键间 IQR/median 上限（默认 0.25）")
+    g.add_argument("--c9-max-p95-over-median", type=float, default=C9_NOISE_DEFAULTS["maxP95OverMedian"], help="键间 p95/median 上限（默认 1.60）")
+    g.add_argument("--c9-max-round-spread", type=float, default=C9_NOISE_DEFAULTS["maxRoundSpread"], help="轮间相对极差上限（默认 0.20）")
+    g.add_argument("--c9-min-keys", type=int, default=C9_NOISE_DEFAULTS["minLiveKeys"], help="最少正式键数（默认 20）")
     args = ap.parse_args()
 
     src_kb = (REPO_ROOT / args.kb).resolve()
@@ -400,13 +571,23 @@ def main():
     raw_path = RESULTS_DIR / ("raw-%s.json" % stem)
     cases_path = REPO_ROOT / "tests" / "probe-kb" / "cases" / "cases.json"
 
+    c9_args = [
+        "--c9-warmup", str(args.c9_warmup),
+        "--c9-rounds", str(args.c9_rounds),
+        "--c9-keys", str(args.c9_keys),
+        "--c9-settle-timeout", str(args.c9_settle_timeout),
+        "--c9-max-iqr-over-median", str(args.c9_max_iqr_over_median),
+        "--c9-max-p95-over-median", str(args.c9_max_p95_over_median),
+        "--c9-max-round-spread", str(args.c9_max_round_spread),
+        "--c9-min-keys", str(args.c9_min_keys),
+    ]
     cmd = [
         "node", str(CDP_MJS), "--probe",
         "--url", "http://127.0.0.1:%d/" % args.port,
         "--kb-root", str(work_kb),
         "--cases", str(cases_path),
         "--out", str(raw_path),
-    ]
+    ] + c9_args
     print("[probe] 运行: %s" % " ".join(cmd))
     t0 = time.time()
     try:
@@ -426,6 +607,19 @@ def main():
     raw = json.loads(raw_path.read_text(encoding="utf-8"))
     verdicts = judge(raw)
 
+    # 协议一致性：raw 实际生效的 C9 参数应等于命令行参数（不一致 ⇒ 以 raw 为准，但要说出来）
+    effective_c9 = ((raw.get("measurementProtocol") or {}).get("c9")) or {}
+    c9_inconsistent = []
+    for k in ("warmupKeys", "rounds", "keysPerRound", "settleTimeoutMs"):
+        if k in effective_c9 and effective_c9[k] != getattr(args, {
+                "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
+                "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]):
+            c9_inconsistent.append("%s: cli=%s raw=%s" % (k, getattr(args, {
+                "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
+                "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]), effective_c9[k]))
+    if c9_inconsistent:
+        print("[probe] 警告：C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent), file=sys.stderr)
+
     env = {
         "browser": raw.get("browser"),
         "edge": raw.get("edgePath"),
@@ -436,6 +630,12 @@ def main():
         "casesFile": "tests/probe-kb/cases/cases.json",
         "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
         "scaleDocLines": (_ev(raw, "sel_scroll_stress") or {}).get("docLines"),
+        "c9Protocol": "v%s / %s" % ((raw.get("measurementProtocol") or {}).get("version", "?"), MEASUREMENT_PROTOCOL),
+        "c9Params": "warmup=%s, R=%s, keysPerRound=%s, settleTimeout=%sms" % (
+            args.c9_warmup, args.c9_rounds, args.c9_keys, args.c9_settle_timeout),
+        "c9NoiseThresholds": "IQR/median<=%s, p95/median<=%s, roundSpread<=%s, minKeys>=%s" % (
+            args.c9_max_iqr_over_median, args.c9_max_p95_over_median,
+            args.c9_max_round_spread, args.c9_min_keys),
         "appReady": raw.get("appReady"),
         "runDurationMs": raw.get("durationMs"),
     }
@@ -443,11 +643,15 @@ def main():
         "绿/红按契约判，不按与老实现一致判。",
         "未测项已写明原因，未默认成绿。",
         "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
-        "C9 读数有运行间波动（同机同档多次实测落在 budget 之上；引用须连同档位/运行环境一起）。",
+        "C9 口径 v2：逐键采样（非一次性连发）+ warmup 丢弃 + R 轮 median-of-medians；"
+        "判绿/红前先过噪声门（键间 IQR/p95、轮间极差、样本量、死键），不过则标「不确定」而非绿/红。",
+        "C9 的「不确定」是**度量状态**而非性能结论：不得据此说达标或退化；处置 = 同机同档位重测。",
         "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
         "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
         "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。",
     ]
+    if c9_inconsistent:
+        notes.append("C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent))
     meta = {
         "label": args.label, "sha": sha,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -470,7 +674,10 @@ def main():
     for i in range(1, 13):
         k = "C%d" % i
         v = verdicts[k]
-        print("  %-4s %-8s %s" % (k, BADGE[v["status"]], v["reading"][:110]))
+        tag = BADGE[v["status"]]
+        if v.get("conclude") is False and k == "C9":
+            tag = "⚪ 不确定"      # 度量无效：既不是绿也不是红（协议 §6.3 / R5）
+        print("  %-4s %-8s %s" % (k, tag, v["reading"][:150]))
     print("\n[probe] 产物：\n  %s\n  %s\n  raw: %s" % (jpath, mpath, raw_path))
     return 0
 

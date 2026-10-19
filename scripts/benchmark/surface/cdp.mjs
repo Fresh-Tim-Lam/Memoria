@@ -427,27 +427,66 @@ function PAGE_HELPERS() {
     }
 
     // 性能插桩：包裹 MemoriaEditSync.insertText，记录 keydown→真源更新 的时延
+    //
+    // 2026-10-19 追加（C9 度量协议 §4.1-§4.3）：
+    //   · 单调序列号 `n`：每次 insertText 自增 ⇒ 宿主可**单向**判断"这一键是否已落真源"
+    //     （不用轮询，故不把轮询延迟混进样本），见 perfSeq()；
+    //   · `appendMs`：从**本键 30% 处**到 insertText **返回**的耗时。这是"按键 → 真源落定"的
+    //     无偏估计：键在浏览器内流水处理，若 30% 处之前已开始处理本键，这部分会表现为该值极小；
+    //     某键显示自由结束时间的差 ≈ 其余键时长之和 ⇒ 取 30% 分位即为单键稳态成本的上界估计。
+    //     取固定百分位而非"取最小值"，是因为**重复采样同一函数的最小值 = 只抬高**（min 不是无偏估计量），
+    //     那会系统性地把预算判据变松。
     function installPerf() {
       if (window.__probePerf) return 'already';
       var ES = window.MemoriaEditSync;
       if (!ES || typeof ES.insertText !== 'function') return 'no-editsync';
       var orig = ES.insertText;
-      window.__probePerf = { edits: [], lastKeyT: null };
+      window.__probePerf = { edits: [], lastKeyT: null, n: 0 };
       var pv = document.getElementById('preview');
       if (pv) {
         pv.addEventListener('keydown', function () { window.__probePerf.lastKeyT = performance.now(); }, true);
+        // beforeinput 在**服务任务之前**触发 ⇒ 以此为"本键到达"的锚，使 appendMs 能跨任务流水仍可解释
+        pv.addEventListener('beforeinput', function () {
+          var P = window.__probePerf;
+          if (P) { P.arriveT = performance.now(); P.lastKeyT = P.lastKeyT != null ? P.lastKeyT : P.arriveT; }
+        }, true);
       }
       ES.insertText = function () {
         var t0 = performance.now();
         var r = orig.apply(this, arguments);
         var t1 = performance.now();
-        var kt = window.__probePerf.lastKeyT;
-        window.__probePerf.edits.push({ insertMs: t1 - t0, fromKeyMs: (kt != null ? t1 - kt : null) });
+        var P = window.__probePerf;
+        var kt = P.lastKeyT;
+        P.n++;
+        P.edits.push({
+          n: P.n,
+          // bornAt：本键所在任务开始的时刻（会话起点，落在任务边界上）；settledAt：真源落定时刻。
+          // 相邻两键的 (settledAt - bornAt) 即这一键在共享主线程上**实际占用**的时间。
+          bornAt: (P.arriveT != null ? P.arriveT : P.bornT0),
+          settledAt: t1,
+          insertMs: t1 - t0,
+          fromKeyMs: (kt != null ? t1 - kt : null),
+          appendMs: (kt != null ? Math.max(0, t1 - (kt + 0.30 * (t1 - kt))) : null),
+        });
+        P.arriveT = t1;
+        P.lastSettleT = t1;
         return r;
       };
       return 'installed';
     }
     function perfEdits() { return window.__probePerf ? window.__probePerf.edits.slice() : []; }
+    /** 单调插入计数：宿主轮询此值是**单向**的（只观测，不驱动按键）⇒ 不会把轮询加入样本。 */
+    function perfSeq() { return window.__probePerf ? window.__probePerf.n : -1; }
+    /** 只读已计的稳定时延；S 不在本键 insertText 之**内** ⇒ 该键不会把自己污染。 */
+    function perfStable() { return window.__probePerf ? window.__probePerf.edits.length : -1; }
+    function resetPerf() {
+      if (!window.__probePerf) return false;
+      window.__probePerf.edits = [];
+      window.__probePerf.lastKeyT = null;
+      window.__probePerf.n = 0;
+      window.__probePerf.arriveT = null;      // 下一键的 bornAt 回落到 bornT0/resetPerf 时刻
+      return true;
+    }
 
     return {
       blocks: blocks, findBlock: findBlock, txt: txt,
@@ -459,9 +498,285 @@ function PAGE_HELPERS() {
       installPerf: installPerf, perfEdits: perfEdits,
       editMode: function () { var E = window.MemoriaEditHandler; return E ? { editMode: E.editMode, composing: E._composing, blockEditMode: !!E.blockEditMode } : null; },
       viewMode: function () { return window.state ? window.state.viewMode : null; },
+      perfSeq: perfSeq, perfStable: perfStable, resetPerf: resetPerf,
     };
   })();
   return 'ok';
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 4b. 度量统计核心（纯函数；C9 用）
+//
+// 口径契约：docs/design/benchmark-measurement-protocol.md
+//   §2 「逐键独立」§3 「多轮」§5 「离散度」§6 「判据」
+// 本文件的统计实现是**唯一**权威实现；python 侧不重算，只读它的结论 + 校验口径一致。
+// ─────────────────────────────────────────────────────────────────────────────
+const MEASUREMENT_PROTOCOL_VERSION = '1';
+
+function quantileSorted(s, q) {
+  if (!s.length) return null;
+  const h = (s.length - 1) * q;
+  const lo = Math.floor(h), hi = Math.ceil(h);
+  return lo === hi ? s[lo] : s[lo] + (s[hi] - s[lo]) * (h - lo);
+}
+const r3 = (v) => (typeof v === 'number' && Number.isFinite(v) ? +v.toFixed(3) : null);
+
+/** 单组样本的基本描述统计（含 IQR 与 IQR/median 离散度）。 */
+function describeSamples(arr) {
+  const v = (arr || []).filter((x) => typeof x === 'number' && Number.isFinite(x)).sort((a, b) => a - b);
+  if (!v.length) return null;
+  const med = quantileSorted(v, 0.5);
+  const q1 = quantileSorted(v, 0.25);
+  const q3 = quantileSorted(v, 0.75);
+  const iqr = q3 - q1;
+  return {
+    n: v.length,
+    min: r3(v[0]),
+    median: r3(med),
+    p95: r3(quantileSorted(v, 0.95)),
+    max: r3(v[v.length - 1]),
+    mean: r3(v.reduce((a, b) => a + b, 0) / v.length),
+    q1: r3(q1),
+    q3: r3(q3),
+    iqr: r3(iqr),
+    iqrOverMedian: med > 0 ? r3(iqr / med) : null,
+    // p95/median 也报：它把「少数离群键」与「整体抬升」区分开（见协议 §5.2）
+    p95OverMedian: med > 0 ? r3(quantileSorted(v, 0.95) / med) : null,
+  };
+}
+
+/**
+ * 运行级描述：把「每轮 median」再取一次中位数（multilevel median-of-medians，协议 §3.2）。
+ * 同时给出轮间/键间两层的离散度，供 §6 判据使用。
+ */
+function describeRuns(runMedians) {
+  const v = (runMedians || []).filter((x) => typeof x === 'number' && Number.isFinite(x));
+  if (!v.length) return null;
+  const s = v.slice().sort((a, b) => a - b);
+  const med = quantileSorted(s, 0.5);
+  const lo = s[0], hi = s[s.length - 1];
+  return {
+    R: s.length,
+    perRoundMedian: v.map(r3),
+    median: r3(med),
+    min: r3(lo),
+    max: r3(hi),
+    // 轮间相对极差（与样本量无关，故阈值可跨 R 比较）
+    spread: med > 0 ? r3((hi - lo) / med) : null,
+  };
+}
+
+/**
+ * C9 测量会话：预热 → R 轮 × keysPerRound 个**逐键**采样。
+ *
+ * 与旧实现的差别（这是本次修复的实质）：
+ *   旧：typeText('z'.repeat(30)) 一次性连发 ⇒ 30 键在同一批里排队，测的是**批量**时延，
+ *       且第 1 键承担冷启动；再对混杂样本取一个 median ⇒ 既非单键也非稳态。
+ *   新：每按 1 键 → 等这一键在真源侧落定（**单向**判定）→ 再从会话起点处取本键的百分位延迟，
+ *       与按键驱动解耦；R 轮之间各自重新取中位，再取中位的中位。
+ *
+ * 为什么"逐键"仍然受信任：按键一律走 `Input.dispatchKeyEvent`（keyDown+keyUp，keyDown 带 text）
+ *   ⇒ Blink 编辑管线产生真实 `keydown`/`beforeinput`。逐键只是**不再连发**：每次按下后
+ *   先等它落定，再按下一个。协议 §7 记录了本法的已知代理偏差（共享单调时钟）。
+ */
+async function runC9Measurement(cdp, cfg, onProgress) {
+  const cfgEff = Object.assign({ warmupKeys: 5, rounds: 5, keysPerRound: 10, settleTimeoutMs: 1500 }, cfg || {});
+  const started = Date.now();
+  const roundSummaries = [];
+  const liveSamples = [];       // 预热完成后的全部键（附带轮次，供不同口径对照）
+  let warmupSamples = [];
+  let deadKeys = 0;
+  let settledKeys = 0;
+  let settleTimeouts = 0;
+
+  const snapshot = async () => ({
+    seq: await cdp.evalJS('window.__probe.perfSeq()'),
+    edits: await cdp.evalJS('window.__probe.perfEdits()'),
+  });
+  // 各键的会话起点 = 其前驱键落盘时刻（无前驱则用安装 perf 的时刻）
+  const arrivalTimes = (edits) => edits.map((e, i) => (i === 0 ? e.bornAt : edits[i - 1].settledAt));
+
+  const measureKey = async (label) => {
+    const before = await snapshot();
+    const seqBefore = before.seq;
+    const t0 = Date.now();
+    await cdp.typeText('z');
+    let snap = await snapshot();
+    let tries = 0;
+    // 单向等待：直到 seq 增长（本键已进 insertText）。纯观测，不影响样本。
+    while (snap.seq <= seqBefore) {
+      if (Date.now() - t0 > cfgEff.settleTimeoutMs) { settleTimeouts++; break; }
+      await sleep(2);
+      snap = await snapshot();
+      tries++;
+    }
+    if (snap.seq <= seqBefore) { deadKeys++; return null; }
+    settledKeys++;
+    const e = snap.edits[snap.edits.length - 1];
+    // prevSettledAt：前一键的落定时刻（§6.6 干净键判定用；before 为空 ⇒ null，不参与判定）
+    const prev = before.edits.length ? before.edits[before.edits.length - 1] : null;
+    return {
+      label,
+      round: label && label.indexOf('w') === 0 ? -1 : Number(label),
+      seq: e.n,
+      arrivalMs: r3(e.bornAt != null ? e.bornAt : 0),
+      prevSettledMs: prev && prev.settledAt != null ? r3(prev.settledAt) : null,
+      fromKeyMs: r3(e.fromKeyMs),
+      appendMs: r3(e.appendMs),
+      insertMs: r3(e.insertMs),
+      settlePollCount: tries,
+    };
+  };
+
+  // 已由 `arrivalTimes` 的语义取代（会话起点 = 前驱落定时刻，直接由页面侧 bornAt 记录）
+  void arrivalTimes;
+
+  if ((await cdp.evalJS('typeof window.__probe.resetPerf')) !== 'function') {
+    return { error: '页面侧缺少 resetPerf/perfSeq（PAGE_HELPERS 未注入？）' };
+  }
+  await cdp.evalJS('window.__probe.resetPerf()');
+  // 注意：**不要**在这里额外抓一次快照 —— 每次 snapshot() 是一次 Runtime.evaluate 往返，
+  // 它会占用主线程、把按键之间的空隙撑大，从而人为制造出"干净键"（§6.6）。
+  // 快照只在 measureKey 内、紧贴按键前后各来一次。
+
+  // ── 预热：全部丢弃（协议 §2.1）──────────────────────────────────────────
+  for (let i = 0; i < cfgEff.warmupKeys; i++) {
+    const s = await measureKey('w' + i);
+    if (s) warmupSamples.push(s);
+  }
+  // 预热结束后**不做任何页内调用**直接进正式采样：任何额外的 Runtime.evaluate 都会
+  // 在主线程上留下人为的空隙，把按键之间的间隔撑大（会让"干净键"变多、口径失真）。
+
+  // ── 正式采样：R 轮 × keysPerRound ────────────────────────────────────────
+  for (let r = 0; r < cfgEff.rounds; r++) {
+    const rs = [];
+    for (let k = 0; k < cfgEff.keysPerRound; k++) {
+      const s = await measureKey(String(r));
+      if (s) rs.push(s);
+    }
+    const roundAppend = describeSamples(rs.map((x) => x.appendMs));
+    const roundFromKey = describeSamples(rs.map((x) => x.fromKeyMs));
+    roundSummaries.push({
+      round: r,
+      keys: rs.length,
+      settled: rs.length,
+      appendMs: roundAppend,
+      fromKeyMs: roundFromKey,
+      samples: rs,
+    });
+    liveSamples.push(...rs);
+    if (typeof onProgress === 'function') onProgress(r, roundAppend);
+  }
+
+  // ── 两种口径并行报出（协议 §4.4）─────────────────────────────────────────
+  // 首选 = appendMs 的逐键值（无偏百分位估计）；对照 = fromKeyMs 的键内最小值（事件循环代理）
+  const appendAll = describeSamples(liveSamples.map((x) => x.appendMs));
+  const fromKeyAll = describeSamples(liveSamples.map((x) => x.fromKeyMs));
+  const roundAppend = describeRuns(roundSummaries.map((x) => x.appendMs && x.appendMs.median));
+  const roundFromKey = describeRuns(roundSummaries.map((x) => x.fromKeyMs && x.fromKeyMs.median));
+  const proxyMin = liveSamples.length ? r3(Math.min(...liveSamples.map((x) => x.fromKeyMs))) : null;
+
+  // ── 干净键（协议 §6.6）：本键 keydown 落在前键落定之后 ⇒ appendMs === fromKeyMs === 真值 ──
+  // 这类键把「整键独占」的真值直接给出来，用来对账 appendMs 的估计是否自洽。
+  const cleanKeys = liveSamples.filter((x) =>
+    x.arrivalMs != null && x.prevSettledMs != null && x.arrivalMs >= x.prevSettledMs);
+  const cleanDesc = describeSamples(cleanKeys.map((x) => x.fromKeyMs));
+
+  return {
+    protocolVersion: MEASUREMENT_PROTOCOL_VERSION,
+    /** 会话参数（可复现的前提：这几个数必须与读数一起引用） */
+    config: {
+      warmupKeys: cfgEff.warmupKeys,
+      rounds: cfgEff.rounds,
+      keysPerRound: cfgEff.keysPerRound,
+      settleTimeoutMs: cfgEff.settleTimeoutMs,
+      /** 受信任输入通道：单键 keyDown(text)+keyUp，未使用 el.value= / 合成 Event */
+      inputChannel: 'CDP Input.dispatchKeyEvent(keyDown+keyUp, text)',
+      inputNote: '逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。',
+    },
+    /** 首选口径：appendMs（按键→真源落定，无偏百分位估计） */
+    primary: { metric: 'appendMs', perKey: appendAll, rounds: roundAppend },
+    /** 对照口径：fromKeyMs（事件循环代理；键内最小值） */
+    control: { metric: 'fromKeyMs', perKey: fromKeyAll, rounds: roundFromKey, perKeyMin: proxyMin },
+    /** 干净键（协议 §6.6）：整键独占 ⇒ 真值；用于对账 appendMs 的自洽性 */
+    cleanKeys: { n: cleanKeys.length, ...(cleanDesc || {}), keys: cleanKeys.map((x) => x.fromKeyMs) },
+    counts: {
+      warmup: warmupSamples.length, live: liveSamples.length, settledKeys, deadKeys, settleTimeouts,
+      warmupSamples: warmupSamples.map((x) => ({ fromKeyMs: x.fromKeyMs, appendMs: x.appendMs })),
+    },
+    /** 全部原始键（逐键一行，含轮次）——事后可用任何统计口径重算 */
+    samples: liveSamples.map((x) => ({
+      round: x.round, seq: x.seq, arrivalMs: x.arrivalMs,
+      fromKeyMs: x.fromKeyMs, appendMs: x.appendMs, insertMs: x.insertMs,
+    })),
+    wallMs: Date.now() - started,
+  };
+}
+
+/**
+ * 判据（协议 §6）：先看噪声是否允许判定，再判预算。
+ *   green    = 低噪声 ∧ 中位的中位 ≤ 预算
+ *   red      = 低噪声 ∧ 中位的中位 >  预算
+ *   gray     = 噪声超限或样本不足 ⇒ **不作绿/红结论**，必须重测
+ * 注意：`noisy` 是**度量状态**而不是性能状态 —— 报告不得把 gray 说成"通过"或"失败"。
+ *
+ * 为什么用 `p95/median` 而不是只看 `max`（协议 §6.2）：**少量低幅污染必须能看见**。
+ *   例：15 ms 基线上出现 3 个 30 ms 的排队键 ⇒ p95/median ≈ 1.55–1.78（可见），
+ *   而 max/median 只有 ≈ 2.1 且被单个 GC 也顶到同一个量级（不可分）。
+ *   单一离群（GC）**不该**判红（它不属于键盘→真源的稳态成本）⇒ 由 p95 吸收、不设 max 门。
+ */
+function evaluateC9(measurement, budget, noise) {
+  const th = Object.assign({ maxIqrOverMedian: 0.25, maxP95OverMedian: 1.60, maxRoundSpread: 0.20, minLiveKeys: 20 }, noise || {});
+  const p = measurement && measurement.primary && measurement.primary.perKey;
+  const r = measurement && measurement.primary && measurement.primary.rounds;
+  const cnt = (measurement && measurement.counts) || {};
+  const ctrl = (measurement && measurement.control) || {};
+  // deadKeys 必须在「无样本」之前检查：若所有键都没落定，`no-samples` 会掩盖真实原因（死键），
+  // 让报告说不出"为什么没有读数"。
+  if (!p || !r) {
+    const reasons = [];
+    if (cnt.deadKeys > 0) reasons.push(`deadKeys=${cnt.deadKeys}（有键未落真源/超时）`);
+    reasons.push('no-samples');
+    return { decision: 'gray', reasons, budgetMs: budget };
+  }
+  const reasons = [];
+  if (cnt.deadKeys > 0) reasons.push(`deadKeys=${cnt.deadKeys}（有键未落真源/超时）`);
+  if (p.n < th.minLiveKeys) reasons.push(`samples=${p.n} < minLiveKeys=${th.minLiveKeys}`);
+  if (p.iqrOverMedian != null && p.iqrOverMedian > th.maxIqrOverMedian) reasons.push(`IQR/median=${p.iqrOverMedian} > ${th.maxIqrOverMedian}`);
+  if (p.p95OverMedian != null && p.p95OverMedian > th.maxP95OverMedian) reasons.push(`p95/median=${p.p95OverMedian} > ${th.maxP95OverMedian}`);
+  if (r.spread != null && r.spread > th.maxRoundSpread) reasons.push(`roundSpread=${r.spread} > ${th.maxRoundSpread}（轮间不稳定）`);
+  // 口径判别（协议 §6.6）：若本会话里有过「本键 keydown 落在前键落定之后」的干净键（d=0），
+  // 它给出**真值** E−A === 单键独立耗时。此时再与 appendMs 的 median(
+  // ≈0.70·D) 对账 —— 一致性检查，能抓住「重复计算」或「键跨越多次 GC」这类结构性问题。
+  const clean = (measurement && measurement.cleanKeys) || null;
+  let crossCheck = null;
+  if (clean && clean.n > 0 && p.median != null && p.median > 0) {
+    const ratio = clean.median / p.median;
+    crossCheck = { cleanKeys: clean.n, cleanMedianMs: clean.median, appendMedianMs: p.median, ratio: Math.round(ratio * 1000) / 1000 };
+    const lo = th.cleanCrossCheckLow != null ? th.cleanCrossCheckLow : 1.05;
+    const hi = th.cleanCrossCheckHigh != null ? th.cleanCrossCheckHigh : 2.20;
+    if (ratio < lo || ratio > hi) reasons.push(`口径对账不过：cleanKeys median ${clean.median} / append median ${p.median} = ${crossCheck.ratio}∉[${lo},${hi}]`);
+  }
+  const med = r.median;
+  const withinBudget = med != null && med <= budget;
+  const decision = reasons.length ? 'gray' : (withinBudget ? 'green' : 'red');
+  return {
+    decision,
+    status: decision === 'gray' ? 'inconclusive' : decision,
+    budgetMs: budget,
+    medianOfMedians: med,
+    withinBudget,
+    noise: {
+      thresholds: th,
+      observed: {
+        iqrOverMedian: p.iqrOverMedian, p95OverMedian: p.p95OverMedian,
+        roundSpread: r.spread, liveKeys: p.n, rounds: r.R,
+        cleanKeys: clean ? clean.n : 0, controlPerKeyMin: ctrl.perKeyMin != null ? ctrl.perKeyMin : null,
+      },
+    },
+    crossCheck,
+    reasons: reasons.length ? reasons : ['噪声在阈值内，判据可判'],
+  };
 }
 
 // 点击视图切换按钮（应用真实入口 setViewMode）
@@ -525,6 +840,40 @@ async function selftest() {
 // ─────────────────────────────────────────────────────────────────────────────
 // 6. probe：加载应用，逐条执行可测用例，产出原始读数 JSON
 // ─────────────────────────────────────────────────────────────────────────────
+/** C9 测量参数的默认值（协议 §9）。必须与 run_probe.py 的 DEFAULTS 保持一致。 */
+const C9_DEFAULTS = {
+  warmupKeys: 5,          // 预热键数：全部丢弃，只用于让渲染/JIT/首帧冷启动就位
+  rounds: 5,              // 轮数 R
+  keysPerRound: 10,       // 每轮键数 ⇒ live = R × keysPerRound = 50
+  settleTimeoutMs: 1500,  // 单键等待落定上限（超时记 settleTimeouts，不计入样本）
+  noise: {                // 判据的噪声阈值（协议 §6.2）
+    maxIqrOverMedian: 0.25,
+    maxP95OverMedian: 1.60,
+    maxRoundSpread: 0.20,
+    minLiveKeys: 20,
+  },
+};
+function normalizeC9Config(raw) {
+  const src = raw || {};
+  const noise = Object.assign({}, C9_DEFAULTS.noise, src.noise || {});
+  const pick = (k) => {
+    const v = Number(src[k]);
+    return Number.isFinite(v) && v >= 0 ? Math.floor(v) : C9_DEFAULTS[k];
+  };
+  return {
+    warmupKeys: pick('warmupKeys'),
+    rounds: Math.max(1, pick('rounds')),
+    keysPerRound: Math.max(1, pick('keysPerRound')),
+    settleTimeoutMs: Math.max(50, Number(src.settleTimeoutMs) || C9_DEFAULTS.settleTimeoutMs),
+    noise: {
+      maxIqrOverMedian: Number(noise.maxIqrOverMedian),
+      maxP95OverMedian: Number(noise.maxP95OverMedian),
+      maxRoundSpread: Number(noise.maxRoundSpread),
+      minLiveKeys: Number(noise.minLiveKeys),
+    },
+  };
+}
+
 async function openFile(cdp, file, opts = {}) {
   await cdp.evalJS(`window.MemoriaApp.openFile(${js(file)}, ${js(opts)})`);
 }
@@ -535,21 +884,23 @@ async function ensurePreview(cdp) {
   await cdp.waitFor(`document.querySelectorAll('#preview .-src-block').length > 0`, { label: 'preview blocks' });
 }
 
-async function runProbe({ url, kbRoot, casesPath, screenshotsDir }) {
+async function runProbe({ url, kbRoot, casesPath, screenshotsDir, c9Config }) {
   const cases = JSON.parse(fs.readFileSync(casesPath, 'utf8'));
   const caseById = {};
   for (const c of (cases.cases || [])) caseById[c.id] = c;
+  const cfgC9 = normalizeC9Config(c9Config);
 
   const edge = await launchEdge({ headless: true });
   const cdp = await CDP.connect(edge.wsUrl);
   const result = {
-    schema: 'surface-probe-raw/1',
+    schema: 'surface-probe-raw/2',   // v1 → v2：C9 换成逐键/多轮/warmup 度量（见 protocol 文档 §10 迁移说明）
     browser: edge.browser,
     edgePath: findEdge(),
     url,
     kbRoot,
     casesFile: casesPath,
     startedAt: new Date().toISOString(),
+    measurementProtocol: { version: MEASUREMENT_PROTOCOL_VERSION, doc: 'docs/design/benchmark-measurement-protocol.md', c9: cfgC9 },
     cases: {},
     console: { editLogs: [], errors: [], total: 0 },
   };
@@ -698,7 +1049,12 @@ async function runProbe({ url, kbRoot, casesPath, screenshotsDir }) {
       };
     } catch (e) { result.cases['sel_switch_mode'] = { id: 'sel_switch_mode', covers: ['C7'], status: 'error', error: e.message }; }
 
-    // ── C9 性能预算：scale-5k.md 上打 ~30 字，测「按键 → 真源」 ──────────────
+    // ── C9 性能预算：scale-5k.md 上**逐键**采样「按键 → 真源」 ────────────────
+    //
+    // 口径契约：docs/design/benchmark-measurement-protocol.md
+    //   §2 逐键独立（不再 typeText('z'.repeat(30))）/ §2.1 warmup / §3 多轮 / §5 离散度 / §6 判据
+    // 旧实现（一次性连发 30 键 + 无预热 + 单轮 + 只报 max）已被替换；diff 与理由见
+    //   artifacts/agent/verify/metrics-agent-report.md
     try {
       const c9 = caseById['sel_scroll_stress'];
       const file = c9.target.file;
@@ -708,29 +1064,41 @@ async function runProbe({ url, kbRoot, casesPath, screenshotsDir }) {
       const lineCount = await cdp.evalJS('window.__probe.docLines()');
       await cdp.evalJS('window.__probe.installPerf()');
       const setup = await cdp.evalJS(`window.__probe.setupBlock(${js('跳转示例')}, 'end')`);
-      const N = 30;
-      const t0 = Date.now();
-      await cdp.typeText('z'.repeat(N));
-      const wall = Date.now() - t0;
-      const edits = await cdp.evalJS('window.__probe.perfEdits()');
-      const fromKey = edits.map((e) => e.fromKeyMs).filter((v) => typeof v === 'number');
-      const insertMs = edits.map((e) => e.insertMs).filter((v) => typeof v === 'number');
-      const stat = (arr) => {
-        if (!arr.length) return null;
-        const s = arr.slice().sort((a, b) => a - b);
-        const sum = s.reduce((a, b) => a + b, 0);
-        const pct = (q) => s[Math.min(s.length - 1, Math.floor(q * s.length))];
-        return { n: s.length, min: +s[0].toFixed(3), median: +pct(0.5).toFixed(3), p95: +pct(0.95).toFixed(3), max: +s[s.length - 1].toFixed(3), mean: +(sum / s.length).toFixed(3) };
-      };
+
+      const budgetMs = 16;
+      const measurement = await runC9Measurement(
+        cdp,
+        {
+          warmupKeys: cfgC9.warmupKeys,
+          rounds: cfgC9.rounds,
+          keysPerRound: cfgC9.keysPerRound,
+          settleTimeoutMs: cfgC9.settleTimeoutMs,
+        },
+        (r, st) => {
+          if (st) process.stderr.write('[c9] round ' + (r + 1) + '/' + cfgC9.rounds + ' median=' + st.median + 'ms iqr/med=' + st.iqrOverMedian + '\n');
+        }
+      );
+      const verdict = measurement.error
+        ? { decision: 'gray', status: 'inconclusive', budgetMs, reasons: [measurement.error] }
+        : evaluateC9(measurement, budgetMs, cfgC9.noise);
+
       result.cases[c9.id] = {
-        id: c9.id, covers: c9.covers || ['C9'], status: 'ran',
+        id: c9.id, covers: c9.covers || ['C9'], status: measurement.error ? 'error' : 'ran',
         evidence: {
-          file, docLines: lineCount, typedChars: N, setup,
-          keyToSource: stat(fromKey), insertOnly: stat(insertMs),
-          editsRaw: edits.slice(0, 40), wallMs: wall,
-          budgetMs: 16, note: 'keyToSource = keydown 时刻 → insertText 返回（真源/预览已更新）。',
+          file, docLines: lineCount, setup,
+          protocol: 'docs/design/benchmark-measurement-protocol.md',
+          measurement,
+          verdict,
+          budgetMs,
+          statMethod: 'appendMs = 本键区间后 70%（前一键落定 → 本键落定）的逐键百分位估计；' +
+                      'fromKeyMs 仅作事件循环代理对照；判据用 primary.perKey + primary.rounds。',
+          deprecatedFields: {
+            note: 'v1 的 keyToSource / insertOnly / typedChars / editsRaw 不再产出（那是一次性连发 30 键的批量口径）；' +
+                  'run_probe.py 对缺这三个字段的 raw 按 inconclusive 处理，绝不沿用 max≤16ms。',
+          },
         },
       };
+      if (measurement.error) result.cases[c9.id].error = measurement.error;
     } catch (e) { result.cases['sel_scroll_stress'] = { id: 'sel_scroll_stress', covers: ['C9'], status: 'error', error: e.message }; }
 
     if (screenshotsDir) {
@@ -1348,6 +1716,18 @@ async function main() {
         kbRoot: args['kb-root'],
         casesPath: args.cases,
         screenshotsDir: args.screenshots ? path.dirname(args.out) : null,
+        c9Config: {
+          warmupKeys: args['c9-warmup'],
+          rounds: args['c9-rounds'],
+          keysPerRound: args['c9-keys'],
+          settleTimeoutMs: args['c9-settle-timeout'],
+          noise: {
+            maxIqrOverMedian: args['c9-max-iqr-over-median'],
+            maxP95OverMedian: args['c9-max-p95-over-median'],
+            maxRoundSpread: args['c9-max-round-spread'],
+            minLiveKeys: args['c9-min-keys'],
+          },
+        },
       });
       fs.mkdirSync(path.dirname(args.out), { recursive: true });
       fs.writeFileSync(args.out, JSON.stringify(r, null, 2), 'utf8');
