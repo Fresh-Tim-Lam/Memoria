@@ -554,8 +554,32 @@
     gap: 0.25rem;
     margin-top: 0.4375rem;
 }
+/* 引用可折叠（2026-10-19 人：引用直接堆积、多了占视野）：
+   label 变可点按钮，chip 收进 list；折叠态隐藏 list 只留"N 条引用"一行。 */
+.-agent-sources-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    min-width: 0;
+}
+.-agent-sources--collapsed .-agent-sources-list {
+    display: none;
+}
 .-agent-sources-label {
     flex-shrink: 0;
+}
+button.-agent-sources-label {
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-align: left;
+}
+button.-agent-sources-label:hover {
+    color: var(--text-primary);
 }
 .-agent-source {
     padding: 0 5px;

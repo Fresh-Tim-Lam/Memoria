@@ -627,14 +627,32 @@ window.MemoriaAgentPanel = (function () {
     return wrap;
   }
 
-  /** 助手消息末尾的来源条（后端 anchors：file/line/kp_id/name）。 */
+  /** 助手消息末尾的来源条（后端 anchors：file/line/kp_id/name）。
+   *  引用多时默认折叠，点标签可展开/收起（人 2026-10-19：「引用直接堆积，多了会占据很大视野」）。 */
   function sourcesEl(anchors) {
+    const COLLAPSE_AT = 3; // 超过该条数才折叠；少量引用不该藏起来
     const box = document.createElement("div");
     box.className = "-agent-sources";
-    const label = document.createElement("span");
+    const collapsible = anchors.length > COLLAPSE_AT;
+    if (collapsible) box.classList.add("-agent-sources--collapsed");
+
+    const label = document.createElement(collapsible ? "button" : "span");
     label.className = "-agent-sources-label -muted";
-    label.textContent = T("agent.sources", { n: anchors.length });
+    if (collapsible) {
+      label.setAttribute("type", "button");
+      label.setAttribute("aria-expanded", "false");
+      label.title = T("agent.sourcesToggleTitle");
+      label.addEventListener("click", function () {
+        const collapsed = box.classList.toggle("-agent-sources--collapsed");
+        label.setAttribute("aria-expanded", collapsed ? "false" : "true");
+        label.title = T(collapsed ? "agent.sourcesExpandTitle" : "agent.sourcesCollapseTitle");
+      });
+    }
+    label.textContent = T("agent.sources", { n: anchors.length }) + (collapsible ? " ▾" : "");
     box.appendChild(label);
+
+    const list = document.createElement("div");
+    list.className = "-agent-sources-list";
     anchors.forEach(function (anchor) {
       const file = String((anchor && anchor.file) || "");
       if (!file) return;
@@ -645,8 +663,9 @@ window.MemoriaAgentPanel = (function () {
       if (line) chip.setAttribute("data-agent-line", String(line));
       const name = String((anchor && anchor.name) || anchor.kp_id || "");
       chip.textContent = name ? name + " · " + file + (line ? ":" + line : "") : file + (line ? ":" + line : "");
-      box.appendChild(chip);
+      list.appendChild(chip);
     });
+    box.appendChild(list);
     return box;
   }
 
@@ -6783,4 +6802,170 @@ window.MemoriaAgentPanel = (function () {
     if (String((row && row.name) || "") !== "ask_user_question") return String((row && row.detail) || "");
     return askRecordText((row && row.detail) || "");
   }
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-13 追加：**文档资源附件**（拖入 pdf/docx/txt/md → agent 用 read_resource 读）
+  //   与图片附件（上方「图片附件」块）并行、各自独立：图片走 `agent_attach_image`→vision 输入，
+  //   文档走 `agent_attach_resource`→临时区/KB 内引用→agent 用只读工具 `read_resource` 解析文本。
+  //   落点纪律：整块追加在 IIFE 末尾（`})();` 之前）；需要改既有行为处一律**按名包装**
+  //   （`intakeImageFiles` / `renderAttachStrip` / `callAskStart`）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 文档资源扩展名（小写、无点）；「等等」后续在此追加
+  const RES_EXT = { pdf: true, docx: true, txt: true, md: true };
+  //: 单文件上限（20 MiB，与后端 RESOURCE_TOO_LARGE 同口径，前端先拦省得白传字节）
+  const RES_MAX_BYTES = 20 * 1024 * 1024;
+  //: 单条消息最多几个资源
+  const RES_MAX_COUNT = 20;
+
+  //: 草稿资源（内存态）：`{name, state:"pending"|"ready", rel_path, kind, cancelled}`。
+  const resourceItems = [];
+
+  function isResourceFile(file) {
+    const name = String((file && file.name) || "").toLowerCase();
+    const m = name.match(/\.([^.]+)$/);
+    return !!m && !!RES_EXT[m[1]];
+  }
+
+  function resourceErrorText(res) {
+    const code = String((res && res.code) || "");
+    if (code === "RESOURCE_TOO_LARGE") return "资源文件过大（上限 20 MiB）";
+    if (code === "UNSUPPORTED_RESOURCE_TYPE") return "只支持 PDF / Word(.docx) / TXT / Markdown";
+    if (code === "NO_KB") return T("agent.err.no_kb");
+    return String((res && res.message) || "") || "资源上传失败";
+  }
+
+  async function uploadResource(file) {
+    const item = { name: String((file && file.name) || ""), state: "pending", rel_path: "", kind: "", cancelled: false };
+    resourceItems.push(item);
+    renderAttachStrip();
+    const send = $("#agent-send");
+    if (send) send.disabled = true; // 上传期间不给发（资源还没就位）
+    let res;
+    try {
+      const buf = await file.arrayBuffer();
+      res = await call("agent_attach_resource", item.name, bufferToBase64(buf));
+    } catch (e) {
+      res = { status: "error", message: String((e && e.message) || e) };
+    }
+    if (item.cancelled) return;
+    if (!res || res.status !== "ok" || !res.rel_path) {
+      const at = resourceItems.indexOf(item);
+      if (at >= 0) resourceItems.splice(at, 1);
+      renderAttachStrip();
+      showAttachError(resourceErrorText(res));
+      if (!resourceItems.some(function (it) { return it.state === "pending"; })) renderComposer();
+      return;
+    }
+    item.state = "ready";
+    item.rel_path = String(res.rel_path);
+    item.kind = String(res.kind || "");
+    renderAttachStrip();
+    if (!resourceItems.some(function (it) { return it.state === "pending"; })) renderComposer();
+  }
+
+  function intakeResourceFiles(fileList) {
+    const files = Array.prototype.slice.call(fileList || []).filter(Boolean);
+    if (!files.length) return false;
+    if (resourceItems.length + files.length > RES_MAX_COUNT) {
+      showAttachError(T("agent.attach.tooMany", { max: RES_MAX_COUNT }));
+      return false;
+    }
+    for (let i = 0; i < files.length; i += 1) {
+      if (Number(files[i].size) > RES_MAX_BYTES) {
+        showAttachError("资源文件过大（上限 20 MiB）：" + String(files[i].name || ""));
+        return false;
+      }
+    }
+    files.forEach(function (f) { void uploadResource(f); });
+    return true;
+  }
+
+  /** 已就绪的资源 → 注入消息文本的提示（agent 据此用 read_resource 读；路径随消息落盘、跨回话可查）。 */
+  function resourceNote() {
+    const ready = resourceItems.filter(function (it) { return it && it.state === "ready" && !it.cancelled && it.rel_path; });
+    if (!ready.length) return "";
+    return "（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n" +
+      ready.map(function (it) { return "- " + it.rel_path; }).join("\n");
+  }
+
+  function removeResourceAt(idx) {
+    const it = resourceItems[idx];
+    if (!it) return;
+    it.cancelled = true;
+    resourceItems.splice(idx, 1);
+    renderAttachStrip();
+  }
+
+  function clearResourceItems() {
+    resourceItems.length = 0;
+    renderAttachStrip();
+  }
+
+  // ── 按名包装（零行漂移）────────────────────────────────────────────────────────
+
+  // ① intakeImageFiles：图片之外再收文档资源（图片/文档之外的类型整批拒绝）
+  const baseIntakeImageFiles = intakeImageFiles;
+  intakeImageFiles = function (fileList) {
+    const files = Array.prototype.slice.call(fileList || []).filter(Boolean);
+    const imgs = files.filter(isImageFile);
+    const docs = files.filter(function (f) { return !isImageFile(f) && isResourceFile(f); });
+    const others = files.filter(function (f) { return !isImageFile(f) && !isResourceFile(f); });
+    if (others.length) {
+      showAttachError("不支持的文件类型：" + String(others[0].name || "") + "（可拖入图片或 PDF / Word / TXT / Markdown）");
+      return false;
+    }
+    if (docs.length) intakeResourceFiles(docs);
+    if (imgs.length) return baseIntakeImageFiles(imgs);
+    return true;
+  };
+
+  // ② renderAttachStrip：图片 chip 之后追加文档 chip（名字标签，非缩略图）
+  const baseRenderAttachStrip = renderAttachStrip;
+  renderAttachStrip = function () {
+    baseRenderAttachStrip();
+    const strip = attachStripEl();
+    if (!strip) return;
+    if (resourceItems.length) strip.hidden = false;
+    resourceItems.forEach(function (it, idx) {
+      const chip = document.createElement("span");
+      chip.className = "-agent-attach-chip -agent-resource-chip" + (it.state === "pending" ? " -agent-attach-chip--pending" : "");
+      const label = document.createElement("span");
+      label.className = "-agent-resource-label";
+      label.textContent = (it.kind ? "[" + it.kind + "] " : "") + (it.name || "");
+      label.title = it.rel_path || it.name || "";
+      chip.appendChild(label);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "-agent-attach-remove";
+      remove.setAttribute("data-res-idx", String(idx));
+      remove.title = it.state === "pending" ? T("agent.attach.uploading") : T("agent.attach.remove");
+      remove.setAttribute("aria-label", T("agent.attach.remove"));
+      remove.textContent = "×";
+      chip.appendChild(remove);
+      strip.appendChild(chip);
+    });
+  };
+
+  // ③ callAskStart：注入资源提示（agent 用 read_resource 读），成功后清资源草稿
+  const baseCallAskStart = callAskStart;
+  callAskStart = function (text, kb, sessionForKb) {
+    const resNote = resourceNote();
+    const finalText = resNote ? (String(text || "") + (text ? "\n\n" : "") + resNote) : text;
+    return Promise.resolve(baseCallAskStart(finalText, kb, sessionForKb)).then(function (res) {
+      if (res && res.status === "ok" && resNote) clearResourceItems();
+      return res;
+    });
+  };
+
+  // ④ 文档 chip 的移除按钮（`data-res-idx`，与图片 `data-idx` 分离）
+  (function wireResourceRemove() {
+    const strip = attachStripEl();
+    if (!strip) return;
+    strip.addEventListener("click", function (e) {
+      const btn = e.target && e.target.closest ? e.target.closest(".-agent-attach-remove[data-res-idx]") : null;
+      if (!btn) return;
+      removeResourceAt(parseInt(btn.getAttribute("data-res-idx") || "", 10));
+    });
+  })();
 })();

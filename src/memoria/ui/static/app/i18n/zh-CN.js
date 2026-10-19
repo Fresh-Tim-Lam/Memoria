@@ -620,6 +620,9 @@
       empty: "还没有对话。回答里的「文件:行号」可点击跳转。",
       role: { user: "我", assistant: "智能体" },
       sources: "来源 {n}",
+      sourcesExpandTitle: "展开引用",
+      sourcesCollapseTitle: "收起引用",
+      sourcesToggleTitle: "点此展开/收起引用",
       // 消息里 `@相对路径` 引用 chip 的悬停文案（文件树拖入；目录在左栏定位，文件直接打开）
       mention: {
         openTitle: "打开 {path}",

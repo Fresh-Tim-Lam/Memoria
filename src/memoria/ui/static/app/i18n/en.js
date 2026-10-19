@@ -621,6 +621,9 @@
       empty: "No messages yet. `file:line` references in answers are clickable.",
       role: { user: "Me", assistant: "Agent" },
       sources: "Sources {n}",
+      sourcesExpandTitle: "Show sources",
+      sourcesCollapseTitle: "Hide sources",
+      sourcesToggleTitle: "Click to show/hide sources",
       // Tooltip for the `@relative/path` reference chips (dropped from the file tree;
       // directories reveal in the tree, files open directly)
       mention: {
