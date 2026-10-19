@@ -1,5 +1,10 @@
 # 渲染底层重构 · 系统作战图
 
+> ⚠️ **先读 [display-refactor-charter.md](display-refactor-charter.md)**——那份是**人话版重构宪章**
+> （痛点 / 牵涉功能 / 牵涉交互 / 鸠占鹊巢含义 / 验收标准）。**本文是内部实施细节附录**：
+> 阶段编号、契约测试编号（C1–C12）、内部代号（A0/A1/A3/K5a/K5b/K5c）都在这里，
+> 供施工与度量使用，**不作为向人汇报的主文档**。
+
 > **性质**：这是「系统分析阶段」的交付物，综合了 5 份 agent 报告（render-perf / sync-mapper /
 > render-impl / arch-agent / detail-agent）与 12 份探针 baseline 的证据，形成统一的施工蓝图。
 > **不是施工记录**：本图只负责「现状真相 + 待裁决 + 分阶段顺序」，逐阶段施工另派 agent。
