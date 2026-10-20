@@ -209,4 +209,26 @@ BlockIndex = { byId: Map<id, BlockHandle>      // O(1)
 
 > 这条不是形式主义：`kp-owner` 与 `arch-contract` 同时改 `app.js` 已实际发生过行号漂移——这正是 D10 的实时复现。
 
+### 7.3 G1 裁决：R1「被编辑块 id 会变」的**取代语义**——分路径，不二选一
+
+> **来源**：P1 报告 §5 缺口 G1（task-14）。**Lead 裁决 2026-10-20**，已写入 task-18 实现要求。
+> **问题**：R1 规定"块被编辑 ⇒ `blockSrcText` 变 ⇒ 自动生成的 id 变"。但 `upsert` 无法知道"新 id 取代了哪个旧 id"，旧块会残留在 `byId/byOrder` ⇒ `blocksInRange` 同时命中新旧两块 = **重复命中**。
+
+**裁决：按路径分治，因为两条路径的代价结构不同。**
+
+| 路径 | 触发场景 | 做法 | 代价 |
+|---|---|---|---|
+| **局部路径** | 单块重渲 / 结构编辑 / `commitRange` | **调用方显式传 `id`** ⇒ 同 id 就地更新，不产生"新 id + 旧 id 残留" | **O(1)** |
+| **整篇路径** | 整篇 reparse / 换文件 / 缓存搬回 | `beginStamp({reset:true})` —— 先清空 `byId/byOrder`（旧 id 全记入 `removedIds` 供 I10 重放）再全量 upsert | **O(n)**（本就如此） |
+
+**为什么不是一刀切**：重复命中只在"新旧同时存在"时发生。若让局部路径也走"清空重来"，**打字路径就会背上 O(n)**——与 §7.1 性能闸直接冲突。反之若让整篇路径也依赖显式 id，整篇 reparse 时调用方并无 identity 可传（文本全变了），只能靠清空。
+
+**代码落点（P1 已实现，P2 接线）**
+- `block-index.js` 的 `beginStamp(opts)`：`opts.reset=true` 时清空 `byId/byOrder/starts/_metrics/_frozen`，并把旧 id 全推进 `_pendingRemove`；默认 `beginStamp()` **不清空**（局部路径）。
+- 断言：`block_index_test.js` **A13-1**（局部路径：编辑后受影响行只 1 个 handle、索引总数不增长）、**A13-2**（整篇路径：reset 把旧 id 记入 removedIds、重建后受影响行只 1 个 handle、索引总数不翻倍）。
+
+**P2 必须遵守**：局部路径的每个 `upsert` 调用点都要拿到并传 `id`（编辑点天然知道 identity）；整篇路径（`renderPreview` 全量重渲等）才用 `beginStamp({reset:true})`。**用错路径 = A13 红 = 重复命中回归。**
+
+---
+
 **裁决状态：R1–R6 已全部拍板并生效（见 §7），本设计转入施工拆分** —— 见 [block-identity-build-plan.md](block-identity-build-plan.md)。

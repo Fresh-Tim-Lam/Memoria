@@ -180,13 +180,34 @@
     };
 
     // ── 渲染期（内核专用）────────────────────────────────────────────────
-    /** 进入一整轮更新；期间查询走当前快照。清空本轮 counters。 */
-    api.beginStamp = function () {
+    /**
+     * 进入一整轮更新；期间查询走当前快照。清空本轮 counters。
+     *
+     * G1 分路径裁决（Lead 2026-10-20）：
+     *  - **局部路径**（单块重渲 / 结构编辑 / commitRange）：`beginStamp()` 默认**不清空**，
+     *    调用方显式传 id ⇒ 同 id 就地更新，不产生"新 id + 旧 id 残留"。
+     *  - **整篇路径**（整篇 reparse / 换文件 / 缓存搬回）：`beginStamp({reset:true})` ——
+     *    先清空 byId/byOrder（旧 id 全记入 removedIds 供 I10 重放）再全量 upsert。
+     *    此时 O(n) 本来就是固有成本，不会让打字路径背上它。
+     * @param {object} [opts] opts.reset=true ⇒ 整篇重建：清空现有索引
+     */
+    api.beginStamp = function (opts) {
       _stamping = true;
       _seq = new Map();
       _pendingRemove = [];
       _lineDelta = 0;
       _touched = false;
+      if (opts && opts.reset) {
+        // 整篇路径：清空旧索引；旧 id 全部进 removedIds（订阅者据此重放/清理 band/hover）
+        byId.forEach(function (_, id) { _pendingRemove.push(id); });
+        byId.clear();
+        byOrder.length = 0;
+        starts.length = 0;
+        startsValid = false;
+        _metrics.clear();
+        _frozen.clear();
+        _touched = true;          // 整篇重建 ⇒ commit 后前缀须重算
+      }
     };
 
     /**

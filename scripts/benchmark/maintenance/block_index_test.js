@@ -228,6 +228,60 @@ function makeDoc(blocksSpec) {
   check("A11 getMetrics 侧表可读", !!m && m.estHeight === 24 && m.realHeight === 28);
 })();
 
+// A13 编辑一块后，受影响行 blocksInRange 只返回 1 个 handle（G1 防重复命中回归）
+//   G1 分路径裁决：① 局部路径（调用方显式传 id ⇒ 同 id 就地更新）② 整篇路径（beginStamp({reset:true}) 先清空）
+
+// A13-1 局部路径：显式传 id ⇒ 编辑后同一行仍只命中 1 块
+(function () {
+  const bi = BlockIndex();
+  bi.beginStamp();
+  bi.upsert({ id: "L-1", kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "aaa" });
+  bi.upsert({ id: "L-2", kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "bbb" });
+  bi.upsert({ id: "L-3", kind: "paragraph", srcLineStart: 3, srcLineEnd: 3, blockSrcText: "ccc" });
+  bi.commit();
+
+  // 局部编辑第 2 块：显式传同一 id（模拟调用方知道 identity）
+  bi.beginStamp();
+  bi.upsert({ id: "L-2", kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "bbb-EDITED" });
+  bi.commit();
+
+  const hit = bi.blocksInRange(2, 2);
+  check("A13-1 局部路径：编辑后受影响行只 1 个 handle", hit.length === 1, { len: hit.length, ids: hit.map(h => h.id) });
+  check("A13-1 局部路径：且就是被编辑那块", hit.length === 1 && hit[0].id === "L-2");
+  check("A13-1 局部路径：索引总数未增长（无孤儿）", bi.blocks().length === 3, { total: bi.blocks().length });
+})();
+
+// A13-2 整篇路径：beginStamp({reset:true}) 先清空 ⇒ 全量 upsert 后无重复命中
+(function () {
+  const bi = BlockIndex();
+  bi.beginStamp();
+  bi.upsert({ kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "aaa" });
+  bi.upsert({ kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "bbb" });
+  bi.commit();
+  const beforeCount = bi.blocks().length;
+
+  // 整篇 reparse：文本变了（自动 id 会变），但 reset 先清空 ⇒ 不会残留旧 id
+  bi.beginStamp({ reset: true });
+  const res = bi.commit();   // 先验证 reset 把旧 id 记进 removedIds
+  check("A13-2 整篇路径：reset 把旧 id 记入 removedIds", res.removedIds.length === beforeCount, { removed: res.removedIds.length, beforeCount });
+
+  // 假设整篇路径是「beginStamp({reset:true}) → 全量 upsert → commit」一次做完
+  const bi2 = BlockIndex();
+  bi2.beginStamp();
+  bi2.upsert({ kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "aaa" });
+  bi2.upsert({ kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "bbb" });
+  bi2.commit();
+
+  bi2.beginStamp({ reset: true });   // 整篇重建
+  bi2.upsert({ kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "aaa" });
+  bi2.upsert({ kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "bbb-CHANGED" });
+  bi2.commit();
+
+  const hit2 = bi2.blocksInRange(2, 2);
+  check("A13-2 整篇路径：重建后受影响行只 1 个 handle", hit2.length === 1, { len: hit2.length, ids: hit2.map(h => h.id) });
+  check("A13-2 整篇路径：索引总数不翻倍", bi2.blocks().length === 2, { total: bi2.blocks().length });
+})();
+
 // ── 汇总 ────────────────────────────────────────────────────────────────
 console.log("\n" + passes + " passed, " + failures + " failed");
 process.exit(failures === 0 ? 0 : 1);
