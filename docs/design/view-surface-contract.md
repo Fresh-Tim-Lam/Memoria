@@ -224,7 +224,7 @@ surface.capabilities -> {
 |---|---|---|---|---|---|---|---|
 | 1 | `mount(container, host)` | 引擎接管 `container` 内容；`host` = §3.2 回调集；**首次挂载不重放 setText/setMode**（避免加载期刷顶/重渲） | container(HTMLElement), host(callbacks) | void | 插头首次激活 / switchTo | `throw`（mount 失败 = 插头不可用 ⇒ 回滚 legacy） | ✅ 是（骨架：空挂载即可） |
 | 2 | `setText(text, cause)` | 全量替换正文并**全量重建**块树 | text(str), cause∈{open,switch,reload,external} | void | 打开/换文件/切换接手 | `throw` | ✅ 是（RenderCore 主入口） |
-| 3 | `setMode(mode)` | 切视图（source/split/preview）；**删 DOM 前先 flush**（F6） | mode∈{source,split,preview} | void | 视图按钮/快捷方式 | `throw` 或 `onDegraded` | ⚠️ 可先 `throw NotImpl`（P2a 不含三视图同步） |
+| 3 | `setMode(mode)` | 切视图（source/split/preview）；**删 DOM 前先 flush**（F6） | mode∈{source,split,preview} | void | 视图按钮/快捷方式 / **§4.2 交接第④步（无条件调用）** | **仅非法 mode 抛错**；合法 mode 必须接受并记录（见下） | ✅ **必须**（接受并记录 mode，可查询）；**DOM 视图切换延后 P2b** |
 | 4 | `applyEdit(op)` | **唯一内容变更入口**；op 见 §3.1；**每个 op 前先 flush**（F1） | op(EditOp) | void | 打字/结构编辑/粘贴/撤销 | `throw`（编辑语义错误 = 数据不一致） | ⚠️ 可 `throw NotImpl`（P2a 只渲染不编辑） |
 | 5 | `undo()` | 撤销一步；**前先 flush**（F2） | — | void | Ctrl+Z | `throw NotImpl`（未实现撤销也允许，见 §4.5.3） | ❌ 可 `throw NotImpl` |
 | 6 | `redo()` | 重做一步；**前先 flush**（F2） | — | void | Ctrl+Y | 同上 | ❌ 可 `throw NotImpl` |
@@ -255,17 +255,25 @@ surface.capabilities -> {
 
 #### 4.5.3 P2a 最小可用子集（5 类块：paragraph/heading/listItem(+list)/blockquote/horizontalRule）
 
-**可以"如实抛 NotImpl"（不违契约）的方法**——`new-surface.js` 骨架已如此，`surface-new` 填充时**只需把它们从"占位抛错"改成"真实实现"，未实现的部分继续抛 NotImpl 即为合法**：
+**P2a 各方法的"必须实现 / 可暂缺"分级**——`new-surface.js` 骨架已全部抛 NotImpl，`surface-new` 填充时按下表把方法从"占位抛错"改成真实现；**标"可抛 NotImpl"的继续抛是合法的**，但标"必实现"的**必须**接住：
 
 | 方法 | P2a 是否实现 | 依据 |
 |---|---|---|
 | `mount` / `setText` / `flush` / `destroy` | ✅ **必实现** | 渲染最小闭环 |
-| `setMode` | ⚠️ **必须接受并记录（可查询）；DOM 视图切换可延后到 P2b** | §4.2 交接第④步**无条件**调 `setMode`：若本方法抛 `NotImpl`，throw 会被 catch ⇒ 回滚 ⇒ `switchTo('new')` **永远失败**（`surface-new` 实测）。故本方法**不得**抛 `NotImpl`：必须接受合法 mode 并**记录**（交接后 `getMode() === 请求值`），但**不得伪造视图 DOM**（P2a 三视图 DOM 仍归宿主 `app.js`）；**非法 mode 必须抛错**。这是 P2a 的已知偏离，P2b/P3 补真正的视图切换 |
+| `setMode` | ✅ **必实现（接受并记录）；DOM 视图切换可延后到 P2b** | §4.2 交接第④步**无条件**调 `setMode`：若本方法抛 `NotImpl`，throw 会被 catch ⇒ 回滚 ⇒ `switchTo('new')` **永远失败**（`surface-new` 实测）。故本方法**不属于"可抛 NotImpl"之列**：必须接受合法 mode 并**记录**（交接后 `getMode() === 请求值`），但**不得伪造视图 DOM**（P2a 三视图 DOM 仍归宿主 `app.js`）；**非法 mode 必须抛错**。这是 P2a 的已知偏离（见 §4.5.5 K2），P2b/P3 补真正的视图切换 |
 | `applyEdit` / `undo` / `redo` | ❌ 可抛 NotImpl | P2a 只渲染不编辑（§0：RenderCore 只读优先） |
 | `revealRange` / `getScrollAnchor` / `setScrollAnchor` / `getSrcRangeForSelection` | ⚠️ 可抛 NotImpl | P2a 无跳转/无选区 |
 | `isBlockFrozen` | ✅ 建议返回 `false`（恒不冻结） | 5 类块都非冻结类型；比抛错更"可用" |
 
 **红线（防"伪造可用"）**：`surface-new` **不得**实现一个"返回假空值但看起来能用"的方法（如 `applyEdit` 返回空而不抛）——那样 C11 会在 NewSurface 未真正编辑时被误判等价。**未实现就抛 NotImpl，是契约允许且鼓励的诚实降级。**
+
+**★ 反例纪律（与 `metrics-baseline` 的同名纪律呼应）**
+
+> **契约不得要求实现者绕过宿主交接序列才能被切换。**
+> 任何"**按契约字面实现就永远切不过去**"的条款，都是**契约缺陷**，不是实现者的错。
+> **判定方法**：把该条款代进 §4.2 交接序列走一遍——若任一步的合法实现会让整条序列必然失败（throw 被 catch ⇒ 回滚），则该条款必须放宽（降级为"接受并记录"）或调整交接序列。
+
+**本条的成因（留痕）**：§4.5.3 曾把 `setMode` 列入"可抛 NotImpl"，而 §4.2 第④步无条件调它 ⇒ 两者相乘 = `switchTo('new')` 必然失败。`surface-new` 实测踩到后才暴露——**契约自相矛盾不会在纯文档评审里现形，只在"实现者严格照做"时爆炸**。教训：**新增"可抛/可缺"条款时，必须与 §4.2/§3.3 的调用序列交叉验证**。
 
 #### 4.5.4 与 BlockIndex 的边界（`surface-new` 必须按此接线）
 
@@ -291,7 +299,39 @@ surface.capabilities -> {
 - **处置**：已改回 §4.3 字段名（2026-10-20）。
 - **教训**：**先定契约字段再写骨架**——占位期用临时字段名，会被后来者当成契约照抄。
 
-##### K2 · 链接层后处理散落在 `app.js`（**legacy 的插头面不完整**）★
+##### K2 · `setMode` 的视图切换延后到 P2b/P3 ★（2026-10-20 登记）
+
+**现象**：P2a 只做渲染（5 类块 AST→DOM），**不做三视图（source/split/preview）的真实 DOM 切换**——那仍由宿主 `app.js` 负责。但 §4.2 交接第④步**无条件**调 `next.setMode(mode)`。
+
+**为什么曾是契约缺陷**：§4.5.3 早期把 `setMode` 列进"可抛 NotImpl" ⇒ 与 §4.2 第④步相乘 = throw 被 catch ⇒ 回滚 ⇒ **`switchTo('new')` 永远失败**。`surface-new` 实测踩到。**这是契约文档内部冲突，不是实现者的锅**（成因与纪律见 §4.5.3 的"反例纪律"）。
+
+**现行条款（已统一）**：
+- **必须接受合法 mode 并记录**（交接后 `getMode() === 请求值`，可查询）；
+- **不得伪造视图 DOM**（P2a 三视图 DOM 仍归宿主）；
+- **仅非法 mode 抛错**；
+- 移交：`switchTo('new')` 可成功（不再被 setMode 堵死）。
+
+**建议归属 / 纳入时机**：**P2b / P3** 补真正的 DOM 视图切换（届时 `setMode` 拥有完整语义）。
+**当下对 `surface-new` 的指引**：`setMode(mode)` 落成「校验 + 存 `_mode` 字段」即可，**不要**做 DOM 切换、也不要抛 NotImpl。
+
+##### K3 · "等价"的确定性边界：不得把随机量纳入对比基线 ★（2026-10-20 登记）
+
+**为什么登记**：契约里多处用"逐字/逐字节等价"（§2.2 **I1**、§5 **C10/C11**、§4.5.5 K4）。但实测证明 **DOM 里存在合法的非确定性**——若把整棵 DOM 逐字节做对比基线，会**周期性假红**，实现者会被迫去"消除"本来不该消除的东西。
+
+**实测证据（本项目已踩到）**：
+- **mermaid** 每次渲染生成**随机 SVG id**（`#mermaid-vppr1439` vs `#mermaid-yjl12f8b`），CSS 选择器全部带该前缀 ⇒ 整个 `<style>` 块与 `id` 属性每轮都不同。`run_fidelity.py` 与 `S_old v2` 对比时，5 个文件里只有含 mermaid 的那个"diff"，**抹掉随机 id 后 0 diff**。
+- **MathJax** 生成的 `mjx-*` 内部 id/编号同理。
+
+**条款（新增，约束所有等价性断言）**：
+
+> **"等价"必须定义在一个确定性投影上，不得要求整棵 DOM 逐字节相同。**
+> 合规的对比口径至少包含：**块序列（kind 顺序）** + **每块的规范化文本**（`textContent` 去空白）。
+> **必须归一化**（在对比前抹掉）：随机/递增 id（`mermaid-*`、`mjx-*` 内联 id）、行内 `<style>` 的选择器 id 前缀、时间戳类属性。
+> **不得**把"随机量为零差异"写成验收要求——那是**不可实现的确定性**。
+
+**对 `metrics-baseline` comparator 的呼应**：其 `signatureNorm` 若未落盘会导致"文本恒空 ⇒ 只比 kind+tag 就判 match"的**假 match**（工具侧缺陷，由 `metrics-baseline` 修）。本条从**契约侧**给出正面对口径：**签名必须包含文本，且必须对上述随机量归一化**——两者缺一即不可信（**假 match** 与 **假 diff** 是同一个确定性问题的两面）。
+
+##### K4 · 链接层后处理散落在 `app.js`（**legacy 的插头面不完整**）★
 
 **现象**：`legacy` 的"公开插头面"（§3.1 的 13 个方法 + RenderCore）**不包含链接层**。两段后处理只存在于 `app.js` 私有闭包里，不在 `SurfaceHost` / RenderCore 契约内：
 
