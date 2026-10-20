@@ -117,9 +117,30 @@ class CDP {
   close() { try { this.ws.close(); } catch { /* noop */ } }
 }
 
+/**
+ * 取一个**当前空闲**的本地端口，而不是随机猜。
+ * 起因（2026-10-20 实测）：原来用 `9222 + random(3000)`，两个 benchmark 并发时可能撞同一端口；
+ * 后启动的 Edge 绑不上调试端口，CDP 客户端于是连到**另一个正在跑的页面**。
+ * 症状：`window.MemoriaApp` 存在、`window.MemoriaParser` 却 undefined、#preview 停在「预览模块未加载」占位，
+ * 每个剧本都要等满超时（11 个剧本 520s+）。这不是被测代码的问题，是测量工具的问题。
+ */
+async function freeTcpPort() {
+  const net = await import('node:net');
+  return await new Promise((resolve, reject) => {
+    const srv = net.createServer();
+    srv.unref();
+    srv.once('error', reject);
+    srv.listen(0, '127.0.0.1', () => {
+      const addr = srv.address();
+      const port = addr && typeof addr === 'object' ? addr.port : 0;
+      srv.close(() => resolve(port));
+    });
+  });
+}
+
 async function launchEdge({ headless = true, port } = {}) {
   const edgePath = findEdge();
-  const cdpPort = port || (9222 + Math.floor(Math.random() * 3000));
+  const cdpPort = port || await freeTcpPort();
   const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoria-ix-edge-'));
   const args = [
     '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
@@ -777,6 +798,14 @@ async function withBrowser(url, fn) {
     if (!ready) {
       const diag = await cdp.evalJS(`({href: location.href, title: document.title, scripts: document.scripts.length, hasApp: !!window.MemoriaApp, bodyLen: document.body ? document.body.innerHTML.length : -1})`).catch(() => null);
       throw new Error('应用未就绪（reload 重试后仍失败）: ' + JSON.stringify(diag) + ' | ' + (lastErr && lastErr.message));
+    }
+    // 模块齐全性前置断言：缺任一模块都会让 #preview 停在占位，并让后续剧本全部超时。
+    // 显式报出来，避免把「脚本没加载 / CDP 连错页面」误诊成「交互坏了」。
+    {
+      const mods = await cdp.evalJS(`({ parser: !!window.MemoriaParser, lexer: !!window.MemoriaLexer, mapper: !!window.MemoriaMapper, renderer: !!window.MemoriaRenderer, href: location.href })`);
+      if (!mods.parser || !mods.lexer || !mods.mapper || !mods.renderer) {
+        throw new Error('前端模块未加载（CDP 可能连到了别的页面）: ' + JSON.stringify(mods));
+      }
     }
     const settledPath = await waitAppSettled(cdp);
     // 启动尾动作（恢复上次视图/刷新文件列表）可能再改一次 currentPath ⇒ 再等一会并复查
