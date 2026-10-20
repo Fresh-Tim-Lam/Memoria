@@ -30,7 +30,7 @@
 - 一次性、只读、跑完即弃 → **L2 subagent**；
 - 一两行改动能凭现有认知完成 → **Lead 自己做**。
 
-## 2. 常驻成员与领域所有权（当前 8 个，上限 16）
+## 2. 常驻成员与领域所有权（当前 9 个，上限 16）
 
 | Agent | 领域所有权 | 对应对象认知 |
 |---|---|---|
@@ -41,10 +41,11 @@
 | `metrics-baseline` | **度量与基准域**：真机/无头度量协议、基线与预算、交互金标准回归、渲染保真度指标 | `design/realapp-measurement-protocol.md` + `design/benchmark-measurement-protocol.md` + `design/render-fidelity-contract.md` |
 | `kp-owner` | **知识点域**：KP 面板、图谱联动、KP 抽取与存储、`agent-guide/05` | `agent-guide/05-*` + KP 前后端实现 |
 | `settings-owner` | **设置/i18n/快捷键域**：设置键事实源、i18n 键、快捷键、`agent-guide/09` | `agent-guide/09-*` + 设置/文案实现 |
+| `surface-new` | **新渲染管线域**：`RenderCore`（AST→块树→DOM）实现、new 插头接线、与 legacy 双跑等价（阶段 2） | `design/stage2-plan.md` + `design/render-fidelity-contract.md` + `design/block-identity-design.md` |
 | `team-steward` | **团队维护域**：名册/编制一致性、任务生命周期、报告落盘核验、写域冲突；**只检测+提议，执行权归 Lead** | 本文件 §2/§2.1/§10 + `dsh-agent-teams-contract.md` |
 
 > **名额口径**（2026-10-20 核实源码 `agent-team/src/roster.ts:63`）：`maxMembers` = **「每个 Team 的非退役 roster 条目上限」，即只数 teammate、不含 Lead**。
-> 当前 **8 名 teammate / 上限 16 ⇒ 还有 8 个空位**。
+> 当前 **9 名 teammate / 上限 16 ⇒ 还有 7 个空位**。
 > 空缺领域（如 06 图谱本体、08 导入导出）默认走 L2 subagent；**只有出现长期、跨任务的领域责任时才升格为 Owner**。
 
 
