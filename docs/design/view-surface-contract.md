@@ -211,6 +211,80 @@ surface.capabilities -> {
 - 插头 `mount` 抛错 / 关键不变量违约 ⇒ **自动切回 legacy**（不许留在半坏状态）。
 - 切换状态**必须可见**（设置项里显示当前插头）。
 
+### 4.5 ★ 插头方法语义表（`surface-new` 施工依据，2026-10-20）
+
+> **给谁看**：`surface-new`（新渲染管线 RenderCore 的 owner）实现 `surface/new-surface.js` 的 13 个占位方法时，**以本表为准**。
+> **原则**：契约 owner 是 `arch-contract`；凡本表与实现冲突，以本表 + 上游 §3/§4 为准，回报 Lead，勿自行改对方文件。
+
+#### 4.5.1 方法清单（13 个，与 `new-surface.js` 一 一对应）
+
+§3.1 列了 12 个；`flush`（§4.2 交接第一步）补齐为第 13 个。**每个方法失败语义二选一：`throw`（契约违规，宿主回滚）或 `降级`（如实上报 `onDegraded`，不伪造成功）——绝不允许静默吞错或返回假值。**
+
+| # | 方法 | 职责 | 入参 | 出参 | 调用时机 | 失败语义 | P2a 必须实现？ |
+|---|---|---|---|---|---|---|---|
+| 1 | `mount(container, host)` | 引擎接管 `container` 内容；`host` = §3.2 回调集；**首次挂载不重放 setText/setMode**（避免加载期刷顶/重渲） | container(HTMLElement), host(callbacks) | void | 插头首次激活 / switchTo | `throw`（mount 失败 = 插头不可用 ⇒ 回滚 legacy） | ✅ 是（骨架：空挂载即可） |
+| 2 | `setText(text, cause)` | 全量替换正文并**全量重建**块树 | text(str), cause∈{open,switch,reload,external} | void | 打开/换文件/切换接手 | `throw` | ✅ 是（RenderCore 主入口） |
+| 3 | `setMode(mode)` | 切视图（source/split/preview）；**删 DOM 前先 flush**（F6） | mode∈{source,split,preview} | void | 视图按钮/快捷方式 | `throw` 或 `onDegraded` | ⚠️ 可先 `throw NotImpl`（P2a 不含三视图同步） |
+| 4 | `applyEdit(op)` | **唯一内容变更入口**；op 见 §3.1；**每个 op 前先 flush**（F1） | op(EditOp) | void | 打字/结构编辑/粘贴/撤销 | `throw`（编辑语义错误 = 数据不一致） | ⚠️ 可 `throw NotImpl`（P2a 只渲染不编辑） |
+| 5 | `undo()` | 撤销一步；**前先 flush**（F2） | — | void | Ctrl+Z | `throw NotImpl`（未实现撤销也允许，见 §4.5.3） | ❌ 可 `throw NotImpl` |
+| 6 | `redo()` | 重做一步；**前先 flush**（F2） | — | void | Ctrl+Y | 同上 | ❌ 可 `throw NotImpl` |
+| 7 | `revealRange(startLine, endLine, opts)` | 跳转落点：滚到行区间 + 可选 band/flash；**前先 flush**（F5） | 1-based 含端点；opts{scroll,flash} | void | 点链接/KP/搜索/检查 | `onDegraded`（落点失败不致命） | ⚠️ 可先 `throw NotImpl`（P2a 无跳转） |
+| 8 | `getScrollAnchor()` | 取当前滚动锚点（**源码行**语义，非像素）；**前先 flush**（F4） | — | Anchor{srcLine,mode} | 切模式/换文件前 | 返回 null 或抛 | ⚠️ 可 `throw NotImpl` |
+| 9 | `setScrollAnchor(a)` | 恢复滚动锚点；**前先 flush**（F4） | Anchor | void | 切回/换文件恢复 | `onDegraded` | ⚠️ 可 `throw NotImpl` |
+| 10 | `getSrcRangeForSelection()` | 当前选区 → 源码坐标；**前先 flush**（F3） | — | SrcRange\|null（无选区） | 选区→链接/样式/KP | 返回 null（无选区不算是错） | ⚠️ 可 `throw NotImpl` |
+| 11 | `isBlockFrozen(blockId)` | 冻结判定（§3.4）；命中 ⇒ 该块**不重建/不摘除/不复用** | blockId | boolean | 块内编辑/公式/表格时 | 查不到 ⇒ **保守返回 true** | ✅ 是（P2a 至少返回 false 或保守 true） |
+| 12 | `destroy()` | 销毁引擎实例、清引用；**前先 flush**（F7） | — | void | switchTo 切走 / 关闭 | 尽力而为，不抛 | ✅ 是 |
+| 13 | `flush()` | 把"DOM 领先真源"窗口内的未落定变更**落地到真源**；无待办 ≤0.1ms | — | 交接包 `{text,cursor,anchor,mode,frozen}` | §4.2 交接第 1 步 + F1–F7 每入口前 | `throw`（flush 失败 = 丢字，严重） | ✅ 是（P2a 可返回当前快照） |
+
+#### 4.5.2 切换交接顺序（§4.2 展开，每步对新插头的要求）
+
+```
+① 老插头 flush()   → 交接包 {text, cursor, anchor, mode, frozen}
+   要求：flush 必须**把未落定变更落地**（否则切过去丢字）；返回的 text 是唯一真源。
+② 老插头 destroy() → 清引用、不摘 #editor-split（DOM 归宿主）
+   要求：destroy 幂等；不得在此抛错阻断回滚。
+③ 新插头 mount(container, host)
+   要求：空挂载即可；**首次挂载（old==null）不重放 setText/setMode**（registry.js 已如此）。
+④ 有交接包时：setText(text,'switch') → setMode(mode) → setScrollAnchor(anchor) → 恢复光标
+   要求：各步**顺序不能乱**（先正文、再模式、再锚点、最后光标）；恢复光标走 revealRange(不滚动不闪)。
+⑤ 任一步失败 ⇒ 回滚：老插头 mount + setText/setMode/setScrollAnchor + onDegraded('switch-failed')
+   ★ 回滚也必须**不抛**（尽力而为）；若回滚也失败，_current/_instance 置 null（不留半坏态）。
+```
+
+**哪步失败必须回滚**：① flush 异常、③ mount 抛错、④ 任一 `setText/setMode/setScrollAnchor` 抛错——**都回滚**。⑤ `onDegraded` 后不得再试图"半切换"。
+
+#### 4.5.3 P2a 最小可用子集（5 类块：paragraph/heading/listItem(+list)/blockquote/horizontalRule）
+
+**可以"如实抛 NotImpl"（不违契约）的方法**——`new-surface.js` 骨架已如此，`surface-new` 填充时**只需把它们从"占位抛错"改成"真实实现"，未实现的部分继续抛 NotImpl 即为合法**：
+
+| 方法 | P2a 是否实现 | 依据 |
+|---|---|---|
+| `mount` / `setText` / `flush` / `destroy` | ✅ **必实现** | 渲染最小闭环 |
+| `setMode` | ⚠️ 可暂抛 NotImpl | P2a 不含三视图同步（但 `setText` 里要能产 preview 形态的块） |
+| `applyEdit` / `undo` / `redo` | ❌ 可抛 NotImpl | P2a 只渲染不编辑（§0：RenderCore 只读优先） |
+| `revealRange` / `getScrollAnchor` / `setScrollAnchor` / `getSrcRangeForSelection` | ⚠️ 可抛 NotImpl | P2a 无跳转/无选区 |
+| `isBlockFrozen` | ✅ 建议返回 `false`（恒不冻结） | 5 类块都非冻结类型；比抛错更"可用" |
+
+**红线（防"伪造可用"）**：`surface-new` **不得**实现一个"返回假空值但看起来能用"的方法（如 `applyEdit` 返回空而不抛）——那样 C11 会在 NewSurface 未真正编辑时被误判等价。**未实现就抛 NotImpl，是契约允许且鼓励的诚实降级。**
+
+#### 4.5.4 与 BlockIndex 的边界（`surface-new` 必须按此接线）
+
+新管线（RenderCore 内嵌于 EditSurface 外壳）在**这些时机**操作单例 `window.MemoriaApp.blockIndex`：
+
+| 方法 | BlockIndex 动作 | reset？ | 说明 |
+|---|---|---|---|
+| `setText(text, cause)` | `beginStamp({reset:true})` → 逐块 `upsert` → `commit()` | ✅ reset | 全量重建（文本全换）；`cause` 决定是否真换文件 |
+| （将来的）块级增量 | `beginStamp()`（不 reset）→ `upsert(id 显式)` → `commit()` | ❌ 不 reset | 局部路径：显式 id 就地更新（G1 裁决） |
+| `flush()` | **不碰** BlockIndex | — | flush 落定的是**真源文本**，不是索引 |
+| `isBlockFrozen(blockId)` | 只读 `BlockIndex.get(id)` / 不写 | — | 冻结是时变状态（R6，方法形态） |
+
+**id 语义（Lead 裁决 task-22，勿弄反）**：**id 标识身份，不保证内容不变**。局部路径同 id 就地更新 ⇒ 被编辑块 id 不变；整篇重 parse 才按内容哈希换 id。内容变化信号 = `onPatched.changedIds` / `domVersion` / 行区间，**不是 id**。
+
+#### 4.5.5 ⚠️ 已知契约偏离（`surface-new` 实现 `capabilities` 前必读）
+
+`new-surface.js` 当前 `capabilities` 字段是 P1 占位期临时写的 `{supportsEdit, supportsViewport, supportsStableBlockId, findInPage, implemented}`，**与 §4.3 正式字段名 `{virtualization, incrementalRender, blockEdit, imageCaption, findInPage}` 不一致**。
+⇒ **`surface-new` 填实插头时，必须改用 §4.3 的正式字段名**，删除临时字段（`supportsEdit 等` + `implemented`）；`arch-contract` 会同步修正 `new-surface.js` 占位骨架。**这是唯一一处已登记的契约偏离。**
+
 ---
 
 ## 5. 契约测试清单（对接一致性套件）

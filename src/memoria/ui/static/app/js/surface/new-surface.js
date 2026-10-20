@@ -39,13 +39,13 @@ window.createNewSurface = function createNewSurface(deps) {
     /** 插头标识（诊断用）。 */
     name: _name,
 
-    /** 契约 §4.3：能力声明 —— 未实现 ⇒ 全 false（诚实声明，不虚报）。 */
+    /** 契约 §4.3：能力声明 —— 未实现 ⇒ 全 false（诚实声明，不虚报）。字段名以 §4.3 为准。 */
     capabilities: {
-      supportsEdit: false,
-      supportsViewport: false,
-      supportsStableBlockId: false,
+      virtualization: false,      // 视口只渲染
+      incrementalRender: false,  // 块级复用
+      blockEdit: false,          // 代码/公式/表格/mermaid 块编辑
+      imageCaption: false,
       findInPage: "unsupported",
-      implemented: false,
     },
 
     mount: function () { throw _notImplemented("mount"); },
