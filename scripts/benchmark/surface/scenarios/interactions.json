@@ -1,0 +1,154 @@
+{
+  "schema": "memoria-interaction-scenarios/v1",
+  "note": "每条 = 一个可独立对比的交互契约。新实现落地后跑同一份，逐剧本 diff 快照（选区 anchor/focus + 块文本）。块解析：auto=首个正文块，auto1=第二个；pairA/pairB=视口内成对正文块（跨块用例必须两点同时可见，否则 CDP 鼠标事件落在视口外会被丢弃）。",
+  "scenarios": [
+    {
+      "id": "S0-open-and-ready",
+      "desc": "打开文档 + 切预览视图就绪",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3", "label": "blocks" },
+        { "op": "sleep", "ms": 800 },
+        { "op": "snapshot", "label": "ready" }
+      ]
+    },
+    {
+      "id": "S1-drag-select-same-block",
+      "desc": "鼠标拖拽选块内文字（同块）",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "dragSelect", "nth": "auto", "from": 2, "to": 10 },
+        { "op": "sleep", "ms": 150 },
+        { "op": "snapshot", "label": "after-drag" }
+      ]
+    },
+    {
+      "id": "S2-drag-select-cross-block",
+      "desc": "鼠标拖拽跨块选择",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "dragBetweenBlocks", "fromBlock": "pairA", "fromOffset": 4, "toBlock": "pairB", "toOffset": 6 },
+        { "op": "sleep", "ms": 200 },
+        { "op": "snapshot", "label": "after-cross-drag" }
+      ]
+    },
+    {
+      "id": "S3-double-click-word",
+      "desc": "双击选中英文单词",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "doubleClickInBlock", "nth": "auto", "at": 1 },
+        { "op": "sleep", "ms": 150 },
+        { "op": "snapshot", "label": "after-dblclick" }
+      ]
+    },
+    {
+      "id": "S4-shift-arrow-extend",
+      "desc": "落点后 Shift+右箭头 逐字扩选",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "auto", "at": 3 },
+        { "op": "snapshot", "label": "collapsed" },
+        { "op": "key", "key": "ArrowRight", "modifiers": ["shift"] },
+        { "op": "key", "key": "ArrowRight", "modifiers": ["shift"] },
+        { "op": "key", "key": "ArrowRight", "modifiers": ["shift"] },
+        { "op": "snapshot", "label": "after-shift-right-x3" }
+      ]
+    },
+    {
+      "id": "S5-ctrl-shift-arrow-word",
+      "desc": "Ctrl+Shift+右箭头 按词扩选（组合修饰键）",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "auto", "at": 2 },
+        { "op": "key", "key": "ArrowRight", "modifiers": ["ctrl", "shift"] },
+        { "op": "snapshot", "label": "after-ctrl-shift-right" }
+      ]
+    },
+    {
+      "id": "S6-shift-home-end",
+      "desc": "Shift+End / Shift+Home 扩选到行首行尾",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "auto", "at": 5 },
+        { "op": "key", "key": "End", "modifiers": ["shift"] },
+        { "op": "snapshot", "label": "after-shift-end" },
+        { "op": "key", "key": "Home", "modifiers": ["shift"] },
+        { "op": "snapshot", "label": "after-shift-home" }
+      ]
+    },
+    {
+      "id": "S7-ctrl-a",
+      "desc": "Ctrl+A 全选",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "auto", "at": 1 },
+        { "op": "key", "key": "a", "modifiers": ["ctrl"], "code": "KeyA", "vk": 65 },
+        { "op": "sleep", "ms": 150 },
+        { "op": "snapshot", "label": "after-ctrl-a" }
+      ]
+    },
+    {
+      "id": "S8-shift-click-extend",
+      "desc": "先落点，再 Shift+点击另一块扩展选区",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "pairA", "at": 2 },
+        { "op": "snapshot", "label": "after-first-click" },
+        { "op": "clickInBlock", "nth": "pairB", "at": 6, "modifiers": ["shift"] },
+        { "op": "sleep", "ms": 150 },
+        { "op": "snapshot", "label": "after-shift-click" }
+      ]
+    },
+    {
+      "id": "S9-ime-compose-commit",
+      "desc": "编辑态下 IME 中文组合输入并落字（覆盖 compositionend 路径）",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "eval", "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickInBlock", "nth": "auto", "at": 2 },
+        { "op": "snapshot", "label": "before-ime" },
+        { "op": "ime", "text": "信号" },
+        { "op": "sleep", "ms": 500 },
+        { "op": "snapshot", "label": "after-ime" }
+      ]
+    },
+    {
+      "id": "S10-brush-highlight-drag",
+      "desc": "样式画笔：武装高亮色块后在预览区拖拽选区即应用",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "eval", "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "clickSelector", "selector": ".-fmt-btn[data-fmt=highlight]" },
+        { "op": "sleep", "ms": 250 },
+        { "op": "clickSelector", "selector": ".-hl-swatch" },
+        { "op": "sleep", "ms": 150 },
+        { "op": "eval", "expr": "!!(document.body && document.body.classList.contains('-brush-active'))" },
+        { "op": "snapshot", "label": "brush-armed" },
+        { "op": "dragSelect", "nth": "auto", "from": 2, "to": 8 },
+        { "op": "sleep", "ms": 400 },
+        { "op": "snapshot", "label": "after-brush" }
+      ]
+    }
+  ]
+}

@@ -175,6 +175,11 @@
 ⇒ **策略**：自动化覆盖「可模拟的交互」（点击/双击/拖拽选区/键盘扩选/输入/滚动/切页签），
 **人工兜底不可模拟项**（IME、OS 拖拽、惯性滚动）。两者的结果都记进验收记录。
 
+**已落地（2026-10-20）**：三件套 `scripts/benchmark/surface/{interaction.mjs, run_interaction.py, scenarios/interactions.json}`，
+11 个剧本覆盖 §3 的选区与样式交互；**已在旧实现上产出金标准**（连跑两次 11/11 快照完全一致 ⇒ 可重现）。
+用法见 `scripts/benchmark/surface/README.md`「交互契约测试」一节。
+实测三个坑（已写进代码）：`mouseMoved` 必须带 `button:'left'`；跨块两点须同时在视口内；应用启动会异步自动开默认文件，须先等 `currentPath` 稳定。
+
 ## 6. 基线：拿什么当「大库」和「读数」
 
 - **大库**：`D:\AAA_Courses\数字通信原理`（人指定）

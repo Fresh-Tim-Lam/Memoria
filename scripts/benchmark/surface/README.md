@@ -39,3 +39,33 @@ python scripts\benchmark\surface\run_probe.py --kb tests\probe-kb --surface lega
 `AGENTS.md §4` 目前只把 `scripts/benchmark/maintenance/results/**` 列为 verifier 可写区。
 本目录的 `results/**` **同类**（探针报告 = 取证产物），需人在 `AGENTS.md §4` 补一行
 `scripts/benchmark/surface/results/**` —— 该文件为**人维护、Agent 只读**，故 Agent 不自改。
+
+## 交互契约测试（interaction，2026-10-20 新增）
+
+**为什么另起一套**：`cdp.mjs` 量的是**性能与渲染契约**（C1–C12），它的输入只有「打字」；
+而重构要保住的是**鼠标/键盘/IME 的交互手感**（选区三态、双击选词、拖拽跨块、Ctrl/Shift 组合扩选、样式画笔）。
+这些必须用**受信任的 Input 事件**去驱动，用 `el.value=` / `dispatchEvent` 伪造是测不出来的。
+
+| 文件 | 作用 |
+|---|---|
+| `interaction.mjs` | CDP 客户端 + 交互原语（`Input.dispatchMouseEvent` 拖拽/双击、带 `modifiers` 的键盘、`imeSetComposition`）+ 剧本执行器 + 选区断言与快照 |
+| `run_interaction.py` | 复用 `run_probe.py` 的 `load_harness()` 起服务与桥，跑剧本并落报告 |
+| `scenarios/interactions.json` | 11 个交互契约剧本（拖选同块/跨块、双击选词、Shift+方向、Ctrl+Shift 按词、Shift+Home/End、Ctrl+A、Shift+点击、IME、画笔） |
+
+用法：
+
+```bash
+# 在「旧实现」上跑一遍，产出金标准（新实现落地后用同一份剧本再跑，逐剧本 diff 快照）
+python scripts/benchmark/surface/run_interaction.py \
+    --kb "artifacts/baseline-kb/数字通信原理" \
+    --label legacy-golden
+```
+
+产物：`results/interaction-<label>_<sha>.md`（人读）+ `raw-interaction-<label>_<sha>.json`（快照明细）。
+
+**口径**：
+- 每个剧本抓「选区 anchor/focus（节点偏移 + 所属块）+ 块可见文本」⇒ 新老实现**同一剧本结果必须一致**；
+- 剧本内**不要**依赖绝对像素/绝对行号，用「块内第 N 个字符」定位，抗布局漂移；
+- 三条实测坑（写进代码注释，别再踩）：① `mouseMoved` 必须带 `button:'left'` 才会扩选（只给 `buttons:1` 不扩）；
+  ② 跨块拖拽两点必须**同时在视口内**（视口外的事件会被浏览器丢弃）；③ 应用启动会**异步自动打开默认文件**，
+  抢在它前面 `open` 会被覆盖 ⇒ 必须先等 `currentPath` 稳定。
