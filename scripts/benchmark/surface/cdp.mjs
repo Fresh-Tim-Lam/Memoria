@@ -884,6 +884,128 @@ async function ensurePreview(cdp) {
   await cdp.waitFor(`document.querySelectorAll('#preview .-src-block').length > 0`, { label: 'preview blocks' });
 }
 
+/**
+ * C11 / C12 双插头探针（阶段 2 P1）。
+ *
+ * 设计要点（**不得假绿**）：
+ *   1. C11（新旧等价）：`new` 未实现 ⇒ **inconclusive**（不是绿）。为证明探针**会红**，
+ *      临时注册合成 `__broken`（mount 后抹掉 2 个块），对它跑同一套等价比对 ⇒ 必须判红。
+ *   2. C12（无损切换）：对 **legacy** 做「切走→切回」往返，逐项比对 6 个状态
+ *      （state.doc/currentPath/viewMode/滚动/选区/KP band）；为证明会红，
+ *      临时注册合成 `__lossy`（切换后把滚动写成 0），对它跑同一套比对 ⇒ 必须判红。
+ *   3. 合成插头**只在本函数内注册**，结束时逐出（`__evict`）并切回 legacy。
+ *
+ * 说明：本函数只在**探针模式**（run_probe.py 驱动的 cdp.mjs --probe）里被调用，
+ *      合成插头因此不会出现在生产页面里。
+ */
+async function runSurfaceSwitchProbe(cdp) {
+  const code = `(function(){
+    try {
+      var S = window.MemoriaSurface;
+      if (!S || !S.registry) return { status:'error', error:'MemoriaSurface 缺失' };
+      var st = window.state;
+      var out = { list: S.list(), current: S.current(), c11: null, c12: null, selfProof: {} };
+
+      // ── 状态快照：C12 逐项比对用（6 项）──
+      function snap() {
+        var pv = document.getElementById('preview-pane');
+        var band = document.getElementById('-preview-range-band');
+        var sel = window.getSelection ? window.getSelection() : null;
+        var selInfo = null;
+        if (sel && sel.rangeCount > 0) {
+          var r = sel.getRangeAt(0);
+          selInfo = { collapsed: sel.isCollapsed, startOffset: r.startOffset, endOffset: r.endOffset };
+        }
+        return {
+          docBody: st && st.doc ? (st.doc.body || '').length : null,
+          currentPath: st ? st.currentPath : null,
+          viewMode: st ? st.viewMode : null,
+          scrollTop: pv ? pv.scrollTop : null,
+          selection: selInfo,
+          kpBand: band ? { top: band.style.top, height: band.style.height, srcRange: band.dataset ? band.dataset.srcRange : null } : null,
+        };
+      }
+      function diffSnap(a, b) {
+        var keys = ['docBody','currentPath','viewMode','scrollTop','selection','kpBand'];
+        var d = [];
+        for (var i=0;i<keys.length;i++) {
+          var k = keys[i];
+          if (JSON.stringify(a[k]) !== JSON.stringify(b[k])) d.push({ key:k, before:a[k], after:b[k] });
+        }
+        return d;
+      }
+
+      // ── 合成插头：只用于"自证会红" ──
+      // __broken：mount 后抹掉 2 个块（模拟"新实现渲染不完整"）
+      S.register('__broken', function(){ return {
+        name:'__broken',
+        mount: function(){ try { var bs=document.querySelectorAll('#preview .-src-block'); for(var i=0;i<2&&i<bs.length;i++) bs[i].parentNode&&bs[i].parentNode.removeChild(bs[i]); } catch(e){} },
+        flush: function(){ return {}; }, destroy: function(){},
+        setText:function(){}, setMode:function(){}, setScrollAnchor:function(){}, revealRange:function(){},
+      }; });
+      // __lossy：切换后把滚动位置写成 0（模拟"切换丢状态"）
+      S.register('__lossy', function(){ return {
+        name:'__lossy',
+        mount: function(){ try { var pv=document.getElementById('preview-pane'); if(pv) pv.scrollTop=0; } catch(e){} },
+        flush: function(){ var pv=document.getElementById('preview-pane'); return { text: st&&st.doc?st.doc.body:null, mode: st?st.viewMode:null, anchor: null }; },
+        destroy: function(){},
+        setText:function(){}, setMode:function(){}, setScrollAnchor:function(){ /* 故意不恢复 */ }, revealRange:function(){},
+      }; });
+
+      var blockCount = function(){ return document.querySelectorAll('#preview .-src-block').length; };
+
+      // ── C11：等价性（块序列长度 + 块文本序列）──
+      function blockSeq() {
+        var els = document.querySelectorAll('#preview .-src-block');
+        var out = []; for (var i=0;i<els.length;i++) out.push((els[i].textContent||'').slice(0,40));
+        return out;
+      }
+
+      // ---- 先测 legacy 基线 ----
+      var baseCount = blockCount(), baseSeq = blockSeq();
+      var snapBefore = snap();
+
+      // ---- C12-①：legacy 往返（应绿）----
+      return S.switchTo('legacy').then(function(){
+        return S.switchTo('__lossy');   // 先去 __lossy（会破坏滚动）
+      }).then(function(){
+        return S.switchTo('legacy');    // 再切回 legacy
+      }).then(function(){
+        var snapAfter = snap();
+        var d = diffSnap(snapBefore, snapAfter);
+        // __lossy 把 scrollTop 写 0 ⇒ 若原 scrollTop>0，应检出差异（证 C12 会红）
+        out.selfProof.c12_lossy_red = (d.length > 0);
+        out.selfProof.c12_lossy_diff = d;
+        // legacy 自身的无损性：再来一次纯 legacy→legacy 往返
+        var s1 = snap();
+        return S.switchTo('legacy').then(function(){
+          var s2 = snap();
+          var d2 = diffSnap(s1, s2);
+          out.c12 = { status: d2.length === 0 ? 'green' : 'red', diff: d2, before: s1, after: s2 };
+          // ---- C11：__broken 必须判红 ----
+          return S.switchTo('__broken').then(function(){
+            var brokenCount = blockCount();
+            var eq = (brokenCount === baseCount);
+            out.selfProof.c11_broken_red = !eq;
+            out.c11 = { status: eq ? 'green' : 'red', baseCount: baseCount, brokenCount: brokenCount,
+                        note: 'new 插头未实现 ⇒ 真 C11 应记 inconclusive；此处用 __broken 自证"探针会红"' };
+            // 清理：切回 legacy 并逐出合成插头
+            return S.switchTo('legacy').then(function(){
+              try { S.registry.__evict && S.registry.__evict('__broken'); S.registry.__evict && S.registry.__evict('__lossy'); } catch(e){}
+              out.current = S.current();
+              out.list = S.list();
+              return out;
+            });
+          });
+        });
+      }).catch(function(e){
+        return { status:'error', error:String(e&&e.message||e), partial: out };
+      });
+    } catch(e) { return { status:'error', error:String(e&&e.message||e) }; }
+  })()`;
+  return await cdp.evalJS(code);
+}
+
 async function runProbe({ url, kbRoot, casesPath, screenshotsDir, c9Config }) {
   const cases = JSON.parse(fs.readFileSync(casesPath, 'utf8'));
   const caseById = {};
@@ -1018,6 +1140,171 @@ async function runProbe({ url, kbRoot, casesPath, screenshotsDir, c9Config }) {
       };
     } catch (e) { result.cases['sel_jump_head_mid_tail'] = { id: 'sel_jump_head_mid_tail', covers: ['C6'], status: 'error', error: e.message }; }
 
+    // ── C1 块身份稳定：编辑一块 ⇒ 其余块 `data-block-id` 必须完全不变 ──────────
+    //
+    // 契约 C1（docs/design/view-surface-contract.md）：块身份 id 的稳定范围 ——
+    //   **被编辑块自身的 id 允许变**（R1：id = djb2(kind + "\0" + blockSrcText) ⊕ 出现序，
+    //   内容变了 id 当然变），但**其余所有块的 id 必须完全不变**，且**块总数不变**（打字不增删块）。
+    //
+    // 为什么这条以前是 untested：legacy 的 `data--block-index` 是**位置下标**（随块序重编），
+    // 不是稳定身份；直到 P2 把 `BlockIndex.upsert()` 接上、真实写入 `data-block-id` 之后才可测。
+    //
+    // 边界三例（便宜且值钱）：
+    //   ① 块中间插入字符   ② 块首插入    ③ 块尾追加
+    //   另加 ④ 编辑**最后一块**（防"末块判据"漏掉最后一个）。
+    //
+    // ⚠️ 证伪要求：旧实现（无 `data-block-id`）上本用例**必须判红**——
+    //    否则说明用例没测到东西（render-perf 踩过的"假通过"坑）。
+    try {
+      const c1 = caseById['sel_id_stability'] || { id: 'sel_id_stability', covers: ['C1'], target: { file: 'corpus/02-inline-edges.md' } };
+      const file = c1.target.file;
+
+      // 取「所有 .-src-block 的 data-block-id + 块序 + 源行」快照。
+      // 同时记录 **缺 id 的块数**（旧实现全部缺 ⇒ 快照里 id 全为 null）。
+      const readIds = async () => cdp.evalJS(`(function(){
+        var els = Array.prototype.slice.call(document.querySelectorAll('#preview .-src-block'));
+        return {
+          total: els.length,
+          missingId: els.filter(function(e){ return !e.getAttribute('data-block-id'); }).length,
+          ids: els.map(function(e, i){
+            return { i: i, id: e.getAttribute('data-block-id'), srcLine: e.getAttribute('data--src-line') };
+          })
+        };
+      })()`);
+
+      // 某块内的可点击点：偏左取字（避免点到块尾/出界）。pos: 'mid' | 'head' | 'tail'
+      const pointIn = async (idx, pos) => cdp.evalJS(`(function(){
+        var els = Array.prototype.slice.call(document.querySelectorAll('#preview .-src-block'));
+        var b = els[${idx}];
+        if (!b) return null;
+        b.scrollIntoView({ block: 'center' });
+        var r = b.getBoundingClientRect();
+        var y = Math.round(r.top + Math.min(r.height - 6, Math.max(6, r.height / 2)));
+        var x;
+        if (${js(pos)} === 'head') x = Math.round(r.left + 4);
+        else if (${js(pos)} === 'tail') x = Math.round(r.right - 4);
+        else x = Math.round(r.left + Math.max(8, r.width / 2));
+        return { x: x, y: y, h: Math.round(r.height), w: Math.round(r.width) };
+      })()`);
+
+      const clickAt = async (pt) => {
+        await cdp.send('Input.dispatchMouseEvent', { type: 'mouseMoved', x: pt.x, y: pt.y, button: 'none', buttons: 0 });
+        await cdp.send('Input.dispatchMouseEvent', { type: 'mousePressed', x: pt.x, y: pt.y, button: 'left', buttons: 1, clickCount: 1 });
+        await cdp.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x: pt.x, y: pt.y, button: 'left', buttons: 0, clickCount: 1 });
+      };
+      // 受信任输入：dispatchKeyEvent（与 C9 同一条路径）
+      const typeChar = async (ch) => {
+        await cdp.send('Input.dispatchKeyEvent', { type: 'keyDown', text: ch, unmodifiedText: ch, key: ch, code: 'KeyZ', windowsVirtualKeyCode: 90, nativeVirtualKeyCode: 90 });
+        await cdp.send('Input.dispatchKeyEvent', { type: 'keyUp', key: ch, code: 'KeyZ', windowsVirtualKeyCode: 90, nativeVirtualKeyCode: 90 });
+      };
+
+      const cases = [];
+      // 每例都在**重新打开文档**后做（避免上一例的编辑影响下一例的基线）
+      const runOne = async ({ name, pickIdx, pos }) => {
+        await openFile(cdp, file, { skipNav: true });
+        await cdp.waitFor(`window.state.currentPath === ${js(file)} && !!window.state.doc`, { label: 'c1-open-' + name });
+        await ensurePreview(cdp);
+        await cdp.waitFor(`document.querySelectorAll('#preview .-src-block').length >= 3`, { label: 'c1-blocks-' + name });
+        await sleep(700);
+
+        // 进编辑态（预览区可编辑）
+        await cdp.evalJS(`(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode&&EH.toggleEditMode)EH.toggleEditMode();return true;})()`);
+        await sleep(300);
+
+        const before = await readIds();
+        const idx = pickIdx === 'last' ? before.total - 1 : pickIdx;
+        const pt = await pointIn(idx, pos);
+        if (!pt || pt.w <= 0) {
+          return { name, status: 'error', error: '块不可点（idx=' + idx + '）', before };
+        }
+        await clickAt(pt);
+        await sleep(250);
+        const single = before.total === 1;
+
+        // !! 假通过防线：先证明"这一键真的改到了文档"。
+        //    取被编辑块的 DOM 文本摘要 + state.doc 对应行片段；键后至少一处必须变。
+        //    若没变 => 编辑没生效 => 本用例**不能判绿**。
+        //    （否则"所有 id 都没变"会被误当成"其余块 id 不变"而假通过——这是实测踩到的坑。）
+        const readEditProof = async () => cdp.evalJS(`(function(){
+          var els = Array.prototype.slice.call(document.querySelectorAll('#preview .-src-block'));
+          var b = els[${idx}];
+          var elText = b ? (b.textContent || '').replace(/\\s+/g, ' ').trim() : null;
+          var lines = (window.state && window.state.doc && window.state.doc.lines) || [];
+          var srcLine = b ? parseInt(b.getAttribute('data--src-line') || '0', 10) : 0;
+          var docText = (srcLine > 0 && lines[srcLine - 1] != null) ? String(lines[srcLine - 1]) : null;
+          return { elText: elText, docText: docText, srcLine: srcLine };
+        })()`);
+        const proofBefore = await readEditProof();
+
+        // 打一个字符；单块文档打两次，确保"其余块"这个概念有可判性
+        await typeChar('z');
+        await sleep(450);
+        const after1 = await readIds();
+        if (single) { await typeChar('q'); await sleep(450); }
+        const after = single ? await readIds() : after1;
+        const proofAfter = await readEditProof();
+        const editApplied = !!(proofBefore && proofAfter &&
+          (proofBefore.elText !== proofAfter.elText || proofBefore.docText !== proofAfter.docText));
+
+        // 断言（单块文档：块数=1 时"其余块不变"自动成立，用"总数不变"作主判据）
+        const changed = [];
+        if (before.total !== after.total) {
+          changed.push({ kind: 'blockCount', before: before.total, after: after.total });
+        }
+        const n = Math.min(before.total, after.total);
+        for (let k = 0; k < n; k++) {
+          const b = before.ids[k], a = after.ids[k];
+          if (b.id !== a.id) changed.push({ kind: 'id', i: k, before: b.id, after: a.id, srcLineBefore: b.srcLine, srcLineAfter: a.srcLine });
+        }
+        // 分类：被编辑块变了是**允许**的；其余块变了才是违例
+        const allowed = changed.filter((c) => c.kind === 'id' && c.i === idx);
+        const violations = changed.filter((c) => !(c.kind === 'id' && c.i === idx));
+        // 旧实现证伪：全块缺 id ⇒ 视为"无可测身份" ⇒ 判红（不能算绿）
+        const noIdentity = before.missingId === before.total || after.missingId === after.total;
+
+        return {
+          name,
+          status: 'ran',
+          editIdx: idx,
+          point: pt,
+          blockCount: { before: before.total, after: after.total },
+          missingId: { before: before.missingId, after: after.missingId },
+          noIdentity,
+          editApplied,
+          editProof: { before: proofBefore, after: proofAfter },
+          allowedChange: allowed,
+          violations,
+          // 通过条件：**编辑真的生效** + 无违例 + 块数不变 + 确实有可测身份
+          //   editApplied 是防假通过的关键：若没改成，'id 全不变'毫无意义。
+          ok: editApplied && violations.length === 0 && before.total === after.total && !noIdentity,
+          beforeIds: before.ids,
+          afterIds: after.ids,
+        };
+      };
+
+      cases.push(await runOne({ name: 'mid', pickIdx: 1, pos: 'mid' }));
+      cases.push(await runOne({ name: 'head', pickIdx: 1, pos: 'head' }));
+      cases.push(await runOne({ name: 'tail', pickIdx: 1, pos: 'tail' }));
+      cases.push(await runOne({ name: 'last-block', pickIdx: 'last', pos: 'mid' }));
+
+      const allOk = cases.every((c) => c.status === 'ran' && c.ok);
+      result.cases['sel_id_stability'] = {
+        id: 'sel_id_stability',
+        covers: ['C1'],
+        status: 'ran',
+        evidence: {
+          file,
+          subcases: cases,
+          allOk,
+          // 汇总：任一边界例有违例即整体不绿
+          violationCount: cases.reduce((s, c) => s + (c.violations ? c.violations.length : 0), 0),
+          noIdentityCases: cases.filter((c) => c.noIdentity).map((c) => c.name),
+          // 假通过防线汇总：哪些子例的编辑**没有真正生效**（这些例不能算绿）
+          notAppliedCases: cases.filter((c) => c.status === 'ran' && !c.editApplied).map((c) => c.name),
+        },
+      };
+    } catch (e) { result.cases['sel_id_stability'] = { id: 'sel_id_stability', covers: ['C1'], status: 'error', error: e.message }; }
+
     // ── C7 切模式不漂：记锚点行 → preview↔split↔source → 再读锚点行 ────────────
     try {
       const c7 = caseById['sel_switch_mode'];
@@ -1100,6 +1387,29 @@ async function runProbe({ url, kbRoot, casesPath, screenshotsDir, c9Config }) {
       };
       if (measurement.error) result.cases[c9.id].error = measurement.error;
     } catch (e) { result.cases['sel_scroll_stress'] = { id: 'sel_scroll_stress', covers: ['C9'], status: 'error', error: e.message }; }
+
+    // ── C11 / C12 双插头（阶段 2 P1，2026-10-20）──────────────────────────────
+    //
+    // 关键设计：**C11/C12 必须自证"会红"**。
+    //   现状风险：`new` 插头未实现时探针永远 inconclusive ⇒ 等于换了个说法的"未测"。
+    //   所以本块在**探针模式**下临时注入两个合成插头，让 C11/C12 各自**真的判红一次**：
+    //     · `__broken`：mount 后抹掉 2 个块         ⇒ 供 C11 等价性判红
+    //     · `__lossy` ：切换后把滚动位置写成 0      ⇒ 供 C12 无损切换判红
+    //   两个合成插头**只活在本用例内**（测完 switchTo('legacy') + 逐出注册表），
+    //   不进生产路径、不落 index.html。
+    try {
+      const swEv = await runSurfaceSwitchProbe(cdp);
+      result.cases['c11_c12_surface_switch'] = {
+        id: 'c11_c12_surface_switch', covers: ['C11', 'C12'],
+        status: (swEv && swEv.status === 'error') ? 'error' : 'ran',
+        evidence: swEv,     // run_probe.py 的 _ev() 读 evidence
+        ...(swEv && swEv.status === 'error' ? { error: swEv.error } : {}),
+      };
+    } catch (e) {
+      result.cases['c11_c12_surface_switch'] = {
+        id: 'c11_c12_surface_switch', covers: ['C11', 'C12'], status: 'error', error: e.message,
+      };
+    }
 
     if (screenshotsDir) {
       try {

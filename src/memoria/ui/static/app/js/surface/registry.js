@@ -156,11 +156,36 @@
     return _chain;
   }
 
+  /**
+   * 逐出注册（**仅探针用**，2026-10-20 阶段 2 P1）。
+   * 用途：C11/C12 探针临时注册合成插头（`__broken` / `__lossy`）后必须清理，
+   * 否则会残留在注册表里污染后续用例。
+   *
+   * 安全约束：
+   *   · 只允许逐出 **以 `__` 开头的名字**（生产插头 legacy/new 不可逐出）；
+   *   · 若被逐出的是**当前插头** ⇒ 拒绝（避免 _current 指向已删工厂的死状态）。
+   * @returns {boolean} 是否真的逐出
+   */
+  function evict(name) {
+    if (typeof name !== "string" || name.indexOf("__") !== 0) {
+      throw new Error("SurfaceRegistry.evict: 只允许逐出探针插头（名字须以 __ 开头）: '" + name + "'");
+    }
+    if (name === _current) {
+      throw new Error("SurfaceRegistry.evict: 不能逐出当前插头 '" + name + "'，请先 switchTo 别的插头");
+    }
+    if (!_has(name)) return false;
+    delete _factories[name];
+    var i = _order.indexOf(name);
+    if (i >= 0) _order.splice(i, 1);
+    return true;
+  }
+
   var registry = {
     register: register,
     current: current,
     list: list,
     switchTo: switchTo,
+    __evict: evict,   // 仅探针用（C11/C12 合成插头清理）
   };
 
   var MemoriaSurface = {

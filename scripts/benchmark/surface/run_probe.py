@@ -318,12 +318,68 @@ def judge(raw: dict):
     #     ③ 任一步不过 ⇒ inconclusive（度量状态，不得表述为通过/失败）
     verdicts["C9"] = judge_c9(_ev(raw, "sel_scroll_stress"))
 
-    # 未测（如实 + 原因）
-    verdicts["C1"] = {
-        "status": "untested",
-        "reading": "legacy 无 RenderCore「块 id」概念（`data--block-index` 是**位置下标**、随块序重编，非稳定 id）⇒ 契约 C1 在 legacy 无对应实现，无法测。",
-        "detail": {},
-    }
+    # ── C1 块身份稳定（2026-10-20 由 metrics-baseline 补实测）──────────────────
+    # 契约 C1：编辑一块 ⇒ **被编辑块自身 id 可变**，但**其余块 id 必须完全不变**，块总数不变。
+    # 以前是 untested 的真实原因：legacy 的 `data--block-index` 是位置下标而非稳定身份；
+    # P2 把 BlockIndex.upsert() 接上、真实写 `data-block-id` 之后才可测。
+    # 判据（三态）：无违例 + 块数不变 + **确实存在可测身份** ⇒ 绿；否则红。
+    #   ⚠️ `noIdentity`（全块缺 data-block-id，即旧实现）必须判**红**，不能算绿 ——
+    #   否则本用例会"假通过"（旧实现根本没有该属性，测不到东西）。
+    c1ev = _ev(raw, "sel_id_stability")
+    if c1ev and (c1ev.get("subcases") is not None):
+        subs = c1ev.get("subcases") or []
+        ran = [s for s in subs if s.get("status") == "ran"]
+        bad = [s for s in ran if not s.get("ok")]
+        noid = [s for s in ran if s.get("noIdentity")]
+        # 防假通过：编辑没真正生效的子例不能算绿（否则"id 全没变"会被误读成"其余块不变"）
+        notapplied = [s for s in ran if not s.get("editApplied")]
+        if not ran:
+            verdicts["C1"] = {"status": "untested", "reading": "C1 用例未跑出读数（subcases 全为空/出错）", "detail": c1ev}
+        elif noid:
+            verdicts["C1"] = {
+                "status": "red",
+                "reading": "**块无身份**：%s 例中所有块都缺 `data-block-id`（实现未落地稳定块 id）⇒ 契约 C1 不成立。" % len(noid),
+                "detail": c1ev,
+            }
+        elif notapplied:
+            verdicts["C1"] = {
+                "status": "red",
+                "reading": "**编辑未生效**（%s）：按键没有改动目标块文本 ⇒ 本用例无可判性，不能判绿（防假通过）。"
+                           % "、".join(s.get("name") for s in notapplied),
+                "detail": c1ev,
+            }
+        elif bad:
+            parts = []
+            for s in bad:
+                vs = s.get("violations") or []
+                desc = "、".join(
+                    ("块数 %s→%s" % ((v.get("before"), v.get("after")))) if v.get("kind") == "blockCount"
+                    else ("#%s id %s→%s" % (v.get("i"), v.get("before"), v.get("after")))
+                    for v in vs[:3])
+                parts.append("%s（编辑 #%s）: %s" % (s.get("name"), s.get("editIdx"), desc or "未通过"))
+            verdicts["C1"] = {
+                "status": "red",
+                "reading": "**其余块 id 被牵连** ⇒ " + "；".join(parts),
+                "detail": c1ev,
+            }
+        else:
+            names = "、".join(s.get("name") for s in ran)
+            total = (ran[0].get("blockCount") or {}).get("before")
+            allowed = sum(len(s.get("allowedChange") or []) for s in ran)
+            verdicts["C1"] = {
+                "status": "green",
+                "reading": "%d 例（%s）全部：被编辑块 id 可变（允许变化 %d 次）、**其余块 id 全部不变**、块数保持 %s。"
+                           % (len(ran), names, allowed, total),
+                "detail": c1ev,
+            }
+    elif c1ev and c1ev.get("status") == "error":
+        verdicts["C1"] = {"status": "red", "reading": "C1 用例执行出错：%s" % c1ev.get("error"), "detail": c1ev}
+    else:
+        verdicts["C1"] = {
+            "status": "untested",
+            "reading": "C1 用例未跑出读数（`sel_id_stability` 无 evidence）",
+            "detail": {},
+        }
     verdicts["C5"] = {
         "status": "untested",
         "reading": "需「块编辑中（textarea 在文档内）+ 触发块级重渲」两步：双击进块编辑可用，但驱动块级重渲需要一个**未暴露的应用入口**；本次未实现 ⇒ 未测。",
@@ -334,19 +390,82 @@ def judge(raw: dict):
         "reading": "需断言 onLinkActivate 回调、图片双击进编辑、KP band 定位三件交互存活；回调断言需在页面侧挂测试钩子，本次未实现 ⇒ 未测。",
         "detail": {},
     }
+    # ── C11 / C12：双插头（阶段 2 P1，2026-10-20）────────────────────────────
+    #   数据来自 cdp.mjs 的 `runSurfaceSwitchProbe` 用例（含"自证会红"的合成插头结果）。
+    #   铁律：**不得假绿**。`new` 未实现 ⇒ C11 = inconclusive（不是绿）；
+    #         且只有当合成 `__broken` 确实判红时，C11 的机制才算被证明有效。
+    _sw = _ev(raw, "c11_c12_surface_switch")
+
+    def _probe_red_ok(key: str) -> bool:
+        sp = (_sw.get("selfProof") or {})
+        return sp.get(key) is True
+
+    # C12：无损切换（legacy 往返后 6 项状态全等）+ 自证会红（__lossy 必须检出差异）
+    if _sw.get("status") == "error" or not _sw:
+        verdicts["C12"] = {
+            "status": "untested", "conclude": False,
+            "reading": "双插头探针未跑出读数 ⇒ 无法判。",
+            "detail": {"error": (_sw or {}).get("error")},
+        }
+    else:
+        _c12 = _sw.get("c12") or {}
+        _lossy_red = _probe_red_ok("c12_lossy_red")
+        _c12_green = _c12.get("status") == "green"
+        if not _lossy_red:
+            # 自证失败：合成丢状态插头都没能判红 ⇒ 这个探针没有鉴别力，不能出绿
+            verdicts["C12"] = {
+                "status": "untested", "conclude": False,
+                "reading": ("**探针无鉴别力**：合成丢状态插头 `__lossy` 未被检出差异 ⇒ 即使 legacy 往返"
+                            "看起来一致，也不能据此判绿（否则就是假绿）。"),
+                "detail": {"c12": _c12, "selfProof": _sw.get("selfProof")},
+            }
+        else:
+            verdicts["C12"] = {
+                "status": "green" if _c12_green else "red",
+                "reading": (("legacy 往返后 6 项状态（state.doc / currentPath / viewMode / 滚动 / 选区 / KP band）"
+                             "逐项一致；且合成丢状态插头 `__lossy` 被正确判红 ⇒ 探针有鉴别力。")
+                            if _c12_green else
+                            ("legacy 往返后状态**不一致**，差异：" + str(_c12.get("diff")))),
+                "detail": {"c12": _c12, "selfProof": _sw.get("selfProof")},
+            }
+
+    # C11：新旧等价。
+    #   ⚠️ 口径（Lead 裁决 2026-10-20）：`new` 未实现 ⇒ **inconclusive，不是绿、也不是红**。
+    #   `__broken` 的红只用来证明"探针有鉴别力"，**不能**当作 C11 的结论（它是合成坏插头，不是 new）。
+    _self = (_sw.get("selfProof") or {})
+    _broken_red = _self.get("c11_broken_red") is True
+    if _sw.get("status") == "error" or not _sw:
+        verdicts["C11"] = {
+            "status": "untested", "conclude": False,
+            "reading": "双插头探针未跑出读数 ⇒ 无法判。",
+            "detail": {"error": (_sw or {}).get("error")},
+        }
+    else:
+        _list = _sw.get("list") or []
+        _has_new = "new" in _list
+        _branch = "new 已注册（占位，方法抛 NotImplemented）" if _has_new else "new 未注册"
+        _mech = ("合成坏插头 `__broken`（块数少 2）被正确判红 ⇒ 探针机制有鉴别力。" if _broken_red
+                 else "**合成坏插头 `__broken` 未被检出 ⇒ 探针无鉴别力，结论不可信。**")
+        # 口径（Lead 裁决 2026-10-20）：`new` 未实现 ⇒ **不确定（inconclusive），不是绿、也不是红**。
+        # 遵守本文件既有约定（C9 同此）：**不新增 status 值**（三态词汇绿/红/未测不被破坏），
+        # 用 status="untested" + inconclusive=True + conclude=False 表达「有结论但不可判」。
+        verdicts["C11"] = {
+            "status": "untested", "conclude": False, "inconclusive": True,
+            "reading": ("**不确定（inconclusive）—— 不作绿/红。** %s ⇒ 新旧等价对比**尚不可判**；%s"
+                        "（机制自证不等于 new 等价通过。）" % (_branch, _mech)),
+            "detail": {
+                "list": _list, "branches": ["__broken", "__lossy"],
+                "selfProof": _self,
+                "c11_mechanism_verified": _broken_red,
+                "note": "`__broken` 的红是**合成插头**的结果，仅证明探针有鉴别力；"
+                        "`new` 真实等价性需等 NewSurface 实现后再判。",
+            },
+        }
+
+    # C10：双消费者一致（预览栏 vs agent 气泡）—— 需真实流式数据 ⇒ 仍未测（如实）
     verdicts["C10"] = {
         "status": "untested",
         "reading": "两消费者一致需同时渲染「预览栏（可编辑）」与「对话栏气泡（只读流式）」并比对块序列；气泡渲染驱动成本高，本次未实现 ⇒ 未测。",
-        "detail": {},
-    }
-    verdicts["C11"] = {
-        "status": "untested",
-        "reading": "`new` 插头尚不存在（契约 §4 双插头未施工）⇒ 无法跑 legacy vs new 等价对比。",
-        "detail": {},
-    }
-    verdicts["C12"] = {
-        "status": "untested",
-        "reading": "`SurfaceRegistry.switchTo('new')` 不存在（`new` 插头未施工）⇒ 无损切换无法测。",
         "detail": {},
     }
     return verdicts
