@@ -135,6 +135,40 @@
 > - 功能少了几项（例如预览区不能编辑了）；
 > - 手感变了（例如切页签变慢）——**任何一项手感退化都算失败**。
 
+## 5.1 交互怎么测：自动化覆盖什么、人工兜底什么（2026-10-20 定）
+
+**结论：不需要任何插件。** 现有 `scripts/benchmark/surface/cdp.mjs` 走的是 CDP `Input` 域，
+浏览器把它当**真实输入**处理（`isTrusted=true`，与我们现在的 `typeText` 同一条路）。
+
+### 已有能力（可直接用）
+- `Input.dispatchKeyEvent`（keyDown + keyUp，带 `text`）⇒ 真实 `keydown` / `beforeinput`
+- `typeText(text)`：逐字符受信任输入；`pressKey(key)`：命名键（Enter/Esc/方向键等）
+- `realClick(selector)`、`Page.captureScreenshot`（可做视觉回归）
+
+### 需要补的三块（都在 cdp.mjs 里加，不加依赖）
+| 缺口 | 加什么 | 用来测 |
+|---|---|---|
+| **鼠标拖拽** | `Input.dispatchMouseEvent`：`mousePressed` → 多次 `mouseMoved` → `mouseReleased` | 拖拽选区（跨行/跨块）、拖选建链接 |
+| **双击选词** | 同上，`clickCount: 2` | 双击选英文单词 |
+| **修饰键** | 按键/鼠标事件加 `modifiers` 位掩码（Alt=1 Ctrl=2 Meta=4 **Shift=8**） | Shift+方向扩选、Shift+Home/End、Ctrl+A |
+| **中文输入** | `Input.imeSetComposition` + `Input.insertText` | IME 组合输入（纯键事件的盲区，必须专门加） |
+
+### 断言层（测「有没有做到」）
+1. **选区状态**：`window.getSelection()` 的 `anchorNode/anchorOffset/focusNode/focusOffset/toString()`
+   —— 精确断言「选中的是哪个字到哪个字」；
+2. **选区可视状态**：选区高亮类/样式是否出现、范围是否正确；
+3. **金标准快照**：同一操作序列，对**新老两套实现**分别抓「可见 DOM 结构 + 选区 + 焦点」并 diff。
+   —— 这正是「重构期间允许新老并存」的直接用途：**同一剧本跑两条路，结果必须一致**。
+
+### CDP 做不到的（必须人工验收，写清别假装覆盖）
+- 操作系统级 **IME 候选窗 / 真实输入法行为**（只能模拟 composition 序列，不是真输入法）；
+- 从资源管理器**拖文件进窗口**（OS 级拖放）；
+- 触控板**惯性滚动**、真实触摸；
+- **真实剪贴板**（除非授 `Browser.grantPermissions`，且仍受系统剪贴板影响）。
+
+⇒ **策略**：自动化覆盖「可模拟的交互」（点击/双击/拖拽选区/键盘扩选/输入/滚动/切页签），
+**人工兜底不可模拟项**（IME、OS 拖拽、惯性滚动）。两者的结果都记进验收记录。
+
 ## 6. 基线：拿什么当「大库」和「读数」
 
 - **大库**：`D:\AAA_Courses\数字通信原理`（人指定）
