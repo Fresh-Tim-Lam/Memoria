@@ -977,10 +977,14 @@ window.MemoriaMarkdownPreview = (function () {
     html = String(html || "").trim();
     if (!html) return "";
 
+    // 2026-10-20 P4b：此函数只负责加 `-src-block`（样式/结构依赖）。
+    // 不再注入 `data--src-line` / `data--src-line-end` —— 这是「错误的第二坐标系」：
+    // 本渲染链（renderHtml → splitSourceBlocks）的行号是**相对切片**的
+    // （`app.js` 喂入 `lines.slice(start-1, end)`，基准=切片首行），与主预览的
+    // 绝对源码行号不是同一套坐标，留着会让消费者误读。唯一真源 = BlockIndex（R3）。
+    // 辅助弹窗 / 复习卡的高亮定位不依赖该属性（走 `#assist-md-range` 锚点 / 数据行号）。
     const extraClass =
       block.kind === "display-math" ? "-display-math -src-block" : "-src-block";
-    const lineAttrs =
-      `data--src-line="${block.startLine}" data--src-line-end="${block.endLine}"`;
     const singleRoot = /^<([a-zA-Z][a-zA-Z0-9]*)([^>]*)>[\s\S]*<\/\1>$/.test(html);
     const tagMatch = singleRoot ? html.match(/^<([a-zA-Z][a-zA-Z0-9]*)([^>]*)>/) : null;
 
@@ -994,13 +998,10 @@ window.MemoriaMarkdownPreview = (function () {
       } else {
         rest += ` class="${extraClass}"`;
       }
-      if (!/data--src-line=/.test(rest)) {
-        rest += ` ${lineAttrs}`;
-      }
       return html.replace(/^<[a-zA-Z][a-zA-Z0-9]*[^>]*>/, `<${tag}${rest}>`);
     }
 
-    return `<div class="${extraClass}" ${lineAttrs}>${html}</div>`;
+    return `<div class="${extraClass}">${html}</div>`;
   }
 
   function renderDisplayMathBlock(block) {
@@ -1463,9 +1464,8 @@ window.MemoriaMarkdownPreview = (function () {
     return splitSourceBlocks(normalized)
       .map((block) => {
         if (block.kind === "blank") {
-          // 空行占位 block：生成可选中、可定位的空行元素
-          const lineAttr = `data--src-line="${block.startLine}" data--src-line-end="${block.endLine}"`;
-          return `<div class="-src-block -blank-block" ${lineAttr}><br></div>`;
+          // 空行占位 block：生成可选中、可定位的空行元素（不注入 data--src-line，见 attachLineAttrs 注）
+          return `<div class="-src-block -blank-block"><br></div>`;
         }
         if (block.kind === "display-math") {
           return renderDisplayMathBlock(block);
