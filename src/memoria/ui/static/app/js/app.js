@@ -2234,7 +2234,7 @@
           cls += rr.error.includes("not_found") ? " error" : " warn";
           meta = errorLabel(rr.error);
         }
-        const tags = (kp.tags || [])
+        const tags = (Array.isArray(kp.tags) ? kp.tags : [])
           .map((t) => `<span class="-tag">${esc(t)}</span>`)
           .join("");
         return `<div class="${cls}" data-kp="${esc(kp.id)}">
@@ -7745,8 +7745,8 @@
       state.doc.body = merged.join("\n");
       state.doc.lines = merged;
       // M6b：块替换后按行数差平移 KP 范围并同步列表/hover（预览区编辑实时同步）
-      if (typeof adjustKpRangesAfterSpanReplace === "function") {
-        adjustKpRangesAfterSpanReplace(start, endExcl, oldCount, newLines.length);
+      if (typeof window.__adjustKpRangesAfterSpanReplace === "function") {
+        window.__adjustKpRangesAfterSpanReplace(start, endExcl, oldCount, newLines.length);
       }
       return { start: start, oldCount: oldCount, newCount: newLines.length };   // 2026-09-25 AG101：把"改了哪几行"交给调用方 ⇒ 源码面板可**只更新这几行**（原来每次按键整篇重建）
     }
