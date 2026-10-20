@@ -260,7 +260,7 @@ surface.capabilities -> {
 | 方法 | P2a 是否实现 | 依据 |
 |---|---|---|
 | `mount` / `setText` / `flush` / `destroy` | ✅ **必实现** | 渲染最小闭环 |
-| `setMode` | ⚠️ 可暂抛 NotImpl | P2a 不含三视图同步（但 `setText` 里要能产 preview 形态的块） |
+| `setMode` | ⚠️ **必须接受并记录（可查询）；DOM 视图切换可延后到 P2b** | §4.2 交接第④步**无条件**调 `setMode`：若本方法抛 `NotImpl`，throw 会被 catch ⇒ 回滚 ⇒ `switchTo('new')` **永远失败**（`surface-new` 实测）。故本方法**不得**抛 `NotImpl`：必须接受合法 mode 并**记录**（交接后 `getMode() === 请求值`），但**不得伪造视图 DOM**（P2a 三视图 DOM 仍归宿主 `app.js`）；**非法 mode 必须抛错**。这是 P2a 的已知偏离，P2b/P3 补真正的视图切换 |
 | `applyEdit` / `undo` / `redo` | ❌ 可抛 NotImpl | P2a 只渲染不编辑（§0：RenderCore 只读优先） |
 | `revealRange` / `getScrollAnchor` / `setScrollAnchor` / `getSrcRangeForSelection` | ⚠️ 可抛 NotImpl | P2a 无跳转/无选区 |
 | `isBlockFrozen` | ✅ 建议返回 `false`（恒不冻结） | 5 类块都非冻结类型；比抛错更"可用" |
@@ -280,10 +280,45 @@ surface.capabilities -> {
 
 **id 语义（Lead 裁决 task-22，勿弄反）**：**id 标识身份，不保证内容不变**。局部路径同 id 就地更新 ⇒ 被编辑块 id 不变；整篇重 parse 才按内容哈希换 id。内容变化信号 = `onPatched.changedIds` / `domVersion` / 行区间，**不是 id**。
 
-#### 4.5.5 ⚠️ 已知契约偏离（`surface-new` 实现 `capabilities` 前必读）
+#### 4.5.5 ⚠️ 已知契约偏离表（`surface-new` 必读）
 
-`new-surface.js` 当前 `capabilities` 字段是 P1 占位期临时写的 `{supportsEdit, supportsViewport, supportsStableBlockId, findInPage, implemented}`，**与 §4.3 正式字段名 `{virtualization, incrementalRender, blockEdit, imageCaption, findInPage}` 不一致**。
-⇒ **`surface-new` 填实插头时，必须改用 §4.3 的正式字段名**，删除临时字段（`supportsEdit 等` + `implemented`）；`arch-contract` 会同步修正 `new-surface.js` 占位骨架。**这是唯一一处已登记的契约偏离。**
+> 登记**契约与实现之间已确认的缺口/不一致**。每条给：现象、为什么违反契约、建议归属、纳入时机。
+> **凡在表内的偏离，`surface-new` 都应知道"它迟早要补"，不得把它当作可长期忽略的差异。**
+
+##### K1 · `capabilities` 字段名（已修，记录留痕）
+
+`new-surface.js` 的 `capabilities` 字段曾是 P1 占位期临时写的 `{supportsEdit, supportsViewport, supportsStableBlockId, implemented}`，与 §4.3 正式字段 `{virtualization, incrementalRender, blockEdit, imageCaption, findInPage}` 不一致。
+- **处置**：已改回 §4.3 字段名（2026-10-20）。
+- **教训**：**先定契约字段再写骨架**——占位期用临时字段名，会被后来者当成契约照抄。
+
+##### K2 · 链接层后处理散落在 `app.js`（**legacy 的插头面不完整**）★
+
+**现象**：`legacy` 的"公开插头面"（§3.1 的 13 个方法 + RenderCore）**不包含链接层**。两段后处理只存在于 `app.js` 私有闭包里，不在 `SurfaceHost` / RenderCore 契约内：
+
+| 函数 | 位置 | 做了什么 | 依赖 app.js 私有状态 |
+|---|---|---|---|
+| `postProcessWikilinks(root)` | `app.js`（`function postProcessWikilinks`） | 给 `.-wikilink` **补 class/attr**：`memoria-link` / `role=link` / `data-link-target` / `data-link-type` / `data-link-line`（**读 `data--src-line` 反查行号**）；并按目标集合判 **resolved / broken / pending 三态**（加 `-link-resolved` / `-link-broken` / `-link-pending` + `tabindex` + `title`） | `state.linkTargetSet`、`state.doc.link_overrides`（侧车路由）、`T()` i18n |
+| `bindPreviewLinks(root)` | `app.js`（`function bindPreviewLinks`） | 给 `.memoria-link` **绑 4 类事件**：click（`onMemoriaLinkClick`）、mouseenter/mouseleave（`highlightGraphFromLink` 图谱联动）、contextmenu（`bindLinkContextMenu`）；容器级委托把 KB 内 `.md` 链接转应用内打开 | `onMemoriaLinkClick`、`highlightGraphFromLink`、`bindLinkContextMenu`、`state.graphLinkFocusEl` |
+
+**为什么算契约偏离**：
+1. §5 **C8「交互存活」明确要求"wikilink 可点"**——即这是**契约已承诺的能力**，但实现不在插头面内 ⇒ **契约承诺与实际归属不符**；
+2. RenderCore 的定位是"文本 → 块 DOM + **可激活的 wikilink / KP**"（§0.细则、§2.1 `activateLinks`）——`activateLinks` **在契约里存在（§2.1），但 legacy 侧没有对应实现**，它散在 `app.js`；
+3. ⇒ **新管线要做到与 legacy 逐字节等价，迟早必须把这两段纳入契约**，否则 `06-links-and-kp.md` 这类含链接文档**永远 diff**（C11 永远不可能绿）。
+
+**建议归属：`P2b`（代码/表格/图片片）——不是 P4（编辑层）。**
+
+**契约角度的理由（3 条）**：
+1. **它属于"渲染内核"而非"编辑外壳"**：§1 分层铁律写明 `RenderCore`（只读）负责"块 DOM + 可激活的 wikilink / KP"，消费者 B（助手气泡）**只接 RenderCore** 也要"能点击跳转"（§1 消费者 B 定义）。**气泡不需要编辑却需要链接可点** ⇒ 链接层必须在 RenderCore 侧，与编辑层无关 ⇒ **放 P4 会错层**。
+2. **它与"块类型渲染"同批**：`postProcessWikilinks` 读 `data--src-line`（块行区间）——与块渲染同源；P2b 正好在扩块类型（代码/表格/图片），链接是块内 inline 元素，**同批处理内聚度最高**。
+3. **P4 编辑层的验收是"编辑不丢字/光标不错位"**，与"链接可点"无关；把链接塞进 P4 会让 P4 范围失控。
+
+**纳入时机（建议）**：**P2b 开工时**，把以下内容**正式写进契约**，而不是等 P4：
+- §2.1 `activateLinks(root, onActivate)` 补**完整语义**（三态判定、补哪些 attr、事件绑定归属）；
+- §3.2 `onLinkActivate(target)` 明确**由 RenderCore 触发**（而非宿主自己扫描）；
+- **依赖注入**：`state.linkTargetSet` / `link_overrides` / i18n **必须由宿主以 `opts.resolveLink` 注入**（§2.1 的 `opts` 已有 `resolveLink` 位）——**内核不得读宿主私有 state**；
+- C8 的断言补"新管线链接三态与 legacy 逐项一致"。
+
+> **给 `surface-new` 的当下指引**：P2a（5 类块）**不涉及**链接层 ⇒ 可暂不实现；但**别在块渲染里顺手把链接写死成纯文本**（那样 P2b 要返工）。块内 wikilink 应渲染成 `<span class="-wikilink" data--target="…">`（与 legacy 同结构），**后处理留给契约补齐后的 `activateLinks`**。
 
 ---
 
