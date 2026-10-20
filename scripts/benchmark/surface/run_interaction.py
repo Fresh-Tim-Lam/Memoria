@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -94,13 +95,29 @@ def build_md(meta: dict, raw: dict) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _free_port() -> int:
+    """要一个当前空闲的本地端口（避免并发跑时撞车）。"""
+    import socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("127.0.0.1", 0))
+        return int(s.getsockname()[1])
+
+
+def _port_busy(port: int) -> bool:
+    import socket
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.settimeout(0.4)
+        return s.connect_ex(("127.0.0.1", port)) == 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="交互契约测试运行器")
     ap.add_argument("--kb", default="artifacts/baseline-kb/数字通信原理", help="语料库目录（相对 repo 根）")
     ap.add_argument("--scenarios", default=str(DEFAULT_SCENARIOS), help="剧本 json")
     ap.add_argument("--label", default="legacy-golden", help="本次运行 label")
-    ap.add_argument("--port", type=int, default=8645, help="harness 端口（默认 8645，避让 probe 的 8643）")
-    ap.add_argument("--work-kb", default="artifacts/_interaction_kb", help="临时语料副本目录")
+    # 并发安全：默认自动选空闲端口；显式指定则要求该端口确实空闲（否则快速失败，不劫持别人的服务）
+    ap.add_argument("--port", type=int, default=0, help="harness 端口（0=自动选空闲端口；显式指定时若被占用则失败）")
+    ap.add_argument("--work-kb", default="", help="临时语料副本目录（留空=按 label+pid 自动唯一）")
     ap.add_argument("--timeout", type=int, default=900, help="node 子进程超时秒")
     args = ap.parse_args()
 
@@ -115,8 +132,21 @@ def main() -> int:
         print("[ix] 剧本不存在: %s" % scen_path, file=sys.stderr)
         return 2
 
-    # 工作副本：绝不在原库上跑（会写 .memoria / 改 md）
-    work_kb = (REPO_ROOT / args.work_kb).resolve()
+    # 端口：0=自动挑；显式端口被占用 ⇒ 快速失败并说明（以前是静默劫持/撞车，导致 11 剧本全红）
+    if args.port == 0:
+        port = _free_port()
+        print("[ix] 自动选择空闲端口: %d" % port)
+    else:
+        if _port_busy(args.port):
+            print("[ix] 端口 %d 已被占用（另一个 benchmark 正在跑？）——请换端口或让它结束；"
+                  "也可不传 --port 让脚本自动选。" % args.port, file=sys.stderr)
+            return 2
+        port = args.port
+    args.port = port
+
+    # 工作副本：绝不在原库上跑（会写 .memoria / 改 md）；并发跑必须各自独立目录
+    work_kb_rel = args.work_kb or ("artifacts/_interaction_kb_%s_%d" % (args.label, os.getpid()))
+    work_kb = (REPO_ROOT / work_kb_rel).resolve()
     if work_kb.exists():
         shutil.rmtree(work_kb, ignore_errors=True)
     work_kb.parent.mkdir(parents=True, exist_ok=True)
