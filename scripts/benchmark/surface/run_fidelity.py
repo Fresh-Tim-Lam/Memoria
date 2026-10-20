@@ -1,0 +1,209 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""run_fidelity.py —— 渲染保真度指标的 harness 驱动 + 报告落盘
+
+复用 load_harness（与 run_probe.py 同款做法），驱动 fidelity_cli.mjs，
+产出 results/fidelity-<label>_<sha>.{md,json}。
+
+用法：
+    python scripts/benchmark/surface/run_fidelity.py \
+        --label baseline \
+        --files corpus/01-ime-zh.md,corpus/04-non-editable.md,corpus/07-extremes.md \
+        [--mutate char|math|strong|reorder]   # 变异测试（可选，一次一个）
+
+约束：不改 src/**；--port 自动选（默认 8644，与 run_probe.py 的 8643 错开避免冲突）。
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib.util
+import json
+import os
+import shutil
+import subprocess
+import sys
+import threading
+import time
+from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parents[3]
+HARNESS_PATH = REPO_ROOT / "docs" / "example" / "rich-content-test" / "_harness.py"
+RESULTS_DIR = REPO_ROOT / "scripts" / "benchmark" / "surface" / "results"
+CDP_CLI = REPO_ROOT / "scripts" / "benchmark" / "surface" / "fidelity_cli.mjs"
+
+
+def load_harness(kb_dir: Path, port: int):
+    os.environ["MEMORIA_HARNESS_KB"] = str(kb_dir)
+    os.environ["MEMORIA_HARNESS_PORT"] = str(port)
+    spec = importlib.util.spec_from_file_location("memoria_probe_harness", str(HARNESS_PATH))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def wait_port(port: int, timeout: float = 20.0) -> bool:
+    import socket
+    t0 = time.time()
+    while time.time() - t0 < timeout:
+        try:
+            with socket.create_connection(("127.0.0.1", port), timeout=1):
+                return True
+        except OSError:
+            time.sleep(0.2)
+    return False
+
+
+def git_short_sha() -> str:
+    p = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=str(REPO_ROOT), capture_output=True, text=True)
+    return p.stdout.strip() or "nogit"
+
+
+def main():
+    ap = argparse.ArgumentParser(description="渲染保真度指标 runner")
+    ap.add_argument("--kb", default="tests/probe-kb", help="源语料目录（相对 repo 根）")
+    ap.add_argument("--label", default="baseline", help="报告 label")
+    ap.add_argument("--port", type=int, default=8644, help="harness 端口（默认 8644）")
+    ap.add_argument("--work-kb", default="artifacts/_probe_kb", help="临时语料副本目录")
+    ap.add_argument("--files", default="", help="逗号分隔的相对文档路径；空则用内置三文档")
+    ap.add_argument("--mutate", default=None, help="变异测试 kind：char|math|strong|reorder（可选）")
+    ap.add_argument("--timeout", type=int, default=120, help="node 子进程超时秒数")
+    args = ap.parse_args()
+
+    DEFAULT_FILES = [
+        "corpus/03-block-boundaries.md",   # 小文档
+        "corpus/04-non-editable.md",       # 含 table+math+mermaid 的教材
+        "corpus/07-extremes.md",           # 含 table+list
+    ]
+    files = [f.strip() for f in args.files.split(",") if f.strip()] if args.files else DEFAULT_FILES
+
+    src_kb = (REPO_ROOT / args.kb).resolve()
+    if not src_kb.is_dir():
+        print("[fidelity] 源语料目录不存在: %s" % src_kb, file=sys.stderr)
+        return 2
+
+    work_kb = (REPO_ROOT / args.work_kb).resolve()
+    if work_kb.exists():
+        shutil.rmtree(work_kb, ignore_errors=True)
+    work_kb.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(src_kb, work_kb)
+
+    harness = load_harness(work_kb, args.port)
+    import bottle
+    th = threading.Thread(target=bottle.run, kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True), daemon=True)
+    th.start()
+    if not wait_port(args.port):
+        print("[fidelity] harness 未在端口 %s 起来" % args.port, file=sys.stderr)
+        return 2
+
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    sha = git_short_sha()
+    label = args.label
+    stem = "fidelity-%s_%s" % (label, sha)
+    out_path = RESULTS_DIR / ("%s.json" % stem)
+
+    cmd = [
+        "node", str(CDP_CLI),
+        "--url", "http://127.0.0.1:%d/" % args.port,
+        "--files", ",".join(files),
+        "--out", str(out_path),
+    ]
+    if args.mutate:
+        cmd += ["--mutate", args.mutate]
+    print("[fidelity] 运行: %s" % " ".join(cmd))
+    try:
+        proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)
+    except subprocess.TimeoutExpired:
+        print("[fidelity] node 驱动超时", file=sys.stderr)
+        return 3
+    if proc.returncode != 0 or not out_path.exists():
+        print("[fidelity] node 驱动失败（code=%s）" % proc.returncode, file=sys.stderr)
+        print("--- stdout ---\n%s\n--- stderr ---\n%s" % (proc.stdout.decode("utf-8", "replace")[-4000:], proc.stderr.decode("utf-8", "replace")[-8000:]), file=sys.stderr)
+        return 3
+
+    raw = json.loads(out_path.read_text(encoding="utf-8"))
+
+    # 渲染 markdown 报告
+    md_path = RESULTS_DIR / ("%s.md" % stem)
+    L = []
+    L.append("# 渲染保真度 · %s（%s）\n" % (label, sha))
+    L.append("> 指标：`scripts/benchmark/surface/fidelity.mjs` + `fidelity_cli.mjs`")
+    L.append("> 文档：%s" % "、".join(files))
+    if args.mutate:
+        L.append("> **变异测试**：`%s`（必须判 FAIL）\n" % args.mutate)
+    else:
+        L.append("")
+    L.append("## A 级（硬门槛）整体：**%s**\n" % ("🟢 全绿" if raw.get("allGreen") else "🔴 有红"))
+
+    # ── 变异测试判定（语义与常规相反：注入破坏后**必须**判红，否则说明指标没有判别力）──
+    mutation_verdict = None
+    if args.mutate:
+        muts = [(f, d.get("mutation")) for f, d in (raw.get("documents") or {}).items() if d.get("mutation")]
+        caught = [f for f, m in muts if m and not m.get("ok")]
+        missed = [f for f, m in muts if m and m.get("ok")]
+        mutation_verdict = {
+            "kind": args.mutate,
+            "documents": len(muts),
+            "caughtRed": len(caught),
+            "missed": missed,
+            # 判别力成立 = 至少有一个文档被该变异抓成红
+            "hasDiscriminatingPower": len(caught) > 0,
+            # 全抓不到 ⇒ 指标对该类破坏无判别力 ⇒ 判 FAIL
+            "verdict": "PASS" if len(caught) > 0 else "FAIL",
+        }
+        L.append("## 变异判别力：`%s` → **%s**\n" % (args.mutate, mutation_verdict["verdict"]))
+        L.append("| 文档 | 变异后 A 级 | 期望 | 结果 |")
+        L.append("|---|---|---|---|")
+        for f, m in muts:
+            ok = m.get("ok")
+            L.append("| `%s` | %s | 🔴 必须红 | %s |" % (f, "🟢 仍绿" if ok else "🔴 抓到", "❌ 无判别力" if ok else "✓ 有判别力"))
+        L.append("")
+        L.append("- 抓到（判红）：**%d / %d** 文档" % (len(caught), len(muts)))
+        if missed:
+            L.append("- ⚠️ **未被抓到**：%s ⇒ 该变异类型在这些文档上无判别力" % "、".join("`%s`" % x for x in missed))
+        L.append("")
+    L.append("| 文档 | A 级 | 块数(A/DOM) | 签名 | 可复现 |")
+    L.append("|---|---|---|---|---|")
+    for f, d in (raw.get("documents") or {}).items():
+        r1 = d.get("run1") or {}
+        a = r1.get("aLevel") or {}
+        a1 = a.get("a1") or {}
+        ok = "🟢" if r1.get("ok") else "🔴"
+        sig = (r1.get("signature") or "")[:12]
+        rep = "✓" if d.get("reproducible") else "✗"
+        L.append("| `%s` | %s | %s/%s | `%s…` | %s |" % (f, ok, r1.get("astCount"), r1.get("domCount"), sig, rep))
+    L.append("")
+    # 逐文档 A 级明细
+    for f, d in (raw.get("documents") or {}).items():
+        r1 = d.get("run1") or {}
+        a = r1.get("aLevel") or {}
+        L.append("### `%s`\n" % f)
+        L.append("- A1 块数：%s" % ("PASS" if (a.get("a1") or {}).get("ok") else "FAIL（%s vs %s）" % ((a.get("a1") or {}).get("ast"), (a.get("a1") or {}).get("dom"))))
+        a2 = a.get("a2") or {}
+        L.append("- A2 块序+类型：%s（orderOk=%s，typeMismatch=%d 处）" % ("PASS" if a2.get("ok") else "FAIL", a2.get("orderOk"), len(a2.get("kindMismatch") or [])))
+        a3 = a.get("a3") or {}
+        L.append("- A3 公式：%s（块 %s/%s，行内 %s/%s，残留 %s）" % ("PASS" if a3.get("ok") else "FAIL", a3.get("blockWithTypesetMath"), a3.get("expectBlocks"), a3.get("blockWithInlineMath"), a3.get("expectInline"), a3.get("residual")))
+        a4 = a.get("a4") or {}
+        w1 = a4.get("w1") or []; w2 = a4.get("w2") or []
+        L.append("- A4 看门狗：W1=%s（%d 空文本越界）W2=%s（%d classless）" % ("PASS" if not w1 else "FAIL", len(w1), "PASS" if not w2 else "FAIL", len(w2)))
+        # B 级摘要
+        b = r1.get("bLevel") or {}
+        b5 = b.get("b5") or {}; b6 = b.get("b6") or {}
+        L.append("- B5 文本（warn）：diff %d 块　B6 结构（warn）：diff %d 处" % (b5.get("diffCount", 0), b6.get("diffCount", 0)))
+        if args.mutate and d.get("mutation"):
+            m = d["mutation"]
+            L.append("- **变异 `%s` 后 ok=%s**（期望 False ⇒ 判红）" % (m["kind"], m["ok"]))
+        L.append("")
+    md_path.write_text("\n".join(L), encoding="utf-8")
+    print("[fidelity] 产物：\n  %s\n  %s" % (md_path, out_path))
+    if mutation_verdict is not None:
+        print("[fidelity] 变异 `%s` => %s（抓到 %d/%d 文档）" % (
+            mutation_verdict["kind"], mutation_verdict["verdict"],
+            mutation_verdict["caughtRed"], mutation_verdict["documents"]))
+        return 0 if mutation_verdict["verdict"] == "PASS" else 1
+    print("[fidelity] %s" % ("A 级全绿 ✓" if raw.get("allGreen") else "A 级有红 ✗（见报告）"))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

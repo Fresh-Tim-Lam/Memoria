@@ -1,0 +1,4088 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:8644/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/03-block-boundaries.md",
+    "corpus/04-non-editable.md",
+    "corpus/07-extremes.md"
+  ],
+  "mutateKind": "drop-block",
+  "startedAt": "2026-10-20T13:18:08.456Z",
+  "documents": {
+    "corpus/03-block-boundaries.md": {
+      "status": "ran",
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 25,
+            "dom": 25
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "-blank-block",
+              "ul",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 14,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 块边界 —— 在「第二段行首」按退格合并、在「第一段行尾」按回车拆段，观察合并/拆分后的真源逐字 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "03 · 块边界"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "这是第一段，用来在段尾按回车拆段。"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "这是第二段，用来在段首按退格与上一段合并。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "上面有两个空行（连续空行测试），下面插入或删除空行观察块合并。"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "无序列表项一无序列表项二"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "-嵌套项 A"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "-嵌套项 B"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "有序列表项一有序列表项二"
+              },
+              {
+                "i": 16,
+                "ast": "",
+                "dom": "1.嵌套有序 A"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "2.嵌套有序 B"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "松列表项一松列表项二（与上一项之间有空行）"
+              },
+              {
+                "i": 20,
+                "ast": "",
+                "dom": "引用块第一行引用块第二行引用块第三段"
+              },
+              {
+                "i": 24,
+                "ast": "",
+                "dom": "引用块与分隔线之后再放一段，便于在其行首按退格测试合并。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "6071cc33756694b72cc527e654ff91aca4529926acbd4bd66ba25f8feecb67b0",
+        "astCount": 25,
+        "domCount": 25
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 25,
+            "dom": 25
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "-blank-block",
+              "ul",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "signature": "6071cc33756694b72cc527e654ff91aca4529926acbd4bd66ba25f8feecb67b0"
+      },
+      "reproducible": true,
+      "mutation": {
+        "kind": "drop-block",
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": false,
+            "ast": 25,
+            "dom": 24
+          },
+          "a2": {
+            "ok": false,
+            "orderOk": false,
+            "kindMismatch": [
+              {
+                "i": 1,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h1"
+              },
+              {
+                "i": 2,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 3,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 4,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 5,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 6,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 8,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 9,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 10,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "ul"
+              },
+              {
+                "i": 11,
+                "astKind": "list",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 13,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 14,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "ol"
+              },
+              {
+                "i": 15,
+                "astKind": "list",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 17,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 18,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "ul"
+              },
+              {
+                "i": 19,
+                "astKind": "list",
+                "domKind": "",
+                "domTag": "blockquote"
+              },
+              {
+                "i": 20,
+                "astKind": "blockquote",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 21,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "hr"
+              },
+              {
+                "i": 22,
+                "astKind": "horizontal_rule",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 23,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              }
+            ],
+            "kinds": [
+              "p",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "-blank-block",
+              "ul",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": false,
+            "w1": [
+              {
+                "i": 20,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "blockquote"
+              },
+              {
+                "i": 22,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "horizontal_rule"
+              }
+            ],
+            "w2": []
+          }
+        },
+        "signature": "b19d71d3a70505137369659ed313568894088d48f117952ddecab4a7ea4a1425"
+      }
+    },
+    "corpus/04-non-editable.md": {
+      "status": "ran",
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 29,
+            "dom": 29
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-math-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-mermaid-container",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 1,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 14,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "') 判定）"
+              },
+              {
+                "i": 3,
+                "ast": "",
+                "dom": "<!-- probe: 不可编辑块 —— 双击围栏代码块 / 表格 / 公式块 / mermaid 进入块编辑，改一行后按 Esc，观察 textarea 仍在文档里、内容不丢 -->"
+              },
+              {
+                "i": 5,
+                "ast": "",
+                "dom": "04 · 不可编辑块"
+              },
+              {
+                "i": 7,
+                "ast": "",
+                "dom": "说明：本文件为测 frontmatter 渲染，把 frontmatter 放在最顶部（文件首行必须是 ---），因此这行 probe 注释位于 frontmatter 之后。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "围栏代码块（python）"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "def add(a, b): # 含 # 注释与 = 赋值号 result = a + b return result # 一段含三反引号的说明：markdown 里用 ``` 表示围栏"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "围栏代码块（js）"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "// js 示例，同样含 = 与 # const sum = (a, b) => a + b; console.log(sum(1, 2)); // 输出 3"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "GFM 表格（左 / 中 / 右对齐）"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "左对齐居中右对齐alphabeta100gammadelta2500"
+              },
+              {
+                "i": 21,
+                "ast": "",
+                "dom": "公式块"
+              },
+              {
+                "i": 23,
+                "ast": "",
+                "dom": "∫0∞e−x2dx=π2"
+              },
+              {
+                "i": 25,
+                "ast": "",
+                "dom": "Mermaid"
+              },
+              {
+                "i": 27,
+                "ast": "",
+                "dom": "#mermaid-nelm2kp4{font-family:inherit;font-size:13px;fill:#e6e6e6;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-nelm2kp4 .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-nelm2kp4 .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-nelm2kp4 .error-icon{fill:#1e1e1e;}#mermaid-nelm2kp4 .error-text{fill:#e6e6e6;stroke:#e6e6e6;}#mermaid-nelm2kp4 .edge-thickness-normal{stroke-width:1px;}#mermaid-nelm2kp4 .edge-thickness-thick{stroke-width:3.5px;}#mermaid-nelm2kp4 .edge-pattern-solid{stroke-dasharray:0;}#mermaid-nelm2kp4 .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-nelm2kp4 .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-nelm2kp4 .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-nelm2kp4 .marker{fill:#8c8c96;stroke:#8c8c96;}#mermaid-nelm2kp4 .marker.cross{stroke:#8c8c96;}#mermaid-nelm2kp4 svg{font-family:inherit;font-size:13px;}#mermaid-nelm2kp4 p{margin:0;}#mermaid-nelm2kp4 .label{font-family:inherit;color:#e6e6e6;}#mermaid-nelm2kp4 .cluster-label text{fill:#ffffff;}#mermaid-nelm2kp4 .cluster-label span{color:#ffffff;}#mermaid-nelm2kp4 .cluster-label span p{background-color:transparent;}#mermaid-nelm2kp4 .label text,#mermaid-nelm2kp4 span{fill:#e6e6e6;color:#e6e6e6;}#mermaid-nelm2kp4 .node rect,#mermaid-nelm2kp4 .node circle,#mermaid-nelm2kp4 .node ellipse,#mermaid-nelm2kp4 .node polygon,#mermaid-nelm2kp4 .node path{fill:#2d2d31;stroke:#565660;stroke-width:1px;}#mermaid-nelm2kp4 .rough-node .label text,#mermaid-nelm2kp4 .node .label text,#mermaid-nelm2kp4 .image-shape .label,#mermaid-nelm2kp4 .icon-shape .label{text-anchor:middle;}#mermaid-nelm2kp4 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-nelm2kp4 .rough-node .label,#mermaid-nelm2kp4 .node .label,#mermaid-nelm2kp4 .image-shape .label,#mermaid-nelm2kp4 .icon-shape .label{text-align:center;}#mermaid-nelm2kp4 .node.clickable{cursor:pointer;}#mermaid-nelm2kp4 .root .anchor path{fill:#8c8c96!important;stroke-width:0;stroke:#8c8c96;}#mermaid-nelm2kp4 .arrowheadPath{fill:#e1e1e1;}#mermaid-nelm2kp4 .edgePath .path{stroke:#8c8c96;stroke-width:1px;}#mermaid-nelm2kp4 .flowchart-link{stroke:#8c8c96;fill:none;}#mermaid-nelm2kp4 .edgeLabel{background-color:#1b1b1e;text-align:center;}#mermaid-nelm2kp4 .edgeLabel p{background-color:#1b1b1e;}#mermaid-nelm2kp4 .edgeLabel rect{opacity:0.5;background-color:#1b1b1e;fill:#1b1b1e;}#mermaid-nelm2kp4 .labelBkg{background-color:rgba(27, 27, 30, 0.5);}#mermaid-nelm2kp4 .cluster rect{fill:rgba(255, 255, 255, 0.035);stroke:#46464e;stroke-width:1px;}#mermaid-nelm2kp4 .cluster text{fill:#ffffff;}#mermaid-nelm2kp4 .cluster span{color:#ffffff;}#mermaid-nelm2kp4 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:inherit;font-size:12px;background:#1e1e1e;border:1px solid #46464e;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-nelm2kp4 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#e6e6e6;}#mermaid-nelm2kp4 rect.text{fill:none;stroke-width:0;}#mermaid-nelm2kp4 .icon-shape,#mermaid-nelm2kp4 .image-shape{background-color:#1b1b1e;text-align:center;}#mermaid-nelm2kp4 .icon-shape p,#mermaid-nelm2kp4 .image-shape p{background-color:#1b1b1e;padding:2px;}#mermaid-nelm2kp4 .icon-shape .label rect,#mermaid-nelm2kp4 .image-shape .label rect{opacity:0.5;background-color:#1b1b1e;fill:#1b1b1e;}#mermaid-nelm2kp4 .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-nelm2kp4 .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-nelm2kp4 .node .neo-node{stroke:#565660;}#mermaid-nelm2kp4 [data-look=\"neo\"].node rect,#mermaid-nelm2kp4 [data-look=\"neo\"].cluster rect,#mermaid-nelm2kp4 [data-look=\"neo\"].node polygon{stroke:url(#mermaid-nelm2kp4-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-nelm2kp4 [data-look=\"neo\"].swimlane.cluster rect{filter:none;}#mermaid-nelm2kp4 [data-look=\"neo\"].node path{stroke:url(#mermaid-nelm2kp4-gradient);stroke-width:1px;}#mermaid-nelm2kp4 [data-look=\"neo\"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-nelm2kp4 [data-look=\"neo\"].node .neo-line path{stroke:#565660;filter:none;}#mermaid-nelm2kp4 [data-look=\"neo\"].node circle{stroke:url(#mermaid-nelm2kp4-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-nelm2kp4 [data-look=\"neo\"].node circle .state-start{fill:#000000;}#mermaid-nelm2kp4 [data-look=\"neo\"].icon-shape .icon{fill:url(#mermaid-nelm2kp4-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-nelm2kp4 [data-look=\"neo\"].icon-shape .icon-neo path{stroke:url(#mermaid-nelm2kp4-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-nelm2kp4 :root{--mermaid-font-family:inherit;}是否开始判断结束−＋100%适配⤢"
+              }
+            ]
+          },
+          "b6": {
+            "ok": false,
+            "diffCount": 1,
+            "diffs": [
+              {
+                "i": 27,
+                "field": "code.lang",
+                "ast": "mermaid",
+                "dom": ""
+              }
+            ]
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "3f4dd11a0061cfc79fa1264e5ddb0a3a13e50493b620c1dbb99cdaeb460bded0",
+        "astCount": 29,
+        "domCount": 29
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 29,
+            "dom": 29
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-math-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-mermaid-container",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 1,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "signature": "3f4dd11a0061cfc79fa1264e5ddb0a3a13e50493b620c1dbb99cdaeb460bded0"
+      },
+      "reproducible": true,
+      "mutation": {
+        "kind": "drop-block",
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": false,
+            "ast": 29,
+            "dom": 28
+          },
+          "a2": {
+            "ok": false,
+            "orderOk": false,
+            "kindMismatch": [
+              {
+                "i": 1,
+                "astKind": "horizontal_rule",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 2,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 3,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 4,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h1"
+              },
+              {
+                "i": 5,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 6,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "blockquote"
+              },
+              {
+                "i": 7,
+                "astKind": "blockquote",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 8,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 9,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 10,
+                "astKind": "blank_line",
+                "domKind": "-code-block",
+                "domTag": "pre"
+              },
+              {
+                "i": 11,
+                "astKind": "code_block",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 12,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 13,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 14,
+                "astKind": "blank_line",
+                "domKind": "-code-block",
+                "domTag": "pre"
+              },
+              {
+                "i": 15,
+                "astKind": "code_block",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 16,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 17,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 18,
+                "astKind": "blank_line",
+                "domKind": "-table",
+                "domTag": "table"
+              },
+              {
+                "i": 19,
+                "astKind": "table",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 20,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 21,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 22,
+                "astKind": "blank_line",
+                "domKind": "-math-block",
+                "domTag": "div"
+              },
+              {
+                "i": 23,
+                "astKind": "math_block",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 24,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 25,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 26,
+                "astKind": "blank_line",
+                "domKind": "-mermaid-container",
+                "domTag": "div"
+              },
+              {
+                "i": 27,
+                "astKind": "code_block",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              }
+            ],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-math-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-mermaid-container",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 1,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": false,
+            "w1": [
+              {
+                "i": 1,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "horizontal_rule"
+              },
+              {
+                "i": 7,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "blockquote"
+              },
+              {
+                "i": 11,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "code_block"
+              },
+              {
+                "i": 15,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "code_block"
+              },
+              {
+                "i": 19,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "table"
+              },
+              {
+                "i": 23,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "math_block"
+              },
+              {
+                "i": 27,
+                "kindClass": "-blank-block",
+                "tag": "div",
+                "astKind": "code_block"
+              }
+            ],
+            "w2": []
+          }
+        },
+        "signature": "df5ca21e8560cf8ee5dbd476ccda75e0f8932cb0f6f4dd5dd6b885cb4c588a20"
+      }
+    },
+    "corpus/07-extremes.md": {
+      "status": "ran",
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 219,
+            "dom": 219
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 2,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 1,
+            "astBlocksWithInline": 1,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": true,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 11,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 极端项 —— 1000 字不换行段落 / 连续 200 个空行 / 标题含行内公式 / 表格后紧跟列表 / 约 2000 字符单行 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "07 · 极端项"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "1000 字不换行段落"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "标题里塞行内公式 E=mc2 与 a2+b2=c2"
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "表格后紧跟列表"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "列 A列 B列 C123456"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "紧跟表格的列表项一紧跟表格的列表项二"
+              },
+              {
+                "i": 14,
+                "ast": "",
+                "dom": "200 个连续空行"
+              },
+              {
+                "i": 215,
+                "ast": "",
+                "dom": "约 2000 字符的单行"
+              },
+              {
+                "i": 217,
+                "ast": "",
+                "dom": "这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "5edc6c8e06eaedb974f6805ff32743b8a05ef63d5f5224253ee8ebc20ec70406",
+        "astCount": 219,
+        "domCount": 219
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 219,
+            "dom": 219
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 2,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 1,
+            "astBlocksWithInline": 1,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": true,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "signature": "5edc6c8e06eaedb974f6805ff32743b8a05ef63d5f5224253ee8ebc20ec70406"
+      },
+      "reproducible": true,
+      "mutation": {
+        "kind": "drop-block",
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": false,
+            "ast": 219,
+            "dom": 218
+          },
+          "a2": {
+            "ok": false,
+            "orderOk": false,
+            "kindMismatch": [
+              {
+                "i": 1,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h1"
+              },
+              {
+                "i": 2,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 3,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 4,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 5,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 6,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 7,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 8,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 9,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 10,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 11,
+                "astKind": "blank_line",
+                "domKind": "-table",
+                "domTag": "table"
+              },
+              {
+                "i": 12,
+                "astKind": "table",
+                "domKind": "",
+                "domTag": "ul"
+              },
+              {
+                "i": 13,
+                "astKind": "list",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 14,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 214,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "h2"
+              },
+              {
+                "i": 215,
+                "astKind": "heading",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              },
+              {
+                "i": 216,
+                "astKind": "blank_line",
+                "domKind": "",
+                "domTag": "p"
+              },
+              {
+                "i": 217,
+                "astKind": "paragraph",
+                "domKind": "-blank-block",
+                "domTag": "div"
+              }
+            ],
+            "kinds": [
+              "p",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 2,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 1,
+            "astBlocksWithInline": 1,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": true,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          }
+        },
+        "signature": "cd64419f4fffb123679a8d48337b5ed7e6332b05b23e0b5fa1d8a4c388c244ea"
+      }
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:8644/"
+  },
+  "allGreen": true,
+  "ok": true,
+  "finishedAt": "2026-10-20T13:18:15.594Z"
+}
