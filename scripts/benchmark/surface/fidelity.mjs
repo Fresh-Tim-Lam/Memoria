@@ -299,6 +299,202 @@ export const PROBE_SOURCE = `(function () {
     return normWs(x);
   }
 
+  // ══════════════════════════════════════════════════════════════════════════
+  // 新增 A 级断言（task-25 · 渲染保真覆盖面补齐）
+  //   A5 图片    A6 链接    A7 代码高亮(class)   A8 表格(行列)
+  //   A9 可见效果下限（防"样式全丢"，只查非零）  A10 行内公式按块计数  A11 mermaid
+  // 通用原则：只在「源/期望 > 0」时才判定，0===0 不算通过（防空文档假绿）。
+  //   「无头恒空」类（agent 面板/流式/复阅卡）需真机/数据，另见任务说明。
+  // ══════════════════════════════════════════════════════════════════════════
+
+  // 统计 AST 全文档内某个 inline kind 的出现次数（递归）
+  function astInlineCount(doc, kindSet) {
+    var count = 0;
+    (function walk(n) {
+      if (!n) return;
+      if (kindSet[n.type]) count++;
+      if (n.children) for (var i = 0; i < n.children.length; i++) walk(n.children[i]);
+      if (n.items) for (var j = 0; j < n.items.length; j++) walk(n.items[j]);
+    })(doc);
+    for (var b = 0; b < doc.blocks.length; b++) {
+      (function walk(n) {
+        if (!n) return;
+        if (kindSet[n.type]) count++;
+        if (n.children) for (var i = 0; i < n.children.length; i++) walk(n.children[i]);
+        if (n.items) for (var j = 0; j < n.items.length; j++) walk(n.items[j]);
+      })(doc.blocks[b]);
+    }
+    return count;
+  }
+
+  // A5 图片：源有 image 块时，DOM 里 img[src] 必须存在且 src 非空
+  function imageFidelity(doc, dom) {
+    var astImages = 0;
+    for (var i = 0; i < doc.blocks.length; i++) if (doc.blocks[i].type === 'image') astImages++;
+    // 行内图片（inline image）也可能有
+    var inlineImgs = astInlineCount(doc, { image: 1 });
+    var totalAst = astImages + (inlineImgs - astImages > 0 ? inlineImgs - astImages : 0);  // 块级 image 已含
+    // DOM 侧
+    var imgs = document.querySelectorAll('#preview img');
+    var withSrc = 0; var badSrc = [];
+    var hasEmptySrc = false;
+    var noNatural = 0;  // naturalWidth 未就绪（懒加载/未解码），不能据此判 FAIL
+    for (var k = 0; k < imgs.length; k++) {
+      var el = imgs[k];
+      var src = el.getAttribute('src') || '';
+      if (!src) { hasEmptySrc = true; badSrc.push('empty'); continue; }
+      withSrc++;
+    }
+    var applicable = totalAst > 0;
+    // 只断言：源有图片 => DOM 至少有一个 img 且都带非空 src（不查 naturalWidth——懒加载/无头下不可靠）
+    var ok = !applicable || (imgs.length > 0 && !hasEmptySrc);
+    return { applicable: applicable, astImages: totalAst, domImgs: imgs.length, withSrc: withSrc, hasEmptySrc: hasEmptySrc, ok: ok };
+  }
+
+  // A6 链接：源有 link/wiki_link 时，DOM a[href] 非空 + 无残留 [[x]] 文本
+  function linkFidelity(doc, dom) {
+    var astLinks = astInlineCount(doc, { link: 1, wiki_link: 1 });
+    var anchors = document.querySelectorAll('#preview a');
+    var emptyHref = 0, total = 0;
+    for (var k = 0; k < anchors.length; k++) {
+      total++;
+      if (!anchors[k].getAttribute('href')) emptyHref++;   // 用 attr 而非 property，避免 about:blank
+    }
+    // 残留 [[x]] 文本（wiki 链接未解析）
+    var bodyText = document.querySelector('#preview') ? document.querySelector('#preview').textContent : '';
+    var residualWiki = /\\[\\[[^\\]]+\\]\\]/.test(bodyText);
+    var applicable = astLinks > 0;
+    var ok = !applicable || (total > 0 && emptyHref === 0 && !residualWiki);
+    return { applicable: applicable, astLinks: astLinks, domAnchors: total, emptyHref: emptyHref, residualWiki: residualWiki, ok: ok };
+  }
+
+  // A7 代码高亮：fence 块有 language-* class（token 数 B 级，不在此判）
+  function codeHighlightFidelity(doc, dom) {
+    var astCodeWithLang = 0;
+    for (var i = 0; i < doc.blocks.length; i++) {
+      if (doc.blocks[i].type === 'code_block' && doc.blocks[i].lang &&
+          String(doc.blocks[i].lang).toLowerCase() !== 'mermaid') astCodeWithLang++;
+    }
+    var issues = [];
+    var codeEls = document.querySelectorAll('#preview .-src-block.-code-block code');
+    for (var k = 0; k < codeEls.length; k++) {
+      var cls = codeEls[k].className || '';
+      // 语言 class 缺失（应至少 lang 非空时带性 language-*）
+      // 用 AST 逐块比：块 k 的 lang 非空 => code.className 含 language-<lang>
+    }
+    // 逐块精确比。注意：mermaid 代码块（lang=mermaid）走 mermaid 渲染路径，
+    //   不产出 .-code-block code（是 .-mermaid-container），必须排除，否则每张图都判红。
+    for (var m = 0; m < doc.blocks.length; m++) {
+      if (doc.blocks[m].type !== 'code_block' || !doc.blocks[m].lang) continue;
+      if (String(doc.blocks[m].lang).toLowerCase() === 'mermaid') continue;   // 排除 mermaid
+      var el = document.querySelector('#preview .-src-block[data--block-index="' + m + '"] code');
+      if (!el) { issues.push({ i: m, field: 'missing-code' }); continue; }
+      var cls = String(el.className || '');
+      if (cls.indexOf('language-' + doc.blocks[m].lang) < 0) issues.push({ i: m, field: 'lang-class', ast: doc.blocks[m].lang, dom: cls });
+    }
+    var applicable = astCodeWithLang > 0;
+    var ok = !applicable || issues.length === 0;
+    return { applicable: applicable, astCodeWithLang: astCodeWithLang, issues: issues, ok: ok };
+  }
+
+  // A8 表格：行列数与 AST rows 一致（**不比列对齐**，AST 无此字段）
+  function tableFidelity(doc, dom) {
+    var issues = [];
+    var astTables = 0;
+    for (var i = 0; i < doc.blocks.length; i++) {
+      var b = doc.blocks[i];
+      if (b.type !== 'table') continue;
+      astTables++;
+      var el = document.querySelector('#preview .-src-block[data--block-index="' + i + '"]');
+      if (!el) { issues.push({ i: i, field: 'missing-table' }); continue; }
+      var rows = el.querySelectorAll('tr').length;
+      var headerCount = b.header ? b.header.length : 0;
+      var rowsCount = b.rows ? b.rows.length : 0;
+      var expectRows = headerCount ? 1 + rowsCount : rowsCount;
+      if (rows !== expectRows) issues.push({ i: i, field: 'rows', ast: expectRows, dom: rows });
+      // 列数：取第一行（header 或首数据行）的 cell 数
+      var firstRow = el.querySelector('tr');
+      var domCols = firstRow ? firstRow.querySelectorAll('th,td').length : 0;
+      var astCols = headerCount || (b.rows && b.rows.length ? b.rows[0].length : 0);
+      if (domCols !== astCols) issues.push({ i: i, field: 'cols', ast: astCols, dom: domCols });
+    }
+    var applicable = astTables > 0;
+    var ok = !applicable || issues.length === 0;
+    return { applicable: applicable, astTables: astTables, issues: issues, ok: ok };
+  }
+
+  // A9 可见效果下限：源有某内联标记 => DOM 对应元素数必须 >0（只查非零）
+  //   bold/italic/code/link/image/highlight/font_*（不含精确计数，避开不可反推）
+  function visibleEffectFloor(doc, dom) {
+    var checks = [];
+    var map = {
+      bold:       { ast: ['bold', 'bold_italic', 'font_bold'], dom: 'strong' },
+      italic:     { ast: ['italic', 'bold_italic', 'font_italic'], dom: 'em' },
+      code:       { ast: ['code'], dom: 'code' },
+      link:       { ast: ['link', 'wiki_link'], dom: 'a' },
+      image:      { ast: ['image'], dom: 'img' },
+      highlight:  { ast: ['highlight'], dom: 'mark,.-hl,[data-hl]' },
+      strikethrough: { ast: ['strikethrough'], dom: 's,del,strike' },
+    };
+    var failures = [];
+    for (var kind in map) {
+      var def = map[kind];
+      var astCount = astInlineCount(doc, def.ast.reduce(function (o, k) { o[k] = 1; return o; }, {}));
+      if (astCount === 0) continue;   // 源无此标记 => 不判
+      var domCount = document.querySelectorAll('#preview ' + def.dom).length;
+      checks.push({ kind: kind, astCount: astCount, domCount: domCount });
+      if (domCount === 0) failures.push({ kind: kind, astCount: astCount });
+    }
+    return { checks: checks, failures: failures, ok: failures.length === 0 };
+  }
+
+  // A10 行内公式按块计数：源 $...$ 数 vs 该块内已排版节点数（真机判，无头 inconclusive）
+  function inlineFormulaFidelity(doc, dom, isHeadless) {
+    var perBlock = [];
+    var failures = [];
+    for (var i = 0; i < doc.blocks.length; i++) {
+      var blk = doc.blocks[i];
+      var inlineCount = 0;
+      (function walk(n) {
+        if (!n) return;
+        if (n.type === 'math_inline') inlineCount++;
+        if (n.children) for (var j = 0; j < n.children.length; j++) walk(n.children[j]);
+        if (n.items) for (var j = 0; j < n.items.length; j++) walk(n.items[j]);
+      })(blk);
+      if (inlineCount === 0) continue;
+      var el = document.querySelector('#preview .-src-block[data--block-index="' + i + '"]');
+      var typeset = el ? el.querySelectorAll('mjx-container[data--inline-math="true"]').length : 0;
+      perBlock.push({ i: i, astInline: inlineCount, domTypeset: typeset });
+      if (typeset !== inlineCount) failures.push({ i: i, astInline: inlineCount, domTypeset: typeset });
+    }
+    var applicable = perBlock.length > 0;
+    // 无头：MathJax 排不完 => inconclusive（有据：realapp-measurement-protocol.md §1）
+    var ok = isHeadless ? true : (failures.length === 0);
+    return { applicable: applicable, inconclusive: isHeadless && applicable, perBlock: perBlock, failures: failures, ok: ok };
+  }
+
+  // A11 mermaid：真出 svg + viewBox 非空 + 无错误占位
+  function mermaidFidelity(doc, dom) {
+    var astMermaid = 0;
+    for (var i = 0; i < doc.blocks.length; i++) {
+      if (doc.blocks[i].type === 'mermaid' || (doc.blocks[i].type === 'code_block' && String(doc.blocks[i].lang || '').toLowerCase() === 'mermaid')) {
+        astMermaid++;
+      }
+    }
+    var containers = document.querySelectorAll('#preview .-mermaid-container');
+    var issues = [];
+    for (var k = 0; k < containers.length; k++) {
+      var svg = containers[k].querySelector('svg');
+      if (!svg) { issues.push({ i: k, field: 'no-svg' }); continue; }
+      var viewBox = svg.getAttribute('viewBox') || '';
+      if (!viewBox) issues.push({ i: k, field: 'no-viewBox' });
+    }
+    var errNodes = document.querySelectorAll('#preview .-mermaid-error').length;
+    var applicable = astMermaid > 0;
+    var ok = !applicable || (containers.length === astMermaid && issues.length === 0 && errNodes === 0);
+    return { applicable: applicable, astMermaid: astMermaid, containers: containers.length, issues: issues, errNodes: errNodes, ok: ok };
+  }
+
   // ---------- 主入口 ----------
   function runFidelity(doc) {
     var ast = buildAstProjection(doc);
@@ -337,6 +533,15 @@ export const PROBE_SOURCE = `(function () {
     // A4 = W1 + W2
     var a4 = { ok: wd.w1ok && wd.w2ok, w1: wd.w1, w2: wd.w2 };
 
+    // ── task-25 新增 A 级（渲染保真覆盖面补齐）──
+    var a5 = imageFidelity(doc, dom);                 // 图片
+    var a6 = linkFidelity(doc, dom);                  // 链接
+    var a7 = codeHighlightFidelity(doc, dom);         // 代码高亮 class
+    var a8 = tableFidelity(doc, dom);                 // 表格行列
+    var a9 = visibleEffectFloor(doc, dom);            // 可见效果下限（防样式全丢）
+    var a10 = inlineFormulaFidelity(doc, dom, isHeadless);  // 行内公式按块计数
+    var a11 = mermaidFidelity(doc, dom);              // mermaid SVG
+
     // B5 文本（归一后，warn）
     var textDiffs = [];
     for (var k = 0; k < Math.max(ast.count, dom.count); k++) {
@@ -372,13 +577,21 @@ export const PROBE_SOURCE = `(function () {
       } : {};
     }) };
 
-    // 签名：A 级投影 + 归一化 B 级投影
+    // 签名：A 级投影 + 归一化 B 级投影（v2：纳入 task-25 新增 A5–A11 投影）
     var sigObj = {
+      v: 2,                                            // 签名版本：v2（旧 v1 保留并标 superseded）
       count: dom.count,
       kinds: kinds,
       tags: dom.tags,
       typesetMathBlocks: ff.blockWithBlockMath,
       inlineMathBlocks: ff.blockWithInlineMath,
+      // task-25 新增：图片/链接/代码高亮/表格/可见效果下限 的 DOM 计数
+      imgCount: a5.domImgs, imgEmptySrc: a5.hasEmptySrc,
+      anchorCount: a6.domAnchors, emptyHref: a6.emptyHref, residualWiki: a6.residualWiki,
+      langIssues: a7.issues.length,
+      tableIssues: a8.issues.length,
+      effectFloorFailures: a9.failures.map(function (f) { return f.kind; }),
+      mermaidContainers: a11.containers, mermaidErrors: a11.errNodes,
       // 文本归一后再进签名，但**排除 mermaid / 公式容器内的文本**：
       //   mermaid 渲染成 <svg> 后其内部节点 id、<style> 内容每次生成都不同（随机），
       //   公式排版产物同理 => 若把它们的 textContent 纳入签名，签名永远不稳定，
@@ -393,8 +606,8 @@ export const PROBE_SOURCE = `(function () {
     var normStr = JSON.stringify(sigObj);
 
     return {
-      ok: a1.ok && a2.ok && a3.ok && a4.ok,
-      aLevel: { a1: a1, a2: a2, a3: a3, a4: a4 },
+      ok: a1.ok && a2.ok && a3.ok && a4.ok && a5.ok && a6.ok && a7.ok && a8.ok && a9.ok && a10.ok && a11.ok,
+      aLevel: { a1: a1, a2: a2, a3: a3, a4: a4, a5: a5, a6: a6, a7: a7, a8: a8, a9: a9, a10: a10, a11: a11 },
       bLevel: { b5: b5, b6: b6, b7: b7 },
       signatureNorm: normStr,
       astCount: ast.count, domCount: dom.count,
@@ -409,6 +622,40 @@ export const PROBE_SOURCE = `(function () {
   //   empty-block : 把某块内容清空       => A4 W1 应红
   //   char        : 改块内 1 个字符（**只影响 B5 文本**，A 级按设计不抓 => 期望仍绿）
   function mutate(kind) {
+    // task-25 新增变异（对应 A5–A11）
+    if (kind === 'img-src') {
+      var imgs = document.querySelectorAll('#preview img');
+      for (var i = 0; i < imgs.length; i++) imgs[i].removeAttribute('src');   // 改坏图片 => A5
+      return 'img-src';
+    }
+    if (kind === 'strip-lang') {
+      var codes = document.querySelectorAll('#preview .-src-block.-code-block code');
+      for (var j = 0; j < codes.length; j++) codes[j].className = '';         // 去语言 class => A7
+      return 'strip-lang';
+    }
+    if (kind === 'drop-td') {
+      // 删**表头单元**（th）：列数必然减 1，A8 的 col 校验必判红。
+      // 首版删 data-row 的 td 漏了 —— 若删的是数据行 cell，表头列数不变，断言抓不到。
+      var th = document.querySelector('#preview .-src-block.-table thead th');
+      if (th) { th.remove(); return 'drop-td'; }
+      var td = document.querySelector('#preview .-src-block.-table tr td');
+      if (td) { td.remove(); return 'drop-td-nohead'; }
+      return 'drop-td-noop';
+    }
+    if (kind === 'kill-mermaid-svg') {
+      var mc = document.querySelector('#preview .-mermaid-container svg');
+      if (mc) { mc.remove(); return 'kill-mermaid-svg'; }                     // 破坏 mermaid SVG => A11
+      return 'kill-mermaid-svg-noop';
+    }
+    if (kind === 'strip-inline-formula') {
+      var mj = document.querySelector('#preview mjx-container[data--inline-math="true"]');
+      if (mj) { mj.remove(); return 'strip-inline-formula'; }                 // 删行内公式 => A10
+      return 'strip-inline-formula-noop';
+    }
+    if (kind === 'strip-bold') {
+      document.querySelectorAll('#preview strong').forEach(function (s) { s.replaceWith(document.createTextNode(s.textContent || '')); }); // 去可见加粗 => A9
+      return 'strip-bold';
+    }
     if (kind === 'drop-block') {
       var els = document.querySelectorAll('#preview .-src-block');
       if (els.length > 2) { els[1].remove(); return 'drop-block'; }

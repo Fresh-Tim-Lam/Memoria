@@ -73,7 +73,9 @@ def main():
     DEFAULT_FILES = [
         "corpus/03-block-boundaries.md",   # 小文档
         "corpus/04-non-editable.md",       # 含 table+math+mermaid 的教材
+        "corpus/05-images.md",             # 图片（A5 断言样本）
         "corpus/07-extremes.md",           # 含 table+list
+        "README.md",                       # 含 bold（A9 加粗样本）+ table + mermaid
     ]
     files = [f.strip() for f in args.files.split(",") if f.strip()] if args.files else DEFAULT_FILES
 

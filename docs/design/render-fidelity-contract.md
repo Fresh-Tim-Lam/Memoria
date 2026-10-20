@@ -141,6 +141,35 @@ DOM `.-src-block` 数  ==  parse(body).blocks.length
 
 ---
 
+## 2.5 新增 A 级（task-25 · 渲染保真覆盖面补齐）
+
+> 补齐主预览块级骨架之外的用户可见渲染物。**共性原则：只在「源/期望 > 0」时判定**
+> （`0 === 0` 不算通过，防空文档假绿）；「无头恒空」类需真机/数据，不据空判绿。
+
+| 断言 | 覆盖物 | 判据 | 环境 |
+|---|---|---|---|
+| **A5 图片** | `img[src]` 存在且非空 | 源有 `image` 块 => DOM 至少 1 个 `img` 且都带非空 `src`。**不查 `naturalWidth`**（懒加载/无头不可靠） | headless-ok |
+| **A6 链接** | `a[href]` 非空 + 无残留 `[[x]]` | 源有 `link`/`wiki_link` => DOM 有 `a` 且无空 href、无未解析 wiki 文本 | headless-ok |
+| **A7 代码高亮** | `language-*` class | fence 块（语言非空、**非 mermaid**）=> 对应 `code` 带 `language-<lang>`。token 数 = B 级 | headless-ok |
+| **A8 表格** | 行列数 vs AST `rows` | 行数 = header?1+rows、列数 = 首行 cell 数。**不比列对齐**（AST 无此字段） | headless-ok |
+| **A9 可见效果下限** | bold/italic/code/link/image/mark/font_* | 源有此标记 => DOM 对应元素数 **>0**（只查非零，避开不可反推；精确计数 B 级） | headless-ok |
+| **A10 行内公式按块计数** | `\$...\$` vs 块内已排版节点 | 每块行内公式数 == 该块 `mjx-container[data--inline-math=\"true\"]` 数 | **需真机**（无头 inconclusive） |
+| **A11 mermaid** | 真出 `svg` + `viewBox` 非空 + 无错误占位 | 源有 mermaid => `.-mermaid-container` 内含 `svg[viewBox]`，无 `.-mermaid-error` | headless-ok（SVG 生成不依赖 MathJax） |
+
+**A10 无头 inconclusive 的原因**：无头 MathJax 只排 ≈3 个（真机 270，见
+[realapp-measurement-protocol.md](realapp-measurement-protocol.md) §1）。无头下 A10 的「按块数量一致」
+不可判，仅记录；完整判定与判别力验证在真机（`--cdp`）。
+
+### 2.5.1 未覆盖（须登记，不假装覆盖）
+
+- **agent 面板流式**（`.-agent-msg-body`）、**助手预览弹窗 / 复阅卡**（`-review-manage-box`）：
+  无头 harness 下**无 agent 历史 / 无复习数据** => 这些 surface 恒为空。按「无头恒空不得据空判绿」，
+  登记为**需真机 + 真实数据**项（结构断言已备，待数据）。
+- **导出**：当前无稳定可自动化入口（可能走系统文件对话框）=> 登记缺口。
+- **窗口化口径**：默认取**全渲染模式**基线（开口径①）；子集孔径（②）另记录，非默认。
+
+---
+
 ## 3. B 级 · 记录但不阻断（`warn`，只进报告）
 
 **B 级红不判 FAIL**，仅作为趋势与排查线索。
@@ -179,10 +208,20 @@ heading level / list 项数 / table 行数 / code fence 语言 / 引用嵌套。
 ## 4. 全局签名（阶段 2 的核心工具）
 
 ```
-fidelitySignature = sha256( 规范化投影 B )
+fidelitySignature = sha256( 规范化投影 B )   // v2：含 A5–A11 DOM 投影，obj 内带 v:2 标记
 ```
 
+**签名版本**：
+
+| 版本 | 涵盖断言 | 状态 |
+|---|---|---|
+| **v1** | A1–A4 + B5–B7 | **保留，标 `superseded`**（基线 `fidelity-baseline_19971759.json`） |
+| **v2** | A1–A11 + B5–B7 | **当前生效**（基线 `fidelity-Sold-v2_<sha>.json`） |
+
+> **中途不得换口径**：阶段 2 用 `S_old v2` 做新旧对比；v1 仅作历史参考，不参与阶段 2 判定。
+
 **签名内容**：块数 + kind 序列 + tag 序列 + 已排版公式块数 + 行内公式块数 + **归一化文本**
+   +（v2 新增）img/anchor/lang/table/effect-floor/mermaid 计数
 
 **⚠️ 文本归一化必须排除易变内容**：
 - `mermaid` / `-mermaid-container` / `-mermaid-error` 块的文本 → 置为占位符
@@ -296,3 +335,6 @@ node scripts\benchmark\surface\fidelity_cli.mjs --cdp http://127.0.0.1:9500 `
 | 日期 | 变更 |
 |---|---|
 | 2026-10-20 | 初版。A/B 分级；A3 环境敏感处理；W1/W2 按 Lead 收紧判据实现；签名排除 mermaid/公式易变文本；变异判别力自证 |
+| 2026-10-20 | **task-25 覆盖面补齐**：新增 A5 图片 / A6 链接 / A7 代码高亮(class) / A8 表格行列 / A9 可见效果下限 / A10 行内公式按块 / A11 mermaid 七条断言。基线文档扩为 5 个（+05-images 图片样本、+README 加粗样本） |
+| 2026-10-20 | **签名升级 v2**：纳入 A5-A11 DOM 投影，obj 内带 `v:2`；v1 基线保留标 `superseded`。落盘 `fidelity-Sold-v2_<sha>.json` |
+| 2026-10-20 | 判别力自证：新增 6 个变异（img-src/strip-lang/drop-td/kill-mermaid-svg/strip-bold 全部判红；strip-inline-formula 无头 inconclusive，判别力在真机）。复现性 5 文档签名 2 次一致 |
