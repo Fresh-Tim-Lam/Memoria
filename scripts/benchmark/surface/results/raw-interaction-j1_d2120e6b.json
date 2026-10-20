@@ -1,0 +1,5719 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T02:09:14.848Z",
+  "finishedAt": "2026-10-20T02:10:00.138Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "j1",
+  "results": [
+    {
+      "id": "S0-open-and-ready",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "ready": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 0,
+            "text": ""
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S1-drag-select-same-block",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "dragSelect",
+          "points": {
+            "start": {
+              "x": 314,
+              "y": 393
+            },
+            "end": {
+              "x": 403,
+              "y": 398
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-drag": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "给了 ",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 6,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S2-drag-select-cross-block",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "dragBetweenBlocks",
+          "points": {
+            "start": {
+              "x": 364,
+              "y": 155
+            },
+            "end": {
+              "x": 364,
+              "y": 352
+            },
+            "blockA": 0,
+            "blockB": 2
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-cross-drag": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "03 频率响应：\n，\n\n录入：2026",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 4,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应："
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 5,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "：2026-10-09　"
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S3-double-click-word",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "doubleClickInBlock",
+          "points": {
+            "start": {
+              "x": 295,
+              "y": 393
+            },
+            "end": {
+              "x": 314,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-dblclick": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "虽",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 2,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S4-shift-arrow-extend",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 333,
+              "y": 393
+            },
+            "end": {
+              "x": 352,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "snapshot"
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "collapsed": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 4,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 4,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        },
+        "after-shift-right-x3": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 4,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 4,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S5-ctrl-shift-arrow-word",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 314,
+              "y": 393
+            },
+            "end": {
+              "x": 333,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-ctrl-shift-right": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "给了",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 5,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S6-shift-home-end",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 364,
+              "y": 393
+            },
+            "end": {
+              "x": 368,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "snapshot"
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-shift-end": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "，求 \n 却用不到它 —— 该条件应是留",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 6,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 16,
+              "textLen": 45,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": " 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        },
+        "after-shift-home": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "题面虽给了 ",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 0,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 6,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S7-ctrl-a",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 295,
+              "y": 393
+            },
+            "end": {
+              "x": 314,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "key"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-ctrl-a": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "hw-003 频率响应：\n，\n\n录入：2026-10-09　主题：连续LTI系统 · 频率响应 \n\n\n<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内知识点（见文中 …）。 -->\n\n\n1. 题面\n\n已知连续时间 LTI 系统的冲激响应为\n\n\n\n输入为\n\n\n\n求系统的频率响应 \n。\n\n\n题面虽给了 \n，求 \n 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。\n\n\n2. 答案\n\n\n量\t表达式\t备注\n一阶低通\n幅度响应\t\n 的偶函数\n相位响应\t\n 的奇函数\n直流增益\t\n半功率点\t\n 减半处\n极点\t\n左半平面 ⇒ 稳定\n\n3. 求解：\n 是 \n 的 Fourier 变换\n\n依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）：\n\n\n\n（另一条等价口径 \n 见 §4。）\n\n\n3.1 从定义硬算\n\n 把积分下限改成 \n：\n\n\n\n被积函数的实部指数为 \n ⇒ 积分收敛，\n 端趋于零：\n\n\n\n\n3.2 查表（一行）\n\n库内变换对（\n）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）：\n\n\n\n取 \n 即得 \n，与 §3.1 一致。\n\n\n同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2831）：\n\n\n\n3.3 前置条件：先判存在性\n\n「对于稳定的连续LTI系统，其冲激响应一定存在Fourier变换」（img-ch2-3-99-连续LTI系统的频率响应计算，img/ch02-3_信号的频域分析.md:2799-2816）。本题先验证：\n\n\n\n⇒ BIBO 稳定（判据 img-ch2-2-72-4-冲激响应与LTI系统稳定性）；又 \n ⇒ 因果（img-ch2-2-71-3-冲激响应与LTI系统因果性）。\n\n\n稳定是 \n 存在的前提：换成 \n，\n，Fourier 变换不存在。\n\n\n4. 别混：\n 与输入无关\n\n 只是「给一个输入就能反推 \n」的测量式；\n 本身是系统属性 ——「\n 与系统的输入和输出无关」（img-ch2-3-98-连续时间LTI系统的频域描述，img/ch02-3_信号的频域分析.md:2783）。\n\n\n⇒ 本题的 \n 对第 1 问是冗余条件；走 \n 反而要先知道 \n，绕远。\n\n\n5. 延伸：若下一小问是「求零状态响应」\n\n输入 \n ⇒ \n。先乘、再部分分式、再查表（\n 见 img-ch2-3-108-非周期信号通过连续LTI系统的零状态响应；同型解法见 img-ch2-3-109-例-已知描述某稳定的连续LTI系统的微分方程为）：\n\n\n\n\n时域核对（卷积公式见 img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h，img/ch02-2_信号与系统的时域分析.md:1412）：\n\n\n\n取 \n：\n ✓\n\n\n频域法的前提是 \n 存在。课件反例：输入 \n 的 Fourier 变换不存在，不能用频域法（img/ch02-3_信号的频域分析.md:3085-3089）。\n\n\n6. 易错点\n\n符号：结果是 \n，不是 \n。\n 配 \n —— 衰减指数对应 \n，极点落在负实轴。\n模漏根号：\n，不是 \n。\n先判存在性：不稳定系统没有 Fourier 变换，\n 无从定义；「稳定 ⇒ 存在」是单向的。\n只管零状态：\n 描述零状态响应；由初始状态引起的零输入响应不归它管（img-ch2-2-42-零状态响应）。\n一阶低通的特征：\n 随 \n 单调下降，\n 处降 3 dB，高频段每十倍频程 −20 dB。\n7. 自检\n\n极限：\n ✓；\n ✓（一阶低通）\n共轭对称：\n 为实信号 ⇒ \n，\n 偶、\n 奇 ✓（img-ch2-3-95-幅度响应与相位响应）\n变换对前提：\n ✓\n延伸解：\n ✓、\n 时 \n ✓，与时域卷积公式结果一致 ✓\n<!-- 来源：题面来自用户提供的作业截图（2026-10-09）；求解过程由助手归纳。变换对依据 img-ch2-3-54-常见连续时间信号的频谱（img/ch02-3信号的频域分析.md:1384-1394），定义与存在性依据 img-ch2-3-97-连续时间LTI系统的频率响应（:2673-2690）、img-ch2-3-99-连续LTI系统的频率响应计算（:2799-2816），同型例题 img-ch2-3-100-连续LTI系统频率响应的计算（:2818-2831），卷积公式 img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h（img/ch02-2信号与系统的时域分析.md:1403-1412）。 -->\n\n",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 0,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应："
+            },
+            "focus": {
+              "nodeType": 1,
+              "offset": 0,
+              "textLen": null,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": ""
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S8-shift-click-extend",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 321,
+              "y": 155
+            },
+            "end": {
+              "x": 343,
+              "y": 155
+            },
+            "total": 38,
+            "box": {
+              "x": 520,
+              "y": 217
+            }
+          }
+        },
+        {
+          "op": "snapshot"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 364,
+              "y": 352
+            },
+            "end": {
+              "x": 373,
+              "y": 352
+            },
+            "total": 37,
+            "box": {
+              "x": 520,
+              "y": 353
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "after-first-click": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 2,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应："
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 2,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应："
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        },
+        "after-shift-click": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "-003 频率响应：\n，\n\n录入：2026",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 2,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应："
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 5,
+              "textLen": 12,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "：2026-10-09　"
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S9-ime-compose-commit",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickInBlock",
+          "points": {
+            "start": {
+              "x": 314,
+              "y": 393
+            },
+            "end": {
+              "x": 333,
+              "y": 393
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "snapshot"
+        },
+        {
+          "op": "ime"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "before-ime": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 6,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        },
+        "after-ime": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 5,
+              "textLen": 8,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽信号给了 "
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 5,
+              "textLen": 8,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽信号给了 "
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽信号给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "S10-brush-highlight-drag",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickSelector",
+          "box": {
+            "x": 482,
+            "y": 84,
+            "w": 37
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "clickSelector",
+          "box": {
+            "x": 481,
+            "y": 111,
+            "w": 24
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "snapshot"
+        },
+        {
+          "op": "dragSelect",
+          "points": {
+            "start": {
+              "x": 314,
+              "y": 393
+            },
+            "end": {
+              "x": 387,
+              "y": 398
+            },
+            "total": 63,
+            "box": {
+              "x": 520,
+              "y": 426
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "snapshot"
+        }
+      ],
+      "snapshots": {
+        "brush-armed": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": true,
+            "rangeCount": 1,
+            "text": "",
+            "anchor": {
+              "nodeType": 1,
+              "offset": 0,
+              "textLen": null,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)录入：2026-10"
+            },
+            "focus": {
+              "nodeType": 1,
+              "offset": 0,
+              "textLen": null,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)录入：2026-10"
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        },
+        "after-brush": {
+          "url": "http://127.0.0.1:8645/",
+          "selection": {
+            "collapsed": false,
+            "rangeCount": 1,
+            "text": "给了",
+            "anchor": {
+              "nodeType": 3,
+              "offset": 3,
+              "textLen": 3,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "题面虽"
+            },
+            "focus": {
+              "nodeType": 3,
+              "offset": 2,
+              "textLen": 2,
+              "blockIndex": null,
+              "inPreview": true,
+              "sample": "给了"
+            }
+          },
+          "blocks": [
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "hw-003 频率响应：h(t)=e−3tu(t)，x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "录入：2026-10-09 主题：连续LTI系统 · 频率响应 H(jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "<!-- ⚠ 来源待核实：题面来自用户提供的作业截图（2026-10-09，可见部分止于「求系统的频率响应 H(jω)」）；求解过程由助手归纳整理，依据指向库内"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "1. 题面"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "已知连续时间 LTI 系统的冲激响应为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=e−3tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "输入为"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "x(t)=e−tu(t)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "求系统的频率响应 H(jω)。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "题面虽给了 x(t)，求 H(jω) 却用不到它 —— 该条件应是留给后续小问的，故本文件 §5 把「求零状态响应」一并做掉。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "2. 答案"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "量表达式备注H(jω)13+jω一阶低通幅度响应|H(jω)|=19+ω2ω 的偶函数相位响应φ(ω)=−arctan⁡ω3ω 的奇函数直流增益H(j0)=13"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3. 求解：H(jω) 是 h(t) 的 Fourier 变换"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "依据（img-ch2-3-97-连续时间LTI系统的频率响应，img/ch02-3_信号的频域分析.md:2673-2690）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=F{h(t)}=∫−∞∞h(t)e−jωtdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "（另一条等价口径 H(jω)=Yzs(jω)/X(jω) 见 §4。）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.1 从定义硬算"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "u(t) 把积分下限改成 0："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=∫0∞e−3te−jωtdt=∫0∞e−(3+jω)tdt"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "被积函数的实部指数为 −3<0 ⇒ 积分收敛，∞ 端趋于零："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=[e−(3+jω)t−(3+jω)]t=0∞=0−1−(3+jω)"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "H(jω)=13+jω"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.2 查表（一行）"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "库内变换对（α>0）（img-ch2-3-54-常见连续时间信号的频谱，img/ch02-3_信号的频域分析.md:1384-1394）："
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "F[e−αtu(t)]=1jω+α"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "取 α=3 即得 1jω+3，与 §3.1 一致。"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "同型课件例题（两项之和，用线性特性逐项变换）（img-ch2-3-100-连续LTI系统频率响应的计算，img/ch02-3_信号的频域分析.md:2818-2"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "h(t)=(3e−2t+2e−4t)u(t) ⟹ H(jω)=3jω+2+2jω+4"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": "3.3 前置条件：先判存在性"
+            },
+            {
+              "i": null,
+              "srcLine": null,
+              "text": ""
+            }
+          ]
+        }
+      },
+      "error": null
+    }
+  ]
+}

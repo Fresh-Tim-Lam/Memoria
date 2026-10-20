@@ -520,6 +520,10 @@ async function runScenarios(ix, cdp, scenarios, { onSnapshot } = {}) {
               try {
                 await cdp.evalJS(`window.MemoriaApp.openFile(${js(st.file)}, ${js(st.opts || {})})`);
                 await cdp.waitFor(`window.state.currentPath === ${js(st.file)} && !!window.state.doc`, { timeout: 20000, label: 'open ' + st.file });
+                // 二次校验：确认没有被随后的启动/刷新动作覆盖
+                await sleep(350);
+                const stillThere = await cdp.evalJS(`window.state.currentPath === ${js(st.file)}`);
+                if (!stillThere) throw new Error('打开后被其它动作覆盖: ' + st.file);
                 lastErr = null;
                 break;
               } catch (e) {
@@ -652,10 +656,15 @@ async function waitAppSettled(cdp, { stableMs = 1200, timeout = 40000 } = {}) {
   let last = null, since = Date.now();
   const t0 = Date.now();
   while (Date.now() - t0 < timeout) {
-    let cur = null;
-    try { cur = await cdp.evalJS('(window.state && window.state.currentPath) || null'); } catch { /* 还没就绪 */ }
+    let cur = null, hasDoc = false;
+    try {
+      const st = await cdp.evalJS('({p: (window.state && window.state.currentPath) || null, d: !!(window.state && window.state.doc)})');
+      cur = st && st.p; hasDoc = !!(st && st.d);
+    } catch { /* 还没就绪 */ }
+    // 必须「已真有文档」才算稳定：否则启动早期 currentPath=null 也会被误判为已落定，
+    // 随后应用才去自动打开默认文件，把剧本的 open 覆盖掉（实测踩过）。
     if (cur !== last) { last = cur; since = Date.now(); }
-    else if (cur && Date.now() - since >= stableMs) return cur;
+    else if (cur && hasDoc && Date.now() - since >= stableMs) return cur;
     await sleep(200);
   }
   return last;
@@ -690,7 +699,9 @@ async function withBrowser(url, fn) {
       throw new Error('应用未就绪（reload 重试后仍失败）: ' + JSON.stringify(diag) + ' | ' + (lastErr && lastErr.message));
     }
     const settledPath = await waitAppSettled(cdp);
-    if (settledPath != null) await cdp.evalJS('true'); // 保活一次，确保 settled 判定不是陈旧值
+    // 启动尾动作（恢复上次视图/刷新文件列表）可能再改一次 currentPath ⇒ 再等一会并复查
+    await sleep(1500);
+    await cdp.waitFor('!!window.state && !!window.state.doc', { timeout: 20000, label: 'doc-after-settle' });
     const ix = new Interactions(cdp);
     return await fn(cdp, ix, edge);
   } finally {
@@ -715,6 +726,136 @@ async function main() {
     });
     process.stdout.write(JSON.stringify(r, null, 2) + '\n');
     process.exit(r.ok ? 0 : 1);
+  }
+
+  if (args.bench) {
+    if (!args.url || !args.file) throw new Error('--bench 需要 --url 与 --file（--file-b 可选）');
+    const fileA = args.file;
+    const fileB = args['file-b'] || null;
+    const minBlocks = parseInt(args['min-blocks'] || '5', 10);
+    const out = await withBrowser(args.url, async (cdp, ix, edge) => {
+      const rec = { schema: 'memoria-baseline-bench/v1', fileA, fileB, minBlocks, steps: {}, samples: {} };
+
+      /** 等预览「块出现且数量稳定」（连续 3 次相同才算定）—— 这是「可见就绪」的判据。 */
+      async function waitPreviewReady(timeout = 180000) {
+        const t0 = Date.now();
+        let lastN = -1, lastM = -1, stable = 0, n = 0, m = 0;
+        let blocksAt = 0;
+        const TYPESET_GRACE = 25000; // 块就绪后，最多再等这么久让公式排版稳定
+        for (;;) {
+          const snap = await cdp.evalJS(`(function(){
+            return {
+              n: document.querySelectorAll('#preview .-src-block').length,
+              m: document.querySelectorAll('#preview mjx-container').length,
+              loading: !!document.querySelector('#preview .-preview-loading')
+            };
+          })()`);
+          n = snap.n; m = snap.m;
+          if (n >= minBlocks && !snap.loading) {
+            if (!blocksAt) blocksAt = Date.now();
+            if (n === lastN && m === lastM) {
+              stable++;
+              if (stable >= 3) return { blocks: n, typeset: m, ms: Date.now() - t0, typesetStable: true };
+            } else { lastN = n; lastM = m; stable = 0; }
+            // 块已就绪但公式排版一直不稳 ⇒ 到宽限就收，如实标注（不假装稳定）
+            if (Date.now() - blocksAt > TYPESET_GRACE) {
+              return { blocks: n, typeset: m, ms: Date.now() - t0, typesetStable: false };
+            }
+          } else { lastN = -1; lastM = -1; stable = 0; blocksAt = 0; }
+          if (Date.now() - t0 > timeout) throw new Error('预览就绪超时（blocks=' + n + ' typeset=' + m + '）');
+          await sleep(80);
+        }
+      }
+
+      /** 应用默认可能是 source 视图（此时 #preview 为空）⇒ 显式切到预览。 */
+      async function ensurePreviewView() {
+        const mode = await cdp.evalJS('(window.state||{}).viewMode');
+        if (mode === 'preview') return;
+        await cdp.evalJS(`(function(){var b=document.querySelector('.-view-btn[data-view="preview"]');if(b)b.click();return !!b;})()`);
+        await cdp.waitFor('(window.state||{}).viewMode === "preview"', { timeout: 15000, label: 'viewMode-preview' });
+      }
+
+      // ① 首开（应用刚启动后的第一次打开）
+      {
+        await ensurePreviewView();
+        const t0 = Date.now();
+        await cdp.evalJS(`window.MemoriaApp.openFile(${js(fileA)}, {})`);
+        // 打开后视图可能被「按文件的视图偏好」复位成 source ⇒ 再确保一次（不计入耗时）
+        await ensurePreviewView();
+        const r = await waitPreviewReady();
+        rec.steps.coldOpen = { path: fileA, readyMs: Date.now() - t0, blocks: r.blocks, typeset: r.typeset };
+      }
+
+      // ② 切页签（A→B→A，重复 N 次；报告每次「回到 A 可见」的耗时）
+      if (fileB) {
+        const samples = [];
+        await ensurePreviewView();
+        for (let i = 0; i < 3; i++) {
+          await cdp.evalJS(`window.MemoriaApp.openFile(${js(fileB)}, {})`);
+          await ensurePreviewView();
+          await waitPreviewReady();
+          const t0 = Date.now();
+          await cdp.evalJS(`window.MemoriaApp.openFile(${js(fileA)}, {})`);
+          await ensurePreviewView();
+          const r = await waitPreviewReady();
+          samples.push({ ms: Date.now() - t0, blocks: r.blocks, typeset: r.typeset });
+        }
+        rec.samples.tabSwitchBackToA = samples;
+        rec.steps.tabSwitch = { medianMs: samples.map((s) => s.ms).sort((a, b) => a - b)[1] };
+      }
+
+      // ③ 打字（进入编辑态 → 逐键；量「按键派发 → 预览 DOM 有变化」的时延）
+      {
+        await cdp.evalJS('(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()');
+        await sleep(500);
+        await cdp.evalJS(`(function(){var b=document.querySelectorAll('#preview .-src-block')[0];if(b)b.scrollIntoView({block:'center'});return !!b;})()`);
+        const box = await cdp.evalJS(`(function(){var b=document.querySelectorAll('#preview .-src-block')[0];if(!b)return null;var r=b.getBoundingClientRect();return {x:Math.round(r.left+40),y:Math.round(r.top+r.height/2)};})()`);
+        if (box) await ix.click(box.x, box.y);
+        await sleep(200);
+        await cdp.evalJS(`(function(){
+          window.__bench = { samples: [], t0: 0 };
+          var host = document.querySelector('#preview');
+          var mo = new MutationObserver(function(){
+            if (window.__bench.t0) { window.__bench.samples.push(performance.now() - window.__bench.t0); window.__bench.t0 = 0; }
+          });
+          mo.observe(host, { subtree: true, characterData: true, childList: true, attributes: true });
+          window.__benchMo = mo;
+          return true;
+        })()`);
+        const warmup = parseInt(args['warmup-keys'] || '5', 10);
+        const keys = parseInt(args['keys'] || '30', 10);
+        for (let i = 0; i < warmup + keys; i++) {
+          await cdp.evalJS('window.__bench.t0 = performance.now(); true');
+          await ix.typeText('a');
+          await sleep(130);
+        }
+        const samples = await cdp.evalJS('(window.__bench && window.__bench.samples) || []');
+        const measured = samples.slice(warmup);
+        const sorted = measured.slice().sort((a, b) => a - b);
+        const pick = (q) => sorted.length ? sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))] : null;
+        rec.samples.typing = measured.map((v) => Math.round(v * 10) / 10);
+        rec.steps.typing = {
+          warmup, keys, n: measured.length,
+          minMs: sorted.length ? Math.round(sorted[0] * 10) / 10 : null,
+          medianMs: sorted.length ? Math.round(pick(0.5) * 10) / 10 : null,
+          p95Ms: sorted.length ? Math.round(pick(0.95) * 10) / 10 : null,
+          maxMs: sorted.length ? Math.round(sorted[sorted.length - 1] * 10) / 10 : null,
+        };
+      }
+
+      // ④ 内存（Chromium 的 JS 堆；不是进程 RSS，标注清楚）
+      const mem = await cdp.evalJS('(performance.memory ? {usedJSHeapMB: Math.round(performance.memory.usedJSHeapSize/1048576*10)/10, totalJSHeapMB: Math.round(performance.memory.totalJSHeapSize/1048576*10)/10} : null)');
+      const blocks = await cdp.evalJS("document.querySelectorAll('#preview .-src-block').length");
+      const nodes = await cdp.evalJS("document.querySelectorAll('#preview *').length");
+      rec.steps.memory = { ...(mem || {}), blocks, domNodesInPreview: nodes };
+      rec.browser = edge.browser;
+      rec.finishedAt = new Date().toISOString();
+      return rec;
+    });
+    fs.mkdirSync(path.dirname(args.out), { recursive: true });
+    fs.writeFileSync(args.out, JSON.stringify(out, null, 2), 'utf8');
+    process.stdout.write('__BENCH_JSON__' + JSON.stringify({ ok: true, out: args.out, steps: out.steps }) + '\n');
+    process.exit(0);
   }
 
   if (args.scenarios) {

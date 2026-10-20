@@ -1,0 +1,41 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T02:57:29.254Z",
+  "finishedAt": "2026-10-20T02:58:17.214Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "dump3",
+  "results": [
+    {
+      "id": "P3-dump-preview",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "html": "<div class=\"-preview-content\"><h1 class=\"-src-block\" data--block-index=\"0\" data--src-line=\"1\" data--src-line-end=\"1\">系统的分类</h1><div class=\"-src-block -blank-block\" data--block-index=\"1\" data--src-line=\"2\" data--src-line-end=\"2\"><br></div><p class=\"-src-block\" data--block-index=\"2\" data--src-line=\"3\"",
+            "childCount": 1,
+            "viewMode": "preview",
+            "curPath": "img/ppt2.md",
+            "docBodyLen": 13186,
+            "docLines": 659
+          }
+        },
+        {
+          "op": "eval",
+          "value": {
+            "editorValLen": 0,
+            "editorValHead": ""
+          }
+        }
+      ],
+      "snapshots": {},
+      "error": null
+    }
+  ]
+}

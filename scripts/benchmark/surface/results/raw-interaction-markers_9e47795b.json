@@ -1,0 +1,61 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T03:25:55.736Z",
+  "finishedAt": "2026-10-20T03:26:51.247Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "markers",
+  "results": [
+    {
+      "id": "P5-typeset-markers",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "blocks": 2003,
+            "mjx": 0,
+            "svg": 3,
+            "mjxId": 0,
+            "mathJaxCls": 0,
+            "mathTag": 0,
+            "scriptTags": 0,
+            "switchAsync": null,
+            "lastSwitch": null,
+            "parts": null,
+            "mathjaxGlobals": {
+              "hasMathJax": true,
+              "hasStartup": true,
+              "typeset": "function"
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "t27_mjx": 0,
+            "t27_svg": 3,
+            "t27_mjxId": 0,
+            "t27_nodes": 4693,
+            "switchAsync": null,
+            "parts": null
+          }
+        }
+      ],
+      "snapshots": {},
+      "error": null
+    }
+  ]
+}

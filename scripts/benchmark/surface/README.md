@@ -69,3 +69,23 @@ python scripts/benchmark/surface/run_interaction.py \
 - 三条实测坑（写进代码注释，别再踩）：① `mouseMoved` 必须带 `button:'left'` 才会扩选（只给 `buttons:1` 不扩）；
   ② 跨块拖拽两点必须**同时在视口内**（视口外的事件会被浏览器丢弃）；③ 应用启动会**异步自动打开默认文件**，
   抢在它前面 `open` 会被覆盖 ⇒ 必须先等 `currentPath` 稳定。
+
+## 大库基线读数（baseline，2026-10-20 新增）
+
+`run_probe.py` 的用例绑死 `tests/probe-kb` 构造语料；**大库**（真实知识库，如 `数字通信原理`）需要另一套读数：
+
+```bash
+python scripts/benchmark/surface/run_baseline.py \
+    --kb "artifacts/baseline-kb/数字通信原理" \
+    --file "教材/02_第2章_信号分析基础.md" \
+    --file-b "教材/04_第4章_信息论基础.md" \
+    --label legacy-bigdoc
+```
+
+量四件事：**首开就绪 / 切页签回原文件 / 逐键打字时延 / JS 堆与 DOM 节点规模**。
+
+**已知读数限制（必须随报告一起读）**：
+- 「就绪」判据 = 块数连续稳定 + 无 loading 占位；在**无头 harness** 里公式排版（MathJax）可能不完成
+  （实测某 158KB 文档预 览 `svg` 仅 3 个）⇒ 该读数应理解为**布局就绪**，不含完整公式排版；
+- 含公式的**完整**首开耗时需要在**真实应用**上补测（人执行，按 §交互契约测试 口径记录）。
+- 台账里的历史基线（`results/`）与本次读数必须同语料同机器才可比。

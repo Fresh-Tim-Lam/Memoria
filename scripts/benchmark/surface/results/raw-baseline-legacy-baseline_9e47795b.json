@@ -1,0 +1,81 @@
+{
+  "schema": "memoria-baseline-bench/v1",
+  "fileA": "img/ppt2.md",
+  "fileB": "homework/hw-003-frequency-response.md",
+  "minBlocks": 5,
+  "steps": {
+    "coldOpen": {
+      "path": "img/ppt2.md",
+      "readyMs": 632,
+      "blocks": 565
+    },
+    "tabSwitch": {
+      "medianMs": 236
+    },
+    "typing": {
+      "warmup": 5,
+      "keys": 30,
+      "n": 30,
+      "minMs": 5,
+      "medianMs": 5.7,
+      "p95Ms": 7.1,
+      "maxMs": 7.2
+    },
+    "memory": {
+      "usedJSHeapMB": 26.8,
+      "totalJSHeapMB": 42.6,
+      "blocks": 565,
+      "domNodesInPreview": 6618
+    }
+  },
+  "samples": {
+    "tabSwitchBackToA": [
+      {
+        "ms": 236,
+        "blocks": 565
+      },
+      {
+        "ms": 250,
+        "blocks": 565
+      },
+      {
+        "ms": 235,
+        "blocks": 565
+      }
+    ],
+    "typing": [
+      5.2,
+      5.7,
+      6,
+      6.6,
+      5.5,
+      6.2,
+      7.1,
+      5,
+      5.4,
+      7.2,
+      5.6,
+      5.2,
+      5.5,
+      6.2,
+      5,
+      5.4,
+      6.7,
+      5.5,
+      6.1,
+      6.1,
+      5.2,
+      5.1,
+      5.7,
+      5.9,
+      6.6,
+      5.8,
+      7,
+      5.8,
+      5.6,
+      5.2
+    ]
+  },
+  "browser": "Edg/155.0.4283.45",
+  "finishedAt": "2026-10-20T03:11:17.602Z"
+}

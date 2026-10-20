@@ -1,0 +1,898 @@
+{
+  "schema": "surface-probe-raw/2",
+  "browser": "Edg/155.0.4283.45",
+  "edgePath": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "url": "http://127.0.0.1:8643/",
+  "kbRoot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_probe_kb",
+  "casesFile": "D:\\AAA_Jupyter\\Memoria\\tests\\probe-kb\\cases\\cases.json",
+  "startedAt": "2026-10-20T02:47:49.519Z",
+  "measurementProtocol": {
+    "version": "1",
+    "doc": "docs/design/benchmark-measurement-protocol.md",
+    "c9": {
+      "warmupKeys": 5,
+      "rounds": 5,
+      "keysPerRound": 10,
+      "settleTimeoutMs": 1500,
+      "noise": {
+        "maxIqrOverMedian": 0.25,
+        "maxP95OverMedian": 1.6,
+        "maxRoundSpread": 0.2,
+        "minLiveKeys": 20
+      }
+    }
+  },
+  "cases": {
+    "sel_text_fidelity": {
+      "id": "sel_text_fidelity",
+      "covers": [
+        "C2"
+      ],
+      "status": "ran",
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "sel_typing_ascii": {
+      "id": "sel_typing_ascii",
+      "covers": [
+        "C3",
+        "C4"
+      ],
+      "status": "ran",
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "matchText": "这是加粗之前可以打字的一句",
+        "key": "a",
+        "setup": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "offset": 0,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 4,
+            "nodePath": [
+              0
+            ],
+            "offset": 0
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 33,
+          "blockTextHead": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。"
+        },
+        "before": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": "5",
+          "srcLineFromCaptured": false,
+          "domText": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 33,
+          "srcLineLen": 37
+        },
+        "after": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": null,
+          "srcLineFromCaptured": true,
+          "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 34,
+          "srcLineLen": 38,
+          "domHasChar": true,
+          "srcHasChar": true,
+          "domStartsWithChar": true,
+          "srcStartsWithChar": true
+        },
+        "edits": [
+          {
+            "n": 1,
+            "bornAt": 1182.1000000238419,
+            "settledAt": 1185.5,
+            "insertMs": 2.399999976158142,
+            "fromKeyMs": 3.699999988079071,
+            "appendMs": 2.5899999916553043
+          }
+        ],
+        "immediateRead": true,
+        "note": "typeText 用 Input.dispatchKeyEvent(keyDown+keyUp, text) 注入受信任输入；读 DOM 未等 rAF。"
+      }
+    },
+    "sel_jump_head_mid_tail": {
+      "id": "sel_jump_head_mid_tail",
+      "covers": [
+        "C6"
+      ],
+      "status": "ran",
+      "evidence": {
+        "file": "corpus/06-links-and-kp.md",
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange",
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 4,
+              "end": 4,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 250,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 19,
+              "end": 19,
+              "text": "目标-中"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 765,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 25,
+              "end": 25,
+              "text": "段落三，用于填充。"
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 116,
+              "relBottom": 159,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1038,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": true
+            }
+          }
+        ]
+      }
+    },
+    "sel_switch_mode": {
+      "id": "sel_switch_mode",
+      "covers": [
+        "C7"
+      ],
+      "status": "ran",
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          }
+        ],
+        "anchor0": 1,
+        "anchorFinal": 1,
+        "delta": 0
+      }
+    },
+    "sel_scroll_stress": {
+      "id": "sel_scroll_stress",
+      "covers": [
+        "C9"
+      ],
+      "status": "ran",
+      "evidence": {
+        "file": "scale/scale-5k.md",
+        "docLines": 5000,
+        "setup": {
+          "ok": true,
+          "blockIndex": 21,
+          "srcLine": 36,
+          "offset": 23,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 21,
+            "nodePath": [
+              4
+            ],
+            "offset": 1
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 23,
+          "blockTextHead": "跳转示例：目标-规模-0 与 另一个链接-0。"
+        },
+        "protocol": "docs/design/benchmark-measurement-protocol.md",
+        "measurement": {
+          "protocolVersion": "1",
+          "config": {
+            "warmupKeys": 5,
+            "rounds": 5,
+            "keysPerRound": 10,
+            "settleTimeoutMs": 1500,
+            "inputChannel": "CDP Input.dispatchKeyEvent(keyDown+keyUp, text)",
+            "inputNote": "逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。"
+          },
+          "primary": {
+            "metric": "appendMs",
+            "perKey": {
+              "n": 50,
+              "min": 7.98,
+              "median": 9.695,
+              "p95": 10.818,
+              "max": 12.11,
+              "mean": 9.74,
+              "q1": 9.205,
+              "q3": 10.22,
+              "iqr": 1.015,
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.116
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                10.255,
+                10.045,
+                9.345,
+                9.205,
+                9.835
+              ],
+              "median": 9.835,
+              "min": 9.205,
+              "max": 10.255,
+              "spread": 0.107
+            }
+          },
+          "control": {
+            "metric": "fromKeyMs",
+            "perKey": {
+              "n": 50,
+              "min": 11.4,
+              "median": 13.85,
+              "p95": 15.455,
+              "max": 17.3,
+              "mean": 13.914,
+              "q1": 13.15,
+              "q3": 14.6,
+              "iqr": 1.45,
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.116
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                14.65,
+                14.35,
+                13.35,
+                13.15,
+                14.05
+              ],
+              "median": 14.05,
+              "min": 13.15,
+              "max": 14.65,
+              "spread": 0.107
+            },
+            "perKeyMin": 11.4
+          },
+          "cleanKeys": {
+            "n": 50,
+            "min": 11.4,
+            "median": 13.85,
+            "p95": 15.455,
+            "max": 17.3,
+            "mean": 13.914,
+            "q1": 13.15,
+            "q3": 14.6,
+            "iqr": 1.45,
+            "iqrOverMedian": 0.105,
+            "p95OverMedian": 1.116,
+            "keys": [
+              12.9,
+              15,
+              15.2,
+              15.3,
+              16.7,
+              14,
+              14.3,
+              13.1,
+              13.5,
+              15.5,
+              14.2,
+              15.2,
+              14.5,
+              15.4,
+              15,
+              13.6,
+              13.7,
+              13.6,
+              12.8,
+              17.3,
+              13.3,
+              13.8,
+              11.7,
+              12.7,
+              14.3,
+              11.4,
+              12.9,
+              13.8,
+              13.4,
+              15.1,
+              13.6,
+              14.1,
+              12.6,
+              12.8,
+              13.3,
+              12.4,
+              13,
+              13.9,
+              12.4,
+              14.9,
+              14.6,
+              14.5,
+              13.6,
+              14.6,
+              13.9,
+              14.2,
+              12.1,
+              13.3,
+              14.8,
+              13.9
+            ]
+          },
+          "counts": {
+            "warmup": 5,
+            "live": 50,
+            "settledKeys": 55,
+            "deadKeys": 0,
+            "settleTimeouts": 0,
+            "warmupSamples": [
+              {
+                "fromKeyMs": 13.5,
+                "appendMs": 9.45
+              },
+              {
+                "fromKeyMs": 14.5,
+                "appendMs": 10.15
+              },
+              {
+                "fromKeyMs": 15,
+                "appendMs": 10.5
+              },
+              {
+                "fromKeyMs": 14.8,
+                "appendMs": 10.36
+              },
+              {
+                "fromKeyMs": 13.7,
+                "appendMs": 9.59
+              }
+            ]
+          },
+          "samples": [
+            {
+              "round": 0,
+              "seq": 6,
+              "arrivalMs": 14546.9,
+              "fromKeyMs": 12.9,
+              "appendMs": 9.03,
+              "insertMs": 12.4
+            },
+            {
+              "round": 0,
+              "seq": 7,
+              "arrivalMs": 14568.3,
+              "fromKeyMs": 15,
+              "appendMs": 10.5,
+              "insertMs": 14.6
+            },
+            {
+              "round": 0,
+              "seq": 8,
+              "arrivalMs": 14592,
+              "fromKeyMs": 15.2,
+              "appendMs": 10.64,
+              "insertMs": 14.9
+            },
+            {
+              "round": 0,
+              "seq": 9,
+              "arrivalMs": 14632.5,
+              "fromKeyMs": 15.3,
+              "appendMs": 10.71,
+              "insertMs": 14.8
+            },
+            {
+              "round": 0,
+              "seq": 10,
+              "arrivalMs": 14657.4,
+              "fromKeyMs": 16.7,
+              "appendMs": 11.69,
+              "insertMs": 16.4
+            },
+            {
+              "round": 0,
+              "seq": 11,
+              "arrivalMs": 14684,
+              "fromKeyMs": 14,
+              "appendMs": 9.8,
+              "insertMs": 13.7
+            },
+            {
+              "round": 0,
+              "seq": 12,
+              "arrivalMs": 14707.9,
+              "fromKeyMs": 14.3,
+              "appendMs": 10.01,
+              "insertMs": 14
+            },
+            {
+              "round": 0,
+              "seq": 13,
+              "arrivalMs": 14732,
+              "fromKeyMs": 13.1,
+              "appendMs": 9.17,
+              "insertMs": 12.8
+            },
+            {
+              "round": 0,
+              "seq": 14,
+              "arrivalMs": 14757.4,
+              "fromKeyMs": 13.5,
+              "appendMs": 9.45,
+              "insertMs": 13.3
+            },
+            {
+              "round": 0,
+              "seq": 15,
+              "arrivalMs": 14778.3,
+              "fromKeyMs": 15.5,
+              "appendMs": 10.85,
+              "insertMs": 15.2
+            },
+            {
+              "round": 1,
+              "seq": 16,
+              "arrivalMs": 14806.3,
+              "fromKeyMs": 14.2,
+              "appendMs": 9.94,
+              "insertMs": 13.9
+            },
+            {
+              "round": 1,
+              "seq": 17,
+              "arrivalMs": 14828,
+              "fromKeyMs": 15.2,
+              "appendMs": 10.64,
+              "insertMs": 14.9
+            },
+            {
+              "round": 1,
+              "seq": 18,
+              "arrivalMs": 14853.2,
+              "fromKeyMs": 14.5,
+              "appendMs": 10.15,
+              "insertMs": 14.2
+            },
+            {
+              "round": 1,
+              "seq": 19,
+              "arrivalMs": 14875.9,
+              "fromKeyMs": 15.4,
+              "appendMs": 10.78,
+              "insertMs": 15.2
+            },
+            {
+              "round": 1,
+              "seq": 20,
+              "arrivalMs": 14901.3,
+              "fromKeyMs": 15,
+              "appendMs": 10.5,
+              "insertMs": 14.7
+            },
+            {
+              "round": 1,
+              "seq": 21,
+              "arrivalMs": 14925.4,
+              "fromKeyMs": 13.6,
+              "appendMs": 9.52,
+              "insertMs": 13.3
+            },
+            {
+              "round": 1,
+              "seq": 22,
+              "arrivalMs": 14946.3,
+              "fromKeyMs": 13.7,
+              "appendMs": 9.59,
+              "insertMs": 13.1
+            },
+            {
+              "round": 1,
+              "seq": 23,
+              "arrivalMs": 14969.2,
+              "fromKeyMs": 13.6,
+              "appendMs": 9.52,
+              "insertMs": 13.3
+            },
+            {
+              "round": 1,
+              "seq": 24,
+              "arrivalMs": 14990.9,
+              "fromKeyMs": 12.8,
+              "appendMs": 8.96,
+              "insertMs": 12.5
+            },
+            {
+              "round": 1,
+              "seq": 25,
+              "arrivalMs": 15014.8,
+              "fromKeyMs": 17.3,
+              "appendMs": 12.11,
+              "insertMs": 16.8
+            },
+            {
+              "round": 2,
+              "seq": 26,
+              "arrivalMs": 15040.6,
+              "fromKeyMs": 13.3,
+              "appendMs": 9.31,
+              "insertMs": 13
+            },
+            {
+              "round": 2,
+              "seq": 27,
+              "arrivalMs": 15061.8,
+              "fromKeyMs": 13.8,
+              "appendMs": 9.66,
+              "insertMs": 13.5
+            },
+            {
+              "round": 2,
+              "seq": 28,
+              "arrivalMs": 15084.6,
+              "fromKeyMs": 11.7,
+              "appendMs": 8.19,
+              "insertMs": 11.5
+            },
+            {
+              "round": 2,
+              "seq": 29,
+              "arrivalMs": 15105.9,
+              "fromKeyMs": 12.7,
+              "appendMs": 8.89,
+              "insertMs": 12.4
+            },
+            {
+              "round": 2,
+              "seq": 30,
+              "arrivalMs": 15126.5,
+              "fromKeyMs": 14.3,
+              "appendMs": 10.01,
+              "insertMs": 14
+            },
+            {
+              "round": 2,
+              "seq": 31,
+              "arrivalMs": 15149.7,
+              "fromKeyMs": 11.4,
+              "appendMs": 7.98,
+              "insertMs": 11
+            },
+            {
+              "round": 2,
+              "seq": 32,
+              "arrivalMs": 15171.7,
+              "fromKeyMs": 12.9,
+              "appendMs": 9.03,
+              "insertMs": 12.7
+            },
+            {
+              "round": 2,
+              "seq": 33,
+              "arrivalMs": 15186.7,
+              "fromKeyMs": 13.8,
+              "appendMs": 9.66,
+              "insertMs": 13.5
+            },
+            {
+              "round": 2,
+              "seq": 34,
+              "arrivalMs": 15207.4,
+              "fromKeyMs": 13.4,
+              "appendMs": 9.38,
+              "insertMs": 13.1
+            },
+            {
+              "round": 2,
+              "seq": 35,
+              "arrivalMs": 15228.6,
+              "fromKeyMs": 15.1,
+              "appendMs": 10.57,
+              "insertMs": 14.9
+            },
+            {
+              "round": 3,
+              "seq": 36,
+              "arrivalMs": 15254.6,
+              "fromKeyMs": 13.6,
+              "appendMs": 9.52,
+              "insertMs": 13.2
+            },
+            {
+              "round": 3,
+              "seq": 37,
+              "arrivalMs": 15277.1,
+              "fromKeyMs": 14.1,
+              "appendMs": 9.87,
+              "insertMs": 13.8
+            },
+            {
+              "round": 3,
+              "seq": 38,
+              "arrivalMs": 15300.4,
+              "fromKeyMs": 12.6,
+              "appendMs": 8.82,
+              "insertMs": 12.1
+            },
+            {
+              "round": 3,
+              "seq": 39,
+              "arrivalMs": 15324.4,
+              "fromKeyMs": 12.8,
+              "appendMs": 8.96,
+              "insertMs": 12.5
+            },
+            {
+              "round": 3,
+              "seq": 40,
+              "arrivalMs": 15345.4,
+              "fromKeyMs": 13.3,
+              "appendMs": 9.31,
+              "insertMs": 13.1
+            },
+            {
+              "round": 3,
+              "seq": 41,
+              "arrivalMs": 15367.3,
+              "fromKeyMs": 12.4,
+              "appendMs": 8.68,
+              "insertMs": 12.1
+            },
+            {
+              "round": 3,
+              "seq": 42,
+              "arrivalMs": 15389.8,
+              "fromKeyMs": 13,
+              "appendMs": 9.1,
+              "insertMs": 12.7
+            },
+            {
+              "round": 3,
+              "seq": 43,
+              "arrivalMs": 15411,
+              "fromKeyMs": 13.9,
+              "appendMs": 9.73,
+              "insertMs": 13.6
+            },
+            {
+              "round": 3,
+              "seq": 44,
+              "arrivalMs": 15434,
+              "fromKeyMs": 12.4,
+              "appendMs": 8.68,
+              "insertMs": 12.2
+            },
+            {
+              "round": 3,
+              "seq": 45,
+              "arrivalMs": 15470.7,
+              "fromKeyMs": 14.9,
+              "appendMs": 10.43,
+              "insertMs": 14.7
+            },
+            {
+              "round": 4,
+              "seq": 46,
+              "arrivalMs": 15494,
+              "fromKeyMs": 14.6,
+              "appendMs": 10.22,
+              "insertMs": 14.3
+            },
+            {
+              "round": 4,
+              "seq": 47,
+              "arrivalMs": 15518.9,
+              "fromKeyMs": 14.5,
+              "appendMs": 10.15,
+              "insertMs": 14.2
+            },
+            {
+              "round": 4,
+              "seq": 48,
+              "arrivalMs": 15541.6,
+              "fromKeyMs": 13.6,
+              "appendMs": 9.52,
+              "insertMs": 13.4
+            },
+            {
+              "round": 4,
+              "seq": 49,
+              "arrivalMs": 15562.8,
+              "fromKeyMs": 14.6,
+              "appendMs": 10.22,
+              "insertMs": 14
+            },
+            {
+              "round": 4,
+              "seq": 50,
+              "arrivalMs": 15587.3,
+              "fromKeyMs": 13.9,
+              "appendMs": 9.73,
+              "insertMs": 13.7
+            },
+            {
+              "round": 4,
+              "seq": 51,
+              "arrivalMs": 15609.5,
+              "fromKeyMs": 14.2,
+              "appendMs": 9.94,
+              "insertMs": 14
+            },
+            {
+              "round": 4,
+              "seq": 52,
+              "arrivalMs": 15632.4,
+              "fromKeyMs": 12.1,
+              "appendMs": 8.47,
+              "insertMs": 11.8
+            },
+            {
+              "round": 4,
+              "seq": 53,
+              "arrivalMs": 15654.3,
+              "fromKeyMs": 13.3,
+              "appendMs": 9.31,
+              "insertMs": 12.9
+            },
+            {
+              "round": 4,
+              "seq": 54,
+              "arrivalMs": 15676.4,
+              "fromKeyMs": 14.8,
+              "appendMs": 10.36,
+              "insertMs": 14.6
+            },
+            {
+              "round": 4,
+              "seq": 55,
+              "arrivalMs": 15701.3,
+              "fromKeyMs": 13.9,
+              "appendMs": 9.73,
+              "insertMs": 13.5
+            }
+          ],
+          "wallMs": 1318
+        },
+        "verdict": {
+          "decision": "green",
+          "status": "green",
+          "budgetMs": 16,
+          "medianOfMedians": 9.835,
+          "withinBudget": true,
+          "noise": {
+            "thresholds": {
+              "maxIqrOverMedian": 0.25,
+              "maxP95OverMedian": 1.6,
+              "maxRoundSpread": 0.2,
+              "minLiveKeys": 20
+            },
+            "observed": {
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.116,
+              "roundSpread": 0.107,
+              "liveKeys": 50,
+              "rounds": 5,
+              "cleanKeys": 50,
+              "controlPerKeyMin": 11.4
+            }
+          },
+          "crossCheck": {
+            "cleanKeys": 50,
+            "cleanMedianMs": 13.85,
+            "appendMedianMs": 9.695,
+            "ratio": 1.429
+          },
+          "reasons": [
+            "噪声在阈值内，判据可判"
+          ]
+        },
+        "budgetMs": 16,
+        "statMethod": "appendMs = 本键区间后 70%（前一键落定 → 本键落定）的逐键百分位估计；fromKeyMs 仅作事件循环代理对照；判据用 primary.perKey + primary.rounds。",
+        "deprecatedFields": {
+          "note": "v1 的 keyToSource / insertOnly / typedChars / editsRaw 不再产出（那是一次性连发 30 键的批量口径）；run_probe.py 对缺这三个字段的 raw 按 inconclusive 处理，绝不沿用 max≤16ms。"
+        }
+      }
+    }
+  },
+  "console": {
+    "editLogs": [],
+    "errors": [],
+    "total": 774
+  },
+  "appReady": true,
+  "editHandlerState": {
+    "editMode": true,
+    "composing": false,
+    "blockEditMode": false
+  },
+  "durationMs": 15789,
+  "finishedAt": "2026-10-20T02:48:05.312Z"
+}

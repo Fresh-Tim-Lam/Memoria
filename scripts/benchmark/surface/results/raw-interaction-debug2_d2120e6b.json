@@ -1,0 +1,51 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T01:32:47.733Z",
+  "finishedAt": "2026-10-20T01:32:50.422Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "debug2",
+  "results": [
+    {
+      "id": "D0-diagnose",
+      "steps": [
+        {
+          "op": "eval",
+          "value": {
+            "href": "http://127.0.0.1:8645/",
+            "viewMode": "source",
+            "hasApp": true,
+            "hasEditHandler": true
+          }
+        },
+        {
+          "op": "open"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "viewMode": "source",
+            "curPath": "homework/hw-003-frequency-response.md",
+            "hasPreview": true,
+            "previewLen": 0,
+            "srcBlock": 0,
+            "dataSrcLine": 0,
+            "previewChildren": 0,
+            "firstChildCls": null,
+            "bodyCls": "",
+            "editorVisible": "block"
+          }
+        },
+        {
+          "op": "eval",
+          "value": []
+        }
+      ],
+      "snapshots": {},
+      "error": null
+    }
+  ]
+}

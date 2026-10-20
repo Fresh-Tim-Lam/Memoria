@@ -1,0 +1,81 @@
+{
+  "schema": "memoria-baseline-bench/v1",
+  "fileA": "教材/02_第2章_信号分析基础.md",
+  "fileB": "教材/04_第4章_信息论基础.md",
+  "minBlocks": 5,
+  "steps": {
+    "coldOpen": {
+      "path": "教材/02_第2章_信号分析基础.md",
+      "readyMs": 528,
+      "blocks": 2003
+    },
+    "tabSwitch": {
+      "medianMs": 249
+    },
+    "typing": {
+      "warmup": 5,
+      "keys": 30,
+      "n": 30,
+      "minMs": 7.1,
+      "medianMs": 7.7,
+      "p95Ms": 8.9,
+      "maxMs": 14.2
+    },
+    "memory": {
+      "usedJSHeapMB": 12.9,
+      "totalJSHeapMB": 26.6,
+      "blocks": 2003,
+      "domNodesInPreview": 4282
+    }
+  },
+  "samples": {
+    "tabSwitchBackToA": [
+      {
+        "ms": 249,
+        "blocks": 2003
+      },
+      {
+        "ms": 315,
+        "blocks": 2003
+      },
+      {
+        "ms": 249,
+        "blocks": 2003
+      }
+    ],
+    "typing": [
+      7.9,
+      8.5,
+      7.8,
+      7.5,
+      8.8,
+      7.1,
+      7.4,
+      7.4,
+      7.9,
+      7.5,
+      7.4,
+      7.5,
+      7.7,
+      7.7,
+      7.1,
+      7.8,
+      8.3,
+      7.3,
+      7.2,
+      14.2,
+      8.1,
+      7.3,
+      8.4,
+      7.4,
+      7.3,
+      8.3,
+      8.9,
+      7.9,
+      8,
+      7.5
+    ]
+  },
+  "browser": "Edg/155.0.4283.45",
+  "finishedAt": "2026-10-20T03:20:50.870Z"
+}

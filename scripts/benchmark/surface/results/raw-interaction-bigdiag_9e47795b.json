@@ -1,0 +1,67 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T03:17:25.003Z",
+  "finishedAt": "2026-10-20T03:19:40.562Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "bigdiag",
+  "results": [
+    {
+      "id": "P4-bigdoc-diag",
+      "steps": [
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "open"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "t8_viewMode": "preview",
+            "curPath": "教材/02_第2章_信号分析基础.md",
+            "bodyLen": 117804,
+            "lines": 2712,
+            "previewLen": 417691,
+            "blocks": 2003,
+            "htmlHead": "<div class=\"-preview-content\"><h2 class=\"-src-block\" data--block-index=\"0\" data--src-line=\"1\" data--src-line-end=\"1\">第2章 信号分析基础</h2><div class=\"-src-block -blank-block\" data--block-index=\"1\" data--src",
+            "errs": []
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "t28_viewMode": "preview",
+            "previewLen": 417691,
+            "blocks": 2003,
+            "errs": []
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "t88_previewLen": 417691,
+            "blocks": 2003,
+            "errs": []
+          }
+        }
+      ],
+      "snapshots": {},
+      "error": null
+    }
+  ]
+}

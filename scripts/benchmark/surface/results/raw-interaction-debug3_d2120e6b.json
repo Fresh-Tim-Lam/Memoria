@@ -1,0 +1,16 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T01:34:49.734Z",
+  "finishedAt": "2026-10-20T01:34:50.517Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "debug3",
+  "results": [
+    {
+      "id": "D1-drag-blocked",
+      "steps": [],
+      "snapshots": {},
+      "error": "eval 异常: Uncaught (in promise) TypeError: Failed to fetch TypeError: Failed to fetch\n    at Proxy.<anonymous> (http://127.0.0.1:8645/:53:16)\n    at call (http://127.0.0.1:8645/app/js/app.js:399:23)\n    at Object.openFile (http://127.0.0.1:8645/app/js/app.js:1445:23)\n    at <anonymous>:1:19"
+    }
+  ]
+}

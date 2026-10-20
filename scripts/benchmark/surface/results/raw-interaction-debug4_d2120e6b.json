@@ -1,0 +1,74 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T01:34:57.084Z",
+  "finishedAt": "2026-10-20T01:34:59.670Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "debug4",
+  "results": [
+    {
+      "id": "D1-drag-blocked",
+      "steps": [
+        {
+          "op": "open"
+        },
+        {
+          "op": "wait"
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": true
+        },
+        {
+          "op": "dragSelect",
+          "points": {
+            "start": {
+              "x": 279,
+              "y": 409
+            },
+            "end": {
+              "x": 390,
+              "y": 409
+            },
+            "total": 95,
+            "box": {
+              "x": 520,
+              "y": 442
+            }
+          }
+        },
+        {
+          "op": "sleep"
+        },
+        {
+          "op": "eval",
+          "value": {
+            "mdDefaultPrevented": false,
+            "mdTarget": "-src-block",
+            "ssDefaultPrevented": false,
+            "selectionchangeCount": 1,
+            "selText": "",
+            "selCollapsed": true,
+            "userSelect": "auto",
+            "editable": "true",
+            "paneUserSelect": "auto"
+          }
+        },
+        {
+          "op": "eval",
+          "value": {
+            "start": 1,
+            "end": 1,
+            "startParent": "-src-block",
+            "endParent": "-src-block"
+          }
+        }
+      ],
+      "snapshots": {},
+      "error": null
+    }
+  ]
+}

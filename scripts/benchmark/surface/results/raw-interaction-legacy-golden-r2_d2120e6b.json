@@ -1,0 +1,120 @@
+{
+  "schema": "memoria-interaction-run/v1",
+  "startedAt": "2026-10-20T01:40:41.708Z",
+  "finishedAt": "2026-10-20T01:48:58.598Z",
+  "url": "http://127.0.0.1:8645/",
+  "browser": "Edg/155.0.4283.45",
+  "label": "legacy-golden-r2",
+  "results": [
+    {
+      "id": "S0-open-and-ready",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时（blocks）: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S1-drag-select-same-block",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S2-drag-select-cross-block",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S3-double-click-word",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S4-shift-arrow-extend",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S5-ctrl-shift-arrow-word",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S6-shift-home-end",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S7-ctrl-a",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S8-shift-click-extend",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S9-ime-compose-commit",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    },
+    {
+      "id": "S10-brush-highlight-drag",
+      "steps": [
+        {
+          "op": "open"
+        }
+      ],
+      "snapshots": {},
+      "error": "等待超时: document.querySelectorAll('#preview .-src-block').length > 3"
+    }
+  ]
+}
