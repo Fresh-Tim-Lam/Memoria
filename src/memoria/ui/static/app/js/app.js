@@ -10224,6 +10224,18 @@
         domDesc = describeRange(rr);
       }
     }
+    // 2026-10-20 task-19：无选区 / 选区折叠 / 选区不在预览内 ⇒ 没有任何原子块可高亮。
+    // 此时**只需清掉上一轮残留**，不必遍历全部 `.-math`（scale-5k 上 270 个元素逐个 toggle
+    // ⇒ 每键 148 次空操作；M1=151 而 M2=5 的 30 倍差就是它）。真机口径见
+    // `artifacts/agent/verify/typing-dom-write-baseline.md`。
+    // 注意：**只跳不清会留残影** —— 折叠前被涂亮的公式必须在这里摘掉 `-sel-covered`。
+    if (!r) {
+      for (let k = 0; k < atoms.length; k++) {
+        if (atoms[k].classList.contains("-sel-covered")) atoms[k].classList.toggle("-sel-covered", false);
+      }
+      log("MAP", "selHighlight sel=" + domDesc + " mathTotal=" + atoms.length + " covered=0 (no-selection early-exit)");
+      return;
+    }
     let covered = 0;
     for (let i = 0; i < atoms.length; i++) {
       const el = atoms[i];
@@ -10246,7 +10258,11 @@
           }
         } catch (err) { log("MAP", "selHit ERR " + err); }
       }
-      el.classList.toggle("-sel-covered", isCovered);
+      // 2026-10-20 task-19：**仅在状态真变时写**（原来无条件 toggle ⇒ 有选区但一个都没命中时
+      // 仍要付 atoms.length 次空操作）。`contains` 读的是同一次 StyleDeclaration，
+      // 不产生写；命中集合的判定逻辑（上面 c1/c2 与 startContainer/endContainer 兜底）**一字未动**。
+      const hasCovered = el.classList.contains("-sel-covered");
+      if (isCovered !== hasCovered) el.classList.toggle("-sel-covered", isCovered);
       if (isCovered) covered++;
     }
     log("MAP", "selHighlight sel=" + domDesc + " mathTotal=" + atoms.length + " covered=" + covered);
