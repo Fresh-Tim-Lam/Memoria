@@ -162,9 +162,16 @@ DOM `.-src-block` 数  ==  parse(body).blocks.length
 
 ### 2.5.1 未覆盖（须登记，不假装覆盖）
 
-- **agent 面板流式**（`.-agent-msg-body`）、**助手预览弹窗 / 复阅卡**（`-review-manage-box`）：
-  无头 harness 下**无 agent 历史 / 无复习数据** => 这些 surface 恒为空。按「无头恒空不得据空判绿」，
-  登记为**需真机 + 真实数据**项（结构断言已备，待数据）。
+- **agent 面板流式**（`.-agent-msg-body`）、**助手弹窗 / 复阅卡**：✅ **已用「副本 + 夹具」关闭**。
+  做法（`scripts/benchmark/surface/make_agent_fixture.py`）：
+  1. **复制** KB 到 `artifacts/_realapp_fixture_kb/`（**绝不污染 `docs/example/**` 与用户库**，实测源 KB 保持 git 干净）；
+  2. 注入 `.memoria/agent/sessions/<id>.jsonl`（user/message + assistant/message，含 markdown/表格/代码/公式）；
+  3. 注入 `.memoria/agent/review/cards.json`（1 张含公式的卡）；
+  4. 真机 `--cdp` 下点「历史」页签 → 点夹具会话行（真实用户路径），断言 `.-agent-msg-body` 块数>0、无占位；
+     调 `window.MemoriaReviewModal.open()`（`review-modal.js:814` 真实入口）打开弹窗，断言 `.-review-body` 块数>0、公式已排。
+  
+  **实测结果**（mode=real）：agent 助手气泡 **8 块 + strong/em/table/pre + 1 个已排公式**；
+  复阅卡 `listItems=1`；弹窗 `blocks=1, mathJax=1`。两者 `usesSrcLineAttr=0` ⇒ **确认不依赖 `data--src-line`**（P4b 已移除）。
 - **导出**：当前无稳定可自动化入口（可能走系统文件对话框）=> 登记缺口。
 - **窗口化口径**：默认取**全渲染模式**基线（开口径①）；子集孔径（②）另记录，非默认。
 
@@ -286,6 +293,88 @@ node scripts\benchmark\surface\fidelity_cli.mjs --cdp http://127.0.0.1:9500 `
 
 ---
 
+## 5.5 新旧管线对比（阶段 2 唯一判等工具）
+
+> **归属**：`scripts/benchmark/surface/compare_signatures.mjs` 是阶段 2 **唯一**的比较器。
+> 任何其它人/Agent **不得另写第二个 comparator**（避免两套判据并存）。
+
+### 5.5.1 命令
+
+```bash
+# 1) 取 legacy 基线投影（会写入 signatureNorm + nondetStripped）
+python scripts/benchmark/surface/run_fidelity.py --label legacy-base
+
+# 2) 取待比较侧投影（P2a 阶段由 surface-new 的临时 driver 产出，见 §5.5.4）
+#    产物格式与上一步相同：results/fidelity-<label>_<sha>.json
+
+# 3) 按 kind 过滤对比（P2a 默认只声明它已实现的 5 类块）
+node scripts/benchmark/surface/compare_signatures.mjs \
+     --baseline scripts/benchmark/surface/results/fidelity-legacy-base_<sha>.json \
+     --current  scripts/benchmark/surface/results/fidelity-<new-side>_<sha>.json \
+     --supported paragraph,heading,listItem,list,blockquote,hr \
+     --out artifacts/agent/verify/compare-p2a.json
+```
+
+退出码：`0` = 无 diff（可含 `unsupported`）；`1` = 存在 `diff`；`2` = 输入错误。
+
+### 5.5.2 三种结论的语义（**关键，务必区分**）
+
+| 结论 | 含义 | 是否算失败 |
+|---|---|---|
+| **`match`** | 该 kind 双方投影**完全一致**（**逐块比 `{tag, textNorm}`**） | 否 |
+| **`diff`** | 该 kind **双方都支持**，但投影**不一致** | ✅ **是** |
+| **`unsupported`** | 该 kind **至少一方未实现** | ❌ **不算失败**（仅记录） |
+| **`schema_error`** | 该侧**缺少/无法解析 `signatureNorm`** | ✅ **是（绝不静默 match）** |
+| `missing` | 某文档只在一侧存在 | 是（输入不完整） |
+
+> **为什么必须有 `unsupported`**：P2a 的 `new` 只实现 5 类块（paragraph / heading /
+> listItem / list / blockquote / hr），其余 kind（table / mermaid / code_block / math_block /
+> image / blank…）**尚未实现**。若把它们造成的差异一并算 `diff`，P2a **永远红、无法推进**。
+> 因此：**未实现 ≠ 退化**。只有「双方都声称支持、结果却不同」才是真回归。
+
+### 5.5.2.1 ⚠️ 反例：比较器**不得依赖上游未落盘的字段**
+
+**这次真实踩到的坑（必写死，防复发）**：
+
+`compare_signatures.mjs` 早期版本从 `run1.signatureNorm` 取每块文本，而
+`run_fidelity.py` 当时**并不落盘 `signatureNorm`** ⇒ 两侧文本恒为空
+⇒ 只比 `{kind, tag}` ⇒ **即使 new 管线把 5 类块的文本全渲染错，也会报「0 diff」**。
+
+这是本项目**第三个「假通过」家族成员**（前两个：`END_TO_START` 被 catch 吞、A15 `failed:0` 误当 pass）。
+
+**铁律（适用于所有判等工具）**：
+
+> **任何「字段缺失 ⇒ 值恒空 ⇒ 比较相等 ⇒ 判通过」的路径都是假通过。**
+> 比较器必须：① 显式校验输入 schema，缺失即 **`schema_error` 失败**；
+> ② 比较粒度必须**含内容**（`textNorm` / 归一化 HTML），不能只比结构标签。
+
+**修复三件套**（均已落地）：
+
+1. `fidelity_cli.mjs` 落盘 `run1.signatureNorm`（+ `nondetStripped`），新旧两侧**同 schema、`v:2`**；
+2. 比较器逐块比 `{tag, textNorm}`（`fragment()` → `JSON.stringify` 全等）；
+3. `signatureNorm` 缺失/不可解析 ⇒ `schema_error` ⇒ **FAIL**。
+
+### 5.5.3 自证（工具本身可用）
+
+| 自证 | 做法 | 期望 | 实测 |
+|---|---|---|---|
+| **G-a 双跑一致** | legacy 快照 vs legacy 快照 | `diff=0`、`PASS`、exit 0 | ✅ `match=18 diff=0 unsupported=12` |
+| **G-b 注入必报** | 改动一处 paragraph 文本 | 报 `diff`、`FAIL`、exit 1 | ✅ `diff=5`、exit 1 |
+| **G-c unsupported 不计失败** | 只改动未支持的 `-table` | 仍 `PASS`、exit 0 | ✅ `diff=0`、exit 0 |
+| **G-d 文本必须参与** | kind/tag 全同、只改 `textNorm` | 报 `diff`、exit 1 | ✅ `diff=5`、exit 1 |
+| **G-e 缺字段必失败** | 两侧均缺 `signatureNorm`（旧 schema） | `schema_error`、exit 1（**不得静默 match**） | ✅ `schema_error=5`、exit 1 |
+
+### 5.5.4 `new` 侧投影入口（**当前临时，将被正式取代**）
+
+P2a 阶段由 `surface-new` 在 `artifacts/agent/verify/` 写**临时 driver**：
+`openFile → switchTo('new') → 等块数自洽 → 取 A 级投影`，
+**必须复用 `fidelity.mjs` 的 `PROBE_SOURCE` / 归一化 / 签名**，**禁止复制投影逻辑**。
+
+> **计划**：该临时 driver 将在后续由 `run_fidelity.py --surface legacy|new|dual` 正式化取代，
+> driver 随之退休。本契约在该入口落地后更新本节。
+
+---
+
 ## 6. 自证判别力（硬要求）
 
 ### 6.1 变异测试：每个变异都必须被判红
@@ -338,3 +427,6 @@ node scripts\benchmark\surface\fidelity_cli.mjs --cdp http://127.0.0.1:9500 `
 | 2026-10-20 | **task-25 覆盖面补齐**：新增 A5 图片 / A6 链接 / A7 代码高亮(class) / A8 表格行列 / A9 可见效果下限 / A10 行内公式按块 / A11 mermaid 七条断言。基线文档扩为 5 个（+05-images 图片样本、+README 加粗样本） |
 | 2026-10-20 | **签名升级 v2**：纳入 A5-A11 DOM 投影，obj 内带 `v:2`；v1 基线保留标 `superseded`。落盘 `fidelity-Sold-v2_<sha>.json` |
 | 2026-10-20 | 判别力自证：新增 6 个变异（img-src/strip-lang/drop-td/kill-mermaid-svg/strip-bold 全部判红；strip-inline-formula 无头 inconclusive，判别力在真机）。复现性 5 文档签名 2 次一致 |
+| 2026-10-20 | **签名归一化落地**：内置剥离非确定 id（mermaid 随机 SVG id、MathJax `MJX-*` id、CSS `#id` 选择器引用、`data-block-id`），并纳入签名 `htmlFingerprint`。自证：只换随机 id ⇒ 签名不变；真改内容 ⇒ 签名变 |
+| 2026-10-20 | **对比机制自证 + `compare_signatures.mjs`**（阶段 2 唯一比较器）：按 kind 过滤，`match`/`diff`/`unsupported` 三态，**`unsupported` 不计失败**（未实现 ≠ 退化）。自证：legacy-vs-legacy 0 diff、注入必报 diff、未支持 kind 仍 PASS。见 §5.5 |
+| 2026-10-20 | **修「假 match」漏洞**（第三个假通过家族）：早期比较器依赖未落盘的 `signatureNorm` ⇒ 文本恒空 ⇒ 只比 kind+tag ⇒ 误判 0 diff。已修：落盘 `signatureNorm`（同 schema v:2）、逐块比 `{tag,textNorm}`、缺失即 `schema_error` 失败。自证 G-d（文本变必红）/G-e（缺字段必失败）均通过。见 §5.5.2.1 |

@@ -300,6 +300,89 @@ export const PROBE_SOURCE = `(function () {
   }
 
   // ══════════════════════════════════════════════════════════════════════════
+  // 非确定性 id 归一化（task-28：Lead 要求把「抹掉随机 id」内置成规则，不能靠人工判读）
+  //
+  // 背景（P1 验收实测）：【04-non-editable.md】 两次渲染的唯一差异是 mermaid 生成的随机
+  //   SVG id（【#mermaid-vppr1439】 vs 【#mermaid-jyl12f8b】），语义完全相同。
+  //   若每次对比都要人判"这是随机 id"，阶段 2 的判等工具就不可用。
+  //
+  // **抹掉什么**（均为渲染器生成的会话级标识，与内容语义无关）：
+  //   N1 mermaid 的 【id=mermaid-XXXX】 及其引用 【url(#mermaid-XXXX)】 / 【href=#mermaid-XXXX】
+  //   N2 MathJax 的 【mjx-*】 / 【MJX-*】 id 与同名引用（CHTML/SVG 内部标识）
+  //   N3 其它已知前缀（svg/defs/clip/path/marker/pattern/gradient/filter）+ 纯 8 位以上十六进制
+  //
+  // **为什么安全**：这些 id 只在**同一次渲染会话内**被 【url(#…)】 引用，不承载跨文档/跨会话语义；
+  //   内容本身（文本、结构、坐标、颜色、样式）**不进入被剥离的部分**，仍完整参与比较。
+  //
+  // **故意不抹掉**（防止过度剥离造成漏判）：无上述前缀的普通 【id】（可能是业务/契约标识）、
+  //   class、属性值、文本、坐标、样式 —— 全部保留。
+  // ══════════════════════════════════════════════════════════════════════════
+  var NONDET_ID_PREFIXES = ['mermaid-', 'mjx-', 'MJX-', 'svg-', 'defs-', 'clip-', 'path-', 'marker-', 'pattern-', 'gradient-', 'filter-'];
+
+  function isNondetId(id) {
+    if (!id) return false;
+    var s = String(id);
+    for (var i = 0; i < NONDET_ID_PREFIXES.length; i++) {
+      if (s.indexOf(NONDET_ID_PREFIXES[i]) === 0) return true;
+    }
+    if (/^[0-9a-f]{8,}$/i.test(s)) return true;   // 纯随机十六进制
+    return false;
+  }
+
+  /** 剥离字符串中所有非确定 id 及其引用，返回 {text, stripped}。 */
+  function stripNondetIds(str) {
+    if (!str) return { text: str, stripped: 0 };
+    var count = 0;
+    var out = str;
+    // 本函数位于 PROBE_SOURCE 模板字符串内：不能写带反向引用的正则字面量
+    //   （模板字符串会把反斜杠+数字当 octal escape）。故一律用 RegExp 构造函数。
+    var BS = String.fromCharCode(92);
+    var SQ = String.fromCharCode(39);
+    var DQ = String.fromCharCode(34);
+    var Q2 = '[' + SQ + DQ + ']';
+    var NOTQ = '[^' + SQ + DQ + ']+';
+    var RE_ID = new RegExp(BS + 'bid=(' + Q2 + ')(' + NOTQ + ')' + BS + '1', 'g');
+    var RE_URL = new RegExp('url' + BS + '(' + '(#' + '[^)]+' + ')' + BS + ')', 'g');
+    var RE_HREF = new RegExp('(xlink:)?href=(' + Q2 + ')#(' + NOTQ + ')' + BS + '2', 'g');
+    var RE_CSS = new RegExp('#([A-Za-z][-A-Za-z0-9_]*)' + '(?=[' + BS + 's.,:{>' + BS + '[])', 'g');
+
+    out = out.replace(RE_ID, function (m, q, v) {
+      if (isNondetId(v)) { count++; return 'id=' + q + '<nondet-id>' + q; }
+      return m;
+    });
+    out = out.replace(RE_URL, function (m, v) {
+      var bare = v.charAt(0) === '#' ? v.slice(1) : v;
+      if (isNondetId(bare)) { count++; return 'url(#<nondet-id>)'; }
+      return m;
+    });
+    out = out.replace(RE_HREF, function (m, xl, q, v) {
+      if (isNondetId(v)) { count++; return (xl || '') + 'href=' + q + '#<nondet-id>' + q; }
+      return m;
+    });
+    // 5) 数据属性上的块级随机 id：data-block-id="sjfj9w-13"
+    //    应用给每个块生成会话内 id（随渲染顺序变化），不承载内容语义。
+    var RE_BLOCKID = new RegExp('data-block-id=(' + Q2 + ')(' + NOTQ + ')' + BS + '1', 'g');
+    out = out.replace(RE_BLOCKID, function (m, q, v) {
+      count++;
+      return 'data-block-id=' + q + '<block-id>' + q;
+    });
+    // CSS 选择器引用：覆盖 #id{...} 与后代选择器 #id .cls{...}
+    out = out.replace(RE_CSS, function (m, v) {
+      if (isNondetId(v)) { count++; return '#<nondet-id>'; }
+      return m;
+    });
+    return { text: out, stripped: count };
+  }
+
+  /** 对 #preview 整体 innerHTML 归一化（供签名 / 自证用）。 */
+  function normalizedPreviewHtml() {
+    var pv = document.querySelector('#preview');
+    if (!pv) return { html: '', stripped: 0 };
+    return (function (r) { return { html: r.text, stripped: r.stripped }; })(stripNondetIds(pv.innerHTML || ''));
+  }
+
+
+  // ══════════════════════════════════════════════════════════════════════════
   // 新增 A 级断言（task-25 · 渲染保真覆盖面补齐）
   //   A5 图片    A6 链接    A7 代码高亮(class)   A8 表格(行列)
   //   A9 可见效果下限（防"样式全丢"，只查非零）  A10 行内公式按块计数  A11 mermaid
@@ -496,11 +579,25 @@ export const PROBE_SOURCE = `(function () {
   }
 
   // ---------- 主入口 ----------
+  // 轻量非加密哈希（FNV-1a 32 位 ×2 => 64 位十六进制串）：只用于签名内嵌指纹，
+  //   避免把整段 HTML 塞进签名文本。不是安全哈希，只求确定性与低碰撞。
+  function htmlFp(str) {
+    var h1 = 0x811c9dc5, h2 = 0x01000193;
+    for (var i = 0; i < str.length; i++) {
+      var c = str.charCodeAt(i);
+      h1 ^= c; h1 = (h1 * 16777619) >>> 0;
+      h2 = ((h2 ^ c) * 2166136261) >>> 0;
+    }
+    return ('0000000' + h1.toString(16)).slice(-8) + ('0000000' + h2.toString(16)).slice(-8);
+  }
+
   function runFidelity(doc) {
     var ast = buildAstProjection(doc);
     var dom = buildDomProjection();
     var ff = formulaFidelity(doc, dom);
     var wd = watchdog(doc, dom, ast);
+    // ★ 归一化 HTML（剥离非确定 id）：签名与自证都以此为唯一来源
+    var hNorm = normalizedPreviewHtml();
 
     // A1 块数
     var a1 = { ok: ast.count === dom.count, ast: ast.count, dom: dom.count };
@@ -602,6 +699,11 @@ export const PROBE_SOURCE = `(function () {
             kind === '-math-block') return '<' + kind + '>';
         return normTextDom(b.textNorm);
       }),
+      // ★ v2.1：归一化后的整体 HTML 指纹（已剥离非确定 id，见 stripNondetIds）。
+      //   这是"抹掉随机 id"落进工具的**强制**环节——不依赖调用方人工判读。
+      //   注：只进签名的**哈希摘要**，不把整段 HTML 塞进签名文本（控制体积）。
+      htmlFingerprint: htmlFp(hNorm.html),
+      nondetStripped: hNorm.stripped,
     };
     var normStr = JSON.stringify(sigObj);
 
@@ -610,6 +712,8 @@ export const PROBE_SOURCE = `(function () {
       aLevel: { a1: a1, a2: a2, a3: a3, a4: a4, a5: a5, a6: a6, a7: a7, a8: a8, a9: a9, a10: a10, a11: a11 },
       bLevel: { b5: b5, b6: b6, b7: b7 },
       signatureNorm: normStr,
+      nondetStripped: hNorm.stripped,
+      normalizedHtml: hNorm.html,   // 供 CLI 侧做「只换随机 id ⇒ 签名不变」自证
       astCount: ast.count, domCount: dom.count,
     };
   }
@@ -622,6 +726,59 @@ export const PROBE_SOURCE = `(function () {
   //   empty-block : 把某块内容清空       => A4 W1 应红
   //   char        : 改块内 1 个字符（**只影响 B5 文本**，A 级按设计不抓 => 期望仍绿）
   function mutate(kind) {
+    // ── task-28 归一化规则的「自证」变异 ────────────────────────────────
+    //   nondet-id-only : **只换随机 id、语义不变** => 签名必须**不变**（证明剥离规则生效）
+    //   real-change    : **真改内容**（改一个块的文本） => 签名必须**变**（证明没过度剥离）
+    if (kind === 'nondet-id-only') {
+      // 只把**非确定 id 换成另一个非确定 id**，语义不变。
+      // !! 必须建立 旧id -> 新id 映射，引用同步改成**新 id**（而不是提前写占位符）。
+      //   首版直接把引用写成 '#<nondet-id>' 字面尖括号 => 序列化时被 HTML 转义成
+      //   '#&lt;nondet-id&gt;' => 与 id 侧归一化结果不相等 => G1 假失败。
+      var pv = document.querySelector('#preview');
+      if (!pv) return 'nondet-id-only-noop';
+      var map = {};
+      var changed = 0;
+      pv.querySelectorAll('[id]').forEach(function (el) {
+        var id = el.getAttribute('id') || '';
+        if (!isNondetId(id)) return;
+        var prefix = null;
+        for (var pi = 0; pi < NONDET_ID_PREFIXES.length; pi++) {
+          if (id.indexOf(NONDET_ID_PREFIXES[pi]) === 0) { prefix = NONDET_ID_PREFIXES[pi]; break; }
+        }
+        var fresh = prefix
+          ? prefix + Math.random().toString(36).slice(2, 10)
+          : (Math.random().toString(16).slice(2, 10) + '000000000').slice(0, 8);
+        map[id] = fresh;
+        el.setAttribute('id', fresh);
+        changed++;
+      });
+      // 同步改写内部引用：把旧 id 替换为对应新 id（保持结构一致）
+      var ATTRS = ['fill', 'stroke', 'clip-path', 'mask', 'filter', 'marker-end', 'marker-start', 'xlink:href', 'href'];
+      pv.querySelectorAll('*').forEach(function (el) {
+        ATTRS.forEach(function (attr) {
+          var v = el.getAttribute && el.getAttribute(attr);
+          if (!v) return;
+          if (v.indexOf('url(#') === 0) {
+            var ref = v.slice(5, -1);
+            if (map[ref]) { el.setAttribute(attr, 'url(#' + map[ref] + ')'); changed++; }
+          } else if (v.charAt(0) === '#') {
+            var r2 = v.slice(1);
+            if (map[r2]) { el.setAttribute(attr, '#' + map[r2]); changed++; }
+          }
+        });
+      });
+      return changed > 0 ? 'nondet-id-only(' + changed + ')' : 'nondet-id-only-noop';
+    }    if (kind === 'real-change') {
+      var els = document.querySelectorAll('#preview .-src-block');
+      for (var ri = 0; ri < els.length; ri++) {
+        var c = String(els[ri].className || '');
+        if (c.indexOf('-blank-block') < 0 && els[ri].textContent.trim().length > 3) {
+          els[ri].textContent = els[ri].textContent + '__REAL_CHANGE__';
+          return 'real-change';
+        }
+      }
+      return 'real-change-noop';
+    }
     // task-25 新增变异（对应 A5–A11）
     if (kind === 'img-src') {
       var imgs = document.querySelectorAll('#preview img');

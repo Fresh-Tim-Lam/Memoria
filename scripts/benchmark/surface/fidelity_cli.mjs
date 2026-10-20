@@ -326,7 +326,14 @@ async function main() {
 
       result.documents[file] = {
         status: 'ran',
-        run1: { ok: run1.ok, aLevel: run1.aLevel, bLevel: run1.bLevel, signature: run1.signature, astCount: run1.astCount, domCount: run1.domCount },
+        // signatureNorm 必须落盘：按 kind 的对比工具（compare_signatures.mjs）需要原始规范投影，
+        //   只存哈希无法逐 kind 比较；体积可控（每文档约几 KB）。
+        run1: {
+          ok: run1.ok, aLevel: run1.aLevel, bLevel: run1.bLevel,
+          signature: run1.signature, signatureNorm: run1.signatureNorm,
+          nondetStripped: run1.nondetStripped,
+          astCount: run1.astCount, domCount: run1.domCount,
+        },
         run2: { ok: run2.ok, aLevel: run2.aLevel, signature: run2.signature },
         reproducible: run1.signature === run2.signature,
         mutation,
