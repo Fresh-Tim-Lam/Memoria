@@ -1,0 +1,1275 @@
+{
+  "schema": "memoria-perf-ops/v1",
+  "sha": "7487e5df",
+  "label": "baseline",
+  "mode": "headless",
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "headless"
+  },
+  "inject": null,
+  "budgetRule": "min(用户可感知阈值, P_old×1.15)；无阈值取 P_old×1.15",
+  "noiseGate": {
+    "maxIqrOverMedian": 0.25,
+    "maxP95OverMedian": 1.6,
+    "maxRoundSpread": 0.2
+  },
+  "userThresholds": {
+    "typing": 16.0,
+    "scroll": 16.0,
+    "open": 1000.0
+  },
+  "ops": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 0.2,
+      "p95": 0.55,
+      "samples": 30,
+      "pOld": 0.55,
+      "budget": 0.63,
+      "budgetBasis": "min(阈值 16.0, P_old×1.15)",
+      "verdict": null,
+      "noiseOk": false,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "scroll": {
+      "id": "scroll",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "frames",
+      "p50": 16.7,
+      "p95": 18.56,
+      "samples": 150,
+      "pOld": 18.56,
+      "budget": 16.0,
+      "budgetBasis": "min(阈值 16.0, P_old×1.15)",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": {
+        "longTaskCountMedian": 0,
+        "longTaskMaxMsMax": 0,
+        "framesMedian": 50,
+        "scrolledPx": 2000,
+        "jankRatioMedian": 0,
+        "jankRatioMax": 0.04,
+        "jankThresholdMs": 25
+      }
+    },
+    "select": {
+      "id": "select",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 32.9,
+      "p95": 34.44,
+      "samples": 15,
+      "pOld": 34.44,
+      "budget": 39.61,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "paste": {
+      "id": "paste",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 33.0,
+      "p95": 34.96,
+      "samples": 15,
+      "pOld": 34.96,
+      "budget": 40.2,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "undo": {
+      "id": "undo",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 32.3,
+      "p95": 33.15,
+      "samples": 15,
+      "pOld": 33.15,
+      "budget": 38.12,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "find": {
+      "id": "find",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 33.2,
+      "p95": 34.22,
+      "samples": 15,
+      "pOld": 34.22,
+      "budget": 39.35,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "save": {
+      "id": "save",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 33.1,
+      "p95": 44.32,
+      "samples": 15,
+      "pOld": 44.32,
+      "budget": 50.97,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "viewSwitch": {
+      "id": "viewSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 33.3,
+      "p95": 34.07,
+      "samples": 27,
+      "pOld": 34.07,
+      "budget": 39.18,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "structEdit": {
+      "id": "structEdit",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 35.95,
+      "p95": 42.79,
+      "samples": 24,
+      "pOld": 42.79,
+      "budget": 49.21,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "format": {
+      "id": "format",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 33.1,
+      "p95": 34.38,
+      "samples": 15,
+      "pOld": 34.38,
+      "budget": 39.54,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": null,
+      "p95": null,
+      "samples": 0,
+      "pOld": null,
+      "budget": null,
+      "budgetBasis": null,
+      "verdict": null,
+      "noiseOk": null,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "p50": 966.8,
+      "p95": 995.3,
+      "samples": 9,
+      "pOld": 995.3,
+      "budget": 1000.0,
+      "budgetBasis": "min(阈值 1000.0, P_old×1.15)",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "tabSwitch": {
+      "id": "tabSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 45.65,
+      "p95": 122.3,
+      "samples": 12,
+      "pOld": 122.3,
+      "budget": 140.64,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": false,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "memGrowth": {
+      "id": "memGrowth",
+      "tier": "B",
+      "mode": "headless-ok",
+      "metric": "heap",
+      "p50": -4.89,
+      "p95": 7.8,
+      "samples": 3,
+      "pOld": 7.8,
+      "budget": 8.97,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": {
+        "heapDeltaMB": [
+          -4.9,
+          -4.89,
+          7.8
+        ],
+        "heapBeforeMB": [
+          45.09,
+          40.2,
+          35.3
+        ],
+        "heapAfterMB": [
+          40.19,
+          35.3,
+          43.11
+        ],
+        "supported": true
+      }
+    }
+  },
+  "summaries": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 30,
+      "p50": 0.2,
+      "p95": 0.55,
+      "max": 0.6,
+      "iqrOverMedian": 0.5,
+      "p95OverMedian": 2.775,
+      "roundSpread": 0.0,
+      "noiseOk": false
+    },
+    "scroll": {
+      "id": "scroll",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "frames",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 150,
+      "p50": 16.7,
+      "p95": 18.56,
+      "max": 47.2,
+      "extra": {
+        "longTaskCountMedian": 0,
+        "longTaskMaxMsMax": 0,
+        "framesMedian": 50,
+        "scrolledPx": 2000,
+        "jankRatioMedian": 0,
+        "jankRatioMax": 0.04,
+        "jankThresholdMs": 25
+      },
+      "iqrOverMedian": 0.094,
+      "p95OverMedian": 1.111,
+      "roundSpread": 0.015,
+      "noiseOk": true
+    },
+    "select": {
+      "id": "select",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 32.9,
+      "p95": 34.44,
+      "max": 35,
+      "iqrOverMedian": 0.049,
+      "p95OverMedian": 1.047,
+      "roundSpread": 0.028,
+      "noiseOk": true
+    },
+    "paste": {
+      "id": "paste",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 33.0,
+      "p95": 34.96,
+      "max": 35.1,
+      "iqrOverMedian": 0.092,
+      "p95OverMedian": 1.059,
+      "roundSpread": 0.018,
+      "noiseOk": true
+    },
+    "undo": {
+      "id": "undo",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 32.3,
+      "p95": 33.15,
+      "max": 33.5,
+      "iqrOverMedian": 0.039,
+      "p95OverMedian": 1.026,
+      "roundSpread": 0.035,
+      "noiseOk": true
+    },
+    "find": {
+      "id": "find",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 33.2,
+      "p95": 34.22,
+      "max": 34.5,
+      "iqrOverMedian": 0.029,
+      "p95OverMedian": 1.031,
+      "roundSpread": 0.006,
+      "noiseOk": true
+    },
+    "save": {
+      "id": "save",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 33.1,
+      "p95": 44.32,
+      "max": 67,
+      "iqrOverMedian": 0.056,
+      "p95OverMedian": 1.339,
+      "roundSpread": 0.015,
+      "noiseOk": true
+    },
+    "viewSwitch": {
+      "id": "viewSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 27,
+      "p50": 33.3,
+      "p95": 34.07,
+      "max": 34.1,
+      "iqrOverMedian": 0.023,
+      "p95OverMedian": 1.023,
+      "roundSpread": 0.009,
+      "noiseOk": true
+    },
+    "structEdit": {
+      "id": "structEdit",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 24,
+      "p50": 35.95,
+      "p95": 42.79,
+      "max": 43.9,
+      "iqrOverMedian": 0.242,
+      "p95OverMedian": 1.19,
+      "roundSpread": 0.07,
+      "noiseOk": true
+    },
+    "format": {
+      "id": "format",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 33.1,
+      "p95": 34.38,
+      "max": 34.8,
+      "iqrOverMedian": 0.057,
+      "p95OverMedian": 1.039,
+      "roundSpread": 0.018,
+      "noiseOk": true
+    },
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 0,
+      "p50": null,
+      "p95": null,
+      "max": null,
+      "noiseOk": null
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 9,
+      "p50": 966.8,
+      "p95": 995.3,
+      "max": 1004.5,
+      "iqrOverMedian": 0.026,
+      "p95OverMedian": 1.029,
+      "roundSpread": 0.026,
+      "noiseOk": true
+    },
+    "tabSwitch": {
+      "id": "tabSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/01-ime-zh.md",
+      "status": "ran",
+      "samples": 12,
+      "p50": 45.65,
+      "p95": 122.3,
+      "max": 172.9,
+      "iqrOverMedian": 0.167,
+      "p95OverMedian": 2.679,
+      "roundSpread": 0.1,
+      "noiseOk": false
+    },
+    "memGrowth": {
+      "id": "memGrowth",
+      "tier": "B",
+      "mode": "headless-ok",
+      "metric": "heap",
+      "doc": "corpus/01-ime-zh.md",
+      "status": "ran",
+      "extra": {
+        "heapDeltaMB": [
+          -4.9,
+          -4.89,
+          7.8
+        ],
+        "heapBeforeMB": [
+          45.09,
+          40.2,
+          35.3
+        ],
+        "heapAfterMB": [
+          40.19,
+          35.3,
+          43.11
+        ],
+        "supported": true
+      },
+      "p50": -4.89,
+      "p95": 7.8,
+      "samples": 3,
+      "iqrOverMedian": -1.299,
+      "p95OverMedian": -1.336,
+      "roundSpread": null,
+      "noiseOk": true
+    }
+  },
+  "raw": {
+    "schema": "memoria-perf-ops-run/v1",
+    "mode": "headless",
+    "harnessUrl": "http://127.0.0.1:8645/",
+    "cdpEndpoint": null,
+    "rounds": 3,
+    "inject": null,
+    "startedAt": "2026-10-20T13:44:51.483Z",
+    "ops": {
+      "typing": {
+        "id": "typing",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              0.6000000238418579,
+              0.3999999761581421,
+              0.10000002384185791,
+              0.19999998807907104,
+              0.19999998807907104,
+              0.19999998807907104,
+              0.10000002384185791,
+              0.19999998807907104,
+              0,
+              0.30000001192092896
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              0.5999999642372131,
+              0.10000002384185791,
+              0.19999998807907104,
+              0.19999998807907104,
+              0.20000004768371582,
+              0.19999998807907104,
+              0.30000001192092896,
+              0.2999999523162842,
+              0.10000002384185791,
+              0.10000002384185791
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              0.5,
+              0.19999998807907104,
+              0.10000002384185791,
+              0.19999998807907104,
+              0.10000002384185791,
+              0.19999998807907104,
+              0.19999998807907104,
+              0.10000002384185791,
+              0.09999996423721313,
+              0.19999998807907104
+            ],
+            "timingMode": "fallback-execCommand"
+          }
+        ],
+        "status": "ran"
+      },
+      "scroll": {
+        "id": "scroll",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "frames",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              16,
+              13.299999952316284,
+              16,
+              16.600000023841858,
+              17,
+              16.5,
+              17.600000023841858,
+              15.699999988079071,
+              16.30000001192093,
+              18.399999976158142,
+              15.899999976158142,
+              16.30000001192093,
+              17.19999998807907,
+              17.30000001192093,
+              15.199999988079071,
+              17.600000023841858,
+              17,
+              47.19999998807907,
+              18.600000023841858,
+              8.800000011920929,
+              15.5,
+              9.199999988079071,
+              16,
+              18.099999964237213,
+              16.600000023841858,
+              16.19999998807907,
+              16.400000035762787,
+              16.5,
+              16.19999998807907,
+              17.30000001192093,
+              17.099999964237213,
+              17.400000035762787,
+              15.899999976158142,
+              16.30000001192093,
+              17.899999976158142,
+              15.300000011920929,
+              16.30000001192093,
+              17.899999976158142,
+              16.69999998807907,
+              15.800000011920929,
+              17.900000035762787,
+              15.899999976158142,
+              15.800000011920929,
+              18.30000001192093,
+              15.299999952316284,
+              16.5,
+              17.5,
+              17,
+              46.60000002384186,
+              18.100000023841858
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 902.3000000119209,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 2,
+              "jankRatio": 0.04,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              20.599999964237213,
+              15.400000035762787,
+              17.599999964237213,
+              15.5,
+              17.100000023841858,
+              15.599999964237213,
+              18.100000023841858,
+              17,
+              15,
+              16.899999976158142,
+              17,
+              16.600000023841858,
+              15.899999976158142,
+              18.100000023841858,
+              16.899999976158142,
+              16.600000023841858,
+              16.69999998807907,
+              15.800000011920929,
+              18,
+              16,
+              15.5,
+              17.100000023841858,
+              17.5,
+              17.299999952316284,
+              14.600000023841858,
+              17.69999998807907,
+              16.5,
+              17.600000023841858,
+              15.599999964237213,
+              16.30000001192093,
+              18.5,
+              16.100000023841858,
+              15.300000011920929,
+              18.299999952316284,
+              16.100000023841858,
+              15.5,
+              16.899999976158142,
+              16.200000047683716,
+              17.19999998807907,
+              17,
+              17.5,
+              15.199999988079071,
+              17.80000001192093,
+              16.399999976158142,
+              17.19999998807907,
+              16,
+              17.700000047683716,
+              15.599999964237213,
+              16.80000001192093,
+              14.800000011920929
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 856.1999999880791,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              20.599999964237213,
+              16.30000001192093,
+              15.5,
+              16.69999998807907,
+              17.5,
+              16.69999998807907,
+              17.30000001192093,
+              17,
+              13.100000023841858,
+              18,
+              17.599999964237213,
+              16,
+              16.80000001192093,
+              18.400000035762787,
+              14.599999964237213,
+              17.30000001192093,
+              15.800000011920929,
+              16.899999976158142,
+              19.5,
+              13.800000011920929,
+              16.69999998807907,
+              17.5,
+              18.600000023841858,
+              14.099999964237213,
+              17.600000023841858,
+              16.399999976158142,
+              16.600000023841858,
+              16.100000023841858,
+              16.799999952316284,
+              16.400000035762787,
+              16.899999976158142,
+              17.600000023841858,
+              16.599999964237213,
+              15.800000011920929,
+              16,
+              17.80000001192093,
+              16.19999998807907,
+              17.400000035762787,
+              16.599999964237213,
+              15.900000035762787,
+              17.299999952316284,
+              15.900000035762787,
+              16.80000001192093,
+              18.19999998807907,
+              15.800000011920929,
+              16,
+              17.599999964237213,
+              14.699999988079071,
+              18.600000023841858,
+              17.399999976158142
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 853.6999999880791,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "select": {
+        "id": "select",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              15.900000035762787,
+              34,
+              32.60000002384186,
+              32.59999996423721,
+              35
+            ]
+          },
+          {
+            "samples": [
+              9.399999976158142,
+              32,
+              34.200000047683716,
+              32.89999997615814,
+              33
+            ]
+          },
+          {
+            "samples": [
+              17.900000035762787,
+              33.5,
+              34,
+              32.30000001192093,
+              33.5
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "paste": {
+        "id": "paste",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              14,
+              34.69999998807907,
+              31.69999998807907,
+              34.90000003576279,
+              33
+            ]
+          },
+          {
+            "samples": [
+              6.900000035762787,
+              35.09999996423721,
+              31.80000001192093,
+              33.19999998807907,
+              33.40000003576279
+            ]
+          },
+          {
+            "samples": [
+              9,
+              34.799999952316284,
+              31.700000047683716,
+              34.89999997615814,
+              32.60000002384186
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "undo": {
+        "id": "undo",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              31.19999998807907,
+              31.399999976158142,
+              30.80000001192093,
+              32.69999998807907,
+              31.600000023841858
+            ]
+          },
+          {
+            "samples": [
+              33,
+              32.30000001192093,
+              32.30000001192093,
+              31.400000035762787,
+              32.59999996423721
+            ]
+          },
+          {
+            "samples": [
+              33,
+              32,
+              33.5,
+              32.5,
+              30.799999952316284
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "find": {
+        "id": "find",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              16.80000001192093,
+              33.89999997615814,
+              33,
+              33.19999998807907,
+              33.60000002384186
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          },
+          {
+            "samples": [
+              30,
+              33.200000047683716,
+              34.09999996423721,
+              32.80000001192093,
+              33.39999997615814
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          },
+          {
+            "samples": [
+              5.5,
+              34.5,
+              33,
+              32.30000001192093,
+              33.39999997615814
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "save": {
+        "id": "save",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              11.100000023841858,
+              34.10000002384186,
+              34.59999996423721,
+              32,
+              33.40000003576279
+            ]
+          },
+          {
+            "samples": [
+              22.69999998807907,
+              31.80000001192093,
+              33.60000002384186,
+              32.89999997615814,
+              67
+            ]
+          },
+          {
+            "samples": [
+              2,
+              33.90000003576279,
+              33.09999996423721,
+              33.40000003576279,
+              33.09999996423721
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "viewSwitch": {
+        "id": "viewSwitch",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              8.300000011920929,
+              33,
+              33.60000002384186,
+              32.90000003576279,
+              33.5,
+              33.80000001192093,
+              33.30000001192093,
+              33.30000001192093,
+              33.39999997615814
+            ]
+          },
+          {
+            "samples": [
+              11.699999988079071,
+              33.89999997615814,
+              34.10000002384186,
+              31.899999976158142,
+              33.40000003576279,
+              32.80000001192093,
+              34,
+              33.60000002384186,
+              32.30000001192093
+            ]
+          },
+          {
+            "samples": [
+              11.199999988079071,
+              32.700000047683716,
+              34,
+              33.39999997615814,
+              32.89999997615814,
+              34.10000002384186,
+              32.90000003576279,
+              33.09999996423721,
+              33.60000002384186
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "structEdit": {
+        "id": "structEdit",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              36.69999998807907,
+              36.200000047683716,
+              30.5,
+              26,
+              36.59999996423721,
+              34.40000003576279,
+              32.40000003576279,
+              42.19999998807907
+            ]
+          },
+          {
+            "samples": [
+              39.40000003576279,
+              36.10000002384186,
+              30,
+              26.5,
+              41.69999998807907,
+              39.5,
+              36.19999998807907,
+              34.200000047683716
+            ]
+          },
+          {
+            "samples": [
+              28.5,
+              39.80000001192093,
+              30.80000001192093,
+              28.900000035762787,
+              42.89999997615814,
+              35.80000001192093,
+              31.80000001192093,
+              43.89999997615814
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "format": {
+        "id": "format",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              6.099999964237213,
+              31.30000001192093,
+              33.80000001192093,
+              33,
+              32.80000001192093
+            ]
+          },
+          {
+            "samples": [
+              5.700000047683716,
+              34.799999952316284,
+              32.30000001192093,
+              33.40000003576279,
+              34.19999998807907
+            ]
+          },
+          {
+            "samples": [
+              13.700000047683716,
+              33.299999952316284,
+              33.90000003576279,
+              33.59999996423721,
+              33.10000002384186
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "kpHover": {
+        "id": "kpHover",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          }
+        ],
+        "status": "ran"
+      },
+      "open": {
+        "id": "open",
+        "tier": "A",
+        "mode": "realapp-required",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              976.9000000357628,
+              953,
+              947.5
+            ],
+            "extra": {
+              "blocks": 3110
+            }
+          },
+          {
+            "samples": [
+              981.5,
+              966.8000000119209,
+              952.5
+            ],
+            "extra": {
+              "blocks": 3110
+            }
+          },
+          {
+            "samples": [
+              949.6000000238419,
+              977.8000000119209,
+              1004.5
+            ],
+            "extra": {
+              "blocks": 3110
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "tabSwitch": {
+        "id": "tabSwitch",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/01-ime-zh.md",
+        "runs": [
+          {
+            "samples": [
+              19.399999976158142,
+              80.89999997615814,
+              45.80000001192093,
+              40.5
+            ]
+          },
+          {
+            "samples": [
+              49.39999997615814,
+              45.5,
+              172.89999997615814,
+              44
+            ]
+          },
+          {
+            "samples": [
+              39.5,
+              54.799999952316284,
+              48.5,
+              45.10000002384186
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "memGrowth": {
+        "id": "memGrowth",
+        "tier": "B",
+        "mode": "headless-ok",
+        "metric": "heap",
+        "doc": "corpus/01-ime-zh.md",
+        "runs": [
+          {
+            "samples": [],
+            "extra": {
+              "supported": true,
+              "heapBeforeMB": 45.09,
+              "heapAfterMB": 40.19,
+              "heapDeltaMB": -4.9,
+              "cycles": 12
+            }
+          },
+          {
+            "samples": [],
+            "extra": {
+              "supported": true,
+              "heapBeforeMB": 40.2,
+              "heapAfterMB": 35.3,
+              "heapDeltaMB": -4.89,
+              "cycles": 12
+            }
+          },
+          {
+            "samples": [],
+            "extra": {
+              "supported": true,
+              "heapBeforeMB": 35.3,
+              "heapAfterMB": 43.11,
+              "heapDeltaMB": 7.8,
+              "cycles": 12
+            }
+          }
+        ],
+        "status": "ran"
+      }
+    },
+    "environment": {
+      "browser": "Edg/155.0.4283.45",
+      "mode": "headless"
+    },
+    "ok": true,
+    "finishedAt": "2026-10-20T13:46:05.118Z"
+  }
+}
