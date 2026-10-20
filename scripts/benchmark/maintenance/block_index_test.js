@@ -282,6 +282,34 @@ function makeDoc(blocksSpec) {
   check("A13-2 整篇路径：索引总数不翻倍", bi2.blocks().length === 2, { total: bi2.blocks().length });
 })();
 
+// A14 预渲染隔离：临时实例的 upsert/commit **不得**影响主实例（G2/A14，Lead 裁决 2026-10-20）
+//   对应 app.js `_preloadOne` 用独立 createBlockIndex() 投射另一篇文档。
+(function () {
+  const main = BlockIndex();
+  main.beginStamp();
+  main.upsert({ id: "M-1", kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "doc-A-1" });
+  main.upsert({ id: "M-2", kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "doc-A-2" });
+  main.commit();
+  const before = main.blocks().map(h => h.id).sort();
+
+  // 模拟预渲染另一篇文档：独立临时实例，全量 reset + upsert，然后「用完即弃」
+  let temp = BlockIndex();
+  temp.beginStamp({ reset: true });
+  temp.upsert({ kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "doc-B-1" });
+  temp.upsert({ kind: "list", srcLineStart: 2, srcLineEnd: 4, blockSrcText: "doc-B-2" });
+  temp.commit();
+  const tempIds = temp.blocks().map(h => h.id);
+  temp = null;                                  // 用完即弃（对应 app.js finally 里 tempIndex = null）
+
+  const after = main.blocks().map(h => h.id).sort();
+  check("A14 预渲染后主实例 id 集合完全不变", JSON.stringify(before) === JSON.stringify(after), { before, after });
+  check("A14 主实例块数不变", main.blocks().length === 2, { total: main.blocks().length });
+  check("A14 临时实例确实独立产生了块", tempIds.length === 2, { tempIds });
+  check("A14 临时实例 id 与主实例无交集", tempIds.every(id => !before.includes(id)), { tempIds, before });
+  // 主实例仍能正常查询（未被 reset）
+  check("A14 主实例查询仍正确", main.atSrcLine(1, { outermost: true }).length === 1 && main.atSrcLine(1, { outermost: true })[0].id === "M-1");
+})();
+
 // ── 汇总 ────────────────────────────────────────────────────────────────
 console.log("\n" + passes + " passed, " + failures + " failed");
 process.exit(failures === 0 ? 0 : 1);

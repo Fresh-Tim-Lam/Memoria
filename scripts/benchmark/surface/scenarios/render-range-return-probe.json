@@ -1,0 +1,43 @@
+{
+  "schema": "memoria-interaction-scenarios/v1",
+  "note": "P2 独立探针（A15）：验证 renderer.js renderRange 收集 made[] 并返回「已挂进 DOM 的顶层节点数组」。不并入 11 条金标准（会漂移基线），一次性跑、结果写进 P2 报告。断言内联在 eval 表达式里（框架无 assert op），返回 {pass, fails}。在离屏临时 container 上跑，不污染 #preview。★ 注意：新节点此时尚无 data-block-id（那是 BlockIndex.upsert 写的，本探针不经过 upsert）⇒ 顺序断言必须用节点引用相等，不能用属性。",
+  "requires": {
+    "kb": "artifacts/baseline-kb/数字通信原理（run_interaction.py 默认 kb）",
+    "file": "homework/hw-003-frequency-response.md",
+    "note": "renderRange 是 window.MemoriaRenderer.renderRange；手工造 PARAGRAPH 类型 AST，children=[] 触发 <br> 占位，完全无外部依赖。"
+  },
+  "scenarios": [
+    {
+      "id": "RR1-render-range-returns-made-array",
+      "desc": "离屏 container 造 3 旧块，调 renderRange(doc,1,2,c) 替换 1 块 → 断言：返回数组、长度==1、该节点已挂进容器(isConnected+contains)、旧块被移除、未变块保留",
+      "steps": [
+        {
+          "op": "open",
+          "file": "homework/hw-003-frequency-response.md",
+          "view": "preview",
+          "minBlocks": 1
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){try{var AST=window.MemoriaAST,R=window.MemoriaRenderer;if(!AST||!R||!R.renderRange)return {pass:false,reason:'renderer/AST not loaded'};var T=AST.TYPES;var doc={blocks:[{type:T.PARAGRAPH,children:[]},{type:T.PARAGRAPH,children:[]},{type:T.PARAGRAPH,children:[]}]};var c=document.createElement('div');c.style.cssText='position:absolute;left:-99999px;top:-99999px';document.body.appendChild(c);for(var i=0;i<3;i++){var e=document.createElement('p');e.className='-src-block';e.setAttribute('data--block-index',String(i));e.setAttribute('data-block-id','RRold'+i);e.textContent='old'+i;c.appendChild(e);}var made=R.renderRange(doc,1,2,c);var fail=[];if(!Array.isArray(made)){fail.push('not-array:'+typeof made);}else{if(made.length!==1)fail.push('len!=1:'+made.length);for(var k=0;k<made.length;k++){if(!made[k]||!made[k].isConnected)fail.push('node'+k+'-not-connected');else if(!c.contains(made[k]))fail.push('node'+k+'-not-in-container');}}var after=c.querySelectorAll('.-src-block');if(after.length!==3)fail.push('blocks-after!=3:'+after.length);var keptOld=[].slice.call(after).filter(function(x){var d=x.getAttribute('data-block-id');return d==='RRold0'||d==='RRold2';});if(keptOld.length!==2)fail.push('kept-old!=2:'+keptOld.length);var madeLen=Array.isArray(made)?made.length:-1;c.remove();return {pass:fail.length===0,fails:fail,madeLen:madeLen,blocksAfter:after.length};}catch(e){return {pass:false,reason:String(e&&e.message||e)};}})()"
+        }
+      ]
+    },
+    {
+      "id": "RR2-returned-order-matches-dom-order",
+      "desc": "替换连续 2 块 → 断言返回数组长度==2、顺序与 DOM 顺序一致（用节点引用相等，非属性）",
+      "steps": [
+        {
+          "op": "open",
+          "file": "homework/hw-003-frequency-response.md",
+          "view": "preview",
+          "minBlocks": 1
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){try{var AST=window.MemoriaAST,R=window.MemoriaRenderer;var T=AST.TYPES;var doc={blocks:[{type:T.PARAGRAPH,children:[]},{type:T.PARAGRAPH,children:[]},{type:T.PARAGRAPH,children:[]},{type:T.PARAGRAPH,children:[]}]};var c=document.createElement('div');c.style.cssText='position:absolute;left:-99999px;top:-99999px';document.body.appendChild(c);for(var i=0;i<4;i++){var e=document.createElement('p');e.className='-src-block';e.setAttribute('data--block-index',String(i));e.setAttribute('data-block-id','RRb'+i);e.textContent='b'+i;c.appendChild(e);}var made=R.renderRange(doc,1,3,c);var fail=[];if(!Array.isArray(made)||made.length!==2){fail.push('len!=2:'+JSON.stringify(made&&made.length));}else{var n=c.querySelectorAll('.-src-block');if(n.length!==4)fail.push('blocks-after!=4:'+n.length);else{if(!(n[1]===made[0]&&n[2]===made[1]))fail.push('dom-order-mismatch');var connected=made.every(function(x){return x&&x.isConnected;});if(!connected)fail.push('some-not-connected');}}c.remove();return {pass:fail.length===0,fails:fail,madeLen:(Array.isArray(made)?made.length:-1)};}catch(e){return {pass:false,reason:String(e&&e.message||e)};}})()"
+        }
+      ]
+    }
+  ]
+}

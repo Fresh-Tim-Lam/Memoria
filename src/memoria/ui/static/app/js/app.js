@@ -1822,97 +1822,85 @@
       _renderSettledWaiters.push(resolve);
     });
   }
-  var _blockLineMap = null;  // blockIndex → { startLine, endLine } (0-based)
+  var _blockLineMap = null;  // blockIndex → { startLine, endLine } (0-based)｜2026-10-20 P2：改为 **BlockIndex 的派生投影**（保留形状供既有消费者零改动）
 
   /**
-   * 给 AST 渲染的 DOM 元素标记 data--src-line
-   * 直接匹配 sourceLines 和 AST blocks 的消费顺序
+   * ★ 块身份索引 —— **全 App 唯一实例**（Lead 裁决 2026-10-20，P2）
+   *
+   * 暴露：`window.MemoriaApp.blockIndex`（见门面）。消费者（KP 面板 / 编辑模块 / 助手面板）
+   * **只读**：只可用 blocks() / get() / atSrcLine() / rangeOf() / blocksInRange() / isFrozen() / getMetrics()，
+   * **不得**调 upsert() / commit() / remove() —— 写权限唯一属于渲染内核（stampBlockLines 薄壳、
+   * reRenderBlock、renderPreview、缓存搬回）。违反 = 制造第二套坐标（宪章 §5.2 验收 #1 禁止的"绕开"）。
+   *
+   * 生命周期（见 docs/design/block-identity-design.md §7.3 + P2 草稿 §3.0）：
+   *   · 本处创建（早于任何渲染）
+   *   · 整篇路径（renderPreview / 差分渲染 / 换文件 / 缓存搬回）⇒ beginStamp({reset:true})
+   *   · 局部路径（reRenderBlock 单块重渲，**打字热路径**）⇒ beginStamp() 不 reset + 显式 id 就地 upsert
+   *   · 预渲染另一篇文档 ⇒ **独立临时实例**（用完即弃），绝不碰本实例（A14）
    */
-  function stampBlockLines(preview, doc) {
-    if (!doc || !doc.blocks) return;
-    _blockLineMap = []; var byIdx = new Map(); preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) { byIdx.set(el.getAttribute("data--block-index"), el); }); // 2026-09-23 性能：一次建好 block-index → 元素 索引，替代下方逐块全 DOM querySelector（原为 O(块数×DOM)，2003 块时是主要卡顿源）
+  var BI = window.MemoriaBlockIndex.createBlockIndex();
 
-    var srcLines = state.doc.body ? state.doc.body.split("\n") : [];
-    var srcIdx = 0;
-    var blockIdx = 0;
+  /**
+   * 把 AST 的块行区间投射到 BlockIndex，并派生 `_blockLineMap` 兼容投影。
+   *
+   * 2026-10-20 P2 重写：**删掉原先 8 类正则启发式**（空行/fence/$$/表格/列表/引用）。
+   * 行区间**只**来自 `parser.js emit()` 落盘的 `blk.srcLine / blk.srcLineEnd`（1-based 闭区间，
+   * parser 注释自称"块↔源码行的单一事实源，不得再各自复写一套块边界判定"）。
+   * `data--src-line` / `data--src-line-end` 的写入**只发生在 block-index.js 的 upsert() 内**
+   * （R3：属性是派生投影；门禁 check_line_attr_gate.js 校验）。
+   *
+   * @param {HTMLElement} preview 容器（块元素的父级）
+   * @param {object} doc AST（blocks[] 带 srcLine/srcLineEnd）
+   * @param {object} [opts] opts.reset=true ⇒ 整篇重建（清空索引）；默认 false ⇒ 增量（局部路径）
+   *                       opts.index ⇒ 投射到**指定实例**（默认主实例 BI）。
+   *                         ★ 唯一用途：预加载另一篇文档时用**独立临时实例**（G2/A14：绝不污染 BI）。
+   */
+  function stampBlockLines(preview, doc, opts) {
+    if (!doc || !doc.blocks || !preview) return;
+    var reset = !!(opts && opts.reset);
+    var target = (opts && opts.index) || BI;   // G2：预加载传独立实例 ⇒ 主实例零影响
 
-    while (srcIdx < srcLines.length && blockIdx < doc.blocks.length) {
+    // block-index → 元素（一次建索引，替代逐块全 DOM querySelector）
+    var byIdx = new Map();
+    preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) {
+      byIdx.set(el.getAttribute("data--block-index"), el);
+    });
+
+    target.beginStamp({ reset: reset });
+    var mapped = 0;
+    for (var blockIdx = 0; blockIdx < doc.blocks.length; blockIdx++) {
       var block = doc.blocks[blockIdx];
-      var rawLine = srcLines[srcIdx];
-      var lineCount = 1; // default: 1 source line per block
-
-      // 空行 → BLANK_LINE (1 line)
-      if (rawLine.trim() === "") {
-        // lineCount stays 1
-      }
-      // Frontmatter
-      else if (srcIdx === 0 && rawLine.trim() === "---") {
-        lineCount = 1;
-        while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].trim() !== "---")
-          lineCount++;
-        lineCount++; // include closing ---
-      }
-      // Fenced code / mermaid
-      else if (rawLine.trim().match(/^(`{3,}|~{3,})/)) {
-        var fence = rawLine.trim().match(/^(`{3,}|~{3,})/)[1];
-        lineCount = 1;
-        while (srcIdx + lineCount < srcLines.length && !srcLines[srcIdx + lineCount].trim().startsWith(fence))
-          lineCount++;
-        lineCount++; // close fence
-      }
-      // Math block $$
-      else if (rawLine.trim() === "$$") {
-        lineCount = 1;
-        while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].trim() !== "$$")
-          lineCount++;
-        lineCount++; // closing $$
-      }
-      // Table (header, separator, data rows)
-      else if (rawLine.indexOf("|") >= 0 &&
-               srcIdx + 1 < srcLines.length &&
-               srcLines[srcIdx + 1].trim().match(/^\|?[\s\-:|]+\|?$/)) {
-        lineCount = 2; // header + separator
-        while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].indexOf("|") >= 0)
-          lineCount++;
-      }
-      // List items（含空项 "- " 等：用原始行匹配，避免 trim 丢失尾随空格导致漏算）
-      // 与 parser 松散列表语义对齐：列表项之间的空行属于同一列表块，跳过后继续收集同类型项
-      else if (rawLine.match(/^\s*(\d+\.\s|[-*+]\s)/)) {
-        var isOrd = /^\s*\d+\.\s/.test(rawLine);
-        lineCount = 1;
-        var li = srcIdx + 1;
-        while (li < srcLines.length) {
-          var lst = srcLines[li];
-          if (lst.trim() === "") {
-            li++; // 列表块内部的空行：计入该块，继续找后续列表项
-            continue;
-          }
-          var lstM = lst.match(/^\s*(\d+\.\s|[-*+]\s)/);
-          if (!lstM) break;
-          if (/^\s*\d+\.\s/.test(lst) !== isOrd) break; // 有序/无序类型变化 → 新列表块
-          li++;
-        }
-        lineCount = li - srcIdx;
-      }
-      // Blockquote (consecutive > lines)
-      else if (rawLine.trim().startsWith(">")) {
-        lineCount = 1;
-        while (srcIdx + lineCount < srcLines.length && srcLines[srcIdx + lineCount].trim().startsWith(">"))
-          lineCount++;
-      }
-      // 真值优先：parser 落盘的块行区间（上方启发式仅作缺字段兜底；末块越界=公式归一化曾插行）
-      if (block.srcLine > 0 && block.srcLineEnd >= block.srcLine && doc.blocks[doc.blocks.length - 1].srcLineEnd <= srcLines.length) { srcIdx = block.srcLine - 1; lineCount = block.srcLineEnd - block.srcLine + 1; }
-      _blockLineMap[blockIdx] = { startLine: srcIdx, endLine: srcIdx + lineCount - 1 };
-      var el = byIdx.get(String(blockIdx));
-      if (el) {
-        el.setAttribute("data--src-line", srcIdx + 1);
-        el.setAttribute("data--src-line-end", srcIdx + lineCount);
-      }
-      blockIdx++;
-      srcIdx += lineCount;
+      // 行区间只认 parser 落盘值；缺字段（理论上不该有）⇒ 跳过并如实计数，不猜
+      if (!(block.srcLine > 0) || !(block.srcLineEnd >= block.srcLine)) continue;
+      var el = byIdx.get(String(blockIdx)) || null;
+      target.upsert({
+        kind: block.type,
+        srcLineStart: block.srcLine,
+        srcLineEnd: block.srcLineEnd,
+        blockSrcText: _blockSrcTextOf(block),
+        domEl: el,
+      });
+      mapped++;
     }
+    target.commit();
 
-    log("STAMP", "mapped " + blockIdx + " blocks from " + srcLines.length + " source lines");
+    // 兼容投影只在投射主实例时更新（临时实例不得动 _blockLineMap —— 否则预加载会篡改当前文档的映射）
+    if (target === BI) {
+      _blockLineMap = BI.blocks().map(function (h) {
+        return { startLine: h.srcLineStart - 1, endLine: h.srcLineEnd - 1 };   // 兼容投影保持 0-based 旧口径
+      });
+    }
+    log("STAMP", "mapped " + mapped + "/" + doc.blocks.length + " blocks ⇒ BlockIndex (" + (reset ? "reset" : "incremental") + (target === BI ? "" : "·temp") + ")");
+  }
+
+  /** 取一个块的源码文本（供 BlockIndex 派生稳定 id；纯函数、不读 DOM）。 */
+  function _blockSrcTextOf(block) {
+    try {
+      var lines = state.doc && state.doc.body ? state.doc.body.split("\n") : [];
+      var out = [];
+      for (var i = block.srcLine - 1; i <= block.srcLineEnd - 1 && i < lines.length; i++) out.push(lines[i]);
+      return out.join("\n");
+    } catch (e) { return ""; }
   }
 
   async function renderPreview(doc, options) {
@@ -1969,8 +1957,8 @@
       preview.innerHTML = "";
       preview.appendChild(content);
 
-      // 3b. 构建 block→源行映射，给每个 DOM 元素标记 data--src-line
-      stampBlockLines(preview, _doc); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）
+      // 3b. 构建 block→源行映射（整篇路径 ⇒ reset：清空旧索引，行区间与 id 全部按这份 AST 重建）
+      stampBlockLines(preview, _doc, { reset: true }); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）
 
       window.__blockLineMap = _blockLineMap;
 
@@ -7759,15 +7747,42 @@
       var preview = $("#preview");
       if (!preview) return;
       var container = preview.querySelector(".-preview-content") || preview;
-      R.renderRange(_doc, blockIndex, blockIndex + 1, container);
-      if (!keepLineMap) stampBlockLines(preview, _doc);   // 行数没变 ⇒ 块→行映射逐字不动 ⇒ **跳过 O(文档) 的重算**（AG102）
+      // 2026-10-20 P2：**局部路径（G1）** —— 不再"整趟跳过"（那会造成 X2：新块节点不带 data--src-line），
+      // 而是 beginStamp()（**不 reset**）+ 用**显式 id** 就地 upsert 这一块 ⇒ O(1)。
+      // id 来源：**渲染前**从旧节点读 data-block-id（renderRange 会换掉节点，之后就读不到了）。
+      var _oldEl = container.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
+      var _keepId = _oldEl ? _oldEl.getAttribute("data-block-id") : null;
+      var _made = R.renderRange(_doc, blockIndex, blockIndex + 1, container);   // P2：现返回新建顶层节点数组
+      var _blk = _doc && _doc.blocks ? _doc.blocks[blockIndex] : null;
+      if (_blk && _blk.srcLine > 0 && _blk.srcLineEnd >= _blk.srcLine) {
+        // ★ 性能：兼容投影 `_blockLineMap` 只在**这一块的行区间真变了**时才重建（O(块数)）。
+        //   打字/行内格式化不改行区间 ⇒ 跳过重建（这正是旧 `keepLineMap` 想省的那笔，但现在
+        //   不再以"整趟跳过 upsert"为代价 —— upsert 仍做，X2 因此被消灭）。
+        var _prevRange = (_blockLineMap && _blockLineMap[blockIndex]) || null;
+        var _rangeChanged = !_prevRange || _prevRange.startLine !== (_blk.srcLine - 1) || _prevRange.endLine !== (_blk.srcLineEnd - 1);
+        BI.beginStamp();
+        BI.upsert({
+          id: _keepId || undefined,          // 有旧 id ⇒ 就地更新（不产生孤儿）；无（首次）⇒ upsert 自动生成
+          kind: _blk.type,
+          srcLineStart: _blk.srcLine,
+          srcLineEnd: _blk.srcLineEnd,
+          blockSrcText: _blockSrcTextOf(_blk),
+          domEl: (Array.isArray(_made) && _made[0]) ? _made[0] : null,
+        });
+        BI.commit();
+        if (_rangeChanged) {
+          _blockLineMap = BI.blocks().map(function (h) { return { startLine: h.srcLineStart - 1, endLine: h.srcLineEnd - 1 }; });
+        }
+      } else if (!keepLineMap) {
+        stampBlockLines(preview, _doc);      // 兜底：AST 缺行区间（理论上不该发生）⇒ 退回整篇投影
+      }
       if (_domBlockSig && _doc && _doc.blocks && _domBlockSig.length === _doc.blocks.length) _domBlockSig[blockIndex] = _previewBlockSig(_doc.blocks[blockIndex]);   // 单块重渲 ⇒ 差分基准只跟着这一块走（不更新的话，块级提交会把这块误判成"没变"）
       // 增量渲染替换了 block DOM：.-math span 是新节点，需重新触发 MathJax 排版，
       // 否则行内公式会以裸文本显示（样式应用/笔刷后“公式预览失败”，全量刷新才恢复）
       // 2026-09-25 AG101：**只对"这一块"做后处理** —— 原来 `typesetPromise([container])` 把**整篇预览**重排一遍、
       // `postProcessWikilinks()` 扫全部 `.-wikilink`、`bindPreviewLinks()` 扫全部 `.memoria-link`，
       // 每次按键都付整篇的钱 ⇒ 真机「输入进去没有反应，要等渲染之后才显示编辑内容」（人 2026-09-25）。
-      var _madeBlock = container.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
+      var _madeBlock = (Array.isArray(_made) && _made[0]) ? _made[0] : container.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
       if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
         try { window.MathJax.typesetPromise(_madeBlock ? [_madeBlock] : [container]); } catch (e) { }
       }
@@ -13036,6 +13051,12 @@
     renderTabs,
     closeTabAt,
     updateNavButtons,
+    // ── 块身份索引（2026-10-20 P2，Lead 裁决）─────────────────────────
+    // 全 App **唯一** BlockIndex 实例。★ **消费者只读**：KP 面板 / 编辑模块 / 助手面板
+    // 只能用 blocks()/get()/atSrcLine()/rangeOf()/blocksInRange()/isFrozen()/getMetrics()，
+    // **不得**调 upsert()/commit()/remove()（写权限唯一属于渲染内核）。
+    // 设计：docs/design/block-identity-design.md §7.3；生命周期见 P2 草稿 §3.0。
+    blockIndex: BI,
     // ── KB 完整性检查模块（kb-check.js）追加的私有服务 ─────────────────
     // 后端检查消息本地化（i18n.md §5.1 助手，图谱审计提示等 app.js 侧亦复用）、
     // 状态栏统计重绘、路径规范化、路径修复后的打开标签重映射，均为 app.js 闭包内实现，
@@ -13352,6 +13373,10 @@
     _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 与"刚搬回来的这份 DOM"对齐（同上：块级提交的差分基准）
     preview.innerHTML = "";
     preview.appendChild(entry.frag); _markSwitch("attach");   // 2026-09-25 AG97：窗口化回退 ⇒ 搬回的就是整篇真 DOM（老口径），不再"只挂一窗"
+    // 2026-10-20 P2：缓存搬回是**整篇路径** ⇒ 用搬回来的 AST 重建 BlockIndex（reset）。
+    // 缓存条目里存的是**投影 map**（不存实例，见 _preloadOne G2）⇒ 这里按 AST 重新 upsert 一遍，
+    // 成本 O(n)（与搬回 DOM 同量级，且 upsert 已有"值未变不写"守卫 ⇒ 属性多半已对，写入极少）。
+    stampBlockLines(preview, _doc, { reset: true });
     const _wantEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false"; if (preview.contentEditable !== _wantEditable) preview.contentEditable = _wantEditable; // 2026-09-24：**只在真变时才写** —— 写同值也会让 Blink 走一遍"可编辑性"样式传播（30 万节点真机实测 ~351 ms，正是下面 `static` 那一段）
     _previewDomKey = { path: doc.path, version: entry.version, fp: entry.fp };   // 2026-10-19：`fp` 必须一起搬回（这棵 DOM 的出身仍是 `entry.fp`）⇒ 再切走时还能连续命中
     // 2026-09-24 二次修正：这一行**曾经**调 `_retagInlineMathOnly()`，但它注定空跑 —— 预渲染刻意不跑 MathJax ⇒ 此刻 DOM 里还没有 `mjx-container` 可打标记（而 `contentEditable` 早已随节点搬回）；真正的补标记在下面 MathJax 落定之后那一行（`_markAsyncAfter("mathjax", …)`）。真机读数：这一行曾占 `static` 349 ms（28%）。
@@ -13501,6 +13526,9 @@
     const fp = _bodyFingerprint(rawBody);
     let ast = null;
     let map = null;
+    // G2/A14（Lead 裁决 2026-10-20）：预加载的是**另一篇文档** ⇒ 用**独立临时实例**投射，
+    // **绝不碰主实例 BI**（否则会把当前文档的索引清成这一篇的）。用完即弃：finally 置 null、不挂全局、不进缓存条目。
+    let tempIndex = window.MemoriaBlockIndex.createBlockIndex();
     try {
       if (MP && MP.setCurrentFileDir) MP.setCurrentFileDir(_relDirOf(path));
       ast = P.parse(rewriteMdImagePaths(rawBody));
@@ -13508,14 +13536,15 @@
       // 行号映射：`stampBlockLines` 读的是 `state.doc.body`（**当前**文档）⇒ 临时换成被预渲染的那份。
       // 本段同步执行（解析 / 渲染 / 打标记都不 await）⇒ 不会与任何渲染或编辑交错；finally 里立刻还原。
       state.doc = res;
-      stampBlockLines(holder, ast);
-      map = _blockLineMap;
+      stampBlockLines(holder, ast, { index: tempIndex });
+      map = tempIndex.blocks().map(function (h) { return { startLine: h.srcLineStart - 1, endLine: h.srcLineEnd - 1 }; });
       _applyPreviewStaticPass(holder, ast);
     } catch (_) {
       return false;
     } finally {
       state.doc = savedDoc;
       _blockLineMap = savedMap;
+      tempIndex = null;                      // ★ 用完即弃（显式断引用，不等 GC）
       if (typeof M.setDoc === "function") M.setDoc(savedMapperDoc);
       if (MP && MP.setCurrentFileDir) MP.setCurrentFileDir(savedDir);
     }
@@ -14150,7 +14179,7 @@
       while (k < lim2 && same(_domBlockSig[oldB.length - 1 - k], newB[newB.length - 1 - k])) k++;
       var oldSpan = oldB.length - i - k, newSpan = newB.length - i - k;
       _doc = fresh; if (M && typeof M.setDoc === "function") M.setDoc(_doc);   // 换 AST（与整篇解析同源）；mapper 也必须跟着换，`restoreCursor()` 靠它把 AST 坐标换回 DOM
-      if (oldSpan === 0 && newSpan === 0) { stampBlockLines(preview, _doc); window.__blockLineMap = _blockLineMap; return true; }   // 内容一字未变（例如只是 `preview_body` 作废）⇒ 连 DOM 都不用动
+      if (oldSpan === 0 && newSpan === 0) { stampBlockLines(preview, _doc, { reset: true }); window.__blockLineMap = _blockLineMap; return true; }   // 内容一字未变（例如只是 `preview_body` 作废）⇒ 连 DOM 都不用动；整篇 reset 是幂等重建（同文本同序 ⇒ 同 id）
       var ok = _paintBlockSpan(container, preview, i, oldSpan, newSpan);
       if (ok) {   // 差分基准跟着这次替换走（只动变动区间；长度对不上就整份重建）
         if (_domBlockSig && _domBlockSig.length === oldB.length) {
@@ -14186,7 +14215,7 @@
     var all = container.querySelectorAll(".-src-block[data--block-index]");
     if (all.length !== _doc.blocks.length) return false;
     for (var j = 0; j < all.length; j++) all[j].setAttribute("data--block-index", String(j));
-    stampBlockLines(preview, _doc);                          // 行号映射 + `data--src-line`（按新下标反查）
+    stampBlockLines(preview, _doc, { reset: true });        // 行号映射（整篇路径 ⇒ reset：下标刚被整体重编，索引语义已失效）
     window.__blockLineMap = _blockLineMap;                   // ⚠️ `stampBlockLines()` 是**重新绑定** `_blockLineMap` 的 ⇒ 外部读的那份（编辑模块 9575 行用它做选区/粘贴映射、keys-debug 也用）必须同步换掉，否则拿到的是旧数组
     if (made.length) {                                       // 只处理**新块**：禁编辑 / 公式 / wikilink / mermaid
       var NEC = 'mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay';   // 与 `renderPreview()` 第 4 步同一份选择器（否则新出现的代码块/表格还能被编辑）

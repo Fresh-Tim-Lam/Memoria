@@ -474,9 +474,17 @@ window.MemoriaRenderer = (function () {
     }
 
     // 创建新元素
+    // 2026-10-20 P2：同时收集"本次新建的顶层节点"到 made[]
+    //   —— 仅供 app.js `reRenderBlock` 取回新节点用（把 domEl 交给 BlockIndex.upsert）。
+    //   ⚠️ DocumentFragment 在 insertBefore/appendChild 之后会被 DOM 规范**清空**，
+    //   所以必须在这里收集引用，不能 `return fragment`（那样拿到空 fragment）。
+    //   **只收集、不改造**：不改渲染顺序、不改节点结构、不包装。
+    var made = [];
     var fragment = document.createDocumentFragment();
     for (var k = startBlock; k < endBlock && k < doc.blocks.length; k++) {
-      fragment.appendChild(renderBlock(doc.blocks[k], k));
+      var madeEl = renderBlock(doc.blocks[k], k);
+      made.push(madeEl);
+      fragment.appendChild(madeEl);
     }
 
     // 插入新元素（保持原位）
@@ -489,6 +497,10 @@ window.MemoriaRenderer = (function () {
     } else {
       container.appendChild(fragment);
     }
+
+    // 2026-10-20 P2：返回本次新建的**顶层节点数组**（文档顺序；已挂进 DOM）。
+    // 单节点也返回数组（调用方统一取 [0]），不做单/多两态返回。
+    return made;
   }
 
   // ── 公开 API ──
