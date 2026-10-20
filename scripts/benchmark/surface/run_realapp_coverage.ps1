@@ -11,7 +11,8 @@ param(
     [string]$Ops = 'all',
     [int]$Port = 9500,
     [int]$BootWaitSec = 18,
-    [string]$Out = ''
+    [string]$Out = '',
+    [string]$SessionId = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -107,6 +108,7 @@ try {
         '--rounds', $Rounds,
         '--out', $absOut
     )
+    if ($SessionId) { $nodeArgs += @('--session-id', $SessionId) }
     Write-Host "[realcov] measure: node $($nodeArgs -join ' ')"
     & node @nodeArgs
     $code = $LASTEXITCODE

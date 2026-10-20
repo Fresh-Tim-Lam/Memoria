@@ -37,7 +37,7 @@
 | 8 | 视图切换 | `viewSwitch` | source/preview/split 往返 | 03-block-boundaries | headless-ok | ✅ |
 | 9 | 结构编辑 | `structEdit` | 回车拆段/退格合并 | 03-block-boundaries | headless-ok | ✅ |
 | 10 | 样式画笔 | `format` | 格式按钮切换时延 | 03-block-boundaries | headless-ok | ✅ |
-| 11 | KP 悬停 | `kpHover` | hover→区间高亮时延 | 03-block-boundaries | headless-ok | ⚠️ 见 §7 L1 |
+| 11 | KP 悬停 | `kpHover` | hover→区间高亮时延 | 行政法 KB（真机） | **real-only** | ✅ 真机已测（§3.3.1） |
 | 12 | **首开** | `open` | openFile→块就绪+公式落定 | scale-5k | **realapp-required** | ✅（无头近似） |
 | 13 | 切页签 | `tabSwitch` | 文件间切换时延 | 01-ime-zh ↔ 02 | headless-ok | ✅ |
 
@@ -68,7 +68,8 @@
 | `typing` | `beforeinput` 到达 | `input` 事件（DOM 更新后同步派发）/ 退化用 `execCommand('insertText')` 同步返回 |
 | `scroll` | 首帧 rAF | 滚动 2000px 完成 + 2 帧落定 |
 | `select` | 开始构造 Range | 2 帧落定 |
-| `paste` / `undo` / `find` / `save` / `format` / `kpHover` | 触发前 | 2 帧落定 |
+| `paste` / `undo` / `find` / `save` / `format` | 触发前 | 2 帧落定 |
+| **`kpHover`** | hover 事件派发前 | **MutationObserver 观测到的最后一次 DOM 变更 + idle（连续 3 帧无新记录）**；**禁止固定帧等待**（见 §3.3.1 反例） |
 | `viewSwitch` | 点击按钮 | `state.viewMode` 切换完成 + 2 帧 |
 | `structEdit` | 按键前 | 2 帧落定 |
 | `open` | `openFile` 调用 | 块数 ≥ minBlocks **且** 公式 pending 落定 + 3 帧 |
@@ -134,6 +135,53 @@
 
 > 三项指标各有分工：①看整体流畅度；②看**用户真正感知的"卡"**；③看主线程是否被整块阻塞。
 > 单看任一都可能漏判（例如 ① 达标但出现一个 53ms 长任务 ⇒ 用户明确感知到一次卡顿）。
+
+### 3.3.1 `kpHover` 真机基线（**real-only**）
+
+> **为何只能真机**：无头 harness 下 `#kp-list` **无 `.kp-item`**（需真实知识库索引），
+> 该项在无头下恒空 ⇒ **不得据空判绿或判红**。真机 KB = `docs/example/行政法`（4 个 KP 项）。
+
+| 项 | 值 |
+|---|---|
+| 模式 | **`mode=real`**（pywebview + WebView2，`--remote-debugging-port=9500`） |
+| p50 | **33.3 ms** |
+| **p95** | **33.4 ms** |
+| 样本 | 12（3 轮 × 4 KP 项） |
+| 用户可感知阈值 | 100 ms（hover 高亮的"即时感"上限） |
+| **预算** | **38.4 ms** = `min(100, 33.4 × 1.15)` |
+| 判据 | **不退化 > 1.15× `P_old`**（即 p95 ≤ 38.4 ms） |
+| 复现性 | 33.40 vs 34.16 → 比值 **1.023** < 1.15 ✅ |
+
+#### ⚠️ 反例（**必须写死，禁止重犯**）：不得用「固定帧等待」计时
+
+首版实现是：
+
+`js
+const t = now();
+dispatchHoverEvents(it);
+await nextFrame(); await nextFrame();   // ← 错误
+samples.push(now() - t);
+`
+
+测出的 p50/p95 **恒为 16.7 ms** —— 那正好是**一帧 vsync 周期**，
+是「两帧固定等待」的**成本本身**，**与高亮是否落地毫无关系**。
+（这是"循环论证"型假数据：测的是自己的等待，不是被测系统。）
+
+**正确做法**（现行实现）：
+
+`js
+const mo = new MutationObserver(list => recs.push(list.length));
+mo.observe(preview, {subtree:true, attributes:true, childList:true, characterData:true});
+const t = now();
+dispatchHoverEvents(it);
+// idle 判据：连续 3 帧无新变更记录 => 落定；最多 20 帧
+while (idle < 3 && frames < 20) { await nextFrame(); /* 有新增则 idle=0 */ }
+// 判别力守卫：records === 0 => 该读数无效，不得当绿
+`
+
+修正后真实值 **33.3 ms**（= 4 帧，与观测到的 `records:4, frames:4` 吻合）。
+并额外要求 `effective` 守卫：**一次 DOM 变更都没观测到 ⇒ 读数作废**，
+防止"选择器不符、什么都没变"被误当成"很快"。
 
 ### 3.3 `P_old` 基线（HEAD `7487e5df`，headless，3 轮）
 
@@ -257,7 +305,7 @@ python scripts\benchmark\surface\run_perf_ops.py --label realapp --cdp http://12
 
 | # | 局限 | 说明 |
 |---|---|---|
-| **L1** | **`kpHover` 无样本 —— 需 `--cdp` 真机** | 无头 harness 下 `#kp-list` 无 `.kp-item`（需要真实知识库索引）。**必须在真机上跑**（`--cdp http://127.0.0.1:9500`）才有样本；无头下该项恒为空，**不得据此判绿或判红**。 |
+| **L1** | ✅ `kpHover` **已真机测**（§3.3.1） | 无头 `#kp-list` 无 `.kp-item` ⇒ 只能真机。真机读数 p95 **33.4ms**，预算 **38.4ms**。**禁止用固定帧等待计时**（§3.3.1 反例）。 |
 | **L2a** | **语言切换 未覆盖** | 当前 HEAD 上**无稳定自动化入口**：`i18n.js:117 setLang(code)` 存在，但触发它的 UI 控件不在工具栏/设置面板的可定位集合内，且切换后需断言全站文案重渲染。**如实登记为缺口**，不假装覆盖。 |
 | **L2b** | **agent 流式 未覆盖** | 当前 HEAD 上**无稳定自动化入口**：token 流依赖后端 SSE 通道与人工会话输入，无法在无头 harness 中稳定复现。**如实登记为缺口**。 |
 | **L2c** | **导出 未覆盖** | 当前 HEAD 上**无稳定自动化入口**：未在工具栏/设置面板找到导出按钮，导出可能走系统文件对话框（无法自动化）。**如实登记为缺口**。 |

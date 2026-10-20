@@ -174,16 +174,49 @@ export const REAL_PROBE = String.raw`(function () {
     };
   };
 
-  // ── 3. agentStream：agent 面板最小结构 ──
-  R.agentStream = async function () {
+  // ── 3. agentStream：agent 面板最小结构（用**夹具会话**，不依赖真实对话） ──
+  R.agentStream = async function (ctx) {
     // 真实容器是 #agent-messages（不是 #agent-panel），消息体为 .-agent-msg-body
     var toggle = document.getElementById('btn-agent');
     if (toggle) { toggle.click(); await sleep(500); }
-    // 等面板/消息渲染
+
+    // 用夹具会话灌入消息：模拟真实用户路径 = 打开左栏「历史」页签 → 点夹具会话行。
+    //   （app.js 的 call() 未暴露到 window，故不能直接 RPC；点历史行是等效的真实路径）
+    var loaded = null;
+    var sid = (ctx && ctx.sessionId) || null;
+    if (sid) {
+      // 1) 切到「历史」页签
+      var tabs = document.querySelectorAll('[data-panel-tab], .-panel-tab, .-tab');
+      for (var ti = 0; ti < tabs.length; ti++) {
+        var tt = (tabs[ti].textContent || '').trim();
+        if (/历史|History/i.test(tt)) { try { tabs[ti].click(); } catch (e) {} await sleep(600); break; }
+      }
+      // 2) 等历史行出现
+      var h0 = now();
+      while (now() - h0 < 8000 && !document.querySelector('.-hist-row')) await sleep(200);
+      var rows = document.querySelectorAll('.-hist-row');
+      var target = null;
+      for (var ri = 0; ri < rows.length; ri++) {
+        var txt = (rows[ri].textContent || '');
+        if (txt.indexOf(sid) >= 0 || /夹具|fixture/i.test(txt)) { target = rows[ri]; break; }
+      }
+      if (!target && rows.length) target = rows[0];
+      if (target) {
+        try { target.click(); await sleep(1200); } catch (e) {}
+        loaded = { clicked: true, rows: rows.length };
+      } else {
+        loaded = { clicked: false, rows: rows.length, error: 'no-hist-row（夹具会话未被 agent_sessions_list 发现）' };
+      }
+    }
+
     var t0 = now();
-    while (now() - t0 < 6000 && !document.querySelector('.-agent-msg-body') &&
-           !document.querySelector('#agent-messages')) await sleep(200);
-    await nf(3);
+    while (now() - t0 < 8000 && !document.querySelector('.-agent-msg-body')) await sleep(200);
+    await nf(4);
+    if (window.state && window.state._mathPending && typeof window.state._mathPending.then === 'function') {
+      try { await window.state._mathPending; } catch (e) {}
+      await nf(2);
+    }
+
     var container = document.getElementById('agent-messages');
     var bodies = document.querySelectorAll('.-agent-msg-body');
     var emptyNodes = document.querySelectorAll('.-agent-empty');
@@ -191,24 +224,49 @@ export const REAL_PROBE = String.raw`(function () {
     var placeholders = 0;
     var blockCounts = [];
     var mathTotal = 0;
+    var structured = [];
+    var assistantBlocks = [];
     for (var i = 0; i < bodies.length; i++) {
       var t = (bodies[i].textContent || '').trim();
       if (placeholderRe.test(t)) placeholders++;
       var nb = bodies[i].querySelectorAll('p,li,h1,h2,h3,h4,h5,h6,pre,table,ul,ol').length;
       blockCounts.push(nb);
-      mathTotal += bodies[i].querySelectorAll('mjx-container').length;
+      var mj = bodies[i].querySelectorAll('mjx-container').length;
+      mathTotal += mj;
+      // 区分 role：用户气泡是纯文本（无 markdown 块属正常），
+      //   只有 **assistant** 气泡才要求块数 > 0（这才是"流式渲染结构"的判据）。
+      var wrap = bodies[i].closest('.-agent-msg');
+      var isUser = wrap ? (String(wrap.className || '').indexOf('-agent-msg--user') >= 0) : false;
+      if (!isUser) assistantBlocks.push(nb);
+      structured.push({
+        role: isUser ? 'user' : 'assistant',
+        blocks: nb,
+        strong: bodies[i].querySelectorAll('strong').length,
+        em: bodies[i].querySelectorAll('em').length,
+        table: bodies[i].querySelectorAll('table').length,
+        pre: bodies[i].querySelectorAll('pre').length,
+        mjx: mj,
+      });
     }
     return {
       panelPresent: !!container,
+      sessionId: sid,
+      sessionLoad: loaded ? { status: loaded.status || null, error: loaded.error || null, messages: (loaded.messages || []).length } : null,
       bodyCount: bodies.length,
       emptyNodeCount: emptyNodes.length,
       placeholderCount: placeholders,
       blockCounts: blockCounts,
       mathJaxInBodies: mathTotal,
-      // 最小结构：有消息体 => 块数>0 且无占位
-      ok: bodies.length > 0 && blockCounts.every(function (n) { return n > 0; }) && placeholders === 0,
+      structured: structured,
+      assistantBlocks: assistantBlocks,
+      // 最小结构判据（修正）：
+      //   - 有 agent 消息体
+      //   - **assistant** 气泡的 markdown 块数 > 0（用户气泡纯文本不计，属正常）
+      //   - 无占位文案
+      ok: bodies.length > 0 && assistantBlocks.length > 0 &&
+          assistantBlocks.every(function (n) { return n > 0; }) && placeholders === 0,
       note: bodies.length === 0
-        ? 'no-conversation-data：面板存在但无历史消息（需真实会话才能判流式结构）'
+        ? 'no-conversation-data：面板存在但无消息（夹具会话注入/加载是否成功？见 sessionLoad）'
         : null,
     };
   };
@@ -246,22 +304,38 @@ export const REAL_PROBE = String.raw`(function () {
     } else {
       out.modes.reviewCard = { present: false, ok: null, note: 'no-review-entry（#btn-review 不存在或未打开）' };
     }
-    // 4b 助手预览弹窗（.-modal 中的 markdown 预览）
-    var modals = document.querySelectorAll('.-modal:not(.hidden)');
-    var assistant = null;
-    for (var i = 0; i < modals.length; i++) {
-      if (modals[i].querySelector('.-preview-content, .-src-block, .-md-body')) { assistant = modals[i]; break; }
+    // 4b 助手/复习弹窗：**CDP 真机点击/调用入口打开**（review-modal.js:814 暴露 global.MemoriaReviewModal）
+    //    容器 #-review-modal → .-review-body，正文用 MemoriaMarkdownPreview 渲染（含公式）
+    var am = document.querySelector('#-review-modal');
+    if (!am) {
+      try {
+        if (window.MemoriaReviewModal && typeof window.MemoriaReviewModal.open === 'function') {
+          await window.MemoriaReviewModal.open();       // 真实入口
+          await sleep(800);
+        }
+      } catch (e) { /* 打开失败记在下面 */ }
+      am = document.querySelector('#-review-modal');
     }
-    if (assistant) {
-      var ab = assistant.querySelectorAll('.-src-block, .-preview-content p, .-md-body p').length;
+    if (am) {
+      await nf(4);
+      if (window.state && window.state._mathPending && typeof window.state._mathPending.then === 'function') {
+        try { await window.state._mathPending; } catch (e) {}
+        await nf(2);
+      }
+      var bodyEl = am.querySelector('.-review-body') || am;
+      var blocks = bodyEl.querySelectorAll('p,li,h1,h2,h3,h4,h5,h6,pre,table,ul,ol').length;
       out.modes.assistantModal = {
-        present: true, blocks: ab,
-        mathJax: assistant.querySelectorAll('mjx-container').length,
-        usesSrcLineAttr: assistant.querySelectorAll('[data--src-line]').length,
-        ok: ab > 0,
+        present: true,
+        blocks: blocks,
+        mathJax: bodyEl.querySelectorAll('mjx-container').length,
+        // !! 不得依赖 data--src-line（P4b 已移除）：只数结构块，并**断言确实不依赖**
+        usesSrcLineAttr: bodyEl.querySelectorAll('[data--src-line]').length,
+        ok: blocks > 0,
       };
+      try { if (window.MemoriaReviewModal && window.MemoriaReviewModal.close) window.MemoriaReviewModal.close(); } catch (e) {}
+      await sleep(300);
     } else {
-      out.modes.assistantModal = { present: false, ok: null, note: 'no-assistant-modal（需真实交互打开助手预览）' };
+      out.modes.assistantModal = { present: false, ok: null, note: 'no-assistant-modal（MemoriaReviewModal.open 未产出 #-review-modal）' };
     }
     return out;
   };
@@ -359,7 +433,7 @@ async function main() {
       const opResult = { id: op.id, tier: op.tier, metric: op.metric, mode: 'real', runs: [] };
       try {
         for (let r = 0; r < rounds; r++) {
-          const res = await cdp.evalJS(`window.__realcov.${op.id}({items: 5})`);
+              const res = await cdp.evalJS(`window.__realcov.${op.id}(${JSON.stringify({ items: 5, sessionId: args["session-id"] || null })})`);
           opResult.runs.push(res);
           await sleep(300);
         }
@@ -388,8 +462,20 @@ async function main() {
         opResult.failures = first.failures || [];
       } else {
         const first = opResult.runs[0] || {};
-        opResult.ok = opResult.runs.every((r) => r.ok === true);
         opResult.detail = first;
+        if (op.id === 'assistantCard') {
+          // 聚合：两个子模式各自 ok（null = 未打开，不计入）；至少一个 true 且无 false 才算通过
+          const evals = opResult.runs.map((r) => {
+            const ms = (r && r.modes) || {};
+            const vals = Object.values(ms).map((m) => m && m.ok).filter((v) => v !== null && v !== undefined);
+            return vals.length ? vals.every(Boolean) : null;
+          });
+          const definite = evals.filter((v) => v !== null);
+          opResult.ok = definite.length > 0 && definite.every(Boolean);
+          opResult.modeEvals = evals;
+        } else {
+          opResult.ok = opResult.runs.every((r) => r.ok === true);
+        }
       }
       result.ops[op.id] = opResult;
     }

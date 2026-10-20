@@ -46,11 +46,27 @@ function Stop-App {
         $script:AppPid = $null
     }
     # 2) 兜底：按 CDP 端口找监听者
+    #    !! taskkill 对"正在退出的子进程"会返回 ERROR 且写 stderr；在 $ErrorActionPreference=Stop
+    #    下这会把整个脚本打断（虽然测量已完成，但退出码非 0，看着像失败）。故显式吞掉其 stderr
+    #    与退出码，并把"端口仍被占"降级为 warning。
+    #    !! 更重要：**只杀确实是本次测量留下的进程**（python memoria 或 Temp EBWebView 下的 WebView2），
+    #    绝不误杀别人的进程 —— 实测这台机器上存在一个外部打包版 Memoria.exe 的 WebView2 也在监听，
+    #    那不是我启动的，不能碰。
     Start-Sleep -Milliseconds 500
     $c = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
     if ($c) {
-        & taskkill.exe /PID $c.OwningProcess /T /F 2>&1 | Out-Null
-        Write-Host "[run_domwrites] killed leftover listener tree pid $($c.OwningProcess)"
+        $ownerProc = Get-CimInstance Win32_Process -Filter "ProcessId=$($c.OwningProcess)" -ErrorAction SilentlyContinue
+        $cmd = if ($ownerProc) { [string]$ownerProc.CommandLine } else { '' }
+        $mine = ($cmd -like '*memoria.app.desktop*') -or ($cmd -like '*\Temp\*EBWebView*') -or ($cmd -like '*\Temp\tmp*')
+        if ($mine) {
+            $prevEap = $ErrorActionPreference
+            $ErrorActionPreference = 'Continue'
+            try { & taskkill.exe /PID $c.OwningProcess /T /F *>&1 | Out-Null } catch { }
+            $ErrorActionPreference = $prevEap
+            Write-Host "[run_domwrites] killed own leftover listener tree pid $($c.OwningProcess)"
+        } else {
+            Write-Warning "[run_domwrites] 端口 $Port 被**非本次测量**的进程占用（pid $($c.OwningProcess)），不终止：$($cmd.Substring(0,[Math]::Min(90,$cmd.Length)))"
+        }
     }
     # 3) 兜底：清理 parent 已消失、且 user-data-dir 指向 Temp\...EBWebView 的孤儿
     #    （只认 Temp 下的 EBWebView，不碰用户正常 Edge / 其它应用的 WebView2）
