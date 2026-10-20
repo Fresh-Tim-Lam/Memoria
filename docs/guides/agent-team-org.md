@@ -30,7 +30,7 @@
 - 一次性、只读、跑完即弃 → **L2 subagent**；
 - 一两行改动能凭现有认知完成 → **Lead 自己做**。
 
-## 2. 常驻成员与领域所有权（当前 7 个，上限已提升到 16）
+## 2. 常驻成员与领域所有权（当前 8 个，上限 16）
 
 | Agent | 领域所有权 | 对应对象认知 |
 |---|---|---|
@@ -38,12 +38,15 @@
 | `sync-mapper` | **编辑-预览同步域**：锚点映射准确度、选区与光标映射、双向同步 | `agent-guide/03-editor-and-formatting.md` + `design/edit-syntax-and-mapping.md` |
 | `arch-contract` | **架构与契约域**：显示子系统契约 C1–C12、重构总纲与阶段裁决、`agent-guide/01`+`10` | `architecture.md` + `design/view-surface-contract.md` |
 | `doc-consistency` | **文档一致性域**：文档↔代码审计、文档债、`agent-guide/06`+`07`+`08` | `docs/conventions/**` + 各 design 稿 |
-| `metrics-baseline` | **度量与基准域**：真机/无头度量协议、基线与预算、交互金标准回归 | `design/realapp-measurement-protocol.md` + `design/benchmark-measurement-protocol.md` |
+| `metrics-baseline` | **度量与基准域**：真机/无头度量协议、基线与预算、交互金标准回归、渲染保真度指标 | `design/realapp-measurement-protocol.md` + `design/benchmark-measurement-protocol.md` + `design/render-fidelity-contract.md` |
 | `kp-owner` | **知识点域**：KP 面板、图谱联动、KP 抽取与存储、`agent-guide/05` | `agent-guide/05-*` + KP 前后端实现 |
 | `settings-owner` | **设置/i18n/快捷键域**：设置键事实源、i18n 键、快捷键、`agent-guide/09` | `agent-guide/09-*` + 设置/文案实现 |
+| `team-steward` | **团队维护域**：名册/编制一致性、任务生命周期、报告落盘核验、写域冲突；**只检测+提议，执行权归 Lead** | 本文件 §2/§2.1/§10 + `dsh-agent-teams-contract.md` |
 
-> **名额现状**：上限 16（含 Lead），当前 7 名 teammate ⇒ **还有 8 个空位**。
+> **名额口径**（2026-10-20 核实源码 `agent-team/src/roster.ts:63`）：`maxMembers` = **「每个 Team 的非退役 roster 条目上限」，即只数 teammate、不含 Lead**。
+> 当前 **8 名 teammate / 上限 16 ⇒ 还有 8 个空位**。
 > 空缺领域（如 06 图谱本体、08 导入导出）默认走 L2 subagent；**只有出现长期、跨任务的领域责任时才升格为 Owner**。
+
 
 ### 2.1 动态维护能力（2026-10-20 起具备）
 
@@ -195,3 +198,32 @@ CDP 客户端于是**连到了另一个正在跑的页面**。症状恰好是 `w
 3. 报告里必须写**"我如何证明这个测试会红"**，而不是只写"测试通过"。
 
 
+
+## 10. 收口体检清单（每轮收口前必跑）
+
+> 目的：把「编制/任务/产物」维护从「Lead 碰巧注意到」变成「每轮必跑、有证据」。执行 `team-steward`（只检测+提议）；本清单 Lead 单写。
+
+### 10.1 机检（1 条命令）
+
+| 命令 | 判据 |
+|---|---|
+| `python scripts/agent/team_audit.py` | 退出码 0 才可收口；FAIL 必须当轮处置，或由 Lead 在收口报告显式豁免并写理由 |
+| `python scripts/agent/team_audit.py --selftest` | 必须 PASS（红 fixture 五项必红、绿 fixture 全绿；防「假通过」） |
+
+机检覆盖：快照健康、名册一致性（§2 vs 快照成员/退役集合）、任务卡死（`in_progress` ∧ owner `inactive`）、未完成任务写域重叠（advisory）、报告路径引用与任务交付物存在性（声称 ≠ 存在）。报告落点 `artifacts/agent/verify/team-audit-<YYYYMMDD-HHmm>.md`。
+
+### 10.2 五项人工确认
+
+1. **名册 vs 文档**：§2 当前 Owner 表 = 平台 `list_agents` 的 teammate 集合（含 `team-steward`）；退役者只留 §8 历史。
+2. **任务卡死**：快照 `in_progress` 任务，owner 须 `running` 或有**晚于快照导出时间**的新产物/新提交；否则当轮催办/改派。
+3. **编制泄漏**：单点任务型完成即退役；领域 Owner 仅在领域已无后续活时退役；退役前确认产出已落盘（§2.1）。
+4. **产物落盘**：报告「已交付/已落盘/已产出」必须指向磁盘真实文件；一次性产物标注可清理；机检 WARN 需人工判读并记录。
+5. **写域**：并行 Owner `writeScopes` 不得重叠；`org.md` 等单写文档只由 Lead 写。
+
+### 10.3 快照纪律
+
+Lead 每轮收口前重导出 `artifacts/agent/team-board-snapshot.json`，导出时间必须**晚于最后一次任务状态变更与相关 commit**；`writeScopes` 取任务板最新 revision；`limit.currentMembers` 口径与 `members` 数组一致（**含/不含 Lead 必须写明**）。
+
+### 10.4 边界
+
+`team-steward` 只输出检测结论与提议；`spawn`/`retire`/`rename`/改本文件/改任务板均由 **Lead 执行**；结论必须带证据，未核实标「未核实」，不得推测。
