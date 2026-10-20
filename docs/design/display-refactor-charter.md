@@ -214,11 +214,20 @@
 
 全部证据与 16 条验收用例见 `artifacts/agent/verify/style-brush-inventory.md`。
 
-| # | 问题 | 性质 | 重构时怎么办 |
+| # | 问题 | 性质 | 状态 |
 |---|---|---|---|
-| S1 | **`_brush` 无生命周期收尾**：切文件 / 退编辑模式 / 进块编辑都不清画笔 ⇒ 切文件后首次拖动会**涂到新文件** | **真 bug** | 需人裁决：保持一致 or 修掉 |
-| S2 | **`_brushOnMouseUp` 与 `applyFormat` 都不查 `EH.editMode`** ⇒ **只读态仍可改源码** | **真 bug** | 需人裁决：保持一致 or 修掉 |
-| S3 | `03-editor-and-formatting.md` 锚点整体漂移 **+44 行**（画笔实况 10766–10968，文档写 10549–10751） | 文档漂移 | 施工时同步重取锚点 |
+| S1 | **`_brush` 无生命周期收尾**：切文件 / 退编辑模式 / 进块编辑都不清画笔 ⇒ 切文件后首次拖动会**涂到新文件** | **真 bug** | ✅ **已修** `80d15fc9` |
+| S2 | **`_brushOnMouseUp` 与 `applyFormat` 都不查 `EH.editMode`** ⇒ **只读态仍可改源码** | **真 bug** | ✅ **已修** `80d15fc9` |
+| S3 | `03-editor-and-formatting.md` 锚点整体漂移 **+44 行**（画笔实况 10766–10968，文档写 10549–10751） | 文档漂移 | ⏳ 待修 |
+
+**S1/S2 修法与影响面**（报告 `artifacts/agent/verify/style-brush-fix-report.md`，F1–F9 为行为修正清单）：
+- **S1**：`_brushDisarmAll()` 挂 **5 类入口**（切文件 / 编辑态关闭 / 进块编辑 / 进块内公式编辑 / 换库关库），
+  清四槽 + `body.-brush-active` + `.brush-armed`，并连带清 `_clearColorTint()`/`_dropTintAnchor()`
+  —— 否则切文件后**陈旧锚点**会在新文件首次 hover 时染错块。
+- **S2**：`_styleEditAllowed()` 封 **4 条写入路径**（`applyFormat` / `_brushOnMouseUp` / `armBrush` / 门面
+  `surface.applySelectionStyle`）⇒ `EditSync.applyStyle` 已无绕过路径；只读态给**可见提示** `cfg.style.readonly`（中英）。
+- **未动**：「涂完不退出」的连续涂抹语义、盘点报告 §7 的 16 条验收行为。
+- **验证**：4 文件 `node --check` 过；`i18n_selftest` PASS；pytest 74 项 **73 passed / 1 failed**（失败为既存 CSS 硬编码色）。
 
 > **裁决原则（人已拍板，2026-10-20）**：「功能一致」指**可见行为一致**，但 S1/S2 属**安全/正确性缺陷**，
 > **原样保留等于把 bug 带进新核心 ⇒ 决定修掉**（非静默"保持一致"，须在验收记录里显式记为「相比旧版的行为修正」）。
