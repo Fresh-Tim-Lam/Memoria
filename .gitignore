@@ -110,3 +110,6 @@ scripts/_tmp_parse.js
 
 
 .trae/
+# benchmark 原始数据不入库（契约与工具入库，raw dump 属一次性产物）
+scripts/benchmark/surface/results/raw-*
+scripts/benchmark/surface/results/*-run[0-9]*.json
