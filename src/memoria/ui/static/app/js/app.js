@@ -13735,7 +13735,7 @@
     _previewCacheEvict();   // 池上限可能被调小 ⇒ 当场收口
     // 导航预测器（§3.5）与缓存策略同一份设置来源 ⇒ 顺手转发（它自己会清洗）
     if (window.MemoriaNavPredictor && typeof window.MemoriaNavPredictor.setPolicy === "function") {
-      try { window.MemoriaNavPredictor.setPolicy(next || {}); } catch (_) { /* 预测器可选 */ }
+      try { window.MemoriaNavPredictor.setPolicy(policy || {}); } catch (_) { /* 预测器可选 */ }
     }
     // 2026-09-25 AG97：窗口化（K4a）已整体回退 —— 这里不再往窗口模块转发任何开关（下列两行原地保留以维持行号）
     // （原「窗口化总开关」转发点，已删）
