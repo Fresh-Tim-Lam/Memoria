@@ -1,0 +1,254 @@
+{
+  "schema": "memoria-interaction-scenarios/v1",
+  "note": "KP（知识点）联动金标准。覆盖 surface 契约 C6/C8 未涵盖的「知识点 ↔ 显示区域」联动：hover 高亮 / 点击跳转 / 保存后静默标记 / 错误高亮。全部 op 走真实 CDP Input（isTrusted），快照多一个 kp 段（列表项状态 + 源码行高亮计数 + 预览高亮带 + 滚动位置）。",
+  "requires": {
+    "kb": "artifacts/_kp_probe_kb（docs/example/AAA_Vocab 的副本，不污染源）",
+    "file": "vocab/imperative.md",
+    "kps": [
+      "imperative（L1–107，覆盖全文）",
+      "kp-local-mid（L45–60，**注入**的局部区间 —— 源库没有局部 KP，见 report）",
+      "kp-err-probe（注入，用于产生带 kp_id 的校验问题）"
+    ],
+    "note": "侧车在应用内存里按 rel_norm 缓存 ⇒ 改完 sidecar 必须**重启应用**才可见（切文件/build_kb 都不够，实测）"
+  },
+  "scenarios": [
+    {
+      "id": "KP1-hover-highlights-range",
+      "desc": "悬停 KP 列表项 → 源码对应行出现 in-range+kp-hover，预览出现高亮带（不滚动）",
+      "steps": [
+        {
+          "op": "open",
+          "file": "vocab/imperative.md",
+          "view": "preview",
+          "minBlocks": 3
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#kp-list .-kp-item').length > 0",
+          "label": "kp-list-items",
+          "timeout": 20000
+        },
+        {
+          "op": "sleep",
+          "ms": 800
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){try{var s=window.getSelection();if(s)s.removeAllRanges();}catch(e){}var p=document.getElementById('preview-pane');if(p)p.scrollTop=0;try{if(window.MemoriaKpRuntime&&window.MemoriaKpRuntime.dismiss)window.MemoriaKpRuntime.dismiss();}catch(e){}return true;})()"
+        },
+        {
+          "op": "moveAway",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "snapshot",
+          "label": "before-hover"
+        },
+        {
+          "op": "hoverSelector",
+          "selector": "#kp-list .-kp-item[data-kp=\"kp-local-mid\"]"
+        },
+        {
+          "op": "sleep",
+          "ms": 600
+        },
+        {
+          "op": "snapshot",
+          "label": "during-hover"
+        },
+        {
+          "op": "moveAway",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "op": "sleep",
+          "ms": 600
+        },
+        {
+          "op": "snapshot",
+          "label": "after-hover-out"
+        }
+      ]
+    },
+    {
+      "id": "KP2-click-jumps-to-range",
+      "desc": "从文档顶部点击**局部** KP（L45–60）→ 预览滚到该区间、区间闪烁高亮、列表项 active（用局部 KP 才能区分「跳到区间」与「滚回顶部」）",
+      "steps": [
+        {
+          "op": "open",
+          "file": "vocab/imperative.md",
+          "view": "preview",
+          "minBlocks": 3
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#kp-list .-kp-item[data-kp=\"kp-local-mid\"]').length > 0",
+          "label": "local-kp-item",
+          "timeout": 20000
+        },
+        {
+          "op": "sleep",
+          "ms": 800
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){try{var s=window.getSelection();if(s)s.removeAllRanges();}catch(e){}var p=document.getElementById('preview-pane');if(p)p.scrollTop=0;try{if(window.MemoriaKpRuntime&&window.MemoriaKpRuntime.dismiss)window.MemoriaKpRuntime.dismiss();}catch(e){}return true;})()"
+        },
+        {
+          "op": "moveAway",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "snapshot",
+          "label": "before-click-top"
+        },
+        {
+          "op": "clickSelector",
+          "selector": "#kp-list .-kp-item[data-kp=\"kp-local-mid\"]"
+        },
+        {
+          "op": "sleep",
+          "ms": 1200
+        },
+        {
+          "op": "snapshot",
+          "label": "after-click-scrolled"
+        },
+        {
+          "op": "sleep",
+          "ms": 2200
+        },
+        {
+          "op": "snapshot",
+          "label": "after-flash-faded"
+        }
+      ]
+    },
+    {
+      "id": "KP3-saveupdates-marks-without-scroll",
+      "desc": "视口滚到中部并**悬停局部 KP 建立区间标记**，然后 Ctrl+S 保存 → 标记仍在且预览**不滚动**（静默标记语义）",
+      "steps": [
+        {
+          "op": "open",
+          "file": "vocab/imperative.md",
+          "view": "preview",
+          "minBlocks": 3
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#kp-list .-kp-item[data-kp=\\\"kp-local-mid\\\"]').length > 0",
+          "label": "local-kp-item",
+          "timeout": 20000
+        },
+        {
+          "op": "sleep",
+          "ms": 800
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){try{var s=window.getSelection();if(s)s.removeAllRanges();}catch(e){}var p=document.getElementById('preview-pane');if(p)p.scrollTop=Math.round(p.scrollHeight*0.55);return p?Math.round(p.scrollTop):null;})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "hoverSelector",
+          "selector": "#kp-list .-kp-item[data-kp=\"kp-local-mid\"]"
+        },
+        {
+          "op": "sleep",
+          "ms": 700
+        },
+        {
+          "op": "snapshot",
+          "label": "before-save"
+        },
+        {
+          "op": "key",
+          "key": "s",
+          "modifiers": [
+            "ctrl"
+          ],
+          "code": "KeyS",
+          "vk": 83
+        },
+        {
+          "op": "sleep",
+          "ms": 2000
+        },
+        {
+          "op": "snapshot",
+          "label": "after-save"
+        }
+      ]
+    },
+    {
+      "id": "KP4-error-highlight-via-check-panel",
+      "desc": "工具栏「检查」→ 检查面板里带 data-check-kp 的条目「打开」→ 红色错误高亮（.kp-error-flash + 列表项 error-highlight + band.error）",
+      "steps": [
+        {
+          "op": "open",
+          "file": "vocab/imperative.md",
+          "view": "preview",
+          "minBlocks": 3
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#kp-list .-kp-item').length > 0",
+          "label": "kp-list-items",
+          "timeout": 20000
+        },
+        {
+          "op": "sleep",
+          "ms": 600
+        },
+        {
+          "op": "clickSelector",
+          "selector": "#btn-check"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('[data-check-open]').length > 0",
+          "label": "check-panel-items",
+          "timeout": 90000
+        },
+        {
+          "op": "sleep",
+          "ms": 1200
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var b=document.querySelector('[data-check-kp]'); return b? {path:b.getAttribute('data-check-open'), kp:b.getAttribute('data-check-kp'), kind:b.getAttribute('data-check-kind')} : null;})()"
+        },
+        {
+          "op": "snapshot",
+          "label": "before-open-from-check"
+        },
+        {
+          "op": "clickSelector",
+          "selector": "[data-check-kp]"
+        },
+        {
+          "op": "sleep",
+          "ms": 2200
+        },
+        {
+          "op": "snapshot",
+          "label": "after-error-highlight"
+        }
+      ]
+    }
+  ]
+}

@@ -471,7 +471,10 @@ class Interactions {
     })(${minLen})`);
   }
 
-  /** 页面快照（用于新老双跑对比）：选区 + 每个块的可见文本 + 块数与身份属性。 */  async snapshot() {
+  /** 页面快照（用于新老双跑对比）：选区 + 每个块的可见文本 + 块数与身份属性。
+   *  2026-10-20 追加 `kp` 段（KP 联动金标准用）：知识点列表项、区间高亮计数、预览高亮带、滚动位置。
+   *  旧场景快照只是多一个键，不改变既有对比口径。 */
+  async snapshot() {
     const sel = await this.selection();
     const outline = await this.cdp.evalJS(`(function(){
       var blocks = Array.prototype.slice.call(document.querySelectorAll('#preview .-src-block'));
@@ -483,7 +486,34 @@ class Interactions {
         };
       });
     })()`);
-    return { url: await this.cdp.evalJS('location.href'), selection: sel, blocks: outline };
+    const kp = await this.cdp.evalJS(`(function(){
+      var items = Array.prototype.slice.call(document.querySelectorAll('#kp-list .-kp-item'));
+      var band = document.getElementById('-preview-range-band');
+      var pane = document.getElementById('preview-pane');
+      var lines = Array.prototype.slice.call(document.querySelectorAll('.-line'));
+      function cnt(cls){ return lines.filter(function(e){ return e.classList.contains(cls); }).length; }
+      return {
+        items: items.map(function(e){
+          return {
+            id: e.dataset.kp || null,
+            cls: Array.prototype.slice.call(e.classList).sort().join(' '),
+            meta: ((e.querySelector('.-kp-meta span') || {}).textContent || '').trim()
+          };
+        }),
+        hoveredKpId: (window.state || {}).hoveredKpId || null,
+        activeKpId: (window.state || {}).activeKpId || null,
+        lineTotal: lines.length,
+        lineInRange: cnt('in-range'),
+        lineKpHover: cnt('kp-hover'),
+        lineFlash: cnt('kp-highlight-flash'),
+        lineFadeOut: cnt('fade-out'),
+        lineError: cnt('kp-error-flash'),
+        band: band ? { range: band.dataset.srcRange || null, hasError: !!band.classList.contains('error'), cls: band.className } : null,
+        scroll: pane ? Math.round(pane.scrollTop) : null,
+        scrollHeight: pane ? pane.scrollHeight : null
+      };
+    })()`);
+    return { url: await this.cdp.evalJS('location.href'), selection: sel, blocks: outline, kp };
   }
 }
 
@@ -573,6 +603,23 @@ async function runScenarios(ix, cdp, scenarios, { onSnapshot } = {}) {
             if (!box || !box.w) throw new Error('元素不可点: ' + st.selector);
             await ix.click(box.x, box.y, { modifiers: mods(st.modifiers) });
             log.box = box;
+            break;
+          }
+          // 2026-10-20 追加：真实鼠标「移入」某元素（KP hover 用）。
+          // 必须走 Input.dispatchMouseEvent 的 mouseMoved —— 合成 mouseenter 事件不触发应用的真实监听。
+          case 'hoverSelector': {
+            const box = await cdp.evalJS(`(function(){var el=document.querySelectorAll(${js(st.selector)})[${st.nth || 0}];if(!el)return null;el.scrollIntoView({block:'nearest'});var r=el.getBoundingClientRect();return {x:Math.round(r.left+r.width/2),y:Math.round(r.top+r.height/2),w:Math.round(r.width),h:Math.round(r.height)};})()`);
+            if (!box || !box.w) throw new Error('元素不可悬停: ' + st.selector);
+            await ix.mouseMove(box.x, box.y, { buttons: 0, modifiers: mods(st.modifiers) });
+            log.box = box;
+            break;
+          }
+          // 2026-10-20 追加：把鼠标移到别处，触发 mouseleave（清悬停态用）
+          case 'moveAway': {
+            const x = st.x != null ? st.x : 5;
+            const y = st.y != null ? st.y : 5;
+            await ix.mouseMove(x, y, { buttons: 0 });
+            log.point = { x, y };
             break;
           }
           case 'clickInBlock': {
@@ -668,6 +715,39 @@ async function waitAppSettled(cdp, { stableMs = 1200, timeout = 40000 } = {}) {
     await sleep(200);
   }
   return last;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 2b. attach 模式（2026-10-20）：连**已在运行的**真机应用，不启动无头 Edge
+//
+//   dev 态应用用 WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=<port> 启动后，
+//   本文件可用 `--cdp-port <port>` 跑同一批剧本 ⇒ 交互金标准量在**真机**上（有 GPU/真实窗口），
+//   而不是无头环境。与 withBrowser 的差别仅两点：不 navigate（应用已加载）、不 cleanup（进程不归本脚本）。
+// ─────────────────────────────────────────────────────────────────────────────
+async function withLiveApp(port, fn) {
+  const base = `http://127.0.0.1:${port}`;
+  const version = await httpJson(base + '/json/version').catch(() => null);
+  if (!version || !version.webSocketDebuggerUrl) {
+    throw new Error(`CDP 端口 ${port} 无响应；请确认应用以 WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=${port} 启动`);
+  }
+  // /json/list 里混着 DevTools 自己的页面 ⇒ 必须按 URL 过滤，取真正的应用页面
+  const list = await httpJson(base + '/json/list').catch(() => []);
+  const pages = (list || []).filter((t) =>
+    t.type === 'page' && t.webSocketDebuggerUrl &&
+    !/^devtools:\/\//.test(t.url || '') && !/^about:blank$/.test(t.url || ''));
+  if (!pages.length) throw new Error(`端口 ${port} 上找不到应用页面目标：${JSON.stringify(list)}`);
+  const target = pages[0];
+  const cdp = await CDP.connect(target.webSocketDebuggerUrl);
+  try {
+    await cdp.send('Runtime.enable');
+    await cdp.waitFor('!!window.MemoriaApp && !!window.state && !!window.state.doc', { timeout: 60000, label: 'liveapp-ready' });
+    await waitAppSettled(cdp);
+    await sleep(800);
+    const ix = new Interactions(cdp);
+    return await fn(cdp, ix, { live: true, port, browser: version.Browser, target: { title: target.title, url: target.url } });
+  } finally {
+    cdp.close();   // 只断连接，**不**杀应用
+  }
 }
 
 async function withBrowser(url, fn) {
@@ -859,28 +939,36 @@ async function main() {
   }
 
   if (args.scenarios) {
-    if (!args.url || !args.out) throw new Error('--scenarios 需要 --url/--out');
+    const cdpPort = args['cdp-port'] ? parseInt(args['cdp-port'], 10) : null;
+    if (!cdpPort && (!args.url || !args.out)) throw new Error('--scenarios 需要 --url/--out（或 --cdp-port 连真机应用）');
+    if (!args.out) throw new Error('--scenarios 需要 --out');
     const spec = JSON.parse(fs.readFileSync(args.scenarios, 'utf8'));
     const startedAt = new Date().toISOString();
-    const out = await withBrowser(args.url, async (cdp, ix, edge) => {
+    const run = async (cdp, ix, env) => {
       const results = await runScenarios(ix, cdp, spec.scenarios || []);
       return {
         schema: 'memoria-interaction-run/v1',
         startedAt, finishedAt: new Date().toISOString(),
-        url: args.url, browser: edge.browser, label: args.label || null,
+        url: env.live ? env.target.url : args.url,
+        browser: env.browser,
+        /** live=true 表示跑在**已在运行的真机应用**上（--cdp-port），不是无头 Edge */
+        live: !!env.live,
+        liveTarget: env.live ? env.target : null,
+        label: args.label || null,
         results,
       };
-    });
+    };
+    const out = cdpPort ? await withLiveApp(cdpPort, run) : await withBrowser(args.url, run);
     fs.mkdirSync(path.dirname(args.out), { recursive: true });
     fs.writeFileSync(args.out, JSON.stringify(out, null, 2), 'utf8');
     const failed = out.results.filter((r) => r.error).length;
     process.stdout.write('__INTERACTION_JSON__' + JSON.stringify({
-      ok: failed === 0, out: args.out, scenarios: out.results.length, failed,
+      ok: failed === 0, out: args.out, scenarios: out.results.length, failed, live: out.live,
     }) + '\n');
     process.exit(failed === 0 ? 0 : 1);
   }
 
-  process.stderr.write('用法：--selftest | --scenarios <json> --out <json>，均需 --url\n');
+  process.stderr.write('用法：--selftest | --scenarios <json> --out <json> [--url <无头 url> | --cdp-port <真机 CDP 端口>]\n');
   process.exit(2);
 }
 
