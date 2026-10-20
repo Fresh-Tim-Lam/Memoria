@@ -7211,6 +7211,10 @@
       refreshKpRangeUi();
     }
 
+    // S5/S5b：本函数定义在 bindEditorSelectInteraction 作用域内；预览侧 commitRange 与门面 _surfaceSpliceRange
+    // 在模块外层（词法上不可见）⇒ 经 window 暴露同一实现供两处调用，避免复制平移逻辑。
+    window.__adjustKpRangesAfterSpanReplace = adjustKpRangesAfterSpanReplace;
+
     /** 找出“吸收新行”的 KP：覆盖 line，且光标不在该 KP 末行的行尾（行尾换行视为区域外）。 */
     function findAbsorbKp(line, offset, textLen) {
       for (const k of _kpList()) {
@@ -7389,6 +7393,7 @@
         nextLineEl.remove();
         renumberSourceLines(line + 1);
         _srcAfterEdit();
+        adjustKpRangesAfterRemove(line + 1); // M6b：行末 Delete 合并下一行 → KP 范围收缩/顺延
         scheduleRenderSync();
         markDirty();
       } else if (e.key === "Enter") {
@@ -8540,6 +8545,10 @@
       state.doc.lines = merged;
       state.doc.preview_body = null;  // 本地编辑使 preview_body 缓存过期，必须清空否则渲染旧内容
       if (!patchEditorLines(startLine, endLine - startLine + 1, newLines.length)) renderEditor(state.doc);   // 2026-09-25 AG101：源码面板只更新这一段（回车/合并原来整篇重建 5888 行）
+      // M6b：预览侧结构编辑（回车拆段/合并/跨块删除）按行数差平移 KP 范围并同步列表/hover
+      if (typeof window.__adjustKpRangesAfterSpanReplace === "function") {
+        window.__adjustKpRangesAfterSpanReplace(startLine, endLine + 1, endLine - startLine + 1, newLines.length);
+      }
       repaintPreview().then(function () {   // 2026-09-25：**结构性编辑的块级提交**（回车拆段/合并/跨块删除都经这里 ⇒ 不再整篇重渲、不再"渲染中"塌高度）
         restoreCursor(newCursor.blockIndex, newCursor.nodePath, newCursor.offset);
       });
@@ -14334,6 +14343,10 @@
     if (es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
     try { renderEditor(s.doc); } catch (e) { log("render", "surface.spliceRange renderEditor: " + ((e && e.message) || e)); }
     try { var p = renderPreview(s.doc, { incremental: true }); if (p && typeof p.catch === "function") p.catch(function () { }); } catch (e2) { log("render", "surface.spliceRange renderPreview: " + ((e2 && e2.message) || e2)); }
+    // M6b：门面行区间拼接（deleteRange/replaceRange）按行数差平移 KP 范围并同步列表/hover
+    if (typeof window.__adjustKpRangesAfterSpanReplace === "function") {
+      window.__adjustKpRangesAfterSpanReplace(start0, endExcl, endExcl - start0, newLines.length);
+    }
     markDirty();
     return true;
   }
