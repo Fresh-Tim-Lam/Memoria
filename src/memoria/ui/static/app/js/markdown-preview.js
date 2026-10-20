@@ -201,6 +201,64 @@ window.MemoriaMarkdownPreview = (function () {
     mermaidInited = true;
   }
 
+  /**
+   * mermaid 把 `<pre>` 换成新 `<div>` 后，把该块的**行号属性**重新投射一次。
+   *
+   * 为什么不手工抄属性（2026-10-20 P3b，R3 裁决）：
+   *   `data--src-line` / `data--src-line-end` 是 **BlockIndex 的派生投影**，只允许在
+   *   `block-index.js` 的 `upsert()` 内写（门禁 `check_line_attr_gate.js` 校验）。
+   *   原先这里 `div.setAttribute(k, pre.getAttribute(k))` 是**从 DOM 抄行号** —— 等于把
+   *   已渲染的投影当作事实来源，构成"第二处事实来源"。正确做法：从**唯一真源**
+   *   （`window.MemoriaApp.blockIndex`）按源码行查到那条 handle，再把 `domEl` 换成新节点，
+   *   由 `upsert()` 自己写属性（它带"值未变不写"，故成本可控）。
+   *
+   * `outermost:true` 是必需的：嵌套场景（引用/列表内的 mermaid）中 `<pre>` 自身无
+   *   `.-src-block`，其行号属于**外层块**；`atSrcLine` 默认返回全部覆盖块，`outermost`
+   *   取 `srcLineStart` 最小（区间最广）的那个 —— 正是旧 `closest()` 的语义。
+   *
+   * 退化：无索引（单测/Node 环境）或查不到该行时，**不写任何行号属性**——
+   *   绝不退回"抄 DOM 属性"。此时块仍保留 `data--block-index`（由 stamp 重编、非身份），
+   *   不参与 `[data--src-line]` 消费链；这是可接受的降级，不会制造第二套坐标。
+   *
+   * @param {HTMLElement} pre 被替换的旧节点（读取其 block-index 与行号仅用于**查真源**）
+   * @param {HTMLElement} div 新节点（写入 domEl）
+   */
+  function _restampMermaidBlock(pre, div) {
+    // data--block-index 不是 R3 守护对象（它是位置下标，由 stampBlockLines 重编）⇒ 可直接带过去，
+    // 供双击进入块编辑模式定位。它不表达行号，不构成第二套坐标。
+    const bi = pre.getAttribute("data--block-index");
+    if (bi != null) div.setAttribute("data--block-index", bi);
+
+    const APP = window.MemoriaApp;
+    const BI = APP && APP.blockIndex;
+    if (!BI || typeof BI.atSrcLine !== "function" || typeof BI.upsert !== "function") return;
+
+    // 用旧节点上的行号**定位真源条目**（不是把它当值抄过去）；取不到就不写
+    const line = Number(pre.getAttribute("data--src-line")) || 0;
+    if (!line) return;
+
+    let h = null;
+    try {
+      const hits = BI.atSrcLine(line, { outermost: true }) || [];
+      h = hits[0] || null;
+    } catch (_e) {
+      h = null;
+    }
+    if (!h) return;
+
+    try {
+      BI.upsert({
+        id: h.id,                 // ★ 同一 id ⇒ 就地更新，不新增条目、不产生重复命中
+        kind: h.kind,
+        srcLineStart: h.srcLineStart,
+        srcLineEnd: h.srcLineEnd,
+        domEl: div,               // ★ 把 handle 的 DOM 引用换成新节点
+      });
+    } catch (_e2) {
+      /* 索引回写失败不得影响渲染；该块本轮不参与行号消费链 */
+    }
+  }
+
   async function renderMermaidBlocks(container) {
     initMermaid();
     if (!window.mermaid?.render) return;
@@ -222,30 +280,23 @@ window.MemoriaMarkdownPreview = (function () {
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-container";
-        // 保留 -src-block 与块属性：双击编辑靠 block-index，预览高亮/滚动定位靠 src-line(-end)
+        // 保留 -src-block（样式/结构）；行号属性由 _restampMermaidBlock 经 BlockIndex 重投（P3b）
         if (pre.classList.contains("-src-block")) div.classList.add("-src-block");
-        ["data--block-index", "data--src-line", "data--src-line-end"].forEach((k) => {
-          const v = pre.getAttribute(k);
-          if (v) div.setAttribute(k, v);
-        });
-        // 嵌套场景（引用/列表内的 mermaid）<pre> 无 -src-block，但行号属性同样要带过去
+        // 嵌套场景（引用/列表内的 mermaid）<pre> 无 -src-block，行号属于外层块 ⇒ 同样重投
         // 2026-09-28：**去掉 pan 包装层**（人：「先把渲染做正常再说」）——
         // 原来这里无条件包一层 `.-mermaid-pan`（带 overflow:hidden），与交互开关无关，
         // 等于把渲染路径本身改了 ⇒ 图会被裁/走形。交互整层默认关时，DOM 必须与老路径完全一致。
         div.innerHTML = svg; div._mmdDirective = _parseMemoriaViewDirective(src).found;   // 只解析（不剥行）视图指令，供 _attachMermaidView 还原尺寸/位移；渲染路径零改动
-        pre.replaceWith(div); _afterMermaidInsert(div);
+        pre.replaceWith(div); _restampMermaidBlock(pre, div); _afterMermaidInsert(div);
       } catch (e) {
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-error";
         if (pre.classList.contains("-src-block")) div.classList.add("-src-block");
-        ["data--block-index", "data--src-line", "data--src-line-end"].forEach((k) => {
-          const v = pre.getAttribute(k);
-          if (v) div.setAttribute(k, v);
-        });
-        // 同上：渲染失败换成短红框后行号属性仍要保留，否则该块对行号系消费者整块消失
+        // 渲染失败换成短红框后行号属性仍要保留，否则该块对行号系消费者整块消失
+        // ⇒ 同样经 BlockIndex 重投（P3b），不再抄 DOM 属性
         div.textContent = _t("preview.mermaidFail", { msg: e.message || e });
-        pre.replaceWith(div);
+        pre.replaceWith(div); _restampMermaidBlock(pre, div);
       }
     }
   }

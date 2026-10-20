@@ -1,0 +1,30 @@
+{
+  "schema": "memoria-interaction-scenarios/v1",
+  "note": "P3b 验收：mermaid 异步把 <pre> 换成 <div> 后，行号属性必须仍由 BlockIndex 投射。判据：withSrcLine === blocks、withBlockId === blocks、mermaidBlocks > 0、mermaidMissingAttr === 0。等待时间按实测定：mermaid 字体同步渲染较慢，需 3s+ 且在 mermaid 容器出现后再等一帧。",
+  "requires": {
+    "kb": "artifacts/baseline-kb/数字通信原理",
+    "file": "教材/01_第1章_绪论.md"
+  },
+  "scenarios": [
+    {
+      "id": "P3B-mermaid-attrs",
+      "desc": "含 mermaid 的文档渲染完成后：块总数 vs 带 data--src-line / data-block-id 数，以及 mermaid ��属性缺失数",
+      "steps": [
+        { "op": "open", "file": "教材/01_第1章_绪论.md", "view": "preview", "minBlocks": 3 },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3", "label": "preview-blocks", "timeout": 30000 },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-mermaid-container, #preview .-mermaid-error').length > 0",
+          "label": "mermaid-rendered",
+          "timeout": 60000
+        },
+        { "op": "sleep", "ms": 3000 },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=document.querySelectorAll('#preview .-src-block');var withSrc=0,withId=0,missing=[];for(var i=0;i<bs.length;i++){if(bs[i].hasAttribute('data--src-line'))withSrc++;else missing.push({i:i,cls:(bs[i].className||'').slice(0,40)});if(bs[i].hasAttribute('data-block-id'))withId++;}var mmd=document.querySelectorAll('#preview .-mermaid-container, #preview .-mermaid-error');var mmdNo=0;for(var j=0;j<mmd.length;j++){if(!mmd[j].hasAttribute('data--src-line'))mmdNo++;}return {blocks:bs.length,withSrcLine:withSrc,withBlockId:withId,mermaidBlocks:mmd.length,mermaidMissingAttr:mmdNo,missingSample:missing.slice(0,5)};})()",
+          "label": "attr-integrity"
+        }
+      ]
+    }
+  ]
+}

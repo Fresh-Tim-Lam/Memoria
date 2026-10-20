@@ -13,10 +13,18 @@
  *   Node  ：module.exports = { BlockIndex, hashBlockId }
  *   **不依赖任何 DOM**（纯数据；domEl 只是可选引用，本模块不读写 DOM 属性）
  *
- * ── 关键语义（R1，必须写死）──────────────────────────────────────────────
- *   「被编辑的块 id 会变」：id = djb2(kind + "\0" + blockSrcText) ⊕ 出现序。
- *   块被编辑 ⇒ blockSrcText 变 ⇒ 该块 id 变；**其余块 id 不变**（对应契约 C1）。
- *   消费者**禁止**跨"该块自身被编辑"持有 id 做身份假设 —— 身份稳定只对"未编辑的块"成立。
+ * ── 关键语义（R1 + task-22，必须写死）──────────────────────────────────────
+ *   id = djb2(kind + "\0" + blockSrcText) ⊕ 出现序（纯函数：同文本同序 ⇒ 同 id）。
+ *
+ *   ★ id 何时变（两条路径，最终口径）：
+ *     · **局部路径**（单块重渲 / 编辑点）：调用方**显式传 id**（app.js 用 _keepId）
+ *       ⇒ **同一 id 就地更新** ⇒ **被编辑块的 id 不变**；
+ *     · **整篇重 parse**（换文件 / 整篇重渲 / 缓存搬回）：纯内容哈希生效，文本变 ⇒ 该块 id 变。
+ *   两种路径下契约 C1（"改一处 ⇒ **其余块** id 不变"）都成立。
+ *
+ *   ★★ **id 标识身份，不保证内容不变。消费者不得用「id 未变」推断「内容未变」。**
+ *      内容变化信号只来自三处：`onPatched({changedIds})` / `BlockHandle.domVersion` / 行区间变化。
+ *      （task-22 前本文写的是「被编辑的块 id 会变」，已被 Lead 裁决修正 —— 见设计 §7.4。）
  *
  * ── 为什么不叫 hash8 ──────────────────────────────────────────────────────
  *   设计 §2.2 写「hash8」，但仓内既有指纹先例是 djb2（app.js _bodyFingerprint，32 位）。
@@ -74,6 +82,10 @@
     var _seq = new Map();       // beginStamp 一轮内的 hash-key -> 出现序计数器（供 id 消歧）
     var _stamping = false;      // beginStamp..commit 之间为 true
     var _pendingRemove = [];    // 本轮删除的 id（commit 时回吐 removedIds）
+    // ★ 2026-10-20 语义修正（Lead 裁决 task-22）：本轮**真正被 upsert 过**的 id（commit 时回吐 changedIds）。
+    //   旧实现是「整轮=全量」的 P1 简化 ⇒ 下游无法用 changedIds 做精准缓存失效（会把没变的块也判失效）。
+    //   现在只有 upsert() 写入的 id 才进这里；删除的走 removedIds。
+    var _pendingChanged = new Set();
     var _listeners = [];        // onPatched 订阅者
     var _lineDelta = 0;         // 本轮行数净变化（commit 时回吐 lineDelta）
     var _touched = false;       // 本轮是否触碰了 byOrder 的区间/结构（决定 commit 后 startsValid）
@@ -195,6 +207,7 @@
       _stamping = true;
       _seq = new Map();
       _pendingRemove = [];
+      _pendingChanged = new Set();
       _lineDelta = 0;
       _touched = false;
       if (opts && opts.reset) {
@@ -248,6 +261,7 @@
       }
 
       byId.set(id, handle);
+      _pendingChanged.add(id);   // ★ 语义修正：只有真正被 upsert 的 id 才进 changedIds（供下游精准失效）
       // 维持 byOrder 按 srcLineStart 升序
       var replaced = false;
       for (var i = 0; i < byOrder.length; i++) {
@@ -287,13 +301,19 @@
     }
 
     /**
-     * 结束一轮：记录 removedIds、触发 onPatched。**不强制重建前缀**——
+     * 结束一轮：回吐**本轮真正变更的** id、removedIds、lineDelta，触发 onPatched。**不强制重建前缀**——
      * R4 懒失效：starts 的重建留给下一次查询（_ensureStarts 被 blocksInRange/atSrcLine 等触发）。
+     *
+     * ⚠️ 语义（Lead 裁决 task-22）：
+     *   · `changedIds` = **本轮被 upsert() 写过的 id**（不是全量！），下游据此做精准失效；
+     *   · **同一 id 被再次 upsert ⇒ 该 id 会出现在 changedIds 里、且 handle.domVersion 会 +1** ——
+     *     这是"内容变了"的信号来源（**不要靠 id 是否变化推断内容**：局部路径同 id 就地更新，
+     *     被编辑块的 id 可能不变，见 block-identity-design.md §7.3）。
      * @returns {{changedIds:string[], removedIds:string[], lineDelta:number}}
      */
     api.commit = function () {
       var changedIds = [];
-      byId.forEach(function (_, id) { changedIds.push(id); });   // P1 简化：整轮视为全量变更集合
+      _pendingChanged.forEach(function (id) { if (byId.has(id)) changedIds.push(id); });   // 已删的不算"变更"
       var removedIds = _pendingRemove.slice();
       var ret = { changedIds: changedIds, removedIds: removedIds, lineDelta: _lineDelta };
       // R4：本轮触碰了结构（增/删/改区间）⇒ 前缀失效，留给下次查询懒重建；
