@@ -373,6 +373,7 @@
         needPreviewSel: "请先在预览区选中文字，再使用「无色」",
         needSourceSel: "请先在源码中选中文字",
         formatFail: "格式化失败",
+        readonly: "当前为只读模式，无法应用样式（请先开启「编辑」）",
       },
       clip: {
         empty: "剪贴板为空或无法读取",

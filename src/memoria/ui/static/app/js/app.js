@@ -515,6 +515,7 @@
   }
 
   function resetOpenDocumentUi() { _previewCacheClear(); _preloadResetForNewKb(); // 2026-09-23 性能：换库 ⇒ 预览缓存整库作废（路径键换了一套命名空间）
+    _brushDisarmAll();   // S1：换库 = 离开一切可编辑语境 ⇒ 画笔武装一并收掉
     cancelKpHighlightTimers();
     clearHighlights();
     clearPreviewHighlights();
@@ -606,6 +607,8 @@
     state.doc = null;
     state.activeKpId = null;
     state.openTabs = []; _previewCacheClear(); _preloadResetForNewKb(); // 2026-09-23 性能：关库 ⇒ 预览缓存整体作废（并与换库同一套复位口径）
+    // S1：关库 = 离开一切可编辑语境 ⇒ 画笔武装一并收掉（否则下次开库后仍是武装态）
+    _brushDisarmAll();
     state.graphData = null;
     state.graphAudit = null;
     state.kbValidateReport = null;
@@ -1489,6 +1492,8 @@
     await _waitRenderSettled(); _markPhase("settle");   // `settle` = 等同步渲染那一轮落定（**不等 MathJax**）。真机读数里这 729 ms 既不在恢复、也不在 MathJax ⇒ 看下面两个**异步标记**（paint / mathjax）
     // 切换文件：预览区是全新 DOM，旧文件的编辑光标不继承（selection 可能残留，显式清空）
     if (window.MemoriaEditHandler) window.MemoriaEditHandler._caretInPreview = false;
+    // S1：切文件必须清画笔武装 —— 否则新文件里第一次拖动就会把样式涂上去（跨文件误写）
+    _brushDisarmAll();
     window.MemoriaImageTools?.refreshImageInsertAvailability?.();
     if (opts.restoreScroll) {
       // Tab switch: restore last scroll position instead of jumping to kp/line
@@ -10820,8 +10825,51 @@
     });
   }
 
+  /**
+   * **编辑态闸门**（2026-10-20 · S2 修复）：样式写入只允许在「编辑模式开启」时发生。
+   * 旧版 `applyFormat` / `_brushOnMouseUp` 都不查 `EH.editMode` ⇒ 只读态下预览区
+   * `contentEditable=false` 但浏览器仍能产生选区，于是画笔/右键/工具栏还能改源码（危险）。
+   * @returns {boolean} true=允许应用样式
+   */
+  function _styleEditAllowed() {
+    var EH = window.MemoriaEditHandler;
+    return !!(EH && EH.editMode);
+  }
+
+  /** 只读态拒绝应用样式时的**可见**提示（不静默） */
+  function _notifyStyleReadonly() {
+    setStatus(T("cfg.style.readonly"));
+  }
+
+  /**
+   * **画笔生命周期收尾**（2026-10-20 · S1 修复）：把画笔武装整体清掉。
+   * 旧版 `_brush` 只在「Esc」与「右键取消最后一个槽位」时清理 ⇒ 切文件后画笔仍武装，
+   * 新文件里第一次拖动就把样式涂上去（跨文件误写）。这里统一收口，挂在四类入口：
+   *   ① 切文件（`openFile` 落定后）② 编辑模式关闭（`EH.toggleEditMode` 回调）
+   *   ③ 进入块编辑（`enterBlockEditMode`）/ 块编辑因重渲染失效
+   *   ④ 关闭知识库
+   * @returns {boolean} 是否真的清掉了武装
+   */
+  function _brushDisarmAll() {
+    if (!_brush) return false;
+    _brush = null;
+    if (document.body) document.body.classList.remove("-brush-active");
+    document.querySelectorAll(".-fmt-btn.brush-armed").forEach(function (b) { b.classList.remove("brush-armed"); });
+    try { _clearColorTint(); } catch (_) { /* 预览区/工具栏此刻可能还没建好 */ }
+    try { _dropTintAnchor(); } catch (_) { /* 同上 */ }
+    try { updateFormatToolbarState(); } catch (_) { /* 工具栏此刻可能还没建好 */ }
+    return true;
+  }
+
+  /** 供 edit-handler.js / image-tools.js 等其它模块在"退出可编辑语境"时调用（S1 收尾的公共入口） */
+  window.MemoriaStyleBrush = window.MemoriaStyleBrush || {};
+  window.MemoriaStyleBrush.disarm = _brushDisarmAll;
+  window.MemoriaStyleBrush.isAllowed = _styleEditAllowed;
+
   /** 进入画笔模式：选中（或切换）某个样式的槽位，其余已选样式保留 */
   function armBrush(fmt, color) {
+    // 只读态不武装画笔（否则光标变画笔却涂不上，等于误导）
+    if (!_styleEditAllowed()) { _notifyStyleReadonly(); return; }
     if (!_brush) _brush = { bold: false, italic: false, highlight: null, fontcolor: null };
     if (fmt === "bold") _brush.bold = true;
     else if (fmt === "italic") _brush.italic = true;
@@ -10898,6 +10946,12 @@
     if (!_brush) return;
     if (e.button !== 0) return;
     if (!e.target || !e.target.closest) return;
+    // S2：只读态闸门 —— 编辑模式关闭时不应用（并给可见提示），画笔武装同时收掉
+    if (!_styleEditAllowed()) {
+      _brushDisarmAll();
+      _notifyStyleReadonly();
+      return;
+    }
     // 色块 / 下拉开关 / 添加颜色 / 取色面板 / 右键菜单：交给各自的 click 处理（重新武装或保持）
     if (e.target.closest(".-hl-swatch, .-fc-swatch, .-hl-custom, .-fc-custom, .-fmt-dropdown > .-fmt-btn, .-color-picker-mask, .-context-menu")) return;
     // 工具栏按钮 / 文档区域之外点击：保持画笔（不取消），可继续回来涂抹；
@@ -11040,6 +11094,13 @@
     // 点击色块前先移除 hover 预览的临时着色，避免干扰真实应用
     _clearColorTint();
     if (!state.currentPath) return;
+    // S2：只读态闸门 —— 编辑模式关闭时一律不写源码（预览 AST 管线与源码兜底两条路都堵住），并给可见提示
+    if (!_styleEditAllowed()) {
+      _pendingPreviewRange = null;
+      _notifyStyleReadonly();
+      log("STYLE", "applyFormat BLOCKED: readonly mode fmt=" + formatType);
+      return;
+    }
     log("STYLE", "applyFormat fmt=" + formatType + " color=" + (color || "null") + " path=" + state.currentPath);
 
     // 预览区选区优先：走 AST 包裹管线（顶栏按钮点击时选区可能已失焦，用捕获的选区兜底）
@@ -12738,6 +12799,9 @@
         e.preventDefault();
         e.stopPropagation();
         if (window.MemoriaEditHandler) MemoriaEditHandler.toggleEditMode();
+        // S1：关闭编辑模式 ⇒ 画笔武装必须一起收掉（只读态涂不上，留着只会误导）；
+        // 开启编辑模式时不动画笔（保持原有"涂完可继续涂"的连续涂抹语义）
+        if (window.MemoriaEditHandler && !window.MemoriaEditHandler.editMode) _brushDisarmAll();
         // 编辑模式切换后立即刷新图片插入按钮可用性（不依赖 selectionchange 的后续触发）
         window.MemoriaImageTools?.refreshImageInsertAvailability?.();
       });
@@ -14231,6 +14295,8 @@
 
     /** 契约 §3.1 样式类编辑（内部 MemoriaEditSync.applyStyle ⇒ commitSelection；range 为 DOM Range）。 */
     applySelectionStyle: function (formatType, color, range, forceApply) {
+      // S2：只读态闸门（与 applyFormat / _brushOnMouseUp 同一口径，避免从门面绕过）
+      if (!_styleEditAllowed()) { _notifyStyleReadonly(); return { ok: false, readonly: true }; }
       var es = window.MemoriaEditSync;
       return (es && typeof es.applyStyle === "function") ? es.applyStyle(formatType, color, range, forceApply) : { ok: false };
     },

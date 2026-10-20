@@ -373,6 +373,7 @@
         needPreviewSel: "Select text in the preview first, then use “Remove color”",
         needSourceSel: "Select text in the source first",
         formatFail: "Formatting failed",
+        readonly: "Read-only mode: cannot apply styles (turn on “Edit” first)",
       },
       clip: {
         empty: "Clipboard is empty or unreadable",

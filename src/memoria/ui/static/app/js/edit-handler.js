@@ -1243,6 +1243,9 @@
    */
   function enterInlineMathEditMode(mathEl) {
     if (EH.blockEditMode) exitBlockEditMode();
+    // S1（2026-10-20）：进入块级编辑语境 ⇒ 先收掉样式画笔武装。
+    // 只读调用 app.js 暴露的门面，不改本函数既有语义；门面缺席时静默跳过。
+    try { window.MemoriaStyleBrush?.disarm?.(); } catch (_) { /* noop */ }
 
     // 判断元素类型并获取公式
     var isMjxContainer = mathEl.tagName === "MJX-CONTAINER";
@@ -1323,6 +1326,8 @@
    * 进入块编辑模式
    */
   function enterBlockEditMode(blockEl, blockIndex) {
+    // S1（2026-10-20）：进入块级编辑语境 ⇒ 先收掉样式画笔武装（理由同 enterInlineMathEditMode）。
+    try { window.MemoriaStyleBrush?.disarm?.(); } catch (_) { /* noop */ }
     var M = window.MemoriaMapper;
     var doc = M ? M.getDoc() : null;
     if (!doc || !doc.blocks || blockIndex < 0 || blockIndex >= doc.blocks.length) return;
