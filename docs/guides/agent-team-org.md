@@ -30,38 +30,53 @@
 - 一次性、只读、跑完即弃 → **L2 subagent**；
 - 一两行改动能凭现有认知完成 → **Lead 自己做**。
 
-## 2. 常驻成员与领域所有权（当前 8 个，名额已满）
+## 2. 常驻成员与领域所有权（当前 7 个，上限已提升到 16）
 
 | Agent | 领域所有权 | 对应对象认知 |
 |---|---|---|
-| `render-perf` | 渲染性能：首屏/增量/内存/耗时归因 | `agent-guide/04-preview-and-rendering.md` + `design/benchmark-measurement-protocol.md` |
-| `render-impl` | 渲染实现：渲染管线落地、组件替换 | `agent-guide/04` + `design/preview-render-refactor.md` |
-| `sync-mapper` | 编辑-预览同步：行号/列号/锚点映射准确度 | `agent-guide/03-editor-and-formatting.md` + `design/edit-syntax-and-mapping.md` |
-| `mapper-fix` | 映射实现：parser/lexer/mapper 的具体修 | `agent-guide/03` + `mapper.js`/`lexer.js` |
-| `jump-fix` | 导航与跳转：文件树、tab、前进后退、跳转落点 | `agent-guide/02-file-tree-and-nav.md` |
-| `arch-agent` | 架构与契约：分层、单一事实源、设计稿权威性 | `architecture.md` + `design/view-surface-contract.md` |
-| `detail-agent` | 文档一致性：文档 vs 代码核对、漂移取证 | `docs/conventions/**` + 各 design 稿 |
-| `metrics-agent` | 度量与基准：探针、A/B、判据方法论 | `design/benchmark-measurement-protocol.md` |
+| `render-perf` | **渲染性能域**：首开/切页签/打字时延、内存预算、性能回归守卫 | `agent-guide/04-preview-and-rendering.md` + `design/benchmark-measurement-protocol.md` |
+| `sync-mapper` | **编辑-预览同步域**：锚点映射准确度、选区与光标映射、双向同步 | `agent-guide/03-editor-and-formatting.md` + `design/edit-syntax-and-mapping.md` |
+| `arch-contract` | **架构与契约域**：显示子系统契约 C1–C12、重构总纲与阶段裁决、`agent-guide/01`+`10` | `architecture.md` + `design/view-surface-contract.md` |
+| `doc-consistency` | **文档一致性域**：文档↔代码审计、文档债、`agent-guide/06`+`07`+`08` | `docs/conventions/**` + 各 design 稿 |
+| `metrics-baseline` | **度量与基准域**：真机/无头度量协议、基线与预算、交互金标准回归 | `design/realapp-measurement-protocol.md` + `design/benchmark-measurement-protocol.md` |
+| `kp-owner` | **知识点域**：KP 面板、图谱联动、KP 抽取与存储、`agent-guide/05` | `agent-guide/05-*` + KP 前后端实现 |
+| `settings-owner` | **设置/i18n/快捷键域**：设置键事实源、i18n 键、快捷键、`agent-guide/09` | `agent-guide/09-*` + 设置/文案实现 |
 
-> **8 个名额已满**（Lead + 8），且 DSH 无删除工具 ⇒ **本会话内不得再 spawn**。
-> 空缺领域一律走 L2 subagent。
+> **名额现状**：上限 16（含 Lead），当前 7 名 teammate ⇒ **还有 8 个空位**。
+> 空缺领域（如 06 图谱本体、08 导入导出）默认走 L2 subagent；**只有出现长期、跨任务的领域责任时才升格为 Owner**。
+
+### 2.1 动态维护能力（2026-10-20 起具备）
+
+DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有 `spawn`），导致团队一旦建立就被历史包袱锁死。我们在 DSH 侧补齐了三项能力（DSH 仓库提交 `468b01b5b2`）：
+
+| 能力 | 工具 | 语义 |
+|---|---|---|
+| **退役** | `retire_teammate {target}` | 从花名册移除、释放会话、**释放名额**；journal 历史保留（只追加不删） |
+| **改名/改描述** | `update_teammate {target, name?, description?}` | 新名成为 `send_message`/任务板 owner 的新 target |
+| **提额** | `maxMembers: 8 → 16` | `agent-team-profile/cordis.patch.yml` |
+
+**维护纪律**（必须遵守，否则又会退化成"历史包袱锁死"）：
+1. **任务闭环即退役**：单点任务型 teammate（「修 X bug」「落地 Y」）完成后**当轮退役**，不留着占位；
+2. **Owner 用领域命名**，不用「fix 型」命名（`jump-fix` 这类名字会让人误以为它只干过一次活）；
+3. 退役前先确认它的产出已落到**磁盘报告/提交**（会话记忆不保留，退役即丢上下文）；
+4. 改名后**同步更新本表与任务板 owner**（ownerName 由 roster 快照派生，改名会自动跟随，但本表要人改）。
 
 ## 3. 领域覆盖与缺口（对照 agent-guide 10 篇）
 
-| agent-guide 篇 | Owner | 缺口处理 |
+| agent-guide 篇 | Owner | 状态 |
 |---|---|---|
-| 01 shell-and-layout | （无专人） | `arch-agent` 兼任 |
-| 02 file-tree-and-nav | `jump-fix` | — |
-| 03 editor-and-formatting | `sync-mapper` / `mapper-fix` | — |
-| 04 preview-and-rendering | `render-perf` / `render-impl` | — |
-| 05 knowledge-points | **缺** | L2 subagent |
-| 06 links-and-graph | **缺** | L2 subagent |
-| 07 search-and-images | **缺** | L2 subagent |
-| 08 import-export-and-check | **缺** | L2 subagent |
-| 09 settings-i18n-and-shortcuts | **缺** | L2 subagent |
-| 10 data-layout-and-host-embedding | **缺** | L2 subagent（或 `arch-agent` 兼任） |
+| 01 shell-and-layout | `arch-contract` | 兼任 |
+| 02 file-tree-and-nav | `arch-contract` | 原 `jump-fix` 已退役（R4 已修 `c33c9353`） |
+| 03 editor-and-formatting | `sync-mapper` | 原 `mapper-fix` 已退役（R3 已修 `79865b1d`） |
+| 04 preview-and-rendering | `render-perf` | 原 `render-impl` 已退役（CHTML→SVG 已落地 `4a3e5a7d`） |
+| 05 knowledge-points | `kp-owner` | ✅ 已补 |
+| 06 links-and-graph | `doc-consistency` | 文档侧兼任；图谱本体重构范围外 |
+| 07 search-and-images | `doc-consistency` | 文档侧兼任 |
+| 08 import-export-and-check | `doc-consistency` | 文档侧兼任 |
+| 09 settings-i18n-and-shortcuts | `settings-owner` | ✅ 已补 |
+| 10 data-layout-and-host-embedding | `arch-contract` | 兼任 |
 
-**新会话重建团队时**，应按此表的缺口补 Owner（而不是继续堆渲染/映射类）。
+**下次扩编的判断标准**：只有当某领域出现**跨任务、反复出现**的工作（≥3 次派发）时，才从 subagent 升格为 Owner；否则一律 subagent。
 
 ## 4. 派发规则（Lead 每次派活前必须走这 5 步）
 
@@ -99,15 +114,21 @@
 |---|---|
 | 2026-10-19 | 初版：确立三层结构、8 个常驻 Owner 的领域表、10 篇 agent-guide 的覆盖缺口、5 步派发规则、知识落点与成本模型 |
 | 2026-10-19 | 首轮全员激活：8 个 Owner 各确认领域并回报「最大未解决问题 + 建议下一单元」（见 §8） |
+| 2026-10-20 | **团队重整（首次动态维护）**：退役 3 个任务已闭环的单点 agent（`render-impl`/`mapper-fix`/`jump-fix`）；3 个含糊命名改为领域名（`arch-agent`→`arch-contract`、`detail-agent`→`doc-consistency`、`metrics-agent`→`metrics-baseline`）；补 2 个缺口 Owner（`kp-owner` 知识点域、`settings-owner` 设置/i18n/快捷键域）；名额上限 8→16。前提是 DSH 侧补齐了 `retire_teammate`/`update_teammate`（DSH 提交 `468b01b5b2`），维护纪律见 §2.1 |
 
-## 8. 首轮全员回报（2026-10-19，各 Owner 自述）
+## 8. 首轮全员回报（2026-10-19，各 Owner 自述 · **历史快照**）
+
+> **阅读须知**：本表是 2026-10-19 的**原始快照，保留不删**（追溯用）。
+> 其中 `render-impl` / `mapper-fix` / `jump-fix` 已于 2026-10-20 **退役**（任务闭环），
+> `arch-agent` / `detail-agent` / `metrics-agent` 已改名为 `arch-contract` / `doc-consistency` / `metrics-baseline`。
+> **当前名册以 §2 为准。**
 
 | Owner | 确认领域 | 自报的最大未解决问题 | 建议下一工作单元 |
 |---|---|---|---|
 | `render-perf` | 渲染性能 | **预览缓存命中率 0%**：`_previewCacheStash` 早退条件（`app.js:13134` 的 `!state.doc.preview_body`、`:13133` 的 `_dirty`）让正在编辑的大文件永远进不了预览池 ⇒ 整篇解析 ~1s 纯亏 | 改早退为按 `fp` 指纹判失效，并用度量协议验命中率上升 |
-| `render-impl` | 渲染实现 | CHTML→SVG 切换**已完成**（含 mapper/app/edit-handler 复核：`_isAtomElement` 用非结构化信号，SVG 下无需改动）。真实未收口仅剩 1 项：`app.js:11751` 导出路径 `svg.fontCache="local"` + `typesetClear` 可能致 `<defs>` 未重建、导出公式空（待真机验证）。另一条同批待验风险：SVG 用 `ex` 度量替代 `matchFontHeight`，字高/基线可能有细微差异 | 真机验证导出公式 + 公式行高抽查（该项需人在真机执行，非 agent 可闭环） |
+| ~~`render-impl`~~（已退役） | 渲染实现 | CHTML→SVG 切换**已完成**（含 mapper/app/edit-handler 复核：`_isAtomElement` 用非结构化信号，SVG 下无需改动）。真实未收口仅剩 1 项：`app.js:11751` 导出路径 `svg.fontCache="local"` + `typesetClear` 可能致 `<defs>` 未重建、导出公式空（待真机验证）。另一条同批待验风险：SVG 用 `ex` 度量替代 `matchFontHeight`，字高/基线可能有细微差异 | 真机验证导出公式 + 公式行高抽查（该项需人在真机执行，非 agent 可闭环） |
 | `sync-mapper` | 编辑-预览同步 | **R1 是单点放大器**：`app.js:1872` 末块判据全有或全无，一旦失效全文退回与 parser 平行的第二套启发式，R2/R5/R6 全在此时显形 | R1 改逐块守卫（`block.srcLineEnd <= srcLines.length`）+ 退化时打 `log("STAMP","fallback")` |
-| `mapper-fix` | 映射实现 | `srcToAst` 的 LIST/BLOCKQUOTE 无专用分支（走单行 inline 口径、`nodePath` 可越界）；rawMarker 残余降 P2 | 补 LIST/BLOCKQUOTE 专用分支 + 纯 Node 验证（与 R3 同族） |
+| ~~`mapper-fix`~~（已退役） | 映射实现 | `srcToAst` 的 LIST/BLOCKQUOTE 无专用分支（走单行 inline 口径、`nodePath` 可越界）；rawMarker 残余降 P2 | 补 LIST/BLOCKQUOTE 专用分支 + 纯 Node 验证（与 R3 同族） |
 | `jump-fix` | 导航与跳转 | 4 条已知不准：重命名不重映射导航栈（`file-tree.js:51-73`）、导航失败不回滚 cursor（`app.js:6228-6240`）、树内点击回卷丢尾（`nav-stack.js:38-46`）、文档锚点已 +27 漂移 | 重命名后重映射 `MemoriaNavStack` 帧路径（含 `filePointer`） |
 | `arch-agent` | 架构与契约 | 8 条脱节仍在（D1/D2/D3/D5/D6/D8/D9/D10）；**最大风险是三份文档互相声明自己是/不是事实源** | 产出《契约权威性裁决单》+ D1/D10 修法清单 |
 | `detail-agent` | 文档一致性 | 3 条：①`agent-guide/04`+P 稿通篇 `m0/js/*` 旧路径（`m0/` 已不存在，锚点全失效）；②真源口径冲突未裁；③`docs/todo.md §13` 悬空 | 只读核查 06/07/08 三篇锚点与交叉引用，产出 drift 报告 |
