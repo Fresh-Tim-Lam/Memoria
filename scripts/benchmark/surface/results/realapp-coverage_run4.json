@@ -1,0 +1,336 @@
+{
+  "schema": "memoria-realapp-coverage/v1",
+  "mode": "real",
+  "cdpEndpoint": "http://127.0.0.1:9500",
+  "rounds": 3,
+  "startedAt": "2026-10-20T14:25:29.793Z",
+  "ops": {
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "metric": "latency",
+      "mode": "real",
+      "runs": [
+        {
+          "samples": [
+            31.69999998807907,
+            33.39999997615814,
+            33.299999952316284,
+            31.69999998807907
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        },
+        {
+          "samples": [
+            23.80000001192093,
+            35.10000002384186,
+            33.19999998807907,
+            33.39999997615814
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        },
+        {
+          "samples": [
+            22,
+            33.19999998807907,
+            33.19999998807907,
+            33.30000001192093
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        }
+      ],
+      "status": "ran",
+      "samples": 12,
+      "p50": 33.2,
+      "p95": 34.16,
+      "max": 35.1,
+      "kpCount": 4
+    },
+    "inlineMath": {
+      "id": "inlineMath",
+      "tier": "A",
+      "metric": "count",
+      "mode": "real",
+      "runs": [
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        },
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        },
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        }
+      ],
+      "status": "ran",
+      "ok": true,
+      "applicable": true,
+      "blocksWithInline": 1,
+      "totalInline": 1,
+      "totalTypeset": 1,
+      "mathjaxTotal": 1,
+      "failures": []
+    },
+    "agentStream": {
+      "id": "agentStream",
+      "tier": "A",
+      "metric": "structure",
+      "mode": "real",
+      "runs": [
+        {
+          "panelPresent": true,
+          "bodyCount": 0,
+          "emptyNodeCount": 1,
+          "placeholderCount": 0,
+          "blockCounts": [],
+          "mathJaxInBodies": 0,
+          "ok": false,
+          "note": "no-conversation-data：面板存在但无历史消息（需真实会话才能判流式结构）"
+        },
+        {
+          "panelPresent": true,
+          "bodyCount": 0,
+          "emptyNodeCount": 1,
+          "placeholderCount": 0,
+          "blockCounts": [],
+          "mathJaxInBodies": 0,
+          "ok": false,
+          "note": "no-conversation-data：面板存在但无历史消息（需真实会话才能判流式结构）"
+        },
+        {
+          "panelPresent": true,
+          "bodyCount": 0,
+          "emptyNodeCount": 1,
+          "placeholderCount": 0,
+          "blockCounts": [],
+          "mathJaxInBodies": 0,
+          "ok": false,
+          "note": "no-conversation-data：面板存在但无历史消息（需真实会话才能判流式结构）"
+        }
+      ],
+      "status": "ran",
+      "ok": false,
+      "detail": {
+        "panelPresent": true,
+        "bodyCount": 0,
+        "emptyNodeCount": 1,
+        "placeholderCount": 0,
+        "blockCounts": [],
+        "mathJaxInBodies": 0,
+        "ok": false,
+        "note": "no-conversation-data：面板存在但无历史消息（需真实会话才能判流式结构）"
+      }
+    },
+    "assistantCard": {
+      "id": "assistantCard",
+      "tier": "A",
+      "metric": "structure",
+      "mode": "real",
+      "runs": [
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": false,
+              "ok": null,
+              "note": "no-assistant-modal（需真实交互打开助手预览）"
+            }
+          }
+        },
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": false,
+              "ok": null,
+              "note": "no-assistant-modal（需真实交互打开助手预览）"
+            }
+          }
+        },
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": false,
+              "ok": null,
+              "note": "no-assistant-modal（需真实交互打开助手预览）"
+            }
+          }
+        }
+      ],
+      "status": "ran",
+      "ok": false,
+      "detail": {
+        "modes": {
+          "reviewCard": {
+            "present": true,
+            "listItems": 1,
+            "textBlocks": 0,
+            "mathJax": 0,
+            "usesSrcLineAttr": 0,
+            "ok": true,
+            "note": null
+          },
+          "assistantModal": {
+            "present": false,
+            "ok": null,
+            "note": "no-assistant-modal（需真实交互打开助手预览）"
+          }
+        }
+      }
+    }
+  },
+  "previewReady": {
+    "viewMode": "preview",
+    "blocks": 67,
+    "mathjax": 1
+  },
+  "meta": {
+    "headless": false,
+    "kbPath": "D:\\AAA_Jupyter\\Memoria\\docs\\example\\行政法",
+    "currentPath": "administrative-coercion.md",
+    "viewMode": "preview",
+    "mathjaxCount": 1,
+    "previewBlocks": 67
+  },
+  "ok": true,
+  "finishedAt": "2026-10-20T14:25:39.869Z"
+}
