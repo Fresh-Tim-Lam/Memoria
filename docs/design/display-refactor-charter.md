@@ -295,6 +295,32 @@
 > **给 agent 的硬规则**：派发任何重构工作单元时，**先读本节**；发现新漏项 → 追加一行 + 在回报里点明，
 > **不许私自在实现里"顺手加"或"顺手删"**。
 
+### 8.2 知识点域盘点后发现的缺陷（`kp-owner` 2026-10-20）
+
+证据：`artifacts/agent/verify/kp-gap-fix-proposals.md`、`artifacts/agent/verify/kp-invariants.md`。
+
+| # | 问题 | 性质 | 状态 |
+|---|---|---|---|
+| S4 | **行末 `Delete` 不平移 KP 行号**（`app.js:7376-7393`，7391 后缺 `adjustKpRangesAfterRemove`） | 真 bug | 🔧 修复中（task-12） |
+| S5 | **`commitRange` 不平移**（`app.js:8534-8549`） | 真 bug | 🔧 修复中（task-12） |
+| S5b | `_surfaceSpliceRange` 同缺（`app.js:14311-14339`） | 真 bug | 🔧 修复中（task-12） |
+| D-KP | `agent-guide/05` 锚点**系统性过期**（D1–D12） | 文档漂移 | ⏳ `doc-consistency` 统一处理 |
+
+### 8.3 设置/i18n 域盘点后发现的缺陷（`settings-owner` 2026-10-20）
+
+证据：`artifacts/agent/verify/settings-invariants.md`、`artifacts/agent/verify/settings-fonts-cdp-plan.md`。
+
+| # | 问题 | 性质 | 裁决 |
+|---|---|---|---|
+| S6 | **冷启动字体优先级错序**：`app.js:12777-12781` 里 `display.hydrate` 先于 `i18n.hydrate` ⇒ 字体栈按 zh-CN 错序 | 真 bug（旧实现） | ⏳ **不在旧代码修**：`display.fonts` 是新实现必保项（§5.3），**改为新实现的验收断言**（冷启动后 `font-family` 必须与当前 `i18n.lang` 一致） |
+| S7 | **切语言不重算字体**：`display-settings.js` 无 `addRefresh`，非设置页调 `setLang` 不重算 | 真 bug（旧实现） | ⏳ **同上**：新实现必须提供「语言切换 → 字体刷新」钩子，进 §5.3 验收 |
+| S8 | `navPredictor` / `navHalfLifeDays` 疑似被**静默丢弃**（设置改了不生效） | 真 bug？ | ❓ **待核实**：Lead 已查 `storage/ui_settings.py`（无白名单）与 `presentation/api/ui.py`（无 sanitize），**未找到**所称丢弃点；已要求 Owner 给出精确 `文件:行号`，核实前不记为事实 |
+| D-SET | 设置文档缺口 D1–D12（主题明细表、显示页版块数 4→5 等） | 文档漂移 | ⏳ `doc-consistency` 统一处理 |
+
+> **S6/S7 的裁决理由**：这两处的病灶在**初始化顺序**与**刷新钩子**上，而这两块正是显示区域重构要重写的地方。
+> 在旧代码上修等于白做（重构一落地就被删），但**不修又会带进新实现** ⇒ 正确做法是**变成新实现的硬验收**，不是修旧码。
+
+
 ## 9. 基线（重构前后对比的锚）
 
 **基线库副本**：`artifacts/baseline-kb/数字通信原理/`（`artifacts/` 不进 git，不影响原库）
