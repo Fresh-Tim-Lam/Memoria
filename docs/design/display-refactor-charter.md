@@ -301,10 +301,30 @@
 
 | # | 问题 | 性质 | 状态 |
 |---|---|---|---|
-| S4 | **行末 `Delete` 不平移 KP 行号**（`app.js:7376-7393`，7391 后缺 `adjustKpRangesAfterRemove`） | 真 bug | 🔧 修复中（task-12） |
-| S5 | **`commitRange` 不平移**（`app.js:8534-8549`） | 真 bug | 🔧 修复中（task-12） |
-| S5b | `_surfaceSpliceRange` 同缺（`app.js:14311-14339`） | 真 bug | 🔧 修复中（task-12） |
+| S4 | **行末 `Delete` 不平移 KP 行号**（`app.js:7376-7393`，7391 后缺 `adjustKpRangesAfterRemove`） | 真 bug | ✅ **已修** `dcbb1f08` |
+| S5 | **`commitRange` 不平移**（`app.js:8534-8549`） | 真 bug | ✅ **已修** `dcbb1f08` |
+| S5b | `_surfaceSpliceRange` 同缺（`app.js:14311-14339`） | 真 bug | ✅ **已修** `dcbb1f08` |
+| **S5c** | `spliceBlockSource`（`app.js:7743-7744`）调用**词法不可见**的 `adjustKpRangesAfterSpanReplace` ⇒ **恒为 no-op**（`kp-owner` 自查上报） | 真 bug | 🔧 修复中（task-16，与 S9 同批） |
+| **S9** | `app.js:2237` `(kp.tags || []).map(...)` 只兜 `null/undefined`，`tags` 是**标量**时抛 TypeError ⇒ **整个知识点列表渲染崩溃**（非只坏一项） | 真 bug（用户可见） | 🔧 修复中（task-16） |
 | D-KP | `agent-guide/05` 锚点**系统性过期**（D1–D12） | 文档漂移 | ⏳ `doc-consistency` 统一处理 |
+
+> **S4/S5/S5b 的验收证据**（`dcbb1f08`）：40ms 早读（早于 420ms 后端兜底）证明本地平移真生效 ——
+> S4 `15→14→13`、S5b `15→14`、S5 `21→19`，600ms 无回跳；11 交互剧本仍 11/11。
+> **S5c 的教训**：同类 bug 出现了第三处，说明"行号平移"这条逻辑此前**从未被系统覆盖**——
+> 这也解释了为什么必须把块身份（行区间）做成单一真源，而不是靠每个编辑分支各自记得调。
+
+### 8.2.1 性能热点（`metrics-baseline` 2026-10-20 实测）
+
+| # | 问题 | 性质 | 状态 |
+|---|---|---|---|
+| **H1** | 打字热路径每键 **148 次空操作**：`app.js:10249` 在遍历全部 270 个 `.-math` 时**无条件** `classList.toggle`（选区折叠也照跑） | 性能缺陷 | 🔧 修复中（task-19，`render-perf`） |
+
+实测依据（真机，`scale-5k` 5000 行/3110 块/270 公式）：
+- 每键 DOM 写 API 调用 **M1 = 151**，但浏览器实际变更记录 **M2 只有 5** ⇒ 151 = **148（toggle 空操作）+ 3**；
+- 3 次运行写入计数 **IQR = 0**（可稳定归因）；时延 22.6–29.5ms 波动 1.3×（不适合单次定性）；
+- **为何排在 P2 之前**：P2 的 `upsert` 只加约 10 次写，不清掉这 148 次噪声，性能闸无法归因。
+- 判定流程见 `docs/design/phase1-performance-gate.md`（R0 幂等写规则 + G1–G5 + P/A/B/C/D/E 矩阵）。
+
 
 ### 8.3 设置/i18n 域盘点后发现的缺陷（`settings-owner` 2026-10-20）
 
