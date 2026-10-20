@@ -133,6 +133,7 @@ BlockIndex = { byId: Map<id, BlockHandle>      // O(1)
 | # | 老接口 | 老位置 | 新等价物 | 成本 |
 |---|---|---|---|---|
 | M1 | `[data--src-line]`/`[-end]` | `1908-1909` 写；§1.4 全部读者 | **保留属性**（值不变）+ 新增 `[data-block-id]` | **零**（见 R3） |
+| M1·门禁 | ↑ 的**写入门禁**（R3② 的落地） | `scripts/benchmark/maintenance/check_line_attr_gate.js`（正反例自测 `…_test.js`） | 只允许 `block-index.js` 的 `upsert()` 内写；其余命中即 exit 1 | **P2/P3 交付前必跑、须归零** |
 | M2 | `data--block-index` | `renderer.js` 12 处 | `data--block-id`（**并存**，index 降为调试） | 低 |
 | M3 | `.-src-block` | `renderer.js` / 各处 | **不变** | 零 |
 | M4 | `#line-N`/`.-line`/`.-line-content`（**I8，源码面板侧**） | `1642-1645` 产；`11297,11333,11347,11383` 用 | **不变**（I8 不在本设计范围，另文） | 零 |
@@ -208,5 +209,4 @@ BlockIndex = { byId: Map<id, BlockHandle>      // O(1)
 
 > 这条不是形式主义：`kp-owner` 与 `arch-contract` 同时改 `app.js` 已实际发生过行号漂移——这正是 D10 的实时复现。
 
-
-**待裁决 R1–R6 共 6 条**；其中 **R3（是否保留 `data--src-line`）** 影响最大：它决定"12 个既有消费者要不要同时改"，也决定这次重构是**渐进**还是**大爆炸**。
+**裁决状态：R1–R6 已全部拍板并生效（见 §7），本设计转入施工拆分** —— 见 [block-identity-build-plan.md](block-identity-build-plan.md)。

@@ -52,9 +52,10 @@ node --check src/memoria/ui/static/app/js/block-index.js
 ```bash
 node --check src/memoria/ui/static/app/js/app.js
 node scripts/benchmark/maintenance/block_index_test.js
+node scripts/benchmark/maintenance/check_line_attr_gate.js   # ← P4 门禁，改完必跑，须 exit 0
 python scripts/benchmark/surface/run_probe.py --kb tests/probe-kb --label p2-stamp
 ```
-**断言**：B1 探针 **C2/C3/C4 保持绿**｜B2 `window.__blockLineMap` 与 `--label before-p2` 基线**逐项相等**｜B3 `grep -c 'setAttribute("data--src-line' app.js` **不新增**｜B4 启发式已删（grep 该正则 = 0）。
+**断言**：B1 探针 **C2/C3/C4 保持绿**｜B2 `window.__blockLineMap` 与 `--label before-p2` 基线**逐项相等**｜B3 `grep -c 'setAttribute("data--src-line' app.js` **不新增**｜B4 启发式已删（grep 该正则 = 0）｜**B5（P4 门禁）`node scripts/benchmark/maintenance/check_line_attr_gate.js` exit 0** —— P2 是"消灭 app.js 那 2 处写点"的那一片，改完必须由门禁证明 0 违规，**不得靠 `grep -c` 自证**。
 
 **回滚**：`git checkout -- app.js`（P1 模块留用无害）。
 
@@ -69,35 +70,47 @@ python scripts/benchmark/surface/run_probe.py --kb tests/probe-kb --label p2-sta
 **验收**
 ```bash
 node --check src/memoria/ui/static/app/js/app.js && node --check src/memoria/ui/static/app/js/edit-handler.js
+node scripts/benchmark/maintenance/check_line_attr_gate.js   # ← P4 门禁，改完必跑，须 exit 0
 python scripts/benchmark/surface/run_probe.py --kb tests/probe-kb --label p3-consumers
 python scripts/benchmark/surface/run_interaction.py --label p3-consumers
 ```
-**断言**：C1 **C6/C7 不新增红**、C8 转绿或保持｜C2 **交互金标准 11/11 与 legacy-baseline 一致**｜C3 KP 四链路可跑（hover/跳转/静默标记/错误高亮）｜C4 `grep -c querySelectorAll.*data--src-line app.js` 与 `grep -c 'data--src-line="' edit-handler.js` **均为 0**（证明真迁移）。
+**断言**：C1 **C6/C7 不新增红**、C8 转绿或保持｜C2 **交互金标准 11/11 与 legacy-baseline 一致**｜C3 KP 四链路可跑（hover/跳转/静默标记/错误高亮）｜C4 `grep -c querySelectorAll.*data--src-line app.js` 与 `grep -c 'data--src-line="' edit-handler.js` **均为 0**（证明真迁移）｜**C5（P4 门禁）`check_line_attr_gate.js` exit 0** —— 注意 P3 迁完 M7/M8 后，`edit-handler.js:1941/1958` 那两处**选择器**本就不是写点，不应在门禁里出现；门禁在这一片的目标是**基线 6 → 0**（详见 `artifacts/agent/verify/p4-line-attr-gate-report.md`）。
 
 **回滚**：`git checkout -- app.js edit-handler.js`。
 
-## P4 · `data--src-line` 写入门禁 + deprecated（**可立即并行**）
-**写域**：`scripts/benchmark/surface/check_line_attr_gate.js`（新）、`scripts/benchmark/surface/README.md`。**不写 `src/**`**（避免与 P2/P3 抢 app.js）。
+## P4 · `data--src-line` 写入门禁 + deprecated（**✅ 已交付 2026-10-20**）
+**写域（实际交付）**：`scripts/benchmark/maintenance/check_line_attr_gate.js`（门禁）、`…/check_line_attr_gate_test.js`（正反例自测）、本文 §4 指针。**不写 `src/**`**。
+
+> **路径订正**：本节原先写的是 `scripts/benchmark/surface/`，但**与 task-15 及实际交付不一致** —— 门禁是"维护脚本"（跑在代码上的静态校验），按仓内既有惯例落在 `maintenance/`；`surface/` 只放**浏览器探针**（跑真机出 C1–C12）。两处已统一为 `maintenance/`。
 
 **必做**
-1. 门禁扫 `js/**/*.js`：对 `data--src-line`/`-end` 的**任何 `setAttribute`** 必须落在 `block-index.js` 的 `upsert` 函数体内（**文件白名单 + 函数体归属**双判定），否则非零退出并打印违规 `文件:行号`。
+1. 门禁扫 `js/**/*.js`：对 `data--src-line`/`-end` 的**任何写入**必须落在 `block-index.js` 的 `upsert` 函数体内（**文件白名单 + 函数体归属**双判定），否则非零退出并打印违规 `文件:行号` + 修法。
 2. 允许清单初始仅 `block-index.js`。**P2 若在 app.js 保留写入 ⇒ 必须显式登记豁免并写理由**（宁可红，不可静默绿）。
-3. `README.md` 记：属性 = **派生投影（deprecated）**、唯一真源 = BlockIndex，并列出待迁移的 12 个消费者（设计 §1.4）。
+3. 属性定性写进文档：= **派生投影（deprecated）**、唯一真源 = BlockIndex，待迁移消费者见设计 §1.4。
+
+**实际识别范围（比原计划多两类，均已实现）**
+| 写入形式 | 是否判红 | 说明 |
+|---|---|---|
+| `setAttribute("data--src-line", v)` | ✅ | 裸写 |
+| 模板串 `data--src-line="${v}"` | ✅ | 绕过 `setAttribute` 的 HTML 拼装 |
+| `el.dataset.SrcLine = v`（**左值**） | ✅ | 读（`+(el.dataset.SrcLine||0)`）**不判红** |
+| `setAttribute(k, pre.getAttribute(k))` **转发写** | ✅ | 常量数组 `["data--block-index","data--src-line",…]` + `forEach(k)` 形态；语义上等于第二处事实来源。**初始不豁免**（见报告"待裁决"） |
 
 **验收**
 ```bash
-node scripts/benchmark/surface/check_line_attr_gate.js              # 期望 exit 0
-node scripts/benchmark/surface/check_line_attr_gate.js --self-test  # 反向验证：注入违规必须 FAIL
+node scripts/benchmark/maintenance/check_line_attr_gate.js                 # 门禁本身
+node scripts/benchmark/maintenance/check_line_attr_gate_test.js            # 正反例自测（22 条断言）
 ```
-**断言**：D1 干净仓 exit 0；**反向验证**——临时给 `app.js` 加裸 `setAttribute("data--src-line",…)` ⇒ 必须**非零退出**（不做反向验证的门禁不算门禁）｜D2 跑完 `git status` 无新增改动（只读）。
+**断言**：D1 **自测 22 条全 PASS**（含 R1–R6 红、G1–G5 绿、M1 混合、真实仓基线）｜D2 **反向验证成立**——自测里的 R1/R3/R4/R5/R6 都是"注入违规 ⇒ 非零退出"，不是只测"不误报"｜D3 门禁**只读**（不写 `src/**`，跑完 `git status` 无新增改动）｜D4 **基线 = 6 处**（`app.js:1908/1909`、`markdown-preview.js:229/244/983/1467`），P2+P3 完成后须归零。
 
-**回滚**：纯新增，`rm check_line_attr_gate.js` 即回滚。
+**回滚**：纯新增，`rm scripts/benchmark/maintenance/check_line_attr_gate{,_test}.js` 即回滚（文档那两行指针一并撤）。
 
 ## 交付总验收（4 片合并后 Lead 把关）
 ```bash
 node --check src/memoria/ui/static/app/js/{block-index,app,edit-handler}.js
 node scripts/benchmark/maintenance/block_index_test.js
-node scripts/benchmark/surface/check_line_attr_gate.js
+node scripts/benchmark/maintenance/check_line_attr_gate.js       # 阶段 1 须 exit 0（基线 6 → 0）
+node scripts/benchmark/maintenance/check_line_attr_gate_test.js  # 门禁自身 22 条断言
 python scripts/benchmark/surface/run_probe.py --kb tests/probe-kb --label phase1-final
 python scripts/benchmark/surface/run_interaction.py --label phase1-final
 ```
