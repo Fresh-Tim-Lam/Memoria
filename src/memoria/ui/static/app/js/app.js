@@ -14356,14 +14356,26 @@
       if (pending && typeof pending.then === "function") pending.then(finish, finish);
       return pending || Promise.resolve();
     },
-    setBlockSource: function (blockIndex, newBlockSrc) {
+    /**
+     * 块级写回：替换第 bi 块源码（记撤销 → 更新真源 → 重渲 → 标脏）。
+     *
+     * P4c 追加可选 `opts`（**默认 false，现有调用零变化**）：
+     *   · `skipUndoGroup: true` —— 不自己开/收撤销组；由调用方用 `EditSync.beginUndoGroup/endUndoGroup`
+     *     把**多次**块写回合成**一个撤销单元**（批量 patch 必须单步撤销）。
+     *   · `skipRender: true` —— **精准语义**：仍更新 `state.doc.body/lines/preview_body=null` 与 `markDirty()`，
+     *     但**不调 `renderEditor()` / `renderPreview()`**。调用方**必须**在批量结束后统一渲染一次
+     *     （`MemoriaApp.renderEditor(state.doc)` + `paintPreviewBlockPatch()` 或 `renderPreview`），
+     *     否则会出现「真源已改、画面未变」的静默不一致。
+     */
+    setBlockSource: function (blockIndex, newBlockSrc, opts) {
+      var o = opts || {};
       var es = window.MemoriaEditSync;
       var bi = Number(blockIndex);
       var map = window.__blockLineMap;
       if (!state.doc || !map || !map[bi]) return false;
       var src = String(newBlockSrc == null ? "" : newBlockSrc);
       try { if (es && typeof es.flushRepaint === "function") es.flushRepaint(); } catch (_) { /* 挂起重渲冲掉失败不阻断写回 */ }
-      if (es && typeof es.beginUndoGroup === "function") { try { es.beginUndoGroup(); } catch (_) { /* noop */ } }
+      if (!o.skipUndoGroup && es && typeof es.beginUndoGroup === "function") { try { es.beginUndoGroup(); } catch (_) { /* noop */ } }
       var rawLines = (state.doc.body || "").split("\n");
       var range = map[bi];
       var start = range.startLine;
@@ -14372,11 +14384,34 @@
       state.doc.body = rawLines.slice(0, start).concat(newLines, rawLines.slice(endExcl)).join("\n");
       state.doc.lines = _linesFromBody(state.doc.body);
       state.doc.preview_body = null;
-      if (es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
-      try { renderEditor(state.doc); } catch (e) { log("render", "surface.setBlockSource renderEditor: " + ((e && e.message) || e)); }
-      try { var p = renderPreview(state.doc, { incremental: true }); if (p && typeof p.catch === "function") p.catch(function () { }); } catch (e2) { log("render", "surface.setBlockSource renderPreview: " + ((e2 && e2.message) || e2)); }
+      if (!o.skipUndoGroup && es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
+      if (!o.skipRender) {
+        try { renderEditor(state.doc); } catch (e) { log("render", "surface.setBlockSource renderEditor: " + ((e && e.message) || e)); }
+        try { var p = renderPreview(state.doc, { incremental: true }); if (p && typeof p.catch === "function") p.catch(function () { }); } catch (e2) { log("render", "surface.setBlockSource renderPreview: " + ((e2 && e2.message) || e2)); }
+      }
       markDirty();
       return true;
+    },
+    /**
+     * 块级增量渲染门面（P4c 新增，配合 `setBlockSource(..., {skipRender:true})` 批量写回）。
+     *
+     * 契约语义：把 `state.doc.body` 的最新内容解析后与**当前 DOM 已渲染块签名**（`_domBlockSig`）
+     * 做最短连续区间 diff，只重建真正变化的那一段块（`_paintBlockSpan`），并重投 BlockIndex 行号；
+     * 返回 `true` 表示块级路径成功；`false` 表示无法安全增量（无基准/块数不符/异常）⇒
+     * **调用方必须回退整篇 `renderPreview(state.doc)`**（本门面不自作主张整篇重渲）。
+     *
+     * 为什么开这个窗（K4 类临时豁免，2026-10-21）：
+     *   `paintPreviewAfterSourceEdit()` 定义在主 IIFE 闭包内、模块外不可达；而 P4c 的
+     *   `applyBlockPatches`（new-surface，人机并发 B/C/D 层前置）必须"只替换被 patch 的块"。
+     *   **不得复制该 diff 实现**——复制即产生第二份真源。故只开窗、不迁移。
+     *   终局：P6「鸠占鹊巢」完成后，块级增量渲染应由 render-core 自持，本门面随之删除。
+     *
+     * ⚠️ 使用约束：与 `setBlockSource` 的 `skipRender` 成对使用；每次写回真源后调一次本门面
+     *   （一次只 diff 一个块 ⇒ DOM 仅替换该块）。若返回 false，调用方负责整篇 `renderPreview` 兜底，
+     *   否则会出现「真源已改、画面未变」的静默不一致。
+     */
+    paintPreviewBlockPatch: function () {
+      try { return !!paintPreviewAfterSourceEdit(); } catch (e) { log("render", "surface.paintPreviewBlockPatch: " + ((e && e.message) || e)); return false; }
     },
     getBlockSourceRange: function (blockIndex) {
       var map = window.__blockLineMap;

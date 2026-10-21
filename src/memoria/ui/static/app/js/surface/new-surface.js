@@ -14,11 +14,12 @@
  *          throw 会被 catch ⇒ 回滚 ⇒ `switchTo('new')` 永远失败。
  *      故 P2a 取"记录 + 可查询 + 非法 mode 抛错"；三视图 DOM 仍归宿主 app.js。
  *      **P2b/P3 必须补真正的视图切换实现**（arch-contract 已登记）。
- *   ❌ 如实抛 NOT_IMPLEMENTED：getSrcRangeForSelection
- *      （P4a 只接 applyEdit/undo/redo；选区→源码映射仍未实现，返回假空值是契约红线，绝不做）。
+ *   ❌ 如实抛 NOT_IMPLEMENTED：无（P4c 起 getSrcRangeForSelection 已接通）
  *   ✅ P4a：applyEdit / undo / redo 复用**同一套编辑内核**（`MemoriaEditSync` +
  *      `MemoriaApp.surface.deleteRange/replaceRange`，门面委托，不复制实现）；
  *      预览区可编辑性随 `MemoriaEditHandler.editMode` 恢复（镜像 legacy app.js:1939）。
+ *   ✅ P4c：getSrcRangeForSelection 复用 `MemoriaMapper.domToAst/astToSrc` 接通；
+ *      applyBlockPatches 见文件内（块级增量 + 单步撤销 + 光标保持）。
  *   ✅ 最小实现：revealRange / getScrollAnchor / setScrollAnchor —— 只做"按块滚动"，
  *      不做 band/flash/选区（P4 EditCore 的范围）。它们被 registry 交接第④步调用，
  *      如实抛错会让真实 `switchTo('new')` 回滚，故按"可用即实现、不可用部分不伪造"落地。
@@ -253,6 +254,10 @@ window.createNewSurface = function createNewSurface(deps) {
     var P = window.MemoriaParser;
     if (!P || typeof P.parse !== "function") throw new Error("[NewSurface] setText: MemoriaParser 未加载");
     var doc = P.parse(body);
+    // P4c：Mapper 的 domToAst/srcToAst/astToSrc 依赖其 `_currentDoc`；new 渲染用自己解析的
+    // 同一份 body AST 同步过去（legacy renderPreview 也做 `M.setDoc(_doc)`，同口径）。
+    var M = window.MemoriaMapper;
+    if (M && typeof M.setDoc === "function") { try { M.setDoc(doc); } catch (e) { /* 映射失败不阻断渲染 */ } }
 
     var core = _coreInstance();
     var out = core.renderDocument(doc);
@@ -339,6 +344,219 @@ window.createNewSurface = function createNewSurface(deps) {
     pv.scrollTop += handle.domEl.getBoundingClientRect().top - pv.getBoundingClientRect().top;
     return true;
   }
+
+  /** P4c：捕获预览选区 → 源码坐标 + "指向的文本片段"（供 patch 后验证光标保持）。 */
+  function _captureCursorState() {
+    try {
+      var sel = window.getSelection && window.getSelection();
+      var preview = _previewEl();
+      var M = window.MemoriaMapper;
+      if (!sel || !sel.rangeCount || !preview || !M || typeof M.domToAst !== "function" || typeof M.astToSrc !== "function") return null;
+      var r = sel.getRangeAt(0);
+      if (!preview.contains(r.startContainer) || !preview.contains(r.endContainer)) return null;
+      var ast = M.domToAst(r.startContainer, r.startOffset);
+      if (!ast || ast.blockIndex < 0) return null;
+      var src = M.astToSrc(ast.blockIndex, ast.nodePath || [], ast.offset || 0);
+      if (!src) return null;
+      var st = _state();
+      var lines = (st && st.doc && typeof st.doc.body === "string") ? st.doc.body.split("\n") : [];
+      var lineText = lines[src.line] || "";
+      return {
+        blockIndex: ast.blockIndex,
+        nodePath: (ast.nodePath || []).slice(),
+        offset: ast.offset || 0,
+        line: src.line,          // 0-based
+        lineNo: src.line + 1,    // 1-based（报告/验收口径）
+        col: src.col,
+        before: lineText.slice(Math.max(0, src.col - 24), src.col),
+        after: lineText.slice(src.col, src.col + 24),
+      };
+    } catch (e) { return null; }
+  }
+
+  /** P4c：把光标放到块内第 textOffset 个渲染字符（Mapper 失败时的兜底）。 */
+  function _placeTextOffset(domEl, textOffset) {
+    if (!domEl) return null;
+    try {
+      var w = document.createTreeWalker(domEl, NodeFilter.SHOW_TEXT, null);
+      var node = null; var remain = Math.max(0, textOffset);
+      while (w.nextNode()) {
+        var t = w.currentNode;
+        if (remain <= t.data.length) { node = t; break; }
+        remain -= t.data.length;
+      }
+      if (!node) return null;
+      var r = document.createRange();
+      r.setStart(node, remain);
+      r.collapse(true);
+      return r;
+    } catch (e) { return null; }
+  }
+
+  /** P4c：批量 patch 后恢复光标（仅当光标块被 patch 时；未改块的 DOM/选区原样保留）。 */
+  function _restoreCursorAfterPatches(cursorBefore, jobs) {
+    if (!cursorBefore) return null;
+    var job = null;
+    for (var i = 0; i < jobs.length; i++) if (jobs[i].blockIndex === cursorBefore.blockIndex) { job = jobs[i]; break; }
+    if (!job) return { touchedBlock: false, restored: false };   // 未改光标块 ⇒ 不动选区（DOM 未重建）
+    var M = window.MemoriaMapper;
+    var hs = _index().blocks();
+    var handle = hs[job.blockIndex];
+    var relLine = Math.max(0, cursorBefore.line - (job.oldStartLine - 1));
+    var newLines = String(job.newText).split("\n");
+    var tl = Math.min(relLine, newLines.length - 1);
+    var tc = Math.min(cursorBefore.col, (newLines[tl] || "").length);
+    // 光标块之前的所有 patch 的净行数增量（块数可能变化 ⇒ 不能再用 patch 前的 blockIndex/handle 定位）
+    var deltaBefore = 0;
+    for (var di = 0; di < jobs.length; di++) {
+      if (jobs[di].blockIndex < cursorBefore.blockIndex) {
+        deltaBefore += (String(jobs[di].newText).split("\n").length - jobs[di].oldLineCount);
+      }
+    }
+    var targetLineNo = job.oldStartLine + deltaBefore + tl;   // 1-based（光标块被 patch）
+    var abs0 = targetLineNo - 1;
+    function readSel() {
+      try {
+        var s = window.getSelection && window.getSelection();
+        if (!s || !s.rangeCount) return null;
+        var r2 = s.getRangeAt(0);
+        var a2 = M.domToAst(r2.startContainer, r2.startOffset);
+        if (!a2 || a2.blockIndex < 0) return null;
+        var s2 = M.astToSrc(a2.blockIndex, a2.nodePath || [], a2.offset || 0);
+        return s2 ? { line: s2.line + 1, col: s2.col } : null;
+      } catch (e) { return null; }
+    }
+    function put(range) {
+      try { var s = window.getSelection(); s.removeAllRanges(); s.addRange(range); return true; } catch (e) { return false; }
+    }
+    var placed = null;
+    var ast = null;
+    if (M && handle && typeof M.srcToAst === "function" && typeof M.astToDom === "function") {
+      ast = M.srcToAst(abs0, tc);
+      var range = ast ? M.astToDom(ast.blockIndex, ast.nodePath || [], ast.offset || 0) : null;
+      if (range && put(range)) placed = readSel();
+    }
+    // 兜底（块数可能变化 ⇒ patch 前的 blockIndex/handle 已失效）：按"新源码行号"重新找 DOM 块，
+    // 把 (行内相对行, 列) 换算成块内文本偏移后直接落 Range。
+    if (!placed || placed.line !== targetLineNo || placed.col !== tc) {
+      try {
+        var P2 = window.MemoriaParser;
+        var st2 = _state();
+        var body2 = (st2 && st2.doc && typeof st2.doc.body === "string") ? st2.doc.body : "";
+        var fdoc = (P2 && typeof P2.parse === "function") ? P2.parse(body2) : null;
+        if (fdoc && fdoc.blocks) {
+          var domEl = null;
+          var els = document.querySelectorAll("#preview .-src-block[data--src-line]");
+          for (var ei = 0; ei < els.length; ei++) {
+            var sLine = parseInt(els[ei].getAttribute("data--src-line"), 10);
+            var eLine = parseInt(els[ei].getAttribute("data--src-line-end"), 10) || sLine;
+            if (sLine > 0 && targetLineNo >= sLine && targetLineNo <= eLine) { domEl = els[ei]; break; }
+          }
+          if (domEl) {
+            var relLine2 = targetLineNo - (parseInt(domEl.getAttribute("data--src-line"), 10) || targetLineNo);
+            var bodyLines2 = body2.split("\n");
+            var baseLine = (parseInt(domEl.getAttribute("data--src-line"), 10) || targetLineNo) - 1;
+            var textOff = tc;
+            for (var li = 0; li < relLine2; li++) textOff += (bodyLines2[baseLine + li] || "").length + 1;
+            var r4 = _placeTextOffset(domEl, textOff);
+            if (r4 && put(r4)) placed = readSel();
+          }
+        }
+      } catch (e4) { /* 兜底失败：保留已放好的位置 */ }
+    }
+    if (placed) {
+      var EH = window.MemoriaEditHandler;
+      if (EH && M) {
+        try {
+          var selNow = window.getSelection();
+          var a3 = M.domToAst(selNow.getRangeAt(0).startContainer, selNow.getRangeAt(0).startOffset);
+          if (a3 && a3.blockIndex >= 0) EH.cursorAST = { blockIndex: a3.blockIndex, nodePath: (a3.nodePath || []).slice(), offset: a3.offset || 0 };
+        } catch (e5) { /* noop */ }
+      }
+    }
+    return { touchedBlock: true, restored: !!placed, intended: { line: targetLineNo, col: tc }, actual: placed, blockIndex: job.blockIndex };
+  }
+
+  /**
+   * P4c：`applyBlockPatches(patches)` —— 块级增量替换（人机并发 B/C/D 层前置）。
+   *
+   * 契约：`patches: Array<{ blockId, srcLineStart, srcLineEnd, newText }>`
+   *   · 按 `blockId`（BlockIndex 稳定 id）定位块；`srcLineStart/End` 仅作 id 失效时的兜底与校验。
+   *   · 真源更新走既有 `MemoriaApp.surface.setBlockSource(..., {skipUndoGroup:true, skipRender:true})`，
+   *     **不复制** splice/render 实现；行号属性仍只由 BlockIndex/宿主 `stampBlockLines` 写。
+   *   · **按 `srcLineStart` 降序应用**：先改下面的块 ⇒ 上面块的 `__blockLineMap` 行区间不被移动，
+   *     后续 patch 的定位才稳定；若升序，前面的插入会把后面块的行号推移导致错位。
+   *   · 撤销：外层 `EditSync.beginUndoGroup()` + `endUndoGroup()` 包住全部写回 ⇒ 3 块 = **1 个撤销单元**。
+   *   · 渲染：每个 patch 后调 `MemoriaApp.surface.paintPreviewBlockPatch()`（块级 diff，只替换该块）；
+   *     若块级 diff 不可用/失败 ⇒ 该步回退一次整篇 `renderPreview`（`_domBlockSig` 由宿主维护），
+   *     **绝不静默留下"真源已改、画面未变"**。最后统一 `MemoriaApp.renderEditor(state.doc)` 一次。
+   *   · 光标：未 patch 的块 DOM 不重建 ⇒ 选区原样保留（行号映射由 stampBlockLines 更新）；
+   *     光标所在块被 patch ⇒ 按块内相对行/列 clamp 到新文本后经 Mapper 映射回 DOM，失败落到该块开头。
+   * @returns {boolean} 全部 patch 成功返回 true；任一 blockId 无法解析/写回失败则 **fail-closed 返回 false**
+   *   （解析阶段先整体校验，避免写了一半）。
+   */
+  function _applyBlockPatches(patches) {
+    if (!Array.isArray(patches) || !patches.length) return false;
+    var app = window.MemoriaApp;
+    var st = _state();
+    var BI = _index();
+    if (!app || !app.surface || typeof app.surface.setBlockSource !== "function" || !st || !st.doc || !BI) return false;
+
+    // 1) 解析全部 blockId → blockIndex（先全量校验，fail-closed，避免半写）
+    var jobs = [];
+    var byBi = {};
+    for (var i = 0; i < patches.length; i++) {
+      var p = patches[i] || {};
+      var hs = BI.blocks();
+      var bi = -1;
+      for (var j = 0; j < hs.length; j++) { if (hs[j] && hs[j].id === p.blockId) { bi = j; break; } }
+      if (bi < 0 && p.srcLineStart != null) {
+        for (var j2 = 0; j2 < hs.length; j2++) {
+          if (hs[j2] && hs[j2].srcLineStart === p.srcLineStart && hs[j2].srcLineEnd === p.srcLineEnd) { bi = j2; break; }
+        }
+      }
+      if (bi < 0) return false;
+      var text = String(p.newText == null ? "" : p.newText);
+      if (byBi[bi] != null) { jobs[byBi[bi]].newText = text; continue; }   // 同块重复 patch ⇒ 后者覆盖
+      byBi[bi] = jobs.length;
+      jobs.push({ blockIndex: bi, blockId: p.blockId, oldStartLine: hs[bi].srcLineStart || 1, oldLineCount: Math.max(1, (hs[bi].srcLineEnd || hs[bi].srcLineStart || 1) - (hs[bi].srcLineStart || 1) + 1), newText: text });
+    }
+    // 2) 降序：先改下方的块，上方块的行区间保持稳定（见方法注释）
+    jobs.sort(function (a, b) { return b.oldStartLine - a.oldStartLine; });
+
+    var cursorBefore = _captureCursorState();
+    var es = window.MemoriaEditSync;
+    var grouped = !!(es && typeof es.beginUndoGroup === "function" && typeof es.endUndoGroup === "function");
+    if (grouped) { try { es.beginUndoGroup(); } catch (e0) { grouped = false; } }
+    var applied = 0;
+    var fallbackRenders = 0;
+    try {
+      for (var k = 0; k < jobs.length; k++) {
+        var job = jobs[k];
+        var okWrite = app.surface.setBlockSource(job.blockIndex, job.newText, { skipUndoGroup: true, skipRender: true });
+        if (!okWrite) return false;
+        applied++;
+        var painted = false;
+        if (typeof app.surface.paintPreviewBlockPatch === "function") painted = !!app.surface.paintPreviewBlockPatch();
+        if (!painted) {
+          // 块级 diff 不可用 ⇒ 立即整篇重渲一次，刷新 map/_doc/_domBlockSig，后续 patch 才能继续定位
+          fallbackRenders++;
+          if (typeof app.renderPreview === "function") { try { app.renderPreview(st.doc); } catch (e1) { /* 兜底失败由最终渲染再补 */ } }
+        }
+      }
+    } finally {
+      if (grouped) { try { es.endUndoGroup(); } catch (e2) { /* 组收尾失败不阻断已写入真源 */ } }
+    }
+    // 3) 源码编辑器整篇只重建一次（不额外开窗：MemoriaApp.renderEditor 是公开门面）
+    if (typeof app.renderEditor === "function") { try { app.renderEditor(st.doc); } catch (e3) { /* noop */ } }
+    // 4) 光标保持（未改块不动；改所在块尽量恢复）
+    var cursorAfter = _restoreCursorAfterPatches(cursorBefore, jobs);
+    _lastText = st.doc.body;
+    _lastPatchResult = { applied: applied, fallbackRenders: fallbackRenders, cursorBefore: cursorBefore, cursorAfter: cursorAfter, jobs: jobs.map(function (x) { return { blockIndex: x.blockIndex, blockId: x.blockId, oldStartLine: x.oldStartLine }; }) };
+    return true;
+  }
+
+  var _lastPatchResult = null;
 
   var api = {
     /** 插头标识（诊断用）。 */
@@ -445,6 +663,16 @@ window.createNewSurface = function createNewSurface(deps) {
      * §4.5.1-⑦ revealRange：P2a 只做"按块滚动"（不做 band/flash，后者属 P4 EditCore）。
      * 失败（无块）如实返回，不抛（契约失败语义：落点失败不致命）。
      */
+    /**
+     * P4c §4.5 追加：`applyBlockPatches(patches)` —— 块级增量替换（人机并发 B/C/D 层前置）。
+     * 契约见文件内 `_applyBlockPatches` 注释：按 blockId 定位、降序应用、单步撤销、块级渲染、
+     * 光标保持；解析失败/写回失败 fail-closed 返回 false。
+     */
+    applyBlockPatches: function (patches) { return _applyBlockPatches(patches); },
+
+    /** P4c 诊断出口（仅供探针/回归读最近一次 patch 的 applied/fallback/光标 before-after）。 */
+    getLastPatchResult: function () { return _lastPatchResult; },
+
     revealRange: function (startLine, endLine, opts) {
       var ok = _scrollToLine(startLine, opts);
       if (!ok && startLine != null) _callHost("onDegraded", "revealRange:no-block");
@@ -472,8 +700,34 @@ window.createNewSurface = function createNewSurface(deps) {
       _scrollToLine(a.srcLine, { scroll: true });
     },
 
-    /** §4.5.1-⑩ getSrcRangeForSelection：P2a 无选区映射 ⇒ 如实抛 NotImpl（不返回假 null）。 */
-    getSrcRangeForSelection: function () { throw _notImplemented("getSrcRangeForSelection"); },
+    /**
+     * §4.5.1-⑩ getSrcRangeForSelection：预览选区 → 源码坐标（P4c 接通）。
+     * 复用宿主 `MemoriaMapper.domToAst → astToSrc`（不复制映射实现），返回与 legacy 同形的
+     * `{ startLine, startCol, endLine, endCol, collapsed }`（行 1-based；列 0-based，与 Data--src 口径一致）。
+     * 选区不在预览内 / 映射失败 ⇒ 如实返回 null。
+     */
+    getSrcRangeForSelection: function () {
+      var M = window.MemoriaMapper;
+      var sel = window.getSelection && window.getSelection();
+      var preview = _previewEl();
+      if (!M || typeof M.domToAst !== "function" || typeof M.astToSrc !== "function") return null;
+      if (!sel || !sel.rangeCount || !preview) return null;
+      var r = sel.getRangeAt(0);
+      if (!r || !preview.contains(r.startContainer) || !preview.contains(r.endContainer)) return null;
+      var a = M.domToAst(r.startContainer, r.startOffset);
+      var b = M.domToAst(r.endContainer, r.endOffset);
+      if (!a || !b || a.blockIndex < 0 || b.blockIndex < 0) return null;
+      var sa = M.astToSrc(a.blockIndex, a.nodePath || [], a.offset || 0);
+      var sb = M.astToSrc(b.blockIndex, b.nodePath || [], b.offset || 0);
+      if (!sa || !sb) return null;
+      return {
+        startLine: sa.line + 1,
+        startCol: sa.col,
+        endLine: sb.line + 1,
+        endCol: sb.col,
+        collapsed: !!sel.isCollapsed,
+      };
+    },
 
     /** §4.5.1-⑪ isBlockFrozen：P2a 无块编辑/公式/表格 ⇒ 恒不冻结。 */
     isBlockFrozen: function () { return false; },
