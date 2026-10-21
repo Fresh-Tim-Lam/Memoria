@@ -227,6 +227,9 @@ async function main() {
   const files = args.files || [];
   const out = args.out || null;
   const mutateKind = args.mutate || null;
+// task-58：默认把 normalizedHtml 落盘（供离线重算签名、定位漂移来源）。
+//   体积大（scale-10k ~7MB），可用 --no-normalized-html 关闭。
+const includeNormalizedHtml = args['no-normalized-html'] !== true;
   // task-31：渲染就绪等待上限（公式/mermaid 都是异步的）。大文档真机需给足，默认 30s。
   const readyTimeoutMs = args['ready-timeout'] ? parseInt(args['ready-timeout'], 10) : 30000;
 
@@ -347,13 +350,23 @@ async function main() {
         renderReady: ready,
         // signatureNorm 必须落盘：按 kind 的对比工具（compare_signatures.mjs）需要原始规范投影，
         //   只存哈希无法逐 kind 比较；体积可控（每文档约几 KB）。
+        //
+        // task-58：**normalizedHtml 也必须落盘**。理由（R-18 的直接教训）：
+        //   旧归档只存 htmlFingerprint（哈希），一旦发现签名漂移，**无法离线重算**
+        //   ⇒ 只能重渲全部 13 篇才能定位，且无法判断"漂移来自哪一段 HTML"。
+        //   代价：每文档几十 KB ~ 数 MB（scale-10k 约 7MB）。故只在显式要求时落盘，
+        //   默认开启（确定性排查优先），可用 --no-normalized-html 关闭。
         run1: {
           ok: run1.ok, aLevel: run1.aLevel, bLevel: run1.bLevel,
           signature: run1.signature, signatureNorm: run1.signatureNorm,
           nondetStripped: run1.nondetStripped,
           astCount: run1.astCount, domCount: run1.domCount,
+          ...(includeNormalizedHtml ? { normalizedHtml: run1.normalizedHtml } : {}),
         },
-        run2: { ok: run2.ok, aLevel: run2.aLevel, signature: run2.signature },
+        run2: {
+          ok: run2.ok, aLevel: run2.aLevel, signature: run2.signature,
+          ...(includeNormalizedHtml ? { normalizedHtml: run2.normalizedHtml } : {}),
+        },
         reproducible: run1.signature === run2.signature,
         mutation,
       };

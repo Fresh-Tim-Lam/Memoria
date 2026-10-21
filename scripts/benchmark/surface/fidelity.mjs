@@ -371,6 +371,74 @@ export const PROBE_SOURCE = `(function () {
       if (isNondetId(v)) { count++; return '#<nondet-id>'; }
       return m;
     });
+
+    // ── 7) 图片「加载状态」归一化（task-58 · R-18 根因）──────────────────────
+    //   实测：同一份代码连跑两次，13 篇里 4 篇签名不同，**差异全部来自图片异步加载状态**
+    //        （scale-1k/5k/10k、docs/ref/ppt/ocr）：
+    //          两次分别抓到 alt="占位图" vs alt="占位图 · [图片缺失]"，
+    //          以及 data-img-missing="1" / title 里的 [图片缺失]
+    //          / style 里的 outline 红色虚框 + filter opacity。
+    //   这不是内容、不是结构、不是样式语义 —— 是「图片此刻加载完了没有」的**瞬时状态**，
+    //   取决于两次运行的时间窗，天然非确定。
+    //   原则：**归一化而非删除**（保留 img 节点本身及其 src/class/位置，
+    //   否则会丢掉「图片块存在」这一唯一覆盖，等于 R-15 教训的反面）。
+    //
+    //   ⚠️ 用**字符串方法 + 构造式正则**：本函数位于模板字符串内，反斜杠层数极易写错。
+    //   ⚠️⚠️ [图片缺失] 里的 [ ] 在正则中是**字符类**，必须转义成 \[ \]，否则永不匹配
+    //        （task-58 实测：不转义时 title/alt 全部静默不替换，白查两轮）。
+    var MISSING_TAG = '[' + '图片缺失' + ']';              // 用于 indexOf 等字符串操作
+    var MISSING_RE = BS + '[' + '图片缺失' + BS + ']';     // 用于正则（已转义）
+    var DOT = String.fromCharCode(183);                    // '·'
+    // a) alt 尾巴：" · [图片缺失]"
+    var altTail = ' ' + DOT + ' ' + MISSING_TAG;
+    while (out.indexOf(altTail) >= 0) { out = out.split(altTail).join(''); count++; }
+    // b) 纯 [图片缺失] 的 alt
+    out = out.replace(new RegExp('alt=' + Q2 + MISSING_RE + Q2, 'g'), function (m) {
+      count++; return 'alt=' + m.charAt(4) + m.charAt(4);
+    });
+    // c) title 里的 [图片缺失]（**整属性删除**：缺失态才有 title，非缺失态没有；
+    //    保留它会让"图片是否缺失"这一瞬时状态进入签名 ⇒ 非确定）
+    out = out.replace(new RegExp(BS + 'stitle=(' + Q2 + ')' + MISSING_RE + NOTQ + BS + '1', 'g'),
+      function () { count++; return ''; });
+    // d) data-img-missing 属性（整属性删除 —— 纯状态位，不承载内容/结构）
+    out = out.replace(new RegExp(BS + 'sdata-img-missing=(' + Q2 + ')' + NOTQ + BS + '1', 'g'),
+      function () { count++; return ''; });
+    // e) 缺失图片的红色虚框装饰（**整属性删除**：同理，非缺失态没有 style）
+    out = out.replace(new RegExp(BS + 'sstyle=(' + Q2 + ')outline:[^' + SQ + DQ + ']*' + BS + '1', 'g'),
+      function () { count++; return ''; });
+    // f) filter: opacity(...) 数值
+    out = out.replace(new RegExp('filter:' + BS + 's*opacity' + BS + '([^)]*' + BS + ')', 'g'),
+      function () { count++; return 'filter: opacity(<nondet>)'; });
+
+    // ── 8) 属性**顺序**归一化（task-58 · R-18 残余非确定）────────────────────
+    //   实测真机双跑：13 篇里 3 篇（scale-1k/10k、corpus/07-extremes）签名仍不同，
+    //   normalizedHtml 长度完全一致、首个差异是**同一个 mjx-container 的属性顺序**：
+    //     run1: <mjx-container class="MathJax" jax="SVG" data--inline-math="true"
+    //            data-formula="…" contenteditable="false" style="position: relative;">
+    //     run2: <mjx-container class="MathJax" jax="SVG" style="position: relative;"
+    //            data--inline-math="true" data-formula="…" contenteditable="false">
+    //   ⇒ MathJax 异步给容器补 style 的时机不同，**语义完全相同**，只是属性书写次序不同。
+    //   原则：**排序而非删除** —— 保留每个属性及其值，只把同一标签内的属性按名重排。
+    //   实现：只对 mjx-container 这类由渲染器动态补属性的标签做排序，
+    //   避免对全量标签重排（那会把 presentation 属性顺序也抹平，属于过度归一）。
+    //
+    //   ⚠️ 全程用 RegExp 构造器，**不能写正则字面量**：本函数位于模板字符串内，
+    //      字面量里的反斜杠 + b 会被当成退格转义、反斜杠 + 数字会被当成八进制转义
+    //      （task-58 实测：写成字面量形式时规则**静默不生效**，
+    //       nondetStripped 计数不变、签名照旧漂移，白跑一轮真机）。
+    var TAG_OPEN = '<mjx-container';
+    var RE_MJX = new RegExp(TAG_OPEN + BS + 'b([^>]*)>', 'g');
+    var RE_ATTR = new RegExp('([A-Za-z_:][-A-Za-z0-9_:.]*)=(' + Q2 + ')[^' + SQ + DQ + ']*' + BS + '2', 'g');
+    out = out.replace(RE_MJX, function (m, attrs) {
+      if (!attrs) return m;
+      var parsed = attrs.match(RE_ATTR);
+      if (!parsed || parsed.length < 2) return m;
+      var sorted = parsed.slice().sort();
+      if (sorted.join(' ') === parsed.join(' ')) return m;
+      count++;
+      return TAG_OPEN + ' ' + sorted.join(' ') + '>';
+    });
+
     return { text: out, stripped: count };
   }
 
