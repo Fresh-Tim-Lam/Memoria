@@ -159,6 +159,29 @@ window.createNewSurface = function createNewSurface(deps) {
     );
   }
 
+  // ── 链接层后处理（K4 临时豁免，复用不重写）──────────────────────────────────
+  /**
+   * 调用宿主（app.js）的**同一份**链接层后处理：
+   *   `window.MemoriaApp.surface.applyPreviewLinkLayer(root)`（Lead 2026-10-21 开窗）。
+   *
+   * ★ 纪律：本文件**不复制** `postProcessWikilinks` / `bindPreviewLinks` 的实现。
+   *   复制 = 两份真源 = legacy 改后 new 不会跟 = C11 等价性失效。
+   *   K4 终局（P6）：这两函数迁进 `render-core.js`，开窗与本调用一并删除。
+   *
+   * 入口缺失时的降级：如实 `onDegraded('link-layer:hook-missing')`（不伪造、不自造第二条路）。
+   * 无 wikilink 的文档不受影响；含 wikilink 的文档此时签名会 diff，属明确信号。
+   */
+  function _applyHostLinkLayer(preview) {
+    var app = (typeof window !== "undefined") ? window.MemoriaApp : null;
+    var fn = app && app.surface && app.surface.applyPreviewLinkLayer;
+    if (typeof fn === "function") {
+      try { fn(preview); return true; }
+      catch (e) { _callHost("onDegraded", "link-layer:" + ((e && e.message) || e)); return false; }
+    }
+    _callHost("onDegraded", "link-layer:hook-missing");
+    return false;
+  }
+
   /** 解析 + 渲染 + 挂载 + BlockIndex 全量投射（setText 的唯一实现）。 */
   function _render(text, cause) {
     var preview = _previewEl();
@@ -208,6 +231,13 @@ window.createNewSurface = function createNewSurface(deps) {
     preview.querySelectorAll(
       "mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay"
     ).forEach(function (el) { el.contentEditable = "false"; });
+
+    // 链接层后处理（legacy renderPreview 第 5 步同序：stamp 之后）。
+    // ★ 纪律：**不得复制** `postProcessWikilinks` / `bindPreviewLinks`——必须复用 app.js 同一函数
+    //   （否则产生两份"真源"，legacy 一改 new 不改，C11 就测不出差异）。
+    //   K4 临时豁免入口（Lead 2026-10-21 开窗）：`MemoriaApp.surface.applyPreviewLinkLayer(root)`；
+    //   终局 P6 把这两个函数迁进 render-core，本调用随之删除（见 app.js 该方法的注释）。
+    _applyHostLinkLayer(preview);
 
     _lastText = raw;
     _lastDoc = doc;

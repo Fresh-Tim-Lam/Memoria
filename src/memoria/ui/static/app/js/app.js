@@ -14269,6 +14269,30 @@
   //   （其后的文件末尾装配块整体后移，无锚点引用）。
   // ══════════════════════════════════════════════════════════════════════════════
   window.MemoriaApp.surface = {
+    /**
+     * 预览链接层后处理（`-wikilink` 补 class/attr + 三态判定；`.memoria-link` 绑 4 类事件）。
+     *
+     * 契约语义：`root` 为后处理根（省略则整篇 `#preview`）；幂等，可重复调用。
+     *
+     * 为什么开这个窗（K4 契约豁免，2026-10-21）：
+     *   `postProcessWikilinks` / `bindPreviewLinks` 定义在本 IIFE 闭包内、模块外不可达，
+     *   而阶段 2 新渲染管线（`surface/new-surface.js`）渲染出的 DOM 需要同一层后处理，
+     *   否则含 wikilink 的文档新旧签名必然 diff。**不得复制这两个函数的实现**——
+     *   复制即产生两份"真源"，legacy 一改、new 不改，新旧等价就测不出来了。
+     *   故只开窗、不迁移。
+     *
+     * 安全性依据：两者本就幂等（`postProcessWikilinks` 覆盖写 class/attr；
+     *   `bindPreviewLinks` 靠 `data--bound` 去重），且 app.js 内已有三处重复调用先例
+     *   （渲染后、增量渲染后、链接目标异步加载后）。
+     *
+     * 终局：P6「鸠占鹊巢」完成后，这两步应迁进 `render-core.js` 自身，本开窗随之删除。
+     */
+    applyPreviewLinkLayer: function (root) {
+      var scope = root || undefined;
+      postProcessWikilinks(scope);
+      bindPreviewLinks(scope);
+      return true;
+    },
     setBlockSource: function (blockIndex, newBlockSrc) {
       var es = window.MemoriaEditSync;
       var bi = Number(blockIndex);
