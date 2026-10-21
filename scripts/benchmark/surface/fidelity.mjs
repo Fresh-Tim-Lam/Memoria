@@ -434,21 +434,80 @@ export const PROBE_SOURCE = `(function () {
     return { applicable: applicable, astImages: totalAst, domImgs: imgs.length, withSrc: withSrc, hasEmptySrc: hasEmptySrc, ok: ok };
   }
 
-  // A6 链接：源有 link/wiki_link 时，DOM a[href] 非空 + 无残留 [[x]] 文本
+  // A6 链接：分三类**分别**断言（原版只查 a[href] 非空，是规格缺口）
+  //
+  // !! 规格修正（task-32）：原实现「所有 a 的 href 都必须非空」是**错的**。
+  //    实测 legacy 的 wikilink **无论 resolved 还是 broken 都不设 href**
+  //    （app.js:6339-6360 只加 class / tabindex / title，从不 setAttribute('href')），
+  //    跳转靠 JS click + data-link-target 完成。故 href 非空**只适用于普通 md 链接**。
+  //
+  //    三类的真实可观察差异：
+  //      resolved  : -link-resolved / -link-multi，tabindex="0"（可聚焦、可点击跳转）
+  //      broken    : -link-broken + memoria-broken-link，tabindex="-1"（不可跳转是**正确行为**）
+  //      ordinary  : 普通 markdown 链接，**必须有** href
+  //
+  //    「先写 [[概念]] 再补页面」是用户日常写作常态 ⇒ broken 必须被当作正常态。
   function linkFidelity(doc, dom) {
     var astLinks = astInlineCount(doc, { link: 1, wiki_link: 1 });
-    var anchors = document.querySelectorAll('#preview a');
-    var emptyHref = 0, total = 0;
+    var pv = document.querySelector('#preview');
+    var anchors = pv ? pv.querySelectorAll('a') : [];
+    var total = 0;
+    var broken = 0, resolved = 0, ordinary = 0, pending = 0;
+    var brokenMissingTarget = 0;   // broken 却连 data-link-target 都没有 ⇒ 真错
+    var resolvedMissingTarget = 0; // resolved 却没有 data-link-target ⇒ 真错（无法确定跳哪）
+    var brokenFocusable = 0;       // broken 却 tabindex=0（会被当成可跳转）⇒ 真错
+    var resolvedNotFocusable = 0;  // resolved 却 tabindex=-1（点了没反应）⇒ 真错
+    var ordinaryNoHref = 0;        // 普通链接没 href ⇒ 真错
     for (var k = 0; k < anchors.length; k++) {
+      var el = anchors[k];
       total++;
-      if (!anchors[k].getAttribute('href')) emptyHref++;   // 用 attr 而非 property，避免 about:blank
+      var cls = String(el.className || '');
+      var href = el.getAttribute('href');
+      var target = el.getAttribute('data-link-target');
+      var tabIndex = el.getAttribute('tabindex');
+      var isBroken = cls.indexOf('-link-broken') >= 0;
+      var isResolved = cls.indexOf('-link-resolved') >= 0 || cls.indexOf('-link-multi') >= 0;
+      var isPending = cls.indexOf('-link-pending') >= 0;
+      if (isBroken) {
+        broken++;
+        if (!target) brokenMissingTarget++;
+        if (String(tabIndex) === '0') brokenFocusable++;
+      } else if (isResolved) {
+        resolved++;
+        if (!target) resolvedMissingTarget++;
+        if (String(tabIndex) === '-1') resolvedNotFocusable++;
+      } else if (isPending) {
+        pending++;   // 解析中：合法中间态，不判
+      } else {
+        ordinary++;
+        if (!href) ordinaryNoHref++;
+      }
     }
-    // 残留 [[x]] 文本（wiki 链接未解析）
-    var bodyText = document.querySelector('#preview') ? document.querySelector('#preview').textContent : '';
+    var bodyText = pv ? pv.textContent : '';
     var residualWiki = /\\[\\[[^\\]]+\\]\\]/.test(bodyText);
+
     var applicable = astLinks > 0;
-    var ok = !applicable || (total > 0 && emptyHref === 0 && !residualWiki);
-    return { applicable: applicable, astLinks: astLinks, domAnchors: total, emptyHref: emptyHref, residualWiki: residualWiki, ok: ok };
+    var ok = !applicable || (
+      total > 0 &&
+      brokenMissingTarget === 0 &&
+      resolvedMissingTarget === 0 &&
+      brokenFocusable === 0 &&
+      resolvedNotFocusable === 0 &&
+      ordinaryNoHref === 0 &&
+      !residualWiki
+    );
+    return {
+      applicable: applicable, astLinks: astLinks,
+      domAnchors: total,
+      broken: broken, resolved: resolved, ordinary: ordinary, pending: pending,
+      brokenMissingTarget: brokenMissingTarget,
+      resolvedMissingTarget: resolvedMissingTarget,
+      brokenFocusable: brokenFocusable,
+      resolvedNotFocusable: resolvedNotFocusable,
+      ordinaryNoHref: ordinaryNoHref,
+      residualWiki: residualWiki,
+      ok: ok,
+    };
   }
 
   // A7 代码高亮：fence 块有 language-* class（token 数 B 级，不在此判）
@@ -684,7 +743,14 @@ export const PROBE_SOURCE = `(function () {
       inlineMathBlocks: ff.blockWithInlineMath,
       // task-25 新增：图片/链接/代码高亮/表格/可见效果下限 的 DOM 计数
       imgCount: a5.domImgs, imgEmptySrc: a5.hasEmptySrc,
-      anchorCount: a6.domAnchors, emptyHref: a6.emptyHref, residualWiki: a6.residualWiki,
+      anchorCount: a6.domAnchors, residualWiki: a6.residualWiki,
+      // A6 分类计数（task-32 规格修正后）：broken 不要求 href，resolved/ordinary 必须 href
+      linkBroken: a6.broken, linkResolved: a6.resolved, linkOrdinary: a6.ordinary,
+      linkBrokenMissingTarget: a6.brokenMissingTarget,
+      linkResolvedMissingTarget: a6.resolvedMissingTarget,
+      linkBrokenFocusable: a6.brokenFocusable,
+      linkResolvedNotFocusable: a6.resolvedNotFocusable,
+      linkOrdinaryNoHref: a6.ordinaryNoHref,
       langIssues: a7.issues.length,
       tableIssues: a8.issues.length,
       effectFloorFailures: a9.failures.map(function (f) { return f.kind; }),
@@ -779,6 +845,33 @@ export const PROBE_SOURCE = `(function () {
       }
       return 'real-change-noop';
     }
+    // ── task-32 A6 三条判别力自证（按**真实口径**构造）────────────────────
+    //   resolved-not-focusable : resolved 链接改成 tabindex=-1（点了没反应）=> A6 必红
+    //   broken-focusable       : broken 链接改成 tabindex=0（被当成可跳转）  => A6 必红
+    //   ordinary-nohref        : 普通 md 链接清空 href                     => A6 必红
+    if (kind === 'resolved-not-focusable') {
+      var rl = document.querySelectorAll('#preview a.-link-resolved, #preview a.-link-multi');
+      var n1 = 0;
+      for (var ri = 0; ri < rl.length; ri++) { rl[ri].setAttribute('tabindex', '-1'); n1++; }
+      return n1 > 0 ? 'resolved-not-focusable(' + n1 + ')' : 'resolved-not-focusable-noop';
+    }
+    if (kind === 'broken-focusable') {
+      var bl = document.querySelectorAll('#preview a.-link-broken');
+      var n2 = 0;
+      for (var bi = 0; bi < bl.length; bi++) { bl[bi].setAttribute('tabindex', '0'); n2++; }
+      return n2 > 0 ? 'broken-focusable(' + n2 + ')' : 'broken-focusable-noop';
+    }
+    if (kind === 'ordinary-nohref') {
+      var ol = document.querySelectorAll('#preview a');
+      var n3 = 0;
+      for (var oi = 0; oi < ol.length; oi++) {
+        var cc = String(ol[oi].className || '');
+        if (cc.indexOf('-link-broken') >= 0 || cc.indexOf('-link-resolved') >= 0 ||
+            cc.indexOf('-link-multi') >= 0 || cc.indexOf('-link-pending') >= 0) continue;
+        if (ol[oi].getAttribute('href')) { ol[oi].removeAttribute('href'); n3++; }
+      }
+      return n3 > 0 ? 'ordinary-nohref(' + n3 + ')' : 'ordinary-nohref-noop';
+    }
     // task-25 新增变异（对应 A5–A11）
     if (kind === 'img-src') {
       var imgs = document.querySelectorAll('#preview img');
@@ -872,12 +965,35 @@ export const PROBE_SOURCE = `(function () {
       // 子节点非空 = 真的画出了东西（不是占位空壳）
       if (typeset[i].childElementCount > 0) nonEmpty++;
     }
-    var expected = preview.querySelectorAll('.-math, [data-formula]').length;
+    // !! expected 必须按「**待排版容器**」计，不能数带 data-formula 的元素（task-33 Bug 1）：
+    //    data-formula 只挂在 **mjx-container** 上（app.js:2069），typeset 后原来的 .-math span
+    //    已被替换/包裹 ⇒ 同一个公式会同时满足 .-math 与 [data-formula]，被数两遍。
+    //    实测后果：corpus/02-inline-edges.md（1 行内 / 0 块）得到 expected=2 typeset=1
+    //    ⇒ 永远差 1 ⇒ 3600 帧后 timeout。scale-5k 因为 135+135 恰好 270=270 才没暴露。
+    //
+    //    正确口径：**待排容器 = 尚未产出 mjx-container 的公式容器**
+    //      · 行内未排：span.-math（不含内部已有 mjx-container 的）
+    //      · 块级未排：.-math-block 尚无 mjx-container
+    //    然后 expected = 已产出的 mjx 数 + 尚未产出的容器数。
+    var pendingInline = 0;
+    var mathSpans = preview.querySelectorAll('.-math');
+    for (var si = 0; si < mathSpans.length; si++) {
+      // 已排的 span 内部含 mjx-container（或自身被替换掉）⇒ 不计为待排
+      if (!mathSpans[si].querySelector('mjx-container')) pendingInline++;
+    }
+    var pendingBlock = 0;
+    var mathBlocks = preview.querySelectorAll('.-math-block');
+    for (var bi2 = 0; bi2 < mathBlocks.length; bi2++) {
+      if (!mathBlocks[bi2].querySelector('mjx-container')) pendingBlock++;
+    }
+    var expected = typeset.length + pendingInline + pendingBlock;
     return {
       typeset: typeset.length,
       nonEmpty: nonEmpty,
       expected: expected,
-      key: nonEmpty + ':' + typeset.length,
+      pendingInline: pendingInline,
+      pendingBlock: pendingBlock,
+      key: nonEmpty + ':' + typeset.length + ':' + (pendingInline + pendingBlock),
     };
   }
 

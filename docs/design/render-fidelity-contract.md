@@ -149,7 +149,7 @@ DOM `.-src-block` 数  ==  parse(body).blocks.length
 | 断言 | 覆盖物 | 判据 | 环境 |
 |---|---|---|---|
 | **A5 图片** | `img[src]` 存在且非空 | 源有 `image` 块 => DOM 至少 1 个 `img` 且都带非空 `src`。**不查 `naturalWidth`**（懒加载/无头不可靠） | headless-ok |
-| **A6 链接** | `a[href]` 非空 + 无残留 `[[x]]` | 源有 `link`/`wiki_link` => DOM 有 `a` 且无空 href、无未解析 wiki 文本 | headless-ok |
+| **A6 链接** | 三类分别判（见 §2.5.1） | 源有 `link`/`wiki_link` => ①**broken wiki** 不要求 href、只要 `data-link-target` 非空且 `tabindex=-1`；②**resolved wiki** 只要 `data-link-target` 非空且 `tabindex=0`；③**普通 md 链接** `a[href]` 必须非空；④全文无残留 `[[x]]` | headless-ok |
 | **A7 代码高亮** | `language-*` class | fence 块（语言非空、**非 mermaid**）=> 对应 `code` 带 `language-<lang>`。token 数 = B 级 | headless-ok |
 | **A8 表格** | 行列数 vs AST `rows` | 行数 = header?1+rows、列数 = 首行 cell 数。**不比列对齐**（AST 无此字段） | headless-ok |
 | **A9 可见效果下限** | bold/italic/code/link/image/mark/font_* | 源有此标记 => DOM 对应元素数 **>0**（只查非零，避开不可反推；精确计数 B 级） | headless-ok |
@@ -159,6 +159,32 @@ DOM `.-src-block` 数  ==  parse(body).blocks.length
 **A10 无头 inconclusive 的原因**：无头 MathJax 只排 ≈3 个（真机 270，见
 [realapp-measurement-protocol.md](realapp-measurement-protocol.md) §1）。无头下 A10 的「按块数量一致」
 不可判，仅记录；完整判定与判别力验证在真机（`--cdp`）。
+
+### 2.5.0 A6 链接规格（三类，**不要退回"所有 a 都必须有 href"**）
+
+> **曾经的错误规格**：`a[href]` 必须非空。实测 legacy 的 wikilink **无论 resolved 还是 broken 都不设 href**
+> （`app.js:6339-6360` 只加 class / `tabindex` / `title`，从不 `setAttribute('href')`），跳转靠 JS click +
+> `data-link-target`。于是含 broken wiki 的真实文档（如 `scale-5k` 的 270 个）会被**假红**。
+
+| 类 | DOM 特征 | 判据 |
+|---|---|---|
+| **broken wiki** | `-link-broken` + `memoria-broken-link`，`tabindex=-1` | `data-link-target` 非空；`tabindex` **不得**为 0；**不要求 href**（不可跳转是正确行为） |
+| **resolved wiki** | `-link-resolved` / `-link-multi`，`tabindex=0` | `data-link-target` 非空；`tabindex` **不得**为 -1；**不要求 href** |
+| **pending wiki** | `-link-pending` | 合法中间态，不判 |
+| **普通 md 链接** | 上述 class 都没有 | `a[href]` **必须**非空 |
+
+**为什么 broken 是正常态**：「先写 `[[概念]]` 再补页面」是用户日常写作的常态。把 broken 当失败，
+任何含未解析 wiki 的文档都会永远红，而我们会误以为"新管线坏了"——**是尺子错了，不是实现错了**。
+
+**判别力自证**（在 `artifacts/_link_fixture_kb` 上，含 3 resolved + 2 broken + 2 ordinary）：
+
+| 变异 | 期望 | 实测 |
+|---|---|---|
+| `resolved-not-focusable`（resolved 改 `tabindex=-1`） | 红 | ✅ 抓到 1/1 |
+| `broken-focusable`（broken 改 `tabindex=0`） | 红 | ✅ 抓到 1/1 |
+| `ordinary-nohref`（普通链接清空 href） | 红 | ✅ 抓到 1/1 |
+
+---
 
 ### 2.5.1 未覆盖（须登记，不假装覆盖）
 
@@ -312,8 +338,17 @@ node scripts\benchmark\surface\fidelity_cli.mjs --cdp http://127.0.0.1:9500 `
 
 | 渲染物 | 语义完成判据 |
 |---|---|
-| **公式** | 期望容器（`.-math` / `[data-formula]`）内有 `mjx-container` 且**子节点非空**；并 await `state._mathPending`（应用自己的 `typesetPromise` 链 = 最强信号） |
+| **公式** | **待排容器口径**：`expected = 已产出 mjx-container 数 + 尚未产出 mjx 的容器数`（未排的行内 `.-math` span 与未排的 `.-math-block`）。完成判据 = `nonEmpty >= expected`；并 await `state._mathPending`（应用自己的 `typesetPromise` 链 = 最强信号） |
 | **mermaid** | `residualSrc === 0`（无残留 `code.language-mermaid`）且每个 `.-mermaid-container` 内 `svg[viewBox]` 非空；出现 `.-mermaid-error` ⇒ 立即 `failed` |
+
+**idle**：连续 **3 帧**「已排版数 + 容器数 + svg 数 + 待排容器数」不变。
+
+#### ⚠️ 两个已修正的计数口径错误（务必不要写回去）
+
+| # | 错误写法 | 后果 | 正确写法 |
+|---|---|---|---|
+| **1** | `expected = querySelectorAll('.-math, [data-formula]').length` | `data-formula` **只挂在 mjx-container 上**（`app.js:2069`），typeset 后同一公式同时命中两个选择器 ⇒ **重复计数**。`corpus/02-inline-edges.md`（1 行内/0 块）得到 `expected=2 typeset=1` ⇒ **永远差 1 ⇒ timeout**。scale-5k 因 135+135 恰好 270=270 才侥幸没暴露 | 按**待排容器**计：`expected = typeset + pendingInline + pendingBlock` |
+| **2** | 把 `data-formula` 当作 A3/完整性的**依赖判据** | `data-formula` **从来不是 A3 的判据**（本文件 §2 注释明写"不要求 data-formula"）。据此构造"删 data-formula ⇒ 应红"的变异是**错的** | A3 依赖 `mjx-container` 的有无与数量；变异应用 drop-math-block / 去 `data--inline-math` / 坏 mermaid viewBox 等**真依赖**项 |
 
 **idle**：连续 **3 帧**「已排版数 + 容器数 + svg 数」不变。
 
