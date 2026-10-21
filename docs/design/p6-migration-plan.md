@@ -125,6 +125,17 @@
 
 ## 4. 风险与缓解
 
+> 风险分级、单向门判定与回滚计划要求见 [`docs/guides/risk-management.md`](../guides/risk-management.md)。
+
+**本片对应的风险登记册条目**：
+- **R-04**（单向门）：删除 legacy 后永久失去 A/B 对照 —— **前置：task-47 必须先完成**
+- **R-06**：`markdown-preview.js` 104KB 仍承担高亮/mermaid/math，P6d 禁止大改
+- **R-07**：`renderPreview` 29 个调用点 —— 已用"换实现不换签名"缓解
+
+**执行前必须通过**：`python scripts/benchmark/maintenance/risk_preflight.py --operation "P6a" --require-baseline artifacts/baseline/s_render_frozen --require-baseline artifacts/baseline/p5_perf_frozen --allow-dirty-src src/memoria/services/agent/ask_stream.py`
+
+
+
 | 风险 | 概率 | 缓解 |
 |---|---|---|
 | **29 个调用点里有特殊 opts 依赖** | 中 | P6a 前先枚举 29 处的 `opts` 用法（`incremental` / `keepScroll` 等），逐项确认 new 实现兼容 |
