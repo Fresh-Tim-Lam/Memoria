@@ -1,19 +1,23 @@
 /**
- * MemoriaRenderCore —— 新渲染管线（阶段 2 · P2a + P2b：块级骨架）
+ * MemoriaRenderCore —— 新渲染管线（阶段 2 · P2a/P2b/P2c：块级骨架 + 公式/mermaid 容器）
  *
  * ── 定位 ─────────────────────────────────────────────────────────────────────
  *   `RenderCore` = AST → 块 DOM 的**新实现**（契约 `view-surface-contract.md` §2）。
  *
  *   P2a（已入库）：paragraph / heading / list(+ list_item) / blockquote / horizontal_rule
  *                  + blank_line（任何文档必带）。
- *   P2b（本片）：code_block / table / image + 链接层 DOM 骨架（wikilink/普通链接 inline 结构
- *                  与 legacy 一致，后处理留给 P2b 后半的 `postProcessWikilinks`）。
+ *   P2b（已入库）：code_block / table / image + 链接层 DOM 骨架（wikilink/普通链接 inline
+ *                  结构与 legacy 一致，后处理复用 app.js `postProcessWikilinks`/`bindPreviewLinks`）。
+ *   P2c（本片）：math_block / 行内公式 / mermaid **只产宿主排版前的容器**——
+ *                  · `math_block` → `div.-math-block`（textContent `$$…$$`）；行内公式 →
+ *                    `span.-math[data-formula]`（P2a 已有）。**不调 MathJax**：宿主
+ *                    `MemoriaApp.surface.applyPreviewMathTypeset()` 走既有 token/typeset 链。
+ *                  · mermaid 围栏（parser 产 `code_block(lang="mermaid")`）→ 普通代码块结构，
+ *                    由宿主 `MemoriaMarkdownPreview.renderMermaidBlocks()` 替换成 `.-mermaid-container`。
  *
  *   **其余块 kind 一律显式标记 `data-unsupported="<kind>"`**（`.-unsupported-block`），
  *   绝不静默渲染成空块 / 静默丢内容。这是 `renderer.js` `default:` 分支（内容静默消失）
  *   那条历史教训的直接反制。需要"遇到未实现直接失败"时传 `{ strictUnsupported: true }`。
- *   P2b 特例：mermaid 围栏在 AST 里是 `code_block(lang="mermaid")`，其渲染归 P3 的 Mermaid
- *   后处理 ⇒ 显式 unsupported（`data-unsupported-reason="mermaid=P3"`），不渲染成普通代码块。
  *
  * ── 与 legacy 的关系（P2a 的验收口径）─────────────────────────────────────
  *   本实现的 DOM 产出必须与 `renderer.js` 对同一 AST 的产出**逐属性等价**（签名 0 diff，
@@ -38,7 +42,7 @@ window.MemoriaRenderCore = (function () {
   var T = AST ? AST.TYPES : null;
 
   /**
-   * P2a 已实现的顶层块 kind（与 `renderer.js` 的 AST kind 同名）。
+   * 已实现的顶层块 kind（与 `renderer.js` 的 AST kind 同名）。
    * list_item 不是顶层块，但它是 `list` 的组成部分，故一并声明。
    */
   var SUPPORTED_BLOCK_KINDS = [
@@ -53,6 +57,9 @@ window.MemoriaRenderCore = (function () {
     "code_block",
     "table",
     "image",
+    // ── P2c 新增（只产"待排版/待替换"容器；排版与 mermaid 渲染由宿主链接管）──
+    "math_block",
+    "mermaid",
   ];
 
   // ── 图片尺寸规范化（复刻 renderer.js `_normalizeImageSize`）──────────────────
@@ -373,16 +380,17 @@ window.MemoriaRenderCore = (function () {
       return el;
     },
 
-    // ── P2b 新增 ──────────────────────────────────────────────────────────────
+    // ── P2b 新增：代码块 ─────────────────────────────────────────────────────
     code_block: function (block, blockIndex) {
-      // mermaid 围栏在 parser 里是 code_block(lang="mermaid")，其渲染由 P3 的
-      // Mermaid 后处理负责（legacy 会替换成 `.-mermaid-container`）。P2b 显式标 unsupported，
-      // 避免与 legacy 的 mermaid 容器类型错配（见 renderBlock 的 mermaid 分支）。
+      // ✓ P2c（kind 已 grep 确认）：parser 对**所有围栏**都产 `code_block`（`lang` 区分），
+      //   mermaid 围栏不在 parser 层分型 ⇒ 这里按普通代码块渲染（`language-mermaid` class），
+      //   由宿主 `MemoriaMarkdownPreview.renderMermaidBlocks()` 扫描 `pre > code.language-mermaid`
+      //   替换成 `.-mermaid-container`。P2b 的 `mermaid=P3` 占位已删除。
       var el = _newBlockEl("pre", "-code-block", blockIndex);
       var codeEl = document.createElement("code");
       // A7：源有语言标记 ⇒ class 必带；无语言 ⇒ 不加 class（同 legacy）
       if (block.lang) codeEl.className = "language-" + block.lang;
-      // P2b **不做语法高亮 token**（P2 后续）：纯文本经 DOM 转义；文本与 legacy textContent 一致。
+      // 本片仍**不做语法高亮 token**（P2 后续）：纯文本经 DOM 转义；文本与 legacy textContent 一致。
       codeEl.textContent = block.code == null ? "" : String(block.code);
       el.appendChild(codeEl);
       return el;
@@ -420,6 +428,33 @@ window.MemoriaRenderCore = (function () {
     image: function (block, blockIndex) {
       return _renderImageBlock(block, blockIndex);
     },
+
+    // ── P2c 新增：公式 / mermaid（只产宿主排版前的容器，**不排版**）────────────
+    /**
+     * 块级公式：`div.-src-block.-math-block[data--block-index]`，textContent = `$$<formula>$$`。
+     * 与 legacy `renderer.js` T.MATH_BLOCK 逐属性一致；**不做 typeset**——宿主
+     * `MemoriaApp.surface.applyPreviewMathTypeset()` 会把它交给 `queuePreviewMathTypeset` 链。
+     */
+    math_block: function (block, blockIndex) {
+      var el = _newBlockEl("div", "-math-block", blockIndex);
+      el.textContent = "$$" + (block.formula == null ? "" : String(block.formula)) + "$$";
+      return el;
+    },
+
+    /**
+     * mermaid（AST 若真出 `mermaid` 类型时）：`pre.-src-block.-mermaid[data--block-index]`
+     * > `code.language-mermaid`，textContent = 原始源码。
+     * 与 legacy `renderer.js` T.MERMAID 逐属性一致；**不做 mermaid 渲染**——宿主
+     * `MemoriaMarkdownPreview.renderMermaidBlocks()` 负责替换成 `.-mermaid-container`。
+     */
+    mermaid: function (block, blockIndex) {
+      var el = _newBlockEl("pre", "-mermaid", blockIndex);
+      var codeEl = document.createElement("code");
+      codeEl.className = "language-mermaid";
+      codeEl.textContent = block.code == null ? "" : String(block.code);
+      el.appendChild(codeEl);
+      return el;
+    },
   };
 
   /**
@@ -435,13 +470,6 @@ window.MemoriaRenderCore = (function () {
     return el;
   }
 
-  /** mermaid 围栏（parser 表现为 code_block(lang="mermaid")）—— P3 的 Mermaid 后处理范围。
-   *  P2b 显式 unsupported，避免与 legacy 后处理产物 `.-mermaid-container` 类型错配。 */
-  function _isMermaidFence(block) {
-    return !!(block && block.type === "code_block" &&
-      String(block.lang || "").toLowerCase() === "mermaid");
-  }
-
   /**
    * 渲染单个块。
    * @param {object} block AST 块节点
@@ -449,10 +477,7 @@ window.MemoriaRenderCore = (function () {
    * @param {object} [opts] opts.strictUnsupported=true ⇒ 未实现 kind 直接抛 UNSUPPORTED_BLOCK
    */
   function renderBlock(block, blockIndex, opts) {
-    // mermaid 围栏 = code_block(lang="mermaid")，渲染归 P3 的 Mermaid 后处理（legacy 会替换成
-    // `.-mermaid-container`）；P2b 显式 unsupported，绝不静默渲染成普通代码块（否则类型错配）。
-    var isMermaidFence = _isMermaidFence(block);
-    var fn = (block && block.type && !isMermaidFence) ? BLOCK_RENDERERS[block.type] : null;
+    var fn = (block && block.type) ? BLOCK_RENDERERS[block.type] : null;
     if (fn) return fn(block, blockIndex);
     if (opts && opts.strictUnsupported) {
       var err = new Error("[MemoriaRenderCore] 未实现的块 kind: " + (block && block.type));
@@ -460,7 +485,7 @@ window.MemoriaRenderCore = (function () {
       err.kind = block && block.type;
       throw err;
     }
-    return renderUnsupportedBlock(block, blockIndex, isMermaidFence ? "mermaid=P3" : null);
+    return renderUnsupportedBlock(block, blockIndex, null);
   }
 
   /**
@@ -478,7 +503,7 @@ window.MemoriaRenderCore = (function () {
     }
     for (var i = 0; i < doc.blocks.length; i++) {
       var block = doc.blocks[i];
-      if (!block || !BLOCK_RENDERERS[block.type] || _isMermaidFence(block)) {
+      if (!block || !BLOCK_RENDERERS[block.type]) {
         unsupported.push(block && block.type ? String(block.type) : "unknown");
       }
       var el = renderBlock(block, i, opts);
@@ -517,7 +542,7 @@ window.MemoriaRenderCore = (function () {
     opts = opts || {};
     return {
       name: "MemoriaRenderCore",
-      phase: "P2a+P2b",
+      phase: "P2a+P2b+P2c",
       supportedBlockKinds: SUPPORTED_BLOCK_KINDS.slice(),
       isSupportedKind: function (kind) { return !!BLOCK_RENDERERS[kind]; },
       renderBlock: function (block, blockIndex) { return renderBlock(block, blockIndex, opts); },

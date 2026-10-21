@@ -182,6 +182,46 @@ window.createNewSurface = function createNewSurface(deps) {
     return false;
   }
 
+  // ── P2c：宿主渲染链接入（mermaid 替换 / 公式排版编排）──────────────────────────
+  /** 与 legacy renderPreview 第 4/7 步同口径的不可编辑标记选择器（P2c 追加不可编辑块元素）。 */
+  var _NON_EDITABLE_SEL = "mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay, .-math-block, .-frontmatter";
+
+  /** 给特殊元素写 `contentEditable=false`（幂等；legacy 第 4 步与第 7 步用同一集合）。 */
+  function _setNonEditable(preview) {
+    preview.querySelectorAll(_NON_EDITABLE_SEL).forEach(function (el) { el.contentEditable = "false"; });
+  }
+
+  /**
+   * mermaid 渲染：**复用宿主公开链** `window.MemoriaMarkdownPreview.renderMermaidBlocks(container)`
+   * （markdown-preview.js 导出；它负责把 `pre > code.language-mermaid` 替换成 `.-mermaid-container`，
+   * 并经 BlockIndex 重投行号——不复制、不调 mermaid API）。返回宿主 Promise（可能为 null）。
+   */
+  function _runHostMermaidLayer(preview) {
+    var MP = window.MemoriaMarkdownPreview;
+    if (!MP || typeof MP.renderMermaidBlocks !== "function") {
+      _callHost("onDegraded", "mermaid:hook-missing");
+      return null;
+    }
+    try { return MP.renderMermaidBlocks(preview); }
+    catch (e) { _callHost("onDegraded", "mermaid:" + ((e && e.message) || e)); return null; }
+  }
+
+  /**
+   * 公式排版：**复用宿主编排入口** `MemoriaApp.surface.applyPreviewMathTypeset(root, ast)`
+   * （app.js 开窗：token 自增 → `queuePreviewMathTypeset` → 行内 mjx 打标；内部会写
+   * `state.previewToken` / `state._mathPending`，本文件**不碰**这两个状态）。
+   */
+  function _applyHostMathTypeset(doc) {
+    var app = (typeof window !== "undefined") ? window.MemoriaApp : null;
+    var fn = app && app.surface && app.surface.applyPreviewMathTypeset;
+    if (typeof fn !== "function") {
+      _callHost("onDegraded", "math-typeset:hook-missing");
+      return null;
+    }
+    try { return fn(_previewEl(), doc); }
+    catch (e) { _callHost("onDegraded", "math-typeset:" + ((e && e.message) || e)); return null; }
+  }
+
   /** 解析 + 渲染 + 挂载 + BlockIndex 全量投射（setText 的唯一实现）。 */
   function _render(text, cause) {
     var preview = _previewEl();
@@ -228,9 +268,9 @@ window.createNewSurface = function createNewSurface(deps) {
 
     // 禁止特殊元素编辑（与 legacy renderPreview **第 4 步同一顺序**：stamp 之后才写
     // contentEditable）——属性插入顺序影响内联 HTML 序列化 ⇒ 影响 signatureNorm/htmlFingerprint。
-    preview.querySelectorAll(
-      "mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay"
-    ).forEach(function (el) { el.contentEditable = "false"; });
+    // P2c 追加 `.-math-block` / `.-frontmatter`：legacy 第 7 步对不可编辑块（math_block 等）
+    // 的**块元素本身**也写 contentEditable，块元素不在第 4 步的标签选择器里。
+    _setNonEditable(preview);
 
     // 链接层后处理（legacy renderPreview 第 5 步同序：stamp 之后）。
     // ★ 纪律：**不得复制** `postProcessWikilinks` / `bindPreviewLinks`——必须复用 app.js 同一函数
@@ -238,6 +278,18 @@ window.createNewSurface = function createNewSurface(deps) {
     //   K4 临时豁免入口（Lead 2026-10-21 开窗）：`MemoriaApp.surface.applyPreviewLinkLayer(root)`；
     //   终局 P6 把这两个函数迁进 render-core，本调用随之删除（见 app.js 该方法的注释）。
     _applyHostLinkLayer(preview);
+
+    // P2c：mermaid 替换 + 公式排版编排（**只调宿主链，绝不自己调 mermaid/MathJax API**）。
+    //   legacy 顺序（renderPreview）：链接后处理 → await renderMermaidBlocks → 公式排队 → 第 7 步
+    //   不可编辑标记。这里同序：mermaid 完成后补一次不可编辑标记（替换出来的容器/svg 才在 DOM 里），
+    //   再交给宿主的 `applyPreviewMathTypeset`（token/typeset/行内打标全在宿主内，见 app.js）。
+    var afterMermaid = function () {
+      _setNonEditable(preview);
+      _applyHostMathTypeset(doc);
+    };
+    var mmdPending = _runHostMermaidLayer(preview);
+    if (mmdPending && typeof mmdPending.then === "function") mmdPending.then(afterMermaid, afterMermaid);
+    else afterMermaid();
 
     _lastText = raw;
     _lastDoc = doc;
