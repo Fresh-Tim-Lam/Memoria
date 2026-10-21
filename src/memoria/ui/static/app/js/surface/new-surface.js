@@ -227,8 +227,18 @@ window.createNewSurface = function createNewSurface(deps) {
     var preview = _previewEl();
     if (!preview) throw new Error("[NewSurface] setText: 找不到 #preview 容器");
     var st = _state();
-    // 与 legacy renderPreview 同源：preview_body（后端预清洗）优先，其次传入 text
-    var rawSrc = (st && st.doc && st.doc.preview_body != null) ? st.doc.preview_body : text;
+    // ★ 真源优先级（修 P2c 尾块 bug）：**setText(text) 的 text 就是本次要渲染的正文**。
+    //   legacy `legacy-surface.setText(text)` 的语义是：`state.doc.body = text; preview_body = null;
+    //   renderPreview(doc)` ⇒ renderPreview 里的 `doc.preview_body || doc.body` 取到的是 text。
+    //   而 `state.doc.preview_body` 是**上一次预览/编辑留下的派生字段**，可能与 handoff text 差一个
+    //   末尾换行（后端 preview_body 保留文件尾 `\n`，body 已剥离）⇒ 若优先取它，会多 parse 出一个
+    //   末尾 blank 块（scale-5k：legacy 3110 vs new 3111 的根因）。
+    //   故与 legacy setText 同语义：**text 非空时一律以 text 为准**；text 缺失才回退到
+    //   preview_body / body（仅用于非常规直接调用，不参与 surface 交接路径）。
+    var rawSrc = (text != null)
+      ? text
+      : ((st && st.doc && st.doc.preview_body != null) ? st.doc.preview_body
+        : (st && st.doc ? st.doc.body : null));
     var raw = (rawSrc == null) ? "" : String(rawSrc);
 
     // 与 legacy 同一份源码预处理（顺序也必须一致）：
