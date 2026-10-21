@@ -149,6 +149,27 @@
         { "op": "sleep", "ms": 400 },
         { "op": "snapshot", "label": "after-brush" }
       ]
+    },
+    {
+      "id": "S11-find-highlight",
+      "desc": "搜索框输入词 → 等防抖 → 断言：搜索建议面板出现（≥1 条），且**预览区不产生高亮**（实测 find 是全局搜索/跳转，不是预览内查找高亮）",
+      "note": "task-49 实测结论（HEAD 106993be，真机）：#toolbar-search 是**全局搜索建议面板**（-toolbar-search-panel / -suggest-item），输入后约 1s 出现建议项，格式「L<行> <片段> <文件名>」；点击建议项会跳转定位，但 #preview 的 mark/高亮计数**恒为 0**、previewHTML 长度在输入前后不变（实测 4458 → 4458）。故本剧本断言「面板出现 + 预览无高亮」，**不伪造预览高亮行为**。若将来实现改成预览内高亮，本剧本的 before/after 快照会 diff 出来。",
+      "steps": [
+        { "op": "open", "file": "homework/hw-003-frequency-response.md", "view": "preview" },
+        { "op": "wait", "expr": "document.querySelectorAll('#preview .-src-block').length > 3" },
+        { "op": "sleep", "ms": 600 },
+        { "op": "eval", "expr": "(function(){window.__s11={beforeMark:document.querySelectorAll('#preview mark').length,beforeHl:document.querySelectorAll('#preview [class*=highlight]').length,beforeLen:(document.getElementById('preview')||{}).innerHTML.length};return window.__s11;})()" },
+        { "op": "snapshot", "label": "before-find" },
+        { "op": "eval", "expr": "(function(){var el=document.getElementById('toolbar-search');if(!el)return 'no-toolbar-search';el.focus();el.value='频率';el.dispatchEvent(new Event('input',{bubbles:true}));return 'typed';})()" },
+        { "op": "sleep", "ms": 400 },
+        { "op": "wait", "expr": "document.querySelectorAll('#toolbar-search-panel .-suggest-item').length > 0", "label": "suggest-items" },
+        { "op": "snapshot", "label": "after-find" },
+        { "op": "eval", "expr": "(function(){var p=document.getElementById('toolbar-search-panel');var items=document.querySelectorAll('#toolbar-search-panel .-suggest-item');var afterMark=document.querySelectorAll('#preview mark').length;var afterHl=document.querySelectorAll('#preview [class*=highlight]').length;var afterLen=(document.getElementById('preview')||{}).innerHTML.length;var r={panelVisible:!!p&&p.getBoundingClientRect().height>2,suggestItems:items.length,firstItem:(items[0]?(items[0].textContent||'').replace(/\\s+/g,' ').trim().slice(0,60):null),afterMark:afterMark,afterHl:afterHl,afterLen:afterLen,sameLenAsBefore:afterLen===window.__s11.beforeLen,noPreviewHighlight:(afterMark===window.__s11.beforeMark&&afterHl===window.__s11.beforeHl)};window.__s11.result=r;return r;})()" },
+        { "op": "eval", "expr": "(function(){var el=document.getElementById('toolbar-search');if(el){el.value='';el.dispatchEvent(new Event('input',{bubbles:true}));}return 1;})()" },
+        { "op": "sleep", "ms": 500 },
+        { "op": "snapshot", "label": "after-clear" },
+        { "op": "eval", "expr": "(function(){var el=document.querySelectorAll('#toolbar-search-panel .-suggest-item').length;var r={afterClearSuggestItems:el,verdict:(window.__s11.result.panelVisible&&window.__s11.result.suggestItems>0&&window.__s11.result.noPreviewHighlight)?'PASS:panel-shown+no-preview-highlight':'FAIL'};window.__s11.verdict=r;return r;})()" }
+      ]
     }
   ]
 }

@@ -27,20 +27,39 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  安全终止（task-49）—— 统一入口：禁止杀进程树、禁止凭端口反查 PID 再杀。
+#  ★ 事故背景：2026-10-21 本仓库测量脚本用「端口反查 PID + 杀进程树」的方式清理实例，
+#    端口恰好被用户手动打开的 Package\Memoria.exe 占用 ⇒ **用户 app 被误杀并重启**
+#    （pid 21860 → 39868 → 49444）。故：
+#      · 只杀本次脚本 Start-Process 得到的 $script:AppPid；
+#      · 杀前校验该 PID 命令行必含本次调试端口，不含则拒绝；
+#      · 端口被占用时**只报告、不终止**；
+#      · 绝不杀进程树（不连带子进程），绝不杀 Package\Memoria.exe。
+# ═══════════════════════════════════════════════════════════════════════════
+$script:SafeKillModule = Join-Path $PSScriptRoot 'safe-kill.psm1'
+if (Test-Path $script:SafeKillModule) {
+    Import-Module $script:SafeKillModule -Force -DisableNameChecking
+} else {
+    throw "[safe-kill] 缺少 $script:SafeKillModule —— 禁止在无安全模块时运行（防误杀用户应用）"
+}
+
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
 
 function Stop-App {
-    # 1) 按记录的 PID **连整棵进程树**一起杀。
+    # 1) 只终止本次启动的 $script:AppPid（不连带子进程树）。
     #    !! 实测教训：pywebview 的 WebView2 会拉起一整棵 msedgewebview2 进程树
     #    (browser + crashpad + gpu-process + utility + renderer...)。
     #    只 Stop-Process 主 python 进程 => 那棵树全部变成孤儿继续吃 CPU/GPU，
     #    下一次测量的读数被这堆残留拖慢（实测 run2 时延随轮次单调上升 12->22ms，
     #    而写入计数完全没变 => 纯机器侧负载，不是代码回归）。
-    #    故用 taskkill /T 杀整棵树，再兜底清理指向临时 EBWebView 的孤儿。
+    #    现改用 Stop-OrphanWebView2 按唯一标记精确清理孤儿（原「杀整棵树」做法已于 task-49 废弃，
+#    因其会波及其他进程，曾导致用户应用被误杀）。
     if ($script:AppPid) {
         $p = Get-Process -Id $script:AppPid -ErrorAction SilentlyContinue
         if ($p) {
-            & taskkill.exe /PID $script:AppPid /T /F 2>&1 | Out-Null
+            Stop-MeasurementProcess -ProcessId $script:AppPid -ExpectedPort $Port -Quiet | Out-Null
             Write-Host "[run_domwrites] stopped app tree pid $($script:AppPid) (/T)"
         }
         $script:AppPid = $null
@@ -61,7 +80,8 @@ function Stop-App {
         if ($mine) {
             $prevEap = $ErrorActionPreference
             $ErrorActionPreference = 'Continue'
-            try { & taskkill.exe /PID $c.OwningProcess /T /F *>&1 | Out-Null } catch { }
+            # ★ 已移除「凭端口反查 PID 再杀」——该路径曾误杀用户 app。改为只报告：
+            Get-PortOwnerSafe -Port $Port | Out-Null
             $ErrorActionPreference = $prevEap
             Write-Host "[run_domwrites] killed own leftover listener tree pid $($c.OwningProcess)"
         } else {
@@ -90,10 +110,10 @@ function Stop-App {
 
 try {
     # 先确保端口干净（残留进程）
-    $leftover = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue
-    if ($leftover) {
-        Write-Warning "[run_domwrites] 端口 $Port 被 pid $($leftover.OwningProcess) 占用，先清理"
-        Stop-App
+    # ★ task-49：端口被占用时**不再自动清理**（曾因反查 PID 误杀用户 app），只报告。
+    $portInfo = Get-PortOwnerSafe -Port $Port
+    if (-not $portInfo.Free) {
+        throw "[run_domwrites] 端口 $Port 被占用（$($portInfo.Identity)），请换端口后重跑。$($portInfo.Advice)"
     }
 
     # ── env ──

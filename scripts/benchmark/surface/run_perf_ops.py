@@ -277,6 +277,8 @@ def main():
     ap.add_argument("--inject", default=None, help="注入已知退化：busywait")
     ap.add_argument("--cdp", default=None, help="真机 CDP endpoint（首开/公式必须）")
     ap.add_argument("--baseline", default=None, help="对比基线 json（判超预算用）")
+    ap.add_argument("--surface", default=None, choices=["legacy", "new"],
+                    help="task-47 L1：指定显示插头（同会话切 MemoriaSurface），用于 A/B 双侧对照；未指定则用当前插头")
     ap.add_argument("--timeout", type=int, default=900)
     args = ap.parse_args()
 
@@ -314,6 +316,8 @@ def main():
         cmd += ["--url", harness_url]
     if args.inject:
         cmd += ["--inject", args.inject]
+    if args.surface:
+        cmd += ["--surface", args.surface]
     print("[perfops] 运行: %s" % " ".join(cmd))
     try:
         proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)

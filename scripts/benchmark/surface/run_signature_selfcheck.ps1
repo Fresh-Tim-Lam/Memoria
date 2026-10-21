@@ -11,6 +11,24 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+
+# ═══════════════════════════════════════════════════════════════════════════
+#  安全终止（task-49）—— 统一入口：禁止杀进程树、禁止凭端口反查 PID 再杀。
+#  ★ 事故背景：2026-10-21 本仓库测量脚本用「端口反查 PID + 杀进程树」的方式清理实例，
+#    端口恰好被用户手动打开的 Package\Memoria.exe 占用 ⇒ **用户 app 被误杀并重启**
+#    （pid 21860 → 39868 → 49444）。故：
+#      · 只杀本次脚本 Start-Process 得到的 $script:AppPid；
+#      · 杀前校验该 PID 命令行必含本次调试端口，不含则拒绝；
+#      · 端口被占用时**只报告、不终止**；
+#      · 绝不杀进程树（不连带子进程），绝不杀 Package\Memoria.exe。
+# ═══════════════════════════════════════════════════════════════════════════
+$script:SafeKillModule = Join-Path $PSScriptRoot 'safe-kill.psm1'
+if (Test-Path $script:SafeKillModule) {
+    Import-Module $script:SafeKillModule -Force -DisableNameChecking
+} else {
+    throw "[safe-kill] 缺少 $script:SafeKillModule —— 禁止在无安全模块时运行（防误杀用户应用）"
+}
+
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
 $script:AppPid = $null
 
@@ -18,7 +36,7 @@ function Stop-App {
     if ($script:AppPid) {
         $prevEap = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
-        try { & taskkill.exe /PID $script:AppPid /T /F *>&1 | Out-Null } catch { }
+        try { Stop-MeasurementProcess -ProcessId $script:AppPid -ExpectedPort $Port -Quiet | Out-Null } catch { }
         $ErrorActionPreference = $prevEap
         $script:AppPid = $null
     }
@@ -30,7 +48,8 @@ function Stop-App {
         if ($cmd -like '*memoria.app.desktop*' -or $cmd -like '*\Temp\*EBWebView*') {
             $prevEap = $ErrorActionPreference
             $ErrorActionPreference = 'Continue'
-            try { & taskkill.exe /PID $c.OwningProcess /T /F *>&1 | Out-Null } catch { }
+            # ★ 已移除「凭端口反查 PID 再杀」——该路径曾误杀用户 app。改为只报告：
+            Get-PortOwnerSafe -Port $Port | Out-Null
             $ErrorActionPreference = $prevEap
         }
     }
@@ -44,7 +63,7 @@ function Stop-App {
     foreach ($o in $orphans) {
         $prevEap = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
-        try { & taskkill.exe /PID $o.ProcessId /T /F *>&1 | Out-Null } catch { }
+        try { & taskkill.exe /PID $o.ProcessId /F *>&1 | Out-Null } catch { }   # 单进程终止（task-49：不连带子树）
         $ErrorActionPreference = $prevEap
     }
 }

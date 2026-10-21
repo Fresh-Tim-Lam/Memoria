@@ -305,8 +305,31 @@ async function main() {
     }
     await cdp.waitFor('!!window.MemoriaApp && !!window.MemoriaParser', { label: 'app', timeout: 90000 });
 
+    // ── task-47 L1：--surface legacy|new（同会话切插头，用于 A/B 双侧对照）──
+    //    ★ 必须能切到指定插头并确认生效，否则两侧测的是同一个插头 ⇒ 假"无差异"。
+    const wantSurface = (typeof args.surface === 'string' && args.surface) ? String(args.surface) : null;
+    if (wantSurface) {
+      if (wantSurface !== 'legacy' && wantSurface !== 'new') {
+        process.stderr.write('错误：--surface 只能是 legacy 或 new\n'); return 2;
+      }
+      const hasSurfaceApi = await cdp.evalJS('!!(window.MemoriaSurface && window.MemoriaSurface.switchTo)');
+      if (!hasSurfaceApi) {
+        process.stderr.write('错误：--surface 需要 window.MemoriaSurface（该构建未提供）\n'); return 2;
+      }
+      await cdp.evalJS(`window.MemoriaSurface.switchTo(${JSON.stringify(wantSurface)})`);
+      await cdp.waitFor(`window.MemoriaSurface.current() === ${JSON.stringify(wantSurface)}`,
+                        { timeout: 60000, label: 'surface:' + wantSurface });
+      // 确认生效（读到实际 current，写进产物，供事后核对）
+      result.surface = await cdp.evalJS('window.MemoriaSurface.current()');
+      result.surfaceList = await cdp.evalJS('window.MemoriaSurface.list()');
+    } else {
+      result.surface = null;
+      result.surfaceList = await cdp.evalJS('(window.MemoriaSurface && window.MemoriaSurface.list) ? window.MemoriaSurface.list() : null');
+    }
+
     // 注入探针
     await cdp.evalJS('window.__perfops = ' + PERF_PROBE);
+
 
     // 可选：注入已知退化（用于自证判别力）
     if (inject === 'busywait') {
