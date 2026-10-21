@@ -34,15 +34,27 @@ function Stop-App {
             $ErrorActionPreference = $prevEap
         }
     }
+    # !! 只杀 user-data-dir 在 Temp 的孤儿（=本次启动的），且**等它真正退出**。
+    #    踩过：taskkill 返回后进程仍监听端口（WebView2 子进程延迟退出）=> 下次启动抢不到端口。
     $orphans = @(Get-CimInstance Win32_Process -Filter "Name='msedgewebview2.exe'" -ErrorAction SilentlyContinue |
-        Where-Object { $_.CommandLine -like '*EBWebView*' -and (-not (Get-Process -Id $_.ParentProcessId -ErrorAction SilentlyContinue)) })
+        Where-Object {
+            $_.CommandLine -like '*EBWebView*' -and $_.CommandLine -like '*\Temp\*' -and
+            (-not (Get-Process -Id $_.ParentProcessId -ErrorAction SilentlyContinue))
+        })
     foreach ($o in $orphans) {
         $prevEap = $ErrorActionPreference
         $ErrorActionPreference = 'Continue'
         try { & taskkill.exe /PID $o.ProcessId /T /F *>&1 | Out-Null } catch { }
         $ErrorActionPreference = $prevEap
     }
-    if ($orphans.Count -gt 0) { Write-Host "[readycheck] swept $($orphans.Count) orphaned WebView2" }
+    # 等待孤儿真正退出（最多 ~5s），避免端口残留
+    foreach ($o in $orphans) {
+        for ($w = 0; $w -lt 10; $w++) {
+            if (-not (Get-Process -Id $o.ProcessId -ErrorAction SilentlyContinue)) { break }
+            Start-Sleep -Milliseconds 500
+        }
+    }
+    if ($orphans.Count -gt 0) { Write-Host "[cleanup] swept $($orphans.Count) orphaned WebView2" }
 }
 
 try {

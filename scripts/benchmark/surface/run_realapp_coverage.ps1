@@ -56,7 +56,14 @@ function Stop-App {
         try { & taskkill.exe /PID $o.ProcessId /T /F *>&1 | Out-Null } catch { }
         $ErrorActionPreference = $prevEap
     }
-    if ($orphans.Count -gt 0) { Write-Host "[realcov] swept $($orphans.Count) orphaned WebView2" }
+    # 等待孤儿真正退出（最多 ~5s），避免端口残留
+    foreach ($o in $orphans) {
+        for ($w = 0; $w -lt 10; $w++) {
+            if (-not (Get-Process -Id $o.ProcessId -ErrorAction SilentlyContinue)) { break }
+            Start-Sleep -Milliseconds 500
+        }
+    }
+    if ($orphans.Count -gt 0) { Write-Host "[cleanup] swept $($orphans.Count) orphaned WebView2" }
 }
 
 try {

@@ -310,6 +310,39 @@ function makeDoc(blocksSpec) {
   check("A14 主实例查询仍正确", main.atSrcLine(1, { outermost: true }).length === 1 && main.atSrcLine(1, { outermost: true })[0].id === "M-1");
 })();
 
+// A16 内容变化信号**不依赖 id**（Lead 裁决 task-22）
+//   语义：局部路径同 id 就地更新（_keepId）⇒ 被编辑块的 id **可以不变**。
+//   因此"内容变了"必须靠 ①domVersion 递增 ②onPatched.changedIds 含该 id 来表达。
+(function () {
+  const bi = BlockIndex();
+  bi.beginStamp();
+  bi.upsert({ id: "S-1", kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "one" });
+  bi.upsert({ id: "S-2", kind: "paragraph", srcLineStart: 2, srcLineEnd: 2, blockSrcText: "two" });
+  bi.upsert({ id: "S-3", kind: "paragraph", srcLineStart: 3, srcLineEnd: 3, blockSrcText: "three" });
+  const r0 = bi.commit();
+  check("A16 全量 build：changedIds 含全部 3 块", r0.changedIds.length === 3, { changed: r0.changedIds });
+
+  const v0 = bi.get("S-1").domVersion;
+  let payload = null;
+  const off = bi.onPatched(function (p) { payload = p; });
+
+  // 局部路径：同 id、同区间、只改文本（模拟 app.js 的 _keepId 就地更新）
+  bi.beginStamp();
+  bi.upsert({ id: "S-1", kind: "paragraph", srcLineStart: 1, srcLineEnd: 1, blockSrcText: "one-EDITED" });
+  bi.commit();
+  off();
+
+  const v1 = bi.get("S-1").domVersion;
+  check("A16 domVersion 在就地更新后 +1", v1 === v0 + 1, { v0, v1 });
+  check("A16 onPatched.changedIds **只含**被编辑块（精准失效，非全量）",
+    payload && payload.changedIds.length === 1 && payload.changedIds[0] === "S-1",
+    { changedIds: payload && payload.changedIds });
+  check("A16 changedIds 不含未变块 S-2/S-3",
+    payload && payload.changedIds.indexOf("S-2") < 0 && payload.changedIds.indexOf("S-3") < 0);
+  check("A16 被编辑块 id 保持不变（_keepId 语义：id 不用于推断内容变化）",
+    bi.get("S-1") !== null && bi.blocks().length === 3, { total: bi.blocks().length });
+})();
+
 // ── 汇总 ────────────────────────────────────────────────────────────────
 console.log("\n" + passes + " passed, " + failures + " failed");
 process.exit(failures === 0 ? 0 : 1);
