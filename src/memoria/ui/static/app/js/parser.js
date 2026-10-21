@@ -311,12 +311,28 @@ window.MemoriaParser = (function () {
 
   /**
    * 解析全文 → Document AST
+   *
+   * ★ 2026-10-21 task-40：Document 节点新增 `trailingNewline`（原文是否以 "\n" 结尾）。
+   *
+   *   为什么需要：`"a\n".split("\n")` → `["a",""]`，那个末尾空串是**行终止符的产物，
+   *   不是真实空行**。parser 会把它建模成一个 `blank_line` 块 ⇒ 在树里
+   *   「文末换行」与「真的多一个空行」**不可区分**。这正是 S13（回写丢尾 \n）的树级根因：
+   *   不是实现忘了写，而是**树里没有这个信息**。
+   *
+   *   本字段把它显式记下来。**注意：不改变块数口径**（尾部 blank_line 块照旧产生），
+   *   以免 `S_render_frozen` 基线（scale-5k = 3111，末块正是该假 blank 块）失真。
+   *   消费方若要精确重建原文，按 `trailingNewline` 决定末尾是否补 "\n"。
+   *
    * @param {string} body — 全文源码
-   * @returns {object} Document
+   * @returns {object} Document（含 `trailingNewline: boolean`）
    */
   function parse(body) {
-    var lines = body.split("\n");
-    return AST.document(parseBlocks(lines));
+    var src = (typeof body === "string") ? body : "";
+    var lines = src.split("\n");
+    var doc = AST.document(parseBlocks(lines));
+    // 原文是否以换行结尾（空串 ⇒ 无换行）
+    doc.trailingNewline = src.length > 0 && src.charAt(src.length - 1) === "\n";
+    return doc;
   }
 
   /**
@@ -484,6 +500,12 @@ window.MemoriaParser = (function () {
         // 渲染仍从正确数字开始（如 `1. a\n$$...$$\n2. b` 显示 1. / 2. 而非 1. / 1.）
         var listStart = isOrdered ? parseInt(tokens[0].value, 10) : null;
         var items = [];
+        // ★ 2026-10-21 task-40：记录每项的**源码行号**（1-based，与 blk.srcLine 同口径）。
+        //   为什么需要：松散列表里列表项之间的空行会被跳过（下面 `lt2.length === 0` 分支），
+        //   而 `AST.list` 的 items 只存内容 ⇒ **空行在第几项之后无法追溯**。
+        //   例：`- a\n- b\n\nafter` 的 list 区间是 L1-3（吞了空行），但 items 只有 2 项。
+        //   有了 itemSrcLine，可据「相邻两项行号差 > 1」判定其间的空行数 ⇒ 逐字节重建可行。
+        var itemSrcLine = [];
         var scan = i;
         while (scan < endLine) {
           var lt2 = lexer.tokenize(lines[scan]);
@@ -497,10 +519,13 @@ window.MemoriaParser = (function () {
           if (/^\d+\.$/.test(lt2[0].value) !== isOrdered) break;
           var itemChildren2 = parseInline(lt2.slice(1));
           items.push(AST.listItem(itemChildren2));
+          itemSrcLine.push(scan + 1);   // 1-based 源码行号
           scan++;
         }
         // 注意：此处 i 仍等于块首行，跨行末端在 scan；若传 i 会退化成单行区间
-        emit(blocks, AST.list(isOrdered, items, listStart), lineNum, scan);
+        var listNode = AST.list(isOrdered, items, listStart);
+        listNode.itemSrcLine = itemSrcLine;
+        emit(blocks, listNode, lineNum, scan);
         i = scan;
         continue;
       }
