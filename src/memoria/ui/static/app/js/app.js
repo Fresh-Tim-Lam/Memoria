@@ -1956,7 +1956,7 @@
     clearGraphLinkHighlight();
     const preview = $("#preview");
     hidePreviewStatus();
-    if (!P || !R || !M) {
+    if (!P || !M || !_rcRenderer()) {
       preview.innerHTML = '<p class="-preview-loading">' + T("preview.loadNotReady") + '</p>';
       _renderingPreview = false;
       return;
@@ -1981,10 +1981,15 @@
       _doc = P.parse(body);
       M.setDoc(_doc);
 
-      // 3. AST → DOM 渲染
-      const content = R.render(_doc);
+      // 3. AST → DOM 渲染（P6a：切换为 render-core；**不再调用 legacy `R.render`**）
+      //    render-core 与本函数既有管线同形：返回 `.-preview-content` 容器，块元素与 `_doc.blocks` 一一对应；
+      //    行号/块身份仍由下面的 `stampBlockLines` 经 BlockIndex 写入（唯一写点不变）。
+      const content = _rcRenderer().renderDocument(_doc).container;
       preview.innerHTML = "";
       preview.appendChild(content);
+      // 3a. 代码块语法高亮（P6a 补丁：render-core 本片不做 token；复用 MemoriaCodeHighlight，
+      //     与 legacy renderer.js:105-106 同源；必须早于 mermaid 替换 pre）
+      _applyCodeHighlightToPreview(preview);
 
       // 3b. 构建 block→源行映射（整篇路径 ⇒ reset：清空旧索引，行区间与 id 全部按这份 AST 重建）
       stampBlockLines(preview, _doc, { reset: true }); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）
@@ -7701,21 +7706,36 @@
   // ── Current AST document ──
   let _doc = null;
 
+  // ── P6a：预览整篇渲染内核（render-core）──────────────────────────────────
+  // 单向门：`renderPreview` 的 29 个调用点一字不动，只换内部实现。
+  // 渲染器单例：render-core 的 createRenderCore 无状态，复用实例只省一次闭包创建。
+  // 为什么不再用 `R.render`：`renderer.js` 是 legacy 渲染器，P6 终局要删除；本段先让它
+  // 失去整篇渲染调用（`R.renderBlock/renderRange` 仍服务块级增量，属 P6b/c）。
+  let _rcCore = null;
+  function _rcRenderer() {
+    const rc = window.MemoriaRenderCore;
+    if (!rc || typeof rc.createRenderCore !== "function") return null;
+    if (!_rcCore) _rcCore = rc.createRenderCore({});
+    return _rcCore;
+  }
+
   /**
    * F1: AST-based preview rendering.
    * Parses source body → AST → renders to DOM.
    * No contenteditable, no cursor, just display.
    */
   function renderPreviewAST(body) {
-    if (!P || !R || !M) { log("F1", "modules missing"); return null; }
+    if (!P || !M || !_rcRenderer()) { log("F1", "modules missing"); return null; }
     const t0 = performance.now();
     _doc = P.parse(body || "");
     M.setDoc(_doc);
     const preview = $("#preview");
     if (!preview) return null;
-    const content = R.render(_doc);
+    // P6a：整篇渲染切 render-core（不再调用 legacy `R.render`）
+    const content = _rcRenderer().renderDocument(_doc).container;
     preview.innerHTML = "";
     preview.appendChild(content);
+    _applyCodeHighlightToPreview(preview);   // 与 renderPreview 同口径
     log("F1", "rendered " + _doc.blocks.length + " blocks in " + (performance.now() - t0).toFixed(1) + "ms");
     return _doc;
   }
@@ -13346,6 +13366,44 @@
     _previewDomKey = null;   // 预览区已空 ⇒ 等新文档渲染完成后重新登记
   }
 
+  /**
+   * P6a 补丁：为预览里的**围栏代码块**恢复语法高亮（render-core 本片不做 token；原 legacy
+   * `renderer.js:105-106` 在渲染期内联调用 `MemoriaCodeHighlight.render`）。
+   *
+   * 复用既有纯函数实现（不复制 token 规则）：
+   *   · 目标 `pre.-code-block > code`（块级代码块；render-core/legacy 同形）；
+   *   · **跳过** `code.language-mermaid`（mermaid 由 `renderMermaidBlocks` 接管，不能当代码高亮）；
+   *   · `Hl.render(text, lang)` 返回**已转义 HTML**：未知语言/异常降级为转义纯文本（与旧路径一致），
+   *     只加 `<span>`、不改 `textContent` ⇒ 冻结签名/textNorm 不变；
+   *   · 无高亮模块/无代码块 ⇒ 零开销早退。
+   * 时点：必须在块挂载后、mermaid/MathJax 后处理之前（与 legacy 渲染期内联高亮同序，
+   * 否则 mermaid 已把 `pre` 换掉）。
+   * 终局：P6b/P6d 应把高亮下沉到 render-core 的 code_block，本函数随之删除。
+   * @returns {number} 实际写入高亮的 code 元素数（诊断用）
+   */
+  function _applyCodeHighlightToPreview(preview) {
+    const Hl = window.MemoriaCodeHighlight;
+    if (!preview || !Hl || typeof Hl.render !== "function") return 0;
+    const codes = preview.querySelectorAll("pre.-code-block > code");
+    if (!codes.length) return 0;
+    let n = 0;
+    codes.forEach(function (codeEl) {
+      const cls = String(codeEl.className || "");
+      if (/(^|\s)language-mermaid(\s|$)/.test(cls)) return;   // mermaid 块不参与代码高亮
+      const m = /(?:^|\s)language-([^\s]+)/.exec(cls);
+      const lang = m ? m[1] : "";
+      const text = codeEl.textContent || "";
+      try {
+        const html = Hl.render(text, lang);
+        if (typeof html === "string" && html !== codeEl.innerHTML) { codeEl.innerHTML = html; n++; }
+      } catch (e) {
+        // 降级：保持已转义纯文本（codeEl 本来就只有 textContent），绝不吞内容
+        log("render", "code highlight fallback: " + ((e && e.message) || e));
+      }
+    });
+    return n;
+  }
+
   /** 预览的"静态收尾"：禁止特殊元素编辑 + 行内公式标记。
    *  普通（切走时缓存）条目的这些属性随节点一并保留，无需重做；只有后台预渲染的条目要在恢复时补做。 */
   function _applyPreviewStaticPass(preview, ast) {
@@ -13545,7 +13603,7 @@
     if (!res || res.status !== "ok" || !(res.blocks && res.blocks.length)) return false;
     if ((res.lines || []).length > _preloadLineLimit()) return false;
     if (_previewDomCache.has(path)) return true;   // 已被普通切换缓存过
-    if (!P || !R || !M) return false;
+    if (!P || !M || !_rcRenderer()) return false;
 
     const MP = window.MemoriaMarkdownPreview;
     const holder = document.createElement("div");
@@ -13563,7 +13621,10 @@
     try {
       if (MP && MP.setCurrentFileDir) MP.setCurrentFileDir(_relDirOf(path));
       ast = P.parse(rewriteMdImagePaths(rawBody));
-      holder.appendChild(R.render(ast));
+      // P6a：预渲染缓存与普通渲染同源（render-core），不得再走 legacy `R.render`
+      holder.appendChild(_rcRenderer().renderDocument(ast).container);
+      // 已挂载；高亮与普通渲染同口径（否则预渲染缓存恢复会搬回无高亮 DOM）
+      _applyCodeHighlightToPreview(holder);
       // 行号映射：`stampBlockLines` 读的是 `state.doc.body`（**当前**文档）⇒ 临时换成被预渲染的那份。
       // 本段同步执行（解析 / 渲染 / 打标记都不 await）⇒ 不会与任何渲染或编辑交错；finally 里立刻还原。
       state.doc = res;
