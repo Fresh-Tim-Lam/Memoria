@@ -1,4 +1,4 @@
-# run_p5_finalize.ps1 —— P5 矩阵一次定案（task-33）
+﻿# run_p5_finalize.ps1 —— P5 矩阵一次定案（task-33）
 #
 # 前提（脚本会先自检，不满足就拒跑）：
 #   1. `git status --porcelain -- src/` 必须干净  —— 否则又是跨代码版本混跑（本轮最大教训）
