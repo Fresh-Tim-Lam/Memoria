@@ -424,6 +424,46 @@ node scripts/benchmark/surface/compare_signatures.mjs \
 | **G-d 文本必须参与** | kind/tag 全同、只改 `textNorm` | 报 `diff`、exit 1 | ✅ `diff=5`、exit 1 |
 | **G-e 缺字段必失败** | 两侧均缺 `signatureNorm`（旧 schema） | `schema_error`、exit 1（**不得静默 match**） | ✅ `schema_error=5`、exit 1 |
 
+### 5.5.1.1 真机模式（`--cdp`）与无头模式（默认）
+
+> **两种模式绝不能混跑**：真机 MathJax 排 270 个、无头只排 ≈3 ⇒ 混着比 = **假 diff**。
+> `run_fidelity.py` 会把 `mode` 写进 JSON 与报告头，下游可据此拒绝跨模式比较。
+
+```bash
+# ── 无头（默认，CI 友好；不需要应用在跑）──
+python scripts/benchmark/surface/run_fidelity.py --label headless-base
+
+# ── 真机（直连已运行应用的 CDP；本 runner 不起 harness）──
+python scripts/benchmark/surface/run_fidelity.py \
+     --cdp http://127.0.0.1:9500 \
+     --kb tests/probe-kb \
+     --files scale/scale-5k.md \
+     --label real-p2c \
+     --ready-timeout 60000 \
+     --timeout 600
+```
+
+**启动真机的完整封装**（含整树清理 + 端口释放确认）：
+
+```powershell
+powershell -File scripts/benchmark/surface/run_fidelity_real.ps1 \
+    -Kb tests\probe-kb -Files scale/scale-5k.md -Label real-p2c -ReadyTimeout 60000
+```
+
+| 参数 | 说明 |
+|---|---|
+| `--cdp <endpoint>` | **真机模式**：直连已运行应用；**不启动 harness**、不复制语料。与 `--url` 语义互斥（`fidelity_cli.mjs` 内亦有校验） |
+| `--ready-timeout <ms>` | 渲染就绪等待上限（公式/mermaid 异步），原样透传 `fidelity_cli.mjs` |
+| `--kb` | 真机模式下**仅用于校验目录存在**（应用已在自己的 KB 上运行） |
+
+**产物**：`documents[<file>].renderReady` = `{status, elapsedMs, math, mermaid, appPending, frames}`；
+JSON 顶层 `mode` = `real` / `headless`。
+
+> **只有 `renderReady.status === 'ready'` 的快照可用于判等**；
+> `timeout`/`failed` 表示快照可能早取或渲染异常；`inconclusive`（无头）**不据此判绿也不判红**。
+
+---
+
 ### 5.5.4 `new` 侧投影入口（**当前临时，将被正式取代**）
 
 P2a 阶段由 `surface-new` 在 `artifacts/agent/verify/` 写**临时 driver**：
@@ -491,3 +531,4 @@ P2a 阶段由 `surface-new` 在 `artifacts/agent/verify/` 写**临时 driver**�
 | 2026-10-20 | **对比机制自证 + `compare_signatures.mjs`**（阶段 2 唯一比较器）：按 kind 过滤，`match`/`diff`/`unsupported` 三态，**`unsupported` 不计失败**（未实现 ≠ 退化）。自证：legacy-vs-legacy 0 diff、注入必报 diff、未支持 kind 仍 PASS。见 §5.5 |
 | 2026-10-20 | **修「假 match」漏洞**（第三个假通过家族）：早期比较器依赖未落盘的 `signatureNorm` ⇒ 文本恒空 ⇒ 只比 kind+tag ⇒ 误判 0 diff。已修：落盘 `signatureNorm`（同 schema v:2）、逐块比 `{tag,textNorm}`、缺失即 `schema_error` 失败。自证 G-d（文本变必红）/G-e（缺字段必失败）均通过。见 §5.5.2.1 |
 | 2026-10-21 | **渲染就绪判定**（P2c 前置，§5.4）：公式/mermaid 异步就绪三态 `ready`/`timeout`/`failed` + 无头 `inconclusive`；**禁止固定 sleep / getBBox / 固定帧等待**。真机 270 公式 135 mermaid 就绪 25.8ms；S1/S2/S3 判别力自证全过；无头全 inconclusive |
+| 2026-10-21 | **`run_fidelity.py` 补 `--cdp` / `--ready-timeout`**（§5.5.1.1）：真机模式直连 CDP、不启 harness；`mode` 标注进 JSON/报告，**真机与无头不得混跑**。真机实测 `scale-5k`：`renderReady=ready`、公式 **270/270**、mermaid **135/135**、等待 22.5ms。无 `--cdp` 时行为不变（4 组回归 0 diff） |

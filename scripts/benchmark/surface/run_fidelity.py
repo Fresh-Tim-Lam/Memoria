@@ -68,7 +68,17 @@ def main():
     ap.add_argument("--files", default="", help="逗号分隔的相对文档路径；空则用内置三文档")
     ap.add_argument("--mutate", default=None, help="变异测试 kind：char|math|strong|reorder（可选）")
     ap.add_argument("--timeout", type=int, default=120, help="node 子进程超时秒数")
+    ap.add_argument("--cdp", default=None,
+                    help="真机模式：已运行应用的 CDP 端点（如 http://127.0.0.1:9500）。"
+                         "给了它就不起 harness、直连真机；与 --url 语义互斥（本 runner 不起 --url）")
+    ap.add_argument("--ready-timeout", type=int, default=None,
+                    help="渲染就绪等待上限 ms（公式/mermaid 异步）；原样透传给 fidelity_cli.mjs")
     args = ap.parse_args()
+
+    # ── 模式：real（--cdp）or headless（默认 harness）──
+    #   !! 两种模式**绝不能混跑**：真机 MathJax 排 270 个、无头只排 ≈3，
+    #      混着比就是假 diff。故 mode 显式标注并写进产物。
+    mode = "real" if args.cdp else "headless"
 
     DEFAULT_FILES = [
         "corpus/03-block-boundaries.md",   # 小文档
@@ -84,19 +94,25 @@ def main():
         print("[fidelity] 源语料目录不存在: %s" % src_kb, file=sys.stderr)
         return 2
 
-    work_kb = (REPO_ROOT / args.work_kb).resolve()
-    if work_kb.exists():
-        shutil.rmtree(work_kb, ignore_errors=True)
-    work_kb.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(src_kb, work_kb)
+    if mode == "real":
+        # 真机模式：**不复制语料、不起 harness**（应用已在自己的 KB 上运行）
+        print("[fidelity] mode=real，直连 CDP: %s（不起 harness）" % args.cdp)
+        work_kb = None
+        harness = None
+    else:
+        work_kb = (REPO_ROOT / args.work_kb).resolve()
+        if work_kb.exists():
+            shutil.rmtree(work_kb, ignore_errors=True)
+        work_kb.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(src_kb, work_kb)
 
-    harness = load_harness(work_kb, args.port)
-    import bottle
-    th = threading.Thread(target=bottle.run, kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True), daemon=True)
-    th.start()
-    if not wait_port(args.port):
-        print("[fidelity] harness 未在端口 %s 起来" % args.port, file=sys.stderr)
-        return 2
+        harness = load_harness(work_kb, args.port)
+        import bottle
+        th = threading.Thread(target=bottle.run, kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True), daemon=True)
+        th.start()
+        if not wait_port(args.port):
+            print("[fidelity] harness 未在端口 %s 起来" % args.port, file=sys.stderr)
+            return 2
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     sha = git_short_sha()
@@ -104,12 +120,19 @@ def main():
     stem = "fidelity-%s_%s" % (label, sha)
     out_path = RESULTS_DIR / ("%s.json" % stem)
 
-    cmd = [
-        "node", str(CDP_CLI),
-        "--url", "http://127.0.0.1:%d/" % args.port,
+    # ── 构建 node 驱动命令：两种模式互斥（fidelity_cli.mjs 内含同样的互斥校验）──
+    cmd = ["node", str(CDP_CLI)]
+    if mode == "real":
+        cmd += ["--cdp", args.cdp]
+    else:
+        cmd += ["--url", "http://127.0.0.1:%d/" % args.port]
+    cmd += [
         "--files", ",".join(files),
         "--out", str(out_path),
     ]
+    # 原样透传渲染就绪等待上限（公式/mermaid 异步；仅显式给出时透传，保持默认行为不变）
+    if args.ready_timeout is not None:
+        cmd += ["--ready-timeout", str(args.ready_timeout)]
     if args.mutate:
         cmd += ["--mutate", args.mutate]
     print("[fidelity] 运行: %s" % " ".join(cmd))
@@ -125,10 +148,19 @@ def main():
 
     raw = json.loads(out_path.read_text(encoding="utf-8"))
 
+    # ── 模式标注（**不得混跑**：真机/无头不可混比）──
+    raw["mode"] = mode
+    raw["cdp"] = args.cdp if mode == "real" else None
+    raw["readyTimeoutMs"] = args.ready_timeout
+    # 回写，保证落盘 JSON 自带模式标注（下游 Comparator 可据此拒绝跨模式比较）
+    out_path.write_text(json.dumps(raw, ensure_ascii=False, indent=2), encoding="utf-8")
+
     # 渲染 markdown 报告
     md_path = RESULTS_DIR / ("%s.md" % stem)
     L = []
     L.append("# 渲染保真度 · %s（%s）\n" % (label, sha))
+    L.append("> **mode = %s**%s" % (mode, "（真机 CDP：%s）" % args.cdp if mode == "real" else "（无头 harness）"))
+    L.append("> ⚠️ 真机与无头**不可混比**：真机 MathJax 排 270 个，无头只排 ≈3；跨模式比较 = 假 diff\n")
     L.append("> 指标：`scripts/benchmark/surface/fidelity.mjs` + `fidelity_cli.mjs`")
     L.append("> 文档：%s" % "、".join(files))
     if args.mutate:
@@ -136,6 +168,29 @@ def main():
     else:
         L.append("")
     L.append("## A 级（硬门槛）整体：**%s**\n" % ("🟢 全绿" if raw.get("allGreen") else "🔴 有红"))
+
+    # ── 渲染就绪（task-31/32）：只有 ready 的快照才可信 ──
+    ready_rows = []
+    for f, d in (raw.get("documents") or {}).items():
+        rr = d.get("renderReady") or {}
+        if not rr:
+            continue
+        mm = rr.get("math") or {}
+        md_ = rr.get("mermaid") or {}
+        ready_rows.append((f, rr.get("status"), rr.get("elapsedMs"),
+                           "%s/%s" % (mm.get("nonEmpty"), mm.get("expected")) if mm.get("expected") else "-",
+                           "%s/%s" % (md_.get("withSvg"), md_.get("containers")) if md_.get("containers") else "-"))
+    if ready_rows:
+        L.append("## 渲染就绪（task-31）\n")
+        L.append("| 文档 | status | 等待 ms | 公式(已排/期望) | mermaid(有svg/容器) |")
+        L.append("|---|---|---|---|---|")
+        for f, st, el, math_c, mmd_c in ready_rows:
+            icon = {"ready": "✅", "timeout": "⏱️", "failed": "🔴", "inconclusive": "⚪"}.get(st, "?")
+            L.append("| `%s` | %s `%s` | %s | %s | %s |" % (f, icon, st, el, math_c, mmd_c))
+        L.append("")
+        L.append("> **只有 `ready` 的快照可信**；`timeout`/`failed` 表示快照可能早取或渲染异常；")
+        L.append("> `inconclusive` = 无头环境（MathJax 排不完），**不据此判绿也不判红**。\n")
+
 
     # ── 变异测试判定（语义与常规相反：注入破坏后**必须**判红，否则说明指标没有判别力）──
     mutation_verdict = None
