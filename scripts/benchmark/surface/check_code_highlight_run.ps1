@@ -1,7 +1,9 @@
-# check_code_highlight_run.ps1 -- real-machine assertion runner for code-block highlight fidelity.
+﻿# check_code_highlight_run.ps1 -- real-machine assertion runner for code-block highlight fidelity.
 # Guard: only kill the PID started by THIS script (safe-kill verifies debug port in cmdline);
 # never resolve by port, never taskkill /T. Snapshots user release app (`Memoria.exe`) before/after.
 param(
+    # task-54：默认密封；-AmbientConfig 仅诊断（继承开发机 ui-settings.json）
+    [switch]$AmbientConfig,
     [string]$Kb = 'artifacts\_p5_matrix_kb',
     [string]$Files = 'scale/scale-5k.md,scale/scale-10k.md,scale/scale-1k.md,corpus/01-ime-zh.md,corpus/02-inline-edges.md,corpus/03-block-boundaries.md,corpus/04-non-editable.md,corpus/05-images.md,corpus/06-links-and-kp.md,corpus/07-extremes.md,README.md,docs/error_log_format.md,docs/ref/ppt/ocr.md',
     [int]$Port = 0,
@@ -9,6 +11,16 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
+
+# ── 配置隔离（task-54）：默认密封，不继承开发机 config/ui-settings.json ──
+#   事故背景：ambient 的 search.embedding_enabled=true 会让搜索同步建 embedding 索引
+#   而长时间阻塞（S11 假红）；同类泄漏也可能污染冻结基线。
+$script:IsoHelper = Join-Path $PSScriptRoot '_iso_config.ps1'
+if (-not (Test-Path $script:IsoHelper)) {
+    throw "[iso] 缺少 $script:IsoHelper —— 拒绝在无配置隔离下运行测量"
+}
+. $script:IsoHelper
+$script:Iso = Initialize-MemoriaConfigIsolation -Script 'check_code_highlight_run' -Label ''run'' -Ambient:$AmbientConfig
 $KbAbs = (Resolve-Path (Join-Path $RepoRoot $Kb)).Path
 Import-Module (Join-Path $RepoRoot 'scripts\benchmark\surface\safe-kill.psm1') -Force
 if ($Port -le 0) { $l = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 0); $l.Start(); $Port = $l.LocalEndpoint.Port; $l.Stop() }

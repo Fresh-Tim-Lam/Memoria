@@ -3,6 +3,8 @@
 # 复用 run_signature_selfcheck.ps1 的启停/整树清理纪律。
 # 只读测量，不改 src/**。
 param(
+    # task-54：默认密封；-AmbientConfig 仅诊断（继承开发机 ui-settings.json）
+    [switch]$AmbientConfig,
     [string]$Kb = 'tests\probe-kb',
     [string]$File = 'scale/scale-5k.md',
     [int]$Port = 9501,
@@ -30,6 +32,16 @@ if (Test-Path $script:SafeKillModule) {
 }
 
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..')).Path
+
+# ── 配置隔离（task-54）：默认密封，不继承开发机 config/ui-settings.json ──
+#   事故背景：ambient 的 search.embedding_enabled=true 会让搜索同步建 embedding 索引
+#   而长时间阻塞（S11 假红）；同类泄漏也可能污染冻结基线。
+$script:IsoHelper = Join-Path $PSScriptRoot '_iso_config.ps1'
+if (-not (Test-Path $script:IsoHelper)) {
+    throw "[iso] 缺少 $script:IsoHelper —— 拒绝在无配置隔离下运行测量"
+}
+. $script:IsoHelper
+$script:Iso = Initialize-MemoriaConfigIsolation -Script 'run_ready_selfcheck' -Label ''run'' -Ambient:$AmbientConfig
 $script:AppPid = $null
 
 function Stop-App {

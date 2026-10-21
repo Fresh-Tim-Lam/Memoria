@@ -16,6 +16,8 @@
 #     KB 用 tests/probe-kb（scale-5k.md 档位，与既有基线一致）。
 # ---------------------------------------------------------------------------
 param(
+    # task-54：默认密封；-AmbientConfig 仅诊断（继承开发机 ui-settings.json）
+    [switch]$AmbientConfig,
     [string]$Out = "results\raw-domwrites-run.json",
     [string]$FileA = "scale/scale-5k.md",
     [int]$Rounds = 5,
@@ -46,6 +48,16 @@ if (Test-Path $script:SafeKillModule) {
 }
 
 $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+
+# ── 配置隔离（task-54）：默认密封，不继承开发机 config/ui-settings.json ──
+#   事故背景：ambient 的 search.embedding_enabled=true 会让搜索同步建 embedding 索引
+#   而长时间阻塞（S11 假红）；同类泄漏也可能污染冻结基线。
+$script:IsoHelper = Join-Path $PSScriptRoot '_iso_config.ps1'
+if (-not (Test-Path $script:IsoHelper)) {
+    throw "[iso] 缺少 $script:IsoHelper —— 拒绝在无配置隔离下运行测量"
+}
+. $script:IsoHelper
+$script:Iso = Initialize-MemoriaConfigIsolation -Script 'run_domwrites' -Label ''run'' -Ambient:$AmbientConfig
 
 function Stop-App {
     # 1) 只终止本次启动的 $script:AppPid（不连带子进程树）。

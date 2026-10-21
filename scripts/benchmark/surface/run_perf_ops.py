@@ -97,6 +97,24 @@ A_LEVEL = ["typing", "scroll", "select", "paste", "undo", "find", "save",
 B_LEVEL = ["memGrowth"]
 
 
+def _load_iso_config():
+    """加载共用配置隔离助手（同目录 `_iso_config.py`）。
+
+    隔离失败必须**直接报错**：静默降级回 ambient 会让测量在无提示的情况下失去密封性，
+    正是 task-53 假红的成因。
+    """
+    import importlib.util as _ilu
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_iso_config.py")
+    if not os.path.exists(_p):
+        raise SystemExit("缺少配置隔离助手 _iso_config.py —— 拒绝在无隔离下运行测量")
+    _spec = _ilu.spec_from_file_location("_iso_config", _p)
+    if _spec is None or _spec.loader is None:
+        raise SystemExit("无法加载 _iso_config.py")
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def load_harness(kb_dir: Path, port: int):
     os.environ["MEMORIA_HARNESS_KB"] = str(kb_dir)
     os.environ["MEMORIA_HARNESS_PORT"] = str(port)
@@ -280,8 +298,19 @@ def main():
     ap.add_argument("--surface", default=None, choices=["legacy", "new"],
                     help="task-47 L1：指定显示插头（同会话切 MemoriaSurface），用于 A/B 双侧对照；未指定则用当前插头")
     ap.add_argument("--timeout", type=int, default=900)
+    # ── 配置隔离（task-54）：默认密封，不继承开发机 config/ui-settings.json ──
+    #   事故背景：ambient 的 search.embedding_enabled=true 会让搜索在单线程 harness 内
+    #   同步构建 embedding 索引（阻塞 >45s），导致假红；同类泄漏也可能污染冻结基线。
+    _iso_mod = _load_iso_config()
+    _iso_mod.add_isolation_arg(ap)
     args = ap.parse_args()
-
+    # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
+    _iso = _iso_mod.isolate_config(
+        script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
+        label=getattr(args, 'label', 'run'),
+        ambient=getattr(args, 'ambient_config', False),
+    )
+    print(_iso.describe())
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     sha = git_short_sha()
     stem = "perf-ops-%s_%s" % (args.label, sha)

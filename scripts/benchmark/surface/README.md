@@ -6,7 +6,49 @@
 > 契约与测试清单的权威说明：[docs/design/view-surface-contract.md](../../../docs/design/view-surface-contract.md)（§5 的 C1–C12、§3.3 的 flush 清单与预算）。
 > 语料与操作脚本：`tests/probe-kb/`（构造覆盖 ×7 + 三档规模 + `cases/cases.json`）。
 
+## 🚨 硬规则（task-55，先读这段再跑任何测量）
+
+> **冻结语料只读；测试写入一律在副本上；每次真机测试前后校验 sha。**
+
+| 规则 | 说明 |
+|---|---|
+| **冻结语料只读** | `artifacts/_p5_matrix_kb`、`artifacts/baseline/**`、`artifacts/baseline-kb/**` 一律**只读**。 |
+| **写类测试用副本** | `save` / `paste` / 编辑 / 结构编辑 / 撤销重做 等**会写 KB** 的操作，必须用 `make_work_copy()` 建副本，`MEMORIA_KB` 指向副本，报告里写明**副本路径**。 |
+| **前后校验 sha** | 每次真机测试开始前 + 结束后各算一次全 13 文档 sha，不一致 ⇒ **判红并点名文件**。 |
+
+**为什么（真实缺陷，进行中）**：2026-10-21 22:57:54，`artifacts/_p5_matrix_kb/corpus/03-block-boundaries.md`
+被测试的自动保存写入了 `ZZZ`（778B→814B，同时 LF→CRLF）。而 P6a 在 20:49 的 diag 里该文档**不含** `ZZZ`
+⇒ **污染发生在测试运行期间**，不是早年遗留。后果：`p5_perf_frozen` 的 `blocks=32` / `upsert=48`
+是污染态下的值，**基线失效并已重建**（task-55）。
+
+**怎么用**：
+
+```powershell
+# ① 测试前：冻结 KB 校验 + 落 manifest
+python scripts/benchmark/surface/_kb_guard.py --kb artifacts/_p5_matrix_kb `
+    --manifest artifacts/baseline/p5_perf_frozen/kb-manifest.json
+
+# ② 跑测量 …
+
+# ③ 测试后：对比前快照（不一致 ⇒ exit 1 并点名）
+python scripts/benchmark/surface/_kb_guard.py --kb artifacts/_p5_matrix_kb `
+    --verify artifacts/agent/verify/frozen-kb-guard-before.json
+```
+
+```python
+# 需要写 KB 的测试：一律用副本
+sys.path.insert(0, "scripts/benchmark/surface")
+from _kb_guard import KbGuard, make_work_copy
+
+guard = KbGuard("artifacts/_p5_matrix_kb"); guard.snapshot_before()
+work  = make_work_copy("artifacts/_p5_matrix_kb", label="save-test")   # 副本
+os.environ["MEMORIA_KB"] = str(work)                                   # 指向副本
+...                                                                     # 跑测量
+guard.assert_clean("后")                                                # 不干净即抛异常判红
+```
+
 ## 为什么报告落这里（而不是 `artifacts/`）
+
 
 `AGENTS.md §1` 把 `artifacts/**` 定为**可再生缓存**，且 `.gitignore` 忽略它 ⇒ 放那儿的报告**溯不到**。
 人 2026-09-28 定：「**入库，相关的测试报告便于溯源**」⇒ 报告走**可提交**路径，即本目录（与 `graph` / `maintenance` / `usage` 同构）。

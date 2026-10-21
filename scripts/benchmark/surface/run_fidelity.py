@@ -33,6 +33,24 @@ RESULTS_DIR = REPO_ROOT / "scripts" / "benchmark" / "surface" / "results"
 CDP_CLI = REPO_ROOT / "scripts" / "benchmark" / "surface" / "fidelity_cli.mjs"
 
 
+def _load_iso_config():
+    """加载共用配置隔离助手（同目录 `_iso_config.py`）。
+
+    隔离失败必须**直接报错**：静默降级回 ambient 会让测量在无提示的情况下失去密封性，
+    正是 task-53 假红的成因。
+    """
+    import importlib.util as _ilu
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_iso_config.py")
+    if not os.path.exists(_p):
+        raise SystemExit("缺少配置隔离助手 _iso_config.py —— 拒绝在无隔离下运行测量")
+    _spec = _ilu.spec_from_file_location("_iso_config", _p)
+    if _spec is None or _spec.loader is None:
+        raise SystemExit("无法加载 _iso_config.py")
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def load_harness(kb_dir: Path, port: int):
     os.environ["MEMORIA_HARNESS_KB"] = str(kb_dir)
     os.environ["MEMORIA_HARNESS_PORT"] = str(port)
@@ -73,8 +91,19 @@ def main():
                          "给了它就不起 harness、直连真机；与 --url 语义互斥（本 runner 不起 --url）")
     ap.add_argument("--ready-timeout", type=int, default=None,
                     help="渲染就绪等待上限 ms（公式/mermaid 异步）；原样透传给 fidelity_cli.mjs")
+    # ── 配置隔离（task-54）：默认密封，不继承开发机 config/ui-settings.json ──
+    #   事故背景：ambient 的 search.embedding_enabled=true 会让搜索在单线程 harness 内
+    #   同步构建 embedding 索引（阻塞 >45s），导致假红；同类泄漏也可能污染冻结基线。
+    _iso_mod = _load_iso_config()
+    _iso_mod.add_isolation_arg(ap)
     args = ap.parse_args()
-
+    # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
+    _iso = _iso_mod.isolate_config(
+        script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
+        label=getattr(args, 'label', 'run'),
+        ambient=getattr(args, 'ambient_config', False),
+    )
+    print(_iso.describe())
     # ── 模式：real（--cdp）or headless（默认 harness）──
     #   !! 两种模式**绝不能混跑**：真机 MathJax 排 270 个、无头只排 ≈3，
     #      混着比就是假 diff。故 mode 显式标注并写进产物。
