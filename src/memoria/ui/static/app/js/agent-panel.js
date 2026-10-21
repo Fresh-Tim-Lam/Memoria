@@ -1497,7 +1497,7 @@ window.MemoriaAgentPanel = (function () {
   /** 一条消息正文的渲染入口：用户气泡走 `@引用` chip，助手气泡走 Markdown（含兜底）。 */
   function renderBody(el, role, text) {
     if (role === "user") el.innerHTML = linkifyUser(text);
-    else renderAssistantBody(el, text);                    // 助手气泡：Markdown（含兜底）；用户气泡：`@引用` chip + 纯文本
+    else renderAssistantBody(el, text, { final: true });                    // 助手气泡：Markdown（P4e：最终消息走 render-core；用户气泡：`@引用` chip + 纯文本）
     // ★ 可寻址：给每段可见文本标出它在**消息原文**里的字符区间（拖拽引用靠它定位，见文件尾 `annotateMessageOffsets`）
     annotateMessageOffsets(el, text);
   }
@@ -1557,9 +1557,20 @@ window.MemoriaAgentPanel = (function () {
     });
   }
 
-  /** 助手气泡正文渲染（失败/无 `marked` 时退回纯文本 + `<br>`）。 */
-  function renderAssistantBody(el, text) {
+  /** 助手气泡正文渲染。
+   *
+   *  P4e：**最终消息**走 `MemoriaParser + render-core`（与预览同一个解析器/渲染器，消灭 marked 双解析器）；
+   *  **流式期间**仍走 `marked` 兜底（策略 A：流式的 safe 前缀逐帧重绘，增量渲染另立一片），
+   *  流式结束 `finalizeMessage()` 会用 `messageEl()` 整体重建气泡 ⇒ 自动收敛到 render-core。
+   *
+   *  @param {HTMLElement} el 目标气泡正文
+   *  @param {string} text Markdown 原文
+   *  @param {{final?:boolean}} [opts] `final:true` = 已完成消息（走 render-core）；缺省 = 流式帧（marked 兜底）
+   *  失败/缺模块 ⇒ 退回纯文本 + `<br>`（"渲染坏了也不至于看不了答案"）。
+   */
+  function renderAssistantBody(el, text, opts) {
     const src = String(text == null ? "" : text);
+    if (opts && opts.final && renderAssistantBodyCore(el, src)) { try { el.setAttribute("data-agent-render", "core"); } catch (e0) { /* noop */ } return; }
     const md = window.marked;
     if (!md || typeof md.parse !== "function") {
       el.innerHTML = linkify(src);
@@ -1573,11 +1584,117 @@ window.MemoriaAgentPanel = (function () {
       sanitizeHtmlInto(el, tpl.content);
       linkifyNodes(el);
       attachAgentImages(el); typesetAgentMath(el); // 净化**之后**：先挂图片灯箱、再排版公式（产物都不进净化器）
+      try { el.setAttribute("data-agent-render", "marked"); } catch (e1) { /* noop */ }
     } catch (e) {
       el.classList.remove("markdown-body");
       el.innerHTML = linkify(src);
       console.warn("agent-md:", e);
     }
+  }
+
+  // ── P4e：agent 气泡统一到 render-core（无行号模式 + 块级后处理）──────────────────────────
+  // 为什么（人提出的功能需求 + 架构正确性）：
+  //   ① 后续"在 agent 回复里选区 → 精确行列引用"需要气泡 DOM 与预览同源（同一块结构、同一套后处理）；
+  //   ② 此前气泡用 `marked`、预览用 `MemoriaParser` ⇒ 同一段 Markdown 两个解析器可能产出不一致
+  //      （并行事实源，阶段 2 的核心攻击目标）。本函数**不复制渲染实现**：解析 = MemoriaParser，
+  //      渲染 = MemoriaRenderCore，链接后处理 = 宿主 `applyPreviewLinkLayer`，公式/mermaid/图片 =
+  //      markdown-preview 既有实现。
+  // 无行号模式：气泡没有源码行概念 ⇒ `renderDocument(doc, {noSourceLines:true})`，块只带
+  //   `data--block-index`（位置序块身份），**不伪造 data--src-line**。
+  // 安全：模型输出不可信（可能含库内文本/提示注入）。render-core 只产生程序化 DOM（parser 不解析
+  //   原始 HTML ⇒ 文本一律走 textContent）；唯一来自不可信 Markdown 的属性是 `<a href>` 与 `<img src>`：
+  //   ⇒ 去掉全部 href（不能把 webview 导航交出去）、图片只留库内 `/files/`（与旧净化器同一安全边界）。
+  /** 惰性 render-core 单例（气泡渲染与预览同源，但**不**共用 BlockIndex：气泡无源码行）。 */
+  let agentCore = null;
+  function agentCoreInstance() {
+    const RC = window.MemoriaRenderCore;
+    if (!RC || typeof RC.createRenderCore !== "function") return null;
+    if (!agentCore) agentCore = RC.createRenderCore({});
+    return agentCore;
+  }
+
+  /** 气泡 Markdown 源：公式归一化（同预览）→ 预览同款 normalizeBody（图片路径改写前一步）。 */
+  function agentMarkdownSource(text) {
+    let body = agentMathSource(text);
+    const MP = window.MemoriaMarkdownPreview;
+    if (MP && typeof MP.normalizeBody === "function") {
+      try { body = MP.normalizeBody(body); } catch (e) { console.warn("agent-normalize:", e); }
+    }
+    return body;
+  }
+
+  /** 气泡 DOM 的不可信 URL 出口：去 href（不交出导航）、图片只留库内（同旧净化器边界）。 */
+  function sanitizeAgentCoreUrls(el) {
+    el.querySelectorAll("a[href]").forEach(function (a) { a.removeAttribute("href"); });
+    el.querySelectorAll("img").forEach(function (img) {
+      const src = String(img.getAttribute("src") || "");
+      if (!isLocalImageSrc(src)) img.remove();
+    });
+  }
+
+  /** 代码块语法高亮：复用 legacy 预览同一实现（`MemoriaCodeHighlight.render`，预览 renderer.js:107 同款）。
+   *  render-core 本片不做高亮 token（见文件头注释），这里补齐 ⇒ 气泡与预览 {tag,textNorm} 序列一致。 */
+  function highlightAgentCodeBlocks(el) {
+    const Hl = window.MemoriaCodeHighlight;
+    if (!Hl || typeof Hl.render !== "function") return;
+    el.querySelectorAll("pre.-code-block > code").forEach(function (codeEl) {
+      const m = /(?:^|\s)language-([^\s]+)/.exec(codeEl.className || "");
+      const lang = m ? m[1] : "";
+      const src = codeEl.textContent || "";
+      try { codeEl.innerHTML = Hl.render(src, lang); } catch (e) { /* 高亮失败保持转义纯文本（同预览降级） */ }
+    });
+  }
+
+  /** 气泡块级后处理：链接层只处理**本次渲染产出的块**（宿主门面自带 root 作用域，不复制实现）。 */
+  function postProcessAgentBlocks(el) {
+    const app = window.MemoriaApp;
+    const surf = app && app.surface;
+    if (surf && typeof surf.applyPreviewLinkLayer === "function") {
+      try { surf.applyPreviewLinkLayer(el); } catch (e) { console.warn("agent-link-layer:", e); }
+    }
+  }
+
+  /** 用 render-core 渲染助手正文；成功返回 true，失败返回 false（调用方回退 marked/纯文本）。 */
+  function renderAssistantBodyCore(el, text) {
+    const P = window.MemoriaParser;
+    const core = agentCoreInstance();
+    if (!P || typeof P.parse !== "function" || !core) return false;
+    try {
+      const doc = P.parse(agentMarkdownSource(text));
+      const out = core.renderDocument(doc, { noSourceLines: true });
+      let html = out.container.innerHTML;
+      const MP = window.MemoriaMarkdownPreview;
+      if (MP && typeof MP.rewriteLocalImagePaths === "function") {
+        try { html = MP.rewriteLocalImagePaths(html); } catch (e) { console.warn("agent-img-rewrite:", e); }
+      }
+      el.innerHTML = "";
+      el.classList.add("markdown-body");
+      el.innerHTML = html;
+      highlightAgentCodeBlocks(el);
+      sanitizeAgentCoreUrls(el);
+      postProcessAgentBlocks(el);
+      linkifyNodes(el);            // 既有能力：`文件:行号` → 可点锚点（agent 特有，预览无此装饰）
+      attachAgentImages(el);       // 图片灯箱：同一个实现
+      typesetAgentMath(el);        // 公式排版（同预览 MathJax 实例/配置，防抖）
+      if (MP && typeof MP.renderMermaidBlocks === "function") {
+        try { MP.renderMermaidBlocks(el); } catch (e) { console.warn("agent-mermaid:", e); }
+      }
+      return true;
+    } catch (e) {
+      console.warn("agent-core-md:", e);
+      return false;
+    }
+  }
+
+  /** P4e 诊断/回归出口（**仅供探针**：与生产同一函数，默认渲染到游离节点，不挂载）。
+   *  mode `final` = 已完成消息（render-core）；`stream` = 流式帧（marked 兜底）。
+   *  `target` 可传同一元素以模拟流式逐帧重绘（验收：不重复）。 */
+  function renderMarkdownForTest(text, mode, target) {
+    const el = target || document.createElement("div");
+    if (!el.className) el.className = "-agent-msg-body";
+    if (mode === "stream") renderAssistantBody(el, text);
+    else renderAssistantBody(el, text, { final: true });
+    return el;
   }
 
   // ── 输入框上方的状态 bar（首版）────────────────────────────────────────
@@ -2443,7 +2560,7 @@ window.MemoriaAgentPanel = (function () {
     const body = document.createElement("div"); body.className = "-agent-think-body";
     // 有正文 ⇒ 走与助手正文**同一条 markdown 管线**（公式 / 代码 / 列表都渲染，2026-09-21 的口径：
     // 「思考可以渲染吧，不然公式这些用户都看不懂」）；**流式同样走渲染**（见 `updateThinkRowEl()`）。
-    if (String(text || "").trim()) { renderAssistantBody(body, text); body.__thinkText = String(text); }
+    if (String(text || "").trim()) { renderAssistantBody(body, text, { final: true }); body.__thinkText = String(text); }
     else if (live) { body.__thinkText = T("agent.thinkLive"); body.textContent = body.__thinkText; }
     bubble.appendChild(body);
     const more = document.createElement("button");
@@ -3928,8 +4045,8 @@ window.MemoriaAgentPanel = (function () {
   }
 
   const baseRenderAssistantBodyForRefs = renderAssistantBody;
-  renderAssistantBody = function (el, text) {
-    baseRenderAssistantBodyForRefs(el, text);
+  renderAssistantBody = function (el, text, opts) {
+    baseRenderAssistantBodyForRefs(el, text, opts);   // P4e：透传 `{final:true}`（最终消息走 render-core）
     chipRangeRefsInDom(el);
   };
 
@@ -5030,7 +5147,7 @@ window.MemoriaAgentPanel = (function () {
       if (!text) return;
       const step = document.createElement("div");
       step.className = "-agent-step";
-      renderAssistantBody(step, text); // 与助手正文同一条管线（公式 / 代码 / 列表都渲染）
+      renderAssistantBody(step, text, { final: true }); // 与助手正文同一条管线（P4e：最终文本走 render-core；公式/代码/列表都渲染）
       box.appendChild(step);
     });
     return box;
@@ -6762,6 +6879,8 @@ window.MemoriaAgentPanel = (function () {
     // 写入状态栏入口（`plan-confirm.js` 调用）：告知"这次对话写了什么"，本模块渲染在顶部
     // **副标题行**（`.-agent-subhead`）——「已修改 N 个文件（可展开）+ 撤销一步 / 重做一步」。
     setWriteState: setWriteState,
+    // P4e 诊断/回归出口（仅供探针；生产路径不调用）：与生产同一函数渲染到游离节点。
+    renderMarkdownForTest: renderMarkdownForTest,
   };
 
   /**

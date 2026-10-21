@@ -474,18 +474,34 @@ window.MemoriaRenderCore = (function () {
    * 渲染单个块。
    * @param {object} block AST 块节点
    * @param {number} blockIndex 文档内下标（写 data--block-index，与 legacy 同口径）
-   * @param {object} [opts] opts.strictUnsupported=true ⇒ 未实现 kind 直接抛 UNSUPPORTED_BLOCK
+   * @param {object} [opts] opts.strictUnsupported=true ⇒ 未实现 kind 直接抛 UNSUPPORTED_BLOCK；
+   *   opts.noSourceLines=true ⇒ **无行号模式**（P4e：agent 气泡等无源码行场景）：
+   *   返回的块元素**不带**任何行号属性（`data--src-line` / `data--src-line-end` / `data-block-id`），
+   *   只保留 `data--block-index` 作为块序身份；本模块本身从不写行号属性，此处把宿主后续可能
+   *   叠加的行号属性一并清除，保证"不得伪造行号"。
    */
   function renderBlock(block, blockIndex, opts) {
     var fn = (block && block.type) ? BLOCK_RENDERERS[block.type] : null;
-    if (fn) return fn(block, blockIndex);
-    if (opts && opts.strictUnsupported) {
+    var el;
+    if (fn) el = fn(block, blockIndex);
+    else if (opts && opts.strictUnsupported) {
       var err = new Error("[MemoriaRenderCore] 未实现的块 kind: " + (block && block.type));
       err.code = "UNSUPPORTED_BLOCK";
       err.kind = block && block.type;
       throw err;
+    } else {
+      el = renderUnsupportedBlock(block, blockIndex, null);
     }
-    return renderUnsupportedBlock(block, blockIndex, null);
+    if (opts && opts.noSourceLines) _clearSourceLineAttrs(el);
+    return el;
+  }
+
+  /** 无行号模式：清掉行号/正式块身份属性（保留 `data--block-index` 位置序身份）。 */
+  function _clearSourceLineAttrs(el) {
+    if (!el || el.nodeType !== 1) return;
+    el.removeAttribute("data--src-line");
+    el.removeAttribute("data--src-line-end");
+    el.removeAttribute("data-block-id");
   }
 
   /**
