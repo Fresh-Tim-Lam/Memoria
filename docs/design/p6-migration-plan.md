@@ -107,6 +107,38 @@
 
 ---
 
+## 2.5 执行状态（2026-10-22 00:0x）
+
+| 段 | 状态 | 证据 |
+|---|---|---|
+| **P6a** | ✅ 已入库 `d472e851` | `R.render` 运行时 0 次；冻结签名 13/13（当时工具）；性能 −0.2%~+0.6%；高亮 435 块/2189 span |
+| **P6b** | ✅ 已入库 `045bbb6e` | 3 个临时开窗删除，改依赖注入（`createRenderCore({host})`）；4 文件 +94/−116 |
+| **P6c** | ⏳ 代码完成、**未提交** | `legacy-surface.js`（298 行）已删；`switchTo('legacy')` 显式失败（`rejected=true`/`degraded=['unknown-surface']`/保持 `new`）；12 剧本 12/12；高亮 435/2189；门禁 PASS 0；**等待 `frozen-v2` 基线** |
+| **P6d** | ⏳ 未开始 | 见下方残留调用点 |
+
+### P6c 阻塞原因（R-18）
+
+**保真签名对 mermaid/MathJax 不确定**：同一份代码连跑 2 次，`signature` 在
+`docs/ref/ppt/ocr.md`、`scale/scale-1k.md`、`scale/scale-5k.md`、`scale/scale-10k.md` **4 篇不同**
+（`fidelity.mjs:771` 的 `htmlFingerprint = htmlFp(hNorm.html)`，`stripNondetIds` 未剥净 SVG/MathJax 易变 id）。
+
+⇒ **"13/13 IDENTICAL" 门禁一直在随机漂移**；P6a 当时的 raw 13/13 属同状态巧合。
+⇒ 修复：扩展归一化（归一化而非删除，保留嵌套标记覆盖）+ **同代码双跑签名逐字节相同** + 用**同一工具版本**重建 `frozen-v2`。
+
+**新原则：基线身份 = 数据 sha + 工具 sha + 配置隔离状态**（此前只认数据 sha，工具一改基线即失效）。
+
+### P6d 前置：`renderer.js` 尚存的调用点（已勘察）
+
+删除 `renderer.js`（514 行）前必须先把这两处迁到 render-core：
+
+| 位置 | 调用 | 说明 |
+|---|---|---|
+| `app.js:7805` | `R.renderRange(_doc, blockIndex, blockIndex+1, container)` | 块级增量渲染（P2 起返回新建） |
+| `app.js:14302` | `R.renderBlock(...)` | 块级重渲 |
+| `app.js:7703` | `const R = window.MemoriaRenderer;` | 句柄取得 |
+
+`render-core.js:19` 注释明确：**绝不静默渲染成空块 / 静默丢内容**，是对 `renderer.js` `default:` 分支（内容静默消失）的修正 —— P6d 迁移时必须保留该行为差异（这是改善，不是等价）。
+
 ## 3. 全域验收（P6 收口）
 
 | # | 判据 | 来源 |
