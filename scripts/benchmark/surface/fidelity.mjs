@@ -831,7 +831,201 @@ export const PROBE_SOURCE = `(function () {
     return 'unknown';
   }
 
-  return { runFidelity: runFidelity, buildDomProjection: buildDomProjection, buildAstProjection: buildAstProjection, mutate: mutate, DOM_KIND_OK: DOM_KIND_OK };
+  // ══════════════════════════════════════════════════════════════════════════
+  // 渲染就绪判定（task-31 · P2c 前置）
+  //
+  // 问题：MathJax 与 mermaid 都是**异步**渲染，取快照早一步 ⇒ 假 diff，晚一步 ⇒ 白等。
+  // 三态：ready / timeout / failed —— **timeout 绝不冒充 ready**。
+  //
+  // !! 三条被禁的做法（都是历史踩过的坑）：
+  //   ① 禁止固定 sleep —— 随文档规模失准（曾 sleep 2500 仍不够，导致假红）
+  //   ② 禁止 getBBox —— 无头/不可见时为 0，不可作判据
+  //   ③ 禁止「固定帧等待」当就绪判据 —— kpHover 那次 16.7ms 教训：那是帧成本，不是渲染完成
+  //
+  // 判据（两条腿，缺一不可）：
+  //   A. **语义完成**：
+  //      公式 —— 每个期望的公式容器内出现 mjx-container 且其**子节点非空**
+  //              （另可 await state._mathPending：应用自己的 typesetPromise 链，最强信号）
+  //      mermaid —— 所有 mermaid 源块都已被替换掉（无残留 【code.language-mermaid】），
+  //                 每个容器内是真实 svg 且 viewBox 非空；出现 .-mermaid-error 即 failed
+  //   B. **idle**：连续 N 帧「已排版节点数 + 容器数 + svg 数」三元组不变
+  //      ⇒ 防「排到一半就比对」
+  //
+  // 只读纯 DOM 计数，不依赖布局（故无头下也能跑，但结论标 inconclusive，见下）。
+  // ══════════════════════════════════════════════════════════════════════════
+  var READY_MIN_FRAMES = 3;         // 连续不变帧数
+  var READY_POLL_CAP_FRAMES = 3600; // 硬上限（60fps 下约 60s），防死等
+
+  function isHeadlessEnv() {
+    return !!(navigator.userAgent && /Headless/i.test(navigator.userAgent));
+  }
+
+  function nextFrameP() {
+    return new Promise(function (r) { requestAnimationFrame(function () { r(); }); });
+  }
+
+  /** 公式快照：已排版容器数 / 子节点非空数 / 期望数（.-math 或 [data-formula]） */
+  function mathSnapshot(preview) {
+    var typeset = preview.querySelectorAll('mjx-container');
+    var nonEmpty = 0;
+    for (var i = 0; i < typeset.length; i++) {
+      // 子节点非空 = 真的画出了东西（不是占位空壳）
+      if (typeset[i].childElementCount > 0) nonEmpty++;
+    }
+    var expected = preview.querySelectorAll('.-math, [data-formula]').length;
+    return {
+      typeset: typeset.length,
+      nonEmpty: nonEmpty,
+      expected: expected,
+      key: nonEmpty + ':' + typeset.length,
+    };
+  }
+
+  /** mermaid 快照：容器数 / 有 svg 且 viewBox 非空数 / 错误节点数 / 残留源块数 */
+  function mermaidSnapshot(preview) {
+    var containers = preview.querySelectorAll('.-mermaid-container');
+    var withSvg = 0;
+    for (var i = 0; i < containers.length; i++) {
+      var svg = containers[i].querySelector('svg');
+      if (svg && String(svg.getAttribute('viewBox') || '').trim()) withSvg++;
+    }
+    var errs = preview.querySelectorAll('.-mermaid-error').length;
+    var residualSrc = preview.querySelectorAll('code.language-mermaid').length;
+    return {
+      containers: containers.length,
+      withSvg: withSvg,
+      errors: errs,
+      residualSrc: residualSrc,
+      key: containers.length + ':' + withSvg + ':' + errs + ':' + residualSrc,
+    };
+  }
+
+  /**
+   * 主入口：等待渲染就绪。
+   * @param {Object} opt { which: 'math'|'mermaid'|'both', minFrames, timeoutMs, awaitAppPending }
+   * @returns ready / timeout / failed / inconclusive（无头）
+   */
+  async function waitForRenderReady(opt) {
+    opt = opt || {};
+    var which = opt.which || 'both';
+    var minFrames = opt.minFrames || READY_MIN_FRAMES;
+    var timeoutMs = opt.timeoutMs || 20000;
+    var awaitAppPending = opt.awaitAppPending !== false;
+    var preview = document.getElementById('preview');
+    var t0 = performance.now();
+    var base = {
+      which: which,
+      headless: isHeadlessEnv(),
+      minFrames: minFrames,
+      timeoutMs: timeoutMs,
+      awaitAppPending: awaitAppPending,
+    };
+    if (!preview) {
+      return Object.assign(base, { status: 'failed', reason: 'no-preview', elapsedMs: 0 });
+    }
+
+    var sawTimeout = false;
+
+    // 最强信号：应用自己的 typesetPromise 链（仅公式）。它 resolve 时 typeset 真的全跑完了。
+    if (awaitAppPending && (which === 'math' || which === 'both')) {
+      var pend = window.state && window.state._mathPending;
+      if (pend && typeof pend.then === 'function') {
+        var settled = await Promise.race([
+          pend.then(function () { return 'done'; }).catch(function () { return 'rejected'; }),
+          new Promise(function (r) { setTimeout(function () { r('pending-timeout'); }, timeoutMs); }),
+        ]);
+        base.appPending = settled;
+      } else {
+        base.appPending = 'none';
+      }
+    }
+
+    var lastKey = null;
+    var stableFrames = 0;
+    var frames = 0;
+    var lastMath = null;
+    var lastMmd = null;
+    var status = 'timeout';
+
+    while (frames < READY_POLL_CAP_FRAMES) {
+      await nextFrameP();
+      frames++;
+      var m = mathSnapshot(preview);
+      var mm = mermaidSnapshot(preview);
+      lastMath = m;
+      lastMmd = mm;
+
+      var key = m.key + '|' + mm.key;
+      if (key === lastKey) stableFrames++; else { stableFrames = 0; lastKey = key; }
+
+      // 语义完成判定
+      var mathDone = (which === 'mermaid') ? true
+        : (m.expected === 0 ? true : (m.nonEmpty >= m.expected && m.typeset > 0));
+      var mmdFailed = (which === 'math') ? false : (mm.errors > 0);
+      var mmdDone = (which === 'math') ? true
+        : (mm.containers === 0 && mm.residualSrc === 0) ? true   // 无 mermaid 块
+          : (mm.withSvg === mm.containers && mm.containers > 0 && mm.residualSrc === 0);
+
+      if (mmdFailed) {
+        status = 'failed';
+        base.reason = 'mermaid-error-node';
+        break;
+      }
+      if (mathDone && mmdDone && stableFrames >= minFrames) {
+        status = 'ready';
+        break;
+      }
+      if (performance.now() - t0 > timeoutMs) {
+        sawTimeout = true;
+        status = 'timeout';
+        break;
+      }
+    }
+
+    var elapsed = performance.now() - t0;
+    var out = Object.assign(base, {
+      status: status,
+      elapsedMs: +elapsed.toFixed(2),
+      frames: frames,
+      stableFrames: stableFrames,
+      math: lastMath,
+      mermaid: lastMmd,
+      sawTimeout: sawTimeout,
+    });
+
+    // !! 无头：MathJax 排不完（≈3 vs 真机 270）=> 结论一律 inconclusive，
+    //    既不报 ready 也不报 failed（除非是有明确 DOM 证据的 mermaid 错误）。
+    if (out.headless && status !== 'failed') {
+      out.status = 'inconclusive';
+      out.reason = 'headless-math-incomplete';
+    }
+    // 真实性守卫：若判 ready 但公式一个都没排出来（期望>0），视为没就绪
+    if (out.status === 'ready' && which !== 'mermaid' && lastMath && lastMath.expected > 0 && lastMath.nonEmpty === 0) {
+      out.status = 'timeout';
+      out.reason = 'ready-but-zero-typeset';
+    }
+    return out;
+  }
+
+  /**
+   * 判别力自证用：抢拍（不等 idle，立即取一次快照并给出"若此时判定"的结论）。
+   * 期望在渲染未完成时返回非 ready。
+   */
+  function snapshotNow(which) {
+    var preview = document.getElementById('preview');
+    if (!preview) return { status: 'failed', reason: 'no-preview' };
+    var m = mathSnapshot(preview);
+    var mm = mermaidSnapshot(preview);
+    var w = which || 'both';
+    var mathDone = (w === 'mermaid') ? true : (m.expected === 0 ? true : (m.nonEmpty >= m.expected && m.typeset > 0));
+    var mmdDone = (w === 'math') ? true : (mm.containers === 0 && mm.residualSrc === 0) ? true
+      : (mm.withSvg === mm.containers && mm.containers > 0 && mm.residualSrc === 0);
+    var status = (mm.errors > 0) ? 'failed'
+      : (mathDone && mmdDone) ? 'ready-but-not-idle' : 'not-ready';
+    return { status: status, math: m, mermaid: mm, headless: isHeadlessEnv() };
+  }
+
+  return { runFidelity: runFidelity, buildDomProjection: buildDomProjection, buildAstProjection: buildAstProjection, mutate: mutate, DOM_KIND_OK: DOM_KIND_OK, waitForRenderReady: waitForRenderReady, snapshotNow: snapshotNow, mathSnapshot: mathSnapshot, mermaidSnapshot: mermaidSnapshot };
 })()`;
 
 // ─────────────────────────────────────────────────────────────────────────────

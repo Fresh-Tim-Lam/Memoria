@@ -49,6 +49,7 @@ fidelity_cli.mjs —— 渲染保真度指标（A 级硬门槛 / B 级 warn）
   --files <a,b,c>         待测文档（逗号分隔）
   --out   <path.json>     产物路径
   --mutate <kind>         变异测试：char | math | strong | reorder（期望断言变红）
+  --ready-timeout <ms>    渲染就绪等待上限（公式/mermaid 异步），默认 30000
   --help                  显示本帮助
 
 注意：--url 与 --cdp **不可同时给**；两者都无则报错。
@@ -226,6 +227,8 @@ async function main() {
   const files = args.files || [];
   const out = args.out || null;
   const mutateKind = args.mutate || null;
+  // task-31：渲染就绪等待上限（公式/mermaid 都是异步的）。大文档真机需给足，默认 30s。
+  const readyTimeoutMs = args['ready-timeout'] ? parseInt(args['ready-timeout'], 10) : 30000;
 
   // ── 两种模式互斥，报错要清楚（后来人最容易用错的地方）──
   if (harnessUrl && cdpEndpoint) {
@@ -306,6 +309,18 @@ async function main() {
       })()`);
       if (!doc) { result.documents[file] = { status: 'error', error: '解析失败（state.doc.body 不可用）' }; continue; }
 
+      // ★ task-31：取快照**之前**先等渲染就绪（公式 / mermaid 都是异步的）。
+      //   旧实现用固定 sleep(600) 兜底 —— 随文档规模失准（曾导致假红）。
+      //   三态 ready/timeout/failed；无头下 → inconclusive（不判绿也不判红）。
+      let ready = null;
+      try {
+        ready = await cdp.evalJS(`window.__fidelity.waitForRenderReady(${JSON.stringify({ which: 'both', minFrames: 3, timeoutMs: readyTimeoutMs, awaitAppPending: true })})`);
+      } catch (e) {
+        ready = { status: 'failed', reason: 'eval-error: ' + String((e && e.message) || e) };
+      }
+      // timeout 绝不冒充 ready：明确记录，并在结果里标注（不阻断测量，但读者必须知道快照可能早取）
+      ready.trustworthy = ready.status === 'ready';
+
       // 第一次：无变异
       const run1 = await cdp.evalJS(`window.__fidelity.runFidelity(window.MemoriaParser.parse(window.state.doc.body))`);
       run1.signature = fidelitySignature(run1.signatureNorm);
@@ -326,6 +341,10 @@ async function main() {
 
       result.documents[file] = {
         status: 'ran',
+        // task-31：渲染就绪判定结果（三态 + 等待耗时 + 计数）。
+        //   读者必须看 ready.status：只有 'ready' 才是可信快照；
+        //   'timeout'/'failed' 表示快照可能早取或渲染异常；'inconclusive' 表示无头无法判定。
+        renderReady: ready,
         // signatureNorm 必须落盘：按 kind 的对比工具（compare_signatures.mjs）需要原始规范投影，
         //   只存哈希无法逐 kind 比较；体积可控（每文档约几 KB）。
         run1: {

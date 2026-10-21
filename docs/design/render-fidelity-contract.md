@@ -293,6 +293,66 @@ node scripts\benchmark\surface\fidelity_cli.mjs --cdp http://127.0.0.1:9500 `
 
 ---
 
+## 5.4 渲染就绪判定（P2c 前置 · 公式 / mermaid 异步）
+
+> **为什么需要**：MathJax 与 mermaid 都是异步渲染（MathJax 实测 2712 行教材约 2.0–2.2s；
+> mermaid 逐块 `await`，无全局句柄）。**早取快照 = 假 diff；晚取 = 白等。**
+> 没有可靠的"渲染完成"信号，P2c 的签名对比全是假数据。
+
+### 5.4.1 三态 + inconclusive
+
+| 状态 | 含义 | 可否据此判等 |
+|---|---|---|
+| `ready` | 语义完成 **且** idle 稳定 | ✅ 唯一可信 |
+| `timeout` | 到期仍未满足 | ❌ **绝不冒充 ready** |
+| `failed` | 有明确失败证据（如 `.-mermaid-error`） | ❌ |
+| `inconclusive` | **无头**（MathJax 排不完 ≈3 vs 真机 270） | ❌ 不判绿也不判红 |
+
+### 5.4.2 判据（两条腿，缺一不可）
+
+| 渲染物 | 语义完成判据 |
+|---|---|
+| **公式** | 期望容器（`.-math` / `[data-formula]`）内有 `mjx-container` 且**子节点非空**；并 await `state._mathPending`（应用自己的 `typesetPromise` 链 = 最强信号） |
+| **mermaid** | `residualSrc === 0`（无残留 `code.language-mermaid`）且每个 `.-mermaid-container` 内 `svg[viewBox]` 非空；出现 `.-mermaid-error` ⇒ 立即 `failed` |
+
+**idle**：连续 **3 帧**「已排版数 + 容器数 + svg 数」不变。
+
+**真实性守卫**：判 `ready` 但 `expected > 0 且 nonEmpty === 0` ⇒ 降级 `timeout`（`ready-but-zero-typeset`）。
+
+### 5.4.3 ⛔ 三条被禁的做法（历史踩坑）
+
+| 禁止 | 原因 |
+|---|---|
+| **固定 `sleep(N)`** | 随文档规模失准（曾 `sleep(2500)` 仍不够 ⇒ 假红） |
+| **`getBBox`** | 无头/不可见时恒为 0 |
+| **「固定帧等待」当就绪判据** | kpHover 教训：两帧 16.7ms 是**帧成本**，不是渲染完成 |
+
+> 帧只用于 **idle 稳定性**；**语义完成由 DOM 事实决定**。
+
+### 5.4.4 判别力自证（硬要求）
+
+| 自证 | 构造 | 期望 | 实测 |
+|---|---|---|---|
+| **S1 抢拍不误报** | 注入 40 个未排版公式占位（expected 270→310） | 不得 ready | ✅ `snapshotNow=not-ready`；`waitForRenderReady` 802ms 后 `timeout` |
+| **S2 坏 mermaid** | 注入 `.-mermaid-error` | `failed` | ✅ `failed` |
+| **S3 timeout** | `minFrames=999999` + `timeoutMs=120` | `timeout` | ✅ `timeout`(127.7ms) |
+| **S0 正常就绪**（真机） | `scale-5k.md` | `ready` | ✅ 公式 **270/270**、mermaid **135/135**、等待 **25.8ms** |
+
+> **S1 的教训**：验证"判据不误报"**必须确定性地制造被测量状态**。
+> 前两版试图靠时序（重开文档 / 人为延迟 typeset）都失败 —— 因为命中**预览 DOM 缓存**
+> （`previewCacheMax` 最小夹到 1，无法禁用），根本没进入"渲染中"。
+
+### 5.4.5 接入方式
+
+`fidelity_cli.mjs` 在取快照**前**等待就绪，结果写入
+`documents[<file>].renderReady`（三态 + `elapsedMs` + 计数 + `appPending`）。
+
+**不进入签名**：`renderReady` / 耗时是产物字段；`signatureNorm` 内**无**易变字段。
+
+参数：`--ready-timeout <ms>`（默认 30000）。
+
+---
+
 ## 5.5 新旧管线对比（阶段 2 唯一判等工具）
 
 > **归属**：`scripts/benchmark/surface/compare_signatures.mjs` 是阶段 2 **唯一**的比较器。
@@ -430,3 +490,4 @@ P2a 阶段由 `surface-new` 在 `artifacts/agent/verify/` 写**临时 driver**�
 | 2026-10-20 | **签名归一化落地**：内置剥离非确定 id（mermaid 随机 SVG id、MathJax `MJX-*` id、CSS `#id` 选择器引用、`data-block-id`），并纳入签名 `htmlFingerprint`。自证：只换随机 id ⇒ 签名不变；真改内容 ⇒ 签名变 |
 | 2026-10-20 | **对比机制自证 + `compare_signatures.mjs`**（阶段 2 唯一比较器）：按 kind 过滤，`match`/`diff`/`unsupported` 三态，**`unsupported` 不计失败**（未实现 ≠ 退化）。自证：legacy-vs-legacy 0 diff、注入必报 diff、未支持 kind 仍 PASS。见 §5.5 |
 | 2026-10-20 | **修「假 match」漏洞**（第三个假通过家族）：早期比较器依赖未落盘的 `signatureNorm` ⇒ 文本恒空 ⇒ 只比 kind+tag ⇒ 误判 0 diff。已修：落盘 `signatureNorm`（同 schema v:2）、逐块比 `{tag,textNorm}`、缺失即 `schema_error` 失败。自证 G-d（文本变必红）/G-e（缺字段必失败）均通过。见 §5.5.2.1 |
+| 2026-10-21 | **渲染就绪判定**（P2c 前置，§5.4）：公式/mermaid 异步就绪三态 `ready`/`timeout`/`failed` + 无头 `inconclusive`；**禁止固定 sleep / getBBox / 固定帧等待**。真机 270 公式 135 mermaid 就绪 25.8ms；S1/S2/S3 判别力自证全过；无头全 inconclusive |
