@@ -10,8 +10,8 @@
  *                  结构与 legacy 一致，后处理复用 app.js `postProcessWikilinks`/`bindPreviewLinks`）。
  *   P2c（本片）：math_block / 行内公式 / mermaid **只产宿主排版前的容器**——
  *                  · `math_block` → `div.-math-block`（textContent `$$…$$`）；行内公式 →
- *                    `span.-math[data-formula]`（P2a 已有）。**不调 MathJax**：宿主
- *                    `MemoriaApp.surface.applyPreviewMathTypeset()` 走既有 token/typeset 链。
+ *                    `span.-math[data-formula]`（P2a 已有）。**不调 MathJax**：宿主经
+ *                    render-core 注入的 host `applyMathTypeset`（实现在 app.js）走既有 token/typeset 链。
  *                  · mermaid 围栏（parser 产 `code_block(lang="mermaid")`）→ 普通代码块结构，
  *                    由宿主 `MemoriaMarkdownPreview.renderMermaidBlocks()` 替换成 `.-mermaid-container`。
  *
@@ -432,8 +432,8 @@ window.MemoriaRenderCore = (function () {
     // ── P2c 新增：公式 / mermaid（只产宿主排版前的容器，**不排版**）────────────
     /**
      * 块级公式：`div.-src-block.-math-block[data--block-index]`，textContent = `$$<formula>$$`。
-     * 与 legacy `renderer.js` T.MATH_BLOCK 逐属性一致；**不做 typeset**——宿主
-     * `MemoriaApp.surface.applyPreviewMathTypeset()` 会把它交给 `queuePreviewMathTypeset` 链。
+     * 与 legacy `renderer.js` T.MATH_BLOCK 逐属性一致；**不做 typeset**——宿主经注入的
+     * host `applyMathTypeset`（实现在 app.js）会把它交给 `queuePreviewMathTypeset` 链。
      */
     math_block: function (block, blockIndex) {
       var el = _newBlockEl("div", "-math-block", blockIndex);

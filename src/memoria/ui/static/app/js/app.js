@@ -14356,7 +14356,7 @@
   //   块→行映射取 `window.__blockLineMap`（app.js 渲染链已导出），真源取 `MemoriaApp.state`，
   //   撤销走 `MemoriaEditSync.beginUndoGroup/endUndoGroup`（同一份预览撤销栈；edit-handler 的
   //   Ctrl+Z 即 `EditSync.undo`），重渲走 `renderEditor` + `renderPreview({incremental:true})`
-  //   （**重解析** ⇒ `_doc`/映射/DOM 一致；与既有 `legacy-surface.setText` 同口径）。
+  //   （**重解析** ⇒ `_doc`/映射/DOM 一致；与原 legacy 适配器 `setText` 同口径；该适配器 P6c 已删除）。
   //   位置在**主 IIFE 收尾之前** ⇒ 只把 `})();` 往后推，其上既有 `app.js:<行>` 锚点一个不动
   //   （其后的文件末尾装配块整体后移，无锚点引用）。
   // ══════════════════════════════════════════════════════════════════════════════
@@ -14447,7 +14447,7 @@
     },
 
     // ── 2026-10-05 追加：显示子系统契约（view-surface-contract.md）§3.1 的**语义键** ──
-    // 只挂契约语义（不吐内部函数名）；供 surface/legacy-surface.js 适配器取用「门面在就用门面」。
+    // 只挂契约语义（不吐内部函数名）；P6c 起 legacy 适配器已删除，new 插头用等价的全局/真实入口。
     // 这些闭包（setViewMode/collectEditorBody/highlightRange/_getViewTopSrcLine/_scrollToSrcLine）
     // 都在本主 IIFE 内、从外面够不着 ⇒ 在此开窗；**不改动任何既有调用路径**（只开窗，不迁移）。
 
@@ -14666,28 +14666,30 @@
   };
 })();
 
-/* ===== 显示子系统插口（Surface 插头骨架，2026-10-02）===========================
+/* ===== 显示子系统插口（Surface 插头，2026-10-02；P6c 起仅 new）=====================
    只立「插口 + 注册 + 切换协议 + 如实声明能力」；**不迁移**任何既有调用路径 ——
    app.js 现有调用照旧（把现有调用改成"经插口调用"会在宿主侧留下"半所有权"状态，
    是本仓已知红线；留待 NewSurface 能跑时再迁）。契约：docs/design/view-surface-contract.md §4。
 
    零行漂移：整块**追加在 app.js 最末尾**（主 IIFE 之外）⇒ 其上既有 `app.js:<行>` 锚点
-   一个不动。本块只用全局入口（`window.MemoriaSurface` / `window.createLegacySurface`），
-   `#editor-split` 此时已存在（脚本在 body 末尾加载）。
+   一个不动。本块只用全局入口（`window.MemoriaSurface`），`#editor-split` 此时已存在
+   （脚本在 body 末尾加载）。
    ⚠️ 主 IIFE 内的闭包（setViewMode / highlightRange / _getViewTopSrcLine …）在此**不可见**、
-   也不通过门面暴露 ⇒ legacy 适配器改用等价的全局/真实入口（见 surface/legacy-surface.js 头部说明）。（2026-10-06 例外：`_getViewTopSrcLine` / `_scrollToSrcLine` 两个**只读视图入口**已单独经 `window.MemoriaApp` 门面暴露，供本文件末尾 `memoriaPositionMemory()` 块复用；legacy 适配器仍走其原有等价入口。） */
+   也不通过门面暴露 ⇒ new 插头改用等价的全局/真实入口（见 surface/new-surface.js 头部说明）。
+   （2026-10-06 例外：`_getViewTopSrcLine` / `_scrollToSrcLine` 两个**只读视图入口**已单独经
+   `window.MemoriaApp` 门面暴露，供本文件末尾 `memoriaPositionMemory()` 块复用。） */
 (function initSurfaceSocket() {
   var S = window.MemoriaSurface;
-  if (!S || !S.registry || typeof window.createLegacySurface !== "function") return;
+  if (!S || !S.registry || typeof S.switchTo !== "function") return;
 
-  // ① 注册 legacy 插头（工厂按 deps 造一个薄适配器）
-  S.registry.register("legacy", function (deps) { return window.createLegacySurface(deps); });
+  // P6c（不可逆）：legacy 插头已删除，唯一生产插头是 new（new-surface.js 自注册）。
+  // 首次挂载＝采用宿主现存状态（不重放 setText/setMode ⇒ 加载期零重渲）。
+  // 若 new 缺失（脚本顺序错误/损坏），switchTo 会落到 §4.4 的显式失败路径并保持无插头，
+  // 不会退回 legacy（已不存在）。
+  S.switchTo("new", { container: document.getElementById("editor-split") })
+    .catch(function (e) { try { console.warn("[MemoriaSurface] switchTo('new') 失败:", (e && e.message) || e); } catch (_) { /* noop */ } });
 
-  // ② 默认走 legacy；首次挂载＝采用宿主现存状态（不重放 setText/setMode ⇒ 加载期零重渲）
-  S.switchTo("legacy", { container: document.getElementById("editor-split") })
-    .catch(function (e) { try { console.warn("[MemoriaSurface] switchTo('legacy') 失败:", (e && e.message) || e); } catch (_) { /* noop */ } });
-
-  // ③ `window.MemoriaSurface` 已由 surface/registry.js 暴露（控制台可用 current() / switchTo()）
+  // `window.MemoriaSurface` 已由 surface/registry.js 暴露（控制台可用 current() / switchTo()）
 })();
 
 /* ===== 前进/后退 + 按文件的位置记忆（2026-10-06）=====================================

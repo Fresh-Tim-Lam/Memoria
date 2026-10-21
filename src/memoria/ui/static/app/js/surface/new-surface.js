@@ -226,7 +226,7 @@ window.createNewSurface = function createNewSurface(deps) {
     if (!preview) throw new Error("[NewSurface] setText: 找不到 #preview 容器");
     var st = _state();
     // ★ 真源优先级（修 P2c 尾块 bug）：**setText(text) 的 text 就是本次要渲染的正文**。
-    //   legacy `legacy-surface.setText(text)` 的语义是：`state.doc.body = text; preview_body = null;
+    //   legacy 适配器 `setText(text)` 的语义是：`state.doc.body = text; preview_body = null;
     //   renderPreview(doc)` ⇒ renderPreview 里的 `doc.preview_body || doc.body` 取到的是 text。
     //   而 `state.doc.preview_body` 是**上一次预览/编辑留下的派生字段**，可能与 handoff text 差一个
     //   末尾换行（后端 preview_body 保留文件尾 `\n`，body 已剥离）⇒ 若优先取它，会多 parse 出一个
@@ -752,9 +752,8 @@ window.createNewSurface = function createNewSurface(deps) {
 
 /**
  * 自注册（不依赖 app.js 的装配块）。
- * 加载顺序：index.html 里 surface/registry.js → surface/render-core.js → legacy-surface.js →
- * new-surface.js → app.js，故此处 MemoriaSurface 已就绪；app.js 末尾装配块随后注册 legacy
- * 并 switchTo('legacy')，两者互不干扰 ⇒ list() 最终为 ['legacy', 'new']。
+ * 加载顺序：index.html 里 surface/registry.js → surface/render-core.js → new-surface.js →
+ * app.js。P6c 起 legacy 适配器已删除；app.js 末尾装配块只 switchTo('new')。
  * 若 MemoriaSurface 缺失（单测/非常规加载）⇒ 不抛，留待宿主显式注册。
  *
  * 诊断出口（**只读**）：实例创建后挂 `window.__MemoriaNewSurface`，供 C11/保真对比等探针

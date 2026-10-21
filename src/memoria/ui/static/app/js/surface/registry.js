@@ -23,6 +23,7 @@
   var _current = null;         // 当前插头名
   var _instance = null;        // 当前插头实例
   var _chain = Promise.resolve();  // 切换串行链 ⇒ 可重入安全（同一时刻只跑一次切换）
+  var _warnedUnknown = {};         // 未注册插头名 → 已 warn（每个名字只 warn 一次）
 
   // ── 宿主回调集（契约 §3.2）：装配位，宿主可覆盖任一 ──────────────────────────
   var host = {
@@ -88,8 +89,16 @@
     if (name === _current && _instance) return Promise.resolve(_current);
 
     if (!_has(name)) {
-      // §4.4：未注册 = 失败。不改变现状，仅按降级上报，并把失败抛给调用方。
-      host.onDegraded("switch-failed");
+      // §4.4：未注册 = 失败。P6c 起 legacy 已删除 ⇒ switchTo('legacy') 落到这里：
+      //   ① onDegraded('unknown-surface') 显式上报；② 保持当前插头不变；③ console.warn（每名一次）；
+      //   ④ 把 rejection 抛给调用方 —— 任何一条都不允许"静默成功"。
+      if (!_warnedUnknown[name]) {
+        _warnedUnknown[name] = true;
+        try {
+          console.warn("[MemoriaSurface] switchTo('" + name + "'): 未注册的插头（P6c 起 legacy 已删除），保持当前插头 '" + (_current || "null") + "'");
+        } catch (e) { /* noop */ }
+      }
+      host.onDegraded("unknown-surface");
       return Promise.reject(new Error("MemoriaSurface.switchTo: 未注册的插头 '" + name + "'"));
     }
 

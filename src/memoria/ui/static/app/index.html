@@ -473,12 +473,11 @@
   <script src="/app/i18n/en.js"></script>
   <script src="/app/js/i18n.js"></script>
   <script src="/app/js/scheduler.js"></script>
-  <!-- 显示子系统插口（Surface 插头骨架）：插口 + legacy 插头必须在 app.js **之前**加载
-       （app.js 末尾的装配块要能取到 window.MemoriaSurface / window.createLegacySurface）。
-       只定义全局、无副作用；不迁移任何既有调用路径（见 docs/design/view-surface-contract.md §4）。 -->
+  <!-- 显示子系统插口（Surface 插头）：P6c 起只保留 new 插头（legacy 适配器已删除，
+       不可逆）。render-core / new-surface 必须在 app.js 之前加载；app.js 末尾装配块
+       只做 switchTo('new')，switchTo('legacy') 显式失败（见 surface/registry.js §4.4）。 -->
   <script src="/app/js/surface/registry.js"></script>
   <script src="/app/js/surface/render-core.js"></script>
-  <script src="/app/js/surface/legacy-surface.js"></script>
   <script src="/app/js/surface/new-surface.js"></script>
   <script src="/app/js/app.js"></script>
   <script src="/app/js/import-flow.js"></script>
