@@ -143,6 +143,18 @@
 |---|---|---|---|
 | **P0 覆盖面补齐** | 保真指标扩到 §2 的 7–16 项；定义窗口化口径（全渲染 or 按 `data--src-line` 比子集）；新增 A5–A9 硬断言 + 其余 warn | 无（现在就能做） | 覆盖面矩阵每一项有指标；A 级仍 HEAD 全绿；3 个新变异必红 |
 
+### P4 追加约束（2026-10-21，来自人机并发编辑设计）
+
+**RunCore 之外，P4 EditCore 必须暴露块级增量应用接口**，否则后续的人机并发编辑（提案化 / 双向事件流 / 块级三方合并）全部无法实现：
+
+```js
+applyBlockPatches(patches: Array<{blockId, srcLineStart, srcLineEnd, newText}>): void
+```
+
+**验收追加一条**：P4 报告中必须有「用 `applyBlockPatches` 改 3 个块后，光标位置不变、其余块 DOM 未重建」的证据。
+
+完整设计见 `docs/design/concurrent-edit-infrastructure.md`（含现状盘点、四种并发模型对比、四层基础设施 A/B/C/D、6 条已定裁决、5 个开放问题）。
+
 ### P0 执行状态（2026-10-20 收口）
 
 | 覆盖面 | 状态 |
