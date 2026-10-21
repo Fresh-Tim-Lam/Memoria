@@ -552,6 +552,59 @@ window.MemoriaRenderCore = (function () {
   }
 
   /**
+   * 增量渲染：替换 container 内 `[startBlock, endBlock)` 区间的块（P6d 从 renderer.js:448-504 迁入）。
+   *
+   * 语义与 legacy `renderer.js#renderRange` 一致：
+   *   · 先按 `data--block-index` 收集区间内旧节点（**必须在移除前**确定锚点）；
+   *   · 从后往前移除旧节点，用 DocumentFragment 在原位插入新块；
+   *   · 返回**本次新建的顶层节点数组**（文档顺序、已挂进 DOM；单节点也返回数组）。
+   * 差异（保留 render-core 改善，不回退）：
+   *   · 新块由本模块 `renderBlock` 产出 —— 未实现 kind 会渲染成**显式 unsupported 块**，
+   *     绝不静默渲染成空块/静默丢内容（renderer.js 的 `default:` 是内容静默消失）。
+   * @param {object} doc — Document AST
+   * @param {number} startBlock
+   * @param {number} endBlock — exclusive
+   * @param {HTMLElement} container — 预览容器（block 的直接父级，如 `.-preview-content`）
+   * @returns {HTMLElement[]|undefined}
+   */
+  function renderRange(doc, startBlock, endBlock, container, opts) {
+    if (!doc || !doc.blocks || !container) return;
+    var oldBlocks = container.querySelectorAll(".-src-block");
+    var targetIndices = [];
+    for (var i = 0; i < oldBlocks.length; i++) {
+      var idx = parseInt(oldBlocks[i].getAttribute("data--block-index"), 10);
+      if (idx >= startBlock && idx < endBlock) targetIndices.push(i);
+    }
+    if (targetIndices.length === 0) return;
+
+    var firstEl = oldBlocks[targetIndices[0]];
+    var parent = firstEl.parentNode;
+    var lastIdx = targetIndices[targetIndices.length - 1];
+    var anchor = (lastIdx + 1 < oldBlocks.length) ? oldBlocks[lastIdx + 1] : null;
+
+    for (var j = targetIndices.length - 1; j >= 0; j--) {
+      var el = oldBlocks[targetIndices[j]];
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }
+
+    var made = [];
+    var fragment = document.createDocumentFragment();
+    for (var k = startBlock; k < endBlock && k < doc.blocks.length; k++) {
+      var madeEl = renderBlock(doc.blocks[k], k, opts);
+      made.push(madeEl);
+      fragment.appendChild(madeEl);
+    }
+
+    if (parent) {
+      if (anchor && anchor.parentNode === parent) parent.insertBefore(fragment, anchor);
+      else parent.appendChild(fragment);
+    } else {
+      container.appendChild(fragment);
+    }
+    return made;
+  }
+
+  /**
    * @param {object} [opts]
    *   opts.strictUnsupported=true ⇒ 未实现 kind 抛错（默认显式标记）
    *   opts.host = { applyLinkLayer(root), applyMathTypeset(root, ast), paintBlockPatch() }
@@ -571,6 +624,7 @@ window.MemoriaRenderCore = (function () {
       supportedBlockKinds: SUPPORTED_BLOCK_KINDS.slice(),
       isSupportedKind: function (kind) { return !!BLOCK_RENDERERS[kind]; },
       renderBlock: function (block, blockIndex) { return renderBlock(block, blockIndex, opts); },
+      renderRange: function (doc, startBlock, endBlock, container) { return renderRange(doc, startBlock, endBlock, container, opts); },
       renderDocument: function (doc) { return renderDocument(doc, opts); },
       renderAll: function (text, container) { return renderAll(text, container, opts); },
       renderInline: renderInline,

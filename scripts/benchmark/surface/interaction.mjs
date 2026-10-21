@@ -802,8 +802,8 @@ async function withBrowser(url, fn) {
     // 模块齐全性前置断言：缺任一模块都会让 #preview 停在占位，并让后续剧本全部超时。
     // 显式报出来，避免把「脚本没加载 / CDP 连错页面」误诊成「交互坏了」。
     {
-      const mods = await cdp.evalJS(`({ parser: !!window.MemoriaParser, lexer: !!window.MemoriaLexer, mapper: !!window.MemoriaMapper, renderer: !!window.MemoriaRenderer, href: location.href })`);
-      if (!mods.parser || !mods.lexer || !mods.mapper || !mods.renderer) {
+      const mods = await cdp.evalJS(`({ parser: !!window.MemoriaParser, lexer: !!window.MemoriaLexer, mapper: !!window.MemoriaMapper, renderCore: !!window.MemoriaRenderCore, href: location.href })`);
+      if (!mods.parser || !mods.lexer || !mods.mapper || !mods.renderCore) {
         throw new Error('前端模块未加载（CDP 可能连到了别的页面）: ' + JSON.stringify(mods));
       }
     }

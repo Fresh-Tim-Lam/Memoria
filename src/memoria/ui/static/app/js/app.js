@@ -7700,7 +7700,6 @@
   const P = window.MemoriaParser;
   const G = window.MemoriaSourceGen;
   const M = window.MemoriaMapper;
-  const R = window.MemoriaRenderer;
   const A = window.MemoriaAST;
 
   // ── Current AST document ──
@@ -7709,14 +7708,18 @@
   // ── P6a：预览整篇渲染内核（render-core）──────────────────────────────────
   // 单向门：`renderPreview` 的 29 个调用点一字不动，只换内部实现。
   // 渲染器单例：render-core 的 createRenderCore 无状态，复用实例只省一次闭包创建。
-  // 为什么不再用 `R.render`：`renderer.js` 是 legacy 渲染器，P6 终局要删除；本段先让它
-  // 失去整篇渲染调用（`R.renderBlock/renderRange` 仍服务块级增量，属 P6b/c）。
+  // P6d：legacy `renderer.js` 已删除；整篇 / 块级增量（renderBlock/renderRange）全部走 render-core。
   let _rcCore = null;
   function _rcRenderer() {
     const rc = window.MemoriaRenderCore;
     if (!rc || typeof rc.createRenderCore !== "function") return null;
     if (!_rcCore) _rcCore = rc.createRenderCore({});
     return _rcCore;
+  }
+  /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
+  function _supplyRangeRender(blockIndex, container) {
+    const rc = _rcRenderer();
+    return rc ? rc.renderRange(_doc, blockIndex, blockIndex + 1, container) : undefined;
   }
 
   /**
@@ -7802,7 +7805,7 @@
       // id 来源：**渲染前**从旧节点读 data-block-id（renderRange 会换掉节点，之后就读不到了）。
       var _oldEl = container.querySelector('.-src-block[data--block-index="' + blockIndex + '"]');
       var _keepId = _oldEl ? _oldEl.getAttribute("data-block-id") : null;
-      var _made = R.renderRange(_doc, blockIndex, blockIndex + 1, container);   // P2：现返回新建顶层节点数组
+      var _made = _supplyRangeRender(blockIndex, container);   // P2：现返回新建顶层节点数组
       var _blk = _doc && _doc.blocks ? _doc.blocks[blockIndex] : null;
       if (_blk && _blk.srcLine > 0 && _blk.srcLineEnd >= _blk.srcLine) {
         // ★ 性能：兼容投影 `_blockLineMap` 只在**这一块的行区间真变了**时才重建（O(块数)）。
@@ -14299,7 +14302,9 @@
     var toRemove = [], cur = first;
     for (var n = 0; n < oldSpan && cur; n++) { toRemove.push(cur); cur = cur.nextElementSibling; }
     var frag = document.createDocumentFragment(), made = [];
-    for (var b = i; b < i + newSpan && b < _doc.blocks.length; b++) { var el = R.renderBlock(_doc.blocks[b], b); frag.appendChild(el); made.push(el); }
+    var _rc = _rcRenderer();
+    if (!_rc) return false;
+    for (var b = i; b < i + newSpan && b < _doc.blocks.length; b++) { var el = _rc.renderBlock(_doc.blocks[b], b); frag.appendChild(el); made.push(el); }
     parent.insertBefore(frag, toRemove.length ? toRemove[0] : anchor);
     for (var m = 0; m < toRemove.length; m++) if (toRemove[m].parentNode) toRemove[m].parentNode.removeChild(toRemove[m]);
     // **重编块下标**：不变量是「`.-src-block` 与 `doc.blocks` 一一对应、DOM 序即块序」（renderer 每个块恰好一个
