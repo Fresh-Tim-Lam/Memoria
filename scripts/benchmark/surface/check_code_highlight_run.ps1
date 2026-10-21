@@ -21,6 +21,14 @@ if (-not (Test-Path $script:IsoHelper)) {
 }
 . $script:IsoHelper
 $script:Iso = Initialize-MemoriaConfigIsolation -Script 'check_code_highlight_run' -Label ''run'' -Ambient:$AmbientConfig
+
+# ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+#    事故：R-17 已实际发生两次（task-54、task-55），测试把内容写进冻结语料。
+#    冻结语料取自独立变量 P5PERF_FROZEN_KB（与 MEMORIA_KB 分离，避免"守卫盯错对象"）。
+$script:KbWire = Join-Path $PSScriptRoot '_kb_guard_wire.ps1'
+if (-not (Test-Path $script:KbWire)) { throw "[kb-guard] 缺少 $script:KbWire —— 拒绝在无守卫下运行测量" }
+. $script:KbWire
+$script:KbGuard = Start-KbGuard -Script 'check_code_highlight_run' -Label $Label
 $KbAbs = (Resolve-Path (Join-Path $RepoRoot $Kb)).Path
 Import-Module (Join-Path $RepoRoot 'scripts\benchmark\surface\safe-kill.psm1') -Force
 if ($Port -le 0) { $l = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 0); $l.Start(); $Port = $l.LocalEndpoint.Port; $l.Stop() }
@@ -77,6 +85,8 @@ public class Win32Restore {
     Write-Host "[p6h] node exit=$LASTEXITCODE"
 }
 finally {
+    try { Complete-KbGuard -Guard $script:KbGuard } catch { Write-Warning "[kb-guard] $_" }
+
     if ($fgJob) { Stop-Job -Job $fgJob -ErrorAction SilentlyContinue; Remove-Job -Job $fgJob -Force -ErrorAction SilentlyContinue }
     $after = Get-UserAppSnapshot
     Write-Host "[p6h] user-app AFTER : $(@($after | ForEach-Object { $_.ProcessId }) -join ',')"

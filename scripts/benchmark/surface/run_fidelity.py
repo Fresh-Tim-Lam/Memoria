@@ -33,6 +33,23 @@ RESULTS_DIR = REPO_ROOT / "scripts" / "benchmark" / "surface" / "results"
 CDP_CLI = REPO_ROOT / "scripts" / "benchmark" / "surface" / "fidelity_cli.mjs"
 
 
+def _load_kb_guard_wire():
+    """加载 KB 守卫接线助手（task-57）。
+
+    冻结语料缺失即报错：**拒绝在无守卫下运行测量**（R-17 已实际发生两次）。
+    """
+    import importlib.util as _ilu
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_kb_guard_wire.py")
+    if not os.path.exists(_p):
+        raise SystemExit("缺少 KB 守卫助手 _kb_guard_wire.py —— 拒绝在无守卫下运行测量")
+    _spec = _ilu.spec_from_file_location("_kb_guard_wire", _p)
+    if _spec is None or _spec.loader is None:
+        raise SystemExit("无法加载 _kb_guard_wire.py")
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def _load_iso_config():
     """加载共用配置隔离助手（同目录 `_iso_config.py`）。
 
@@ -97,6 +114,22 @@ def main():
     _iso_mod = _load_iso_config()
     _iso_mod.add_isolation_arg(ap)
     args = ap.parse_args()
+    # ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+    #    ★ 用 try/finally 包裹主体，保证**任何 return 路径**都做后校验：
+    #      主体内有 `return 0 if ... else 1` 早退，若把 end_guard 放在末尾语句，
+    #      早退时会被跳过 ⇒ 守卫形同虚设（task-57 实测踩到）。
+    _kbw = _load_kb_guard_wire()
+    _kb_guard = _kbw.begin_guard(
+        'run_fidelity', label=getattr(args, 'label', 'run'), writable=False,
+    )
+    try:
+        return _run_fidelity_body(args)
+    finally:
+        _kbw.end_guard(_kb_guard)
+
+
+def _run_fidelity_body(args):
+    """run_fidelity 的主体（原 main 中 args 解析之后的部分）。"""
     # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
     _iso = _iso_mod.isolate_config(
         script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
@@ -289,6 +322,7 @@ def main():
         return 0 if mutation_verdict["verdict"] == "PASS" else 1
     print("[fidelity] %s" % ("A 级全绿 ✓" if raw.get("allGreen") else "A 级有红 ✗（见报告）"))
     return 0
+
 
 
 if __name__ == "__main__":

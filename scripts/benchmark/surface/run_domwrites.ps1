@@ -59,6 +59,15 @@ if (-not (Test-Path $script:IsoHelper)) {
 . $script:IsoHelper
 $script:Iso = Initialize-MemoriaConfigIsolation -Script 'run_domwrites' -Label ''run'' -Ambient:$AmbientConfig
 
+# ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+#    事故：R-17 已实际发生两次（task-54、task-55），测试把内容写进冻结语料。
+#    冻结语料取自独立变量 P5PERF_FROZEN_KB（与 MEMORIA_KB 分离，避免"守卫盯错对象"）。
+$script:KbWire = Join-Path $PSScriptRoot '_kb_guard_wire.ps1'
+if (-not (Test-Path $script:KbWire)) { throw "[kb-guard] 缺少 $script:KbWire —— 拒绝在无守卫下运行测量" }
+. $script:KbWire
+$script:KbGuard = Start-KbGuard -Script 'run_domwrites' -Label $Label -Writable
+$script:WorkKb = New-KbMeasureCopy -Guard $script:KbGuard   # 写类：测量跑副本
+
 function Stop-App {
     # 1) 只终止本次启动的 $script:AppPid（不连带子进程树）。
     #    !! 实测教训：pywebview 的 WebView2 会拉起一整棵 msedgewebview2 进程树
@@ -180,6 +189,8 @@ try {
         Throw "[run_domwrites] 测量未产出 out 文件"
     }
 } finally {
+    # ── KB 守卫后校验（task-57）：必须在 finally 里，异常路径也要校验 ──
+    try { Complete-KbGuard -Guard $script:KbGuard } catch { Write-Warning "[kb-guard] $_" }
     if (-not $KeepAlive) {
         Stop-App
     } else {

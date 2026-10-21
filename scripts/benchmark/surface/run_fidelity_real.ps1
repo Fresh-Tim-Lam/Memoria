@@ -46,6 +46,14 @@ if (-not (Test-Path $script:IsoHelper)) {
 }
 . $script:IsoHelper
 $script:Iso = Initialize-MemoriaConfigIsolation -Script 'run_fidelity_real' -Label ''run'' -Ambient:$AmbientConfig
+
+# ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+#    事故：R-17 已实际发生两次（task-54、task-55），测试把内容写进冻结语料。
+#    冻结语料取自独立变量 P5PERF_FROZEN_KB（与 MEMORIA_KB 分离，避免"守卫盯错对象"）。
+$script:KbWire = Join-Path $PSScriptRoot '_kb_guard_wire.ps1'
+if (-not (Test-Path $script:KbWire)) { throw "[kb-guard] 缺少 $script:KbWire —— 拒绝在无守卫下运行测量" }
+. $script:KbWire
+$script:KbGuard = Start-KbGuard -Script 'run_fidelity_real' -Label $Label
 $script:AppPid = $null
 
 function Stop-App {
@@ -137,6 +145,8 @@ try {
     Write-Host "[fid-real] python exit=$LASTEXITCODE"
 }
 finally {
+    try { Complete-KbGuard -Guard $script:KbGuard } catch { Write-Warning "[kb-guard] $_" }
+
     Stop-App
     Start-Sleep -Milliseconds 800
     $still = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue

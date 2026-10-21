@@ -61,6 +61,23 @@ C9_BUDGET_MS = 16.0
 # ─────────────────────────────────────────────────────────────────────────────
 # git / 环境
 # ─────────────────────────────────────────────────────────────────────────────
+def _load_kb_guard_wire():
+    """加载 KB 守卫接线助手（task-57）。
+
+    冻结语料缺失即报错：**拒绝在无守卫下运行测量**（R-17 已实际发生两次）。
+    """
+    import importlib.util as _ilu
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_kb_guard_wire.py")
+    if not os.path.exists(_p):
+        raise SystemExit("缺少 KB 守卫助手 _kb_guard_wire.py —— 拒绝在无守卫下运行测量")
+    _spec = _ilu.spec_from_file_location("_kb_guard_wire", _p)
+    if _spec is None or _spec.loader is None:
+        raise SystemExit("无法加载 _kb_guard_wire.py")
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def _load_iso_config():
     """加载共用配置隔离助手（同目录 `_iso_config.py`）。
 
@@ -674,159 +691,169 @@ def main():
     _iso_mod = _load_iso_config()
     _iso_mod.add_isolation_arg(ap)
     args = ap.parse_args()
-    # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
-    _iso = _iso_mod.isolate_config(
-        script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
-        label=getattr(args, 'label', 'run'),
-        ambient=getattr(args, 'ambient_config', False),
+    # ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+    _kbw = _load_kb_guard_wire()
+    _kb_guard = _kbw.begin_guard(
+        'run_probe', label=getattr(args, "label", "run"), writable=False,
     )
-    print(_iso.describe())
-    src_kb = (REPO_ROOT / args.kb).resolve()
-    if not src_kb.is_dir():
-        print("[probe] 源语料目录不存在: %s" % src_kb, file=sys.stderr)
-        return 2
-
-    # 复用到临时副本，避免污染 tests/probe-kb
-    work_kb = (REPO_ROOT / args.work_kb).resolve()
-    if work_kb.exists():
-        shutil.rmtree(work_kb, ignore_errors=True)
-    work_kb.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(src_kb, work_kb)
-    print("[probe] 语料副本: %s -> %s" % (src_kb, work_kb))
-    had_memoria = (src_kb / ".memoria").exists()
-
-    # harness
-    harness = load_harness(work_kb, args.port)
-    import bottle  # harness 已导入 bottle
-    th = threading.Thread(
-        target=bottle.run,
-        kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True),
-        daemon=True,
-    )
-    th.start()
-    if not wait_port(args.port):
-        print("[probe] harness 未能在端口 %s 起来" % args.port, file=sys.stderr)
-        return 2
-    print("[probe] harness 就绪: http://127.0.0.1:%s/" % args.port)
-
-    # node 驱动
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    sha = git_short_sha()
-    # 产物命名：probe-<surface>-<label>_<sha>；label 已带 surface 前缀则不重复
-    label = args.label
-    base = label if label.startswith(args.surface + "-") else "%s-%s" % (args.surface, label)
-    stem = "probe-%s_%s" % (base, sha)
-    raw_path = RESULTS_DIR / ("raw-%s.json" % stem)
-    cases_path = REPO_ROOT / "tests" / "probe-kb" / "cases" / "cases.json"
-
-    c9_args = [
-        "--c9-warmup", str(args.c9_warmup),
-        "--c9-rounds", str(args.c9_rounds),
-        "--c9-keys", str(args.c9_keys),
-        "--c9-settle-timeout", str(args.c9_settle_timeout),
-        "--c9-max-iqr-over-median", str(args.c9_max_iqr_over_median),
-        "--c9-max-p95-over-median", str(args.c9_max_p95_over_median),
-        "--c9-max-round-spread", str(args.c9_max_round_spread),
-        "--c9-min-keys", str(args.c9_min_keys),
-    ]
-    cmd = [
-        "node", str(CDP_MJS), "--probe",
-        "--url", "http://127.0.0.1:%d/" % args.port,
-        "--kb-root", str(work_kb),
-        "--cases", str(cases_path),
-        "--out", str(raw_path),
-    ] + c9_args
-    print("[probe] 运行: %s" % " ".join(cmd))
-    t0 = time.time()
     try:
-        proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)
-    except subprocess.TimeoutExpired:
-        print("[probe] node 驱动超时", file=sys.stderr)
-        return 3
-    dur = time.time() - t0
-    out = proc.stdout.decode("utf-8", "replace")
-    err = proc.stderr.decode("utf-8", "replace")
-    if proc.returncode != 0 or not raw_path.exists():
-        print("[probe] node 驱动失败（code=%s）" % proc.returncode, file=sys.stderr)
-        print("--- stdout ---\n%s\n--- stderr ---\n%s" % (out[-4000:], err[-8000:]), file=sys.stderr)
-        return 3
-    print("[probe] node 驱动完成（%.1fs）" % dur)
+        # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
+        _iso = _iso_mod.isolate_config(
+            script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
+            label=getattr(args, 'label', 'run'),
+            ambient=getattr(args, 'ambient_config', False),
+        )
+        print(_iso.describe())
+        src_kb = (REPO_ROOT / args.kb).resolve()
+        if not src_kb.is_dir():
+            print("[probe] 源语料目录不存在: %s" % src_kb, file=sys.stderr)
+            return 2
 
-    raw = json.loads(raw_path.read_text(encoding="utf-8"))
-    verdicts = judge(raw)
+        # 复用到临时副本，避免污染 tests/probe-kb
+        work_kb = (REPO_ROOT / args.work_kb).resolve()
+        if work_kb.exists():
+            shutil.rmtree(work_kb, ignore_errors=True)
+        work_kb.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(src_kb, work_kb)
+        print("[probe] 语料副本: %s -> %s" % (src_kb, work_kb))
+        had_memoria = (src_kb / ".memoria").exists()
 
-    # 协议一致性：raw 实际生效的 C9 参数应等于命令行参数（不一致 ⇒ 以 raw 为准，但要说出来）
-    effective_c9 = ((raw.get("measurementProtocol") or {}).get("c9")) or {}
-    c9_inconsistent = []
-    for k in ("warmupKeys", "rounds", "keysPerRound", "settleTimeoutMs"):
-        if k in effective_c9 and effective_c9[k] != getattr(args, {
-                "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
-                "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]):
-            c9_inconsistent.append("%s: cli=%s raw=%s" % (k, getattr(args, {
-                "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
-                "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]), effective_c9[k]))
-    if c9_inconsistent:
-        print("[probe] 警告：C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent), file=sys.stderr)
+        # harness
+        harness = load_harness(work_kb, args.port)
+        import bottle  # harness 已导入 bottle
+        th = threading.Thread(
+            target=bottle.run,
+            kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True),
+            daemon=True,
+        )
+        th.start()
+        if not wait_port(args.port):
+            print("[probe] harness 未能在端口 %s 起来" % args.port, file=sys.stderr)
+            return 2
+        print("[probe] harness 就绪: http://127.0.0.1:%s/" % args.port)
 
-    env = {
-        "browser": raw.get("browser"),
-        "edge": raw.get("edgePath"),
-        "node": node_version(),
-        "kbServed": str(work_kb),
-        "kbSource": str(src_kb),
-        "kbSourceHasMemoria": ("是" if had_memoria else "否（已用副本让应用自初始化）"),
-        "casesFile": "tests/probe-kb/cases/cases.json",
-        "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
-        "scaleDocLines": (_ev(raw, "sel_scroll_stress") or {}).get("docLines"),
-        "c9Protocol": "v%s / %s" % ((raw.get("measurementProtocol") or {}).get("version", "?"), MEASUREMENT_PROTOCOL),
-        "c9Params": "warmup=%s, R=%s, keysPerRound=%s, settleTimeout=%sms" % (
-            args.c9_warmup, args.c9_rounds, args.c9_keys, args.c9_settle_timeout),
-        "c9NoiseThresholds": "IQR/median<=%s, p95/median<=%s, roundSpread<=%s, minKeys>=%s" % (
-            args.c9_max_iqr_over_median, args.c9_max_p95_over_median,
-            args.c9_max_round_spread, args.c9_min_keys),
-        "appReady": raw.get("appReady"),
-        "runDurationMs": raw.get("durationMs"),
-    }
-    notes = [
-        "绿/红按契约判，不按与老实现一致判。",
-        "未测项已写明原因，未默认成绿。",
-        "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
-        "C9 口径 v2：逐键采样（非一次性连发）+ warmup 丢弃 + R 轮 median-of-medians；"
-        "判绿/红前先过噪声门（键间 IQR/p95、轮间极差、样本量、死键），不过则标「不确定」而非绿/红。",
-        "C9 的「不确定」是**度量状态**而非性能结论：不得据此说达标或退化；处置 = 同机同档位重测。",
-        "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
-        "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
-        "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。",
-    ]
-    if c9_inconsistent:
-        notes.append("C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent))
-    meta = {
-        "label": args.label, "sha": sha,
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "env": env, "notes": notes,
-        "cov": {
-            "green": [k for k, v in verdicts.items() if v["status"] == "green"],
-            "red": [k for k, v in verdicts.items() if v["status"] == "red"],
-            "untested": [k for k, v in verdicts.items() if v["status"] == "untested"],
-        },
-    }
+        # node 驱动
+        RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+        sha = git_short_sha()
+        # 产物命名：probe-<surface>-<label>_<sha>；label 已带 surface 前缀则不重复
+        label = args.label
+        base = label if label.startswith(args.surface + "-") else "%s-%s" % (args.surface, label)
+        stem = "probe-%s_%s" % (base, sha)
+        raw_path = RESULTS_DIR / ("raw-%s.json" % stem)
+        cases_path = REPO_ROOT / "tests" / "probe-kb" / "cases" / "cases.json"
 
-    rep_json = build_report_json(meta, verdicts, raw)
-    rep_md = build_report_md(meta, verdicts, raw)
-    jpath = RESULTS_DIR / (stem + ".json")
-    mpath = RESULTS_DIR / (stem + ".md")
-    jpath.write_text(json.dumps(rep_json, ensure_ascii=False, indent=2), encoding="utf-8")
-    mpath.write_text(rep_md, encoding="utf-8")
+        c9_args = [
+            "--c9-warmup", str(args.c9_warmup),
+            "--c9-rounds", str(args.c9_rounds),
+            "--c9-keys", str(args.c9_keys),
+            "--c9-settle-timeout", str(args.c9_settle_timeout),
+            "--c9-max-iqr-over-median", str(args.c9_max_iqr_over_median),
+            "--c9-max-p95-over-median", str(args.c9_max_p95_over_median),
+            "--c9-max-round-spread", str(args.c9_max_round_spread),
+            "--c9-min-keys", str(args.c9_min_keys),
+        ]
+        cmd = [
+            "node", str(CDP_MJS), "--probe",
+            "--url", "http://127.0.0.1:%d/" % args.port,
+            "--kb-root", str(work_kb),
+            "--cases", str(cases_path),
+            "--out", str(raw_path),
+        ] + c9_args
+        print("[probe] 运行: %s" % " ".join(cmd))
+        t0 = time.time()
+        try:
+            proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)
+        except subprocess.TimeoutExpired:
+            print("[probe] node 驱动超时", file=sys.stderr)
+            return 3
+        dur = time.time() - t0
+        out = proc.stdout.decode("utf-8", "replace")
+        err = proc.stderr.decode("utf-8", "replace")
+        if proc.returncode != 0 or not raw_path.exists():
+            print("[probe] node 驱动失败（code=%s）" % proc.returncode, file=sys.stderr)
+            print("--- stdout ---\n%s\n--- stderr ---\n%s" % (out[-4000:], err[-8000:]), file=sys.stderr)
+            return 3
+        print("[probe] node 驱动完成（%.1fs）" % dur)
 
-    print("\n[probe] ===== 结论摘要 =====")
-    for i in range(1, 13):
-        k = "C%d" % i
-        v = verdicts[k]
-        tag = BADGE[v["status"]]
-        if v.get("conclude") is False and k == "C9":
-            tag = "⚪ 不确定"      # 度量无效：既不是绿也不是红（协议 §6.3 / R5）
-        print("  %-4s %-8s %s" % (k, tag, v["reading"][:150]))
-    print("\n[probe] 产物：\n  %s\n  %s\n  raw: %s" % (jpath, mpath, raw_path))
+        raw = json.loads(raw_path.read_text(encoding="utf-8"))
+        verdicts = judge(raw)
+
+        # 协议一致性：raw 实际生效的 C9 参数应等于命令行参数（不一致 ⇒ 以 raw 为准，但要说出来）
+        effective_c9 = ((raw.get("measurementProtocol") or {}).get("c9")) or {}
+        c9_inconsistent = []
+        for k in ("warmupKeys", "rounds", "keysPerRound", "settleTimeoutMs"):
+            if k in effective_c9 and effective_c9[k] != getattr(args, {
+                    "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
+                    "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]):
+                c9_inconsistent.append("%s: cli=%s raw=%s" % (k, getattr(args, {
+                    "warmupKeys": "c9_warmup", "rounds": "c9_rounds",
+                    "keysPerRound": "c9_keys", "settleTimeoutMs": "c9_settle_timeout"}[k]), effective_c9[k]))
+        if c9_inconsistent:
+            print("[probe] 警告：C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent), file=sys.stderr)
+
+        env = {
+            "browser": raw.get("browser"),
+            "edge": raw.get("edgePath"),
+            "node": node_version(),
+            "kbServed": str(work_kb),
+            "kbSource": str(src_kb),
+            "kbSourceHasMemoria": ("是" if had_memoria else "否（已用副本让应用自初始化）"),
+            "casesFile": "tests/probe-kb/cases/cases.json",
+            "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
+            "scaleDocLines": (_ev(raw, "sel_scroll_stress") or {}).get("docLines"),
+            "c9Protocol": "v%s / %s" % ((raw.get("measurementProtocol") or {}).get("version", "?"), MEASUREMENT_PROTOCOL),
+            "c9Params": "warmup=%s, R=%s, keysPerRound=%s, settleTimeout=%sms" % (
+                args.c9_warmup, args.c9_rounds, args.c9_keys, args.c9_settle_timeout),
+            "c9NoiseThresholds": "IQR/median<=%s, p95/median<=%s, roundSpread<=%s, minKeys>=%s" % (
+                args.c9_max_iqr_over_median, args.c9_max_p95_over_median,
+                args.c9_max_round_spread, args.c9_min_keys),
+            "appReady": raw.get("appReady"),
+            "runDurationMs": raw.get("durationMs"),
+        }
+        notes = [
+            "绿/红按契约判，不按与老实现一致判。",
+            "未测项已写明原因，未默认成绿。",
+            "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
+            "C9 口径 v2：逐键采样（非一次性连发）+ warmup 丢弃 + R 轮 median-of-medians；"
+            "判绿/红前先过噪声门（键间 IQR/p95、轮间极差、样本量、死键），不过则标「不确定」而非绿/红。",
+            "C9 的「不确定」是**度量状态**而非性能结论：不得据此说达标或退化；处置 = 同机同档位重测。",
+            "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
+            "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
+            "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。",
+        ]
+        if c9_inconsistent:
+            notes.append("C9 参数与 raw 不一致（以 raw 为准）：%s" % "; ".join(c9_inconsistent))
+        meta = {
+            "label": args.label, "sha": sha,
+            "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "env": env, "notes": notes,
+            "cov": {
+                "green": [k for k, v in verdicts.items() if v["status"] == "green"],
+                "red": [k for k, v in verdicts.items() if v["status"] == "red"],
+                "untested": [k for k, v in verdicts.items() if v["status"] == "untested"],
+            },
+        }
+
+        rep_json = build_report_json(meta, verdicts, raw)
+        rep_md = build_report_md(meta, verdicts, raw)
+        jpath = RESULTS_DIR / (stem + ".json")
+        mpath = RESULTS_DIR / (stem + ".md")
+        jpath.write_text(json.dumps(rep_json, ensure_ascii=False, indent=2), encoding="utf-8")
+        mpath.write_text(rep_md, encoding="utf-8")
+
+        print("\n[probe] ===== 结论摘要 =====")
+        for i in range(1, 13):
+            k = "C%d" % i
+            v = verdicts[k]
+            tag = BADGE[v["status"]]
+            if v.get("conclude") is False and k == "C9":
+                tag = "⚪ 不确定"      # 度量无效：既不是绿也不是红（协议 §6.3 / R5）
+            print("  %-4s %-8s %s" % (k, tag, v["reading"][:150]))
+        print("\n[probe] 产物：\n  %s\n  %s\n  raw: %s" % (jpath, mpath, raw_path))
+    finally:
+        # KB 守卫后校验：即使主体抛异常也要校验（冻结语料被写 ⇒ 判红并点名）
+        _kbw.end_guard(_kb_guard)
+    _kbw.end_guard(_kb_guard)
     return 0
 
 

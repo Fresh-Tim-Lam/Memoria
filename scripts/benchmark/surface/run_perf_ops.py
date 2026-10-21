@@ -97,6 +97,23 @@ A_LEVEL = ["typing", "scroll", "select", "paste", "undo", "find", "save",
 B_LEVEL = ["memGrowth"]
 
 
+def _load_kb_guard_wire():
+    """加载 KB 守卫接线助手（task-57）。
+
+    冻结语料缺失即报错：**拒绝在无守卫下运行测量**（R-17 已实际发生两次）。
+    """
+    import importlib.util as _ilu
+    _p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_kb_guard_wire.py")
+    if not os.path.exists(_p):
+        raise SystemExit("缺少 KB 守卫助手 _kb_guard_wire.py —— 拒绝在无守卫下运行测量")
+    _spec = _ilu.spec_from_file_location("_kb_guard_wire", _p)
+    if _spec is None or _spec.loader is None:
+        raise SystemExit("无法加载 _kb_guard_wire.py")
+    _m = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_m)
+    return _m
+
+
 def _load_iso_config():
     """加载共用配置隔离助手（同目录 `_iso_config.py`）。
 
@@ -304,245 +321,257 @@ def main():
     _iso_mod = _load_iso_config()
     _iso_mod.add_isolation_arg(ap)
     args = ap.parse_args()
-    # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
-    _iso = _iso_mod.isolate_config(
-        script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
-        label=getattr(args, 'label', 'run'),
-        ambient=getattr(args, 'ambient_config', False),
+    # ── KB 完整性守卫（task-57）：冻结语料只读 + 前后 sha 校验 ──
+    _kbw = _load_kb_guard_wire()
+    _kb_guard = _kbw.begin_guard(
+        'run_perf_ops', label=getattr(args, "label", "run"), writable=True,
     )
-    print(_iso.describe())
-    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    sha = git_short_sha()
-    stem = "perf-ops-%s_%s" % (args.label, sha)
-    out_path = RESULTS_DIR / ("%s.json" % stem)
-
-    harness_url = None
-    harness_thread = None
-    if not args.cdp:
-        src_kb = (REPO_ROOT / args.kb).resolve()
-        if not src_kb.is_dir():
-            print("[perfops] 源语料不存在: %s" % src_kb, file=sys.stderr)
-            return 2
-        work_kb = (REPO_ROOT / args.work_kb).resolve()
-        if work_kb.exists():
-            shutil.rmtree(work_kb, ignore_errors=True)
-        work_kb.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copytree(src_kb, work_kb)
-        harness = load_harness(work_kb, args.port)
-        import bottle
-        th = threading.Thread(target=bottle.run, kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True), daemon=True)
-        th.start()
-        harness_thread = th
-        if not wait_port(args.port):
-            print("[perfops] harness 未起来", file=sys.stderr)
-            return 2
-        harness_url = "http://127.0.0.1:%d/" % args.port
-
-    cmd = ["node", str(CLI), "--ops", args.ops, "--rounds", str(args.rounds), "--out", str(out_path)]
-    if args.cdp:
-        cmd += ["--cdp", args.cdp]
-    else:
-        cmd += ["--url", harness_url]
-    if args.inject:
-        cmd += ["--inject", args.inject]
-    if args.surface:
-        cmd += ["--surface", args.surface]
-    print("[perfops] 运行: %s" % " ".join(cmd))
     try:
-        proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)
-    except subprocess.TimeoutExpired:
-        print("[perfops] node 驱动超时", file=sys.stderr)
-        return 3
-    if proc.returncode != 0 or not out_path.exists():
-        print("[perfops] node 驱动失败 code=%s" % proc.returncode, file=sys.stderr)
-        print("--- stdout ---\n%s\n--- stderr ---\n%s" % (
-            proc.stdout.decode("utf-8", "replace")[-3000:], proc.stderr.decode("utf-8", "replace")[-6000:]), file=sys.stderr)
-        return 3
+        if _kb_guard.writable:
+            _kbw.make_measure_kb(_kb_guard)   # 写类：测量跑副本，打印副本路径
+        # ── 应用配置隔离（task-54）：默认密封；--ambient-config 仅诊断 ──
+        _iso = _iso_mod.isolate_config(
+            script=__file__.rsplit(os.sep, 1)[-1].rsplit('.', 1)[0],
+            label=getattr(args, 'label', 'run'),
+            ambient=getattr(args, 'ambient_config', False),
+        )
+        print(_iso.describe())
+        RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+        sha = git_short_sha()
+        stem = "perf-ops-%s_%s" % (args.label, sha)
+        out_path = RESULTS_DIR / ("%s.json" % stem)
 
-    raw = json.loads(out_path.read_text(encoding="utf-8"))
-    mode = raw.get("mode")
+        harness_url = None
+        harness_thread = None
+        if not args.cdp:
+            src_kb = (REPO_ROOT / args.kb).resolve()
+            if not src_kb.is_dir():
+                print("[perfops] 源语料不存在: %s" % src_kb, file=sys.stderr)
+                return 2
+            work_kb = (REPO_ROOT / args.work_kb).resolve()
+            if work_kb.exists():
+                shutil.rmtree(work_kb, ignore_errors=True)
+            work_kb.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(src_kb, work_kb)
+            harness = load_harness(work_kb, args.port)
+            import bottle
+            th = threading.Thread(target=bottle.run, kwargs=dict(app=harness.app, host="127.0.0.1", port=args.port, quiet=True), daemon=True)
+            th.start()
+            harness_thread = th
+            if not wait_port(args.port):
+                print("[perfops] harness 未起来", file=sys.stderr)
+                return 2
+            harness_url = "http://127.0.0.1:%d/" % args.port
 
-    # ── 逐操作汇总 ──
-    summaries = {}
-    for name, op in (raw.get("ops") or {}).items():
-        summaries[name] = summarize(name, op, op.get("metric"))
-
-    # ── 基线对比 / 预算判定 ──
-    baseline = None
-    if args.baseline:
-        bp = Path(args.baseline)
-        if not bp.is_absolute():
-            bp = RESULTS_DIR / bp
-        if bp.exists():
-            baseline = json.loads(bp.read_text(encoding="utf-8"))
-    # 若本次是 baseline（无 --baseline），预算以自身 P_old 计算并落盘
-    baseline_ops = (baseline or {}).get("ops") or raw.get("baselineOps") or {}
-
-    table = []
-    for name, s in summaries.items():
-        base = baseline_ops.get(name) or {}
-        p_old = base.get("p95") if base else s.get("p95")
-        budget, basis = budget_for(name, p_old)
-        verdict = None
-        reasons = []
-        if name == "scroll":
-            # scroll 走三重硬判据（方案 A），单位是帧间隔；不受 --baseline 与否影响
-            verdict, reasons, _sd = scroll_verdict(s, p_old)
-        elif baseline and s.get("p95") is not None and budget is not None:
-            verdict = "FAIL" if s["p95"] > budget else "PASS"
-        # open：当前实现已超 1000ms 阈值（阶段 1 gate 记 1434ms）。标注"当前红"，
-        #   阶段 2 的约束是"不得恶化 >1.15×"，改善另计 => 单独打标，不与"退化判红"混淆。
-        # 「当前即红」标注：open 超 1000ms 阈值；scroll 长任务>0（见 CURRENTLY_RED 注释）。
-        #   与"阶段 2 退化判红"分开，避免把既有事实误读成回归。
-        if name == "open":
-            currently_red = (s.get("p95") is not None
-                             and USER_THRESHOLDS.get("open") is not None
-                             and s["p95"] > USER_THRESHOLDS["open"])
-        elif name == "scroll":
-            currently_red = (verdict == "FAIL")
+        cmd = ["node", str(CLI), "--ops", args.ops, "--rounds", str(args.rounds), "--out", str(out_path)]
+        if args.cdp:
+            cmd += ["--cdp", args.cdp]
         else:
-            currently_red = False
-        table.append({
-            "id": name, "tier": s.get("tier"), "mode": s.get("mode"), "metric": s.get("metric"),
-            "p50": s.get("p50"), "p95": s.get("p95"), "samples": s.get("samples"),
-            "pOld": p_old, "budget": budget, "budgetBasis": basis,
-            "verdict": verdict, "verdictReasons": reasons,
-            "currentlyRed": currently_red,
-            "noiseOk": s.get("noiseOk"),
-            "status": s.get("status"), "error": s.get("error"),
-            "extra": s.get("extra"),
-        })
+            cmd += ["--url", harness_url]
+        if args.inject:
+            cmd += ["--inject", args.inject]
+        if args.surface:
+            cmd += ["--surface", args.surface]
+        print("[perfops] 运行: %s" % " ".join(cmd))
+        try:
+            proc = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, timeout=args.timeout)
+        except subprocess.TimeoutExpired:
+            print("[perfops] node 驱动超时", file=sys.stderr)
+            return 3
+        if proc.returncode != 0 or not out_path.exists():
+            print("[perfops] node 驱动失败 code=%s" % proc.returncode, file=sys.stderr)
+            print("--- stdout ---\n%s\n--- stderr ---\n%s" % (
+                proc.stdout.decode("utf-8", "replace")[-3000:], proc.stderr.decode("utf-8", "replace")[-6000:]), file=sys.stderr)
+            return 3
 
-    result = {
-        "schema": "memoria-perf-ops/v1",
-        "sha": sha, "label": args.label, "mode": mode,
-        "environment": raw.get("environment"), "inject": raw.get("inject"),
-        "budgetRule": "min(用户可感知阈值, P_old×1.15)；无阈值取 P_old×1.15",
-        "noiseGate": NOISE,
-        "userThresholds": USER_THRESHOLDS,
-        "ops": {t["id"]: t for t in table},
-        "summaries": summaries,
-        "raw": raw,
-    }
-    out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+        raw = json.loads(out_path.read_text(encoding="utf-8"))
+        mode = raw.get("mode")
 
-    # ── Markdown 报告 ──
-    md = RESULTS_DIR / ("%s.md" % stem)
-    L = []
-    L.append("# 绩效操作覆盖矩阵 · %s（%s）\n" % (args.label, sha))
-    L.append("> 模式：**%s**%s" % (mode, "" if mode == "realapp" else "（无头 Edge；首开/公式相关需 `--cdp` 真机）"))
-    L.append("> 轮数：每操作 %d 轮　｜　噪声门：IQR/med≤%.2f, p95/med≤%.2f, roundSpread≤%.2f\n" % (
-        args.rounds, NOISE["maxIqrOverMedian"], NOISE["maxP95OverMedian"], NOISE["maxRoundSpread"]))
-    if raw.get("inject"):
-        L.append("> **注入**：`%s` —— 期望被判超预算时须如实显红\n" % json.dumps(raw["inject"], ensure_ascii=False))
-    L.append("## 操作矩阵（A 级必测 %d 项 / B 级记录 %d 项）\n" % (
-        len([t for t in table if t["tier"] == "A"]), len([t for t in table if t["tier"] == "B"])))
-    L.append("| 操作 | 级 | 度量 | p50 | **p95** | 样本 | P_old | 预算 | 判定 |")
-    L.append("|---|---|---|---|---|---|---|---|---|")
-    for t in table:
-        v = "-" if t["verdict"] is None else ("🟢 PASS" if t["verdict"] == "PASS" else "🔴 FAIL")
-        if t.get("currentlyRed"):
-            v += " ⚠️当前红"
-        unit = "ms"
-        if t["id"] == "memGrowth":
-            unit = "MB"
-        budget_cell = ("%s %s" % (t["budget"], unit)) if t["budget"] is not None else "-"
-        if t["id"] == "scroll":
-            budget_cell = "p95≤%s + 卡顿≤%.2f + 长任务=0" % (
-                SCROLL_BUDGET["p95MaxMs"], SCROLL_BUDGET["jankRatioMax"])
-        L.append("| `%s` | %s | %s | %s | **%s** | %s | %s | %s | %s |" % (
-            t["id"], t["tier"], t["metric"],
-            ("%s %s" % (t["p50"], unit)) if t["p50"] is not None else "-",
-            ("%s %s" % (t["p95"], unit)) if t["p95"] is not None else "-",
-            t["samples"] or 0,
-            ("%s %s" % (t["pOld"], unit)) if t["pOld"] is not None else "-",
-            budget_cell,
-            v))
-    L.append("")
-    # 判定失败原因明细
-    failrows = [t for t in table if t["verdict"] == "FAIL"]
-    if failrows:
-        L.append("### 判定为 FAIL 的原因\n")
-        for t in failrows:
-            rs = t.get("verdictReasons") or []
-            if rs:
-                L.append("- `%s`：%s" % (t["id"], "；".join(rs)))
+        # ── 逐操作汇总 ──
+        summaries = {}
+        for name, op in (raw.get("ops") or {}).items():
+            summaries[name] = summarize(name, op, op.get("metric"))
+
+        # ── 基线对比 / 预算判定 ──
+        baseline = None
+        if args.baseline:
+            bp = Path(args.baseline)
+            if not bp.is_absolute():
+                bp = RESULTS_DIR / bp
+            if bp.exists():
+                baseline = json.loads(bp.read_text(encoding="utf-8"))
+        # 若本次是 baseline（无 --baseline），预算以自身 P_old 计算并落盘
+        baseline_ops = (baseline or {}).get("ops") or raw.get("baselineOps") or {}
+
+        table = []
+        for name, s in summaries.items():
+            base = baseline_ops.get(name) or {}
+            p_old = base.get("p95") if base else s.get("p95")
+            budget, basis = budget_for(name, p_old)
+            verdict = None
+            reasons = []
+            if name == "scroll":
+                # scroll 走三重硬判据（方案 A），单位是帧间隔；不受 --baseline 与否影响
+                verdict, reasons, _sd = scroll_verdict(s, p_old)
+            elif baseline and s.get("p95") is not None and budget is not None:
+                verdict = "FAIL" if s["p95"] > budget else "PASS"
+            # open：当前实现已超 1000ms 阈值（阶段 1 gate 记 1434ms）。标注"当前红"，
+            #   阶段 2 的约束是"不得恶化 >1.15×"，改善另计 => 单独打标，不与"退化判红"混淆。
+            # 「当前即红」标注：open 超 1000ms 阈值；scroll 长任务>0（见 CURRENTLY_RED 注释）。
+            #   与"阶段 2 退化判红"分开，避免把既有事实误读成回归。
+            if name == "open":
+                currently_red = (s.get("p95") is not None
+                                 and USER_THRESHOLDS.get("open") is not None
+                                 and s["p95"] > USER_THRESHOLDS["open"])
+            elif name == "scroll":
+                currently_red = (verdict == "FAIL")
             else:
-                L.append("- `%s`：p95 %s %s > 预算 %s %s" % (
-                    t["id"], t["p95"], "ms", t["budget"], "ms"))
-        L.append("")
-    # 滚动专项
-    sc = summaries.get("scroll") or {}
-    if sc.get("samples"):
-        L.append("## 滚动专项（Lead 重点项）\n")
-        L.append("**单位是「帧间隔」，不是「操作耗时」** —— 帧间隔的物理下限就是 vsync 周期 `1000/60 ≈ %.2f ms`。"
-                 % VSYNC_FRAME_MS)
-        L.append("所以 `p95 ≤ 16ms` 在 60Hz 上**物理不可达**（那是把刷新率当要求）。"
-                 "scroll 预算改用：**p95 ≤ %.0f ms（下限+一帧容差）且 卡顿比例 ≤ %.2f 且 长任务 = 0**，"
-                 "并保留「不退化 >%.2f× P_old」回归判据。\n" % (
-                     SCROLL_BUDGET["p95MaxMs"], SCROLL_BUDGET["jankRatioMax"], SCROLL_BUDGET["regressionFactor"]))
-        ex = sc.get("extra") or {}
-        sverdict, sreasons, _sd = scroll_verdict(sc, sc.get("p95"))
-        L.append("| 条件 | 实测 | 门槛 | 结果 |")
-        L.append("|---|---|---|---|")
-        L.append("| 帧间隔 p95 | **%s ms** | ≤ %s ms | %s |" % (
-            sc.get("p95"), SCROLL_BUDGET["p95MaxMs"],
-            "✅" if (sc.get("p95") or 0) <= SCROLL_BUDGET["p95MaxMs"] else "❌"))
-        jr = ex.get("jankRatioMax")
-        L.append("| 卡顿比例（帧间隔 > %sms） | **%s** | ≤ %.2f | %s |" % (
-            ex.get("jankThresholdMs"), jr, SCROLL_BUDGET["jankRatioMax"],
-            "✅" if isinstance(jr, (int, float)) and jr <= SCROLL_BUDGET["jankRatioMax"] else "❌"))
-        lt = ex.get("longTaskCountMedian"); ltm = ex.get("longTaskMaxMsMax")
-        L.append("| 长任务 | 中位 %s 个 / 最长 %s ms | = 0 | %s |" % (
-            lt, ltm, "✅" if not lt and not ltm else "❌"))
-        L.append("")
-        L.append("- 帧间隔明细：p50=%s ms，max=%s ms（%d 帧）；滚动距离 %s px" % (
-            sc.get("p50"), sc.get("max"), sc.get("samples"), ex.get("scrolledPx")))
-        L.append("- **滚动判定：%s**%s\n" % (
-            "🟢 PASS" if sverdict == "PASS" else "🔴 FAIL",
-            "" if not sreasons else "（%s）" % "；".join(sreasons)))
-    # 失败/错误
-    errs = [t for t in table if t["status"] != "ran" or t["error"]]
-    if errs:
-        L.append("## ⚠️ 未跑成 / 出错的操作\n")
-        for t in errs:
-            L.append("- `%s`：%s" % (t["id"], t.get("error") or t.get("status")))
-        L.append("")
-    # 预算口径
-    L.append("## 预算口径\n")
-    L.append("**绝对预算 = min(用户可感知阈值, P_old × 1.15)**；无用户阈值的取 `P_old × 1.15`。\n")
-    L.append("| 操作 | 用户可感知阈值 | 依据 |")
-    L.append("|---|---|---|")
-    for k, v in USER_THRESHOLDS.items():
-        L.append("| `%s` | %s | %s |" % (k, v, {
-            "typing": "60fps 单帧预算（gate §0 G1' 既定目标 16ms）；单位是「操作耗时」，16ms 合理",
-            "open": "可接受首开阈值（gate 已用 1434ms 观测作参照）",
-        }.get(k, "-")))
-    L.append("| `scroll` | **不含固定 ms 阈值** | 帧间隔物理下限 = vsync %.2f ms，`≤16ms` 不可达 ⇒ 改用三重判据（见「滚动专项」） |" % VSYNC_FRAME_MS)
-    L.append("")
-    # 当前即红项（不是退化，是既有事实）
-    reds = [t for t in table if t.get("currentlyRed")]
-    if reds:
-        L.append("## ⚠️ 当前实现即未达标的项（**不是**阶段 2 退化）\n")
-        for t in reds:
-            if t["id"] == "open":
-                L.append("- `open`：p95 = **%s ms** > 阈值 %s ms。阶段 1 gate 已记录该操作长期偏高（1434ms）。" % (
-                    t["p95"], USER_THRESHOLDS.get("open")))
-            elif t["id"] == "scroll":
-                ex = t.get("extra") or {}
-                L.append("- `scroll`：p95 %s ms 与卡顿比例 %s 均已达标，但**长任务 = %s ms（门槛 0）**。" % (
-                    t["p95"], ex.get("jankRatioMax"), ex.get("longTaskMaxMsMax")))
-                L.append("  该项 3 次独立复跑一致（53/54/53 ms），是窗口化边界跨越的首帧成本，属当前实现事实。")
-        L.append("")
-        L.append("**阶段 2 的约束是「不得恶化 >1.15× `P_old`」，改善另计**——不要把「当前红」误读为「本次回归」。\n")
-    md.write_text("\n".join(L), encoding="utf-8")
+                currently_red = False
+            table.append({
+                "id": name, "tier": s.get("tier"), "mode": s.get("mode"), "metric": s.get("metric"),
+                "p50": s.get("p50"), "p95": s.get("p95"), "samples": s.get("samples"),
+                "pOld": p_old, "budget": budget, "budgetBasis": basis,
+                "verdict": verdict, "verdictReasons": reasons,
+                "currentlyRed": currently_red,
+                "noiseOk": s.get("noiseOk"),
+                "status": s.get("status"), "error": s.get("error"),
+                "extra": s.get("extra"),
+            })
 
-    print("[perfops] 产物：\n  %s\n  %s" % (md, out_path))
-    ran = [t for t in table if t["status"] == "ran" and t["p95"] is not None]
-    print("[perfops] 成功 %d/%d 项（A 级 %d 项）" % (
-        len(ran), len(table), len([t for t in ran if t["tier"] == "A"])))
-    if any(t["verdict"] == "FAIL" for t in table):
-        print("[perfops] 有操作超预算 ✗")
+        result = {
+            "schema": "memoria-perf-ops/v1",
+            "sha": sha, "label": args.label, "mode": mode,
+            "environment": raw.get("environment"), "inject": raw.get("inject"),
+            "budgetRule": "min(用户可感知阈值, P_old×1.15)；无阈值取 P_old×1.15",
+            "noiseGate": NOISE,
+            "userThresholds": USER_THRESHOLDS,
+            "ops": {t["id"]: t for t in table},
+            "summaries": summaries,
+            "raw": raw,
+        }
+        out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        # ── Markdown 报告 ──
+        md = RESULTS_DIR / ("%s.md" % stem)
+        L = []
+        L.append("# 绩效操作覆盖矩阵 · %s（%s）\n" % (args.label, sha))
+        L.append("> 模式：**%s**%s" % (mode, "" if mode == "realapp" else "（无头 Edge；首开/公式相关需 `--cdp` 真机）"))
+        L.append("> 轮数：每操作 %d 轮　｜　噪声门：IQR/med≤%.2f, p95/med≤%.2f, roundSpread≤%.2f\n" % (
+            args.rounds, NOISE["maxIqrOverMedian"], NOISE["maxP95OverMedian"], NOISE["maxRoundSpread"]))
+        if raw.get("inject"):
+            L.append("> **注入**：`%s` —— 期望被判超预算时须如实显红\n" % json.dumps(raw["inject"], ensure_ascii=False))
+        L.append("## 操作矩阵（A 级必测 %d 项 / B 级记录 %d 项）\n" % (
+            len([t for t in table if t["tier"] == "A"]), len([t for t in table if t["tier"] == "B"])))
+        L.append("| 操作 | 级 | 度量 | p50 | **p95** | 样本 | P_old | 预算 | 判定 |")
+        L.append("|---|---|---|---|---|---|---|---|---|")
+        for t in table:
+            v = "-" if t["verdict"] is None else ("🟢 PASS" if t["verdict"] == "PASS" else "🔴 FAIL")
+            if t.get("currentlyRed"):
+                v += " ⚠️当前红"
+            unit = "ms"
+            if t["id"] == "memGrowth":
+                unit = "MB"
+            budget_cell = ("%s %s" % (t["budget"], unit)) if t["budget"] is not None else "-"
+            if t["id"] == "scroll":
+                budget_cell = "p95≤%s + 卡顿≤%.2f + 长任务=0" % (
+                    SCROLL_BUDGET["p95MaxMs"], SCROLL_BUDGET["jankRatioMax"])
+            L.append("| `%s` | %s | %s | %s | **%s** | %s | %s | %s | %s |" % (
+                t["id"], t["tier"], t["metric"],
+                ("%s %s" % (t["p50"], unit)) if t["p50"] is not None else "-",
+                ("%s %s" % (t["p95"], unit)) if t["p95"] is not None else "-",
+                t["samples"] or 0,
+                ("%s %s" % (t["pOld"], unit)) if t["pOld"] is not None else "-",
+                budget_cell,
+                v))
+        L.append("")
+        # 判定失败原因明细
+        failrows = [t for t in table if t["verdict"] == "FAIL"]
+        if failrows:
+            L.append("### 判定为 FAIL 的原因\n")
+            for t in failrows:
+                rs = t.get("verdictReasons") or []
+                if rs:
+                    L.append("- `%s`：%s" % (t["id"], "；".join(rs)))
+                else:
+                    L.append("- `%s`：p95 %s %s > 预算 %s %s" % (
+                        t["id"], t["p95"], "ms", t["budget"], "ms"))
+            L.append("")
+        # 滚动专项
+        sc = summaries.get("scroll") or {}
+        if sc.get("samples"):
+            L.append("## 滚动专项（Lead 重点项）\n")
+            L.append("**单位是「帧间隔」，不是「操作耗时」** —— 帧间隔的物理下限就是 vsync 周期 `1000/60 ≈ %.2f ms`。"
+                     % VSYNC_FRAME_MS)
+            L.append("所以 `p95 ≤ 16ms` 在 60Hz 上**物理不可达**（那是把刷新率当要求）。"
+                     "scroll 预算改用：**p95 ≤ %.0f ms（下限+一帧容差）且 卡顿比例 ≤ %.2f 且 长任务 = 0**，"
+                     "并保留「不退化 >%.2f× P_old」回归判据。\n" % (
+                         SCROLL_BUDGET["p95MaxMs"], SCROLL_BUDGET["jankRatioMax"], SCROLL_BUDGET["regressionFactor"]))
+            ex = sc.get("extra") or {}
+            sverdict, sreasons, _sd = scroll_verdict(sc, sc.get("p95"))
+            L.append("| 条件 | 实测 | 门槛 | 结果 |")
+            L.append("|---|---|---|---|")
+            L.append("| 帧间隔 p95 | **%s ms** | ≤ %s ms | %s |" % (
+                sc.get("p95"), SCROLL_BUDGET["p95MaxMs"],
+                "✅" if (sc.get("p95") or 0) <= SCROLL_BUDGET["p95MaxMs"] else "❌"))
+            jr = ex.get("jankRatioMax")
+            L.append("| 卡顿比例（帧间隔 > %sms） | **%s** | ≤ %.2f | %s |" % (
+                ex.get("jankThresholdMs"), jr, SCROLL_BUDGET["jankRatioMax"],
+                "✅" if isinstance(jr, (int, float)) and jr <= SCROLL_BUDGET["jankRatioMax"] else "❌"))
+            lt = ex.get("longTaskCountMedian"); ltm = ex.get("longTaskMaxMsMax")
+            L.append("| 长任务 | 中位 %s 个 / 最长 %s ms | = 0 | %s |" % (
+                lt, ltm, "✅" if not lt and not ltm else "❌"))
+            L.append("")
+            L.append("- 帧间隔明细：p50=%s ms，max=%s ms（%d 帧）；滚动距离 %s px" % (
+                sc.get("p50"), sc.get("max"), sc.get("samples"), ex.get("scrolledPx")))
+            L.append("- **滚动判定：%s**%s\n" % (
+                "🟢 PASS" if sverdict == "PASS" else "🔴 FAIL",
+                "" if not sreasons else "（%s）" % "；".join(sreasons)))
+        # 失败/错误
+        errs = [t for t in table if t["status"] != "ran" or t["error"]]
+        if errs:
+            L.append("## ⚠️ 未跑成 / 出错的操作\n")
+            for t in errs:
+                L.append("- `%s`：%s" % (t["id"], t.get("error") or t.get("status")))
+            L.append("")
+        # 预算口径
+        L.append("## 预算口径\n")
+        L.append("**绝对预算 = min(用户可感知阈值, P_old × 1.15)**；无用户阈值的取 `P_old × 1.15`。\n")
+        L.append("| 操作 | 用户可感知阈值 | 依据 |")
+        L.append("|---|---|---|")
+        for k, v in USER_THRESHOLDS.items():
+            L.append("| `%s` | %s | %s |" % (k, v, {
+                "typing": "60fps 单帧预算（gate §0 G1' 既定目标 16ms）；单位是「操作耗时」，16ms 合理",
+                "open": "可接受首开阈值（gate 已用 1434ms 观测作参照）",
+            }.get(k, "-")))
+        L.append("| `scroll` | **不含固定 ms 阈值** | 帧间隔物理下限 = vsync %.2f ms，`≤16ms` 不可达 ⇒ 改用三重判据（见「滚动专项」） |" % VSYNC_FRAME_MS)
+        L.append("")
+        # 当前即红项（不是退化，是既有事实）
+        reds = [t for t in table if t.get("currentlyRed")]
+        if reds:
+            L.append("## ⚠️ 当前实现即未达标的项（**不是**阶段 2 退化）\n")
+            for t in reds:
+                if t["id"] == "open":
+                    L.append("- `open`：p95 = **%s ms** > 阈值 %s ms。阶段 1 gate 已记录该操作长期偏高（1434ms）。" % (
+                        t["p95"], USER_THRESHOLDS.get("open")))
+                elif t["id"] == "scroll":
+                    ex = t.get("extra") or {}
+                    L.append("- `scroll`：p95 %s ms 与卡顿比例 %s 均已达标，但**长任务 = %s ms（门槛 0）**。" % (
+                        t["p95"], ex.get("jankRatioMax"), ex.get("longTaskMaxMsMax")))
+                    L.append("  该项 3 次独立复跑一致（53/54/53 ms），是窗口化边界跨越的首帧成本，属当前实现事实。")
+            L.append("")
+            L.append("**阶段 2 的约束是「不得恶化 >1.15× `P_old`」，改善另计**——不要把「当前红」误读为「本次回归」。\n")
+        md.write_text("\n".join(L), encoding="utf-8")
+
+        print("[perfops] 产物：\n  %s\n  %s" % (md, out_path))
+        ran = [t for t in table if t["status"] == "ran" and t["p95"] is not None]
+        print("[perfops] 成功 %d/%d 项（A 级 %d 项）" % (
+            len(ran), len(table), len([t for t in ran if t["tier"] == "A"])))
+        if any(t["verdict"] == "FAIL" for t in table):
+            print("[perfops] 有操作超预算 ✗")
+    finally:
+        # KB 守卫后校验：即使主体抛异常也要校验（冻结语料被写 ⇒ 判红并点名）
+        _kbw.end_guard(_kb_guard)
+    _kbw.end_guard(_kb_guard)
     return 0
 
 
