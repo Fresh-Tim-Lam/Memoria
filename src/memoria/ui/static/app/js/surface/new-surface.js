@@ -1,5 +1,5 @@
 /**
- * NewSurface —— 显示子系统插头「new」（阶段 2 · P2a + P2b：渲染最小闭环）
+ * NewSurface —— 显示子系统插头「new」（阶段 2 · P2a + P2b + P2c + P4a：渲染最小闭环 + 编辑接线）
  *
  * 契约：docs/design/view-surface-contract.md
  *   §3.1 接口 / §4.2 交接 / §4.3 capabilities / §4.5 插头方法语义表
@@ -14,8 +14,11 @@
  *          throw 会被 catch ⇒ 回滚 ⇒ `switchTo('new')` 永远失败。
  *      故 P2a 取"记录 + 可查询 + 非法 mode 抛错"；三视图 DOM 仍归宿主 app.js。
  *      **P2b/P3 必须补真正的视图切换实现**（arch-contract 已登记）。
- *   ❌ 如实抛 NOT_IMPLEMENTED：applyEdit / undo / redo / getSrcRangeForSelection
- *      （P2a 只渲染不编辑；返回假空值是契约红线，绝不做）。
+ *   ❌ 如实抛 NOT_IMPLEMENTED：getSrcRangeForSelection
+ *      （P4a 只接 applyEdit/undo/redo；选区→源码映射仍未实现，返回假空值是契约红线，绝不做）。
+ *   ✅ P4a：applyEdit / undo / redo 复用**同一套编辑内核**（`MemoriaEditSync` +
+ *      `MemoriaApp.surface.deleteRange/replaceRange`，门面委托，不复制实现）；
+ *      预览区可编辑性随 `MemoriaEditHandler.editMode` 恢复（镜像 legacy app.js:1939）。
  *   ✅ 最小实现：revealRange / getScrollAnchor / setScrollAnchor —— 只做"按块滚动"，
  *      不做 band/flash/选区（P4 EditCore 的范围）。它们被 registry 交接第④步调用，
  *      如实抛错会让真实 `switchTo('new')` 回滚，故按"可用即实现、不可用部分不伪造"落地。
@@ -257,7 +260,9 @@ window.createNewSurface = function createNewSurface(deps) {
     // 挂载：与 legacy renderPreview 同形（清空 #preview 后追加 .-preview-content）
     preview.innerHTML = "";
     preview.appendChild(out.container);
-    preview.contentEditable = "false";
+    // P4a P1：镜像 legacy renderPreview（app.js:1939）——预览区可编辑性必须跟随 editMode，
+    // 不能写死 false，否则编辑模式下 new 渲染后用户无法在预览区直接打字。
+    preview.contentEditable = (window.MemoriaEditHandler && window.MemoriaEditHandler.editMode) ? "true" : "false";
 
     // 块身份：整篇路径 ⇒ beginStamp({reset:true}) → 逐块 upsert → commit（契约 §4.5.4）
     var idx = _index();
@@ -391,14 +396,50 @@ window.createNewSurface = function createNewSurface(deps) {
     /** 查询记录的 mode（交接可验证性：getMode() === 请求的 mode）。 */
     getMode: function () { return _mode; },
 
-    /** §4.5.1-④ applyEdit：P2a 只渲染不编辑 ⇒ 如实抛 NotImpl（绝不返回假空值）。 */
-    applyEdit: function () { throw _notImplemented("applyEdit"); },
+    /** §4.5.1-④ applyEdit：P4a 起复用既有编辑内核（与 legacy 同一套门面委托，不复制实现）。
+     *  - insertText / splitBlock / mergeBlock → `window.MemoriaEditSync`（真实编辑逻辑所在）
+     *  - deleteRange / replaceRange → `MemoriaApp.surface`（与 legacy 相同的宿主门面）
+     *  先 `flushRepaint()` 落定"停手才渲"的那一块（legacy F1 同口径）。
+     */
+    applyEdit: function (op) {
+      if (!op || !op.kind) return false;
+      var es = window.MemoriaEditSync;
+      if (es && typeof es.flushRepaint === "function") { try { es.flushRepaint(); } catch (e) { /* 与 legacy 一致：停手重渲失败不阻塞编辑 */ } }
+      if (!es) return false;
+      var app = window.MemoriaApp;
+      switch (op.kind) {
+        case "insertText":
+          return typeof es.insertText === "function" ? es.insertText(op.text || "") : false;
+        case "splitBlock":
+          return typeof es.splitParagraph === "function" ? es.splitParagraph() : false;
+        case "mergeBlock":
+          return typeof es.backspace === "function" ? es.backspace() : false;
+        case "deleteRange": {
+          var sDel = app && app.surface;
+          return !!(sDel && typeof sDel.deleteRange === "function" && sDel.deleteRange(op.range || op.at || op));
+        }
+        case "replaceRange": {
+          var sRep = app && app.surface;
+          return !!(sRep && typeof sRep.replaceRange === "function" && sRep.replaceRange(op.range || op.at || op, op.text));
+        }
+        default:
+          return false;
+      }
+    },
 
-    /** §4.5.1-⑤ undo：同上。 */
-    undo: function () { throw _notImplemented("undo"); },
+    /** §4.5.1-⑤ undo：复用 EditSync 的同一份撤销栈（P4a）。 */
+    undo: function () {
+      var es = window.MemoriaEditSync;
+      if (es && typeof es.flushRepaint === "function") { try { es.flushRepaint(); } catch (e) { /* noop */ } }
+      return !!(es && typeof es.undo === "function" && es.undo());
+    },
 
     /** §4.5.1-⑥ redo：同上。 */
-    redo: function () { throw _notImplemented("redo"); },
+    redo: function () {
+      var es = window.MemoriaEditSync;
+      if (es && typeof es.flushRepaint === "function") { try { es.flushRepaint(); } catch (e) { /* noop */ } }
+      return !!(es && typeof es.redo === "function" && es.redo());
+    },
 
     /**
      * §4.5.1-⑦ revealRange：P2a 只做"按块滚动"（不做 band/flash，后者属 P4 EditCore）。
