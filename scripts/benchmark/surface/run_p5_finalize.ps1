@@ -1,4 +1,4 @@
-﻿# run_p5_finalize.ps1 —— P5 矩阵一次定案（task-33）
+# run_p5_finalize.ps1 —— P5 矩阵一次定案（task-33）
 #
 # 前提（脚本会先自检，不满足就拒跑）：
 #   1. `git status --porcelain -- src/` 必须干净  —— 否则又是跨代码版本混跑（本轮最大教训）
@@ -98,7 +98,18 @@ $t = $json.totals
 Write-Host ""
 Write-Host "[finalize] totals: match=$($t.match) diff=$($t.diff) unsupported=$($t.unsupported) missing=$($t.missing) schema_error=$($t.schema_error)"
 
-$allPass = ($t.diff -eq 0 -and $t.unsupported -eq 0 -and $t.missing -eq 0 -and $t.schema_error -eq 0)
+# ⚠️ 坑（2026-10-21 实测）：`compare_signatures.mjs` 的 totals **不含 `schema_error` 键**
+#   ⇒ `$t.schema_error` 取到 `$null`，而 PowerShell 的 `$null -eq 0` 是 **False**
+#   ⇒ 即使 diff/unsupported/missing 全 0，`$allPass` 恒为 False，脚本永远报"未达标"。
+#   这是**假红**（与"假绿"同族的判定错误），已按"缺失即视为 0 但必须显式打印"修正：
+#   显式取键并给默认值 0，同时把最终判据打印出来，避免再次误读。
+function _Num($v) { if ($null -eq $v) { return 0 } return [int]$v }
+$nDiff = _Num $t.diff
+$nUnsupported = _Num $t.unsupported
+$nMissing = _Num $t.missing
+$nSchemaError = _Num $t.schema_error
+$allPass = ($nDiff -eq 0 -and $nUnsupported -eq 0 -and $nMissing -eq 0 -and $nSchemaError -eq 0)
+Write-Host "[finalize] 判据: diff=$nDiff unsupported=$nUnsupported missing=$nMissing schema_error=$nSchemaError => allPass=$allPass"
 Write-Host ""
 if ($allPass) {
     Write-Host "[finalize] ✅ 13/13 全绿 + unsupported=0 —— 可以正式冻结 S_render_frozen"
