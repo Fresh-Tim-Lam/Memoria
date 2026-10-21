@@ -74,7 +74,35 @@
 
   function syncLog(...args) { if (_SYNC_LOG) console.log("[SYNC]", ...args); }
 
-  /** 收集源码编辑器的当前内容（逐行拼接） */
+  /**
+   * S13：`state.doc.body` 是否以 `\n` 结尾（"文件尾换行"这一位）。
+   * DOM 的 `.-line-content` **无法表达**尾换行（N 行 ⇒ N-1 个分隔符），故必须从真源
+   * `state.doc.body` 在第一次回读前把它记下来，之后按位回补——**不是**无条件加 `\n`。
+   * 每次 `state.doc` 新载入（新对象）会重新判定，故不会把无尾换行的文件改成有。
+   */
+  function _docEndsWithNL(doc) {
+    const d = doc || state.doc;
+    if (!d) return false;
+    if (typeof d.__endsWithNL === "boolean") return d.__endsWithNL;
+    const b = typeof d.body === "string" ? d.body : "";
+    d.__endsWithNL = b.length > 0 && b.endsWith("\n");
+    return d.__endsWithNL;
+  }
+
+  /** 由 body 得 `state.doc.lines`：尾 `\n` 不产生空行（与后端 `load_document.lines` 同口径） */
+  function _linesFromBody(body) {
+    const b = body == null ? "" : String(body);
+    return b.endsWith("\n") ? b.slice(0, -1).split("\n") : b.split("\n");
+  }
+
+  /** 按原文"是否有尾换行"补回（只在真源标记为 true 且当前 body 缺尾时补一位） */
+  function _restoreDocTailNL(body) {
+    if (body == null) return body;
+    const b = String(body);
+    return (_docEndsWithNL() && b.length > 0 && !b.endsWith("\n")) ? b + "\n" : b;
+  }
+
+  /** 收集源码编辑器的当前内容（逐行拼接；S13：按真源原样恢复尾换行） */
   function collectEditorBody() {
     const editor = $("#editor");
     if (!editor) { syncLog("collectEditorBody: editor DOM 不存在"); return null; }
@@ -88,8 +116,9 @@
       clone.querySelectorAll(".-sync-cursor").forEach((n) => n.remove());
       return clone.textContent ?? "";
     }).join("\n");
-    syncLog("collectEditorBody: 收集到", lines.length, "行, 总长度", body.length);
-    return body;
+    const out = _restoreDocTailNL(body);
+    syncLog("collectEditorBody: 收集到", lines.length, "行, 总长度", out.length, "(tailNL=", _docEndsWithNL(), ")");
+    return out;
   }
 
   /** 源码→预览：实时重新渲染预览（内存，不写盘） */
@@ -101,7 +130,7 @@
       return;
     }
     state.doc.body = body;
-    state.doc.lines = body.split("\n");
+    state.doc.lines = _linesFromBody(body);
     state.doc.preview_body = null;
     syncLog("syncSourceToPreview: 调用 renderPreview, body 前50字:", body.substring(0, 50));
     await renderPreview(state.doc);
@@ -1668,7 +1697,7 @@
       const body = collectEditorBody();   var _viewAnchorBeforeRerender = _getViewTopSrcLine(prevMode); _saveCurrentViewScroll(prevMode);   // 2026-09-25 AG105：**锚点与滚动位置必须在重渲染之前采** —— 下面的 `renderEditor()`/`renderPreview()` 会把两个视图都刷回顶部，之后再量到的"顶部行"永远是第一行（人：「从预览区域切换分栏等其他模式仍有位置漂移」的根因）
       if (body !== null) {
         state.doc.body = body;
-        state.doc.lines = body.split("\n");
+        state.doc.lines = _linesFromBody(body);
         state.doc.preview_body = null;
         syncLog("setViewMode: 更新 state.doc.body, 前80字:", body.substring(0, 80));
       }
@@ -6976,8 +7005,9 @@
   /** 应用快照：重写编辑器 DOM + 预览 + 恢复光标 */
   async function _srcApplySnapshot(snap) {
     if (!state.currentPath) return;
-    state.doc.body = snap.body;
-    state.doc.lines = snap.body.split("\n");
+    const _snapBody = _restoreDocTailNL(snap.body);
+    state.doc.body = _snapBody;
+    state.doc.lines = _linesFromBody(_snapBody);
     state.doc.preview_body = null;
     renderEditor(state.doc);
     await renderPreview(state.doc);
@@ -8393,8 +8423,9 @@
 
     function applySnapshot(snap) {
       hlog("applySnapshot cursor=" + _fmtCursor(snap.cursorAST) + " bodyLen=" + (snap.body ? snap.body.length : 0) + " | " + _stackDump());
-      state.doc.body = snap.body;
-      state.doc.lines = snap.body.split("\n");
+      var _snapBody = _restoreDocTailNL(snap.body);
+      state.doc.body = _snapBody;
+      state.doc.lines = _linesFromBody(_snapBody);
       state.doc.preview_body = null;  // 撤销/重做后 preview_body 缓存过期，必须清空否则渲染旧内容
       renderEditor(state.doc);
       repaintPreview().then(function () {   // 2026-09-25：撤销/重做也走**块级提交**（原来整篇重渲 ⇒ 每步 undo 都闪一次）
@@ -14339,7 +14370,7 @@
       var endExcl = range.endLine + 1;
       var newLines = src.split("\n");
       state.doc.body = rawLines.slice(0, start).concat(newLines, rawLines.slice(endExcl)).join("\n");
-      state.doc.lines = state.doc.body.split("\n");
+      state.doc.lines = _linesFromBody(state.doc.body);
       state.doc.preview_body = null;
       if (es && typeof es.endUndoGroup === "function") { try { es.endUndoGroup(); } catch (_) { /* noop */ } }
       try { renderEditor(state.doc); } catch (e) { log("render", "surface.setBlockSource renderEditor: " + ((e && e.message) || e)); }
