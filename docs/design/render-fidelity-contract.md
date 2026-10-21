@@ -567,3 +567,41 @@ P2a 阶段由 `surface-new` 在 `artifacts/agent/verify/` 写**临时 driver**�
 | 2026-10-20 | **修「假 match」漏洞**（第三个假通过家族）：早期比较器依赖未落盘的 `signatureNorm` ⇒ 文本恒空 ⇒ 只比 kind+tag ⇒ 误判 0 diff。已修：落盘 `signatureNorm`（同 schema v:2）、逐块比 `{tag,textNorm}`、缺失即 `schema_error` 失败。自证 G-d（文本变必红）/G-e（缺字段必失败）均通过。见 §5.5.2.1 |
 | 2026-10-21 | **渲染就绪判定**（P2c 前置，§5.4）：公式/mermaid 异步就绪三态 `ready`/`timeout`/`failed` + 无头 `inconclusive`；**禁止固定 sleep / getBBox / 固定帧等待**。真机 270 公式 135 mermaid 就绪 25.8ms；S1/S2/S3 判别力自证全过；无头全 inconclusive |
 | 2026-10-21 | **`run_fidelity.py` 补 `--cdp` / `--ready-timeout`**（§5.5.1.1）：真机模式直连 CDP、不启 harness；`mode` 标注进 JSON/报告，**真机与无头不得混跑**。真机实测 `scale-5k`：`renderReady=ready`、公式 **270/270**、mermaid **135/135**、等待 22.5ms。无 `--cdp` 时行为不变（4 组回归 0 diff） |
+
+---
+
+## 5.6 冻结基线 `S_render_frozen`（P4 前置，task-33）
+
+**位置**：`artifacts/baseline/s_render_frozen/`（含 README、两侧 JSON、comparator 输出、冻结 KB）
+
+### 状态：✅ **已冻结为 P4 门禁基线**
+
+冻结 HEAD `86dc0abc`，**13/13 全绿 + `unsupported=0` + 每份 `renderReady=ready`**。
+判定门：`diff=0 && unsupported=0 && missing=0 && schema_error=0`，且两侧 `a1.ast` 相等、body 逐字节一致。
+
+### ⚠️ 对比对象 + 等价性定义（必读，否则复现会踩坑）
+
+**对比对象 = `-newlegacy` vs `-new`（同会话 dual），不是 `-legacy` vs `-new`。**
+`p2c_session.ps1` 产出三个文件：`-legacy`（`fidelity_cli.mjs` 独立批）会触发 S13 编辑器回读剥尾 `\n`，
+与 `-new` 不同状态 ⇒ **不可用于判等**。同会话的 legacy 是 `-newlegacy`。
+
+> **等价性定义在「同一个 app 状态」上，不定义在「磁盘字节」上**：
+> 判等要求两侧 `state.doc.body` 逐字节相同，而非 body 逐字节等于磁盘文件。
+
+**关联待办 S13**（单独立项，不阻塞本基线）：`app.js collectEditorBody()` 按行回读
+（`lines.map(...).join("\n")`）丢失文件末尾 `\n`，触发条件待定位（scale-5k 触发 / scale-10k 未触发）。
+见 `artifacts/agent/verify/render-layer-freeze-report.md` §11。
+
+### 冻结 KB 口径
+
+- 只含矩阵用到的 **13 篇**（不整份复制 220 篇，避免耗时与噪声）
+- probe-kb 的 11 篇从 **`git show HEAD:`** 取 —— 因`scale-5k.md` 工作区曾被变异测试污染
+- 每篇来源与 sha256 记录在 `matrix_kb/manifest.json`
+
+### `--supported` 默认口径（Lead 裁决）
+
+`compare_signatures.mjs` 默认集合 = **全部 12 kind**；未显式传 `--supported` 时
+产物带 `supportedSource: "default-all"` 且结论行打印提醒。
+
+> **两面性**：默认"太少"⇒ 假 `unsupported`；默认"太多"⇒ 未实现 kind 永远被当支持，**也是假通过**。
+> 要验证「某 kind 未实现能被正确识别」，**必须显式传 `--supported`**。

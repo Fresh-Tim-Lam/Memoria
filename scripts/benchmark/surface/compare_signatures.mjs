@@ -2,22 +2,28 @@
 /**
  * compare_signatures.mjs —— 新旧渲染管线「按 kind 过滤」的双跑签名对比（阶段 2 判等工具）
  *
- * 背景（Lead 要求）：P2a 阶段 `new` 只实现 5 类块（paragraph/heading/listItem/list/blockquote/hr）
- *   ⇒ 与 legacy 对比时**必然有 diff**（其余 kind 尚未实现）。
- *   若把所有差异都算失败，P2a 永远红、无法推进。
+ * 背景：P2a 阶段 `new` 只实现 5 类块，故本工具支持「按 kind 过滤」——未实现的 kind 记
+ *   `unsupported` 而非 `diff`，否则 P2a 永远红、无法推进。
+ *   **P2c 之后 `new` 已覆盖全部 12 kind**，默认集合随之改为全 12 kind（见 ALL_KINDS）。
  *
- * **三种结论，语义严格区分**：
- *   - `match`       ：该 kind 双方签名片段**完全一致**
- *   - `diff`        ：该 kind **双方都支持**，但签名**不一致** ⇒ **这才是失败**
- *   - `unsupported` ：该 kind **至少一方不支持/未实现** ⇒ **不算失败**（记录但不阻断）
+ * **四种结论，语义严格区分**：
+ *   - `match`        ：该 kind 双方签名片段**完全一致**（逐块比 {tag, textNorm}）
+ *   - `diff`         ：该 kind **双方都支持**，但签名**不一致** ⇒ **这才是失败**
+ *   - `unsupported`  ：该 kind **至少一方未实现** ⇒ 不算失败（记录但不阻断）
+ *   - `schema_error` ：某侧缺/坏 `signatureNorm` ⇒ **必须失败**（绝不静默 match）
  *
- * 支持矩阵默认取 P2a 声明（5 类块），可用 --supported 覆盖。
+ * ## ⚠️ 默认口径的两面性（Lead 裁决，必读）
+ *   默认值改成「全部 12 kind」修复了「漏 kind ⇒ 假 unsupported」；
+ *   但反过来，**全默认会让「未实现 kind」永远被当成支持 ⇒ 也是假通过**。
+ *   因此：未显式传 `--supported` 时，产物带 `supportedSource: "default-all"`，
+ *   结论行打印提醒 —— 使用者必须知道自己在用哪个口径。
+ *   若要验证「某 kind 未实现会被正确识别」，**必须显式传 `--supported`**。
  *
  * 用法：
  *   node compare_signatures.mjs --baseline <a.json> --current <b.json> \
- *        [--supported paragraph,heading,listItem,list,blockquote,hr] [--out diff.json]
+ *        [--supported <k1,k2,...>] [--out diff.json]
  *
- * 退出码：0 = 无 diff（match + unsupported 均可接受）；1 = 存在 diff；2 = 输入错误
+ * 退出码：0 = 无 diff（match + unsupported 均可接受）；1 = 存在 diff/schema_error；2 = 输入错误
  */
 
 import fs from 'node:fs';
@@ -48,7 +54,15 @@ function normalizeKind(raw) {
   return k;
 }
 
-const P2A_SUPPORTED = ['paragraph', 'heading', 'listItem', 'list', 'blockquote', 'hr'];
+/**
+ * 默认支持的 kind 集合（P2c 之后 new 已覆盖全部 12 类）。
+ * 顺序与 task-33 口径一致：paragraph,heading,listItem,list,blockquote,hr,
+ *                         code_block,table,image,blank,math_block,mermaid
+ */
+const ALL_KINDS = [
+  'paragraph', 'heading', 'listItem', 'list', 'blockquote', 'hr',
+  'code_block', 'table', 'image', 'blank', 'math_block', 'mermaid',
+];
 
 function parseArgs(argv) {
   const a = {};
@@ -183,9 +197,12 @@ function main() {
     process.exitCode = 2;
     return;
   }
-  let supported = P2A_SUPPORTED;
+  // 口径来源：显式 --supported 还是默认全集（决定结论行的提醒）
+  let supported = ALL_KINDS;
+  let supportedSource = 'default-all';
   if (typeof args.supported === 'string') {
     supported = args.supported.split(',').map((s) => s.trim()).filter(Boolean);
+    supportedSource = 'explicit';
   }
 
   let baseRaw, curRaw;
@@ -207,6 +224,10 @@ function main() {
     baseline: baselinePath,
     current: currentPath,
     supportedKinds: supported,
+    // 口径来源：'default-all' = 未显式传 --supported（全 12 kind）；'explicit' = 调用方指定
+    //   默认全集修了"漏 kind ⇒ 假 unsupported"，但反过来说未实现 kind 也会被当支持 ⇒
+    //   读者必须看这个字段判断自己用的是哪个口径。
+    supportedSource: supportedSource,
     generatedAt: new Date().toISOString(),
     ok: result.ok,
     totals: result.totals,
@@ -227,7 +248,13 @@ function main() {
   }
 
   // 控制台摘要
-  process.stdout.write('[compare] supported = ' + supported.join(',') + '\n');
+  process.stdout.write('[compare] supported = ' + supported.join(',') +
+    '  (source=' + supportedSource + ')\n');
+  // ⚠️ 默认口径提醒（Lead 裁决要求）：默认全集会让"未实现 kind"永远被当成支持 ⇒ 也是假通过
+  if (supportedSource === 'default-all') {
+    process.stdout.write('⚠ 使用默认全 kind 集合（12 类）；若要验证「某 kind 未实现被正确识别」，' +
+      '必须显式传 --supported\n');
+  }
   for (const [file, info] of Object.entries(result.perFile)) {
     if (info.status === 'missing') {
       process.stdout.write('  ' + file + '  MISSING(' + info.side + ')\n');
