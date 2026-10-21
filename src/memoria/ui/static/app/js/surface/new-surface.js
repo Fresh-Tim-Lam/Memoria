@@ -1,5 +1,5 @@
 /**
- * NewSurface —— 显示子系统插头「new」（阶段 2 · P2a：渲染最小闭环）
+ * NewSurface —— 显示子系统插头「new」（阶段 2 · P2a + P2b：渲染最小闭环）
  *
  * 契约：docs/design/view-surface-contract.md
  *   §3.1 接口 / §4.2 交接 / §4.3 capabilities / §4.5 插头方法语义表
@@ -19,6 +19,12 @@
  *   ✅ 最小实现：revealRange / getScrollAnchor / setScrollAnchor —— 只做"按块滚动"，
  *      不做 band/flash/选区（P4 EditCore 的范围）。它们被 registry 交接第④步调用，
  *      如实抛错会让真实 `switchTo('new')` 回滚，故按"可用即实现、不可用部分不伪造"落地。
+ *
+ * ── P2b 增量 ────────────────────────────────────────────────────────────────
+ *   · setText 源码预处理补齐 `rewriteMdImagePaths`（与 legacy 同语义：本地图片 → `/files/...`）；
+ *   · contentEditable 写入顺序与 legacy renderPreview 对齐（stamp 之后写）——
+ *     属性插入顺序影响内联 HTML 序列化 ⇒ 影响 fidelity 签名的 htmlFingerprint；
+ *   · 块类型扩展由 render-core 负责（code_block/table/image），本文件不感知具体 kind。
  *
  * ── 块身份（契约 §4.5.4）────────────────────────────────────────────────────
  *   · setText = `beginStamp({reset:true}) → 逐块 upsert → commit()`（全量重建，O(n)）；
@@ -118,6 +124,41 @@ window.createNewSurface = function createNewSurface(deps) {
     }
   }
 
+  // ── 源码预处理：本地图片相对路径 → `/files/...`（P2b）───────────────────────
+  //   与 legacy `app.js rewriteMdImagePaths()` **同语义**：legacy 在 parse 前把
+  //   `![x](./.memoria/images/x.png)` 重写成 `/files/...`，因此 DOM 里 img.src 是服务端路由；
+  //   new 管线若不做这一步，A5/A6 与签名都会与 legacy 不同（且图片加载 404）。
+  //   ⚠️ 已知重复：这段目前是 legacy 私有闭包逻辑的等价复刻（无法从 surface 门面调用）。
+  //      待 P6 前收敛进 RenderCore 的 source-preprocess 契约（报告 §偏离登记）。
+  function _escAttr(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function _rewriteImagePath(src) {
+    var MP = window.MemoriaMarkdownPreview;
+    if (!MP || typeof MP.rewriteLocalImagePaths !== "function") return src;
+    // 用带标记的 HTML 触发重写函数（与 legacy `_rewriteImagePath` 同一做法）
+    var tmpHtml = '<img src="' + _escAttr(src) + '">';
+    var rewritten = MP.rewriteLocalImagePaths(tmpHtml);
+    var m = rewritten.match(/src="([^"]+)"/);
+    return m ? m[1] : src;
+  }
+  function _rewriteMdImagePaths(md) {
+    if (typeof md !== "string") return md;
+    return md.replace(
+      /!\[([^\]]*)\]\((?:<([^>]*)>|(\.[^\s)]+))(\s+"[^"]*")?\s*\)/g,
+      function (full, alt, angleUrl, bareUrl, title) {
+        var src = angleUrl !== undefined ? angleUrl : bareUrl;
+        var rewritten = _rewriteImagePath(src);
+        if (rewritten === src) return full; // 远程/绝对路径等未重写 ⇒ 保持原文（同 legacy）
+        return "![" + alt + "](" + rewritten + (title || "") + ")";
+      }
+    );
+  }
+
   /** 解析 + 渲染 + 挂载 + BlockIndex 全量投射（setText 的唯一实现）。 */
   function _render(text, cause) {
     var preview = _previewEl();
@@ -127,10 +168,11 @@ window.createNewSurface = function createNewSurface(deps) {
     var rawSrc = (st && st.doc && st.doc.preview_body != null) ? st.doc.preview_body : text;
     var raw = (rawSrc == null) ? "" : String(rawSrc);
 
-    // 与 legacy 同一份源码预处理（normalizeBody）。P2a 不复刻 rewriteMdImagePaths：
-    // image 块在 P2a 未实现 ⇒ 会显式 data-unsupported，不会静默丢内容（报告登记限制）。
+    // 与 legacy 同一份源码预处理（顺序也必须一致）：
+    //   ① normalizeBody（公式/空白归一）② rewriteMdImagePaths（本地图片 → /files/...）
     var MP = window.MemoriaMarkdownPreview;
     var body = (MP && typeof MP.normalizeBody === "function") ? MP.normalizeBody(raw) : raw;
+    body = _rewriteMdImagePaths(body);
 
     var P = window.MemoriaParser;
     if (!P || typeof P.parse !== "function") throw new Error("[NewSurface] setText: MemoriaParser 未加载");
@@ -142,11 +184,6 @@ window.createNewSurface = function createNewSurface(deps) {
     // 挂载：与 legacy renderPreview 同形（清空 #preview 后追加 .-preview-content）
     preview.innerHTML = "";
     preview.appendChild(out.container);
-    // 禁止特殊元素编辑（与 legacy renderPreview 第 4 步同一选择器；P2a 语料无这些块，
-    // 但保留同口径以防后续片接入后行为漂移）
-    preview.querySelectorAll(
-      "mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay"
-    ).forEach(function (el) { el.contentEditable = "false"; });
     preview.contentEditable = "false";
 
     // 块身份：整篇路径 ⇒ beginStamp({reset:true}) → 逐块 upsert → commit（契约 §4.5.4）
@@ -165,6 +202,12 @@ window.createNewSurface = function createNewSurface(deps) {
       });
     }
     idx.commit();
+
+    // 禁止特殊元素编辑（与 legacy renderPreview **第 4 步同一顺序**：stamp 之后才写
+    // contentEditable）——属性插入顺序影响内联 HTML 序列化 ⇒ 影响 signatureNorm/htmlFingerprint。
+    preview.querySelectorAll(
+      "mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay"
+    ).forEach(function (el) { el.contentEditable = "false"; });
 
     _lastText = raw;
     _lastDoc = doc;

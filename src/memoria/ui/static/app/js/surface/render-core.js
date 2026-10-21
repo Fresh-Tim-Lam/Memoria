@@ -1,15 +1,19 @@
 /**
- * MemoriaRenderCore —— 新渲染管线（阶段 2 · P2a：块级骨架）
+ * MemoriaRenderCore —— 新渲染管线（阶段 2 · P2a + P2b：块级骨架）
  *
  * ── 定位 ─────────────────────────────────────────────────────────────────────
  *   `RenderCore` = AST → 块 DOM 的**新实现**（契约 `view-surface-contract.md` §2）。
- *   本片（P2a）只实现 5 类块：
- *     paragraph / heading / list(+ list_item) / blockquote / horizontal_rule
- *   以及任何文档都必带的 blank_line（空行是顶层块，5 类块的对比语料里必然出现）。
+ *
+ *   P2a（已入库）：paragraph / heading / list(+ list_item) / blockquote / horizontal_rule
+ *                  + blank_line（任何文档必带）。
+ *   P2b（本片）：code_block / table / image + 链接层 DOM 骨架（wikilink/普通链接 inline 结构
+ *                  与 legacy 一致，后处理留给 P2b 后半的 `postProcessWikilinks`）。
  *
  *   **其余块 kind 一律显式标记 `data-unsupported="<kind>"`**（`.-unsupported-block`），
  *   绝不静默渲染成空块 / 静默丢内容。这是 `renderer.js` `default:` 分支（内容静默消失）
  *   那条历史教训的直接反制。需要"遇到未实现直接失败"时传 `{ strictUnsupported: true }`。
+ *   P2b 特例：mermaid 围栏在 AST 里是 `code_block(lang="mermaid")`，其渲染归 P3 的 Mermaid
+ *   后处理 ⇒ 显式 unsupported（`data-unsupported-reason="mermaid=P3"`），不渲染成普通代码块。
  *
  * ── 与 legacy 的关系（P2a 的验收口径）─────────────────────────────────────
  *   本实现的 DOM 产出必须与 `renderer.js` 对同一 AST 的产出**逐属性等价**（签名 0 diff，
@@ -45,6 +49,10 @@ window.MemoriaRenderCore = (function () {
     "list_item",
     "blockquote",
     "horizontal_rule",
+    // ── P2b 新增 ──
+    "code_block",
+    "table",
+    "image",
   ];
 
   // ── 图片尺寸规范化（复刻 renderer.js `_normalizeImageSize`）──────────────────
@@ -241,6 +249,69 @@ window.MemoriaRenderCore = (function () {
     return el;
   }
 
+  // ── P2b：表格单元格文本（复刻 renderer.js `_renderTableCellText`）────────────
+  //   legacy 会把单元格里的 **加粗** / $x$ / [[wiki]] 等按行内 AST 渲染；
+  //   若只写 textContent，单元格内联结构会丢（虽然 textNorm 相同，但 HTML 指纹不同）。
+  function _renderTableCellText(el, text) {
+    if (window.MemoriaLexer && window.MemoriaParser && typeof text === "string") {
+      try {
+        var _tokens = window.MemoriaLexer.tokenize(text);
+        var _children = window.MemoriaParser.parseInline(_tokens);
+        renderInlineList(_children, el);
+        return;
+      } catch (_e) {
+        /* 解析失败退化纯文本（与 legacy 同兜底） */
+      }
+    }
+    el.textContent = text == null ? "" : String(text);
+  }
+
+  // ── P2b：图片块（复刻 renderer.js T.IMAGE 分支，逐属性一致）──────────────────
+  //   src 已由 new-surface 在源码层把相对路径重写为 `/files/...`（与 legacy 同源）。
+  function _renderImageBlock(block, blockIndex) {
+    var el = _newBlockEl("p", "-image-block", blockIndex);
+    var img = document.createElement("img");
+    img.loading = "lazy"; // 与 legacy 一致：预览里动辄数百张图
+    img.src = block.url;
+    img.alt = block.alt;
+    img.className = "-preview-image";
+    if (block.title) img.title = block.title;
+    if (block.attrs) {
+      for (var _ak in block.attrs) {
+        if (_ak === "width" || _ak === "height") {
+          var v = _normalizeImageSize(block.attrs[_ak]);
+          if (v !== null) {
+            img.style[_ak] = v;
+            img.style.maxWidth = "100%"; // 显式尺寸生效时仅防溢出（同 legacy）
+          }
+        } else if (_ak === "align") {
+          var a = block.attrs.align;
+          if (a === "center" || a === "left" || a === "right") {
+            el.classList.add("-image-align-" + a);
+          }
+        } else if (_ak !== "name-size" && _ak !== "name") {
+          console.warn("[img-attrs] 未知图片属性 key=" + _ak + "（已忽略），支持 width/height/align/name-size/name");
+        }
+      }
+    }
+    el.appendChild(img);
+    // 图片名称（alt）显示在图片下方（阶段 G；同 legacy）
+    var cap = document.createElement("span");
+    cap.className = "-image-caption";
+    cap.setAttribute("data--image-caption", "1");
+    cap.textContent = block.alt || "";
+    if (block.attrs) {
+      var ns = block.attrs["name-size"];
+      if (ns) {
+        var nsv = _normalizeImageSize(ns);
+        if (nsv !== null) cap.style.fontSize = nsv;
+      }
+      if (block.attrs.name === "hide") cap.style.display = "none";
+    }
+    el.appendChild(cap);
+    return el;
+  }
+
   // ── P2a 块渲染器 ────────────────────────────────────────────────────────────
   var BLOCK_RENDERERS = {
     blank_line: function (block, blockIndex) {
@@ -301,18 +372,74 @@ window.MemoriaRenderCore = (function () {
       }
       return el;
     },
+
+    // ── P2b 新增 ──────────────────────────────────────────────────────────────
+    code_block: function (block, blockIndex) {
+      // mermaid 围栏在 parser 里是 code_block(lang="mermaid")，其渲染由 P3 的
+      // Mermaid 后处理负责（legacy 会替换成 `.-mermaid-container`）。P2b 显式标 unsupported，
+      // 避免与 legacy 的 mermaid 容器类型错配（见 renderBlock 的 mermaid 分支）。
+      var el = _newBlockEl("pre", "-code-block", blockIndex);
+      var codeEl = document.createElement("code");
+      // A7：源有语言标记 ⇒ class 必带；无语言 ⇒ 不加 class（同 legacy）
+      if (block.lang) codeEl.className = "language-" + block.lang;
+      // P2b **不做语法高亮 token**（P2 后续）：纯文本经 DOM 转义；文本与 legacy textContent 一致。
+      codeEl.textContent = block.code == null ? "" : String(block.code);
+      el.appendChild(codeEl);
+      return el;
+    },
+
+    table: function (block, blockIndex) {
+      var el = _newBlockEl("table", "-table", blockIndex);
+      if (block.header) {
+        var thead = document.createElement("thead");
+        var tr = document.createElement("tr");
+        for (var hi = 0; hi < block.header.length; hi++) {
+          var th = document.createElement("th");
+          _renderTableCellText(th, block.header[hi]);
+          tr.appendChild(th);
+        }
+        thead.appendChild(tr);
+        el.appendChild(thead);
+      }
+      if (block.rows) {
+        var tbody = document.createElement("tbody");
+        for (var ri = 0; ri < block.rows.length; ri++) {
+          var row = document.createElement("tr");
+          for (var ci = 0; ci < block.rows[ri].length; ci++) {
+            var td = document.createElement("td");
+            _renderTableCellText(td, block.rows[ri][ci]);
+            row.appendChild(td);
+          }
+          tbody.appendChild(row);
+        }
+        el.appendChild(tbody);
+      }
+      return el;
+    },
+
+    image: function (block, blockIndex) {
+      return _renderImageBlock(block, blockIndex);
+    },
   };
 
   /**
    * 未实现 kind 的**显式**表示（不静默、不空块）。
    * 同时带 `data-unsupported`（机器可查）与可见占位文本（人可查）。
    */
-  function renderUnsupportedBlock(block, blockIndex) {
+  function renderUnsupportedBlock(block, blockIndex, reason) {
     var kind = (block && block.type) ? String(block.type) : "unknown";
     var el = _newBlockEl("div", "-unsupported-block", blockIndex);
     el.setAttribute("data-unsupported", kind);
-    el.textContent = "[" + kind + ": P2a RenderCore 尚未实现]";
+    if (reason) el.setAttribute("data-unsupported-reason", reason);
+    el.textContent = "[" + kind + (reason ? " (" + reason + ")" : "") + ": RenderCore 尚未实现]";
     return el;
+  }
+
+  /** mermaid 围栏（parser 表现为 code_block(lang="mermaid")）—— P3 的 Mermaid 后处理范围。
+   *  P2b 显式 unsupported，避免与 legacy 后处理产物 `.-mermaid-container` 类型错配。 */
+  function _isMermaidFence(block) {
+    return !!(block && block.type === "code_block" &&
+      String(block.lang || "").toLowerCase() === "mermaid");
   }
 
   /**
@@ -322,7 +449,10 @@ window.MemoriaRenderCore = (function () {
    * @param {object} [opts] opts.strictUnsupported=true ⇒ 未实现 kind 直接抛 UNSUPPORTED_BLOCK
    */
   function renderBlock(block, blockIndex, opts) {
-    var fn = block && block.type ? BLOCK_RENDERERS[block.type] : null;
+    // mermaid 围栏 = code_block(lang="mermaid")，渲染归 P3 的 Mermaid 后处理（legacy 会替换成
+    // `.-mermaid-container`）；P2b 显式 unsupported，绝不静默渲染成普通代码块（否则类型错配）。
+    var isMermaidFence = _isMermaidFence(block);
+    var fn = (block && block.type && !isMermaidFence) ? BLOCK_RENDERERS[block.type] : null;
     if (fn) return fn(block, blockIndex);
     if (opts && opts.strictUnsupported) {
       var err = new Error("[MemoriaRenderCore] 未实现的块 kind: " + (block && block.type));
@@ -330,7 +460,7 @@ window.MemoriaRenderCore = (function () {
       err.kind = block && block.type;
       throw err;
     }
-    return renderUnsupportedBlock(block, blockIndex);
+    return renderUnsupportedBlock(block, blockIndex, isMermaidFence ? "mermaid=P3" : null);
   }
 
   /**
@@ -348,7 +478,9 @@ window.MemoriaRenderCore = (function () {
     }
     for (var i = 0; i < doc.blocks.length; i++) {
       var block = doc.blocks[i];
-      if (!block || !BLOCK_RENDERERS[block.type]) unsupported.push(block && block.type ? String(block.type) : "unknown");
+      if (!block || !BLOCK_RENDERERS[block.type] || _isMermaidFence(block)) {
+        unsupported.push(block && block.type ? String(block.type) : "unknown");
+      }
       var el = renderBlock(block, i, opts);
       blockEls.push(el);
       container.appendChild(el);
@@ -385,7 +517,7 @@ window.MemoriaRenderCore = (function () {
     opts = opts || {};
     return {
       name: "MemoriaRenderCore",
-      phase: "P2a",
+      phase: "P2a+P2b",
       supportedBlockKinds: SUPPORTED_BLOCK_KINDS.slice(),
       isSupportedKind: function (kind) { return !!BLOCK_RENDERERS[kind]; },
       renderBlock: function (block, blockIndex) { return renderBlock(block, blockIndex, opts); },
