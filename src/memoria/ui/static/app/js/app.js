@@ -14360,63 +14360,43 @@
   //   位置在**主 IIFE 收尾之前** ⇒ 只把 `})();` 往后推，其上既有 `app.js:<行>` 锚点一个不动
   //   （其后的文件末尾装配块整体后移，无锚点引用）。
   // ══════════════════════════════════════════════════════════════════════════════
+  // ── P6b：三个宿主能力（链接层 / 公式编排 / 块级重绘）通过**依赖注入**交给 render-core ──
+  // 实现仍在本 IIFE（单一事实源）；不再挂 `window.MemoriaApp.surface` 门面。
+  // render-core.createRenderCore({host}) 只转发，不复制实现；new-surface / agent-panel 调
+  // `core.applyLinkLayer(root)` / `core.applyMathTypeset(root, ast)` / `core.paintBlockPatch()`。
+  function _hostApplyPreviewLinkLayer(root) {
+    var scope = root || undefined;
+    postProcessWikilinks(scope);
+    bindPreviewLinks(scope);
+    return true;
+  }
+  function _hostApplyPreviewMathTypeset(root, ast) {
+    var preview = root || document.getElementById("preview");
+    var docAst = ast || state.doc;
+    state.previewToken = (state.previewToken || 0) + 1;
+    var token = state.previewToken;
+    var pending = queuePreviewMathTypeset(preview, token);
+    var finish = function () {
+      try { _tagInlineMathContainers(preview, docAst); } catch (_) { /* 打标失败不阻断排版 */ }
+    };
+    finish();
+    if (pending && typeof pending.then === "function") pending.then(finish, finish);
+    return pending || Promise.resolve();
+  }
+  function _hostPaintPreviewBlockPatch() {
+    try { return !!paintPreviewAfterSourceEdit(); }
+    catch (e) { log("render", "host.paintBlockPatch: " + ((e && e.message) || e)); return false; }
+  }
+  // 注入到 surface 插件共用的 host 对象（registry 创建、new-surface mount 时取用；同一引用）
+  (function _injectSurfaceHost() {
+    var h = window.MemoriaSurface && window.MemoriaSurface.host;
+    if (!h) return;
+    h.applyLinkLayer = _hostApplyPreviewLinkLayer;
+    h.applyMathTypeset = _hostApplyPreviewMathTypeset;
+    h.paintBlockPatch = _hostPaintPreviewBlockPatch;
+  })();
+
   window.MemoriaApp.surface = {
-    /**
-     * 预览链接层后处理（`-wikilink` 补 class/attr + 三态判定；`.memoria-link` 绑 4 类事件）。
-     *
-     * 契约语义：`root` 为后处理根（省略则整篇 `#preview`）；幂等，可重复调用。
-     *
-     * 为什么开这个窗（K4 契约豁免，2026-10-21）：
-     *   `postProcessWikilinks` / `bindPreviewLinks` 定义在本 IIFE 闭包内、模块外不可达，
-     *   而阶段 2 新渲染管线（`surface/new-surface.js`）渲染出的 DOM 需要同一层后处理，
-     *   否则含 wikilink 的文档新旧签名必然 diff。**不得复制这两个函数的实现**——
-     *   复制即产生两份"真源"，legacy 一改、new 不改，新旧等价就测不出来了。
-     *   故只开窗、不迁移。
-     *
-     * 安全性依据：两者本就幂等（`postProcessWikilinks` 覆盖写 class/attr；
-     *   `bindPreviewLinks` 靠 `data--bound` 去重），且 app.js 内已有三处重复调用先例
-     *   （渲染后、增量渲染后、链接目标异步加载后）。
-     *
-     * 终局：P6「鸠占鹊巢」完成后，这两步应迁进 `render-core.js` 自身，本开窗随之删除。
-     */
-    applyPreviewLinkLayer: function (root) {
-      var scope = root || undefined;
-      postProcessWikilinks(scope);
-      bindPreviewLinks(scope);
-      return true;
-    },
-    /**
-     * 预览公式排版编排（token 自增 → `queuePreviewMathTypeset` → 行内公式打标）。
-     *
-     * 契约语义：`root` 为预览根（省略则 `#preview`）；`ast` 为与 DOM 对应的文档 AST
-     * （省略则取 `state.doc`）；返回 typeset 的 Promise（调用方 await 后即代表公式已排完）。
-     * 幂等可重入：每次调用自增 `state.previewToken`，旧链结果自动作废。
-     *
-     * 为什么开这个窗（与 applyPreviewLinkLayer 同属 K4 类临时豁免，2026-10-21）：
-     *   `queuePreviewMathTypeset`（app.js:13140）与 `_tagInlineMathContainers`（app.js:2035）
-     *   都是本 IIFE 闭包私有，`window.*` 赋值 0 处；而阶段 2 新渲染管线需要同一套 token 链
-     *   与行内公式打标（`data--inline-math` 是 A3 断言与 `renderReady` 的直接依赖）。
-     *   **本窗只做「编排」**：自增 token、按既有顺序调用、返回 Promise；
-     *   **不含任何 typeset 逻辑**（不碰 MathJax、不碰容器类型判定），也不复制上面两个函数。
-     *
-     * 为什么 `finish()` 要调两次：`_tagInlineMathContainers` 既要在 typeset 前给待排版容器
-     *   打标（A3 早读），又要在 typeset 后补打（`mjx-container` 出现后按实际节点校正）。
-     *
-     * 终局：P6 完成、公式排版迁入 `render-core.js` 后，本窗随之删除。
-     */
-    applyPreviewMathTypeset: function (root, ast) {
-      var preview = root || document.getElementById("preview");
-      var docAst = ast || state.doc;
-      state.previewToken = (state.previewToken || 0) + 1;
-      var token = state.previewToken;
-      var pending = queuePreviewMathTypeset(preview, token);
-      var finish = function () {
-        try { _tagInlineMathContainers(preview, docAst); } catch (_) { /* 打标失败不阻断排版 */ }
-      };
-      finish();
-      if (pending && typeof pending.then === "function") pending.then(finish, finish);
-      return pending || Promise.resolve();
-    },
     /**
      * 块级写回：替换第 bi 块源码（记撤销 → 更新真源 → 重渲 → 标脏）。
      *
@@ -14452,27 +14432,6 @@
       }
       markDirty();
       return true;
-    },
-    /**
-     * 块级增量渲染门面（P4c 新增，配合 `setBlockSource(..., {skipRender:true})` 批量写回）。
-     *
-     * 契约语义：把 `state.doc.body` 的最新内容解析后与**当前 DOM 已渲染块签名**（`_domBlockSig`）
-     * 做最短连续区间 diff，只重建真正变化的那一段块（`_paintBlockSpan`），并重投 BlockIndex 行号；
-     * 返回 `true` 表示块级路径成功；`false` 表示无法安全增量（无基准/块数不符/异常）⇒
-     * **调用方必须回退整篇 `renderPreview(state.doc)`**（本门面不自作主张整篇重渲）。
-     *
-     * 为什么开这个窗（K4 类临时豁免，2026-10-21）：
-     *   `paintPreviewAfterSourceEdit()` 定义在主 IIFE 闭包内、模块外不可达；而 P4c 的
-     *   `applyBlockPatches`（new-surface，人机并发 B/C/D 层前置）必须"只替换被 patch 的块"。
-     *   **不得复制该 diff 实现**——复制即产生第二份真源。故只开窗、不迁移。
-     *   终局：P6「鸠占鹊巢」完成后，块级增量渲染应由 render-core 自持，本门面随之删除。
-     *
-     * ⚠️ 使用约束：与 `setBlockSource` 的 `skipRender` 成对使用；每次写回真源后调一次本门面
-     *   （一次只 diff 一个块 ⇒ DOM 仅替换该块）。若返回 false，调用方负责整篇 `renderPreview` 兜底，
-     *   否则会出现「真源已改、画面未变」的静默不一致。
-     */
-    paintPreviewBlockPatch: function () {
-      try { return !!paintPreviewAfterSourceEdit(); } catch (e) { log("render", "surface.paintPreviewBlockPatch: " + ((e && e.message) || e)); return false; }
     },
     getBlockSourceRange: function (blockIndex) {
       var map = window.__blockLineMap;

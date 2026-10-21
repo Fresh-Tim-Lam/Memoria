@@ -87,7 +87,9 @@ window.createNewSurface = function createNewSurface(deps) {
       if (!RC || typeof RC.createRenderCore !== "function") {
         throw new Error("[NewSurface] MemoriaRenderCore 未加载（index.html 脚本顺序：surface/render-core.js 须在 app.js 之前）");
       }
-      _core = RC.createRenderCore();
+      // P6b：host 由 registry/app.js 注入（实现仍在 app.js）；DI 覆盖链接层/公式编排/块级重绘。
+      var host = _host || (window.MemoriaSurface && window.MemoriaSurface.host) || null;
+      _core = RC.createRenderCore({ host: host });
     }
     return _core;
   }
@@ -163,27 +165,20 @@ window.createNewSurface = function createNewSurface(deps) {
     );
   }
 
-  // ── 链接层后处理（K4 临时豁免，复用不重写）──────────────────────────────────
+  // ── P6b：链接层 / 公式编排走 render-core 的**注入依赖**（实现仍在 app.js，不复制）──
   /**
-   * 调用宿主（app.js）的**同一份**链接层后处理：
-   *   `window.MemoriaApp.surface.applyPreviewLinkLayer(root)`（Lead 2026-10-21 开窗）。
-   *
-   * ★ 纪律：本文件**不复制** `postProcessWikilinks` / `bindPreviewLinks` 的实现。
-   *   复制 = 两份真源 = legacy 改后 new 不会跟 = C11 等价性失效。
-   *   K4 终局（P6）：这两函数迁进 `render-core.js`，开窗与本调用一并删除。
-   *
-   * 入口缺失时的降级：如实 `onDegraded('link-layer:hook-missing')`（不伪造、不自造第二条路）。
-   * 无 wikilink 的文档不受影响；含 wikilink 的文档此时签名会 diff，属明确信号。
+   * 链接层后处理：调 `core.applyLinkLayer(preview)`（render-core 转发到 app.js 注入的 host，
+   * 即 `postProcessWikilinks` + `bindPreviewLinks` 同一份实现）。
+   * 缺失时如实 `onDegraded('link-layer:hook-missing')`（不伪造、不自造第二条路）。
    */
   function _applyHostLinkLayer(preview) {
-    var app = (typeof window !== "undefined") ? window.MemoriaApp : null;
-    var fn = app && app.surface && app.surface.applyPreviewLinkLayer;
-    if (typeof fn === "function") {
-      try { fn(preview); return true; }
-      catch (e) { _callHost("onDegraded", "link-layer:" + ((e && e.message) || e)); return false; }
+    var core = _coreInstance();
+    if (!core || typeof core.applyLinkLayer !== "function") {
+      _callHost("onDegraded", "link-layer:hook-missing");
+      return false;
     }
-    _callHost("onDegraded", "link-layer:hook-missing");
-    return false;
+    try { core.applyLinkLayer(preview); return true; }
+    catch (e) { _callHost("onDegraded", "link-layer:" + ((e && e.message) || e)); return false; }
   }
 
   // ── P2c：宿主渲染链接入（mermaid 替换 / 公式排版编排）──────────────────────────
@@ -211,18 +206,17 @@ window.createNewSurface = function createNewSurface(deps) {
   }
 
   /**
-   * 公式排版：**复用宿主编排入口** `MemoriaApp.surface.applyPreviewMathTypeset(root, ast)`
-   * （app.js 开窗：token 自增 → `queuePreviewMathTypeset` → 行内 mjx 打标；内部会写
-   * `state.previewToken` / `state._mathPending`，本文件**不碰**这两个状态）。
+   * 公式排版：调 `core.applyMathTypeset(preview, ast)`（render-core 转发到 app.js 注入的 host：
+   * token 自增 → `queuePreviewMathTypeset` → 行内 mjx 打标；内部会写 `state.previewToken` /
+   * `state._mathPending`，本文件**不碰**这两个状态）。缺省返回 null（调用方自行降级）。
    */
   function _applyHostMathTypeset(doc) {
-    var app = (typeof window !== "undefined") ? window.MemoriaApp : null;
-    var fn = app && app.surface && app.surface.applyPreviewMathTypeset;
-    if (typeof fn !== "function") {
+    var core = _coreInstance();
+    if (!core || typeof core.applyMathTypeset !== "function") {
       _callHost("onDegraded", "math-typeset:hook-missing");
       return null;
     }
-    try { return fn(_previewEl(), doc); }
+    try { return core.applyMathTypeset(_previewEl(), doc); }
     catch (e) { _callHost("onDegraded", "math-typeset:" + ((e && e.message) || e)); return null; }
   }
 
@@ -295,14 +289,13 @@ window.createNewSurface = function createNewSurface(deps) {
     // 链接层后处理（legacy renderPreview 第 5 步同序：stamp 之后）。
     // ★ 纪律：**不得复制** `postProcessWikilinks` / `bindPreviewLinks`——必须复用 app.js 同一函数
     //   （否则产生两份"真源"，legacy 一改 new 不改，C11 就测不出差异）。
-    //   K4 临时豁免入口（Lead 2026-10-21 开窗）：`MemoriaApp.surface.applyPreviewLinkLayer(root)`；
-    //   终局 P6 把这两个函数迁进 render-core，本调用随之删除（见 app.js 该方法的注释）。
+    //   P6b：走 render-core 的注入依赖 `core.applyLinkLayer(root)`（host 实现在 app.js）。
     _applyHostLinkLayer(preview);
 
     // P2c：mermaid 替换 + 公式排版编排（**只调宿主链，绝不自己调 mermaid/MathJax API**）。
     //   legacy 顺序（renderPreview）：链接后处理 → await renderMermaidBlocks → 公式排队 → 第 7 步
     //   不可编辑标记。这里同序：mermaid 完成后补一次不可编辑标记（替换出来的容器/svg 才在 DOM 里），
-    //   再交给宿主的 `applyPreviewMathTypeset`（token/typeset/行内打标全在宿主内，见 app.js）。
+    //   再交给 `core.applyMathTypeset`（token/typeset/行内打标全在 app.js 注入的 host 内）。
     var afterMermaid = function () {
       _setNonEditable(preview);
       _applyHostMathTypeset(doc);
@@ -487,7 +480,7 @@ window.createNewSurface = function createNewSurface(deps) {
    *   · **按 `srcLineStart` 降序应用**：先改下面的块 ⇒ 上面块的 `__blockLineMap` 行区间不被移动，
    *     后续 patch 的定位才稳定；若升序，前面的插入会把后面块的行号推移导致错位。
    *   · 撤销：外层 `EditSync.beginUndoGroup()` + `endUndoGroup()` 包住全部写回 ⇒ 3 块 = **1 个撤销单元**。
-   *   · 渲染：每个 patch 后调 `MemoriaApp.surface.paintPreviewBlockPatch()`（块级 diff，只替换该块）；
+   *   · 渲染：每个 patch 后调 `core.paintBlockPatch()`（render-core 注入的宿主块级 diff，只替换该块）；
    *     若块级 diff 不可用/失败 ⇒ 该步回退一次整篇 `renderPreview`（`_domBlockSig` 由宿主维护），
    *     **绝不静默留下"真源已改、画面未变"**。最后统一 `MemoriaApp.renderEditor(state.doc)` 一次。
    *   · 光标：未 patch 的块 DOM 不重建 ⇒ 选区原样保留（行号映射由 stampBlockLines 更新）；
@@ -537,7 +530,8 @@ window.createNewSurface = function createNewSurface(deps) {
         if (!okWrite) return false;
         applied++;
         var painted = false;
-        if (typeof app.surface.paintPreviewBlockPatch === "function") painted = !!app.surface.paintPreviewBlockPatch();
+        var core = _coreInstance();
+        if (core && typeof core.paintBlockPatch === "function") painted = !!core.paintBlockPatch();
         if (!painted) {
           // 块级 diff 不可用 ⇒ 立即整篇重渲一次，刷新 map/_doc/_domBlockSig，后续 patch 才能继续定位
           fallbackRenders++;
@@ -586,6 +580,8 @@ window.createNewSurface = function createNewSurface(deps) {
     mount: function (container, host) {
       if (container) _container = container;
       if (host) _host = host;
+      // P6b：核心实例可能先于 mount 创建 ⇒ 把注入的 host 补给它（同一引用，后来注入的方法也可见）
+      if (_core && typeof _core.setHost === "function") _core.setHost(_host);
       _mounted = true;
     },
 

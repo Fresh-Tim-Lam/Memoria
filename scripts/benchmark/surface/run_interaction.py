@@ -119,6 +119,8 @@ def main() -> int:
     ap.add_argument("--port", type=int, default=0, help="harness 端口（0=自动选空闲端口；显式指定时若被占用则失败）")
     ap.add_argument("--work-kb", default="", help="临时语料副本目录（留空=按 label+pid 自动唯一）")
     ap.add_argument("--timeout", type=int, default=900, help="node 子进程超时秒")
+    # 诊断开关：继承开发机 config/ui-settings.json（默认关闭=密封）。正常验收不要打开。
+    ap.add_argument("--ambient-config", action="store_true", help="DIAG：不设 MEMORIA_CONFIG_DIR，继承开发机 ui-settings.json")
     args = ap.parse_args()
 
     src_kb = (REPO_ROOT / args.kb).resolve()
@@ -152,6 +154,19 @@ def main() -> int:
     work_kb.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(src_kb, work_kb)
     print("[ix] 语料副本: %s -> %s" % (src_kb, work_kb))
+    # 测试密封性（task-53）：交互套件不得继承开发机 `config/ui-settings.json`。
+    # 实测：该文件 `search.embedding_enabled=true` 时，S11 的搜索（modes=both）会在
+    # 单线程 harness 内同步构建 embedding 索引（BERT 编码数百段），阻塞 >45s，S11 稳定红；
+    # 这是**机器级配置泄漏**，不是产品/剧本逻辑。给每个 run 一个空配置目录 ⇒ 默认 lexical。
+    cfg_dir = work_kb.parent / ("_interaction_config_%s_%d" % (args.label, os.getpid()))
+    if args.ambient_config:
+        print("[ix] DIAG: ambient ui-settings.json（不密封）")
+    else:
+        if cfg_dir.exists():
+            shutil.rmtree(cfg_dir, ignore_errors=True)
+        cfg_dir.mkdir(parents=True, exist_ok=True)
+        os.environ["MEMORIA_CONFIG_DIR"] = str(cfg_dir)
+        print("[ix] 密封配置目录: %s" % cfg_dir)
 
     rp = _load_run_probe()
     harness = rp.load_harness(work_kb, args.port)

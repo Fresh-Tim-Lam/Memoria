@@ -552,10 +552,19 @@ window.MemoriaRenderCore = (function () {
   }
 
   /**
-   * @param {object} [opts] opts.strictUnsupported=true ⇒ 未实现 kind 抛错（默认显式标记）
+   * @param {object} [opts]
+   *   opts.strictUnsupported=true ⇒ 未实现 kind 抛错（默认显式标记）
+   *   opts.host = { applyLinkLayer(root), applyMathTypeset(root, ast), paintBlockPatch() }
+   *     —— P6b 依赖注入：render-core **不实现**这些依赖应用运行时的能力，只把调用转发给宿主
+   *     （实现在 app.js，单一事实源）；缺 host/方法时如实返回 false/null，不伪造。
    */
   function createRenderCore(opts) {
     opts = opts || {};
+    var host = opts.host || null;
+    function callHost(name, a, b) {
+      if (!host || typeof host[name] !== "function") return undefined;
+      try { return host[name](a, b); } catch (e) { return undefined; }
+    }
     return {
       name: "MemoriaRenderCore",
       phase: "P2a+P2b+P2c",
@@ -566,6 +575,23 @@ window.MemoriaRenderCore = (function () {
       renderAll: function (text, container) { return renderAll(text, container, opts); },
       renderInline: renderInline,
       renderInlineList: renderInlineList,
+      /** P6b DI：链接层后处理（实现由宿主注入；缺省返回 false，调用方自行降级）。 */
+      applyLinkLayer: function (root) {
+        var r = callHost("applyLinkLayer", root);
+        return (r === undefined) ? false : r;
+      },
+      /** P6b DI：公式排版编排（实现由宿主注入；缺省返回 null）。 */
+      applyMathTypeset: function (root, ast) {
+        var r = callHost("applyMathTypeset", root, ast);
+        return (r === undefined) ? null : r;
+      },
+      /** P6b DI：块级增量重绘（实现由宿主注入；缺省返回 false）。 */
+      paintBlockPatch: function () {
+        var r = callHost("paintBlockPatch");
+        return (r === undefined) ? false : r;
+      },
+      /** 宿主稍后注入（new-surface 可能在 mount 前就创建了实例）。 */
+      setHost: function (h) { host = h || null; },
     };
   }
 

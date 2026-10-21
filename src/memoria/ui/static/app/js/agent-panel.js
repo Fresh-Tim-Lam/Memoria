@@ -1645,13 +1645,10 @@ window.MemoriaAgentPanel = (function () {
     });
   }
 
-  /** 气泡块级后处理：链接层只处理**本次渲染产出的块**（宿主门面自带 root 作用域，不复制实现）。 */
-  function postProcessAgentBlocks(el) {
-    const app = window.MemoriaApp;
-    const surf = app && app.surface;
-    if (surf && typeof surf.applyPreviewLinkLayer === "function") {
-      try { surf.applyPreviewLinkLayer(el); } catch (e) { console.warn("agent-link-layer:", e); }
-    }
+  /** 气泡块级后处理：链接层只处理**本次渲染产出的块**（走 render-core 注入依赖，不复制实现）。 */
+  function postProcessAgentBlocks(core, el) {
+    if (!core || typeof core.applyLinkLayer !== "function") return;
+    try { core.applyLinkLayer(el); } catch (e) { console.warn("agent-link-layer:", e); }
   }
 
   /** 用 render-core 渲染助手正文；成功返回 true，失败返回 false（调用方回退 marked/纯文本）。 */
@@ -1672,7 +1669,7 @@ window.MemoriaAgentPanel = (function () {
       el.innerHTML = html;
       highlightAgentCodeBlocks(el);
       sanitizeAgentCoreUrls(el);
-      postProcessAgentBlocks(el);
+      postProcessAgentBlocks(core, el);
       linkifyNodes(el);            // 既有能力：`文件:行号` → 可点锚点（agent 特有，预览无此装饰）
       attachAgentImages(el);       // 图片灯箱：同一个实现
       typesetAgentMath(el);        // 公式排版（同预览 MathJax 实例/配置，防抖）
