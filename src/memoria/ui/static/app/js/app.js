@@ -2048,6 +2048,7 @@
         try { await MathJax.startup.promise; } catch (e) { log("render", "MathJax startup: " + e.message); }
       }
       if (window.MathJax?.typesetPromise) {   // 2026-09-25 AG99：**回旧口径** —— 紧贴渲染末尾**排队**（`queuePreviewMathTypeset` 本身不是 await：实测 2.0–2.2 s 转后台 ⇒ 文件/编辑器/KP 立刻可用，公式"晚一拍"升级为渲染态是既有取舍）；AG73 那次"挪到两帧之后"是窗口化时期为"第一帧先出来"加的，回退窗口化后一并撤掉
+        if (lazyOn) log("lazy", "typeset: mathEls=" + preview.querySelectorAll(".-math, .-math-block").length + " mjx=" + preview.querySelectorAll("mjx-container").length + " blocks=" + preview.querySelectorAll(".-src-block").length + " ph=" + preview.querySelectorAll(".-pv-placeholder").length);   // 2026-10-22 1a 诊断：定位惰性模式下 mjx=0 的根因
         const _orgC = _switchAbs; const _mp = queuePreviewMathTypeset(preview, token); _markAsyncAfter("mathjax", _mp, _orgC); _mp.then(function () { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); });   // 排版跑完的耗时读数（`切页签异步` 那行）+ 补一次行内公式标记
       }
 
@@ -7754,9 +7755,15 @@
   // 开关：`_lazyMaterializeEnabled` —— 默认关；开了才走惰性路径。回退只需关掉它
   //   （renderPreview 的 `lazyOn` 分支即回到全量 renderDocument，行为与阶段1前一致）。
 
-  /** 惰性物化总开关（默认关；1a/1b 验收通过后再评估默认值）。可被同页面的性能开关覆盖。 */
+  /** 惰性物化总开关（默认关；1a/1b 验收通过后再评估默认值）。 */
   function _lazyMaterializeEnabled(doc) {
-    return false;   // ⚠️ 阶段1a 默认关，由验收实测后决定是否开启；这里先返回 false 保证 12 剧本零变化
+    // 测试用最高优先级：window 变量（CDP 可注入，不改代码/不重载做 A/B 对照）
+    if (typeof window.__MEMORIA_LAZY === "boolean") return window.__MEMORIA_LAZY;
+    // 持久开关（真机手动体验：DevTools 设一次 localStorage，重开文档生效，不用重打包）
+    try {
+      if (localStorage.getItem("memoria.perf.lazy") === "1") return true;
+    } catch (e) { /* 隐私模式 localStorage 不可用 ⇒ 忽略 */ }
+    return false;   // 默认关
   }
 
   /** 按块类型估算占位高度（纯 AST，不读 DOM）。宁大勿小（D1）：上跳比留白差。 */
@@ -7815,7 +7822,21 @@
     var viewH = pane.clientHeight || 720;
     var avgH = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), 64) : 64;   // 粗略平均，首屏块高差异不大
     var firstCount = Math.min(N, Math.max(20, Math.ceil((viewH * 2) / avgH)));
-    _materializeRange(container, doc, 0, firstCount);
+    var materialized = _materializeRange(container, doc, 0, firstCount);
+
+    // ── 自检（硬约束）：占位 + 已物化 必须 === 全文块数。不等 ⇒ 有块既没占位也没物化（严重缺陷）。──
+    var placeholders = container.querySelectorAll(".-pv-placeholder").length;
+    var ok = (placeholders + materialized) === N;
+    log("lazy", "lazy materialize ON: blocks=" + N + " placeholders=" + placeholders + " materialized=" + materialized + " sum=" + (placeholders + materialized) + " eq=" + ok);
+    if (!ok) {
+      // 硬约束破 ⇒ 就地退回：清掉占位，走全量 renderDocument（绝不半坏状态）
+      try { log("lazy", "CONSTRAINT BROKEN, falling back to full render"); } catch (_) {}
+      preview.innerHTML = "";
+      var _full = _rcRenderer().renderDocument(doc);
+      preview.appendChild(_full.container);
+      _lazyBlockEls = _full.blockEls;
+      return _full.container;
+    }
     return container;
   }
 
