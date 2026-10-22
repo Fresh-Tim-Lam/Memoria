@@ -403,10 +403,16 @@ export const PROBE_SOURCE = `(function () {
     // d) data-img-missing 属性（整属性删除 —— 纯状态位，不承载内容/结构）
     out = out.replace(new RegExp(BS + 'sdata-img-missing=(' + Q2 + ')' + NOTQ + BS + '1', 'g'),
       function () { count++; return ''; });
-    // e) 缺失图片的红色虚框装饰（**整属性删除**：同理，非缺失态没有 style）
-    out = out.replace(new RegExp(BS + 'sstyle=(' + Q2 + ')outline:[^' + SQ + DQ + ']*' + BS + '1', 'g'),
-      function () { count++; return ''; });
-    // f) filter: opacity(...) 数值
+    // e) 缺失图片的红色虚框装饰
+    //   ⚠️ 关键：style 的值**不一定以 outline 开头**。实测真实形态是
+    //        style="cursor: zoom-in; outline: rgb(229,83,75) dashed 1px; filter: opacity(0.55);"
+    //      旧写法要求 style 值**紧跟** outline（即 style= + 引号 + outline:），
+    //      因此**永不匹配**，导致 outline 残留进指纹 ⇒ 图片缺失与否仍会改变签名
+    //      （task-60 收口实测抓出：nondetStripped 少算 3~4）。
+    //   ⇒ 改为：**匹配 style 值内部是否含 outline**（只要含就认定是缺失装饰），整属性删除。
+    var RE_STYLE_OUTLINE = new RegExp(BS + 'sstyle=(' + Q2 + ')([^' + SQ + DQ + ']*outline[^' + SQ + DQ + ']*)' + BS + '1', 'g');
+    out = out.replace(RE_STYLE_OUTLINE, function () { count++; return ''; });
+    // f) filter: opacity(...) 数值（上面若已整属性删除则不会再命中；保留兜底）
     out = out.replace(new RegExp('filter:' + BS + 's*opacity' + BS + '([^)]*' + BS + ')', 'g'),
       function () { count++; return 'filter: opacity(<nondet>)'; });
 
@@ -836,8 +842,21 @@ export const PROBE_SOURCE = `(function () {
       // ★ v2.1：归一化后的整体 HTML 指纹（已剥离非确定 id，见 stripNondetIds）。
       //   这是"抹掉随机 id"落进工具的**强制**环节——不依赖调用方人工判读。
       //   注：只进签名的**哈希摘要**，不把整段 HTML 塞进签名文本（控制体积）。
+      //
+      // ⚠️ task-62 裁决：**本字段降为「诊断参考」，不参与等价门禁**。
+      //   原因（实测）：黑名单式剥除不收敛 —— 每修一类非确定源就冒出下一类；
+      //   且「剥到什么」本身依赖异步状态（nondetStripped 在 4140↔4143 间浮动）。
+      //   已确认的非确定源：
+      //     · img-load-state            图片此刻加载完没有（缺失态才有 outline/title 可剥）
+      //     · mermaid-layout-fit        max-width / viewBox 随容器测量时机变化
+      //   门禁改用**确定性判据**：块级签名(tag/kindClass/textNorm) + A 级 11 项
+      //     + astCount/domCount + 高亮独立断言(check_code_highlight.mjs)。
+      //   ≠ "测不过就不测" —— 而是"门禁不许建在非确定量上"。
       htmlFingerprint: htmlFp(hNorm.html),
       nondetStripped: hNorm.stripped,
+      gateRole: 'diagnostic-only',
+      nonDeterministicSources: ['img-load-state', 'mermaid-layout-fit(max-width/viewBox)'],
+      gateFields: ['count', 'kinds', 'tags', 'textNorm', 'astCount', 'domCount', 'aLevel.*'],
     };
     var normStr = JSON.stringify(sigObj);
 
