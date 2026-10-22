@@ -7815,22 +7815,67 @@
     return _countProcMath(block);
   }
 
-  /** 按块类型估算占位高度（纯 AST，不读 DOM）。宁大勿小（D1）：上跳比留白差。 */
+  // ── 2026-10-22（人追加约束）：占位度量**不许硬编码** ─────────────────────────────
+  // 人：「不同字体 / 窗口大小 / UI 缩放 下视口能显示的内容量不同」。
+  // 硬编码 16px/120/240/720 在换字体、UI 缩放(80~150%)、窗口尺寸变化时全部失效
+  // ⇒ 占位高度估错 ⇒ 漂移变大、**上跳复发**（我们刚修到 0）。
+  // 对策：每次渲染**量一次**实际度量（不是每块读），之后所有估值都用它。
+  var _pvMetrics = null;   // { fs, lhPx, paneW } —— 每次渲染/每次 resize 重新量
+
+  /** 量一次预览区的真实排版度量。
+   *
+   *  **为什么要量"块"而不是量 `#preview-pane`**：`#preview-pane` 的行高是 `normal`，
+   *  真正生效的行高在 `.‑preview-content` 的块上（`p`/`li`/`.‑src-block`）。
+   *  只按 `fontSize` 推也不行：`18px/1.2` 与 `16px/1.5` 的**行高可能相同**，必须看 `lineHeight` 解析值。
+   *  `lineHeight: normal` ⇒ 按 CSS 规范约 1.2×fontSize，本仓正文行高观感更接近 1.5 ⇒ 取 1.5 保守（宁大）。 */
+  function _measurePreviewMetrics(pane, container) {
+    var fs = 16, lhPx = 0, paneW = 800;
+    try {
+      var probe = (container && container.querySelector)
+        ? (container.querySelector(".-src-block:not(.-pv-placeholder)") || container)
+        : null;
+      var cs = probe ? getComputedStyle(probe) : null;
+      if (cs) {
+        fs = parseFloat(cs.fontSize) || 0;
+        var lh = cs.lineHeight;
+        if (lh && /px$/.test(lh)) lhPx = parseFloat(lh) || 0;
+      }
+      if (!fs) {
+        var rootCs = getComputedStyle(document.documentElement);
+        fs = parseFloat(rootCs.fontSize) || 16;
+      }
+      if (!lhPx) lhPx = fs * 1.5;               // normal / 其它单位 ⇒ 1.5×fontSize
+      if (pane && pane.clientWidth) paneW = pane.clientWidth;
+    } catch (_) {
+      fs = 16; lhPx = 24; paneW = 800;
+    }
+    if (!(fs > 0)) fs = 16;
+    if (!(lhPx > 0)) lhPx = fs * 1.5;
+    if (!(paneW > 0)) paneW = 800;
+    return { fs: fs, lhPx: lhPx, paneW: paneW };
+  }
+  /** 取当前度量（没有就按最保守默认造一份，保证任何时候都不崩）。 */
+  function _pvM() {
+    return _pvMetrics || { fs: 16, lhPx: 24, paneW: 800 };
+  }
+
+  /** 按块类型估算占位高度（纯 AST + 实测度量；**无硬编码 px**）。宁大勿小（D1）：上跳比留白差。 */
   function _placeholderHeight(block) {
-    if (!block) return 1.5 * 16;
-    var em = 16;   // 行高基准 px（与 editor/preview 行高 1.5 对齐的近似值）
+    var m = _pvM(), lh = m.lhPx;
+    if (!block) return lh;
     var lines = Math.max(1, (block.srcLineEnd - block.srcLine + 1) || 1);
     switch (block.type) {
-      case "blank_line": return 1.5 * em;
-      case "heading": return 2.2 * em;
-      case "paragraph": return lines * 1.6 * em;
-      case "math_block": return lines * 2.6 * em;
-      case "code_block": return lines * 1.4 * em;
-      case "table": return lines * 2.0 * em;
-      case "mermaid": return Math.max(120, lines * 1.4 * em);
-      case "image": return 240;
-      case "horizontal_rule": return 2 * em;
-      default: return lines * 1.6 * em;
+      case "blank_line": return lh;
+      case "heading": return lh * 1.5;
+      case "paragraph": return lines * lh * 1.05;          // 正文本就是"行数×行高"，1.05 含段间距
+      case "math_block": return lines * lh * 1.7;          // 块公式更高（字号更大 + 上下留白）
+      case "code_block": return lines * lh * 0.95;
+      case "table": return lines * lh * 1.35;
+      case "mermaid": return Math.max(7.5 * lh, lines * lh * 0.95);   // 原硬编码 120px ⇒ 7.5×行高
+      case "image":                                        // 原硬编码 240px ⇒ 按容器宽 16:9 估
+        return Math.max(4 * lh, Math.round(m.paneW * 9 / 16));
+      case "horizontal_rule": return lh * 1.3;
+      default: return lines * lh * 1.05;
     }
   }
 
@@ -7855,6 +7900,9 @@
     var container = document.createElement("div");
     container.className = "-preview-content";
     var N = doc.blocks.length;
+    var pane = document.getElementById("preview-pane") || preview;
+    // ★ 2026-10-22：**先量度量再建占位**（字体/缩放/窗口尺寸都会影响行高 ⇒ 不许硬编码）
+    _pvMetrics = _measurePreviewMetrics(pane, container);
     _lazyBlockEls = new Array(N);
     var frag = document.createDocumentFragment();
     for (var i = 0; i < N; i++) {
@@ -7866,18 +7914,43 @@
     preview.innerHTML = "";
     preview.appendChild(container);
 
-    // 物化首屏 ×2：由视口高度(容器 clientHeight) ÷ 平均块高 估算"需要物化的首块数"，再 ×2 兜底。
-    var pane = document.getElementById("preview-pane") || preview;
-    var viewH = pane.clientHeight || 720;
-    var avgH = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), 64) : 64;   // 粗略平均，首屏块高差异不大
-    var firstCount = Math.min(N, Math.max(20, Math.ceil((viewH * 2) / avgH)));
+    // 物化首屏：先按估值给一个**保守**首块数，之后用**实测块高反推**再决定是否补物化（不依赖任何硬编码）。
+    var viewH = pane.clientHeight || (window.visualViewport && visualViewport.height) || 720;
+    var avgH0 = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), _pvM().lhPx) : _pvM().lhPx;
+    var firstCount = Math.min(N, Math.max(12, Math.ceil(viewH / avgH0)));   // 先物化约 1 屏
     var madeEls = _materializeRange(container, doc, 0, firstCount);
     var materialized = madeEls.length;
+
+    // ★ ④ 用**实测块高**反推 avgH，补物化到 2 屏（换字体/缩放后自适应，不靠估值）
+    try {
+      if (materialized > 0) {
+        var top0 = container.getBoundingClientRect().top;
+        var usedH = 0;
+        for (var q = materialized - 1; q >= 0; q--) {
+          var e0 = madeEls[q];
+          if (e0 && e0.getBoundingClientRect) {
+            usedH = (e0.getBoundingClientRect().bottom - top0);
+            if (usedH > 0) break;
+          }
+        }
+        var avgReal = (usedH > 0 && materialized > 0) ? (usedH / materialized) : 0;
+        if (avgReal > 0) {
+          var target = Math.min(N, Math.ceil((viewH * 2) / avgReal));   // 目标 = 2 屏
+          if (target > materialized) {
+            var more = _materializeRange(container, doc, materialized, target);
+            madeEls = madeEls.concat(more);
+            materialized += more.length;
+            log("lazy", "first-screen: avgRealH=" + Math.round(avgReal) + "px viewH=" + Math.round(viewH) + " ⇒ materialized " + materialized + " blocks (2 screens)");
+          }
+        }
+      }
+    } catch (e) { log("lazy", "first-screen measure ERR " + ((e && e.message) || e)); }
 
     // ── 自检（硬约束）：占位 + 已物化 必须 === 全文块数。不等 ⇒ 有块既没占位也没物化（严重缺陷）。──
     var placeholders = container.querySelectorAll(".-pv-placeholder").length;
     var ok = (placeholders + materialized) === N;
-    log("lazy", "lazy materialize ON: blocks=" + N + " placeholders=" + placeholders + " materialized=" + materialized + " sum=" + (placeholders + materialized) + " eq=" + ok);
+    var _pm = _pvM();
+    log("lazy", "lazy materialize ON: blocks=" + N + " placeholders=" + placeholders + " materialized=" + materialized + " sum=" + (placeholders + materialized) + " eq=" + ok + " [fs=" + _pm.fs + " lh=" + Math.round(_pm.lhPx) + " paneW=" + Math.round(_pm.paneW) + "]");
     if (!ok) {
       // 硬约束破 ⇒ 就地退回：清掉占位，走全量 renderDocument（绝不半坏状态）
       try { log("lazy", "CONSTRAINT BROKEN, falling back to full render"); } catch (_) {}
@@ -7996,6 +8069,7 @@
 
     var phs = preview.querySelectorAll(".-pv-placeholder");
     for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
+    _bindLazyViewportWatchers();   // 2026-10-22：字体/缩放/窗口变化 ⇒ 重算占位（幂等，只绑一次）
   }
 
   /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。
@@ -8363,6 +8437,125 @@
     setTimeout(function () { _lazyFlushMathNow("force"); }, 0);   // 宏任务让出后必跑一次
   }
 
+  // ══ 2026-10-22（人追加约束）：**窗口尺寸 / UI 缩放 / 字体变化 ⇒ 必须重算占位** ══════════════
+  // 硬化前的实现：占位高度与首屏物化量都硬编码 ⇒ 换字体、Ctrl+±、拖窗口后布局全错、上跳复发。
+  // 现在：监听 resize / visualViewport.resize / DPR 变化 ⇒ 重新量度量 → 重设所有占位高度
+  //   → 重算视口物化窗口并补物化 → **用 data--src-line 锚定滚动位置**（绝不用像素锚）。
+  var _lazyResizeTimer = null;
+  var _lazyDPRMedia = null;
+  var _lazyResizeBound = false;
+
+  /** 取"当前视口顶部第一个有行号的块"的源行号，作为重算后的滚动锚点。
+   *  **用行号而不是像素**：像素在缩放/尺寸变化后完全失去意义，行号是稳定的。 */
+  function _lazyCaptureAnchorLine(pane) {
+    try {
+      var cc = pane ? pane.querySelector(".-preview-content") : null;
+      if (!cc) return null;
+      var paneTop = pane.getBoundingClientRect().top;
+      var els = cc.querySelectorAll(".-src-block[data--src-line]");
+      for (var i = 0; i < els.length; i++) {
+        var r = els[i].getBoundingClientRect();
+        if (r.bottom > paneTop) {                    // 第一个"底边在视口内/下方"的块 = 视口顶部那块
+          var l = parseInt(els[i].getAttribute("data--src-line"), 10);
+          if (!isNaN(l)) return l;
+        }
+      }
+    } catch (_) {}
+    return null;
+  }
+
+  /** resize / zoom 后重建：重算度量 → 重设全部占位高度 → 补物化视口 → 按行号恢复滚动位置。 */
+  function _lazyHandleViewportChange(reason) {
+    if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return;
+    var pane = document.getElementById("preview-pane");
+    var preview = $("#preview");
+    if (!pane || !preview) return;
+    var cc = preview.querySelector(".-preview-content");
+    if (!cc) return;
+    if (!cc.querySelector(".-pv-placeholder")) return;   // 已全物化 ⇒ 无需重算
+
+    // ① 锚点必须在**重设高度之前**采（用旧布局找"视口顶部是哪个源行"）
+    var anchorLine = _lazyCaptureAnchorLine(pane);
+    var oldScrollTop = pane.scrollTop;
+
+    // ② 重新量度量
+    _pvMetrics = _measurePreviewMetrics(pane, cc);
+
+    // ③ 重设**所有未物化占位块**的高度（已物化的真块不动；它们的 min-height 由解锁机制处理）
+    var phs = cc.querySelectorAll(".-pv-placeholder");
+    for (var i = 0; i < phs.length; i++) {
+      var idx = parseInt(phs[i].getAttribute("data--block-index"), 10);
+      if (isNaN(idx) || idx >= _doc.blocks.length) continue;
+      phs[i].style.height = Math.round(_placeholderHeight(_doc.blocks[idx])) + "px";
+    }
+
+    // ④ 重算视口物化窗口并补物化：按新度量定位"锚点附近 ± 2 屏"的块
+    if (anchorLine != null) {
+      var viewH = pane.clientHeight || (window.visualViewport && visualViewport.height) || 720;
+      var lh = _pvM().lhPx;
+      // 粗定位：用锚点行号找块下标（block 的 srcLine/srcLineEnd 覆盖该行）
+      var centerIdx = 0;
+      for (var bi = 0; bi < _doc.blocks.length; bi++) {
+        var b = _doc.blocks[bi];
+        if (b && b.srcLine > 0 && b.srcLineEnd >= anchorLine && b.srcLine <= anchorLine) { centerIdx = bi; break; }
+        if (b && b.srcLine > anchorLine) { centerIdx = bi; break; }
+      }
+      var spanBlocks = Math.max(20, Math.ceil((viewH * 2) / Math.max(lh, 1)));
+      var s0 = Math.max(0, centerIdx - Math.floor(spanBlocks / 2));
+      _materializeRange(cc, _doc, s0, Math.min(_doc.blocks.length, centerIdx + spanBlocks));
+
+      // ⑤ 恢复滚动位置：**重算后**用锚点块的当前位置补偿（不是恢复旧像素）
+      try {
+        var target = null;
+        var all = cc.querySelectorAll(".-src-block[data--src-line]");
+        for (var k = 0; k < all.length; k++) {
+          var sl = parseInt(all[k].getAttribute("data--src-line"), 10);
+          var se = parseInt(all[k].getAttribute("data--src-line-end"), 10);
+          if (isNaN(sl)) continue;
+          if (anchorLine >= sl && anchorLine <= (isNaN(se) ? sl : se)) { target = all[k]; break; }
+        }
+        if (target) {
+          var delta = target.getBoundingClientRect().top - pane.getBoundingClientRect().top;
+          pane.scrollTop = pane.scrollTop + delta;    // 让锚点块回到视口顶部
+        } else {
+          pane.scrollTop = oldScrollTop;              // 找不到锚点 ⇒ 退回旧像素（总比乱跳好）
+        }
+      } catch (_) { try { pane.scrollTop = oldScrollTop; } catch (__) {} }
+    }
+
+    log("lazy", "viewport change (" + reason + "): fs=" + _pvM().fs + " lh=" + Math.round(_pvM().lhPx) + " paneW=" + Math.round(_pvM().paneW) + " anchorLine=" + anchorLine);
+    // ⑥ 重设后可能又有新块进入视口 ⇒ 触发一次批量物化
+    _lazyScheduleFlush();
+  }
+
+  /** 绑定 resize / visualViewport / DPR 监听（幂等，只绑一次）。 */
+  function _bindLazyViewportWatchers() {
+    if (_lazyResizeBound) return;
+    _lazyResizeBound = true;
+    var onAny = function (reason) {
+      // 节流：resize 会高频触发，合并到一次（150ms）避免每次拖拽都全量重设占位
+      if (_lazyResizeTimer) clearTimeout(_lazyResizeTimer);
+      _lazyResizeTimer = setTimeout(function () {
+        _lazyResizeTimer = null;
+        try { _lazyHandleViewportChange(reason); } catch (e) { log("lazy", "viewport change ERR " + ((e && e.message) || e)); }
+      }, 150);
+    };
+    try { window.addEventListener("resize", function () { onAny("window.resize"); }); } catch (_) {}
+    try {
+      if (window.visualViewport && window.visualViewport.addEventListener) {
+        window.visualViewport.addEventListener("resize", function () { onAny("visualViewport.resize"); });
+      }
+    } catch (_) {}
+    // DPR 变化（跨屏拖动 / 浏览器缩放）：matchMedia 对"当前 dppx"不再匹配时会触发
+    try {
+      var dpr = window.devicePixelRatio || 1;
+      _lazyDPRMedia = window.matchMedia("(resolution: " + dpr + "dppx)");
+      var dprHandler = function () { onAny("dpr.change"); };
+      if (_lazyDPRMedia.addEventListener) _lazyDPRMedia.addEventListener("change", dprHandler);
+      else if (_lazyDPRMedia.addListener) _lazyDPRMedia.addListener(dprHandler);
+    } catch (_) {}
+  }
+
   /** 拆掉滚动物化（换库/换文档/切走时清理，避免观察已移除的占位）。 */
   function _teardownLazyScrollMaterialization() {
     if (_lazyIO) { _lazyIO.disconnect(); _lazyIO = null; }
@@ -8372,6 +8565,9 @@
     _lazyReleaseMinHeight();
     if (_lazyLockedIO) { _lazyLockedIO.disconnect(); _lazyLockedIO = null; }
     _lazyLockedEls = null;
+    // 2026-10-22：resize 定时器与 DPR 监听也一并清（watcher 本身保持绑定，重进惰性路径会复用）
+    if (_lazyResizeTimer) { clearTimeout(_lazyResizeTimer); _lazyResizeTimer = null; }
+    _pvMetrics = null;   // 度量作废 ⇒ 下次渲染重新量
   }
   /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
   function _supplyRangeRender(blockIndex, container) {
