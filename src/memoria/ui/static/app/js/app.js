@@ -2007,7 +2007,9 @@
       if (lazyOn) {
         content = _buildLazyPreview(_doc, preview);
         _rendered = { container: content, blockEls: _lazyBlockEls };
+        _setupLazyScrollMaterialization(preview);   // 2026-10-22 1b：滚动追加物化
       } else {
+        _teardownLazyScrollMaterialization();       // 非惰性路径 ⇒ 拆掉（若之前开过）
         _rendered = _rc.renderDocument(_doc);
         content = _rendered.container;
         preview.innerHTML = "";
@@ -7822,7 +7824,8 @@
     var viewH = pane.clientHeight || 720;
     var avgH = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), 64) : 64;   // 粗略平均，首屏块高差异不大
     var firstCount = Math.min(N, Math.max(20, Math.ceil((viewH * 2) / avgH)));
-    var materialized = _materializeRange(container, doc, 0, firstCount);
+    var madeEls = _materializeRange(container, doc, 0, firstCount);
+    var materialized = madeEls.length;
 
     // ── 自检（硬约束）：占位 + 已物化 必须 === 全文块数。不等 ⇒ 有块既没占位也没物化（严重缺陷）。──
     var placeholders = container.querySelectorAll(".-pv-placeholder").length;
@@ -7840,13 +7843,14 @@
     return container;
   }
 
-  /** 物化 `[start, end)` 区间：占位块 → renderBlock 产出的真块（原位替换，保持 data--block-index 连续）。 */
+  /** 物化 `[start, end)` 区间：占位块 → renderBlock 产出的真块（原位替换，保持 data--block-index 连续）。
+   *  @returns {HTMLElement[]} 本次新建的真块节点数组（供调用方对新块排版/后处理；失败/跳过不入）。 */
   function _materializeRange(container, doc, start, end) {
     var rc = _rcRenderer();
-    if (!rc || !rc.renderBlock) return 0;
+    if (!rc || !rc.renderBlock) return [];
     var all = container.querySelectorAll(".-pv-placeholder");
     // 按 data--block-index 建"占位下标 → 元素"（占位在区间 [start,end) 内才物化）
-    var made = 0;
+    var madeEls = [];
     for (var j = 0; j < all.length; j++) {
       var ph = all[j];
       var idx = parseInt(ph.getAttribute("data--block-index"), 10);
@@ -7857,10 +7861,115 @@
       catch (e) { log("render", "lazy materialize block " + idx + " ERR " + (e && e.message)); continue; }
       if (!real) continue;
       ph.replaceWith(real);
+      // 2026-10-22 1b：滚动物化的真块缺 data--src-line（stampBlockLines 只跑一次，管不到滚动新增的块）。
+      //   物化时直接从 AST 补写（与 stampBlockLines 经 BlockIndex 写的口径一致，行号唯一真源仍是 parser）。
+      var _blk = doc.blocks[idx];
+      if (_blk && _blk.srcLine > 0) {
+        real.setAttribute("data--src-line", String(_blk.srcLine));
+        real.setAttribute("data--src-line-end", String(_blk.srcLineEnd >= _blk.srcLine ? _blk.srcLineEnd : _blk.srcLine));
+      }
       _lazyBlockEls[idx] = real;
-      made++;
+      madeEls.push(real);
     }
-    return made;
+    return madeEls;
+  }
+
+  // ════ 2026-10-22 阶段1b：滚动追加物化（IntersectionObserver + 批量 idle 物化）══════
+  // 滚动使占位块进入视口前 1 屏 ⇒ IO 回调只收集下标到 pending 集合 ⇒ idle 里批量物化 + 排版。
+  // 绝不在 IO 回调里同步物化（会吃掉那一帧）；拖动时靠节流（IO 天然按帧节流，无需手写 debounce）。
+
+  var _lazyIO = null;           // IntersectionObserver 实例
+  var _lazyPending = null;      // Set：待物化块下标（收集后统一批量处理）
+  var _lazyFlushScheduled = false;
+
+  /** 建立滚动物化：观察 `.-pv-placeholder`，进视口前 1 屏(long)时批量物化。仅惰性模式调用。 */
+  function _setupLazyScrollMaterialization(preview) {
+    if (typeof IntersectionObserver !== "function") return;   // 极老环境（应当没有）⇒ 不启用
+    if (_lazyIO) _lazyIO.disconnect();
+    _lazyIO = new IntersectionObserver(function (entries) {
+      var hit = false;
+      for (var i = 0; i < entries.length; i++) {
+        if (!entries[i].isIntersecting) continue;
+        var t = entries[i].target;
+        if (!t || !t.classList || !t.classList.contains("-pv-placeholder")) continue;
+        if (!_lazyPending) _lazyPending = new Set();
+        var idx = parseInt(t.getAttribute("data--block-index"), 10);
+        if (!isNaN(idx)) { _lazyPending.add(idx); hit = true; }
+      }
+      if (hit) _lazyScheduleFlush();
+    }, { root: preview.parentElement || document, rootMargin: "100% 0px", threshold: 0 });
+
+    var phs = preview.querySelectorAll(".-pv-placeholder");
+    for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
+  }
+
+  /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。 */
+  function _lazyScheduleFlush() {
+    if (_lazyFlushScheduled) return;
+    _lazyFlushScheduled = true;
+    var fire = function () {
+      _lazyFlushScheduled = false;
+      _lazyFlushNow();
+    };
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(fire, { timeout: 300 });
+    } else {
+      setTimeout(fire, 0);
+    }
+  }
+
+  /** 批量物化 pending 里的块 + 对新块排版。 */
+  function _lazyFlushNow() {
+    if (!_lazyPending || !_lazyPending.size) return;
+    if (!_doc || !_doc.blocks) { _lazyPending.clear(); return; }
+    var container = $("#preview");
+    if (!container) return;
+    var cc = container.querySelector(".-preview-content") || container;
+    var pendingArr = Array.from(_lazyPending).sort(function (a, b) { return a - b; });
+    _lazyPending.clear();
+
+    // 物化：把 pending 的块下标合并成连续区间，物化之
+    var made = [];
+    for (var i = 0; i < pendingArr.length; i++) {
+      var s = pendingArr[i];
+      var e = s + 1;
+      // 向后合并连续下标
+      while (i + 1 < pendingArr.length && pendingArr[i + 1] === e) { i++; e++; }
+      var els = _materializeRange(cc, _doc, s, e);
+      made = made.concat(els);
+    }
+    if (!made.length) return;
+
+    // 对新物化块排版（只排这些块，进 _mathPending 链，保证"已请求批次排完"语义）
+    if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+      var withMath = made.filter(function (el) {
+        return el && el.querySelector && (el.querySelector(".-math, .-math-block") || el.classList.contains("-math-block"));
+      });
+      if (withMath.length) {
+        var token = state.previewToken;
+        var prev = state._mathPending;
+        var chain = prev && typeof prev.then === "function" ? prev.catch(function () {}) : Promise.resolve();
+        state._mathPending = chain.then(function () {
+          if (token !== state.previewToken) return Promise.resolve();
+          return MathJax.typesetPromise(withMath).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+        });
+      }
+    }
+    // 补齐行内公式标记（排版后会替换 .-math ⇒ mjx-container，需重打 data--inline-math）
+    var token2 = state.previewToken;
+    var prev2 = state._mathPending;
+    if (prev2 && typeof prev2.then === "function") {
+      prev2.then(function () { if (token2 === state.previewToken) { try { _tagInlineMathContainers($("#preview"), _doc); } catch (_) {} } });
+    }
+    // 代码高亮 / 链接后处理（新块可能有 code / wikilink）
+    try { _applyCodeHighlightToPreview(container); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+  }
+
+  /** 拆掉滚动物化（换库/换文档/切走时清理，避免观察已移除的占位）。 */
+  function _teardownLazyScrollMaterialization() {
+    if (_lazyIO) { _lazyIO.disconnect(); _lazyIO = null; }
+    if (_lazyPending) _lazyPending.clear();
+    _lazyFlushScheduled = false;
   }
   /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
   function _supplyRangeRender(blockIndex, container) {
@@ -13450,6 +13559,7 @@
   function _previewCacheClear() {
     _previewDomCache.clear(); _previewForgetAll(); // 2026-09-24：换库/重命名/删除/导入 ⇒ 历史画像也一并作废
     _previewDomKey = null;
+    _teardownLazyScrollMaterialization();   // 2026-10-22 1b：换库/文件集合变 ⇒ 拆掉滚动物化（观察对象已失效）
   }
 
   /** 渲染成功后登记「这份 `#preview` DOM 对应哪份文档的哪个版本」。
@@ -13611,6 +13721,33 @@
     _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 与"刚搬回来的这份 DOM"对齐（同上：块级提交的差分基准）
     preview.innerHTML = "";
     preview.appendChild(entry.frag); _markSwitch("attach");   // 2026-09-25 AG97：窗口化回退 ⇒ 搬回的就是整篇真 DOM（老口径），不再"只挂一窗"
+    // 2026-10-22 1a/问题2：缓存条目可能是惰性化的（占位 + 首屏真块）。恢复后必须对**当前视口**重新物化，
+    // 否则切回时视口若落在占位区 ⇒ 白屏。物化范围 = 恢复的 scrollTop 上下 ± 视口×2 高度。
+    if (_lazyMaterializeEnabled(doc)) {
+      var _lzContainer = preview.querySelector(".-preview-content");
+      if (_lzContainer && _lzContainer.querySelector(".-pv-placeholder")) {
+        // 重建块元素数组（占位/真块都按 data--block-index 对位），供 _materializeRange 就地更新
+        _lazyBlockEls = new Array(_doc.blocks.length);
+        var _lzAll = _lzContainer.querySelectorAll(".-src-block[data--block-index]");
+        for (var _lzz = 0; _lzz < _lzAll.length; _lzz++) {
+          var _ix = parseInt(_lzAll[_lzz].getAttribute("data--block-index"), 10);
+          if (_ix >= 0 && _ix < _lazyBlockEls.length) _lazyBlockEls[_ix] = _lzAll[_lzz];
+        }
+        var _lzPane = $("#preview-pane");
+        var _lzScrollTop = (entry.scrollTop != null) ? entry.scrollTop : (_lzPane ? _lzPane.scrollTop : 0);
+        var _lzViewH = (_lzPane && _lzPane.clientHeight) || 720;
+        // 用平均占位高定位当前视口对应的块区间（估算 + 上下各扩一屏）
+        var _lzN = _doc.blocks.length;
+        var _lzAvg = Math.max(_placeholderHeight(_doc.blocks[0]), 64);
+        var _lzCenter = Math.floor(_lzScrollTop / _lzAvg);
+        var _lzHalf = Math.max(10, Math.ceil((_lzViewH * 2) / _lzAvg));
+        var _lzStart = Math.max(0, _lzCenter - _lzHalf);
+        var _lzEnd = Math.min(_lzN, _lzCenter + _lzHalf);
+        _materializeRange(_lzContainer, _doc, _lzStart, _lzEnd);
+        // 注：新物化块的排版由下面既有的 MathJax 排队（stampBlockLines 之后那段，双 rAF + queuePreviewMathTypeset）
+        // 覆盖 —— 不必在此单独排（否则双重排队，第二次对已排块空扫）。
+      }
+    }
     // 2026-10-20 P2：缓存搬回是**整篇路径** ⇒ 用搬回来的 AST 重建 BlockIndex（reset）。
     // 缓存条目里存的是**投影 map**（不存实例，见 _preloadOne G2）⇒ 这里按 AST 重新 upsert 一遍，
     // 成本 O(n)（与搬回 DOM 同量级，且 upsert 已有"值未变不写"守卫 ⇒ 属性多半已对，写入极少）。
