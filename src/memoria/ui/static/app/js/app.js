@@ -7914,6 +7914,10 @@
     // ★ 2026-10-22：**先量度量再建占位**（字体/缩放/窗口尺寸都会影响行高 ⇒ 不许硬编码）
     _pvMetrics = _measurePreviewMetrics(pane, container);
     _lazyBlockEls = new Array(N);
+    // 2026-10-22 1c：新一轮文档 ⇒ 重置工作集淘汰状态（LRU 时钟/暂停/计数都只对当前 DOM 有意义）
+    _lazyTouch = new Array(N);
+    _lazyEvictSuspended = false;
+    _lazyEvictCount = 0;
     var frag = document.createDocumentFragment();
     for (var i = 0; i < N; i++) {
       var ph = _makePlaceholder(doc.blocks[i], i);
@@ -8016,6 +8020,7 @@
         real.setAttribute("data--src-line-end", String(_blk.srcLineEnd >= _blk.srcLine ? _blk.srcLineEnd : _blk.srcLine));
       }
       _lazyBlockEls[idx] = real;
+      _lazyTouchBlock(idx);       // 2026-10-22 1c：物化即"触碰"，供淘汰的 LRU 时钟使用
       madeEls.push(real);
     }
     return madeEls;
@@ -8080,6 +8085,7 @@
     for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
     _bindLazyViewportWatchers();   // 2026-10-22：字体/缩放/窗口变化 ⇒ 重算占位（幂等，只绑一次）
     _bindLazyScrollIdleSync(preview);   // 2026-10-22：滚动**停止**后同步补物化（不等 IO/idle）
+    _lazyScheduleEvict();          // 2026-10-22 1c：首屏建成后排一次工作集淘汰（P3，不在渲染帧里做）
   }
 
   // ══ 2026-10-22（Lead 定性"饿死"+ 我观察到的"滚动停后静默停滞"）：滚动停止 ⇒ **同步**补物化 ══
@@ -8124,6 +8130,8 @@
       _lazyScrollIdleTimer = setTimeout(function () {
         _lazyScrollIdleTimer = null;
         try { _lazySyncMaterializeViewport(preview); } catch (e) { log("lazy", "scroll-stop sync ERR " + ((e && e.message) || e)); }
+        // 2026-10-22 1c：滚动**停止**才排淘汰（滚动帧内绝不换出；P3 作业自己按帧预算切片）
+        _lazyScheduleEvict();
       }, LAZY_SCROLL_IDLE_MS);
     }, { passive: true });
   }
@@ -8281,6 +8289,9 @@
     var S = _lazyJobScheduler();
     var ep = (S && typeof S.bumpEpoch === "function") ? S.bumpEpoch() : null;
     _lazyPipelineDropQueues();
+    // 2026-10-22 1c：换文档/缓存搬回 ⇒ 解除 `__MEMORIA_MATERIALIZE_ALL` 的淘汰暂停
+    //   （该暂停只属于"当时那份被强制全量物化的 DOM"，不能跨文档残留）。
+    _lazyEvictSuspended = false;
     try { log("lazy", "pipeline epoch→" + (ep == null ? "n/a" : ep) + " (" + reason + ")"); } catch (_) {}
   }
 
@@ -8425,6 +8436,8 @@
     try { _applyCodeHighlightToPreview(container); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
     _lazyRenderMermaidIn(made);
     _lazyPostProcessNewBlocks(made);   // 2026-10-22：补齐 contentEditable / 灯箱（与首屏路径对齐，见函数注释）
+    // 2026-10-22 1c：一批物化完成后顺手排一次淘汰（P3；`_lazyEvictNow` 会在 pending 非空时自行让路）
+    _lazyScheduleEvict();
   }
 
   /** 对新物化的块补做**首屏路径做过、滚动批次曾漏掉**的后处理（2026-10-22 系统性对齐）。
@@ -8891,6 +8904,7 @@
     log("lazy", "viewport change (" + reason + "): fs=" + _pvM().fs + " lh=" + Math.round(_pvM().lhPx) + " paneW=" + Math.round(_pvM().paneW) + " anchorLine=" + anchorLine);
     // ⑥ 重设后可能又有新块进入视口 ⇒ 触发一次批量物化
     _lazyScheduleFlush();
+    _lazyScheduleEvict();   // 2026-10-22 1c：度量/窗口变了 ⇒ 保留窗口也变了，重新淘汰
   }
 
   /** 绑定 resize / visualViewport / DPR 监听（幂等，只绑一次）。 */
@@ -8940,7 +8954,262 @@
     // 2026-10-22：resize 定时器与 DPR 监听也一并清（watcher 本身保持绑定，重进惰性路径会复用）
     if (_lazyResizeTimer) { clearTimeout(_lazyResizeTimer); _lazyResizeTimer = null; }
     _pvMetrics = null;   // 度量作废 ⇒ 下次渲染重新量
+    // 2026-10-22 1c：工作集淘汰状态一并作废（旧块的 LRU 时钟/暂停标记对新 DOM 无意义）
+    _lazyTouch = null;
+    _lazyEvictSuspended = false;
   }
+
+  // ════ 2026-10-22 阶段1c：**工作集淘汰**（缺页装入 + 换出）════════════════════════
+  // 问题（08 章 4001 块实测）：惰性路径只装入不回收 ⇒ 滚到底 DOM 105,428 (25×)、堆 84.2MB (3.4×)、
+  //   滚回顶 122,617 (29×)；第二遍滚动顶部帧 +320%~+421%。类比 OS 只缺页装入、从不换出。
+  // 对策：把"视口 ±N 屏"之外的**已物化块退回占位形态**（`_makePlaceholder` → `real.replaceWith(ph)`），
+  //   让真块子树脱离文档可被 GC。占位仍保留块身份/行号/高度 ⇒ 滚回时 IO 照常重新物化。
+  //
+  // 三条纪律：
+  //   ① **不在滚动帧里做**：只由 `MemoriaScheduler` 的 P3 作业（`lazy_evict`）执行，滚动回调只 enqueue；
+  //   ② **单批上限** `LAZY_EVICT_BATCH_MAX`，避免长帧；有余量则续排下一批（跨帧推进）；
+  //   ③ 保留窗口 `LAZY_EVICT_KEEP_SCREENS` 必须 ≥ 物化预取（IO `rootMargin: 200%` = 2 屏）⇒ 不抖动。
+  // 参数（初值，需真机 metrics 复核后调；**不凭感觉改**）：
+  //   · `LAZY_EVICT_KEEP_SCREENS = 4`：视口上下各保留 4 屏（约 8 屏总量）；
+  //   · `LAZY_EVICT_BATCH_MAX = 60`：单批淘汰 ≤60 块（按物化实测 0.65ms/块 ≈ 39ms，P3 可切片）；
+  //   · `LAZY_EVICT_RECENT_MS`：LRU 时钟的"近期"窗口（评分按秒折算，不单独 pin）。
+  var LAZY_EVICT_KEEP_SCREENS = 4;
+  var LAZY_EVICT_BATCH_MAX = 60;
+  var LAZY_EVICT_RECENT_MS = 1500;
+
+  var _lazyTouch = null;            // Array<number>：每个块最近一次物化/进入工作集的时刻（LRU 时钟）
+  var _lazyEvictCount = 0;          // 本文件累计淘汰块数（诊断/metrics）
+  var _lazyEvictSuspended = false;  // `__MEMORIA_MATERIALIZE_ALL`（门禁强制全量）期间/之后禁用淘汰
+
+  /** 触碰一个块（LRU 时钟）。越界/无时钟表 ⇒ 静默忽略。 */
+  function _lazyTouchBlock(idx) {
+    try {
+      if (!_lazyTouch || idx < 0 || idx >= _lazyTouch.length) return;
+      _lazyTouch[idx] = (window.performance && performance.now) ? performance.now() : Date.now();
+    } catch (_) {}
+  }
+
+  /** 节点所属的块下标（`data--block-index`）；不在 `.-preview-content` 内 ⇒ -1。 */
+  function _lazyBlockPosOfNode(node, cc) {
+    try {
+      var n = node;
+      if (n && n.nodeType !== 1) n = n.parentElement;      // 文本节点 ⇒ 父元素
+      if (!n || !n.closest) return -1;
+      var el = n.closest("[data--block-index]");
+      if (!el || !cc.contains(el)) return -1;
+      var idx = parseInt(el.getAttribute("data--block-index"), 10);
+      return isNaN(idx) ? -1 : idx;
+    } catch (_) { return -1; }
+  }
+
+  /** 计算"保留窗口"：视口上下各 `LAZY_EVICT_KEEP_SCREENS` 屏对应的块下标区间。
+   *  `cc.children` 按块序排列、位置单调 ⇒ 二分 O(log n)；**不做全量 getBoundingClientRect**。 */
+  function _lazyEvictKeepRange(cc, pane) {
+    var paneRect = pane.getBoundingClientRect();
+    var viewH = pane.clientHeight || paneRect.height || 720;
+    var keepTop = paneRect.top - viewH * LAZY_EVICT_KEEP_SCREENS;
+    var keepBottom = paneRect.bottom + viewH * LAZY_EVICT_KEEP_SCREENS;
+    var centerY = (paneRect.top + paneRect.bottom) / 2;
+    var kids = cc.children, n = kids.length;
+    if (!n) return { lo: 0, hi: -1, center: 0, viewH: viewH, none: true };
+
+    // 第一个 bottom >= keepTop
+    var a = 0, b = n - 1, first = n;
+    while (a <= b) {
+      var m = (a + b) >> 1;
+      if (kids[m].getBoundingClientRect().bottom >= keepTop) { first = m; b = m - 1; } else { a = m + 1; }
+    }
+    // 最后一个 top <= keepBottom
+    var c = 0, d = n - 1, last = -1;
+    while (c <= d) {
+      var m2 = (c + d) >> 1;
+      if (kids[m2].getBoundingClientRect().top <= keepBottom) { last = m2; c = m2 + 1; } else { d = m2 - 1; }
+    }
+    // 视口中心所在块（用于距离加权；找不到 ⇒ 0）
+    var e = 0, f = n - 1, center = 0;
+    while (e <= f) {
+      var m3 = (e + f) >> 1;
+      if (kids[m3].getBoundingClientRect().bottom >= centerY) { center = m3; f = m3 - 1; } else { e = m3 + 1; }
+    }
+    function idxOf(pos) {
+      if (pos < 0 || pos >= n) return pos < 0 ? -1 : n;
+      var v = parseInt(kids[pos].getAttribute("data--block-index"), 10);
+      return isNaN(v) ? pos : v;
+    }
+    return { lo: idxOf(first), hi: idxOf(last), center: idxOf(center), viewH: viewH, none: false };
+  }
+
+  /** 淘汰一批：把保留窗口之外的已物化块换回占位。**只应由调度器 P3 作业调用**。 */
+  function _lazyEvictNow(reason) {
+    if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return 0;
+    if (_lazyEvictSuspended) return 0;
+    try {
+      var preview = $("#preview");
+      if (!preview) return 0;
+      var cc = preview.querySelector(".-preview-content");
+      if (!cc || !cc.children.length) return 0;
+      // 灯箱打开时不换出：放大中的图可能就在待换出的块里，移出文档会让灯箱引用空节点。
+      if (document.querySelector(".-lightbox-overlay")) return 0;
+      // 物化优先：还有待物化块 ⇒ 本帧让路（`_lazyFlushNow` 结束会重新排淘汰）。
+      if (_lazyPending && _lazyPending.size) return 0;
+      var pane = document.getElementById("preview-pane") || preview.parentElement;
+      if (!pane) return 0;
+
+      var blocks = _doc.blocks, N = blocks.length;
+      if (!_lazyTouch || _lazyTouch.length !== N) _lazyTouch = new Array(N);
+
+      var keep = _lazyEvictKeepRange(cc, pane);
+      if (keep.none) return 0;
+
+      // ③ 保护区（**编辑模式也允许淘汰远处块**，否则永不回收）：
+      //    · 当前选区锚点/焦点所在块及邻块（正在选字/拖选）；
+      //    · `document.activeElement`（焦点在某个 contenteditable 里）；
+      //    · `MemoriaEditHandler.blockEditMode` 正在编辑的节点（块编辑器/行内公式编辑器）。
+      //    ⇒ 只保护"用户正踩着的块"，其余远处块照常换出。
+      var selLo = -1, selHi = -1;
+      function _protectNode(node) {
+        var p = _lazyBlockPosOfNode(node, cc);
+        if (p < 0) return;
+        var lo = p - 1, hi = p + 1;
+        if (selLo < 0) { selLo = lo; selHi = hi; }
+        else { selLo = Math.min(selLo, lo); selHi = Math.max(selHi, hi); }
+      }
+      try {
+        var sel = window.getSelection();
+        if (sel && sel.rangeCount) { _protectNode(sel.anchorNode); _protectNode(sel.focusNode); }
+      } catch (_) {}
+      try { if (document.activeElement) _protectNode(document.activeElement); } catch (_) {}
+      try {
+        var EH = window.MemoriaEditHandler;
+        if (EH && EH.blockEditMode) {
+          var bm = EH.blockEditMode;
+          _protectNode(bm.mathEl); _protectNode(bm.editor); _protectNode(bm.blockEl); _protectNode(bm.el);
+        }
+      } catch (_) {}
+
+      // ④ 收集候选：已物化 + 在保留窗口外 + 不在保护区
+      var nowMs = (window.performance && performance.now) ? performance.now() : Date.now();
+      var materializedBefore = 0;
+      var cand = [];
+      for (var i = 0; i < cc.children.length; i++) {
+        var el = cc.children[i];
+        if (!el || !el.classList || el.classList.contains("-pv-placeholder")) continue;
+        var idx = parseInt(el.getAttribute("data--block-index"), 10);
+        if (isNaN(idx) || idx < 0 || idx >= N) continue;
+        materializedBefore++;
+        if (idx >= keep.lo && idx <= keep.hi) continue;
+        if (selLo >= 0 && idx >= selLo && idx <= selHi) continue;
+        cand.push({ idx: idx, el: el });
+      }
+      if (!cand.length) return 0;
+
+      // ⑤ 距离加权 + LRU：远者先淘汰；同距离时"更久未访问"先淘汰。
+      //    score = 屏距 + 冷度(秒)×0.05（60s 上限 ⇒ 最多加 3 屏，避免久置文档分数爆掉）。
+      var perScreen = Math.max(1, Math.ceil((keep.viewH || 720) / Math.max(1, _pvM().lhPx)));
+      for (var k = 0; k < cand.length; k++) {
+        var c0 = cand[k];
+        var distScreens = Math.abs(c0.idx - keep.center) / perScreen;
+        var touched = _lazyTouch[c0.idx] || 0;
+        var staleSec = Math.min(60, Math.max(0, (nowMs - touched) / 1000));
+        c0.score = distScreens + staleSec * 0.05;
+      }
+      cand.sort(function (x, y) { return (y.score - x.score) || (Math.abs(y.idx - keep.center) - Math.abs(x.idx - keep.center)); });
+
+      var batch = cand.slice(0, LAZY_EVICT_BATCH_MAX);
+      var n = 0, evicted = null;
+      for (var q = 0; q < batch.length; q++) {
+        var it = batch[q];
+        var real = it.el, bi = it.idx, blk = blocks[bi];
+        if (!real || !blk || !real.parentNode) continue;
+        try {
+          // A. 清理该块的 `-math-pending` 标记（四层清理之一：换出即不再等排版）
+          if (real.classList && real.classList.contains("-math-pending")) {
+            real.classList.remove("-math-pending");
+            if (_lazyHiddenByBatch) _lazyHiddenByBatch["delete"](real);
+          }
+          // B. 解除 min-height 锁 + 停止观察（否则 `_lazyLockedEls` 持死引用）
+          _lazyReleaseMinHeight(real);
+          // C. 生成与原占位**同口径**的占位（data--block-index / data--src-line / style.height 全由 AST 决定）
+          var ph = _makePlaceholder(blk, bi);
+          real.replaceWith(ph);
+          _lazyBlockEls[bi] = ph;
+          // D. 新占位重新纳入 IO ⇒ 滚回时可以再次物化
+          if (_lazyIO) { try { _lazyIO.observe(ph); } catch (_) {} }
+          if (!evicted) evicted = new Set();
+          evicted.add(real);
+          _lazyEvictCount++;
+          n++;
+        } catch (e) {
+          log("lazy", "evict block " + bi + " ERR " + ((e && e.message) || e));
+        }
+      }
+
+      // ⑥ 清掉排版队列里对已换出元素的引用（否则队列长期持死 DOM ⇒ 淘汰白做）
+      if (evicted && _lazyMathQueue && _lazyMathQueue.length) {
+        try {
+          _lazyMathQueue = _lazyMathQueue.filter(function (x) { return !evicted.has(x); });
+          if (!_lazyMathQueue.length) {
+            _lazyMathQueue = null;
+            if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
+          }
+        } catch (_) {}
+      }
+
+      if (n) {
+        var kept = Math.max(0, materializedBefore - n);
+        log("lazy", "evict: " + n + " blocks (kept=" + kept + ", viewport=" + keep.lo + ".." + keep.hi + ", reason=" + reason + ")");
+        // 有余量 ⇒ 续排下一批（跨帧推进；单批仍受 LAZY_EVICT_BATCH_MAX 限制）
+        if (cand.length > batch.length) _lazyScheduleEvict();
+      }
+      return n;
+    } catch (e) {
+      log("lazy", "evict ERR " + ((e && e.message) || e));
+      return 0;
+    }
+  }
+
+  /** 调度一次工作集淘汰 —— **MemoriaScheduler P3 作业**（同键合并 ⇒ 任意多次请求只留一个）。
+   *  绝不在这里同步淘汰：滚动回调只 enqueue，重活留给调度器帧预算。 */
+  function _lazyScheduleEvict() {
+    if (_lazyEvictSuspended) return;
+    if (!_lazyMaterializeEnabled(_doc)) return;
+    var S = _lazyJobScheduler();
+    if (!S || typeof S.schedule !== "function") return;
+    S.schedule({
+      kind: "lazy_evict",
+      key: "lazy-evict",
+      priority: 3,             // P3 后台：最晚于物化(P1)/排版(P2)，不抢可见性
+      replace: true,
+      gen: (typeof S.epoch === "function") ? S.epoch() : 0,
+      dropStale: true,
+      run: function () { _lazyEvictNow("scheduler"); },
+    });
+  }
+
+  /** 工作集统计（metrics / 门禁量化用）：当前实际物化块数 / 占位数 / 全文块数。 */
+  window.__MEMORIA_WORKSET_STATS = function () {
+    var out = {
+      materialized: 0,
+      placeholders: 0,
+      totalBlocks: 0,
+      evictTotal: _lazyEvictCount,
+      keepScreens: LAZY_EVICT_KEEP_SCREENS,
+      suspended: !!_lazyEvictSuspended,
+    };
+    try {
+      var preview = $("#preview");
+      var cc = preview ? preview.querySelector(".-preview-content") : null;
+      var total = (_doc && _doc.blocks) ? _doc.blocks.length : 0;
+      out.totalBlocks = total;
+      if (cc) {
+        var ph = cc.querySelectorAll(".-pv-placeholder").length;
+        out.placeholders = ph;
+        out.materialized = Math.max(0, total - ph);
+      }
+    } catch (_) {}
+    return out;
+  };
+
   /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
   function _supplyRangeRender(blockIndex, container) {
     const rc = _rcRenderer();
@@ -14948,6 +15217,9 @@
       var preview = $("#preview");
       var cc = preview ? (preview.querySelector(".-preview-content") || preview) : null;
       if (!cc || !_doc || !_doc.blocks) return Promise.resolve(0);
+      // 2026-10-22 1c：这是**门禁专用**的"强制全量物化"路径 ⇒ 全程禁用工作集淘汰，
+      //   否则门禁按 DOM 统计内容时会把"被淘汰的块"误判成渲染缺失。下次 `_buildLazyPreview` 会重置。
+      _lazyEvictSuspended = true;
       if (!cc.querySelector(".-pv-placeholder")) return Promise.resolve(0);   // 幂等：已全物化/非惰性
 
       var total = _doc.blocks.length;
