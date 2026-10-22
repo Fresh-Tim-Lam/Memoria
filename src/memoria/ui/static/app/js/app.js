@@ -8064,12 +8064,77 @@
         var idx = parseInt(t.getAttribute("data--block-index"), 10);
         if (!isNaN(idx)) { _lazyPending.add(idx); hit = true; }
       }
-      if (hit) _lazyScheduleFlush();
+      if (hit) { if (!_lazyCollectAt) _lazyCollectAt = (window.performance && performance.now) ? performance.now() : Date.now(); _lazyScheduleFlush(); }
     }, { root: preview.parentElement || document, rootMargin: "200% 0px", threshold: 0 });   // 2026-10-22 1b 调优：前 2 屏预取（100%→200%），滚动 141/187ms → ≤100ms；副作用（多物化/新冻结）待实测
 
     var phs = preview.querySelectorAll(".-pv-placeholder");
     for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
     _bindLazyViewportWatchers();   // 2026-10-22：字体/缩放/窗口变化 ⇒ 重算占位（幂等，只绑一次）
+    _bindLazyScrollIdleSync(preview);   // 2026-10-22：滚动**停止**后同步补物化（不等 IO/idle）
+  }
+
+  // ══ 2026-10-22（Lead 定性"饿死"+ 我观察到的"滚动停后静默停滞"）：滚动停止 ⇒ **同步**补物化 ══
+  // 问题：拖动时 IO 收集 + idle 批物化（不卡手感，正确）；但**用户停下后**若视口内仍有占位块，
+  //   IO 可能已把回调消费掉、pending 也被清空 ⇒ **没有任何东西再叫醒物化** ⇒ 空白持续上千 ms
+  //   （metrics 实测 line=4707 卡住 683ms、滚动已停却迟迟不物化）。
+  // 对策：scroll 停止 50ms 后，**不依赖 IO/pending，直接扫 DOM 里视口内的占位块同步物化**。
+  //   这与会话中异步物化不冲突：拖动时 idle（不卡手感），停下时同步（保证"用户看得见"）。
+  var LAZY_SCROLL_IDLE_MS = 50;
+  var _lazyScrollIdleTimer = null;
+  var _lazyScrollBound = false;
+
+  function _bindLazyScrollIdleSync(preview) {
+    if (_lazyScrollBound) return;
+    var pane = preview.parentElement || preview;
+    if (!pane || !pane.addEventListener) return;
+    _lazyScrollBound = true;
+    pane.addEventListener("scroll", function () {
+      if (_lazyScrollIdleTimer) clearTimeout(_lazyScrollIdleTimer);
+      _lazyScrollIdleTimer = setTimeout(function () {
+        _lazyScrollIdleTimer = null;
+        try { _lazySyncMaterializeViewport(preview); } catch (e) { log("lazy", "scroll-idle sync ERR " + ((e && e.message) || e)); }
+      }, LAZY_SCROLL_IDLE_MS);
+    }, { passive: true });
+  }
+
+  /** **同步**物化当前视口内的占位块（滚动停止后调用；不排队、不等 idle）。 */
+  function _lazySyncMaterializeViewport(preview) {
+    if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return 0;
+    var pane = document.getElementById("preview-pane") || (preview && preview.parentElement);
+    var cc = preview ? preview.querySelector(".-preview-content") : null;
+    if (!pane || !cc) return 0;
+    var paneRect = pane.getBoundingClientRect();
+    var phs = cc.querySelectorAll(".-pv-placeholder");
+    if (!phs.length) return 0;
+    // 找视口内（含上下各半屏余量）的占位块下标
+    var lo = paneRect.top - paneRect.height * 0.5;
+    var hi = paneRect.bottom + paneRect.height * 0.5;
+    var idxs = [];
+    for (var i = 0; i < phs.length; i++) {
+      var r = phs[i].getBoundingClientRect();
+      if (r.bottom < lo || r.top > hi) continue;      // 不在视口±半屏内 ⇒ 跳过
+      var ix = parseInt(phs[i].getAttribute("data--block-index"), 10);
+      if (!isNaN(ix)) idxs.push(ix);
+    }
+    if (!idxs.length) return 0;
+    // 合并连续区间并同步物化（单批上限内分批，避免长冻结）
+    var made = [];
+    idxs.sort(function (a, b) { return a - b; });
+    for (var k = 0; k < idxs.length; k += LAZY_FLUSH_MAX) {
+      var chunk = idxs.slice(k, k + LAZY_FLUSH_MAX);
+      var s = chunk[0], e = chunk[chunk.length - 1] + 1;
+      var els = _materializeRange(cc, _doc, s, e);
+      made = made.concat(els);
+    }
+    if (made.length) {
+      log("lazy", "scroll-idle sync materialize: blocks=" + made.length);
+      // 排版走合并器（低优先级、可合并），后处理与首屏对齐
+      _lazyEnqueueMath(made);
+      _lazyRenderMermaidIn(made);
+      _lazyPostProcessNewBlocks(made);
+      try { _applyCodeHighlightToPreview(preview); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+    }
+    return made.length;
   }
 
   /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。
@@ -8082,6 +8147,7 @@
    *  另：`fire()` 用 try/finally 保证**即使 `_lazyFlushNow()` 抛异常，标志也一定复位**。 */
   var LAZY_SCHED_STALE_MS = 2000;
   var _lazySchedAt = 0;   // 上次置 `_lazyFlushScheduled = true` 的时刻
+  var _lazyCollectAt = 0; // IO 收集到块、请求 flush 的时刻（用于量化"饿死"延迟）
 
   function _lazyScheduleFlush() {
     if (_lazyFlushScheduled) {
@@ -8094,6 +8160,13 @@
     _lazyFlushScheduled = true;
     _lazySchedAt = (window.performance && performance.now) ? performance.now() : Date.now();
     var fire = function () {
+      // 2026-10-22 饿死修复：记录"收集 → 实际 flush"的延迟（metrics 用来量化 rIC 被推迟的程度）
+      try {
+        if (_lazyCollectAt) {
+          log("lazy", "flush delay: collect→flush = " + Math.round(((window.performance && performance.now) ? performance.now() : Date.now()) - _lazyCollectAt) + " ms");
+          _lazyCollectAt = 0;
+        }
+      } catch (_) {}
       // try/finally：**无论 `_lazyFlushNow` 是否抛异常，标志一定复位**，否则一次异常=永久停滞。
       try {
         _lazyFlushNow();
@@ -8108,11 +8181,12 @@
         } catch (_) {}
       }
     };
-    if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(fire, { timeout: 300 });
-    } else {
-      setTimeout(fire, 0);
-    }
+    // ★ 2026-10-22（Lead 定性"物化被 typeset 饿死"）：
+    //   原来用 `requestIdleCallback` —— 而 typeset 批次会反复占住主线程 ⇒ rIC **被无限推迟**
+    //   ⇒ 物化拿不到执行机会 ⇒ p95 只有 15ms（帧不卡）却出现 2s 空白。
+    //   **可见性优先级高于排版**：物化决定"用户看不看得见"，typeset 只影响"公式好不好看"。
+    //   ⇒ 物化改用 `setTimeout(0)`（宏任务，保证拿到执行机会）；typeset 合并器继续用 idle（可延后）。
+    setTimeout(fire, 0);
   }
 
   /** 批量物化 pending 里的块 + 对新块排版。
