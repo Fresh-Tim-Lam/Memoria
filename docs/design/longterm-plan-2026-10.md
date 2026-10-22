@@ -938,6 +938,32 @@ LAZY_EVICT_PRESSURE_SCREENS 5 处（task-78 修复在位）
 3. **提交纪律新增**：`git add <file>` 会把该文件里**所有**并发改动一起提交
    ⇒ 提交前必须 `git diff <file>` 逐块确认只含自己那一项，**或要求 agent 分文件/分时机落盘**
 
+### ⚠️ 修复相互作用的线索（第 113 轮）：**task-72 的 typeset 缓存可能已单独解决"饥饿"症状**
+
+```
+t78-drag-pred-ab2-base.json: drag maxMat = 140   ← 压力场景、未开 P1 升级（base 臂）
+t78-drag-pred-p2fix.json:    drag maxMat = 146   ← 压力场景、开 P1 升级
+```
+两者都 ≤240。差别在于：**`ab2-base` 是在含 task-72 typeset 缓存的 HEAD 上跑的**
+（缓存降低 typeset 压力 ⇒ P2 队列更容易空 ⇒ P3 淘汰有机会被调度）。
+
+**⇒ 假说（需验证）**：task-78 的"淘汰饥饿"症状，可能**主要**由 typeset 压力造成；
+task-72 的缓存减少了 typeset ⇒ **单独就能把 maxMaterialized 压回限值**，P1 升级变成冗余保险。
+
+**必须做的三臂 A/B 才能定论**：
+```
+① cache off + pressure off  → 预期 3228（原始症状）
+② cache off + pressure on   → 预期 ~146
+③ cache on  + pressure off  → 已测 140（本次）
+④ cache on  + pressure on   → 已知 146
+```
+由 ①②③ 可判断：**到底谁在起作用、两者是否冗余**。
+
+**裁决方向**：
+- 若 ③≈② 且 ① 远高 ⇒ **缓存是主因**，P1 升级可作为"兜底"保留（低成本）或移除（少一个机制）
+- 若 ③ 仍高而 ② 低 ⇒ P1 升级是主因，缓存只是间接
+- **不得在没做这个三臂对照前，声称任一修复是"必要的"**
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
