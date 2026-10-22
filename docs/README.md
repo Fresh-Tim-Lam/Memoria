@@ -15,7 +15,7 @@
 | `conventions/` | Contractual conventions (rules that both humans and agents must follow) | [README.md](conventions/README.md) (list of conventions) |
 | `guides/` | How-to guides (how to do something) | [README.md](guides/README.md) |
 | `reference/` | Reference material (understanding: architecture, terminology, hard constraints, feature mechanisms) | [README.md](reference/README.md) |
-| `design/` | Design documents and decision records | system-design.md, dicussion.md, designV0.md, etc.; 台账归档明细：[agent-panel-batches.md](design/agent-panel-batches.md)（§13 叙述原文存档）、[ledger-archive-2026.md](design/ledger-archive-2026.md)（§10 归档明细）、[editor-input-defects-2026-10.md](design/editor-input-defects-2026-10.md)（§5.1 缺陷详情）、[packaging-release.md](design/packaging-release.md)（§8 P04/P06 详情） |
+| `design/` | Design documents and decision records | system-design.md, dicussion.md, designV0.md, etc.; 台账归档明细：[agent-panel-batches.md](design/agent-panel-batches.md)（§13 叙述原文存档）、[ledger-archive-2026.md](design/ledger-archive-2026.md)（§10 归档明细）、[editor-input-defects-2026-10.md](design/editor-input-defects-2026-10.md)（§5.1 缺陷详情）、[packaging-release.md](design/packaging-release.md)（§8 P04/P06 详情）、[maintenance-jobs-archive-2026-10.md](design/maintenance-jobs-archive-2026-10.md)（§5 作业明细） |
 | `sessions/` | Records of past conversations (carry context forward; formerly `agents/`) | Per-session documents |
 | `example/` | Container for example knowledge bases: `showcase/` (official showcase, kept in repo) and `import-test/` (fixtures, kept in repo); other local samples and personal libraries stay local only |  |
 | `refs/` | Development reference materials | [README.md](refs/README.md) |
