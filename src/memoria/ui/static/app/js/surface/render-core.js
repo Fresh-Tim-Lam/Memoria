@@ -517,6 +517,13 @@ window.MemoriaRenderCore = (function () {
     if (!doc || !doc.blocks) {
       return { container: container, blockEls: blockEls, unsupported: unsupported, count: 0, doc: doc || null };
     }
+    // 2026-10-22 S3/A：先用 DocumentFragment 组装，再一次挂载到 container。
+    // 原来每个块都 `container.appendChild(el)`：容器虽在文档外（未挂载），但逐次 appendChild
+    // 仍要付节点插入簿记 ⇒ 4001 块 = 4001 次插入。fragment 只在最后 appendChild 一次。
+    // 注意：块元素身份（`blockEls[i]` 与 `doc.blocks[i]` 一一对应）与顺序**完全不变**；
+    // `blockEls` 里的元素在 fragment 挂到 container 前 `parentNode` 是 `frag`（返回前已挂载），
+    // 调用方拿到的 `container.children` 结果逐节点一致 ⇒ 渲染等价。
+    var frag = document.createDocumentFragment();
     for (var i = 0; i < doc.blocks.length; i++) {
       var block = doc.blocks[i];
       if (!block || !BLOCK_RENDERERS[block.type]) {
@@ -524,8 +531,9 @@ window.MemoriaRenderCore = (function () {
       }
       var el = renderBlock(block, i, opts);
       blockEls.push(el);
-      container.appendChild(el);
+      frag.appendChild(el);
     }
+    container.appendChild(frag);
     return { container: container, blockEls: blockEls, unsupported: unsupported, count: doc.blocks.length, doc: doc };
   }
 
