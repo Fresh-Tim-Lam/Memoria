@@ -68,9 +68,17 @@ window.MemoriaSourceGen = (function () {
         return "---";
 
       case T.BLOCKQUOTE:
-        return "> " + (block.children || []).map(function (b) {
-          return generateBlock(b);
-        }).join("\n> ");
+        // E28（2026-10-22）：旧实现恒写 `"> " + 正文`，把 `>` / `>a` 统一成 `> ` / `> a`
+        //   ⇒ 每次往返**凭空插入一个空格**，而「`>` 后的空格是标记语法还是用户内容」
+        //   在回写后无从分辨。parser 现在把每行原始前缀记进 `block.prefixes`
+        //   （与 children 等长），这里按原样回写 ⇒ `>`、`> `、`>a`、`> a`、`>> ` 均逐字节还原。
+        var qKids = block.children || [];
+        if (!qKids.length) return "> ";   // 空引用块：仍回写 `> `（历史行为，且可表达「`>` + 一个空格 + 空正文」）
+        var qPrefixes = block.prefixes;
+        var qUsePrefixes = Array.isArray(qPrefixes) && qPrefixes.length === qKids.length;
+        return qKids.map(function (b, qIdx) {
+          return (qUsePrefixes ? _quotePrefixOf(qPrefixes[qIdx]) : "> ") + generateBlock(b);
+        }).join("\n");
 
       case T.LIST:
         return (block.items || []).map(function (item, idx) {
@@ -95,6 +103,17 @@ window.MemoriaSourceGen = (function () {
       default:
         return "";
     }
+  }
+
+  /**
+   * 校验引用行前缀：只接受 lexer 产出的引用标记串（`>` + 至多一个空格/制表符，可重复，
+   * 例如 `>`、`> `、`>\t`、`>> `、`> > `）。
+   * 其它值（外部构造/旧 AST 残留）一律退回历史默认 `"> "`，保证不会写出非法前缀。
+   * @param {string} prefix
+   * @returns {string}
+   */
+  function _quotePrefixOf(prefix) {
+    return (typeof prefix === "string" && /^(?:>[ \t]?)+$/.test(prefix)) ? prefix : "> ";
   }
 
   /**

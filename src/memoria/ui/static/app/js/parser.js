@@ -483,13 +483,21 @@ window.MemoriaParser = (function () {
         // 连续引用行：每行解析为一个独立段落，保留完整内联结构（高亮/加粗/颜色等）。
         // 若按文本拼接，[[\h:...]] / ** 等标记会被当作纯文本丢失。
         var qBlocks = [];
+        // E28（2026-10-22）：逐行记下**原始**前缀（`>` / `> ` / `>\t`），
+        // SourceGen 据此无损回写；否则 `>`→`> `、`>a`→`> a`，每次往返凭空插入空格。
+        var qPrefixes = [];
         while (i < endLine) {
           var qt = lexer.tokenize(lines[i]);
           if (qt.length === 0 || qt[0].type !== "blockquote_prefix") break;
+          qPrefixes.push(qt[0].value);
           qBlocks.push(AST.paragraph(parseInline(qt.slice(1))));
           i++;
         }
-        if (qBlocks.length) emit(blocks, AST.blockquote(qBlocks), lineNum, i);
+        if (qBlocks.length) {
+          var qBlock = AST.blockquote(qBlocks);
+          qBlock.prefixes = qPrefixes; // 与 children 等长；SourceGen 长度不匹配时退回默认 "> "
+          emit(blocks, qBlock, lineNum, i);
+        }
         continue;
       }
 

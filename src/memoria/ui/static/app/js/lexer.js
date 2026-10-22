@@ -97,7 +97,15 @@ window.MemoriaLexer = (function () {
           continue;
         }
         // 引用前缀 >
-        var qm = sourceLine.match(/^(\s*)(>\s?)/);
+        // ★ E28（2026-10-22）：旧写法 `^(\s*)(>\s?)` 有两个问题：
+        //   ① `\s` 覆盖面过大（连 `\r` 等换行类空白都算），且「`>` 后到底有没有那个
+        //      分隔空格」的信息被丢掉 ⇒ SourceGen 恒写 `"> "`，`>` / `>a` / `>> ` 每次
+        //      往返都被**凭空插入空格**；
+        //   ② 只吃一层 `>`，`>> x` 把第二个 `>` 当正文。
+        //   现在把**整段引用标记**（`>` + 至多一个空格/制表符，可重复）作为前缀，
+        //   原始文本原样交给 parser（记进 blockquote.prefixes，SourceGen 逐字节回写）；
+        //   `>> x` / `> > x` 的正文都只取 `x`，不再是 "> x"。
+        var qm = sourceLine.match(/^(\s*)((?:>[ \t]?)+)/);
         if (qm) {
           if (qm[1].length > 0) {
             tokens.push(make("text", qm[1], i, srcOffset));
