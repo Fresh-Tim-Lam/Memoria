@@ -1,0 +1,32 @@
+{
+  "schema": "memoria-lazy-gate-scenarios/v1",
+  "note": "task-78 诊断剧本：与 lazy-gate-4001.json 同语料，但把长滚改成更密的连击（64 步 × 40ms），用来把生产门禁的『偶发超 8 屏』稳定复现。不用于验收判定，只用于根因定位与修复前后对照。",
+  "fixture": {
+    "path": "artifacts/_kbwork_perf_edu/教材/08_第8章_差错控制编码.md",
+    "file": "教材/08_第8章_差错控制编码.md",
+    "segments": []
+  },
+  "checks": [
+    "idleRaf",
+    "open",
+    "longScroll"
+  ],
+  "thresholds": {
+    "frames": 90,
+    "p50MaxMs": 20,
+    "firstVisibleMaxMs": 500,
+    "postOpenSettleMs": 1500,
+    "fractions": [0.3, 0.5, 0.7, 0.9],
+    "driftSettleMs": 1500,
+    "driftLinesMax": 5,
+    "alignToleranceLines": 12,
+    "ratioTolerance": 0.08,
+    "domScreensMax": 8,
+    "longScrollSteps": 64,
+    "longScrollStepMs": 40,
+    "heapPeakDeltaMb": 96,
+    "heapRetainedDeltaMb": 32,
+    "heapPeakDeltaMbWhenMonotonic": 32,
+    "scrollTopTolerancePx": 32
+  }
+}

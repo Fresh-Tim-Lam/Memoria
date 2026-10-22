@@ -1,0 +1,44 @@
+{
+  "schema": "memoria-lazy-gate-scenarios/v1",
+  "note": "task-78：真教材 08 章（约 4001 块）上的惰性工作集 L4 复现剧本。只跑 L0 测量可信门 + L1 打开 + L4 长滚；L2/L3/L5 依赖 LAZYGATE-MARK-* 标记，真教材没有，故不跑（fixture 必须保持在仓库内）。",
+  "fixture": {
+    "path": "artifacts/_kbwork_perf_edu/教材/08_第8章_差错控制编码.md",
+    "file": "教材/08_第8章_差错控制编码.md",
+    "segments": [
+      "公式",
+      "表格",
+      "mermaid",
+      "代码",
+      "列表",
+      "引用"
+    ]
+  },
+  "checks": [
+    "idleRaf",
+    "open",
+    "longScroll"
+  ],
+  "thresholds": {
+    "frames": 90,
+    "p50MaxMs": 20,
+    "firstVisibleMaxMs": 500,
+    "postOpenSettleMs": 1500,
+    "fractions": [
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
+    "driftSettleMs": 1500,
+    "driftLinesMax": 5,
+    "alignToleranceLines": 12,
+    "ratioTolerance": 0.08,
+    "domScreensMax": 8,
+    "longScrollSteps": 32,
+    "longScrollStepMs": 130,
+    "heapPeakDeltaMb": 96,
+    "heapRetainedDeltaMb": 32,
+    "heapPeakDeltaMbWhenMonotonic": 32,
+    "scrollTopTolerancePx": 32
+  }
+}

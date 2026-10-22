@@ -999,6 +999,61 @@ W4.3 L03 复核判定、DOC02、fidelity outline 正则、图片缓存上限、�
 ⑤ 接手 agent 产物前先看 numstat，不只看 git status 的 M
 ```
 
+## task-78 最终报告（agent ed2b560c，2026-10-23 03:0x）—— 定位/修复/A/B 全部闭合
+
+报告落盘：`scripts/benchmark/surface/results/task78-report.md`
+新增脚本：`_t78_gate.py` / `_t78_probe.py` / `_t78_probe.mjs` / `scenarios/lazy-gate-4001{,-diag}.json`
+
+### 根因（代码级 + **故障注入证实**，不是推测）
+```
+淘汰 lazy_evict 一直是 P3；物化 P1、typeset P2
+⇒ 长滚期间只要 P1/P2 队列持续非空，P3 可连续多帧甚至整轮滚动一次都排不到
+⇒ 工作集只装入不回收
+```
+**故障注入验证**（页面内每 60ms 注入 P2 忙等作业，模拟 typeset 积压；6s 连续拖动）：
+```
+修复前：evictDelta = 49     maxMaterialized = 3684
+修复后：evictDelta = 2631   maxMaterialized = 130
+```
+**次要缺陷**：`_lazyEvictNow` 在 `_lazyPending` 非空时 `return 0` 且**不续排** ⇒
+淘汰只在滚动停止 50ms 后重新排队 ⇒ 连续滚动时**一次让路就永久丢链**。
+
+**为何 pred 更差**：pred 批尾不做强制布局，主线程更多时间给物化/typeset ⇒ P1/P2 积压更深、P3 饥饿窗口更宽；
+legacy 的强制布局反而拖慢管线。**复核者 381/991 与机制一致**，具体值取决于当轮帧率/负载。
+
+**为何 4001 块才现**：保留窗口 = 视口 ±4 屏 = 9 屏像素；该文档约 30 块/屏、块均高 2.5–3 行，
+稳态 80–170，**离 240 只有 1–2 个物化批余量**；3662 fixture 稳态 99–104，余量更大。
+
+### 同 build A/B（密封副本：临时静态根只替换 app.js，走官方 lazy_gate.mjs，门禁锁串行）
+| 场景 | 修复前(78de3d2f) | 修复后(HEAD) |
+|---|---:|---:|
+| 4001 pred maxMaterialized | 157 | **122 / 150**（复跑）|
+| 4001 legacy maxMaterialized | **232（逼近 240）** | **170 / 117**（复跑）|
+| 4001 视口占位 | 0 | 0 |
+| 4001 pred peakΔMB / retainedΔMB | 65.9 / 6.74 | **51.1 / 6.78** |
+| 3662 fixture 6/6 maxMat | 99 | 100（限 248，无回归）|
+| **P2 积压注入 maxMat / evictDelta** | **3684 / 49** | **130 / 2631** |
+| 高度漂移（5s 拖动 ~3800 次换出）| 32.3px | **30.5px** |
+
+pred/legacy 交替复跑 117–170 全部 ≤240，**pred 不再系统性更差**（差异是运行噪声）。
+
+### 修复要点（只改 app.js）
+1. `_lazyEvictIsPressure`：物化块 > 4 屏块数 ⇒ 同一个 `lazy_evict` 以 **P1** 排队（仍走 `MemoriaScheduler`），压力解除回 P3；同 key 去重，**P3 不顶掉已排队的 P1**
+2. 因待物化让路时**重新续排**淘汰（不再丢链）
+3. `_lazyFlushNow` 开始/结束、`_lazySyncMaterializeViewport` 结束都调 `_lazyMaybeScheduleEvict()`，**不再依赖 scroll-stop**；开始处先排淘汰（id 早于续排物化）避免峰值叠两批
+4. 新增诊断字段 `pressureScreens / evictPressureSchedules / evictPendingSkips`
+5. **保留窗口 / 批大小 / 高度记账均未改**
+
+### 重要前瞻建议（写进后续计划）
+> 阈值 240 未改。保留窗口是"9 屏像素"；若文档几乎全是单行块，即使淘汰不滞后也可能逼近 240。
+> ⇒ 将来应改**「块数 + 像素」双限**，而不是继续调压力阈值。
+
+### 未验证
+1. 全部在无头 Edge harness；真实 WebView2 的"偶发"未在空载机器复现（空载基线 157/232）—— 机制由故障注入证明
+2. 未在机器级并发负载（其他 agent 的 py/wv2）下复跑官方门禁；采样时系统仍有 msedge 51 / wv2 24 进程，
+   **991 很可能来自这种负载**
+3. 未验证"单行块为主的文档"下的稳态块数（前述双限建议即由此而来）
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
