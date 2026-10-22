@@ -9388,6 +9388,20 @@
   }
   var LAZY_MATH_FORMULAS_SCROLLING = 60;   // 滚动中单批公式上限（≈60×1.27≈76ms）
   var LAZY_MATH_FORMULAS_IDLE = 200;       // 静止时单批公式上限（≈200×1.27≈254ms，静止可接受）
+
+  /** W3.2：typeset 单批上限的**运行时覆盖**（同一 build/实例内交替 A/B 用；CDP 注入即可，无需改码）。
+   *  背景（真机 08 章 4001 块、逐位置帧采样）：第二遍（向上）在 45%/70%/90% 的长帧不是物化、
+   *  也不是淘汰，而是 **MathJax 单批 typeset**——LoAF 里 `styleAndLayoutStart` 之前的 script 段
+   *  与 `MathJax.typesetPromise` 的包裹耗时对得上（45%: 单批 max 41–58ms / 帧 88–108ms）。
+   *  向上滚动时队列更容易在"静止窗口"里攒大批（idle=200），一次 flush 就是一根长帧。
+   *  这条覆盖只影响**每批切多大**，不改变总公式量与排版顺序（剩余批次回到队列下一轮继续）。 */
+  function _mathBatchCaps() {
+    var sc = (typeof window.__MEMORIA_MATH_BATCH_SCROLLING === "number" && window.__MEMORIA_MATH_BATCH_SCROLLING > 0)
+      ? window.__MEMORIA_MATH_BATCH_SCROLLING : LAZY_MATH_FORMULAS_SCROLLING;
+    var idle = (typeof window.__MEMORIA_MATH_BATCH_IDLE === "number" && window.__MEMORIA_MATH_BATCH_IDLE > 0)
+      ? window.__MEMORIA_MATH_BATCH_IDLE : LAZY_MATH_FORMULAS_IDLE;
+    return { scrolling: sc, idle: idle };
+  }
   var _lazyMathDeferStart = 0;          // 本批次开始被推迟的时刻
   var _lazyMathDeferred = false;        // 当前是否正处于"让路推迟"中（供诊断）
 
@@ -9526,7 +9540,9 @@
     // ★ 2026-10-22 ②（Lead：单批 246 公式 ≈300ms+ 独占主线程）：
     //   **滚动期间更严**：最近 300ms 有 scroll ⇒ 单批 ≤ `LAZY_MATH_FORMULAS_SCROLLING`(60) 公式；
     //   静止时放宽到 `LAZY_MATH_FORMULAS_IDLE`(200)。超出部分**留回队列**，下一轮再排。
-    var batchLimit = _lazyIsScrolling() ? LAZY_MATH_FORMULAS_SCROLLING : LAZY_MATH_FORMULAS_IDLE;
+    //   W3.2：两档都可经 `window.__MEMORIA_MATH_BATCH_{SCROLLING,IDLE}` 覆盖（同实例 A/B）。
+    var _caps = _mathBatchCaps();
+    var batchLimit = _lazyIsScrolling() ? _caps.scrolling : _caps.idle;
     var fAcc = 0, cut = batch.length;
     for (var fi = 0; fi < batch.length; fi++) {
       var _f = _countBlockFormulas(_doc && _doc.blocks ? _doc.blocks[parseInt(batch[fi].getAttribute("data--block-index"), 10)] : null);
@@ -9800,6 +9816,15 @@
   var LAZY_EVICT_KEEP_SCREENS = 4;
   var LAZY_EVICT_BATCH_MAX = 60;
   var LAZY_EVICT_RECENT_MS = 1500;
+
+  /** W3.2：淘汰单批上限的运行时覆盖（同实例 A/B；CDP 注入 `window.__MEMORIA_EVICT_BATCH_MAX`）。
+   *  背景：逐位置帧采样里，第二遍向上的长帧除 typeset 外还有一段 `scheduler.js` 同步工作
+   *  （LoAF: 12.8–14.1ms），与淘汰单批同步耗时同量级。pred 批尾零强制布局之后，单批拆小
+   *  **不再**按批数付一次全篇 reflow ⇒ 可以只按"每帧预算"切，而不伤总量。 */
+  function _lazyEvictBatchMax() {
+    var v = window.__MEMORIA_EVICT_BATCH_MAX;
+    return (typeof v === "number" && v > 0) ? v : LAZY_EVICT_BATCH_MAX;
+  }
 
   var _lazyTouch = null;            // Array<number>：每个块最近一次物化/进入工作集的时刻（LRU 时钟）
   var _lazyEvictCount = 0;          // 本文件累计淘汰块数（诊断/metrics）
@@ -10111,7 +10136,7 @@
       }
       cand.sort(function (x, y) { return (y.score - x.score) || (Math.abs(y.idx - keep.center) - Math.abs(x.idx - keep.center)); });
 
-      var batch = cand.slice(0, LAZY_EVICT_BATCH_MAX);
+      var batch = cand.slice(0, _lazyEvictBatchMax());
       if (_pf) { _pf.scanMs += _evNow() - _pseg; _pseg = _evNow(); }
       // ── ⑤.5【先读后写】换出高度/锚点必须在**任何 DOM 变更之前**量完 ───────────────────
       //   · `_advH[q]`：块的**垂直占位体积** = 本块 rect.top → 下一块 rect.top（含塌陷外边距）。

@@ -259,10 +259,35 @@ window.MemoriaMarkdownPreview = (function () {
     }
   }
 
+  // ── W3.2：mermaid 渲染结果缓存（真机逐位置帧采样归因）─────────────────────────
+  //   实测（08 章 4001 块、`perf_updown_positions.mjs`）：单次 `mermaid.render` 17–83ms；
+  //   第二遍（向上）每个 mermaid 块都是**重新物化 ⇒ 重新 render**，一次落进采样窗口就是
+  //   一根 90–155ms 长帧（20%: up 145.6 vs down 54.9；35%: 3 张图 96–104ms 全落在向上那遍）。
+  //   产物只取决于 (源码, 主题) —— 与块身份无关 ⇒ 按源码缓存 SVG **字符串**；命中时换一个新
+  //   `mermaid-<random>` id 再插入（**不能直接复用旧 id**：多块同 id 会让 `url(#…)` 指到别处；
+  //   旧实现把 id 写死在新节点上，正是这个坑）。主题指纹进 key，主题变量变了自然 miss。
+  //   上限 64 条 FIFO（19 张图的 SVG 字符串合计 <1MB）。开关：`window.__MEMORIA_MMD_CACHE === false`
+  //   关闭（同一 build/实例内交替 A/B 用；默认开）。
+  var _mmdSvgCache = new Map();
+  var MMD_CACHE_MAX = 64;
+  function _mmdCacheEnabled() {
+    try { return window.__MEMORIA_MMD_CACHE !== false; } catch (_e) { return true; }
+  }
+  function _mmdThemeFingerprint() {
+    try {
+      if (window.MemoriaMermaidTheme && typeof window.MemoriaMermaidTheme.options === "function") {
+        return JSON.stringify(window.MemoriaMermaidTheme.options());
+      }
+    } catch (_e) { /* 取不到主题 ⇒ 用固定 key（与既有兜底配置一致） */ }
+    return "default";
+  }
+
   async function renderMermaidBlocks(container) {
     initMermaid();
     if (!window.mermaid?.render) return;
     const els = container.querySelectorAll("code.language-mermaid");
+    const cacheOn = _mmdCacheEnabled();
+    const themeKey = cacheOn ? _mmdThemeFingerprint() : "";
     for (const el of els) {
       const pre = el.parentElement;
       if (!pre) continue;
@@ -275,8 +300,24 @@ window.MemoriaMarkdownPreview = (function () {
       if (pre.dataset.mermaidRendered === "1") continue;
       pre.dataset.mermaidRendered = "1";
       const id = "mermaid-" + Math.random().toString(36).slice(2, 10);
+      const cacheKey = cacheOn ? themeKey + "\u0000" + src : null;
       try {
-        const { svg } = await _mmdRenderWithFontSync(id, src);   // 2026-10-05 根因修法：渲染前等字体就绪（见文件尾 _mmdRenderWithFontSync 注释）
+        let svg;
+        const hit = cacheKey ? _mmdSvgCache.get(cacheKey) : null;
+        if (hit) {
+          // 命中：只换 id（含 `id=` / `url(#…)` / `aria-labelledby` 里的同一 token）
+          svg = hit.svg.split(hit.id).join(id);
+        } else {
+          const r = await _mmdRenderWithFontSync(id, src);   // 2026-10-05 根因修法：渲染前等字体就绪（见文件尾 _mmdRenderWithFontSync 注释）
+          svg = r && r.svg;
+          if (cacheKey && svg) {
+            if (_mmdSvgCache.size >= MMD_CACHE_MAX) {
+              const k0 = _mmdSvgCache.keys().next().value;
+              _mmdSvgCache.delete(k0);
+            }
+            _mmdSvgCache.set(cacheKey, { svg: svg, id: id });
+          }
+        }
         if (!pre.isConnected) continue;
         const div = document.createElement("div");
         div.className = "-mermaid-container";
