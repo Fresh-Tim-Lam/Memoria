@@ -8175,6 +8175,47 @@
     // ⇒ 新物化的 mermaid 块**必须**显式交给 mermaid 渲染，否则永远停在 `<pre><code>` 源码态（2026-10-22 交互门禁实测到）。
     try { _applyCodeHighlightToPreview(container); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
     _lazyRenderMermaidIn(made);
+    _lazyPostProcessNewBlocks(made);   // 2026-10-22：补齐 contentEditable / 灯箱（与首屏路径对齐，见函数注释）
+  }
+
+  /** 对新物化的块补做**首屏路径做过、滚动批次曾漏掉**的后处理（2026-10-22 系统性对齐）。
+   *
+   *  背景：首屏 `renderPreview` 有一整串收尾（禁编辑 / 灯箱 / 行号 / 后续 mermaid），
+   *  滚动批次只做了"代码高亮 + 链接 + 公式"，于是门禁逐条抓到漏处理：
+   *    · mermaid 显示源码（已修）
+   *    · `contentEditable` 没设 ⇒ 代码块/表格/公式块**可被误编辑**（真可感知缺陷）
+   *    · 灯箱未绑定 ⇒ 点图不放大
+   *    · `data-block-id` / 行号属性缺失（行号已在 `_materializeRange` 里直接补）
+   *  本函数把"按块集合就能做"的收尾统一补齐；**只作用于本批块**，不扫全篇。 */
+  function _lazyPostProcessNewBlocks(madeEls) {
+    if (!madeEls || !madeEls.length) return;
+    // ① 禁编辑：与首屏路径同一份 kind 白名单（app.js:2056 的 _nonEditableTypes）与同一组子选择器
+    var _nonEdTypes = { code_block: 1, math_block: 1, mermaid: 1, table: 1, frontmatter: 1 };
+    for (var i = 0; i < madeEls.length; i++) {
+      var blkEl = madeEls[i];
+      if (!blkEl || !blkEl.getAttribute) continue;
+      var bi = parseInt(blkEl.getAttribute("data--block-index"), 10);
+      if (!isNaN(bi) && _doc && _doc.blocks[bi] && _nonEdTypes[_doc.blocks[bi].type]) {
+        blkEl.contentEditable = "false";
+        blkEl.querySelectorAll('pre, code, table, svg, mjx-container, .-mermaid-container, .-mermaid-error').forEach(function (el) {
+          el.contentEditable = "false";
+        });
+      } else {
+        // 非白名单块：其内部仍可能有 pre/code/table/svg（如嵌套），按首屏的通用列表补一遍
+        blkEl.querySelectorAll('mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error').forEach(function (el) {
+          el.contentEditable = "false";
+        });
+      }
+    }
+    // ② 灯箱：`attachImageLightbox` 不是幂等的 ⇒ 只对本批块调用（传入块集合，不传 preview）
+    var MP = window.MemoriaMarkdownPreview;
+    if (MP && typeof MP.attachImageLightbox === "function") {
+      for (var k = 0; k < madeEls.length; k++) {
+        var e2 = madeEls[k];
+        if (!e2 || !e2.querySelector || !e2.querySelector("img")) continue;
+        try { MP.attachImageLightbox(e2); } catch (_) { /* 可选增强 */ }
+      }
+    }
   }
 
   /** 对新物化的块渲染 mermaid（只处理这批块里的 `code.language-mermaid`）。
