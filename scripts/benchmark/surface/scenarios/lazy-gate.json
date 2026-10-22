@@ -1,0 +1,27 @@
+{
+  "schema": "memoria-lazy-gate-scenarios/v1",
+  "note": "W4.1 惰性路径交互门禁。全部检查跑在 ≥1000 块的大文档 fixture 上；由 run_lazy_gate.py 起 harness 后调用 lazy_gate.mjs。阈值与口径见 scripts/benchmark/surface/README.md「惰性路径交互门禁」一节。",
+  "fixture": {
+    "path": "scripts/benchmark/surface/fixtures/lazy-gate-kb/docs/lazy-gate-1600.md",
+    "file": "docs/lazy-gate-1600.md",
+    "segments": ["公式", "表格", "mermaid", "代码", "列表", "引用"]
+  },
+  "checks": ["idleRaf", "open", "positions", "backToTop", "longScroll", "editProtect"],
+  "thresholds": {
+    "frames": 90,
+    "p50MaxMs": 20,
+    "firstVisibleMaxMs": 500,
+    "postOpenSettleMs": 1500,
+    "fractions": [0.3, 0.5, 0.7, 0.9],
+    "driftSettleMs": 1500,
+    "driftLinesMax": 5,
+    "alignToleranceLines": 12,
+    "ratioTolerance": 0.08,
+    "domScreensMax": 8,
+    "longScrollSteps": 32,
+    "longScrollStepMs": 130,
+    "heapPeakDeltaMb": 96,
+    "heapRetainedDeltaMb": 32,
+    "heapPeakDeltaMbWhenMonotonic": 32
+  }
+}

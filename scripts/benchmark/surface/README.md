@@ -112,8 +112,88 @@ python scripts/benchmark/surface/run_interaction.py \
   ② 跨块拖拽两点必须**同时在视口内**（视口外的事件会被浏览器丢弃）；③ 应用启动会**异步自动打开默认文件**，
   抢在它前面 `open` 会被覆盖 ⇒ 必须先等 `currentPath` 稳定。
 
-## 大库基线读数（baseline，2026-10-20 新增）
+## 惰性路径交互门禁（W4.1，2026-10-23 新增）
 
+**为什么另起一套**：上面 12 个交互剧本的语料都是 <200 块的小文档 ⇒ `_lazyMaterializeEnabled` 走**全量渲染**，
+惰性物化 / 工作集淘汰 / 公式 pending 三个已合入的重量级特性**没有任何固定回归**。本门禁专门跑
+≥1000 块的大文档，把「打开/拖到 30·50·70·90%/回顶/长滚/编辑保护」变成一条命令可复跑的 PASS/FAIL。
+
+| 文件 | 作用 |
+|---|---|
+| `run_lazy_gate.py` | **一条命令入口**：复用 `run_probe.load_harness()` 起服务（与 12 剧本同一套 harness），跑 `lazy_gate.mjs`，落 JSON + MD |
+| `lazy_gate.mjs` | CDP 执行器：复用 `interaction.mjs` 的 `withBrowser` / `CDP` / `Interactions`，按 L0–L5 量断言 |
+| `scenarios/lazy-gate.json` | 检查清单与阈值（fractions / 漂移行数 / DOM 屏数 / 堆预算） |
+| `make_lazy_gate_fixture.py` | 确定性生成 fixture（160 节 ≈ 3662 块，含公式/表格/mermaid/代码/列表/引用） |
+| `fixtures/lazy-gate-kb/` | **入库的固定 fixture**（不依赖 `artifacts/**`，可提交、可 diff） |
+
+```powershell
+# 门禁本体（默认 6 项检查，~26s）
+python scripts/benchmark/surface/run_lazy_gate.py
+
+# 顺带证明既有 12 剧本仍 12/12（同一次运行，证据写进同一份 JSON）
+python scripts/benchmark/surface/run_lazy_gate.py --with-existing-12
+
+# 负向验证：门禁必须 FAIL（证明守卫不是摆设）
+python scripts/benchmark/surface/run_lazy_gate.py --sabotage viewport-placeholder --label neg-placeholder
+python scripts/benchmark/surface/run_lazy_gate.py --sabotage noevict              --label neg-noevict
+```
+
+产物：`results/lazy-gate-<label>_<sha>.{json,md}`（JSON 每步含 `assertions[{name,ok,expected,actual,note}]`
+与 `readings`，FAIL 时直接定位到 `L2-positions / position-30pct / settled-viewport-placeholders-0`）。
+
+### 检查与阈值
+
+| id | 量什么 | 阈值/口径 |
+|---|---|---|
+| L0 `idle-raf` | **测量可信门**：空转 90 帧 rAF 间隔 p50 | ≤20ms；不过则 `measurement.trusted=false`，整体 FAIL（最小化窗口会节流 rAF，读数不可信） |
+| L1 `open-first-screen` | `openFile()` → 首个已物化块进入视口 | ≤500ms；且 `totalBlocks≥1000`、`placeholders>0`、`materialized<total`、`metricsSrc∈{probe,computed}`（确实走惰性，且占位高度是实测而非 detached 24px bug） |
+| L2 `positions` | 30/50/70/90%（按**源行数**定位；先 settle 再对齐一次） | 停稳后视口 `.-pv-placeholder`=0；文本与**该位置覆盖的源行区间**重合 ≥8 个 token/2-gram；远离视口 >250 行的 MARK/TOKEN = 串位；相对漂移 = 同一锚点块屏幕位移÷实测行高 ≤5 行 |
+| L3 `back-to-top` | 回 `scrollTop=0` | 首块相对视口顶偏移 Δ≤5 行、绝对源行 Δ≤5、视口占位=0、有文本/媒体（无白屏） |
+| L4 `long-scroll` | 32 步滚完整篇 | 同时物化块 ≤ `8 × ceil(paneH/行高)`；`evictTotal` 在长滚期间必须增长；`suspended=false`；堆峰值/驻留增量有上限，且轨迹不能严格单调递增 |
+| L5 `edit-protect` | 编辑已物化块 → 滚到 95% 触发远处淘汰 → 滚回 | 远处 `evictTotal` 必须增长（证明淘汰真的发生）；被编辑块仍是真块；编辑文本仍在；光标块+字符偏移不变 |
+
+### 负向验证（每个守卫都必须能报错）
+
+- `--sabotage viewport-placeholder`：把 30% 位置视口内一个已物化块换回占位，并把块下标改成**非数字**
+  （产品任何补物化路径都会跳过它 ⇒ 缺陷是持续的，不会 1.5s 后自愈）。期望输出：`L2-positions FAIL`，
+  唯一失败断言 `settled-viewport-placeholders-0：期望 0，实际 1`。
+- `--sabotage noevict`：调用产品自带 `window.__MEMORIA_MATERIALIZE_ALL()`（它会把全文物化并全程
+  `_lazyEvictSuspended=true`，等价于把 `LAZY_EVICT_KEEP_SCREENS` 调到极大）。期望输出：
+  `L4-long-scroll FAIL`（`eviction-ran-during-long-scroll` / `eviction-not-suspended` / `dom-within-8-screens`），
+  并连带 `L5-edit-protect FAIL`（远处不再淘汰）。两次实测均 FAIL，恢复后重跑 PASS。
+
+### JSON 结构（`schema=memoria-lazy-gate/v1`）
+
+```jsonc
+{
+  "schema": "memoria-lazy-gate/v1",
+  "sabotage": null,                     // 负向验证注入；正常为 null
+  "fixture": { "path": "...", "totalLines": 5784, "markers": 160 },
+  "measurement": { "raf": { "p50Ms": 16.6, "p95Ms": 17.7 }, "trusted": true },
+  "open": { "firstVisibleMs": 118, "stats": { "totalBlocks": 3662, "placeholders": 3629, "lhPx": 22.4 } },
+  "positions": [ { "frac": 0.3, "driftLines": 0, "vpPlaceholders": 0, "topLine": 1735, "ratio": 0.3 } ],
+  "longScroll": { "evictTotal": 3250, "maxMaterialized": 107, "domLimit": 248, "peakDeltaMb": 17.4 },
+  "edit": { "blockIndex": 1834, "editSurvives": true, "caretPreserved": true },
+  "checks": [ { "id": "L2-positions", "status": "PASS", "steps": [ { "step": "...", "assertions": [ ... ], "readings": { ... } } ] } ],
+  "summary": { "pass": true, "failedIds": [] },
+  "existing12": { "ok": true, "returncode": 0 }   // 仅 --with-existing-12
+}
+```
+
+### 口径与限制（引用数字时必须一起给）
+
+1. 跑在**无头 Edge harness**（与 12 剧本同一条 CDP 路径），不是真机 pywebview；首开 118ms 是 harness 读数，
+   真机（WebView2 + 真实窗口）需按 `docs/design/benchmark-measurement-protocol.md` 另测。
+2. 「堆」是 `performance.memory.usedJSHeapSize`（不是进程 RSS）；采样前后尽量 `gc()`（启动加了
+   `--js-flags=--expose-gc --enable-precise-memory-info`），仍受引擎 GC 时机影响 ⇒ 结论看「峰值/驻留增量 +
+   是否严格单调」的组合，不看单个采样点。
+3. 「DOM ≤ 视口×8」按**同时存在的块数**（含占位）计；`#preview` 节点数只作报告读数列出。
+4. fixture 全部合成，无用户数据；`LAZYGATE-MARK-<NNNN>` 每节一行，是「文本↔源行号」的对齐锚点。
+   改 fixture 后必须重跑 `make_lazy_gate_fixture.py` 并更新本页读数。
+5. 已知未验证：L4 堆断言在长时间/并发跑机器上是否稳定；fixture 的真实感（合成文档，非教材原文）；
+   真机 GPU/字体/缩放组合下的漂移；公式 pending 的独立断言（当前由「视口文本/媒体存在 + 公式块可物化」间接覆盖）。
+
+## 大库基线读数（baseline，2026-10-20 新增）
 `run_probe.py` 的用例绑死 `tests/probe-kb` 构造语料；**大库**（真实知识库，如 `数字通信原理`）需要另一套读数：
 
 ```bash

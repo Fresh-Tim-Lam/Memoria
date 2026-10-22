@@ -17,10 +17,11 @@
  *   node scripts/benchmark/surface/interaction.mjs --scenarios <in.json> --out <out.json> --url <url>
  */
 
-import { spawn } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 0. 修饰键位掩码（CDP 规范）
@@ -138,7 +139,22 @@ async function freeTcpPort() {
   });
 }
 
-async function launchEdge({ headless = true, port } = {}) {
+/** 用一个**唯一的 `--user-data-dir`** 反查并杀掉该 profile 的全部 msedge 进程。
+ *
+ * 为什么不能只 `proc.kill()`：Edge 启动后主进程可能立刻退出/重拉一个浏览器进程，
+ * `proc.pid` 会变成死 PID ⇒ `taskkill /T /PID` 找不到子进程，headless 实例整棵残留
+ * （实测一次门禁跑完还能留下 10+ 个 msedge）。profile 目录是本次启动独有的，按它匹配最可靠。 */
+function killEdgeByProfile(profileDir) {
+  if (process.platform !== 'win32' || !profileDir) return;
+  const esc = String(profileDir).replace(/'/g, "''");
+  const ps = `$p = Get-CimInstance Win32_Process -Filter "Name='msedge.exe'" | Where-Object { $_.CommandLine -and $_.CommandLine.Contains('${esc}') }; if ($p) { $p | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue } }`;
+  try {
+    spawnSync('powershell', ['-NoProfile', '-NonInteractive', '-Command', ps],
+      { windowsHide: true, stdio: 'ignore', timeout: 15000 });
+  } catch { /* noop */ }
+}
+
+async function launchEdge({ headless = true, port, extraArgs = [] } = {}) {
   const edgePath = findEdge();
   const cdpPort = port || await freeTcpPort();
   const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'memoria-ix-edge-'));
@@ -146,7 +162,9 @@ async function launchEdge({ headless = true, port } = {}) {
     '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
     '--disable-extensions', '--disable-background-networking', '--remote-allow-origins=*',
     '--window-size=1280,900',
-    `--remote-debugging-port=${cdpPort}`, `--user-data-dir=${userDataDir}`, 'about:blank',
+    `--remote-debugging-port=${cdpPort}`, `--user-data-dir=${userDataDir}`,
+    ...extraArgs,
+    'about:blank',
   ];
   const proc = spawn(edgePath, args, { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
   let stderr = '';
@@ -172,7 +190,18 @@ async function launchEdge({ headless = true, port } = {}) {
   if (!wsUrl) { try { proc.kill(); } catch { /* noop */ } throw new Error('拿不到 webSocketDebuggerUrl'); }
   return {
     port: cdpPort, browser: version.Browser || 'Edge', wsUrl,
-    cleanup() { try { proc.kill(); } catch { /* noop */ } try { fs.rmSync(userDataDir, { recursive: true, force: true }); } catch { /* noop */ } },
+    cleanup() {
+      // Windows 上 proc.kill() 只结束浏览器主进程，headless 的子进程/渲染进程可能残留
+      // （实测门禁跑完仍有 10+ 个 msedge 进程）⇒ taskkill 整棵树 + 按 profile 反查兜底。
+      try {
+        if (process.platform === 'win32' && proc.pid) {
+          spawnSync('taskkill', ['/pid', String(proc.pid), '/T', '/F'], { windowsHide: true, stdio: 'ignore' });
+        }
+      } catch { /* noop */ }
+      try { proc.kill(); } catch { /* noop */ }
+      killEdgeByProfile(userDataDir);
+      try { fs.rmSync(userDataDir, { recursive: true, force: true }); } catch { /* noop */ }
+    },
   };
 }
 
@@ -771,8 +800,8 @@ async function withLiveApp(port, fn) {
   }
 }
 
-async function withBrowser(url, fn) {
-  const edge = await launchEdge({ headless: true });
+async function withBrowser(url, fn, launchOptions = {}) {
+  const edge = await launchEdge({ headless: true, ...launchOptions });
   const cdp = await CDP.connect(edge.wsUrl);
   try {
     await cdp.send('Page.enable');
@@ -1001,4 +1030,22 @@ async function main() {
   process.exit(2);
 }
 
-main().catch((e) => { process.stderr.write(String((e && e.stack) || e) + '\n'); process.exit(1); });
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. 导出（供 lazy_gate.mjs 等固定门禁复用同一套 CDP / 交互原语）
+//    ⚠️ 只在被 `node interaction.mjs ...` 直接执行时跑 CLI；被 import 时不得产生副作用。
+// ─────────────────────────────────────────────────────────────────────────────
+export {
+  CDP, Interactions, launchEdge, withBrowser, withLiveApp, waitAppSettled, runScenarios, sleep,
+};
+
+const _isDirectRun = (() => {
+  try {
+    return !!process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+  } catch {
+    return false;
+  }
+})();
+
+if (_isDirectRun) {
+  main().catch((e) => { process.stderr.write(String((e && e.stack) || e) + '\n'); process.exit(1); });
+}
