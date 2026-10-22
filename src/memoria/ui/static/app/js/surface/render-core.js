@@ -248,6 +248,52 @@ window.MemoriaRenderCore = (function () {
     }
   }
 
+  /** 块类型白名单：只有这些块承载用户可编辑的 inline 文本。 */
+  var _TRAILING_SPACE_BLOCK_KINDS = {
+    paragraph: 1,
+    heading: 1,
+    list: 1,
+    blockquote: 1,
+  };
+
+  /**
+   * E27 / E29（2026-10-22）：**保留块末尾的「内容空格」的可见宽度**。
+   *
+   * 事故：在预览区「英文单词 / 样式文字」末尾敲空格时，源码（`state.doc.body`）**已经写入了**
+   * 那个空格，但预览看起来"没反应"。根因纯粹在呈现层：`.-preview` 的 `white-space` 是
+   * 默认的 `normal`，而 CSS 会**折叠行尾空格**（零宽度）⇒ DOM 里 `"word "` 的尾随空格不占宽、
+   * 光标也不动，用户只能看到"敲空格没反应"；再敲一个字符时前一个空格才"突然出现"。
+   * 同一个根因覆盖两类入口：
+   *   · E29：普通段落 `word` 末尾的空格；
+   *   · E27：`**bold**` / `[[\h|…]]` 等样式节点内、位于块末尾的空格（空格在 `<strong>` /
+   *     `<span>` 里，仍然处于**行尾**，照样被折叠）。
+   * 这与 E28（lexer 引用前缀把语法空格吃进 token）**不是同一层**：E28 丢的是源码字节，
+   * 这里源码字节始终正确，丢的是渲染宽度。
+   *
+   * 修法（不改 `app.css`，避免与其它任务冲突）：只在该块**最后一个文本节点以空格/制表符结尾**
+   * 时，给这个文本节点的宿主元素加内联 `white-space: pre-wrap`。`pre-wrap` 保留空白且照常换行
+   * ⇒ 尾随空格占宽、光标可停在它后面；不满足条件时预览与原来逐字节/逐样式一致。
+   * 之所以落在「最后一个文本节点的宿主」而不是整个块：样式末尾的空格在 `<strong>/<span>` 内，
+   * 只给该 inline 宿主开 `pre-wrap` 就够，不会改变同段其它文字的空白折叠行为。
+   * @param {HTMLElement} el — renderBlock 产出的块元素
+   */
+  function _preserveTrailingSpace(el) {
+    if (!el || el.nodeType !== 1) return;
+    if (typeof document.createTreeWalker !== "function") return;
+    var showText = (typeof NodeFilter !== "undefined" && NodeFilter.SHOW_TEXT) ? NodeFilter.SHOW_TEXT : 4;
+    var last = null;
+    var walker = document.createTreeWalker(el, showText, null);
+    var n;
+    while ((n = walker.nextNode())) last = n;
+    if (!last) return;
+    var text = last.nodeValue || "";
+    if (!/[ \t]$/.test(text)) return;
+    var host = last.parentElement || el;
+    // 原子 inline（wikilink / link / 行内公式）不可编辑，尾随空白不是用户内容
+    if (host.closest && host.closest('[contenteditable="false"]')) return;
+    host.style.whiteSpace = "pre-wrap";
+  }
+
   // ── 块元素工厂（属性插入顺序与 renderer.js 一致：class → data--block-index）────
   function _newBlockEl(tag, kindClass, blockIndex) {
     var el = document.createElement(tag);
@@ -492,6 +538,7 @@ window.MemoriaRenderCore = (function () {
     } else {
       el = renderUnsupportedBlock(block, blockIndex, null);
     }
+    if (block && block.type && _TRAILING_SPACE_BLOCK_KINDS[block.type]) _preserveTrailingSpace(el);
     if (opts && opts.noSourceLines) _clearSourceLineAttrs(el);
     return el;
   }

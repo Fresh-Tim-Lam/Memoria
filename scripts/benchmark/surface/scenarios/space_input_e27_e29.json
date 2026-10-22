@@ -1,0 +1,334 @@
+{
+  "schema": "memoria-interaction-scenarios/v1",
+  "note": "E27/E29 直接落光标：块内最后一个文本节点末尾键入空格，断言源码保留 + 预览尾随空格占宽",
+  "scenarios": [
+    {
+      "id": "E29-direct",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('plainword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var r=document.createRange();r.setStart(last,last.nodeValue.length);r.collapse(true);var s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('preview').focus();return {idx:i,last:last.nodeValue,ws:getComputedStyle(bs[i]).whiteSpace};}}return null;})()"
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var s=getSelection(),r=s.getRangeAt(0).cloneRange();r.collapse(true);return {caretLeft:Math.round(r.getBoundingClientRect().left*100)/100,offset:s.anchorOffset};})()"
+        },
+        {
+          "op": "type",
+          "text": " "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('plainword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-1);rr.setEnd(last,last.nodeValue.length);var rect=rr.getBoundingClientRect();return {idx:i,text:bs[i].textContent,html:bs[i].innerHTML,ws:getComputedStyle(bs[i]).whiteSpace,spaceWidth:Math.round(rect.width*100)/100,lastText:last.nodeValue};}}return null;})()"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var s=getSelection(),r=s.getRangeAt(0).cloneRange();r.collapse(true);return {caretLeft:Math.round(r.getBoundingClientRect().left*100)/100,offset:s.anchorOffset};})()"
+        }
+      ]
+    },
+    {
+      "id": "E29-two-spaces",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('plainword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var r=document.createRange();r.setStart(last,last.nodeValue.length);r.collapse(true);var s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('preview').focus();return true;}}return false;})()"
+        },
+        {
+          "op": "type",
+          "text": "  "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('plainword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-2);rr.setEnd(last,last.nodeValue.length);return {text:bs[i].textContent,ws:getComputedStyle(bs[i]).whiteSpace,twoSpaceWidth:Math.round(rr.getBoundingClientRect().width*100)/100,lastText:last.nodeValue};}}return null;})()"
+        }
+      ]
+    },
+    {
+      "id": "E27-highlight-direct",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('highlightedword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var r=document.createRange();r.setStart(last,last.nodeValue.length);r.collapse(true);var s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('preview').focus();return {idx:i,last:last.nodeValue,parent:last.parentElement.tagName+'.'+last.parentElement.className,ws:getComputedStyle(last.parentElement).whiteSpace};}}return null;})()"
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "type",
+          "text": " "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('highlightedword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-1);rr.setEnd(last,last.nodeValue.length);return {idx:i,text:bs[i].textContent,html:bs[i].innerHTML,hostWs:getComputedStyle(last.parentElement).whiteSpace,blockWs:getComputedStyle(bs[i]).whiteSpace,spaceWidth:Math.round(rr.getBoundingClientRect().width*100)/100,lastText:last.nodeValue};}}return null;})()"
+        }
+      ]
+    },
+    {
+      "id": "E27-bold-direct",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('boldword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var r=document.createRange();r.setStart(last,last.nodeValue.length);r.collapse(true);var s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('preview').focus();return {idx:i,last:last.nodeValue,parent:last.parentElement.tagName,ws:getComputedStyle(last.parentElement).whiteSpace};}}return null;})()"
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "type",
+          "text": " "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('boldword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-1);rr.setEnd(last,last.nodeValue.length);return {idx:i,text:bs[i].textContent,html:bs[i].innerHTML,hostWs:getComputedStyle(last.parentElement).whiteSpace,spaceWidth:Math.round(rr.getBoundingClientRect().width*100)/100,lastText:last.nodeValue};}}return null;})()"
+        }
+      ]
+    },
+    {
+      "id": "E27-click-highlight",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 600
+        },
+        {
+          "op": "clickInBlock",
+          "nth": "auto1",
+          "at": 12
+        },
+        {
+          "op": "key",
+          "key": "End"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var s=getSelection();var n=s.anchorNode;var el=n&&n.nodeType===3?n.parentElement:n;var b=el&&el.closest?el.closest('#preview .-src-block'):null;return {blockText:b?b.textContent:null,blockIndex:b?b.getAttribute('data--block-index'):null,caretOffset:s.anchorOffset,nodeValue:n&&n.nodeValue};})()"
+        },
+        {
+          "op": "type",
+          "text": " "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('highlightedword')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-1);rr.setEnd(last,last.nodeValue.length);return {idx:i,text:bs[i].textContent,html:bs[i].innerHTML,hostWs:getComputedStyle(last.parentElement).whiteSpace,spaceWidth:Math.round(rr.getBoundingClientRect().width*100)/100};}}return null;})()"
+        }
+      ]
+    },
+    {
+      "id": "E29-chinese",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 500
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('中文段落')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var r=document.createRange();r.setStart(last,last.nodeValue.length);r.collapse(true);var s=getSelection();s.removeAllRanges();s.addRange(r);document.getElementById('preview').focus();return true;}}return false;})()"
+        },
+        {
+          "op": "type",
+          "text": " "
+        },
+        {
+          "op": "sleep",
+          "ms": 350
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('中文段落')>=0){var w=document.createTreeWalker(bs[i],NodeFilter.SHOW_TEXT,null),last=null,n;while(n=w.nextNode())last=n;var rr=document.createRange();rr.setStart(last,last.nodeValue.length-1);rr.setEnd(last,last.nodeValue.length);return {text:bs[i].textContent,ws:getComputedStyle(bs[i]).whiteSpace,spaceWidth:Math.round(rr.getBoundingClientRect().width*100)/100,lastText:last.nodeValue};}}return null;})()"
+        }
+      ]
+    },
+    {
+      "id": "E27-space-then-letter",
+      "steps": [
+        {
+          "op": "open",
+          "file": "space-fixture.md",
+          "view": "preview"
+        },
+        {
+          "op": "wait",
+          "expr": "document.querySelectorAll('#preview .-src-block').length > 3"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var EH=window.MemoriaEditHandler;if(EH&&!EH.editMode)EH.toggleEditMode();return !!(EH&&EH.editMode);})()"
+        },
+        {
+          "op": "sleep",
+          "ms": 600
+        },
+        {
+          "op": "clickInBlock",
+          "nth": "auto1",
+          "at": 12
+        },
+        {
+          "op": "key",
+          "key": "End"
+        },
+        {
+          "op": "type",
+          "text": " x"
+        },
+        {
+          "op": "sleep",
+          "ms": 400
+        },
+        {
+          "op": "eval",
+          "expr": "window.state.doc.body"
+        },
+        {
+          "op": "eval",
+          "expr": "(function(){var bs=[].slice.call(document.querySelectorAll('#preview .-src-block'));for(var i=0;i<bs.length;i++){if((bs[i].textContent||'').indexOf('highlightedword')>=0){return {text:bs[i].textContent,html:bs[i].innerHTML};}}return null;})()"
+        }
+      ]
+    }
+  ]
+}
