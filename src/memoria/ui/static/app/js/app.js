@@ -7791,6 +7791,30 @@
     return nBlocks >= LAZY_MIN_BLOCKS;
   }
 
+  /** 数一个 AST 块里的公式数（**纯 AST，不读 DOM**）：块公式=1，行内公式=递归 inline 子树里 `math_inline` 的个数。
+   *
+   *  为什么要分开数：物化前块还是占位 div（无 `.-math` 子节点），DOM 侧数不到；
+   *  只有 AST 能告诉你"这个块物化后会有几个公式" ⇒ 物化批次才能按**公式数**（而不是块数）封顶。
+   *  复杂度 = 本块自身 inline 节点数（不是全文）⇒ 便宜。 */
+  function _countProcMath(node) {
+    if (!node) return 0;
+    if (node.type === "math_inline") return 1;
+    var n = 0;
+    if (node.children) for (var i = 0; i < node.children.length; i++) n += _countProcMath(node.children[i]);
+    if (node.items) for (var j = 0; j < node.items.length; j++) if (node.items[j]) n += _countProcMath(node.items[j]);
+    return n;
+  }
+  function _countBlockFormulas(block) {
+    if (!block) return 0;
+    if (block.type === "math_block") return 1;
+    if (block.type === "list") {
+      var ln = 0;
+      if (block.items) for (var i = 0; i < block.items.length; i++) if (block.items[i]) ln += _countProcMath(block.items[i]);
+      return ln;
+    }
+    return _countProcMath(block);
+  }
+
   /** 按块类型估算占位高度（纯 AST，不读 DOM）。宁大勿小（D1）：上跳比留白差。 */
   function _placeholderHeight(block) {
     if (!block) return 1.5 * 16;
@@ -8001,6 +8025,14 @@
   // 若后续出现"块更复杂导致单批仍超 100ms"，继续降到 50 —— **有实测依据才调，不凭感觉改**。
   var LAZY_FLUSH_MAX = 100;
 
+  // 公式数上限。**依据实测**（Lead，真拖拽 08 章）：
+  //   · 每公式 typeset 1.270ms（不是 0.6 —— 之前忽略了单次调用开销与块级公式更贵）
+  //   · 每帧 = "物化 100 块 + 排 50~119 公式"叠加 ⇒ maxGap 350ms
+  //   · 目标 100ms − DOM(100块≈50ms) = 50ms 给 typeset ⇒ 50/1.27 ≈ 39（贴边）
+  //   ⇒ 设 32（≈41ms），留 ~10ms 余量吸收抖动。
+  //   若仍越线：32→24→16 或 块数 100→50，**由实测决定，不盲调**。
+  var LAZY_FLUSH_MAX_FORMULAS = 32;
+
   function _lazyFlushNow() {
     if (!_lazyPending || !_lazyPending.size) return;
     if (!_doc || !_doc.blocks) { _lazyPending.clear(); return; }
@@ -8018,6 +8050,21 @@
     if (pendingArr.length > LAZY_FLUSH_MAX) {
       overflow = pendingArr.slice(LAZY_FLUSH_MAX);
       pendingArr = pendingArr.slice(0, LAZY_FLUSH_MAX);
+    }
+    // ★ 2026-10-22：**双上限**（块数 + 公式数，先到者生效）。按 AST 累计本批公式数，
+    //   超过 `LAZY_FLUSH_MAX_FORMULAS` 就把超额块截到 overflow。公式数是纯 AST 计数（不读 DOM）。
+    if (pendingArr.length) {
+      var fAcc = 0, fCut = pendingArr.length;
+      for (var fi = 0; fi < pendingArr.length; fi++) {
+        var _f = _countBlockFormulas(_doc.blocks[pendingArr[fi]]);
+        if (fAcc + _f > LAZY_FLUSH_MAX_FORMULAS) { fCut = fi; break; }   // 本批停在 fi 之前（第 fi 块若加入会越界 ⇒ 进余量）
+        fAcc += _f;
+      }
+      if (fCut < pendingArr.length) {
+        var fOverflow = pendingArr.slice(fCut);
+        overflow = overflow ? overflow.concat(fOverflow) : fOverflow;
+        pendingArr = pendingArr.slice(0, fCut);
+      }
     }
     _lazyPending.clear();
     if (overflow) {
