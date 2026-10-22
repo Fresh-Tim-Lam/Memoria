@@ -579,16 +579,22 @@ window.MemoriaRenderCore = (function () {
     if (!doc || !doc.blocks || !container) return;
     var oldBlocks = container.querySelectorAll(".-src-block");
     var targetIndices = [];
+    var anchor = null;   // 2026-10-22 阶段0：锚点按"block-index 数值"定位，不再"数组相邻"
     for (var i = 0; i < oldBlocks.length; i++) {
       var idx = parseInt(oldBlocks[i].getAttribute("data--block-index"), 10);
-      if (idx >= startBlock && idx < endBlock) targetIndices.push(i);
+      // 区间内（含占位块）：记下待删下标。
+      //   注意：占位块（-pv-placeholder，阶段1引入）的 data--block-index 也是连续编号，
+      //   所以它会像真块一样落入区间并被删除/重建 —— 这正是要的语义。
+      if (idx >= startBlock && idx < endBlock) { targetIndices.push(i); continue; }
+      // 区间外但 idx >= endBlock：它就是"区间之后第一个块" ⇒ 插入锚点。
+      //   用数值比较而非"oldBlocks[lastIdx+1]"，因为区间末尾可能混着占位/缺失，
+      //   且未来惰性物化下"区间内某些块可能是占位、甚至数组位置不连续"。
+      if (idx >= endBlock && anchor === null) anchor = oldBlocks[i];
     }
-    if (targetIndices.length === 0) return;
+    if (targetIndices.length === 0) return;   // 区间内没有可替换的旧块（越界/已消失）⇒ 像原来一样放弃，不凭空插入
 
     var firstEl = oldBlocks[targetIndices[0]];
-    var parent = firstEl.parentNode;
-    var lastIdx = targetIndices[targetIndices.length - 1];
-    var anchor = (lastIdx + 1 < oldBlocks.length) ? oldBlocks[lastIdx + 1] : null;
+    var parent = firstEl ? firstEl.parentNode : (anchor ? anchor.parentNode : container);
 
     for (var j = targetIndices.length - 1; j >= 0; j--) {
       var el = oldBlocks[targetIndices[j]];
