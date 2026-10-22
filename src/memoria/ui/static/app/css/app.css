@@ -3904,7 +3904,14 @@ body.-brush-active #editor {
    刻意**不加动画**：几千个占位块跑 CSS 动画会持续触发合成/重绘，滚动时反而加压；
    且静态色块已足够表达"占位"，动画会让骨架更抢眼。 */
 .-preview .-pv-placeholder {
-    background: var(--pv-placeholder-bg, rgba(127, 127, 127, 0.10));
+    /* 2026-10-22（metrics 截图证实）：原来 `rgba(127,127,127,0.10)` 在**深色主题下肉眼不可见**
+       —— 覆盖率实测已 56~100%（骨架确实铺满），但用户仍看到"空白"。
+       改为**主题感知 + 加深**：以主题的 `--bg-tertiary` 为基色与 `--text-primary` 少量混合，
+       深色主题（--bg-tertiary #333 / 背景更黑）得"略亮灰块"，浅色主题（#ececec / 背景更白）得"略暗灰块"，
+       两边都可见但不刺眼。令牌来源：theme/memoria.css:7、theme/light.css:18。
+       仍**不加动画**：几千个占位块跑 CSS 动画会持续触发合成/重绘，滚动时反而加压。 */
+    background: var(--pv-placeholder-bg,
+        color-mix(in srgb, var(--bg-tertiary, #333) 88%, var(--text-primary, #ccc) 4%));
     border-radius: 4px;
     /* 占位块不可选中：避免用户选中"空白"。
        ⚠️ 刻意**不设** `pointer-events: none` —— 那会让点击穿透到父容器，
