@@ -7832,41 +7832,120 @@
   // 对策：每次渲染**量一次**实际度量（不是每块读），之后所有估值都用它。
   var _pvMetrics = null;   // { fs, lhPx, paneW } —— 每次渲染/每次 resize 重新量
 
+  /** 用**已挂载**宿主实测行盒高度（`line-height: normal` / 比例值也能量出像素值）。
+   *
+   *  做法：向宿主临时插入一个 `.-src-block` 探测块，内容为 3 行文本；块用
+   *  `position: fixed` 完全脱离文档流（不产生滚动条、不推动任何内容），`visibility: hidden`
+   *  仍保留布局盒 ⇒ `getBoundingClientRect()` 可读。`margin/padding/border` 全强制 0，
+   *  故「总高 ÷ 3」就是每行行盒高度（不做任何比例推测）。
+   *
+   *  为什么必须这样量：`getComputedStyle(el).lineHeight` 在 `line-height: normal` 时返回字符串
+   *  `"normal"`，拿不到像素；而「1.5×fontSize」只是猜——本仓实测真值 22.4px、猜测值 24px，
+   *  偏高 7.1%，在 4001 块上累加成整篇 +17.7k px。只有「量一个真的排过版的块」才准确。
+   *
+   *  @returns {{fs:number, lhPx:number}|null} 宿主未挂载 / 取不到布局盒时返回 null（由调用方兜底）。
+   */
+  function _probeBlockMetrics(host, fsHint) {
+    if (!host || !host.isConnected || !host.appendChild) return null;
+    var probe = null;
+    try {
+      probe = document.createElement("div");
+      probe.className = "-src-block -pv-metrics-probe";
+      probe.setAttribute("aria-hidden", "true");
+      probe.style.cssText = "position:fixed;left:-99999px;top:0;width:auto;white-space:nowrap;" +
+        "margin:0;padding:0;border:0;visibility:hidden;pointer-events:none;z-index:-1;";
+      probe.appendChild(document.createTextNode("Mg"));
+      probe.appendChild(document.createElement("br"));
+      probe.appendChild(document.createTextNode("Mg"));
+      probe.appendChild(document.createElement("br"));
+      probe.appendChild(document.createTextNode("Mg"));
+      host.appendChild(probe);
+      var cs = getComputedStyle(probe);
+      var fs = parseFloat(cs.fontSize) || parseFloat(fsHint) || 0;
+      var lh = cs && cs.lineHeight;
+      var lhPx = (lh && /px$/.test(lh)) ? (parseFloat(lh) || 0) : 0;
+      if (!(lhPx > 0) && probe.getBoundingClientRect) {
+        var h = probe.getBoundingClientRect().height;   // 3 行、零内外边距 ⇒ 每行 = 总高 / 3
+        if (h > 0) lhPx = h / 3;
+      }
+      return { fs: fs, lhPx: lhPx };
+    } catch (_) {
+      return null;
+    } finally {
+      try { if (probe && probe.parentNode) probe.parentNode.removeChild(probe); } catch (__) {}
+    }
+  }
+
   /** 量一次预览区的真实排版度量。
+   *
+   *  **为什么必须量「已挂载」的块**：对 detached 元素调 `getComputedStyle` 拿到的是 initial 值
+   *  （font-size 16px / line-height normal），不是页面实际 CSS ⇒ 旧实现回退 24px。
+   *  所以本函数要求 `container`（或其宿主 `#preview`）已挂进文档；未挂载时也**绝不猜比例**，
+   *  而是用已挂载的宿主插探测块实测（见 `_probeBlockMetrics`）。
    *
    *  **为什么要量"块"而不是量 `#preview-pane`**：`#preview-pane` 的行高是 `normal`，
    *  真正生效的行高在 `.‑preview-content` 的块上（`p`/`li`/`.‑src-block`）。
-   *  只按 `fontSize` 推也不行：`18px/1.2` 与 `16px/1.5` 的**行高可能相同**，必须看 `lineHeight` 解析值。
-   *  `lineHeight: normal` ⇒ 按 CSS 规范约 1.2×fontSize，本仓正文行高观感更接近 1.5 ⇒ 取 1.5 保守（宁大）。 */
+   *  只按 `fontSize` 推也不行：`18px/1.2` 与 `16px/1.5` 的**行高可能相同**，必须看解析后的像素值。
+   */
   function _measurePreviewMetrics(pane, container) {
-    var fs = 16, lhPx = 0, paneW = 800;
+    var fs = 0, lhPx = 0, paneW = 800, src = "none";
     try {
-      var probe = (container && container.querySelector)
-        ? (container.querySelector(".-src-block:not(.-pv-placeholder)") || container)
-        : null;
-      var cs = probe ? getComputedStyle(probe) : null;
-      if (cs) {
-        fs = parseFloat(cs.fontSize) || 0;
-        var lh = cs.lineHeight;
-        if (lh && /px$/.test(lh)) lhPx = parseFloat(lh) || 0;
+      // 宿主解析顺序：已挂载的 container → 已挂载的 #preview（仍是 `.-preview` 祖先）
+      //   → pane（最后手段）。detached container 永不作为测量宿主。
+      var host = (container && container.isConnected) ? container : null;
+      if (!host) {
+        var pv = document.getElementById("preview");
+        if (pv && pv.isConnected) host = pv;
+        else if (pane && pane.isConnected) host = pane;
       }
-      if (!fs) {
+      // ① **优先用已挂载宿主上的探测块实测**：它与正文同源（`.‑preview .‑src-block`），
+      //   且 `line-height: normal` / 比例值也能读出像素；`src=probe`。
+      //   ⚠️ 刻意**不优先**取「第一个已物化真块」：真块可能是 `h1/h2/...` 标题块
+      //   （本仓实测标题 font-size=20.006px / line-height=32.01px），拿它当正文行高会把
+      //   占位高度整体放大 43%——resize 重算时尤其明显（首块常是章标题）。
+      var mp = _probeBlockMetrics(host, 0);
+      if (mp) {
+        if (mp.fs > 0) fs = mp.fs;
+        if (mp.lhPx > 0) { lhPx = mp.lhPx; src = "probe"; }
+      }
+      // ② 探测块取不到（宿主不可用/零布局）⇒ 退回**正文型**真块的 computed style，
+      //   显式排除标题（h1~h6）；`line-height` 为 normal 时再实测。
+      if (!(lhPx > 0)) {
+        var real = (host && host.querySelector)
+          ? host.querySelector(".-src-block:not(.-pv-placeholder):not(.-pv-metrics-probe):not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)")
+          : null;
+        if (real) {
+          var cs = getComputedStyle(real);
+          if (!(fs > 0)) fs = parseFloat(cs.fontSize) || 0;
+          var lh = cs.lineHeight;
+          if (lh && /px$/.test(lh)) { lhPx = parseFloat(lh) || 0; if (lhPx > 0) src = "computed"; }
+        }
+      }
+      if (!(fs > 0)) {
         var rootCs = getComputedStyle(document.documentElement);
         fs = parseFloat(rootCs.fontSize) || 16;
       }
-      if (!lhPx) lhPx = fs * 1.5;               // normal / 其它单位 ⇒ 1.5×fontSize
+      // ③ 连宿主布局都没有（如 DOM stub / 不可见窗口）才用 body 再试一次
+      if (!(lhPx > 0)) {
+        var mb = _probeBlockMetrics(document.body, fs);
+        if (mb && mb.lhPx > 0) { lhPx = mb.lhPx; src = "probe-body"; }
+      }
+      // ④ 最后兜底：只在**完全拿不到布局**时发生。用 CSS 规范的比例 1.6（本仓 `.-preview` 的
+      //    line-height 就是 1.6），仍好过旧实现的 1.5。
+      if (!(lhPx > 0)) { lhPx = fs * 1.6; src = "fallback"; }
       if (pane && pane.clientWidth) paneW = pane.clientWidth;
     } catch (_) {
-      fs = 16; lhPx = 24; paneW = 800;
+      fs = 16; lhPx = 0; paneW = 800;
     }
     if (!(fs > 0)) fs = 16;
-    if (!(lhPx > 0)) lhPx = fs * 1.5;
+    if (!(lhPx > 0)) { lhPx = fs * 1.6; src = "fallback"; }
     if (!(paneW > 0)) paneW = 800;
-    return { fs: fs, lhPx: lhPx, paneW: paneW };
+    return { fs: fs, lhPx: lhPx, paneW: paneW, src: src };
   }
-  /** 取当前度量（没有就按最保守默认造一份，保证任何时候都不崩）。 */
+  /** 取当前度量（没有就按最保守默认造一份，保证任何时候都不崩）。
+   *  默认值也只用于「还没渲染过」的瞬间；正常路径一定先走 `_measurePreviewMetrics`。 */
   function _pvM() {
-    return _pvMetrics || { fs: 16, lhPx: 24, paneW: 800 };
+    return _pvMetrics || { fs: 16, lhPx: 16 * 1.6, paneW: 800, src: "default" };
   }
 
   /** 按块类型估算占位高度（纯 AST + 实测度量；**无硬编码 px**）。宁大勿小（D1）：上跳比留白差。 */
@@ -7911,8 +7990,18 @@
     container.className = "-preview-content";
     var N = doc.blocks.length;
     var pane = document.getElementById("preview-pane") || preview;
-    // ★ 2026-10-22：**先量度量再建占位**（字体/缩放/窗口尺寸都会影响行高 ⇒ 不许硬编码）
+    // ★ 2026-10-22（v0.4.6 淘汰修复诊断）：**必须先挂进文档，再量度量**。
+    //   旧顺序是先 `_measurePreviewMetrics(pane, container)` 再 `appendChild` ⇒ container 是
+    //   detached 元素，`getComputedStyle` 拿到的是 initial 值（16px / normal）⇒ lineHeight 回退
+    //   24px；而真实 `.-preview` 是 14px × 1.6 = 22.4px ⇒ 每个占位块系统性偏高 7.1%，
+    //   4001 块累加 ≈ 整篇 192,981px vs 真值 175,282px（+17.7k px）。挂载后量到的才是页面 CSS。
+    //   注意：这里只挂**空的** container（占位块还没建），不影响任何块序号/高度。
+    preview.innerHTML = "";
+    preview.appendChild(container);
     _pvMetrics = _measurePreviewMetrics(pane, container);
+    // ★ 可观测（验证用）：实测值必须落在 22.4 附近（旧 bug 是 24 = 16×1.5）。
+    log("lazy", "metrics: fs=" + _pvMetrics.fs + "px lhPx=" + _pvMetrics.lhPx.toFixed(2) +
+      "px paneW=" + Math.round(_pvMetrics.paneW) + " src=" + _pvMetrics.src);
     _lazyBlockEls = new Array(N);
     // 2026-10-22 1c：新一轮文档 ⇒ 重置工作集淘汰状态（LRU 时钟/暂停/计数都只对当前 DOM 有意义）
     _lazyTouch = new Array(N);
@@ -7927,8 +8016,6 @@
       frag.appendChild(ph);
     }
     container.appendChild(frag);
-    preview.innerHTML = "";
-    preview.appendChild(container);
 
     // 物化首屏：先按估值给一个**保守**首块数，之后用**实测块高反推**再决定是否补物化（不依赖任何硬编码）。
     var viewH = pane.clientHeight || (window.visualViewport && visualViewport.height) || 720;
@@ -7966,7 +8053,7 @@
     var placeholders = container.querySelectorAll(".-pv-placeholder").length;
     var ok = (placeholders + materialized) === N;
     var _pm = _pvM();
-    log("lazy", "lazy materialize ON: blocks=" + N + " placeholders=" + placeholders + " materialized=" + materialized + " sum=" + (placeholders + materialized) + " eq=" + ok + " [fs=" + _pm.fs + " lh=" + Math.round(_pm.lhPx) + " paneW=" + Math.round(_pm.paneW) + "]");
+    log("lazy", "lazy materialize ON: blocks=" + N + " placeholders=" + placeholders + " materialized=" + materialized + " sum=" + (placeholders + materialized) + " eq=" + ok + " [fs=" + _pm.fs + " lh=" + _pm.lhPx.toFixed(2) + " paneW=" + Math.round(_pm.paneW) + " src=" + _pm.src + "]");
     if (!ok) {
       // 硬约束破 ⇒ 就地退回：清掉占位，走全量 renderDocument（绝不半坏状态）
       try { log("lazy", "CONSTRAINT BROKEN, falling back to full render"); } catch (_) {}
@@ -8871,8 +8958,10 @@
     var anchorLine = _lazyCaptureAnchorLine(pane);
     var oldScrollTop = pane.scrollTop;
 
-    // ② 重新量度量
+    // ② 重新量度量（cc 已挂载 ⇒ 这里的量法与 `_buildLazyPreview` 完全一致）
     _pvMetrics = _measurePreviewMetrics(pane, cc);
+    log("lazy", "resize metrics: fs=" + _pvMetrics.fs + "px lhPx=" + _pvMetrics.lhPx.toFixed(2) +
+      "px paneW=" + Math.round(_pvMetrics.paneW) + " src=" + _pvMetrics.src + " reason=" + (reason || ""));
 
     // ③ 重设**所有未物化占位块**的高度（已物化的真块不动；它们的 min-height 由解锁机制处理）
     var phs = cc.querySelectorAll(".-pv-placeholder");
@@ -9302,6 +9391,11 @@
       // 2026-10-22 1d：换出高度稳定性指标 —— 累计 |本批 scrollHeight 变化|（px，越小越好；修复后≈0）
       heightDriftPx: Math.round(_lazyHeightDriftPx * 10) / 10,
       anchorFixes: _lazyAnchorFixes,     // 发生过 scrollTop 补偿的批次数（B 兜底触发次数）
+      // 2026-10-22：**实测排版度量**（验证 detached 度量 bug 用）。
+      //   lhPx 应为 22.4（.-preview 14px × 1.6），旧 bug 为 24（detached ⇒ 16 × 1.5）。
+      fsPx: Math.round(_pvM().fs * 100) / 100,
+      lhPx: Math.round(_pvM().lhPx * 100) / 100,
+      metricsSrc: _pvM().src || "default",
     };
     try {
       var preview = $("#preview");
