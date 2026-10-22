@@ -225,25 +225,29 @@ run 调用**（不重跑）。`shouldYield()` 为真当：单帧单元数达 `ma
 
 ## 5. 作业登记表（单一事实源，新增作业在此登记）
 
-| 作业 | 触发点 | 优先级 | 可合并 | 当前归属 |
+> **索引列**：`kind` / 触发点 / 优先级 / 去重键 / 归属。逐项实现状态、证据锚与对账修正原文见
+> [maintenance-jobs-archive-2026-10.md](./maintenance-jobs-archive-2026-10.md)（迁出前版本 `56690378`，逐字保留）。
+> 新增作业：先在本表登记一行，再在归档文件补一行明细；`python scripts/check_jobs_size.py` 校验两表等价。
+
+| 作业（kind） | 触发点 | 优先级 | 去重键 | 归属 |
 |---|---|---|---|---|
-| doc_save | 输入停止（SAVE_DEBOUNCE）/文件切换前 flush | P0 | ✅（同 path 合并） | syncToDisk（已有防抖） |
-| durable_flush | 文件切换/关库/退出屏障（fsync 批量） | P0 | ✅（合并） | ✅ M6a 已实现并**门禁通过**（2026-09-09）：save_document barrier 默认 + flush_durable RPC + 前端 3s 防抖兜底；证据 `results/durable-flush-2026-09-09.json`（inline 89.35 → barrier 24.62ms）+ 崩溃注入 15/15。**2026-09-14 对账修正**：原写"待真机回归"，与 to-dolist §12 E7 门禁记录矛盾 |
-| manifest_touch_batch | 保存后（manifest 单条更新 ~50ms/次） | P2 | ✅（合并+延迟） | ✅ 模块 pending overlay + 屏障批量落盘（2026-09-09），G4 门禁含"连续保存单次落盘"证据。**2026-09-14 对账修正**：原写"待回归" |
-| kp_range_resync | doc_save 成功后同事务 | P0 | ✅（并入 doc_save） | 已并入 `_resync_kp_ranges_after_edit` |
-| registry_doc | doc_save 成功后 | P0 | ✅ | 已并入 `_update_registry_for_doc` |
-| rename_cascade | 文件/文件夹重命名 | P0 | ❌（独占） | rename_file/rename_dir 已实现 |
-| kp_create / kp_update | 用户确认/编辑知识点 | P1 | ❌ | ✅ 2026-09-09 提速（JSON+单文件同步+关窗先于图谱）485ms 保持内联；M6b 拍板：保持内联不入队，改为正文编辑行范围实时同步（区域内 Enter 并入/删行收缩，保存后 resync 权威校正） |
-| kp_panel_refresh | ranges_resynced>0 | P2 | ✅ | `_silentRefreshKpPanel` 已落地 |
-| preview_range_redraw | 重锚就绪 | P2 | ✅ | ✅ 2026-09-10 已实现：`markRangeQuiet`（只标记范围，不滚动/不闪烁/不自动消失）用于「修改范围 / 创建知识点」，`app.js:11021`（调用点 `app.js:4649,11914`）。**2026-09-14 对账修正**：原写"未实现（P2）"与同文件 §4 矛盾 |
-| index_rebuild | 侧车写后（词法）/配置变更（embedding） | P3 | ✅（合并） | ✅ M3 后台化（2026-09-09）：锁+合并 daemon 重建，写路径不阻塞；search/切库/关库前 wait |
-| kp_index_rebuild | 侧车写后（KP id 集合）/文件增删改（stem）/显式刷新 | P3 | ✅（合并 + 逐文件增量） | ✅ G5.4（2026-09-10）：读路径只读 `.memoria/kp_targets.json` 轻量快照（零构建），写后失效 + 后台增量重建（逐 sidecar mtime+size 缓存）；打开库只秒读快照，不触发全库重活 |
-| graph_build | 显式“构建” | P3 | ✅ | 手动 |
-| cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅ | ✅ G5.3 后端执行器（2026-09-10）：`validate_kb_async` 提交线程池即返回 + `job_status` 轮询；同库同 kind 排队顶替合并 |
-| file_tree_refresh | 树/结构变更 | P2 | ✅ | refreshFiles |
-| lazy_materialize | IO 收集到视口占位块 / 滚动停止同步补齐 | P1 | ✅（`lazy-materialize:<最小块号>` 顶替 + `dropStale`） | ✅ 2026-10-22 M5：`MemoriaScheduler` 作业；单批 ≤100 块，余量续排 |
-| lazy_typeset | 新物化块含公式 / 队列达 400 块 / 500ms 合并截止 | P2 | ✅（`lazy-typeset:<首块号>` 顶替 + `dropStale`） | ✅ 2026-10-22：Scheduler 作业；滚动中 ≤60、静止 ≤200 公式/批 |
-| lazy_evict | 首屏建成 / 滚动停止（50ms 去抖） | P3 | ✅（单键 `lazy-evict` 顶替） | ✅ 2026-10-22：Scheduler 作业；单批 ≤60 块，保留 4 屏工作集 |
+| doc_save | 输入停止（SAVE_DEBOUNCE）/ 文件切换前 flush | P0 | 同 path 合并 | syncToDisk（防抖） |
+| durable_flush | 文件切换 / 关库 / 退出屏障（fsync 批量） | P0 | 合并 | M6a：barrier + `flush_durable` |
+| manifest_touch_batch | 保存后（manifest 单条 ~50ms） | P2 | 合并 + 延迟 | pending overlay + 屏障落盘 |
+| kp_range_resync | doc_save 成功后同事务 | P0 | 并入 doc_save | `_resync_kp_ranges_after_edit` |
+| registry_doc | doc_save 成功后 | P0 | ✅（未细化） | `_update_registry_for_doc` |
+| rename_cascade | 文件 / 文件夹重命名 | P0 | ❌ 独占 | `rename_file` / `rename_dir` |
+| kp_create / kp_update | 用户确认 / 编辑知识点 | P1 | ❌ | 内联；M6b 实时行映射 |
+| kp_panel_refresh | `ranges_resynced>0` | P2 | ✅（未细化） | `_silentRefreshKpPanel` |
+| preview_range_redraw | 重锚就绪 | P2 | ✅（未细化） | `markRangeQuiet` |
+| index_rebuild | 侧车写后（词法）/ 配置变更（embedding） | P3 | 合并 | M3：锁 + 合并 daemon |
+| kp_index_rebuild | 侧车写后（KP id 集合）/ 增删改（stem）/ 显式刷新 | P3 | 合并 + 逐文件增量 | G5.4：`kp_targets` 快照 |
+| graph_build | 显式「构建」 | P3 | ✅（未细化） | 手动 |
+| cleanup / validate / image_auto_check | 显式 / 长间隔 | P3 | ✅（未细化） | G5.3：执行器 + `job_status` |
+| file_tree_refresh | 树 / 结构变更 | P2 | ✅（未细化） | `refreshFiles` |
+| lazy_materialize | IO 收集到视口占位块 / 滚动停止补齐 | P1 | `lazy-materialize:<最小块号>` 顶替 + `dropStale` | M5：Scheduler，≤100 块/批 |
+| lazy_typeset | 新物化块含公式 / 队列达 400 块 / 500ms 截止 | P2 | `lazy-typeset:<首块号>` 顶替 + `dropStale` | M5：Scheduler，≤60（滚动）/≤200（静止） |
+| lazy_evict | 首屏建成 / 滚动停止（50ms 去抖） | P3 | 单键 `lazy-evict` 顶替 | M5：Scheduler，≤60 块/批 |
 
 ## 6. 阶段规划（每阶段含验证，通过后再进下一阶段）
 
