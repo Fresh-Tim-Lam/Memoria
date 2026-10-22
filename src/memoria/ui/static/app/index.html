@@ -23,7 +23,20 @@
   <script>
     window.MathJax = {
       tex: {
-        packages: { "[+]": ["ams", "boldsymbol", "mathtools", "physics", "unicode", "noerrors", "noundefined", "color", "cancel", "bbox"] },
+        // 2026-10-22 修（task-63 期间发现的发布级 bug）：
+        //   真实教材大量使用 `\boldsymbol`（数字通信原理 语料 1,101 次 / 15 篇；08 章 527 次），
+        //   而 vendor 目录 `vendor/mathjax/es5/input/tex/extensions/` **没有 boldsymbol.js**
+        //   ⇒ MathJax `autoload` 遇到 `\boldsymbol` 就去 fetch 该文件 ⇒ 404
+        //   ⇒ 整个 `typesetPromise` 被拒绝 ⇒ **全部公式都不排版**（只有一行 console 日志，用户不可见）。
+        //   实测复现：预览视图下打开 08 章 → 20s 后 mjx=0；source 下打开再切 preview → mjx=2850。
+        //
+        //   处置（两层，都不需要补 vendor 文件）：
+        //   ① `[+]` 只保留 vendor 真实存在的 6 个扩展（缺失的 4 个不再强制加载）；
+        //   ② 用宏把 `\boldsymbol`/`\bm` 映射到 `\mathbf` —— 宏已定义 ⇒ autoload 不再触发 fetch，
+        //      公式整体正常排版；粗体符号退化为 `\mathbf`（希腊小写/部分符号的粗体效果会丢失，
+        //      属可接受的降级，远好于"整篇公式不显示"）。
+        packages: { "[+]": ["ams", "mathtools", "physics", "unicode", "noerrors", "noundefined"] },
+        macros: { boldsymbol: ["\\mathbf{#1}", 1], bm: ["\\mathbf{#1}", 1] },
         inlineMath: [["$", "$"], ["\\(", "\\)"]],
         displayMath: [["$$", "$$"], ["\\[", "\\]"]],
         processEscapes: true,
