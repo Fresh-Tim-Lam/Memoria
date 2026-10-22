@@ -7989,7 +7989,15 @@
     }
   }
 
-  /** 批量物化 pending 里的块 + 对新块排版。 */
+  /** 批量物化 pending 里的块 + 对新块排版。
+   *
+   *  ⚠️ 2026-10-22 修复（Lead 实测 `MATERIALIZE_ALL` 冻结 20 分钟引发）：**单批必须有上限**。
+   *  真实场景：用户**快速拖滚动条到底** ⇒ IO 在一两帧内把沿途**所有**占位块收进 pending
+   *  （`rootMargin: 200%` 还会放大范围）⇒ 原先这里一次全物化 = 数千块同步建 DOM = 长时间冻结。
+   *  现在：每次 float 最多物化 `LAZY_FLUSH_MAX` 块，**余量放回 pending 并重新调度**
+   *  ⇒ 每次只占一小段主线程，其余留给下一批 idle/宏任务。 */
+  var LAZY_FLUSH_MAX = 200;   // 单批物化上限（≈ 数十 ms 量级，远低于 100ms 门槛）
+
   function _lazyFlushNow() {
     if (!_lazyPending || !_lazyPending.size) return;
     if (!_doc || !_doc.blocks) { _lazyPending.clear(); return; }
@@ -7999,7 +8007,14 @@
     var pendingArr = Array.from(_lazyPending).sort(function (a, b) { return a - b; });
     _lazyPending.clear();
 
-    // 物化：把 pending 的块下标合并成连续区间，物化之
+    // ── 单批封顶：只取前 LAZY_FLUSH_MAX 块；其余**放回 pending**，稍后由下一次调度继续 ──
+    var overflow = null;
+    if (pendingArr.length > LAZY_FLUSH_MAX) {
+      overflow = pendingArr.slice(LAZY_FLUSH_MAX);
+      pendingArr = pendingArr.slice(0, LAZY_FLUSH_MAX);
+    }
+
+    // 物化：把本批的下标合并成连续区间，逐段物化
     var made = [];
     for (var i = 0; i < pendingArr.length; i++) {
       var s = pendingArr[i];
@@ -8009,6 +8024,15 @@
       var els = _materializeRange(cc, _doc, s, e);
       made = made.concat(els);
     }
+
+    // 余量回队列 + 重新调度（让出后再做下一批，绝不一次做完）
+    if (overflow && overflow.length) {
+      if (!_lazyPending) _lazyPending = new Set();
+      for (var q = 0; q < overflow.length; q++) _lazyPending.add(overflow[q]);
+      log("lazy", "flush batch capped: made=" + made.length + " overflow=" + overflow.length + " (will continue next idle)");
+      _lazyScheduleFlush();
+    }
+
     if (!made.length) return;
 
     // 对新物化块排版（只排这些块，进 _mathPending 链，保证"已请求批次排完"语义）
@@ -14036,35 +14060,56 @@
   // ══ 2026-10-22 测试专用接口：强制把全文占位块物化为真块（**给门禁/回归用，不是生产路径**）══
   // 为什么需要：冻结门禁按"DOM 里实际存在的元素"统计内容（公式/图片/表格/语言），而惰性模式下
   //   绝大多数块只是占位 div ⇒ 门禁会把"没物化"误判成"渲染丢了内容"（typesetMathBlocks 270→2 等）。
-  // 门禁应：先 `await __MEMORIA_MATERIALIZE_ALL()` 再计数；或直接用 `window.__MEMORIA_LAZY = false`
-  //   让该文档走全量路径（小文档阈值下同样可用，钩子优先于阈值）。
-  // 语义：把**当前文档**所有 `.-pv-placeholder` 物化为真块；完成后 `placeholders === 0`。
-  //   会一次性建大量块（可能长冻结）—— 测试场景可接受，**生产路径绝不调用**。
-  // 返回 Promise：全部物化 + 排版(fire) 后 resolve；无文档/非惰性 ⇒ 立即 resolve(0)。
+  //   **更推荐**门禁直接用 `window.__MEMORIA_LAZY = false` 走全量生产路径（钩子优先于小文档阈值），
+  //   本接口留给"必须验证惰性路径本身"的场景。
+  //
+  // ⚠️ 2026-10-22 重写（Lead 实测旧版在 3111 块上冻结 20 分钟）：
+  //   旧版一次同步 `_materializeRange(0, N)` ⇒ 数千块同步建 DOM + 逐块 replaceWith/min-height/IO.observe
+  //   ⇒ 主线程长时间不可响应（连 CDP 都不回）。**这与惰性物化要避免的正是同一件事**。
+  //   现在：**分批（每批 `MATERIALIZE_BATCH` 块）+ 批间 `setTimeout(0)` 让出**，任何时候不阻塞 >100ms；
+  //   支持中断（`state.previewToken` 变 ⇒ 停止，resolve 已物化数）；幂等（无占位 ⇒ resolve(0)）。
+  var MATERIALIZE_BATCH = 200;
   window.__MEMORIA_MATERIALIZE_ALL = function () {
     try {
       var preview = $("#preview");
       var cc = preview ? (preview.querySelector(".-preview-content") || preview) : null;
       if (!cc || !_doc || !_doc.blocks) return Promise.resolve(0);
-      var phs = cc.querySelectorAll(".-pv-placeholder");
-      if (!phs.length) return Promise.resolve(0);   // 已经全物化（或走全量路径）⇒ 无操作
-      // 物化全文（一次调用；_materializeRange 内部按 data--block-index 逐个替换）
-      var made = _materializeRange(cc, _doc, 0, _doc.blocks.length);
-      // 对新块排版：走既有的 queuePreviewMathTypeset（它扫整个 preview，已排过的会空扫但幂等）
+      if (!cc.querySelector(".-pv-placeholder")) return Promise.resolve(0);   // 幂等：已全物化/非惰性
+
+      var total = _doc.blocks.length;
       var token = state.previewToken;
-      var p = Promise.resolve();
-      if (made.length && window.MathJax && typeof window.MathJax.typesetPromise === "function") {
-        p = queuePreviewMathTypeset(preview, token) || Promise.resolve();
+      var done = 0;
+
+      // 一批：物化 [from, to) 里有占位的那部分（_materializeRange 自己跳过已物化的）
+      function runBatch(from) {
+        if (token !== state.previewToken) {                       // ③ 中断：文档已换 ⇒ 停止
+          log("lazy", "__MEMORIA_MATERIALIZE_ALL aborted by token: materialized=" + done + "/" + total);
+          return Promise.resolve(done);
+        }
+        if (from >= total) {
+          // 全部物化完成 ⇒ 一次性排版（MathJax 自身是异步分片的，且此时只排一次）
+          var p = Promise.resolve();
+          if (done && window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+            p = queuePreviewMathTypeset(preview, token) || Promise.resolve();
+          }
+          return p.then(function () {
+            try { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); } catch (_) {}
+            try { _applyCodeHighlightToPreview(preview); } catch (_) {}
+            try { postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+            var remain = cc.querySelectorAll(".-pv-placeholder").length;
+            log("lazy", "__MEMORIA_MATERIALIZE_ALL done: materialized=" + done + " remainingPlaceholders=" + remain + " blocks=" + total);
+            return done;
+          });
+        }
+        var to = Math.min(total, from + MATERIALIZE_BATCH);
+        var made = _materializeRange(cc, _doc, from, to);
+        done += made.length;
+        log("lazy", "__MEMORIA_MATERIALIZE_ALL: materialized=" + done + "/" + total);
+        // ② 批间让出（宏任务边界 ⇒ 帧/输入有机会跑）
+        return new Promise(function (r) { setTimeout(r, 0); }).then(function () { return runBatch(to); });
       }
-      // 排版后补行内公式标记（与常规路径同口径），保证门禁读到的是"可交互终态"
-      return p.then(function () {
-        try { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); } catch (_) {}
-        try { _applyCodeHighlightToPreview(preview); } catch (_) {}
-        try { postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
-        var remain = cc.querySelectorAll(".-pv-placeholder").length;
-        log("lazy", "__MEMORIA_MATERIALIZE_ALL: materialized=" + made.length + " remainingPlaceholders=" + remain + " blocks=" + _doc.blocks.length);
-        return made.length;
-      });
+
+      return runBatch(0);
     } catch (e) {
       log("lazy", "__MEMORIA_MATERIALIZE_ALL ERR " + ((e && e.message) || e));
       return Promise.resolve(0);
