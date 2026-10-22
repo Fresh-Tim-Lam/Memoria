@@ -2320,6 +2320,9 @@
       else _lazyPipelineDropQueues();
     }
     if (!incremental) {   // 2026-09-25 AG97：窗口化回退 ⇒ 回到"全量重渲染前先插一句『渲染中』"的老行为（大文档编辑时会有一次高度塌陷/补齐，这是老路径固有代价）
+      // 2026-10-22 task-70：换文档/整篇重渲前清掉旧 DOM 内的 MathJax MathItem，
+      //   否则旧文档的 `mjx-container` 会被 `document.math` 永久钉住（打开新文档后仍残留）。
+      _clearMathJaxWithin(preview);
       preview.innerHTML = '<p class="-preview-loading">' + T("preview.rendering") + '</p>';
     }
     preview.contentEditable = (window.MemoriaEditHandler && MemoriaEditHandler.editMode) ? "true" : "false";
@@ -8343,6 +8346,59 @@
     }
   }
 
+  /** 清掉一批**即将离开文档 / 已被换出**的元素内部的 MathJax 记录。
+   *
+   *  2026-10-22 task-70（堆泄漏根治）：MathJax v3 的 `document.math`（`MathList`）会**一直持有**
+   *  每个已排版 `MathItem`（`start.node` / `typesetRoot` 就是 `mjx-container`）。工作集淘汰只做
+   *  `real.replaceWith(placeholder)` ⇒ MathItem 仍把整棵 detached SVG 子树钉在堆上 ⇒ 滚一趟 08 章
+   *  堆从 17.9MB 涨到 85.1MB、`document.math` 16 → 2317 条（实测全是 `isConnected=false`）。
+   *  `MathJax.typesetClear([el])` 是官方清理入口：按 `start.node` 包含关系把这棵子树里的
+   *  MathItem 从 `MathList` 移除（已实测单块 75→74 条生效）；**不删除 DOM**、不影响仍在文档里的公式。
+   *  ⚠️ 必须在元素仍保有子树时调用：换出后 `real` 仍含 `mjx-container`，故 `replaceWith` 之后调用同样成立；
+   *  但**不能**先 `real.remove()` 再清。 */
+  function _clearMathJaxWithin(els) {
+    if (!els) return 0;
+    var MJ = window.MathJax;
+    if (!MJ || typeof MJ.typesetClear !== "function") return 0;
+    var list = Array.isArray(els) ? els : [els];
+    var live = [];
+    for (var i = 0; i < list.length; i++) {
+      var el = list[i];
+      if (el && el.querySelector) live.push(el);
+    }
+    if (!live.length) return 0;
+    try {
+      MJ.typesetClear(live);
+      _purgeDetachedMathItems();
+      return live.length;
+    } catch (e) {
+      log("lazy", "math clear ERR " + ((e && e.message) || e));
+      return 0;
+    }
+  }
+
+  /** 兜底：清掉 `document.math` 里**已经脱离文档**的 MathItem。
+   *
+   *  `typesetClear([el])` 只按传入元素做包含匹配；换文档/缓存搬回时，旧文档可能已经整体被替换，
+   *  这些 item 的 `typesetRoot` 早已 `isConnected=false`，却仍留在 `MathList` 里。
+   *  这里只删 `typesetRoot` 已脱离文档的条目 —— 不碰仍挂着的公式，也不会误清可见内容。
+   *  与 `typesetClear` 共用 MathJax 官方 `MathList.remove()`（内部 API，但 typesetClear 自身也走它）。 */
+  function _purgeDetachedMathItems() {
+    var MJ = window.MathJax;
+    var doc = MJ && MJ.startup && MJ.startup.document;
+    if (!doc || !doc.math || typeof doc.math.remove !== "function") return 0;
+    var stale = [];
+    try {
+      for (var it of doc.math) {
+        var tr = it && it.typesetRoot;
+        if (!tr || !tr.isConnected) stale.push(it);
+      }
+    } catch (_) { return 0; }
+    if (!stale.length) return 0;
+    try { doc.math.remove(stale); } catch (_) { return 0; }
+    return stale.length;
+  }
+
   /** 建一个占位块元素（带连续编号 + 行号 + inline 高度 + aria-hidden）。 */
   function _makePlaceholder(block, i) {
     var el = document.createElement("div");
@@ -9651,7 +9707,7 @@
         _shBefore = pane.scrollHeight;
       } catch (_) { _anchorTop = NaN; _shBefore = 0; }
 
-      var n = 0, evicted = null;
+      var n = 0, evicted = null, _mathEvicted = null;
       for (var q = 0; q < batch.length; q++) {
         var it = batch[q];
         var real = it.el, bi = it.idx, blk = blocks[bi];
@@ -9677,8 +9733,25 @@
             ph.setAttribute("data--pv-h", String(Math.round(_advHv * 10) / 10));
           }
           if (_rectHv > 0) ph.setAttribute("data--pv-r", String(Math.round(_rectHv * 10) / 10));
+          // 2026-10-22 task-70：换出前登记"含 MathJax 产物"的块；整批换出后统一 typesetClear（见下）。
+          //   必须在 `replaceWith` 之前/之后但**子树仍在 `real` 内**时清理；不能先 remove 子树。
+          if (real.querySelector && real.querySelector("mjx-container, .-math, .-math-block")) {
+            if (!_mathEvicted) _mathEvicted = [];
+            _mathEvicted.push(real);
+          }
           real.replaceWith(ph);
           _lazyBlockEls[bi] = ph;
+          // 2026-10-22 task-70：BlockIndex 的 handle 仍持有换出前的 `domEl`（真块）⇒ 即使 DOM 已
+          //   换出，`MemoriaApp.blockIndex.blocks()[i].domEl` 仍钉住整棵子树（实测 mermaid 块
+          //   经 `byOrder → domEl → -mermaid-pan → SVGSVGElement` 被保留）。这里把 handle 的
+          //   `domEl` 同步成新占位；`BI.get(id)` 是 O(1)，不是全表扫描。
+          try {
+            var _bid = real.getAttribute ? real.getAttribute("data-block-id") : null;
+            if (_bid && BI && typeof BI.get === "function") {
+              var _bh = BI.get(_bid);
+              if (_bh && _bh.domEl === real) _bh.domEl = ph;
+            }
+          } catch (_) {}
           // D. 新占位重新纳入 IO ⇒ 滚回时可以再次物化
           if (_lazyIO) { try { _lazyIO.observe(ph); } catch (_) {} }
           if (!evicted) evicted = new Set();
@@ -9688,6 +9761,15 @@
         } catch (e) {
           log("lazy", "evict block " + bi + " ERR " + ((e && e.message) || e));
         }
+      }
+
+      // ⑥.0 2026-10-22 task-70（堆泄漏根治）：把已换出块里的 MathJax MathItem 从 `document.math`
+      //   移除。`replaceWith` 只把 DOM 换出文档；MathJax 的 `MathList` 仍持有 MathItem →
+      //   MathItem.typesetRoot 指向 detached 的 `mjx-container`，整棵 SVG 子树因此不可回收。
+      //   本批只对**确实含公式产物**的块调用（`_mathEvicted`），无公式的块不付这笔扫描成本。
+      if (_mathEvicted) {
+        var _mc = _clearMathJaxWithin(_mathEvicted);
+        if (_mc) log("lazy", "math clear on evict: " + _mc + " blocks / " + _mathEvicted.length);
       }
 
       // ⑥ 清掉排版队列里对已换出元素的引用（否则队列长期持死 DOM ⇒ 淘汰白做）
