@@ -8081,6 +8081,53 @@
   //   这与会话中异步物化不冲突：拖动时 idle（不卡手感），停下时同步（保证"用户看得见"）。
   var LAZY_SCROLL_IDLE_MS = 50;
   var LAZY_SYNC_MAX = 50;          // rAF 同步物化单批上限（每帧都可能跑 ⇒ 必须小步，防单帧过重）
+
+  // ══ 2026-10-22（Lead：决定性数据）——**统一调度循环** ═══════════════════════════
+  // 问题：物化与排版**各用 setTimeout(0)**，在同一个宏任务队列里竞争 ⇒ 100+ 任务排队，
+  //   每批之间被前面的任务挡住 40–170ms。排版占用率仅 35%，65% 时间主线程空闲却仍在排队。
+  // 对策：用**一个 rAF 循环**做唯一调度源，每轮 = 物化(有界) + 排版(有界)，
+  //   同一轮内物化后立刻发起排版 ⇒ 省掉一次调度往返（直接消掉 40–170ms 空档）。
+  //   两个原有 `setTimeout(0)` 调度入口退化为"置标志"，由本循环统一消费。
+  var _lazyWorkActive = false;      // rAF 循环是否在跑
+  var _lazyWorkRAF = 0;             // 当前 rAF 句柄
+  var _lazyWorkLastRun = 0;         // 上一轮结束时刻
+
+  /** 启动统一调度循环（幂等：已在跑则不重复启动）。 */
+  function _lazyStartWorkLoop() {
+    if (_lazyWorkActive) return;
+    _lazyWorkActive = true;
+    var tick = function () {
+      _lazyWorkRAF = 0;
+      if (!_lazyWorkActive) return;
+      _lazyWorkLastRun = (window.performance && performance.now) ? performance.now() : Date.now();
+      try { _lazyWorkStep(); } catch (e) { log("lazy", "work loop ERR " + ((e && e.message) || e)); }
+      // 还有活 ⇒ 下一帧继续
+      var hasWork = (_lazyPending && _lazyPending.size) || (_lazyMathQueue && _lazyMathQueue.length);
+      if (hasWork) {
+        if (window.requestAnimationFrame) _lazyWorkRAF = window.requestAnimationFrame(tick);
+        else _lazyWorkRAF = setTimeout(tick, 16);
+      } else {
+        _lazyWorkActive = false;
+      }
+    };
+    if (window.requestAnimationFrame) _lazyWorkRAF = window.requestAnimationFrame(tick);
+    else _lazyWorkRAF = setTimeout(tick, 16);
+  }
+
+  /** 每轮：物化(有界) → 排版(有界)。**同一轮内连续处理**，不再各自调度往返。 */
+  function _lazyWorkStep() {
+    // 1) 物化（有界：LAZY_FLUSH_MAX 内部已截断，余量留在 _lazyPending）
+    if (_lazyPending && _lazyPending.size) {
+      _lazyFlushNow();
+    }
+    // 2) 排版（有界：SPLIT 逻辑已在 _lazyFlushMathNow 内）。
+    //    ⚠️ **不再用 `_lazyViewportHasPlaceholder()` 判据** —— 那等价于重新引入"让路给物化"，
+    //      而 deferral 已实测证伪（median 273→381ms）。统一循环本身已保证"物化→排版"交替推进，
+    //       每轮两者都干一点，无需谁让谁。
+    if (_lazyMathQueue && _lazyMathQueue.length) {
+      _lazyFlushMathNow("work-loop");
+    }
+  }
   var _lazyScrollIdleTimer = null;
   var _lazyScrollBound = false;
   var _lazySyncNeeded = false;      // ★ rAF 驱动：scroll 只置位，不 debounce
@@ -8204,36 +8251,12 @@
       try { log("lazy", "SCHEDULER STALE (" + Math.round(now - _lazySchedAt) + "ms) ⇒ force reschedule"); } catch (_) {}
       _lazyFlushScheduled = false;
     }
-    _lazyFlushScheduled = true;
-    _lazySchedAt = (window.performance && performance.now) ? performance.now() : Date.now();
-    var fire = function () {
-      // 2026-10-22 饿死修复：记录"收集 → 实际 flush"的延迟（metrics 用来量化 rIC 被推迟的程度）
-      try {
-        if (_lazyCollectAt) {
-          log("lazy", "flush delay: collect→flush = " + Math.round(((window.performance && performance.now) ? performance.now() : Date.now()) - _lazyCollectAt) + " ms");
-          _lazyCollectAt = 0;
-        }
-      } catch (_) {}
-      // try/finally：**无论 `_lazyFlushNow` 是否抛异常，标志一定复位**，否则一次异常=永久停滞。
-      try {
-        _lazyFlushNow();
-      } catch (e) {
-        try { log("lazy", "flush THREW: " + ((e && e.message) || e)); } catch (_) {}
-      } finally {
-        _lazyFlushScheduled = false;
-        _lazySchedAt = 0;
-        // 兜底续命：若仍有残留（异常后遗漏的情形），再排一次
-        try {
-          if (_lazyPending && _lazyPending.size) _lazyScheduleFlush();
-        } catch (_) {}
-      }
-    };
-    // ★ 2026-10-22（Lead 定性"物化被 typeset 饿死"）：
-    //   原来用 `requestIdleCallback` —— 而 typeset 批次会反复占住主线程 ⇒ rIC **被无限推迟**
-    //   ⇒ 物化拿不到执行机会 ⇒ p95 只有 15ms（帧不卡）却出现 2s 空白。
-    //   **可见性优先级高于排版**：物化决定"用户看不看得见"，typeset 只影响"公式好不好看"。
-    //   ⇒ 物化改用 `setTimeout(0)`（宏任务，保证拿到执行机会）；typeset 合并器继续用 idle（可延后）。
-    setTimeout(fire, 0);
+    // ★ 2026-10-22（Lead：统一调度循环）—— 不再各自 `setTimeout(0)`（那会与排版任务在同一个
+    //   宏任务队列竞争，每批被前序任务挡住 40–170ms）。改为**只启动/续跑统一 rAF 循环**，
+    //   由 `_lazyWorkStep` 统一消费物化 + 排版，省掉调度往返。
+    //   保留 `_lazyFlushScheduled` 语义（供循环/自愈判断），但实际执行交给循环。
+    _lazyFlushScheduled = false;   // 让循环直接接管（不再用本函数自己的 fire 定时器）
+    _lazyStartWorkLoop();
   }
 
   /** 批量物化 pending 里的块 + 对新块排版。
@@ -8558,18 +8581,55 @@
    *  超限 ⇒ **先 flush 现有队列**，再入新块（调用次数略增，但换来单次调用体积受控）。 */
   var LAZY_MATH_QUEUE_MAX_BLOCKS = 400;   // 单次 typeset 最多扫这么多块（含无公式块；公式数未变则成本基本不变）
 
+  // ★ 2026-10-22（Lead 实测单批中位 52ms/最坏 98ms，推翻我的 20ms 假设）：
+  //   根因是**批次产生速率 > 消费速率**——滚动时每批物化都会触发一次 typeset 排队，
+  //   而单批 typeset 52ms > 每批产生间隔 ⇒ 队列越积越长（30%/50% 位置 861~970ms）。
+  //   改法：**降低触发速率**——不再"每批物化都触发"，而是攒到阈值/时间窗才排一次。
+  var LAZY_MATH_RECOALESCE_MS = 150;      // 距上次 typeset 发起 < 此值 ⇒ 只入队、不触发（合并）
+  var LAZY_MATH_MIN_FORMULAS = 60;        // 待排公式数达到此值才值得发起（公式才是 cost）
+  var LAZY_MATH_MAX_WAIT = 300;           // 最大等待：到点必排（防长期不排）
+  var _lazyMathLastFlushAt = 0;           // 上次发起 typeset 的时刻
+  var _lazyMathFirstEnqueueAt = 0;        // 首次入队时刻（用于最大等待上限）
+
   function _lazyEnqueueMath(els) {
     if (els && els.length) {
       if (!_lazyMathQueue) _lazyMathQueue = [];
       for (var i = 0; i < els.length; i++) _lazyMathQueue.push(els[i]);
-      // 队列超限 ⇒ 立即排掉现有的（避免单次 typeset 过大）
-      if (_lazyMathQueue.length >= LAZY_MATH_QUEUE_MAX_BLOCKS) {
-        _lazyForceScheduleMathFlush();
-        return;
-      }
+      if (!_lazyMathFirstEnqueueAt) _lazyMathFirstEnqueueAt = (window.performance && performance.now) ? performance.now() : Date.now();
     }
-    if (!_lazyMathQueue || !_lazyMathQueue.length) return;   // 空队列 ⇒ 无需调度
-    _lazyScheduleMathFlush();
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return;
+
+    var nowMs = (window.performance && performance.now) ? performance.now() : Date.now();
+    var sinceEnqueue = nowMs - _lazyMathFirstEnqueueAt;
+    var sinceFlush = nowMs - _lazyMathLastFlushAt;
+
+    // ① 队列块数硬上限：无条件触发（防止单次 typeset 体积失控）
+    if (_lazyMathQueue.length >= LAZY_MATH_QUEUE_MAX_BLOCKS) {
+      _lazyForceScheduleMathFlush();
+      return;
+    }
+    // ② 最大等待上限：到点必排（防公式长期停在 $…$）
+    if (sinceEnqueue >= LAZY_MATH_MAX_WAIT) {
+      _lazyForceScheduleMathFlush();
+      return;
+    }
+    // ③ 时间窗：距上次触发 ≥150ms 才允许发起（连续滚动时合并多批）
+    if (sinceFlush < LAZY_MATH_RECOALESCE_MS) {
+      return;   // 还在窗口内 ⇒ 只入队，不触发（由 ① 或 ② 兜底）
+    }
+    // ④ 公式数阈值：待排公式数 ≥60 才值得排（公式才是真正的成本）
+    var fTotal = 0;
+    for (var fi = 0; fi < _lazyMathQueue.length; fi++) {
+      var _el = _lazyMathQueue[fi];
+      if (!_el || !_el.getAttribute) continue;
+      var _bi = parseInt(_el.getAttribute("data--block-index"), 10);
+      fTotal += _countBlockFormulas(_doc && _doc.blocks ? _doc.blocks[_bi] : null);
+    }
+    if (fTotal >= LAZY_MATH_MIN_FORMULAS) {
+      _lazyScheduleMathFlush();
+      return;
+    }
+    // 不够阈值 + 不到时间窗 ⇒ 不触发（靠 ② 的 300ms 上限兜底，不会饿死）
   }
 
   /** 调度一次合并排版（幂等：已在排/已定时不重复建）。
@@ -8584,15 +8644,9 @@
         _lazyFlushMathNow("max-wait");
       }, LAZY_MATH_MERGE_MAX_WAIT);
     }
-    // ★ 2026-10-22（Lead 实测**最长连续源码态 1.3–1.8s**）：调度从 `requestIdleCallback` 改为 `setTimeout(0)`。
-    //   理由与物化 flush 完全同一类：**rIC 在连续滚动/输入时被无限推迟**
-    //   （物化那次实测 median 286ms、`didTimeout=true` 9/10）。
-    //   虽然这里 `timeout:120` 理论上会超时兜底，但：
-    //   ① rIC 的 timeout 只保证"**最终**给回调"，实际延迟可达数百 ms ~ 1s+（浏览器繁忙时）；
-    //   ② 期间用户在滚动 ⇒ 每次 scroll 又引发新批次入队 ⇒ **入队速度 ≥ 出队速度** ⇒ 越积越长。
-    //   `setTimeout(0)` 是宏任务、优先级高于 idle ⇒ 保证拿到执行机会。
-    //   （"可见性相关工作不用 idle 优先级"这条原则，已经在物化上验证过。）
-    setTimeout(function () { _lazyFlushMathNow("timer"); }, 0);
+    // ★ 2026-10-22（统一调度循环）：不再各自 `setTimeout(0)` 竞争宏任务队列。
+    //   只启动/续跑统一 rAF 循环，由 `_lazyWorkStep` 在"物化之后"调用 `_lazyFlushMathNow`。
+    _lazyStartWorkLoop();
   }
 
   /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。
@@ -8729,7 +8783,9 @@
 
   /** 强制调度一次合并排版：**清除幂等守卫与在跑的 idle 定时**，保证一定有一次 flush。
    *  用于"队列孤儿"救援（token 变化 / 异常回队）——普通 `_lazyScheduleMathFlush` 可能因
-   *  `_lazyMathQueueTimer` 已存在或 rIC 被跳过而**不再产生 flush**。 */
+   *  `_lazyMathQueueTimer` 已存在或 rIC 被跳过而**不再产生 flush**。
+   *  ⚠️ 2026-10-22（统一循环后）：本函数**保留 `setTimeout(0)` 直接排**、**不**走 rAF 循环 ——
+   *    因为 force 语义是"**必须立刻**推进"（救援路径），不是"合并调度"；若退化成 rAF 会重新引入等待。 */
   function _lazyForceScheduleMathFlush() {
     if (!_lazyMathQueue || !_lazyMathQueue.length) return;
     if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
