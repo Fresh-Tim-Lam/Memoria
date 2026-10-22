@@ -1911,6 +1911,10 @@
   function setupSplitScrollSync() {
     const editorPane = $("#editor-pane");
     const previewPane = $("#preview-pane");
+    // E26：用户滚动豁免监听**启动即绑**（而不是等第一次编辑时才懒绑）——
+    // 否则「先滚上去看上文，再敲第一个字」这一拍还没有守卫，光标会被拽回。
+    _bindUserScrollGuard(editorPane);
+    _bindUserScrollGuard(previewPane);
     if (editorPane) {
       editorPane.addEventListener("scroll", () => _onSplitPaneScroll("source", editorPane));
     }
@@ -10572,6 +10576,12 @@
       if (!line) return null;
       var hm = line.match(/^(#{1,6})\s/);
       if (hm) return { type: "heading", level: hm[1].length };
+      // E28（2026-10-22）：`>` + 一个空格/制表符 ⇒ 引用块。
+      // 语义与 lexer 的 `^(\s*)((?:>[ \t]?)+)` 对齐：`>` 后的**第一个**空白属于标记，
+      // 再往后的空白才是正文内容。
+      // ★ 只在**空白已落下**时才转换（不匹配裸 `>`）：若敲 `>` 就转成引用块，紧随的
+      //   空格会被当成"正文空格"写进空段落 ⇒ 源码多一个空格（`>  `），与用户输入不符。
+      if (/^>[ \t]/.test(line)) return { type: "blockquote" };
       var lm = line.match(/^([-*+])\s/);
       if (lm) return { type: "list", ordered: false };
       var om = line.match(/^(\d+)\.\s/);
@@ -10590,6 +10600,14 @@
         var ifp = item ? firstTextPath(item.children || []) : null;
         return { nodePath: ifp ? [0].concat(ifp.path) : [0], offset: 0 };
       }
+      // E28：引用块的 children 是**块级段落**（每行一个，与 parser 一致），
+      // 光标必须落到第一段内部（nodePath[0] = 段落索引），否则会指向 blockquote
+      // 本身 ⇒ 后续 insertText 会把 text 直接挂到 blockquote.children 上（坏 AST）。
+      if (block.type === "blockquote") {
+        var qPara = block.children && block.children[0];
+        var qfp = qPara ? firstTextPath(qPara.children || []) : null;
+        return { nodePath: qfp ? [0].concat(qfp.path) : [0], offset: 0 };
+      }
       var pfp = firstTextPath(block.children || []);
       return { nodePath: pfp ? pfp.path : [], offset: 0 };
     }
@@ -10607,10 +10625,23 @@
       var newBlock = P.parseBlocks([line])[0];
       if (!newBlock || newBlock.type === "paragraph") return false;
 
+      // ★ E28（2026-10-22）：**保留原块的源码行号**。
+      // `P.parseBlocks([line])` 拿到的是一段"单行切片"，它给 newBlock 的 srcLine 恒为 1。
+      // 若把这个 1 抄进真实块（第 5 块就会变成 srcLine=1），随后：
+      //   ① reRenderBlock 判定"行区间变了" ⇒ 重建 `_blockLineMap`；
+      //   ② 下一次按键的 spliceBlockSource 用错的行区间 ⇒ **改到文档开头**（真机实测：
+      //      `# E28 probe\n\n> \n\n正文行\n> ` 敲一个 x 后变成 `> x\n\n> \n\n正文行\n> `，
+      //      heading 被覆盖、正文尾部多出一截）。
+      // 转换是"一行换一行"，行号本就不该变 ⇒ 显式保住。
+      var keepSrcLine = block.srcLine;
+      var keepSrcLineEnd = block.srcLineEnd;
+
       // 原地替换 block 属性（block 即 _doc.blocks[cursor.blockIndex]）
       var k;
       for (k in block) { if (Object.prototype.hasOwnProperty.call(block, k)) delete block[k]; }
       for (k in newBlock) { if (Object.prototype.hasOwnProperty.call(newBlock, k)) block[k] = newBlock[k]; }
+      if (keepSrcLine > 0) block.srcLine = keepSrcLine;
+      if (keepSrcLineEnd > 0) block.srcLineEnd = keepSrcLineEnd;
 
       var nc = blockContentStart(block);
       cursor.nodePath = nc.nodePath;
@@ -10646,15 +10677,41 @@
       var preCursor = cloneCursor(cursor);
 
       var node = null;
-      if (cursor.nodePath && cursor.nodePath.length) {
-        node = A.getNodeAt(block, cursor.nodePath);
+      // ── E28（2026-10-22）：引用块写入必须落在**引用内段落**上 ──
+      // 事故（真机实测，CDP 9621）：在空引用行（`> `）里敲空格时，domToAst 给出的
+      // nodePath 是 `[0]`（指向引用内的空段落），旧代码把它当"非 inline 叶子"处理，
+      // 于是 `block.children = [text(" ")]` ——
+      //   ① blockquote.children 里直接出现 text（parser 永远不会产出这种形状）；
+      //   ② SourceGen.generateBlock(blockquote) 对 text 子节点生成 ""，⇒ 源码**一个字符都不变**，
+      //      预览也不刷新 ⇒ 用户看到的就是「敲空格没反应」（真机 bodyLen 21→21，DOM 不变）；
+      //   ③ 之后再敲字母也写不进去。
+      // 修法：先把写入目标归一化到「引用内段落」，text 只能落在段落的 children 上。
+      var inlineHost = block;
+      var inlinePath = (cursor.nodePath || []).slice();
+      var quoteIdx = -1;
+      if (block.type === "blockquote") {
+        quoteIdx = inlinePath.length ? inlinePath[0] : 0;
+        var qPara = (block.children || [])[quoteIdx];
+        if (!qPara || qPara.type !== "paragraph") {
+          // 空引用块 / 结构异常：补一个空段落，与 parser 的 `AST.blockquote([AST.paragraph([])])` 同形
+          qPara = A.paragraph([]);
+          if (!block.children) block.children = [];
+          block.children[quoteIdx] = qPara;
+          inlinePath = [quoteIdx];
+          cursor.nodePath = inlinePath.slice();
+        }
+        inlineHost = qPara;
+        inlinePath = inlinePath.slice(1);
+      }
+      if (inlinePath.length) {
+        node = A.getNodeAt(inlineHost, inlinePath);
       }
 
       if (node && node.type === "text") {
         A.editText(node, cursor.offset, text);
         cursor.offset += text.length;
       } else if (!node || !A.isInline(node)) {
-        // 空 block / 空 list item：新建 Text 节点
+        // 空 block / 空 list item / 空引用段落：新建 Text 节点
         node = A.text(text);
         if (block.type === "list") {
           var itemIdx = (cursor.nodePath && cursor.nodePath.length) ? cursor.nodePath[0] : 0;
@@ -10662,6 +10719,10 @@
           if (!item) return false;
           item.children = [node];
           cursor.nodePath = [itemIdx, 0];
+        } else if (block.type === "blockquote") {
+          // ★ 只写进引用内段落的 children，绝不写进 blockquote.children
+          inlineHost.children = [node];
+          cursor.nodePath = [quoteIdx, 0];
         } else {
           block.children = [node];
           cursor.nodePath = [0];
@@ -10672,7 +10733,7 @@
         return false;
       }
 
-      // 结构标记自动转换（段落输入 "# " / "- " / "1. " 等 → 标题/列表）
+      // 结构标记自动转换（段落输入 "# " / "- " / "1. " / "> " 等 → 标题/列表/引用）
       convertStructuralBlock(block, cursor);
 
       beginUndo("insert", preCursor, forceGroup);

@@ -3973,6 +3973,18 @@ body.-brush-active #editor {
     padding: 0.3em 1em;
     border-left: 3px solid var(--border);
 }
+/* ── 2026-10-22 E28 第二步（方案 F）：空引用行（`> `）必须有可见落点 ──────────
+   真机实测（WebView2 / Edge 155，14px 正文）：
+     · 空引用行（parser 产出 `blockquote > p > br`）：blockquote 32.17px / 内层 <p> 23.8px；
+     · 但"在空引用行里敲空格"后内层 <p> 只剩一个**可折叠空格**（无 <br>）⇒ 没有行盒，
+       高度会塌到 blockquote 的 padding（8.4px）。这就是「敲空格看不见 / 行像没了」的呈现面。
+   只作用于 `blockquote.-src-block` 的**直接子段落**：非空引用段落本来就 ≥ 1 行
+   （实测 23.8px），`min-height: 1lh` 对它们是 no-op ⇒ 存量非空引用块渲染不变。
+   1lh = 当前行高（Chromium 109+）；前一行 1.7em 是给老内核的等效回退。 */
+.-preview blockquote.-src-block > p {
+    min-height: 1.7em;
+    min-height: 1lh;
+}
 .-preview .-src-block > pre {
     margin: 0;
 }
