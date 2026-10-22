@@ -59,7 +59,13 @@
 > **修订流水已拆出**（2026-10-19）：「规范修订记录」的逐条流水已迁至 [documentation-changelog.md](../design/documentation-changelog.md)（docs 内、规范体系的一部分）。本节只保留指针；**新变更追加进 changelog 文件**。
 > **勘误（对既有提交信息的更正，非新工作）**：`37739bc6`（收录 AAA_Vocab 库内产物）那次提交信息里曾说"该库 `.memoria/**` 私人数据不在本次范围"，**实际 `docs/example/**/.memoria/sidecars/**` 被一并提交了**（sidecar 在本仓是被追踪内容）；真正被 `.gitignore` 排除的是 `review/**`、`sessions/**`、`backups/**`。
 
-- **动作**：① 检查 `docs/` 根是否出现非允许文件 → 归位；② 检查新文档是否已登记索引；③ 检查临时产物是否都在 `artifacts/`；④ 检查台账体积是否在预算内（`docs/todo.md` ≤ 36 KB、`docs/design/maintenance-jobs.md §5` ≤ 8 KB），超限即按 [ledger-maintenance.md 规则 8](./ledger-maintenance.md) 清理（已收口条目出表入归档、开发流水账移除、压缩前事实须先转移到对应文档）。
+- **动作**：① 检查 `docs/` 根是否出现非允许文件 → 归位；② 检查新文档是否已登记索引；③ 检查临时产物是否都在 `artifacts/`；④ 检查台账体积是否在预算内（`docs/todo.md` **≤ 64 KB**（2026-10-22 调整，见下方说明）、`docs/design/maintenance-jobs.md §5` ≤ 8 KB），超限即按 [ledger-maintenance.md 规则 8](./ledger-maintenance.md) 清理（已收口条目出表入归档、开发流水账移除、压缩前事实须先转移到对应文档）。
+- **台账硬规则（2026-10-22 随预算调整生效，守卫脚本 = `python scripts/check_todo_size.py`）**：
+  1. **单元格 ≤200 B**（新增/修改条目；存量超限单元格以守卫脚本内的**基线清单**冻结，只允许变小，不允许变大或新增）；
+  2. **禁止叙述体**：长文（做法 / 证据 / 未取证全文）进 `docs/design/**`，`todo.md` 只留一行索引 + 指针（先例：`agent-panel-batches.md` / `ledger-archive-2026.md` / `editor-input-defects-2026-10.md` / `packaging-release.md`）；
+  3. **禁止等宽填充对齐**：表格用紧凑格式（`| a | b |`），不得用连续空格把列撑齐；
+  4. **超限后的正规动作**：把**已收口条目**按 P1 先例归档到 `docs/design/**`（原文逐字、可 `git log -S` 追溯），台账只留索引行；**不得**靠调高预算或删条目/删证据锚达标；预算调整须人批准并注明日期与理由。
+- **预算调整记录（2026-10-22）**：`docs/todo.md` 预算 **36 KB → 64 KB**。理由：① 旧预算在 ACTIVE 条目 170+、批次叙述持续增长后长期失真（曾达 797,845 B / 超 21.6 倍）；② 2026-10-22 完成 P1–P5 台账拆分与去填充后实测 **47,093 B**，64 KB 可留 ≈17 KB（约 3–5 批新缺陷）增长余量；③ 拆分为"活动 + 归档"两份文件会制造第二事实源（漂移风险高于可读性收益），故选择调预算 + 硬规则 + 守卫脚本，而非拆文件。
 
 ## 5. 已执行的整理
 
