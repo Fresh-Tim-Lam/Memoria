@@ -14032,6 +14032,45 @@
 
   window.MemoriaApp.setBackgroundPreload = setBackgroundPreload;   // 2026-09-25 AG97：`pvPostWikilinks` / `pvBindLinks` 两个导出点随窗口化一起删除（它们只为"窗口内就地补链接"服务）
   window.MemoriaApp.previewCacheStats = previewCacheStats;
+
+  // ══ 2026-10-22 测试专用接口：强制把全文占位块物化为真块（**给门禁/回归用，不是生产路径**）══
+  // 为什么需要：冻结门禁按"DOM 里实际存在的元素"统计内容（公式/图片/表格/语言），而惰性模式下
+  //   绝大多数块只是占位 div ⇒ 门禁会把"没物化"误判成"渲染丢了内容"（typesetMathBlocks 270→2 等）。
+  // 门禁应：先 `await __MEMORIA_MATERIALIZE_ALL()` 再计数；或直接用 `window.__MEMORIA_LAZY = false`
+  //   让该文档走全量路径（小文档阈值下同样可用，钩子优先于阈值）。
+  // 语义：把**当前文档**所有 `.-pv-placeholder` 物化为真块；完成后 `placeholders === 0`。
+  //   会一次性建大量块（可能长冻结）—— 测试场景可接受，**生产路径绝不调用**。
+  // 返回 Promise：全部物化 + 排版(fire) 后 resolve；无文档/非惰性 ⇒ 立即 resolve(0)。
+  window.__MEMORIA_MATERIALIZE_ALL = function () {
+    try {
+      var preview = $("#preview");
+      var cc = preview ? (preview.querySelector(".-preview-content") || preview) : null;
+      if (!cc || !_doc || !_doc.blocks) return Promise.resolve(0);
+      var phs = cc.querySelectorAll(".-pv-placeholder");
+      if (!phs.length) return Promise.resolve(0);   // 已经全物化（或走全量路径）⇒ 无操作
+      // 物化全文（一次调用；_materializeRange 内部按 data--block-index 逐个替换）
+      var made = _materializeRange(cc, _doc, 0, _doc.blocks.length);
+      // 对新块排版：走既有的 queuePreviewMathTypeset（它扫整个 preview，已排过的会空扫但幂等）
+      var token = state.previewToken;
+      var p = Promise.resolve();
+      if (made.length && window.MathJax && typeof window.MathJax.typesetPromise === "function") {
+        p = queuePreviewMathTypeset(preview, token) || Promise.resolve();
+      }
+      // 排版后补行内公式标记（与常规路径同口径），保证门禁读到的是"可交互终态"
+      return p.then(function () {
+        try { if (token === state.previewToken) _tagInlineMathContainers(preview, _doc); } catch (_) {}
+        try { _applyCodeHighlightToPreview(preview); } catch (_) {}
+        try { postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+        var remain = cc.querySelectorAll(".-pv-placeholder").length;
+        log("lazy", "__MEMORIA_MATERIALIZE_ALL: materialized=" + made.length + " remainingPlaceholders=" + remain + " blocks=" + _doc.blocks.length);
+        return made.length;
+      });
+    } catch (e) {
+      log("lazy", "__MEMORIA_MATERIALIZE_ALL ERR " + ((e && e.message) || e));
+      return Promise.resolve(0);
+    }
+  };
+
   // 语言 / 主题变了：已缓存的他页签预览里含本地化文案与 mermaid 主题色 ⇒ 整体作废重渲染
   window.addEventListener("memoria:langchange", function () { _previewCachePurge(); });
   window.addEventListener("memoria:themechange", function () { _previewCachePurge(); });
