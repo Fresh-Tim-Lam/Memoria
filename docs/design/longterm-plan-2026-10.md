@@ -409,4 +409,29 @@ CDP 真实 `Input.dispatchKeyEvent` 的 Ctrl+X ⇒
 **E30 收口。** 单开一条跟进项（不经 E30 修）：`deleteByDrag` 的真实拖拽移动还依赖未拦截的 `insertFromDrop`，
 落点插入可能只进 DOM 不进源码（P2）。
 
+### W0 第 15 轮：E28 **两步均闭环**（真因更正 + 顺带修掉一个改错文档的既有缺陷）
+
+**真因更正**：我第 3 轮假设「空引用行高度为 0 ⇒ 看不见」被真机证伪（blockquote 32.17px / `<p><br></p>` 23.8px）。
+真因在**输入路径**：旧代码把 `blockquote.children` 写成 `[text(" ")]`（parser 永不产出的坏形状）
+⇒ `SourceGen` 对 text 子节点生成 `""` ⇒ **源码一字不变、DOM 不刷新** ⇒ 零感知，之后字母也写不进。
+
+**提交 `e0740f26`**（app.js 四处 + app.css 一处）：
+1. `insertText()` 引用块归一化（text 只进内层段落，缺则补 `paragraph([])`）
+2. `blockContentStart()` 补 blockquote 分支（光标进引用内段落）
+3. `detectStructuralMarker()` 补 `^>[ \t]`（只在空白落下时转换，避免多空格）
+4. `convertStructuralBlock()` **保留 `srcLine/srcLineEnd`** —— 本轮真机抓到：不保留会用错行区间 splice，
+   **下一次按键改到文档开头**（`# probe …` 敲 `x` 后 heading 被覆盖）；**该缺陷对 `# `/`- ` 转换同样存在，已顺带修复**
+5. CSS `.-preview blockquote.-src-block > p { min-height: 1lh }` —— 仅引用块直接子段落，非空段落 no-op
+
+**真机修前/修后**：空引用行敲空格 `"> "` 不变 → `">  "`（AST 正确）；再敲 `a` 可写入；
+**CSS 必要性用对照实验证明**（覆盖 `min-height:0` 后 `<p> </p>` 塌成 8.38 / p 0），非空引用块逐像素不变。
+
+**同时收录 E26 一处守卫补丁**：`setupSplitScrollSync()` 启动即绑 `_bindUserScrollGuard`
+（不再等首次编辑懒绑），修「先滚上去 → 敲第一个字被拽回」。
+
+**门禁**：`node --check` 0 / roundtrip 80/80 / typing 39/39 / 12 剧本 12/12 / 调度守卫 PASS。
+
+**E28 收口。** 未验证：引用块内 Enter/Backspace/粘贴/IME、多段引用第 2 段以后、402 篇全库渲染回归、
+老内核无 `1lh` 时的 `1.7em` 回退观感。
+
 
