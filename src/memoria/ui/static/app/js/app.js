@@ -7996,7 +7996,10 @@
    *  （`rootMargin: 200%` 还会放大范围）⇒ 原先这里一次全物化 = 数千块同步建 DOM = 长时间冻结。
    *  现在：每次 float 最多物化 `LAZY_FLUSH_MAX` 块，**余量放回 pending 并重新调度**
    *  ⇒ 每次只占一小段主线程，其余留给下一批 idle/宏任务。 */
-  var LAZY_FLUSH_MAX = 200;   // 单批物化上限（≈ 数十 ms 量级，远低于 100ms 门槛）
+  // 单批物化上限。**依据实测**（Lead，拖到底场景 08 章）：130.8ms 帧 / 200 块 ≈ **0.65ms/块**
+  // ⇒ 100 块 ≈ 65ms，为 100ms 预算留余量。
+  // 若后续出现"块更复杂导致单批仍超 100ms"，继续降到 50 —— **有实测依据才调，不凭感觉改**。
+  var LAZY_FLUSH_MAX = 100;
 
   function _lazyFlushNow() {
     if (!_lazyPending || !_lazyPending.size) return;
@@ -8005,13 +8008,20 @@
     if (!container) return;
     var cc = container.querySelector(".-preview-content") || container;
     var pendingArr = Array.from(_lazyPending).sort(function (a, b) { return a - b; });
-    _lazyPending.clear();
 
-    // ── 单批封顶：只取前 LAZY_FLUSH_MAX 块；其余**放回 pending**，稍后由下一次调度继续 ──
+    // 2026-10-22 加固：**先算余量、先把余量放回队列，再物化**。
+    // 原写法「先 clear → 再算 overflow → 物化完才放回」存在一个脆弱时序：
+    // 若在 clear 与放回之间抛异常，overflow（本批之外的块）会**永久丢失** ⇒
+    // 用户滚过去看到永久占位（静默、不报错，属最难发现的失效）。
+    // 现在：即便物化阶段抛错，余量已在队列里 ⇒ 最坏只是本批延后，绝不漏块。
     var overflow = null;
     if (pendingArr.length > LAZY_FLUSH_MAX) {
       overflow = pendingArr.slice(LAZY_FLUSH_MAX);
       pendingArr = pendingArr.slice(0, LAZY_FLUSH_MAX);
+    }
+    _lazyPending.clear();
+    if (overflow) {
+      for (var oi = 0; oi < overflow.length; oi++) _lazyPending.add(overflow[oi]);
     }
 
     // 物化：把本批的下标合并成连续区间，逐段物化
