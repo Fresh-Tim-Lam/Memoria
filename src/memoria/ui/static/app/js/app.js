@@ -8097,27 +8097,53 @@
     }, { passive: true });
   }
 
-  /** **同步**物化当前视口内的占位块（滚动停止后调用；不排队、不等 idle）。 */
+  /** **同步**物化当前视口内的占位块（滚动停止后调用；不排队、不等 idle）。
+   *
+   *  ⚠️ 2026-10-22 修复（Lead 实测本函数**从未触发**）：原实现遍历**全部**占位块并逐块
+   *  `getBoundingClientRect()` —— 3978 个占位块 = 数千次强制同步布局 ⇒ 该函数本身要跑几百 ms~秒级，
+   *  期间又被新的 scroll 事件重置 debounce ⇒ 实际**几乎永远跑不到 log 那行**（`scroll-idle sync` 0 次）。
+   *  现在：占位块是 `.-preview-content` 的**直接子元素**且按 `data--block-index` 有序、布局位置单调递增
+   *  ⇒ 用**二分查找**定位视口范围，只对命中区间做少量 `getBoundingClientRect`（O(log n)）。
+   *  并且：**只要有视口占位就物化**（不再依赖 pending 集合），彻底消除"滚动停后无事件叫醒"的静默停滞。 */
   function _lazySyncMaterializeViewport(preview) {
     if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return 0;
     var pane = document.getElementById("preview-pane") || (preview && preview.parentElement);
     var cc = preview ? preview.querySelector(".-preview-content") : null;
     if (!pane || !cc) return 0;
-    var paneRect = pane.getBoundingClientRect();
     var phs = cc.querySelectorAll(".-pv-placeholder");
     if (!phs.length) return 0;
-    // 找视口内（含上下各半屏余量）的占位块下标
+
+    var paneRect = pane.getBoundingClientRect();
+    // 视口上下各留半屏余量（"用户停下"时也顺手把上下略远处物化好）
     var lo = paneRect.top - paneRect.height * 0.5;
     var hi = paneRect.bottom + paneRect.height * 0.5;
+
+    // ── 二分：占位块按文档序排列、位置单调 ⇒ 找 top >= lo 的第一个 / bottom <= hi 的最后一个 ──
+    var n = phs.length;
+    function topOf(i) { return phs[i].getBoundingClientRect().top; }
+    function bottomOf(i) { return phs[i].getBoundingClientRect().bottom; }
+    var loI = 0, hiI = n - 1, firstHit = n;
+    while (loI <= hiI) {                       // 找第一个 bottom >= lo 的块
+      var mid = (loI + hiI) >> 1;
+      if (bottomOf(mid) >= lo) { firstHit = mid; hiI = mid - 1; } else { loI = mid + 1; }
+    }
+    if (firstHit >= n) return 0;               // 视口上方没有占位块（都在下方或全已物化）
+    var loI2 = firstHit, hiI2 = n - 1, lastHit = -1;
+    while (loI2 <= hiI2) {                     // 找最后一个 top <= hi 的块
+      var mid2 = (loI2 + hiI2) >> 1;
+      if (topOf(mid2) <= hi) { lastHit = mid2; loI2 = mid2 + 1; } else { hiI2 = mid2 - 1; }
+    }
+    if (lastHit < firstHit) return 0;          // 视口内没有占位块 ⇒ 已全部物化（无操作）
+
+    // 收集命中区间内的块下标（区间通常只有几屏，量很小）
     var idxs = [];
-    for (var i = 0; i < phs.length; i++) {
-      var r = phs[i].getBoundingClientRect();
-      if (r.bottom < lo || r.top > hi) continue;      // 不在视口±半屏内 ⇒ 跳过
+    for (var i = firstHit; i <= lastHit; i++) {
       var ix = parseInt(phs[i].getAttribute("data--block-index"), 10);
       if (!isNaN(ix)) idxs.push(ix);
     }
     if (!idxs.length) return 0;
-    // 合并连续区间并同步物化（单批上限内分批，避免长冻结）
+
+    // 合并连续区间并**同步**物化（按 LAZY_FLUSH_MAX 分批，避免长冻结）
     var made = [];
     idxs.sort(function (a, b) { return a - b; });
     for (var k = 0; k < idxs.length; k += LAZY_FLUSH_MAX) {
@@ -8127,7 +8153,7 @@
       made = made.concat(els);
     }
     if (made.length) {
-      log("lazy", "scroll-idle sync materialize: blocks=" + made.length);
+      log("lazy", "scroll-idle sync materialize: blocks=" + made.length + " (viewport[" + firstHit + ".." + lastHit + "])");
       // 排版走合并器（低优先级、可合并），后处理与首屏对齐
       _lazyEnqueueMath(made);
       _lazyRenderMermaidIn(made);
@@ -8472,7 +8498,19 @@
         //   必须照常排版（否则就是 R1 跳转漏排的根因）。
         if (pathNow === pathAt) {
           log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length + (token !== state.previewToken ? " [retoken same-doc ⇒ still typeset]" : ""));
-          return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+          // ★ 2026-10-22 分帧修复（Lead 实测 478.9ms 单帧）：`setTimeout(0)` 把物化 flush 提上去后，
+          //   typeset 可能**紧接在物化之后同一帧**启动 ⇒ 两者叠加出长帧。
+          //   这里让出**一次事件循环 + 一次渲染帧**再排，保证 typeset 落在物化之后的**另一帧**。
+          //   （仍进 `_mathPending` 链 ⇒ "已请求批次排完"语义不变，只是推迟一个帧边界。）
+          return new Promise(function (r) { setTimeout(r, 0); }).then(function () {
+            return new Promise(function (r2) {
+              if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { r2(); }); });
+              else setTimeout(r2, 0);
+            });
+          }).then(function () {
+            if (!window.MathJax || typeof MathJax.typesetPromise !== "function") return;
+            return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+          });
         }
         // 文档真的换了 ⇒ 这批 DOM 多半已脱离（仍连上的才回收，避免内存泄漏）
         var still = batch.filter(function (el) { return el && el.isConnected; });
