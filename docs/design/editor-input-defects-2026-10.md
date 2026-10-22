@@ -1,9 +1,10 @@
-# 编辑器输入 / 复制粘贴 / 选区缺陷详情（E24–E31 + DOC01/DOC02，2026-10-22）
+# 编辑器输入 / 复制粘贴 / 选区缺陷详情（E24–E34 + DOC01/DOC02，2026-10-22）
 
 > **用途**：承接 `docs/todo.md §5.1` 的逐条**详情**（现象含用户原话 / 客观描述 / 影响面 / 验收判据 / 定位线索 / 优先级），按台账维护规范 [规则 8](../conventions/ledger-maintenance.md) 与 Lead 裁决 P3 于 2026-10-22 逐字迁出。
 > **目标读者**：Lead、后续 TODO Owner、verifier、实现者。
 > **关联**：[docs/todo.md](../../docs/todo.md) §5.1（**状态/优先级事实源**；本文件是详情存档，不改状态）、[ledger-maintenance.md](../conventions/ledger-maintenance.md)、[docs-management.md](../conventions/docs-management.md)。
 > **状态**：生效中（2026-10-22）；本轮来源 = 用户 2026-10-22 反馈 + Lead 台账治理裁决。
+> **2026-10-22 更新（收口/归档）**：**E25–E30 已闭环并移出 `todo.md §5.1` 活动表**，原文 + 证据归档于 [ledger-archive-2026.md §10.4.1](ledger-archive-2026.md)；本文件保留其详情作为归档依据。同日后续登记 **E32–E34**（E32 已修复，E33/E34 待做）见文末 §2。
 
 **A. 编辑器输入（格式 / 光标 / 空白）**
 
