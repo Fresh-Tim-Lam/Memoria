@@ -34,6 +34,28 @@
 | E26 | 换行后光标不跟随滚动 | 🔄 同上 |
 | E27 / E29 | 样式文字末尾无法输入空格 / 英文词后无空格 | ⏳ **待 E28 结论后判定是否同源**（若同源一并收口）|
 
+### W0 中期结论（2026-10-22）
+
+**E25 前置调查已完成，结论与裁决**：
+
+- **既有文档图片资产链只吃本地路径**：`image-tools.js:67 startInsertImage` → `select_image_file`（对话框）→ `import_image(local_path)`（`ui.py:857` → `document.py:879`，落 `<kb>/.memoria/images/`，MD5 去重 + registry）→ `insertSourceLine("![alt](<rel>)")`。
+- WebView2 剪贴板给的是 `File`/`Blob`，**没有真实路径**；无任何 RPC 接受"图片字节 → `.memoria/images/`"。
+- 唯一"字节→落盘"既有 RPC 是 `agent_attach_image`，但它**明确落 `.memoria/agent/attachments/` 且不进图片注册表**（设计上避免被未使用图片清理误伤）⇒ 属对话附件链，**不能复用**。
+
+**裁决：方案 A** —— 放宽写入范围到 `ui.py` / `document.py`，把 `DocumentService.import_image(local_path)` 重构为：
+
+```
+_import_image_bytes(name, data)     # 核心：落盘 + MD5 去重 + registry
+import_image(local_path)            # 读文件后调核心（保持既有调用方不变）
+import_image_base64(name, b64)      # 解码后调核心（新增，供剪贴板用）
+```
+
+**硬约束**：① 禁止在新 RPC 里重写落盘/去重/注册表逻辑（那是"第二条链"的开端）；② 保留 MD5 去重命中返回既有路径、registry 登记、相对路径插入、未使用图片清理语义；③ 大小上限 ≤20MB + 非法 base64/扩展名明确拒绝，前端必须显示失败而非假装成功。
+
+**明确否决**：方案 B（复用 `agent_attach_image` 落 attachments 再插 `![]()`）—— 会造成两类图片资产混住 + 绕过注册表；方案 C（不修）—— 用户要求修。
+
+**前端要求**：只在确有图片时 `preventDefault`（纯文本粘贴路径完全不动）；多图按序插入、单张失败不影响其它；插入后光标落到插入点之后；走既有 undo 栈（Ctrl+Z 可撤销）。
+
 ---
 
 ## W1：数据正确性 + 不可用（最高优先）
