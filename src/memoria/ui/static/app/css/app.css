@@ -3897,11 +3897,25 @@ body.-brush-active #editor {
     cursor: text;
     border-radius: 4px;
 }
+/* ── 2026-10-22：惰性物化**占位块**的骨架外观 ────────────────────────────────────
+   背景：0.4.6 惰性物化把"未物化块"渲染成 `div.-pv-placeholder`（带 inline height）。
+   用户快速滚动时，未物化区原本是**纯空白**（体感像"坏了/黑屏"），实测视口空白中位 273ms。
+   给一个中性底色/圆角 ⇒ 视觉上变成"内容正在加载"，**不改变任何布局**（高度仍由 inline style 决定）。
+   刻意**不加动画**：几千个占位块跑 CSS 动画会持续触发合成/重绘，滚动时反而加压；
+   且静态色块已足够表达"占位"，动画会让骨架更抢眼。 */
+.-preview .-pv-placeholder {
+    background: var(--pv-placeholder-bg, rgba(127, 127, 127, 0.10));
+    border-radius: 4px;
+    /* 占位块不可选中：避免用户选中"空白"。
+       ⚠️ 刻意**不设** `pointer-events: none` —— 那会让点击穿透到父容器，
+       且会挡住阶段 2 的"点击未物化块 ⇒ 同步物化"(D3)。**本样式只做视觉，不改交互。** */
+    user-select: none;
+    -webkit-user-select: none;
+}
 /* 所有 block 内元素 margin 归零，避免"虚假空行"光标 */
 .-preview .-src-block > p {
     margin: 0;
-}
-.-preview .-src-block > h1,
+}.-preview .-src-block > h1,
 .-preview .-src-block > h2,
 .-preview .-src-block > h3,
 .-preview .-src-block > h4,

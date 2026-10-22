@@ -8450,6 +8450,14 @@
   var LAZY_MATH_MERGE_MAX_WAIT = 500;   // ms：合并窗口上限（到点必排，保证公式不会长期不显示）
   var LAZY_MATH_MERGE_IDLE = 120;       // ms：空闲合并窗口（拖到底期间把多批合并成一次）
   var LAZY_MATH_DEFER_MAX = 1000;       // ms：为"让路给物化"最多推迟多久（防公式永不上屏）
+  // ★ deferral 总开关：**默认关**（2026-10-22 实测负收益：median 273→381ms、CV 28%→68%）。
+  //   保留开关以便**同一运行内 A/B**（跨运行比较受机器状态/WebView2 缓存影响，不可靠）。
+  //   可用 `window.__MEMORIA_DEFER` 运行时覆盖（CDP 注入，免改代码）。
+  var LAZY_MATH_DEFER_ENABLED = false;
+  function _deferEnabled() {
+    if (typeof window.__MEMORIA_DEFER === "boolean") return window.__MEMORIA_DEFER;
+    return LAZY_MATH_DEFER_ENABLED;
+  }
   var LAZY_MATH_FORMULAS_SCROLLING = 60;   // 滚动中单批公式上限（≈60×1.27≈76ms）
   var LAZY_MATH_FORMULAS_IDLE = 200;       // 静止时单批公式上限（≈200×1.27≈254ms，静止可接受）
   var _lazyMathDeferStart = 0;          // 本批次开始被推迟的时刻
@@ -8545,7 +8553,13 @@
     //      滚动时几乎永远非空 ⇒ 拿它判会把"用户看得见的排版"无限推迟。
     //      正确判据 = **视口内是否还有占位块**（`_lazySyncNeeded` 或二分实测视口占位）。
     //   防饿死：最多推迟 `LAZY_MATH_DEFER_MAX`（1s），到点必排 ⇒ 公式不会永不上屏。
-    if (reason !== "force-deadline") {
+    // ⚠️ 2026-10-22 **可关开关**（Lead 实测 deferral 为负收益，且跨运行比较不可靠）：
+    //   同口径 5 轮：`40474734`（无 defer）median 273ms/CV 28%；`8cc1da1c`（+defer）median 381ms/CV 68%
+    //   ⇒ **deferral 方向证伪**（中位 +108ms、长尾 1345ms）。
+    //   推断：推迟 typeset 期间那些块**仍占着视口位置**、物化并没变快；而 1s 上限造成"到点集中爆排" ⇒ 长尾。
+    //   保留为开关是为了能在**同一运行内 A/B**（关→开→开→关交替，消除跨运行/缓存顺序效应）。
+    //   默认 **false**（当前实测负收益）。置 true 可复现 defer 行为。
+    if (_deferEnabled() && reason !== "force-deadline") {
       var nowMs = (window.performance && performance.now) ? performance.now() : Date.now();
       if (!_lazyMathDeferStart) _lazyMathDeferStart = nowMs;
       var deferredTooLong = (nowMs - _lazyMathDeferStart) >= LAZY_MATH_DEFER_MAX;
