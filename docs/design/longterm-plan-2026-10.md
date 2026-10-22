@@ -625,6 +625,40 @@ t78-drag-pred-base.json: result.drag.maxMat = 110（限 240）
 ```
 ⇒ 标准门禁 158、连击拖拽 110，**两种场景都不超**。task-78 保持"需复核方补场景"。
 
+### W3.2 合入（`9c940796`）与口径澄清（第 90 轮）
+
+**`9c940796`** `perf(lazy): W3.2 第二遍向上长帧归因与修法` —— 由 **W3.2 原 agent** 提交（不是我，也不是重做 agent），
+实现：`_mmdSvgCache`（theme+src 为键、命中换 id、**64 条 FIFO**、`window.__MEMORIA_MMD_CACHE` 运行时开关）
++ typeset/淘汰批运行时覆盖。
+
+**Lead 复核（刚跑，全部 PASS）**
+```
+node --check app.js / markdown-preview.js   PASS
+blockquote 80 / trailing 62 / discipline    PASS
+run_lazy_gate.py    6/6 PASS（27.7s）
+run_interaction.py  12/12（失败 0，41.1s）
+```
+
+**⚠️ 口径澄清（重要，我此前给过一组"57 对样本"数字）**：
+那组 `median/p90/max` 是我用**临时脚本**按 `rounds[].down/up` 里 **`counters.max_frame_ms`** 聚合的，
+**脚本未落盘**（不可复现）。重做 agent 用 harness 自带的 `rows[].ratio = upMax/downMax` 聚合，得到不同数字：
+```
+A: median 0.919 / p90 1.938 / max up-frame 153ms
+B: median 0.882 / p90 1.540 / max up-frame 122.4ms
+```
+⇒ **两者都指向 B 更好，但绝对值不同。** 后续**以 harness 的 `rows[].ratio` 与绝对 `up` 帧 ms 为准**，
+我此前的临时聚合数字**不得再被引用**。
+
+**⇒ 教训补充**：**临时聚合脚本必须落盘**（否则"我算过一个数"无法复核，等于没有证据）。
+应把该聚合写成 `scripts/benchmark/surface/_agg_updown.py` 之类并入库。
+
+### 并发写秩序（第 90 轮，再次需要显式排他）
+当前同一时间有三个写者/读者涉及 `app.js` / `markdown-preview.js`：
+① W3.2 原 agent（已提交 `9c940796`，可能仍在跑）
+② 重做 agent（`ff918bba`，**未写入任何文件**，主动报告冲突 —— 正确行为）
+③ Lead（已停止对 `src/**` 的任何写操作）
+**裁决：`9c940796` 即为 W3.2 的收口实现；重做 agent 转为只读独立验证。**
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
