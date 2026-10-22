@@ -454,4 +454,31 @@ E28 往返 80/80 未退化；12 剧本 12/12。
 
 **未验证**：打包态 WebView2 + 真实中文输入法；IME 组合结束后的尾随空格提交仅代码路径判断。
 
+### W1 第 18 轮：task-70 堆泄漏**定位并修复**（`1094778d`）—— 根因是 MathJax MathList
+
+**根因（HeapSnapshot + retainer 链实证）**：`Window.MathJax → startup → document → math(MathList)
+→ list.next → data → MathItem → typesetRoot → <mjx-container>`。
+淘汰把 `<mjx-container>` 换出成 placeholder 后，**MathItem 仍被 `document.math` 持有** ⇒ 整棵 SVG 子树不可回收。
+修复前 `document.math` **16 → 2317 条，2317/2317 `isConnected=false`**。
+因果验证：`MathJax.typesetClear()` 后 GC ⇒ 85.02 → 22.24 MB、DOM 383,390 → 65,341。
+
+**次因**：`BlockIndex.domEl` 仍指向被换出元素 ⇒ mermaid `SVGSVGElement` 被 `byOrder → domEl` 钉住。
+
+**已排除（有证据）**：`_lazyBlockEls` / `_lazyHiddenByBatch` / `_lazyMathQueue` / `_lazyPending` /
+`_lazyLockedEls` / `_previewDomCache` / 事件监听（930→930 不变）。
+
+**修法**（`app.js` +83/−1）：① 换出含公式块后批量 `typesetClear`；② `_purgeDetachedMathItems()` 只清
+`isConnected=false` 的 item；③ 换文档/整篇重渲前清旧 preview MathItem；④ 换出时同步 `BlockIndex.domEl` 为新占位。
+
+**结果**：回顶+GC **85.13 → 20.99 MB（−75.3%）**；MathItems 2317 → **9**；detached DOM 22,542 → 2,033；
+`#preview` 恒定 4,018；3 遍滚动 20.97/21.40/21.58 MB（+2.0%/+0.8%）。
+
+**验收口径修正（重要）**：冷打开 16.19 → 21.58（**+33.3%，字面未过 ±20%**）。
+差值 ≈3.37MB 是 **V8 一次性 JIT/字节码**（InstructionStream +2.17 等），第 2/3 遍不再增长 ⇒ 非可达泄漏。
+以预热后第 1 遍为基线为 **+2.9%**。
+⇒ **门禁改为「第 2 遍起相对第 1 遍 ≤10%」或允许一次性 JIT 预热**（原 ±20% 从冷打开比较对 V8 不合理）。
+
+**未验证**：进程 Working Set（用户报的 69.5–165MB 是工作集，本次是 CDP JS heap 计数器，**量纲不同**）；
+release 包（无 remote debugging）未复测；编辑/灯箱/mermaid/字体缩放长时 soak 未做。
+
 
