@@ -8025,13 +8025,17 @@
   // 若后续出现"块更复杂导致单批仍超 100ms"，继续降到 50 —— **有实测依据才调，不凭感觉改**。
   var LAZY_FLUSH_MAX = 100;
 
-  // 公式数上限。**依据实测**（Lead，真拖拽 08 章）：
-  //   · 每公式 typeset 1.270ms（不是 0.6 —— 之前忽略了单次调用开销与块级公式更贵）
-  //   · 每帧 = "物化 100 块 + 排 50~119 公式"叠加 ⇒ maxGap 350ms
-  //   · 目标 100ms − DOM(100块≈50ms) = 50ms 给 typeset ⇒ 50/1.27 ≈ 39（贴边）
-  //   ⇒ 设 32（≈41ms），留 ~10ms 余量吸收抖动。
-  //   若仍越线：32→24→16 或 块数 100→50，**由实测决定，不盲调**。
-  var LAZY_FLUSH_MAX_FORMULAS = 32;
+  // 公式数上限 —— **当前不生效（0 = 关闭）**。
+  //
+  // 【为什么不启用】2026-10-22 实测 A/B（Lead，08 章真拖拽）：
+  //   v4（本上限关闭）：9 次 typeset 调用 → 574.1ms / 452 公式 → **1.270 ms/公式**
+  //   v5（本上限 = 32）：19 次 typeset 调用 → 1244.7ms / 445 公式 → **2.797 ms/公式**（2.2×）
+  //   ⇒ **同样公式量、调用次数翻倍 ⇒ 总成本翻倍**：`typesetPromise` 每次调用有显著**固定开销**，
+  //     批次越碎越亏（U 形曲线：批次减少省下的主线程峰值，被固定开销反噬掉）。
+  //   ⇒ 32 是**过度优化**。保留代码与 `_countBlockFormulas`（纯 AST 计数，另有用处），
+  //     但**待"物化/排版解耦"落地后重新评估**——解耦后 typeset 调用次数由合并策略决定，
+  //     与物化批次数脱钩，届时本上限才可能重新有意义。
+  var LAZY_FLUSH_MAX_FORMULAS = 0;   // 0 = 不限制（回到 v4 配置：块 100 / 无公式上限）
 
   function _lazyFlushNow() {
     if (!_lazyPending || !_lazyPending.size) return;
@@ -8053,7 +8057,8 @@
     }
     // ★ 2026-10-22：**双上限**（块数 + 公式数，先到者生效）。按 AST 累计本批公式数，
     //   超过 `LAZY_FLUSH_MAX_FORMULAS` 就把超额块截到 overflow。公式数是纯 AST 计数（不读 DOM）。
-    if (pendingArr.length) {
+    //   ⚠️ `LAZY_FLUSH_MAX_FORMULAS <= 0` ⇒ **不限制**（当前即此态：实测批次数增加会放大 typeset 固定开销）。
+    if (pendingArr.length && LAZY_FLUSH_MAX_FORMULAS > 0) {
       var fAcc = 0, fCut = pendingArr.length;
       for (var fi = 0; fi < pendingArr.length; fi++) {
         var _f = _countBlockFormulas(_doc.blocks[pendingArr[fi]]);
@@ -8092,20 +8097,20 @@
 
     if (!made.length) return;
 
-    // 对新物化块排版（只排这些块，进 _mathPending 链，保证"已请求批次排完"语义）
+    // ★ 2026-10-22「物化/排版**解耦**」：不再"每批 flush ⇒ 立即 typeset 该批"。
+    //
+    // 依据实测（Lead，08 章真拖拽 A/B）：
+    //   v4（每批一次 typeset）9 次调用 → 574.1ms / 452 公式 → 1.270 ms/公式
+    //   v5（批次更碎）        19 次调用 → 1244.7ms / 445 公式 → 2.797 ms/公式（2.2×）
+    //   ⇒ `typesetPromise` **每次调用有显著固定开销** ⇒ 调用次数与成本正相关 ⇒ 应**合并**。
+    // 做法：本批物化出的含公式块先**累积**到 `_lazyMathQueue`，由一个合并器在 idle 里**一次性**排掉；
+    //   拖到底期间 6 批物化 ⇒ 预期只触发 1–2 次 typeset（而非 6 次）。
+    // **必须保证公式不会长期不排** ⇒ `_lazyMathQueueTimer` 硬上限 `LAZY_MATH_MERGE_MAX_WAIT`（500ms）必排。
     if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
       var withMath = made.filter(function (el) {
         return el && el.querySelector && (el.querySelector(".-math, .-math-block") || el.classList.contains("-math-block"));
       });
-      if (withMath.length) {
-        var token = state.previewToken;
-        var prev = state._mathPending;
-        var chain = prev && typeof prev.then === "function" ? prev.catch(function () {}) : Promise.resolve();
-        state._mathPending = chain.then(function () {
-          if (token !== state.previewToken) return Promise.resolve();
-          return MathJax.typesetPromise(withMath).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
-        });
-      }
+      if (withMath.length) _lazyEnqueueMath(withMath);
     }
     // 补齐行内公式标记（排版后会替换 .-math ⇒ mjx-container，需重打 data--inline-math）
     var token2 = state.previewToken;
@@ -8114,8 +8119,104 @@
       prev2.then(function () { if (token2 === state.previewToken) { try { _tagInlineMathContainers($("#preview"), _doc); } catch (_) {} } });
     }
     // 代码高亮 / 链接后处理（新块可能有 code / wikilink）
+    // ⚠️ `_applyCodeHighlightToPreview` **故意跳过** `code.language-mermaid`（mermaid 由 renderMermaidBlocks 接管）
+    // ⇒ 新物化的 mermaid 块**必须**显式交给 mermaid 渲染，否则永远停在 `<pre><code>` 源码态（2026-10-22 交互门禁实测到）。
     try { _applyCodeHighlightToPreview(container); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+    _lazyRenderMermaidIn(made);
   }
+
+  /** 对新物化的块渲染 mermaid（只处理这批块里的 `code.language-mermaid`）。
+   *
+   *  ⚠️ 2026-10-22 P0 修复：滚动批次原先**没有**这一步 ⇒ 物化后的 mermaid 永远显示源码
+   *  （交互文本门禁实测：golden 是已渲染的 SVG/CSS，actual 是 `graph LR x["x(k)"] --> ...` 源码）。
+   *  首屏路径（renderPreview）与编辑路径（_paintBlockSpan）都有对应调用，唯独滚动批次漏了。
+   *  `renderMermaidBlocks(scope)` 接受任意容器 ⇒ 传入每个新块即可，作用域天然限定在本批。 */
+  function _lazyRenderMermaidIn(madeEls) {
+    var MP = window.MemoriaMarkdownPreview;
+    if (!MP || typeof MP.renderMermaidBlocks !== "function" || !madeEls || !madeEls.length) return;
+    for (var i = 0; i < madeEls.length; i++) {
+      var el = madeEls[i];
+      if (!el || !el.querySelector) continue;
+      // 只有确实含 mermaid 源码的块才调（避免每块都起一次渲染流程）
+      if (!el.querySelector("code.language-mermaid")) continue;
+      try { MP.renderMermaidBlocks(el); } catch (e) { log("render", "lazy mermaid ERR " + ((e && e.message) || e)); }
+    }
+  }
+
+  // ══ 2026-10-22「物化 / 排版解耦」的合并器 ═══════════════════════════════════════
+  // 目的：`typesetPromise` **每次调用有显著固定开销**（实测 v4 1.27ms/公式 vs v5 更碎批次 2.80ms/公式）。
+  //   物化批次（每批 ≤100 块）与 typeset 调用**脱钩**：把待排块累积起来，合并成一次调用。
+  // 三条保证：
+  //   ① **不会长期不排**：硬上限 `LAZY_MATH_MERGE_MAX_WAIT = 500ms` 到点必排；
+  //   ② **不会永久漏排**：token 守卫失败（文档已换）时，**已累积的块不丢弃**（它们已在 DOM 里，
+  //      但本函数负责"已请求"语义）—— 做法是把队列**保留**并重试一次调度，由下一轮/新文档收走；
+  //   ③ **不重复排**：排完即清空队列；对已排过的元素再排是幂等空扫，但有成本，故仍避免。
+  var _lazyMathQueue = null;        // Array<Element>：待排版的块（本批新物化且含公式）
+  var _lazyMathQueueTimer = null;   // 硬上限计时器
+  var LAZY_MATH_MERGE_MAX_WAIT = 500;   // ms：合并窗口上限（到点必排，保证公式不会长期不显示）
+  var LAZY_MATH_MERGE_IDLE = 120;       // ms：空闲合并窗口（拖到底期间把多批合并成一次）
+
+  /** 把一批"新物化且含公式"的块加入待排队列，并调度合并排版。 */
+  function _lazyEnqueueMath(els) {
+    if (els && els.length) {
+      if (!_lazyMathQueue) _lazyMathQueue = [];
+      for (var i = 0; i < els.length; i++) _lazyMathQueue.push(els[i]);
+    }
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return;   // 空队列 ⇒ 无需调度
+    _lazyScheduleMathFlush();
+  }
+
+  /** 调度一次合并排版（幂等：已在排/已定时不重复建）。
+   *  ⚠️ 单独抽出来是必须的：**token 回收路径**要"队列已填、只补调度"，
+   *  若复用 `_lazyEnqueueMath([])` 会被它的空数组早退挡掉 ⇒ 回收的块**永远不排**（正是要修的漏排）。 */
+  function _lazyScheduleMathFlush() {
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return;
+    // 硬上限：从**首次入队**起算，500ms 后无条件排（即便还在持续物化）⇒ 公式不会长期停在 `$…$`
+    if (!_lazyMathQueueTimer) {
+      _lazyMathQueueTimer = setTimeout(function () {
+        _lazyMathQueueTimer = null;
+        _lazyFlushMathNow("max-wait");
+      }, LAZY_MATH_MERGE_MAX_WAIT);
+    }
+    // 空闲合并窗口：短延迟后合并排（拖到底时多批会合并成一次）
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(function () { _lazyFlushMathNow("idle"); }, { timeout: LAZY_MATH_MERGE_IDLE });
+    } else {
+      setTimeout(function () { _lazyFlushMathNow("timer"); }, LAZY_MATH_MERGE_IDLE);
+    }
+  }
+
+  /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。 */
+  function _lazyFlushMathNow(reason) {
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return;
+    var batch = _lazyMathQueue;
+    _lazyMathQueue = null;
+    if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
+    if (!window.MathJax || typeof window.MathJax.typesetPromise !== "function") return;
+
+    // token 守卫：**失败不丢弃**（这些块已在 DOM，仍需要排版）⇒ 放回队列并重试调度。
+    //   ⚠️ 只有 token 变化且**新文档已经重渲**时才真正作废；此处保守地"放回 + 重排一次"，
+    //   避免"已被抛弃的批次里的块再没人排"（交互门禁实测的漏排路径）。
+    var token = state.previewToken;
+    var prev = state._mathPending;
+    var chain = prev && typeof prev.then === "function" ? prev.catch(function () {}) : Promise.resolve();
+    state._mathPending = chain.then(function () {
+      if (token !== state.previewToken) {
+        // 文档已换 ⇒ 这批 DOM 多半已脱离文档。仍连上的才值得重排；脱钩的直接放掉（避免内存泄漏）。
+        var still = batch.filter(function (el) { return el && el.isConnected; });
+        if (still.length) {
+          log("lazy", "math merge: token changed, re-queue connected blocks=" + still.length);
+          if (!_lazyMathQueue) _lazyMathQueue = [];
+          for (var i = 0; i < still.length; i++) _lazyMathQueue.push(still[i]);
+          _lazyScheduleMathFlush();   // ★ 显式只补调度（不能走 _lazyEnqueueMath([])，那里会被空数组早退挡掉）
+        }
+        return Promise.resolve();
+      }
+      log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length);
+      return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+    });
+  }
+
 
   /** 拆掉滚动物化（换库/换文档/切走时清理，避免观察已移除的占位）。 */
   function _teardownLazyScrollMaterialization() {
