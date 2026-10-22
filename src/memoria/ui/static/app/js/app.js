@@ -8668,6 +8668,251 @@
     return stale.length;
   }
 
+  // ════ 2026-10-23 task-72：**块级排版缓存（MathJax typeset 结果复用）** ════════════
+  //
+  // 问题（W3.2 收口实测，成因已定位）：
+  //   · 45% 位置：单个 300 字矩阵 math_block 一次 typeset 40–60ms（按公式数切批切不动：math_block 恒计 1）；
+  //   · 70%/90%：向上"到达即冷启动"，一窗内 typeset 65–75ms（下行只要 15–30ms）。
+  //   ⇒ 换出再进入视口的块**每次都重新 typeset**，而内容完全没变。
+  //
+  // 做法：把 **mjx-container 的 outerHTML**（纯字符串，不是 DOM 节点）按
+  //   `fontSize | display | formula` 为键缓存；重新物化时直接写回 `innerHTML`，跳过 typeset。
+  //   选"字符串"而不是"DOM clone"是**内存与泄漏两方面的硬约束**：
+  //     ① 字符串不持有 DOM 节点、不持有 MathJax 内部对象（MathItem/MathList）
+  //        ⇒ 不会像 task-70 之前那样把 detached 的 MathItem 钉在堆上；
+  //     ② 缓存**从不注册**到 `document.math`；换出时仍走既有 `_clearMathJaxWithin` /
+  //        `_purgeDetachedMathItems`，原 MathItem 照常被清掉 ⇒ detached 恒 0。
+  //   反过来说：**绝不能缓存 MathItem 或仍带着 MathItem 引用的活动 DOM**，否则泄漏复活。
+  //
+  // 上限与开关（硬性验收）：
+  //   · 条数 ≤ `TS_MAX_ENTRIES`（默认 512）、字符 ≤ `TS_MAX_CHARS`（默认 2.5M，~2.5MB 单字节串），
+  //     超出按插入序 FIFO 逐出（命中不刷新序；本缓存是"内容→字节"映射，无时序语义）；
+  //   · `window.__MEMORIA_TYPESET_CACHE === false` ⇒ 完全旁路（store/apply 都不做），行为与旧实现逐字节一致；
+  //   · 换文档（`state.doc.path` 变化）⇒ 整表清空（缓存只对同一篇文档有效，也避免跨文档的公式编号串味）。
+  //
+  // 为什么键里带 fontSize：MathJax 的 SVG 尺寸是 ex 单位、依赖外层字号；Ctrl+± 后旧产物不可复用。
+  // 为什么键里带 display：`$$…$$` 与 `$…$` 的容器属性（display=true）不同。
+  // 为什么用公式原文而不是 hash 作键：公式源通常远小于产物字节，精确键可避免 hash 碰撞导致的错公式。
+  var TS_MAX_ENTRIES = 512;
+  var TS_MAX_CHARS = 2500000;
+  var _tsCache = (typeof Map === "function") ? new Map() : null;
+  var _tsChars = 0;
+  var _tsDocKey = null;
+  var _tsRestoreSeq = 0;
+  var _tsRestoredEls = (typeof WeakSet === "function") ? new WeakSet() : null;   // 已完整复用、无需再排版的块
+  var _tsStats = { enabled: true, stores: 0, hits: 0, misses: 0, evictions: 0,
+                   skipped: 0, restoreMs: 0, storeMs: 0, entries: 0, chars: 0 };
+
+  /** 运行时开关：默认开；`window.__MEMORIA_TYPESET_CACHE === false` 时完全旁路（同一 build A/B 用）。 */
+  function _tsEnabled() {
+    if (!_tsCache) return false;
+    return window.__MEMORIA_TYPESET_CACHE !== false;
+  }
+  function _tsMaxEntries() {
+    var v = window.__MEMORIA_TYPESET_CACHE_MAX_ENTRIES;
+    return (typeof v === "number" && v >= 0) ? v : TS_MAX_ENTRIES;
+  }
+  function _tsMaxChars() {
+    var v = window.__MEMORIA_TYPESET_CACHE_MAX_CHARS;
+    return (typeof v === "number" && v >= 0) ? v : TS_MAX_CHARS;
+  }
+
+  /** 换文档 ⇒ 清空（同文档内编辑不失效：键是公式原文，改过的公式自然不会命中）。 */
+  function _tsSyncDoc() {
+    var p = (state && state.doc && state.doc.path) ? String(state.doc.path) : "";
+    if (p !== _tsDocKey) {
+      _tsCache.clear(); _tsChars = 0; _tsDocKey = p;
+      _tsStats.hits = 0; _tsStats.misses = 0; _tsStats.stores = 0; _tsStats.evictions = 0;
+      _tsStats.skipped = 0; _tsStats.restoreMs = 0; _tsStats.storeMs = 0;
+    }
+  }
+
+  /** 一个块里"会被 MathJax 排版的公式"列表（**DOM 文档序**；与 render-core 的渲染顺序一致）。
+   *  `math_block` ⇒ 单条 display 公式；其它块 ⇒ 递归收集 `math_inline`。
+   *  ⚠️ 只用于"数量对得上才缓存"：表格单元格里的 `$…$` 由文本二次解析，AST 里看不到 ⇒
+   *  数量必然对不上 ⇒ 自动跳过（宁可少缓存，不可错配公式）。 */
+  function _tsFormulasOf(block) {
+    if (!block) return [];
+    if (block.type === "math_block") {
+      return [{ f: String(block.formula == null ? "" : block.formula), d: true }];
+    }
+    var out = [];
+    function walk(n) {
+      if (!n) return;
+      if (n.type === "math_inline") {
+        out.push({ f: String(n.formula == null ? (n.content || "") : n.formula), d: false });
+        return;
+      }
+      if (n.children) for (var i = 0; i < n.children.length; i++) walk(n.children[i]);
+      if (n.items) {
+        for (var j = 0; j < n.items.length; j++) {
+          var it = n.items[j];
+          if (it && it.children) for (var k = 0; k < it.children.length; k++) walk(it.children[k]);
+        }
+      }
+    }
+    walk(block);
+    return out;
+  }
+
+  function _tsKey(item) {
+    var fs = Math.round((_pvM().fs || 0) * 100) / 100;
+    return (item.d ? "D" : "I") + "|" + fs + "|" + item.f;
+  }
+
+  function _tsPut(key, html) {
+    if (!html || _tsCache.has(key)) return false;
+    _tsCache.set(key, html);
+    _tsChars += html.length;
+    var maxE = _tsMaxEntries(), maxC = _tsMaxChars();
+    while ((_tsCache.size > maxE || _tsChars > maxC) && _tsCache.size > 1) {
+      var k0 = _tsCache.keys().next().value;
+      var v0 = _tsCache.get(k0);
+      _tsCache.delete(k0);
+      _tsChars -= (v0 ? v0.length : 0);
+      _tsStats.evictions++;
+    }
+    _tsStats.stores++;
+    return true;
+  }
+
+  /** 给缓存串里的 SVG `id="MJX-<n>-…"` 换成本次复用的唯一前缀。
+   *  原因：MathJax 的 id 是**文档级递增**的（`fontCache: local` 下每个容器自带 `<defs>`）；
+   *  同一公式在视口里出现两次时若沿用原 id 会产生重复 id。换前缀后每个容器自洽。
+   *  只改前缀（`MJX-<n>-` 在 id 与 `xlink:href` 里同形出现），不动 `<use>`/`<path>` 的引用关系。 */
+  function _tsRewriteIds(html) {
+    _tsRestoreSeq++;
+    var p = "MJXT72-" + _tsRestoreSeq + "-";
+    return html.replace(/MJX-\d+-/g, p);
+  }
+
+  /** 缓存一批**刚 typeset 完成**的块。只在块仍 connected 时调用（换出的块不再序列化）。 */
+  function _tsStoreEls(els) {
+    if (!_tsEnabled() || !els || !els.length) return 0;
+    _tsSyncDoc();
+    var t0 = _evProf ? _evNow() : 0;
+    var n = 0;
+    var blocks = _doc && _doc.blocks ? _doc.blocks : null;
+    if (!blocks) return 0;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (!el || !el.isConnected || !el.getAttribute) continue;
+      var idx = parseInt(el.getAttribute("data--block-index"), 10);
+      if (isNaN(idx) || idx < 0 || idx >= blocks.length) continue;
+      var spec = _tsFormulasOf(blocks[idx]);
+      if (!spec.length) continue;
+      var cs = el.querySelectorAll("mjx-container");
+      if (cs.length !== spec.length) { _tsStats.skipped++; continue; }   // 对不上 ⇒ 不猜
+      for (var j = 0; j < spec.length; j++) {
+        var key = _tsKey(spec[j]);
+        if (_tsCache.has(key)) continue;
+        var html = "";
+        try { html = cs[j].outerHTML || ""; } catch (_) {}
+        if (html && _tsPut(key, html)) n++;
+      }
+    }
+    if (_evProf && t0) _tsStats.storeMs += _evNow() - t0;
+    _tsStats.entries = _tsCache.size; _tsStats.chars = _tsChars;
+    return n;
+  }
+
+  /** 扫描一个容器（preview / 某批块）里所有已排版块并缓存（全量 typeset 收尾用）。 */
+  function _tsStoreWithin(root) {
+    if (!_tsEnabled() || !root || !root.querySelectorAll) return 0;
+    var cs;
+    try { cs = root.querySelectorAll("mjx-container"); } catch (_) { return 0; }
+    if (!cs.length) return 0;
+    var seen = [], seenSet = (typeof Set === "function") ? new Set() : null;
+    for (var i = 0; i < cs.length; i++) {
+      var b = null;
+      try { b = cs[i].closest ? cs[i].closest(".-src-block") : null; } catch (_) {}
+      if (!b) continue;
+      if (seenSet) { if (seenSet.has(b)) continue; seenSet.add(b); }
+      seen.push(b);
+    }
+    return _tsStoreEls(seen);
+  }
+
+  /** 把缓存产物写回一个**刚 renderBlock 出来、尚未插入文档**的块。
+   *  @returns {boolean} true = 该块所有公式都命中（调用方据此跳过 typeset）。 */
+  function _tsApplyBlock(el, block) {
+    if (!_tsEnabled() || !el || !block) return false;
+    var spec = _tsFormulasOf(block);
+    if (!spec.length) return false;
+    _tsSyncDoc();
+    var t0 = _evProf ? _evNow() : 0;
+    var ok = false, hitN = 0;
+    try {
+      if (block.type === "math_block") {
+        var html = _tsCache.get(_tsKey(spec[0]));
+        if (html) {
+          el.innerHTML = _tsRewriteIds(html);
+          var c0 = el.firstElementChild;
+          if (c0 && c0.nodeName === "MJX-CONTAINER") c0.contentEditable = "false";
+          ok = true; hitN = 1;
+        }
+      } else {
+        var spans = el.querySelectorAll(".-math");
+        if (spans.length === spec.length) {
+          // 先全部取好再改，避免"改了一半才发现对不上"
+          var htmls = new Array(spec.length), n = 0;
+          for (var i = 0; i < spec.length; i++) {
+            var h = _tsCache.get(_tsKey(spec[i]));
+            htmls[i] = h || "";
+            if (h) n++;
+          }
+          if (n) {
+            for (var k = 0; k < spec.length; k++) {
+              if (!htmls[k]) continue;
+              spans[k].innerHTML = _tsRewriteIds(htmls[k]);
+              var c = spans[k].firstElementChild;
+              if (c && c.nodeName === "MJX-CONTAINER") {
+                c.setAttribute("data--inline-math", "true");
+                c.setAttribute("data-formula", spec[k].f);
+                c.contentEditable = "false";
+              }
+            }
+            hitN = n;
+            ok = (n === spec.length);
+          }
+        }
+      }
+    } catch (e) {
+      log("lazy", "typeset cache apply ERR " + ((e && e.message) || e));
+      ok = false;
+    }
+    if (hitN) {
+      _tsStats.hits += hitN;
+      if (_tsRestoredEls && ok) _tsRestoredEls.add(el);
+    }
+    if (!ok) _tsStats.misses += (spec.length - hitN);
+    if (_evProf && t0) _tsStats.restoreMs += _evNow() - t0;
+    _tsStats.entries = _tsCache.size; _tsStats.chars = _tsChars;
+    return ok;
+  }
+
+  function _tsWasRestored(el) {
+    return !!(_tsRestoredEls && el && _tsRestoredEls.has(el));
+  }
+
+  /** 只读统计（验收/诊断；不参与渲染）。 */
+  function _tsStatsSnapshot() {
+    return {
+      enabled: _tsEnabled(),
+      entries: _tsCache ? _tsCache.size : 0,
+      chars: _tsChars,
+      maxEntries: _tsMaxEntries(),
+      maxChars: _tsMaxChars(),
+      docKey: _tsDocKey,
+      stores: _tsStats.stores, hits: _tsStats.hits, misses: _tsStats.misses,
+      evictions: _tsStats.evictions, skipped: _tsStats.skipped,
+      restoreMs: Math.round(_tsStats.restoreMs * 100) / 100,
+      storeMs: Math.round(_tsStats.storeMs * 100) / 100,
+    };
+  }
+  try { window.__MEMORIA_TYPESET_CACHE_STATS = _tsStatsSnapshot; } catch (_) {}
+  try { window.__MEMORIA_TYPESET_CACHE_CLEAR = function () { _tsCache.clear(); _tsChars = 0; _tsDocKey = null; return 1; }; } catch (_) {}
+
   /** 建一个占位块元素（带连续编号 + 行号 + inline 高度 + aria-hidden）。 */
   function _makePlaceholder(block, i, doc) {
     var el = document.createElement("div");
@@ -8707,6 +8952,9 @@
     _lazyTouch = new Array(N);
     _lazyEvictSuspended = false;
     _lazyEvictCount = 0;
+    _lazyEvictQueuedPriority = 0;
+    _lazyEvictPendingSkips = 0;
+    _lazyEvictPressureSchedules = 0;
     _lazyHeightDriftPx = 0;      // 2026-10-22 1d：新文档 ⇒ 高度漂移计数从 0 开始（旧 DOM 的漂移无意义）
     _lazyAnchorFixes = 0;
     var frag = document.createDocumentFragment();
@@ -9010,6 +9258,8 @@
       _lazyRenderMermaidIn(made);
       _lazyPostProcessNewBlocks(made);
       try { _applyCodeHighlightToPreview(preview); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
+      // task-78：滚动中一旦工作集超压，立即把淘汰升到 P1 排队（不等 50ms 的 scroll-stop）。
+      _lazyMaybeScheduleEvict();
     }
     return made.length;
   }
@@ -9096,6 +9346,7 @@
     // 2026-10-22 1c：换文档/缓存搬回 ⇒ 解除 `__MEMORIA_MATERIALIZE_ALL` 的淘汰暂停
     //   （该暂停只属于"当时那份被强制全量物化的 DOM"，不能跨文档残留）。
     _lazyEvictSuspended = false;
+    _lazyEvictQueuedPriority = 0;
     try { log("lazy", "pipeline epoch→" + (ep == null ? "n/a" : ep) + " (" + reason + ")"); } catch (_) {}
   }
 
@@ -9206,6 +9457,8 @@
     }
 
     if (!made.length) return;
+    // task-78：物化批次同样检查压力 —— P1 物化连续非空时，P3 淘汰会被无限推后。
+    _lazyMaybeScheduleEvict();
 
     // ★ 2026-10-22「物化/排版**解耦**」：不再"每批 flush ⇒ 立即 typeset 该批"。
     //
@@ -9797,6 +10050,7 @@
     // 2026-10-22 1c：工作集淘汰状态一并作废（旧块的 LRU 时钟/暂停标记对新 DOM 无意义）
     _lazyTouch = null;
     _lazyEvictSuspended = false;
+    _lazyEvictQueuedPriority = 0;
   }
 
   // ════ 2026-10-22 阶段1c：**工作集淘汰**（缺页装入 + 换出）════════════════════════
@@ -9829,6 +10083,20 @@
   var _lazyTouch = null;            // Array<number>：每个块最近一次物化/进入工作集的时刻（LRU 时钟）
   var _lazyEvictCount = 0;          // 本文件累计淘汰块数（诊断/metrics）
   var _lazyEvictSuspended = false;  // `__MEMORIA_MATERIALIZE_ALL`（门禁强制全量）期间/之后禁用淘汰
+
+  // 2026-10-23 task-78：**淘汰防饥饿（pressure 升级）**。
+  //   实测根因（见 results/t78-*）：惰性淘汰是 P3，物化是 P1、typeset 是 P2。长滚期间
+  //   P1/P2 任一条队列持续非空时，调度器按优先级取作业 ⇒ P3 可以连续多帧甚至整轮滚动
+  //   一次都跑不到。08 章 4001 块上注入 P2 积压后，6s 连续拖动里 `evictTotal` 只涨 49，
+  //   物化块冲到 3228（= 只装入不回收）——这正是「偶发超 8 屏」的机制，且与机器快慢有关。
+  //   对策：物化块数超过 `LAZY_EVICT_PRESSURE_SCREENS` 屏时，把**同一个** `lazy_evict`
+  //   作业以 P1 排队（仍在调度器里执行，不新增任何手写调度）；压力解除后回到 P3。
+  //   另外：因「物化优先」让路时不再把淘汰链丢掉（见 `_lazyEvictNow` ⑤ 前的 re-arm）。
+  var LAZY_EVICT_PRESSURE_SCREENS = 4;
+  var _lazyEvictQueuedPriority = 0;   // 0 = 当前没有已排队的 lazy_evict；1/3 = 该作业的优先级
+  var _lazyEvictPendingSkips = 0;     // 因 `_lazyPending` 非空而让路的次数（诊断）
+  var _lazyEvictPressureSchedules = 0;// 因超过压力阈值而升到 P1 的次数（诊断）
+
 
   // 2026-10-22 task-76：**淘汰单批耗时分解**（默认关闭 ⇒ `_evProf` 为 null，只多一次判空）。
   //   动机：`counters().max_frame_ms` 只给"整批最慢一次"，无法回答"淘汰 / typesetClear / BlockIndex 同步
@@ -10055,7 +10323,33 @@
     };
   }
 
-  /** 淘汰一批：把保留窗口之外的已物化块换回占位。**只应由调度器 P3 作业调用**。 */
+  /** 当前工作集是否已超过"压力阈值"（约 `LAZY_EVICT_PRESSURE_SCREENS` 屏的块数）。
+   *  只用于**调度优先级**与"是否给物化让路"的判据 —— 不会因此换出保留窗口内的块。
+   *  成本：1 次 `querySelectorAll` + 1 次 `children.length`（O(块数)，每批一次，可忽略）。 */
+  function _lazyEvictIsPressure(cc, pane) {
+    try {
+      if (!cc || !pane) return false;
+      var viewH = pane.clientHeight || pane.getBoundingClientRect().height || 720;
+      var perScreen = Math.max(1, Math.ceil(viewH / Math.max(1, _pvM().lhPx)));
+      var ph = cc.querySelectorAll(".-pv-placeholder").length;
+      var mat = cc.children.length - ph;
+      return mat > perScreen * LAZY_EVICT_PRESSURE_SCREENS;
+    } catch (_) { return false; }
+  }
+
+  /** 物化之后调用：只有确实超过压力阈值才排 P1 淘汰；否则什么都不做
+   *  （常规节奏仍由滚动停止 / 淘汰续排驱动，避免每批物化都多排一个作业）。 */
+  function _lazyMaybeScheduleEvict() {
+    try {
+      var preview = $("#preview");
+      var cc = preview ? preview.querySelector(".-preview-content") : null;
+      var pane = document.getElementById("preview-pane");
+      if (!cc || !pane) return;
+      if (_lazyEvictIsPressure(cc, pane)) _lazyScheduleEvict(true);
+    } catch (_) {}
+  }
+
+  /** 淘汰一批：把保留窗口之外的已物化块换回占位。**只应由调度器作业调用**。 */
   function _lazyEvictNow(reason) {
     if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return 0;
     if (_lazyEvictSuspended) return 0;
@@ -10070,10 +10364,19 @@
       if (!cc || !cc.children.length) return 0;
       // 灯箱打开时不换出：放大中的图可能就在待换出的块里，移出文档会让灯箱引用空节点。
       if (document.querySelector(".-lightbox-overlay")) return 0;
-      // 物化优先：还有待物化块 ⇒ 本帧让路（`_lazyFlushNow` 结束会重新排淘汰）。
-      if (_lazyPending && _lazyPending.size) return 0;
       var pane = document.getElementById("preview-pane") || preview.parentElement;
       if (!pane) return 0;
+      // task-78：超过压力阈值时**不再**给物化让路 —— 否则「P1 连续非空 ⇒ P3 永远排不到」
+      //   会让工作集只涨不落（注入 P2 积压实测 6s 冲到 3228 块）。淘汰只动保留窗口外的块，
+      //   不会影响视口可见性；压力解除后立即回到「物化优先」。
+      var _pressureNow = _lazyEvictIsPressure(cc, pane);
+      // 物化优先：还有待物化块 ⇒ 本帧让路；但**必须把淘汰链续上**，不能因一次让路就
+      //   永久丢掉调度（滚动停止的 50ms debounce 在连续滚动时不会触发 ⇒ 旧实现会一直不回收）。
+      if (!_pressureNow && _lazyPending && _lazyPending.size) {
+        _lazyEvictPendingSkips++;
+        _lazyScheduleEvict(false);
+        return 0;
+      }
 
       var blocks = _doc.blocks, N = blocks.length;
       if (!_lazyTouch || _lazyTouch.length !== N) _lazyTouch = new Array(N);
@@ -10331,7 +10634,7 @@
         var kept = Math.max(0, materializedBefore - n);
         log("lazy", "evict: " + n + " blocks (kept=" + kept + ", viewport=" + keep.lo + ".." + keep.hi + ", reason=" + reason + ")");
         // 有余量 ⇒ 续排下一批（跨帧推进；单批仍受 LAZY_EVICT_BATCH_MAX 限制）
-        if (cand.length > batch.length) _lazyScheduleEvict();
+        if (cand.length > batch.length) _lazyScheduleEvict(_lazyEvictIsPressure(cc, pane));
       }
       if (_pf) {
         _pf.anchorMs += _evNow() - _pseg;
@@ -10364,21 +10667,32 @@
     }
   }
 
-  /** 调度一次工作集淘汰 —— **MemoriaScheduler P3 作业**（同键合并 ⇒ 任意多次请求只留一个）。
-   *  绝不在这里同步淘汰：滚动回调只 enqueue，重活留给调度器帧预算。 */
-  function _lazyScheduleEvict() {
+  /** 调度一次工作集淘汰 —— **MemoriaScheduler 作业**（同键合并 ⇒ 任意多次请求只留一个）。
+   *  绝不在这里同步淘汰：滚动回调只 enqueue，重活留给调度器帧预算。
+   *
+   *  @param {boolean} [pressure] 工作集已超压力阈值 ⇒ 以 P1 排队（防 P2 typeset / P1 物化
+   *    连续非空时 P3 被饿死）。压力解除后恢复 P3。
+   *  task-78：同一 key 只留一个作业；**不降级**已排队的 P1 作业（P3 请求不得把它顶掉）。 */
+  function _lazyScheduleEvict(pressure) {
     if (_lazyEvictSuspended) return;
     if (!_lazyMaterializeEnabled(_doc)) return;
     var S = _lazyJobScheduler();
     if (!S || typeof S.schedule !== "function") return;
+    var prio = pressure ? 1 : 3;
+    if (_lazyEvictQueuedPriority && prio >= _lazyEvictQueuedPriority) return;
+    _lazyEvictQueuedPriority = prio;
+    if (pressure) _lazyEvictPressureSchedules++;
     S.schedule({
       kind: "lazy_evict",
       key: "lazy-evict",
-      priority: 3,             // P3 后台：最晚于物化(P1)/排版(P2)，不抢可见性
+      priority: prio,          // P3 后台；压力时 P1（仍走调度器，不抢同步帧）
       replace: true,
       gen: (typeof S.epoch === "function") ? S.epoch() : 0,
       dropStale: true,
-      run: function () { _lazyEvictNow("scheduler"); },
+      run: function () {
+        _lazyEvictQueuedPriority = 0;
+        _lazyEvictNow("scheduler" + (pressure ? "-pressure" : ""));
+      },
     });
   }
 
@@ -10390,6 +10704,9 @@
       totalBlocks: 0,
       evictTotal: _lazyEvictCount,
       keepScreens: LAZY_EVICT_KEEP_SCREENS,
+      pressureScreens: LAZY_EVICT_PRESSURE_SCREENS,
+      evictPressureSchedules: _lazyEvictPressureSchedules,
+      evictPendingSkips: _lazyEvictPendingSkips,
       suspended: !!_lazyEvictSuspended,
       // 2026-10-22 1d：换出高度稳定性指标 —— 累计 |本批 scrollHeight 变化|（px，越小越好；修复后≈0）
       heightDriftPx: Math.round(_lazyHeightDriftPx * 10) / 10,
@@ -16667,6 +16984,7 @@
       // 2026-10-22 1c：这是**门禁专用**的"强制全量物化"路径 ⇒ 全程禁用工作集淘汰，
       //   否则门禁按 DOM 统计内容时会把"被淘汰的块"误判成渲染缺失。下次 `_buildLazyPreview` 会重置。
       _lazyEvictSuspended = true;
+      _lazyEvictQueuedPriority = 0;
       if (!cc.querySelector(".-pv-placeholder")) return Promise.resolve(0);   // 幂等：已全物化/非惰性
 
       var total = _doc.blocks.length;
