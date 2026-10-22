@@ -861,6 +861,19 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)}
 
+    def import_image_base64(self, name: str, data: str) -> dict:
+        """剪贴板图片（base64 / data URL）入库，返回相对路径。
+
+        2026-10-22 E25：WebView2 粘贴图片只能拿到 `File`/`Blob`（无本地路径），
+        故新增本 RPC；**与 `import_image` 同一条落盘链**（`DocumentService` 内共用
+        `_import_image_bytes`：MD5 去重 + registry 语义不变），错误口径也一致
+        （`{"status": "error", "message": ...}`，前端据此显式报错）。
+        """
+        try:
+            return self._svc.import_image_base64(name, data)
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)}
+
     def list_images(self) -> dict:
         """列出 .memoria/images/ 全部图片资产（含注册状态：referenced / referencedBy）。"""
         try:

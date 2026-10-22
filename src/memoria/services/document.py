@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import base64
+import binascii
 import hashlib
 import json
 import logging
@@ -870,6 +872,22 @@ class DocumentService:
         ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".bmp", ".ico",
     })
 
+    # 剪贴板图片 MIME → 扩展名（粘贴时浏览器给的文件名可能没有扩展名）
+    _MIME_IMAGE_EXT = {
+        "image/png": ".png",
+        "image/jpeg": ".jpg",
+        "image/jpg": ".jpg",
+        "image/gif": ".gif",
+        "image/webp": ".webp",
+        "image/svg+xml": ".svg",
+        "image/bmp": ".bmp",
+        "image/x-icon": ".ico",
+        "image/vnd.microsoft.icon": ".ico",
+    }
+
+    # 剪贴板粘贴体积上限（解码前按 base64 长度估算，解码后再核对真实字节数）
+    _IMAGE_PASTE_MAX_BYTES = 20 * 1024 * 1024
+
     def images_dir(self) -> str:
         """知识库图片资产目录（KB 根/.memoria/images/）。"""
         if not self.kb_path:
@@ -884,6 +902,9 @@ class DocumentService:
           直接复用已有副本（返回其 relPath，`deduped=true`），不产生新副本
         - 重名策略：x.png → x-1.png → x-2.png（不覆盖、不报错，仅在同名且内容不同时触发）
         - 相对路径统一正斜杠：.memoria/images/x.png
+
+        2026-10-22 E25：落盘 / MD5 去重 / 重名追加全部收敛到 `_import_image_bytes`，
+        本函数只负责"读本地文件 + 前置校验"，与剪贴板 base64 入口共用同一条链。
         """
         if not self.kb_path:
             return {"status": "error", "message": "未打开知识库"}
@@ -894,9 +915,71 @@ class DocumentService:
             return {"status": "error", "message": f"不支持的图片格式: {ext or '(无扩展名)'}"}
         if not os.path.isfile(local_path):
             return {"status": "error", "message": "源文件不存在"}
+        try:
+            with open(local_path, "rb") as f:
+                data = f.read()
+        except OSError:
+            return {"status": "error", "message": "源文件不存在"}
+        return self._import_image_bytes(os.path.basename(local_path), data)
+
+    def import_image_base64(self, name: str, data: str) -> dict:
+        """把剪贴板图片（base64 或 data URL）写进 .memoria/images/。
+
+        2026-10-22 E25：WebView2 的剪贴板图片是 `File`/`Blob`，没有真实本地路径，
+        因此新增本入口；**不重写落盘逻辑**，与 `import_image` 共用 `_import_image_bytes`
+        （同样的扩展名白名单、MD5 内容去重、重名追加序号、相对路径口径）。
+
+        错误一律返回 `{"status": "error", "message": ...}`：非图片扩展名、非法 base64、
+        超过 20MB 上限、空内容。
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        raw_name = (name or "").strip() or "image.png"
+        b64 = (data or "").strip()
+        if b64.startswith("data:"):
+            head, _, b64 = b64.partition(",")
+            b64 = b64.strip()
+            if not os.path.splitext(raw_name)[1]:
+                mime = head[5:].split(";", 1)[0].strip().lower()
+                raw_name += self._MIME_IMAGE_EXT.get(mime, "")
+        if not b64:
+            return {"status": "error", "message": "无效的 base64 图片数据"}
+        limit_mb = self._IMAGE_PASTE_MAX_BYTES // (1024 * 1024)
+        # 体积预检：解码前按 base64 编码长度上界拒绝，避免先吃进内存再拒绝。
+        # 上界 = 4*ceil(limit/3)（含 padding），精确字节数在解码后再核对；
+        # 不用 len*3//4 估算，否则恰好 20MB 的图片会因 1~2 字节的估算误差被误拒。
+        max_b64_len = ((self._IMAGE_PASTE_MAX_BYTES + 2) // 3) * 4
+        if len(b64) > max_b64_len:
+            return {"status": "error", "message": f"图片超过 {limit_mb}MB 上限"}
+        try:
+            blob = base64.b64decode(b64, validate=True)
+        except (binascii.Error, ValueError):
+            return {"status": "error", "message": "无效的 base64 图片数据"}
+        if len(blob) > self._IMAGE_PASTE_MAX_BYTES:
+            return {"status": "error", "message": f"图片超过 {limit_mb}MB 上限"}
+        if not blob:
+            return {"status": "error", "message": "图片内容为空"}
+        return self._import_image_bytes(raw_name, blob)
+
+    def _import_image_bytes(self, name: str, data: bytes) -> dict:
+        """图片入库**核心**：白名单校验 → MD5 内容去重 → 重名追加序号 → 落盘。
+
+        `import_image`（本地文件）与 `import_image_base64`（剪贴板）都走这里，
+        保证"同一份内容在 .memoria/images/ 只有一份文件"。
+        注册表（registry.json）仍由文档保存路径 `_update_registry_for_doc` 维护 ——
+        本函数只落盘，不写注册表（导入时尚未产生引用）。
+        """
+        if not self.kb_path:
+            return {"status": "error", "message": "未打开知识库"}
+        if not data:
+            return {"status": "error", "message": "图片内容为空"}
+        base = os.path.basename(name or "")
+        ext = os.path.splitext(base)[1].lower()
+        if ext not in self._IMAGE_EXTENSIONS:
+            return {"status": "error", "message": f"不支持的图片格式: {ext or '(无扩展名)'}"}
         target_dir = self.images_dir()
         os.makedirs(target_dir, exist_ok=True)
-        digest = self._file_md5(local_path)
+        digest = hashlib.md5(data).hexdigest()
         # 内容去重：已有相同内容图片则直接复用
         for entry in os.listdir(target_dir):
             full = os.path.join(target_dir, entry)
@@ -912,18 +995,21 @@ class DocumentService:
                     "name": entry,
                     "deduped": True,
                 }
-        stem = os.path.splitext(os.path.basename(local_path))[0]
-        name = stem + ext
+        stem = os.path.splitext(base)[0] or "image"
+        out_name = stem + ext
         index = 1
-        while os.path.exists(os.path.join(target_dir, name)):
-            name = f"{stem}-{index}{ext}"
+        while os.path.exists(os.path.join(target_dir, out_name)):
+            out_name = f"{stem}-{index}{ext}"
             index += 1
-        shutil.copy2(local_path, os.path.join(target_dir, name))
-        rel_path = f"{MEMORIA_DIR}/images/{name}"
+        try:
+            with open(os.path.join(target_dir, out_name), "wb") as f:
+                f.write(data)
+        except OSError as e:
+            return {"status": "error", "message": f"写入图片失败: {e}"}
         return {
             "status": "ok",
-            "relPath": rel_path,
-            "name": name,
+            "relPath": f"{MEMORIA_DIR}/images/{out_name}",
+            "name": out_name,
             "deduped": False,
         }
 
