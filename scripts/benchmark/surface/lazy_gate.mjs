@@ -299,7 +299,7 @@ async function checkIdleRaf(cdp, ctx, th) {
   st.read('p95Ms', p95);
   st.read('maxMs', samples.length ? Math.max(...samples) : null);
   st.assert('idle-raf-p50', p50 != null && p50 <= th.p50MaxMs, `≤ ${th.p50MaxMs} ms`, p50, 'p50 > 阈值通常意味着窗口被最小化/后台节流，性能读数不可信');
-  ctx.rAF = { p50, p95, frames: samples.length };
+  ctx.rAF = { p50Ms: p50, p95Ms: p95, frames: samples.length };
   return c.rec;
 }
 
@@ -311,6 +311,17 @@ async function checkOpen(cdp, ctx, th) {
   await cdp.waitFor('(window.state||{}).viewMode === "preview"', { timeout: 15000, label: 'viewMode-preview' });
   // 惰性钩子必须在 open 之前设置（它是阈值覆盖，见 app.js `_lazyMaterializeEnabled`）
   await cdp.evalJS(`(function(){window.__MEMORIA_LAZY=true;try{localStorage.setItem('memoria.perf.lazy','1')}catch(e){}return window.__MEMORIA_LAZY;})()`);
+  // W3.3：批尾布局模式必须在**首次物化/淘汰之前**选定（否则 open 阶段的淘汰会用默认模式）。
+  // 这里只调用产品自己的运行时开关（`__MEMORIA_TAIL_LAYOUT.setMode`），不写死任何实现细节。
+  if (ctx.tailMode) {
+    const applied = await cdp.evalJS(`(function(m){
+      try { return window.__MEMORIA_TAIL_LAYOUT ? window.__MEMORIA_TAIL_LAYOUT.setMode(m) : null; }
+      catch(e){ return 'ERR:'+e.message; }
+    })(${js(ctx.tailMode)})`);
+    st.read('tailMode', applied);
+    st.assert('tail-mode-applied', applied === ctx.tailMode, ctx.tailMode, applied, 'AB 实验要求逐轮显式指定批尾模式');
+  }
+  ctx.tailModeSeen = await cdp.evalJS(`(window.__MEMORIA_TAIL_LAYOUT?window.__MEMORIA_TAIL_LAYOUT.getMode():null)`, false);
   const file = ctx.spec.fixture.file;
   const r = await cdp.evalJS(`(async function(file){
     var t0=performance.now();
@@ -374,15 +385,17 @@ async function sabotageViewportPlaceholder(cdp) {
     if(!pane||!cc)return {ok:false,reason:'no-pane'};
     var pr=pane.getBoundingClientRect();
     var kids=cc.children;
-    var victim=null;
+    var vis=[];
     for(var i=0;i<kids.length;i++){
       var el=kids[i],r=el.getBoundingClientRect();
       if(r.bottom<=pr.top||r.top>=pr.bottom)continue;
       if(el.classList.contains('-pv-placeholder'))continue;
       if(r.height<10)continue;
-      victim=el;break;
+      vis.push(el);
     }
-    if(!victim)return {ok:false,reason:'no-visible-materialized'};
+    if(!vis.length)return {ok:false,reason:'no-visible-materialized'};
+    // 不拿第一个可见块：它是漂移锚点，换掉会污染其它断言。取第二个（没有就取第一个）。
+    var victim=vis.length>1?vis[1]:vis[0];
     var donor=null;
     for(var j=0;j<kids.length;j++){
       var e2=kids[j];
@@ -392,14 +405,17 @@ async function sabotageViewportPlaceholder(cdp) {
     }
     if(!donor)return {ok:false,reason:'no-offscreen-placeholder'};
     var ph=donor.cloneNode(true);
-    ph.setAttribute('data--block-index',victim.getAttribute('data--block-index'));
-    // 保持行号属性与 victim 一致：让“占位残留”成为**唯一**差异，便于失败定位。
+    // 关键：块下标设成**非数字** ⇒ 产品的补物化路径（IO / scroll-stop sync / 调度器）都会
+    // parseInt 失败并跳过它 ⇒ 占位残留是**持续缺陷**，不会被 1.5s 后的同步物化自愈。
+    // （不能设 -1 或超大数：sync materialize 会把它们并进区间，触发大范围物化。）
+    ph.setAttribute('data--block-index','sabotage');
     if(victim.getAttribute('data--src-line'))ph.setAttribute('data--src-line',victim.getAttribute('data--src-line'));
     if(victim.getAttribute('data--src-line-end'))ph.setAttribute('data--src-line-end',victim.getAttribute('data--src-line-end'));
     ph.setAttribute('data--pv-sabotage','1');
     ph.style.height=Math.max(24,Math.round(victim.getBoundingClientRect().height))+'px';
+    var victimIdx=victim.getAttribute('data--block-index');
     victim.replaceWith(ph);
-    return {ok:true,blockIndex:parseInt(ph.getAttribute('data--block-index'),10),kind:'viewport-placeholder'};
+    return {ok:true,replacedBlockIndex:parseInt(victimIdx,10),sabotageIndex:'sabotage',kind:'viewport-placeholder'};
   })()`);
 }
 
@@ -629,7 +645,7 @@ async function checkLongScroll(cdp, ctx, th) {
   st.assert('heap-not-strictly-monotonic', !strictlyIncreasing || (peakDelta != null && peakDelta <= th.heapPeakDeltaMbWhenMonotonic), `not strictly increasing (or peakΔ≤${th.heapPeakDeltaMbWhenMonotonic}MB)`, strictlyIncreasing, '要求采样轨迹出现回落（GC），或涨幅足够小');
   st.assert('heap-peak-delta', peakDelta == null || peakDelta <= th.heapPeakDeltaMb, `≤${th.heapPeakDeltaMb} MB`, peakDelta);
   st.assert('heap-retained-delta', retainedDelta == null || retainedDelta <= th.heapRetainedDeltaMb, `≤${th.heapRetainedDeltaMb} MB`, retainedDelta, 'GC 后的驻留增量（真正的泄漏会远超）');
-  ctx.longScroll = { evictTotal, maxMaterialized, domLimit, peakDelta, retainedDelta, blocksPerScreen, final: fin };
+  ctx.longScroll = { evictTotal, evictDelta, maxMaterialized, domLimit, peakDelta, retainedDelta, blocksPerScreen, final: fin };
   return c.rec;
 }
 
@@ -673,7 +689,9 @@ async function checkEditProtect(cdp, ctx, th) {
       var r=el.getBoundingClientRect();if(r.bottom<=pr.top+4||r.top>=pr.bottom-4)continue;
       var t=(el.textContent||'').replace(/\\s+/g,' ').trim();
       if(t.length<60)continue;
-      if(el.querySelector('mjx-container'))continue;
+      // 只挑正文块（p/li/h/blockquote）：代码块点进去会进块编辑器、表格/图/公式不可直接落光标。
+      if(el.querySelector('pre,table,svg,mjx-container'))continue;
+      if(el.closest('pre,table'))continue;
       var walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null),node=null,x;
       while((x=walker.nextNode())){if((x.nodeValue||'').trim().length>20){node=x;break;}}
       if(!node)continue;
@@ -682,17 +700,44 @@ async function checkEditProtect(cdp, ctx, th) {
       rng.setStart(node,off);rng.setEnd(node,Math.min(node.nodeValue.length,off+1));
       var rects=rng.getClientRects(),rr=rects.length?rects[0]:rng.getBoundingClientRect();
       if(!rr||(!rr.width&&!rr.height))continue;
-      return {blockIndex:+el.getAttribute('data--block-index'),x:Math.round(rr.left+Math.max(1,rr.width/2)),y:Math.round(rr.top+rr.height/2),text:t.slice(0,80)};
+      var hit=document.elementFromPoint(Math.round(rr.left+Math.max(1,rr.width/2)),Math.round(rr.top+rr.height/2));
+      var hitBlk=hit&&hit.closest?hit.closest('[data--block-index]'):null;
+      return {blockIndex:+el.getAttribute('data--block-index'),x:Math.round(rr.left+Math.max(1,rr.width/2)),y:Math.round(rr.top+rr.height/2),text:t.slice(0,80),
+        paneTop:+pr.top.toFixed(1),blockTop:+r.top.toFixed(1),blockBottom:+r.bottom.toFixed(1),scrollTop:+pane.scrollTop.toFixed(1),
+        hitTag:hit?hit.tagName:null,hitBlock:hitBlk?parseInt(hitBlk.getAttribute('data--block-index'),10):null,
+        hitPh:!!(hitBlk&&hitBlk.classList.contains('-pv-placeholder'))};
     }
     return null;
   })()`);
   if (!pick) { st.assert('editable-block-found', false, 'a visible text block', null); return c.rec; }
   // 用受信任点击落光标 + 受信任键盘输入唯一标记
   const ix = ctx.ix;
+  // 点击前后的落点诊断：pred 若在 pick 与 click 之间发生布局漂移，这里能直接看到命中块/占位。
+  const clickProbe = (p) => cdp.evalJS(`(function(p){
+    var pane=document.getElementById('preview-pane');
+    var pv=document.getElementById('preview');
+    var e=document.elementFromPoint(p.x,p.y);
+    var el=e&&e.closest?e.closest('[data--block-index]'):null;
+    var s=window.getSelection(),r=s&&s.rangeCount?s.getRangeAt(0):null;
+    function bi(node){var n=node?(node.nodeType===1?node:node.parentElement):null;var b=n&&n.closest?n.closest('[data--block-index]'):null;return b?parseInt(b.getAttribute('data--block-index'),10):null;}
+    var picked=document.querySelector('#preview .-preview-content [data--block-index="'+p.i+'"]');
+    var a=document.activeElement;
+    return {scrollTop:+pane.scrollTop.toFixed(1),hitTag:e?e.tagName:null,hitBlock:el?parseInt(el.getAttribute('data--block-index'),10):null,
+      hitPh:!!(el&&el.classList.contains('-pv-placeholder')),
+      activeTag:a?a.tagName:null,activeId:a?a.id||null:null,focusInPreview:!!(a&&pv&&pv.contains(a)),
+      rangeCount:s?s.rangeCount:null,caretBlock:r?bi(r.startContainer):null,caretOffset:r?r.startOffset:null,
+      pickedExists:!!picked,pickedPh:!!(picked&&picked.classList.contains('-pv-placeholder')),
+      tail:(window.__MEMORIA_TAIL_LAYOUT?window.__MEMORIA_TAIL_LAYOUT.stats():null)};
+  })(${JSON.stringify({ x: p.x, y: p.y, i: p.i })})`);
+  st.read('pick', pick);
+  st.read('clickBefore', await clickProbe({ x: pick.x, y: pick.y, i: pick.blockIndex }));
   await ix.click(pick.x, pick.y);
+  st.read('clickAfter', await clickProbe({ x: pick.x, y: pick.y, i: pick.blockIndex }));
   await sleep(250);
+  st.read('clickAfter250', await clickProbe({ x: pick.x, y: pick.y, i: pick.blockIndex }));
   await ix.typeText('ZGATE');
   await sleep(800);
+  st.read('clickAfterType', await clickProbe({ x: pick.x, y: pick.y, i: pick.blockIndex }));
   const afterType = await cdp.evalJS(`(function(i){
     var el=document.querySelector('#preview .-preview-content [data--block-index="'+i+'"]');
     return {text:(el?el.textContent:'').replace(/\\s+/g,' ').trim(), has:(el?el.textContent:'').indexOf('ZGATE')>=0};
@@ -718,6 +763,7 @@ async function checkEditProtect(cdp, ctx, th) {
       text:el?(el.textContent||'').replace(/\\s+/g,' ').trim().slice(0,200):null};
   })(${pick.blockIndex})`);
   st.read('whileFarAway', during);
+  st.read('selectionFarAway', await caretInfo(cdp));
   st.assert('eviction-ran-elsewhere', during.stats && during.stats.evictTotal > evictBefore, `>${evictBefore}`, during.stats ? during.stats.evictTotal : null, '必须先证明远处真的发生了淘汰，否则“保护”无从谈起');
   st.assert('edited-block-not-evicted', during.exists && !during.isPlaceholder, 'materialized', during.exists ? (during.isPlaceholder ? 'placeholder' : 'materialized') : 'missing');
   // 滚回编辑块，校验内容与光标
@@ -758,6 +804,11 @@ async function main() {
   const run = async (cdp, ix, edge) => {
     const ctx = newRunCtx(spec, fixture, sabotage);
     ctx.ix = ix;
+    // W3.3：`--tail-mode legacy|pred|noSh` 让你在同一 fixture 上逐轮切换批尾模式（默认不干预）。
+    ctx.tailMode = args['tail-mode'] || null;
+    if (ctx.tailMode && !['legacy', 'pred', 'noSh'].includes(ctx.tailMode)) {
+      throw new Error('未知 --tail-mode: ' + ctx.tailMode + '（支持 legacy | pred | noSh）');
+    }
     const checks = [];
     const only = spec.checks || ['idleRaf', 'open', 'positions', 'backToTop', 'longScroll', 'editProtect'];
     const started = Date.now();
@@ -785,13 +836,15 @@ async function main() {
       url: args.url || null,
       label: args.label || null,
       sabotage,
+      tailMode: ctx.tailMode,
+      tailModeSeen: ctx.tailModeSeen || null,
       browser: edge ? edge.browser : null,
       fixture: { path: path.relative(process.cwd(), fixturePath).replace(/\\/g, '/'), totalLines: fixture.totalLines, markers: fixture.markers.length, segments: spec.fixture.segments || null },
       thresholds: th,
-      measurement: { raf: ctx.rAF || null, trusted: !!(ctx.rAF && ctx.rAF.p50 != null && ctx.rAF.p50 <= th.p50MaxMs) },
+      measurement: { raf: ctx.rAF || null, trusted: !!(ctx.rAF && ctx.rAF.p50Ms != null && ctx.rAF.p50Ms <= th.p50MaxMs) },
       open: ctx.open ? { firstVisibleMs: ctx.open.firstVisibleMs, screenReadyMs: ctx.open.screenReadyMs, wallMs: ctx.open.wallMs, stats: ctx.open.stats, blocksPerScreen: ctx.open.blocksPerScreen } : null,
       positions: ctx.positions,
-      longScroll: ctx.longScroll ? { evictTotal: ctx.longScroll.evictTotal, maxMaterialized: ctx.longScroll.maxMaterialized, domLimit: ctx.longScroll.domLimit, peakDeltaMb: ctx.longScroll.peakDelta, retainedDeltaMb: ctx.longScroll.retainedDelta, blocksPerScreen: ctx.longScroll.blocksPerScreen } : null,
+      longScroll: ctx.longScroll ? { evictTotal: ctx.longScroll.evictTotal, evictDeltaDuringLongScroll: ctx.longScroll.evictDelta, maxMaterialized: ctx.longScroll.maxMaterialized, domLimit: ctx.longScroll.domLimit, peakDeltaMb: ctx.longScroll.peakDelta, retainedDeltaMb: ctx.longScroll.retainedDelta, blocksPerScreen: ctx.longScroll.blocksPerScreen } : null,
       edit: ctx.edit || null,
       checks,
       summary: { pass: failed.length === 0, checks: checks.length, failed: failed.length, failedIds: failed.map((c) => c.id) },

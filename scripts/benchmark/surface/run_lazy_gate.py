@@ -86,6 +86,7 @@ def build_md(meta: dict, out: dict) -> str:
         out.get("fixture", {}).get("path"), (out.get("fixture") or {}).get("totalLines"), (out.get("fixture") or {}).get("markers")))
     L.append("- 剧本：`%s`" % meta["scenarios"])
     L.append("- 负向注入：%s" % (out.get("sabotage") or "无"))
+    L.append("- 批尾模式：请求 `%s`；运行期实测 `%s`" % (out.get("tailMode") or "产品默认", out.get("tailModeSeen") or "?"))
     L.append("- 浏览器：%s" % (out.get("browser") or "?"))
     L.append("- 测量可信门：rAF p50 = %s ms（阈值 ≤ %s ms）⇒ %s" % (
         ((out.get("measurement") or {}).get("raf") or {}).get("p50Ms"),
@@ -164,13 +165,63 @@ def run_existing12(label: str, timeout: int) -> dict:
             "stdoutTail": (cp.stdout or "").strip()[-2000:]}
 
 
+# ── 串行化守卫（2026-10-23）────────────────────────────────────────────────
+# 事故：两个 agent 同时跑本门禁，互相抢 CPU / app 实例 ⇒ 曾把「并发噪声」误判成
+#   「pred 模式破坏 L5 编辑保护」，并据此回退了正确改动。门禁读数必须独占机器。
+import os as _os, time as _time, tempfile as _tempfile
+_GATE_LOCK = _os.path.join(_tempfile.gettempdir(), "memoria_lazy_gate.lock")
+_GATE_LOCK_STALE_S = 3600
+
+
+def _acquire_gate_lock(timeout_s=1800):
+    start_t = _time.time()
+    while True:
+        try:
+            fd = _os.open(_GATE_LOCK, _os.O_CREAT | _os.O_EXCL | _os.O_WRONLY)
+            _os.write(fd, ("%d %f" % (_os.getpid(), _time.time())).encode())
+            _os.close(fd)
+            return True
+        except FileExistsError:
+            stale = False
+            try:
+                age = _time.time() - _os.path.getmtime(_GATE_LOCK)
+                if age > _GATE_LOCK_STALE_S:
+                    stale = True
+            except OSError:
+                stale = True
+            if stale:
+                try:
+                    _os.unlink(_GATE_LOCK)
+                except OSError:
+                    pass
+                continue
+            if _time.time() - start_t > timeout_s:
+                raise SystemExit(
+                    "[gate] 另一个门禁实例仍在运行，拒绝并发测量（锁：%s）。"
+                    "并发会让两路测量互相污染 —— 今天的教训。" % _GATE_LOCK
+                )
+            _time.sleep(2.0)
+
+
+def _release_gate_lock():
+    try:
+        _os.unlink(_GATE_LOCK)
+    except OSError:
+        pass
+
+
 def main() -> int:
+    _acquire_gate_lock()
+    import atexit as _atexit
+    _atexit.register(_release_gate_lock)
     ap = argparse.ArgumentParser(description="W4.1 惰性路径交互门禁")
     ap.add_argument("--kb", default=str(DEFAULT_KB), help="fixture 语料目录（相对 repo 根或绝对路径）")
     ap.add_argument("--scenarios", default=str(DEFAULT_SCENARIOS), help="门禁剧本 json")
     ap.add_argument("--label", default="lazy-gate", help="本次运行 label（也用于结果文件名）")
     ap.add_argument("--sabotage", default="", choices=["", "noevict", "viewport-placeholder"],
                     help="负向验证注入（正常验收不要传）")
+    ap.add_argument("--tail-mode", default="", choices=["", "legacy", "pred", "noSh"],
+                    help="W3.3 批尾布局模式（空=用产品默认；AB 复核时逐轮显式指定）")
     ap.add_argument("--port", type=int, default=0, help="harness 端口（0=自动空闲端口）")
     ap.add_argument("--timeout", type=int, default=600, help="node 子进程超时秒")
     ap.add_argument("--with-existing-12", action="store_true", help="顺带跑既有 12 个交互剧本（12/12 证据）")
@@ -251,6 +302,12 @@ def main() -> int:
            "--url", url, "--label", args.label]
     if args.sabotage:
         cmd += ["--sabotage", args.sabotage]
+    if args.tail_mode:
+        cmd += ["--tail-mode", args.tail_mode]
+    # 关键：先删掉同名旧 raw。node 若语法错/崩溃没落新文件，绝不能把**上一轮**的 JSON
+    # 当成这次结果（实测踩过：0.1s 就“跑完”并报 PASS）。
+    if raw_path.exists():
+        raw_path.unlink()
     print("[gate] 起 node: %s" % " ".join(cmd))
     t0 = time.time()
     try:
@@ -265,12 +322,16 @@ def main() -> int:
     if cp.stderr:
         print("[gate] node stderr:\n%s" % cp.stderr.strip()[-4000:], file=sys.stderr)
     if not raw_path.is_file():
-        print("[gate] 未产出 JSON：%s" % raw_path, file=sys.stderr)
+        print("[gate] 未产出 JSON（node returncode=%s）：%s" % (cp.returncode, raw_path), file=sys.stderr)
         return 3
     out = json.loads(raw_path.read_text(encoding="utf-8"))
+    if cp.returncode != 0 and (out.get("summary") or {}).get("pass"):
+        print("[gate] node 异常退出（%s）却报 PASS ⇒ 判为测量失败，不采信" % cp.returncode, file=sys.stderr)
+        return 3
     meta = {"label": args.label, "sha": sha, "startedAt": started,
             "scenarios": scen_path.name, "elapsedMs": int(elapsed * 1000)}
     out["meta"] = meta
+    out["tailModeRequested"] = args.tail_mode or None
     # 既有 12 剧本证据（可选）
     if args.with_existing_12:
         out["existing12"] = run_existing12("lazy-gate-existing12", args.timeout)
