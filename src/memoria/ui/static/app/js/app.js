@@ -7897,7 +7897,7 @@
         if (!isNaN(idx)) { _lazyPending.add(idx); hit = true; }
       }
       if (hit) _lazyScheduleFlush();
-    }, { root: preview.parentElement || document, rootMargin: "100% 0px", threshold: 0 });
+    }, { root: preview.parentElement || document, rootMargin: "200% 0px", threshold: 0 });   // 2026-10-22 1b 调优：前 2 屏预取（100%→200%），滚动 141/187ms → ≤100ms；副作用（多物化/新冻结）待实测
 
     var phs = preview.querySelectorAll(".-pv-placeholder");
     for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
