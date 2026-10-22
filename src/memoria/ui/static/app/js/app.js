@@ -1889,11 +1889,19 @@
     var reset = !!(opts && opts.reset);
     var target = (opts && opts.index) || BI;   // G2：预加载传独立实例 ⇒ 主实例零影响
 
-    // block-index → 元素（一次建索引，替代逐块全 DOM querySelector）
+    // block-index → 元素。
+    // 2026-10-22 阶段0：整篇渲染路径已由 `renderDocument` 产出 `blockEls`（与 `doc.blocks` 一一对应、
+    //   文档序）⇒ 直接复用，省掉一次全篇 `querySelectorAll`。其它调用方（编辑路径/预加载）不传 ⇒ 走原查询，
+    //   **缺省行为逐字不变**。
     var byIdx = new Map();
-    preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) {
-      byIdx.set(el.getAttribute("data--block-index"), el);
-    });
+    if (opts && Array.isArray(opts.blockEls) && opts.blockEls.length === doc.blocks.length) {
+      // 长度必须与 AST 块数严格一致；不符 ⇒ 退回查询（宁可慢一次，不许错位）
+      for (var _bi = 0; _bi < opts.blockEls.length; _bi++) byIdx.set(String(_bi), opts.blockEls[_bi]);
+    } else {
+      preview.querySelectorAll(".-src-block[data--block-index]").forEach(function (el) {
+        byIdx.set(el.getAttribute("data--block-index"), el);
+      });
+    }
 
     target.beginStamp({ reset: reset });
     var mapped = 0;
@@ -1989,7 +1997,11 @@
       // 3. AST → DOM 渲染（P6a：切换为 render-core；**不再调用 legacy `R.render`**）
       //    render-core 与本函数既有管线同形：返回 `.-preview-content` 容器，块元素与 `_doc.blocks` 一一对应；
       //    行号/块身份仍由下面的 `stampBlockLines` 经 BlockIndex 写入（唯一写点不变）。
-      const content = _rcRenderer().renderDocument(_doc).container;
+      // 2026-10-22 阶段0：**保留 `blockEls`**（原来只取 `.container` 把它丢了 ⇒ 下面 `stampBlockLines`
+      //   又用 `querySelectorAll` 全篇重建索引，白扫一遍）。透传给 `stampBlockLines` 省这次全篇查询；
+      //   `querySelectorAll` 分支保留（编辑路径等其它调用方仍走它，缺省行为不变）。
+      const _rendered = _rcRenderer().renderDocument(_doc);
+      const content = _rendered.container;
       preview.innerHTML = "";
       preview.appendChild(content);
       // 3a. 代码块语法高亮（P6a 补丁：render-core 本片不做 token；复用 MemoriaCodeHighlight，
@@ -1997,7 +2009,7 @@
       _applyCodeHighlightToPreview(preview);
 
       // 3b. 构建 block→源行映射（整篇路径 ⇒ reset：清空旧索引，行区间与 id 全部按这份 AST 重建）
-      stampBlockLines(preview, _doc, { reset: true }); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）
+      stampBlockLines(preview, _doc, { reset: true, blockEls: _rendered.blockEls }); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）；2026-10-22 阶段0：把 `renderDocument` 刚产出的 `blockEls` 透传进去，省掉 `stampBlockLines` 内部的全篇 `querySelectorAll`
 
       window.__blockLineMap = _blockLineMap;
 
