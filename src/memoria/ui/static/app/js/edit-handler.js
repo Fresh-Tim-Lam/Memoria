@@ -128,6 +128,8 @@
   EH.dockAfter = null;      // { blockIndex, before? } — 光标停靠在不可编辑块边界（见 dockAtNonEditableBlock）
   EH._composing = false;      // 是否处于 IME 组合输入中
   EH._composeStartAST = null; // 组合输入起始 AST 锚点（组合期间 DOM 会被污染，仅以此为准）
+  // E33：拖拽移动的 deleteByDrag/insertFromDrop 配对撤销分组（见 beginDragMoveUndo）
+  EH._dragMoveGroup = false;
 
   // ── 源码区假光标 ──
   var _fakeCursorEl = null;
@@ -850,6 +852,53 @@
   }
 
   /**
+   * 取出「拖拽落点插入」携带的纯文本（E33）。
+   * `InputEvent.dataTransfer` 只在 insertFromDrop / insertFromPaste 上存在；
+   * 拖入文件/图片时没有 text/plain ⇒ 返回 ""，调用方必须交还原生处理（不拦）。
+   * @param {InputEvent} e
+   * @returns {string}
+   */
+  function readDropText(e) {
+    var text = "";
+    var dt = e && e.dataTransfer;
+    if (dt && typeof dt.getData === "function") {
+      try { text = dt.getData("text/plain") || ""; } catch (err) { text = ""; }
+    }
+    if (!text && e && typeof e.data === "string") text = e.data;   // 合成事件兜底（真实 drop 的 e.data 为 null）
+    return text;
+  }
+
+  /**
+   * E33：拖拽移动 = 源处 `deleteByDrag` + 落点 `insertFromDrop`，浏览器把它拆成两个 beforeinput。
+   * 两者都走 EditSync 后默认会各压一个撤销快照 ⇒ Ctrl+Z 只回退插入、删除留在源码里。
+   * 做法：`deleteByDrag` 之前开一个原子分组（快照 = 移动前），`insertFromDrop` 完成后收组，
+   * 整个「源处删除 + 落点插入」只占**一个撤销单元**。
+   * 收组兜底：dragend（拖到应用外/取消）、下一次非拖拽 beforeinput、Ctrl+Z 之前。
+   */
+  function beginDragMoveUndo(EditSync) {
+    if (!EditSync || typeof EditSync.beginUndoGroup !== "function") return;
+    if (EH._dragMoveGroup) return;   // 同一次拖拽的重复 deleteByDrag：沿用已开的分组
+    try {
+      EditSync.beginUndoGroup();
+      EH._dragMoveGroup = true;
+    } catch (err) {
+      EH._dragMoveGroup = false;     // 分组不可用就退化为默认两次撤销，绝不阻断编辑
+      log("EH", "beginDragMoveUndo failed (" + ((err && err.message) || err) + ")");
+    }
+  }
+
+  function endDragMoveUndo(EditSync) {
+    if (!EH._dragMoveGroup) return;
+    EH._dragMoveGroup = false;
+    var es = EditSync || window.MemoriaEditSync;
+    if (es && typeof es.endUndoGroup === "function") {
+      try { es.endUndoGroup(); } catch (err) {
+        log("EH", "endDragMoveUndo failed (" + ((err && err.message) || err) + ")");
+      }
+    }
+  }
+
+  /**
    * 绑定 beforeinput：拦截预览区的文本输入，统一走 AST 编辑管线
    * 每种编辑操作逐步实现，当前支持 insertText（Backspace/Delete/Enter 后续补充）
    */
@@ -874,6 +923,13 @@
       var arg = null;
       var cutText = null;            // Ctrl+X：需在 preventDefault 后自行写剪贴板
       var cutClipboard = false;
+
+      // E33：上一次拖拽没有落点（拖到应用外/取消）时 dragend 通常已收组；
+      // 极端情况下 dragend 未到，就在下一次非拖拽输入之前兜底收组，
+      // 否则这次输入会被吞进同一个撤销单元（撤销一次回退两步）。
+      if (EH._dragMoveGroup && inputType !== "insertFromDrop" && inputType !== "deleteByDrag") {
+        endDragMoveUndo(EditSync);
+      }
 
       if (inputType === "insertText") {
         if (!e.data) return;
@@ -900,8 +956,20 @@
         if (inputType === "deleteByCut") {
           cutText = selCut.toString();
           cutClipboard = true;
+        } else {
+          // E33：拖拽移动的「源处删除」先开原子分组，等落点 insertFromDrop 收组 ⇒ 撤销一次整体回退
+          beginDragMoveUndo(EditSync);
         }
         // deleteByDrag 不写剪贴板：拖拽不是复制语义，写剪贴板会污染用户剪贴板
+      } else if (inputType === "insertFromDrop") {
+        // E33：拖拽的「插入半边」默认会被浏览器原生插进预览 DOM，但 AST/源码不变，
+        // 下一次重渲（切文件/重排版/滚动重物化）内容就消失（与 E30 剪切同类）。
+        // 这里改走 EditSync.insertText，保证源码同步；只接管**带 text/plain** 的拖拽，
+        // 拖文件/图片（无文本）继续交还原生，避免抢掉上传/图片插入。
+        var dropText = readDropText(e);
+        if (!dropText) return;      // 无文本：不拦、不 preventDefault
+        fn = "insertText";
+        arg = dropText;
       } else if (inputType === "insertParagraph") {
         fn = "splitParagraph";
       } else {
@@ -923,7 +991,19 @@
 
       if (arg !== null) EditSync[fn](arg);
       else EditSync[fn]();
+
+      // E33：落点插入完成后收掉 deleteByDrag 开的分组 ⇒ 一次拖拽移动 = 单个撤销单元
+      if (inputType === "insertFromDrop") endDragMoveUndo(EditSync);
     });
+
+    // E33：拖拽结束（落点成功 / 拖到应用外 / 取消）都收掉 deleteByDrag 开的撤销分组。
+    // 捕获阶段挂在 document 上：源节点在 deleteByDrag 后可能已被块级重渲替换，
+    // 节点自身的 dragend 未必还能到达；endDragMoveUndo 是幂等的（已收组即 no-op）。
+    if (typeof document.addEventListener === "function") {
+      document.addEventListener("dragend", function () {
+        endDragMoveUndo(window.MemoriaEditSync);
+      }, true);
+    }
 
     // Ctrl+Z / Ctrl+Y（及 Ctrl+Shift+Z）撤销与重做
     preview.addEventListener("keydown", function (e) {
@@ -935,6 +1015,9 @@
       var key = (e.key || "").toLowerCase();
       var EditSync = window.MemoriaEditSync;
       if (!EditSync) return;
+
+      // E33：拖拽分组若因 dragend 缺失仍未收，先收组再撤销（否则一步会越过整次移动）
+      endDragMoveUndo(EditSync);
 
       if (key === "z" && !e.shiftKey) {
         e.preventDefault();

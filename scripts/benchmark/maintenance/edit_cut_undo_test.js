@@ -58,6 +58,9 @@ function extractFunction(name) {
 
 const fnCut = extractFunction("writeCutToClipboard");
 const fnBind = extractFunction("bindBeforeInput");
+// E33：bindBeforeInput 的 insertFromDrop 分支会调 beginDragMoveUndo（配对撤销分组），
+// 抽取时一并注入，否则 vm 里 ReferenceError。
+const fnDragUndo = extractFunction("beginDragMoveUndo");
 check("抽取 writeCutToClipboard 源码", fnCut.indexOf("navigator.clipboard.writeText") >= 0);
 check("抽取 bindBeforeInput 源码", fnBind.indexOf("deleteByCut") >= 0 && fnBind.indexOf("deleteByDrag") >= 0);
 
@@ -105,7 +108,7 @@ const preview = {
 };
 
 vm.createContext(sandbox);
-vm.runInContext(fnCut + "\n" + fnBind + "\nthis.__bindBeforeInput = bindBeforeInput;", sandbox, {
+vm.runInContext(fnCut + "\n" + fnDragUndo + "\n" + fnBind + "\nthis.__bindBeforeInput = bindBeforeInput;", sandbox, {
   filename: SRC_PATH + "#E30-extracted",
 });
 sandbox.__bindBeforeInput();
