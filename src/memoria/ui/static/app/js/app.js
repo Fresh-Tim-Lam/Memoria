@@ -8254,6 +8254,73 @@
     }
   }
 
+  /** 量「分类型」的排版度量（与 `_probeBlockMetrics` 同法、同样只插一次性探测块）。
+   *
+   *  为什么正文行高不够：`.-preview` 的 `line-height:1.6`（div/空行 = 22.4px），但
+   *  **段落**吃的是 `theme/memoria.css` 的 `.markdown-body p { line-height:1.7 }`
+   *  ⇒ 实测 23.8px（+6.3%）；标题按级缩放（h2 = 20px×1.6 = 32px）。W3.4 前占位用
+   *  单一 `lhPx` 估所有类型，段落系统性偏低、标题偏高。
+   *
+   *  这里把「段落行高 / h1–h3 单行高 / 图片失败骨架的 caption 高」一次量出来，
+   *  全部走真实已挂载宿主，因此换字体、UI 缩放、窗口尺寸都自动跟随，仍**无硬编码 px**。
+   *  取不到布局盒 ⇒ 返回 null，由调用方退回既有比例兜底。
+   *  @returns {{pLhPx:number, captionH:number, headingH:Object<number,number>}|null}
+   */
+  function _probeTypeMetrics(host) {
+    if (!host || !host.isConnected || !host.appendChild) return null;
+    var wrap = null;
+    try {
+      wrap = document.createElement("div");
+      wrap.className = "-pv-type-probe";
+      wrap.setAttribute("aria-hidden", "true");
+      wrap.style.cssText = "position:fixed;left:-99999px;top:0;visibility:hidden;" +
+        "pointer-events:none;z-index:-1;";
+      function add(tag, cls, text) {
+        var el = document.createElement(tag);
+        el.className = "-src-block -pv-metrics-probe" + (cls ? " " + cls : "");
+        el.style.margin = "0";
+        el.style.padding = "0";
+        el.style.border = "0";
+        el.textContent = text || "Mg";
+        wrap.appendChild(el);
+        return el;
+      }
+      var pEl = add("p", "", "Mg");
+      var h1 = add("h1", "", "Mg");
+      var h2 = add("h2", "", "Mg");
+      var h3 = add("h3", "", "Mg");
+      // 图片失败骨架的 caption 必须放在 `.-image-block` 内才命中 `.-image-block .-image-caption`
+      var imgProbe = document.createElement("p");
+      imgProbe.className = "-src-block -pv-metrics-probe -image-block";
+      imgProbe.style.cssText = "margin:0;padding:0;border:0;";
+      var cap = document.createElement("span");
+      cap.className = "-image-caption";
+      cap.textContent = "图";
+      imgProbe.appendChild(cap);
+      wrap.appendChild(imgProbe);
+      host.appendChild(wrap);
+      var out = { pLhPx: 0, captionH: 0, captionGap: 0, headingH: {} };
+      var pcs = getComputedStyle(pEl);
+      if (pcs && pcs.lineHeight && /px$/.test(pcs.lineHeight)) out.pLhPx = parseFloat(pcs.lineHeight) || 0;
+      if (!(out.pLhPx > 0) && pEl.getBoundingClientRect) out.pLhPx = pEl.getBoundingClientRect().height || 0;
+      if (cap.getBoundingClientRect) out.captionH = cap.getBoundingClientRect().height || 0;
+      try {
+        var ccs = getComputedStyle(cap);
+        if (ccs && ccs.marginTop) out.captionGap = parseFloat(ccs.marginTop) || 0;
+      } catch (_) {}
+      var hs = [h1, h2, h3];
+      for (var i = 0; i < hs.length; i++) {
+        var hr = hs[i].getBoundingClientRect ? hs[i].getBoundingClientRect() : null;
+        if (hr && hr.height > 0) out.headingH[i + 1] = Math.round(hr.height * 100) / 100;
+      }
+      return out;
+    } catch (_) {
+      return null;
+    } finally {
+      try { if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap); } catch (__) {}
+    }
+  }
+
   /** 量一次预览区的真实排版度量。
    *
    *  **为什么必须量「已挂载」的块**：对 detached 元素调 `getComputedStyle` 拿到的是 initial 值
@@ -8266,7 +8333,7 @@
    *  只按 `fontSize` 推也不行：`18px/1.2` 与 `16px/1.5` 的**行高可能相同**，必须看解析后的像素值。
    */
   function _measurePreviewMetrics(pane, container) {
-    var fs = 0, lhPx = 0, paneW = 800, src = "none";
+    var fs = 0, lhPx = 0, paneW = 800, src = "none", pLhPx = 0, captionH = 0, captionGap = 0, headingH = {};
     try {
       // 宿主解析顺序：已挂载的 container → 已挂载的 #preview（仍是 `.-preview` 祖先）
       //   → pane（最后手段）。detached container 永不作为测量宿主。
@@ -8285,6 +8352,15 @@
       if (mp) {
         if (mp.fs > 0) fs = mp.fs;
         if (mp.lhPx > 0) { lhPx = mp.lhPx; src = "probe"; }
+      }
+      // ①b 分类型度量（段落行高 / 标题单行高 / caption 高）：同样用已挂载宿主探针。
+      //    失败不影响主流程（后面按比例兜底）。
+      var mt = _probeTypeMetrics(host);
+      if (mt) {
+        if (mt.pLhPx > 0) pLhPx = mt.pLhPx;
+        if (mt.captionH > 0) captionH = mt.captionH;
+        if (mt.captionGap > 0) captionGap = mt.captionGap;
+        if (mt.headingH) headingH = mt.headingH;
       }
       // ② 探测块取不到（宿主不可用/零布局）⇒ 退回**正文型**真块的 computed style，
       //   显式排除标题（h1~h6）；`line-height` 为 normal 时再实测。
@@ -8318,32 +8394,209 @@
     if (!(fs > 0)) fs = 16;
     if (!(lhPx > 0)) { lhPx = fs * 1.6; src = "fallback"; }
     if (!(paneW > 0)) paneW = 800;
-    return { fs: fs, lhPx: lhPx, paneW: paneW, src: src };
+    // 分类型度量的兜底：段落行高按 CSS 规范 `.markdown-body p{line-height:1.7}`；
+    // caption 按 `. -image-caption { font-size:.875rem; line-height:1.4 }`（rem 以根字号计）。
+    if (!(pLhPx > 0)) pLhPx = fs * 1.7;
+    if (!(captionH > 0)) {
+      var rootFs = parseFloat(getComputedStyle(document.documentElement).fontSize) || fs;
+      captionH = rootFs * 0.875 * 1.4;
+      if (!(captionGap > 0)) captionGap = rootFs * 0.1875;
+    }
+    if (!(captionGap > 0)) captionGap = 3;
+    // 文本可用宽度 = 内容容器宽度（不含 pane 左右 padding）。取不到再退回 paneW × 0.855
+    // （本仓 624 → 534，实测容器宽/ pane 宽 = 0.856）。
+    var availW = 0;
+    try { if (container && container.isConnected && container.clientWidth > 0) availW = container.clientWidth; } catch (_) {}
+    if (!(availW > 0)) availW = Math.round(paneW * 0.856);
+    return { fs: fs, lhPx: lhPx, paneW: paneW, pLhPx: pLhPx, captionH: captionH,
+             captionGap: captionGap, headingH: headingH, availW: availW, src: src };
   }
   /** 取当前度量（没有就按最保守默认造一份，保证任何时候都不崩）。
    *  默认值也只用于「还没渲染过」的瞬间；正常路径一定先走 `_measurePreviewMetrics`。 */
   function _pvM() {
-    return _pvMetrics || { fs: 16, lhPx: 16 * 1.6, paneW: 800, src: "default" };
+    return _pvMetrics || { fs: 16, lhPx: 16 * 1.6, paneW: 800, pLhPx: 16 * 1.7,
+                           captionH: 16 * 0.875 * 1.4, captionGap: 3, headingH: {},
+                           availW: 800 * 0.856, src: "default" };
   }
 
-  /** 按块类型估算占位高度（纯 AST + 实测度量；**无硬编码 px**）。宁大勿小（D1）：上跳比留白差。 */
+  // ── W3.4（2026-10-23）：占位高度的「分类型实测标定」 ─────────────────────────
+  // 旧实现用单一 lhPx 估所有类型 ⇒ 实测（08 章 4001 块，全量 175,616px）：
+  //   paragraph 49.63 vs 24.97（-49.7%，中文段落折行没算）、math 62.11 vs 113.85（+83%，
+  //   块公式高度与**源码行数**几乎无关）、image 41.58 vs 351（+744%，9:16 假设遇到图片
+  //   未加载/加载失败时完全失真）、mermaid 211.6 vs 450（+113%）。逐类型错互相抵消后
+  //   整篇仍 +3.41%。这里按实测重标：段落按「文本视觉宽度 ÷ 可用宽度」估折行；公式按
+  //   公式长度（与渲染高度实测相关 0.74）；图片未加载/失败走骨架高度，加载成功后回写
+  //   真实宽高比（见 `_pvWatchImage`）。
+  /** 图片 URL → {ok:true,nw,nh} | {ok:false}。内存级缓存：内容寻址的 `.memoria/images/*`
+   *  文件名本身就是内容哈希（不可变），故无需失效；仅用于占位阶段判断失败/真实宽高比。 */
+  var _pvImgSizes = (typeof Map === "function") ? new Map() : null;
+
+  /** 单个字符的视觉宽度（em）。用于「段落折行数」估算：CJK/全角≈0.95em、ASCII≈0.6em、
+   *  空白 0.3em、标点 0.35em。系数由 08 章 1398 段实测标定（行数命中 94.3%）。 */
+  function _chEmWidth(ch) {
+    var o = ch.charCodeAt(0);
+    if (o >= 0x2E80) return 0.95;
+    if (ch === " " || ch === "\t") return 0.3;
+    if (".,;:!?'\"()[]{}<>|/\\-—–".indexOf(ch) >= 0) return 0.35;
+    return 0.6;
+  }
+  function _textEmWidth(s) {
+    var em = 0;
+    for (var i = 0; i < s.length; i++) em += _chEmWidth(s.charAt(i));
+    return em;
+  }
+  /** inline AST 的视觉宽度（em）。行内公式/图片按经验宽度计（文本串里它们只有很短的字面）。 */
+  function _inlineEmWidth(nodes) {
+    if (!nodes || !nodes.length) return 0;
+    var em = 0;
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (!n) continue;
+      switch (n.type) {
+        case "text": em += _textEmWidth(String(n.content == null ? "" : n.content)); break;
+        case "escape": em += 0.6; break;
+        case "math_inline":
+          em += Math.max(1.2, 0.55 * String(n.formula == null ? (n.content || "") : n.formula).length);
+          break;
+        case "code": em += 0.6 * String(n.content == null ? (n.value || "") : n.content).length; break;
+        case "image": em += 2; break;
+        case "wiki_link":
+          em += _inlineEmWidth(n.children) || (0.6 * String(n.target == null ? "" : n.target).length);
+          break;
+        default:
+          if (n.children) em += _inlineEmWidth(n.children);
+          else if (n.content) em += _textEmWidth(String(n.content));
+      }
+    }
+    return em;
+  }
+  /** 段落折行数 = ceil(视觉宽度 × 字号 ÷ 可用宽度)。 */
+  function _wrappedLines(block) {
+    var m = _pvM();
+    var em = _inlineEmWidth(block && block.children);
+    if (!(em > 0)) return 1;
+    var avail = m.availW > 0 ? m.availW : m.paneW * 0.856;
+    if (!(avail > 0)) avail = 480;
+    return Math.max(1, Math.ceil((em * m.fs) / avail));
+  }
+  /** 图片块在「未加载 / 加载失败」时的骨架高度：broken-img 行盒 + caption（含上边距）。
+   *  08 章实测 46.39px（53 张图的真值中位），本式给 pLh(23.8)+caption(17.15)+gap(3)=43.95px
+   *  （-5%，整篇影响 <0.1%）；成功加载后由 `_pvWatchImage` 回写真实宽高比。 */
+  function _pvImageFallbackH() {
+    var m = _pvM();
+    var lineH = m.pLhPx > 0 ? m.pLhPx : m.lhPx;
+    var cap = m.captionH > 0 ? m.captionH : m.fs * 0.875 * 1.4;
+    var gap = m.captionGap > 0 ? m.captionGap : 3;
+    return lineH + gap + cap;
+  }
+  /** 图片块估值：已知真实宽高比 ⇒ 按显示宽度（≤可用宽）算；未知/失败 ⇒ 骨架高度。 */
+  function _pvImageHeight(block) {
+    var m = _pvM();
+    var url = block && block.url ? String(block.url) : "";
+    var rec = (url && _pvImgSizes) ? _pvImgSizes.get(url) : null;
+    if (rec && rec.ok && rec.nw > 0 && rec.nh > 0) {
+      var avail = m.availW > 0 ? m.availW : m.paneW * 0.856;
+      var w = Math.min(avail > 0 ? avail : m.paneW, rec.nw);
+      var cap = m.captionH > 0 ? m.captionH : m.fs * 0.875 * 1.4;
+      var gap = m.captionGap > 0 ? m.captionGap : 3;
+      return (w * rec.nh) / rec.nw + gap + cap;
+    }
+    return _pvImageFallbackH();
+  }
+  /** 记录物化图片的真实结果（load/error 各一次）。只写缓存，不改已存在真块的高度：
+   *  图片加载完成后浏览器自然会撑开块（与全量渲染同一行为），占位阶段则用缓存估下一次。 */
+  function _pvWatchImage(real) {
+    if (!real || !real.querySelector || !_pvImgSizes) return;
+    if (!(real.classList && real.classList.contains("-image-block"))) return;
+    var im = real.querySelector("img");
+    if (!im) return;
+    var url = im.getAttribute("src") || "";
+    if (!url || _pvImgSizes.has(url)) return;
+    var settled = false;
+    function record() {
+      if (settled) return;
+      settled = true;
+      try {
+        if (im.naturalWidth > 0 && im.naturalHeight > 0) {
+          _pvImgSizes.set(url, { ok: true, nw: im.naturalWidth, nh: im.naturalHeight });
+        } else if (im.complete) {
+          _pvImgSizes.set(url, { ok: false });
+        }
+      } catch (_) {}
+    }
+    try {
+      if (im.complete) { record(); return; }
+      im.addEventListener("load", record);
+      im.addEventListener("error", record);
+    } catch (_) {}
+  }
+
+  /** 按块类型估算占位高度（纯 AST + 实测度量；**无硬编码 px**）。
+   *  W3.4：逐类型按实测标定；未知类型仍沿用旧的保守式（宁大勿小只在无证据时成立）。 */
   function _placeholderHeight(block) {
     var m = _pvM(), lh = m.lhPx;
     if (!block) return lh;
     var lines = Math.max(1, (block.srcLineEnd - block.srcLine + 1) || 1);
     switch (block.type) {
-      case "blank_line": return lh;
-      case "heading": return lh * 1.5;
-      case "paragraph": return lines * lh * 1.05;          // 正文本就是"行数×行高"，1.05 含段间距
-      case "math_block": return lines * lh * 1.7;          // 块公式更高（字号更大 + 上下留白）
-      case "code_block": return lines * lh * 0.95;
-      case "table": return lines * lh * 1.35;
-      case "mermaid": return Math.max(7.5 * lh, lines * lh * 0.95);   // 原硬编码 120px ⇒ 7.5×行高
-      case "image":                                        // 原硬编码 240px ⇒ 按容器宽 16:9 估
-        return Math.max(4 * lh, Math.round(m.paneW * 9 / 16));
+      case "blank_line":
+        // 空行块自身 = 1 行（22.4px）；MathJax 公式的上下 1em 外边距记在公式块上（见下），
+        // 不再靠把空行统一放大约 19% 来吸收（那会在纯文本文档里系统性偏高）。
+        return lh;
+      case "heading": {
+        var lvl = Math.max(1, Math.min(6, block.level || 2));
+        var hh = m.headingH && m.headingH[lvl];
+        if (hh > 0) return hh;
+        var scale = [0, 1.857, 1.429, 1.143, 1, 1, 1][lvl] || 1;
+        return m.fs * scale * 1.6;
+      }
+      case "paragraph": {
+        var pLh = m.pLhPx > 0 ? m.pLhPx : lh;
+        return _wrappedLines(block) * pLh;
+      }
+      case "math_block": {
+        // 块公式：高度与「源码行数」基本无关（本仓全部 3 行）。按 08 章 567 个公式实测
+        // （真实布局贡献 = 渲染高 + **下** 1em 外边距）：h ≈ 24.76 + 0.1595×公式源长度
+        // （相关 0.74）。上 1em 外边距在布局里塌陷到**前一个空行块**上 ⇒ 记到空行
+        // （见 `_pvBlockH`），不在这里重复计。
+        var flen = block.formula != null ? String(block.formula).length : lines * 10;
+        var est = lh * (1.105 + 0.0071 * flen);
+        return Math.min(est, Math.max(lh * 3, m.availW || m.paneW) * 8);   // 防御性上限
+      }
+      case "code_block": {
+        // parser 把所有围栏都产 `code_block`（`lang` 区分）；mermaid 围栏在预览里会被
+        // 替换成 `.-mermaid-container`，真实高度≈源码行数×10px（08 章 402 源行→4021px），
+        // 与普通代码块（等宽行）完全不同 ⇒ 必须按 lang 分流。
+        if (block.lang && String(block.lang).toLowerCase() === "mermaid") {
+          return Math.max(4 * lh, lines * lh * 0.45);
+        }
+        return lines * lh * 0.95;
+      }
+      case "table": return lines * lh * 1.5;          // 实测 33.4px/源行 = 1.49×lh（08 章 33 表）
+      case "mermaid": return Math.max(4 * lh, lines * lh * 0.45);   // 实测 402 源行 → 4021px
+      case "image": return _pvImageHeight(block);
       case "horizontal_rule": return lh * 1.3;
       default: return lines * lh * 1.05;
     }
+  }
+
+  /** MathJax 行间公式的 1em 外边距（上/下各一）。08 章实测 14px（= 1em @14px）。 */
+  function _pvMathMarginH() {
+    var m = _pvM();
+    return m.fs > 0 ? m.fs : 14;
+  }
+
+  /** 带**邻居上下文**的占位高度：公式的 1em 上外边距在布局里会塌陷到前一个空行块，
+   *  故「空行 + 下一块是公式」要额外加这一行外边距（否则空行会系统性偏低、公式偏高）。 */
+  function _pvBlockH(doc, idx) {
+    var blocks = doc && doc.blocks;
+    if (!blocks || idx < 0 || idx >= blocks.length) return _pvM().lhPx;
+    var block = blocks[idx];
+    var h = _placeholderHeight(block);
+    var nx = blocks[idx + 1];
+    if (block && block.type === "blank_line" && nx && nx.type === "math_block") {
+      h += _pvMathMarginH();
+    }
+    return h;
   }
 
   /** 清掉一批**即将离开文档 / 已被换出**的元素内部的 MathJax 记录。
@@ -8415,13 +8668,13 @@
   }
 
   /** 建一个占位块元素（带连续编号 + 行号 + inline 高度 + aria-hidden）。 */
-  function _makePlaceholder(block, i) {
+  function _makePlaceholder(block, i, doc) {
     var el = document.createElement("div");
     el.className = "-src-block -pv-placeholder";
     el.setAttribute("data--block-index", String(i));
     if (block.srcLine > 0) el.setAttribute("data--src-line", String(block.srcLine));
     if (block.srcLineEnd >= block.srcLine) el.setAttribute("data--src-line-end", String(block.srcLineEnd));
-    el.style.height = Math.round(_placeholderHeight(block)) + "px";
+    el.style.height = Math.round(_pvBlockH(doc || _doc, i)) + "px";
     el.setAttribute("aria-hidden", "true");
     return el;
   }
@@ -8457,7 +8710,7 @@
     _lazyAnchorFixes = 0;
     var frag = document.createDocumentFragment();
     for (var i = 0; i < N; i++) {
-      var ph = _makePlaceholder(doc.blocks[i], i);
+      var ph = _makePlaceholder(doc.blocks[i], i, doc);
       _lazyBlockEls[i] = ph;
       frag.appendChild(ph);
     }
@@ -8465,7 +8718,7 @@
 
     // 物化首屏：先按估值给一个**保守**首块数，之后用**实测块高反推**再决定是否补物化（不依赖任何硬编码）。
     var viewH = pane.clientHeight || (window.visualViewport && visualViewport.height) || 720;
-    var avgH0 = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), _pvM().lhPx) : _pvM().lhPx;
+    var avgH0 = N > 0 ? Math.max(_pvBlockH(doc, 0), _pvM().lhPx) : _pvM().lhPx;
     var firstCount = Math.min(N, Math.max(12, Math.ceil(viewH / avgH0)));   // 先物化约 1 屏
     var madeEls = _materializeRange(container, doc, 0, firstCount);
     var materialized = madeEls.length;
@@ -8540,7 +8793,7 @@
       //   差重新引入（实测最大 332px/块），让"换出保高"白做、滚动绝对位置再次漂移。
       //   ⚠️ 用 `data--pv-r`（块自身高）而**不是** `data--pv-h`（垂直占位体积）：后者含塌陷外边距，
       //   拿来锁 min-height 会把外边距变成块内 padding ⇒ 高度反而涨回去。
-      var _phH = _placeholderHeight(doc.blocks[idx]);
+      var _phH = _pvBlockH(doc, idx);
       var _recH = parseFloat(ph.getAttribute("data--pv-r"));
       if (_recH > 0) _phH = _recH;
       ph.replaceWith(real);
@@ -8562,6 +8815,8 @@
         real.setAttribute("data--src-line-end", String(_blk.srcLineEnd >= _blk.srcLine ? _blk.srcLineEnd : _blk.srcLine));
       }
       _lazyBlockEls[idx] = real;
+      // W3.4：图片块物化后记录真实加载结果（成功→宽高比，失败→标记），供后续占位估值使用。
+      try { _pvWatchImage(real); } catch (_) {}
       _lazyTouchBlock(idx);       // 2026-10-22 1c：物化即"触碰"，供淘汰的 LRU 时钟使用
       madeEls.push(real);
     }
@@ -9429,7 +9684,7 @@
     for (var i = 0; i < phs.length; i++) {
       var idx = parseInt(phs[i].getAttribute("data--block-index"), 10);
       if (isNaN(idx) || idx >= _doc.blocks.length) continue;
-      phs[i].style.height = Math.round(_placeholderHeight(_doc.blocks[idx])) + "px";
+      phs[i].style.height = Math.round(_pvBlockH(_doc, idx)) + "px";
       // 2026-10-22 1d：度量已变 ⇒ 换出时记录的真块高度作废（否则 `_materializeRange` 会用旧高度锁高）
       phs[i].removeAttribute("data--pv-h");
       phs[i].removeAttribute("data--pv-r");
@@ -9911,7 +10166,7 @@
           // B. 解除 min-height 锁 + 停止观察（否则 `_lazyLockedEls` 持死引用）
           _lazyReleaseMinHeight(real);
           // C. 生成占位（data--block-index / data--src-line 由 AST 决定）
-          var ph = _makePlaceholder(blk, bi);
+          var ph = _makePlaceholder(blk, bi, _doc);
           // ★★ 治本（A）：**用换出前的真实占位体积**覆盖估值 —— 估值与真块排版高度可差上百 px
           //  （实测：真块 214px ⇒ 估值 25px；真块 415px ⇒ 估值 227px），用估值换出会让整篇
           //  scrollHeight 漂移 ⇒ 用户滚回原处时绝对位置对不上。
@@ -16146,7 +16401,7 @@
         var _lzViewH = (_lzPane && _lzPane.clientHeight) || 720;
         // 用平均占位高定位当前视口对应的块区间（估算 + 上下各扩一屏）
         var _lzN = _doc.blocks.length;
-        var _lzAvg = Math.max(_placeholderHeight(_doc.blocks[0]), 64);
+        var _lzAvg = Math.max(_pvBlockH(_doc, 0), 64);
         var _lzCenter = Math.floor(_lzScrollTop / _lzAvg);
         var _lzHalf = Math.max(10, Math.ceil((_lzViewH * 2) / _lzAvg));
         var _lzStart = Math.max(0, _lzCenter - _lzHalf);
