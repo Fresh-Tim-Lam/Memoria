@@ -8685,16 +8685,19 @@
   //   反过来说：**绝不能缓存 MathItem 或仍带着 MathItem 引用的活动 DOM**，否则泄漏复活。
   //
   // 上限与开关（硬性验收）：
-  //   · 条数 ≤ `TS_MAX_ENTRIES`（默认 512）、字符 ≤ `TS_MAX_CHARS`（默认 2.5M，~2.5MB 单字节串），
-  //     超出按插入序 FIFO 逐出（命中不刷新序；本缓存是"内容→字节"映射，无时序语义）；
+  //   · 条数 ≤ `TS_MAX_ENTRIES`（默认 1024）、字符 ≤ `TS_MAX_CHARS`（默认 8M），超出按插入序 FIFO 逐出；
   //   · `window.__MEMORIA_TYPESET_CACHE === false` ⇒ 完全旁路（store/apply 都不做），行为与旧实现逐字节一致；
   //   · 换文档（`state.doc.path` 变化）⇒ 整表清空（缓存只对同一篇文档有效，也避免跨文档的公式编号串味）。
   //
-  // 为什么键里带 fontSize：MathJax 的 SVG 尺寸是 ex 单位、依赖外层字号；Ctrl+± 后旧产物不可复用。
-  // 为什么键里带 display：`$$…$$` 与 `$…$` 的容器属性（display=true）不同。
-  // 为什么用公式原文而不是 hash 作键：公式源通常远小于产物字节，精确键可避免 hash 碰撞导致的错公式。
-  var TS_MAX_ENTRIES = 512;
-  var TS_MAX_CHARS = 2500000;
+  // 容量标定（2026-10-23 实测 08 章 4001 块、全量 down 一遍）：**827 条 / 7,066,821 字符**。
+  //   取 1024/8M ⇒ 整章可容纳，向上第二遍**零逐出**。这不是拍脑袋放大：实测 2.5M 上限时
+  //   恰好把文档**顶部**的公式逐出（FIFO），而向上第二遍最后到达的正是顶部 ⇒ 5%/20% 位置
+  //   重新冷启动（20% 的 up/down 比值 1.188，已贴 1.2 红线）。缓存必须是**有界**的，
+  //   但不能小到只能装半章 —— 否则本次要治的"70%/90% 到达即冷启动"会在另一端复现。
+  //   真实字节量由 `__MEMORIA_TYPESET_CACHE_STATS().chars` 如实暴露；`Runtime.getHeapUsage`
+  //   的 usedSize 不含长字符串内容（实测 5M 字符只 +0.45MB），heap 口径仍稳定在 21–22MB。
+  var TS_MAX_ENTRIES = 1024;
+  var TS_MAX_CHARS = 8000000;
   var _tsCache = (typeof Map === "function") ? new Map() : null;
   var _tsChars = 0;
   var _tsDocKey = null;
@@ -8895,6 +8898,20 @@
     return !!(_tsRestoredEls && el && _tsRestoredEls.has(el));
   }
 
+  /** 过滤出"仍需 typeset"的块：已完整复用排版产物的块不再入队。
+   *  两条物化路径（idle 批 / 滚动 rAF 同步批）都走这里，避免"缓存命中却又空排一次"。 */
+  function _tsFilterNeedTypeset(els) {
+    if (!els || !els.length) return els;
+    try {
+      if (!_tsEnabled()) return els;
+      var out = els.filter(function (el) { return !_tsWasRestored(el); });
+      if (out.length !== els.length) {
+        log("lazy", "typeset cache: skip " + (els.length - out.length) + "/" + els.length + " blocks (fully reused)");
+      }
+      return out;
+    } catch (_) { return els; }
+  }
+
   /** 只读统计（验收/诊断；不参与渲染）。 */
   function _tsStatsSnapshot() {
     return {
@@ -9031,6 +9048,9 @@
       try { real = rc.renderBlock(doc.blocks[idx], idx); }
       catch (e) { log("render", "lazy materialize block " + idx + " ERR " + (e && e.message)); continue; }
       if (!real) continue;
+      // ★ 2026-10-23 task-72：先尝试**复用上次 typeset 的产物**（纯 innerHTML 写回，不产生 MathItem）。
+      //   命中 ⇒ 该块不需要再进 typeset 队列（见 `_tsFilterNeedTypeset`），这是本次改动的核心收益。
+      try { _tsApplyBlock(real, doc.blocks[idx]); } catch (_) {}
       // 2026-10-22 修上跳（metrics 实测 maxShrink=114px）：**占位偏高时物化必然上跳**（D1 的"宁大勿小"只保证
       //   初值偏大，但物化那一刻真实高度若小于占位高度，下方内容就会弹上去 —— 这是 K4a 被回退的同类问题）。
       //   修法：物化前取占位高度，把真块的 `min-height` 锁到该值 ⇒ **替换瞬间高度只增不减**；
@@ -9254,7 +9274,7 @@
     if (made.length) {
       log("lazy", "scroll-rAF sync materialize: blocks=" + made.length + " (viewport[" + firstHit + ".." + lastHit + "])");
       // 排版走合并器（低优先级、可合并），后处理与首屏对齐
-      _lazyEnqueueMath(made);
+      _lazyEnqueueMath(_tsFilterNeedTypeset(made));
       _lazyRenderMermaidIn(made);
       _lazyPostProcessNewBlocks(made);
       try { _applyCodeHighlightToPreview(preview); postProcessWikilinks(); bindPreviewLinks(); } catch (_) {}
@@ -9479,7 +9499,8 @@
       //   本就是我早前留下的**多余优化**，制造了漏排。现在回到全量路径语义：
       //   **本批所有物化块都入队**；MathJax 对无公式块是低成本 no-op（扫一遍无 `$`/`\(` 就返回）。
       // 成本结论：调用次数不变（合并器保证），只有"每次调用扫的块数"略增；公式数不变则成本基本不变。
-      _lazyEnqueueMath(made);
+      // task-72：已完整复用排版产物的块**不再入队**（否则会被 `-math-pending` 隐藏再空排一次）。
+      _lazyEnqueueMath(_tsFilterNeedTypeset(made));
     }
     // 补齐行内公式标记（排版后会替换 .-math ⇒ mjx-container，需重打 data--inline-math）
     var token2 = state.previewToken;
@@ -9852,6 +9873,9 @@
             if (!window.MathJax || typeof MathJax.typesetPromise !== "function") return;
             return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
           }).then(function () {
+            // ★ 2026-10-23 task-72：排版完成 ⇒ 立刻把本批产物缓存成字符串（供换出后复用）。
+            //   只序列化**仍 connected**的块；失败不影响 reveal/后续流程。
+            try { _tsStoreEls(batch); } catch (_) {}
             // ★ 方案 C：**排版完成 ⇒ reveal**（成功路径）
             _lazyRevealMathIn(hiddenBatch);
           }, function (e2) {
@@ -16453,7 +16477,10 @@
     const run = () => {
       if (token !== state.previewToken) return Promise.resolve(); // 已被更新的一轮取代 ⇒ 不排了
       if (!window.MathJax?.typesetPromise) return Promise.resolve();
-      return MathJax.typesetPromise([preview]).catch((e) => log("render", "MathJax: " + e.message));
+      // ★ 2026-10-23 task-72：整篇/首屏这一轮排完后同样入缓存（滚动路径之外的公式也要能复用）。
+      return MathJax.typesetPromise([preview])
+        .then(function (v) { try { _tsStoreWithin(preview); } catch (_) {} return v; })
+        .catch((e) => log("render", "MathJax: " + e.message));
     };
     const prev = state._mathPending;
     const chain = prev && typeof prev.then === "function" ? prev.catch(() => {}) : Promise.resolve();
