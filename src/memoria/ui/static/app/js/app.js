@@ -48,6 +48,12 @@
     toolbarSearchResults: [],
     kbPending: null,
     lastFileStats: "",
+    // 启动自动打开 vs 用户主动导航（2026-10-22）：
+    // openSeq 单调递增，用户每次主动打开 ++；启动自动打开在 await 前记录 token，
+    // await 后 token 变了（或 userNavigated=true）⇒ 放弃提交，绝不覆盖用户已选的页面。
+    openSeq: 0,
+    userNavigated: false,
+    bootAutoOpenPending: false,
   };
 
   window.state = state;  // 导出给 edit-handler.js 等外部模块使用
@@ -422,6 +428,162 @@
     $("#editor-wrap").classList.toggle("hidden", show);
   }
 
+  // ── 启动恢复「最后停留的文件」（2026-10-22）──────────────────────────────
+  // 设计约束：
+  //   ① 同一浏览器可切换多个知识库 ⇒ 按键名分区，绝不能串库；
+  //   ② 桌面壳（pywebview WebView2）默认 private_mode=True，每次启动会清 localStorage
+  //      ⇒ localStorage 只作同进程快速缓存，磁盘 ui-settings.json 才是跨重启权威源；
+  //   ③ 只在「文件真正打开成功」后写；打开失败/已从 KB 删除时清除，避免每次启动重试失败。
+  const BOOT_LAST_PATH_LS_PREFIX = "memoria.lastPath.";
+  const BOOT_SETTINGS_SECTION = "boot";
+
+  /** KB 路径规范形：仅用于分区与碰撞校验（不改变真实路径的展示/使用）。 */
+  function _bootKbIdentity(kbPath) {
+    return String(kbPath || "")
+      .trim()
+      .replace(/\\/g, "/")
+      .replace(/\/+$/, "")
+      .toLowerCase();
+  }
+
+  /** FNV-1a 32-bit：短、稳定、无依赖；碰撞由记录里的 kb 全路径二次校验兜底。 */
+  function _bootKbScope(kbPath) {
+    const s = _bootKbIdentity(kbPath);
+    let h = 0x811c9dc5;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16).padStart(8, "0");
+  }
+
+  function _bootLastPathLsKey(kbPath) {
+    return BOOT_LAST_PATH_LS_PREFIX + _bootKbScope(kbPath);
+  }
+
+  function _bootReadLocalLastPath(kbPath) {
+    try {
+      const raw = localStorage.getItem(_bootLastPathLsKey(kbPath));
+      if (!raw) return "";
+      const rec = JSON.parse(raw);
+      if (typeof rec === "string") return rec;
+      if (!rec || typeof rec !== "object" || !rec.path) return "";
+      if (rec.kb && _bootKbIdentity(rec.kb) !== _bootKbIdentity(kbPath)) return "";
+      return String(rec.path);
+    } catch (_) {
+      return "";
+    }
+  }
+
+  function _bootWriteLocalLastPath(kbPath, relPath) {
+    try {
+      localStorage.setItem(
+        _bootLastPathLsKey(kbPath),
+        JSON.stringify({ kb: kbPath, path: relPath, at: Date.now() })
+      );
+    } catch (_) {
+      /* 隐私模式/配额：磁盘仍为权威源 */
+    }
+  }
+
+  function _bootClearLocalLastPath(kbPath) {
+    try {
+      localStorage.removeItem(_bootLastPathLsKey(kbPath));
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  // 磁盘 ui-settings 是「读整对象 → 改 boot → 写回」，快速连续打开时必须串行，
+  // 否则旧快照晚写会覆盖新值（表现为重启回到更早的文件）。
+  let _bootSettingsWriteChain = Promise.resolve();
+  let _bootLastPersistKey = "";
+
+  function _bootEnqueueSettings(task) {
+    _bootSettingsWriteChain = _bootSettingsWriteChain.then(task).catch(() => {});
+    return _bootSettingsWriteChain;
+  }
+
+  async function _bootReadSettingsSection() {
+    try {
+      const res = await call("get_ui_settings");
+      const settings = res && res.status === "ok" ? res.settings : null;
+      const boot =
+        settings && typeof settings[BOOT_SETTINGS_SECTION] === "object"
+          ? settings[BOOT_SETTINGS_SECTION]
+          : null;
+      return boot || {};
+    } catch (_) {
+      return {};
+    }
+  }
+
+  /** 读「最后文件」：磁盘优先（跨重启），本地缓存兜底（网页模式/磁盘不可用时）。 */
+  async function readPersistedLastFile(kbPath) {
+    if (!kbPath) return "";
+    const scope = _bootKbScope(kbPath);
+    const boot = await _bootReadSettingsSection();
+    const rec = boot.lastPathByKb && boot.lastPathByKb[scope];
+    let diskPath = "";
+    if (typeof rec === "string") {
+      diskPath = rec;
+    } else if (rec && typeof rec === "object" && typeof rec.path === "string") {
+      if (!rec.kb || _bootKbIdentity(rec.kb) === _bootKbIdentity(kbPath)) diskPath = rec.path;
+    }
+    if (diskPath) return diskPath;
+    return _bootReadLocalLastPath(kbPath);
+  }
+
+  /** 记录「最后停留的文件」：localStorage 同步写 + ui-settings 串行落盘。 */
+  function rememberLastFile(relPath) {
+    const kbPath = state.kbPath;
+    if (!kbPath || !relPath) return;
+    _bootWriteLocalLastPath(kbPath, relPath);
+    const scope = _bootKbScope(kbPath);
+    const persistKey = scope + "\u0000" + relPath;
+    if (_bootLastPersistKey === persistKey) return;
+    _bootLastPersistKey = persistKey;
+    _bootEnqueueSettings(() => _bootPersistLastFile(kbPath, scope, relPath));
+  }
+
+  async function _bootPersistLastFile(kbPath, scope, relPath) {
+    // KB 已切走 ⇒ 旧库的排队写入不得污染新库分区
+    if (!kbPath || state.kbPath !== kbPath) return;
+    const boot = await _bootReadSettingsSection();
+    const map =
+      boot.lastPathByKb && typeof boot.lastPathByKb === "object" ? { ...boot.lastPathByKb } : {};
+    map[scope] = { kb: kbPath, path: relPath };
+    await call("save_ui_settings", { boot: { lastPathByKb: map } });
+  }
+
+  /**
+   * 清除持久化。expectedPath 用于防止误删用户随后打开的新值：
+   * 只有磁盘里仍记录着「本次失败的那条」时才删除。
+   */
+  function clearPersistedLastFile(kbPath, expectedPath) {
+    if (!kbPath) return;
+    // 本地缓存只在仍记录着「本次失败的那条」时清除，避免误删用户随后打开的新值
+    const local = _bootReadLocalLastPath(kbPath);
+    if (!expectedPath || !local || local === expectedPath) _bootClearLocalLastPath(kbPath);
+    if (_bootLastPersistKey === _bootKbScope(kbPath) + "\u0000" + expectedPath) _bootLastPersistKey = "";
+    const scope = _bootKbScope(kbPath);
+    _bootEnqueueSettings(() => _bootClearPersistedLastFile(kbPath, scope, expectedPath));
+  }
+
+  async function _bootClearPersistedLastFile(kbPath, scope, expectedPath) {
+    if (!kbPath || state.kbPath !== kbPath) return;
+    const boot = await _bootReadSettingsSection();
+    const map =
+      boot.lastPathByKb && typeof boot.lastPathByKb === "object" ? { ...boot.lastPathByKb } : {};
+    if (!(scope in map)) return;
+    const rec = map[scope];
+    const current =
+      rec && typeof rec === "object" ? rec.path : typeof rec === "string" ? rec : "";
+    if (expectedPath && current && current !== expectedPath) return;
+    delete map[scope];
+    await call("save_ui_settings", { boot: { lastPathByKb: map } });
+  }
+
   async function call(fn, ...args) {
     const a = api();
     if (!a || !a[fn]) throw new Error(T("app.apiUnavailable", { fn }));
@@ -472,6 +634,78 @@
     return "";
   }
 
+  /**
+   * 启动自动打开（2026-10-22 修）：
+   *   优先级 ① 持久化的 lastPath（必须仍在 state.files）→ ② 既有启发式 → ③ 无文件 showWelcome。
+   *   用户在此期间主动打开任何文件 ⇒ openSeq 前进 / userNavigated=true ⇒ 这里立即放弃，
+   *   不再调用 openFile 做重活，也不回写覆盖用户选择。
+   */
+  async function bootAutoOpen() {
+    if (state.userNavigated) {
+      console.log("[boot] auto-open aborted: user navigated");
+      return;
+    }
+    if (!state.files.length) {
+      console.log("[boot] fallback: no files");
+      showWelcome(true);
+      return;
+    }
+    const token = state.openSeq;
+    state.bootAutoOpenPending = true;
+    try {
+      const persisted = await readPersistedLastFile(state.kbPath);
+      if (state.userNavigated || state.openSeq !== token) {
+        console.log("[boot] auto-open aborted: user navigated");
+        return;
+      }
+      if (persisted) {
+        const exists = state.files.some((f) => f && f.path === persisted);
+        if (exists) {
+          console.log("[boot] restore last file: " + persisted);
+          const outcome = await openFile(persisted, {
+            skipNav: true,
+            autoBoot: true,
+            bootToken: token,
+          });
+          if (state.userNavigated || state.openSeq !== token) {
+            console.log("[boot] auto-open aborted: user navigated");
+            return;
+          }
+          if (outcome === "ok") return;
+          console.log("[boot] fallback: restore open failed: " + persisted);
+          clearPersistedLastFile(state.kbPath, persisted);
+        } else {
+          // KB 已删除/改名的旧路径：清掉，避免每次启动都重试失败
+          console.log("[boot] fallback: last file missing from KB: " + persisted);
+          clearPersistedLastFile(state.kbPath, persisted);
+        }
+      } else {
+        console.log("[boot] fallback: no persisted last file");
+      }
+      if (state.userNavigated || state.openSeq !== token) {
+        console.log("[boot] auto-open aborted: user navigated");
+        return;
+      }
+      const preferred =
+        state.files.find((f) => f.path === "navigation-demo.md") ||
+        state.files.find((f) => f.path === "mdp.md") ||
+        state.files[0];
+      if (!preferred) {
+        console.log("[boot] fallback: no preferred file");
+        showWelcome(true);
+        return;
+      }
+      console.log("[boot] fallback: heuristic " + preferred.path);
+      await openFile(preferred.path, {
+        skipNav: true,
+        autoBoot: true,
+        bootToken: token,
+      });
+    } finally {
+      state.bootAutoOpenPending = false;
+    }
+  }
+
   async function initKb() {
     try {
       state.kbPath = await resolveStartupKbPath();
@@ -515,11 +749,8 @@
         window.MemoriaKbCheck?.startKbSilentCheck?.();
         // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
         window.MemoriaKbAgent?.ensure?.();
-        const preferred =
-          state.files.find((f) => f.path === "navigation-demo.md") ||
-          state.files.find((f) => f.path === "mdp.md") ||
-          state.files[0];
-        if (preferred) await openFile(preferred.path, { skipNav: true });
+        // 2026-10-22：恢复「最后停留的文件」，且与用户主动导航竞态隔离（见 bootAutoOpen）
+        await bootAutoOpen();
       } else {
         showWelcome(true);
         showKbIndicator("");
@@ -1443,6 +1674,18 @@
   // 树内点击切换文档（原 navigateToFile）已随文件树子系统迁至 file-tree.js
 
   async function openFile(relPath, opts = {}) {
+    // 用户主动打开（文件树点击 / 命令面板 / 快捷键 / 搜索跳转 / 标签切换 …）一律优先：
+    // 立即推进 openSeq 并置 userNavigated，使正在等待/渲染的启动自动打开作废。
+    if (opts.skipNav !== true) {
+      state.openSeq++;
+      state.userNavigated = true;
+      if (state.bootAutoOpenPending) console.log("[boot] auto-open aborted: user navigated");
+    }
+    // 启动自动打开：调用点已记录 token；若期间用户已导航（或又发生一次打开）⇒ 不进入重活。
+    if (opts.bootToken != null && (state.openSeq !== opts.bootToken || state.userNavigated)) {
+      if (opts.autoBoot) console.log("[boot] auto-open aborted: user navigated");
+      return "aborted";
+    }
     // 文件上下文切换 → 提升调度 epoch，使基于旧文件的排队作业（如 kp_panel）陈旧可弃
     window.MemoriaScheduler?.bumpEpoch?.(); _preloadStop("switch"); _lastSwitch.hit = false; const _t0Switch = performance.now(); _switchAbs = _t0Switch; _switchPhases = {}; if (!opts.fromNav && window.MemoriaPositionMemory) window.MemoriaPositionMemory.remember(); // 2026-10-06 位置记忆：**在 push/换文件之前**采当前视口顶部源码行（AG105 纪律）；fromNav 由调用方采 // 2026-09-23 性能：切页签即中止在跑的后台预渲染，并开始计时（见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；2026-09-24：把起点交给**外层阶段计时**（`_markPhase`，读数里的「切页签阶段」）
     // 导航栈记录：凡「非 skipNav / 非 fromNav」的用户切换，push() 会丢弃当前指针往上的
@@ -1465,6 +1708,11 @@
       await flushDurableBarrier();
       _saveCurrentTabScroll();
     }
+    // await 期间用户可能已经打开别的文件：在清理/搬运预览 DOM 之前再次作废。
+    if (opts.bootToken != null && (state.openSeq !== opts.bootToken || state.userNavigated)) {
+      if (opts.autoBoot) console.log("[boot] auto-open aborted: user navigated");
+      return "aborted";
+    }
     cancelKpHighlightTimers();
     clearHighlights();
     clearPreviewHighlights();
@@ -1472,13 +1720,24 @@
     clearGraphKpHover(); if (state.currentPath && state.currentPath !== relPath) _previewCacheStash(state.currentPath); _markPhase("stash"); // 2026-09-23 性能：切页签前把当前预览 DOM 整体搬进缓存（移动节点，见文件末尾「预览 DOM 缓存 + 后台预渲染」块）；`stash` = 这段 + 之前那点收尾（含 `_estimatePreviewBytes` 的整树遍历）
     setStatus(T("app.loading"), relPath);
     const res = await call("load_document", relPath); _markPhase("load");   // `load` = 后端读文件 + 解析 AST + sha256 的 IPC 往返（有 FIFO 24 条文档缓存）
+    // ★ 关键竞态点：load 期间用户可能已打开别的文件。此处必须在写任何 state 之前放弃，
+    //   否则会把用户刚打开的页面「拽回」启动自动打开的目标。
+    if (opts.bootToken != null && (state.openSeq !== opts.bootToken || state.userNavigated)) {
+      if (opts.autoBoot) console.log("[boot] auto-open aborted: user navigated");
+      return "aborted";
+    }
     if (res.status !== "ok") {
       setStatus(res.message || T("app.loadFailed"));
-      return;
+      // KB 已删除该文件：清掉持久化，避免每次启动都重试一条不存在的路径
+      clearPersistedLastFile(state.kbPath, relPath);
+      return "failed";
     }
     state.currentPath = relPath;
     state.doc = res;
     state.activeKpId = opts.kpId || null;
+    // load_document 成功 ⇒ 文件确实已打开：立刻记「最后停留文件」（本地同步 + 磁盘异步），
+    // 不必等整篇渲染收尾，避免用户打开后马上退出导致丢记录。
+    rememberLastFile(relPath);
     _dirty = false;
     // 切换文件：清空预览区撤销/重做历史，避免跨文件回退
     if (window.MemoriaEditSync && typeof window.MemoriaEditSync.resetHistory === "function") {
@@ -1606,6 +1865,10 @@
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
     window.MemoriaToolbarSearch?.syncScope?.(); _markPhase("tail"); _lastSwitch.ms = Math.round(performance.now() - _t0Switch); _previewCacheNoteLoad(_lastSwitch.ms); // 2026-09-24 追加：把本次**冷加载**耗时交给池（切走时挂到该条画像上）；`tail` 前一步先落表 ⇒ 阶段表给出的就是"从点击到状态栏收尾"的完整账
+    // 只在「真正打开成功且仍是当前文件」时记录最后停留文件：
+    // 渲染期间用户已切到 B 的，A 不得把 B 的持久化覆盖回 A。
+    if (state.currentPath === relPath) rememberLastFile(relPath);
+    return "ok";
   }
 
   // 分栏模式滚动同步：源码滚动→预览跟随，预览滚动→源码跟随
