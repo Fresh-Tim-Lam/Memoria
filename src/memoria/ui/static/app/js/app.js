@@ -1975,6 +1975,16 @@
       return;
     }
     const token = ++state.previewToken;   // 2026-09-25 AG97：窗口化回退 ⇒ 清屏前不再需要"把视口顶部行交给窗口"
+    // 2026-10-22 task-65：**换文档 / 整篇重渲**才提升调度 epoch（滚动不 bump）⇒
+    //   排队中的惰性物化/排版作业执行前陈旧丢弃；并清空两条队列，避免"作业被丢、队列留孤儿"。
+    //   `incremental: true`（同文档增量重渲）不 bump：job 仍属当前文档，误丢会造成漏物化/漏排版。
+    //   同文档整篇重渲（视图切换 / 源→预览同步）只清队列、**不** bump：DOM 虽重建，但排队作业
+    //   按块下标作用到新 DOM 仍是幂等的；bump 会误丢**同一文档**的其它 P2 派生作业（如 kp_panel 静默刷新）。
+    if (!incremental) {
+      var _lazyPrevPath = (_doc && _doc.path) || "";
+      if (_lazyPrevPath !== ((doc && doc.path) || "")) _lazyPipelineReset("render:doc-change");
+      else _lazyPipelineDropQueues();
+    }
     if (!incremental) {   // 2026-09-25 AG97：窗口化回退 ⇒ 回到"全量重渲染前先插一句『渲染中』"的老行为（大文档编辑时会有一次高度塌陷/补齐，这是老路径固有代价）
       preview.innerHTML = '<p class="-preview-loading">' + T("preview.rendering") + '</p>';
     }
@@ -8017,7 +8027,6 @@
 
   var _lazyIO = null;           // IntersectionObserver 实例
   var _lazyPending = null;      // Set：待物化块下标（收集后统一批量处理）
-  var _lazyFlushScheduled = false;
   var _lazyLockedEls = null;    // Set<Element>：物化时被锁 min-height 的块（等离开视口再回落）
   var _lazyLockedIO = null;    // 观察"被锁高块"的 IO：离开视口 ⇒ 解除 min-height
 
@@ -8107,6 +8116,15 @@
         };
         _lazySyncRAF = (window.requestAnimationFrame) ? window.requestAnimationFrame(tick) : setTimeout(tick, 16);
       }
+      // ★ 2026-10-22 task-65「滚动停止」兜底：拖动中由上面 rAF 每帧小步推进；**停下那一刻**
+      //   若视口内仍有占位（最后一帧 rAF 已跑完 / 被其它任务插队），再同步推进一批。
+      //   这里只是 UI debounce（50ms 内无新 scroll），**不是**惰性管线的调度源：
+      //   物化/排版仍由 `MemoriaScheduler` 按 P1/P2 排队执行。
+      if (_lazyScrollIdleTimer) clearTimeout(_lazyScrollIdleTimer);
+      _lazyScrollIdleTimer = setTimeout(function () {
+        _lazyScrollIdleTimer = null;
+        try { _lazySyncMaterializeViewport(preview); } catch (e) { log("lazy", "scroll-stop sync ERR " + ((e && e.message) || e)); }
+      }, LAZY_SCROLL_IDLE_MS);
     }, { passive: true });
   }
 
@@ -8184,56 +8202,86 @@
     return made.length;
   }
 
-  /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。
+  /** 调度一次批量物化 —— **MemoriaScheduler 作业**（P1 交互可见，同起点合并）。
    *
-   *  ⚠️ 2026-10-22 P0 加固（活性自愈）：`_lazyFlushScheduled` 是"已排队"标志，
-   *  一旦因任何原因被卡在 `true`（回调没跑 / 被异常打断 / 定时器被丢弃），后续 `_lazyScheduleFlush()`
-   *  会**全部空转** ⇒ 队列有块但永不物化 ⇒ 视口永久占位（静默、极难发现）。
-   *  对策：记录"上次排队时刻"，若标志仍为 true 但**超过 `LAZY_SCHED_STALE_MS` 没有推进**，
-   *  视为卡死 ⇒ 强制复位并重新调度。
-   *  另：`fire()` 用 try/finally 保证**即使 `_lazyFlushNow()` 抛异常，标志也一定复位**。 */
-  var LAZY_SCHED_STALE_MS = 2000;
-  var _lazySchedAt = 0;   // 上次置 `_lazyFlushScheduled = true` 的时刻
-  var _lazyCollectAt = 0; // IO 收集到块、请求 flush 的时刻（用于量化"饿死"延迟）
+   *  2026-10-22 task-65：把原来手写的 `setTimeout(0)` 队列换成 M5 调度内核作业，与排版管线（P2）
+   *  共用**同一个**调度源 ⇒ 不再出现"两个宏任务队列互相排队"（实测批次间隔 median 119–134ms）。
+   *
+   *  合并：`key = lazy-materialize:<pending 最小块下标>` + `replace: true`
+   *    ⇒ 同一区间的多次 IO 收集只留一个待执行作业；起点变了才另开一个（旧作业执行时
+   *      `_materializeRange` 只处理**仍是占位**的块 ⇒ 幂等空跑，不会重复建 DOM）。
+   *  陈旧：`gen = epoch()` + `dropStale` ⇒ 换文档 / 缓存搬回 `bumpEpoch()` 后，排队中的旧作业执行前丢弃。
+   *    **滚动不 bump**（滚动只是同一份文档内的可见窗口变化）。
+   *  活性：作业内部 `_lazyFlushNow()` 仍保留"有余量就续排"的 finally（不依赖调度器内部状态）；
+   *    即使某次调度回调丢失，下一次 IO/滚动 stop 仍会重新 `schedule` ⇒ 不回到"队列有块但没人消费"。
+   */
+  var _lazyCollectAt = 0; // IO 收集到块、请求 flush 的时刻（用于量化 collect→flush 延迟）
+
+  /** 调度内核引用（scheduler.js 在 index.html 中先于 app.js 加载；测试壳可能缺席 ⇒ 调用方需防御）。 */
+  function _lazyJobScheduler() { return window.MemoriaScheduler || null; }
+
+  /** pending 集合里最小的块下标（只用于生成作业 key；不修改队列）。 */
+  function _lazyPendingStartKey() {
+    if (!_lazyPending || !_lazyPending.size) return "none";
+    var min = Infinity;
+    _lazyPending.forEach(function (v) { if (v < min) min = v; });
+    return String(min);
+  }
 
   function _lazyScheduleFlush() {
-    if (_lazyFlushScheduled) {
-      // 自愈：标志卡住但已超时 ⇒ 强制重置（否则整条物化链永久停滞）
-      var now = (window.performance && performance.now) ? performance.now() : Date.now();
-      if (_lazySchedAt && (now - _lazySchedAt) < LAZY_SCHED_STALE_MS) return;   // 正常"已排队"⇒ 不重复建
-      try { log("lazy", "SCHEDULER STALE (" + Math.round(now - _lazySchedAt) + "ms) ⇒ force reschedule"); } catch (_) {}
-      _lazyFlushScheduled = false;
+    if (!_lazyPending || !_lazyPending.size) return;
+    var S = _lazyJobScheduler();
+    if (!S || typeof S.schedule !== "function") {
+      // 防御性回退：调度内核缺席（旧壳/被裁剪的构建）时也不能让视口永久占位。
+      // 正常生产路径**不会**走到这里（scheduler.js 先加载）。
+      setTimeout(function () {
+        try { _lazyFlushNow(); } catch (e) { log("lazy", "flush THREW (no scheduler): " + ((e && e.message) || e)); }
+      }, 0);
+      return;
     }
-    _lazyFlushScheduled = true;
-    _lazySchedAt = (window.performance && performance.now) ? performance.now() : Date.now();
-    var fire = function () {
-      // 2026-10-22 饿死修复：记录"收集 → 实际 flush"的延迟（metrics 用来量化 rIC 被推迟的程度）
-      try {
-        if (_lazyCollectAt) {
-          log("lazy", "flush delay: collect→flush = " + Math.round(((window.performance && performance.now) ? performance.now() : Date.now()) - _lazyCollectAt) + " ms");
-          _lazyCollectAt = 0;
-        }
-      } catch (_) {}
-      // try/finally：**无论 `_lazyFlushNow` 是否抛异常，标志一定复位**，否则一次异常=永久停滞。
-      try {
-        _lazyFlushNow();
-      } catch (e) {
-        try { log("lazy", "flush THREW: " + ((e && e.message) || e)); } catch (_) {}
-      } finally {
-        _lazyFlushScheduled = false;
-        _lazySchedAt = 0;
-        // 兜底续命：若仍有残留（异常后遗漏的情形），再排一次
+    S.schedule({
+      kind: "lazy_materialize",
+      key: "lazy-materialize:" + _lazyPendingStartKey(),
+      priority: 1,            // P1 交互：可见性优先于排版（P2）
+      replace: true,
+      gen: (typeof S.epoch === "function") ? S.epoch() : 0,
+      dropStale: true,
+      run: function () {
+        // 记录"收集 → 实际 flush"的延迟（metrics 用来量化调度等待）
         try {
-          if (_lazyPending && _lazyPending.size) _lazyScheduleFlush();
+          if (_lazyCollectAt) {
+            log("lazy", "flush delay: collect→flush = " + Math.round(((window.performance && performance.now) ? performance.now() : Date.now()) - _lazyCollectAt) + " ms");
+            _lazyCollectAt = 0;
+          }
         } catch (_) {}
-      }
-    };
-    // ★ 2026-10-22（Lead 定性"物化被 typeset 饿死"）：
-    //   原来用 `requestIdleCallback` —— 而 typeset 批次会反复占住主线程 ⇒ rIC **被无限推迟**
-    //   ⇒ 物化拿不到执行机会 ⇒ p95 只有 15ms（帧不卡）却出现 2s 空白。
-    //   **可见性优先级高于排版**：物化决定"用户看不看得见"，typeset 只影响"公式好不好看"。
-    //   ⇒ 物化改用 `setTimeout(0)`（宏任务，保证拿到执行机会）；typeset 合并器继续用 idle（可延后）。
-    setTimeout(fire, 0);
+        try {
+          _lazyFlushNow();
+        } catch (e) {
+          log("lazy", "flush THREW: " + ((e && e.message) || e));
+          throw e;   // 交回调度器：作业标 error 并继续跑队列里的其它作业（不会卡住 pump）
+        }
+      },
+    });
+  }
+
+  /** 换文档 / 缓存搬回：**惰性管线里唯一**提升调度 epoch 的地方（滚动不 bump）。
+   *
+   *  同时清空两条惰性管线队列：被 `dropStale` 丢弃的作业不会留下"队列有块但没人消费"的孤儿。
+   *  （同文档增量重渲**不**调用 ⇒ 已排队作业按原 epoch 继续执行，避免误丢。） */
+  function _lazyPipelineDropQueues() {
+    if (_lazyPending) _lazyPending.clear();
+    _lazyCollectAt = 0;
+    _lazyMathQueue = null;
+    if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
+    try { _lazyRevealAllMathPending(); } catch (_) {}
+  }
+
+  /** 提升 epoch + 作废两条队列（换文档/缓存搬回用）。 */
+  function _lazyPipelineReset(reason) {
+    var S = _lazyJobScheduler();
+    var ep = (S && typeof S.bumpEpoch === "function") ? S.bumpEpoch() : null;
+    _lazyPipelineDropQueues();
+    try { log("lazy", "pipeline epoch→" + (ep == null ? "n/a" : ep) + " (" + reason + ")"); } catch (_) {}
   }
 
   /** 批量物化 pending 里的块 + 对新块排版。
@@ -8242,7 +8290,7 @@
    *  真实场景：用户**快速拖滚动条到底** ⇒ IO 在一两帧内把沿途**所有**占位块收进 pending
    *  （`rootMargin: 200%` 还会放大范围）⇒ 原先这里一次全物化 = 数千块同步建 DOM = 长时间冻结。
    *  现在：每次 float 最多物化 `LAZY_FLUSH_MAX` 块，**余量放回 pending 并重新调度**
-   *  ⇒ 每次只占一小段主线程，其余留给下一批 idle/宏任务。 */
+   *  ⇒ 每次只占一小段主线程，其余留给下一批调度作业（MemoriaScheduler 帧预算）。 */
   // 单批物化上限。**依据实测**（Lead，拖到底场景 08 章）：130.8ms 帧 / 200 块 ≈ **0.65ms/块**
   // ⇒ 100 块 ≈ 65ms，为 100ms 预算留余量。
   // 若后续出现"块更复杂导致单批仍超 100ms"，继续降到 50 —— **有实测依据才调，不凭感觉改**。
@@ -8572,9 +8620,19 @@
     _lazyScheduleMathFlush();
   }
 
-  /** 调度一次合并排版（幂等：已在排/已定时不重复建）。
+  /** 调度一次合并排版 —— **MemoriaScheduler 作业**（P2 派生视图，同起点合并）。
+   *
+   *  保留 `LAZY_MATH_MERGE_MAX_WAIT` 硬上限计时器：它是**截止期**（deadline），不是调度源 ——
+   *  保证合并窗口内公式一定会排；即使调度器回调被推迟，到点也会直接 flush。
    *  ⚠️ 单独抽出来是必须的：**token 回收路径**要"队列已填、只补调度"，
    *  若复用 `_lazyEnqueueMath([])` 会被它的空数组早退挡掉 ⇒ 回收的块**永远不排**（正是要修的漏排）。 */
+  function _lazyMathStartKey() {
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return "none";
+    var el = _lazyMathQueue[0];
+    var bi = (el && el.getAttribute) ? parseInt(el.getAttribute("data--block-index"), 10) : NaN;
+    return isNaN(bi) ? String(_lazyMathQueue.length) : String(bi);
+  }
+
   function _lazyScheduleMathFlush() {
     if (!_lazyMathQueue || !_lazyMathQueue.length) return;
     // 硬上限：从**首次入队**起算，500ms 后无条件排（即便还在持续物化）⇒ 公式不会长期停在 `$…$`
@@ -8584,15 +8642,21 @@
         _lazyFlushMathNow("max-wait");
       }, LAZY_MATH_MERGE_MAX_WAIT);
     }
-    // ★ 2026-10-22（Lead 实测**最长连续源码态 1.3–1.8s**）：调度从 `requestIdleCallback` 改为 `setTimeout(0)`。
-    //   理由与物化 flush 完全同一类：**rIC 在连续滚动/输入时被无限推迟**
-    //   （物化那次实测 median 286ms、`didTimeout=true` 9/10）。
-    //   虽然这里 `timeout:120` 理论上会超时兜底，但：
-    //   ① rIC 的 timeout 只保证"**最终**给回调"，实际延迟可达数百 ms ~ 1s+（浏览器繁忙时）；
-    //   ② 期间用户在滚动 ⇒ 每次 scroll 又引发新批次入队 ⇒ **入队速度 ≥ 出队速度** ⇒ 越积越长。
-    //   `setTimeout(0)` 是宏任务、优先级高于 idle ⇒ 保证拿到执行机会。
-    //   （"可见性相关工作不用 idle 优先级"这条原则，已经在物化上验证过。）
-    setTimeout(function () { _lazyFlushMathNow("timer"); }, 0);
+    var S = _lazyJobScheduler();
+    if (!S || typeof S.schedule !== "function") {
+      // 防御性回退（正常生产路径不会走到：scheduler.js 先于 app.js 加载）
+      setTimeout(function () { _lazyFlushMathNow("timer"); }, 0);
+      return;
+    }
+    S.schedule({
+      kind: "lazy_typeset",
+      key: "lazy-typeset:" + _lazyMathStartKey(),
+      priority: 2,            // P2 派生：让物化（P1 交互）先跑
+      replace: true,
+      gen: (typeof S.epoch === "function") ? S.epoch() : 0,
+      dropStale: true,
+      run: function () { _lazyFlushMathNow("scheduler"); },
+    });
   }
 
   /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。
@@ -8727,13 +8791,15 @@
     });
   }
 
-  /** 强制调度一次合并排版：**清除幂等守卫与在跑的 idle 定时**，保证一定有一次 flush。
-   *  用于"队列孤儿"救援（token 变化 / 异常回队）——普通 `_lazyScheduleMathFlush` 可能因
-   *  `_lazyMathQueueTimer` 已存在或 rIC 被跳过而**不再产生 flush**。 */
+  /** 强制调度一次合并排版：**清除截止期计时器**，保证一定有一次 flush。
+   *  用于"队列孤儿"救援（token 变化 / 异常回队）：普通 `_lazyScheduleMathFlush` 可能因
+   *  同键合并而被顶替，但 `replace: true` 的语义本身就是"用新作业顶替旧的排队作业"
+   *  ⇒ 重新 schedule 后**一定**有一个待执行作业；若已有作业在跑，会再追加一个。
+   *  ⚠️ 2026-10-22 task-65：不再用 `setTimeout(0)` 直排（那是第二个调度源，正是要消除的竞争）。 */
   function _lazyForceScheduleMathFlush() {
     if (!_lazyMathQueue || !_lazyMathQueue.length) return;
     if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
-    setTimeout(function () { _lazyFlushMathNow("force"); }, 0);   // 宏任务让出后必跑一次
+    _lazyScheduleMathFlush();
   }
 
   // ══ 2026-10-22（人追加约束）：**窗口尺寸 / UI 缩放 / 字体变化 ⇒ 必须重算占位** ══════════════
@@ -8859,7 +8925,11 @@
   function _teardownLazyScrollMaterialization() {
     if (_lazyIO) { _lazyIO.disconnect(); _lazyIO = null; }
     if (_lazyPending) _lazyPending.clear();
-    _lazyFlushScheduled = false;
+    _lazyCollectAt = 0;
+    // 2026-10-22 task-65：排版队列/截止期计时器也一并作废（DOM 即将被替换 ⇒ 队列里的元素不再有意义）。
+    //   换文档/整篇重渲另由 `_lazyPipelineReset()` 提升 epoch，让排队中的调度作业陈旧丢弃。
+    _lazyMathQueue = null;
+    if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
     // 2026-10-22：被锁高块在换文档/关库时全部解锁并拆 IO，避免死引用与遗留 min-height
     _lazyReleaseMinHeight();
     if (_lazyLockedIO) { _lazyLockedIO.disconnect(); _lazyLockedIO = null; }
@@ -14621,6 +14691,9 @@
     _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 与"刚搬回来的这份 DOM"对齐（同上：块级提交的差分基准）
     preview.innerHTML = "";
     preview.appendChild(entry.frag); _markSwitch("attach");   // 2026-09-25 AG97：窗口化回退 ⇒ 搬回的就是整篇真 DOM（老口径），不再"只挂一窗"
+    // 2026-10-22 task-65：缓存搬回 = **换了一轮整篇 DOM** ⇒ 提升调度 epoch、作废上一文档的排队作业；
+    //   同时（在挂回后）兜底清一遍 `-math-pending`：缓存期间若有块停在隐藏态，这里直接放出来。
+    _lazyPipelineReset("cache-restore");
     // 2026-10-22 1a/问题2：缓存条目可能是惰性化的（占位 + 首屏真块）。恢复后必须对**当前视口**重新物化，
     // 否则切回时视口若落在占位区 ⇒ 白屏。物化范围 = 恢复的 scrollTop 上下 ± 视口×2 高度。
     if (_lazyMaterializeEnabled(doc)) {
