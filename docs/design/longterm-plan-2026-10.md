@@ -117,6 +117,26 @@ keep+scan+read 23.5%、**批尾一次全篇强制布局 58.7%**（批均 21ms、
 
 ---
 
+### W3/W4 第 28 轮：W3.3 收口 + W4.1 负向验证补齐
+
+**W3.3 已真正启用（`e4fb2b4b`）**：`_tailLayoutMode` 默认 `pred`；**移除**了"编辑态回退 legacy"这个
+基于误判的零收益修法（`EH.editMode` 默认 true ⇒ 每批回退 ⇒ 收益归零）。
+
+**W4.1 补齐（`09592f8e`）**：`scenarios/lazy-gate.json` 入库、README 增「惰性路径交互门禁」章节、
+`interaction.mjs` 加 Edge 残留清理。**两种 `--sabotage` 负向验证**：
+- `viewport-placeholder` ⇒ FAIL `settled-viewport-placeholders-0：期望 0，实际 1`
+- `noevict` ⇒ FAIL `eviction-ran-during-long-scroll` / `eviction-not-suspended` /
+  `dom-within-8-screens`（3662 > 248）
+两者都是**真实产品路径与真实 DOM 状态**，非伪造指标。
+
+**测量方法三连修（今天最大收获 —— 是仪器坏，不是被测对象坏）**：
+1. 跨会话比较（整机负载 2–8×）⇒ 改**同 build 交错 A/B**
+2. 并发跑门禁互相污染 ⇒ 加**串行化锁**（曾因此误判"pred 破坏 L5"并回退了正确改动）
+3. 门禁 pick 落点不在视口内（块相交但文字行在 pane 之上）⇒ 加**落点视口内约束**
+
+**W3.4 占位估值已开工**：`_placeholderHeight` 逐类型标定；实测整篇虚高 +4.4%（最大来源是 image
+`paneW*9/16≈450px`，而该 KB 53 张图全失败、真实块高 ~46px）。目标 ≤2%，且**不得用"缩小估值"换"更大跳动"**。
+
 ## 8 小时自主作业授权（2026-10-23 00:13 用户指令）
 
 用户明确：**"接下来 8 小时你们自由收拾这些 todo"**。执行规则：
