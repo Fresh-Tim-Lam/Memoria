@@ -700,6 +700,9 @@ async function checkEditProtect(cdp, ctx, th) {
       rng.setStart(node,off);rng.setEnd(node,Math.min(node.nodeValue.length,off+1));
       var rects=rng.getClientRects(),rr=rects.length?rects[0]:rng.getBoundingClientRect();
       if(!rr||(!rr.width&&!rr.height))continue;
+      // L5 落点必须**在 pane 可见区内**：只判块与视口相交不够 ——
+      // 块顶部可能被工具栏裁掉，选中文字行落在 paneTop 之上 ⇒ elementFromPoint 命中容器 DIV ⇒ 点击落空。
+      if(rr.top < pr.top+4 || rr.bottom > pr.bottom-4 || rr.left < pr.left+4 || rr.right > pr.right-4)continue;
       var hit=document.elementFromPoint(Math.round(rr.left+Math.max(1,rr.width/2)),Math.round(rr.top+rr.height/2));
       var hitBlk=hit&&hit.closest?hit.closest('[data--block-index]'):null;
       return {blockIndex:+el.getAttribute('data--block-index'),x:Math.round(rr.left+Math.max(1,rr.width/2)),y:Math.round(rr.top+rr.height/2),text:t.slice(0,80),
@@ -726,6 +729,9 @@ async function checkEditProtect(cdp, ctx, th) {
       hitPh:!!(el&&el.classList.contains('-pv-placeholder')),
       activeTag:a?a.tagName:null,activeId:a?a.id||null:null,focusInPreview:!!(a&&pv&&pv.contains(a)),
       rangeCount:s?s.rangeCount:null,caretBlock:r?bi(r.startContainer):null,caretOffset:r?r.startOffset:null,
+      editMode:!!(window.MemoriaEditHandler&&window.MemoriaEditHandler.editMode),
+      hasFocus:document.hasFocus(),visibility:document.visibilityState,
+      contentEditable:(pv?String(pv.contentEditable):null),
       pickedExists:!!picked,pickedPh:!!(picked&&picked.classList.contains('-pv-placeholder')),
       tail:(window.__MEMORIA_TAIL_LAYOUT?window.__MEMORIA_TAIL_LAYOUT.stats():null)};
   })(${JSON.stringify({ x: p.x, y: p.y, i: p.i })})`);

@@ -9599,7 +9599,8 @@
   //               读取几乎免费），把实测误差记入 `heightDriftErrPx`。
   //   `pred` 模式不写 scrollTop：高度变化仅 ±亚像素，交给浏览器 scroll anchoring；
   //   实测 legacy 的 anchorFixes ≈ 10% 批次且 |Δ|<0.5px。
-  var _tailLayoutMode = "legacy";
+  // 默认 `pred`（批尾零强制布局）；`legacy`/`noSh` 仅用于同 build A/B 与诊断。
+  var _tailLayoutMode = "pred";
   var _tailBatchCount = 0;          // pred：距上次核对的批数
   var _tailPredDriftPx = 0;         // pred：距上次核对的**有符号**预测高度变化（锚点上方）
   var _tailPredTotalPx = 0;         // pred：距上次核对的**有符号**预测全篇高度变化（用于核对 scrollHeight）
