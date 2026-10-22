@@ -140,4 +140,32 @@ import_image_base64(name, b64)      # 解码后调核心（新增，供剪贴板
 | Agent 回复段间空行（29.69→8.00px） | `096fcab2` | 流式与定稿一致 |
 | 调度内核收尾（文档+守卫+真机计数） | `081c4825` | 守卫 PASS + 反向验证 FAIL |
 | TODO 台账治理（797 KB → 47 KB，−94.1%） | `91bb2dad`…`6509b8d9` | `check_todo_size.py` PASS |
-| 8 条用户缺陷登记（E24–E31） | todo.md §5.1 | 逐条现象/验收/线索 |
+| 8 条用户缺陷登记（E24–E31） | todo.md §5.1 | 逐条现象/验收/线索 |### W1 中期结论（2026-10-22 第 2 轮）：E30 机制**已由代码确认**（不再是推断）
+
+`edit-handler.js:822-867` 的 `beforeinput` 处理器**枚举式分派**，缺 `deleteByCut`：
+
+```js
+if (inputType === "insertText") { fn = "insertText"; arg = e.data; }
+else if (inputType === "deleteContentBackward" || inputType === "deleteContentForward") { ... }
+else if (inputType === "insertParagraph") { fn = "splitParagraph"; }
+else { return; }   // ← L853-854：deleteByCut 落到这里
+```
+
+**⇒ Ctrl+X 的三步后果**：
+1. 处理器 `return`（不 `preventDefault`、不调 `EditSync`）
+2. 浏览器**原生删除**预览 DOM 里的文字 ⇒ 界面看起来"剪切成功"
+3. **AST 与源码完全未变** ⇒ 下一次重渲（切文件/重排版/滚动重物化）**内容回魂**
+
+**这不是"没实现"，是"分派表缺一个 case + 静默 return"** —— 与今天反复强调的静默失真同类。
+
+**修法设计**（需注意：`preventDefault` 会连带阻止浏览器写剪贴板，所以不能只加 case）：
+1. 捕获当前选区文本
+2. `e.preventDefault()`
+3. **自己把文本写入剪贴板**（`navigator.clipboard.writeText`，失败则降级/提示）
+4. 调 `EditSync.deleteSelection(range)`（复用 L846-847 既有路径，保证是单个撤销单元）
+5. 同时补 `deleteByDrag`（同类漏洞：拖拽移动文字后源码未更新）
+
+**风险点**：剪贴板写入在部分环境需要用户手势/权限；失败时必须明确提示而不是静默吞掉。
+**验证**：修后 Ctrl+X → 重渲（切文件再回来）→ 内容**不得**回魂；Ctrl+Z 恢复；Ctrl+V 粘回内容一致。
+
+
