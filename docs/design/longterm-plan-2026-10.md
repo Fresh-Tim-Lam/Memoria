@@ -437,6 +437,25 @@ rAF 帧间隔量**整体帧**（含布局/绘制/GC）。前者高、后者低�
 
 **这是今天第 6 次"比较方式错"类问题**（①跨会话 ②并发 ③pick 落点 ④探针窗口 ⑤跨视口 ⑥双口径）。
 
+### AOCI 完整认知读取：**本次失败，需在无并发写时重做**
+
+按 AOCI 合同，上下文压缩后需重读 Whole-Index。本次尝试：
+1. `aoci_overview` 第 1/3 块交付成功（`index_sha256=fda7991a…`，470 Entry，3 块，~13,947 tokens）
+2. 继续第 2 块时返回 **[cognition_snapshot_unavailable]** —— 「组装期间正式认知资产发生变化；未交付混合快照」
+   （当时有 agent 在改 `app.js`/`docs`，属并发写导致 Index 变化）
+3. 重试新的一次 Overview：仍只返回**第 1/3 块且 body_sha256 与上次完全相同**，并给回同一个 `next_cursor`
+   ⇒ 判定为**交付链路不可继续**（重复块），**立即停止认知链**，不重复提交 cursor。
+
+**结论（按合同如实表述）**：
+> 当前上下文**未能**建立可靠的完整系统认知（`model_full_cognition_reliable=false`，`governance_aligned=false`）。
+> 本轮之后仅进行 **source-bound 工程与调查**（每项都有实测证据/门禁），**不声称掌握完整系统框架**。
+
+**W4.5（AOCI 维护 + 完整认知重读）仍待做**，前置条件：
+1. 所有写 `src/**`、`docs/**` 的后台 agent 已结束（今天有并发写导致 Index 变化）
+2. 工作区 `git status` 稳定（无 in-flight 改动）
+3. 再做一次 `aoci_rules` → 普通 `aoci_overview` → 原样跟随 cursor 到 `completed=true` → 提交 Attestation
+4. 然后 `aoci_maintain`（今天改了 `app.js` / `edit-handler.js` / 多个 docs ⇒ 需要增量维护）
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
