@@ -872,6 +872,40 @@ up 遍 mermaid 总耗时：  607.6ms → 98.7ms
 
 **未验证**：缓存命中 vs 重新渲染的**像素级一致性**；主题切换逐主题视觉；SVG 字符串 vs DOM clone 的内存差异。
 
+## 🚨 事故：`app.js` 被陈旧缓冲区覆盖，**静默回退了 `17ee05d9`（task-78 修复）**（第 110 轮）
+
+### 发现
+`git diff --numstat` 显示 `app.js` 是 **9 插入 / 327 删除** —— **删除远多于插入**，
+而该文件本应"只增不减"（task-72 只是加缓存）。进一步检查：
+```
+工作区 app.js  16979 行 → 实为 16677 行、822KB（缺 302 行）
+工作区含 LAZY_EVICT_PRESSURE_SCREENS：0 处   ← task-78 修复**已被静默回退**！
+工作区含 _lazyMaybeScheduleEvict：0 处
+```
+⇒ 某个 agent 把**自己手上的旧版 app.js 整体写回**，覆盖了 `17ee05d9`。
+
+### 处置
+```
+git checkout -- src/memoria/ui/static/app/js/app.js   （从 HEAD 恢复）
+恢复后：16979 行 / 856KB / LAZY_EVICT_PRESSURE_SCREENS 5 处 / node --check PASS
+```
+**⇒ task-78 的"淘汰饥饿"修复已恢复；task-72 的未提交实验代码随之丢弃（可重做，非损失）。**
+
+### 教训（重要，写进纪律）
+1. **`git diff --numstat` 的删除数 > 插入数 是最强的异常信号** —— 一个"只该加功能"的文件出现大量删除，
+   几乎一定是"陈旧缓冲区覆盖"或"误用旧版整体写回"。
+2. **agent 写整个文件（而非 edit）时，必须先从 HEAD 重新读取**，不能用手上缓存的副本。
+3. **每次接手 agent 产物前先跑 `git diff --numstat`**，不要只看 `git status` 的 M 标记。
+4. 我今天两次在 agent 运行时 `git checkout`（误伤），这次是 agent 覆盖了我的提交 ——
+   **双向都有风险，所以"提交后立刻验证 HEAD 的关键标记仍在"应成为固定动作。**
+
+### 恢复后的验证
+```
+行数 16979（与 HEAD 一致）、node --check PASS
+LAZY_EVICT_PRESSURE_SCREENS 5 处（task-78 修复在位）
+```
+后续需重跑门禁确认（见下一轮）。
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
