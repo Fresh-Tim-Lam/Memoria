@@ -8584,12 +8584,15 @@
         _lazyFlushMathNow("max-wait");
       }, LAZY_MATH_MERGE_MAX_WAIT);
     }
-    // 空闲合并窗口：短延迟后合并排（拖到底时多批会合并成一次）
-    if (typeof window.requestIdleCallback === "function") {
-      window.requestIdleCallback(function () { _lazyFlushMathNow("idle"); }, { timeout: LAZY_MATH_MERGE_IDLE });
-    } else {
-      setTimeout(function () { _lazyFlushMathNow("timer"); }, LAZY_MATH_MERGE_IDLE);
-    }
+    // ★ 2026-10-22（Lead 实测**最长连续源码态 1.3–1.8s**）：调度从 `requestIdleCallback` 改为 `setTimeout(0)`。
+    //   理由与物化 flush 完全同一类：**rIC 在连续滚动/输入时被无限推迟**
+    //   （物化那次实测 median 286ms、`didTimeout=true` 9/10）。
+    //   虽然这里 `timeout:120` 理论上会超时兜底，但：
+    //   ① rIC 的 timeout 只保证"**最终**给回调"，实际延迟可达数百 ms ~ 1s+（浏览器繁忙时）；
+    //   ② 期间用户在滚动 ⇒ 每次 scroll 又引发新批次入队 ⇒ **入队速度 ≥ 出队速度** ⇒ 越积越长。
+    //   `setTimeout(0)` 是宏任务、优先级高于 idle ⇒ 保证拿到执行机会。
+    //   （"可见性相关工作不用 idle 优先级"这条原则，已经在物化上验证过。）
+    setTimeout(function () { _lazyFlushMathNow("timer"); }, 0);
   }
 
   /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。
@@ -8673,16 +8676,14 @@
         //   必须照常排版（否则就是 R1 跳转漏排的根因）。
         if (pathNow === pathAt) {
           log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length + (token !== state.previewToken ? " [retoken same-doc ⇒ still typeset]" : ""));
-          // ★ 2026-10-22 分帧修复（Lead 实测 478.9ms 单帧）：`setTimeout(0)` 把物化 flush 提上去后，
-          //   typeset 可能**紧接在物化之后同一帧**启动 ⇒ 两者叠加出长帧。
-          //   这里让出**一次事件循环 + 一次渲染帧**再排，保证 typeset 落在物化之后的**另一帧**。
-          //   （仍进 `_mathPending` 链 ⇒ "已请求批次排完"语义不变，只是推迟一个帧边界。）
+          // ★ 2026-10-22 修正（Lead 实测**最长连续源码态 1.3–1.8s**）：
+          //   这里原来每次都要"让出 1 个宏任务 + **双 rAF**"才排。单看一批只多 2 帧，但
+          //   **`_mathPending` 是串行链**：滚动时批次源源不断入队，每批都要在这条链上排队，
+          //   每批再各等 2 帧 ⇒ 积压 N 批就是 2N 帧 ⇒ **入队速度 ≥ 出队速度 ⇒ 队列越积越长**
+          //   ⇒ 这正是"公式 1.8s 还不上屏"的主因（不是单批 typeset 慢，是排队）。
+          //   现在：**只在链上让出一个宏任务边界**（保证不与刚结束的物化同帧、且让链有机会推进），
+          //   **不再等双 rAF**。单帧风险由下面的"公式数上限"和既有批次上限控制。
           return new Promise(function (r) { setTimeout(r, 0); }).then(function () {
-            return new Promise(function (r2) {
-              if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { r2(); }); });
-              else setTimeout(r2, 0);
-            });
-          }).then(function () {
             if (!window.MathJax || typeof MathJax.typesetPromise !== "function") return;
             return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
           }).then(function () {
