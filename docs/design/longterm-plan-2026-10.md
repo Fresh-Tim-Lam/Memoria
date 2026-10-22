@@ -334,6 +334,60 @@ Windows 上 `os.kill(pid,0)` 不可靠，改用 mtime 判陈旧）。并发时�
 
 ---
 
+---
+
+## 会话交接（2026-10-23 01:5x，8 小时窗口已用 ~2.5h）
+
+### 已收口（全部已提交并推送；`git log` 可查）
+| 项 | 提交 | 关键证据 |
+|---|---|---|
+| W4.1 惰性路径交互门禁 | `98c8c1b9` `09592f8e` | 6/6 PASS + 2 种 `--sabotage` FAIL + pick 落点约束 + 串行化锁 |
+| W3.3 批尾 pred（默认启用） | `8b625b24` `e4fb2b4b` `b92c58a7` | 同 build 8 轮 `LPLPLPLP`：max_frame 中位 40.3→14.7ms（−63.5%）、墙钟 12.998→5.665s；批尾 `scrollHeight` 161–177ms/轮 → 0 |
+| W4.2 §5 叙述体治理 | `a43c6612` `976b3236` `1a1f1c9c` | §5 3,584→2,523 B（−29.6%）；`check_jobs_size.py` 含索引/归档等价校验 |
+| W3.4 占位估值校准 | `bbab57ed` | 整篇 +3.41%→**+1.04%**；逐类型 paragraph −49.7%→+3.24%、image +744%→+10.6% |
+| W4.3 L03 复核 | `0297508d` | 原声明属实；判定**不实现**（改 display 语义 + 破坏公式原子性，风险>收益），给替代方案 |
+| DOC02 修复 | `95356e57` | `| <br /> |` → `\|\|`；其余 3 处是 DOC02 自身描述 |
+| E33 拖拽写回 | `9feb84ab` + `f046cc87` | `insertFromDrop` 接管；`edit_drag_drop_test.js` 38/38；E30 回归网救回 28/28 |
+| E30 剪切回魂（此前） | `002b5506` `1b6956e3` | 真机 CDP 全链路：重渲不回魂、单撤销 |
+| E25/E26/E27/E28/E29（此前） | 见 §W0/W2 | 图片粘贴/光标跟随/末尾空格/引用块空格 |
+
+### 进行中（接手前先看这里）
+- **W3.2 第二遍滚动中段长尾**：agent 正在当前 HEAD **重测**（W3.3/W3.4 已改变基线）。
+  要求：先在当前 HEAD 测第二遍/第一遍比值；**若已消失就如实关闭，不硬修**。
+- **task-78**（团队任务板）：大文档（4001 块）L4 `dom-within-8-screens` 偶发失败
+  （legacy 381 / pred 991 vs 限 240；3662 块 fixture 稳定 84–96）⇒ 疑 pred 每 8 批才核对，
+  预测误差累积误导 keep 边界；也可能是 `_lazyEvictKeepRange` 屏高/块高比失效。
+
+### 待做（按序）
+1. **W4.5 AOCI 维护**：今天大量改 `src/**` 与 `docs/**` ⇒ 收尾时需 `aoci_maintain` 走批次（未做）
+2. **E34**：尾随空格占宽对基线库 603 行的观感（需人眼/长文档判定，属"需用户裁决"范畴）
+3. **DOC02 收口**：todo 里可标记完成（代码腐蚀 0 处）
+4. task-78 修复
+
+### 复跑口诀（任何人都能验证今天所有改动）
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+python scripts/benchmark/surface/run_lazy_gate.py          # 6 项，~28s，有串行化锁
+python scripts/benchmark/surface/run_interaction.py        # 12 剧本
+python scripts/benchmark/surface/run_placeholder_probe.py  # 占位估值（+1.04%）
+node scripts/benchmark/maintenance/blockquote_roundtrip_test.js   # 80/80
+node scripts/benchmark/maintenance/trailing_space_input_test.js   # 62/62
+node scripts/benchmark/maintenance/edit_cut_undo_test.js          # 28/28
+node scripts/benchmark/maintenance/edit_drag_drop_test.js         # 38/38
+node scripts/benchmark/maintenance/scheduler_vm_test.js
+python scripts/check_scheduler_discipline.py               # 30 白名单
+python scripts/check_todo_size.py ; python scripts/check_jobs_size.py
+```
+
+### 今日最重要的三条方法论（比任何单个修复都值钱）
+1. **测量仪器会坏**：跨会话比较（负载 2–8×）、并发跑门禁、探针窗口不一致、pick 落点不在视口
+   —— 今天 4 次把"仪器故障"误判成"产品缺陷"，其中一次导致正确改动被回退。
+   ⇒ **先证明尺子准，再量东西**。
+2. **"指标达标 ≠ 模型正确"**：占位估值总偏差 +3.41% 曾是"paragraph 低估 50% + image 高估 744%"的抵消；
+   只压总偏差会在别的文档上重炸 ⇒ **必须看分类型/分位置**。
+3. **门禁必须能自证会报错**：`--sabotage` 两种注入均 FAIL 才算有效；
+   同理"回归网"要有测试桩同步（E30 曾因新增函数导致白盒测试 ReferenceError，差点静默失效）。
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
