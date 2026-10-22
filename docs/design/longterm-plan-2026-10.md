@@ -208,4 +208,19 @@ E28 实现（`lexer.js` / `parser.js` / `source-gen.js`，工作区未提交）�
 
 **裁决待定项**：A / B / C / F 四选一，需先有真机复现证据（第 4 轮做）。
 
+### W1 第 4 轮：task-68（reload 崩溃）**降级待确认用户可达性**
+
+**代码事实**（已查，2026-10-22）：
+- `index.html` 脚本顺序正常：`ast.js`(含 `MemoriaAST`) → `block-index.js` → `lexer/parser/source-gen` → … → `app.js`，**不存在加载顺序导致的未定义**
+- **全仓无任何 reload/F5/Ctrl+R 绑定**（`location.reload`、`reload()` 在 app js/py 中零命中；vendor 里的命中是压缩代码噪声）
+- 观测到的崩溃来自 **CDP 主动 `location.reload()`**（dev 模式由 python 进程内部 scheme 提供页面，reload 会重新发起网络请求 ⇒ `ERR_CONNECTION_REFUSED` ⇒ 后续 JS 加载失败 ⇒ `MemoriaAST is not defined`）
+
+**⇒ 结论（暂定）**：这更像**开发期检测手法**造成的现象，而非用户可达的产品缺陷。
+**降级理由**：若打包后用户没有任何 reload 入口，该崩溃不可达；把它当 P0 会挤占真正可达缺陷的优先级。
+
+**下一步（降级为 P2，待确认）**：
+1. 在**打包 `Memoria.exe`** 里确认是否有 F5/Ctrl+R/右键菜单「重新加载」入口（pywebview 默认可能提供）
+2. 若有 ⇒ 恢复 P0，修法：禁用 reload（拦截快捷键）或让 reload 走安全重建（幂等 bootstrap）
+3. 若无 ⇒ 关闭该项为「dev 检测手法限制」，在 todo 里注明不是产品缺陷
+
 
