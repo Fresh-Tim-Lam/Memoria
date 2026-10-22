@@ -304,4 +304,27 @@ E28 实现（`lexer.js` / `parser.js` / `source-gen.js`，工作区未提交）�
 **④ E28 第二步进行中**：已派 agent（`917d4c26`）在 `app.js`/`app.css` 做
 方案 F（空引用行可见行高）+ `detectStructuralMarker` 补 `>` 分支（AST 须 `children:[paragraph]`）。
 
+### W0 第 9 轮：E25 后端完成并提交（`82b3afc4`），端到端已接通，待真机粘贴验证
+
+**实现**（复用单一链，非新造）：
+- `_import_image_bytes(name, data)` 为唯一核心（白名单 → MD5 去重 → 重名追加 → 写盘）
+- `import_image(local_path)` 只读文件 + 前置校验，签名/返回/相对路径口径不变
+- `import_image_base64(name, data)` 新增剪贴板入口（裸 base64 与 data URL；无扩展名按 MIME 补）
+- `ui.py` 同名 RPC，错误结构与 `import_image` 一致
+- **顺带修边界 bug**：原 `len*3//4` 估算会把恰好 20MB 的图片误拒 ⇒ 改严格上界 + 解码后精确复核
+
+**前端已在 HEAD 接通**：`app.js:12185` `call("import_image_base64", f.name||"image.png", dataUrl)`（契约一致）。
+
+**测试**：`tests/test_image_import_bytes.py` **13 passed**；
+关键用例「同图 4 次导入（本地/裸 base64/data URL/再导）⇒ 磁盘仅 1 份、4 次 relPath 全等、deduped=[F,T,T,T]」；
+21MB 拒绝且不写盘；非法输入各类明确报错；`import_image` 回归。
+门禁：`py_compile` 0 / pytest 13 passed / 12 剧本 12/12。
+
+**需要裁决的一点**：registry 语义 —— 现状是**导入不写、保存含引用文档后写**（与重构前一致）。
+若要求"导入瞬间即登记"，会改变既有语义（`refs` 是引用文档列表，无引用文档时无法凭空写）。
+
+**仍未验证**：真实 WebView2 剪贴板粘贴（前端 UI 链路 + 撤销）、粘贴多图、粘贴超大图的实际报错呈现。
+
+**E28 第二步（agent `917d4c26`）仍进行中**：`app.js`/`app.css` 尚无对应改动落地。
+
 
