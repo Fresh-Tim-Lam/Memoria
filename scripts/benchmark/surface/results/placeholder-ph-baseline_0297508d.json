@@ -1,0 +1,345 @@
+{
+  "schema": "memoria-placeholder-probe/v1",
+  "startedAt": "2026-10-22T17:20:36.150Z",
+  "url": "http://127.0.0.1:54217/",
+  "file": "教材/08_第8章_差错控制编码.md",
+  "browser": {
+    "href": "http://127.0.0.1:54217/",
+    "innerWidth": 1256,
+    "innerHeight": 808,
+    "dpr": 1
+  },
+  "measurement": {
+    "raf": {
+      "p50Ms": 16.59999999962747,
+      "frames": 90,
+      "trusted": true
+    },
+    "trusted": true
+  },
+  "thresholds": {
+    "postOpenSettleMs": 1500,
+    "settleTimeoutMs": 120000,
+    "scrollSteps": 24,
+    "scrollPauseMs": 220,
+    "p50MaxMs": 20
+  },
+  "full": {
+    "scrollHeight": 175616,
+    "clientHeight": 691,
+    "sumBlockH": 159629.08,
+    "workset": {
+      "materialized": 4001,
+      "placeholders": 0,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 16,
+      "lhPx": 25.6,
+      "metricsSrc": "default"
+    },
+    "imgStat": {
+      "total": 53,
+      "complete": 0,
+      "loaded": 0,
+      "failed": 0
+    },
+    "openWallMs": 4187,
+    "n": 4001
+  },
+  "lazy": {
+    "scrollHeight": 181601,
+    "clientHeight": 694,
+    "sumBlockH": 181500.83,
+    "workset": {
+      "materialized": 41,
+      "placeholders": 3960,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    },
+    "imgStat": {
+      "total": 0,
+      "complete": 0,
+      "loaded": 0,
+      "failed": 0
+    },
+    "openWallMs": 330,
+    "n": 4001
+  },
+  "deltaPct": 3.41,
+  "ratio": 1.0341,
+  "perType": [
+    {
+      "type": "blank_line",
+      "count": 1889,
+      "placeholders": 1870,
+      "materialized": 19,
+      "meanRealH": 22.39,
+      "meanEstH": 22,
+      "ratio": 0.9828,
+      "pct": -1.72,
+      "meanLines": 1
+    },
+    {
+      "type": "paragraph",
+      "count": 1398,
+      "placeholders": 1384,
+      "materialized": 14,
+      "meanRealH": 49.63,
+      "meanEstH": 24.97,
+      "ratio": 0.5031,
+      "pct": -49.69,
+      "meanLines": 1
+    },
+    {
+      "type": "math_block",
+      "count": 567,
+      "placeholders": 566,
+      "materialized": 1,
+      "meanRealH": 48.11,
+      "meanEstH": 113.83,
+      "ratio": 2.3661,
+      "pct": 136.61,
+      "meanLines": 3
+    },
+    {
+      "type": "image",
+      "count": 53,
+      "placeholders": 53,
+      "materialized": 0,
+      "meanRealH": 40.85,
+      "meanEstH": 351,
+      "ratio": 8.5926,
+      "pct": 759.26,
+      "meanLines": 1
+    },
+    {
+      "type": "heading",
+      "count": 42,
+      "placeholders": 35,
+      "materialized": 7,
+      "meanRealH": 32,
+      "meanEstH": 33.86,
+      "ratio": 1.058,
+      "pct": 5.8,
+      "meanLines": 1
+    },
+    {
+      "type": "table",
+      "count": 33,
+      "placeholders": 33,
+      "materialized": 0,
+      "meanRealH": 398.33,
+      "meanEstH": 360.94,
+      "ratio": 0.9061,
+      "pct": -9.39,
+      "meanLines": 11.94
+    },
+    {
+      "type": "unknown",
+      "count": 19,
+      "placeholders": 19,
+      "materialized": 0,
+      "meanRealH": 211.61,
+      "meanEstH": 450.21,
+      "ratio": 2.1276,
+      "pct": 112.76,
+      "meanLines": 21.16
+    }
+  ],
+  "joinMismatches": 0,
+  "scrollTrace": {
+    "series": [
+      {
+        "f": 0,
+        "scrollTop": 0,
+        "scrollHeight": 181601,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.041666666666666664,
+        "scrollTop": 7538,
+        "scrollHeight": 181601,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.08333333333333333,
+        "scrollTop": 15071,
+        "scrollHeight": 181542,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.125,
+        "scrollTop": 22630,
+        "scrollHeight": 181730,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.16666666666666666,
+        "scrollTop": 30062,
+        "scrollHeight": 181061,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.20833333333333334,
+        "scrollTop": 37494,
+        "scrollHeight": 180663,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.25,
+        "scrollTop": 45061,
+        "scrollHeight": 180934,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.2916666666666667,
+        "scrollTop": 52639,
+        "scrollHeight": 181172,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.3333333333333333,
+        "scrollTop": 60230,
+        "scrollHeight": 181382,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.375,
+        "scrollTop": 67664,
+        "scrollHeight": 181127,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.4166666666666667,
+        "scrollTop": 75429,
+        "scrollHeight": 181724,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.4583333333333333,
+        "scrollTop": 83150,
+        "scrollHeight": 182109,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.5,
+        "scrollTop": 90416,
+        "scrollHeight": 181523,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.5416666666666666,
+        "scrollTop": 97689,
+        "scrollHeight": 181040,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.5833333333333334,
+        "scrollTop": 104835,
+        "scrollHeight": 180408,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.625,
+        "scrollTop": 112577,
+        "scrollHeight": 180814,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.6666666666666666,
+        "scrollTop": 119713,
+        "scrollHeight": 180264,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.7083333333333334,
+        "scrollTop": 127324,
+        "scrollHeight": 180446,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.75,
+        "scrollTop": 134795,
+        "scrollHeight": 180418,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.7916666666666666,
+        "scrollTop": 143070,
+        "scrollHeight": 181411,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.8333333333333334,
+        "scrollTop": 150937,
+        "scrollHeight": 181815,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.875,
+        "scrollTop": 158689,
+        "scrollHeight": 182050,
+        "clientHeight": 691
+      },
+      {
+        "f": 0.9166666666666666,
+        "scrollTop": 163986,
+        "scrollHeight": 179588,
+        "clientHeight": 694
+      },
+      {
+        "f": 0.9583333333333334,
+        "scrollTop": 171326,
+        "scrollHeight": 179466,
+        "clientHeight": 691
+      },
+      {
+        "f": 1,
+        "scrollTop": 179172,
+        "scrollHeight": 179866,
+        "clientHeight": 694
+      }
+    ],
+    "steps": 25,
+    "minScrollHeight": 179466,
+    "maxScrollHeight": 182109,
+    "spreadPx": 2643,
+    "spreadPct": 1.45,
+    "backToTopScrollHeight": 178549,
+    "tailWorkset": {
+      "materialized": 34,
+      "placeholders": 3967,
+      "totalBlocks": 4001,
+      "evictTotal": 1981,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 12.6,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    }
+  },
+  "checks": {
+    "within2pct": false,
+    "measurementTrusted": true,
+    "noPlaceholderLeft": true
+  },
+  "meta": {
+    "label": "ph-baseline",
+    "sha": "0297508d",
+    "startedAt": "2026-10-22T17:20:37.440115+00:00",
+    "elapsedMs": 41195
+  }
+}

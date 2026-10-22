@@ -1,0 +1,3391 @@
+{
+  "schema": "surface-probe-report/1",
+  "surface": "legacy",
+  "label": "c1-oldimpl",
+  "gitSha": "35dc17c0",
+  "generatedAt": "2026-10-20T12:46:28Z",
+  "contract": "docs/design/view-surface-contract.md#5（契约测试清单 C1–C12）",
+  "casesFile": "tests/probe-kb/cases/cases.json",
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "node": "v24.19.0",
+    "kbServed": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_probe_kb",
+    "kbSource": "D:\\AAA_Jupyter\\Memoria\\tests\\probe-kb",
+    "kbSourceHasMemoria": "是",
+    "casesFile": "tests/probe-kb/cases/cases.json",
+    "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
+    "scaleDocLines": 5000,
+    "c9Protocol": "v1 / docs/design/benchmark-measurement-protocol.md",
+    "c9Params": "warmup=5, R=5, keysPerRound=10, settleTimeout=1500ms",
+    "c9NoiseThresholds": "IQR/median<=0.25, p95/median<=1.6, roundSpread<=0.2, minKeys>=20",
+    "appReady": true,
+    "runDurationMs": 31876
+  },
+  "coverage": {
+    "green": [
+      "C2",
+      "C3",
+      "C4",
+      "C7"
+    ],
+    "red": [
+      "C6",
+      "C9",
+      "C1"
+    ],
+    "untested": [
+      "C5",
+      "C8",
+      "C10",
+      "C11",
+      "C12"
+    ]
+  },
+  "verdicts": {
+    "C1": {
+      "title": "块 id 稳定",
+      "status": "red",
+      "reading": "**块无身份**：4 例中所有块都缺 `data-block-id`（实现未落地稳定块 id）⇒ 契约 C1 不成立。",
+      "detail": {
+        "file": "corpus/02-inline-edges.md",
+        "subcases": [
+          {
+            "name": "mid",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 486,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "head",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 270,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "tail",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 702,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "last-block",
+            "status": "ran",
+            "editIdx": 20,
+            "point": {
+              "x": 486,
+              "y": 384,
+              "h": 65,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "可在此处打字的句子 ③。斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              },
+              "after": {
+                "elText": "可在此处打字的句子 ③。z斜可在此处打字的句子 ④。",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": null
+              }
+            ]
+          }
+        ],
+        "allOk": false,
+        "violationCount": 0,
+        "noIdentityCases": [
+          "mid",
+          "head",
+          "tail",
+          "last-block"
+        ],
+        "notAppliedCases": []
+      }
+    },
+    "C2": {
+      "title": "文本保真",
+      "status": "green",
+      "reading": "打开 01-ime-zh.md 不编辑：state.doc.body 逐字等于 磁盘文件（len body=485 / disk=485）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "C3": {
+      "title": "打字当帧可见",
+      "status": "green",
+      "reading": "受信任输入 keyDown(text='a') 后**不等 rAF** 立刻读 DOM：块文本 已含 'a'",
+      "detail": {
+        "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+        "domHasChar": true,
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。"
+      }
+    },
+    "C4": {
+      "title": "真源不落后",
+      "status": "green",
+      "reading": "同一次按键后立刻读真源：state.doc.lines[L] 已含字符；caret→块映射 正确（行号取自编辑前捕获：增量重渲后新块节点不带 data--src-line）",
+      "detail": {
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+        "srcHasChar": true,
+        "caretMapsToBlock": true,
+        "srcLineFromCaptured": true
+      }
+    },
+    "C5": {
+      "title": "冻结不破",
+      "status": "untested",
+      "reading": "需「块编辑中（textarea 在文档内）+ 触发块级重渲」两步：双击进块编辑可用，但驱动块级重渲需要一个**未暴露的应用入口**；本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C6": {
+      "title": "落点准确",
+      "status": "red",
+      "reading": "目标-头 L=5 首屏块=[4,4] ✓；目标-中 L=19 首屏块=[19,19] ✓；目标-尾 L=29 首屏块=[25,25] ✗（文档末尾滚动钳制：目标块[29,29]已渲染且可见，但无法置顶）",
+      "detail": {
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 4,
+              "end": 4,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 250,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 19,
+              "end": 19,
+              "text": "目标-中"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 765,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 25,
+              "end": 25,
+              "text": "段落三，用于填充。"
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 116,
+              "relBottom": 159,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1038,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": true
+            }
+          }
+        ],
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange"
+      }
+    },
+    "C7": {
+      "title": "切模式不漂",
+      "status": "green",
+      "reading": "锚点行 preview#0=1 → preview#1=1，Δ=0（≤1 判绿）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          }
+        ],
+        "anchor0": 1,
+        "anchorFinal": 1,
+        "delta": 0
+      }
+    },
+    "C8": {
+      "title": "交互存活",
+      "status": "untested",
+      "reading": "需断言 onLinkActivate 回调、图片双击进编辑、KP band 定位三件交互存活；回调断言需在页面侧挂测试钩子，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C9": {
+      "title": "性能预算",
+      "status": "red",
+      "reading": "文档 scale-5k.md（5000 行）逐键采样：n=50（R=5 × 10 键）× warmup 5；min 14.1 ms / median 17.7 ms / p95 23.1 ms / max 27.1 ms；IQR 3.20 ms，IQR/median 0.180，p95/median 1.304，轮间极差 0.162；预算 ≤16 ms ⇒ median-of-medians 17.9 ms ⇒ **超预算**。噪声门通过（噪声在阈值内，判据可判）；对照口径 fromKeyMs 的键内最小值 20.2 ms（仅参考，**不作判据**）；干净键 50 个给出**下界** 25.4 ms（真值，§6.6）。",
+      "detail": {
+        "decision": "red",
+        "conclude": true,
+        "budgetMs": 16,
+        "medianOfMedians": 17.885,
+        "withinBudget": false,
+        "lowerBoundMs": 25.35,
+        "cleanKeys": {
+          "n": 50,
+          "median": 25.35,
+          "keys": [
+            20.6,
+            29.3,
+            28.1,
+            32,
+            20.7,
+            23.1,
+            26.5,
+            28,
+            33.9,
+            30.7,
+            29.9,
+            22.7,
+            21.8,
+            24.7,
+            25.6,
+            21.5,
+            24.2,
+            22.5,
+            25.7,
+            24.6,
+            29.8,
+            28.2,
+            21,
+            25.9,
+            23.9,
+            23.9,
+            25.4,
+            23.8,
+            21,
+            23.4,
+            26.5,
+            25.4,
+            24,
+            20.2,
+            23.4,
+            38.7,
+            29.9,
+            26.7,
+            25.3,
+            26.1,
+            26,
+            29.1,
+            24.2,
+            25.8,
+            25.3,
+            23.4,
+            29,
+            24.3,
+            37.5,
+            24.2
+          ]
+        },
+        "crossCheck": {
+          "cleanKeys": 50,
+          "cleanMedianMs": 25.35,
+          "appendMedianMs": 17.745,
+          "ratio": 1.429
+        },
+        "rawDecision": "red",
+        "rawMedianOfMedians": 17.885,
+        "primary": {
+          "metric": "appendMs",
+          "perKey": {
+            "n": 50,
+            "min": 14.14,
+            "median": 17.745,
+            "p95": 23.131,
+            "max": 27.09,
+            "mean": 18.164,
+            "q1": 16.45,
+            "q3": 19.653,
+            "iqr": 3.203,
+            "iqrOverMedian": 0.18,
+            "p95OverMedian": 1.304
+          },
+          "rounds": {
+            "R": 5,
+            "perRoundMedian": [
+              19.635,
+              17.08,
+              16.73,
+              18.025,
+              17.885
+            ],
+            "median": 17.885,
+            "min": 16.73,
+            "max": 19.635,
+            "spread": 0.162
+          }
+        },
+        "control": {
+          "metric": "fromKeyMs",
+          "perKey": {
+            "n": 50,
+            "min": 20.2,
+            "median": 25.35,
+            "p95": 33.045,
+            "max": 38.7,
+            "mean": 25.948,
+            "q1": 23.5,
+            "q3": 28.075,
+            "iqr": 4.575,
+            "iqrOverMedian": 0.18,
+            "p95OverMedian": 1.304
+          },
+          "perKeyMin": 20.2
+        },
+        "config": {
+          "warmupKeys": 5,
+          "rounds": 5,
+          "keysPerRound": 10,
+          "settleTimeoutMs": 1500,
+          "inputChannel": "CDP Input.dispatchKeyEvent(keyDown+keyUp, text)",
+          "inputNote": "逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。"
+        },
+        "counts": {
+          "warmup": 5,
+          "live": 50,
+          "settledKeys": 55,
+          "deadKeys": 0,
+          "settleTimeouts": 0,
+          "warmupSamples": [
+            {
+              "fromKeyMs": 36.3,
+              "appendMs": 25.41
+            },
+            {
+              "fromKeyMs": 25.3,
+              "appendMs": 17.71
+            },
+            {
+              "fromKeyMs": 30.9,
+              "appendMs": 21.63
+            },
+            {
+              "fromKeyMs": 26.6,
+              "appendMs": 18.62
+            },
+            {
+              "fromKeyMs": 23.9,
+              "appendMs": 16.73
+            }
+          ]
+        },
+        "noise": {
+          "thresholds": {
+            "maxIqrOverMedian": 0.25,
+            "maxP95OverMedian": 1.6,
+            "maxRoundSpread": 0.2,
+            "minLiveKeys": 20
+          },
+          "observed": {
+            "iqrOverMedian": 0.18,
+            "p95OverMedian": 1.304,
+            "roundSpread": 0.162,
+            "liveKeys": 50,
+            "rounds": 5,
+            "cleanKeys": 50,
+            "controlPerKeyMin": 20.2
+          }
+        },
+        "reasons": [
+          "噪声在阈值内，判据可判"
+        ],
+        "docLines": 5000,
+        "protocol": "docs/design/benchmark-measurement-protocol.md",
+        "reproduce": "node scripts/benchmark/surface/cdp.mjs --probe … --c9-warmup 5 --c9-rounds 5 --c9-keys 10"
+      }
+    },
+    "C10": {
+      "title": "两消费者一致",
+      "status": "untested",
+      "reading": "两消费者一致需同时渲染「预览栏（可编辑）」与「对话栏气泡（只读流式）」并比对块序列；气泡渲染驱动成本高，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C11": {
+      "title": "插头等价",
+      "status": "untested",
+      "reading": "`new` 插头尚不存在（契约 §4 双插头未施工）⇒ 无法跑 legacy vs new 等价对比。",
+      "detail": {}
+    },
+    "C12": {
+      "title": "无损切换",
+      "status": "untested",
+      "reading": "`SurfaceRegistry.switchTo('new')` 不存在（`new` 插头未施工）⇒ 无损切换无法测。",
+      "detail": {}
+    }
+  },
+  "rawCases": {
+    "sel_text_fidelity": {
+      "status": "ran",
+      "covers": [
+        "C2"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "sel_typing_ascii": {
+      "status": "ran",
+      "covers": [
+        "C3",
+        "C4"
+      ],
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "matchText": "这是加粗之前可以打字的一句",
+        "key": "a",
+        "setup": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "offset": 0,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 4,
+            "nodePath": [
+              0
+            ],
+            "offset": 0
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 33,
+          "blockTextHead": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。"
+        },
+        "before": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": "5",
+          "srcLineFromCaptured": false,
+          "domText": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 33,
+          "srcLineLen": 37
+        },
+        "after": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": null,
+          "srcLineFromCaptured": true,
+          "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 34,
+          "srcLineLen": 38,
+          "domHasChar": true,
+          "srcHasChar": true,
+          "domStartsWithChar": true,
+          "srcStartsWithChar": true
+        },
+        "edits": [
+          {
+            "n": 1,
+            "bornAt": 1177.2000000476837,
+            "settledAt": 1180.6000000238419,
+            "insertMs": 2.5,
+            "fromKeyMs": 3.699999988079071,
+            "appendMs": 2.5899999916553043
+          }
+        ],
+        "immediateRead": true,
+        "note": "typeText 用 Input.dispatchKeyEvent(keyDown+keyUp, text) 注入受信任输入；读 DOM 未等 rAF。"
+      }
+    },
+    "sel_jump_head_mid_tail": {
+      "status": "ran",
+      "covers": [
+        "C6"
+      ],
+      "evidence": {
+        "file": "corpus/06-links-and-kp.md",
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange",
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 4,
+              "end": 4,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 250,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 19,
+              "end": 19,
+              "text": "目标-中"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 765,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 25,
+              "end": 25,
+              "text": "段落三，用于填充。"
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 116,
+              "relBottom": 159,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1038,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": true
+            }
+          }
+        ]
+      }
+    },
+    "sel_id_stability": {
+      "status": "ran",
+      "covers": [
+        "C1"
+      ],
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "subcases": [
+          {
+            "name": "mid",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 486,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "head",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 270,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "tail",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 702,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": null
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "last-block",
+            "status": "ran",
+            "editIdx": 20,
+            "point": {
+              "x": 486,
+              "y": 384,
+              "h": 65,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 21,
+              "after": 21
+            },
+            "noIdentity": true,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "可在此处打字的句子 ③。斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              },
+              "after": {
+                "elText": "可在此处打字的句子 ③。z斜可在此处打字的句子 ④。",
+                "docText": null,
+                "srcLine": 0
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": false,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": null,
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": null,
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": null,
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": null,
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": null,
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": null,
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": null,
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": null,
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": null,
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": null,
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": null,
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": null,
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": null,
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": null,
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": null,
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": null,
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": null,
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": null,
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": null,
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": null,
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": null,
+                "srcLine": null
+              }
+            ]
+          }
+        ],
+        "allOk": false,
+        "violationCount": 0,
+        "noIdentityCases": [
+          "mid",
+          "head",
+          "tail",
+          "last-block"
+        ],
+        "notAppliedCases": []
+      }
+    },
+    "sel_switch_mode": {
+      "status": "ran",
+      "covers": [
+        "C7"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          }
+        ],
+        "anchor0": 1,
+        "anchorFinal": 1,
+        "delta": 0
+      }
+    },
+    "sel_scroll_stress": {
+      "status": "ran",
+      "covers": [
+        "C9"
+      ],
+      "evidence": {
+        "file": "scale/scale-5k.md",
+        "docLines": 5000,
+        "setup": {
+          "ok": true,
+          "blockIndex": 21,
+          "srcLine": 36,
+          "offset": 23,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 21,
+            "nodePath": [
+              4
+            ],
+            "offset": 1
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 23,
+          "blockTextHead": "跳转示例：目标-规模-0 与 另一个链接-0。"
+        },
+        "protocol": "docs/design/benchmark-measurement-protocol.md",
+        "measurement": {
+          "protocolVersion": "1",
+          "config": {
+            "warmupKeys": 5,
+            "rounds": 5,
+            "keysPerRound": 10,
+            "settleTimeoutMs": 1500,
+            "inputChannel": "CDP Input.dispatchKeyEvent(keyDown+keyUp, text)",
+            "inputNote": "逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。"
+          },
+          "primary": {
+            "metric": "appendMs",
+            "perKey": {
+              "n": 50,
+              "min": 14.14,
+              "median": 17.745,
+              "p95": 23.131,
+              "max": 27.09,
+              "mean": 18.164,
+              "q1": 16.45,
+              "q3": 19.653,
+              "iqr": 3.203,
+              "iqrOverMedian": 0.18,
+              "p95OverMedian": 1.304
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                19.635,
+                17.08,
+                16.73,
+                18.025,
+                17.885
+              ],
+              "median": 17.885,
+              "min": 16.73,
+              "max": 19.635,
+              "spread": 0.162
+            }
+          },
+          "control": {
+            "metric": "fromKeyMs",
+            "perKey": {
+              "n": 50,
+              "min": 20.2,
+              "median": 25.35,
+              "p95": 33.045,
+              "max": 38.7,
+              "mean": 25.948,
+              "q1": 23.5,
+              "q3": 28.075,
+              "iqr": 4.575,
+              "iqrOverMedian": 0.18,
+              "p95OverMedian": 1.304
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                28.05,
+                24.4,
+                23.9,
+                25.75,
+                25.55
+              ],
+              "median": 25.55,
+              "min": 23.9,
+              "max": 28.05,
+              "spread": 0.162
+            },
+            "perKeyMin": 20.2
+          },
+          "cleanKeys": {
+            "n": 50,
+            "min": 20.2,
+            "median": 25.35,
+            "p95": 33.045,
+            "max": 38.7,
+            "mean": 25.948,
+            "q1": 23.5,
+            "q3": 28.075,
+            "iqr": 4.575,
+            "iqrOverMedian": 0.18,
+            "p95OverMedian": 1.304,
+            "keys": [
+              20.6,
+              29.3,
+              28.1,
+              32,
+              20.7,
+              23.1,
+              26.5,
+              28,
+              33.9,
+              30.7,
+              29.9,
+              22.7,
+              21.8,
+              24.7,
+              25.6,
+              21.5,
+              24.2,
+              22.5,
+              25.7,
+              24.6,
+              29.8,
+              28.2,
+              21,
+              25.9,
+              23.9,
+              23.9,
+              25.4,
+              23.8,
+              21,
+              23.4,
+              26.5,
+              25.4,
+              24,
+              20.2,
+              23.4,
+              38.7,
+              29.9,
+              26.7,
+              25.3,
+              26.1,
+              26,
+              29.1,
+              24.2,
+              25.8,
+              25.3,
+              23.4,
+              29,
+              24.3,
+              37.5,
+              24.2
+            ]
+          },
+          "counts": {
+            "warmup": 5,
+            "live": 50,
+            "settledKeys": 55,
+            "deadKeys": 0,
+            "settleTimeouts": 0,
+            "warmupSamples": [
+              {
+                "fromKeyMs": 36.3,
+                "appendMs": 25.41
+              },
+              {
+                "fromKeyMs": 25.3,
+                "appendMs": 17.71
+              },
+              {
+                "fromKeyMs": 30.9,
+                "appendMs": 21.63
+              },
+              {
+                "fromKeyMs": 26.6,
+                "appendMs": 18.62
+              },
+              {
+                "fromKeyMs": 23.9,
+                "appendMs": 16.73
+              }
+            ]
+          },
+          "samples": [
+            {
+              "round": 0,
+              "seq": 6,
+              "arrivalMs": 29597.6,
+              "fromKeyMs": 20.6,
+              "appendMs": 14.42,
+              "insertMs": 20.2
+            },
+            {
+              "round": 0,
+              "seq": 7,
+              "arrivalMs": 29632.1,
+              "fromKeyMs": 29.3,
+              "appendMs": 20.51,
+              "insertMs": 28.8
+            },
+            {
+              "round": 0,
+              "seq": 8,
+              "arrivalMs": 29695.4,
+              "fromKeyMs": 28.1,
+              "appendMs": 19.67,
+              "insertMs": 27.4
+            },
+            {
+              "round": 0,
+              "seq": 9,
+              "arrivalMs": 29779.9,
+              "fromKeyMs": 32,
+              "appendMs": 22.4,
+              "insertMs": 31.4
+            },
+            {
+              "round": 0,
+              "seq": 10,
+              "arrivalMs": 29828.6,
+              "fromKeyMs": 20.7,
+              "appendMs": 14.49,
+              "insertMs": 20.2
+            },
+            {
+              "round": 0,
+              "seq": 11,
+              "arrivalMs": 29862.7,
+              "fromKeyMs": 23.1,
+              "appendMs": 16.17,
+              "insertMs": 22.7
+            },
+            {
+              "round": 0,
+              "seq": 12,
+              "arrivalMs": 29903.3,
+              "fromKeyMs": 26.5,
+              "appendMs": 18.55,
+              "insertMs": 26
+            },
+            {
+              "round": 0,
+              "seq": 13,
+              "arrivalMs": 29946.8,
+              "fromKeyMs": 28,
+              "appendMs": 19.6,
+              "insertMs": 27.5
+            },
+            {
+              "round": 0,
+              "seq": 14,
+              "arrivalMs": 29987.9,
+              "fromKeyMs": 33.9,
+              "appendMs": 23.73,
+              "insertMs": 33.4
+            },
+            {
+              "round": 0,
+              "seq": 15,
+              "arrivalMs": 30040.4,
+              "fromKeyMs": 30.7,
+              "appendMs": 21.49,
+              "insertMs": 30.1
+            },
+            {
+              "round": 1,
+              "seq": 16,
+              "arrivalMs": 30091.3,
+              "fromKeyMs": 29.9,
+              "appendMs": 20.93,
+              "insertMs": 29.4
+            },
+            {
+              "round": 1,
+              "seq": 17,
+              "arrivalMs": 30137.6,
+              "fromKeyMs": 22.7,
+              "appendMs": 15.89,
+              "insertMs": 22.2
+            },
+            {
+              "round": 1,
+              "seq": 18,
+              "arrivalMs": 30178,
+              "fromKeyMs": 21.8,
+              "appendMs": 15.26,
+              "insertMs": 21.3
+            },
+            {
+              "round": 1,
+              "seq": 19,
+              "arrivalMs": 30213.6,
+              "fromKeyMs": 24.7,
+              "appendMs": 17.29,
+              "insertMs": 24
+            },
+            {
+              "round": 1,
+              "seq": 20,
+              "arrivalMs": 30256.1,
+              "fromKeyMs": 25.6,
+              "appendMs": 17.92,
+              "insertMs": 25.1
+            },
+            {
+              "round": 1,
+              "seq": 21,
+              "arrivalMs": 30295.9,
+              "fromKeyMs": 21.5,
+              "appendMs": 15.05,
+              "insertMs": 21.1
+            },
+            {
+              "round": 1,
+              "seq": 22,
+              "arrivalMs": 30334,
+              "fromKeyMs": 24.2,
+              "appendMs": 16.94,
+              "insertMs": 23.8
+            },
+            {
+              "round": 1,
+              "seq": 23,
+              "arrivalMs": 30372.5,
+              "fromKeyMs": 22.5,
+              "appendMs": 15.75,
+              "insertMs": 22
+            },
+            {
+              "round": 1,
+              "seq": 24,
+              "arrivalMs": 30413.9,
+              "fromKeyMs": 25.7,
+              "appendMs": 17.99,
+              "insertMs": 25.1
+            },
+            {
+              "round": 1,
+              "seq": 25,
+              "arrivalMs": 30453.3,
+              "fromKeyMs": 24.6,
+              "appendMs": 17.22,
+              "insertMs": 24.2
+            },
+            {
+              "round": 2,
+              "seq": 26,
+              "arrivalMs": 30496.8,
+              "fromKeyMs": 29.8,
+              "appendMs": 20.86,
+              "insertMs": 29.3
+            },
+            {
+              "round": 2,
+              "seq": 27,
+              "arrivalMs": 30542,
+              "fromKeyMs": 28.2,
+              "appendMs": 19.74,
+              "insertMs": 27.5
+            },
+            {
+              "round": 2,
+              "seq": 28,
+              "arrivalMs": 30585,
+              "fromKeyMs": 21,
+              "appendMs": 14.7,
+              "insertMs": 20.4
+            },
+            {
+              "round": 2,
+              "seq": 29,
+              "arrivalMs": 30619.4,
+              "fromKeyMs": 25.9,
+              "appendMs": 18.13,
+              "insertMs": 25.5
+            },
+            {
+              "round": 2,
+              "seq": 30,
+              "arrivalMs": 30663.8,
+              "fromKeyMs": 23.9,
+              "appendMs": 16.73,
+              "insertMs": 23.5
+            },
+            {
+              "round": 2,
+              "seq": 31,
+              "arrivalMs": 30702.2,
+              "fromKeyMs": 23.9,
+              "appendMs": 16.73,
+              "insertMs": 23.4
+            },
+            {
+              "round": 2,
+              "seq": 32,
+              "arrivalMs": 30742.6,
+              "fromKeyMs": 25.4,
+              "appendMs": 17.78,
+              "insertMs": 24.8
+            },
+            {
+              "round": 2,
+              "seq": 33,
+              "arrivalMs": 30789.2,
+              "fromKeyMs": 23.8,
+              "appendMs": 16.66,
+              "insertMs": 23.1
+            },
+            {
+              "round": 2,
+              "seq": 34,
+              "arrivalMs": 30830.4,
+              "fromKeyMs": 21,
+              "appendMs": 14.7,
+              "insertMs": 20.5
+            },
+            {
+              "round": 2,
+              "seq": 35,
+              "arrivalMs": 30866.2,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 22.9
+            },
+            {
+              "round": 3,
+              "seq": 36,
+              "arrivalMs": 30905.7,
+              "fromKeyMs": 26.5,
+              "appendMs": 18.55,
+              "insertMs": 25.9
+            },
+            {
+              "round": 3,
+              "seq": 37,
+              "arrivalMs": 30951.3,
+              "fromKeyMs": 25.4,
+              "appendMs": 17.78,
+              "insertMs": 24.9
+            },
+            {
+              "round": 3,
+              "seq": 38,
+              "arrivalMs": 30992.8,
+              "fromKeyMs": 24,
+              "appendMs": 16.8,
+              "insertMs": 23.5
+            },
+            {
+              "round": 3,
+              "seq": 39,
+              "arrivalMs": 31034.7,
+              "fromKeyMs": 20.2,
+              "appendMs": 14.14,
+              "insertMs": 19.7
+            },
+            {
+              "round": 3,
+              "seq": 40,
+              "arrivalMs": 31070.5,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 22.9
+            },
+            {
+              "round": 3,
+              "seq": 41,
+              "arrivalMs": 31116.1,
+              "fromKeyMs": 38.7,
+              "appendMs": 27.09,
+              "insertMs": 38
+            },
+            {
+              "round": 3,
+              "seq": 42,
+              "arrivalMs": 31174,
+              "fromKeyMs": 29.9,
+              "appendMs": 20.93,
+              "insertMs": 29.4
+            },
+            {
+              "round": 3,
+              "seq": 43,
+              "arrivalMs": 31223.6,
+              "fromKeyMs": 26.7,
+              "appendMs": 18.69,
+              "insertMs": 26.1
+            },
+            {
+              "round": 3,
+              "seq": 44,
+              "arrivalMs": 31268.8,
+              "fromKeyMs": 25.3,
+              "appendMs": 17.71,
+              "insertMs": 24.7
+            },
+            {
+              "round": 3,
+              "seq": 45,
+              "arrivalMs": 31339.3,
+              "fromKeyMs": 26.1,
+              "appendMs": 18.27,
+              "insertMs": 25.7
+            },
+            {
+              "round": 4,
+              "seq": 46,
+              "arrivalMs": 31380.2,
+              "fromKeyMs": 26,
+              "appendMs": 18.2,
+              "insertMs": 25.4
+            },
+            {
+              "round": 4,
+              "seq": 47,
+              "arrivalMs": 31422.3,
+              "fromKeyMs": 29.1,
+              "appendMs": 20.37,
+              "insertMs": 28.5
+            },
+            {
+              "round": 4,
+              "seq": 48,
+              "arrivalMs": 31468.4,
+              "fromKeyMs": 24.2,
+              "appendMs": 16.94,
+              "insertMs": 23.6
+            },
+            {
+              "round": 4,
+              "seq": 49,
+              "arrivalMs": 31511.7,
+              "fromKeyMs": 25.8,
+              "appendMs": 18.06,
+              "insertMs": 25.3
+            },
+            {
+              "round": 4,
+              "seq": 50,
+              "arrivalMs": 31554,
+              "fromKeyMs": 25.3,
+              "appendMs": 17.71,
+              "insertMs": 24.9
+            },
+            {
+              "round": 4,
+              "seq": 51,
+              "arrivalMs": 31598.1,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 23
+            },
+            {
+              "round": 4,
+              "seq": 52,
+              "arrivalMs": 31636.4,
+              "fromKeyMs": 29,
+              "appendMs": 20.3,
+              "insertMs": 28.5
+            },
+            {
+              "round": 4,
+              "seq": 53,
+              "arrivalMs": 31682,
+              "fromKeyMs": 24.3,
+              "appendMs": 17.01,
+              "insertMs": 23.9
+            },
+            {
+              "round": 4,
+              "seq": 54,
+              "arrivalMs": 31724.1,
+              "fromKeyMs": 37.5,
+              "appendMs": 26.25,
+              "insertMs": 37
+            },
+            {
+              "round": 4,
+              "seq": 55,
+              "arrivalMs": 31782.3,
+              "fromKeyMs": 24.2,
+              "appendMs": 16.94,
+              "insertMs": 23.6
+            }
+          ],
+          "wallMs": 2500
+        },
+        "verdict": {
+          "decision": "red",
+          "status": "red",
+          "budgetMs": 16,
+          "medianOfMedians": 17.885,
+          "withinBudget": false,
+          "noise": {
+            "thresholds": {
+              "maxIqrOverMedian": 0.25,
+              "maxP95OverMedian": 1.6,
+              "maxRoundSpread": 0.2,
+              "minLiveKeys": 20
+            },
+            "observed": {
+              "iqrOverMedian": 0.18,
+              "p95OverMedian": 1.304,
+              "roundSpread": 0.162,
+              "liveKeys": 50,
+              "rounds": 5,
+              "cleanKeys": 50,
+              "controlPerKeyMin": 20.2
+            }
+          },
+          "crossCheck": {
+            "cleanKeys": 50,
+            "cleanMedianMs": 25.35,
+            "appendMedianMs": 17.745,
+            "ratio": 1.429
+          },
+          "reasons": [
+            "噪声在阈值内，判据可判"
+          ]
+        },
+        "budgetMs": 16,
+        "statMethod": "appendMs = 本键区间后 70%（前一键落定 → 本键落定）的逐键百分位估计；fromKeyMs 仅作事件循环代理对照；判据用 primary.perKey + primary.rounds。",
+        "deprecatedFields": {
+          "note": "v1 的 keyToSource / insertOnly / typedChars / editsRaw 不再产出（那是一次性连发 30 键的批量口径）；run_probe.py 对缺这三个字段的 raw 按 inconclusive 处理，绝不沿用 max≤16ms。"
+        }
+      }
+    }
+  },
+  "console": {
+    "editLogs": [
+      "[20:46:25.913] [EDIT] 按键提交 35ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:25.968] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.015] [EDIT] 按键提交 30ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.060] [EDIT] 按键提交 26ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.101] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.177] [EDIT] 按键提交 29ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.239] [EDIT] 按键提交 27ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.328] [EDIT] 按键提交 31ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.401] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.445] [EDIT] 按键提交 26ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.490] [EDIT] 按键提交 27ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.537] [EDIT] 按键提交 33ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.586] [EDIT] 按键提交 30ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.637] [EDIT] 按键提交 29ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.676] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.715] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.754] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.797] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.833] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.874] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.910] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.955] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:26.993] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.042] [EDIT] 按键提交 29ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.086] [EDIT] 按键提交 27ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.122] [EDIT] 按键提交 20ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.161] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.203] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.242] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.284] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.329] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.367] [EDIT] 按键提交 20ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.405] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.448] [EDIT] 按键提交 26ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.492] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.532] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.610] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.670] [EDIT] 按键提交 38ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.719] [EDIT] 按键提交 29ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.766] [EDIT] 按键提交 26ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.810] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.881] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.922] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:27.967] [EDIT] 按键提交 28ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.008] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.053] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.095] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.137] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.181] [EDIT] 按键提交 28ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.222] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.277] [EDIT] 按键提交 37ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:46:28.322] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）"
+    ],
+    "errors": [],
+    "total": 938
+  },
+  "notes": [
+    "绿/红按契约判，不按与老实现一致判。",
+    "未测项已写明原因，未默认成绿。",
+    "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
+    "C9 口径 v2：逐键采样（非一次性连发）+ warmup 丢弃 + R 轮 median-of-medians；判绿/红前先过噪声门（键间 IQR/p95、轮间极差、样本量、死键），不过则标「不确定」而非绿/红。",
+    "C9 的「不确定」是**度量状态**而非性能结论：不得据此说达标或退化；处置 = 同机同档位重测。",
+    "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
+    "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
+    "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。"
+  ]
+}

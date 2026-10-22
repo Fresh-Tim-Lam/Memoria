@@ -1,0 +1,715 @@
+{
+  "schema": "memoria-signature-compare/v1",
+  "baseline": "D:\\AAA_Jupyter\\Memoria\\scripts\\benchmark\\surface\\results\\fidelity-p2c-p5final-newlegacy-c6afeec8.json",
+  "current": "D:\\AAA_Jupyter\\Memoria\\scripts\\benchmark\\surface\\results\\fidelity-p2c-p5final-new-c6afeec8.json",
+  "supportedKinds": [
+    "paragraph",
+    "heading",
+    "listItem",
+    "list",
+    "blockquote",
+    "hr",
+    "code_block",
+    "table",
+    "image",
+    "blank",
+    "math_block",
+    "mermaid"
+  ],
+  "supportedSource": "default-all",
+  "generatedAt": "2026-10-21T07:38:17.781Z",
+  "ok": true,
+  "totals": {
+    "match": 82,
+    "diff": 0,
+    "unsupported": 0,
+    "missing": 0
+  },
+  "files": {
+    "scale/scale-5k.md": {
+      "status": "match",
+      "baseBlockCount": 3111,
+      "curBlockCount": 3111,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1351,
+          "curCount": 1351
+        },
+        {
+          "kind": "code_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        },
+        {
+          "kind": "image",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "math_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        },
+        {
+          "kind": "mermaid",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 680,
+          "curCount": 680
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 135,
+          "curCount": 135
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "scale/scale-1k.md": {
+      "status": "match",
+      "baseBlockCount": 623,
+      "curBlockCount": 623,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 271,
+          "curCount": 271
+        },
+        {
+          "kind": "code_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        },
+        {
+          "kind": "image",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 54,
+          "curCount": 54
+        },
+        {
+          "kind": "math_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        },
+        {
+          "kind": "mermaid",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 136,
+          "curCount": 136
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 27,
+          "curCount": 27
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "scale/scale-10k.md": {
+      "status": "match",
+      "baseBlockCount": 6221,
+      "curBlockCount": 6221,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 2701,
+          "curCount": 2701
+        },
+        {
+          "kind": "code_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "image",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 540,
+          "curCount": 540
+        },
+        {
+          "kind": "math_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "mermaid",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1360,
+          "curCount": 1360
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 270,
+          "curCount": 270
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "corpus/01-ime-zh.md": {
+      "status": "match",
+      "baseBlockCount": 16,
+      "curBlockCount": 16,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 8,
+          "curCount": 8
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        }
+      ],
+      "signatureIdentical": true
+    },
+    "corpus/02-inline-edges.md": {
+      "status": "match",
+      "baseBlockCount": 22,
+      "curBlockCount": 22,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 11,
+          "curCount": 11
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 10,
+          "curCount": 10
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "corpus/03-block-boundaries.md": {
+      "status": "match",
+      "baseBlockCount": 26,
+      "curBlockCount": 26,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 11,
+          "curCount": 11
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "hr",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 3,
+          "curCount": 3
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 9,
+          "curCount": 9
+        }
+      ],
+      "signatureIdentical": true
+    },
+    "corpus/04-non-editable.md": {
+      "status": "match",
+      "baseBlockCount": 29,
+      "curBlockCount": 29,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 14,
+          "curCount": 14
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "code_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 2,
+          "curCount": 2
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        },
+        {
+          "kind": "hr",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "math_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "mermaid",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 2,
+          "curCount": 2
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "corpus/05-images.md": {
+      "status": "match",
+      "baseBlockCount": 18,
+      "curBlockCount": 18,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 8,
+          "curCount": 8
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "image",
+          "status": "match",
+          "supported": true,
+          "baseCount": 3,
+          "curCount": 3
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "corpus/06-links-and-kp.md": {
+      "status": "match",
+      "baseBlockCount": 34,
+      "curBlockCount": 34,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 17,
+          "curCount": 17
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 4,
+          "curCount": 4
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 13,
+          "curCount": 13
+        }
+      ],
+      "signatureIdentical": true
+    },
+    "corpus/07-extremes.md": {
+      "status": "match",
+      "baseBlockCount": 219,
+      "curBlockCount": 219,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 208,
+          "curCount": 208
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 3,
+          "curCount": 3
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "README.md": {
+      "status": "match",
+      "baseBlockCount": 30,
+      "curBlockCount": 30,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 9,
+          "curCount": 9
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 7,
+          "curCount": 7
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        }
+      ],
+      "signatureIdentical": true
+    },
+    "docs/error_log_format.md": {
+      "status": "match",
+      "baseBlockCount": 50,
+      "curBlockCount": 50,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 23,
+          "curCount": 23
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "code_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 12,
+          "curCount": 12
+        },
+        {
+          "kind": "hr",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "list",
+          "status": "match",
+          "supported": true,
+          "baseCount": 4,
+          "curCount": 4
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 2,
+          "curCount": 2
+        },
+        {
+          "kind": "table",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        }
+      ],
+      "signatureIdentical": false
+    },
+    "docs/ref/ppt/ocr.md": {
+      "status": "match",
+      "baseBlockCount": 316,
+      "curBlockCount": 316,
+      "rows": [
+        {
+          "kind": "blank",
+          "status": "match",
+          "supported": true,
+          "baseCount": 158,
+          "curCount": 158
+        },
+        {
+          "kind": "blockquote",
+          "status": "match",
+          "supported": true,
+          "baseCount": 9,
+          "curCount": 9
+        },
+        {
+          "kind": "heading",
+          "status": "match",
+          "supported": true,
+          "baseCount": 31,
+          "curCount": 31
+        },
+        {
+          "kind": "hr",
+          "status": "match",
+          "supported": true,
+          "baseCount": 8,
+          "curCount": 8
+        },
+        {
+          "kind": "image",
+          "status": "match",
+          "supported": true,
+          "baseCount": 6,
+          "curCount": 6
+        },
+        {
+          "kind": "math_block",
+          "status": "match",
+          "supported": true,
+          "baseCount": 1,
+          "curCount": 1
+        },
+        {
+          "kind": "paragraph",
+          "status": "match",
+          "supported": true,
+          "baseCount": 103,
+          "curCount": 103
+        }
+      ],
+      "signatureIdentical": false
+    }
+  },
+  "semantics": {
+    "match": "该 kind 双方签名片段完全一致",
+    "diff": "该 kind 双方都支持但签名不一致 —— **这才是失败**",
+    "unsupported": "该 kind 至少一方未实现（如 P2a 只覆盖 5 类块）—— **不算失败**，仅记录",
+    "missing": "某个文档只在一侧存在 —— 失败",
+    "schema_error": "该侧缺少/无法解析 signatureNorm（旧 schema）—— **失败，绝不静默 match**"
+  }
+}

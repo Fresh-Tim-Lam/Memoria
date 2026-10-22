@@ -1,0 +1,3373 @@
+{
+  "schema": "surface-probe-report/1",
+  "surface": "legacy",
+  "label": "baseline",
+  "gitSha": "35dc17c0",
+  "generatedAt": "2026-10-20T12:45:22Z",
+  "contract": "docs/design/view-surface-contract.md#5（契约测试清单 C1–C12）",
+  "casesFile": "tests/probe-kb/cases/cases.json",
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "edge": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "node": "v24.19.0",
+    "kbServed": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_probe_kb",
+    "kbSource": "D:\\AAA_Jupyter\\Memoria\\tests\\probe-kb",
+    "kbSourceHasMemoria": "是",
+    "casesFile": "tests/probe-kb/cases/cases.json",
+    "scaleDoc": "tests/probe-kb/scale/scale-5k.md",
+    "scaleDocLines": 5000,
+    "c9Protocol": "v1 / docs/design/benchmark-measurement-protocol.md",
+    "c9Params": "warmup=5, R=5, keysPerRound=10, settleTimeout=1500ms",
+    "c9NoiseThresholds": "IQR/median<=0.25, p95/median<=1.6, roundSpread<=0.2, minKeys>=20",
+    "appReady": true,
+    "runDurationMs": 31983
+  },
+  "coverage": {
+    "green": [
+      "C2",
+      "C3",
+      "C4",
+      "C7",
+      "C1"
+    ],
+    "red": [
+      "C6",
+      "C9"
+    ],
+    "untested": [
+      "C5",
+      "C8",
+      "C10",
+      "C11",
+      "C12"
+    ]
+  },
+  "verdicts": {
+    "C1": {
+      "title": "块 id 稳定",
+      "status": "green",
+      "reading": "4 例（mid、head、tail、last-block）全部：被编辑块 id 可变（允许变化 0 次）、**其余块 id 全部不变**、块数保持 21。",
+      "detail": {
+        "file": "corpus/02-inline-edges.md",
+        "subcases": [
+          {
+            "name": "mid",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 486,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "head",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 270,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "tail",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 702,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "last-block",
+            "status": "ran",
+            "editIdx": 20,
+            "point": {
+              "x": 486,
+              "y": 384,
+              "h": 65,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "可在此处打字的句子 ③。斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              },
+              "after": {
+                "elText": "可在此处打字的句子 ③。z斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。z*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          }
+        ],
+        "allOk": true,
+        "violationCount": 0,
+        "noIdentityCases": [],
+        "notAppliedCases": []
+      }
+    },
+    "C2": {
+      "title": "文本保真",
+      "status": "green",
+      "reading": "打开 01-ime-zh.md 不编辑：state.doc.body 逐字等于 磁盘文件（len body=485 / disk=485）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "C3": {
+      "title": "打字当帧可见",
+      "status": "green",
+      "reading": "受信任输入 keyDown(text='a') 后**不等 rAF** 立刻读 DOM：块文本 已含 'a'",
+      "detail": {
+        "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+        "domHasChar": true,
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。"
+      }
+    },
+    "C4": {
+      "title": "真源不落后",
+      "status": "green",
+      "reading": "同一次按键后立刻读真源：state.doc.lines[L] 已含字符；caret→块映射 正确",
+      "detail": {
+        "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+        "srcHasChar": true,
+        "caretMapsToBlock": true,
+        "srcLineFromCaptured": false
+      }
+    },
+    "C5": {
+      "title": "冻结不破",
+      "status": "untested",
+      "reading": "需「块编辑中（textarea 在文档内）+ 触发块级重渲」两步：双击进块编辑可用，但驱动块级重渲需要一个**未暴露的应用入口**；本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C6": {
+      "title": "落点准确",
+      "status": "red",
+      "reading": "目标-头 L=5 首屏块=[4,4] ✓；目标-中 L=19 首屏块=[19,19] ✓；目标-尾 L=29 首屏块=[25,25] ✗（文档末尾滚动钳制：目标块[29,29]已渲染且可见，但无法置顶）",
+      "detail": {
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 4,
+              "end": 4,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 250,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 19,
+              "end": 19,
+              "text": "目标-中"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 765,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 25,
+              "end": 25,
+              "text": "段落三，用于填充。"
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 116,
+              "relBottom": 159,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1038,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": true
+            }
+          }
+        ],
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange"
+      }
+    },
+    "C7": {
+      "title": "切模式不漂",
+      "status": "green",
+      "reading": "锚点行 preview#0=1 → preview#1=1，Δ=0（≤1 判绿）",
+      "detail": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          }
+        ],
+        "anchor0": 1,
+        "anchorFinal": 1,
+        "delta": 0
+      }
+    },
+    "C8": {
+      "title": "交互存活",
+      "status": "untested",
+      "reading": "需断言 onLinkActivate 回调、图片双击进编辑、KP band 定位三件交互存活；回调断言需在页面侧挂测试钩子，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C9": {
+      "title": "性能预算",
+      "status": "red",
+      "reading": "文档 scale-5k.md（5000 行）逐键采样：n=50（R=5 × 10 键）× warmup 5；min 12.8 ms / median 15.7 ms / p95 17.9 ms / max 20.2 ms；IQR 1.65 ms，IQR/median 0.105，p95/median 1.143，轮间极差 0.126；预算 ≤16 ms ⇒ median-of-medians 16.1 ms ⇒ **超预算**。噪声门通过（噪声在阈值内，判据可判）；对照口径 fromKeyMs 的键内最小值 18.3 ms（仅参考，**不作判据**）；干净键 50 个给出**下界** 22.4 ms（真值，§6.6）。",
+      "detail": {
+        "decision": "red",
+        "conclude": true,
+        "budgetMs": 16,
+        "medianOfMedians": 16.1,
+        "withinBudget": false,
+        "lowerBoundMs": 22.4,
+        "cleanKeys": {
+          "n": 50,
+          "median": 22.4,
+          "keys": [
+            21,
+            22.9,
+            19.7,
+            19.8,
+            20,
+            19.9,
+            20.4,
+            21.8,
+            22,
+            21.4,
+            21.2,
+            20.6,
+            19.2,
+            19.9,
+            20.2,
+            22.2,
+            21.6,
+            19,
+            18.3,
+            21,
+            22.2,
+            22.6,
+            22.7,
+            25.9,
+            22.4,
+            23.6,
+            22,
+            23.4,
+            23.8,
+            28.9,
+            25.6,
+            25.6,
+            23.2,
+            23.4,
+            22.4,
+            24.9,
+            23.4,
+            22.5,
+            21.9,
+            22.1,
+            23.5,
+            22.8,
+            24.2,
+            23.1,
+            22.9,
+            22.2,
+            22.4,
+            23.5,
+            24,
+            22.7
+          ]
+        },
+        "crossCheck": {
+          "cleanKeys": 50,
+          "cleanMedianMs": 22.4,
+          "appendMedianMs": 15.68,
+          "ratio": 1.429
+        },
+        "rawDecision": "red",
+        "rawMedianOfMedians": 16.1,
+        "primary": {
+          "metric": "appendMs",
+          "perKey": {
+            "n": 50,
+            "min": 12.81,
+            "median": 15.68,
+            "p95": 17.92,
+            "max": 20.23,
+            "mean": 15.623,
+            "q1": 14.735,
+            "q3": 16.38,
+            "iqr": 1.645,
+            "iqrOverMedian": 0.105,
+            "p95OverMedian": 1.143
+          },
+          "rounds": {
+            "R": 5,
+            "perRoundMedian": [
+              14.49,
+              14.28,
+              16.135,
+              16.31,
+              16.1
+            ],
+            "median": 16.1,
+            "min": 14.28,
+            "max": 16.31,
+            "spread": 0.126
+          }
+        },
+        "control": {
+          "metric": "fromKeyMs",
+          "perKey": {
+            "n": 50,
+            "min": 18.3,
+            "median": 22.4,
+            "p95": 25.6,
+            "max": 28.9,
+            "mean": 22.318,
+            "q1": 21.05,
+            "q3": 23.4,
+            "iqr": 2.35,
+            "iqrOverMedian": 0.105,
+            "p95OverMedian": 1.143
+          },
+          "perKeyMin": 18.3
+        },
+        "config": {
+          "warmupKeys": 5,
+          "rounds": 5,
+          "keysPerRound": 10,
+          "settleTimeoutMs": 1500,
+          "inputChannel": "CDP Input.dispatchKeyEvent(keyDown+keyUp, text)",
+          "inputNote": "逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。"
+        },
+        "counts": {
+          "warmup": 5,
+          "live": 50,
+          "settledKeys": 55,
+          "deadKeys": 0,
+          "settleTimeouts": 0,
+          "warmupSamples": [
+            {
+              "fromKeyMs": 24.2,
+              "appendMs": 16.94
+            },
+            {
+              "fromKeyMs": 23.3,
+              "appendMs": 16.31
+            },
+            {
+              "fromKeyMs": 25.2,
+              "appendMs": 17.64
+            },
+            {
+              "fromKeyMs": 21.9,
+              "appendMs": 15.33
+            },
+            {
+              "fromKeyMs": 22.4,
+              "appendMs": 15.68
+            }
+          ]
+        },
+        "noise": {
+          "thresholds": {
+            "maxIqrOverMedian": 0.25,
+            "maxP95OverMedian": 1.6,
+            "maxRoundSpread": 0.2,
+            "minLiveKeys": 20
+          },
+          "observed": {
+            "iqrOverMedian": 0.105,
+            "p95OverMedian": 1.143,
+            "roundSpread": 0.126,
+            "liveKeys": 50,
+            "rounds": 5,
+            "cleanKeys": 50,
+            "controlPerKeyMin": 18.3
+          }
+        },
+        "reasons": [
+          "噪声在阈值内，判据可判"
+        ],
+        "docLines": 5000,
+        "protocol": "docs/design/benchmark-measurement-protocol.md",
+        "reproduce": "node scripts/benchmark/surface/cdp.mjs --probe … --c9-warmup 5 --c9-rounds 5 --c9-keys 10"
+      }
+    },
+    "C10": {
+      "title": "两消费者一致",
+      "status": "untested",
+      "reading": "两消费者一致需同时渲染「预览栏（可编辑）」与「对话栏气泡（只读流式）」并比对块序列；气泡渲染驱动成本高，本次未实现 ⇒ 未测。",
+      "detail": {}
+    },
+    "C11": {
+      "title": "插头等价",
+      "status": "untested",
+      "reading": "`new` 插头尚不存在（契约 §4 双插头未施工）⇒ 无法跑 legacy vs new 等价对比。",
+      "detail": {}
+    },
+    "C12": {
+      "title": "无损切换",
+      "status": "untested",
+      "reading": "`SurfaceRegistry.switchTo('new')` 不存在（`new` 插头未施工）⇒ 无损切换无法测。",
+      "detail": {}
+    }
+  },
+  "rawCases": {
+    "sel_text_fidelity": {
+      "status": "ran",
+      "covers": [
+        "C2"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "bodyEqualsDisk": true,
+        "linesJoinEqualsDisk": false,
+        "bodyLen": 485,
+        "diskLen": 485,
+        "diffAt": -1,
+        "bodyHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi",
+        "diskHead": "<!-- probe: 中文 / IME —— 在「拼音切换点」与「行内加粗中文」处切换输入法打字，观察 composi"
+      }
+    },
+    "sel_typing_ascii": {
+      "status": "ran",
+      "covers": [
+        "C3",
+        "C4"
+      ],
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "matchText": "这是加粗之前可以打字的一句",
+        "key": "a",
+        "setup": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "offset": 0,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 4,
+            "nodePath": [
+              0
+            ],
+            "offset": 0
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 33,
+          "blockTextHead": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。"
+        },
+        "before": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": "5",
+          "srcLineFromCaptured": false,
+          "domText": "这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 33,
+          "srcLineLen": 37
+        },
+        "after": {
+          "ok": true,
+          "blockIndex": 4,
+          "srcLine": 5,
+          "srcLineAttrNow": "5",
+          "srcLineFromCaptured": false,
+          "domText": "a这是加粗之前可以打字的一句。这是加粗这是加粗之后也可以打字的一句。",
+          "srcLineText": "a这是加粗之前可以打字的一句。**这是加粗**这是加粗之后也可以打字的一句。",
+          "domLen": 34,
+          "srcLineLen": 38,
+          "domHasChar": true,
+          "srcHasChar": true,
+          "domStartsWithChar": true,
+          "srcStartsWithChar": true
+        },
+        "edits": [
+          {
+            "n": 1,
+            "bornAt": 1029.199999988079,
+            "settledAt": 1032.0999999642372,
+            "insertMs": 2.199999988079071,
+            "fromKeyMs": 3.299999952316284,
+            "appendMs": 2.30999996662149
+          }
+        ],
+        "immediateRead": true,
+        "note": "typeText 用 Input.dispatchKeyEvent(keyDown+keyUp, text) 注入受信任输入；读 DOM 未等 rAF。"
+      }
+    },
+    "sel_jump_head_mid_tail": {
+      "status": "ran",
+      "covers": [
+        "C6"
+      ],
+      "evidence": {
+        "file": "corpus/06-links-and-kp.md",
+        "entry": "MemoriaApp.openFile(file,{lineHint}) -> highlightRange -> highlightPreviewRange",
+        "rows": [
+          {
+            "heading": "目标-头",
+            "targetLine": 5,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 4,
+              "end": 4,
+              "text": ""
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 5,
+              "end": 5,
+              "text": "目标-头",
+              "relTop": 0,
+              "relBottom": 44,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 250,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-中",
+            "targetLine": 19,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 19,
+              "end": 19,
+              "text": "目标-中"
+            },
+            "inRangePlusMinus1": true,
+            "targetBlock": {
+              "start": 19,
+              "end": 19,
+              "text": "目标-中",
+              "relTop": 0,
+              "relBottom": 43,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": false,
+            "scroll": {
+              "scrollTop": 765,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": false
+            }
+          },
+          {
+            "heading": "目标-尾",
+            "targetLine": 29,
+            "firstScreenBlock": {
+              "pane": "preview",
+              "start": 25,
+              "end": 25,
+              "text": "段落三，用于填充。"
+            },
+            "inRangePlusMinus1": false,
+            "targetBlock": {
+              "start": 29,
+              "end": 29,
+              "text": "目标-尾",
+              "relTop": 116,
+              "relBottom": 159,
+              "visible": true
+            },
+            "targetVisible": true,
+            "scrollClampedAtBottom": true,
+            "scroll": {
+              "scrollTop": 1038,
+              "scrollHeight": 1401,
+              "clientHeight": 363,
+              "maxScroll": 1038,
+              "clampedAtBottom": true
+            }
+          }
+        ]
+      }
+    },
+    "sel_id_stability": {
+      "status": "ran",
+      "covers": [
+        "C1"
+      ],
+      "evidence": {
+        "file": "corpus/02-inline-edges.md",
+        "subcases": [
+          {
+            "name": "mid",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 486,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "head",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 270,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "tail",
+            "status": "ran",
+            "editIdx": 1,
+            "point": {
+              "x": 702,
+              "y": 239,
+              "h": 30,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "",
+                "docText": "",
+                "srcLine": 2
+              },
+              "after": {
+                "elText": "z",
+                "docText": "z",
+                "srcLine": 2
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          },
+          {
+            "name": "last-block",
+            "status": "ran",
+            "editIdx": 20,
+            "point": {
+              "x": 486,
+              "y": 384,
+              "h": 65,
+              "w": 440
+            },
+            "blockCount": {
+              "before": 21,
+              "after": 21
+            },
+            "missingId": {
+              "before": 0,
+              "after": 0
+            },
+            "noIdentity": false,
+            "editApplied": true,
+            "editProof": {
+              "before": {
+                "elText": "可在此处打字的句子 ③。斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              },
+              "after": {
+                "elText": "可在此处打字的句子 ③。z斜可在此处打字的句子 ④。",
+                "docText": "可在此处打字的句子 ③。z*斜*可在此处打字的句子 ④。",
+                "srcLine": 21
+              }
+            },
+            "allowedChange": [],
+            "violations": [],
+            "ok": true,
+            "beforeIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ],
+            "afterIds": [
+              {
+                "i": 0,
+                "id": "18qk3x4-0",
+                "srcLine": "1"
+              },
+              {
+                "i": 1,
+                "id": "sjfj9w-0",
+                "srcLine": "2"
+              },
+              {
+                "i": 2,
+                "id": "1qbiic5-0",
+                "srcLine": "3"
+              },
+              {
+                "i": 3,
+                "id": "sjfj9w-1",
+                "srcLine": "4"
+              },
+              {
+                "i": 4,
+                "id": "1eutvpf-0",
+                "srcLine": "5"
+              },
+              {
+                "i": 5,
+                "id": "sjfj9w-2",
+                "srcLine": "6"
+              },
+              {
+                "i": 6,
+                "id": "omnni6-0",
+                "srcLine": "7"
+              },
+              {
+                "i": 7,
+                "id": "sjfj9w-3",
+                "srcLine": "8"
+              },
+              {
+                "i": 8,
+                "id": "7ky8qm-0",
+                "srcLine": "9"
+              },
+              {
+                "i": 9,
+                "id": "sjfj9w-4",
+                "srcLine": "10"
+              },
+              {
+                "i": 10,
+                "id": "qbpisk-0",
+                "srcLine": "11"
+              },
+              {
+                "i": 11,
+                "id": "sjfj9w-5",
+                "srcLine": "12"
+              },
+              {
+                "i": 12,
+                "id": "x45lht-0",
+                "srcLine": "13"
+              },
+              {
+                "i": 13,
+                "id": "sjfj9w-6",
+                "srcLine": "14"
+              },
+              {
+                "i": 14,
+                "id": "1sca4co-0",
+                "srcLine": "15"
+              },
+              {
+                "i": 15,
+                "id": "sjfj9w-7",
+                "srcLine": "16"
+              },
+              {
+                "i": 16,
+                "id": "q45mm9-0",
+                "srcLine": "17"
+              },
+              {
+                "i": 17,
+                "id": "sjfj9w-8",
+                "srcLine": "18"
+              },
+              {
+                "i": 18,
+                "id": "qizhmr-0",
+                "srcLine": "19"
+              },
+              {
+                "i": 19,
+                "id": "sjfj9w-9",
+                "srcLine": "20"
+              },
+              {
+                "i": 20,
+                "id": "1rv9vjs-0",
+                "srcLine": "21"
+              }
+            ]
+          }
+        ],
+        "allOk": true,
+        "violationCount": 0,
+        "noIdentityCases": [],
+        "notAppliedCases": []
+      }
+    },
+    "sel_switch_mode": {
+      "status": "ran",
+      "covers": [
+        "C7"
+      ],
+      "evidence": {
+        "file": "corpus/01-ime-zh.md",
+        "matchText": "中英混排的句子",
+        "sequence": [
+          {
+            "at": "preview#0",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "split",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          },
+          {
+            "at": "source",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 0
+          },
+          {
+            "at": "preview#1",
+            "previewTopSrcLine": 1,
+            "sourceTopSrcLine": 1,
+            "scrollTop": 26
+          }
+        ],
+        "anchor0": 1,
+        "anchorFinal": 1,
+        "delta": 0
+      }
+    },
+    "sel_scroll_stress": {
+      "status": "ran",
+      "covers": [
+        "C9"
+      ],
+      "evidence": {
+        "file": "scale/scale-5k.md",
+        "docLines": 5000,
+        "setup": {
+          "ok": true,
+          "blockIndex": 21,
+          "srcLine": 36,
+          "offset": 23,
+          "caretSet": true,
+          "caretMap": {
+            "blockIndex": 21,
+            "nodePath": [
+              4
+            ],
+            "offset": 1
+          },
+          "caretMapsToBlock": true,
+          "blockTextLen": 23,
+          "blockTextHead": "跳转示例：目标-规模-0 与 另一个链接-0。"
+        },
+        "protocol": "docs/design/benchmark-measurement-protocol.md",
+        "measurement": {
+          "protocolVersion": "1",
+          "config": {
+            "warmupKeys": 5,
+            "rounds": 5,
+            "keysPerRound": 10,
+            "settleTimeoutMs": 1500,
+            "inputChannel": "CDP Input.dispatchKeyEvent(keyDown+keyUp, text)",
+            "inputNote": "逐键：每键按下后等其落真源再按下一键；不再一次性连发 30 键。"
+          },
+          "primary": {
+            "metric": "appendMs",
+            "perKey": {
+              "n": 50,
+              "min": 12.81,
+              "median": 15.68,
+              "p95": 17.92,
+              "max": 20.23,
+              "mean": 15.623,
+              "q1": 14.735,
+              "q3": 16.38,
+              "iqr": 1.645,
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.143
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                14.49,
+                14.28,
+                16.135,
+                16.31,
+                16.1
+              ],
+              "median": 16.1,
+              "min": 14.28,
+              "max": 16.31,
+              "spread": 0.126
+            }
+          },
+          "control": {
+            "metric": "fromKeyMs",
+            "perKey": {
+              "n": 50,
+              "min": 18.3,
+              "median": 22.4,
+              "p95": 25.6,
+              "max": 28.9,
+              "mean": 22.318,
+              "q1": 21.05,
+              "q3": 23.4,
+              "iqr": 2.35,
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.143
+            },
+            "rounds": {
+              "R": 5,
+              "perRoundMedian": [
+                20.7,
+                20.4,
+                23.05,
+                23.3,
+                23
+              ],
+              "median": 23,
+              "min": 20.4,
+              "max": 23.3,
+              "spread": 0.126
+            },
+            "perKeyMin": 18.3
+          },
+          "cleanKeys": {
+            "n": 50,
+            "min": 18.3,
+            "median": 22.4,
+            "p95": 25.6,
+            "max": 28.9,
+            "mean": 22.318,
+            "q1": 21.05,
+            "q3": 23.4,
+            "iqr": 2.35,
+            "iqrOverMedian": 0.105,
+            "p95OverMedian": 1.143,
+            "keys": [
+              21,
+              22.9,
+              19.7,
+              19.8,
+              20,
+              19.9,
+              20.4,
+              21.8,
+              22,
+              21.4,
+              21.2,
+              20.6,
+              19.2,
+              19.9,
+              20.2,
+              22.2,
+              21.6,
+              19,
+              18.3,
+              21,
+              22.2,
+              22.6,
+              22.7,
+              25.9,
+              22.4,
+              23.6,
+              22,
+              23.4,
+              23.8,
+              28.9,
+              25.6,
+              25.6,
+              23.2,
+              23.4,
+              22.4,
+              24.9,
+              23.4,
+              22.5,
+              21.9,
+              22.1,
+              23.5,
+              22.8,
+              24.2,
+              23.1,
+              22.9,
+              22.2,
+              22.4,
+              23.5,
+              24,
+              22.7
+            ]
+          },
+          "counts": {
+            "warmup": 5,
+            "live": 50,
+            "settledKeys": 55,
+            "deadKeys": 0,
+            "settleTimeouts": 0,
+            "warmupSamples": [
+              {
+                "fromKeyMs": 24.2,
+                "appendMs": 16.94
+              },
+              {
+                "fromKeyMs": 23.3,
+                "appendMs": 16.31
+              },
+              {
+                "fromKeyMs": 25.2,
+                "appendMs": 17.64
+              },
+              {
+                "fromKeyMs": 21.9,
+                "appendMs": 15.33
+              },
+              {
+                "fromKeyMs": 22.4,
+                "appendMs": 15.68
+              }
+            ]
+          },
+          "samples": [
+            {
+              "round": 0,
+              "seq": 6,
+              "arrivalMs": 29988.8,
+              "fromKeyMs": 21,
+              "appendMs": 14.7,
+              "insertMs": 20.4
+            },
+            {
+              "round": 0,
+              "seq": 7,
+              "arrivalMs": 30023,
+              "fromKeyMs": 22.9,
+              "appendMs": 16.03,
+              "insertMs": 22.4
+            },
+            {
+              "round": 0,
+              "seq": 8,
+              "arrivalMs": 30058.9,
+              "fromKeyMs": 19.7,
+              "appendMs": 13.79,
+              "insertMs": 19.2
+            },
+            {
+              "round": 0,
+              "seq": 9,
+              "arrivalMs": 30116.2,
+              "fromKeyMs": 19.8,
+              "appendMs": 13.86,
+              "insertMs": 19.4
+            },
+            {
+              "round": 0,
+              "seq": 10,
+              "arrivalMs": 30149.1,
+              "fromKeyMs": 20,
+              "appendMs": 14,
+              "insertMs": 19.7
+            },
+            {
+              "round": 0,
+              "seq": 11,
+              "arrivalMs": 30182,
+              "fromKeyMs": 19.9,
+              "appendMs": 13.93,
+              "insertMs": 19.5
+            },
+            {
+              "round": 0,
+              "seq": 12,
+              "arrivalMs": 30214,
+              "fromKeyMs": 20.4,
+              "appendMs": 14.28,
+              "insertMs": 19.8
+            },
+            {
+              "round": 0,
+              "seq": 13,
+              "arrivalMs": 30248.3,
+              "fromKeyMs": 21.8,
+              "appendMs": 15.26,
+              "insertMs": 21.4
+            },
+            {
+              "round": 0,
+              "seq": 14,
+              "arrivalMs": 30283.1,
+              "fromKeyMs": 22,
+              "appendMs": 15.4,
+              "insertMs": 21.6
+            },
+            {
+              "round": 0,
+              "seq": 15,
+              "arrivalMs": 30321,
+              "fromKeyMs": 21.4,
+              "appendMs": 14.98,
+              "insertMs": 20.9
+            },
+            {
+              "round": 1,
+              "seq": 16,
+              "arrivalMs": 30355.9,
+              "fromKeyMs": 21.2,
+              "appendMs": 14.84,
+              "insertMs": 20.8
+            },
+            {
+              "round": 1,
+              "seq": 17,
+              "arrivalMs": 30391.7,
+              "fromKeyMs": 20.6,
+              "appendMs": 14.42,
+              "insertMs": 20.2
+            },
+            {
+              "round": 1,
+              "seq": 18,
+              "arrivalMs": 30427.1,
+              "fromKeyMs": 19.2,
+              "appendMs": 13.44,
+              "insertMs": 18.6
+            },
+            {
+              "round": 1,
+              "seq": 19,
+              "arrivalMs": 30459.2,
+              "fromKeyMs": 19.9,
+              "appendMs": 13.93,
+              "insertMs": 19.4
+            },
+            {
+              "round": 1,
+              "seq": 20,
+              "arrivalMs": 30492,
+              "fromKeyMs": 20.2,
+              "appendMs": 14.14,
+              "insertMs": 19.7
+            },
+            {
+              "round": 1,
+              "seq": 21,
+              "arrivalMs": 30526.2,
+              "fromKeyMs": 22.2,
+              "appendMs": 15.54,
+              "insertMs": 21.7
+            },
+            {
+              "round": 1,
+              "seq": 22,
+              "arrivalMs": 30562.2,
+              "fromKeyMs": 21.6,
+              "appendMs": 15.12,
+              "insertMs": 21.1
+            },
+            {
+              "round": 1,
+              "seq": 23,
+              "arrivalMs": 30597.4,
+              "fromKeyMs": 19,
+              "appendMs": 13.3,
+              "insertMs": 18.6
+            },
+            {
+              "round": 1,
+              "seq": 24,
+              "arrivalMs": 30627.4,
+              "fromKeyMs": 18.3,
+              "appendMs": 12.81,
+              "insertMs": 17.8
+            },
+            {
+              "round": 1,
+              "seq": 25,
+              "arrivalMs": 30658.4,
+              "fromKeyMs": 21,
+              "appendMs": 14.7,
+              "insertMs": 20.5
+            },
+            {
+              "round": 2,
+              "seq": 26,
+              "arrivalMs": 30695.3,
+              "fromKeyMs": 22.2,
+              "appendMs": 15.54,
+              "insertMs": 21.7
+            },
+            {
+              "round": 2,
+              "seq": 27,
+              "arrivalMs": 30734.7,
+              "fromKeyMs": 22.6,
+              "appendMs": 15.82,
+              "insertMs": 22.1
+            },
+            {
+              "round": 2,
+              "seq": 28,
+              "arrivalMs": 30771.1,
+              "fromKeyMs": 22.7,
+              "appendMs": 15.89,
+              "insertMs": 22.2
+            },
+            {
+              "round": 2,
+              "seq": 29,
+              "arrivalMs": 30809.5,
+              "fromKeyMs": 25.9,
+              "appendMs": 18.13,
+              "insertMs": 25.3
+            },
+            {
+              "round": 2,
+              "seq": 30,
+              "arrivalMs": 30851.8,
+              "fromKeyMs": 22.4,
+              "appendMs": 15.68,
+              "insertMs": 21.9
+            },
+            {
+              "round": 2,
+              "seq": 31,
+              "arrivalMs": 30889.6,
+              "fromKeyMs": 23.6,
+              "appendMs": 16.52,
+              "insertMs": 23
+            },
+            {
+              "round": 2,
+              "seq": 32,
+              "arrivalMs": 30931,
+              "fromKeyMs": 22,
+              "appendMs": 15.4,
+              "insertMs": 21.6
+            },
+            {
+              "round": 2,
+              "seq": 33,
+              "arrivalMs": 30966.8,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 22.9
+            },
+            {
+              "round": 2,
+              "seq": 34,
+              "arrivalMs": 31007.4,
+              "fromKeyMs": 23.8,
+              "appendMs": 16.66,
+              "insertMs": 23.2
+            },
+            {
+              "round": 2,
+              "seq": 35,
+              "arrivalMs": 31055.4,
+              "fromKeyMs": 28.9,
+              "appendMs": 20.23,
+              "insertMs": 28.3
+            },
+            {
+              "round": 3,
+              "seq": 36,
+              "arrivalMs": 31104.1,
+              "fromKeyMs": 25.6,
+              "appendMs": 17.92,
+              "insertMs": 25.1
+            },
+            {
+              "round": 3,
+              "seq": 37,
+              "arrivalMs": 31149,
+              "fromKeyMs": 25.6,
+              "appendMs": 17.92,
+              "insertMs": 25.2
+            },
+            {
+              "round": 3,
+              "seq": 38,
+              "arrivalMs": 31190.3,
+              "fromKeyMs": 23.2,
+              "appendMs": 16.24,
+              "insertMs": 22.7
+            },
+            {
+              "round": 3,
+              "seq": 39,
+              "arrivalMs": 31229,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 23
+            },
+            {
+              "round": 3,
+              "seq": 40,
+              "arrivalMs": 31268.3,
+              "fromKeyMs": 22.4,
+              "appendMs": 15.68,
+              "insertMs": 21.8
+            },
+            {
+              "round": 3,
+              "seq": 41,
+              "arrivalMs": 31310,
+              "fromKeyMs": 24.9,
+              "appendMs": 17.43,
+              "insertMs": 24.4
+            },
+            {
+              "round": 3,
+              "seq": 42,
+              "arrivalMs": 31354.4,
+              "fromKeyMs": 23.4,
+              "appendMs": 16.38,
+              "insertMs": 22.8
+            },
+            {
+              "round": 3,
+              "seq": 43,
+              "arrivalMs": 31397.6,
+              "fromKeyMs": 22.5,
+              "appendMs": 15.75,
+              "insertMs": 22
+            },
+            {
+              "round": 3,
+              "seq": 44,
+              "arrivalMs": 31437.3,
+              "fromKeyMs": 21.9,
+              "appendMs": 15.33,
+              "insertMs": 21.3
+            },
+            {
+              "round": 3,
+              "seq": 45,
+              "arrivalMs": 31501.8,
+              "fromKeyMs": 22.1,
+              "appendMs": 15.47,
+              "insertMs": 21.6
+            },
+            {
+              "round": 4,
+              "seq": 46,
+              "arrivalMs": 31539.8,
+              "fromKeyMs": 23.5,
+              "appendMs": 16.45,
+              "insertMs": 23.1
+            },
+            {
+              "round": 4,
+              "seq": 47,
+              "arrivalMs": 31579.2,
+              "fromKeyMs": 22.8,
+              "appendMs": 15.96,
+              "insertMs": 22.3
+            },
+            {
+              "round": 4,
+              "seq": 48,
+              "arrivalMs": 31620.1,
+              "fromKeyMs": 24.2,
+              "appendMs": 16.94,
+              "insertMs": 23.8
+            },
+            {
+              "round": 4,
+              "seq": 49,
+              "arrivalMs": 31660.7,
+              "fromKeyMs": 23.1,
+              "appendMs": 16.17,
+              "insertMs": 22.5
+            },
+            {
+              "round": 4,
+              "seq": 50,
+              "arrivalMs": 31700.7,
+              "fromKeyMs": 22.9,
+              "appendMs": 16.03,
+              "insertMs": 22.5
+            },
+            {
+              "round": 4,
+              "seq": 51,
+              "arrivalMs": 31739.5,
+              "fromKeyMs": 22.2,
+              "appendMs": 15.54,
+              "insertMs": 21.8
+            },
+            {
+              "round": 4,
+              "seq": 52,
+              "arrivalMs": 31778.2,
+              "fromKeyMs": 22.4,
+              "appendMs": 15.68,
+              "insertMs": 21.8
+            },
+            {
+              "round": 4,
+              "seq": 53,
+              "arrivalMs": 31819.3,
+              "fromKeyMs": 23.5,
+              "appendMs": 16.45,
+              "insertMs": 22.9
+            },
+            {
+              "round": 4,
+              "seq": 54,
+              "arrivalMs": 31857.8,
+              "fromKeyMs": 24,
+              "appendMs": 16.8,
+              "insertMs": 23.5
+            },
+            {
+              "round": 4,
+              "seq": 55,
+              "arrivalMs": 31902.5,
+              "fromKeyMs": 22.7,
+              "appendMs": 15.89,
+              "insertMs": 22.2
+            }
+          ],
+          "wallMs": 2178
+        },
+        "verdict": {
+          "decision": "red",
+          "status": "red",
+          "budgetMs": 16,
+          "medianOfMedians": 16.1,
+          "withinBudget": false,
+          "noise": {
+            "thresholds": {
+              "maxIqrOverMedian": 0.25,
+              "maxP95OverMedian": 1.6,
+              "maxRoundSpread": 0.2,
+              "minLiveKeys": 20
+            },
+            "observed": {
+              "iqrOverMedian": 0.105,
+              "p95OverMedian": 1.143,
+              "roundSpread": 0.126,
+              "liveKeys": 50,
+              "rounds": 5,
+              "cleanKeys": 50,
+              "controlPerKeyMin": 18.3
+            }
+          },
+          "crossCheck": {
+            "cleanKeys": 50,
+            "cleanMedianMs": 22.4,
+            "appendMedianMs": 15.68,
+            "ratio": 1.429
+          },
+          "reasons": [
+            "噪声在阈值内，判据可判"
+          ]
+        },
+        "budgetMs": 16,
+        "statMethod": "appendMs = 本键区间后 70%（前一键落定 → 本键落定）的逐键百分位估计；fromKeyMs 仅作事件循环代理对照；判据用 primary.perKey + primary.rounds。",
+        "deprecatedFields": {
+          "note": "v1 的 keyToSource / insertOnly / typedChars / editsRaw 不再产出（那是一次性连发 30 键的批量口径）；run_probe.py 对缺这三个字段的 raw 按 inconclusive 处理，绝不沿用 max≤16ms。"
+        }
+      }
+    }
+  },
+  "console": {
+    "editLogs": [
+      "[20:45:20.300] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.344] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.384] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.420] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.457] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.491] [EDIT] 按键提交 20ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.527] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.751] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.786] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.823] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:20.858] [EDIT] 按键提交 20ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.029] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.065] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.160] [EDIT] 按键提交 20ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.198] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.238] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.275] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.316] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.355] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.394] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.434] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.471] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.512] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.565] [EDIT] 按键提交 28ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.611] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.655] [EDIT] 按键提交 25ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.695] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.733] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.772] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.816] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.859] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.901] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:21.940] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.005] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.044] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.083] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.125] [EDIT] 按键提交 24ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.165] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.205] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.243] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.282] [EDIT] 按键提交 21ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.324] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.363] [EDIT] 按键提交 23ms · 行 1→1 · 块 21（全篇 5000 行）",
+      "[20:45:22.406] [EDIT] 按键提交 22ms · 行 1→1 · 块 21（全篇 5000 行）"
+    ],
+    "errors": [],
+    "total": 930
+  },
+  "notes": [
+    "绿/红按契约判，不按与老实现一致判。",
+    "未测项已写明原因，未默认成绿。",
+    "C9 只覆盖「按键→真源」半条；滚动长任务半条未采。",
+    "C9 口径 v2：逐键采样（非一次性连发）+ warmup 丢弃 + R 轮 median-of-medians；判绿/红前先过噪声门（键间 IQR/p95、轮间极差、样本量、死键），不过则标「不确定」而非绿/红。",
+    "C9 的「不确定」是**度量状态**而非性能结论：不得据此说达标或退化；处置 = 同机同档位重测。",
+    "跳转入口用等价真实入口 openFile(file,{lineHint}) 代替闭包 revealRange。",
+    "语料在 artifacts/_probe_kb 副本上运行，tests/probe-kb 未被改动。",
+    "观察项（非本次断言）：增量重渲（reRenderBlock→renderRange 换节点 + keepLineMap 跳过 stamp）后，被编辑块节点**瞬时不带** data--src-line，可能影响按该属性定位的入口。"
+  ]
+}

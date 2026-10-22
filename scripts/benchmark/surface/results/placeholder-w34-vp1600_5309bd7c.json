@@ -1,0 +1,955 @@
+{
+  "schema": "memoria-placeholder-probe/v1",
+  "startedAt": "2026-10-22T17:54:20.761Z",
+  "url": "http://127.0.0.1:61281/",
+  "file": "教材/08_第8章_差错控制编码.md",
+  "browser": {
+    "href": "http://127.0.0.1:61281/",
+    "innerWidth": 1600,
+    "innerHeight": 900,
+    "dpr": 1
+  },
+  "viewportOverride": "1600x900",
+  "measurement": {
+    "raf": {
+      "p50Ms": 16.800000000745058,
+      "frames": 90,
+      "trusted": true
+    },
+    "trusted": true
+  },
+  "thresholds": {
+    "postOpenSettleMs": 1500,
+    "settleTimeoutMs": 120000,
+    "scrollSteps": 24,
+    "scrollPauseMs": 220,
+    "p50MaxMs": 20
+  },
+  "full": {
+    "scrollHeight": 158187,
+    "clientHeight": 786,
+    "availWidth": 878,
+    "sumBlockH": 142199.88,
+    "sumContrib": 158114.88,
+    "contentScrollHeight": 158115,
+    "panePadTop": 0,
+    "panePadBottom": 0,
+    "workset": {
+      "materialized": 4001,
+      "placeholders": 0,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 16,
+      "lhPx": 25.6,
+      "metricsSrc": "default"
+    },
+    "imgStat": {
+      "total": 53,
+      "complete": 0,
+      "loaded": 0,
+      "failed": 0
+    },
+    "openWallMs": 3896,
+    "n": 4001
+  },
+  "lazy": {
+    "scrollHeight": 158645,
+    "clientHeight": 786,
+    "sumBlockH": 158432.88,
+    "sumContrib": 158572.88,
+    "contentScrollHeight": 158573,
+    "workset": {
+      "materialized": 63,
+      "placeholders": 3938,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    },
+    "imgStat": {
+      "total": 0,
+      "complete": 0,
+      "loaded": 0,
+      "failed": 0
+    },
+    "openWallMs": 320,
+    "n": 4001
+  },
+  "deltaPct": 0.29,
+  "ratio": 1.0029,
+  "perType": [
+    {
+      "type": "blank_line",
+      "count": 1889,
+      "placeholders": 1859,
+      "materialized": 30,
+      "meanRealH": 26.59,
+      "medianRealH": 22.39,
+      "p90RealH": 36.39,
+      "meanRectH": 22.39,
+      "meanGap": 4.2,
+      "meanEstH": 26.21,
+      "ratio": 0.9856,
+      "pct": -1.44,
+      "meanLines": 1,
+      "meanTextLen": 0,
+      "lineHist": {
+        "1": {
+          "count": 1889,
+          "meanRealH": 26.59
+        }
+      },
+      "tags": {
+        "div.-src-block": 1889
+      }
+    },
+    {
+      "type": "paragraph",
+      "count": 1398,
+      "placeholders": 1377,
+      "materialized": 21,
+      "meanRealH": 36.35,
+      "medianRealH": 23.8,
+      "p90RealH": 71.39,
+      "meanRectH": 36.35,
+      "meanGap": 0,
+      "meanEstH": 37.82,
+      "ratio": 1.0403,
+      "pct": 4.03,
+      "meanLines": 1,
+      "meanTextLen": 69.4,
+      "lineHist": {
+        "1": {
+          "count": 1398,
+          "meanRealH": 36.35
+        }
+      },
+      "tags": {
+        "p.-src-block": 1398
+      }
+    },
+    {
+      "type": "math_block",
+      "count": 567,
+      "placeholders": 562,
+      "materialized": 5,
+      "meanRealH": 61.9,
+      "medianRealH": 45.63,
+      "p90RealH": 112.13,
+      "meanRectH": 47.9,
+      "meanGap": 14,
+      "meanEstH": 61.94,
+      "ratio": 1.0007,
+      "pct": 0.07,
+      "meanLines": 3,
+      "meanTextLen": 58.6,
+      "lineHist": {
+        "3": {
+          "count": 567,
+          "meanRealH": 61.9
+        }
+      },
+      "tags": {
+        "div.-src-block": 567
+      }
+    },
+    {
+      "type": "image",
+      "count": 53,
+      "placeholders": 53,
+      "materialized": 0,
+      "meanRealH": 41.58,
+      "medianRealH": 46.39,
+      "p90RealH": 46.39,
+      "meanRectH": 40.85,
+      "meanGap": 0.74,
+      "meanEstH": 46,
+      "ratio": 1.1062,
+      "pct": 10.62,
+      "meanLines": 1,
+      "meanTextLen": 18.9,
+      "lineHist": {
+        "1": {
+          "count": 53,
+          "meanRealH": 41.58
+        }
+      },
+      "tags": {
+        "p.-src-block": 53
+      }
+    },
+    {
+      "type": "heading",
+      "count": 42,
+      "placeholders": 35,
+      "materialized": 7,
+      "meanRealH": 32,
+      "medianRealH": 32,
+      "p90RealH": 32,
+      "meanRectH": 32,
+      "meanGap": 0,
+      "meanEstH": 32,
+      "ratio": 1,
+      "pct": 0,
+      "meanLines": 1,
+      "meanTextLen": 14.8,
+      "lineHist": {
+        "1": {
+          "count": 42,
+          "meanRealH": 32
+        }
+      },
+      "tags": {
+        "h2.-src-block": 42
+      }
+    },
+    {
+      "type": "table",
+      "count": 33,
+      "placeholders": 33,
+      "materialized": 0,
+      "meanRealH": 388.15,
+      "medianRealH": 213.34,
+      "p90RealH": 567.25,
+      "meanRectH": 388.15,
+      "meanGap": 0,
+      "meanEstH": 401.15,
+      "ratio": 1.0335,
+      "pct": 3.35,
+      "meanLines": 11.94,
+      "meanTextLen": 140.9,
+      "lineHist": {
+        "3": {
+          "count": 2,
+          "meanRealH": 71.78
+        },
+        "4": {
+          "count": 1,
+          "meanRealH": 107.17
+        },
+        "6": {
+          "count": 9,
+          "meanRealH": 177.95
+        },
+        "7": {
+          "count": 5,
+          "meanRealH": 213.34
+        },
+        "8": {
+          "count": 1,
+          "meanRealH": 248.73
+        },
+        "9": {
+          "count": 2,
+          "meanRealH": 284.13
+        },
+        "10": {
+          "count": 1,
+          "meanRealH": 319.52
+        },
+        "12": {
+          "count": 5,
+          "meanRealH": 390.3
+        },
+        "13": {
+          "count": 1,
+          "meanRealH": 425.69
+        },
+        "14": {
+          "count": 2,
+          "meanRealH": 461.08
+        },
+        "17": {
+          "count": 2,
+          "meanRealH": 567.25
+        },
+        "22": {
+          "count": 1,
+          "meanRealH": 744.2
+        },
+        "102": {
+          "count": 1,
+          "meanRealH": 3575.45
+        }
+      },
+      "tags": {
+        "table.-src-block": 33
+      }
+    },
+    {
+      "type": "unknown",
+      "count": 19,
+      "placeholders": 19,
+      "materialized": 0,
+      "meanRealH": 295.51,
+      "medianRealH": 179.95,
+      "p90RealH": 567.88,
+      "meanRectH": 295.51,
+      "meanGap": 0,
+      "meanEstH": 213.74,
+      "ratio": 0.7233,
+      "pct": -27.67,
+      "meanLines": 21.16,
+      "meanTextLen": 4778.2,
+      "lineHist": {
+        "8": {
+          "count": 1,
+          "meanRealH": 148.38
+        },
+        "10": {
+          "count": 1,
+          "meanRealH": 193.97
+        },
+        "11": {
+          "count": 4,
+          "meanRealH": 140.9
+        },
+        "12": {
+          "count": 1,
+          "meanRealH": 157.06
+        },
+        "13": {
+          "count": 1,
+          "meanRealH": 284.03
+        },
+        "14": {
+          "count": 2,
+          "meanRealH": 195.98
+        },
+        "15": {
+          "count": 1,
+          "meanRealH": 189.31
+        },
+        "16": {
+          "count": 2,
+          "meanRealH": 231.61
+        },
+        "17": {
+          "count": 2,
+          "meanRealH": 151.17
+        },
+        "19": {
+          "count": 1,
+          "meanRealH": 567.88
+        },
+        "24": {
+          "count": 1,
+          "meanRealH": 561.7
+        },
+        "70": {
+          "count": 1,
+          "meanRealH": 1731.69
+        },
+        "93": {
+          "count": 1,
+          "meanRealH": 59.59
+        }
+      },
+      "tags": {
+        "div.-mermaid-container": 18,
+        "div.-mermaid-error": 1
+      }
+    }
+  ],
+  "joinMismatches": 0,
+  "diagnostics": {
+    "mathjax": {
+      "mjxCount": 2850
+    },
+    "samples": {
+      "blank_line": [
+        {
+          "idx": 1,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        },
+        {
+          "idx": 3,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        },
+        {
+          "idx": 5,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        },
+        {
+          "idx": 7,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        },
+        {
+          "idx": 9,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        },
+        {
+          "idx": 11,
+          "h": 22.39,
+          "contrib": 22.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -blank-block"
+        }
+      ],
+      "math_block": [
+        {
+          "idx": 38,
+          "h": 15.83,
+          "contrib": 29.83,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        },
+        {
+          "idx": 44,
+          "h": 15.83,
+          "contrib": 29.83,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        },
+        {
+          "idx": 50,
+          "h": 15.83,
+          "contrib": 29.83,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        },
+        {
+          "idx": 54,
+          "h": 15.83,
+          "contrib": 29.83,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        },
+        {
+          "idx": 62,
+          "h": 22.39,
+          "contrib": 36.39,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        },
+        {
+          "idx": 76,
+          "h": 22.39,
+          "contrib": 36.39,
+          "lines": 3,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-src-block -math-block"
+        }
+      ],
+      "paragraph": [
+        {
+          "idx": 4,
+          "h": 95.19,
+          "contrib": 95.19,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        },
+        {
+          "idx": 6,
+          "h": 95.19,
+          "contrib": 95.19,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        },
+        {
+          "idx": 12,
+          "h": 95.19,
+          "contrib": 95.19,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        },
+        {
+          "idx": 14,
+          "h": 23.8,
+          "contrib": 23.8,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        },
+        {
+          "idx": 16,
+          "h": 47.59,
+          "contrib": 47.59,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        },
+        {
+          "idx": 17,
+          "h": 47.59,
+          "contrib": 47.59,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block"
+        }
+      ],
+      "image": [
+        {
+          "idx": 575,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        },
+        {
+          "idx": 591,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        },
+        {
+          "idx": 619,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        },
+        {
+          "idx": 1511,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        },
+        {
+          "idx": 1527,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        },
+        {
+          "idx": 1579,
+          "h": 46.39,
+          "contrib": 46.39,
+          "lines": 1,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 23.8,
+            "fs": 14
+          },
+          "cls": "-src-block -image-block"
+        }
+      ],
+      "unknown": [
+        {
+          "idx": 1584,
+          "h": 283.27,
+          "contrib": 283.27,
+          "lines": 16,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        },
+        {
+          "idx": 1600,
+          "h": 567.88,
+          "contrib": 567.88,
+          "lines": 19,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        },
+        {
+          "idx": 2154,
+          "h": 58.97,
+          "contrib": 58.97,
+          "lines": 17,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        },
+        {
+          "idx": 2592,
+          "h": 243.36,
+          "contrib": 243.36,
+          "lines": 17,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        },
+        {
+          "idx": 2694,
+          "h": 113.28,
+          "contrib": 113.28,
+          "lines": 11,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        },
+        {
+          "idx": 2739,
+          "h": 122.47,
+          "contrib": 122.47,
+          "lines": 14,
+          "cs": {
+            "mt": 0,
+            "mb": 0,
+            "lh": 22.4,
+            "fs": 14
+          },
+          "cls": "-mermaid-container -src-block -mmd-viewport"
+        }
+      ]
+    }
+  },
+  "scrollTrace": {
+    "series": [
+      {
+        "f": 0,
+        "scrollTop": 0,
+        "scrollHeight": 158645,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.041666666666666664,
+        "scrollTop": 6577,
+        "scrollHeight": 158645,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.08333333333333333,
+        "scrollTop": 13148,
+        "scrollHeight": 158562,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.125,
+        "scrollTop": 19700,
+        "scrollHeight": 158384,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.16666666666666666,
+        "scrollTop": 26275,
+        "scrollHeight": 158434,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.20833333333333334,
+        "scrollTop": 32812,
+        "scrollHeight": 158285,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.25,
+        "scrollTop": 39350,
+        "scrollHeight": 158185,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.2916666666666667,
+        "scrollTop": 45981,
+        "scrollHeight": 158434,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.3333333333333333,
+        "scrollTop": 52541,
+        "scrollHeight": 158408,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.375,
+        "scrollTop": 59169,
+        "scrollHeight": 158569,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.4166666666666667,
+        "scrollTop": 66067,
+        "scrollHeight": 159346,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.4583333333333333,
+        "scrollTop": 72671,
+        "scrollHeight": 159341,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.5,
+        "scrollTop": 79137,
+        "scrollHeight": 159060,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.5416666666666666,
+        "scrollTop": 85663,
+        "scrollHeight": 158933,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.5833333333333334,
+        "scrollTop": 92145,
+        "scrollHeight": 158749,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.625,
+        "scrollTop": 98638,
+        "scrollHeight": 158607,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.6666666666666666,
+        "scrollTop": 105361,
+        "scrollHeight": 158828,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.7083333333333334,
+        "scrollTop": 112375,
+        "scrollHeight": 159433,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.75,
+        "scrollTop": 119386,
+        "scrollHeight": 159967,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.7916666666666666,
+        "scrollTop": 126543,
+        "scrollHeight": 160630,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.8333333333333334,
+        "scrollTop": 135248,
+        "scrollHeight": 163083,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.875,
+        "scrollTop": 142198,
+        "scrollHeight": 163298,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.9166666666666666,
+        "scrollTop": 149331,
+        "scrollHeight": 163692,
+        "clientHeight": 786
+      },
+      {
+        "f": 0.9583333333333334,
+        "scrollTop": 156492,
+        "scrollHeight": 164082,
+        "clientHeight": 786
+      },
+      {
+        "f": 1,
+        "scrollTop": 163314,
+        "scrollHeight": 164100,
+        "clientHeight": 786
+      }
+    ],
+    "steps": 25,
+    "minScrollHeight": 158185,
+    "maxScrollHeight": 164100,
+    "spreadPx": 5915,
+    "spreadPct": 3.6,
+    "backToTopScrollHeight": 164551,
+    "tailWorkset": {
+      "materialized": 63,
+      "placeholders": 3938,
+      "totalBlocks": 4001,
+      "evictTotal": 2407,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 15.7,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    }
+  },
+  "checks": {
+    "within2pct": true,
+    "measurementTrusted": true,
+    "noPlaceholderLeft": true
+  },
+  "meta": {
+    "label": "w34-vp1600",
+    "sha": "5309bd7c",
+    "startedAt": "2026-10-22T17:54:22.488344+00:00",
+    "elapsedMs": 42997
+  }
+}

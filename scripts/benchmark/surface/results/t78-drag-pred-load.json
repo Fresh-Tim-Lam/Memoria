@@ -1,0 +1,213 @@
+{
+  "mode": "pred",
+  "result": {
+    "applied": "pred",
+    "open": {
+      "ok": true,
+      "attempts": 1,
+      "ms": 272.09999999962747,
+      "stats": {
+        "materialized": 27,
+        "placeholders": 3974,
+        "totalBlocks": 4001,
+        "evictTotal": 0,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 0,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "path": "教材/08_第8章_差错控制编码.md"
+    },
+    "drag": {
+      "baseEv": 0,
+      "endEv": 1393,
+      "evDelta": 1393,
+      "evFrames": 67,
+      "frames": 70,
+      "totalMs": 6048,
+      "fps": 11.6,
+      "avgFrameMs": 86.4,
+      "maxMat": 110,
+      "endScrollTop": 60230,
+      "maxScroll": 176781,
+      "samples": [
+        {
+          "t": 170,
+          "st": 3576,
+          "mat": 76,
+          "ph": 3925,
+          "ev": 1,
+          "dt": 74.3
+        },
+        {
+          "t": 450,
+          "st": 7095,
+          "mat": 81,
+          "ph": 3920,
+          "ev": 72,
+          "dt": 73.7
+        },
+        {
+          "t": 812,
+          "st": 10582,
+          "mat": 98,
+          "ph": 3903,
+          "ev": 148,
+          "dt": 83.7
+        },
+        {
+          "t": 1165,
+          "st": 14018,
+          "mat": 78,
+          "ph": 3923,
+          "ev": 241,
+          "dt": 85.7
+        },
+        {
+          "t": 1540,
+          "st": 17503,
+          "mat": 93,
+          "ph": 3908,
+          "ev": 313,
+          "dt": 90.8
+        },
+        {
+          "t": 1925,
+          "st": 20836,
+          "mat": 110,
+          "ph": 3891,
+          "ev": 400,
+          "dt": 85.4
+        },
+        {
+          "t": 2260,
+          "st": 24292,
+          "mat": 110,
+          "ph": 3891,
+          "ev": 501,
+          "dt": 65.1
+        },
+        {
+          "t": 2645,
+          "st": 27865,
+          "mat": 90,
+          "ph": 3911,
+          "ev": 602,
+          "dt": 89.3
+        },
+        {
+          "t": 3023,
+          "st": 31106,
+          "mat": 90,
+          "ph": 3911,
+          "ev": 685,
+          "dt": 91.9
+        },
+        {
+          "t": 3395,
+          "st": 34465,
+          "mat": 89,
+          "ph": 3912,
+          "ev": 769,
+          "dt": 89.8
+        },
+        {
+          "t": 3755,
+          "st": 37691,
+          "mat": 87,
+          "ph": 3914,
+          "ev": 849,
+          "dt": 82.9
+        },
+        {
+          "t": 4105,
+          "st": 41095,
+          "mat": 87,
+          "ph": 3914,
+          "ev": 931,
+          "dt": 95.4
+        },
+        {
+          "t": 4497,
+          "st": 44638,
+          "mat": 67,
+          "ph": 3934,
+          "ev": 1011,
+          "dt": 104.3
+        },
+        {
+          "t": 4825,
+          "st": 48113,
+          "mat": 92,
+          "ph": 3909,
+          "ev": 1077,
+          "dt": 81.1
+        },
+        {
+          "t": 5147,
+          "st": 51596,
+          "mat": 103,
+          "ph": 3898,
+          "ev": 1165,
+          "dt": 88.5
+        },
+        {
+          "t": 5513,
+          "st": 54945,
+          "mat": 92,
+          "ph": 3909,
+          "ev": 1255,
+          "dt": 92.3
+        },
+        {
+          "t": 5849,
+          "st": 58518,
+          "mat": 108,
+          "ph": 3893,
+          "ev": 1339,
+          "dt": 88.9
+        }
+      ],
+      "mode": "pred"
+    },
+    "settled": {
+      "stats": {
+        "materialized": 125,
+        "placeholders": 3876,
+        "totalBlocks": 4001,
+        "evictTotal": 1415,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 8.3,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "tail": {
+        "mode": "pred",
+        "batches": 5,
+        "verifies": 7,
+        "skips": 68,
+        "driftErrPx": 1767.8,
+        "deferredReadMs": 8.7,
+        "shCache": 177173,
+        "predDriftPx": 0.69,
+        "predTotalPx": 0.69,
+        "wouldFix": 0,
+        "anchorPredMax": 0.27,
+        "driftMode": "predicted+verified"
+      },
+      "scrollTop": 60220,
+      "scrollHeight": 177343
+    },
+    "dom": {
+      "previewNodes": 10705,
+      "blocks": 4001
+    },
+    "heapMB": 29.5
+  }
+}

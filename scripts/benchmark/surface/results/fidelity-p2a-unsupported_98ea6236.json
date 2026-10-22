@@ -1,0 +1,706 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:59611/",
+  "files": [
+    "corpus/04-non-editable.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-20T15:00:00.555Z",
+  "documents": {
+    "corpus/04-non-editable.md": {
+      "status": "ran",
+      "run1": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 28,
+            "dom": 28
+          },
+          "a2": {
+            "ok": false,
+            "orderOk": true,
+            "kindMismatch": [
+              {
+                "i": 11,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 15,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 19,
+                "astKind": "table",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 23,
+                "astKind": "math_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 27,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              }
+            ],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": true,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": false,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": true,
+            "astCodeWithLang": 2,
+            "issues": [
+              {
+                "i": 11,
+                "field": "missing-code"
+              },
+              {
+                "i": 15,
+                "field": "missing-code"
+              }
+            ],
+            "ok": false
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [
+              {
+                "i": 19,
+                "field": "rows",
+                "ast": 3,
+                "dom": 0
+              },
+              {
+                "i": 19,
+                "field": "cols",
+                "ast": 3,
+                "dom": 0
+              }
+            ],
+            "ok": false
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "code",
+                "astCount": 2,
+                "domCount": 2
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": true,
+            "astMermaid": 1,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": false
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 14,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "') 判定）"
+              },
+              {
+                "i": 3,
+                "ast": "",
+                "dom": "<!-- probe: 不可编辑块 —— 双击围栏代码块 / 表格 / 公式块 / mermaid 进入块编辑，改一行后按 Esc，观察 textarea 仍在文档里、内容不丢 -->"
+              },
+              {
+                "i": 5,
+                "ast": "",
+                "dom": "04 · 不可编辑块"
+              },
+              {
+                "i": 7,
+                "ast": "",
+                "dom": "说明：本文件为测 frontmatter 渲染，把 frontmatter 放在最顶部（文件首行必须是 ---），因此这行 probe 注释位于 frontmatter 之后。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "围栏代码块（python）"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "[code_block: P2a RenderCore 尚未实现]"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "围栏代码块（js）"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "[code_block: P2a RenderCore 尚未实现]"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "GFM 表格（左 / 中 / 右对齐）"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "[table: P2a RenderCore 尚未实现]"
+              },
+              {
+                "i": 21,
+                "ast": "",
+                "dom": "公式块"
+              },
+              {
+                "i": 23,
+                "ast": "",
+                "dom": "[math_block: P2a RenderCore 尚未实现]"
+              },
+              {
+                "i": 25,
+                "ast": "",
+                "dom": "Mermaid"
+              },
+              {
+                "i": 27,
+                "ast": "",
+                "dom": "[code_block: P2a RenderCore 尚未实现]"
+              }
+            ]
+          },
+          "b6": {
+            "ok": false,
+            "diffCount": 4,
+            "diffs": [
+              {
+                "i": 11,
+                "field": "code.lang",
+                "ast": "python",
+                "dom": ""
+              },
+              {
+                "i": 15,
+                "field": "code.lang",
+                "ast": "js",
+                "dom": ""
+              },
+              {
+                "i": 19,
+                "field": "table.rows",
+                "ast": 3,
+                "dom": 0
+              },
+              {
+                "i": 27,
+                "field": "code.lang",
+                "ast": "mermaid",
+                "dom": ""
+              }
+            ]
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "2167572b53b6ab3e3576be5423f3400928afb118f2ddff0dbf50b0a420dadee3",
+        "signatureNorm": "{\"v\":2,\"count\":28,\"kinds\":[\"p\",\"hr\",\"-blank-block\",\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"blockquote\",\"-blank-block\",\"h2\",\"-blank-block\",\"-unsupported-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-unsupported-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-unsupported-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-unsupported-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-unsupported-block\"],\"tags\":[\"p\",\"hr\",\"div\",\"p\",\"div\",\"h1\",\"div\",\"blockquote\",\"div\",\"h2\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"div\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":2,\"tableIssues\":2,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"') 判定）\",\"\",\"\",\"<!-- probe: 不可编辑块 —— 双击围栏代码块 / 表格 / 公式块 / mermaid 进入块编辑，改一行后按 Esc，观察 textarea 仍在文档里、内容不丢 -->\",\"\",\"04 · 不可编辑块\",\"\",\"说明：本文件为测 frontmatter 渲染，把 frontmatter 放在最顶部（文件首行必须是 ---），因此这行 probe 注释位于 frontmatter 之后。\",\"\",\"围栏代码块（python）\",\"\",\"[code_block: P2a RenderCore 尚未实现]\",\"\",\"围栏代码块（js）\",\"\",\"[code_block: P2a RenderCore 尚未实现]\",\"\",\"GFM 表格（左 / 中 / 右对齐）\",\"\",\"[table: P2a RenderCore 尚未实现]\",\"\",\"公式块\",\"\",\"[math_block: P2a RenderCore 尚未实现]\",\"\",\"Mermaid\",\"\",\"[code_block: P2a RenderCore 尚未实现]\"],\"htmlFingerprint\":\"ec454cd4d2ca9400\",\"nondetStripped\":28}",
+        "nondetStripped": 28,
+        "astCount": 28,
+        "domCount": 28
+      },
+      "run2": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 28,
+            "dom": 28
+          },
+          "a2": {
+            "ok": false,
+            "orderOk": true,
+            "kindMismatch": [
+              {
+                "i": 11,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 15,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 19,
+                "astKind": "table",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 23,
+                "astKind": "math_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              },
+              {
+                "i": 27,
+                "astKind": "code_block",
+                "domKind": "-unsupported-block",
+                "domTag": "div"
+              }
+            ],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-unsupported-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": true,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": false,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": true,
+            "astCodeWithLang": 2,
+            "issues": [
+              {
+                "i": 11,
+                "field": "missing-code"
+              },
+              {
+                "i": 15,
+                "field": "missing-code"
+              }
+            ],
+            "ok": false
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [
+              {
+                "i": 19,
+                "field": "rows",
+                "ast": 3,
+                "dom": 0
+              },
+              {
+                "i": 19,
+                "field": "cols",
+                "ast": 3,
+                "dom": 0
+              }
+            ],
+            "ok": false
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "code",
+                "astCount": 2,
+                "domCount": 2
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": true,
+            "astMermaid": 1,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": false
+          }
+        },
+        "signature": "2167572b53b6ab3e3576be5423f3400928afb118f2ddff0dbf50b0a420dadee3"
+      },
+      "reproducible": true,
+      "mutation": null
+    }
+  },
+  "allGreen": false,
+  "ok": true,
+  "finishedAt": "2026-10-20T15:00:04.417Z"
+}

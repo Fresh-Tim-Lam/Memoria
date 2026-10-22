@@ -1,0 +1,332 @@
+{
+  "schema": "memoria-evict-frames/v1",
+  "at": "2026-10-22T15:33:34.597Z",
+  "head": "a373dd745ac9dbaccc0f030465b219f29f490a1a",
+  "dirty": "",
+  "scriptSha256": "fca08794be1f5462ade01ebe0ec98ab7691ce80f2503e367b8b1fdd0af021912",
+  "argv": [
+    "9624",
+    "scripts\\benchmark\\surface\\results\\evict-frames-pristine-2round.json",
+    "--fast",
+    "2",
+    "--slow",
+    "0"
+  ],
+  "env": {
+    "mode": "realapp-webview2",
+    "port": 9624,
+    "doc": "教材/08_第8章_差错控制编码.md",
+    "profile": true,
+    "fastFrames": 80,
+    "slowSteps": 30,
+    "slowInterval": 100
+  },
+  "gpu": {
+    "webgl": true,
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "visibility": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "w": 1264,
+    "h": 821
+  },
+  "idleRafBaseline": {
+    "n": 145,
+    "p50": 8.3,
+    "p95": 8.5,
+    "max": 30.3
+  },
+  "window": {
+    "w": 1264,
+    "h": 821,
+    "dpr": 1,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0"
+  },
+  "appVersion": "Memoria v0.4.5",
+  "rounds": [
+    {
+      "round": 1,
+      "kind": "fast",
+      "topQuiet": 36,
+      "scroll": {
+        "frames": 80,
+        "ms": 3665.9,
+        "maxScroll": 181110
+      },
+      "quiet": {
+        "quietMs": 1811,
+        "stats": {
+          "materialized": 92,
+          "placeholders": 3909,
+          "totalBlocks": 4001,
+          "evictTotal": 3909,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 9,
+          "anchorFixes": 9,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        }
+      },
+      "frames": {
+        "n": 242,
+        "p50": 8.4,
+        "p95": 77.4,
+        "max": 148.2,
+        "over50": 38,
+        "over100": 6,
+        "over200": 0
+      },
+      "longtask": {
+        "n": 15,
+        "max": 117,
+        "over50": 15
+      },
+      "counters": {
+        "scheduled": 369,
+        "executed": 239,
+        "merged": 130,
+        "dropped": 0,
+        "queue_max": 3,
+        "budget_exceeded": 6,
+        "frames_used": 80,
+        "slice_count": 0,
+        "max_frame_ms": 18.90000000037253
+      },
+      "jobs": {
+        "lazy_materialize": {
+          "n": 78,
+          "max": 6.3,
+          "sum": 189.2
+        },
+        "lazy_typeset": {
+          "n": 80,
+          "max": 0.4,
+          "sum": 8.2
+        },
+        "lazy_evict": {
+          "n": 81,
+          "max": 15.8,
+          "sum": 472.7
+        }
+      },
+      "evictProfile": null,
+      "snap": {
+        "ws": {
+          "materialized": 92,
+          "placeholders": 3909,
+          "totalBlocks": 4001,
+          "evictTotal": 3909,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 9,
+          "anchorFixes": 9,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "domPreview": 6001,
+        "domBody": 26965,
+        "mjx": 15,
+        "mathItems": 2637,
+        "mathDetached": 2622,
+        "scrollTop": 180992,
+        "scrollHeight": 181751,
+        "clientHeight": 707,
+        "viewMode": "preview"
+      },
+      "heap": {
+        "usedMB": 92.39,
+        "embedderMB": 146.56,
+        "domNodes": 380534,
+        "listeners": 1038
+      }
+    },
+    {
+      "round": 2,
+      "kind": "fast",
+      "topQuiet": 35,
+      "scroll": {
+        "frames": 80,
+        "ms": 7795.6,
+        "maxScroll": 181041
+      },
+      "quiet": {
+        "quietMs": 7164.7,
+        "stats": {
+          "materialized": 93,
+          "placeholders": 3908,
+          "totalBlocks": 4001,
+          "evictTotal": 7909,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 102,
+          "anchorFixes": 16,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        }
+      },
+      "frames": {
+        "n": 325,
+        "p50": 8.4,
+        "p95": 190.3,
+        "max": 512.9,
+        "over50": 88,
+        "over100": 55,
+        "over200": 11
+      },
+      "longtask": {
+        "n": 113,
+        "max": 326,
+        "over50": 112
+      },
+      "counters": {
+        "scheduled": 321,
+        "executed": 170,
+        "merged": 151,
+        "dropped": 0,
+        "queue_max": 3,
+        "budget_exceeded": 70,
+        "frames_used": 141,
+        "slice_count": 0,
+        "max_frame_ms": 50.09999999962747
+      },
+      "jobs": {
+        "lazy_materialize": {
+          "n": 40,
+          "max": 26.7,
+          "sum": 444.4
+        },
+        "lazy_typeset": {
+          "n": 63,
+          "max": 0.5,
+          "sum": 10
+        },
+        "lazy_evict": {
+          "n": 67,
+          "max": 50.1,
+          "sum": 1426.9
+        }
+      },
+      "evictProfile": null,
+      "snap": {
+        "ws": {
+          "materialized": 93,
+          "placeholders": 3908,
+          "totalBlocks": 4001,
+          "evictTotal": 7909,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 102,
+          "anchorFixes": 16,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "domPreview": 6025,
+        "domBody": 26989,
+        "mjx": 16,
+        "mathItems": 2638,
+        "mathDetached": 2622,
+        "scrollTop": 178644,
+        "scrollHeight": 179352,
+        "clientHeight": 707,
+        "viewMode": "preview"
+      },
+      "heap": {
+        "usedMB": 93.59,
+        "embedderMB": 149.82,
+        "domNodes": 380810,
+        "listeners": 1038
+      }
+    }
+  ],
+  "open": {
+    "snap": {
+      "ws": {
+        "materialized": 36,
+        "placeholders": 3965,
+        "totalBlocks": 4001,
+        "evictTotal": 0,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 0,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "domPreview": 4019,
+      "domBody": 24983,
+      "mjx": 0,
+      "mathItems": 7,
+      "mathDetached": 7,
+      "scrollTop": 0,
+      "scrollHeight": 181817,
+      "clientHeight": 707,
+      "viewMode": "preview"
+    },
+    "heap": {
+      "usedMB": 16.22,
+      "embedderMB": 14.43,
+      "domNodes": 55311,
+      "listeners": 930
+    }
+  },
+  "summary": {
+    "rounds": 2,
+    "max_frame_ms": [
+      18.9,
+      50.1
+    ],
+    "max_frame_ms_max": 50.1,
+    "over200": 0,
+    "slice_count": [
+      0,
+      0
+    ],
+    "budget_exceeded": [
+      6,
+      70
+    ],
+    "evict_job_max": [
+      15.8,
+      50.1
+    ],
+    "materialize_job_max": [
+      6.3,
+      26.7
+    ],
+    "typeset_job_max": [
+      0.4,
+      0.5
+    ],
+    "evictTotal": [
+      3909,
+      7909
+    ],
+    "evict_blocks_per_round": [
+      3909,
+      4000
+    ],
+    "heapMB": [
+      92.39,
+      93.59
+    ],
+    "domPreview": [
+      6001,
+      6025
+    ],
+    "materialized": [
+      92,
+      93
+    ],
+    "heightDriftPx": [
+      9,
+      102
+    ]
+  }
+}

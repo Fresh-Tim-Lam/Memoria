@@ -1,0 +1,176 @@
+{
+  "schema": "memoria-ready-detector-selfcheck/v1",
+  "mode": "real",
+  "cdpEndpoint": "http://127.0.0.1:9501",
+  "file": "scale/scale-5k.md",
+  "startedAt": "2026-10-21T04:11:03.020Z",
+  "checks": {
+    "S0_normalReady": {
+      "which": "both",
+      "headless": false,
+      "minFrames": 3,
+      "timeoutMs": 45000,
+      "awaitAppPending": true,
+      "appPending": "done",
+      "status": "ready",
+      "elapsedMs": 30.5,
+      "frames": 4,
+      "stableFrames": 3,
+      "math": {
+        "typeset": 270,
+        "nonEmpty": 270,
+        "expected": 270,
+        "pendingInline": 0,
+        "pendingBlock": 0,
+        "key": "270:270:0"
+      },
+      "mermaid": {
+        "containers": 135,
+        "withSvg": 135,
+        "errors": 0,
+        "residualSrc": 0,
+        "key": "135:135:0:0"
+      },
+      "sawTimeout": false,
+      "wallMs": 33,
+      "verdict": "PASS",
+      "rule": "真机必须 ready"
+    },
+    "S1_earlySnapshotNotReady": {
+      "injected": {
+        "ok": true,
+        "before": 270,
+        "after": 310,
+        "injected": 40
+      },
+      "snapshot": {
+        "status": "not-ready",
+        "math": {
+          "typeset": 270,
+          "nonEmpty": 270,
+          "expected": 310,
+          "pendingInline": 40,
+          "pendingBlock": 0,
+          "key": "270:270:40"
+        },
+        "mermaid": {
+          "containers": 135,
+          "withSvg": 135,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "135:135:0:0"
+        },
+        "headless": false
+      },
+      "stillRendering": true,
+      "immediateWait": {
+        "which": "math",
+        "headless": false,
+        "minFrames": 3,
+        "timeoutMs": 800,
+        "awaitAppPending": false,
+        "status": "timeout",
+        "elapsedMs": 805.2,
+        "frames": 93,
+        "stableFrames": 92,
+        "math": {
+          "typeset": 270,
+          "nonEmpty": 270,
+          "expected": 310,
+          "pendingInline": 40,
+          "pendingBlock": 0,
+          "key": "270:270:40"
+        },
+        "mermaid": {
+          "containers": 135,
+          "withSvg": 135,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "135:135:0:0"
+        },
+        "sawTimeout": true,
+        "observedAfterMs": 805.4
+      },
+      "verdict": "PASS",
+      "rule": "追加未排版公式占位制造\"未排完\"状态：snapshotNow 不得 ready，且 800ms 窗口内 waitForRenderReady 也不得 ready"
+    },
+    "S3_timeoutNotReady": {
+      "which": "both",
+      "headless": false,
+      "minFrames": 999999,
+      "timeoutMs": 120,
+      "awaitAppPending": false,
+      "status": "timeout",
+      "elapsedMs": 133.3,
+      "frames": 2,
+      "stableFrames": 1,
+      "math": {
+        "typeset": 270,
+        "nonEmpty": 270,
+        "expected": 270,
+        "pendingInline": 0,
+        "pendingBlock": 0,
+        "key": "270:270:0"
+      },
+      "mermaid": {
+        "containers": 135,
+        "withSvg": 135,
+        "errors": 0,
+        "residualSrc": 0,
+        "key": "135:135:0:0"
+      },
+      "sawTimeout": true,
+      "verdict": "PASS",
+      "note": "minFrames 极高 + timeoutMs=120 ⇒ 必须 timeout（或真无头 inconclusive），绝不能 ready",
+      "rule": "timeout 不得冒充 ready"
+    },
+    "S2_badMermaidFailed": {
+      "injected": {
+        "ok": true,
+        "count": 1
+      },
+      "ready": {
+        "which": "mermaid",
+        "headless": false,
+        "minFrames": 1,
+        "timeoutMs": 3000,
+        "awaitAppPending": false,
+        "reason": "mermaid-error-node",
+        "status": "failed",
+        "elapsedMs": 5.5,
+        "frames": 1,
+        "stableFrames": 0,
+        "math": {
+          "typeset": 270,
+          "nonEmpty": 270,
+          "expected": 270,
+          "pendingInline": 0,
+          "pendingBlock": 0,
+          "key": "270:270:0"
+        },
+        "mermaid": {
+          "containers": 135,
+          "withSvg": 135,
+          "errors": 1,
+          "residualSrc": 0,
+          "key": "135:135:1:0"
+        },
+        "sawTimeout": false
+      },
+      "verdict": "PASS",
+      "rule": "出现 .-mermaid-error ⇒ 必须 failed（不是 ready 也不是 timeout）"
+    }
+  },
+  "env": {
+    "headless": false,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155."
+  },
+  "summary": {
+    "S0": "PASS",
+    "S1": "PASS",
+    "S2": "PASS",
+    "S3": "PASS"
+  },
+  "ok": true,
+  "finishedAt": "2026-10-21T04:11:32.590Z"
+}

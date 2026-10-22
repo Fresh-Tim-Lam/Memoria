@@ -1,0 +1,477 @@
+{
+  "schema": "memoria-realapp-coverage/v1",
+  "mode": "real",
+  "cdpEndpoint": "http://127.0.0.1:9500",
+  "rounds": 3,
+  "startedAt": "2026-10-20T14:32:25.504Z",
+  "ops": {
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "metric": "latency",
+      "mode": "real",
+      "runs": [
+        {
+          "samples": [
+            31.100000023841858,
+            32.5,
+            33.19999998807907,
+            33.19999998807907
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        },
+        {
+          "samples": [
+            22.899999976158142,
+            33.19999998807907,
+            33.299999952316284,
+            33.5
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        },
+        {
+          "samples": [
+            27.5,
+            35.09999996423721,
+            33.30000001192093,
+            33.30000001192093
+          ],
+          "kpCount": 4,
+          "observed": [
+            {
+              "i": 0,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 1,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 2,
+              "records": 4,
+              "frames": 4
+            },
+            {
+              "i": 3,
+              "records": 4,
+              "frames": 4
+            }
+          ],
+          "effectiveCount": 4,
+          "effective": true,
+          "note": null
+        }
+      ],
+      "status": "ran",
+      "samples": 12,
+      "p50": 33.2,
+      "p95": 34.22,
+      "max": 35.1,
+      "kpCount": 4
+    },
+    "inlineMath": {
+      "id": "inlineMath",
+      "tier": "A",
+      "metric": "count",
+      "mode": "real",
+      "runs": [
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        },
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        },
+        {
+          "applicable": true,
+          "blocksWithInline": 1,
+          "totalInline": 1,
+          "totalTypeset": 1,
+          "failures": [],
+          "perBlock": [
+            {
+              "i": 31,
+              "astInline": 1,
+              "domTypeset": 1
+            }
+          ],
+          "ok": true,
+          "mathjaxTotal": 1
+        }
+      ],
+      "status": "ran",
+      "ok": true,
+      "applicable": true,
+      "blocksWithInline": 1,
+      "totalInline": 1,
+      "totalTypeset": 1,
+      "mathjaxTotal": 1,
+      "failures": []
+    },
+    "agentStream": {
+      "id": "agentStream",
+      "tier": "A",
+      "metric": "structure",
+      "mode": "real",
+      "runs": [
+        {
+          "panelPresent": true,
+          "sessionId": "fixture-session-0001",
+          "sessionLoad": {
+            "status": null,
+            "error": null,
+            "messages": 0
+          },
+          "bodyCount": 2,
+          "emptyNodeCount": 0,
+          "placeholderCount": 0,
+          "blockCounts": [
+            0,
+            8
+          ],
+          "mathJaxInBodies": 1,
+          "structured": [
+            {
+              "role": "user",
+              "blocks": 0,
+              "strong": 0,
+              "em": 0,
+              "table": 0,
+              "pre": 0,
+              "mjx": 0
+            },
+            {
+              "role": "assistant",
+              "blocks": 8,
+              "strong": 1,
+              "em": 1,
+              "table": 1,
+              "pre": 1,
+              "mjx": 1
+            }
+          ],
+          "assistantBlocks": [
+            8
+          ],
+          "ok": true,
+          "note": null
+        },
+        {
+          "panelPresent": true,
+          "sessionId": "fixture-session-0001",
+          "sessionLoad": {
+            "status": null,
+            "error": null,
+            "messages": 0
+          },
+          "bodyCount": 2,
+          "emptyNodeCount": 0,
+          "placeholderCount": 0,
+          "blockCounts": [
+            0,
+            8
+          ],
+          "mathJaxInBodies": 1,
+          "structured": [
+            {
+              "role": "user",
+              "blocks": 0,
+              "strong": 0,
+              "em": 0,
+              "table": 0,
+              "pre": 0,
+              "mjx": 0
+            },
+            {
+              "role": "assistant",
+              "blocks": 8,
+              "strong": 1,
+              "em": 1,
+              "table": 1,
+              "pre": 1,
+              "mjx": 1
+            }
+          ],
+          "assistantBlocks": [
+            8
+          ],
+          "ok": true,
+          "note": null
+        },
+        {
+          "panelPresent": true,
+          "sessionId": "fixture-session-0001",
+          "sessionLoad": {
+            "status": null,
+            "error": null,
+            "messages": 0
+          },
+          "bodyCount": 2,
+          "emptyNodeCount": 0,
+          "placeholderCount": 0,
+          "blockCounts": [
+            0,
+            8
+          ],
+          "mathJaxInBodies": 1,
+          "structured": [
+            {
+              "role": "user",
+              "blocks": 0,
+              "strong": 0,
+              "em": 0,
+              "table": 0,
+              "pre": 0,
+              "mjx": 0
+            },
+            {
+              "role": "assistant",
+              "blocks": 8,
+              "strong": 1,
+              "em": 1,
+              "table": 1,
+              "pre": 1,
+              "mjx": 1
+            }
+          ],
+          "assistantBlocks": [
+            8
+          ],
+          "ok": true,
+          "note": null
+        }
+      ],
+      "status": "ran",
+      "detail": {
+        "panelPresent": true,
+        "sessionId": "fixture-session-0001",
+        "sessionLoad": {
+          "status": null,
+          "error": null,
+          "messages": 0
+        },
+        "bodyCount": 2,
+        "emptyNodeCount": 0,
+        "placeholderCount": 0,
+        "blockCounts": [
+          0,
+          8
+        ],
+        "mathJaxInBodies": 1,
+        "structured": [
+          {
+            "role": "user",
+            "blocks": 0,
+            "strong": 0,
+            "em": 0,
+            "table": 0,
+            "pre": 0,
+            "mjx": 0
+          },
+          {
+            "role": "assistant",
+            "blocks": 8,
+            "strong": 1,
+            "em": 1,
+            "table": 1,
+            "pre": 1,
+            "mjx": 1
+          }
+        ],
+        "assistantBlocks": [
+          8
+        ],
+        "ok": true,
+        "note": null
+      },
+      "ok": true
+    },
+    "assistantCard": {
+      "id": "assistantCard",
+      "tier": "A",
+      "metric": "structure",
+      "mode": "real",
+      "runs": [
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": true,
+              "blocks": 1,
+              "mathJax": 1,
+              "usesSrcLineAttr": 0,
+              "ok": true
+            }
+          }
+        },
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": true,
+              "blocks": 1,
+              "mathJax": 1,
+              "usesSrcLineAttr": 0,
+              "ok": true
+            }
+          }
+        },
+        {
+          "modes": {
+            "reviewCard": {
+              "present": true,
+              "listItems": 1,
+              "textBlocks": 0,
+              "mathJax": 0,
+              "usesSrcLineAttr": 0,
+              "ok": true,
+              "note": null
+            },
+            "assistantModal": {
+              "present": true,
+              "blocks": 1,
+              "mathJax": 1,
+              "usesSrcLineAttr": 0,
+              "ok": true
+            }
+          }
+        }
+      ],
+      "status": "ran",
+      "detail": {
+        "modes": {
+          "reviewCard": {
+            "present": true,
+            "listItems": 1,
+            "textBlocks": 0,
+            "mathJax": 0,
+            "usesSrcLineAttr": 0,
+            "ok": true,
+            "note": null
+          },
+          "assistantModal": {
+            "present": true,
+            "blocks": 1,
+            "mathJax": 1,
+            "usesSrcLineAttr": 0,
+            "ok": true
+          }
+        }
+      },
+      "ok": true,
+      "modeEvals": [
+        true,
+        true,
+        true
+      ]
+    }
+  },
+  "previewReady": {
+    "viewMode": "preview",
+    "blocks": 67,
+    "mathjax": 1
+  },
+  "meta": {
+    "headless": false,
+    "kbPath": "D:\\AAA_Jupyter\\Memoria\\artifacts\\_realapp_fixture_kb",
+    "currentPath": "administrative-coercion.md",
+    "viewMode": "preview",
+    "mathjaxCount": 1,
+    "previewBlocks": 67
+  },
+  "ok": true,
+  "finishedAt": "2026-10-20T14:32:42.931Z"
+}

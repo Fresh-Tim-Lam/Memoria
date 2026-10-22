@@ -1,0 +1,20 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:52221/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/01-ime-zh.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T01:29:51.995Z",
+  "documents": {},
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:52221/"
+  },
+  "ok": false,
+  "error": "Error: 文档/预览未自洽（corpus/01-ime-zh.md）：parse(body).blocks=30 vs DOM=30，path=README.md，err=undefined\n    at openDoc (file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:214:13)\n    at async main (file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:301:7)\n    at async file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:361:14",
+  "finishedAt": "2026-10-21T01:30:25.112Z"
+}

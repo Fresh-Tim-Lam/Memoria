@@ -1,0 +1,3064 @@
+{
+  "runs": [
+    {
+      "label": "smoke3",
+      "variant": "V4",
+      "threshold": 4,
+      "appjs": "3c790f1f9af45ea92fc189993780f731bcd778a512d642881ac52b8214bfda6a",
+      "origin": "head:b41340254c179a1c177cb4167f9731601d24f51a",
+      "blocks": 4001,
+      "idleP50": 8.3,
+      "visibility": "visible",
+      "w1down": [
+        {
+          "frac": 0.05,
+          "max": 82.4,
+          "p95": 45.5,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 21.5,
+          "budget_exceeded": 2,
+          "mat": 95,
+          "evictTotal": 36,
+          "ev": 36,
+          "remat": 95,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 1,
+          "settleMs": 271,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 57.5,
+            "2": 0.9,
+            "3": 7.3
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 5,
+            "3": 4
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.1,
+          "max": 78.7,
+          "p95": 33.2,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 108,
+          "evictTotal": 131,
+          "ev": 95,
+          "remat": 108,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 255,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 51.8,
+            "2": 0.7,
+            "3": 16.6
+          },
+          "sched_exec": {
+            "1": 5,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.15,
+          "max": 71.9,
+          "p95": 37,
+          "p50": 8.3,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 87,
+          "evictTotal": 239,
+          "ev": 108,
+          "remat": 87,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 259,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 39.9,
+            "2": 0.2
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.2,
+          "max": 53.9,
+          "p95": 27.4,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 92,
+          "evictTotal": 326,
+          "ev": 87,
+          "remat": 92,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 260,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 49.1,
+            "2": 0.2,
+            "3": 7.1
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 4,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.25,
+          "max": 50.7,
+          "p95": 34.2,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 77,
+          "evictTotal": 418,
+          "ev": 92,
+          "remat": 77,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 40.4,
+            "2": 0.4,
+            "3": 6.4
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.3,
+          "max": 60,
+          "p95": 31.6,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 85,
+          "evictTotal": 495,
+          "ev": 77,
+          "remat": 85,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 278,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 45.4,
+            "2": 0.4,
+            "3": 2.9
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.35,
+          "max": 36.8,
+          "p95": 19.3,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 73,
+          "evictTotal": 580,
+          "ev": 85,
+          "remat": 73,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 495,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 19.4,
+            "2": 0.3,
+            "3": 11.1
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.4,
+          "max": 59,
+          "p95": 33.2,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 74,
+          "evictTotal": 176,
+          "ev": 148,
+          "remat": 150,
+          "back": 69,
+          "rebuilds": 0,
+          "batches": 4,
+          "settleMs": 261,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 61.8,
+            "2": 0.4,
+            "3": 4.6
+          },
+          "sched_exec": {
+            "1": 6,
+            "2": 5,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.45,
+          "max": 57,
+          "p95": 42.2,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 3,
+          "mat": 75,
+          "evictTotal": 335,
+          "ev": 159,
+          "remat": 160,
+          "back": 74,
+          "rebuilds": 0,
+          "batches": 4,
+          "settleMs": 273,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 71.4,
+            "2": 0.1,
+            "3": 21.3
+          },
+          "sched_exec": {
+            "1": 8,
+            "2": 11,
+            "3": 8
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.5,
+          "max": 56.1,
+          "p95": 34,
+          "p50": 8.3,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 73,
+          "evictTotal": 410,
+          "ev": 75,
+          "remat": 73,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 280,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 51.9,
+            "2": 0.6,
+            "3": 4.7
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.55,
+          "max": 77.3,
+          "p95": 22.3,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 99,
+          "evictTotal": 483,
+          "ev": 73,
+          "remat": 99,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 285,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 48.3,
+            "2": 0.2,
+            "3": 5.4
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 3,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.6,
+          "max": 55.3,
+          "p95": 24.6,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 82,
+          "evictTotal": 582,
+          "ev": 99,
+          "remat": 82,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 268,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27.4,
+            "2": 0.2,
+            "3": 19.8
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.65,
+          "max": 75.8,
+          "p95": 29.9,
+          "p50": 8.3,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 85,
+          "evictTotal": 664,
+          "ev": 82,
+          "remat": 87,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 15.3,
+            "2": 0.4,
+            "3": 3.9
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.7,
+          "max": 70.4,
+          "p95": 24.6,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 66,
+          "evictTotal": 749,
+          "ev": 85,
+          "remat": 67,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 257,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 28.6,
+            "2": 0.3,
+            "3": 1.6
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.75,
+          "max": 43.9,
+          "p95": 39.6,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 79,
+          "evictTotal": 815,
+          "ev": 66,
+          "remat": 80,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 279,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 18.8,
+            "2": 0.3,
+            "3": 11.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.8,
+          "max": 129.1,
+          "p95": 34.2,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 77,
+          "evictTotal": 894,
+          "ev": 79,
+          "remat": 78,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 277,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 31,
+            "2": 0.2,
+            "3": 12.7
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.85,
+          "max": 51,
+          "p95": 35.5,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 83,
+          "evictTotal": 971,
+          "ev": 77,
+          "remat": 83,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 43.3,
+            "2": 0.4,
+            "3": 9.2
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.9,
+          "max": 26.1,
+          "p95": 10.8,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 112,
+          "evictTotal": 1054,
+          "ev": 83,
+          "remat": 113,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 278,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 24.5,
+            "2": 0.3
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.95,
+          "max": 61.1,
+          "p95": 35.2,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 88,
+          "evictTotal": 1166,
+          "ev": 112,
+          "remat": 89,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 256,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 37.5,
+            "2": 0.4,
+            "3": 2.5
+          },
+          "sched_exec": {
+            "1": 5,
+            "2": 4,
+            "3": 2
+          },
+          "pkms": {}
+        }
+      ],
+      "w1up": [
+        {
+          "frac": 0.05,
+          "max": 30.1,
+          "p95": 19.7,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 96,
+          "evictTotal": 2793,
+          "ev": 102,
+          "remat": 96,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 272,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 37.3,
+            "2": 0.1,
+            "3": 2.2
+          },
+          "sched_exec": {
+            "1": 5,
+            "2": 4,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.1,
+          "max": 34.6,
+          "p95": 16.5,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 102,
+          "evictTotal": 2691,
+          "ev": 92,
+          "remat": 102,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 40.3,
+            "2": 0.1,
+            "3": 1.5
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.15,
+          "max": 38.2,
+          "p95": 17.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 92,
+          "evictTotal": 2599,
+          "ev": 90,
+          "remat": 92,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 270,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 43.5,
+            "3": 6.1
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.2,
+          "max": 30.2,
+          "p95": 17.2,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 90,
+          "evictTotal": 2509,
+          "ev": 76,
+          "remat": 90,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 36,
+            "2": 0.3,
+            "3": 3.6
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 4,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.25,
+          "max": 34.6,
+          "p95": 15.6,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 76,
+          "evictTotal": 2433,
+          "ev": 83,
+          "remat": 76,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 268,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 26.1,
+            "2": 0.2,
+            "3": 5.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.3,
+          "max": 38.1,
+          "p95": 17.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 83,
+          "evictTotal": 2350,
+          "ev": 73,
+          "remat": 83,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 270,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 38.7,
+            "2": 0.1,
+            "3": 2.9
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.35,
+          "max": 29.9,
+          "p95": 14.7,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 73,
+          "evictTotal": 2277,
+          "ev": 71,
+          "remat": 73,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 29,
+            "3": 3.1
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.4,
+          "max": 43.8,
+          "p95": 20.5,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 71,
+          "evictTotal": 2206,
+          "ev": 82,
+          "remat": 71,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 255,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 34.2,
+            "2": 0.1,
+            "3": 9.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.45,
+          "max": 49.8,
+          "p95": 39.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 82,
+          "evictTotal": 2124,
+          "ev": 82,
+          "remat": 82,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 264,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 40.1,
+            "2": 0.2,
+            "3": 17.5
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.5,
+          "max": 43.5,
+          "p95": 21.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 82,
+          "evictTotal": 2042,
+          "ev": 89,
+          "remat": 82,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 276,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 44.8,
+            "2": 0.3,
+            "3": 9.5
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.55,
+          "max": 68.2,
+          "p95": 42.9,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 89,
+          "evictTotal": 1953,
+          "ev": 81,
+          "remat": 89,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 280,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 38.5,
+            "2": 0.1,
+            "3": 25.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.6,
+          "max": 37.9,
+          "p95": 27.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 81,
+          "evictTotal": 1872,
+          "ev": 77,
+          "remat": 81,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 30,
+            "2": 0.5,
+            "3": 11.8
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.65,
+          "max": 59.9,
+          "p95": 15.6,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 77,
+          "evictTotal": 1795,
+          "ev": 63,
+          "remat": 80,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 273,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27.5,
+            "2": 0.3,
+            "3": 1.3
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.7,
+          "max": 28.4,
+          "p95": 15.9,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 63,
+          "evictTotal": 1732,
+          "ev": 76,
+          "remat": 64,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 258,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 22,
+            "2": 0.2,
+            "3": 8.5
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.75,
+          "max": 37.9,
+          "p95": 24.1,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 76,
+          "evictTotal": 1656,
+          "ev": 75,
+          "remat": 77,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 34.1,
+            "2": 0.4,
+            "3": 2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.8,
+          "max": 46.2,
+          "p95": 12.8,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 2.1,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 1581,
+          "ev": 84,
+          "remat": 76,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 278,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 42.1,
+            "2": 0.1,
+            "3": 2.7
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.85,
+          "max": 37,
+          "p95": 17.2,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 84,
+          "evictTotal": 1497,
+          "ev": 96,
+          "remat": 84,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 271,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 36.1,
+            "2": 0.2,
+            "3": 3
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.9,
+          "max": 16.4,
+          "p95": 9.9,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 96,
+          "evictTotal": 1401,
+          "ev": 91,
+          "remat": 96,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 270,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 17.2,
+            "3": 5.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.95,
+          "max": 34,
+          "p95": 13.4,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 91,
+          "evictTotal": 1310,
+          "ev": 56,
+          "remat": 92,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 1,
+          "settleMs": 264,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 26.4,
+            "2": 0.2,
+            "3": 1.1
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 1
+          },
+          "pkms": {}
+        }
+      ],
+      "w2": [
+        {
+          "maxMat": 155,
+          "frames": 191,
+          "p50": 25.8,
+          "p95": 81.3,
+          "maxFrame": 133.8,
+          "over50": 22,
+          "over100": 6,
+          "ev": 3506,
+          "remat": 3585,
+          "back": 0,
+          "backRate": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "batches": 73,
+          "evictBlocks": 3506,
+          "evictMs": 375.6,
+          "evictMaxMs": 15.2,
+          "budget_exceeded": 36,
+          "exec": 269,
+          "sched_ms": {
+            "1": 1450.7,
+            "2": 277,
+            "3": 4.7
+          },
+          "sched_exec": {
+            "1": 190,
+            "2": 76,
+            "3": 3
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 72,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        },
+        {
+          "maxMat": 158,
+          "frames": 193,
+          "p50": 25.1,
+          "p95": 77.4,
+          "maxFrame": 132.9,
+          "over50": 27,
+          "over100": 1,
+          "ev": 3501,
+          "remat": 3597,
+          "back": 0,
+          "backRate": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "batches": 70,
+          "evictBlocks": 3501,
+          "evictMs": 358.7,
+          "evictMaxMs": 11,
+          "budget_exceeded": 20,
+          "exec": 285,
+          "sched_ms": {
+            "1": 1120.2,
+            "2": 518.7,
+            "3": 10.6
+          },
+          "sched_exec": {
+            "1": 163,
+            "2": 118,
+            "3": 4
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 68,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        }
+      ],
+      "w3": [
+        {
+          "maxMat": 127,
+          "frames": 346,
+          "p50": 12.6,
+          "p95": 34.1,
+          "maxFrame": 73.9,
+          "over50": 1,
+          "over100": 0,
+          "ev": 580,
+          "remat": 623,
+          "back": 520,
+          "backRate": 89.7,
+          "backDtP50": 548,
+          "backDtP95": 1035.5,
+          "repeat2": 123,
+          "rebuilds": 0,
+          "batches": 117,
+          "evictBlocks": 580,
+          "evictMs": 240.1,
+          "evictMaxMs": 4.1,
+          "budget_exceeded": 18,
+          "exec": 414,
+          "sched_ms": {
+            "1": 1131.2,
+            "2": 3.1,
+            "3": 269.1
+          },
+          "sched_exec": {
+            "1": 142,
+            "2": 136,
+            "3": 136
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        },
+        {
+          "maxMat": 129,
+          "frames": 362,
+          "p50": 12.9,
+          "p95": 33.1,
+          "maxFrame": 50.7,
+          "over50": 1,
+          "over100": 0,
+          "ev": 606,
+          "remat": 640,
+          "back": 541,
+          "backRate": 89.3,
+          "backDtP50": 586.3,
+          "backDtP95": 1011.4,
+          "repeat2": 123,
+          "rebuilds": 0,
+          "batches": 108,
+          "evictBlocks": 606,
+          "evictMs": 252.1,
+          "evictMaxMs": 4.5,
+          "budget_exceeded": 24,
+          "exec": 384,
+          "sched_ms": {
+            "1": 1173.9,
+            "2": 1.6,
+            "3": 268.6
+          },
+          "sched_exec": {
+            "1": 133,
+            "2": 126,
+            "3": 125
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        }
+      ],
+      "final": {
+        "workset": {
+          "materialized": 119,
+          "placeholders": 3882,
+          "totalBlocks": 4001,
+          "evictTotal": 11594,
+          "keepScreens": 4,
+          "pressureScreens": 4,
+          "evictPressureSchedules": 188,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 88.7,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "counters": {
+          "scheduled": 2257,
+          "executed": 1834,
+          "merged": 423,
+          "dropped": 0,
+          "queue_max": 74,
+          "budget_exceeded": 155,
+          "frames_used": 1017,
+          "slice_count": 0,
+          "max_frame_ms": 37.69999999925494
+        },
+        "math": {
+          "items": 0,
+          "detached": 0
+        },
+        "sched": {
+          "queued": {
+            "1": 799,
+            "2": 977,
+            "3": 477
+          },
+          "exec": {
+            "1": 779,
+            "2": 689,
+            "3": 362
+          },
+          "ms": {
+            "1": 6556.599999997765,
+            "2": 1269.1999999843538,
+            "3": 887.9000000152737
+          },
+          "kind": {
+            "lazy_typeset": 822,
+            "lazy_materialize": 603,
+            "lazy_evict": 673,
+            "t79_p2_load": 155
+          },
+          "err": 0
+        },
+        "heap": {
+          "usedMB": 22.67
+        }
+      }
+    },
+    {
+      "label": "smoke-off",
+      "variant": "Voff",
+      "threshold": 1000000,
+      "appjs": "4906b04706dce1ea8b764d4a66333ed320fa0abb36197b209c6040f32e43b211",
+      "origin": "head:b41340254c179a1c177cb4167f9731601d24f51a",
+      "blocks": 4001,
+      "idleP50": 8.3,
+      "visibility": "visible",
+      "w1down": [
+        {
+          "frac": 0.05,
+          "max": 88.3,
+          "p95": 45.5,
+          "p50": 8.3,
+          "over50": 2,
+          "max_frame_ms": 26.9,
+          "budget_exceeded": 1,
+          "mat": 95,
+          "evictTotal": 36,
+          "ev": 36,
+          "remat": 95,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 1,
+          "settleMs": 277,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 51.8,
+            "2": 0.5,
+            "3": 7.9
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 5,
+            "3": 4
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.1,
+          "max": 63.8,
+          "p95": 36.2,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 107,
+          "evictTotal": 131,
+          "ev": 95,
+          "remat": 107,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27.5,
+            "2": 0.5,
+            "3": 48.8
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.15,
+          "max": 67.9,
+          "p95": 47.5,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 91,
+          "evictTotal": 238,
+          "ev": 107,
+          "remat": 91,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 273,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 41.9,
+            "2": 0.4,
+            "3": 37.2
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.2,
+          "max": 54.9,
+          "p95": 30,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 91,
+          "evictTotal": 329,
+          "ev": 91,
+          "remat": 91,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 275,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 40.5,
+            "2": 0.8,
+            "3": 22.3
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.25,
+          "max": 76.6,
+          "p95": 33,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 77,
+          "evictTotal": 420,
+          "ev": 91,
+          "remat": 77,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 273,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 38.6,
+            "2": 0.3,
+            "3": 17.5
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.3,
+          "max": 51.1,
+          "p95": 32.5,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 85,
+          "evictTotal": 497,
+          "ev": 77,
+          "remat": 85,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 279,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 32.8,
+            "2": 0.3,
+            "3": 10.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.35,
+          "max": 46,
+          "p95": 18.9,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 74,
+          "evictTotal": 582,
+          "ev": 85,
+          "remat": 74,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 485,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 11.4,
+            "2": 0.4,
+            "3": 19.4
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.4,
+          "max": 56,
+          "p95": 40.4,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 104,
+          "ev": 76,
+          "remat": 80,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 275,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 38,
+            "2": 0.2,
+            "3": 16.6
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 3,
+            "3": 5
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.45,
+          "max": 61,
+          "p95": 52.1,
+          "p50": 8.4,
+          "over50": 3,
+          "max_frame_ms": 0,
+          "budget_exceeded": 3,
+          "mat": 75,
+          "evictTotal": 264,
+          "ev": 160,
+          "remat": 160,
+          "back": 75,
+          "rebuilds": 0,
+          "batches": 4,
+          "settleMs": 280,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 71.4,
+            "2": 0.4,
+            "3": 33
+          },
+          "sched_exec": {
+            "1": 6,
+            "2": 7,
+            "3": 6
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.5,
+          "max": 59.5,
+          "p95": 33.5,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 72,
+          "evictTotal": 339,
+          "ev": 75,
+          "remat": 72,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 283,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 45.2,
+            "2": 0.6,
+            "3": 15.9
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.55,
+          "max": 55.2,
+          "p95": 33.8,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 100,
+          "evictTotal": 411,
+          "ev": 72,
+          "remat": 100,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 280,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 35.8,
+            "2": 0.8,
+            "3": 34.5
+          },
+          "sched_exec": {
+            "1": 4,
+            "2": 5,
+            "3": 5
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.6,
+          "max": 88.1,
+          "p95": 19.5,
+          "p50": 8.4,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 81,
+          "evictTotal": 511,
+          "ev": 100,
+          "remat": 81,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 276,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 8.8,
+            "2": 0.3,
+            "3": 45.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.65,
+          "max": 101.9,
+          "p95": 30.3,
+          "p50": 8.3,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 85,
+          "evictTotal": 592,
+          "ev": 81,
+          "remat": 87,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 280,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 6.8,
+            "2": 0.6,
+            "3": 20.4
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.7,
+          "max": 74.6,
+          "p95": 11.2,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 64,
+          "evictTotal": 677,
+          "ev": 85,
+          "remat": 65,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 267,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 10,
+            "2": 0.4,
+            "3": 22.4
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 1,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.75,
+          "max": 59.9,
+          "p95": 33.2,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 78,
+          "evictTotal": 741,
+          "ev": 64,
+          "remat": 79,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 9.5,
+            "2": 0.4,
+            "3": 21.7
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.8,
+          "max": 130.4,
+          "p95": 37.5,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 78,
+          "evictTotal": 819,
+          "ev": 78,
+          "remat": 79,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 266,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 20.2,
+            "2": 0.5,
+            "3": 29.9
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.85,
+          "max": 54.8,
+          "p95": 37.2,
+          "p50": 8.4,
+          "over50": 2,
+          "max_frame_ms": 5.1,
+          "budget_exceeded": 2,
+          "mat": 82,
+          "evictTotal": 897,
+          "ev": 78,
+          "remat": 82,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 276,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 22.4,
+            "2": 0.5,
+            "3": 41
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.9,
+          "max": 42,
+          "p95": 19.7,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 113,
+          "evictTotal": 979,
+          "ev": 82,
+          "remat": 114,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 272,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 16.1,
+            "2": 0.3,
+            "3": 22.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.95,
+          "max": 66.2,
+          "p95": 31.3,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 87,
+          "evictTotal": 1092,
+          "ev": 113,
+          "remat": 88,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 271,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 33.3,
+            "2": 0.8,
+            "3": 11.8
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        }
+      ],
+      "w1up": [
+        {
+          "frac": 0.05,
+          "max": 31.2,
+          "p95": 17.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 96,
+          "evictTotal": 2722,
+          "ev": 102,
+          "remat": 96,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 283,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 25.5,
+            "2": 0.2,
+            "3": 13.4
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.1,
+          "max": 35.9,
+          "p95": 18.8,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 102,
+          "evictTotal": 2620,
+          "ev": 92,
+          "remat": 102,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27,
+            "2": 0.1,
+            "3": 13.5
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.15,
+          "max": 33.5,
+          "p95": 15.9,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 92,
+          "evictTotal": 2528,
+          "ev": 90,
+          "remat": 92,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 35.7,
+            "2": 0.1,
+            "3": 13.6
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.2,
+          "max": 30.2,
+          "p95": 15.9,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 90,
+          "evictTotal": 2438,
+          "ev": 75,
+          "remat": 90,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 284,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 28.6,
+            "2": 0.4,
+            "3": 12.4
+          },
+          "sched_exec": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.25,
+          "max": 31.7,
+          "p95": 14.7,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 2363,
+          "ev": 83,
+          "remat": 75,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 270,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 15.8,
+            "2": 0.2,
+            "3": 14.1
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.3,
+          "max": 31.2,
+          "p95": 16,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 83,
+          "evictTotal": 2280,
+          "ev": 73,
+          "remat": 83,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 271,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 26.6,
+            "2": 0.1,
+            "3": 13.8
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 2,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.35,
+          "max": 38.3,
+          "p95": 15.7,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 73,
+          "evictTotal": 2207,
+          "ev": 73,
+          "remat": 73,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 271,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 24.2,
+            "2": 0.1,
+            "3": 11.8
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.4,
+          "max": 37.4,
+          "p95": 33.9,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 3,
+          "mat": 73,
+          "evictTotal": 2134,
+          "ev": 83,
+          "remat": 73,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 35.6,
+            "2": 0.3,
+            "3": 18.2
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.45,
+          "max": 49.4,
+          "p95": 43.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 83,
+          "evictTotal": 2051,
+          "ev": 82,
+          "remat": 83,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 24.4,
+            "2": 0.1,
+            "3": 24.6
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.5,
+          "max": 44.5,
+          "p95": 16.9,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 82,
+          "evictTotal": 1969,
+          "ev": 90,
+          "remat": 82,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27.6,
+            "2": 0.1,
+            "3": 24.5
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.55,
+          "max": 66.3,
+          "p95": 34,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 2,
+          "mat": 90,
+          "evictTotal": 1879,
+          "ev": 84,
+          "remat": 90,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 276,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 19.5,
+            "2": 0.2,
+            "3": 32.7
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.6,
+          "max": 38.2,
+          "p95": 24.6,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 84,
+          "evictTotal": 1795,
+          "ev": 75,
+          "remat": 84,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 269,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 21,
+            "2": 0.2,
+            "3": 18.9
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.65,
+          "max": 59.9,
+          "p95": 14.9,
+          "p50": 8.3,
+          "over50": 1,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 1720,
+          "ev": 63,
+          "remat": 78,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 281,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 16.7,
+            "2": 0.1,
+            "3": 9.4
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.7,
+          "max": 30,
+          "p95": 17.5,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 63,
+          "evictTotal": 1657,
+          "ev": 75,
+          "remat": 64,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 284,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 17.9,
+            "2": 0.1,
+            "3": 18.7
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.75,
+          "max": 37,
+          "p95": 23.2,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 1582,
+          "ev": 75,
+          "remat": 76,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 268,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 24.3,
+            "2": 0.3,
+            "3": 11.6
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.8,
+          "max": 48.8,
+          "p95": 13.6,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 75,
+          "evictTotal": 1507,
+          "ev": 85,
+          "remat": 76,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 270,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 29.8,
+            "3": 12.3
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.85,
+          "max": 38.1,
+          "p95": 17.7,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 85,
+          "evictTotal": 1422,
+          "ev": 96,
+          "remat": 85,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 279,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 32.8,
+            "2": 0.2,
+            "3": 9.6
+          },
+          "sched_exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.9,
+          "max": 19.4,
+          "p95": 9.5,
+          "p50": 8.3,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 0,
+          "mat": 96,
+          "evictTotal": 1326,
+          "ev": 91,
+          "remat": 96,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 2,
+          "settleMs": 277,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 9.1,
+            "2": 0.1,
+            "3": 10.6
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "pkms": {}
+        },
+        {
+          "frac": 0.95,
+          "max": 38.2,
+          "p95": 15.3,
+          "p50": 8.4,
+          "over50": 0,
+          "max_frame_ms": 0,
+          "budget_exceeded": 1,
+          "mat": 91,
+          "evictTotal": 1235,
+          "ev": 56,
+          "remat": 92,
+          "back": 0,
+          "rebuilds": 0,
+          "batches": 1,
+          "settleMs": 282,
+          "tokenDelta": 0,
+          "sched_ms": {
+            "1": 27.6,
+            "2": 0.2,
+            "3": 3.8
+          },
+          "sched_exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "pkms": {}
+        }
+      ],
+      "w2": [
+        {
+          "maxMat": 3029,
+          "frames": 147,
+          "p50": 34.9,
+          "p95": 89.4,
+          "maxFrame": 144.8,
+          "over50": 38,
+          "over100": 5,
+          "ev": 40,
+          "remat": 3044,
+          "back": 0,
+          "backRate": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "batches": 3,
+          "evictBlocks": 40,
+          "evictMs": 3.2,
+          "evictMaxMs": 1.2,
+          "budget_exceeded": 87,
+          "exec": 154,
+          "sched_ms": {
+            "1": 2347.1,
+            "2": 8.4,
+            "3": 3.2
+          },
+          "sched_exec": {
+            "1": 144,
+            "2": 7,
+            "3": 3
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        },
+        {
+          "maxMat": 1892,
+          "frames": 99,
+          "p50": 54.4,
+          "p95": 115.3,
+          "maxFrame": 165.7,
+          "over50": 56,
+          "over100": 14,
+          "ev": 107,
+          "remat": 1933,
+          "back": 0,
+          "backRate": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "batches": 3,
+          "evictBlocks": 107,
+          "evictMs": 15.3,
+          "evictMaxMs": 11.3,
+          "budget_exceeded": 40,
+          "exec": 145,
+          "sched_ms": {
+            "1": 1250.8,
+            "2": 367,
+            "3": 15.4
+          },
+          "sched_exec": {
+            "1": 48,
+            "2": 94,
+            "3": 3
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        }
+      ],
+      "w3": [
+        {
+          "maxMat": 128,
+          "frames": 340,
+          "p50": 14,
+          "p95": 35,
+          "maxFrame": 49.1,
+          "over50": 0,
+          "over100": 0,
+          "ev": 574,
+          "remat": 611,
+          "back": 510,
+          "backRate": 88.9,
+          "backDtP50": 682.5,
+          "backDtP95": 1123.5,
+          "repeat2": 125,
+          "rebuilds": 0,
+          "batches": 103,
+          "evictBlocks": 574,
+          "evictMs": 242.9,
+          "evictMaxMs": 4.3,
+          "budget_exceeded": 25,
+          "exec": 356,
+          "sched_ms": {
+            "1": 1181.7,
+            "2": 1.8,
+            "3": 269.6
+          },
+          "sched_exec": {
+            "1": 119,
+            "2": 118,
+            "3": 119
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        },
+        {
+          "maxMat": 129,
+          "frames": 334,
+          "p50": 16.2,
+          "p95": 33.9,
+          "maxFrame": 48.4,
+          "over50": 0,
+          "over100": 0,
+          "ev": 570,
+          "remat": 605,
+          "back": 503,
+          "backRate": 88.2,
+          "backDtP50": 701.6,
+          "backDtP95": 1137.5,
+          "repeat2": 127,
+          "rebuilds": 0,
+          "batches": 107,
+          "evictBlocks": 570,
+          "evictMs": 251.4,
+          "evictMaxMs": 5.4,
+          "budget_exceeded": 30,
+          "exec": 358,
+          "sched_ms": {
+            "1": 1216,
+            "2": 2.3,
+            "3": 279.7
+          },
+          "sched_exec": {
+            "1": 121,
+            "2": 116,
+            "3": 121
+          },
+          "pkms": {},
+          "pk": {},
+          "qpk": {},
+          "pressureSchedules": 0,
+          "pendingSkips": 0,
+          "tokenDelta": 0
+        }
+      ],
+      "final": {
+        "workset": {
+          "materialized": 118,
+          "placeholders": 3883,
+          "totalBlocks": 4001,
+          "evictTotal": 9276,
+          "keepScreens": 4,
+          "pressureScreens": 1000000,
+          "evictPressureSchedules": 0,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 69.6,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "counters": {
+          "scheduled": 1712,
+          "executed": 1513,
+          "merged": 199,
+          "dropped": 0,
+          "queue_max": 65,
+          "budget_exceeded": 322,
+          "frames_used": 990,
+          "slice_count": 0,
+          "max_frame_ms": 175.2000000011176
+        },
+        "math": {
+          "items": 0,
+          "detached": 0
+        },
+        "sched": {
+          "queued": {
+            "1": 523,
+            "2": 729,
+            "3": 456
+          },
+          "exec": {
+            "1": 523,
+            "2": 530,
+            "3": 456
+          },
+          "ms": {
+            "1": 7350.800000008196,
+            "2": 898.4000000115484,
+            "3": 3541.2000000029802
+          },
+          "kind": {
+            "lazy_typeset": 620,
+            "lazy_materialize": 523,
+            "lazy_evict": 456,
+            "t79_p2_load": 109
+          },
+          "err": 0
+        },
+        "heap": {
+          "usedMB": 22.9
+        }
+      }
+    }
+  ],
+  "arms": {
+    "V4": {
+      "nRuns": 1,
+      "w1downMax": 59,
+      "w1downMaxP90": 82.4,
+      "w1downMaxWorst": 129.1,
+      "w1downP95": 33.2,
+      "w1downP95P90": 42.2,
+      "w1downMaxFrameMs": 0,
+      "w1downOver50": 20,
+      "w1upMax": 37.9,
+      "w1upP95": 17.2,
+      "w1downBack": 143,
+      "w1downEvict": 1718,
+      "w1downRebuilds": 0,
+      "w2": {
+        "n": 2,
+        "maxMatMed": 156.5,
+        "maxMatWorst": 158,
+        "evMed": 3503.5,
+        "backMed": 0.0,
+        "backRateMed": 0.0,
+        "backRateWorst": 0,
+        "batchesMed": 71.5,
+        "evictMsMed": 367.15,
+        "maxFrameMed": 133.35,
+        "maxFrameWorst": 133.8,
+        "p95Med": 79.35,
+        "budgetMed": 28.0,
+        "pressureSchedMed": 70.0,
+        "rebuilds": 0,
+        "tokenDelta": 0,
+        "p1evictMsMed": 0.0,
+        "p1evictExecMed": 0.0,
+        "p1msMed": 1285.45,
+        "p3msMed": 7.65,
+        "p1SharePctMed": 75.83,
+        "evictP1CountMed": 0.0,
+        "evictP3CountMed": 0.0
+      },
+      "w3": {
+        "n": 2,
+        "maxMatMed": 128.0,
+        "maxMatWorst": 129,
+        "evMed": 593.0,
+        "backMed": 530.5,
+        "backRateMed": 89.5,
+        "backRateWorst": 89.7,
+        "batchesMed": 112.5,
+        "evictMsMed": 246.1,
+        "maxFrameMed": 62.3,
+        "maxFrameWorst": 73.9,
+        "p95Med": 33.6,
+        "budgetMed": 21.0,
+        "pressureSchedMed": 0.0,
+        "rebuilds": 0,
+        "tokenDelta": 0,
+        "p1evictMsMed": 0.0,
+        "p1evictExecMed": 0.0,
+        "p1msMed": 1152.55,
+        "p3msMed": 268.85,
+        "p1SharePctMed": 80.95,
+        "evictP1CountMed": 0.0,
+        "evictP3CountMed": 0.0
+      }
+    },
+    "Voff": {
+      "nRuns": 1,
+      "w1downMax": 61,
+      "w1downMaxP90": 101.9,
+      "w1downMaxWorst": 130.4,
+      "w1downP95": 33.2,
+      "w1downP95P90": 47.5,
+      "w1downMaxFrameMs": 0,
+      "w1downOver50": 26,
+      "w1upMax": 37.4,
+      "w1upP95": 16.9,
+      "w1downBack": 75,
+      "w1downEvict": 1646,
+      "w1downRebuilds": 0,
+      "w2": {
+        "n": 2,
+        "maxMatMed": 2460.5,
+        "maxMatWorst": 3029,
+        "evMed": 73.5,
+        "backMed": 0.0,
+        "backRateMed": 0.0,
+        "backRateWorst": 0,
+        "batchesMed": 3.0,
+        "evictMsMed": 9.25,
+        "maxFrameMed": 155.25,
+        "maxFrameWorst": 165.7,
+        "p95Med": 102.35,
+        "budgetMed": 63.5,
+        "pressureSchedMed": 0.0,
+        "rebuilds": 0,
+        "tokenDelta": 0,
+        "p1evictMsMed": 0.0,
+        "p1evictExecMed": 0.0,
+        "p1msMed": 1798.95,
+        "p3msMed": 9.3,
+        "p1SharePctMed": 88.05,
+        "evictP1CountMed": 0.0,
+        "evictP3CountMed": 0.0
+      },
+      "w3": {
+        "n": 2,
+        "maxMatMed": 128.5,
+        "maxMatWorst": 129,
+        "evMed": 572.0,
+        "backMed": 506.5,
+        "backRateMed": 88.55,
+        "backRateWorst": 88.9,
+        "batchesMed": 105.0,
+        "evictMsMed": 247.15,
+        "maxFrameMed": 48.75,
+        "maxFrameWorst": 49.1,
+        "p95Med": 34.45,
+        "budgetMed": 27.5,
+        "pressureSchedMed": 0.0,
+        "rebuilds": 0,
+        "tokenDelta": 0,
+        "p1evictMsMed": 0.0,
+        "p1evictExecMed": 0.0,
+        "p1msMed": 1198.85,
+        "p3msMed": 274.65,
+        "p1SharePctMed": 81.25,
+        "evictP1CountMed": 0.0,
+        "evictP3CountMed": 0.0
+      }
+    }
+  },
+  "compare": {
+    "V4_vs_Voff": {
+      "rows": [
+        {
+          "frac": 0.05,
+          "A": 82.4,
+          "B": 88.3,
+          "ratio": 0.933,
+          "p95A": 45.5,
+          "p95B": 45.5,
+          "p95ratio": 1.0
+        },
+        {
+          "frac": 0.1,
+          "A": 78.7,
+          "B": 63.8,
+          "ratio": 1.234,
+          "p95A": 33.2,
+          "p95B": 36.2,
+          "p95ratio": 0.917
+        },
+        {
+          "frac": 0.15,
+          "A": 71.9,
+          "B": 67.9,
+          "ratio": 1.059,
+          "p95A": 37,
+          "p95B": 47.5,
+          "p95ratio": 0.779
+        },
+        {
+          "frac": 0.2,
+          "A": 53.9,
+          "B": 54.9,
+          "ratio": 0.982,
+          "p95A": 27.4,
+          "p95B": 30,
+          "p95ratio": 0.913
+        },
+        {
+          "frac": 0.25,
+          "A": 50.7,
+          "B": 76.6,
+          "ratio": 0.662,
+          "p95A": 34.2,
+          "p95B": 33,
+          "p95ratio": 1.036
+        },
+        {
+          "frac": 0.3,
+          "A": 60,
+          "B": 51.1,
+          "ratio": 1.174,
+          "p95A": 31.6,
+          "p95B": 32.5,
+          "p95ratio": 0.972
+        },
+        {
+          "frac": 0.35,
+          "A": 36.8,
+          "B": 46,
+          "ratio": 0.8,
+          "p95A": 19.3,
+          "p95B": 18.9,
+          "p95ratio": 1.021
+        },
+        {
+          "frac": 0.4,
+          "A": 59,
+          "B": 56,
+          "ratio": 1.054,
+          "p95A": 33.2,
+          "p95B": 40.4,
+          "p95ratio": 0.822
+        },
+        {
+          "frac": 0.45,
+          "A": 57,
+          "B": 61,
+          "ratio": 0.934,
+          "p95A": 42.2,
+          "p95B": 52.1,
+          "p95ratio": 0.81
+        },
+        {
+          "frac": 0.5,
+          "A": 56.1,
+          "B": 59.5,
+          "ratio": 0.943,
+          "p95A": 34,
+          "p95B": 33.5,
+          "p95ratio": 1.015
+        },
+        {
+          "frac": 0.55,
+          "A": 77.3,
+          "B": 55.2,
+          "ratio": 1.4,
+          "p95A": 22.3,
+          "p95B": 33.8,
+          "p95ratio": 0.66
+        },
+        {
+          "frac": 0.6,
+          "A": 55.3,
+          "B": 88.1,
+          "ratio": 0.628,
+          "p95A": 24.6,
+          "p95B": 19.5,
+          "p95ratio": 1.262
+        },
+        {
+          "frac": 0.65,
+          "A": 75.8,
+          "B": 101.9,
+          "ratio": 0.744,
+          "p95A": 29.9,
+          "p95B": 30.3,
+          "p95ratio": 0.987
+        },
+        {
+          "frac": 0.7,
+          "A": 70.4,
+          "B": 74.6,
+          "ratio": 0.944,
+          "p95A": 24.6,
+          "p95B": 11.2,
+          "p95ratio": 2.196
+        },
+        {
+          "frac": 0.75,
+          "A": 43.9,
+          "B": 59.9,
+          "ratio": 0.733,
+          "p95A": 39.6,
+          "p95B": 33.2,
+          "p95ratio": 1.193
+        },
+        {
+          "frac": 0.8,
+          "A": 129.1,
+          "B": 130.4,
+          "ratio": 0.99,
+          "p95A": 34.2,
+          "p95B": 37.5,
+          "p95ratio": 0.912
+        },
+        {
+          "frac": 0.85,
+          "A": 51,
+          "B": 54.8,
+          "ratio": 0.931,
+          "p95A": 35.5,
+          "p95B": 37.2,
+          "p95ratio": 0.954
+        },
+        {
+          "frac": 0.9,
+          "A": 26.1,
+          "B": 42,
+          "ratio": 0.621,
+          "p95A": 10.8,
+          "p95B": 19.7,
+          "p95ratio": 0.548
+        },
+        {
+          "frac": 0.95,
+          "A": 61.1,
+          "B": 66.2,
+          "ratio": 0.923,
+          "p95A": 35.2,
+          "p95B": 31.3,
+          "p95ratio": 1.125
+        }
+      ],
+      "ratioMed": 0.93,
+      "ratioWorst": 1.4,
+      "worse10": [
+        {
+          "frac": 0.1,
+          "A": 78.7,
+          "B": 63.8,
+          "ratio": 1.234,
+          "p95A": 33.2,
+          "p95B": 36.2,
+          "p95ratio": 0.917
+        },
+        {
+          "frac": 0.3,
+          "A": 60,
+          "B": 51.1,
+          "ratio": 1.174,
+          "p95A": 31.6,
+          "p95B": 32.5,
+          "p95ratio": 0.972
+        },
+        {
+          "frac": 0.55,
+          "A": 77.3,
+          "B": 55.2,
+          "ratio": 1.4,
+          "p95A": 22.3,
+          "p95B": 33.8,
+          "p95ratio": 0.66
+        }
+      ],
+      "better10": [
+        {
+          "frac": 0.25,
+          "A": 50.7,
+          "B": 76.6,
+          "ratio": 0.662,
+          "p95A": 34.2,
+          "p95B": 33,
+          "p95ratio": 1.036
+        },
+        {
+          "frac": 0.35,
+          "A": 36.8,
+          "B": 46,
+          "ratio": 0.8,
+          "p95A": 19.3,
+          "p95B": 18.9,
+          "p95ratio": 1.021
+        },
+        {
+          "frac": 0.6,
+          "A": 55.3,
+          "B": 88.1,
+          "ratio": 0.628,
+          "p95A": 24.6,
+          "p95B": 19.5,
+          "p95ratio": 1.262
+        },
+        {
+          "frac": 0.65,
+          "A": 75.8,
+          "B": 101.9,
+          "ratio": 0.744,
+          "p95A": 29.9,
+          "p95B": 30.3,
+          "p95ratio": 0.987
+        },
+        {
+          "frac": 0.75,
+          "A": 43.9,
+          "B": 59.9,
+          "ratio": 0.733,
+          "p95A": 39.6,
+          "p95B": 33.2,
+          "p95ratio": 1.193
+        },
+        {
+          "frac": 0.9,
+          "A": 26.1,
+          "B": 42,
+          "ratio": 0.621,
+          "p95A": 10.8,
+          "p95B": 19.7,
+          "p95ratio": 0.548
+        }
+      ]
+    }
+  }
+}

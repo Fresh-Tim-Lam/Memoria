@@ -1,0 +1,237 @@
+{
+  "mode": "pred",
+  "result": {
+    "applied": "pred",
+    "open": {
+      "ok": true,
+      "attempts": 1,
+      "ms": 316,
+      "stats": {
+        "materialized": 29,
+        "placeholders": 3972,
+        "totalBlocks": 4001,
+        "evictTotal": 0,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 0,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "path": "教材/08_第8章_差错控制编码.md"
+    },
+    "drag": {
+      "baseEv": 0,
+      "endEv": 1615,
+      "evDelta": 1615,
+      "evFrames": 76,
+      "frames": 82,
+      "totalMs": 4011,
+      "fps": 20.4,
+      "avgFrameMs": 48.9,
+      "maxMat": 110,
+      "endScrollTop": 70772,
+      "maxScroll": 177519,
+      "samples": [
+        {
+          "t": 71,
+          "st": 3600,
+          "mat": 78,
+          "ph": 3923,
+          "ev": 1,
+          "dt": 38.3
+        },
+        {
+          "t": 184,
+          "st": 7117,
+          "mat": 83,
+          "ph": 3918,
+          "ev": 74,
+          "dt": 37.3
+        },
+        {
+          "t": 403,
+          "st": 10585,
+          "mat": 97,
+          "ph": 3904,
+          "ev": 151,
+          "dt": 41.5
+        },
+        {
+          "t": 588,
+          "st": 13989,
+          "mat": 77,
+          "ph": 3924,
+          "ev": 243,
+          "dt": 48.8
+        },
+        {
+          "t": 831,
+          "st": 17473,
+          "mat": 92,
+          "ph": 3909,
+          "ev": 314,
+          "dt": 66.1
+        },
+        {
+          "t": 1060,
+          "st": 20787,
+          "mat": 110,
+          "ph": 3891,
+          "ev": 400,
+          "dt": 48.5
+        },
+        {
+          "t": 1247,
+          "st": 24230,
+          "mat": 110,
+          "ph": 3891,
+          "ev": 501,
+          "dt": 30.1
+        },
+        {
+          "t": 1478,
+          "st": 27803,
+          "mat": 90,
+          "ph": 3911,
+          "ev": 602,
+          "dt": 60.7
+        },
+        {
+          "t": 1702,
+          "st": 31043,
+          "mat": 89,
+          "ph": 3912,
+          "ev": 685,
+          "dt": 49.9
+        },
+        {
+          "t": 1905,
+          "st": 34401,
+          "mat": 89,
+          "ph": 3912,
+          "ev": 769,
+          "dt": 49
+        },
+        {
+          "t": 2102,
+          "st": 37578,
+          "mat": 88,
+          "ph": 3913,
+          "ev": 848,
+          "dt": 47.8
+        },
+        {
+          "t": 2290,
+          "st": 40997,
+          "mat": 87,
+          "ph": 3914,
+          "ev": 930,
+          "dt": 50.6
+        },
+        {
+          "t": 2540,
+          "st": 44555,
+          "mat": 67,
+          "ph": 3934,
+          "ev": 1011,
+          "dt": 76.7
+        },
+        {
+          "t": 2740,
+          "st": 48023,
+          "mat": 91,
+          "ph": 3910,
+          "ev": 1077,
+          "dt": 49.4
+        },
+        {
+          "t": 2907,
+          "st": 51480,
+          "mat": 103,
+          "ph": 3898,
+          "ev": 1164,
+          "dt": 47.3
+        },
+        {
+          "t": 3103,
+          "st": 54867,
+          "mat": 91,
+          "ph": 3910,
+          "ev": 1254,
+          "dt": 41.1
+        },
+        {
+          "t": 3297,
+          "st": 58424,
+          "mat": 108,
+          "ph": 3893,
+          "ev": 1339,
+          "dt": 49.6
+        },
+        {
+          "t": 3459,
+          "st": 61903,
+          "mat": 99,
+          "ph": 3902,
+          "ev": 1439,
+          "dt": 32.5
+        },
+        {
+          "t": 3745,
+          "st": 65435,
+          "mat": 74,
+          "ph": 3927,
+          "ev": 1532,
+          "dt": 86.6
+        },
+        {
+          "t": 3882,
+          "st": 68998,
+          "mat": 78,
+          "ph": 3923,
+          "ev": 1600,
+          "dt": 35.5
+        }
+      ],
+      "mode": "pred"
+    },
+    "settled": {
+      "stats": {
+        "materialized": 92,
+        "placeholders": 3909,
+        "totalBlocks": 4001,
+        "evictTotal": 1657,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 10.2,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "tail": {
+        "mode": "pred",
+        "batches": 5,
+        "verifies": 8,
+        "skips": 77,
+        "driftErrPx": 2537.5,
+        "deferredReadMs": 15.2,
+        "shCache": 178249,
+        "predDriftPx": 0.74,
+        "predTotalPx": 0.74,
+        "wouldFix": 0,
+        "anchorPredMax": 0.32,
+        "driftMode": "predicted+verified"
+      },
+      "scrollTop": 70772,
+      "scrollHeight": 178585
+    },
+    "dom": {
+      "previewNodes": 10355,
+      "blocks": 4001
+    },
+    "heapMB": 31.1
+  }
+}

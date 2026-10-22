@@ -1,0 +1,461 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:63047/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/05-images.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T01:30:44.797Z",
+  "documents": {
+    "corpus/05-images.md": {
+      "status": "ran",
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 17,
+            "dom": 17
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": true,
+            "astImages": 3,
+            "domImgs": 3,
+            "withSrc": 3,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "italic",
+                "astCount": 1,
+                "domCount": 1
+              },
+              {
+                "kind": "image",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 10,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 图片 —— 路径均为占位（无真实文件），用于测懒加载 0 高场景：单图 / 带图注 / 紧跟正文 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "05 · 图片"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "单张图片（占位）："
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "probe 单图"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "带图注的图片："
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "probe 带图注"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "图 05-2：这是该图片的图注，用于测 caption 编辑。"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "紧跟正文的图片（图片后立刻跟文字，中间无空行，测 0 间距布局）："
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "probe 紧跟正文"
+              },
+              {
+                "i": 16,
+                "ast": "",
+                "dom": "图片后面紧接着的这一行文字，用于测「图片与正文之间 0 间距」的布局表现。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 1,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "10916b2c8a025ce2fb2f3feebc0c0c87536c9aaa13b567561c68e1a234ed43c1",
+        "signatureNorm": "{\"v\":2,\"count\":17,\"kinds\":[\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"p\"],\"tags\":[\"p\",\"div\",\"h1\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"p\",\"div\",\"p\",\"div\",\"p\",\"p\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":3,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"<!-- probe: 图片 —— 路径均为占位（无真实文件），用于测懒加载 0 高场景：单图 / 带图注 / 紧跟正文 -->\",\"\",\"05 · 图片\",\"\",\"单张图片（占位）：\",\"\",\"probe 单图\",\"\",\"带图注的图片：\",\"\",\"probe 带图注\",\"图 05-2：这是该图片的图注，用于测 caption 编辑。\",\"\",\"紧跟正文的图片（图片后立刻跟文字，中间无空行，测 0 间距布局）：\",\"\",\"probe 紧跟正文\",\"图片后面紧接着的这一行文字，用于测「图片与正文之间 0 间距」的布局表现。\"],\"htmlFingerprint\":\"448d68844830e600\",\"nondetStripped\":17}",
+        "nondetStripped": 17,
+        "astCount": 17,
+        "domCount": 17
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 17,
+            "dom": 17
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": true,
+            "astImages": 3,
+            "domImgs": 3,
+            "withSrc": 3,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "italic",
+                "astCount": 1,
+                "domCount": 1
+              },
+              {
+                "kind": "image",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "10916b2c8a025ce2fb2f3feebc0c0c87536c9aaa13b567561c68e1a234ed43c1"
+      },
+      "reproducible": true,
+      "mutation": null
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:63047/"
+  },
+  "allGreen": true,
+  "ok": true,
+  "finishedAt": "2026-10-21T01:30:48.650Z"
+}

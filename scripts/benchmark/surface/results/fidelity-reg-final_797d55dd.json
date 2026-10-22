@@ -1,0 +1,24 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:8644/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/03-block-boundaries.md",
+    "corpus/04-non-editable.md",
+    "corpus/05-images.md",
+    "corpus/07-extremes.md",
+    "README.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T04:14:06.500Z",
+  "documents": {},
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:8644/"
+  },
+  "ok": false,
+  "error": "Error: 等待超时（blocks-retry:corpus/03-block-boundaries.md）\n    at CDP.waitFor (file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:135:135)\n    at async openDoc (file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:187:5)\n    at async main (file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:304:7)\n    at async file:///D:/AAA_Jupyter/Memoria/scripts/benchmark/surface/fidelity_cli.mjs:380:14",
+  "finishedAt": "2026-10-21T04:15:00.818Z"
+}

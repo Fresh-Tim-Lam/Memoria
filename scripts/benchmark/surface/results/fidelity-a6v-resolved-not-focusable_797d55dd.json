@@ -1,0 +1,593 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "headless",
+  "harnessUrl": "http://127.0.0.1:8644/",
+  "cdpEndpoint": null,
+  "files": [
+    "link-fixture.md"
+  ],
+  "mutateKind": "resolved-not-focusable",
+  "startedAt": "2026-10-21T04:13:01.307Z",
+  "documents": {
+    "link-fixture.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 44.9,
+        "frames": 4,
+        "stableFrames": 3,
+        "math": {
+          "typeset": 0,
+          "nonEmpty": 0,
+          "expected": 0,
+          "pendingInline": 0,
+          "pendingBlock": 0,
+          "key": "0:0:0"
+        },
+        "mermaid": {
+          "containers": 0,
+          "withSvg": 0,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "0:0:0:0"
+        },
+        "sawTimeout": false,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 14,
+            "dom": 14
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 7,
+            "domAnchors": 7,
+            "broken": 2,
+            "resolved": 3,
+            "ordinary": 2,
+            "pending": 0,
+            "brokenMissingTarget": 0,
+            "resolvedMissingTarget": 0,
+            "brokenFocusable": 0,
+            "resolvedNotFocusable": 0,
+            "ordinaryNoHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 2,
+                "domCount": 2
+              },
+              {
+                "kind": "link",
+                "astCount": 7,
+                "domCount": 7
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 9,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "链接夹具（A6 自证用）"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "已解析 wiki（目标存在 ⇒ 必须有 href）"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "03-block-boundaries 已存在（原 probe-kb 的文件主干）05-images 也存在README 也存在"
+              },
+              {
+                "i": 5,
+                "ast": "",
+                "dom": "未解析 wiki（目标不存在 ⇒ 不应有 href，只要求 data-link-target）"
+              },
+              {
+                "i": 7,
+                "ast": "",
+                "dom": "不存在的页面甲不存在的页面乙"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "普通 markdown 链接（必须有 href）"
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "站内相对链接外部链接"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "残留检查"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "本段不含任何未解析的 wikilink 原始文本。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 3,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 2,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 2,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "cc64cb55c4479c557ed9781263ee4bad75051ee76ac68846e6f67af8eae0d71c",
+        "signatureNorm": "{\"v\":2,\"count\":14,\"kinds\":[\"h1\",\"-blank-block\",\"h2\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"p\"],\"tags\":[\"h1\",\"div\",\"h2\",\"div\",\"ul\",\"h2\",\"div\",\"ul\",\"h2\",\"div\",\"ul\",\"h2\",\"div\",\"p\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":7,\"residualWiki\":false,\"linkBroken\":2,\"linkResolved\":3,\"linkOrdinary\":2,\"linkBrokenMissingTarget\":0,\"linkResolvedMissingTarget\":0,\"linkBrokenFocusable\":0,\"linkResolvedNotFocusable\":0,\"linkOrdinaryNoHref\":0,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"链接夹具（A6 自证用）\",\"\",\"已解析 wiki（目标存在 ⇒ 必须有 href）\",\"\",\"03-block-boundaries 已存在（原 probe-kb 的文件主干）05-images 也存在README 也存在\",\"未解析 wiki（目标不存在 ⇒ 不应有 href，只要求 data-link-target）\",\"\",\"不存在的页面甲不存在的页面乙\",\"普通 markdown 链接（必须有 href）\",\"\",\"站内相对链接外部链接\",\"残留检查\",\"\",\"本段不含任何未解析的 wikilink 原始文本。\"],\"htmlFingerprint\":\"dfa05f84e8908800\",\"nondetStripped\":14}",
+        "nondetStripped": 14,
+        "astCount": 14,
+        "domCount": 14
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 14,
+            "dom": 14
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 7,
+            "domAnchors": 7,
+            "broken": 2,
+            "resolved": 3,
+            "ordinary": 2,
+            "pending": 0,
+            "brokenMissingTarget": 0,
+            "resolvedMissingTarget": 0,
+            "brokenFocusable": 0,
+            "resolvedNotFocusable": 0,
+            "ordinaryNoHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 2,
+                "domCount": 2
+              },
+              {
+                "kind": "link",
+                "astCount": 7,
+                "domCount": 7
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "cc64cb55c4479c557ed9781263ee4bad75051ee76ac68846e6f67af8eae0d71c"
+      },
+      "reproducible": true,
+      "mutation": {
+        "kind": "resolved-not-focusable",
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 14,
+            "dom": 14
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 7,
+            "domAnchors": 7,
+            "broken": 2,
+            "resolved": 3,
+            "ordinary": 2,
+            "pending": 0,
+            "brokenMissingTarget": 0,
+            "resolvedMissingTarget": 0,
+            "brokenFocusable": 0,
+            "resolvedNotFocusable": 3,
+            "ordinaryNoHref": 0,
+            "residualWiki": false,
+            "ok": false
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 2,
+                "domCount": 2
+              },
+              {
+                "kind": "link",
+                "astCount": 7,
+                "domCount": 7
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "e35e144a844746906bd991cdc085cebe2bf4291439dd8aa51ec02f397d30af0f"
+      }
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:8644/"
+  },
+  "allGreen": true,
+  "ok": true,
+  "finishedAt": "2026-10-21T04:13:51.208Z",
+  "cdp": null,
+  "readyTimeoutMs": null
+}

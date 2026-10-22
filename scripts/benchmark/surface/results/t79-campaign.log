@@ -1,0 +1,748 @@
+
+===== 02:54:21 v4-r1 (V4, thr=None) =====
+[t79] gate lock acquired
+[t79] launch variant=V4 threshold=None appjs=3c790f1f9af4
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:13105/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json --variant V4 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:13105/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[top] {"ms":1038,"stats":{"materialized":36,"placeholders":3965,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":9.9} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V4",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 53.9,
+  "downP95Med": 31.5,
+  "w2": [
+    {
+      "maxMat": 154,
+      "ev": 3828,
+      "back": 0,
+      "backRate": 0,
+      "batches": 82,
+      "evictMs": 341.1,
+      "maxFrame": 132.1
+    },
+    {
+      "maxMat": 154,
+      "ev": 2883,
+      "back": 0,
+      "backRate": 0,
+      "batches": 68,
+      "evictMs": 264.4,
+      "maxFrame": 118.9
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 129,
+      "ev": 681,
+      "back": 615,
+      "backRate": 90.3,
+      "batches": 124,
+      "maxFrame": 35.7
+    },
+    {
+      "maxMat": 131,
+      "ev": 689,
+      "back": 628,
+      "backRate": 91.1,
+      "batches": 127,
+      "maxFrame": 42.3
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json
+[t79] app killed / port free=True
+[campaign] OK 102s blocks=4001 W1down max med=53.9 W2 maxMat=[None, None] W2 back=[0, 0]
+
+===== 02:56:04 voff-r1 (Voff, thr=1000000) =====
+[t79] gate lock acquired
+[t79] launch variant=Voff threshold=1000000 appjs=4906b04706dc
+[t79] app ready in 2.0s: Memoria http://127.0.0.1:14499/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json --variant Voff --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:14499/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[top] {"ms":1018,"stats":{"materialized":36,"placeholders":3965,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.8,"max":11.1} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "Voff",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 56.4,
+  "downP95Med": 32.6,
+  "w2": [
+    {
+      "maxMat": 3211,
+      "ev": 66,
+      "back": 0,
+      "backRate": 0,
+      "batches": 3,
+      "evictMs": 5.6,
+      "maxFrame": 136.7
+    },
+    {
+      "maxMat": 2030,
+      "ev": 172,
+      "back": 0,
+      "backRate": 0,
+      "batches": 4,
+      "evictMs": 21.5,
+      "maxFrame": 133
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 129,
+      "ev": 675,
+      "back": 613,
+      "backRate": 90.8,
+      "batches": 129,
+      "maxFrame": 33.5
+    },
+    {
+      "maxMat": 127,
+      "ev": 618,
+      "back": 554,
+      "backRate": 89.6,
+      "batches": 111,
+      "maxFrame": 60.6
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json
+[t79] app killed / port free=True
+[campaign] OK 118s blocks=4001 W1down max med=56.4 W2 maxMat=[None, None] W2 back=[0, 0]
+
+===== 02:58:02 voff-r2 (Voff, thr=1000000) =====
+
+===== 03:02:40 v4-r1 (V4, thr=None) =====
+[t79] gate lock acquired
+[t79] launch variant=V4 threshold=None appjs=3c790f1f9af4
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:18521/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json --variant V4 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:18521/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1019,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.6,"max":9.2} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V4",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 64.4,
+  "downP95Med": 21.2,
+  "w2": [
+    {
+      "maxMat": 153,
+      "ev": 3860,
+      "back": 0,
+      "backRate": 0,
+      "batches": 85,
+      "evictMs": 305.1,
+      "maxFrame": 161.9
+    },
+    {
+      "maxMat": 156,
+      "ev": 3083,
+      "back": 0,
+      "backRate": 0,
+      "batches": 67,
+      "evictMs": 277.9,
+      "maxFrame": 107
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 123,
+      "ev": 636,
+      "back": 568,
+      "backRate": 89.3,
+      "batches": 119,
+      "maxFrame": 54.4
+    },
+    {
+      "maxMat": 128,
+      "ev": 680,
+      "back": 620,
+      "backRate": 91.2,
+      "batches": 121,
+      "maxFrame": 35.5
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r1.json
+[t79] app killed / port free=True
+[campaign] OK 93s blocks=4001 W1down max med=64.4 W2 maxMat=[153, 156] W2 back=[0, 0]
+
+===== 03:04:13 voff-r1 (Voff, thr=1000000) =====
+[t79] gate lock acquired
+[t79] launch variant=Voff threshold=1000000 appjs=4906b04706dc
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:8439/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json --variant Voff --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:8439/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1020,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":8.6} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "Voff",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 75.2,
+  "downP95Med": 19.3,
+  "w2": [
+    {
+      "maxMat": 3103,
+      "ev": 70,
+      "back": 0,
+      "backRate": 0,
+      "batches": 3,
+      "evictMs": 5.5,
+      "maxFrame": 142.9
+    },
+    {
+      "maxMat": 1986,
+      "ev": 295,
+      "back": 0,
+      "backRate": 0,
+      "batches": 7,
+      "evictMs": 27.2,
+      "maxFrame": 127.1
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 128,
+      "ev": 625,
+      "back": 552,
+      "backRate": 88.3,
+      "batches": 113,
+      "maxFrame": 54.8
+    },
+    {
+      "maxMat": 129,
+      "ev": 636,
+      "back": 572,
+      "backRate": 89.9,
+      "batches": 125,
+      "maxFrame": 36.6
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r1.json
+[t79] app killed / port free=True
+[campaign] OK 96s blocks=4001 W1down max med=75.2 W2 maxMat=[3103, 1986] W2 back=[0, 0]
+
+===== 03:05:50 voff-r2 (Voff, thr=1000000) =====
+[t79] gate lock acquired
+[t79] launch variant=Voff threshold=1000000 appjs=4906b04706dc
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:48008/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r2.json --variant Voff --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:48008/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1024,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":1000000,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":9.9} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "Voff",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 76.3,
+  "downP95Med": 20.4,
+  "w2": [
+    {
+      "maxMat": 3111,
+      "ev": 41,
+      "back": 0,
+      "backRate": 0,
+      "batches": 3,
+      "evictMs": 3.6,
+      "maxFrame": 131
+    },
+    {
+      "maxMat": 1733,
+      "ev": 681,
+      "back": 0,
+      "backRate": 0,
+      "batches": 15,
+      "evictMs": 98.1,
+      "maxFrame": 128.4
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 129,
+      "ev": 621,
+      "back": 556,
+      "backRate": 89.5,
+      "batches": 114,
+      "maxFrame": 82.7
+    },
+    {
+      "maxMat": 127,
+      "ev": 646,
+      "back": 576,
+      "backRate": 89.2,
+      "batches": 119,
+      "maxFrame": 44.5
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r2.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-voff-r2.json
+[t79] app killed / port free=True
+[campaign] OK 96s blocks=4001 W1down max med=76.3 W2 maxMat=[3111, 1733] W2 back=[0, 0]
+
+===== 03:07:27 v4-r2 (V4, thr=None) =====
+[t79] gate lock acquired
+[t79] launch variant=V4 threshold=None appjs=3c790f1f9af4
+[t79] app ready in 2.0s: Memoria http://127.0.0.1:25034/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r2.json --variant V4 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:25034/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1014,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":4,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.6,"max":9.6} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V4",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 63.3,
+  "downP95Med": 24.4,
+  "w2": [
+    {
+      "maxMat": 153,
+      "ev": 3829,
+      "back": 0,
+      "backRate": 0,
+      "batches": 84,
+      "evictMs": 312.7,
+      "maxFrame": 85.4
+    },
+    {
+      "maxMat": 160,
+      "ev": 3057,
+      "back": 0,
+      "backRate": 0,
+      "batches": 69,
+      "evictMs": 278.5,
+      "maxFrame": 116.4
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 127,
+      "ev": 674,
+      "back": 607,
+      "backRate": 90.1,
+      "batches": 122,
+      "maxFrame": 35.9
+    },
+    {
+      "maxMat": 126,
+      "ev": 656,
+      "back": 589,
+      "backRate": 89.8,
+      "batches": 121,
+      "maxFrame": 41.8
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r2.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v4-r2.json
+[t79] app killed / port free=True
+[campaign] OK 90s blocks=4001 W1down max med=63.3 W2 maxMat=[153, 160] W2 back=[0, 0]
+
+===== 03:08:58 v3-r1 (V3, thr=3) =====
+[t79] gate lock acquired
+[t79] launch variant=V3 threshold=3 appjs=c53f3b78df5c
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:42363/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r1.json --variant V3 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:42363/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":3,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1020,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":3,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.6,"max":10.8} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V3",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 72.8,
+  "downP95Med": 18.2,
+  "w2": [
+    {
+      "maxMat": 188,
+      "ev": 4023,
+      "back": 201,
+      "backRate": 5,
+      "batches": 145,
+      "evictMs": 328.3,
+      "maxFrame": 105.3
+    },
+    {
+      "maxMat": 145,
+      "ev": 2778,
+      "back": 0,
+      "backRate": 0,
+      "batches": 95,
+      "evictMs": 267.1,
+      "maxFrame": 111.3
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 129,
+      "ev": 652,
+      "back": 581,
+      "backRate": 89.1,
+      "batches": 117,
+      "maxFrame": 38.6
+    },
+    {
+      "maxMat": 131,
+      "ev": 669,
+      "back": 603,
+      "backRate": 90.1,
+      "batches": 122,
+      "maxFrame": 32
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r1.json
+[t79] app killed / port free=True
+[campaign] OK 119s blocks=4001 W1down max med=72.8 W2 maxMat=[188, 145] W2 back=[201, 0]
+
+===== 03:10:58 v6-r1 (V6, thr=6) =====
+[t79] gate lock acquired
+[t79] launch variant=V6 threshold=6 appjs=e42ad236348d
+[t79] app ready in 2.0s: Memoria http://127.0.0.1:35408/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r1.json --variant V6 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:35408/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":6,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1016,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":6,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":9.9} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V6",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 68.3,
+  "downP95Med": 20.4,
+  "w2": [
+    {
+      "maxMat": 219,
+      "ev": 3761,
+      "back": 0,
+      "backRate": 0,
+      "batches": 65,
+      "evictMs": 400.6,
+      "maxFrame": 96.6
+    },
+    {
+      "maxMat": 217,
+      "ev": 3782,
+      "back": 0,
+      "backRate": 0,
+      "batches": 65,
+      "evictMs": 382.6,
+      "maxFrame": 170.5
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 127,
+      "ev": 658,
+      "back": 600,
+      "backRate": 91.2,
+      "batches": 119,
+      "maxFrame": 42.4
+    },
+    {
+      "maxMat": 127,
+      "ev": 669,
+      "back": 608,
+      "backRate": 90.9,
+      "batches": 122,
+      "maxFrame": 35.7
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r1.json
+[t79] app killed / port free=True
+[campaign] OK 92s blocks=4001 W1down max med=68.3 W2 maxMat=[219, 217] W2 back=[0, 0]
+
+===== 03:12:31 vpre-r1 (Vpre, thr=None) =====
+[t79] gate lock acquired
+[t79] launch variant=Vpre threshold=None appjs=fff3e18108e3
+[t79] app ready in 2.1s: Memoria http://127.0.0.1:54376/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-vpre-r1.json --variant Vpre --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:54376/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1020,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":9.3} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "Vpre",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 72.5,
+  "downP95Med": 19.2,
+  "w2": [
+    {
+      "maxMat": 292,
+      "ev": 2539,
+      "back": 0,
+      "backRate": 0,
+      "batches": 60,
+      "evictMs": 280.2,
+      "maxFrame": 104.9
+    },
+    {
+      "maxMat": 374,
+      "ev": 2645,
+      "back": 0,
+      "backRate": 0,
+      "batches": 63,
+      "evictMs": 256.2,
+      "maxFrame": 95.5
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 128,
+      "ev": 536,
+      "back": 465,
+      "backRate": 86.8,
+      "batches": 96,
+      "maxFrame": 56
+    },
+    {
+      "maxMat": 125,
+      "ev": 538,
+      "back": 468,
+      "backRate": 87,
+      "batches": 96,
+      "maxFrame": 59.4
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-vpre-r1.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-vpre-r1.json
+[t79] app killed / port free=True
+[campaign] OK 90s blocks=4001 W1down max med=72.5 W2 maxMat=[292, 374] W2 back=[0, 0]
+
+===== 03:14:03 v3-r2 (V3, thr=3) =====
+[t79] gate lock acquired
+[t79] launch variant=V3 threshold=3 appjs=c53f3b78df5c
+[t79] app ready in 2.0s: Memoria http://127.0.0.1:59204/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r2.json --variant V3 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:59204/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":3,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1019,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":3,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":8.8} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V3",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 65.2,
+  "downP95Med": 14.3,
+  "w2": [
+    {
+      "maxMat": 182,
+      "ev": 4052,
+      "back": 183,
+      "backRate": 4.5,
+      "batches": 138,
+      "evictMs": 335.5,
+      "maxFrame": 118
+    },
+    {
+      "maxMat": 147,
+      "ev": 2882,
+      "back": 0,
+      "backRate": 0,
+      "batches": 90,
+      "evictMs": 263.9,
+      "maxFrame": 132.8
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 131,
+      "ev": 633,
+      "back": 566,
+      "backRate": 89.4,
+      "batches": 117,
+      "maxFrame": 36.5
+    },
+    {
+      "maxMat": 130,
+      "ev": 615,
+      "back": 546,
+      "backRate": 88.8,
+      "batches": 112,
+      "maxFrame": 38
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r2.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v3-r2.json
+[t79] app killed / port free=True
+[campaign] OK 90s blocks=4001 W1down max med=65.2 W2 maxMat=[182, 147] W2 back=[183, 0]
+
+===== 03:15:34 v6-r2 (V6, thr=6) =====
+[t79] gate lock acquired
+[t79] launch variant=V6 threshold=6 appjs=e42ad236348d
+[t79] app ready in 2.0s: Memoria http://127.0.0.1:21953/
+[t79] measure: node D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\_t79_evict_jitter.mjs --port 9635 --out D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r2.json --variant V6 --doc 教材/08_第8章_差错控制编码.md
+[page] Memoria http://127.0.0.1:21953/
+[pre] {"kbPath":"C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t79\\kb","files":28,"currentPath":null,"viewMode":"source"}
+[gpu] ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)
+[probe] install= 1
+[open] {"ok":true,"attempt":1,"stats":{"materialized":28,"placeholders":3973,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":6,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"},"openResult":"ok"}
+[stabilize] token=1 stable=8
+[warm] token 1 -> 1
+[stabilize2] token=2 stable=12
+[top] {"ms":1017,"stats":{"materialized":37,"placeholders":3964,"totalBlocks":4001,"evictTotal":0,"keepScreens":4,"pressureScreens":6,"evictPressureSchedules":0,"evictPendingSkips":0,"suspended":false,"heightDriftPx":0,"anchorFixes":0,"fsPx":14,"lhPx":22.4,"metricsSrc":"probe"}}
+[idle-raf] {"n":145,"p50":8.3,"p95":8.5,"max":10.3} visibility=visible
+[probe] observe=observing
+[probe] sched=patched
+{
+  "variant": "V6",
+  "openBlocks": 4001,
+  "idle": 8.3,
+  "downMaxMed": 70.4,
+  "downP95Med": 22.8,
+  "w2": [
+    {
+      "maxMat": 219,
+      "ev": 3790,
+      "back": 0,
+      "backRate": 0,
+      "batches": 65,
+      "evictMs": 392,
+      "maxFrame": 105.5
+    },
+    {
+      "maxMat": 221,
+      "ev": 3819,
+      "back": 0,
+      "backRate": 0,
+      "batches": 66,
+      "evictMs": 396.7,
+      "maxFrame": 157.6
+    }
+  ],
+  "w3": [
+    {
+      "maxMat": 124,
+      "ev": 645,
+      "back": 577,
+      "backRate": 89.5,
+      "batches": 117,
+      "maxFrame": 55.1
+    },
+    {
+      "maxMat": 128,
+      "ev": 671,
+      "back": 605,
+      "backRate": 90.2,
+      "batches": 125,
+      "maxFrame": 37.2
+    }
+  ]
+}
+[out] D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r2.json
+
+[t79] wrote D:\AAA_Jupyter\Memoria\scripts\benchmark\surface\results\t79-v6-r2.json
+[t79] app killed / port free=True
+[campaign] OK 90s blocks=4001 W1down max med=70.4 W2 maxMat=[219, 221] W2 back=[0, 0]
+
+[campaign done] ok=['v4-r1', 'voff-r1', 'voff-r2', 'v4-r2', 'v3-r1', 'v6-r1', 'vpre-r1', 'v3-r2', 'v6-r2'] fail=[]

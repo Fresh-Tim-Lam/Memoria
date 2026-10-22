@@ -1,0 +1,646 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:60186/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/06-links-and-kp.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T02:30:12.417Z",
+  "documents": {
+    "corpus/06-links-and-kp.md": {
+      "status": "ran",
+      "run1": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 33,
+            "dom": 33
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 27,
+            "domAnchors": 27,
+            "emptyHref": 27,
+            "residualWiki": false,
+            "ok": false
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "link",
+                "astCount": 27,
+                "domCount": 27
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 17,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: wikilink / KP 跳转 —— 目标标题分列「头 / 中 / 尾」，用 revealRange 跳到各目标，观察首屏第一块 srcStart ≤ 目标行 ≤ srcEnd -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "06 · 链接与跳转目标"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "目标-头"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "这里是文件开头的跳转锚点，密集链接区从下面开始："
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "alpha beta gamma delta epsilon zeta eta theta"
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "一行里塞多个 链接一链接二链接三，中间不留空格，测后处理绑定。"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "（中段填充，制造「头」与「中」之间的距离。）"
+              },
+              {
+                "i": 14,
+                "ast": "",
+                "dom": "段落一，用于填充。"
+              },
+              {
+                "i": 16,
+                "ast": "",
+                "dom": "段落二，用于填充。"
+              },
+              {
+                "i": 18,
+                "ast": "",
+                "dom": "目标-中"
+              },
+              {
+                "i": 20,
+                "ast": "",
+                "dom": "这里是文件中部：目标-头 指回开头，目标-尾 指向结尾。"
+              },
+              {
+                "i": 22,
+                "ast": "",
+                "dom": "更多链接：iota kappa lambda mu nu xi omicron pi。"
+              },
+              {
+                "i": 24,
+                "ast": "",
+                "dom": "段落三，用于填充。"
+              },
+              {
+                "i": 26,
+                "ast": "",
+                "dom": "段落四，用于填充。"
+              },
+              {
+                "i": 28,
+                "ast": "",
+                "dom": "目标-尾"
+              },
+              {
+                "i": 30,
+                "ast": "",
+                "dom": "这里是文件结尾：回到 目标-头 或跳到 目标-中。"
+              },
+              {
+                "i": 32,
+                "ast": "",
+                "dom": "结尾链接：rho sigma tau upsilon。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 8,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 3,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 2,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 8,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 2,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 4,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "37cdbc353f98392e2b51c4c70d30bfcbfa8473937fe0cb44b34d19b7fb6d05c4",
+        "signatureNorm": "{\"v\":2,\"count\":33,\"kinds\":[\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"h2\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"h2\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"h2\",\"-blank-block\",\"p\",\"-blank-block\",\"p\"],\"tags\":[\"p\",\"div\",\"h1\",\"div\",\"h2\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"h2\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"h2\",\"div\",\"p\",\"div\",\"p\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":27,\"emptyHref\":27,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"<!-- probe: wikilink / KP 跳转 —— 目标标题分列「头 / 中 / 尾」，用 revealRange 跳到各目标，观察首屏第一块 srcStart ≤ 目标行 ≤ srcEnd -->\",\"\",\"06 · 链接与跳转目标\",\"\",\"目标-头\",\"\",\"这里是文件开头的跳转锚点，密集链接区从下面开始：\",\"\",\"alpha beta gamma delta epsilon zeta eta theta\",\"\",\"一行里塞多个 链接一链接二链接三，中间不留空格，测后处理绑定。\",\"\",\"（中段填充，制造「头」与「中」之间的距离。）\",\"\",\"段落一，用于填充。\",\"\",\"段落二，用于填充。\",\"\",\"目标-中\",\"\",\"这里是文件中部：目标-头 指回开头，目标-尾 指向结尾。\",\"\",\"更多链接：iota kappa lambda mu nu xi omicron pi。\",\"\",\"段落三，用于填充。\",\"\",\"段落四，用于填充。\",\"\",\"目标-尾\",\"\",\"这里是文件结尾：回到 目标-头 或跳到 目标-中。\",\"\",\"结尾链接：rho sigma tau upsilon。\"],\"htmlFingerprint\":\"962412fa76ac6500\",\"nondetStripped\":33}",
+        "nondetStripped": 33,
+        "astCount": 33,
+        "domCount": 33
+      },
+      "run2": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 33,
+            "dom": 33
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 27,
+            "domAnchors": 27,
+            "emptyHref": 27,
+            "residualWiki": false,
+            "ok": false
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "link",
+                "astCount": 27,
+                "domCount": 27
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "37cdbc353f98392e2b51c4c70d30bfcbfa8473937fe0cb44b34d19b7fb6d05c4"
+      },
+      "reproducible": true,
+      "mutation": null
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:60186/"
+  },
+  "allGreen": false,
+  "ok": true,
+  "finishedAt": "2026-10-21T02:30:15.945Z"
+}

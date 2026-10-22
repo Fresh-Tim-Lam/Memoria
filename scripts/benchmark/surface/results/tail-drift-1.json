@@ -1,0 +1,578 @@
+{
+  "schema": "memoria-tail-drift/v1",
+  "at": "2026-10-22T16:34:14.083Z",
+  "doc": "教材/08_第8章_差错控制编码.md",
+  "f1": 0.35,
+  "f2": 0.85,
+  "scriptSha256": "443d20bb182f944ba6cf81268a476f6df0a599a1b4127de487ddb4c3abb7d66e",
+  "cycles": [
+    {
+      "cycle": 1,
+      "mode": "legacy",
+      "A": {
+        "line": 2126,
+        "top": -73,
+        "scrollTop": 63388,
+        "sh": 181369,
+        "mat": 74
+      },
+      "B": {
+        "line": 2126,
+        "top": -0.16,
+        "scrollTop": 63304,
+        "sh": 181357,
+        "mat": 74
+      },
+      "deep": {
+        "targetScrollTop": 153563,
+        "actual": 153563,
+        "quiet": {
+          "quietMs": 1857.2,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 110,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 0,
+            "anchorFixes": 0,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 72.84,
+      "scrollTopDelta": -84,
+      "shDelta": -12,
+      "back": {
+        "requested": 63388,
+        "actual": 63304,
+        "quiet": {
+          "quietMs": 2878.9,
+          "stats": {
+            "materialized": 74,
+            "placeholders": 3927,
+            "totalBlocks": 4001,
+            "evictTotal": 29,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 1,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 1,
+      "mode": "pred",
+      "A": {
+        "line": 2106,
+        "top": -552.22,
+        "scrollTop": 63209,
+        "sh": 181282,
+        "mat": 73
+      },
+      "B": {
+        "line": 2106,
+        "top": -552.22,
+        "scrollTop": 63209,
+        "sh": 182027,
+        "mat": 73
+      },
+      "deep": {
+        "targetScrollTop": 153489,
+        "actual": 153489,
+        "quiet": {
+          "quietMs": 1855.4,
+          "stats": {
+            "materialized": 65,
+            "placeholders": 3936,
+            "totalBlocks": 4001,
+            "evictTotal": 212,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 1,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 745,
+      "back": {
+        "requested": 63209,
+        "actual": 63209,
+        "quiet": {
+          "quietMs": 1852.1,
+          "stats": {
+            "materialized": 73,
+            "placeholders": 3928,
+            "totalBlocks": 4001,
+            "evictTotal": 277,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 1,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 1.5,
+      "mode": "pred",
+      "A": {
+        "line": 2128,
+        "top": -34.42,
+        "scrollTop": 63467,
+        "sh": 182013,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -34.42,
+        "scrollTop": 63467,
+        "sh": 182018,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154110,
+        "actual": 154110,
+        "quiet": {
+          "quietMs": 1868.8,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 450,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 1,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 5,
+      "back": {
+        "requested": 63467,
+        "actual": 63467,
+        "quiet": {
+          "quietMs": 1861.7,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 513,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 1,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 1.5,
+      "mode": "legacy",
+      "A": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154114,
+        "actual": 154114,
+        "quiet": {
+          "quietMs": 1855.6,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 677,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 15,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 0,
+      "back": {
+        "requested": 63468,
+        "actual": 63468,
+        "quiet": {
+          "quietMs": 1860,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 740,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 29,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 2,
+      "mode": "legacy",
+      "A": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154114,
+        "actual": 154114,
+        "quiet": {
+          "quietMs": 1869.2,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 904,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 43,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 0,
+      "back": {
+        "requested": 63468,
+        "actual": 63468,
+        "quiet": {
+          "quietMs": 1865.8,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 967,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 57,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 2,
+      "mode": "pred",
+      "A": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154114,
+        "actual": 154114,
+        "quiet": {
+          "quietMs": 1857.2,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 1131,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 57,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 0,
+      "back": {
+        "requested": 63468,
+        "actual": 63468,
+        "quiet": {
+          "quietMs": 1841.9,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 1194,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 57,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 2.5,
+      "mode": "pred",
+      "A": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154114,
+        "actual": 154114,
+        "quiet": {
+          "quietMs": 1850.6,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 1358,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 57,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 0,
+      "back": {
+        "requested": 63468,
+        "actual": 63468,
+        "quiet": {
+          "quietMs": 1864.2,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 1421,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 57,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    },
+    {
+      "cycle": 2.5,
+      "mode": "legacy",
+      "A": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 65
+      },
+      "B": {
+        "line": 2128,
+        "top": -35.42,
+        "scrollTop": 63468,
+        "sh": 182017,
+        "mat": 64
+      },
+      "deep": {
+        "targetScrollTop": 154114,
+        "actual": 154114,
+        "quiet": {
+          "quietMs": 1857.3,
+          "stats": {
+            "materialized": 63,
+            "placeholders": 3938,
+            "totalBlocks": 4001,
+            "evictTotal": 1585,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 71,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      },
+      "lineDelta": 0,
+      "topDelta": 0,
+      "scrollTopDelta": 0,
+      "shDelta": 0,
+      "back": {
+        "requested": 63468,
+        "actual": 63468,
+        "quiet": {
+          "quietMs": 1858.7,
+          "stats": {
+            "materialized": 64,
+            "placeholders": 3937,
+            "totalBlocks": 4001,
+            "evictTotal": 1648,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 85,
+            "anchorFixes": 1,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          }
+        }
+      }
+    }
+  ],
+  "summary": {
+    "legacy": {
+      "lineAbs": {
+        "n": 4,
+        "median": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "topAbs": {
+        "n": 4,
+        "median": 0,
+        "max": 72.84,
+        "values": [
+          72.84,
+          0,
+          0,
+          0
+        ]
+      },
+      "shAbs": {
+        "n": 4,
+        "median": 0,
+        "max": 12,
+        "values": [
+          12,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    "pred": {
+      "lineAbs": {
+        "n": 4,
+        "median": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "topAbs": {
+        "n": 4,
+        "median": 0,
+        "max": 0,
+        "values": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "shAbs": {
+        "n": 4,
+        "median": 5,
+        "max": 745,
+        "values": [
+          745,
+          5,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

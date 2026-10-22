@@ -1,0 +1,4797 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "headless",
+  "harnessUrl": "http://127.0.0.1:8644/",
+  "cdpEndpoint": null,
+  "files": [
+    "corpus/03-block-boundaries.md",
+    "corpus/04-non-editable.md",
+    "corpus/05-images.md",
+    "corpus/07-extremes.md",
+    "README.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T03:59:21.672Z",
+  "documents": {
+    "corpus/03-block-boundaries.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 45.7,
+        "frames": 4,
+        "stableFrames": 3,
+        "math": {
+          "typeset": 0,
+          "nonEmpty": 0,
+          "expected": 0,
+          "key": "0:0"
+        },
+        "mermaid": {
+          "containers": 0,
+          "withSvg": 0,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "0:0:0:0"
+        },
+        "sawTimeout": false,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 25,
+            "dom": 25
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "-blank-block",
+              "ul",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 14,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 块边界 —— 在「第二段行首」按退格合并、在「第一段行尾」按回车拆段，观察合并/拆分后的真源逐字 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "03 · 块边界"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "这是第一段，用来在段尾按回车拆段。"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "这是第二段，用来在段首按退格与上一段合并。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "上面有两个空行（连续空行测试），下面插入或删除空行观察块合并。"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "无序列表项一无序列表项二"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "-嵌套项 A"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "-嵌套项 B"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "有序列表项一有序列表项二"
+              },
+              {
+                "i": 16,
+                "ast": "",
+                "dom": "1.嵌套有序 A"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "2.嵌套有序 B"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "松列表项一松列表项二（与上一项之间有空行）"
+              },
+              {
+                "i": 20,
+                "ast": "",
+                "dom": "引用块第一行引用块第二行引用块第三段"
+              },
+              {
+                "i": 24,
+                "ast": "",
+                "dom": "引用块与分隔线之后再放一段，便于在其行首按退格测试合并。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "3ef2bc06740d2f02c3144229306b2dc7094f3de45fb83a6e3ec25eae947fbe39",
+        "signatureNorm": "{\"v\":2,\"count\":25,\"kinds\":[\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"-blank-block\",\"p\",\"-blank-block\",\"ul\",\"p\",\"p\",\"-blank-block\",\"ol\",\"p\",\"p\",\"-blank-block\",\"ul\",\"blockquote\",\"-blank-block\",\"hr\",\"-blank-block\",\"p\"],\"tags\":[\"p\",\"div\",\"h1\",\"div\",\"p\",\"div\",\"p\",\"div\",\"div\",\"p\",\"div\",\"ul\",\"p\",\"p\",\"div\",\"ol\",\"p\",\"p\",\"div\",\"ul\",\"blockquote\",\"div\",\"hr\",\"div\",\"p\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"<!-- probe: 块边界 —— 在「第二段行首」按退格合并、在「第一段行尾」按回车拆段，观察合并/拆分后的真源逐字 -->\",\"\",\"03 · 块边界\",\"\",\"这是第一段，用来在段尾按回车拆段。\",\"\",\"这是第二段，用来在段首按退格与上一段合并。\",\"\",\"\",\"上面有两个空行（连续空行测试），下面插入或删除空行观察块合并。\",\"\",\"无序列表项一无序列表项二\",\"-嵌套项 A\",\"-嵌套项 B\",\"\",\"有序列表项一有序列表项二\",\"1.嵌套有序 A\",\"2.嵌套有序 B\",\"\",\"松列表项一松列表项二（与上一项之间有空行）\",\"引用块第一行引用块第二行引用块第三段\",\"\",\"\",\"\",\"引用块与分隔线之后再放一段，便于在其行首按退格测试合并。\"],\"htmlFingerprint\":\"f4927bacb264ba00\",\"nondetStripped\":25}",
+        "nondetStripped": 25,
+        "astCount": 25,
+        "domCount": 25
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 25,
+            "dom": 25
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "-blank-block",
+              "ul",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "p"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "3ef2bc06740d2f02c3144229306b2dc7094f3de45fb83a6e3ec25eae947fbe39"
+      },
+      "reproducible": true,
+      "mutation": null
+    },
+    "corpus/04-non-editable.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 44,
+        "frames": 4,
+        "stableFrames": 3,
+        "math": {
+          "typeset": 1,
+          "nonEmpty": 1,
+          "expected": 0,
+          "key": "1:1"
+        },
+        "mermaid": {
+          "containers": 1,
+          "withSvg": 1,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "1:1:0:0"
+        },
+        "sawTimeout": false,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 29,
+            "dom": 29
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-math-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-mermaid-container",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 1,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": true,
+            "astCodeWithLang": 2,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "code",
+                "astCount": 2,
+                "domCount": 4
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": true,
+            "astMermaid": 1,
+            "containers": 1,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 14,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "') 判定）"
+              },
+              {
+                "i": 3,
+                "ast": "",
+                "dom": "<!-- probe: 不可编辑块 —— 双击围栏代码块 / 表格 / 公式块 / mermaid 进入块编辑，改一行后按 Esc，观察 textarea 仍在文档里、内容不丢 -->"
+              },
+              {
+                "i": 5,
+                "ast": "",
+                "dom": "04 · 不可编辑块"
+              },
+              {
+                "i": 7,
+                "ast": "",
+                "dom": "说明：本文件为测 frontmatter 渲染，把 frontmatter 放在最顶部（文件首行必须是 ---），因此这行 probe 注释位于 frontmatter 之后。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "围栏代码块（python）"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "def add(a, b): # 含 # 注释与 = 赋值号 result = a + b return result # 一段含三反引号的说明：markdown 里用 ``` 表示围栏"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "围栏代码块（js）"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "// js 示例，同样含 = 与 # const sum = (a, b) => a + b; console.log(sum(1, 2)); // 输出 3"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "GFM 表格（左 / 中 / 右对齐）"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "左对齐居中右对齐alphabeta100gammadelta2500"
+              },
+              {
+                "i": 21,
+                "ast": "",
+                "dom": "公式块"
+              },
+              {
+                "i": 23,
+                "ast": "",
+                "dom": "∫0∞e−x2dx=π2"
+              },
+              {
+                "i": 25,
+                "ast": "",
+                "dom": "Mermaid"
+              },
+              {
+                "i": 27,
+                "ast": "",
+                "dom": "#mermaid-hdqz1zgf{font-family:inherit;font-size:13px;fill:#e6e6e6;}@keyframes edge-animation-frame{from{stroke-dashoffset:0;}}@keyframes dash{to{stroke-dashoffset:0;}}#mermaid-hdqz1zgf .edge-animation-slow{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 50s linear infinite;stroke-linecap:round;}#mermaid-hdqz1zgf .edge-animation-fast{stroke-dasharray:9,5!important;stroke-dashoffset:900;animation:dash 20s linear infinite;stroke-linecap:round;}#mermaid-hdqz1zgf .error-icon{fill:#1e1e1e;}#mermaid-hdqz1zgf .error-text{fill:#e6e6e6;stroke:#e6e6e6;}#mermaid-hdqz1zgf .edge-thickness-normal{stroke-width:1px;}#mermaid-hdqz1zgf .edge-thickness-thick{stroke-width:3.5px;}#mermaid-hdqz1zgf .edge-pattern-solid{stroke-dasharray:0;}#mermaid-hdqz1zgf .edge-thickness-invisible{stroke-width:0;fill:none;}#mermaid-hdqz1zgf .edge-pattern-dashed{stroke-dasharray:3;}#mermaid-hdqz1zgf .edge-pattern-dotted{stroke-dasharray:2;}#mermaid-hdqz1zgf .marker{fill:#8c8c96;stroke:#8c8c96;}#mermaid-hdqz1zgf .marker.cross{stroke:#8c8c96;}#mermaid-hdqz1zgf svg{font-family:inherit;font-size:13px;}#mermaid-hdqz1zgf p{margin:0;}#mermaid-hdqz1zgf .label{font-family:inherit;color:#e6e6e6;}#mermaid-hdqz1zgf .cluster-label text{fill:#ffffff;}#mermaid-hdqz1zgf .cluster-label span{color:#ffffff;}#mermaid-hdqz1zgf .cluster-label span p{background-color:transparent;}#mermaid-hdqz1zgf .label text,#mermaid-hdqz1zgf span{fill:#e6e6e6;color:#e6e6e6;}#mermaid-hdqz1zgf .node rect,#mermaid-hdqz1zgf .node circle,#mermaid-hdqz1zgf .node ellipse,#mermaid-hdqz1zgf .node polygon,#mermaid-hdqz1zgf .node path{fill:#2d2d31;stroke:#565660;stroke-width:1px;}#mermaid-hdqz1zgf .rough-node .label text,#mermaid-hdqz1zgf .node .label text,#mermaid-hdqz1zgf .image-shape .label,#mermaid-hdqz1zgf .icon-shape .label{text-anchor:middle;}#mermaid-hdqz1zgf .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#mermaid-hdqz1zgf .rough-node .label,#mermaid-hdqz1zgf .node .label,#mermaid-hdqz1zgf .image-shape .label,#mermaid-hdqz1zgf .icon-shape .label{text-align:center;}#mermaid-hdqz1zgf .node.clickable{cursor:pointer;}#mermaid-hdqz1zgf .root .anchor path{fill:#8c8c96!important;stroke-width:0;stroke:#8c8c96;}#mermaid-hdqz1zgf .arrowheadPath{fill:#e1e1e1;}#mermaid-hdqz1zgf .edgePath .path{stroke:#8c8c96;stroke-width:1px;}#mermaid-hdqz1zgf .flowchart-link{stroke:#8c8c96;fill:none;}#mermaid-hdqz1zgf .edgeLabel{background-color:#1b1b1e;text-align:center;}#mermaid-hdqz1zgf .edgeLabel p{background-color:#1b1b1e;}#mermaid-hdqz1zgf .edgeLabel rect{opacity:0.5;background-color:#1b1b1e;fill:#1b1b1e;}#mermaid-hdqz1zgf .labelBkg{background-color:rgba(27, 27, 30, 0.5);}#mermaid-hdqz1zgf .cluster rect{fill:rgba(255, 255, 255, 0.035);stroke:#46464e;stroke-width:1px;}#mermaid-hdqz1zgf .cluster text{fill:#ffffff;}#mermaid-hdqz1zgf .cluster span{color:#ffffff;}#mermaid-hdqz1zgf div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:inherit;font-size:12px;background:#1e1e1e;border:1px solid #46464e;border-radius:2px;pointer-events:none;z-index:100;}#mermaid-hdqz1zgf .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#e6e6e6;}#mermaid-hdqz1zgf rect.text{fill:none;stroke-width:0;}#mermaid-hdqz1zgf .icon-shape,#mermaid-hdqz1zgf .image-shape{background-color:#1b1b1e;text-align:center;}#mermaid-hdqz1zgf .icon-shape p,#mermaid-hdqz1zgf .image-shape p{background-color:#1b1b1e;padding:2px;}#mermaid-hdqz1zgf .icon-shape .label rect,#mermaid-hdqz1zgf .image-shape .label rect{opacity:0.5;background-color:#1b1b1e;fill:#1b1b1e;}#mermaid-hdqz1zgf .label-icon{display:inline-block;height:1em;overflow:visible;vertical-align:-0.125em;}#mermaid-hdqz1zgf .node .label-icon path{fill:currentColor;stroke:revert;stroke-width:revert;}#mermaid-hdqz1zgf .node .neo-node{stroke:#565660;}#mermaid-hdqz1zgf [data-look=\"neo\"].node rect,#mermaid-hdqz1zgf [data-look=\"neo\"].cluster rect,#mermaid-hdqz1zgf [data-look=\"neo\"].node polygon{stroke:url(#mermaid-hdqz1zgf-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-hdqz1zgf [data-look=\"neo\"].swimlane.cluster rect{filter:none;}#mermaid-hdqz1zgf [data-look=\"neo\"].node path{stroke:url(#mermaid-hdqz1zgf-gradient);stroke-width:1px;}#mermaid-hdqz1zgf [data-look=\"neo\"].node .outer-path{filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-hdqz1zgf [data-look=\"neo\"].node .neo-line path{stroke:#565660;filter:none;}#mermaid-hdqz1zgf [data-look=\"neo\"].node circle{stroke:url(#mermaid-hdqz1zgf-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-hdqz1zgf [data-look=\"neo\"].node circle .state-start{fill:#000000;}#mermaid-hdqz1zgf [data-look=\"neo\"].icon-shape .icon{fill:url(#mermaid-hdqz1zgf-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-hdqz1zgf [data-look=\"neo\"].icon-shape .icon-neo path{stroke:url(#mermaid-hdqz1zgf-gradient);filter:drop-shadow( 1px 2px 2px rgba(185,185,185,1));}#mermaid-hdqz1zgf :root{--mermaid-font-family:inherit;}是否开始判断结束−＋100%适配⤢"
+              }
+            ]
+          },
+          "b6": {
+            "ok": false,
+            "diffCount": 1,
+            "diffs": [
+              {
+                "i": 27,
+                "field": "code.lang",
+                "ast": "mermaid",
+                "dom": ""
+              }
+            ]
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "56efa98c3b853ef740646ec87683c6e49b44225a17696f43799697425250f107",
+        "signatureNorm": "{\"v\":2,\"count\":29,\"kinds\":[\"p\",\"hr\",\"-blank-block\",\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"blockquote\",\"-blank-block\",\"h2\",\"-blank-block\",\"-code-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-code-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-table\",\"-blank-block\",\"h2\",\"-blank-block\",\"-math-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"-mermaid-container\",\"-blank-block\"],\"tags\":[\"p\",\"hr\",\"div\",\"p\",\"div\",\"h1\",\"div\",\"blockquote\",\"div\",\"h2\",\"div\",\"pre\",\"div\",\"h2\",\"div\",\"pre\",\"div\",\"h2\",\"div\",\"table\",\"div\",\"h2\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"div\",\"div\"],\"typesetMathBlocks\":1,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":1,\"mermaidErrors\":0,\"textNorm\":[\"') 判定）\",\"\",\"\",\"<!-- probe: 不可编辑块 —— 双击围栏代码块 / 表格 / 公式块 / mermaid 进入块编辑，改一行后按 Esc，观察 textarea 仍在文档里、内容不丢 -->\",\"\",\"04 · 不可编辑块\",\"\",\"说明：本文件为测 frontmatter 渲染，把 frontmatter 放在最顶部（文件首行必须是 ---），因此这行 probe 注释位于 frontmatter 之后。\",\"\",\"围栏代码块（python）\",\"\",\"def add(a, b): # 含 # 注释与 = 赋值号 result = a + b return result # 一段含三反引号的说明：markdown 里用 ``` 表示围栏\",\"\",\"围栏代码块（js）\",\"\",\"// js 示例，同样含 = 与 # const sum = (a, b) => a + b; console.log(sum(1, 2)); // 输出 3\",\"\",\"GFM 表格（左 / 中 / 右对齐）\",\"\",\"左对齐居中右对齐alphabeta100gammadelta2500\",\"\",\"公式块\",\"\",\"<-math-block>\",\"\",\"Mermaid\",\"\",\"<-mermaid-container>\",\"\"],\"htmlFingerprint\":\"434d7cd239761c00\",\"nondetStripped\":154}",
+        "nondetStripped": 154,
+        "astCount": 29,
+        "domCount": 29
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 29,
+            "dom": 29
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "hr",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-math-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-mermaid-container",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 1,
+            "expectInline": 0,
+            "blockWithBlockMath": 1,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": true,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": true,
+            "astCodeWithLang": 2,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "code",
+                "astCount": 2,
+                "domCount": 4
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": true,
+            "astMermaid": 1,
+            "containers": 1,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "56efa98c3b853ef740646ec87683c6e49b44225a17696f43799697425250f107"
+      },
+      "reproducible": true,
+      "mutation": null
+    },
+    "corpus/05-images.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 37.7,
+        "frames": 4,
+        "stableFrames": 3,
+        "math": {
+          "typeset": 0,
+          "nonEmpty": 0,
+          "expected": 0,
+          "key": "0:0"
+        },
+        "mermaid": {
+          "containers": 0,
+          "withSvg": 0,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "0:0:0:0"
+        },
+        "sawTimeout": false,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 18,
+            "dom": 18
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": true,
+            "astImages": 3,
+            "domImgs": 3,
+            "withSrc": 3,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "italic",
+                "astCount": 1,
+                "domCount": 1
+              },
+              {
+                "kind": "image",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 10,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 图片 —— 路径均为占位（无真实文件），用于测懒加载 0 高场景：单图 / 带图注 / 紧跟正文 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "05 · 图片"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "单张图片（占位）："
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "probe 单图"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "带图注的图片："
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "probe 带图注"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "图 05-2：这是该图片的图注，用于测 caption 编辑。"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "紧跟正文的图片（图片后立刻跟文字，中间无空行，测 0 间距布局）："
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "probe 紧跟正文"
+              },
+              {
+                "i": 16,
+                "ast": "",
+                "dom": "图片后面紧接着的这一行文字，用于测「图片与正文之间 0 间距」的布局表现。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 1,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 1,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "f94880d955c532d7eb1d54863baa2ddea3c865c1710775a067edef81c773ada6",
+        "signatureNorm": "{\"v\":2,\"count\":18,\"kinds\":[\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"p\",\"-blank-block\",\"p\",\"-blank-block\",\"-image-block\",\"p\",\"-blank-block\"],\"tags\":[\"p\",\"div\",\"h1\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"div\",\"p\",\"p\",\"div\",\"p\",\"div\",\"p\",\"p\",\"div\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":3,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"<!-- probe: 图片 —— 路径均为占位（无真实文件），用于测懒加载 0 高场景：单图 / 带图注 / 紧跟正文 -->\",\"\",\"05 · 图片\",\"\",\"单张图片（占位）：\",\"\",\"probe 单图\",\"\",\"带图注的图片：\",\"\",\"probe 带图注\",\"图 05-2：这是该图片的图注，用于测 caption 编辑。\",\"\",\"紧跟正文的图片（图片后立刻跟文字，中间无空行，测 0 间距布局）：\",\"\",\"probe 紧跟正文\",\"图片后面紧接着的这一行文字，用于测「图片与正文之间 0 间距」的布局表现。\",\"\"],\"htmlFingerprint\":\"474d65f83aaebbc0\",\"nondetStripped\":18}",
+        "nondetStripped": 18,
+        "astCount": 18,
+        "domCount": 18
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 18,
+            "dom": 18
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "-image-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": true,
+            "astImages": 3,
+            "domImgs": 3,
+            "withSrc": 3,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": false,
+            "astTables": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "italic",
+                "astCount": 1,
+                "domCount": 1
+              },
+              {
+                "kind": "image",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "f94880d955c532d7eb1d54863baa2ddea3c865c1710775a067edef81c773ada6"
+      },
+      "reproducible": true,
+      "mutation": null
+    },
+    "corpus/07-extremes.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 30003.1,
+        "frames": 1802,
+        "stableFrames": 1801,
+        "math": {
+          "typeset": 2,
+          "nonEmpty": 2,
+          "expected": 4,
+          "key": "2:2"
+        },
+        "mermaid": {
+          "containers": 0,
+          "withSvg": 0,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "0:0:0:0"
+        },
+        "sawTimeout": true,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 219,
+            "dom": 219
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 2,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 1,
+            "astBlocksWithInline": 1,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": true,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": true,
+            "inconclusive": true,
+            "perBlock": [
+              {
+                "i": 8,
+                "astInline": 2,
+                "domTypeset": 2
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 11,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "<!-- probe: 极端项 —— 1000 字不换行段落 / 连续 200 个空行 / 标题含行内公式 / 表格后紧跟列表 / 约 2000 字符单行 -->"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "07 · 极端项"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "1000 字不换行段落"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "标题里塞行内公式 E=mc2 与 a2+b2=c2"
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "表格后紧跟列表"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "列 A列 B列 C123456"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "紧跟表格的列表项一紧跟表格的列表项二"
+              },
+              {
+                "i": 14,
+                "ast": "",
+                "dom": "200 个连续空行"
+              },
+              {
+                "i": 215,
+                "ast": "",
+                "dom": "约 2000 字符的单行"
+              },
+              {
+                "i": 217,
+                "ast": "",
+                "dom": "这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "808bab3f924c8438fa1ca8c07dd208a49126589390ff725cf8bb7a5a44c478af",
+        "signatureNorm": "{\"v\":2,\"count\":219,\"kinds\":[\"p\",\"-blank-block\",\"h1\",\"-blank-block\",\"h2\",\"-blank-block\",\"p\",\"-blank-block\",\"h2\",\"-blank-block\",\"h2\",\"-blank-block\",\"-table\",\"ul\",\"h2\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"-blank-block\",\"h2\",\"-blank-block\",\"p\",\"-blank-block\"],\"tags\":[\"p\",\"div\",\"h1\",\"div\",\"h2\",\"div\",\"p\",\"div\",\"h2\",\"div\",\"h2\",\"div\",\"table\",\"ul\",\"h2\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"div\",\"h2\",\"div\",\"p\",\"div\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":1,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":0,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"<!-- probe: 极端项 —— 1000 字不换行段落 / 连续 200 个空行 / 标题含行内公式 / 表格后紧跟列表 / 约 2000 字符单行 -->\",\"\",\"07 · 极端项\",\"\",\"1000 字不换行段落\",\"\",\"这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。\",\"\",\"标题里塞行内公式 E=mc2 与 a2+b2=c2\",\"\",\"表格后紧跟列表\",\"\",\"列 A列 B列 C123456\",\"紧跟表格的列表项一紧跟表格的列表项二\",\"200 个连续空行\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"约 2000 字符的单行\",\"\",\"这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。这句用于压力测试而不换行，中文文本连续排布以检验超长单行下的渲染与分词行为表现。\",\"\"],\"htmlFingerprint\":\"10eebd52804d9a00\",\"nondetStripped\":243}",
+        "nondetStripped": 243,
+        "astCount": 219,
+        "domCount": 219
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 219,
+            "dom": 219
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "p",
+              "-blank-block",
+              "h1",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "p",
+              "-blank-block"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 2,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 1,
+            "astBlocksWithInline": 1,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": true,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": false,
+            "astLinks": 0,
+            "domAnchors": 0,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": true,
+            "inconclusive": true,
+            "perBlock": [
+              {
+                "i": 8,
+                "astInline": 2,
+                "domTypeset": 2
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "808bab3f924c8438fa1ca8c07dd208a49126589390ff725cf8bb7a5a44c478af"
+      },
+      "reproducible": true,
+      "mutation": null
+    },
+    "README.md": {
+      "status": "ran",
+      "renderReady": {
+        "which": "both",
+        "headless": true,
+        "minFrames": 3,
+        "timeoutMs": 30000,
+        "awaitAppPending": true,
+        "appPending": "done",
+        "status": "inconclusive",
+        "elapsedMs": 42.7,
+        "frames": 4,
+        "stableFrames": 3,
+        "math": {
+          "typeset": 0,
+          "nonEmpty": 0,
+          "expected": 0,
+          "key": "0:0"
+        },
+        "mermaid": {
+          "containers": 0,
+          "withSvg": 0,
+          "errors": 0,
+          "residualSrc": 0,
+          "key": "0:0:0:0"
+        },
+        "sawTimeout": false,
+        "reason": "headless-math-incomplete",
+        "trustworthy": false
+      },
+      "run1": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 30,
+            "dom": 30
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 3,
+            "domAnchors": 3,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 25,
+                "domCount": 29
+              },
+              {
+                "kind": "code",
+                "astCount": 37,
+                "domCount": 44
+              },
+              {
+                "kind": "link",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 21,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "tests/probe-kb/ —— 预览 / 显示子系统「探针语料库」"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "用途：为「显示子系统接口化 + 两个插头（LegacySurface / NewSurface）一致性」提供可复现的语料 + 操作脚本。需求来源：docs/design/preview-render-refactor.md §1.8 / §1.10 C；断言清单：docs/design/view-surface-contract.md §5（C1–C12）。状态：纯数据 + 脚本，不改产品代码；语料与脚本最终入 git（R21/R22 已由人拍板）。"
+              },
+              {
+                "i": 4,
+                "ast": "",
+                "dom": "三段结构"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "目录是什么怎么用corpus/构造覆盖：7 个文件，每个专打一类易碎构造（IME/中文、inline 边界、块边界、不可编辑块、图片、wikilink/KP、极端项）人工在预览区逐条交互复测；也可被脚本按 cases.json 消费scale/规模档位：gen_scale.py + 三档产物 scale-1k/5k/10k.md压力测试与性能预算（C9）；三档由脚本确定性生成cases/操作脚本：cases.json，14 条可复现序列，覆盖契约 C1–C12pytest / 浏览器脚本读它驱动回放，比对「真源逐字 + 落点行号 + 读数」"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "怎么用"
+              },
+              {
+                "i": 10,
+                "ast": "",
+                "dom": "当知识库打开：在应用里把 tests/probe-kb/ 这个目录选为知识库（首次打开时应用会初始化 .memoria/）。消费 cases.json（可选）："
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "-每条 case = { id, covers, target, steps[], expect{} }，steps[] 是可复现序列，expect{} 是行为断言；"
+              },
+              {
+                "i": 12,
+                "ast": "",
+                "dom": "-坐标一律是文本坐标（块 = 语义匹配，见文件头 coordinate 字段；块内 = {block,path,offset}；整篇 = {line}）——不含像素 / DOM 节点，因为块 id 由实现生成、无法预先写死；"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "-每条应在 legacy 与 new 两套插头上各跑一遍（C11），期望值来自「真源文本 + 行为契约」，不来自「与 legacy 一致」。"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "确定性声明"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "scale/scale-1k.md、scale-5k.md、scale-10k.md 由 scale/gen_scale.py 生成，可逐字节重现："
+              },
+              {
+                "i": 18,
+                "ast": "",
+                "dom": "脚本不用随机数、不用时间，固定 UTF-8 + LF；重复执行输出 sha256 不变。"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "重新生成：python tests/probe-kb/scale/gen_scale.py（会同时打印三档的行数与字节数）。"
+              },
+              {
+                "i": 20,
+                "ast": "",
+                "dom": "目标行数分别为 1000 / 5000 / 10000（精确命中，非近似）。模板内嵌于脚本、混合多种块（标题 / 段落 / 有序·无序列表 / 表格 / python 围栏 / 行内公式 / 公式块 / mermaid / 图片 / wikilink）。"
+              },
+              {
+                "i": 21,
+                "ast": "",
+                "dom": "为什么不创建 .memoria/"
+              },
+              {
+                "i": 23,
+                "ast": "",
+                "dom": "本目录只放语料与脚本，不预先内置 .memoria/："
+              },
+              {
+                "i": 24,
+                "ast": "",
+                "dom": "-.memoria/** 是**产品状态（manifest/sidecars/pending/images…），由应用代码**在首次打开该目录时初始化，不应由 Agent 手造（会与产品写入纪律冲突）；"
+              },
+              {
+                "i": 25,
+                "ast": "",
+                "dom": "-语料里的图片均为占位相对路径（./.memoria/images/probe-0N.png），没有真实图片二进制，因此也无需预置图片资产。"
+              },
+              {
+                "i": 26,
+                "ast": "",
+                "dom": "若应用不接受没有 .memoria/ 的目录，则按 docs/reference/agent-guide/10-data-layout-and-host-embedding.md §1.1 的清单补齐（manifest.yaml 等），该清单以该文档为准，本 README 不复制。"
+              },
+              {
+                "i": 27,
+                "ast": "",
+                "dom": "如实（已知 / 待验证）"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 2,
+                "em": 0,
+                "code": 3,
+                "a": 2,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 4,
+                "em": 0,
+                "code": 7,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 2,
+                "em": 0,
+                "code": 3,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 4,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 2,
+                "em": 0,
+                "code": 4,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 2,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 4,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 2,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 2,
+                "a": 1,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 11,
+                "em": 0,
+                "code": 9,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "9131e745e60fd7921a08c62458d983ccc81dc0f2aad2d92a6c93ae216917b78c",
+        "signatureNorm": "{\"v\":2,\"count\":30,\"kinds\":[\"h1\",\"-blank-block\",\"blockquote\",\"-blank-block\",\"h2\",\"-blank-block\",\"-table\",\"-blank-block\",\"h2\",\"-blank-block\",\"ol\",\"p\",\"p\",\"p\",\"-blank-block\",\"h2\",\"-blank-block\",\"ul\",\"p\",\"p\",\"ul\",\"h2\",\"-blank-block\",\"ul\",\"p\",\"p\",\"ul\",\"h2\",\"-blank-block\",\"ul\"],\"tags\":[\"h1\",\"div\",\"blockquote\",\"div\",\"h2\",\"div\",\"table\",\"div\",\"h2\",\"div\",\"ol\",\"p\",\"p\",\"p\",\"div\",\"h2\",\"div\",\"ul\",\"p\",\"p\",\"ul\",\"h2\",\"div\",\"ul\",\"p\",\"p\",\"ul\",\"h2\",\"div\",\"ul\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":3,\"emptyHref\":0,\"residualWiki\":false,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"tests/probe-kb/ —— 预览 / 显示子系统「探针语料库」\",\"\",\"用途：为「显示子系统接口化 + 两个插头（LegacySurface / NewSurface）一致性」提供可复现的语料 + 操作脚本。需求来源：docs/design/preview-render-refactor.md §1.8 / §1.10 C；断言清单：docs/design/view-surface-contract.md §5（C1–C12）。状态：纯数据 + 脚本，不改产品代码；语料与脚本最终入 git（R21/R22 已由人拍板）。\",\"\",\"三段结构\",\"\",\"目录是什么怎么用corpus/构造覆盖：7 个文件，每个专打一类易碎构造（IME/中文、inline 边界、块边界、不可编辑块、图片、wikilink/KP、极端项）人工在预览区逐条交互复测；也可被脚本按 cases.json 消费scale/规模档位：gen_scale.py + 三档产物 scale-1k/5k/10k.md压力测试与性能预算（C9）；三档由脚本确定性生成cases/操作脚本：cases.json，14 条可复现序列，覆盖契约 C1–C12pytest / 浏览器脚本读它驱动回放，比对「真源逐字 + 落点行号 + 读数」\",\"\",\"怎么用\",\"\",\"当知识库打开：在应用里把 tests/probe-kb/ 这个目录选为知识库（首次打开时应用会初始化 .memoria/）。消费 cases.json（可选）：\",\"-每条 case = { id, covers, target, steps[], expect{} }，steps[] 是可复现序列，expect{} 是行为断言；\",\"-坐标一律是文本坐标（块 = 语义匹配，见文件头 coordinate 字段；块内 = {block,path,offset}；整篇 = {line}）——不含像素 / DOM 节点，因为块 id 由实现生成、无法预先写死；\",\"-每条应在 legacy 与 new 两套插头上各跑一遍（C11），期望值来自「真源文本 + 行为契约」，不来自「与 legacy 一致」。\",\"\",\"确定性声明\",\"\",\"scale/scale-1k.md、scale-5k.md、scale-10k.md 由 scale/gen_scale.py 生成，可逐字节重现：\",\"脚本不用随机数、不用时间，固定 UTF-8 + LF；重复执行输出 sha256 不变。\",\"重新生成：python tests/probe-kb/scale/gen_scale.py（会同时打印三档的行数与字节数）。\",\"目标行数分别为 1000 / 5000 / 10000（精确命中，非近似）。模板内嵌于脚本、混合多种块（标题 / 段落 / 有序·无序列表 / 表格 / python 围栏 / 行内公式 / 公式块 / mermaid / 图片 / wikilink）。\",\"为什么不创建 .memoria/\",\"\",\"本目录只放语料与脚本，不预先内置 .memoria/：\",\"-.memoria/** 是**产品状态（manifest/sidecars/pending/images…），由应用代码**在首次打开该目录时初始化，不应由 Agent 手造（会与产品写入纪律冲突）；\",\"-语料里的图片均为占位相对路径（./.memoria/images/probe-0N.png），没有真实图片二进制，因此也无需预置图片资产。\",\"若应用不接受没有 .memoria/ 的目录，则按 docs/reference/agent-guide/10-data-layout-and-host-embedding.md §1.1 的清单补齐（manifest.yaml 等），该清单以该文档为准，本 README 不复制。\",\"如实（已知 / 待验证）\",\"\",\"体量：scale-10k.md 单文件约 182 KB（三档合计约 297 KB），会让仓库变大 —— 已由人拍板三档全部入库（R22），建议单独一次提交，并在 docs/conventions/directory-organization.md 登记时把这条代价一并写明（登记尚未做）。corpus/04-non-editable.md 的 frontmatter 必须落在文件首行（strip_frontmatter 以 text.startswith('---') 判定），因此该文件的 probe 注释位于 frontmatter 之后，而非文件第一行 —— 这是与「每个 corpus 文件开头写 probe 注释」的有意偏差。图片为占位、无真实文件，用于测懒加载 0 高场景；不保证能渲染出真实图片。corpus/07-extremes.md：1000 字不换行段落与约 2000 字符单行为近似字数；「连续 200 个空行」为精确 200 行。本目录未登记进 docs/conventions/directory-organization.md / docs-management.md §4.1（登记属 registrar 职责，需另行处理）。\"],\"htmlFingerprint\":\"66a88deaf538a800\",\"nondetStripped\":30}",
+        "nondetStripped": 30,
+        "astCount": 30,
+        "domCount": 30
+      },
+      "run2": {
+        "ok": true,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 30,
+            "dom": 30
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ol",
+              "p",
+              "p",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "p",
+              "p",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 3,
+            "domAnchors": 3,
+            "emptyHref": 0,
+            "residualWiki": false,
+            "ok": true
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 1,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 25,
+                "domCount": 29
+              },
+              {
+                "kind": "code",
+                "astCount": 37,
+                "domCount": 44
+              },
+              {
+                "kind": "link",
+                "astCount": 3,
+                "domCount": 3
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "9131e745e60fd7921a08c62458d983ccc81dc0f2aad2d92a6c93ae216917b78c"
+      },
+      "reproducible": true,
+      "mutation": null
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:8644/"
+  },
+  "allGreen": true,
+  "ok": true,
+  "finishedAt": "2026-10-21T04:00:00.442Z",
+  "cdp": null,
+  "readyTimeoutMs": null
+}

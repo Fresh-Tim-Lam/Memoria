@@ -1,0 +1,4947 @@
+{
+  "schema": "memoria-evict-jitter/v1",
+  "at": "2026-10-22T19:15:56.549Z",
+  "variant": "V6",
+  "doc": "教材/08_第8章_差错控制编码.md",
+  "argv": [
+    "--port",
+    "9635",
+    "--out",
+    "D:\\AAA_Jupyter\\Memoria\\scripts\\benchmark\\surface\\results\\t79-v6-r2.json",
+    "--variant",
+    "V6",
+    "--doc",
+    "教材/08_第8章_差错控制编码.md"
+  ],
+  "gpu": {
+    "webgl": true,
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "visibility": {
+    "visibility": "visible",
+    "w": 1264,
+    "h": 821,
+    "dpr": 1
+  },
+  "idleRafBaseline": {
+    "n": 145,
+    "p50": 8.3,
+    "p95": 8.5,
+    "max": 10.3
+  },
+  "window": {
+    "w": 1264,
+    "h": 821,
+    "dpr": 1,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0"
+  },
+  "appTitle": "Memoria",
+  "pageUrl": "http://127.0.0.1:21953/",
+  "open": {
+    "ok": true,
+    "attempt": 1,
+    "stats": {
+      "materialized": 28,
+      "placeholders": 3973,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "pressureScreens": 6,
+      "evictPressureSchedules": 0,
+      "evictPendingSkips": 0,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    },
+    "openResult": "ok"
+  },
+  "top": {
+    "ms": 1017,
+    "stats": {
+      "materialized": 37,
+      "placeholders": 3964,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "pressureScreens": 6,
+      "evictPressureSchedules": 0,
+      "evictPendingSkips": 0,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    }
+  },
+  "w1": {
+    "down": [
+      {
+        "frac": 0.05,
+        "scrollTop": 8813,
+        "maxScroll": 176261,
+        "scrollHeight": 176889,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 57,
+          "p50": 8.3,
+          "p95": 25.1,
+          "max": 65.4,
+          "over50": 2,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 10,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 95,
+          "placeholders": 3906,
+          "totalBlocks": 4001,
+          "evictTotal": 37,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 0,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 0,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 8445,
+          "mjx": 99
+        },
+        "events": {
+          "evict": 37,
+          "remat": 95,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 37,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 1,
+          "blocks": 37,
+          "totalMs": 1.8,
+          "maxTotalMs": 1.8,
+          "maxApplyMs": 0.3,
+          "mathClearMs": 0.1,
+          "blocksWithMath": 1
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "exec": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "ms": {
+            "1": 14.8,
+            "2": 0.4,
+            "3": 4.2
+          },
+          "kind": {
+            "lazy_typeset": 4,
+            "lazy_materialize": 3,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.4,
+            "1|lazy_materialize": 14.8,
+            "3|lazy_evict": 4.2
+          },
+          "qpk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 93,
+          "detached": 0
+        },
+        "settleMs": 275,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 12.700000002980232,
+        "evictPressureSchedules": 0,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.1,
+        "scrollTop": 17618,
+        "maxScroll": 176182,
+        "scrollHeight": 176759,
+        "jumpMs": 0,
+        "frames": {
+          "n": 60,
+          "p50": 8.4,
+          "p95": 23.9,
+          "max": 55.1,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 1.5,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 10,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 105,
+          "placeholders": 3896,
+          "totalBlocks": 4001,
+          "evictTotal": 132,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 0,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10028,
+          "mjx": 107
+        },
+        "events": {
+          "evict": 95,
+          "remat": 105,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 95,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 95,
+          "totalMs": 10.2,
+          "maxTotalMs": 6.1,
+          "maxApplyMs": 1.7,
+          "mathClearMs": 0.8,
+          "blocksWithMath": 36
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "exec": {
+            "1": 3,
+            "2": 4,
+            "3": 3
+          },
+          "ms": {
+            "1": 18.6,
+            "2": 0.4,
+            "3": 6.4
+          },
+          "kind": {
+            "lazy_typeset": 4,
+            "lazy_materialize": 2,
+            "lazy_evict": 4
+          },
+          "pk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3,
+            "1|lazy_evict": 1
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.4,
+            "1|lazy_materialize": 12.5,
+            "3|lazy_evict": 6.4,
+            "1|lazy_evict": 6.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3,
+            "1|lazy_evict": 1
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 80,
+          "detached": 0
+        },
+        "settleMs": 272,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 14.199999995529652,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.15,
+        "scrollTop": 26408,
+        "maxScroll": 176055,
+        "scrollHeight": 176677,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 56,
+          "p50": 8.3,
+          "p95": 19.8,
+          "max": 81.3,
+          "over50": 2,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 1,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 8,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 91,
+          "placeholders": 3910,
+          "totalBlocks": 4001,
+          "evictTotal": 237,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 2.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11528,
+          "mjx": 57
+        },
+        "events": {
+          "evict": 105,
+          "remat": 91,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 105,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 105,
+          "totalMs": 10.4,
+          "maxTotalMs": 7.4,
+          "maxApplyMs": 2.8,
+          "mathClearMs": 0.6,
+          "blocksWithMath": 47
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "ms": {
+            "1": 11.4,
+            "2": 0.3,
+            "3": 11.3
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 11.4,
+            "3|lazy_evict": 11.3
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 47,
+          "detached": 0
+        },
+        "settleMs": 279,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.2,
+        "scrollTop": 35195,
+        "maxScroll": 175973,
+        "scrollHeight": 176295,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 59,
+          "p50": 8.3,
+          "p95": 24.2,
+          "max": 63.7,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 11,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 91,
+          "placeholders": 3910,
+          "totalBlocks": 4001,
+          "evictTotal": 328,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 2.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 9595,
+          "mjx": 57
+        },
+        "events": {
+          "evict": 91,
+          "remat": 91,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 91,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 91,
+          "totalMs": 10.3,
+          "maxTotalMs": 6.9,
+          "maxApplyMs": 2.6,
+          "mathClearMs": 0.6,
+          "blocksWithMath": 28
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "exec": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "ms": {
+            "1": 13,
+            "2": 0.3,
+            "3": 12.7
+          },
+          "kind": {
+            "lazy_typeset": 4,
+            "lazy_materialize": 3,
+            "lazy_evict": 4
+          },
+          "pk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 13,
+            "3|lazy_evict": 12.7
+          },
+          "qpk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 47,
+          "detached": 0
+        },
+        "settleMs": 276,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.25,
+        "scrollTop": 43898,
+        "maxScroll": 175591,
+        "scrollHeight": 176410,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 59,
+          "p50": 8.3,
+          "p95": 22.8,
+          "max": 63.9,
+          "over50": 2,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 8,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 77,
+          "placeholders": 3924,
+          "totalBlocks": 4001,
+          "evictTotal": 419,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 2.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10225,
+          "mjx": 45
+        },
+        "events": {
+          "evict": 91,
+          "remat": 77,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 91,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 91,
+          "totalMs": 8.7,
+          "maxTotalMs": 5.5,
+          "maxApplyMs": 1.9,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 29
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "ms": {
+            "1": 9.5,
+            "2": 0.2,
+            "3": 9.6
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 9.5,
+            "3|lazy_evict": 9.6
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 41,
+          "detached": 0
+        },
+        "settleMs": 270,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.3,
+        "scrollTop": 52712,
+        "maxScroll": 175706,
+        "scrollHeight": 176497,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 60,
+          "p50": 8.3,
+          "p95": 20.2,
+          "max": 70.4,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 8,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 84,
+          "placeholders": 3917,
+          "totalBlocks": 4001,
+          "evictTotal": 496,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 2.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10030,
+          "mjx": 67
+        },
+        "events": {
+          "evict": 77,
+          "remat": 84,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 77,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 77,
+          "totalMs": 9,
+          "maxTotalMs": 7.5,
+          "maxApplyMs": 2.9,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 26
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "ms": {
+            "1": 10.7,
+            "2": 0.2,
+            "3": 10.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 10.7,
+            "3|lazy_evict": 10.2
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 43,
+          "detached": 0
+        },
+        "settleMs": 268,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.35,
+        "scrollTop": 61528,
+        "maxScroll": 175793,
+        "scrollHeight": 176457,
+        "jumpMs": 0,
+        "frames": {
+          "n": 66,
+          "p50": 8.3,
+          "p95": 20.1,
+          "max": 31.1,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 11,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 73,
+          "placeholders": 3928,
+          "totalBlocks": 4001,
+          "evictTotal": 580,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 4.8,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 7841,
+          "mjx": 24
+        },
+        "events": {
+          "evict": 84,
+          "remat": 73,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 84,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 84,
+          "totalMs": 9.6,
+          "maxTotalMs": 6.7,
+          "maxApplyMs": 2.3,
+          "mathClearMs": 0.4,
+          "blocksWithMath": 35
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "exec": {
+            "1": 3,
+            "2": 4,
+            "3": 4
+          },
+          "ms": {
+            "1": 17.7,
+            "2": 0.2,
+            "3": 11.4
+          },
+          "kind": {
+            "lazy_typeset": 4,
+            "lazy_materialize": 3,
+            "lazy_evict": 4
+          },
+          "pk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 17.7,
+            "3|lazy_evict": 11.4
+          },
+          "qpk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 5,
+          "detached": 0
+        },
+        "settleMs": 273,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.4,
+        "scrollTop": 70300,
+        "maxScroll": 175750,
+        "scrollHeight": 176825,
+        "jumpMs": 0,
+        "frames": {
+          "n": 59,
+          "p50": 8.3,
+          "p95": 25.2,
+          "max": 82.7,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 75,
+          "placeholders": 3926,
+          "totalBlocks": 4001,
+          "evictTotal": 653,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 4.8,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10827,
+          "mjx": 86
+        },
+        "events": {
+          "evict": 73,
+          "remat": 75,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 73,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 73,
+          "totalMs": 7.7,
+          "maxTotalMs": 6.1,
+          "maxApplyMs": 2.2,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 16
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 10.3,
+            "2": 0.3,
+            "3": 8.7
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 10.3,
+            "3|lazy_evict": 8.7
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 56,
+          "detached": 0
+        },
+        "settleMs": 278,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 15.199999999254942,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.45,
+        "scrollTop": 79254,
+        "maxScroll": 176121,
+        "scrollHeight": 176268,
+        "jumpMs": 0,
+        "frames": {
+          "n": 49,
+          "p50": 8.3,
+          "p95": 50.2,
+          "max": 62.9,
+          "over50": 3,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 2.4,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 13,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 83,
+          "placeholders": 3918,
+          "totalBlocks": 4001,
+          "evictTotal": 728,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 4.8,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 14201,
+          "mjx": 153
+        },
+        "events": {
+          "evict": 75,
+          "remat": 83,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 75,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 75,
+          "totalMs": 11.9,
+          "maxTotalMs": 9.1,
+          "maxApplyMs": 3.4,
+          "mathClearMs": 0.5,
+          "blocksWithMath": 28
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 6,
+            "3": 4
+          },
+          "exec": {
+            "1": 3,
+            "2": 6,
+            "3": 4
+          },
+          "ms": {
+            "1": 17.4,
+            "2": 0.5,
+            "3": 14.7
+          },
+          "kind": {
+            "lazy_typeset": 6,
+            "lazy_materialize": 3,
+            "lazy_evict": 4
+          },
+          "pk": {
+            "2|lazy_typeset": 6,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.5,
+            "1|lazy_materialize": 17.4,
+            "3|lazy_evict": 14.7
+          },
+          "qpk": {
+            "2|lazy_typeset": 6,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 125,
+          "detached": 0
+        },
+        "settleMs": 283,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.600000001490116,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.5,
+        "scrollTop": 87782,
+        "maxScroll": 175564,
+        "scrollHeight": 175967,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 56,
+          "p50": 8.3,
+          "p95": 23.8,
+          "max": 77.5,
+          "over50": 2,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 6,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 14,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 78,
+          "placeholders": 3923,
+          "totalBlocks": 4001,
+          "evictTotal": 811,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 4.8,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11698,
+          "mjx": 72
+        },
+        "events": {
+          "evict": 83,
+          "remat": 78,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 83,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 83,
+          "totalMs": 11.9,
+          "maxTotalMs": 8,
+          "maxApplyMs": 4.2,
+          "mathClearMs": 0.5,
+          "blocksWithMath": 38
+        },
+        "sched": {
+          "queued": {
+            "1": 4,
+            "2": 5,
+            "3": 5
+          },
+          "exec": {
+            "1": 4,
+            "2": 5,
+            "3": 5
+          },
+          "ms": {
+            "1": 18.2,
+            "2": 0.3,
+            "3": 14.9
+          },
+          "kind": {
+            "lazy_typeset": 5,
+            "lazy_materialize": 4,
+            "lazy_evict": 5
+          },
+          "pk": {
+            "2|lazy_typeset": 5,
+            "1|lazy_materialize": 4,
+            "3|lazy_evict": 5
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 18.2,
+            "3|lazy_evict": 14.9
+          },
+          "qpk": {
+            "2|lazy_typeset": 5,
+            "1|lazy_materialize": 4,
+            "3|lazy_evict": 5
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 52,
+          "detached": 0
+        },
+        "settleMs": 271,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.600000001490116,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.55,
+        "scrollTop": 96393,
+        "maxScroll": 175260,
+        "scrollHeight": 175973,
+        "jumpMs": 0,
+        "frames": {
+          "n": 60,
+          "p50": 8.4,
+          "p95": 16.8,
+          "max": 77.5,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 97,
+          "placeholders": 3904,
+          "totalBlocks": 4001,
+          "evictTotal": 889,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 7.1,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10679,
+          "mjx": 43
+        },
+        "events": {
+          "evict": 78,
+          "remat": 97,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 78,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 78,
+          "totalMs": 10.7,
+          "maxTotalMs": 8.1,
+          "maxApplyMs": 3.2,
+          "mathClearMs": 0.4,
+          "blocksWithMath": 30
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 8.3,
+            "2": 0.2,
+            "3": 12.3
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 8.3,
+            "3|lazy_evict": 12.3
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 42,
+          "detached": 0
+        },
+        "settleMs": 263,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.600000001490116,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.6,
+        "scrollTop": 105161,
+        "maxScroll": 175269,
+        "scrollHeight": 176008,
+        "jumpMs": 0,
+        "frames": {
+          "n": 60,
+          "p50": 8.3,
+          "p95": 18,
+          "max": 83.1,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 9,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 79,
+          "placeholders": 3922,
+          "totalBlocks": 4001,
+          "evictTotal": 986,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 7.1,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10971,
+          "mjx": 72
+        },
+        "events": {
+          "evict": 97,
+          "remat": 79,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 97,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 97,
+          "totalMs": 10.1,
+          "maxTotalMs": 7.6,
+          "maxApplyMs": 3.8,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 35
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 4
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 4
+          },
+          "ms": {
+            "1": 12.3,
+            "2": 0.3,
+            "3": 12.1
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 4
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 4
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 12.3,
+            "3|lazy_evict": 12.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 4
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 55,
+          "detached": 0
+        },
+        "settleMs": 270,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.600000001490116,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.65,
+        "scrollTop": 113948,
+        "maxScroll": 175304,
+        "scrollHeight": 176332,
+        "jumpMs": 0,
+        "frames": {
+          "n": 55,
+          "p50": 8.3,
+          "p95": 17.5,
+          "max": 126.4,
+          "over50": 1,
+          "over100": 1
+        },
+        "counters": {
+          "max_frame_ms": 0.1,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 82,
+          "placeholders": 3919,
+          "totalBlocks": 4001,
+          "evictTotal": 1065,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 7.1,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 7947,
+          "mjx": 24
+        },
+        "events": {
+          "evict": 79,
+          "remat": 84,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 79,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 79,
+          "totalMs": 12,
+          "maxTotalMs": 9.2,
+          "maxApplyMs": 3.3,
+          "mathClearMs": 0.6,
+          "blocksWithMath": 33
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 8.3,
+            "2": 0.3,
+            "3": 13
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 8.3,
+            "3|lazy_evict": 13
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 21,
+          "detached": 0
+        },
+        "settleMs": 275,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.7,
+        "scrollTop": 122937,
+        "maxScroll": 175625,
+        "scrollHeight": 176697,
+        "jumpMs": 0,
+        "frames": {
+          "n": 63,
+          "p50": 8.3,
+          "p95": 10,
+          "max": 79.9,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 61,
+          "placeholders": 3940,
+          "totalBlocks": 4001,
+          "evictTotal": 1147,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 7.1,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 6468,
+          "mjx": 43
+        },
+        "events": {
+          "evict": 82,
+          "remat": 62,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 82,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 82,
+          "totalMs": 8,
+          "maxTotalMs": 6.4,
+          "maxApplyMs": 2,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 17
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 8.3,
+            "2": 0.2,
+            "3": 9.1
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 8.3,
+            "3|lazy_evict": 9.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 33,
+          "detached": 0
+        },
+        "settleMs": 268,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.75,
+        "scrollTop": 131993,
+        "maxScroll": 175990,
+        "scrollHeight": 176912,
+        "jumpMs": 0,
+        "frames": {
+          "n": 59,
+          "p50": 8.4,
+          "p95": 33.4,
+          "max": 68.3,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 3,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 78,
+          "placeholders": 3923,
+          "totalBlocks": 4001,
+          "evictTotal": 1208,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 9.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 8980,
+          "mjx": 77
+        },
+        "events": {
+          "evict": 61,
+          "remat": 79,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 61,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 61,
+          "totalMs": 9.1,
+          "maxTotalMs": 6.7,
+          "maxApplyMs": 1.6,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 14
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 8.4,
+            "2": 0.2,
+            "3": 9.1
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 8.4,
+            "3|lazy_evict": 9.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 54,
+          "detached": 0
+        },
+        "settleMs": 273,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.8,
+        "scrollTop": 140966,
+        "maxScroll": 176208,
+        "scrollHeight": 177614,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 50,
+          "p50": 8.4,
+          "p95": 23.8,
+          "max": 149.4,
+          "over50": 2,
+          "over100": 1
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 81,
+          "placeholders": 3920,
+          "totalBlocks": 4001,
+          "evictTotal": 1286,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 9.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11314,
+          "mjx": 86
+        },
+        "events": {
+          "evict": 78,
+          "remat": 82,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 78,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 78,
+          "totalMs": 11.6,
+          "maxTotalMs": 9.4,
+          "maxApplyMs": 2.8,
+          "mathClearMs": 0.5,
+          "blocksWithMath": 27
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 9.3,
+            "2": 0.1,
+            "3": 11.7
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 9.3,
+            "3|lazy_evict": 11.7
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 77,
+          "detached": 0
+        },
+        "settleMs": 280,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.85,
+        "scrollTop": 150371,
+        "maxScroll": 176907,
+        "scrollHeight": 177684,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 58,
+          "p50": 8.3,
+          "p95": 23.5,
+          "max": 67.8,
+          "over50": 2,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 82,
+          "placeholders": 3919,
+          "totalBlocks": 4001,
+          "evictTotal": 1367,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 9.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10517,
+          "mjx": 83
+        },
+        "events": {
+          "evict": 81,
+          "remat": 82,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 81,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 81,
+          "totalMs": 12.9,
+          "maxTotalMs": 10.1,
+          "maxApplyMs": 3.2,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 33
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 7.6,
+            "2": 0.2,
+            "3": 12.9
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 7.6,
+            "3|lazy_evict": 12.9
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 69,
+          "detached": 0
+        },
+        "settleMs": 270,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.9,
+        "scrollTop": 159282,
+        "maxScroll": 176980,
+        "scrollHeight": 177549,
+        "jumpMs": 0,
+        "frames": {
+          "n": 67,
+          "p50": 8.3,
+          "p95": 14.2,
+          "max": 39.7,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 113,
+          "placeholders": 3888,
+          "totalBlocks": 4001,
+          "evictTotal": 1449,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 1,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 9.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 4951,
+          "mjx": 28
+        },
+        "events": {
+          "evict": 82,
+          "remat": 114,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 82,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 82,
+          "totalMs": 9.2,
+          "maxTotalMs": 7.1,
+          "maxApplyMs": 3.3,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 36
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "ms": {
+            "1": 11.5,
+            "2": 0.4,
+            "3": 9.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.4,
+            "1|lazy_materialize": 11.5,
+            "3|lazy_evict": 9.2
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 19,
+          "detached": 0
+        },
+        "settleMs": 273,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 1,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.95,
+        "scrollTop": 168000,
+        "maxScroll": 176842,
+        "scrollHeight": 177521,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 61,
+          "p50": 8.3,
+          "p95": 12.1,
+          "max": 112,
+          "over50": 1,
+          "over100": 1
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 0,
+          "executed": 11,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 89,
+          "placeholders": 3912,
+          "totalBlocks": 4001,
+          "evictTotal": 1562,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 12,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 8246,
+          "mjx": 50
+        },
+        "events": {
+          "evict": 113,
+          "remat": 90,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 113,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 113,
+          "totalMs": 7.8,
+          "maxTotalMs": 4.9,
+          "maxApplyMs": 0.9,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 8
+        },
+        "sched": {
+          "queued": {
+            "1": 4,
+            "2": 4,
+            "3": 4
+          },
+          "exec": {
+            "1": 4,
+            "2": 3,
+            "3": 4
+          },
+          "ms": {
+            "1": 18.3,
+            "2": 0.1,
+            "3": 5.3
+          },
+          "kind": {
+            "lazy_typeset": 4,
+            "lazy_materialize": 3,
+            "lazy_evict": 5
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4,
+            "1|lazy_evict": 1
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 13.4,
+            "3|lazy_evict": 5.3,
+            "1|lazy_evict": 4.9
+          },
+          "qpk": {
+            "2|lazy_typeset": 4,
+            "1|lazy_materialize": 3,
+            "3|lazy_evict": 4,
+            "1|lazy_evict": 1
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 41,
+          "detached": 0
+        },
+        "settleMs": 259,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 17.700000006705523,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      }
+    ],
+    "up": [
+      {
+        "frac": 0.05,
+        "scrollTop": 8846,
+        "maxScroll": 176914,
+        "scrollHeight": 177673,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 65,
+          "p50": 8.4,
+          "p95": 16.8,
+          "max": 38,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 100,
+          "placeholders": 3901,
+          "totalBlocks": 4001,
+          "evictTotal": 3215,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 4,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 21.6,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 8591,
+          "mjx": 102
+        },
+        "events": {
+          "evict": 109,
+          "remat": 100,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 109,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 109,
+          "totalMs": 9.7,
+          "maxTotalMs": 6.6,
+          "maxApplyMs": 2.4,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 47
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 3,
+            "3": 1
+          },
+          "exec": {
+            "1": 3,
+            "2": 2,
+            "3": 1
+          },
+          "ms": {
+            "1": 28.2,
+            "2": 0.2,
+            "3": 3.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 1,
+            "1|lazy_evict": 1
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 21.6,
+            "3|lazy_evict": 3.2,
+            "1|lazy_evict": 6.6
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 1,
+            "1|lazy_evict": 1
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 15,
+          "detached": 0
+        },
+        "settleMs": 265,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 4,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.1,
+        "scrollTop": 17702,
+        "maxScroll": 177019,
+        "scrollHeight": 177618,
+        "jumpMs": 0,
+        "frames": {
+          "n": 63,
+          "p50": 8.3,
+          "p95": 29.2,
+          "max": 40.3,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 109,
+          "placeholders": 3892,
+          "totalBlocks": 4001,
+          "evictTotal": 3106,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 3,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 21.6,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10306,
+          "mjx": 107
+        },
+        "events": {
+          "evict": 93,
+          "remat": 109,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 93,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 93,
+          "totalMs": 11.6,
+          "maxTotalMs": 9.4,
+          "maxApplyMs": 4.4,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 29
+        },
+        "sched": {
+          "queued": {
+            "1": 3,
+            "2": 3,
+            "3": 1
+          },
+          "exec": {
+            "1": 3,
+            "2": 3,
+            "3": 1
+          },
+          "ms": {
+            "1": 37.1,
+            "2": 0.3,
+            "3": 2.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 1,
+            "1|lazy_evict": 1
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 27.7,
+            "3|lazy_evict": 2.2,
+            "1|lazy_evict": 9.4
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 1,
+            "1|lazy_evict": 1
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 2,
+          "detached": 0
+        },
+        "settleMs": 279,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 3,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.15,
+        "scrollTop": 26553,
+        "maxScroll": 177019,
+        "scrollHeight": 177723,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 64,
+          "p50": 8.4,
+          "p95": 10.5,
+          "max": 39.9,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 93,
+          "placeholders": 3908,
+          "totalBlocks": 4001,
+          "evictTotal": 3013,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 21.6,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11837,
+          "mjx": 59
+        },
+        "events": {
+          "evict": 90,
+          "remat": 93,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 90,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 90,
+          "totalMs": 10,
+          "maxTotalMs": 7.9,
+          "maxApplyMs": 3.2,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 28
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 25.9,
+            "2": 0.1,
+            "3": 10
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 25.9,
+            "3|lazy_evict": 10
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 3,
+          "detached": 0
+        },
+        "settleMs": 267,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.2,
+        "scrollTop": 35388,
+        "maxScroll": 176938,
+        "scrollHeight": 177723,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 66,
+          "p50": 8.4,
+          "p95": 10.5,
+          "max": 32.1,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 90,
+          "placeholders": 3911,
+          "totalBlocks": 4001,
+          "evictTotal": 2923,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 21.6,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 9399,
+          "mjx": 50
+        },
+        "events": {
+          "evict": 81,
+          "remat": 90,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 81,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 81,
+          "totalMs": 11.3,
+          "maxTotalMs": 8.4,
+          "maxApplyMs": 2.4,
+          "mathClearMs": 0.1,
+          "blocksWithMath": 25
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 15,
+            "2": 0.2,
+            "3": 11.3
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 15,
+            "3|lazy_evict": 11.3
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 9,
+          "detached": 0
+        },
+        "settleMs": 277,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.25,
+        "scrollTop": 44235,
+        "maxScroll": 176941,
+        "scrollHeight": 177642,
+        "jumpMs": 0,
+        "frames": {
+          "n": 67,
+          "p50": 8.3,
+          "p95": 12.9,
+          "max": 33.1,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 81,
+          "placeholders": 3920,
+          "totalBlocks": 4001,
+          "evictTotal": 2842,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 19.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10025,
+          "mjx": 37
+        },
+        "events": {
+          "evict": 85,
+          "remat": 81,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 85,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 85,
+          "totalMs": 10.5,
+          "maxTotalMs": 7.3,
+          "maxApplyMs": 2.1,
+          "mathClearMs": 0.4,
+          "blocksWithMath": 37
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 19.2,
+            "2": 0.2,
+            "3": 10.5
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 19.2,
+            "3|lazy_evict": 10.5
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 2,
+          "detached": 0
+        },
+        "settleMs": 272,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.3,
+        "scrollTop": 53093,
+        "maxScroll": 176977,
+        "scrollHeight": 177645,
+        "jumpMs": 0,
+        "frames": {
+          "n": 67,
+          "p50": 8.3,
+          "p95": 9.6,
+          "max": 36.3,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 85,
+          "placeholders": 3916,
+          "totalBlocks": 4001,
+          "evictTotal": 2757,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 19.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10254,
+          "mjx": 74
+        },
+        "events": {
+          "evict": 76,
+          "remat": 85,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 76,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 76,
+          "totalMs": 10,
+          "maxTotalMs": 8.1,
+          "maxApplyMs": 2.4,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 15
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 24,
+            "2": 0.2,
+            "3": 10
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 24,
+            "3|lazy_evict": 10
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 6,
+          "detached": 0
+        },
+        "settleMs": 269,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.35,
+        "scrollTop": 61898,
+        "maxScroll": 176851,
+        "scrollHeight": 177684,
+        "jumpMs": 0,
+        "frames": {
+          "n": 65,
+          "p50": 8.3,
+          "p95": 13.5,
+          "max": 64.3,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 5,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 8,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 76,
+          "placeholders": 3925,
+          "totalBlocks": 4001,
+          "evictTotal": 2681,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 19.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 7665,
+          "mjx": 24
+        },
+        "events": {
+          "evict": 77,
+          "remat": 77,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 77,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 77,
+          "totalMs": 10.9,
+          "maxTotalMs": 7.7,
+          "maxApplyMs": 3.5,
+          "mathClearMs": 0.4,
+          "blocksWithMath": 30
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 3
+          },
+          "ms": {
+            "1": 19.8,
+            "2": 0.2,
+            "3": 11.7
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 19.8,
+            "3|lazy_evict": 11.7
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 3,
+          "detached": 0
+        },
+        "settleMs": 273,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.4,
+        "scrollTop": 70758,
+        "maxScroll": 176895,
+        "scrollHeight": 177555,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 64,
+          "p50": 8.3,
+          "p95": 10.3,
+          "max": 43.4,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 77,
+          "placeholders": 3924,
+          "totalBlocks": 4001,
+          "evictTotal": 2604,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 19.5,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11024,
+          "mjx": 91
+        },
+        "events": {
+          "evict": 83,
+          "remat": 77,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 83,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 83,
+          "totalMs": 12,
+          "maxTotalMs": 9.6,
+          "maxApplyMs": 4.9,
+          "mathClearMs": 0.4,
+          "blocksWithMath": 38
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 26.8,
+            "2": 0.2,
+            "3": 12
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 26.8,
+            "3|lazy_evict": 12
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 6,
+          "detached": 0
+        },
+        "settleMs": 280,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.45,
+        "scrollTop": 79618,
+        "maxScroll": 176928,
+        "scrollHeight": 177599,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 62,
+          "p50": 8.4,
+          "p95": 12.2,
+          "max": 46.1,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 3.9,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 83,
+          "placeholders": 3918,
+          "totalBlocks": 4001,
+          "evictTotal": 2521,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 17.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 13831,
+          "mjx": 139
+        },
+        "events": {
+          "evict": 82,
+          "remat": 83,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 82,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 82,
+          "totalMs": 12.8,
+          "maxTotalMs": 9.6,
+          "maxApplyMs": 1.8,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 24
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 28.9,
+            "2": 0.2,
+            "3": 12.8
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 28.9,
+            "3|lazy_evict": 12.8
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 11,
+          "detached": 0
+        },
+        "settleMs": 275,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 28.900000002235174,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.5,
+        "scrollTop": 88457,
+        "maxScroll": 176913,
+        "scrollHeight": 177632,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 58,
+          "p50": 8.3,
+          "p95": 27.4,
+          "max": 88.8,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 1,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 82,
+          "placeholders": 3919,
+          "totalBlocks": 4001,
+          "evictTotal": 2439,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 17.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10574,
+          "mjx": 60
+        },
+        "events": {
+          "evict": 91,
+          "remat": 83,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 91,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 91,
+          "totalMs": 13.4,
+          "maxTotalMs": 10.4,
+          "maxApplyMs": 5.5,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 36
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "ms": {
+            "1": 29.4,
+            "2": 0.2,
+            "3": 13.4
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 29.4,
+            "3|lazy_evict": 13.4
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 2,
+          "detached": 0
+        },
+        "settleMs": 285,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 25,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.55,
+        "scrollTop": 97367,
+        "maxScroll": 177030,
+        "scrollHeight": 177617,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 60,
+          "p50": 8.3,
+          "p95": 25.3,
+          "max": 83.8,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 91,
+          "placeholders": 3910,
+          "totalBlocks": 4001,
+          "evictTotal": 2348,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 17.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 13648,
+          "mjx": 44
+        },
+        "events": {
+          "evict": 85,
+          "remat": 91,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 85,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 85,
+          "totalMs": 11.2,
+          "maxTotalMs": 8.6,
+          "maxApplyMs": 2.9,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 36
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 18.6,
+            "2": 0.3,
+            "3": 11.4
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.3,
+            "1|lazy_materialize": 18.6,
+            "3|lazy_evict": 11.4
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 11,
+          "detached": 0
+        },
+        "settleMs": 279,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.6,
+        "scrollTop": 106226,
+        "maxScroll": 177044,
+        "scrollHeight": 177734,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 63,
+          "p50": 8.3,
+          "p95": 11.7,
+          "max": 52.4,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 85,
+          "placeholders": 3916,
+          "totalBlocks": 4001,
+          "evictTotal": 2263,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 17.3,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 11493,
+          "mjx": 71
+        },
+        "events": {
+          "evict": 75,
+          "remat": 85,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 75,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 75,
+          "totalMs": 11,
+          "maxTotalMs": 7.9,
+          "maxApplyMs": 1.5,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 13
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 18,
+            "2": 0.1,
+            "3": 11
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 18,
+            "3|lazy_evict": 11
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 12,
+          "detached": 0
+        },
+        "settleMs": 271,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.65,
+        "scrollTop": 114975,
+        "maxScroll": 176885,
+        "scrollHeight": 177751,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 65,
+          "p50": 8.3,
+          "p95": 8.9,
+          "max": 54.6,
+          "over50": 1,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 5,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 75,
+          "placeholders": 3926,
+          "totalBlocks": 4001,
+          "evictTotal": 2188,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 14.7,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 7699,
+          "mjx": 34
+        },
+        "events": {
+          "evict": 62,
+          "remat": 77,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 62,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 62,
+          "totalMs": 8.5,
+          "maxTotalMs": 7.3,
+          "maxApplyMs": 1.5,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 13
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 2
+          },
+          "ms": {
+            "1": 14.1,
+            "2": 0.2,
+            "3": 8.5
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 14.1,
+            "3|lazy_evict": 8.5
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 12,
+          "detached": 0
+        },
+        "settleMs": 272,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.7,
+        "scrollTop": 123789,
+        "maxScroll": 176841,
+        "scrollHeight": 177592,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 68,
+          "p50": 8.3,
+          "p95": 9.2,
+          "max": 30.6,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 62,
+          "placeholders": 3939,
+          "totalBlocks": 4001,
+          "evictTotal": 2126,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 14.7,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 6538,
+          "mjx": 49
+        },
+        "events": {
+          "evict": 75,
+          "remat": 63,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 75,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 75,
+          "totalMs": 10,
+          "maxTotalMs": 6.7,
+          "maxApplyMs": 2.4,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 26
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 13.1,
+            "2": 0.4,
+            "3": 11.1
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.4,
+            "1|lazy_materialize": 13.1,
+            "3|lazy_evict": 11.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 11,
+          "detached": 0
+        },
+        "settleMs": 272,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.75,
+        "scrollTop": 132650,
+        "maxScroll": 176867,
+        "scrollHeight": 177545,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 63,
+          "p50": 8.3,
+          "p95": 21,
+          "max": 41,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 75,
+          "placeholders": 3926,
+          "totalBlocks": 4001,
+          "evictTotal": 2051,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 14.7,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 9284,
+          "mjx": 68
+        },
+        "events": {
+          "evict": 74,
+          "remat": 76,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 74,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 74,
+          "totalMs": 11.2,
+          "maxTotalMs": 9.1,
+          "maxApplyMs": 3.7,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 30
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "ms": {
+            "1": 27.1,
+            "2": 0.4,
+            "3": 11.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.4,
+            "1|lazy_materialize": 27.1,
+            "3|lazy_evict": 11.2
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 14,
+          "detached": 0
+        },
+        "settleMs": 277,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.8,
+        "scrollTop": 141474,
+        "maxScroll": 176842,
+        "scrollHeight": 177574,
+        "jumpMs": 0.1,
+        "frames": {
+          "n": 64,
+          "p50": 8.3,
+          "p95": 18,
+          "max": 39.2,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 74,
+          "placeholders": 3927,
+          "totalBlocks": 4001,
+          "evictTotal": 1977,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 14.7,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10387,
+          "mjx": 79
+        },
+        "events": {
+          "evict": 83,
+          "remat": 74,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 83,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 83,
+          "totalMs": 11.4,
+          "maxTotalMs": 8.5,
+          "maxApplyMs": 3.9,
+          "mathClearMs": 0.2,
+          "blocksWithMath": 37
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "ms": {
+            "1": 19,
+            "2": 0.1,
+            "3": 11.4
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 19,
+            "3|lazy_evict": 11.4
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 0,
+          "detached": 0
+        },
+        "settleMs": 268,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.85,
+        "scrollTop": 150339,
+        "maxScroll": 176869,
+        "scrollHeight": 177546,
+        "jumpMs": 0,
+        "frames": {
+          "n": 67,
+          "p50": 8.3,
+          "p95": 8.5,
+          "max": 34.6,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 3,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 83,
+          "placeholders": 3918,
+          "totalBlocks": 4001,
+          "evictTotal": 1894,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 12,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 10703,
+          "mjx": 87
+        },
+        "events": {
+          "evict": 96,
+          "remat": 83,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 96,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 96,
+          "totalMs": 7.1,
+          "maxTotalMs": 5,
+          "maxApplyMs": 0.6,
+          "mathClearMs": 0.6,
+          "blocksWithMath": 6
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 24,
+            "2": 0.2,
+            "3": 8.3
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 24,
+            "3|lazy_evict": 8.3
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 1,
+          "detached": 0
+        },
+        "settleMs": 274,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 24,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.9,
+        "scrollTop": 159158,
+        "maxScroll": 176842,
+        "scrollHeight": 177576,
+        "jumpMs": 0,
+        "frames": {
+          "n": 73,
+          "p50": 8.3,
+          "p95": 8.7,
+          "max": 22.2,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 0,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 6,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 96,
+          "placeholders": 3905,
+          "totalBlocks": 4001,
+          "evictTotal": 1798,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 12,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 4841,
+          "mjx": 26
+        },
+        "events": {
+          "evict": 91,
+          "remat": 96,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 91,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 2,
+          "blocks": 91,
+          "totalMs": 6.6,
+          "maxTotalMs": 5,
+          "maxApplyMs": 1.8,
+          "mathClearMs": 0.1,
+          "blocksWithMath": 33
+        },
+        "sched": {
+          "queued": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "exec": {
+            "1": 1,
+            "2": 2,
+            "3": 3
+          },
+          "ms": {
+            "1": 8.5,
+            "2": 0.1,
+            "3": 8.1
+          },
+          "kind": {
+            "lazy_typeset": 2,
+            "lazy_materialize": 1,
+            "lazy_evict": 3
+          },
+          "pk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.1,
+            "1|lazy_materialize": 8.5,
+            "3|lazy_evict": 8.1
+          },
+          "qpk": {
+            "2|lazy_typeset": 2,
+            "1|lazy_materialize": 1,
+            "3|lazy_evict": 3
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 0,
+          "detached": 0
+        },
+        "settleMs": 271,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 21,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      },
+      {
+        "frac": 0.95,
+        "scrollTop": 168071,
+        "maxScroll": 176917,
+        "scrollHeight": 177546,
+        "jumpMs": 0,
+        "frames": {
+          "n": 69,
+          "p50": 8.4,
+          "p95": 10,
+          "max": 30.2,
+          "over50": 0,
+          "over100": 0
+        },
+        "counters": {
+          "max_frame_ms": 3.3,
+          "frames_used": 4,
+          "slice_count": 0,
+          "budget_exceeded": 1,
+          "executed": 7,
+          "dropped": 0
+        },
+        "workset": {
+          "materialized": 91,
+          "placeholders": 3910,
+          "totalBlocks": 4001,
+          "evictTotal": 1707,
+          "keepScreens": 4,
+          "pressureScreens": 6,
+          "evictPressureSchedules": 2,
+          "evictPendingSkips": 0,
+          "suspended": false,
+          "heightDriftPx": 12,
+          "anchorFixes": 0,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "dom": {
+          "nodes": 8402,
+          "mjx": 52
+        },
+        "events": {
+          "evict": 56,
+          "remat": 92,
+          "back": 0,
+          "backRatePct": 0,
+          "backBlocks": 0,
+          "evictBlocks": 56,
+          "repeat2": 0,
+          "rebuilds": 0,
+          "backDtP50": null,
+          "backDtP95": null,
+          "backDtMax": null,
+          "windowMs": 2000
+        },
+        "profile": {
+          "batches": 1,
+          "blocks": 56,
+          "totalMs": 2.3,
+          "maxTotalMs": 2.3,
+          "maxApplyMs": 0.7,
+          "mathClearMs": 0.3,
+          "blocksWithMath": 4
+        },
+        "sched": {
+          "queued": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "exec": {
+            "1": 2,
+            "2": 3,
+            "3": 2
+          },
+          "ms": {
+            "1": 23.6,
+            "2": 0.2,
+            "3": 3.2
+          },
+          "kind": {
+            "lazy_typeset": 3,
+            "lazy_materialize": 2,
+            "lazy_evict": 2
+          },
+          "pk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "pkms": {
+            "2|lazy_typeset": 0.2,
+            "1|lazy_materialize": 23.6,
+            "3|lazy_evict": 3.2
+          },
+          "qpk": {
+            "2|lazy_typeset": 3,
+            "1|lazy_materialize": 2,
+            "3|lazy_evict": 2
+          },
+          "err": 0
+        },
+        "math": {
+          "items": 2,
+          "detached": 0
+        },
+        "settleMs": 285,
+        "settleTimeout": false,
+        "tokenDelta": 0,
+        "max_frame_ms_abs": 21,
+        "evictPressureSchedules": 2,
+        "evictPendingSkips": 0
+      }
+    ]
+  },
+  "w2": [
+    {
+      "drag": {
+        "totalMs": 5269,
+        "frames": 196,
+        "endScrollTop": 176992,
+        "max": 176992,
+        "maxMat": 219,
+        "evFrames": 65,
+        "hitBottom": true
+      },
+      "frames": {
+        "n": 195,
+        "p50": 22.6,
+        "p95": 68.3,
+        "max": 105.5,
+        "over50": 14,
+        "over100": 2
+      },
+      "counters": {
+        "max_frame_ms": 9.5,
+        "frames_used": 193,
+        "slice_count": 0,
+        "budget_exceeded": 35,
+        "executed": 232,
+        "dropped": 0
+      },
+      "events": {
+        "evict": 3790,
+        "remat": 3939,
+        "back": 0,
+        "backRatePct": 0,
+        "backBlocks": 0,
+        "evictBlocks": 3790,
+        "repeat2": 0,
+        "rebuilds": 0,
+        "backDtP50": null,
+        "backDtP95": null,
+        "backDtMax": null,
+        "windowMs": 2000
+      },
+      "profile": {
+        "batches": 65,
+        "blocks": 3790,
+        "totalMs": 392,
+        "maxTotalMs": 9.7,
+        "maxApplyMs": 4,
+        "mathClearMs": 7.8,
+        "blocksWithMath": 1013
+      },
+      "sched": {
+        "queued": {
+          "1": 251,
+          "2": 270,
+          "3": 66
+        },
+        "exec": {
+          "1": 215,
+          "2": 14,
+          "3": 3
+        },
+        "ms": {
+          "1": 1646,
+          "2": 57,
+          "3": 4.7
+        },
+        "kind": {
+          "lazy_typeset": 199,
+          "lazy_materialize": 189,
+          "lazy_evict": 128,
+          "t79_p2_load": 71
+        },
+        "pk": {
+          "2|lazy_typeset": 7,
+          "1|lazy_materialize": 153,
+          "3|lazy_evict": 3,
+          "1|lazy_evict": 62,
+          "2|t79_p2_load": 7
+        },
+        "pkms": {
+          "2|lazy_typeset": 1,
+          "1|lazy_materialize": 1258.3,
+          "3|lazy_evict": 4.7,
+          "1|lazy_evict": 387.7,
+          "2|t79_p2_load": 56
+        },
+        "qpk": {
+          "2|lazy_typeset": 199,
+          "1|lazy_materialize": 189,
+          "3|lazy_evict": 66,
+          "1|lazy_evict": 62,
+          "2|t79_p2_load": 71
+        },
+        "err": 0
+      },
+      "p2n": 71,
+      "before": {
+        "materialized": 35,
+        "evictTotal": 3315,
+        "pressureSchedules": 4,
+        "pendingSkips": 0
+      },
+      "after": {
+        "materialized": 143,
+        "evictTotal": 7165,
+        "pressureSchedules": 67,
+        "pendingSkips": 0
+      },
+      "settleMs": 285,
+      "tokenDelta": 0,
+      "rebuilds": 0,
+      "max_frame_ms_abs": 38.400000002235174
+    },
+    {
+      "drag": {
+        "totalMs": 5918,
+        "frames": 213,
+        "endScrollTop": 179022,
+        "max": 179022,
+        "maxMat": 221,
+        "evFrames": 66,
+        "hitBottom": true
+      },
+      "frames": {
+        "n": 212,
+        "p50": 20.7,
+        "p95": 73.4,
+        "max": 157.6,
+        "over50": 26,
+        "over100": 4
+      },
+      "counters": {
+        "max_frame_ms": 0,
+        "frames_used": 209,
+        "slice_count": 0,
+        "budget_exceeded": 18,
+        "executed": 292,
+        "dropped": 0
+      },
+      "events": {
+        "evict": 3819,
+        "remat": 3955,
+        "back": 0,
+        "backRatePct": 0,
+        "backBlocks": 0,
+        "evictBlocks": 3819,
+        "repeat2": 0,
+        "rebuilds": 0,
+        "backDtP50": null,
+        "backDtP95": null,
+        "backDtMax": null,
+        "windowMs": 2000
+      },
+      "profile": {
+        "batches": 66,
+        "blocks": 3819,
+        "totalMs": 396.7,
+        "maxTotalMs": 9.8,
+        "maxApplyMs": 4.6,
+        "mathClearMs": 10.3,
+        "blocksWithMath": 1052
+      },
+      "sched": {
+        "queued": {
+          "1": 210,
+          "2": 302,
+          "3": 67
+        },
+        "exec": {
+          "1": 196,
+          "2": 88,
+          "3": 8
+        },
+        "ms": {
+          "1": 1248.9,
+          "2": 421.4,
+          "3": 28.2
+        },
+        "kind": {
+          "lazy_typeset": 224,
+          "lazy_materialize": 152,
+          "lazy_evict": 125,
+          "t79_p2_load": 78
+        },
+        "pk": {
+          "2|lazy_typeset": 36,
+          "1|lazy_materialize": 138,
+          "3|lazy_evict": 8,
+          "1|lazy_evict": 58,
+          "2|t79_p2_load": 52
+        },
+        "pkms": {
+          "2|lazy_typeset": 5.2,
+          "1|lazy_materialize": 879.8,
+          "3|lazy_evict": 28.2,
+          "1|lazy_evict": 369.1,
+          "2|t79_p2_load": 416.2
+        },
+        "qpk": {
+          "2|lazy_typeset": 224,
+          "1|lazy_materialize": 152,
+          "3|lazy_evict": 67,
+          "1|lazy_evict": 58,
+          "2|t79_p2_load": 78
+        },
+        "err": 0
+      },
+      "p2n": 78,
+      "before": {
+        "materialized": 35,
+        "evictTotal": 7308,
+        "pressureSchedules": 67,
+        "pendingSkips": 0
+      },
+      "after": {
+        "materialized": 182,
+        "evictTotal": 11127,
+        "pressureSchedules": 125,
+        "pendingSkips": 0
+      },
+      "settleMs": 277,
+      "tokenDelta": 0,
+      "rebuilds": 0,
+      "max_frame_ms_abs": 38.400000002235174
+    }
+  ],
+  "w3": [
+    {
+      "osc": {
+        "totalMs": 6003,
+        "maxMat": 124,
+        "evFrames": 117,
+        "swings": 10,
+        "lo": 81031,
+        "hi": 85255
+      },
+      "frames": {
+        "n": 379,
+        "p50": 11.1,
+        "p95": 30.8,
+        "max": 55.1,
+        "over50": 2,
+        "over100": 0
+      },
+      "counters": {
+        "max_frame_ms": 0,
+        "frames_used": 147,
+        "slice_count": 0,
+        "budget_exceeded": 2,
+        "executed": 393,
+        "dropped": 0
+      },
+      "events": {
+        "evict": 645,
+        "remat": 679,
+        "back": 577,
+        "backRatePct": 89.5,
+        "backBlocks": 127,
+        "evictBlocks": 128,
+        "repeat2": 127,
+        "rebuilds": 0,
+        "backDtP50": 523,
+        "backDtP95": 974.5,
+        "backDtMax": 1158.7,
+        "windowMs": 2000
+      },
+      "profile": {
+        "batches": 117,
+        "blocks": 645,
+        "totalMs": 224.9,
+        "maxTotalMs": 3.6,
+        "maxApplyMs": 1.1,
+        "mathClearMs": 15.1,
+        "blocksWithMath": 263
+      },
+      "sched": {
+        "queued": {
+          "1": 132,
+          "2": 129,
+          "3": 132
+        },
+        "exec": {
+          "1": 132,
+          "2": 129,
+          "3": 132
+        },
+        "ms": {
+          "1": 973.8,
+          "2": 2,
+          "3": 243.1
+        },
+        "kind": {
+          "lazy_typeset": 129,
+          "lazy_materialize": 132,
+          "lazy_evict": 132
+        },
+        "pk": {
+          "2|lazy_typeset": 129,
+          "1|lazy_materialize": 132,
+          "3|lazy_evict": 132
+        },
+        "pkms": {
+          "2|lazy_typeset": 2,
+          "1|lazy_materialize": 973.8,
+          "3|lazy_evict": 243.1
+        },
+        "qpk": {
+          "2|lazy_typeset": 129,
+          "1|lazy_materialize": 132,
+          "3|lazy_evict": 132
+        },
+        "err": 0
+      },
+      "before": {
+        "materialized": 83,
+        "evictTotal": 11344
+      },
+      "after": {
+        "materialized": 123,
+        "evictTotal": 11991
+      },
+      "settleMs": 272,
+      "tokenDelta": 0,
+      "rebuilds": 0,
+      "max_frame_ms_abs": 38.400000002235174
+    },
+    {
+      "osc": {
+        "totalMs": 6002,
+        "maxMat": 128,
+        "evFrames": 125,
+        "swings": 10,
+        "lo": 80746,
+        "hi": 84970
+      },
+      "frames": {
+        "n": 391,
+        "p50": 11.2,
+        "p95": 29.9,
+        "max": 37.2,
+        "over50": 0,
+        "over100": 0
+      },
+      "counters": {
+        "max_frame_ms": 0,
+        "frames_used": 152,
+        "slice_count": 0,
+        "budget_exceeded": 3,
+        "executed": 410,
+        "dropped": 0
+      },
+      "events": {
+        "evict": 671,
+        "remat": 705,
+        "back": 605,
+        "backRatePct": 90.2,
+        "backBlocks": 124,
+        "evictBlocks": 124,
+        "repeat2": 124,
+        "rebuilds": 0,
+        "backDtP50": 543.6,
+        "backDtP95": 947,
+        "backDtMax": 1018.4,
+        "windowMs": 2000
+      },
+      "profile": {
+        "batches": 125,
+        "blocks": 671,
+        "totalMs": 229.3,
+        "maxTotalMs": 3,
+        "maxApplyMs": 1.1,
+        "mathClearMs": 12.7,
+        "blocksWithMath": 272
+      },
+      "sched": {
+        "queued": {
+          "1": 140,
+          "2": 132,
+          "3": 139
+        },
+        "exec": {
+          "1": 139,
+          "2": 132,
+          "3": 139
+        },
+        "ms": {
+          "1": 1072.2,
+          "2": 2.3,
+          "3": 246.5
+        },
+        "kind": {
+          "lazy_typeset": 132,
+          "lazy_materialize": 140,
+          "lazy_evict": 139
+        },
+        "pk": {
+          "2|lazy_typeset": 132,
+          "1|lazy_materialize": 139,
+          "3|lazy_evict": 139
+        },
+        "pkms": {
+          "2|lazy_typeset": 2.3,
+          "1|lazy_materialize": 1072.2,
+          "3|lazy_evict": 246.5
+        },
+        "qpk": {
+          "2|lazy_typeset": 132,
+          "1|lazy_materialize": 140,
+          "3|lazy_evict": 139
+        },
+        "err": 0
+      },
+      "before": {
+        "materialized": 83,
+        "evictTotal": 12149
+      },
+      "after": {
+        "materialized": 119,
+        "evictTotal": 12824
+      },
+      "settleMs": 268,
+      "tokenDelta": 0,
+      "rebuilds": 0,
+      "max_frame_ms_abs": 38.400000002235174
+    }
+  ],
+  "final": {
+    "workset": {
+      "materialized": 119,
+      "placeholders": 3882,
+      "totalBlocks": 4001,
+      "evictTotal": 12824,
+      "keepScreens": 4,
+      "pressureScreens": 6,
+      "evictPressureSchedules": 125,
+      "evictPendingSkips": 0,
+      "suspended": false,
+      "heightDriftPx": 99,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    },
+    "counters": {
+      "scheduled": 2326,
+      "executed": 1835,
+      "merged": 491,
+      "dropped": 0,
+      "queue_max": 112,
+      "budget_exceeded": 94,
+      "frames_used": 1001,
+      "slice_count": 0,
+      "max_frame_ms": 38.400000002235174
+    },
+    "math": {
+      "items": 0,
+      "detached": 0
+    },
+    "sched": {
+      "queued": {
+        "1": 814,
+        "2": 961,
+        "3": 530
+      },
+      "exec": {
+        "1": 766,
+        "2": 639,
+        "3": 409
+      },
+      "ms": {
+        "1": 5732.899999968708,
+        "2": 1213.8999999985099,
+        "3": 980.9999999925494
+      },
+      "kind": {
+        "lazy_typeset": 812,
+        "lazy_materialize": 689,
+        "lazy_evict": 655,
+        "t79_p2_load": 149
+      },
+      "pk": {
+        "2|lazy_typeset": 490,
+        "1|lazy_materialize": 641,
+        "3|lazy_evict": 409,
+        "1|lazy_evict": 125,
+        "2|t79_p2_load": 149
+      },
+      "pkms": {
+        "2|lazy_typeset": 21.5,
+        "1|lazy_materialize": 4944.799999978393,
+        "3|lazy_evict": 980.9999999925494,
+        "1|lazy_evict": 788.0999999903142,
+        "2|t79_p2_load": 1192.3999999985099
+      },
+      "qpk": {
+        "2|lazy_typeset": 812,
+        "1|lazy_materialize": 689,
+        "3|lazy_evict": 530,
+        "1|lazy_evict": 125,
+        "2|t79_p2_load": 149
+      },
+      "err": 0
+    },
+    "heap": {
+      "usedMB": 23.22
+    }
+  },
+  "appjs": "http://127.0.0.1:21953/app/js/app.js?v=1792696534",
+  "variantMeta": {
+    "origin": "head:6c3e8c01758b48035cd22d409c9d9e9dcc22eca6",
+    "source_sha256": "3c790f1f9af45ea92fc189993780f731bcd778a512d642881ac52b8214bfda6a",
+    "appjs_sha256": "e42ad236348da9b82b2ad8c6be90fa68cac74c3ac9b2f56808ed9021856e3038",
+    "threshold_requested": 6
+  },
+  "label": "v6-r2",
+  "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t79\\kb",
+  "appjsServed": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t79\\V6\\static\\app\\js\\app.js"
+}

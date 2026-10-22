@@ -1,0 +1,1561 @@
+{
+  "schema": "memoria-perf-ops/v1",
+  "sha": "4532cc23",
+  "label": "p5gate-new",
+  "mode": "realapp",
+  "environment": {
+    "mode": "realapp",
+    "cdpEndpoint": "http://127.0.0.1:9564"
+  },
+  "inject": null,
+  "budgetRule": "min(用户可感知阈值, P_old×1.15)；无阈值取 P_old×1.15",
+  "noiseGate": {
+    "maxIqrOverMedian": 0.25,
+    "maxP95OverMedian": 1.6,
+    "maxRoundSpread": 0.2
+  },
+  "userThresholds": {
+    "typing": 16.0,
+    "open": 1000.0
+  },
+  "ops": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 0.9,
+      "p95": 2.58,
+      "samples": 50,
+      "pOld": 2.58,
+      "budget": 2.97,
+      "budgetBasis": "min(阈值 16.0, P_old×1.15)",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": false,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "scroll": {
+      "id": "scroll",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "frames",
+      "p50": 8.3,
+      "p95": 8.66,
+      "samples": 250,
+      "pOld": 8.66,
+      "budget": 9.96,
+      "budgetBasis": "P_old×1.15（回归参照；硬判据见三重条件）",
+      "verdict": "PASS",
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": {
+        "longTaskCountMedian": 0,
+        "longTaskMaxMsMax": 0,
+        "framesMedian": 50,
+        "scrolledPx": 2000,
+        "jankRatioMedian": 0,
+        "jankRatioMax": 0,
+        "jankThresholdMs": 25
+      }
+    },
+    "select": {
+      "id": "select",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.6,
+      "p95": 16.7,
+      "samples": 25,
+      "pOld": 16.7,
+      "budget": 19.2,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "paste": {
+      "id": "paste",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.6,
+      "p95": 16.86,
+      "samples": 25,
+      "pOld": 16.86,
+      "budget": 19.39,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "undo": {
+      "id": "undo",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 15.4,
+      "p95": 23.78,
+      "samples": 25,
+      "pOld": 23.78,
+      "budget": 27.35,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "find": {
+      "id": "find",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.7,
+      "p95": 16.9,
+      "samples": 25,
+      "pOld": 16.9,
+      "budget": 19.43,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "save": {
+      "id": "save",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.6,
+      "p95": 16.78,
+      "samples": 25,
+      "pOld": 16.78,
+      "budget": 19.3,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "viewSwitch": {
+      "id": "viewSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.6,
+      "p95": 17.44,
+      "samples": 45,
+      "pOld": 17.44,
+      "budget": 20.06,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "structEdit": {
+      "id": "structEdit",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 19.0,
+      "p95": 29.81,
+      "samples": 40,
+      "pOld": 29.81,
+      "budget": 34.28,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "format": {
+      "id": "format",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 16.6,
+      "p95": 17.58,
+      "samples": 25,
+      "pOld": 17.58,
+      "budget": 20.22,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": null,
+      "p95": null,
+      "samples": 0,
+      "pOld": null,
+      "budget": null,
+      "budgetBasis": null,
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": null,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "p50": 818.2,
+      "p95": 873.65,
+      "samples": 15,
+      "pOld": 873.65,
+      "budget": 1000.0,
+      "budgetBasis": "min(阈值 1000.0, P_old×1.15)",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "tabSwitch": {
+      "id": "tabSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 34.95,
+      "p95": 38.84,
+      "samples": 20,
+      "pOld": 38.84,
+      "budget": 44.67,
+      "budgetBasis": "P_old×1.15",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    }
+  },
+  "summaries": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 50,
+      "p50": 0.9,
+      "p95": 2.58,
+      "max": 3.3,
+      "iqrOverMedian": 0.444,
+      "p95OverMedian": 2.872,
+      "roundSpread": 0.375,
+      "noiseOk": false
+    },
+    "scroll": {
+      "id": "scroll",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "frames",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 250,
+      "p50": 8.3,
+      "p95": 8.66,
+      "max": 24,
+      "extra": {
+        "longTaskCountMedian": 0,
+        "longTaskMaxMsMax": 0,
+        "framesMedian": 50,
+        "scrolledPx": 2000,
+        "jankRatioMedian": 0,
+        "jankRatioMax": 0,
+        "jankThresholdMs": 25
+      },
+      "iqrOverMedian": 0.012,
+      "p95OverMedian": 1.043,
+      "roundSpread": 0.006,
+      "noiseOk": true
+    },
+    "select": {
+      "id": "select",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 16.6,
+      "p95": 16.7,
+      "max": 16.8,
+      "iqrOverMedian": 0.066,
+      "p95OverMedian": 1.006,
+      "roundSpread": 0.012,
+      "noiseOk": true
+    },
+    "paste": {
+      "id": "paste",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 16.6,
+      "p95": 16.86,
+      "max": 17.3,
+      "iqrOverMedian": 0.03,
+      "p95OverMedian": 1.016,
+      "roundSpread": 0.006,
+      "noiseOk": true
+    },
+    "undo": {
+      "id": "undo",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 15.4,
+      "p95": 23.78,
+      "max": 25.5,
+      "iqrOverMedian": 0.032,
+      "p95OverMedian": 1.544,
+      "roundSpread": 0.058,
+      "noiseOk": true
+    },
+    "find": {
+      "id": "find",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 16.7,
+      "p95": 16.9,
+      "max": 17.7,
+      "iqrOverMedian": 0.012,
+      "p95OverMedian": 1.012,
+      "roundSpread": 0.012,
+      "noiseOk": true
+    },
+    "save": {
+      "id": "save",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 16.6,
+      "p95": 16.78,
+      "max": 16.8,
+      "iqrOverMedian": 0.012,
+      "p95OverMedian": 1.011,
+      "roundSpread": 0.0,
+      "noiseOk": true
+    },
+    "viewSwitch": {
+      "id": "viewSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 45,
+      "p50": 16.6,
+      "p95": 17.44,
+      "max": 27.8,
+      "iqrOverMedian": 0.024,
+      "p95OverMedian": 1.051,
+      "roundSpread": 0.006,
+      "noiseOk": true
+    },
+    "structEdit": {
+      "id": "structEdit",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 40,
+      "p50": 19.0,
+      "p95": 29.81,
+      "max": 34.5,
+      "iqrOverMedian": 0.214,
+      "p95OverMedian": 1.569,
+      "roundSpread": 0.146,
+      "noiseOk": true
+    },
+    "format": {
+      "id": "format",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 25,
+      "p50": 16.6,
+      "p95": 17.58,
+      "max": 17.7,
+      "iqrOverMedian": 0.03,
+      "p95OverMedian": 1.059,
+      "roundSpread": 0.006,
+      "noiseOk": true
+    },
+    "kpHover": {
+      "id": "kpHover",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/03-block-boundaries.md",
+      "status": "ran",
+      "samples": 0,
+      "p50": null,
+      "p95": null,
+      "max": null,
+      "noiseOk": null
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 15,
+      "p50": 818.2,
+      "p95": 873.65,
+      "max": 888.7,
+      "iqrOverMedian": 0.037,
+      "p95OverMedian": 1.068,
+      "roundSpread": 0.015,
+      "noiseOk": true
+    },
+    "tabSwitch": {
+      "id": "tabSwitch",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "corpus/01-ime-zh.md",
+      "status": "ran",
+      "samples": 20,
+      "p50": 34.95,
+      "p95": 38.84,
+      "max": 51,
+      "iqrOverMedian": 0.125,
+      "p95OverMedian": 1.111,
+      "roundSpread": 0.125,
+      "noiseOk": true
+    }
+  },
+  "raw": {
+    "schema": "memoria-perf-ops-run/v1",
+    "mode": "realapp",
+    "harnessUrl": null,
+    "cdpEndpoint": "http://127.0.0.1:9564",
+    "rounds": 5,
+    "inject": null,
+    "startedAt": "2026-10-21T09:56:52.268Z",
+    "ops": {
+      "typing": {
+        "id": "typing",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              2,
+              1.300000011920929,
+              1.0999999642372131,
+              1.199999988079071,
+              1.100000023841858,
+              1,
+              1,
+              1.100000023841858,
+              0.7999999523162842,
+              0.800000011920929
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              2.199999988079071,
+              1.300000011920929,
+              0.800000011920929,
+              0.7999999523162842,
+              0.9000000357627869,
+              1.399999976158142,
+              0.9000000357627869,
+              0.8999999761581421,
+              0.8999999761581421,
+              0.9000000357627869
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              2.899999976158142,
+              2.199999988079071,
+              1.199999988079071,
+              0.8999999761581421,
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              0.7999999523162842,
+              0.800000011920929
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              3.299999952316284,
+              1.800000011920929,
+              1.199999988079071,
+              0.9000000357627869,
+              1,
+              0.800000011920929,
+              0.8999999761581421,
+              0.699999988079071,
+              0.9000000357627869,
+              0.699999988079071
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              3.199999988079071,
+              1.5,
+              1,
+              0.8999999761581421,
+              0.9000000357627869,
+              0.800000011920929,
+              0.7999999523162842,
+              0.800000011920929,
+              0.699999988079071,
+              0.800000011920929
+            ],
+            "timingMode": "fallback-execCommand"
+          }
+        ],
+        "status": "ran"
+      },
+      "scroll": {
+        "id": "scroll",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "frames",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              8.199999988079071,
+              8.400000035762787,
+              8.5,
+              8.300000011920929,
+              8.299999952316284,
+              8.400000035762787,
+              8.300000011920929,
+              8.199999988079071,
+              8.5,
+              8.199999988079071,
+              9,
+              24,
+              16.19999998807907,
+              12.199999988079071,
+              7.300000011920929,
+              6.300000011920929,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.399999976158142,
+              8.300000011920929,
+              8.5,
+              11.600000023841858,
+              4.899999976158142,
+              8.399999976158142,
+              9.200000047683716,
+              7.399999976158142,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.300000011920929,
+              8.399999976158142,
+              8.399999976158142,
+              8.200000047683716,
+              8.5,
+              8.299999952316284,
+              8.400000035762787,
+              8.099999964237213,
+              8.800000011920929,
+              16.900000035762787,
+              15.599999964237213,
+              5.400000035762787,
+              5.299999952316284,
+              6.300000011920929,
+              8.5,
+              8.5,
+              8,
+              8.5
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 479.69999998807907,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              8.300000011920929,
+              8.300000011920929,
+              8.299999952316284,
+              8.5,
+              8.200000047683716,
+              8.299999952316284,
+              8.400000035762787,
+              8.300000011920929,
+              8.299999952316284,
+              8.300000011920929,
+              8.400000035762787,
+              8.399999976158142,
+              8.399999976158142,
+              8.300000011920929,
+              8.300000011920929,
+              8.199999988079071,
+              8.5,
+              8.400000035762787,
+              8.199999988079071,
+              8.399999976158142,
+              8.199999988079071,
+              8.300000011920929,
+              8.400000035762787,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.299999952316284,
+              8.300000011920929,
+              8.400000035762787,
+              8.399999976158142,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.300000011920929,
+              8.599999964237213,
+              8.199999988079071,
+              8.300000011920929,
+              8.199999988079071,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.400000035762787,
+              8.399999976158142,
+              8.400000035762787,
+              8.199999988079071,
+              8.399999976158142,
+              8.300000011920929,
+              8.300000011920929,
+              8.5
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 427.10000002384186,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              8.400000035762787,
+              8.399999976158142,
+              8.300000011920929,
+              8.399999976158142,
+              8.400000035762787,
+              8.199999988079071,
+              8.300000011920929,
+              8.399999976158142,
+              8.300000011920929,
+              8.300000011920929,
+              8.299999952316284,
+              8.400000035762787,
+              8.599999964237213,
+              8.100000023841858,
+              8.300000011920929,
+              8.300000011920929,
+              8.399999976158142,
+              8.300000011920929,
+              8.399999976158142,
+              8.300000011920929,
+              8.199999988079071,
+              8.400000035762787,
+              8.399999976158142,
+              8.399999976158142,
+              8.200000047683716,
+              8.599999964237213,
+              8.100000023841858,
+              8.699999988079071,
+              7.899999976158142,
+              8.400000035762787,
+              8.199999988079071,
+              8.5,
+              8.199999988079071,
+              8.400000035762787,
+              8.299999952316284,
+              8.400000035762787,
+              8.399999976158142,
+              8.5,
+              8.300000011920929,
+              8.100000023841858,
+              8.399999976158142,
+              8.300000011920929,
+              8.300000011920929,
+              8.299999952316284,
+              8.300000011920929,
+              8.400000035762787,
+              8.299999952316284,
+              8.700000047683716,
+              8.099999964237213,
+              8.199999988079071
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 426.80000001192093,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              8.5,
+              8.300000011920929,
+              8.300000011920929,
+              8.299999952316284,
+              8.400000035762787,
+              8.199999988079071,
+              8.600000023841858,
+              8.199999988079071,
+              8.300000011920929,
+              8.299999952316284,
+              8.400000035762787,
+              8.5,
+              8.099999964237213,
+              8.5,
+              8.300000011920929,
+              8.300000011920929,
+              8.300000011920929,
+              8.300000011920929,
+              8.399999976158142,
+              8.199999988079071,
+              8.400000035762787,
+              8.299999952316284,
+              8.400000035762787,
+              8.399999976158142,
+              8.199999988079071,
+              8.300000011920929,
+              8.400000035762787,
+              8.599999964237213,
+              8,
+              8.400000035762787,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.299999952316284,
+              8.400000035762787,
+              8.399999976158142,
+              8.199999988079071,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.5,
+              8.300000011920929,
+              8.300000011920929,
+              8.199999988079071,
+              8.400000035762787,
+              8.299999952316284,
+              8.300000011920929,
+              8.300000011920929,
+              8.5,
+              8.300000011920929
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 427.80000001192093,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          },
+          {
+            "samples": [
+              8.300000011920929,
+              8.300000011920929,
+              8.399999976158142,
+              8.400000035762787,
+              8.299999952316284,
+              8.300000011920929,
+              9,
+              7.800000011920929,
+              8.300000011920929,
+              8.199999988079071,
+              8.399999976158142,
+              8.300000011920929,
+              8.400000035762787,
+              8.299999952316284,
+              8.400000035762787,
+              8.5,
+              8.099999964237213,
+              8.400000035762787,
+              8.300000011920929,
+              8.399999976158142,
+              8.300000011920929,
+              8.300000011920929,
+              8.199999988079071,
+              8.5,
+              8.300000011920929,
+              8.299999952316284,
+              8.600000023841858,
+              8.100000023841858,
+              8.299999952316284,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.300000011920929,
+              8.5,
+              8.199999988079071,
+              8.400000035762787,
+              8.300000011920929,
+              8.399999976158142,
+              8.199999988079071,
+              8.300000011920929,
+              8.5,
+              8.300000011920929,
+              8.199999988079071,
+              8.399999976158142,
+              8.400000035762787,
+              8.300000011920929,
+              8.399999976158142,
+              8.199999988079071,
+              8.5,
+              12.100000023841858
+            ],
+            "extra": {
+              "frames": 50,
+              "scrolledPx": 2000,
+              "elapsedMs": 439.39999997615814,
+              "longTaskCount": 0,
+              "longTaskMaxMs": 0,
+              "longTaskTotalMs": 0,
+              "jankFrames": 0,
+              "jankRatio": 0,
+              "jankThresholdMs": 25
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "select": {
+        "id": "select",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              10.100000023841858,
+              15.599999964237213,
+              16.80000001192093,
+              16.5,
+              16.600000023841858
+            ]
+          },
+          {
+            "samples": [
+              4.699999988079071,
+              16,
+              16.69999998807907,
+              16.69999998807907,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              5,
+              16.5,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              7.100000023841858,
+              13.399999976158142,
+              16.5,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              3.399999976158142,
+              16.69999998807907,
+              16.600000023841858,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "paste": {
+        "id": "paste",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              4.300000011920929,
+              16.69999998807907,
+              16.69999998807907,
+              16.69999998807907,
+              16.5
+            ]
+          },
+          {
+            "samples": [
+              3.100000023841858,
+              17.30000001192093,
+              16.19999998807907,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              7.399999976158142,
+              16,
+              16.700000047683716,
+              16.599999964237213,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              7.199999988079071,
+              16.700000047683716,
+              16.599999964237213,
+              16.69999998807907,
+              16.700000047683716
+            ]
+          },
+          {
+            "samples": [
+              4.400000035762787,
+              16.899999976158142,
+              16.5,
+              16.69999998807907,
+              16.600000023841858
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "undo": {
+        "id": "undo",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              16.19999998807907,
+              15.100000023841858,
+              15.400000035762787,
+              15.300000011920929,
+              15.400000035762787
+            ]
+          },
+          {
+            "samples": [
+              15.399999976158142,
+              15.399999976158142,
+              15.5,
+              15,
+              23.80000001192093
+            ]
+          },
+          {
+            "samples": [
+              15.5,
+              14.600000023841858,
+              15.600000023841858,
+              15,
+              15.699999988079071
+            ]
+          },
+          {
+            "samples": [
+              14.299999952316284,
+              23.69999998807907,
+              25.5,
+              16.299999952316284,
+              15.400000035762787
+            ]
+          },
+          {
+            "samples": [
+              16.19999998807907,
+              15,
+              15.699999988079071,
+              15.399999976158142,
+              15.800000011920929
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "find": {
+        "id": "find",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              8.399999976158142,
+              16.69999998807907,
+              16.700000047683716,
+              16.69999998807907,
+              16.80000001192093
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          },
+          {
+            "samples": [
+              7,
+              16.900000035762787,
+              16.5,
+              16.599999964237213,
+              16.80000001192093
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          },
+          {
+            "samples": [
+              1.699999988079071,
+              16.69999998807907,
+              16.900000035762787,
+              16.599999964237213,
+              16.600000023841858
+            ],
+            "extra": {
+              "panelVisible": false
+            }
+          },
+          {
+            "samples": [
+              1.899999976158142,
+              16.80000001192093,
+              16.599999964237213,
+              16.80000001192093,
+              17.69999998807907
+            ],
+            "extra": {
+              "panelVisible": true
+            }
+          },
+          {
+            "samples": [
+              9.199999988079071,
+              16.700000047683716,
+              16.69999998807907,
+              16.599999964237213,
+              16.80000001192093
+            ],
+            "extra": {
+              "panelVisible": true
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "save": {
+        "id": "save",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              1.800000011920929,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907,
+              16.599999964237213
+            ]
+          },
+          {
+            "samples": [
+              5.199999988079071,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907,
+              16.600000023841858
+            ]
+          },
+          {
+            "samples": [
+              9.900000035762787,
+              15.599999964237213,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              5.299999952316284,
+              16.600000023841858,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              7,
+              16.600000023841858,
+              16.80000001192093,
+              16.5,
+              16.80000001192093
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "viewSwitch": {
+        "id": "viewSwitch",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              8.5,
+              16.600000023841858,
+              16.799999952316284,
+              16.5,
+              16.600000023841858,
+              16.69999998807907,
+              16.600000023841858,
+              16.69999998807907,
+              16.600000023841858
+            ]
+          },
+          {
+            "samples": [
+              11.400000035762787,
+              15.199999988079071,
+              17.5,
+              16,
+              16.5,
+              17.5,
+              15.900000035762787,
+              16.80000001192093,
+              16.599999964237213
+            ]
+          },
+          {
+            "samples": [
+              8.199999988079071,
+              16.200000047683716,
+              16.799999952316284,
+              16.600000023841858,
+              16.600000023841858,
+              16.799999952316284,
+              16.5,
+              16.80000001192093,
+              16.80000001192093
+            ]
+          },
+          {
+            "samples": [
+              8.900000035762787,
+              16.599999964237213,
+              16.80000001192093,
+              16.5,
+              16.600000023841858,
+              16.799999952316284,
+              16.600000023841858,
+              16.600000023841858,
+              16.69999998807907
+            ]
+          },
+          {
+            "samples": [
+              8.900000035762787,
+              27.80000001192093,
+              16.399999976158142,
+              14.100000023841858,
+              16.399999976158142,
+              16.69999998807907,
+              16.5,
+              16.69999998807907,
+              17.200000047683716
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "structEdit": {
+        "id": "structEdit",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              30,
+              18.899999976158142,
+              14.300000011920929,
+              19.30000001192093,
+              17.80000001192093,
+              14,
+              21.099999964237213,
+              17.900000035762787
+            ]
+          },
+          {
+            "samples": [
+              24.399999976158142,
+              20.19999998807907,
+              17.5,
+              21.30000001192093,
+              18.600000023841858,
+              23.200000047683716,
+              21.299999952316284,
+              14.899999976158142
+            ]
+          },
+          {
+            "samples": [
+              20.19999998807907,
+              18.80000001192093,
+              21.600000023841858,
+              20,
+              27,
+              15.199999988079071,
+              18.30000001192093,
+              23.80000001192093
+            ]
+          },
+          {
+            "samples": [
+              14.699999988079071,
+              19.099999964237213,
+              15.399999976158142,
+              34.5,
+              29.80000001192093,
+              20.30000001192093,
+              17.299999952316284,
+              17.099999964237213
+            ]
+          },
+          {
+            "samples": [
+              24,
+              22,
+              19.400000035762787,
+              18.69999998807907,
+              17.5,
+              15.100000023841858,
+              13.5,
+              17.299999952316284
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "format": {
+        "id": "format",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [
+              7.900000035762787,
+              16.19999998807907,
+              16.80000001192093,
+              16.69999998807907,
+              16.599999964237213
+            ]
+          },
+          {
+            "samples": [
+              7.199999988079071,
+              16.80000001192093,
+              16.599999964237213,
+              17.69999998807907,
+              16.30000001192093
+            ]
+          },
+          {
+            "samples": [
+              5.299999952316284,
+              16.900000035762787,
+              16.599999964237213,
+              16.80000001192093,
+              16.5
+            ]
+          },
+          {
+            "samples": [
+              7.5,
+              16.600000023841858,
+              16.80000001192093,
+              16.69999998807907,
+              16.5
+            ]
+          },
+          {
+            "samples": [
+              17.5,
+              16.599999964237213,
+              17.600000023841858,
+              15.800000011920929,
+              16.69999998807907
+            ]
+          }
+        ],
+        "status": "ran"
+      },
+      "kpHover": {
+        "id": "kpHover",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/03-block-boundaries.md",
+        "runs": [
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          },
+          {
+            "samples": [],
+            "error": "no-kp-item"
+          }
+        ],
+        "status": "ran"
+      },
+      "open": {
+        "id": "open",
+        "tier": "A",
+        "mode": "realapp-required",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              825.1999999880791,
+              856.5,
+              806.4000000357628
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              807.3999999761581,
+              825.7999999523163,
+              867.1999999880791
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              810.1999999880791,
+              851.3999999761581,
+              818.1999999880791
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              815.1999999880791,
+              888.6999999880791,
+              809.6999999880791
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              800.3999999761581,
+              828.6999999880791,
+              813.5
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          }
+        ],
+        "status": "ran"
+      },
+      "tabSwitch": {
+        "id": "tabSwitch",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "corpus/01-ime-zh.md",
+        "runs": [
+          {
+            "samples": [
+              13,
+              51,
+              36.69999998807907,
+              32.09999996423721
+            ]
+          },
+          {
+            "samples": [
+              37.69999998807907,
+              31.899999976158142,
+              38.19999998807907,
+              35
+            ]
+          },
+          {
+            "samples": [
+              32.30000001192093,
+              36.60000002384186,
+              33,
+              36.5
+            ]
+          },
+          {
+            "samples": [
+              30,
+              34.59999996423721,
+              35.40000003576279,
+              29
+            ]
+          },
+          {
+            "samples": [
+              32.60000002384186,
+              36.69999998807907,
+              35.39999997615814,
+              34.89999997615814
+            ]
+          }
+        ],
+        "status": "ran"
+      }
+    },
+    "environment": {
+      "mode": "realapp",
+      "cdpEndpoint": "http://127.0.0.1:9564"
+    },
+    "ok": true,
+    "finishedAt": "2026-10-21T09:58:26.156Z"
+  }
+}

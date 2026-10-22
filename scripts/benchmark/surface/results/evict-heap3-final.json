@@ -1,0 +1,335 @@
+{
+  "schema": "memoria-evict-heap3/v1",
+  "at": "2026-10-22T15:52:17.325Z",
+  "head": "a373dd745ac9dbaccc0f030465b219f29f490a1a",
+  "scriptSha256": "53118d1184e58e1e8f6596549ea370933c3bc308e0b31c6cf6bf89a710c01ff1",
+  "argv": [
+    "9624",
+    "scripts\\benchmark\\surface\\results\\evict-heap3-final.json"
+  ],
+  "port": 9624,
+  "doc": "教材/08_第8章_差错控制编码.md",
+  "open": {
+    "usedMB": 16.05,
+    "embedderMB": 14.31,
+    "domNodes": 55311,
+    "listeners": 930
+  },
+  "openState": {
+    "math": 0,
+    "mathDisconnected": 0,
+    "domPreview": 4019,
+    "domBody": 24983,
+    "ws": {
+      "materialized": 36,
+      "placeholders": 3965,
+      "totalBlocks": 4001,
+      "evictTotal": 0,
+      "keepScreens": 4,
+      "suspended": false,
+      "heightDriftPx": 0,
+      "anchorFixes": 0,
+      "fsPx": 14,
+      "lhPx": 22.4,
+      "metricsSrc": "probe"
+    },
+    "mjx": 0,
+    "scrollTop": 0,
+    "scrollHeight": 181817,
+    "clientHeight": 707
+  },
+  "passes": [
+    {
+      "pass": 1,
+      "bottomQuiet": {
+        "materialized": 48,
+        "placeholders": 3953,
+        "totalBlocks": 4001,
+        "evictTotal": 1580,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 129,
+        "anchorFixes": 9,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "topQuiet": {
+        "materialized": 35,
+        "placeholders": 3966,
+        "totalBlocks": 4001,
+        "evictTotal": 3178,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 255,
+        "anchorFixes": 9,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "bottom": {
+        "state": {
+          "math": 5,
+          "mathDisconnected": 0,
+          "domPreview": 4786,
+          "domBody": 25750,
+          "ws": {
+            "materialized": 48,
+            "placeholders": 3953,
+            "totalBlocks": 4001,
+            "evictTotal": 1580,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 129,
+            "anchorFixes": 9,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 5,
+          "scrollTop": 180723,
+          "scrollHeight": 181431,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 20.71,
+          "embedderMB": 18.32,
+          "domNodes": 58557,
+          "listeners": 993
+        }
+      },
+      "top": {
+        "state": {
+          "math": 0,
+          "mathDisconnected": 0,
+          "domPreview": 4018,
+          "domBody": 24982,
+          "ws": {
+            "materialized": 35,
+            "placeholders": 3966,
+            "totalBlocks": 4001,
+            "evictTotal": 3178,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 255,
+            "anchorFixes": 9,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 0,
+          "scrollTop": 0,
+          "scrollHeight": 182006,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 20.83,
+          "embedderMB": 17.41,
+          "domNodes": 57956,
+          "listeners": 930
+        }
+      }
+    },
+    {
+      "pass": 2,
+      "bottomQuiet": {
+        "materialized": 56,
+        "placeholders": 3945,
+        "totalBlocks": 4001,
+        "evictTotal": 4754,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 385,
+        "anchorFixes": 17,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "topQuiet": {
+        "materialized": 35,
+        "placeholders": 3966,
+        "totalBlocks": 4001,
+        "evictTotal": 6478,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 542,
+        "anchorFixes": 17,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "bottom": {
+        "state": {
+          "math": 7,
+          "mathDisconnected": 0,
+          "domPreview": 5171,
+          "domBody": 26135,
+          "ws": {
+            "materialized": 56,
+            "placeholders": 3945,
+            "totalBlocks": 4001,
+            "evictTotal": 4754,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 385,
+            "anchorFixes": 17,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 7,
+          "scrollTop": 180891,
+          "scrollHeight": 181598,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 21.22,
+          "embedderMB": 19.45,
+          "domNodes": 59055,
+          "listeners": 1013
+        }
+      },
+      "top": {
+        "state": {
+          "math": 0,
+          "mathDisconnected": 0,
+          "domPreview": 4018,
+          "domBody": 24982,
+          "ws": {
+            "materialized": 35,
+            "placeholders": 3966,
+            "totalBlocks": 4001,
+            "evictTotal": 6478,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 542,
+            "anchorFixes": 17,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 0,
+          "scrollTop": 0,
+          "scrollHeight": 179785,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 21.32,
+          "embedderMB": 17.85,
+          "domNodes": 58140,
+          "listeners": 930
+        }
+      }
+    },
+    {
+      "pass": 3,
+      "bottomQuiet": {
+        "materialized": 55,
+        "placeholders": 3946,
+        "totalBlocks": 4001,
+        "evictTotal": 8124,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 616,
+        "anchorFixes": 20,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "topQuiet": {
+        "materialized": 35,
+        "placeholders": 3966,
+        "totalBlocks": 4001,
+        "evictTotal": 9784,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 703,
+        "anchorFixes": 20,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "bottom": {
+        "state": {
+          "math": 7,
+          "mathDisconnected": 0,
+          "domPreview": 4944,
+          "domBody": 25908,
+          "ws": {
+            "materialized": 55,
+            "placeholders": 3946,
+            "totalBlocks": 4001,
+            "evictTotal": 8124,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 616,
+            "anchorFixes": 20,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 7,
+          "scrollTop": 178820,
+          "scrollHeight": 179537,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 21.53,
+          "embedderMB": 19.34,
+          "domNodes": 59064,
+          "listeners": 993
+        }
+      },
+      "top": {
+        "state": {
+          "math": 0,
+          "mathDisconnected": 0,
+          "domPreview": 4018,
+          "domBody": 24982,
+          "ws": {
+            "materialized": 35,
+            "placeholders": 3966,
+            "totalBlocks": 4001,
+            "evictTotal": 9784,
+            "keepScreens": 4,
+            "suspended": false,
+            "heightDriftPx": 703,
+            "anchorFixes": 20,
+            "fsPx": 14,
+            "lhPx": 22.4,
+            "metricsSrc": "probe"
+          },
+          "mjx": 0,
+          "scrollTop": 0,
+          "scrollHeight": 179547,
+          "clientHeight": 707
+        },
+        "heap": {
+          "usedMB": 21.53,
+          "embedderMB": 18.26,
+          "domNodes": 58157,
+          "listeners": 930
+        }
+      }
+    }
+  ],
+  "summary": {
+    "heapMB": [
+      20.83,
+      21.32,
+      21.53
+    ],
+    "deltas": [
+      null,
+      2.4,
+      1
+    ],
+    "openToLastPct": 34.1,
+    "firstToLastPct": 3.4,
+    "mathItems": [
+      0,
+      0,
+      0
+    ]
+  }
+}

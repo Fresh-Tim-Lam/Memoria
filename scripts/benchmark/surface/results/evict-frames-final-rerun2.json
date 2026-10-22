@@ -1,0 +1,1887 @@
+{
+  "schema": "memoria-evict-frames/v1",
+  "at": "2026-10-22T15:48:47.097Z",
+  "concurrencyBefore": "py:5 wv2:24 node:6 cpu:15.3",
+  "head": "a373dd745ac9dbaccc0f030465b219f29f490a1a",
+  "dirty": "M src/memoria/ui/static/app/js/app.js",
+  "scriptSha256": "cc30f9a7bcc9866fb5391fd811ee42c039c501b418ed7f109f542861edb7c418",
+  "argv": [
+    "9624",
+    "scripts\\benchmark\\surface\\results\\evict-frames-final-rerun2.json",
+    "--fast",
+    "3",
+    "--slow",
+    "0"
+  ],
+  "env": {
+    "mode": "realapp-webview2",
+    "port": 9624,
+    "doc": "教材/08_第8章_差错控制编码.md",
+    "profile": true,
+    "fastFrames": 80,
+    "slowSteps": 30,
+    "slowInterval": 100
+  },
+  "gpu": {
+    "webgl": true,
+    "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+  },
+  "visibility": {
+    "visibility": "visible",
+    "hasFocus": true,
+    "w": 1264,
+    "h": 821
+  },
+  "idleRafBaseline": {
+    "n": 145,
+    "p50": 8.3,
+    "p95": 8.4,
+    "max": 9.1
+  },
+  "window": {
+    "w": 1264,
+    "h": 821,
+    "dpr": 1,
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0"
+  },
+  "appVersion": "Memoria v0.4.5",
+  "rounds": [
+    {
+      "round": 1,
+      "kind": "fast",
+      "topQuiet": 36,
+      "scroll": {
+        "frames": 80,
+        "ms": 13646.5,
+        "maxScroll": 181102
+      },
+      "quiet": {
+        "quietMs": 12234.1,
+        "stats": {
+          "materialized": 86,
+          "placeholders": 3915,
+          "totalBlocks": 4001,
+          "evictTotal": 3915,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 340,
+          "anchorFixes": 7,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        }
+      },
+      "frames": {
+        "n": 331,
+        "p50": 8.5,
+        "p95": 306.5,
+        "max": 657.3,
+        "over50": 131,
+        "over100": 100,
+        "over200": 38
+      },
+      "longtask": {
+        "n": 164,
+        "max": 656,
+        "over50": 163
+      },
+      "counters": {
+        "scheduled": 429,
+        "executed": 195,
+        "merged": 234,
+        "dropped": 0,
+        "queue_max": 3,
+        "budget_exceeded": 103,
+        "frames_used": 153,
+        "slice_count": 0,
+        "max_frame_ms": 186.8999999994412
+      },
+      "jobs": {
+        "lazy_materialize": {
+          "n": 77,
+          "max": 33.6,
+          "sum": 1135.9
+        },
+        "lazy_typeset": {
+          "n": 51,
+          "max": 0.6,
+          "sum": 12.1
+        },
+        "lazy_evict": {
+          "n": 67,
+          "max": 186.9,
+          "sum": 2379.4
+        }
+      },
+      "evictProfile": {
+        "batches": 66,
+        "blocks": 3915,
+        "totalMs": 2376.3999999975786,
+        "keepMs": 380.5999999931082,
+        "scanMs": 132.50000000745058,
+        "readMs": 11.600000000558794,
+        "applyMs": 297.199999993667,
+        "blockIndexMs": 2.199999997392297,
+        "mathClearMs": 123.30000000353903,
+        "purgeMs": 11.699999999254942,
+        "anchorMs": 1432.4000000003725,
+        "maxTotalMs": 186.8999999994412,
+        "maxMathClearMs": 7,
+        "maxApplyMs": 8.700000000186265,
+        "maxBlockIndexMs": 0.20000000018626451,
+        "blocksWithMath": 1245,
+        "last": [
+          {
+            "n": 42,
+            "total": 8.8,
+            "apply": 0.6,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 45,
+            "total": 14.7,
+            "apply": 2.3,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 30.8,
+            "apply": 2.1,
+            "math": 1.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 40.9,
+            "apply": 3.4,
+            "math": 3.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 43.6,
+            "apply": 3.3,
+            "math": 7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 44.8,
+            "apply": 5.2,
+            "math": 3.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 186.9,
+            "apply": 5.2,
+            "math": 3.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 46.3,
+            "apply": 4.9,
+            "math": 5.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 162,
+            "apply": 3.6,
+            "math": 3.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 42.1,
+            "apply": 4.6,
+            "math": 2.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 40.9,
+            "apply": 2,
+            "math": 1.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 43.2,
+            "apply": 5.4,
+            "math": 3.3,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 56.7,
+            "apply": 4.7,
+            "math": 4.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 41.1,
+            "apply": 3.8,
+            "math": 3.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 39.1,
+            "apply": 4.9,
+            "math": 2.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38.6,
+            "apply": 4.7,
+            "math": 2.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 40.5,
+            "apply": 4.7,
+            "math": 2.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38.8,
+            "apply": 3.4,
+            "math": 2.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 39.9,
+            "apply": 6.2,
+            "math": 3.1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 35.3,
+            "apply": 3,
+            "math": 2.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35,
+            "apply": 2.9,
+            "math": 2.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.1,
+            "apply": 3.9,
+            "math": 2.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38.3,
+            "apply": 5.4,
+            "math": 3.6,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 34.7,
+            "apply": 3.6,
+            "math": 2.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.5,
+            "apply": 3.3,
+            "math": 2.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 33.7,
+            "apply": 3.8,
+            "math": 2.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 79.8,
+            "apply": 3.5,
+            "math": 1.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 79,
+            "apply": 3.5,
+            "math": 2,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 32.4,
+            "apply": 3.7,
+            "math": 1.9,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 32.3,
+            "apply": 5.3,
+            "math": 2.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.6,
+            "apply": 7.4,
+            "math": 2.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 33.2,
+            "apply": 7.2,
+            "math": 1.9,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34.1,
+            "apply": 8.7,
+            "math": 2.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 30.6,
+            "apply": 6.1,
+            "math": 1.8,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 30.7,
+            "apply": 8.3,
+            "math": 1.6,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 30.7,
+            "apply": 7.6,
+            "math": 1.8,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 61.3,
+            "apply": 3,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 27.5,
+            "apply": 5.4,
+            "math": 1.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 26.7,
+            "apply": 6.3,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 27.5,
+            "apply": 7.5,
+            "math": 1.7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 26.8,
+            "apply": 8.4,
+            "math": 1.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 24.7,
+            "apply": 6.6,
+            "math": 1.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 24.2,
+            "apply": 6.7,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 42.6,
+            "apply": 5.2,
+            "math": 1.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 22,
+            "apply": 4.6,
+            "math": 1.3,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 40,
+            "apply": 4.3,
+            "math": 1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 37.5,
+            "apply": 3.1,
+            "math": 1,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 17,
+            "apply": 2.9,
+            "math": 0.7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 35.6,
+            "apply": 2.9,
+            "math": 0.7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 33.9,
+            "apply": 3.7,
+            "math": 0.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.2,
+            "apply": 4.4,
+            "math": 0.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.1,
+            "apply": 6,
+            "math": 0.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 20.1,
+            "apply": 8.2,
+            "math": 0.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 28.5,
+            "apply": 3.6,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 17,
+            "apply": 6.6,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12.9,
+            "apply": 2.1,
+            "math": 0.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 16.2,
+            "apply": 6.4,
+            "math": 0.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 13.1,
+            "apply": 5,
+            "math": 0.5,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 10.6,
+            "apply": 1.5,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 9.5,
+            "apply": 0.8,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 10,
+            "apply": 2,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12,
+            "apply": 4.5,
+            "math": 0.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 15.5,
+            "apply": 3.2,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 11.7,
+            "apply": 4.8,
+            "math": 0.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 9.3,
+            "apply": 3.2,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 48,
+            "total": 9.7,
+            "apply": 2.1,
+            "math": 0.2,
+            "bi": 0
+          }
+        ]
+      },
+      "snap": {
+        "ws": {
+          "materialized": 86,
+          "placeholders": 3915,
+          "totalBlocks": 4001,
+          "evictTotal": 3915,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 340,
+          "anchorFixes": 7,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "domPreview": 5943,
+        "domBody": 26907,
+        "mjx": 14,
+        "mathItems": 14,
+        "mathDetached": 0,
+        "scrollTop": 178661,
+        "scrollHeight": 179369,
+        "clientHeight": 707,
+        "viewMode": "preview"
+      },
+      "heap": {
+        "usedMB": 22.92,
+        "embedderMB": 33,
+        "domNodes": 78912,
+        "listeners": 1052
+      }
+    },
+    {
+      "round": 2,
+      "kind": "fast",
+      "topQuiet": 35,
+      "scroll": {
+        "frames": 80,
+        "ms": 12372.9,
+        "maxScroll": 178387
+      },
+      "quiet": {
+        "quietMs": 10477.5,
+        "stats": {
+          "materialized": 107,
+          "placeholders": 3894,
+          "totalBlocks": 4001,
+          "evictTotal": 7895,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 428,
+          "anchorFixes": 11,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        }
+      },
+      "frames": {
+        "n": 329,
+        "p50": 8.4,
+        "p95": 302.9,
+        "max": 704.1,
+        "over50": 123,
+        "over100": 84,
+        "over200": 36
+      },
+      "longtask": {
+        "n": 149,
+        "max": 716,
+        "over50": 148
+      },
+      "counters": {
+        "scheduled": 312,
+        "executed": 163,
+        "merged": 149,
+        "dropped": 0,
+        "queue_max": 3,
+        "budget_exceeded": 86,
+        "frames_used": 144,
+        "slice_count": 0,
+        "max_frame_ms": 136.5
+      },
+      "jobs": {
+        "lazy_materialize": {
+          "n": 40,
+          "max": 46.7,
+          "sum": 736.8
+        },
+        "lazy_typeset": {
+          "n": 56,
+          "max": 0.6,
+          "sum": 14.1
+        },
+        "lazy_evict": {
+          "n": 67,
+          "max": 136.5,
+          "sum": 2154.8
+        }
+      },
+      "evictProfile": {
+        "batches": 66,
+        "blocks": 3894,
+        "totalMs": 2150.900000001304,
+        "keepMs": 389.2000000011176,
+        "scanMs": 138.80000000167638,
+        "readMs": 11.299999993294477,
+        "applyMs": 295.800000003539,
+        "blockIndexMs": 2.4000000013038516,
+        "mathClearMs": 95.60000000149012,
+        "purgeMs": 8.09999999590218,
+        "anchorMs": 1221.6000000005588,
+        "maxTotalMs": 136.5,
+        "maxMathClearMs": 4.5,
+        "maxApplyMs": 9.200000000186265,
+        "maxBlockIndexMs": 0.20000000018626451,
+        "blocksWithMath": 1240,
+        "last": [
+          {
+            "n": 26,
+            "total": 8.6,
+            "apply": 0.3,
+            "math": 0,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 8.9,
+            "apply": 2.1,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12.2,
+            "apply": 1.8,
+            "math": 0.2,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 13.5,
+            "apply": 2.8,
+            "math": 0.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 15.4,
+            "apply": 4.1,
+            "math": 0.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 40.3,
+            "apply": 5.1,
+            "math": 2.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 42.4,
+            "apply": 5.5,
+            "math": 2.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 51.3,
+            "apply": 4.3,
+            "math": 2.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38,
+            "apply": 3.7,
+            "math": 3.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 36,
+            "apply": 4,
+            "math": 2.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.2,
+            "apply": 1.9,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 46.6,
+            "apply": 5.5,
+            "math": 2.8,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 37.8,
+            "apply": 4.9,
+            "math": 3,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 49.5,
+            "apply": 4.6,
+            "math": 2.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 36.8,
+            "apply": 4.4,
+            "math": 2.3,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 53.7,
+            "apply": 4.4,
+            "math": 2.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.6,
+            "apply": 4.6,
+            "math": 2.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 48.9,
+            "apply": 3.4,
+            "math": 2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.8,
+            "apply": 6,
+            "math": 2.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 30.1,
+            "apply": 2.2,
+            "math": 2.5,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 31.5,
+            "apply": 2.9,
+            "math": 2.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 59.7,
+            "apply": 4.3,
+            "math": 4.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 36.7,
+            "apply": 5.7,
+            "math": 2.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 31.7,
+            "apply": 3.7,
+            "math": 2.2,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 31.4,
+            "apply": 3.3,
+            "math": 2.5,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 32,
+            "apply": 4.7,
+            "math": 2.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 74.2,
+            "apply": 4.4,
+            "math": 1.5,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 69,
+            "apply": 2.8,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 71.9,
+            "apply": 4.2,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 30.6,
+            "apply": 5,
+            "math": 1.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 33,
+            "apply": 7.6,
+            "math": 2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 30.3,
+            "apply": 6.1,
+            "math": 2.1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34.1,
+            "apply": 9.2,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 29.7,
+            "apply": 6.5,
+            "math": 1.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 28.2,
+            "apply": 7.8,
+            "math": 1.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 68.9,
+            "apply": 7.8,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 51,
+            "apply": 3.9,
+            "math": 1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 25.5,
+            "apply": 5.9,
+            "math": 1.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 26.5,
+            "apply": 6,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 25.6,
+            "apply": 7.1,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 26.5,
+            "apply": 8.2,
+            "math": 1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 24,
+            "apply": 6.5,
+            "math": 1.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 22.3,
+            "apply": 6.2,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38,
+            "apply": 5.6,
+            "math": 1.1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 18.3,
+            "apply": 3.9,
+            "math": 1.1,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 136.5,
+            "apply": 4.6,
+            "math": 0.8,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 37.8,
+            "apply": 2.8,
+            "math": 0.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 16.6,
+            "apply": 2.1,
+            "math": 0.6,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34,
+            "apply": 2.7,
+            "math": 1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.5,
+            "apply": 3.4,
+            "math": 0.9,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34.7,
+            "apply": 4.2,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.8,
+            "apply": 6.4,
+            "math": 1.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 19.4,
+            "apply": 7.3,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 27.3,
+            "apply": 4.3,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 18.3,
+            "apply": 5.9,
+            "math": 0.7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 12.9,
+            "apply": 3.2,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 16.5,
+            "apply": 6.8,
+            "math": 0.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 13.8,
+            "apply": 5.3,
+            "math": 0.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 9.8,
+            "apply": 2,
+            "math": 0.3,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 9.8,
+            "apply": 0.9,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 10.4,
+            "apply": 2.9,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12.2,
+            "apply": 3.9,
+            "math": 0.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 14.8,
+            "apply": 3.9,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12.1,
+            "apply": 3.9,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 11.1,
+            "apply": 3,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 28,
+            "total": 7.4,
+            "apply": 1.4,
+            "math": 0.2,
+            "bi": 0
+          }
+        ]
+      },
+      "snap": {
+        "ws": {
+          "materialized": 107,
+          "placeholders": 3894,
+          "totalBlocks": 4001,
+          "evictTotal": 7895,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 428,
+          "anchorFixes": 11,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "domPreview": 6393,
+        "domBody": 27357,
+        "mjx": 22,
+        "mathItems": 22,
+        "mathDetached": 0,
+        "scrollTop": 178176,
+        "scrollHeight": 179285,
+        "clientHeight": 707,
+        "viewMode": "preview"
+      },
+      "heap": {
+        "usedMB": 23.11,
+        "embedderMB": 34.76,
+        "domNodes": 80156,
+        "listeners": 1052
+      }
+    },
+    {
+      "round": 3,
+      "kind": "fast",
+      "topQuiet": 35,
+      "scroll": {
+        "frames": 80,
+        "ms": 12341.9,
+        "maxScroll": 178581
+      },
+      "quiet": {
+        "quietMs": 10675.5,
+        "stats": {
+          "materialized": 105,
+          "placeholders": 3896,
+          "totalBlocks": 4001,
+          "evictTotal": 11898,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 515,
+          "anchorFixes": 18,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        }
+      },
+      "frames": {
+        "n": 322,
+        "p50": 8.5,
+        "p95": 313.5,
+        "max": 672.1,
+        "over50": 125,
+        "over100": 86,
+        "over200": 36
+      },
+      "longtask": {
+        "n": 149,
+        "max": 683,
+        "over50": 148
+      },
+      "counters": {
+        "scheduled": 316,
+        "executed": 163,
+        "merged": 153,
+        "dropped": 0,
+        "queue_max": 3,
+        "budget_exceeded": 87,
+        "frames_used": 145,
+        "slice_count": 0,
+        "max_frame_ms": 149.59999999962747
+      },
+      "jobs": {
+        "lazy_materialize": {
+          "n": 40,
+          "max": 43.6,
+          "sum": 758.5
+        },
+        "lazy_typeset": {
+          "n": 56,
+          "max": 0.6,
+          "sum": 15.9
+        },
+        "lazy_evict": {
+          "n": 67,
+          "max": 149.6,
+          "sum": 2173.1
+        }
+      },
+      "evictProfile": {
+        "batches": 66,
+        "blocks": 3896,
+        "totalMs": 2169.4999999990687,
+        "keepMs": 364.59999999962747,
+        "scanMs": 127.39999999664724,
+        "readMs": 10.600000005215406,
+        "applyMs": 300.7999999951571,
+        "blockIndexMs": 1.5000000009313226,
+        "mathClearMs": 98.39999999664724,
+        "purgeMs": 7.800000002607703,
+        "anchorMs": 1268.7000000067055,
+        "maxTotalMs": 149.59999999962747,
+        "maxMathClearMs": 3.900000000372529,
+        "maxApplyMs": 8.5,
+        "maxBlockIndexMs": 0.19999999925494194,
+        "blocksWithMath": 1241,
+        "last": [
+          {
+            "n": 26,
+            "total": 8.4,
+            "apply": 0.3,
+            "math": 0,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 9.2,
+            "apply": 1.8,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 13.3,
+            "apply": 1.8,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 15,
+            "apply": 3.3,
+            "math": 0.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 14.8,
+            "apply": 3.3,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 41.1,
+            "apply": 5,
+            "math": 2.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 40.1,
+            "apply": 5.5,
+            "math": 2.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 41.1,
+            "apply": 3.8,
+            "math": 3.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 37.5,
+            "apply": 3.5,
+            "math": 2.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 36,
+            "apply": 4.3,
+            "math": 2.3,
+            "bi": 0.2
+          },
+          {
+            "n": 60,
+            "total": 43.8,
+            "apply": 1.7,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 38.1,
+            "apply": 6.3,
+            "math": 2.1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 49.9,
+            "apply": 5.5,
+            "math": 2.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 36.5,
+            "apply": 4.5,
+            "math": 3.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 50.9,
+            "apply": 4.6,
+            "math": 2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.1,
+            "apply": 5.1,
+            "math": 2.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 48.4,
+            "apply": 4.9,
+            "math": 2.1,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34.8,
+            "apply": 4.1,
+            "math": 2.2,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 38.6,
+            "apply": 6.6,
+            "math": 2.1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 32.5,
+            "apply": 2.3,
+            "math": 2.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 104.9,
+            "apply": 3.7,
+            "math": 2.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.5,
+            "apply": 4.1,
+            "math": 3.9,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 34.2,
+            "apply": 5.5,
+            "math": 2.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 31.4,
+            "apply": 3.7,
+            "math": 2.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 31.2,
+            "apply": 3.1,
+            "math": 2.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.9,
+            "apply": 5.7,
+            "math": 1.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 78.9,
+            "apply": 4.1,
+            "math": 1.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 79.7,
+            "apply": 3.8,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 32.3,
+            "apply": 4.7,
+            "math": 1.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 33.1,
+            "apply": 6.2,
+            "math": 1.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 31.3,
+            "apply": 6.9,
+            "math": 2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 32.2,
+            "apply": 6.7,
+            "math": 3.6,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 31.5,
+            "apply": 8.5,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 149.6,
+            "apply": 6.2,
+            "math": 1.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 31.9,
+            "apply": 8.3,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 29.3,
+            "apply": 7.9,
+            "math": 1.5,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 56,
+            "apply": 3.5,
+            "math": 1.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 26.5,
+            "apply": 6.1,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 28.5,
+            "apply": 6.8,
+            "math": 1.6,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 28.2,
+            "apply": 7.7,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 26,
+            "apply": 7.9,
+            "math": 1.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 25.3,
+            "apply": 6,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 23.4,
+            "apply": 6.4,
+            "math": 1.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 44,
+            "apply": 4.7,
+            "math": 2.7,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 19.8,
+            "apply": 4.3,
+            "math": 1.2,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 39.6,
+            "apply": 5.1,
+            "math": 0.9,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 37.8,
+            "apply": 3.6,
+            "math": 1,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 17.3,
+            "apply": 2.2,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.5,
+            "apply": 2.7,
+            "math": 0.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 35.5,
+            "apply": 3.8,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 34.4,
+            "apply": 4,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 33.3,
+            "apply": 5.8,
+            "math": 0.8,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 19.6,
+            "apply": 7.3,
+            "math": 0.9,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 28.1,
+            "apply": 3.9,
+            "math": 0.7,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 16.6,
+            "apply": 6.4,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 12.6,
+            "apply": 2.7,
+            "math": 0.6,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 15.9,
+            "apply": 6.3,
+            "math": 0.5,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 13.5,
+            "apply": 4.4,
+            "math": 0.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 10,
+            "apply": 1.5,
+            "math": 0.2,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 9.1,
+            "apply": 0.9,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 10.6,
+            "apply": 1.9,
+            "math": 0.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 11.8,
+            "apply": 4,
+            "math": 0.4,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 14.8,
+            "apply": 3.3,
+            "math": 0.3,
+            "bi": 0
+          },
+          {
+            "n": 60,
+            "total": 13.6,
+            "apply": 5.9,
+            "math": 0.4,
+            "bi": 0.1
+          },
+          {
+            "n": 60,
+            "total": 9.4,
+            "apply": 2.8,
+            "math": 0.3,
+            "bi": 0.1
+          },
+          {
+            "n": 30,
+            "total": 6.8,
+            "apply": 1.6,
+            "math": 0.2,
+            "bi": 0
+          }
+        ]
+      },
+      "snap": {
+        "ws": {
+          "materialized": 105,
+          "placeholders": 3896,
+          "totalBlocks": 4001,
+          "evictTotal": 11898,
+          "keepScreens": 4,
+          "suspended": false,
+          "heightDriftPx": 515,
+          "anchorFixes": 18,
+          "fsPx": 14,
+          "lhPx": 22.4,
+          "metricsSrc": "probe"
+        },
+        "domPreview": 6324,
+        "domBody": 27288,
+        "mjx": 21,
+        "mathItems": 21,
+        "mathDetached": 0,
+        "scrollTop": 178369,
+        "scrollHeight": 179409,
+        "clientHeight": 707,
+        "viewMode": "preview"
+      },
+      "heap": {
+        "usedMB": 23.11,
+        "embedderMB": 26.12,
+        "domNodes": 63186,
+        "listeners": 1051
+      }
+    }
+  ],
+  "open": {
+    "snap": {
+      "ws": {
+        "materialized": 36,
+        "placeholders": 3965,
+        "totalBlocks": 4001,
+        "evictTotal": 0,
+        "keepScreens": 4,
+        "suspended": false,
+        "heightDriftPx": 0,
+        "anchorFixes": 0,
+        "fsPx": 14,
+        "lhPx": 22.4,
+        "metricsSrc": "probe"
+      },
+      "domPreview": 4019,
+      "domBody": 24983,
+      "mjx": 0,
+      "mathItems": 0,
+      "mathDetached": 0,
+      "scrollTop": 24,
+      "scrollHeight": 181809,
+      "clientHeight": 707,
+      "viewMode": "preview"
+    },
+    "heap": {
+      "usedMB": 22.6,
+      "embedderMB": 19.31,
+      "domNodes": 61249,
+      "listeners": 1029
+    }
+  },
+  "summary": {
+    "rounds": 3,
+    "max_frame_ms": [
+      186.9,
+      136.5,
+      149.6
+    ],
+    "max_frame_ms_max": 186.9,
+    "over200": 0,
+    "slice_count": [
+      0,
+      0,
+      0
+    ],
+    "budget_exceeded": [
+      103,
+      86,
+      87
+    ],
+    "evict_job_max": [
+      186.9,
+      136.5,
+      149.6
+    ],
+    "materialize_job_max": [
+      33.6,
+      46.7,
+      43.6
+    ],
+    "typeset_job_max": [
+      0.6,
+      0.6,
+      0.6
+    ],
+    "evictTotal": [
+      3915,
+      7895,
+      11898
+    ],
+    "evict_blocks_per_round": [
+      3915,
+      3980,
+      4003
+    ],
+    "heapMB": [
+      22.92,
+      23.11,
+      23.11
+    ],
+    "domPreview": [
+      5943,
+      6393,
+      6324
+    ],
+    "materialized": [
+      86,
+      107,
+      105
+    ],
+    "heightDriftPx": [
+      340,
+      428,
+      515
+    ]
+  }
+}

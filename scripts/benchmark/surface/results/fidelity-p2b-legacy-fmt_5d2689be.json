@@ -1,0 +1,941 @@
+{
+  "schema": "memoria-fidelity-run/v1",
+  "mode": "harness",
+  "harnessUrl": "http://127.0.0.1:8644/",
+  "cdpEndpoint": null,
+  "files": [
+    "docs/format.md"
+  ],
+  "mutateKind": null,
+  "startedAt": "2026-10-21T01:27:12.374Z",
+  "documents": {
+    "docs/format.md": {
+      "status": "ran",
+      "run1": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 59,
+            "dom": 59
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h3",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h3",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h3",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h3",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ol"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 4,
+            "domAnchors": 4,
+            "emptyHref": 0,
+            "residualWiki": true,
+            "ok": false
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 7,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 38,
+                "domCount": 44
+              },
+              {
+                "kind": "code",
+                "astCount": 107,
+                "domCount": 231
+              },
+              {
+                "kind": "link",
+                "astCount": 4,
+                "domCount": 4
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "bLevel": {
+          "b5": {
+            "ok": false,
+            "diffCount": 32,
+            "diffs": [
+              {
+                "i": 0,
+                "ast": "",
+                "dom": "预览渲染：支持的格式与样式（Preview Formats & Styles）"
+              },
+              {
+                "i": 2,
+                "ast": "",
+                "dom": "用途：Memoria 主预览区（#preview）对源正文支持哪些书写格式、各自渲染成什么样子、有哪些交互与边界。给内容生产者（写文档的人 / 生成正文的 Agent）与排查渲染问题的维护者提供准确的当前实现说明。目标读者：知识库内容生产者（含 Agent）· 维护者（排查预览渲染问题时先读本页）。关联文档：markdown-form-std.md（`[]]` 语法体系与 sidecar 存储契约）；[image-features.md（图片功能机制）；architecture.md（前端模块与数据流）；glossary.md（术语）。状态：生效中。核验于 2026-09-01，与 ui/static/app/ 当前源码一致。源码行号随实现演进可能漂移，以行为描述为准。提示词关联：程序内 Agent 整理提示词 resources/agent-prompts/organize.zh-CN.md §7「正文书写格式」要点以本页为权威源；渲染行为变更后若与要点失配，请同步该提示词（防双份漂移）。"
+              },
+              {
+                "i": 6,
+                "ast": "",
+                "dom": "1. 总览"
+              },
+              {
+                "i": 8,
+                "ast": "",
+                "dom": "主预览走 AST 渲染管线，不是通用 Markdown 库：源码正文 → 图片路径重写（app.js rewriteMdImagePaths）→ lexer.js 词法 → parser.js 块/行内 AST → renderer.js AST→DOM（每块一个 . -src-block）→ 行号打标（stampBlockLines）→ 后处理（Mermaid、图片 Lightbox、MathJax 排版、链接解析）。markdown-preview.js（marked / GFM 管线）在主预览中只被借用三样能力：本地图片路径重写、Mermaid 渲染、图片 Lightbox。它自己的 renderHtml 只用于知识点范围预览的\"Markdown 模式\"（辅助面板），两者行为差异已在文中标注。主容器：#preview，类 -preview markdown-body（index.html）；内部内容容器 . -preview-content。编辑态（打开\"编辑\"开关）时 #preview 为 contenteditable，可直接在预览改正文；只读态仅供浏览（链接可点，右键无编辑菜单）。Frontmatter、代码、公式、Mermaid、表格、图片块无论编辑态与否都不可直接编辑（内部 contenteditable=false）；编辑态下双击这些块进入对应\"块编辑\"面板，见 §6。"
+              },
+              {
+                "i": 9,
+                "ast": "",
+                "dom": "2. 块级书写格式与渲染效果"
+              },
+              {
+                "i": 11,
+                "ast": "",
+                "dom": "源码写法预览渲染说明空行. -blank-block（内含 <br>）块间纵向间距的唯一来源# … ～ ###### …h1～h6（类 -src-block）空标题补占位连续普通行p空段补占位 lang… 或 ~lang…~ | pre（. -code-block）＋code.language-<lang> | **纯文本，无语法高亮**；代码内 ` 不排版（MathJax 跳过 pre/code）独占行 …MathJax 块级公式文本按 公式 排版alturl 独立行. -image-block：img＋下方 . -image-caption（显示 alt）存储位置与路径写法见 §4.4，属性见 §4.3；默认限宽 35%，见 §5--- / *** / ___（≥3 个）hr> … 连续行blockquote（内层为普通 p）- /* /+ /1. … | ul/ol`松散列表；有序/无序切换视为新块含表头行＋分隔行的 | 表格table（. -table）th/td 纯文本 mermaid… | Mermaid 图（. -mermaid-container，svg 居中） | 语法错误显示 . -mermaid-error` 红框文档首部 --- YAML 块pre 原文显示不隐藏，以代码块形式可见"
+              },
+              {
+                "i": 13,
+                "ast": "",
+                "dom": "标准 Markdown 的 HTML 直通不可用：正文里的原始 HTML 标签按字面文本显示，不生成 DOM。裸 URL 不会自动成链（需 texturl 或 …]]）。"
+              },
+              {
+                "i": 15,
+                "ast": "",
+                "dom": "3. 行内书写格式"
+              },
+              {
+                "i": 17,
+                "ast": "",
+                "dom": "写法渲染备注**加粗** / __加粗__<strong>***粗斜体*** 也支持*斜体* / _斜体_<em>~~删除~~<del> 行内代码 <code>x转义字面字符…MathJax 行内公式（. -math）只匹配单行，不能跨行；多行用块级 texturl<a>（可点击，跳转新窗口/外链）目标]] 或 目标\\|显示文本]]. -wikilink（知识点链接）语法见 §4.1[[…|文本]]字样式命令语法见 §4.2"
+              },
+              {
+                "i": 19,
+                "ast": "",
+                "dom": "4. Memoria 扩展语法"
+              },
+              {
+                "i": 21,
+                "ast": "",
+                "dom": "4.1 知识点链接（无 `` 前缀）"
+              },
+              {
+                "i": 23,
+                "ast": "",
+                "dom": "语法含义kp-id]]链接到知识点 kp-idkp-id\\|显示文本]]链接＋自定义显示文本"
+              },
+              {
+                "i": 25,
+                "ast": "",
+                "dom": "链接渲染后按绑定状态三态着色：已绑定（-link-resolved，主题色实线下划线）/ 未绑定（-link-broken，灰、不可点，点击弹链接编辑器）/ 待绑定提议（-link-pending，虚线下划线）。主预览中 #type 后缀不会被拆分：kp#edge\\|文本]] 整个作为目标参与解析，不产生边类型小标签（与辅助 marked 面板不同）。悬停时联动图谱高亮对应节点；点击跳转目标文件/定位；右键弹链接菜单。"
+              },
+              {
+                "i": 26,
+                "ast": "",
+                "dom": "4.2 字样式命令（[[` 前缀；]]` 收尾，不嵌套）"
+              },
+              {
+                "i": 28,
+                "ast": "",
+                "dom": "写法渲染效果[[h|文本]]高亮，默认黄底 #fff3cdh:bg\\文本]]、h:bg:fg\\文本]]指定底色/前景色c:color\\文本]]字体颜色s:size\\文本]]字号（size 为 CSS 值，如 20px、1.2em）[[b|文本]] / [[i|文本]]粗体 / 斜体[[u|文本]] / [[sup|文本]] / [[sub|文本]]下划线 / 上标 / 下标"
+              },
+              {
+                "i": 30,
+                "ast": "",
+                "dom": "命令内部不嵌套字样式命令；要叠加效果用 Markdown 语法（如 h:green\\**加粗**]]）。]] 按行内第一个 ]] 收尾。高亮底色名（bg）：yellow(默认 #fff3cd)、green、red、blue、orange。前景/字色名（fg/color）：red、green、blue、orange、yellow、purple、gray。命名色与 #RRGGBB（及任意 CSS 颜色名）均可直通。渲染方式：高亮为 span.-hl（inline 底色 + 已知色名加 . -hl-<name> fallback 类）；字色为 inline style.color。参数段最多两段（bg:fg），与 markdown-form-std.md 描述的 id 参数 / <mark> 类渲染不一致——该契约描述的是辅助 marked 管线的能力。主预览的带名高亮记录仍存 sidecar highlights[]，但正文预览不再按 data-hl-id 走 <mark> 分支。"
+              },
+              {
+                "i": 31,
+                "ast": "",
+                "dom": "4.3 图片属性（title 位 key=value 逗号列表）"
+              },
+              {
+                "i": 33,
+                "ast": "",
+                "dom": "![说明文字](url \"width=300,align=center\")"
+              },
+              {
+                "i": 35,
+                "ast": "",
+                "dom": "key取值渲染效果width / height数字（px）或带单位（300px/50%）img 内联尺寸；一旦设显式尺寸，max-width 放宽到 100%（解除默认 35% 钳制）alignleft/center/right图片块容器对齐（. -image-align-*）name-size尺寸值下方名称（alt）字号namehide隐藏下方名称"
+              },
+              {
+                "i": 37,
+                "ast": "",
+                "dom": "未知 key 忽略并 console.warn(\"[img-attrs] …\")，不破坏渲染。"
+              }
+            ]
+          },
+          "b6": {
+            "ok": true,
+            "diffCount": 0,
+            "diffs": []
+          },
+          "b7": {
+            "perBlock": [
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 6,
+                "em": 0,
+                "code": 3,
+                "a": 4,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 3,
+                "em": 0,
+                "code": 14,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 52,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 2,
+                "em": 0,
+                "code": 2,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 23,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 3,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 5,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 13,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 4,
+                "em": 0,
+                "code": 27,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 13,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 1,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 3,
+                "em": 0,
+                "code": 2,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 2,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 4,
+                "em": 0,
+                "code": 19,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 1,
+                "em": 0,
+                "code": 9,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 11,
+                "em": 0,
+                "code": 23,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 0,
+                "em": 0,
+                "code": 0,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              },
+              {
+                "strong": 5,
+                "em": 0,
+                "code": 17,
+                "a": 0,
+                "img": 0,
+                "hl": 0
+              }
+            ]
+          }
+        },
+        "signature": "9c07a64e4fb48888e2bfb6d3f668b2b6bcaebacac9b6a5449dfd08dc00460247",
+        "signatureNorm": "{\"v\":2,\"count\":59,\"kinds\":[\"h1\",\"-blank-block\",\"blockquote\",\"-blank-block\",\"hr\",\"-blank-block\",\"h2\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"-table\",\"-blank-block\",\"p\",\"-blank-block\",\"h2\",\"-blank-block\",\"-table\",\"-blank-block\",\"h2\",\"-blank-block\",\"h3\",\"-blank-block\",\"-table\",\"-blank-block\",\"ul\",\"h3\",\"-blank-block\",\"-table\",\"-blank-block\",\"ul\",\"h3\",\"-blank-block\",\"-code-block\",\"-blank-block\",\"-table\",\"-blank-block\",\"p\",\"-blank-block\",\"h3\",\"-blank-block\",\"p\",\"-blank-block\",\"ul\",\"p\",\"-blank-block\",\"-table\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"ul\",\"h2\",\"-blank-block\",\"-table\",\"-blank-block\",\"h2\",\"-blank-block\",\"ol\"],\"tags\":[\"h1\",\"div\",\"blockquote\",\"div\",\"hr\",\"div\",\"h2\",\"div\",\"ul\",\"h2\",\"div\",\"table\",\"div\",\"p\",\"div\",\"h2\",\"div\",\"table\",\"div\",\"h2\",\"div\",\"h3\",\"div\",\"table\",\"div\",\"ul\",\"h3\",\"div\",\"table\",\"div\",\"ul\",\"h3\",\"div\",\"pre\",\"div\",\"table\",\"div\",\"p\",\"div\",\"h3\",\"div\",\"p\",\"div\",\"ul\",\"p\",\"div\",\"table\",\"div\",\"ul\",\"h2\",\"div\",\"ul\",\"h2\",\"div\",\"table\",\"div\",\"h2\",\"div\",\"ol\"],\"typesetMathBlocks\":0,\"inlineMathBlocks\":0,\"imgCount\":0,\"imgEmptySrc\":false,\"anchorCount\":4,\"emptyHref\":0,\"residualWiki\":true,\"langIssues\":0,\"tableIssues\":0,\"effectFloorFailures\":[],\"mermaidContainers\":0,\"mermaidErrors\":0,\"textNorm\":[\"预览渲染：支持的格式与样式（Preview Formats & Styles）\",\"\",\"用途：Memoria 主预览区（#preview）对源正文支持哪些书写格式、各自渲染成什么样子、有哪些交互与边界。给内容生产者（写文档的人 / 生成正文的 Agent）与排查渲染问题的维护者提供准确的当前实现说明。目标读者：知识库内容生产者（含 Agent）· 维护者（排查预览渲染问题时先读本页）。关联文档：markdown-form-std.md（`[]]` 语法体系与 sidecar 存储契约）；[image-features.md（图片功能机制）；architecture.md（前端模块与数据流）；glossary.md（术语）。状态：生效中。核验于 2026-09-01，与 ui/static/app/ 当前源码一致。源码行号随实现演进可能漂移，以行为描述为准。提示词关联：程序内 Agent 整理提示词 resources/agent-prompts/organize.zh-CN.md §7「正文书写格式」要点以本页为权威源；渲染行为变更后若与要点失配，请同步该提示词（防双份漂移）。\",\"\",\"\",\"\",\"1. 总览\",\"\",\"主预览走 AST 渲染管线，不是通用 Markdown 库：源码正文 → 图片路径重写（app.js rewriteMdImagePaths）→ lexer.js 词法 → parser.js 块/行内 AST → renderer.js AST→DOM（每块一个 . -src-block）→ 行号打标（stampBlockLines）→ 后处理（Mermaid、图片 Lightbox、MathJax 排版、链接解析）。markdown-preview.js（marked / GFM 管线）在主预览中只被借用三样能力：本地图片路径重写、Mermaid 渲染、图片 Lightbox。它自己的 renderHtml 只用于知识点范围预览的\\\"Markdown 模式\\\"（辅助面板），两者行为差异已在文中标注。主容器：#preview，类 -preview markdown-body（index.html）；内部内容容器 . -preview-content。编辑态（打开\\\"编辑\\\"开关）时 #preview 为 contenteditable，可直接在预览改正文；只读态仅供浏览（链接可点，右键无编辑菜单）。Frontmatter、代码、公式、Mermaid、表格、图片块无论编辑态与否都不可直接编辑（内部 contenteditable=false）；编辑态下双击这些块进入对应\\\"块编辑\\\"面板，见 §6。\",\"2. 块级书写格式与渲染效果\",\"\",\"源码写法预览渲染说明空行. -blank-block（内含 <br>）块间纵向间距的唯一来源# … ～ ###### …h1～h6（类 -src-block）空标题补占位连续普通行p空段补占位 lang… 或 ~lang…~ | pre（. -code-block）＋code.language-<lang> | **纯文本，无语法高亮**；代码内 ` 不排版（MathJax 跳过 pre/code）独占行 …MathJax 块级公式文本按 公式 排版alturl 独立行. -image-block：img＋下方 . -image-caption（显示 alt）存储位置与路径写法见 §4.4，属性见 §4.3；默认限宽 35%，见 §5--- / *** / ___（≥3 个）hr> … 连续行blockquote（内层为普通 p）- /* /+ /1. … | ul/ol`松散列表；有序/无序切换视为新块含表头行＋分隔行的 | 表格table（. -table）th/td 纯文本 mermaid… | Mermaid 图（. -mermaid-container，svg 居中） | 语法错误显示 . -mermaid-error` 红框文档首部 --- YAML 块pre 原文显示不隐藏，以代码块形式可见\",\"\",\"标准 Markdown 的 HTML 直通不可用：正文里的原始 HTML 标签按字面文本显示，不生成 DOM。裸 URL 不会自动成链（需 texturl 或 …]]）。\",\"\",\"3. 行内书写格式\",\"\",\"写法渲染备注**加粗** / __加粗__<strong>***粗斜体*** 也支持*斜体* / _斜体_<em>~~删除~~<del> 行内代码 <code>x转义字面字符…MathJax 行内公式（. -math）只匹配单行，不能跨行；多行用块级 texturl<a>（可点击，跳转新窗口/外链）目标]] 或 目标\\\\|显示文本]]. -wikilink（知识点链接）语法见 §4.1[[…|文本]]字样式命令语法见 §4.2\",\"\",\"4. Memoria 扩展语法\",\"\",\"4.1 知识点链接（无 `` 前缀）\",\"\",\"语法含义kp-id]]链接到知识点 kp-idkp-id\\\\|显示文本]]链接＋自定义显示文本\",\"\",\"链接渲染后按绑定状态三态着色：已绑定（-link-resolved，主题色实线下划线）/ 未绑定（-link-broken，灰、不可点，点击弹链接编辑器）/ 待绑定提议（-link-pending，虚线下划线）。主预览中 #type 后缀不会被拆分：kp#edge\\\\|文本]] 整个作为目标参与解析，不产生边类型小标签（与辅助 marked 面板不同）。悬停时联动图谱高亮对应节点；点击跳转目标文件/定位；右键弹链接菜单。\",\"4.2 字样式命令（[[` 前缀；]]` 收尾，不嵌套）\",\"\",\"写法渲染效果[[h|文本]]高亮，默认黄底 #fff3cdh:bg\\\\文本]]、h:bg:fg\\\\文本]]指定底色/前景色c:color\\\\文本]]字体颜色s:size\\\\文本]]字号（size 为 CSS 值，如 20px、1.2em）[[b|文本]] / [[i|文本]]粗体 / 斜体[[u|文本]] / [[sup|文本]] / [[sub|文本]]下划线 / 上标 / 下标\",\"\",\"命令内部不嵌套字样式命令；要叠加效果用 Markdown 语法（如 h:green\\\\**加粗**]]）。]] 按行内第一个 ]] 收尾。高亮底色名（bg）：yellow(默认 #fff3cd)、green、red、blue、orange。前景/字色名（fg/color）：red、green、blue、orange、yellow、purple、gray。命名色与 #RRGGBB（及任意 CSS 颜色名）均可直通。渲染方式：高亮为 span.-hl（inline 底色 + 已知色名加 . -hl-<name> fallback 类）；字色为 inline style.color。参数段最多两段（bg:fg），与 markdown-form-std.md 描述的 id 参数 / <mark> 类渲染不一致——该契约描述的是辅助 marked 管线的能力。主预览的带名高亮记录仍存 sidecar highlights[]，但正文预览不再按 data-hl-id 走 <mark> 分支。\",\"4.3 图片属性（title 位 key=value 逗号列表）\",\"\",\"![说明文字](url \\\"width=300,align=center\\\")\",\"\",\"key取值渲染效果width / height数字（px）或带单位（300px/50%）img 内联尺寸；一旦设显式尺寸，max-width 放宽到 100%（解除默认 35% 钳制）alignleft/center/right图片块容器对齐（. -image-align-*）name-size尺寸值下方名称（alt）字号namehide隐藏下方名称\",\"\",\"未知 key 忽略并 console.warn(\\\"[img-attrs] …\\\")，不破坏渲染。\",\"\",\"4.4 图片存储位置与路径写法\",\"\",\"存储位置约定\",\"\",\"知识库内图片统一放入知识库根的隐藏目录 .memoria/images/（该目录不在文件树 / 文档扫描范围，可在「图片管理」视图中浏览、插入、清理）。编辑器「插入图片 / 替换图片」会把所选本地图自动复制入库到 .memoria/images/（MD5 去重，正文只写引用）。删除正文图片块仅删引用，磁盘文件保留（其他文档可能仍在引用）。\",\"正文里的路径写法（主预览 app.js rewriteMdImagePaths → markdown-preview.js rewriteLocalImagePaths）\",\"\",\"写法含义示例https://… / data:… / /… 开头原样不动（远程 / 数据 / 绝对路径）图https://example.com/a.png.memoria/images/x.png（不以 ./ 开头）推荐新约定：相对知识库根结构图/files/.memoria/images/arch.png → 渲染为 /files/.memoria/images/arch.png./x.png（以 ./ 开头）旧语义兼容：相对当前文件所在目录文件 sub/a.md 内 图/files/docs/img/x.png → 指向 sub/img/x.png../… / 含 .. 上跳非法：逃出知识库根，静态服务判路径逃逸 → 404图/files/../.memoria/images/x.png → 应写 .memoria/images/x.png路径含空格 / 中文用尖括号 <…> 包裹（编辑器插入图片默认写成该形式）图/files/.memoria/images/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202026.png\",\"\",\"相对路径解析基准只有两种：无 ./ → 知识库根；有 ./ → 当前文件所在目录。两种基准都不接受 .. 上跳：引用 KB 根 .memoria/images/ 的资产时，不因文件位于子目录而推导 ../.memoria/…，一律直接写无前缀的 .memoria/images/…（KB 根相对与文件深度无关）。相对路径统一转成 /files/<编码路径> 再加载；` 一律按 /` 处理，路径段自动做 URL 编码。显示属性放在 title 位，语法见 §4.3：alturl。\",\"5. 样式与主题\",\"\",\"字号：预览基础字号由 CSS 变量 --preview-font-size 控制，默认 14px；“设置 → 显示 → 文字”滑块（12–28px）同时设置预览（--preview-font-size）与源码编辑器（--editor-font-size）。整体界面缩放由“缩放比例”控制根字号（rem 化布局），与文字字号独立。排版：. -preview 内联 padding、line-height 1.6；标题比例来自 markdown-body：h1 1.625rem＋下边框、h2 1.25rem、h3 1rem；块级 p/h1–h6/ol/ul/pre/hr margin 归零；引用左侧 3px 主题色边框。代码：行内 <code> 与块级 <pre> 均为主题背景色（.markdown-body），无语法高亮配色。表格：border-collapse、宽 100%、th/td 1px 边框、表头主题浅底。链接态：见 §4.1；图谱联动焦点有紫色高亮环。图片：默认 max-width: 35%（大图等比缩小不撑破布局）、圆角；下方 caption 灰字。公式：MathJax 容器 max-width 100%、横向可滚动、不可选中（避免误改）。Mermaid：容器浅底、居中、圆角、svg 限宽；失败显示红框错误提示。Lightbox：双击图片全屏放大，黑色半透明遮罩，点遮罩关闭。选区覆盖：行内公式等不可编辑元素被选中时，JS 补画蓝色高亮框（. -math.-sel-covered）。知识点定位：KP 范围带（. -preview-range-band，半透明蓝带，错误为红）；源码↔预览同步光标（. -preview-cursor / . -sync-cursor）；预览拖选整行范围（. -src-block.is-drag-select）。\",\"6. 交互行为\",\"\",\"场景行为单击链接跳转目标文件/定位；broken 链弹链接编辑器；多目标弹选择器悬停链接图谱联动高亮节点右键链接链接菜单（编辑/删除/加链）单击图片（编辑态）进入图片编辑工具栏（对齐/尺寸/名称字号/名称显隐/图片管理）双击图片全屏 Lightbox 放大（点击遮罩关闭）双击代码块（编辑态）“编辑代码块”面板，语言下拉（js/python/bash/json/html/css/sql/mermaid）双击 Mermaid（编辑态）“编辑思维导图”，类型下拉（graph TD / sequenceDiagram / classDiagram / stateDiagram-v2 / erDiagram / gantt）双击公式/行内公式（编辑态）编辑数学公式面板（含常用符号按钮）双击表格（编辑态）编辑表格（加行/加列）点击正文（编辑态）光标同步到源码对应行（分栏/源码视图）；不可编辑块不映射，保证双击可用只读态右键无编辑菜单；单击不同步光标；“编辑模式关闭”时按 ↑/↓ 滚动预览（滚轮效果）\",\"\",\"7. 已知边界与注意事项\",\"\",\"代码块无语法高亮；frontmatter 原文以 pre 显示（不隐藏）。任务列表（- [ ]）：主预览按普通列表文本渲染，无勾选框。图片默认仅显示到 35% 宽——若显式给了 width/height 则放宽到 100%（防溢出）。嫌图太小先查是否有 width 属性。正文改动后预览取后端 preview_body（带缓存）；涉及正文的写入后须让后端失效 preview_body（本地编辑、粘贴、导入、撤销等已统一处理），否则预览不更新。主预览的 …]] 不支持 #type 拆分与 marked 管线的 <mark>/id 高亮分支（§4.2）；跨管线行为不一致时以主预览为准。代码调试日志（[img-rewrite]/[img-debug]）与 console.warn(\\\"[img-attrs] …\\\") 当前仍在输出，非故障。markdown-form-std.md 为 [[]] 语法契约（含 sidecar 存储），本文档描述主预览实际渲染；两者冲突处（如高亮 id 参数）以本页为准。\"],\"htmlFingerprint\":\"d2cb236442d3c700\",\"nondetStripped\":59}",
+        "nondetStripped": 59,
+        "astCount": 59,
+        "domCount": 59
+      },
+      "run2": {
+        "ok": false,
+        "aLevel": {
+          "a1": {
+            "ok": true,
+            "ast": 59,
+            "dom": 59
+          },
+          "a2": {
+            "ok": true,
+            "orderOk": true,
+            "kindMismatch": [],
+            "kinds": [
+              "h1",
+              "-blank-block",
+              "blockquote",
+              "-blank-block",
+              "hr",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "h3",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h3",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h3",
+              "-blank-block",
+              "-code-block",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "h3",
+              "-blank-block",
+              "p",
+              "-blank-block",
+              "ul",
+              "p",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "ul",
+              "h2",
+              "-blank-block",
+              "-table",
+              "-blank-block",
+              "h2",
+              "-blank-block",
+              "ol"
+            ]
+          },
+          "a3": {
+            "ok": true,
+            "inconclusive": false,
+            "expectBlocks": 0,
+            "expectInline": 0,
+            "blockWithBlockMath": 0,
+            "blockWithInlineMath": 0,
+            "astBlocksWithInline": 0,
+            "residual": 0,
+            "blocksApplicable": false,
+            "inlineApplicable": false,
+            "blocksMatch": true,
+            "inlineMatch": true,
+            "noResidual": true
+          },
+          "a4": {
+            "ok": true,
+            "w1": [],
+            "w2": []
+          },
+          "a5": {
+            "applicable": false,
+            "astImages": 0,
+            "domImgs": 0,
+            "withSrc": 0,
+            "hasEmptySrc": false,
+            "ok": true
+          },
+          "a6": {
+            "applicable": true,
+            "astLinks": 4,
+            "domAnchors": 4,
+            "emptyHref": 0,
+            "residualWiki": true,
+            "ok": false
+          },
+          "a7": {
+            "applicable": false,
+            "astCodeWithLang": 0,
+            "issues": [],
+            "ok": true
+          },
+          "a8": {
+            "applicable": true,
+            "astTables": 7,
+            "issues": [],
+            "ok": true
+          },
+          "a9": {
+            "checks": [
+              {
+                "kind": "bold",
+                "astCount": 38,
+                "domCount": 44
+              },
+              {
+                "kind": "code",
+                "astCount": 107,
+                "domCount": 231
+              },
+              {
+                "kind": "link",
+                "astCount": 4,
+                "domCount": 4
+              }
+            ],
+            "failures": [],
+            "ok": true
+          },
+          "a10": {
+            "applicable": false,
+            "inconclusive": false,
+            "perBlock": [],
+            "failures": [],
+            "ok": true
+          },
+          "a11": {
+            "applicable": false,
+            "astMermaid": 0,
+            "containers": 0,
+            "issues": [],
+            "errNodes": 0,
+            "ok": true
+          }
+        },
+        "signature": "9c07a64e4fb48888e2bfb6d3f668b2b6bcaebacac9b6a5449dfd08dc00460247"
+      },
+      "reproducible": true,
+      "mutation": null
+    }
+  },
+  "environment": {
+    "browser": "Edg/155.0.4283.45",
+    "mode": "harness",
+    "harnessUrl": "http://127.0.0.1:8644/"
+  },
+  "allGreen": false,
+  "ok": true,
+  "finishedAt": "2026-10-21T01:27:15.697Z"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "memoria-signature-selfcheck/v1",
+  "mode": "real",
+  "cdpEndpoint": "http://127.0.0.1:9500",
+  "startedAt": "2026-10-20T14:48:35.202Z",
+  "files": [
+    "corpus/04-non-editable.md"
+  ],
+  "groups": {
+    "corpus/04-non-editable.md": {
+      "file": "corpus/04-non-editable.md",
+      "g1": {
+        "mutation": "nondet-id-only(49)",
+        "baselineSig": "7ba2e800c3aa56bc5eea0c7d89499fb4578dd3e0dcff0a4a5c98113d2935cb13",
+        "afterSig": "c4e16831a78b3b194a2df958fd4a9006747657d59248667fb6a270b55d2cde0f",
+        "unchanged": false,
+        "nondetStrippedBase": 153,
+        "nondetStrippedAfter": 154,
+        "diff": {
+          "at": 26945,
+          "baseLen": 26950,
+          "afterLen": 27091,
+          "baseAround": "n><button type=\"button\" class=\"-mmd-zoom-btn\" contenteditable=\"false\" title=\"全屏\" aria-label=\"全屏\">⤢</button></div></div></div>",
+          "afterAround": "n><button type=\"button\" class=\"-mmd-zoom-btn\" contenteditable=\"false\" title=\"全屏\" aria-label=\"全屏\">⤢</button></div></div><div class=\"-src-block -blank-block\" data--block-index=\"28\" data-block-id=\"<block-id>\" data--src-line=\"49\" data--src-line-end=\"49\"><br></div></div>"
+        },
+        "verdict": "FAIL"
+      },
+      "g2": {
+        "mutation": "real-change",
+        "baselineSig": "7ba2e800c3aa56bc5eea0c7d89499fb4578dd3e0dcff0a4a5c98113d2935cb13",
+        "afterSig": "babfa8dd4020e3b4cb5b76ce5c650a243b66f05f7a2e3ab16784cafcd15e9fae",
+        "changed": true,
+        "verdict": "PASS"
+      },
+      "g3": {
+        "s1": "7ba2e800c3aa56bc5eea0c7d89499fb4578dd3e0dcff0a4a5c98113d2935cb13",
+        "s2": "7ba2e800c3aa56bc5eea0c7d89499fb4578dd3e0dcff0a4a5c98113d2935cb13",
+        "identical": true,
+        "nondetStripped": 153
+      },
+      "g4": {
+        "diffDetected": true,
+        "verdict": "PASS"
+      }
+    }
+  },
+  "summary": {
+    "g1_allUnchanged": false,
+    "g2_allChanged": true,
+    "g3_allZeroDiff": true,
+    "g4_allDiffDetected": true
+  },
+  "ok": false,
+  "finishedAt": "2026-10-20T14:48:51.898Z"
+}

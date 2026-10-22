@@ -1,0 +1,207 @@
+{
+  "schema": "memoria-perf-ops/v1",
+  "sha": "4532cc23",
+  "label": "p5gate-smoke",
+  "mode": "realapp",
+  "environment": {
+    "mode": "realapp",
+    "cdpEndpoint": "http://127.0.0.1:9560"
+  },
+  "inject": null,
+  "budgetRule": "min(用户可感知阈值, P_old×1.15)；无阈值取 P_old×1.15",
+  "noiseGate": {
+    "maxIqrOverMedian": 0.25,
+    "maxP95OverMedian": 1.6,
+    "maxRoundSpread": 0.2
+  },
+  "userThresholds": {
+    "typing": 16.0,
+    "open": 1000.0
+  },
+  "ops": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "p50": 0.85,
+      "p95": 2.86,
+      "samples": 30,
+      "pOld": 2.86,
+      "budget": 3.29,
+      "budgetBasis": "min(阈值 16.0, P_old×1.15)",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": false,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "p50": 834.8,
+      "p95": 863.42,
+      "samples": 9,
+      "pOld": 863.42,
+      "budget": 992.93,
+      "budgetBasis": "min(阈值 1000.0, P_old×1.15)",
+      "verdict": null,
+      "verdictReasons": [],
+      "currentlyRed": false,
+      "noiseOk": true,
+      "status": "ran",
+      "error": null,
+      "extra": null
+    }
+  },
+  "summaries": {
+    "typing": {
+      "id": "typing",
+      "tier": "A",
+      "mode": "headless-ok",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 30,
+      "p50": 0.85,
+      "p95": 2.86,
+      "max": 3.3,
+      "iqrOverMedian": 0.324,
+      "p95OverMedian": 3.371,
+      "roundSpread": 0.125,
+      "noiseOk": false
+    },
+    "open": {
+      "id": "open",
+      "tier": "A",
+      "mode": "realapp-required",
+      "metric": "latency",
+      "doc": "scale/scale-5k.md",
+      "status": "ran",
+      "samples": 9,
+      "p50": 834.8,
+      "p95": 863.42,
+      "max": 872.7,
+      "iqrOverMedian": 0.034,
+      "p95OverMedian": 1.034,
+      "roundSpread": 0.031,
+      "noiseOk": true
+    }
+  },
+  "raw": {
+    "schema": "memoria-perf-ops-run/v1",
+    "mode": "realapp",
+    "harnessUrl": null,
+    "cdpEndpoint": "http://127.0.0.1:9560",
+    "rounds": 3,
+    "inject": null,
+    "startedAt": "2026-10-21T09:47:46.103Z",
+    "ops": {
+      "typing": {
+        "id": "typing",
+        "tier": "A",
+        "mode": "headless-ok",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              3.300000011920929,
+              1.5,
+              0.8999999761581421,
+              0.9000000357627869,
+              1.0999999642372131,
+              1,
+              0.9000000357627869,
+              0.800000011920929,
+              0.699999988079071,
+              0.800000011920929
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              3,
+              1.5,
+              1,
+              0.7999999523162842,
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              0.8999999761581421,
+              0.699999988079071,
+              0.699999988079071
+            ],
+            "timingMode": "fallback-execCommand"
+          },
+          {
+            "samples": [
+              2.699999988079071,
+              1.2000000476837158,
+              0.8999999761581421,
+              1.100000023841858,
+              0.7999999523162842,
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              0.800000011920929,
+              0.7999999523162842
+            ],
+            "timingMode": "fallback-execCommand"
+          }
+        ],
+        "status": "ran"
+      },
+      "open": {
+        "id": "open",
+        "tier": "A",
+        "mode": "realapp-required",
+        "metric": "latency",
+        "doc": "scale/scale-5k.md",
+        "runs": [
+          {
+            "samples": [
+              835.8000000119209,
+              834.8000000119209,
+              839.5999999642372
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              849.5,
+              810.5,
+              809.3000000119209
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          },
+          {
+            "samples": [
+              821.8999999761581,
+              811.1999999880791,
+              872.6999999880791
+            ],
+            "extra": {
+              "blocks": 3111
+            }
+          }
+        ],
+        "status": "ran"
+      }
+    },
+    "environment": {
+      "mode": "realapp",
+      "cdpEndpoint": "http://127.0.0.1:9560"
+    },
+    "ok": true,
+    "finishedAt": "2026-10-21T09:48:20.206Z"
+  }
+}
