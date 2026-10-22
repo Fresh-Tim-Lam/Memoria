@@ -8279,7 +8279,15 @@
     }
   }
 
-  /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。 */
+  /** 把队列里的块合并成**一次** typesetPromise；进 `_mathPending` 链（保持"已请求批次排完"语义）。
+   *
+   *  2026-10-22 P0 三处加固（Lead 定性为真 bug：03 章 R1 跳转 `$A$`/`$\mu$` 未排 ⇒ 可见题注残留源码）：
+   *   ① **token 判定要区分"重渲"与"换文档"**（根因）：
+   *      `state.previewToken` 每轮渲染都 +1（同文档跳转/重渲也会变），而 `state.doc.path` 只在**换文档**时变。
+   *      原实现只看 token ⇒ 同文档重渲时把**仍然有效**的块整批拦下 ⇒ 队列孤儿 ⇒ 那些块永不排版。
+   *      现在：**path 未变 ⇒ 文档没换 ⇒ 直接排**（不拦）；path 变了 ⇒ 才过滤 `isConnected` 后回收/丢弃。
+   *   ② 全程 **try/finally**：`finally` 里队列非空 ⇒ **无条件续命调度**（异常不再让队列变孤儿）。
+   *   ③ token 分支的重新调度走 `_lazyForceScheduleMathFlush()`：**不受幂等守卫影响**，保证一定有一次 flush。 */
   function _lazyFlushMathNow(reason) {
     if (!_lazyMathQueue || !_lazyMathQueue.length) return;
     var batch = _lazyMathQueue;
@@ -8287,29 +8295,55 @@
     if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
     if (!window.MathJax || typeof window.MathJax.typesetPromise !== "function") return;
 
-    // token 守卫：**失败不丢弃**（这些块已在 DOM，仍需要排版）⇒ 放回队列并重试调度。
-    //   ⚠️ 只有 token 变化且**新文档已经重渲**时才真正作废；此处保守地"放回 + 重排一次"，
-    //   避免"已被抛弃的批次里的块再没人排"（交互门禁实测的漏排路径）。
     var token = state.previewToken;
+    var pathAt = (state.doc && state.doc.path) || "";   // ★ 记下"这批块属于哪个文档"
     var prev = state._mathPending;
     var chain = prev && typeof prev.then === "function" ? prev.catch(function () {}) : Promise.resolve();
     state._mathPending = chain.then(function () {
-      if (token !== state.previewToken) {
-        // 文档已换 ⇒ 这批 DOM 多半已脱离文档。仍连上的才值得重排；脱钩的直接放掉（避免内存泄漏）。
+      try {
+        var pathNow = (state.doc && state.doc.path) || "";
+        // ★ 关键：**文档没换 ⇒ 不拦**。token 变化只代表"又重渲了一轮"，这些块仍是当前文档的一部分，
+        //   必须照常排版（否则就是 R1 跳转漏排的根因）。
+        if (pathNow === pathAt) {
+          log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length + (token !== state.previewToken ? " [retoken same-doc ⇒ still typeset]" : ""));
+          return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+        }
+        // 文档真的换了 ⇒ 这批 DOM 多半已脱离（仍连上的才回收，避免内存泄漏）
         var still = batch.filter(function (el) { return el && el.isConnected; });
         if (still.length) {
-          log("lazy", "math merge: token changed, re-queue connected blocks=" + still.length);
+          log("lazy", "math merge: doc changed, re-queue connected blocks=" + still.length);
           if (!_lazyMathQueue) _lazyMathQueue = [];
           for (var i = 0; i < still.length; i++) _lazyMathQueue.push(still[i]);
-          _lazyScheduleMathFlush();   // ★ 显式只补调度（不能走 _lazyEnqueueMath([])，那里会被空数组早退挡掉）
         }
         return Promise.resolve();
+      } catch (e) {
+        log("lazy", "math merge THREW: " + ((e && e.message) || e));
+        // 异常：把这批仍连上的块回队列，绝不丢弃
+        try {
+          var alive = batch.filter(function (el) { return el && el.isConnected; });
+          if (alive.length) {
+            if (!_lazyMathQueue) _lazyMathQueue = [];
+            for (var k = 0; k < alive.length; k++) _lazyMathQueue.push(alive[k]);
+          }
+        } catch (_) {}
+        return Promise.resolve();
+      } finally {
+        // ★ 队列非空 ⇒ 无条件续命（不受幂等守卫影响），杜绝"队列孤儿"
+        try {
+          if (_lazyMathQueue && _lazyMathQueue.length) _lazyForceScheduleMathFlush();
+        } catch (_) {}
       }
-      log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length);
-      return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
     });
   }
 
+  /** 强制调度一次合并排版：**清除幂等守卫与在跑的 idle 定时**，保证一定有一次 flush。
+   *  用于"队列孤儿"救援（token 变化 / 异常回队）——普通 `_lazyScheduleMathFlush` 可能因
+   *  `_lazyMathQueueTimer` 已存在或 rIC 被跳过而**不再产生 flush**。 */
+  function _lazyForceScheduleMathFlush() {
+    if (!_lazyMathQueue || !_lazyMathQueue.length) return;
+    if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
+    setTimeout(function () { _lazyFlushMathNow("force"); }, 0);   // 宏任务让出后必跑一次
+  }
 
   /** 拆掉滚动物化（换库/换文档/切走时清理，避免观察已移除的占位）。 */
   function _teardownLazyScrollMaterialization() {
