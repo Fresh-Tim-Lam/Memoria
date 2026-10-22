@@ -8080,21 +8080,41 @@
   // 对策：scroll 停止 50ms 后，**不依赖 IO/pending，直接扫 DOM 里视口内的占位块同步物化**。
   //   这与会话中异步物化不冲突：拖动时 idle（不卡手感），停下时同步（保证"用户看得见"）。
   var LAZY_SCROLL_IDLE_MS = 50;
+  var LAZY_SYNC_MAX = 50;          // rAF 同步物化单批上限（每帧都可能跑 ⇒ 必须小步，防单帧过重）
   var _lazyScrollIdleTimer = null;
   var _lazyScrollBound = false;
+  var _lazySyncNeeded = false;      // ★ rAF 驱动：scroll 只置位，不 debounce
+  var _lazySyncRAF = 0;
+  var _lazyLastScrollAt = 0;        // 最近一次 scroll 的时刻（供"滚动中"判据）
 
   function _bindLazyScrollIdleSync(preview) {
     if (_lazyScrollBound) return;
     var pane = preview.parentElement || preview;
     if (!pane || !pane.addEventListener) return;
     _lazyScrollBound = true;
+    // ★ 2026-10-22 改（Lead：`sync materialize` 恒 0 次）：**不再 debounce**。
+    //   原写法在滚动中每次 scroll 都 `clearTimeout` 重置 50ms 定时器 ⇒ 持续拖动时**永远到不了执行点**。
+    //   现在：scroll **只置位** `_lazySyncNeeded`，由 rAF 每帧检查一次并执行 ⇒ 滚动中每帧都有机会跑。
     pane.addEventListener("scroll", function () {
-      if (_lazyScrollIdleTimer) clearTimeout(_lazyScrollIdleTimer);
-      _lazyScrollIdleTimer = setTimeout(function () {
-        _lazyScrollIdleTimer = null;
-        try { _lazySyncMaterializeViewport(preview); } catch (e) { log("lazy", "scroll-idle sync ERR " + ((e && e.message) || e)); }
-      }, LAZY_SCROLL_IDLE_MS);
+      _lazySyncNeeded = true;
+      _lazyLastScrollAt = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (!_lazySyncRAF) {
+        var tick = function () {
+          _lazySyncRAF = 0;
+          if (!_lazySyncNeeded) return;
+          _lazySyncNeeded = false;
+          try { _lazySyncMaterializeViewport(preview); } catch (e) { log("lazy", "scroll-rAF sync ERR " + ((e && e.message) || e)); }
+        };
+        _lazySyncRAF = (window.requestAnimationFrame) ? window.requestAnimationFrame(tick) : setTimeout(tick, 16);
+      }
     }, { passive: true });
+  }
+
+  /** 最近 300ms 内是否发生过滚动（"滚动中"判据，供 typeset 降批/让路）。 */
+  function _lazyIsScrolling() {
+    if (!_lazyLastScrollAt) return false;
+    var now = (window.performance && performance.now) ? performance.now() : Date.now();
+    return (now - _lazyLastScrollAt) < 300;
   }
 
   /** **同步**物化当前视口内的占位块（滚动停止后调用；不排队、不等 idle）。
@@ -8143,17 +8163,18 @@
     }
     if (!idxs.length) return 0;
 
-    // 合并连续区间并**同步**物化（按 LAZY_FLUSH_MAX 分批，避免长冻结）
+    // 合并连续区间并**同步**物化。★ 单批上限收窄到 `LAZY_SYNC_MAX`（50）：
+    //   rAF 每帧都可能调用本函数 ⇒ 必须小步快跑，绝不能在单帧里建上百块（否则又造长帧）。
     var made = [];
     idxs.sort(function (a, b) { return a - b; });
-    for (var k = 0; k < idxs.length; k += LAZY_FLUSH_MAX) {
-      var chunk = idxs.slice(k, k + LAZY_FLUSH_MAX);
+    for (var k = 0; k < idxs.length; k += LAZY_SYNC_MAX) {
+      var chunk = idxs.slice(k, k + LAZY_SYNC_MAX);
       var s = chunk[0], e = chunk[chunk.length - 1] + 1;
       var els = _materializeRange(cc, _doc, s, e);
       made = made.concat(els);
     }
     if (made.length) {
-      log("lazy", "scroll-idle sync materialize: blocks=" + made.length + " (viewport[" + firstHit + ".." + lastHit + "])");
+      log("lazy", "scroll-rAF sync materialize: blocks=" + made.length + " (viewport[" + firstHit + ".." + lastHit + "])");
       // 排版走合并器（低优先级、可合并），后处理与首屏对齐
       _lazyEnqueueMath(made);
       _lazyRenderMermaidIn(made);
@@ -8428,6 +8449,35 @@
   var _lazyMathQueueTimer = null;   // 硬上限计时器
   var LAZY_MATH_MERGE_MAX_WAIT = 500;   // ms：合并窗口上限（到点必排，保证公式不会长期不显示）
   var LAZY_MATH_MERGE_IDLE = 120;       // ms：空闲合并窗口（拖到底期间把多批合并成一次）
+  var LAZY_MATH_DEFER_MAX = 1000;       // ms：为"让路给物化"最多推迟多久（防公式永不上屏）
+  var LAZY_MATH_FORMULAS_SCROLLING = 60;   // 滚动中单批公式上限（≈60×1.27≈76ms）
+  var LAZY_MATH_FORMULAS_IDLE = 200;       // 静止时单批公式上限（≈200×1.27≈254ms，静止可接受）
+  var _lazyMathDeferStart = 0;          // 本批次开始被推迟的时刻
+  var _lazyMathDeferred = false;        // 当前是否正处于"让路推迟"中（供诊断）
+
+  /** **视口内是否还有占位块**（决定 typeset 是否必须让路）。
+   *  用二分定位（占位块是 `.-preview-content` 直接子元素、布局位置单调），只 O(log n) 次测量。 */
+  function _lazyViewportHasPlaceholder() {
+    try {
+      var preview = $("#preview");
+      if (!preview) return false;
+      var cc = preview.querySelector(".-preview-content");
+      if (!cc) return false;
+      var phs = cc.querySelectorAll(".-pv-placeholder");
+      if (!phs.length) return false;
+      var pane = document.getElementById("preview-pane") || preview.parentElement;
+      if (!pane) return false;
+      var pr = pane.getBoundingClientRect();
+      var n = phs.length, a = 0, b = n - 1, firstHit = n;
+      while (a <= b) {                       // 第一个 bottom >= 视口顶 的占位块
+        var m = (a + b) >> 1;
+        if (phs[m].getBoundingClientRect().bottom >= pr.top) { firstHit = m; b = m - 1; } else { a = m + 1; }
+      }
+      if (firstHit >= n) return false;
+      // 它是否真的在视口内（top <= 视口底）⇒ 是则说明视口里有占位
+      return phs[firstHit].getBoundingClientRect().top <= pr.bottom;
+    } catch (_) { return false; }
+  }
 
   /** 把一批块加入待排队列，并调度合并排版。
    *
@@ -8486,6 +8536,49 @@
     _lazyMathQueue = null;
     if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
     if (!window.MathJax || typeof window.MathJax.typesetPromise !== "function") return;
+
+    // ★ 2026-10-22（Lead 长帧归因定死了方向）：**typeset 必须给物化让路**。
+    //   实测：gap=672.8ms / mjx+246 / ph-0 / 视口占位=15 ⇒ **纯 typeset 帧把物化挤掉，用户在黑屏**。
+    //   双 rAF 让出不够：让出后 typeset 仍是一大块，物化的 `setTimeout(0)` 排在它后面。
+    //
+    //   ⚠️ 判据**不是** `_lazyPending.size`：它表示"视口外 ±2 屏的**预取**工作"，
+    //      滚动时几乎永远非空 ⇒ 拿它判会把"用户看得见的排版"无限推迟。
+    //      正确判据 = **视口内是否还有占位块**（`_lazySyncNeeded` 或二分实测视口占位）。
+    //   防饿死：最多推迟 `LAZY_MATH_DEFER_MAX`（1s），到点必排 ⇒ 公式不会永不上屏。
+    if (reason !== "force-deadline") {
+      var nowMs = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (!_lazyMathDeferStart) _lazyMathDeferStart = nowMs;
+      var deferredTooLong = (nowMs - _lazyMathDeferStart) >= LAZY_MATH_DEFER_MAX;
+      if (!deferredTooLong && _lazyViewportHasPlaceholder()) {
+        _lazyMathDeferred = true;
+        // 把批次放回队列头部，稍后重试（不动 `_lazyMathDeferStart`，让 1s 上限累计）
+        if (!_lazyMathQueue) _lazyMathQueue = [];
+        _lazyMathQueue = batch.concat(_lazyMathQueue);
+        log("lazy", "typeset DEFERRED for materialization: blocks=" + batch.length + " (defer " + Math.round(nowMs - _lazyMathDeferStart) + "ms)");
+        _lazyForceScheduleMathFlush();
+        return;
+      }
+    }
+    _lazyMathDeferStart = 0;
+    _lazyMathDeferred = false;
+
+    // ★ 2026-10-22 ②（Lead：单批 246 公式 ≈300ms+ 独占主线程）：
+    //   **滚动期间更严**：最近 300ms 有 scroll ⇒ 单批 ≤ `LAZY_MATH_FORMULAS_SCROLLING`(60) 公式；
+    //   静止时放宽到 `LAZY_MATH_FORMULAS_IDLE`(200)。超出部分**留回队列**，下一轮再排。
+    var batchLimit = _lazyIsScrolling() ? LAZY_MATH_FORMULAS_SCROLLING : LAZY_MATH_FORMULAS_IDLE;
+    var fAcc = 0, cut = batch.length;
+    for (var fi = 0; fi < batch.length; fi++) {
+      var _f = _countBlockFormulas(_doc && _doc.blocks ? _doc.blocks[parseInt(batch[fi].getAttribute("data--block-index"), 10)] : null);
+      if (fAcc + _f > batchLimit && fi > 0) { cut = fi; break; }
+      fAcc += _f;
+    }
+    if (cut < batch.length) {
+      var rest = batch.slice(cut);
+      batch = batch.slice(0, cut);
+      if (!_lazyMathQueue) _lazyMathQueue = [];
+      _lazyMathQueue = rest.concat(_lazyMathQueue);
+      log("lazy", "typeset batch SPLIT (" + (_lazyIsScrolling() ? "scrolling" : "idle") + " limit=" + batchLimit + "): this=" + batch.length + " rest=" + rest.length);
+    }
 
     var token = state.previewToken;
     var pathAt = (state.doc && state.doc.path) || "";   // ★ 记下"这批块属于哪个文档"
