@@ -2068,6 +2068,73 @@
     return false;
   }
 
+  // ── E26：编辑后保持光标可见（源码区 / 预览区共用）──────────────────────────
+  // 只做**最小滚动**：光标矩形仍在 pane 视口内（含 margin）⇒ 一像素都不动，
+  // 避免"每次输入都跳"；只有越出视口才按差值补 scrollTop。
+  // pane 自身的 scroll 事件仍会走 `_onSplitPaneScroll`（分栏同步），与既有行为一致。
+  //
+  // 用户主动滚动的短时豁免：仓库原无 claimScroll 一类机制（全仓检索确认），
+  // 这里是唯一实现点 —— 用 wheel / 触摸 / 拖滚动条三种**确定是用户意图**的输入打时间戳，
+  // 命中后的 700 ms 内不自动补滚，避免"刚滚上去看上文，敲一个字又被拽回底部"。
+  // 不监听 scroll 事件：分栏同步、懒加载锚点补偿也会改 scrollTop，会误判成用户滚动。
+  var _lastUserScrollAt = 0;
+  var USER_SCROLL_GRACE_MS = 700;
+
+  function _keepCaretDebug() {
+    return {
+      userScrollAgoMs: _lastUserScrollAt ? Math.round(performance.now() - _lastUserScrollAt) : null,
+      graceMs: USER_SCROLL_GRACE_MS,
+    };
+  }
+
+  function _bindUserScrollGuard(pane) {
+    if (!pane || pane._memoriaScrollGuardBound) return;
+    pane._memoriaScrollGuardBound = true;
+    const mark = () => { _lastUserScrollAt = performance.now(); };
+    pane.addEventListener("wheel", mark, { passive: true });
+    pane.addEventListener("touchmove", mark, { passive: true });
+    // 拖滚动条：pointerdown 落在 pane 自身且横坐标越过内容宽度（= 竖向滚动条区域）
+    pane.addEventListener("pointerdown", (e) => {
+      if (e.target !== pane) return;
+      if (e.offsetX >= pane.clientWidth) mark();
+    }, { passive: true });
+  }
+
+  function _userScrolledRecently() {
+    return !!_lastUserScrollAt && (performance.now() - _lastUserScrollAt) < USER_SCROLL_GRACE_MS;
+  }
+
+  function _caretRect(range, fallbackEl) {
+    let rect = null;
+    try { rect = range.getBoundingClientRect(); } catch (_) { rect = null; }
+    // 空行 / <br> 上的折叠光标常给出全 0 的 rect ⇒ 退回所在行元素。
+    if ((!rect || (rect.width === 0 && rect.height === 0 && rect.top === 0 && rect.left === 0)) && fallbackEl) {
+      try { rect = fallbackEl.getBoundingClientRect(); } catch (_) { rect = null; }
+    }
+    return rect;
+  }
+
+  function _keepCaretVisible(pane, range, fallbackEl, margin) {
+    if (!pane || !range) return false;
+    _bindUserScrollGuard(pane);
+    if (_userScrolledRecently()) return false;   // 用户刚手动滚过 ⇒ 短时间内不强行拽回
+    const paneRect = pane.getBoundingClientRect();
+    const caretRect = _caretRect(range, fallbackEl);
+    if (!caretRect || (!caretRect.width && !caretRect.height && !caretRect.top)) return false;
+    const m = margin == null ? 8 : margin;
+    let delta = 0;
+    if (caretRect.bottom > paneRect.bottom - m) {
+      delta = caretRect.bottom - (paneRect.bottom - m);
+    } else if (caretRect.top < paneRect.top + m) {
+      delta = caretRect.top - (paneRect.top + m);
+    }
+    if (!delta) return false;
+    const before = pane.scrollTop;
+    const max = Math.max(0, pane.scrollHeight - pane.clientHeight);
+    pane.scrollTop = Math.max(0, Math.min(before + delta, max));
+    return pane.scrollTop !== before;
+  }
+
   function _saveCurrentViewScroll(mode) {
     if (!state.currentPath) return;
     const tab = state.openTabs.find((t) => t.path === state.currentPath);
@@ -7384,6 +7451,18 @@
     if (!editor || editor.dataset.selectBound) return;
     editor.dataset.selectBound = "1";
 
+    /** E26：源码区编辑后保持光标可见（IME 组合期间不滚，避免候选框/光标跳动）。 */
+    function _keepSrcCaretVisible(contentEl) {
+      if (!contentEl || _srcComposing) return;
+      const pane = $("#editor-pane");
+      const sel = window.getSelection();
+      if (!pane || !sel || !sel.rangeCount) return;
+      const range = sel.getRangeAt(0);
+      if (!contentEl.contains(range.startContainer)) return;
+      const lineEl = contentEl.closest(".-line") || contentEl;
+      _keepCaretVisible(pane, range, lineEl);
+    }
+
     // 方向键滚轮效果：pane 单步滚动（模拟滚轮一档约 6 行 @14px）。
     // 仅在"编辑模式关闭（只读）"时生效：编辑模式下上下键归属光标位置控制，
     // 源码/预览均正常移动光标，不做干预。
@@ -7447,6 +7526,8 @@
       }
       _srcAfterEdit();
       syncLog("editor input: 源码编辑触发, 目标行:", content.closest("[data-line]")?.dataset.line);
+      // E26：只在光标越出视口时补滚动（IME 组合中 _keepSrcCaretVisible 内部直接跳过）
+      if (!e.isComposing) _keepSrcCaretVisible(content);
       scheduleRenderSync();
       markDirty();
     });
@@ -7764,6 +7845,8 @@
             sel.removeAllRanges();
             sel.addRange(range);
           }
+          // E26：新行进入视口（连续回车不把光标留在视口外）
+          _keepSrcCaretVisible(newLineContent);
           scheduleRenderSync();
           markDirty();
           return;
@@ -7806,6 +7889,8 @@
           sel.removeAllRanges();
           sel.addRange(range);
         }
+        // E26：回车后新行/光标必须进入视口
+        _keepSrcCaretVisible(newLineContent);
         scheduleRenderSync();
         markDirty();
       }
@@ -7821,6 +7906,15 @@
     editor.addEventListener("paste", (e) => {
       const t = e.target;
       const contentEl = t && t.closest ? t.closest(".-line-content") : null;
+      // E25：剪贴板里有图片 ⇒ 先走图片链。**只有确有图片时**才 preventDefault，
+      // 纯文本粘贴完全走下面原有路径（原实现会先把图片当成空 text/plain 吞掉）。
+      const imgs = clipboardImageFiles(e);
+      if (imgs.length) {
+        if (!editor.contains(t)) return;   // 不在源码编辑器内 ⇒ 不拦截
+        e.preventDefault();
+        insertClipboardImages(imgs, 0);
+        return;
+      }
       if (!contentEl || !editor.contains(contentEl)) return;
       const clip = e.clipboardData || window.clipboardData;
       if (!clip) return;
@@ -7916,6 +8010,8 @@
           sel.addRange(r);
         }
       }
+      // E26：多行粘贴后光标可能已在视口外
+      if (cur) _keepSrcCaretVisible(cur);
       scheduleRenderSync();
       markDirty();
     }
@@ -7967,7 +8063,19 @@
 
     // IME 组合输入期间：input 事件不单独入栈，组合整体由 compositionend 后的状态兜底
     editor.addEventListener("compositionstart", () => { _srcComposing = true; });
-    editor.addEventListener("compositionend", () => { _srcComposing = false; });
+    editor.addEventListener("compositionend", () => {
+      _srcComposing = false;
+      // E26：组合**期间**绝不滚（否则拼音候选阶段光标会跳）；提交后的这一拍才补一次。
+      // 用 rAF 等浏览器把刚提交的字排进布局，避免用旧几何判断"是否可见"。
+      requestAnimationFrame(() => {
+        const sel = window.getSelection();
+        if (!sel || !sel.rangeCount) return;
+        const an = sel.anchorNode;
+        const el = an && (an.nodeType === 3 ? an.parentElement : an);
+        const content = el && el.closest ? el.closest(".-line-content") : null;
+        if (content && editor.contains(content)) _keepSrcCaretVisible(content);
+      });
+    });
 
     // 源码区选区（键盘 Shift+方向键 / 鼠标跨行拖拽 / 双击整行）→ js/sel-source.js
     // 显式注入宿主能力，模块不读本文件闭包私有符号（见 docs/conventions/frontend-modules.md R2）
@@ -9810,6 +9918,20 @@
       var sel = window.getSelection();
       sel.removeAllRanges();
       sel.addRange(range);
+      // ── E26：预览区输入/回车/IME 提交后保持光标可见 ──
+      // 仅当预览区真正持有焦点、且不处于 IME 组合中时才滚；`_keepCaretVisible`
+      // 只在光标越出 pane 视口（含 8px 余量）时补差值 ⇒ 正常打字不会每键跳动。
+      // 用户主动滚动后没有新的编辑提交 ⇒ 不会被这里拽回。
+      var _pv = document.getElementById("preview");
+      var _pp = document.getElementById("preview-pane");
+      var _eh = window.MemoriaEditHandler;
+      if (_pv && _pp && !(_eh && _eh._composing) &&
+          (document.activeElement === _pv ||
+           (document.activeElement && _pv.contains(document.activeElement)))) {
+        var _fallback = range.startContainer;
+        if (_fallback && _fallback.nodeType === 3) _fallback = _fallback.parentElement;
+        _keepCaretVisible(_pp, range, _fallback);
+      }
       // 同步 EH.cursorAST，避免后续 undo/redo 的 currentSnapshot 读到过期光标
       var EH = window.MemoriaEditHandler;
       if (EH) {
@@ -11927,6 +12049,169 @@
     pasteTextAtCursor(text);
   }
 
+  /* ── E25：Ctrl+V 粘贴图片（扩展既有 .memoria/images/ 图片链，不另造第二条）──────
+     链路：剪贴板 File/Blob → (前端) base64 → RPC `import_image_base64`
+           → `DocumentService._import_image_bytes`（与本地文件导入共用：白名单 + MD5 去重 +
+             重名追加 + relPath 口径）→ 插入 `![alt](<rel>)` 独占行（并入源码撤销栈）。
+     纯文本粘贴路径**完全不动**：只有剪贴板里确有图片文件时才 preventDefault。 */
+
+  /** 从 ClipboardEvent 取图片 File（files 优先，items 兜底）。无图片返回 []。 */
+  function clipboardImageFiles(e) {
+    const clip = e && (e.clipboardData || window.clipboardData);
+    if (!clip) return [];
+    const out = [];
+    const seen = new Set();
+    const add = (f) => {
+      if (!f) return;
+      const type = String(f.type || "").toLowerCase();
+      if (type.indexOf("image/") !== 0) return;   // 只认图片；文本/文件走原路径
+      if (seen.has(f)) return;
+      seen.add(f);
+      out.push(f);
+    };
+    const files = clip.files;
+    if (files && files.length) {
+      for (let i = 0; i < files.length; i++) add(files[i]);
+    }
+    if (!out.length) {
+      const items = clip.items;
+      if (items && items.length) {
+        for (let i = 0; i < items.length; i++) {
+          const it = items[i];
+          if (it && it.kind === "file") add(it.getAsFile());
+        }
+      }
+    }
+    return out;
+  }
+
+  /** File/Blob → data URL（后端同时接受裸 base64 与 data URL，用它补扩展名）。 */
+  function _clipboardFileDataURL(file) {
+    return new Promise((resolve, reject) => {
+      try {
+        const fr = new FileReader();
+        fr.onload = () => resolve(String(fr.result || ""));
+        fr.onerror = () => reject(fr.error || new Error("read failed"));
+        fr.readAsDataURL(file);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  /**
+   * 在源码编辑器插入一行独占 Markdown（图片必须独占一行才渲染），光标落到行尾。
+   * 与 `image-tools.js insertSourceLine` 同一套机制（独占行 + 光标落点 + 走源码撤销栈）；
+   * 该函数未在 MemoriaImageTools 门面导出，故此处按同一契约实现一份，供粘贴路径复用。
+   * @returns {boolean} false = 没有源码编辑器（调用方须显式报错）
+   */
+  function _insertExclusiveSourceLine(text, lineNum) {
+    const editor = $("#editor");
+    if (!editor) return false;
+    const sel = window.getSelection();
+    let baseLine = null;
+    if (sel && sel.rangeCount && sel.anchorNode) {
+      baseLine = closestLineEl(sel.anchorNode);
+      if (!editor.contains(baseLine)) baseLine = null;
+    }
+    if (!baseLine && lineNum > 0) baseLine = document.getElementById("line-" + lineNum);
+    if (!baseLine) {
+      // 预览区粘贴：光标锚点在预览 DOM 上，用既有"预览光标所在源码行"定位
+      const pLine = window.MemoriaImageTools?.previewCursorSourceLine?.() || 0;
+      if (pLine > 0) baseLine = document.getElementById("line-" + pLine);
+    }
+    if (!baseLine) {
+      const all = editor.querySelectorAll(".-line");
+      baseLine = all[all.length - 1] || null;
+    }
+    const lastNum = baseLine ? +(baseLine.dataset.line || 0) : 0;
+    const newLineEl = document.createElement("div");
+    newLineEl.className = "-line";
+    newLineEl.dataset.line = String(lastNum + 1);
+    newLineEl.id = "line-" + (lastNum + 1);
+    const lineno = document.createElement("span");
+    lineno.className = "-lineno";
+    lineno.textContent = String(lastNum + 1);
+    const content = document.createElement("span");
+    content.className = "-line-content";
+    // 与既有插入一致：关闭编辑模式时新增行保持只读
+    content.contentEditable = !window.MemoriaEditHandler || window.MemoriaEditHandler.editMode ? "true" : "false";
+    content.spellcheck = false;
+    content.tabIndex = -1;
+    content.textContent = text;
+    newLineEl.appendChild(lineno);
+    newLineEl.appendChild(content);
+    if (baseLine) baseLine.after(newLineEl);
+    else editor.appendChild(newLineEl);
+    renumberSourceLines();
+    // 光标落到插入点之后（行尾）
+    const node = content.firstChild;
+    const r = document.createRange();
+    if (node) r.setStart(node, node.nodeType === Node.TEXT_NODE ? node.textContent.length : 0);
+    else r.setStart(content, 0);
+    r.collapse(true);
+    if (sel) {
+      sel.removeAllRanges();
+      sel.addRange(r);
+    }
+    // E26：插入的图片行若在视口外 ⇒ 带进视野（用户刚手动滚过则不动）
+    const pane = $("#editor-pane");
+    if (pane) _keepCaretVisible(pane, r, newLineEl);
+    scheduleRenderSync();
+    markDirty();
+    return true;
+  }
+
+  /**
+   * 粘贴图片主流程：逐张入库（单张失败不影响其它）→ 按顺序插入独占行 → 一个撤销单元。
+   * 失败必须显式显示（绝不假装成功）。
+   * @param {File[]} files 剪贴板里的图片文件（已按剪贴板顺序）
+   * @param {number} lineNum 目标源码行（0 = 跟随当前光标）
+   */
+  async function insertClipboardImages(files, lineNum) {
+    if (!state.kbPath) {
+      setStatusError(T("app.openKbFirst"));
+      return;
+    }
+    if (!state.currentPath) {
+      setStatusError(T("img.insert.openDocFirst"));
+      return;
+    }
+    const imported = [];
+    const failures = [];
+    for (const f of files) {
+      try {
+        const dataUrl = await _clipboardFileDataURL(f);
+        const res = await call("import_image_base64", f.name || "image.png", dataUrl);
+        if (res && res.status === "ok" && res.relPath) imported.push(res);
+        else failures.push((res && res.message) || T("common.unknownError"));
+      } catch (err) {
+        failures.push((err && err.message) || String(err));
+      }
+    }
+    if (imported.length) {
+      // 整次粘贴 = 一个撤销单元（与源码区多行文本粘贴同口径）
+      _srcPushBefore();
+      _srcCoalesceAt = 0;
+      let base = lineNum || 0;
+      for (const r of imported) {
+        const alt = String(r.name || "").replace(/\.[^.]+$/, "");
+        // 尖括号包裹：文件名可能含中文/空格（裸 URL 会被 marked 在空格处截断）
+        if (!_insertExclusiveSourceLine("![" + alt + "](<" + r.relPath + ">)", base)) {
+          failures.push(T("img.insert.noEditor"));
+          break;
+        }
+        base = 0;   // 后续图片顺延到上一张插入行之后（光标已在那里）
+      }
+      _srcAfterEdit();
+      setStatus(T("img.insert.stored"), imported[imported.length - 1].relPath);
+    }
+    if (failures.length) {
+      // 有失败就必须看得见（部分成功也照实报错）
+      setStatusError(T("img.insert.importFailed"), failures.join("；"));
+    }
+  }
+
   /** 预览区 Ctrl+V：走原生 paste 事件读 clipboardData（**不触发 WebView2 剪贴板权限询问**），
    *  并与源码区（见编辑器 paste 监听）保持同一模式：拦截原生粘贴、改由 AST 管线插入。 */
   function bindPreviewPaste() {
@@ -11938,6 +12223,15 @@
       if (state.viewMode === "source") return;
       const clip = e.clipboardData || window.clipboardData;
       if (!clip) return;
+      // E25：剪贴板里有图片 ⇒ 走图片链（否则会被下面的 text/plain 分支吞掉：纯图时
+      // text/plain 是空串，原逻辑 preventDefault 后插入了空文本，图片静默丢失）
+      const imgs = clipboardImageFiles(e);
+      if (imgs.length) {
+        e.preventDefault();
+        const insLine = window.MemoriaImageTools?.previewCursorSourceLine?.() || 0;
+        insertClipboardImages(imgs, insLine);
+        return;
+      }
       const raw = clip.getData("text/plain");
       if (raw === null || raw === undefined) return;
       // 与右键「粘贴」一致：先从当前选区解析出 AST 光标锚点。
