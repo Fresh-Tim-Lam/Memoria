@@ -320,6 +320,13 @@ async function main() {
     p50MaxMs: 20,
   };
   const run = async (cdp) => {
+    if (args.viewport && /^\d+x\d+$/.test(args.viewport)) {
+      const [w, h] = args.viewport.split('x').map((x) => parseInt(x, 10));
+      await cdp.send('Emulation.setDeviceMetricsOverride', {
+        width: w, height: h, deviceScaleFactor: 1, mobile: false,
+      });
+      await sleep(300);
+    }
     // L0 测量可信门
     const samples = await cdp.evalJS(`(${RAF_JS})(${90})`);
     const p50 = median(samples);
@@ -340,6 +347,7 @@ async function main() {
       url: args.url,
       file: args.file,
       browser: info,
+      viewportOverride: args.viewport || null,
       measurement: { raf, trusted: raf.trusted },
       thresholds: th,
       full: { scrollHeight: fullH, clientHeight: full.clientHeight, availWidth: full.availWidth, sumBlockH: full.sumBlockH, sumContrib: full.sumContrib, contentScrollHeight: full.contentScrollHeight, panePadTop: full.panePadTop, panePadBottom: full.panePadBottom, workset: full.workset, imgStat: full.imgStat, openWallMs: full.openWallMs, n: full.n },

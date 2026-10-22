@@ -103,6 +103,7 @@ def main() -> int:
     ap.add_argument("--with-lazy-gate", action="store_true",
                     help="顺带串行跑 run_lazy_gate.py（6/6 证据）")
     ap.add_argument("--dump-blocks", action="store_true", help="额外落逐块明细（.blocks.json，供离线分析）")
+    ap.add_argument("--viewport", default="", help="覆盖视口尺寸，如 1000x700（默认沿用 headless 窗口）")
     args = ap.parse_args()
 
     src_kb = Path(args.kb)
@@ -160,6 +161,8 @@ def main() -> int:
            "--settle-timeout-ms", str(args.settle_timeout_ms)]
     if args.dump_blocks:
         cmd.append("--dump-blocks")
+    if args.viewport:
+        cmd += ["--viewport", args.viewport]
     print("[ph] 起 node: %s" % " ".join(cmd))
     t0 = time.time()
     cp = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True,
