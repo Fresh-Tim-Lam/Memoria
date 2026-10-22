@@ -7860,7 +7860,24 @@
       try { real = rc.renderBlock(doc.blocks[idx], idx); }
       catch (e) { log("render", "lazy materialize block " + idx + " ERR " + (e && e.message)); continue; }
       if (!real) continue;
+      // 2026-10-22 修上跳（metrics 实测 maxShrink=114px）：**占位偏高时物化必然上跳**（D1 的"宁大勿小"只保证
+      //   初值偏大，但物化那一刻真实高度若小于占位高度，下方内容就会弹上去 —— 这是 K4a 被回退的同类问题）。
+      //   修法：物化前取占位高度，把真块的 `min-height` 锁到该值 ⇒ **替换瞬间高度只增不减**；
+      //   等高块离开视口后再由 `_lazyReleaseMinHeight` 回落（用户看不见，且不产生上跳）。
+      //   注意：**用计算出的估值、不量 DOM**（`getBoundingClientRect()` 会强制同步布局，批量物化时十几次代价高）；
+      //   该值与 `_makePlaceholder` 写进 `style.height` 的值同源，故等价。
+      var _phH = _placeholderHeight(doc.blocks[idx]);
       ph.replaceWith(real);
+      // **无条件**锁 min-height：若真实高度 ≥ 占位 ⇒ min-height 不生效（零副作用）；
+      // 若 < 占位 ⇒ 生效，挡住上跳。不比较、不量真块高度（省一次强制同步布局）。
+      if (_phH > 0 && real.style) {
+        _ensureLazyLockedIO();
+        real.style.minHeight = Math.round(_phH) + "px";
+        real.setAttribute("data--pv-locked", "1");
+        if (!_lazyLockedEls) _lazyLockedEls = new Set();
+        _lazyLockedEls.add(real);
+        if (_lazyLockedIO) _lazyLockedIO.observe(real);
+      }
       // 2026-10-22 1b：滚动物化的真块缺 data--src-line（stampBlockLines 只跑一次，管不到滚动新增的块）。
       //   物化时直接从 AST 补写（与 stampBlockLines 经 BlockIndex 写的口径一致，行号唯一真源仍是 parser）。
       var _blk = doc.blocks[idx];
@@ -7881,6 +7898,37 @@
   var _lazyIO = null;           // IntersectionObserver 实例
   var _lazyPending = null;      // Set：待物化块下标（收集后统一批量处理）
   var _lazyFlushScheduled = false;
+  var _lazyLockedEls = null;    // Set<Element>：物化时被锁 min-height 的块（等离开视口再回落）
+  var _lazyLockedIO = null;    // 观察"被锁高块"的 IO：离开视口 ⇒ 解除 min-height
+
+  /** 解除被锁高的块（真高度接管）。`el` 省略 ⇒ 全部解除（换文档/teardown 时兜底）。 */
+  function _lazyReleaseMinHeight(el) {
+    var list = el ? [el] : (_lazyLockedEls ? Array.from(_lazyLockedEls) : []);
+    for (var i = 0; i < list.length; i++) {
+      var x = list[i];
+      if (!x) continue;
+      try {
+        x.style.minHeight = "";
+        x.removeAttribute("data--pv-locked");
+        if (_lazyLockedIO) _lazyLockedIO.unobserve(x);
+      } catch (_) { /* 已脱离文档 ⇒ 忽略 */ }
+      if (_lazyLockedEls) _lazyLockedEls.delete(x);
+    }
+  }
+
+  /** 惰性创建"被锁高块"的 IO：这些块**离开视口**时解除 min-height（视口内永不回落 ⇒ 不上跳）。 */
+  function _ensureLazyLockedIO() {
+    if (_lazyLockedIO || typeof IntersectionObserver !== "function") return;
+    _lazyLockedIO = new IntersectionObserver(function (entries) {
+      var released = 0;
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].isIntersecting) continue;      // 还在视口内 ⇒ 保持锁高，绝不回落
+        _lazyReleaseMinHeight(entries[i].target);
+        released++;
+      }
+      if (released) log("lazy", "unlock minHeight: " + released);
+    }, { root: null, rootMargin: "0px", threshold: 0 });
+  }
 
   /** 建立滚动物化：观察 `.-pv-placeholder`，进视口前 1 屏(long)时批量物化。仅惰性模式调用。 */
   function _setupLazyScrollMaterialization(preview) {
@@ -7970,6 +8018,10 @@
     if (_lazyIO) { _lazyIO.disconnect(); _lazyIO = null; }
     if (_lazyPending) _lazyPending.clear();
     _lazyFlushScheduled = false;
+    // 2026-10-22：被锁高块在换文档/关库时全部解锁并拆 IO，避免死引用与遗留 min-height
+    _lazyReleaseMinHeight();
+    if (_lazyLockedIO) { _lazyLockedIO.disconnect(); _lazyLockedIO = null; }
+    _lazyLockedEls = null;
   }
   /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
   function _supplyRangeRender(blockIndex, container) {
