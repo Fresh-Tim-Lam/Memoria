@@ -170,7 +170,7 @@ function check(name, cond, extra) {
     check("G3 发生 4 次切片让出（末尾一次为空切片）", c.slice_count === 4 && c.frames_used === 5, c);
   }
 
-  // H) 长任务协作切片：maxSliceMs=4，20×1ms ⇒ 5 帧、4 次让出
+  // H) 长任务协作切片：maxSliceMs=4，20×1ms ⇒ 6 帧、5 次让出（末次为空尾切片）
   {
     const { S, clock } = fresh({ config: { frameBudgetMs: 12, criticalReserveMs: 4 } });
     let done = false;
@@ -191,7 +191,7 @@ function check(name, cond, extra) {
     check("H3 每帧 work<=4ms 且未超预算", c.max_frame_ms <= 4 && c.budget_exceeded === 0, c);
   }
 
-  // I) async generator 自动切片：maxSliceMs=4，10×2ms ⇒ 5 帧、4 次切片
+  // I) async generator 自动切片：maxSliceMs=4，10×2ms ⇒ 6 帧、5 次切片（末帧发现 done）
   {
     const { S, clock } = fresh({ config: { frameBudgetMs: 12, criticalReserveMs: 4 } });
     let produced = 0;

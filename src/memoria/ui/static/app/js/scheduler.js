@@ -411,7 +411,8 @@
     if (!j._frame) return false;
     if (j._frame.units >= _config.maxUnitsPerFrame) return true;
     if (j.maxSliceMs > 0 && now() - j._sliceStart >= j.maxSliceMs) return true;
-    if (now() - j._frame.start >= _frameLimit(j)) return true;
+    // 帧预算按“已累计的同步耗时”判断，不能被 await RPC 的墙钟时间放大
+    if (j._frame.used >= _frameLimit(j)) return true;
     return _higherPriorityQueued(j.priority);
   }
 
@@ -702,7 +703,7 @@
   function status() {
     return {
       queued: QUEUE.filter(function (j) { return j.status === "queued"; }).length + SUSPENDED.length,
-      running: _running,
+      running: _running || _frameScheduled,
       epoch: _epoch,
     };
   }
