@@ -8159,10 +8159,16 @@
     //   拖到底期间 6 批物化 ⇒ 预期只触发 1–2 次 typeset（而非 6 次）。
     // **必须保证公式不会长期不排** ⇒ `_lazyMathQueueTimer` 硬上限 `LAZY_MATH_MERGE_MAX_WAIT`（500ms）必排。
     if (window.MathJax && typeof window.MathJax.typesetPromise === "function") {
-      var withMath = made.filter(function (el) {
-        return el && el.querySelector && (el.querySelector(".-math, .-math-block") || el.classList.contains("-math-block"));
-      });
-      if (withMath.length) _lazyEnqueueMath(withMath);
+      // ★ 2026-10-22 P0 修复（Lead 定性真 bug）：**删掉 `withMath` 按 `.-math` 类名的二元过滤**。
+      //
+      // 根因：`withMath` 只认 `.-math` / `.-math-block` 类名 ⇒ 把 `-image-block`（其可见题注是**裸文本**
+      //   `图3.3.15 $A$ 律变换...`，MathJax 靠**分隔符**识别、**不依赖类名**）排除掉了 ⇒ 题注里的 `$A$`
+      //   永不入 typeset 队列 ⇒ 永不排版 ⇒ golden 是 `A`、惰性是 `$A$`（R1 漏排）。
+      // 全量路径是 `typesetPromise([preview])` **整篇扫**、根本不做"哪块有公式"的预判 —— 这个过滤
+      //   本就是我早前留下的**多余优化**，制造了漏排。现在回到全量路径语义：
+      //   **本批所有物化块都入队**；MathJax 对无公式块是低成本 no-op（扫一遍无 `$`/`\(` 就返回）。
+      // 成本结论：调用次数不变（合并器保证），只有"每次调用扫的块数"略增；公式数不变则成本基本不变。
+      _lazyEnqueueMath(made);
     }
     // 补齐行内公式标记（排版后会替换 .-math ⇒ mjx-container，需重打 data--inline-math）
     var token2 = state.previewToken;
@@ -8249,11 +8255,23 @@
   var LAZY_MATH_MERGE_MAX_WAIT = 500;   // ms：合并窗口上限（到点必排，保证公式不会长期不显示）
   var LAZY_MATH_MERGE_IDLE = 120;       // ms：空闲合并窗口（拖到底期间把多批合并成一次）
 
-  /** 把一批"新物化且含公式"的块加入待排队列，并调度合并排版。 */
+  /** 把一批块加入待排队列，并调度合并排版。
+   *
+   *  2026-10-22 P0 之后：入队的**不再过滤"是否含公式"**（正是那次过滤漏掉了 `-image-block` 的裸文本 `$A$`）。
+   *  所以队列现在可能涨得很快 ⇒ 用 `LAZY_MATH_QUEUE_MAX_BLOCKS` 给**单次 typeset 的块数**设上限，
+   *  防止合并窗口（120ms）内累积上千块后一次 `typesetPromise` 变长、又涨回 maxGap。
+   *  超限 ⇒ **先 flush 现有队列**，再入新块（调用次数略增，但换来单次调用体积受控）。 */
+  var LAZY_MATH_QUEUE_MAX_BLOCKS = 400;   // 单次 typeset 最多扫这么多块（含无公式块；公式数未变则成本基本不变）
+
   function _lazyEnqueueMath(els) {
     if (els && els.length) {
       if (!_lazyMathQueue) _lazyMathQueue = [];
       for (var i = 0; i < els.length; i++) _lazyMathQueue.push(els[i]);
+      // 队列超限 ⇒ 立即排掉现有的（避免单次 typeset 过大）
+      if (_lazyMathQueue.length >= LAZY_MATH_QUEUE_MAX_BLOCKS) {
+        _lazyForceScheduleMathFlush();
+        return;
+      }
     }
     if (!_lazyMathQueue || !_lazyMathQueue.length) return;   // 空队列 ⇒ 无需调度
     _lazyScheduleMathFlush();
