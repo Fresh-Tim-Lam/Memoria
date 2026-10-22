@@ -3919,10 +3919,36 @@ body.-brush-active #editor {
     user-select: none;
     -webkit-user-select: none;
 }
+/* ── 2026-10-22 方案 C：排版前隐藏公式源码 ──────────────────────────────────────
+   问题：metrics 实测源码态帧仅 9/492(2%)，但**面积峰值 89.9%、持续 375ms**
+   ⇒ 滚动中会看到大片 `$…$` LaTeX 源码（观感像"坏了"）。
+   做法：物化批次给"含公式的块"打 `.-math-pending`，该批 typeset 完成后由 JS 移除。
+   **必须用 `visibility: hidden` 而非 `display: none`** —— 前者**保留布局盒**，
+   不会引发高度塌陷/漂移（高度漂移是 R1 回退项，绝不能再碰）。
+   同时给公式位置一个同款骨架底色：块内文字照常显示、公式位置显示"占位色块"，
+   避免出现"文字中间一块空洞"。纯 CSS，零额外单帧成本。 */
+.-preview .-math-pending .-math,
+.-preview .-math-pending .-math-block {
+    visibility: hidden;
+    position: relative;
+}
+/* `visibility:hidden` 会连带隐藏子元素与伪元素 ⇒ 伪元素需显式 visible 才能显示色块 */
+.-preview .-math-pending .-math::after,
+.-preview .-math-pending .-math-block::after {
+    content: "";
+    visibility: visible;
+    position: absolute;
+    inset: 0;
+    background: var(--pv-placeholder-bg,
+        color-mix(in srgb, var(--bg-tertiary, #333) 88%, var(--text-primary, #ccc) 4%));
+    border-radius: 3px;
+}
+
 /* 所有 block 内元素 margin 归零，避免"虚假空行"光标 */
 .-preview .-src-block > p {
     margin: 0;
-}.-preview .-src-block > h1,
+}
+.-preview .-src-block > h1,
 .-preview .-src-block > h2,
 .-preview .-src-block > h3,
 .-preview .-src-block > h4,

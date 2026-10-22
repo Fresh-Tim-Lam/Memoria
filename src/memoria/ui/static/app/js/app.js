@@ -8450,6 +8450,69 @@
   var LAZY_MATH_MERGE_MAX_WAIT = 500;   // ms：合并窗口上限（到点必排，保证公式不会长期不显示）
   var LAZY_MATH_MERGE_IDLE = 120;       // ms：空闲合并窗口（拖到底期间把多批合并成一次）
   var LAZY_MATH_DEFER_MAX = 1000;       // ms：为"让路给物化"最多推迟多久（防公式永不上屏）
+
+  // ══ 2026-10-22 方案 C：**排版前隐藏公式源码**（metrics 裁决）═══════════════════════════
+  // 依据：08 章拖到 80%，源码态帧仅 9/492（2%）但**面积峰值 89.9%、持续 375ms** ⇒ 用户看到大片 `$…$`。
+  //   方案 A（整块骨架）不可行：08/03 章含公式块占 63.7~65.4% ⇒ 会变成大片骨架，更糟。
+  //   方案 B（同步 typeset）会让单帧 300ms+ ⇒ 回到刚消除的长帧问题。
+  //   ⇒ C：物化批次给"含公式的块"打 `-math-pending`，CSS 用 **`visibility:hidden`**（**保留布局**，
+  //      不引发高度漂移 —— R1 回退项不可再碰），该批 typeset 完成（含异常）后**finally 式**移除。
+  //
+  // ⚠️ 漏清理是本方案最大风险（公式永久不可见 > 看到源码）。四条真实路径都要覆盖：
+  //   ① typeset 抛异常 → `finally`
+  //   ② 批次被 defer 推迟 / 被公式上限切分 → 只给**真正进入本次 typeset 的那批**打标记；余量不打
+  //   ③ 文档切换 / token 作废 → `_lazyRevealAllMathPending()` 兜底全清
+  //   ④ 已物化未排版的存量块（缓存恢复/跳转）→ 同样走 enqueue 时打标
+  //   做法：用 WeakSet 记录"本批打了标记的元素"，只有那批 reveal 才清；另加全局兜底清扫。
+  var _lazyHiddenByBatch = null;   // WeakSet<Element>：当前被隐藏的块（供诊断/兜底）
+
+  /** 给一批块打 `-math-pending`（只对**真的含公式**的块；不改变布局，仅 visibility）。 */
+  function _lazyHideMathIn(els) {
+    if (!els || !els.length) return 0;
+    if (!_lazyHiddenByBatch) _lazyHiddenByBatch = new WeakSet();
+    var n = 0;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (!el || !el.classList || el.classList.contains("-math-pending")) continue;
+      // 只有"确实有未排版公式"的块才隐藏（已排好的 mjx-container 不该被藏）
+      var hasRaw = el.querySelector && el.querySelector(".-math, .-math-block");
+      if (!hasRaw) continue;
+      el.classList.add("-math-pending");
+      _lazyHiddenByBatch.add(el);
+      n++;
+    }
+    if (n) log("lazy", "math hidden for typeset: " + n + " blocks");
+    return n;
+  }
+
+  /** 移除一批块的 `-math-pending`（幂等；只清传进来的，不动别的批）。 */
+  function _lazyRevealMathIn(els) {
+    if (!els || !els.length) return 0;
+    var n = 0;
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (!el || !el.classList || !el.classList.contains("-math-pending")) continue;
+      el.classList.remove("-math-pending");
+      if (_lazyHiddenByBatch) _lazyHiddenByBatch["delete"](el);
+      n++;
+    }
+    if (n) log("lazy", "math revealed: " + n + " blocks");
+    return n;
+  }
+
+  /** **兜底全清**（文档切换 / token 作废 / teardown）：保证不会有块永久停在隐藏态。 */
+  function _lazyRevealAllMathPending() {
+    try {
+      var preview = $("#preview");
+      if (!preview) return 0;
+      var els = preview.querySelectorAll(".-math-pending");
+      if (!els.length) return 0;
+      for (var i = 0; i < els.length; i++) els[i].classList.remove("-math-pending");
+      if (_lazyHiddenByBatch) _lazyHiddenByBatch = null;
+      log("lazy", "math revealed (sweep): " + els.length + " blocks");
+      return els.length;
+    } catch (_) { return 0; }
+  }
   // ★ deferral 总开关：**默认关**（2026-10-22 实测负收益：median 273→381ms、CV 28%→68%）。
   //   保留开关以便**同一运行内 A/B**（跨运行比较受机器状态/WebView2 缓存影响，不可靠）。
   //   可用 `window.__MEMORIA_DEFER` 运行时覆盖（CDP 注入，免改代码）。
@@ -8594,6 +8657,11 @@
       log("lazy", "typeset batch SPLIT (" + (_lazyIsScrolling() ? "scrolling" : "idle") + " limit=" + batchLimit + "): this=" + batch.length + " rest=" + rest.length);
     }
 
+    // ★ 方案 C：给**真正进入本次 typeset 的这批**打隐藏标记（切分后的 `rest` 不打 —— 它们还没排）。
+    //   打标在这一刻（已确定要排），保证"隐藏的块一定会被 reveal"。
+    var hiddenBatch = batch.slice();   // 记下本批元素，供 finally reveal
+    _lazyHideMathIn(hiddenBatch);
+
     var token = state.previewToken;
     var pathAt = (state.doc && state.doc.path) || "";   // ★ 记下"这批块属于哪个文档"
     var prev = state._mathPending;
@@ -8617,6 +8685,13 @@
           }).then(function () {
             if (!window.MathJax || typeof MathJax.typesetPromise !== "function") return;
             return MathJax.typesetPromise(batch).catch(function (err) { log("render", "lazy typeset: " + (err && err.message)); });
+          }).then(function () {
+            // ★ 方案 C：**排版完成 ⇒ reveal**（成功路径）
+            _lazyRevealMathIn(hiddenBatch);
+          }, function (e2) {
+            // ★ 方案 C：**排版失败也必须 reveal**（否则公式永久不可见 —— 比看到源码严重）
+            log("lazy", "typeset FAILED, reveal anyway: " + ((e2 && e2.message) || e2));
+            _lazyRevealMathIn(hiddenBatch);
           });
         }
         // 文档真的换了 ⇒ 这批 DOM 多半已脱离（仍连上的才回收，避免内存泄漏）
@@ -8639,6 +8714,10 @@
         } catch (_) {}
         return Promise.resolve();
       } finally {
+        // ★ 方案 C 兜底：无论走哪条路径（成功/文档换/异常），本批打的标记都要清。
+        //   这一层是"双保险"：上面 .then 已 reveal，这里再清一次是幂等的（`_lazyRevealMathIn` 会跳过已清的）。
+        //   覆盖"文档真的换了"那条 return 分支 —— 那里没走排版，但标记已打，必须清。
+        try { _lazyRevealMathIn(hiddenBatch); } catch (_) {}
         // ★ 队列非空 ⇒ 无条件续命（不受幂等守卫影响），杜绝"队列孤儿"
         try {
           if (_lazyMathQueue && _lazyMathQueue.length) _lazyForceScheduleMathFlush();
@@ -8784,6 +8863,9 @@
     _lazyReleaseMinHeight();
     if (_lazyLockedIO) { _lazyLockedIO.disconnect(); _lazyLockedIO = null; }
     _lazyLockedEls = null;
+    // 2026-10-22 方案 C：换文档/关库时**兜底全清** `-math-pending`
+    //（否则切换瞬间被打标但未排版的块会永久停在隐藏态 = 公式永久不可见）
+    _lazyRevealAllMathPending();
     // 2026-10-22：resize 定时器与 DPR 监听也一并清（watcher 本身保持绑定，重进惰性路径会复用）
     if (_lazyResizeTimer) { clearTimeout(_lazyResizeTimer); _lazyResizeTimer = null; }
     _pvMetrics = null;   // 度量作废 ⇒ 下次渲染重新量
