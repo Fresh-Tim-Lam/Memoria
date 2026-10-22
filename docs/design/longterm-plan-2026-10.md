@@ -565,6 +565,28 @@ lazy-gate-t78-base-pred_5a509977:
 1. 若能在"连击滚动/瞬时大跳"下复现 >240 ⇒ 按真问题修
 2. 若复现不出 ⇒ **收口为"标准场景不可复现"，请复核方补充场景参数**（不硬修一个复现不出来的问题）
 
+## 全绿认证（HEAD `7972274e`，2026-10-23 02:24）
+
+**静态（Lead 亲跑，全部 PASS）**
+```
+blockquote_roundtrip_test.js   80/80
+trailing_space_input_test.js   62/62
+edit_cut_undo_test.js          28/28
+edit_drag_drop_test.js         38/38
+scheduler_vm_test.js           全 PASS
+check_scheduler_discipline.py  PASS（62 文件 / 白名单 30 条全命中）
+check_todo_size.py             PASS
+check_jobs_size.py             PASS（§5 2,523 B ≤ 8 KB，索引/归档等价）
+node --check app.js            0
+```
+**动态（Lead 亲跑）**
+```
+run_lazy_gate.py    6/6 PASS（27.4s，L0 可信门 + L1–L5）
+run_interaction.py  12/12（失败 0，42.9s）
+```
+⇒ **本窗口所有已合入改动在该 HEAD 上全部门禁通过。**
+工作区干净（仅 `ask_stream.py` 为长期存在的非本窗口改动，未入提交）。
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
