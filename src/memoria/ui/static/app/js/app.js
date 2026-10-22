@@ -7998,13 +7998,41 @@
     for (var p = 0; p < phs.length; p++) _lazyIO.observe(phs[p]);
   }
 
-  /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。 */
+  /** 调度一次批量物化（idle 优先；无 idle 则 setTimeout(0) —— 与 A1 让出同理由：必须推进，不能饿死）。
+   *
+   *  ⚠️ 2026-10-22 P0 加固（活性自愈）：`_lazyFlushScheduled` 是"已排队"标志，
+   *  一旦因任何原因被卡在 `true`（回调没跑 / 被异常打断 / 定时器被丢弃），后续 `_lazyScheduleFlush()`
+   *  会**全部空转** ⇒ 队列有块但永不物化 ⇒ 视口永久占位（静默、极难发现）。
+   *  对策：记录"上次排队时刻"，若标志仍为 true 但**超过 `LAZY_SCHED_STALE_MS` 没有推进**，
+   *  视为卡死 ⇒ 强制复位并重新调度。
+   *  另：`fire()` 用 try/finally 保证**即使 `_lazyFlushNow()` 抛异常，标志也一定复位**。 */
+  var LAZY_SCHED_STALE_MS = 2000;
+  var _lazySchedAt = 0;   // 上次置 `_lazyFlushScheduled = true` 的时刻
+
   function _lazyScheduleFlush() {
-    if (_lazyFlushScheduled) return;
-    _lazyFlushScheduled = true;
-    var fire = function () {
+    if (_lazyFlushScheduled) {
+      // 自愈：标志卡住但已超时 ⇒ 强制重置（否则整条物化链永久停滞）
+      var now = (window.performance && performance.now) ? performance.now() : Date.now();
+      if (_lazySchedAt && (now - _lazySchedAt) < LAZY_SCHED_STALE_MS) return;   // 正常"已排队"⇒ 不重复建
+      try { log("lazy", "SCHEDULER STALE (" + Math.round(now - _lazySchedAt) + "ms) ⇒ force reschedule"); } catch (_) {}
       _lazyFlushScheduled = false;
-      _lazyFlushNow();
+    }
+    _lazyFlushScheduled = true;
+    _lazySchedAt = (window.performance && performance.now) ? performance.now() : Date.now();
+    var fire = function () {
+      // try/finally：**无论 `_lazyFlushNow` 是否抛异常，标志一定复位**，否则一次异常=永久停滞。
+      try {
+        _lazyFlushNow();
+      } catch (e) {
+        try { log("lazy", "flush THREW: " + ((e && e.message) || e)); } catch (_) {}
+      } finally {
+        _lazyFlushScheduled = false;
+        _lazySchedAt = 0;
+        // 兜底续命：若仍有残留（异常后遗漏的情形），再排一次
+        try {
+          if (_lazyPending && _lazyPending.size) _lazyScheduleFlush();
+        } catch (_) {}
+      }
     };
     if (typeof window.requestIdleCallback === "function") {
       window.requestIdleCallback(fire, { timeout: 300 });
@@ -8076,23 +8104,47 @@
       for (var oi = 0; oi < overflow.length; oi++) _lazyPending.add(overflow[oi]);
     }
 
-    // 物化：把本批的下标合并成连续区间，逐段物化
+    // 物化：把本批的下标合并成连续区间，逐段物化。
+    // ⚠️ 2026-10-22 P0 修复（Lead 定位到"物化停滞"）：**必须 try/catch/finally**。
+    //   `_materializeRange` 里除 `renderBlock` 外的调用（`ph.replaceWith` / `observe` 等）**没有保护**，
+    //   一旦抛未捕获异常，原代码会**跳过下面的 `_lazyScheduleFlush()`** ⇒
+    //   队列里明明有块却没有任何调度 ⇒ **后续物化永久停滞**（用户看到视口永远是占位块/空白）。
+    //   与 metrics 观察吻合：从某一刻起 ph 不再减少。
+    //   ⇒ 现在：异常只记日志并中止**本批**，但调度**无条件续命**（finally）。
     var made = [];
-    for (var i = 0; i < pendingArr.length; i++) {
-      var s = pendingArr[i];
-      var e = s + 1;
-      // 向后合并连续下标
-      while (i + 1 < pendingArr.length && pendingArr[i + 1] === e) { i++; e++; }
-      var els = _materializeRange(cc, _doc, s, e);
-      made = made.concat(els);
-    }
-
-    // 余量回队列 + 重新调度（让出后再做下一批，绝不一次做完）
-    if (overflow && overflow.length) {
-      if (!_lazyPending) _lazyPending = new Set();
-      for (var q = 0; q < overflow.length; q++) _lazyPending.add(overflow[q]);
-      log("lazy", "flush batch capped: made=" + made.length + " overflow=" + overflow.length + " (will continue next idle)");
-      _lazyScheduleFlush();
+    try {
+      for (var i = 0; i < pendingArr.length; i++) {
+        var s = pendingArr[i];
+        var e = s + 1;
+        // 向后合并连续下标
+        while (i + 1 < pendingArr.length && pendingArr[i + 1] === e) { i++; e++; }
+        var els = _materializeRange(cc, _doc, s, e);
+        made = made.concat(els);
+      }
+    } catch (eMat) {
+      log("lazy", "materialize batch FAILED: " + ((eMat && eMat.message) || eMat) + " (batch=" + pendingArr.length + " made=" + made.length + ")");
+      // 本批未物化成功的块**放回队列**（它们仍是占位块，还需要物化）——
+      //   否则异常会让这些块永远停在占位态（与上面"调度停滞"是两个独立的漏排来源）。
+      try {
+        var _doneSet = null;   // 已成功物化的块下标集合（从 made 反推不划算，这里按"是否仍是占位"判断）
+        if (!_lazyPending) _lazyPending = new Set();
+        for (var ri = 0; ri < pendingArr.length; ri++) {
+          var _ix2 = pendingArr[ri];
+          var _el2 = _lazyBlockEls ? _lazyBlockEls[_ix2] : null;
+          // 该下标对应元素仍是占位（或找不到）⇒ 说明没物化成功 ⇒ 回队列重试
+          if (!_el2 || (typeof _el2.classList !== "undefined" && _el2.classList && _el2.classList.contains("-pv-placeholder"))) {
+            _lazyPending.add(_ix2);
+          }
+        }
+      } catch (_) { /* 回收失败也不能阻断下面的续命调度 */ }
+    } finally {
+      // ★ 核心原则：**只要有残留待物化块，就必须保证下一批会被调度**（绝不会"队列有块但没人管"）。
+      if ((overflow && overflow.length) || (_lazyPending && _lazyPending.size)) {
+        try {
+          log("lazy", "flush continue: made=" + made.length + " overflow=" + (overflow ? overflow.length : 0) + " pending=" + (_lazyPending ? _lazyPending.size : 0));
+        } catch (_) {}
+        _lazyScheduleFlush();
+      }
     }
 
     if (!made.length) return;
