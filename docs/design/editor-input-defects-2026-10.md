@@ -4,7 +4,7 @@
 > **目标读者**：Lead、后续 TODO Owner、verifier、实现者。
 > **关联**：[docs/todo.md](../../docs/todo.md) §5.1（**状态/优先级事实源**；本文件是详情存档，不改状态）、[ledger-maintenance.md](../conventions/ledger-maintenance.md)、[docs-management.md](../conventions/docs-management.md)。
 > **状态**：生效中（2026-10-22）；本轮来源 = 用户 2026-10-22 反馈 + Lead 台账治理裁决。
-> **2026-10-22 更新（收口/归档）**：**E25–E30 已闭环并移出 `todo.md §5.1` 活动表**，原文 + 证据归档于 [ledger-archive-2026.md §10.4.1](ledger-archive-2026.md)；本文件保留其详情作为归档依据。同日后续登记 **E32–E34**（E32 已修复，E33/E34 待做）见文末 §2。
+> **2026-10-22 更新（收口/归档）**：**E25–E30、E32、DOC01 已闭环并移出 `todo.md §5.1` 活动表**，原文 + 证据归档于 [ledger-archive-2026.md §10.4.1](ledger-archive-2026.md)；本文件保留其详情作为归档依据。**E33/E34 仍待做**（见文末 §2）。
 
 **A. 编辑器输入（格式 / 光标 / 空白）**
 
