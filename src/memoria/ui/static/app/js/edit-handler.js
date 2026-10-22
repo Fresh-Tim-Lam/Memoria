@@ -812,6 +812,44 @@
   }
 
   /**
+   * Ctrl+X（deleteByCut）被拦截后手动写剪贴板。
+   * navigator.clipboard.writeText 是异步的，且可能因权限/焦点被拒绝；失败必须提示用户，
+   * 否则用户以为"剪切"成功、却没有任何可粘贴内容（静默吞掉是最坏的失败方式）。
+   * 仅在 Clipboard API 完全缺失时退回同步 execCommand（此时选区还没被删除，仍然有效）。
+   * @param {string} text — 剪切前捕获的选区纯文本
+   */
+  function writeCutToClipboard(text) {
+    if (!text) return;   // 无可复制的文本（如仅选中图片）：不写剪贴板，也不提示
+    function notify(err) {
+      var detail = (err && (err.message || err.name)) ? String(err.message || err.name) : "clipboard unavailable";
+      log("EH", "deleteByCut: clipboard write failed (" + detail + ")");
+      var app = window.MemoriaApp;
+      var msg = "剪切已从文档移除，但写入剪贴板失败：内容可能无法粘贴。";
+      if (app && typeof app.showFlashError === "function") { app.showFlashError(msg, detail); return; }
+      if (app && typeof app.setStatusError === "function") { app.setStatusError(msg, detail); return; }
+      // 极端兜底（MemoriaApp 尚未导出时）：console + 原生提示，绝不静默
+      try { console.warn("[EH] " + msg + " " + detail); } catch (e1) { /* ignore */ }
+      try { window.alert(msg + "\n" + detail); } catch (e2) { /* ignore */ }
+    }
+
+    try {
+      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        var p = navigator.clipboard.writeText(text);
+        if (p && typeof p.then === "function") p.then(null, notify);
+        return;
+      }
+    } catch (err) {
+      notify(err);
+      return;
+    }
+
+    // Clipboard API 不可用：同步复制当前选区（选区此刻仍未被 EditSync 删除）
+    var ok = false;
+    try { ok = document.execCommand("copy"); } catch (e3) { ok = false; }
+    if (!ok) notify(new Error("clipboard api unavailable"));
+  }
+
+  /**
    * 绑定 beforeinput：拦截预览区的文本输入，统一走 AST 编辑管线
    * 每种编辑操作逐步实现，当前支持 insertText（Backspace/Delete/Enter 后续补充）
    */
@@ -834,6 +872,8 @@
       var inputType = e.inputType;
       var fn = null;
       var arg = null;
+      var cutText = null;            // Ctrl+X：需在 preventDefault 后自行写剪贴板
+      var cutClipboard = false;
 
       if (inputType === "insertText") {
         if (!e.data) return;
@@ -848,6 +888,20 @@
         } else {
           fn = inputType === "deleteContentBackward" ? "backspace" : "deleteForward";
         }
+      } else if (inputType === "deleteByCut" || inputType === "deleteByDrag") {
+        // E30：Ctrl+X / 拖拽移动默认会被浏览器原生删掉预览 DOM 文本，但 AST/源码不变，
+        // 下一次重渲（切文件/重排版/滚动重物化）内容就会"回魂"。
+        // 这里统一改走 EditSync.deleteSelection（复用 Backspace 非折叠选区路径），
+        // 保证源码同步更新，且整个剪切是**单个撤销单元**（Ctrl+Z 只恢复一次）。
+        var selCut = window.getSelection();
+        if (!selCut || !selCut.rangeCount || selCut.isCollapsed) return; // 无选区：交还原生
+        fn = "deleteSelection";
+        arg = selCut.getRangeAt(0).cloneRange();
+        if (inputType === "deleteByCut") {
+          cutText = selCut.toString();
+          cutClipboard = true;
+        }
+        // deleteByDrag 不写剪贴板：拖拽不是复制语义，写剪贴板会污染用户剪贴板
       } else if (inputType === "insertParagraph") {
         fn = "splitParagraph";
       } else {
@@ -862,6 +916,11 @@
 
       // 阻止浏览器直接修改 DOM，改由 AST 编辑管线统一处理
       e.preventDefault();
+
+      // Ctrl+X：原生剪切被 preventDefault 后剪贴板不会自动更新，必须在选区仍有效时自己写
+      // （异步失败在 writeCutToClipboard 内 catch 并提示；不阻塞源码删除）
+      if (cutClipboard) writeCutToClipboard(cutText);
+
       if (arg !== null) EditSync[fn](arg);
       else EditSync[fn]();
     });
