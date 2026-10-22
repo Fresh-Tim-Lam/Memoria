@@ -397,6 +397,16 @@ for (var qi = 0; qi < block.children.length; qi++) {
 - 真机端到端：CDP 模拟 Ctrl+X 的剪贴板行为不可靠 ⇒「剪切 → 重渲不回魂 → Ctrl+Z 只恢复一次」待真机键盘验证
 - 中文输入法下选中+剪切、拖拽移动文字、`execCommand` 回退路径均未单独触发
 
-**⇒ E30 状态改为「已实现+门禁通过，端到端待真机」**，不作为已闭环。
+**⇒ E30 已于第 14 轮**真机闭环**（证据 `1b6956e3`）**：
+CDP 真实 `Input.dispatchKeyEvent` 的 Ctrl+X ⇒
+① `state.doc.body` 目标文本 count 0（698→693）；
+② **整篇重渲后仍 0（不回魂）**、切文件再切回仍 0；
+③ Ctrl+Z 后 body 与剪切前**逐字节相同**、再按 Ctrl+Z 不变（**不重复恢复**）；
+④ `clipboard.writeText` promise resolved（真实写入剪贴板）；
+⑤ 注入 writeText reject ⇒ 出现含「剪贴板」的可见错误提示，且源码仍完成删除。
+门禁：`edit_cut_undo_test.js` 28/28、探针 20/20、12 剧本 12/12、E28 回归 80/80。
+
+**E30 收口。** 单开一条跟进项（不经 E30 修）：`deleteByDrag` 的真实拖拽移动还依赖未拦截的 `insertFromDrop`，
+落点插入可能只进 DOM 不进源码（P2）。
 
 
