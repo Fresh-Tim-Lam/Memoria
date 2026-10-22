@@ -7918,6 +7918,8 @@
     _lazyTouch = new Array(N);
     _lazyEvictSuspended = false;
     _lazyEvictCount = 0;
+    _lazyHeightDriftPx = 0;      // 2026-10-22 1d：新文档 ⇒ 高度漂移计数从 0 开始（旧 DOM 的漂移无意义）
+    _lazyAnchorFixes = 0;
     var frag = document.createDocumentFragment();
     for (var i = 0; i < N; i++) {
       var ph = _makePlaceholder(doc.blocks[i], i);
@@ -8000,7 +8002,14 @@
       //   等高块离开视口后再由 `_lazyReleaseMinHeight` 回落（用户看不见，且不产生上跳）。
       //   注意：**用计算出的估值、不量 DOM**（`getBoundingClientRect()` 会强制同步布局，批量物化时十几次代价高）；
       //   该值与 `_makePlaceholder` 写进 `style.height` 的值同源，故等价。
+      //   注意：**优先用占位自带的块高**——换出时写进 `data--pv-r` 的是**真块自身 rect 高度**
+      //   （见 `_lazyEvictNow`）。若这里改用估值（`_placeholderHeight`）锁高，就会把估值与真块的高度
+      //   差重新引入（实测最大 332px/块），让"换出保高"白做、滚动绝对位置再次漂移。
+      //   ⚠️ 用 `data--pv-r`（块自身高）而**不是** `data--pv-h`（垂直占位体积）：后者含塌陷外边距，
+      //   拿来锁 min-height 会把外边距变成块内 padding ⇒ 高度反而涨回去。
       var _phH = _placeholderHeight(doc.blocks[idx]);
+      var _recH = parseFloat(ph.getAttribute("data--pv-r"));
+      if (_recH > 0) _phH = _recH;
       ph.replaceWith(real);
       // **无条件**锁 min-height：若真实高度 ≥ 占位 ⇒ min-height 不生效（零副作用）；
       // 若 < 占位 ⇒ 生效，挡住上跳。不比较、不量真块高度（省一次强制同步布局）。
@@ -8050,7 +8059,13 @@
     }
   }
 
-  /** 惰性创建"被锁高块"的 IO：这些块**离开视口**时解除 min-height（视口内永不回落 ⇒ 不上跳）。 */
+  /** 惰性创建"被锁高块"的 IO：这些块**离开视口**时解除 min-height（视口内永不回落 ⇒ 不上跳）。
+   *
+   *  ⚠️ 2026-10-22 1d 评估记录：曾尝试"只回落视口下方的块（视口上方保持锁高）"以消除
+   *  "上方块变矮 ⇒ 可见内容整体上移"。**不可行**：视口上方保持锁高的块被换出时占位高度会被
+   *  记录成估算值（因为它的 rect 仍被 min-height 撑着），滚回物化时真实高度更小 ⇒ 占位与真块
+   *  高度不一致，反而在物化瞬间再次抽走高度，且块内留下大段空白。⇒ 保持原语义（离开视口即回落），
+   *  高度一致性交给"换出时记录真实高度 + 回滚物化锁真实高度"（见 `_lazyEvictNow` / `_materializeRange`）。 */
   function _ensureLazyLockedIO() {
     if (_lazyLockedIO || typeof IntersectionObserver !== "function") return;
     _lazyLockedIO = new IntersectionObserver(function (entries) {
@@ -8865,6 +8880,9 @@
       var idx = parseInt(phs[i].getAttribute("data--block-index"), 10);
       if (isNaN(idx) || idx >= _doc.blocks.length) continue;
       phs[i].style.height = Math.round(_placeholderHeight(_doc.blocks[idx])) + "px";
+      // 2026-10-22 1d：度量已变 ⇒ 换出时记录的真块高度作废（否则 `_materializeRange` 会用旧高度锁高）
+      phs[i].removeAttribute("data--pv-h");
+      phs[i].removeAttribute("data--pv-r");
     }
 
     // ④ 重算视口物化窗口并补物化：按新度量定位"锚点附近 ± 2 屏"的块
@@ -8980,6 +8998,16 @@
   var _lazyTouch = null;            // Array<number>：每个块最近一次物化/进入工作集的时刻（LRU 时钟）
   var _lazyEvictCount = 0;          // 本文件累计淘汰块数（诊断/metrics）
   var _lazyEvictSuspended = false;  // `__MEMORIA_MATERIALIZE_ALL`（门禁强制全量）期间/之后禁用淘汰
+  // 2026-10-22 1d：**换出高度稳定性**的可观测指标。
+  //   问题（真机实测）：换出时用 `_placeholderHeight` 估值当占位高度，而估值与真块排版高度可能差
+  //   上百 px（实测：真块 214px ⇒ 估值 25px、真块 415px ⇒ 估值 227px、真块 415→227 等），
+  //   整篇 `scrollHeight` 因此随换出而漂移 ⇒ 用户滚回原处时**绝对位置**对不上（同一 scrollTop 看到的内容位移若干行）。
+  //   对策 A：换出前量真块的**垂直占位体积**（rect.top → 下一块 rect.top，含塌陷外边距），
+  //          直接用它当占位高度（治本；实测换出批次高度变化从 ±100~330px/块 降到累计 ≈0）；
+  //   对策 B：淘汰批次用**视口顶部首个可见块**做锚点补偿 `scrollTop`（兜底残余高度变化）。
+  //   `heightDriftPx` = 累计 |本批 scrollHeight 变化| —— 修复后应稳定在 0 附近；一旦增长即回归。
+  var _lazyHeightDriftPx = 0;       // 累计 |scrollHeight 变化|（换出批次；metrics 量化用）
+  var _lazyAnchorFixes = 0;         // 发生过 scrollTop 补偿的淘汰批次数（诊断）
 
   /** 触碰一个块（LRU 时钟）。越界/无时钟表 ⇒ 静默忽略。 */
   function _lazyTouchBlock(idx) {
@@ -9003,7 +9031,9 @@
   }
 
   /** 计算"保留窗口"：视口上下各 `LAZY_EVICT_KEEP_SCREENS` 屏对应的块下标区间。
-   *  `cc.children` 按块序排列、位置单调 ⇒ 二分 O(log n)；**不做全量 getBoundingClientRect**。 */
+   *  `cc.children` 按块序排列、位置单调 ⇒ 二分 O(log n)；**不做全量 getBoundingClientRect**。
+   *  同时顺带二分出"视口顶边覆盖的块"（`anchorEl`）——换出后用它做滚动锚定补偿（B）。
+   *  四次二分共享同一布局快照 ⇒ 仍是 O(log n) 次 rect 读，不随文档规模线性增长。 */
   function _lazyEvictKeepRange(cc, pane) {
     var paneRect = pane.getBoundingClientRect();
     var viewH = pane.clientHeight || paneRect.height || 720;
@@ -9011,7 +9041,7 @@
     var keepBottom = paneRect.bottom + viewH * LAZY_EVICT_KEEP_SCREENS;
     var centerY = (paneRect.top + paneRect.bottom) / 2;
     var kids = cc.children, n = kids.length;
-    if (!n) return { lo: 0, hi: -1, center: 0, viewH: viewH, none: true };
+    if (!n) return { lo: 0, hi: -1, center: 0, viewH: viewH, none: true, anchorEl: null, anchorLine: null };
 
     // 第一个 bottom >= keepTop
     var a = 0, b = n - 1, first = n;
@@ -9031,12 +9061,24 @@
       var m3 = (e + f) >> 1;
       if (kids[m3].getBoundingClientRect().bottom >= centerY) { center = m3; f = m3 - 1; } else { e = m3 + 1; }
     }
+    // 视口顶边覆盖的块（锚点；必须在保留窗口内，故换出不会动它 ⇒ 换出后仍可读它的 rect）
+    var g = 0, h = n - 1, anchorPos = -1;
+    var anchorEdge = paneRect.top + 1;
+    while (g <= h) {
+      var m4 = (g + h) >> 1;
+      if (kids[m4].getBoundingClientRect().bottom > anchorEdge) { anchorPos = m4; h = m4 - 1; } else { g = m4 + 1; }
+    }
+    var anchorEl = anchorPos >= 0 ? kids[anchorPos] : null;
+    var anchorLine = anchorEl ? parseInt(anchorEl.getAttribute("data--src-line"), 10) : NaN;
     function idxOf(pos) {
       if (pos < 0 || pos >= n) return pos < 0 ? -1 : n;
       var v = parseInt(kids[pos].getAttribute("data--block-index"), 10);
       return isNaN(v) ? pos : v;
     }
-    return { lo: idxOf(first), hi: idxOf(last), center: idxOf(center), viewH: viewH, none: false };
+    return {
+      lo: idxOf(first), hi: idxOf(last), center: idxOf(center), viewH: viewH, none: false,
+      anchorEl: anchorEl, anchorLine: isNaN(anchorLine) ? null : anchorLine,
+    };
   }
 
   /** 淘汰一批：把保留窗口之外的已物化块换回占位。**只应由调度器 P3 作业调用**。 */
@@ -9116,6 +9158,35 @@
       cand.sort(function (x, y) { return (y.score - x.score) || (Math.abs(y.idx - keep.center) - Math.abs(x.idx - keep.center)); });
 
       var batch = cand.slice(0, LAZY_EVICT_BATCH_MAX);
+      // ── ⑤.5【先读后写】换出高度/锚点必须在**任何 DOM 变更之前**量完 ───────────────────
+      //   · `_advH[q]`：块的**垂直占位体积** = 本块 rect.top → 下一块 rect.top（含塌陷外边距）。
+      //     ⚠️ 不能用 `rect.height`：真块内部的 `mjx-container`/`pre` 等外边距会**塌陷穿过**
+      //     `.‑src-block`（本块 margin:0、无 padding/border），不进入本块 rect.height，但确实占版面。
+      //     实测：62 个真块的 Σrect.height=3153px，Σ(top 到下一块 top)=3405px（相差 252px，单块最大 14px）。
+      //     若用 rect.height 当占位高度，每次换出都会**丢掉这部分**⇒ scrollHeight 系统性缩水
+      //     （实测 5%→35% 滚一轮缩 5204px）⇒ 用户绝对位置漂移。用 adv 才是"整篇高度不变"。
+      //   · `_rectH[q]`：块自身 rect 高度（回滚物化时只锁到这个值，不能锁 adv ⇒ 否则会把
+      //     塌陷外边距变成块内 padding，高度反而涨回去）。
+      //   · `_anchorTop` / `_shBefore`：视口顶部锚点屏幕位置 + 本批前 scrollHeight（B 补偿/量化用）。
+      //   这一段只有读：不会与写交错 ⇒ 整批仍只多一次布局（不是 60 次强制同步布局）。
+      var _rectH = new Array(batch.length), _advH = new Array(batch.length);
+      for (var q0 = 0; q0 < batch.length; q0++) {
+        try {
+          var _el0 = batch[q0].el;
+          if (!_el0 || !_el0.parentNode) { _rectH[q0] = 0; _advH[q0] = 0; continue; }
+          var _r0 = _el0.getBoundingClientRect();
+          _rectH[q0] = _r0.height;
+          var _nx0 = _el0.nextElementSibling;
+          var _adv0 = (_nx0 && _nx0.getBoundingClientRect) ? (_nx0.getBoundingClientRect().top - _r0.top) : _r0.height;
+          _advH[q0] = (_adv0 > 0) ? _adv0 : _r0.height;
+        } catch (_) { _rectH[q0] = 0; _advH[q0] = 0; }
+      }
+      var _anchorEl = keep.anchorEl, _anchorTop = NaN, _shBefore = 0;
+      try {
+        if (_anchorEl && _anchorEl.parentNode) _anchorTop = _anchorEl.getBoundingClientRect().top;
+        _shBefore = pane.scrollHeight;
+      } catch (_) { _anchorTop = NaN; _shBefore = 0; }
+
       var n = 0, evicted = null;
       for (var q = 0; q < batch.length; q++) {
         var it = batch[q];
@@ -9129,8 +9200,19 @@
           }
           // B. 解除 min-height 锁 + 停止观察（否则 `_lazyLockedEls` 持死引用）
           _lazyReleaseMinHeight(real);
-          // C. 生成与原占位**同口径**的占位（data--block-index / data--src-line / style.height 全由 AST 决定）
+          // C. 生成占位（data--block-index / data--src-line 由 AST 决定）
           var ph = _makePlaceholder(blk, bi);
+          // ★★ 治本（A）：**用换出前的真实占位体积**覆盖估值 —— 估值与真块排版高度可差上百 px
+          //  （实测：真块 214px ⇒ 估值 25px；真块 415px ⇒ 估值 227px），用估值换出会让整篇
+          //  scrollHeight 漂移 ⇒ 用户滚回原处时绝对位置对不上。
+          //  `data--pv-h`（adv，供诊断）/ `data--pv-r`（块自身 rect 高，回滚物化时锁高）
+          //  ⇒ 保证"换出 → 滚回物化"这一整圈高度不变。
+          var _advHv = _advH[q], _rectHv = _rectH[q];
+          if (_advHv > 0) {
+            ph.style.height = (Math.round(_advHv * 10) / 10) + "px";
+            ph.setAttribute("data--pv-h", String(Math.round(_advHv * 10) / 10));
+          }
+          if (_rectHv > 0) ph.setAttribute("data--pv-r", String(Math.round(_rectHv * 10) / 10));
           real.replaceWith(ph);
           _lazyBlockEls[bi] = ph;
           // D. 新占位重新纳入 IO ⇒ 滚回时可以再次物化
@@ -9151,6 +9233,28 @@
           if (!_lazyMathQueue.length) {
             _lazyMathQueue = null;
             if (_lazyMathQueueTimer) { clearTimeout(_lazyMathQueueTimer); _lazyMathQueueTimer = null; }
+          }
+        } catch (_) {}
+      }
+
+      // ── ⑥.5【兜底 B】滚动锚定补偿：A 已让高度稳定，这里只吸收**残余**变化 ───────────────
+      //   做法：同一锚点块（换出不会碰它，它在保留窗口内）在批次前后的 `rect.top` 之差 =
+      //   视口上方内容高度变化 ⇒ 反向加回 `scrollTop`，用户的可见位置一像素不动。
+      //   成本：1 次 rect 读 + 1 次 scrollHeight 读（同一布局），复用 `_lazyEvictKeepRange` 的二分锚点，
+      //   **不遍历全篇 rect**；无补偿时不写 scrollTop、不打日志。
+      if (n) {
+        try {
+          var _shAfter = pane.scrollHeight;
+          if (_shBefore > 0) _lazyHeightDriftPx += Math.abs(_shAfter - _shBefore);
+          if (!isNaN(_anchorTop) && _anchorEl && _anchorEl.parentNode) {
+            var _nowTop = _anchorEl.getBoundingClientRect().top;
+            var _anchorDelta = _nowTop - _anchorTop;
+            if (Math.abs(_anchorDelta) >= 0.5) {
+              pane.scrollTop = pane.scrollTop + _anchorDelta;   // 越界由浏览器自行 clamp
+              _lazyAnchorFixes++;
+              log("lazy", "evict scroll-anchor: line=" + (keep.anchorLine == null ? "?" : keep.anchorLine) +
+                " Δ=" + Math.round(_anchorDelta) + "px");
+            }
           }
         } catch (_) {}
       }
@@ -9195,6 +9299,9 @@
       evictTotal: _lazyEvictCount,
       keepScreens: LAZY_EVICT_KEEP_SCREENS,
       suspended: !!_lazyEvictSuspended,
+      // 2026-10-22 1d：换出高度稳定性指标 —— 累计 |本批 scrollHeight 变化|（px，越小越好；修复后≈0）
+      heightDriftPx: Math.round(_lazyHeightDriftPx * 10) / 10,
+      anchorFixes: _lazyAnchorFixes,     // 发生过 scrollTop 补偿的批次数（B 兜底触发次数）
     };
     try {
       var preview = $("#preview");
