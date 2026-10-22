@@ -327,4 +327,32 @@ E28 实现（`lexer.js` / `parser.js` / `source-gen.js`，工作区未提交）�
 
 **E28 第二步（agent `917d4c26`）仍进行中**：`app.js`/`app.css` 尚无对应改动落地。
 
+### W0 第 11 轮：重新评估「方案 F 是否必要」—— 空引用行其实**有高度**，F 可能是伪需求
+
+读 `surface/render-core.js:349-364` 的 blockquote 渲染：
+
+```js
+for (var qi = 0; qi < block.children.length; qi++) {
+  var qEl = document.createElement("p");
+  renderInlineList(inner.children, qEl);
+  if (!inner.children || inner.children.length === 0) qEl.innerHTML = "<br>";  // ← 空段落给 <br>
+  el.appendChild(qEl);
+}
+```
+
+**⇒ 空引用行的 DOM 是 `<blockquote><p><br></p></blockquote>`**，`<p>` 内含 `<br>` 会撑出真实行高（≈1.55em）。
+**因此"`> ` 在预览里高度为 0 ⇒ 看不见"这个假设不成立** —— 我在第 3 轮提出的方案 F 可能是**伪需求**。
+
+**更可能的真相**：E28 的**第一步（`405f2959` 字节保真）就已经修好了用户感知** ——
+旧实现 `>  a` 会被 lexer 吃掉第一个空格（正文变成 `"a"`），用户"想在引用里打前导空格"打不出来；
+新实现 `>  a` 正文保留 `" a"`。**这正是"`>` 后面按空格没反应"的实质**。
+
+**⇒ 撤销"方案 F 必须做"的判断**，改为**先真机验证再决定**：
+1. 真机：预览里进入引用行，输入 `>` → 空格 → 空格 → `a`，检查 source 与渲染文本是否保留前导空格
+2. 若已可见/已保留 ⇒ **E28 收口**，`detectStructuralMarker` 的 `>` 分支按"仅影响输入判定"单独评估是否仍需要
+3. 若仍无感知 ⇒ 再回来看 C/F，且必须先给出"哪一步看不到"的截图级证据
+
+**教训**：我在第 3 轮把"高度为 0"当作前提推出方案 F，**但没有先读渲染代码确认** —— 凭假设设计替代方案，
+和之前"(deferral) 以为能省时间"是同一类错误。**先读代码、先复现，再给方案。**
+
 
