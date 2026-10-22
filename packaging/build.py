@@ -240,6 +240,8 @@ _REQUIRED_RELEASE_RESOURCES = (
     "agent-capabilities/web-search.json",  # N 线联网检索的声明（2026-09-24；逐库启停的对象）
     "agent-capabilities/web-fetch.json",  # N 线网页抓取的声明（同上；其 config 是库级域名名单）
     "agent-skills/web-research/SKILL.md",  # 内置技能：N 线联网工作法（`skills.py` 的 bundled 只读根读取）
+    "agent-skills/skill-creator/SKILL.md",  # 内置技能：写技能元技能（`skills.py` 的 bundled 只读根读取）
+    "agent-skills/kb-maintenance/SKILL.md",  # 内置技能：知识库维护工作法（`skills.py` 的 bundled 只读根读取）
     "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
     "examples/README.md",  # 官方展示样例库入口（机器学习导论，随包可试用）
     "icons/Memoria.ico",
