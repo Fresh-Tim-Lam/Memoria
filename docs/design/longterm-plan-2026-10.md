@@ -381,4 +381,22 @@ for (var qi = 0; qi < block.children.length; qi++) {
 **仍未验证**：真机 WebView2 真实剪贴板 payload（截图工具/浏览器复制图片）、真实滚轮与滚动条拖拽、
 预览面板光标跟随的几何（复用同一 `_keepCaretVisible` 但只有源码面板有数字）、前端无 20MB 预检（超限会先转 base64）。
 
+### W1 第 13 轮：E30 已实现并提交（`002b5506`）—— 数据正确性修复，端到端待真机
+
+**修法**（`edit-handler.js` +59 行）：
+1. 分派表补 `deleteByCut` / `deleteByDrag` → 复用 `deleteSelection(range)` ⇒ 源码同步 + **单个撤销单元**
+2. `preventDefault` 会阻止浏览器写剪贴板 ⇒ 剪切前捕获文本自行写入：
+   `navigator.clipboard.writeText` → 失败/缺失退回 `execCommand("copy")`（此时选区未删仍有效）
+3. **失败绝不静默**：`showFlashError` → `setStatusError` → `console + alert` 三级兜底，
+   文案「剪切已从文档移除，但写入剪贴板失败：内容可能无法粘贴」
+4. **`deleteByDrag` 不写剪贴板**（拖拽非复制语义，写剪贴板会污染用户剪贴板）
+
+**门禁**：`node --check` 0；12 剧本 12/12（41.2s）；调度守卫 PASS；E28 回归 **80/80** 未受影响。
+
+**仍未验证（P0 项不能仅凭门禁收口）**：
+- 真机端到端：CDP 模拟 Ctrl+X 的剪贴板行为不可靠 ⇒「剪切 → 重渲不回魂 → Ctrl+Z 只恢复一次」待真机键盘验证
+- 中文输入法下选中+剪切、拖拽移动文字、`execCommand` 回退路径均未单独触发
+
+**⇒ E30 状态改为「已实现+门禁通过，端到端待真机」**，不作为已闭环。
+
 
