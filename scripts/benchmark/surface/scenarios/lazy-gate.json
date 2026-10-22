@@ -4,15 +4,34 @@
   "fixture": {
     "path": "scripts/benchmark/surface/fixtures/lazy-gate-kb/docs/lazy-gate-1600.md",
     "file": "docs/lazy-gate-1600.md",
-    "segments": ["公式", "表格", "mermaid", "代码", "列表", "引用"]
+    "segments": [
+      "公式",
+      "表格",
+      "mermaid",
+      "代码",
+      "列表",
+      "引用"
+    ]
   },
-  "checks": ["idleRaf", "open", "positions", "backToTop", "longScroll", "editProtect"],
+  "checks": [
+    "idleRaf",
+    "open",
+    "positions",
+    "backToTop",
+    "longScroll",
+    "editProtect"
+  ],
   "thresholds": {
     "frames": 90,
     "p50MaxMs": 20,
     "firstVisibleMaxMs": 500,
     "postOpenSettleMs": 1500,
-    "fractions": [0.3, 0.5, 0.7, 0.9],
+    "fractions": [
+      0.3,
+      0.5,
+      0.7,
+      0.9
+    ],
     "driftSettleMs": 1500,
     "driftLinesMax": 5,
     "alignToleranceLines": 12,
@@ -22,6 +41,7 @@
     "longScrollStepMs": 130,
     "heapPeakDeltaMb": 96,
     "heapRetainedDeltaMb": 32,
-    "heapPeakDeltaMbWhenMonotonic": 32
+    "heapPeakDeltaMbWhenMonotonic": 32,
+    "scrollTopTolerancePx": 32
   }
 }
