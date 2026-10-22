@@ -33,6 +33,11 @@ DEFAULT_DIR = os.path.join(ROOT, "src", "memoria", "ui", "static", "app", "js")
 # ── 白名单：只允许「结构上不该进调度器」的例外 ───────────────────────────────
 # anchor 必须在**去掉注释后的代码行**里逐字出现；max 为该锚点允许的最大命中数。
 WHITELIST = [
+    # ── W3.3 淘汰批尾：布局落定后的一次性核对（rAF 回调在渲染前，需再跳一个宏任务读 scrollHeight）──
+    dict(file="app.js", rule="raf", anchor="if (window.requestAnimationFrame) requestAnimationFrame(go);", max=1,
+         reason="批尾布局核对：rAF 后再等一帧渲染完成，才读 scrollHeight（一次性探测，非队列调度）"),
+    dict(file="app.js", rule="timeout0", anchor="try { _tailVerifyNow(); } catch (_) {}", max=1,
+         reason="同上：rAF→setTimeout(0) 越过渲染边界后做一次同步核对；由 _tailVerifyScheduled 去重，不构成作业队列"),
     # ── 调度器自身的降级/续跑实现（它就是调度器，不能再调度自己） ──────────────
     dict(file="scheduler.js", rule="timeout0", anchor="return setTimeout(fn, 0);", max=1,
          reason="调度器空闲兜底：无 requestIdleCallback 时退化为零延时宏任务"),

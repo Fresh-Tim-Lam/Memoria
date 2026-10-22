@@ -270,3 +270,8 @@ run 调用**（不重跑）。`shouldYield()` 为真当：单帧单元数达 `ma
   真机 counters 读数见 `artifacts/agent/verify/scheduler-realmachine-2026-10-22.json`（快速滚动 5 轮）
   与 `scheduler-realmachine-slow-2026-10-22.json`（慢滚 4 轮）；9 轮中 3 轮 `max_frame_ms` >200ms，
   均由 `lazy_evict` 单批贡献（见 §3.5 结论；本轮不改 `src/**`）。
+
+- **W3.3 批尾布局核对（`app.js::_tailScheduleVerify`，2026-10-23 登记）**：`rAF` 回调发生在渲染**前**，
+  因此读取 `pane.scrollHeight` 仍会强制布局；该处刻意「rAF → `setTimeout(0)`」越过渲染边界后再做一次
+  **一次性**同步核对（用于校验预测高度与真实 scrollHeight 的偏差）。由 `_tailVerifyScheduled` 去重，
+  **不构成作业队列**，属结构性例外，已进守卫白名单。
