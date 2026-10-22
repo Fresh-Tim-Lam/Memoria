@@ -48,6 +48,7 @@ const ROUNDS = Number(arg('rounds', 3));
 const WIN_MS = Number(arg('window-ms', 600));
 const POSITIONS = Number(arg('positions', 19));
 const SETTLE_MAX_MS = Number(arg('settle-max-ms', 900));
+const ORDER = String(arg('order', 'downup'));   // downup（默认：第一遍向下、第二遍向上）| updown（对照）
 // 同实例 A/B：A 臂 = 200/60（当前默认），B 臂 = 48/24（W3.2 候选）。传 --ab 开启交替。
 const AB = !!arg('ab', false);
 const AB_A = { idle: Number(arg('ab-a-idle', 200)), scrolling: Number(arg('ab-a-scrolling', 60)), evict: Number(arg('ab-a-evict', 60)) };
@@ -430,6 +431,20 @@ await cdp.ev(`(function(){
     }
     return { ms:+(performance.now()-t0).toFixed(0), stats:U.workset(), timeout:true };
   };
+  U.toBottom = async function(){
+    var pane = document.getElementById('preview-pane');
+    pane.scrollTop = Math.max(0, pane.scrollHeight - pane.clientHeight);
+    var t0 = performance.now(), last = null, stable = 0;
+    while (performance.now() - t0 < 30000) {
+      await new Promise(function(r){ setTimeout(r, 200); });
+      var s = U.workset();
+      if (!s) continue;
+      var key = s.materialized + '|' + s.placeholders + '|' + s.evictTotal;
+      if (key === last) stable++; else { stable = 0; last = key; }
+      if (stable >= 4) return { ms:+(performance.now()-t0).toFixed(0), stats:s };
+    }
+    return { ms:+(performance.now()-t0).toFixed(0), stats:U.workset(), timeout:true };
+  };
   return 1;
 })()`);
 
@@ -590,19 +605,32 @@ for (let r = 0; r < ROUNDS; r++) {
       + ` return 1; })()`, false);
   }
   await cdp.ev('window.__ud.toTop()');
-  const run = { round: r + 1, arm, caps: AB ? (arm === 'A' ? AB_A : AB_B) : null, order: 'down-then-up', down: [], up: [], concurrency: concurrency() };
+  const run = { round: r + 1, arm, caps: AB ? (arm === 'A' ? AB_A : AB_B) : null, order: ORDER, down: [], up: [], concurrency: concurrency() };
   const t0 = Date.now();
-  for (const f of FRACS) {
-    const m = await cdp.ev(`window.__ud.measureAt(${f}, ${WIN_MS}, ${SETTLE_MAX_MS})`);
-    run.down.push(m);
+  if (ORDER === 'updown') {
+    // 对照：先向上（从底部），再向下。用于区分"第二遍"效应 vs "向上"方向效应。
+    await cdp.ev('window.__ud.toBottom()');
+    const tA = Date.now();
+    for (let i = FRACS.length - 1; i >= 0; i--) {
+      run.up[i] = await cdp.ev(`window.__ud.measureAt(${FRACS[i]}, ${WIN_MS}, ${SETTLE_MAX_MS})`);
+    }
+    run.upWallMs = Date.now() - tA;
+    const tB = Date.now();
+    for (let i = 0; i < FRACS.length; i++) {
+      run.down[i] = await cdp.ev(`window.__ud.measureAt(${FRACS[i]}, ${WIN_MS}, ${SETTLE_MAX_MS})`);
+    }
+    run.downWallMs = Date.now() - tB;
+  } else {
+    for (const f of FRACS) {
+      run.down.push(await cdp.ev(`window.__ud.measureAt(${f}, ${WIN_MS}, ${SETTLE_MAX_MS})`));
+    }
+    run.downWallMs = Date.now() - t0;
+    const t1 = Date.now();
+    for (let i = FRACS.length - 1; i >= 0; i--) {
+      run.up[i] = await cdp.ev(`window.__ud.measureAt(${FRACS[i]}, ${WIN_MS}, ${SETTLE_MAX_MS})`);
+    }
+    run.upWallMs = Date.now() - t1;
   }
-  const downMs = Date.now() - t0;
-  const t1 = Date.now();
-  for (let i = FRACS.length - 1; i >= 0; i--) {
-    const m = await cdp.ev(`window.__ud.measureAt(${FRACS[i]}, ${WIN_MS}, ${SETTLE_MAX_MS})`);
-    run.up.push(m);
-  }
-  run.downWallMs = downMs; run.upWallMs = Date.now() - t1;
   run.rows = summarize({ down: run.down, up: run.up });
   run.heap = await heap();
   run.concurrencyAfter = concurrency();
@@ -610,8 +638,8 @@ for (let r = 0; r < ROUNDS; r++) {
   const ratios = run.rows.map(x => x.ratio).filter(x => typeof x === 'number');
   const sorted = ratios.slice().sort((a, b) => a - b);
   const med = sorted.length ? sorted[Math.floor(sorted.length / 2)] : null;
-  console.log(`[round ${r + 1}] down=${run.downWallMs}ms up=${run.upWallMs}ms`
-    + ` ratio med=${med} min=${sorted[0]} max=${sorted[sorted.length - 1]}` + ` heap=${run.heap.usedMB}MB`);
+  console.log(`[round ${r + 1}${arm ? ' ' + arm : ''}] order=${ORDER} down=${run.downWallMs}ms up=${run.upWallMs}ms`
+    + ` ratio(up/down) med=${med} min=${sorted[0]} max=${sorted[sorted.length - 1]}` + ` heap=${run.heap.usedMB}MB`);
   for (const x of run.rows) if (x.ratio && x.ratio > 1.2) console.log(`   >1.2 @${(x.frac * 100).toFixed(0)}% : ${x.downMax} → ${x.upMax} (${x.ratio}×)`);
 }
 
@@ -668,7 +696,7 @@ function analyze(runs) {
 }
 
 R.summary = Object.assign({
-  rounds: ROUNDS, positions: POSITIONS, windowMs: WIN_MS,
+  rounds: ROUNDS, positions: POSITIONS, windowMs: WIN_MS, order: ORDER,
   concurrency: { before: R.concurrencyBefore, after: concurrency() },
 }, analyze(R.rounds));
 
