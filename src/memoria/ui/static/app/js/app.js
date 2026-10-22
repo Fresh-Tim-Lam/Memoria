@@ -8518,6 +8518,7 @@
       settled = true;
       try {
         if (im.naturalWidth > 0 && im.naturalHeight > 0) {
+          if (_pvImgSizes.size > 4000) _pvImgSizes.clear();   // 会话级防无限增长（单库图片通常 <1500）
           _pvImgSizes.set(url, { ok: true, nw: im.naturalWidth, nh: im.naturalHeight });
         } else if (im.complete) {
           _pvImgSizes.set(url, { ok: false });
