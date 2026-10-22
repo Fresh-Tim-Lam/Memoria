@@ -355,4 +355,30 @@ for (var qi = 0; qi < block.children.length; qi++) {
 **教训**：我在第 3 轮把"高度为 0"当作前提推出方案 F，**但没有先读渲染代码确认** —— 凭假设设计替代方案，
 和之前"(deferral) 以为能省时间"是同一类错误。**先读代码、先复现，再给方案。**
 
+### W0 第 12 轮：E25 / E26 **真机式验收通过**（有修前/修后数字），探针已入库
+
+**E26（回车后光标不跟随滚动）**
+| | 修前 | 修后 |
+|---|---|---|
+| 连按 40 次 Enter | `scrollTop` 恒 0、`caretTop=1037 > paneBottom=786`（**光标在视口外 251px**）| `scrollTop` 逐行跟随到 280、`caretBottom=778 ≤ 786` |
+| 光标本就可见时 5 次 Enter | — | **滚动 0 次**（"绝不乱跳"）|
+| IME 组合期 | — | `compositionstart→end` 之间 **0 次滚动**，`compositionend` 才补滚 |
+| 用户滚动豁免 | — | 合成 `wheel` 后 700ms 内不跟随、900ms 后恢复 |
+
+**E25（Ctrl+V 粘贴图片）**
+| | 修前 | 修后 |
+|---|---|---|
+| 合成 `ClipboardEvent(files=[pasted.png])` | `defaultPrevented=true` 但**0 行插入**、`.memoria/images/` **0 张图**（被 text/plain 分支吞掉）| 插入 `![pasted](<.memoria/images/pasted.png>)`，磁盘 `pasted.png` |
+| 重复粘贴同图 | — | MD 再插一行但指向**同一路径**，磁盘仍只有 1 份（**MD5 去重**）|
+| 多图 / 失败 / 撤销 | — | 按序插入；`.txt` 失败红字可见；**Ctrl+Z 一次撤销整次多图粘贴** |
+| registry | — | 保存引用后 `refs = {pasted.png:[notes/long.md], multi-a.png:[...], multi-b.png:[...]}`（语义未变）|
+
+**门禁**：12 剧本 12/12；`check_scheduler_discipline` PASS；`py_compile` 0；后端单测 15/15。
+
+**探针已入库（`4bba8533`）**：`_e25_backend_check.py`（15 项）、`_e2526_probe.mjs` + `_e2526_run.py`（12 项 check，修前/修后成对）。
+**⇒ 这两个缺陷从此有可复跑判定器，不再依赖一次性脚本。**
+
+**仍未验证**：真机 WebView2 真实剪贴板 payload（截图工具/浏览器复制图片）、真实滚轮与滚动条拖拽、
+预览面板光标跟随的几何（复用同一 `_keepCaretVisible` 但只有源码面板有数字）、前端无 20MB 预检（超限会先转 base64）。
+
 
