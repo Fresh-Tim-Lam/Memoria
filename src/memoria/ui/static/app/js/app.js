@@ -9562,7 +9562,9 @@
         batches: 0, blocks: 0, totalMs: 0,
         keepMs: 0, scanMs: 0, readMs: 0, applyMs: 0,
         blockIndexMs: 0, mathClearMs: 0, purgeMs: 0, anchorMs: 0,
+        tailShMs: 0, tailAnchorReadMs: 0, tailWriteMs: 0,
         maxTotalMs: 0, maxMathClearMs: 0, maxApplyMs: 0, maxBlockIndexMs: 0,
+        tailSkips: 0, tailVerifies: 0,
         blocksWithMath: 0, last: [],
       };
       return true;
@@ -9581,6 +9583,123 @@
   //   `heightDriftPx` = 累计 |本批 scrollHeight 变化| —— 修复后应稳定在 0 附近；一旦增长即回归。
   var _lazyHeightDriftPx = 0;       // 累计 |scrollHeight 变化|（换出批次；metrics 量化用）
   var _lazyAnchorFixes = 0;         // 发生过 scrollTop 补偿的淘汰批次数（诊断）
+
+  // ══ W3.3（2026-10-23）：**批尾强制布局**策略 ══════════════════════════════════════
+  // 实测（`__MEMORIA_EVICT_PROFILE`，08 章 4001 块、快拖 1 轮 66 批）：
+  //   keep 16.7% / scan 6.3% / apply 12.8% / typesetClear 5.0% / **批尾 58.7%**；
+  //   批尾里 `pane.scrollHeight` 是唯一真正强制布局的读（anchor rect 紧随其后，同一次布局）。
+  //   ⇒ 每批一次全篇 reflow，批均 ~21ms、尖峰 150–180ms；**不是块数**（每块边际仅 0.077ms）。
+  //
+  // 三种模式（运行时可切，供**同 build 交错 A/B**）：
+  //   · `legacy`：现行为（读 scrollHeight + anchor rect + 必要 scrollTop 补偿）
+  //   · `noSh`  ：只去掉 scrollHeight 读，保留 anchor rect / 补偿（诊断用，隔离 scrollHeight 代价）
+  //   · `pred`  ：批尾**零强制布局**。换出时占位高度 = 真块 advance 高度（差仅 ±0.05px/块），
+  //               于是"视口上方内容高度变化"可由 `Σ(新占位高 - advH)` **预测**；累计超过阈值
+  //               （或每 N 批）才在**渲染之后的空帧**做一次真实核对（此时布局已由渲染阶段完成，
+  //               读取几乎免费），把实测误差记入 `heightDriftErrPx`。
+  //   `pred` 模式不写 scrollTop：高度变化仅 ±亚像素，交给浏览器 scroll anchoring；
+  //   实测 legacy 的 anchorFixes ≈ 10% 批次且 |Δ|<0.5px。
+  var _tailLayoutMode = "legacy";
+  var _tailBatchCount = 0;          // pred：距上次核对的批数
+  var _tailPredDriftPx = 0;         // pred：距上次核对的**有符号**预测高度变化（锚点上方）
+  var _tailPredTotalPx = 0;         // pred：距上次核对的**有符号**预测全篇高度变化（用于核对 scrollHeight）
+  var _tailPendingAbsDriftPx = 0;   // pred：距上次核对的 |预测全篇变化| 累加（诚实计入 heightDriftPx）
+  var _tailShCache = 0;             // 上次真实读到的 pane.scrollHeight
+  var _tailVerifyScheduled = false;
+  var _tailVerifies = 0;            // 真实核对次数
+  var _tailSkips = 0;               // 跳过强制布局的批数
+  var _tailWouldFix = 0;            // pred：若按 legacy 的 0.5px 阈值"本应补偿"的批数（诊断）
+  var _tailAnchorPredMax = 0;       // pred：|预测锚点位移| 最大值（px）
+  var _tailDriftErrPx = 0;          // 核对时 |实测 - 预测| 累加（偏差告警）
+  var _tailDeferredReadMs = 0;      // 延迟核对里 scrollHeight 读取耗时（应接近 0：布局已干净）
+  var _TAIL_VERIFY_BATCHES = 8;
+  var _TAIL_VERIFY_PX = 4;
+
+  function _tailSetMode(m) {
+    if (m !== "legacy" && m !== "noSh" && m !== "pred") return _tailLayoutMode;
+    _tailLayoutMode = m;
+    _tailBatchCount = 0;
+    _tailPredDriftPx = 0;
+    _tailPredTotalPx = 0;
+    _tailPendingAbsDriftPx = 0;
+    _tailShCache = 0;
+    return _tailLayoutMode;
+  }
+
+  /** 在"渲染之后"的空帧做真实核对：rAF 回调在渲染前，因此再跳一个 setTimeout(0)
+   *  ⇒ 该宏任务通常落在本帧渲染/布局完成之后，`scrollHeight` 读取不再触发布局。 */
+  function _tailScheduleVerify() {
+    if (_tailVerifyScheduled) return;
+    _tailVerifyScheduled = true;
+    var go = function () {
+      setTimeout(function () {
+        _tailVerifyScheduled = false;
+        try { _tailVerifyNow(); } catch (_) {}
+      }, 0);
+    };
+    if (window.requestAnimationFrame) requestAnimationFrame(go);
+    else setTimeout(go, 16);
+  }
+
+  function _tailVerifyNow() {
+    if (_tailLayoutMode !== "pred") {
+      // 模式已切走（A/B 切换残留的延迟核对）⇒ 丢弃本次，避免污染另一种模式的统计。
+      _tailPredDriftPx = 0;
+      _tailPredTotalPx = 0;
+      _tailPendingAbsDriftPx = 0;
+      _tailBatchCount = 0;
+      return;
+    }
+    var pane = document.getElementById("preview-pane");
+    if (!pane) return;
+    var t0 = _evNow();
+    var sh = pane.scrollHeight;      // 布局已由渲染阶段完成 ⇒ 这里应是一次读缓存
+    _tailDeferredReadMs += _evNow() - t0;
+    if (_tailShCache > 0) {
+      var pred = _tailShCache + _tailPredTotalPx;
+      var err = sh - pred;
+      if (Math.abs(err) > 0.5) _tailDriftErrPx += Math.abs(err);
+    }
+    // 诚实记账：跳过批次的 |预测变化| 计入高度漂移指标（实测/预测口径见 stats）。
+    _lazyHeightDriftPx += _tailPendingAbsDriftPx;
+    _tailShCache = sh;
+    _tailPredDriftPx = 0;
+    _tailPredTotalPx = 0;
+    _tailPendingAbsDriftPx = 0;
+    _tailBatchCount = 0;
+    _tailVerifies++;
+  }
+
+  window.__MEMORIA_TAIL_LAYOUT = {
+    getMode: function () { return _tailLayoutMode; },
+    setMode: function (m) {
+      var r = _tailSetMode(m);
+      log("lazy", "tail-layout mode = " + r);
+      return r;
+    },
+    stats: function () {
+      return {
+        mode: _tailLayoutMode,
+        batches: _tailBatchCount,
+        verifies: _tailVerifies,
+        skips: _tailSkips,
+        driftErrPx: Math.round(_tailDriftErrPx * 10) / 10,
+        deferredReadMs: Math.round(_tailDeferredReadMs * 100) / 100,
+        shCache: _tailShCache,
+        predDriftPx: Math.round(_tailPredDriftPx * 100) / 100,
+        predTotalPx: Math.round(_tailPredTotalPx * 100) / 100,
+        wouldFix: _tailWouldFix,
+        anchorPredMax: Math.round(_tailAnchorPredMax * 100) / 100,
+        driftMode: _tailLayoutMode === "pred" ? "predicted+verified" : "measured",
+      };
+    },
+    /** 静止（布局已干净）时强制结算一次：让本轮 skip 的预测漂移落到实测口径上。 */
+    flushVerify: function () {
+      if (_tailLayoutMode !== "pred") return false;
+      _tailVerifyScheduled = false;
+      try { _tailVerifyNow(); return true; } catch (_) { return false; }
+    },
+  };
 
   /** 触碰一个块（LRU 时钟）。越界/无时钟表 ⇒ 静默忽略。 */
   function _lazyTouchBlock(idx) {
@@ -9765,6 +9884,16 @@
         if (_anchorEl && _anchorEl.parentNode) _anchorTop = _anchorEl.getBoundingClientRect().top;
         _shBefore = pane.scrollHeight;
       } catch (_) { _anchorTop = NaN; _shBefore = 0; }
+      // W3.3：pred 模式用**预测**替代批尾读取。`_anchorIdx` = 视口顶部块下标；
+      //   只有"位于锚点上方"的块高度变化才会移动视口（下方变化不影响当前位置）。
+      var _anchorIdx = -1;
+      try { if (_anchorEl) _anchorIdx = parseInt(_anchorEl.getAttribute("data--block-index"), 10); } catch (_) {}
+      if (isNaN(_anchorIdx)) _anchorIdx = -1;
+      if (_tailLayoutMode === "pred" && _tailShCache <= 0 && _shBefore > 0) _tailShCache = _shBefore;
+      var _predAbove = 0;            // 本批：锚点上方内容高度的预测变化（px，有符号）
+      var _predTotalPx = 0;          // 本批：全篇高度的预测变化（px，有符号）
+      var _predAboveN = 0;
+      var _predUnknown = false;
 
       var n = 0, evicted = null, _mathEvicted = null;
       if (_pf) { _pf.readMs += _evNow() - _pseg; _pseg = _evNow(); }
@@ -9793,6 +9922,17 @@
             ph.setAttribute("data--pv-h", String(Math.round(_advHv * 10) / 10));
           }
           if (_rectHv > 0) ph.setAttribute("data--pv-r", String(Math.round(_rectHv * 10) / 10));
+          // W3.3：预测"锚点上方内容高度变化" —— 占位高 = round(adv, 0.1) ⇒ 每块误差 ≤0.05px。
+          if (_advHv > 0) {
+            var _newHv = Math.round(_advHv * 10) / 10;
+            _predTotalPx += (_newHv - _advHv);
+            if (bi < _anchorIdx) {
+              _predAbove += (_newHv - _advHv);
+              _predAboveN++;
+            }
+          } else {
+            _predUnknown = true;   // 量不到 advance 高度的块 ⇒ 预测不可信，本批结束时核对
+          }
           // 2026-10-22 task-70：换出前登记"含 MathJax 产物"的块；整批换出后统一 typesetClear（见下）。
           //   必须在 `replaceWith` 之前/之后但**子树仍在 `real` 内**时清理；不能先 remove 子树。
           if (real.querySelector && real.querySelector("mjx-container, .-math, .-math-block")) {
@@ -9853,20 +9993,56 @@
       //   成本：1 次 rect 读 + 1 次 scrollHeight 读（同一布局），复用 `_lazyEvictKeepRange` 的二分锚点，
       //   **不遍历全篇 rect**；无补偿时不写 scrollTop、不打日志。
       if (n) {
-        try {
-          var _shAfter = pane.scrollHeight;
-          if (_shBefore > 0) _lazyHeightDriftPx += Math.abs(_shAfter - _shBefore);
-          if (!isNaN(_anchorTop) && _anchorEl && _anchorEl.parentNode) {
-            var _nowTop = _anchorEl.getBoundingClientRect().top;
-            var _anchorDelta = _nowTop - _anchorTop;
-            if (Math.abs(_anchorDelta) >= 0.5) {
-              pane.scrollTop = pane.scrollTop + _anchorDelta;   // 越界由浏览器自行 clamp
-              _lazyAnchorFixes++;
-              log("lazy", "evict scroll-anchor: line=" + (keep.anchorLine == null ? "?" : keep.anchorLine) +
-                " Δ=" + Math.round(_anchorDelta) + "px");
+        var _tailT0 = _pf ? _evNow() : 0;
+        if (_tailLayoutMode === "legacy") {
+          try {
+            var _shAfter = pane.scrollHeight;
+            if (_pf) { _pf.tailShMs += _evNow() - _tailT0; _tailT0 = _evNow(); }
+            if (_shBefore > 0) _lazyHeightDriftPx += Math.abs(_shAfter - _shBefore);
+            if (!isNaN(_anchorTop) && _anchorEl && _anchorEl.parentNode) {
+              var _nowTop = _anchorEl.getBoundingClientRect().top;
+              if (_pf) { _pf.tailAnchorReadMs += _evNow() - _tailT0; _tailT0 = _evNow(); }
+              var _anchorDelta = _nowTop - _anchorTop;
+              if (Math.abs(_anchorDelta) >= 0.5) {
+                pane.scrollTop = pane.scrollTop + _anchorDelta;   // 越界由浏览器自行 clamp
+                _lazyAnchorFixes++;
+                log("lazy", "evict scroll-anchor: line=" + (keep.anchorLine == null ? "?" : keep.anchorLine) +
+                  " Δ=" + Math.round(_anchorDelta) + "px");
+              }
             }
+            if (_pf) _pf.tailWriteMs += _evNow() - _tailT0;
+          } catch (_) {}
+        } else if (_tailLayoutMode === "noSh") {
+          // 诊断模式：只去掉 scrollHeight 读，anchor rect 仍然强制布局。
+          // 高度漂移无法实测 ⇒ 用预测绝对值诚实记账（核对项见 heightDriftErrPx）。
+          try {
+            _lazyHeightDriftPx += Math.abs(_predTotalPx);
+            if (!isNaN(_anchorTop) && _anchorEl && _anchorEl.parentNode) {
+              var _nowTop2 = _anchorEl.getBoundingClientRect().top;
+              if (_pf) { _pf.tailAnchorReadMs += _evNow() - _tailT0; _tailT0 = _evNow(); }
+              var _anchorDelta2 = _nowTop2 - _anchorTop;
+              if (Math.abs(_anchorDelta2) >= 0.5) {
+                pane.scrollTop = pane.scrollTop + _anchorDelta2;
+                _lazyAnchorFixes++;
+              }
+            }
+            if (_pf) _pf.tailWriteMs += _evNow() - _tailT0;
+          } catch (_) {}
+        } else {
+          // pred：**批尾零强制布局**。高度预测见 ⑤.5；真实核对延后到渲染后的空帧。
+          _tailPredDriftPx += _predAbove;
+          _tailPredTotalPx += _predTotalPx;
+          _tailPendingAbsDriftPx += Math.abs(_predTotalPx);
+          if (Math.abs(_predAbove) >= 0.5) _tailWouldFix++;
+          if (Math.abs(_predAbove) > _tailAnchorPredMax) _tailAnchorPredMax = Math.abs(_predAbove);
+          _tailBatchCount++;
+          _tailSkips++;
+          if (_pf) _pf.tailSkips++;
+          if (_predUnknown || Math.abs(_tailPredDriftPx) >= _TAIL_VERIFY_PX ||
+              _tailBatchCount >= _TAIL_VERIFY_BATCHES) {
+            _tailScheduleVerify();
           }
-        } catch (_) {}
+        }
       }
 
       if (n) {
