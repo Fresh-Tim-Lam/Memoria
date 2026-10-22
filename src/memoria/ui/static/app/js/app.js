@@ -1897,6 +1897,9 @@
 
     target.beginStamp({ reset: reset });
     var mapped = 0;
+    // 2026-10-22 性能修复（B1）：整篇 body 只切一次，循环内复用。
+    // 原写法每个块都调 _blockSrcTextOf ⇒ 内部再 split 全文 ⇒ O(n²)（实测 4001 块 ≈715ms）。
+    var _srcLines = (state.doc && state.doc.body) ? state.doc.body.split("\n") : [];
     for (var blockIdx = 0; blockIdx < doc.blocks.length; blockIdx++) {
       var block = doc.blocks[blockIdx];
       // 行区间只认 parser 落盘值；缺字段（理论上不该有）⇒ 跳过并如实计数，不猜
@@ -1906,7 +1909,7 @@
         kind: block.type,
         srcLineStart: block.srcLine,
         srcLineEnd: block.srcLineEnd,
-        blockSrcText: _blockSrcTextOf(block),
+        blockSrcText: _blockSrcTextOf(block, _srcLines),
         domEl: el,
       });
       mapped++;
@@ -1923,9 +1926,11 @@
   }
 
   /** 取一个块的源码文本（供 BlockIndex 派生稳定 id；纯函数、不读 DOM）。 */
-  function _blockSrcTextOf(block) {
+  function _blockSrcTextOf(block, preSplitLines) {
     try {
-      var lines = state.doc && state.doc.body ? state.doc.body.split("\n") : [];
+      // 2026-10-22 性能修复（B1）：允许调用方预切好行数组。
+      // 原先每块都 split 整篇 body ⇒ 4001 块 × 5879 行 = O(n²)，实测 ≈715ms。
+      var lines = preSplitLines || (state.doc && state.doc.body ? state.doc.body.split("\n") : []);
       var out = [];
       for (var i = block.srcLine - 1; i <= block.srcLineEnd - 1 && i < lines.length; i++) out.push(lines[i]);
       return out.join("\n");
