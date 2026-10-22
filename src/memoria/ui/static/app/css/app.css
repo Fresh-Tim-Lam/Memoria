@@ -7290,3 +7290,29 @@ body.-review-manage-open { overflow: hidden; }
 /* 2026-10-13 追加：开放题「判分中」动态 spinner（agent 生成期间的加载指示）。 */
 .-review-spinner { display: inline-block; width: 0.9em; height: 0.9em; border: 2px solid var(--text-secondary); border-top-color: transparent; border-radius: 50%; animation: -review-spin 0.8s linear infinite; vertical-align: -0.1em; margin-right: 0.4em; }
 @keyframes -review-spin { to { transform: rotate(360deg); } }
+
+/* ===== 2026-10-22 追加：对话气泡里的「空行块」不再占一整行（修"各段之间间距异常大"）=====
+   人：「会话内 Agent 回复渲染很奇怪：各段/行之间有很多换行（间距异常大）」。
+   机制（真机 CDP 实测）：P4e 之后助手回复**定稿**走 render-core，它按**源码行**产块 ⇒ 原文里
+   每一个空行都变成一个 `<div class="-src-block -blank-block"><br></div>`（预览里这是"空行的可
+   点击落点"，**有意义，不能动**）。但气泡没有源码行概念——`renderDocument(doc, {noSourceLines:true})`
+   只清 `data--src-line` 等行号属性，**不丢空行块** ⇒ 每个空行都占满一行行高
+   （13px × 1.55 ≈ 21.69px），再叠加 `<p>` 的 0.5rem 下边距 ⇒ 相邻两段实测 **29.69px**
+   （8px 边距 + 21.69px 空行块）。而**流式**路径（marked）块间没有空行块，同一份 Markdown
+   实测 **8px** ⇒ 症状是"流式时正常、定稿后突然多出空行"，与 `white-space` 无关
+   （气泡链上只有 `.-agent-msg` 是 pre-wrap，`.markdown-body` 已是 normal；定稿 DOM 里
+   纯空白文本节点 = 0 个）。
+   修法：**只**在这三个走 markdown 的气泡容器里隐藏空行块 ——
+     · `.-agent-msg-body`（答案正文）、`.-agent-think-body`（思考）、`.-agent-step`（过程行里
+       更早的助手正文），三者都走 `renderAssistantBody()` ⇒ 定稿都可能是 render-core；
+     · 用 `display:none` 而不是删节点：DOM 顺序、`data--block-index`、`annotateMessageOffsets()`
+       的字符偏移标注全都不受影响（空行块内只有 `<br>`、无文本节点，标注本来就跳过）；
+     · **不**写成全局 `.markdown-body .-blank-block`：预览（`.-preview.markdown-body`）里空行块
+       是编辑落点，必须保留；
+     · `pre`/`code` 的空白与换行不受影响（它们是 `-code-block`，不是空行块）。
+   本块末尾追加 ⇒ 既有行号锚点零漂移。 */
+.-agent-msg-body.markdown-body .-blank-block,
+.-agent-think-body.markdown-body .-blank-block,
+.-agent-step.markdown-body .-blank-block {
+    display: none;
+}
