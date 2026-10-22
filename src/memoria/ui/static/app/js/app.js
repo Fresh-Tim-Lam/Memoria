@@ -2014,6 +2014,8 @@
         content = _rendered.container;
         preview.innerHTML = "";
         preview.appendChild(content);
+        // 2026-10-22：明确记录"走了全量路径"，便于回归分辨大/小文档两种分支
+        log("lazy", "lazy materialize OFF (full render): blocks=" + _doc.blocks.length + " threshold=" + LAZY_MIN_BLOCKS + " hook=" + (typeof window.__MEMORIA_LAZY === "boolean" ? String(window.__MEMORIA_LAZY) : "unset"));
       }
       // 3a. 代码块语法高亮（P6a 补丁：render-core 本片不做 token；复用 MemoriaCodeHighlight，
       //     与 legacy renderer.js:105-106 同源；必须早于 mermaid 替换 pre）
@@ -7757,15 +7759,36 @@
   // 开关：`_lazyMaterializeEnabled` —— 默认关；开了才走惰性路径。回退只需关掉它
   //   （renderPreview 的 `lazyOn` 分支即回到全量 renderDocument，行为与阶段1前一致）。
 
-  /** 惰性物化总开关（默认关；1a/1b 验收通过后再评估默认值）。 */
+  /** 惰性物化的**小文档阈值**：块数低于此值走原全量渲染。
+   *
+   *  为什么需要它（2026-10-22 Lead 裁决）：
+   *   ① 小文档本来打开就快（几十块），惰性化收益为零，却引入占位/锁高/解锁一层新状态；
+   *   ② **冻结渲染等价基线用的是小文档** —— 走原路径才能保证对照有效；
+   *   ③ 占位高度估值在短文档上更容易出错（样本少）。
+   *  阈值 200：08 章 4001 块、03 章 2028 块都远超；典型 homework（几十块）远低于。 */
+  var LAZY_MIN_BLOCKS = 200;
+
+  /** 惰性物化总开关。**默认开**（2026-10-22 四项验收通过后裁决）。
+   *
+   *  优先级（高 → 低）：
+   *   ① `window.__MEMORIA_LAZY`（boolean）—— **测试钩子**，显式设置**覆盖阈值**，
+   *      让回归脚本既能测得大文档惰性、也能测得小文档全量（否则小文档测不到惰性分支）。
+   *   ② `localStorage["memoria.perf.lazy"]` —— `"0"` 显式关、`"1"` 显式开；其它值/缺失 ⇒ 默认开。
+   *   ③ 默认：块数 ≥ `LAZY_MIN_BLOCKS` 才惰性。
+   *
+   *  即：**默认开 = "大文档惰性 + 小文档全量"**，不是无条件开。 */
   function _lazyMaterializeEnabled(doc) {
-    // 测试用最高优先级：window 变量（CDP 可注入，不改代码/不重载做 A/B 对照）
+    var nBlocks = (doc && doc.blocks) ? doc.blocks.length : 0;
+    // ① 测试钩子：显式 boolean ⇒ 连阈值一起覆盖（这是给回归用的唯一通道）
     if (typeof window.__MEMORIA_LAZY === "boolean") return window.__MEMORIA_LAZY;
-    // 持久开关（真机手动体验：DevTools 设一次 localStorage，重开文档生效，不用重打包）
+    // ② 持久开关：显式 "0" 关 / "1" 开
     try {
-      if (localStorage.getItem("memoria.perf.lazy") === "1") return true;
+      var v = localStorage.getItem("memoria.perf.lazy");
+      if (v === "0") return false;
+      if (v === "1") return true;
     } catch (e) { /* 隐私模式 localStorage 不可用 ⇒ 忽略 */ }
-    return false;   // 默认关
+    // ③ 默认开，但小文档走原全量路径
+    return nBlocks >= LAZY_MIN_BLOCKS;
   }
 
   /** 按块类型估算占位高度（纯 AST，不读 DOM）。宁大勿小（D1）：上跳比留白差。 */
