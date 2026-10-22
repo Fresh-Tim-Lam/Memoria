@@ -8369,7 +8369,13 @@
     if (!live.length) return 0;
     try {
       MJ.typesetClear(live);
-      _purgeDetachedMathItems();
+      if (_evProf) {
+        var _p0 = _evNow();
+        _purgeDetachedMathItems();
+        _evProf.purgeMs += _evNow() - _p0;
+      } else {
+        _purgeDetachedMathItems();
+      }
       return live.length;
     } catch (e) {
       log("lazy", "math clear ERR " + ((e && e.message) || e));
@@ -8395,7 +8401,16 @@
       }
     } catch (_) { return 0; }
     if (!stale.length) return 0;
-    try { doc.math.remove(stale); } catch (_) { return 0; }
+    // ⚠️ 2026-10-22 task-76：`MathList.remove(...items)` 是**变参**签名（`clearMathItemsWithin`
+    //   自己也用 `remove.apply(e, items)`）。原先写 `remove(stale)`（传数组）实测是**静默 no-op**：
+    //   `document.math` 4455 条时 `remove([it])` 前后条数不变，`remove(...items)` 才下降。
+    //   ⇒ 这个"兜底"此前从未生效；快拖时"typeset 在块被换出后才完成"产生的新 MathItem 只能靠这里清，
+    //   结果全部留下（实测 3 遍快拖 21MB → 130MB）。变参不能一次上千个（栈风险）⇒ 每 500 条一批。
+    try {
+      for (var _pi = 0; _pi < stale.length; _pi += 500) {
+        doc.math.remove.apply(doc.math, stale.slice(_pi, _pi + 500));
+      }
+    } catch (_) { return 0; }
     return stale.length;
   }
 
@@ -9285,6 +9300,21 @@
         // ★ 关键：**文档没换 ⇒ 不拦**。token 变化只代表"又重渲了一轮"，这些块仍是当前文档的一部分，
         //   必须照常排版（否则就是 R1 跳转漏排的根因）。
         if (pathNow === pathAt) {
+          // ★ 2026-10-22 task-76：**先剔除已被工作集淘汰的块再排版**。
+          //   本批在入队后可能已被 `lazy_evict` 换出（快拖时几乎必然发生）。对已 detached 的块排版
+          //   会创建 `MathItem`（`start.node`/`typesetRoot` 都在文档外），而淘汰批的 `typesetClear`
+          //   **早已跑过** ⇒ 没人再清它 ⇒ `document.math` 无限增长（实测快拖 3 遍 16MB → 130MB、
+          //   4455 条 item / 4446 条 detached）。这里直接不排，从源头断掉"给死块排版"。
+          var liveBatch = batch.filter(function (el) { return el && el.isConnected; });
+          if (!liveBatch.length) {
+            log("lazy", "math merge SKIP (all " + batch.length + " blocks evicted)");
+            _lazyRevealMathIn(hiddenBatch);
+            return Promise.resolve();
+          }
+          if (liveBatch.length !== batch.length) {
+            log("lazy", "math merge SKIP evicted blocks: " + (batch.length - liveBatch.length) + "/" + batch.length);
+          }
+          batch = liveBatch;
           log("lazy", "math merge typeset (" + reason + "): blocks=" + batch.length + (token !== state.previewToken ? " [retoken same-doc ⇒ still typeset]" : ""));
           // ★ 2026-10-22 修正（Lead 实测**最长连续源码态 1.3–1.8s**）：
           //   这里原来每次都要"让出 1 个宏任务 + **双 rAF**"才排。单看一批只多 2 帧，但
@@ -9518,6 +9548,29 @@
   var _lazyTouch = null;            // Array<number>：每个块最近一次物化/进入工作集的时刻（LRU 时钟）
   var _lazyEvictCount = 0;          // 本文件累计淘汰块数（诊断/metrics）
   var _lazyEvictSuspended = false;  // `__MEMORIA_MATERIALIZE_ALL`（门禁强制全量）期间/之后禁用淘汰
+
+  // 2026-10-22 task-76：**淘汰单批耗时分解**（默认关闭 ⇒ `_evProf` 为 null，只多一次判空）。
+  //   动机：`counters().max_frame_ms` 只给"整批最慢一次"，无法回答"淘汰 / typesetClear / BlockIndex 同步
+  //   各占多少"，而调参（批上限 / 切片粒度）必须先知道这个比例。
+  //   用法：页面内 `window.__MEMORIA_EVICT_PROFILE.enable()` → 滚一轮 → `.read()`；`.disable()` 关。
+  //   口径：全部 `performance.now()` 差值，单位 ms；`mathClearMs` 含 `purgeMs`（后者是前者的子集）。
+  var _evProf = null;
+  function _evNow() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
+  window.__MEMORIA_EVICT_PROFILE = {
+    enable: function () {
+      _evProf = {
+        batches: 0, blocks: 0, totalMs: 0,
+        keepMs: 0, scanMs: 0, readMs: 0, applyMs: 0,
+        blockIndexMs: 0, mathClearMs: 0, purgeMs: 0, anchorMs: 0,
+        maxTotalMs: 0, maxMathClearMs: 0, maxApplyMs: 0, maxBlockIndexMs: 0,
+        blocksWithMath: 0, last: [],
+      };
+      return true;
+    },
+    disable: function () { _evProf = null; return true; },
+    reset: function () { return this.enable(); },
+    read: function () { return _evProf ? JSON.parse(JSON.stringify(_evProf)) : null; },
+  };
   // 2026-10-22 1d：**换出高度稳定性**的可观测指标。
   //   问题（真机实测）：换出时用 `_placeholderHeight` 估值当占位高度，而估值与真块排版高度可能差
   //   上百 px（实测：真块 214px ⇒ 估值 25px、真块 415px ⇒ 估值 227px、真块 415→227 等），
@@ -9605,6 +9658,10 @@
   function _lazyEvictNow(reason) {
     if (!_lazyMaterializeEnabled(_doc) || !_doc || !_doc.blocks) return 0;
     if (_lazyEvictSuspended) return 0;
+    var _pf = _evProf, _ptot0 = _pf ? _evNow() : 0, _pseg = _pf ? _evNow() : 0;
+    // 单批增量起点（`_pf.*` 是累计值；max 必须按"单批增量"取，不能用累计值）
+    var _pb = _pf ? { keep: _pf.keepMs, scan: _pf.scanMs, read: _pf.readMs, apply: _pf.applyMs,
+      bi: _pf.blockIndexMs, math: _pf.mathClearMs, purge: _pf.purgeMs, total: _pf.totalMs } : null;
     try {
       var preview = $("#preview");
       if (!preview) return 0;
@@ -9622,6 +9679,7 @@
 
       var keep = _lazyEvictKeepRange(cc, pane);
       if (keep.none) return 0;
+      if (_pf) { _pf.keepMs += _evNow() - _pseg; _pseg = _evNow(); }
 
       // ③ 保护区（**编辑模式也允许淘汰远处块**，否则永不回收）：
       //    · 当前选区锚点/焦点所在块及邻块（正在选字/拖选）；
@@ -9678,6 +9736,7 @@
       cand.sort(function (x, y) { return (y.score - x.score) || (Math.abs(y.idx - keep.center) - Math.abs(x.idx - keep.center)); });
 
       var batch = cand.slice(0, LAZY_EVICT_BATCH_MAX);
+      if (_pf) { _pf.scanMs += _evNow() - _pseg; _pseg = _evNow(); }
       // ── ⑤.5【先读后写】换出高度/锚点必须在**任何 DOM 变更之前**量完 ───────────────────
       //   · `_advH[q]`：块的**垂直占位体积** = 本块 rect.top → 下一块 rect.top（含塌陷外边距）。
       //     ⚠️ 不能用 `rect.height`：真块内部的 `mjx-container`/`pre` 等外边距会**塌陷穿过**
@@ -9708,6 +9767,7 @@
       } catch (_) { _anchorTop = NaN; _shBefore = 0; }
 
       var n = 0, evicted = null, _mathEvicted = null;
+      if (_pf) { _pf.readMs += _evNow() - _pseg; _pseg = _evNow(); }
       for (var q = 0; q < batch.length; q++) {
         var it = batch[q];
         var real = it.el, bi = it.idx, blk = blocks[bi];
@@ -9746,11 +9806,13 @@
           //   经 `byOrder → domEl → -mermaid-pan → SVGSVGElement` 被保留）。这里把 handle 的
           //   `domEl` 同步成新占位；`BI.get(id)` 是 O(1)，不是全表扫描。
           try {
+            var _pbi = _pf ? _evNow() : 0;
             var _bid = real.getAttribute ? real.getAttribute("data-block-id") : null;
             if (_bid && BI && typeof BI.get === "function") {
               var _bh = BI.get(_bid);
               if (_bh && _bh.domEl === real) _bh.domEl = ph;
             }
+            if (_pf) _pf.blockIndexMs += _evNow() - _pbi;
           } catch (_) {}
           // D. 新占位重新纳入 IO ⇒ 滚回时可以再次物化
           if (_lazyIO) { try { _lazyIO.observe(ph); } catch (_) {} }
@@ -9762,6 +9824,7 @@
           log("lazy", "evict block " + bi + " ERR " + ((e && e.message) || e));
         }
       }
+      if (_pf) { _pf.applyMs += _evNow() - _pseg; _pseg = _evNow(); }
 
       // ⑥.0 2026-10-22 task-70（堆泄漏根治）：把已换出块里的 MathJax MathItem 从 `document.math`
       //   移除。`replaceWith` 只把 DOM 换出文档；MathJax 的 `MathList` 仍持有 MathItem →
@@ -9771,6 +9834,7 @@
         var _mc = _clearMathJaxWithin(_mathEvicted);
         if (_mc) log("lazy", "math clear on evict: " + _mc + " blocks / " + _mathEvicted.length);
       }
+      if (_pf) { _pf.mathClearMs += _evNow() - _pseg; _pseg = _evNow(); }
 
       // ⑥ 清掉排版队列里对已换出元素的引用（否则队列长期持死 DOM ⇒ 淘汰白做）
       if (evicted && _lazyMathQueue && _lazyMathQueue.length) {
@@ -9810,6 +9874,30 @@
         log("lazy", "evict: " + n + " blocks (kept=" + kept + ", viewport=" + keep.lo + ".." + keep.hi + ", reason=" + reason + ")");
         // 有余量 ⇒ 续排下一批（跨帧推进；单批仍受 LAZY_EVICT_BATCH_MAX 限制）
         if (cand.length > batch.length) _lazyScheduleEvict();
+      }
+      if (_pf) {
+        _pf.anchorMs += _evNow() - _pseg;
+        var _lastSeg = _evNow() - _ptot0;
+        _pf.totalMs += _lastSeg;                // 本批同步耗时（整批）
+        var _bTotal = _pf.totalMs - _pb.total;  // 本批同步耗时合计（写 DOM + 强制布局 + 清理）
+        var _bApply = _pf.applyMs - _pb.apply;
+        var _bMath = _pf.mathClearMs - _pb.math;
+        var _bBi = _pf.blockIndexMs - _pb.bi;
+        _pf.batches++;
+        _pf.blocks += n;
+        _pf.blocksWithMath += (_mathEvicted ? _mathEvicted.length : 0);
+        if (_bTotal > _pf.maxTotalMs) _pf.maxTotalMs = _bTotal;
+        if (_bApply > _pf.maxApplyMs) _pf.maxApplyMs = _bApply;
+        if (_mathEvicted && _bMath > _pf.maxMathClearMs) _pf.maxMathClearMs = _bMath;
+        if (_bBi > _pf.maxBlockIndexMs) _pf.maxBlockIndexMs = _bBi;
+        if (_pf.last.length < 600) {
+          _pf.last.push({
+            n: n, total: Math.round(_bTotal * 100) / 100,
+            apply: Math.round(_bApply * 100) / 100,
+            math: Math.round(_bMath * 100) / 100,
+            bi: Math.round(_bBi * 100) / 100,
+          });
+        }
       }
       return n;
     } catch (e) {
