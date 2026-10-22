@@ -456,6 +456,23 @@ rAF 帧间隔量**整体帧**（含布局/绘制/GC）。前者高、后者低�
 3. 再做一次 `aoci_rules` → 普通 `aoci_overview` → 原样跟随 cursor 到 `completed=true` → 提交 Attestation
 4. 然后 `aoci_maintain`（今天改了 `app.js` / `edit-handler.js` / 多个 docs ⇒ 需要增量维护）
 
+### 实时状态（2026-10-23 02:1x，接手先看这条）
+
+**W3.2 进行中，工作区有未提交改动**：
+- `app.js` 有 **+18/−1** 未提交：`_mathBatchCaps()` —— MathJax 单批 typeset 的**运行时覆盖**
+  （同 build/实例内交替 A/B 用，CDP 注入即可，不改产品默认行为）
+- **归因已完成**（agent 用 LoAF 对齐）：第二遍向上滚动的长帧**不是物化、不是淘汰**，
+  而是 **MathJax 单批 typeset**：向上滚时队列在"静止窗口"（idle=200）攒大批，一次 flush 就是一根长帧
+  （45% 位置：单批 max 41–58ms / 帧 88–108ms）
+- 基线两轮一致：35%/45% 稳定热点（1.7–2.2×），中位 0.8–0.9（第二遍整体更快）
+- 正在跑：`updown-w32-ab1`（同 build A/B，切换 `_mathBatchCaps` 覆盖）
+
+**接手时若发现 `app.js` 有 `_mathBatchCaps` 未提交**：那是 A/B 脚手架，
+A/B 结论出来后再决定「保留并设为默认」还是「回退」。**不要在 A/B 未完成时提交它**。
+
+**AOCI 完整认知仍未建立**（见上一节），因此：可以做 source-bound 工程与测量，
+**不要**在没有重新完整 Overview 的情况下做 Root/Meta/全局布局类决策。
+
 ## 附：本会话已收口（供追溯，勿重复做）
 
 | 项 | 提交 | 证据 |
