@@ -1997,19 +1997,31 @@
       // 3. AST → DOM 渲染（P6a：切换为 render-core；**不再调用 legacy `R.render`**）
       //    render-core 与本函数既有管线同形：返回 `.-preview-content` 容器，块元素与 `_doc.blocks` 一一对应；
       //    行号/块身份仍由下面的 `stampBlockLines` 经 BlockIndex 写入（唯一写点不变）。
-      // 2026-10-22 阶段0：**保留 `blockEls`**（原来只取 `.container` 把它丢了 ⇒ 下面 `stampBlockLines`
-      //   又用 `querySelectorAll` 全篇重建索引，白扫一遍）。透传给 `stampBlockLines` 省这次全篇查询；
-      //   `querySelectorAll` 分支保留（编辑路径等其它调用方仍走它，缺省行为不变）。
-      const _rendered = _rcRenderer().renderDocument(_doc);
-      const content = _rendered.container;
-      preview.innerHTML = "";
-      preview.appendChild(content);
+      // 2026-10-22 阶段0：透传 `blockEls` 省掉 `stampBlockLines` 内部全篇查询（见下）。
+      // 2026-10-22 阶段1a：**惰性物化** —— 不再一次性建全文 4001 块，而是先建全文**占位**（O(块数)纯属性+高度估值），
+      //   再同步物化"视口 ×2 高度"的块。其余块滚动靠近时物化（1b）。
+      //   首屏之外的全篇 DOM 只以占位存在 ⇒ 浏览器不再为全文做 style/layout（实测这是打开 2.9s 的主因）。
+      const _rc = _rcRenderer();
+      const lazyOn = _lazyMaterializeEnabled(_doc);
+      let _rendered, content;
+      if (lazyOn) {
+        content = _buildLazyPreview(_doc, preview);
+        _rendered = { container: content, blockEls: _lazyBlockEls };
+      } else {
+        _rendered = _rc.renderDocument(_doc);
+        content = _rendered.container;
+        preview.innerHTML = "";
+        preview.appendChild(content);
+      }
       // 3a. 代码块语法高亮（P6a 补丁：render-core 本片不做 token；复用 MemoriaCodeHighlight，
       //     与 legacy renderer.js:105-106 同源；必须早于 mermaid 替换 pre）
       _applyCodeHighlightToPreview(preview);
 
       // 3b. 构建 block→源行映射（整篇路径 ⇒ reset：清空旧索引，行区间与 id 全部按这份 AST 重建）
-      stampBlockLines(preview, _doc, { reset: true, blockEls: _rendered.blockEls }); _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：登记"**这个 DOM 现在渲染的是哪些块**"（块级提交的差分必须拿它当基准 —— 不能拿 `_doc.blocks`：编辑路径会**先就地改 AST 再改源码**，那样"已改的块"会被误判成"没变"）；2026-10-22 阶段0：把 `renderDocument` 刚产出的 `blockEls` 透传进去，省掉 `stampBlockLines` 内部的全篇 `querySelectorAll`
+      // 2026-10-22 阶段1a：惰性物化时走 `querySelectorAll` 分支（占位块也在 DOM 里、带 data--block-index，
+      //   所以 `blockEls` 无法复用 —— 传给 stampBlockLines 的会是占位元素，而非 renderDocument 的产物）。
+      stampBlockLines(preview, _doc, { reset: true, blockEls: lazyOn ? undefined : _rendered.blockEls });
+      _domBlockSig = _doc.blocks.map(_previewBlockSig);   // 2026-09-25 AG100：差分基准（纯 AST，不读 DOM，惰性物化不影响）
 
       window.__blockLineMap = _blockLineMap;
 
@@ -7732,6 +7744,102 @@
     if (!rc || typeof rc.createRenderCore !== "function") return null;
     if (!_rcCore) _rcCore = rc.createRenderCore({});
     return _rcCore;
+  }
+
+  // ════ 2026-10-22 阶段1a：惰性块物化（占位 + 首屏物化）════════════════════════
+  // 目标：打开大文档时**不再一次性建全文 4001 块 DOM**（那是 style/layout 2.88s 的来源），
+  //   而是先建全文**占位**（纯 AST 属性 + 高度估值，O(块数) 且不触发布局），
+  //   再同步物化"视口 ×2 高度"的块。其余滚动靠近时物化（1b）。
+  //
+  // 开关：`_lazyMaterializeEnabled` —— 默认关；开了才走惰性路径。回退只需关掉它
+  //   （renderPreview 的 `lazyOn` 分支即回到全量 renderDocument，行为与阶段1前一致）。
+
+  /** 惰性物化总开关（默认关；1a/1b 验收通过后再评估默认值）。可被同页面的性能开关覆盖。 */
+  function _lazyMaterializeEnabled(doc) {
+    return false;   // ⚠️ 阶段1a 默认关，由验收实测后决定是否开启；这里先返回 false 保证 12 剧本零变化
+  }
+
+  /** 按块类型估算占位高度（纯 AST，不读 DOM）。宁大勿小（D1）：上跳比留白差。 */
+  function _placeholderHeight(block) {
+    if (!block) return 1.5 * 16;
+    var em = 16;   // 行高基准 px（与 editor/preview 行高 1.5 对齐的近似值）
+    var lines = Math.max(1, (block.srcLineEnd - block.srcLine + 1) || 1);
+    switch (block.type) {
+      case "blank_line": return 1.5 * em;
+      case "heading": return 2.2 * em;
+      case "paragraph": return lines * 1.6 * em;
+      case "math_block": return lines * 2.6 * em;
+      case "code_block": return lines * 1.4 * em;
+      case "table": return lines * 2.0 * em;
+      case "mermaid": return Math.max(120, lines * 1.4 * em);
+      case "image": return 240;
+      case "horizontal_rule": return 2 * em;
+      default: return lines * 1.6 * em;
+    }
+  }
+
+  /** 建一个占位块元素（带连续编号 + 行号 + inline 高度 + aria-hidden）。 */
+  function _makePlaceholder(block, i) {
+    var el = document.createElement("div");
+    el.className = "-src-block -pv-placeholder";
+    el.setAttribute("data--block-index", String(i));
+    if (block.srcLine > 0) el.setAttribute("data--src-line", String(block.srcLine));
+    if (block.srcLineEnd >= block.srcLine) el.setAttribute("data--src-line-end", String(block.srcLineEnd));
+    el.style.height = Math.round(_placeholderHeight(block)) + "px";
+    el.setAttribute("aria-hidden", "true");
+    return el;
+  }
+
+  /**
+   * 建全文占位 + 物化"视口 ×2 高度"的块。返回 `.-preview-content` 容器（已挂进 preview）。
+   * 占位块与 doc.blocks 严格一一对应（0..N-1 连续 data--block-index），**保证 renderRange 永不遇到"连占位都没有"的区间**。
+   */
+  var _lazyBlockEls = null;   // 全文块元素（占位或已物化的引用，按 index；供后续物化/校验用）
+  function _buildLazyPreview(doc, preview) {
+    var container = document.createElement("div");
+    container.className = "-preview-content";
+    var N = doc.blocks.length;
+    _lazyBlockEls = new Array(N);
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < N; i++) {
+      var ph = _makePlaceholder(doc.blocks[i], i);
+      _lazyBlockEls[i] = ph;
+      frag.appendChild(ph);
+    }
+    container.appendChild(frag);
+    preview.innerHTML = "";
+    preview.appendChild(container);
+
+    // 物化首屏 ×2：由视口高度(容器 clientHeight) ÷ 平均块高 估算"需要物化的首块数"，再 ×2 兜底。
+    var pane = document.getElementById("preview-pane") || preview;
+    var viewH = pane.clientHeight || 720;
+    var avgH = N > 0 ? Math.max(_placeholderHeight(doc.blocks[0]), 64) : 64;   // 粗略平均，首屏块高差异不大
+    var firstCount = Math.min(N, Math.max(20, Math.ceil((viewH * 2) / avgH)));
+    _materializeRange(container, doc, 0, firstCount);
+    return container;
+  }
+
+  /** 物化 `[start, end)` 区间：占位块 → renderBlock 产出的真块（原位替换，保持 data--block-index 连续）。 */
+  function _materializeRange(container, doc, start, end) {
+    var rc = _rcRenderer();
+    if (!rc || !rc.renderBlock) return 0;
+    var all = container.querySelectorAll(".-pv-placeholder");
+    // 按 data--block-index 建"占位下标 → 元素"（占位在区间 [start,end) 内才物化）
+    var made = 0;
+    for (var j = 0; j < all.length; j++) {
+      var ph = all[j];
+      var idx = parseInt(ph.getAttribute("data--block-index"), 10);
+      if (idx < start || idx >= end) continue;
+      if (idx >= doc.blocks.length) continue;
+      var real;
+      try { real = rc.renderBlock(doc.blocks[idx], idx); }
+      catch (e) { log("render", "lazy materialize block " + idx + " ERR " + (e && e.message)); continue; }
+      if (!real) continue;
+      ph.replaceWith(real);
+      _lazyBlockEls[idx] = real;
+      made++;
+    }
+    return made;
   }
   /** P6d：单块增量重渲的薄封装（render-core.renderRange；缺内核时返回 undefined，调用方已有兜底）。 */
   function _supplyRangeRender(blockIndex, container) {
