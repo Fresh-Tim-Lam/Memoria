@@ -98,17 +98,38 @@ window.MemoriaSourceGen = (function () {
         /**
          * 递归：把 list 生成源码行。
          *
-         * **空行重建的唯一依据是「上一行源码行号」**（`prevEmittedLine`）——
+         * **空行重建的唯一依据是「上一行源码行号」**（`state.cursorLine`）——
          * 而不是「同级相邻两项的行号差」。原因：多级列表里源码顺序是
          * `父项 → 全部子项 → 下一个父项`，用「同级差」会把子项占用的行算成空行。
          * 逐行推进 `cursorLine` 后，任何层级的项只用 `item.srcLine - cursorLine - 1` 补空行。
+         *
+         * ★ 2026-10-23（N4 前置）：**`srcLine` 只在 AST 未被编辑时可信**。
+         *   编辑（删项 / 移动项 / 改层级）后 `srcLine` 会失真且可能**不再单调递增**，
+         *   若照用会①多补空行 ②按 srcLine 排序把项顺序搞乱。
+         *   ⇒ 先做「单调性检查」：把整棵树按源码顺序平铺，若 `srcLine` 非严格递增，
+         *     判定为「已编辑」⇒ **完全不用 srcLine 补空行**（宁可少一个空行，不可错乱）。
          */
+        function collectSrcLinesInOrder(node, out) {
+          var its = (node && node.items) || [];
+          for (var i3 = 0; i3 < its.length; i3++) {
+            if (its[i3].srcLine) out.push(its[i3].srcLine);
+            if (its[i3].list) collectSrcLinesInOrder(its[i3].list, out);
+          }
+          return out;
+        }
+        var _lines = collectSrcLinesInOrder(block, []);
+        var _monotonic = true;
+        for (var mi = 1; mi < _lines.length; mi++) {
+          if (_lines[mi] <= _lines[mi - 1]) { _monotonic = false; break; }
+        }
+        var srcLineTrusted = _monotonic && _lines.length > 0;
+
         function genListLines(node, fallbackIndent, state) {
           var lines = [];
           var items = (node && node.items) || [];
           for (var idx = 0; idx < items.length; idx++) {
             var item = items[idx];
-            var myLine = item.srcLine;
+            var myLine = srcLineTrusted ? item.srcLine : 0;
             if (myLine && state.cursorLine && myLine - state.cursorLine > 1) {
               for (var g2 = 0; g2 < myLine - state.cursorLine - 1; g2++) lines.push("");
             }
@@ -127,11 +148,11 @@ window.MemoriaSourceGen = (function () {
         {
           var state = { cursorLine: 0 };
           var out = genListLines(block, "", state);
-          // 兼容旧路径：若解析结果没有任何 item.indent / item.srcLine
-          // （例如编辑后由 A.list() 新建的列表节点），退回原「无缩进 + 同级 itemSrcLine 差」行为。
+          // 兼容旧路径：若解析结果**没有任何 indent 且 srcLine 不可信**
+          // （例如编辑后由 A.list() 新建的列表节点，或编辑后 srcLine 已失真），
+          // 退回原「无缩进 + 同级 itemSrcLine 差」行为（此时 hasItemLines 也会因长度不符而失效）。
           var anyIndent = out.some(function (l) { return /^[ \t]/.test(l); });
-          var anySrcLine = (block.items || []).some(function (it) { return it && it.srcLine; });
-          if (!anyIndent && !anySrcLine) {
+          if (!anyIndent && !srcLineTrusted) {
             var out2 = [];
             (block.items || []).forEach(function (item, idx) {
               if (hasItemLines && idx > 0) {
