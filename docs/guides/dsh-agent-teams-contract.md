@@ -65,7 +65,7 @@ AOCI 是「机器索引」，两者都服务于「各看自己那份、不读全
 
 ## 3. 一次只做一件事，disjoint 写范围
 
-**补充（2026-10-19）：`spawn_teammate`（进团队）vs `subagent`（一次性）的选择边界** —— 团队名额上限 8（Lead + 7 teammate），必须按「是否需要跨轮协作」分流：
+**补充（2026-10-19，2026-10-23 更新）：`spawn_teammate`（进团队）vs `subagent`（一次性）的选择边界** —— 团队名额上限 **16**（Lead 之外最多 16 个 teammate；2026-10-20 由 8 提升，见 `agent-team-profile/cordis.patch.yml`），必须按「是否需要跨轮协作」分流：
 
 | 用 `spawn_teammate`（持久、可寻址） | 用 `subagent`（一次性、用完即弃） |
 |---|---|
@@ -107,8 +107,9 @@ AOCI 是「机器索引」，两者都服务于「各看自己那份、不读全
 
 1. **AGENTS.md 每编辑一次就触发一次全文重注入**（25 KB／次）。本轮曾连改 4 次 ⇒ 约 100 KB ≈ 30 K tokens 纯浪费。
    **纪律：批量攒够再一次改完，禁止边想边改同一文件的多轮 edit。**
-2. **team 名额已满（8）时 spawn 会被拒**，只能退用 `subagent`。**teammate 是一次性分析任务就注定占位不还**（无 kill 工具），
-   所以：**小任务一律用 `subagent`（用完即弃、不占名额）**；只有需要多轮 steer 的长任务才 `spawn_teammate`。
+2. **team 名额上限 16，且有 `retire_teammate`（2026-10-20 起）**：单点任务完成后当轮退役、释放名额；
+   `retire_teammate` 会移除 roster 条目并释放会话，journal 历史保留。仍建议：**一次性分析任务用 `subagent`（不占名额）**；
+   只有需要多轮 steer 的长任务才 `spawn_teammate`。**不再有「无 kill 工具、占位不还」的问题。**
 3. **工具输出必须截断**：`pytest`/`grep`/`git diff` 一律 `| Select-Object -Last N` 或 `-First N`，禁止整段回灌。
 4. **不为简单问题查全仓/跑全量测试**：能凭已有认知答的直接答；要取证再定位读。
 
@@ -116,3 +117,71 @@ AOCI 是「机器索引」，两者都服务于「各看自己那份、不读全
 
 **维护**：本文档只记录「被实践验证过的契约」。新增一条 = 先在一个真实任务里跑通并得到结论，再补记，
 **不提前写臆想的规则**（呼应「先搜索学习、不凭空想象」）。
+
+---
+
+## 模型选择偏好（2026-10-22 用户指令）
+
+**尽量不要使用 deepseek-pro 模型**，默认使用 flash（deployment default）。
+- 新建 teammate / subagent 时省略 model 参数（走 mode 默认 = flash）
+- 需要更强推理时优先用 mode: "deep" 而非换 pro 模型
+- 既有 deepseek-v4-pro 的 teammate（如度量域）保持 idle，不主动 resume；
+  新的测量任务改用新起的 flash subagent 承担
+
+---
+
+## 7. 派发日志（P3，2026-10-23 落地）
+
+**每次 `spawn_teammate` / `send_message` / 收口后，Lead 必须追加一条 append-only 记录**：
+
+```
+artifacts/agent/dispatch-log.jsonl
+```
+
+用仓库脚本追加（自动时间戳、字段校验）：
+
+```powershell
+$env:PYTHONIOENCODING="utf-8"
+# 派发
+python scripts/agent/dispatch_log.py append --actor lead --target executor-x --phase spawn `
+  --task task-80 --desc "mapper 嵌套支持"
+# 完成/收口
+python scripts/agent/dispatch_log.py append --actor executor-x --target lead --phase done `
+  --task task-80 --outcome pass --report artifacts/agent/verify/xx.md
+# 收口前自检（退出码 0 才可收口）
+python scripts/agent/dispatch_log.py check
+```
+
+字段：`ts / actor / phase` 必需；`phase ∈ spawn|message|done|retire|backfill`；
+可选 `target / task / desc / outcome / report / evidence / source`。
+**禁止改写历史行**；Curator 用它判 `active`（V2/V3 证据）。
+
+## 8. Creator 模式与 Curator（P4，2026-10-23 落地）
+
+DSH 宿主已支持 **Creator 模式的 teammate**：
+
+```
+spawn_teammate({ name:"curator", mode:"creator", prompt:"..." })
+```
+
+- `mode:"creator"` 让子 agent 运行部署的 Creator preset（默认 `cordis`），获得
+  `plugin_manager` / `tool-cordis` / 创造模式技能，可维护 DSH 插件、bundle、preset。
+- Creator teammate 仍是 Team 成员：保留 `send_message` / `list_agents` / 任务板工具。
+- **权限继承 Lead**：`plugin_manager` 修改 profile 需要 danger-full-access 或单次审批，
+  权限不足时会失败关闭（不会静默跳过）。
+- Curator 的团队资产写域见 [curator-agent-prompt.md](curator-agent-prompt.md) 与
+  `agents.json` 的 `curator.write_scope`；**DSH 无路径级硬隔离**，写域是提示词 + 工具过滤 + 审计约束。
+
+## 9. 任务板历史（Curator 判据必需）
+
+`team_task_list` 返回**全部未删除任务**（pending / in_progress / completed），含 `status / ownerName / revision`；
+`team_task_get` 可取单条最新 revision。**任务板历史 + dispatch-log + 磁盘报告** 三者合起来构成
+「谁认领、谁真的干、产出在哪」的证据链；不要只看 pending。
+
+## 10. 权限与写域边界（2026-10-23 实测）
+
+- DSH 文件策略只有 `read-only / workspace-write / danger-full-access`，**没有子路径白名单**；
+  因此「Curator 只准写团队资产」无法由沙箱强制，只能靠 preset 工具集 + 提示词 + Lead/人类复核。
+- 旧版「teammate shell 写入被整体拦截」是当时沙箱环境所致；当前会话为 `danger-full-access` 时写入不受限。
+  **派发前仍建议按最小权限原则给任务**（能读就别给写）。
+- 删除类操作（P5 清理）**必须人类确认清单**，Agent 不得自行删除不可逆资产。

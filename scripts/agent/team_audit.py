@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 5 类检查
+覆盖 6 类检查
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -12,6 +12,9 @@
 4. write_scope     : 未完成任务之间 writeScopes 重叠（含目录前缀重叠）⇒ 串行化风险
 5. artifact_refs   : `artifacts/agent/verify/*.md` 中反引号引用的仓库路径是否真的存在
                      （"声称 ≠ 存在"）；任务声明的 `artifacts/.../*.md` 交付物是否存在
+6. role_evidence   : `artifacts/agent/agents.json` 里 `status=active` 的角色，是否在
+                     14 天内有可复跑证据（dispatch-log 派发 / 任务板 owner / 产物 mtime）。
+                     补上 §4 漏检：声明 active 但从未运转的「幽灵角色」。
 
 用法
 ----
@@ -35,7 +38,7 @@ import subprocess
 import sys
 import tempfile
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -44,6 +47,9 @@ from pathlib import Path
 DEFAULT_SNAPSHOT = "artifacts/agent/team-board-snapshot.json"
 DEFAULT_ORG = "docs/guides/agent-team-org.md"
 DEFAULT_VERIFY_DIR = "artifacts/agent/verify"
+DEFAULT_AGENTS = "artifacts/agent/agents.json"
+DEFAULT_DISPATCH_LOG = "artifacts/agent/dispatch-log.jsonl"
+ROLE_EVIDENCE_DAYS = 14
 
 # 可被报告引用、且应当真实存在的仓库路径前缀
 PATH_PREFIXES = (
@@ -122,6 +128,8 @@ class AuditContext:
     snapshot_path: Path
     org_path: Path
     verify_dir: Path
+    agents_path: Path = Path(DEFAULT_AGENTS)
+    dispatch_path: Path = Path(DEFAULT_DISPATCH_LOG)
     findings: list = field(default_factory=list)
 
     def add(self, check: str, severity: str, message: str, evidence: str) -> None:
@@ -255,6 +263,13 @@ def _newest_mtime(paths: list[Path]):
 _ORG_ROW_RE = re.compile(r"^\|\s*`([a-z0-9][a-z0-9-]*)`\s*\|")
 _ORG_SECTION_RE = re.compile(r"^##\s+2\.(.*)$")
 _NEXT_SECTION_RE = re.compile(r"^##\s+")
+# ★ 2026-10-23 Lead 裁决：§2.2 的「非领域常驻成员」也是合法 roster 成员。
+#   旧实现只解析 §2，导致快照里出现 todo-owner/team-curator 时被误判「名册漏登记」。
+_RESIDENT_SECTION_RE = re.compile(r"^###\s+2\.2")
+_RESIDENT_END_RE = re.compile(r"^##\s+|^###\s+")
+# §2.2 的行首列形如 `\`todo-owner\`（TODO 文档 Owner）` —— 反引号后还有括号说明，
+# 故不能用严格的 _ORG_ROW_RE（它要求反引号后直接是 `|`）。
+_RESIDENT_ROW_RE = re.compile(r"^\|\s*`([a-z0-9][a-z0-9-]*)`")
 
 
 def parse_org_owners(org_text: str) -> dict:
@@ -277,8 +292,28 @@ def parse_org_owners(org_text: str) -> dict:
         m = _ORG_ROW_RE.match(lines[k])
         if m:
             owners.append({"target": m.group(1), "line": k + 1})
+
+    # ★ §2.2 非领域常驻成员（合法 roster 成员，但不算「领域 Owner」）
+    resident = []
+    r_start = None
+    for i, line in enumerate(lines):
+        if _RESIDENT_SECTION_RE.match(line):
+            r_start = i
+            break
+    if r_start is not None:
+        r_end = len(lines)
+        for j in range(r_start + 1, len(lines)):
+            if _RESIDENT_END_RE.match(lines[j]):
+                r_end = j
+                break
+        for k in range(r_start + 1, r_end):
+            m = _RESIDENT_ROW_RE.match(lines[k])
+            if m:
+                resident.append({"target": m.group(1), "line": k + 1})
+
     return {
         "owners": owners,
+        "resident": resident,
         "section_lines": (start + 1, end),
         "heading": lines[start],
     }
@@ -320,6 +355,8 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
 
     members = data.get("members") or []
     retired = {r.get("target") for r in (data.get("retired") or []) if isinstance(r, dict)}
+    # ★ §2.2 非领域常驻成员：合法 roster 成员（不算领域 Owner，但必须允许出现在快照里）
+    residents = {r["target"] for r in (parsed.get("resident") or [])}
     teammate_targets = {
         m.get("target") for m in members
         if isinstance(m, dict) and m.get("role") != "lead" and m.get("target")
@@ -332,7 +369,9 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
             ctx.add(check, FAIL,
                     f"org.md §2 列出的 Owner `{o['target']}` 不在快照成员中（疑似已退役但表未更新）",
                     f"{ctx.rel(ctx.org_path)}:{o['line']} vs {ctx.rel(ctx.snapshot_path)}:members")
-    for target in sorted(teammate_targets - org_set):
+    # §2.2 常驻成员：出现在快照里是**合法的**，不报 FAIL
+    org_legal = org_set | residents
+    for target in sorted(teammate_targets - org_legal):
         ctx.add(check, FAIL,
                 f"快照成员 `{target}` 未出现在 org.md §2 Owner 表中（名册漏登记）",
                 f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.org_path)}:§2")
@@ -362,13 +401,17 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
                 f"{ctx.rel(ctx.org_path)}:§2 note")
     if org_owners and data.get("members"):
         # 快照口径：teammates = members - lead
-        if len(teammate_targets) != actual:
+        expected_total = actual + len(residents)
+        if len(teammate_targets) != expected_total:
             ctx.add(check, FAIL,
-                    f"快照 teammate 数 {len(teammate_targets)} ≠ org.md §2 Owner 数 {actual}",
-                    f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.org_path)}:§2")
+                    f"快照 teammate 数 {len(teammate_targets)} ≠ org.md §2 领域 Owner {actual} + §2.2 常驻 {len(residents)} = {expected_total}",
+                    f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.org_path)}:§2+§2.2")
     if org_owners:
-        ctx.add(check, INFO, f"org.md §2 解析到 {actual} 个 Owner：{', '.join(o['target'] for o in org_owners)}",
+        ctx.add(check, INFO, f"org.md §2 解析到 {actual} 个领域 Owner：{', '.join(o['target'] for o in org_owners)}",
                 f"{ctx.rel(ctx.org_path)}:§2")
+        if residents:
+            ctx.add(check, INFO, f"org.md §2.2 解析到 {len(residents)} 个非领域常驻：{', '.join(sorted(residents))}",
+                    f"{ctx.rel(ctx.org_path)}:§2.2")
 
 
 # ---------------------------------------------------------------------------
@@ -585,6 +628,154 @@ def check_artifact_refs(ctx: AuditContext) -> None:
 
 
 # ---------------------------------------------------------------------------
+# 6. 角色活性证据（agents.json active 角色 vs 14 天可复跑证据）
+# ---------------------------------------------------------------------------
+def _newest_under(path: Path):
+    """返回文件或目录树内最新的 mtime（UTC aware）；不存在返回 None。"""
+    if not path.exists():
+        return None
+    if path.is_file():
+        try:
+            return datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+        except OSError:
+            return None
+    newest = None
+    for p in path.rglob("*"):
+        if not p.is_file():
+            continue
+        try:
+            mtime = datetime.fromtimestamp(p.stat().st_mtime, tz=timezone.utc)
+        except OSError:
+            continue
+        if newest is None or mtime > newest:
+            newest = mtime
+    return newest
+
+
+def _evidence_path_newest(repo: Path, raw: str):
+    """把 agents.json 的 evidence_path 规整到可探测的静态前缀并取最新 mtime。
+
+    支持真实文件/目录、glob（`verify/**`）与占位符（`audit-<date>/`）。
+    - glob/`?` 的静态基目录**必须真实存在**，否则返回 None（不回退父目录，
+      否则任意 `void/**` 都会回退到 `artifacts/agent/` 产生「假证据」）；
+    - `<...>`/`{...}` 是文件名内占位符，允许回退到父目录。
+    非路径（如 `git log -- ...`）返回 None。
+    """
+    text = str(raw).strip()
+    if not text.startswith(PATH_PREFIXES):
+        return None
+    marker = None
+    cut_at = -1
+    for candidate in ("<", "{", "[", "*", "?"):
+        idx = text.find(candidate)
+        if idx >= 0 and (cut_at < 0 or idx < cut_at):
+            cut_at, marker = idx, candidate
+    if cut_at >= 0:
+        text = text[:cut_at]
+    allow_parent_fallback = marker in ("<", "{", "[")
+    text = text.rstrip("/")
+    while text:
+        newest = _newest_under(repo / text)
+        if newest is not None:
+            return newest
+        if not allow_parent_fallback or "/" not in text:
+            return None
+        text = text.rsplit("/", 1)[0]
+    return None
+
+
+def _parse_dispatch_stamps(path: Path) -> list[tuple]:
+    """读取 dispatch-log，返回 [(ts, actor, target)]（坏行忽略，由 dispatch_log.py 负责报错）。"""
+    rows = []
+    if not path.is_file():
+        return rows
+    for raw in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if not isinstance(obj, dict):
+            continue
+        ts = _parse_iso(str(obj.get("ts", "")))
+        if ts is None:
+            continue
+        rows.append((ts.astimezone(timezone.utc), str(obj.get("actor") or ""), str(obj.get("target") or "")))
+    return rows
+
+
+def check_role_evidence(ctx: AuditContext, data: dict | None) -> None:
+    """active 角色必须有 14 天证据；否则 WARN（幽灵角色，需 Lead 判 retired 或补派发）。
+
+    证据来源三选一（任一即可）：dispatch-log 出现该 actor/target、任务板 owner、
+    evidence_path 指向的产物在窗口内有过写入。这是 §2.2 三条硬判据的机检投影。
+    """
+    check = "role_evidence"
+    path = ctx.agents_path
+    if not path.is_file():
+        ctx.add(check, INFO, f"未找到 {ctx.rel(path)}，角色活性检查跳过", f"missing file: {ctx.rel(path)}")
+        return
+    try:
+        payload = json.loads(_read_text(path))
+    except (OSError, json.JSONDecodeError) as exc:
+        ctx.add(check, FAIL, f"角色能力目录无法解析：{exc}", f"{ctx.rel(path)}")
+        return
+    agents = [a for a in (payload.get("agents") or []) if isinstance(a, dict)]
+    active = [a for a in agents if a.get("status") == "active"]
+    if not active:
+        ctx.add(check, INFO, f"{ctx.rel(path)} 无 active 角色", f"{ctx.rel(path)}:agents")
+        return
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=ROLE_EVIDENCE_DAYS)
+    dispatch = _parse_dispatch_stamps(ctx.dispatch_path)
+    owners = set()
+    for t in (data or {}).get("tasks") or []:
+        if isinstance(t, dict) and t.get("owner"):
+            owners.add(str(t["owner"]))
+
+    evidenced, ghosts = [], []
+    for agent in active:
+        aid = str(agent.get("id") or "?")
+        sources = []
+        if any((actor == aid or target == aid) and ts >= cutoff for ts, actor, target in dispatch):
+            sources.append("dispatch-log")
+        if aid in owners:
+            sources.append("team-board owner")
+        newest = None
+        for raw in agent.get("evidence_path") or []:
+            # 只认「角色专属产物」：路径里必须出现角色 id，避免所有人共用
+            # artifacts/agent/verify/** 这类公共目录而互相「借证据」。
+            if aid.lower() not in str(raw).lower():
+                continue
+            stamp = _evidence_path_newest(ctx.repo, raw)
+            if stamp is not None and (newest is None or stamp > newest):
+                newest = stamp
+        if newest is not None and newest >= cutoff:
+            sources.append(f"产物 {newest.date().isoformat()}")
+        if sources:
+            evidenced.append(f"{aid}({', '.join(sources)})")
+        else:
+            ghosts.append(aid)
+            ctx.add(check, WARN,
+                    f"active 角色 `{aid}` 在 {ROLE_EVIDENCE_DAYS} 天内无派发/任务/产物证据"
+                    f"（幽灵角色：须 Lead 判 retired-in-dsh 或补 dispatch-log）",
+                    f"{ctx.rel(path)}:agents[{aid}].status=active; 无 dispatch-log 记录、"
+                    f"无任务板 owner、evidence_path 产物早于 cutoff")
+    if ghosts:
+        ctx.add(check, WARN,
+                f"agents.json 有 {len(ghosts)} 个 active 角色缺 {ROLE_EVIDENCE_DAYS} 天证据："
+                + ", ".join(ghosts),
+                f"{ctx.rel(path)}:agents")
+    else:
+        ctx.add(check, INFO,
+                f"agents.json active 角色 {len(active)} 个，均有 {ROLE_EVIDENCE_DAYS} 天证据："
+                + "; ".join(evidenced),
+                f"{ctx.rel(path)}:agents + {ctx.rel(ctx.dispatch_path)}")
+
+
+# ---------------------------------------------------------------------------
 # 汇总/自测
 # ---------------------------------------------------------------------------
 def run_checks(ctx: AuditContext) -> list:
@@ -594,6 +785,7 @@ def run_checks(ctx: AuditContext) -> list:
     check_write_scopes(ctx, data)
     check_task_reports(ctx, data)
     check_artifact_refs(ctx)
+    check_role_evidence(ctx, data)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -676,11 +868,21 @@ def selftest() -> int:
         }, ensure_ascii=False, indent=2))
         _write(red / "artifacts/agent/verify/claim-report.md",
                "# 报告\n\n已落盘 `scripts/not-exist/missing.py`。\n")
+        # 幽灵角色：声明 active，但 14 天内无 dispatch/任务/产物证据
+        _write(red / "artifacts/agent/agents.json", json.dumps({
+            "schema_version": 2,
+            "agents": [
+                {"id": "phantom", "status": "active", "evidence_path": ["artifacts/agent/void/**"]},
+                {"id": "alpha", "status": "active", "evidence_path": ["artifacts/agent/verify/**"]},
+            ],
+        }, ensure_ascii=False, indent=2))
         red_ctx = AuditContext(
             repo=red,
             snapshot_path=red / DEFAULT_SNAPSHOT,
             org_path=red / DEFAULT_ORG,
             verify_dir=red / DEFAULT_VERIFY_DIR,
+            agents_path=red / DEFAULT_AGENTS,
+            dispatch_path=red / DEFAULT_DISPATCH_LOG,
         )
         red_findings = run_checks(red_ctx)
         expect(red_findings, "roster", FAIL, "ghost")  # org 有、快照无
@@ -688,6 +890,7 @@ def selftest() -> int:
         expect(red_findings, "stall", FAIL, "t-1")
         expect(red_findings, "write_scope", WARN, "t-1")
         expect(red_findings, "artifact_refs", FAIL, "scripts/not-exist/missing.py")
+        expect(red_findings, "role_evidence", WARN, "phantom")  # 有声明无证据
         if not any(f.severity == FAIL for f in red_findings):
             failures.append("红 fixture 未产生 FAIL，退出码不会为 1")
 
@@ -726,6 +929,8 @@ def selftest() -> int:
             snapshot_path=green / DEFAULT_SNAPSHOT,
             org_path=green / DEFAULT_ORG,
             verify_dir=green / DEFAULT_VERIFY_DIR,
+            agents_path=green / DEFAULT_AGENTS,
+            dispatch_path=green / DEFAULT_DISPATCH_LOG,
         )
         green_findings = run_checks(green_ctx)
         green_fails = [f for f in green_findings if f.severity == FAIL]
@@ -742,8 +947,8 @@ def selftest() -> int:
             for msg in failures:
                 print(" - " + msg)
             return 1
-        print("SELFTEST PASS：红 fixture 报出 5 项（roster×2 / stall / write_scope / artifact_refs），"
-              "绿 fixture 全绿。")
+        print("SELFTEST PASS：红 fixture 报出 6 项（roster×2 / stall / write_scope / artifact_refs / "
+              "role_evidence），绿 fixture 全绿。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

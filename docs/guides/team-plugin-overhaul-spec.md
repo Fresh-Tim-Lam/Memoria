@@ -8,6 +8,11 @@
 > **配套**：`docs/guides/agent-team-status.md`（当前真实状态 + 复跑命令）、
 > `docs/guides/curator-agent-prompt.md`（创造模式 agent 的系统提示词）。
 
+> **实施状态（2026-10-23）**：P1 / P2 / P3 / P4 / P5 均已完成并通过验收（P5 经人类确认后执行，
+> `artifacts/agent` 750.2 MB → **66.7 MB**）。DSH 宿主侧没有新增独立 agent 模式，而是用
+> `spawn_teammate({mode:"creator"})` 提供 Creator 模式 Curator（preset `cordis`）。
+> 实际落地与偏差见文末 **第七部分：实施状态与偏差**。
+
 ---
 
 # 第一部分：现状（实测，可复跑）
@@ -229,3 +234,60 @@
 - P5 清理 600MB —— 30 分钟（需确认）
 
 **只有 P4（Curator 上线）需要 DSH 宿主支持。**
+
+---
+
+# 第七部分：实施状态与偏差（2026-10-23 回填）
+
+> 本部分记录**实际交付**，与上文要求不一致处以本部分为准；验收命令均可直接复跑。
+
+## 7.1 阶段状态
+
+| 阶段 | 状态 | 交付物 / 证据 |
+|---|---|---|
+| **P1 单一载体** | ✅ 完成 | `AGENTS.md` 顶部「历史载体警告」+ §2 退役标注；`agents.json` 的 `retired_agents[]` 含 3 个 `retired-in-dsh`；旧 prompt 保留 |
+| **P2 注册表重写** | ✅ 完成 | `agents.json` schema v2：`agents[]` = lead / executor / auditor / registrar / curator，全部带 `trigger_channel`；旧事件类型移入 `event_stream.legacy_event_types` |
+| **P3 派发日志** | ✅ 完成 | `artifacts/agent/dispatch-log.jsonl`（append-only）+ `scripts/agent/dispatch_log.py`（append/check/selftest）；已回填 5 条历史 + 1 条本轮收口记录 |
+| **P4 Curator 上线** | ✅ 完成 | DSH `spawn_teammate({mode:"creator"})`（Creator preset `cordis`）；首次审计产物 `artifacts/agent/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`；**实际修改**了 `agents.json` / `AGENTS.md` / 契约 / status |
+| **P5 资产清理** | ✅ 完成（人类确认后执行） | 删除 28 个未引用大文件 / **683.48 MB**；保留 `.md` 114 份；删除清单 `artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json`；体积 **750.2 MB → 66.7 MB**；`team_audit.py` FAIL 1→0（修复误命名为 `.md` 的目录） |
+
+## 7.2 与原文的偏差（重要）
+
+| 原文要求 | 实际落地 | 原因 |
+|---|---|---|
+| §3.1 在宿主注册 `curator` agent 模式 | 不新增 host agent 模式；Lead 用 `spawn_teammate({mode:"creator"})` 创建 Creator 模式 teammate，人格/写域来自 `curator-agent-prompt.md` + `agents.json` | DSH 的 agent preset 是组合式插件，`cordis` preset 已提供 `plugin_manager` / `tool-cordis` / 创造技能；spawn 模式是更小、可回滚的接入点 |
+| §3.1 `on_schedule: "0 3 * * 1"` | **不支持**：DSH 宿主无 cron；Curator 仅「关键词 + 显式派发」触发 | 不假装有定时（契约已写明） |
+| §3.1 `write_scope` 只允许团队资产 | **advisory（提示词 + 工具过滤 + 审计）**，DSH 沙箱无子路径白名单 | 沙箱只有 read-only / workspace-write / danger-full-access；删除类操作必须人类确认 |
+| P3「每次 spawn/send 自动追加」 | 宿主不会自动写仓库文件；由 **Lead 调 `dispatch_log.py append`** 追加 | 派发日志是团队资产，不是 DSH 内部事件；用脚本降低漏记成本，`check` 作为收口门禁 |
+| §3.2「`team_task_list` 含历史」 | 已满足：`team_task_list` 返回 pending/in_progress/completed；`team_task_get` 取单条 | 无需额外改造 |
+| V1 期望 `grep -c "retired-in-dsh"` = 3 | ✅ 满足（`retired_agents[]` 中 3 条） | — |
+
+## 7.3 验收总表（实测命令）
+
+| 编号 | 检查命令（PowerShell，工作目录 = 仓库根） | 通过标准 | 实测 |
+|---|---|---|---|
+| **V1** | `(Select-String -Path artifacts/agent/agents.json -Pattern "retired-in-dsh").Count` + `Select-String -Path AGENTS.md -Pattern "历史载体警告"` | 3 + 有警告块 | ✅ 3 / 1 |
+| **V2** | `python scripts/agent/curator_audit.py --json \| python -c "import json,sys; d=json.load(sys.stdin); print(d['registry']['missing_trigger_channel'])"` | `[]` | ✅ `[]` |
+| **V3** | `python scripts/agent/dispatch_log.py check` | 退出码 0 且 `count>0`、latest ≤7 天 | ✅ 8 条，latest 2026-10-23（含历史回填 + 本轮收口 + P5；真实派发的 spawn/done 成对记录从下一次派发开始产生） |
+| **V4** | `git log --oneline --all -- artifacts/agent/verify/<report>.md` + 报告引用检查 | 每个角色至少一份报告被引用 | ✅ Curator 首次审计已引用报告；其余角色按任务复核 |
+| **V5** | 跑 `python scripts/agent/curator_audit.py --date <date>` 并检查实际修改 | 产出 raw+summary 且**实际改**团队资产 | ✅ `audit-2026-10-23/` + `agents.json` v2（首次运行由本会话 Lead 兼 Curator 执行；`spawn_teammate({mode:"creator"})` 路径由 DSH 单测覆盖） |
+| **V6** | `Get-ChildItem artifacts/agent -Recurse -File \| Measure-Object Length -Sum` | < 150 MB | ✅ 66.7 MB（789 文件，`.md` 114 份保留） |
+| **V7** | 读 Curator SUMMARY `owner_activity` | 无「active 但 14 天无证据」的角色 | ⚠️ 采集器按报告名匹配，`inactive` 项需人工复核（见 SUMMARY §3 口径说明） |
+
+## 7.4 最该改的一件事
+
+**把 dispatch-log 变成 Lead 收口必跑项**：每次 spawn/send/收口后 `append`，收口前 `check`。
+否则「谁在干活」仍只能靠 789 个磁盘文件反推。
+
+## 7.5 复跑入口
+
+```powershell
+cd D:\AAA_Jupyter\Memoria
+$env:PYTHONIOENCODING="utf-8"
+python scripts/agent/dispatch_log.py check
+python scripts/agent/dispatch_log.py --selftest
+python scripts/agent/curator_audit.py --date 2026-10-23
+```
+
+详见 [agent-team-status.md](agent-team-status.md) 与
+`artifacts/agent/curator/audit-2026-10-23/SUMMARY.md`。

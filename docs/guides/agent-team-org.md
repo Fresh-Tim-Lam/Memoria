@@ -22,7 +22,7 @@
 | 层 | 谁 | 生命周期 | 用途 |
 |---|---|---|---|
 | **L0 调度** | Lead | 整个会话 | 派发、裁决、扩权原子操作（git/大文件/删除）、最终验收 |
-| **L1 常驻领域 Owner** | 8 个 teammate | 跨多个工作单元常驻（inactive 时零成本） | 各自领域内的分析、实现、复核；**有领域记忆** |
+| **L1 常驻领域 Owner** | 9 个领域 Owner（另有 2 个非领域常驻，见 §2.2） | 跨多个工作单元常驻（inactive 时零成本） | 各自领域内的分析、实现、复核；**有领域记忆** |
 | **L2 一次性子代理** | `subagent` | 用完即弃 | 只读盘点、单点机械活、并发分片；**不占名额、不留上下文** |
 
 **判据**：
@@ -30,7 +30,7 @@
 - 一次性、只读、跑完即弃 → **L2 subagent**；
 - 一两行改动能凭现有认知完成 → **Lead 自己做**。
 
-## 2. 常驻成员与领域所有权（当前 9 个，上限 16）
+## 2. 常驻成员与领域所有权（当前 9 个领域 Owner；另有 2 个非领域常驻见 §2.2；上限 16）
 
 | Agent | 领域所有权 | 对应对象认知 |
 |---|---|---|
@@ -45,7 +45,7 @@
 | `team-steward` | **团队维护域**：名册/编制一致性、任务生命周期、报告落盘核验、写域冲突；**只检测+提议，执行权归 Lead** | 本文件 §2/§2.1/§10 + `dsh-agent-teams-contract.md` |
 
 > **名额口径**（2026-10-20 核实源码 `agent-team/src/roster.ts:63`）：`maxMembers` = **「每个 Team 的非退役 roster 条目上限」，即只数 teammate、不含 Lead**。
-> 当前 **9 名 teammate / 上限 16 ⇒ 还有 7 个空位**。
+> 当前 roster 共 **11 名成员**（9 个领域 Owner + 2 个非领域常驻，见 §2.2）/ 上限 16 ⇒ 还有 **5 个空位**。
 > 空缺领域（如 06 图谱本体、08 导入导出）默认走 L2 subagent；**只有出现长期、跨任务的领域责任时才升格为 Owner**。
 
 
@@ -63,7 +63,25 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 1. **任务闭环即退役**：单点任务型 teammate（「修 X bug」「落地 Y」）完成后**当轮退役**，不留着占位；
 2. **Owner 用领域命名**，不用「fix 型」命名（`jump-fix` 这类名字会让人误以为它只干过一次活）；
 3. 退役前先确认它的产出已落到**磁盘报告/提交**（会话记忆不保留，退役即丢上下文）；
-4. 改名后**同步更新本表与任务板 owner**（ownerName 由 roster 快照派生，改名会自动跟随，但本表要人改）。
+4. 改名后**同步更新本表与任务板 owner**（ownerName 由 roster 快照派生，改名会自动跟随，但本表要人改）；
+5. **角色退役须留痕**：`agents.json` 标 `retired-in-dsh` + 理由 + 证据（不删除）；退役后必须过
+   `python scripts/agent/team_audit.py` 的 `role_evidence` 检查（active 角色须有 14 天证据，
+   否则会被判「幽灵角色」WARN）。
+
+### 2.2 非领域常驻成员（不计入 §2 领域 Owner 数）
+
+名册里还有 2 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
+以免污染 §2 的领域计数与 `team_audit.py` 的 roster 比对）：
+
+| 成员 | 职责 | 与领域 Owner 的区别 |
+|---|---|---|
+| `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
+| `team-curator`（团队策展人） | 审计并维护团队资产（`agents.json` / 契约 / 本表 / 审计脚本），持有团队定义写权限；Creator 模式（`agent_preset: cordis`） | 只改「团队」不改「产品」；与 `team-steward` 互补：steward 只检测+提议，curator 可实际落盘修改 |
+
+> 口径（2026-10-23 Lead 更新）：`team_audit.py` 的 `roster` 检查**同时解析 §2 与 §2.2**：
+> 合法快照成员 = §2 领域 Owner（9）+ §2.2 非领域常驻（2）= **11**；缺 1 个或多 1 个都会 FAIL。
+> 另外 `role_evidence` 检查（`agents.json` active 角色的 14 天证据）独立覆盖 active 角色活性。
+> 文档自述计数只约束 §2 领域 Owner（9），不含 §2.2。
 
 ## 3. 领域覆盖与缺口（对照 agent-guide 10 篇）
 
@@ -119,6 +137,7 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | 2026-10-19 | 初版：确立三层结构、8 个常驻 Owner 的领域表、10 篇 agent-guide 的覆盖缺口、5 步派发规则、知识落点与成本模型 |
 | 2026-10-19 | 首轮全员激活：8 个 Owner 各确认领域并回报「最大未解决问题 + 建议下一单元」（见 §8） |
 | 2026-10-20 | **团队重整（首次动态维护）**：退役 3 个任务已闭环的单点 agent（`render-impl`/`mapper-fix`/`jump-fix`）；3 个含糊命名改为领域名（`arch-agent`→`arch-contract`、`detail-agent`→`doc-consistency`、`metrics-agent`→`metrics-baseline`）；补 2 个缺口 Owner（`kp-owner` 知识点域、`settings-owner` 设置/i18n/快捷键域）；名额上限 8→16。前提是 DSH 侧补齐了 `retire_teammate`/`update_teammate`（DSH 提交 `468b01b5b2`），维护纪律见 §2.1 |
+| 2026-10-23 | **团队载体收口（P1–P5）**：AGENTS.md 标注 Trae 三角色为历史；`agents.json` 重写为 DSH 角色能力目录（lead/executor/auditor/registrar/curator）；新增 append-only `artifacts/agent/dispatch-log.jsonl` + `scripts/agent/dispatch_log.py`；Curator 以 Creator 模式 teammate 上线（`spawn_teammate({mode:"creator"})`），首次审计产物 `artifacts/agent/curator/audit-2026-10-23/`；P5 经人类确认后清理 28 个未引用大文件（750.2 MB → 66.7 MB，`.md` 114 份保留） |
 
 ## 8. 首轮全员回报（2026-10-19，各 Owner 自述 · **历史快照**）
 
@@ -141,7 +160,12 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 ## 9. 自维护约定与首例纠错（重要）
 
 **自维护规则**（agent 如何维护本文档）：
-1. **单一写者**：本文档由 **Lead 单写**；各 Owner **不直接编辑**（8 个并行写同一文件必冲突）。
+1. **写者白名单**：本文档由 **Lead** 或 **Curator**（`docs/guides/curator-agent-prompt.md`）写；
+   各领域 Owner **不直接编辑**（并行写同一文件必冲突）。
+   > **2026-10-23 Lead 裁决**：原文写「Lead 单写」，与 Curator 职责（维护团队文档）冲突。
+   > 规则的**目的是防并行写冲突**，而 Curator 是 Lead **串行派发**的单一角色，不存在并行冲突；
+   > 且维护团队文档正是它的核心职责。故按「白名单」表述，保留对领域 Owner 的禁令。
+   > 若未来 Curator 改为常驻并发角色，本条须重新裁决。
 2. Owner 通过**回报**更新自己那一行：把「最大未解决问题 + 建议下一单元」发给 Lead，Lead 汇总落表。
 3. Owner 可自行维护**自己领域的 artifacts 报告**（`artifacts/agent/verify/<owner>-*.md`），那是自由写区。
 
@@ -210,8 +234,9 @@ CDP 客户端于是**连到了另一个正在跑的页面**。症状恰好是 `w
 |---|---|
 | `python scripts/agent/team_audit.py` | 退出码 0 才可收口；FAIL 必须当轮处置，或由 Lead 在收口报告显式豁免并写理由 |
 | `python scripts/agent/team_audit.py --selftest` | 必须 PASS（红 fixture 五项必红、绿 fixture 全绿；防「假通过」） |
+| `python scripts/agent/dispatch_log.py check` | 退出码 0 才可收口（派发日志存在、JSON 合法、最近一条 ≤7 天） |
 
-机检覆盖：快照健康、名册一致性（§2 vs 快照成员/退役集合）、任务卡死（`in_progress` ∧ owner `inactive`）、未完成任务写域重叠（advisory）、报告路径引用与任务交付物存在性（声称 ≠ 存在）。报告落点 `artifacts/agent/verify/team-audit-<YYYYMMDD-HHmm>.md`。
+机检覆盖：快照健康、名册一致性（§2 vs 快照成员/退役集合）、任务卡死（`in_progress` ∧ owner `inactive`）、未完成任务写域重叠（advisory）、报告路径引用与任务交付物存在性（声称 ≠ 存在）、**角色活性证据**（`agents.json` active 角色须有 14 天 dispatch/任务/产物证据，否则报「幽灵角色」WARN）。报告落点 `artifacts/agent/verify/team-audit-<YYYYMMDD-HHmm>.md`。
 
 ### 10.2 五项人工确认
 
@@ -224,6 +249,14 @@ CDP 客户端于是**连到了另一个正在跑的页面**。症状恰好是 `w
 ### 10.3 快照纪律
 
 Lead 每轮收口前重导出 `artifacts/agent/team-board-snapshot.json`，导出时间必须**晚于最后一次任务状态变更与相关 commit**；`writeScopes` 取任务板最新 revision；`limit.currentMembers` 口径与 `members` 数组一致（**含/不含 Lead 必须写明**）。
+
+### 10.3.1 派发日志纪律（2026-10-23）
+
+- 每次 `spawn_teammate` / `send_message` / 收口后，Lead 用
+  `python scripts/agent/dispatch_log.py append --actor ... --target ... --phase ...` 追加一条；
+- 收口前 `python scripts/agent/dispatch_log.py check` 必须为 0；
+- 日志只追加，不改历史行；回填历史用 `--phase backfill --ts <ISO8601> --source backfill:<证据路径>`。
+- 详见 [dsh-agent-teams-contract.md §7](dsh-agent-teams-contract.md)。
 
 ### 10.4 边界
 

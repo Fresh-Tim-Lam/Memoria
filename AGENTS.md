@@ -8,6 +8,14 @@
 > - **Trae/SOLO 载体（历史）**：SOLO 主控 + 静态三角色 + `events.jsonl` 事件流；
 > - **DSH 载体（当前）**：Lead + 动态 `spawn_teammate` + 共享任务板 + `send_message` + 磁盘报告。实操见 [dsh-agent-teams-contract.md](docs/guides/dsh-agent-teams-contract.md)。
 
+> **⚠️ 历史载体警告（2026-10-23，P1 单一载体）**：本文件 §2–§7 描述的是 **Trae/SOLO 载体（历史）**：
+> 静态三角色 builder/verifier/registrar + `events.jsonl` 事件派发。**该机制在 DSH 载体下从未运行**，
+> 三角色已在 `artifacts/agent/agents.json` 标记 `retired-in-dsh`。
+> **当前 DSH 载体的真实机制**见 [agent-team-status.md](docs/guides/agent-team-status.md)、
+> [agent-team-org.md](docs/guides/agent-team-org.md)（常驻领域 Owner）与
+> [dsh-agent-teams-contract.md](docs/guides/dsh-agent-teams-contract.md)（实操）。
+> 派发可追溯记录写入 `artifacts/agent/dispatch-log.jsonl`（见同目录 `scripts/agent/dispatch_log.py`）。
+
 ---
 
 ## 0. 平台硬约束（不可绕过）
@@ -32,7 +40,9 @@
 | 复习作答记录 | `<kb>/.memoria/agent/review/attempts.jsonl` | 应用代码（UI 路径 review_submit_one；append-only，不撤销） |
 - 新增事实源必须先在本表登记；**禁止并行事实源**。`.memoria/cache/**` 视为**可再生缓存**，不作为事实源。
 
-## 2. 基础 Agent 集（RISC，仅 3 个）
+## 2. 基础 Agent 集（RISC，仅 3 个 —— Trae 载体历史，DSH 下已退役）
+
+> **DSH 载体下已退役（2026-10-23）**：本节三角色仅在历史语义中保留；当前团队由 Lead + 动态 teammate 组成，见 [agent-team-org.md §2](docs/guides/agent-team-org.md) 与 [agent-team-status.md](docs/guides/agent-team-status.md)。
 
 > 业务关注点（F01–F03 维护、图片注册表、重命名级联、图谱构建、i18n、打包、检索评测等）**一律作为 `builder` 的作业或工具**，并登记进 [maintenance-jobs.md §5](docs/design/maintenance-jobs.md)，**永不新增独立 Agent**。
 
