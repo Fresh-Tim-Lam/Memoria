@@ -410,20 +410,35 @@ window.MemoriaRenderCore = (function () {
     },
 
     list: function (block, blockIndex) {
-      var el = _newBlockEl(block.ordered ? "ol" : "ul", "", blockIndex);
-      // 列表被块级元素隔断时会拆成多个 <ol>；首项源编号保留（同 renderer.js）
-      if (block.ordered && block.start && block.start > 1) {
-        el.setAttribute("start", String(block.start));
-      }
-      if (block.items) {
-        for (var li = 0; li < block.items.length; li++) {
-          var liEl = document.createElement("li");
-          renderInlineList(block.items[li].children, liEl);
-          if (!block.items[li].children || block.items[li].children.length === 0) liEl.innerHTML = "<br>";
-          el.appendChild(liEl);
+      /**
+       * ★ 2026-10-23（0.4.7 任务 4：多级列表）：**递归渲染子列表**。
+       *   parser 把子列表挂在 `item.list`（不在 `children` —— 那装行内节点），
+       *   这里若存在就在该 `<li>` 内部再插一个 `<ul>/<ol>` ⇒ 浏览器原生嵌套缩进，
+       *   无需额外 CSS 缩进（`.-list--nested` 只补一点安全边距）。
+       *   `depth` 只用于 class / data 属性，便于探针与样式区分层级。
+       */
+      function buildList(node, depth) {
+        var el2 = _newBlockEl(node.ordered ? "ol" : "ul", "", blockIndex);
+        if (depth > 0) el2.classList.add("-list--nested");
+        el2.setAttribute("data--list-depth", String(depth));
+        // 列表被块级元素隔断时会拆成多个 <ol>；首项源编号保留（同 renderer.js）
+        if (node.ordered && node.start && node.start > 1) {
+          el2.setAttribute("start", String(node.start));
         }
+        var items2 = node.items || [];
+        for (var i2 = 0; i2 < items2.length; i2++) {
+          var it = items2[i2];
+          var liEl = document.createElement("li");
+          renderInlineList(it.children, liEl);
+          if (!it.children || it.children.length === 0) liEl.innerHTML = "<br>";
+          if (it.list && it.list.items && it.list.items.length) {
+            liEl.appendChild(buildList(it.list, depth + 1));
+          }
+          el2.appendChild(liEl);
+        }
+        return el2;
       }
-      return el;
+      return buildList(block, 0);
     },
 
     // ── P2b 新增：代码块 ─────────────────────────────────────────────────────

@@ -3973,6 +3973,18 @@ body.-brush-active #editor {
     margin: 0;
     padding-left: 1.8em;
 }
+/* 0.4.7 任务 4：多级列表的**嵌套**子列表。
+   浏览器对 <li> 内的 <ul>/<ol> 默认已有缩进，这里只统一间距、避免层层累积过大：
+   - 去掉嵌套列表的上下 margin（父 <li> 的行高已提供间距）
+   - padding-left 略收窄（浏览器默认 ~40px 在正文里偏大） */
+.-preview .-list--nested {
+    margin: 0;
+    padding-left: 1.35em;
+}
+/* 嵌套层级标记：让"对齐"更清楚（不同符号区分层级，避免全是一样的小圆点） */
+.-preview .-list--nested[data--list-depth="1"] { list-style-type: circle; }
+.-preview .-list--nested[data--list-depth="2"] { list-style-type: square; }
+.-preview .-list--nested[data--list-depth="3"] { list-style-type: disc; }
 .-preview blockquote.-src-block {
     margin: 0;
     padding: 0.3em 1em;
