@@ -418,8 +418,21 @@ window.MemoriaRenderCore = (function () {
        *   `depth` 只用于 class / data 属性，便于探针与样式区分层级。
        */
       function buildList(node, depth) {
-        var el2 = _newBlockEl(node.ordered ? "ol" : "ul", "", blockIndex);
-        if (depth > 0) el2.classList.add("-list--nested");
+        // ★ 2026-10-23（修 2eef3e34 的缺陷）：**只有根层才是"块"**。
+        //   `_newBlockEl()` 恒加 `-src-block` class 与 `data--block-index`，而嵌套子列表
+        //   **不是独立块**（它属于父块）。若给嵌套层也用 `_newBlockEl`：
+        //     · `querySelectorAll('#preview .-src-block')` 数量虚高
+        //       （实测夹具 22 块被判成 26 —— 惰性门禁的 blockCount 也会因此失真）
+        //     · `querySelector('.-src-block[data--block-index=N]')` 会**命中内层 <ul>**
+        //       而不是块根 ⇒ `mapper.astToDom()` 的光标恢复落错层级
+        //   ⇒ 嵌套层改用裸 `createElement` + 自己的 class/data。
+        var el2;
+        if (depth === 0) {
+          el2 = _newBlockEl(node.ordered ? "ol" : "ul", "", blockIndex);
+        } else {
+          el2 = document.createElement(node.ordered ? "ol" : "ul");
+          el2.classList.add("-list--nested");
+        }
         el2.setAttribute("data--list-depth", String(depth));
         // 列表被块级元素隔断时会拆成多个 <ol>；首项源编号保留（同 renderer.js）
         if (node.ordered && node.start && node.start > 1) {
