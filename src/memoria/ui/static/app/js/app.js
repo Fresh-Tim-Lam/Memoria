@@ -11737,6 +11737,31 @@
     }
 
     /**
+     * ★ 2026-10-23（0.4.7 任务 4 / N5）：**列表结构被编辑后，清空行号缓存**。
+     *
+     * 契约：`item.srcLine`（每项源码行，1-based）与 `list.itemSrcLine`（顶层项行号数组）
+     * 都是**解析产物**。它们只在「AST 与源码一一对应」时可信（用于：
+     *   ① 松散列表项间空行的逐字节重建 ② 多级列表空行重建）。
+     * 一旦编辑增删/移动了项，行号就**全部失真**且不再连续 —— 若继续使用，
+     * source-gen 会按「上一项行号差」补空行 ⇒ **凭空多出空行**（实测：删一个子项多 1 空行）。
+     *
+     * 因此**任何改动列表结构的编辑路径都必须调用本函数**（递归清到所有层级）。
+     * 清空后 source-gen 自动退回「不补空行」的安全行为（宁可少一个空行，不可错乱）。
+     *
+     * @param {object} blockOrList 列表块或其子列表节点
+     */
+    function _invalidateListItemLines(blockOrList) {
+      if (!blockOrList || !blockOrList.items) return;
+      blockOrList.itemSrcLine = null;
+      for (var li2 = 0; li2 < blockOrList.items.length; li2++) {
+        var it2 = blockOrList.items[li2];
+        if (!it2) continue;
+        it2.srcLine = null;
+        if (it2.list) _invalidateListItemLines(it2.list);
+      }
+    }
+
+    /**
      * 列表项「退列表」：去掉列表标记，把当前项变成段落（有内容）或纯空行（空项）。
      * 当前项之前的项仍为一个列表，之后的项仍为一个列表（若有）。
      */
@@ -11811,6 +11836,10 @@
         var prevLast = lastTextPath(prevItem.children || []);
         prevItem.children = mergeAdjacentInline((prevItem.children || []).concat(curItem.children || []));
         block.items.splice(itemIdx, 1);
+        // ★ 2026-10-23（0.4.7 任务 4 / N5）：**改列表结构后必须清空行号缓存**。
+        //   `srcLine` / `itemSrcLine` 是解析产物；删项后仍在但已失真 ⇒
+        //   source-gen 会按「上一项行号差」补空行，导致**凭空多出空行**。
+        _invalidateListItemLines(block);
         var newSrcLines = G.generateBlock(block).split("\n");
         var range = _blockLineMap[blockIndex];
         if (!range) return false;
