@@ -226,9 +226,30 @@ window.MemoriaAST = (function () {
     };
   }
 
-  /** @return {{type:"list_item", children:Inline[]}} */
-  function listItem(children) {
-    return { type: TYPES.LIST_ITEM, children: children || [] };
+  /**
+   * 列表项。
+   *
+   * ★ 2026-10-23（0.4.7 任务 4：多级列表）：新增三个**可选**字段，
+   *   既有调用 `listItem(children)` 行为完全不变。
+   *
+   * @param {Inline[]} children — 本项自己的行内内容
+   * @param {{list?: object|null, srcLine?: number, indent?: string}} [extra]
+   *   - `list`   ：本项的子列表（嵌套），无则 null/undefined。
+   *                **刻意不放进 `children`**：`children` 装的是行内节点，
+   *                混入 list 会让所有遍历方（渲染 / `firstTextPath` / `renderedLenOfNodes`）
+   *                把它当行内节点处理 ⇒ 大面积隐患。
+   *   - `srcLine`：本项源码行号（1-based），供松散列表项间空行逐字节重建
+   *   - `indent` ：本项缩进**原文**（Tab 保持 Tab、N 空格保持 N 空格），供回写保真
+   * @return {{type:"list_item", children:Inline[], list?:object|null, srcLine?:number, indent?:string}}
+   */
+  function listItem(children, extra) {
+    var node = { type: TYPES.LIST_ITEM, children: children || [] };
+    if (extra) {
+      if (extra.list) node.list = extra.list;
+      if (extra.srcLine) node.srcLine = extra.srcLine;
+      if (extra.indent != null) node.indent = String(extra.indent);
+    }
+    return node;
   }
 
   /** @return {{type:"mermaid", code:string}} */

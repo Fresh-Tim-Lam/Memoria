@@ -87,19 +87,66 @@ window.MemoriaSourceGen = (function () {
         //   旧实现只按 items 逐项 join("\n") ⇒ 那些空行在做任何一次编辑后被**永久抹掉**。
         //   重建规则：相邻两项的行号差 > 1 ⇒ 其间插入 (差 - 1) 个空行。
         //   ⚠️ 只有 `itemSrcLine` 与 `items` **等长**时才可信（编辑后若不维护会失真，
-        //      调用方必须同步更新或清空它，见 app.js 的 `_syncItemSrcLine`）。
+        //      调用方必须同步更新或清空它）。
+        //
+        // ★ 2026-10-23（0.4.7 任务 4：多级列表）：**递归生成子列表**。
+        //   每项优先用 `item.indent`（原文缩进，Tab 保持 Tab）与 `item.list`（子列表）。
+        //   子项没有 `indent`（编辑新建的项）⇒ 按「父缩进 + 2 空格」推算，保持最小可用。
         var srcLines = block.itemSrcLine;
         var hasItemLines = Array.isArray(srcLines) && srcLines.length === (block.items || []).length;
-        {
-          var out = [];
-          (block.items || []).forEach(function (item, idx) {
-            if (hasItemLines && idx > 0) {
-              var gap = (srcLines[idx] || 0) - (srcLines[idx - 1] || 0) - 1;
-              for (var g = 0; g < gap; g++) out.push("");   // 项间空行
+
+        /**
+         * 递归：把 list 生成源码行。
+         *
+         * **空行重建的唯一依据是「上一行源码行号」**（`prevEmittedLine`）——
+         * 而不是「同级相邻两项的行号差」。原因：多级列表里源码顺序是
+         * `父项 → 全部子项 → 下一个父项`，用「同级差」会把子项占用的行算成空行。
+         * 逐行推进 `cursorLine` 后，任何层级的项只用 `item.srcLine - cursorLine - 1` 补空行。
+         */
+        function genListLines(node, fallbackIndent, state) {
+          var lines = [];
+          var items = (node && node.items) || [];
+          for (var idx = 0; idx < items.length; idx++) {
+            var item = items[idx];
+            var myLine = item.srcLine;
+            if (myLine && state.cursorLine && myLine - state.cursorLine > 1) {
+              for (var g2 = 0; g2 < myLine - state.cursorLine - 1; g2++) lines.push("");
             }
-            var prefix = block.ordered ? (idx + 1) + ". " : "- ";
-            out.push(prefix + generateInlineList(item.children));
-          });
+            var indent2 = item.indent != null ? item.indent : fallbackIndent;
+            var prefix2 = node.ordered ? (idx + 1) + ". " : "- ";
+            lines.push(indent2 + prefix2 + generateInlineList(item.children));
+            if (myLine) state.cursorLine = myLine;
+            if (item.list && item.list.items && item.list.items.length) {
+              var sub = genListLines(item.list, indent2 + "  ", state);
+              for (var si = 0; si < sub.length; si++) lines.push(sub[si]);
+            }
+          }
+          return lines;
+        }
+
+        {
+          var state = { cursorLine: 0 };
+          var out = genListLines(block, "", state);
+          // 兼容旧路径：若解析结果没有任何 item.indent / item.srcLine
+          // （例如编辑后由 A.list() 新建的列表节点），退回原「无缩进 + 同级 itemSrcLine 差」行为。
+          var anyIndent = out.some(function (l) { return /^[ \t]/.test(l); });
+          var anySrcLine = (block.items || []).some(function (it) { return it && it.srcLine; });
+          if (!anyIndent && !anySrcLine) {
+            var out2 = [];
+            (block.items || []).forEach(function (item, idx) {
+              if (hasItemLines && idx > 0) {
+                var gap = (srcLines[idx] || 0) - (srcLines[idx - 1] || 0) - 1;
+                for (var g = 0; g < gap; g++) out2.push("");
+              }
+              var prefix = block.ordered ? (idx + 1) + ". " : "- ";
+              out2.push(prefix + generateInlineList(item.children));
+              if (item.list && item.list.items && item.list.items.length) {
+                var sub2 = genListLines(item.list, "  ", { cursorLine: 0 });
+                for (var si2 = 0; si2 < sub2.length; si2++) out2.push(sub2[si2]);
+              }
+            });
+            out = out2;
+          }
           return out.join("\n");
         }
 

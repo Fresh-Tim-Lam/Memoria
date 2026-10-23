@@ -502,58 +502,150 @@ window.MemoriaParser = (function () {
       }
 
       // ── 列表 ──
+      // ★ 2026-10-23（0.4.7 任务 4：多级列表）：重写为**栈式建树**。
+      //   旧实现只认「行首就是 list_prefix 的行」，缩进行（首个 token 是缩进 text）
+      //   直接被降级成段落 ⇒ 多级列表完全不支持，且编辑后会损坏（已由 e374463f 堵住损坏）。
+      //   新实现按**对齐宽度**判定层级（用户：「空格数量不要紧，关键是对齐」）：
+      //     Tab = 4、空格 = 1；同一父级下兄弟项宽度一致即视为同层；
+      //     不要求固定步长（2 空格 / 4 空格 / Tab 都可）；Tab 与空格等价。
+      //   `item.list` 挂子列表（**不放进 children** —— children 是行内节点）。
       if (tokens.length > 0 && tokens[0].type === "list_prefix") {
         var isOrdered = /^\d+\.$/.test(tokens[0].value);
         // 保留首项源编号：列表被公式/代码块等隔断拆成多个 <ol> 时，
         // 渲染仍从正确数字开始（如 `1. a\n$$...$$\n2. b` 显示 1. / 2. 而非 1. / 1.）
         var listStart = isOrdered ? parseInt(tokens[0].value, 10) : null;
-        var items = [];
-        // ★ 2026-10-21 task-40：记录每项的**源码行号**（1-based，与 blk.srcLine 同口径）。
-        //   为什么需要：松散列表里列表项之间的空行会被跳过（下面 `lt2.length === 0` 分支），
-        //   而 `AST.list` 的 items 只存内容 ⇒ **空行在第几项之后无法追溯**。
-        //   例：`- a\n- b\n\nafter` 的 list 区间是 L1-3（吞了空行），但 items 只有 2 项。
-        //   有了 itemSrcLine，可据「相邻两项行号差 > 1」判定其间的空行数 ⇒ 逐字节重建可行。
-        var itemSrcLine = [];
+        var itemSrcLine = [];          // 每项源码行号（1-based）——顶层项口径，兼容既有消费方
+
+        /**
+         * 缩进宽度：Tab 记 4、其余按字符数。
+         * （不做 CommonMark 的「Tab 进位到 4 的倍数」，因为用户只要求"对齐"。）
+         */
+        function indentWidth(str) {
+          var w = 0;
+          for (var ci = 0; ci < str.length; ci++) w += str[ci] === "\t" ? 4 : 1;
+          return w;
+        }
+
+        /**
+         * 把一行拆成 { indentRaw, marker, ordered, contentTokens }。
+         * 非列表行返回 null。
+         * 兼容 lexer 现在会产出「marker 后的分隔空格 text token」（e374463f）。
+         */
+        function parseListLine(raw) {
+          var toks = lexer.tokenize(raw);
+          if (!toks.length) return null;
+          var k = 0;
+          var ind = "";
+          // 前导缩进（lexer 把它产成一个 text token，紧跟在首位）
+          if (toks[k].type === "text" && /^[ \t]+$/.test(toks[k].value)) {
+            ind = toks[k].value;
+            k++;
+          }
+          if (k >= toks.length || toks[k].type !== "list_prefix") return null;
+          var marker = toks[k].value;
+          var ord = /^\d+\.$/.test(marker);
+          k++;
+          // 跳过 marker 后的分隔空格（e374463f 新增的 text token）
+          if (k < toks.length && toks[k].type === "text" && toks[k].value === " ") k++;
+          return { indentRaw: ind, marker: marker, ordered: ord, content: toks.slice(k) };
+        }
+
+        // ── 先收集：连续列表行 + 松散列表的空行 ──
+        var collected = [];   // { srcLine(1-based), indentRaw, marker, ordered, content }
         var scan = i;
+        var pendingBlank = 0; // 已跳过、尚未归属的空行数（用于项间空行重建）
         while (scan < endLine) {
-          var lt2 = lexer.tokenize(lines[scan]);
-          // 松散列表：列表项之间的空行不中断列表（CommonMark 语义，从 PDF 复制常见）
-          if (lt2.length === 0) {
+          var rawLine = lines[scan];
+          if (rawLine.trim() === "") {
+            pendingBlank++;
             scan++;
             continue;
           }
-          if (lt2[0].type !== "list_prefix") break;
-          // 有序/无序类型变化视为新列表（如 `1. a\n\n- b`），不合并
-          if (/^\d+\.$/.test(lt2[0].value) !== isOrdered) break;
-          // ★ 2026-10-23（0.4.7 任务 4 前置）：lexer 现在把 marker 后的分隔空格也产出成
-          //   text token（为了在"缩进列表降级成段落"时**不丢空格**）。列表分支必须跳过它，
-          //   否则每项内容都会多一个前导空格。
-          var _itemToks = lt2.slice(1);
-          if (_itemToks.length && _itemToks[0].type === "text" && _itemToks[0].value === " ") {
-            _itemToks = _itemToks.slice(1);
-          }
-          var itemChildren2 = parseInline(_itemToks);
-          items.push(AST.listItem(itemChildren2));
-          itemSrcLine.push(scan + 1);   // 1-based 源码行号
+          var pl = parseListLine(rawLine);
+          if (!pl) break;
+          // 顶层 marker 类型变化视为新列表（既有语义：`1. a\n\n- b` 不合并）
+          // 注意：**子列表**的类型可以不同（`- a` 下挂 `1. x` 是合法的）
+          collected.push({
+            srcLine: scan + 1,
+            indentRaw: pl.indentRaw,
+            marker: pl.marker,
+            ordered: pl.ordered,
+            content: pl.content,
+            blanksBefore: pendingBlank,
+          });
+          pendingBlank = 0;
           scan++;
         }
-        // 注意：此处 i 仍等于块首行，跨行末端在 scan；若传 i 会退化成单行区间。
-        //
-        // ★ 2026-10-23 Bug C：**列表末尾的空行不属于列表**。
-        //   扫描循环对空行是 `scan++` 继续找下一项（松散列表语义，这是对的），
-        //   但循环 break 时 `scan` 已经越过「末尾那串空行」⇒ 传给 emit 后
-        //   `list.srcLineEnd` 把它们算进列表区间 ⇒ AST 里**没有 blank_line 块** ⇒
-        //   预览渲染不出列表后的空行（用户报「- 块后的空行在预览里看不到」）。
-        //   修法：用最后一个 item 的实际行号收尾，让主循环从末尾空行继续 ⇒ 生成 blank_line。
-        //   （`itemSrcLine` 本来就是为「逐字节重建」准备的，见上面的说明。）
-        var lastItemLine = itemSrcLine.length
-          ? itemSrcLine[itemSrcLine.length - 1]   // 1-based
-          : lineNum + 1;                           // 防御：空 items 时至少占当前行
-        var listNode = AST.list(isOrdered, items, listStart);
-        listNode.itemSrcLine = itemSrcLine;
-        emit(blocks, listNode, lineNum, lastItemLine);
-        i = lastItemLine;
-        continue;
+
+        // ── 栈式建树 ──
+        if (collected.length) {
+          var topOrdered = collected[0].ordered;
+          // 只取与首项同类型的顶层项；遇到顶层类型变化就在那里截断（其余留给下一轮 parseBlocks）
+          var take = 0;
+          for (; take < collected.length; take++) {
+            var it0 = collected[take];
+            var w0 = indentWidth(it0.indentRaw);
+            // 顶层 = 缩进宽度等于首项宽度；类型必须一致
+            if (w0 === indentWidth(collected[0].indentRaw) && it0.ordered !== topOrdered) break;
+          }
+          var used = collected.slice(0, take);
+
+          var wStack = [];        // 缩进宽度栈（每层一个宽度）
+          var itemsByLevel = [[]]; // itemsByLevel[level] = 该层的项数组（用于挂载）
+          var lastItemByLevel = {}; // lastItemByLevel[level] = 该层最近的 item（父项）
+
+          for (var ci2 = 0; ci2 < used.length; ci2++) {
+            var cIt = used[ci2];
+            var w = indentWidth(cIt.indentRaw);
+
+            // 栈维护：找 level
+            if (!wStack.length) {
+              wStack.push(w);
+            } else if (w > wStack[wStack.length - 1]) {
+              wStack.push(w);
+            } else if (w < wStack[wStack.length - 1]) {
+              while (wStack.length && w < wStack[wStack.length - 1]) wStack.pop();
+              if (!wStack.length || w < wStack[wStack.length - 1]) wStack.push(w);
+            }
+            var level = wStack.length - 1;
+
+            var item = AST.listItem(parseInline(cIt.content), {
+              srcLine: cIt.srcLine,
+              indent: cIt.indentRaw,
+            });
+
+            if (level === 0) {
+              itemsByLevel[0].push(item);
+              itemSrcLine.push(cIt.srcLine);
+            } else {
+              // 挂到「最近一个 level-1 的父项的 .list」上
+              var parent = lastItemByLevel[level - 1];
+              if (!parent) {
+                // 防御：level>0 却没有父项（理论上不会发生）⇒ 降级为顶层
+                itemsByLevel[0].push(item);
+                itemSrcLine.push(cIt.srcLine);
+                item = itemsByLevel[0][itemsByLevel[0].length - 1];
+              } else {
+                if (!parent.list) {
+                  parent.list = AST.list(cIt.ordered, [], cIt.ordered ? parseInt(cIt.marker, 10) : null);
+                }
+                parent.list.items.push(item);
+              }
+            }
+            // 记录该层最近的 item（供下一层挂载）+ 清掉更深层的记录
+            lastItemByLevel[level] = item;
+            for (var deeper = level + 1; deeper < 20; deeper++) delete lastItemByLevel[deeper];
+          }
+
+          var listNode = AST.list(topOrdered, itemsByLevel[0], listStart);
+          listNode.itemSrcLine = itemSrcLine;
+
+          // 列表区间收尾（Bug C）：用最后一个**任何层级**项的行号
+          var lastLine = used[used.length - 1].srcLine;
+          emit(blocks, listNode, lineNum, lastLine);
+          i = lastLine;
+          continue;
+        }
       }
 
       // ── 表格 ──
