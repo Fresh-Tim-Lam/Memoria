@@ -81,6 +81,12 @@ window.MemoriaLexer = (function () {
             i += indent;
           }
           tokens.push(make("list_prefix", lm[2], i, srcOffset));
+          // ★ 2026-10-23（0.4.7 任务 4 前置）：marker 后那个空格**必须作为 text token 产出**。
+          //   旧实现直接 `i += 2` 跳过 ⇒ 空格在词法层消失。当该行**不是**列表项时
+          //   （缩进的 `- b` 因首个 token 是缩进 text 而不走列表分支 ⇒ 降级成段落），
+          //   回写就会把 `- b` 写成 `-b` ⇒ **用户的多级列表被编辑一次后永久损坏**。
+          //   列表分支会跳过一个紧随的空格 text（见 parser.js 的 `lt2.slice(1)` 处理）。
+          tokens.push(make("text", lm[2] ? sourceLine.slice(i + 1, i + 2) : "", i + 1, srcOffset));
           i += 2; // marker + space
           continue;
         }
@@ -93,6 +99,8 @@ window.MemoriaLexer = (function () {
             i += oindent;
           }
           tokens.push(make("list_prefix", om[2] + ".", i, srcOffset));
+          // 同上：`1. ` 的分隔空格也产出成 text token（避免段落降级时丢空格）
+          tokens.push(make("text", sourceLine.slice(i + om[2].length + 1, i + om[2].length + 2), i + om[2].length + 1, srcOffset));
           i += om[2].length + 2; // number + ". "
           continue;
         }

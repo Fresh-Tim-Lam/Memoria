@@ -525,7 +525,14 @@ window.MemoriaParser = (function () {
           if (lt2[0].type !== "list_prefix") break;
           // 有序/无序类型变化视为新列表（如 `1. a\n\n- b`），不合并
           if (/^\d+\.$/.test(lt2[0].value) !== isOrdered) break;
-          var itemChildren2 = parseInline(lt2.slice(1));
+          // ★ 2026-10-23（0.4.7 任务 4 前置）：lexer 现在把 marker 后的分隔空格也产出成
+          //   text token（为了在"缩进列表降级成段落"时**不丢空格**）。列表分支必须跳过它，
+          //   否则每项内容都会多一个前导空格。
+          var _itemToks = lt2.slice(1);
+          if (_itemToks.length && _itemToks[0].type === "text" && _itemToks[0].value === " ") {
+            _itemToks = _itemToks.slice(1);
+          }
+          var itemChildren2 = parseInline(_itemToks);
           items.push(AST.listItem(itemChildren2));
           itemSrcLine.push(scan + 1);   // 1-based 源码行号
           scan++;
