@@ -19,18 +19,33 @@
 
 ## 1. 三层结构
 
+> **⚠️ 2026-10-23 第三轮复盘修正（重要，先读这段再读表）**
+>
+> 本节的「三层结构」是**设计意图**，不是实况。截至 2026-10-23 的实测事实是：
+>
+> ```
+> L1「9 个常驻领域 Owner」中，14 天内有磁盘产出证据的 = 2 个（render-perf / sync-mapper）
+> 其余 9 名常驻成员（含 todo-owner / team-curator）全部 inactive，且 0 条派发记录
+> 真实工作模式 = Lead 一个人做 + 按需 spawn 一次性 teammate + Curator 按轮审计
+> ```
+>
+> 因此下表要按**状态语义**读：`active`（14 天有证据）≠ `standby`（领域已登记、当前无活）。
+> 「常驻」不等于「在运转」；把 standby 当 active 是本团队历史上最贵的一类自欺（见 §2.3）。
+
 | 层 | 谁 | 生命周期 | 用途 |
 |---|---|---|---|
 | **L0 调度** | Lead | 整个会话 | 派发、裁决、扩权原子操作（git/大文件/删除）、最终验收 |
-| **L1 常驻领域 Owner** | 9 个领域 Owner（另有 2 个非领域常驻，见 §2.2） | 跨多个工作单元常驻（inactive 时零成本） | 各自领域内的分析、实现、复核；**有领域记忆** |
-| **L2 一次性子代理** | `subagent` | 用完即弃 | 只读盘点、单点机械活、并发分片；**不占名额、不留上下文** |
+| **L1 领域能力（standby 池）** | 7 名常驻（5 领域 + 2 非领域） | 跨多个工作单元常驻（inactive 时零 token 成本，**只占名额**） | 各自领域内的分析、实现、复核；**有领域记忆** |
+| **L2 一次性子代理** | `subagent` / `spawn_teammate` | 用完即弃 | 只读盘点、单点机械活、并发分片；**不占名额、不留上下文** |
+| **L3 周期性审计** | Curator（按轮 spawn） | 每轮复盘 | 审计团队资产并**直接修改**；唯一持有团队定义写权限 |
 
-**判据**：
-- 需要跨多轮 steer、需要领域累积 → **L1 Owner**；
-- 一次性、只读、跑完即弃 → **L2 subagent**；
-- 一两行改动能凭现有认知完成 → **Lead 自己做**。
+**判据（2026-10-23 修订，原文「简单任务 Lead 直接做」保留）**：
+- 需要跨多轮 steer、需要领域累积 → **L1**（但先确认它真的 active，否则等于派给一个不存在的人）；
+- 一次性、只读、跑完即弃 → **L2**；
+- 一两行改动能凭现有认知完成 → **Lead 自己做**；
+- 团队自身资产（注册表/契约/组织/机检脚本）→ **L3 Curator**，不进领域 Owner。
 
-## 2. 常驻成员与领域所有权（当前 9 个领域 Owner；另有 2 个非领域常驻见 §2.2；上限 16）
+## 2. 常驻成员与领域所有权（当前 5 个领域 Owner；另有 2 个非领域常驻见 §2.2；4 个域已退役见 §2.3；上限 16）
 
 | Agent | 领域所有权 | 对应对象认知 |
 |---|---|---|
@@ -39,13 +54,11 @@
 | `arch-contract` | **架构与契约域**：显示子系统契约 C1–C12、重构总纲与阶段裁决、`agent-guide/01`+`10` | `architecture.md` + `design/view-surface-contract.md` |
 | `doc-consistency` | **文档一致性域**：文档↔代码审计、文档债、`agent-guide/06`+`07`+`08` | `docs/conventions/**` + 各 design 稿 |
 | `metrics-baseline` | **度量与基准域**：真机/无头度量协议、基线与预算、交互金标准回归、渲染保真度指标 | `design/realapp-measurement-protocol.md` + `design/benchmark-measurement-protocol.md` + `design/render-fidelity-contract.md` |
-| `kp-owner` | **知识点域**：KP 面板、图谱联动、KP 抽取与存储、`agent-guide/05` | `agent-guide/05-*` + KP 前后端实现 |
-| `settings-owner` | **设置/i18n/快捷键域**：设置键事实源、i18n 键、快捷键、`agent-guide/09` | `agent-guide/09-*` + 设置/文案实现 |
-| `surface-new` | **新渲染管线域**：`RenderCore`（AST→块树→DOM）实现、new 插头接线、与 legacy 双跑等价（阶段 2） | `design/stage2-plan.md` + `design/render-fidelity-contract.md` + `design/block-identity-design.md` |
-| `team-steward` | **团队维护域**：名册/编制一致性、任务生命周期、报告落盘核验、写域冲突；**只检测+提议，执行权归 Lead** | 本文件 §2/§2.1/§10 + `dsh-agent-teams-contract.md` |
 
 > **名额口径**（2026-10-20 核实源码 `agent-team/src/roster.ts:63`）：`maxMembers` = **「每个 Team 的非退役 roster 条目上限」，即只数 teammate、不含 Lead**。
-> 当前 roster 共 **11 名成员**（9 个领域 Owner + 2 个非领域常驻，见 §2.2）/ 上限 16 ⇒ 还有 **5 个空位**。
+> 当前 roster 共 **5 名领域 Owner + 2 名非领域常驻 = 7 名 teammate**（+Lead = 8）/ 上限 16 ⇒ 还有 **8 个空位**。
+> 2026-10-23 依 Curator r3 建议退役 4 名（kp-owner/settings-owner/surface-new/team-steward），
+> 退役登记见下方 §2.3（**故意不用反引号首列**，避免被 `team_audit.py` 的 roster 机检当作「当前 Owner」）。
 > 空缺领域（如 06 图谱本体、08 导入导出）默认走 L2 subagent；**只有出现长期、跨任务的领域责任时才升格为 Owner**。
 
 
@@ -76,12 +89,59 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | 成员 | 职责 | 与领域 Owner 的区别 |
 |---|---|---|
 | `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
-| `team-curator`（团队策展人） | 审计并维护团队资产（`agents.json` / 契约 / 本表 / 审计脚本），持有团队定义写权限；Creator 模式（`agent_preset: cordis`） | 只改「团队」不改「产品」；与 `team-steward` 互补：steward 只检测+提议，curator 可实际落盘修改 |
+| `curator-r3`（团队策展人，按轮 spawn） | 审计并维护团队资产（`agents.json` / 契约 / 本表 / 审计脚本），持有团队定义写权限；Creator 模式（`agent_preset: cordis`） | 只改「团队」不改「产品」；与 `team-steward` 互补：steward 只检测+提议，curator 可实际落盘修改 |
+
+> **命名约定**：Curator 按轮 spawn，roster 名带轮次后缀（`curator-r3` = 第三轮）；
+> 历史 spawn 名（`team-curator`）已在 DSH 侧退役。`agents.json → roster_alias` 记录映射，
+> `team_audit.py::role_evidence` 按 `id ∪ alias` 匹配，故不会因换名假报幽灵角色。
 
 > 口径（2026-10-23 Lead 更新）：`team_audit.py` 的 `roster` 检查**同时解析 §2 与 §2.2**：
 > 合法快照成员 = §2 领域 Owner（9）+ §2.2 非领域常驻（2）= **11**；缺 1 个或多 1 个都会 FAIL。
 > 另外 `role_evidence` 检查（`agents.json` active 角色的 14 天证据）独立覆盖 active 角色活性。
 > 文档自述计数只约束 §2 领域 Owner（9），不含 §2.2。
+
+### 2.3 状态语义与待执行的花名册动作（2026-10-23 第三轮新增）
+
+**状态三分**（定义在 `agents.json` → `status_semantics`，此处只讲用法）：
+
+| 状态 | 含义 | 机检要求 |
+|---|---|---|
+| **active** | 14 天内有可复跑证据，且可被指派新活 | `team_audit::role_evidence` 必须给它找到证据，否则报「幽灵角色」WARN |
+| **standby** | 领域已登记、职责明确，**当前窗口无活** | **不要求**证据，也不算幽灵 ⇒ 把「占名额」与「在运转」分开 |
+| **retired-in-dsh** | DSH 下无可派发身份，保留历史 | 必须在快照 `retired[]` 中，且不得再出现在 §2 当前表 |
+
+**待执行动作队列**（Curator 只能提议；`retire_teammate`/`rename_teammate` 是 Lead 的 DSH 操作）：
+
+待执行清单在 `team/agents.json` → `dsn_roster_actions.retire_recommended`（含每人理由 + 证据 + 吸收方）。
+本轮推荐退役 4 名、保留 6 名 standby：
+
+| 动作 | 目标 | 理由（可复跑） | 吸收方 |
+|---|---|---|---|
+| 退役 | `kp-owner` | 14 天 0 派发 / 0 任务板 owner / 0 专属产物；该域近 30 天无 src 变更 | Lead 直做 + L2 |
+| 退役 | `settings-owner` | 同上（0/0/0） | Lead 直做 + L2 |
+| 退役 | `surface-new` | 同上；近 3 天该目录改动作者均为 Lead | Lead 直做 + L2 |
+| 退役 | `team-steward` | 职责已被 `scripts/agent/team_audit.py`（9 类机检）+ Curator 完全覆盖，人形 Owner 反而制造第二套口径 | 机检脚本 + Curator |
+| 保留 standby | `arch-contract` / `doc-consistency` / `metrics-baseline` / `render-perf` / `sync-mapper` / `todo-owner` | 领域仍在（契约、文档、度量、渲染、同步、台账），但**按 standby 计** | — |
+
+**执行纪律（否则队列会变成新的自欺）**：
+1. Lead 执行 `retire_teammate` 后，**必须在同一轮** ① 更新本表与 §2.2、② 重导出快照、③ 从 `dsn_roster_actions` 删除该条目；
+2. `contract_drift` D6 会校验「队列里的目标仍存在于 roster 快照」，残留即 WARN —— 用来防「已退休却仍挂在待办里」；
+3. 未执行前，机检 `roster` 仍要求成员齐全，**不要先改文档再改名册**（顺序错了会 FAIL）。
+
+> **为什么是「退役」而不是「删除」**：条目进 `retired_agents[]`，理由 + 证据保留，可随时复活。
+> 代价只有 4 个名额；收益是新人读 org/agents 时不会再以为「有 9 个 Owner 在干活」。
+
+### 2.3 已退役领域（2026-10-23，DSH 侧已 retire，absorbed_by 见右列）
+
+> 依据：14 天内 0 派发 / 0 任务板 owner / 0 角色专属产物（`team/dispatch-log.jsonl` + 快照 + `git log`）。
+> 保留描述供回溯；若该域重新有活，按 §2.1「按需 spawn」恢复，不预先占用名额。
+
+| 原域 | 现状 | absorbed_by |
+|---|---|---|
+| kp-owner | 知识点面板/图谱联动/KP 抽取 | Lead 直做 + L2 subagent |
+| settings-owner | 设置项/i18n/快捷键 | Lead 直做 + L2 subagent |
+| surface-new | RenderCore 新渲染管线（P2–P4 已交付） | Lead 直做 + L2 subagent |
+| team-steward | 名册/编制一致性检测 | `scripts/agent/team_audit.py`（9 类机检）+ Curator |
 
 ## 3. 领域覆盖与缺口（对照 agent-guide 10 篇）
 
@@ -138,6 +198,7 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | 2026-10-19 | 首轮全员激活：8 个 Owner 各确认领域并回报「最大未解决问题 + 建议下一单元」（见 §8） |
 | 2026-10-20 | **团队重整（首次动态维护）**：退役 3 个任务已闭环的单点 agent（`render-impl`/`mapper-fix`/`jump-fix`）；3 个含糊命名改为领域名（`arch-agent`→`arch-contract`、`detail-agent`→`doc-consistency`、`metrics-agent`→`metrics-baseline`）；补 2 个缺口 Owner（`kp-owner` 知识点域、`settings-owner` 设置/i18n/快捷键域）；名额上限 8→16。前提是 DSH 侧补齐了 `retire_teammate`/`update_teammate`（DSH 提交 `468b01b5b2`），维护纪律见 §2.1 |
 | 2026-10-23 | **团队载体收口（P1–P5）**：AGENTS.md 标注 Trae 三角色为历史；`agents.json` 重写为 DSH 角色能力目录（lead/executor/auditor/registrar/curator）；新增 append-only `team/dispatch-log.jsonl` + `scripts/agent/dispatch_log.py`；Curator 以 Creator 模式 teammate 上线（`spawn_teammate({mode:"creator"})`），首次审计产物 `team/curator/audit-2026-10-23/`；P5 经人类确认后清理 28 个未引用大文件（750.2 MB → 66.7 MB，`.md` 114 份保留） |
+| 2026-10-23（第三轮，复盘） | **组织形态纠偏 + 机检扩到 9 类**：① §1 改写为「设计意图 vs 实况」（11 名常驻中仅 2 名 14 天有证据）；② 新增 §2.3 状态三分（active/standby/retired）+ 待执行退役 4 名 / 保留 standby 6 名；③ 新增 §13 Lead 代码独立审查的风险分级 R0/R1/R2 + 「新特性必须附不变量检查」三条判据；④ `team_audit.py` 新增 `silent_failure`（S1–S6）/`contract_drift`（D1–D6）/`commit_hygiene`（H1–H3），并修掉两处**假绿**（写域无输入仍报「无重叠」、12 条无主任务不告警）；⑤ `dispatch_log.py` 增加 done-无产物 fail-closed 拦截 + `corrects` 更正协议 |
 
 ## 8. 首轮全员回报（2026-10-19，各 Owner 自述 · **历史快照**）
 
@@ -228,15 +289,27 @@ CDP 客户端于是**连到了另一个正在跑的页面**。症状恰好是 `w
 
 > 目的：把「编制/任务/产物」维护从「Lead 碰巧注意到」变成「每轮必跑、有证据」。执行 `team-steward`（只检测+提议）；本清单 Lead 单写。
 
-### 10.1 机检（1 条命令）
+### 10.1 机检（4 条命令，2026-10-23 第三轮扩到 9 类检查）
 
 | 命令 | 判据 |
 |---|---|
-| `python scripts/agent/team_audit.py` | 退出码 0 才可收口；FAIL 必须当轮处置，或由 Lead 在收口报告显式豁免并写理由 |
-| `python scripts/agent/team_audit.py --selftest` | 必须 PASS（红 fixture 五项必红、绿 fixture 全绿；防「假通过」） |
-| `python scripts/agent/dispatch_log.py check` | 退出码 0 才可收口（派发日志存在、JSON 合法、最近一条 ≤7 天） |
+| `python scripts/agent/team_audit.py` | 退出码 0（**FAIL=0**）才可收口；FAIL 必须当轮处置，或由 Lead 在收口报告显式豁免并写理由 |
+| `python scripts/agent/team_audit.py --selftest` | 必须 PASS（红 fixture 报出 9 类检查共 20 项断言；绿 fixture 零 FAIL/WARN）——防「假通过」 |
+| `python scripts/agent/dispatch_log.py check` | 退出码 0（派发日志存在、JSON 合法、最近一条 ≤7 天） |
+| `python scripts/agent/dispatch_log.py --selftest` | 必须 PASS（红 7 类：缺文件/过期/坏JSON/缺字段/done无report被拒/corrects滥用被拒/默认路径回归） |
 
-机检覆盖：快照健康、名册一致性（§2 vs 快照成员/退役集合）、任务卡死（`in_progress` ∧ owner `inactive`）、未完成任务写域重叠（advisory）、报告路径引用与任务交付物存在性（声称 ≠ 存在）、**角色活性证据**（`agents.json` active 角色须有 14 天 dispatch/任务/产物证据，否则报「幽灵角色」WARN）。报告落点 `artifacts/agent/verify/team-audit-<YYYYMMDD-HHmm>.md`。
+机检覆盖（9 类）：
+1. `snapshot_health` 快照健康（存在/可解析/字段齐全/过期提示）
+2. `roster` 名册一致性（§2 + §2.2 vs 快照 members/retired）
+3. `stall` 卡死 **+ 无人认领**（pending 无 owner 也报，旧实现只扫 in_progress ⇒ 12 条无主任务全线静默）
+4. `write_scope` 写域重叠 **+ 输入充分性**（全部缺 writeScopes 时报「输入不足/假绿」，不再输出「无重叠」）
+5. `artifact_refs` 声称 ≠ 存在（报告内引用路径 + 任务交付物）
+6. `role_evidence` active 角色 14 天证据（按 `id ∪ roster_alias` 匹配）
+7. `silent_failure` **静默失败 S1–S6**（done 无产物 / 产物不存在 / 产物晚于结论 / spawn 未闭环 / 行序乱 / 闭环时间不可信）
+8. `contract_drift` **契约漂移 D1–D6**（事件流路径 / 枚举与写入器一致 / 通道证据可指 / status 合法 / id 与名册对账 / 待办动作残留）
+9. `commit_hygiene` **自修链 H1–H3**（自认修复前提交 / 同文件同日 ≥3 次 / feat 改 src 未附不变量）
+
+报告落点 `artifacts/agent/verify/team-audit-<YYYYMMDD-HHmm>.md`。
 
 ### 10.2 五项人工确认
 
@@ -363,3 +436,56 @@ Bazel 官方验证密封性的做法是 **"null sequential builds"**：
 | `fidelity_cli.mjs --cdp` | ⚠️ 部分 | ⚠️ | ❌ |
 | `perf_ops_cli.mjs` | ❌ | ⚠️ | ❌ |
 | `run_interaction.py` | ❌ | ⚠️ | ❌ |
+
+---
+
+## 13. Lead 代码的独立审查：风险分级与强制触发（2026-10-23 第三轮立项）
+
+### 13.0 事实前提（可复跑，不是推测）
+
+```powershell
+git log --since="2026-10-23 00:00" --oneline | Measure-Object -Line      # → 73
+git log --since="2026-10-23 00:00" --format="%an" | Sort-Object -Unique   # → 只有 Lead/人 一个作者
+```
+
+**73 个提交、0 次由第二方看过代码。** Lead 既是作者又是唯一审查者 ⇒ 自己的错误只能靠
+「某个 agent 偶然读到那段代码」发现（清单 A1/A2 全靠 task-80 的偶遇）。这是**运气，不是机制**。
+
+### 13.1 风险分级：什么改动**必须**派独立审查
+
+判据必须能被一条命令判定，不能写「重要改动要审查」。分级只看两件事：
+**不可逆程度**（能不能回退） × **验证盲区**（现有门禁能不能证明它对）。
+
+| 级别 | 触发条件（任一命中） | 审查要求 |
+|---|---|---|
+| **R2 强制独立审查** | ① 触碰 `src/**` **且** 同一 commit 未附测试/探针（`commit_hygiene H3` 命中）<br>② 数据/迁移类：`artifacts/baseline-kb/**`、`<kb>/.memoria/**`、`team/agents.json` 结构、`Package/**`<br>③ 删除 ≥20 行或删文件<br>④ 今日同一文件已被改 ≥3 次（`commit_hygiene H2` 热点）<br>⑤ 自认「修复前提交引入的缺陷」（`H1` 命中）即**下一次**同类改动 | **提交前**必须由独立 teammate（`subagent` 或领域 Owner）做只读复核，产出 `artifacts/agent/verify/review-<sha>.md`；报告必须含「我构造了什么用例能证明它是红的」 |
+| **R1 提交后同轮复核** | 触碰 `src/**` 且附带测试/探针；或改 `docs/guides/**` 契约类 | 可先提交，但**同一轮收口前**必须有一次独立复核（可以是 L2 subagent 的只读 diff 审查） |
+| **R0 双向门** | 只改 `docs/**` 正文、`team/curator/**`、报告类；纯查询 | 不派审查；靠机检 + Curator 下一轮审计 |
+
+### 13.2 「新增特性必须同时提交不变量检查」——可执行判据
+
+**规则**：任何 `feat(` 提交若改 `src/**`，必须**在同一 commit** 内至少新增/修改一处
+「该特性的不变量检查」（测试、探针、或基准断言），否则不得提交。
+
+**怎么判断这条检查真的覆盖了新特性？**（这是问题里最难的一句，给三条硬判据）
+
+1. **红过的证据**：报告里必须写明「我把哪一行改坏 → 该检查变红」（A2 的反例：`-src-block`
+   数量 == AST 块数，这条不变量在 2eef3e34 提交时**不存在**，所以门禁全绿而 bug 已在）。
+2. **断言对象是新特性本身**，不是它的邻居：检查必须能在**特性被删掉时变红**。可执行验证：
+   在临时分支删掉特性实现，检查必须 FAIL（一次即可，留报告）。
+3. **能指名失败模式**：检查名/注释必须写出它防的是哪个已知坏法（例：
+   「嵌套 `<ul>` 不得带 `-src-block`」），而不是笼统的「冒烟通过」。
+
+> 三条里缺任一条 ⇒ 视为「无覆盖」，`commit_hygiene H3` 仍会报，且该改动落入 R2。
+
+### 13.3 机制而非纪律：三条落地
+
+| 机制 | 位置 | 作用 |
+|---|---|---|
+| `commit_hygiene` 机检（H1/H2/H3） | `team_audit.py`，收口必跑 | 把「自修链 / 热点 / 无测试 feat」变成**每轮必列清单**，不再靠偶然发现 |
+| 风险分级表（本节） | 本文件 | 派单/提交前 20 秒判定；R2 未复核 ⇒ 收口报告必须显式写「未复核 + 理由」 |
+| 独立复核报告落盘 | `artifacts/agent/verify/review-<sha>.md` | 让「有没有第二个人看过」成为可查事实，而不是回忆 |
+
+**成本控制**（为什么不是每个改动都派）：R0/R1 占日常改动 ~80%，零额外派发；
+R2 按今日数据估算约 3–6 次/天（热点文件 10 次改 + feat 无测试 16 个里的一部分），
+每次只读复核 ≈ 一次窄任务的固定开销 —— 远低于「一个静默 bug 花 1 轮真机验证白发」的代价。

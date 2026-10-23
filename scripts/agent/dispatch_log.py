@@ -18,6 +18,21 @@ Curator 用它判 `active`（V2/V3 的可复跑证据）。
 ----
 必需：ts / actor / phase（phase ∈ spawn|message|done|retire|backfill）
 可选：target / task / desc / outcome / report / evidence / source
+      corrects（更正协议，仅 backfill 用）
+
+**fail-closed 纪律（2026-10-23 第三轮新增）**
+`--phase done` **必须**带 `--report`：完成声明如果没有绑定产物，事后无法验证「做完了没」
+（Lead 错误清单 A5 的结构：该记的没记，且不报错）。要记「做完了但确实无产物」，用
+`--no-report-reason "<为什么没有可验证产物>"` 显式声明，禁止静默留空。
+
+**更正协议（append-only 的更正方式）**
+历史行的路径失效（如资产迁移）不能改历史行，改为追加一条带 corrects 的 backfill：
+    python scripts/agent/dispatch_log.py append --actor lead --target X --phase backfill \
+        --corrects-line 7 --corrects-field report \
+        --corrects-old artifacts/a/b.json --corrects-new team/a/b.json \
+        --desc "team_assets 迁移后路径失效，按更正协议指向新路径"
+`team_audit.py::silent_failure` 会验证 `--corrects-new` 指向的产物**真实存在**；
+若更正本身也指不到东西，仍然 FAIL。
 
 写入磁盘路径：team/dispatch-log.jsonl（append-only；禁止改写历史行）
 """
@@ -140,7 +155,46 @@ def build_entry(args: argparse.Namespace) -> dict:
         "source": args.source,
     }
     entry.update({key: value for key, value in optional.items() if value is not None})
+    if getattr(args, "no_report_reason", None):
+        entry["no_report_reason"] = args.no_report_reason
+    if getattr(args, "corrects_line", None) is not None:
+        entry["corrects"] = {
+            "line": args.corrects_line,
+            "field": args.corrects_field or "report",
+            "old": args.corrects_old,
+            "new": args.corrects_new,
+        }
+        entry["corrects"] = {k: v for k, v in entry["corrects"].items() if v is not None}
     return entry
+
+
+def validate_entry(entry: dict) -> list[str]:
+    """fail-closed 校验：返回违规说明列表（空=合法）。
+
+    这一层存在的理由：`check` 只能看见**已经写进磁盘**的坏记录；
+    真正的静默失败发生在**写入之前**（该带产物却不带）。所以守卫必须挡在 append 前。
+    """
+    problems: list[str] = []
+    phase = entry.get("phase")
+    if entry.get("phase") == "done":
+        has_report = bool(entry.get("report"))
+        has_reason = bool(entry.get("no_report_reason"))
+        if not has_report and not has_reason:
+            problems.append(
+                "phase=done 必须带 --report <产物路径>；若确实无可验证产物，"
+                "必须用 --no-report-reason 显式说明（禁止静默留空）"
+            )
+    if "corrects" in entry:
+        fix = entry["corrects"]
+        if phase != "backfill":
+            problems.append("corrects 只允许出现在 phase=backfill 记录里")
+        if not isinstance(fix.get("line"), int) or fix["line"] < 1:
+            problems.append("corrects.line 必须是 >=1 的整数（要更正的历史行号）")
+        if not fix.get("new"):
+            problems.append("corrects.new 必填（更正后的路径/值）")
+    if phase not in PHASES:
+        problems.append(f"phase={phase!r} 不在 {PHASES}")
+    return problems
 
 
 def selftest() -> int:
@@ -178,10 +232,48 @@ def selftest() -> int:
         append_entry(fields_path, {"actor": "lead", "phase": "nonsense"})
         expect("missing-fields-must-fail", check(fields_path)["ok"] is False)
 
+        # 红 5（2026-10-23 新增）：done 不带 report ⇒ append 必须被拒（静默失败守卫）
+        guard_path = Path(tmp) / "guard.jsonl"
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "done",
+                     "--log", str(guard_path)])
+        expect("done-without-report-must-be-rejected", code == 2)
+        expect("rejected-entry-must-not-be-written", not guard_path.exists())
+
+        # 绿：done 带 --no-report-reason 时必须放行（合法豁免，而不是靠静默留空）
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "done",
+                     "--no-report-reason", "纯会话操作，无磁盘产物", "--log", str(guard_path)])
+        expect("done-with-explicit-reason-must-pass", code == 0)
+
+        # 红 6：corrects 只允许 backfill，且必须带 line/new
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "done",
+                     "--report", "team/dispatch-log.jsonl",
+                     "--corrects-line", "3", "--corrects-new", "team/x.json",
+                     "--log", str(guard_path)])
+        expect("corrects-on-done-must-be-rejected", code == 2)
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "backfill",
+                     "--corrects-line", "3", "--log", str(guard_path)])
+        expect("corrects-without-new-must-be-rejected", code == 2)
+        # 绿：合法更正记录
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "backfill",
+                     "--corrects-line", "3", "--corrects-new", "team/dispatch-log.jsonl",
+                     "--log", str(guard_path)])
+        expect("valid-correction-must-pass", code == 0)
+        guard_report = check(guard_path, max_age_days=36500)
+        expect("guard-log-must-be-valid", guard_report["ok"] is True)
+        expect("guard-log-must-have-2-entries", guard_report["count"] == 2)
+
+        # 红 7（回归守卫）：子命令 --log 的 default=None 曾把默认路径吃掉 ⇒ Path(None) TypeError。
+        #   断言「不给 --log 也必须能拿到非空路径」：用真实默认值构造一次 check（只读，不写）。
+        code = main(["check"])
+        expect("check-with-default-log-must-not-crash", code in (0, 1))
+        if not DEFAULT_LOG.is_file():
+            failures.append("DEFAULT_LOG 指向的 team/dispatch-log.jsonl 不存在（默认路径口径失效）")
+
     if failures:
         print(f"FAIL: {', '.join(failures)}")
         return 1
-    print("PASS: dispatch_log.py selftest (4 red fixtures red, 2 assertions green)")
+    print("PASS: dispatch_log.py selftest（红 7 类：缺文件/过期/坏JSON/缺字段/done无report被拒/"
+          "corrects滥用被拒/默认路径回归；绿：成对记录、显式豁免、合法更正）")
     return 0
 
 
@@ -193,6 +285,8 @@ def main(argv: list[str] | None = None) -> int:
 
     append_parser = sub.add_parser("append", help="追加一条派发记录")
     append_parser.add_argument("--actor", required=True, help="执行派发的 agent（lead / teammate 名）")
+    append_parser.add_argument("--log", default=None,
+                              help="日志路径（也可放在子命令前；两者等价）")
     append_parser.add_argument("--target", required=True, help="被派发/接收的 agent")
     append_parser.add_argument("--phase", required=True, choices=PHASES, help="派发阶段")
     append_parser.add_argument("--task", help="关联任务 id（如 task-80）")
@@ -202,21 +296,39 @@ def main(argv: list[str] | None = None) -> int:
     append_parser.add_argument("--evidence", help="额外证据路径")
     append_parser.add_argument("--source", help="来源标记（如 backfill:team-board-snapshot.json）")
     append_parser.add_argument("--ts", help="显式时间戳（回填历史用；缺省取当前时间）")
+    append_parser.add_argument("--no-report-reason",
+                               help="phase=done 但确实无产物时的显式理由（替代 --report）")
+    append_parser.add_argument("--corrects-line", type=int,
+                               help="更正协议：要更正的历史行号（仅 phase=backfill）")
+    append_parser.add_argument("--corrects-field", default="report",
+                               help="更正协议：被更正的字段名（默认 report）")
+    append_parser.add_argument("--corrects-old", help="更正协议：原值（留痕用，可省）")
+    append_parser.add_argument("--corrects-new", help="更正协议：新值（必填，须可验证）")
 
     check_parser = sub.add_parser("check", help="校验日志是否可追溯")
     check_parser.add_argument("--json", action="store_true", help="输出机器可读 JSON")
     check_parser.add_argument("--max-age-days", type=int, default=MAX_AGE_DAYS, help="最近记录的允许最大天数")
+    check_parser.add_argument("--log", default=None,
+                              help="日志路径（也可放在子命令前；两者等价）")
 
     args = parser.parse_args(argv)
     if args.selftest:
         return selftest()
+    # 子命令也接受 --log（等价写法），其 default=None 会覆盖顶层默认值 ⇒ 这里兜底。
+    log_path = Path(args.log or DEFAULT_LOG)
     if args.command == "append":
         entry = build_entry(args)
-        append_entry(Path(args.log), entry)
+        violations = validate_entry(entry)
+        if violations:
+            print("FAIL: 拒绝写入非法派发记录（fail-closed）：", file=sys.stderr)
+            for item in violations:
+                print(f"  - {item}", file=sys.stderr)
+            return 2
+        append_entry(log_path, entry)
         print(json.dumps(entry, ensure_ascii=False))
         return 0
     if args.command == "check":
-        report = check(Path(args.log), args.max_age_days)
+        report = check(log_path, args.max_age_days)
         if args.json:
             print(json.dumps(report, ensure_ascii=False, indent=2))
         else:

@@ -185,3 +185,57 @@ spawn_teammate({ name:"curator", mode:"creator", prompt:"..." })
 - 旧版「teammate shell 写入被整体拦截」是当时沙箱环境所致；当前会话为 `danger-full-access` 时写入不受限。
   **派发前仍建议按最小权限原则给任务**（能读就别给写）。
 - 删除类操作（P5 清理）**必须人类确认清单**，Agent 不得自行删除不可逆资产。
+
+---
+
+## 11. 派发日志的两个 fail-closed 守卫（2026-10-23 第三轮新增）
+
+第三轮复盘发现：**「日志写了」不等于「日志有用」**。实测三类失真（都可复跑）：
+
+| 失真 | 证据 | 后果 |
+|---|---|---|
+| `done` 不绑产物 | 13 条记录中，早期 `done` 只写 `desc` 不写 `report` | 「做完了」不可验证 |
+| `report` 路径已失效 | 第 7/10/12 行的 `report` 仍指 `artifacts/agent/curator/...`，但资产已迁到 `team/curator/...` ⇒ 3/5 条 done 的产物指不到 | 完成声明变成死链 |
+| `done.ts` 是补记值 | 第 11/12 行 spawn→done 相差 **1 秒**，而产物实际落盘晚 13 分钟 | 「是否按时完成」全部失真 |
+
+**守卫 1：append 前 fail-closed（`dispatch_log.py`）**
+
+```powershell
+# 没有产物就必须显式说明，禁止静默留空
+python scripts/agent/dispatch_log.py append --actor lead --target x --phase done --report <路径>
+python scripts/agent/dispatch_log.py append --actor lead --target x --phase done `
+  --no-report-reason "纯会话操作，无磁盘产物"
+```
+`phase=done` 缺 `--report` 且缺 `--no-report-reason` ⇒ 退出码 2，**不写入**。
+
+**守卫 2：更正协议（append-only 下唯一合法的修法）**
+
+历史行永不改写；路径失效/字段写错靠追加 `backfill` + `corrects`：
+
+```powershell
+python scripts/agent/dispatch_log.py append --actor lead --target lead --phase backfill `
+  --corrects-line 7 --corrects-field report `
+  --corrects-old artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json `
+  --corrects-new team/curator/audit-2026-10-23/cleanup-deleted.json `
+  --desc "team_assets 迁移后路径失效"
+```
+`team_audit.py::silent_failure` 会验证 `corrects.new` **真实存在**；
+若更正本身也指不到东西 ⇒ 仍然 FAIL（「更正不可验证」= 二次静默失败）。
+
+**机检投影**（收口必跑）：`python scripts/agent/team_audit.py` 的 `silent_failure`（S1–S6）。
+
+## 12. 三方对账缺口：DSH roster 实况不可机检（2026-10-23 第三轮发现）
+
+合同要求的对账本是**三方**：`org.md §2`（文档）↔ `team-board-snapshot.json`（快照）↔ **DSH `list_agents`（实况）**。
+`team_audit.py` 的 `roster` 检查只做了前两方；**第三方没有机检入口**，因此必然漂移：
+
+- 实测：快照 `members` 11 名、`org.md` 称 11 名，但同一时刻 `list_agents` 返回 **13 名**
+  （本轮 `curator-r3` 与常驻 `team-curator` 并存），无人发现——直到人工调用 `list_agents` 比对。
+- 结论：**「人工确认项」= 一定漂移的项**。凡写进 `org.md §10.2` 的人工检查，要么给出机检入口，要么降级为 WARN。
+
+**可执行缓解（当前唯一可行）**：
+1. Lead 每次收口前调一次 `list_agents`，把结果写进快照 `members`（快照即实况的存档）；
+2. 快照 `exportedAt` 必须晚于最后一次 roster 变更（`snapshot_health` 已有过期 WARN）；
+3. 名字分叉必须登记 `agents.json` 的 `roster_alias`（`contract_drift` D4 强制）。
+**真正的修法在宿主侧**：见 [team-plugin-improvement-spec.md](team-plugin-improvement-spec.md) 需求 R1
+（把 roster 导出成机器可读文件 / 或给 Curator 一个 `list_agents` 落盘工具）。

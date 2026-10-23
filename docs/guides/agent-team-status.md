@@ -132,3 +132,58 @@ team/curator/audit-2026-10-23/      Curator 审计产物
 | D | 保持现状，靠 dispatch-log + curator 审计留痕 | 仍无历史，仅事后可查 |
 
 **推荐 A**（最小改动、语义清楚：团队资产是"源"不是"产物"）。
+
+---
+
+## 7. 第三轮（2026-10-23 22:00，复盘 + 组织改造 + 插件规格）
+
+> 产物：`team/curator/audit-2026-10-23/r3-review.md`（独立复核全量证据）、
+> `docs/guides/team-plugin-improvement-spec.md`（宿主侧需求 R1–R9）。
+
+### 7.1 本轮改了什么（都可复跑）
+
+| 类别 | 变更 | 验收 |
+|---|---|---|
+| 机检 | `team_audit.py` 从 6 类扩到 **9 类**：新增 `silent_failure`(S1–S6) / `contract_drift`(D1–D6) / `commit_hygiene`(H1–H3)；修 2 处**假绿** | `--selftest` PASS（红 fixture 20 项断言）；实仓 FAIL 4→0 |
+| 派发日志 | `dispatch_log.py`：`done` 无产物 fail-closed（退出码 2）+ `--no-report-reason` 豁免 + `corrects` 更正协议 | `--selftest` PASS（红 7 类）；3 条死链已按协议更正 |
+| 注册表 | `agents.json` → schema v3：`status_semantics` 三分、`roster_alias`、`dsn_roster_actions`、`event_stream.invariants` | `team_audit.py` FAIL=0 |
+| 组织 | `org.md §1` 改写「设计意图 vs 实况」；新增 §2.3（状态三分 + 退役 4 名推荐）、§13（审查风险分级 R0/R1/R2 + 不变量判据） | `roster` INFO 仍解析 9+2；FAIL=0 |
+| 契约 | `dsh-agent-teams-contract.md` 新增 §11（两守卫）§12（三方对账缺口） | 文档内命令可直接跑 |
+| 规格 | 新增 `team-plugin-improvement-spec.md`（R1–R9 + M1–M6） | 每条带验收方式 |
+
+### 7.2 本轮新发现（Lead 清单未提，详见 r3-review §3）
+
+1. **12 条未完成任务 0 条有 `owner`/`writeScopes`** ⇒ `stall`/`write_scope`/`artifact_refs`
+   三个检查同时空转，而机检仍输出「全绿」——**检查通过是因为它没有输入**。
+2. **派发日志 3/5 条 `done` 的 `report` 指向已迁移的旧路径**；且第 11/12 行 spawn→done 相差
+   **1 秒**（产物实际晚 13 分钟）⇒ 「是否按时完成」全部失真。
+3. **同一角色三套名字**（`agents.json`=curator / roster=team-curator / 本轮=curator-r3）
+   ⇒ `role_evidence` **假报幽灵角色**。
+4. **快照 11 名 vs `list_agents` 13 名** ⇒ 「文档 ↔ 快照 ↔ 实况」三方对账**第三方无机检入口**，
+   必然漂移（`org.md §10.2` 第 1 项人工确认已失守）。
+5. **提交说明与最终代码不符**（`405f2959` → 次日 `2f4918aa` 自我更正）；**静默回退**
+   （`d40e5fc8`：陈旧缓冲区覆盖回退了已验收的 `17ee05d9`）。
+6. **B1 的 fixture 污染未被机检防住**：`hw-003-frequency-response.md` 正常 7545B，
+   `artifacts/` 下仍有 **4 份 605B 占位副本**（`org.md §12.5` 自记 `run_interaction.py` Inputs guard = ❌）。
+
+> 附带发现：第二轮 `SUMMARY.md` 内部数字不一致（§1 称 789 文件、§5 称 813 文件，813 是清理前口径）。
+> 该文件保留不改（历史产物），此处登记以便对照。
+
+### 7.3 收口机检最终数字
+
+```
+python scripts/agent/team_audit.py            → FAIL=0 WARN=30 INFO=8（合计 38）
+python scripts/agent/team_audit.py --selftest → PASS（红 fixture 9 类 / 20 项断言；绿 fixture 零 FAIL/WARN）
+python scripts/agent/dispatch_log.py check    → PASS（18 条，latest 2026-10-23T22:05:30+08:00）
+python scripts/agent/dispatch_log.py --selftest → PASS（红 7 类）
+```
+
+### 7.4 仍未解决
+
+| 项 | 阻塞点 |
+|---|---|
+| Creator 模式不可用 | 运行 asar 为 10-21 构建，源码 10-23 才有 creator ⇒ 需重打包 + 重启 |
+| roster 实况无机检 | DSH 不把 `list_agents` 落盘（规格 R1） |
+| 12 条未完成任务无 owner | 属任务板历史，需 Lead 逐条认领/关闭 |
+| fixture 无 sha 守卫 | 涉 `scripts/benchmark/**`（本轮禁写区） |
+| numstat「删除>插入」未拦截 | 需 pre-commit/hook，属 Lead 流程 |

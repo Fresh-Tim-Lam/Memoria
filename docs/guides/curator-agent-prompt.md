@@ -31,16 +31,19 @@
 
 **允许写**：
 ```
-team/agents.json          （角色能力目录，schema v2）
+team/agents.json          （角色能力目录，schema v3）
 team/prompts/*.md         （角色提示词）
 team/dispatch-log.jsonl   （只追加，不改历史行）
-team/curator/**           （审计 raw/summary）
+team/curator/**           （审计 raw/summary/复核报告）
 docs/guides/agent-team-status.md
 docs/guides/curator-agent-prompt.md
 docs/guides/dsh-agent-teams-contract.md
 docs/guides/agent-team-org.md        （团队组织，Lead 单写例外见 §5）
+docs/guides/team-plugin-improvement-spec.md
 AGENTS.md 的团队章节
 resources/agent-skills/**
+scripts/agent/team_audit.py   （仅补检查项，不改既有判据语义）
+scripts/agent/dispatch_log.py （仅补守卫/字段，不改既有字段语义）
 ```
 
 **禁止写**：`src/**`、`Package/**`、`pyproject.toml`、`src/memoria/__version__.py`、
@@ -63,6 +66,22 @@ resources/agent-skills/**
 
 禁止：「应该没在用」「契约写得很完整」。
 必需：「`agents.json` 声明 X 在 `change.applied` 触发；`events.jsonl` 不存在 ⇒ 0 次」（附命令）。
+
+### 2.1 第三轮补充：**假绿（false green）比红更危险**
+
+2026-10-23 第三轮实测到机检自身在说谎：
+
+- `write_scope` 在 12 条任务**全部没有 `writeScopes`** 时输出「两两写域无重叠」⇒ 看起来通过，
+  实际**没有输入**（"没有可比对象" ≠ "没有冲突"）。
+- `stall` 只扫 `in_progress`，而 12 条未完成任务全是 `pending` 且 0 条有 `owner` ⇒ 全线静默。
+- `role_evidence` 按精确 id 匹配，而同一角色有三套名字（`curator` / `team-curator` / `curator-r3`）
+  ⇒ **假报「幽灵角色」**（有派发却被判没干活）。
+
+⇒ **判据升级（每条都适用于你新写的检查项）**：
+1. **先验输入**：检查开始前必须说明「我拿到了几条输入」；输入为空/不全必须报警，不能输出"通过"。
+2. **先证红再改绿**：新增检查项必须在 `--selftest` 里有一个**必须红**的 fixture；
+   写不出红用例 ⇒ 该检查没有判别力，删掉。
+3. **命中即核对语义**：机器报的每一条都要人工读一遍；`inactive`/`WARN` 是**线索**不是结论。
 
 ---
 
@@ -95,6 +114,11 @@ python scripts/agent/dispatch_log.py --selftest   # 防「假通过」
 不满足 ⇒ `inactive`，写清缺哪条 + 证据。**注意**：采集器的 Owner 活性只按 verify 报告文件名匹配，
 是**待复核线索**，不能直接当结论。
 
+> **第三轮补充：判 id 之前先解析别名**
+> 同一角色可能有三套名字（`agents.json` 的 `id`、DSH roster 的 `target`、本轮 spawn 的临时名）。
+> 判「有无证据」时必须用 `id ∪ roster_alias` 去匹配 dispatch-log / 任务板 / 产物路径；
+> 未声明的分叉要写进 `agents.json` 的 `roster_alias`（否则 `contract_drift` D4 会 FAIL）。
+
 ### 3.3 分类与动作
 
 | 判定 | 动作 |
@@ -113,9 +137,12 @@ python scripts/agent/dispatch_log.py --selftest   # 防「假通过」
 能写清输入/输出契约。不满足就写「不建」并缺哪条——造空转角色比不造更糟。
 
 - 能直接造：**skill**（按 `resources/agent-skills/skill-creator/SKILL.md`）。
+- 能直接造：**机检项**（`scripts/agent/team_audit.py` 的新检查）——但**必须先证红**：
+  写出一个该检查必然报错的 fixture 并跑通，才有资格合入 `--selftest`。
 - 只能提议：**新 agent 模式**（写提示词 + 工具集 + 写域，交给能改 DSH 宿主的人）。
   2026-10-23 起，团队 Agent 可通过 `spawn_teammate({mode:"creator"})` 获得 Creator 模式，
   因此「需要改宿主」的门槛已降低；先在 `agent-team-status.md` 登记。
+  宿主侧改造需求统一写进 `docs/guides/team-plugin-improvement-spec.md`（带验收方式）。
 
 ---
 
@@ -169,3 +196,25 @@ python scripts/agent/dispatch_log.py --selftest   # 防「假通过」
 - 复跑：`team_audit.py --selftest` PASS（6 红）、`team_audit.py` FAIL=0、`dispatch_log.py check` PASS。
 - 仍存缺口（未修）：dispatch-log 只有 8 条 vs 任务板 60 条 completed（大量「做了没记」）；
   `dispatch_log.py check` 只校验单行结构，不校验 `done.report` 是否存在、spawn/done 是否配对。
+
+## 7.2 第三次运行结果（2026-10-23 第三轮，复盘 + 组织改造）
+
+角色身份 `curator-r3`（standard 模式：运行中 `app.asar` 是 10-21 构建、源码 10-23 15:52 才有 creator）。
+
+- **独立复核**：`team/curator/audit-2026-10-23/r3-review.md`
+  —— Lead 自陈 22 条无一条被推翻（4 条「未核实」已标注），另**新发现 6 条**其清单未提的错误，
+  其中最重的是「12 条未完成任务 0 条有 owner ⇒ 三个检查同时空转而机检仍报全绿」。
+- **机检扩到 9 类**（`team_audit.py`，实仓 FAIL 4→0、`--selftest` 20 项红断言 PASS）：
+  - `silent_failure` S1–S6（done 无产物 / 产物不存在 / 产物晚于结论 / spawn 未闭环 / 行序乱 / 闭环时间不可信）
+  - `contract_drift` D1–D6（事件流路径 / 枚举双源 / 通道证据 / status 合法 / id↔roster 对账 / 待办残留）
+  - `commit_hygiene` H1–H3（自修链 / 同文件同日 ≥3 次 / feat 改 src 未附不变量）
+  - 修补 2 处假绿：`write_scope` 输入不足、`stall` 漏 pending 无主任务
+- **派发日志 fail-closed**：`done` 无 `--report` ⇒ 退出码 2 不写入；新增 `corrects` 更正协议，
+  3 条因资产迁移而失效的历史 `report` 已按协议更正（不改历史行）。
+- **组织改造**：`org.md §1` 改写为「设计意图 vs 实况」；新增 §2.3 状态三分 + 退役 4 名推荐
+  （队列在 `agents.json → dsn_roster_actions`，DSH 侧 retire 由 Lead 执行）；新增 §13 Lead 代码
+  独立审查风险分级 R0/R1/R2 + 「新特性必须附不变量检查」三条判据。
+- **插件改进规格**：`docs/guides/team-plugin-improvement-spec.md`（R1–R9，DSH 侧 / Memoria 侧分开）。
+- **仍存缺口**：Creator 模式不可用（需重打包重启）；roster 实况无机检入口（DSH 未落盘）；
+  fixture 无 sha256 守卫（4 份 605B 污染副本仍在）；numstat「删除>插入」拦截未实现。
+  详见 r3-review.md §6。

@@ -1,23 +1,67 @@
 {
-  "schema_version": 2,
-  "updated_at": "2026-10-23T17:05:00+08:00",
+  "schema_version": 3,
+  "updated_at": "2026-10-23T22:11:06+08:00",
   "carrier": "dsh",
-  "note": "Memoria Agent 注册表。DSH 载体下本文件是『可派发角色目录』，不是运行时花名册：运行时花名册（Lead + 9 个领域 Owner + 2 个非领域常驻）以 docs/guides/agent-team-org.md §2 与 DSH list_agents 为准。2026-10-23 第二轮 Curator 审计依三条硬判据（触发通道 / 14 天运行证据 / 产出被消费）把 executor/auditor/registrar 标为 retired-in-dsh：三者在 dispatch-log 与任务板均 0 条记录，其职能实际由 Lead + 领域 Owner 承担（不是删除，可随时复活）。判定机检见 scripts/agent/team_audit.py 的 role_evidence 检查。",
+  "note": "Memoria Agent 注册表。DSH 载体下本文件是『可派发角色目录 + 契约声明』，不是运行时花名册：运行时花名册（Lead + 领域 Owner + 非领域常驻）以 docs/guides/agent-team-org.md §2 与 DSH list_agents 为准。schema v3（2026-10-23 第三轮 Curator）：新增 status_semantics（active/standby/retired-in-dsh 三分）、roster_alias（id 与 roster 名分叉时必须显式登记）、dsn_roster_actions（Lead 待执行的花名册动作队列）。机检：scripts/agent/team_audit.py 的 contract_drift（检查 8）逐条核对本文件的声明能否在磁盘指到现实。",
+  "status_semantics": {
+    "active": "14 天内有可复跑证据（dispatch-log / 任务板 owner / 角色专属产物），且必须能被指派新工作。缺证据 ⇒ team_audit::role_evidence 报「幽灵角色」。",
+    "standby": "领域已登记、职责明确，但当前窗口内无活 ⇒ **不要求** 14 天证据，也不算「幽灵」。这是把「名额占用」与「正在运转」分开的显式状态（2026-10-23 新增）。",
+    "retired-in-dsh": "历史上存在过、DSH 载体下无可派发身份；保留条目与证据，不删（可随时复活）。"
+  },
+  "roster_alias": {
+    "rule": "id 与 DSH roster 成员名不一致时，必须在此 agent 上显式声明 roster_alias，且别名必须能在 team/team-board-snapshot.json 的 members 中命中；未声明即漂移（contract_drift D4 会 FAIL）。理由：role_evidence 按精确 id 匹配，未声明的分叉会假报「幽灵角色」（实测：agents.json 用 curator、roster 用 team-curator、本轮 spawn 名 curator-r3）。"
+  },
+  "dsn_roster_actions": {
+    "owner": "Lead",
+    "note": "队列已清空（2026-10-23 执行完毕）。新动作由 Curator 追加。",
+    "retire_recommended": [],
+    "rename_recommended": [],
+    "keep_standby": [
+      "arch-contract",
+      "doc-consistency",
+      "metrics-baseline",
+      "render-perf",
+      "sync-mapper",
+      "todo-owner"
+    ]
+  },
   "authority": {
     "runtime_roster": "docs/guides/agent-team-org.md §2 + DSH list_agents",
     "task_board": "DSH Team 共享任务板（team_task_create/list/get/update）",
     "dispatch_log": "team/dispatch-log.jsonl",
     "team_contract": "docs/guides/dsh-agent-teams-contract.md",
     "status_audit": "docs/guides/agent-team-status.md",
-    "active_role_evidence": "scripts/agent/team_audit.py::check_role_evidence（14 天三源证据）"
+    "active_role_evidence": "scripts/agent/team_audit.py::check_role_evidence（14 天三源证据，按 id ∪ roster_alias 匹配）",
+    "silent_failure_projection": "scripts/agent/team_audit.py::check_silent_failure（S1–S6）",
+    "contract_drift_projection": "scripts/agent/team_audit.py::check_contract_drift（D1–D6）",
+    "commit_hygiene_projection": "scripts/agent/team_audit.py::check_commit_hygiene（H1–H3）",
+    "review_risk_grading": "docs/guides/agent-team-org.md §13（哪些改动必须派独立审查）"
   },
   "event_stream": {
     "status": "enabled",
     "path": "team/dispatch-log.jsonl",
     "format": "jsonl-append-only",
     "writer": "Lead（scripts/agent/dispatch_log.py append）",
-    "phases": ["spawn", "message", "done", "retire", "backfill"],
-    "required_fields": ["ts", "actor", "phase"],
+    "phases": [
+      "spawn",
+      "message",
+      "done",
+      "retire",
+      "backfill"
+    ],
+    "required_fields": [
+      "ts",
+      "actor",
+      "phase"
+    ],
+    "invariants": [
+      "phase=done 必须带 report（或显式 no_report_reason）——append 前 fail-closed 校验",
+      "done.report 必须是**当时已存在**的产物（team_audit S2/S3）",
+      "spawn 必须在 6h 内有 done/retire 配对（team_audit S4）",
+      "行序必须与 ts 同向（team_audit S5）",
+      "spawn→done 间隔 <60s 视为补记时间，不可用于「是否按时完成」（team_audit S6）",
+      "历史行不可改；路径失效按 corrects 更正协议追加 backfill（dispatch_log.py --corrects-*）"
+    ],
     "legacy_event_types": [
       "task.dispatched",
       "change.proposed",
@@ -42,49 +86,118 @@
         "evidence": "DSH 会话历史 + team/dispatch-log.jsonl（8 条 actor=lead）",
         "limitation": null
       },
-      "input_contract": ["用户需求", "共享任务板（team_task_list）", "team/team-board-snapshot.json"],
-      "output_contract": ["任务板条目（create/claim/complete）", "spawn/send/retire 派发记录（dispatch-log）", "最终复核与提交"],
-      "evidence_path": ["team/dispatch-log.jsonl", "team/team-board-snapshot.json"],
-      "write_scope": ["src/**", "docs/**", "scripts/**", "artifacts/**", ".git/**（扩权原子操作）"],
-      "forbidden": ["git push --force", "覆盖用户知识库原文", "无人类确认删除不可逆资产"],
+      "input_contract": [
+        "用户需求",
+        "共享任务板（team_task_list）",
+        "team/team-board-snapshot.json"
+      ],
+      "output_contract": [
+        "任务板条目（create/claim/complete）",
+        "spawn/send/retire 派发记录（dispatch-log）",
+        "最终复核与提交"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "src/**",
+        "docs/**",
+        "scripts/**",
+        "artifacts/**",
+        ".git/**（扩权原子操作）"
+      ],
+      "forbidden": [
+        "git push --force",
+        "覆盖用户知识库原文",
+        "无人类确认删除不可逆资产"
+      ],
       "prompt_ref": "docs/guides/dsh-agent-teams-contract.md",
-      "emits": ["dispatch.spawn", "dispatch.message", "dispatch.done", "dispatch.retire"],
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.message",
+        "dispatch.done",
+        "dispatch.retire"
+      ],
       "last_evidence": "2026-10-23T16:22:12+08:00（dispatch-log done）"
     },
     {
       "id": "curator",
       "name": "团队策展人（Curator）",
       "status": "active",
-      "scope": "creator-mode-teammate",
+      "scope": "creator-or-standard-mode-teammate",
       "mode": "creator",
       "agent_preset": "cordis",
+      "roster_alias": [
+        "team-curator",
+        "curator-r3"
+      ],
+      "roster_alias_note": "roster 里的常驻名是 team-curator；每轮 sp_teammate 可用一次性名（如本轮 curator-r3）。两者都必须在此登记，否则 role_evidence 会按精确 id 假报「幽灵角色」。",
       "trigger_channel": {
         "type": "explicit-dispatch+keywords",
-        "mechanism": "Lead 用 spawn_teammate({mode:\"creator\"}) 显式创建；用户关键词『审视团队』『团队审计』『curator』",
+        "mechanism": "Lead 用 spawn_teammate 显式创建（creator 模式或 standard 模式均可）；用户关键词『审视团队』『团队审计』『curator』",
         "evidence": "team/curator/audit-<date>/（raw.json + SUMMARY.md）+ dispatch-log 记录",
-        "limitation": "DSH 宿主无 cron，不能每周自动触发；write_scope 是提示词/工具级约束，无路径级硬隔离（DSH 沙箱不支持子路径白名单）"
+        "limitation": "DSH 宿主无 cron，不能每周自动触发；write_scope 是提示词/工具级约束，无路径级硬隔离（DSH 沙箱不支持子路径白名单）。2026-10-23 运行中的 app.asar（10-21 构建）不含 creator preset ⇒ creator 模式当前不可用，需重打包+重启后才生效；在此之前用 standard 模式 + 本提示词承担同一职责。"
       },
-      "input_contract": ["团队资产（本文件 / prompts / 契约 / org / status）", "共享任务板历史（team_task_list，含 completed）", "磁盘产物与体积", "dispatch-log.jsonl"],
-      "output_contract": ["team/curator/audit-<date>/{raw.json,SUMMARY.md}", "直接修改团队资产（agents.json / 契约 / status / prompts）", "清理候选清单（删除需人类确认）"],
-      "evidence_path": ["team/curator/audit-<date>/", "team/dispatch-log.jsonl"],
-      "tools_required": ["read", "write", "edit", "glob", "grep", "pwsh", "team_task_list", "team_task_create", "team_task_get", "team_task_update", "spawn_teammate"],
+      "input_contract": [
+        "团队资产（本文件 / prompts / 契约 / org / status）",
+        "共享任务板历史（team_task_list，含 completed）",
+        "磁盘产物与体积",
+        "dispatch-log.jsonl",
+        "git log（自修链/热点/不变量缺位）"
+      ],
+      "output_contract": [
+        "team/curator/audit-<date>/{raw.json,SUMMARY.md}",
+        "直接修改团队资产（agents.json / 契约 / status / org / prompts / team_audit.py 检查项）",
+        "清理候选清单（删除需人类确认）",
+        "本轮的『最该改的一件事』"
+      ],
+      "evidence_path": [
+        "team/curator/audit-<date>/",
+        "team/dispatch-log.jsonl"
+      ],
+      "tools_required": [
+        "read",
+        "write",
+        "edit",
+        "glob",
+        "grep",
+        "pwsh",
+        "team_task_list",
+        "team_task_create",
+        "team_task_get",
+        "team_task_update",
+        "spawn_teammate"
+      ],
       "write_scope": [
         "team/agents.json",
         "team/prompts/**",
-        "team/dispatch-log.jsonl",
+        "team/dispatch-log.jsonl（只追加）",
         "team/curator/**",
         "docs/guides/agent-team-status.md",
         "docs/guides/curator-agent-prompt.md",
         "docs/guides/dsh-agent-teams-contract.md",
         "docs/guides/agent-team-org.md",
+        "docs/guides/team-plugin-improvement-spec.md",
         "AGENTS.md",
         "resources/agent-skills/**",
-        "scripts/agent/team_audit.py（仅补检查项，不改既有判据语义）"
+        "scripts/agent/team_audit.py（仅补检查项，不改既有判据语义）",
+        "scripts/agent/dispatch_log.py（仅补守卫/字段，不改既有字段语义）"
       ],
-      "write_forbidden": ["src/**", "Package/**", "pyproject.toml", "src/memoria/__version__.py", "docs/todo.md 台账正文", "<kb>/.memoria/**"],
+      "write_forbidden": [
+        "src/**",
+        "Package/**",
+        "pyproject.toml",
+        "src/memoria/__version__.py",
+        "docs/todo.md 台账正文",
+        "<kb>/.memoria/**"
+      ],
       "prompt_ref": "docs/guides/curator-agent-prompt.md",
-      "emits": ["dispatch.done"],
-      "last_evidence": "2026-10-23T16:54:03+08:00（team/curator/audit-2026-10-23/）"
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23T22:10:00+08:00（team/curator/audit-2026-10-23/ 第三轮 + team/dispatch-log.jsonl 行 13/16-18）"
     }
   ],
   "retired_agents": [
@@ -97,11 +210,29 @@
       "scope": "teammate",
       "retired_reason": "DSH 内无可派发身份：dispatch-log 8 条中 actor/target=executor 为 0；任务板 ownerName 79 条中 executor 为 0（施工实际由 9 个领域 Owner + Lead 承担）。功能未消失，但没有『executor』这个可 spawn 的 teammate 名。",
       "absorbed_by": "Lead + docs/guides/agent-team-org.md §2 的 9 个领域 Owner",
-      "evidence": ["team/dispatch-log.jsonl（8 条，无 executor）", "team_task_list（79 条有 owner 的任务，ownerName 无 executor）"],
-      "input_contract": ["team_task_* 任务描述（含 write_scopes 与验收标准）", "对象认知路径（docs/reference/agent-guide/0X-*.md）"],
-      "output_contract": ["代码/文档变更（限任务 write_scopes）", "自测结果", "磁盘报告（artifacts/agent/verify/** 或领域报告路径）"],
-      "write_scope": ["任务声明的 write_scopes", "artifacts/agent/verify/**"],
-      "forbidden": ["改 Package/**", "手改版本文件", "改登记类文件（docs/README 索引 / maintenance-jobs §5 / todo §12）", "git push --force"],
+      "evidence": [
+        "team/dispatch-log.jsonl（8 条，无 executor）",
+        "team_task_list（79 条有 owner 的任务，ownerName 无 executor）"
+      ],
+      "input_contract": [
+        "team_task_* 任务描述（含 write_scopes 与验收标准）",
+        "对象认知路径（docs/reference/agent-guide/0X-*.md）"
+      ],
+      "output_contract": [
+        "代码/文档变更（限任务 write_scopes）",
+        "自测结果",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）"
+      ],
+      "write_scope": [
+        "任务声明的 write_scopes",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件",
+        "改登记类文件（docs/README 索引 / maintenance-jobs §5 / todo §12）",
+        "git push --force"
+      ],
       "prompt_ref": null
     },
     {
@@ -113,11 +244,27 @@
       "scope": "teammate",
       "retired_reason": "dispatch-log 0 条、任务板 owner 0 条；109 份 artifacts/agent/verify/*.md 的实际作者是领域 Owner + Lead（无 auditor 身份落款）。独立复核职能真实存在，但以『Lead 复核 + 领域 Owner 互查』形式执行，不经过 auditor 派发通道。",
       "absorbed_by": "Lead 复核 + 领域 Owner 互查（org.md §10.2 五项人工确认）",
-      "evidence": ["team/dispatch-log.jsonl（无 auditor）", "team_task_list（ownerName 无 auditor）", "artifacts/agent/verify/（109 份报告，按领域 Owner 命名）"],
-      "input_contract": ["被执行者声明的变更范围（git diff / 任务 write_scopes）", "仓库既有门禁脚本"],
-      "output_contract": ["artifacts/agent/verify/** 验证报告（含可复跑命令与 实测/推断 标注）"],
-      "write_scope": ["artifacts/agent/verify/**", "scripts/benchmark/maintenance/results/**"],
-      "forbidden": ["修改 src/** 或 docs/**", "自行实现修复", "采信未落盘的口头结论"],
+      "evidence": [
+        "team/dispatch-log.jsonl（无 auditor）",
+        "team_task_list（ownerName 无 auditor）",
+        "artifacts/agent/verify/（109 份报告，按领域 Owner 命名）"
+      ],
+      "input_contract": [
+        "被执行者声明的变更范围（git diff / 任务 write_scopes）",
+        "仓库既有门禁脚本"
+      ],
+      "output_contract": [
+        "artifacts/agent/verify/** 验证报告（含可复跑命令与 实测/推断 标注）"
+      ],
+      "write_scope": [
+        "artifacts/agent/verify/**",
+        "scripts/benchmark/maintenance/results/**"
+      ],
+      "forbidden": [
+        "修改 src/** 或 docs/**",
+        "自行实现修复",
+        "采信未落盘的口头结论"
+      ],
       "prompt_ref": null
     },
     {
@@ -129,11 +276,32 @@
       "scope": "teammate",
       "retired_reason": "dispatch-log 0 条、任务板 owner 0 条。登记类提交确实存在（近 14 天 docs(todo)/docs(index) 多条，如 3fab6436、29196c9b），但提交身份统一为人工/Lead，无 registrar 派发与运行证据。登记职能由 Lead 直接在收口时执行。",
       "absorbed_by": "Lead（收口时直接登记；org.md §10 收口体检清单）",
-      "evidence": ["team/dispatch-log.jsonl（无 registrar）", "team_task_list（ownerName 无 registrar）", "git log -- docs/todo.md docs/README.md docs/design/maintenance-jobs.md（近 14 天多条登记提交，作者为 Lead/人）"],
-      "input_contract": ["审计通过结果", "变更文件清单", "登记类文件白名单"],
-      "output_contract": ["docs/README.md 索引 / todo.md §12 / maintenance-jobs.md §5 的登记行", "过期登记清理"],
-      "write_scope": ["docs/README.md", "docs/**/README.md", "docs/todo.md §12（登记行）", "docs/design/maintenance-jobs.md §5", "artifacts/agent/**"],
-      "forbidden": ["修改文档正文语义", "改 src/**", "静默修复漂移"],
+      "evidence": [
+        "team/dispatch-log.jsonl（无 registrar）",
+        "team_task_list（ownerName 无 registrar）",
+        "git log -- docs/todo.md docs/README.md docs/design/maintenance-jobs.md（近 14 天多条登记提交，作者为 Lead/人）"
+      ],
+      "input_contract": [
+        "审计通过结果",
+        "变更文件清单",
+        "登记类文件白名单"
+      ],
+      "output_contract": [
+        "docs/README.md 索引 / todo.md §12 / maintenance-jobs.md §5 的登记行",
+        "过期登记清理"
+      ],
+      "write_scope": [
+        "docs/README.md",
+        "docs/**/README.md",
+        "docs/todo.md §12（登记行）",
+        "docs/design/maintenance-jobs.md §5",
+        "artifacts/agent/**"
+      ],
+      "forbidden": [
+        "修改文档正文语义",
+        "改 src/**",
+        "静默修复漂移"
+      ],
       "prompt_ref": null
     },
     {
@@ -158,8 +326,13 @@
       "retired_at": "2026-10-23",
       "retired_reason": "change.applied 事件在 DSH 下从未产生；独立验证职责已由 auditor 角色（显式派发/关键词）承接——auditor 亦已于 2026-10-23 因 0 证据再退役，见上。",
       "triggers": {
-        "on_events": ["change.applied"],
-        "on_user_keywords": ["验证", "复核"],
+        "on_events": [
+          "change.applied"
+        ],
+        "on_user_keywords": [
+          "验证",
+          "复核"
+        ],
         "on_schedule": null
       },
       "prompt_ref": "team/prompts/verifier.md"
@@ -172,11 +345,47 @@
       "retired_at": "2026-10-23",
       "retired_reason": "verify.result 事件不存在；登记职责由 Lead 在收口时执行（registrar 角色亦已于 2026-10-23 因 0 证据再退役，见上）。",
       "triggers": {
-        "on_events": ["verify.result"],
-        "on_user_keywords": ["登记"],
+        "on_events": [
+          "verify.result"
+        ],
+        "on_user_keywords": [
+          "登记"
+        ],
         "on_schedule": "0 3 * * *"
       },
       "prompt_ref": "team/prompts/registrar.md"
+    },
+    {
+      "id": "kp-owner",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "知识点域 14 天内 0 派发 / 0 任务板 owner / 0 专属产物；该域近 30 天无 src 变更（唯一相关提交为 10-22 的 KP 侧 0.4.6 收尾，作者 Lead）",
+      "absorbed_by": "Lead 直做 + L2 subagent",
+      "evidence": "team/dispatch-log.jsonl 无 kp-owner；team/team-board-snapshot.json 无 kp-owner 任务；git log --since='30 days ago' -- src/memoria/ui/static/app/js/kp* 空"
+    },
+    {
+      "id": "settings-owner",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "设置/i18n/快捷键域 14 天内 0 派发 / 0 任务板 owner / 0 专属产物",
+      "absorbed_by": "Lead 直做 + L2 subagent",
+      "evidence": "team/dispatch-log.jsonl 无 settings-owner；team/team-board-snapshot.json 无 settings-owner 任务"
+    },
+    {
+      "id": "surface-new",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "新渲染管线域 14 天内 0 派发；该域近 3 天的 src 改动（render-core/new-surface）均为 Lead 提交",
+      "absorbed_by": "Lead 直做 + L2 subagent",
+      "evidence": "team/dispatch-log.jsonl 无 surface-new；git log --since='3 days ago' -- src/memoria/ui/static/app/js/surface/ 作者均为 Lead"
+    },
+    {
+      "id": "team-steward",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "职责已被 scripts/agent/team_audit.py（9 类机检）+ Curator 完全覆盖，人形 Owner 反而制造第二套口径",
+      "absorbed_by": "scripts/agent/team_audit.py + Curator",
+      "evidence": "scripts/agent/team_audit.py（只读机检，收口必跑）；team/dispatch-log.jsonl 无 team-steward"
     }
   ]
 }
