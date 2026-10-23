@@ -298,13 +298,18 @@
    结构：#-agent-dock > #agent-dock-resizer（左缘拖拽柄）+ 顶部操作条（模型名 +
    出网开关 + 设置）/ 折叠设置区 / 消息区（唯一滚动容器）/ 底部输入区 + 状态行。
    与左栏 #-sidebar（app.css:123-144）镜像：flex-shrink:0、分隔边框、宽度过渡；
-   宽度单位 rem（随根 font-size 缩放），默认 22rem / 最小 16rem / 上限 34rem，
+   宽度单位 rem（随根 font-size 缩放），默认 22rem / 最小 16rem / **无静态上限**（0.4.7 起），
    折叠态（.-agent-dock--collapsed）宽度归零；空间不足时另加 .-agent-dock--auto-hidden
    （视觉同上，但为派生态、不落盘，见下）。见 js/agent-panel.js。 */
 #-agent-dock {
     width: 22rem;
     min-width: 16rem;
-    max-width: 34rem;
+    /* 2026-10-23（0.4.7）：**取消静态上限**。用户报「会话栏宽度上限不够大」。
+       原先 max-width:34rem（≈544px）把可拖宽度钉死；现在只由 JS 的 `applyDockLayout()`
+       按「#main 内宽 − 左栏 − CONTENT_MIN_PX(360)」动态封顶 ⇒ 宽屏可拖到任意宽
+       （文档区始终保留 360px），窄屏仍自动收缩/隐藏。这里留 100% 兜底，
+       防止内联 width 异常时撑破 #main。 */
+    max-width: 100%;
     background: var(--bg-secondary);
     border-left: 0.5px solid var(--border-sep, var(--border));
     display: flex;

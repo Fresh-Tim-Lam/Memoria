@@ -206,7 +206,15 @@ window.MemoriaAgentPanel = (function () {
 
   // ── 右侧停靠栏宽度 / 折叠（持久化到 config/ui-settings.json 的 layout 段）──
   const DOCK_MIN_REM = 16; // 与 app.css 的 #-agent-dock min-width 一致
-  const DOCK_MAX_REM = 34; // 与 max-width 一致
+  // 2026-10-23（0.4.7）：**取消静态上限**。用户报「会话栏宽度上限不够大」。
+  // 原先 DOCK_MAX_REM = 34（≈544px）把可拖宽度钉死。现在上限完全由
+  // `availableDockPx()` =「#main 内宽 − 左栏生效宽 − CONTENT_MIN_PX」动态决定：
+  // 宽屏可拖到任意宽（文档区始终保留 360px），窄屏仍自动收缩/隐藏。
+  // ⚠️ 必须保留一个**有限**上限：否则用户把会话栏拖满后、再拖动窗口变窄时，
+  //    `dockWidthRem` 会记住一个超宽值，展开时永远只能贴到边。故用
+  //    `DOCK_SOFT_MAX_REM` 只作「期望值」的钳制（远大于任常见窗口宽），
+  //    真正的生效宽度仍受 availableDockPx() 约束。
+  const DOCK_SOFT_MAX_REM = 120; // 软上限：仅防止期望值变成荒谬数字（≈1920px @16px）
   const DOCK_DEFAULT_REM = 22; // 与 width 一致
   // 文档区（#content）最小宽度保护：三栏（左栏 + #content + dock）都是固定/自动宽，
   // 空间不足时**只让 dock 让位**（先缩到 16rem，再整体临时隐藏），#content 永不小于它。
@@ -223,7 +231,7 @@ window.MemoriaAgentPanel = (function () {
 
   function clampDockRem(rem) {
     const rounded = Math.round(rem * 100) / 100;
-    return Math.min(DOCK_MAX_REM, Math.max(DOCK_MIN_REM, rounded));
+    return Math.min(DOCK_SOFT_MAX_REM, Math.max(DOCK_MIN_REM, rounded));
   }
 
   /** 左栏**生效**宽度（px）：未折叠 = 当前宽度，折叠 = 0（CSS 已把宽度归零）。 */
@@ -272,7 +280,8 @@ window.MemoriaAgentPanel = (function () {
     let effectiveRem = 0;
     dockAutoHidden = false;
     if (!dockCollapsed) {
-      const cappedPx = Math.min(DOCK_MAX_REM * unit, availableDockPx());
+      // 0.4.7：上限只由「可用宽」决定（不再有 34rem 硬顶）；DOCK_SOFT_MAX_REM 仅防荒谬值
+      const cappedPx = Math.min(DOCK_SOFT_MAX_REM * unit, availableDockPx());
       if (cappedPx >= DOCK_MIN_REM * unit) {
         effectiveRem = Math.min(dockWidthRem, cappedPx / unit);
       } else {
@@ -411,9 +420,10 @@ window.MemoriaAgentPanel = (function () {
     window.addEventListener("mousemove", (e) => {
       if (!dragging) return;
       // 右栏与左栏相反：向左拖变宽 ⇒ 期望宽度 = 窗口右缘 − 指针 x
-      // 上界同时受「文档区留 360px」约束（min(34rem, available)）：拖到极限也不会破 360
+      // 0.4.7：上界**只**受「文档区留 360px」约束（不再有 34rem 硬顶）：
+      // 拖到极限也只会停在「文档区刚好剩 360px」处，不会更宽。
       const unit = rootFontSize();
-      const upperRem = Math.min(DOCK_MAX_REM, availableDockPx() / unit);
+      const upperRem = Math.min(DOCK_SOFT_MAX_REM, availableDockPx() / unit);
       const wantRem = (window.innerWidth - e.clientX) / unit;
       dockWidthRem = Math.min(Math.max(DOCK_MIN_REM, wantRem), Math.max(DOCK_MIN_REM, upperRem));
       applyDockLayout(); // 拖拽过程中实时生效
@@ -6878,6 +6888,32 @@ window.MemoriaAgentPanel = (function () {
     setWriteState: setWriteState,
     // P4e 诊断/回归出口（仅供探针；生产路径不调用）：与生产同一函数渲染到游离节点。
     renderMarkdownForTest: renderMarkdownForTest,
+    // 0.4.7（任务 3）诊断出口（**仅供探针**，生产路径不调用）：
+    //   验证「会话栏宽度上限」时需要一个可复现的设宽/读宽入口。
+    //   - getDockState()：读**期望**宽（dockWidthRem）、生效宽（DOM 内联）、三态标志、可用宽。
+    //   - setDockWidthForTest(rem)：只改期望宽并走**生产同一条** applyDockLayout()
+    //     ⇒ 测到的封顶行为与用户拖拽完全一致（不伪造布局、不改 CSS）。
+    //   两者都不写盘（saveDockLayout 只在 mouseup 时调），避免污染用户配置。
+    getDockState: function () {
+      const dock = $("#-agent-dock");
+      const unit = rootFontSize();
+      return {
+        expectedRem: dockWidthRem,
+        effectiveWidthPx: dock ? Math.round(dock.getBoundingClientRect().width) : 0,
+        unit,
+        minRem: DOCK_MIN_REM,
+        softMaxRem: DOCK_SOFT_MAX_REM,
+        availablePx: availableDockPx(),
+        contentMinPx: CONTENT_MIN_PX,
+        collapsed: dockCollapsed,
+        autoHidden: dockAutoHidden,
+      };
+    },
+    setDockWidthForTest: function (rem) {
+      dockWidthRem = clampDockRem(Number(rem) || DOCK_DEFAULT_REM);
+      applyDockLayout();
+      return true;
+    },
   };
 
   /**
