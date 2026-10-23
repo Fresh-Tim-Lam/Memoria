@@ -530,11 +530,22 @@ window.MemoriaParser = (function () {
           itemSrcLine.push(scan + 1);   // 1-based 源码行号
           scan++;
         }
-        // 注意：此处 i 仍等于块首行，跨行末端在 scan；若传 i 会退化成单行区间
+        // 注意：此处 i 仍等于块首行，跨行末端在 scan；若传 i 会退化成单行区间。
+        //
+        // ★ 2026-10-23 Bug C：**列表末尾的空行不属于列表**。
+        //   扫描循环对空行是 `scan++` 继续找下一项（松散列表语义，这是对的），
+        //   但循环 break 时 `scan` 已经越过「末尾那串空行」⇒ 传给 emit 后
+        //   `list.srcLineEnd` 把它们算进列表区间 ⇒ AST 里**没有 blank_line 块** ⇒
+        //   预览渲染不出列表后的空行（用户报「- 块后的空行在预览里看不到」）。
+        //   修法：用最后一个 item 的实际行号收尾，让主循环从末尾空行继续 ⇒ 生成 blank_line。
+        //   （`itemSrcLine` 本来就是为「逐字节重建」准备的，见上面的说明。）
+        var lastItemLine = itemSrcLine.length
+          ? itemSrcLine[itemSrcLine.length - 1]   // 1-based
+          : lineNum + 1;                           // 防御：空 items 时至少占当前行
         var listNode = AST.list(isOrdered, items, listStart);
         listNode.itemSrcLine = itemSrcLine;
-        emit(blocks, listNode, lineNum, scan);
-        i = scan;
+        emit(blocks, listNode, lineNum, lastItemLine);
+        i = lastItemLine;
         continue;
       }
 

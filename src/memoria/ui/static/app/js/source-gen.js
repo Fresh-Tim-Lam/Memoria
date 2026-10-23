@@ -81,10 +81,27 @@ window.MemoriaSourceGen = (function () {
         }).join("\n");
 
       case T.LIST:
-        return (block.items || []).map(function (item, idx) {
-          var prefix = block.ordered ? (idx + 1) + ". " : "- ";
-          return prefix + generateInlineList(item.children);
-        }).join("\n");
+        // ★ 2026-10-23 Bug C：松散列表的**项间空行**必须逐字节重建。
+        //   parser 把「项之间」的空行吸收进同一个 list 块（CommonMark 松散列表语义，这是对的），
+        //   并用 `itemSrcLine`（每项的 1-based 源码行）记下了每项实际所在行。
+        //   旧实现只按 items 逐项 join("\n") ⇒ 那些空行在做任何一次编辑后被**永久抹掉**。
+        //   重建规则：相邻两项的行号差 > 1 ⇒ 其间插入 (差 - 1) 个空行。
+        //   ⚠️ 只有 `itemSrcLine` 与 `items` **等长**时才可信（编辑后若不维护会失真，
+        //      调用方必须同步更新或清空它，见 app.js 的 `_syncItemSrcLine`）。
+        var srcLines = block.itemSrcLine;
+        var hasItemLines = Array.isArray(srcLines) && srcLines.length === (block.items || []).length;
+        {
+          var out = [];
+          (block.items || []).forEach(function (item, idx) {
+            if (hasItemLines && idx > 0) {
+              var gap = (srcLines[idx] || 0) - (srcLines[idx - 1] || 0) - 1;
+              for (var g = 0; g < gap; g++) out.push("");   // 项间空行
+            }
+            var prefix = block.ordered ? (idx + 1) + ". " : "- ";
+            out.push(prefix + generateInlineList(item.children));
+          });
+          return out.join("\n");
+        }
 
       case T.TABLE:
         var header = "| " + (block.header || []).join(" | ") + " |";

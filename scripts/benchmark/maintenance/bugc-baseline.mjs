@@ -76,10 +76,12 @@ const CASES = [
     expectRegenEqual: true,
   },
   {
-    id: "ordered-trailing-blank",
+    id: "ordered-loose-between",
     src: "1. x\n\n2. y\ntail",
-    note: "有序松散列表 + 末尾空行",
-    expectBlocks: ["list(1..3)", "blank_line(4..4)"],
+    // 注意：L2 空行是**项之间**（属于 list，松散列表语义），末尾 L4 `tail` 紧跟 ⇒ **没有**末尾空行。
+    // 所以期望里不应出现 blank_line —— 项间空行由 source-gen 按 itemSrcLine 重建（见回写等价断言）。
+    note: "有序松散列表：项间空行属于列表内部，末尾无空行",
+    expectBlocks: ["list(1..3)", "paragraph(4..4)"],
     expectRegenEqual: true,
   },
   {
