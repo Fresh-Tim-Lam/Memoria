@@ -253,6 +253,7 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 
 ### G. 团队任务板 12 条无主任务：认领与顺序（2026-10-23，todo-owner）
 
+> **判定纪律（2026-10-23 新增，Lead 纠正）**：判「过期/已完成」**必须两条都查** —— ① 任务书点名的产物是否存在；② 全仓搜**功能等价物**（换名/换实现也算）。只查 ① 会系统性高估「过期」数量（task-61 即假阴性：任务书点名的 `nav-interactions.json`/`run_nav.py` 不存在，但实交付是 `nav_entries.mjs`）。
 > 背景：Curator r3 机检发现 12 条未完成任务 0 owner / 0 writeScopes ⇒ 三项检查空转。Lead 派 todo-owner 认领并按现状排序；**12/12 已认领（owner=todo-owner）**，每条 writeScopes 已按真实写域收敛。现状调研与逐条证据见 `artifacts/agent/verify/todo-owner-state-assessment.md`（只读调研，不提交）。
 
 | 任务 | 处置 | 理由 / 前置（证据见 assessment） |
@@ -269,8 +270,12 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | task-73 占位高度估值 | **已关闭 @2026-10-23** | 已校准：`bbab57ed`（+3.41%→+1.04%，7 类收敛） |
 | task-74 大文档交互测量债 | **已关闭 @2026-10-23** | 已完成：W4.1 `run_lazy_gate.py` L0–L5 + `--sabotage` 负向自证（`98c8c1b9`） |
 | task-78 L4 超 8 屏 | **已关闭 @2026-10-23** | 已修复：`17ee05d9` 淘汰饥饿（压力场景 3228→146），`task78-report.md` 闭合 |
+| task-61 导航入口测试套件 | **已关闭·已完成** | 实交付 `nav_entries.mjs` + `nav-entries-report.md` + `nav-entries-run{1,2,3}.json`；P50 68–75ms、renderPreview 三入口全 0 |
+| task-62 P6 收口重跑 | **待 Lead（blocked_by task-60）** | 实质产物齐全：`s_render_frozen_v3/`（README 明写 task-62）+ `p6c2-rulecheck.json` + `p6-closure-*` 产物；仅缺最终汇总 report/D 双跑；需先解锁 task-60 才能 claim |
+| task-64 S2 方案评估 | **已关闭·已完成** | 实交付 `artifacts/agent/verify/perf-solution-evaluation.md`（41,956 B；标题即 task-64；A/B/C/D 对比+推荐+失败模式+前置问题）|
+| task-72 块级排版缓存 | **已关闭·已完成** | 代码 `6c3e8c01`（up-pass typeset 1082.8→105.5ms）；**残余完整 4 轮 A/B 未测、不补**（结论已由单轮数据给出，重复验证边际收益低）|
 
-**处置汇总**：保留 3 条（79→69→75，严格串行：`app.js` 单写者）；**已关闭 9 条 @2026-10-23**（48/49/63/68/70/71/73/74/78；Lead 批准，`complete` 不删历史）。另有 4 条 blocked 待办（61/62/64/72）：**因 `blocked_by` 未清除，todo-owner 无 owner 权限执行 claim/complete，需 Lead 清依赖后关闭**（依据同 assessment）。
+**处置汇总**：保留 3 条（79→69→75，严格串行：`app.js` 单写者）；**已关闭 9 条 @2026-10-23**（48/49/63/68/70/71/73/74/78；Lead 批准，`complete` 不删历史）。另 4 条原 blocked 待办：**61/64/72 已关闭**（61、64 已完成；72 已完成但残余 A/B 未测、不补）；**62 仍 blocked_by task-60（metrics-baseline in_progress）⇒ 我无 owner 权限 claim，需 Lead 先关 task-60 或直接完成 62**（其 v3 基线/规则校验/性能产物齐全，仅缺最终汇总 report）。
 
 ### 验证机制分配（2026-09-09）
 
