@@ -944,6 +944,7 @@ def check_silent_failure(ctx: AuditContext) -> None:
 
     now = datetime.now(timezone.utc)
     problems = 0
+    exempt = 0  # S1-exempt：显式 no_report_reason 豁免计数（可见但不阻断）
 
     # ---- 更正协议：append-only 日志的「更正靠新增记录」（AGENTS.md §3 铁律 ④） ----
     # backfill 记录若带 corrects{line,field,new}，则第 line 行的该字段以 new 为准。
@@ -975,9 +976,21 @@ def check_silent_failure(ctx: AuditContext) -> None:
                     f"{where} corrects={fix}")
             continue
         if not report:
+            # S1-exempt：dispatch_log.py 允许 --no-report-reason 显式豁免。
+            # 两个工具必须口径一致，否则同一份数据 A 工具放行、B 工具判 FAIL（实测踩到）。
+            # 保留可见性：豁免记 WARN 而非静默放过；同一 actor 反复豁免仍会被 WARN 计数看见。
+            exempt_reason = str(row.get("no_report_reason") or "").strip()
+            if exempt_reason:
+                exempt += 1
+                ctx.add(check, WARN,
+                        f"done 未绑定产物，但已显式声明豁免（S1-exempt）："
+                        f"{exempt_reason[:100]}",
+                        f"{where} actor={row.get('actor')} task={row.get('task')}")
+                continue
             problems += 1
             ctx.add(check, FAIL,
-                    f"done 记录未绑定任何产物（S1：完成无 report ⇒ 无法验证「做完了」）",
+                    f"done 记录未绑定任何产物（S1：完成无 report ⇒ 无法验证「做完了」）"
+                    f"（无产物时应写 no_report_reason 显式豁免，而不是留空）",
                     f"{where} actor={row.get('actor')} task={row.get('task')}")
             continue
         target = ctx.repo / str(report).replace("\\", "/")
