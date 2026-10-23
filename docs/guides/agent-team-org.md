@@ -83,20 +83,21 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 
 ### 2.2 非领域常驻成员（不计入 §2 领域 Owner 数）
 
-名册里还有 2 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
+名册里还有 3 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
 以免污染 §2 的领域计数与 `team_audit.py` 的 roster 比对）：
 
 | 成员 | 职责 | 与领域 Owner 的区别 |
 |---|---|---|
 | `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
 | `curator-r3`（团队策展人，按轮 spawn） | 审计并维护团队资产（`agents.json` / 契约 / 本表 / 审计脚本），持有团队定义写权限；Creator 模式（`agent_preset: cordis`） | 只改「团队」不改「产品」；与 `team-steward` 互补：steward 只检测+提议，curator 可实际落盘修改 |
+| `team-plugin-creator`（DSH 插件改进者，Creator 模式） | 实现 `team-plugin-improvement-spec.md` 的 R1–R8（DSH 插件侧改动：roster 落盘 / 派发审计日志 / 强制 owner / complete 绑产物 / 快照生成 / 周期触发 / preset 暴露 / token 统计）；**唯一持有 DSH 插件源码与 preset 写权限的角色** | 不碰 Memoria 产品代码（`src/**`）与 Memoria 团队资产（`team/**`）；改动需重打包才生效 ⇒ 受 §13「打包是单向门」约束 |
 
 > **命名约定**：Curator 按轮 spawn，roster 名带轮次后缀（`curator-r3` = 第三轮）；
 > 历史 spawn 名（`team-curator`）已在 DSH 侧退役。`agents.json → roster_alias` 记录映射，
 > `team_audit.py::role_evidence` 按 `id ∪ alias` 匹配，故不会因换名假报幽灵角色。
 
 > 口径（2026-10-23 Lead 更新）：`team_audit.py` 的 `roster` 检查**同时解析 §2 与 §2.2**：
-> 合法快照成员 = §2 领域 Owner（9）+ §2.2 非领域常驻（2）= **11**；缺 1 个或多 1 个都会 FAIL。
+> 合法快照成员 = §2 领域 Owner（9）+ §2.2 非领域常驻（3）= **11**；缺 1 个或多 1 个都会 FAIL。
 > 另外 `role_evidence` 检查（`agents.json` active 角色的 14 天证据）独立覆盖 active 角色活性。
 > 文档自述计数只约束 §2 领域 Owner（9），不含 §2.2。
 

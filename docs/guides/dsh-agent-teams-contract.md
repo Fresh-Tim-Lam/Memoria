@@ -239,3 +239,58 @@ python scripts/agent/dispatch_log.py append --actor lead --target lead --phase b
 3. 名字分叉必须登记 `agents.json` 的 `roster_alias`（`contract_drift` D4 强制）。
 **真正的修法在宿主侧**：见 [team-plugin-improvement-spec.md](team-plugin-improvement-spec.md) 需求 R1
 （把 roster 导出成机器可读文件 / 或给 Curator 一个 `list_agents` 落盘工具）。
+
+---
+
+## 13. 打包 DSH 桌面应用 = **单向门**（2026-10-23 事故后立，血泪）
+
+> 本节的「单向门」判定与 Pre-mortem/回滚要求，来自团队风险协议
+> （`risk-management.md` §2/§4/§5/§6）。**打包产物属于典型单向门**：
+> 「改打包产物 / 版本号 ⇒ 发布语义变化，产物已流出就无法收回」。
+
+### 13.1 为什么它是单向门（不是例行命令）
+`electron-builder` 的 `appOutDir` **就是用户日常启动的那棵树**：
+它**先清空 `win-unpacked`，再复制**。
+只要有一个文件被占用，它就**删到一半中断**，留下一具缺 `icudtl.dat` / `locales/` 的残壳
+——**表现是「双击毫无反应、无任何报错」**，比崩溃更难查。
+
+**已实际发生（2026-10-23）**：
+```
+⨯ EBUSY: resource busy or locked, unlink '...esourcespp.asar'
+```
+原因：DSH 桌面应用正在运行（我们的会话就跑在它上面），Windows 锁住了 `app.asar`。
+
+### 13.2 三条硬教训（用户提供 + 实测确认）
+| # | 教训 | 判据 / 应对 |
+|---|---|---|
+| L1 | **打包前必须彻底退出 app** | 任务管理器里 0 个 `DeepSeek Harness` 进程；打包后校验 `icudtl.dat` / `locales/` / `resources/app.asar` 齐全 |
+| L2 | **本机打包需避开沙箱** | `prepare:dsh` 的冒烟测试要建 junction，沙箱内报 `EPERM` ⇒ 用普通终端或无沙箱执行 |
+| L3 | **改完一定实测启动，不要只看 `success: true`** | 退出码 0 证明不了应用能启动。必须真的启动一次、看到窗口 |
+
+### 13.3 唯一可复用的执行入口
+`D:\deepseek-harness\finish-rebuild.ps1`（253 行，**纯 ASCII**）已实现完整协议：
+
+```
+Preflight 1  应用进程数为 0（否则拒跑并解释残壳风险）
+Preflight 2  无 electron / electron-builder 残留进程
+Preflight 3  把当前 win-unpacked 整目录备份为 win-unpacked.bak-<ts>
+             → 打印可直接复制的回滚命令
+Step 3/3     pnpm run package:desktop:win:x64:unsigned
+Postflight  ① asar 时间戳必须更新
+             ② 与 Electron 发行包逐文件对比（不硬编码清单 ——
+                Electron 44 已不再发行 libEGL.dll/libGLESv2.dll，
+                硬编码会误报"缺失"）
+             ③ locales/ 的 .pak 数量 ≥10
+             ④ 扫 asar 内特征串（如 creatorPreset）确认新代码真的进包
+失败时       打印回滚命令，明确提示"壳可能已半删"
+```
+
+**为什么要"与 Electron 发行包对比"而不是硬编码清单**：
+我第一次检查时按硬编码清单，误报 4 项缺失（`app.asar`、`elevate.exe`、`libEGL.dll`、`libGLESv2.dll`），
+实际全部正常 —— 前两个本就不该在那些位置，后两个 Electron 44 源里就没有。
+**正确校验方式 = 与源发行包做集合差**。
+
+### 13.4 残留缺口
+- 备份是**整目录复制**（~1.4GB），磁盘占用大；尚未做「保留最近 N 份 + 自动清理」。
+- 尚未自动化**真正启动应用并检测窗口出现**（L3 仍需人工确认）。
+- 未覆盖 macOS / Linux 打包路径。

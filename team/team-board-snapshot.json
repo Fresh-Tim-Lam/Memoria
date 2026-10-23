@@ -1,12 +1,12 @@
 {
-  "schema": "team-board-snapshot/v3",
+  "schema": "team-board-snapshot/v4",
   "exportedBy": "lead",
-  "exportedAt": "2026-10-23T22:11:20+08:00",
-  "note": "2026-10-23 第三次收口：按 Curator r3 建议退役 4 名（kp-owner/settings-owner/surface-new/team-steward）+ 旧 team-curator，roster 由 13 缩到 8。未完成任务 12 条（均无 owner/writeScopes ⇒ write_scope 检查会报「输入不足」WARN，非假绿）。",
+  "exportedAt": "2026-10-24T00:37:14+08:00",
+  "note": "2026-10-24 第四次收口：task-62 拆分（关闭+task-81）+ todo-owner 关闭 13 条 + **v4 起 tasks[] 带 ownerName 与 writeScopes**（修 write_scope 检查「输入不足」的假绿）。team-plugin-creator 以 Creator 模式在跑。",
   "limit": {
     "maxMembers": 16,
-    "currentMembers": 8,
-    "remaining": 8
+    "currentMembers": 9,
+    "remaining": 7
   },
   "members": [
     {
@@ -48,20 +48,25 @@
       "target": "curator-r3",
       "role": "teammate",
       "status": "inactive"
+    },
+    {
+      "target": "team-plugin-creator",
+      "role": "teammate",
+      "status": "running"
     }
   ],
   "retired": [
     {
       "target": "kp-owner",
-      "absorbed_by": "Lead 直做 + L2 subagent"
+      "absorbed_by": "Lead + L2 subagent"
     },
     {
       "target": "settings-owner",
-      "absorbed_by": "Lead 直做 + L2 subagent"
+      "absorbed_by": "Lead + L2 subagent"
     },
     {
       "target": "surface-new",
-      "absorbed_by": "Lead 直做 + L2 subagent"
+      "absorbed_by": "Lead + L2 subagent"
     },
     {
       "target": "team-steward",
@@ -74,64 +79,58 @@
   ],
   "tasks": [
     {
-      "id": "task-48",
+      "id": "task-79",
       "status": "pending",
-      "subject": "P6 放行前有界重试"
-    },
-    {
-      "id": "task-49",
-      "status": "pending",
-      "subject": "P0 安全修复 taskkill /T + find 剧本"
-    },
-    {
-      "id": "task-63",
-      "status": "pending",
-      "subject": "性能 S0+S1 干净基线"
-    },
-    {
-      "id": "task-68",
-      "status": "pending",
-      "subject": "P0 reload 崩溃"
+      "ownerName": "todo-owner",
+      "priority": "P0",
+      "subject": "多行选区跨块操作静默失败（复制/剪切/删除/粘贴）",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/edit-handler.js",
+        "scripts/benchmark/surface/scenarios/selection-*",
+        "scripts/benchmark/surface/run_selection.py",
+        "scripts/benchmark/maintenance/edit_selection_*"
+      ]
     },
     {
       "id": "task-69",
       "status": "pending",
-      "subject": "P1 冷启动慢"
-    },
-    {
-      "id": "task-70",
-      "status": "pending",
-      "subject": "P0 堆泄漏"
-    },
-    {
-      "id": "task-71",
-      "status": "pending",
-      "subject": "P2 第二遍滚动中段慢"
-    },
-    {
-      "id": "task-73",
-      "status": "pending",
-      "subject": "P2 占位高度估值偏高"
-    },
-    {
-      "id": "task-74",
-      "status": "pending",
-      "subject": "P1 测量债：大文档交互无固定回归"
+      "ownerName": "todo-owner",
+      "priority": "P1",
+      "subject": "冷启动慢（13–23s 才自动开首文件）；需先补 boot 打点",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/presentation/api",
+        "src/memoria/services",
+        "scripts/benchmark/surface/profile_open.py",
+        "scripts/benchmark/surface/run_boot_profile.py",
+        "artifacts/agent/verify/boot-*"
+      ]
     },
     {
       "id": "task-75",
       "status": "pending",
-      "subject": "P1 openFile 启动期静默失效"
+      "ownerName": "todo-owner",
+      "priority": "P1",
+      "subject": "openFile() 启动期静默失效（可能被 task-69 顺带解决）",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "scripts/benchmark/surface/scenarios/openfile-*",
+        "scripts/benchmark/surface/run_openfile_race.py"
+      ]
     },
     {
-      "id": "task-78",
+      "id": "task-81",
       "status": "pending",
-      "subject": "⏸ L4 不可复现需补参数"
-    },
-    {
-      "id": "task-79",
-      "status": "pending",
-      "subject": "P0 跨块选区操作静默失败"
+      "ownerName": null,
+      "priority": "P1",
+      "subject": "测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效",
+      "writeScopes": [
+        "scripts/benchmark/surface/fidelity.mjs",
+        "scripts/benchmark/surface/p5perf_workload.mjs",
+        "scripts/benchmark/surface/p5perf_workload2.mjs",
+        "artifacts/agent/verify/measurement-debt-"
+      ]
     }
   ],
   "inactiveOwners": [
@@ -141,7 +140,8 @@
     "doc-consistency",
     "metrics-baseline",
     "todo-owner",
-    "curator-r3"
+    "curator-r3",
+    "team-plugin-creator"
   ],
   "completedRecent": [
     {
@@ -150,13 +150,23 @@
       "ownerName": "lead"
     },
     {
-      "id": "team-audit-r2",
-      "subject": "Curator 第二轮（ae36046c）",
+      "id": "task-61",
+      "subject": "导航入口测试套件（实交付 nav_entries.mjs；判定假阴性纠错案例）",
       "ownerName": "lead"
     },
     {
-      "id": "team-retro-r3",
-      "subject": "Curator 第三轮复盘+组织改造",
+      "id": "task-62",
+      "subject": "P6 收口（已过期；两真实缺陷拆到 task-81）",
+      "ownerName": "lead"
+    },
+    {
+      "id": "task-64",
+      "subject": "S2 方案评估（已完成）",
+      "ownerName": "lead"
+    },
+    {
+      "id": "task-72",
+      "subject": "块级排版缓存（已完成；残余 A/B 未测不补）",
       "ownerName": "lead"
     }
   ]
