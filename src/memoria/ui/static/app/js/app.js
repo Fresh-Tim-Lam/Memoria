@@ -12901,6 +12901,161 @@
       return commitRange(startLine, endLine, newLines, newCursor, preCursor, "deleteSelection");
     }
 
+    /**
+     * ★ 2026-10-23（0.4.7 任务 4 / N4）：多级列表**升降级**。
+     *
+     * `dir = +1` 降级（Tab）：把当前项从所在列表移出，挂到「同级的前一项」的子列表末尾。
+     *   - 若是列表首项 ⇒ 无处可降 ⇒ 返回 false（交调用方决定，比如插空格）
+     * `dir = -1` 升级（Shift+Tab）：把当前项从子列表移出，插到其父项**之后**（同级）。
+     *   - 若已在顶层 ⇒ 返回 false
+     *
+     * 实现方式：直接改 AST 的 list 结构，再用 `G.generateBlock` 重写该块源码行，
+     * 经 `commitRange` 提交（**单个撤销单元**）。
+     * ⚠️ 改动结构后**必须调 `_invalidateListItemLines`** —— 见其注释里的契约。
+     *
+     * @returns {boolean} 是否执行了升降级
+     */
+    function indentListLevel(dir) {
+      var ctx = getEditContext();
+      if (!ctx) return false;
+      var block = ctx.block;
+      if (!block || block.type !== "list") return false;
+      var cursor = ctx.cursor;
+
+      var range = (_blockLineMap && _blockLineMap[cursor.blockIndex]) || null;
+      if (!range) return false;
+      var preCursor = cloneCursor(cursor);
+
+      /**
+       * ★ 定位当前项：用**扁平 li 索引**反查树路径（方案 C，2026-10-23）。
+       *
+       * 为什么不用 `cursor.nodePath`：现有 6 处代码一律按「nodePath[0]=顶层 item 下标、
+       * nodePath.slice(1)=inline 路径」解释（L10992/11143/11236/11686/11819/12142、L11071）。
+       * 嵌套后 nodePath 前缀的语义无法与 inline 索引区分 ⇒ 本函数改用
+       * `EH.listItemIndex`（`getPreviewCursor()` 产出的**扁平 li 索引**，
+       * 对应 `blockEl.querySelectorAll("li")` 的文档序），自己遍历树反查路径。
+       * 这样**不动既有 6 处代码、不动 syncFromSelection**，改动最小。
+       */
+      function flatLiToTreePath(rootList, flatIdx) {
+        var n = 0;
+        var hit = null;
+        function walk(list, parentItem, path) {
+          for (var i4 = 0; i4 < list.items.length; i4++) {
+            var it4 = list.items[i4];
+            if (n === flatIdx) {
+              hit = {
+                parentList: list,
+                index: i4,
+                parentItem: parentItem,
+                path: path.concat([i4]),
+                item: it4,
+              };
+              return true;
+            }
+            n++;
+            if (it4.list && walk(it4.list, it4, path.concat([i4]))) return true;
+          }
+          return false;
+        }
+        walk(rootList, null, []);
+        return hit;
+      }
+
+      /**
+       * ★ 2026-10-23（task-80）：用**树路径**定位当前项，两种来源按优先级取：
+       *
+       * ① **首选** `EH.listPath` —— 由 `mapper.domToAst()` 的 `resolveListItem()`
+       *    按 DOM 真实父子关系递归解析得出（如 `[0,1]`）。这是权威层级坐标，
+       *    **不需要任何扁平索引反查**，因此天然不受「domToAst 扁平/树口径不一致」影响。
+       * ② **兜底** `flatLiToTreePath(block, EH.listItemIndex)` —— 旧路径，保留给
+       *    `listPath` 缺失的场合（如旧缓存光标、非列表 block 的边缘态）。
+       *
+       * 两者都返回同一形状 `{parentList,index,parentItem,item}`，下游逻辑共用。
+       */
+      function pathToTreeHit(rootList, listPath) {
+        if (!listPath || !listPath.length) return null;
+        var list2 = rootList;
+        var parentItem = null;
+        for (var d = 0; d < listPath.length; d++) {
+          var ii = listPath[d];
+          if (!list2 || !list2.items || ii < 0 || ii >= list2.items.length) return null;
+          var it5 = list2.items[ii];
+          var isLast = (d === listPath.length - 1);
+          if (isLast) {
+            return { parentList: list2, index: ii, parentItem: parentItem, item: it5 };
+          }
+          if (!it5.list) return null;
+          parentItem = it5;
+          list2 = it5.list;
+        }
+        return null;
+      }
+
+      var EH = (typeof window.MemoriaEditHandler !== "undefined") ? window.MemoriaEditHandler : null;
+      var found = null;
+      if (EH && EH.listPath) {
+        found = pathToTreeHit(block, EH.listPath);
+      }
+      if (!found) {
+        var flatIdx = (EH && EH.listItemIndex != null) ? EH.listItemIndex : 0;
+        found = flatLiToTreePath(block, flatIdx);
+      }
+      if (!found) return false;
+      var curItem = found.item;
+      var curList = found.parentList;
+      var curListParentItem = found.parentItem;
+
+      if (dir > 0) {
+        // ── 降级：挂到同级前一项的子列表 ──
+        if (found.index === 0) return false;          // 首项无处可降
+        var prevSib = found.parentList.items[found.index - 1];
+        if (!prevSib) return false;
+        if (!prevSib.list) {
+          prevSib.list = A.list(curList.ordered, []);
+        }
+        found.parentList.items.splice(found.index, 1);
+        // 缩进：父项缩进 + 2 空格（清空 srcLine 后由 source-gen 按 fallbackIndent 推算；
+        // 这里显式给一个，保证中间态也正确）
+        curItem.indent = (prevSib.indent != null ? prevSib.indent : "") + "  ";
+        prevSib.list.items.push(curItem);
+      } else {
+        // ── 升级：从当前列表移出，插到父项之后（同级） ──
+        if (!curListParentItem) return false;         // 已在顶层
+        /**
+         * ★ 2026-10-23（task-80）：这里原先调 `findItem(block, curListParentItem, null)`，
+         *   但 **`findItem` 在整个 app.js 里从未定义过**（HEAD 与工作区都只有这一处调用）
+         *   ⇒ 运行时抛 ReferenceError ⇒ 被 keydown 的 try/catch 吞成 `did=false`
+         *   ⇒ **升级（Shift+Tab）永远静默失效**。
+         *
+         *   改法：父项在**父层列表**中的下标 = 当前路径去掉最后一段后，
+         *   再走一遍同一个 `pathToTreeHit()` —— 已经有权威路径，不需要再按对象引用搜索。
+         *   （`found.parentItem` 来自路径解析；`grand.parentList` 即 `curList` 的归属列表。）
+         */
+        var parentPath = (EH && EH.listPath && EH.listPath.length > 1)
+          ? EH.listPath.slice(0, EH.listPath.length - 1) : null;
+        var grand = parentPath ? pathToTreeHit(block, parentPath) : null;
+        if (!grand) return false;
+        found.parentList.items.splice(found.index, 1);
+        curItem.indent = curListParentItem.indent != null ? curListParentItem.indent : "";
+        grand.parentList.items.splice(grand.index + 1, 0, curItem);
+        // 子列表空了就摘掉，避免残留空 <ul>
+        if (curList.items.length === 0 && curListParentItem) delete curListParentItem.list;
+      }
+
+      _invalidateListItemLines(block);
+
+      var newSrcLines = G.generateBlock(block).split("\n");
+      if (!newSrcLines.length) return false;
+      // 光标落在**顶层列表**的首项开头（保守：结构变了，精确落点由后续点击决定）
+      var newCursor = {
+        blockIndex: cursor.blockIndex,
+        nodePath: [0],
+        offset: 0,
+      };
+      commitRange(range.startLine, range.endLine, newSrcLines, newCursor, preCursor, "indent");
+      return true;
+    }
+
     /** 供工具栏读取当前选区的样式状态（active 指示） */
     function getSelectionStyles(range) {
       var ctx = _extractSelectionMiddle(range);
@@ -12926,6 +13081,8 @@
       applyStyle: applyStyle,
       getSelectionStyles: getSelectionStyles,
       deleteSelection: deleteSelection,
+      // 0.4.7 任务 4 / N4：多级列表升降级（dir=+1 降级 / -1 升级）
+      indentListLevel: indentListLevel,
       beginUndoGroup: beginUndoGroup,
       endUndoGroup: endUndoGroup,
       undo: undo,

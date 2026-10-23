@@ -287,6 +287,8 @@
       srcCol: srcPos.col,    // 来自 astToSrc，已处理 inline 前缀
       blockIndex: astPos.blockIndex,
       listItemIndex: astPos.listItemIndex,  // LIST block 专用
+      // ★ task-80：树路径（如 [0,1]），**新增**字段，只供 indentListLevel 升降级使用
+      listPath: astPos.listPath,
       nodePath: astPos.nodePath,  // AST 坐标：相对 block 的 inline 节点路径
       offset: astPos.offset,      // AST 坐标：在最终 Text 节点内的偏移
     };
@@ -497,6 +499,18 @@
       nodePath: cur.nodePath,
       offset: cur.offset,
     };
+    // ★ 2026-10-23（0.4.7 任务 4 / N4）：`listItemIndex` 是**扁平 li 索引**
+    //   （对应 `blockEl.querySelectorAll("li")` 的文档序，`getPreviewCursor()` 产出）。
+    //   多级列表的**升降级**需要它来反查树路径（见 `app.js` 的 `flatLiToTreePath`）——
+    //   不能复用 `nodePath`：现有 6 处编辑代码按「nodePath[0]=顶层 item 下标、
+    //   nodePath.slice(1)=inline 路径」解释，嵌套后语义会冲突。
+    //   单独存一个字段，**不改 nodePath**，既有消费方零影响。
+    EH.listItemIndex = (cur.listItemIndex !== undefined) ? cur.listItemIndex : null;
+    // ★ 2026-10-23（task-80）：**树路径**（如 [0,1] = 顶层第 0 项的第二个子项）。
+    //   由 `mapper.domToAst()` 的 `resolveListItem()` 递归解析得出，是嵌套列表的
+    //   **权威层级坐标**。`indentListLevel` 优先用它；拿不到才退回「扁平索引反查树」的旧兜底。
+    //   同样**不改 nodePath**（那是 inline 路径语义，另有 6 处消费方）。
+    EH.listPath = (cur.listPath && cur.listPath.length) ? cur.listPath : null;
     if (typeof setSourceCursor === "function") {
       setSourceCursor(cur.srcLine, cur.srcCol);
     }
@@ -1025,6 +1039,58 @@
       } else if (key === "y" || (key === "z" && e.shiftKey)) {
         e.preventDefault();
         EditSync.redo();
+      }
+    });
+
+    /**
+     * ★ 2026-10-23（0.4.7 任务 4 / N4）：**Tab / Shift+Tab**。
+     *
+     * 语义（用户 2026-10-23 确认）：
+     *   · 列表项内 Tab       ⇒ **降级**（往右缩进一层）
+     *   · 列表项内 Shift+Tab ⇒ **升级**（往左缩进一层；已在顶层则退列表）
+     *   · 普通段落内 Tab     ⇒ **插入 2 个空格**（像代码编辑器）
+     *   · 普通段落内 Shift+Tab ⇒ 不拦（交浏览器默认，避免抢走"反向移焦点"）
+     *
+     * 为什么必须 preventDefault：浏览器默认 Tab 会把焦点移出编辑区。
+     * 全部走 `MemoriaEditSync` 管线路（`indentListLevel` / `insertText`），
+     * **不直接改 DOM** —— 否则下一次重渲内容就"回魂"（E30 教训）。
+     */
+    preview.addEventListener("keydown", function (e) {
+      if (!EH.editMode) return;
+      if (typeof state === "undefined" || !state) return;
+      if (state.viewMode === "source") return;
+      if (e.key !== "Tab") return;
+      // IME 组合中不拦（Tab 可能是输入法的一部分）
+      if (EH._composing) return;
+      if (EH._captionEditingEl) return;   // 图片名称 input 用原生 Tab
+
+      var EditSync = window.MemoriaEditSync;
+      if (!EditSync) return;
+
+      // 先尝试「列表升降级」——由 `indentListLevel` 自己判定当前是否列表项：
+      //   返回 false = 不是列表项 / 首项无处降级 / 顶层无处升级 ⇒ 继续走下方兜底
+      if (typeof EditSync.indentListLevel === "function") {
+        syncFromSelection("tab");
+        var did = false;
+        try {
+          did = EditSync.indentListLevel(e.shiftKey ? -1 : +1);
+        } catch (_e1) {
+          did = false;
+        }
+        if (did) {
+          e.preventDefault();
+          return;
+        }
+        // Shift+Tab 无处升级（已在顶层）⇒ 交浏览器（不抢"反向移焦点"）
+        if (e.shiftKey) return;
+      }
+
+      // 普通段落内 Tab（或列表首项无处降级）⇒ 插入 2 个空格
+      if (!e.shiftKey) {
+        e.preventDefault();
+        syncFromSelection("tab-space");
+        // 用户 2026-10-23 确认：段落内 Tab 插 **4 个空格**（像代码缩进）
+        if (typeof EditSync.insertText === "function") EditSync.insertText("    ");
       }
     });
   }

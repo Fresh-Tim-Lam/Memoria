@@ -661,15 +661,30 @@ window.MemoriaMapper = (function () {
       if (!liEl || liEl.tagName !== "LI") {
         return { blockIndex: blockIndex, nodePath: [], offset: 0 };
       }
-      // 确定 item 索引
-      var itemIndex = -1;
-      var lis = blockEl.querySelectorAll("li");
-      for (var k = 0; k < lis.length; k++) {
-        if (lis[k] === liEl) { itemIndex = k; break; }
-      }
-      if (itemIndex < 0 || itemIndex >= block.items.length) {
+      // ★ 2026-10-23（task-80）：按 DOM 真实父子关系定位 item —— **递归下潜 `item.list`**。
+      //
+      // 旧实现有两个 BUG：
+      //   ① `blockEl.querySelectorAll("li")` 拿的是**扁平文档序**（含嵌套子项），
+      //      却和 `block.items.length`（只有顶层）比长度 ⇒ 第 2~N 个 li 全部越界，
+      //      返回 `nodePath: []` 且**没有 listItemIndex**（"第二项/戊/外层二" 都中招）。
+      //   ② 即使不越界，扁平序 `k` 被当成 `block.items[k]` 的下标 ⇒ 嵌套 li 取到
+      //      **错误 item 的 children**，nodePath 完全错位（"子项 B"→[1,0]）。
+      //
+      // 新实现**不再索引比对**，而是沿着「liEl 的父列表是不是当前 list 的 DOM 根」
+      // 逐层下潜，结构由 DOM 决定、AST 侧递归 `item.list` 同步 ⇒ 两者天然对齐。
+      // 见 `resolveListItem()`。
+      var resolved = resolveListItem(block, blockEl, liEl);
+      if (!resolved) {
         return { blockIndex: blockIndex, nodePath: [], offset: 0 };
       }
+      var itemIndex = resolved.listItemIndex;
+      var listPath = resolved.listPath;
+      // ★ `resolved.item` 才是**真正的目标项**（可能是嵌套子项）；
+      //   `topIndex` 是它在顶层 `block.items` 中的下标 —— `nodePath[0]` 仍用 topIndex，
+      //   因为既有 6 处代码把 `nodePath[0]` 当「顶层 item 下标」解释。
+      //   ⚠️ 下面对 `item` 的重新赋值必须保持这个区分：
+      //   `item` = 目标项本身（取 children）；`topIndex` = 顶层下标（写 nodePath）。
+      var topIndex = resolved.topIndex;
       // 在 <li> 内计算渲染偏移
       var liTextNodes = [];
       collectTextNodes(liEl, liTextNodes);
@@ -732,19 +747,32 @@ window.MemoriaMapper = (function () {
         }
       }
       // 在 item.children 中映射
-      var item = block.items[itemIndex];
+      // ★ task-80：用 `resolved.item`（递归解析出的**真实目标项**），不能用
+      //   `block.items[itemIndex]` —— 那是旧的扁平序口径，嵌套时会取错项。
+      var item = resolved.item;
+      // ★ task-80：`nodePath` 语义**保持不变** —— `[顶层 item 下标, ...inline 路径]`。
+      //   嵌套 li 的 `nodePath[0]` 取它所属**顶层项**的下标（topIndex），
+      //   因此既有 6 处按 `nodePath[0]=顶层 item 下标` 解释的代码零影响。
+      //   真正带层级的路径放在**新字段** `listPath`（如 [0,1]），只供升降级使用。
       if (!item.children || item.children.length === 0) {
-        return { blockIndex: blockIndex, nodePath: [itemIndex], offset: 0, listItemIndex: itemIndex };
+        return {
+          blockIndex: blockIndex,
+          nodePath: [topIndex],
+          offset: 0,
+          listItemIndex: itemIndex,
+          listPath: listPath,
+        };
       }
       var liPreferEnd = (domOffset > 0);
       var liResult = renderedToSrcCol({ children: item.children }, liRenderedOffset, liPreferEnd);
-      if (window.log) window.log("MAP", "domToAst block=" + blockIndex + " item=" + itemIndex + " dom=" + describeDomNode(domNode, domOffset) + " seg=[" + mapSeg.join(",") + "] renderedOffset=" + liRenderedOffset + " -> " + (liResult ? JSON.stringify(liResult.targetNode && liResult.targetNode.type) : "null"));
+      if (window.log) window.log("MAP", "domToAst block=" + blockIndex + " item=" + itemIndex + " listPath=[" + (listPath || []).join(",") + "] dom=" + describeDomNode(domNode, domOffset) + " seg=[" + mapSeg.join(",") + "] renderedOffset=" + liRenderedOffset + " -> " + (liResult ? JSON.stringify(liResult.targetNode && liResult.targetNode.type) : "null"));
       var liPath = findNodePathInList(item.children, liResult.targetNode);
       return {
         blockIndex: blockIndex,
-        nodePath: [itemIndex].concat(liPath || [0]),
+        nodePath: [topIndex].concat(liPath || [0]),
         offset: liResult.leafOffset,
         listItemIndex: itemIndex,
+        listPath: listPath,
       };
     }
 
@@ -841,6 +869,85 @@ window.MemoriaMapper = (function () {
       nodePath: nodePath || [0],
       offset: result.leafOffset,
     };
+  }
+
+  /**
+   * ★ 2026-10-23（task-80）：把 DOM `<li>` 解析为 AST 中的列表项。
+   *
+   * 为什么要单独一个函数：`domToAst` 旧实现用「扁平 li 序号」当 `block.items` 下标，
+   * 在**嵌套列表**下必然错位（见 `domToAst` 里的注释）。这里改为**按 DOM 真实父子
+   * 关系递归下潜**：DOM 侧「liEl 的父 `<ul>` 是不是当前 list 的 DOM 根」和 AST 侧
+   * 「item.list 递归」是完全同构的，因此不需要任何序号对齐。
+   *
+   * 返回值同时保留**两套坐标**，各自服务不同的消费方：
+   *   · `listItemIndex` — **扁平 li 索引**（`blockEl.querySelectorAll("li")` 文档序）。
+   *     `edit-handler.getPreviewCursor()` 的 `srcLine += listItemIndex` 与
+   *     `logCursorContext` 的 `lis[listItemIndex]` 都依赖这个语义，**不能改**。
+   *   · `listPath` — **树路径**（如 `[0,1]` = 顶层第 0 项的第二个子项）。
+   *     新增字段，供 `indentListLevel`（Tab/Shift+Tab 升降级）定位当前项。
+   *   · `topIndex` — 该 item 在**顶层** `block.items` 中的下标。`nodePath[0]` 用它，
+   *     从而 `nodePath` 的既有语义（6 处代码依赖）完全不变。
+   *
+   * @param {object} block — LIST block（含 `items`）
+   * @param {Element} blockEl — 该块的根 `<ul>/<ol>`（`data--block-index` 指向它）
+   * @param {Element} liEl — 光标所在的 `<li>`
+   * @returns {{item:object, listPath:number[], listItemIndex:number, topIndex:number}|null}
+   */
+  function resolveListItem(block, blockEl, liEl) {
+    if (!block || !block.items || !liEl) return null;
+
+    // 扁平索引：与 getPreviewCursor 的 `srcLine += listItemIndex` 口径一致
+    var flatIdx = -1;
+    var allLis = blockEl.querySelectorAll("li");
+    for (var fi = 0; fi < allLis.length; fi++) {
+      if (allLis[fi] === liEl) { flatIdx = fi; break; }
+    }
+    if (flatIdx < 0) return null;
+
+    /**
+     * 递归下潜。`listRoot` 是当前 list 的 DOM 根（顶层是 blockEl，之后是 item 内嵌的 ul/ol）。
+     * `items` 是与之对应的 AST 数组；`path` 是到当前层的前缀。
+     */
+    function descend(listRoot, items, path) {
+      // 本层所有直接 <li>（只取直系子元素，不递归 querySelectorAll）
+      var siblings = [];
+      for (var s = 0; s < listRoot.children.length; s++) {
+        if (listRoot.children[s].tagName === "LI") siblings.push(listRoot.children[s]);
+      }
+      // liEl 是否在本层
+      var idxInLevel = -1;
+      for (var t = 0; t < siblings.length; t++) {
+        if (siblings[t] === liEl) { idxInLevel = t; break; }
+      }
+      if (idxInLevel >= 0) {
+        var hitItem = items[idxInLevel];
+        if (!hitItem) return null;              // AST/DOM 不一致 ⇒ 交给调用方 bail
+        return {
+          item: hitItem,
+          listPath: path.concat([idxInLevel]),
+          listItemIndex: flatIdx,
+          topIndex: path.length ? path[0] : idxInLevel,
+        };
+      }
+      // 不在本层 ⇒ 下潜到每个 <li> 的子列表
+      for (var u = 0; u < siblings.length; u++) {
+        var sibLi = siblings[u];
+        var childListEl = null;
+        for (var c = 0; c < sibLi.children.length; c++) {
+          var ce = sibLi.children[c];
+          if (ce.tagName === "UL" || ce.tagName === "OL") { childListEl = ce; break; }
+        }
+        if (!childListEl) continue;
+        var sibItem = items[u];
+        var childItems = (sibItem && sibItem.list && sibItem.list.items) ? sibItem.list.items : null;
+        if (!childItems || !childItems.length) continue;
+        var r = descend(childListEl, childItems, path.concat([u]));
+        if (r) return r;
+      }
+      return null;
+    }
+
+    return descend(blockEl, block.items, []);
   }
 
   /**
