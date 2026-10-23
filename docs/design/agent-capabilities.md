@@ -35,7 +35,7 @@
 ## 2. 能力线 W：写能力 —— 第一个**可插拔能力插件**（M3 完善设计）
 
 > 用户口径（2026-09-20）：「M3 需要完善设计，做成可插拔的机制」。本节因此**不只是**写工具清单：先把 **W/N/S/H 四条线共用的「能力插件契约」**定下来（2.1–2.2），再把**写能力作为该契约的第一个消费者**落地（2.3–2.4），最后说明四条线如何各自成为**同一条契约下的插件族**（2.5）与分期验收（2.6）。
-> **契约的模板**是 [AGENTS.md §6](../../AGENTS.md) 的 Agent 注册条目（声明式条目 + 单一注册文件 + 权限显式；**"禁项显式"/"提示词独立文件"两项已随本轮收缩移出 v1**，见 §2.1「暂缓字段」），实样见 `artifacts/agent/agents.json`；差别只在"扩展的是**产品内对话 Agent 的工具面**"而不是"仓库协作 Agent 的派发面"（边界措辞见 [dsh-agent-port.md §10](dsh-agent-port.md) 的待人工改动项）。
+> **契约的模板**是 [AGENTS.md §6](../../AGENTS.md) 的 Agent 注册条目（声明式条目 + 单一注册文件 + 权限显式；**"禁项显式"/"提示词独立文件"两项已随本轮收缩移出 v1**，见 §2.1「暂缓字段」），实样见 `team/agents.json`；差别只在"扩展的是**产品内对话 Agent 的工具面**"而不是"仓库协作 Agent 的派发面"（边界措辞见 [dsh-agent-port.md §10](dsh-agent-port.md) 的待人工改动项）。
 
 ### 2.1 插件能力契约（capability plugin contract）（契约正文已迁出本文）
 
@@ -61,7 +61,7 @@
 
 - **两个位置，职责分开**（沿用既有的"程序读取源 vs 库内事实源"分工）：
   1. **插件声明（随版本分发，只读）**：`resources/agent-capabilities/<id>.json` —— 与 `resources/agent-prompts/**` 同级的**程序读取源**，不含可执行代码；
-  2. **库级启用与参数（随库走，用户可改）**：`<kb>/.memoria/agent/capabilities.json` —— **单一注册文件**（形态对齐 `artifacts/agent/agents.json`）。**该文件是新增事实源，须由人登记进 [AGENTS.md §1](../../AGENTS.md) 单一事实源表**（Agent 只读那张表；先例见 [dsh-agent-port.md §10](dsh-agent-port.md) 的 P3 会话目录）。
+  2. **库级启用与参数（随库走，用户可改）**：`<kb>/.memoria/agent/capabilities.json` —— **单一注册文件**（形态对齐 `team/agents.json`）。**该文件是新增事实源，须由人登记进 [AGENTS.md §1](../../AGENTS.md) 单一事实源表**（Agent 只读那张表；先例见 [dsh-agent-port.md §10](dsh-agent-port.md) 的 P3 会话目录）。
 - **发现顺序**（顺序确定，冲突即失败）：① 内置声明按 `id` 字典序加载 → ② 用 `<kb>/.memoria/agent/capabilities.json` 的 `enabled[]` 求交集与启用位（**条目存在即启用**，§2.1）→ ③ `id` 未在声明里出现 / **v1 字段校验不过**（§2.1 字段表的"校验规则"列）⇒ **该条不装载 + 一条可见告警**，其余照常（**装载 fail-soft，执行 fail-closed**）。
 - **冲突与重名**：
   - 两个声明同 `id` ⇒ 装载失败；
@@ -756,7 +756,7 @@ apply 入口（核心，M3a）
 - **手势**：agent 消息里的 ```powershell / ```cmd 围栏 → 渲染出一个「运行」按钮；点击 ⇒ 走**与 Z.4.1 完全相同**的执行内核与审批桥（`approval_bridge.py`）。
 - **复用**：后端执行内核（`scratch.run_script()` 扩展后的统一执行器）+ 审批桥（`approval_bridge.py`，挂起等面板应答、fail-closed）+ 面板轮询（`agent_ask_poll` / `agent_approval_answer`，`ui.py:1267`/`:1865-1889`）。
 - **前端**：复用既有消息渲染管线，在围栏代码块上挂按钮——**具体文件/行需施工前定位（本轮未读码取证）**，记为**待定（Z.9-Q5）**。
-- **与 [AGENTS.md §2](../../AGENTS.md) 相容**：本提案新增的是**产品内 Agent 的一把工具**（`tools/kb.py` 的 KB 工具面），**不是**在 `artifacts/agent/agents.json` 新增一个 Agent ⇒ 与 §2「业务关注点一律作为 builder 的**作业或工具**，**永不新增独立 Agent**」相符；施工本身（若走仓库协作）作为 `builder` 的一个作业登记进 [maintenance-jobs.md §5](maintenance-jobs.md)。
+- **与 [AGENTS.md §2](../../AGENTS.md) 相容**：本提案新增的是**产品内 Agent 的一把工具**（`tools/kb.py` 的 KB 工具面），**不是**在 `team/agents.json` 新增一个 Agent ⇒ 与 §2「业务关注点一律作为 builder 的**作业或工具**，**永不新增独立 Agent**」相符；施工本身（若走仓库协作）作为 `builder` 的一个作业登记进 [maintenance-jobs.md §5](maintenance-jobs.md)。
 - **待定**：人自己点跑是否还需再过一次审批（建议：人点 = 一次显式批准；**agent 自己跑**必过审批）—— **Z.9-Q6**。
 
 #### Z.4.3 取消 UI 工作区 —— 现有资产逐项处置（**只写提案，不真删**）

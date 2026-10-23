@@ -19,7 +19,7 @@ Curator 用它判 `active`（V2/V3 的可复跑证据）。
 必需：ts / actor / phase（phase ∈ spawn|message|done|retire|backfill）
 可选：target / task / desc / outcome / report / evidence / source
 
-写入磁盘路径：artifacts/agent/dispatch-log.jsonl（append-only；禁止改写历史行）
+写入磁盘路径：team/dispatch-log.jsonl（append-only；禁止改写历史行）
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_LOG = REPO_ROOT / "artifacts" / "agent" / "dispatch-log.jsonl"
+DEFAULT_LOG = REPO_ROOT / "team" / "dispatch-log.jsonl"   # 2026-10-23 迁入版本控制（原 artifacts/agent/ 被 gitignore）
 PHASES = ("spawn", "message", "done", "retire", "backfill")
 REQUIRED_FIELDS = ("ts", "actor", "phase")
 MAX_AGE_DAYS = 7
@@ -188,7 +188,7 @@ def selftest() -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="派发日志 append / check / selftest")
     parser.add_argument("--selftest", action="store_true", help="运行自测并退出")
-    parser.add_argument("--log", default=str(DEFAULT_LOG), help="日志路径（默认 artifacts/agent/dispatch-log.jsonl）")
+    parser.add_argument("--log", default=str(DEFAULT_LOG), help="日志路径（默认 team/dispatch-log.jsonl）")
     sub = parser.add_subparsers(dest="command")
 
     append_parser = sub.add_parser("append", help="追加一条派发记录")

@@ -80,10 +80,10 @@
 | 文件 | 用途 |
 |---|---|
 | `D:\AAA_Jupyter\Memoria\AGENTS.md` | 顶部「历史载体警告」，§2 三角色已标注 DSH 下退役 |
-| `D:\AAA_Jupyter\Memoria\artifacts\agent\agents.json` | schema v2 角色能力目录：lead/executor/auditor/registrar/curator + 3 个 retired |
-| `D:\AAA_Jupyter\Memoria\artifacts\agent\dispatch-log.jsonl` | append-only 派发日志（spawn/message/done/retire/backfill） |
-| `D:\AAA_Jupyter\Memoria\artifacts\agent\team-board-snapshot.json` | 每轮收口导出的团队快照 |
-| `D:\AAA_Jupyter\Memoria\artifacts\agent\curator\audit-2026-10-23\raw.json` | Curator 首次审计（机器可读） |
+| `D:\AAA_Jupyter\Memoria\team\agents.json` | schema v2 角色能力目录：lead/executor/auditor/registrar/curator + 3 个 retired |
+| `D:\AAA_Jupyter\Memoria\team\dispatch-log.jsonl` | append-only 派发日志（spawn/message/done/retire/backfill） |
+| `D:\AAA_Jupyter\Memoria\team\team-board-snapshot.json` | 每轮收口导出的团队快照 |
+| `D:\AAA_Jupyter\Memoria\team\curator\audit-2026-10-23\raw.json` | Curator 首次审计（机器可读） |
 | `...\audit-2026-10-23\SUMMARY.md` | Curator 首次审计（人可读，含清理候选与「最该改的一件事」） |
 | `...\audit-2026-10-23\cleanup-deleted.json` | P5 删除清单（28 文件 / 683.48 MB） |
 | `D:\AAA_Jupyter\Memoria\scripts\agent\dispatch_log.py` | 派发日志 `append` / `check` / `--selftest` |
@@ -233,7 +233,7 @@ send_message { target:"plugin-curator", message:"汇报你当前可用的插件�
 spawn_teammate {
   name: "team-curator",
   description: "审计并维护团队资产",
-  prompt: "读取 docs/guides/curator-agent-prompt.md 作为你的系统角色。先跑 python scripts/agent/curator_audit.py --date <今天> 与 python scripts/agent/dispatch_log.py check；然后按提示词审计，实际修改 artifacts/agent/agents.json / 契约 / status；删除动作必须先列清单给人类确认。",
+  prompt: "读取 docs/guides/curator-agent-prompt.md 作为你的系统角色。先跑 python scripts/agent/curator_audit.py --date <今天> 与 python scripts/agent/dispatch_log.py check；然后按提示词审计，实际修改 team/agents.json / 契约 / status；删除动作必须先列清单给人类确认。",
   mode: "creator"
 }
 ```

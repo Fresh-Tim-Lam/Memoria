@@ -15,7 +15,7 @@
 | 事件驱动派发（`events.jsonl`） | **0 次**（文件不存在），旧事件类型不再产生 | `Test-Path artifacts/agent/events.jsonl` |
 | 角色提示词 | 3 份保留为历史，mtime 仍为 2026-09-10 | `agents.json` → `prompt_ref` |
 | 实际协作机制 | **Lead + 动态 teammate（领域 Owner）+ 共享任务板 + `send_message` + 磁盘报告** | [agent-team-org.md §2](agent-team-org.md) |
-| 派发可追溯 | 已新增 append-only `artifacts/agent/dispatch-log.jsonl`（8 条，含回填与本轮收口） | `python scripts/agent/dispatch_log.py check` |
+| 派发可追溯 | 已新增 append-only `team/dispatch-log.jsonl`（8 条，含回填与本轮收口） | `python scripts/agent/dispatch_log.py check` |
 
 **执行载体（当前）**：
 ```
@@ -34,9 +34,9 @@ Lead（单点，用户直接对话）
 |---|---|---|
 | **P1 单一载体** | `AGENTS.md` 顶部加「历史载体警告」；§2 标注三角色已退役；三份旧 prompt 保留 | `grep -n "历史载体警告" AGENTS.md`；`agents.json` 中 3 个 `retired-in-dsh` |
 | **P2 注册表重写** | `agents.json` → schema v2：`agents[]` = lead / executor / auditor / registrar / curator（各带 `trigger_channel` / `input_contract` / `output_contract` / `evidence_path`）；旧三角色进 `retired_agents[]`；旧事件类型进 `event_stream.legacy_event_types` | `python scripts/agent/curator_audit.py --json` → `registry.missing_trigger_channel = []` |
-| **P3 派发日志** | `scripts/agent/dispatch_log.py`（append/check/selftest）+ `artifacts/agent/dispatch-log.jsonl` | `python scripts/agent/dispatch_log.py check` 退出码 0；`--selftest` PASS |
-| **P4 Curator 上线** | DSH 侧新增 `spawn_teammate({mode:"creator"})`（Creator 模式 preset，工具含 `plugin_manager` / `tool-cordis` / 技能）；本文件与 `curator_audit.py` 即首次运行产物 | `artifacts/agent/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`；`agents.json` 实际被修改 |
-| **P5 资产清理** | ✅ 已完成：删除 28 个未引用大文件 / **683.48 MB**（人类确认后执行）；**.md 报告 114 份全部保留** | `artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json`（删除清单）；`Get-ChildItem artifacts/agent -Recurse -File \| Measure-Object Length -Sum` → 66.7 MB |
+| **P3 派发日志** | `scripts/agent/dispatch_log.py`（append/check/selftest）+ `team/dispatch-log.jsonl` | `python scripts/agent/dispatch_log.py check` 退出码 0；`--selftest` PASS |
+| **P4 Curator 上线** | DSH 侧新增 `spawn_teammate({mode:"creator"})`（Creator 模式 preset，工具含 `plugin_manager` / `tool-cordis` / 技能）；本文件与 `curator_audit.py` 即首次运行产物 | `team/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`；`agents.json` 实际被修改 |
+| **P5 资产清理** | ✅ 已完成：删除 28 个未引用大文件 / **683.48 MB**（人类确认后执行）；**.md 报告 114 份全部保留** | `team/curator/audit-2026-10-23/cleanup-deleted.json`（删除清单）；`Get-ChildItem artifacts/agent -Recurse -File \| Measure-Object Length -Sum` → 66.7 MB |
 
 > 收口机检：`python scripts/agent/team_audit.py` → **FAIL=0**（修复 `artifacts/agent/verify/` 下误命名为
 > `*.md` 的目录后；该目录含 3 个诊断 JSON，已改名为普通目录，数据未删）。
@@ -64,8 +64,8 @@ Curator = `spawn_teammate({mode:"creator"})` 的 teammate，系统提示词见 [
 删除 28 个「未被任何提交/文档引用」的调试转储（`heap-*.json.gz` 6 个、`p6*-diag/v2/fidelity *.json` 20 个、
 `print_prototype/*.json` 2 个），合计 **683.48 MB**，经人类确认后执行。
 
-- 删除清单（含每个文件体积）：`artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json`
-- 清理后审计（体积/引用检查）：`artifacts/agent/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`
+- 删除清单（含每个文件体积）：`team/curator/audit-2026-10-23/cleanup-deleted.json`
+- 清理后审计（体积/引用检查）：`team/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`
 - 删除原则：只删「产出后未被任何提交/文档引用」的中间产物；所有 `.md` 报告与可复跑脚本保留。
 
 ---
@@ -84,7 +84,7 @@ python scripts/agent/dispatch_log.py --selftest
 python scripts/agent/curator_audit.py --date 2026-10-23
 
 # 3) 注册表 / 旧事件流 / 体积
-(Get-Content "artifacts\agent\agents.json" -Raw | ConvertFrom-Json).agents | Select-Object id, status
+(Get-Content "team\agents.json" -Raw | ConvertFrom-Json).agents | Select-Object id, status
 if (Test-Path "artifacts\agent\events.jsonl") { "events.jsonl 已存在" } else { "events.jsonl 不存在 ⇒ 旧事件派发未启用" }
 Get-ChildItem "artifacts\agent" -Recurse -File | Measure-Object Length -Sum |
   ForEach-Object { "{0:N1} MB / {1} 文件" -f ($_.Sum/1MB), $_.Count }
@@ -109,7 +109,21 @@ git ls-files artifacts/agent/  →  0 个文件
 
 **影响面**：任何 agent 都能静默覆盖团队定义，审计链断裂。这与"团队可信"的核心目标直接冲突。
 
-**候选修法（需人类裁决，Lead 未擅自改 .gitignore）**：
+**✅ 已修（2026-10-23，用户裁决选 B）**：团队资产迁到顶层 `team/`（**入库**）：
+```
+team/agents.json                    角色注册表（原 artifacts/agent/agents.json）
+team/dispatch-log.jsonl             派发日志
+team/team-board-snapshot.json       任务板快照
+team/prompts/{builder,verifier,registrar}.md
+team/curator/audit-2026-10-23/      Curator 审计产物
+```
+**不搬**：`artifacts/agent/verify/**`（109 份验证报告，是**产物**不是源）仍留在 artifacts/。
+迁移脚本 `scripts/agent/migrate_team_assets.py`（`--check` 幂等 / `--apply` 执行），
+已同步更新 14 处引用（AGENTS.md / docs/guides/* / 3 个 python 脚本 / tmp.md / 审计产物自身）。
+验证：`team/` 未被 gitignore（`git check-ignore team/agents.json` ⇒ exit 1）；
+`dispatch_log.py check` / `team_audit.py` / `curator_audit.py` 均绿。
+
+**原候选修法（保留供回溯）**：
 | 方案 | 做法 | 代价 |
 |---|---|---|
 | A | `.gitignore` 加 `!artifacts/agent/` 例外 | 团队资产入库；`artifacts/` 其余仍忽略 |

@@ -21,8 +21,8 @@
 
 | 层 | 文件 | 实测结论 |
 |---|---|---|
-| 角色注册表 | `artifacts/agent/agents.json` | 3 条目（builder / verifier / registrar）字段齐全，但**从未被触发** |
-| 角色提示词 | `artifacts/agent/prompts/*.md` | 3 份，mtime 全部 **2026-09-10**（43 天零改动） |
+| 角色注册表 | `team/agents.json` | 3 条目（builder / verifier / registrar）字段齐全，但**从未被触发** |
+| 角色提示词 | `team/prompts/*.md` | 3 份，mtime 全部 **2026-09-10**（43 天零改动） |
 | 事件流 | `artifacts/agent/events.jsonl` | **不存在**（文件自身注明「契约预留，当前未落盘」）|
 | 团队契约 | `AGENTS.md` §0–§7 | 描述「主控派发 + 事件订阅」，**DSH 下不成立** |
 | DSH 实操指引 | `docs/guides/dsh-agent-teams-contract.md` | 描述「Lead + spawn_teammate + 任务板」，**与实际一致** |
@@ -62,7 +62,7 @@
 
 | 角色 | 触发 | 输入 | 输出 | 与现状差异 |
 |---|---|---|---|---|
-| **Lead** | 用户直接对话 | 用户需求 + 任务板 | 任务板条目、派发、最终复核、提交 | 新增：**必须记录派发决策**（写 `artifacts/agent/dispatch-log.jsonl`）|
+| **Lead** | 用户直接对话 | 用户需求 + 任务板 | 任务板条目、派发、最终复核、提交 | 新增：**必须记录派发决策**（写 `team/dispatch-log.jsonl`）|
 | **执行者**（原 builder，改名 `executor`）| 任务板认领 | `team_task_*` 任务描述 | 代码/文档变更 + 自测结果 + 磁盘报告 | 去掉 `events.jsonl` 依赖，改任务板 |
 | **审计者**（原 verifier，改名 `auditor`）| Lead 显式派发 或 关键词 | 被执行者声明的变更 + 门禁脚本 | `artifacts/agent/verify/**` 报告 | 去掉 `on_events: ["change.applied"]`（该事件不存在）|
 | **登记官**（原 registrar，保留）| Lead 显式派发 或 定时 | 审计通过结果 | 更新 `docs/README.md` 索引 / `todo.md` §12 / `maintenance-jobs.md` §5 | 去事件依赖；**新增**：清理过期登记 |
@@ -77,7 +77,7 @@
 | 触发类型 | 机制 | 可验证证据 |
 |---|---|---|
 | **任务板** | `team_task_create` → agent `claim` → `complete` | 任务板历史（`team_task_list` 可见 status/owner）|
-| **显式派发** | Lead `spawn_teammate` / `send_message` | `artifacts/agent/dispatch-log.jsonl`（新增）|
+| **显式派发** | Lead `spawn_teammate` / `send_message` | `team/dispatch-log.jsonl`（新增）|
 | **用户关键词** | 会话中命中 "审视团队" / "验证" / "复核" | 会话历史 |
 | **定时** | DSH 宿主 cron（若支持）| 调度日志 |
 
@@ -105,10 +105,10 @@
 
   // 写域：只允许团队资产
   "write_scope": [
-    "artifacts/agent/agents.json",
-    "artifacts/agent/prompts/**",
-    "artifacts/agent/dispatch-log.jsonl",
-    "artifacts/agent/curator/**",
+    "team/agents.json",
+    "team/prompts/**",
+    "team/dispatch-log.jsonl",
+    "team/curator/**",
     "docs/guides/agent-team-status.md",
     "docs/guides/curator-agent-prompt.md",
     "docs/guides/dsh-agent-teams-contract.md",
@@ -154,7 +154,7 @@
 2. `agents.json` 三个条目加 `status: "retired-in-dsh"` + `retired_at` + `retired_reason`
 3. `docs/guides/agent-team-status.md` 已存在（本次审计产出）
 
-**验收**：`grep -c "retired-in-dsh" artifacts/agent/agents.json` = 3；`AGENTS.md` 顶部有警告块。
+**验收**：`grep -c "retired-in-dsh" team/agents.json` = 3；`AGENTS.md` 顶部有警告块。
 
 ## P2：注册表重写为 DSH 真实分工（~2 小时）
 
@@ -168,7 +168,7 @@
 
 ## P3：派发日志（让「谁真的在干活」可验证，~1 小时）
 
-**动作**：新建 `artifacts/agent/dispatch-log.jsonl`（append-only），每次 `spawn_teammate` / `send_message` 追加：
+**动作**：新建 `team/dispatch-log.jsonl`（append-only），每次 `spawn_teammate` / `send_message` 追加：
 ```json
 {"ts":"...","actor":"lead","target":"executor-15fc7d0c","task":"task-80","phase":"spawn","desc":"mapper 嵌套支持"}
 {"ts":"...","actor":"executor-15fc7d0c","task":"task-80","phase":"done","outcome":"pass","report":"..."}
@@ -181,7 +181,7 @@
 **动作**：
 1. 按第 3 节在宿主中注册 `curator` 模式
 2. 用 `docs/guides/curator-agent-prompt.md` 作为系统提示词
-3. 首次运行产出：`artifacts/agent/curator/audit-<date>/{raw.json,SUMMARY.md}`
+3. 首次运行产出：`team/curator/audit-<date>/{raw.json,SUMMARY.md}`
 
 **验收**：
 - Curator 能独立产出审计报告 AND **实际修改** `agents.json`（不是只报告）
@@ -202,9 +202,9 @@
 
 | 编号 | 属性 | 检查命令 | 通过标准 |
 |---|---|---|---|
-| V1 | 单一载体 | `grep -n "retired-in-dsh" artifacts/agent/agents.json` | 3 条；`AGENTS.md` 有警告块 |
+| V1 | 单一载体 | `grep -n "retired-in-dsh" team/agents.json` | 3 条；`AGENTS.md` 有警告块 |
 | V2 | 触发通道 | 读 `agents.json` 每个角色 | non-retired 角色均有真实存在的 `trigger_channel` |
-| V3 | 派发可追溯 | `wc -l artifacts/agent/dispatch-log.jsonl` | > 0，且最近一条 ≤ 7 天 |
+| V3 | 派发可追溯 | `wc -l team/dispatch-log.jsonl` | > 0，且最近一条 ≤ 7 天 |
 | V4 | 产出被消费 | `git log --oneline --all -- <report>` | 每个角色至少一份报告被引用过 |
 | V5 | Curator 可自我维护 | 跑一次 curator | 产出 audit raw+summary，且**实际改了**至少一个团队资产 |
 | V6 | 资产体积 | `Get-ChildItem artifacts\agent -Recurse -File \| Measure-Object Length -Sum` | < 150 MB |
@@ -247,9 +247,9 @@
 |---|---|---|
 | **P1 单一载体** | ✅ 完成 | `AGENTS.md` 顶部「历史载体警告」+ §2 退役标注；`agents.json` 的 `retired_agents[]` 含 3 个 `retired-in-dsh`；旧 prompt 保留 |
 | **P2 注册表重写** | ✅ 完成 | `agents.json` schema v2：`agents[]` = lead / executor / auditor / registrar / curator，全部带 `trigger_channel`；旧事件类型移入 `event_stream.legacy_event_types` |
-| **P3 派发日志** | ✅ 完成 | `artifacts/agent/dispatch-log.jsonl`（append-only）+ `scripts/agent/dispatch_log.py`（append/check/selftest）；已回填 5 条历史 + 1 条本轮收口记录 |
-| **P4 Curator 上线** | ✅ 完成 | DSH `spawn_teammate({mode:"creator"})`（Creator preset `cordis`）；首次审计产物 `artifacts/agent/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`；**实际修改**了 `agents.json` / `AGENTS.md` / 契约 / status |
-| **P5 资产清理** | ✅ 完成（人类确认后执行） | 删除 28 个未引用大文件 / **683.48 MB**；保留 `.md` 114 份；删除清单 `artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json`；体积 **750.2 MB → 66.7 MB**；`team_audit.py` FAIL 1→0（修复误命名为 `.md` 的目录） |
+| **P3 派发日志** | ✅ 完成 | `team/dispatch-log.jsonl`（append-only）+ `scripts/agent/dispatch_log.py`（append/check/selftest）；已回填 5 条历史 + 1 条本轮收口记录 |
+| **P4 Curator 上线** | ✅ 完成 | DSH `spawn_teammate({mode:"creator"})`（Creator preset `cordis`）；首次审计产物 `team/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`；**实际修改**了 `agents.json` / `AGENTS.md` / 契约 / status |
+| **P5 资产清理** | ✅ 完成（人类确认后执行） | 删除 28 个未引用大文件 / **683.48 MB**；保留 `.md` 114 份；删除清单 `team/curator/audit-2026-10-23/cleanup-deleted.json`；体积 **750.2 MB → 66.7 MB**；`team_audit.py` FAIL 1→0（修复误命名为 `.md` 的目录） |
 
 ## 7.2 与原文的偏差（重要）
 
@@ -266,7 +266,7 @@
 
 | 编号 | 检查命令（PowerShell，工作目录 = 仓库根） | 通过标准 | 实测 |
 |---|---|---|---|
-| **V1** | `(Select-String -Path artifacts/agent/agents.json -Pattern "retired-in-dsh").Count` + `Select-String -Path AGENTS.md -Pattern "历史载体警告"` | 3 + 有警告块 | ✅ 3 / 1 |
+| **V1** | `(Select-String -Path team/agents.json -Pattern "retired-in-dsh").Count` + `Select-String -Path AGENTS.md -Pattern "历史载体警告"` | 3 + 有警告块 | ✅ 3 / 1 |
 | **V2** | `python scripts/agent/curator_audit.py --json \| python -c "import json,sys; d=json.load(sys.stdin); print(d['registry']['missing_trigger_channel'])"` | `[]` | ✅ `[]` |
 | **V3** | `python scripts/agent/dispatch_log.py check` | 退出码 0 且 `count>0`、latest ≤7 天 | ✅ 8 条，latest 2026-10-23（含历史回填 + 本轮收口 + P5；真实派发的 spawn/done 成对记录从下一次派发开始产生） |
 | **V4** | `git log --oneline --all -- artifacts/agent/verify/<report>.md` + 报告引用检查 | 每个角色至少一份报告被引用 | ✅ Curator 首次审计已引用报告；其余角色按任务复核 |
@@ -290,4 +290,4 @@ python scripts/agent/curator_audit.py --date 2026-10-23
 ```
 
 详见 [agent-team-status.md](agent-team-status.md) 与
-`artifacts/agent/curator/audit-2026-10-23/SUMMARY.md`。
+`team/curator/audit-2026-10-23/SUMMARY.md`。

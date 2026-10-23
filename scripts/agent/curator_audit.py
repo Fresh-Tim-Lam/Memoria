@@ -2,8 +2,8 @@
 """Curator 审计采集器（P4/V5 的可复跑实现）。
 
 只读仓库，不修改任何文件；把审计所需证据一次采集成：
-    artifacts/agent/curator/audit-<date>/raw.json    （机器可读）
-    artifacts/agent/curator/audit-<date>/SUMMARY.md  （人可读，每条结论附命令）
+    team/curator/audit-<date>/raw.json    （机器可读）
+    team/curator/audit-<date>/SUMMARY.md  （人可读，每条结论附命令）
 
 用法
 ----
@@ -26,7 +26,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-AGENT_DIR = REPO_ROOT / "artifacts" / "agent"
+# 2026-10-23：团队资产已迁出 artifacts/（那里被 gitignore，零版本历史）
+TEAM_DIR = REPO_ROOT / "team"                 # 入库：agents.json / dispatch-log / 快照 / prompts / curator 审计
+VERIFY_DIR = REPO_ROOT / "artifacts" / "agent" / "verify"   # 仍是产物（109 份验证报告，不入库）
+AGENT_LEGACY = REPO_ROOT / "artifacts" / "agent"            # 兼容：体积统计仍扫这里（verify 占绝大部分）
 CLEANUP_MIN_BYTES = 5 * 1024 * 1024
 ACTIVE_WINDOW_DAYS = 14
 
@@ -57,8 +60,8 @@ def load_json(path: Path) -> dict | None:
 
 
 def collect_registry(raw: dict) -> None:
-    registry = load_json(AGENT_DIR / "agents.json")
-    entry: dict = {"path": "artifacts/agent/agents.json", "exists": registry is not None}
+    registry = load_json(TEAM_DIR / "agents.json")
+    entry: dict = {"path": "team/agents.json", "exists": registry is not None}
     if registry:
         agents = registry.get("agents", [])
         retired = registry.get("retired_agents", [])
@@ -88,7 +91,7 @@ def collect_registry(raw: dict) -> None:
 
 def collect_prompts(raw: dict) -> None:
     prompts: list[dict] = []
-    prompt_dir = AGENT_DIR / "prompts"
+    prompt_dir = TEAM_DIR / "prompts"
     if prompt_dir.exists():
         for path in sorted(prompt_dir.glob("*.md")):
             stat = path.stat()
@@ -105,13 +108,13 @@ def collect_event_stream(raw: dict) -> None:
     sys.path.insert(0, str(REPO_ROOT / "scripts" / "agent"))
     try:
         from dispatch_log import check as check_dispatch  # noqa: PLC0415
-        report = check_dispatch(AGENT_DIR / "dispatch-log.jsonl")
+        report = check_dispatch(TEAM_DIR / "dispatch-log.jsonl")
     except ImportError:
         report = {"ok": False, "error": "scripts/agent/dispatch_log.py 不可导入"}
     raw["event_stream"] = {
         "legacy_events_jsonl": {
             "path": "artifacts/agent/events.jsonl",
-            "exists": (AGENT_DIR / "events.jsonl").exists(),
+            "exists": (AGENT_LEGACY / "events.jsonl").exists(),   # 历史事件流（从未落盘）
             "note": "Trae 载体事件流；DSH 下从未落盘",
         },
         "dispatch_log": report,
@@ -119,8 +122,8 @@ def collect_event_stream(raw: dict) -> None:
 
 
 def collect_task_board(raw: dict) -> None:
-    snapshot = load_json(AGENT_DIR / "team-board-snapshot.json")
-    entry: dict = {"path": "artifacts/agent/team-board-snapshot.json", "exists": snapshot is not None}
+    snapshot = load_json(TEAM_DIR / "team-board-snapshot.json")
+    entry: dict = {"path": "team/team-board-snapshot.json", "exists": snapshot is not None}
     if snapshot:
         members = snapshot.get("members", [])
         tasks = snapshot.get("tasks", [])
@@ -136,11 +139,11 @@ def collect_task_board(raw: dict) -> None:
 
 
 def collect_artifacts(raw: dict) -> None:
-    files = [p for p in AGENT_DIR.rglob("*") if p.is_file()]
+    files = [p for p in TEAM_DIR.rglob("*") if p.is_file()] + [p for p in AGENT_LEGACY.rglob("*") if p.is_file()]
     total_bytes = sum(p.stat().st_size for p in files)
     by_top: dict[str, dict[str, int]] = {}
     for path in files:
-        rel = path.relative_to(AGENT_DIR)
+        rel = path.relative_to(TEAM_DIR) if str(path).startswith(str(TEAM_DIR)) else path.relative_to(AGENT_LEGACY)
         top = rel.parts[0] if len(rel.parts) > 1 else "(root files)"
         bucket = by_top.setdefault(top, {"files": 0, "bytes": 0})
         bucket["files"] += 1
@@ -187,9 +190,9 @@ def collect_artifacts(raw: dict) -> None:
 
 def collect_owner_activity(raw: dict) -> None:
     """以 verify 报告 mtime 作为领域 Owner 的近期运行证据（磁盘证据，非猜测）。"""
-    snapshot = load_json(AGENT_DIR / "team-board-snapshot.json") or {}
+    snapshot = load_json(TEAM_DIR / "team-board-snapshot.json") or {}
     members = [m.get("target") for m in snapshot.get("members", []) if m.get("role") == "teammate"]
-    verify_files = [p for p in (AGENT_DIR / "verify").rglob("*.md") if p.is_file()] if (AGENT_DIR / "verify").exists() else []
+    verify_files = [p for p in VERIFY_DIR.rglob("*.md") if p.is_file()] if VERIFY_DIR.exists() else []
     activity: list[dict] = []
     for owner in members:
         matches = [p for p in verify_files if owner and owner.lower() in p.name.lower()]
@@ -259,7 +262,7 @@ def verification_commands() -> list[str]:
         "python scripts/agent/dispatch_log.py check",
         "python scripts/agent/dispatch_log.py --selftest",
         "python scripts/agent/curator_audit.py --json",
-        "powershell -Command \"(Get-Content artifacts/agent/agents.json -Raw | ConvertFrom-Json).agents | Select-Object id,status\"",
+        "powershell -Command \"(Get-Content team/agents.json -Raw | ConvertFrom-Json).agents | Select-Object id,status\"",
         "powershell -Command \"Get-ChildItem artifacts/agent -Recurse -File | Measure-Object Length -Sum\"",
         "git status --short docs/guides artifacts/agent",
     ]
@@ -342,7 +345,7 @@ def render_summary(raw: dict) -> str:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Curator 审计采集（只读）")
     parser.add_argument("--date", default=datetime.now().astimezone().strftime("%Y-%m-%d"), help="审计日期")
-    parser.add_argument("--out-dir", default=None, help="输出目录（默认 artifacts/agent/curator/audit-<date>）")
+    parser.add_argument("--out-dir", default=None, help="输出目录（默认 team/curator/audit-<date>）")
     parser.add_argument("--json", action="store_true", help="只打印 raw JSON，不写文件")
     args = parser.parse_args(argv)
 
@@ -364,7 +367,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.json:
         print(json.dumps(raw, ensure_ascii=False, indent=2))
         return 0
-    out_dir = Path(args.out_dir) if args.out_dir else AGENT_DIR / "curator" / f"audit-{args.date}"
+    out_dir = Path(args.out_dir) if args.out_dir else TEAM_DIR / "curator" / f"audit-{args.date}"
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "raw.json").write_text(json.dumps(raw, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out_dir / "SUMMARY.md").write_text(render_summary(raw), encoding="utf-8")

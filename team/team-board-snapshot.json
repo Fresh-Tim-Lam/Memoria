@@ -1,0 +1,181 @@
+{
+  "schema": "team-board-snapshot/v2",
+  "exportedBy": "lead",
+  "exportedAt": "2026-10-23T21:27:31+08:00",
+  "note": "Lead 每轮收口前重导出（org.md §10.3）。本快照含 team-curator（2026-10-23 新增），取代 2026-10-20 版。members 含 Lead 共 12 名；未完成任务 12 条。",
+  "limit": {
+    "maxMembers": 16,
+    "used": 11,
+    "remaining": 5
+  },
+  "members": [
+    {
+      "role": "lead",
+      "status": "running",
+      "target": "lead"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "render-perf"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "sync-mapper"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "arch-contract"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "doc-consistency"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "metrics-baseline"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "kp-owner"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "settings-owner"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "team-steward"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "surface-new"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "todo-owner"
+    },
+    {
+      "role": "teammate",
+      "status": "inactive",
+      "target": "team-curator"
+    }
+  ],
+  "retired": [
+    {
+      "absorbed_by": "Lead + 9 领域 Owner",
+      "target": "executor"
+    },
+    {
+      "absorbed_by": "Lead 复核 + Owner 互查",
+      "target": "auditor"
+    },
+    {
+      "absorbed_by": "Lead 收口时登记",
+      "target": "registrar"
+    },
+    {
+      "absorbed_by": "Lead + 领域 Owner",
+      "target": "legacy-builder"
+    },
+    {
+      "absorbed_by": "Lead 复核",
+      "target": "legacy-verifier"
+    },
+    {
+      "absorbed_by": "Lead 收口",
+      "target": "legacy-registrar"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-48",
+      "status": "pending",
+      "subject": "[metrics-baseline] P6 放行前有界重试"
+    },
+    {
+      "id": "task-49",
+      "status": "pending",
+      "subject": "[metrics-baseline] P0 安全修复：消除 18 处 taskkill /T + 补 find 剧本 S11"
+    },
+    {
+      "id": "task-63",
+      "status": "pending",
+      "subject": "[metrics-baseline] 性能阶段 S0+S1：0.4.4 干净基线"
+    },
+    {
+      "id": "task-68",
+      "status": "pending",
+      "subject": "P0 缺陷：页面 reload 崩溃（MemoriaAST is not defined）"
+    },
+    {
+      "id": "task-69",
+      "status": "pending",
+      "subject": "P1 缺陷：冷启动慢（13–23s）"
+    },
+    {
+      "id": "task-70",
+      "status": "pending",
+      "subject": "P0 缺陷：堆泄漏（DOM 回收但 heap 69→165MB）"
+    },
+    {
+      "id": "task-71",
+      "status": "pending",
+      "subject": "P2：第二遍滚动中段仍慢 1.54–1.65×"
+    },
+    {
+      "id": "task-73",
+      "status": "pending",
+      "subject": "P2：占位高度估值偏高（+4.4%）"
+    },
+    {
+      "id": "task-74",
+      "status": "pending",
+      "subject": "P1 测量债：交互门禁用小文档，惰性/淘汰无固定回归"
+    },
+    {
+      "id": "task-75",
+      "status": "pending",
+      "subject": "P1 缺陷：openFile() 启动期静默失效"
+    },
+    {
+      "id": "task-78",
+      "status": "pending",
+      "subject": "⏸ 大文档 L4 超 8 屏标准场景不可复现 —— 需复核方补参数"
+    },
+    {
+      "id": "task-79",
+      "status": "pending",
+      "subject": "P0：多行选区跨块操作静默失败"
+    }
+  ],
+  "inactiveOwners": [
+    "render-perf",
+    "sync-mapper",
+    "arch-contract",
+    "doc-consistency",
+    "metrics-baseline",
+    "kp-owner",
+    "settings-owner",
+    "team-steward",
+    "surface-new",
+    "todo-owner",
+    "team-curator"
+  ],
+  "completedRecent": [
+    {
+      "id": "task-80",
+      "subject": "P0：mapper.domToAst 支持嵌套列表（提交 17c20c62）",
+      "ownerName": "lead"
+    }
+  ]
+}

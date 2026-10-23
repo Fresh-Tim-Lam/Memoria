@@ -12,7 +12,7 @@
 4. write_scope     : 未完成任务之间 writeScopes 重叠（含目录前缀重叠）⇒ 串行化风险
 5. artifact_refs   : `artifacts/agent/verify/*.md` 中反引号引用的仓库路径是否真的存在
                      （"声称 ≠ 存在"）；任务声明的 `artifacts/.../*.md` 交付物是否存在
-6. role_evidence   : `artifacts/agent/agents.json` 里 `status=active` 的角色，是否在
+6. role_evidence   : `team/agents.json` 里 `status=active` 的角色，是否在
                      14 天内有可复跑证据（dispatch-log 派发 / 任务板 owner / 产物 mtime）。
                      补上 §4 漏检：声明 active 但从未运转的「幽灵角色」。
 
@@ -44,11 +44,11 @@ from pathlib import Path
 # ---------------------------------------------------------------------------
 # 默认路径（相对仓库根）
 # ---------------------------------------------------------------------------
-DEFAULT_SNAPSHOT = "artifacts/agent/team-board-snapshot.json"
+DEFAULT_SNAPSHOT = "team/team-board-snapshot.json"
 DEFAULT_ORG = "docs/guides/agent-team-org.md"
 DEFAULT_VERIFY_DIR = "artifacts/agent/verify"
-DEFAULT_AGENTS = "artifacts/agent/agents.json"
-DEFAULT_DISPATCH_LOG = "artifacts/agent/dispatch-log.jsonl"
+DEFAULT_AGENTS = "team/agents.json"
+DEFAULT_DISPATCH_LOG = "team/dispatch-log.jsonl"
 ROLE_EVIDENCE_DAYS = 14
 
 # 可被报告引用、且应当真实存在的仓库路径前缀
@@ -848,7 +848,7 @@ def selftest() -> int:
 
 ## 3. 其他
 """)
-        _write(red / "artifacts/agent/team-board-snapshot.json", json.dumps({
+        _write(red / "team/team-board-snapshot.json", json.dumps({
             "schema": "team-board-snapshot/v1",
             "exportedAt": "2026-10-20T21:00:00+08:00",
             "limit": {"maxMembers": 16, "currentMembers": 3},
@@ -869,7 +869,7 @@ def selftest() -> int:
         _write(red / "artifacts/agent/verify/claim-report.md",
                "# 报告\n\n已落盘 `scripts/not-exist/missing.py`。\n")
         # 幽灵角色：声明 active，但 14 天内无 dispatch/任务/产物证据
-        _write(red / "artifacts/agent/agents.json", json.dumps({
+        _write(red / "team/agents.json", json.dumps({
             "schema_version": 2,
             "agents": [
                 {"id": "phantom", "status": "active", "evidence_path": ["artifacts/agent/void/**"]},
@@ -910,7 +910,7 @@ def selftest() -> int:
 
 ## 3. 其他
 """)
-        _write(green / "artifacts/agent/team-board-snapshot.json", json.dumps({
+        _write(green / "team/team-board-snapshot.json", json.dumps({
             "schema": "team-board-snapshot/v1",
             # 未来时间：避免「快照过期」WARN（fixture 文件 mtime 必然晚于导出时间）
             "exportedAt": "2099-01-01T00:00:00+08:00",

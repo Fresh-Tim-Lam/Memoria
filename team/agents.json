@@ -1,0 +1,182 @@
+{
+  "schema_version": 2,
+  "updated_at": "2026-10-23T17:05:00+08:00",
+  "carrier": "dsh",
+  "note": "Memoria Agent 注册表。DSH 载体下本文件是『可派发角色目录』，不是运行时花名册：运行时花名册（Lead + 9 个领域 Owner + 2 个非领域常驻）以 docs/guides/agent-team-org.md §2 与 DSH list_agents 为准。2026-10-23 第二轮 Curator 审计依三条硬判据（触发通道 / 14 天运行证据 / 产出被消费）把 executor/auditor/registrar 标为 retired-in-dsh：三者在 dispatch-log 与任务板均 0 条记录，其职能实际由 Lead + 领域 Owner 承担（不是删除，可随时复活）。判定机检见 scripts/agent/team_audit.py 的 role_evidence 检查。",
+  "authority": {
+    "runtime_roster": "docs/guides/agent-team-org.md §2 + DSH list_agents",
+    "task_board": "DSH Team 共享任务板（team_task_create/list/get/update）",
+    "dispatch_log": "team/dispatch-log.jsonl",
+    "team_contract": "docs/guides/dsh-agent-teams-contract.md",
+    "status_audit": "docs/guides/agent-team-status.md",
+    "active_role_evidence": "scripts/agent/team_audit.py::check_role_evidence（14 天三源证据）"
+  },
+  "event_stream": {
+    "status": "enabled",
+    "path": "team/dispatch-log.jsonl",
+    "format": "jsonl-append-only",
+    "writer": "Lead（scripts/agent/dispatch_log.py append）",
+    "phases": ["spawn", "message", "done", "retire", "backfill"],
+    "required_fields": ["ts", "actor", "phase"],
+    "legacy_event_types": [
+      "task.dispatched",
+      "change.proposed",
+      "change.applied",
+      "verify.result",
+      "register.updated",
+      "state.drift",
+      "task.completed",
+      "agent.registered"
+    ],
+    "legacy_note": "Trae/SOLO 事件流从未落盘（events.jsonl 不存在）；DSH 载体下仅 dispatch-log 生效，旧事件类型不再产生。"
+  },
+  "agents": [
+    {
+      "id": "lead",
+      "name": "Lead（主控）",
+      "status": "active",
+      "scope": "dsn-session",
+      "trigger_channel": {
+        "type": "user-dialog",
+        "mechanism": "用户直接对话（DSH 会话）",
+        "evidence": "DSH 会话历史 + team/dispatch-log.jsonl（8 条 actor=lead）",
+        "limitation": null
+      },
+      "input_contract": ["用户需求", "共享任务板（team_task_list）", "team/team-board-snapshot.json"],
+      "output_contract": ["任务板条目（create/claim/complete）", "spawn/send/retire 派发记录（dispatch-log）", "最终复核与提交"],
+      "evidence_path": ["team/dispatch-log.jsonl", "team/team-board-snapshot.json"],
+      "write_scope": ["src/**", "docs/**", "scripts/**", "artifacts/**", ".git/**（扩权原子操作）"],
+      "forbidden": ["git push --force", "覆盖用户知识库原文", "无人类确认删除不可逆资产"],
+      "prompt_ref": "docs/guides/dsh-agent-teams-contract.md",
+      "emits": ["dispatch.spawn", "dispatch.message", "dispatch.done", "dispatch.retire"],
+      "last_evidence": "2026-10-23T16:22:12+08:00（dispatch-log done）"
+    },
+    {
+      "id": "curator",
+      "name": "团队策展人（Curator）",
+      "status": "active",
+      "scope": "creator-mode-teammate",
+      "mode": "creator",
+      "agent_preset": "cordis",
+      "trigger_channel": {
+        "type": "explicit-dispatch+keywords",
+        "mechanism": "Lead 用 spawn_teammate({mode:\"creator\"}) 显式创建；用户关键词『审视团队』『团队审计』『curator』",
+        "evidence": "team/curator/audit-<date>/（raw.json + SUMMARY.md）+ dispatch-log 记录",
+        "limitation": "DSH 宿主无 cron，不能每周自动触发；write_scope 是提示词/工具级约束，无路径级硬隔离（DSH 沙箱不支持子路径白名单）"
+      },
+      "input_contract": ["团队资产（本文件 / prompts / 契约 / org / status）", "共享任务板历史（team_task_list，含 completed）", "磁盘产物与体积", "dispatch-log.jsonl"],
+      "output_contract": ["team/curator/audit-<date>/{raw.json,SUMMARY.md}", "直接修改团队资产（agents.json / 契约 / status / prompts）", "清理候选清单（删除需人类确认）"],
+      "evidence_path": ["team/curator/audit-<date>/", "team/dispatch-log.jsonl"],
+      "tools_required": ["read", "write", "edit", "glob", "grep", "pwsh", "team_task_list", "team_task_create", "team_task_get", "team_task_update", "spawn_teammate"],
+      "write_scope": [
+        "team/agents.json",
+        "team/prompts/**",
+        "team/dispatch-log.jsonl",
+        "team/curator/**",
+        "docs/guides/agent-team-status.md",
+        "docs/guides/curator-agent-prompt.md",
+        "docs/guides/dsh-agent-teams-contract.md",
+        "docs/guides/agent-team-org.md",
+        "AGENTS.md",
+        "resources/agent-skills/**",
+        "scripts/agent/team_audit.py（仅补检查项，不改既有判据语义）"
+      ],
+      "write_forbidden": ["src/**", "Package/**", "pyproject.toml", "src/memoria/__version__.py", "docs/todo.md 台账正文", "<kb>/.memoria/**"],
+      "prompt_ref": "docs/guides/curator-agent-prompt.md",
+      "emits": ["dispatch.done"],
+      "last_evidence": "2026-10-23T16:54:03+08:00（team/curator/audit-2026-10-23/）"
+    }
+  ],
+  "retired_agents": [
+    {
+      "id": "executor",
+      "previous_id": "builder",
+      "name": "执行者（原 builder）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "scope": "teammate",
+      "retired_reason": "DSH 内无可派发身份：dispatch-log 8 条中 actor/target=executor 为 0；任务板 ownerName 79 条中 executor 为 0（施工实际由 9 个领域 Owner + Lead 承担）。功能未消失，但没有『executor』这个可 spawn 的 teammate 名。",
+      "absorbed_by": "Lead + docs/guides/agent-team-org.md §2 的 9 个领域 Owner",
+      "evidence": ["team/dispatch-log.jsonl（8 条，无 executor）", "team_task_list（79 条有 owner 的任务，ownerName 无 executor）"],
+      "input_contract": ["team_task_* 任务描述（含 write_scopes 与验收标准）", "对象认知路径（docs/reference/agent-guide/0X-*.md）"],
+      "output_contract": ["代码/文档变更（限任务 write_scopes）", "自测结果", "磁盘报告（artifacts/agent/verify/** 或领域报告路径）"],
+      "write_scope": ["任务声明的 write_scopes", "artifacts/agent/verify/**"],
+      "forbidden": ["改 Package/**", "手改版本文件", "改登记类文件（docs/README 索引 / maintenance-jobs §5 / todo §12）", "git push --force"],
+      "prompt_ref": null
+    },
+    {
+      "id": "auditor",
+      "previous_id": "verifier",
+      "name": "审计者（原 verifier）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "scope": "teammate",
+      "retired_reason": "dispatch-log 0 条、任务板 owner 0 条；109 份 artifacts/agent/verify/*.md 的实际作者是领域 Owner + Lead（无 auditor 身份落款）。独立复核职能真实存在，但以『Lead 复核 + 领域 Owner 互查』形式执行，不经过 auditor 派发通道。",
+      "absorbed_by": "Lead 复核 + 领域 Owner 互查（org.md §10.2 五项人工确认）",
+      "evidence": ["team/dispatch-log.jsonl（无 auditor）", "team_task_list（ownerName 无 auditor）", "artifacts/agent/verify/（109 份报告，按领域 Owner 命名）"],
+      "input_contract": ["被执行者声明的变更范围（git diff / 任务 write_scopes）", "仓库既有门禁脚本"],
+      "output_contract": ["artifacts/agent/verify/** 验证报告（含可复跑命令与 实测/推断 标注）"],
+      "write_scope": ["artifacts/agent/verify/**", "scripts/benchmark/maintenance/results/**"],
+      "forbidden": ["修改 src/** 或 docs/**", "自行实现修复", "采信未落盘的口头结论"],
+      "prompt_ref": null
+    },
+    {
+      "id": "registrar",
+      "previous_id": null,
+      "name": "登记官",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "scope": "teammate",
+      "retired_reason": "dispatch-log 0 条、任务板 owner 0 条。登记类提交确实存在（近 14 天 docs(todo)/docs(index) 多条，如 3fab6436、29196c9b），但提交身份统一为人工/Lead，无 registrar 派发与运行证据。登记职能由 Lead 直接在收口时执行。",
+      "absorbed_by": "Lead（收口时直接登记；org.md §10 收口体检清单）",
+      "evidence": ["team/dispatch-log.jsonl（无 registrar）", "team_task_list（ownerName 无 registrar）", "git log -- docs/todo.md docs/README.md docs/design/maintenance-jobs.md（近 14 天多条登记提交，作者为 Lead/人）"],
+      "input_contract": ["审计通过结果", "变更文件清单", "登记类文件白名单"],
+      "output_contract": ["docs/README.md 索引 / todo.md §12 / maintenance-jobs.md §5 的登记行", "过期登记清理"],
+      "write_scope": ["docs/README.md", "docs/**/README.md", "docs/todo.md §12（登记行）", "docs/design/maintenance-jobs.md §5", "artifacts/agent/**"],
+      "forbidden": ["修改文档正文语义", "改 src/**", "静默修复漂移"],
+      "prompt_ref": null
+    },
+    {
+      "id": "legacy-builder",
+      "previous_id": "builder",
+      "name": "构建者（Trae 载体）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "DSH 载体下事件驱动派发未启用（events.jsonl 从未落盘）；实际施工由 Lead + 领域 Owner/teammate 代劳。保留仅为历史与语义参考。",
+      "triggers": {
+        "on_events": [],
+        "on_user_keywords": [],
+        "on_schedule": null
+      },
+      "prompt_ref": "team/prompts/builder.md"
+    },
+    {
+      "id": "legacy-verifier",
+      "previous_id": "verifier",
+      "name": "验证者（Trae 载体）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "change.applied 事件在 DSH 下从未产生；独立验证职责已由 auditor 角色（显式派发/关键词）承接——auditor 亦已于 2026-10-23 因 0 证据再退役，见上。",
+      "triggers": {
+        "on_events": ["change.applied"],
+        "on_user_keywords": ["验证", "复核"],
+        "on_schedule": null
+      },
+      "prompt_ref": "team/prompts/verifier.md"
+    },
+    {
+      "id": "legacy-registrar",
+      "previous_id": "registrar",
+      "name": "登记官（Trae 载体）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-23",
+      "retired_reason": "verify.result 事件不存在；登记职责由 Lead 在收口时执行（registrar 角色亦已于 2026-10-23 因 0 证据再退役，见上）。",
+      "triggers": {
+        "on_events": ["verify.result"],
+        "on_user_keywords": ["登记"],
+        "on_schedule": "0 3 * * *"
+      },
+      "prompt_ref": "team/prompts/registrar.md"
+    }
+  ]
+}

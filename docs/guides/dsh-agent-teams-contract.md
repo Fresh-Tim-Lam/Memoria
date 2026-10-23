@@ -135,7 +135,7 @@ AOCI 是「机器索引」，两者都服务于「各看自己那份、不读全
 **每次 `spawn_teammate` / `send_message` / 收口后，Lead 必须追加一条 append-only 记录**：
 
 ```
-artifacts/agent/dispatch-log.jsonl
+team/dispatch-log.jsonl
 ```
 
 用仓库脚本追加（自动时间戳、字段校验）：

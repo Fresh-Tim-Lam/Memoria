@@ -137,7 +137,7 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | 2026-10-19 | 初版：确立三层结构、8 个常驻 Owner 的领域表、10 篇 agent-guide 的覆盖缺口、5 步派发规则、知识落点与成本模型 |
 | 2026-10-19 | 首轮全员激活：8 个 Owner 各确认领域并回报「最大未解决问题 + 建议下一单元」（见 §8） |
 | 2026-10-20 | **团队重整（首次动态维护）**：退役 3 个任务已闭环的单点 agent（`render-impl`/`mapper-fix`/`jump-fix`）；3 个含糊命名改为领域名（`arch-agent`→`arch-contract`、`detail-agent`→`doc-consistency`、`metrics-agent`→`metrics-baseline`）；补 2 个缺口 Owner（`kp-owner` 知识点域、`settings-owner` 设置/i18n/快捷键域）；名额上限 8→16。前提是 DSH 侧补齐了 `retire_teammate`/`update_teammate`（DSH 提交 `468b01b5b2`），维护纪律见 §2.1 |
-| 2026-10-23 | **团队载体收口（P1–P5）**：AGENTS.md 标注 Trae 三角色为历史；`agents.json` 重写为 DSH 角色能力目录（lead/executor/auditor/registrar/curator）；新增 append-only `artifacts/agent/dispatch-log.jsonl` + `scripts/agent/dispatch_log.py`；Curator 以 Creator 模式 teammate 上线（`spawn_teammate({mode:"creator"})`），首次审计产物 `artifacts/agent/curator/audit-2026-10-23/`；P5 经人类确认后清理 28 个未引用大文件（750.2 MB → 66.7 MB，`.md` 114 份保留） |
+| 2026-10-23 | **团队载体收口（P1–P5）**：AGENTS.md 标注 Trae 三角色为历史；`agents.json` 重写为 DSH 角色能力目录（lead/executor/auditor/registrar/curator）；新增 append-only `team/dispatch-log.jsonl` + `scripts/agent/dispatch_log.py`；Curator 以 Creator 模式 teammate 上线（`spawn_teammate({mode:"creator"})`），首次审计产物 `team/curator/audit-2026-10-23/`；P5 经人类确认后清理 28 个未引用大文件（750.2 MB → 66.7 MB，`.md` 114 份保留） |
 
 ## 8. 首轮全员回报（2026-10-19，各 Owner 自述 · **历史快照**）
 
@@ -248,7 +248,7 @@ CDP 客户端于是**连到了另一个正在跑的页面**。症状恰好是 `w
 
 ### 10.3 快照纪律
 
-Lead 每轮收口前重导出 `artifacts/agent/team-board-snapshot.json`，导出时间必须**晚于最后一次任务状态变更与相关 commit**；`writeScopes` 取任务板最新 revision；`limit.currentMembers` 口径与 `members` 数组一致（**含/不含 Lead 必须写明**）。
+Lead 每轮收口前重导出 `team/team-board-snapshot.json`，导出时间必须**晚于最后一次任务状态变更与相关 commit**；`writeScopes` 取任务板最新 revision；`limit.currentMembers` 口径与 `members` 数组一致（**含/不含 Lead 必须写明**）。
 
 ### 10.3.1 派发日志纪律（2026-10-23）
 

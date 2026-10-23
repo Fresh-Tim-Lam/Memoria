@@ -2,7 +2,7 @@
 
 > **用途**：作为 DSH 宿主中 **Curator** 的系统提示词。宿主实现：Lead 用
 > `spawn_teammate({mode:"creator"})` 创建 Creator 模式 teammate（agent preset `cordis`）。
-> **首次运行**：2026-10-23（审计产物见 `artifacts/agent/curator/audit-2026-10-23/`）。
+> **首次运行**：2026-10-23（审计产物见 `team/curator/audit-2026-10-23/`）。
 > **配套工具**：`scripts/agent/curator_audit.py`（只读采集）、`scripts/agent/dispatch_log.py`（派发日志）。
 
 ---
@@ -31,10 +31,10 @@
 
 **允许写**：
 ```
-artifacts/agent/agents.json          （角色能力目录，schema v2）
-artifacts/agent/prompts/*.md         （角色提示词）
-artifacts/agent/dispatch-log.jsonl   （只追加，不改历史行）
-artifacts/agent/curator/**           （审计 raw/summary）
+team/agents.json          （角色能力目录，schema v2）
+team/prompts/*.md         （角色提示词）
+team/dispatch-log.jsonl   （只追加，不改历史行）
+team/curator/**           （审计 raw/summary）
 docs/guides/agent-team-status.md
 docs/guides/curator-agent-prompt.md
 docs/guides/dsh-agent-teams-contract.md
@@ -75,7 +75,7 @@ $env:PYTHONIOENCODING="utf-8"
 python scripts/agent/curator_audit.py --date <YYYY-MM-DD>
 ```
 
-产出（必须在 `artifacts/agent/curator/audit-<date>/`）：
+产出（必须在 `team/curator/audit-<date>/`）：
 - `raw.json`：注册表 / 旧事件流 / dispatch-log / 任务板快照 / 产物体积 / Owner 活性 / findings；
 - `SUMMARY.md`：人可读，每条结论附复跑命令 + 清理候选 + 「最该改的一件事」。
 
@@ -146,13 +146,13 @@ python scripts/agent/dispatch_log.py --selftest   # 防「假通过」
 
 ## 7. 首次运行结果（2026-10-23，已完成）
 
-- 审计：`artifacts/agent/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`
+- 审计：`team/curator/audit-2026-10-23/{raw.json,SUMMARY.md}`
 - 实际修改（非只报告）：`agents.json`（v2 角色目录 + 退役标记）、`AGENTS.md`（历史载体警告）、
   `agent-team-status.md`、`dsh-agent-teams-contract.md`、本提示词。
 - **最该改的一件事**：把 dispatch-log 变成 Lead 收口必跑项（append + check），
   否则「谁在干活」仍只能靠磁盘文件反推。
 - P5 已完成：经人类确认后删除 28 个未引用大文件 / 683.48 MB（`artifacts/agent` 750.2 MB → 66.7 MB，
-  `.md` 报告 114 份全部保留）；删除清单 `artifacts/agent/curator/audit-2026-10-23/cleanup-deleted.json`。
+  `.md` 报告 114 份全部保留）；删除清单 `team/curator/audit-2026-10-23/cleanup-deleted.json`。
 
 ## 7.1 第二次运行结果（2026-10-23 第二轮，角色活性专项）
 

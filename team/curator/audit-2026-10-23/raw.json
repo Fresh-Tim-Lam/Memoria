@@ -1,0 +1,342 @@
+{
+  "schema": "curator-audit/v1",
+  "date": "2026-10-23",
+  "generated_at": "2026-10-23T21:40:42+08:00",
+  "repo_root": "D:\\AAA_Jupyter\\Memoria",
+  "registry": {
+    "path": "team/agents.json",
+    "exists": true,
+    "schema_version": 2,
+    "carrier": "dsh",
+    "active_agents": [
+      {
+        "id": "lead",
+        "status": "active",
+        "trigger_type": "user-dialog",
+        "trigger_mechanism": "用户直接对话（DSH 会话）",
+        "prompt_ref": "docs/guides/dsh-agent-teams-contract.md"
+      },
+      {
+        "id": "curator",
+        "status": "active",
+        "trigger_type": "explicit-dispatch+keywords",
+        "trigger_mechanism": "Lead 用 spawn_teammate({mode:\"creator\"}) 显式创建；用户关键词『审视团队』『团队审计』『curator』",
+        "prompt_ref": "docs/guides/curator-agent-prompt.md"
+      }
+    ],
+    "retired_agents": [
+      {
+        "id": "executor",
+        "previous_id": "builder",
+        "status": "retired-in-dsh"
+      },
+      {
+        "id": "auditor",
+        "previous_id": "verifier",
+        "status": "retired-in-dsh"
+      },
+      {
+        "id": "registrar",
+        "previous_id": null,
+        "status": "retired-in-dsh"
+      },
+      {
+        "id": "legacy-builder",
+        "previous_id": "builder",
+        "status": "retired-in-dsh"
+      },
+      {
+        "id": "legacy-verifier",
+        "previous_id": "verifier",
+        "status": "retired-in-dsh"
+      },
+      {
+        "id": "legacy-registrar",
+        "previous_id": "registrar",
+        "status": "retired-in-dsh"
+      }
+    ],
+    "missing_trigger_channel": []
+  },
+  "legacy_prompts": [
+    {
+      "path": "team/prompts/builder.md",
+      "mtime": "2026-09-10T15:02:04+08:00",
+      "age_days": 43.3,
+      "bytes": 3607
+    },
+    {
+      "path": "team/prompts/registrar.md",
+      "mtime": "2026-09-10T15:43:45+08:00",
+      "age_days": 43.2,
+      "bytes": 3677
+    },
+    {
+      "path": "team/prompts/verifier.md",
+      "mtime": "2026-09-10T15:43:45+08:00",
+      "age_days": 43.2,
+      "bytes": 1735
+    }
+  ],
+  "event_stream": {
+    "legacy_events_jsonl": {
+      "path": "artifacts/agent/events.jsonl",
+      "exists": false,
+      "note": "Trae 载体事件流；DSH 下从未落盘"
+    },
+    "dispatch_log": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\team\\dispatch-log.jsonl",
+      "count": 12,
+      "bad_lines": [],
+      "latest": "2026-10-23T21:27:36+08:00",
+      "max_age_days": 7,
+      "problems": []
+    }
+  },
+  "task_board": {
+    "path": "team/team-board-snapshot.json",
+    "exists": true,
+    "exported_at": "2026-10-23T21:27:31+08:00",
+    "limit": {
+      "maxMembers": 16,
+      "used": 11,
+      "remaining": 5
+    },
+    "members": [
+      {
+        "target": "lead",
+        "status": "running"
+      },
+      {
+        "target": "render-perf",
+        "status": "inactive"
+      },
+      {
+        "target": "sync-mapper",
+        "status": "inactive"
+      },
+      {
+        "target": "arch-contract",
+        "status": "inactive"
+      },
+      {
+        "target": "doc-consistency",
+        "status": "inactive"
+      },
+      {
+        "target": "metrics-baseline",
+        "status": "inactive"
+      },
+      {
+        "target": "kp-owner",
+        "status": "inactive"
+      },
+      {
+        "target": "settings-owner",
+        "status": "inactive"
+      },
+      {
+        "target": "team-steward",
+        "status": "inactive"
+      },
+      {
+        "target": "surface-new",
+        "status": "inactive"
+      },
+      {
+        "target": "todo-owner",
+        "status": "inactive"
+      },
+      {
+        "target": "team-curator",
+        "status": "inactive"
+      }
+    ],
+    "retired": [
+      {
+        "target": "executor",
+        "reason": null
+      },
+      {
+        "target": "auditor",
+        "reason": null
+      },
+      {
+        "target": "registrar",
+        "reason": null
+      },
+      {
+        "target": "legacy-builder",
+        "reason": null
+      },
+      {
+        "target": "legacy-verifier",
+        "reason": null
+      },
+      {
+        "target": "legacy-registrar",
+        "reason": null
+      }
+    ],
+    "in_progress": [],
+    "completed_recent": [
+      {
+        "id": "task-80",
+        "subject": "P0：mapper.domToAst 支持嵌套列表（提交 17c20c62）",
+        "ownerName": "lead"
+      }
+    ]
+  },
+  "artifacts": {
+    "total_files": 789,
+    "total_bytes": 69911500,
+    "total_mb": 66.7,
+    "by_top_dir": {
+      "(root files)": {
+        "files": 3,
+        "bytes": 18259
+      },
+      "prompts": {
+        "files": 3,
+        "bytes": 9019
+      },
+      "curator": {
+        "files": 3,
+        "bytes": 15359
+      },
+      "verify": {
+        "files": 780,
+        "bytes": 69868863
+      }
+    },
+    "cleanup_min_bytes": 5242880,
+    "cleanup_candidates": [],
+    "cleanup_candidate_bytes": 0,
+    "cleanup_candidate_mb": 0.0,
+    "target_total_mb_after_cleanup": 66.7
+  },
+  "owner_activity": {
+    "window_days": 14,
+    "source": "artifacts/agent/verify/**/*.md 文件名含 owner 名",
+    "owners": [
+      {
+        "owner": "render-perf",
+        "report_matches": 2,
+        "latest_report": "2026-10-19T21:25:06+08:00",
+        "days_since_report": 4.0,
+        "judgement": "active"
+      },
+      {
+        "owner": "sync-mapper",
+        "report_matches": 1,
+        "latest_report": "2026-10-18T23:50:08+08:00",
+        "days_since_report": 4.9,
+        "judgement": "active"
+      },
+      {
+        "owner": "arch-contract",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "doc-consistency",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "metrics-baseline",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "kp-owner",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "settings-owner",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "team-steward",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "surface-new",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "todo-owner",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      },
+      {
+        "owner": "team-curator",
+        "report_matches": 0,
+        "latest_report": null,
+        "days_since_report": null,
+        "judgement": "inactive"
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "conclusion": "Trae 事件流（events.jsonl）不存在 ⇒ 旧 on_events 触发器 0 次；DSH 下仅 dispatch-log 生效",
+      "evidence": "Test-Path artifacts/agent/events.jsonl = False; dispatch-log count=12, ok=True"
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "conclusion": "历史角色提示词 3/3 份超过 30 天未改动 ⇒ 判 inactive（保留历史）",
+      "evidence": "team/prompts/builder.md age=43.3d; team/prompts/registrar.md age=43.2d; team/prompts/verifier.md age=43.2d"
+    },
+    {
+      "id": "F3",
+      "severity": "info",
+      "conclusion": "非退役角色全部具备真实触发通道",
+      "evidence": "agents.json agents[].trigger_channel.mechanism 逐项检查"
+    },
+    {
+      "id": "F4",
+      "severity": "medium",
+      "conclusion": "存在 14 天内无磁盘产出证据的 Owner",
+      "evidence": "inactive owners = ['arch-contract', 'doc-consistency', 'metrics-baseline', 'kp-owner', 'settings-owner', 'team-steward', 'surface-new', 'todo-owner', 'team-curator']（窗口 14 天，依据 verify 报告 mtime）"
+    },
+    {
+      "id": "F5",
+      "severity": "medium",
+      "conclusion": "artifacts/agent 体积 66.7 MB；未引用的大文件可清理 0.0 MB（需人类确认）",
+      "evidence": "789 files; cleanup candidates=0; post-cleanup≈66.7 MB"
+    }
+  ],
+  "verification_commands": [
+    "python scripts/agent/dispatch_log.py check",
+    "python scripts/agent/dispatch_log.py --selftest",
+    "python scripts/agent/curator_audit.py --json",
+    "powershell -Command \"(Get-Content team/agents.json -Raw | ConvertFrom-Json).agents | Select-Object id,status\"",
+    "powershell -Command \"Get-ChildItem artifacts/agent -Recurse -File | Measure-Object Length -Sum\"",
+    "git status --short docs/guides artifacts/agent"
+  ]
+}

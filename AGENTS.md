@@ -10,11 +10,11 @@
 
 > **⚠️ 历史载体警告（2026-10-23，P1 单一载体）**：本文件 §2–§7 描述的是 **Trae/SOLO 载体（历史）**：
 > 静态三角色 builder/verifier/registrar + `events.jsonl` 事件派发。**该机制在 DSH 载体下从未运行**，
-> 三角色已在 `artifacts/agent/agents.json` 标记 `retired-in-dsh`。
+> 三角色已在 `team/agents.json` 标记 `retired-in-dsh`。
 > **当前 DSH 载体的真实机制**见 [agent-team-status.md](docs/guides/agent-team-status.md)、
 > [agent-team-org.md](docs/guides/agent-team-org.md)（常驻领域 Owner）与
 > [dsh-agent-teams-contract.md](docs/guides/dsh-agent-teams-contract.md)（实操）。
-> 派发可追溯记录写入 `artifacts/agent/dispatch-log.jsonl`（见同目录 `scripts/agent/dispatch_log.py`）。
+> 派发可追溯记录写入 `team/dispatch-log.jsonl`（见同目录 `scripts/agent/dispatch_log.py`）。
 
 ---
 
@@ -34,7 +34,7 @@
 | 文档索引/登记 | `docs/README.md` 及各级 README、`docs/conventions/docs-management.md` | `registrar` |
 | 版本号 | `src/memoria/__version__.py` | 人（Agent 只读） |
 | 产品状态 | 各知识库 `.memoria/**`（manifest/sidecars/pending/images） | 应用代码 |
-| Agent 注册表 | `artifacts/agent/agents.json` | `registrar` |
+| Agent 注册表 | `team/agents.json` | `registrar` |
 | Agent 事件流 | `artifacts/agent/events.jsonl`（**契约预留，当前未落盘**；DSH 载体用共享任务板 + 磁盘报告，见 dsh-agent-teams-contract.md） | 主控（追加） |
 | 会话历史 | `会话历史 →`<kb>/.memoria/agent/sessions/*.jsonl` | 主控（追加） |
 | 复习作答记录 | `<kb>/.memoria/agent/review/attempts.jsonl` | 应用代码（UI 路径 review_submit_one；append-only，不撤销） |
@@ -52,7 +52,7 @@
 - **禁止**：自判门禁通过；改 `Package/**`；手改 `pyproject.toml` 版本；覆盖用户知识库原文；改登记表/索引；`push` 或强推。
 - **权限**：Read 全库；Write 限 `src/**`、`docs/**`（非登记类）、`scripts/**`；RunCommand 限 [AGENT.md §3](AGENT.md) 命令；非破坏性 git（`commit` 需用户授权）。
 - **触发条件**：① 收到已批准变更任务（含范围+边界+验收标准）；② 收到 `verify.result{pass:false}` 的返工派发。
-- **提示词**：`artifacts/agent/prompts/builder.md`。
+- **提示词**：`team/prompts/builder.md`。
 
 ### 2.2 verifier（验证者）
 
@@ -66,7 +66,7 @@
 - **禁止**：修改 `src/**` 或 `docs/**`；自行实现修复；引用未落盘的口头结论；接受"无证据的 ✅"。
 - **权限**：Read 全库；Write 限 `artifacts/agent/verify/**`、`scripts/benchmark/maintenance/results/**`；RunCommand 限上述验证命令。
 - **触发条件**：① 收到 `change.applied`；② 到达门禁检查点；③ 用户显式要求复核。
-- **提示词**：`artifacts/agent/prompts/verifier.md`。
+- **提示词**：`team/prompts/verifier.md`。
 
 ### 2.3 registrar（登记官）
 
@@ -74,7 +74,7 @@
 - **禁止**：改代码；改文档正文语义；覆盖用户手改；擅自"顺手修复"漂移（只上报 `state.drift`）。
 - **权限**：Read 全库；Edit **仅**登记类文件白名单（§4 矩阵中"写权限=registrar"者）；Write 限 `artifacts/agent/**`；RunCommand 限 `scripts/scan_ui_strings.py`、`scripts/i18n_selftest.js` 等自检脚本。
 - **触发条件**：① 收到 `verify.result{pass:true}`；② 新建文档/作业/i18n 键；③ 定时漂移审计；④ 门禁收口前。
-- **提示词**：`artifacts/agent/prompts/registrar.md`。
+- **提示词**：`team/prompts/registrar.md`。
 
 ## 3. 事件契约（不可变信封）
 
@@ -117,7 +117,7 @@
 | `docs` 登记类（README 索引 / §5 登记 / docs-management 表 / todo.md §12 台账） | R | R | **R/W** | R |
 | `scripts/benchmark/maintenance/results/**`、`artifacts/agent/verify/**` | R | **R/W** | R | R |
 | `artifacts/agent/events.jsonl` | R | R | R | **R/W** |
-| `artifacts/agent/agents.json` | R | R | **R/W** | R |
+| `team/agents.json` | R | R | **R/W** | R |
 | `Package/**`、`pyproject.toml`(version)、`__version__.py` | — Never — | — Never — | — Never — | — Never — |
 | `scripts/benchmark/**/results/**`   (verifier R/W)
 
@@ -135,7 +135,7 @@
 新增 Agent 只需两步，**无需修改 builder/verifier/registrar 的提示词或工作流**：
 
 ```yaml
-# === 追加到 artifacts/agent/agents.json 的 agents[] 数组（唯一改动点）===
+# === 追加到 team/agents.json 的 agents[] 数组（唯一改动点）===
 - id: linter                      # 英文标识（唯一）
   name: 静态检查员                 # 中文名
   # —— 触发条件（主控据此自动派发；支持事件驱动 / 定时 / 用户显式触发）——
@@ -155,7 +155,7 @@
     exec:  [ "ruff", "npx eslint" ]
   # —— 禁止行为：与平台/仓库红线对齐 ——
   forbidden: [ "edit src/**", "edit docs/**", "git push" ]
-  prompt_ref: "artifacts/agent/prompts/linter.md"   # 提示词独立文件，互不污染
+  prompt_ref: "team/prompts/linter.md"   # 提示词独立文件，互不污染
 ```
 
 - 主控在每次事件落盘后扫描 `agents.json` 中 `triggers.on_events` 命中者并派发；**派发逻辑与既有 Agent 无耦合**。
