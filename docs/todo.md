@@ -250,6 +250,27 @@ D1、D2 已收口，见 §10。
 
 F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02（路径漂移检测/修复 `detect_path_moves`/`repair_path_cascade`）、F03（图片引用诊断/修复 `diagnose_image_refs`/`fix_unregistered_image_refs`）均已确认存在并出表（见 §10）；三者后续由 G5.1–G5.3 的后台化/调度化/CLI 补全承接。
 
+### G. 团队任务板 12 条无主任务：认领与顺序（2026-10-23，todo-owner）
+
+> 背景：Curator r3 机检发现 12 条未完成任务 0 owner / 0 writeScopes ⇒ 三项检查空转。Lead 派 todo-owner 认领并按现状排序；**12/12 已认领（owner=todo-owner）**，每条 writeScopes 已按真实写域收敛。现状调研与逐条证据见 `artifacts/agent/verify/todo-owner-state-assessment.md`（只读调研，不提交）。
+
+| 任务 | 处置 | 理由 / 前置（证据见 assessment） |
+|---|---|---|
+| task-79 跨块选区操作 | **执行中·顺序 1（P0）** | 用户报告数据丢失；与 E22 同根因；`app.js` 单写者 ⇒ 先于 69/75 |
+| task-69 冷启动 13–23s | **执行中·顺序 2（P1）** | 先补 boot 打点（`profile_open.py` 不存在）；0.4.6 只优化"打开"不含"启动" |
+| task-75 openFile 启动期静默 | **执行中·顺序 3（P1）** | 已返回 `ok/failed/aborted`；69 的 boot 改造后先复测，可能直接关闭 |
+| task-48 P6 放行前有界重试 | 建议关闭 | 0.4.4/P6 已发布（`v0.4.4`），发布门已过；重试预算按设计用满 |
+| task-49 taskkill /T 安全 + S11 | 建议关闭 | 已完成：无真实 `/T` 用法（仅注释），S11 已入 `interactions.json:154` |
+| task-63 性能 S0+S1（0.4.4 基线） | 建议关闭 | 0.4.4 基线已失效；S0/S1 结论已在 `performance-improvement-plan.md` §7 |
+| task-68 reload 崩溃 | 建议关闭 | 非用户可达：全仓无 reload/F5 绑定，崩溃仅来自 CDP reload（longterm-plan W1 第4轮） |
+| task-70 堆泄漏 | 建议关闭 | 已修：`1094778d` + `dc00034f`（85→21MB，−75.3%），报告在案 |
+| task-71 第二遍滚动中段慢 | 建议关闭 | W3.2 已收口为已知限制：两条修法被证伪，mermaid 缓存 `9c940796` 已合入 |
+| task-73 占位高度估值 | 建议关闭 | 已校准：`bbab57ed`（+3.41%→+1.04%，7 类收敛） |
+| task-74 大文档交互测量债 | 建议关闭 | 已完成：W4.1 `run_lazy_gate.py` L0–L5 + `--sabotage` 负向自证（`98c8c1b9`） |
+| task-78 L4 超 8 屏 | 建议关闭 | 已修复：`17ee05d9` 淘汰饥饿（压力场景 3228→146），`task78-report.md` 闭合 |
+
+**处置汇总**：保留 3 条（79→69→75，严格串行：`app.js` 单写者）；建议关闭 9 条（48/49/63/68/70/71/73/74/78）——**等 Lead 裁决**（建议 `complete` 保留关闭依据，不删除历史）。另有 4 条 blocked 待办同样无主且多数过期：task-61/62/64 建议关闭、task-72 已由 `6c3e8c01` 落地（残余 A/B 待裁）。
+
 ### 验证机制分配（2026-09-09）
 
 > 该表属**施工期验证方法论**（"每项用什么手段验、通过标准是什么"），按规则 8.3 已移到 [design/maintenance-benchmark.md §9](design/maintenance-benchmark.md)（原地不再维护副本）；通用基线（`py_compile` / `node --check` / i18n `rows=0` 等）以 [AGENTS.md §2.2](../../AGENTS.md) 的验证阶梯为准。
