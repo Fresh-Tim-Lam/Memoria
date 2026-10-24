@@ -1,6 +1,6 @@
 {
   "schema_version": 4,
-  "updated_at": "2026-10-24T19:34:14+08:00",
+  "updated_at": "2026-10-25T00:20:39+08:00",
   "carrier": "dsh",
   "note": "Memoria Agent 注册表。**schema v4（2026-10-24）修复了一个真实缺陷**：此前本文件的 agents[] 只有 lead + curator，而运行时实际有 7 个领域/非领域常驻成员 —— 它们只存在于 org.md，导致『注册表描述不了现实』，team_audit 也只有 org.md 一个输入可校验。v4 起 **本文件必须与 DSH list_agents 的成员一致**（除 ephemeral）。团队模型 = Lead（编排/验收/发布）+ 7 个 deepseek-flash 常驻（按需召用）+ 按任务 spawn 的 ephemeral（完成即退役）。2026-10-24 人指令：团队统一 flash，v4-pro 成员全部退役。 2026-10-24 新增 steward（团队管理员）：组织资产 + 成员工作记录 + 过程审计 + 协议演进。",
   "status_semantics": {
@@ -473,60 +473,9 @@
         "dispatch.done",
         "process.finding"
       ],
-      "last_evidence": "2026-10-24T18:09:14+08:00（task-97 设计阶段启动）",
-      "note": "2026-10-24 恢复该角色（上一代 curator-r3 为 v4-pro，已按人指令退役）。与 Lead 的分工：Lead 管交付结果，steward 管过程与行为；steward 不阻断（阻断权在机检/人），其产品是新机检而非报告。"
-    },
-    {
-      "id": "steward2",
-      "name": "团队管理员（steward 第二实例）",
-      "status": "active",
-      "tier": "resident-l2",
-      "domain": "组织资产 + 成员工作记录 + 过程审计 + 协议演进",
-      "model": "deepseek-flash",
-      "scope": "teammate",
-      "input_contract": [
-        "任务板（team_task_list / get）",
-        "成员工作记录（动作层 / 任务层 / 决策层）",
-        "当前标准（AGENTS.md §0.5 / lead-dispatch-rules.md / agent-team-lessons.md / team_audit.py）"
-      ],
-      "output_contract": [
-        "过程类 finding（必须带 rule_ref + 证据引用）→ 进任务板",
-        "协议修订建议 → docs/guides/（需 Lead 批准）",
-        "新机检 → scripts/agent/team_audit.py（同一个问题只应发生一次）"
-      ],
-      "objects": [
-        "team/agents.json",
-        "team/dispatch-log.jsonl",
-        "team/team-board-snapshot.json",
-        "docs/guides/agent-team-org.md",
-        "docs/guides/lead-dispatch-rules.md",
-        "docs/guides/agent-team-lessons.md",
-        "scripts/agent/team_audit.py"
-      ],
-      "evidence_path": [
-        "artifacts/agent/verify/steward/**",
-        "team/dispatch-log.jsonl"
-      ],
-      "write_scope": [
-        "docs/guides/",
-        "artifacts/agent/verify/steward/",
-        "scripts/agent/team_audit.py"
-      ],
-      "forbidden": [
-        "改 Package/**",
-        "手改版本文件 src/memoria/__version__.py",
-        "改 src/**（本角色不写产品代码）",
-        "直接改 AGENTS.md / lead-dispatch-rules.md（只能提 diff，需 Lead 批准）",
-        "git push --force"
-      ],
-      "prompt_ref": "task-97 派发 prompt（内联）",
-      "emits": [
-        "dispatch.spawn",
-        "dispatch.done",
-        "process.finding"
-      ],
-      "last_evidence": "2026-10-24T19:34:14+08:00（task-101 in_progress）",
-      "note": "代次：steward(v4-pro, 首实例) -> steward(v4-pro, 已退役) -> steward(flash, 实例二) -> steward2(flash, 实例三)。之所以改名为 steward2：插件 bug —— 退役后同名重生时 send_message / update_teammate 无法解析该 target（team_task_* 可以，已报 team-plugin-creator）。修好后 steward2 可改回 steward 或直接沿用。"
+      "last_evidence": "2026-10-25T00:20:39+08:00",
+      "note": "代次：curator-r3(v4-pro) -> steward(v4-pro,已退役) -> steward(flash,实例二,因同名重生 bug 不可唤醒,已 force 退役) -> steward(flash,实例三,原名 steward2,于 2026-10-25 改回)。同名重生 bug 已修 66c6dac129 并部署；双实例已合并。旧代卡片归档 team/memory/steward.gen2-retired-20261024.md",
+      "description": "团队管理员：组织资产维护 + 成员工作记录机制（动作/任务/决策三层）+ 过程审计 + 协议演进"
     }
   ],
   "retired_agents": [

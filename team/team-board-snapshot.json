@@ -1,15 +1,15 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T12:06:52.080Z",
+  "exportedAt": "2026-10-24T16:20:42.610Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
-    "currentTeammates": 9,
+    "currentTeammates": 8,
     "maxMembers": 17,
-    "currentMembers": 10,
-    "remaining": 7,
-    "used": 10
+    "currentMembers": 9,
+    "remaining": 8,
+    "used": 9
   },
   "members": [
     {
@@ -76,7 +76,7 @@
     {
       "target": "team-plugin-creator",
       "role": "teammate",
-      "status": "running",
+      "status": "inactive",
       "id": "b5b06a33-6cdd-4d5a-9e23-d8abaeacb30d",
       "model": "deepseek-flash",
       "context": "fresh",
@@ -86,19 +86,10 @@
       "target": "steward",
       "role": "teammate",
       "status": "inactive",
-      "id": "6fc191b4-36cc-4b43-a48f-a6365af0b30e",
-      "model": "deepseek-flash",
-      "context": "fresh",
-      "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制 + 过程审计 + 协议演进。设计阶段先出方案，实现由 Lead 批准后落地。"
-    },
-    {
-      "target": "steward2",
-      "role": "teammate",
-      "status": "running",
       "id": "1c413811-c0ac-4949-b92a-5b236a121d4e",
       "model": "deepseek-flash",
       "context": "fresh",
-      "description": "团队管理员（steward 第二实例，因同名重生 bug 临时改名 steward2）：执行 task-101 / task-100 / task-102 / task-103。代次说明见 agents.json 与 org.md §2.2。"
+      "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制（动作/任务/决策三层）+ 过程审计 + 协议演进。章程见 org.md §2.6；已交付 work_record.py / decide.py / 6 类机检 / findings.jsonl。"
     }
   ],
   "retired": [
@@ -165,6 +156,10 @@
     {
       "target": "boot-fix-backend",
       "description": "task-69 修复 P0-a：lexical_index 加进程内缓存（293 次冗余 4.4MB JSON 解析 ≈ 11.4s）+ validate_kb 后端异步化"
+    },
+    {
+      "target": "steward",
+      "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制 + 过程审计 + 协议演进。设计阶段先出方案，实现由 Lead 批准后落地。"
     },
     {
       "target": "steward",
@@ -1488,7 +1483,7 @@
     },
     {
       "id": "task-98",
-      "status": "pending",
+      "status": "completed",
       "subject": "steward 注册同步：org.md §2.2 行 + steward 章程 + agents.json 字段统一 + 快照重导出（修当前 team_audit FAIL=1）",
       "owner": "lead",
       "writeScopes": [
@@ -1497,7 +1492,12 @@
         "team/team-board-snapshot.json"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "docs/guides/agent-team-org.md",
+        "team/agents.json",
+        "team/team-board-snapshot.json"
+      ]
     },
     {
       "id": "task-99",
@@ -1521,7 +1521,7 @@
       "id": "task-100",
       "status": "completed",
       "subject": "P0 机检四类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ mode_policy（L9）+ 各自红 fixture",
-      "owner": "steward2",
+      "owner": "steward",
       "writeScopes": [
         "scripts/agent/team_audit.py",
         "artifacts/agent/verify/steward"
@@ -1537,7 +1537,7 @@
       "id": "task-101",
       "status": "completed",
       "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
-      "owner": "steward2",
+      "owner": "steward",
       "writeScopes": [
         "scripts/agent/work_record.py",
         "artifacts/agent/verify/steward"
@@ -1553,7 +1553,7 @@
       "id": "task-102",
       "status": "completed",
       "subject": "decide.py + team/decisions.jsonl：决策 e2b04b 追加/提交 trailer 解析/check/selftest（执行者：steward）",
-      "owner": "steward2",
+      "owner": "steward",
       "writeScopes": [
         "scripts/agent/decide.py",
         "team/decisions.jsonl",
@@ -1572,9 +1572,9 @@
     },
     {
       "id": "task-103",
-      "status": "pending",
+      "status": "completed",
       "subject": "P1 机检（decision_trail/model_policy/steward_self_audit）+ findings.jsonl + steward 首轮真实审计（执行者：steward）",
-      "owner": "lead",
+      "owner": "steward",
       "writeScopes": [
         "scripts/agent/team_audit.py",
         "team/steward",
@@ -1586,41 +1586,118 @@
         "task-100",
         "task-102"
       ],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "scripts/agent/team_audit.py",
+        "team/steward/audit-2026-10-24/SUMMARY.md",
+        "team/steward/findings.jsonl",
+        "team/steward/audit-2026-10-24/standards_read.json",
+        "artifacts/agent/verify/steward/task-103/SUMMARY.md"
+      ]
     },
     {
       "id": "task-105",
-      "status": "pending",
+      "status": "completed",
       "subject": "插件契约版本 + 升级通知 + 项目合规检查 —— 让其他项目团队知道插件变了（人：真实工程经验，必须遵循规范）",
       "owner": "team-plugin-creator",
       "writeScopes": [
         "docs/persistence-changes"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "packages/experimental/agent-team/src/contract.ts",
+        "packages/experimental/agent-team/tests/contract.spec.ts",
+        "docs/guides/team-plugin-migration.md",
+        "packages/experimental/tool-agent-team/src/index.ts",
+        "packages/experimental/agent-team/src/index.ts"
+      ]
     },
     {
       "id": "task-106",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "插件缺陷修复批：记忆卡归属/内容范围/正文泄漏（严重）+ completed 任务改派 + 轨迹单任务限额 + 主动物化",
       "owner": "team-plugin-creator",
       "writeScopes": [
         "docs/persistence-changes"
       ],
       "blockedBy": [],
-      "revision": 2
+      "revision": 3,
+      "evidence": [
+        "packages/experimental/agent-team/src/memory.ts",
+        "packages/experimental/agent-team/src/roster.ts",
+        "packages/experimental/agent-team/src/task-board.ts",
+        "packages/experimental/agent-team/tests/team.spec.ts",
+        "packages/experimental/agent-team/tests/trajectory.spec.ts"
+      ]
     },
     {
       "id": "task-107",
-      "status": "pending",
+      "status": "completed",
       "subject": "dispatch_log.py 记录 spawn 的 mode / modeExplicit（让 mode_policy 可判定；task-100 遗留）",
+      "owner": "steward",
       "writeScopes": [
         "scripts/agent/dispatch_log.py",
         "artifacts/agent/verify"
       ],
       "blockedBy": [],
-      "revision": 1,
+      "revision": 3,
+      "evidence": [
+        "scripts/agent/dispatch_log.py",
+        "artifacts/agent/verify/steward/task-107/SUMMARY.md",
+        "artifacts/agent/verify/steward/task-107/demo-mode-policy.txt",
+        "team/steward/findings.jsonl"
+      ],
       "unassignedReason": "dispatch_log.py 不在 steward 写域（steward 写域 = team_audit.py / work_record.py / docs 提案 / artifacts）；按 AGENTS.md §0.5 L1，spawn 前必须先建任务并声明 writeScope，需 Lead 指派执行者（建议 team-plugin-creator 或 Lead 亲自）"
+    },
+    {
+      "id": "task-108",
+      "status": "completed",
+      "subject": "BUG-1b 残留：inherit 路径仍注入未截断的 assistant 原文（卡已修好，inherit 没修）",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 3,
+      "evidence": [
+        "packages/experimental/agent-team/src/memory.ts",
+        "packages/experimental/agent-team/tests/team.spec.ts",
+        "packages/experimental/agent-team/README.md"
+      ]
+    },
+    {
+      "id": "task-109",
+      "status": "completed",
+      "subject": "P1 机检收口（--determinism / write_scope 分级 / mode_policy 显式未决定）+ 第二轮真实审计（SF-014/015/016 已由 d95712e3 批准）",
+      "owner": "steward",
+      "writeScopes": [
+        "scripts/agent/team_audit.py",
+        "team/steward",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [],
+      "revision": 3,
+      "evidence": [
+        "scripts/agent/team_audit.py",
+        "team/steward/audit-2026-10-24-r2/SUMMARY.md",
+        "team/steward/findings.jsonl",
+        "team/steward/audit-2026-10-24-r2/standards_read.json",
+        "artifacts/agent/verify/steward/task-109/SUMMARY.md"
+      ]
+    },
+    {
+      "id": "task-110",
+      "status": "pending",
+      "subject": "SF-025 收据 sha 跨平台假红：改用 LF 归一化内容 sha（不可移植性，非\"可能假红\"）",
+      "owner": "steward",
+      "writeScopes": [
+        "scripts/agent/team_audit.py",
+        "team/steward",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [],
+      "revision": 1
     }
   ],
   "inactiveOwners": [
@@ -1630,39 +1707,40 @@
     "doc-consistency",
     "metrics-baseline",
     "todo-owner",
+    "team-plugin-creator",
     "steward"
   ],
   "completedRecent": [
     {
-      "id": "task-95",
-      "subject": "轨迹追踪 L1+L2：结构化工作轨迹事件流（不是 transcript）+ 可查询投影",
-      "ownerName": "team-plugin-creator"
-    },
-    {
-      "id": "task-97",
-      "subject": "设计「成员工作记录机制」（动作/任务/决策三层）+ 定清团队管理员职责边界（人：可能就是一份工作）",
+      "id": "task-103",
+      "subject": "P1 机检（decision_trail/model_policy/steward_self_audit）+ findings.jsonl + steward 首轮真实审计（执行者：steward）",
       "ownerName": "steward"
     },
     {
-      "id": "task-99",
-      "subject": "决策记录协议条款：AGENTS.md §0.5 新增 L9 + lead-dispatch-rules §6 + org.md §2.1 纪律 6（先条款后机检）",
-      "ownerName": "lead"
+      "id": "task-105",
+      "subject": "插件契约版本 + 升级通知 + 项目合规检查 —— 让其他项目团队知道插件变了（人：真实工程经验，必须遵循规范）",
+      "ownerName": "team-plugin-creator"
     },
     {
-      "id": "task-100",
-      "subject": "P0 机检四类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ mode_policy（L9）+ 各自红 fixture",
-      "ownerName": "steward2"
+      "id": "task-106",
+      "subject": "插件缺陷修复批：记忆卡归属/内容范围/正文泄漏（严重）+ completed 任务改派 + 轨迹单任务限额 + 主动物化",
+      "ownerName": "team-plugin-creator"
     },
     {
-      "id": "task-101",
-      "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
-      "ownerName": "steward2"
+      "id": "task-107",
+      "subject": "dispatch_log.py 记录 spawn 的 mode / modeExplicit（让 mode_policy 可判定；task-100 遗留）",
+      "ownerName": "steward"
     },
     {
-      "id": "task-102",
-      "subject": "decide.py + team/decisions.jsonl：决策 e2b04b 追加/提交 trailer 解析/check/selftest（执行者：steward）",
-      "ownerName": "steward2"
+      "id": "task-108",
+      "subject": "BUG-1b 残留：inherit 路径仍注入未截断的 assistant 原文（卡已修好，inherit 没修）",
+      "ownerName": "team-plugin-creator"
+    },
+    {
+      "id": "task-109",
+      "subject": "P1 机检收口（--determinism / write_scope 分级 / mode_policy 显式未决定）+ 第二轮真实审计（SF-014/015/016 已由 d95712e3 批准）",
+      "ownerName": "steward"
     }
   ],
-  "note": "task-98 补齐（§2.6 steward 章程 + §2.3 执行纪律 1 + 章节重编号）；task-102 完成"
+  "note": "2026-10-25 steward 双实例合并：僵尸 steward force 退役，steward2 改回 steward（同名重生 bug 已修并部署）"
 }
