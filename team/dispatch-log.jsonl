@@ -33,3 +33,5 @@
 {"ts": "2026-10-24T18:09:04+08:00", "actor": "lead", "phase": "spawn", "target": "steward", "task": "task-97", "desc": "团队管理员(spawn，flash)：设计成员工作记录机制(动作/任务/决策三层)+定清职责边界"}
 {"ts": "2026-10-24T18:09:04+08:00", "actor": "lead", "phase": "message", "target": "lead", "task": "task-97", "desc": "Lead 自我纠正：spawn 时用 mode:deep 导致默认 v4-pro，违反人『统一 flash』指令；已 retire 并用 model:deepseek-flash 重启（未产生实质工作）"}
 {"ts": "2026-10-24T18:09:31+08:00", "actor": "lead", "phase": "message", "target": "team-plugin-creator", "task": "task-89", "desc": "发现插件BUG：新spawn成员无法成为task owner（reassign报not found，即使已登记agents.json）；要求定位校验数据源+让错误信息带缓存时间+加测试"}
+{"ts": "2026-10-24T19:57:45+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "task-106", "desc": "插件缺陷批：记忆卡归属/内容范围/正文泄漏(严重) + completed 改派 + 轨迹单任务限额 + 主动物化"}
+{"ts": "2026-10-24T19:57:46+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "task-105", "desc": "插件契约版本+升级通知+项目合规检查：工具响应内 contractNotice 四态，落后2大版本才硬阻断"}
