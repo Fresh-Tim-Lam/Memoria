@@ -848,21 +848,36 @@
       try { window.alert(msg + "\n" + detail); } catch (e2) { /* ignore */ }
     }
 
-    try {
-      if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
-        var p = navigator.clipboard.writeText(text);
-        if (p && typeof p.then === "function") p.then(null, notify);
+    /** 浏览器 API 路径（后端系统剪贴板不可用时的回退）。 */
+    function fallback() {
+      try {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+          var p = navigator.clipboard.writeText(text);
+          if (p && typeof p.then === "function") p.then(null, notify);
+          return;
+        }
+      } catch (err) {
+        notify(err);
         return;
       }
-    } catch (err) {
-      notify(err);
-      return;
+      // Clipboard API 不可用：同步复制当前选区（选区此刻仍未被 EditSync 删除）
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e3) { ok = false; }
+      if (!ok) notify(new Error("clipboard api unavailable"));
     }
 
-    // Clipboard API 不可用：同步复制当前选区（选区此刻仍未被 EditSync 删除）
-    var ok = false;
-    try { ok = document.execCommand("copy"); } catch (e3) { ok = false; }
-    if (!ok) notify(new Error("clipboard api unavailable"));
+    // ① 优先后端系统剪贴板：WebView2 下 clipboard.writeText 可能因窗口未聚焦/权限被拒，
+    //    而后端直写无此限制（2026-10-24 人反馈「复制粘贴卡住/弹权限」的同类根因）。
+    var app = window.MemoriaApp;
+    if (app && typeof app.writeClipboardText === "function") {
+      try {
+        Promise.resolve(app.writeClipboardText(text)).then(function (okWrite) {
+          if (!okWrite) notify(new Error("backend clipboard write failed"));
+        }, notify);
+        return;
+      } catch (_e4) { /* 落到 fallback */ }
+    }
+    fallback();
   }
 
   /**

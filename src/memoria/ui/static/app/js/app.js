@@ -588,7 +588,75 @@
     await call("save_ui_settings", { boot: { lastPathByKb: map } });
   }
 
-  async function call(fn, ...args) {
+  /**
+ * 读取剪贴板文本。
+ *
+ * 优先走后端系统剪贴板（`clipboard_get_text`）：WebView2 下 `navigator.clipboard.readText()`
+ * 需要 `clipboard-read` 权限（会弹「是否允许」把界面卡住），且要求瞬时用户激活
+ * （右键菜单的异步回调里手势已过期，会直接失败并被 catch 吞掉 ⇒ 表现为「粘贴没反应」）。
+ *
+ * 后端读取无权限、无弹窗、同步可靠。仅在非 Windows 或后端失败时才回退浏览器 API。
+ */
+async function readClipboardText() {
+  try {
+    const res = await call("clipboard_get_text");
+    if (res && res.status === "ok" && typeof res.text === "string") {
+      // read_status==="ok" 表示真的读到了（可能是空串）；busy/unavailable/error 时回退
+      if (res.read_status === "ok") return res.text;
+      if (res.read_status === "unsupported") {
+        /* 非 Windows：走下面的浏览器回退 */
+      } else if (res.read_status === "unavailable") {
+        // 剪贴板里没有文本（例如复制的是图片）⇒ 不再回退，直接当空处理
+        return "";
+      }
+    }
+  } catch (_) {
+    /* 后端不可用：回退 */
+  }
+  try {
+    if (navigator.clipboard && typeof navigator.clipboard.readText === "function") {
+      return (await navigator.clipboard.readText()) || "";
+    }
+  } catch (_) {
+    /* 权限被拒/无用户激活：当作读不到 */
+  }
+  return "";
+}
+
+/**
+ * 写入剪贴板文本。
+ *
+ * 优先走后端系统剪贴板（`clipboard_set_text`）：WebView2 下 `navigator.clipboard.writeText()`
+ * 也可能因窗口未聚焦/权限被拒而失败，而此时用户以为「复制成功了」—— 静默失败最坏。
+ * 后端直写无权限、无焦点要求；仅在后端不可用时回退浏览器 API（含 execCommand 兜底）。
+ *
+ * @param {string} text
+ * @returns {Promise<boolean>} 是否写入成功
+ */
+async function writeClipboardText(text) {
+  const value = typeof text === "string" ? text : String(text == null ? "" : text);
+  try {
+    const res = await call("clipboard_set_text", value);
+    if (res && res.status === "ok" && res.written) return true;
+  } catch (_) {
+    /* 后端不可用：回退 */
+  }
+  try {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      await navigator.clipboard.writeText(value);
+      return true;
+    }
+  } catch (_) {
+    /* 继续回退 */
+  }
+  try {
+    return document.execCommand("copy");
+  } catch (_) {
+    return false;
+  }
+}
+
+async function call(fn, ...args) {
     const a = api();
     if (!a || !a[fn]) throw new Error(T("app.apiUnavailable", { fn }));
     return await a[fn](...args);
@@ -8136,7 +8204,7 @@
     async function pasteAtSourceEditor() {
       let text = "";
       try {
-        text = (await navigator.clipboard.readText()) || "";
+        text = (await readClipboardText()) || "";
       } catch (_) {
         text = "";
       }
@@ -13687,7 +13755,7 @@
   async function pasteAtCursor() {
     let text = "";
     try {
-      text = (await navigator.clipboard.readText()) || "";
+      text = (await readClipboardText()) || "";
     } catch (_) {
       text = "";
     }
@@ -16990,6 +17058,8 @@
   window.MemoriaApp = {
     state,
     call,
+    readClipboardText,
+    writeClipboardText,
     T,
     esc,
     setStatus,

@@ -2677,6 +2677,41 @@ UIAPI.review_summon_card = _review_ui_summon_card
 # 增删改/禁用复用 agent 工具同一条领域实现（`_review_cards_upsert`/`_review_card_disable`/`_review_card_delete`，
 # 均已写前备份+可撤销+审计），UI 侧只做入参校验 + 错误转 `status/code/category`。本块追加在文件末尾 ⇒ 锚点零漂移。
 
+def _clipboard_get_text(self) -> dict:
+    """读取系统剪贴板文本（Windows 直读，**不经浏览器 clipboard 权限**）。
+
+    背景（2026-10-24 人反馈）：右键「粘贴」原先走 `navigator.clipboard.readText()`，
+    WebView2 下需要 `clipboard-read` 权限（弹「是否允许」⇒ 界面卡住），且要求瞬时用户激活
+    （右键菜单的异步回调里手势已过期 ⇒ 静默失败）。改由后端直读系统剪贴板，无权限、无弹窗。
+
+    返回 `read_status` 让调用方能区分「剪贴板为空」与「读取失败」：
+    `ok` / `unsupported` / `busy` / `unavailable`（如复制的是图片）/ `error`。
+    """
+    try:
+        from memoria.services import system_clipboard as sc
+
+        text, read_status = sc.read_text_with_status()
+        return {
+            "status": "ok",
+            "text": text,
+            "read_status": read_status,
+            "source": "system",
+        }
+    except Exception as e:  # noqa: BLE001
+        return {"status": "error", "code": "clipboard_failed", "message": str(e)}
+
+
+def _clipboard_set_text(self, text: str = "") -> dict:
+    """写入系统剪贴板文本（Windows 直写，无权限弹窗）。失败时调用方可回退浏览器 API。"""
+    try:
+        from memoria.services import system_clipboard as sc
+
+        ok = sc.write_text(text or "")
+        return {"status": "ok" if ok else "error", "written": bool(ok)}
+    except Exception as e:  # noqa: BLE001
+        return {"status": "error", "code": "clipboard_failed", "message": str(e)}
+
+
 def _review_ui_cards_list(self, kb_path: str | None = None) -> dict:
     """管理页：列出**所有**复习卡（含未到期、含答案、不做隔离）。只读。"""
     from memoria.services.agent.tools.kb import REVIEW_CARDS_REL, _review_load_json
@@ -2846,5 +2881,9 @@ def review_feedback_reply(self, card_id: str, reply: str, kb_path: str | None = 
 
 
 UIAPI.review_feedback_reply = review_feedback_reply
+
+# 系统剪贴板（2026-10-24）：绕开 WebView2 clipboard 权限弹窗与瞬时用户激活限制
+UIAPI.clipboard_get_text = _clipboard_get_text
+UIAPI.clipboard_set_text = _clipboard_set_text
 
 
