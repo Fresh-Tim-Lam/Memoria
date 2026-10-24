@@ -26,3 +26,5 @@
 {"ts": "2026-10-24T11:54:08+08:00", "actor": "boot-probe", "phase": "done", "target": "lead", "task": "task-69-measure", "desc": "测量阶段完成：根因=293次冗余4.4MB解析占75%；建成5个探针", "outcome": "pass", "no_report_reason": "报告在 artifacts/agent/verify/boot-roots-cause-analysis.md（artifacts 被 gitignore）"}
 {"ts": "2026-10-24T12:05:04+08:00", "actor": "lead", "phase": "retire", "target": "boot-fix-backend", "task": "task-69-fix", "desc": "P0-a(279x) + P1后端(coalesce) 完成并验证；按 ephemeral 规则退役"}
 {"ts": "2026-10-24T17:34:48+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "task-87", "desc": "DSH 插件成员记忆继承：P0 记忆卡（≤8KB，append，带免责）+ P1 inherit（≤50KB 报错不截断）"}
+{"ts": "2026-10-24T17:56:58+08:00", "actor": "lead", "phase": "spawn", "target": "todo-owner", "task": "task-88", "desc": "0.4.7 收摊规划：审计 §13 全表 + 排序 + 写回台账 §14（Lead 上一轮漏了咨询）"}
+{"ts": "2026-10-24T17:58:04+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "task-89", "desc": "插件级规范强制：team_preflight 返回义务 + 版本级任务强制 planRef（不依赖 Lead 记忆）"}
