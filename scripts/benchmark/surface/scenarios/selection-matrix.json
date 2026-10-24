@@ -1,0 +1,97 @@
+{
+  "schema": "memoria-selection-matrix/v1",
+  "note": "task-79 跨块选区矩阵。端点用（块内唯一词, 边界）表达，驱动在 DOM 里按词定位，不依赖行号。跨度口径：span1=跨过 1 个目标块（含端点块相邻边界）；span2same=同类型两块都被整体跨过；span3mix=3+ 块混合。不可编辑块（code/table/math/mermaid）的端点一律落在**两侧可编辑段落**里（MathJax/mermaid 渲染后块内无可停留光标，用户也只能整块跨过），布局为 PRE / X1 / MID / X2 / POST ⇒ 可精确表达「跨 1 块」「跨 2 块同类型」。",
+  "file": "selection-matrix.md",
+  "pasteText": "PASTEQ zeta9 omega5",
+  "ops": ["copy", "cut", "delete", "pasteReplace"],
+  "groups": [
+    {
+      "id": "paragraph",
+      "type": "paragraph",
+      "spans": [
+        {"span": "span1", "from": {"marker": "P1", "word": "delta", "edge": "start"}, "to": {"marker": "P2", "word": "echo", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "P1", "word": "P1", "edge": "start"}, "to": {"marker": "P2", "word": "hotel", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "P1", "word": "alpha", "edge": "start"}, "to": {"marker": "P3", "word": "lima", "edge": "end"}}
+      ]
+    },
+    {
+      "id": "heading",
+      "type": "heading",
+      "spans": [
+        {"span": "span1", "from": {"marker": "H1", "word": "marker", "edge": "start"}, "to": {"marker": "H2", "word": "mike", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "H1", "word": "H1", "edge": "start"}, "to": {"marker": "H2", "word": "november", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "H1", "word": "marker", "edge": "start"}, "to": {"marker": "P2", "word": "golf", "edge": "end"}}
+      ]
+    },
+    {
+      "id": "blockquote",
+      "type": "blockquote",
+      "spans": [
+        {"span": "span1", "from": {"marker": "BQ1", "word": "sierra", "edge": "start"}, "to": {"marker": "BQ2", "word": "whiskey", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "BQ1", "word": "BQ1", "edge": "start"}, "to": {"marker": "BQ2B", "word": "beta", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "BQ1", "word": "quebec", "edge": "start"}, "to": {"marker": "L1", "word": "gamma2", "edge": "start"}}
+      ]
+    },
+    {
+      "id": "list",
+      "type": "list",
+      "spans": [
+        {"span": "span1", "from": {"marker": "L1", "word": "delta2", "edge": "start"}, "to": {"marker": "L2", "word": "eta2", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "L1", "word": "L1", "edge": "start"}, "to": {"marker": "L2B", "word": "kappa2", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "L1B", "word": "zeta2", "edge": "start"}, "to": {"marker": "PREC", "word": "lima3", "edge": "end"}}
+      ]
+    },
+    {
+      "id": "code",
+      "type": "code_block",
+      "spans": [
+        {"span": "span1", "from": {"marker": "PREC", "word": "lima3", "edge": "start"}, "to": {"marker": "MIDC", "word": "mike3", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "PREC", "word": "kilo3", "edge": "start"}, "to": {"marker": "POSTC", "word": "quebec3", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "P3", "word": "lima", "edge": "start"}, "to": {"marker": "MIDC", "word": "mike3", "edge": "start"}}
+      ]
+    },
+    {
+      "id": "table",
+      "type": "table",
+      "spans": [
+        {"span": "span1", "from": {"marker": "PRET", "word": "sierra3", "edge": "start"}, "to": {"marker": "MIDT", "word": "tango3", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "PRET", "word": "romeo3", "edge": "start"}, "to": {"marker": "POSTT", "word": "whiskey3", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "P3", "word": "lima", "edge": "start"}, "to": {"marker": "MIDT", "word": "tango3", "edge": "start"}}
+      ]
+    },
+    {
+      "id": "math",
+      "type": "math_block",
+      "spans": [
+        {"span": "span1", "from": {"marker": "PREM", "word": "yankee3", "edge": "start"}, "to": {"marker": "MIDM", "word": "zulu3", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "PREM", "word": "xray3", "edge": "start"}, "to": {"marker": "POSTM", "word": "charlie4", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "POSTC", "word": "quebec3", "edge": "start"}, "to": {"marker": "MIDM", "word": "zulu3", "edge": "start"}}
+      ]
+    },
+    {
+      "id": "mermaid",
+      "type": "mermaid",
+      "spans": [
+        {"span": "span1", "from": {"marker": "PREMM", "word": "echo4", "edge": "start"}, "to": {"marker": "MIDMM", "word": "foxtrot4", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "PREMM", "word": "delta4", "edge": "start"}, "to": {"marker": "POSTMM", "word": "india4", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "MIDM", "word": "zulu3", "edge": "start"}, "to": {"marker": "MIDMM", "word": "foxtrot4", "edge": "start"}}
+      ]
+    }
+  ],
+  "sameBlock": [
+    {"id": "same-quote", "type": "blockquote(intra-block)", "span": "sameBlock", "from": {"marker": "BQ1", "word": "quebec", "edge": "start"}, "to": {"marker": "BQ1B", "word": "victor", "edge": "end"}},
+    {"id": "same-list", "type": "list(intra-block)", "span": "sameBlock", "from": {"marker": "L1", "word": "gamma2", "edge": "start"}, "to": {"marker": "L1B", "word": "zeta2", "edge": "end"}}
+  ],
+  "mixed": [
+    {"id": "mixed-para2code", "type": "paragraph->code_block", "span": "span3mix", "from": {"marker": "P3", "word": "lima", "edge": "start"}, "to": {"marker": "MIDC", "word": "mike3", "edge": "start"}},
+    {"id": "mixed-quote2para", "type": "blockquote->paragraph", "span": "span3mix", "from": {"marker": "BQ2B", "word": "beta", "edge": "start"}, "to": {"marker": "PREC", "word": "kilo3", "edge": "start"}},
+    {"id": "mixed-table2para", "type": "table->paragraph", "span": "span3mix", "from": {"marker": "MIDT", "word": "tango3", "edge": "start"}, "to": {"marker": "POSTT", "word": "whiskey3", "edge": "start"}},
+    {"id": "mixed-math2para", "type": "math_block->paragraph", "span": "span3mix", "from": {"marker": "MIDM", "word": "zulu3", "edge": "start"}, "to": {"marker": "POSTM", "word": "charlie4", "edge": "start"}}
+  ],
+  "mouseCases": [
+    {"id": "mouse-para-span1", "type": "paragraph", "span": "span1", "from": {"marker": "P1", "word": "bravo", "edge": "start"}, "to": {"marker": "P2", "word": "golf", "edge": "end"}},
+    {"id": "mouse-heading-span2", "type": "heading", "span": "span2same", "from": {"marker": "H1", "word": "H1", "edge": "start"}, "to": {"marker": "H2", "word": "november", "edge": "end"}},
+    {"id": "mouse-list-span1", "type": "list", "span": "span1", "from": {"marker": "L1", "word": "delta2", "edge": "start"}, "to": {"marker": "L2", "word": "eta2", "edge": "start"}},
+    {"id": "mouse-quote-span1", "type": "blockquote", "span": "span1", "from": {"marker": "BQ1", "word": "sierra", "edge": "start"}, "to": {"marker": "BQ2", "word": "whiskey", "edge": "start"}}
+  ]
+}
