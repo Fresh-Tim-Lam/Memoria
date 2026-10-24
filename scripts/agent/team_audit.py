@@ -1295,6 +1295,65 @@ def _git(repo: Path, *args: str) -> str:
     return out.stdout if out.returncode == 0 else ""
 
 
+def check_lessons(ctx: AuditContext) -> None:
+    """检查「教训库」是否存在且未过久未更新（组织学习能力的机检投影）。
+
+    设计口径（2026-10-24 自省）：团队反复踩同一类坑（假绿/假红/修了等于没修），
+    每次都由 Lead 重新发现 —— 说明**教训没有沉淀机制**。
+    `docs/guides/agent-team-lessons.md` 是沉淀载体；本检查只保证：
+    ① 文件存在 ② 未被清空 ③ 不是几个月没动（提醒 Curator 复盘）。
+
+    阈值取 21 天：一轮迭代通常 1–2 周，超过三周未更新说明复盘停摆。
+    """
+    check = "lessons_stale"
+    path = ctx.repo / "docs" / "guides" / "agent-team-lessons.md"
+    if not path.exists():
+        ctx.add(check, FAIL,
+                "教训库不存在（docs/guides/agent-team-lessons.md）—— 组织缺学习载体",
+                ctx.rel(path))
+        return
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as e:
+        ctx.add(check, WARN, f"教训库读取失败：{e}", ctx.rel(path))
+        return
+    # 排除 BOM 与空白后计数
+    body = text.lstrip("\ufeff").strip()
+    if len(body) < 1500:
+        ctx.add(check, WARN,
+                f"教训库内容过短（{len(body)} 字符 < 1500）—— 可能被清空或未真正沉淀",
+                ctx.rel(path))
+        return
+    # 条目数（以 "### L" 开头的判据条目计）
+    entries = sum(1 for ln in body.splitlines() if ln.startswith("### L"))
+    try:
+        import subprocess
+
+        out = subprocess.run(
+            ["git", "log", "-1", "--format=%ct", "--", str(path.relative_to(ctx.repo))],
+            cwd=str(ctx.repo), capture_output=True, text=True, encoding="utf-8", timeout=15,
+        )
+        ts = int((out.stdout or "0").strip() or 0)
+    except (OSError, ValueError, subprocess.SubprocessError):
+        ts = 0
+    if ts <= 0:
+        ctx.add(check, INFO,
+                f"教训库未入 git 历史（{entries} 条判据）—— 首版时正常，提交后转为日期检查",
+                ctx.rel(path))
+        return
+    import time as _time
+
+    age_days = (_time.time() - ts) / 86400.0
+    if age_days > 21:
+        ctx.add(check, INFO,
+                f"教训库已 {age_days:.0f} 天未更新（{entries} 条判据）—— 建议 Curator 复盘后追加",
+                ctx.rel(path))
+    else:
+        ctx.add(check, INFO,
+                f"教训库健康：{entries} 条判据，{age_days:.1f} 天前更新",
+                ctx.rel(path))
+
+
 def check_commit_hygiene(ctx: AuditContext) -> None:
     """扫 git 历史找「自修链 / 同一文件同日反复 / 新特性无测试」三类信号。
 
@@ -1392,6 +1451,7 @@ def run_checks(ctx: AuditContext) -> list:
     check_silent_failure(ctx)
     check_contract_drift(ctx, data)
     check_commit_hygiene(ctx)
+    check_lessons(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -1553,7 +1613,15 @@ def selftest() -> int:
             failures.append("红 fixture 未产生 FAIL，退出码不会为 1")
 
         # ---------- 绿 fixture ----------
+
         green = tmp / "green"
+        # lessons_stale（2026-10-24）：绿 fixture 必须也包含教训库 ——
+        # 否则这个新检查会把"本该全绿"的 fixture 变成红的（自证夹具不完整）。
+        _write(green / "docs/guides/agent-team-lessons.md",
+               "# lessons\n\n" + "\n".join(
+                   f"### L{i} 判据{i}\n说明{i}：这是一条足够长的判据说明文本，"
+                   f"用于让 fixture 超过「内容过短」阈值（1500 字符）。\n"
+                   for i in range(1, 40)) + "\n")
         _write(green / "docs/guides/agent-team-org.md", """# org
 
 | 层 | 谁 | 生命周期 |

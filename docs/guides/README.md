@@ -16,4 +16,5 @@
 | [usage-agent-workflow.md](./usage-agent-workflow.md) | Knowledge-base production pipeline: content generation Agent → user pastes back → conversion Agent | Producing/converting knowledge base |
 | [operations.md](./operations.md) | Development/release/build/harness-validation operations manual | Local development and packaging |
 | [agent-team-org.md](./agent-team-org.md) | **Agent team organization**: three-layer structure, standing domain owners, dispatch rules, knowledge placement, cost model | Organizing/spawning agents; engineering maintenance |
+- [Agent 团队教训库](agent-team-lessons.md) — 踩过的坑 → 可继承的判据（27 条，派发前必读三条）
 | [dsh-agent-teams-contract.md](./dsh-agent-teams-contract.md) | **DSH Agent Teams practical contract**: pre-dispatch object cognition, Lead/teammate sandbox split, evidence grading, token discipline | Running multi-agent work in DSH |
