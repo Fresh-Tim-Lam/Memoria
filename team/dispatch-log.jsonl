@@ -21,3 +21,8 @@
 {"ts": "2026-10-24T10:23:05+08:00", "actor": "lead", "phase": "spawn", "target": "p0-selection", "task": "task-79", "desc": "P0 跨块选区四操作矩阵（deep）；分5阶段，阶段4原子块删除需先裁决"}
 {"ts": "2026-10-24T10:23:05+08:00", "actor": "lead", "phase": "spawn", "target": "measurement-debt", "task": "task-81", "desc": "测量债：归一化正则 + p5perf wrap（deep）；需让下次失败可见"}
 {"ts": "2026-10-24T10:43:44+08:00", "actor": "lead", "phase": "retire", "target": "measurement-debt", "task": "task-82", "desc": "任务完成（task-81+82 均收口）；按 ephemeral 规则退役并从名单移除"}
+{"ts": "2026-10-24T11:33:50+08:00", "actor": "lead", "phase": "spawn", "target": "boot-probe", "task": "task-69-measure", "desc": "task-69 测量阶段：建 boot 时间线探针（只写 benchmark，不碰 src）"}
+{"ts": "2026-10-24T11:54:08+08:00", "actor": "lead", "phase": "spawn", "target": "boot-fix-backend", "task": "task-69-fix", "desc": "task-69 后端 P0-a：lexical_index 进程内缓存（省11.2s）+ validate_kb 异步"}
+{"ts": "2026-10-24T11:54:08+08:00", "actor": "boot-probe", "phase": "done", "target": "lead", "task": "task-69-measure", "desc": "测量阶段完成：根因=293次冗余4.4MB解析占75%；建成5个探针", "outcome": "pass", "no_report_reason": "报告在 artifacts/agent/verify/boot-roots-cause-analysis.md（artifacts 被 gitignore）"}
+{"ts": "2026-10-24T12:05:04+08:00", "actor": "lead", "phase": "retire", "target": "boot-fix-backend", "task": "task-69-fix", "desc": "P0-a(279x) + P1后端(coalesce) 完成并验证；按 ephemeral 规则退役"}
+{"ts": "2026-10-24T17:34:48+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "task-87", "desc": "DSH 插件成员记忆继承：P0 记忆卡（≤8KB，append，带免责）+ P1 inherit（≤50KB 报错不截断）"}
