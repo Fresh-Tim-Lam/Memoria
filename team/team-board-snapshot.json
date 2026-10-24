@@ -1,15 +1,15 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T02:43:48.399Z",
+  "exportedAt": "2026-10-24T09:07:25.178Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
-    "currentTeammates": 9,
+    "currentTeammates": 7,
     "maxMembers": 17,
-    "currentMembers": 10,
-    "remaining": 7,
-    "used": 10
+    "currentMembers": 8,
+    "remaining": 9,
+    "used": 8
   },
   "members": [
     {
@@ -74,15 +74,6 @@
       "description": "TODO 文档 Owner：维护 docs/todo.md、登记新缺陷/待办、审计陈旧与废弃项"
     },
     {
-      "target": "curator-r3",
-      "role": "teammate",
-      "status": "inactive",
-      "id": "e16d5e47-89d2-48d4-819b-199a7cc5aa8d",
-      "model": "deepseek-v4-pro",
-      "context": "fresh",
-      "description": "团队复盘与优化：梳理本轮犯过的错误、根因分析、改造组织与团队插件（第三轮）"
-    },
-    {
       "target": "team-plugin-creator",
       "role": "teammate",
       "status": "inactive",
@@ -90,15 +81,6 @@
       "model": "deepseek-flash",
       "context": "fresh",
       "description": "Creator：实现 DSH Agent Teams 插件侧改进 R1–R9（roster 落盘/审计日志/强制 owner/complete 绑产物/快照生成/周期触发/preset 暴露/token 统计）"
-    },
-    {
-      "target": "p0-selection",
-      "role": "teammate",
-      "status": "running",
-      "id": "647393be-53fa-4018-8026-ef8bd559fb47",
-      "model": "deepseek-v4-pro",
-      "context": "fresh",
-      "description": "P0 task-79：跨块选区四种操作（复制/剪切/删除/粘贴替换）× 块类型矩阵，修静默失败 + 建自动化实机矩阵探针"
     }
   ],
   "retired": [
@@ -147,8 +129,24 @@
       "description": "团队策展人：审计并维护 Memoria 团队资产（agents.json / 契约 / org 表 / 脚本），唯一持有团队定义写权限"
     },
     {
+      "target": "curator-r3",
+      "description": "团队复盘与优化：梳理本轮犯过的错误、根因分析、改造组织与团队插件（第三轮）"
+    },
+    {
+      "target": "p0-selection",
+      "description": "P0 task-79：跨块选区四种操作（复制/剪切/删除/粘贴替换）× 块类型矩阵，修静默失败 + 建自动化实机矩阵探针"
+    },
+    {
       "target": "measurement-debt",
       "description": "task-81 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（修法必须让下次失败可见）"
+    },
+    {
+      "target": "boot-probe",
+      "description": "task-69 测量阶段：建 boot 时间线探针，把冷启动 13–23s 拆成分阶段 ms（只写 benchmark 脚本，不碰 src）"
+    },
+    {
+      "target": "boot-fix-backend",
+      "description": "task-69 修复 P0-a：lexical_index 加进程内缓存（293 次冗余 4.4MB JSON 解析 ≈ 11.4s）+ validate_kb 后端异步化"
     }
   ],
   "tasks": [
@@ -1043,7 +1041,7 @@
     },
     {
       "id": "task-69",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "【todo-owner 认领·P1·顺序2】冷启动慢（13–23s 才自动打开首个文件；先补 boot 打点）",
       "owner": "lead",
       "writeScopes": [
@@ -1055,7 +1053,12 @@
         "artifacts/agent/verify/boot-*"
       ],
       "blockedBy": [],
-      "revision": 4
+      "revision": 5,
+      "evidence": [
+        "src/memoria/services/lexical_index.py",
+        "scripts/benchmark/surface/run_boot_profile.py",
+        "src/memoria/ui/static/app/js/app.js"
+      ]
     },
     {
       "id": "task-70",
@@ -1116,16 +1119,21 @@
     },
     {
       "id": "task-75",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "【todo-owner 认领·P1·顺序3】openFile() 启动期静默失效（已返回 ok/failed/aborted；待复测是否仍静默）",
-      "owner": "lead",
+      "owner": "p0-selection",
       "writeScopes": [
         "src/memoria/ui/static/app/js/app.js",
         "scripts/benchmark/surface/scenarios/openfile-*",
         "scripts/benchmark/surface/run_openfile_race.py"
       ],
       "blockedBy": [],
-      "revision": 4
+      "revision": 6,
+      "evidence": [
+        "scripts/benchmark/surface/run_openfile_race.py",
+        "scripts/benchmark/surface/scenarios/openfile-race.mjs",
+        "src/memoria/ui/static/app/js/app.js"
+      ]
     },
     {
       "id": "task-76",
@@ -1160,7 +1168,7 @@
     },
     {
       "id": "task-79",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "【todo-owner 认领·P0·顺序1】多行选区跨块操作（复制/剪切/删除/粘贴替换）—— 跨 blockquote/表格/代码/公式时静默失败",
       "owner": "p0-selection",
       "writeScopes": [
@@ -1171,7 +1179,12 @@
         "scripts/benchmark/maintenance/edit_selection_*"
       ],
       "blockedBy": [],
-      "revision": 5
+      "revision": 6,
+      "evidence": [
+        "artifacts/agent/verify/selection-matrix-after-stage5.md",
+        "scripts/benchmark/surface/run_selection.py",
+        "scripts/benchmark/surface/scenarios/selection-driver.mjs"
+      ]
     },
     {
       "id": "task-80",
@@ -1234,6 +1247,63 @@
         "artifacts/agent/verify/measurement-debt-task81-wl2-install-legacy.js.txt",
         "artifacts/agent/verify/measurement-debt-task81.md"
       ]
+    },
+    {
+      "id": "task-83",
+      "status": "completed",
+      "subject": "P1 task-79 阶段5：粘贴替换跨块选区（新交互语义，进 0.4.7）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/edit-handler.js",
+        "scripts/benchmark/surface/scenarios/selection-",
+        "scripts/benchmark/surface/run_selection.py"
+      ],
+      "blockedBy": [],
+      "revision": 3,
+      "evidence": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify/selection-matrix-after-stage5.md"
+      ]
+    },
+    {
+      "id": "task-84",
+      "status": "completed",
+      "subject": "P1 task-69：validate_kb + loadGraphData 移出 bootAutoOpen 关键路径（P0-b 已被 P0-a 覆盖，收益 43ms→1.9s）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 4,
+      "evidence": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/kb-check.js"
+      ]
+    },
+    {
+      "id": "task-85",
+      "status": "pending",
+      "subject": "P2 图谱审计启动跑 3 次（≈0.6s，0.3s 在关键路径）—— 需失效缓存且判据必须保守（进 0.4.7）",
+      "writeScopes": [
+        "src/memoria/services",
+        "scripts/benchmark/maintenance/graph_audit_"
+      ],
+      "blockedBy": [],
+      "revision": 1,
+      "unassignedReason": "需先由 p0-selection 的 P1 前端落地后再评估实际收益；且并入 0.4.7，暂不分配执行者"
+    },
+    {
+      "id": "task-86",
+      "status": "pending",
+      "subject": "P0-0.4.8 知识图谱调研：知识点类型学 + 关系本体（含方向性）+ 点分布模式（现在只是毛球）",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify",
+        "docs/design"
+      ],
+      "blockedBy": [],
+      "revision": 1
     }
   ],
   "inactiveOwners": [
@@ -1243,7 +1313,6 @@
     "doc-consistency",
     "metrics-baseline",
     "todo-owner",
-    "curator-r3",
     "team-plugin-creator"
   ],
   "completedRecent": [
@@ -1256,6 +1325,11 @@
       "id": "task-78",
       "subject": "【已关闭·已修复 17ee05d9（淘汰饥饿；压力场景 3228→146；task78-report.md 闭合）】L4 超 8 屏",
       "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-79",
+      "subject": "【todo-owner 认领·P0·顺序1】多行选区跨块操作（复制/剪切/删除/粘贴替换）—— 跨 blockquote/表格/代码/公式时静默失败",
+      "ownerName": "p0-selection"
     },
     {
       "id": "task-80",
@@ -1271,7 +1345,17 @@
       "id": "task-82",
       "subject": "P1 测量债续：v2 生产路径（p5perf_run2 + _wl2_install）仍静默 wrap —— 修死文件不等于修生产（task-81 拆出）",
       "ownerName": "measurement-debt"
+    },
+    {
+      "id": "task-83",
+      "subject": "P1 task-79 阶段5：粘贴替换跨块选区（新交互语义，进 0.4.7）",
+      "ownerName": "lead"
+    },
+    {
+      "id": "task-84",
+      "subject": "P1 task-69：validate_kb + loadGraphData 移出 bootAutoOpen 关键路径（P0-b 已被 P0-a 覆盖，收益 43ms→1.9s）",
+      "ownerName": "lead"
     }
   ],
-  "note": "2026-10-24 task-81/82 完成，measurement-debt 已退役；p0-selection 仍在 task-79"
+  "note": "2026-10-24 团队修理完成：v4-pro 全退役（curator-r3/p0-selection/boot-probe）、agents.json v4 登记全部 7 个运行时成员、task-69/75/79/83/84 全部收口"
 }

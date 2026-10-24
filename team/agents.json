@@ -1,8 +1,8 @@
 {
-  "schema_version": 3,
-  "updated_at": "2026-10-24T10:43:44+08:00",
+  "schema_version": 4,
+  "updated_at": "2026-10-24T17:06:24+08:00",
   "carrier": "dsh",
-  "note": "Memoria Agent 注册表。DSH 载体下本文件是『可派发角色目录 + 契约声明』，不是运行时花名册：运行时花名册（Lead + 领域 Owner + 非领域常驻）以 docs/guides/agent-team-org.md §2 与 DSH list_agents 为准。schema v3（2026-10-23 第三轮 Curator）：新增 status_semantics（active/standby/retired-in-dsh 三分）、roster_alias（id 与 roster 名分叉时必须显式登记）、dsn_roster_actions（Lead 待执行的花名册动作队列）。机检：scripts/agent/team_audit.py 的 contract_drift（检查 8）逐条核对本文件的声明能否在磁盘指到现实。",
+  "note": "Memoria Agent 注册表。**schema v4（2026-10-24）修复了一个真实缺陷**：此前本文件的 agents[] 只有 lead + curator，而运行时实际有 7 个领域/非领域常驻成员 —— 它们只存在于 org.md，导致『注册表描述不了现实』，team_audit 也只有 org.md 一个输入可校验。v4 起 **本文件必须与 DSH list_agents 的成员一致**（除 ephemeral）。团队模型 = Lead（编排/验收/发布）+ 7 个 deepseek-flash 常驻（按需召用）+ 按任务 spawn 的 ephemeral（完成即退役）。2026-10-24 人指令：团队统一 flash，v4-pro 成员全部退役。",
   "status_semantics": {
     "active": "14 天内有可复跑证据（dispatch-log / 任务板 owner / 角色专属产物），且必须能被指派新工作。缺证据 ⇒ team_audit::role_evidence 报「幽灵角色」。",
     "standby": "领域已登记、职责明确，但当前窗口内无活 ⇒ **不要求** 14 天证据，也不算「幽灵」。这是把「名额占用」与「正在运转」分开的显式状态（2026-10-23 新增）。",
@@ -13,16 +13,17 @@
   },
   "dsn_roster_actions": {
     "owner": "Lead",
-    "note": "队列已清空（2026-10-23 执行完毕）。新动作由 Curator 追加。",
+    "note": "2026-10-24 执行完毕：退役 3 个 v4-pro（curator-r3 / p0-selection / boot-probe），团队统一 deepseek-flash + 修复本次 1 个真实问题：本地 agents.json 缺登 7 个运行时成员（两套事实源）。",
     "retire_recommended": [],
     "rename_recommended": [],
     "keep_standby": [
+      "render-perf",
+      "sync-mapper",
       "arch-contract",
       "doc-consistency",
       "metrics-baseline",
-      "render-perf",
-      "sync-mapper",
-      "todo-owner"
+      "todo-owner",
+      "team-plugin-creator"
     ]
   },
   "authority": {
@@ -119,85 +120,306 @@
         "dispatch.done",
         "dispatch.retire"
       ],
-      "last_evidence": "2026-10-23T16:22:12+08:00（dispatch-log done）"
+      "last_evidence": "2026-10-24T16:38:42+08:00（发布 v0.4.6 + dispatch-log 多行 actor=lead）"
     },
     {
-      "id": "curator",
-      "name": "团队策展人（Curator）",
+      "id": "render-perf",
+      "name": "渲染性能域 Owner",
       "status": "active",
-      "scope": "creator-or-standard-mode-teammate",
-      "mode": "creator",
-      "agent_preset": "cordis",
-      "roster_alias": [
-        "team-curator",
-        "curator-r3"
-      ],
-      "roster_alias_note": "roster 里的常驻名是 team-curator；每轮 sp_teammate 可用一次性名（如本轮 curator-r3）。两者都必须在此登记，否则 role_evidence 会按精确 id 假报「幽灵角色」。",
-      "trigger_channel": {
-        "type": "explicit-dispatch+keywords",
-        "mechanism": "Lead 用 spawn_teammate 显式创建（creator 模式或 standard 模式均可）；用户关键词『审视团队』『团队审计』『curator』",
-        "evidence": "team/curator/audit-<date>/（raw.json + SUMMARY.md）+ dispatch-log 记录",
-        "limitation": "DSH 宿主无 cron，不能每周自动触发；write_scope 是提示词/工具级约束，无路径级硬隔离（DSH 沙箱不支持子路径白名单）。2026-10-23 运行中的 app.asar（10-21 构建）不含 creator preset ⇒ creator 模式当前不可用，需重打包+重启后才生效；在此之前用 standard 模式 + 本提示词承担同一职责。"
-      },
+      "tier": "resident-l1",
+      "domain": "渲染性能域",
+      "model": "deepseek-flash",
+      "scope": "teammate",
       "input_contract": [
-        "团队资产（本文件 / prompts / 契约 / org / status）",
-        "共享任务板历史（team_task_list，含 completed）",
-        "磁盘产物与体积",
-        "dispatch-log.jsonl",
-        "git log（自修链/热点/不变量缺位）"
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
       ],
       "output_contract": [
-        "team/curator/audit-<date>/{raw.json,SUMMARY.md}",
-        "直接修改团队资产（agents.json / 契约 / status / org / prompts / team_audit.py 检查项）",
-        "清理候选清单（删除需人类确认）",
-        "本轮的『最该改的一件事』"
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/reference/agent-guide/04-preview-and-rendering.md",
+        "docs/design/benchmark-metrics.md"
       ],
       "evidence_path": [
-        "team/curator/audit-<date>/",
-        "team/dispatch-log.jsonl"
-      ],
-      "tools_required": [
-        "read",
-        "write",
-        "edit",
-        "glob",
-        "grep",
-        "pwsh",
-        "team_task_list",
-        "team_task_create",
-        "team_task_get",
-        "team_task_update",
-        "spawn_teammate"
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
       ],
       "write_scope": [
-        "team/agents.json",
-        "team/prompts/**",
-        "team/dispatch-log.jsonl（只追加）",
-        "team/curator/**",
-        "docs/guides/agent-team-status.md",
-        "docs/guides/curator-agent-prompt.md",
-        "docs/guides/dsh-agent-teams-contract.md",
-        "docs/guides/agent-team-org.md",
-        "docs/guides/team-plugin-improvement-spec.md",
-        "AGENTS.md",
-        "resources/agent-skills/**",
-        "scripts/agent/team_audit.py（仅补检查项，不改既有判据语义）",
-        "scripts/agent/dispatch_log.py（仅补守卫/字段，不改既有字段语义）"
+        "src/memoria/ui/static/app/js/**（渲染/调度）",
+        "scripts/benchmark/surface/**",
+        "artifacts/agent/verify/**"
       ],
-      "write_forbidden": [
-        "src/**",
-        "Package/**",
-        "pyproject.toml",
-        "src/memoria/__version__.py",
-        "docs/todo.md 台账正文",
-        "<kb>/.memoria/**"
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
       ],
-      "prompt_ref": "docs/guides/curator-agent-prompt.md",
+      "prompt_ref": "docs/guides/agent-team-org.md §2",
       "emits": [
         "dispatch.spawn",
         "dispatch.done"
       ],
-      "last_evidence": "2026-10-23T22:10:00+08:00（team/curator/audit-2026-10-23/ 第三轮 + team/dispatch-log.jsonl 行 13/16-18）"
+      "last_evidence": "2026-10-23（任务板 1 条已完成）"
+    },
+    {
+      "id": "sync-mapper",
+      "name": "编辑-预览同步域 Owner",
+      "status": "active",
+      "tier": "resident-l1",
+      "domain": "编辑-预览同步域",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/reference/agent-guide/03-editor-and-formatting.md",
+        "docs/design/edit-syntax-anchors.md"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "src/memoria/ui/static/app/js/**（mapper/edit-handler）",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/agent-team-org.md §2",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23（任务板 1 条已完成）"
+    },
+    {
+      "id": "arch-contract",
+      "name": "架构与契约域 Owner",
+      "status": "active",
+      "tier": "resident-l1",
+      "domain": "架构与契约域",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/architecture.md",
+        "docs/design/view-surface-contract.md",
+        "docs/reference/agent-guide/01-*.md",
+        "docs/reference/agent-guide/10-*.md"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "docs/**",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/agent-team-org.md §2",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23（任务板 6 条已完成）"
+    },
+    {
+      "id": "doc-consistency",
+      "name": "文档一致性域 Owner",
+      "status": "active",
+      "tier": "resident-l1",
+      "domain": "文档一致性域",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/conventions/**",
+        "docs/reference/agent-guide/06/07/08"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "docs/**",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/agent-team-org.md §2",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23（任务板 3 条已完成）"
+    },
+    {
+      "id": "metrics-baseline",
+      "name": "度量与基准域 Owner",
+      "status": "active",
+      "tier": "resident-l1",
+      "domain": "度量与基准域",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/design/realapp-measurement-protocol.md",
+        "docs/design/benchmark-metrics.md"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "scripts/benchmark/**",
+        "artifacts/baseline/**（冻结基线只读）",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/agent-team-org.md §2",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23（任务板 18 条已完成 —— 历史主力）"
+    },
+    {
+      "id": "todo-owner",
+      "name": "TODO 文档 Owner",
+      "status": "active",
+      "tier": "resident-l2",
+      "domain": "任务台账与规划",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/todo.md §12",
+        "docs/design/maintenance-jobs.md §5"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "docs/todo.md",
+        "docs/design/maintenance-jobs.md",
+        "artifacts/agent/verify/**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/agent-team-org.md §2.2",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-23（任务板 11 条已完成；§12 G 认领 12 条无主任务）"
+    },
+    {
+      "id": "team-plugin-creator",
+      "name": "Creator：DSH Agent Teams 插件维护",
+      "status": "active",
+      "tier": "resident-l2",
+      "domain": "团队插件与工具链",
+      "model": "deepseek-flash",
+      "scope": "teammate",
+      "input_contract": [
+        "任务板条目（write_scopes + 验收标准）",
+        "objects 列出的认知文档",
+        "docs/guides/agent-team-lessons.md（派发前必读三条）"
+      ],
+      "output_contract": [
+        "限 write_scope 内的变更",
+        "磁盘报告（artifacts/agent/verify/** 或领域报告路径）",
+        "每阶段独立 commit"
+      ],
+      "objects": [
+        "docs/guides/team-plugin-improvement-spec.md",
+        "docs/guides/dsh-agent-teams-contract.md"
+      ],
+      "evidence_path": [
+        "team/dispatch-log.jsonl",
+        "team/team-board-snapshot.json"
+      ],
+      "write_scope": [
+        "D:\\deepseek-harness\\packages\\experimental\\agent-team\\**",
+        "D:\\deepseek-harness\\packages\\experimental\\tool-agent-team\\**"
+      ],
+      "forbidden": [
+        "改 Package/**",
+        "手改版本文件 src/memoria/__version__.py",
+        "git push --force"
+      ],
+      "prompt_ref": "docs/guides/team-plugin-improvement-spec.md",
+      "emits": [
+        "dispatch.spawn",
+        "dispatch.done"
+      ],
+      "last_evidence": "2026-10-24（R1–R8 落地：127 tests + tsc 0；产物 commit 于 DSH 仓库）"
     }
   ],
   "retired_agents": [
@@ -386,16 +608,66 @@
       "retired_reason": "职责已被 scripts/agent/team_audit.py（9 类机检）+ Curator 完全覆盖，人形 Owner 反而制造第二套口径",
       "absorbed_by": "scripts/agent/team_audit.py + Curator",
       "evidence": "scripts/agent/team_audit.py（只读机检，收口必跑）；team/dispatch-log.jsonl 无 team-steward"
-    }
-  ],
-  "ephemeral_agents": [
+    },
+    {
+      "id": "curator",
+      "name": "团队策展人（Curator）",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-24",
+      "retired_reason": "人 2026-10-24 指令『v4-pro 的删掉，修理团队』：本轮团队统一使用 deepseek-flash。 curator 历史运行身份为 curator-r3（v4-pro），第三轮复盘已产出并沉淀到 docs/guides/agent-team-lessons.md（27 条判据）+ docs/guides/agent-team-org.md §1.5（运行形态诚实声明），无事可做；其职责由 Lead 承担（§4 第 6 步「R1 级改动必须独立验收」）。",
+      "absorbed_by": "Lead（复核 + 收口）+ docs/guides/agent-team-lessons.md + org.md §4",
+      "roster_alias": [
+        "team-curator",
+        "curator-r3"
+      ],
+      "scope": "creator-or-standard-mode-teammate",
+      "prompt_ref": "docs/guides/curator-agent-prompt.md",
+      "input_contract": [
+        "团队资产（本文件 / prompts / 契约 / org / status）",
+        "共享任务板历史（team_task_list，含 completed）",
+        "磁盘产物与体积",
+        "dispatch-log.jsonl",
+        "git log（自修链/热点/不变量缺位）"
+      ],
+      "output_contract": [
+        "team/curator/audit-<date>/{raw.json,SUMMARY.md}",
+        "直接修改团队资产（agents.json / 契约 / status / org / prompts / team_audit.py 检查项）",
+        "清理候选清单（删除需人类确认）",
+        "本轮的『最该改的一件事』"
+      ],
+      "write_scope": [
+        "team/agents.json",
+        "team/prompts/**",
+        "team/dispatch-log.jsonl（只追加）",
+        "team/curator/**",
+        "docs/guides/agent-team-status.md",
+        "docs/guides/curator-agent-prompt.md",
+        "docs/guides/dsh-agent-teams-contract.md",
+        "docs/guides/agent-team-org.md",
+        "docs/guides/team-plugin-improvement-spec.md",
+        "AGENTS.md",
+        "resources/agent-skills/**",
+        "scripts/agent/team_audit.py（仅补检查项，不改既有判据语义）",
+        "scripts/agent/dispatch_log.py（仅补守卫/字段，不改既有字段语义）"
+      ]
+    },
     {
       "id": "p0-selection",
-      "purpose": "task-79 P0 跨块选区四操作矩阵（deep 模式执行者）",
-      "task": "task-79",
-      "spawned_at": "2026-10-24T10:22:00+08:00",
-      "dispose_when": "task-79 完成后 retire"
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-24",
+      "scope": "ephemeral-executor",
+      "retired_reason": "人 2026-10-24 指令『v4-pro 的删掉』（该成员为 v4-pro）。任务已完成并入库：task-79 五阶段 / task-83 / task-75 / task-84，7 个 commit；v0.4.6 已发布",
+      "absorbed_by": "Lead 复核 + 已入库的 commit 与 artifacts/agent/verify 报告"
+    },
+    {
+      "id": "boot-probe",
+      "status": "retired-in-dsh",
+      "retired_at": "2026-10-24",
+      "scope": "ephemeral-executor",
+      "retired_reason": "人 2026-10-24 指令『v4-pro 的删掉』（该成员为 v4-pro）。任务已完成并入库：task-69 测量阶段，5 个探针；根因已定位且修复已落地（缓存 279×，冷启动 15.4s→2.4s）",
+      "absorbed_by": "Lead 复核 + 已入库的 commit 与 artifacts/agent/verify 报告"
     }
   ],
+  "ephemeral_agents": [],
   "ephemeral_agents_note": "按任务 spawn 的一次性执行者。它们**不是**常驻成员：不入 org.md §2/§2.2，不参与 roster 计数比对（team_audit.py 判 INFO 而非 FAIL），任务完成即 retire。命名约定（2026-10-24 起）：此类成员以任务域命名（如 p0-selection / measurement-debt），并在本列表登记 purpose/task/spawned_at/dispose_when，便于收口时清理。"
 }
