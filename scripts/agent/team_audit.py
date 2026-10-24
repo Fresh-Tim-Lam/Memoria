@@ -437,8 +437,12 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
                 f"已退役的 `{target}` 仍出现在 org.md §2 当前 Owner 表中（应为历史记录/删除）",
                 f"{ctx.rel(ctx.snapshot_path)}:retired vs {ctx.rel(ctx.org_path)}:§2")
     for target in sorted(retired & teammate_targets):
-        ctx.add(check, FAIL,
-                f"已退役的 `{target}` 仍占快照成员名额（退役未生效）",
+        # 2026-10-24：名字复用（同一角色换人）是合法的 —— 退役条目只有 target/description，
+        # 无法区分"退役未生效"与"角色换代"。故降为 WARN 并要求 org.md 标注代次，
+        # 由人/管理员复核；不静默通过，也不误判为 FAIL。
+        ctx.add(check, WARN,
+                f"`{target}` 同时出现在 retired 与 members —— 名字复用/角色换代？"
+                f"（若为换代请在 org.md 标注代次；若为退役未生效请检查花名册）",
                 f"{ctx.rel(ctx.snapshot_path)}:retired vs :members")
 
     # 文档内部数字自洽

@@ -1,15 +1,15 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T09:07:25.178Z",
+  "exportedAt": "2026-10-24T10:16:11.933Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
-    "currentTeammates": 7,
+    "currentTeammates": 8,
     "maxMembers": 17,
-    "currentMembers": 8,
-    "remaining": 9,
-    "used": 8
+    "currentMembers": 9,
+    "remaining": 8,
+    "used": 9
   },
   "members": [
     {
@@ -76,11 +76,20 @@
     {
       "target": "team-plugin-creator",
       "role": "teammate",
-      "status": "inactive",
+      "status": "running",
       "id": "b5b06a33-6cdd-4d5a-9e23-d8abaeacb30d",
       "model": "deepseek-flash",
       "context": "fresh",
       "description": "Creator：实现 DSH Agent Teams 插件侧改进 R1–R9（roster 落盘/审计日志/强制 owner/complete 绑产物/快照生成/周期触发/preset 暴露/token 统计）"
+    },
+    {
+      "target": "steward",
+      "role": "teammate",
+      "status": "inactive",
+      "id": "6fc191b4-36cc-4b43-a48f-a6365af0b30e",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制 + 过程审计 + 协议演进。设计阶段先出方案，实现由 Lead 批准后落地。"
     }
   ],
   "retired": [
@@ -147,6 +156,10 @@
     {
       "target": "boot-fix-backend",
       "description": "task-69 修复 P0-a：lexical_index 加进程内缓存（293 次冗余 4.4MB JSON 解析 ≈ 11.4s）+ validate_kb 后端异步化"
+    },
+    {
+      "target": "steward",
+      "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制 + 过程审计 + 协议演进。设计阶段先出方案，实现由 Lead 批准后落地。"
     }
   ],
   "tasks": [
@@ -1304,6 +1317,246 @@
       ],
       "blockedBy": [],
       "revision": 1
+    },
+    {
+      "id": "task-87",
+      "status": "completed",
+      "subject": "DSH 插件：记忆卡 + 成员记忆继承（E1–E5 插件强制点 / 8KiB 卡 / 50KiB 注入预算）",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 4,
+      "evidence": [
+        "packages/experimental/agent-team/src/memory.ts",
+        "packages/experimental/agent-team/src/roster.ts",
+        "packages/experimental/tool-agent-team/src/index.ts",
+        "packages/experimental/agent-team/tests/team.spec.ts",
+        "docs/persistence-changes/2026-10-24-team-memory-cards.md"
+      ]
+    },
+    {
+      "id": "task-88",
+      "status": "completed",
+      "subject": "0.4.7 = agent 半吊子工作收摊：审计 §13 全表 + 排序 + 写回台账 §14（Lead 漏了这一步）",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "docs/todo.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3,
+      "evidence": [
+        "docs/todo.md",
+        "artifacts/agent/verify/agent-0.4.7-collection-audit-2026-10-24.md"
+      ]
+    },
+    {
+      "id": "task-89",
+      "status": "in_progress",
+      "subject": "DSH 插件：把义务变成工具返回值 —— team_preflight + 版本级任务强制 planRef（不依赖 Lead 记忆）",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 2
+    },
+    {
+      "id": "task-90",
+      "status": "pending",
+      "subject": "0.4.7-1 台账校准：§13 窗口化家族（AG71–AG96 中窗口化相关）作废归档 + ✅·K2 矛盾状态修正",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "docs/todo.md",
+        "docs/design/ledger-archive-2026.md",
+        "docs/design/agent-panel-batches.md"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-91",
+      "status": "pending",
+      "subject": "0.4.7-2 显示 agent 上下文占用 + 上下文压缩可观测（原 0.4.7 ① 可观测部分）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "src/memoria/ui/static/app/css/app.css",
+        "src/memoria/services/agent/ask.py",
+        "src/memoria/services/agent/compaction.py",
+        "src/memoria/ui/static/app/i18n/zh-CN.js",
+        "src/memoria/ui/static/app/i18n/en-US.js",
+        "scripts/benchmark/surface/scenarios/agent-*.json"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-92",
+      "status": "pending",
+      "subject": "0.4.7-3 skill/plugin 命名统一 + AG21「技能规则面」真机收口（原 0.4.7 ① 命名部分）",
+      "owner": "lead",
+      "writeScopes": [
+        "docs/design/agent-plugin-design.md",
+        "docs/design/agent-capabilities.md",
+        "docs/guides/agent-skills.md",
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "src/memoria/ui/static/app/i18n/zh-CN.js",
+        "src/memoria/ui/static/app/i18n/en-US.js",
+        "src/memoria/services/agent"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-93",
+      "status": "pending",
+      "subject": "0.4.7-4 排版响应式：dock 展开时收缩文件树 / 折叠+分屏时切预览（原 0.4.7 ②）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/css/app.css",
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "src/memoria/ui/static/app/js/file-tree.js",
+        "scripts/benchmark/surface/scenarios/layout-*.json"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-94",
+      "status": "pending",
+      "subject": "0.4.7-5 §13 剩余 K2 逐条收口/降级审计（证据驱动，不写代码）",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "docs/todo.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-95",
+      "status": "pending",
+      "subject": "轨迹追踪 L1+L2：结构化工作轨迹事件流（不是 transcript）+ 可查询投影",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-96",
+      "status": "pending",
+      "subject": "带教（mentor）：过程与行为审计 —— 重读标准不靠记忆，产出是「新机检」不是报告",
+      "owner": "lead",
+      "writeScopes": [
+        "docs/guides",
+        "scripts/agent/team_audit.py",
+        "artifacts/agent/verify/mentor"
+      ],
+      "blockedBy": [
+        "task-95"
+      ],
+      "revision": 1
+    },
+    {
+      "id": "task-97",
+      "status": "pending",
+      "subject": "设计「成员工作记录机制」（动作/任务/决策三层）+ 定清团队管理员职责边界（人：可能就是一份工作）",
+      "owner": "lead",
+      "writeScopes": [
+        "docs/guides",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-98",
+      "status": "pending",
+      "subject": "steward 注册同步：org.md §2.2 行 + steward 章程 + agents.json 字段统一 + 快照重导出（修当前 team_audit FAIL=1）",
+      "owner": "lead",
+      "writeScopes": [
+        "docs/guides/agent-team-org.md",
+        "team/agents.json",
+        "team/team-board-snapshot.json"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-99",
+      "status": "pending",
+      "subject": "决策记录协议条款：AGENTS.md §0.5 新增 L9 + lead-dispatch-rules §6 + org.md §2.1 纪律 6（先条款后机检）",
+      "owner": "lead",
+      "writeScopes": [
+        "AGENTS.md",
+        "docs/guides/lead-dispatch-rules.md",
+        "docs/guides/agent-team-org.md"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-100",
+      "status": "pending",
+      "subject": "P0 机检三类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ 各自红 fixture（执行者：steward）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/agent/team_audit.py",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-101",
+      "status": "pending",
+      "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/agent/work_record.py",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-102",
+      "status": "pending",
+      "subject": "decide.py + team/decisions.jsonl：决策 e2b04b 追加/提交 trailer 解析/check/selftest（执行者：steward）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/agent/decide.py",
+        "team/decisions.jsonl",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [
+        "task-99"
+      ],
+      "revision": 1
+    },
+    {
+      "id": "task-103",
+      "status": "pending",
+      "subject": "P1 机检（decision_trail/model_policy/steward_self_audit）+ findings.jsonl + steward 首轮真实审计（执行者：steward）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/agent/team_audit.py",
+        "team/steward",
+        "artifacts/agent/verify/steward"
+      ],
+      "blockedBy": [
+        "task-98",
+        "task-99",
+        "task-100",
+        "task-102"
+      ],
+      "revision": 1
     }
   ],
   "inactiveOwners": [
@@ -1313,34 +1566,9 @@
     "doc-consistency",
     "metrics-baseline",
     "todo-owner",
-    "team-plugin-creator"
+    "steward"
   ],
   "completedRecent": [
-    {
-      "id": "task-77",
-      "subject": "✅ task-70 堆泄漏已修复（MathJax MathItem 持有 detached 子树，−75.3%）",
-      "ownerName": "lead"
-    },
-    {
-      "id": "task-78",
-      "subject": "【已关闭·已修复 17ee05d9（淘汰饥饿；压力场景 3228→146；task78-report.md 闭合）】L4 超 8 屏",
-      "ownerName": "todo-owner"
-    },
-    {
-      "id": "task-79",
-      "subject": "【todo-owner 认领·P0·顺序1】多行选区跨块操作（复制/剪切/删除/粘贴替换）—— 跨 blockquote/表格/代码/公式时静默失败",
-      "ownerName": "p0-selection"
-    },
-    {
-      "id": "task-80",
-      "subject": "P0：mapper.domToAst 支持嵌套列表 —— 修复 listItemIndex 错位（Tab 升降级的前置阻塞）",
-      "ownerName": "lead"
-    },
-    {
-      "id": "task-81",
-      "subject": "P1 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（task-62 拆出）",
-      "ownerName": "measurement-debt"
-    },
     {
       "id": "task-82",
       "subject": "P1 测量债续：v2 生产路径（p5perf_run2 + _wl2_install）仍静默 wrap —— 修死文件不等于修生产（task-81 拆出）",
@@ -1355,7 +1583,17 @@
       "id": "task-84",
       "subject": "P1 task-69：validate_kb + loadGraphData 移出 bootAutoOpen 关键路径（P0-b 已被 P0-a 覆盖，收益 43ms→1.9s）",
       "ownerName": "lead"
+    },
+    {
+      "id": "task-87",
+      "subject": "DSH 插件：记忆卡 + 成员记忆继承（E1–E5 插件强制点 / 8KiB 卡 / 50KiB 注入预算）",
+      "ownerName": "team-plugin-creator"
+    },
+    {
+      "id": "task-88",
+      "subject": "0.4.7 = agent 半吊子工作收摊：审计 §13 全表 + 排序 + 写回台账 §14（Lead 漏了这一步）",
+      "ownerName": "todo-owner"
     }
   ],
-  "note": "2026-10-24 团队修理完成：v4-pro 全退役（curator-r3/p0-selection/boot-probe）、agents.json v4 登记全部 7 个运行时成员、task-69/75/79/83/84 全部收口"
+  "note": "2026-10-24 task-98：steward 三处注册同步（agents.json 18:09 / org.md §2.2 / 快照）"
 }

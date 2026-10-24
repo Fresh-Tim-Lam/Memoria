@@ -118,15 +118,16 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
    `python scripts/agent/team_audit.py` 的 `role_evidence` 检查（active 角色须有 14 天证据，
    否则会被判「幽灵角色」WARN）。
 
-### 2.2 非领域常驻成员（不计入 §2 领域 Owner 数）
+### 2.2 非领域常驻成员（当前 3 个，不计入 §2 领域 Owner 数）
 
-名册里还有 2 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
+名册里还有 3 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
 以免污染 §2 的领域计数与 `team_audit.py` 的 roster 比对）：
 
 | 成员 | 职责 | 与领域 Owner 的区别 |
 |---|---|---|
 | `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
 | `team-plugin-creator`（DSH 插件改进者，Creator 模式） | 实现 `team-plugin-improvement-spec.md` 的 R1–R8（DSH 插件侧改动：roster 落盘 / 派发审计日志 / 强制 owner / complete 绑产物 / 快照生成 / 周期触发 / preset 暴露 / token 统计）；**唯一持有 DSH 插件源码与 preset 写权限的角色** | 不碰 Memoria 产品代码（`src/**`）与 Memoria 团队资产（`team/**`）；改动需重打包才生效 ⇒ 受 §13「打包是单向门」约束 |
+| `steward`（团队管理员，2026-10-24 恢复） | **组织资产 + 成员工作记录 + 过程审计 + 协议演进**。维护 `team/agents.json` / 名册 / 工作记录三层（动作/任务/决策）；审过程不审结果；产出必须是**新机检**而非报告；**不阻断**（阻断权在机检/人）。**代次说明**：v4-pro 时代的 `curator-r3` 与 v4-pro 的 `steward` 首实例均已退役，当前为 flash 代（第二实例，同名复用）| 与领域 Owner：管全团队的过程与行为，不拥有产品领域；与 `todo-owner`：steward 管「怎么干」，todo-owner 管「干什么/先干什么」|
 
 > > **2026-10-24 变更：Curator 已退役。** 人指令「团队统一 deepseek-flash，v4-pro 的删掉」——
 > 最后一代 Curator 运行身份是 `curator-r3`（v4-pro，第三轮复盘）。其产出已沉淀为
