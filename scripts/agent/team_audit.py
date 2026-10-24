@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 9 类检查
+覆盖 16 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -30,6 +30,20 @@
                      H2 同一文件同日改 ≥3 次（未收敛热点，仅 src/**）；
                      H3 `feat(` 改 src/** 但同 commit 未附带任何测试/探针（不变量缺位）。
 
+10. dispatch_release / lessons / task_reports : 发版三查 / 教训库时效 / 任务报告存在性
+                     （既有检查，详见各自函数注释）
+11. plan_consulted   : **版本级规划是否先于实施**（AGENTS.md §0.5 L8）。task-100 新增。
+                     对近 14 天提交里的版本号 V，比较「实施提交最早时间」与「docs/todo.md 计划最早落盘时间」；
+                     实施早于计划 ⇒ WARN（首月宽限，之后 FAIL）。
+12. role_registration: **角色注册三方全等**（org.md §2.3 执行纪律 1）。task-100 新增。
+                     agents.json（active/standby，别名展开）== org.md §2+§2.2 == 快照 members；
+                     且快照 exportedAt 必须晚于 agents.json/org.md 的 mtime。
+13. dead_path_edit   : **改了无引用文件**（agent-team-lessons.md L0.3）。task-100 新增。
+                     近 7 天改动的 src/scripts 文件，若全仓找不到一处 basename 引用且无 `@entry` 标记 ⇒ WARN。
+14. mode_policy      : **spawn 是否显式做了模式决策**（AGENTS.md §0.5 L9）。task-100 新增。
+                     扫 dispatch-log 的 phase=spawn：无 mode 字段或 modeExplicit=false ⇒ WARN
+                     「静默默认 standard」；若整份日志都不记 mode ⇒ 显式报「无法判定 + checked_count」，不静默判绿。
+
 用法
 ----
     python scripts/agent/team_audit.py            # 人类可读，FAIL⇒退出码 1
@@ -46,6 +60,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -75,6 +90,21 @@ DISPATCH_MIN_TURNAROUND_SECONDS = 60
 # commit_hygiene：默认扫描窗口（天）与热点阈值
 COMMIT_WINDOW_DAYS = 3
 HOTSPOT_MIN_COMMITS = 3
+# task-100 新增检查的窗口/阈值（独立常量：不改既有检查的窗口语义）
+PLAN_WINDOW_DAYS = 14            # plan_consulted：版本级实施/计划时序比对窗口
+DEAD_PATH_WINDOW_DAYS = 7        # dead_path_edit：改动文件回溯窗口
+MODE_POLICY_WINDOW_DAYS = 14     # mode_policy：spawn 记录回溯窗口
+MAX_DEAD_PATH_FILES = 300        # dead_path_edit：单次最多检查的文件数（一次批量 git grep，成本可控）
+DEFAULT_VERSION_FILE = "src/memoria/__version__.py"
+TODO_DOC = "docs/todo.md"
+# dead_path_edit：入口白名单标记（写在文件头 5 行内，实测生成，不允许只存在于文档约定）
+ENTRY_MARKER_RE = re.compile(r"@entry\b")
+_VERSION_RE = re.compile(r"\b\d+\.\d+\.\d+\b")
+DEAD_PATH_EXTS = (".py", ".js", ".mjs", ".ts")
+# mode_policy：DSH 四档（源码 tool-agent-team/src/index.ts）
+VALID_MODES = ("mechanical", "standard", "deep", "creator")
+# mode_policy 加分判据：任务描述明显只读/扫描类，却用了 standard/deep ⇒ 可能该用 mechanical
+_MECHANICAL_DESC_RE = re.compile(r"扫描|统计|盘点|清点|只读|取数|生成报告|写报告|格式检查|列一下|数一数")
 # agents.json 合法的角色状态（standby 是本轮新增：领域已登记但当前无活，不计活性）
 VALID_ROLE_STATUS = ("active", "standby", "retired-in-dsh")
 # trigger_channel 的合法类型前缀（真实通道；不许假装有 cron）
@@ -1564,6 +1594,448 @@ def check_commit_hygiene(ctx: AuditContext) -> None:
 
 
 # ---------------------------------------------------------------------------
+# 10. task-100 新增四类检查（rule_ref 均已在现行规范内：L8 / org §2.3 / lessons L0.3 / L9）
+# ---------------------------------------------------------------------------
+def _git_raw(repo: Path, *args: str) -> str:
+    """执行 git 并返回 stdout；失败返回空串。`core.quotepath=false` 防中文路径转义。"""
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(repo), "-c", "core.quotepath=false", *args],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=60, check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return ""
+    return out.stdout if out.returncode == 0 else ""
+
+
+def _is_git_repo(repo: Path) -> bool:
+    return bool(_git(repo, "rev-parse", "--git-dir").strip())
+
+
+def _git_commits_with_paths(repo: Path, days: int) -> list[dict] | None:
+    """窗口内提交 [{sha, ts, subject, paths}]；非 git 仓库返回 None（调用方必须显式跳过）。"""
+    if not _is_git_repo(repo):
+        return None
+    raw = _git_raw(repo, "log", "--all", f"--since={days} days ago",
+                   "--format=@@%H%x1f%aI%x1f%s", "--name-only")
+    commits: list[dict] = []
+    current: dict | None = None
+    for line in raw.splitlines():
+        if line.startswith("@@"):
+            parts = line[2:].split("\x1f")
+            if len(parts) < 3:
+                current = None
+                continue
+            current = {"sha": parts[0], "ts": _parse_iso(parts[1]), "subject": parts[2], "paths": []}
+            commits.append(current)
+        elif line.strip() and current is not None:
+            current["paths"].append(line.strip())
+    return commits
+
+
+def _fmt_dt(moment) -> str:
+    if not isinstance(moment, datetime):
+        return "?"
+    return moment.astimezone().strftime("%m-%d %H:%M")
+
+
+def check_plan_consulted(ctx: AuditContext) -> None:
+    """版本级规划是否先于实施（AGENTS.md §0.5 L8）。
+
+    判据（设计稿 §5.2-①）：对窗口内出现的版本号 V，
+      t_impl = 最早「提交信息含 V 且改动含 src/ 或 scripts/ 且不含 docs/」的提交时间；
+      t_plan = 最早「改动 docs/todo.md 且 diff 中出现 V」的提交时间；
+      t_impl 存在且（t_plan 不存在 或 t_plan > t_impl）⇒ WARN（首月宽限，之后 FAIL）。
+    """
+    check = "plan_consulted"
+    commits = _git_commits_with_paths(ctx.repo, PLAN_WINDOW_DAYS)
+    if commits is None:
+        ctx.add(check, INFO,
+                "非 git 仓库（或 git 不可用），plan_consulted 跳过（本检查必须依赖 git 历史）",
+                f"git -C {ctx.rel(ctx.repo)} rev-parse --git-dir")
+        return
+    if not commits:
+        ctx.add(check, WARN,
+                f"近 {PLAN_WINDOW_DAYS} 天无提交：plan_consulted 输入为 0（**不得视为通过**；"
+                f"若这是窗口配置错误需修）",
+                f"git log --since='{PLAN_WINDOW_DAYS} days ago'")
+        return
+
+    version_path = ctx.repo / DEFAULT_VERSION_FILE
+    current = ""
+    if version_path.is_file():
+        match = _VERSION_RE.search(_read_text(version_path))
+        current = match.group(0) if match else ""
+    family = ".".join(current.split(".")[:2]) + "." if current else None
+
+    all_versions = sorted({v for c in commits for v in _VERSION_RE.findall(c["subject"])})
+    versions_in_family = [v for v in all_versions if family and v.startswith(family)]
+    if all_versions and not versions_in_family:
+        ctx.add(check, FAIL,
+                f"窗口内提交出现版本号 {all_versions[:6]}，但按当前版本家族 {family} 过滤后为 0 —— "
+                f"版本/家族解析失效（输入为 0 不得判绿）",
+                f"{ctx.rel(version_path)} + git log 提交信息")
+        return
+    if not versions_in_family:
+        ctx.add(check, INFO,
+                f"近 {PLAN_WINDOW_DAYS} 天 {len(commits)} 个提交中未出现版本级工作（checked_count=0，不适用）",
+                f"git log --since='{PLAN_WINDOW_DAYS} days ago'")
+        return
+
+    checked = 0
+    problems = 0
+    for version in versions_in_family:
+        impl = [
+            c for c in commits
+            if version in c["subject"]
+            and any(p.startswith(("src/", "scripts/")) for p in c["paths"])
+            and not any(p.startswith("docs/") for p in c["paths"])
+        ]
+        impl = [c for c in impl if c["ts"] is not None]
+        if not impl:
+            continue
+        checked += 1
+        first_impl = min(impl, key=lambda c: c["ts"])
+        plan_raw = _git_raw(ctx.repo, "log", "--all", f"-S{version}", "--format=%aI", "--", TODO_DOC)
+        plan_times = [t for t in (_parse_iso(x) for x in plan_raw.splitlines() if x.strip()) if t]
+        first_plan = min(plan_times) if plan_times else None
+        if first_plan is None or first_plan > first_impl["ts"]:
+            problems += 1
+            plan_text = f"{_fmt_dt(first_plan)}（{TODO_DOC}）" if first_plan else f"未找到（{TODO_DOC} 无该版本落盘）"
+            ctx.add(check, WARN,
+                    f"版本 {version} 的实施提交 {first_impl['sha'][:8]}（{_fmt_dt(first_impl['ts'])}）"
+                    f"早于台账计划落盘 {plan_text} —— 违反 AGENTS.md §0.5 L8"
+                    f"（版本级规划须先由 todo-owner 产出并写进 {TODO_DOC}；首月 WARN，之后 FAIL；"
+                    f"checked_count={checked}）",
+                    f"git:{first_impl['sha']} vs {TODO_DOC} -S'{version}'")
+    if problems == 0:
+        ctx.add(check, INFO,
+                f"近 {PLAN_WINDOW_DAYS} 天 {checked} 个版本"
+                f"（{', '.join(versions_in_family)}）的实施提交均不早于台账计划（checked_count={checked}）",
+                f"git log --since='{PLAN_WINDOW_DAYS} days ago' + {TODO_DOC} -S")
+
+
+def check_role_registration(ctx: AuditContext, data: dict | None) -> None:
+    """角色注册三方全等 + 快照晚于注册修改（org.md §2.3 执行纪律 1）。
+
+    三方：A = agents.json 中 status∈{active,standby} 的 id（roster_alias 展开，lead 除外）；
+          B = org.md §2 + §2.2 解析出的 owner id；C = 快照 members（lead 除外）。
+    判据：A == B == C；且 snapshot.exportedAt 必须晚于 agents.json / org.md 的 mtime（否则 WARN）。
+    """
+    check = "role_registration"
+    sources = 0
+    if not ctx.agents_path.is_file():
+        ctx.add(check, FAIL, f"输入不足：{ctx.rel(ctx.agents_path)} 不存在，三方一致性无法验证（输入为 0 不得判绿）",
+                f"missing file: {ctx.rel(ctx.agents_path)}")
+        return
+    try:
+        payload = json.loads(_read_text(ctx.agents_path))
+    except (OSError, json.JSONDecodeError) as exc:
+        ctx.add(check, FAIL, f"输入不足：{ctx.rel(ctx.agents_path)} 无法解析（{exc}）",
+                f"{ctx.rel(ctx.agents_path)}")
+        return
+    sources += 1
+
+    if not ctx.org_path.is_file():
+        ctx.add(check, FAIL, f"输入不足：{ctx.rel(ctx.org_path)} 不存在，三方一致性无法验证",
+                f"missing file: {ctx.rel(ctx.org_path)}")
+        return
+    org_text = _read_text(ctx.org_path)
+    parsed_org = parse_org_owners(org_text)
+    if not (parsed_org["owners"] or parsed_org["resident"]):
+        ctx.add(check, FAIL,
+                f"输入不足：{ctx.rel(ctx.org_path)} §2/§2.2 未解析出任何 Owner（名册解析失效，输入为 0 不得判绿）",
+                f"{ctx.rel(ctx.org_path)}:§2")
+        return
+    sources += 1
+
+    if data is None:
+        ctx.add(check, FAIL, "输入不足：任务板快照不可用，三方一致性无法验证",
+                f"{ctx.rel(ctx.snapshot_path)}")
+        return
+    sources += 1
+
+    org_targets = {str(item["target"]) for item in parsed_org["owners"] + parsed_org["resident"]}
+    members = [m for m in (data.get("members") or []) if isinstance(m, dict)]
+    member_targets = {str(m.get("target")) for m in members if m.get("target")}
+    lead_targets = {
+        str(m.get("target")) for m in members
+        if m.get("role") == "lead" or str(m.get("target")) == "lead"
+    }
+    snapshot_targets = member_targets - lead_targets
+
+    agent_targets: set[str] = set()
+    for agent in (payload.get("agents") or []):
+        if not isinstance(agent, dict) or agent.get("status") not in ("active", "standby"):
+            continue
+        aid = str(agent.get("id") or "")
+        # lead 是 DSH 会话身份（scope=dsn-session），不进 org §2 名册计数，故三方比对一律排除
+        if not aid or aid == "lead" or agent.get("scope") == "dsn-session":
+            continue
+        aliases = [str(a) for a in (agent.get("roster_alias") or [])]
+        if aid in member_targets:
+            agent_targets.add(aid)
+        elif aliases:
+            hit = next((a for a in aliases if a in member_targets), None)
+            agent_targets.add(hit or aid)
+        else:
+            agent_targets.add(aid)
+
+    if not (agent_targets or org_targets or snapshot_targets):
+        ctx.add(check, FAIL, "输入不足：三方解析结果均为空（注册表/名册/快照同时失效？），输入为 0 不得判绿",
+                f"{ctx.rel(ctx.agents_path)} + {ctx.rel(ctx.org_path)} + {ctx.rel(ctx.snapshot_path)}:members")
+        return
+
+    checked = len(agent_targets) + len(org_targets) + len(snapshot_targets)
+    problems = 0
+    diffs = [
+        ("agents.json 有 / org.md 无", agent_targets - org_targets,
+         f"{ctx.rel(ctx.agents_path)}:agents[].id vs {ctx.rel(ctx.org_path)}:§2+§2.2"),
+        ("org.md 有 / agents.json 无", org_targets - agent_targets,
+         f"{ctx.rel(ctx.org_path)}:§2+§2.2 vs {ctx.rel(ctx.agents_path)}:agents[].id"),
+        ("agents.json 有 / 快照无", agent_targets - snapshot_targets,
+         f"{ctx.rel(ctx.agents_path)}:agents[].id vs {ctx.rel(ctx.snapshot_path)}:members"),
+        ("快照有 / agents.json 无", snapshot_targets - agent_targets,
+         f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.agents_path)}:agents[].id"),
+        ("org.md 有 / 快照无", org_targets - snapshot_targets,
+         f"{ctx.rel(ctx.org_path)}:§2+§2.2 vs {ctx.rel(ctx.snapshot_path)}:members"),
+        ("快照有 / org.md 无", snapshot_targets - org_targets,
+         f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.org_path)}:§2+§2.2"),
+    ]
+    for label, diff, evidence in diffs:
+        if not diff:
+            continue
+        problems += 1
+        ctx.add(check, FAIL,
+                f"角色注册三方不一致（{label}）：{sorted(diff)} —— 违反 org.md §2.3 执行纪律 1"
+                f"（注册新角色 = 改 3 处 [agents.json / org.md §2.2 / 快照] 并在同一轮重导出快照；"
+                f"id 与 roster 名不一致须显式写 roster_alias；checked_count={checked}）",
+                evidence)
+
+    exported = _parse_iso(data.get("exportedAt"))
+    if exported is None:
+        problems += 1
+        ctx.add(check, FAIL, f"快照 exportedAt={data.get('exportedAt')!r} 不可解析，无法验证「快照晚于注册修改」",
+                f"{ctx.rel(ctx.snapshot_path)}:exportedAt")
+    else:
+        for label, path in (("agents.json", ctx.agents_path), ("org.md", ctx.org_path)):
+            if not path.is_file():
+                continue
+            mtime = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+            if exported.astimezone(timezone.utc) < mtime - timedelta(seconds=30):
+                problems += 1
+                ctx.add(check, WARN,
+                        f"快照 exportedAt={data.get('exportedAt')} 早于 {label} mtime={mtime.isoformat()} "
+                        f"⇒ 快照不可能反映注册修改，须重导出快照后再审计（checked_count={checked}）",
+                        f"{ctx.rel(ctx.snapshot_path)}:exportedAt vs {ctx.rel(path)} mtime")
+
+    if problems == 0:
+        ctx.add(check, INFO,
+                f"角色注册三方一致：agents.json {len(agent_targets)} / org.md {len(org_targets)} / "
+                f"快照 {len(snapshot_targets)} 个 id，且快照晚于注册修改（checked_count={checked}）",
+                f"{ctx.rel(ctx.agents_path)} + {ctx.rel(ctx.org_path)} + {ctx.rel(ctx.snapshot_path)}:members")
+    _ = sources  # 保留计数语义：三方任一不可用已在上方提前 return
+
+
+def check_dead_path_edit(ctx: AuditContext) -> None:
+    """改了无引用文件（agent-team-lessons.md L0.3：测试必须走被测路径）。
+
+    判据：近 N 天改动的 src/**、scripts/** 文件（排除 tests/），若全仓
+    `git grep -l <basename>` 找不到任何引用（含文档引用）且文件头 5 行无 `@entry` 标记 ⇒ WARN。
+    白名单来自仓内实测（`@entry` 标记），不维护文档里的手工名单（防白名单过期变假绿/假红）。
+    """
+    check = "dead_path_edit"
+    commits = _git_commits_with_paths(ctx.repo, DEAD_PATH_WINDOW_DAYS)
+    if commits is None:
+        ctx.add(check, INFO, "非 git 仓库（或 git 不可用），dead_path_edit 跳过（本检查必须依赖 git 历史）",
+                f"git -C {ctx.rel(ctx.repo)} rev-parse --git-dir")
+        return
+    if not commits:
+        ctx.add(check, WARN,
+                f"近 {DEAD_PATH_WINDOW_DAYS} 天无提交：dead_path_edit 输入为 0（**不得视为通过**）",
+                f"git log --since='{DEAD_PATH_WINDOW_DAYS} days ago'")
+        return
+
+    changed: list[str] = []
+    for commit in commits:
+        for path in commit["paths"]:
+            if not path.startswith(("src/", "scripts/")):
+                continue
+            if "/tests/" in path or path.startswith("tests/"):
+                continue
+            if not path.endswith(DEAD_PATH_EXTS):
+                continue
+            if path not in changed:
+                changed.append(path)
+    if not changed:
+        ctx.add(check, FAIL,
+                f"近 {DEAD_PATH_WINDOW_DAYS} 天有 {len(commits)} 个提交，但未解析出任何 src/scripts 代码改动 —— "
+                f"解析失效（输入为 0 不得判绿）",
+                "git log --since=... --name-only")
+        return
+
+    # 性能：一次 git grep 批量搜全部 basename（逐文件调用会把机检拖到 60s+）；
+    # 匹配行里必然含命中的 basename，故用整行子串反查即可。
+    checkable: list[str] = []
+    entry_whitelisted: list[str] = []
+    deleted = 0
+    for path in changed:
+        target = ctx.repo / path
+        if not target.is_file():
+            deleted += 1  # 已删除文件不判（删除本身属 risk 清单，不在这里重复报）
+            continue
+        try:
+            head_text = "\n".join(_read_text(target).splitlines()[:5])
+        except OSError:
+            continue
+        if ENTRY_MARKER_RE.search(head_text):
+            entry_whitelisted.append(path)
+            continue
+        checkable.append(path)
+    checkable = checkable[:MAX_DEAD_PATH_FILES]
+    if not checkable:
+        ctx.add(check, FAIL,
+                f"近 {DEAD_PATH_WINDOW_DAYS} 天有 {len(commits)} 个提交、解析出 {len(changed)} 个候选文件，"
+                f"但全部不可检查（已删除 {deleted} / 入口白名单 {len(entry_whitelisted)}）—— 输入为 0 不得判绿",
+                "git log --since=... --name-only")
+        return
+
+    basenames = sorted({path.rsplit("/", 1)[-1] for path in checkable})
+    owners: dict[str, set[str]] = {}
+    for path in checkable:
+        owners.setdefault(path.rsplit("/", 1)[-1], set()).add(path)
+    grep_args = ["grep", "-n", "-I", "-F"]
+    for name in basenames:
+        grep_args += ["-e", name]
+    grep_out = _git_raw(ctx.repo, *grep_args, "HEAD")
+    referenced: set[str] = set()
+    for line in grep_out.splitlines():
+        # 格式：HEAD:<repo-relative-path>:<lineno>:<content>
+        if not line.startswith("HEAD:"):
+            continue
+        parts = line[5:].split(":", 2)
+        if len(parts) < 3:
+            continue
+        match_path, _lineno, content = parts
+        for name in basenames:
+            if name in content and match_path not in owners.get(name, set()):
+                # 排除「文件自己提到自己」（usage 文案/自述）——那不是外部入口引用
+                referenced.add(name)
+    orphans = [path for path in checkable if path.rsplit("/", 1)[-1] not in referenced]
+    checked = len(checkable)
+
+    if orphans:
+        examples = "; ".join(orphans[:12]) + ("…" if len(orphans) > 12 else "")
+        ctx.add(check, WARN,
+                f"近 {DEAD_PATH_WINDOW_DAYS} 天改了 {len(orphans)} 个「全仓无引用」文件"
+                f"（checked_count={checked}，扫描 {len(basenames)} 个 basename，一次批量 git grep）："
+                f"{examples} —— 先确认它们在**生产/测试路径**上再改"
+                f"（lessons L0.3；对照：改了 p5perf_workload2.mjs 才发现它无入口）",
+                "git grep -n -I -F -e <basename>... HEAD")
+    else:
+        ctx.add(check, INFO,
+                f"近 {DEAD_PATH_WINDOW_DAYS} 天改动的 {checked} 个 src/scripts 文件均能在仓内找到至少一处引用"
+                f"（或文件头带 @entry 入口标记 {len(entry_whitelisted)} 个；checked_count={checked}）",
+                "git grep -n -I -F -e <basename>... HEAD")
+
+
+def check_mode_policy(ctx: AuditContext) -> None:
+    """spawn 是否显式做了模式决策（AGENTS.md §0.5 L9）。
+
+    判据：扫 dispatch-log 的 phase=spawn 记录：
+      - 无 `mode` 字段 / `modeExplicit=false` ⇒ WARN「静默默认 standard（等于没做决策）」；
+      - mode 不在 DSH 四档 ⇒ WARN；
+      - 整份日志都没有 mode 字段 ⇒ 显式报「无法判定 + checked_count」，**不静默判绿**（lessons L1.1）。
+    dispatch-log 当前尚未记录 mode（已实测 12 条 spawn 全缺）——本检查先暴露这个缺口，
+    等 Lead 在 dispatch_log.py 增加 --mode 后自动转为可判定。
+    """
+    check = "mode_policy"
+    path = ctx.dispatch_path
+    if not path.is_file():
+        ctx.add(check, FAIL, f"输入不足：{ctx.rel(path)} 不存在，无法检查 spawn 模式决策",
+                f"missing file: {ctx.rel(path)}")
+        return
+    rows = _read_dispatch_rows(path)
+    spawns = [r for r in rows if isinstance(r, dict) and r.get("phase") == "spawn"]
+    if not spawns:
+        ctx.add(check, FAIL,
+                f"输入不足：{ctx.rel(path)} 中没有任何 phase=spawn 记录（输入为 0 不得判绿）",
+                f"{ctx.rel(path)}:phase=spawn")
+        return
+
+    since = datetime.now(timezone.utc) - timedelta(days=MODE_POLICY_WINDOW_DAYS)
+    in_window = []
+    for row in spawns:
+        stamp = _parse_iso(str(row.get("ts") or ""))
+        if stamp is None or stamp.astimezone(timezone.utc) >= since:
+            in_window.append((row, stamp))
+    if not in_window:
+        ctx.add(check, WARN,
+                f"近 {MODE_POLICY_WINDOW_DAYS} 天无 spawn 记录：mode_policy 输入为 0（**不得视为通过**）",
+                f"{ctx.rel(path)}:phase=spawn")
+        return
+
+    checked = len(in_window)
+    missing_mode = [(row, stamp) for row, stamp in in_window if not str(row.get("mode") or "").strip()]
+    with_mode = [(row, stamp) for row, stamp in in_window if str(row.get("mode") or "").strip()]
+    if not with_mode:
+        ctx.add(check, WARN,
+                f"{checked} 条 spawn 记录**全部缺 mode 字段**（dispatch-log 尚未记录模式）⇒ "
+                f"无法判定是否做过模式决策，**不静默判绿**。修法：dispatch_log.py 增加 --mode 参数，"
+                f"spawn 时记录 mode（L9：不传 mode = 静默默认 standard）"
+                f"（checked_count={checked}，with_mode=0）",
+                f"{ctx.rel(path)}:phase=spawn 无 mode 字段（字段实测：ts/actor/phase/target/task/desc/source）")
+        return
+
+    problems = 0
+    missing_explicit = 0
+    # 有 mode 的记录里，仍可能有另一部分记录完全没记 mode —— 必须一并暴露（否则又是一处假绿）
+    if missing_mode:
+        problems += 1
+        targets = ", ".join(str(r.get("target")) for r, _ in missing_mode[:6])
+        ctx.add(check, WARN,
+                f"{len(missing_mode)}/{checked} 条 spawn 记录缺 mode 字段（{targets}）⇒ 无法判定是否做了"
+                f"模式决策（静默默认 standard；checked_count={checked}）",
+                f"{ctx.rel(path)}:phase=spawn 缺 mode")
+    for row, _stamp in with_mode:
+        mode = str(row.get("mode")).strip()
+        explicit = row.get("modeExplicit")
+        if explicit is False or (explicit is None and "modeExplicit" not in row):
+            # 有 mode 但没有显式决策标记 ⇒ 仍可能是不传 mode 的静默默认（无法区分），必须报
+            missing_explicit += 1
+            ctx.add(check, WARN,
+                    f"spawn `{row.get('target')}`（{_fmt_dt(_stamp)}，task={row.get('task') or '—'}）"
+                    f"记录了 mode={mode} 但无 modeExplicit 标记 ⇒ 无法证明是**显式**决策"
+                    f"（L9：不传 mode 会被静默默认为 standard）",
+                    f"{ctx.rel(path)}:phase=spawn[{row.get('target')}].modeExplicit")
+            problems += 1
+        if mode not in VALID_MODES:
+            ctx.add(check, WARN,
+                    f"spawn `{row.get('target')}` 的 mode={mode!r} 不在 DSH 四档 {list(VALID_MODES)} 内",
+                    f"{ctx.rel(path)}:phase=spawn[{row.get('target')}].mode")
+            problems += 1
+        desc = str(row.get("desc") or "")
+        if mode in ("standard", "deep") and _MECHANICAL_DESC_RE.search(desc):
+            ctx.add(check, WARN,
+                    f"spawn `{row.get('target')}` 的任务描述偏只读/扫描类（「{desc[:40]}…」）却用了 mode={mode} "
+                    f"⇒ 可能该用 mechanical（推理链 off；L9 路由表）",
+                    f"{ctx.rel(path)}:phase=spawn[{row.get('target')}].desc vs mode")
+            problems += 1
+
+    if problems == 0:
+        ctx.add(check, INFO,
+                f"近 {MODE_POLICY_WINDOW_DAYS} 天 {checked} 条 spawn 记录中 {len(with_mode)} 条带 mode 且均显式"
+                f"（{', '.join(sorted({str(r.get('mode')) for r, _ in with_mode}))}，checked_count={checked}）",
+                f"{ctx.rel(path)}:phase=spawn")
+    else:
+        ctx.add(check, INFO,
+                f"mode_policy 统计：checked_count={checked}，with_mode={len(with_mode)}，"
+                f"缺显式标记={missing_explicit}",
+                f"{ctx.rel(path)}:phase=spawn")
+
+
+# ---------------------------------------------------------------------------
 # 汇总/自测
 # ---------------------------------------------------------------------------
 def run_checks(ctx: AuditContext) -> list:
@@ -1579,6 +2051,11 @@ def run_checks(ctx: AuditContext) -> list:
     check_commit_hygiene(ctx)
     check_lessons(ctx)
     check_dispatch_release(ctx, data)
+    # task-100 新增四类（rule_ref：AGENTS.md §0.5 L8 / org.md §2.3 / lessons L0.3 / AGENTS.md §0.5 L9）
+    check_plan_consulted(ctx)
+    check_role_registration(ctx, data)
+    check_dead_path_edit(ctx)
+    check_mode_policy(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -1793,8 +2270,10 @@ def selftest() -> int:
             ],
         }, ensure_ascii=False, indent=2))
         _write(green / "team/dispatch-log.jsonl", "\n".join([
+            # task-100：mode_policy 绿路径要求 spawn 显式记录 mode（L9）；否则绿 fixture 会出 WARN
             json.dumps({"ts": "2099-01-01T00:00:00+08:00", "actor": "lead",
-                        "phase": "spawn", "target": "curator"}, ensure_ascii=False),
+                        "phase": "spawn", "target": "curator",
+                        "mode": "mechanical", "modeExplicit": True}, ensure_ascii=False),
             json.dumps({"ts": "2099-01-01T00:01:00+08:00", "actor": "curator",
                         "phase": "done", "target": "lead",
                         "report": "artifacts/agent/verify/ok-report.md"}, ensure_ascii=False),
@@ -1825,6 +2304,160 @@ def selftest() -> int:
             failures.append("绿 fixture 出现意外 WARN：" + "; ".join(
                 f"{f.check}:{f.message}" for f in green_warns[:5]))
 
+        # ---------- task-100：四个新检查的专属红/绿 fixture（缺一不可） ----------
+        def _git_do(repo, *args, env_extra=None):
+            env = dict(os.environ)
+            if env_extra:
+                env.update(env_extra)
+            subprocess.run(["git", "-C", str(repo), *args], capture_output=True,
+                           text=True, check=False, env=env)
+
+        def _init_git(repo):
+            repo.mkdir(parents=True, exist_ok=True)
+            _git_do(repo, "init", "-q")
+            _git_do(repo, "config", "user.email", "selftest@example.com")
+            _git_do(repo, "config", "user.name", "selftest")
+            _git_do(repo, "config", "commit.gpgsign", "false")
+
+        def _commit(repo, message, when):
+            _git_do(repo, "add", "-A")
+            stamp = when.isoformat()
+            _git_do(repo, "commit", "-q", "-m", message,
+                    env_extra={"GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp})
+
+        def _ctx(repo):
+            return AuditContext(
+                repo=repo,
+                snapshot_path=repo / DEFAULT_SNAPSHOT,
+                org_path=repo / DEFAULT_ORG,
+                verify_dir=repo / DEFAULT_VERIFY_DIR,
+                agents_path=repo / DEFAULT_AGENTS,
+                dispatch_path=repo / DEFAULT_DISPATCH_LOG,
+                dispatch_script=repo / DEFAULT_DISPATCH_SCRIPT,
+                agents_md_path=repo / DEFAULT_AGENTS_MD,
+            )
+
+        def _isolated(check_fn, ctx, *extra_args):
+            ctx.findings = []
+            check_fn(ctx, *extra_args)
+            return ctx.findings
+
+        now = datetime.now(timezone.utc)
+        day = lambda n: now - timedelta(days=n)  # noqa: E731
+
+        # 1) plan_consulted：红 = 先实施后台账；绿 = 先计划后实施
+        plan_red = tmp / "plan-red"
+        _init_git(plan_red)
+        _write(plan_red / DEFAULT_VERSION_FILE, '__version__ = "0.9.9"\n')
+        _write(plan_red / "src" / "impl.py", "x = 1\n")
+        _commit(plan_red, "feat: 0.9.9 实现第一步", day(3))
+        _write(plan_red / TODO_DOC, "- 0.9.9 计划落盘\n")
+        _commit(plan_red, "docs(todo): 0.9.9 计划", day(2))
+        plan_red_findings = _isolated(check_plan_consulted, _ctx(plan_red))
+        expect(plan_red_findings, "plan_consulted", WARN, "0.9.9")
+
+        plan_green = tmp / "plan-green"
+        _init_git(plan_green)
+        _write(plan_green / TODO_DOC, "- 0.9.9 计划落盘\n")
+        _commit(plan_green, "docs(todo): 0.9.9 计划", day(3))
+        _write(plan_green / DEFAULT_VERSION_FILE, '__version__ = "0.9.9"\n')
+        _write(plan_green / "src" / "impl.py", "x = 1\n")
+        _commit(plan_green, "feat: 0.9.9 实现", day(2))
+        plan_green_findings = _isolated(check_plan_consulted, _ctx(plan_green))
+        if any(f.check == "plan_consulted" and f.severity in (FAIL, WARN) for f in plan_green_findings):
+            failures.append("plan_consulted 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in plan_green_findings if f.severity in (FAIL, WARN)))
+
+        # 2) role_registration：红 = 三方各缺一个成员；绿 = 三方全等
+        roles_green = tmp / "roles-green"
+        _write(roles_green / DEFAULT_SNAPSHOT, json.dumps({
+            "schema": "team-board-snapshot/v1", "exportedAt": "2099-01-01T00:00:00+08:00",
+            "limit": {}, "retired": [], "inactiveOwners": [], "tasks": [],
+            "members": [{"target": "lead", "role": "lead"}, {"target": "alpha", "role": "teammate"}],
+        }, ensure_ascii=False))
+        _write(roles_green / DEFAULT_ORG,
+               "# org\n\n## 2. 常驻成员（当前 1 个）\n\n| Agent | 领域 |\n|---|---|\n| `alpha` | 甲 |\n")
+        _write(roles_green / DEFAULT_AGENTS, json.dumps({
+            "agents": [{"id": "alpha", "status": "active"}],
+        }, ensure_ascii=False))
+        green_role_snapshot = json.loads(_read_text(roles_green / DEFAULT_SNAPSHOT))
+        roles_green_ctx = _ctx(roles_green)
+        roles_green_findings = _isolated(check_role_registration, roles_green_ctx, green_role_snapshot)
+        if any(f.check == "role_registration" and f.severity in (FAIL, WARN) for f in roles_green_findings):
+            failures.append("role_registration 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in roles_green_findings if f.severity in (FAIL, WARN)))
+
+        roles_red = tmp / "roles-red"
+        red_role_snapshot = {
+            "schema": "team-board-snapshot/v1", "exportedAt": "2026-01-01T00:00:00+08:00",
+            "limit": {}, "retired": [], "inactiveOwners": [], "tasks": [],
+            "members": [{"target": "lead", "role": "lead"},
+                        {"target": "alpha", "role": "teammate"},
+                        {"target": "beta", "role": "teammate"}],
+        }
+        _write(roles_red / DEFAULT_SNAPSHOT, json.dumps(red_role_snapshot, ensure_ascii=False))
+        _write(roles_red / DEFAULT_ORG,
+               "# org\n\n## 2. 常驻成员\n\n| Agent | 领域 |\n|---|---|\n| `alpha` | 甲 |\n")
+        _write(roles_red / DEFAULT_AGENTS, json.dumps({
+            "agents": [{"id": "alpha", "status": "active"}, {"id": "ghost", "status": "active"}],
+        }, ensure_ascii=False))
+        roles_red_findings = _isolated(check_role_registration, _ctx(roles_red), red_role_snapshot)
+        expect(roles_red_findings, "role_registration", FAIL, "ghost")   # agents 有 / org 无
+        expect(roles_red_findings, "role_registration", FAIL, "beta")    # 快照有 / agents 无
+        if not any(f.check == "role_registration" and "checked_count" in f.message for f in roles_red_findings):
+            failures.append("role_registration 的 FAIL 消息未带 checked_count")
+
+        # 3) dead_path_edit：红 = 无引用新文件；绿 = 文件被文档引用
+        dead_red = tmp / "dead-red"
+        _init_git(dead_red)
+        _write(dead_red / "scripts" / "dead_probe_zz.py", "print('dead')\n")
+        _commit(dead_red, "feat: 新增探针", day(1))
+        dead_red_findings = _isolated(check_dead_path_edit, _ctx(dead_red))
+        expect(dead_red_findings, "dead_path_edit", WARN, "dead_probe_zz.py")
+
+        dead_green = tmp / "dead-green"
+        _init_git(dead_green)
+        _write(dead_green / "scripts" / "used_probe_zz.py", "print('used')\n")
+        _write(dead_green / "docs" / "ref.md", "跑 `used_probe_zz.py` 取数。\n")
+        _commit(dead_green, "feat: 新增被引用探针", day(1))
+        dead_green_findings = _isolated(check_dead_path_edit, _ctx(dead_green))
+        if any(f.check == "dead_path_edit" and f.severity in (FAIL, WARN) for f in dead_green_findings):
+            failures.append("dead_path_edit 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in dead_green_findings if f.severity in (FAIL, WARN)))
+
+        # 4) mode_policy：红 = 缺 mode / 缺显式标记 / 非法档位；绿 = 显式 mechanical
+        mode_red = tmp / "mode-red"
+        stamp = now.isoformat(timespec="seconds")
+        _write(mode_red / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": stamp, "actor": "lead", "phase": "spawn", "target": "no-mode",
+                        "desc": "扫一遍仓库统计"}, ensure_ascii=False),
+            json.dumps({"ts": stamp, "actor": "lead", "phase": "spawn", "target": "no-explicit",
+                        "mode": "standard"}, ensure_ascii=False),
+            json.dumps({"ts": stamp, "actor": "lead", "phase": "spawn", "target": "bad-mode",
+                        "mode": "turbo", "modeExplicit": True}, ensure_ascii=False),
+        ]) + "\n")
+        mode_red_findings = _isolated(check_mode_policy, _ctx(mode_red))
+        expect(mode_red_findings, "mode_policy", WARN, "缺 mode 字段")
+        expect(mode_red_findings, "mode_policy", WARN, "modeExplicit")
+        expect(mode_red_findings, "mode_policy", WARN, "不在 DSH 四档")
+
+        mode_green = tmp / "mode-green"
+        _write(mode_green / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": stamp, "actor": "lead", "phase": "spawn", "target": "ok",
+                        "mode": "mechanical", "modeExplicit": True,
+                        "desc": "跑一条命令取数"}, ensure_ascii=False),
+        ]) + "\n")
+        mode_green_findings = _isolated(check_mode_policy, _ctx(mode_green))
+        if any(f.check == "mode_policy" and f.severity in (FAIL, WARN) for f in mode_green_findings):
+            failures.append("mode_policy 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in mode_green_findings if f.severity in (FAIL, WARN)))
+
+        # 5) 四个新检查必须已注册进 run_checks（否则上面单测绿、生产不跑 = 假绿）
+        registered = {f.check for f in run_checks(_ctx(roles_green))}
+        for name in ("plan_consulted", "role_registration", "dead_path_edit", "mode_policy"):
+            if name not in registered:
+                failures.append(f"run_checks 未注册新检查：{name}")
+
         if failures:
             print("SELFTEST FAIL")
             for msg in failures:
@@ -1832,7 +2465,8 @@ def selftest() -> int:
             return 1
         print("SELFTEST PASS：红 fixture 报出 9 类检查（roster×2 / stall ×2 / write_scope ×2 / "
               "artifact_refs / role_evidence / silent_failure ×6 / contract_drift ×5），"
-              "commit_hygiene 在非 git fixture 上 INFO 跳过，绿 fixture 全绿。")
+              "commit_hygiene 在非 git fixture 上 INFO 跳过，绿 fixture 全绿；"
+              "task-100 四类新检查各自红 fixture 必红、绿 fixture 不误报、且都已注册进 run_checks。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
