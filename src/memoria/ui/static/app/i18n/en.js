@@ -1,4 +1,4 @@
-// English language pack —— Memoria i18n.
+﻿// English language pack —— Memoria i18n.
 // Managed by docs/conventions/i18n.md. Fallback to "zh-CN" for any missing key.
 (function (g) {
   "use strict";
@@ -381,9 +381,19 @@
         editorNotReady: "Editor not ready",
         pasteFail: "Paste failed (current position is not editable)",
         pasted: "Pasted",
-        delSelFail: "Cannot delete this selection: it spans blocks that cannot be removed as a whole",
-        cutSelFail: "Copied to clipboard, but cannot delete this selection: it spans blocks that cannot be removed as a whole",
-        selFailDetail: "The document was not changed. Shrink the selection or act in smaller pieces; table / code / formula / diagram blocks can only be deleted one block at a time for now.",
+        delSelFail: "Cannot delete this selection: it contains content that cannot be removed with a selection",
+        cutSelFail: "Copied to clipboard, but cannot delete this selection: it contains content that cannot be removed with a selection",
+        selFailDetail: "The document was not changed. The leading frontmatter (document header) cannot be removed with a selection; otherwise try a smaller selection.",
+        blockNameParagraph: "paragraph",
+        blockNameHeading: "heading",
+        blockNameList: "list",
+        blockNameQuote: "quote",
+        blockNameTable: "table",
+        blockNameCode: "code block",
+        blockNameMath: "formula block",
+        blockNameMermaid: "diagram block",
+        blockCount: "{name} x{n}",
+        deletedSummary: "Deleted: {parts}",
       },
       assist: {
         ellipsisTop: "\u2026 above lines 1\u2013{to}",

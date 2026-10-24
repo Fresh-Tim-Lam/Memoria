@@ -309,6 +309,28 @@ function pageHelpers() {
     var last = arr[arr.length - 1];
     return last && (last.msg + (last.detail ? ' | ' + last.detail : ''));
   }
+  /** 全部提示调用（fn/msg/detail）——仅作证据；**用户可见性以 flashTexts() 的 DOM 为准**
+   *  （产品内部函数 showFlashInfo/showFlashError 不经 MemoriaApp 门面，spy 抓不到）。 */
+  function noticeAll() {
+    return (window.__NOTICE && window.__NOTICE.calls) ? window.__NOTICE.calls.slice(-8) : [];
+  }
+
+  /** 真实可见提示：读 `#-flash-host` 里现存 toast（info / error 两类）。 */
+  function flashTexts() {
+    var host = document.getElementById('-flash-host');
+    if (!host) return { info: [], error: [], all: [] };
+    var info = [], error = [];
+    var kids = host.children || [];
+    for (var i = 0; i < kids.length; i++) {
+      var el = kids[i];
+      var t = (el.textContent || '').trim();
+      if (!t) continue;
+      var cls = String(el.className || '');
+      if (cls.indexOf('-flash-error') >= 0) error.push(t);
+      else if (cls.indexOf('-flash-info') >= 0) info.push(t);
+    }
+    return { info: info, error: error, all: info.concat(error) };
+  }
 
   /** 事件监听/剪贴板/提示 侦察桩（幂等）：只装一次。 */
   function installSpies() {
@@ -374,7 +396,14 @@ function pageHelpers() {
     return { prevented: ev.defaultPrevented };
   }
 
-  function resetClip() { window.__CLIP = { writes: [], copyEvents: [], pasteEvents: [] }; window.__NOTICE = { calls: [] }; }
+  function resetClip() {
+    window.__CLIP = { writes: [], copyEvents: [], pasteEvents: [] };
+    window.__NOTICE = { calls: [] };
+    // 清掉上一例残留的 toast：toast 有 ~3.8s 生命周期，不清会污染本例的
+    // 「原子块删除必须有摘要 / 纯可编辑删除必须无提示」断言。
+    var host = document.getElementById('-flash-host');
+    if (host) host.innerHTML = '';
+  }
 
   /** 浏览器原生复制（无产品 handler，等价 Ctrl+C 的剪贴板填充路径）。
    *  用 execCommand('copy') 只为**兜底**：真机/无头下真实 Ctrl+C 偶发不触发 copy 事件时，
@@ -497,6 +526,8 @@ function pageHelpers() {
     debugSelect: debugSelect,
     clip: function () { return window.__CLIP; },
     notice: noticeText,
+    noticeAll: noticeAll,
+    flashTexts: flashTexts,
     editMode: function () { return !!(window.MemoriaEditHandler && window.MemoriaEditHandler.editMode); },
     forceEditMode: function () {
       var EH = window.MemoriaEditHandler;
@@ -511,6 +542,17 @@ function pageHelpers() {
       return (window.state || {}).viewMode;
     },
     blockLineMap: function () { return window.__blockLineMap || null; },
+    /** frontmatter 块计数（stage5 断言：粘贴绝不能造出文档头） */
+    frontmatterCount: function () {
+      var doc = window.state && window.state.doc;
+      var blocks = (doc && doc.blocks) || [];
+      var n = 0;
+      for (var i = 0; i < blocks.length; i++) if (blocks[i] && blocks[i].type === 'frontmatter') n++;
+      return n;
+    },
+    bodyStartsWithFrontmatter: function () {
+      return String(bodyText()).replace(/^\uFEFF/, '').indexOf('---') === 0;
+    },
     // 隔离兜底：万一磁盘被 flush（切文件/失焦）写脏，用后端 force 覆盖回原始内容
     restoreDisk: function (file, pristine) {
       var app = window.MemoriaApp;
@@ -804,6 +846,15 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       }
     }
   }
+  for (const pc of matrix.pasteCases || []) {
+    if (wantOps && !wantOps.has('pasteReplace')) continue;
+    const id = `paste-${pc.id}`;
+    if (!want(id)) continue;
+    list.push({
+      id, type: pc.type || 'paste', span: pc.span || 'paste', op: 'pasteReplace',
+      from: pc.from, to: pc.to, selMode: 'programmatic', pasteText: pc.pasteText,
+    });
+  }
   for (const sb of matrix.sameBlock || []) {
     const ops = (sb.ops || opsAll).filter((o) => !wantOps || wantOps.has(o));
     for (const op of ops) {
@@ -856,7 +907,7 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       // 粘贴用例：剪贴板必须在**建立选区之前**写好（写剪贴板的 textarea 兜底会抢走选区）
       let pasteText = null, clipWrite = null;
       if (cs.op === 'pasteReplace') {
-        pasteText = matrix.pasteText || 'PASTEQ zeta9 omega5';
+        pasteText = cs.pasteText || matrix.pasteText || 'PASTEQ zeta9 omega5';
         clipWrite = await cdp.evalJS(`window.__SEL.writeClipboard(${JSON.stringify(pasteText)})`).catch((e) => 'eval-error:' + e.message);
         await sleep(180);
         await cdp.evalJS('window.__SEL.forceEditMode()');
@@ -973,8 +1024,12 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       const postBody = await cdp.evalJS('window.__SEL.body()');
       const clip = await cdp.evalJS('window.__SEL.clip()');
       const notice = await cdp.evalJS('window.__SEL.notice()');
+      const noticeCalls = await cdp.evalJS('window.__SEL.noticeAll()');
+      const flashes = await cdp.evalJS('window.__SEL.flashTexts()');
       const domToksAfterOp = await cdp.evalJS('window.__SEL.domTokens()');
-      rec.preBody = preBody; rec.postBody = postBody; rec.notice = notice; rec.opNote = opNote;
+      rec.preBody = preBody; rec.postBody = postBody; rec.notice = notice; rec.noticeCalls = noticeCalls;
+      rec.flashes = flashes;
+      rec.opNote = opNote;
       rec.selText = cov.selText;
       // 「只改 DOM、不改源码」证据（E30 同族：原生粘贴/拖拽没被 AST 管线接管时的特征）
       rec.domOnlyChange = (postBody === preBody) &&
@@ -982,6 +1037,12 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       if (cs.op === 'pasteReplace' && rec.pasteText) {
         const pw = await cdp.evalJS(`window.__SEL.tokensOf(${JSON.stringify(rec.pasteText)})`);
         rec.pastedVisibleInDom = Object.keys(pw).every((w) => !!domToksAfterOp[w]);
+      }
+      // stage5 专项证据（Lead 要求的两条必须实测）
+      if (cs.op === 'pasteReplace') {
+        rec.fmCount = await cdp.evalJS('window.__SEL.frontmatterCount()');
+        rec.bodyStartsWithFm = await cdp.evalJS('window.__SEL.bodyStartsWithFrontmatter()');
+        rec.docBlocks = await cdp.evalJS('(window.state.doc && window.state.doc.blocks || []).length');
       }
 
       // ── 断言 1：源码词集（复制 = 必须一字不动；其余 = 选中删净 + 未选保留 + 无重复残留） ──
@@ -995,12 +1056,32 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
         rec.checks.copyNoop = postBody === preBody;
       } else {
         rec.checks.changed = postBody !== preBody;
-        rec.checks.deletedGone = Object.keys(cov.deleted).every((w) => !postTokens[w]);
+        // 计数口径：源码里同一词可能出现多次（如两个 ```python 围栏）⇒ 用 pre−deleted 的期望计数
+        rec.checks.deletedGone = Object.keys(cov.deleted).every(
+          (w) => (postTokens[w] || 0) <= Math.max(0, (preTokens[w] || 0) - (cov.deleted[w] || 0)));
         rec.checks.keptPresent = missing.length === 0;
         rec.checks.noDuplicate = extra.length === 0;
         // task-79 阶段2 断言：**操作没发生 ⇒ 用户必须看到提示**（不许静默）
         if (postBody === preBody) {
-          rec.checks.failureNotice = !!(notice && String(notice).trim());
+          rec.checks.failureNotice = !!(flashes && flashes.error && flashes.error.length > 0) ||
+            !!(notice && String(notice).trim());
+        } else if (cs.op === 'delete' || cs.op === 'cut') {          // task-79 阶段4 断言（Lead 要求，口径=用户可见 DOM toast）：
+          //   ① 删除范围含原子块 ⇒ 必须有删除摘要（-flash-info）
+          //   ② 纯可编辑块删除 ⇒ 必须**无**任何 toast（不能变噪音）
+          const atomicInvolved = /code_block|table|math_block|mermaid/.test(String(cs.type));
+          const infoArr = (flashes && flashes.info) || [];
+          const allArr = (flashes && flashes.all) || [];
+          if (atomicInvolved) rec.checks.atomicSummary = infoArr.length > 0;
+          else rec.checks.silentWhenEditable = allArr.length === 0;
+        } else if (cs.op === 'pasteReplace') {
+          // stage5 硬条件（Lead 要求实测）：
+          //   ① 不得出现"只改 DOM 不改源码"（原生粘贴兜底 = E30 同族回魂）
+          //   ② 粘贴不得造出 frontmatter（文档头），文档仍可解析
+          //   ③ 粘贴内容必须真的出现在 DOM 里（不是只写源码没渲染）
+          rec.checks.noNativeDomOnly = !rec.domOnlyChange;
+          if (rec.fmCount != null) rec.checks.noFrontmatter = rec.fmCount === 0;
+          if (rec.docBlocks != null) rec.checks.docStillParses = rec.docBlocks > 0;
+          if (rec.pastedVisibleInDom != null) rec.checks.pastedVisible = rec.pastedVisibleInDom;
         }
       }
 

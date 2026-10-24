@@ -12828,15 +12828,21 @@
         return false;
       }
 
-      // 校验范围内所有 block 均可编辑
-      //   list  ：支持（按 item 定位到行，前后未被选中的 item 会保留）
-      //   quote ：支持（按内部段落索引定位到行；stage3 起）
+      // 校验范围内所有 block 是否可随选区删除（stage4 语义，Lead 2026-10-24 裁决）
+      //   · 原子块（表格 / 代码块 / 公式块 / mermaid）：**允许整块删除**。
+      //     理由：这些块 contenteditable=false，Chromium 会把选区端点吸附到块边界 ⇒
+      //     真实用户能表达的只有「整块被跨过 / 端点贴边界」，「只删半个表格」不可表达，
+      //     所以按整块行区间删除是安全且一致的语义；单撤销可完整恢复。
+      //   · frontmatter：**必须继续拒绝**（删掉 = 文档头损坏），返回 false 由调用方给可见提示。
+      var delCounts = {};
       for (var bi = start.blockIndex; bi <= end.blockIndex; bi++) {
         var blk = _doc.blocks[bi];
-        var why = !blk ? ("block " + bi + " 缺失")
-          : NON_EDITABLE[blk.type] ? ("block " + bi + " type=" + blk.type + " 不可编辑")
-            : null;
-        if (why) { log("STYLE", "deleteMulti ABORT: " + why); return false; }
+        if (!blk) { log("STYLE", "deleteMulti ABORT: block " + bi + " 缺失"); return false; }
+        if (blk.type === "frontmatter") {
+          log("STYLE", "deleteMulti ABORT: block " + bi + " type=frontmatter 不可删除（文档头）");
+          return false;
+        }
+        delCounts[blk.type] = (delCounts[blk.type] || 0) + 1;
       }
 
       var startBlock = startBlock0;
@@ -12939,7 +12945,46 @@
         " srcLines=[" + startLine + "," + endLine + "]" +
         " blm=[s" + JSON.stringify(blm && blm[start.blockIndex]) + " e" + JSON.stringify(blm && blm[end.blockIndex]) + "]" +
         " newSrc=" + JSON.stringify(newLines[0]));
-      return commitRange(startLine, endLine, newLines, newCursor, preCursor, "deleteSelection");
+      var okDel = commitRange(startLine, endLine, newLines, newCursor, preCursor, "deleteSelection");
+      if (okDel) _notifyDeletionSummary(delCounts);
+      return okDel;
+    }
+
+    // ── stage4：删除摘要提示（原子块被整删时）────────────────────────────
+    var _DEL_NAME_KEY = {
+      paragraph: "blockNameParagraph", heading: "blockNameHeading", list: "blockNameList",
+      blockquote: "blockNameQuote", table: "blockNameTable", code_block: "blockNameCode",
+      math_block: "blockNameMath", mermaid: "blockNameMermaid",
+    };
+    var _DEL_ORDER = ["paragraph", "heading", "list", "blockquote", "table", "code_block", "math_block", "mermaid"];
+    var _DEL_ATOMIC = { code_block: 1, table: 1, math_block: 1, mermaid: 1 };
+
+    /**
+     * 删除范围含**原子块**时给事后摘要提示（不是确认框）。
+     *
+     * 为什么必须提示：长选区滚出视口后，用户可能没意识到中间夹着整块表格/代码；
+     * 数据已经删除，必须让用户知道"刚才删掉了什么"，否则连是否该撤销都无从判断。
+     * 为什么纯可编辑块不提示：删段落/列表/引用是高频动作，每次都弹 = 噪音。
+     * 通道：复用 `showFlashInfo`（阶段2 的 showFlashError 是失败提示，两者不混）。
+     *
+     * @param {Object<string,number>} counts — 被删除块的类型计数
+     */
+    function _notifyDeletionSummary(counts) {
+      if (!counts) return;
+      var hasAtomic = false;
+      for (var t in _DEL_ATOMIC) { if (counts[t] > 0) { hasAtomic = true; break; } }
+      if (!hasAtomic) return;
+      var parts = [];
+      for (var i = 0; i < _DEL_ORDER.length; i++) {
+        var ty = _DEL_ORDER[i];
+        var n = counts[ty] || 0;
+        if (n <= 0 || !_DEL_NAME_KEY[ty]) continue;
+        parts.push(T("cfg.clip.blockCount", { name: T("cfg.clip." + _DEL_NAME_KEY[ty]), n: n }));
+      }
+      if (!parts.length) return;
+      var msg = T("cfg.clip.deletedSummary", { parts: parts.join("、") });
+      try { showFlashInfo(msg); } catch (e) { /* 提示失败不影响删除结果 */ }
+      log("STYLE", "deleteMulti summary: " + msg);
     }
 
     /**

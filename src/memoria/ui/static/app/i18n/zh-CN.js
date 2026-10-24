@@ -1,4 +1,4 @@
-// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
+﻿// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
 // 由 docs/conventions/i18n.md 管理；界面文案必须走 MemoriaI18n.t('key')。
 (function (g) {
   "use strict";
@@ -381,9 +381,19 @@
         editorNotReady: "编辑器未就绪",
         pasteFail: "粘贴失败（当前位置不可编辑）",
         pasted: "已粘贴",
-        delSelFail: "无法删除该选区：它跨了暂不支持整体删除的块",
-        cutSelFail: "已复制到剪贴板，但无法删除该选区：它跨了暂不支持整体删除的块",
-        selFailDetail: "文档未做修改。请缩小选区或分段操作；表格、代码块、公式块、图示块目前只能整块单独删除。",
+        delSelFail: "无法删除该选区：选区包含不能随选区删除的内容",
+        cutSelFail: "已复制到剪贴板，但无法删除该选区：选区包含不能随选区删除的内容",
+        selFailDetail: "文档未做修改。文首 frontmatter（文档头）不能随选区删除；其它情况请缩小选区后重试。",
+        blockNameParagraph: "段落",
+        blockNameHeading: "标题",
+        blockNameList: "列表",
+        blockNameQuote: "引用",
+        blockNameTable: "表格",
+        blockNameCode: "代码块",
+        blockNameMath: "公式块",
+        blockNameMermaid: "图示块",
+        blockCount: "{name}×{n}",
+        deletedSummary: "已删除：{parts}",
       },
       assist: {
         ellipsisTop: "… 上文第 1–{to} 行",

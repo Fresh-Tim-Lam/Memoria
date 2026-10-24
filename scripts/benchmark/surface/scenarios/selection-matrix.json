@@ -83,10 +83,19 @@
     {"id": "same-list", "type": "list(intra-block)", "span": "sameBlock", "from": {"marker": "L1", "word": "gamma2", "edge": "start"}, "to": {"marker": "L1B", "word": "zeta2", "edge": "end"}}
   ],
   "mixed": [
+    {"id": "hard-para-table-para", "type": "paragraph+table+paragraph", "span": "hard", "from": {"marker": "PRET", "word": "sierra3", "edge": "start"}, "to": {"marker": "MIDT", "word": "tango3", "edge": "start"}},
     {"id": "mixed-para2code", "type": "paragraph->code_block", "span": "span3mix", "from": {"marker": "P3", "word": "lima", "edge": "start"}, "to": {"marker": "MIDC", "word": "mike3", "edge": "start"}},
     {"id": "mixed-quote2para", "type": "blockquote->paragraph", "span": "span3mix", "from": {"marker": "BQ2B", "word": "beta", "edge": "start"}, "to": {"marker": "PREC", "word": "kilo3", "edge": "start"}},
     {"id": "mixed-table2para", "type": "table->paragraph", "span": "span3mix", "from": {"marker": "MIDT", "word": "tango3", "edge": "start"}, "to": {"marker": "POSTT", "word": "whiskey3", "edge": "start"}},
     {"id": "mixed-math2para", "type": "math_block->paragraph", "span": "span3mix", "from": {"marker": "MIDM", "word": "zulu3", "edge": "start"}, "to": {"marker": "POSTM", "word": "charlie4", "edge": "start"}}
+  ],
+  "pasteCases": [
+    {"id": "single-para", "type": "paste:paragraph", "span": "paste", "from": {"marker": "P1", "word": "delta", "edge": "start"}, "to": {"marker": "P2", "word": "echo", "edge": "start"}, "pasteText": "PASTEQ zeta9 omega5"},
+    {"id": "multi-para", "type": "paste:paragraph(multiline)", "span": "paste", "from": {"marker": "P1", "word": "delta", "edge": "start"}, "to": {"marker": "P2", "word": "echo", "edge": "start"}, "pasteText": "MLPZ one9\ntwo9 three9"},
+    {"id": "frontmatter-guard", "type": "paste:frontmatter-guard", "span": "paste", "from": {"marker": "P1", "word": "delta", "edge": "start"}, "to": {"marker": "P2", "word": "echo", "edge": "start"}, "pasteText": "FMX one8\n---\ntitle8: x8\n---\nFMY two8"},
+    {"id": "markdown-block", "type": "paste:markdown-multiline", "span": "paste", "from": {"marker": "P1", "word": "delta", "edge": "start"}, "to": {"marker": "P2", "word": "echo", "edge": "start"}, "pasteText": "HEADM one7\n- LISTM item7\n- LISTN item8\nTAILM two7"},
+    {"id": "across-quote", "type": "paste:blockquote", "span": "paste", "from": {"marker": "BQ1", "word": "sierra", "edge": "start"}, "to": {"marker": "BQ2", "word": "whiskey", "edge": "start"}, "pasteText": "QPASTE zeta6"},
+    {"id": "across-table", "type": "paste:table", "span": "paste", "from": {"marker": "PRET", "word": "sierra3", "edge": "start"}, "to": {"marker": "MIDT", "word": "tango3", "edge": "start"}, "pasteText": "TPASTE zeta5"}
   ],
   "mouseCases": [
     {"id": "mouse-para-span1", "type": "paragraph", "span": "span1", "from": {"marker": "P1", "word": "bravo", "edge": "start"}, "to": {"marker": "P2", "word": "golf", "edge": "end"}},
