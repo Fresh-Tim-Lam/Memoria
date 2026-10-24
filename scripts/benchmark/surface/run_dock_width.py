@@ -118,7 +118,7 @@ process.exit(result.ok ? 0 : 1);
     print("[dw] 跑探针: %s" % " ".join(cmd))
     t0 = time.time()
     try:
-        cp = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=args.timeout)
+        cp = subprocess.run(cmd, cwd=str(REPO_ROOT), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=args.timeout)
     except subprocess.TimeoutExpired:
         print("[dw] 探针超时", file=sys.stderr)
         runner.unlink(missing_ok=True)

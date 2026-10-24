@@ -1,15 +1,15 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T02:36:30.871Z",
+  "exportedAt": "2026-10-24T02:43:48.399Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
-    "currentTeammates": 10,
+    "currentTeammates": 9,
     "maxMembers": 17,
-    "currentMembers": 11,
-    "remaining": 6,
-    "used": 11
+    "currentMembers": 10,
+    "remaining": 7,
+    "used": 10
   },
   "members": [
     {
@@ -99,15 +99,6 @@
       "model": "deepseek-v4-pro",
       "context": "fresh",
       "description": "P0 task-79：跨块选区四种操作（复制/剪切/删除/粘贴替换）× 块类型矩阵，修静默失败 + 建自动化实机矩阵探针"
-    },
-    {
-      "target": "measurement-debt",
-      "role": "teammate",
-      "status": "running",
-      "id": "6a013dd3-a31f-433f-834b-79c4d22e9a40",
-      "model": "deepseek-v4-pro",
-      "context": "fresh",
-      "description": "task-81 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（修法必须让下次失败可见）"
     }
   ],
   "retired": [
@@ -154,6 +145,10 @@
     {
       "target": "team-curator",
       "description": "团队策展人：审计并维护 Memoria 团队资产（agents.json / 契约 / org 表 / 脚本），唯一持有团队定义写权限"
+    },
+    {
+      "target": "measurement-debt",
+      "description": "task-81 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（修法必须让下次失败可见）"
     }
   ],
   "tasks": [
@@ -1218,7 +1213,7 @@
     },
     {
       "id": "task-82",
-      "status": "pending",
+      "status": "completed",
       "subject": "P1 测量债续：v2 生产路径（p5perf_run2 + _wl2_install）仍静默 wrap —— 修死文件不等于修生产（task-81 拆出）",
       "owner": "measurement-debt",
       "writeScopes": [
@@ -1228,7 +1223,17 @@
         "artifacts/agent/verify/measurement-debt-"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "artifacts/agent/verify/measurement-debt-task82.md",
+        "scripts/benchmark/surface/_wl2_install.js.txt",
+        "scripts/benchmark/surface/p5perf_run2.mjs",
+        "scripts/benchmark/surface/p5perf_workload2.mjs",
+        "artifacts/agent/verify/measurement-debt-task82-wl2-redgate.json",
+        "artifacts/agent/verify/measurement-debt-task82-v2path-run.json",
+        "artifacts/agent/verify/measurement-debt-task81-wl2-install-legacy.js.txt",
+        "artifacts/agent/verify/measurement-debt-task81.md"
+      ]
     }
   ],
   "inactiveOwners": [
@@ -1242,11 +1247,6 @@
     "team-plugin-creator"
   ],
   "completedRecent": [
-    {
-      "id": "task-76",
-      "subject": "✅ task-76 结论修正：evict 长批非块数问题（批尾布局 58.7%）；顺带修 purge 静默 no-op",
-      "ownerName": "lead"
-    },
     {
       "id": "task-77",
       "subject": "✅ task-70 堆泄漏已修复（MathJax MathItem 持有 detached 子树，−75.3%）",
@@ -1266,7 +1266,12 @@
       "id": "task-81",
       "subject": "P1 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（task-62 拆出）",
       "ownerName": "measurement-debt"
+    },
+    {
+      "id": "task-82",
+      "subject": "P1 测量债续：v2 生产路径（p5perf_run2 + _wl2_install）仍静默 wrap —— 修死文件不等于修生产（task-81 拆出）",
+      "ownerName": "measurement-debt"
     }
   ],
-  "note": "2026-10-24 task-81 收口、task-82 拆出、p0-selection 进行中"
+  "note": "2026-10-24 task-81/82 完成，measurement-debt 已退役；p0-selection 仍在 task-79"
 }

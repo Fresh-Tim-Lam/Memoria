@@ -18,3 +18,6 @@
 {"ts": "2026-10-23T22:09:26+08:00", "actor": "curator-r3", "phase": "done", "target": "lead", "task": "team-retro-r3", "desc": "第三轮：独立复核(Lead 22 条无推翻+新发现 6 条) + 机检 6→9 类 + 组织改造 + 插件规格 R1-R9；四项机检全绿", "outcome": "pass", "report": "team/curator/audit-2026-10-23/r3-review.md", "evidence": "docs/guides/team-plugin-improvement-spec.md"}
 {"ts": "2026-10-24T00:15:47+08:00", "actor": "lead", "phase": "spawn", "target": "team-plugin-creator", "task": "team-plugin-r1r9", "desc": "Creator 模式首次实跑：实现 DSH Agent Teams 插件改进 R1-R8（禁打包/重启）"}
 {"ts": "2026-10-24T00:44:50+08:00", "actor": "team-plugin-creator", "phase": "done", "target": "lead", "task": "team-plugin-r1r9", "desc": "R1/R2/R3/R4/R5/R7 已实现；R6/R8 未做（有理由）；Lead 已独立验证 127 tests + tsc exit0", "outcome": "pass", "no_report_reason": "DSH 仓库变更未提交，报告在会话消息中（待 DSH commit 后补路径）"}
+{"ts": "2026-10-24T10:23:05+08:00", "actor": "lead", "phase": "spawn", "target": "p0-selection", "task": "task-79", "desc": "P0 跨块选区四操作矩阵（deep）；分5阶段，阶段4原子块删除需先裁决"}
+{"ts": "2026-10-24T10:23:05+08:00", "actor": "lead", "phase": "spawn", "target": "measurement-debt", "task": "task-81", "desc": "测量债：归一化正则 + p5perf wrap（deep）；需让下次失败可见"}
+{"ts": "2026-10-24T10:43:44+08:00", "actor": "lead", "phase": "retire", "target": "measurement-debt", "task": "task-82", "desc": "任务完成（task-81+82 均收口）；按 ephemeral 规则退役并从名单移除"}

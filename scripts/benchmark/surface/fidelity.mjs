@@ -329,10 +329,140 @@ export const PROBE_SOURCE = `(function () {
     return false;
   }
 
-  /** 剥离字符串中所有非确定 id 及其引用，返回 {text, stripped}。 */
-  function stripNondetIds(str) {
-    if (!str) return { text: str, stripped: 0 };
+  // ── 归一化规则**自证清单**（task-81 · P1 测量债）─────────────────────────────
+  //   事故背景：本文件历史上出现过**两次**「正则永不匹配」的静默失败
+  //     · task-58：[图片缺失] 里的 [ ] 未转义 ⇒ 被当字符类 ⇒ title/alt 静默不替换
+  //     · task-60：style 值要求**以 outline 开头** ⇒ 真实形态 "cursor: …; outline: …" 永不命中
+  //   共同特征：**不报错、不警告、计数仍是一个"看起来合理"的数字** ⇒ 白跑真机。
+  //
+  //   ⇒ task-81 的修法不是"再改对一条正则"，而是**让"规则永不匹配"这件事自己暴露**：
+  //     每条规则配一个 canary 样本（真实 DOM 形态），加载即跑；canary 剥不动 ⇒
+  //     报 ruleNeverMatched 并把 A12 判红（fail-closed：工具不可信 ⇒ 门禁不许绿）。
+  //
+  //   runtimeSoftCheck：运行时"输入里出现该特征但剥离 0 次"记为软告警 ruleNotApplied
+  //     （可能是内容本身含特征词，故不判红）；mjx-attr-order 例外：
+  //     属性恰好已有序时 0 次是**合法**的 ⇒ 不做软告警。
+  var NORM_RULES = [
+    'nondet-id', 'nondet-ref-url', 'nondet-ref-href', 'data-block-id', 'css-id-selector',
+    'img-alt-tail', 'img-alt-missing', 'img-title-missing', 'img-data-missing',
+    'img-style-outline', 'filter-opacity', 'mjx-attr-order'
+  ];
+  var NORM_SOFT_SKIP = { 'mjx-attr-order': 1 };
+
+  function normCanaries() {
+    // 全部是**实测见过的真实 DOM 形态**，不是"为了过测试编的字符串"。
+    var DOT = String.fromCharCode(183);
+    var MISS = '[' + '图片缺失' + ']';
+    return {
+      'nondet-id': '<g id="mermaid-vppr1439"></g>',
+      'nondet-ref-url': '<path fill="url(#mermaid-vppr1439)"/>',
+      'nondet-ref-href': '<use xlink:href="#mermaid-vppr1439"/>',
+      'data-block-id': '<div class="-src-block" data-block-id="sjfj9w-13"></div>',
+      'css-id-selector': '<style>#mermaid-vppr1439 .node{fill:red}</style>',
+      'img-alt-tail': '<img src="scale-placeholder-2.png" alt="占位图 ' + DOT + ' ' + MISS + '" class="-preview-image">',
+      'img-alt-missing': '<img src="a.png" alt="' + MISS + '">',
+      'img-title-missing': '<img src="a.png" title="' + MISS + ' a.png">',
+      'img-data-missing': '<img src="a.png" data-img-missing="1">',
+      // ★ 就是 task-81 缺陷 1 的样本：style 值**不以 outline 开头**
+      'img-style-outline': '<img src="a.png" style="cursor: zoom-in; outline: rgb(229,83,75) dashed 1px; filter: opacity(0.55);">',
+      'filter-opacity': '<div style="filter: opacity(0.55);"></div>',
+      'mjx-attr-order': '<mjx-container class="MathJax" jax="SVG" style="position: relative;" data--inline-math="true"></mjx-container>'
+    };
+  }
+
+  function normMustNotContain() {
+    // 剥离后**必须消失**的标记：防"计数了但其实没改"（比只看计数更强）。
+    //   mjx-attr-order 不列：排序后属性仍在，只是次序变。
+    var DOT = String.fromCharCode(183);
+    var MISS = '[' + '图片缺失' + ']';
+    return {
+      'nondet-id': ['mermaid-vppr1439'],
+      'nondet-ref-url': ['mermaid-vppr1439'],
+      'nondet-ref-href': ['mermaid-vppr1439'],
+      'data-block-id': ['sjfj9w-13'],
+      'css-id-selector': ['#mermaid-vppr1439'],
+      'img-alt-tail': [' ' + DOT + ' ' + MISS],
+      'img-alt-missing': [MISS],
+      'img-title-missing': [MISS],
+      'img-data-missing': ['data-img-missing'],
+      'img-style-outline': ['outline:'],
+      'filter-opacity': ['0.55']
+    };
+  }
+
+  /** 运行时"输入里是否出现该规则的目标特征"（软告警用；近似即可）。 */
+  function normApplicable(html) {
+    var s = String(html || '');
+    var DOT = String.fromCharCode(183);
+    var MISS = '[' + '图片缺失' + ']';
+    var hasAnyIdPrefix = false;
+    for (var i = 0; i < NONDET_ID_PREFIXES.length; i++) {
+      if (s.indexOf('id="' + NONDET_ID_PREFIXES[i]) >= 0 || s.indexOf("id='" + NONDET_ID_PREFIXES[i]) >= 0) { hasAnyIdPrefix = true; break; }
+    }
+    return {
+      'nondet-id': hasAnyIdPrefix,
+      'nondet-ref-url': s.indexOf('url(#') >= 0,
+      'nondet-ref-href': s.indexOf('href="#') >= 0 || s.indexOf("href='#") >= 0,
+      'data-block-id': s.indexOf('data-block-id=') >= 0,
+      'css-id-selector': s.indexOf('#mermaid-') >= 0 || s.indexOf('#MJX-') >= 0,
+      'img-alt-tail': s.indexOf(' ' + DOT + ' ' + MISS) >= 0,
+      'img-alt-missing': s.indexOf('alt="' + MISS) >= 0 || s.indexOf("alt='" + MISS) >= 0,
+      'img-title-missing': s.indexOf('title="' + MISS) >= 0 || s.indexOf("title='" + MISS) >= 0,
+      'img-data-missing': s.indexOf('data-img-missing=') >= 0,
+      'img-style-outline': s.indexOf('outline:') >= 0,
+      'filter-opacity': s.indexOf('filter: opacity(') >= 0 || s.indexOf('filter:opacity(') >= 0,
+      'mjx-attr-order': s.indexOf('<mjx-container') >= 0
+    };
+  }
+
+  /**
+   * 归一化规则自证：每条规则的 canary 必须真的被剥离。
+   * @returns {{ok:boolean, rules:string[], perRule:Object, neverMatched:string[], failures:Object[]}}
+   *   ok=false ⇒ 至少一条规则**永不匹配** ⇒ 工具不可信，门禁必须判红（A12）。
+   */
+  function normalizationSelfTest() {
+    var canaries = normCanaries();
+    var mustNot = normMustNotContain();
+    var perRule = {};
+    var neverMatched = [];
+    var failures = [];
+    for (var i = 0; i < NORM_RULES.length; i++) {
+      var name = NORM_RULES[i];
+      var sample = canaries[name];
+      var st = {};
+      var r = stripNondetIds(sample, st);
+      var n = st[name] || 0;
+      perRule[name] = n;
+      if (!(n > 0)) {
+        neverMatched.push(name);
+        failures.push({ rule: name, sample: sample, ruleHits: n, totalStripped: r.stripped, reason: 'canary-not-matched' });
+        continue;
+      }
+      var mn = mustNot[name] || [];
+      for (var j = 0; j < mn.length; j++) {
+        if (r.text.indexOf(mn[j]) >= 0) {
+          failures.push({ rule: name, sample: sample, ruleHits: n, residue: mn[j], reason: 'counted-but-not-removed' });
+        }
+      }
+    }
+    return {
+      ok: failures.length === 0,
+      rules: NORM_RULES.slice(),
+      perRule: perRule,
+      neverMatched: neverMatched,
+      failures: failures
+    };
+  }
+
+  /** 剥离字符串中所有非确定 id 及其引用，返回 {text, stripped, byRule}。 */
+  function stripNondetIds(str, stats) {
+    if (!str) return { text: str, stripped: 0, byRule: stats || {} };
     var count = 0;
+    /** 命中一条规则：总计数 + 分规则计数（分规则计数是 task-81 的可观测性基础）。 */
+    function hit(name) {
+      count++;
+      if (stats) stats[name] = (stats[name] || 0) + 1;
+    }
     var out = str;
     // 本函数位于 PROBE_SOURCE 模板字符串内：不能写带反向引用的正则字面量
     //   （模板字符串会把反斜杠+数字当 octal escape）。故一律用 RegExp 构造函数。
@@ -347,28 +477,28 @@ export const PROBE_SOURCE = `(function () {
     var RE_CSS = new RegExp('#([A-Za-z][-A-Za-z0-9_]*)' + '(?=[' + BS + 's.,:{>' + BS + '[])', 'g');
 
     out = out.replace(RE_ID, function (m, q, v) {
-      if (isNondetId(v)) { count++; return 'id=' + q + '<nondet-id>' + q; }
+      if (isNondetId(v)) { hit('nondet-id'); return 'id=' + q + '<nondet-id>' + q; }
       return m;
     });
     out = out.replace(RE_URL, function (m, v) {
       var bare = v.charAt(0) === '#' ? v.slice(1) : v;
-      if (isNondetId(bare)) { count++; return 'url(#<nondet-id>)'; }
+      if (isNondetId(bare)) { hit('nondet-ref-url'); return 'url(#<nondet-id>)'; }
       return m;
     });
     out = out.replace(RE_HREF, function (m, xl, q, v) {
-      if (isNondetId(v)) { count++; return (xl || '') + 'href=' + q + '#<nondet-id>' + q; }
+      if (isNondetId(v)) { hit('nondet-ref-href'); return (xl || '') + 'href=' + q + '#<nondet-id>' + q; }
       return m;
     });
     // 5) 数据属性上的块级随机 id：data-block-id="sjfj9w-13"
     //    应用给每个块生成会话内 id（随渲染顺序变化），不承载内容语义。
     var RE_BLOCKID = new RegExp('data-block-id=(' + Q2 + ')(' + NOTQ + ')' + BS + '1', 'g');
     out = out.replace(RE_BLOCKID, function (m, q, v) {
-      count++;
+      hit('data-block-id');
       return 'data-block-id=' + q + '<block-id>' + q;
     });
     // CSS 选择器引用：覆盖 #id{...} 与后代选择器 #id .cls{...}
     out = out.replace(RE_CSS, function (m, v) {
-      if (isNondetId(v)) { count++; return '#<nondet-id>'; }
+      if (isNondetId(v)) { hit('css-id-selector'); return '#<nondet-id>'; }
       return m;
     });
 
@@ -391,18 +521,18 @@ export const PROBE_SOURCE = `(function () {
     var DOT = String.fromCharCode(183);                    // '·'
     // a) alt 尾巴：" · [图片缺失]"
     var altTail = ' ' + DOT + ' ' + MISSING_TAG;
-    while (out.indexOf(altTail) >= 0) { out = out.split(altTail).join(''); count++; }
+    while (out.indexOf(altTail) >= 0) { out = out.split(altTail).join(''); hit('img-alt-tail'); }
     // b) 纯 [图片缺失] 的 alt
     out = out.replace(new RegExp('alt=' + Q2 + MISSING_RE + Q2, 'g'), function (m) {
-      count++; return 'alt=' + m.charAt(4) + m.charAt(4);
+      hit('img-alt-missing'); return 'alt=' + m.charAt(4) + m.charAt(4);
     });
     // c) title 里的 [图片缺失]（**整属性删除**：缺失态才有 title，非缺失态没有；
     //    保留它会让"图片是否缺失"这一瞬时状态进入签名 ⇒ 非确定）
     out = out.replace(new RegExp(BS + 'stitle=(' + Q2 + ')' + MISSING_RE + NOTQ + BS + '1', 'g'),
-      function () { count++; return ''; });
+      function () { hit('img-title-missing'); return ''; });
     // d) data-img-missing 属性（整属性删除 —— 纯状态位，不承载内容/结构）
     out = out.replace(new RegExp(BS + 'sdata-img-missing=(' + Q2 + ')' + NOTQ + BS + '1', 'g'),
-      function () { count++; return ''; });
+      function () { hit('img-data-missing'); return ''; });
     // e) 缺失图片的红色虚框装饰
     //   ⚠️ 关键：style 的值**不一定以 outline 开头**。实测真实形态是
     //        style="cursor: zoom-in; outline: rgb(229,83,75) dashed 1px; filter: opacity(0.55);"
@@ -411,10 +541,10 @@ export const PROBE_SOURCE = `(function () {
     //      （task-60 收口实测抓出：nondetStripped 少算 3~4）。
     //   ⇒ 改为：**匹配 style 值内部是否含 outline**（只要含就认定是缺失装饰），整属性删除。
     var RE_STYLE_OUTLINE = new RegExp(BS + 'sstyle=(' + Q2 + ')([^' + SQ + DQ + ']*outline[^' + SQ + DQ + ']*)' + BS + '1', 'g');
-    out = out.replace(RE_STYLE_OUTLINE, function () { count++; return ''; });
+    out = out.replace(RE_STYLE_OUTLINE, function () { hit('img-style-outline'); return ''; });
     // f) filter: opacity(...) 数值（上面若已整属性删除则不会再命中；保留兜底）
     out = out.replace(new RegExp('filter:' + BS + 's*opacity' + BS + '([^)]*' + BS + ')', 'g'),
-      function () { count++; return 'filter: opacity(<nondet>)'; });
+      function () { hit('filter-opacity'); return 'filter: opacity(<nondet>)'; });
 
     // ── 8) 属性**顺序**归一化（task-58 · R-18 残余非确定）────────────────────
     //   实测真机双跑：13 篇里 3 篇（scale-1k/10k、corpus/07-extremes）签名仍不同，
@@ -441,18 +571,21 @@ export const PROBE_SOURCE = `(function () {
       if (!parsed || parsed.length < 2) return m;
       var sorted = parsed.slice().sort();
       if (sorted.join(' ') === parsed.join(' ')) return m;
-      count++;
+      hit('mjx-attr-order');
       return TAG_OPEN + ' ' + sorted.join(' ') + '>';
     });
 
-    return { text: out, stripped: count };
+    return { text: out, stripped: count, byRule: stats || {} };
   }
 
-  /** 对 #preview 整体 innerHTML 归一化（供签名 / 自证用）。 */
+  /** 对 #preview 整体 innerHTML 归一化（供签名 / 自证 / 分规则计数用）。 */
   function normalizedPreviewHtml() {
     var pv = document.querySelector('#preview');
-    if (!pv) return { html: '', stripped: 0 };
-    return (function (r) { return { html: r.text, stripped: r.stripped }; })(stripNondetIds(pv.innerHTML || ''));
+    if (!pv) return { html: '', stripped: 0, byRule: {} };
+    var r = stripNondetIds(pv.innerHTML || '', {});
+    // ⚠️ 保持契约字段名 html（runFidelity 里 htmlFp(hNorm.html) 依赖它；
+    //    真机核验时曾因这里只返回 text 而抛 TypeError —— 见 task-81 报告）
+    return { html: r.text, stripped: r.stripped, byRule: r.byRule };
   }
 
 
@@ -732,6 +865,19 @@ export const PROBE_SOURCE = `(function () {
     // ★ 归一化 HTML（剥离非确定 id）：签名与自证都以此为唯一来源
     var hNorm = normalizedPreviewHtml();
 
+    // ★ task-81 A12：归一化规则**自证**（canary 驱动，与页面内容无关）
+    //   为什么必须在**门禁**里而不是只在报告里：工具静默失效时，所有下游签名
+    //   都还是"看起来合理"的数字 —— 只有把工具自检也判红，才能阻止假绿。
+    var normSelf = normalizationSelfTest();
+    var normApplic = normApplicable(hNorm.html);
+    var ruleNotApplied = [];
+    var normByRule = hNorm.byRule || {};
+    for (var ri2 = 0; ri2 < NORM_RULES.length; ri2++) {
+      var rn = NORM_RULES[ri2];
+      if (NORM_SOFT_SKIP[rn]) continue;
+      if (normApplic[rn] && !(normByRule[rn] > 0)) ruleNotApplied.push(rn);
+    }
+
     // A1 块数
     var a1 = { ok: ast.count === dom.count, ast: ast.count, dom: dom.count };
 
@@ -771,6 +917,16 @@ export const PROBE_SOURCE = `(function () {
     var a9 = visibleEffectFloor(doc, dom);            // 可见效果下限（防样式全丢）
     var a10 = inlineFormulaFidelity(doc, dom, isHeadless);  // 行内公式按块计数
     var a11 = mermaidFidelity(doc, dom);              // mermaid SVG
+
+    // A12 归一化规则自证（task-81）：任一条规则"永不匹配" ⇒ 工具不可信 ⇒ 判红
+    var a12 = {
+      ok: normSelf.ok,
+      neverMatched: normSelf.neverMatched,
+      canaryHits: normSelf.perRule,
+      failures: normSelf.failures,
+      nondetStrippedByRule: normByRule,
+      ruleNotApplied: ruleNotApplied,     // 软告警：运行时出现特征但剥离 0 次
+    };
 
     // B5 文本（归一后，warn）
     var textDiffs = [];
@@ -861,11 +1017,16 @@ export const PROBE_SOURCE = `(function () {
     var normStr = JSON.stringify(sigObj);
 
     return {
-      ok: a1.ok && a2.ok && a3.ok && a4.ok && a5.ok && a6.ok && a7.ok && a8.ok && a9.ok && a10.ok && a11.ok,
-      aLevel: { a1: a1, a2: a2, a3: a3, a4: a4, a5: a5, a6: a6, a7: a7, a8: a8, a9: a9, a10: a10, a11: a11 },
+      ok: a1.ok && a2.ok && a3.ok && a4.ok && a5.ok && a6.ok && a7.ok && a8.ok && a9.ok && a10.ok && a11.ok && a12.ok,
+      aLevel: { a1: a1, a2: a2, a3: a3, a4: a4, a5: a5, a6: a6, a7: a7, a8: a8, a9: a9, a10: a10, a11: a11, a12: a12 },
       bLevel: { b5: b5, b6: b6, b7: b7 },
       signatureNorm: normStr,
       nondetStripped: hNorm.stripped,
+      // ★ task-81：归一化可观测性（**不进签名**，故不改变签名确定性/冻结基线身份）
+      nondetStrippedByRule: normByRule,
+      ruleNeverMatched: normSelf.neverMatched,      // 硬失败（同时进 A12 ⇒ ok=false）
+      ruleNotApplied: ruleNotApplied,               // 软告警（不判红）
+      normalizationCanary: normSelf.perRule,
       normalizedHtml: hNorm.html,   // 供 CLI 侧做「只换随机 id ⇒ 签名不变」自证
       astCount: ast.count, domCount: dom.count,
     };
@@ -1228,7 +1389,10 @@ export const PROBE_SOURCE = `(function () {
     return { status: status, math: m, mermaid: mm, headless: isHeadlessEnv() };
   }
 
-  return { runFidelity: runFidelity, buildDomProjection: buildDomProjection, buildAstProjection: buildAstProjection, mutate: mutate, DOM_KIND_OK: DOM_KIND_OK, waitForRenderReady: waitForRenderReady, snapshotNow: snapshotNow, mathSnapshot: mathSnapshot, mermaidSnapshot: mermaidSnapshot };
+  return { runFidelity: runFidelity, buildDomProjection: buildDomProjection, buildAstProjection: buildAstProjection, mutate: mutate, DOM_KIND_OK: DOM_KIND_OK, waitForRenderReady: waitForRenderReady, snapshotNow: snapshotNow, mathSnapshot: mathSnapshot, mermaidSnapshot: mermaidSnapshot,
+    // ★ task-81：归一化规则自证 + 分规则计数（可单测；不再只藏在闭包里）
+    stripNondetIds: stripNondetIds, normalizedPreviewHtml: normalizedPreviewHtml,
+    normalizationSelfTest: normalizationSelfTest, NORM_RULES: NORM_RULES };
 })()`;
 
 // ─────────────────────────────────────────────────────────────────────────────

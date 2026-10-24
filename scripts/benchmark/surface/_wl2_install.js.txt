@@ -1,0 +1,170 @@
+(function(){
+  // ═══════════════════════════════════════════════════════════════════════════
+  // _wl2_install.js.txt —— p5perf_run2.mjs 的**页面内探针**（v2 生产路径）
+  //
+  // task-82（P1 测量债续）：本文件是 v2 的**被测路径**。task-81 修的
+  //   p5perf_workload2.mjs 经查是**无入口死文件** ⇒ 修死文件 = 没修。
+  //   本轮把 v1 的修法原样搬到生产路径：
+  //     · wrap 目标不再是不存在的 window.MemoriaRenderer
+  //     · render* 改由 p5perf_run2.mjs 在**页面脚本执行前**注入的 BOOT_HOOK 包装
+  //       （钩 window.MemoriaRenderCore.createRenderCore 工厂 ⇒ 包到 app 的真实实例）
+  //     · 包装失败 ⇒ wrapFailed[] + calls 分项 = "unsupported"（**禁止静默 0**）
+  //
+  // calls 三态（写进产物）：
+  //   number        = 已包装且计数（0 = 测到了，确实没调用）
+  //   "unsupported" = 无法包装（P6d 删了目标 / boot hook 未生效）⇒ 禁止当 0 读
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (window.__wl2) return { already:true, wrapped: window.__wl2.wrapped };
+  var W = window.__wl2 = {
+    v: 4, on: false,
+    // A 类：确定性计数
+    m1: 0, m2add: 0, m2del: 0, attrWrites: 0,
+    // B 类：竞态计数
+    typeset: 0, flushRepaint: 0,
+    acc: {}, sigBefore: [], blocksBefore: 0
+  };
+  var counters = {};
+  function resetAcc(){ counters = {}; }
+  function inc(n){ counters[n] = (counters[n]||0) + 1; }
+
+  var obs = new MutationObserver(function(recs){
+    if (!W.on) return;
+    W.m1 += recs.length;
+    for (var i=0;i<recs.length;i++){
+      var r = recs[i];
+      if (r.type === 'attributes') { if (r.attributeName === 'data--src-line') W.attrWrites++; continue; }
+      if (r.addedNodes) W.m2add += r.addedNodes.length;
+      if (r.removedNodes) W.m2del += r.removedNodes.length;
+    }
+  });
+  W.obs = obs;
+
+  function wrap(obj, prop, label, isRacy){
+    if (!obj || typeof obj[prop] !== 'function') return false;
+    if (obj[prop].__wlWrapped) return true;
+    var orig = obj[prop];
+    var w = function(){
+      if (W.on) { if (isRacy) { if (label==='typeset') W.typeset++; else W.flushRepaint++; } else inc(label); }
+      return orig.apply(this, arguments);
+    };
+    w.__wlWrapped = true;
+    try { obj[prop] = w; } catch(e){ return false; }
+    return true;
+  }
+  W.wrapped = {
+    // A 类
+    parse: wrap(window.MemoriaParser, 'parse', 'parse', false),
+    parseRange: wrap(window.MemoriaParser, 'parseRange', 'parseRange', false),
+    // ★ task-82：render* 由 BOOT_HOOK 包装（app.js `_rcCore` 是闭包私有，
+    //   页面加载后不可达）⇒ 这里只放占位；真实状态由 W.wrapState() 从
+    //   window.__wlCore.methods 读。**不再对 undefined 的 MemoriaRenderer 调 wrap**。
+    render: false,
+    renderRange: false,
+    renderBlock: false,
+    renderAll: false,
+    renderInline: false,
+    renderInlineList: false,
+    renderPreview: wrap(window.MemoriaApp, 'renderPreview', 'renderPreview', false),
+    insertText: wrap(window.MemoriaEditSync, 'insertText', 'insertText', false),
+    splitParagraph: wrap(window.MemoriaEditSync, 'splitParagraph', 'splitParagraph', false),
+    backspace: wrap(window.MemoriaEditSync, 'backspace', 'backspace', false),
+    undo: wrap(window.MemoriaEditSync, 'undo', 'undo', false),
+    redo: wrap(window.MemoriaEditSync, 'redo', 'redo', false),
+    // B 类（竞态）
+    typeset: wrap(window.MathJax, 'typesetPromise', 'typeset', true),
+    flushRepaint: wrap(window.MemoriaEditSync, 'flushRepaint', 'flushRepaint', true)
+  };
+
+  // 探针可用性诊断（写进产物，禁止静默）
+  W.probeAvailability = {
+    MemoriaRendererExists: typeof window.MemoriaRenderer !== 'undefined',
+    renderCoreExists: typeof window.MemoriaRenderCore !== 'undefined',
+    note: 'P6d 删除 MemoriaRenderer；render-core 实例改由 BOOT_HOOK 包装（见 wrapState）。'
+        + ' 若 wrapFailed 非空 ⇒ calls 分项为 "unsupported"，禁止读成 0。'
+  };
+
+  /** 刷新并返回 render-core 侧的包装状态（实例可能在 INSTALL 之后才创建）。 */
+  W.wrapState = function(){
+    var C = window.__wlCore;
+    var METHODS = ['render', 'renderRange', 'renderBlock', 'renderAll', 'renderInline', 'renderInlineList'];
+    var wrapFailed = [];
+    if (!C) { wrapFailed.push('boot-hook-not-installed'); }
+    else {
+      if (C.hookError) wrapFailed.push('boot-hook-error:' + C.hookError);
+      if (!C.factorySeen) wrapFailed.push('render-core-factory-not-seen');
+      if (C.instances === 0) wrapFailed.push('render-core-instance-not-created');
+      for (var mi = 0; mi < METHODS.length; mi++) {
+        var nm = METHODS[mi], st = C.methods && C.methods[nm];
+        W.wrapped[nm] = !!(st && st.wrapped > 0 && st.failed === 0);
+      }
+      for (var mj = 0; mj < (C.wrapFailed || []).length; mj++) wrapFailed.push(C.wrapFailed[mj]);
+    }
+    W.probeAvailability.unwrappable = METHODS.filter(function(k){ return !W.wrapped[k]; });
+    return { wrapped: W.wrapped, wrapFailed: wrapFailed,
+             instances: C ? C.instances : 0,
+             factorySeen: C ? !!C.factorySeen : false,
+             hookError: C ? C.hookError : 'boot-hook-not-installed' };
+  };
+  // 安装时先算一次，让 p5perf_run2 的 pathCheck 立刻能看到真实状态
+  W.probeAvailability.initialWrapState = W.wrapState();
+
+  // upsert（A 类）
+  (function(){
+    var BI = window.MemoriaApp && window.MemoriaApp.blockIndex;
+    if (!BI || typeof BI.upsert !== 'function') return;
+    // 幂等：若已被上一次安装包过，必须**仍然标记为可用**，否则会被误报 "unsupported"
+    if (BI.upsert.__wlWrapped) { W.wrapped.upsert = true; return; }
+    var o = BI.upsert;
+    var w = function(){ if (W.on) inc('upsert'); return o.apply(this, arguments); };
+    w.__wlWrapped = true; BI.upsert = w; W.wrapped.upsert = true;
+  })();
+
+  W.reset = function(){
+    resetAcc();
+    W.m1 = 0; W.m2add = 0; W.m2del = 0; W.attrWrites = 0; W.typeset = 0; W.flushRepaint = 0;
+    // 清 boot-hook 侧的分方法计数（与 counters 分开存放，见 BOOT_HOOK 的 bump()）
+    try { if (window.__wlCore) window.__wlCore.calls = {}; } catch (e) {}
+    var p = document.getElementById('preview');
+    // 每次 reset 重绑 observer 到**当前** #preview（openFile 可能换节点）
+    try { obs.disconnect(); } catch(e){}
+    if (p) { try { obs.observe(p, { childList:true, subtree:true, attributes:true, attributeFilter:['data--src-line'] }); } catch(e){} }
+    W.blocksBefore = p ? p.querySelectorAll('.-src-block').length : 0;
+    W.sigBefore = [];
+    if (p) { var bs = p.querySelectorAll('.-src-block');
+      for (var i=0;i<bs.length;i++) W.sigBefore.push((bs[i].innerHTML||'').length + ':' + String(bs[i].className||'')); }
+    W.on = true;
+    return { blocksBefore: W.blocksBefore };
+  };
+
+  // 注意：不含 setBlockSource —— v2 的 A 类判据（task-48）本来就不含它，
+  //   列进来会恒为 "unsupported"，反而稀释"真正包装失败"的信号。
+  var CALL_LABELS = ['parse', 'parseRange', 'render', 'renderRange', 'renderBlock',
+                     'renderAll', 'renderInline', 'renderInlineList',
+                     'typeset', 'renderPreview',
+                     'insertText', 'splitParagraph', 'backspace', 'undo', 'redo', 'flushRepaint', 'upsert'];
+  W.collect = function(){
+    W.on = false;
+    var p = document.getElementById('preview');
+    var bs = p ? p.querySelectorAll('.-src-block') : [];
+    var sigBefore = W.sigBefore || [];
+    var changed = 0;
+    for (var i=0;i<bs.length && i<sigBefore.length;i++){
+      if (((bs[i].innerHTML||'').length + ':' + String(bs[i].className||'')) !== sigBefore[i]) changed++;
+    }
+    var ws = W.wrapState();
+    var coreCalls = (window.__wlCore && window.__wlCore.calls) || {};
+    var calls = {};
+    for (var k = 0; k < CALL_LABELS.length; k++) {
+      var label = CALL_LABELS[k];
+      calls[label] = W.wrapped[label] ? ((counters[label] || 0) + (coreCalls[label] || 0)) : 'unsupported';
+    }
+    // 拆 A / B
+    var A = { M1: W.m1, M2add: W.m2add, M2del: W.m2del, M2: W.m2add + W.m2del,
+              attrWrites: W.attrWrites, blocksChanged: changed,
+              blocksBefore: W.blocksBefore, blocksAfter: bs.length, calls: calls,
+              wrapped: ws.wrapped, wrapFailed: ws.wrapFailed, rendererInstances: ws.instances };
+    var B = { typeset: W.typeset, flushRepaint: W.flushRepaint };
+    return { A: A, B: B };
+  };
+  return { ok:true, wrapped: W.wrapped, wrapState: W.wrapState, probeAvailability: W.probeAvailability };
+})()
