@@ -11,19 +11,19 @@
   },
   "B": {
     "hit_rate": 1.0,
-    "per_round_tokens_median": 260.0,
-    "rounds_max": 2,
-    "rounds_median": 1.5,
+    "per_round_tokens_median": 204.5,
+    "rounds_max": 1,
+    "rounds_median": 1.0,
     "rounds_min": 1,
     "tasks": 20,
-    "total_median": 654.5,
-    "total_sum": 28600
+    "total_median": 204.5,
+    "total_sum": 5077
   },
   "arms": {
     "A_read_document": "read_document(offset/limit=2000) 分页整篇读，直到锚点出现",
     "B_granular": "outline → section(near_line) → 续片，直到锚点出现"
   },
-  "artifactSha256": "5f25d1d057b3719e9d09f6033b5b9f08741cbd1619b3c4c08f80553f5e3bf802",
+  "artifactSha256": "8873fbf05346fe97bd80e2085c9ecd4fbdcb815c072698bfb2685faa9de6bff7",
   "bands": {
     "find_sentence": {
       "A_total_sum": 33123,
@@ -35,33 +35,34 @@
     },
     "read_section": {
       "A_total_sum": 33986,
-      "B_total_sum": 26699,
+      "B_total_sum": 3176,
       "avg_rounds_A": 1.0,
-      "avg_rounds_B": 2.0,
-      "savings": 0.2144,
+      "avg_rounds_B": 1.0,
+      "savings": 0.9065,
       "tasks": 10
     }
   },
   "bands_by_doc_size": {
     "large": {
       "A_total_sum": 26325,
-      "B_total_sum": 6106,
-      "savings": 0.7681,
+      "B_total_sum": 1111,
+      "savings": 0.9578,
       "tasks": 4
     },
     "mid": {
       "A_total_sum": 27221,
-      "B_total_sum": 14584,
-      "savings": 0.4642,
+      "B_total_sum": 2463,
+      "savings": 0.9095,
       "tasks": 8
     },
     "small": {
       "A_total_sum": 13563,
-      "B_total_sum": 7910,
-      "savings": 0.4168,
+      "B_total_sum": 1503,
+      "savings": 0.8892,
       "tasks": 8
     }
   },
+  "fallback_used_tasks": 0,
   "max_rounds_per_task": 8,
   "nature": "PROXY（检索充分性 + 固定策略轮数），不是完成率；不调用模型",
   "per_task": [
@@ -72,17 +73,18 @@
         "total": 2048
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 2219
+        "rounds": 1,
+        "total": 201
       },
       "band": "small",
       "doc_bytes": 7975,
       "heading": "🔉 Pronunciation & Listening Cue",
       "id": "AAA_Vocab::vocab/mainstay.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0835
+      "rounds_delta": 0,
+      "savings": 0.9019
     },
     {
       "A": {
@@ -91,6 +93,7 @@
         "total": 2389
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 139
@@ -110,17 +113,18 @@
         "total": 1814
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 2002
+        "rounds": 1,
+        "total": 314
       },
       "band": "small",
       "doc_bytes": 6595,
       "heading": "1. 官方样卷结构（PDF 目录原文）",
       "id": "AAA_Vocab::docs/ref/ielts/sample-tasks-and-examiner-comments.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.1036
+      "rounds_delta": 0,
+      "savings": 0.8269
     },
     {
       "A": {
@@ -129,6 +133,7 @@
         "total": 279
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 142
@@ -148,17 +153,18 @@
         "total": 2079
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 2248
+        "rounds": 1,
+        "total": 196
       },
       "band": "small",
       "doc_bytes": 8122,
       "heading": "🔉 Pronunciation & Listening Cue",
       "id": "AAA_Vocab::vocab/leaven.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0813
+      "rounds_delta": 0,
+      "savings": 0.9057
     },
     {
       "A": {
@@ -167,6 +173,7 @@
         "total": 2420
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 109
@@ -186,17 +193,18 @@
         "total": 2314
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 880
+        "rounds": 1,
+        "total": 231
       },
       "band": "small",
       "doc_bytes": 9381,
       "heading": "1.1 强化学习的基础符号（这些你应该眼熟）",
       "id": "AAA_KnowledgeBase::ReinforcementLearning/PeVFA_appendix.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": 0.6197
+      "rounds_delta": 0,
+      "savings": 0.9002
     },
     {
       "A": {
@@ -205,6 +213,7 @@
         "total": 220
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 171
@@ -224,17 +233,18 @@
         "total": 3816
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 4005
+        "rounds": 1,
+        "total": 929
       },
       "band": "mid",
       "doc_bytes": 15844,
       "heading": "知识点10-1：语言基础模型（大模型）的发展与建模（对应表格“语言大模型”）",
       "id": "人工智能导论知识点汇总::模块10：人工智能应用/1.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0495
+      "rounds_delta": 0,
+      "savings": 0.7566
     },
     {
       "A": {
@@ -243,6 +253,7 @@
         "total": 4047
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 94
@@ -262,17 +273,18 @@
         "total": 3004
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 3245
+        "rounds": 1,
+        "total": 217
       },
       "band": "mid",
       "doc_bytes": 11656,
       "heading": "🔉 Pronunciation & Listening Cue",
       "id": "AAA_Vocab::vocab/mainstream.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0802
+      "rounds_delta": 0,
+      "savings": 0.9278
     },
     {
       "A": {
@@ -281,6 +293,7 @@
         "total": 3345
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 164
@@ -300,17 +313,18 @@
         "total": 3095
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 3328
+        "rounds": 1,
+        "total": 327
       },
       "band": "mid",
       "doc_bytes": 12188,
       "heading": "🔉 Pronunciation & Listening Cue",
       "id": "AAA_Vocab::vocab/exacerbate.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0753
+      "rounds_delta": 0,
+      "savings": 0.8943
     },
     {
       "A": {
@@ -319,6 +333,7 @@
         "total": 3511
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 277
@@ -338,17 +353,18 @@
         "total": 3063
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 3303
+        "rounds": 1,
+        "total": 287
       },
       "band": "mid",
       "doc_bytes": 12090,
       "heading": "🔉 Pronunciation & Listening Cue",
       "id": "AAA_Vocab::vocab/ooze.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": -0.0784
+      "rounds_delta": 0,
+      "savings": 0.9063
     },
     {
       "A": {
@@ -357,6 +373,7 @@
         "total": 3340
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 168
@@ -376,17 +393,18 @@
         "total": 6988
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 4310
+        "rounds": 1,
+        "total": 159
       },
       "band": "large",
       "doc_bytes": 42422,
       "heading": "📋 题目 / Task",
       "id": "AAA_Vocab::writing/part2/international-tourism-adv-disadv.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": 0.3832
+      "rounds_delta": 0,
+      "savings": 0.9772
     },
     {
       "A": {
@@ -395,6 +413,7 @@
         "total": 7325
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 429
@@ -414,17 +433,18 @@
         "total": 5765
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
-        "rounds": 2,
-        "total": 1159
+        "rounds": 1,
+        "total": 315
       },
       "band": "large",
       "doc_bytes": 35356,
       "heading": "Contents",
       "id": "AAA_Vocab::docs/ref/ielts/ielts-academic-writing-sample-tasks-2023.extracted.md::0",
       "kind": "read_section",
-      "rounds_delta": 1,
-      "savings": 0.799
+      "rounds_delta": 0,
+      "savings": 0.9454
     },
     {
       "A": {
@@ -433,6 +453,7 @@
         "total": 6247
       },
       "B": {
+        "fallback_used": false,
         "hit": true,
         "rounds": 1,
         "total": 208
@@ -446,24 +467,26 @@
       "savings": 0.9667
     }
   ],
-  "rounds_delta_median": 0.5,
-  "savings_total_pct": 0.5738,
+  "regression_detail": [],
+  "rounds_delta_median": 0.0,
+  "savings_total_pct": 0.9243,
   "schema": "section-granularity-ab/v1",
   "schema_cost": {
     "all_tools_tokens": 10834,
-    "breakeven_tasks": 0.4,
+    "breakeven_tasks": 0.2,
     "share_pct": 6.43,
     "three_new_tools_tokens": 697
   },
   "sealed": {
     "MEMORIA_CONFIG_DIR": true
   },
+  "single_task_regressions": 0,
   "tasks": 20,
   "token_estimator": "N1 静态口径（CJK 1.5 字/token，其它 3.5 字/token）",
   "u3_total_up": false,
   "verdict": {
     "no_u3_regression": true,
     "note": "双指标要求的 (i) 轮数 (ii) 每轮 token (iii) 总账 均已报；完成率需 metrics-baseline 真机补",
-    "savings_ge_70pct": false
+    "savings_ge_70pct": true
   }
 }

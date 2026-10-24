@@ -1,5 +1,5 @@
 {
-  "artifactSha256": "41766432d804f632faeda63169c294b739904d8a3d3095cf9e7273962af13226",
+  "artifactSha256": "5fb259eb71480ee7277b12c2597193c9900b4371c3f6132b7a932a2f6ada10d2",
   "assertions": [
     {
       "detail": "'标题'",
@@ -95,6 +95,24 @@
       "detail": "21/21 组（父级路径互异的同名标题）",
       "falsifier": "任一失败 ⇒ 同级/异父重名会静默取错节",
       "name": "A3(C2) 真实语料：父级链消歧命中率",
+      "ok": true
+    },
+    {
+      "detail": "fallback=whole_document, parts=1, share=1.0, tok=206",
+      "falsifier": "未回退 ⇒ 目标节占大半篇时仍要多付一轮/多片",
+      "name": "A13 回退触发：目标节 >50% 全文且整篇在预算内 ⇒ 整篇 1 片",
+      "ok": true
+    },
+    {
+      "detail": "fallback=None, title=小, share=0.0194",
+      "falsifier": "小节也被整篇替换 ⇒ 回退条件写错（会白送全文）",
+      "name": "A13 回退不误伤：目标节 ≤50% ⇒ 只给该节",
+      "ok": true
+    },
+    {
+      "detail": "fallback=None, skipped=over_budget, doc_tokens=6419, share=0.6677",
+      "falsifier": "超预算仍回整篇 ⇒ 会被切成更多片，反而更贵",
+      "name": "A13 预算保护：整篇超预算 ⇒ 不回退（标 fallback_skipped）",
       "ok": true
     },
     {

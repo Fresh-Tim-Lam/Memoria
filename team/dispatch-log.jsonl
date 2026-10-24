@@ -111,3 +111,7 @@
 {"ts": "2026-10-25T01:36:42+08:00", "actor": "lead", "phase": "backfill", "target": "todo-owner", "task": "task-119", "desc": "更正 L97：report 原写成 markdown 锚点（非文件路径）", "corrects": {"line": 97, "field": "report", "old": "docs/todo.md#15", "new": "artifacts/agent/verify/todo/agent-arch-plan-2026-10-25.md"}}
 {"ts":"2026-10-24T17:37:17.691Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
 {"ts": "2026-10-25T01:37:25+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "R-S1B-1：70%阈值作废（度量误设）+必须加>50%自适应回退；R-S1B-2 接线已验"}
+{"ts":"2026-10-24T17:41:14.012Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:43:03.750Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:43:19+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "R-S1B-4: heading=None静默返sections[0]是生产缺陷必须修；R-S1B-5撤回我那条裁决"}
+{"ts": "2026-10-25T01:43:19+08:00", "actor": "lead", "phase": "spawn", "target": "steward", "task": "task-127", "desc": "静默默认缺陷机检方案提案（T1/T2/T3，只提案不实现）", "mode": "mechanical", "modeExplicit": true}

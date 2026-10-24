@@ -54,6 +54,11 @@ SNIPPET_MAX_TOKENS = 600
 #: 片段窗口默认上下文行数（±N）
 SNIPPET_DEFAULT_CTX_LINES = 3
 
+#: **自适应回退阈值**（R-S1B-1）：目标节 token / 全文 token 超过它 ⇒ `get_section()` 直接回整篇正文。
+#: 理由：本节已占大半篇时，"只给本节"逼调用方再补读一轮，多付的一轮往返比"多给"更贵；
+#: 但整篇本身超预算时不回退（回退会被切成更多片，反而更贵——见 `get_section()` 的预算保护）。
+WHOLE_DOC_FALLBACK_RATIO = 0.5
+
 #: snippet 一次最多回几个命中窗口（超出则报计数 + 收窄提示，不静默取一个）
 SNIPPET_MAX_WINDOWS = 5
 
@@ -357,20 +362,81 @@ def get_section(
     max_tokens: int = SECTION_MAX_TOKENS,
     **selector,
 ) -> dict:
-    """取单节正文；超预算切成 `part i/n` + `next_cursor`（不静默截断）。"""
+    """取单节正文；超预算切成 `part i/n` + `next_cursor`（不静默截断）。
+
+    ## R-S1B-1 自适应回退（2026-10-25）
+
+    当**目标节占全文档比例 > 50%** 时，"只给这一节"已经等于"几乎给整篇"，但调用方常会为了拿全
+    而再发一轮（或本节超预算被切成 `part i/n` 连读数轮）。此时改为**直接回整篇正文**（1 轮、1 片，
+    `fallback="whole_document"`），把"两轮惩罚"消掉。
+
+    为什么是 50%：本节 token / 全文 token > 1/2 ⇒ 少给出去的部分 < 一半。再让调用方补读那"<一半的一半"
+    的代价（多一轮 + 一轮往返开销）已超过"多给"的代价。阈值写成常量 `WHOLE_DOC_FALLBACK_RATIO`。
+
+    **预算保护**：整篇若本身就超 `max_tokens` ⇒ **不回退**（回整篇也会被切成多片，反而更贵），
+    照旧回本节分片，并在 payload 里标 `fallback_skipped: over_budget`。
+    """
     sec, err = resolve_section(body, **selector)
     if err is not None:
         return err.payload()
 
     text = sec.text
     tokens = estimate_tokens(text)
+    doc_tokens = estimate_tokens(body)
+    ratio = (tokens / doc_tokens) if doc_tokens else 0.0
     base = {
         "ok": True,
-        "section": {**sec.ident(), "blocks": sec.block_count, "lines": sec.line_count},
+        "section": {
+            **sec.ident(),
+            "blocks": sec.block_count,
+            "lines": sec.line_count,
+            "doc_share": round(ratio, 4),
+        },
         "tokens": tokens,
+        "doc_tokens": doc_tokens,
         "budget_tokens": max_tokens,
         "tokens_estimated": True,
     }
+
+    # ── 本节即整篇（首个 h1 覆盖全文）⇒ 整篇在预算内则直接 1 片 1 轮 ──
+    if tokens >= doc_tokens and doc_tokens <= max_tokens:
+        return {
+            **base,
+            "fallback": "whole_document",
+            "fallback_reason": "该节即整篇（h1 覆盖全文）",
+            "text": body,
+            "tokens": doc_tokens,
+            "part": 1,
+            "parts": 1,
+            "next_cursor": None,
+            "truncated": False,
+        }
+    if tokens >= doc_tokens:
+        # 本节即整篇但超预算 ⇒ 不能"整篇返回"（那样既不 1 轮也不省），按片给
+        base["fallback_skipped"] = "over_budget"
+        base["fallback_skipped_reason"] = (
+            f"该节即整篇（{doc_tokens} tok）超预算 {max_tokens} ⇒ 只能按片给"
+        )
+
+    # ── 自适应回退：本节 > 半篇 ⇒ 直接给整篇（1 轮）；整篇超预算则不回退 ──
+    if ratio > WHOLE_DOC_FALLBACK_RATIO and doc_tokens > tokens:
+        if doc_tokens <= max_tokens:
+            return {
+                **base,
+                "fallback": "whole_document",
+                "fallback_reason": f"该节占全文 {ratio:.1%} > {WHOLE_DOC_FALLBACK_RATIO:.0%}",
+                "text": body,
+                "tokens": doc_tokens,
+                "part": 1,
+                "parts": 1,
+                "next_cursor": None,
+                "truncated": False,
+            }
+        base["fallback_skipped"] = "over_budget"
+        base["fallback_skipped_reason"] = (
+            f"该节占全文 {ratio:.1%}，但整篇 {doc_tokens} tok 超预算 {max_tokens} ⇒ 回退会变多片，放弃"
+        )
+
     if tokens <= max_tokens:
         return {**base, "text": text, "part": 1, "parts": 1, "next_cursor": None, "truncated": False}
 

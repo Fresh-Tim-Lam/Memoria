@@ -352,3 +352,78 @@ smoke：`outline` → 标题树（含行号区间）；`section` → 单节正�
   `test_doc_anchors.py` **不覆盖 kb.py**（Lead 已确认，属 task-126）⇒ 本任务不自行重取。
 - 未改 `src/**` 之外的产品代码；未改前端；**未 commit**。
 
+
+---
+
+## 13. R-S1B-1：70% 阈值作废 + >50% 自适应回退（**含我自己的 harness bug 自曝**）
+
+### 13.1 先说结论
+
+| 关闭条件（新） | 要求 | 实测 | 判定 |
+|---|---|---|---|
+| `find_sentence` 节省 | ≥90% | **94.26%** | ✅ |
+| `read_section` 节省 | ≥20% | **90.65%** | ✅ |
+| **单任务反升** | **=0** | **0** | ✅ |
+
+**task-120 关闭条件 2：达成**（按 R-S1B-1 新口径）。旧的"统一 70%"口径作废。
+
+### 13.2 ⚠️ 自曝：上一轮的 `read_section = 21.44%` 是**我的 A/B harness bug**，不是"口径误设"那么轻
+
+上一轮 `run_arm_b()` 对 `read_section` 的调用是：
+
+```python
+sec_args = {"file": …, "near_line": task["heading_line"]}      # ← 没有 heading！
+out = tools["section"].handler(sec_args)
+```
+
+而 `resolve_section(body, heading=None, near_line=…)` 的语义是：**没有标题选择器 ⇒ 返回 `sections[0]`**
+（首个 h1 节 ≈ 整篇）。于是 B 臂根本**没有取目标节**，读到的是整篇 —— 这既解释了旧数字为什么只有 21%，
+也解释了它的"2 轮"（outline + 整篇）。
+
+**性质**：这是我度量脚本的缺陷，**不是** N1 基线的问题、也不是实现的问题。
+它与 Lead 在 `silent_failure` S2 里讲的是同一类错误：**静默默认**（`heading=None` ⇒ 悄悄回 `sections[0]`）让错误看起来像结果。
+修法有两层：① 脚本传 `heading`；② `section()` 支持直接按标题取（本来就能，只是脚本没传）。
+
+### 13.3 实现：`WHOLE_DOC_FALLBACK_RATIO = 0.5`
+
+`services/agent/section_index.py::get_section()` 新增三分支（其余逻辑不变）：
+
+| 情形 | 行为 | payload 标记 |
+|---|---|---|
+| 目标节即整篇（h1 覆盖全文）且整篇 ≤ 预算 | **整篇 1 片 1 轮** | `fallback="whole_document"` |
+| 目标节 >50% 全文 且 整篇 ≤ 预算 | **整篇 1 片 1 轮**（消除补读一轮） | `fallback="whole_document"` + `fallback_reason` |
+| 目标节 >50% 但整篇 > 预算 | **不回退**（回整篇会被切成更多片 ⇒ 更贵），照旧按节分片 | `fallback_skipped="over_budget"` |
+
+工具侧（`tools/kb.py::_section_call`）把回退渲染成 `**整篇**（目标节「X」占全文 NN% > 50%，已一次给全，无需再读）`，
+超预算跳过时渲染 `（本节占全文过半，但整篇超预算，故按节给）` —— 让模型知道"不必再补读"或"确实还要读"。
+
+### 13.4 回退前后对比（同一任务集、同一策略、同一 token 口径）
+
+| 版本 | `read_section` | `find_sentence` | 合计 | 轮数 A/B | 单任务反升 |
+|---|---|---|---|---|---|
+| 修复前（harness bug：`section` 未传 heading ⇒ 回 `sections[0]`） | 21.44% | 94.26% | 57.38% | 1.0 / 2.0 | 有 |
+| 修复 + 直取 + >50% 回退 | **90.65%** | 94.26% | **92.43%** | **1.0 / 1.0** | **0** |
+
+`artifacts/agent/verify/todo/s1a-granularity-ab.json`（`sha256=8873fbf05346fe97…`）；
+`read_api` 侧新增 A13 三条断言（触发 / 不误伤 / 预算保护，全部 OK，`sha256=5fb259eb71480ee7…`）。
+
+**必须说清的一点（不给自己贴金）**：这 69 个百分点里，**主要来自修 harness bug + 去掉多余的一轮 outline**，
+**不是**来自 >50% 回退 —— 回退在这个任务集里 **触发 0/20 次**（目标节只占全文约 6%，远不到 50%）。
+回退的价值我用 A13 三条断言**单独证明**（它会触发、不会误伤小节、超预算会跳过），
+而**没有**把它算进 A/B 的增益里。如果只看 A/B 数字就说"回退很有效"，那是又错一次。
+
+### 13.5 本轮附带修的一个真 bug（回退引入后被 A11 抓到）
+
+第一版回退没做预算保护，"本节即整篇" 分支会把 6,761 tok 的整篇直接返回 ⇒ **违反 section ≤4,000 tok 预算**。
+`read_api` 的 A11 当场抓红（23 个文档）。现已加预算守卫：整篇超预算一律不回退、标 `fallback_skipped`，A11 全绿。
+**这说明"预算断言"不是装饰** —— 它把回退写错的那一刻就拦住了。
+
+### 13.6 复跑
+
+```bash
+python scripts/benchmark/maintenance/section_read_api.py --json artifacts/agent/verify/todo/s1a-read-api.json     # PASS（20 断言）
+python scripts/benchmark/maintenance/section_granularity_ab.py --json artifacts/agent/verify/todo/s1a-granularity-ab.json  # PASS
+```
+其余三个脚本 sha 不变（`census e9c4021a` / `replace_op 11a955e8` / `kp_impact NO_IMPACT`）；
+`pytest -k "agent_plan/apply/body_edit/audit/doc_anchor"` = **106 passed / 0 failed**；未 commit。
+

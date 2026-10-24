@@ -151,39 +151,52 @@ def run_arm_a(tools: dict, task: dict) -> dict:
 def run_arm_b(tools: dict, task: dict) -> dict:
     """B 粒度：按意图走三级粒度。
 
-    - `find_sentence`：`snippet(query)` 一轮（不中再 outline→section 兜底）
-    - `read_section`：`outline` → `section(near_line)` → 必要时按 next_cursor 续片
+    - `find_sentence`：`snippet(query)` 一轮（不中再 section/outline 兜底）
+    - `read_section`：**直接** `section(heading=…)` 一轮 —— R-S1B-1 起，目标节占全文 >50% 时
+      `section()` 自适应回整篇 ⇒ **1 轮拿全**，不再付 `outline→section` 的两轮惩罚；
+      只有直接取不中（同名歧义/切片未覆盖）才退到 outline 探测。
     """
     rounds: list[int] = []
     hit = False
+    fallback_used = False
     sec_args: dict = {"file": task["file"], "near_line": task["heading_line"]}
+    direct_args: dict = {"file": task["file"], "heading": task["heading"]}
+
+    def _is_fallback(t: str) -> bool:
+        return "整篇" in t[:80]
 
     if task["kind"] == "find_sentence":
         out = tools["snippet"].handler({"file": task["file"], "query": task["anchor"][:24]})
         rounds.append(estimate_tokens(out.text))
         if task["anchor"] in out.text:
             return {"arm": "B_granular", "rounds": len(rounds), "tokens_by_round": rounds,
-                    "total": sum(rounds), "hit": True}
+                    "total": sum(rounds), "hit": True, "fallback_used": False}
 
+    # ① 直接按标题取（1 轮；>50% 时内部回整篇）
+    out = tools["section"].handler(direct_args)
+    rounds.append(estimate_tokens(out.text))
+    fallback_used = fallback_used or _is_fallback(out.text)
+    if task["anchor"] in out.text:
+        return {"arm": "B_granular", "rounds": len(rounds), "tokens_by_round": rounds,
+                "total": sum(rounds), "hit": True, "fallback_used": fallback_used}
+
+    # ② 直接取不中 ⇒ outline 探一次，再按 near_line 取（含续片）
     out = tools["outline"].handler({"file": task["file"]})
     rounds.append(estimate_tokens(out.text))
-    out = tools["section"].handler(sec_args)
-    rounds.append(estimate_tokens(out.text))
-    if task["anchor"] in out.text:
-        hit = True
-    else:
-        part = 2
-        while len(rounds) < MAX_ROUNDS:
-            out = tools["section"].handler({**sec_args, "part": part})
-            rounds.append(estimate_tokens(out.text))
-            if task["anchor"] in out.text:
-                hit = True
-                break
-            if "本片未完" not in out.text:
-                break
-            part += 1
+    part = 1
+    while len(rounds) < MAX_ROUNDS:
+        args = dict(sec_args) if part == 1 else {**sec_args, "part": part}
+        out = tools["section"].handler(args)
+        rounds.append(estimate_tokens(out.text))
+        fallback_used = fallback_used or _is_fallback(out.text)
+        if task["anchor"] in out.text:
+            hit = True
+            break
+        if "本片未完" not in out.text:
+            break
+        part += 1
     return {"arm": "B_granular", "rounds": len(rounds), "tokens_by_round": rounds,
-            "total": sum(rounds), "hit": hit}
+            "total": sum(rounds), "hit": hit, "fallback_used": fallback_used}
 
 
 def arm_summary(rows: list[dict]) -> dict:
@@ -254,7 +267,8 @@ def main() -> int:
                 "band": "small" if task["doc_bytes"] < 10_000 else ("mid" if task["doc_bytes"] < 30_000 else "large"),
                 "heading": task["heading"],
                 "A": {"rounds": a["rounds"], "total": a["total"], "hit": a["hit"]},
-                "B": {"rounds": b["rounds"], "total": b["total"], "hit": b["hit"]},
+                "B": {"rounds": b["rounds"], "total": b["total"], "hit": b["hit"],
+                      "fallback_used": b.get("fallback_used", False)},
                 "savings": round(1 - b["total"] / a["total"], 4) if a["total"] else 0,
                 "rounds_delta": b["rounds"] - a["rounds"],
             }
@@ -295,6 +309,9 @@ def main() -> int:
         }
 
     u3_alert = sb["total_sum"] > sa["total_sum"]
+    # 单任务反升（B 总账 > A 总账）—— 新关闭条件的硬指标，必须为 0
+    regressions = [r for r in per_task if r["B"]["total"] > r["A"]["total"]]
+    fallback_tasks = sum(1 for r in per_task if r["B"].get("fallback_used"))
 
     payload = {
         "schema": "section-granularity-ab/v1",
@@ -314,6 +331,12 @@ def main() -> int:
         "u3_total_up": u3_alert,
         "bands": bands,
         "bands_by_doc_size": bands_by_size,
+        "single_task_regressions": len(regressions),
+        "regression_detail": [
+            {"id": r["id"], "kind": r.get("kind"), "A": r["A"]["total"], "B": r["B"]["total"]}
+            for r in regressions
+        ],
+        "fallback_used_tasks": fallback_tasks,
         "schema_cost": {
             "three_new_tools_tokens": new_schema_tokens,
             "all_tools_tokens": all_schema_tokens,
@@ -340,6 +363,9 @@ def main() -> int:
     print(f"  rounds: min={sb['rounds_min']} median={sb['rounds_median']} max={sb['rounds_max']} | "
           f"per-round中位={sb['per_round_tokens_median']} tok | 总账 sum={sb['total_sum']} 中位={sb['total_median']} | hit={sb['hit_rate']}")
     print(f"\n总账节省: {savings:.2%} | 轮数变化中位: {payload['rounds_delta_median']:+} | U3 总账反升: {u3_alert}")
+    print(f"**单任务反升: {len(regressions)} 个**（新关闭条件要求 0）；触发整篇回退的任务: {fallback_tasks}")
+    for r in regressions[:8]:
+        print(f"    REGRESS {r['kind']} {r['id']}: A={r['A']['total']} B={r['B']['total']}")
     for band, v in bands.items():
         print(f"  [{band}] tasks={v['tasks']} A={v['A_total_sum']} B={v['B_total_sum']} "
               f"savings={v['savings']:.2%} rounds A/B={v['avg_rounds_A']}/{v['avg_rounds_B']}")

@@ -32,9 +32,16 @@ import hashlib
 import json
 import os
 import sys
+import tempfile
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, os.path.join(REPO, "src"))
+
+# ── 密封性（R-S1A-3）：`DocumentService.__post_init__` 会调 `remember_last_kb_path()`
+# 写**全局** UI 设置（`config/ui-settings.json`）；app 运行时该文件被占用 ⇒ PermissionError。
+# 把 config 目录重定向到临时目录，测量才能密封可复跑，且**不改全局配置**。
+_SEALED_CONFIG_DIR = tempfile.mkdtemp(prefix="memoria-cfg-")
+os.environ.setdefault("MEMORIA_CONFIG_DIR", _SEALED_CONFIG_DIR)
 
 from memoria.services.agent import section_index as si  # noqa: E402
 from memoria.services.heading_proposals import scan_headings  # noqa: E402
@@ -278,6 +285,51 @@ def main() -> int:
         path_checked > 0 and path_ok == path_checked,
         f"{path_ok}/{path_checked} 组（父级路径互异的同名标题）",
         "任一失败 ⇒ 同级/异父重名会静默取错节",
+    )
+
+    # ── A13 R-S1B-1 自适应回退（目标节 >50% 全文 ⇒ 整篇 1 轮）────────────
+    # ① 触发：h1 覆盖大半篇（且整篇在预算内）⇒ 回整篇、1 片、文本逐字等于全文
+    dom_body = "# 甲\n" + "\n".join(f"甲的第 {i} 行正文内容" for i in range(30)) + "\n\n## 小\n小内容\n"
+    pay = si.get_section(dom_body, heading="甲")
+    check(
+        "A13 回退触发：目标节 >50% 全文且整篇在预算内 ⇒ 整篇 1 片",
+        bool(pay.get("ok"))
+        and pay.get("fallback") == "whole_document"
+        and pay.get("parts") == 1
+        and pay.get("next_cursor") is None
+        and pay.get("text") == dom_body,
+        f"fallback={pay.get('fallback')}, parts={pay.get('parts')}, "
+        f"share={(pay.get('section') or {}).get('doc_share')}, tok={pay.get('tokens')}",
+        "未回退 ⇒ 目标节占大半篇时仍要多付一轮/多片",
+    )
+    # ② 不误伤：同一篇里的小节（占比远小于 50%）⇒ 只给该节
+    pay = si.get_section(dom_body, heading="小")
+    check(
+        "A13 回退不误伤：目标节 ≤50% ⇒ 只给该节",
+        bool(pay.get("ok"))
+        and pay.get("fallback") is None
+        and (pay.get("section") or {}).get("title") == "小",
+        f"fallback={pay.get('fallback')}, title={(pay.get('section') or {}).get('title')}, "
+        f"share={(pay.get('section') or {}).get('doc_share')}",
+        "小节也被整篇替换 ⇒ 回退条件写错（会白送全文）",
+    )
+    # ③ 预算保护：整篇超预算 ⇒ 不回退（回整篇会被切成更多片，反而更贵）
+    over_body = (
+        "# 长文\n"
+        + "\n".join(f"前言第 {i} 行，内容够长才会把 token 顶上去。" for i in range(150))
+        + "\n\n## 大节\n"
+        + "\n".join(f"大节第 {i} 行，内容够长才会把 token 顶上去。" for i in range(300))
+        + "\n\n## 尾节\n末节。\n"
+    )
+    pay = si.get_section(over_body, heading="大节")
+    check(
+        "A13 预算保护：整篇超预算 ⇒ 不回退（标 fallback_skipped）",
+        bool(pay.get("ok"))
+        and pay.get("fallback") is None
+        and pay.get("fallback_skipped") == "over_budget",
+        f"fallback={pay.get('fallback')}, skipped={pay.get('fallback_skipped')}, "
+        f"doc_tokens={pay.get('doc_tokens')}, share={(pay.get('section') or {}).get('doc_share')}",
+        "超预算仍回整篇 ⇒ 会被切成更多片，反而更贵",
     )
 
     # ── A12 C3 触发率 ────────────────────────────────────────────────────
