@@ -1,0 +1,37 @@
+{
+  "verified_at": "2026-10-25T00:55:57+08:00",
+  "verified_by": "lead",
+  "purpose": "PROTOCOL §10 要求提案者引用 ≥3 个外部独立来源且不得编造；Lead 独立验证来源存在性",
+  "sources": [
+    {
+      "id": "S1",
+      "claimed": "MCP 官方规范 2026-07-28",
+      "verified": true,
+      "how": "web_search 命中官方 blog post 'The 2026-07-28 Specification' 与 TS SDK 迁移文档 support-2026-07-28",
+      "citations": [
+        "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/refs/heads/main/blog/content/posts/2026-07-28-spec-ga/index.md",
+        "https://ts.sdk.modelcontextprotocol.io/v2/migration/support-2026-07-28.md"
+      ]
+    },
+    {
+      "id": "S2",
+      "claimed": "basicmachines-co/basic-memory",
+      "verified": true,
+      "how": "web_search 命中仓库 PR #335（v0.15.0 assistant guide by phernandez）",
+      "citations": [
+        "https://github.com/basicmachines-co/basic-memory/pull/335"
+      ]
+    },
+    {
+      "id": "S3",
+      "claimed": "arXiv:2508.02694 Efficient Agents: Building Effective Agents While Reducing Cost",
+      "verified": true,
+      "how": "web_search 命中 ar5iv 全文页，标题一致",
+      "citations": [
+        "https://ar5iv.labs.arxiv.org/html/2508.02694"
+      ]
+    }
+  ],
+  "independence_check": "三类各不相同（规范 / 开源实现 / 学术测量），无同作者同材料",
+  "verdict": "≥3 外部独立来源要求满足，未发现编造"
+}
