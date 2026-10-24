@@ -18,7 +18,16 @@ Curator 用它判 `active`（V2/V3 的可复跑证据）。
 ----
 必需：ts / actor / phase（phase ∈ spawn|message|done|retire|backfill）
 可选：target / task / desc / outcome / report / evidence / source
+      mode / modeExplicit（task-107：spawn 的模式决策；路由表见 `docs/guides/lead-dispatch-rules.md §1.3b`）
       corrects（更正协议，仅 backfill 用）
+
+**L9 模式决策（task-107，2026-10-24）**
+`AGENTS.md §0.5 L9`：spawn 必须**显式**选 `mode`（`mechanical`/`standard`/`deep`/`creator`）；
+不传会被 DSH 静默默认为 `standard` = "没做决策"。因此本工具对 `phase=spawn` **fail-closed**：
+- 缺 `--mode` ⇒ **拒绝写入**（与 `done 必须带 report` 同风格）；
+- 若确实无法判断，用 `--mode-explicit false` 显式留下「未决定」痕迹（`modeExplicit=false`，不伪造 mode）；
+- `--mode` 默认 `modeExplicit=true`；与 `--mode-explicit false` 同时用 ⇒ 拒绝（自相矛盾）。
+`check` 对历史 spawn 行（无 mode 字段）只报 **WARN**（append-only，不回改历史），并给出可判定/不可判定计数。
 
 **fail-closed 纪律（2026-10-23 第三轮新增）**
 `--phase done` **必须**带 `--report`：完成声明如果没有绑定产物，事后无法验证「做完了没」
@@ -50,6 +59,8 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_LOG = REPO_ROOT / "team" / "dispatch-log.jsonl"   # 2026-10-23 迁入版本控制（原 artifacts/agent/ 被 gitignore）
 PHASES = ("spawn", "message", "done", "retire", "backfill")
 REQUIRED_FIELDS = ("ts", "actor", "phase")
+# task-107：DSH 四档（源码 tool-agent-team/src/index.ts:448 mode 默认 standard）；路由表见 §1.3b
+VALID_MODES = ("mechanical", "standard", "deep", "creator")
 MAX_AGE_DAYS = 7
 
 
@@ -98,8 +109,13 @@ def parse_ts(value: str) -> datetime | None:
 
 
 def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
-    """校验日志：存在、可解析、字段齐全、时间可读、最近一条不超过 max_age_days。"""
+    """校验日志：存在、可解析、字段齐全、时间可读、最近一条不超过 max_age_days。
+
+    task-107：对 `phase=spawn` 额外核对模式决策（缺 mode / 非法 mode / 缺 modeExplicit）——
+    历史行（append-only）只报 **warnings**，不影响 `ok`（不阻断历史），但必须**可见**。
+    """
     problems: list[dict] = []
+    warnings: list[dict] = []
     entries, bad = read_entries(path)
     if not path.exists():
         problems.append({"check": "exists", "detail": f"{path} 不存在（尚未记录任何派发）"})
@@ -112,6 +128,22 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
         phase = entry.get("phase")
         if phase not in PHASES:
             problems.append({"check": "phase", "line": lineno, "value": phase})
+        # task-107 / L9：spawn 的模式决策可判定性（warnings，不阻断历史行）
+        if phase == "spawn":
+            mode = entry.get("mode")
+            explicit = entry.get("modeExplicit")
+            if mode is None and explicit is not False:
+                warnings.append({
+                    "check": "mode_missing", "line": lineno, "target": entry.get("target"),
+                    "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；"
+                              "新记录必须 --mode，或用 --mode-explicit false 显式留痕）",
+                })
+            elif mode is not None and mode not in VALID_MODES:
+                warnings.append({"check": "mode_invalid", "line": lineno, "value": mode,
+                                 "detail": f"mode={mode!r} 不在 DSH 四档 {list(VALID_MODES)}"})
+            elif mode is not None and explicit is not True:
+                warnings.append({"check": "mode_not_explicit", "line": lineno, "target": entry.get("target"),
+                                 "detail": "有 mode 但 modeExplicit 不是 true（无法证明是显式决策）"})
     latest = None
     stamps = [ts for ts in (parse_ts(str(entry.get("ts", ""))) for entry in entries) if ts is not None]
     if stamps:
@@ -127,6 +159,16 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
             })
     elif entries:
         problems.append({"check": "recency", "detail": "没有可解析的 ts"})
+    spawn_count = sum(1 for entry in entries if entry.get("phase") == "spawn")
+    judgeable = 0
+    for entry in entries:
+        if entry.get("phase") != "spawn":
+            continue
+        if entry.get("mode") in VALID_MODES and entry.get("modeExplicit") is True:
+            judgeable += 1  # 显式选了模式
+        elif entry.get("mode") is None and entry.get("modeExplicit") is False:
+            judgeable += 1  # 显式「未决定」也是一种可判定状态（不伪造 mode）
+    mode_known = judgeable
     return {
         "ok": not problems,
         "path": str(path),
@@ -135,6 +177,9 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
         "latest": latest.isoformat() if latest is not None else None,
         "max_age_days": max_age_days,
         "problems": problems,
+        "warnings": warnings,
+        "mode_coverage": {"spawn": spawn_count, "judgeable": mode_known,
+                          "unknown": spawn_count - mode_known},
     }
 
 
@@ -155,6 +200,16 @@ def build_entry(args: argparse.Namespace) -> dict:
         "source": args.source,
     }
     entry.update({key: value for key, value in optional.items() if value is not None})
+    # task-107 / L9：mode 与 modeExplicit（spawn 必填；其它 phase 可选）
+    mode = getattr(args, "mode", None)
+    mode_explicit = getattr(args, "mode_explicit", None)
+    if mode is not None:
+        entry["mode"] = mode
+    if mode_explicit is not None:
+        entry["modeExplicit"] = mode_explicit == "true"
+    elif mode is not None and entry["phase"] == "spawn":
+        # 显式传了 --mode 即视为显式决策；无需再额外传 true
+        entry["modeExplicit"] = True
     if getattr(args, "no_report_reason", None):
         entry["no_report_reason"] = args.no_report_reason
     if getattr(args, "corrects_line", None) is not None:
@@ -184,6 +239,20 @@ def validate_entry(entry: dict) -> list[str]:
                 "phase=done 必须带 --report <产物路径>；若确实无可验证产物，"
                 "必须用 --no-report-reason 显式说明（禁止静默留空）"
             )
+    # task-107 / L9：spawn 的模式决策 fail-closed（不传 mode = 静默默认 standard = 没做决策）
+    if phase == "spawn":
+        mode = entry.get("mode")
+        explicit = entry.get("modeExplicit")
+        if mode is None and explicit is not False:
+            problems.append(
+                "phase=spawn 必须显式 --mode {mechanical|standard|deep|creator}（AGENTS.md §0.5 L9："
+                "不传 mode 会被静默默认为 standard = 没做决策）；若确实无法判断，用 "
+                "--mode-explicit false 显式留下「未决定」痕迹（modeExplicit=false，不伪造 mode）"
+            )
+        elif mode is not None and explicit is False:
+            problems.append("--mode 与 --mode-explicit false 自相矛盾（既然选了模式就不能声明未决定）")
+        elif mode is not None and mode not in VALID_MODES:
+            problems.append(f"mode={mode!r} 不在 DSH 四档 {list(VALID_MODES)}")
     if "corrects" in entry:
         fix = entry["corrects"]
         if phase != "backfill":
@@ -262,6 +331,34 @@ def selftest() -> int:
         expect("guard-log-must-be-valid", guard_report["ok"] is True)
         expect("guard-log-must-have-2-entries", guard_report["count"] == 2)
 
+        # 红 9（task-107 / L9）：spawn 不带 --mode ⇒ append 必须被拒；带 --mode 必须落盘且含字段；
+        #    --mode-explicit false 是「显式未决定」留痕（允许，但缺 mode）；两者同用 ⇒ 拒绝。
+        mode_path = Path(tmp) / "mode.jsonl"
+        code = main(["append", "--actor", "lead", "--target", "worker", "--phase", "spawn",
+                     "--task", "task-107", "--log", str(mode_path)])
+        expect("spawn-without-mode-must-be-rejected", code == 2)
+        expect("rejected-spawn-must-not-be-written", not mode_path.exists())
+        code = main(["append", "--actor", "lead", "--target", "worker", "--phase", "spawn",
+                     "--task", "task-107", "--mode", "mechanical", "--log", str(mode_path)])
+        expect("spawn-with-mode-must-pass", code == 0)
+        mode_rows = [json.loads(line) for line in mode_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        expect("spawn-mode-fields-written", bool(mode_rows) and mode_rows[0].get("mode") == "mechanical"
+               and mode_rows[0].get("modeExplicit") is True)
+        code = main(["append", "--actor", "lead", "--target", "undecided", "--phase", "spawn",
+                     "--mode-explicit", "false", "--log", str(mode_path)])
+        expect("spawn-explicit-undecided-allowed", code == 0)
+        # 历史行（直接 append_entry，模拟 task-107 之前的旧记录）⇒ 必须只 WARN 不阻断
+        append_entry(mode_path, {"ts": now_iso(), "actor": "lead", "phase": "spawn", "target": "legacy"})
+        mode_report = check(mode_path, max_age_days=36500)
+        coverage = mode_report["mode_coverage"]
+        expect("mode-check-coverage-counted", coverage["spawn"] == 3 and coverage["judgeable"] == 2
+               and coverage["unknown"] == 1)
+        expect("mode-check-warns-legacy-row", any(w["check"] == "mode_missing" for w in mode_report["warnings"]))
+        expect("mode-warnings-do-not-break-ok", mode_report["ok"] is True)
+        code = main(["append", "--actor", "lead", "--target", "conflict", "--phase", "spawn",
+                     "--mode", "standard", "--mode-explicit", "false", "--log", str(mode_path)])
+        expect("mode-contradiction-must-be-rejected", code == 2)
+
         # 红 7（回归守卫）：子命令 --log 的 default=None 曾把默认路径吃掉 ⇒ Path(None) TypeError。
         #   断言「不给 --log 也必须能拿到非空路径」：用真实默认值构造一次 check（只读，不写）。
         code = main(["check"])
@@ -272,8 +369,10 @@ def selftest() -> int:
     if failures:
         print(f"FAIL: {', '.join(failures)}")
         return 1
-    print("PASS: dispatch_log.py selftest（红 7 类：缺文件/过期/坏JSON/缺字段/done无report被拒/"
-          "corrects滥用被拒/默认路径回归；绿：成对记录、显式豁免、合法更正）")
+    print("PASS: dispatch_log.py selftest（红 9 类：缺文件/过期/坏JSON/缺字段/done无report被拒/"
+          "corrects滥用被拒/默认路径回归/spawn无mode被拒/mode自相矛盾被拒；"
+          "绿：成对记录、显式豁免、合法更正、spawn带mode落盘、显式未决定留痕；"
+          "mode 覆盖计数与 warnings 可见）")
     return 0
 
 
@@ -296,6 +395,10 @@ def main(argv: list[str] | None = None) -> int:
     append_parser.add_argument("--evidence", help="额外证据路径")
     append_parser.add_argument("--source", help="来源标记（如 backfill:team-board-snapshot.json）")
     append_parser.add_argument("--ts", help="显式时间戳（回填历史用；缺省取当前时间）")
+    append_parser.add_argument("--mode", choices=VALID_MODES,
+                               help="spawn 模式决策（L9，必填；路由表见 lead-dispatch-rules §1.3b）")
+    append_parser.add_argument("--mode-explicit", choices=("true", "false"), default=None,
+                               help="modeExplicit 布尔：true=显式决策；false=显式「未决定」留痕（与 --mode 互斥）")
     append_parser.add_argument("--no-report-reason",
                                help="phase=done 但确实无产物时的显式理由（替代 --report）")
     append_parser.add_argument("--corrects-line", type=int,
@@ -333,9 +436,13 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(report, ensure_ascii=False, indent=2))
         else:
             status = "PASS" if report["ok"] else "FAIL"
-            print(f"{status}: {report['count']} 条派发记录, latest={report['latest']}, path={report['path']}")
+            coverage = report.get("mode_coverage") or {}
+            print(f"{status}: {report['count']} 条派发记录, latest={report['latest']}, path={report['path']}"
+                  f"；mode 可判定 {coverage.get('judgeable', 0)}/{coverage.get('spawn', 0)}")
             for problem in report["problems"]:
                 print(f"  - {problem}")
+            for warning in report.get("warnings") or []:
+                print(f"  - [WARN] {warning}")
         return 0 if report["ok"] else 1
     parser.print_help()
     return 2
