@@ -1,15 +1,15 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T10:16:11.933Z",
+  "exportedAt": "2026-10-24T11:34:19.214Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
-    "currentTeammates": 8,
+    "currentTeammates": 9,
     "maxMembers": 17,
-    "currentMembers": 9,
-    "remaining": 8,
-    "used": 9
+    "currentMembers": 10,
+    "remaining": 7,
+    "used": 10
   },
   "members": [
     {
@@ -90,6 +90,15 @@
       "model": "deepseek-flash",
       "context": "fresh",
       "description": "团队管理员（steward）：组织资产维护 + 成员工作记录机制 + 过程审计 + 协议演进。设计阶段先出方案，实现由 Lead 批准后落地。"
+    },
+    {
+      "target": "steward2",
+      "role": "teammate",
+      "status": "running",
+      "id": "1c413811-c0ac-4949-b92a-5b236a121d4e",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "团队管理员（steward 第二实例，因同名重生 bug 临时改名 steward2）：执行 task-101 / task-100 / task-102 / task-103。代次说明见 agents.json 与 org.md §2.2。"
     }
   ],
   "retired": [
@@ -1354,14 +1363,21 @@
     },
     {
       "id": "task-89",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "DSH 插件：把义务变成工具返回值 —— team_preflight + 版本级任务强制 planRef（不依赖 Lead 记忆）",
       "owner": "team-plugin-creator",
       "writeScopes": [
         "docs/persistence-changes"
       ],
       "blockedBy": [],
-      "revision": 2
+      "revision": 3,
+      "evidence": [
+        "packages/experimental/agent-team/src/preflight.ts",
+        "packages/experimental/agent-team/src/task-board.ts",
+        "packages/experimental/tool-agent-team/src/index.ts",
+        "packages/experimental/agent-team/tests/team.spec.ts",
+        "docs/persistence-changes/2026-10-24-team-preflight-planref.md"
+      ]
     },
     {
       "id": "task-90",
@@ -1449,31 +1465,19 @@
       "revision": 1
     },
     {
-      "id": "task-96",
-      "status": "pending",
-      "subject": "带教（mentor）：过程与行为审计 —— 重读标准不靠记忆，产出是「新机检」不是报告",
-      "owner": "lead",
-      "writeScopes": [
-        "docs/guides",
-        "scripts/agent/team_audit.py",
-        "artifacts/agent/verify/mentor"
-      ],
-      "blockedBy": [
-        "task-95"
-      ],
-      "revision": 1
-    },
-    {
       "id": "task-97",
-      "status": "pending",
+      "status": "completed",
       "subject": "设计「成员工作记录机制」（动作/任务/决策三层）+ 定清团队管理员职责边界（人：可能就是一份工作）",
-      "owner": "lead",
+      "owner": "steward",
       "writeScopes": [
         "docs/guides",
         "artifacts/agent/verify/steward"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "docs/guides/team-work-record-and-steward-design.md"
+      ]
     },
     {
       "id": "task-98",
@@ -1515,15 +1519,15 @@
     },
     {
       "id": "task-101",
-      "status": "pending",
+      "status": "in_progress",
       "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
-      "owner": "lead",
+      "owner": "steward2",
       "writeScopes": [
         "scripts/agent/work_record.py",
         "artifacts/agent/verify/steward"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3
     },
     {
       "id": "task-102",
@@ -1570,11 +1574,6 @@
   ],
   "completedRecent": [
     {
-      "id": "task-82",
-      "subject": "P1 测量债续：v2 生产路径（p5perf_run2 + _wl2_install）仍静默 wrap —— 修死文件不等于修生产（task-81 拆出）",
-      "ownerName": "measurement-debt"
-    },
-    {
       "id": "task-83",
       "subject": "P1 task-79 阶段5：粘贴替换跨块选区（新交互语义，进 0.4.7）",
       "ownerName": "lead"
@@ -1593,7 +1592,17 @@
       "id": "task-88",
       "subject": "0.4.7 = agent 半吊子工作收摊：审计 §13 全表 + 排序 + 写回台账 §14（Lead 漏了这一步）",
       "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-89",
+      "subject": "DSH 插件：把义务变成工具返回值 —— team_preflight + 版本级任务强制 planRef（不依赖 Lead 记忆）",
+      "ownerName": "team-plugin-creator"
+    },
+    {
+      "id": "task-97",
+      "subject": "设计「成员工作记录机制」（动作/任务/决策三层）+ 定清团队管理员职责边界（人：可能就是一份工作）",
+      "ownerName": "steward"
     }
   ],
-  "note": "2026-10-24 task-98：steward 三处注册同步（agents.json 18:09 / org.md §2.2 / 快照）"
+  "note": "2026-10-24 steward2 上线（同名重生 bug 绕过）；task-96 已删（并入 steward）；task-97 完成"
 }
