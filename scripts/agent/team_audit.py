@@ -1295,6 +1295,128 @@ def _git(repo: Path, *args: str) -> str:
     return out.stdout if out.returncode == 0 else ""
 
 
+def check_dispatch_release(ctx: AuditContext, data: dict | None) -> None:
+    """第 11 类：派发与发布不变量（2026-10-24 新增）。
+
+    对应 `AGENTS.md §0.5` 的 L1/L5 与 `docs/guides/lead-dispatch-rules.md` §4。
+    设计口径：**只检查"能机器验证"的部分**，不检查"Lead 有没有读规范"。
+
+    H1 `version_triad`    —— 版本三查：__version__.py == version.md §1 == Package/VERSION
+    H2 `tag_version`      —— 最新 tag 与版本文件一致；已 bump 未打 tag ⇒ WARN（发版未完成）
+    H3 `ephemeral_cleanup`—— agents.json 的 ephemeral 名单不得残留已退役成员
+
+    三条都来自 2026-10-24 的真实事故：
+      H1：DOC03 版本漂移（version.md 写 0.4.6 而 __version__.py 仍 0.4.5）
+      H2：本地 tag v0.4.6 指向非发布 commit 且从未推送 ⇒ 差点做出多余且不可逆的"删 tag 重建"
+      H3：退役 p0-selection / boot-probe 后 ephemeral 名单残留 ⇒ 需人工清
+    """
+    import re as _re
+    import subprocess
+
+    check = "dispatch_release"
+
+    # ── H1 版本三查 ────────────────────────────────────────────────
+    ver_py = ctx.repo / "src" / "memoria" / "__version__.py"
+    code_ver = ""
+    if ver_py.exists():
+        m = _re.search(r'__version__\s*=\s*["\']([0-9][^"\']*)["\']',
+                       ver_py.read_text(encoding="utf-8", errors="replace"))
+        code_ver = m.group(1) if m else ""
+
+    doc_ver = ""
+    doc_path = ctx.repo / "docs" / "conventions" / "version.md"
+    if doc_path.exists():
+        m = _re.search(r"\|\s*当前版本\s*\|\s*\**v?([0-9][0-9.]*)\**", 
+                       doc_path.read_text(encoding="utf-8", errors="replace"))
+        doc_ver = m.group(1) if m else ""
+
+    pkg_file = ctx.repo / "Package" / "VERSION"
+    pkg_ver = ""
+    if pkg_file.exists():
+        pkg_ver = pkg_file.read_text(encoding="utf-8", errors="replace").strip()
+
+    if code_ver and doc_ver and code_ver != doc_ver:
+        ctx.add(check, FAIL,
+                f"H1 版本漂移：__version__.py={code_ver} 但 version.md §1={doc_ver}（DOC03 同族）",
+                f"{ctx.rel(ver_py)} vs {ctx.rel(doc_path)}")
+    if code_ver and pkg_ver and code_ver != pkg_ver:
+        ctx.add(check, FAIL,
+                f"H1 打包产物版本不符：Package\\VERSION={pkg_ver} 但 __version__.py={code_ver}"
+                f"（需重新 build_release）",
+                f"{ctx.rel(pkg_file)} vs {ctx.rel(ver_py)}")
+    if ver_py.exists() and not code_ver:
+        # 文件在但解析不出 ⇒ 真问题；文件本身不存在（如 fixture/临时仓库）⇒ 静默跳过
+        ctx.add(check, WARN, "H1 无法解析 __version__.py 的版本号", ctx.rel(ver_py))
+
+    # ── H2 最新 tag ↔ 版本文件 ─────────────────────────────────────
+    def _git(*args: str) -> str:
+        try:
+            r = subprocess.run(["git", *args], cwd=str(ctx.repo), capture_output=True,
+                               text=True, encoding="utf-8", timeout=20)
+            return (r.stdout or "").strip() if r.returncode == 0 else ""
+        except (OSError, subprocess.SubprocessError):
+            return ""
+
+    latest_tag = _git("tag", "--sort=-creatordate")
+    latest_tag = latest_tag.split("\n")[0].strip() if latest_tag else ""
+    latest_tag = latest_tag[1:] if latest_tag.startswith("v") else latest_tag
+
+    if code_ver and latest_tag and code_ver != latest_tag:
+        # 版本文件比 tag 新 ⇒ 已 bump 未发版（WARN，不是错误：可能在准备中）
+        try:
+            newer = tuple(int(x) for x in code_ver.split(".")) > tuple(int(x) for x in latest_tag.split("."))
+        except ValueError:
+            newer = False
+        if newer:
+            ctx.add(check, WARN,
+                    f"H2 版本文件 {code_ver} 领先最新 tag v{latest_tag} —— 已 bump 但未发版（发版未完成）",
+                    f"{ctx.rel(ver_py)} vs git tag")
+        else:
+            ctx.add(check, FAIL,
+                    f"H2 版本文件 {code_ver} 落后于最新 tag v{latest_tag} —— tag 与代码不一致",
+                    f"{ctx.rel(ver_py)} vs git tag")
+
+    # tag 指向的 commit 必须是发布 commit（即 tag 不得指向与版本文件不符的历史）
+    if code_ver and latest_tag:
+        tag_commit = _git("rev-list", "-n", "1", f"v{latest_tag}")
+        head = _git("rev-parse", "HEAD")
+        if tag_commit and head and tag_commit != head:
+            unpushed = _git("log", "--oneline", f"v{latest_tag}..HEAD")
+            n = len([ln for ln in unpushed.split("\n") if ln.strip()]) if unpushed else 0
+            if n > 0:
+                ctx.add(check, INFO,
+                        f"H2 tag v{latest_tag} 之后还有 {n} 个 commit（tag 指向 {tag_commit[:8]}）",
+                        "git tag / HEAD")
+
+    # ── H3 ephemeral 名单残留 ─────────────────────────────────────
+    reg_path = ctx.repo / "team" / "agents.json"
+    if reg_path.exists():
+        try:
+            import json as _json
+
+            reg = _json.loads(reg_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            reg = {}
+        eph = [e.get("id") for e in (reg.get("ephemeral_agents") or []) if isinstance(e, dict)]
+        members = set()
+        if data:
+            for m in (data.get("members") or []):
+                if isinstance(m, dict) and m.get("target"):
+                    members.add(m["target"])
+        if eph and members:
+            stale = [e for e in eph if e not in members]
+            if stale:
+                ctx.add(check, FAIL,
+                        "H3 ephemeral 名单残留（成员已退役/不在快照中）：" + ", ".join(stale)
+                        + " —— 收口时必须从 ephemeral_agents 删除",
+                        f"{ctx.rel(reg_path)}:ephemeral_agents vs snapshot:members")
+            live = [e for e in eph if e in members]
+            if live:
+                ctx.add(check, INFO,
+                        "H3 活跃 ephemeral：" + ", ".join(live) + "（任务完成即退役）",
+                        f"{ctx.rel(reg_path)}:ephemeral_agents")
+
+
 def check_lessons(ctx: AuditContext) -> None:
     """检查「教训库」是否存在且未过久未更新（组织学习能力的机检投影）。
 
@@ -1452,6 +1574,7 @@ def run_checks(ctx: AuditContext) -> list:
     check_contract_drift(ctx, data)
     check_commit_hygiene(ctx)
     check_lessons(ctx)
+    check_dispatch_release(ctx, data)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
