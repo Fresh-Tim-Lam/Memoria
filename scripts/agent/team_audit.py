@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 19 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
+覆盖 20 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -51,6 +51,10 @@
 17. steward_self_audit: **steward 自己可被机审**（org.md §2.6 B3/B4）。task-103 新增。
                      standards_read 的 4 个标准 sha256 必须与磁盘一致；finding 的 rule_ref 可解析或标 proposal；
                      open>14d WARN；SUMMARY 缺 blind_spots WARN。
+18. deliberation_quality: **辩论过程可复核**（PROTOCOL.md §1-§4；task-116 新增）。
+                     dq1 证据身份可解析 / dq2 rejected 必带 UEH / dq3 falsifiers / dq4 claim→evidence /
+                     dq5 freeze+PINNED sha / dq6 辩论产物 git tracked ⇒ FAIL；
+                     dq7 objection_ids / dq8 同源组 / dq9 coverage 三表 / dq10 deferred 超期 ⇒ WARN（两周后 FAIL）。
 
 用法
 ----
@@ -146,6 +150,13 @@ STEWARD_FINDING_DISPOSITIONS = ("open", "fixed", "dismissed", "mechanized", "pro
 STEWARD_OPEN_WARN_DAYS = 14
 # lead-dispatch-rules §1.2b（task-109 新增）：共享产出根 —— 根 vs 其子路径只报 INFO（假重叠）
 SHARED_OUTPUT_ROOTS = ("artifacts/agent/verify", "docs/design", "team", "scripts/benchmark")
+# ---- task-116：deliberation_quality（辩论过程机检，PROTOCOL.md §2/§3/§4/§9）----
+DEBATE_DIR_REL = "artifacts/agent/verify/debate"
+# 协议冻结 2026-10-25；dq7-dq10 先 WARN，两周后转 FAIL（与 §5.4/§6.5 的宽限先例一致）
+DEBATE_WARN_UNTIL = "2026-11-08"
+ALLOWED_EV_KINDS = ("file", "commit", "bench", "spec", "doc", "counterexample")
+_EV_RE = re.compile(r"^ev:([a-z][a-z0-9_-]*):(.+)$")
+_EV_DIRTY_CHARS = "（）()，,；; \t\r\n"
 
 # agents.json 合法的角色状态（standby 是本轮新增：领域已登记但当前无活，不计活性）
 VALID_ROLE_STATUS = ("active", "standby", "retired-in-dsh")
@@ -2479,6 +2490,311 @@ def check_steward_self_audit(ctx: AuditContext) -> None:
                 f"{ctx.rel(latest)}")
 
 
+def _lf_sha256(path: Path) -> str:
+    """LF 归一化内容 sha256（与 task-110/§2.6 B3 口径一致，跨平台可复算）。"""
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
+
+def _debate_evidence_refs(ruling: dict) -> list[tuple[str, str]]:
+    """收集一条裁决里所有证据身份字符串（supporting_evidence + rejected[].its_evidence）。"""
+    refs: list[tuple[str, str]] = []
+    for index, item in enumerate(ruling.get("supporting_evidence") or []):
+        refs.append((f"supporting_evidence[{index}]", str(item)))
+    for index, rejected in enumerate(ruling.get("rejected") or []):
+        if not isinstance(rejected, dict):
+            continue
+        for sub, item in enumerate(rejected.get("its_evidence") or []):
+            refs.append((f"rejected[{index}].its_evidence[{sub}]", str(item)))
+    return refs
+
+
+def _resolve_evidence_identity(ctx: AuditContext, kind: str, raw_ref: str) -> tuple[bool, str]:
+    """按 PROTOCOL E1 解析一条证据身份（不判语义，只判"可追"）。"""
+    if kind not in ALLOWED_EV_KINDS:
+        return False, f"kind={kind!r} 不在 E1 六类 {list(ALLOWED_EV_KINDS)}"
+    if any(ch in raw_ref for ch in _EV_DIRTY_CHARS):
+        return False, f"ref={raw_ref!r} 含说明文字/空白（E1 要求纯身份）"
+    ref = raw_ref.split("#", 1)[0].strip()
+    if kind in ("file", "doc"):
+        path = Path(ref)
+        if not path.is_absolute():
+            path = ctx.repo / ref
+        if not path.is_file():
+            return False, f"文件不存在：{ref}"
+        return True, ref
+    if kind == "commit":
+        ok, _out, _err = git(ctx.repo, "cat-file", "-e", f"{ref}^{{commit}}")
+        return (True, ref) if ok else (False, f"commit 不存在：{ref}")
+    # bench/spec/counterexample：id 类身份，v0 只校验非空（目标在 evidence_ledger 中由 dq8 追）
+    return (bool(ref.strip()), ref)
+
+
+def check_deliberation_quality(ctx: AuditContext) -> None:
+    """辩论过程质量（PROTOCOL.md §1/§2/§3/§4；v0 = 6 FAIL + 4 WARN）。
+
+    - dq1..dq6 = FAIL：协议已冻结，这些是**硬结构**（不可复核的辩论 = 没有辩论）；
+    - dq7..dq10 = WARN，`DEBATE_WARN_UNTIL` 之后转 FAIL（与 §5.4/§6.5 宽限先例一致）；
+    - 盲区（不假装检查）：`unique_evidence` 是否**真** unique、共享假设是否"合理"、证据是否**足以**支撑结论
+      —— 语义判断交评审/人；机器只查"是否被处理 / 是否可追 / 是否有 falsifier"。
+    - 无辩论产物时 INFO「不适用」（不是假绿：本仓有产物时必须走完 dq1-dq6）。
+    """
+    check = "deliberation_quality"
+    base = ctx.repo / DEBATE_DIR_REL
+    if not base.is_dir():
+        ctx.add(check, INFO, f"{DEBATE_DIR_REL} 不存在：无辩论产物，本检查不适用（非通过）",
+                f"missing dir: {ctx.rel(base)}")
+        return
+    rulings_path = base / "ruling" / "rulings.jsonl"
+    rulings, bad_rows = _read_jsonl_safe(rulings_path) if rulings_path.is_file() else ([], [])
+    problems = 0
+    if not rulings_path.is_file():
+        problems += 1
+        ctx.add(check, FAIL, f"dq4：缺 {ctx.rel(rulings_path)} —— 裁决不可复核（输入为 0 不得判绿）",
+                f"missing file: {ctx.rel(rulings_path)}")
+    if bad_rows:
+        problems += 1
+        ctx.add(check, FAIL, f"dq4：{ctx.rel(rulings_path)} 有坏行 {bad_rows[:2]}", f"{ctx.rel(rulings_path)}")
+
+    # dq1：证据身份格式合法（E1）
+    dq1_bad: list[str] = []
+    evidence_total = 0
+    for ruling in rulings:
+        rid = str(ruling.get("ruling_id") or "?")
+        for where, ev in _debate_evidence_refs(ruling):
+            evidence_total += 1
+            match = _EV_RE.match(ev.strip())
+            if not match:
+                dq1_bad.append(f"{rid}.{where}={ev!r}（不是 ev:<kind>:<ref>）")
+                continue
+            ok, detail = _resolve_evidence_identity(ctx, match.group(1), match.group(2))
+            if not ok:
+                dq1_bad.append(f"{rid}.{where}={ev!r}（{detail}）")
+    if dq1_bad:
+        problems += 1
+        ctx.add(check, FAIL, f"dq1：{len(dq1_bad)} 条证据身份不可解析（E1）——"
+                             f"不可复核的引用 = 无效引用（{'; '.join(dq1_bad[:4])}）",
+                f"{ctx.rel(rulings_path)}:supporting_evidence/rejected[].its_evidence")
+
+    # dq2：rejected 非空 ⇒ 每条被驳回立场带 unique_evidence_handled（J2'）
+    dq2_bad: list[str] = []
+    for ruling in rulings:
+        rejected = ruling.get("rejected") or []
+        if not rejected:
+            continue
+        rid = str(ruling.get("ruling_id") or "?")
+        top = ruling.get("unique_evidence_handled")
+        per_item = [item.get("unique_evidence_handled") for item in rejected if isinstance(item, dict)]
+        top_ok = isinstance(top, list) and len(top) == len(rejected) and all(v is not None for v in top)
+        per_ok = len(per_item) == len(rejected) and all(v is not None for v in per_item)
+        if not (top_ok or per_ok):
+            dq2_bad.append(f"{rid}（rejected={len(rejected)} 条，top={type(top).__name__}/len={len(top) if isinstance(top, list) else 'n/a'}，"
+                           f"per-item 缺失={sum(1 for v in per_item if v is None)}）")
+    if dq2_bad:
+        problems += 1
+        ctx.add(check, FAIL, f"dq2：{len(dq2_bad)} 条裁决有 rejected 却未逐条写 unique_evidence_handled（J2'）——"
+                             f"少数派唯一证据未被裁决（{'; '.join(dq2_bad[:3])}）",
+                f"{ctx.rel(rulings_path)}:rejected[].unique_evidence_handled")
+
+    # dq3：每条裁决 falsifiers 非空（J3）
+    dq3_bad = [str(ruling.get("ruling_id") or "?") for ruling in rulings
+               if not (ruling.get("falsifiers") or [])]
+    if dq3_bad:
+        problems += 1
+        ctx.add(check, FAIL, f"dq3：{len(dq3_bad)} 条裁决缺 falsifiers（J3：不可证伪的裁决）{dq3_bad[:6]}",
+                f"{ctx.rel(rulings_path)}:falsifiers")
+
+    # dq4：claim → evidence 可解析（supporting_evidence 非空且每条可追）
+    dq4_bad: list[str] = []
+    for ruling in rulings:
+        rid = str(ruling.get("ruling_id") or "?")
+        supporting = ruling.get("supporting_evidence") or []
+        if not supporting:
+            dq4_bad.append(f"{rid}（supporting_evidence 为空）")
+            continue
+        for item in supporting:
+            match = _EV_RE.match(str(item).strip())
+            if not match:
+                dq4_bad.append(f"{rid}（不可解析：{item!r}）")
+                continue
+            ok, detail = _resolve_evidence_identity(ctx, match.group(1), match.group(2))
+            if not ok:
+                dq4_bad.append(f"{rid}（{detail}）")
+    if dq4_bad:
+        problems += 1
+        ctx.add(check, FAIL, f"dq4：{len(dq4_bad)} 条裁决的 claim→evidence 映射不可追（J1）"
+                             f"（{'; '.join(dq4_bad[:4])}）",
+                f"{ctx.rel(rulings_path)}:supporting_evidence")
+
+    # dq5：freeze.standards 非空且 sha 与磁盘一致 + PINNED sha 一致（F1/F2'/O3/O4）
+    # 注：freeze 里同时冻结「决策标准」与「机检实现（tooling）」。实现类条目会随基础设施提交演化
+    #     （如 task-116 改 team_audit.py），按 F1 字面会误报；v0 把它们分开：决策标准 sha 不符 ⇒ FAIL，
+    #     tooling 漂移 ⇒ WARN + 提示 v1.1 正式分离（见 PROTOCOL-v1.1-PROPOSAL §7）。
+    dq5_bad: list[str] = []
+    tooling_drift: list[str] = []
+    freeze_path = base / "freeze-v2.json"
+    pinned_path = base / "PINNED-PROPOSALS.json"
+    freeze: dict = {}
+    if not freeze_path.is_file():
+        dq5_bad.append("freeze-v2.json 缺失")
+    else:
+        try:
+            freeze = json.loads(_read_text(freeze_path))
+        except json.JSONDecodeError as exc:
+            dq5_bad.append(f"freeze-v2.json 无法解析（{exc}）")
+    if freeze:
+        if not str(freeze.get("question") or "").strip():
+            dq5_bad.append("freeze.question 为空")
+        if not (freeze.get("acceptance_criteria") or []):
+            dq5_bad.append("freeze.acceptance_criteria 为空")
+        standards = freeze.get("standards") or []
+        if not standards:
+            dq5_bad.append("freeze.standards 为空（F1 要求冻结标准 sha）")
+        for item in standards:
+            if not isinstance(item, dict):
+                dq5_bad.append("freeze.standards 项不是对象")
+                continue
+            path_rel = str(item.get("path") or "")
+            recorded = item.get("sha256_lf") or item.get("sha256") or ""
+            role = str(item.get("role") or "")
+            is_tooling = any(hint in role for hint in ("机检", "实现", "tooling"))
+            target = ctx.repo / path_rel
+            if not target.is_file():
+                dq5_bad.append(f"标准文件不存在：{path_rel}")
+                continue
+            if _lf_sha256(target) != str(recorded):
+                if is_tooling:
+                    tooling_drift.append(path_rel)
+                else:
+                    dq5_bad.append(f"标准 sha 不匹配（LF 归一化）：{path_rel}")
+    if not pinned_path.is_file():
+        dq5_bad.append("PINNED-PROPOSALS.json 缺失")
+    else:
+        try:
+            pinned = json.loads(_read_text(pinned_path))
+        except json.JSONDecodeError as exc:
+            pinned = {}
+            dq5_bad.append(f"PINNED-PROPOSALS.json 无法解析（{exc}）")
+        for rel, meta in (pinned.get("files") or {}).items():
+            target = base / rel
+            if not target.is_file():
+                dq5_bad.append(f"pinned 文件不存在：{rel}")
+                continue
+            raw = hashlib.sha256(target.read_bytes()).hexdigest()
+            lf = _lf_sha256(target)
+            recorded = str((meta or {}).get("sha256") or "")
+            if recorded not in (raw, lf):
+                dq5_bad.append(f"pinned sha 不匹配：{rel}")
+    if dq5_bad:
+        problems += 1
+        ctx.add(check, FAIL, f"dq5：冻结收据不完整/不匹配（F1/F2'）——{'; '.join(dq5_bad[:5])}",
+                f"{ctx.rel(freeze_path)} + {ctx.rel(pinned_path)}")
+    if tooling_drift:
+        ctx.add(check, WARN,
+                f"dq5：工具实现类冻结项 sha 已漂移（{', '.join(tooling_drift)}）—— 属实现演化，不阻断裁决；"
+                f"建议 v1.1 把 tooling 与 decision standards 分离（见 PROTOCOL-v1.1-PROPOSAL §7）",
+                f"{ctx.rel(freeze_path)}:standards[role=机检实现]")
+
+    # dq6：辩论产物必须 git tracked（J6' 的强制力来自存储位置）
+    debate_rel = ctx.rel(base)
+    tracked_raw = _git_raw(ctx.repo, "ls-files", "-z", "--", debate_rel)
+    tracked = {item.replace("\\", "/") for item in tracked_raw.split("\0") if item.strip()}
+    disk_files = {ctx.rel(path) for path in base.rglob("*") if path.is_file()}
+    untracked = sorted(disk_files - tracked)
+    if untracked:
+        problems += 1
+        ctx.add(check, FAIL, f"dq6：{len(untracked)} 个辩论产物未被 git 跟踪（J6'：append-only 无强制力）"
+                             f"：{untracked[:5]}",
+                f"git ls-files -- {debate_rel}")
+
+    severity = FAIL if datetime.now(timezone.utc) >= _parse_iso(DEBATE_WARN_UNTIL + "T00:00:00+08:00") else WARN
+
+    # dq7：objection_ids 覆盖（WARN→FAIL）
+    dq7_bad = [str(ruling.get("ruling_id") or "?") for ruling in rulings
+               if not (ruling.get("objection_ids") or [])]
+    if dq7_bad:
+        ctx.add(check, severity,
+                f"dq7：{len(dq7_bad)}/{len(rulings)} 条裁决缺 objection_ids（异议→裁决映射不可机检）{dq7_bad[:6]}",
+                f"{ctx.rel(rulings_path)}:objection_ids")
+
+    # dq8：同源组引用（需要 evidence_ledger）
+    ledger_path = base / "evidence_ledger.jsonl"
+    if not ledger_path.is_file():
+        ctx.add(check, severity,
+                f"dq8：无 {ctx.rel(ledger_path)} —— 同源去重（E2）无法机检；F-6 适用范围待 v1.1 裁决",
+                f"missing file: {ctx.rel(ledger_path)}")
+    else:
+        ledger, ledger_bad = _read_jsonl_safe(ledger_path)
+        if ledger_bad:
+            ctx.add(check, severity, f"dq8：evidence_ledger 有坏行 {ledger_bad[:2]}", f"{ctx.rel(ledger_path)}")
+        else:
+            broken = [row.get("evidence_id") for row in ledger
+                      if not isinstance(row.get("source_identity"), dict)
+                      or not row.get("independent_group")]
+            if broken:
+                ctx.add(check, severity,
+                        f"dq8：{len(broken)} 条台账缺 source_identity/independent_group（E2 无法去重）{broken[:6]}",
+                        f"{ctx.rel(ledger_path)}")
+            else:
+                groups: dict[str, int] = {}
+                for row in ledger:
+                    group = str(row.get("independent_group"))
+                    groups[group] = groups.get(group, 0) + 1
+                multi = {key: value for key, value in groups.items() if value > 1}
+                ctx.add(check, INFO, f"dq8：evidence_ledger {len(ledger)} 条，独立组 {len(groups)} 个"
+                                     f"（多引用组 {len(multi)} 个，需在裁决中标注「N 方共同引用」）",
+                        f"{ctx.rel(ledger_path)}")
+
+    # dq9：coverage 三表分割（P2；协议辩论阶段提案早于本规则 ⇒ 无输入时 WARN 说明）
+    proposal_dir = base / "protocol-proposals"
+    has_coverage = False
+    if proposal_dir.is_dir():
+        for proposal in proposal_dir.glob("*.md"):
+            text = _read_text(proposal)
+            if any(key in text for key in ("checked_categories", "examined_categories", "not_examined_categories",
+                                           '"coverage"')):
+                has_coverage = True
+                break
+    if not has_coverage:
+        ctx.add(check, severity,
+                "dq9：没有任何提案含 coverage 三表（checked/not_examined/out_of_scope）——"
+                "协议辩论阶段提案早于 P2，无输入；架构辩论起强制（F-6 相关）",
+                f"{ctx.rel(proposal_dir)}")
+    else:
+        ctx.add(check, INFO, "dq9：检测到 coverage 声明（v0 只做存在性；三表分割的机器校验待 v1.1 schema）",
+                f"{ctx.rel(proposal_dir)}")
+
+    # dq10：deferred 超期（J2'）
+    deferred: list[tuple[str, dict]] = []
+    for ruling in rulings:
+        for item in ruling.get("rejected") or []:
+            if not isinstance(item, dict):
+                continue
+            value = item.get("unique_evidence_handled")
+            if value == "deferred" or (isinstance(value, dict) and value.get("disposition") == "deferred"):
+                deferred.append((str(ruling.get("ruling_id") or "?"), item))
+    if not deferred:
+        ctx.add(check, INFO, f"dq10：无 deferred 状态（{len(rulings)} 条裁决中 0 条待收敛）",
+                f"{ctx.rel(rulings_path)}")
+    else:
+        expired = []
+        for rid, item in deferred:
+            deadline = item.get("deadline") or item.get("due_by")
+            stamp = _parse_iso(str(deadline)) if deadline else None
+            if stamp is None:
+                expired.append(f"{rid}（deferred 缺 deadline）")
+            elif datetime.now(timezone.utc) > stamp.astimezone(timezone.utc):
+                expired.append(f"{rid}（deferred 已超期 {deadline}）")
+        if expired:
+            ctx.add(check, severity, f"dq10：{len(expired)} 条 deferred 超期/无期限（J2' 自动降级未执行）"
+                                     f"{expired[:5]}", f"{ctx.rel(rulings_path)}")
+
+    if problems == 0:
+        ctx.add(check, INFO,
+                f"deliberation_quality dq1-dq6 PASS（rulings={len(rulings)}，证据引用={evidence_total}，"
+                f"pinned={len((json.loads(_read_text(pinned_path)).get('files') or {})) if pinned_path.is_file() else 0}）",
+                f"{ctx.rel(base)}")
+
+
 def _read_jsonl_safe(path: Path) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     bad: list[dict] = []
@@ -2525,6 +2841,8 @@ def run_checks(ctx: AuditContext) -> list:
     check_decision_trail(ctx)
     check_model_policy(ctx, data)
     check_steward_self_audit(ctx)
+    # task-116：辩论过程机检（PROTOCOL.md §1-§4 的机检化；dq1-dq6 FAIL，dq7-dq10 宽限 WARN）
+    check_deliberation_quality(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -2951,7 +3269,7 @@ def selftest() -> int:
         # 5) 四个新检查必须已注册进 run_checks（否则上面单测绿、生产不跑 = 假绿）
         registered = {f.check for f in run_checks(_ctx(roles_green))}
         for name in ("plan_consulted", "role_registration", "dead_path_edit", "mode_policy",
-                     "decision_trail", "model_policy", "steward_self_audit"):
+                     "decision_trail", "model_policy", "steward_self_audit", "deliberation_quality"):
             if name not in registered:
                 failures.append(f"run_checks 未注册新检查：{name}")
 
@@ -3112,6 +3430,120 @@ def selftest() -> int:
         expect_true("mode-policy-good-row-not-warned", not any(
             f.severity == WARN and "good" in f.message for f in mode_findings))
 
+        # (g) deliberation_quality（task-116）：绿 fixture + dq1-dq6 六条各自必红 fixture
+        def _debate_ruling(**over):
+            row = {
+                "ruling_id": "R-C1", "objection_by": "steward",
+                "objection_ids": ["OBJ-steward-1"], "question": "Q", "adopted": "A", "reason": "R",
+                "supporting_evidence": ["ev:doc:artifacts/agent/verify/debate/protocol-v1.md#L1"],
+                "rejected": [], "unique_evidence_handled": [], "falsifiers": ["若 X 出现则撤回"],
+                "adjudicator": "lead", "decided_at": "2026-10-25T00:00:00+08:00",
+            }
+            row.update(over)
+            return row
+
+        def _debate_repo(name, pre=None, post=None):
+            root = tmp / name
+            debate = root / DEBATE_DIR_REL
+            (debate / "ruling").mkdir(parents=True, exist_ok=True)
+            (debate / "protocol-proposals").mkdir(parents=True, exist_ok=True)
+            _write(root / "AGENTS.md", "# AGENTS\n\nL1\n")
+            _write(debate / "PROTOCOL.md", "# protocol\n")
+            _write(debate / "protocol-v1.md", "# v1\n")
+            _write(debate / "protocol-proposals" / "m1.md", "# proposal\n")
+            std = [{"path": "AGENTS.md",
+                    "sha256_lf": hashlib.sha256(
+                        (root / "AGENTS.md").read_bytes().replace(b"\r\n", b"\n")).hexdigest(),
+                    "role": "test"}]
+            _write(debate / "freeze-v2.json", json.dumps({
+                "schema": "debate-freeze/v2", "question": "Q?", "acceptance_criteria": ["AC1"],
+                "standards": std, "expected_categories": ["CAT-1"]}, ensure_ascii=False))
+            pinned = {}
+            for rel in ("PROTOCOL.md", "protocol-v1.md"):
+                target = debate / rel
+                pinned[rel] = {"sha256": hashlib.sha256(target.read_bytes()).hexdigest(),
+                               "bytes": len(target.read_bytes())}
+            _write(debate / "PINNED-PROPOSALS.json", json.dumps({"files": pinned}, ensure_ascii=False))
+            rows = [_debate_ruling()]
+            if pre:
+                rows = pre(root, debate, rows) or rows
+            _write(debate / "ruling" / "rulings.jsonl",
+                   "".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
+            _init_git(root)
+            _commit(root, "debate fixture", day(1))
+            if post:
+                post(root, debate)
+            return root
+
+        def _dq_red(name, pre=None, post=None):
+            return _isolated(check_deliberation_quality, _ctx(_debate_repo(name, pre=pre, post=post)))
+
+        dq_green_findings = _isolated(check_deliberation_quality, _ctx(_debate_repo("dq-green")))
+        if any(f.severity == FAIL for f in dq_green_findings):
+            failures.append("deliberation_quality 绿 fixture 误报 FAIL：" + "; ".join(
+                f.message[:100] for f in dq_green_findings if f.severity == FAIL))
+
+        def _dq1(root, debate, rows):
+            rows[0]["supporting_evidence"] = ["ev:file:.gitignore（含 artifacts/）#L15"]
+            return rows
+
+        expect(_dq_red("dq1-red", pre=_dq1), "deliberation_quality", FAIL, "dq1")
+
+        def _dq2(root, debate, rows):
+            rows[0]["rejected"] = [{
+                "position": "p", "why_insufficient": "w",
+                "its_evidence": ["ev:doc:artifacts/agent/verify/debate/protocol-v1.md#L1"]}]
+            rows[0]["unique_evidence_handled"] = []
+            return rows
+
+        expect(_dq_red("dq2-red", pre=_dq2), "deliberation_quality", FAIL, "dq2")
+
+        def _dq3(root, debate, rows):
+            rows[0]["falsifiers"] = []
+            return rows
+
+        expect(_dq_red("dq3-red", pre=_dq3), "deliberation_quality", FAIL, "dq3")
+
+        def _dq4(root, debate, rows):
+            rows[0]["supporting_evidence"] = []
+            return rows
+
+        expect(_dq_red("dq4-red", pre=_dq4), "deliberation_quality", FAIL, "dq4")
+
+        def _dq5(root, debate, rows):
+            freeze = json.loads((debate / "freeze-v2.json").read_text(encoding="utf-8"))
+            freeze["standards"] = []
+            _write(debate / "freeze-v2.json", json.dumps(freeze, ensure_ascii=False))
+            return rows
+
+        expect(_dq_red("dq5-red", pre=_dq5), "deliberation_quality", FAIL, "dq5")
+
+        def _dq5b(root, debate, rows):
+            pinned = json.loads((debate / "PINNED-PROPOSALS.json").read_text(encoding="utf-8"))
+            pinned["files"]["PROTOCOL.md"]["sha256"] = "0" * 64
+            _write(debate / "PINNED-PROPOSALS.json", json.dumps(pinned, ensure_ascii=False))
+            return rows
+
+        expect(_dq_red("dq5b-red", pre=_dq5b), "deliberation_quality", FAIL, "pinned sha")
+
+        def _dq5c(root, debate, rows):
+            freeze = json.loads((debate / "freeze-v2.json").read_text(encoding="utf-8"))
+            freeze["standards"][0]["role"] = "机检实现"
+            freeze["standards"][0]["sha256_lf"] = "0" * 64
+            _write(debate / "freeze-v2.json", json.dumps(freeze, ensure_ascii=False))
+            return rows
+
+        dq5c_findings = _dq_red("dq5c-tooling", pre=_dq5c)
+        if any(f.severity == FAIL for f in dq5c_findings):
+            failures.append("dq5 把 tooling 实现漂移误判为 FAIL（应 WARN）")
+        if not any(f.severity == WARN and "工具实现类" in f.message for f in dq5c_findings):
+            failures.append("dq5 未对 tooling 漂移给出 WARN")
+
+        def _dq6_post(root, debate):
+            _write(debate / "UNTRACKED.md", "untracked\n")
+
+        expect(_dq_red("dq6-red", post=_dq6_post), "deliberation_quality", FAIL, "dq6")
+
         if failures:
             print("SELFTEST FAIL")
             for msg in failures:
@@ -3124,7 +3556,9 @@ def selftest() -> int:
               "task-103 三类 P1（decision_trail / model_policy / steward_self_audit）各自红 fixture 必红、"
               "绿 fixture 不误报、且都已注册进 run_checks；"
               "task-109 三处收口（determinism 归一化/差异定位、write_scope 分级「共享根 vs 子路径=INFO」、"
-              "mode_policy 区分「显式未决定」）各自必红/必绿 fixture 通过。")
+              "mode_policy 区分「显式未决定」）各自必红/必绿 fixture 通过；"
+              "task-116 辩论过程机检 deliberation_quality：dq1-dq6 六条 FAIL 判据各自必红 fixture + 绿 fixture 不误报，"
+              "dq7-dq10 宽限 WARN 已注册。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
