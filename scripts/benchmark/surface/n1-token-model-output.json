@@ -1,0 +1,42 @@
+{
+  "base": {
+    "n_tools_group_A": 35,
+    "schema_chars_group_A": 15220,
+    "kb_file_avg_bytes": 80896,
+    "kb_file_max_bytes": 417280.0,
+    "read_limit_lines": 2000,
+    "kb_md_count": 32,
+    "kb_total_bytes": 2589900.8
+  },
+  "scenarios": {
+    "T1_查概念": {
+      "schema_A_tok": 4349,
+      "schema_B_discover_tok": 4349,
+      "A_total": 57882,
+      "zero_total": 9882,
+      "B_total": 10979,
+      "A_vs_zero_pct": -82.9,
+      "A_vs_B_pct": -81.0
+    },
+    "T2_通读章": {
+      "schema_A_tok": 4349,
+      "schema_B_discover_tok": 4349,
+      "A_total": 537682,
+      "zero_total": 57682,
+      "B_total": 68349,
+      "A_vs_zero_pct": -89.3,
+      "A_vs_B_pct": -87.3
+    },
+    "T3_多轮": {
+      "schema_A_tok": 4349,
+      "schema_B_discover_tok": 4349,
+      "A_total": 111615,
+      "zero_total": 15615,
+      "B_total": 17839,
+      "A_vs_zero_pct": -86.0,
+      "A_vs_B_pct": -84.0
+    }
+  },
+  "verdict": "A1 不成立：token 省耗主要由「返回粒度/结构化」决定，与「是否 MCP 化」无必然因果；零新增 schema 的组 0 已在多数场景更省",
+  "model_note": "静态 token 记账模型（非实测），口径=字符估算，见 report"
+}
