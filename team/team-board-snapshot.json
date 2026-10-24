@@ -1,7 +1,7 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T11:59:57.831Z",
+  "exportedAt": "2026-10-24T12:06:52.080Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
@@ -1501,7 +1501,7 @@
     },
     {
       "id": "task-99",
-      "status": "pending",
+      "status": "completed",
       "subject": "决策记录协议条款：AGENTS.md §0.5 新增 L9 + lead-dispatch-rules §6 + org.md §2.1 纪律 6（先条款后机检）",
       "owner": "lead",
       "writeScopes": [
@@ -1510,7 +1510,12 @@
         "docs/guides/agent-team-org.md"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "AGENTS.md",
+        "docs/guides/lead-dispatch-rules.md",
+        "docs/guides/agent-team-org.md"
+      ]
     },
     {
       "id": "task-100",
@@ -1546,9 +1551,9 @@
     },
     {
       "id": "task-102",
-      "status": "pending",
+      "status": "completed",
       "subject": "decide.py + team/decisions.jsonl：决策 e2b04b 追加/提交 trailer 解析/check/selftest（执行者：steward）",
-      "owner": "lead",
+      "owner": "steward2",
       "writeScopes": [
         "scripts/agent/decide.py",
         "team/decisions.jsonl",
@@ -1557,7 +1562,13 @@
       "blockedBy": [
         "task-99"
       ],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "scripts/agent/decide.py",
+        "team/decisions.jsonl",
+        "scripts/agent/work_record.py",
+        "artifacts/agent/verify/steward/task-102/SUMMARY.md"
+      ]
     },
     {
       "id": "task-103",
@@ -1623,16 +1634,6 @@
   ],
   "completedRecent": [
     {
-      "id": "task-88",
-      "subject": "0.4.7 = agent 半吊子工作收摊：审计 §13 全表 + 排序 + 写回台账 §14（Lead 漏了这一步）",
-      "ownerName": "todo-owner"
-    },
-    {
-      "id": "task-89",
-      "subject": "DSH 插件：把义务变成工具返回值 —— team_preflight + 版本级任务强制 planRef（不依赖 Lead 记忆）",
-      "ownerName": "team-plugin-creator"
-    },
-    {
       "id": "task-95",
       "subject": "轨迹追踪 L1+L2：结构化工作轨迹事件流（不是 transcript）+ 可查询投影",
       "ownerName": "team-plugin-creator"
@@ -1643,6 +1644,11 @@
       "ownerName": "steward"
     },
     {
+      "id": "task-99",
+      "subject": "决策记录协议条款：AGENTS.md §0.5 新增 L9 + lead-dispatch-rules §6 + org.md §2.1 纪律 6（先条款后机检）",
+      "ownerName": "lead"
+    },
+    {
       "id": "task-100",
       "subject": "P0 机检四类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ mode_policy（L9）+ 各自红 fixture",
       "ownerName": "steward2"
@@ -1651,7 +1657,12 @@
       "id": "task-101",
       "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
       "ownerName": "steward2"
+    },
+    {
+      "id": "task-102",
+      "subject": "decide.py + team/decisions.jsonl：决策 e2b04b 追加/提交 trailer 解析/check/selftest（执行者：steward）",
+      "ownerName": "steward2"
     }
   ],
-  "note": "task-99 条款落地（AGENTS L10 + rules §6 + org §2.1 纪律6）；task-100 完成；快照重导出以消 role_registration WARN"
+  "note": "task-98 补齐（§2.6 steward 章程 + §2.3 执行纪律 1 + 章节重编号）；task-102 完成"
 }

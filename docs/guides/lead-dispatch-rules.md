@@ -171,26 +171,6 @@ S3. 任何"看起来成功其实没做"的路径，修法是**让失败可见**�
 
 ---
 
-## 6. 机检对应表（`team_audit.py` 11 类）
-
-| 类 | 覆盖本文件的 |
-|---|---|
-| `snapshot_health` | 快照新鲜度/结构 |
-| `roster` | §1.1 名册一致性、§3.4 幽灵成员 |
-| `stall` | §3.4 幽灵 owner、无人认领 |
-| `write_scope` | §1.2 写域重叠、§2.3 写域缺失 |
-| `artifact_refs` | §3.1 证据路径存在性 |
-| `role_evidence` | 角色是否真在运转（14 天三源证据） |
-| `silent_failure` | L2 静默失败（S1–S6） |
-| `contract_drift` | 契约声明↔现实（D1–D6） |
-| `commit_hygiene` | 提交卫生（H1–H3） |
-| `lessons_stale` | 教训库是否在更新 |
-| **`dispatch_release`** | **§1.1 spawn↔任务、§4.5 版本三查、§4.10 tag↔commit** |
-| `mode_policy` / `plan_consulted` / `role_registration` / `dead_path_edit` | §1.3b 模式路由、L8 计划先行、§2 注册同步、§3 死文件 |
-| `decision_trail`（待实现） | **§6 决策记录义务（T1–T3 + 6 条防伪造判据）** |
-
----
-
 ## 6. 要做一个"决策"时（记录义务）
 
 ### 触发（T1–T3，任一命中即须记录）
@@ -210,6 +190,9 @@ S3. 任何"看起来成功其实没做"的路径，修法是**让失败可见**�
 | 6.4 | **R0/R1** ⇒ 7 天内找**非决策者**做一次对抗复核（`review.verdict`）；决策者自己复核无效 | 人工 + `decision_trail` |
 | 6.5 | **违反的后果**：首两周 **WARN**（不阻断），之后 `team_audit::decision_trail` **FAIL**（收口必须处置） | 分阶段 |
 
+| 6.6 | **谁写**：**决策者本人**。执行者实现 Lead 的决策 ⇒ 写**自己的** `Decision:`/`Why:`（实现层取舍），<br>并用 `Human-Directive:` 引用 Lead 指令原文；**不得替 Lead 补写 Lead 的决策**（A6）。<br>Lead 的决策若只存在于会话 ⇒ 由 Lead 本人补 D2 并标 `reconstructed:true`。<br>teammate 的提交若改变范围/取舍（T1–T3）⇒ 同样要写 trailer；**纯执行（照单实现、无取舍）可不写**。 | `decision_trail` |
+| 6.7 | **时效窗口**：`append` 时距决策发生 **>600s** ⇒ 强制标 `reconstructed:true`（常量 `RECONSTRUCTED_THRESHOLD_SECONDS=600`）。<br>窗口值本身是**实现常量**不是条款 ⇒ 调整需同步改 `decide.py` 与本节说明 | `decide.py`（已实现） |
+
 ### 防"事后编理由"（6 条机器判据，来自设计稿）
 ```
 A1 时效窗口：决策记录时间必须早于或接近决策生效时间（超窗 ⇒ 标 reconstructed）
@@ -228,6 +211,26 @@ steward 抽查该 commit 完整 message：既无 43ms 也无 P0-b
 另：0.4.7 的实施提交 a68ab655(10-23 13:19) 早于台账计划(10-23 22:52)
 ⇒ 现在跑决策/计划类机检能自动发现，不靠人抓
 ```
+
+---
+
+## 7. 机检对应表（`team_audit.py` 15 类）
+
+| 类 | 覆盖本文件的 |
+|---|---|
+| `snapshot_health` | 快照新鲜度/结构 |
+| `roster` | §1.1 名册一致性、§3.4 幽灵成员 |
+| `stall` | §3.4 幽灵 owner、无人认领 |
+| `write_scope` | §1.2 写域重叠、§2.3 写域缺失 |
+| `artifact_refs` | §3.1 证据路径存在性 |
+| `role_evidence` | 角色是否真在运转（14 天三源证据） |
+| `silent_failure` | L2 静默失败（S1–S6） |
+| `contract_drift` | 契约声明↔现实（D1–D6） |
+| `commit_hygiene` | 提交卫生（H1–H3） |
+| `lessons_stale` | 教训库是否在更新 |
+| **`dispatch_release`** | **§1.1 spawn↔任务、§4.5 版本三查、§4.10 tag↔commit** |
+| `mode_policy` / `plan_consulted` / `role_registration` / `dead_path_edit` | §1.3b 模式路由、L8 计划先行、§2 注册同步、§3 死文件 |
+| `decision_trail`（待实现） | **§6 决策记录义务（T1–T3 + 6 条防伪造判据）** |
 
 ---
 

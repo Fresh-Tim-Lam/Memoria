@@ -150,6 +150,10 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 
 ### 2.3 状态语义与待执行的花名册动作（2026-10-23 第三轮新增）
 
+> **执行纪律 1（2026-10-24 补）**：注册新角色 = **改 3 处 + 重导出快照**
+> （`team/agents.json` → 本文件 §2/§2.2 → `team_snapshot`），由 `role_registration` 机检核对三方全等
+> 且「快照 `exportedAt` 晚于注册文件 mtime」。本轮 steward 上线时漏了后两步，机检当场 FAIL=3。
+
 **状态三分**（定义在 `agents.json` → `status_semantics`，此处只讲用法）：
 
 | 状态 | 含义 | 机检要求 |
@@ -218,6 +222,36 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | **curator-r3**（v4-pro） | 团队策展/复盘（第三轮已完成） | Lead + `docs/guides/agent-team-lessons.md` + §1.5 |
 | **p0-selection**（v4-pro，ephemeral） | task-79/83/75/84（已发布 0.4.6） | Lead 复核 + 已入库 commit |
 | **boot-probe**（v4-pro，ephemeral） | task-69 测量阶段（根因已定位并修复） | Lead 复核 + `artifacts/agent/verify/boot-*` |
+
+### 2.6 steward 章程（团队管理员，2026-10-24 恢复；人裁决"可能就是一份工作"）
+
+**B1 边界 —— 管什么**
+- **管**：组织资产（`team/agents.json` / 快照 / 本表）、成员工作记录（动作/任务/决策三层）、过程与行为审计、协议演进
+- **不管**：产品代码（`src/**` 只读）、交付结果验收（归 Lead）、范围与顺序（归 `todo-owner`）、插件实现（归 `team-plugin-creator`）
+- **无写标准权**：`AGENTS.md` / 本文件 / `lead-dispatch-rules.md` 只能**提 diff**，由 Lead 批准写入
+
+**B2 三条输出通道（互不混）**
+| 通道 | 落到哪 | 例 |
+|---|---|---|
+| **组织类** | 名册 / 快照 / 本表 | 注册未同步、幽灵成员、名字复用 |
+| **过程类** | `team_audit.py` 新检查 / 插件拒绝 / `team/steward/findings.jsonl` | 写文件前没读、门禁失败后继续 |
+| **决策索引类** | 抽取/去重/时效校验（**永不创作 why**） | `decision_trail` |
+
+**B3 standards_read 收据（防"带教落伍"）**
+每次审计必须**重读**当前标准并在收据里记 `sha256`：
+`AGENTS.md §0.5` / `lead-dispatch-rules.md` / `agent-team-lessons.md` / `team_audit.py` 现有检查。
+标准 sha 变化而收据未更新 ⇒ `steward_self_audit` FAIL。
+**它不"记得"标准，它"读"标准** —— 这是人不设"共享记忆"的裁决（「带教空几代反而他落伍了」）。
+
+**B4 finding 生命周期**
+`FAIL` ⇒ 24h 内建任务；`WARN` ⇒ 进 `findings.jsonl`（有强制 disposition，open>14d 报警）；
+同一问题 **7 天内第二次**才建任务。
+**每条 finding 必须带 `rule_ref` 指到现行条款**；指不到 ⇒ 只能作 **proposal（建议新增条款）**，不能算违规。
+
+**B5 拆分触发条件（何时该把一个 steward 拆成两个）**
+单轮 finding > 30 条且其中 >50% 需要独立调查 ⇒ 提议拆分（Lead/人裁决）；
+在此之前**保持单一角色**（避免"两个都要看全部数据"的重复成本）。
+
 
 ## 3. 领域覆盖与缺口（对照 agent-guide 10 篇）
 
