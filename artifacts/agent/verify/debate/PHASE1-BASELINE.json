@@ -1,0 +1,18 @@
+{
+    "participants":  [
+                         "agent-arch",
+                         "arch-contract",
+                         "metrics-baseline",
+                         "steward"
+                     ],
+    "rule":  "Phase 1 严格独立：每位参与者只写自己的提案文件，禁止读他人提案",
+    "verification":  "每份提案的 mtime 必须晚于该文件首次出现时间；且提案内需声明「我只读了 X/Y/Z」",
+    "phase":  "1-independent-proposals",
+    "proposal_paths":  [
+                           "artifacts/agent/verify/debate/protocol-proposals/agent-arch.md",
+                           "artifacts/agent/verify/debate/protocol-proposals/arch-contract.md",
+                           "artifacts/agent/verify/debate/protocol-proposals/metrics-baseline.md",
+                           "artifacts/agent/verify/debate/protocol-proposals/steward.md"
+                       ],
+    "started_at":  "2026-10-25T00:43:20+08:00"
+}

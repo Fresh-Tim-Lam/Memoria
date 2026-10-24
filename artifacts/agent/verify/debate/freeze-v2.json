@@ -1,0 +1,29 @@
+{
+  "schema": "debate-freeze/v2",
+  "frozen_at": "2026-10-25T00:48:54+08:00",
+  "frozen_by": "lead",
+  "question": "Memoria 的 agent 能力架构应如何演进：(a) 全量移植 DSH 的能力模型到何种程度；(b) Memoria 是否作为 MCP server 暴露知识库能力；(c) 扩展点应如何设计；(d) 如何用封装接口替代'agent 靠记忆维护知识库'并降低 token 成本；(e) trace 轨迹如何记录与查询。",
+  "acceptance_criteria": [
+    "每条结论必须能指到 ev: 证据，且证据身份完整（E1）",
+    "强主张（如'全量移植'）以覆盖面清单 + 已知盲区声明评价，不以'证明无遗漏'评价（P2'）",
+    "所有'省 token'类主张必须有 ev:bench:<id>，且满足 E4/E5（含完整往返、禁止择一引用）",
+    "共享假设必须显式登记、指派检验者、未检验不得作裁决依据（E3）",
+    "裁决必须给 falsifiers（J3）且处理少数派 unique evidence（J2'）",
+    "辩论产物必须进 git 并可复算（J6'）"
+  ],
+  "standards": [],
+  "expected_categories": [
+    "DSH 能力模型（skill/hook/guard/plan/goal/todo）",
+    "DSH 宿主运行时（Cordis 服务/lifecycle/scoped layers）",
+    "DSH 自用技能内容（.agents/skills 的 dsh-* 类）",
+    "MCP 协议（tools/resources/prompts/transport/版本）",
+    "Memoria 现有 agent 工具面（kb.py / registry）",
+    "Memoria 知识库数据形态（md/frontmatter/graph/sidecar）",
+    "token 经济（schema 开销/往返/错误路径/截断语义）",
+    "写侧安全（propose_write→审批→备份→撤销）",
+    "trace/轨迹（记录什么/存哪/查询/容量）",
+    "扩展点契约（字段/版本/沙箱边界/兼容）"
+  ],
+  "proposals_pinned": "PINNED-PROPOSALS.json",
+  "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。"
+}
