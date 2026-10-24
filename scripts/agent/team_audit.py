@@ -354,10 +354,12 @@ def check_snapshot(ctx: AuditContext) -> dict | None:
                     f"{ctx.rel(path)}:exportedAt={data.get('exportedAt')} < HEAD@{head_t.isoformat()}")
         newest = _newest_mtime([ctx.verify_dir])
         if newest is not None and newest > exported.astimezone(timezone.utc):
+            # task-116 §5.4 修正：不把实时 mtime 写进 message/evidence —— 否则并发写入时
+            # 两次 determinism 运行会因秒级差异而不一致（假红）。用布尔事实 + 固定 exportedAt。
             ctx.add(check, WARN,
                     "快照可能过期：导出后 artifacts/agent/verify 有新产物落盘",
                     f"{ctx.rel(path)}:exportedAt={data.get('exportedAt')} < "
-                    f"{ctx.rel(ctx.verify_dir)}@{newest.isoformat()}")
+                    f"{ctx.rel(ctx.verify_dir)}:newest_mtime")
     return data
 
 

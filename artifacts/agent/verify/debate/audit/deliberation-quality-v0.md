@@ -108,3 +108,21 @@ python scripts/agent/team_audit.py --selftest
 python scripts/agent/team_audit.py --determinism
 python scripts/agent/team_audit.py --json   # 看 check=deliberation_quality
 ```
+
+---
+
+## 8. 最终状态（r3 收据后，2026-10-25T01:3x+08:00）
+
+1. **`steward_self_audit` 已转 INFO**：team_audit.py 变更导致 r2 收据过期（设计行为），已按正确处置跑 **r3 审计**
+   （`team/steward/audit-2026-10-25-r3/`，重读 4 标准新 sha，未改历史收据）。
+2. **`snapshot_health` 的确定性缺陷已修（SF-029）**：原把 `artifacts/agent/verify` 实时 mtime 写进 finding 文本，
+   并发写入时两次 determinism 运行差 1 秒 ⇒ §5.4 假红。改为只记 `exportedAt` + `newest_mtime` 布尔标记后，
+   `--determinism` **PASS**（sha `ac227c6e…`）。
+3. **dq1-dq5 在真实产物上 PASS**（含 dq5 tooling WARN）。
+4. **dq6 仍 FAIL，但对象已不是本任务产物**：当前仅剩 `artifacts/agent/verify/debate/review/arch-contract-review.md`
+   （并行任务 task-115/评审产物，未 git tracked）。这说明 **dq6 在真实数据上确实会红**，且红得正确——
+   辩论产物在提交前就不算"冻结"。**本任务不越权提交他人产物**；待 Lead/归属方提交后 dq6 自动转 PASS。
+5. 台账：`team/steward/findings.jsonl` 30 行（新增 SF-026/027/028/029/030；SF-030 是 SF-028 的更正记录，
+   r3 快照用 supersede 投影，历史行不变）；本任务全程未改 `PROTOCOL.md` / `freeze-v2.json`。
+6. 基线（r3 后）：`team_audit.py` **FAIL=1（仅 dq6 外部产物）/ WARN=50 / INFO=23**；
+   `--selftest` PASS、`--determinism` PASS；其余检查无回归。

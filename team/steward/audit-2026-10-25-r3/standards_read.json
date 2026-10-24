@@ -1,0 +1,42 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-25T01:01:26+08:00",
+  "round": "r3",
+  "tool": "team_audit.py@ee806e3af079",
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "read_at": "2026-10-25T01:01:26+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（含 §1.2b/§1.3b/§5.4/§6.5）",
+      "sha256": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+      "read_at": "2026-10-25T01:01:26+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "read_at": "2026-10-25T01:01:26+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单 + --determinism + deliberation_quality",
+      "sha256": "ee806e3af079afbb2f263865b9113edb2831cfe533283b092df01f4ff1991e7d",
+      "read_at": "2026-10-25T01:01:26+08:00"
+    }
+  ],
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "PASS（除 generatedAt 外逐字节一致；sha b8226d22…）"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "session 正文（按设计不读，只作证据引用）"
+  ]
+}
