@@ -118,6 +118,12 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
    `python scripts/agent/team_audit.py` 的 `role_evidence` 检查（active 角色须有 14 天证据，
    否则会被判「幽灵角色」WARN）。
 
+6. **模型默认 `deepseek-flash`**（人 2026-10-24 裁决：团队统一 flash）。
+   只有长链推理 / 契约裁决 / 高风险评审才允许 `v4-pro`，且必须在**派发 prompt 与回报**中写明理由。
+   需要硬约束的场合在任务上标 `model_exemption: { model, reason }`，由 `mode_policy` 机检核对。
+   **背景**：本轮曾用 `mode: deep` 导致模型自动变 v4-pro（`deepModel`），违反统一 flash；
+   `mode` 不显式传则静默默认 `standard`（源码 `tool-agent-team/src/index.ts:448`）。
+
 ### 2.2 非领域常驻成员（当前 4 个，不计入 §2 领域 Owner 数）
 
 名册里还有 4 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，

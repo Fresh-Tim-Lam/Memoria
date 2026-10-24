@@ -1,7 +1,7 @@
 {
   "schema": "team-board-snapshot/v3",
   "rosterSchema": "team-roster/v1",
-  "exportedAt": "2026-10-24T11:34:19.214Z",
+  "exportedAt": "2026-10-24T11:59:57.831Z",
   "exportedBy": "lead",
   "limit": {
     "maxTeammates": 16,
@@ -1455,14 +1455,21 @@
     },
     {
       "id": "task-95",
-      "status": "pending",
+      "status": "completed",
       "subject": "轨迹追踪 L1+L2：结构化工作轨迹事件流（不是 transcript）+ 可查询投影",
       "owner": "team-plugin-creator",
       "writeScopes": [
         "docs/persistence-changes"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 3,
+      "evidence": [
+        "packages/experimental/agent-team/src/trajectory.ts",
+        "packages/experimental/agent-team/tests/trajectory.spec.ts",
+        "packages/experimental/tool-agent-team/src/index.ts",
+        "packages/experimental/agent-team/README.md",
+        "docs/tool-catalog.md"
+      ]
     },
     {
       "id": "task-97",
@@ -1507,19 +1514,23 @@
     },
     {
       "id": "task-100",
-      "status": "pending",
-      "subject": "P0 机检三类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ 各自红 fixture（执行者：steward）",
-      "owner": "lead",
+      "status": "completed",
+      "subject": "P0 机检四类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ mode_policy（L9）+ 各自红 fixture",
+      "owner": "steward2",
       "writeScopes": [
         "scripts/agent/team_audit.py",
         "artifacts/agent/verify/steward"
       ],
       "blockedBy": [],
-      "revision": 1
+      "revision": 4,
+      "evidence": [
+        "scripts/agent/team_audit.py",
+        "artifacts/agent/verify/steward/task-100/SUMMARY.md"
+      ]
     },
     {
       "id": "task-101",
-      "status": "in_progress",
+      "status": "completed",
       "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
       "owner": "steward2",
       "writeScopes": [
@@ -1527,7 +1538,11 @@
         "artifacts/agent/verify/steward"
       ],
       "blockedBy": [],
-      "revision": 3
+      "revision": 4,
+      "evidence": [
+        "scripts/agent/work_record.py",
+        "artifacts/agent/verify/steward/task-101/SUMMARY.md"
+      ]
     },
     {
       "id": "task-102",
@@ -1561,6 +1576,40 @@
         "task-102"
       ],
       "revision": 1
+    },
+    {
+      "id": "task-105",
+      "status": "pending",
+      "subject": "插件契约版本 + 升级通知 + 项目合规检查 —— 让其他项目团队知道插件变了（人：真实工程经验，必须遵循规范）",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 1
+    },
+    {
+      "id": "task-106",
+      "status": "in_progress",
+      "subject": "插件缺陷修复批：记忆卡归属/内容范围/正文泄漏（严重）+ completed 任务改派 + 轨迹单任务限额 + 主动物化",
+      "owner": "team-plugin-creator",
+      "writeScopes": [
+        "docs/persistence-changes"
+      ],
+      "blockedBy": [],
+      "revision": 2
+    },
+    {
+      "id": "task-107",
+      "status": "pending",
+      "subject": "dispatch_log.py 记录 spawn 的 mode / modeExplicit（让 mode_policy 可判定；task-100 遗留）",
+      "writeScopes": [
+        "scripts/agent/dispatch_log.py",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 1,
+      "unassignedReason": "dispatch_log.py 不在 steward 写域（steward 写域 = team_audit.py / work_record.py / docs 提案 / artifacts）；按 AGENTS.md §0.5 L1，spawn 前必须先建任务并声明 writeScope，需 Lead 指派执行者（建议 team-plugin-creator 或 Lead 亲自）"
     }
   ],
   "inactiveOwners": [
@@ -1574,21 +1623,6 @@
   ],
   "completedRecent": [
     {
-      "id": "task-83",
-      "subject": "P1 task-79 阶段5：粘贴替换跨块选区（新交互语义，进 0.4.7）",
-      "ownerName": "lead"
-    },
-    {
-      "id": "task-84",
-      "subject": "P1 task-69：validate_kb + loadGraphData 移出 bootAutoOpen 关键路径（P0-b 已被 P0-a 覆盖，收益 43ms→1.9s）",
-      "ownerName": "lead"
-    },
-    {
-      "id": "task-87",
-      "subject": "DSH 插件：记忆卡 + 成员记忆继承（E1–E5 插件强制点 / 8KiB 卡 / 50KiB 注入预算）",
-      "ownerName": "team-plugin-creator"
-    },
-    {
       "id": "task-88",
       "subject": "0.4.7 = agent 半吊子工作收摊：审计 §13 全表 + 排序 + 写回台账 §14（Lead 漏了这一步）",
       "ownerName": "todo-owner"
@@ -1599,10 +1633,25 @@
       "ownerName": "team-plugin-creator"
     },
     {
+      "id": "task-95",
+      "subject": "轨迹追踪 L1+L2：结构化工作轨迹事件流（不是 transcript）+ 可查询投影",
+      "ownerName": "team-plugin-creator"
+    },
+    {
       "id": "task-97",
       "subject": "设计「成员工作记录机制」（动作/任务/决策三层）+ 定清团队管理员职责边界（人：可能就是一份工作）",
       "ownerName": "steward"
+    },
+    {
+      "id": "task-100",
+      "subject": "P0 机检四类：plan_consulted（L8）+ role_registration（org §2.3）+ dead_path_edit（lessons L0.3）+ mode_policy（L9）+ 各自红 fixture",
+      "ownerName": "steward2"
+    },
+    {
+      "id": "task-101",
+      "subject": "work_record.py：任务档案/成员时间线/决策检索/风险清单/doctor 五命令（只读投影，不新增事实源；执行者：steward）",
+      "ownerName": "steward2"
     }
   ],
-  "note": "2026-10-24 steward2 上线（同名重生 bug 绕过）；task-96 已删（并入 steward）；task-97 完成"
+  "note": "task-99 条款落地（AGENTS L10 + rules §6 + org §2.1 纪律6）；task-100 完成；快照重导出以消 role_registration WARN"
 }

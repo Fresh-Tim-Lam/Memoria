@@ -186,6 +186,48 @@ S3. 任何"看起来成功其实没做"的路径，修法是**让失败可见**�
 | `commit_hygiene` | 提交卫生（H1–H3） |
 | `lessons_stale` | 教训库是否在更新 |
 | **`dispatch_release`** | **§1.1 spawn↔任务、§4.5 版本三查、§4.10 tag↔commit** |
+| `mode_policy` / `plan_consulted` / `role_registration` / `dead_path_edit` | §1.3b 模式路由、L8 计划先行、§2 注册同步、§3 死文件 |
+| `decision_trail`（待实现） | **§6 决策记录义务（T1–T3 + 6 条防伪造判据）** |
+
+---
+
+## 6. 要做一个"决策"时（记录义务）
+
+### 触发（T1–T3，任一命中即须记录）
+| # | 触发 | 例子 |
+|---|---|---|
+| **T1 可回退但影响后续走向** | 改代码/改组织资产/改团队规范 | 「P0-b 降为 P1」「退役 3 个 v4-pro」 |
+| **T2 判断类（有备选被否）** | 选方案 A 不选 B | 「拒绝复制会话改用记忆卡」「steward 不合并」 |
+| **T3 不可回退（R0/R1）** | 发版/迁移数据/强推/删 tag | 「v0.4.6 发布」「删旧 tag」 |
+
+### 检查清单
+
+| # | 动作 | 机检 |
+|---|---|---|
+| 6.1 | **判定是否触发**（T1/T2/T3；都不命中 ⇒ 不记录，别给所有提交加 trailer） | `decision_trail`（task-102/103 实现） |
+| 6.2 | **有提交** ⇒ 在提交信息末尾写 trailer（键名固定，改名会破坏机检）：<br>`Decision:` ≤200 字、非空<br>`Why:` ≤200 字、非空<br>`Alternatives:` ≥1 项且每项含 `rejected:`（发版/回退必填）<br>`Rule-Ref:` 可选，`path#section` 必须能解析<br>`Reversibility:` 可选，∈ {R0,R1,R2}<br>`Human-Directive:` 实现人指令时必填，须为**原文摘录** ≤120 字<br>`Decision-Id:` 可选，形状 `dec-\d{8}-[0-9a-f]{8}` | 同上 |
+| 6.3 | **无提交**（纯对话决策）⇒ `python scripts/agent/decide.py append --question ... --choice ... --alternative ... --why ...` | `team/decisions.jsonl` |
+| 6.4 | **R0/R1** ⇒ 7 天内找**非决策者**做一次对抗复核（`review.verdict`）；决策者自己复核无效 | 人工 + `decision_trail` |
+| 6.5 | **违反的后果**：首两周 **WARN**（不阻断），之后 `team_audit::decision_trail` **FAIL**（收口必须处置） | 分阶段 |
+
+### 防"事后编理由"（6 条机器判据，来自设计稿）
+```
+A1 时效窗口：决策记录时间必须早于或接近决策生效时间（超窗 ⇒ 标 reconstructed）
+A2 reconstructed 标记：事后补写的必须显式标，不得伪装成当时写的
+A3 append-only：decisions.jsonl 只追加，永不改写（改 = 伪造）
+A4 同提交绑定：trailer 必须在【决策所在那个提交】里，不能事后单独补一个提交
+A5 R0/R1 对抗复核：非决策者 7 天内复核
+A6 机器不创作 why：decide.py 只落盘人/Lead 写的内容，永不自作理由
+```
+
+### 本轮实证（为什么要 6.2）
+```
+Lead 自省曾说「P0-b 降 P1 的 43ms 理由在 commit 26fa9bc6 里」
+steward 抽查该 commit 完整 message：既无 43ms 也无 P0-b
+⇒ 理由连 commit 都没进，只存在于已压缩的会话
+另：0.4.7 的实施提交 a68ab655(10-23 13:19) 早于台账计划(10-23 22:52)
+⇒ 现在跑决策/计划类机检能自动发现，不靠人抓
+```
 
 ---
 
