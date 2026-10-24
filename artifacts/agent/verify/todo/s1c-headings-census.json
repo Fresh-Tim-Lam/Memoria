@@ -1,0 +1,218 @@
+{
+  "artifactSha256": "e9c4021a5761e29337203c9d7636c00060704d4aaaf68aeecc6be07fcf03a733",
+  "baseline_artifact": "artifacts/agent/verify/debate/assumptions/as-section-range-measure.json",
+  "behavior": {
+    "aware_h1": 279,
+    "delta_fully_explained": true,
+    "expected_new_count": 3517,
+    "fence_false_h1": 21,
+    "fence_false_headings_new": 0,
+    "fence_false_headings_old": 92,
+    "fence_false_non_h1": 71,
+    "h1_proposals_new": 279,
+    "h1_proposals_old": 0,
+    "naive_h1": 300,
+    "new_proposal_count": 3517,
+    "old_proposal_count": 3309,
+    "proposal_delta": 208
+  },
+  "corpus": [
+    "docs/example/AAA_KnowledgeBase",
+    "docs/example/人工智能导论知识点汇总",
+    "docs/example/行政法",
+    "docs/example/AAA_Vocab"
+  ],
+  "heading_regex_inventory": {
+    "hits": {
+      "src/memoria/services/mention_proposals.py": [
+        26,
+        47,
+        57
+      ],
+      "src/memoria/services/search_aux.py": [
+        22
+      ],
+      "src/memoria/services/suggest_metadata.py": [
+        10
+      ]
+    },
+    "pending": {
+      "src/memoria/services/mention_proposals.py": "section kind 的 mention 提议（需独立验收）",
+      "src/memoria/services/search_aux.py": "检索噪音清洗，非寻址语义",
+      "src/memoria/services/suggest_metadata.py": "元数据建议的噪音清洗"
+    },
+    "unexpected": {},
+    "unified": "src/memoria/services/heading_proposals.py"
+  },
+  "parity": [
+    {
+      "expected": 229,
+      "field": "docs",
+      "got": 229,
+      "ok": true
+    },
+    {
+      "expected": 3517,
+      "field": "awareHeadingCount",
+      "got": 3517,
+      "ok": true
+    },
+    {
+      "expected": 3609,
+      "field": "naiveHeadingCount",
+      "got": 3609,
+      "ok": true
+    },
+    {
+      "expected": 92,
+      "field": "falseHeadingInFence",
+      "got": 92,
+      "ok": true
+    },
+    {
+      "expected": 0,
+      "field": "falseHeadingInFrontmatter",
+      "got": 0,
+      "ok": true
+    },
+    {
+      "expected": 33,
+      "field": "duplicateTextCount",
+      "got": 33,
+      "ok": true
+    },
+    {
+      "expected": 279,
+      "field": "h1",
+      "got": 279,
+      "ok": true
+    },
+    {
+      "expected": 279,
+      "field": "levelDist[1]",
+      "got": 279,
+      "ok": true
+    },
+    {
+      "expected": 1574,
+      "field": "levelDist[2]",
+      "got": 1574,
+      "ok": true
+    },
+    {
+      "expected": 1545,
+      "field": "levelDist[3]",
+      "got": 1545,
+      "ok": true
+    },
+    {
+      "expected": 118,
+      "field": "levelDist[4]",
+      "got": 118,
+      "ok": true
+    },
+    {
+      "expected": 1,
+      "field": "levelDist[5]",
+      "got": 1,
+      "ok": true
+    }
+  ],
+  "results": {
+    "behavior_ok": true,
+    "no_unexpected_regex": true,
+    "parity_ok": true,
+    "regex_inventory_ok": true,
+    "units_ok": true
+  },
+  "schema": "section-headings-census/v1",
+  "totals": {
+    "awareHeadingCount": 3517,
+    "docs": 229,
+    "duplicateTextCount": 33,
+    "falseHeadingInFence": 92,
+    "falseHeadingInFrontmatter": 0,
+    "h1": 279,
+    "h1ProposalNew": 279,
+    "h1ProposalOld": 0,
+    "levelDist": {
+      "1": 279,
+      "2": 1574,
+      "3": 1545,
+      "4": 118,
+      "5": 1
+    },
+    "naiveH1": 300,
+    "naiveHeadingCount": 3609,
+    "newProposalCount": 3517,
+    "oldProposalCount": 3309
+  },
+  "units": [
+    {
+      "detail": "levels=[1, 2, 3, 4, 5, 6]",
+      "falsifier": "任一级别漏识别 ⇒ C5 未落地",
+      "name": "C5 级别 1..6 全部识别",
+      "ok": true
+    },
+    {
+      "detail": "(1, 6)",
+      "falsifier": "常量被改动 ⇒ 与基线口径不一致",
+      "name": "C5 常量写死为 (1,6)",
+      "ok": true
+    },
+    {
+      "detail": "pattern='^(#{1,6})\\\\s+'",
+      "falsifier": "正则不是由 HEADING_LEVEL_MIN/MAX 拼出 ⇒ 出现第二处定义",
+      "name": "C5 正则由常量唯一拼出（无第二份字面量）",
+      "ok": true
+    },
+    {
+      "detail": "[]",
+      "falsifier": "h7 被识别 ⇒ 正则范围错",
+      "name": "C5 h7 不是 heading",
+      "ok": true
+    },
+    {
+      "detail": "titles=['T', 'A']",
+      "falsifier": "围栏内 # 被计入 ⇒ C1 未落地（基线实测 92 个误判）",
+      "name": "C1 围栏内 # 不计入",
+      "ok": true
+    },
+    {
+      "detail": "titles=['T']",
+      "falsifier": "未闭合围栏未生效 ⇒ 误判",
+      "name": "C1 ~~~ 未闭合围栏延伸到文末",
+      "ok": true
+    },
+    {
+      "detail": "titles=['真标题']",
+      "falsifier": "frontmatter 内 # 被计入 ⇒ C1 未落地",
+      "name": "C1 frontmatter 内 # 不计入",
+      "ok": true
+    },
+    {
+      "detail": "parents=[('案例 1',), ('案例 2',)]",
+      "falsifier": "parent_path 相同 ⇒ C2 双锚失效（93.9% 重名是同级）",
+      "name": "C2 同名 h3 靠 parent_path 区分",
+      "ok": true
+    },
+    {
+      "detail": "line_no=[2, 5]",
+      "falsifier": "行号偏移 ⇒ C4 行号回退不可用",
+      "name": "C2 line_no 是原文件 1-based",
+      "ok": true
+    },
+    {
+      "detail": "'标题'",
+      "falsifier": "`## 标题 ##` 归一化残留 `#` ⇒ 文本锚匹配失败",
+      "name": "D.1 ATX 闭合 # 被剥离",
+      "ok": true
+    },
+    {
+      "detail": "names=['甲', '乙']",
+      "falsifier": "h1 未进入提议 ⇒ R-D2 未落地（实测应 279）",
+      "name": "R-D2 h1 进入提议（旧口径 0）",
+      "ok": true
+    }
+  ]
+}

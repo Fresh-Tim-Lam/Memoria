@@ -417,16 +417,17 @@ class DocumentService:
         out["ms"] = round((time.perf_counter() - t0) * 1000, 2)
         return out
 
-    _HEADING_RE = re.compile(r"^(#{1,6})\s+")
-
     def _resync_kp_ranges_after_edit(self, rel_norm: str) -> int:
         """正文保存后重新锚定该文档的 KP range，返回改动数。
 
         - 解析成功：仅把漂移的 line_hint 更新为实际解析到的行号；
         - 解析失败且为 end 锚点丢失（如“在结尾行中间回车”把锚点行拆成两行）：
-          从已定位的 start 起，按下一条 `#{1,6} ` 标题前（或文末）重建 end，
-          同步 snippet 为重建行内容截断——避免 KP 因锚点断裂而无法识别。
+          从已定位的 start 起，按下一条 heading 前（或文末）重建 end，同步 snippet 截断。
+        - 2026-10-25（task-120 R-D2）：原自实现 `^(#{1,6})\\s+` 与 `{2,6}` 并存 = 并行事实源；
+          现统一到唯一实现（围栏/frontmatter 感知 C1），顺带修掉"代码块 `# 注释` 截断 KP end"。
         """
+        # heading 唯一实现（C1/C5，R-D2）；函数内 import 以免顶部加行漂移文档锚点
+        from memoria.services.heading_proposals import scan_headings
         full = os.path.join(self.kb_path, rel_norm)
         sc = load_sidecar_for_md(full, self.kb_path)
         if not sc:
@@ -444,6 +445,7 @@ class DocumentService:
         if not isinstance(kps, list):
             return 0
         changed = 0
+        _heading_index0: list[int] | None = None  # 懒计算：需要重建 end 时才扫 heading（O(n) 一次）
         for kp in kps:
             if not isinstance(kp, dict) or not isinstance(kp.get("range"), dict):
                 continue
@@ -463,11 +465,9 @@ class DocumentService:
             # 结构修复：start 已定位、end 锚点断裂 → 按标题结构重建 end
             if rr.get("error") == "end_snippet_not_found" and rr.get("start_line"):
                 si = rr["start_line"] - 1
-                nxt = None
-                for i in range(si + 1, len(lines)):
-                    if self._HEADING_RE.match(lines[i]):
-                        nxt = i
-                        break
+                if _heading_index0 is None:
+                    _heading_index0 = [h.index0 for h in scan_headings(body)]
+                nxt = next((i for i in _heading_index0 if i > si), None)
                 ei = len(lines) - 1 if nxt is None else nxt - 1
                 end["line_hint"] = ei + 1
                 end["snippet"] = lines[ei].strip()[:SNIPPET_MAX_LEN]
