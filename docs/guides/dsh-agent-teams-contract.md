@@ -256,7 +256,8 @@ python scripts/agent/dispatch_log.py append --actor lead --target lead --phase b
 
 **已实际发生（2026-10-23）**：
 ```
-⨯ EBUSY: resource busy or locked, unlink '...esourcespp.asar'
+⨯ EBUSY: resource busy or locked, unlink '...
+esourcespp.asar'
 ```
 原因：DSH 桌面应用正在运行（我们的会话就跑在它上面），Windows 锁住了 `app.asar`。
 
@@ -294,3 +295,38 @@ Postflight  ① asar 时间戳必须更新
 - 备份是**整目录复制**（~1.4GB），磁盘占用大；尚未做「保留最近 N 份 + 自动清理」。
 - 尚未自动化**真正启动应用并检测窗口出现**（L3 仍需人工确认）。
 - 未覆盖 macOS / Linux 打包路径。
+
+
+---
+
+## 附：DSH 插件升级的生效边界（2026-10-24 实测，必读）
+
+### 1. 代码生效 ≠ 工具可调用
+插件改动需要**两个独立步骤**才真正可用：
+
+| 步骤 | 做什么 | 验证方式 |
+|---|---|---|
+| **① 重新打包 asar** | 把 `packages/experimental/*/lib` 打进 `app.asar` | 字节级搜标志串（如 `TEAM_PLAN_REF_REQUIRED`） |
+| **② 开新会话** | 会话创建时**固定工具表快照**；已存在的会话看不到新工具 | 新会话里调用一次该工具 |
+
+**实测事故（2026-10-24）**：
+```
+team_preflight 已进 asar（字节级确认出现 9 次），但当前会话工具清单里没有
+team_trajectory 同样（asar 里有，我的会话调不到）
+⇒ 一度误判"打包没生效"，实际是【会话工具表快照过期】
+```
+**判法**：`字节在包里 ≠ 我能调到`。诊断时先分清是「部署失败」还是「会话快照过期」。
+**结论：新增工具只在新会话可见；重启应用只换代码、不换已存在会话的工具表。**
+
+### 2. 破坏性语义变更必须通知使用方
+插件的行为语义变更（新增必填字段 / fail-closed / 解析语义变化）会让**其他项目团队**在升级后突然报错。
+通知机制（`task-105` 实现中）：
+```
+插件侧  TEAM_CONTRACT_VERSION 常量 + changelog（每次破坏性变更 +1）
+项目侧  team/plugin-contract.json 声明 contractVersion + acknowledgedAt + reviewedChanges
+工具响应 contractNotice 四态：missing / outdated / ahead / ok（ok 不刷屏）
+        落后 ≥2 个大版本 ⇒ 写操作工具硬拒绝（只读仍可用）
+```
+**原则**：**通知要放在"必然被看到"的位置（工具返回值），不是 CHANGELOG 或日志文件** ——
+因为"文档是我应该看，工具返回值是我必然看到"。
+
