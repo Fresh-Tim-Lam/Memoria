@@ -381,6 +381,9 @@
         editorNotReady: "Editor not ready",
         pasteFail: "Paste failed (current position is not editable)",
         pasted: "Pasted",
+        delSelFail: "Cannot delete this selection: it spans blocks that cannot be removed as a whole",
+        cutSelFail: "Copied to clipboard, but cannot delete this selection: it spans blocks that cannot be removed as a whole",
+        selFailDetail: "The document was not changed. Shrink the selection or act in smaller pieces; table / code / formula / diagram blocks can only be deleted one block at a time for now.",
       },
       assist: {
         ellipsisTop: "\u2026 above lines 1\u2013{to}",

@@ -913,6 +913,30 @@
   }
 
   /**
+   * 选区删除/剪切被 EditSync **拒绝**（返回 false）时的可见提示（task-79 / E22）。
+   *
+   * 为什么必须有：`beforeinput` 已经被 `preventDefault()`（原生删除被拦掉），若再把
+   * `deleteSelection() === false` 静默吞掉，用户看到的就是「选中了一大段、按 Delete/Ctrl+X
+   * 什么也没发生」——这正是用户报的"静默失败"。返回 false 的合法原因目前是：
+   *   ① 选区跨了暂不支持整体删除的块（表格 / 代码块 / 公式块 / mermaid）；
+   *   ② 选区端点无法在 inline 树里切分（边界元素不可拆）。
+   * 提示分两条文案：剪切要额外说明「剪贴板已写入」（否则用户以为连复制都没成功）。
+   *
+   * @param {boolean} isCut — true=Ctrl+X 路径（剪贴板已写过）；false=Delete/Backspace 路径
+   */
+  function notifySelectionDeleteRejected(isCut) {
+    var msg = _t(isCut ? "cfg.clip.cutSelFail" : "cfg.clip.delSelFail");
+    var detail = _t("cfg.clip.selFailDetail");
+    log("EH", "deleteSelection rejected (" + (isCut ? "cut" : "delete") + ") → notify user");
+    var app = window.MemoriaApp;
+    // setStatusError = 状态栏 + 浮动提示；两者都缺时退到 console.warn，绝不静默
+    if (app && typeof app.setStatusError === "function") { app.setStatusError(msg, detail); return; }
+    if (app && typeof app.showFlashError === "function") { app.showFlashError(msg, detail); return; }
+    if (app && typeof app.setStatus === "function") { app.setStatus(msg + " " + detail); return; }
+    try { console.warn("[EH] " + msg + " " + detail); } catch (e) { /* ignore */ }
+  }
+
+  /**
    * 绑定 beforeinput：拦截预览区的文本输入，统一走 AST 编辑管线
    * 每种编辑操作逐步实现，当前支持 insertText（Backspace/Delete/Enter 后续补充）
    */
@@ -1003,8 +1027,15 @@
       // （异步失败在 writeCutToClipboard 内 catch 并提示；不阻塞源码删除）
       if (cutClipboard) writeCutToClipboard(cutText);
 
-      if (arg !== null) EditSync[fn](arg);
-      else EditSync[fn]();
+      if (arg !== null) {
+        var opResult = EditSync[fn](arg);
+        // task-79 阶段2：选区删除被拒绝 ⇒ 必须给用户可见提示（否则就是"按了没反应"）
+        if (fn === "deleteSelection" && opResult === false) {
+          notifySelectionDeleteRejected(!!cutClipboard);
+        }
+      } else {
+        EditSync[fn]();
+      }
 
       // E33：落点插入完成后收掉 deleteByDrag 开的分组 ⇒ 一次拖拽移动 = 单个撤销单元
       if (inputType === "insertFromDrop") endDragMoveUndo(EditSync);

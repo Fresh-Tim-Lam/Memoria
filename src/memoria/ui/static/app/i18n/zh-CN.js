@@ -381,6 +381,9 @@
         editorNotReady: "编辑器未就绪",
         pasteFail: "粘贴失败（当前位置不可编辑）",
         pasted: "已粘贴",
+        delSelFail: "无法删除该选区：它跨了暂不支持整体删除的块",
+        cutSelFail: "已复制到剪贴板，但无法删除该选区：它跨了暂不支持整体删除的块",
+        selFailDetail: "文档未做修改。请缩小选区或分段操作；表格、代码块、公式块、图示块目前只能整块单独删除。",
       },
       assist: {
         ellipsisTop: "… 上文第 1–{to} 行",
