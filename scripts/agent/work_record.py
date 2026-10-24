@@ -12,7 +12,7 @@
 |---|---|---|
 | 任务层 | `team/team-board-snapshot.json`（任务板磁盘投影） | Lead 导出 |
 | 动作层 | `team/dispatch-log.jsonl`（生命周期）+ `git log`（改了什么） | Lead / 人 |
-| 决策层 | `team/decisions.jsonl`（task-102 建立；当前可能缺失 ⇒ 显式 NOT_ESTABLISHED） | 决策者 |
+| 决策层 | `team/decisions.jsonl`（task-102 已建立，append-only；缺失 ⇒ doctor FAIL） | 决策者 |
 | 产物 | 任务 `evidence[]` / dispatch `report` 指向的磁盘文件 | 执行者 |
 | 成员经验 | `team/memory/<member>.md`（task-87 记忆卡，当前刚起步） | 插件/Lead |
 
@@ -22,7 +22,8 @@
   `source: snapshot` 与 `data_gaps`，不假装拿到 live 任务板。
 - `artifacts/` 被 `.gitignore` 排除 ⇒ 证据路径分三类：`exists` / `gitignored`（不入库≠缺失）/ `missing`。
 - 动作层 Phase 0 只覆盖 git 可观测子集；`write_without_read` / `gate_fail_continue` 需要 task-95 轨迹（未落地）。
-- 决策索引未建立前，`decision` 命令返回 `NOT_ESTABLISHED`，**不是**"没有决策"。
+- 决策索引由 task-102 建立（append-only）。**缺失或损坏 ⇒ doctor FAIL**（决策层已是必需事实源，
+  不能把"没有索引"静默当成"没有问题"）；索引存在但查询无命中时，才回到「无决策记录」。
 
 用法
 ----
@@ -425,6 +426,38 @@ def resolve_evidence(repo: Path, raw) -> dict:
         result["state"] = "missing"
         result["detail"] = "仓库外绝对路径不存在"
     return result
+
+
+def resolve_decision_evidence(repo: Path, item) -> dict:
+    """决策 evidence 的三类指针解析：doc/report=文件、commit=git 对象、task=任务板/派发日志。
+
+    与 `decide.py` 的写侧口径保持一致（写侧 fail-closed 校验过的东西，读侧必须能复验）。
+    """
+    if not isinstance(item, dict):
+        return resolve_evidence(repo, item)
+    kind = str(item.get("kind") or "")
+    ref = str(item.get("ref") or "")
+    if kind == "commit":
+        ok, _out, _err = git(repo, "cat-file", "-e", f"{ref}^{{commit}}")
+        return {"raw": ref, "state": "exists" if ok else "missing",
+                "detail": "commit 存在" if ok else "commit 对象不存在", "size": None, "sha256": item.get("sha256")}
+    if kind == "task":
+        snapshot = load_snapshot(repo)
+        if snapshot["status"] == "ok":
+            if ref in snapshot["tasks"] or any(r.get("id") == ref for r in snapshot["recent"]):
+                return {"raw": ref, "state": "exists", "detail": "任务在快照中", "size": None,
+                        "sha256": item.get("sha256")}
+        dispatch = load_dispatch(repo)
+        if any(row.get("task") == ref for row in dispatch["rows"]):
+            return {"raw": ref, "state": "exists", "detail": "任务在 dispatch-log 中", "size": None,
+                    "sha256": item.get("sha256")}
+        return {"raw": ref, "state": "missing", "detail": "任务不在快照/派发日志中", "size": None,
+                "sha256": item.get("sha256")}
+    if kind in ("doc", "report", ""):
+        resolved = resolve_evidence(repo, item)
+        return resolved
+    return {"raw": ref or str(item), "state": "missing", "detail": f"未知 evidence.kind={kind!r}",
+            "size": None, "sha256": item.get("sha256")}
 
 
 def scan_memory_for(repo: Path, needle: str) -> list[dict]:
@@ -923,13 +956,14 @@ def validate_decision_index(repo: Path, rows: list[dict]) -> dict:
             problems.append({"line": index, "rule": "reconstructed", "detail": "reconstructed 必须是布尔（防「事后编理由」伪装）"})
         for item in row.get("evidence") or []:
             if isinstance(item, dict) and item.get("ref"):
-                resolved = resolve_evidence(repo, item)
+                resolved = resolve_decision_evidence(repo, item)
                 if resolved["state"] in ("missing", "empty"):
                     problems.append(
                         {
                             "line": index,
                             "rule": "evidence-ref",
-                            "detail": f"evidence.ref={item.get('ref')!r} 不可解析（{resolved['detail']}）",
+                            "detail": f"evidence({item.get('kind')}).ref={item.get('ref')!r} 不可解析"
+                                      f"（{resolved['detail']}）",
                         }
                     )
     return {
@@ -971,10 +1005,10 @@ def _render_decision_md(data: dict, limit: int) -> str:
             f"；task：{row.get('task_id') or '—'}"
         )
         for item in row.get("evidence") or []:
-            resolved = resolve_evidence(data.get("_repo"), item) if isinstance(item, dict) else None
+            resolved = resolve_decision_evidence(data.get("_repo"), item)
             ref = item.get("ref") if isinstance(item, dict) else item
-            state = f" [{resolved['state']}]" if resolved else ""
-            lines.append(f"- evidence：`{ref}`{state}")
+            kind = f"({item.get('kind')})" if isinstance(item, dict) and item.get("kind") else ""
+            lines.append(f"- evidence：`{ref}`{kind} [{resolved['state']}]")
         lines.append("")
     if data["status"] == "ok" and not data["items"]:
         lines.append("- （索引已建立，但没有命中该关键词的决策）")
@@ -1321,8 +1355,10 @@ def collect_doctor(repo: Path) -> dict:
 
     decisions = load_decisions(repo)
     if decisions["status"] == "missing":
-        add("decisions", "WARN",
-            f"{DECISIONS_REL} 不存在（task-102/task-99 未落地）⇒ decision 查询返回 NOT_ESTABLISHED，不是「无决策」")
+        # task-102 已落地：决策索引 = 必需事实源；缺失不是"计划中"而是"事实源缺了" ⇒ FAIL
+        add("decisions", "FAIL",
+            f"{DECISIONS_REL} 不存在（task-102 已落地 ⇒ 决策层事实源缺失，不能静默绿；"
+            f"用 `python scripts/agent/decide.py append ...` 建库）")
     elif decisions["status"] == "corrupt":
         add("decisions", "FAIL", f"{DECISIONS_REL} 存在坏行：{decisions['bad'][:3]}")
     else:
@@ -1469,14 +1505,36 @@ def selftest() -> int:
              "task": "task-95", "desc": "完成", "outcome": "pass", "report": "artifacts/agent/verify/x.md"},
         ]) + "\n")
 
-        # --- doctor：正常 fixture 必须 PASS（decisions 缺失只是 WARN）---
+        # --- decision：索引未建立必须 NOT_ESTABLISHED（先测缺失态）---
+        code, out = _selftest_capture(["--repo", str(repo), "decision", "--grep", "轨迹", "--json"])
+        decision = json.loads(out)
+        expect("decision-not-established", code == 0 and decision["status"] == "not_established")
+        code, _out = _selftest_capture(["--repo", str(repo), "decision", "--doctor"])
+        expect("decision-doctor-missing-index-fails", code == 1)
+
+        # --- doctor：task-102 落地后 decisions.jsonl 属**必需源**：缺失 ⇒ FAIL（不再 WARN）---
+        code, out = _selftest_capture(["--repo", str(repo), "doctor", "--json"])
+        report = json.loads(out)
+        expect("doctor-decisions-missing-fails", code == 1 and any(
+            c["check"] == "decisions" and c["status"] == "FAIL" for c in report["checks"]))
+        expect("doctor-trajectory-missing-is-warn", any(
+            c["check"] == "trajectory" and c["status"] == "WARN" for c in report["checks"]))
+
+        # 写入合法决策索引后 doctor 必须回到 PASS
+        valid_decision = {
+            "id": "dec-20261024-abcdef01", "ts": iso(timedelta(minutes=-30)), "decided_by": "lead",
+            "scope": "task-95", "question": "轨迹存哪", "choice": "artifacts/ 不进 git",
+            "alternatives": [{"option": "进 git", "why_rejected": "体量大且可再生"}],
+            "why": "体量大且可再生", "evidence": [{"kind": "doc", "ref": "docs/plan.md"}],
+            "rule_refs": ["docs/guides/x.md#2.1"], "reversibility": "R2", "task_id": "task-95",
+            "reconstructed": False,
+        }
+        _selftest_write(repo / DECISIONS_REL, json.dumps(valid_decision, ensure_ascii=False) + "\n")
         code, out = _selftest_capture(["--repo", str(repo), "doctor", "--json"])
         report = json.loads(out)
         expect("doctor-normal-must-pass", code == 0 and report["ok"] is True)
-        expect("doctor-decisions-missing-is-warn", any(
-            c["check"] == "decisions" and c["status"] == "WARN" for c in report["checks"]))
-        expect("doctor-trajectory-missing-is-warn", any(
-            c["check"] == "trajectory" and c["status"] == "WARN" for c in report["checks"]))
+        expect("doctor-decisions-ok", any(
+            c["check"] == "decisions" and c["status"] == "OK" for c in report["checks"]))
 
         # --- task：任务档案 join 与证据三态 ---
         code, out = _selftest_capture(["--repo", str(repo), "task", "--id", "task-95", "--json"])
@@ -1489,8 +1547,7 @@ def selftest() -> int:
         expect("task-evidence-exists", states.get("docs/plan.md") == "exists")
         expect("task-evidence-gitignored", states.get("artifacts/agent/verify/x.md") == "gitignored")
         expect("task-evidence-missing", states.get("docs/missing.md") == "missing")
-        expect("task-decisions-not-established", task["decisions_status"] == "missing" and any(
-            "决策索引未建立" in gap for gap in task["data_gaps"]))
+        expect("task-decision-joined", task["decisions_status"] == "ok" and len(task["decisions"]) == 1)
         expect("task-memory-hit", len(task["memory"]) == 1)
 
         # --- 不存在的任务：必须显式 data_gaps，而不是空结果 ---
@@ -1519,23 +1576,7 @@ def selftest() -> int:
         expect("member-identity", member["identity"].get("status") == "active")
         expect("member-memory-card-present", member["memory_card"]["present"] is True)
 
-        # --- decision：索引未建立必须 NOT_ESTABLISHED ---
-        code, out = _selftest_capture(["--repo", str(repo), "decision", "--grep", "轨迹", "--json"])
-        decision = json.loads(out)
-        expect("decision-not-established", code == 0 and decision["status"] == "not_established")
-        code, _out = _selftest_capture(["--repo", str(repo), "decision", "--doctor"])
-        expect("decision-doctor-missing-index-fails", code == 1)
-
-        # --- decision：合法索引可检索 ---
-        valid_decision = {
-            "id": "dec-20261024-abcdef01", "ts": iso(timedelta(minutes=-30)), "decided_by": "lead",
-            "scope": "task-95", "question": "轨迹存哪", "choice": "artifacts/ 不进 git",
-            "alternatives": [{"option": "进 git", "why_rejected": "体量大且可再生"}],
-            "why": "体量大且可再生", "evidence": [{"kind": "doc", "ref": "docs/plan.md"}],
-            "rule_refs": ["设计稿#§2.1"], "reversibility": "R2", "task_id": "task-95",
-            "reconstructed": False,
-        }
-        _selftest_write(repo / DECISIONS_REL, json.dumps(valid_decision, ensure_ascii=False) + "\n")
+        # --- decision：合法索引可检索（索引已在上方写入）---
         code, out = _selftest_capture(["--repo", str(repo), "decision", "--grep", "轨迹", "--json"])
         decision = json.loads(out)
         expect("decision-grep-hit", code == 0 and decision["matched_count"] == 1)
