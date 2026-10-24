@@ -118,16 +118,17 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
    `python scripts/agent/team_audit.py` 的 `role_evidence` 检查（active 角色须有 14 天证据，
    否则会被判「幽灵角色」WARN）。
 
-### 2.2 非领域常驻成员（当前 3 个，不计入 §2 领域 Owner 数）
+### 2.2 非领域常驻成员（当前 4 个，不计入 §2 领域 Owner 数）
 
-名册里还有 3 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
+名册里还有 4 个**有明确职责、但不按领域切分**的常驻成员（`list_agents` 可见；它们不出现在上表中，
 以免污染 §2 的领域计数与 `team_audit.py` 的 roster 比对）：
 
 | 成员 | 职责 | 与领域 Owner 的区别 |
 |---|---|---|
 | `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
 | `team-plugin-creator`（DSH 插件改进者，Creator 模式） | 实现 `team-plugin-improvement-spec.md` 的 R1–R8（DSH 插件侧改动：roster 落盘 / 派发审计日志 / 强制 owner / complete 绑产物 / 快照生成 / 周期触发 / preset 暴露 / token 统计）；**唯一持有 DSH 插件源码与 preset 写权限的角色** | 不碰 Memoria 产品代码（`src/**`）与 Memoria 团队资产（`team/**`）；改动需重打包才生效 ⇒ 受 §13「打包是单向门」约束 |
-| `steward`（团队管理员，2026-10-24 恢复） | **组织资产 + 成员工作记录 + 过程审计 + 协议演进**。维护 `team/agents.json` / 名册 / 工作记录三层（动作/任务/决策）；审过程不审结果；产出必须是**新机检**而非报告；**不阻断**（阻断权在机检/人）。**代次说明**：`curator-r3`(v4-pro) → `steward`(v4-pro，已退役) → `steward`(flash，实例二) → **当前 `steward2`(flash，实例三)**。改名为 steward2 的原因是一个插件 bug：退役后同名重生时 `send_message`/`update_teammate` 无法解析 target（`team_task_*` 可解析），已报 team-plugin-creator；修好后可并回 steward 之名| 与领域 Owner：管全团队的过程与行为，不拥有产品领域；与 `todo-owner`：steward 管「怎么干」，todo-owner 管「干什么/先干什么」|
+| `steward`（团队管理员，2026-10-24 恢复；**当前不可唤醒，待退役**） | **组织资产 + 成员工作记录 + 过程审计 + 协议演进**。维护 `team/agents.json` / 名册 / 工作记录三层（动作/任务/决策）；审过程不审结果；产出必须是**新机检**而非报告；**不阻断**（阻断权在机检/人）。**代次说明**：`curator-r3`(v4-pro) → `steward`(v4-pro，已退役) → `steward`(flash，实例二) → **当前 `steward2`(flash，实例三)**。改名为 steward2 的原因是一个插件 bug：退役后同名重生时 `send_message`/`update_teammate` 无法解析 target（`team_task_*` 可解析），已报 team-plugin-creator；修好后可并回 steward 之名| 与领域 Owner：管全团队的过程与行为，不拥有产品领域；与 `todo-owner`：steward 管「怎么干」，todo-owner 管「干什么/先干什么」|
+| `steward2`（团队管理员·**当前在岗**，2026-10-24） | 同上职责（steward 的第三代实例）。**为什么是两个条目**：`steward` 实例因插件 bug（退役后同名重生 ⇒ `send_message`/`update_teammate` 无法解析 target）不可唤醒；DSH 侧已修（commit `66c6dac129`，generation-aware 解析）但**尚未重建部署**，故暂以 `steward2` 命名继续。**待下次 DSH 重建后可退役 steward 并把本行并回上一行** | 同上：管全团队过程与行为；与 `todo-owner` 分工为「怎么干」vs「干什么」 |
 
 > > **2026-10-24 变更：Curator 已退役。** 人指令「团队统一 deepseek-flash，v4-pro 的删掉」——
 > 最后一代 Curator 运行身份是 `curator-r3`（v4-pro，第三轮复盘）。其产出已沉淀为
