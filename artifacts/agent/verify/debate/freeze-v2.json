@@ -11,7 +11,33 @@
     "裁决必须给 falsifiers（J3）且处理少数派 unique evidence（J2'）",
     "辩论产物必须进 git 并可复算（J6'）"
   ],
-  "standards": [],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sha256_lf": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "role": "Lead 派发不变量 L1-L10"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sha256_lf": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+      "role": "派发细则"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sha256_lf": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "role": "教训台账"
+    },
+    {
+      "path": "docs/guides/agent-team-org.md",
+      "sha256_lf": "fd91c21ff75901edb84807fa6faeb4e8b4d4270d8c8bed20c19042f184d72872",
+      "role": "组织与角色章程"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sha256_lf": "e6f16ef1720084690354d82d189f5614b5354fd54560c21fe7417d8331a6cc51",
+      "role": "机检实现"
+    }
+  ],
   "expected_categories": [
     "DSH 能力模型（skill/hook/guard/plan/goal/todo）",
     "DSH 宿主运行时（Cordis 服务/lifecycle/scoped layers）",
@@ -25,5 +51,6 @@
     "扩展点契约（字段/版本/沙箱边界/兼容）"
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
-  "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。"
+  "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
+  "standards_frozen_at": "2026-10-25T00:52:37+08:00"
 }
