@@ -35,10 +35,16 @@ L6. 任何"看起来成功其实没做"的路径，修法是【让失败可见�
 L7. 对话被压缩后不凭记忆回答"还剩什么"：一律重查任务板 + 跑 team_audit.py
 L8. 版本级规划（某版本做什么/顺序/范围）必须由 todo-owner 产出并写进 docs/todo.md；
     Lead 不得凭记忆排期。开始任何版本级工作前先调 team_preflight（见下）
+L9. spawn 必须**显式**传 `mode`：能扫一遍/跑一条命令得出结果的活用 `mechanical`（推理链 off）；
+    `deep` 会把模型换成 v4-pro（与本队"统一 flash"冲突）。不传 = 静默默认 standard = 没做决策
 ```
 
+> **L9 依据**：DSH 源码 `tool-agent-team/src/index.ts:448` `const mode = args.mode ?? 'standard'` ——
+> 不传 mode 是**静默默认**，日志上「忘了想」和「决定用 standard」无法区分。
+> 路由表见 [lead-dispatch-rules.md §1.3b](docs/guides/lead-dispatch-rules.md)。
+
 > **⚠️ 关于本清单的局限（2026-10-24 人指出的）**：
-> 这 8 条**只覆盖已经发生过的违规**。它们仍然是"静态记忆"，无法覆盖尚未认识到的义务。
+> 这 9 条**只覆盖已经发生过的违规**。它们仍然是"静态记忆"，无法覆盖尚未认识到的义务。
 > **真正的修法是插件级强制**（`task-89`）：把义务做成**工具返回值**（`team_preflight`）
 > 和**工具拒绝**（版本级任务必须带 `planRef`）——
 > 因为"文档/注入清单是我应该看"，而"工具返回值是我必然看到"。

@@ -1,4 +1,4 @@
-﻿# Lead 派发规范（Dispatch Rules）
+# Lead 派发规范（Dispatch Rules）
 
 > **读者**：Lead（主控）。
 > **用法**：**不要求通读**。按「触发时刻」读对应一节即可（见下方索引）。
@@ -40,9 +40,44 @@
 | 1.1 | **先建任务，再 spawn**（任务存在且 `owner` 已留给该成员） | `dispatch_release::H1` | WARN「派发了但任务板无 owner」 |
 | 1.2 | 该任务的 `writeScopes` **必须显式声明**，且与所有存活成员**无交集** | `write_scope`（advisory→spawn 前置） | 重叠 ⇒ **排队，不许并行** |
 | 1.3 | 选模型：**默认 `deepseek-flash`**；只有需要长链推理/契约裁决才用 `v4-pro`，且必须在回报里说明理由 | 人工 | — |
+| **1.3b** | **选 `mode`（四档，见下）—— 不许不选**。不传 `mode` 会被静默默认为 `standard`，等于"没做决策" | `mode_policy`（待实现） | WARN「未做模式决策」 |
 | 1.4 | `context`：**默认 `fresh`**。只有"接续我自己未完成的上下文"才用 `fork` | — | — |
 | 1.5 | prompt 必含 5 项：① 任务 id ② 写域 ③ 验收标准 ④ 必读文档（含 lessons 三条）⑤ **卡壳 >N 分钟先回报** | 人工 | — |
 | 1.6 | 若为一次性只读调研（不写代码、不需要审计）⇒ **优先用 subagent，不占名册** | — | — |
+
+### 1.3b 模式路由表（DSH 四档，源码 `tool-agent-team/src/index.ts`）
+
+```ts
+L43: reasoningEffort = mode === 'mechanical' ? 'off' : mode === 'deep' ? 'high' : undefined
+L44: modeModel       = mode === 'deep' ? config.deepModel
+                     : mode === 'mechanical' ? config.mechanicalModel : undefined
+L448: const mode = args.mode ?? 'standard'      // ← 不传 = 静默默认
+```
+
+| mode | 推理链 | 模型 | 该给谁 |
+|---|---|---|---|
+| **`mechanical`** | **off** | 可配 `mechanicalModel` | **纯执行不可判断的活**：只读扫描 / 统计 / 格式检查 / 生成报告 / 一行修复 / 跑命令取数 |
+| `standard` | 默认 | 默认 | 常规实现：多文件、需判断、要自验 |
+| `deep` | **high** | `deepModel`（本部署实测 = v4-pro） | 契约裁决 / 架构设计 / 等价性判断 / 高风险评审 |
+| `creator` | 默认 | 默认 + creator preset | **改 DSH 插件 / bundle / preset**（唯一能做的模式） |
+
+**强制规则**：`mode` 必须**显式传**。理由 —— 不传就是 `standard`（源码 `args.mode ?? 'standard'`），
+日志上「忘了想」与「决定用 standard」完全无法区分。
+
+**两条铁律**：
+1. **能用一个命令或一次扫描得出结果的任务，不许用 `standard`/`deep`** —— 那是纯浪费推理链
+2. **`deep` 会把模型换成 `deepModel`（v4-pro）** ⇒ 与人「团队统一 flash」冲突 ⇒ 用 `deep` 必须在回报里写明理由，
+   否则退化为 `standard` + 显式 `model: deepseek-flash`
+
+### 本轮实证（为什么要 1.3b）
+```
+2026-10-24 spawn 记录：
+  steward  → mode: deep     ← 错：任务是"设计文档"，standard 够；且模型被换成 v4-pro，违反"统一 flash"
+  steward2 → mode: standard
+  todo-owner / team-plugin-creator → 未传 mode ⇒ 静默默认 standard
+⇒ 一次都没用过 mechanical，尽管当天有大量"扫一遍仓库/生成报告/跑命令取数"的活
+```
+
 
 ### 本轮实证（为什么要 1.1/1.2）
 ```
