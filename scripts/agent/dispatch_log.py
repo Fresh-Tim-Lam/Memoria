@@ -57,7 +57,13 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_LOG = REPO_ROOT / "team" / "dispatch-log.jsonl"   # 2026-10-23 迁入版本控制（原 artifacts/agent/ 被 gitignore）
-PHASES = ("spawn", "message", "done", "retire", "backfill")
+PHASES = ("spawn", "message", "done", "retire", "backfill",
+          # 2026-10-24: when the DSH Agent Teams plugin's auditLog is pointed at this same
+          # file (team/dispatch-log.jsonl), it also writes these phases. Omitting them here
+          # would make our own `check` reject the plugin's rows and turn one shared fact
+          # source into a false "corrupt log" finding.
+          # Plugin side of truth: agent-team/src/audit.ts -> TeamAuditPhase.
+          "preflight", "reassign", "contract")
 REQUIRED_FIELDS = ("ts", "actor", "phase")
 # task-107：DSH 四档（源码 tool-agent-team/src/index.ts:448 mode 默认 standard）；路由表见 §1.3b
 VALID_MODES = ("mechanical", "standard", "deep", "creator")
