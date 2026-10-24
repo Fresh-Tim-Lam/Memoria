@@ -237,6 +237,14 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 | **过程类** | `team_audit.py` 新检查 / 插件拒绝 / `team/steward/findings.jsonl` | 写文件前没读、门禁失败后继续 |
 | **决策索引类** | 抽取/去重/时效校验（**永不创作 why**） | `decision_trail` |
 
+
+> **B3-b 收据 sha 口径（2026-10-24，SF-025）**：`standards_read` 记的 sha256 必须是
+> **LF 归一化后的内容 sha**（`\r\n → \n` 后再算），**不是工作区原始字节**。
+> **原因**：本仓 `core.autocrlf=true` + `* text=auto` ⇒ 工作区是 CRLF；
+> 换到 Linux CI 或 `autocrlf=false` 的克隆会 checkout 出 LF ⇒ 收据全部假红（标准其实没改）。
+> **实测**：`agent-team-lessons.md` 收据的原始字节 sha MATCH，LF 归一化后 **MISMATCH**
+> ⇒ 旧口径不可跨平台移植。若需与 git 对账，另记 `git blob sha`（`git rev-parse HEAD:<path>`）作第二列。
+
 **B3 standards_read 收据（防"带教落伍"）**
 每次审计必须**重读**当前标准并在收据里记 `sha256`：
 `AGENTS.md §0.5` / `lead-dispatch-rules.md` / `agent-team-lessons.md` / `team_audit.py` 现有检查。
