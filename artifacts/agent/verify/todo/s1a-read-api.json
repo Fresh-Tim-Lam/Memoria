@@ -1,5 +1,5 @@
 {
-  "artifactSha256": "5fb259eb71480ee7277b12c2597193c9900b4371c3f6132b7a932a2f6ada10d2",
+  "artifactSha256": "6ef86927e98a6534517f582bf03ae02f1866c520a8e74bfac314d24d437b8fd9",
   "assertions": [
     {
       "detail": "'标题'",
@@ -113,6 +113,48 @@
       "detail": "fallback=None, skipped=over_budget, doc_tokens=6419, share=0.6677",
       "falsifier": "超预算仍回整篇 ⇒ 会被切成更多片，反而更贵",
       "name": "A13 预算保护：整篇超预算 ⇒ 不回退（标 fallback_skipped）",
+      "ok": true
+    },
+    {
+      "detail": "code=INVALID_SELECTOR, 返回节=False, msg=`near_line` 是 `heading` 的消歧修饰符，单独使用无效；按行定位请用 `line`（#L 一等回退）",
+      "falsifier": "静默回 sections[0] ⇒ 模型拿到整篇以为是一节（无错误信号）",
+      "name": "A14 near_line 单独给 ⇒ INVALID_SELECTOR（不回 sections[0]）",
+      "ok": true
+    },
+    {
+      "detail": "code=INVALID_SELECTOR, 返回节=False",
+      "falsifier": "path 单独给却回 sections[0] ⇒ 同样是静默默认",
+      "name": "A14 path 单独给 ⇒ INVALID_SELECTOR",
+      "ok": true
+    },
+    {
+      "detail": "code=INVALID_SELECTOR, 返回节=False",
+      "falsifier": "无选择器时静默回第一节 ⇒ 只读接口会给出无根据的节",
+      "name": "A14 完全不给选择器 ⇒ INVALID_SELECTOR（不再猜第一节）",
+      "ok": true
+    },
+    {
+      "detail": "err=None, line=7",
+      "falsifier": "",
+      "name": "A14 `line` 单独给仍正常工作（一等回退不受影响，C4）",
+      "ok": true
+    },
+    {
+      "detail": "err=None, line=4",
+      "falsifier": "",
+      "name": "A14 heading + near_line 仍可消歧（修饰符语义不变）",
+      "ok": true
+    },
+    {
+      "detail": "error=True, code=INVALID_SELECTOR, text=Error: 你给的是 `near_line`，它们是 `heading` 的消歧修饰符，单独使用无效；section 需要 `heading`（可再配 near_line/path/level）或 `line`（#L ",
+      "falsifier": "工具静默回整篇 ⇒ 模型永远不知道该改用 line",
+      "name": "A14 工具层只给 near_line ⇒ 可操作错误（不是整篇）",
+      "ok": true
+    },
+    {
+      "detail": "error=False, text=d.md 「定义」(L7-11，h3，5 行)\n\n### 定义\n第二处\n```python\n# 这不是标题\n```",
+      "falsifier": "",
+      "name": "A14 工具层只给 line ⇒ 正常工作（C4 一等回退）",
       "ok": true
     },
     {

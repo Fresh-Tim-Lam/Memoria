@@ -44,6 +44,7 @@ _SEALED_CONFIG_DIR = tempfile.mkdtemp(prefix="memoria-cfg-")
 os.environ.setdefault("MEMORIA_CONFIG_DIR", _SEALED_CONFIG_DIR)
 
 from memoria.services.agent import section_index as si  # noqa: E402
+from memoria.services.agent.tools.kb import build_kb_tools  # noqa: E402
 from memoria.services.heading_proposals import scan_headings  # noqa: E402
 
 KB_DIRS = [
@@ -330,6 +331,63 @@ def main() -> int:
         f"fallback={pay.get('fallback')}, skipped={pay.get('fallback_skipped')}, "
         f"doc_tokens={pay.get('doc_tokens')}, share={(pay.get('section') or {}).get('doc_share')}",
         "超预算仍回整篇 ⇒ 会被切成更多片，反而更贵",
+    )
+
+    # ── A14 R-S1B-4 回归：`heading=None` 时**不得**静默回 sections[0] ──────────
+    # 生产缺陷背景：`near_line`/`path`/`level` 是 **heading 的消歧修饰符**，单独给毫无意义；
+    # 旧实现 `if heading is None: return sections[0]` ⇒ 模型拿到"整篇"却以为拿到"一节"，零错误信号。
+    # 这条静默默认实际咬人两次（A/B 测错两轮 + Lead 据此下错裁决）⇒ 现在必须显式报错。
+    sec, err = si.resolve_section(synth, near_line=5)
+    check(
+        "A14 near_line 单独给 ⇒ INVALID_SELECTOR（不回 sections[0]）",
+        err is not None and err.code == si.INVALID_SELECTOR,
+        f"code={err and err.code}, 返回节={bool(sec)}, msg={(err and err.message) or ''}",
+        "静默回 sections[0] ⇒ 模型拿到整篇以为是一节（无错误信号）",
+    )
+    sec, err = si.resolve_section(synth, path=["案例 2"])
+    check(
+        "A14 path 单独给 ⇒ INVALID_SELECTOR",
+        err is not None and err.code == si.INVALID_SELECTOR,
+        f"code={err and err.code}, 返回节={bool(sec)}",
+        "path 单独给却回 sections[0] ⇒ 同样是静默默认",
+    )
+    sec, err = si.resolve_section(synth)
+    check(
+        "A14 完全不给选择器 ⇒ INVALID_SELECTOR（不再猜第一节）",
+        err is not None and err.code == si.INVALID_SELECTOR,
+        f"code={err and err.code}, 返回节={bool(sec)}",
+        "无选择器时静默回第一节 ⇒ 只读接口会给出无根据的节",
+    )
+    sec, err = si.resolve_section(synth, line=8)
+    check(
+        "A14 `line` 单独给仍正常工作（一等回退不受影响，C4）",
+        err is None and sec is not None and sec.heading.line_no == 7,
+        f"err={err and err.code}, line={sec and sec.heading.line_no}",
+    )
+    sec, err = si.resolve_section(synth, heading="定义", near_line=5)
+    check(
+        "A14 heading + near_line 仍可消歧（修饰符语义不变）",
+        err is None and sec is not None and sec.heading.line_no == 4,
+        f"err={err and err.code}, line={sec and sec.heading.line_no}",
+    )
+    # 工具层：只给 near_line ⇒ 必须回**可操作**错误，而不是整篇
+    kb_tmp = os.path.join(tempfile.mkdtemp(prefix="memoria-a14-"), "kb")
+    os.makedirs(kb_tmp)
+    with open(os.path.join(kb_tmp, "d.md"), "w", encoding="utf-8", newline="") as fh:
+        fh.write(synth)
+    _tools = {t.name: t for t in build_kb_tools(kb_tmp)}
+    out = _tools["section"].handler({"file": "d.md", "near_line": 5})
+    check(
+        "A14 工具层只给 near_line ⇒ 可操作错误（不是整篇）",
+        out.error is True and "near_line" in out.text and "line" in out.text,
+        f"error={out.error}, code={out.code}, text={out.text[:110]}",
+        "工具静默回整篇 ⇒ 模型永远不知道该改用 line",
+    )
+    out = _tools["section"].handler({"file": "d.md", "line": 8})
+    check(
+        "A14 工具层只给 line ⇒ 正常工作（C4 一等回退）",
+        out.error is False and "定义" in out.text,
+        f"error={out.error}, text={out.text[:80]}",
     )
 
     # ── A12 C3 触发率 ────────────────────────────────────────────────────

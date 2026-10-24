@@ -427,3 +427,104 @@ python scripts/benchmark/maintenance/section_granularity_ab.py --json artifacts/
 其余三个脚本 sha 不变（`census e9c4021a` / `replace_op 11a955e8` / `kp_impact NO_IMPACT`）；
 `pytest -k "agent_plan/apply/body_edit/audit/doc_anchor"` = **106 passed / 0 failed**；未 commit。
 
+
+---
+
+## 14. R-S1B-4：`heading=None` 静默回 `sections[0]` —— 生产缺陷 + 修复（P1）
+
+### 14.1 缺陷（Lead 顺着我的自曝查出来的，比我说的"harness 用错"更重）
+
+`section_index.resolve_section()` 旧代码：
+
+```python
+if heading is None:
+    return sections[0], None      # ← 静默回"首个节"（通常 = 整篇）
+```
+
+而 `near_line` / `path` / `level` 是 **heading 的消歧修饰符**，在**工具参数表里对模型可见**
+（`tools/kb.py::_section_call` 会读它们）。于是三种调用会掉进静默默认：
+
+| 输入 | 旧行为 | 后果 |
+|---|---|---|
+| `section(file, near_line=215)` | 回 `sections[0]` ≈ 整篇 | 模型**拿到整篇以为拿到一节**，零错误信号 |
+| `section(file, path=[…])` | 同上 | 同上 |
+| 无任何选择器 | 同上 | 只读接口给出无根据的节 |
+
+真实语料复现（Lead 给的例子，我已复验）：`DeepLearning/ELU.md`
+`near_line=215` → 旧行为回「ELU激活函数完整报告」L1-228（整篇）❌；`line=215` → 正确回「7. 总结」L215-228 ✅。
+
+**违反三条既有原则**：L6「让失败可见」/ C3「不得取首个」/ E4「可复现」。
+**实际危害已发生**：它让我的 A/B 连错两轮（`read_section` 21.44% 假数字），Lead 又基于假数字下了
+「70% 数学上不可能」的错裁决（R-S1B-5 已撤回）。
+
+### 14.2 修复（两层，缺一不可）
+
+**(a) 领域层** `section_index.resolve_section()`：新增错误码 `INVALID_SELECTOR`。
+
+```python
+if heading is None:
+    modifiers = [n for n, v in (("near_line", near_line), ("path", path), ("level", level)) if v is not None]
+    if modifiers:  → _Err(INVALID_SELECTOR, "`near_line`/`path`/`level` 是 heading 的消歧修饰符，单独使用无效；按行定位请用 line")
+    否则           → _Err(INVALID_SELECTOR, "必须给 heading 或 line；没有选择器时不会猜第一节")
+```
+
+**(b) 工具层** `tools/kb.py::_section_call()`：`heading` 或 `line` 至少一个；否则回**可操作**错误：
+
+```
+Error: 你给的是 `near_line`，它们是 `heading` 的消歧修饰符，单独使用无效；
+       section 需要 `heading`（可再配 near_line/path/level）或 `line`（#L 行号，一等回退）。
+       按行定位请用 line=215 (INVALID_SELECTOR)
+```
+
+两层都要：领域层保证任何调用方（含 `replace_section` 校验、未来的 RPC）都拿不到静默默认；
+工具层保证**模型**拿到的是"该改用 line=215"这种能自纠的话，而不是一句干巴巴的 code。
+
+### 14.3 先证红、再证绿（Lead 明确要求）
+
+**红**（修复前，产物 `artifacts/agent/verify/todo/s1b-4-red-before-fix.txt`）：
+```
+[FAIL] A14 near_line 单独给 ⇒ INVALID_SELECTOR（不回 sections[0]）: code=None, 返回节=True
+[FAIL] A14 path 单独给 ⇒ INVALID_SELECTOR: code=None, 返回节=True
+[FAIL] A14 完全不给选择器 ⇒ INVALID_SELECTOR（不再猜第一节）: code=None, 返回节=True
+[FAIL] A14 工具层只给 near_line ⇒ 可操作错误（不是整篇）: error=False,
+       text=d.md **整篇**（目标节「文档」占全文 100% > 50%，已一次给全，无需再读）
+== RESULT: FAIL ==  (sha256 fe19b1580e3c8c19…)
+```
+（注意最后一条：**回退逻辑把"整篇"包装得很漂亮**，正是 L6 说的"看起来成功其实没做"。）
+
+**绿**（修复后）：
+```
+[OK] A14 near_line 单独给 ⇒ INVALID_SELECTOR: code=INVALID_SELECTOR, 返回节=False
+[OK] A14 path 单独给 ⇒ INVALID_SELECTOR
+[OK] A14 完全不给选择器 ⇒ INVALID_SELECTOR
+[OK] A14 `line` 单独给仍正常工作（C4 不受影响）: line=7
+[OK] A14 heading + near_line 仍可消歧（修饰符语义不变）: line=4
+[OK] A14 工具层只给 near_line ⇒ 可操作错误: code=INVALID_SELECTOR
+[OK] A14 工具层只给 line ⇒ 正常工作: 「定义」(L7-11)
+== RESULT: PASS ==  (sha256 6ef86927e98a6534…)
+```
+
+### 14.4 重跑五脚本：**sha 变化只来自新增用例**
+
+| 脚本 | 修复前 sha | 修复后 sha | 说明 |
+|---|---|---|---|
+| `section_read_api.py` | `5fb259eb` / 红 `fe19b158` | **`6ef86927`** | **唯一变化**：+7 条 A14 断言（3 条从红转绿） |
+| `section_headings_census.py` | `e9c4021a` | `e9c4021a` | 不变（不涉及选择器） |
+| `section_replace_op.py` | `11a955e8` | `11a955e8` | 不变（`replace_section` 本来就强制 heading/line） |
+| `section_kp_end_impact.py` | NO_IMPACT | NO_IMPACT | 不变 |
+| `section_granularity_ab.py` | `8873fbf0` | `8873fbf0` | 不变（B 臂已传 heading） |
+
+`pytest -k "agent_plan/apply/body_edit/audit/doc_anchor"` = **106 passed / 0 failed**；未 commit。
+
+### 14.5 这次缺陷的教训（与 R-R1 同源，值得进 ledger 提案）
+
+| 次 | 形态 | 代价 |
+|---|---|---|
+| 第一次（R-R1） | `gate` 字段**存在但从不被求值** | 我误判"删工具能省 4,349 tok schema" |
+| 第二次（R-S1B-4） | `heading=None` **静默回 `sections[0]`** | A/B 测错两轮 + Lead 下错裁决 |
+
+共同点：**一个看起来能用的默认值，让错误看起来像结果。**
+我这次的教训是双层的：**先用"实现不行"解释数字之前，先怀疑度量与默认值** ——
+如果我只停在"实现就是 21%"，这个静默默认会带着发版。
+`dsh-agent-team-governance` 的"测量密封性/默认值可证伪"正是这一类。
+

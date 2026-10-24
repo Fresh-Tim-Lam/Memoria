@@ -71,6 +71,9 @@ AMBIGUOUS_SECTION = "AMBIGUOUS_SECTION"
 NO_HEADINGS = "NO_HEADINGS"
 INVALID_LEVEL = "INVALID_LEVEL"
 UNSUPPORTED = "UNSUPPORTED"
+#: **选择器非法**（R-S1B-4，2026-10-25）：`heading` 缺席时**不再静默回首个节**。
+#: `near_line` / `path` / `level` 是 heading 的**消歧修饰符**，单独给无意义；按行定位请用 `line`（C4）。
+INVALID_SELECTOR = "INVALID_SELECTOR"
 
 
 def estimate_tokens(text: str) -> int:
@@ -321,8 +324,26 @@ def resolve_section(
         return containing[-1][1], None  # 最深层（最后出现的包含者即是嵌套最深的）
 
     if heading is None:
-        # 无选择器：取第一个节（调用方若要全篇应走 read_document）
-        return sections[0], None
+        # R-S1B-4：**不再静默回 sections[0]**（那会让"整篇"冒充"一节"，且零错误信号）。
+        # `near_line` / `path` / `level` 是 heading 的消歧修饰符 —— 没有 heading 时它们无从发挥作用。
+        modifiers = [
+            name
+            for name, value in (("near_line", near_line), ("path", path), ("level", level))
+            if value is not None
+        ]
+        if modifiers:
+            return None, _Err(
+                INVALID_SELECTOR,
+                f"`{'`、`'.join(modifiers)}` 是 `heading` 的消歧修饰符，单独使用无效；"
+                f"按行定位请用 `line`（#L 一等回退）",
+                {"how_to": "给 heading（可再配 path/near_line/level），或只给 line"},
+            )
+        return None, _Err(
+            INVALID_SELECTOR,
+            "必须给 `heading`（可再配 path/near_line/level）或 `line`；"
+            "没有选择器时不会猜第一节（旧行为是静默回首个节，已废弃）",
+            {"how_to": "heading=<标题> 或 line=<#L 行号>"},
+        )
 
     cands = _candidates(heads, title=heading, level=level, ci=ci)
     if not cands:
@@ -649,4 +670,5 @@ __all__ = [
     "NO_HEADINGS",
     "INVALID_LEVEL",
     "UNSUPPORTED",
+    "INVALID_SELECTOR",
 ]

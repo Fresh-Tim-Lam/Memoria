@@ -729,6 +729,21 @@ def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
         if err is not None:
             return err
         rel, body, _lines = got  # type: ignore[misc]
+        # R-S1B-4：`heading` 或 `line` 至少给一个。`near_line`/`path`/`level` 是 heading 的
+        # **消歧修饰符**，单独给毫无意义 —— 旧版会在这种输入下静默返回"首个节（≈整篇）"，
+        # 模型会把整篇当一节用且没有任何错误信号。这里显式拒绝并告诉它该改用 `line`。
+        if not arguments.get("heading") and arguments.get("line") is None:
+            given = [k for k in ("near_line", "path", "level") if arguments.get(k) not in (None, "")]
+            hint = (
+                f"你给的是 `{'`/`'.join(given)}`，它们是 `heading` 的消歧修饰符，单独使用无效；"
+                if given
+                else "这一项没给选择器；"
+            )
+            return _error(
+                f"{hint}section 需要 `heading`（可再配 near_line/path/level）或 `line`（#L 行号，一等回退）。"
+                f"按行定位请用 line={arguments.get('near_line') or '目标行号'}",
+                "INVALID_SELECTOR",
+            )
         selector: dict[str, Any] = {}
         if arguments.get("heading"):
             selector["heading"] = str(arguments["heading"])
@@ -758,6 +773,16 @@ def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
             f"{rel} 「{sec.get('title')}」(L{sec.get('line_no')}-{sec.get('end_line_no')}，"
             f"h{sec.get('level')}，{sec.get('lines')} 行)"
         )
+        if payload.get("fallback") == "whole_document":
+            # R-S1B-1：该节占全文 >50% ⇒ 已按整篇一次返回（1 轮），调用方**无需再补读**
+            share = float(sec.get("doc_share") or 0)
+            head = (
+                f"{rel} **整篇**（目标节「{sec.get('title')}」占全文 {share:.0%} > 50%，"
+                f"已一次给全，无需再读）："
+            )
+            return ToolOutput(text=head + "\n\n" + str(payload.get("text") or ""))
+        if payload.get("fallback_skipped") == "over_budget":
+            head += "（本节占全文过半，但整篇超预算，故按节给）"
         if payload.get("parts", 1) > 1:
             head += f"  第 {payload.get('part')}/{payload.get('parts')} 片（约 {payload.get('tokens', 0)} tok）"
         text = head + "\n\n" + str(payload.get("text") or "")
