@@ -12988,6 +12988,227 @@
     }
 
     /**
+     * 以「首块类型」造一个块（列表→单 item 列表 / 引用→单段引用 / 标题→同级别标题 / 其它→段落）。
+     * 用于 stage4 删除合并块与 stage5 粘贴替换的首/尾块。
+     * 原子块（表格/代码/公式/mermaid）在这里**降级为段落**：它们不能承载内联文本。
+     */
+    function _blockLike(kindBlock, inlineNodes) {
+      var nodes = inlineNodes || [];
+      if (!kindBlock) return A.paragraph(nodes);
+      if (kindBlock.type === "list") return A.list(kindBlock.ordered, [A.listItem(nodes)]);
+      if (kindBlock.type === "heading") return A.heading(kindBlock.level, nodes);
+      if (kindBlock.type === "blockquote") return A.blockquote([A.paragraph(nodes)]);
+      return A.paragraph(nodes);
+    }
+
+    /** 把「粘贴内容的中段」按 markdown 解析成块；**frontmatter 一律降级为段落**
+     *  （粘贴绝不能造出文档头；内容仍可见、而单撤销可回退）。 */
+    function _parsePastedBlocks(chunk) {
+      var text = String(chunk == null ? "" : chunk);
+      if (!text) return [];
+      var blocks = [];
+      try { blocks = P.parseBlocks(text.split("\n")) || []; } catch (e) { blocks = []; }
+      if (!blocks.length) return [A.paragraph([A.text(text)])];
+      var out = [];
+      for (var i = 0; i < blocks.length; i++) {
+        var b = blocks[i];
+        if (!b) continue;
+        if (b.type === "frontmatter") {
+          log("STYLE", "pasteReplace: frontmatter 降级为段落（粘贴不得造文档头）");
+          out.push(A.paragraph([A.text(String(b.yaml || ""))]));
+        } else {
+          out.push(b);
+        }
+      }
+      return out;
+    }
+
+    /** 块数组 → 源码行数组（每块至少一行；空数组退化为一个空行）。 */
+    function _blocksToSrcLines(blocks) {
+      var out = [];
+      for (var i = 0; i < (blocks || []).length; i++) {
+        var src = String(G.generateBlock(blocks[i]));
+        var ls = src.split("\n");
+        for (var k = 0; k < ls.length; k++) out.push(ls[k]);
+      }
+      return out.length ? out : [""];
+    }
+
+    /**
+     * ★ stage5（task-83）：**粘贴 = 替换选区**（单行/多行、跨块/同块跨段都支持；单撤销）。
+     *
+     * 关键设计（Lead 2026-10-24 裁决，不要改）：
+     *  · **不做"先删再插"两次编辑**：直接算好「删除行区间 + 新行集合」，**一次 `commitRange`**
+     *    提交 ⇒ 天然只有一个 undo 条目 ⇒ 不可能出现"内容删了但没粘上"的半成品（静默数据损坏）。
+     *  · 单行粘贴 = 纯文本内联替换（**不解析** markdown：粘一句 `# x` 不该变成标题）。
+     *  · 多行粘贴 = 三段式：`[首块类型(before + 第 1 行)] + [中段按 markdown 解析] + [末块类型(最后 1 行 + after)]`；
+     *    中段解析出的 frontmatter 降级为段落。
+     *  · 光标落在**粘贴内容末尾**（after 非空时也是粘贴内容末尾：否则下一次输入会跳到旧文本后面）。
+     *  · 选区含原子块（表格/代码/公式/mermaid）⇒ 与删除同一语义（整块跨过即整删）+ 删除摘要；
+     *    frontmatter ⇒ 拒绝并回 false（调用方给可见提示）。
+     *
+     * @param {Range} range — 浏览器选区（可跨块）
+     * @param {string} rawText — 剪贴板 text/plain
+     * @returns {boolean}
+     */
+    function replaceSelectionWithText(range, rawText) {
+      var text = String(rawText == null ? "" : rawText).replace(/\r\n?/g, "\n");
+      // 复制的跨行文本常带一个结尾换行：只去掉**一个**（否则会凭空多一个空行块）
+      if (text.length > 1 && text.charAt(text.length - 1) === "\n") text = text.slice(0, -1);
+      if (!range || !text) return false;
+      var start = M.domToAst(range.startContainer, range.startOffset);
+      var end = M.domToAst(range.endContainer, range.endOffset);
+      if (!start || !end) return false;
+      var startBlock = _doc.blocks[start.blockIndex];
+      var endBlock = _doc.blocks[end.blockIndex];
+      if (!startBlock || !endBlock) return false;
+      var lines = text.split("\n");
+
+      if (start.blockIndex === end.blockIndex) {
+        // 同一行内树 ⇒ 内联替换（保块类型）
+        var ctx = _extractSelectionMiddle(range);
+        if (ctx) return _replaceInlineSingle(ctx, lines);
+        // 同块跨段/跨项（quote/list）⇒ 走行粒度多块替换
+        if (startBlock.type !== "blockquote" && startBlock.type !== "list") return false;
+        var sSeg = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : -1;
+        var eSeg = (end.nodePath && end.nodePath.length) ? end.nodePath[0] : -1;
+        if (sSeg < 0 || eSeg <= sSeg) return false;
+      } else if (start.blockIndex > end.blockIndex) {
+        return false;
+      }
+      return _replaceMulti(start, end, startBlock, endBlock, lines);
+    }
+
+    /** 单块内联替换（同一 inline 树；ctx 来自 _extractSelectionMiddle）。 */
+    function _replaceInlineSingle(ctx, lines) {
+      var preCursor = cloneCursor(ctx.start);
+      if (lines.length === 1) {
+        var merged = mergeAdjacentInline(ctx.before.concat([A.text(lines[0])], ctx.after));
+        if (ctx.isList) ctx.block.items[ctx.itemIdx].children = merged;
+        else if (ctx.isQuote) ctx.block.children[ctx.quoteIdx].children = merged;
+        else ctx.block.children = merged;
+        var prefix = ctx.isList ? [ctx.itemIdx] : (ctx.isQuote ? [ctx.quoteIdx] : []);
+        var pastedEnd = renderedLenOfNodes(ctx.before) + lines[0].length;
+        var rel = renderedOffsetToPath(merged, pastedEnd);
+        if (!rel) { var lp = lastTextPath(merged); rel = lp ? { nodePath: lp.path, offset: lp.offset } : { nodePath: [], offset: 0 }; }
+        var cursor = { blockIndex: ctx.blockIndex, nodePath: prefix.concat(rel.nodePath || []), offset: rel.offset };
+        beginUndo("pasteReplace", preCursor, true);
+        var ok = commit(ctx.block, cursor);
+        if (ok) recordGroup("pasteReplace", cursor);
+        return ok;
+      }
+      // 多行：容器所在源码行 → 块序列
+      var blm = window.__blockLineMap || null;
+      var rng = blm && blm[ctx.blockIndex];
+      if (!rng) return false;
+      var startLine = rng.startLine, endLine = rng.endLine;
+      if (ctx.isList) { startLine = rng.startLine + ctx.itemIdx; endLine = startLine; }
+      else if (ctx.isQuote) { startLine = rng.startLine + ctx.quoteIdx; endLine = startLine; }
+      var blocks = [];
+      blocks.push(_blockLike(ctx.block, ctx.before.concat([A.text(lines[0])])));
+      if (lines.length > 2) blocks = blocks.concat(_parsePastedBlocks(lines.slice(1, lines.length - 1).join("\n")));
+      var tailInline = [A.text(lines[lines.length - 1])].concat(ctx.after);
+      blocks.push(_blockLike(ctx.block, tailInline));
+      var newLines = _blocksToSrcLines(blocks);
+      var tailIdx = ctx.blockIndex + blocks.length - 1;
+      var tailPrefix = (ctx.isList || ctx.isQuote) ? [0] : [];
+      var lastLineLen = lines[lines.length - 1].length;
+      var relT = renderedOffsetToPath(tailInline, lastLineLen);
+      var cursorT = { blockIndex: tailIdx, nodePath: tailPrefix.concat(relT ? relT.nodePath : []), offset: relT ? relT.offset : 0 };
+      return commitRange(startLine, endLine, newLines, cursorT, preCursor, "pasteReplace");
+    }
+
+    /** 跨块 / 同块跨段的多块替换（语义与 deleteSelectionMulti 对齐；**必须与它同步维护**）。 */
+    function _replaceMulti(start, end, startBlock, endBlock, lines) {
+      var preCursor = cloneCursor(start);
+      function inlineCtx(block, cursor) {
+        var path = cursor.nodePath || [];
+        if (block.type === "list") {
+          var ii = path.length ? path[0] : 0;
+          var item = block.items && block.items[ii];
+          if (!item) return null;
+          return { children: item.children || [], path: path.slice(1) };
+        }
+        if (block.type === "blockquote") {
+          var qi = path.length ? path[0] : 0;
+          var inner = block.children && block.children[qi];
+          if (!inner) return null;
+          return { children: inner.children || [], path: path.slice(1) };
+        }
+        return { children: block.children || [], path: path };
+      }
+      var sc = inlineCtx(startBlock, start);
+      var ec = inlineCtx(endBlock, end);
+      var sp = sc ? splitInlineAtEdge(sc.children, sc.path, start.offset) : null;
+      var ep = ec ? splitInlineAtEdge(ec.children, ec.path, end.offset) : null;
+      if (!sp || !ep) {
+        log("STYLE", "pasteReplace ABORT: split=null start=" + _fmtCursor(start) + " end=" + _fmtCursor(end));
+        return false;
+      }
+      // 校验（与 deleteSelectionMulti 同语义）：frontmatter 拒绝；原子块允许整块跨过
+      var delCounts = {};
+      for (var bi = start.blockIndex; bi <= end.blockIndex; bi++) {
+        var blk = _doc.blocks[bi];
+        if (!blk) return false;
+        if (blk.type === "frontmatter") {
+          log("STYLE", "pasteReplace ABORT: block " + bi + " type=frontmatter 不可删除（文档头）");
+          return false;
+        }
+        delCounts[blk.type] = (delCounts[blk.type] || 0) + 1;
+      }
+      var blocks = [];
+      if (lines.length === 1) {
+        var mergedOne = mergeAdjacentInline(sp.left.concat([A.text(lines[0])], ep.right));
+        blocks.push(_blockLike(startBlock, mergedOne));
+      } else {
+        blocks.push(_blockLike(startBlock, sp.left.concat([A.text(lines[0])])));
+        if (lines.length > 2) blocks = blocks.concat(_parsePastedBlocks(lines.slice(1, lines.length - 1).join("\n")));
+        blocks.push(_blockLike(endBlock, [A.text(lines[lines.length - 1])].concat(ep.right)));
+      }
+      var newLines = _blocksToSrcLines(blocks);
+
+      // 行区间（与 deleteSelectionMulti 同一套映射：引用块一段=一行；列表一项=一行）
+      var blm = window.__blockLineMap || null;
+      var startLine, endLine;
+      if (blm && blm[start.blockIndex] && blm[end.blockIndex]) {
+        startLine = blm[start.blockIndex].startLine + (start.listItemIndex || 0);
+        endLine = (endBlock.type === "list")
+          ? (blm[end.blockIndex].startLine + (end.listItemIndex || 0))
+          : blm[end.blockIndex].endLine;
+        if (startBlock.type === "blockquote") startLine = blm[start.blockIndex].startLine + ((start.nodePath && start.nodePath[0]) || 0);
+        if (endBlock.type === "blockquote") endLine = blm[end.blockIndex].startLine + ((end.nodePath && end.nodePath[0]) || 0);
+      } else {
+        var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
+        var endSrc = M.astToSrc(end.blockIndex, end.nodePath || [], end.offset);
+        if (!startSrc || !endSrc) return false;
+        startLine = startSrc.line;
+        endLine = endSrc.line;
+      }
+      if (startLine > endLine) return false;
+
+      // 光标：粘贴内容末尾
+      var tailIdx = start.blockIndex + blocks.length - 1;
+      var prefix = (startBlock.type === "list" || startBlock.type === "blockquote") ? [0] : [];
+      var cursor;
+      if (lines.length === 1) {
+        var joinedOne = mergeAdjacentInline(sp.left.concat([A.text(lines[0])], ep.right));
+        var offOne = renderedLenOfNodes(sp.left) + lines[0].length;
+        var relOne = renderedOffsetToPath(joinedOne, offOne);
+        cursor = { blockIndex: start.blockIndex, nodePath: prefix.concat(relOne ? relOne.nodePath : []), offset: relOne ? relOne.offset : 0 };
+      } else {
+        var tailInlineM = [A.text(lines[lines.length - 1])].concat(ep.right);
+        var relM = renderedOffsetToPath(tailInlineM, lines[lines.length - 1].length);
+        cursor = { blockIndex: tailIdx, nodePath: prefix.concat(relM ? relM.nodePath : []), offset: relM ? relM.offset : 0 };
+      }
+      log("STYLE", "pasteReplace blocks=" + (end.blockIndex - start.blockIndex + 1) +
+        " srcLines=[" + startLine + "," + endLine + "] lines=" + lines.length +
+        " newBlocks=" + blocks.length + " newSrc0=" + JSON.stringify(newLines[0]));
+      var okRep = commitRange(startLine, endLine, newLines, cursor, preCursor, "pasteReplace");
+      if (okRep) _notifyDeletionSummary(delCounts);
+      return okRep;
+    }
+
+    /**
      * ★ 2026-10-23（0.4.7 任务 4 / N4）：多级列表**升降级**。
      *
      * `dir = +1` 降级（Tab）：把当前项从所在列表移出，挂到「同级的前一项」的子列表末尾。
@@ -13167,6 +13388,8 @@
       applyStyle: applyStyle,
       getSelectionStyles: getSelectionStyles,
       deleteSelection: deleteSelection,
+      // stage5（task-83）：粘贴 = 替换选区（单行内联 / 多行三段式；一次 commitRange ⇒ 单撤销）
+      replaceSelectionWithText: replaceSelectionWithText,
       // 0.4.7 任务 4 / N4：多级列表升降级（dir=+1 降级 / -1 升级）
       indentListLevel: indentListLevel,
       beginUndoGroup: beginUndoGroup,
@@ -13318,6 +13541,21 @@
     if (!EditSync || typeof EditSync.insertText !== "function") {
       setStatus(T("cfg.clip.editorNotReady"));
       return;
+    }
+
+    // ★ stage5（task-83）：右键「粘贴」时预览区若有非折叠选区 ⇒ 同样按「替换选区」处理
+    //   （与 Ctrl+V 路径同一实现 ⇒ 行为一致，不出现两个入口两套语义）。
+    const selP = window.getSelection();
+    const pvP = $("#preview");
+    if (selP && !selP.isCollapsed && selP.rangeCount && pvP) {
+      const rP = selP.getRangeAt(0);
+      if (pvP.contains(rP.startContainer) && pvP.contains(rP.endContainer)) {
+        const okP = (typeof EditSync.replaceSelectionWithText === "function")
+          ? EditSync.replaceSelectionWithText(rP.cloneRange(), text) : false;
+        if (!okP) { setStatusError(T("cfg.clip.pasteReplaceFail"), T("cfg.clip.selFailDetail")); return; }
+        setStatus(T("cfg.clip.pasteReplaced"));
+        return;
+      }
     }
 
     const lines = String(text).replace(/\r\n?/g, "\n").split("\n");
@@ -13536,6 +13774,24 @@
       }
       const raw = clip.getData("text/plain");
       if (raw === null || raw === undefined) return;
+      // ★ stage5（task-83）：选区非折叠 ⇒ 粘贴 = **替换选区**（含跨块/同块跨段）。
+      //   必须先 preventDefault 再走 AST 管线：否则浏览器原生粘贴"只改 DOM 不改源码"
+      //   （E30 同族：下一次重渲回魂 / 源码与画面不一致）。失败给可见提示，绝不静默。
+      const selPaste = window.getSelection();
+      const rngPaste = selPaste && selPaste.rangeCount ? selPaste.getRangeAt(0) : null;
+      if (rngPaste && !rngPaste.collapsed &&
+          preview.contains(rngPaste.startContainer) && preview.contains(rngPaste.endContainer)) {
+        e.preventDefault();
+        const ES = window.MemoriaEditSync;
+        const okReplace = (ES && typeof ES.replaceSelectionWithText === "function")
+          ? ES.replaceSelectionWithText(rngPaste.cloneRange(), raw) : false;
+        if (!okReplace) {
+          setStatusError(T("cfg.clip.pasteReplaceFail"), T("cfg.clip.selFailDetail"));
+          return;
+        }
+        setStatus(T("cfg.clip.pasteReplaced"));
+        return;
+      }
       // 与右键「粘贴」一致：先从当前选区解析出 AST 光标锚点。
       // 解析不到（光标不在预览区 / 无法映射）则**不拦截**，退回浏览器原生粘贴——宁可有原生行为，也不吞掉用户的粘贴。
       if (!syncPreviewCursorForPaste()) return;

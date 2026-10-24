@@ -394,6 +394,8 @@
         blockNameMermaid: "diagram block",
         blockCount: "{name} x{n}",
         deletedSummary: "Deleted: {parts}",
+        pasteReplaceFail: "Cannot paste over this selection: it contains content that cannot be removed with a selection",
+        pasteReplaced: "Selection replaced",
       },
       assist: {
         ellipsisTop: "\u2026 above lines 1\u2013{to}",

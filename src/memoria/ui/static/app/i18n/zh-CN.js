@@ -394,6 +394,8 @@
         blockNameMermaid: "图示块",
         blockCount: "{name}×{n}",
         deletedSummary: "已删除：{parts}",
+        pasteReplaceFail: "无法粘贴替换该选区：选区包含不能随选区删除的内容",
+        pasteReplaced: "已替换选区",
       },
       assist: {
         ellipsisTop: "… 上文第 1–{to} 行",

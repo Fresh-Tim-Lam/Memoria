@@ -1035,14 +1035,19 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       rec.domOnlyChange = (postBody === preBody) &&
         (JSON.stringify(domToksAfterOp) !== JSON.stringify(domToksBefore || {}));
       if (cs.op === 'pasteReplace' && rec.pasteText) {
-        const pw = await cdp.evalJS(`window.__SEL.tokensOf(${JSON.stringify(rec.pasteText)})`);
-        rec.pastedVisibleInDom = Object.keys(pw).every((w) => !!domToksAfterOp[w]);
+        // 用**子串**判定而不是词集：粘贴尾部词可能与 after 首词拼接（"omega5echo"），
+        // 词集判定会误判为"不可见"；子串能正确覆盖这种情况。
+        rec.pastedVisibleImmediate = await cdp.evalJS(
+          `(function(){var p=document.getElementById('preview');var t=String(p&&p.innerText||'');var toks=window.__SEL.tokensOf(${JSON.stringify(rec.pasteText)});for(var k in toks){if(t.indexOf(k)<0)return false;}return true;})()`);
+        rec.domSample = await cdp.evalJS('(function(){var p=document.getElementById("preview");return p?String(p.innerText||"").slice(0,200):null;})()');
       }
       // stage5 专项证据（Lead 要求的两条必须实测）
       if (cs.op === 'pasteReplace') {
         rec.fmCount = await cdp.evalJS('window.__SEL.frontmatterCount()');
         rec.bodyStartsWithFm = await cdp.evalJS('window.__SEL.bodyStartsWithFrontmatter()');
-        rec.docBlocks = await cdp.evalJS('(window.state.doc && window.state.doc.blocks || []).length');
+        rec.docStillParses = await cdp.evalJS(
+          `(function(){try{var d=window.state&&window.state.doc;var m=window.__blockLineMap;
+             return !!(d && typeof d.body==='string' && d.body.length>0 && Array.isArray(m) && m.length>0);}catch(e){return false;}})()`);
       }
 
       // ── 断言 1：源码词集（复制 = 必须一字不动；其余 = 选中删净 + 未选保留 + 无重复残留） ──
@@ -1080,7 +1085,7 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
           //   ③ 粘贴内容必须真的出现在 DOM 里（不是只写源码没渲染）
           rec.checks.noNativeDomOnly = !rec.domOnlyChange;
           if (rec.fmCount != null) rec.checks.noFrontmatter = rec.fmCount === 0;
-          if (rec.docBlocks != null) rec.checks.docStillParses = rec.docBlocks > 0;
+          if (rec.docStillParses != null) rec.checks.docStillParses = !!rec.docStillParses;
           if (rec.pastedVisibleInDom != null) rec.checks.pastedVisible = rec.pastedVisibleInDom;
         }
       }
@@ -1100,6 +1105,12 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
         const ghost = Object.keys(cov.deleted).filter((w) => domToks[w] && !SYNTAX_WORDS.has(w));
         rec.checks.domNoGhost = ghost.length === 0;
         rec.ghost = ghost.slice(0, 12);
+        // 粘贴内容必须在**重渲后的 DOM** 里可见（而不是只写进源码）
+        if (cs.op === 'pasteReplace' && rec.pasteText) {
+          rec.pastedVisibleInDom = await cdp.evalJS(
+            `(function(){var p=document.getElementById('preview');var t=String(p&&p.innerText||'');var toks=window.__SEL.tokensOf(${JSON.stringify(rec.pasteText)});for(var k in toks){if(t.indexOf(k)<0)return false;}return true;})()`);
+          rec.checks.pastedVisible = !!rec.pastedVisibleInDom;
+        }
       }
       rec.checks.renderStable = bodyAfterRender === postBody;
       rec.bodyAfterRender = bodyAfterRender;
