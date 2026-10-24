@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import threading
 from collections import defaultdict
 from datetime import datetime, timezone
 
@@ -204,6 +205,8 @@ def save_lexical_index(kb_path: str, index: dict) -> str:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(index, f, ensure_ascii=False, indent=2)
+    # task-69 P0-a：写盘即失效（进程内缓存），避免"重建后仍读到旧对象"
+    invalidate_lexical_index(kb_path)
     return path
 
 
@@ -231,11 +234,119 @@ def rebuild_lexical_index(kb_path: str) -> dict:
     return index
 
 
+# ── 进程内索引缓存（task-69 P0-a）─────────────────────────────────────────────
+#
+# 背景：`ensure_lexical_index` 原先每次调用都 `json.load` 磁盘上的 4.4MB
+# `.memoria/cache/lexical/index.json`（单次 ~35–39ms）。启动时
+# `suggest_group_labels` 对每个图谱分组复用同一份索引（293 组），
+# 逐组重解析 ⇒ ~11.4s 全在关键路径上。
+#
+# 缓存身份 = (st_mtime_ns, st_size)：文件被重建/替换后自动失效；
+# 另外 `save_lexical_index` 写盘后**显式失效**，覆盖同一 mtime 粒度内的快速重写。
+#
+# 返回策略：`ensure_lexical_index` 返回**顶层字典的浅拷贝**（O(顶层键数)，~µs 级），
+# 调用方无法通过增删顶层键污染缓存；嵌套值（records/inverted）按只读约定共享。
+# 已核对全部仓内调用方（search_lexical / search_kernel / embedding_provider /
+# rerank_provider）均为只读，不原地修改返回的索引。
+
+_INDEX_CACHE: dict[str, tuple[tuple[int, int], dict]] = {}
+_INDEX_CACHE_LOCK = threading.Lock()
+_PATH_LOCKS: dict[str, threading.Lock] = {}
+_PATH_LOCKS_LOCK = threading.Lock()
+# 解析后的索引常驻内存（4.4MB JSON ⇒ Python 对象约数十 MB）；
+# 只保留最近使用的少数几个库，避免多库切换时无限增长。
+_CACHE_MAX_ENTRIES = 2
+
+
+def _cache_key(kb_path: str) -> str:
+    return os.path.normcase(os.path.abspath(kb_path or "."))
+
+
+def _index_file_identity(path: str) -> tuple[int, int] | None:
+    """磁盘索引身份 (mtime_ns, size)；文件不存在返回 None。"""
+    try:
+        st = os.stat(path)
+    except OSError:
+        return None
+    mtime_ns = int(getattr(st, "st_mtime_ns", 0)) or int(st.st_mtime * 1_000_000_000)
+    return (mtime_ns, int(st.st_size))
+
+
+def _path_lock(key: str) -> threading.Lock:
+    with _PATH_LOCKS_LOCK:
+        lock = _PATH_LOCKS.get(key)
+        if lock is None:
+            lock = threading.Lock()
+            _PATH_LOCKS[key] = lock
+        return lock
+
+
+def _cache_get(key: str, ident: tuple[int, int]) -> dict | None:
+    with _INDEX_CACHE_LOCK:
+        entry = _INDEX_CACHE.get(key)
+        if entry is None:
+            return None
+        if entry[0] != ident:
+            _INDEX_CACHE.pop(key, None)  # 身份不符：磁盘已变，丢弃
+            return None
+        return entry[1]
+
+
+def _cache_put(key: str, ident: tuple[int, int], index: dict) -> None:
+    with _INDEX_CACHE_LOCK:
+        _INDEX_CACHE.pop(key, None)  # 重新插入以更新 LRU 顺序
+        _INDEX_CACHE[key] = (ident, index)
+        while len(_INDEX_CACHE) > _CACHE_MAX_ENTRIES:
+            _INDEX_CACHE.pop(next(iter(_INDEX_CACHE)), None)
+
+
+def invalidate_lexical_index(kb_path: str | None = None) -> None:
+    """丢弃进程内索引缓存；`kb_path=None` 时清空全部。"""
+    with _INDEX_CACHE_LOCK:
+        if kb_path is None:
+            _INDEX_CACHE.clear()
+        else:
+            _INDEX_CACHE.pop(_cache_key(kb_path), None)
+
+
+def _load_into_cache(kb_path: str, path: str, key: str) -> dict | None:
+    """加载磁盘索引并填充缓存；期间文件变动则本次不缓存。"""
+    before = _index_file_identity(path)
+    data = load_lexical_index(kb_path)
+    if data is None:
+        return None
+    after = _index_file_identity(path)
+    if before is not None and before == after:
+        _cache_put(key, after, data)
+    return data
+
+
 def ensure_lexical_index(kb_path: str) -> dict:
-    cached = load_lexical_index(kb_path)
-    if cached is not None:
-        return cached
-    return rebuild_lexical_index(kb_path)
+    """取词法索引：优先进程内缓存，其次磁盘缓存，最后重建。"""
+    key = _cache_key(kb_path)
+    path = lexical_cache_path(kb_path)
+
+    ident = _index_file_identity(path)
+    if ident is not None:
+        cached = _cache_get(key, ident)
+        if cached is not None:
+            return dict(cached)
+
+    # 未命中：同路径串行（避免并发重复解析/重复重建），不同库互不阻塞
+    with _path_lock(key):
+        ident = _index_file_identity(path)
+        if ident is not None:
+            cached = _cache_get(key, ident)  # 等锁期间可能已被别的线程填好
+            if cached is not None:
+                return dict(cached)
+        loaded = _load_into_cache(kb_path, path, key)
+        if loaded is not None:
+            return dict(loaded)
+        index = rebuild_lexical_index(kb_path)
+        ident = _index_file_identity(path)
+        if ident is not None:
+            _cache_put(key, ident, index)
+        return dict(index)
 
 
 def _score_record(rec: dict, q_lower: str) -> tuple[float, list[str]] | None:
