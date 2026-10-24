@@ -12796,26 +12796,51 @@
      * 跨 block 删除选区：保留首块选区前的内容 + 末块选区后的内容，
      * 合并为一个 block（沿用首块类型），中间的 block（含空行）整段删除。
      * 整段作为单个撤销单元。
+     *
+     * ★ 2026-10-24（task-79 阶段3）：**引用块跨段 / 同块内跨 item 也被接住**。
+     *   背景：`_extractSelectionMiddle()` 对「跨引用段」「跨 list item」返回 null ⇒ 走到这里；
+     *   而这里原来只接受 `start.blockIndex < end.blockIndex`，同一块内跨段直接 return false
+     *   ⇒ 选区落在同一引用块的两段 / 同一列表的两项时，Delete 静默无效。
+     *   现在按「段/项 = 源码行」的**块内粒度**映射：
+     *     · quote：parser 逐行产出 `AST.paragraph`（block.prefixes 等长）⇒ 段索引 = 行偏移；
+     *     · list ：每项一行（与既有 `listItemIndex` 行定位同口径）⇒ 项索引 = 行偏移。
      */
     function deleteSelectionMulti(range) {
       var start = M.domToAst(range.startContainer, range.startOffset);
       var end = M.domToAst(range.endContainer, range.endOffset);
-      if (!start || !end || start.blockIndex >= end.blockIndex) return false;
+      if (!start || !end) return false;
+      var startBlock0 = _doc.blocks[start.blockIndex];
+      var endBlock0 = _doc.blocks[end.blockIndex];
+      if (!startBlock0 || !endBlock0) return false;
+
+      // 同一 block 内跨「段/项」：只有 blockquote / list 是"多段容器"，其它类型同块 = 同一 inline 树
+      var sameBlockSpan = false;
+      if (start.blockIndex === end.blockIndex) {
+        var sSeg = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : -1;
+        var eSeg = (end.nodePath && end.nodePath.length) ? end.nodePath[0] : -1;
+        if (startBlock0.type === "blockquote" || startBlock0.type === "list") {
+          if (sSeg < 0 || eSeg <= sSeg) return false;
+          sameBlockSpan = true;
+        } else {
+          return false;
+        }
+      } else if (start.blockIndex >= end.blockIndex) {
+        return false;
+      }
 
       // 校验范围内所有 block 均可编辑
       //   list  ：支持（按 item 定位到行，前后未被选中的 item 会保留）
-      //   quote ：仍不支持——一个引用块含多个段落，而 block→行映射只到"整块"粒度，
-      //           无法保证末段之后的内容不被误删
+      //   quote ：支持（按内部段落索引定位到行；stage3 起）
       for (var bi = start.blockIndex; bi <= end.blockIndex; bi++) {
         var blk = _doc.blocks[bi];
         var why = !blk ? ("block " + bi + " 缺失")
           : NON_EDITABLE[blk.type] ? ("block " + bi + " type=" + blk.type + " 不可编辑")
-            : (blk.type === "blockquote" ? ("block " + bi + " type=blockquote 暂不支持跨块") : null);
+            : null;
         if (why) { log("STYLE", "deleteMulti ABORT: " + why); return false; }
       }
 
-      var startBlock = _doc.blocks[start.blockIndex];
-      var endBlock = _doc.blocks[end.blockIndex];
+      var startBlock = startBlock0;
+      var endBlock = endBlock0;
       var preCursor = cloneCursor(start);
 
       /**
@@ -12853,13 +12878,17 @@
       var after = ep.right;
       var joined = mergeAdjacentInline(before.concat(after));
 
-      // 结果 block 沿用首块类型（heading 保留级别；列表保留列表形态，item 前缀 `- ` 不丢）；
+      // 结果 block 沿用首块类型（heading 保留级别；列表保留列表形态，item 前缀 `- ` 不丢；
+      // 引用块保留为引用块，前缀由 source-gen 默认写 `> `）；
       // 全部删空则退化为空行
       var newBlock;
       if (startBlock.type === "list" && before.length) {
         newBlock = A.list(startBlock.ordered, [A.listItem(joined)]);
       } else if (startBlock.type === "heading") {
         newBlock = A.heading(startBlock.level, joined);
+      } else if (startBlock.type === "blockquote") {
+        // stage3：合并结果留在引用块内（与用户直觉一致：删除后剩余文字仍在原引用里）
+        newBlock = A.blockquote([A.paragraph(joined)]);
       } else {
         newBlock = A.paragraph(joined);
       }
@@ -12878,6 +12907,15 @@
         endLine = (endBlock.type === "list")
           ? (blm[end.blockIndex].startLine + (end.listItemIndex || 0))
           : blm[end.blockIndex].endLine;
+        // ★ stage3：引用块「一段 = 一行」（parser 逐行产出 paragraph，prefixes 等长）
+        //   ⇒ 段索引 nodePath[0] 就是块内行偏移。没有这条映射时只能整块粒度删除，
+        //   会把末段之后未被选中的引用内容一起删掉。
+        if (startBlock.type === "blockquote") {
+          startLine = blm[start.blockIndex].startLine + ((start.nodePath && start.nodePath[0]) || 0);
+        }
+        if (endBlock.type === "blockquote") {
+          endLine = blm[end.blockIndex].startLine + ((end.nodePath && end.nodePath[0]) || 0);
+        }
       } else {
         var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
         var endSrc = M.astToSrc(end.blockIndex, end.nodePath || [], end.offset);
@@ -12885,9 +12923,12 @@
         startLine = startSrc.line;
         endLine = endSrc.line;
       }
+      if (startLine > endLine) return false;
 
-      // 新光标：合并处（before 末尾）。首块为列表时合并结果只剩一个 item，路径需带 item 前缀
-      var cursorPrefix = (startBlock.type === "list" && before.length) ? [0] : [];
+      // 新光标：合并处（before 末尾）。首块为列表/引用时合并结果只剩一个 item / 一个内部段落，
+      // 路径需带 item / 段落前缀
+      var cursorPrefix = (startBlock.type === "list" && before.length) ? [0]
+        : (startBlock.type === "blockquote" ? [0] : []);
       var beforeLen = renderedLenOfNodes(before);
       var cursorRel = joined.length ? renderedOffsetToPath(joined, beforeLen) : null;
       var newCursor = cursorRel
