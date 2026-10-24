@@ -39,6 +39,7 @@
 |---|---|---|---|
 | 1.1 | **先建任务，再 spawn**（任务存在且 `owner` 已留给该成员） | `dispatch_release::H1` | WARN「派发了但任务板无 owner」 |
 | 1.2 | 该任务的 `writeScopes` **必须显式声明**，且与所有存活成员**无交集** | `write_scope`（advisory→spawn 前置） | 重叠 ⇒ **排队，不许并行** |
+| **1.2b** | **写域必须写到产物级**：具体文件或**任务专属子目录**。<br>**共享产出根**（`artifacts/agent/verify`、`docs/design`、`team/`、`scripts/benchmark/`）**不得单独作为 writeScope**，<br>除非任务确实要改该根下任意文件（此时写明理由）。<br>**理由**（治理 skill 的「写域到产物级」）：共享根 vs 其子路径会产生**假重叠**；<br>实测 11 条 write_scope WARN 里 **9 条是假重叠**，会训练大家忽略 WARN（lessons L1.2 假红成本）。 | `write_scope`（分级后） | 假重叠 ⇒ INFO；同文件/同子目录 ⇒ WARN |
 | 1.3 | 选模型：**默认 `deepseek-flash`**；只有需要长链推理/契约裁决才用 `v4-pro`，且必须在回报里说明理由 | 人工 | — |
 | **1.3b** | **选 `mode`（四档，见下）—— 不许不选**。不传 `mode` 会被静默默认为 `standard`，等于"没做决策" | `mode_policy`（待实现） | WARN「未做模式决策」 |
 | 1.4 | `context`：**默认 `fresh`**。只有"接续我自己未完成的上下文"才用 `fork` | — | — |
@@ -61,7 +62,8 @@ L448: const mode = args.mode ?? 'standard'      // ← 不传 = 静默默认
 | `deep` | **high** | `deepModel`（本部署实测 = v4-pro） | 契约裁决 / 架构设计 / 等价性判断 / 高风险评审 |
 | `creator` | 默认 | 默认 + creator preset | **改 DSH 插件 / bundle / preset**（唯一能做的模式） |
 
-**强制规则**：`mode` 必须**显式传**。理由 —— 不传就是 `standard`（源码 `args.mode ?? 'standard'`），
+**强制规则**：`mode` 必须**显式传**。确实无法判断时用 `--mode-explicit false` 显式留下「未决定」痕迹
+（该状态**合法**，机检应单列 `WARN「显式未决定」`，**不得**与「历史记录缺失」混为一谈）。理由 —— 不传就是 `standard`（源码 `args.mode ?? 'standard'`），
 日志上「忘了想」与「决定用 standard」完全无法区分。
 
 **两条铁律**：
@@ -170,6 +172,8 @@ S3. 任何"看起来成功其实没做"的路径，修法是**让失败可见**�
 **规范的价值不在于"我会读它"，而在于"我读不读都得照做"。**
 
 ---
+
+| 5.4 | **机检工具本身必须确定性**：同输入连跑两次，除 `generatedAt` 类时间戳外**逐字节一致**。<br>非确定性的门禁 ⇒ 所有「全绿」结论不可复现 ⇒ 等于没有门禁。<br>实现：`team_audit.py --determinism`（子进程连跑两次、置空时间戳、比对字节）。 | `--determinism`（待实现，SF-014） |
 
 ## 6. 要做一个"决策"时（记录义务）
 

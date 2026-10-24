@@ -254,3 +254,17 @@ task-62/65/66/67/69/76/77/80/83/84 —— 与 task-97 完全无关
 **修法（task-105）**：插件契约版本常量 + 项目侧 `team/plugin-contract.json` 声明 +
 **工具响应内 `contractNotice`**（missing/outdated/ahead/ok 四态，ok 不刷屏）+ 落后 2 大版本硬阻断。
 **原则**：**通知要放在"必然被看到"的位置**（工具返回值），不是 CHANGELOG/日志。
+
+### L9.6 `git add <目录>` 会吞掉该目录下所有未跟踪文件
+**事故（2026-10-24，未推送前发现）**：归档 12 个探针时执行 `git add scripts/benchmark/`，
+结果把 **139 个未跟踪文件**（`_t72_*`/`perf_*`/`selcol_*` 探针 + `results/` 下的测量产物）
+一并 staged 进提交，提交从 13 个文件膨胀到 152 个。
+**判法**：`git add` 只加**明确列举的路径**；加目录前先 `git status --short <dir>` 看有多少 `??`。
+**提交前必查**：`git show --name-only --format="" HEAD` 逐个确认是"我这次要提交的"。
+**修法**：`git rm --cached` + `git commit --amend`（未推送时安全）；已推送则只能新增回滚提交且要披露。
+
+### L9.7 门禁工具本身必须确定性
+**规则**：同输入连跑两次，除时间戳外逐字节一致（治理 skill 的「null sequential build 自检」）。
+**为什么**：非确定性的门禁 ⇒ 这次绿下次红，所有「全绿」结论都不复现 ⇒ 等于没有门禁。
+**实测（2026-10-24）**：`team_audit.py --json` 连跑两次，sha 不同但差异**仅** `generatedAt`
+⇒ 确定性成立。**如果差异出现在 finding 内容上，必须先修工具，再谈产品。**
