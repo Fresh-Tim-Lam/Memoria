@@ -57,7 +57,8 @@
     python scripts/agent/team_audit.py            # 人类可读，FAIL⇒退出码 1
     python scripts/agent/team_audit.py --json     # 机器可读
     python scripts/agent/team_audit.py --strict   # WARN 也计入退出码
-    python scripts/agent/team_audit.py --selftest # 自测：必须能红（三项）
+    python scripts/agent/team_audit.py --selftest # 自测：必须能红（含每个新检查的必红 fixture）
+    python scripts/agent/team_audit.py --determinism  # §5.4：连跑两次，除 generatedAt 外逐字节一致
 
 证据口径
 --------
@@ -143,6 +144,8 @@ STEWARD_STANDARDS = (
 )
 STEWARD_FINDING_DISPOSITIONS = ("open", "fixed", "dismissed", "mechanized", "proposal")
 STEWARD_OPEN_WARN_DAYS = 14
+# lead-dispatch-rules §1.2b（task-109 新增）：共享产出根 —— 根 vs 其子路径只报 INFO（假重叠）
+SHARED_OUTPUT_ROOTS = ("artifacts/agent/verify", "docs/design", "team", "scripts/benchmark")
 
 # agents.json 合法的角色状态（standby 是本轮新增：领域已登记但当前无活，不计活性）
 VALID_ROLE_STATUS = ("active", "standby", "retired-in-dsh")
@@ -613,6 +616,25 @@ def scopes_overlap(a: str, b: str) -> str | None:
     return None
 
 
+def classify_scope_overlap(a: str, b: str) -> tuple[str, str] | None:
+    """按 lead-dispatch-rules §1.2b 分级返回 (severity, overlap)；无重叠返回 None。
+
+    分级理由（条款）：共享产出根（如 `artifacts/agent/verify`）下各任务默认写自己的子目录，
+    因此「共享根 vs 其子路径」**不证明冲突**（假重叠 ⇒ INFO，避免训练大家忽略 WARN）；
+    同文件 / 同子目录 / 非共享根的父目录重叠 ⇒ 仍按 WARN（可能存在真冲突，需排队）。
+    """
+    overlap = scopes_overlap(a, b)
+    if not overlap:
+        return None
+    na, nb = _norm_scope(a), _norm_scope(b)
+    for root in SHARED_OUTPUT_ROOTS:
+        if na == root and nb.startswith(root + "/"):
+            return INFO, overlap
+        if nb == root and na.startswith(root + "/"):
+            return INFO, overlap
+    return WARN, overlap
+
+
 def check_write_scopes(ctx: AuditContext, data: dict | None) -> None:
     check = "write_scope"
     if not data:
@@ -635,6 +657,7 @@ def check_write_scopes(ctx: AuditContext, data: dict | None) -> None:
                 f"⇒ 覆盖不完整（缺的 {len(active) - len(with_scopes)} 条无法参与冲突判定）",
                 f"{ctx.rel(ctx.snapshot_path)}:tasks[].writeScopes 部分缺失")
     conflicts = 0
+    advisories = 0
     for i in range(len(active)):
         for j in range(i + 1, len(active)):
             t1, t2 = active[i], active[j]
@@ -642,23 +665,34 @@ def check_write_scopes(ctx: AuditContext, data: dict | None) -> None:
                 continue  # 同一 owner 内串行是它的自由
             for s1 in t1.get("writeScopes") or []:
                 for s2 in t2.get("writeScopes") or []:
-                    overlap = scopes_overlap(str(s1), str(s2))
-                    if overlap:
-                        conflicts += 1
-                        ctx.add(check, WARN,
-                                f"未完成任务 {t1.get('id')} 与 {t2.get('id')} 写域重叠：{overlap}"
-                                f"（串行化风险，advisory）",
-                                f"{ctx.rel(ctx.snapshot_path)}:tasks[{t1.get('id')}].writeScopes "
+                    graded = classify_scope_overlap(str(s1), str(s2))
+                    if not graded:
+                        continue
+                    severity, overlap = graded
+                    pair = (f"{t1.get('id')} 与 {t2.get('id')} 写域重叠：{overlap}"
+                            f"（{'串行化风险，advisory' if severity == WARN else '共享产出根 vs 子路径：不同子目录不证明冲突（§1.2b）'}）")
+                    evidence = (f"{ctx.rel(ctx.snapshot_path)}:tasks[{t1.get('id')}].writeScopes "
                                 f"∩ tasks[{t2.get('id')}].writeScopes = {overlap}")
+                    if severity == WARN:
+                        conflicts += 1
+                    else:
+                        advisories += 1
+                    ctx.add(check, severity, pair, evidence)
     if conflicts == 0:
         # 只有在「输入完整」时，「无重叠」才是可采信的结论
         if active and len(with_scopes) == len(active):
             ctx.add(check, INFO,
-                    f"未完成任务 {len(active)} 条（写域字段齐全），两两写域无重叠",
+                    f"未完成任务 {len(active)} 条（写域字段齐全），两两写域无 WARN 级重叠"
+                    + (f"（另有 {advisories} 条共享根子路径 advisory，§1.2b 判为 INFO）" if advisories else ""),
                     f"{ctx.rel(ctx.snapshot_path)}:tasks")
         elif not active:
             ctx.add(check, INFO, "无未完成任务，写域检查无输入（非结论）",
                     f"{ctx.rel(ctx.snapshot_path)}:tasks")
+    else:
+        ctx.add(check, INFO,
+                f"write_scope 分级统计（§1.2b）：WARN 级 {conflicts} 条（真重叠/同子目录），"
+                f"INFO 级 {advisories} 条（共享产出根 vs 子路径，假重叠）",
+                f"{ctx.rel(ctx.snapshot_path)}:tasks[].writeScopes")
 
 
 # ---------------------------------------------------------------------------
@@ -1983,11 +2017,11 @@ def check_mode_policy(ctx: AuditContext) -> None:
     """spawn 是否显式做了模式决策（AGENTS.md §0.5 L9）。
 
     判据：扫 dispatch-log 的 phase=spawn 记录：
-      - 无 `mode` 字段 / `modeExplicit=false` ⇒ WARN「静默默认 standard（等于没做决策）」；
-      - mode 不在 DSH 四档 ⇒ WARN；
+      - 无 `mode` 字段（且非显式未决定）⇒ WARN「无法判定（静默默认 standard）」；
+      - `modeExplicit=false`（显式未决定，§1.3b 合法留痕）⇒ 单列 WARN「显式未决定」，不与历史缺失混淆；
+      - mode 不在 DSH 四档 ⇒ WARN；有 mode 但缺 modeExplicit ⇒ WARN「无法证明显式决策」；
       - 整份日志都没有 mode 字段 ⇒ 显式报「无法判定 + checked_count」，**不静默判绿**（lessons L1.1）。
-    dispatch-log 当前尚未记录 mode（已实测 12 条 spawn 全缺）——本检查先暴露这个缺口，
-    等 Lead 在 dispatch_log.py 增加 --mode 后自动转为可判定。
+    dispatch-log 的历史 14 条 spawn 全缺 mode（append-only 不改写）——本检查如实报「不可判定」。
     """
     check = "mode_policy"
     path = ctx.dispatch_path
@@ -2018,7 +2052,10 @@ def check_mode_policy(ctx: AuditContext) -> None:
     checked = len(in_window)
     missing_mode = [(row, stamp) for row, stamp in in_window if not str(row.get("mode") or "").strip()]
     with_mode = [(row, stamp) for row, stamp in in_window if str(row.get("mode") or "").strip()]
-    if not with_mode:
+    # §1.3b（task-109）：显式未决定（modeExplicit=false）是**合法留痕**，与「历史记录缺 mode」区分开报
+    explicit_undecided = [(row, stamp) for row, stamp in missing_mode if row.get("modeExplicit") is False]
+    true_missing = [(row, stamp) for row, stamp in missing_mode if row.get("modeExplicit") is not False]
+    if not with_mode and not explicit_undecided:
         ctx.add(check, WARN,
                 f"{checked} 条 spawn 记录**全部缺 mode 字段**（dispatch-log 尚未记录模式）⇒ "
                 f"无法判定是否做过模式决策，**不静默判绿**。修法：dispatch_log.py 增加 --mode 参数，"
@@ -2029,14 +2066,21 @@ def check_mode_policy(ctx: AuditContext) -> None:
 
     problems = 0
     missing_explicit = 0
-    # 有 mode 的记录里，仍可能有另一部分记录完全没记 mode —— 必须一并暴露（否则又是一处假绿）
-    if missing_mode:
+    if true_missing:
         problems += 1
-        targets = ", ".join(str(r.get("target")) for r, _ in missing_mode[:6])
+        targets = ", ".join(str(r.get("target")) for r, _ in true_missing[:6])
         ctx.add(check, WARN,
-                f"{len(missing_mode)}/{checked} 条 spawn 记录缺 mode 字段（{targets}）⇒ 无法判定是否做了"
+                f"{len(true_missing)}/{checked} 条 spawn 记录缺 mode 字段（{targets}）⇒ 无法判定是否做了"
                 f"模式决策（静默默认 standard；checked_count={checked}）",
                 f"{ctx.rel(path)}:phase=spawn 缺 mode")
+    if explicit_undecided:
+        problems += 1
+        targets = ", ".join(str(r.get("target")) for r, _ in explicit_undecided[:6])
+        ctx.add(check, WARN,
+                f"{len(explicit_undecided)}/{checked} 条 spawn 记录为**显式未决定**（modeExplicit=false，"
+                f"合法留痕：{targets}）—— 与「历史缺 mode」不同，这是**有意**没选模式；"
+                f"按 L9 仍应尽量选（mechanical 成本最低）",
+                f"{ctx.rel(path)}:phase=spawn modeExplicit=false")
     for row, _stamp in with_mode:
         mode = str(row.get("mode")).strip()
         explicit = row.get("modeExplicit")
@@ -2070,7 +2114,7 @@ def check_mode_policy(ctx: AuditContext) -> None:
     else:
         ctx.add(check, INFO,
                 f"mode_policy 统计：checked_count={checked}，with_mode={len(with_mode)}，"
-                f"缺显式标记={missing_explicit}",
+                f"显式未决定={len(explicit_undecided)}，缺显式标记={missing_explicit}",
                 f"{ctx.rel(path)}:phase=spawn")
 
 
@@ -3008,6 +3052,66 @@ def selftest() -> int:
             failures.append("steward_self_audit 绿 fixture 误报：" + "; ".join(
                 f"{f.check}:{f.message}" for f in sa_green_findings if f.severity in (FAIL, WARN)))
 
+        def expect_true(name: str, condition: bool) -> None:
+            if not condition:
+                failures.append(name)
+
+        # (d) determinism（§5.4）：generatedAt 不同 ⇒ 归一化后一致；finding 内容不同 ⇒ 必红
+        det_a = {"generatedAt": "2026-01-01T00:00:00", "summary": {"FAIL": 0},
+                 "findings": [{"check": "x", "severity": "WARN", "message": "m"}]}
+        det_b = json.loads(json.dumps(det_a))
+        det_b["generatedAt"] = "2026-01-02T00:00:00"
+        det_c = json.loads(json.dumps(det_a))
+        det_c["findings"][0]["message"] = "changed"
+        expect_true("determinism-normalizes-generatedAt",
+               _normalize_audit_payload(det_a) == _normalize_audit_payload(det_b))
+        expect_true("determinism-detects-content-diff",
+               _normalize_audit_payload(det_a) != _normalize_audit_payload(det_c))
+        expect_true("determinism-locates-divergence",
+               (_first_audit_divergence(det_a, det_c) or {}).get("field") == "findings[0]")
+        expect_true("determinism-sha-stable",
+               hashlib.sha256(_normalize_audit_payload(det_a)).hexdigest()
+               == hashlib.sha256(_normalize_audit_payload(det_b)).hexdigest())
+
+        # (e) write_scope 分级（§1.2b）：共享根 vs 子路径 INFO；同文件 WARN
+        scope_ctx = _ctx(tmp / "scope-fixture")
+        scope_data = {"tasks": [
+            {"id": "t-a", "status": "in_progress", "owner": "alpha",
+             "writeScopes": ["artifacts/agent/verify"]},
+            {"id": "t-b", "status": "pending", "owner": "beta",
+             "writeScopes": ["artifacts/agent/verify/steward"]},
+            {"id": "t-c", "status": "pending", "owner": "gamma", "writeScopes": ["src/x.py"]},
+            {"id": "t-d", "status": "pending", "owner": "delta", "writeScopes": ["src/x.py"]},
+        ]}
+        scope_findings = _isolated(check_write_scopes, scope_ctx, scope_data)
+        expect_true("write-scope-shared-root-is-info", any(
+            f.severity == INFO and "共享产出根" in f.message for f in scope_findings))
+        expect_true("write-scope-same-file-is-warn", any(
+            f.severity == WARN and "src/x.py" in f.message for f in scope_findings))
+        expect_true("write-scope-fake-overlap-not-warn", not any(
+            f.severity == WARN and "artifacts/agent/verify/steward" in f.message
+            for f in scope_findings))
+
+        # (f) mode_policy 三分（§1.3b）：缺字段 / 显式未决定 / 带 mode 且显式
+        mode_log = tmp / "mode-fixture" / "dispatch-log.jsonl"
+        _write(mode_log, "\n".join(json.dumps(row, ensure_ascii=False) for row in [
+            {"ts": now.isoformat(timespec="seconds"), "actor": "lead", "phase": "spawn",
+             "target": "legacy"},
+            {"ts": now.isoformat(timespec="seconds"), "actor": "lead", "phase": "spawn",
+             "target": "undecided", "modeExplicit": False},
+            {"ts": now.isoformat(timespec="seconds"), "actor": "lead", "phase": "spawn",
+             "target": "good", "mode": "mechanical", "modeExplicit": True},
+        ]) + "\n")
+        mode_ctx = _ctx(tmp / "mode-fixture")
+        mode_ctx.dispatch_path = mode_log
+        mode_findings = _isolated(check_mode_policy, mode_ctx)
+        expect_true("mode-policy-missing-mode-warn", any(
+            f.severity == WARN and "缺 mode 字段" in f.message for f in mode_findings))
+        expect_true("mode-policy-explicit-undecided-warn", any(
+            f.severity == WARN and "显式未决定" in f.message for f in mode_findings))
+        expect_true("mode-policy-good-row-not-warned", not any(
+            f.severity == WARN and "good" in f.message for f in mode_findings))
+
         if failures:
             print("SELFTEST FAIL")
             for msg in failures:
@@ -3018,7 +3122,9 @@ def selftest() -> int:
               "commit_hygiene 在非 git fixture 上 INFO 跳过，绿 fixture 全绿；"
               "task-100 四类新检查各自红 fixture 必红、绿 fixture 不误报、且都已注册进 run_checks；"
               "task-103 三类 P1（decision_trail / model_policy / steward_self_audit）各自红 fixture 必红、"
-              "绿 fixture 不误报、且都已注册进 run_checks。")
+              "绿 fixture 不误报、且都已注册进 run_checks；"
+              "task-109 三处收口（determinism 归一化/差异定位、write_scope 分级「共享根 vs 子路径=INFO」、"
+              "mode_policy 区分「显式未决定」）各自必红/必绿 fixture 通过。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
@@ -3027,6 +3133,69 @@ def selftest() -> int:
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
+def _audit_payload(repo: Path) -> dict:
+    """以子进程跑一次 `--json` 审计（determinism 只用；避免与本进程状态耦合）。"""
+    proc = subprocess.run(
+        [sys.executable, str(Path(__file__).resolve()), "--repo", str(repo), "--json"],
+        capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    if proc.returncode not in (0, 1):
+        raise RuntimeError(f"子进程审计异常退出 rc={proc.returncode}: {proc.stderr[-400:]}")
+    return json.loads(proc.stdout)
+
+
+def _normalize_audit_payload(payload: dict) -> bytes:
+    """把时间戳类字段归一化后序列化（§5.4：除 generatedAt 外应逐字节一致）。"""
+    clone = json.loads(json.dumps(payload, ensure_ascii=False))
+    clone["generatedAt"] = "<normalized>"
+    return json.dumps(clone, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
+def _first_audit_divergence(first: dict, second: dict) -> dict | None:
+    f1 = first.get("findings") or []
+    f2 = second.get("findings") or []
+    for index, (left, right) in enumerate(zip(f1, f2)):
+        if left != right:
+            return {"field": f"findings[{index}]", "run1": left, "run2": right}
+    if len(f1) != len(f2):
+        return {"field": "findings.length", "run1": len(f1), "run2": len(f2)}
+    for key in sorted(set(first) | set(second)):
+        if key == "generatedAt":
+            continue
+        if first.get(key) != second.get(key):
+            return {"field": key, "run1": first.get(key), "run2": second.get(key)}
+    return None
+
+
+def determinism_check(repo: Path, as_json: bool = False) -> int:
+    """§5.4 机检工具确定性：同输入连跑两次，除 generatedAt 外逐字节一致（null sequential build 自检）。"""
+    first = _audit_payload(repo)
+    second = _audit_payload(repo)
+    bytes1 = _normalize_audit_payload(first)
+    bytes2 = _normalize_audit_payload(second)
+    sha1, sha2 = hashlib.sha256(bytes1).hexdigest(), hashlib.sha256(bytes2).hexdigest()
+    same = bytes1 == bytes2
+    report = {
+        "ok": same,
+        "rule_ref": "docs/guides/lead-dispatch-rules.md#5.4",
+        "runs": 2,
+        "sha256": [sha1, sha2],
+        "compared_findings": [len(first.get("findings") or []), len(second.get("findings") or [])],
+        "generatedAt": [first.get("generatedAt"), second.get("generatedAt")],
+        "first_divergence": None if same else _first_audit_divergence(first, second),
+    }
+    if as_json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+    elif same:
+        print(f"PASS: audit determinism（2 次运行除 generatedAt 外逐字节一致；sha256={sha1[:16]}…，"
+              f"compared_findings={report['compared_findings'][0]}）")
+    else:
+        print("FAIL: audit determinism（同一输入两次运行结果不一致 ⇒ 所有「全绿」结论不可复现）",
+              file=sys.stderr)
+        print(json.dumps(report["first_divergence"], ensure_ascii=False, indent=2), file=sys.stderr)
+    return 0 if same else 1
+
+
 def main(argv: list[str] | None = None) -> int:
     _force_utf8_stdio()
     parser = argparse.ArgumentParser(description="Memoria 团队体检机检脚本（只读）")
@@ -3037,6 +3206,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--json", action="store_true", help="输出 JSON")
     parser.add_argument("--strict", action="store_true", help="WARN 也计入退出码")
     parser.add_argument("--selftest", action="store_true", help="自测：证明脚本会红也会绿")
+    parser.add_argument("--determinism", action="store_true",
+                        help="§5.4 确定性自检：连跑两次 --json，除 generatedAt 外逐字节比对")
     parser.add_argument("--git-days", type=int, default=COMMIT_WINDOW_DAYS,
                         help=f"commit_hygiene 扫描窗口天数（默认 {COMMIT_WINDOW_DAYS}）")
     args = parser.parse_args(argv)
@@ -3045,6 +3216,8 @@ def main(argv: list[str] | None = None) -> int:
         return selftest()
 
     repo = Path(args.repo).resolve() if args.repo else Path(__file__).resolve().parents[2]
+    if args.determinism:
+        return determinism_check(repo, args.json)
     ctx = AuditContext(
         repo=repo,
         snapshot_path=(repo / args.snapshot).resolve(),
