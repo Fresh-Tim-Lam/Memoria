@@ -670,7 +670,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_granular_read_tools(root),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_granular_read_tools(root, session_id),
     )
 
 
@@ -680,9 +680,20 @@ def build_kb_tools(
 # 三把工具把"要哪一层"显式化：outline（有什么）→ section（这一节）→ snippet（这一行附近）。
 # 预算与失败语义在 `services/agent/section_index.py`（C1–C5 / D.1–D.3）；本处只做 Tool 包装。
 # 注意：**同名多候选且无法消歧 ⇒ AMBIGUOUS_SECTION，不取首个**（C3 安全红线）。
-def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
+# R-S2-1（接缝修复）：`section` / `outline` 读成功即记一次观察（`record_read`），供「读后写」闸判定；
+# **`snippet` 不记**（片段窗口，与 `grep`/`glob` 同口径，不构成"看过这个文件"）。
+# 且必须**线程 `session_id`**：否则观察记在 `agent-auto`，与真实会话对不上，「section 完就写」会被
+# 自己的读闸挡成 `FS_NOT_OBSERVED`（两阶段接缝缺陷，S1 收益漏点）。
+def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[Tool, ...]:
     """把 `section_index` 的三级读接口包装成模型工具（绑定到一个库根）。"""
     from memoria.services.agent import section_index as si
+
+    def _observe_read(rel: str) -> None:
+        """读成功即记一次观察（真实版本号）。`snippet` 路径**不**调用此函数。"""
+        from memoria.services.agent import observation
+        from memoria.storage.file_version import rel_version
+
+        observation.record_read(kb_path, session_id, rel, present=True, version=rel_version(kb_path, rel))
 
     def _open(arguments: Mapping[str, Any]) -> tuple[tuple[str, str, list[str]] | None, ToolOutput | None]:
         rel = _safe_rel(kb_path, str(arguments.get("file") or ""))
@@ -708,6 +719,7 @@ def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
         if err is not None:
             return err
         rel, body, _lines = got  # type: ignore[misc]
+        _observe_read(rel)  # R-S2-1：outline 读成功即记观察（供读后写闸）
         payload = si.build_outline(body, max_tokens=_int_arg(arguments, "max_tokens") or si.OUTLINE_MAX_TOKENS)
         rows = [
             f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']}，{n['lines']} 行)"
@@ -769,6 +781,7 @@ def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
                 msg += "；相近标题=" + ", ".join(payload["suggestions"])
             return _error(msg, str(payload.get("code") or "SECTION_NOT_FOUND"))
         sec = payload.get("section") or {}
+        _observe_read(rel)  # R-S2-1：section 定位成功即记观察（snippet 不记，见工厂 docstring）
         head = (
             f"{rel} 「{sec.get('title')}」(L{sec.get('line_no')}-{sec.get('end_line_no')}，"
             f"h{sec.get('level')}，{sec.get('lines')} 行)"

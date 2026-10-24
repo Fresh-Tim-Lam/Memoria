@@ -1,0 +1,39 @@
+{
+  "artifactSha256": "849179dda04efa76b7728953ad9cddcdb01b1d1d34d8527b11037927223ec084",
+  "assertions": [
+    {
+      "detail": "verdict=('FS_NOT_OBSERVED', '还没有读过 d.md —— 不能凭印象改它。请先用 `read_document` 读一遍这个文件（拿到**当前**行号与逐字原文），再重提这一批。')",
+      "falsifier": "放行 ⇒ 读后写守卫完全失效",
+      "name": "W2 未任何读就写 ⇒ FS_NOT_OBSERVED",
+      "ok": true
+    },
+    {
+      "detail": "verdict=None",
+      "falsifier": "仍是 FS_NOT_OBSERVED ⇒ 接缝修复被回退，S1 收益被读闸自吞",
+      "name": "W2 read_section 后写 ⇒ 放行（R-S2-1 接缝；修复前=FS_NOT_OBSERVED）",
+      "ok": true
+    },
+    {
+      "detail": "verdict=None",
+      "falsifier": "",
+      "name": "W2 read_outline 后写 ⇒ 放行",
+      "ok": true
+    },
+    {
+      "detail": "verdict=('FS_NOT_OBSERVED', '还没有读过 d.md —— 不能凭印象改它。请先用 `read_document` 读一遍这个文件（拿到**当前**行号与逐字原文），再重提这一批。')",
+      "falsifier": "放行 ⇒ 有人给 snippet 补了观察，把'片段=看过'写死成错误口径",
+      "name": "W2 read_snippet 后写 ⇒ 仍 FS_NOT_OBSERVED（片段≠看过）",
+      "ok": true
+    },
+    {
+      "detail": "verdict=('FS_STALE_VERSION', 'd.md 在你读过之后又被改过了（内容已变）—— 请**重新** `read_document` 读一遍，按新的行号与原文重提这一批（别照着记忆改）。')",
+      "falsifier": "",
+      "name": "W2 读后被外部改 ⇒ FS_STALE_VERSION",
+      "ok": true
+    }
+  ],
+  "guard": "observation.gate_ops (FS_NOT_OBSERVED / FS_NOT_FOUND / FS_STALE_VERSION)",
+  "passed": true,
+  "schema": "contract-w2/v1",
+  "seam_fix": "R-S2-1: read_section / read_outline 记观察；read_snippet 不记；session_id 线程"
+}
