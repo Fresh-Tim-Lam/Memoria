@@ -281,3 +281,74 @@ python scripts/benchmark/maintenance/section_headings_census.py \
 2. `docs/design/dsh-agent-port.md` 补 `replace_section` + R-D2 统一这两节（该文件在写域内，下一轮补）；
 3. 交 `arch-contract` 独立验收（不是我自己判过）。
 
+
+---
+
+## 12. R-S1A-3 密封性修复 + 工具面接线 + 双指标(b) 代理 A/B
+
+### 12.1 密封性（`MEMORIA_CONFIG_DIR`）
+
+**问题（Lead 实测发现）**：`DocumentService.__post_init__`（`document.py:238`）→ `set_kb_path()`（`:240`）→
+`remember_last_kb_path()`（`:259`）会写**全局** UI 设置 `config/ui-settings.json`；app 运行时该文件被占用 ⇒
+`PermissionError: [WinError 5]`。任何构造 `DocumentService` 的 benchmark 都有同样非密封性。
+
+**修法**：四个脚本启动时（`import memoria` 之前）设
+`os.environ.setdefault("MEMORIA_CONFIG_DIR", tempfile.mkdtemp(prefix="memoria-cfg-"))`
+（`ui_settings.py:19` 读它）。已加：`section_headings_census.py` / `section_read_api.py` /
+`section_replace_op.py` / `section_kp_end_impact.py` / 新增的 `section_granularity_ab.py`。
+
+**验证**：密封后重跑，**embedded sha 全部不变**（`e9c4021a` / `41766432` / `11a955e8`），
+`git status -- config/` = **0 改动** ⇒ 全局配置未被触碰、测量可复跑。
+
+### 12.2 工具面接线（S1a 之前只交了模块，模型拿不到）
+
+`tools/kb.py::_granular_read_tools(root)` 新增三把工具并接到 `build_kb_tools()`：
+`outline` / `section` / `snippet`（工具面 **36 → 39**，其中"新增"= 3 把）。
+同时修了 ⑰ 的措辞：`replace_section` 的说明里引用了 `outline`/`section` —— 那时工具还没接，现已一致。
+smoke：`outline` → 标题树（含行号区间）；`section` → 单节正文（同名走 `near_line`/`path`，歧义报错）；
+`snippet` → ±ctx 窗口；404/歧义路径回可操作错误文本。
+
+### 12.3 双指标 (b)：代理 A/B（**含往返轮数与总账**）
+
+`scripts/benchmark/maintenance/section_granularity_ab.py` → `artifacts/agent/verify/todo/s1a-granularity-ab.json`
+（`sha256=5f25d1d057b3719e…`）。密封环境；两臂都用**真实工具 handler**（不是自编 payload）；
+锚点 = 该节第一条 ≥12 字的正文行；轮数由**固定策略**模拟（`read_document` 分页 vs `outline→section`）。
+
+**性质声明**：`PROXY`（检索充分性 + 固定策略轮数），**不是完成率**；不调用模型（R-S1A-1 已裁决不烧额度）。
+
+| 指标 | A 当前（整篇分页） | B 粒度（outline→section） |
+|---|---|---|
+| 任务数 | 20（read_section 10 / find_sentence 10） | 同 |
+| **轮数** min/median/max | 1 / 1.0 / 2 | 1 / 1.5 / 2 |
+| **每轮 token** 中位 | **2,079** | **260** |
+| **总账** sum / 中位 | **67,109** / 3,079 | **28,600** / 654.5 |
+| 命中率（锚点落在返回内） | **1.00** | **1.00** |
+
+**按意图拆（关键）**：
+
+| 意图 | A 总账 | B 总账 | 节省 | 轮数 A/B |
+|---|---|---|---|---|
+| `find_sentence`（找一句话） | 33,123 | 1,901 | **94.26%** ✅ | 1.8 / 1.0 |
+| `read_section`（读一节） | 33,986 | 26,699 | **21.44%** ❌ | 1.0 / 2.0 |
+| 合计 | 67,109 | 28,600 | **57.38%** | 中位 +0.5 |
+
+**schema 成本**：新增 3 把工具定义 = **697 tok**（占全部工具 schema 的 6.43%），
+按本题集的总账节省算 **≈0.4 个任务即回本**（一次性/会话成本，摊平后可忽略）。
+
+**诚实结论（不修饰）**：
+1. **"省 ≥70%" 没有整体达成**（57.38%）。它在 `find_sentence` 类成立（94.26%），在 `read_section` 类只有 21.44%。
+2. **原因不是实现，是任务结构**：`read_section` 的目标节往往占全文很大比例 ⇒ A 的"整篇一次读完"本来就只有 1 轮 ~3,000 tok，
+   粒度化省不下多少，还要多付一轮 outline（~50 tok）+ section 头部。**这正是 U3 的边界**：
+   粒度化的收益 ≈ `1 − (所需材料 token + 固定开销) / 全文 token`，对"所需材料≈全文"的任务天然不成立。
+3. **U3（总账反升）没有在大盘触发**（B 总账 28,600 < A 67,109），但 `read_section` 类的**单任务层面已经有反升案例**——
+   脚本按 kind 汇总会掩盖它们，逐任务明细在 `per_task[]`（该字段已保留，供 metrics-baseline 复核）。
+4. 因此我**不建议**把"省 ≥70%"当统一门槛；建议改为**按意图分级**（`find_sentence` ≥90% / `read_section` ≥20% 且无单任务反升），
+   或由 metrics-baseline 在真机上重定基线。**在 Lead 重新裁决前，task-120 关闭条件 2 判为"未达成"。**
+
+### 12.4 文档与债
+
+- `docs/design/dsh-agent-port.md` 已补 **§12**（R-D2 统一 + 三级粒度 + `replace_section` 落点与口径，+50 行）。
+- `kb.py` 累计 **+181 行**（工具面 + ⑰ 说明）⇒ 其中 `kb.py:<行号>` 类文档引用（如有）漂移；
+  `test_doc_anchors.py` **不覆盖 kb.py**（Lead 已确认，属 task-126）⇒ 本任务不自行重取。
+- 未改 `src/**` 之外的产品代码；未改前端；**未 commit**。
+

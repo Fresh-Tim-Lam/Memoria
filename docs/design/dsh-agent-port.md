@@ -2140,3 +2140,53 @@ Enter 提交与焦点管理（点按钮提交）；④ 真机上只验了 **2 �
 | 2026-09-23 | **N 线联网落地（`web_search` / `fetch_url`）+ §6.28** —— 人「补齐联网搜索能力」；拣选依据 = 台账 `docs/todo.md` **AG54** 已冻结的施工清单（实现面 = DeepSeek 原生复用现有 key / 范围 = `agent-capabilities.md §3` 草案全套 / 审批 = 当只读免审批） | **上游对照**（`D:\deepseek-harness`，pin `0d1f5000`）：`packages/web/` 的 `web-search-deepseek` 给出**原生 server tool** `web_search_20250305` 的完整线格式（`{base}/v1/messages` + `x-api-key` / `authorization` / `anthropic-version`，结果走 `web_search_tool_result` 块 + `text.citations[]` 拼摘要），而 `web-fetch-http` 的 **SSRF 防护被显式标 deferred**（`policy.ts:18-19`）—— 后者正是本地必须自己补的一格。**本轮改动（源码 4 文件 + 新 1 模块；`tools/kb.py` 与 `audit.py` 全零锚点漂移）**：① 新 `services/agent/web.py`（纯标准库；`opener`/`resolver`/`on_outbound` 可注入 ⇒ 单测永不触网；基址推导三态、线格式构造与结果归一、**逐地址私网拒绝** + 同源重定向逐跳重校验 + 字节/字符双上限、`save_fetched_page()` 走 `storage/pending.py::save_pending`）；② `tools/kb.py` 末尾追加 `_web_tools(root, session_id)` + `KB_TOOL_NAMES` **同行追加**（工具面 **18 → 20**；两把 `read_only=True` ⇒ 免审批，`approvals.py`/`approval_bridge.py` 未动一行）+ 出网闸 `WEB_DISABLED` + 审计 `net/request`；③ `llm/config.py` 增 `search_base_url`/`search_max_results`(5)/`fetch_max_bytes`(2 MiB)/`search_timeout_s`/`fetch_timeout_s`(30s)（唯一位移：`os.replace` **338 → 368**，已同步两处文档引用）；④ `audit.py` 末尾追加 `EVENT_NET_REQUEST = "net/request"`。**验收**：新 `tests/test_agent_web.py` **49 例**；`python -m pytest -q` **1268 passed**（基线 1217 + 49 + `test_source_integrity` 按新增源文件的 **+2**）；`tests/test_doc_anchors.py` 14 passed。**同步更新的文档**：§5.1「其余读面」行（`skill`/`ask_user`/web 三块已落，只留 `view`/`todo_write`/computer-use 未移植）、[agent-capabilities.md](agent-capabilities.md) §3（N1 标已落 + P3 拍板回填）、`docs/todo.md` AG54、`docs/conventions/docs-management.md §4.2`。**未取证/已知缺口**：真实出网未验（按纪律不调用用户真密钥）、`kind=web` 的 pending 条目会被 `sync_kb_pending()` 全量重算丢掉（本轮未改 `pending.py`）、面板可见的完整交互未做；详见 §6.28 |
 | 2026-09-24 | **skill 的内置只读根（收掉 §6.22 偏差 1 那句"全局根**留待拍板**"）** —— 人对「N 线要不要做成技能包」与 `agent-capabilities.md §10 P4` 拍板 **开出内置根** | **本条即 §6.22 偏差 1 那句"全局技能根**留待拍板**"（及后续引用它的行）的补记**（§6.22 正文属**带日期的历史小节，不追改**；以本行为准，同本表"历史行不追改"的既有做法）。**缺口**：§6.22 落地时**只吃一个根**（`<kb>/.memoria/agent/skills/**`），偏差 1 原文写着"库外根会破坏'允许根'纪律 ⇒ 全局根**留待拍板**"；而"什么时候该联网、抓完怎么落工作区、什么时候必须停下来问用户"这份说明书是**产品自带**的 ⇒ 要求每个用户先在库里手建一遍，既不现实、也必随版本漂移。**落地两处（都不新造机制）**：① `services/agent/skills.py` 末尾追加 `BUILTIN_SKILLS_DIRNAME` / `BUNDLED_SOURCE` / `BUNDLED_RANK = 600` / `_all_roots()`，`skill_roots()` 的表体**等量替换**为一行委托（上方形参/docstring 行数不变）⇒ 根表 = 库内 `kb`（100）+ 随包 `bundled`（600，`runtime.resources_dir()/agent-skills`；**目录不存在就不给这一项**）；② 新增首个随包技能 `resources/agent-skills/web-research/SKILL.md`（frontmatter `name`/`description`/`whenToUse` + 六节工作法：先决定该不该查 / 两把工具的代价与顺序 / 抓完落哪 / **四种情况必须停下问用户**（`WEB_DISABLED` / `capability_disabled` / `WEB_BLOCKED_DOMAIN` / 草案态待确认）/ 引用口径 / 不许做的事）。**为什么这样取根**：不取上游的 `~/.dsh` / `~/.agents`（本地无"工程根"概念、库才是边界），而取**应用资源目录**（同 `agent-prompts/` / `agent-capabilities/` 先例）⇒ `tools/kb.py::_read_roots()` 仍只有库根，**不触"允许根"纪律**。**遮蔽关系**：rank 100 < 600 ⇒ **库内同名永远盖得住内置**（用户要改内置技能就在库内建同名那份）。**缺失即降级**：目录不在 ⇒ 只剩库内根、不报错；"漏拷"由发布侧 `_REQUIRED_RELEASE_RESOURCES` 硬门禁拦（`packaging/build.py` 登记表 + 必带清单 + 两份 `packaging/README*` 表与自检命令 + `templates/README.release.txt` 已同步）。**验收**：`tests/test_agent_skills.py` **56 → 63 例**（新增 ⑬ 段 7 例：两根 rank / 缺目录降级 / 空库也能看见随包技能 / 正文自足（八处关键词 + "没有运行工具" + "别去读资源目录"）/ 库内遮蔽 / 经 `skill` 工具加载且**库内逐字节不变** / 随包登记表带上它；①–⑫ 走 `_no_bundled_root` 隔离态 ⇒ 既有 56 例语义不变）；`pytest -q` **1324 passed**（1317 → 1324）；`tests/test_doc_anchors.py` 通过。**L4（真实进程 + 仓库真实 `resources/`，临时脚本跑完即删）**：① 对**真实示例库** `docs/example/AAA_Vocab`（只读）与一个**全新空库**各跑一次真实装订 —— `skill_roots` 回 `[('kb', 100, <库>\.memoria\agent\skills), ('bundled', 600, D:\AAA_Jupyter\Memoria\resources\agent-skills)]`、`discover_skills` 回 `[('web-research', 'bundled', 600)]`、`build_system_prompt()` 的「## 可用技能」段**逐字出现**随包技能 description 与「何时用」两行、`skill` 工具回文 `is_error=False` 且 `<skill_instructions>` 里是 `SKILL.md` 原文；示例库侧**库内零写入**（363 个文件 sha256 前后一致、`git status --short docs/example/AAA_Vocab` 空）⇒ 发现 / 加载 / 装订全程只读；② **缺目录降级**实测：把 `resources_dir()` 指到不存在的路径 ⇒ 根表只剩 `[('kb', 100)]`、发现为空、**不报错**。**未做（如实）**：① `render_skill_content()` 对**库外基目录**仍印"按需再读取其中的资源"，而读取工具到不了它 —— 今天靠"正文自足 + 正文自声明别去读"绕过，**给内置技能配 `assets/**` 前必须先解决**；② 用户技能类插件的 `manifest.json`（声明领域动词）与库级权限/启停仍属 S1 后半段；③ 内置技能**不进"能力插件"面板**（无 `manifest.json`，不参与启停）；④ 面板/真机一轮"模型收到技能目录后真的加载并按它办事"未验（harness 无模型端点）；⑤ `resources/agent-skills/**` 是否需人工登记 `AGENTS.md §1`（"程序读取源 vs 库内事实源"分工下**属程序读取源**，但随包目录清单在 `AGENTS.md` 未见约定 ⇒ **待人拍板**，同 AG61 的 `agent-capabilities/**` 那条）。台账：`docs/todo.md` **AG62**；`agent-capabilities.md` §4.6 / §8 S1 / §10 P4 与 `docs/conventions/docs-management.md §4.2` 同日至此行 |
 | 2026-09-24 | **脚本工作区三键的设置界面（AG63）** —— 人「继续」（拣选依据 = 上一批交付后我列的待办第 3 条「脚本工作区三个设置键的界面」；同列另两条 = N 线 skill 提示词包**已落 AG62**、打包内置解释器**仍未做**） | **缺口**：AG59 落了 `script_interpreter` / `script_use_bundled` / `script_timeout_s` 三个键，但**只能手改 `config/agent.json`**（`agent-capabilities.md §3.4` 的「未做②」原文）⇒ 用户根本不知道有这回事。**落地两处（零漂移、零新机制）**：① `presentation/api/ui.py` 末尾追加 RPC `agent_script_settings`（**不收 `kb_path`**：解释器是**机器级**设置、没开库也要能改；**不并进** `_agent_config_view()`：那是中段函数，加键会推位 `ui.py` 中段所有锚点 —— 与 `agent_net_domains` 同款取舍），回 `{interpreter, use_bundled, timeout_s, default_timeout_s, resolved:{path,source}, bundled_dir, bundled_name, error, code, limits}`；解析**复用** `scratch.resolve_interpreter()`（不另立判据）⇒ 填了不存在的路径**带 `error` 回来、`source="none"`、不静默回落**，配置读不到 ⇒ 结构化 `config_error`（真机踩过 BOM 那条）；② 新前端模块 `js/scratch-settings.js`（DOM 自建后**追加**进 `#agent-settings`，与 `net-settings.js` 同款 ⇒ `index.html` 只多一行 `<script>`；`change` 即存，走既有 `agent_save_config` 浅合并）+ 两份 i18n `settings.script.*`（中英成对）+ `app.css` 末尾块。**行为三条**：回显"当前会用哪个解释器 + 来源四态"；超时只收**正数**（非数字 / ≤0 照原样报错并回滚显示），**正数但越界**才夹到 5–300 秒并提示"已夹到 N 秒" —— 真正的 5–300 夹取在**执行时**（`scratch._clamp_timeout()`），所以 999 会被**存下**、跑时按 300 秒用；`-script-switch` **刻意不复用** `-agent-field`（那条 `.-agent-field input` 会给文本框 padding，套到勾选框上会把方框撑大）。**L4（真实进程 + 真配置读写层；配置文件用产品自带的 `MEMORIA_AGENT_CONFIG` 重定向到临时目录 ⇒ **不碰**用户的 `config/agent.json`，那份里有真密钥）**：① 初始读回 `{timeout_s: 60, use_bundled: true, resolved: {path: D:\Python\python.EXE, source: system}, bundled_dir: ""}`；② 写三键 ⇒ 磁盘**只有这三键**且读回一致；③ **只写一个键** ⇒ 另一键（30.0）保持 ⇒ 浅合并成立；④ 超时写 `999` ⇒ **原样存下**、执行期 `_clamp_timeout(999) = 300`（`2` 夹到 `5`）⇒ 证实"夹取在执行时"（**第一版文案写的"后端读侧再夹一次"是错的，已就地订正**）；⑤ 超时写 `0` ⇒ 写侧 `ConfigError` 拒写且**盘值未变** ⇒ fail-closed；⑥ 显式路径填不存在的目录 ⇒ `error` 有值 + `source="none"`（**不静默回落**），用户填的路径原样留在盘上；⑦ 清空 ⇒ 回 `system`。**验收**：新 `tests/test_scratch_settings_panel.py` **12 例**（RPC 形状与不收 kb / 三键默认值 / 来源四态与"不静默回落" / `config_error` / 前端只走两条 RPC 且不碰 `agent_scratch_*` / 挂载点 / 三键名与 `llm/config.py` 对照 / `index.html` 末尾加载 / **三个 `input` 的 id 与查找键逐一对账** / 中英文案成对 / 样式用令牌）；`pytest -q` **1336 passed**（1324 → 1336）；`node --check` + `scripts/i18n_selftest.js` **12/12 PASS**；`scripts/scan_ui_strings.py` 刷新 `docs/reference/i18n-inventory.md`（**新文件不进未迁移清单** —— 兜底文案走了 i18n）。**未取证（如实）**：① **无浏览器/真机 UI 一轮**（DOM 装配与 `change` 保存未经真点击/人眼确认 —— 进程内 L4 只覆盖数据面）；② `resources/python/` 内置解释器**本身仍未分发**（`bundled_dir()` 恒空）⇒ 勾选框今天等价于"允许将来用内置的那一份"；③ 刷新清单**顺带暴露存量 2 处新入清单**（`agent-scratch.js` / `net-settings.js` 的 `"桥不可用"` 硬编码，AG59/AG60 留下；另有 2 个兄弟模块同款早已在清单里）—— 本轮**未**改它们（不在范围），已如实记进 `i18n-inventory.md`。台账：`docs/todo.md` **AG63**（并把 AG59 那条「未做②」划掉改指本条）；`agent-guide/09-settings-i18n-and-shortcuts.md §2.23` |
+## 12. 粒度化读 + `replace_section`（0.5.0-S1 / task-120，2026-10-25）
+
+> 依据：辩论裁结论 1（N1：省耗来自**返回粒度**，组 0 无 MCP 已省 82.9–89.3%）、结论 4 / R-R3（写侧缺"按 heading 替换一节"）、
+> 结论 8 / R-D2（两套 heading 正则 = 并行事实源）、`AS-SECTION-RANGE`（有条件成立，C1–C5）。
+> 本节只记**落点与口径**，验收证据见 `artifacts/agent/verify/todo/s1-granularity-report.md`。
+
+### 12.1 R-D2：heading 语义统一到一处
+
+| 原 | 原正则 | 处置 |
+|---|---|---|
+| `services/document.py:420` | `^(#{1,6})\s+` | 删除，改调唯一实现 |
+| `services/heading_proposals.py` | `^(#{2,6})\s+` | 删除，本模块成为**唯一实现** |
+
+- **唯一实现**：`services/heading_proposals.py::scan_headings()`；级别范围写死为
+  `HEADING_LEVEL_MIN = 1 / HEADING_LEVEL_MAX = 6`（C5），正则**由常量拼出**（无第二份字面量）。
+- **C1**：`scan_headings()` 先算 frontmatter 边界与围栏区间（```/~~~，同字符且长度 ≥ 开启者才闭合），再匹配。
+- **为什么放在 services 而不是 `services/agent/`**：`document.py` 已依赖 `range_proposals → heading_proposals`；
+  把扫描器放进 agent 子包会让 services 反依赖 agent（而 `agent/__init__.py` 明文承诺"本包不导入任何子模块"）。
+- **`document.py` 的改动是净 0 行**（`git diff --numstat` = 9/9，函数内 import）：保住既有 `<文件>:<行号>` 文档锚点。
+- **行为变化（2 处，均已在 census 里断言）**：① 围栏内 `#` 不再被当 heading（实测 92 处误判 → 0）；
+  ② `heading_proposals` 现在会提议 h1（279 个，实测语料）—— 提议策略常量 `PROPOSABLE_LEVEL_MIN/MAX` 单独命名，
+  不想给 h1 提议就只改这一个常量。
+- **等价性**：新实现复现 `as-section-range-measure.json` 的围栏感知口径（3517 / 279 / 92 / 33 / levelDist），
+  复跑脚本 `scripts/benchmark/maintenance/section_headings_census.py`。
+
+### 12.2 三级读粒度：`outline` / `section` / `snippet`
+
+- **实现**：`services/agent/section_index.py`（消费者；heading 语义仍走唯一实现）。
+- **工具面**：`tools/kb.py::_granular_read_tools(root)` → `outline` / `section` / `snippet`（工具面 **35 → 38**）。
+- **预算**（初值，`tokens_estimated=True`）：outline ≤ 800 / section ≤ 4,000 / snippet ≤ 600（N1 静态口径：CJK 1.5 字/token、
+  其它 3.5 字/token）。超预算 ⇒ `part i/n` + `next_cursor`（section）/ 缩 ctx 再截字符（snippet）—— **不静默截断**。
+- **失败语义**（D.3）：`SECTION_NOT_FOUND`（带 `suggestions`）/ **`AMBIGUOUS_SECTION`（带 `candidates`，C3：不取首个）**
+  / `NO_HEADINGS` / `INVALID_LEVEL` / `UNSUPPORTED`。
+- **消歧**（C2）：`path=[父级标题…]`（后缀匹配）+ `near_line`；**`line=` 是 `#L` 一等回退**（C4）。
+- **实测**（229 docs / 35,039 行）：outline 最大 646 tok；超 4,000 tok 的节最大切 3 片且都带 cursor；
+  snippet 最大 406 tok；**C3 触发率 2.93%**（103/3517，远低于 20% 阈值）；C2 双锚 **21/21** 组命中正确节。
+
+### 12.3 写侧：`replace_section`（R-R3 的能力缺口）
+
+- **缺口**：`BODY_EDIT_OPS` 五项全是**行号/块索引锚**，模型读到一节后要改它，只能自己把 heading 翻成行区间
+  （本地没有读时投影）⇒「按 heading 改一节」是**能力缺失**，不是接口包装。
+- **落点**：`plan.OP_REPLACE_SECTION`（`KNOWN_OPS` 18 / `COMPILED_OPS` 17）+ `plan._validate_replace_section()`
+  （**校验期归一化成 `replace_lines` 的 `edit`**）+ `apply.compile_plan()` 并入 body-edit 分支 + `preview_plan()` 并入行级 diff 分支。
+  **零新写原语**：`compile_plan` 产出的原语集合 = `{"edit_body"}` ⇒ 备份/撤销/审计全走既有链（唯一写者不变）。
+- **语义**：`file` + `heading`（或 `line`=#L）+ `text`（该节**正文**新内容，不含标题行）+ `expect`（逐字；缺省用计划视图当前正文兜底）
+  + 可选 `path` / `near_line`；标题行保留；空节 ⇒ 退化为"标题行后插入"。
+- **安全**：同名多候选 ⇒ `ambiguous_section`（不猜）；`expect` 不符 ⇒ 拒且零改动；单撤销**逐字节**复原（3/3 用例）；
+  `preview` 给行级 diff + 节身份（title/line_no/level/parent_path/end_line_no）⇒ 审批不盲批。
+- **未进 `RISKY_OPS`**（与 `edit_body` 同档，已有 byte-exact 单撤销）；后续可加"大删除告警"（R-S1A-2）。
+

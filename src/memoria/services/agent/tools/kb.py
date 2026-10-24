@@ -670,7 +670,188 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id),
+        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_granular_read_tools(root),
+    )
+
+
+# ── 三级读粒度（task-120 S1a）：`outline` / `section` / `snippet` ─────────────
+# 为什么加：N1 实测「省耗来自**返回粒度**」（组 0 不碰 MCP 也省 82.9–89.3%），
+# 而当前 `read_document` 默认一次回整篇（≤2000 行 / ≤20,000 字符）⇒ 查一节也要付整篇的钱。
+# 三把工具把"要哪一层"显式化：outline（有什么）→ section（这一节）→ snippet（这一行附近）。
+# 预算与失败语义在 `services/agent/section_index.py`（C1–C5 / D.1–D.3）；本处只做 Tool 包装。
+# 注意：**同名多候选且无法消歧 ⇒ AMBIGUOUS_SECTION，不取首个**（C3 安全红线）。
+def _granular_read_tools(kb_path: str) -> tuple[Tool, ...]:
+    """把 `section_index` 的三级读接口包装成模型工具（绑定到一个库根）。"""
+    from memoria.services.agent import section_index as si
+
+    def _open(arguments: Mapping[str, Any]) -> tuple[tuple[str, str, list[str]] | None, ToolOutput | None]:
+        rel = _safe_rel(kb_path, str(arguments.get("file") or ""))
+        if rel is None:
+            return None, _error("path 必须是工作区（允许根）内的相对路径（不得上跳）")
+        full = os.path.join(kb_path, rel)
+        if not os.path.isfile(full):
+            return None, _error(f"文档不存在：{rel}", "NOT_FOUND")
+        body, lines = _read_body_lines(kb_path, rel)
+        return (rel, body, lines), None
+
+    def _int_arg(arguments: Mapping[str, Any], key: str) -> int | None:
+        raw = arguments.get(key)
+        if raw is None:
+            return None
+        try:
+            return int(raw)
+        except (TypeError, ValueError):
+            return None
+
+    def _outline_call(arguments: Mapping[str, Any]) -> ToolOutput:
+        got, err = _open(arguments)
+        if err is not None:
+            return err
+        rel, body, _lines = got  # type: ignore[misc]
+        payload = si.build_outline(body, max_tokens=_int_arg(arguments, "max_tokens") or si.OUTLINE_MAX_TOKENS)
+        rows = [
+            f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']}，{n['lines']} 行)"
+            for n in payload.get("headings") or []
+        ]
+        head = f"文档 {rel}：{payload.get('count', 0)} 个标题（约 {payload.get('tokens', 0)} tok）"
+        note = ""
+        if payload.get("degraded"):
+            note = f"\n（已降级：{', '.join(payload['degraded'])}）"
+        if payload.get("truncated"):
+            note += f"\n（只列到 h2，其余 {payload.get('omitted_count', 0)} 个标题省略）"
+        text = "\n".join([head, *rows]) + note
+        if not rows:
+            text += "\n（该文档没有 heading；请用 read_document 的 offset/limit 读正文）"
+        return ToolOutput(text=text)
+
+    def _section_call(arguments: Mapping[str, Any]) -> ToolOutput:
+        got, err = _open(arguments)
+        if err is not None:
+            return err
+        rel, body, _lines = got  # type: ignore[misc]
+        selector: dict[str, Any] = {}
+        if arguments.get("heading"):
+            selector["heading"] = str(arguments["heading"])
+        if arguments.get("line") is not None:
+            selector["line"] = _int_arg(arguments, "line")
+        if arguments.get("near_line") is not None:
+            selector["near_line"] = _int_arg(arguments, "near_line")
+        if arguments.get("path"):
+            selector["path"] = arguments["path"]
+        if arguments.get("level") is not None:
+            selector["level"] = _int_arg(arguments, "level")
+        mt = _int_arg(arguments, "max_tokens") or si.SECTION_MAX_TOKENS
+        part = _int_arg(arguments, "part") or 1
+        payload = si.get_section_part(body, part=part, max_tokens=mt, **selector) if part > 1 else si.get_section(body, max_tokens=mt, **selector)
+        if not payload.get("ok"):
+            msg = str(payload.get("message") or "无法定位该节")
+            cands = payload.get("candidates") or []
+            if cands:
+                msg += "；候选=" + ", ".join(
+                    f"L{c['line_no']}[{'/'.join(c['parent_path']) or '根'}]" for c in cands
+                )
+            elif payload.get("suggestions"):
+                msg += "；相近标题=" + ", ".join(payload["suggestions"])
+            return _error(msg, str(payload.get("code") or "SECTION_NOT_FOUND"))
+        sec = payload.get("section") or {}
+        head = (
+            f"{rel} 「{sec.get('title')}」(L{sec.get('line_no')}-{sec.get('end_line_no')}，"
+            f"h{sec.get('level')}，{sec.get('lines')} 行)"
+        )
+        if payload.get("parts", 1) > 1:
+            head += f"  第 {payload.get('part')}/{payload.get('parts')} 片（约 {payload.get('tokens', 0)} tok）"
+        text = head + "\n\n" + str(payload.get("text") or "")
+        cur = payload.get("next_cursor")
+        if cur:
+            text += f"\n\n（本片未完；续读：section(file={rel!r}, heading={sec.get('title')!r}, part={cur.get('part')})）"
+        return ToolOutput(text=text)
+
+    def _snippet_call(arguments: Mapping[str, Any]) -> ToolOutput:
+        got, err = _open(arguments)
+        if err is not None:
+            return err
+        rel, body, _lines = got  # type: ignore[misc]
+        payload = si.get_snippet(
+            body,
+            query=str(arguments["query"]) if arguments.get("query") else None,
+            line=_int_arg(arguments, "line"),
+            ctx_lines=_int_arg(arguments, "ctx_lines") or si.SNIPPET_DEFAULT_CTX_LINES,
+            max_tokens=_int_arg(arguments, "max_tokens") or si.SNIPPET_MAX_TOKENS,
+        )
+        if not payload.get("ok"):
+            return _error(str(payload.get("message") or "snippet 需要 query 或 line"), str(payload.get("code") or "UNSUPPORTED"))
+        wins = payload.get("windows") or []
+        if not wins:
+            return ToolOutput(text=f"{rel}：0 命中（已按子串扫描全文 {payload.get('scanned_lines')} 行）")
+        parts = [f"{rel}：{payload.get('match_count')} 处命中（展示 {payload.get('shown')} 个窗口）"]
+        for w in wins:
+            parts.append(f"--- L{w['start_line_no']}-{w['end_line_no']}（命中行 {w['line_no']}）---")
+            parts.append(str(w.get("text") or ""))
+        if payload.get("note"):
+            parts.append(f"（{payload['note']}）")
+        return ToolOutput(text="\n".join(parts))
+
+    return (
+        Tool(
+            name="outline",
+            description=(
+                "看一篇 md 的**标题树**（标题 + 行号区间 + 行数），不读正文 —— 想知道「这篇有什么」时先用它，"
+                "再按标题用 section 取你要的那一节。比 read_document 省得多。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "file": {"type": "string", "minLength": 1, "description": "库内相对路径（.md）"},
+                    "max_tokens": {"type": "integer", "minimum": 100, "description": f"token 预算上限（默认 {si.OUTLINE_MAX_TOKENS}）"},
+                },
+                "required": ["file"],
+                "additionalProperties": False,
+            },
+            handler=_outline_call,
+        ),
+        Tool(
+            name="section",
+            description=(
+                "按**标题**或**行号**取 md 的**一节正文**（含标题行）。同名标题必须消歧：给 path=[父级标题…] 或 "
+                "near_line=<行号>；**消歧不了会回 AMBIGUOUS_SECTION（不会猜）**。超预算自动切片，按 next_cursor 续读。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "file": {"type": "string", "minLength": 1, "description": "库内相对路径（.md）"},
+                    "heading": {"type": "string", "minLength": 1, "description": "标题文本（可省略 #，ATX 闭合 # 会被剥离）"},
+                    "line": {"type": "integer", "minimum": 1, "description": "按行号定位（#L 回退；取包含该行的最深层节）"},
+                    "near_line": {"type": "integer", "minimum": 1, "description": "同名标题时：取该行之前最近的同名节"},
+                    "path": {"type": "array", "items": {"type": "string"}, "description": "父级标题链（后缀匹配），用于同名消歧"},
+                    "level": {"type": "integer", "minimum": 1, "maximum": 6, "description": "限定标题级别"},
+                    "part": {"type": "integer", "minimum": 1, "description": "第几片（配合 next_cursor）"},
+                    "max_tokens": {"type": "integer", "minimum": 200, "description": f"token 预算上限（默认 {si.SECTION_MAX_TOKENS}）"},
+                },
+                "required": ["file"],
+                "additionalProperties": False,
+            },
+            handler=_section_call,
+        ),
+        Tool(
+            name="snippet",
+            description=(
+                "在 md 里**按关键词找命中行**，只回命中行 ±N 行的窗口（最多 5 个窗口，硬预算）。"
+                "想知道「某句话在哪」时用它；命中太多会提示收窄 query。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "file": {"type": "string", "minLength": 1, "description": "库内相对路径（.md）"},
+                    "query": {"type": "string", "minLength": 1, "description": "子串（大小写敏感）"},
+                    "line": {"type": "integer", "minimum": 1, "description": "取该行附近的窗口（与 query 二选一）"},
+                    "ctx_lines": {"type": "integer", "minimum": 0, "maximum": 20, "description": f"上下各几行（默认 {si.SNIPPET_DEFAULT_CTX_LINES}）"},
+                    "max_tokens": {"type": "integer", "minimum": 100, "description": f"token 预算上限（默认 {si.SNIPPET_MAX_TOKENS}）"},
+                },
+                "required": ["file"],
+                "additionalProperties": False,
+            },
+            handler=_snippet_call,
+        ),
     )
 
 

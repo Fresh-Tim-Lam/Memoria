@@ -68,3 +68,46 @@
 {"ts":"2026-10-24T16:53:03.604Z","actor":"lead","phase":"done","target":"lead","task":"task-113","outcome":"pass","report":"artifacts/agent/verify/debate/PROTOCOL.md","evidence":"artifacts/agent/verify/debate/PROTOCOL.md,artifacts/agent/verify/debate/ruling/rulings.jsonl,artifacts/agent/verify/debate/freeze-v2.json,artifacts/agent/verify/debate/audit/steward-phase5-audit.md,artifacts/agent/verify/debate/SUMMARY.md,artifacts/agent/verify/debate/rules-index.json","source":"dsh-agent-team"}
 {"ts":"2026-10-24T16:53:09.914Z","actor":"lead","phase":"message","target":"steward","source":"dsh-agent-team"}
 {"ts": "2026-10-25T00:53:13+08:00", "actor": "lead", "phase": "message", "target": "steward", "task": "task-116", "desc": "deliberation_quality v0（6FAIL+4WARN，每条必红fixture）+ 协议v1.1 schema补丁"}
+{"ts":"2026-10-24T16:55:16.607Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T00:55:20+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-115", "desc": "N1 结论已出：A1 不成立，组0比MCP更省；放行立场书并要求重写§2（MCP 不能再用省token当理由）"}
+{"ts":"2026-10-24T16:59:04.826Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T16:59:41.924Z","actor":"lead","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts": "2026-10-25T00:59:50+08:00", "actor": "lead", "phase": "message", "target": "arch-contract", "task": "task-117", "desc": "对抗评审立场书（gate杠杆/MCP定位/写侧OPS覆盖三必查点）"}
+{"ts":"2026-10-24T17:02:32.863Z","actor":"arch-contract","phase":"done","target":"arch-contract","task":"task-117","outcome":"pass","report":"artifacts/agent/verify/debate/review/arch-contract-review.md","evidence":"artifacts/agent/verify/debate/review/arch-contract-review.md","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:02:39.729Z","actor":"steward","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:02:43.120Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:04:07.404Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:04:15.607Z","actor":"lead","phase":"message","target":"steward","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:04:19+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-115", "desc": "裁决 R-R1/R-R2/R-R4：撤回gate主张/补三字段消费者/删M-1改造X-1；要求正文更正"}
+{"ts": "2026-10-25T01:04:19+08:00", "actor": "lead", "phase": "message", "target": "steward", "task": "task-116", "desc": "裁决 R-R6(dq5分治)/R-R7(F-6架构辩论起强制)；dq6已转绿可收口"}
+{"ts": "2026-10-25T01:04:19+08:00", "actor": "lead", "phase": "done", "target": "arch-contract", "task": "task-117", "desc": "对抗评审：1条硬false_claim(gate)+2条结构问题，全部采纳", "outcome": "pass", "report": "artifacts/agent/verify/debate/review/arch-contract-review.md"}
+{"ts":"2026-10-24T17:04:51.873Z","actor":"lead","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:05:39.300Z","actor":"steward","phase":"done","target":"steward","task":"task-116","outcome":"pass","report":"scripts/agent/team_audit.py","evidence":"scripts/agent/team_audit.py,artifacts/agent/verify/debate/audit/deliberation-quality-v0.md,artifacts/agent/verify/debate/PROTOCOL-v1.1-PROPOSAL.md,team/steward/audit-2026-10-25-r3/SUMMARY.md","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:05:45.857Z","actor":"steward","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:06:35.945Z","actor":"arch-contract","phase":"done","target":"arch-contract","task":"task-118","outcome":"pass","report":"artifacts/agent/verify/debate/assumptions/as-section-range.md","evidence":"artifacts/agent/verify/debate/assumptions/as-section-range.md,artifacts/agent/verify/debate/assumptions/as-section-range-measure.json,scripts/benchmark/maintenance/as_section_range/heading_addressability.js","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:06:41.913Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:08:17.279Z","actor":"lead","phase":"message","target":"todo-owner","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:08:20+08:00", "actor": "lead", "phase": "message", "target": "todo-owner", "task": "task-119", "desc": "辩论完成，由 todo-owner 立项 5 阶段长期计划写入 docs/todo.md（L8）"}
+{"ts": "2026-10-25T01:08:21+08:00", "actor": "lead", "phase": "done", "target": "arch-contract", "task": "task-118", "desc": "AS-SECTION-RANGE 有条件成立；Lead 复跑统计差异=0", "outcome": "pass", "report": "artifacts/agent/verify/debate/assumptions/as-section-range.md"}
+{"ts":"2026-10-24T17:08:32.755Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:10:56.452Z","actor":"todo-owner","phase":"done","target":"todo-owner","task":"task-119","outcome":"pass","report":"docs/todo.md","evidence":"docs/todo.md,artifacts/agent/verify/todo/agent-arch-plan-2026-10-25.md","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:11:05.225Z","actor":"todo-owner","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:11:48.732Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:11:52+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "0.5.0-S1 粒度化实现：S1c正则统一→S1a三级读→S1b replace_section；双指标验收", "mode": "deep", "modeExplicit": true}
+{"ts": "2026-10-25T01:11:52+08:00", "actor": "lead", "phase": "done", "target": "todo-owner", "task": "task-119", "desc": "0.5.0 五阶段立项（拆两版本/不合并S2S3/R-D2前置）", "outcome": "pass", "report": "docs/todo.md#15"}
+{"ts":"2026-10-24T17:20:13.706Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:21:14.706Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:21:18+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "S1c 验证通过+5裁决；继续 S1a（先做KP end迁移评估）"}
+{"ts": "2026-10-25T01:21:18+08:00", "actor": "lead", "phase": "spawn", "target": "doc-consistency", "task": "task-125", "desc": "清偿 13/14 文档锚点债（HEAD 即红）", "mode": "standard", "modeExplicit": true}
+{"ts":"2026-10-24T17:21:27.406Z","actor":"lead","phase":"message","target":"doc-consistency","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:27:52.978Z","actor":"doc-consistency","phase":"done","target":"doc-consistency","task":"task-125","outcome":"pass","report":"artifacts/agent/verify/doc-anchors-debt-2026-10-25.md","evidence":"artifacts/agent/verify/doc-anchors-debt-2026-10-25.md","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:27:59.237Z","actor":"doc-consistency","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:28:01.961Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:29:03.040Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:32:46+08:00", "actor": "lead", "phase": "done", "target": "doc-consistency", "task": "task-125", "desc": "锚点债 13红→14绿（未改测试文件，逐符号grep）", "outcome": "pass", "report": "artifacts/agent/verify/doc-anchors-debt-2026-10-25.md"}
+{"ts": "2026-10-25T01:32:46+08:00", "actor": "lead", "phase": "message", "target": "doc-consistency", "task": "task-126", "desc": "扩展锚点守卫覆盖（kb.py未守卫/区间END/函数体内交叉引用）"}
+{"ts":"2026-10-24T17:34:02.280Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:36:20+08:00", "actor": "lead", "phase": "backfill", "target": "todo-owner", "task": "task-119", "desc": "更正：原 report 写成 markdown 锚点 docs/todo.md#15（不是文件路径），改为真实报告路径", "corrects": {"line": 45, "field": "report", "old": "docs/todo.md#15", "new": "artifacts/agent/verify/todo/agent-arch-plan-2026-10-25.md"}}
+{"ts": "2026-10-25T01:36:42+08:00", "actor": "lead", "phase": "backfill", "target": "todo-owner", "task": "task-119", "desc": "更正 L97：report 原写成 markdown 锚点（非文件路径）", "corrects": {"line": 97, "field": "report", "old": "docs/todo.md#15", "new": "artifacts/agent/verify/todo/agent-arch-plan-2026-10-25.md"}}
+{"ts":"2026-10-24T17:37:17.691Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:37:25+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "R-S1B-1：70%阈值作废（度量误设）+必须加>50%自适应回退；R-S1B-2 接线已验"}

@@ -1,0 +1,469 @@
+{
+  "A": {
+    "hit_rate": 1.0,
+    "per_round_tokens_median": 2079.0,
+    "rounds_max": 2,
+    "rounds_median": 1.0,
+    "rounds_min": 1,
+    "tasks": 20,
+    "total_median": 3079.0,
+    "total_sum": 67109
+  },
+  "B": {
+    "hit_rate": 1.0,
+    "per_round_tokens_median": 260.0,
+    "rounds_max": 2,
+    "rounds_median": 1.5,
+    "rounds_min": 1,
+    "tasks": 20,
+    "total_median": 654.5,
+    "total_sum": 28600
+  },
+  "arms": {
+    "A_read_document": "read_document(offset/limit=2000) 分页整篇读，直到锚点出现",
+    "B_granular": "outline → section(near_line) → 续片，直到锚点出现"
+  },
+  "artifactSha256": "5f25d1d057b3719e9d09f6033b5b9f08741cbd1619b3c4c08f80553f5e3bf802",
+  "bands": {
+    "find_sentence": {
+      "A_total_sum": 33123,
+      "B_total_sum": 1901,
+      "avg_rounds_A": 1.8,
+      "avg_rounds_B": 1.0,
+      "savings": 0.9426,
+      "tasks": 10
+    },
+    "read_section": {
+      "A_total_sum": 33986,
+      "B_total_sum": 26699,
+      "avg_rounds_A": 1.0,
+      "avg_rounds_B": 2.0,
+      "savings": 0.2144,
+      "tasks": 10
+    }
+  },
+  "bands_by_doc_size": {
+    "large": {
+      "A_total_sum": 26325,
+      "B_total_sum": 6106,
+      "savings": 0.7681,
+      "tasks": 4
+    },
+    "mid": {
+      "A_total_sum": 27221,
+      "B_total_sum": 14584,
+      "savings": 0.4642,
+      "tasks": 8
+    },
+    "small": {
+      "A_total_sum": 13563,
+      "B_total_sum": 7910,
+      "savings": 0.4168,
+      "tasks": 8
+    }
+  },
+  "max_rounds_per_task": 8,
+  "nature": "PROXY（检索充分性 + 固定策略轮数），不是完成率；不调用模型",
+  "per_task": [
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 2048
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 2219
+      },
+      "band": "small",
+      "doc_bytes": 7975,
+      "heading": "🔉 Pronunciation & Listening Cue",
+      "id": "AAA_Vocab::vocab/mainstay.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0835
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 2389
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 139
+      },
+      "band": "small",
+      "doc_bytes": 7975,
+      "heading": "📖 Core Definitions (Dictionary‑Based)",
+      "id": "AAA_Vocab::vocab/mainstay.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9418
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 1814
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 2002
+      },
+      "band": "small",
+      "doc_bytes": 6595,
+      "heading": "1. 官方样卷结构（PDF 目录原文）",
+      "id": "AAA_Vocab::docs/ref/ielts/sample-tasks-and-examiner-comments.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.1036
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 279
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 142
+      },
+      "band": "small",
+      "doc_bytes": 6595,
+      "heading": "2. 官方题面原文（已获取，逐字）",
+      "id": "AAA_Vocab::docs/ref/ielts/sample-tasks-and-examiner-comments.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": 0,
+      "savings": 0.491
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 2079
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 2248
+      },
+      "band": "small",
+      "doc_bytes": 8122,
+      "heading": "🔉 Pronunciation & Listening Cue",
+      "id": "AAA_Vocab::vocab/leaven.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0813
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 2420
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 109
+      },
+      "band": "small",
+      "doc_bytes": 8122,
+      "heading": "📖 Core Definitions (Dictionary‑Based)",
+      "id": "AAA_Vocab::vocab/leaven.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.955
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 2314
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 880
+      },
+      "band": "small",
+      "doc_bytes": 9381,
+      "heading": "1.1 强化学习的基础符号（这些你应该眼熟）",
+      "id": "AAA_KnowledgeBase::ReinforcementLearning/PeVFA_appendix.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": 0.6197
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 220
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 171
+      },
+      "band": "small",
+      "doc_bytes": 9381,
+      "heading": "1.2 PeVFA 引入的新符号",
+      "id": "AAA_KnowledgeBase::ReinforcementLearning/PeVFA_appendix.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": 0,
+      "savings": 0.2227
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 3816
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 4005
+      },
+      "band": "mid",
+      "doc_bytes": 15844,
+      "heading": "知识点10-1：语言基础模型（大模型）的发展与建模（对应表格“语言大模型”）",
+      "id": "人工智能导论知识点汇总::模块10：人工智能应用/1.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0495
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 4047
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 94
+      },
+      "band": "mid",
+      "doc_bytes": 15844,
+      "heading": "知识点10-2：提示学习、指令微调与RLHF（对应表格“语言大模型”）",
+      "id": "人工智能导论知识点汇总::模块10：人工智能应用/1.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9768
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 3004
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3245
+      },
+      "band": "mid",
+      "doc_bytes": 11656,
+      "heading": "🔉 Pronunciation & Listening Cue",
+      "id": "AAA_Vocab::vocab/mainstream.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0802
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3345
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 164
+      },
+      "band": "mid",
+      "doc_bytes": 11656,
+      "heading": "📖 Core Definitions (Dictionary‑Based)",
+      "id": "AAA_Vocab::vocab/mainstream.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.951
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 3095
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3328
+      },
+      "band": "mid",
+      "doc_bytes": 12188,
+      "heading": "🔉 Pronunciation & Listening Cue",
+      "id": "AAA_Vocab::vocab/exacerbate.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0753
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3511
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 277
+      },
+      "band": "mid",
+      "doc_bytes": 12188,
+      "heading": "📖 Core Definitions (Dictionary‑Based)",
+      "id": "AAA_Vocab::vocab/exacerbate.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9211
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 3063
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3303
+      },
+      "band": "mid",
+      "doc_bytes": 12090,
+      "heading": "🔉 Pronunciation & Listening Cue",
+      "id": "AAA_Vocab::vocab/ooze.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": -0.0784
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 3340
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 168
+      },
+      "band": "mid",
+      "doc_bytes": 12090,
+      "heading": "📖 Core Definitions (Dictionary‑Based)",
+      "id": "AAA_Vocab::vocab/ooze.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9497
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 6988
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 4310
+      },
+      "band": "large",
+      "doc_bytes": 42422,
+      "heading": "📋 题目 / Task",
+      "id": "AAA_Vocab::writing/part2/international-tourism-adv-disadv.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": 0.3832
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 7325
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 429
+      },
+      "band": "large",
+      "doc_bytes": 42422,
+      "heading": "✍️ 我的作答 / My Answer",
+      "id": "AAA_Vocab::writing/part2/international-tourism-adv-disadv.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9414
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 1,
+        "total": 5765
+      },
+      "B": {
+        "hit": true,
+        "rounds": 2,
+        "total": 1159
+      },
+      "band": "large",
+      "doc_bytes": 35356,
+      "heading": "Contents",
+      "id": "AAA_Vocab::docs/ref/ielts/ielts-academic-writing-sample-tasks-2023.extracted.md::0",
+      "kind": "read_section",
+      "rounds_delta": 1,
+      "savings": 0.799
+    },
+    {
+      "A": {
+        "hit": true,
+        "rounds": 2,
+        "total": 6247
+      },
+      "B": {
+        "hit": true,
+        "rounds": 1,
+        "total": 208
+      },
+      "band": "large",
+      "doc_bytes": 35356,
+      "heading": "WRITING TASK 1",
+      "id": "AAA_Vocab::docs/ref/ielts/ielts-academic-writing-sample-tasks-2023.extracted.md::1",
+      "kind": "find_sentence",
+      "rounds_delta": -1,
+      "savings": 0.9667
+    }
+  ],
+  "rounds_delta_median": 0.5,
+  "savings_total_pct": 0.5738,
+  "schema": "section-granularity-ab/v1",
+  "schema_cost": {
+    "all_tools_tokens": 10834,
+    "breakeven_tasks": 0.4,
+    "share_pct": 6.43,
+    "three_new_tools_tokens": 697
+  },
+  "sealed": {
+    "MEMORIA_CONFIG_DIR": true
+  },
+  "tasks": 20,
+  "token_estimator": "N1 静态口径（CJK 1.5 字/token，其它 3.5 字/token）",
+  "u3_total_up": false,
+  "verdict": {
+    "no_u3_regression": true,
+    "note": "双指标要求的 (i) 轮数 (ii) 每轮 token (iii) 总账 均已报；完成率需 metrics-baseline 真机补",
+    "savings_ge_70pct": false
+  }
+}
