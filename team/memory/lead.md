@@ -1,17 +1,6 @@
 # 记忆卡：lead
 
-<!-- team-memory-card/v1 · bounded to 8 KiB · omitted 3 older section(s) · truncated: true -->
-
-## 二、task-106：缺陷批（5 个，全部有现场证据）
-
-| # | 缺陷 | 证据 |
-|---|---|---|
-| **BUG-1** | 记忆卡：归属错 + 内容范围错 + 正文泄漏 | 上面那条 |
-| **BUG-2** | completed 任务不能 reassign | `only a pending or in-progress task can be reassigned`（收口后发现 owner 挂在僵尸成员上，改不了） |
-| **BUG-3** | 轨迹 64 KiB 是"整份成员文件"不是"单任务" | 执行者自己承认 |
-| **BUG-4** | 轨迹是"读取时物化"，session 被清就拿不到 | 你刚问过要不要清 61 个历史会话 |
-| BUG-5 | 新工具不进已存在会话的工具清单 | 我实测：asar 里有定义，当前会话调不到（这个只改文档） |
-
+<!-- team-memory-card/v1 · bounded to 8 KiB · omitted 4 older section(s) · truncated: true -->
 
 ## 三、task-105：契约版本 + 升级通知（你今天的新要求）
 
@@ -51,6 +40,7 @@ authority: machine
 authority: machine
 - （未自动分类；复查上方「最近结论」时请人工标注被推翻项）
 
+
 ## lead · steward 注册同步：org.md §2.2 行 + steward 章程 + agents.json 字段统一 + 快照重导出（修当前 team_audit FAIL=1）
 <!-- task-id: task-98 -->
 ### 我确认的事实（带证据：file:line / commit / 命令输出）
@@ -83,3 +73,18 @@ authority: machine
 ### 我推翻过的假设
 authority: machine
 - （未自动分类；复查上方「最近结论」时请人工标注被推翻项）
+
+## lead · 辩论协议协商：4 方独立提案 → 合并 → 异议 → 裁决 → 冻结（防同源伪多数/共享假设/票决压少数）
+<!-- task-id: task-113 -->
+### 我确认的事实（带证据：file:line / commit / 命令输出）
+authority: machine
+- 完成任务 task-113「辩论协议协商：4 方独立提案 → 合并 → 异议 → 裁决 → 冻结（防同源伪多数/共享假设/票决压少数）」：artifacts/agent/verify/debate/PROTOCOL.md, artifacts/agent/verify/debate/ruling/rulings.jsonl, artifacts/agent/verify/debate/freeze-v2.json, artifacts/agent/verify/debate/audit/steward-phase5-audit.md, artifacts/agent/verify/debate/SUMMARY.md, artifacts/agent/verify/debate/rules-index.json
+### 我试过但失败的路（含失败原因 —— 比成功经验更省时间）
+authority: machine
+- 工具 team_task_update 失败：Error: only an in-progress task can complete
+### 我留下的坑 / 下一个人该从哪开始
+authority: machine
+（没有未完成任务；从本段会话的结论继续）
+### 我推翻过的假设
+authority: machine
+- （未自动分类；复查上方机器事实时请人工标注被推翻项）

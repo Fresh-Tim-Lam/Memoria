@@ -478,6 +478,8 @@ def test_ask_leaves_a_plain_question_with_slashes_untouched(kb: Path) -> None:
 # ── ⑬ 内置只读根（2026-09-24；随包 `resources/agent-skills/**`）────────────────────────────────
 
 BUNDLED_SKILL = "web-research"
+#: 随包内置技能全集（`resources/agent-skills/**`，source `bundled`）。新增内置技能须同步此表。
+BUNDLED_SKILLS = ("kb-maintenance", "skill-creator", "web-research")
 
 
 def _fresh_kb(tmp_path: Path) -> Path:
@@ -499,13 +501,23 @@ def test_bundled_root_degrades_when_the_directory_is_missing(tmp_path: Path) -> 
     assert [root.source for root in skills.skill_roots(str(_fresh_kb(tmp_path)))] == ["kb"]
 
 
-def test_shipped_skill_shows_up_in_a_kb_that_has_none(with_bundled_root: None, tmp_path: Path) -> None:
+def test_shipped_skills_show_up_in_a_kb_that_has_none(with_bundled_root: None, tmp_path: Path) -> None:
     found = skills.discover_skills(str(_fresh_kb(tmp_path)))
-    assert [skill.name for skill in found] == [BUNDLED_SKILL]
-    assert found[0].source == skills.BUNDLED_SOURCE and found[0].rank == skills.BUNDLED_RANK
-    assert found[0].model_invocable is True and found[0].user_invocable is True
+    assert [skill.name for skill in found] == sorted(BUNDLED_SKILLS)
+    assert all(s.source == skills.BUNDLED_SOURCE and s.rank == skills.BUNDLED_RANK for s in found)
+    assert all(s.model_invocable is True and s.user_invocable is True for s in found)
     section = skills.render_skill_catalog(found)
-    assert f"- `{BUNDLED_SKILL}`：" in section and "何时用：" in section
+    assert "何时用：" in section and all(f"- `{name}`：" in section for name in BUNDLED_SKILLS)
+
+
+def test_all_shipped_skills_are_loadable_and_self_contained(with_bundled_root: None, tmp_path: Path) -> None:
+    """每个内置技能都要能加载、frontmatter 两字段非空，且正文**自足**（明说别去读自己的资源目录）。"""
+    kb = _fresh_kb(tmp_path)
+    for name in BUNDLED_SKILLS:
+        loaded = skills.load_skill(str(kb), name)
+        assert loaded is not None, name
+        assert loaded.description.strip() and loaded.when_to_use.strip(), f"{name} frontmatter 两字段不能空"
+        assert "库外路径会被读取工具拒绝" in loaded.content, f"{name} 必须自足：别去读自己的资源目录"
 
 
 def test_shipped_skill_body_is_loadable_and_self_contained(with_bundled_root: None, tmp_path: Path) -> None:
@@ -550,8 +562,9 @@ def test_shipped_skill_loads_through_the_tool_and_writes_nothing(with_bundled_ro
     assert _facts(root) == before, "加载内置技能是只读的：库内逐字节不变"
 
 
-def test_shipped_skill_is_registered_as_a_required_release_resource() -> None:
-    """随包清单必须带上它：漏拷时内置根**静默降级**（不报错），只有发布侧硬门禁拦得住。"""
+def test_shipped_skills_are_registered_as_required_release_resources() -> None:
+    """随包清单必须带上它们：漏拷时内置根**静默降级**（不报错），只有发布侧硬门禁拦得住。"""
     build_py = (_ROOT / "packaging" / "build.py").read_text(encoding="utf-8")
-    assert f'"agent-skills/{BUNDLED_SKILL}/SKILL.md"' in build_py, "没进 _REQUIRED_RELEASE_RESOURCES"
+    for name in BUNDLED_SKILLS:
+        assert f'"agent-skills/{name}/SKILL.md"' in build_py, f"{name} 没进 _REQUIRED_RELEASE_RESOURCES"
     assert 'RELEASE_RES / "agent-skills"' in build_py, "没进 _stage_runtime_resources()` 的登记表"
