@@ -37,16 +37,48 @@ class MaintenanceExecutor:
         self._jobs: dict[str, dict] = {}
         self._order: list[str] = []
         self._keep = keep
-        self._counters = {"scheduled": 0, "executed": 0, "merged": 0, "superseded_run": 0, "error": 0}
+        self._counters = {
+            "scheduled": 0,
+            "executed": 0,
+            "merged": 0,
+            "coalesced": 0,
+            "superseded_run": 0,
+            "error": 0,
+        }
 
     # ── 提交 ────────────────────────────────────────────────────────────────
 
-    def submit(self, kind: str, fn: Callable[[], Any], *, key: str = "", replace: bool = True) -> dict:
-        """登记作业并立即返回；同 kind+key 的 queued 旧作业被顶替（replace）。"""
+    def submit(
+        self,
+        kind: str,
+        fn: Callable[[], Any],
+        *,
+        key: str = "",
+        replace: bool = True,
+        coalesce_running: bool = False,
+    ) -> dict:
+        """登记作业并立即返回；同 kind+key 的 queued 旧作业被顶替（replace）。
+
+        ``coalesce_running=True``（task-69 P1，默认关闭，旧调用方行为不变）：
+        同 kind+key 已有**排队中或执行中**作业时直接复用该作业（返回其 job_id），
+        不再重复执行同一份重活。适用于幂等只读作业（如全库 validate）：
+        启动路径与静默检查可能同时提交，合并后只跑一次，且调用方仍按原样轮询结果。
+        """
         with self._lock:
-            if replace and key:
+            if key:
                 for job in self._jobs.values():
-                    if job["kind"] == kind and job["key"] == key and job["status"] == PENDING:
+                    if job["kind"] != kind or job["key"] != key:
+                        continue
+                    if coalesce_running and job["status"] in (PENDING, RUNNING):
+                        self._counters["coalesced"] += 1
+                        return {
+                            "status": "ok",
+                            "job_id": job["id"],
+                            "job_status": job["status"],
+                            "kind": kind,
+                            "coalesced": True,
+                        }
+                    if replace and job["status"] == PENDING:
                         job["status"] = SUPERSEDED
                         self._counters["merged"] += 1
             job_id = uuid.uuid4().hex[:12]

@@ -396,13 +396,19 @@ class UIAPI:
     # ── G5.3 / M7b：重活入线程池，RPC 提交即返回（见 services/executor.py）────
 
     def validate_kb_async(self) -> dict:
-        """把全库 validate 提交为后台作业：立即返回 job_id，RPC 不再被重活阻塞。"""
+        """把全库 validate 提交为后台作业：立即返回 job_id，RPC 不再被重活阻塞。
+
+        task-69 P1：``coalesce_running=True`` —— 启动路径与静默检查可能同时提交同一
+        知识库的全库校验，合并到同一个排队/执行中作业，避免重复跑 ~1s 只读审计。
+        """
         from memoria.services.executor import get_executor
 
         if not self._svc.kb_path:
             return {"status": "error", "message": "未打开知识库"}
         kb = self._svc.kb_path
-        return get_executor().submit("validate_kb", lambda: self._svc.validate_kb(), key=kb)
+        return get_executor().submit(
+            "validate_kb", lambda: self._svc.validate_kb(), key=kb, coalesce_running=True
+        )
 
     def job_status(self, job_id: str) -> dict:
         """查询后台作业状态与结果（前端轮询用）。"""
