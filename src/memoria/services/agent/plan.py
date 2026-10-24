@@ -99,7 +99,14 @@ OP_DELETE_KP = "delete_kp"
 #: **前置硬闸**：库里有未修复的**路径变更** ⇒ 拒（先「修复路径」）—— 判定直接调
 #: `document.sync_manifest()` 用的同一个 `detect_path_moves()`（单一事实源，不另写宽松判断）。
 OP_REBUILD_MANIFEST = "rebuild_manifest"
-
+#: **按 heading 替换一节正文**（2026-10-25，task-120 S1b / 辩论裁结论 4 R-R3 的能力缺口）：
+#: `BODY_EDIT_OPS` 五项全是**行号/块索引锚**，模型读到一节后想改它，只能自己把 heading 翻成行区间
+#: （而本地没有读时投影）——「按 heading 改一节」是**能力缺失**，不是接口包装。
+#: **不新增写原语**：本 op 在校验期被**归一化成一个 `replace_lines` 的 edit**（同样的
+#: `normalize_edits` + `check_edit` 逐字 `expect` 校验），编译期照样落 `edit_body`，
+#: 备份/撤销/审计全部走既有链（唯一写者：`propose_write → plan → compile → apply`）。
+#: 消歧拒绝"取首个"：同名多候选且无法用 `path`（父级标题链）/`near_line` 消歧 ⇒ `ambiguous_section`。
+OP_REPLACE_SECTION = "replace_section"
 #: 全部已知 op（**只增不改**）；不在表内 ⇒ 拒整批
 KNOWN_OPS: tuple[str, ...] = (
     OP_UPSERT_KP,
@@ -112,6 +119,7 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_DELETE_LINES,
     OP_UPSERT_BLOCK,
     OP_INSERT_IMAGE_REF,
+    OP_REPLACE_SECTION,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
     OP_DELETE_FILE,
@@ -137,6 +145,7 @@ COMPILED_OPS: tuple[str, ...] = (
     OP_DELETE_LINES,
     OP_UPSERT_BLOCK,
     OP_INSERT_IMAGE_REF,
+    OP_REPLACE_SECTION,
     OP_CREATE_FILE,
     OP_RENAME_FILE,
     OP_DELETE_FILE,
@@ -570,6 +579,94 @@ def _validate_body_edit(op: Mapping, verb: str, lines: Sequence[str], op_id: str
     return {"action": normalized["mode"], "edit": normalized}
 
 
+def _validate_replace_section(
+    kb_path: str, rel: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]
+) -> dict:
+    """按 heading 替换一节正文 —— **归一化成一个 `replace_lines` edit**（不新增写原语）。
+
+    能力缺口来源（task-120 S1b / 辩论结论 4 R-R3）：`BODY_EDIT_OPS` 五项全是行号/块索引锚，
+    模型读到一节后想改它只能自己把 heading 翻成行区间（本地没有读时投影）⇒「按 heading 改一节」缺失。
+
+    设计要点（全部复用既有链，不绕过）：
+    1. **消歧不取首个**：`resolve_section` 多候选且 `path`/`near_line` 无法消歧 ⇒ 报 `ambiguous_section`；
+    2. **行区间为准**：解析出 `[heading_line+1, section_end]`，交给 `replace_lines` 语义（标题行保留）；
+    3. **`expect` 逐字校验**：未显式给 `expect` 时用**计划视图里的当前节正文**兜底 ——
+       apply 前盘上若变了，`check_edit`/`edit_body` 的逐字比对会拒（不会盲写）；
+    4. **零新写者**：本函数只产出 edit，落地仍走 `edit_body`（备份/撤销/审计同一条链）。
+    """
+    from memoria.services.agent import section_index as section_index_mod
+
+    body = "\n".join(lines)
+    heading = op.get("heading")
+    target_line = op.get("line")
+    if not heading and target_line is None:
+        errors.append(
+            _err(op_id, "missing_field", "replace_section 需要 `heading`（或 `line` = `#L` 行号）")
+        )
+        return {"action": "invalid"}
+
+    level = op.get("level")
+    sec, sec_err = section_index_mod.resolve_section(
+        body,
+        heading=str(heading) if heading else None,
+        level=int(level) if level is not None else None,
+        path=op.get("path"),
+        near_line=int(op["near_line"]) if op.get("near_line") is not None else None,
+        line=int(target_line) if target_line is not None else None,
+    )
+    if sec_err is not None:
+        code_map = {
+            section_index_mod.AMBIGUOUS_SECTION: "ambiguous_section",
+            section_index_mod.SECTION_NOT_FOUND: "section_not_found",
+            section_index_mod.NO_HEADINGS: "no_headings",
+            section_index_mod.INVALID_LEVEL: "invalid_level",
+            section_index_mod.UNSUPPORTED: "unsupported",
+        }
+        hint = ""
+        cands = sec_err.extra.get("candidates") or []
+        if cands:
+            hint = "；候选=" + ", ".join(
+                f"L{c['line_no']}[{'/'.join(c['parent_path']) or '根'}]" for c in cands
+            )
+        elif sec_err.extra.get("suggestions"):
+            hint = "；相近标题=" + ", ".join(sec_err.extra["suggestions"])
+        errors.append(
+            _err(op_id, code_map.get(sec_err.code, "section_not_found"), sec_err.message + hint)
+        )
+        return {"action": "invalid"}
+
+    start = sec.heading.line_no + 1
+    end = sec.end_line_no
+    text = str(op.get("text") or "")
+
+    if end < start:
+        # 空节（标题下没有正文）：改写成"在标题行后插入"
+        synth: dict[str, Any] = {
+            "op": OP_INSERT_LINES,
+            "op_id": op_id,
+            "after": sec.heading.line_no,
+            "text": text,
+            "expect": "",
+        }
+        detail = _validate_body_edit(synth, OP_INSERT_LINES, lines, op_id, errors)
+        detail["resolved_section"] = sec.ident()
+        return detail
+
+    current = "\n".join(lines[start - 1 : end])
+    expect_raw = op.get("expect")
+    expect = current if expect_raw is None else str(expect_raw)
+    synth = {
+        "op": OP_REPLACE_LINES,
+        "op_id": op_id,
+        "range": {"start": start, "end": end},
+        "text": text,
+        "expect": expect,
+    }
+    detail = _validate_body_edit(synth, OP_REPLACE_LINES, lines, op_id, errors)
+    detail["resolved_section"] = sec.ident()
+    return detail
+
+
 def _validate_insert_image_ref(kb_path: str, op: Mapping, lines: Sequence[str], op_id: str, errors: list[dict]) -> dict:
     """图片引用（§7 4.1）：把 `![alt](<路径> "属性")` 插在某行之后 —— 行由 `file_ops` 拼、落地走 `insert`。"""
     from memoria.services.agent.file_ops import image_ref_line
@@ -983,6 +1080,8 @@ def _validate_op(
         detail = _validate_attach_links(kb_path, data, lines, op_id, errors, warnings, pending_targets)
     elif verb == OP_DETACH_LINKS:
         detail = _validate_detach_links(kb_path, data, lines, _sidecar_of(kb_path, rel), op_id, errors)
+    elif verb == OP_REPLACE_SECTION:
+        detail = _validate_replace_section(kb_path, rel, data, lines, op_id, errors)
     elif verb in BODY_EDIT_OPS:
         if verb == OP_UPSERT_BLOCK:
             detail = _validate_upsert_block(data, lines, op_id, errors)
@@ -1217,7 +1316,7 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             ]
             bucket["lines_changed"] = sorted(set(bucket["lines_changed"]) | set(changed))
             view.put(rel, new_lines)
-        elif parsed.get("op") in BODY_EDIT_OPS:
+        elif parsed.get("op") in BODY_EDIT_OPS or parsed.get("op") == OP_REPLACE_SECTION:
             body = "\n".join(view.lines(rel))  # **这一刻**的正文（前序 op 的效果已叠加）
             edit = parsed.get("edit") or {}
             # 与落地**同一个** `splice()`（`body_edit`）⇒ 预览给出的一定是真正会写下去的那几行
@@ -1227,6 +1326,9 @@ def preview_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
             entry["diff"] = diff
             entry["mode"] = edit.get("mode")
             entry["lines_after"] = len(new_body.splitlines())
+            if parsed.get("op") == OP_REPLACE_SECTION:
+                # 让审批卡能显示"改的是哪一节"（标题 + 行区间），不必让人自己猜行号
+                entry["section"] = parsed.get("resolved_section")
             view.put(rel, new_body.splitlines())
             if parsed.get("kind"):  # `upsert_block`：让卡片能显示"整块重建（kind / lang）"
                 entry["block"] = {"kind": parsed.get("kind"), "lang": parsed.get("lang") or ""}

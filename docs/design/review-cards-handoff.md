@@ -44,12 +44,14 @@
 | **R4.2 补记（按需揭晓）** | `99a9356b` | 2026-10-12 | `cloze` 取卡把 `front` 挖空为 `{{cN::}}`、整键剔 `back`；新增只读 **`review_reveal_one`** 只在 cloze 翻面时调。`pytest 1421→1426` |
 | **R4 P1** | `cf1301b6` | 2026-10-12 | 作答记录 **`attempts.jsonl`** + 只读工具 `review_attempts_list` + `short/produce` 输入框解锁。`pytest 1426→1433` |
 | **R4 P2** | `bf854d9b` | 2026-10-12 | agent 反馈写回 **`review_feedback_add`** + 作答 `attempt_id` + `review_attempts_list` 预过滤 + UI 显示上次反馈。`pytest 1433→1440` |
+| **R4-3 v1（悬浮卡）** | 未提交（工作区） | 2026-10-12 | agent 工具 `review_summon`/`review_revoke`（免审批）+ `agent_ask_poll` 载荷 `pending_summons` + 前端悬浮卡 `js/review-summon.js`（右下固定/可拖拽/单卡槽/就地作答复用同一套渲染）+ UI RPC `review_summon_card`（隔离卡面）。10 条待拍板已敲定（v1 先行、默认开、免审批、允许任意卡、不落盘）。 |
+| **R4-3 后续（管理页 + 队列）** | 未提交（工作区） | 2026-10-13 | 顶栏「复习」改为打开**复习卡管理页** `js/review-manage.js`（看所有卡含未到期+增删改/禁用+批量复习入口，走 `review_cards_list`/`review_cards_upsert`/`review_card_delete`/`review_card_disable` 4 个 UI RPC，均复用 agent 工具同一条领域实现）；悬浮卡**单卡槽→队列**（`S.queue` + `showNext` 重入保护）+ 去掉全局 30s 限流（保留同卡 5min）。 |
 
-> R4 P0 条目对应台账行：`docs/conventions/docs-management.md:340`；R4.2 → `:341`；R4.3 → `:342`；R4.2 补记 → `:343`；R4 P1 → `:344`；R4 P2 → `:345`；R4-3 方案 → `:346`。
+> R4 P0 条目对应台账行：`docs/conventions/docs-management.md:340`；R4.2 → `:341`；R4.3 → `:342`；R4.2 补记 → `:343`；R4 P1 → `:344`；R4 P2 → `:345`；R4-3 方案 → `:346`；R4-3 v1 落地 → 本文件接手后的同日至此台账行（未提交）。
 
 **方案已出、未施工**：
 
-- **悬浮卡形态（R4-3）**：设计已落盘（`docs/design/preview-render-refactor.md:1131` 起 `## 附 R4-3`），**未改任何 `src/**`**。边界：**v1 只支持「作业进行中」呼出**（复用现有 250ms 轮询）；**作业结束后**要呼出/撤回想生效须 **v2** 新增「面板打开时的低频空闲心跳（≈5–10s）」。待拍板项 10 条（见 §5）。
+- **悬浮卡 v2（空闲心跳）**：v1 已落地（未提交）。**v2 未施工**：面板打开时的低频空闲心跳（≈5–10s）⇒ 作业结束后仍能呼出/撤回。v1 的 10 条待拍板已全部敲定（见上表行）；v2 剩余边界见 `preview-render-refactor.md:1236-1240`。
 
 **小项待办（未做）**：见 §5 末。
 

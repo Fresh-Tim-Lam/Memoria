@@ -172,5 +172,112 @@ python scripts/benchmark/maintenance/section_headings_census.py \
 - **S1a**：新建 `services/agent/section_index.py`，实现 `outline / section / snippet`；
   C2（父级路径+行号双锚）/ C3（`AMBIGUOUS_SECTION`，**不得取首个**）/ C4（`#L` 一等回退）在**消费侧**实现；
   失败语义 `NOT_FOUND`（带候选）/ `AMBIGUOUS_SECTION`（候选列表）/ `UNSUPPORTED`；预算 800/4,000/600 tok + `part i/n` + next cursor。
-- **S1b**：`replace_section` 写 op（复用 `propose_write→plan→compile→apply` 唯一写者链，`expect` 双锚，单撤销，回执粒度）。
-- 两者都会在同一个 `section_index.py` 文件里落地（写域的另一个新文件），届时再补对应报告节。
+## 7. S1a：读侧三级粒度（`outline` / `section` / `snippet`）
+
+**新文件**：`src/memoria/services/agent/section_index.py`（heading 语义仍走唯一实现 `services/heading_proposals`，本模块只是消费者）。
+**验收制品**：`artifacts/agent/verify/todo/s1a-read-api.json`（`sha256=41766432d804f632…`；两次运行一致）
+**复跑**：`python scripts/benchmark/maintenance/section_read_api.py --json artifacts/agent/verify/todo/s1a-read-api.json`
+
+### 7.1 逐条对照 D 节（17 条断言全绿）
+
+| 断言 | D 节 | 结果 |
+|---|---|---|
+| 归一化：去 `#`/ATX 闭合/空白折叠；默认不折大小写、`ci=True` 才折 | D.1 | ✅ |
+| 唯一命中 | D.2 ② | ✅ |
+| 多候选 + `path`（父级标题链，后缀匹配）命中正确那一节 | D.2 ③a / C2 | ✅ |
+| 多候选 + `near_line` 取之前最近同名 | D.2 ③b | ✅ |
+| 仍 >1 ⇒ `AMBIGUOUS_SECTION` + `candidates[]`（**不取首个**） | D.2 ③c / **C3 红线** | ✅ |
+| 无匹配 ⇒ `SECTION_NOT_FOUND` + `suggestions[]`（difflib 最近 3） | D.2 ④ / D.3 | ✅ |
+| `NO_HEADINGS` | D.3 | ✅ |
+| `INVALID_LEVEL` | D.3 | ✅ |
+| `line=` 一等回退（`#L`），命中包含该行的**最深层**节（可 `outermost=True`） | **C4** | ✅ |
+| 围栏内 `#` 不进 outline | **C1** | ✅ |
+| 预算：outline ≤800 / section ≤4000（超限有 part+cursor）/ snippet ≤600 | task-120 | ✅ |
+
+### 7.2 真实语料实测（229 docs / 35,039 行 / 2,556,740 B）
+
+| 指标 | 数值 | 判读 |
+|---|---|---|
+| outline 最大 tokens | **646**（预算 800） | 无需降级；降级阶梯 `full → no_first_line → level≤2_only` 已实现且可机检 |
+| 超预算的节 | **25 个文档**有节超 4,000 tok，最大切 **3 片** | 每片带 `next_cursor={kind:section_part,line_no,part}`，无静默截断 |
+| snippet 最大 tokens | **406**（预算 600） | 硬预算：先缩 ±ctx，再截断该行字符；单窗口不可超预算 |
+| **C3 触发率**（同名标题占比） | **103 / 3517 = 2.93%** | **远低于 20% 阈值** ⇒ 不需要改显式 `{#id}` 锚（设计变更） |
+| 最差单文档 | `modeling_solutions.md` 64.5%（31 个 heading 里 20 个重名） | 该文档内 title-only 常歧义，但 `path`/`near_line`/`line` 三条路径都能解 |
+| **C2 双锚有效性** | **21 / 21 组**（父级路径互异的同名标题，全部命中正确那一节） | 反向用例也测：**无 path 必报歧义**，没有静默取错 |
+
+### 7.3 token 口径（必须说清，否则"省 X%"是假的）
+
+`estimate_tokens()` 用 **N1 静态口径**（CJK 1.5 字/token、其它 3.5 字/token），是**估算**；所有返回带 `tokens_estimated: true`。
+**完整往返口径（B4.f）不在本模块内**：本模块只报自身载荷，schema/system 成本由调用方（工具层）记账 —— 这是 §9 Q1 双指标要做的事。
+
+---
+
+## 8. S1b：`replace_section` 写 op（复用唯一写者链）
+
+**验收制品**：`artifacts/agent/verify/todo/s1b-replace-section.json`（`sha256=11a955e871d0e0bc…`）
+**复跑**：`python scripts/benchmark/maintenance/section_replace_op.py --json …`（在 **tempfile 临时 KB** 上跑，不碰仓库 KB）
+
+### 8.1 改动清单（3 个文件、9 处）
+
+| 文件 | 改动 |
+|---|---|
+| `services/agent/plan.py` | ① `OP_REPLACE_SECTION` 常量；② `KNOWN_OPS` 18 项；③ `COMPILED_OPS` 17 项；④ 新增 `_validate_replace_section()`；⑤ `_validate_op` 分发；⑥ `preview_plan` 并入 body-edit diff 分支 + 输出节身份 |
+| `services/agent/apply.py` | ⑦ import 常量；⑧ compile 分支 `elif verb in BODY_EDIT_OPS or verb == OP_REPLACE_SECTION` |
+| `services/agent/tools/kb.py` | ⑨ `propose_write` 工具说明新增 ⑰ 条（否则模型不知道 op 存在 = 不可达） |
+
+### 8.2 "零新写者"的机检证明
+
+`compile_plan()` 为 `replace_section` 产出的原语集合 = **`{"edit_body"}`**（既有原语），**新增原语数 0**。
+链路：`replace_section` →（校验期）归一化成 `replace_lines` 的 `edit` →（编译期）`edit_body` →（落地）既有
+`body_edit.splice()` → 既有 `backup.snapshot_pre_images()` + 撤销栈。`RISKY_OPS` 未变（与 `replace_lines` 同档）。
+
+### 8.3 矩阵（临时 KB，逐字节验证）
+
+| 用例 | 结果 |
+|---|---|
+| h1 整节替换 | ✅ 只改该节；标题行保留 |
+| h2 节替换 | ✅ |
+| **同名标题、无 `path`/`near_line`** | ✅ **报 `ambiguous_section`，不取首个**（C3 红线在写侧同样成立） |
+| 同名标题 + `near_line` 消歧 | ✅ 只改对的那一节 |
+| **围栏代码块内的 `#`** | ✅ 不构成节边界：整节（含代码块）被替换，`## 第二节` 未误伤 |
+| `expect` 不符 | ✅ 拒（`expect_mismatch`），**文件零改动** |
+| **单撤销逐字节复原** | ✅ 3/3 用例 `restore_batch` 后 sha 与 apply 前**完全相同** |
+| dry-run 零落盘 | ✅ 3/3 |
+| **preview 给行级 diff + 节身份** | ✅ `diff_available=true`、`lines_changed` 非空、`section={title,line_no,level,parent_path,end_line_no}` —— 人不会对着 op 名盲批 |
+
+### 8.4 已知未做（**必须明说**）
+
+- **双指标 A/B（省 ≥70% 且完成率不降 >10%）尚未做**。token 侧可用 N1 同口径静态复算（组 0 已是 −82.9~−89.3%），
+  但**"任务完成率"需要真实模型跑**（本仓有 `llm/` 配置）；跑模型要花额度，**我不擅自烧** —— 见 §9 Q1。
+  在它跑完前，**task-120 关闭条件 2 不满足**，本报告不宣称达标。
+
+---
+
+## 9. 需要 Lead 裁决
+
+| # | 事项 | 我的建议 |
+|---|---|---|
+| **Q1** | **双指标 A/B 怎么跑**（完成率需真实模型） | 三选一：(a) 用 `llm/config.py` 现配置跑 5 任务 × 2 臂 × 3 = 30 次调用（我报预算）；(b) 只跑**检索充分性代理指标**（答案锚点是否落在返回窗口内，不需要模型），并明确标"代理 ≠ 完成率"；(c) 交 metrics-baseline 独立验收 |
+| **Q2** | `kb.py` +7 行 ⇒ `agent-capabilities.md` 的 `kb.py:3879` 引用漂移 **+7** | 归 task-125（doc-consistency）；我不改 `docs/**` 其它文件 |
+| **Q3** | `replace_section` 是否进 `RISKY_OPS` | 倾向**不进**（与 `replace_lines` 同档，且 preview 已给行级 diff + 节身份）；你认为整节重写更险就加一行 |
+
+---
+
+## 10. 门禁与回归（本轮）
+
+| 项 | 结果 |
+|---|---|
+| py_compile（plan / apply / kb / section_index / heading_proposals / document） | ✅ 0 |
+| 四份验收脚本 | ✅ `census PASS` / `read_api PASS` / `replace_op PASS` / `kp_end_impact NO_IMPACT` |
+| `pytest -k "agent_plan or agent_apply or agent_body_edit or agent_audit"` | ✅ **92 passed / 0 failed** |
+| 未改前端、未 commit | ✅ |
+| `document.py` 行漂移 | 净 0（9/9）；14 个受监控符号行号不变 |
+
+---
+
+## 11. 下一步
+
+1. 等 Q1 裁决 → 跑双指标 A/B（或代理指标）→ 关 task-120 关闭条件 2；
+2. `docs/design/dsh-agent-port.md` 补 `replace_section` + R-D2 统一这两节（该文件在写域内，下一轮补）；
+3. 交 `arch-contract` 独立验收（不是我自己判过）。
+

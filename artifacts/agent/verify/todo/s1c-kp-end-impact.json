@@ -1,0 +1,162 @@
+{
+  "artifactSha256": "c33dabfa8f6b20cd774e00cc399617facdc17c4f544f6d1386e7b416a4e3d40a",
+  "kbs": [
+    {
+      "affected": [],
+      "kb": "docs/example/AAA_KnowledgeBase",
+      "stats": {
+        "docs": 38,
+        "docsWithSidecar": 16,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 19,
+        "kps": 20
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/AAA_Vocab",
+      "stats": {
+        "docs": 255,
+        "docsWithSidecar": 125,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 124,
+        "kps": 124
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/empty",
+      "stats": {
+        "docs": 2,
+        "docsWithSidecar": 2,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 2,
+        "kps": 2
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/example-boonie",
+      "stats": {
+        "docs": 7,
+        "docsWithSidecar": 6,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 15,
+        "kps": 15
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/example-english-kb",
+      "stats": {
+        "docs": 9,
+        "docsWithSidecar": 9,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 40,
+        "kps": 40
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/examples",
+      "stats": {
+        "docs": 28,
+        "docsWithSidecar": 18,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 55,
+        "kps": 55
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/rename-test",
+      "stats": {
+        "docs": 5,
+        "docsWithSidecar": 4,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 5,
+        "kps": 5
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/rich-content-test",
+      "stats": {
+        "docs": 12,
+        "docsWithSidecar": 1,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 0,
+        "kps": 0
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/showcase",
+      "stats": {
+        "docs": 14,
+        "docsWithSidecar": 10,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 35,
+        "kps": 35
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/人工智能导论知识点汇总",
+      "stats": {
+        "docs": 18,
+        "docsWithSidecar": 2,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 3,
+        "kps": 3
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/导入test",
+      "stats": {
+        "docs": 5,
+        "docsWithSidecar": 5,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 48,
+        "kps": 48
+      }
+    },
+    {
+      "affected": [],
+      "kb": "docs/example/行政法",
+      "stats": {
+        "docs": 9,
+        "docsWithSidecar": 5,
+        "kpAffected": 0,
+        "kpRepairBranch": 0,
+        "kpResolved": 49,
+        "kps": 49
+      }
+    }
+  ],
+  "method": "resolve_range 触发 end_snippet_not_found 修复分支的 KP，比较旧(朴素)/新(围栏感知)下一条 heading 行号",
+  "question": "fence-aware 的 KP end 重建会改动多少既有 sidecar？",
+  "schema": "section-kp-end-impact/v1",
+  "scope_note": "只覆盖仓库随附 docs/example/**（用户私有 KB 不在仓库内，未覆盖）",
+  "totals": {
+    "docs": 402,
+    "docsWithSidecar": 203,
+    "kpAffected": 0,
+    "kpRepairBranch": 0,
+    "kpResolved": 395,
+    "kps": 396
+  },
+  "verdict": "NO_IMPACT"
+}

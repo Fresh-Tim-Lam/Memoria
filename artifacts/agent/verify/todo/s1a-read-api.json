@@ -1,0 +1,140 @@
+{
+  "artifactSha256": "41766432d804f632faeda63169c294b739904d8a3d3095cf9e7273962af13226",
+  "assertions": [
+    {
+      "detail": "'标题'",
+      "falsifier": "",
+      "name": "A1 去行首 # 与 ATX 闭合 #",
+      "ok": true
+    },
+    {
+      "detail": "'a b c'",
+      "falsifier": "",
+      "name": "A1 空白折叠",
+      "ok": true
+    },
+    {
+      "detail": "'Foo' / 'foo'",
+      "falsifier": "",
+      "name": "A1 默认不折大小写 / ci=True 才折",
+      "ok": true
+    },
+    {
+      "detail": "titles=['文档', '案例 1', '定义', '案例 2', '定义', '结尾']",
+      "falsifier": "围栏内 # 被计入 ⇒ C1 失效",
+      "name": "A10 C1 围栏内 # 不进 outline",
+      "ok": true
+    },
+    {
+      "detail": "err=None, line=12",
+      "falsifier": "",
+      "name": "A2 唯一命中",
+      "ok": true
+    },
+    {
+      "detail": "code=AMBIGUOUS_SECTION, n=2",
+      "falsifier": "返回了某个候选 ⇒ C3 红线破了",
+      "name": "A5 同名多候选 ⇒ AMBIGUOUS_SECTION（不取首个）",
+      "ok": true
+    },
+    {
+      "detail": "err=None, line=7",
+      "falsifier": "命中案例 1 的节（line 4）⇒ C2 失效",
+      "name": "A3 path 父级链消歧命中正确那一节",
+      "ok": true
+    },
+    {
+      "detail": "line=4",
+      "falsifier": "",
+      "name": "A4 near_line 取之前最近同名",
+      "ok": true
+    },
+    {
+      "detail": "code=SECTION_NOT_FOUND, extra_keys=['suggestions', 'candidate_count']",
+      "falsifier": "",
+      "name": "A6 无匹配 ⇒ SECTION_NOT_FOUND + suggestions",
+      "ok": true
+    },
+    {
+      "detail": "code=NO_HEADINGS",
+      "falsifier": "",
+      "name": "A8 NO_HEADINGS",
+      "ok": true
+    },
+    {
+      "detail": "code=INVALID_LEVEL",
+      "falsifier": "",
+      "name": "A9 INVALID_LEVEL",
+      "ok": true
+    },
+    {
+      "detail": "err=None, title=定义, line=7",
+      "falsifier": "",
+      "name": "A7 line= 一等回退（C4）命中包含该行的节",
+      "ok": true
+    },
+    {
+      "detail": "over_budget=[], max_tokens=646",
+      "falsifier": "超预算却没降级 ⇒ 预算形同虚设",
+      "name": "A11 outline 全部 ≤ 预算或已降级",
+      "ok": true
+    },
+    {
+      "detail": "超预算节数=25, 最大分片=3",
+      "falsifier": "",
+      "name": "A11 section 超预算的节都给了 part/cursor",
+      "ok": true
+    },
+    {
+      "detail": "max_snippet_tokens=406",
+      "falsifier": "单窗口就超预算 ⇒ ±ctx 默认值过大",
+      "name": "A11 snippet 窗口 ≤ 预算",
+      "ok": true
+    },
+    {
+      "detail": "21/21 组（父级路径互异的同名标题）",
+      "falsifier": "任一失败 ⇒ 同级/异父重名会静默取错节",
+      "name": "A3(C2) 真实语料：父级链消歧命中率",
+      "ok": true
+    },
+    {
+      "detail": "103/3517 = 2.9286%；最差文档 {'doc': 'docs/example/AAA_KnowledgeBase/Mathemetical_Modeling/1_A/modeling_solutions.md', 'rate': 0.6452, 'dup_heads': 20, 'heads': 31}",
+      "falsifier": ">20% ⇒ 按 falsifier 需改显式 {#id} 锚（设计变更，须先报 Lead）",
+      "name": "A12 C3 触发率（同名标题占比）< 20%",
+      "ok": true
+    }
+  ],
+  "contract": "artifacts/agent/verify/debate/assumptions/as-section-range.md#D",
+  "corpus": {
+    "bytes": 2556740,
+    "docs": 229,
+    "kbs": [
+      "docs/example/AAA_KnowledgeBase",
+      "docs/example/人工智能导论知识点汇总",
+      "docs/example/行政法",
+      "docs/example/AAA_Vocab"
+    ],
+    "lines": 35039
+  },
+  "metrics": {
+    "c2_path_checked": 21,
+    "c2_path_ok": 21,
+    "dup_docs": 10,
+    "dup_groups": 33,
+    "dup_heads": 103,
+    "dup_rate": 0.029286,
+    "outline_max_tokens": 646,
+    "section_budget_exceeded_docs": 25,
+    "section_max_parts": 3,
+    "snippet_max_tokens": 406,
+    "total_heads": 3517,
+    "worst_dup_doc": {
+      "doc": "docs/example/AAA_KnowledgeBase/Mathemetical_Modeling/1_A/modeling_solutions.md",
+      "dup_heads": 20,
+      "heads": 31,
+      "rate": 0.6452
+    }
+  },
+  "passed": true,
+  "schema": "section-read-api-acceptance/v1"
+}

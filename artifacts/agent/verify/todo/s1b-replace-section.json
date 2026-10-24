@@ -1,0 +1,105 @@
+{
+  "artifactSha256": "11a955e871d0e0bc7caecc09923079b5c23f1bfa594883453291ea910fc6d4d2",
+  "assertions": [
+    {
+      "detail": "status=ok, diff_available=True, lines_changed=[16, 17, 18, 19, 20, 21], section={'line_no': 15, 'level': 2, 'title': '第二节', 'parent_path': ['总标题'], 'end_line_no': 21}",
+      "falsifier": "无 diff/无节身份 ⇒ 人只能看 op 名批准，等于盲批",
+      "name": "B5 preview 给行级 diff + 节身份（审批不能盲批）",
+      "ok": true
+    },
+    {
+      "detail": "primitives=['edit_body']",
+      "falsifier": "出现 edit_body 之外的原语 ⇒ 新增了写路径",
+      "name": "B1 replace_section 只用既有原语（edit_body）",
+      "ok": true
+    },
+    {
+      "detail": "cases=[('h1 整节替换', True), ('h2 节替换', True), ('同名标题无 path ⇒ ambiguous_section', True), ('同名标题 near_line 消歧', True), ('围栏内 # 不截断节（整节被替换，代码块随之消失）', True), ('expect 不符 ⇒ 拒（零改动）', True)]",
+      "falsifier": "",
+      "name": "B2 矩阵全部通过",
+      "ok": true
+    },
+    {
+      "detail": "restored=[True, True, True]",
+      "falsifier": "任一用例撤销后字节不同 ⇒ 撤销链被绕过",
+      "name": "B3 单撤销逐字节复原",
+      "ok": true
+    },
+    {
+      "detail": "dry_ok=[True, True, True]",
+      "falsifier": "",
+      "name": "B4 dry-run 零落盘",
+      "ok": true
+    }
+  ],
+  "cases": [
+    {
+      "after_len": 20,
+      "before_len": 151,
+      "case": "h1 整节替换",
+      "changed": true,
+      "dry_ok": true,
+      "expect_code": null,
+      "ok": true,
+      "primitives": [
+        "edit_body"
+      ],
+      "restored_byte_exact": true,
+      "undo_status": "ok"
+    },
+    {
+      "after_len": 129,
+      "before_len": 151,
+      "case": "h2 节替换",
+      "changed": true,
+      "dry_ok": true,
+      "expect_code": null,
+      "ok": true,
+      "primitives": [
+        "edit_body"
+      ],
+      "restored_byte_exact": true,
+      "undo_status": "ok"
+    },
+    {
+      "case": "同名标题无 path ⇒ ambiguous_section",
+      "errors": [
+        "ambiguous_section"
+      ],
+      "ok": true,
+      "status": "error"
+    },
+    {
+      "after_len": 181,
+      "before_len": 151,
+      "case": "同名标题 near_line 消歧",
+      "changed": true,
+      "dry_ok": true,
+      "expect_code": null,
+      "ok": true,
+      "primitives": [
+        "edit_body"
+      ],
+      "restored_byte_exact": true,
+      "undo_status": "ok"
+    },
+    {
+      "after_has_comment": false,
+      "case": "围栏内 # 不截断节（整节被替换，代码块随之消失）",
+      "ok": true,
+      "restored": true
+    },
+    {
+      "case": "expect 不符 ⇒ 拒（零改动）",
+      "codes": [
+        "expect_mismatch"
+      ],
+      "ok": true
+    }
+  ],
+  "doc_sha_before": "3331fee7798ac9c3cb9b0be26f5b34795af88356e6c9714e92d84eefec8d9150",
+  "kb_fixture": "临时 KB（tempfile，非仓库 KB）",
+  "op": "replace_section",
+  "passed": true,
+  "schema": "section-replace-op-acceptance/v1"
+}

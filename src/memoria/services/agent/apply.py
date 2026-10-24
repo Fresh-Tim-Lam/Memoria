@@ -46,6 +46,7 @@ from memoria.services.agent.plan import (
     OP_REBUILD_MANIFEST,
     OP_RENAME_FILE,
     OP_RENAME_KP,
+    OP_REPLACE_SECTION,
     OP_UPSERT_EDGE,
     OP_UPSERT_KP,
     base_versions as plan_base_versions,
@@ -329,7 +330,7 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                             "args": {"rel_path": rel, "anchor_text": parsed.get("anchor_text"), "line_number": int(line)},
                         }
                     )
-        elif verb in BODY_EDIT_OPS:
+        elif verb in BODY_EDIT_OPS or verb == OP_REPLACE_SECTION:
             if isinstance(parsed.get("edit"), Mapping):
                 calls.append(
                     {

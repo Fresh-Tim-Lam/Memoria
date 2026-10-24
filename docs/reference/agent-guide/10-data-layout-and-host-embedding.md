@@ -54,7 +54,7 @@
 | 派生索引 | `.memoria/kp_targets.json`、`.memoria/cache/**`、`.memoria/build/**` | 产品（可重建） | 可删，下次读写自动重建 | ❌ |
 | 图片资产 | `.memoria/images/**`（含 registry.json） | 产品（插入/清理 RPC） | 图片文件删=正文引用悬空（检查会报）；registry 可删（重建） | 图片本体≈事实源 |
 | 工具包 | `.memoria/agent/{README,prompt,kb-spec,preview-formats,fsrs.py,.kit.json}` | 产品（`install_kb_agent`，升级时覆盖） | 可删：删目录即完全回滚（kb-agent.md:252） | ❌ 分发物 |
-| 对话会话 | `.memoria/agent/sessions/*.jsonl` | 产品服务层（应用内对话 `ask()` → `SessionStore`，session/store.py:169-237；**M1 收尾起亦可由 `agent_session_delete` 删除**） | 可删：丢对话记录（过程数据，非知识） | ⚠️ 会话事实源（对话自身的权威记录；**不是**知识事实源）。M1c 起由 `agent_sessions_list` / `agent_session_load` **只读**列出与载入（ui.py:1311-1381），并作为续聊的上下文来源（history.py:333-348，**M2 起先应用 `compaction` 压缩、再兜底截断**）；**M1 收尾起 `agent_session_delete` 可删单份会话**（ui.py:1382-1420，会话目录是产品自己管理的运行时产物 ⇒ 这是**产品首次允许写知识库**，范围仅限该目录） |
+| 对话会话 | `.memoria/agent/sessions/*.jsonl` | 产品服务层（应用内对话 `ask()` → `SessionStore`，session/store.py:169-237；**M1 收尾起亦可由 `agent_session_delete` 删除**） | 可删：丢对话记录（过程数据，非知识） | ⚠️ 会话事实源（对话自身的权威记录；**不是**知识事实源）。M1c 起由 `agent_sessions_list` / `agent_session_load` **只读**列出与载入（ui.py:1311-1381），并作为续聊的上下文来源（history.py:333-348，**M2 起先应用 `compaction` 压缩、再兜底截断**）；**M1 收尾起 `agent_session_delete` 可删单份会话**（ui.py:1401-1420，会话目录是产品自己管理的运行时产物 ⇒ 这是**产品首次允许写知识库**，范围仅限该目录） |
 | UI 偏好 | `config/ui-settings.json`（`layout` 段 + **M1 收尾新增的顶层 `agent` 段**；2026-09-18 起 `agent.lastSessionByKb` 为**按库**记的「上次会话」映射，见 §2.15） | 前端 → `save_ui_settings` | 可删（回默认值） | ❌ |
 | 端点配置 | `config/agent.json` | 前端（对话面板）→ `agent_save_config` → `llm/config.py::save_config` | 可删（回默认端点，需重新配置） | ❌（含密钥，**仅本地文件**） |
 
@@ -63,7 +63,7 @@
 ### 2.1 `*.md`（知识正文）
 
 - **扫描口径**：`SKIP_DIR_NAMES = {".memoria", ".git", ".build", "__pycache__", "node_modules"}`（constants.py:11-17）；`.memoria/` 不进文件树、不参与构建与校验（kb-agent.md:39）。
-- **写入链路（唯一合法路径）**：RPC `save_document`（ui.py:206）→ `DocumentService.save_document`（document.py:317-430）：读原文件保留 frontmatter（335-338）→ **tmp + `os.replace` 原子写**（341-347，`MEMORIA_FSYNC` 等策略见 `durable_flush`）→ 清内存缓存（351）→ 更新 manifest（353-359，M6a 走延迟 pending）→ 增量维护图片注册表（365）→ 重新锚定 KP range（376）。
+- **写入链路（唯一合法路径）**：RPC `save_document`（ui.py:206）→ `DocumentService.save_document`（document.py:319-430）：读原文件保留 frontmatter（335-338）→ **tmp + `os.replace` 原子写**（341-347，`MEMORIA_FSYNC` 等策略见 `durable_flush`）→ 清内存缓存（351）→ 更新 manifest（353-359，M6a 走延迟 pending）→ 增量维护图片注册表（365）→ 重新锚定 KP range（376）。
 - 重命名/移动/删除走各自 RPC（`rename_*` / `delete_*` / 路径级联修复），不是直接改文件名。
 - ⚠️ **文档与代码相反的一处**：[../hard-constraints.md](../hard-constraints.md):31 写"`save_document` 成功后清理全库未引用图片（物理删除）"，代码注释与实现**明确不做**：清理只在用户显式调用 `cleanup_unused_images`（document.py:317-368；ui.py:873；前端 image-tools.js:443、474）。
 
@@ -173,9 +173,9 @@
 
 M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，前端见 [01 篇 §2.4](./01-shell-and-layout.md)）共 10 个 RPC：
 **4 个为 2026-09-17 新增**（`presentation/api/ui.py:1183-1278`：`agent_get_config` 1177-1183、`agent_save_config` 1184-1193、`agent_ask_start` 1194-1213、`agent_ask_poll` 1214-1225），**2 个为 2026-09-18（M1c）新增的只读会话历史**（ui.py:1311-1381：`agent_sessions_list` 1258-1300、`agent_session_load` 1301-1328），
-**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1279-1305、`agent_session_delete` ui.py:1382-1418），
-**1 个为 2026-09-20（会话改名）新增**（`agent_session_rename` ui.py:1419-1472，历史行右键菜单的「重命名」；**追加**一条 `session/title`，最新者胜，见下行），
-**1 个为 2026-09-18（用量可视化）新增的只读用量统计**（`agent_usage_stats` ui.py:1475-1507，见 §2.17）；
+**2 个为 2026-09-18（M1 收尾）新增**（`agent_ask_cancel` ui.py:1298-1305、`agent_session_delete` ui.py:1401-1418），
+**1 个为 2026-09-20（会话改名）新增**（`agent_session_rename` ui.py:1438-1472，历史行右键菜单的「重命名」；**追加**一条 `session/title`，最新者胜，见下行），
+**1 个为 2026-09-18（用量可视化）新增的只读用量统计**（`agent_usage_stats` ui.py:1494-1507，见 §2.17）；
 **行号重取说明（2026-09-20）**：`agent_session_rename` 插在 `agent_session_delete` 之后 ⇒ **`agent_usage_stats` 及其后的行号整体 +54**（`1368-1400` → `1422-1454`）；`agent_session_delete` 与更上方的方法**零漂移**（顺带按实读校正：`agent_session_delete` 旧记 `1329-1367`，实测 `def` 1329、末行 `}` 1365）。
 除下表中 `agent_ask_start` 的**追加可选参数**（`session_id`）、`agent_ask_poll` 的**追加字段**（`cancelled`）、
 `agent_sessions_list` 的**追加字段**（`capped`）、`loop/end.usage` 的**追加字段**（三个 cache 字段，见 §2.17）外，
@@ -292,7 +292,7 @@ M1「对话」面板（**2026-09-17 第二轮起挂在右侧 `#-agent-dock`**，
 `{prompt_tokens, completion_tokens, total_tokens, estimated, cache_read_tokens, cache_write_tokens, cache_miss_tokens}`
 （前 4 键既有，后 3 键本轮起随 `loop/end` 与 `agent_ask_poll.usage` 一并返回；`AskResult` 的公开字段未改）。另有一个**兄弟键 `model`**（不在 `usage` 内）：2026-09-20 起 `loop/end.data.model` 记**本轮实际使用的模型**（`loop.py:404`），消费者是「模型切换告知」与将来的逐轮成本归属；旧读者忽略未知键即可（payload 只增不改）。
 
-**4) RPC `agent_usage_stats`**（ui.py:1475-1507）—— **只读**，见 §2.15 表；
+**4) RPC `agent_usage_stats`**（ui.py:1494-1507）—— **只读**，见 §2.15 表；
 实现是 `services/agent/usage_report.py::usage_stats()`，与 CLI 报告脚本同一份口径。
 
 **5) 报告脚本** `scripts/benchmark/usage/report_usage.py`（目录与命名对齐 `scripts/benchmark/graph/`，README 中文单语）
