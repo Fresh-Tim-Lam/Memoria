@@ -668,6 +668,7 @@ window.MemoriaKbCheck = (function () {
   return {
     init,
     runKbValidate,      // 原 runKbValidate（openKb/initKb 打开知识库后立即检查用）
+    submitAsyncValidate, // task-84 P1：validate_kb_async 提交+轮询（app.js 首屏后 P3 作业复用，勿另写一套）
     startKbSilentCheck, // 原 startKbSilentCheck
     stopKbSilentCheck,  // 原 stopKbSilentCheck（closeKb 用）
     resetIndicators: () => updateCheckButtonBadge(null), // 清空「检查」角标（closeKb 用）

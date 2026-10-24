@@ -743,14 +743,17 @@
         updateNavButtons();
         await refreshFiles();
         await loadLinkTargets();
-        await loadGraphData();
         setStatus(T("app.status.kbLoaded"));
-        await window.MemoriaKbCheck?.runKbValidate?.({ silent: false });
+        // 静默后台检查（按设置的间隔轮询；本身已经是 P3 作业，不阻塞）
         window.MemoriaKbCheck?.startKbSilentCheck?.();
         // 打开知识库后自动补写/刷新 Trae 智能体工具包（幂等；不阻塞打开、不弹窗）
         window.MemoriaKbAgent?.ensure?.();
         // 2026-10-22：恢复「最后停留的文件」，且与用户主动导航竞态隔离（见 bootAutoOpen）
         await bootAutoOpen();
+        // ★ 2026-10-24（task-84 P1）：图谱数据 + 全库校验**移出首文档关键路径**（见函数注释）
+        //   注意必须排在 bootAutoOpen 之后：openFile 会 bumpEpoch（文件级陈旧语义），
+        //   而图谱/校验是**库级**任务，若排在前面会被当陈旧作业丢弃（实测过）。
+        schedulePostBootDerivedWork();
       } else {
         showWelcome(true);
         showKbIndicator("");
@@ -761,8 +764,72 @@
     }
   }
 
-  async function refreshKbPendingSummary() {
-    if (!state.kbPath) {
+  /**
+   * ★ 2026-10-24（task-84 P1）：把「图谱数据（含分组标签）」与「全库校验」移出首文档关键路径。
+   *
+   * 为什么（boot probe 实测 P50，真机 WebView2）：
+   *   `await loadGraphData()`  ≈ 900 ms（含全库 graph_audit 审计）
+   *   `await runKbValidate()`  ≈ 1026 ms（同步 validate_kb RPC）
+   * 二者串行排在 `bootAutoOpen()` 之前 ⇒ 冷启动 4443ms 里约 1.9s 是在等"用户此刻不需要的东西"
+   * （图谱页签/审计提示/状态栏检查统计）。首屏真正需要的只有 refreshFiles + 首文档。
+   *
+   * 怎么延后（**不自造调度器**，沿既有机制）：
+   *  · 前端用 M5 `MemoriaScheduler` 的 P3 队列（与 kb-check.js 静默检查同层）排一个作业；
+   *    后端没有 P3 概念，"延后"只能在前端调度里表达。
+   *  · 校验复用 kb-check.js 既有的 `submitAsyncValidate()`（validate_kb_async 提交 + job_status
+   *    轮询，真异步：提交 0.2–0.3ms、后台线程跑 987ms）；结果仍落 `state.kbValidateReport`，
+   *    角标 / 状态栏统计 / 已打开的检查弹窗照旧更新，只是晚到 1~2s。
+   *  · 图谱仍走原 `loadGraphData()`（含 refreshGraphGroupLabels + renderGraphGroupTabs +
+   *    applyGraphGroupLayout）⇒ 标签与页签最终一定出现，不是"永不加载"。
+   *  · 一致性：`state.kbPending` 的刷新路径（refreshKbPendingSummary）完全不动，语义保留。
+   *  · 陈旧语义：**故意不用 dropStale/gen** —— 图谱数据与全库校验是**库级**任务，
+   *    不应随"文件切换 bumpEpoch"被丢弃（openFile 每次切文件都会 bump）；改成运行前比对
+   *    `state.kbPath`：换库/关库才丢弃，同库内切文件照跑。作业排在 bootAutoOpen 之后，
+   *    避免与首文档打开争 CPU。
+   *  · 调度器缺失（极旧宿主）：退化为下一宏任务，只失去"让位给首屏"，不丢功能。
+   */
+  function schedulePostBootDerivedWork() {
+    const kb = state.kbPath;
+    if (!kb) return;
+    const run = async () => {
+      if (!state.kbPath || state.kbPath !== kb) return; // 换库/关库 ⇒ 陈旧丢弃
+      try {
+        // ① 图谱数据（buildKb/用户操作可能已加载过 ⇒ 幂等跳过）
+        if (!state.graphData) await loadGraphData();
+      } catch (_) {
+        /* 图谱失败不阻塞后续校验（loadGraphData 内部已有状态提示） */
+      }
+      if (!state.kbPath || state.kbPath !== kb) return;
+      try {
+        // ② 全库校验：优先既有真异步路径；旧宿主退化为同步校验（仍在 P3 里，不挡首屏）
+        const KbCheck = window.MemoriaKbCheck;
+        if (KbCheck && typeof KbCheck.submitAsyncValidate === "function") {
+          await KbCheck.submitAsyncValidate();
+        } else if (KbCheck && typeof KbCheck.runKbValidate === "function") {
+          await KbCheck.runKbValidate({ silent: true });
+        }
+      } catch (_) {
+        /* 校验失败不影响首屏；角标维持上次状态 */
+      }
+    };
+    const S = window.MemoriaScheduler;
+    if (S && typeof S.schedule === "function") {
+      const id = S.schedule({
+        kind: "post_boot",
+        key: "post_boot:" + kb,
+        priority: 3, // P3：首屏/交互优先，空闲才跑
+        replace: true,
+        // 不带 gen/dropStale：库级任务不能被"切文件 bumpEpoch"判陈旧（见上方注释）
+        run,
+      });
+      S.note?.("post_boot 入队 #" + id + "（图谱+校验移出首屏）");
+    } else {
+      // 极旧宿主没有调度内核：退化为「立即执行」，等价于改动前的同步行为（只失去让位首屏）
+      run();
+    }
+  }
+
+  async function refreshKbPendingSummary() {    if (!state.kbPath) {
       state.kbPending = null;
       return;
     }
