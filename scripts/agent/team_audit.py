@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 16 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
+覆盖 19 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -43,6 +43,14 @@
 14. mode_policy      : **spawn 是否显式做了模式决策**（AGENTS.md §0.5 L9）。task-100 新增。
                      扫 dispatch-log 的 phase=spawn：无 mode 字段或 modeExplicit=false ⇒ WARN
                      「静默默认 standard」；若整份日志都不记 mode ⇒ 显式报「无法判定 + checked_count」，不静默判绿。
+15. decision_trail   : **决策记录义务**（lead-dispatch-rules §6.5 / AGENTS.md §0.5 L10）。task-103 新增。
+                     T3=版本/Package/发布/回退、T1=组织资产/规范 的触发提交必须有 Decision/Why（T3/R1 另需
+                     Alternatives）；首两周 WARN、之后 FAIL；T2 判断类不可机检（盲区声明）。带 trailer 的提交抽取成索引行。
+16. model_policy     : **成员模型白名单**（org.md §2.1 维护纪律 6）。task-103 新增。
+                     snapshot.members[].model 必须 deepseek-flash，或 agents.json 有 model_exemption{reason,approved_at,approved_by}。
+17. steward_self_audit: **steward 自己可被机审**（org.md §2.6 B3/B4）。task-103 新增。
+                     standards_read 的 4 个标准 sha256 必须与磁盘一致；finding 的 rule_ref 可解析或标 proposal；
+                     open>14d WARN；SUMMARY 缺 blind_spots WARN。
 
 用法
 ----
@@ -59,6 +67,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -69,6 +78,13 @@ import tempfile
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# 决策索引模块与本次审计共用同一套 trailer/Rule-Ref 解析（单一实现，避免第二套口径）
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+try:  # pragma: no cover - import 失败时由各检查显式报输入不足
+    import decide as _decide  # type: ignore
+except Exception:  # noqa: BLE001
+    _decide = None
 
 # ---------------------------------------------------------------------------
 # 默认路径（相对仓库根）
@@ -105,6 +121,29 @@ DEAD_PATH_EXTS = (".py", ".js", ".mjs", ".ts")
 VALID_MODES = ("mechanical", "standard", "deep", "creator")
 # mode_policy 加分判据：任务描述明显只读/扫描类，却用了 standard/deep ⇒ 可能该用 mechanical
 _MECHANICAL_DESC_RE = re.compile(r"扫描|统计|盘点|清点|只读|取数|生成报告|写报告|格式检查|列一下|数一数")
+# ---- task-103 新增（P1）----
+DECISION_TRAIL_WINDOW_DAYS = 14
+# 条款 lead-dispatch-rules §6.5：首两周 WARN，之后 FAIL。条款 2026-10-24 落地 ⇒ 宽限到 2026-11-07。
+DECISION_TRAIL_GRACE_UNTIL = "2026-11-07"
+DECISION_TRAIL_REQUIRED_KEYS = ("Decision", "Why")
+# T1 机检可判定子集：组织资产 / 团队规范（普通 src 改动不计 —— 见 check_decision_trail docstring）
+DECISION_TRAIL_ORG_PATHS = {
+    "AGENTS.md",
+    "docs/guides/lead-dispatch-rules.md",
+    "docs/guides/agent-team-org.md",
+    "team/agents.json",
+    "team/team-board-snapshot.json",
+}
+STEWARD_DIR = "team/steward"
+STEWARD_STANDARDS = (
+    ("AGENTS.md", "§0.5"),
+    ("docs/guides/lead-dispatch-rules.md", "全部"),
+    ("docs/guides/agent-team-lessons.md", "全部"),
+    ("scripts/agent/team_audit.py", "检查清单"),
+)
+STEWARD_FINDING_DISPOSITIONS = ("open", "fixed", "dismissed", "mechanized", "proposal")
+STEWARD_OPEN_WARN_DAYS = 14
+
 # agents.json 合法的角色状态（standby 是本轮新增：领域已登记但当前无活，不计活性）
 VALID_ROLE_STATUS = ("active", "standby", "retired-in-dsh")
 # trigger_channel 的合法类型前缀（真实通道；不许假装有 cron）
@@ -2036,6 +2075,388 @@ def check_mode_policy(ctx: AuditContext) -> None:
 
 
 # ---------------------------------------------------------------------------
+# 11. task-103 新增（P1）：decision_trail / model_policy / steward_self_audit
+# ---------------------------------------------------------------------------
+def _fmt_moment(moment) -> str:
+    return moment.astimezone().strftime("%m-%d %H:%M") if isinstance(moment, datetime) else "?"
+
+
+def _fallback_parse_trailers(message: str) -> dict[str, str]:
+    """decide.py 不可用时的最小 trailer 解析（只取末尾键值块，不创作任何文本）。"""
+    trailers: dict[str, str] = {}
+    lines = [line.rstrip() for line in message.splitlines()]
+    index = len(lines) - 1
+    while index >= 0:
+        line = lines[index]
+        if not line.strip():
+            if trailers:
+                break
+            index -= 1
+            continue
+        match = re.match(r"^([A-Za-z][A-Za-z-]*):\s*(.*)$", line)
+        if not match:
+            break
+        trailers.setdefault(match.group(1), match.group(2).strip())
+        index -= 1
+    return trailers
+
+
+def _validate_rule_ref(repo: Path, rule_ref: str) -> tuple[bool, str]:
+    if _decide is not None:
+        return _decide.validate_rule_ref(repo, rule_ref)
+    if "#" not in rule_ref:
+        return False, "不是 path#section 形式"
+    path_part, section = rule_ref.split("#", 1)
+    path = repo / path_part
+    if not path.is_file():
+        return False, f"文件不存在：{path_part}"
+    tokens = [t for t in re.split(r"[§#\s、,，/·]+", re.sub(r"^#+", "", section)) if t]
+    text = _read_text(path)
+    return (any(t in text for t in tokens), "" if any(t in text for t in tokens) else "章节 token 未在文件中命中")
+
+
+def check_decision_trail(ctx: AuditContext) -> None:
+    """决策记录义务（lead-dispatch-rules §6 / AGENTS.md §0.5 L10，2026-10-24 起）。
+
+    机检口径 = **条款的可判定子集**（诚实声明，不是全量）：
+      - T3 不可回退（R0/R1）：改版本文件 / `Package/**` / 发布提交（`chore(release)`）/ `Revert`；
+      - T1 影响后续走向：改**组织资产/团队规范**（AGENTS.md、lead-dispatch-rules、org.md、agents.json、快照）；
+      - T2 判断类（有备选被否）**不可机检** —— 属盲区（见审计报告 blind_spots），不假装检查。
+    普通 `src/**` 代码提交**不计触发**（否则几乎每个提交都要 trailer = 假红灾难，lessons L1.2）。
+    宽限：§6.5「首两周 WARN、之后 FAIL」（DECISION_TRAIL_GRACE_UNTIL）。
+    另：把带 trailer 的提交**抽取成索引行**（只读报告；不写 decisions.jsonl —— A3/A6）。
+    """
+    check = "decision_trail"
+    commits = _git_commits_with_paths(ctx.repo, DECISION_TRAIL_WINDOW_DAYS)
+    if commits is None:
+        ctx.add(check, INFO, "非 git 仓库（或 git 不可用），decision_trail 跳过",
+                f"git -C {ctx.rel(ctx.repo)} rev-parse --git-dir")
+        return
+    if not commits:
+        ctx.add(check, WARN,
+                f"近 {DECISION_TRAIL_WINDOW_DAYS} 天无提交：decision_trail 输入为 0（**不得视为通过**）",
+                f"git log --since='{DECISION_TRAIL_WINDOW_DAYS} days ago'")
+        return
+    if _decide is None:
+        ctx.add(check, INFO, "decide.py 不可用（trailer 解析依赖它），decision_trail 跳过（输入不足，不算通过）",
+                "scripts/agent/decide.py")
+        return
+
+    # 一次 git log 拿全部 message（避免逐提交 show 的 N 次进程开销）
+    raw = _git_raw(ctx.repo, "log", "--all", f"--since={DECISION_TRAIL_WINDOW_DAYS} days ago",
+                   "--format=@@%H%x1f%B")
+    messages: dict[str, str] = {}
+    current_sha = None
+    buffer: list[str] = []
+    for line in raw.splitlines():
+        if line.startswith("@@"):
+            if current_sha is not None:
+                messages[current_sha] = "\n".join(buffer)
+            parts = line[2:].split("\x1f", 1)
+            current_sha = parts[0].strip()
+            buffer = [parts[1]] if len(parts) > 1 else []
+        elif current_sha is not None:
+            buffer.append(line)
+    if current_sha is not None:
+        messages[current_sha] = "\n".join(buffer)
+
+    grace_end = _parse_iso(DECISION_TRAIL_GRACE_UNTIL + "T00:00:00+08:00")
+    in_grace = grace_end is not None and datetime.now(timezone.utc) < grace_end.astimezone(timezone.utc)
+    severity = WARN if in_grace else FAIL
+
+    triggers: list[dict] = []
+    for commit in commits:
+        paths = commit["paths"]
+        subject = commit["subject"]
+        reasons: list[str] = []
+        if (any(p.startswith("Package/") or p in (DEFAULT_VERSION_FILE, "pyproject.toml") for p in paths)
+                or re.match(r"^chore\(release\)|^Revert\b", subject)):
+            reasons.append("T3-不可回退(R1)")
+        if any(p in DECISION_TRAIL_ORG_PATHS for p in paths):
+            reasons.append("T1-组织资产/规范")
+        if not reasons:
+            continue
+        message = messages.get(commit["sha"], "")
+        trailers = _decide.parse_commit_trailers(message)[0]
+        missing = [key for key in DECISION_TRAIL_REQUIRED_KEYS if not trailers.get(key)]
+        needs_alternatives = "T3-不可回退(R1)" in reasons or trailers.get("Reversibility") == "R1"
+        if needs_alternatives and not trailers.get("Alternatives"):
+            missing.append("Alternatives")
+        triggers.append({
+            "sha": commit["sha"],
+            "ts": _fmt_moment(commit["ts"]),
+            "subject": subject,
+            "reasons": reasons,
+            "missing": missing,
+            "trailers": trailers,
+        })
+
+    checked = len(triggers)
+    missing_trailer = [item for item in triggers if item["missing"]]
+    extracted = [item for item in triggers if item["trailers"].get("Decision") and not item["missing"]]
+
+    if missing_trailer:
+        examples = "; ".join(
+            f"{item['sha'][:8]}({item['ts']}，{'/'.join(item['reasons'])}，缺{','.join(item['missing'])})"
+            for item in missing_trailer[:6]
+        )
+        ctx.add(check, severity,
+                f"近 {DECISION_TRAIL_WINDOW_DAYS} 天 {checked} 个 T1/T3 触发提交中 "
+                f"{len(missing_trailer)} 个缺决策 trailer（{examples}"
+                f"{'…' if len(missing_trailer) > 6 else ''}）—— 违反 lead-dispatch-rules §6.5 / "
+                f"AGENTS.md §0.5 L10（{'首两周宽限：WARN' if in_grace else '宽限期已过：FAIL'}；"
+                f"机检口径是可判定子集：T3=版本/Package/发布/回退，T1=组织资产/规范；T2 判断类不可机检）",
+                "; ".join(f"git:{item['sha'][:10]}" for item in missing_trailer[:10]))
+
+    if extracted:
+        sample = "; ".join(
+            f"{item['sha'][:8]}→{item['trailers'].get('Decision-Id') or '(无 Decision-Id)'}："
+            f"{str(item['trailers'].get('Decision'))[:40]}"
+            for item in extracted[:3]
+        )
+        ctx.add(check, INFO,
+                f"decision_trail 抽取到 {len(extracted)} 个带合规 trailer 的决策提交（可索引；"
+                f"只读报告，不写 decisions.jsonl）：{sample}"
+                f"{'…' if len(extracted) > 3 else ''}",
+                "; ".join(f"git:{item['sha'][:10]}" for item in extracted[:10]))
+
+    if checked == 0:
+        ctx.add(check, INFO,
+                f"近 {DECISION_TRAIL_WINDOW_DAYS} 天 {len(commits)} 个提交中无 T1/T3 触发提交（checked_count=0，不适用）",
+                f"git log --since='{DECISION_TRAIL_WINDOW_DAYS} days ago'")
+
+
+def check_model_policy(ctx: AuditContext, data: dict | None) -> None:
+    """成员模型必须白名单（org.md §2.1 维护纪律 6，2026-10-24 人裁决"统一 flash"）。
+
+    判据：`snapshot.members[].model` 必须 ∈ {deepseek-flash}；
+    例外：该成员在 `team/agents.json` 有 `model_exemption{reason, approved_at, approved_by}` 三字段齐全。
+    快照缺 `model` 字段 ⇒ WARN「无法核对」（不静默绿）。
+    """
+    check = "model_policy"
+    if data is None:
+        ctx.add(check, FAIL, "输入不足：任务板快照不可用，无法核对成员模型",
+                f"{ctx.rel(ctx.snapshot_path)}")
+        return
+    members = [m for m in (data.get("members") or []) if isinstance(m, dict)]
+    if not members:
+        ctx.add(check, FAIL, "输入不足：快照 members 为空（输入为 0 不得判绿）",
+                f"{ctx.rel(ctx.snapshot_path)}:members")
+        return
+
+    exemptions: dict[str, dict] = {}
+    agents_payload = {}
+    if ctx.agents_path.is_file():
+        try:
+            agents_payload = json.loads(_read_text(ctx.agents_path))
+        except json.JSONDecodeError:
+            agents_payload = {}
+    for agent in agents_payload.get("agents") or []:
+        if not isinstance(agent, dict):
+            continue
+        exemption = agent.get("model_exemption")
+        if isinstance(exemption, dict) and all(exemption.get(key) for key in
+                                               ("reason", "approved_at", "approved_by")):
+            exemptions[str(agent.get("id"))] = exemption
+
+    checked = 0
+    problems = 0
+    unknown: list[str] = []
+    for member in members:
+        target = str(member.get("target") or "?")
+        model = member.get("model")
+        checked += 1
+        if not model:
+            unknown.append(target)
+            continue
+        if str(model) == "deepseek-flash":
+            continue
+        if target in exemptions:
+            exemption = exemptions[target]
+            ctx.add(check, INFO,
+                    f"成员 `{target}` 使用 {model}，有 model_exemption（{exemption.get('approved_by')}："
+                    f"{exemption.get('reason')}）",
+                    f"{ctx.rel(ctx.agents_path)}:agents[{target}].model_exemption")
+            continue
+        problems += 1
+        ctx.add(check, FAIL,
+                f"成员 `{target}` 的 model={model!r} 不在白名单 {{'deepseek-flash'}}，且 agents.json 无"
+                f" model_exemption{{reason,approved_at,approved_by}} —— 违反 org.md §2.1 维护纪律 6"
+                f"（人 2026-10-24：团队统一 flash）",
+                f"{ctx.rel(ctx.snapshot_path)}:members[{target}].model vs {ctx.rel(ctx.agents_path)}")
+
+    if unknown:
+        ctx.add(check, WARN,
+                f"{len(unknown)}/{checked} 名成员的快照缺 model 字段（{', '.join(unknown[:6])}）⇒ 无法核对模型策略，"
+                f"不静默判绿；修法：快照导出时包含 model 字段（role_registration 同源）",
+                f"{ctx.rel(ctx.snapshot_path)}:members[].model")
+
+    if problems == 0 and not unknown:
+        ctx.add(check, INFO,
+                f"{checked} 名成员模型均为 deepseek-flash（checked_count={checked}，exemptions={len(exemptions)}）",
+                f"{ctx.rel(ctx.snapshot_path)}:members[].model")
+
+
+def check_steward_self_audit(ctx: AuditContext) -> None:
+    """steward 自身可被机审（org.md §2.6 B3/B4；设计稿 §6.3）。
+
+    检查最近一轮 `team/steward/audit-*/`：
+      ① `standards_read.json` 必须覆盖四个标准且 sha256 与磁盘当前文件一致（不一致 = 用缓存标准 ⇒ FAIL）；
+      ② 每条 finding 的 `rule_ref` 可解析，或 `disposition=proposal`（把偏好当规范 ⇒ FAIL）；
+      ③ `disposition=open` 且 `audit_ts` 超过 14 天 ⇒ WARN；
+      ④ `SUMMARY.md` 必须存在且写 `blind_spots`（盲区声明）⇒ 否则 WARN。
+    """
+    check = "steward_self_audit"
+    base = ctx.repo / STEWARD_DIR
+    if not base.is_dir():
+        ctx.add(check, FAIL,
+                f"输入不足：{STEWARD_DIR}/ 不存在（steward 尚未产出审计收据；输入为 0 不得判绿）",
+                f"missing dir: {ctx.rel(base)}")
+        return
+    audit_dirs = sorted(
+        (item for item in base.iterdir() if item.is_dir() and item.name.startswith("audit-")),
+        key=lambda item: item.name,
+    )
+    if not audit_dirs:
+        ctx.add(check, FAIL,
+                f"输入不足：{STEWARD_DIR}/ 下没有任何 audit-* 目录（输入为 0 不得判绿）",
+                f"{ctx.rel(base)}")
+        return
+    latest = audit_dirs[-1]
+    problems = 0
+
+    # ① standards_read 收据（B3：四个标准的 sha256）
+    receipt_path = latest / "standards_read.json"
+    receipt: dict = {}
+    if not receipt_path.is_file():
+        problems += 1
+        ctx.add(check, FAIL, f"{latest.name} 缺 standards_read.json（B3 要求每次审计记标准 sha256）",
+                f"{ctx.rel(receipt_path)}")
+    else:
+        try:
+            receipt = json.loads(_read_text(receipt_path))
+        except json.JSONDecodeError as exc:
+            problems += 1
+            ctx.add(check, FAIL, f"standards_read.json 无法解析：{exc}", f"{ctx.rel(receipt_path)}")
+            receipt = {}
+        recordings = {}
+        for item in receipt.get("standards") or []:
+            if isinstance(item, dict) and item.get("path"):
+                recordings[str(item["path"])] = item
+        for path_rel, sections in STEWARD_STANDARDS:
+            path = ctx.repo / path_rel
+            if not path.is_file():
+                problems += 1
+                ctx.add(check, FAIL, f"标准文件不存在，无法核对收据：{path_rel}", f"{ctx.rel(path)}")
+                continue
+            current = hashlib.sha256(path.read_bytes()).hexdigest()
+            recorded = recordings.get(path_rel)
+            if recorded is None:
+                problems += 1
+                ctx.add(check, FAIL,
+                        f"standards_read 未覆盖标准 `{path_rel}`（{sections}）—— B3：每次审计必须重读并记 sha256",
+                        f"{ctx.rel(receipt_path)} vs {path_rel}")
+            elif str(recorded.get("sha256")) != current:
+                problems += 1
+                ctx.add(check, FAIL,
+                        f"标准已变而收据未更新（用缓存标准审计）：`{path_rel}` 磁盘 {current[:12]}… vs "
+                        f"收据 {str(recorded.get('sha256'))[:12]}… ⇒ 必须重读标准并重写收据",
+                        f"{ctx.rel(receipt_path)} vs {ctx.rel(path)}")
+
+    # ② findings：rule_ref 可解析，或 disposition=proposal
+    findings_path = latest / "findings.jsonl"
+    if not findings_path.is_file():
+        findings_path = base / "findings.jsonl"
+    findings, bad = _read_jsonl_safe(findings_path)
+    if not findings_path.is_file():
+        problems += 1
+        ctx.add(check, FAIL, f"{latest.name} 缺 findings.jsonl（finding 必须有结构化落点，不能只写 md）",
+                f"{ctx.rel(findings_path)}")
+    elif bad:
+        problems += 1
+        ctx.add(check, FAIL, f"findings.jsonl 有坏行：{bad[:3]}", f"{ctx.rel(findings_path)}")
+    elif not findings:
+        problems += 1
+        ctx.add(check, FAIL, "findings.jsonl 为空（输入为 0 不得判绿）", f"{ctx.rel(findings_path)}")
+
+    open_stale = 0
+    for index, finding in enumerate(findings, 1):
+        disposition = str(finding.get("disposition") or "")
+        if disposition not in STEWARD_FINDING_DISPOSITIONS:
+            problems += 1
+            ctx.add(check, FAIL,
+                    f"finding #{index}（{finding.get('finding_id')}）disposition={disposition!r} 不在 "
+                    f"{list(STEWARD_FINDING_DISPOSITIONS)}",
+                    f"{ctx.rel(findings_path)}:{index}")
+        elif disposition != "proposal":
+            rule_ref = finding.get("rule_ref")
+            if not rule_ref:
+                problems += 1
+                ctx.add(check, FAIL,
+                        f"finding #{index}（{finding.get('finding_id')}）非 proposal 但没有 rule_ref —— "
+                        f"指不到现行条款的发现只能标 proposal（org.md §2.6 B4）",
+                        f"{ctx.rel(findings_path)}:{index}")
+            else:
+                ok_ref, detail = _validate_rule_ref(ctx.repo, str(rule_ref))
+                if not ok_ref:
+                    problems += 1
+                    ctx.add(check, FAIL,
+                            f"finding #{index}（{finding.get('finding_id')}）的 rule_ref 不可解析"
+                            f"（{detail}）—— 把偏好当规范（org.md §2.6 B4）",
+                            f"{ctx.rel(findings_path)}:{index} rule_ref={rule_ref}")
+        if disposition == "open":
+            stamp = _parse_iso(str(finding.get("audit_ts") or finding.get("disposition_at") or ""))
+            if stamp is not None:
+                age_days = (datetime.now(timezone.utc) - stamp.astimezone(timezone.utc)).days
+                if age_days > STEWARD_OPEN_WARN_DAYS:
+                    open_stale += 1
+                    ctx.add(check, WARN,
+                            f"finding {finding.get('finding_id')} disposition=open 已 {age_days} 天（>"
+                            f"{STEWARD_OPEN_WARN_DAYS}）⇒ 需处置（fixed/dismissed/mechanized）",
+                            f"{ctx.rel(findings_path)}:{index}")
+
+    # ③ SUMMARY.md 存在且写 blind_spots
+    summary_path = latest / "SUMMARY.md"
+    if not summary_path.is_file():
+        problems += 1
+        ctx.add(check, FAIL, f"{latest.name} 缺 SUMMARY.md（审计报告是收据的一部分）",
+                f"{ctx.rel(summary_path)}")
+    else:
+        summary_text = _read_text(summary_path)
+        if "blind_spots" not in summary_text and "盲区" not in summary_text:
+            ctx.add(check, WARN,
+                    f"{latest.name}/SUMMARY.md 未写 blind_spots（盲区声明）—— 只报容易报的 = 过拟合风险",
+                    f"{ctx.rel(summary_path)}")
+
+    if problems == 0:
+        ctx.add(check, INFO,
+                f"最近审计 {latest.name} 可机审通过：standards 4/4 sha256 匹配；findings {len(findings)} 条"
+                f"（rule_ref 可解析/或 proposal）；blind_spots 已写",
+                f"{ctx.rel(latest)}")
+
+
+def _read_jsonl_safe(path: Path) -> tuple[list[dict], list[dict]]:
+    rows: list[dict] = []
+    bad: list[dict] = []
+    if not path.is_file():
+        return rows, bad
+    for lineno, raw in enumerate(path.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+        line = raw.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+        except json.JSONDecodeError as exc:
+            bad.append({"line": lineno, "error": str(exc)})
+            continue
+        if not isinstance(obj, dict):
+            bad.append({"line": lineno, "error": "not-a-json-object"})
+            continue
+        rows.append(obj)
+    return rows, bad
+
+
+# ---------------------------------------------------------------------------
 # 汇总/自测
 # ---------------------------------------------------------------------------
 def run_checks(ctx: AuditContext) -> list:
@@ -2056,6 +2477,10 @@ def run_checks(ctx: AuditContext) -> list:
     check_role_registration(ctx, data)
     check_dead_path_edit(ctx)
     check_mode_policy(ctx)
+    # task-103 新增（P1）：决策记录义务 / 模型策略 / steward 自身可机审
+    check_decision_trail(ctx)
+    check_model_policy(ctx, data)
+    check_steward_self_audit(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -2247,9 +2672,9 @@ def selftest() -> int:
             "exportedAt": "2099-01-01T00:00:00+08:00",
             "limit": {"maxMembers": 16, "currentMembers": 3},
             "members": [
-                {"target": "lead", "role": "lead", "status": "running"},
-                {"target": "alpha", "role": "teammate", "status": "inactive"},
-                {"target": "team-curator", "role": "teammate", "status": "inactive"},
+                {"target": "lead", "role": "lead", "status": "running", "model": "deepseek-flash"},
+                {"target": "alpha", "role": "teammate", "status": "inactive", "model": "deepseek-flash"},
+                {"target": "team-curator", "role": "teammate", "status": "inactive", "model": "deepseek-flash"},
             ],
             "retired": [], "inactiveOwners": ["alpha", "team-curator"], "tasks": [],
         }, ensure_ascii=False, indent=2))
@@ -2284,6 +2709,33 @@ def selftest() -> int:
         _write(green / "scripts/ok.py", "print('ok')\n")
         _write(green / "artifacts/agent/verify/ok-report.md",
                "# 报告\n\n已落盘 `scripts/ok.py`。\n")
+        # task-103：steward_self_audit 绿 fixture（四个标准 + 审计收据 + findings + blind_spots）
+        _write(green / "AGENTS.md", "# AGENTS\n\n## 0.5 派发不变量\nL1. selftest fixture\n")
+        _write(green / "docs/guides/lead-dispatch-rules.md", "# rules\n\n## 6. 决策记录义务\n")
+        _write(green / "scripts/agent/team_audit.py", "CHECKS = ()\n")
+        green_audit = green / STEWARD_DIR / "audit-2099-01-01"
+        green_receipt = {
+            "schema": "steward-standards-read/v1",
+            "audit_ts": "2099-01-01T00:00:00+08:00",
+            "tool": "team_audit.py@selftest",
+            "standards": [
+                {"path": path_rel, "sections": sections, "read_at": "2099-01-01T00:00:00+08:00",
+                 "sha256": hashlib.sha256((green / path_rel).read_bytes()).hexdigest()}
+                for path_rel, sections in STEWARD_STANDARDS
+            ],
+            "not_read": [],
+        }
+        _write(green_audit / "standards_read.json", json.dumps(green_receipt, ensure_ascii=False))
+        _write(green_audit / "findings.jsonl", json.dumps({
+            "finding_id": "SF-20990101-001", "audit_ts": "2099-01-01T00:00:00+08:00",
+            "severity": "WARN", "check": "steward_self_audit",
+            "rule_ref": "docs/guides/lead-dispatch-rules.md#6",
+            "claim": "selftest fixture", "evidence": ["selftest"],
+            "task_id": None, "disposition": "mechanized",
+            "mechanized_as": "team_audit.py::steward_self_audit",
+            "disposition_by": "selftest", "disposition_at": "2099-01-01T00:00:00+08:00", "note": None,
+        }, ensure_ascii=False) + "\n")
+        _write(green_audit / "SUMMARY.md", "# selftest audit\n\n## blind_spots\n- 无\n")
         green_ctx = AuditContext(
             repo=green,
             snapshot_path=green / DEFAULT_SNAPSHOT,
@@ -2454,9 +2906,107 @@ def selftest() -> int:
 
         # 5) 四个新检查必须已注册进 run_checks（否则上面单测绿、生产不跑 = 假绿）
         registered = {f.check for f in run_checks(_ctx(roles_green))}
-        for name in ("plan_consulted", "role_registration", "dead_path_edit", "mode_policy"):
+        for name in ("plan_consulted", "role_registration", "dead_path_edit", "mode_policy",
+                     "decision_trail", "model_policy", "steward_self_audit"):
             if name not in registered:
                 failures.append(f"run_checks 未注册新检查：{name}")
+
+        # ---------- task-103：三个 P1 检查的专属红/绿 fixture ----------
+        # (a) decision_trail：红 = 触发提交缺 trailer；绿 = 同触发带 trailer
+        trail_red = tmp / "trail-red"
+        _init_git(trail_red)
+        _write(trail_red / "Package" / "app.txt", "x\n")
+        _commit(trail_red, "chore(release): 发布 9.9.9", day(2))
+        _write(trail_red / "docs/guides/lead-dispatch-rules.md", "# rules\n\n## 6. 决策\n")
+        _commit(trail_red, "docs(rules): 改团队规范", day(2))
+        _write(trail_red / "src" / "plain.py", "x = 1\n")
+        _commit(trail_red, "feat: 普通代码（非触发）", day(1))
+        trail_red_findings = _isolated(check_decision_trail, _ctx(trail_red))
+        expect(trail_red_findings, "decision_trail", WARN, "缺决策 trailer")
+        if any(f.severity == WARN and "普通代码" in f.message for f in trail_red_findings):
+            failures.append("decision_trail 把普通 src 提交误判为触发（假红）")
+
+        trail_green = tmp / "trail-green"
+        _init_git(trail_green)
+        _write(trail_green / "Package" / "app.txt", "x\n")
+        _git_do(trail_green, "add", "-A")
+        _git_do(trail_green, "commit", "-q", "-m",
+                "chore(release): 发布 9.9.9\n\n"
+                "Decision: 发布 9.9.9\n"
+                "Alternatives: 不发布 (rejected: 已冻结需修复)\n"
+                "Why: 修复已验证\n"
+                "Rule-Ref: AGENTS.md#0.5 L10\n"
+                "Reversibility: R1\n",
+                env_extra={"GIT_AUTHOR_DATE": day(2).isoformat(), "GIT_COMMITTER_DATE": day(2).isoformat()})
+        trail_green_findings = _isolated(check_decision_trail, _ctx(trail_green))
+        if any(f.check == "decision_trail" and f.severity in (FAIL, WARN) for f in trail_green_findings):
+            failures.append("decision_trail 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in trail_green_findings if f.severity in (FAIL, WARN)))
+        expect(trail_green_findings, "decision_trail", INFO, "抽取到")
+
+        # (b) model_policy：红 = 非白名单且无豁免；绿 = flash / 有合法豁免
+        mp_repo = tmp / "model-policy"
+        _write(mp_repo / "team" / "agents.json", json.dumps({
+            "agents": [{"id": "ok-exempt", "status": "active", "model_exemption": {
+                "reason": "长链契约裁决", "approved_at": "2026-10-24", "approved_by": "human"}}],
+        }, ensure_ascii=False))
+        mp_ctx = _ctx(mp_repo)
+        mp_red = _isolated(check_model_policy, mp_ctx, {"members": [
+            {"target": "bad-member", "model": "v4-pro"},
+            {"target": "no-model-member"},
+        ]})
+        expect(mp_red, "model_policy", FAIL, "bad-member")
+        expect(mp_red, "model_policy", WARN, "no-model-member")
+        mp_green = _isolated(check_model_policy, mp_ctx, {"members": [
+            {"target": "ok-member", "model": "deepseek-flash"},
+            {"target": "ok-exempt", "model": "v4-pro"},
+        ]})
+        if any(f.check == "model_policy" and f.severity in (FAIL, WARN) for f in mp_green):
+            failures.append("model_policy 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in mp_green if f.severity in (FAIL, WARN)))
+
+        # (c) steward_self_audit：红 = 缓存标准 + rule_ref 不可解析 + 缺 blind_spots；绿 = 全部合规
+        def _write_standards(repo_dir):
+            _write(repo_dir / "AGENTS.md", "# AGENTS\n\n## 0.5 不变量\nL1.\n")
+            _write(repo_dir / "docs/guides/lead-dispatch-rules.md", "# rules\n\n## 6. 决策\n")
+            _write(repo_dir / "docs/guides/agent-team-lessons.md", "# lessons\n\n## 1. 假绿\n")
+            _write(repo_dir / "scripts/agent/team_audit.py", "CHECKS = ()\n")
+
+        def _write_audit(repo_dir, correct_sha: bool, bad_rule_ref: bool, blind_spots: bool):
+            audit = repo_dir / STEWARD_DIR / "audit-2026-10-24"
+            standards = []
+            for path_rel, sections in STEWARD_STANDARDS:
+                sha = hashlib.sha256((repo_dir / path_rel).read_bytes()).hexdigest() if correct_sha else "0" * 64
+                standards.append({"path": path_rel, "sections": sections,
+                                  "read_at": "2026-10-24T20:00:00+08:00", "sha256": sha})
+            _write(audit / "standards_read.json", json.dumps({
+                "schema": "steward-standards-read/v1", "audit_ts": now.isoformat(timespec="seconds"),
+                "tool": "team_audit.py@selftest", "standards": standards, "not_read": []}, ensure_ascii=False))
+            _write(audit / "findings.jsonl", json.dumps({
+                "finding_id": "SF-20261024-900", "audit_ts": now.isoformat(timespec="seconds"),
+                "severity": "WARN", "check": "selftest",
+                "rule_ref": "docs/guides/not-exist.md#1" if bad_rule_ref else "docs/guides/lead-dispatch-rules.md#6",
+                "claim": "selftest", "evidence": ["selftest"], "task_id": None,
+                "disposition": "mechanized", "mechanized_as": "team_audit.py::selftest",
+                "disposition_by": "selftest", "disposition_at": now.isoformat(timespec="seconds"), "note": None,
+            }, ensure_ascii=False) + "\n")
+            _write(audit / "SUMMARY.md", "# audit\n\n## blind_spots\n- selftest\n" if blind_spots else "# audit\n\n无\n")
+
+        sa_red = tmp / "steward-red"
+        _write_standards(sa_red)
+        _write_audit(sa_red, correct_sha=False, bad_rule_ref=True, blind_spots=False)
+        sa_red_findings = _isolated(check_steward_self_audit, _ctx(sa_red))
+        expect(sa_red_findings, "steward_self_audit", FAIL, "缓存标准")
+        expect(sa_red_findings, "steward_self_audit", FAIL, "rule_ref 不可解析")
+        expect(sa_red_findings, "steward_self_audit", WARN, "blind_spots")
+
+        sa_green = tmp / "steward-green"
+        _write_standards(sa_green)
+        _write_audit(sa_green, correct_sha=True, bad_rule_ref=False, blind_spots=True)
+        sa_green_findings = _isolated(check_steward_self_audit, _ctx(sa_green))
+        if any(f.check == "steward_self_audit" and f.severity in (FAIL, WARN) for f in sa_green_findings):
+            failures.append("steward_self_audit 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in sa_green_findings if f.severity in (FAIL, WARN)))
 
         if failures:
             print("SELFTEST FAIL")
@@ -2466,7 +3016,9 @@ def selftest() -> int:
         print("SELFTEST PASS：红 fixture 报出 9 类检查（roster×2 / stall ×2 / write_scope ×2 / "
               "artifact_refs / role_evidence / silent_failure ×6 / contract_drift ×5），"
               "commit_hygiene 在非 git fixture 上 INFO 跳过，绿 fixture 全绿；"
-              "task-100 四类新检查各自红 fixture 必红、绿 fixture 不误报、且都已注册进 run_checks。")
+              "task-100 四类新检查各自红 fixture 必红、绿 fixture 不误报、且都已注册进 run_checks；"
+              "task-103 三类 P1（decision_trail / model_policy / steward_self_audit）各自红 fixture 必红、"
+              "绿 fixture 不误报、且都已注册进 run_checks。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

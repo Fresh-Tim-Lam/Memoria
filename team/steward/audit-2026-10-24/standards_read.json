@@ -1,0 +1,36 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-24T20:11:27+08:00",
+  "tool": "team_audit.py@cedd8309a1ba",
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "read_at": "2026-10-24T20:11:27+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部",
+      "sha256": "df3580bbcd4b42284883685f9615e2c56b59849dab935af14955e80a42bf440d",
+      "read_at": "2026-10-24T20:11:27+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部",
+      "sha256": "fb8ca896be67e85996cb51cfb350ec3ec633d1e6283717c2def2c0fb4c708ead",
+      "read_at": "2026-10-24T20:11:27+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单",
+      "sha256": "cedd8309a1baf7c5c52a0c4cb4bf2fc5101fa59d0083a8183156d0d9bb4b179e",
+      "read_at": "2026-10-24T20:11:27+08:00"
+    }
+  ],
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6/§2.1，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "session 正文（42MB，按设计不读，只作证据引用）"
+  ]
+}
