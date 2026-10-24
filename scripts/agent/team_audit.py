@@ -409,10 +409,29 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
                     f"{ctx.rel(ctx.org_path)}:{o['line']} vs {ctx.rel(ctx.snapshot_path)}:members")
     # §2.2 常驻成员：出现在快照里是**合法的**，不报 FAIL
     org_legal = org_set | residents
-    for target in sorted(teammate_targets - org_legal):
+
+    # ★ 2026-10-24：按任务 spawn 的一次性执行者（ephemeral_agents）也是合法成员。
+    #   它们不入常驻名册（org.md 无法预知每次会 spawn 谁），但必须显式登记在
+    #   team/agents.json → ephemeral_agents（含 purpose/task/dispose_when），
+    #   否则仍然 FAIL —— 保留「名册漂移检测」强度，只豁免已声明的那批。
+    ephemeral = set()
+    try:
+        reg = json.loads((ctx.repo / "team" / "agents.json").read_text(encoding="utf-8"))
+        for item in (reg.get("ephemeral_agents") or []):
+            tid = item.get("id") if isinstance(item, dict) else None
+            if tid:
+                ephemeral.add(tid)
+    except (OSError, ValueError, AttributeError):
+        pass
+
+    for target in sorted(teammate_targets - org_legal - ephemeral):
         ctx.add(check, FAIL,
                 f"快照成员 `{target}` 未出现在 org.md §2 Owner 表中（名册漏登记）",
                 f"{ctx.rel(ctx.snapshot_path)}:members vs {ctx.rel(ctx.org_path)}:§2")
+    for target in sorted(teammate_targets & ephemeral):
+        ctx.add(check, INFO,
+                f"按任务 spawn 的执行者 `{target}`（已声明于 agents.json:ephemeral_agents，不计入常驻名册）",
+                f"{ctx.rel(ctx.snapshot_path)}:members")
     for target in sorted(retired & org_set):
         ctx.add(check, FAIL,
                 f"已退役的 `{target}` 仍出现在 org.md §2 当前 Owner 表中（应为历史记录/删除）",
@@ -439,7 +458,7 @@ def check_roster(ctx: AuditContext, data: dict | None) -> None:
                 f"{ctx.rel(ctx.org_path)}:§2 note")
     if org_owners and data.get("members"):
         # 快照口径：teammates = members - lead
-        expected_total = actual + len(residents)
+        expected_total = actual + len(residents) + len(teammate_targets & ephemeral)
         if len(teammate_targets) != expected_total:
             ctx.add(check, FAIL,
                     f"快照 teammate 数 {len(teammate_targets)} ≠ org.md §2 领域 Owner {actual} + §2.2 常驻 {len(residents)} = {expected_total}",

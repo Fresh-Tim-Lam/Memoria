@@ -132,6 +132,26 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 > **为什么是「退役」而不是「删除」**：条目进 `retired_agents[]`，理由 + 证据保留，可随时复活。
 > 代价只有 4 个名额；收益是新人读 org/agents 时不会再以为「有 9 个 Owner 在干活」。
 
+### 2.4 按任务 spawn 的执行者（ephemeral，不计入常驻名册）
+
+**背景（2026-10-24 新增）**：某些任务需要 deep 模式的长时执行者（如 P0 缺陷修复、跨文件测量工具改造），
+它们只活一个任务周期，**不是常驻成员**。org.md 无法预知每次会 spawn 谁，因此不能靠本表登记。
+
+**登记方式**：`team/agents.json → ephemeral_agents[]`，每条含
+`id` / `purpose` / `task` / `spawned_at` / `dispose_when`。
+
+**机检口径**（`team_audit.py::roster`）：
+- 快照里出现**已声明**的 ephemeral 成员 ⇒ **INFO**（不计入常驻计数）
+- 快照里出现**未声明**的成员 ⇒ 仍 **FAIL「名册漏登记」**（漂移检测强度不变）
+- 期望总数 = §2 领域 Owner + §2.2 常驻 + 当前活跃的 ephemeral
+
+**收口要求**：任务 `complete` 后**必须 retire 该成员并从 `ephemeral_agents` 删除**，
+否则它会以"已声明但已不存在"的状态残留（下一轮 Curator 审计会报）。
+
+**为什么不用"放宽成 WARN"**：那会让「改名漂移」也一起被放过
+（历史事故：`curator-r3` vs `team-curator` 曾导致 `role_evidence` 假报幽灵角色）。
+显式名单既保留了强度，又承认了"按任务 spawn"这个真实形态。
+
 ### 2.3 已退役领域（2026-10-23，DSH 侧已 retire，absorbed_by 见右列）
 
 > 依据：14 天内 0 派发 / 0 任务板 owner / 0 角色专属产物（`team/dispatch-log.jsonl` + 快照 + `git log`）。

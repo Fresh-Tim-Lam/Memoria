@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "updated_at": "2026-10-23T22:11:06+08:00",
+  "updated_at": "2026-10-24T10:36:51+08:00",
   "carrier": "dsh",
   "note": "Memoria Agent 注册表。DSH 载体下本文件是『可派发角色目录 + 契约声明』，不是运行时花名册：运行时花名册（Lead + 领域 Owner + 非领域常驻）以 docs/guides/agent-team-org.md §2 与 DSH list_agents 为准。schema v3（2026-10-23 第三轮 Curator）：新增 status_semantics（active/standby/retired-in-dsh 三分）、roster_alias（id 与 roster 名分叉时必须显式登记）、dsn_roster_actions（Lead 待执行的花名册动作队列）。机检：scripts/agent/team_audit.py 的 contract_drift（检查 8）逐条核对本文件的声明能否在磁盘指到现实。",
   "status_semantics": {
@@ -387,5 +387,22 @@
       "absorbed_by": "scripts/agent/team_audit.py + Curator",
       "evidence": "scripts/agent/team_audit.py（只读机检，收口必跑）；team/dispatch-log.jsonl 无 team-steward"
     }
-  ]
+  ],
+  "ephemeral_agents": [
+    {
+      "id": "p0-selection",
+      "purpose": "task-79 P0 跨块选区四操作矩阵（deep 模式执行者）",
+      "task": "task-79",
+      "spawned_at": "2026-10-24T10:22:00+08:00",
+      "dispose_when": "task-79 完成后 retire"
+    },
+    {
+      "id": "measurement-debt",
+      "purpose": "task-81/82 测量工具缺陷修复（deep 模式执行者）",
+      "task": "task-81",
+      "spawned_at": "2026-10-24T10:22:00+08:00",
+      "dispose_when": "task-82 完成后 retire"
+    }
+  ],
+  "ephemeral_agents_note": "按任务 spawn 的一次性执行者。它们**不是**常驻成员：不入 org.md §2/§2.2，不参与 roster 计数比对（team_audit.py 判 INFO 而非 FAIL），任务完成即 retire。命名约定（2026-10-24 起）：此类成员以任务域命名（如 p0-selection / measurement-debt），并在本列表登记 purpose/task/spawned_at/dispose_when，便于收口时清理。"
 }
