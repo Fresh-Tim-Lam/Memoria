@@ -1,103 +1,1038 @@
 {
-  "schema": "team-board-snapshot/v4",
+  "schema": "team-board-snapshot/v3",
+  "rosterSchema": "team-roster/v1",
+  "exportedAt": "2026-10-24T02:05:52.620Z",
   "exportedBy": "lead",
-  "exportedAt": "2026-10-24T00:37:14+08:00",
-  "note": "2026-10-24 第四次收口：task-62 拆分（关闭+task-81）+ todo-owner 关闭 13 条 + **v4 起 tasks[] 带 ownerName 与 writeScopes**（修 write_scope 检查「输入不足」的假绿）。team-plugin-creator 以 Creator 模式在跑。",
   "limit": {
-    "maxMembers": 16,
+    "maxTeammates": 16,
+    "currentTeammates": 8,
+    "maxMembers": 17,
     "currentMembers": 9,
-    "remaining": 7
+    "remaining": 8,
+    "used": 9
   },
   "members": [
     {
       "target": "lead",
       "role": "lead",
-      "status": "running"
+      "status": "running",
+      "id": "session-670e76a9-e8fc-4ad7-9f39-504305836826",
+      "model": "deepseek-flash"
     },
     {
       "target": "render-perf",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "bd880ead-5ee5-44ef-83e9-44a58323d7b4",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "渲染性能域 Owner：首开/切页签/打字时延与内存预算、性能回归守卫"
     },
     {
       "target": "sync-mapper",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "68dbf01f-057c-408a-87bb-80ccf1d0b810",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "编辑-预览同步域 Owner：锚点映射准确度、选区与光标映射、双向同步"
     },
     {
       "target": "arch-contract",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "f78d2ea9-1260-4410-bc6b-fab06a2c3308",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "架构与契约域 Owner：显示子系统契约 C1–C12、重构总纲与阶段裁决、agent-guide/01+10"
     },
     {
       "target": "doc-consistency",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "d9360af9-a882-4267-b70d-39db465970d3",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "文档一致性域 Owner：文档↔代码一致性审计、文档债、agent-guide/06+07+08"
     },
     {
       "target": "metrics-baseline",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "589af520-10a8-407b-bee6-0a49498b5f1a",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "度量与基准域 Owner：真机/无头度量协议、基线与预算、交互金标准回归"
     },
     {
       "target": "todo-owner",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "c355151b-570b-42a0-b834-a988d95901cd",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "TODO 文档 Owner：维护 docs/todo.md、登记新缺陷/待办、审计陈旧与废弃项"
     },
     {
       "target": "curator-r3",
       "role": "teammate",
-      "status": "inactive"
+      "status": "inactive",
+      "id": "e16d5e47-89d2-48d4-819b-199a7cc5aa8d",
+      "model": "deepseek-v4-pro",
+      "context": "fresh",
+      "description": "团队复盘与优化：梳理本轮犯过的错误、根因分析、改造组织与团队插件（第三轮）"
     },
     {
       "target": "team-plugin-creator",
       "role": "teammate",
-      "status": "running"
+      "status": "inactive",
+      "id": "b5b06a33-6cdd-4d5a-9e23-d8abaeacb30d",
+      "model": "deepseek-flash",
+      "context": "fresh",
+      "description": "Creator：实现 DSH Agent Teams 插件侧改进 R1–R9（roster 落盘/审计日志/强制 owner/complete 绑产物/快照生成/周期触发/preset 暴露/token 统计）"
     }
   ],
   "retired": [
     {
+      "target": "render-impl",
+      "description": "落地 CHTML→SVG 渲染优化（补组件+切换+兼容复核+自验）"
+    },
+    {
+      "target": "mapper-fix",
+      "description": "修复有序列表列号少位 bug（R3，锚点准确度 P0）"
+    },
+    {
+      "target": "jump-fix",
+      "description": "修复 openFile 跳转静默失败 bug（R4，跳转准确度 P0）"
+    },
+    {
       "target": "kp-owner",
-      "absorbed_by": "Lead + L2 subagent"
+      "description": "知识点域 Owner：知识点面板、图谱联动、KP 抽取与 agent-guide/05"
     },
     {
       "target": "settings-owner",
-      "absorbed_by": "Lead + L2 subagent"
-    },
-    {
-      "target": "surface-new",
-      "absorbed_by": "Lead + L2 subagent"
+      "description": "设置/i18n/快捷键域 Owner：设置项、i18n 键、快捷键与 agent-guide/09"
     },
     {
       "target": "team-steward",
-      "absorbed_by": "scripts/agent/team_audit.py + Curator"
+      "description": "团队维护域 Owner：名册/编制一致性、任务生命周期、报告落盘核验、写域冲突；只检测+提议，执行权归 Lead"
+    },
+    {
+      "target": "surface-new",
+      "description": "新渲染管线 Owner：RenderCore（AST→块树→DOM）实现，接 new 插头；与 legacy 双跑等价"
+    },
+    {
+      "target": "probe-deep",
+      "description": "能力探针：验证 deep 模式是否把模型切到 v4-pro"
+    },
+    {
+      "target": "probe-mech",
+      "description": "能力验证：mechanical 模式（reasoning off + flash）"
+    },
+    {
+      "target": "probe-deep2",
+      "description": "能力验证：deep 模式（reasoning high + v4-pro）"
     },
     {
       "target": "team-curator",
-      "absorbed_by": "curator-r3（按轮 spawn）"
+      "description": "团队策展人：审计并维护 Memoria 团队资产（agents.json / 契约 / org 表 / 脚本），唯一持有团队定义写权限"
     }
   ],
   "tasks": [
     {
-      "id": "task-79",
-      "status": "pending",
-      "ownerName": "todo-owner",
-      "priority": "P0",
-      "subject": "多行选区跨块操作静默失败（复制/剪切/删除/粘贴）",
+      "id": "task-1",
+      "status": "completed",
+      "subject": "render-perf：大库渲染性能剖析报告",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify/render-perf-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-2",
+      "status": "completed",
+      "subject": "sync-mapper：编辑-预览同步/锚点映射准确度清单",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify/sync-mapper-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-3",
+      "status": "completed",
+      "subject": "render-impl：CHTML→SVG 渲染组件切换落地",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/vendor/mathjax/es5/tex-svg.js",
+        "src/memoria/ui/static/app/index.html",
+        "artifacts/agent/verify/render-impl-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-4",
+      "status": "completed",
+      "subject": "mapper-fix：修有序列表列号少位 bug（R3/P0）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/mapper.js",
+        "src/memoria/ui/static/app/js/source-gen.js",
+        "artifacts/agent/verify/mapper-fix-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-5",
+      "status": "completed",
+      "subject": "jump-fix：修 openFile 跳转静默失败 bug（R4/P0）",
+      "owner": "lead",
       "writeScopes": [
         "src/memoria/ui/static/app/js/app.js",
-        "src/memoria/ui/static/app/js/edit-handler.js",
-        "scripts/benchmark/surface/scenarios/selection-*",
-        "scripts/benchmark/surface/run_selection.py",
-        "scripts/benchmark/maintenance/edit_selection_*"
+        "artifacts/agent/verify/jump-fix-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-6",
+      "status": "completed",
+      "subject": "arch-agent：渲染重构总纲+历史决策分析",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify/arch-agent-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-7",
+      "status": "completed",
+      "subject": "detail-agent：渲染管线+同步映射细节分析",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify/detail-agent-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-8",
+      "status": "completed",
+      "subject": "metrics-agent：根治度量噪声+固化可复现取样协议",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/benchmark/surface/cdp.mjs",
+        "scripts/benchmark/surface/run_probe.py",
+        "docs/design/benchmark-measurement-protocol.md",
+        "artifacts/agent/verify/metrics-agent-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-9",
+      "status": "completed",
+      "subject": "[render-perf] 修预览缓存命中率 0%（内容哈希判有效期）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify/render-perf-cache-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-10",
+      "status": "completed",
+      "subject": "[sync-mapper] 修 S1/S2：画笔生命周期收尾 + 只读态样式闸门",
+      "owner": "sync-mapper",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify/style-brush-fix-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-11",
+      "status": "completed",
+      "subject": "[metrics-agent] 真机应用度量：WebView2 远程调试 + 页面内打点 + 人工/自动偏差校验",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "docs/design/realapp-measurement-protocol.md",
+        "artifacts/agent/verify/realapp-measure-report.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-12",
+      "status": "completed",
+      "subject": "[kp-owner] 修 S4/S5/S5b：KP 行号未本地平移（Delete / commitRange / _surfaceSpliceRange）",
+      "owner": "kp-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-13",
+      "status": "completed",
+      "subject": "[settings-owner] 修 S8：nav 设置被 preview-cache sanitize 静默丢弃（app.js:13718 传原始 policy）",
+      "owner": "settings-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [
+        "task-16",
+        "task-19"
+      ],
+      "revision": 5
+    },
+    {
+      "id": "task-14",
+      "status": "completed",
+      "subject": "[arch-contract] P1：实现 BlockIndex 核心 + 单测（UMD 双出口，不碰 app.js）",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/block-index.js",
+        "scripts/benchmark/maintenance/block_index_test.js",
+        "src/memoria/ui/static/app/index.html",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-15",
+      "status": "completed",
+      "subject": "[doc-consistency] P4：data--src-line 写入门禁 + 正反例自测（只写 scripts/，可与 P1 并行）",
+      "owner": "doc-consistency",
+      "writeScopes": [
+        "scripts/benchmark/maintenance",
+        "docs/design/block-identity-design.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-16",
+      "status": "completed",
+      "subject": "[kp-owner] 修 S9：kp.tags 非数组导致整个知识点列表渲染崩溃（一行守卫）",
+      "owner": "kp-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [
+        "task-12"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-17",
+      "status": "completed",
+      "subject": "[doc-consistency] P4b：移除 markdown-preview 模板中的错误坐标属性（6→4，不豁免）",
+      "owner": "doc-consistency",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/markdown-preview.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-18",
+      "status": "completed",
+      "subject": "[arch-contract] P2：stampBlockLines 薄壳化 + 5 调用点接线（销 data--src-line 写点，G1 按分路径裁决）",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [
+        "task-16",
+        "task-13"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-19",
+      "status": "completed",
+      "subject": "[render-perf] 热点：每键 148 次空操作 classList.toggle（先于 P2，为性能闸清噪）",
+      "owner": "render-perf",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify",
+        "scripts/benchmark/maintenance/sel_covered_equivalence_test.js"
+      ],
+      "blockedBy": [
+        "task-16"
+      ],
+      "revision": 5
+    },
+    {
+      "id": "task-20",
+      "status": "completed",
+      "subject": "[doc-consistency] P3b：mermaid 转发写改为 BlockIndex 重写（门禁 4→2）",
+      "owner": "doc-consistency",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/markdown-preview.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [
+        "task-18"
+      ],
+      "revision": 4
+    },
+    {
+      "id": "task-21",
+      "status": "completed",
+      "subject": "[metrics-baseline] 补契约 C1 实测用例：编辑一块 ⇒ 其余块 id 不变（旧实现必须判红）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/cdp.mjs",
+        "scripts/benchmark/surface/run_probe.py",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-22",
+      "status": "completed",
+      "subject": "[metrics-baseline] 建「渲染保真度」指标 + 结构签名（阶段 2 的核心验收工具）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/fidelity.mjs",
+        "scripts/benchmark/surface/run_fidelity.py",
+        "docs/design/render-fidelity-contract.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-23",
+      "status": "completed",
+      "subject": "[team-steward] 团队体检机制：机检脚本 + 首份审计报告 + org.md §10 草案",
+      "owner": "team-steward",
+      "writeScopes": [
+        "scripts/agent/team_audit.py",
+        "artifacts/agent/verify",
+        "docs/guides/agent-team-org.md"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-24",
+      "status": "completed",
+      "subject": "[metrics-baseline] 性能操作覆盖矩阵 + P_old 基线 + 预算表（阶段 2 前置，与保真度并列）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/scenarios",
+        "scripts/benchmark/surface/run_perf_ops.py",
+        "scripts/benchmark/surface/perf_ops.mjs",
+        "docs/design/perf-ops-contract.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-25",
+      "status": "completed",
+      "subject": "[metrics-baseline] P0-b 渲染保真覆盖面补齐（图片/链接/高亮/表格/mermaid/行内公式/其它 surface/窗口化口径）+ S_old v2",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/fidelity.mjs",
+        "scripts/benchmark/surface/fidelity_cli.mjs",
+        "scripts/benchmark/surface/run_fidelity.py",
+        "docs/design/render-fidelity-contract.md",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-26",
+      "status": "completed",
+      "subject": "[arch-contract] P1 双插头骨架：SurfaceRegistry + legacy 适配 + switchTo + C11/C12 探针（零行为变更）",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface-registry.js",
+        "src/memoria/ui/static/app/index.html",
+        "scripts/benchmark/surface/cdp.mjs",
+        "scripts/benchmark/surface/run_probe.py",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-27",
+      "status": "completed",
+      "subject": "[metrics-baseline] 真机补测：kpHover 时延 + A10 行内公式 + agent 面板/助手弹窗/复阅卡最小结构",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-28",
+      "status": "completed",
+      "subject": "[surface-new] P2a：RenderCore 骨架 + 5 类块，与 legacy 签名 0 diff",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface/render-core.js",
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "src/memoria/ui/static/app/index.html",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-29",
+      "status": "completed",
+      "subject": "[surface-new] P2b：codeBlock/table/image + K4 链接层骨架，签名 0 diff 且 unsupported 递减",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface/render-core.js",
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-30",
+      "status": "completed",
+      "subject": "[surface-new] P2b 后半：链接层后处理接入新管线（复用不重写）+ 06 文档进签名 diff",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-31",
+      "status": "completed",
+      "subject": "[metrics-baseline] P2c 前置：真机公式/mermaid 渲染就绪判定工具（三态 + 判别力自证）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/fidelity.mjs",
+        "scripts/benchmark/surface/fidelity_cli.mjs",
+        "scripts/benchmark/surface/run_fidelity.py",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-32",
+      "status": "completed",
+      "subject": "[surface-new] P2c：公式（块级+行内）+ mermaid 渲染，真机签名 0 diff 且 renderReady=ready",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface/render-core.js",
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-33",
+      "status": "completed",
+      "subject": "[metrics-baseline] P5 前半：渲染层全量回归 + 冻结基线 S_render_frozen（P4 前置）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify",
+        "artifacts/baseline",
+        "scripts/benchmark/surface/results"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-34",
+      "status": "completed",
+      "subject": "[surface-new] P4a-spike：new 渲染下编辑内核可行性验证（GO / SPIKE-FAIL）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-35",
+      "status": "completed",
+      "subject": "[surface-new] P4b：修 S13——collectEditorBody 丢文件尾 \\n（含触发条件定位）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-36",
+      "status": "completed",
+      "subject": "[surface-new] P4c：applyBlockPatches 块级增量接口 + 光标保持 + 选区坐标接通",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-37",
+      "status": "completed",
+      "subject": "[surface-new] P4e：agent 消息统一到 render-core（消灭 marked/MemoriaParser 双解析器）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "src/memoria/ui/static/app/js/surface/render-core.js",
+        "artifacts/agent/verify/p4e-*"
+      ],
+      "blockedBy": [
+        "task-36"
+      ],
+      "revision": 5
+    },
+    {
+      "id": "task-38",
+      "status": "completed",
+      "subject": "[metrics-baseline] 增量失效量化：改一个块/公式/链接时，实际波及多少",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-39",
+      "status": "completed",
+      "subject": "[arch-contract] AST 丢失量化：现有 parse 能否支撑逐字节回写（决定是否需要 CST）",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-40",
+      "status": "completed",
+      "subject": "[arch-contract] AST 补两字段：document.trailingNewline（根治 S13）+ list.itemSrcLine[]",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/parser.js",
+        "artifacts/agent/verify"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-41",
+      "status": "completed",
+      "subject": "[metrics-baseline] P4d：编辑不丢字随机序列验收（5 seed × 200 步，逐字节校验）",
+      "owner": "lead",
+      "writeScopes": [
+        "artifacts/agent/verify/p4d-*",
+        "scripts/benchmark/surface/p4d_*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-43",
+      "status": "completed",
+      "subject": "[metrics-baseline] S14 危险面验证：幽灵块（AST有/DOM无）被编辑时是否丢字或写错块",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify/s14-*",
+        "scripts/benchmark/surface/s14_*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-44",
+      "status": "completed",
+      "subject": "[arch-contract] 接通选区列号：selectionLocation 补 col + addSelectionToChat 改调 rangeTokenText",
+      "owner": "arch-contract",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "artifacts/agent/verify/selection-columns-*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-45",
+      "status": "completed",
+      "subject": "[metrics-baseline] 真机验证：选区→composer 的精确行列引用（源码/预览/气泡三宿主 + 后端往返）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify/selection-columns-realapp-*",
+        "scripts/benchmark/surface/selcol_*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-46",
+      "status": "completed",
+      "subject": "[metrics-baseline] P5 后半：性能总闸（全操作 × 新旧对照 × 两次自检 × 低并发）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify/p5-perf-*",
+        "artifacts/baseline/p5_perf_frozen",
+        "scripts/benchmark/surface/p5perf_*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-47",
+      "status": "completed",
+      "subject": "[metrics-baseline] P6 前置：补齐 L1（wall-time 双侧）+ L3（7 操作工作量计数）——A/B 能力最后窗口",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface/perf_ops_cli.mjs",
+        "scripts/benchmark/surface/run_perf_ops.py",
+        "artifacts/agent/verify/p5-perf-gap-*",
+        "artifacts/baseline/p5_perf_frozen"
+      ],
+      "blockedBy": [
+        "task-46"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-48",
+      "status": "completed",
+      "subject": "【已关闭·0.4.4/P6 已发布（v0.4.4），发布门已过；重试预算按设计用满】P6 放行前有界重试：计数器分确定性/竞态两类 + 让 kpHover/select/paste/find 真正触发",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "scripts/benchmark/surface/p5perf_*",
+        "scripts/benchmark/surface/perf_ops_cli.mjs",
+        "scripts/benchmark/surface/run_perf_ops.py",
+        "artifacts/agent/verify/p5-perf-gap-*",
+        "artifacts/baseline/p5_perf_frozen"
+      ],
+      "blockedBy": [
+        "task-47"
+      ],
+      "revision": 6
+    },
+    {
+      "id": "task-49",
+      "status": "completed",
+      "subject": "【已关闭·已完成：taskkill 单 PID 化（无真实 /T）+ S11 已入库（interactions.json:154）】P0 安全修复 taskkill /T + find 剧本",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "scripts/benchmark",
+        "artifacts/agent/verify/measurement-safety-*"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-50",
+      "status": "completed",
+      "subject": "[surface-new] P6a：renderPreview 内部切到 render-core（29 个调用点一字不动）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "artifacts/agent/verify/p6a-*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-51",
+      "status": "completed",
+      "subject": "[surface-new] P6a 补缺陷：恢复代码块语法高亮 + 补「嵌套标记」断言（13/13 是假绿）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "scripts/benchmark/surface",
+        "artifacts/agent/verify/p6a-highlight-*"
+      ],
+      "blockedBy": [
+        "task-50"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-52",
+      "status": "completed",
+      "subject": "[surface-new] P6b：3 个临时开窗摘除（依赖注入代替全局 window 门面）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/surface/new-surface.js",
+        "src/memoria/ui/static/app/js/surface/render-core.js",
+        "src/memoria/ui/static/app/js/agent-panel.js",
+        "artifacts/agent/verify/p6b-*"
+      ],
+      "blockedBy": [
+        "task-50"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-53",
+      "status": "completed",
+      "subject": "[surface-new] P6a 回归定位：套件顺序下 S11 稳定红（二分已锁定 P6a，非 P6b）+ 量化高亮性能代价",
+      "owner": "surface-new",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "src/memoria/ui/static/app/js",
+        "artifacts/agent/verify/p6a-s11-*"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-54",
+      "status": "completed",
+      "subject": "[metrics-baseline] P6c 前置：8 个真机脚本补 config 隔离 + 复验两份冻结基线是否被 ambient 污染",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/agent/verify/config-isolation-*"
+      ],
+      "blockedBy": [
+        "task-53"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-55",
+      "status": "completed",
+      "subject": "[metrics-baseline] 裁决：重建冻结语料与 p5_perf 基线 + 补「冻结语料只读 + 前后 sha 校验」守卫",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/baseline/p5_perf_frozen",
+        "artifacts/_p5_matrix_kb",
+        "artifacts/agent/verify/frozen-kb-*"
+      ],
+      "blockedBy": [
+        "task-54"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-56",
+      "status": "completed",
+      "subject": "[surface-new] P6c：删除 legacy 插头（switchTo('legacy') 必须显式失败，不得静默）",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app",
+        "artifacts/agent/verify/p6c-*"
+      ],
+      "blockedBy": [
+        "task-55"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-57",
+      "status": "completed",
+      "subject": "[metrics-baseline] L6：把 KB 守卫接到其余 8 个真机脚本（只改脚本，不跑测量）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/agent/verify/kb-guard-wiring-*"
+      ],
+      "blockedBy": [
+        "task-55"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-58",
+      "status": "completed",
+      "subject": "【已关闭·已完成】task-58 保真签名确定性 + frozen-v2 重建（实交付 s_render_frozen_v2 + signature-determinism-report.md）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/baseline/s_render_frozen_v2",
+        "artifacts/agent/verify/signature-*"
+      ],
+      "blockedBy": [
+        "task-57"
+      ],
+      "revision": 4,
+      "evidence": [
+        "artifacts/agent/verify/signature-determinism-report.md",
+        "artifacts/baseline/s_render_frozen_v2"
       ]
     },
     {
+      "id": "task-59",
+      "status": "completed",
+      "subject": "[surface-new] P6d：renderer.js 摘除（renderRange 迁入 render-core）+ 块级增量路径实测",
+      "owner": "surface-new",
+      "writeScopes": [
+        "src/memoria/ui/static/app",
+        "artifacts/agent/verify/p6d-*"
+      ],
+      "blockedBy": [
+        "task-56"
+      ],
+      "revision": 3
+    },
+    {
+      "id": "task-60",
+      "status": "completed",
+      "subject": "【已关闭·已过期】task-60 P6 收口全域验收（0.4.4 已发布、门已过；产物在 p6-closure-*，缺最终汇总报告；与 task-62 同源）",
+      "owner": "metrics-baseline",
+      "writeScopes": [
+        "artifacts/agent/verify/p6-closure-*",
+        "scripts/benchmark/surface"
+      ],
+      "blockedBy": [
+        "task-59"
+      ],
+      "revision": 4,
+      "evidence": [
+        "artifacts/agent/verify/p6-closure-alert.md",
+        "artifacts/agent/verify/p6-closure-fidelity-run1.json",
+        "artifacts/agent/verify/p6-closure-highlight.json"
+      ]
+    },
+    {
+      "id": "task-61",
+      "status": "completed",
+      "subject": "【已关闭·已完成】task-61 导航入口测试套件（实交付：`nav_entries.mjs` + `nav-entries-report.md`，覆盖 NAV1/3/6/7 + 3 个\"功能不存在\"如实记录）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/benchmark/surface/scenarios/nav-*",
+        "scripts/benchmark/surface/run_nav.py",
+        "artifacts/baseline/nav_frozen",
+        "artifacts/agent/verify/nav-*"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-62",
+      "status": "completed",
+      "subject": "【已关闭·已过期】task-62 P6 收口重跑（0.4.4 已发布、收口门已过；两个真实测量工具缺陷已拆到 task-81）",
+      "owner": "lead",
+      "writeScopes": [
+        "scripts/benchmark/surface",
+        "artifacts/baseline/s_render_frozen_v3",
+        "artifacts/agent/verify/p6-closure-*"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-63",
+      "status": "completed",
+      "subject": "【已关闭·0.4.4 基线已失效；S0/S1 结论已落 performance-improvement-plan §7】性能 S0+S1",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "artifacts/baseline/perf_0_4_4",
+        "artifacts/agent/verify/perf-*",
+        "scripts/benchmark/surface/perf_*"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-64",
+      "status": "completed",
+      "subject": "【已关闭·已完成】S2 方案评估（实交付 artifacts/agent/verify/perf-solution-evaluation.md，41,956 B：A/B/C/D 对比表+推荐顺序+失败模式+前置问题）",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "artifacts/agent/verify/perf-solution-*"
+      ],
+      "blockedBy": [
+        "task-63"
+      ],
+      "revision": 4
+    },
+    {
+      "id": "task-65",
+      "status": "completed",
+      "subject": "迁移：预览物化/排版接入 MemoriaScheduler（P1/P2 作业）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-66",
+      "status": "completed",
+      "subject": "调度内核：补帧预算/公平份额（burst 累加器 + 长任务切片）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/scheduler.js",
+        "scripts/benchmark/maintenance/scheduler_vm_test.js"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-67",
+      "status": "completed",
+      "subject": "v0.4.6 P0：工作集淘汰（DOM 回收 + 回滚复用）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-68",
+      "status": "completed",
+      "subject": "【已关闭·非用户可达（仅 CDP reload）；保留条件：打包版若加入 F5/右键「重新加载」/菜单项等重载入口则复开】reload 崩溃",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
       "id": "task-69",
-      "status": "pending",
-      "ownerName": "todo-owner",
-      "priority": "P1",
-      "subject": "冷启动慢（13–23s 才自动开首文件）；需先补 boot 打点",
+      "status": "in_progress",
+      "subject": "【todo-owner 认领·P1·顺序2】冷启动慢（13–23s 才自动打开首个文件；先补 boot 打点）",
+      "owner": "lead",
       "writeScopes": [
         "src/memoria/ui/static/app/js/app.js",
         "src/memoria/presentation/api",
@@ -105,32 +1040,152 @@
         "scripts/benchmark/surface/profile_open.py",
         "scripts/benchmark/surface/run_boot_profile.py",
         "artifacts/agent/verify/boot-*"
-      ]
+      ],
+      "blockedBy": [],
+      "revision": 4
+    },
+    {
+      "id": "task-70",
+      "status": "completed",
+      "subject": "【已关闭·已修复 1094778d+dc00034f（85→21MB，−75.3%）】堆泄漏",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-71",
+      "status": "completed",
+      "subject": "【已关闭·已知结构性限制（MathJax 单批 typeset 不可分割；两条修法已证伪），归入 longterm-plan「已知限制」节，勿再立项】第二遍滚动中段慢",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-72",
+      "status": "completed",
+      "subject": "【已关闭·已完成】块级排版缓存（代码 6c3e8c01；up-pass typeset 1082.8→105.5ms；残余完整 4 轮 A/B 未测、不补）",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [
+        "task-70"
+      ],
+      "revision": 4
+    },
+    {
+      "id": "task-73",
+      "status": "completed",
+      "subject": "【已关闭·已校准 bbab57ed（整篇 +3.41%→+1.04%，7 类收敛）】占位高度估值偏高",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 5
+    },
+    {
+      "id": "task-74",
+      "status": "completed",
+      "subject": "【已关闭·W4.1 lazy gate L0–L5 已入库（98c8c1b9/09592f8e，含 L5 编辑保护 + sabotage 负向自证）】测量债：大文档交互无回归",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "scripts/benchmark/surface"
+      ],
+      "blockedBy": [],
+      "revision": 5
     },
     {
       "id": "task-75",
-      "status": "pending",
-      "ownerName": "todo-owner",
-      "priority": "P1",
-      "subject": "openFile() 启动期静默失效（可能被 task-69 顺带解决）",
+      "status": "in_progress",
+      "subject": "【todo-owner 认领·P1·顺序3】openFile() 启动期静默失效（已返回 ok/failed/aborted；待复测是否仍静默）",
+      "owner": "lead",
       "writeScopes": [
         "src/memoria/ui/static/app/js/app.js",
         "scripts/benchmark/surface/scenarios/openfile-*",
         "scripts/benchmark/surface/run_openfile_race.py"
-      ]
+      ],
+      "blockedBy": [],
+      "revision": 4
+    },
+    {
+      "id": "task-76",
+      "status": "completed",
+      "subject": "✅ task-76 结论修正：evict 长批非块数问题（批尾布局 58.7%）；顺带修 purge 静默 no-op",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 4
+    },
+    {
+      "id": "task-77",
+      "status": "completed",
+      "subject": "✅ task-70 堆泄漏已修复（MathJax MathItem 持有 detached 子树，−75.3%）",
+      "owner": "lead",
+      "writeScopes": [],
+      "blockedBy": [],
+      "revision": 3
+    },
+    {
+      "id": "task-78",
+      "status": "completed",
+      "subject": "【已关闭·已修复 17ee05d9（淘汰饥饿；压力场景 3228→146；task78-report.md 闭合）】L4 超 8 屏",
+      "owner": "todo-owner",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js"
+      ],
+      "blockedBy": [],
+      "revision": 8
+    },
+    {
+      "id": "task-79",
+      "status": "in_progress",
+      "subject": "【todo-owner 认领·P0·顺序1】多行选区跨块操作（复制/剪切/删除/粘贴替换）—— 跨 blockquote/表格/代码/公式时静默失败",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/app.js",
+        "src/memoria/ui/static/app/js/edit-handler.js",
+        "scripts/benchmark/surface/scenarios/selection-*",
+        "scripts/benchmark/surface/run_selection.py",
+        "scripts/benchmark/maintenance/edit_selection_*"
+      ],
+      "blockedBy": [],
+      "revision": 4
+    },
+    {
+      "id": "task-80",
+      "status": "completed",
+      "subject": "P0：mapper.domToAst 支持嵌套列表 —— 修复 listItemIndex 错位（Tab 升降级的前置阻塞）",
+      "owner": "lead",
+      "writeScopes": [
+        "src/memoria/ui/static/app/js/mapper.js",
+        "src/memoria/ui/static/app/js/edit-handler.js",
+        "scripts/benchmark/surface/nested_list_tab_probe.mjs"
+      ],
+      "blockedBy": [],
+      "revision": 3
     },
     {
       "id": "task-81",
-      "status": "pending",
-      "ownerName": null,
-      "priority": "P1",
-      "subject": "测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效",
+      "status": "in_progress",
+      "subject": "P1 测量债：fidelity 归一化正则永不匹配 + p5perf wrap 静默失效（task-62 拆出）",
+      "owner": "lead",
       "writeScopes": [
         "scripts/benchmark/surface/fidelity.mjs",
         "scripts/benchmark/surface/p5perf_workload.mjs",
         "scripts/benchmark/surface/p5perf_workload2.mjs",
         "artifacts/agent/verify/measurement-debt-"
-      ]
+      ],
+      "blockedBy": [],
+      "revision": 2
     }
   ],
   "inactiveOwners": [
@@ -145,29 +1200,55 @@
   ],
   "completedRecent": [
     {
-      "id": "task-80",
-      "subject": "mapper.domToAst 嵌套列表（17c20c62）",
-      "ownerName": "lead"
+      "id": "task-68",
+      "subject": "【已关闭·非用户可达（仅 CDP reload）；保留条件：打包版若加入 F5/右键「重新加载」/菜单项等重载入口则复开】reload 崩溃",
+      "ownerName": "todo-owner"
     },
     {
-      "id": "task-61",
-      "subject": "导航入口测试套件（实交付 nav_entries.mjs；判定假阴性纠错案例）",
-      "ownerName": "lead"
+      "id": "task-70",
+      "subject": "【已关闭·已修复 1094778d+dc00034f（85→21MB，−75.3%）】堆泄漏",
+      "ownerName": "todo-owner"
     },
     {
-      "id": "task-62",
-      "subject": "P6 收口（已过期；两真实缺陷拆到 task-81）",
-      "ownerName": "lead"
-    },
-    {
-      "id": "task-64",
-      "subject": "S2 方案评估（已完成）",
-      "ownerName": "lead"
+      "id": "task-71",
+      "subject": "【已关闭·已知结构性限制（MathJax 单批 typeset 不可分割；两条修法已证伪），归入 longterm-plan「已知限制」节，勿再立项】第二遍滚动中段慢",
+      "ownerName": "todo-owner"
     },
     {
       "id": "task-72",
-      "subject": "块级排版缓存（已完成；残余 A/B 未测不补）",
+      "subject": "【已关闭·已完成】块级排版缓存（代码 6c3e8c01；up-pass typeset 1082.8→105.5ms；残余完整 4 轮 A/B 未测、不补）",
+      "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-73",
+      "subject": "【已关闭·已校准 bbab57ed（整篇 +3.41%→+1.04%，7 类收敛）】占位高度估值偏高",
+      "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-74",
+      "subject": "【已关闭·W4.1 lazy gate L0–L5 已入库（98c8c1b9/09592f8e，含 L5 编辑保护 + sabotage 负向自证）】测量债：大文档交互无回归",
+      "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-76",
+      "subject": "✅ task-76 结论修正：evict 长批非块数问题（批尾布局 58.7%）；顺带修 purge 静默 no-op",
+      "ownerName": "lead"
+    },
+    {
+      "id": "task-77",
+      "subject": "✅ task-70 堆泄漏已修复（MathJax MathItem 持有 detached 子树，−75.3%）",
+      "ownerName": "lead"
+    },
+    {
+      "id": "task-78",
+      "subject": "【已关闭·已修复 17ee05d9（淘汰饥饿；压力场景 3228→146；task78-report.md 闭合）】L4 超 8 屏",
+      "ownerName": "todo-owner"
+    },
+    {
+      "id": "task-80",
+      "subject": "P0：mapper.domToAst 支持嵌套列表 —— 修复 listItemIndex 错位（Tab 升降级的前置阻塞）",
       "ownerName": "lead"
     }
-  ]
+  ],
+  "note": "2026-10-24 第二次机器生成：清理 5 条 in_progress（58/60 关闭；69/75/79/81 收归 Lead）、补齐 owner 与 evidence"
 }
