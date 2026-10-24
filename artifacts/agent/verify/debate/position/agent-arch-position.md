@@ -317,6 +317,7 @@ Markdown 文件 + frontmatter + wikilink 图 + 双向读写 + 本地优先，**�
 | `AS-MCP-COST` | "MCP 化会增 token" | **已证伪**（directional） | `task-114` metrics-baseline，`ev:bench:n1-a1-token-hypothesis#§4` |
 | `AS-GRANULARITY` | "省耗由返回粒度决定，与是否 MCP 无关" | 已被同一实验支持（组 0 不含 MCP 仍省 83–89%） | 同上；**我的 Q4 全部建立在这条上** |
 | `AS-STYLE-COST` | "MCP 形态的额外成本 = 结构化 JSON 键名 + 一次性 discover" | **未检验**（N1 §4 归因，未分离测） | 检验者待指派；影响 Q2 的"若做则最小化 schema"建议 |
+| `AS-SECTION-RANGE` | "heading / KP range 可解析，`section()` 粒度接口可用" | **未检验**；§4 把"知识库数据形态"放入 `not_examined` | **指派 arch-contract 检验**（R-R5）；通过前 Q4 的 L1 标"有条件成立" |
 
 ---
 
@@ -467,14 +468,21 @@ MCP server 是**已定方向**（`R-L2`，组织决定），本文不设"是否�
 | 级 | 接口形态 | 典型问题 | 预算上限（初值，**未测**） |
 |---|---|---|---|
 | **L0 outline** | `outline(path)` → 标题树 + 块计数 + 行号范围 | "这篇有什么" | **≤ 800 tokens** |
-| **L1 section**（**默认**） | `section(path, heading\|kp_id\|line-range)` → 单节正文 | "这一节说了什么" | **≤ 4,000 tokens** |
+| **L1 section**（**默认**，**有条件成立**） | `section(path, heading\|kp_id\|line-range)` → 单节正文 | "这一节说了什么" | **≤ 4,000 tokens** |
 | **L2 snippet** | `snippet(path, query\|anchor, ctx=±N)` → 命中窗口 | "这句话在哪" | **≤ 600 tokens** |
 | 兼容 | `read_document(path, offset, limit)`（**已有**：默认/最多 2000 行 + 20,000 字符预算） | 确实要通读 | 沿用现有 `MAX_BODY_CHARS=20_000` |
+
+> **L1 的"有条件成立"**（R-R5）：它依赖"heading / KP range 可解析"，而"知识库数据形态（frontmatter/sidecar/graph 字段面）"被我放进了 §4 `not_examined` —— 这是**依赖倒挂**。
+> 已登记 `AS-SECTION-RANGE`，**指派 arch-contract 检验**；检验通过前，L1 只标"有条件成立"，不得作为"粒度化已可用"的依据。
 
 **写侧：不需要新造（这是本轮一个反直觉的发现）** —— 本地写面**已经是 patch 式**：
 17 个 `KNOWN_OPS` / 16 个 `COMPILED_OPS`，含 `replace_lines`/`insert_lines`/`delete_lines`/`upsert_block`，且**要求 `expect` 逐字原文**（对不上即拒）。
 证据：`ev:file:docs/design/dsh-agent-port.md#L151-L152`。
 ⇒ Q4 的写侧工作 = **补回执粒度**（成功只回 `{txid, files[], ±lines, undo_available}`，不回全文 diff）**+ 给每个 op 预算**，而不是设计新写工具。
+
+> **一处我漏掉的能力缺失（R-R3，接受）**：`BODY_EDIT_OPS`（`plan.py:152-158`）五项全是**行号/块索引锚**，**没有"按 heading 替换一节"**。
+> 这是**能力缺失，不是接口包装**：`section()` 读到某节后，若想改这一节，模型只能把 heading 翻译成行区间，而本地没有读时投影（AG07 的 L 路线未实施，`dsh-agent-port.md#L142` 已登记"区间锚点如实回 `unsupported`"）。
+> ⇒ 写侧新增一条缺口：`replace_section(path, heading)`（或以 `kp_id` 为锚），否则"粒度化读 + 整行写"会变成**读得细、写得粗**的畸形接口。
 
 **每工具预算表（初值，全部标注"未测，需 E4 测量"）**
 
@@ -491,8 +499,9 @@ MCP server 是**已定方向**（`R-L2`，组织决定），本文不设"是否�
 
 **三条跨工具规则（把 N1 的记账口径变成设计约束）**：
 1. **完整往返记账**（B4.f）：预算按 `system + tool schema + messages + completions` **总账**，不是 per-call；
-2. **schema 固定成本必须被 `gate` 抵消**：N1 实测组 A 35 工具 = 15,220 字符 ≈ **4,349 token/会话**（`ev:bench:n1-a1-token-hypothesis#§2`）⇒
-   每新增 N 个工具，必须同时给出"哪些工具因此不再默认出现"（Q3 的 `gate`），否则净增；
+2. **schema 固定成本目前无条件支付，动态裁剪是待建能力**：N1 实测组 A 35 工具 = 15,220 字符 ≈ **4,349 token/会话**（`ev:bench:n1-a1-token-hypothesis#§2`）⇒
+   每新增 N 个工具，若无"工具面动态裁剪"（Q3 已按 R-R1 撤回 gate 主张，确认其当前**不被求值**），则固定成本净增；
+   动态裁剪属于 Q3 的"第三层（待做）"，落地前**不**作为省 schema 的手段计入 Q4。
 3. **截断必须带下一步指令**（S4 实证做法）：截断末尾给 `next=<cursor>` 或"收窄建议"，让模型一次就能收敛。
 
 **【依赖假设】** `AS-GRANULARITY`（核心）；`AS-TOKENIZER`（N1 用 3.5 字符/token、1.5 中文字/token 的**假设**，未真测）。
@@ -594,7 +603,7 @@ W3 每批写入必须能 `restore_batch` 到 pre-image（逐字节）；W4 外�
     {"cat": "Memoria 现有 agent 工具面（kb.py / registry）", "evidence": "ev:file:src/memoria/services/agent/tools/kb.py#L2867（35 工具/build_kb_tools）、registry.py#L102-L118", "check_cmd": "(Get-Item src/memoria/services/agent/tools/kb.py).Length", "verdict": "已判定：304,374 B 单文件；35 工具；registry 有 Tool/invoke 管线但无扩展点"},
     {"cat": "token 经济（schema 开销/往返/错误路径/截断语义）", "evidence": "ev:bench:n1-a1-token-hypothesis#§2-#§4", "check_cmd": "Get-Item artifacts/agent/verify/debate/n1-a1-token-hypothesis.md | Select-Object Length", "verdict": "已判定（directional）：schema 固定成本 ≈4,349 tok/会话；省耗主因=粒度"},
     {"cat": "写侧安全（propose_write→审批→备份→撤销）", "evidence": "ev:file:src/memoria/services/agent/tools/kb.py#L4203-L4215、dsh-agent-port.md#L151、#L161、#L170-L172", "check_cmd": "Select-String -Path src/memoria/services/agent/backup.py -Pattern 'snapshot_pre_images|restore_batch' | Measure-Object", "verdict": "已判定：唯一写者 + 读后写守卫 + 备份/撤销 + 分发前审批，四道齐全"},
-    {"cat": "扩展点契约（字段/版本/沙箱边界/兼容）", "evidence": "ev:file:src/memoria/services/agent/plugins.py#L4-L14、docs/design/agent-plugin-design.md#L12-L28", "check_cmd": "Get-Item src/memoria/services/agent/plugins.py | Select-Object Length", "verdict": "已判定：声明面存在（6 字段 + 原语目录 + gate）；缺工具面扩展点"},
+    {"cat": "扩展点契约（字段/版本/沙箱边界/兼容）", "evidence": "ev:file:src/memoria/services/agent/plugins.py#L4-L14、docs/design/agent-plugin-design.md#L12-L28", "check_cmd": "Get-Item src/memoria/services/agent/plugins.py | Select-Object Length", "verdict": "已判定：声明面存在（6 字段 + 原语目录）；缺工具面扩展点；`gate` 字段存在但当前不被求值（R-R1）"},
     {"cat": "trace/轨迹（记录什么/存哪/查询/容量）", "evidence": "ev:file:docs/design/dsh-agent-port.md#L132、#L171、src/memoria/services/agent/audit.py", "check_cmd": "Select-String -Path src/memoria/services/agent/audit.py -Pattern 'capability/' | Measure-Object", "verdict": "已判定：机制已存在（session JSONL + audit 4 类事件 + 4 把查询工具）+ 本文件 Q5 给增量；**盲区已声明**：未读 DSH 侧 `team_trajectory` 实现，'可复用事件形态'基于二手描述"}
   ],
   "not_examined": [
@@ -616,13 +625,13 @@ W3 每批写入必须能 `restore_batch` 到 pre-image（逐字节）；W4 外�
 
 | # | 最坏会发生什么 | 后果等级 | 缓解手段 | 我的证据弱点 |
 |---|---|---|---|---|
-| **R1** | 我判"Q2 推后 MCP"是**错的方向判断**：外部 agent 接入其实是产品主线，推后等于错过窗口 | 高（战略） | 条件化交付规则（M-1/P-1）：facade 先行使补 transport 成本低；X-1 给退役机制；我**执行人的决定** | 我没有外部需求的一手证据（只有"人说了要 MCP"这一组织事实） |
+| **R1** | 我判"Q2 应先粒度化再投递 MCP"的**顺序**是错的：若外部接入其实是最急诉求，这个顺序会拖慢它 | 中（战术） | P-1 只约束顺序不约束做不做；facade 先行使补 transport 成本低；MCP 是既定方向（R-L2），我**不设立项门** | 我没有外部需求强度的一手证据 |
 | **R2** | 三级粒度**降低任务完成率**：模型拿不到足够上下文，迭代更多轮，总账反而上升 | 高（产品） | 双指标验收（完成率 + 总账）；默认粒度可回退一级；合并接口（outline+首节一次返回） | N1 是静态记账模型，**未计往返轮数**（已登记 U3） |
 | **R3** | 我的 `est_tokens` 静态估算系统性偏差，导致预算表全是装饰 | 中 | 预算只作**相对约束**，绝对值等真机；偏差 >30% 即改口径（Q5 falsifier） | N1 的 tokenizer 口径是假设（3.5 字符/token） |
-| **R4** | **三表漏类目**（我没想到的类目），表现为"看着覆盖了其实没有" | 中高 | 已登记 2 项 `not_examined`；接受 P2(d) 抽查；请 arch-contract 专门攻"你还漏了什么类目" | 这正是 PROTOCOL §10 承认防不住的"全员都没想到" |
+| **R4** | **三表漏类目**（我没想到的类目），表现为"看着覆盖了其实没有" | 中高 | 已登记 1 项 `not_examined`（知识库数据形态）+ trace 盲区在 `checked[8].verdict` 声明；接受 P2(d) 抽查 | 这正是 PROTOCOL §10 承认防不住的"全员都没想到" |
 | **R5** | 我**继承了 `dsh-agent-port.md` 的陈旧事实**（该文档部分行已过期，如称 `capabilities.json` 零命中但 `plugins.py` 已实现） | 中 | 对结论性行做独立复核（§4 每条给 `check_cmd`）；在文中显式标注 `AS-PORT-LEDGER` 假设 | 我未通读 361 KB 全文档，只精读 §5 与相关小节 |
 | **R6** | 按 MCP **2026-07-28** 设计契约，但外部客户端还停在旧版（2025-06-18 / 2025-11-25） | 中 | 契约只用 tools/resources/prompts 的**稳定子集**；不依赖新特性（discover/subscriptions） | 我无法验证生态采纳率（无网络测量） |
-| **R7** | 我建议"不做 MCP 主线"被读成**消极/抗命** | 中（协作） | 明确写：若人拍板做，我按 §7 override 全力执行，并给退役条件；这不是拖延，是把不可逆决定推后 | — |
+| **R7** | 我把"gate 是省 schema 杠杆"当已成立事实写进正文，被 R-R1 证伪——**这是"没独立复核就断言"的教训** | 中（诚信） | 已撤回并改为 `conditional_object`；今后对"字段是否真的被求值"一律 grep + 读调用链后再写 | 我此前把"字段存在于声明里"误当成"字段已生效" |
 | **R8** | 把 token 预算写成契约字段（`budget`）会**提高第三方写插件门槛**，压制扩展生态 | 低中 | `budget` 给默认值；`schema_ref` 由装载器自动生成；插件只需声明 `tool_id` | 无第三方生态数据可参考 |
 
 ---
@@ -635,7 +644,7 @@ W3 每批写入必须能 `restore_batch` 到 pre-image（逐字节）；W4 外�
 | **U2** | Cordis 的 **scoped layers / dispose** 在 Memoria 单进程里是否有真消费者 | 若无 ⇒ Q1 ② 连"两条契约语义"也不必取，宿主运行时整类判为"不适用"（进一步简化）；若有（如未来多插件）⇒ 必须把它们做成 `lifecycle` 契约字段（Q3 已预留） |
 | **U3** | 大库（2530 KB）下，L0→L1→L2 的**多轮往返次数**是否反而使**总账**高于一次整篇读（N1 静态模型未计轮数） | 若为真 ⇒ Q4 改为"合并接口优先"（一次返回 outline + 首节），并把默认粒度从 section 上调；Q4 的预算表整体重算 |
 | **U4** | 真实 tokenizer 与 N1 的假设（3.5 字符/token、1.5 中文字/token）差异多大 | 若偏差 >30% ⇒ 所有预算表的**绝对值**作废，只保留相对排序；Q4/Q5 的成本字段改用 provider 回填 |
-| **U5** | 是否存在**真实外部客户端**接入需求（决定 M-1 触发条件是否成立） | 若存在 ⇒ Q2 从"推后"翻为"立项"，且形态按 D-1（最小集 + gate + 按需结构化）；若不存在 ⇒ 保持"facade 先行、server 不做"，并把该判断写入设计文档 |
+| **U5** | MCP 交付的**形态决策**：schema 总量上限取多少、最小集含哪些工具 | 取决于真机测出的"工具 schema 实际成本"与"外部客户端真实调用面"——这两者当前均无数据；测出后 D-1 的"最小集"才有具体清单，否则只是方向 |
 | **U6** | `propose_write` 的回执当前是否回**全文 diff**（决定写侧回执改造量） | 若是 ⇒ Q4 写侧需要改造（回执粒度化，工作量 1 处）；若否 ⇒ 写侧零改造，只需补预算 |
 | **U7** | 我的三表是否还有**未登记类目**（P2(a) 允许盲区，但盲区必须登记） | 若被指出存在未登记类目 ⇒ 记 `coverage_gap`，我接受降级（该结论标 `有条件成立`），并把该类目补进 `not_examined` 后重提 |
 
