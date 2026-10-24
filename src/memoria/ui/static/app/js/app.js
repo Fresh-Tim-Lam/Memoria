@@ -54,6 +54,10 @@
     openSeq: 0,
     userNavigated: false,
     bootAutoOpenPending: false,
+    // task-75：启动初始化窗口（initKb 的 ensure_kb_root→refreshFiles→loadLinkTargets 期间）。
+    // 期间拒绝外部 openFile（明确 failed），避免与启动 RPC 交错把 boot 卡死；
+    // 启动自动打开自己带 bootToken，可穿透（见 openFile 的前置判定）。
+    startupInFlight: false,
   };
 
   window.state = state;  // 导出给 edit-handler.js 等外部模块使用
@@ -711,6 +715,9 @@
       state.kbPath = await resolveStartupKbPath();
       console.log("[initKb] kbPath=" + state.kbPath);
       if (state.kbPath) {
+        // task-75：启动初始化窗口开始（见 state.startupInFlight 注释）。
+        // 结束点：本分支 finally（含异常路径）—— 期间只有带 bootToken 的内部调用可穿透。
+        state.startupInFlight = true;
         // 确保服务端 _kb_root 同步（防止前端通过 remembered path 获取但服务端未设置）
         await call("ensure_kb_root", state.kbPath);
         // 对话面板：启动即已开库（initKb 在面板 init 之后跑）时刷新历史并恢复「上次会话」
@@ -754,12 +761,15 @@
         //   注意必须排在 bootAutoOpen 之后：openFile 会 bumpEpoch（文件级陈旧语义），
         //   而图谱/校验是**库级**任务，若排在前面会被当陈旧作业丢弃（实测过）。
         schedulePostBootDerivedWork();
+        state.startupInFlight = false;
       } else {
+        state.startupInFlight = false;
         showWelcome(true);
         showKbIndicator("");
         setStatus("Memoria");
       }
     } catch (e) {
+      state.startupInFlight = false;
       setStatus(T("app.status.waitingBackend"));
     }
   }
@@ -1741,6 +1751,38 @@
   // 树内点击切换文档（原 navigateToFile）已随文件树子系统迁至 file-tree.js
 
   async function openFile(relPath, opts = {}) {
+    // ★ task-75（2026-10-24）：启动早期调用必须**先判可用性，再动任何状态**。
+    //   旧行为：先 `state.openSeq++` / `state.userNavigated = true`，再去 `await load_document`；
+    //   而启动早期 bridge/后端还没就绪 ⇒ `load_document` 直接抛「API 不可用」，但"用户已导航"
+    //   标记已经落下 ⇒ bootAutoOpen 打印 `[boot] auto-open aborted: user navigated` 并放弃
+    //   ⇒ 最终**一篇文档都不打开**（currentPath 永远 null）、调用方只看到 reject、
+    //   应用日志里只有一条误导性的"用户已导航"。这就是「启动后立即调 openFile 静默失效」。
+    //   现在：前置条件不满足时返回明确的 `"failed"` + 可见状态提示 + console.warn，
+    //   **不触碰 openSeq/userNavigated** ⇒ 启动自动打开照常完成；调用方可稍后重试。
+    if (!relPath || typeof relPath !== "string") {
+      console.warn("[openFile] 参数无效（relPath 为空/非字符串），已拒绝");
+      return "failed";
+    }
+    const _bridge = (window.MemoriaBridge && typeof window.MemoriaBridge.api === "function")
+      ? window.MemoriaBridge.api() : null;
+    if (!_bridge || typeof _bridge.load_document !== "function") {
+      console.warn("[openFile] 后端尚未就绪（bridge.load_document 不可用），已拒绝：" + relPath);
+      setStatus(T("app.status.waitingBackend"), relPath);
+      return "failed";
+    }
+    if (!state.kbPath) {
+      console.warn("[openFile] 知识库尚未就绪（state.kbPath 为空），已拒绝：" + relPath);
+      setStatus(T("app.status.waitingBackend"), relPath);
+      return "failed";
+    }
+    // task-75：启动初始化进行中（ensure_kb_root/refreshFiles/loadLinkTargets 在飞）⇒ 外部调用
+    // 明确拒绝：此时发起 load_document 会与启动 RPC 交错，实测能把 boot 卡死（files 永远 0）。
+    // 启动自动打开自身带 bootToken，穿透放行。
+    if (state.startupInFlight && opts.bootToken == null) {
+      console.warn("[openFile] 启动初始化尚未完成，已拒绝（请稍后重试）：" + relPath);
+      setStatus(T("app.status.waitingBackend"), relPath);
+      return "failed";
+    }
     // 用户主动打开（文件树点击 / 命令面板 / 快捷键 / 搜索跳转 / 标签切换 …）一律优先：
     // 立即推进 openSeq 并置 userNavigated，使正在等待/渲染的启动自动打开作废。
     if (opts.skipNav !== true) {
