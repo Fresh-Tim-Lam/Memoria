@@ -62,6 +62,7 @@
 | P1-5 | 「声明≠事实」证据契约：`team_preflight` 返回义务中增加"claim 必须绑定可执行验证（测试名/命令/真机证据路径）" | 以本轮 8 个实例为 fixture：每条声明若拿不出绑定验证 ⇒ 报告/任务标记 `unverified`，不能升 ✅ | ⚠️ 设计 + 部分机检 |
 | P1-6 | 用户可读 digest 的**最小骨架**：`team_digest` 工具（读任务板+decisions+最近 artifact，输出 markdown） | 对当前版本生成一份 digest，包含：版本目标/实际/偏离/未闭环/证据锚；人工按 vision §9 三条测试通过 | ⚠️ 需设计格式 |
 | P1-7 | 用户可见文档同样纳入 artifact_refs 校验（防止 digest 引用不存在路径） | `team_audit.py` 对 `docs/design/team-plugin-*.md` 的路径引用检查 FAIL=0 或仅历史 WARN | ✅ 已有脚本可复用 |
+| **P1-8** | **研讨会/辩论编排 `team_debate`**（阶段状态机 Phase1 独立提案→Phase2 Lead 并集→Phase3 交叉异议→Phase4 裁决→Phase5 冻结；独立性机检/并集「0 自创」机检/裁决 `rulings.jsonl` 带 source+falsifier/异议必须带 `ev:`） | 用本轮 KG 辩论四阶段产物**重放一次**，应得到等价裁决（13 条）；独立性/0 自创/证据身份三项机检可跑 | ⏳ 待做；**实证**：本轮 4 spawn + 8 send_message + 4 wait_agent + 2 份 Lead 文书 + 13 条裁决（见 `docs/todo.md §17`） |
 
 **P1 完成定义（整体）**：视界测试 = 新会话里让一个 teammate 尝试"跳过证据关闭任务 / 不传 mode spawn / 重叠写域 claim"三种违规，**全部被工具拒绝**；同时 `team_audit.py FAIL=0`。
 
