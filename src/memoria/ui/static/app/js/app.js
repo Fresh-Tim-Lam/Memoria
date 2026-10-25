@@ -142,9 +142,135 @@
     state.doc.body = body;
     state.doc.lines = _linesFromBody(body);
     state.doc.preview_body = null;
+    // 2026-10-25 task-141：**锚点必须在重渲之前采**（AG105 同款教训：清屏后再量，量到的永远是第一行）。
+    //   病根（真机 2×2 对照已证）：长文档走惰性物化 ⇒ `_buildLazyPreview` 为量真实 CSS 度量，会在
+    //   "已清空、占位未建"的空态上**强制布局**（`_measurePreviewMetrics` 读 getBoundingClientRect）
+    //   ⇒ 那一刻 maxScroll≈0，浏览器把 scrollTop 夹到 0；占位补回高度后**没有任何恢复** ⇒ 预览停在
+    //   文件开头。全量路径清屏+重建在同一任务内完成，布局从未观察空态 ⇒ 不跳（medium 2180 全程不动）。
+    //   修法两道：① `_buildLazyPreview` 跨过空态保住 scrollTop（根因处）；② 这里按**元素/行号锚点**
+    //   精确恢复，且只在排版/物化落定后**补漂移**（绝不再重设落点 —— 与 task-140 同一不变量）。
     syncLog("syncSourceToPreview: 调用 renderPreview, body 前50字:", body.substring(0, 50));
-    await renderPreview(state.doc);
+    await _renderPreviewKeepScroll();
     syncLog("syncSourceToPreview: 完成");
+  }
+
+  // ── 源码编辑 ⇒ 预览重渲的**滚动保持**（2026-10-25 task-141）──────────────────────────────
+  //  不变量（先问"要保证什么"）：
+  //    E1 编辑前后**视口顶部锚点块**（srcLine）不变 —— 用元素/行号表达位置，不用 scrollTop 数值；
+  //    E2 重建后若排版/惰性物化把锚点块挪了位置 ⇒ **只补差值**，绝不重设落点（与 task-140 I3 同一条）；
+  //    E3 用户一旦自己滚预览 ⇒ 立刻放弃校准（不跟人抢滚动条）。
+  var _editScrollGen = 0;          // 编辑代际：新一轮源码编辑 ⇒ 旧校准链立即失效
+  var _editScrollGuard = null;     // 当前校准链守卫（用户滚动/新编辑会置 cancelled）
+  var _editScrollStats = { restores: 0, restoredByAnchor: 0, restoredByPixel: 0, reanchors: 0, reanchorNoop: 0 };
+  try {
+    // 只读诊断（真机验证/回归用；不参与渲染）：证明"恢复分支真的执行"，而不只是"看起来没跳"
+    window.__memoriaEditScrollStats = function () { return JSON.parse(JSON.stringify(_editScrollStats)); };
+  } catch (_) { /* noop */ }
+
+  /** 采「预览视口顶部第一个可见块」＝锚点（srcLine + 它相对视口顶的偏移）。 */
+  function _capturePreviewScrollAnchor() {
+    const pane = document.getElementById("preview-pane");
+    if (!pane || state.viewMode === "source") return null;
+    const preview = document.getElementById("preview");
+    if (!preview) return null;
+    // 整篇重建 ⇒ 上一轮跳转（task-140）的落点已失效：撤销其二次校准，避免两条校准链互抢滚动条
+    if (_jumpAnchorGuard && !_jumpAnchorGuard.cancelled) _jumpAnchorGuard.cancelled = true;
+    _jumpExpectedOffset = null;
+    const pvTop = pane.getBoundingClientRect().top;
+    const blocks = preview.querySelectorAll("[data--src-line]");
+    for (const el of blocks) {
+      if (el.closest("[data--src-line]") !== el) continue;   // 只取最外层块
+      const r = el.getBoundingClientRect();
+      if (r.bottom < pvTop) continue;
+      const line = +(el.dataset.SrcLine || 0) || 0;
+      if (!line) continue;
+      return { line: line, offset: r.top - pvTop, scrollTop: pane.scrollTop, gen: _editScrollGen + 1 };
+    }
+    return { line: null, offset: 0, scrollTop: pane.scrollTop, gen: _editScrollGen + 1 };
+  }
+
+  /** 按锚点恢复：优先元素/行号（与 `_lazyResizeBound` 的锚点恢复同一思路），找不到才退裸像素。 */
+  function _restorePreviewScrollAnchor(anchor) {
+    if (!anchor) return false;
+    const pane = document.getElementById("preview-pane");
+    if (!pane) return false;
+    const preview = document.getElementById("preview");
+    if (anchor.line && preview) {
+      const els = preview.querySelectorAll("[data--src-line]");
+      for (const el of els) {
+        if (el.closest("[data--src-line]") !== el) continue;
+        const s = +(el.dataset.SrcLine || 0) || 0;
+        const e = +(el.dataset.SrcLineEnd || s) || s;
+        if (s && s <= anchor.line && anchor.line <= e) {
+          const pvTop = pane.getBoundingClientRect().top;
+          const delta = el.getBoundingClientRect().top - pvTop - anchor.offset;
+          _editScrollStats.restores++;
+          _editScrollStats.restoredByAnchor++;
+          if (Math.abs(delta) >= 1) pane.scrollTop += delta;   // 只补差值（不是重设落点）
+          return true;
+        }
+      }
+    }
+    _editScrollStats.restores++;
+    _editScrollStats.restoredByPixel++;
+    pane.scrollTop = anchor.scrollTop;   // 兜底：极端情况下找不到锚点元素
+    return false;
+  }
+
+  /** 重渲后的**漂移收敛**：只在同一代编辑内、用户没自己滚的前提下补差值；绝不重设落点。 */
+  function _scheduleEditScrollReanchor(anchor) {
+    if (!anchor || !anchor.line) return;
+    const gen = ++_editScrollGen;
+    const pane = document.getElementById("preview-pane");
+    if (!pane) return;
+    const g = { cancelled: false };
+    _editScrollGuard = g;
+    const cancel = () => { g.cancelled = true; };
+    ["wheel", "mousedown", "touchstart"].forEach((ev) => {
+      pane.addEventListener(ev, cancel, { once: true, passive: true });
+    });
+    // 惰性物化/公式排版会晚一拍改高度 ⇒ 分几个稳定点补漂移（密集前段 + 覆盖 1.5s 收尾）
+    [80, 260, 700, 1500].forEach((ms) => {
+      window.setTimeout(() => {
+        if (g.cancelled || _editScrollGuard !== g || gen !== _editScrollGen) return;
+        if (state.viewMode === "source") return;
+        try {
+          const pv = document.getElementById("preview");
+          const pp = document.getElementById("preview-pane");
+          if (!pv || !pp) return;
+          const pvTop = pp.getBoundingClientRect().top;
+          let target = null;
+          const els = pv.querySelectorAll("[data--src-line]");
+          for (const el of els) {
+            if (el.closest("[data--src-line]") !== el) continue;
+            const s = +(el.dataset.SrcLine || 0) || 0;
+            const e = +(el.dataset.SrcLineEnd || s) || s;
+            if (s && s <= anchor.line && anchor.line <= e) { target = el; break; }
+          }
+          if (!target) return;
+          const drift = target.getBoundingClientRect().top - pvTop - anchor.offset;
+          if (Math.abs(drift) < 1) { _editScrollStats.reanchorNoop++; return; }
+          pp.scrollTop += drift;   // 只补偏移
+          _editScrollStats.reanchors++;
+          log("SCROLL", "edit-reanchor(" + ms + "ms): drift=" + Math.round(drift));
+        } catch (_) { /* noop */ }
+      }, ms);
+    });
+  }
+
+  /** **源码侧触发的整篇重渲**统一入口（task-141）：采锚点 → renderPreview → 恢复锚点 → 漂移收敛。
+   *  为什么不能只在 `syncSourceToPreview` 里做：撤销/重做（`_srcApplySnapshot`）与结构编辑的
+   *  兜底（`repaintPreview` → `renderPreview`）同样会整篇重渲，同样会在惰性文档上丢滚动位置。 */
+  async function _renderPreviewKeepScroll(options) {
+    const anchor = _capturePreviewScrollAnchor();
+    try {
+      return await renderPreview(state.doc, options);
+    } finally {
+      if (anchor) {
+        _restorePreviewScrollAnchor(anchor);
+        _scheduleEditScrollReanchor(anchor);
+      }
+    }
   }
 
   /** 内存实时同步：源码编辑时更新预览 */
@@ -7573,7 +7699,7 @@ async function call(fn, ...args) {
     state.doc.lines = _linesFromBody(_snapBody);
     state.doc.preview_body = null;
     renderEditor(state.doc);
-    await renderPreview(state.doc);
+    await _renderPreviewKeepScroll();   // task-141：撤销/重做也是整篇重渲 ⇒ 同样要保住预览滚动位置
     _srcAfterEdit();
     _srcCoalesceAt = 0;
     const lineEl = document.getElementById("line-" + snap.caret.line);
@@ -9135,6 +9261,13 @@ async function call(fn, ...args) {
     //   24px；而真实 `.-preview` 是 14px × 1.6 = 22.4px ⇒ 每个占位块系统性偏高 7.1%，
     //   4001 块累加 ≈ 整篇 192,981px vs 真值 175,282px（+17.7k px）。挂载后量到的才是页面 CSS。
     //   注意：这里只挂**空的** container（占位块还没建），不影响任何块序号/高度。
+    //   ★ 2026-10-25 task-141：`_measurePreviewMetrics` 会**强制布局**（`_probeBlockMetrics` /
+    //   `_probeTypeMetrics` 读 getBoundingClientRect），而此刻 preview 只有一个**空** container
+    //   （占位块还没建）⇒ 该次布局看到的 maxScroll≈0，浏览器把 `scrollTop` **夹到 0**。
+    //   于是"源码编辑 ⇒ 长文档预览跳回文件开头"。这里在根因处把 scrollTop 跨过空态保住，
+    //   占位一齐（总高度恢复）就立刻还原；随后由 `syncSourceToPreview` 用元素锚点做精确校正。
+    var _lazyKeepScrollTop = 0;
+    try { _lazyKeepScrollTop = pane.scrollTop || 0; } catch (_) { _lazyKeepScrollTop = 0; }
     preview.innerHTML = "";
     preview.appendChild(container);
     _pvMetrics = _measurePreviewMetrics(pane, container);
@@ -9158,6 +9291,15 @@ async function call(fn, ...args) {
       frag.appendChild(ph);
     }
     container.appendChild(frag);
+    // 占位已齐 ⇒ 总高度恢复，此刻写回 scrollTop 不会被夹（task-141 根因处的还原）。
+    //   注意：占位高是**估值**，可能与真块略有差 ⇒ 这里只保证"不跳到文件开头"，
+    //   精确位置由 `syncSourceToPreview` 的元素锚点 + 漂移收敛负责。
+    try {
+      if (_lazyKeepScrollTop > 0 && pane.scrollTop < _lazyKeepScrollTop) {
+        pane.scrollTop = _lazyKeepScrollTop;
+        log("lazy", "restore scrollTop after empty-measure: " + Math.round(_lazyKeepScrollTop));
+      }
+    } catch (_) { /* noop */ }
 
     // 物化首屏：先按估值给一个**保守**首块数，之后用**实测块高反推**再决定是否补物化（不依赖任何硬编码）。
     var viewH = pane.clientHeight || (window.visualViewport && visualViewport.height) || 720;
@@ -18876,6 +19018,10 @@ async function call(fn, ...args) {
   function repaintPreview() {
     try { if (paintPreviewAfterSourceEdit()) return Promise.resolve(false); }
     catch (e) { log("render", "块级提交异常 ⇒ 整篇重渲: " + ((e && e.message) || e)); }
+    // 2026-10-25 task-141 说明：这里**保持**原样 `renderPreview(state.doc)`（整篇兜底），
+    //   不改成 _renderPreviewKeepScroll()。原因：`tests/test_preview_block_commit.py` 把"兜底=整篇重渲"
+    //   写成了契约断言，而本任务的症状（源码区编辑）不经过这条路径（源码侧走 syncSourceToPreview /
+    //   _srcApplySnapshot，已覆盖）。预览侧结构编辑的兜底丢滚动是**另一个入口**，见报告 §9 残留项。
     return renderPreview(state.doc);
   }
 
