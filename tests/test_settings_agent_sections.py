@@ -78,10 +78,14 @@ def test_chat_section_moves_the_existing_form_instead_of_rebuilding_it() -> None
 
 
 def test_section_titles_exist_in_both_locales_and_plugins_tab_key_is_retired() -> None:
-    """子版块标题中英成对；`settings.tab.plugins`（原「能力」页签名）已退役。"""
+    """子版块标题中英成对；`settings.tab.plugins`（原「能力」页签名）已退役。
+
+    2026-10-25（D1=A 三层区分，task-92）：子版块标题由「能力插件 / Capabilities」改为
+    「插件 / Plugins」—— 该面板管的是**插件**（分发载体），不是抽象能力。
+    """
     zh = _LOCALES["zh-CN"].read_text(encoding="utf-8")
     en = _LOCALES["en"].read_text(encoding="utf-8")
-    for text, chat, caps in ((zh, "对话", "能力插件"), (en, "Chat", "Capabilities")):
+    for text, chat, caps in ((zh, "对话", "插件"), (en, "Chat", "Plugins")):
         assert re.search(r"section:\s*\{", text), "缺 settings.section 子对象"
         assert f'chat: "{chat}"' in text and f'caps: "{caps}"' in text, f"{chat}/{caps} 缺失"
     assert 'plugins: "能力"' not in zh and 'plugins: "Capabilities"' not in en, "退役的页签名不该还在"

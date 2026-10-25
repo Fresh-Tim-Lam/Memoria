@@ -1587,7 +1587,7 @@
     thinkLess: "收起",
     thinkLive: "正在思考…",
   });
-  // ===== 2026-09-22 追加：能力插件面板（2026-09-23 起并入「Agent」页签的「能力插件」子版块）=====
+  // ===== 2026-09-22 追加：插件面板（2026-09-23 起并入「Agent」页签的「插件」子版块）=====
   // 面板 = `plugins-settings.js`，只调后端网关 `agent_plugins` / `agent_plugin_set`（`plugins.py` 末尾
   // 「契约接线」）。文案里刻意讲清三件事：**库级**开关、关掉即"该动作类在本库不可用"、清单只读。
   // 页签名 `settings.tab.plugins`（原「能力」）**随合并退役** ⇒ 不再声明；下面两行是等量占位，
@@ -1595,9 +1595,9 @@
   //
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings, {
     plugins: {
-      hint: "这是本库的能力插件清单（声明随版本分发、只读）。开关写在 `<库>/.memoria/agent/capabilities.json` 里、随库走；关掉后对应动作在本库不可用 —— 智能体提这类写入会被拒（错误码 capability_disabled）。",
+      hint: "这是本库的插件清单（声明随版本分发、只读）。开关写在 `<库>/.memoria/agent/capabilities.json` 里、随库走；关掉后对应能力在本库不可用 —— 智能体提这类写入会被拒（错误码 capability_disabled）。",
       loading: "加载中…",
-      empty: "本库没有可用的能力插件声明（此时能力闸不生效）。",
+      empty: "本库没有可用的插件声明（此时能力闸不生效）。",
       failed: "读取失败",
       noKb: "请先打开一个知识库",
       toolsLabel: "动作类",
@@ -1648,11 +1648,11 @@
 
   // 2026-09-23 追加：「Agent」页内**两个可折叠子版块**的标题（装配见 `graph-settings.js` 末尾
   // `ensureAgentSections()`；人授权"子版块名字你来定"）⇒ 取「对话」（原 Chat 页内容）与
-  // 「能力插件」（原独立页签，本轮并进来）。末尾追加 ⇒ 上方既有键与行号零漂移。
+  // 「插件」（原独立页签，本轮并进来）。末尾追加 ⇒ 上方既有键与行号零漂移。
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].settings, {
     section: {
       chat: "对话",
-      caps: "能力插件",
+      caps: "插件",
     },
   });
 
@@ -1715,8 +1715,8 @@
       parsedAllow: "允许：{list}",
       parsedDeny: "禁止：{list}",
       merged: "本库合并后 允许：{allow} / 禁止：{deny}",
-      capabilityOff: "⚠ 本库没启用「网页抓取」能力（去「能力插件」里打开才有用）",
-      scopeNote: "以上是「机器级默认」（所有库共用）。某个库想更严，去上面的「能力插件」里给 web-fetch 填「本库参数」—— 库级只能收紧、不能放宽。",
+      capabilityOff: "⚠ 本库没启用「网页抓取」能力（去「插件」里打开才有用）",
+      scopeNote: "以上是「机器级默认」（所有库共用）。某个库想更严，去上面的「插件」里给 web-fetch 填「本库参数」—— 库级只能收紧、不能放宽。",
       any: "不限",
       none: "无",
       ignored: "已忽略 {n} 处无法识别的写法",

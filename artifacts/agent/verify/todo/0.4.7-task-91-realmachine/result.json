@@ -1,0 +1,266 @@
+{
+  "app_pid": 5072,
+  "cdp_port": 9577,
+  "stub_port": 9599,
+  "cdp": {
+    "Browser": "Edg/155.0.4283.62",
+    "Protocol-Version": "1.3"
+  },
+  "driver": {
+    "rc": 0,
+    "stdout": "{\"ok\":true,\"gpu\":\"ANGLE (NVIDIA, NVIDIA GeForce RTX 5060 Ti (0x00002D04) Direct3D11 vs_5_0 ps_5_0, D3D11)\",\"durationMs\":8791}",
+    "stderr": ""
+  },
+  "cleanup": [
+    "killed 5072",
+    "skip 37936（身份校验未过）"
+  ],
+  "seed": {
+    "session_id": "session-t133-realmachine",
+    "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t133\\kb",
+    "kb_key": "c:\\users\\lamtim~1\\appdata\\local\\temp\\memoria_t133\\kb",
+    "kb_key_long": "c:\\users\\lam tim\\appdata\\local\\temp\\memoria_t133\\kb",
+    "cfg": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t133\\cfg",
+    "turns": 20,
+    "history_messages": 40,
+    "history_chars": 31702,
+    "context_usage": {
+      "chars": 31702,
+      "max_chars": 32000,
+      "threshold_chars": 25600,
+      "compacted_times": 0
+    },
+    "percent": 99,
+    "default_view_roles": [
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant"
+    ],
+    "with_compaction_roles": [
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant",
+      "user",
+      "assistant"
+    ],
+    "stub_port": 9599
+  },
+  "session": {
+    "path": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t133\\kb\\.memoria\\agent\\sessions\\session-t133-realmachine.jsonl",
+    "event_count": 69,
+    "compactions": [
+      {
+        "seq": 61,
+        "shadowed": 50,
+        "summary_chars": 221,
+        "model": "t133-stub"
+      }
+    ],
+    "user_messages": 21,
+    "loop_end": 21,
+    "last_type": "loop/end",
+    "total_lines": 69
+  },
+  "stub_requests": [
+    {
+      "kind": "compaction",
+      "messages": 35,
+      "model": "t133-stub",
+      "stream": true,
+      "last_role": "user",
+      "last_content_head": "你现在充当这次对话的压缩引擎。把**上面的对话**浓缩成一份结构化 checkpoint，\n让另一个模型能在不丢失关键上"
+    },
+    {
+      "kind": "answer",
+      "messages": 10,
+      "model": "t133-stub",
+      "stream": true,
+      "last_role": "user",
+      "last_content_head": "真机验证：压缩之后请继续回答。\n\n当前本地时间：2026-10-25T13:51:14+08:00"
+    },
+    {
+      "kind": "compaction",
+      "messages": 35,
+      "model": "t133-stub",
+      "stream": true,
+      "last_role": "user",
+      "last_content_head": "你现在充当这次对话的压缩引擎。把**上面的对话**浓缩成一份结构化 checkpoint，\n让另一个模型能在不丢失关键上"
+    },
+    {
+      "kind": "answer",
+      "messages": 10,
+      "model": "t133-stub",
+      "stream": true,
+      "last_role": "user",
+      "last_content_head": "真机验证：压缩之后请继续回答。\n\n当前本地时间：2026-10-25T13:52:01+08:00"
+    }
+  ],
+  "dom": {
+    "pre": {
+      "statusText": "压缩预算 99% · 该压缩还没压缩",
+      "statusTitle": "压缩预算 99%（31.7k / 32k 字符）\n阈值 80%（占字符预算；到点自动压缩早前对话）\n占用已超过压缩阈值。正常会在下一次提问前先压缩；若一直停在这里，说明那次摘要调用失败或被取消（fail-open：提问本身不受影响）。",
+      "statusColorInline": "var(--error)",
+      "statusComputedColor": "rgb(241, 76, 76)",
+      "rows": 40,
+      "systemRows": 0,
+      "systemTexts": [],
+      "tailRows": [
+        "智能体第19条线索已记录。答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答",
+        "我请记住第20条线索：这是一段用于把上下文推到压缩阈值以上的真机验证历史。旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧旧",
+        "智能体第20条线索已记录。答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答"
+      ],
+      "dockClass": "-agent-dock",
+      "dockWidthPx": 352,
+      "kbPath": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t133\\kb",
+      "currentSession": "task-133 真机压缩验证",
+      "viewport": {
+        "w": 1264,
+        "h": 821
+      },
+      "title": "Memoria v0.4.6"
+    },
+    "post": {
+      "statusText": "↑16.3k ↓6 · 压缩预算 19% · 已压缩 1 次",
+      "statusTitle": "本轮：输入 16310 / 输出 6 / 合计 16316 tokens\n缓存：未知（端点未上报，或为本次改动之前的旧会话）\n（本轮用量为估算值，端点未返回 usage）\n本会话累计 1 轮：输入 16310 / 输出 6 / 合计 16316 tokens\n点击打开对话面板\n压缩预算 19%（5.9k / 32k 字符）\n阈值 80%（占字符预算；到点自动压缩早前对话）\n已压缩 1 次\n本会话已发生的压缩次数（压缩后占用会骤降，那是真实事件，不是显示错误）",
+      "statusColorInline": "",
+      "statusComputedColor": "rgb(255, 255, 255)",
+      "rows": 42,
+      "systemRows": 0,
+      "systemTexts": [],
+      "tailRows": [
+        "智能体第20条线索已记录。答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答",
+        "我真机验证：压缩之后请继续回答。",
+        "智能体真机验证回答：已按当前（压缩后的）上下文继续。"
+      ],
+      "dockClass": "-agent-dock",
+      "dockWidthPx": 352,
+      "kbPath": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t133\\kb",
+      "currentSession": "task-133 真机压缩验证",
+      "viewport": {
+        "w": 1264,
+        "h": 821
+      },
+      "title": "Memoria v0.4.6"
+    },
+    "reload": {
+      "statusText": "↑16.3k ↓6 · 压缩预算 19% · 已压缩 1 次",
+      "statusTitle": "本轮：输入 16310 / 输出 6 / 合计 16316 tokens\n缓存：未知（端点未上报，或为本次改动之前的旧会话）\n（本轮用量为估算值，端点未返回 usage）\n点击打开对话面板\n压缩预算 19%（5.9k / 32k 字符）\n阈值 80%（占字符预算；到点自动压缩早前对话）\n已压缩 1 次\n本会话已发生的压缩次数（压缩后占用会骤降，那是真实事件，不是显示错误）",
+      "statusColorInline": "",
+      "statusComputedColor": "rgb(255, 255, 255)",
+      "rows": 43,
+      "systemRows": 1,
+      "systemTexts": [
+        "系统已压缩 50 条旧消息（摘要 221 字符）· 其后对话按摘要继续"
+      ],
+      "tailRows": [
+        "系统已压缩 50 条旧消息（摘要 221 字符）· 其后对话按摘要继续",
+        "我真机验证：压缩之后请继续回答。",
+        "智能体真机验证回答：已按当前（压缩后的）上下文继续。"
+      ],
+      "dockClass": "-agent-dock",
+      "dockWidthPx": 352,
+      "kbPath": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t133\\kb",
+      "currentSession": "task-133 真机压缩验证",
+      "viewport": {
+        "w": 1264,
+        "h": 821
+      },
+      "title": "Memoria v0.4.6"
+    }
+  },
+  "percent": {
+    "pre": 99,
+    "post": 19,
+    "reload": 19
+  },
+  "times": {
+    "pre": null,
+    "post": 1,
+    "reload": 1
+  },
+  "checks": {
+    "1_real_compaction_event": true,
+    "2a_pre_screenshot": true,
+    "2b_post_screenshot": true,
+    "2c_reload_screenshot": true,
+    "2d_element_clips": true,
+    "3a_percent_dropped": true,
+    "3b_times_plus_one": true,
+    "4_reload_system_row_kept": true,
+    "5_stub_saw_compaction_call": true,
+    "6_gpu_is_real": true
+  },
+  "pass": true
+}

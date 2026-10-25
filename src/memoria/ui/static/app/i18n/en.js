@@ -1686,7 +1686,7 @@
     thinkLess: "Collapse",
     thinkLive: "Thinking…",
   });
-  // ===== appended 2026-09-22: capability-plugin panel (2026-09-23 it moved into the "Agent" tab's "Capabilities" sub-section) =====
+  // ===== appended 2026-09-22: plugin panel (2026-09-23 it moved into the "Agent" tab's "Plugins" sub-section) =====
   // The panel is `plugins-settings.js`; it only calls the backend gateway
   // `agent_plugins` / `agent_plugin_set` (see `plugins.py`'s trailing "contract wiring" note).
   // The copy says three things on purpose: the switch is **per-KB**, turning it off makes those
@@ -1696,9 +1696,9 @@
   //
   Object.assign(g.MEMORIA_LOCALES["en"].settings, {
     plugins: {
-      hint: "These are this knowledge base's capability plugins (declarations ship with the build and are read-only). The switches are stored in `<kb>/.memoria/agent/capabilities.json` and travel with the KB; once off, those actions are unavailable here — the agent's write proposals of that kind are refused (code capability_disabled).",
+      hint: "These are this knowledge base's plugins (declarations ship with the build and are read-only). The switches are stored in `<kb>/.memoria/agent/capabilities.json` and travel with the KB; once off, those capabilities are unavailable here — the agent's write proposals of that kind are refused (code capability_disabled).",
       loading: "Loading…",
-      empty: "No capability-plugin declarations are available for this knowledge base (the capability gate is inert).",
+      empty: "No plugin declarations are available for this knowledge base (the capability gate is inert).",
       failed: "Failed to load",
       noKb: "Open a knowledge base first",
       toolsLabel: "Actions",
@@ -1753,7 +1753,7 @@
   Object.assign(g.MEMORIA_LOCALES["en"].settings, {
     section: {
       chat: "Chat",
-      caps: "Capabilities",
+      caps: "Plugins",
     },
   });
 
@@ -1820,7 +1820,7 @@
       parsedAllow: "Allowed: {list}",
       parsedDeny: "Blocked: {list}",
       merged: "This KB, merged -> allowed: {allow} / blocked: {deny}",
-      capabilityOff: "⚠ This KB has the “web fetch” capability turned off (enable it under Capability plugins)",
+      capabilityOff: "⚠ This KB has the “web fetch” capability turned off (enable it under Plugins)",
       scopeNote: "The lines above are the machine-wide default (shared by every knowledge base). For a stricter rule in one KB, set the web-fetch “Per-KB parameters” above — a KB can only tighten, never loosen.",
       any: "any",
       none: "none",

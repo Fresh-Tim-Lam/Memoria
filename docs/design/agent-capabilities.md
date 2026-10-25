@@ -1,6 +1,6 @@
 # 工具与能力包路线图（产品内 Agent）
 
-> **用途**：把"让 agent 真正智能"的四条能力线（**W 写能力 / N 联网收集 / S skill 机制 / H 宿主接口**）与两条横向约束（**token 预算与工具元层 / 基准测试集**）收敛成**可施工的阶段表与验收口径**。
+> **用途**：把"让 agent 真正智能"的四条能力线（**W 写能力 / N 联网收集 / S skill 机制 / H 宿主接口**）与两条横向约束（**token 预算与工具元层 / 基准测试集**）收敛成**可施工的阶段表与验收口径**。**术语（2026-10-25 人裁决 D1=A，三层区分）**：**能力 = capability**（抽象：agent 能做的一类事，如文件写入 / 网页抓取）；**技能 = skill**（规则面：`SKILL.md` frontmatter + 正文，指导模型"何时用、怎么做"）；**插件 = plugin**（分发载体：随版本分发的声明，本库开关落在 `<kb>/.memoria/agent/capabilities.json`）。**三者不是同义词：插件声明能力，技能指导能力的使用。** 三份文档分工：[agent-skills.md](./agent-skills.md)（技能编写约定）、[agent-plugin-design.md](./agent-plugin-design.md)（插件契约与写模块）；本文 = 能力/写能力的**路线图**。
 > **关系**：调用面（循环、会话、工具注册表、只读工具、压缩/裁剪/标题/会话检索）已在 [dsh-agent-port.md](dsh-agent-port.md) 的 M1–M2 落地；本文只接它的 **M3（写能力）与 M4（对外契约）** 并展开。基准方法论复用 [maintenance-benchmark.md](maintenance-benchmark.md)（分层采集 / 确定性语料 / A/B 与门禁）。
 > **状态**：待评审（2026-09-19 初版；**2026-09-20 完善 M3**：把写能力提升为「可插拔能力插件」契约的第一个消费者，四条线由此共用同一装载器，见 §2）。**实施状态的唯一来源是 [../todo.md §13](../todo.md) 的条目 ID**（本文不复制状态，遵守 [ledger-maintenance.md](../conventions/ledger-maintenance.md) 规则 1.2）。
 

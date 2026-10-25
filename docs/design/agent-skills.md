@@ -1,6 +1,6 @@
 # Agent 技能（skill）：编写约定与随包技能
 
-> **状态**：2026-10-12 初稿；随包技能 `skill-creator` / `kb-maintenance` 已落地，编写约定对后续所有技能创作生效。
+> **状态**：2026-10-12 初稿；随包技能 `skill-creator` / `kb-maintenance` 已落地，编写约定对后续所有技能创作生效。**术语（2026-10-25 人裁决 D1=A，三层区分）**：**能力 = capability**（抽象：agent 能做的一类事，如文件写入 / 网页抓取）；**技能 = skill**（规则面：`SKILL.md` frontmatter + 正文，指导模型"何时用、怎么做"——**本文主题**）；**插件 = plugin**（分发载体：随版本分发的声明）。**三者不是同义词：插件声明能力，技能指导能力的使用。** 三份文档分工：[agent-capabilities.md](agent-capabilities.md)（能力/写能力路线图）、[agent-plugin-design.md](agent-plugin-design.md)（插件契约与写模块）；本文 = **技能编写约定**（机制事实源仍是 `src/memoria/services/agent/skills.py`）。
 > **用途**：把 GitHub 高 star skill 生态的**精华**（编写最佳实践）收敛成 Memoria 自己的技能编写约定，并登记随包技能目录与已知漂移。
 > **关联文档**：[agent-capabilities.md §4](agent-capabilities.md)（skill 机制设计）、[agent-plugin-design.md](agent-plugin-design.md)（能力插件与写模块总设计）。
 > **单一事实源**：技能的**机制**事实源是 `src/memoria/services/agent/skills.py`（frontmatter 契约 / 两段式发现 / `skill` 工具 / `/name` 手势 / 内置只读根）；本文只承载**编写约定**与**随包技能目录**，不重复机制细节，冲突以机制实现为准。

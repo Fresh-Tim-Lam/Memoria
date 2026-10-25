@@ -6871,6 +6871,164 @@ window.MemoriaAgentPanel = (function () {
     return out;
   };
 
+
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-25 追加（0.4.7-task-91）：**上下文压缩可观测**（字符预算占用 / 超阈值提示 / 系统行）
+  //   ① 分子分母同域（都是字符）：`context_usage` 由后端 `history.session_context_usage()` 给出 =
+  //      `history_chars(build_history(...))` / `MAX_HISTORY_CHARS(32_000 字符)`，与压缩判定
+  //      （`ask._compact_if_needed()` → `compaction.history_chars()`）**同一个实现**；阈值 = ×0.8 = 25_600。
+  //      **这不是 token**：token 用量仍由既有 `agent.statusBar.line/span` 单独显示 ——
+  //      两条口径并存、不合并（合并即"UI 说 62% 但实际已压缩"的漂移源）。
+  //   ② 刷新时机 = **低频**：载入会话（`loadSession` 的 RPC 响应）＋ 每轮结束（`tagLiveBubblesWithSeqs`
+  //      复用同一次 `agent_session_load`，零额外往返）⇒ 不轮询 ⇒ 不闪烁。
+  //   ③ 压缩后占用**骤降是真实事件**，如实显示、不做过平滑；`compacted_times` 是"压缩发生过"的直接证据。
+  //   ④ `>threshold` ⇒ 状态格转红 + 「该压缩还没压缩」（可能在等下一轮，或摘要调用失败/被取消）。
+  //   ⑤ 系统行：后端把 `compaction` 事件投影成 `role:"system"`（`conversation_messages(include_compaction=True)`）
+  //      ⇒ 这里渲染成一条可回放系统行（载入/切回会话后可见），不占用户/助手气泡。
+  //   纪律：只**包装**既有函数 + 新增函数声明，不改既有函数体。
+  //   ⚠️ 本块必须放在门面 `return {` **之前**：IIFE 里 `return` 之后的顶层语句永不执行
+  //   （2026-10-25 task-133 真机验证实证：首版追加在 `})();` 之前 ⇒ 整块是死代码、界面上完全没生效）。
+  // ══════════════════════════════════════════════════════════════════════════════
+
+  //: 最近一次拿到的字符预算占用（形状见 `history.session_context_usage()`）；null = 未知（旧会话/未载入）。
+  //: 用 `var` 而非 `let`：`var` 提升到 IIFE 顶部 ⇒ 即便某个入口在本块赋值前被调用，
+  //: 读到的也是 `undefined`（按"未知"处理），不会抛 TDZ。
+  var contextUsage = null;
+
+  /** 收下后端 `context_usage`（逐字段校验；非法/缺席 ⇒ 置空，状态格按"未知"降级、绝不瞎报）。 */
+  function setContextUsage(raw) {
+    contextUsage = null;
+    if (raw && typeof raw === "object") {
+      const max = Number(raw.max_chars);
+      const chars = Number(raw.chars);
+      if (isFinite(max) && max > 0 && isFinite(chars) && chars >= 0) {
+        const threshold = Number(raw.threshold_chars);
+        const times = Math.floor(Number(raw.compacted_times));
+        contextUsage = {
+          chars: chars,
+          max_chars: max,
+          threshold_chars: isFinite(threshold) && threshold > 0 ? threshold : max * 0.8,
+          compacted_times: isFinite(times) && times > 0 ? times : 0,
+        };
+      }
+    }
+    renderStatusUsage();
+  }
+
+  /** 由 `contextUsage` 派生显示值；无数据 ⇒ null。占比 = chars / max_chars（**字符 / 字符**）。 */
+  function contextUsageView() {
+    const cu = contextUsage;
+    if (!cu || typeof cu !== "object" || !(cu.max_chars > 0)) return null;
+    const chars = cu.chars;
+    const percent = Math.round((chars / cu.max_chars) * 100);
+    return {
+      chars: chars,
+      max: cu.max_chars,
+      times: cu.compacted_times,
+      percent: percent,
+      thresholdPercent: Math.round((cu.threshold_chars / cu.max_chars) * 100),
+      over: cu.chars > cu.threshold_chars,
+    };
+  }
+
+  /** 把预算占用并进**底部状态栏用量格**（`#status-agent`）：可见短串 + 悬停明细；>阈值转红。
+   *  注意：只**追加**在 base 写好的 token 文本之后 —— token 口径与字符口径互不覆盖。 */
+  function applyContextUsageToStatus() {
+    const el = $("#status-agent");
+    if (!el) return;
+    const baseText = el.textContent || "";
+    const baseTitle = el.title || "";
+    const view = contextUsageView();
+    if (!view) {
+      el.style.color = ""; // 没有预算数据 ⇒ 文本/悬停交给 base（token 行照旧）；只还原颜色
+      return;
+    }
+    const parts = [];
+    if (baseText) parts.push(baseText);
+    parts.push(
+      view.over
+        ? T("agent.statusBar.compactOverdue", { percent: view.percent })
+        : T("agent.statusBar.compactShort", { percent: view.percent })
+    );
+    if (view.times > 0) parts.push(T("agent.statusBar.compactTimes", { n: view.times }));
+    el.textContent = parts.filter(Boolean).join(" · ");
+    const lines = baseTitle ? [baseTitle] : [];
+    lines.push(
+      T("agent.statusBar.compactBudget", {
+        percent: view.percent,
+        chars: fmtTokens(view.chars),
+        max: fmtTokens(view.max),
+      })
+    );
+    lines.push(T("agent.statusBar.compactThreshold", { percent: view.thresholdPercent }));
+    if (view.times > 0) {
+      lines.push(T("agent.statusBar.compactTimes", { n: view.times }));
+      lines.push(T("agent.statusBar.compactTimesHint"));
+    }
+    if (view.over) lines.push(T("agent.statusBar.compactOverdueHint"));
+    el.title = lines.join("\n");
+    el.style.color = view.over ? "var(--error)" : "";
+  }
+
+  /** 系统行文案（i18n 键缺失时回落到后端 `text`，绝不显示空行）。 */
+  function systemRowText(rec) {
+    const compact = rec && rec.compact && typeof rec.compact === "object" ? rec.compact : null;
+    if (!compact) return String((rec && rec.text) || "");
+    const key = "agent.status.compactSystem";
+    const text = T(key, { covered: compact.covered, chars: fmtTokens(compact.summaryChars) });
+    return text === key ? String((rec && rec.text) || "") : text;
+  }
+
+  /** 压缩系统行（`role:"system"`）：一条次要色、无气泡框的行；带 `data-msg-index` 以保持
+   *  "messages[] ↔ 气泡 1:1"（`data-msg-index` 定位纪律见文件中部块）。 */
+  function systemMessageEl(rec) {
+    const wrap = document.createElement("div");
+    wrap.className = "-agent-msg -agent-msg--assistant -agent-msg--system";
+    const idx = messages.indexOf(rec);
+    if (idx >= 0) wrap.dataset.msgIndex = String(idx);
+    wrap.setAttribute("data-agent-system", "compaction");
+    const role = document.createElement("span");
+    role.className = "-agent-msg-role";
+    role.textContent = T("agent.role.system");
+    const body = document.createElement("div");
+    body.className = "-agent-msg-body";
+    body.textContent = systemRowText(rec);
+    body.style.color = "var(--text-secondary)";
+    wrap.appendChild(role);
+    wrap.appendChild(body);
+    return wrap;
+  }
+
+  // ① 状态格：base 写完 token 文本后再并上字符预算（不覆盖 base 的任何内容）
+  const baseRenderStatusUsageForCompact = renderStatusUsage;
+  renderStatusUsage = function () {
+    const out = baseRenderStatusUsageForCompact.apply(null, arguments);
+    applyContextUsageToStatus();
+    return out;
+  };
+  // ② 复位（清空对话 / 载入历史 / 换库）：旧会话的占用一并作废；
+  //    `loadSession` 拿到 RPC 响应后会由 `setContextUsage()` 写回新会话的值（顺序：reset → render → 本块 wrapper 写入）
+  const baseResetStatusUsageForCompact = resetStatusUsage;
+  resetStatusUsage = function () {
+    contextUsage = null;
+    return baseResetStatusUsageForCompact.apply(null, arguments);
+  };
+  // ③ 系统行：只拦 `role:"system"`，其余记录走原渲染链（过程行/折叠/用量行全部不动）
+  const baseMessageElForSystem = messageEl;
+  messageEl = function (rec) {
+    if (rec && rec.role === "system") return systemMessageEl(rec);
+    return baseMessageElForSystem.apply(null, arguments);
+  };
+  // ④ 载入会话：把响应里的 `context_usage` 收下（只读字段；缺席 ⇒ 未知，不报错）
+  const baseLoadSessionForCompact = loadSession;
+  loadSession = function () {
+    const pending = baseLoadSessionForCompact.apply(null, arguments);
+    return Promise.resolve(pending).then(function (res) {
+      if (res && res.status === "ok") setContextUsage(res.context_usage);
+      return res;
+    });
+  };
+
   return {
     init: init,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
@@ -7123,158 +7281,4 @@ window.MemoriaAgentPanel = (function () {
     });
   })();
 
-  // ══════════════════════════════════════════════════════════════════════════════
-  // 2026-10-25 追加（0.4.7-task-91）：**上下文压缩可观测**（字符预算占用 / 超阈值提示 / 系统行）
-  //   ① 分子分母同域（都是字符）：`context_usage` 由后端 `history.session_context_usage()` 给出 =
-  //      `history_chars(build_history(...))` / `MAX_HISTORY_CHARS(32_000 字符)`，与压缩判定
-  //      （`ask._compact_if_needed()` → `compaction.history_chars()`）**同一个实现**；阈值 = ×0.8 = 25_600。
-  //      **这不是 token**：token 用量仍由既有 `agent.statusBar.line/span` 单独显示 ——
-  //      两条口径并存、不合并（合并即"UI 说 62% 但实际已压缩"的漂移源）。
-  //   ② 刷新时机 = **低频**：载入会话（`loadSession` 的 RPC 响应）＋ 每轮结束（`tagLiveBubblesWithSeqs`
-  //      复用同一次 `agent_session_load`，零额外往返）⇒ 不轮询 ⇒ 不闪烁。
-  //   ③ 压缩后占用**骤降是真实事件**，如实显示、不做过平滑；`compacted_times` 是"压缩发生过"的直接证据。
-  //   ④ `>threshold` ⇒ 状态格转红 + 「该压缩还没压缩」（可能在等下一轮，或摘要调用失败/被取消）。
-  //   ⑤ 系统行：后端把 `compaction` 事件投影成 `role:"system"`（`conversation_messages(include_compaction=True)`）
-  //      ⇒ 这里渲染成一条可回放系统行（载入/切回会话后可见），不占用户/助手气泡。
-  //   纪律：只**包装**既有函数 + 末尾声明新函数，不改既有函数体 ⇒ 上方所有锚点零漂移。
-  // ══════════════════════════════════════════════════════════════════════════════
-
-  //: 最近一次拿到的字符预算占用（形状见 `history.session_context_usage()`）；null = 未知（旧会话/未载入）。
-  //: 用 `var` 而非 `let`：本块在 IIFE **末尾**执行，`var` 提升到 IIFE 顶部 ⇒ 即便上方某个入口在本块
-  //: 执行前就被调用，读到的是 `undefined`（按"未知"处理），不会抛 TDZ。
-  var contextUsage = null;
-
-  /** 收下后端 `context_usage`（逐字段校验；非法/缺席 ⇒ 置空，状态格按"未知"降级、绝不瞎报）。 */
-  function setContextUsage(raw) {
-    contextUsage = null;
-    if (raw && typeof raw === "object") {
-      const max = Number(raw.max_chars);
-      const chars = Number(raw.chars);
-      if (isFinite(max) && max > 0 && isFinite(chars) && chars >= 0) {
-        const threshold = Number(raw.threshold_chars);
-        const times = Math.floor(Number(raw.compacted_times));
-        contextUsage = {
-          chars: chars,
-          max_chars: max,
-          threshold_chars: isFinite(threshold) && threshold > 0 ? threshold : max * 0.8,
-          compacted_times: isFinite(times) && times > 0 ? times : 0,
-        };
-      }
-    }
-    renderStatusUsage();
-  }
-
-  /** 由 `contextUsage` 派生显示值；无数据 ⇒ null。占比 = chars / max_chars（**字符 / 字符**）。 */
-  function contextUsageView() {
-    const cu = contextUsage;
-    if (!cu || typeof cu !== "object" || !(cu.max_chars > 0)) return null;
-    const chars = cu.chars;
-    const percent = Math.round((chars / cu.max_chars) * 100);
-    return {
-      chars: chars,
-      max: cu.max_chars,
-      times: cu.compacted_times,
-      percent: percent,
-      thresholdPercent: Math.round((cu.threshold_chars / cu.max_chars) * 100),
-      over: cu.chars > cu.threshold_chars,
-    };
-  }
-
-  /** 把预算占用并进**底部状态栏用量格**（`#status-agent`）：可见短串 + 悬停明细；>阈值转红。
-   *  注意：只**追加**在 base 写好的 token 文本之后 —— token 口径与字符口径互不覆盖。 */
-  function applyContextUsageToStatus() {
-    const el = $("#status-agent");
-    if (!el) return;
-    const baseText = el.textContent || "";
-    const baseTitle = el.title || "";
-    const view = contextUsageView();
-    if (!view) {
-      el.style.color = ""; // 没有预算数据 ⇒ 文本/悬停交给 base（token 行照旧）；只还原颜色
-      return;
-    }
-    const parts = [];
-    if (baseText) parts.push(baseText);
-    parts.push(
-      view.over
-        ? T("agent.statusBar.compactOverdue", { percent: view.percent })
-        : T("agent.statusBar.compactShort", { percent: view.percent })
-    );
-    if (view.times > 0) parts.push(T("agent.statusBar.compactTimes", { n: view.times }));
-    el.textContent = parts.filter(Boolean).join(" · ");
-    const lines = baseTitle ? [baseTitle] : [];
-    lines.push(
-      T("agent.statusBar.compactBudget", {
-        percent: view.percent,
-        chars: fmtTokens(view.chars),
-        max: fmtTokens(view.max),
-      })
-    );
-    lines.push(T("agent.statusBar.compactThreshold", { percent: view.thresholdPercent }));
-    if (view.times > 0) {
-      lines.push(T("agent.statusBar.compactTimes", { n: view.times }));
-      lines.push(T("agent.statusBar.compactTimesHint"));
-    }
-    if (view.over) lines.push(T("agent.statusBar.compactOverdueHint"));
-    el.title = lines.join("\n");
-    el.style.color = view.over ? "var(--error)" : "";
-  }
-
-  /** 系统行文案（i18n 键缺失时回落到后端 `text`，绝不显示空行）。 */
-  function systemRowText(rec) {
-    const compact = rec && rec.compact && typeof rec.compact === "object" ? rec.compact : null;
-    if (!compact) return String((rec && rec.text) || "");
-    const key = "agent.status.compactSystem";
-    const text = T(key, { covered: compact.covered, chars: fmtTokens(compact.summaryChars) });
-    return text === key ? String((rec && rec.text) || "") : text;
-  }
-
-  /** 压缩系统行（`role:"system"`）：一条次要色、无气泡框的行；带 `data-msg-index` 以保持
-   *  "messages[] ↔ 气泡 1:1"（`data-msg-index` 定位纪律见文件中部块）。 */
-  function systemMessageEl(rec) {
-    const wrap = document.createElement("div");
-    wrap.className = "-agent-msg -agent-msg--assistant -agent-msg--system";
-    const idx = messages.indexOf(rec);
-    if (idx >= 0) wrap.dataset.msgIndex = String(idx);
-    wrap.setAttribute("data-agent-system", "compaction");
-    const role = document.createElement("span");
-    role.className = "-agent-msg-role";
-    role.textContent = T("agent.role.system");
-    const body = document.createElement("div");
-    body.className = "-agent-msg-body";
-    body.textContent = systemRowText(rec);
-    body.style.color = "var(--text-secondary)";
-    wrap.appendChild(role);
-    wrap.appendChild(body);
-    return wrap;
-  }
-
-  // ① 状态格：base 写完 token 文本后再并上字符预算（不覆盖 base 的任何内容）
-  const baseRenderStatusUsageForCompact = renderStatusUsage;
-  renderStatusUsage = function () {
-    const out = baseRenderStatusUsageForCompact.apply(null, arguments);
-    applyContextUsageToStatus();
-    return out;
-  };
-  // ② 复位（清空对话 / 载入历史 / 换库）：旧会话的占用一并作废；
-  //    `loadSession` 拿到 RPC 响应后会由 `setContextUsage()` 写回新会话的值（顺序：reset → render → 本块 wrapper 写入）
-  const baseResetStatusUsageForCompact = resetStatusUsage;
-  resetStatusUsage = function () {
-    contextUsage = null;
-    return baseResetStatusUsageForCompact.apply(null, arguments);
-  };
-  // ③ 系统行：只拦 `role:"system"`，其余记录走原渲染链（过程行/折叠/用量行全部不动）
-  const baseMessageElForSystem = messageEl;
-  messageEl = function (rec) {
-    if (rec && rec.role === "system") return systemMessageEl(rec);
-    return baseMessageElForSystem.apply(null, arguments);
-  };
-  // ④ 载入会话：把响应里的 `context_usage` 收下（只读字段；缺席 ⇒ 未知，不报错）
-  const baseLoadSessionForCompact = loadSession;
-  loadSession = function () {
-    const pending = baseLoadSessionForCompact.apply(null, arguments);
-    return Promise.resolve(pending).then(function (res) {
-      if (res && res.status === "ok") setContextUsage(res.context_usage);
-      return res;
-    });
-  };
 })();
