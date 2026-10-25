@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """跨块选区矩阵探针运行器（task-79）。
 
 做什么：
@@ -240,6 +240,8 @@ CHECK_ZH = {
     "singleUndo": "单次撤销复原",
     "imagesGone": "选中图片块已整体删除",
     "imagesKept": "未选图片块保留",
+    "previewMultiline3of3": "预览折叠光标多行粘贴 3 行→3 行",
+    "pastedVisible": "粘贴内容可见",
     "clipboard": "剪贴板正确",
     "copyNoop": "复制不改文档",
     "failureNotice": "失败有可见提示",
@@ -254,8 +256,9 @@ def build_md(raw: dict, label: str, sha: str) -> str:
     """
     cases = raw.get("cases") or []
     meta = raw.get("meta") or {}
-    total = len(cases)
-    passed = sum(1 for c in cases if c.get("pass"))
+    skipped = [c for c in cases if c.get("skipped")]
+    total = len(cases) - len(skipped)
+    passed = sum(1 for c in cases if c.get("pass") and not c.get("skipped"))
 
     # 聚合：类型 × 操作（用例 id 里的类型前缀只到组，另用 type 字段归一）
     def type_key(c):
@@ -267,6 +270,8 @@ def build_md(raw: dict, label: str, sha: str) -> str:
 
     agg = {}
     for c in cases:
+        if c.get("skipped"):
+            continue
         k = (type_key(c), c.get("op"))
         d = agg.setdefault(k, {"pass": 0, "total": 0})
         d["total"] += 1
@@ -288,6 +293,10 @@ def build_md(raw: dict, label: str, sha: str) -> str:
     L.append("")
     verdict = "✅ 全部 PASS" if passed == total else "❌ %d / %d FAIL" % (total - passed, total)
     L.append("## 结论：%s（%d/%d）" % (verdict, passed, total))
+    if skipped:
+        L.append("")
+        L.append("> ⏭ 跳过 %d 条（已知问题，不计入 PASS/FAIL，保留用例不删）：%s" % (
+            len(skipped), "；".join("%s（%s）" % (c.get("id"), str(c.get("skipReason") or "")[:80]) for c in skipped)))
     L.append("")
     L.append("## 摘要：块类型 × 操作")
     L.append("")
@@ -310,6 +319,10 @@ def build_md(raw: dict, label: str, sha: str) -> str:
     L.append("| 用例 | 结果 | 失败项 | 备注 |")
     L.append("|---|---|---|---|")
     for c in cases:
+        if c.get("skipped"):
+            L.append("| %s | ⏭ SKIP | — | %s |" % (
+                c.get("id"), str(c.get("skipReason") or "").replace("|", "\\|")[:70]))
+            continue
         fails = c.get("failChecks") or []
         note = c.get("error") or ""
         if not note and c.get("notice"):
@@ -472,12 +485,14 @@ def main() -> int:
     raw = json.loads(raw_path.read_text(encoding="utf-8"))
     raw.setdefault("meta", {})["mode"] = mode
     cases = raw.get("cases") or []
-    passed = sum(1 for c in cases if c.get("pass"))
+    skipped = [c for c in cases if c.get("skipped")]
+    executed = [c for c in cases if not c.get("skipped")]
+    passed = sum(1 for c in executed if c.get("pass"))
     md_path.write_text(build_md(raw, args.label, sha), encoding="utf-8")
     print("\n[sel] 产物：\n  %s\n  raw: %s" % (md_path, raw_path))
-    print("[sel] 用例 %d 个：PASS %d / FAIL %d，用时 %.1fs" % (
-        len(cases), passed, len(cases) - passed, elapsed))
-    if args.strict and passed != len(cases):
+    print("[sel] 用例 %d 个（跳过 %d，已知问题）：PASS %d / FAIL %d，用时 %.1fs" % (
+        len(executed), len(skipped), passed, len(executed) - passed, elapsed))
+    if args.strict and passed != len(executed):
         return 1
     return 0
 

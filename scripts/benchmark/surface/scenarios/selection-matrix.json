@@ -114,7 +114,8 @@
       "span": "paste",
       "from": {"marker": "P1", "word": "delta", "edge": "start"},
       "pasteText": "P1MX_ONE a\nP1MX_TWO b\nP1MX_THREE c",
-      "skip_reason": "task-137 定性：预览区折叠光标多行粘贴只保留首行（产品缺陷，修复前不纳入门禁）；修复后恢复断言。见 artifacts/agent/verify/todo/0.4.7-p1-preview-paste.md"
+      "resolved": true,
+      "note": "task-138 已修复：app.js pasteTextAtCursor 每拆一段等 whenStructuralIdle 再插下一行，且失败可见；恢复 3 行→3 行断言（见 artifacts/agent/verify/todo/0.4.8-p1-preview-paste-fix.md）"
     }
   ],
   "mouseCases": [

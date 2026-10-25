@@ -11550,6 +11550,10 @@ async function call(fn, ...args) {
     var redoStack = [];
     var lastGroup = null; // { kind, blockIndex, nodePath, offset }
     var _pendingGroupSnapshot = null; // 原子操作分组（粘贴/选中删除）的起点快照
+    // task-138：结构编辑（拆段/块级重渲）的"完成"信号。拆段后的 restoreCursor 在
+    // repaintPreview().then(...) 里异步执行；多行粘贴必须在插下一行前等它，否则 cursorAST
+    // 还指向拆段前的旧位置 ⇒ 后续行插入失败且静默丢失（真机 10/10 复现）。
+    var _pendingStructural = null;
 
     function cloneCursor(cursor) {
       return {
@@ -12374,13 +12378,17 @@ async function call(fn, ...args) {
 
       // 2026-09-25：**回车拆段（最常走的那条）改为块级提交** —— 原来这里整篇重渲 ⇒ 「按回车卡顿一下 + 画面上下闪」
       _cancelBlockRepaint();   // AG103：同上 —— 块级提交马上会重渲这一段
-      repaintPreview().then(function () {
+      _pendingStructural = repaintPreview().then(function () {
         var rb = (_doc && _doc.blocks && _doc.blocks[newCursor.blockIndex]) || null;
         hlog("splitParagraph re-rendered blocks=" + (_doc && _doc.blocks ? _doc.blocks.length : 0) +
           " block[" + newCursor.blockIndex + "].type=" + (rb ? rb.type : "?") +
           " items=" + (rb && rb.items ? rb.items.length : "-"));
         hlog("splitParagraph re-rendered, restore new cursor=" + _fmtCursor(newCursor));
         restoreCursor(newCursor.blockIndex, newCursor.nodePath, newCursor.offset);
+      })["catch"](function (e) {
+        // 结构性重渲失败：不让异常变成未处理 rejection；调用方（多行粘贴）通过
+        // whenStructuralIdle 等待后仍会看到 cursorAST 未恢复，从而走"失败可见"分支。
+        console.error("[MemoriaEditSync] splitParagraph 重渲失败：", e);
       });
 
       markDirty();
@@ -13571,6 +13579,8 @@ async function call(fn, ...args) {
       indentListLevel: indentListLevel,
       beginUndoGroup: beginUndoGroup,
       endUndoGroup: endUndoGroup,
+      // task-138：多行粘贴等待"拆段 + 异步光标恢复"完成（否则下一行读到旧 cursorAST）
+      whenStructuralIdle: function () { return _pendingStructural || Promise.resolve(); },
       undo: undo,
       redo: redo,
       resetHistory: resetHistory,
@@ -13712,12 +13722,18 @@ async function call(fn, ...args) {
   }
 
   /** 把给定文本插入预览区光标处（多行逐行拆分、整体作为一个撤销单元）。
-   *  由 Ctrl+V（paste 事件）与右键「粘贴」共用。 */
-  function pasteTextAtCursor(text) {
+   *  由 Ctrl+V（paste 事件）与右键「粘贴」共用。
+   *
+   *  task-138 修复（真机 10/10 丢行）：拆段后的光标恢复在 `repaintPreview().then(...)`
+   *  异步里执行；原实现**同步**继续插下一行 ⇒ 读到拆段前的旧 cursorAST，
+   *  `insertText(lines[i])` 返回 false 且结果被丢弃 ⇒ 用户以为粘贴成功、实际只留第 1 行。
+   *  现在每拆一段都 `await whenStructuralIdle()` 再插下一行；任何一行失败都走
+   *  `setStatusError` + `console.error`（L6：失败必须可见，绝不静默吞掉）。 */
+  async function pasteTextAtCursor(text) {
     const EditSync = window.MemoriaEditSync;
     if (!EditSync || typeof EditSync.insertText !== "function") {
       setStatus(T("cfg.clip.editorNotReady"));
-      return;
+      return false;
     }
 
     // ★ stage5（task-83）：右键「粘贴」时预览区若有非折叠选区 ⇒ 同样按「替换选区」处理
@@ -13729,26 +13745,44 @@ async function call(fn, ...args) {
       if (pvP.contains(rP.startContainer) && pvP.contains(rP.endContainer)) {
         const okP = (typeof EditSync.replaceSelectionWithText === "function")
           ? EditSync.replaceSelectionWithText(rP.cloneRange(), text) : false;
-        if (!okP) { setStatusError(T("cfg.clip.pasteReplaceFail"), T("cfg.clip.selFailDetail")); return; }
+        if (!okP) { setStatusError(T("cfg.clip.pasteReplaceFail"), T("cfg.clip.selFailDetail")); return false; }
         setStatus(T("cfg.clip.pasteReplaced"));
-        return;
+        return true;
       }
     }
 
     const lines = String(text).replace(/\r\n?/g, "\n").split("\n");
+    const waitStructural = async () => {
+      if (typeof EditSync.whenStructuralIdle !== "function") return;
+      try { await EditSync.whenStructuralIdle(); } catch (_) { /* 重渲失败由下方"失败可见"兜底 */ }
+    };
     // 作为单个撤销单元：分组包裹，子操作（insertText/splitParagraph）不各自入栈
     if (typeof EditSync.beginUndoGroup === "function") EditSync.beginUndoGroup();
-    if (!EditSync.insertText(lines[0])) {
+    let failedAt = -1;
+    try {
+      if (!EditSync.insertText(lines[0])) {
+        failedAt = 0;
+      } else {
+        for (let i = 1; i < lines.length; i++) {
+          if (!EditSync.splitParagraph()) { failedAt = i; break; }
+          // ★ 关键修复：等拆段的异步光标恢复完成，再插下一行
+          await waitStructural();
+          if (!lines[i]) continue;             // 空行：拆段已产生空段落
+          if (!EditSync.insertText(lines[i])) { failedAt = i; break; }
+        }
+      }
+    } finally {
       if (typeof EditSync.endUndoGroup === "function") EditSync.endUndoGroup();
-      setStatus(T("cfg.clip.pasteFail"));
-      return;
     }
-    for (let i = 1; i < lines.length; i++) {
-      EditSync.splitParagraph();
-      if (lines[i]) EditSync.insertText(lines[i]);
+    if (failedAt >= 0) {
+      // L6：失败必须可见 —— 不静默吞掉，也不谎报"已粘贴"
+      console.error("[Memoria] 多行粘贴在第 " + (failedAt + 1) + "/" + lines.length +
+        " 行失败（已插入 " + failedAt + " 行），文档可能不完整");
+      setStatusError(T("cfg.clip.pasteFail"), String(failedAt + 1) + "/" + String(lines.length));
+      return false;
     }
-    if (typeof EditSync.endUndoGroup === "function") EditSync.endUndoGroup();
     setStatus(T("cfg.clip.pasted"));
+    return true;
   }
 
   /** 读取剪贴板并在光标位置粘贴（右键菜单入口；经 clipboard API，WebView2 会询问权限） */

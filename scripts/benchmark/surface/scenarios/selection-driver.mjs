@@ -579,6 +579,32 @@ function pageHelpers() {
     return out;
   }
 
+  /**
+   * task-138：把预览区折叠光标放到指定词端点（并把该位置同步到 EH.cursorAST），
+   * 用于「预览区折叠光标多行粘贴」矩阵用例（真实 Ctrl+V 前必须先有合法光标锚点）。
+   */
+  function placeCollapsedCaretAt(spec) {
+    var e = findEndpoint(spec);
+    if (!e || !e.ok) return e || { ok: false, reason: 'no-endpoint' };
+    var pv = previewEl();
+    if (!pv) return { ok: false, reason: 'no-preview' };
+    try { pv.focus({ preventScroll: true }); } catch (_) { pv.focus(); }
+    var r = document.createRange();
+    r.setStart(e.node, e.offset);
+    r.collapse(true);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+    var ast = null;
+    try {
+      var M = window.MemoriaMapper;
+      ast = (M && typeof M.domToAst === 'function') ? M.domToAst(e.node, e.offset) : null;
+    } catch (_2) { ast = null; }
+    var EH = window.MemoriaEditHandler;
+    if (ast && EH) EH.cursorAST = { blockIndex: ast.blockIndex, nodePath: (ast.nodePath || []).slice(), offset: ast.offset };
+    return { ok: true, blockIndex: e.blockIndex, offset: e.offset, ast: ast || null };
+  }
+
   window.__SEL = {
     blocks: qsaBlocks,
     body: bodyText,
@@ -605,6 +631,7 @@ function pageHelpers() {
     imageAltsSource: imageAltsSource,
     imageAltsDom: imageAltsDom,
     debugSelect: debugSelect,
+    placeCollapsedCaretAt: placeCollapsedCaretAt,
     clip: function () { return window.__CLIP; },
     notice: noticeText,
     noticeAll: noticeAll,
@@ -955,13 +982,17 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin, 
     }
   }
   for (const ki of matrix.knownIssues || []) {
-    // 已知问题用例：必须保留在矩阵里（不可删除），但定性/修复前不参与 PASS/FAIL 统计
+    // 已知问题用例：必须保留在矩阵里（不可删除）。未 resolved ⇒ 记录但跳过、不计 PASS/FAIL；
+    // resolved ⇒ 作为真实用例执行（task-138 修复后恢复「3 行 → 3 行」断言）。
     const id = `known-${ki.id}`;
     if (!want(id)) continue;
+    const resolved = !!ki.resolved;
     list.push({
-      id, type: ki.type || 'known-issue', span: ki.span || 'known', op: 'pasteReplace',
+      id, type: ki.type || 'known-issue', span: ki.span || 'known',
+      op: resolved ? 'pastePreviewMultiline' : 'pasteReplace',
       from: ki.from, to: ki.to, selMode: 'programmatic', pasteText: ki.pasteText,
-      skipped: true, skipReason: ki.skip_reason || 'known issue',
+      skipped: !resolved, skipReason: ki.skip_reason || 'known issue',
+      note: ki.note || null,
     });
   }
   for (const mc of matrix.mouseCases || []) {
@@ -1011,6 +1042,50 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin, 
         sentinelPrep = await cdp.evalJS('window.__SEL.prepareClipboardSentinel()').catch(() => null);
       }
       const preBody = await cdp.evalJS('window.__SEL.body()');
+      // ── task-138：预览区折叠光标多行粘贴（修复后恢复的矩阵断言，3 行 → 3 行）──
+      if (cs.op === 'pastePreviewMultiline') {
+        const pasteText = cs.pasteText || 'P1MX_ONE a\nP1MX_TWO b\nP1MX_THREE c';
+        const markers = pasteText.split('\n');
+        rec.pasteText = pasteText;
+        const caret = await cdp.evalJS(`window.__SEL.placeCollapsedCaretAt(${JSON.stringify(cs.from)})`);
+        rec.caretAnchor = caret;
+        const clipWrite = await cdp.evalJS(`window.__SEL.writeClipboard(${JSON.stringify(pasteText)})`)
+          .catch((e) => 'eval-error:' + e.message);
+        rec.clipWrite = clipWrite;
+        await sleep(180);
+        await cdp.evalJS('window.__SEL.forceEditMode()');
+        await ix.press('v', { mods: ['ctrl'] });
+        let bodyNow = await waitBodyChange(cdp, preBody, 2500);
+        let pasteHow = 'ctrl+v';
+        if (bodyNow === preBody) {
+          const sp = await cdp.evalJS(`window.__SEL.syntheticPaste(${JSON.stringify(pasteText)})`);
+          pasteHow = 'synthetic:' + JSON.stringify(sp);
+          bodyNow = await waitBodyChange(cdp, preBody, 2500);
+        }
+        rec.pasteHow = pasteHow;
+        await settle(cdp);
+        const postBody = await cdp.evalJS('window.__SEL.body()');
+        const lines = postBody.split('\n');
+        const markerLines = lines.filter((l) => markers.some((m) => l.indexOf(m) >= 0));
+        const visible = await cdp.evalJS(
+          `(function(){var p=document.getElementById('preview');var t=String(p&&p.innerText||'');` +
+          `var toks=window.__SEL.tokensOf(${JSON.stringify(pasteText)});for(var k in toks){if(t.indexOf(k)<0)return false;}return true;})()`);
+        await cdp.evalJS('window.__SEL.undoOnce()');
+        await settle(cdp);
+        const undoBody = await cdp.evalJS('window.__SEL.body()');
+        rec.preBody = preBody; rec.postBody = postBody;
+        rec.checks.previewMultiline3of3 = markerLines.length >= markers.length;
+        rec.checks.changed = postBody !== preBody;
+        rec.checks.pastedVisible = !!visible;
+        rec.checks.singleUndo = undoBody === preBody;
+        rec.markerLines = markerLines;
+        rec.failChecks = Object.keys(rec.checks).filter((k) => !rec.checks[k]);
+        rec.pass = rec.failChecks.length === 0;
+        cases.push(rec);
+        process.stdout.write(`[sel] ${idx}/${list.length} ${rec.pass ? 'PASS' : 'FAIL'} ${rec.id}` +
+          (rec.pass ? '' : ' :: ' + JSON.stringify(rec.failChecks)) + '\n');
+        continue;
+      }
       // 粘贴用例：剪贴板必须在**建立选区之前**写好（写剪贴板的 textarea 兜底会抢走选区）
       let pasteText = null, clipWrite = null;
       if (cs.op === 'pasteReplace') {

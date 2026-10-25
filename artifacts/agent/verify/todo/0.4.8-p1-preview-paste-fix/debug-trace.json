@@ -1,0 +1,129 @@
+{
+  "clickPoint": {
+    "x": 172,
+    "y": 200,
+    "text": "ALPHA one two three"
+  },
+  "trace": [
+    {
+      "fn": "insertText",
+      "arg": "DBG_ONE aaa",
+      "ret": true,
+      "before": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 19
+      },
+      "after": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "blocks": []
+    },
+    {
+      "fn": "splitParagraph",
+      "ret": true,
+      "before": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "after": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "blocks": []
+    },
+    {
+      "fn": "insertText",
+      "arg": "DBG_TWO bbb",
+      "ret": false,
+      "before": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "after": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "blocks": []
+    },
+    {
+      "fn": "splitParagraph",
+      "ret": false,
+      "before": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "after": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "blocks": []
+    },
+    {
+      "fn": "insertText",
+      "arg": "DBG_THREE ccc",
+      "ret": false,
+      "before": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "after": {
+        "bi": 2,
+        "path": [
+          0
+        ],
+        "off": 30
+      },
+      "blocks": []
+    }
+  ],
+  "after": {
+    "bodyLines": [
+      "# Cursor test",
+      "",
+      "ALPHA one two threeDBG_ONE aaa",
+      "",
+      "",
+      "BETA four five six",
+      "",
+      "GAMMA seven eight nine",
+      ""
+    ],
+    "pasteHits": [
+      "ALPHA one two threeDBG_ONE aaa"
+    ],
+    "cursorAST": {
+      "blockIndex": 3,
+      "nodePath": [],
+      "offset": 0
+    }
+  },
+  "text": "DBG_ONE aaa\nDBG_TWO bbb\nDBG_THREE ccc"
+}
