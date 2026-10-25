@@ -64,19 +64,27 @@
 
 ## 4. 监督型角色机制（人最具体的痛点）
 
-### 方案 A：规律自触发（supervisor 定时醒来审查）
+### 方案 A：规律自触发（supervisor 定时醒来审查）——**❌ 已验证不可行（2026-10-25，机制层禁止）**
 
-**目标**：监督者不依赖"别人触发"，按固定节奏醒来，读当前任务板 + 最近产物，输出审查报告。
+> **实测结论**：teammate 的工具表**挂载了** `schedule_list / schedule_create / schedule_update / schedule_delete` 四个工具，
+> 但任何调用都被 DSH 拒绝，错误原文：
+> ```
+> {"code":"subagent_session","message":"A delegated subagent cannot use reminders."}
+> ```
+> ⇒ 拒绝是**会话类型级**（teammate 被当作 subagent 会话），**不是 preset 缺工具** ⇒ 换 preset / 升级插件 v4 都不能解决；
+> 开关在 DSH 的 subagent/session 策略层（推断，错误码与文案可证）。
+> **详细证据**：`artifacts/agent/verify/todo/team-plugin-schedule-verify.md`（含 spawn/retire 的 dispatch-log 时间线）。
 
-**机制（DSH 插件层面）**：
-1. 给 supervisor 一个 recurring reminder（`schedule_create`，如 every 2h / daily 09:00），内容是"审查当前团队：任务板快照 + 未闭环项 + 最近 3 份报告，输出 review 报告并挂任务板"。
-2. Schedule 是 **Host-owned**：`schedule` 包持久化提醒、**独立于 Session 激活**、到期时 **Host 会 resume 原 Session 投递**（`docs/subsystems/schedule.md:5,251-252`；README：「Due reminders arrive as ordinary follow-up messages in the original conversation」）。
-3. supervisor 醒来后工具链：`team_snapshot` → `team_task_list` → 读最近 artifact → 产出 review 报告（落 `artifacts/agent/verify/supervisor/<date>.md`）→ `team_task_create`（审查结论作为任务/债务）。
+**原方案（保留供追溯）**：目标是监督者不依赖"别人触发"，按固定节奏醒来读任务板+最近产物、输出审查报告。
+原机制设想过：给 supervisor 一个 recurring reminder → Host 到期 resume 原 Session 投递 → supervisor 跑审查工具链。
+**该机制对非 subagent 会话成立**（Lead 会话实测 schedule 四工具可用；Host 会 resume 原 Session：`docs/subsystems/schedule.md:5,251-252`），
+但 **teammate 会话被策略禁止**，因此不能用于 supervisor。
 
-**可行性判定**：
-- ✅ **Host 层**：schedule 服务在 `apps/desktop-host/package.json` 依赖 `@deepseek-ai/dsh-schedule`；Host 会 resume Session（上面证据）。
-- ⚠️ **未验证（关键）**：**teammate 的 preset 是否挂载 `tool-schedule` 工具**。Lead 所在的 preset 有这些工具（本会话可见），但 teammate 由 `mechanical/standard/deep/creator` 模式选择 preset；`tool-schedule` 是 "Preset-scoped"（`packages/schedule/README.md`）。**验证方法**：spawn 一个 teammate，让它调 `schedule_list`；能调通则可直接落 A，否则需把 tool-schedule 加进 teammate preset（DSH 组合配置改动）或给团队插件新增 `team_reminder` 工具。
-- ⚠️ **未验证**：插件本身是否能注册"Host 定时器"自触发（grep `agent-team/src` 无 `setTimeout/schedule`；`agentTeams.sendMessage` 需要 `caller: Agent`，无 host-side 公开自调度 API）。**结论：A 的最小可行路径是"supervisor 用 schedule 工具自设提醒"，不是"插件后台定时器"**。
+**替代：Lead 代持定时唤醒（过渡方案）**
+1. **Lead** 用 `schedule_create` 设 recurring reminder（如每日 09:00 / 每 2h）——Lead 不是 subagent，schedule 可用（实测）。
+2. 到期 Host resume **Lead** 会话；Lead 收到提醒后 `send_message` 给 supervisor（inactive target 会**起一个回合**，`tool-agent-team` 文档：inactive target starts or resumes a turn）。
+3. supervisor 执行审查（任务书 + 检查项 S1–S6），产出 review artifact，`team_task_create` 挂结论。
+4. **代价**：触发链多一跳（Lead 定时 → Lead 代发），Lead 必须在线/会话可被 resume；supervisor 本身仍不能自触发。
 
 ### 方案 B：团队契约强制审查点（release 前必须审查）
 
@@ -92,12 +100,34 @@
 - ⚠️ **未验证**：wrapper 能否"拦截任意工具（含其他插件的工具）"还是只能包装自己注册的工具——文档称 "Around-dispatch view of a ToolExecution. A `tools/execute` wrapper"，倾向可包装全局 dispatch；**需写一个原型（10 行 wrapper 拒绝某个工具）验证**。
 - ✅ **repo 侧**：即使插件 gate 不可行，release 脚本前置检查（读 review artifact + decisions）**现在就能做**，属"下沉 A"。
 
-### 推荐
+### 推荐（2026-10-25 Lead 裁决 + 验证后修正）
 
-**A + B 分阶段，先 A 后 B**：
-1. **先做 A（0.6）**：supervisor 用 schedule 自设 recurring reminder（若 teammate 无 schedule 工具，先补 preset 或加 `team_reminder`），审查报告落盘并挂任务板。**先验证 tool-schedule 是否对 teammate 可用**（1 次 spawn 即可验证）。
-2. **再做 B（0.6/0.7）**：repo release 脚本前置检查（可立即做）；插件 `tools/execute` wrapper 原型验证后再决定是否把门禁上移。
-3. **共同前提**：审查报告必须**有可验证形状**（verdict/证据锚/时间/被审对象），否则"审查"会变成又一份文档。
+**决策 1 最终 = A 不可行（机制层已证）⇒ 主路径 B（契约 + repo 侧门禁）+ 过渡「Lead 代持定时唤醒 supervisor」。**
+
+1. **A 已判 ❌**：teammate 调用 schedule 被 `subagent_session` 拒绝（错误原文见上）；**换 preset/升级插件都不能解决**。不再把 A 当候选。
+2. **B 是主路径**：
+   - **repo 侧（已落地）**：`scripts/agent/release_preflight.py` —— 缺 supervisor review artifact（或 verdict≠pass/版本不符）⇒ exit 1；`--selftest` 四条 fixture 自证红/绿。
+     ⚠️ **待扩展**：release 规范（标题格式/双语结构/造价段）修好后，把这三项并入检查（Lead 2026-10-25 要求）。
+   - **插件侧**：`tools/execute` wrapper 仍是候选（机制存在，未原型验证），不承诺。
+3. **过渡方案（Lead 代持）**：Lead 设 schedule 定时 → 到期 resume Lead → Lead `send_message` 唤醒 supervisor（inactive target 起回合）→ supervisor 审查并落 artifact。
+4. **共同前提**：审查报告必须**有可验证形状**（verdict/证据锚/时间/被审对象），否则"审查"会变成又一份文档。
+
+### 监督角色的失败模式（Lead 补充 1，必须写进设计）
+
+> **最大的失败模式不是"不触发"，而是"触发了但看不出问题"** —— 每次按时产出"一切正常"的报告 = 没有监督。
+
+因此 supervisor 的审查必须有**明确检查项**与**必报 FAIL 条件**（不能只写"审查一下"）：
+
+| # | 检查项 | 必报 FAIL 的条件（示例） |
+| --- | --- | --- |
+| S1 | 任务板健康 | 出现 ready 但无 owner 的任务；in_progress 超过约定时长无进展；blocked_by 指向已消失任务 |
+| S2 | 证据完整性 | 有任务 `complete` 但 evidence 指向不存在的路径/commit；报告声明与 artifact 不符 |
+| S3 | 声明 vs 事实 | 本轮新增/修改的"已修复/已实现"声明，找不到可执行验证（测试/真机证据/矩阵） |
+| S4 | 版本与门禁 | 版本号/声明/tag 三者不一致；发版记录缺回滚方案；review artifact 缺失 |
+| S5 | 决策留痕 | T1/T3 提交缺 `Decision:/Why:`；重大偏离只有记录、没有授权 |
+| S6 | 用户可读性 | 本版本 digest 缺失，或 digest 无法在 5 分钟内回答三个问题（见 §9） |
+
+**输出格式（强制）**：`verdict: pass|fail` + 每项 `检查项 / 结论 / 证据锚 / 建议`；**verdict=fail 必须给出阻断项**，否则报告无效。
 
 ---
 
@@ -159,21 +189,28 @@
 
 | 诉求 | 现状判定 | 缺什么 / 替代路径 |
 | --- | --- | --- |
-| 插件后台定时器自触发（非工具） | ❌ **未发现 API**（`agent-team/src` 无 timer；`agentTeams.sendMessage` 需 caller Agent） | 用 schedule 工具（Host resume）替代；或需 DSH 提供"host-side activation API / 插件注册 timer" |
+| **teammate 使用 schedule 工具（方案 A）** | ❌ **已验证不可行（2026-10-25）**：四工具都在工具表，但调用被拒 `{"code":"subagent_session","message":"A delegated subagent cannot use reminders."}`；**会话类型级**限制，换 preset 无效 | **替代**：Lead 代持定时（Lead 的 schedule 可用）→ 到期 `send_message` 唤醒 supervisor；或需 DSH 在 subagent/session 策略层开口（本插件做不到） |
+| 插件后台定时器自触发（非工具） | ❌ **未发现 API**（`agent-team/src` 无 timer；`agentTeams.sendMessage` 需 caller Agent） | 用 schedule 工具（限 Lead 会话）替代；或需 DSH 提供 host-side activation API |
 | 拦截/包装**任意**工具做门禁 | ⚠️ **机制存在**（`tools/execute` wrapper），**未原型验证**是否覆盖其他插件工具 | 10 行 wrapper 原型验证；失败则退到 repo 侧门禁 |
 | 插件强制 git commit 带 Decision trailer | ❌ **做不到**（git 在插件外） | repo `pre-commit` hook + `team_audit.py` 事后检查 |
-| 插件强制发布流程 | ❌ 发布是 repo 脚本/人操作 | repo release 脚本前置检查（读 review artifact/decisions） |
-| teammate 使用 schedule 工具 | ⚠️ **未验证**（tool-schedule 是 preset-scoped） | 1 次 spawn 验证；不通过则改 preset 或加 `team_reminder` 工具 |
+| 插件强制发布流程 | ❌ 发布是 repo 脚本/人操作 | **已落地** repo 侧 `scripts/agent/release_preflight.py`（review artifact 前置检查，exit 1）；待 release 规范修正后扩展标题/双语/造价检查 |
 | teammate 继承 AOCI/Xerj MCP 工具 | ⚠️ **未验证** | spawn 后让 teammate 调 aoci/xerj 工具验证 |
+
 
 ---
 
 ## 9. 检验标准（防止"内部更规范但用户更看不懂"）
 
-设计是否成功，只看三条**用户视角**：
+设计是否成功，只看**用户视角**；其中"用户能不能读懂"必须有**可测验收标准**（Lead 补充 2）：
 
-1. **10 分钟测试**：一个新人读 `team-plugin-digest` + 当前版本 digest，能否说出"团队在做什么、为什么这么做、下一步是什么"。
-2. **可追溯测试**：每个用户可见结论都能点到 `Decision:` / 任务板 id / artifact 路径 / 代码锚点（至少一条真实存在）。
-3. **一致性测试**：文档声明与代码/测试一致（`team_audit.py::artifact_refs` 类检查对**用户可见文档**同样生效）。
+> **定义（可测）：一个未参与本轮的读者，只读 digest（≤2 页），能否在 5 分钟内回答三个问题：**
+> **① 这版做了什么？ ② 为什么这么做？ ③ 有什么已知问题？**
+> 三问全部答对 ⇒ digest 合格；任何一问答不上 ⇒ 视为用户跟不上，回炉重写 digest（不是"加内容"，而是"减内容/换结构"）。
+
+三条辅助测试：
+
+1. **可追溯测试**：每个用户可见结论都能点到 `Decision:` / 任务板 id / artifact 路径 / 代码锚点（至少一条真实存在）。
+2. **一致性测试**：文档声明与代码/测试一致（`team_audit.py::artifact_refs` 类检查对**用户可见文档**同样生效）。
+3. **诚实测试**：digest 必须包含"已知问题/未做什么"（参照本 digest 的决策点与 release record 的已知问题段）；只写成绩不写缺口 = 不合格。
 
 如果方案只让团队内部更"规范"但用户还是看不懂 ⇒ 判为跑偏，回炉。

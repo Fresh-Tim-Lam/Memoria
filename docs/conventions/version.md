@@ -81,6 +81,44 @@ __version__.py
 
 ## 6. 升级版本步骤
 
+### 第 0 步：发版门禁（必须；任何 release 先跑，**exit 1 不得继续**）
+
+> 机器检查：`scripts/agent/release_preflight.py`（规则见本文「GitHub Release 规范」章；
+> 宣传模板/术语表见 [release-copy.md](./release-copy.md)）。三步缺一不可：
+> **0a tag push 前 / 0b tag push 后建 Release 前 / 0c 建 Release 后复核实际状态**。
+
+**0a. tag push 之前（防覆盖已发布版本）**
+
+```powershell
+python scripts/agent/release_preflight.py --tag vx.y.z --phase pre `
+    --title "Memoria vx.y.z" --body-file artifacts/release-body-vx.y.z.md
+```
+目的：远端 tag 必须**不存在**。已存在 ⇒ exit 1（覆盖已发布版本，禁止）。
+
+**0b. tag push 之后、创建 Release 之前**
+
+```powershell
+python scripts/agent/release_preflight.py --tag vx.y.z --phase post `
+    --title "Memoria vx.y.z" --body-file artifacts/release-body-vx.y.z.md
+```
+目的：远端 tag 已存在 + 标题严格相等 + 双语顺序 + 造价段 + 版本三查。exit 1 不得建 Release。
+
+**0c. 创建 Release 并上传资产之后（必须，不可省）**
+
+```powershell
+python scripts/agent/release_preflight.py --tag vx.y.z --verify-published
+```
+目的：用 GitHub 上**实际** `name` / `body` / `assets` 复核，防「本地改好了但线上没变」的假绿。
+历史教训：v0.4.7 / v0.4.8 / v0.5.0 三次发布都是「建完没有核对实际 name」。
+
+> **supervisor review 检查当前为 WARN 级**（检查项 `SUPERVISOR-REVIEW`）：supervisor 角色目前
+> 只有设计（`docs/design/team-plugin-roadmap.md` P2）未投入运行，`artifacts/agent/verify/supervisor/`
+> 为 0 份。**目标状态是硬 FAIL**；翻转条件 = supervisor 角色投入运行 + 至少产出 1 份合格 review
+> artifact；翻转后默认 FAIL，`--allow-missing-review` 才降级（与现在相反）。翻转前以 WARN 输出
+> 为提示、不阻断。注意：旧 `--version` legacy 模式下 review 缺失仍为 FAIL（① 语义不变）。
+
+### 第 1–5 步
+
 1. 修改 `src/memoria/__version__.py` 为 `"x.y.z"`（唯一一处）
 2. 更新本文件「当前版本」与「变更记录」表
 3. 构建发布：`packaging\build_release.cmd --no-clean`
@@ -88,6 +126,12 @@ __version__.py
    - `Package\VERSION` 内容 = `x.y.z`
    - 启动发布包后顶栏 badge / 欢迎页 / 窗口标题显示 `vx.y.z`
 5. 打 tag 与发布：tag 用 `vx.y.z`；GitHub Release 资产按 [operations.md §5.1](../guides/operations.md) 命名（`Memoria-vx.y.z-win64.zip` 完整包 + `Memoria-vx.y.z-win64-lite.zip` 轻量包，**两者同时上传**）
+
+> **资产命名（canonical）**：`Memoria-vX.Y.Z-win64.zip` + `Memoria-vX.Y.Z-win64-lite.zip`。
+> v0.4.7 / v0.4.8 / v0.5.0 三个 Release 实际用了 `Memoria-vX.Y.Z-lite.zip`（缺 `win64-` 段），
+> 属**历史漂移**（根因：v0.4.7 只看最近自己的命名习惯照抄，未对照 operations.md §5.1）；
+> **已发布资产不改名**（外部链接可能已存），**新发布一律用 canonical `-win64-lite.zip`**。
+> 机检 `ASSETS-COUNT` 两种都接受，`-lite.zip` 只 WARN。
 
 ## 7. 变更记录（CHANGELOG）
 

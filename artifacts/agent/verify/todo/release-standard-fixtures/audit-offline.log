@@ -1,0 +1,36 @@
+===== v0.4.7 =====
+发布后审计（GitHub 实际状态）：tag=v0.4.7
+  [PASS] TITLE-EXACT: 标题严格等于 'Memoria v0.4.7'
+  [PASS] BODY-BILINGUAL: 英文在前（行 1）/ 中文在后（行 92）；主内容 EN=4962 字符、ZH=4443 字符（均 >200）
+  [PASS] COST-SECTION: 中英文造价段齐全，含量级与统计口径
+  [WARN] ASSETS-COUNT: 2/2 资产成对：['Memoria-v0.4.7-lite.zip', 'Memoria-v0.4.7-win64.zip']；lite 包名为 ['Memoria-v0.4.7-lite.zip']；canonical 是 `Memoria-v0.4.7-win64-lite.zip`（v0.4.7–v0.5.0 历史漂移命名，已发布不改名；新发布按 canonical，仅告警）
+  [PASS] VERSION-THREE-WAY: tag v0.4.7 提交内 __version__.py='0.4.7'、version.md §1='0.4.7' 一致；Package/VERSION 未入库，无法从提交核验（已显式说明）
+  [SKIP] TAG-REMOTE: --offline：跳过远端 tag 核验（本地 tag=v0.4.7）。SKIP 不算通过
+  正文口径：EN 块 5681 字符 / ZH 块 4685 字符（去标题/分隔线/空行）
+结论：PASS-WITH-SKIPS（6 项检查，1 项 SKIP：TAG-REMOTE；SKIP 不算通过，需人工确认）
+  告警：ASSETS-COUNT
+exit=0
+===== v0.4.8 =====
+发布后审计（GitHub 实际状态）：tag=v0.4.8
+  [PASS] TITLE-EXACT: 标题严格等于 'Memoria v0.4.8'
+  [PASS] BODY-BILINGUAL: 英文在前（行 1）/ 中文在后（行 89）；主内容 EN=4620 字符、ZH=4370 字符（均 >200）
+  [PASS] COST-SECTION: 中英文造价段齐全，含量级与统计口径
+  [WARN] ASSETS-COUNT: 2/2 资产成对：['Memoria-v0.4.8-lite.zip', 'Memoria-v0.4.8-win64.zip']；lite 包名为 ['Memoria-v0.4.8-lite.zip']；canonical 是 `Memoria-v0.4.8-win64-lite.zip`（v0.4.7–v0.5.0 历史漂移命名，已发布不改名；新发布按 canonical，仅告警）
+  [PASS] VERSION-THREE-WAY: tag v0.4.8 提交内 __version__.py='0.4.8'、version.md §1='0.4.8' 一致；Package/VERSION 未入库，无法从提交核验（已显式说明）
+  [SKIP] TAG-REMOTE: --offline：跳过远端 tag 核验（本地 tag=v0.4.8）。SKIP 不算通过
+  正文口径：EN 块 5339 字符 / ZH 块 4612 字符（去标题/分隔线/空行）
+结论：PASS-WITH-SKIPS（6 项检查，1 项 SKIP：TAG-REMOTE；SKIP 不算通过，需人工确认）
+  告警：ASSETS-COUNT
+exit=0
+===== v0.5.0 =====
+发布后审计（GitHub 实际状态）：tag=v0.5.0
+  [PASS] TITLE-EXACT: 标题严格等于 'Memoria v0.5.0'
+  [PASS] BODY-BILINGUAL: 英文在前（行 1）/ 中文在后（行 108）；主内容 EN=5890 字符、ZH=3970 字符（均 >200）
+  [PASS] COST-SECTION: 中英文造价段齐全，含量级与统计口径
+  [WARN] ASSETS-COUNT: 2/2 资产成对：['Memoria-v0.5.0-lite.zip', 'Memoria-v0.5.0-win64.zip']；lite 包名为 ['Memoria-v0.5.0-lite.zip']；canonical 是 `Memoria-v0.5.0-win64-lite.zip`（v0.4.7–v0.5.0 历史漂移命名，已发布不改名；新发布按 canonical，仅告警）
+  [PASS] VERSION-THREE-WAY: tag v0.5.0 提交内 __version__.py='0.5.0'、version.md §1='0.5.0' 一致；Package/VERSION 未入库，无法从提交核验（已显式说明）
+  [SKIP] TAG-REMOTE: --offline：跳过远端 tag 核验（本地 tag=v0.5.0）。SKIP 不算通过
+  正文口径：EN 块 6609 字符 / ZH 块 4212 字符（去标题/分隔线/空行）
+结论：PASS-WITH-SKIPS（6 项检查，1 项 SKIP：TAG-REMOTE；SKIP 不算通过，需人工确认）
+  告警：ASSETS-COUNT
+exit=0

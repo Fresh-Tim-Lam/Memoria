@@ -20,6 +20,17 @@
 
 **核心矛盾**：源码已是 v4、项目声明 v4，但**运行中的 App 仍是 v3** ⇒ 任何"依赖 v4 行为"的设计必须先解决「插件版本 vs 声明版本」的兼容与升级路径（本文件 §1 的 P0）。
 
+### 0.1 2026-10-25 Lead 裁决（本路线图的执行前提）
+
+| 决策 | 裁决 | 对路线图的影响 |
+| --- | --- | --- |
+| 1 监督角色 | **A 已验证不可行**（teammate 调 schedule 被 `subagent_session` 拒绝，2026-10-25 probe）⇒ 主路径 **B（契约 + repo 侧门禁）** + 过渡 **Lead 代持定时唤醒** | P2-1 由"待验证"改为"已证不可行"；新增 P2-0（Lead 代持过渡），P2-2 依赖 P2-0 |
+| 2 v3→v4 | **(a) 原则批准"声明>插件 ⇒ 拒绝"；(b) 今天不重建 DSH**，拆成独立计划（前置=备份+验回滚+人指定时间窗） | P0-2 改为"两阶段 + 开关默认 off"；拒绝规则**只写文档、不改代码**，直到重建完成 |
+| 3 产品化 | **A：内部 kernel + 用户可读 digest 先行**；digest 通过 5 分钟三问后才谈分发 | P4 顺序调整：P1-6/P4-1 先于 P4-4（独立插件包） |
+
+
+> 关键约束（决策 2 的**顺序矛盾**）：若现在就启用"声明>插件 ⇒ 拒绝"，会把 Lead 自己的版本级任务立刻拒掉（declared=4 / plugin=3）⇒ 必须 **先重建插件、后开开关**。
+
 ---
 
 ## 阶段 P0：版本对齐与契约升级（前置，1–2 天）
@@ -29,11 +40,12 @@
 | # | 任务 | 可验证完成定义 | 类型 |
 | --- | --- | --- | --- |
 | P0-1 | 查清 v3→v4 差异：源码 `TEAM_CONTRACT_VERSION=4` 相对运行 v3 多了什么（`reviewedChanges` 11 条 vs 运行版本行为） | 产出差异表（逐条：工具/返回值/拒绝条件），每条附 `file:line` 或"查不到" | ⚠️ 需对照源码 |
-| P0-2 | **插件升级路径**：重建 DSH App 使运行插件 = 源码 v4；或明确锁定 v3 并降 `team/plugin-contract.json` 到 3 | 重建后 `contractNotice.status` 从 `ahead` → 消失（或 `declaredVersion=3` 且无 mismatch）；记录一次实测收据 | 🔧 |
-| P0-3 | 契约升级策略：声明 > 插件 ⇒ **版本级任务拒绝**（而非仅通知） | 造一个声明 v99 的临时项目 fixture，跑 `team_task_create`（版本级）必须被拒；恢复 fixture | 🔧 需插件代码（契约 v5 候选） |
+| P0-2 | **第一步（今天可做，文档）**：把「声明>插件 ⇒ 拒绝版本级任务」写成**待启用规则**（带开关，默认 `off`），不改 DSH 代码 | 文档/配置项存在且默认 off；当前会话的版本级任务仍能通过（不被拒） | ✅ 文档 |
+| P0-3 | **第二步（独立计划，需人给时间窗）**：重建 DSH 使运行插件 = 源码 v4；顺序必须是 ①备份旧 `app.asar` ②重建 ③验证 `pluginVersion=4` ④打开开关 ⑤跑一次版本级任务确认能过 | 五步全部留证据；`contractNotice.status` 从 `ahead` 消失；失败时可按备份回滚并验证回滚可行 | 🔧 R1 级（属改变宿主，**Lead 不自己动手**，等人指定时间窗） |
 | P0-4 | 明确 v3/v4 双版本兼容窗口（若某些项目仍用 v3）：插件对 v3 声明只警告不拒；v4 声明才启用新义务 | 单测/文档表：声明版本×插件版本 的 4 种组合行为 | ⚠️ 设计 |
+| P0-5 | **回滚演练**（P0-3 前置）：备份当前 `app.asar`/安装目录，模拟一次"重建失败"并恢复 | 备份 sha 记录 + 恢复后 App 可启动 + `pluginVersion` 与恢复前一致 | 🔧 需人时间窗 |
 
-**为什么先做 P0**：本轮 0.5.0 越序发布的根因之一就是"机制版本与声明不一致时只发通知"；不先解决，后续所有"契约强制"都可能落空。
+**为什么先做 P0**：本轮 0.5.0 越序发布的根因之一就是"机制版本与声明不一致时只发通知"；且决策 2 明确：**拒绝规则不能先于重建启用**（否则 Lead 自己的版本级任务立刻停摆）——所以 P0 的动作顺序被固定为「写规则（off）→ 重建 → 开开关」。
 
 ---
 
@@ -61,13 +73,16 @@
 
 | # | 任务 | 可验证完成定义 | 类型 |
 | --- | --- | --- | --- |
-| P2-1 | **验证 teammate 能否用 schedule 工具**：spawn 一个 teammate，让它 `schedule_create` 一条 1 分钟后提醒；到点观察该 teammate 是否被 Host resume 并收到提醒 | 一次真实会话证据：提醒到期 ⇒ teammate 新回合开始 ⇒ 输出确认；若失败，记录缺什么（preset 未挂载/权限） | ⚠️ 1 次验证，最能定性 |
-| P2-2 | **supervisor 角色模板**：recurring reminder（如每日 09:00/每 2h）+ 审查任务书（任务板快照/未闭环/最近产物/输出格式） | supervisor 连续 2 个周期产出的 review 报告落盘，且报告里每条结论有证据锚；被审对象能收到并响应 | ✅ 若 P2-1 成功 |
-| P2-3 | **审查报告格式与挂账**：review artifact schema（verdict/证据/建议/时间）+ 结论自动挂任务板（债务/任务） | 报告 schema 校验通过；至少 1 条 review 结论被转成任务并有 owner | 🔧 小 |
-| P2-4 | **release 前置审查门**（方案 B）：repo release 脚本检查 supervisor review artifact + decisions，缺失则拒 | 造一个"无 review artifact"的发版分支 ⇒ 脚本拒绝（先证红）；补 review 后通过 | ✅ 下沉 A，可立即做 |
-| P2-5 | （可选）插件 `tools/execute` wrapper 原型：拒绝一个指定工具 | 10 行 wrapper 让某工具调用返回拒绝；记录 wrapper 是否覆盖其他插件工具 | ⚠️ 原型验证 |
+| P2-1 | ~~**验证 teammate 能否用 schedule 工具**~~ ⇒ **已验证不可行（2026-10-25）**：四工具都在工具表，但调用被拒 `{"code":"subagent_session","message":"A delegated subagent cannot use reminders."}`（会话类型级，换 preset 无效） | 证据：`artifacts/agent/verify/todo/team-plugin-schedule-verify.md` + dispatch-log（spawn 11:20:29 / retire 11:21:49）；**结论=❌，不再尝试** | ❌ 已证伪 |
+| P2-0 | **过渡：Lead 代持定时唤醒**——Lead 用 `schedule_create` 设 recurring reminder；到期 resume Lead ⇒ Lead `send_message` 唤醒 supervisor（inactive target 起回合）⇒ supervisor 审查 | 连续 2 个周期由 Lead 定时唤醒 supervisor 并产出 review artifact；Lead 侧 schedule 四工具可用（已实测） | ✅ 可做（过渡） |
+| P2-2 | **supervisor 角色模板**：审查任务书（任务板快照/未闭环/最近产物/**必报 FAIL 条件 S1–S6**） | supervisor 连续 2 个周期产出的 review 报告落盘，且每条结论有证据锚；verdict=fail 时必须有阻断项（vision §4.1）；被审对象能收到并响应 | ✅（触发走 P2-0） |
 
-**P2 完成定义（整体）**：至少一个 supervisor 实际运行 ≥2 个周期，产出 ≥2 份有人跟进结论的 review 报告；release 脚本对"无审查"必红。
+| P2-3 | **审查报告格式与挂账**：review artifact schema（version/reviewer/verdict/evidence）+ 结论自动挂任务板（债务/任务） | 报告 schema 校验通过（可被 `release_preflight.py` 识别）；至少 1 条 review 结论被转成任务并有 owner | 🔧 小 |
+| P2-4 | **release 前置审查门**（方案 B repo 侧）：发版前置检查 supervisor review artifact，缺失/verdict≠pass 即拒 | **已落地** `scripts/agent/release_preflight.py`：`--selftest` PASS（缺审查/版本不符/verdict=fail 全红；合规绿）；对 0.4.8 实测 exit=1（缺审查） | ✅ 已落地 |
+| P2-5 | （可选）插件 `tools/execute` wrapper 原型：拒绝一个指定工具 | 10 行 wrapper 让某工具调用返回拒绝；记录 wrapper 是否覆盖其他插件工具 | ⚠️ 原型验证 |
+| P2-6 | **supervisor 检查项清单**（Lead 补充 1）：把"触发了但看不出问题"作为首要失败模式，任务书必须含 S1–S6 检查项与 FAIL 判据 | 任务书模板包含 S1–S6；一次演练：故意制造 1 个真实问题（如缺失证据的任务），supervisor 必须报 FAIL 并给证据 | ✅ 设计已写入 vision §4.1 |
+
+**P2 完成定义（整体）**：至少一个 supervisor 由 **Lead 代持定时**唤醒并实际运行 ≥2 个周期，产出 ≥2 份有人跟进结论的 review 报告（verdict=fail 时含阻断项）；release 脚本对"无审查"必红。
 
 ---
 
@@ -92,7 +107,7 @@
 
 | # | 任务 | 可验证完成定义 | 类型 |
 | --- | --- | --- | --- |
-| P4-1 | **用户可读文档体系**：每个版本/项目自动生成 `docs/design/<project>-digest.md`（目标/实际/决定/证据/代码锚点） | 用 Memoria 0.4.7 数据生成一份完整 digest，用户/新人按 §9 三项测试通过 | ⚠️ 设计 + 工具 |
+| P4-1 | **用户可读文档体系**：每个版本/项目自动生成 `docs/design/<project>-digest.md`（目标/实际/决定/证据/代码锚点） | 用 Memoria 0.4.7/0.4.8 数据生成 digest；**验收 = 未参与本轮的读者只读 digest（≤2 页），5 分钟内答对三问：①这版做了什么 ②为什么 ③已知问题**（Lead 补充 2，vision §9）；答不上 ⇒ 回炉重写 digest | ⚠️ 设计 + 工具 |
 | P4-2 | **Memoria 场景接入**：学习/笔记/复习场景的 profile 能拉起小团队，产物直接落 `.memoria/` | 一个真实学习任务跑完：知识点拆分→出题→复习计划→review，产物落库且可回放 | ❓ 需 Memoria 侧接入点（RPC/事件），未验证 |
 | P4-3 | **AOCI/Xerj 集成**：角色启动时用 AOCI 恢复系统认知、用 Xerj 检索决策/历史 | teammate 能调用 aoci/xerj MCP 工具（需验证 MCP 是否随 spawn 继承）；一次任务里至少用一次 | ⚠️ 未验证 |
 | P4-4 | **独立 DSH 插件包**：kernel 固化 + profile 可配置 + 版本契约；可被其他项目安装 | 另一个示例项目用插件拉起团队并跑通 P1 的三种拒绝 | 🔧 分发/打包 |
@@ -117,8 +132,8 @@ P4（产品化，4–8w，需人批准投入）
 ```
 
 **可立即做、无依赖的三件**（建议本周内）：
-1. **P2-1**：1 次 spawn 验证 teammate 能否用 schedule（决定 A 方案成立与否，成本 10 分钟）。
-2. **P2-4**：release 脚本前置检查（repo 侧，1 天）。
+1. **P2-1** ✅ 已完成：验证结论 = **❌ 不可行**（teammate schedule 被 `subagent_session` 拒）；改走 P2-0（Lead 代持定时唤醒）。
+2. **P2-4**：release 前置检查——**已落地** `scripts/agent/release_preflight.py`（`--selftest` PASS）；**待扩展**（release 标题/双语/造价段，等规范修正）。
 3. **P1-1**：`mode` 缺失拒绝（若允许改 DSH 插件代码；否则先加机检 FAIL）。
 
 ## 2. 每阶段的风险
@@ -133,5 +148,8 @@ P4（产品化，4–8w，需人批准投入）
 
 ## 3. 与产品版本的关系（不混版）
 
-- 本路线图**不占用** 0.4.8（KG 调研 + P1 修复）与 0.5.0（架构重构）的版本范围。
-- 建议团队插件能力迭代**独立于产品版本**（它服务团队自己，不是 Memoria 功能）；若要随产品发布，需人单独裁决（类似 0.5.0 的 R1 门）。
+- 本路线图**不占用**产品版本范围。截至 2026-10-25：0.4.7、0.4.8、0.5.0 均已发布（`src/memoria/__version__.py = 0.5.0`；tag `v0.4.8`/`v0.5.0` 存在）；团队插件能力迭代仍独立于产品版本。
+- **决策 3（2026-10-25）**：产品化顺序 = **先内部 kernel + 用户可读 digest（P1-6/P4-1）→ 通过 5 分钟三问 → 再谈独立插件包（P4-4）**。先做独立包会重演"功能出生即死"（包做出来没人用，因为看不懂）。
+- 团队插件能力若要随产品发布，需人单独裁决（类似 0.5.0 的 R1 门）。
+
+**已落地（2026-10-25）**：`scripts/agent/release_preflight.py` —— 发版前置检查（supervisor review artifact 契约 `version/reviewer/verdict/evidence`；缺审查/版本不符/verdict≠pass ⇒ exit 1；`--selftest` 四条 fixture 自证红绿）。发版流程应把它作为第 0 步。

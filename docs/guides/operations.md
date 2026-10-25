@@ -114,6 +114,12 @@ Release 的 Asset 命名固定为：
 - **无后缀 = 完整包**；`-lite` = 不含内置模型。两种形态**每次同时上传**，供用户按网络条件 / 磁盘占用自行选择。
 - 样板（v0.3.1）：`Memoria-v0.3.1-win64.zip`（1182.8 MB）、`Memoria-v0.3.1-win64-lite.zip`（35.1 MB）。
 
+> **历史漂移（2026-10-25 核实，勿再复制）**：`v0.4.7` / `v0.4.8` / `v0.5.0` 三个 Release 的实际资产名是
+> `Memoria-vX.Y.Z-lite.zip`（缺 `win64-` 平台段），**根因是 v0.4.7 只看最近自己的命名习惯照抄，没人回头对照本表**。
+> `v0.3.x`–`v0.4.6` 均为规范的 `-win64-lite.zip`。
+> **已发布资产不改名**（可能有外部链接/用户已存路径）；**新发布一律用 `Memoria-vX.Y.Z-win64-lite.zip`**。
+> 机检 `release_preflight.py --verify-published` 的 `ASSETS-COUNT` 两种都接受，`-lite.zip` 只 WARN 提示漂移。
+
 发布资产生成（轻量包仅选完整包内容、排除 `hf/` 模型目录）：
 
 ```powershell
@@ -135,32 +141,51 @@ Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Packa
 > **`Memoria.exe.config` 不可省**：它是 .NET 应用配置，缺了则 zip 解压出的文件带 Mark-of-the-Web 时
 > pythonnet 起不来（P06）。`packaging/build.py` 的 `_verify_release_bundle()` 会在构建末尾校验其存在。
 
-### 5.2 Release 说明（双语 + 上下排版）
+### 5.2 Release 说明（双语 + 英语在前，机检）
 
-Release 正文必须**中英双语**，且**上下排版**——中文段在前、英文段在后，之间用 `---` 分隔：
+> **规则单一事实源**：[version.md「GitHub Release 规范」](../conventions/version.md)（三条硬规则 +
+> §6 第 0 步门禁）。本节只给排版骨架；冲突时以 version.md 为准，且以
+> `scripts/agent/release_preflight.py` 的机器判定为准（`exit 1` 不得发布）。
+> **注意：英文段在【前】、中文段在【后】**（2026-10-25 更正；旧版本本节曾写反，是违规来源之一）。
 
 ```markdown
-## Memoria vX.Y.Z
+# Memoria vX.Y.Z
 
-<中文说明：本次变更要点，含两个 package 的选择说明>
-<系统要求 + 整包解压 / Unblock-File 提示>
+## English
+
+<English highlights: what changed, which package to choose>
+<system requirements + unzip / Unblock-File note>
+
+## Cost (Agent compute)
+
+- **Magnitude**: roughly **CNY XXX-XXX** (estimate; not itemised).
+- **Accounting basis**: <single version or merged block>.
+- **Cost structure (one line)**: <where the spend went>.
 
 ---
 
-## Memoria vX.Y.Z
+## 中文
 
-<English description: same highlights, incl. which package to choose>
-<system requirements + unzip / Unblock-File note>
+<中文要点：改了什么、完整包 / 轻量包怎么选>
+<系统要求 + 整包解压 / Unblock-File 提示>
+
+## 造价（Agent 算力）
+
+- **量级**：约 **XXX–XXX 元人民币**（估算，非逐项计量）。
+- **统计口径**：<单版或合并统计；为什么不能诚实切分>。
+- **成本结构（一句话）**：<钱主要花在哪>。
 ```
 
 规则：
 
-- 两段使用**同一版本标题**，便于读者按语言定位。
-- 用 `---` 分隔，避免中英混排导致标题层级混乱。
-- 变更要点与「完整包 / 轻量包怎么选」在两段中**都要出现**（各自语言）。
+- 标题/正文硬规则（标题严格等于 `Memoria vX.Y.Z`、English 在前、两段 >200 字符、中英双造价段）
+  见 version.md；**不要再在 Release 标题上加副标题或「## Memoria vX.Y.Z」式段落标题**。
+- 用 `---` 分隔两种语言，避免中英混排导致标题层级混乱。
+- 变更要点与「完整包 / 轻量包怎么选」在两段中**都要出现**（各自语言），且**两段都要完整**（不是一段摘要）。
+- 代码、文件名、`file:line`、commit sha 在两种语言里**保持原样**。
 - 两段**都要**给出**系统要求**（Windows 10/11 x64、.NET Framework 4.7.2+、WebView2）与「**整包解压**到可写目录、勿在 zip 内直接运行」的提示；启动排障指向 exe 同目录的 `crash.log`，并附可选命令 `Get-ChildItem -Recurse | Unblock-File`。
   - 原因（P06）：zip 解压会给文件打上 Mark-of-the-Web，.NET 因此拒绝 `Assembly.LoadFrom` 加载随包运行时，报 `Failed to resolve Python.Runtime.Loader.Initialize`，首发表现即「双击闪退」。产品侧的解法是随包 `Memoria.exe.config`（`loadFromRemoteSources`，见 §5.1）；`Unblock-File` 仅作兜底提示。随包 `README.release.txt` 与两份 README 已有同款说明。
-- 样板：v0.3.2 Release（本条规范落地后的首个双语说明）。
+- 样板：v0.5.0 Release（双语 + 造价段 + 机检通过后的首个样板）。
 
 #### 截图（必要时补）
 
