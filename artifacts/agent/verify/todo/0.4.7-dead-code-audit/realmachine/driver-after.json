@@ -1,0 +1,67 @@
+{
+  "phase": "after",
+  "target": {
+    "id": "E5C5A2BFCC1DAD6A657BA92EC8DD88B7",
+    "title": "Memoria v0.4.6",
+    "url": "http://127.0.0.1:45049/"
+  },
+  "steps": [
+    {
+      "name": "drop",
+      "dragRes": "dropped",
+      "dom": {
+        "stripHidden": false,
+        "chips": 1,
+        "resChips": 1,
+        "chipTexts": [
+          "[txt] task134-note.txt×"
+        ],
+        "chipTitles": [
+          ""
+        ],
+        "statusText": "",
+        "flashText": "",
+        "rows": 0,
+        "sendDisabled": false,
+        "dockWidth": 352
+      }
+    },
+    {
+      "name": "remove",
+      "dom": {
+        "stripHidden": true,
+        "chips": 0,
+        "resChips": 0,
+        "chipTexts": [],
+        "chipTitles": [],
+        "statusText": "",
+        "flashText": "",
+        "rows": 0,
+        "sendDisabled": false,
+        "dockWidth": 352
+      }
+    },
+    {
+      "name": "send",
+      "dom": {
+        "stripHidden": true,
+        "chips": 0,
+        "resChips": 0,
+        "chipTexts": [],
+        "chipTitles": [],
+        "statusText": "↑14.8k ↓7 · 压缩预算 1%",
+        "flashText": "",
+        "rows": 2,
+        "sendDisabled": false,
+        "dockWidth": 352
+      }
+    }
+  ],
+  "startedAt": "2026-10-25T06:21:47.755Z",
+  "gpu": {
+    "webgl": true,
+    "renderer": "WebKit WebGL"
+  },
+  "finishedAt": "2026-10-25T06:21:55.888Z",
+  "durationMs": 8165
+}

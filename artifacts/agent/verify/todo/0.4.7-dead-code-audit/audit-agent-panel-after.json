@@ -1,0 +1,58 @@
+{
+  "files": [
+    {
+      "file": "agent-panel.js",
+      "iifes": [
+        {
+          "start_line": 83,
+          "end_line": 7287,
+          "returns": [
+            {
+              "idx": 46282,
+              "line": 7201,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": {
+            "return_line": 7201,
+            "return_line_text": "return {",
+            "start_line": 7255,
+            "end_line": 7287,
+            "dead_stmts": [],
+            "alive_fn_decls": [
+              {
+                "name": "askRecordText",
+                "lines": "7255-7279",
+                "tdz_refs": []
+              },
+              {
+                "name": "toolDisplayDetail",
+                "lines": "7282-7285",
+                "tdz_refs": []
+              }
+            ],
+            "dead_declared_names": {},
+            "external_refs_to_dead_names": []
+          }
+        },
+        {
+          "start_line": 1788,
+          "end_line": 1790,
+          "returns": []
+        },
+        {
+          "start_line": 1918,
+          "end_line": 1920,
+          "returns": []
+        },
+        {
+          "start_line": 3613,
+          "end_line": 3613,
+          "returns": []
+        }
+      ],
+      "issues": []
+    }
+  ]
+}

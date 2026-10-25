@@ -1,0 +1,98 @@
+{
+  "phase": "after",
+  "app_pid": 49256,
+  "cdp": "Edg/155.0.4283.62",
+  "driver": {
+    "rc": 0,
+    "stdout": "{\"ok\":true,\"phase\":\"after\",\"durationMs\":8165,\"drop\":{\"stripHidden\":false,\"chips\":1,\"resChips\":1,\"chipTexts\":[\"[txt] task134-note.txt×\"],\"chipTitles\":[\"\"],\"statusText\":\"\",\"flashText\":\"\",\"rows\":0,\"sendDisabled\":false,\"dockWidth\":352}}",
+    "stderr": ""
+  },
+  "cleanup": [
+    "killed 49256",
+    "skip 48356"
+  ],
+  "seed": {
+    "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t134\\kb",
+    "cfg": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t134\\cfg",
+    "stub_port": 9599
+  },
+  "drop_dom": {
+    "stripHidden": false,
+    "chips": 1,
+    "resChips": 1,
+    "chipTexts": [
+      "[txt] task134-note.txt×"
+    ],
+    "chipTitles": [
+      ""
+    ],
+    "statusText": "",
+    "flashText": "",
+    "rows": 0,
+    "sendDisabled": false,
+    "dockWidth": 352
+  },
+  "removed_dom": {
+    "stripHidden": true,
+    "chips": 0,
+    "resChips": 0,
+    "chipTexts": [],
+    "chipTitles": [],
+    "statusText": "",
+    "flashText": "",
+    "rows": 0,
+    "sendDisabled": false,
+    "dockWidth": 352
+  },
+  "sent_dom": {
+    "stripHidden": true,
+    "chips": 0,
+    "resChips": 0,
+    "chipTexts": [],
+    "chipTitles": [],
+    "statusText": "↑14.8k ↓7 · 压缩预算 1%",
+    "flashText": "",
+    "rows": 2,
+    "sendDisabled": false,
+    "dockWidth": 352
+  },
+  "stub_requests": [
+    {
+      "kind": "answer",
+      "messages": 2,
+      "has_resource_note": true,
+      "last_user_head": "task-134 真机验证：这份 txt 资源你收到了吗？\n\n（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n- .memoria/agent/attachments/resources/9c8aec45-"
+    },
+    {
+      "kind": "answer",
+      "messages": 2,
+      "has_resource_note": true,
+      "last_user_head": "根据这个 JSON 数组里的人类消息生成会话标题：\n[{\"seq\": 0, \"text\": \"task-134 真机验证：这份 txt 资源你收到了吗？\\n\\n（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）"
+    }
+  ],
+  "backend_resource_files": [
+    "9c8aec45-task134-note.txt"
+  ],
+  "screenshots": [
+    "drop-after.png",
+    "pre-after.png",
+    "removed-after.png",
+    "sent-after.png",
+    "status-after.png",
+    "strip-after.png",
+    "strip-sent-after.png"
+  ],
+  "checks": {
+    "screenshots": true,
+    "before_error_shown": true,
+    "before_no_resource_chip": true,
+    "before_no_backend_file": true,
+    "after_chip_shown": true,
+    "after_backend_file": true,
+    "after_remove_works": true,
+    "after_note_injected": true,
+    "after_chip_cleared_after_send": true,
+    "gpu_webgl": true
+  },
+  "pass": true
+}

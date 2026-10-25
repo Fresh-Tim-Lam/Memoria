@@ -7029,98 +7029,15 @@ window.MemoriaAgentPanel = (function () {
     });
   };
 
-  return {
-    init: init,
-    // 展开并刷新配置（旧版是「点开左栏对话页签」）；
-    // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
-    open: () => {
-      if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
-      else {
-        refreshConfig();
-        refreshHistory().then(() => restoreLastSession());
-      }
-    },
-    // 知识库切换钩子（app.js 在 openKbAt/closeKb 处调用）：作废跨库会话并重试恢复
-    onKbChanged: onKbChanged,
-    clear: clear,
-    // 写入状态栏入口（`plan-confirm.js` 调用）：告知"这次对话写了什么"，本模块渲染在顶部
-    // **副标题行**（`.-agent-subhead`）——「已修改 N 个文件（可展开）+ 撤销一步 / 重做一步」。
-    setWriteState: setWriteState,
-    // P4e 诊断/回归出口（仅供探针；生产路径不调用）：与生产同一函数渲染到游离节点。
-    renderMarkdownForTest: renderMarkdownForTest,
-    // 0.4.7（任务 3）诊断出口（**仅供探针**，生产路径不调用）：
-    //   验证「会话栏宽度上限」时需要一个可复现的设宽/读宽入口。
-    //   - getDockState()：读**期望**宽（dockWidthRem）、生效宽（DOM 内联）、三态标志、可用宽。
-    //   - setDockWidthForTest(rem)：只改期望宽并走**生产同一条** applyDockLayout()
-    //     ⇒ 测到的封顶行为与用户拖拽完全一致（不伪造布局、不改 CSS）。
-    //   两者都不写盘（saveDockLayout 只在 mouseup 时调），避免污染用户配置。
-    getDockState: function () {
-      const dock = $("#-agent-dock");
-      const unit = rootFontSize();
-      return {
-        expectedRem: dockWidthRem,
-        effectiveWidthPx: dock ? Math.round(dock.getBoundingClientRect().width) : 0,
-        unit,
-        minRem: DOCK_MIN_REM,
-        softMaxRem: DOCK_SOFT_MAX_REM,
-        availablePx: availableDockPx(),
-        contentMinPx: CONTENT_MIN_PX,
-        collapsed: dockCollapsed,
-        autoHidden: dockAutoHidden,
-      };
-    },
-    setDockWidthForTest: function (rem) {
-      dockWidthRem = clampDockRem(Number(rem) || DOCK_DEFAULT_REM);
-      applyDockLayout();
-      return true;
-    },
-  };
-
-  /**
-   * `ask_user_question` 那一行**只显示人话**（人 2026-09-23：「不显示背后的 json 等只显示文本」）。
-   *
-   * 工具输出是给模型看的 `{"answers":[{"id","selected","custom"}]}` ⇒ 这里转成
-   * `问：<题干>` + `答：<选项…>` 的多行文本；题干取自待答卡留下的 `MemoriaAgentQuestion.questionText()`
-   * （同一会话内必定拿得到）。**绝不把内部 id 露给人**：题干取不到时退化成「第 N 题」。
-   */
-  function askRecordText(message) {
-    var raw = String(message == null ? "" : message);
-    var rows = null;
-    try {
-      var parsed = JSON.parse(raw);
-      rows = parsed && parsed.answers;
-    } catch (e) {
-      rows = null;
-    }
-    if (!rows || !rows.length) return raw; // 不是我们认识的形状 ⇒ 原样（别的工具/坏数据）
-    var ask = T("agent.question.recordAsk");
-    var answer = T("agent.question.recordAnswer");
-    var nth = T("agent.question.recordNth");
-    return rows
-      .map(function (row, i) {
-        var parts = (row && row.selected ? row.selected : []).slice();
-        if (row && row.custom) parts.push(row.custom);
-        var text = parts.join("、") || "—";
-        var q = window.MemoriaAgentQuestion && window.MemoriaAgentQuestion.questionText
-          ? window.MemoriaAgentQuestion.questionText(row && row.id)
-          : "";
-        return (q ? ask + q : ask + nth.replace("{n}", String(i + 1))) + "\n" + answer + text;
-      })
-      .join("\n");
-  }
-
-  /** 工具行要显示的正文：`ask_user_question` 走人话，其余原样。 */
-  function toolDisplayDetail(row) {
-    if (String((row && row.name) || "") !== "ask_user_question") return String((row && row.detail) || "");
-    return askRecordText((row && row.detail) || "");
-  }
-
   // ══════════════════════════════════════════════════════════════════════════════
   // 2026-10-13 追加：**文档资源附件**（拖入 pdf/docx/txt/md → agent 用 read_resource 读）
   //   与图片附件（上方「图片附件」块）并行、各自独立：图片走 `agent_attach_image`→vision 输入，
   //   文档走 `agent_attach_resource`→临时区/KB 内引用→agent 用只读工具 `read_resource` 解析文本。
-  //   落点纪律：整块追加在 IIFE 末尾（`})();` 之前）；需要改既有行为处一律**按名包装**
-  //   （`intakeImageFiles` / `renderAttachStrip` / `callAskStart`）⇒ 上方所有 `<文件>:<行号>` 锚点零漂移。
+  //   落点纪律：整块追加在 IIFE 内、门面 `return {` **之前**。
+  //   `return` 之后的顶层语句**永不执行**（只有 `function` 声明会 hoist，但同样不该放那里）。
+  //   历史（2026-10-25 task-134 取证）：2f9a88f9(09-19) 起 11 个 commit / 19 个块都遵守「return 之前」的正确写法；
+  //   1fe97fa7(10-19) 误改成「`})();` 之前」，导致**本块出生即死**（10-19~10-25 用户拖 PDF/Word/TXT/MD 一律报「只支持图片」）。
+  //   需要改既有行为处一律**按名包装**（`intakeImageFiles` / `renderAttachStrip` / `callAskStart`）⇒ 不改既有函数体。
   // ══════════════════════════════════════════════════════════════════════════════
 
   //: 文档资源扩展名（小写、无点）；「等等」后续在此追加
@@ -7280,5 +7197,91 @@ window.MemoriaAgentPanel = (function () {
       removeResourceAt(parseInt(btn.getAttribute("data-res-idx") || "", 10));
     });
   })();
+
+  return {
+    init: init,
+    // 展开并刷新配置（旧版是「点开左栏对话页签」）；
+    // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
+    open: () => {
+      if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
+      else {
+        refreshConfig();
+        refreshHistory().then(() => restoreLastSession());
+      }
+    },
+    // 知识库切换钩子（app.js 在 openKbAt/closeKb 处调用）：作废跨库会话并重试恢复
+    onKbChanged: onKbChanged,
+    clear: clear,
+    // 写入状态栏入口（`plan-confirm.js` 调用）：告知"这次对话写了什么"，本模块渲染在顶部
+    // **副标题行**（`.-agent-subhead`）——「已修改 N 个文件（可展开）+ 撤销一步 / 重做一步」。
+    setWriteState: setWriteState,
+    // P4e 诊断/回归出口（仅供探针；生产路径不调用）：与生产同一函数渲染到游离节点。
+    renderMarkdownForTest: renderMarkdownForTest,
+    // 0.4.7（任务 3）诊断出口（**仅供探针**，生产路径不调用）：
+    //   验证「会话栏宽度上限」时需要一个可复现的设宽/读宽入口。
+    //   - getDockState()：读**期望**宽（dockWidthRem）、生效宽（DOM 内联）、三态标志、可用宽。
+    //   - setDockWidthForTest(rem)：只改期望宽并走**生产同一条** applyDockLayout()
+    //     ⇒ 测到的封顶行为与用户拖拽完全一致（不伪造布局、不改 CSS）。
+    //   两者都不写盘（saveDockLayout 只在 mouseup 时调），避免污染用户配置。
+    getDockState: function () {
+      const dock = $("#-agent-dock");
+      const unit = rootFontSize();
+      return {
+        expectedRem: dockWidthRem,
+        effectiveWidthPx: dock ? Math.round(dock.getBoundingClientRect().width) : 0,
+        unit,
+        minRem: DOCK_MIN_REM,
+        softMaxRem: DOCK_SOFT_MAX_REM,
+        availablePx: availableDockPx(),
+        contentMinPx: CONTENT_MIN_PX,
+        collapsed: dockCollapsed,
+        autoHidden: dockAutoHidden,
+      };
+    },
+    setDockWidthForTest: function (rem) {
+      dockWidthRem = clampDockRem(Number(rem) || DOCK_DEFAULT_REM);
+      applyDockLayout();
+      return true;
+    },
+  };
+
+  /**
+   * `ask_user_question` 那一行**只显示人话**（人 2026-09-23：「不显示背后的 json 等只显示文本」）。
+   *
+   * 工具输出是给模型看的 `{"answers":[{"id","selected","custom"}]}` ⇒ 这里转成
+   * `问：<题干>` + `答：<选项…>` 的多行文本；题干取自待答卡留下的 `MemoriaAgentQuestion.questionText()`
+   * （同一会话内必定拿得到）。**绝不把内部 id 露给人**：题干取不到时退化成「第 N 题」。
+   */
+  function askRecordText(message) {
+    var raw = String(message == null ? "" : message);
+    var rows = null;
+    try {
+      var parsed = JSON.parse(raw);
+      rows = parsed && parsed.answers;
+    } catch (e) {
+      rows = null;
+    }
+    if (!rows || !rows.length) return raw; // 不是我们认识的形状 ⇒ 原样（别的工具/坏数据）
+    var ask = T("agent.question.recordAsk");
+    var answer = T("agent.question.recordAnswer");
+    var nth = T("agent.question.recordNth");
+    return rows
+      .map(function (row, i) {
+        var parts = (row && row.selected ? row.selected : []).slice();
+        if (row && row.custom) parts.push(row.custom);
+        var text = parts.join("、") || "—";
+        var q = window.MemoriaAgentQuestion && window.MemoriaAgentQuestion.questionText
+          ? window.MemoriaAgentQuestion.questionText(row && row.id)
+          : "";
+        return (q ? ask + q : ask + nth.replace("{n}", String(i + 1))) + "\n" + answer + text;
+      })
+      .join("\n");
+  }
+
+  /** 工具行要显示的正文：`ask_user_question` 走人话，其余原样。 */
+  function toolDisplayDetail(row) {
+    if (String((row && row.name) || "") !== "ask_user_question") return String((row && row.detail) || "");
+    return askRecordText((row && row.detail) || "");
+  }
 
 })();

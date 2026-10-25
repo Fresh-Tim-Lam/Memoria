@@ -1,0 +1,168 @@
+{
+  "files": [
+    {
+      "file": "agent-panel.js",
+      "iifes": [
+        {
+          "start_line": 83,
+          "end_line": 7284,
+          "returns": [
+            {
+              "idx": 44926,
+              "line": 7032,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": {
+            "return_line": 7032,
+            "return_line_text": "return {",
+            "start_line": 7086,
+            "end_line": 7284,
+            "dead_stmts": [
+              {
+                "type": "decl",
+                "lines": "7127-7127",
+                "first": "const RES_EXT = { pdf : true ,",
+                "comments": [
+                  "//: 文档资源扩展名（小写、无点）；「等等」后续在此追加"
+                ]
+              },
+              {
+                "type": "decl",
+                "lines": "7129-7129",
+                "first": "const RES_MAX_BYTES = * *",
+                "comments": [
+                  "//: 单文件上限（20 MiB，与后端 RESOURCE_TOO_LARGE 同口径，前端先拦省得白传字节）"
+                ]
+              },
+              {
+                "type": "decl",
+                "lines": "7131-7131",
+                "first": "const RES_MAX_COUNT = ; const resourceItems =",
+                "comments": [
+                  "//: 单条消息最多几个资源"
+                ]
+              },
+              {
+                "type": "decl",
+                "lines": "7134-7134",
+                "first": "const resourceItems = [ ] ; function isResourceFile",
+                "comments": [
+                  "//: 草稿资源（内存态）：`{name, state:\"pending\"|\"ready\", rel_path, kind, cancelled}`。"
+                ]
+              },
+              {
+                "type": "stmt",
+                "lines": "7150-7220",
+                "first": "async function uploadResource ( file ) { const",
+                "comments": []
+              },
+              {
+                "type": "stmt",
+                "lines": "7221-7233",
+                "first": "intakeImageFiles = function ( fileList ) { const",
+                "comments": []
+              },
+              {
+                "type": "decl",
+                "lines": "7236-7236",
+                "first": "const baseRenderAttachStrip = renderAttachStrip ; renderAttachStrip = function",
+                "comments": [
+                  "// ② renderAttachStrip：图片 chip 之后追加文档 chip（名字标签，非缩略图）"
+                ]
+              },
+              {
+                "type": "stmt",
+                "lines": "7237-7260",
+                "first": "renderAttachStrip = function ( ) { baseRenderAttachStrip (",
+                "comments": []
+              },
+              {
+                "type": "decl",
+                "lines": "7263-7263",
+                "first": "const baseCallAskStart = callAskStart ; callAskStart = function",
+                "comments": [
+                  "// ③ callAskStart：注入资源提示（agent 用 read_resource 读），成功后清资源草稿"
+                ]
+              },
+              {
+                "type": "stmt",
+                "lines": "7264-7271",
+                "first": "callAskStart = function ( text , kb ,",
+                "comments": []
+              },
+              {
+                "type": "stmt",
+                "lines": "7274-7282",
+                "first": "( function wireResourceRemove ( ) { const strip",
+                "comments": [
+                  "// ④ 文档 chip 的移除按钮（`data-res-idx`，与图片 `data-idx` 分离）"
+                ]
+              }
+            ],
+            "alive_fn_decls": [
+              {
+                "name": "askRecordText",
+                "lines": "7086-7110",
+                "tdz_refs": []
+              },
+              {
+                "name": "toolDisplayDetail",
+                "lines": "7113-7116",
+                "tdz_refs": []
+              },
+              {
+                "name": "isResourceFile",
+                "lines": "7136-7140",
+                "tdz_refs": [
+                  "RES_EXT"
+                ]
+              },
+              {
+                "name": "resourceErrorText",
+                "lines": "7142-7148",
+                "tdz_refs": []
+              }
+            ],
+            "dead_declared_names": {
+              "RES_EXT": 7127,
+              "RES_MAX_BYTES": 7129,
+              "RES_MAX_COUNT": 7131,
+              "resourceItems": 7134,
+              "baseRenderAttachStrip": 7236,
+              "baseCallAskStart": 7263
+            },
+            "external_refs_to_dead_names": []
+          }
+        },
+        {
+          "start_line": 1788,
+          "end_line": 1790,
+          "returns": []
+        },
+        {
+          "start_line": 1918,
+          "end_line": 1920,
+          "returns": []
+        },
+        {
+          "start_line": 3613,
+          "end_line": 3613,
+          "returns": []
+        }
+      ],
+      "issues": [
+        {
+          "type": "iife-return-dead-code",
+          "return_line": 7032,
+          "dead_zone_lines": "7086-7284",
+          "dead_stmt_count": 11,
+          "tdz_alive_fns": [
+            "isResourceFile"
+          ]
+        }
+      ]
+    }
+  ]
+}

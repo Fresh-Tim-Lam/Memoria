@@ -1,0 +1,54 @@
+{
+  "phase": "before",
+  "app_pid": 35648,
+  "cdp": "Edg/155.0.4283.62",
+  "driver": {
+    "rc": 0,
+    "stdout": "{\"ok\":true,\"phase\":\"before\",\"durationMs\":4130,\"drop\":{\"stripHidden\":true,\"chips\":0,\"resChips\":0,\"chipTexts\":[],\"chipTitles\":[],\"statusText\":\"\",\"flashText\":\"只支持 JPEG / PNG / GIF / WebP 图片：task134-note.txt\",\"rows\":0,\"sendDisabled\":false,\"dockWidth\":352}}",
+    "stderr": ""
+  },
+  "cleanup": [
+    "killed 35648",
+    "skip 19128"
+  ],
+  "seed": {
+    "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t134\\kb",
+    "cfg": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t134\\cfg",
+    "stub_port": 9599
+  },
+  "drop_dom": {
+    "stripHidden": true,
+    "chips": 0,
+    "resChips": 0,
+    "chipTexts": [],
+    "chipTitles": [],
+    "statusText": "",
+    "flashText": "只支持 JPEG / PNG / GIF / WebP 图片：task134-note.txt",
+    "rows": 0,
+    "sendDisabled": false,
+    "dockWidth": 352
+  },
+  "removed_dom": null,
+  "sent_dom": null,
+  "stub_requests": [],
+  "backend_resource_files": [],
+  "screenshots": [
+    "drop-before.png",
+    "pre-before.png",
+    "status-before.png",
+    "strip-before.png"
+  ],
+  "checks": {
+    "screenshots": true,
+    "before_error_shown": true,
+    "before_no_resource_chip": true,
+    "before_no_backend_file": true,
+    "after_chip_shown": true,
+    "after_backend_file": true,
+    "after_remove_works": true,
+    "after_note_injected": true,
+    "after_chip_cleared_after_send": true,
+    "gpu_webgl": true
+  },
+  "pass": true
+}

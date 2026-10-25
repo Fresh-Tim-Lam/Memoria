@@ -1,0 +1,907 @@
+{
+  "files": [
+    {
+      "file": "agent-panel.js",
+      "iifes": [
+        {
+          "start_line": 83,
+          "end_line": 7287,
+          "returns": [
+            {
+              "idx": 46282,
+              "line": 7201,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": {
+            "return_line": 7201,
+            "return_line_text": "return {",
+            "start_line": 7255,
+            "end_line": 7287,
+            "dead_stmts": [],
+            "alive_fn_decls": [
+              {
+                "name": "askRecordText",
+                "lines": "7255-7279",
+                "tdz_refs": []
+              },
+              {
+                "name": "toolDisplayDetail",
+                "lines": "7282-7285",
+                "tdz_refs": []
+              }
+            ],
+            "dead_declared_names": {},
+            "external_refs_to_dead_names": []
+          }
+        },
+        {
+          "start_line": 1788,
+          "end_line": 1790,
+          "returns": []
+        },
+        {
+          "start_line": 1918,
+          "end_line": 1920,
+          "returns": []
+        },
+        {
+          "start_line": 3613,
+          "end_line": 3613,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "agent-question.js",
+      "iifes": [
+        {
+          "start_line": 26,
+          "end_line": 337,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "agent-stream-buffer.js",
+      "iifes": [
+        {
+          "start_line": 28,
+          "end_line": 131,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "app.js",
+      "iifes": [
+        {
+          "start_line": 1,
+          "end_line": 3803,
+          "returns": []
+        },
+        {
+          "start_line": 10966,
+          "end_line": 13578,
+          "returns": [
+            {
+              "idx": 96179,
+              "line": 13558,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        },
+        {
+          "start_line": 18782,
+          "end_line": 18782,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "ast.js",
+      "iifes": [
+        {
+          "start_line": 6,
+          "end_line": 476,
+          "returns": [
+            {
+              "idx": 2039,
+              "line": 425,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "block-index.js",
+      "iifes": [
+        {
+          "start_line": 34,
+          "end_line": 42,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "bridge.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 120,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "check-settings.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 241,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "code-highlight.js",
+      "iifes": [
+        {
+          "start_line": 12,
+          "end_line": 173,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "display-settings.js",
+      "iifes": [
+        {
+          "start_line": 6,
+          "end_line": 804,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "edit-handler.js",
+      "iifes": [
+        {
+          "start_line": 8,
+          "end_line": 2226,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "file-tree.js",
+      "iifes": [
+        {
+          "start_line": 31,
+          "end_line": 753,
+          "returns": [
+            {
+              "idx": 4867,
+              "line": 747,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-bh-tree.js",
+      "iifes": [
+        {
+          "start_line": 21,
+          "end_line": 229,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-engine.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 110,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-groups.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 185,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-label.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 72,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-layout-2d.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 439,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-layout-3d.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 487,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-layout-sim-core.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 477,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-layout-worker-bridge.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 279,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-layout-worker.js",
+      "iifes": [],
+      "issues": []
+    },
+    {
+      "file": "graph-octree.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 176,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-settings.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 1124,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-synthetic.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 107,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-theme.js",
+      "iifes": [
+        {
+          "start_line": 13,
+          "end_line": 147,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-view-2d.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 668,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "graph-view-3d.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 1011,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "i18n.js",
+      "iifes": [
+        {
+          "start_line": 10,
+          "end_line": 183,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "image-tools.js",
+      "iifes": [
+        {
+          "start_line": 23,
+          "end_line": 668,
+          "returns": [
+            {
+              "idx": 4614,
+              "line": 660,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "import-flow.js",
+      "iifes": [
+        {
+          "start_line": 12,
+          "end_line": 355,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "kb-agent.js",
+      "iifes": [
+        {
+          "start_line": 17,
+          "end_line": 207,
+          "returns": [
+            {
+              "idx": 1152,
+              "line": 206,
+              "conditional": false,
+              "line_text": "return { init, start, ensure };"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "kb-check.js",
+      "iifes": [
+        {
+          "start_line": 30,
+          "end_line": 679,
+          "returns": [
+            {
+              "idx": 4195,
+              "line": 668,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "keys-debug.js",
+      "iifes": [
+        {
+          "start_line": 11,
+          "end_line": 244,
+          "returns": [
+            {
+              "idx": 67,
+              "line": 25,
+              "conditional": true,
+              "line_text": "if (!__kdbgOn) return;"
+            }
+          ],
+          "dead_zone": null
+        },
+        {
+          "start_line": 30,
+          "end_line": 56,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "kp-context-menu.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 72,
+          "returns": [
+            {
+              "idx": 470,
+              "line": 71,
+              "conditional": false,
+              "line_text": "return { show, hide };"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "lexer.js",
+      "iifes": [
+        {
+          "start_line": 7,
+          "end_line": 436,
+          "returns": [
+            {
+              "idx": 2625,
+              "line": 433,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "link-context-menu.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 268,
+          "returns": [
+            {
+              "idx": 1623,
+              "line": 267,
+              "conditional": false,
+              "line_text": "return { showForLink, showForSelection, showForCursor, hide };"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "mapper.js",
+      "iifes": [
+        {
+          "start_line": 7,
+          "end_line": 1343,
+          "returns": [
+            {
+              "idx": 8580,
+              "line": 1323,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "markdown-preview.js",
+      "iifes": [
+        {
+          "start_line": 5,
+          "end_line": 2450,
+          "returns": [
+            {
+              "idx": 13062,
+              "line": 1971,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": {
+            "return_line": 1971,
+            "return_line_text": "return {",
+            "start_line": 2002,
+            "end_line": 2450,
+            "dead_stmts": [],
+            "alive_fn_decls": [
+              {
+                "name": "_mvFoundFromGroups",
+                "lines": "2002-2010",
+                "tdz_refs": []
+              },
+              {
+                "name": "_mmdClampZoom",
+                "lines": "2013-2016",
+                "tdz_refs": []
+              },
+              {
+                "name": "_applyMermaidView",
+                "lines": "2025-2041",
+                "tdz_refs": []
+              },
+              {
+                "name": "_attachMermaidView",
+                "lines": "2049-2197",
+                "tdz_refs": []
+              },
+              {
+                "name": "_mmdRenderWithFontSync",
+                "lines": "2214-2224",
+                "tdz_refs": []
+              },
+              {
+                "name": "_normalizeMermaidSvg",
+                "lines": "2234-2264",
+                "tdz_refs": []
+              },
+              {
+                "name": "_attachMermaidZoom",
+                "lines": "2277-2277",
+                "tdz_refs": []
+              },
+              {
+                "name": "_attachMermaidView",
+                "lines": "2285-2449",
+                "tdz_refs": []
+              }
+            ],
+            "dead_declared_names": {},
+            "external_refs_to_dead_names": []
+          }
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "math-normalize.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 120,
+          "returns": [
+            {
+              "idx": 832,
+              "line": 119,
+              "conditional": false,
+              "line_text": "return { normalize, toLatex, isLegacyFormulaLine };"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "mermaid-theme.js",
+      "iifes": [
+        {
+          "start_line": 11,
+          "end_line": 113,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "nav-model.js",
+      "iifes": [
+        {
+          "start_line": 31,
+          "end_line": 393,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "nav-predictor.js",
+      "iifes": [
+        {
+          "start_line": 24,
+          "end_line": 225,
+          "returns": [
+            {
+              "idx": 31,
+              "line": 29,
+              "conditional": true,
+              "line_text": "if (!STACK || !MODEL) return;   // 依赖缺席（老发布包 / 脚本没加载）⇒ 整个模块静默退场，app.js 自动回退启发式"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "nav-stack.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 78,
+          "returns": [
+            {
+              "idx": 348,
+              "line": 68,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "net-settings.js",
+      "iifes": [
+        {
+          "start_line": 18,
+          "end_line": 181,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "parser.js",
+      "iifes": [
+        {
+          "start_line": 7,
+          "end_line": 692,
+          "returns": [
+            {
+              "idx": 4178,
+              "line": 686,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "plan-confirm.js",
+      "iifes": [
+        {
+          "start_line": 36,
+          "end_line": 666,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "plugins-settings.js",
+      "iifes": [
+        {
+          "start_line": 18,
+          "end_line": 127,
+          "returns": [
+            {
+              "idx": 680,
+              "line": 126,
+              "conditional": false,
+              "line_text": "return head + rowsHtml(state || {}) + issuesHtml(state || {}) + registry;"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "preview-cache-policy.js",
+      "iifes": [
+        {
+          "start_line": 34,
+          "end_line": 221,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "review-manage.js",
+      "iifes": [
+        {
+          "start_line": 9,
+          "end_line": 299,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "review-modal.js",
+      "iifes": [
+        {
+          "start_line": 20,
+          "end_line": 966,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "review-summon.js",
+      "iifes": [
+        {
+          "start_line": 21,
+          "end_line": 575,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "scheduler.js",
+      "iifes": [
+        {
+          "start_line": 38,
+          "end_line": 750,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "search-settings.js",
+      "iifes": [
+        {
+          "start_line": 7,
+          "end_line": 341,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "sel-source.js",
+      "iifes": [
+        {
+          "start_line": 17,
+          "end_line": 204,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "selection-core.js",
+      "iifes": [
+        {
+          "start_line": 17,
+          "end_line": 105,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "source-gen.js",
+      "iifes": [
+        {
+          "start_line": 7,
+          "end_line": 300,
+          "returns": [
+            {
+              "idx": 1700,
+              "line": 293,
+              "conditional": false,
+              "line_text": "return {"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "theme-mode.js",
+      "iifes": [
+        {
+          "start_line": 10,
+          "end_line": 125,
+          "returns": []
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "toolbar-search.js",
+      "iifes": [
+        {
+          "start_line": 10,
+          "end_line": 290,
+          "returns": [
+            {
+              "idx": 2076,
+              "line": 289,
+              "conditional": false,
+              "line_text": "return { init, syncScope };"
+            }
+          ],
+          "dead_zone": null
+        }
+      ],
+      "issues": []
+    },
+    {
+      "file": "window-chrome.js",
+      "iifes": [
+        {
+          "start_line": 4,
+          "end_line": 405,
+          "returns": []
+        }
+      ],
+      "issues": []
+    }
+  ]
+}
