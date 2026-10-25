@@ -16,6 +16,8 @@
 - 🔄 M5 桌面壳收尾：窗口原生动画/顶栏拖拽/圆角/最大化已达成；剩余图标与安装体验、更新通道。K1
 - 🔄 app.js 拆分瘦身：已抽 5 个子系统 js（file-tree / import-flow / toolbar-search / image-tools / kb-check），app.js ≈16.8k 行 @2026-10-22（实测 16,845 行；`js/**` 共 62 个模块 —— 当时记的「~10.9k 行 / 5 个子系统」已随迭代腐化，故改为带日期快照）；界面文案候选清零（i18n-inventory 空清单）。下一步：editor-styles 层抽取（`FT_MENU_ID` 浮层引用仍在 app.js）；真机回归待用户执行。K1
 - 🔄 **P06 打包态在他人机器启动崩溃**（根因 = **Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面说明；v0.3.4 已重新构建并替换资产）。K2（待在报错机器复验，见 §8 P06 详情）
+- ✅ **task-140 跳转滚动定位三处不符** → 已修（`039e815f`）：删 `block:"start"` + 已可见不滚 + 二次校准只补偏移；真机三场景 + OLD-SIM 对照（`artifacts/agent/verify/todo/jump-scroll-fix.md`）。K4a
+- 🔄 **task-141 长文档预览跳开头** → 进行中（sync-mapper，`blocked_by task-140` 已解除）：先证红 + 时间序列定位。K1
 
 ***
 
@@ -375,6 +377,8 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG99 | **清掉窗口化残留 + MathJax 排队回旧口径**（收尾） | ✅·K4a | design §2 |
 | AG98 | **预览区编辑一律块级提交：结构性编辑不再整篇重渲**（人指出病根） | ✅·K4 | design §2 |
 | AG106 | 文档资源附件（拖 PDF/Word/TXT/MD 进对话栏） | ✅ 0.4.7 修复（task-134/`4d210c45`；后端 `6336728a` 交付，前端 `1fe97fa7` 出生即死 10-19~10-25） | design §2 |
+| AG107 | Release 标题/双语/造价段违反已文档化规范（v0.4.7–v0.5.0 连续三版） | ✅ 已修：`e030dc1d`+`b5c7ee5a`（机检必红 32/32）+ 3 个 body 重写双语 | version.md §7 |
+| AG108 | 资产命名漂移：`-lite.zip`（v0.4.7–v0.5.0；canonical=`-win64-lite.zip`） | ⚠️ 留档：已发布资产不改名；新发布用 canonical；机检 `-lite` 仅 WARN | operations.md §5.1 |
 
 > **2026-10-25 task-90 状态校准**：① 24 条窗口化家族 → `⛔→§10.4.2`（见 [design/ledger-archive-2026.md §10.4.2](design/ledger-archive-2026.md)）；② AG03/AG08/AG11/AG89 由 `✅·K2` **降回 `🔄·K2`**（矛盾修正：无真机验收证据，按规则 2 不得标 ✅）；③ 复核明细与逐条证据见 `artifacts/agent/verify/todo/0.4.7-task-90-ledger.md`；④ 剩余 K2 条目等 task-91~112 判定后由 task-94 收口。
 
@@ -383,7 +387,10 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 > **2026-10-25 task-135 台账修正（AG59/AG63）**：两行的 **UI 部分已于 2026-10-09 `ed5964c9` 设计性拆除**（`refactor(agent): 第三期 拆掉 UI 脚本工作区（保留四把工具与工作区位置）`）—— 状态改 `⛔ 已并入 ed5964c9 拆除`，**原文逐字保留**。**保留**：后端 `scratch.py` + 四把工具（`tools/kb.py`）+ 工作区位置 `.memoria/agent/scratch/`；**拆除**：五条面板 RPC + 对话栏「工作区」面板 + 三键设置界面（`scratch-settings.js` / `agent_script_settings` / `agent_scratch` 全仓 0 命中）。**替代**：AG59「人点运行」诉求由**消息内代码块「运行」按钮**承接（`agent-panel.js:6669-6678` 落点注释块；Q1 拍板保留）。**AG59/AG63 的 UI 部分不再恢复**（恢复属功能决策，需人裁决）。> **落点约定（2026-10-25 补，task-134 实证）**：UI 追加块必须落在 IIFE 门面 `return {` **之前**；`return` 之后的顶层语句**永不执行**（只有 function 声明会 hoist，且 hoist 会把问题掩盖成“看起来在”）。约定史：`8f2e88f6` 首版就有门面 return ⇒ “`})();` 之前”从来 ≠ “`return` 之前”；`2f9a88f9`(09-19) 起的正确写法被 11 commit / 19 块遵守；`1fe97fa7`(10-19) 首次写成错误变体 ⇒ 文档资源附件块出生即死 6 天。
 
 > **2026-10-25 task-94 K2 收口判定**：§13 剩余 K2 **31 条（实测）**逐条判定 = **A 0 / B 1 / C 30 / D 0**；AG07 降 `⏳`（路线已定未施工），其余 30 条保持 `🔄·K2`（代码在、真机未闭环，**不升 ✅**）；明细见 `artifacts/agent/verify/agent-k2-triage-2026-10-25.md`。
-***
+
+> **2026-10-25 台账补录（AG107/AG108，Lead 自认违例，如实记录）**：
+> - **AG107（release 规范违例）**：`version.md:124` 早已规定「Release 标题只允许 `Memoria vX.Y.Z`」，但 v0.4.7/v0.4.8/v0.5.0 **连续三版**写了副标题；另造价段缺量级与统计口径、正文非双语。**根因**：规范只写在文档里、靠"记得住"= 随机数。**修法**：`e030dc1d` 规范升三条硬规则 + `b5c7ee5a` 做成机检（必红 32/32）+ 3 个 release body 重写为双语。**留下机制**：release_preflight 不通过就发不出去。
+> - **AG108（资产命名漂移）**：v0.3.x–v0.4.6 canonical 是 `-win64-lite.zip`，v0.4.7 起漂成 `-lite.zip`。**根因**：打包时只看最近自己的命名习惯照抄，没回头对照 `operations.md` 表。**处置**：canonical 保持 `-win64-lite.zip`；**已发布资产不改名**（外部链接/用户已存路径）；`operations.md §5.1` + `release-copy.md` 记漂移；机检 ASSETS-COUNT 两种都收、`-lite` 只 WARN；**新发布一律 canonical**。***
 
 ## 14. 0.4.7 收摊计划（2026-10-25 刷新，todo-owner；交人审）
 
@@ -518,41 +525,9 @@ P1 折叠光标多行粘贴 → 0.4.8（task-138）；AG21 待真模型回合；
 > **版本关系**：0.4.7 先发 §14 收摊（低风险）；**0.5.0 = 本 §16**（R1 级独立验收；前置 = 0.4.8；SemVer 0.x MINOR，见 `version.md` §2）。
 > **不做**（裁决结论 7）：不移植 Cordis 宿主运行时（scoped layers/服务注册/bundle+preset 分层）、不移植 DSH 17 个 `dsh-*` 自用技能内容、不追 `skill-office`/`tool-workspace-dependencies`。
 
-### 16.1 阶段与顺序（5 阶段）
+> **✅ 已发布 0.5.0（2026-10-25，第二次）**：tag `v0.5.0` → **annotated tag 对象 `b43306e4`**，**commit `8067cde6`**（两者不同：annotated tag 有自己的对象 sha；核对时勿混用）。资产 2 件（win64 约 1.18 GB / lite 约 35 MB）。
+> **⚠️ 命名注意**：本次用 `Memoria-v0.5.0-lite.zip`（**漂移**，见 `AG108`）；canonical 是 `-win64-lite.zip`。已发布资产不改名。
+> **⚠️ 勿引用 `release-0.5.0-record.md`**：那是**被撤回**的首次发布记录（tag `c7c5fb39`，12:26），与本次无关；本记录见 `8067cde6` 提交信息与 `release-0.4.7-record.md` §一（发布顺序）。
+> R1 重验收 `task-139`（HEAD `093dac0e`）：五份旧验收逐条复核 + 必红重证明 + 12 剧本 12/12 + pytest 1474 passed，报告 `artifacts/agent/verify/todo/0.5.0-acceptance-reverify.md`。
+> **0.5.0 body 保留更正声明**：S1–S5 代码已随 0.4.7/0.4.8 发布但当时未提（见 `8067cde6` 提交标题）。§16.1–16.5 原计划详情 → [design/ledger-archive-2026.md §10.10](design/ledger-archive-2026.md)。
 
-| 序 | 阶段 | 范围（细节见报告） | 预估 | 依赖 |
-| --- | --- | --- | --- | --- |
-| S1 | 粒度化（读+写+正则） | `outline/section/snippet` + C1–C5；`replace_section`（R-R3）；R-D2 h1 正则统一 | 5–8 天 | 无 |
-| S2 | 进程内契约层 | T1–T4 facade + 写安全 W1–W4 可测断言（R-L2 硬需求） | 4–6 天 | S1 |
-| S3 | MCP 薄绑定 | 最小集 + schema 上限 + 无状态（`2026-07-28`）；只暴露"产 plan"（W1）；边界复跑 W1–W4 | 2–4 天 | S2 |
-| S4 | 扩展点（第三层） | 工具面投影消费者（gate 复活或移出，R-R1）；三字段移出 v1（R-R2） | 3–5 天 | S2；与 S3 串行 |
-| S5 | trace 跨边界 | 调用成本字段 + `_meta` + 容量/淘汰（不复用 Cordis） | 3–4 天 | S3 |
-
-**顺序**：S1→S2→S3→S4→S5。**S2/S3 不合并**：MCP 估 2–4 人日（>1），拆开保留写安全验收门；且同属 0.5.0，不增加发布次数。**串行**：`src/memoria/services/agent/**` 单写者 ⇒ S3/S4 串行。前端不动（如需 UI 入口另立，与 0.4.7 前端串行）。合计 17–27 人日。
-
-### 16.2 任务板（写域到产物级）
-
-| 阶段 | 任务板 |
-| --- | --- |
-| S1 | `task-120` |
-| S2 | `task-121` |
-| S3 | `task-122` |
-| S4 | `task-123` |
-| S5 | `task-124` |
-
-### 16.3 本版做什么 / 不做什么
-
-- **做**：三级读粒度 + `replace_section` + C1–C5；进程内契约层；MCP 最小集薄绑定；工具面投影消费者（gate 复活或三字段移出）；trace 成本字段与跨边界 `_meta`。
-- **不做**：结论 7 三项；**不以省 token 为 MCP 立项理由**（N1：组 0 无 MCP 省 82.9–89.3%，MCP 比组 0 贵 11.10/18.49/14.24%）；不把"工具不出现=省 schema"当既成事实（R-R1）；不在 v1 加无消费者字段（R-R2）。
-
-### 16.4 需人裁决
-
-**无人裁决项**（人 2026-10-25「不需要问我」；本计划只排期/拆解）。若执行中出现影响外部契约的新分支（如 MCP 是否暴露写工具），按 §16.5 升级给人。
-
-### 16.5 风险与未测项
-
-1. `AS-STYLE-COST` 未检验（MCP 额外成本构成未分测）⇒ S3 schema 上限先按 N1 实测 4,349 token/会话固定成本设，实施时 E4 复测。
-2. 粒度切太细可能总账反升（position U3）⇒ S1 验收 = **完成率 + 完整往返总账**双指标。
-3. `AS-SECTION-RANGE` 有条件成立（91.70% 可寻址 / 2.62% 围栏误判 / 2.93% 重名）⇒ C1–C5 为实测条件；C3 歧义率 >20% 需改显式 `{#id}` 锚。
-4. `replace_section` 数据风险 ⇒ `expect` 逐字校验 + 单撤销；W1–W4 缺一否决。
-5. N1 tokenizer 为静态估算假设（3.5 字符/token、1.5 中文字/token），非真机 usage。
