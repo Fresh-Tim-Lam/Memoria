@@ -1,0 +1,41 @@
+{
+  "trials": [
+    {
+      "trial": 0,
+      "inject": "os_shot",
+      "point": {
+        "x": 172,
+        "y": 200,
+        "text": "ALPHA one two three"
+      },
+      "fgTitle": "Memoria v0.4.6",
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-p1-preview-paste\\shots\\p1_trial_os_shot_0.png",
+      "after": {
+        "found": [
+          true,
+          false,
+          false
+        ],
+        "hitLineCount": 1,
+        "hitLines": [
+          "ALPHA one two threeP1PV_ONE x0a"
+        ],
+        "bodyLineCount": 9,
+        "paste": 1,
+        "beforeinput": [],
+        "keydownV": 1,
+        "ready": "complete",
+        "focus": true
+      },
+      "evalException": null,
+      "threeLines": false
+    }
+  ],
+  "inject": "os_shot",
+  "N": 1,
+  "summary": {
+    "runs": 1,
+    "threeLines": 0,
+    "lost": 1
+  }
+}

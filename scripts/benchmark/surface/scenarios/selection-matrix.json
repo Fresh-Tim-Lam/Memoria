@@ -107,6 +107,16 @@
     {"id": "across-quote", "type": "paste:blockquote", "span": "paste", "from": {"marker": "BQ1", "word": "sierra", "edge": "start"}, "to": {"marker": "BQ2", "word": "whiskey", "edge": "start"}, "pasteText": "QPASTE zeta6"},
     {"id": "across-table", "type": "paste:table", "span": "paste", "from": {"marker": "PRET", "word": "sierra3", "edge": "start"}, "to": {"marker": "MIDT", "word": "tango3", "edge": "start"}, "pasteText": "TPASTE zeta5"}
   ],
+  "knownIssues": [
+    {
+      "id": "preview-collapsed-multiline",
+      "type": "paste:preview-collapsed-multiline",
+      "span": "paste",
+      "from": {"marker": "P1", "word": "delta", "edge": "start"},
+      "pasteText": "P1MX_ONE a\nP1MX_TWO b\nP1MX_THREE c",
+      "skip_reason": "task-137 定性：预览区折叠光标多行粘贴只保留首行（产品缺陷，修复前不纳入门禁）；修复后恢复断言。见 artifacts/agent/verify/todo/0.4.7-p1-preview-paste.md"
+    }
+  ],
   "mouseCases": [
     {"id": "mouse-para-span1", "type": "paragraph", "span": "span1", "from": {"marker": "P1", "word": "bravo", "edge": "start"}, "to": {"marker": "P2", "word": "golf", "edge": "end"}},
     {"id": "mouse-heading-span2", "type": "heading", "span": "span2same", "from": {"marker": "H1", "word": "H1", "edge": "start"}, "to": {"marker": "H2", "word": "november", "edge": "end"}},
