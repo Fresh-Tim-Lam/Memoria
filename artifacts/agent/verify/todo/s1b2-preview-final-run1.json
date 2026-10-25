@@ -1,0 +1,137 @@
+{
+  "ambiguous_max_candidates": 20,
+  "artifactSha256": "d33a45d5b9bc0c666bb2c4b05341366f3f6d331769a0dcabf0d44fcc68cdd7ce",
+  "assertions": [
+    {
+      "detail": "[{\"line_no\": 3, \"level\": 2, \"title\": \"7. 总结\", \"parent_path\": [\"标题\"], \"preview\": \"这是内容 A 的第一行。\"}, {\"line_no\": 6, \"level\": 2, \"title\": \"7. 总结\", \"parent_path\": [\"标题\"], \"preview\": \"这是内容 B 的第一行。\"}]",
+      "falsifier": "preview 相同/缺失 ⇒ 消歧仍靠猜",
+      "name": "同名候选都带 preview 且两个 preview 不同（能区分）",
+      "ok": true
+    },
+    {
+      "detail": "picked=[3]",
+      "falsifier": "按 preview 选不唯一 ⇒ preview 不构成消歧信息",
+      "name": "凭 preview 能唯一选中候选（不是猜）",
+      "ok": true
+    },
+    {
+      "detail": "text=## 7. 总结\n这是内容 A 的第一行。",
+      "falsifier": "",
+      "name": "选中后 near_line 定位成功且内容正确",
+      "ok": true
+    },
+    {
+      "detail": "previews=['', ''], picked=[]",
+      "falsifier": "去掉 preview 仍能唯一选 ⇒ preview 是装饰，消歧其实不靠它",
+      "name": "必红（库层）：preview 信息缺失 ⇒ 凭 preview 选中不唯一（2 个候选全同）",
+      "ok": true
+    },
+    {
+      "detail": "[{\"line_no\": 3, \"level\": 2, \"title\": \"空节\", \"parent_path\": [\"甲\"], \"preview\": \"\"}, {\"line_no\": 5, \"level\": 2, \"title\": \"空节\", \"parent_path\": [\"甲\"], \"preview\": \"\"}]",
+      "falsifier": "字段被省略 ⇒ 形状不稳定（又一次'声明≠事实'）",
+      "name": "空节 ⇒ preview 为空字符串（字段不省略，形状稳定）",
+      "ok": true
+    },
+    {
+      "detail": "candidates=10, payload_tokens=458",
+      "falsifier": "超预算 ⇒ preview 截断逻辑失效",
+      "name": "预算不爆：10 个同名候选 ⇒ 每个 preview ≤61 字符且 payload ≤4,000 tok",
+      "ok": true
+    },
+    {
+      "detail": "shown=20, count=200, truncated=True, tokens=653",
+      "falsifier": "候选无上限 ⇒ 载荷随同名数线性膨胀直到爆预算",
+      "name": "预算硬上限：200 个同名候选 ⇒ 截断到上限并标注 candidate_count/omitted_count，载荷 ≤4,000 tok",
+      "ok": true
+    },
+    {
+      "detail": "同名预览='这是内容 B 的第一行。', 唯一标题keys=['blocks', 'end_line_no', 'first_line', 'level', 'line_no', 'lines', 'parent_path', 'title']",
+      "falsifier": "同名不带 preview ⇒ outline 里同名标题同样只能靠行号猜",
+      "name": "outline：同名标题带 preview、唯一标题不带（省预算且计入 budget）",
+      "ok": true
+    },
+    {
+      "detail": "tokens with=31, without=15",
+      "falsifier": "两次 token 相等 ⇒ preview 被漏算进预算",
+      "name": "outline：preview **计入** OUTLINE 预算（不是'没算进去'）",
+      "ok": true
+    },
+    {
+      "detail": "Error: 标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个） ⏎ ；候选（按 preview 辨认目标）： ⏎   - L3 h2 [标题] 这是内容 A 的第一行。 ⏎   - L6 h2 [标题] 这是内容 B 的第一行。 ⏎ 按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]） (AMBIGUOUS_SECTION)",
+      "falsifier": "工具文本不带 preview ⇒ 模型仍只能猜（库层修了等于没修）",
+      "name": "工具层 section：AMBIGUOUS 文本带每个候选的 preview（模型能看到）",
+      "ok": true
+    },
+    {
+      "detail": "dup.md 「7. 总结」(L6-7，h2，2 行) ⏎  ⏎ ## 7. 总结 ⏎ 这是内容 B 的第一行。",
+      "falsifier": "near_line 命中错节 ⇒ 消歧链路断裂",
+      "name": "工具层 section：凭 preview 选中后按 near_line（内容行）命中内容 B",
+      "ok": true
+    },
+    {
+      "detail": "旧拼法=；候选=L3[标题], L6[标题]",
+      "falsifier": "旧拼法已含 preview ⇒ 本接缝修复是多余的",
+      "name": "必红（工具层）：修复前的渲染复刻不含 preview ⇒ 接缝缺陷真实存在",
+      "ok": true
+    },
+    {
+      "detail": "Error: 标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个） ⏎ ；候选（按 preview 辨认目标）： ⏎   - L3 h2 [标题] （空节） ⏎   - L6 h2 [标题] （空节） ⏎ 按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]） (AMBIGUOUS_SECTION)",
+      "falsifier": "信息缺失仍能消歧 ⇒ preview 不必要",
+      "name": "必红（工具层）：preview 信息缺失 ⇒ 工具文本不含可区分内容，按 preview 选不中",
+      "ok": true
+    },
+    {
+      "detail": "dup_rows=['  7. 总结  (L3-4，2 行)  ∥ 这是内容 A 的第一行。', '  7. 总结  (L6-7，2 行)  ∥ 这是内容 B 的第一行。'], title_row=['标题  (L1-7，7 行)']",
+      "falsifier": "outline 工具不渲染 preview ⇒ 同名节在概要层仍只能靠行号猜",
+      "name": "工具层 outline：同名标题行带 ∥ preview，唯一标题行不带",
+      "ok": true
+    },
+    {
+      "detail": "Error: 标题 '同名' 有 200 个同名候选，无法唯一确定（C3：不取首个） ⏎ ；候选（按 preview 辨认目标）： ⏎   - L3 h2 [巨] 第 0 节正文。 ⏎   - L6 h2 [巨] 第 1 节正文。 ⏎   - L9 h2 [巨] 第 2 节正文。 ⏎   - L12 h2 [巨] 第 3 节正文。 ⏎   - L15 h2 [巨] 第 4 节正文。 ⏎   - L18 h2 [巨] 第 5 节正文。 ⏎   - L21 h2 [巨] 第 6 节正文。 ⏎   - L24 h2 [巨] 第 7 节正文。 ⏎   - L27 h2 [巨] 第 8 节正文。 ⏎   - L30 h2 [巨] 第 9 节正文。 ⏎   - L33 h2 [巨] 第 10 节正文。 ⏎   - L36 h2 [巨] 第 11 节正文。 ⏎   - L39 h2 [巨] 第 12 节",
+      "falsifier": "截断却不标注 ⇒ 候选列表变成不完整的事实声明",
+      "name": "工具层 section：候选截断时如实标注『共 200 个 / 其余 180 个未列出』",
+      "ok": true
+    },
+    {
+      "detail": "AMBIGUOUS_SECTION: 标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个） ⏎ ；候选（按 preview 辨认目标）： ⏎   - L3 h2 [标题] 这是内容 A 的第一行。 ⏎   - L6 h2 [标题] 这是内容 B 的第一行。 ⏎ 按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]）",
+      "falsifier": "MCP 文本不带 preview ⇒ 跨进程调用仍只能猜（第二个消费者漏修）",
+      "name": "MCP 路径 section：AMBIGUOUS 文本带每个候选的 preview（跨进程同样能消歧）",
+      "ok": true
+    },
+    {
+      "detail": "文档 dup.md：3 个标题 ⏎ 标题  (L1-7，7 行) ⏎   7. 总结  (L3-4，2 行)  ∥ 这是内容 A 的第一行。 ⏎   7. 总结  (L6-7，2 行)  ∥ 这是内容 B 的第一行。 ⏎ read_handle: <HANDLE>",
+      "falsifier": "MCP outline 不渲染 preview ⇒ 跨进程概要层仍只能靠行号猜",
+      "name": "MCP 路径 outline：同名标题行带 ∥ preview",
+      "ok": true
+    },
+    {
+      "detail": "AMBIGUOUS_SECTION: 标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个） ⏎ ；候选（按 preview 辨认目标）： ⏎   - L3 h2 [标题] （空节） ⏎   - L6 h2 [标题] （空节） ⏎ 按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]）",
+      "falsifier": "信息缺失仍有 preview ⇒ 本修复不必要",
+      "name": "必红（MCP 路径）：preview 信息缺失 ⇒ MCP 文本不含可区分内容",
+      "ok": true
+    },
+    {
+      "detail": "[{\"op_id\": \"s1\", \"code\": \"ambiguous_section\", \"message\": \"标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个）；候选（按 preview 辨认目标）：\\nL3 h2 [标题] 这是内容 A 的第一行。\\nL6 h2 [标题] 这是内容 B 的第一行。\\n按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]）\"}]",
+      "falsifier": "写路径歧义错误不带 preview ⇒ 模型只能猜着改具体哪一节",
+      "name": "写路径 replace_section：同名歧义错误带 preview（改错节比读错节更贵）",
+      "ok": true
+    },
+    {
+      "detail": "[{\"op_id\": \"s1\", \"code\": \"ambiguous_section\", \"message\": \"标题 '7. 总结' 有 2 个同名候选，无法唯一确定（C3：不取首个）；候选（按 preview 辨认目标）：\\nL3 h2 [标题] （空节）\\nL6 h2 [标题] （空节）\\n按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>（或 path=[父级标题…]）\"}]",
+      "falsifier": "信息缺失仍有 preview ⇒ 写路径修复不必要",
+      "name": "必红（写路径）：preview 信息缺失 ⇒ 写路径错误文本不含可区分内容",
+      "ok": true
+    },
+    {
+      "detail": "code=AMBIGUOUS_SECTION",
+      "falsifier": "静默取首个 ⇒ C3 被破坏",
+      "name": "C3 语义未改：仍报 AMBIGUOUS_SECTION，绝不取首个",
+      "ok": true
+    }
+  ],
+  "defect_origin": "task-131 完成率度量暴露：同名候选除 line_no 外完全相同，near_line 提示等于让模型猜",
+  "passed": true,
+  "preview_max_chars": 60,
+  "schema": "section-disambiguation-preview/v2",
+  "seam_defect": "库层 section_index 已有 preview，但 tools/kb.py 只渲染 L行号 ⇒ 模型唯一可见通道看不到 preview"
+}

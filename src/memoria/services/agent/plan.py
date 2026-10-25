@@ -625,9 +625,25 @@ def _validate_replace_section(
         hint = ""
         cands = sec_err.extra.get("candidates") or []
         if cands:
-            hint = "；候选=" + ", ".join(
-                f"L{c['line_no']}[{'/'.join(c['parent_path']) or '根'}]" for c in cands
-            )
+            # R-S1B-5 / task-132：**写路径的第三个消费者**。`replace_section` 同名歧义时过去只回
+            # `L行号[父级]`，模型没有任何依据选 near_line ⇒ 只能猜着改（改错节比读错节更贵）。
+            # 这里必须带上候选的 `preview`（正文首行）。
+            parts = ["；候选（按 preview 辨认目标）："]
+            for cand in cands:
+                preview = str(cand.get("preview") or "").strip()
+                parent = "/".join(cand.get("parent_path") or []) or "根"
+                parts.append(
+                    f"L{cand['line_no']} h{cand.get('level')} [{parent}] {preview or '（空节）'}"
+                )
+            if sec_err.extra.get("candidates_truncated"):
+                parts.append(
+                    f"…共 {sec_err.extra.get('candidate_count', len(cands))} 个，"
+                    f"其余 {sec_err.extra.get('omitted_count', 0)} 个未列出"
+                )
+            how = str(sec_err.extra.get("how_to_disambiguate") or "").strip()
+            if how:
+                parts.append(how)
+            hint = "\n".join(parts)
         elif sec_err.extra.get("suggestions"):
             hint = "；相近标题=" + ", ".join(sec_err.extra["suggestions"])
         errors.append(

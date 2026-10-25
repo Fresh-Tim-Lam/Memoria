@@ -773,6 +773,9 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
         payload = si.build_outline(body, max_tokens=_int_arg(arguments, "max_tokens") or si.OUTLINE_MAX_TOKENS)
         rows = [
             f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']}，{n['lines']} 行)"
+            # R-S1B-5 / task-132：同名标题带 `preview`（正文首行）—— outline 是模型选节的第一跳，
+            # 同名标题若只差行号，模型就只能猜；预算是 section_index 里按渲染文本算过的（含 preview）。
+            + (f"  ∥ {n['preview']}" if n.get("preview") else "")
             for n in payload.get("headings") or []
         ]
         head = f"文档 {rel}：{payload.get('count', 0)} 个标题（约 {payload.get('tokens', 0)} tok）"
@@ -824,9 +827,27 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
             msg = str(payload.get("message") or "无法定位该节")
             cands = payload.get("candidates") or []
             if cands:
-                msg += "；候选=" + ", ".join(
-                    f"L{c['line_no']}[{'/'.join(c['parent_path']) or '根'}]" for c in cands
-                )
+                # R-S1B-5 / task-132 **接缝修复**：`section_index` 早在候选里算了 `preview`，
+                # 但本层过去只渲染 `L行号[父级]` ⇒ 两个同名候选除行号外一模一样，
+                # `how_to_disambiguate` 让模型"传 near_line=<行号>"等于让模型**猜**。
+                # 工具文本是模型**唯一能看到**的东西（`ToolOutput.text`），preview 必须渲染在这里，
+                # 否则库层修了也等于没修（"声明可消歧却不给消歧信息" 的又一形态）。
+                lines_ = ["；候选（按 preview 辨认目标）："]
+                for c in cands:
+                    preview = str(c.get("preview") or "").strip()
+                    parent = "/".join(c.get("parent_path") or []) or "根"
+                    lines_.append(
+                        f"  - L{c['line_no']} h{c.get('level')} [{parent}] {preview or '（空节）'}"
+                    )
+                if payload.get("candidates_truncated"):
+                    lines_.append(
+                        f"  …共 {payload.get('candidate_count', len(cands))} 个候选，"
+                        f"其余 {payload.get('omitted_count', 0)} 个未列出"
+                    )
+                how = str(payload.get("how_to_disambiguate") or "").strip()
+                if how:
+                    lines_.append(how)
+                msg += "\n" + "\n".join(lines_)
             elif payload.get("suggestions"):
                 msg += "；相近标题=" + ", ".join(payload["suggestions"])
             return _error(msg, str(payload.get("code") or "SECTION_NOT_FOUND"))
@@ -885,6 +906,7 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
             description=(
                 "看一篇 md 的**标题树**（标题 + 行号区间 + 行数），不读正文 —— 想知道「这篇有什么」时先用它，"
                 "再按标题用 section 取你要的那一节。比 read_document 省得多。"
+                "同名标题会附 **preview**（该节正文首行），用于区分同名节。"
             ),
             parameters={
                 "type": "object",
@@ -900,8 +922,9 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
         Tool(
             name="section",
             description=(
-                "按**标题**或**行号**取 md 的**一节正文**（含标题行）。同名标题必须消歧：给 path=[父级标题…] 或 "
-                "near_line=<行号>；**消歧不了会回 AMBIGUOUS_SECTION（不会猜）**。超预算自动切片，按 next_cursor 续读。"
+                "按**标题**或**行号**取 md 的**一节正文**（含标题行）。同名标题会回**全部候选**，"
+                "每个候选带 **preview**（该节正文首行）—— 按 preview 辨认目标，再给 near_line=<该候选行号>"
+                "或 path=[父级标题…]；**消歧不了会回 AMBIGUOUS_SECTION（不会猜）**。超预算自动切片，按 next_cursor 续读。"
             ),
             parameters={
                 "type": "object",

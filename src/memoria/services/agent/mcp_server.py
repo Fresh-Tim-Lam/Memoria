@@ -385,6 +385,9 @@ class McpServer:
         token = self.handles.mint(self.kb_path, rel, sha)
         rows = [
             f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']}，{n['lines']} 行)"
+            # R-S1B-5 / task-132：同名标题带 `preview` —— MCP 文本同样是模型的唯一可见通道，
+            # 这里过去只拼标题+行号 ⇒ 同名节在跨进程路径上仍只能猜（与 tools/kb.py 同源修复）。
+            + (f"  ∥ {n['preview']}" if n.get("preview") else "")
             for n in payload.get("headings") or []
         ]
         text = "\n".join([f"文档 {rel}：{payload.get('count', 0)} 个标题", *rows, f"read_handle: {token}"])
@@ -413,7 +416,24 @@ class McpServer:
             msg = str(payload.get("message") or "无法定位该节")
             cands = payload.get("candidates") or []
             if cands:
-                msg += "；候选=" + ", ".join(f"L{c['line_no']}" for c in cands)
+                # R-S1B-5 / task-132：候选必须带 `preview`（正文首行）—— **这是 MCP 路径的
+                # 第二个消费者**，过去只拼 `L行号`（连父级都丢了）⇒ 模型拿不到消歧信息。
+                lines_ = ["；候选（按 preview 辨认目标）："]
+                for c in cands:
+                    preview = str(c.get("preview") or "").strip()
+                    parent = "/".join(c.get("parent_path") or []) or "根"
+                    lines_.append(
+                        f"  - L{c['line_no']} h{c.get('level')} [{parent}] {preview or '（空节）'}"
+                    )
+                if payload.get("candidates_truncated"):
+                    lines_.append(
+                        f"  …共 {payload.get('candidate_count', len(cands))} 个候选，"
+                        f"其余 {payload.get('omitted_count', 0)} 个未列出"
+                    )
+                how = str(payload.get("how_to_disambiguate") or "").strip()
+                if how:
+                    lines_.append(how)
+                msg += "\n" + "\n".join(lines_)
             raise _ToolFailure(code, msg)
         sec = payload.get("section") or {}
         sha = _sha(os.path.join(self.kb_path, rel))

@@ -18,7 +18,7 @@
 | 码 | 触发 | 附带 |
 |---|---|---|
 | `SECTION_NOT_FOUND` | 归一化后无匹配 | `suggestions[]`（最近 3 个标题）+ `candidate_count` |
-| `AMBIGUOUS_SECTION` | 多候选且 `path`/`line` 均无法消歧 | `candidates[]`（每项 `line_no/level/title/parent_path`） |
+| `AMBIGUOUS_SECTION` | 多候选且 `path`/`line` 均无法消歧 | `candidates[]`（每项 `line_no/level/title/parent_path/preview`）、`candidate_count`、`how_to_disambiguate`；超过 `AMBIGUOUS_MAX_CANDIDATES` 时带 `candidates_truncated/omitted_count` |
 | `NO_HEADINGS` | 文档 0 heading | `suggestion` |
 | `INVALID_LEVEL` | 请求的级别超出 1..6 | `actual_levels[]` |
 | `UNSUPPORTED` | 非 markdown（由调用方判定后传入 `kind`） | — |
@@ -34,6 +34,7 @@ from __future__ import annotations
 
 import math
 import re
+from collections import Counter
 from dataclasses import dataclass, field
 from difflib import get_close_matches
 
@@ -53,6 +54,17 @@ SNIPPET_MAX_TOKENS = 600
 
 #: 片段窗口默认上下文行数（±N）
 SNIPPET_DEFAULT_CTX_LINES = 3
+
+#: **候选内容预览**（R-S1B-5 / task-132）：`AMBIGUOUS_SECTION` 的每个候选带上"该节正文首个非空行"，
+#: 截断到这么多字符。为什么必须：同名标题的两个候选除 `line_no` 外完全相同，`near_line` 提示等于让模型猜。
+PREVIEW_MAX_CHARS = 60
+
+#: **歧义候选上限**（task-132 关闭条件 4：候选数有上限时预览也不能爆预算）。
+#: 同名候选数量没有天然上界（生成器 / 模板复制能产出几十上百个同名标题），而每个候选都带 `preview`
+#: ⇒ 载荷随候选数**线性增长**。20 个 × (标题+预览+元数据) 最坏仍在 `SECTION_MAX_TOKENS` 内；
+#: 超出时**截断候选列表并显式标注**（`candidates_truncated` / `candidate_count` / `omitted_count`），
+#: 不静默丢弃（静默丢会让"候选列表"再次变成不完整的事实声明）。
+AMBIGUOUS_MAX_CANDIDATES = 20
 
 #: **自适应回退阈值**（R-S1B-1）：目标节 token / 全文 token 超过它 ⇒ `get_section()` 直接回整篇正文。
 #: 理由：本节已占大半篇时，"只给本节"逼调用方再补读一轮，多付的一轮往返比"多给"更贵；
@@ -181,6 +193,8 @@ def build_outline(body: str, *, max_tokens: int = OUTLINE_MAX_TOKENS) -> dict:
             "tokens_estimated": True,
         }
 
+    dup_titles = {t for t, c in Counter(h.title for h in heads).items() if c > 1}
+
     def node(sec: Section, *, with_text: bool) -> dict:
         h = sec.heading
         d = {
@@ -194,6 +208,11 @@ def build_outline(body: str, *, max_tokens: int = OUTLINE_MAX_TOKENS) -> dict:
         }
         if with_text:
             d["first_line"] = lines[h.index0].strip()
+            # R-S1B-5 / task-132：**只有同名标题**才带 `preview`（唯一标题无需消歧 ⇒ preview 是纯冗余体积）。
+            # 同名组通常只有 2–3 个（S1 实测 dup 组 33 个 / 3517 标题，全为 2–3 个）⇒ 体积增量可忽略，
+            # 且计入 `_outline_payload` 的 token 预算（不靠"没算进去"省预算）。
+            if h.title in dup_titles:
+                d["preview"] = _section_preview(sec)
         return d
 
     # 降级阶梯：① 全量（含 first_line）② 去 first_line ③ 只留 level<=2 + 其余计数
@@ -217,7 +236,14 @@ def build_outline(body: str, *, max_tokens: int = OUTLINE_MAX_TOKENS) -> dict:
 
 
 def _outline_payload(nodes: list[dict], heads: list[Heading], lines: list[str]) -> dict:
-    text = "\n".join(f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']})" for n in nodes)
+    # token 预算按**渲染文本**算；同名标题的 `preview` 一并计入（不靠"没算"省预算）。
+    parts = []
+    for n in nodes:
+        line = f"{'  ' * (n['level'] - 1)}{n['title']}  (L{n['line_no']}-{n['end_line_no']})"
+        if n.get("preview"):
+            line += f"  ∥ {n['preview']}"
+        parts.append(line)
+    text = "\n".join(parts)
     dist: dict[str, int] = {}
     for h in heads:
         dist[str(h.level)] = dist.get(str(h.level), 0) + 1
@@ -271,6 +297,20 @@ def _path_matches(h: Heading, path: list[str] | str | None, *, ci: bool) -> bool
 def _suggestions(heads: list[Heading], title: str) -> list[str]:
     titles = [h.title for h in heads]
     return get_close_matches(title, titles, n=3, cutoff=0.0)
+
+
+def _section_preview(sec: Section, max_chars: int = PREVIEW_MAX_CHARS) -> str:
+    """该节**正文**（标题行之后）的首个非空行，去首尾空白，截断到 `max_chars` 字符。
+
+    空节 ⇒ `""`（字段**不省略**，保持候选形状稳定 —— 省略字段本身又是一次"声明可消歧却不给信息"）。
+    """
+    for row in sec.text.splitlines()[1:]:
+        stripped = row.strip()
+        if stripped:
+            if len(stripped) > max_chars:
+                return stripped[:max_chars] + "…"
+            return stripped
+    return ""
 
 
 def resolve_section(
@@ -365,13 +405,34 @@ def resolve_section(
         if before:
             cands = [before[-1]]
     if len(cands) > 1:
+        by_line = {s.heading.line_no: s for s in sections}
+        shown = cands[:AMBIGUOUS_MAX_CANDIDATES]
+        truncated = len(shown) < len(cands)
+        extra: dict = {
+            # C3：候选**全部**带 preview（空节也给 ""，形状稳定），模型据此辨认目标；
+            # 超过 `AMBIGUOUS_MAX_CANDIDATES` 才截断，且下面如实标注总数/省略数。
+            "candidates": [
+                {**h.ident(), "preview": _section_preview(by_line[h.line_no])} for h in shown
+            ],
+            "candidate_count": len(cands),
+            "candidates_truncated": truncated,
+        }
+        if truncated:
+            extra["omitted_count"] = len(cands) - len(shown)
+            extra["how_to_disambiguate"] = (
+                f"候选过多（共 {len(cands)} 个，只列前 {len(shown)} 个）："
+                "先按每个候选的 preview 辨认目标，再传 near_line=<该候选的 line_no>；"
+                "或用 path=[父级标题…] / level=… 先收窄再重查"
+            )
+        else:
+            extra["how_to_disambiguate"] = (
+                "按每个候选的 preview（该节正文首行）辨认目标，再传 near_line=<该候选的 line_no>"
+                "（或 path=[父级标题…]）"
+            )
         return None, _Err(
             AMBIGUOUS_SECTION,
             f"标题 {heading!r} 有 {len(cands)} 个同名候选，无法唯一确定（C3：不取首个）",
-            {
-                "candidates": [h.ident() for h in cands],
-                "how_to_disambiguate": "传入 path=[父级标题…] 或 near_line=<行号>，或用 line=<#L行号>",
-            },
+            extra,
         )
     sec = next(s for s in sections if s.heading is cands[0])
     return sec, None
@@ -658,6 +719,8 @@ __all__ = [
     "OUTLINE_MAX_TOKENS",
     "SECTION_MAX_TOKENS",
     "SNIPPET_MAX_TOKENS",
+    "PREVIEW_MAX_CHARS",
+    "AMBIGUOUS_MAX_CANDIDATES",
     "Section",
     "build_outline",
     "resolve_section",
