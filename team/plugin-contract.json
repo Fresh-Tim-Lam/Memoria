@@ -1,7 +1,7 @@
 {
   "schema": "team-plugin-contract/v1",
-  "contractVersion": 2,
-  "acknowledgedAt": "2026-10-24T21:50:00+08:00",
+  "contractVersion": 3,
+  "acknowledgedAt": "2026-10-25T11:50:00+08:00",
   "acknowledgedBy": "lead",
   "reviewedChanges": [
     "plan-ref-required",
@@ -11,9 +11,10 @@
     "new-tools-team-preflight-team-trajectory",
     "memory-card-attribution-and-scope",
     "completed-task-owner-correction",
-    "per-task-trajectory-storage"
+    "per-task-trajectory-storage",
+    "pro-model-forbidden-by-default"
   ],
-  "notes": "Memoria 已逐项核对 v2 的 8 条变更并完成适配：plan-ref 自硬门上线起即在所有版本级任务上使用（task-90~94/100~110 均带 plan_ref）；退役流程已了解 fail-closed 与 lead-ruling 两条新拒绝条件（本轮 steward/steward2 换代时人工写过 Lead 裁决段）；同名重生按代次解析已体现在 org.md §2.2 的代次说明与 steward2 注册中；team_preflight / team_trajectory / team_contract 在本会话（重建+新会话后）已实测可调用；记忆卡归属修复后已完成的任务卡按新形状生成；completed 任务改派尚未使用但已了解其 reason+retired 双条件；本项目暂无读取 team/trajectory/<member>.jsonl 的自有工具，故 per-task 存储变更无需迁移。",
+  "notes": "Memoria 已逐项核对 v2 的 8 条变更并完成适配：plan-ref 自硬门上线起即在所有版本级任务上使用（task-90~94/100~110 均带 plan_ref）；退役流程已了解 fail-closed 与 lead-ruling 两条新拒绝条件（本轮 steward/steward2 换代时人工写过 Lead 裁决段）；同名重生按代次解析已体现在 org.md §2.2 的代次说明与 steward2 注册中；team_preflight / team_trajectory / team_contract 在本会话（重建+新会话后）已实测可调用；记忆卡归属修复后已完成的任务卡按新形状生成；completed 任务改派尚未使用但已了解其 reason+retired 双条件；本项目暂无读取 team/trajectory/<member>.jsonl 的自有工具，故 per-task 存储变更无需迁移。v3 的 pro-model-forbidden-by-default：本项目由人明确要求所有成员运行在 deepseek-flash（V4.1 Flash），部署 profile 已设 deepModel=mechanicalModel=deepseek-flash 且 allowProModel=false 并重建 App（asar mtime 11:34 已含新配置、不再含 deepseek-v4-pro）；team/model-overrides.json 另按成员名钉死 flash 作为双保险。实测：原 agent-arch 在本会话的 spawn 记录仍为 deepseek-v4-pro，已 retire 并同名 respawn，list_agents 现显示 deepseek-flash。本项目不使用 deep 模式的 Pro 路由，也不设置 allowProModel: true。",
   "adapter": {
     "project": "Memoria",
     "repo": "D:\\AAA_Jupyter\\Memoria",
