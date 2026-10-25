@@ -81,16 +81,17 @@ def build_tasks() -> list[dict]:
     tasks: list[dict] = []
     for _kb, path, text in picks:
         lines = split_lines(text)
-        heads = [h for h in scan_headings(text) if h.level >= 2]
+        heads = [h for h in scan_headings(text) if h.level >= 2] or scan_headings(text)
         if not heads:
             continue
         h = heads[0]
         anchor_line = None
         anchor = None
-        for idx in range(h.index0 + 1, min(len(lines), h.index0 + 60)):
+        for idx in range(h.index0 + 1, min(len(lines), h.index0 + 200)):
             s = lines[idx].strip()
             if len(s) >= 12 and not s.startswith("#"):
-                anchor_line, anchor = idx + 1, s  # 1-based
+                # `expect` 必须与**盘上原文逐字**一致 ⇒ 用原始行（不 strip；尾随空格也要保留）
+                anchor_line, anchor = idx + 1, lines[idx]
                 break
         if anchor_line is None:
             continue
@@ -156,7 +157,7 @@ def _run_arm(task: dict, arm: str) -> dict:
     text = _call("propose_write", _write_plan(rel, task))
     wrote = "已写入" in text
     return {"arm": arm, "rounds": len(rounds), "tokens_by_round": rounds,
-            "total": sum(rounds), "wrote": wrote}
+            "total": sum(rounds), "wrote": wrote, "write_text": text[-240:]}
 
 
 def main() -> int:
@@ -220,6 +221,10 @@ def main() -> int:
     print(f"\n读写混合节省：修复后 {sav_after:.2%} / 修复前（模拟）{sav_before:.2%}")
     print(f"折扣：相对修复前 {(sav_after - sav_before) * 100:+.2f} 个百分点；"
           f"相对纯读 92.43% {(sav_after - 0.9243) * 100:+.2f} 个百分点")
+    if a["ok_tasks"] != len(tasks):
+        for r in rows:
+            if not r["A"]["wrote"]:
+                print(f"  [FAIL-WRITE] {r['id']}: {r['A']['write_text']}")
     print(f"\n== RESULT: {'PASS' if a['ok_tasks'] == len(tasks) else 'FAIL'} =="
           f"  (sha256 {payload['artifactSha256'][:16]}…)")
 

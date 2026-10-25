@@ -1,0 +1,255 @@
+{
+  "A": {
+    "ok_tasks": 5,
+    "per_round_tokens_median": 1000.5,
+    "rounds_max": 2,
+    "rounds_median": 2,
+    "rounds_min": 2,
+    "tasks": 5,
+    "total_median": 2259,
+    "total_sum": 18278
+  },
+  "B_after": {
+    "ok_tasks": 5,
+    "per_round_tokens_median": 191,
+    "rounds_max": 3,
+    "rounds_median": 3,
+    "rounds_min": 3,
+    "tasks": 5,
+    "total_median": 685,
+    "total_sum": 4055
+  },
+  "B_before": {
+    "ok_tasks": 5,
+    "per_round_tokens_median": 196.5,
+    "rounds_max": 4,
+    "rounds_median": 4,
+    "rounds_min": 4,
+    "tasks": 5,
+    "total_median": 2641,
+    "total_sum": 21402
+  },
+  "arms": {
+    "A": "read_document → propose_write（2 轮）",
+    "B_after": "outline → section → propose_write（3 轮；R-S2-1 修复后 section 即构成观察）",
+    "B_before": "outline → section → read_document → propose_write（4 轮；emulated=True，模拟修复前必须补读）"
+  },
+  "artifactSha256": "b8790e7feedfad530bedd758deab1aac2a800767e5533ff5e30bddbbc477323a",
+  "discount": {
+    "delta_pct_points": 94.9,
+    "read_only_savings_reference": 0.9243,
+    "read_write_vs_read_only": -14.62
+  },
+  "emulated": {
+    "B_before": true
+  },
+  "nature": "PROXY：真实工具 handler 计 token；轮数按固定策略；不调用模型",
+  "per_task": [
+    {
+      "A": {
+        "arm": "A",
+        "rounds": 2,
+        "tokens_by_round": [
+          2047,
+          180
+        ],
+        "total": 2227,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_after": {
+        "arm": "B_after",
+        "rounds": 3,
+        "tokens_by_round": [
+          189,
+          199,
+          180
+        ],
+        "total": 568,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_before": {
+        "arm": "B_before",
+        "rounds": 4,
+        "tokens_by_round": [
+          189,
+          199,
+          2047,
+          180
+        ],
+        "total": 2615,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "doc_bytes": 7975,
+      "id": "vocab/mainstay.md"
+    },
+    {
+      "A": {
+        "arm": "A",
+        "rounds": 2,
+        "tokens_by_round": [
+          1809,
+          188
+        ],
+        "total": 1997,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_after": {
+        "arm": "B_after",
+        "rounds": 3,
+        "tokens_by_round": [
+          188,
+          309,
+          188
+        ],
+        "total": 685,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_before": {
+        "arm": "B_before",
+        "rounds": 4,
+        "tokens_by_round": [
+          188,
+          309,
+          1809,
+          188
+        ],
+        "total": 2494,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "doc_bytes": 6595,
+      "id": "ielts/sample-tasks-and-examiner-comments.md"
+    },
+    {
+      "A": {
+        "arm": "A",
+        "rounds": 2,
+        "tokens_by_round": [
+          2079,
+          180
+        ],
+        "total": 2259,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_after": {
+        "arm": "B_after",
+        "rounds": 3,
+        "tokens_by_round": [
+          188,
+          194,
+          180
+        ],
+        "total": 562,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_before": {
+        "arm": "B_before",
+        "rounds": 4,
+        "tokens_by_round": [
+          188,
+          194,
+          2079,
+          180
+        ],
+        "total": 2641,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "doc_bytes": 8122,
+      "id": "vocab/leaven.md"
+    },
+    {
+      "A": {
+        "arm": "A",
+        "rounds": 2,
+        "tokens_by_round": [
+          5761,
+          192
+        ],
+        "total": 5953,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_after": {
+        "arm": "B_after",
+        "rounds": 3,
+        "tokens_by_round": [
+          705,
+          310,
+          192
+        ],
+        "total": 1207,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_before": {
+        "arm": "B_before",
+        "rounds": 4,
+        "tokens_by_round": [
+          705,
+          310,
+          5761,
+          192
+        ],
+        "total": 6968,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "doc_bytes": 35356,
+      "id": "ielts/ielts-academic-writing-sample-tasks-2023.extracted.md"
+    },
+    {
+      "A": {
+        "arm": "A",
+        "rounds": 2,
+        "tokens_by_round": [
+          5651,
+          191
+        ],
+        "total": 5842,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_after": {
+        "arm": "B_after",
+        "rounds": 3,
+        "tokens_by_round": [
+          684,
+          158,
+          191
+        ],
+        "total": 1033,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "B_before": {
+        "arm": "B_before",
+        "rounds": 4,
+        "tokens_by_round": [
+          684,
+          158,
+          5651,
+          191
+        ],
+        "total": 6684,
+        "write_text": "ment` 再提。\n**一批里按顺序把有先后的动作写全**：同一批的 op **按你给的顺序执行**，后面的 op 看到的是前面 op 生效**之后**的正文。所以「先 replace_lines 写正文 → 再按**新**行号 upsert_kp 建点 → 再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**（`rename_file` / `delete_file` 例外：它们必须是最后一条）。",
+        "wrote": true
+      },
+      "doc_bytes": 37605,
+      "id": "ielts/ielts-academic-writing-sample-tasks-2023.vlm.md"
+    }
+  ],
+  "savings_readwrite_after": 0.7781,
+  "savings_readwrite_before": -0.1709,
+  "schema": "contract-readwrite-ab/v1",
+  "sealed": {
+    "MEMORIA_CONFIG_DIR": true
+  }
+}
