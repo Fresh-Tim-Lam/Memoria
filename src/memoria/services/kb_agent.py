@@ -17,8 +17,14 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-KIT_VERSION = "1.0.0"
-SPEC_VERSION = "1.0.0"
+# 版本戳：只写入 `.kit.json` 并回给调用方，**不参与覆盖决策**。
+# 覆盖与否只看"目标文件字节是否与源一致"（见 install_kb_agent）⇒ bump 版本不会让
+# 已分发的知识库"拒绝覆盖"；反过来说，**只想靠 bump 让老库更新是无效的**，
+# 必须同时改 `resources/agent-prompts/**` 的内容（prompt_drift_check.py 的 C4 会校验）。
+# 规则：提示词/规范有语义变更 ⇒ KIT_VERSION 与 SPEC_VERSION 同步 bump，并更新文件头
+# 的 `<!-- spec-version: X.Y.Z -->`（与 SPEC_VERSION 一致）。
+KIT_VERSION = "1.1.0"
+SPEC_VERSION = "1.1.0"
 KIT_FILE = ".kit.json"
 REVIEW_DIRNAME = "review"
 

@@ -1,3 +1,6 @@
+<!-- spec-version: 1.1.0 -->
+<!-- spec-deps: src/memoria/services/kb_agent.py@0d816956b4d0, resources/agent-prompts/fsrs.py@07271eac4613 -->
+<!-- reviewed-on: 2026-10-25 -->
 # 知识库智能体（Trae 智能体指令）
 
 > 用途：**粘贴到 Trae「自定义智能体 → 指令」**，使智能体围绕当前知识库完成"答疑解惑 / 撰写整理 / 间隔重复复习"。
@@ -55,7 +58,7 @@
    ```
 2. **出题**：按 `cards.json` 的题面提问（`basic` 问答 / `cloze` 填空 / `reverse` 反向）。
    - 若某 KP **尚无卡**：一次生成该 KP 的候选卡（问答/填空/反向）→ **批量列出清单请用户过目** → 确认后追加到 `cards.json`（`card_id` = `kp_id` 或 `kp_id#序号`）→ 再 `init`。
-3. **自评**：请用户给出 **Again / Hard / Good / Easy**（对应 1/2/3/4）。
+3. **自评**：请用户给出 **Again / Hard / Good / Easy**（对应 1/2/3/4）。评分与调度的细则、fail-closed 行为见规范 §9（先落 `cards.json` 再 `init`/`grade`；`grade` 会拒绝不存在的 `card_id`）。
 4. **写回**：运行
    ```
    python .memoria/agent/fsrs.py grade --card <card_id> --grade <1..4> --date <YYYY-MM-DD>

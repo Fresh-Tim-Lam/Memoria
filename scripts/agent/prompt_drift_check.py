@@ -1,0 +1,1262 @@
+#!/usr/bin/env python3
+"""知识库 Agent 提示词漂移机检（task-151）。
+
+目的（唯一 KPI）：**下次代码改了行为而提示词没跟上时，本脚本必须 exit 1。**
+不靠"提示词写得漂亮"，靠五类可复跑、可必红的检查：
+
+  C1 distribution_integrity  分发完整性
+     - `kb_agent.py` 的 FILE_MAP / REFERENCE_DOCS 每个源文件存在、非空、可解析；
+     - README 声明的文件 = 实际分发的文件（双向）；
+     - 提示词里写 `.memoria/agent/<名>` 必须是真实落点；
+     - `resources/agent-prompts/**` 无"未归类的孤儿文件"（防隐藏分发路径）；
+     - 打包白名单（packaging/build.py）覆盖每个分发源（防发布态"内置资源缺失"）。
+
+  C2 symbol_reference        代码符号引用校验（本项目最有价值的一条）
+     - 提示词反引号里的 工具名 / RPC 名 / 字段名 / 代码路径 / KB 路径 / 斜杠枚举，
+       必须在代码或仓库里真实存在；
+     - `fsrs.py` 子命令与 flag 必须与脚本 argparse 一致；
+     - 未归类的 token 记 INFO（不静默放过，也不误红）。
+
+  C3 forbidden_syntax        禁止教"会被代码剥离"的语法
+     - 从 `edge_types.py` 读出已注册的 wikilink 边类型片段；
+     - 从 `kb_build.py` 确认这些片段**真的**会被 strip；
+     - 提示词若把它当推荐写法教（同一行无"遗留/剥离/不要"等限定词）⇒ FAIL；
+     - 反向：代码不再剥离而提示词还说会剥离 ⇒ WARN（说明旧结论过期）。
+
+  C4 version_stamp           版本戳 + 依赖指纹锁
+     - 每个分发的提示词 md 头部有 `<!-- spec-version: X.Y.Z -->`，等于 `kb_agent.SPEC_VERSION`；
+     - `<!-- spec-deps: path@sha12, ... -->` 里每个依赖存在且当前 sha256 前 12 位一致；
+       **依赖一变就红**，强制"代码改了 ⇒ 提示词必须复核并重签指纹"；
+     - `<!-- reviewed-on: YYYY-MM-DD -->`。
+
+  C5 staleness               陈旧告警
+     - reviewed-on 超过 N 天（默认 90）⇒ WARN；
+     - 声明依赖的最近变更时间（git 提交时间优先，无 git 用 mtime）比 reviewed-on 新
+       超过 N 天 ⇒ WARN（C4 指纹没变时才会走到这里）。
+
+退出码：0 = 无 FAIL（可含 WARN/INFO）；1 = 有 FAIL；2 = 用法错误。
+自测：`python scripts/agent/prompt_drift_check.py --selftest`
+      —— 每条检查都有一份必红 fixture；fixture 不红 ⇒ selftest 自己红。
+
+接入（见 artifacts/agent/verify/todo/prompt-drift-audit.md 第 5 节）：
+  - 建议挂 `scripts/agent/team_audit.py`（每轮团队自检跑）；改动只需一行
+    `subprocess.run([sys.executable, "scripts/agent/prompt_drift_check.py"], ...)`；
+    因 task-151 写域不含 team_audit.py，本文件**不自行改** team_audit。
+  - 发版前也可直接跑（无网络、无第三方依赖、~1s）。
+
+维护（提示词 owner 改完提示词后）：
+  1. 更新内容；
+  2. `python scripts/agent/prompt_drift_check.py --print-deps <依赖路径...>` 拿新 sha12；
+  3. 改头部 spec-version / spec-deps / reviewed-on；
+  4. 跑本脚本到 exit 0。
+
+## 依赖指纹变更后的**重签流程**（C4 红时必须按此走，禁止直接手改指纹变绿）
+
+C4 的副作用是"代码一改就红"。红本身不是错——它要求 owner 复核"这条提示词里依赖该文件的断言是否仍然成立"。
+为了不让重签退化成"红就改数字"，提供两条命令（**逐条确认 + 留痕**）：
+
+```bash
+# 1) 只读：列出所有提示词的依赖变更 + 每条变更的 git 证据 + 该文件要复核的小节清单
+python scripts/agent/prompt_drift_check.py --recheck-deps
+
+# 2) 重签：必须【显式列出】本次复核过的变更依赖（逐条确认），并写一句复核说明；
+#    note < 10 字 ⇒ 拒绝；漏列任一变更依赖 ⇒ 拒绝（不许"一把全签"）；
+#    成功后把 from→to 指纹与 note 追加到 artifacts/agent/verify/todo/prompt-drift-recheck-log.jsonl
+python scripts/agent/prompt_drift_check.py --resign resources/agent-prompts/kb-spec.zh-CN.md \
+    --dep src/memoria/graph/kb_build.py \
+    --note "复核 §4 边剥离语义与 §8 常见坑，代码只改注释"
+```
+
+`--resign` 后会自动重跑检查并给出结论（仍可能有别的 FAIL，需继续处理）。
+"""
+from __future__ import annotations
+
+import argparse
+import ast
+import hashlib
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from dataclasses import dataclass, field
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+
+KB_AGENT_REL = "src/memoria/services/kb_agent.py"
+EDGE_TYPES_REL = "src/memoria/graph/edge_types.py"
+KB_BUILD_REL = "src/memoria/graph/kb_build.py"
+LINK_MD_REL = "src/memoria/services/link_md.py"
+FSRS_REL = "resources/agent-prompts/fsrs.py"
+RENDER_CORE_REL = "src/memoria/ui/static/app/js/surface/render-core.js"
+PACKAGING_REL = "packaging/build.py"
+
+FAIL = "FAIL"
+WARN = "WARN"
+INFO = "INFO"
+_SEV_ORDER = {FAIL: 0, WARN: 1, INFO: 2}
+
+STALE_DAYS_DEFAULT = 90
+
+REPO_PATH_PREFIXES = ("docs/", "src/", "scripts/", "resources/", "packaging/", "tests/", "config/")
+CODE_SPAN = re.compile(r"`([^`\n]+)`")
+SNAKE = re.compile(r"^[a-z][a-z0-9]*(?:_[a-z0-9]+)+$")
+SLASH_LIST = re.compile(r"^[a-z][a-z0-9-]*(?:/[a-z][a-z0-9-]*)+$")
+STAMP_MD = re.compile(r"<!--\s*spec-version:\s*(\d+\.\d+\.\d+)\s*-->")
+STAMP_PY = re.compile(r"^#\s*spec-version:\s*(\d+\.\d+\.\d+)\s*$", re.M)
+DEPS_MD = re.compile(r"<!--\s*spec-deps:\s*(.*?)\s*-->")
+DEPS_PY = re.compile(r"^#\s*spec-deps:\s*(.*)$", re.M)
+REVIEWED = re.compile(r"<!--\s*reviewed-on:\s*(\d{4}-\d{2}-\d{2})\s*-->|^#\s*reviewed-on:\s*(\d{4}-\d{2}-\d{2})\s*$", re.M)
+WIKILINK_TYPE = re.compile(r"\[\[[^\[\]\n]*#([A-Za-z][A-Za-z0-9_-]*)\]\]")
+LEGACY_QUALIFIERS = ("遗留", "剥离", "不要", "禁止", "已废弃", "会被", "重写", "legacy", "deprecated")
+CARD_TYPES = frozenset({"basic", "cloze", "reverse"})
+
+# 应由应用维护、**不由安装器分发**的 `.memoria/agent/**` 子项（README 必须说明归属）。
+APP_OWNED_AGENT_NAMES = frozenset(
+    {"capabilities.json", "skills", "sessions", "backups", "scratch", "attachments"}
+)
+# `resources/agent-prompts/**` 里不参与 KB 分发、供应用内 RPC 读取的内部资源。
+# 判定依据见 audit 报告 §3：ui.get_agent_prompt 读 `organize.{lang}.md`。
+APP_INTERNAL_ASSETS = {
+    "organize.zh-CN.md": "ui.py::get_agent_prompt（程序内整理提示词弹窗，单一事实源）",
+}
+
+
+def prompt_doc_rels(ctx: "Ctx") -> list[str]:
+    """全部"提示词文档"的仓库相对路径：分发 md + 应用内部提示词 md。
+
+    C2/C3/C4/C5 都按这一份清单跑；`APP_INTERNAL_ASSETS` 只有在文件真实存在时才纳入，
+    这样"内部提示词被删/改名"由 C1 的引用证据检查负责，而不是这里静默跳过。
+    """
+    rels: list[str] = []
+    for src_name, _dst in ctx.kb_agent.get("FILE_MAP") or ():
+        if str(src_name).endswith(".md"):
+            rels.append(f"resources/agent-prompts/{src_name}")
+    for name in APP_INTERNAL_ASSETS:
+        rel = f"resources/agent-prompts/{name}"
+        if (ctx.repo / rel).is_file():
+            rels.append(rel)
+    return rels
+
+
+@dataclass
+class Finding:
+    check: str
+    severity: str
+    message: str
+    evidence: str = ""
+
+    def as_dict(self) -> dict:
+        return {"check": self.check, "severity": self.severity, "message": self.message, "evidence": self.evidence}
+
+
+@dataclass
+class Ctx:
+    repo: Path
+    kb_agent: dict = field(default_factory=dict)
+    findings: list = field(default_factory=list)
+    _src_text: str | None = None
+    _edge_types: dict | None = None
+
+    # ── 基础 ────────────────────────────────────────────────────────────
+    def add(self, check: str, severity: str, message: str, evidence: str = "") -> None:
+        self.findings.append(Finding(check, severity, message, evidence))
+
+    def read(self, rel: str) -> str | None:
+        try:
+            return (self.repo / rel).read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            return None
+
+    def src_text(self) -> str:
+        """src/memoria 下的代码正文（排除 vendor / 缓存；用于符号存在性校验）。"""
+        if self._src_text is not None:
+            return self._src_text
+        chunks: list[str] = []
+        base = self.repo / "src" / "memoria"
+        if base.is_dir():
+            for path in base.rglob("*"):
+                if not path.is_file() or path.suffix.lower() not in (".py", ".js", ".mjs", ".json"):
+                    continue
+                rel = str(path.relative_to(self.repo)).replace("\\", "/")
+                if "/vendor/" in rel or "/node_modules/" in rel or "__pycache__" in rel:
+                    continue
+                try:
+                    if path.stat().st_size > 2_000_000:
+                        continue
+                    chunks.append(path.read_text(encoding="utf-8", errors="ignore"))
+                except OSError:
+                    continue
+        self._src_text = "\n".join(chunks)
+        return self._src_text
+
+    # ── 常量/权威解析 ───────────────────────────────────────────────────
+    def edge_types(self) -> dict:
+        """从 edge_types.py 读 EDGE_TYPES / WIKILINK_HINT_ALIASES（不 import）。
+
+        真实代码里 `EDGE_TYPES = frozenset({EDGE_CONTAIN, ...})`，`ast.literal_eval`
+        求不了 Name 引用，故先用"简单字符串常量表"解析，再解析集合字面量。
+        """
+        if self._edge_types is not None:
+            return self._edge_types
+        out = {"edge_types": set(), "aliases": set()}
+        text = self.read(EDGE_TYPES_REL) or ""
+        try:
+            tree = ast.parse(text)
+        except SyntaxError:
+            tree = None
+        if tree is not None:
+            consts: dict[str, str] = {}
+            for node in tree.body:
+                if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+                    if isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+                        consts[node.targets[0].id] = node.value.value
+
+            def _eval(node: ast.AST) -> set[str] | None:
+                if isinstance(node, ast.Name):
+                    return {consts[node.id]} if node.id in consts else None
+                if isinstance(node, ast.Constant) and isinstance(node.value, str):
+                    return {node.value}
+                if isinstance(node, (ast.Set, ast.List, ast.Tuple)):
+                    items: set[str] = set()
+                    for element in node.elts:
+                        part = _eval(element)
+                        if part:
+                            items |= part
+                    return items
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id in ("frozenset", "set", "tuple", "list"):
+                    if node.args:
+                        return _eval(node.args[0])
+                return None
+
+            for node in tree.body:
+                if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+                    continue
+                targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+                names = [t.id for t in targets if isinstance(t, ast.Name)]
+                if "EDGE_TYPES" in names:
+                    value = _eval(node.value)
+                    if value:
+                        out["edge_types"] = value
+                if "WIKILINK_HINT_ALIASES" in names:
+                    try:
+                        out["aliases"] = {str(k) for k in ast.literal_eval(node.value)}
+                    except (ValueError, TypeError, SyntaxError):
+                        pass
+        self._edge_types = out
+        return out
+
+    def tool_names(self) -> set[str]:
+        """MCP 工具面 + 进程内工具名（均为真实注册名）。"""
+        names: set[str] = set()
+        mcp = self.read("src/memoria/services/agent/mcp_server.py") or ""
+        names.update(re.findall(r'"name"\s*:\s*"([a-z][a-z0-9_]*)"', mcp))
+        kb_tools = self.read("src/memoria/services/agent/tools/kb.py") or ""
+        names.update(re.findall(r'\bname="([a-z][a-z0-9_]*)"', kb_tools))
+        return names
+
+    def fsrs_subcommands(self) -> set[str]:
+        text = self.read(FSRS_REL) or ""
+        return set(re.findall(r'add_parser\(\s*"([a-z][a-z0-9_-]*)"', text))
+
+    def image_attrs(self) -> set[str]:
+        text = self.read(RENDER_CORE_REL) or ""
+        match = re.search(r"支持\s+([a-z][a-z0-9/-]*)", text)
+        if match:
+            return {part for part in match.group(1).split("/") if part}
+        return set()
+
+    def deps_of(self, text: str) -> tuple[list[tuple[str, str]], str | None]:
+        """解析 spec-deps 头：[(path, sha12)] + 原始行。"""
+        match = DEPS_MD.search(text) or DEPS_PY.search(text)
+        if not match:
+            return [], None
+        entries: list[tuple[str, str]] = []
+        for raw in match.group(1).split(","):
+            item = raw.strip()
+            if not item:
+                continue
+            if "@" in item:
+                path, digest = item.rsplit("@", 1)
+            else:
+                path, digest = item, ""
+            entries.append((path.strip(), digest.strip().lower()))
+        return entries, match.group(1).strip()
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 常量装载
+# ══════════════════════════════════════════════════════════════════════
+def load_kb_agent(repo: Path) -> dict:
+    """用 AST 读 kb_agent.py 的常量，**不 import**（避免副作用/依赖）。"""
+    path = repo / KB_AGENT_REL
+    text = path.read_text(encoding="utf-8") if path.is_file() else ""
+    out = {
+        "path": path,
+        "text": text,
+        "FILE_MAP": None,
+        "REFERENCE_DOCS": None,
+        "KIT_VERSION": None,
+        "SPEC_VERSION": None,
+        "KIT_FILE": ".kit.json",
+        "REVIEW_DIRNAME": "review",
+    }
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:
+        return out
+    for node in tree.body:
+        if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+            continue
+        targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+        names = [t.id for t in targets if isinstance(t, ast.Name)]
+        for name in names:
+            if name in ("FILE_MAP", "REFERENCE_DOCS"):
+                try:
+                    out[name] = ast.literal_eval(node.value)
+                except (ValueError, TypeError, SyntaxError):
+                    pass
+            elif name in ("KIT_VERSION", "SPEC_VERSION", "KIT_FILE", "REVIEW_DIRNAME"):
+                try:
+                    out[name] = ast.literal_eval(node.value)
+                except (ValueError, TypeError, SyntaxError):
+                    pass
+    return out
+
+
+# ══════════════════════════════════════════════════════════════════════
+# C1 分发完整性
+# ══════════════════════════════════════════════════════════════════════
+def check_distribution(ctx: Ctx) -> None:
+    check = "distribution_integrity"
+    info = ctx.kb_agent
+    file_map = info.get("FILE_MAP")
+    ref_docs = info.get("REFERENCE_DOCS")
+    if not file_map:
+        ctx.add(check, FAIL, "kb_agent.py 中没有可解析的 FILE_MAP（分发链路消失？）", KB_AGENT_REL)
+        return
+    if not ref_docs:
+        ctx.add(check, WARN, "kb_agent.py 中没有可解析的 REFERENCE_DOCS", KB_AGENT_REL)
+
+    src_dir = ctx.repo / "resources" / "agent-prompts"
+    dst_names: list[str] = []
+    src_names: list[str] = []
+    for pair in file_map:
+        if not (isinstance(pair, (tuple, list)) and len(pair) == 2):
+            ctx.add(check, FAIL, f"FILE_MAP 条目形状非法：{pair!r}", KB_AGENT_REL)
+            continue
+        src_name, dst_name = str(pair[0]), str(pair[1])
+        src_names.append(src_name)
+        dst_names.append(dst_name)
+        path = src_dir / src_name
+        if not path.is_file():
+            ctx.add(check, FAIL, f"分发源文件不存在：resources/agent-prompts/{src_name}", str(path))
+            continue
+        if path.stat().st_size == 0:
+            ctx.add(check, FAIL, f"分发源文件为空：resources/agent-prompts/{src_name}", str(path))
+            continue
+        raw = path.read_bytes()
+        if path.suffix == ".md":
+            try:
+                raw.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                ctx.add(check, FAIL, f"分发源文件不是合法 UTF-8：{src_name}（{exc}）", str(path))
+        elif path.suffix == ".py":
+            try:
+                compile(raw.decode("utf-8"), str(path), "exec")
+            except (UnicodeDecodeError, SyntaxError) as exc:
+                ctx.add(check, FAIL, f"分发源 Python 文件无法解析：{src_name}（{exc}）", str(path))
+
+    for pair in ref_docs or ():
+        if not (isinstance(pair, (tuple, list)) and len(pair) == 2):
+            ctx.add(check, FAIL, f"REFERENCE_DOCS 条目形状非法：{pair!r}", KB_AGENT_REL)
+            continue
+        src_name, dst_name = str(pair[0]), str(pair[1])
+        dst_names.append(dst_name)
+        path = ctx.repo / "docs" / "reference" / src_name
+        if not path.is_file():
+            ctx.add(check, FAIL, f"随包参考文档不存在：docs/reference/{src_name}", str(path))
+        elif path.stat().st_size == 0:
+            ctx.add(check, FAIL, f"随包参考文档为空：docs/reference/{src_name}", str(path))
+
+    if len(set(dst_names)) != len(dst_names):
+        dupes = sorted({n for n in dst_names if dst_names.count(n) > 1})
+        ctx.add(check, FAIL, f"分发落点文件名重复（会互相覆盖）：{dupes}", KB_AGENT_REL)
+    for name in dst_names:
+        if name.startswith(str(info.get("REVIEW_DIRNAME") or "review") + "/"):
+            ctx.add(check, FAIL, f"分发落点不得落在 review/ 下（永不被覆盖）：{name}", KB_AGENT_REL)
+
+    # README 声明 ↔ 实际分发（双向）
+    readme = None
+    for src_name, dst_name in file_map:
+        if str(dst_name) == "README.md":
+            readme = ctx.read(f"resources/agent-prompts/{src_name}")
+            break
+    readme_rel = "resources/agent-prompts/<README 源>"
+    if readme is None:
+        ctx.add(check, WARN, "未找到分发到 README.md 的源文件，无法核对目录声明", readme_rel)
+    else:
+        claimed = set(re.findall(r"^\|\s*`([^`]+)`\s*\|", readme, re.M))
+        dst_set = set(dst_names)
+        kit_file = str(info.get("KIT_FILE") or ".kit.json")
+        review_dir = str(info.get("REVIEW_DIRNAME") or "review")
+        known_app = {kit_file} | {f"{review_dir}/{x}" for x in ("cards.json", "progress.json")}
+        for item in sorted(claimed):
+            top = item.split("/")[0].rstrip("*").rstrip("/")
+            if item in dst_set or item in known_app or item in APP_OWNED_AGENT_NAMES or top in APP_OWNED_AGENT_NAMES:
+                continue
+            if item.startswith(f"{review_dir}/") or item.startswith(".memoria/"):
+                continue
+            ctx.add(check, FAIL, f"README 声明的文件既不在分发清单也没有归属说明：{item}", readme_rel)
+        for dst in sorted(dst_set):
+            if dst == "README.md":
+                continue
+            if dst not in claimed:
+                ctx.add(check, FAIL, f"分发文件未在 README 目录表中声明：{dst}", readme_rel)
+
+    # 提示词里引用的 .memoria/agent/<名> 必须是真实落点
+    dst_set = set(dst_names)
+    for src_name in src_names:
+        if not src_name.endswith(".md"):
+            continue
+        text = ctx.read(f"resources/agent-prompts/{src_name}") or ""
+        for match in re.finditer(r"\.memoria/agent/([A-Za-z0-9_.-]+)", text):
+            name = match.group(1)
+            if name in dst_set or name in APP_OWNED_AGENT_NAMES or name in (str(info.get("KIT_FILE")),):
+                continue
+            if name.startswith(str(info.get("REVIEW_DIRNAME") or "review")):
+                continue
+            ctx.add(
+                check,
+                FAIL,
+                f"提示词引用了不存在的 .memoria/agent/{name}（分发清单里没有）",
+                f"resources/agent-prompts/{src_name}",
+            )
+
+    # 孤儿资源：目录里有、但既不分发也不在"内部资源"白名单 ⇒ 需要人工归类
+    if src_dir.is_dir():
+        on_disk = {p.name for p in src_dir.iterdir() if p.is_file()}
+        for name in sorted(on_disk - set(src_names) - set(APP_INTERNAL_ASSETS)):
+            ctx.add(
+                check,
+                WARN,
+                f"resources/agent-prompts/{name} 未被 FILE_MAP 分发，也未登记为应用内部资源"
+                "（可能是隐藏分发路径或死文件，须人工归类）",
+                str(src_dir / name),
+            )
+        for name, why in APP_INTERNAL_ASSETS.items():
+            if name in on_disk and why.split("::")[0] not in (ctx.read("src/memoria/presentation/api/ui.py") or ""):
+                ctx.add(check, WARN, f"内部资源 {name} 的引用证据失效（{why} 未在代码中找到）", str(src_dir / name))
+
+    # 隐藏分发路径探测：除 FILE_MAP 外还有没有按目录 scan 复制 agent-prompts 的代码
+    for rel in ("src/memoria", "packaging"):
+        base = ctx.repo / rel
+        if not base.is_dir():
+            continue
+        for path in base.rglob("*.py"):
+            try:
+                text = path.read_text(encoding="utf-8", errors="ignore")
+            except OSError:
+                continue
+            if "agent-prompts" not in text or "kb_agent" in str(path) or "ui.py" in str(path) or "build.py" in str(path):
+                continue
+            if re.search(r"iterdir\(|glob\(|rglob\(", text):
+                ctx.add(
+                    check,
+                    WARN,
+                    f"疑似按目录扫描分发 agent-prompts 的代码：{path.relative_to(ctx.repo)}"
+                    "（若真存在，本检查的覆盖口径需改为目录全量）",
+                    str(path),
+                )
+
+    # 打包白名单：发布态缺一个源文件 ⇒ install_kb_agent 直接报"内置资源缺失"
+    packaging = ctx.read(PACKAGING_REL) or ""
+    if not packaging:
+        ctx.add(check, WARN, f"未找到 {PACKAGING_REL}，无法核对随包白名单", PACKAGING_REL)
+    else:
+        for src_name in src_names:
+            if f"agent-prompts/{src_name}" not in packaging:
+                ctx.add(
+                    check,
+                    FAIL,
+                    f"分发源未登记进打包白名单：agent-prompts/{src_name}（发布态会报内置资源缺失）",
+                    PACKAGING_REL,
+                )
+        for src_name, _ in ref_docs or ():
+            if f"docs/{src_name}" not in packaging:
+                ctx.add(
+                    check,
+                    FAIL,
+                    f"随包参考文档未登记进打包白名单：docs/{src_name}",
+                    PACKAGING_REL,
+                )
+
+
+# ══════════════════════════════════════════════════════════════════════
+# C2 代码符号引用校验
+# ══════════════════════════════════════════════════════════════════════
+def _kb_path_ok(
+    ctx: Ctx,
+    token: str,
+    allowed_kb_prefixes: set[str],
+    dst_set: set[str],
+    code: str,
+) -> tuple[bool, str]:
+    norm = token.replace("\\", "/").rstrip("。，、；：,.;:")
+    parts = [p for p in norm.split("/") if p]
+    if not parts:
+        return False, "空路径"
+    # 目录整体引用（`.memoria/**` / `.memoria/` / `review/**`）只看前缀
+    if norm.endswith("/**") or norm.endswith("/"):
+        prefix = "/".join(parts[:2]) if len(parts) >= 2 else parts[0]
+        if parts[0] == "review":
+            return ("review" in code or "review" in allowed_kb_prefixes), "代码中无 review 目录"
+        return (prefix in allowed_kb_prefixes), f"前缀 {prefix!r} 不在代码已知 KB 路径集合"
+    # review/*：允许的复习数据文件由 fsrs.py/代码字面量决定
+    if parts[0] == "review":
+        leaf = parts[1] if len(parts) > 1 else ""
+        fsrs_text = ctx.read(FSRS_REL) or ""
+        if leaf and (leaf in code or leaf in fsrs_text):
+            return True, ""
+        return False, f"review/{leaf} 不是代码中出现的复习数据文件"
+    if any(ch in norm for ch in "<>*") or re.search(r"[\u4e00-\u9fff]", norm):
+        prefix = "/".join(parts[:2])
+        return (prefix in allowed_kb_prefixes), f"前缀 {prefix!r} 不在代码已知 KB 路径集合"
+    joined = "/".join(parts[:2])
+    if joined not in allowed_kb_prefixes:
+        return False, f"前缀 {joined!r} 不在代码已知 KB 路径集合"
+    if len(parts) >= 3 and parts[1] == "agent":
+        leaf = parts[2]
+        if leaf in dst_set or leaf in APP_OWNED_AGENT_NAMES:
+            return True, ""
+        if leaf.endswith((".json", ".md", ".py")):
+            return False, f".memoria/agent/{leaf} 不是分发落点也不是应用管理项"
+    return True, ""
+
+
+def check_symbols(ctx: Ctx) -> None:
+    check = "symbol_reference"
+    info = ctx.kb_agent
+    dst_set = {str(dst) for _, dst in (info.get("FILE_MAP") or ())}
+    dst_set.update(str(dst) for _, dst in (info.get("REFERENCE_DOCS") or ()))
+    edge = ctx.edge_types()
+    tools = ctx.tool_names()
+    fsrs_subs = ctx.fsrs_subcommands()
+    img_attrs = ctx.image_attrs()
+    code = ctx.src_text()
+    allowed_kb_prefixes = set()
+    for match in re.finditer(r"\.memoria[/\\]([A-Za-z0-9_.-]+)", code):
+        allowed_kb_prefixes.add(".memoria/" + match.group(1))
+    allowed_kb_prefixes.add("review")
+    docs_kb = ""
+    for rel in ("docs/design/kb-agent.md",):
+        docs_kb += (ctx.read(rel) or "")
+
+    prompt_rels = prompt_doc_rels(ctx)
+    kit_file = str(info.get("KIT_FILE") or ".kit.json")
+    preview_text = ctx.read("docs/reference/preview-formats.md") or ""
+
+    for rel in prompt_rels:
+        text = ctx.read(rel)
+        if text is None:
+            continue
+        unclassified: list[str] = []
+        for span in sorted(set(CODE_SPAN.findall(text))):
+            token = span.strip().rstrip("。，、；：,.;:)").replace("[]", "")
+            if not token or token.startswith("[[") or token.startswith("<!--"):
+                continue
+            if re.search(r"[\u4e00-\u9fff]", token):
+                continue
+            # 只校验"像符号"的 token；纯 Markdown 语法（`![..](..)`、`##`、`*.md`）不在此列
+            if not re.fullmatch(r"[A-Za-z_<][A-Za-z0-9_./@#*<>-]*", token):
+                continue
+            # 0) 分发落点名 / 已知运行期文件：直接算真实存在
+            if token in dst_set or token in (kit_file, "README.md") or token in APP_OWNED_AGENT_NAMES:
+                continue
+            # 占位符（<name>.md / skills/**）：不是可校验的具体路径
+            if "<" in token or "*" in token:
+                continue
+            # 仓库路径
+            if token.startswith(REPO_PATH_PREFIXES):
+                clean = re.sub(r":\d+(?:-\d+)?$", "", token)
+                if "**" in clean:
+                    clean = clean.split("**")[0].rstrip("/")
+                target = ctx.repo / clean
+                if not target.exists():
+                    ctx.add(check, FAIL, f"提示词引用的仓库路径不存在：{token}", rel)
+                continue
+            # KB 路径
+            if token.startswith(".memoria/") or token.startswith("review/"):
+                ok, why = _kb_path_ok(ctx, token, allowed_kb_prefixes, dst_set, code)
+                if not ok:
+                    ctx.add(check, FAIL, f"提示词引用的知识库路径不存在或未登记：{token}（{why}）", rel)
+                continue
+            # 图像路径前缀（./ 与 ../ 的语义由渲染权威文档决定）
+            if token in ("./", "../"):
+                if token not in preview_text:
+                    ctx.add(check, FAIL, f"路径前缀 {token} 在渲染权威文档中找不到依据", rel)
+                continue
+            if token.startswith("./") or token.startswith("../"):
+                ctx.add(check, WARN, f"相对路径写法未校验：{token}", rel)
+                continue
+            # 斜杠枚举（如 width/enlarge/align）——必须先于通用相对路径分支
+            if SLASH_LIST.match(token):
+                bad = [
+                    seg
+                    for seg in token.split("/")
+                    if seg not in edge["edge_types"]
+                    and seg not in img_attrs
+                    and seg not in fsrs_subs
+                    and seg not in tools
+                    and seg not in CARD_TYPES
+                    and seg not in code
+                ]
+                if bad:
+                    ctx.add(
+                        check,
+                        FAIL,
+                        f"斜杠枚举里有代码中不存在的符号：{'/'.join(bad)}（原文 {token}）",
+                        rel,
+                    )
+                continue
+            # 相对示例路径（subdir/topic-c.md）不具可校验性 ⇒ 记 INFO（不误红）
+            if "/" in token:
+                unclassified.append(token)
+                continue
+            # 文件名（`.md/.json/.py/.yaml`）：必须出现在分发清单、应用项或代码字面量里
+            if token.endswith((".md", ".json", ".py", ".yaml")):
+                if token in code:
+                    continue
+                ctx.add(check, FAIL, f"提示词提到的文件名在代码/分发清单中不存在：{token}", rel)
+                continue
+            # 点分字段路径（range.end.snippet / links.edge_type）：逐段校验 snake 段
+            if "." in token and "/" not in token and not token.endswith((".md", ".json", ".py", ".yaml")):
+                segs = [seg for seg in token.split(".") if seg]
+                bad = [seg for seg in segs if SNAKE.match(seg) and seg not in code]
+                if bad:
+                    ctx.add(check, FAIL, f"点分字段里有代码中不存在的符号：{'.'.join(bad)}（原文 {token}）", rel)
+                continue
+            # snake_case 标识符 / RPC 名 / 字段名
+            if SNAKE.match(token):
+                if token in code or token in edge["edge_types"]:
+                    continue
+                ctx.add(check, FAIL, f"提示词提到的符号在代码中不存在：{token}", rel)
+                continue
+            # 已知单词类
+            if token in edge["edge_types"] or token in fsrs_subs or token in tools:
+                continue
+            if token in CARD_TYPES:
+                if token not in docs_kb:
+                    ctx.add(check, FAIL, f"卡片类型 {token!r} 在设计文档中也找不到（无权威来源）", rel)
+                continue
+            if token in img_attrs:
+                continue
+            if token.startswith("--"):
+                fsrs_text = ctx.read(FSRS_REL) or ""
+                if token not in fsrs_text:
+                    ctx.add(check, FAIL, f"命令行 flag 在 fsrs.py 中不存在：{token}", rel)
+                continue
+            if re.fullmatch(r"[a-z][a-z0-9-]*", token):
+                unclassified.append(token)
+                continue
+            unclassified.append(token)
+        if unclassified:
+            ctx.add(
+                check,
+                INFO,
+                f"有 {len(unclassified)} 个反引号 token 未归类（未做存在性校验）："
+                + ", ".join(sorted(set(unclassified))[:12]),
+                rel,
+            )
+
+    # fsrs.py 命令行块：子命令与 flag 必须与 argparse 一致
+    fsrs_text = ctx.read(FSRS_REL) or ""
+    for rel in prompt_rels:
+        text = ctx.read(rel)
+        if text is None:
+            continue
+        for match in re.finditer(r"fsrs\.py\s+([a-z][a-z0-9-]*)", text):
+            sub = match.group(1)
+            if sub not in fsrs_subs:
+                ctx.add(check, FAIL, f"提示词教了 fsrs.py 不存在的子命令：{sub}", rel)
+        for line in text.splitlines():
+            if "fsrs.py" not in line:
+                continue
+            for flag in re.findall(r"(--[a-z][a-z0-9-]*)", line):
+                if flag not in fsrs_text:
+                    ctx.add(check, FAIL, f"提示词教了 fsrs.py 不存在的参数：{flag}", rel)
+
+    # 规范章节号引用：prompt 里的 `§N.M` 必须在 kb-spec 中真实存在（防重编号漂移）
+    spec_text = ""
+    for src_name, dst in info.get("FILE_MAP") or ():
+        if str(dst) == "kb-spec.zh-CN.md":
+            spec_text = ctx.read(f"resources/agent-prompts/{src_name}") or ""
+    if spec_text:
+        spec_sections = set(re.findall(r"^#{2,3}\s+(\d+(?:\.\d+)?)[.、\s]", spec_text, re.M))
+        for rel in prompt_rels:
+            text = ctx.read(rel)
+            if text is None or rel.endswith("kb-spec.zh-CN.md"):
+                continue
+            for ref in sorted(set(re.findall(r"§(\d+(?:\.\d+)?)", text))):
+                if ref not in spec_sections:
+                    ctx.add(check, FAIL, f"提示词引用的规范章节 §{ref} 在 kb-spec 中不存在", rel)
+
+
+# ══════════════════════════════════════════════════════════════════════
+# C3 禁止教"会被代码剥离"的语法
+# ══════════════════════════════════════════════════════════════════════
+def check_forbidden_syntax(ctx: Ctx) -> None:
+    check = "forbidden_syntax"
+    edge = ctx.edge_types()
+    aliases = edge["aliases"] | edge["edge_types"]
+    if not aliases:
+        ctx.add(check, WARN, "无法从 edge_types.py 读取边类型片段集合，跳过", EDGE_TYPES_REL)
+        return
+    build_text = ctx.read(KB_BUILD_REL) or ""
+    link_text = ctx.read(LINK_MD_REL) or ""
+    strip_active = "strip_known_wikilink_edge_hints(" in build_text and "def strip_known_wikilink_edge_hints" in link_text
+    if not strip_active:
+        ctx.add(
+            check,
+            WARN,
+            "代码已不再剥离正文 wikilink 边类型片段，但提示词里的『遗留会被剥离』结论可能过期",
+            f"{KB_BUILD_REL} / {LINK_MD_REL}",
+        )
+
+    info = ctx.kb_agent
+    for rel in prompt_doc_rels(ctx):
+        text = ctx.read(rel)
+        if text is None:
+            continue
+        for lineno, line in enumerate(text.splitlines(), 1):
+            for match in WIKILINK_TYPE.finditer(line):
+                hint = match.group(1).lower()
+                if hint not in aliases:
+                    continue
+                if any(word in line for word in LEGACY_QUALIFIERS):
+                    continue
+                if not strip_active:
+                    continue
+                ctx.add(
+                    check,
+                    FAIL,
+                    f"提示词把会被构建剥离的语法当推荐写法教：{match.group(0)}"
+                    "（代码会把它迁移后从正文删除；要标边类型请写 sidecar edges[]）",
+                    f"{rel}:{lineno}",
+                )
+
+
+# ══════════════════════════════════════════════════════════════════════
+# C4 版本戳 + 依赖指纹锁
+# ══════════════════════════════════════════════════════════════════════
+def _sha12(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()[:12]
+
+
+def check_version_stamps(ctx: Ctx) -> None:
+    check = "version_stamp"
+    info = ctx.kb_agent
+    spec_version = str(info.get("SPEC_VERSION") or "")
+    kit_version = str(info.get("KIT_VERSION") or "")
+    if not spec_version:
+        ctx.add(check, FAIL, "kb_agent.py 中没有 SPEC_VERSION", KB_AGENT_REL)
+        return
+    for src_name, _dst in info.get("FILE_MAP") or ():
+        if not str(src_name).endswith(".md"):
+            continue
+        rel = f"resources/agent-prompts/{src_name}"
+        text = ctx.read(rel)
+        if text is None:
+            continue
+        head = "\n".join(text.splitlines()[:14])
+        stamp_md = STAMP_MD.search(head)
+        if not stamp_md:
+            ctx.add(check, FAIL, f"缺少版本戳（头部 14 行内无 <!-- spec-version: X.Y.Z -->）：{src_name}", rel)
+        elif stamp_md.group(1) != spec_version:
+            ctx.add(
+                check,
+                FAIL,
+                f"版本戳 {stamp_md.group(1)} 与 kb_agent.SPEC_VERSION {spec_version} 不一致（{src_name}）",
+                rel,
+            )
+        if not REVIEWED.search(head):
+            ctx.add(check, FAIL, f"缺少 <!-- reviewed-on: YYYY-MM-DD -->（{src_name}）", rel)
+        deps, _raw = ctx.deps_of(head)
+        if not deps:
+            ctx.add(check, FAIL, f"缺少 <!-- spec-deps: path@sha12, ... -->（依赖指纹锁，{src_name}）", rel)
+            continue
+        for dep_path, dep_digest in deps:
+            target = ctx.repo / dep_path
+            if not dep_path or not target.is_file():
+                ctx.add(check, FAIL, f"spec-deps 声明的依赖不存在：{dep_path}", rel)
+                continue
+            current = _sha12(target)
+            if not re.fullmatch(r"[0-9a-f]{8,64}", dep_digest):
+                ctx.add(check, FAIL, f"spec-deps 指纹格式非法：{dep_path}@{dep_digest}", rel)
+            elif not current.startswith(dep_digest.lower()):
+                ctx.add(
+                    check,
+                    FAIL,
+                    "依赖已变更，提示词可能脱节（复核相关断言后重签指纹）："
+                    f"{dep_path} 记录 @{dep_digest}，当前 @{current}",
+                    rel,
+                )
+    if kit_version and spec_version and not kit_version:
+        ctx.add(check, WARN, "KIT_VERSION 为空", KB_AGENT_REL)
+
+
+# ══════════════════════════════════════════════════════════════════════
+# C5 陈旧告警
+# ══════════════════════════════════════════════════════════════════════
+def _git_commit_date(repo: Path, rel: str) -> date | None:
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(repo), "log", "-1", "--format=%cs", "--", rel],
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        if out.returncode == 0 and out.stdout.strip():
+            return date.fromisoformat(out.stdout.strip())
+    except (OSError, subprocess.SubprocessError, ValueError):
+        return None
+    return None
+
+
+def check_staleness(ctx: Ctx, now: date, stale_days: int = STALE_DAYS_DEFAULT) -> None:
+    check = "staleness"
+    info = ctx.kb_agent
+    for src_name, _dst in info.get("FILE_MAP") or ():
+        if not str(src_name).endswith(".md"):
+            continue
+        rel = f"resources/agent-prompts/{src_name}"
+        text = ctx.read(rel)
+        if text is None:
+            continue
+        head = "\n".join(text.splitlines()[:14])
+        match = REVIEWED.search(head)
+        if not match:
+            continue
+        raw_date = match.group(1) or match.group(2)
+        try:
+            reviewed = date.fromisoformat(raw_date)
+        except ValueError:
+            ctx.add(check, FAIL, f"reviewed-on 不是合法日期：{raw_date}", rel)
+            continue
+        age = (now - reviewed).days
+        if age > stale_days:
+            ctx.add(
+                check,
+                WARN,
+                f"提示词已 {age} 天未复核（reviewed-on {raw_date}，阈值 {stale_days} 天）",
+                rel,
+            )
+        deps, _raw = ctx.deps_of(head)
+        for dep_path, _digest in deps:
+            target = ctx.repo / dep_path
+            if not target.is_file():
+                continue
+            changed = _git_commit_date(ctx.repo, dep_path)
+            if changed is None:
+                changed = datetime.fromtimestamp(target.stat().st_mtime, tz=timezone.utc).date()
+            lag = (changed - reviewed).days
+            if lag > stale_days:
+                ctx.add(
+                    check,
+                    WARN,
+                    f"依赖 {dep_path} 的最近变更（{changed.isoformat()}）比 reviewed-on "
+                    f"（{raw_date}）新 {lag} 天，提示词可能已过期",
+                    rel,
+                )
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 运行 / 输出
+# ══════════════════════════════════════════════════════════════════════
+def run_checks(ctx: Ctx, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> list[Finding]:
+    check_distribution(ctx)
+    check_symbols(ctx)
+    check_forbidden_syntax(ctx)
+    check_version_stamps(ctx)
+    check_staleness(ctx, now or date.today(), stale_days)
+    ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
+    return ctx.findings
+
+
+def _summary(findings: list[Finding]) -> dict:
+    counts = {FAIL: 0, WARN: 0, INFO: 0}
+    for finding in findings:
+        counts[finding.severity] = counts.get(finding.severity, 0) + 1
+    return {"findings": len(findings), **counts}
+
+
+def _emit(findings: list[Finding], as_json: bool) -> None:
+    summary = _summary(findings)
+    if as_json:
+        print(
+            json.dumps(
+                {
+                    "schema": "prompt-drift/v1",
+                    "generatedAt": datetime.now(timezone.utc).isoformat(),
+                    "summary": summary,
+                    "findings": [f.as_dict() for f in findings],
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return
+    for finding in findings:
+        print(f"[{finding.severity}] {finding.check}: {finding.message}")
+        if finding.evidence:
+            print(f"        证据：{finding.evidence}")
+    print(
+        f"\n汇总：FAIL={summary[FAIL]} WARN={summary[WARN]} INFO={summary[INFO]} 合计 {summary['findings']} 条"
+    )
+    print("结论：提示词与代码一致（无 FAIL）" if summary[FAIL] == 0 else "结论：存在 FAIL，提示词已漂移，须修")
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 自测（每条检查一份必红 fixture）
+# ══════════════════════════════════════════════════════════════════════
+GREEN_KB_AGENT = '''"""fixture"""
+KIT_VERSION = "1.0.0"
+SPEC_VERSION = "1.0.0"
+KIT_FILE = ".kit.json"
+REVIEW_DIRNAME = "review"
+FILE_MAP = (
+    ("kb-agent-readme.md", "README.md"),
+    ("kb-agent.zh-CN.md", "prompt.zh-CN.md"),
+    ("kb-spec.zh-CN.md", "kb-spec.zh-CN.md"),
+    ("fsrs.py", "fsrs.py"),
+)
+REFERENCE_DOCS = (("preview-formats.md", "preview-formats.md"),)
+'''
+
+GREEN_README = """<!-- spec-version: 1.0.0 -->
+<!-- spec-deps: src/memoria/graph/edge_types.py@%EDGE% -->
+<!-- reviewed-on: 2026-10-01 -->
+# fixture README
+
+| 文件 | 用途 |
+|---|---|
+| `prompt.zh-CN.md` | 指令 |
+| `kb-spec.zh-CN.md` | 规范 |
+| `preview-formats.md` | 格式 |
+| `fsrs.py` | 调度 |
+| `review/cards.json` | 卡片 |
+| `.kit.json` | 版本 |
+"""
+
+GREEN_PROMPT = """<!-- spec-version: 1.0.0 -->
+<!-- spec-deps: src/memoria/graph/edge_types.py@%EDGE% -->
+<!-- reviewed-on: 2026-10-01 -->
+# prompt
+
+先读 `.memoria/agent/kb-spec.zh-CN.md` 与 `.memoria/agent/preview-formats.md`。
+复习用 `python .memoria/agent/fsrs.py due --date 2026-10-01`。
+"""
+
+GREEN_SPEC = """<!-- spec-version: 1.0.0 -->
+<!-- spec-deps: src/memoria/graph/edge_types.py@%EDGE%, src/memoria/graph/kb_build.py@%BUILD% -->
+<!-- reviewed-on: 2026-10-01 -->
+# spec
+
+边类型 `reference` / `extend` / `contain` 只存 sidecar `edges[]`；字段 `source_id`、`targets`、`edge_type`。
+图片属性白名单 `width/height/align/name-size/name`。
+遗留写法 `[[kp-id#extend]]` 会被构建剥离，不要用。
+"""
+
+GREEN_FSRS = '''"""fixture fsrs"""
+import argparse
+FSRS_VERSION = "5"
+def main(argv=None):
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd")
+    sub.add_parser("due")
+    sub.add_parser("init")
+    sub.add_parser("grade")
+    ap.add_argument("--kb", default=".")
+    ap.add_argument("--date", default="")
+    ap.add_argument("--card", default="")
+    ap.add_argument("--grade", default="")
+    return ap.parse_args(argv)
+'''
+
+GREEN_EDGE = '''EDGE_CONTAIN = "contain"
+EDGE_REFERENCE = "reference"
+EDGE_EXTEND = "extend"
+EDGE_TYPES = frozenset({EDGE_CONTAIN, EDGE_REFERENCE, EDGE_EXTEND})
+WIKILINK_HINT_ALIASES = {"prerequisite": "reference", "extend": "extend", "contain": "contain"}
+'''
+
+GREEN_BUILD = '''from memoria.services.link_md import strip_known_wikilink_edge_hints
+def build(body):
+    return strip_known_wikilink_edge_hints(body)
+'''
+
+GREEN_LINK_MD = '''def strip_known_wikilink_edge_hints(body):
+    return body, 0
+'''
+
+GREEN_CONST = '''MEMORIA_DIR = ".memoria"
+SIDECARS_DIR = ".memoria/sidecars"
+IMAGES_DIR = ".memoria/images"
+AGENT_DIR = ".memoria/agent"
+MANIFEST = ".memoria/manifest.yaml"
+REVIEW = "review"
+'''
+
+GREEN_RENDER = '''// 支持 width/height/align/name-size/name
+console.warn("[img-attrs] 未知图片属性 key=");
+'''
+
+GREEN_MCP = '''TOOLS = [{"name": "outline"}, {"name": "section"}, {"name": "snippet"}, {"name": "propose_write"}]
+'''
+
+GREEN_TOOLS_KB = '''Tool(name="read_document", description="x")
+Tool(name="search_kb", description="x")
+'''
+
+
+def _write(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def _fixture_repo(tmp: Path, *, edge_hash: str | None = None, build_hash: str | None = None) -> Path:
+    """构造一个绿 fixture 仓库（内容与真实仓库同构的最小版本）。"""
+    repo = tmp / "repo"
+    _write(repo / KB_AGENT_REL, GREEN_KB_AGENT)
+    _write(repo / GREEN_EDGE_PATH, GREEN_EDGE)
+    _write(repo / GREEN_BUILD_PATH, GREEN_BUILD)
+    _write(repo / GREEN_LINK_MD_PATH, GREEN_LINK_MD)
+    _write(repo / "src/memoria/storage/constants.py", GREEN_CONST)
+    _write(repo / RENDER_CORE_REL, GREEN_RENDER)
+    _write(repo / "src/memoria/services/agent/mcp_server.py", GREEN_MCP)
+    _write(repo / "src/memoria/services/agent/tools/kb.py", GREEN_TOOLS_KB)
+    packaging = "\n".join(
+        [
+            '"agent-prompts/kb-agent-readme.md",',
+            '"agent-prompts/kb-agent.zh-CN.md",',
+            '"agent-prompts/kb-spec.zh-CN.md",',
+            '"agent-prompts/fsrs.py",',
+            '"docs/preview-formats.md",',
+        ]
+    )
+    _write(repo / PACKAGING_REL, packaging)
+    _write(repo / "docs/reference/preview-formats.md", "# preview\n")
+    # 字段名/复习数据文件的字面量来源（真实仓库里有，fixture 也需要）
+    _write(
+        repo / "src/memoria/services/fixture_symbols.py",
+        'FIELDS = ("source_id", "targets", "edge_type", "anchor_text", "instances")\n'
+        'FILES = ("review/cards.json", "review/progress.json", "cards.json", "progress.json")\n',
+    )
+    edge_hash = edge_hash or _sha12(repo / GREEN_EDGE_PATH)
+    build_hash = build_hash or _sha12(repo / GREEN_BUILD_PATH)
+    _write(repo / "resources/agent-prompts/kb-agent-readme.md", GREEN_README.replace("%EDGE%", edge_hash))
+    _write(repo / "resources/agent-prompts/kb-agent.zh-CN.md", GREEN_PROMPT.replace("%EDGE%", edge_hash))
+    _write(
+        repo / "resources/agent-prompts/kb-spec.zh-CN.md",
+        GREEN_SPEC.replace("%EDGE%", edge_hash).replace("%BUILD%", build_hash),
+    )
+    _write(repo / FSRS_REL, GREEN_FSRS)
+    return repo
+
+
+GREEN_EDGE_PATH = EDGE_TYPES_REL
+GREEN_BUILD_PATH = KB_BUILD_REL
+GREEN_LINK_MD_PATH = LINK_MD_REL
+
+
+def _findings_for(repo: Path, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> list[Finding]:
+    ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
+    return run_checks(ctx, now=now, stale_days=stale_days)
+
+
+def selftest() -> int:
+    failures: list[str] = []
+
+    def expect(findings: list[Finding], check: str, severity: str, needle: str, label: str) -> None:
+        for finding in findings:
+            if finding.check == check and finding.severity == severity and needle in finding.message:
+                return
+        failures.append(f"{label}: 未报出预期 finding（{severity} {check} …{needle}）")
+        print(f"  FAIL {label}")
+        return
+    _ = expect
+
+    def assert_green(findings: list[Finding], label: str) -> None:
+        bad = [f for f in findings if f.severity == FAIL]
+        if bad:
+            failures.append(f"{label}: 绿 fixture 出现 FAIL：{[(f.check, f.message) for f in bad]}")
+            print(f"  FAIL {label}: 绿 fixture 有 FAIL")
+        else:
+            print(f"  PASS {label}")
+
+    def expect_red(findings: list[Finding], check: str, label: str, needle: str = "") -> None:
+        hit = [f for f in findings if f.severity == FAIL and f.check == check and needle in f.message]
+        if hit:
+            print(f"  PASS {label}")
+        else:
+            failures.append(f"{label}: {check} 未红（needle={needle!r}）")
+            print(f"  FAIL {label}: {check} 未红")
+
+    tmp = Path(tempfile.mkdtemp(prefix="prompt-drift-selftest-"))
+    try:
+        # ── 绿基线 ──
+        base = _fixture_repo(tmp / "base")
+        assert_green(_findings_for(base), "green:base")
+        _ = expect
+
+        # ── C1 红：删一个分发源文件 ──
+        repo = _fixture_repo(tmp / "red1")
+        os.remove(repo / "resources/agent-prompts/kb-spec.zh-CN.md")
+        expect_red(_findings_for(repo), "distribution_integrity", "red:C1 分发源缺失", "分发源文件不存在")
+
+        # ── C1 红：README 未声明新增分发项 ──
+        repo = _fixture_repo(tmp / "red1b")
+        kb = (repo / KB_AGENT_REL).read_text(encoding="utf-8").replace(
+            '("fsrs.py", "fsrs.py"),', '("fsrs.py", "fsrs.py"),\n    ("extra.md", "extra.md"),'
+        )
+        _write(repo / KB_AGENT_REL, kb)
+        _write(repo / "resources/agent-prompts/extra.md", "# extra\n")
+        _write(repo / PACKAGING_REL, (repo / PACKAGING_REL).read_text(encoding="utf-8") + '"agent-prompts/extra.md",')
+        expect_red(_findings_for(repo), "distribution_integrity", "red:C1 README 未声明", "未在 README 目录表中声明")
+
+        # ── C2 红：提示词教了代码里不存在的符号（width/enlarge/align）──
+        repo = _fixture_repo(tmp / "red2")
+        spec = repo / "resources/agent-prompts/kb-spec.zh-CN.md"
+        spec.write_text(spec.read_text(encoding="utf-8") + "\n图片属性 `width/enlarge/align`。\n", encoding="utf-8")
+        expect_red(_findings_for(repo), "symbol_reference", "red:C2 不存在符号", "enlarge")
+
+        # ── C2 红：fsrs 子命令编造 ──
+        repo = _fixture_repo(tmp / "red2b")
+        prompt = repo / "resources/agent-prompts/kb-agent.zh-CN.md"
+        prompt.write_text(
+            prompt.read_text(encoding="utf-8") + "\n运行 `python .memoria/agent/fsrs.py reset --date 2026-10-01`。\n",
+            encoding="utf-8",
+        )
+        expect_red(_findings_for(repo), "symbol_reference", "red:C2 fsrs 子命令", "不存在的子命令")
+
+        # ── C3 红：把会被剥离的语法当推荐写法 ──
+        repo = _fixture_repo(tmp / "red3")
+        spec = repo / "resources/agent-prompts/kb-spec.zh-CN.md"
+        spec.write_text(
+            spec.read_text(encoding="utf-8") + "\n| `[[kp-id#extend]]` | 声明 extend 边 |\n", encoding="utf-8"
+        )
+        expect_red(_findings_for(repo), "forbidden_syntax", "red:C3 教剥离语法", "会被构建剥离")
+
+        # ── C4 红：版本戳不一致 ──
+        repo = _fixture_repo(tmp / "red4")
+        spec = repo / "resources/agent-prompts/kb-spec.zh-CN.md"
+        spec.write_text(
+            spec.read_text(encoding="utf-8").replace("spec-version: 1.0.0", "spec-version: 9.9.9"), encoding="utf-8"
+        )
+        expect_red(_findings_for(repo), "version_stamp", "red:C4 版本戳不一致", "与 kb_agent.SPEC_VERSION")
+
+        # ── C4 红：依赖内容改了但指纹没重签 ──
+        repo = _fixture_repo(tmp / "red4b")
+        with (repo / GREEN_BUILD_PATH).open("a", encoding="utf-8") as handle:
+            handle.write("\n# changed\n")
+        expect_red(_findings_for(repo), "version_stamp", "red:C4 依赖指纹失配", "依赖已变更")
+
+        # ── C5 黄：reviewed-on 超过阈值 ──
+        repo = _fixture_repo(tmp / "red5")
+        findings = _findings_for(repo, now=date(2026, 10, 1) + timedelta(days=STALE_DAYS_DEFAULT + 10))
+        if any(f.severity == WARN and f.check == "staleness" for f in findings):
+            print("  PASS red:C5 陈旧告警")
+        else:
+            failures.append("red:C5 陈旧告警未报 WARN")
+            print("  FAIL red:C5 陈旧告警")
+
+        # ── 绿：限定词豁免（遗留写法说明不算教）──
+        assert_green(_findings_for(base), "green:legacy-note-allowed")
+    finally:
+        import shutil
+
+        shutil.rmtree(tmp, ignore_errors=True)
+
+    print()
+    if failures:
+        for item in failures:
+            print(f"FAIL: {item}")
+        print(f"selftest: {len(failures)} 项未达预期")
+        return 1
+    print("selftest: PASS（每条检查都有必红 fixture，绿基线不误红）")
+    return 0
+
+
+# ══════════════════════════════════════════════════════════════════════
+# CLI
+# ══════════════════════════════════════════════════════════════════════
+def _print_deps(repo: Path, paths: list[str]) -> int:
+    missing = 0
+    for rel in paths:
+        target = repo / rel
+        if not target.is_file():
+            print(f"MISSING {rel}", file=sys.stderr)
+            missing += 1
+            continue
+        print(f"{rel}@{_sha12(target)}")
+    return 1 if missing else 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+        except (OSError, AttributeError):
+            pass
+    parser = argparse.ArgumentParser(
+        description="Memoria 知识库 Agent 提示词漂移机检（task-151）",
+        epilog="退出码：0 无 FAIL / 1 有 FAIL / 2 用法错误",
+    )
+    parser.add_argument("--repo", default=None, help="仓库根目录（默认脚本上两级）")
+    parser.add_argument("--json", action="store_true", help="输出 JSON")
+    parser.add_argument("--selftest", action="store_true", help="自证红/绿（临时 fixture，不碰真实仓库）")
+    parser.add_argument("--now", default=None, help="覆盖“今天”（YYYY-MM-DD，供陈旧检查复现）")
+    parser.add_argument("--stale-days", type=int, default=STALE_DAYS_DEFAULT, help="陈旧阈值天数（默认 90）")
+    parser.add_argument("--strict", action="store_true", help="WARN 也算失败（默认只 FAIL 退出 1）")
+    parser.add_argument("--print-deps", nargs="+", default=None, help="打印依赖文件当前 sha12（维护头部指纹用）")
+    args = parser.parse_args(argv)
+
+    repo = Path(args.repo).resolve() if args.repo else ROOT
+    if not repo.is_dir():
+        print(f"用法错误：仓库目录不存在：{repo}", file=sys.stderr)
+        return 2
+    if args.print_deps:
+        return _print_deps(repo, args.print_deps)
+    if args.selftest:
+        return selftest()
+    if not (repo / KB_AGENT_REL).is_file():
+        print(f"用法错误：{KB_AGENT_REL} 不存在（--repo 指错了？）", file=sys.stderr)
+        return 2
+    now = date.today()
+    if args.now:
+        try:
+            now = date.fromisoformat(args.now)
+        except ValueError:
+            print(f"用法错误：--now 不是合法日期：{args.now}", file=sys.stderr)
+            return 2
+    ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
+    findings = run_checks(ctx, now=now, stale_days=args.stale_days)
+    _emit(findings, args.json)
+    summary = _summary(findings)
+    if summary[FAIL]:
+        return 1
+    if args.strict and summary[WARN]:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
