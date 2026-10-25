@@ -39,10 +39,23 @@ def append(kb_path: str | None, session_id: str | None, event_type: str, payload
     if not kb_path or not session_id:
         return {"status": "skipped", "reason": "no_session"}
     try:
+        from memoria.services.agent import trace_index
         from memoria.services.agent.session.store import SessionStore
 
+        data = dict(payload)
+        # S5（task-124）：若当前作用域有 OTel 上下文（MCP server 分发工具时置入），把
+        # `traceparent/tracestate/baggage` 一并写进审计事件 ⇒ 跨进程侧（trace/call）与进程内
+        # 写路径（capability/apply）可凭同一 trace_id 串起来（"两侧"不是口头承诺）。
+        otel = trace_index.current_otel()
+        if otel is not None:
+            fields = otel.as_dict()
+            if fields:
+                data.setdefault("otel", fields)
+                trace_id = trace_index.otel_trace_id(otel)
+                if trace_id:
+                    data.setdefault("trace_id", trace_id)
         store = SessionStore(str(kb_path), str(session_id))
-        record = store.append(event_type, dict(payload))
+        record = store.append(event_type, data)
         store.flush()  # 审计的即时性靠它（append 已尽力 flush，这里再上一道屏障）
     except (OSError, ValueError) as e:
         return {"status": "error", "message": str(e)}

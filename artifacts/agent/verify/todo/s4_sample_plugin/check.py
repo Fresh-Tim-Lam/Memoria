@@ -5,8 +5,8 @@
 | 组 | 断言 |
 |---|---|
 | **A 扩展生效** | 声明式插件（**不改 `registry.py` 本体**）⇒ 工具面多 3 把；`ext.kb_stats` 真能跑出统计 |
-| **B 内置零变化** | 前 39 把**名字 + 顺序 + `read_only` 逐项等于**无插件基线；总数 = 39 + 3 |
-| **C 默认关闭** | 没有库级注册表 ⇒ 扩展工具**不出现**（39 把，与无插件一致） |
+| **B 内置零变化** | 内置工具面（**数量/名字取自 `KB_TOOL_NAMES` 单一事实源**）名字 + 顺序 + `read_only` 逐项等于无插件基线；总数 = 内置数 + 3 |
+| **C 默认关闭** | 没有库级注册表 ⇒ 扩展工具**不出现**（= 内置工具面数量） |
 | **D 超时真强制** | `ext.slow`（timeout_s=1，脚本睡 30s）⇒ `EXT_TOOL_TIMEOUT`，且**实测耗时 < 5s**（子进程被终止） |
 | **E 输出上限真强制** | `ext.big`（输出 512KiB）⇒ text ≤ 256KiB+标记，含"已截断" |
 | **F 适配器是通用的** | `registry.py` 源码里**不含**任何具体工具名（`ext.` / `kb_stats`） |
@@ -36,8 +36,15 @@ sys.path.insert(0, os.path.join(REPO, "src"))
 os.environ.setdefault("MEMORIA_CONFIG_DIR", tempfile.mkdtemp(prefix="memoria-cfg-"))
 
 from memoria.services.agent import plugins  # noqa: E402
+from memoria.services.agent.tools import KB_TOOL_NAMES  # noqa: E402
 from memoria.services.agent.tools import registry as registry_mod  # noqa: E402
 from memoria.services.agent.tools.kb import build_kb_tools  # noqa: E402
+
+#: 内置工具面数量/名字的**单一事实源**（2026-10-25：原先把 39 写死，S5 追加 `trace_cost_summary`
+#: 后整组断言失真。基线只应从 `KB_TOOL_NAMES` 派生 —— 否则每加一把工具就要手改验收脚本，
+#: 而"手改基线"与"放宽断言"只差一步）。
+BUILTIN_NAMES = tuple(KB_TOOL_NAMES)
+BUILTIN_COUNT = len(BUILTIN_NAMES)
 
 RESULTS: list[dict] = []
 _TMP_RE = re.compile(r"(?:memoria|tmp)[-_a-zA-Z0-9]{6,}")
@@ -130,22 +137,22 @@ def main() -> int:
     base_names = [t.name for t in baseline]
     base_ro = {t.name: t.read_only for t in baseline}
     check(
-        "基线：无插件时工具面 = 39 把（与 KB_TOOL_NAMES 一致）",
-        len(baseline) == 39,
+        f"基线：无插件时工具面 = {BUILTIN_COUNT} 把（= KB_TOOL_NAMES 单一事实源）",
+        base_names == list(BUILTIN_NAMES),
         f"count={len(baseline)}",
         "基线变了 ⇒ 后续对比无意义",
     )
 
-    # ── C 默认关闭：有插件目录但无库级注册表 ⇒ 仍是 39 把 ──
+    # ── C 默认关闭：有插件目录但无库级注册表 ⇒ 仍是内置工具面 ──
     off = _tools_with(_mk_kb(with_registry=False), plugin_root)
     check(
-        "扩展层默认关闭：声明存在但库级未启用 ⇒ 扩展工具不出现（39 把）",
-        len(off) == 39,
-        f"count={len(off)}, names_tail={[t.name for t in off[36:]]}",
+        f"扩展层默认关闭：声明存在但库级未启用 ⇒ 扩展工具不出现（{BUILTIN_COUNT} 把）",
+        len(off) == BUILTIN_COUNT,
+        f"count={len(off)}, names_tail={[t.name for t in off[BUILTIN_COUNT - 3:]]}",
         "未启用就出现 ⇒ 违背启用位语义",
     )
 
-    # ── A/B 启用后：39 + 3，且前 39 逐项不变 ──
+    # ── A/B 启用后：内置面 + 3，且内置面逐项不变 ──
     kb_on = _mk_kb(with_registry=True)
     on = _tools_with(kb_on, plugin_root)
     names_on = [t.name for t in on]
@@ -153,14 +160,14 @@ def main() -> int:
     ro_on = {t.name: t.read_only for t in on}
     check(
         "A 第三方声明式加工具生效：+3 把（不改 registry.py 本体）",
-        len(on) == 39 + 3 and ext_names == ["ext.kb_stats", "ext.slow", "ext.big"],
+        len(on) == BUILTIN_COUNT + 3 and ext_names == ["ext.kb_stats", "ext.slow", "ext.big"],
         f"count={len(on)}, ext={ext_names}",
         "扩展工具没出现 ⇒ 扩展点没落地",
     )
     check(
-        "B 内置 39 把：名字 + 顺序 + read_only 逐项等于基线",
-        names_on[:39] == base_names and all(ro_on[n] == base_ro[n] for n in base_names),
-        f"前39一致={names_on[:39] == base_names}, read_only一致={all(ro_on[n] == base_ro[n] for n in base_names)}",
+        f"B 内置 {BUILTIN_COUNT} 把：名字 + 顺序 + read_only 逐项等于基线",
+        names_on[:BUILTIN_COUNT] == base_names and all(ro_on[n] == base_ro[n] for n in base_names),
+        f"前{BUILTIN_COUNT}一致={names_on[:BUILTIN_COUNT] == base_names}, read_only一致={all(ro_on[n] == base_ro[n] for n in base_names)}",
         "内置工具面被扩展层污染 ⇒ 行为回归",
     )
     check(

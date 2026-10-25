@@ -2190,3 +2190,78 @@ Enter 提交与焦点管理（点按钮提交）；④ 真机上只验了 **2 �
   `preview` 给行级 diff + 节身份（title/line_no/level/parent_path/end_line_no）⇒ 审批不盲批。
 - **未进 `RISKY_OPS`**（与 `edit_body` 同档，已有 byte-exact 单撤销）；后续可加"大删除告警"（R-S1A-2）。
 
+## 13. 调用级 trace：成本字段 / 容量 / 派生索引 / MCP `_meta`（0.5.0-S5 / task-124，2026-10-25）
+
+> 依据：position §2-Q5（trace **已存在**，本轮只补三件：调用级成本、跨进程 `_meta`、容量口径）、
+> task-124 关闭条件。验收证据见 `artifacts/agent/verify/todo/s5-trace-report.md`。
+
+### 13.1 事实源与事件（不新建并行事实源）
+
+- **唯一事实源**：`<kb>/.memoria/agent/sessions/<sid>.jsonl`。新增一种**只追加**事件
+  `trace/call`（`trace_index.EVENT_TRACE_CALL`），由 `AgentLoop` 在每次工具调用后 `_emit`
+  （`ask._chained_event` 是唯一写入方，负责补 `session_id`）。
+- **对既有回放/压缩/检索零影响**：`history._replay` 跳过未知 type；`compaction.event_chars()`
+  对未知 type 计 0；`session/query` 的语义抽取对未知 type 为空（与 `session/title` 同性质）。
+- **载荷**（`trace_index.build_entry` 是唯一构造点）：`{v, ts, session_id, tool_id, turn, args_digest,
+  result_chars, result_digest, result_preview, est_tokens, truncated, truncated_known,
+  approval{asked,decided}, error_code, write{files,lines_added,lines_removed,backup_txid,undo_available},
+  transport, duration_ms?, plan_txid?, otel{traceparent,tracestate,baggage}?, trace_id?}`。
+- **隐私硬边界**：正文**只存 digest + 长度 + 首 256 字符**（`RESULT_PREVIEW_CHARS`）；参数只存
+  `args_digest`。会话 JSONL 里的 `tool/result` 本来就为回放存全文（既有事实），trace 的边界是
+  **不复制第二份全文**、把可检索面压到 256 字符；夹具用"第 256 字符之后放秘密标记"做**可证伪断言**。
+- **`truncated` 三态口径**：`truncated_known=False`（工具未声明）≠ `truncated=False`（声明未截断）。
+  `ToolOutput.truncated: bool | None`（默认 `None`）；已接线的读工具：`outline/section/snippet/
+  read_document`（含纯文本路径）。聚合截断率**只对 known 计**，`unknown` 单独报数 —— 不把"没声明"伪装成"没截断"。
+- **审批口径**：`asked` = **闸门确实被询问**（参数非法/未知工具在闸门之前返回 ⇒ `asked=false`）；
+  `decided` = `ApprovalOutcome` 值。`approval{asked,decided}` 由 `ToolRegistry.invoke` 包装层补，
+  分发/错误码路径逐字不变。
+
+### 13.2 容量与淘汰（有界，且受保护条目不被淘汰）
+
+- 每会话 **≤5000** 条（`MAX_ENTRIES_PER_SESSION`）；每条序列化 **≤2KB**（`MAX_ENTRY_BYTES`，
+  被保护条目同样受此硬上限：先缩预览 → 去 tracestate/baggage/otel → `write.files` 只留前 10 并标注
+  `files_total/files_truncated`）。
+- **FIFO 淘汰"非写路径且无错误"条目**；`write` 非空或 `error_code` 非空 ⇒ **永不淘汰**
+  （写回执是审计线索、错误是排障证据）。确定性：从最旧的可淘汰条目开始丢 ⇒ 重建结果与增量一致。
+- 若受保护条目本身超上限 ⇒ 一条不丢，但如实标 `over_capacity=True`（不假装 ≤ 上限）。
+
+### 13.3 派生索引是 cache（可删除、可重建、按 session 分片）
+
+- 位置：`<kb>/.memoria/agent/trace/index/<sid>.jsonl`（首行 index header + 条目）。
+  **与任务文本的取舍**：任务写的是单文件 `trace/index.jsonl`，但同时要求"按 session 分片 + 每会话
+  5000 条 FIFO"；单文件无法按会话独立上限，且会退化成第二个全局日志 ⇒ 落地为**每会话一片**。
+- **只在查询/聚合/显式重建时生成**（`ensure_index` / `rebuild_index`）；**工具调用热路径不写索引**
+  ⇒ 不在会话目录之外制造写副作用（既有"只改会话文件"的快照类测试不受影响）。
+- header 记录源文件 `size/mtime`；不一致即重建。重建耗时 >5s/会话（`REBUILD_BUDGET_S`）⇒
+  `degraded=True` 并**降级为按需生成**（position §2-Q5 falsifier 的应对），不假装达标。
+
+### 13.4 聚合工具：`trace_cost_summary`（只读，不新增原始数据）
+
+- 工具面 **+1**（`tools/kb.py::_trace_cost_tools`，**追加在工具面最末**：会话查询四工具的"连续 +
+  相对次序"被测试按符号定位钉住，插中间会让正向切片失效）。
+- scope：`session_id?` / `tool?` / `transport?(inprocess|mcp)` / `trace_id?` / `time_from?/time_to?`。
+- 输出：`calls/sessions/result_chars/est_tokens`、`truncated{count,known,unknown,rate}`、
+  `errors{count,rate}`、`approval{asked,denied,denial_rate}`、`write{calls,files,txids}`、
+  `transports/trace_ids/by_tool`、`index{rebuilt,degraded,dropped_total}`。
+- **可复算**：聚合数字 = 索引条目逐项求和（夹具从原始条目重算，误差 0）。
+
+### 13.5 MCP 跨进程 `_meta`（OTel 透传，两侧可串）
+
+- 请求 `params._meta` 的 `traceparent/tracestate/baggage` → `trace_index.parse_otel_meta()`：
+  - 写入 MCP 侧 `trace/call`（`transport="mcp"`，`otel` + 32-hex `trace_id`）；
+  - 响应 `result._meta` **回执同一组 OTel 键**（透传双向可见）；
+  - 工具执行包在 `otel_scope()` 里 ⇒ 执行链内**任何进程内记录/审计**自动继承同一上下文：
+    MCP 侧 `trace/call` 与进程内写路径 `capability/apply`（`audit.append` 从 `current_otel()` 取）
+    **共享同一 `trace_id`**（夹具断言两侧 trace_id 集合一致）。
+- 隐私：MCP 侧同样只落 `result_preview`（首 256）+ digest；index 容量规则同进程内（按 `MCP_SESSION` 分片）。
+
+### 13.6 偏离与已知限制
+
+| 项 | 说明 |
+|---|---|
+| 索引文件名 | 每会话分片而非单文件（理由见 13.3） |
+| `turn` | 取 loop 的 `iteration`（1-based；跨进程 MCP 无 turn ⇒ `null`） |
+| `truncated` 覆盖面 | 只接线了读工具；其余工具的"未声明"如实计 unknown（后续要提升覆盖率就接 `ToolOutput.truncated`） |
+| 聚合口径 | 聚合读**有界索引**：被容量淘汰的条目不进聚合结果；`index.dropped_total` 如实带出 |
+| 写工具范围 | `write` 块只对 `propose_write`（进程内 + MCP）构造；其它写入口若出现需同样填 `ToolOutput.meta` |
+

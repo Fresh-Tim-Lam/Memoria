@@ -83,6 +83,10 @@ KB_TOOL_NAMES = (
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
     "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd", "review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list", "review_feedback_add", "review_summon", "review_revoke", "read_resource",
+    # S5（task-124）：调用级成本聚合（只读）。**追加在工具面最末** —— 会话查询家族的
+    # `SESSION_TOOLS` 连续性与相对次序被 tests 按符号定位钉住；把新工具插进中间会让
+    # "四把连续" 的正向切片整体失效（这是测试在保护契约，不该为了新工具改它们）。
+    "trace_cost_summary",
 )
 
 #: `search_sessions` 默认 / 最多列出多少个历史会话。
@@ -327,7 +331,7 @@ def _read_document(kb_path: str, path: str, *, offset: int = 1, limit: int | Non
     if footer:
         parts.append(footer)
 
-    return ToolOutput(text="\n".join(parts), anchors=tuple(anchors))
+    return ToolOutput(text="\n".join(parts), anchors=tuple(anchors), truncated=bool(footer))
 
 
 def _read_kp(kb_path: str, kp_id: str) -> ToolOutput:
@@ -720,7 +724,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_plugin_extension_tools(root),
+        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_trace_cost_tools(root), *_plugin_extension_tools(root),
     )
 
 
@@ -787,7 +791,7 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
         text = "\n".join([head, *rows]) + note
         if not rows:
             text += "\n（该文档没有 heading；请用 read_document 的 offset/limit 读正文）"
-        return ToolOutput(text=text)
+        return ToolOutput(text=text, truncated=bool(payload.get("truncated")))
 
     def _section_call(arguments: Mapping[str, Any]) -> ToolOutput:
         got, err = _open(arguments)
@@ -864,7 +868,7 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
                 f"{rel} **整篇**（目标节「{sec.get('title')}」占全文 {share:.0%} > 50%，"
                 f"已一次给全，无需再读）："
             )
-            return ToolOutput(text=head + "\n\n" + str(payload.get("text") or ""))
+            return ToolOutput(text=head + "\n\n" + str(payload.get("text") or ""), truncated=False)
         if payload.get("fallback_skipped") == "over_budget":
             head += "（本节占全文过半，但整篇超预算，故按节给）"
         if payload.get("parts", 1) > 1:
@@ -873,7 +877,7 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
         cur = payload.get("next_cursor")
         if cur:
             text += f"\n\n（本片未完；续读：section(file={rel!r}, heading={sec.get('title')!r}, part={cur.get('part')})）"
-        return ToolOutput(text=text)
+        return ToolOutput(text=text, truncated=bool(payload.get("truncated")) or bool(cur))
 
     def _snippet_call(arguments: Mapping[str, Any]) -> ToolOutput:
         got, err = _open(arguments)
@@ -898,7 +902,7 @@ def _granular_read_tools(kb_path: str, session_id: str | None = None) -> tuple[T
             parts.append(str(w.get("text") or ""))
         if payload.get("note"):
             parts.append(f"（{payload['note']}）")
-        return ToolOutput(text="\n".join(parts))
+        return ToolOutput(text="\n".join(parts), truncated=bool(payload.get("truncated")))
 
     return (
         Tool(
@@ -1824,6 +1828,70 @@ def _session_event_read(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
     return ToolOutput(text="\n".join(lines))
 
 
+def _trace_cost_summary(root: str, arguments: Mapping[str, Any]) -> ToolOutput:
+    """`trace_cost_summary`：聚合调用级成本（S5 / task-124）——**只读聚合**，不新增原始数据。
+
+    口径：从**派生索引**（`<kb>/.memoria/agent/trace/index/<sid>.jsonl`，可删除重建的 cache）
+    聚合 `trace/call` 条目；索引与会话 JSONL 的差异只有"容量淘汰"（`index.dropped_total` 如实带出）。
+    """
+    from memoria.services.agent import trace_index
+
+    scope: dict[str, Any] = {}
+    if arguments.get("session_id"):
+        scope["session_id"] = str(arguments["session_id"])
+    if arguments.get("tool"):
+        scope["tool"] = str(arguments["tool"])
+    if arguments.get("transport"):
+        scope["transport"] = str(arguments["transport"])
+    if arguments.get("trace_id"):
+        scope["trace_id"] = str(arguments["trace_id"])
+    if arguments.get("time_from") is not None:
+        scope["time_from"] = arguments["time_from"]
+    if arguments.get("time_to") is not None:
+        scope["time_to"] = arguments["time_to"]
+    try:
+        payload = trace_index.aggregate_cost(root, scope)
+    except ValueError as exc:
+        return _error(f"trace_cost_summary: {exc}")
+    except OSError as exc:
+        return _error(f"trace_cost_summary: 读索引失败：{exc}")
+
+    trunc = payload["truncated"]
+    err = payload["errors"]
+    approval = payload["approval"]
+    index = payload["index"]
+    rows = [
+        f"调用成本（scope={json.dumps(payload['scope'], ensure_ascii=False) if payload['scope'] else '全库'}）：",
+        f"- 调用数：{payload['calls']}（会话 {payload['sessions']} 个）；est_tokens 合计 "
+        f"{payload['est_tokens']}；结果字符 {payload['result_chars']}",
+        f"- 截断：{trunc['count']}/{trunc['known']} 已知条目"
+        f"（rate={_pct(trunc['rate'])}；未声明 {trunc['unknown']} 条不计入分母）",
+        f"- 失败：{err['count']}（rate={_pct(err['rate'])}）",
+        f"- 审批：询问 {approval['asked']} 次，拒绝 {approval['denied']} 次（拒绝率={_pct(approval['denial_rate'])}）",
+        f"- 写批次：{payload['write']['calls']} 批，影响 {payload['write']['files']} 个文件",
+    ]
+    if payload["write"]["txids"]:
+        rows.append(f"- 写 txid：{', '.join(payload['write']['txids'][:10])}")
+    if payload["trace_ids"]:
+        rows.append(f"- 跨进程 trace_id：{', '.join(payload['trace_ids'][:10])}")
+    if payload["by_tool"]:
+        ranked = sorted(payload["by_tool"].items(), key=lambda pair: (-pair[1]["est_tokens"], pair[0]))
+        shown = "；".join(
+            f"{name}: {info['calls']} 次 / {info['est_tokens']} tok / 失败 {info['errors']}"
+            for name, info in ranked[:8]
+        )
+        rows.append(f"- 按工具：{shown}")
+    rows.append(
+        f"- 索引：{index['rebuilt']} 片重建、{index['dropped_total']} 条被容量淘汰"
+        + ("；**重建超预算，已降级为按需生成**" if index["degraded"] else "")
+    )
+    return ToolOutput(text="\n".join(rows))
+
+
+def _pct(value: Any) -> str:
+    return "—" if value is None else f"{float(value) * 100:.1f}%"
+
+
 def _session_query_tools(kb_path: str) -> tuple[Tool, ...]:
     """会话查询家族的四把只读工具（`search_sessions` 之外的其余四个）；`build_kb_tools()` 末尾拼接。"""
     from memoria.services.agent.session.query import MAX_READ_WINDOW
@@ -1918,6 +1986,43 @@ def _session_query_tools(kb_path: str) -> tuple[Tool, ...]:
                 "additionalProperties": False,
             },
             handler=lambda arguments: _session_event_read(kb_path, arguments),
+        ),
+    )
+
+
+def _trace_cost_tools(kb_path: str) -> tuple[Tool, ...]:
+    """S5（task-124）：调用级成本聚合（**只读聚合**，不新增原始数据）。
+
+    为什么单独成族、且拼在工具面最末：会话查询四工具的**连续性与相对次序**被测试按符号定位钉住
+    （`tests/test_agent_session_query_trace.py`），把新工具插进中间会让"四把连续"的正向切片整体
+    失效 —— 那是测试在保护契约，不应该为新工具改它。故追加在最末（对 `KB_TOOL_NAMES` 亦是尾部追加）。
+    """
+    return (
+        Tool(
+            name="trace_cost_summary",
+            description=(
+                "聚合 agent 调用的**成本**：est_tokens、截断率、失败率、审批拒绝率、写批次；"
+                "可按会话 / 工具 / 传输形态 / 时间窗 / 跨进程 trace_id 过滤。"
+                "想知道「这轮为什么贵 / 哪里被截断 / 哪次写入失败」时用它（只读，不改库）。"
+            ),
+            parameters={
+                "type": "object",
+                "properties": {
+                    "session_id": {"type": "string", "minLength": 1, "description": "只看该会话（省略 = 全库）"},
+                    "tool": {"type": "string", "minLength": 1, "description": "只看该工具（如 section / propose_write）"},
+                    "transport": {
+                        "type": "string",
+                        "enum": ["inprocess", "mcp"],
+                        "description": "进程内（inprocess）或跨进程 MCP（mcp）",
+                    },
+                    "trace_id": {"type": "string", "minLength": 1, "description": "W3C traceparent 里的 32-hex trace_id"},
+                    "time_from": {"description": "时间下界（含）：epoch 毫秒整数或带时区的 ISO 8601"},
+                    "time_to": {"description": "时间上界（含）：格式同 time_from"},
+                },
+                "required": [],
+                "additionalProperties": False,
+            },
+            handler=lambda arguments: _trace_cost_summary(kb_path, arguments),
         ),
     )
 
@@ -3309,6 +3414,30 @@ def _propose_write(
             recover_after_write(kb_path, [str(row.get("file") or "") for row in files], service=service)
         except Exception:  # noqa: BLE001
             logger.warning("[agent-write] 写后一致性恢复失败（不影响已落盘的内容）", exc_info=True)
+    # S5（task-124）：结构化**写回执**只给 trace/审计（`ToolOutput.meta` 不进模型上下文）。
+    # `±lines` 口径：预览 diff 里 `before=None` = 新增行、`after=None` = 删除行（与 `preview_plan` 同源）。
+    write_files = [str(row.get("file") or "") for row in files]
+    lines_added = lines_removed = 0
+    for row in files:
+        for op_row in row.get("ops") or []:
+            for item in op_row.get("diff") or []:
+                if not isinstance(item, Mapping):
+                    continue
+                if item.get("before") is None and item.get("after") is not None:
+                    lines_added += 1
+                elif item.get("before") is not None and item.get("after") is None:
+                    lines_removed += 1
+    backup_info = result.get("backup") if isinstance(result, Mapping) else None
+    trace_meta = {
+        "plan_txid": str(result.get("txid") or plan["txid"]),
+        "write": {
+            "files": write_files,
+            "lines_added": lines_added,
+            "lines_removed": lines_removed,
+            "backup_txid": (backup_info or {}).get("txid") if isinstance(backup_info, Mapping) else None,
+            "undo_available": bool(isinstance(backup_info, Mapping) and backup_info.get("files")),
+        },
+    }
     return ToolOutput(
         text=(
             f"**已写入** {total} 项操作，影响 {len(files)} 个文件（txid {result.get('txid') or plan['txid']}）：\n"
@@ -3320,7 +3449,8 @@ def _propose_write(
             "再 attach_links 挂跳转」、「先 create_file 新建 → 再给新文件建点挂链」都放**同一个 ops[]**"
             "（`rename_file` / `delete_file` 例外：它们必须是最后一条）。"
             + remaining_issues_text(remaining)
-        )
+        ),
+        meta=trace_meta,
     )
 
 
@@ -3552,7 +3682,7 @@ def _read_plain_text(kb_path: str, rel: str, *, offset: int = 1, limit: int | No
         parts.append(f"…（文件大于 {PLAIN_READ_MAX_BYTES} 字节，只读了前 {PLAIN_READ_MAX_BYTES} 字节。）")
     if footer:
         parts.append(footer)
-    return ToolOutput(text="\n".join(parts))
+    return ToolOutput(text="\n".join(parts), truncated=bool(truncated or footer))
 
 
 def _read_text_or_document(

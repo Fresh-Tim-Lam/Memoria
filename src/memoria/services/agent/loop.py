@@ -385,6 +385,27 @@ class AgentLoop:
                         "anchors": [dict(anchor) for anchor in result.output.anchors],
                     },
                 )
+                # S5（task-124）：**调用级成本**事件（`trace/call`，只追加）。
+                # 口径：会话 JSONL 是唯一事实源；本条只带 digest + 长度 + 首 256 字符（隐私边界见
+                # `trace_index.build_entry`）。回放/压缩/语义抽取对未知 type 一律跳过 ⇒ 零请求体影响。
+                from memoria.services.agent import trace_index as _trace_index
+
+                self._emit(
+                    _trace_index.EVENT_TRACE_CALL,
+                    _trace_index.build_entry(
+                        tool_id=result.name,
+                        turn=iteration,
+                        arguments=call.arguments,
+                        content=result.content,
+                        error_code=result.output.code,
+                        truncated=result.output.truncated,
+                        duration_ms=result.duration_ms,
+                        approval=result.approval,
+                        meta=result.output.meta,
+                        transport="inprocess",
+                        otel=_trace_index.current_otel(),
+                    ),
+                )
                 # 取消检查点③：每次工具调用之后（工具本身很短、不设内部中断点）
                 if self._cancelled():
                     aborted = True

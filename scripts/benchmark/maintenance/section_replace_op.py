@@ -146,7 +146,7 @@ def run_case(tmp: str, kb: str, rel: str, name: str, **op) -> dict:
         }
 
     primitives = sorted({c["primitive"] for c in compiled.get("calls", [])})
-    res = apply_mod.apply_plan(kb, plan_for(rel, **op), session_id=session)
+    res = apply_mod.apply_plan(kb, plan_for(rel, **op), session_id=session, origin="human")
     if res.get("status") != "ok":
         return {"case": name, "ok": False, "stage": "apply", "res": res, "dry_ok": dry_ok,
                 "primitives": primitives}
@@ -212,7 +212,7 @@ def main() -> int:
     path = os.path.join(kb, rel)
     before = read(path)
     session = f"verify-{uuid.uuid4().hex[:8]}"
-    res = apply_mod.apply_plan(kb, plan_for(rel, heading="第一节", text="只剩一行。\n"), session_id=session)
+    res = apply_mod.apply_plan(kb, plan_for(rel, heading="第一节", text="只剩一行。\n"), session_id=session, origin="human")
     after = read(path)
     fence_swallowed = (
         res.get("status") == "ok"

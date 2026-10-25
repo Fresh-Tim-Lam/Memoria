@@ -24,6 +24,7 @@ from __future__ import annotations
 import json
 import logging
 import subprocess
+import time
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
@@ -81,6 +82,12 @@ class ToolOutput:
     #: 图片不塞进 `tool` 消息（Chat Completions 的 tool 结果只收字符串），而是由循环作为
     #: **一条延迟的 user 消息**带进上下文（对齐上游 `read_image` 的 `deferContext`）。
     images: tuple[Any, ...] = ()
+    #: S5（task-124）调用级 trace：工具是否**显式声明**输出被截断。
+    #: `None` = 未声明（聚合只对"已知"的算截断率，绝不把"没声明"伪装成"没截断"）。
+    truncated: bool | None = None
+    #: S5（task-124）：工具自报的结构化回执（如 `propose_write` 的 `plan_txid` / `write{…}`）。
+    #: **不进模型上下文**，只供 trace 成本条目与审计使用。
+    meta: Mapping[str, Any] | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -90,6 +97,10 @@ class ToolResult:
     call_id: str
     name: str
     output: ToolOutput
+    #: S5：本次调用的审批闸门信息 `{asked, decided}`（`asked` = 有策略询问；`decided` = outcome 值）。
+    approval: Mapping[str, Any] | None = None
+    #: S5：本次调用耗时（毫秒；工具体执行 + 审批决策）。
+    duration_ms: int | None = None
 
     @property
     def content(self) -> str:
@@ -233,7 +244,29 @@ class ToolRegistry:
 
         `approval` 省略时视为「无需审批」（测试与内部调用）；生产入口
         （`ask.py`）总会传入默认策略。
+
+        **S5（task-124）**：在既有语义之上补两个**只增**字段 —— `approval{asked,decided}`
+        与 `duration_ms` —— 供调用级 trace 记录成本。分发/返回路径与错误码**逐字不变**。
         """
+        started = time.perf_counter()
+        # `asked` 的语义 = **审批闸门真的被询问过**（参数非法/未知工具在闸门之前就返回 ⇒ 不冒充询问）。
+        state: dict[str, Any] = {"approval": {"asked": False, "decided": None}}
+        result = self._invoke(call, approval=approval, state=state)
+        return ToolResult(
+            result.call_id,
+            result.name,
+            result.output,
+            approval=dict(state["approval"]),
+            duration_ms=int((time.perf_counter() - started) * 1000),
+        )
+
+    def _invoke(
+        self,
+        call: ToolCall,
+        *,
+        approval: "ApprovalPolicy | None",
+        state: dict[str, Any],
+    ) -> ToolResult:
         tool = self.get(call.name)
         if tool is None:
             return ToolResult(
@@ -278,6 +311,9 @@ class ToolRegistry:
                     read_only=tool.read_only,
                 )
             )
+            # S5：审批结果进 trace（`asked` 表示闸门**确实**被询问；`decided` 是 outcome 词汇）。
+            state["approval"]["asked"] = True
+            state["approval"]["decided"] = decision.outcome.value
             if not decision.allowed:
                 return ToolResult(
                     call.id,

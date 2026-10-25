@@ -567,7 +567,12 @@ def _chained_event(
 
     def emit(event_type: str, data: Mapping[str, Any]) -> None:
         if session is not None:
-            session.append(event_type, data)
+            payload = data
+            # S5（task-124）：`trace/call` 要带 `session_id`（成本条目按会话分片/过滤的键）。
+            # 循环层不知道会话身份（它只发事件），由**唯一写入方**这里补 —— 不新增第二个事实源。
+            if event_type == "trace/call" and isinstance(data, Mapping) and "session_id" not in data:
+                payload = {**data, "session_id": session.session_id}
+            session.append(event_type, payload)
         if panel is not None:
             try:
                 panel(event_type, data)

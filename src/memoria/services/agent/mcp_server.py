@@ -295,8 +295,17 @@ class McpServer:
             )
         return None
 
-    def _meta(self) -> dict:
-        return {META_SERVER_INFO: {"name": SERVER_NAME, "version": SERVER_VERSION}}
+    def _meta(self, otel: Any = None) -> dict:
+        """响应 `_meta`：serverInfo +（若请求带）OTel 三键的**透传回执**（S5 / task-124）。
+
+        OTel 约定：客户端在 `params._meta` 里带 `traceparent/tracestate/baggage`；server 端记录进
+        调用级 trace，并在响应 `_meta` 原样回执同一组值 ⇒ 两侧凭同一 `trace_id` 可串联
+        （跨进程侧 + 进程内侧，见 `trace_index.otel_trace_id`）。
+        """
+        out = {META_SERVER_INFO: {"name": SERVER_NAME, "version": SERVER_VERSION}}
+        if otel is not None:
+            out.update(otel.as_dict())
+        return out
 
     def _ok(self, req_id: Any, result: Mapping) -> dict:
         return {"jsonrpc": "2.0", "id": req_id, "result": dict(result)}
@@ -331,8 +340,14 @@ class McpServer:
         }
 
     def _tools_call(self, req_id: Any, params: Mapping) -> dict:
+        from memoria.services.agent import trace_index
+
         name = str(params.get("name") or "").strip()
         arguments = params.get("arguments") if isinstance(params.get("arguments"), Mapping) else {}
+        # S5（task-124）：MCP 请求 `_meta` 的 OTel 三键 → 记录 + 作用域置入（其内部嵌套的进程内
+        # 记录/审计自动继承同一 traceparent ⇒ 跨边界可串）。
+        meta = params.get("_meta") if isinstance(params.get("_meta"), Mapping) else {}
+        otel = trace_index.parse_otel_meta(meta)
         handlers = {
             "outline": self._tool_outline,
             "section": self._tool_section,
@@ -340,29 +355,55 @@ class McpServer:
             "propose_write": self._tool_propose_write,
         }
         handler = handlers.get(name)
+        started = time.perf_counter()
+        text = ""
+        structured: dict | None = None
+        is_error = False
+        error_code: str | None = None
         if handler is None:
-            return self._error(req_id, E_INVALID_PARAMS, f"未知工具：{name!r}（可用：{', '.join(handlers)}）")
-        try:
-            text, structured, is_error = handler(arguments)
-        except _ToolFailure as exc:
+            error_code = "INVALID_PARAMS"
+            text = f"未知工具：{name!r}（可用：{', '.join(handlers)}）"
+            is_error = True
+        else:
+            with trace_index.otel_scope(otel):
+                try:
+                    text, structured, is_error = handler(arguments)
+                except _ToolFailure as exc:
+                    text = f"{exc.code}: {exc.message}"
+                    error_code = exc.code
+                    is_error = True
+                    structured = None
+        # 调用级成本事件（**fail-open**：观测失败绝不影响工具调用本身；索引不在此写 = 只落事实源）。
+        trace_index.record_mcp_call(
+            self.kb_path,
+            MCP_SESSION,
+            tool_id=name,
+            arguments=arguments,
+            content=text,
+            meta=_trace_meta_from_structured(structured),
+            error_code=error_code,
+            duration_ms=int((time.perf_counter() - started) * 1000),
+            otel=otel,
+        )
+        if handler is None:
+            return self._error(req_id, E_INVALID_PARAMS, text, {"code": error_code})
+        if error_code is not None or is_error:
             return self._ok(
                 req_id,
                 {
-                    "content": [{"type": "text", "text": f"{exc.code}: {exc.message}"}],
+                    "content": [{"type": "text", "text": text}],
                     "resultType": "complete",
                     "isError": True,
-                    "_meta": self._meta(),
+                    "_meta": self._meta(otel),
                 },
             )
         result: dict[str, Any] = {
             "content": [{"type": "text", "text": text}],
             "resultType": "complete",
-            "_meta": self._meta(),
+            "_meta": self._meta(otel),
         }
         if structured is not None:
             result["structuredContent"] = structured
-        if is_error:
-            result["isError"] = True
         return self._ok(req_id, result)
 
     # ── 工具实现 ──
@@ -580,6 +621,39 @@ class McpServer:
             ]
         )
         return text, structured, False
+
+
+def _trace_meta_from_structured(structured: Mapping[str, Any] | None) -> dict[str, Any] | None:
+    """MCP 工具结构化回执 → trace 成本条目的 `write` 块（只给 trace/审计，不进响应）。
+
+    `±lines` 与进程内 `propose_write` 同口径：预览 diff 里 `before=None` = 新增行、
+    `after=None` = 删除行。`backup_txid` 取 apply 的 txid（`apply_plan` 的备份批次与之同号）。
+    """
+    if not isinstance(structured, Mapping) or structured.get("kind") != "write":
+        return None
+    files = [str(item) for item in (structured.get("files") or []) if str(item)]
+    added = removed = 0
+    for row in structured.get("preview") or []:
+        if not isinstance(row, Mapping):
+            continue
+        for item in row.get("diff") or []:
+            if not isinstance(item, Mapping):
+                continue
+            if item.get("before") is None and item.get("after") is not None:
+                added += 1
+            elif item.get("before") is not None and item.get("after") is None:
+                removed += 1
+    txid = str(structured.get("txid") or "")
+    return {
+        "plan_txid": txid,
+        "write": {
+            "files": files,
+            "lines_added": added,
+            "lines_removed": removed,
+            "backup_txid": txid or None,
+            "undo_available": bool(structured.get("undo_available")),
+        },
+    }
 
 
 class _ToolFailure(Exception):
