@@ -234,7 +234,7 @@
 
 | # | 来源（`agent-capabilities.md`） | 要迁入的内容（一句话） | 状态 |
 |---|---|---|---|
-| 1 | §2.1.1 | 三层术语（**原语 / 领域动词 tool / 技能 skill**）与"领域动词只产出 plan、不落盘"铁律 | 未迁 |
+| 1 | §2.1.1 | 四层术语（**原语 / 领域动词 tool / 扩展工具 ext tool / 技能 skill**）与"领域动词只产出 plan、不落盘"铁律（**2026-10-25 订正**：S4 新增扩展工具为第三层，故由「三层」改「四层」；扩展工具不落 plan，且在 W1 写者链之外，见 §10） | 未迁 |
 | 2 | §2.2 | **注册与装载**：两个位置（内置声明 `resources/agent-capabilities/<id>.json` / 库级 `<kb>/.memoria/agent/capabilities.json`）、发现顺序、冲突与重名、**不变量「新增插件不改核心」**、UIAPI 只加一个通用网关 | 未迁 |
 | 3 | §2.3 | **写管线**六步（propose → dry-run diff → 逐条确认 → apply → 审计 → 撤销）+ 四条不变口径 | 未迁 |
 | 4 | §2.3.1 | **唯一写者**：四原语（`save_document` / `save_sidecar_for_md` / `touch_manifest_entry` / `sync_pending_for_file`）+ realpath 前缀校验 | 未迁 |

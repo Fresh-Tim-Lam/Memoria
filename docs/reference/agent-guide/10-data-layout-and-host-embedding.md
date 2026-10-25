@@ -535,3 +535,13 @@ python scripts\benchmark\usage\report_usage.py --kb <知识库> [--label <标签
 - **审计**：每次运行一条会话事件 `scratch/run`（`audit.EVENT_SCRATCH_RUN`，载荷 `{script, interpreter, source, exit_code, timed_out, duration_ms, bytes, digest}` —— **不含 stdout 全文、不含密钥**）。
 - **设置三键**（`config/agent.json`，暂无界面）：`script_interpreter`（空 = 回落）/ `script_use_bundled`（默认 `true`）/ `script_timeout_s`（默认 60）。**未做**：打包内置解释器、设置界面、清理策略与面板内编辑脚本。
 
+## 文档资源附件（拖 PDF/Word/TXT/MD 进对话栏；`task-134`，0.4.7；**2026-10-25 补登记**）
+
+> **为什么补**：功能自 0.4.7 起**真机可用**（先前 10-19 起"出生即死"已修），但本文此前**零登记** `read_resource` 与附件落点 —— 集成方看文档会以为它不存在。
+
+- **用户手势**：把 **PDF / Word / TXT / MD** 拖进对话栏 ⇒ 应用把文件**复制**进 `<kb>/.memoria/agent/attachments/`（**应用管理目录**，不进 `pending.json`、不走 plan/审批管线），并在输入框旁显示一个可移除的 chip；发送时后端在用户消息尾部附一句「（用户拖入了以下资料文件，请用 `read_resource` 工具按需读取其内容）」。
+- **模型面只有一把**：`read_resource`（工具面成员，`read_only=True` ⇒ 免审批）。后端落点 `presentation/api/ui.py::agent_attach_resource`（RPC，接收拖入）+ `services/agent/resources.py::extract_text`（抽取文本）；抽取是**按需**的 —— 模型不读就不解析，避免大 PDF 拖慢首字。
+- **只支持图片以外的这四类**：其余扩展名一律可见报错（**不再**静默回退成"只支持图片"红框）。
+- **历史（务必看，防再犯）**：该功能自 10-19 起**从未工作** —— 后端三条（`agent_attach_resource` / `read_resource` / `extract_text`）早已交付，但前端接线块被追加在 IIFE **门面 `return {` 之后** ⇒ `const`/赋值是语句、**永不执行**（只有 `function` 声明会 hoist，恰好把问题掩盖成"看起来在"）；且 6 条 helper 引用死区 `const` ⇒ **TDZ 潜伏崩溃**。0.4.7 的修法是**纯搬运**（整块前移到 `return` 之前）+ 订正落点约定注释。**约定腐化史**：`2f9a88f9` 起 11 个 commit/19 个块都遵守正确写法 → `1fe97fa7`(10-19) 首次写成「`})();` 之前」变体 → 该块出生即死 → 后续 3 个 commit 原样保留。⇒ **新增 IIFE 内模块时，接线块必须写在门面 `return` 之前**。
+
+

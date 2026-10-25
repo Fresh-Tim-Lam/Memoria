@@ -403,6 +403,47 @@ src/memoria/services/agent/
 
 **文档**：`reference/agent-guide/10` 会话格式表新增 `compaction` 事件 + 回放口径；`conventions/docs-management.md §4.2` 登记。
 
+#### 6.8.1 `agent_session_load` 的 `context_usage` 字段（契约登记，0.4.7 / task-91；**2026-10-25 补登记**）
+
+> **为什么补这一条**：0.4.7 的 task-91 让上下文压缩首次可观测，代码（`ui.py::agent_session_load` 返回值 +
+> `history.py::session_context_usage()`）与前端（容忍缺席/`null`）都已就位，`conventions/version.md` 的
+> 0.4.7 行也写了口径 —— **但本文件（会话 RPC 的契约归属地）此前零命中**。后果：下一次改这个字段的人
+> 不知道它是契约的一部分，可能随手破坏。本节即把它正式纳入契约。
+
+`agent_session_load` 的返回对象**可能**多带一个 `context_usage` 键（会话上下文占用）：
+
+```
+context_usage: {            // 可缺席、可为 null（旧会话/未知）
+  chars: number,            // 当前历史字符数
+  max_chars: number,        // 字符预算上限（MAX_HISTORY_CHARS = 32000）
+  threshold_chars: number,  // 压缩触发阈值（= max_chars × 0.8 = 25600）
+  compacted_times: number   // 已压缩次数（compaction 事件条数）
+}
+```
+
+**三条语义（契约的核心，改动前必须读）**：
+
+1. **分子分母同域 —— 都是「字符」，不做 token 换算。** `chars / max_chars` 直接就是占用百分比。
+   token 量是**另一套数**（`loop/end.usage` 的 prompt/completion tokens，见 §6.15 与 §13 的成本字段），
+   **两者不合并、不互相折算**。若要显示 token 占用，应另立字段，不许拿本字段换算或反推。
+2. **`chars` 的口径 = `history_chars(build_history(...))` —— 与压缩判定是同一个函数对象。**
+   必须走 `build_history`（它**先应用**已落盘的 `compaction` / `compaction.prune` 覆盖），再交给
+   `compaction.history_chars()`；`ask._compact_if_needed()` 判阈值用的正是**同一个函数**。
+   **禁止**改成"原始事件累加"：那样得到的是**压缩前**的虚高值，UI 会在已经压缩过之后仍显示 >80%
+   （这正是本字段要消除的漂移源）。`compacted_times` = `compaction` 事件条数。
+3. **缺席含义 = 旧会话 / 未知，前端必须容忍。** 该键可能不存在或为 `null`；消费方（面板状态区）
+   遇缺席**不报错、不显示占用行**，不得当成 0% 或 100%。这是**只增字段**：默认路径（旧会话回放）
+   逐字节不变。
+
+**归属说明**：`context_usage` 属**会话 RPC**契约（本节 §6），**不属于** `agent-service-contract.md`
+（该文范围 = 写服务契约：`apply_plan` + `WRITE_CAPABILITY` + 错误码 + `section_index`，不含会话 RPC）。
+**只读**：`session_context_usage()` 不写盘、不改事件（会读两遍会话文件 —— 这是"口径一致"的代价，
+绝不为省一次读盘而另写一份字符累加）。
+
+**登记锚点**：代码 `presentation/api/ui.py::agent_session_load` docstring + `services/agent/session/history.py::session_context_usage()`；
+用户可见口径 `conventions/version.md` 0.4.7 行 ①。
+
+
 ### 6.9 M2 session-query 实施记录（2026-09-19：吃 `session-query/session-query` + `session-query/tool-session-query`，已落地）
 
 **范围界定**：上游 `session-query/` 有 4 个子包，本地只吃两个（且第一个只吃其中两个文件）：
