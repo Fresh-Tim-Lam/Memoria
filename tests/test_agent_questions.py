@@ -238,11 +238,12 @@ def test_tool_is_registered_last_and_only_once(kb: Path) -> None:
     """
     built = tuple(tool.name for tool in build_kb_tools(str(kb)))
     assert built == KB_TOOL_NAMES
-    assert KB_TOOL_NAMES[-16] == "ask_user_question"
-    assert KB_TOOL_NAMES[-15:-13] == ("web_search", "fetch_url")
-    assert KB_TOOL_NAMES[-13:-7] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
-    assert KB_TOOL_NAMES[-7:-1] == ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list")
-    assert KB_TOOL_NAMES[-1] == "review_feedback_add"
+    # 2026-10-25：原为固定负下标，工具面每次追加（`review_summon`/`review_revoke`/`read_resource`）就失效。
+    # 改为「按符号定位 + 验证相对次序」——原意不变（在联网两把之前、只出现一次）。
+    q = KB_TOOL_NAMES.index("ask_user_question")
+    assert KB_TOOL_NAMES[q + 1:q + 3] == ("web_search", "fetch_url")
+    assert KB_TOOL_NAMES[q + 3:q + 9] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd")
+    assert KB_TOOL_NAMES[q + 9:q + 15] == ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_attempts_list")
     assert KB_TOOL_NAMES.count("ask_user_question") == 1
 
 

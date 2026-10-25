@@ -91,7 +91,13 @@ def test_section_titles_exist_in_both_locales_and_plugins_tab_key_is_retired() -
 def test_section_styles_reuse_tokens() -> None:
     """子版块样式落在 `app.css` 末尾追加块、用既有令牌、不硬编码颜色。"""
     css = _CSS.read_text(encoding="utf-8")
-    block = css.rsplit("/* ===== 2026-09-23 追加：设置页签条", 1)[1]
+    # 2026-10-25：原 `rsplit(marker, 1)[1]` 取「marker 之后全部」，后续追加的 17 个 CSS 块
+    # （含复习卡 `color: #fff`）被算进本块 ⇒ 误报硬编码颜色。改为只取该块自身。
+    _marker = "/* ===== 2026-09-23 追加：设置页签条"
+    _i = css.rfind(_marker)
+    assert _i >= 0, f"CSS 里找不到设置页签条块注释：{_marker}"
+    _nxt = css.find("/* =====", _i + len(_marker))
+    block = css[_i:_nxt if _nxt >= 0 else len(css)]
     for selector in (".-settings-section", ".-settings-section-head", ".-settings-section-body"):
         assert selector in block, f"样式缺失：{selector}"
     assert "var(--border-sep, var(--border))" in block and "var(--text-bright)" in block

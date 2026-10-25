@@ -463,7 +463,13 @@ def test_reference_tools_registered_declared_and_read_only(kb: Path) -> None:
     assert tuple(tool.name for tool in built) == KB_TOOL_NAMES
     # 末尾秩序：引用两把 → `propose_write` → `ask_user_question` → 联网两把（2026-09-23，§6.28）
     # → 脚本工作区四把（2026-09-24，§3.4）→ 库内执行两把（`pwsh`/`cmd`，2026-10-06，附录 Z）
-    assert KB_TOOL_NAMES[-19:] == (
+    # 2026-10-25：原为固定负下标 `[-19:]`，工具面每次追加就整体失效。
+    # 改为「从引用两把到 `review_feedback_add` 为止，验证这一段相对次序」——原意不变。
+    # 其后仍有 `review_summon` / `review_revoke`（复习卡召唤与撤销）、`read_resource`（S3 MCP 资源读），
+    # 那些由各自测试守护；本测试只钉「引用两把起、各家族次序」。
+    start = KB_TOOL_NAMES.index("resolve_reference")
+    stop = KB_TOOL_NAMES.index("review_feedback_add") + 1
+    assert KB_TOOL_NAMES[start:stop] == (
         "resolve_reference", "audit_references", "propose_write", "ask_user_question",
         "web_search", "fetch_url",
         "scratch_list", "scratch_read", "scratch_write", "scratch_delete", "pwsh", "cmd",

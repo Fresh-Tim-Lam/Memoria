@@ -681,8 +681,11 @@ def test_thinking_and_process_text_use_the_same_markdown_pipeline() -> None:
     都走助手正文那条管线（归一化 + marked + 净化 + 公式排版），否则思考里的公式没人看得懂。
     """
     src = panel_source()
-    assert "if (String(text || \"\").trim()) { renderAssistantBody(body, text);" in src, "思考行渲染（空文本仍走快路径）"
-    assert "renderAssistantBody(step, text); // 与助手正文同一条管线" in src, "过程行的更早正文同样渲染"
+    # 2026-10-25 判定（A 类，P4e 升级）：两处现在都带第三实参 `{ final: true }`
+    # （最终文本走 render-core —— 公式/代码/列表都渲染，与助手正文同一条管线）。
+    # 原断言钉的是两实参旧形态 ⇒ 更新。**原意不变**：思考行/过程行都与助手正文走同一渲染管线。
+    assert 'if (String(text || "").trim()) { renderAssistantBody(body, text, { final: true });' in src, "思考行渲染（空文本仍走快路径）"
+    assert "renderAssistantBody(step, text, { final: true }); // 与助手正文同一条管线" in src, "过程行的更早正文同样渲染"
     css = (PANEL.parents[1] / "css" / "app.css").read_text(encoding="utf-8")
     assert ".-agent-think-body.markdown-body," in css and ".-agent-step.markdown-body {" in css, "撤掉 pre-wrap"
     assert ".-agent-think-body.markdown-body > :first-child," in css, "首尾间距收口"
@@ -991,7 +994,8 @@ def test_thinking_body_is_always_rendered_never_raw_text() -> None:
     assert 'if (row.state === "live") {' not in src, "流式的纯文本分支已撤"
     assert 'const shown = text || T("agent.thinkLive");' in src, "空正文时才用占位文案"
     assert "renderAssistantBody(body, shown);" in src, "流式增量也走同一条 markdown 管线"
-    assert 'renderAssistantBody(body, text); body.__thinkText = String(text);' in src, "首屏（回放定稿）同样渲染"
+    # 2026-10-25 判定（A 类，P4e 升级）：首屏/回放定稿同样带 `{ final: true }`（走 render-core）。
+    assert 'renderAssistantBody(body, text, { final: true }); body.__thinkText = String(text);' in src, "首屏（回放定稿）同样渲染"
     assert "body.__thinkText !== shown" in src, "同文去重，避免每个增量白重渲染"
 
 

@@ -545,7 +545,13 @@ def test_index_loads_the_policy_module_after_app_js() -> None:
 
 def test_styles_reuse_tokens_and_never_hardcode_colors() -> None:
     css = _CSS.read_text(encoding="utf-8")
-    block = css.rsplit("/* ===== 2026-09-24 追加：设置 →「显示」→「性能」里**预览池智能替换**", 1)[1]
+    # 2026-10-25：原 `rsplit(marker, 1)[1]` 取「marker 之后全部」，后续追加的 CSS 块（含复习卡
+    # `color: #fff`）被算进本块 ⇒ 误报硬编码颜色。改为只取该块自身。
+    _marker = "/* ===== 2026-09-24 追加：设置 →「显示」→「性能」里**预览池智能替换**"
+    _i = css.rfind(_marker)
+    assert _i >= 0, f"CSS 里找不到预览池块注释：{_marker}"
+    _nxt = css.find("/* =====", _i + len(_marker))
+    block = css[_i:_nxt if _nxt >= 0 else len(css)]
     for selector in ('.-settings-field input[type="number"] {', ".-perf-title {", ".-perf-formula-line {"):
         assert selector in block, f"样式缺失：{selector}"
     assert "var(--font-mono)" in block and "white-space: pre-wrap" in block, "公式块要等宽 + 可换行"

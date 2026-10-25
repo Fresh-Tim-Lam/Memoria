@@ -486,7 +486,10 @@ def test_tools_are_registered_read_only(tmp_path: Path, name: str) -> None:
     (root / ".memoria").mkdir(parents=True)
     registry = _registry(root)
 
-    assert KB_TOOL_NAMES[-15:-13] == ("web_search", "fetch_url"), "其后再有脚本工作区四把、库内执行两把（`pwsh`/`cmd`，附录 Z）与 review 领域（R2 五把 + R4 P1 只读 `review_attempts_list` + R4 P2 `review_feedback_add`）"
+    # 2026-10-25：原为固定负下标 `[-15:-13]`，工具面每次追加（`read_resource` 等）就整体失效。
+    # 改为按符号定位后验证「两把连续且次序固定」——原意不变，不再因追加而红。
+    pos = KB_TOOL_NAMES.index("web_search")
+    assert KB_TOOL_NAMES[pos:pos + 2] == ("web_search", "fetch_url"), "联网两把必须连续且次序固定（其后是脚本工作区 / 库内执行 / review 领域）"
     tool = registry.get(name)
     assert tool is not None and tool.read_only, "只读 ⇒ 按既有策略免审批"
     assert tool.parameters["additionalProperties"] is False

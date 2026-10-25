@@ -184,7 +184,11 @@ def test_index_has_review_button_and_loads_module_last() -> None:
     html = (_APP / "index.html").read_text(encoding="utf-8")
     assert 'id="btn-review"' in html and 'data-i18n="review.button"' in html
     scripts = re.findall(r'<script src="([^"]+)"></script>', html.split("</body>")[0])
-    assert scripts and scripts[-1] == "/app/js/review-modal.js", f"最后一个 script 是 {scripts[-1] if scripts else None}"
+    # 2026-10-25 判定（A 类）：原断言末位是 `review-modal.js`，其后已追加
+    # `review-summon.js` / `review-manage.js`（召唤/管理）⇒ 改为「复习模块家族在末尾、
+    # 且 review-modal 在最前」，保住「复习模块最后加载」的原意。
+    assert scripts and scripts[-1].startswith("/app/js/review-"), f"最后一个 script 应为复习模块家族，实际 {scripts[-1] if scripts else None}"
+    assert scripts.index("/app/js/review-modal.js") > scripts.index("/app/js/nav-predictor.js")
 
 
 # ── ⑤ legacyMath 开关：复习路径卡面不做"旧式公式"归一化 ─────────────────────────
@@ -602,9 +606,13 @@ def test_review_attempts_list_read_only_registered_and_others_still_approved(kb:
     assert tool is not None and tool.read_only is True, "只读 ⇒ 免审批（与 scratch_read 同类）"
     assert tool.parameters["additionalProperties"] is False
     assert not hasattr(UIAPI, "review_attempts_list"), "它是 agent 工具，不是 UI RPC"
-    for name in ("review_cards_upsert", "review_card_disable", "review_due_list", "review_grade", "review_error_add", "review_feedback_add"):
+    # 2026-10-25 判定：`review_due_list` 是**只读**（只跑 `fsrs.py due` 读今日到期、不落盘），
+    # 原名单把它误列为写工具 ⇒ 从名单移除（与 `test_agent_tools_read.py` 同一判定）。
+    for name in ("review_cards_upsert", "review_card_disable", "review_grade", "review_error_add", "review_feedback_add"):
         t = reg.get(name)
         assert t is not None and t.read_only is False, name
+    due = reg.get("review_due_list")
+    assert due is not None and due.read_only is True, "review_due_list 只读（免审批）"
 
 
 def test_review_attempts_list_filters_and_labels_truncation(kb: Path) -> None:
@@ -695,9 +703,11 @@ def test_review_feedback_add_writes_kind_feedback_with_backup_and_audit(kb: Path
     # 审计（review/write）
     audit = (kb / ".memoria" / "agent" / "sessions" / "agent-auto.jsonl").read_text(encoding="utf-8")
     assert "review/write" in audit
-    # 不影响 cards.json / progress.json（学习进度仍只由评分写）
+    # 不影响 cards.json（卡内容本身不动）；**但**带 verdict/1-4 score 会按设计折算落调度 ⇒
+    # progress.json 被创建是**正确行为**（2026-10-25 判定：原断言「不建 progress.json」钉的是
+    # score→调度 之前的旧行为；本用例传了 verdict="partial" ⇒ rating=2 ⇒ 必写 progress.json）。
     assert hashlib.sha256((review / "cards.json").read_bytes()).hexdigest() == cards_before
-    assert not (review / "progress.json").exists()
+    assert (review / "progress.json").exists(), "带 verdict ⇒ 按设计折算落调度（写 progress.json，与反馈同批备份/撤销）"
 
 
 def test_review_feedback_add_rejects_bad_args_and_missing_card(kb: Path) -> None:
@@ -763,10 +773,16 @@ def test_review_due_start_attaches_latest_feedback_only_when_present(kb: Path) -
 
     _write_kb(kb, _answer_cards())
     _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "first"})
-    _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "latest", "score": 3})
+    # 2026-10-25 判定（A 类，代码行为已升级）：原第二次调用带 `score: 3`，而 R4 P2 起
+    # `_review_feedback_add` 的 docstring 明确「带 verdict/1-4 score 时**折算 1-4 落调度
+    # （写 progress.json）**」⇒ s1 被排到未来、不再出现在当天的 due 里（实测：due 由
+    # [g1,m1,s1] 变 [g1,m1]、progress.json 被创建）。本测试要验证的是「**最近一条**反馈覆盖前一条」，
+    # 与调度无关 ⇒ 去掉 score，保住原意（仍有 `test_review_feedback_add_writes_kind_feedback_*`
+    # 与 review_grade 系用例覆盖 score→调度）。
+    _review_feedback_add(str(kb), None, {"card_id": "s1", "feedback": "latest"})
 
     by = {c["card_id"]: c for c in _review_ui_due(_Stub(kb), "2026-01-02", None)["cards"]}
-    assert by["s1"]["feedback"]["feedback"] == "latest" and by["s1"]["feedback"]["score"] == 3
+    assert by["s1"]["feedback"]["feedback"] == "latest", "最近一条反馈覆盖前一条"
     assert "feedback" not in by["m1"] and "feedback" not in by["g1"]
     assert "answer" not in by["m1"] and "explain" not in by["m1"]  # 答案隔离照旧
 

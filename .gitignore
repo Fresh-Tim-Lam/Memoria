@@ -113,3 +113,6 @@ scripts/_tmp_parse.js
 # benchmark 原始数据不入库（契约与工具入库，raw dump 属一次性产物）
 scripts/benchmark/surface/results/raw-*
 scripts/benchmark/surface/results/*-run[0-9]*.json
+
+# 测试 KB 的运行期缓存/产物（可再生，非事实源；见 AGENTS.md §1）
+tests/probe-kb/.memoria/

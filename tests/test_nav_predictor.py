@@ -266,7 +266,12 @@ def test_candidate_is_picked_by_gain_not_by_tab_order() -> None:
 
 def test_policy_is_forwarded_and_hit_rate_is_measured() -> None:
     app = _app()
-    assert "window.MemoriaNavPredictor.setPolicy(next || {});" in app
+    # 2026-10-25 判定（S8 修复后的正确行为）：`setPreviewCachePolicy` 里的 `mod.sanitize(policy)`
+    # 只遍历 `Object.keys(DEFAULTS)`、**没有 passthrough** ⇒ `navPredictor` / `navHalfLifeDays`
+    # 会被清洗掉。所以转发给预测器**必须是原始 `policy`**，由 `nav-model.setPolicy` 自行清洗；
+    # 原断言 `setPolicy(next || {})` 钉的是**修复前的错误行为**（会把 nav 设置静默丢弃）⇒ 更新为 `policy`。
+    assert "window.MemoriaNavPredictor.setPolicy(policy || {});" in app
+    assert "window.MemoriaNavPredictor.setPolicy(next || {});" not in app, "不得转发被 sanitize 过的 next（nav 键会被丢弃）"
     assert "if (kind === \"preload\" && _previewDomCache.has(path) && window.MemoriaNavPredictor" in app, "只有**留在池里**的预渲染才算分母"
     assert "nav: (window.MemoriaNavPredictor && typeof window.MemoriaNavPredictor.stats === \"function\")" in app, "读数带导航模型"
 
@@ -326,7 +331,10 @@ def test_index_loads_nav_modules_after_tab_order() -> None:
     scripts = re.findall(r"<script src=\"([^\"]+)\"></script>", html.split("</body>")[0])
     assert scripts.index("/app/js/nav-stack.js") < scripts.index("/app/js/nav-model.js")
     assert scripts.index("/app/js/nav-model.js") < scripts.index("/app/js/nav-predictor.js")
-    assert scripts[-1] == "/app/js/review-modal.js", f"最后一个 script 是 {scripts[-1]}"
+    # 2026-10-25：原断言 `scripts[-1] == review-modal.js`，但末尾其后已追加
+    # `review-summon.js` / `review-manage.js` ⇒ 改为「nav 模块先于复习模块家族」，保住原意。
+    assert scripts.index("/app/js/nav-predictor.js") < scripts.index("/app/js/review-modal.js")
+    assert scripts[-1].startswith("/app/js/review-"), f"最后的 script 应为复习模块家族，实际 {scripts[-1]}"
 
 
 def test_copy_exists_in_both_locales() -> None:

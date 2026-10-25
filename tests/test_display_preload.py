@@ -186,7 +186,11 @@ def test_preload_renders_off_screen_without_touching_the_visible_ui() -> None:
     """在脱离文档的 holder 里渲染，并保存/还原 `state.doc`、`_blockLineMap`、mapper 的当前文档。"""
     js = _app()
     assert 'const holder = document.createElement("div");' in js
-    assert "holder.appendChild(R.render(ast));" in js
+    # 2026-10-25 判定（A 类，代码行为已升级）：P6a 起预渲染与普通渲染**同源（render-core）**，
+    # `app.js` 该处注释明确「不得再走 legacy `R.render`」⇒ 断言从 `R.render(ast)` 更新为
+    # `_rcRenderer().renderDocument(ast).container`（同一渲染内核，避免预渲染缓存与主渲染两套 DOM 口径）。
+    assert "holder.appendChild(_rcRenderer().renderDocument(ast).container);" in js
+    assert "holder.appendChild(R.render(ast));" not in js, "P6a 起不得再走 legacy R.render"
     assert "const savedDoc = state.doc;" in js and "const savedMap = _blockLineMap;" in js
     assert "state.doc = savedDoc;" in js and "_blockLineMap = savedMap;" in js
     assert "M.setDoc(savedMapperDoc);" in js, "mapper 的当前文档也要还原，否则编辑映射会错到预渲染那篇上"

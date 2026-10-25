@@ -141,14 +141,29 @@ def test_index_loads_the_card_as_the_last_script() -> None:
     html = _INDEX.read_text(encoding="utf-8")
     assert '<script src="/app/js/agent-question.js"></script>' in html
     scripts = re.findall(r"<script src=\"([^\"]+)\"></script>", html.split("</body>")[0])
-    assert scripts and scripts[-1] == "/app/js/review-modal.js", f"最后一个 script 是 {scripts[-1] if scripts else None}"
-    assert "/app/js/agent-question.js" in scripts[-7:], "待答卡模块仍在末尾区块里"
+    # 2026-10-25：原断言 `scripts[-1] == review-modal.js` + `agent-question in scripts[-7:]`。
+    # 其后已追加 `review-summon.js` / `review-manage.js`，且中间也新增了 `net-settings` /
+    # `preview-cache-policy` ⇒ 固定末位与固定窗口都过时。改为「纯相对次序」：
+    # 待答卡模块在末尾区块内、且**先于**复习模块加载（保住「新模块最后加载」的原意）。
+    assert scripts, "index.html 里没有 script"
+    q = scripts.index("/app/js/agent-question.js")
+    # 核心意图两条：① 待答卡模块**在末尾区块**（位于后半段）；② 它**先于**复习模块加载。
+    assert q >= len(scripts) // 2, f"待答卡模块应在末尾区块（实际 {q}/{len(scripts)}）"
+    assert q < scripts.index("/app/js/review-modal.js"), "待答卡模块须在复习模块之前加载"
+    assert scripts[-1].startswith("/app/js/review-"), f"最后的 script 应为复习模块家族，实际 {scripts[-1]}"
 
 
 def test_card_styles_exist_and_reuse_tokens() -> None:
     """样式落 `app.css` 末尾追加块，且用既有令牌而不是硬编码颜色。"""
     css = _CSS.read_text(encoding="utf-8")
-    block = css.rsplit("/* ===== 2026-09-23 追加：**待答卡**", 1)[1]
+    # 2026-10-25：原 `css.rsplit(marker, 1)[1]` 取「marker 之后的**全部**内容」，于是后续追加的
+    # 8+ 个 CSS 块（含复习卡 `color: #fff`）也被算进本块 ⇒ 误报「硬编码颜色」。
+    # 改为**只取该块自身**（marker 起到下一个 `/* =====` 块注释之前），原意不变。
+    _marker = "/* ===== 2026-09-23 追加：**待答卡**"
+    _i = css.rfind(_marker)
+    assert _i >= 0, f"CSS 里找不到待答卡块注释：{_marker}"
+    _nxt = css.find("/* =====", _i + len(_marker))
+    block = css[_i:_nxt if _nxt >= 0 else len(css)]
     for selector in (".-agent-question {", ".-agent-question-item", ".-agent-question-mode", ".-agent-question-opt", ".-agent-question-custom", ".-agent-question-state"):
         assert selector in block, f"样式缺失：{selector}"
     assert "var(--bg-tertiary)" in block and "var(--theme-color)" in block

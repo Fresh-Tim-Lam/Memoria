@@ -191,7 +191,13 @@ def test_the_keystroke_path_skips_the_o_document_restamp() -> None:
     js = _js()
     # ① `keepLineMap` 旁路
     assert "function reRenderBlock(blockIndex, keepLineMap) {" in js
-    assert "if (!keepLineMap) stampBlockLines(preview, _doc);" in js
+    # 2026-10-25 判定（A 类，P2 重构）：原断言单行 `if (!keepLineMap) stampBlockLines(preview, _doc);`；
+    # P2 把它改成**兜底分支**（`} else if (!keepLineMap) {` 换行 `stampBlockLines(preview, _doc);`），
+    # 主路径改为 `beginStamp()` + 显式 id `upsert` 就地更新（避免旧"整趟跳过"导致新块节点丢
+    # `data--src-line` 的 X2 缺陷）。**原意仍成立**：行区间没变时**不重建** `_blockLineMap`。
+    assert "stampBlockLines(preview, _doc);" in js, "AST 缺行区间时仍退回整篇投影（兜底）"
+    assert "} else if (!keepLineMap) {" in js, "keepLineMap 兜底分支保留了该形参"
+    assert "_rangeChanged" in js and "if (_rangeChanged) {" in js, "行区间真变时才重建兼容投影（原 keepLineMap 想省的那笔）"
     # ③ 按键链路计时（只打慢的）
     assert 'log("EDIT", "按键提交 " + Math.round(_ms) + "ms · 行 "' in js
     # ② keys-debug 默认关 + 两种开启方式；关闭时**不猴补 console、不装监听**

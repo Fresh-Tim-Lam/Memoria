@@ -124,7 +124,10 @@ def test_total_size_quota_is_enforced(kb: Path) -> None:
 
 
 def test_scratch_tools_are_registered_read_only_and_closed(kb: Path) -> None:
-    assert KB_TOOL_NAMES[-13:-9] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
+    # 2026-10-25：原断言用固定负下标 `[-13:-9]`，工具面每次追加（`read_resource` 等）就整体失效。
+    # 改为「连续且相对次序固定」——保住原意（四把连续追加、次序不变），不再因追加而红。
+    pos = KB_TOOL_NAMES.index("scratch_list")
+    assert KB_TOOL_NAMES[pos:pos + 4] == ("scratch_list", "scratch_read", "scratch_write", "scratch_delete")
     registry = _registry(kb)
     for name in ("scratch_list", "scratch_read", "scratch_write", "scratch_delete"):
         tool = registry.get(name)
