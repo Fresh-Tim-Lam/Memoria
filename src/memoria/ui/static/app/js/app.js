@@ -16447,8 +16447,16 @@ async function call(fn, ...args) {
     if (!btn) return;
     // 生效折叠态 = 用户手动折叠 OR 响应式派生折叠（后者不落盘，见 applyResponsiveLayout）
     const eff = _sidebarCollapsed || _sidebarAutoCollapsed;
-    btn.title = T(eff ? "side.expandTitle" : "side.collapseTitle");
+    // 0.4.7 task-136：三态 tooltip —— 自动折叠 / 用户折叠 / 展开。
+    // 自动折叠态必须点明"展开会收起对话栏"（否则用户点开后面板又消失一次）。
+    let titleKey;
+    if (_sidebarAutoCollapsed) titleKey = "side.autoCollapsedTitle";
+    else if (_sidebarCollapsed) titleKey = "side.expandTitle";
+    else titleKey = "side.collapseTitle";
+    btn.title = T(titleKey);
     btn.setAttribute("aria-label", btn.title);
+    // 视觉弱强调（方案 i）：自动折叠是"系统临时收起"，与用户主动折叠区分；只用既有主题令牌。
+    btn.classList.toggle("-sidebar-auto-collapsed", _sidebarAutoCollapsed);
     // aria-pressed = 当前是否展开（与右栏 `#btn-agent` 同一口径）
     btn.setAttribute("aria-pressed", String(!eff));
   }
@@ -16474,6 +16482,10 @@ async function call(fn, ...args) {
   function setupSidebarCollapse() {
     const btn = $("#btn-toggle-sidebar");
     if (!btn) return;
+    // task-136：标题由本函数按三态（自动折叠/用户折叠/展开）接管 ⇒ 摘掉静态
+    // `data-i18n-attr="title:side.collapseTitle"`，否则 i18n 静态刷新会在启动时把
+    // 自动折叠态的专用文案覆盖成"收起侧栏"（真机实测踩到）。语言切换仍由 addRefresh 更新。
+    btn.removeAttribute("data-i18n-attr");
     btn.addEventListener("click", () => {
       // 自动折叠态下的点击 = 「请展开这一栏」：清派生折叠，让另一面板让位（规则③）
       if (_sidebarAutoCollapsed) {

@@ -585,7 +585,10 @@
       tab: { files: "Files" },
       split: { title: "Drag to adjust graph / knowledge-point list ratio" },
       collapseTitle: "Collapse sidebar",
-      expandTitle: "Expand sidebar",
+      expandTitle: "Expand file tree",
+      // 0.4.7 task-136：auto-collapsed (responsive) tooltip. Must mention the dock trade-off,
+      // otherwise expanding the sidebar makes the dock disappear with no explanation.
+      autoCollapsedTitle: "Auto-collapsed for space; click to expand (the agent dock will be hidden to make room)",
       kp: {
         label: "Knowledge Points",
         config: "Config",

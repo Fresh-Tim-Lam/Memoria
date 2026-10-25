@@ -143,6 +143,13 @@
     display: none;
 }
 
+/* 自动折叠态的左栏开关弱强调（0.4.7 task-136）：
+   "空间不足被自动收起"（派生，不落盘）与"用户自己折叠"在图标上本来无法区分 —— 给自动态
+   一点主题色（**只用既有令牌，不硬编码颜色**），提示"这不是你刚才点的"。tooltip 仍是主解释。 */
+#btn-toggle-sidebar.-sidebar-auto-collapsed {
+    color: var(--theme-color);
+}
+
 /* ── 0.3.0 统一导入向导（import-flow.js）── */
 .-import-kind-list {
     display: flex;

@@ -1,0 +1,223 @@
+{
+  "states": {
+    "auto_1256": {
+      "title": "空间不足，已自动收起；点击展开（空间不足时会收起对话栏）",
+      "ariaLabel": "空间不足，已自动收起；点击展开（空间不足时会收起对话栏）",
+      "ariaPressed": "false",
+      "className": "-sidebar-auto-collapsed",
+      "color": "rgb(0, 122, 204)",
+      "rect": {
+        "x": 1197,
+        "y": 0,
+        "w": 28,
+        "h": 30
+      },
+      "autoCollapsed": true,
+      "userCollapsed": false,
+      "sidebarCollapsedClass": true
+    },
+    "expanded_1600": {
+      "title": "收起侧栏",
+      "ariaLabel": "收起侧栏",
+      "ariaPressed": "true",
+      "className": "",
+      "color": "rgb(204, 204, 204)",
+      "rect": {
+        "x": 1541,
+        "y": 0,
+        "w": 28,
+        "h": 30
+      },
+      "autoCollapsed": false,
+      "userCollapsed": false,
+      "sidebarCollapsedClass": false
+    },
+    "user_1600": {
+      "title": "展开文件树",
+      "ariaLabel": "展开文件树",
+      "ariaPressed": "false",
+      "className": "",
+      "color": "rgb(204, 204, 204)",
+      "rect": {
+        "x": 1541,
+        "y": 0,
+        "w": 28,
+        "h": 30
+      },
+      "autoCollapsed": false,
+      "userCollapsed": true,
+      "sidebarCollapsedClass": true
+    }
+  },
+  "shots": {
+    "auto_1256_tooltip": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\auto_1256_tooltip.png",
+      "crop": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\auto_1256_tooltip_button_crop.png",
+      "rect": {
+        "x": 182,
+        "y": 182,
+        "w": 1272,
+        "h": 813
+      },
+      "fg": {
+        "ok": true,
+        "foreground_ok": true,
+        "hwnd": 14815876,
+        "foreground_hwnd": 14815876,
+        "rect": {
+          "x": 182,
+          "y": 182,
+          "w": 1272,
+          "h": 813
+        },
+        "req": {
+          "op": "foreground",
+          "_seq": 1792913197250392800
+        },
+        "at": 1792913198.2161686
+      },
+      "origin": {
+        "ok": true,
+        "x": 190,
+        "y": 213,
+        "req": {
+          "op": "clientorigin",
+          "_seq": 1792913198265748400
+        },
+        "at": 1792913198.4188793
+      },
+      "cursor": [
+        1401,
+        228
+      ],
+      "tooltipHits": [],
+      "stdout": "{\"ok\": true, \"path\": \"D:\\\\AAA_Jupyter\\\\Memoria\\\\artifacts\\\\agent\\\\verify\\\\todo\\\\0.4.7-task-136-tooltip\\\\shots\\\\auto_1256_tooltip.png\", \"size\": [1272, 813]}",
+      "stderr": ""
+    },
+    "auto_1256_button": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\auto_1256_button.png"
+    },
+    "expanded_1600_tooltip": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\expanded_1600_tooltip.png",
+      "crop": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\expanded_1600_tooltip_button_crop.png",
+      "rect": {
+        "x": 182,
+        "y": 182,
+        "w": 1616,
+        "h": 939
+      },
+      "fg": {
+        "ok": true,
+        "foreground_ok": true,
+        "hwnd": 14815876,
+        "foreground_hwnd": 14815876,
+        "rect": {
+          "x": 182,
+          "y": 182,
+          "w": 1616,
+          "h": 939
+        },
+        "req": {
+          "op": "foreground",
+          "_seq": 1792913205248350700
+        },
+        "at": 1792913205.6297987
+      },
+      "origin": {
+        "ok": true,
+        "x": 190,
+        "y": 213,
+        "req": {
+          "op": "clientorigin",
+          "_seq": 1792913205656080300
+        },
+        "at": 1792913205.8326066
+      },
+      "cursor": [
+        1745,
+        228
+      ],
+      "tooltipHits": [],
+      "stdout": "{\"ok\": true, \"path\": \"D:\\\\AAA_Jupyter\\\\Memoria\\\\artifacts\\\\agent\\\\verify\\\\todo\\\\0.4.7-task-136-tooltip\\\\shots\\\\expanded_1600_tooltip.png\", \"size\": [1616, 939]}",
+      "stderr": ""
+    },
+    "expanded_1600_button": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\expanded_1600_button.png"
+    },
+    "user_1600_tooltip": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\user_1600_tooltip.png",
+      "crop": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\user_1600_tooltip_button_crop.png",
+      "rect": {
+        "x": 182,
+        "y": 182,
+        "w": 1616,
+        "h": 939
+      },
+      "fg": {
+        "ok": true,
+        "foreground_ok": true,
+        "hwnd": 14815876,
+        "foreground_hwnd": 14815876,
+        "rect": {
+          "x": 182,
+          "y": 182,
+          "w": 1616,
+          "h": 939
+        },
+        "req": {
+          "op": "foreground",
+          "_seq": 1792913211455732700
+        },
+        "at": 1792913211.8171449
+      },
+      "origin": {
+        "ok": true,
+        "x": 190,
+        "y": 213,
+        "req": {
+          "op": "clientorigin",
+          "_seq": 1792913211864974900
+        },
+        "at": 1792913212.0215037
+      },
+      "cursor": [
+        1745,
+        228
+      ],
+      "tooltipHits": [],
+      "stdout": "{\"ok\": true, \"path\": \"D:\\\\AAA_Jupyter\\\\Memoria\\\\artifacts\\\\agent\\\\verify\\\\todo\\\\0.4.7-task-136-tooltip\\\\shots\\\\user_1600_tooltip.png\", \"size\": [1616, 939]}",
+      "stderr": ""
+    },
+    "user_1600_button": {
+      "ok": true,
+      "path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-136-tooltip\\shots\\user_1600_button.png"
+    }
+  },
+  "checks": {
+    "auto_title_exact": true,
+    "auto_title_mentions_dock_tradeoff": true,
+    "auto_class_present": true,
+    "auto_color_is_theme": true,
+    "auto_aria_equals_title": true,
+    "user_title_exact": true,
+    "user_class_absent": true,
+    "expanded_title_exact": true,
+    "expanded_class_absent": true,
+    "auto_vs_user_color_differs": true,
+    "auto_shot_ok": true,
+    "user_shot_ok": true,
+    "expanded_shot_ok": true,
+    "auto_button_crop_ok": true,
+    "user_button_crop_ok": true,
+    "expanded_button_crop_ok": true,
+    "auto_state_is_auto_collapsed": true,
+    "user_state_is_user_collapsed": true,
+    "native_tooltip_captured_in_this_env": false
+  },
+  "pass": true
+}
