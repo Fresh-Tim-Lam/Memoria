@@ -1,15 +1,15 @@
 {
-  "startedAt": "2026-10-25T11:58:00.464Z",
+  "startedAt": "2026-10-25T12:12:12.366Z",
   "cdp": "http://127.0.0.1:9581",
   "target": {
-    "id": "912D7270104571C88C4222DD2440D871",
-    "url": "http://127.0.0.1:56862/"
+    "id": "F115E9CF5A9D6E8F380E593E0C00C70C",
+    "url": "http://127.0.0.1:29752/"
   },
   "allTargets": [
     {
-      "id": "912D7270104571C88C4222DD2440D871",
+      "id": "F115E9CF5A9D6E8F380E593E0C00C70C",
       "type": "page",
-      "url": "http://127.0.0.1:56862/"
+      "url": "http://127.0.0.1:29752/"
     }
   ],
   "doc": "docs/huge.md",
@@ -69,7 +69,7 @@
   },
   "control": {
     "kind": "control",
-    "t0": 5266.799999982119,
+    "t0": 5548.0999999940395,
     "baselineScrollTop": 57914,
     "baseline": {
       "scrollTop": 57914,
@@ -99,7 +99,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 3
+        "t": 5
       },
       {
         "scrollTop": 57914,
@@ -114,7 +114,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 20
+        "t": 22
       },
       {
         "scrollTop": 57914,
@@ -144,7 +144,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 61
+        "t": 60
       },
       {
         "scrollTop": 57914,
@@ -219,7 +219,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 138
+        "t": 139
       },
       {
         "scrollTop": 57914,
@@ -234,7 +234,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 171
+        "t": 170
       },
       {
         "scrollTop": 57914,
@@ -264,7 +264,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 277
+        "t": 281
       },
       {
         "scrollTop": 57914,
@@ -279,7 +279,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 325
+        "t": 328
       },
       {
         "scrollTop": 57914,
@@ -294,7 +294,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 511
+        "t": 513
       },
       {
         "scrollTop": 57914,
@@ -309,7 +309,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 808
+        "t": 807
       },
       {
         "scrollTop": 57914,
@@ -324,7 +324,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 1213
+        "t": 1216
       },
       {
         "scrollTop": 57914,
@@ -339,7 +339,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 1509
+        "t": 1514
       },
       {
         "scrollTop": 57914,
@@ -354,7 +354,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 2010
+        "t": 2009
       },
       {
         "scrollTop": 57914,
@@ -369,7 +369,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 3011
+        "t": 3008
       }
     ],
     "muts": [],
@@ -389,6 +389,17 @@
       }
     }
   },
+  "srcLines": {
+    "count": 3334,
+    "last": "3334"
+  },
+  "editLine": 1667,
+  "focus": {
+    "line": 1667,
+    "text": "huge 第 0825 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编",
+    "active": true
+  },
+  "lineTextBefore": "huge 第 0825 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编辑落点。标记 huge-0825。",
   "beforeEdit": {
     "scrollTop": 57914,
     "scrollHeight": 116534,
@@ -403,16 +414,7 @@
       "height": 22.4
     }
   },
-  "srcLines": {
-    "count": 3334,
-    "last": "3334"
-  },
-  "editLine": 1667,
-  "focus": {
-    "line": 1667,
-    "text": "huge 第 0825 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编",
-    "active": true
-  },
+  "bodyLenBefore": 97518,
   "dispatch": {
     "op": "insert",
     "via": "Input.insertText X"
@@ -420,7 +422,7 @@
   "edit": {
     "kind": "edit",
     "label": "docs/huge.md:insert",
-    "t0": 8898.699999988079,
+    "t0": 9180.800000011921,
     "baselineScrollTop": 57914,
     "baseline": {
       "scrollTop": 57914,
@@ -450,7 +452,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 6
+        "t": 5
       },
       {
         "scrollTop": 57914,
@@ -465,7 +467,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 28
+        "t": 22
       },
       {
         "scrollTop": 57914,
@@ -480,7 +482,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 38
+        "t": 46
       },
       {
         "scrollTop": 57914,
@@ -510,7 +512,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 79
+        "t": 71
       },
       {
         "scrollTop": 57914,
@@ -525,7 +527,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 96
+        "t": 93
       },
       {
         "scrollTop": 57914,
@@ -540,7 +542,7 @@
           "offset": -7.8,
           "height": 22.4
         },
-        "t": 111
+        "t": 108
       },
       {
         "scrollTop": 57922,
@@ -555,7 +557,7 @@
           "offset": -5.6,
           "height": 22.4
         },
-        "t": 192
+        "t": 263
       },
       {
         "scrollTop": 57922,
@@ -570,7 +572,37 @@
           "offset": -5.6,
           "height": 22.4
         },
-        "t": 194
+        "t": 266
+      },
+      {
+        "scrollTop": 57922,
+        "scrollHeight": 116525,
+        "clientHeight": 707,
+        "maxScroll": 115818,
+        "placeholders": 3293,
+        "loading": false,
+        "blocks": 3334,
+        "anchor": {
+          "line": 1658,
+          "offset": -5.6,
+          "height": 22.4
+        },
+        "t": 268
+      },
+      {
+        "scrollTop": 57922,
+        "scrollHeight": 116525,
+        "clientHeight": 707,
+        "maxScroll": 115818,
+        "placeholders": 3293,
+        "loading": false,
+        "blocks": 3334,
+        "anchor": {
+          "line": 1658,
+          "offset": -5.6,
+          "height": 22.4
+        },
+        "t": 271
       },
       {
         "scrollTop": 57922,
@@ -585,22 +617,7 @@
           "offset": -7.7,
           "height": 22.4
         },
-        "t": 196
-      },
-      {
-        "scrollTop": 57922,
-        "scrollHeight": 116520,
-        "clientHeight": 707,
-        "maxScroll": 115813,
-        "placeholders": 3232,
-        "loading": false,
-        "blocks": 3334,
-        "anchor": {
-          "line": 1658,
-          "offset": -7.9,
-          "height": 22.4
-        },
-        "t": 215
+        "t": 276
       },
       {
         "scrollTop": 57922,
@@ -615,7 +632,7 @@
           "offset": -7.9,
           "height": 22.4
         },
-        "t": 268
+        "t": 340
       },
       {
         "scrollTop": 57922,
@@ -630,7 +647,7 @@
           "offset": -7.9,
           "height": 22.4
         },
-        "t": 329
+        "t": 514
       },
       {
         "scrollTop": 57922,
@@ -645,7 +662,7 @@
           "offset": -7.9,
           "height": 22.4
         },
-        "t": 516
+        "t": 808
       },
       {
         "scrollTop": 57922,
@@ -660,7 +677,7 @@
           "offset": -7.9,
           "height": 22.4
         },
-        "t": 811
+        "t": 1214
       },
       {
         "scrollTop": 57922,
@@ -675,22 +692,7 @@
           "offset": -7.9,
           "height": 22.4
         },
-        "t": 1213
-      },
-      {
-        "scrollTop": 57922,
-        "scrollHeight": 116520,
-        "clientHeight": 707,
-        "maxScroll": 115813,
-        "placeholders": 3231,
-        "loading": false,
-        "blocks": 3334,
-        "anchor": {
-          "line": 1658,
-          "offset": -7.9,
-          "height": 22.4
-        },
-        "t": 1510
+        "t": 1507
       },
       {
         "scrollTop": 57922,
@@ -725,19 +727,19 @@
     ],
     "muts": [
       {
-        "t": 169,
+        "t": 218,
         "removed": 1,
         "added": 1,
         "addedLoading": true
       },
       {
-        "t": 169,
+        "t": 218,
         "removed": 1,
         "added": 0,
         "addedLoading": false
       },
       {
-        "t": 169,
+        "t": 218,
         "removed": 0,
         "added": 1,
         "addedLoading": false
@@ -774,14 +776,23 @@
     "lazyHook": null,
     "editMode": true
   },
+  "lineTextAfter": "huge 第 0825 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编辑落点。标记 huge-0825。X",
+  "opEffect": {
+    "bodyLenBefore": 97518,
+    "bodyLenAfter": 97518,
+    "changed": false,
+    "editorLineChanged": true,
+    "editorLineBeforeTail": "区一个明确的编辑落点。标记 huge-0825。",
+    "editorLineAfterTail": "一个明确的编辑落点。标记 huge-0825。X"
+  },
   "judge": {
     "s0": 57914,
     "finalScrollTop": 57922,
     "finalDelta": 8,
     "lostRatio": 0,
     "firstDropT": null,
-    "firstLoadingMutationT": 169,
-    "firstClearMutationT": 169,
+    "firstLoadingMutationT": 218,
+    "firstClearMutationT": 218,
     "heldWithinOneBlock": true,
     "controlStable": {
       "min": 57914,

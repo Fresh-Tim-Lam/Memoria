@@ -1,7 +1,7 @@
 # task-141 · 源码区编辑后预览跳回文件开头（滚动位置丢失）
 
 > **状态**：**红色复现 + 根因定位 + 修复 + 真机验证** 均已完成（2026-10-25）。
-> **未 commit**（按纪律等 Lead）。写域：`src/memoria/ui/static/app/js/app.js`、`artifacts/agent/verify/todo/preview-scroll-lost-on-edit*`。
+> **已由 Lead 提交 = `51e1c755`**（`fix(editor): task-141 长文档预览编辑后跳回文件开头 —— 惰性物化空态把 scrollTop 夹到 0`）。写域：`src/memoria/ui/static/app/js/app.js`、`artifacts/agent/verify/todo/preview-scroll-lost-on-edit*`。
 > 证据：`preview-scroll-lost-on-edit-RED-before-fix.log`（改前红色）、`preview-scroll-lost-on-edit-2x2-after.log`（改后）、
 > `preview-scroll-lost-on-edit-matrix.log`（5 编辑类型 × 长/普通）、`preview-scroll-lost-on-edit-runs/*.json`（逐次时间序列）。
 
@@ -127,36 +127,36 @@ E4 与 task-140 互斥：源码编辑导致整篇重建时，撤销尚未触发�
 `medium.md + 惰性=开` 这一格最有信息量：**改前必红、改后绿，且 `reanchors=1` 证明"漂移收敛分支"确实执行过**
 （不是"碰巧没跳"）。
 
-### 6.2 5 种编辑类型 × 长/普通文档（**15 个用例全绿**）
+### 6.2 5 种编辑类型 × 长/普通文档（**15 个用例全绿，最终代码状态**）
 
 | 用例 | 文档/惰性 | S0 | 最终 scrollTop | Δ | 保持(≤1块) | 对照range | 恢复分支(fixStats) | 编辑生效 |
 |---|---|---|---|---|---|---|---|---|
-| `huge-insert` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 97518→97518 UNCHANGED |
-| `huge-enter` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-backspace` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-paste-lines` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-undo` | huge.md / default | 57922 | **57922** | 0 | ✅ | 0 | R2/A2/Ra1/N6 | 97518→97517 changed |
-| `huge-insert-r1` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-insert-r2` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-insert-r3` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `huge-insert-lazyoff` | huge.md / 0 | 57903 | **57903** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | 97518→97518 UNCHANGED |
-| `medium-insert` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `medium-enter` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `medium-backspace` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `medium-paste-lines` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | — |
-| `medium-undo` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R2/A2/Ra0/N7 | 4426→4425 changed |
-| `medium-insert-lazyon` | medium.md / 1 | 2182 | **2182** | 0 | ✅ | 0 | R1/A1/Ra1/N3 | — |
+| `huge-insert` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-enter` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-backspace` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-paste-lines` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-undo` | huge.md / default | 57922 | **57922** | 0 | ✅ | 0 | R2/A2/Ra1/N6 | body 97518→97517 |
+| `huge-insert-r1` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-insert-r2` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-insert-r3` | huge.md / default | 57914 | **57922** | 8 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `huge-insert-lazyoff` | huge.md / 0 | 57903 | **57903** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | UNCHANGED(⚠) |
+| `medium-insert` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `medium-enter` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `medium-backspace` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `medium-paste-lines` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R1/A1/Ra0/N4 | 源码行已变 |
+| `medium-undo` | medium.md / default | 2180 | **2180** | 0 | ✅ | 0 | R2/A2/Ra0/N7 | body 4426→4425 |
+| `medium-insert-lazyon` | medium.md / 1 | 2182 | **2182** | 0 | ✅ | 0 | R1/A1/Ra1/N3 | —（旧探针未记录） |
 
 字段说明：`R`=restores 总次数、`A`=按锚点恢复次数、`Ra`=漂移收敛实际调整次数、`N`=校准点判定"无需调整"次数；
-`Δ` = 最终 scrollTop − S0（px）；判据「保持」= 视口顶部锚点块 srcLine 偏差 ≤ 1 个块（任务关闭条件 3），
-等价于 `|Δ| < 1 个块高（22.4px）`。`编辑生效` 用 body 长度变化证明操作**真的发生了**（防"没编辑也没跳"的假绿）。
+`Δ`=最终 scrollTop − S0（px）；判据「保持」= 视口顶部锚点块 srcLine 偏差 ≤ 1 个块（关闭条件 3），
+等价于 `|Δ| < 1 个块高（22.4px）`；**编辑生效**列：插入类用"源码行文本已变"（`editorLineChanged`，
+含前后尾串证据），撤销用 body 长度变化 —— 防止"没编辑也没跳"的假绿（见 §6.5）。
 
 要点：
-- **长文档（默认惰性）**：insert/enter/backspace/paste-lines 最终 Δ = +4~+8px（< 半个块高），**没有跳 0**；
-- **撤销/重做**：先做一次真实编辑建立撤销栈（否则 Ctrl+Z 是 no-op —— 见 §6.5 的假绿教训），
-  `_srcApplySnapshot` 的整篇重渲也被覆盖，Δ = **0**；
-- **普通文档（全量路径）**：Δ = **0**（改前也是 0，本修复对它只加了一层"无害的锚点恢复"）；
-- **强制惰性（medium + lazy=on）**：改前必红的一格，改后 Δ = 0，且 `Ra=1`（漂移收敛真的动手了）；
+- **长文档（默认惰性）**：insert/enter/backspace/paste-lines Δ = +8px（< 半个块高），**没有跳 0**；
+- **撤销/重做**：先做一次真实编辑建立撤销栈（否则 Ctrl+Z 是 no-op），`_srcApplySnapshot` 的整篇重渲已覆盖，Δ = 0；
+- **普通文档（全量路径）**：Δ = 0（改前也是 0；本修复只加了一层"无害的锚点恢复"）；
+- **强制惰性（medium + lazy=on）**：改前必红的一格，改后 Δ = 0，且 `Ra=1`（漂移收敛真的动手）；
 - **强制非惰性（huge + lazy=off）**：Δ = 0，证明根因修复不依赖"惰性"这个开关本身。
 
 ### 6.3 3 轮一致性（huge.md + insert，独立实例各启一次）
@@ -206,7 +206,7 @@ E4 与 task-140 互斥：源码编辑导致整篇重建时，撤销尚未触发�
 
 ⇒ task-141 的改动**没有改变** task-140 的跳转落点/校准行为。
 
-### 7.2 常规门禁（第一手实跑；交付时 HEAD=`10033073` + 工作区未提交修复）
+### 7.2 常规门禁（第一手实跑；修复已提交为 `51e1c755`）
 
 | 门禁 | 命令 | 结果 |
 |---|---|---|
@@ -219,7 +219,9 @@ E4 与 task-140 互斥：源码编辑导致整篇重建时，撤销尚未触发�
 ### 7.3 改动量
 
 ```
-148	2	src/memoria/ui/static/app/js/app.js      （+148 / −2；全部集中在滚动保持 + 注释）
+git diff 039e815f 51e1c755 -- src/memoria/ui/static/app/js/app.js
+  →  +148 / −2   （全部集中在滚动保持 + 注释；含 3 个新函数 + 2 处调用点 + 1 处根因处）
+提交：`51e1c755`（Lead 统一提交，含本报告与全部真机 JSON/日志）
 ```
 > 说明：`src/memoria/services/agent/ask_stream.py` 的工作区改动**不是本任务**（本轮开始前即存在）。
 
@@ -262,3 +264,6 @@ E4 与 task-140 互斥：源码编辑导致整篇重建时，撤销尚未触发�
    但结构编辑类型只验了 Enter/Backspace/多行/undo；跨块大段选中替换未覆盖）。
 4. 性能：`_measurePreviewMetrics` 的强制布局在长文档上本身是"打开/重渲"的成本，根治应把度量缓存到字体/缩放进版本键
    （不在本任务范围）。
+5. **探针观察（非本任务结论，建议后续确认）**：insert 类编辑后，源码行文本确实变了（`editorLineChanged=true`，
+   前后尾串有证据），但 `state.doc.body` 的长度**未变**（97518→97518）。本次判据改用源码行/块几何，不依赖它；
+   若确认 `state.doc.body` 在编辑后可能短暂陈旧，可能与"预览缓存指纹/保存后刷新"有关，值得单独确认（不影响滚动结论）。

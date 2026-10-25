@@ -1,15 +1,15 @@
 {
-  "startedAt": "2026-10-25T11:56:43.661Z",
+  "startedAt": "2026-10-25T12:10:54.116Z",
   "cdp": "http://127.0.0.1:9581",
   "target": {
-    "id": "DE23FC148EBA2E15099FDBE735D4A566",
-    "url": "http://127.0.0.1:37405/"
+    "id": "BBFB3760C1709B250731FB89D76B82F5",
+    "url": "http://127.0.0.1:51132/"
   },
   "allTargets": [
     {
-      "id": "DE23FC148EBA2E15099FDBE735D4A566",
+      "id": "BBFB3760C1709B250731FB89D76B82F5",
       "type": "page",
-      "url": "http://127.0.0.1:37405/"
+      "url": "http://127.0.0.1:51132/"
     }
   ],
   "doc": "docs/medium.md",
@@ -69,7 +69,7 @@
   },
   "control": {
     "kind": "control",
-    "t0": 5097.699999988079,
+    "t0": 5070.399999976158,
     "baselineScrollTop": 2180,
     "baseline": {
       "scrollTop": 2180,
@@ -129,7 +129,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 46
+        "t": 43
       },
       {
         "scrollTop": 2180,
@@ -144,7 +144,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 61
+        "t": 58
       },
       {
         "scrollTop": 2180,
@@ -159,7 +159,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 77
+        "t": 74
       },
       {
         "scrollTop": 2180,
@@ -174,7 +174,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 93
+        "t": 89
       },
       {
         "scrollTop": 2180,
@@ -189,7 +189,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 108
+        "t": 104
       },
       {
         "scrollTop": 2180,
@@ -204,7 +204,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 124
+        "t": 120
       },
       {
         "scrollTop": 2180,
@@ -219,7 +219,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 140
+        "t": 135
       },
       {
         "scrollTop": 2180,
@@ -234,7 +234,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 171
+        "t": 166
       },
       {
         "scrollTop": 2180,
@@ -249,7 +249,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 201
+        "t": 213
       },
       {
         "scrollTop": 2180,
@@ -264,7 +264,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 263
+        "t": 275
       },
       {
         "scrollTop": 2180,
@@ -279,7 +279,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 325
+        "t": 321
       },
       {
         "scrollTop": 2180,
@@ -294,7 +294,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 513
+        "t": 508
       },
       {
         "scrollTop": 2180,
@@ -309,7 +309,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 809
+        "t": 805
       },
       {
         "scrollTop": 2180,
@@ -324,7 +324,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1214
+        "t": 1213
       },
       {
         "scrollTop": 2180,
@@ -339,7 +339,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1509
+        "t": 1508
       },
       {
         "scrollTop": 2180,
@@ -354,7 +354,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 2009
+        "t": 2005
       },
       {
         "scrollTop": 2180,
@@ -369,7 +369,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 3009
+        "t": 3001
       }
     ],
     "muts": [],
@@ -389,6 +389,17 @@
       }
     }
   },
+  "srcLines": {
+    "count": 142,
+    "last": "142"
+  },
+  "editLine": 71,
+  "focus": {
+    "line": 71,
+    "text": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确",
+    "active": true
+  },
+  "lineTextBefore": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编辑落点。标记 medium-0035。",
   "beforeEdit": {
     "scrollTop": 2180,
     "scrollHeight": 5066,
@@ -403,16 +414,7 @@
       "height": 22.4
     }
   },
-  "srcLines": {
-    "count": 142,
-    "last": "142"
-  },
-  "editLine": 71,
-  "focus": {
-    "line": 71,
-    "text": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确",
-    "active": true
-  },
+  "bodyLenBefore": 4426,
   "dispatch": {
     "op": "backspace",
     "via": "Input.dispatchKeyEvent Backspace"
@@ -420,7 +422,7 @@
   "edit": {
     "kind": "edit",
     "label": "docs/medium.md:backspace",
-    "t0": 8730.300000011921,
+    "t0": 8702.5,
     "baselineScrollTop": 2180,
     "baseline": {
       "scrollTop": 2180,
@@ -465,7 +467,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 19
+        "t": 21
       },
       {
         "scrollTop": 2180,
@@ -480,7 +482,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 33
+        "t": 37
       },
       {
         "scrollTop": 2180,
@@ -495,7 +497,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 63
+        "t": 49
       },
       {
         "scrollTop": 2180,
@@ -510,7 +512,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 79
+        "t": 73
       },
       {
         "scrollTop": 2180,
@@ -525,22 +527,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 94
-      },
-      {
-        "scrollTop": 2180,
-        "scrollHeight": 5066,
-        "clientHeight": 707,
-        "maxScroll": 4359,
-        "placeholders": 0,
-        "loading": false,
-        "blocks": 143,
-        "anchor": {
-          "line": 62,
-          "offset": -5.9,
-          "height": 22.4
-        },
-        "t": 109
+        "t": 88
       },
       {
         "scrollTop": 2180,
@@ -555,7 +542,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 119
+        "t": 114
       },
       {
         "scrollTop": 2180,
@@ -570,7 +557,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 137
+        "t": 116
       },
       {
         "scrollTop": 2180,
@@ -585,7 +572,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 172
+        "t": 129
       },
       {
         "scrollTop": 2180,
@@ -600,7 +587,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 202
+        "t": 166
       },
       {
         "scrollTop": 2180,
@@ -615,7 +602,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 264
+        "t": 212
       },
       {
         "scrollTop": 2180,
@@ -630,7 +617,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 326
+        "t": 274
       },
       {
         "scrollTop": 2180,
@@ -645,7 +632,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 513
+        "t": 336
       },
       {
         "scrollTop": 2180,
@@ -660,7 +647,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 812
+        "t": 508
       },
       {
         "scrollTop": 2180,
@@ -675,7 +662,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1216
+        "t": 804
       },
       {
         "scrollTop": 2180,
@@ -690,7 +677,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1511
+        "t": 1211
       },
       {
         "scrollTop": 2180,
@@ -705,7 +692,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 2010
+        "t": 1507
       },
       {
         "scrollTop": 2180,
@@ -720,24 +707,39 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 3008
+        "t": 2003
+      },
+      {
+        "scrollTop": 2180,
+        "scrollHeight": 5044,
+        "clientHeight": 707,
+        "maxScroll": 4337,
+        "placeholders": 0,
+        "loading": false,
+        "blocks": 142,
+        "anchor": {
+          "line": 62,
+          "offset": -5.9,
+          "height": 22.4
+        },
+        "t": 3001
       }
     ],
     "muts": [
       {
-        "t": 112,
+        "t": 109,
         "removed": 1,
         "added": 1,
         "addedLoading": true
       },
       {
-        "t": 112,
+        "t": 109,
         "removed": 1,
         "added": 0,
         "addedLoading": false
       },
       {
-        "t": 112,
+        "t": 109,
         "removed": 0,
         "added": 1,
         "addedLoading": false
@@ -774,14 +776,23 @@
     "lazyHook": null,
     "editMode": true
   },
+  "lineTextAfter": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编辑落点。标记 medium-0035",
+  "opEffect": {
+    "bodyLenBefore": 4426,
+    "bodyLenAfter": 4424,
+    "changed": true,
+    "editorLineChanged": true,
+    "editorLineBeforeTail": "个明确的编辑落点。标记 medium-0035。",
+    "editorLineAfterTail": "一个明确的编辑落点。标记 medium-0035"
+  },
   "judge": {
     "s0": 2180,
     "finalScrollTop": 2180,
     "finalDelta": 0,
     "lostRatio": 0,
     "firstDropT": null,
-    "firstLoadingMutationT": 112,
-    "firstClearMutationT": 112,
+    "firstLoadingMutationT": 109,
+    "firstClearMutationT": 109,
     "heldWithinOneBlock": true,
     "controlStable": {
       "min": 2180,

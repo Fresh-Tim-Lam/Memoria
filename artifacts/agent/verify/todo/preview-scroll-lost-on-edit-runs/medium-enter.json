@@ -1,15 +1,15 @@
 {
-  "startedAt": "2026-10-25T11:56:25.333Z",
+  "startedAt": "2026-10-25T12:10:35.812Z",
   "cdp": "http://127.0.0.1:9581",
   "target": {
-    "id": "B7CCFDEC4FCCE2F6CD96DA6E08AC0CF9",
-    "url": "http://127.0.0.1:9203/"
+    "id": "03D2654C6DA6DA92BE329726D9713CA9",
+    "url": "http://127.0.0.1:1212/"
   },
   "allTargets": [
     {
-      "id": "B7CCFDEC4FCCE2F6CD96DA6E08AC0CF9",
+      "id": "03D2654C6DA6DA92BE329726D9713CA9",
       "type": "page",
-      "url": "http://127.0.0.1:9203/"
+      "url": "http://127.0.0.1:1212/"
     }
   ],
   "doc": "docs/medium.md",
@@ -69,7 +69,7 @@
   },
   "control": {
     "kind": "control",
-    "t0": 5076.899999976158,
+    "t0": 5105.5999999940395,
     "baselineScrollTop": 2180,
     "baseline": {
       "scrollTop": 2180,
@@ -129,7 +129,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 45
+        "t": 44
       },
       {
         "scrollTop": 2180,
@@ -144,7 +144,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 60
+        "t": 59
       },
       {
         "scrollTop": 2180,
@@ -159,7 +159,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 76
+        "t": 75
       },
       {
         "scrollTop": 2180,
@@ -174,7 +174,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 91
+        "t": 90
       },
       {
         "scrollTop": 2180,
@@ -189,7 +189,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 107
+        "t": 106
       },
       {
         "scrollTop": 2180,
@@ -204,7 +204,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 123
+        "t": 121
       },
       {
         "scrollTop": 2180,
@@ -219,7 +219,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 139
+        "t": 137
       },
       {
         "scrollTop": 2180,
@@ -249,7 +249,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 202
+        "t": 216
       },
       {
         "scrollTop": 2180,
@@ -264,7 +264,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 265
+        "t": 263
       },
       {
         "scrollTop": 2180,
@@ -279,7 +279,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 328
+        "t": 326
       },
       {
         "scrollTop": 2180,
@@ -294,7 +294,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 502
+        "t": 511
       },
       {
         "scrollTop": 2180,
@@ -309,7 +309,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 814
+        "t": 805
       },
       {
         "scrollTop": 2180,
@@ -324,7 +324,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1205
+        "t": 1210
       },
       {
         "scrollTop": 2180,
@@ -339,7 +339,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1502
+        "t": 1507
       },
       {
         "scrollTop": 2180,
@@ -354,7 +354,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 2002
+        "t": 2007
       },
       {
         "scrollTop": 2180,
@@ -369,7 +369,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 3010
+        "t": 3006
       }
     ],
     "muts": [],
@@ -389,6 +389,17 @@
       }
     }
   },
+  "srcLines": {
+    "count": 142,
+    "last": "142"
+  },
+  "editLine": 71,
+  "focus": {
+    "line": 71,
+    "text": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确",
+    "active": true
+  },
+  "lineTextBefore": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确的编辑落点。标记 medium-0035。",
   "beforeEdit": {
     "scrollTop": 2180,
     "scrollHeight": 5066,
@@ -403,16 +414,7 @@
       "height": 22.4
     }
   },
-  "srcLines": {
-    "count": 142,
-    "last": "142"
-  },
-  "editLine": 71,
-  "focus": {
-    "line": 71,
-    "text": "medium 第 0035 段：这一段用于把预览区撑到可滚动，并给源码区一个明确",
-    "active": true
-  },
+  "bodyLenBefore": 4426,
   "dispatch": {
     "op": "enter",
     "via": "Input.dispatchKeyEvent Enter"
@@ -420,7 +422,7 @@
   "edit": {
     "kind": "edit",
     "label": "docs/medium.md:enter",
-    "t0": 8696,
+    "t0": 8740.699999988079,
     "baselineScrollTop": 2180,
     "baseline": {
       "scrollTop": 2180,
@@ -465,7 +467,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 23
+        "t": 22
       },
       {
         "scrollTop": 2180,
@@ -480,7 +482,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 35
+        "t": 36
       },
       {
         "scrollTop": 2180,
@@ -495,7 +497,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 49
+        "t": 52
       },
       {
         "scrollTop": 2180,
@@ -510,7 +512,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 78
+        "t": 75
       },
       {
         "scrollTop": 2180,
@@ -525,7 +527,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 93
+        "t": 91
       },
       {
         "scrollTop": 2180,
@@ -540,7 +542,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 109
+        "t": 106
       },
       {
         "scrollTop": 2180,
@@ -555,7 +557,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 117
+        "t": 114
       },
       {
         "scrollTop": 2180,
@@ -570,7 +572,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 135
+        "t": 138
       },
       {
         "scrollTop": 2180,
@@ -585,7 +587,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 171
+        "t": 169
       },
       {
         "scrollTop": 2180,
@@ -600,7 +602,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 203
+        "t": 215
       },
       {
         "scrollTop": 2180,
@@ -615,7 +617,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 265
+        "t": 276
       },
       {
         "scrollTop": 2180,
@@ -630,7 +632,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 328
+        "t": 321
       },
       {
         "scrollTop": 2180,
@@ -645,7 +647,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 500
+        "t": 511
       },
       {
         "scrollTop": 2180,
@@ -660,7 +662,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 811
+        "t": 807
       },
       {
         "scrollTop": 2180,
@@ -675,7 +677,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1216
+        "t": 1211
       },
       {
         "scrollTop": 2180,
@@ -690,7 +692,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 1510
+        "t": 1505
       },
       {
         "scrollTop": 2180,
@@ -705,7 +707,7 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 2009
+        "t": 2004
       },
       {
         "scrollTop": 2180,
@@ -720,24 +722,24 @@
           "offset": -5.9,
           "height": 22.4
         },
-        "t": 3008
+        "t": 3004
       }
     ],
     "muts": [
       {
-        "t": 112,
+        "t": 108,
         "removed": 1,
         "added": 1,
         "addedLoading": true
       },
       {
-        "t": 112,
+        "t": 108,
         "removed": 1,
         "added": 0,
         "addedLoading": false
       },
       {
-        "t": 112,
+        "t": 108,
         "removed": 0,
         "added": 1,
         "addedLoading": false
@@ -774,14 +776,23 @@
     "lazyHook": null,
     "editMode": true
   },
+  "lineTextAfter": "m",
+  "opEffect": {
+    "bodyLenBefore": 4426,
+    "bodyLenAfter": 4426,
+    "changed": false,
+    "editorLineChanged": true,
+    "editorLineBeforeTail": "个明确的编辑落点。标记 medium-0035。",
+    "editorLineAfterTail": "m"
+  },
   "judge": {
     "s0": 2180,
     "finalScrollTop": 2180,
     "finalDelta": 0,
     "lostRatio": 0,
     "firstDropT": null,
-    "firstLoadingMutationT": 112,
-    "firstClearMutationT": 112,
+    "firstLoadingMutationT": 108,
+    "firstClearMutationT": 108,
     "heldWithinOneBlock": true,
     "controlStable": {
       "min": 2180,
