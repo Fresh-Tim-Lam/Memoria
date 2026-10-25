@@ -254,28 +254,14 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 ### G. 团队任务板 12 条无主任务：认领与顺序（2026-10-23，todo-owner）
 
 > **判定纪律（2026-10-23 新增，Lead 纠正）**：判「过期/已完成」**必须两条都查** —— ① 任务书点名的产物是否存在；② 全仓搜**功能等价物**（换名/换实现也算）。只查 ① 会系统性高估「过期」数量（task-61 即假阴性：任务书点名的 `nav-interactions.json`/`run_nav.py` 不存在，但实交付是 `nav_entries.mjs`）。
-> 背景：Curator r3 机检发现 12 条未完成任务 0 owner / 0 writeScopes ⇒ 三项检查空转。Lead 派 todo-owner 认领并按现状排序；**12/12 已认领（owner=todo-owner）**，每条 writeScopes 已按真实写域收敛。现状调研与逐条证据见 `artifacts/agent/verify/todo-owner-state-assessment.md`（只读调研，不提交）。
+> **2026-10-25 移出**：原 12 行认领表与处置汇总已归档 → [design/ledger-archive-2026.md §10.6](design/ledger-archive-2026.md)（原文逐字；腾出版面给 task-134「出生即死」台账与建议条款）。
+### H. 待裁决 · 建议新增条款（L10：只建议、不落检查）
 
-| 任务 | 处置 | 理由 / 前置（证据见 assessment） |
-|---|---|---|
-| task-79 跨块选区操作 | **执行中·顺序 1（P0）** | 用户报告数据丢失；与 E22 同根因；`app.js` 单写者 ⇒ 先于 69/75 |
-| task-69 冷启动 13–23s | **执行中·顺序 2（P1）** | 先补 boot 打点（`profile_open.py` 不存在）；0.4.6 只优化"打开"不含"启动" |
-| task-75 openFile 启动期静默 | **执行中·顺序 3（P1）** | 已返回 `ok/failed/aborted`；69 的 boot 改造后先复测，可能直接关闭 |
-| task-48 P6 放行前有界重试 | **已关闭 @2026-10-23** | 0.4.4/P6 已发布（`v0.4.4`），发布门已过；重试预算按设计用满 |
-| task-49 taskkill /T 安全 + S11 | **已关闭 @2026-10-23** | 已完成：无真实 `/T` 用法（仅注释），S11 已入 `interactions.json:154` |
-| task-63 性能 S0+S1（0.4.4 基线） | **已关闭 @2026-10-23** | 0.4.4 基线已失效；S0/S1 结论已在 `performance-improvement-plan.md` §7 |
-| task-68 reload 崩溃 | **已关闭 @2026-10-23** | 非用户可达：全仓无 reload/F5 绑定，崩溃仅来自 CDP reload（longterm-plan W1 第4轮） |
-| task-70 堆泄漏 | **已关闭 @2026-10-23** | 已修：`1094778d` + `dc00034f`（85→21MB，−75.3%），报告在案 |
-| task-71 第二遍滚动中段慢 | **已关闭 @2026-10-23** | W3.2 已收口为已知限制：两条修法被证伪，mermaid 缓存 `9c940796` 已合入；**归入 [longterm-plan](design/longterm-plan-2026-10.md) 「已知限制」节，勿再立项** |
-| task-73 占位高度估值 | **已关闭 @2026-10-23** | 已校准：`bbab57ed`（+3.41%→+1.04%，7 类收敛） |
-| task-74 大文档交互测量债 | **已关闭 @2026-10-23** | 已完成：W4.1 `run_lazy_gate.py` L0–L5 + `--sabotage` 负向自证（`98c8c1b9`） |
-| task-78 L4 超 8 屏 | **已关闭 @2026-10-23** | 已修复：`17ee05d9` 淘汰饥饿（压力场景 3228→146），`task78-report.md` 闭合 |
-| task-61 导航入口测试套件 | **已关闭·已完成** | 实交付 `nav_entries.mjs` + `nav-entries-report.md` + `nav-entries-run{1,2,3}.json`；P50 68–75ms、renderPreview 三入口全 0 |
-| task-62 P6 收口重跑 | **待 Lead（blocked_by task-60）** | 实质产物齐全：`s_render_frozen_v3/`（README 明写 task-62）+ `p6c2-rulecheck.json` + `p6-closure-*` 产物；仅缺最终汇总 report/D 双跑；需先解锁 task-60 才能 claim |
-| task-64 S2 方案评估 | **已关闭·已完成** | 实交付 `artifacts/agent/verify/perf-solution-evaluation.md`（41,956 B；标题即 task-64；A/B/C/D 对比+推荐+失败模式+前置问题）|
-| task-72 块级排版缓存 | **已关闭·已完成** | 代码 `6c3e8c01`（up-pass typeset 1082.8→105.5ms）；**残余完整 4 轮 A/B 未测、不补**（结论已由单轮数据给出，重复验证边际收益低）|
-
-**处置汇总**：保留 3 条（79→69→75，严格串行：`app.js` 单写者）；**已关闭 9 条 @2026-10-23**（48/49/63/68/70/71/73/74/78；Lead 批准，`complete` 不删历史）。另 4 条原 blocked 待办：**61/64/72 已关闭**（61、64 已完成；72 已完成但残余 A/B 未测、不补）；**62 仍 blocked_by task-60（metrics-baseline in_progress）⇒ 我无 owner 权限 claim，需 Lead 先关 task-60 或直接完成 62**（其 v3 基线/规则校验/性能产物齐全，仅缺最终汇总 report）。
+> 【**建议新增条款（待裁决）**】UI 追加块必须有 **JS 运行时冒烟**
+> **问题**：`assert "xxx" in src` / `node --check` / `pytest` 都只能证明**文本存在与语法合法**，不能证明**代码在 IIFE 里可达**。本轮实证（task-134）：文档资源附件块 headless 全绿（`pytest 1474 passed`、`node --check` 静默、源码断言通过），但**真机从未生效**（拖文档报「只支持图片」，6 天无人发现）。
+> **候选做法**：**A** 只对「IIFE 门面 `return` 之后」做静态可达性审计（轻、可自动化；`audit_deadcode.py` 已实证 59 个 JS 全扫可行，输出 `issues` 列表）｜**B** 加真机/JS 运行时冒烟（重，需 Electron 环境）｜**C** 只做文档约定 + code review 清单（最轻）。
+> **现状**：A 已由 task-134 的 `audit_deadcode.py` 实证可行（59 个 JS 全扫、`issues: []`）；B 的成本需另估。
+> **待裁决**：选 A / B / C / 不做。按 L10：只建议、不擅自变成检查；落成机检须人裁决。
 
 ### 验证机制分配（2026-09-09）
 
@@ -395,9 +381,12 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG101 | **编辑热路径瘦身：源码面板/后处理都只动改动的那几行·那一块** | ✅·K4 | design §2 |
 | AG99 | **清掉窗口化残留 + MathJax 排队回旧口径**（收尾） | ✅·K4a | design §2 |
 | AG98 | **预览区编辑一律块级提交：结构性编辑不再整篇重渲**（人指出病根） | ✅·K4 | design §2 |
+| AG106 | 文档资源附件（拖 PDF/Word/TXT/MD 进对话栏） | ✅ 0.4.7 修复（task-134/`4d210c45`；后端 `6336728a` 交付，前端 `1fe97fa7` 出生即死 10-19~10-25） | artifact task134 |
 
 > **2026-10-25 task-90 状态校准**：① 24 条窗口化家族 → `⛔→§10.4.2`（见 [design/ledger-archive-2026.md §10.4.2](design/ledger-archive-2026.md)）；② AG03/AG08/AG11/AG89 由 `✅·K2` **降回 `🔄·K2`**（矛盾修正：无真机验收证据，按规则 2 不得标 ✅）；③ 复核明细与逐条证据见 `artifacts/agent/verify/todo/0.4.7-task-90-ledger.md`；④ 剩余 K2 条目等 task-91~112 判定后由 task-94 收口。
 
+> **AG106 明细（2026-10-25 补，task-134）**：后端 `6336728a`(10-18) 已交付 `ui.py:2792 agent_attach_resource` / `kb.py:6065 read_resource` / `resources.py::extract_text`；前端 `1fe97fa7`(10-19 20:16) 首次接线但落在 IIFE 门面 `return` 之后 ⇒ **出生即死**（10-19~10-25 共 6 天：用户拖文档一律红框「只支持图片」，后端 0 文件、无 chip）；§13 此前**没有任何一行**记录该功能。修复 `4d210c45`(task-134)；真机 before/after：`artifacts/agent/verify/todo/0.4.7-dead-code-audit/realmachine/`（`drop-before.png` 红框 → `drop-after.png`：①无报错 ②后端落盘 ③chip ④请求体含 read_resource ⑤发送后清空 ⑥移除按钮生效）。
+> **落点约定（2026-10-25 补，task-134 实证）**：UI 追加块必须落在 IIFE 门面 `return {` **之前**；`return` 之后的顶层语句**永不执行**（只有 function 声明会 hoist，且 hoist 会把问题掩盖成“看起来在”）。约定史：`8f2e88f6` 首版就有门面 return ⇒ “`})();` 之前”从来 ≠ “`return` 之前”；`2f9a88f9`(09-19) 起的正确写法被 11 commit / 19 块遵守；`1fe97fa7`(10-19) 首次写成错误变体 ⇒ 文档资源附件块出生即死 6 天。
 
 ***
 
