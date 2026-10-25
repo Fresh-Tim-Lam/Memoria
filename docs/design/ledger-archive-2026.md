@@ -141,3 +141,17 @@
 | task-72 块级排版缓存 | **已关闭·已完成** | 代码 `6c3e8c01`（up-pass typeset 1082.8→105.5ms）；**残余完整 4 轮 A/B 未测、不补**（结论已由单轮数据给出，重复验证边际收益低）|
 
 **处置汇总**：保留 3 条（79→69→75，严格串行：`app.js` 单写者）；**已关闭 9 条 @2026-10-23**（48/49/63/68/70/71/73/74/78；Lead 批准，`complete` 不删历史）。另 4 条原 blocked 待办：**61/64/72 已关闭**（61、64 已完成；72 已完成但残余 A/B 未测、不补）；**62 仍 blocked_by task-60（metrics-baseline in_progress）⇒ 我无 owner 权限 claim，需 Lead 先关 task-60 或直接完成 62**（其 v3 基线/规则校验/性能产物齐全，仅缺最终汇总 report）。
+
+### 10.7 §10 早期归档索引（2026-08 ~ 2026-09-05；task-135 移出腾体积，2026-10-25）
+
+> **移出原因**：`docs/todo.md` 体积逼近 64 KB 预算（**实测**余量 746 B），task-135 需在 §13 补 AG59/AG63 拆除说明；按 [docs-management.md §4.2](../conventions/docs-management.md)「超限归档到 design，台账只留索引」。下表 7 行逐字保留（原 §10 表头 + 行）。
+
+| 日期 | ID 列表 | 一行汇总 | 证据锚 |
+| --- | --- | --- | --- |
+| 2026-08 | — | 换壳 pywebview（WebView2）根治首帧冻结；窗口原生动画 + 顶栏原生拖拽（Aero Snap）+ Win11 圆角 + 最大化铺满（DWM + WndProc）；打包机制整理（scripts↔packaging 职责、构建脚本修正）；m0 → app 目录与命名整理（含 egg-info 出库）；样式笔刷公式映射修复（domToAst 跳过 MathJax 内部文本）+ 公式选中高亮 `.m0-sel-covered` | CHANGELOG 0.2.0（[version.md §7](conventions/version.md)） |
+| 2026-08 | E04, I02 | 公式编辑：双击行内公式进入编辑、双击块级公式进入 `math_block` 符号面板；图片与 Mermaid：引用+预览+入库+管理+属性编辑（阶段 A–G）+ Mermaid 渲染与编辑；图片资产全链路（入库去重、管理视图/清理、宽度·对齐·名称字号、双击放大即改即存） | `edit-handler.js:1244,1844`；`git log -S I02` |
+| 2026-08-29 | — | 版本号单一入口（pyproject dynamic version，改 `src/memoria/__version__.py` 一处全生效）；源码编辑器右键粘贴（无选区右键弹「粘贴」、多行逐行拆分；有选区仍弹链接菜单） | [version.md](conventions/version.md) |
+| 2026-08-30 | G03, G04 | docs 目录体系重构（`standards/`/`context/` → `conventions/`/`guides/`/`reference/`，中文名 kebab-case 重命名 + AGENT.md 重写）；图谱银河 Galaxy 视觉样式（星点光晕、亮度随连接度、深空底色、焦点脉冲、设置内光晕强度，随 `ui-settings.json` 持久化） | [docs-management.md](conventions/docs-management.md)；`graph-settings.js:574-587` |
+| 2026-09-03 | — | 演示截图迁出 docs → `resources/screenshots/`（git mv 保历史，README 双语引用 14 处同步）；新增 `conventions/readme-i18n.md`（README 双语 + 截图收录维护规范） | `conventions/readme-i18n.md` |
+| 2026-09-03/04 | i18n ④ | 语言系统 i18n（中英语言包）：`i18n.js` + zh-CN/en 包 + 设置→显示即时切换；「检查」链路与全量界面文案迁移（`menu.*`/`edit.block.*`/`cfg.*`/`app.*`/`preview.*` 等键族），app.js 候选清零；后端检查消息 code+params 本地化 | [conventions/i18n.md](conventions/i18n.md) 修订记录；`i18n-inventory.md` 候选 0 行 |
+| 2026-09-05 | — | 0.3.0 导入体系（M0–M7 全 ☑）：统一导入向导（三源卡→预览→冲突决策→复制反馈 JSON/MD→结果）+ Agent 整理提示词事实源；GUI 真机回归（三类源 × 新建/幂等/冲突全 ✓）；导入工具栏并入「文件」下拉 | [import-plan.md](reference/import-plan.md)；[import-spec.md](reference/import-spec.md) |

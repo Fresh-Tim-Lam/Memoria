@@ -169,15 +169,10 @@ T01–T03 已按规则 8.4 出表（见 §10）。
 
 > **格式**：本节是归档索引，按规则 8.4 从活动分区出表；一行一批次 = `| 日期 | ID 列表 | 一行汇总 | 证据锚 |`。**未收口条目不在本节**（原 §10.1 末尾的「样式笔刷·同行公式涂抹」属 K2 未收口项，已归位 §0）。
 
+> **2026-08 ~ 2026-09-05 的 7 条早期归档索引已移出** → [design/ledger-archive-2026.md §10.7](design/ledger-archive-2026.md)（task-135 腾体积，**原文逐字**；其余批次仍见下表）。
+
 | 日期 | ID 列表 | 一行汇总 | 证据锚 |
 | --- | --- | --- | --- |
-| 2026-08 | — | 换壳 pywebview（WebView2）根治首帧冻结；窗口原生动画 + 顶栏原生拖拽（Aero Snap）+ Win11 圆角 + 最大化铺满（DWM + WndProc）；打包机制整理（scripts↔packaging 职责、构建脚本修正）；m0 → app 目录与命名整理（含 egg-info 出库）；样式笔刷公式映射修复（domToAst 跳过 MathJax 内部文本）+ 公式选中高亮 `.m0-sel-covered` | CHANGELOG 0.2.0（[version.md §7](conventions/version.md)） |
-| 2026-08 | E04, I02 | 公式编辑：双击行内公式进入编辑、双击块级公式进入 `math_block` 符号面板；图片与 Mermaid：引用+预览+入库+管理+属性编辑（阶段 A–G）+ Mermaid 渲染与编辑；图片资产全链路（入库去重、管理视图/清理、宽度·对齐·名称字号、双击放大即改即存） | `edit-handler.js:1244,1844`；`git log -S I02` |
-| 2026-08-29 | — | 版本号单一入口（pyproject dynamic version，改 `src/memoria/__version__.py` 一处全生效）；源码编辑器右键粘贴（无选区右键弹「粘贴」、多行逐行拆分；有选区仍弹链接菜单） | [version.md](conventions/version.md) |
-| 2026-08-30 | G03, G04 | docs 目录体系重构（`standards/`/`context/` → `conventions/`/`guides/`/`reference/`，中文名 kebab-case 重命名 + AGENT.md 重写）；图谱银河 Galaxy 视觉样式（星点光晕、亮度随连接度、深空底色、焦点脉冲、设置内光晕强度，随 `ui-settings.json` 持久化） | [docs-management.md](conventions/docs-management.md)；`graph-settings.js:574-587` |
-| 2026-09-03 | — | 演示截图迁出 docs → `resources/screenshots/`（git mv 保历史，README 双语引用 14 处同步）；新增 `conventions/readme-i18n.md`（README 双语 + 截图收录维护规范） | `conventions/readme-i18n.md` |
-| 2026-09-03/04 | i18n ④ | 语言系统 i18n（中英语言包）：`i18n.js` + zh-CN/en 包 + 设置→显示即时切换；「检查」链路与全量界面文案迁移（`menu.*`/`edit.block.*`/`cfg.*`/`app.*`/`preview.*` 等键族），app.js 候选清零；后端检查消息 code+params 本地化 | [conventions/i18n.md](conventions/i18n.md) 修订记录；`i18n-inventory.md` 候选 0 行 |
-| 2026-09-05 | — | 0.3.0 导入体系（M0–M7 全 ☑）：统一导入向导（三源卡→预览→冲突决策→复制反馈 JSON/MD→结果）+ Agent 整理提示词事实源；GUI 真机回归（三类源 × 新建/幂等/冲突全 ✓）；导入工具栏并入「文件」下拉 | [import-plan.md](reference/import-plan.md)；[import-spec.md](reference/import-spec.md) |
 | 历史 | T01, T02, T03 | 文件树右键菜单：文件重命名/删除、空白区或文件夹右键新建文件/文件夹；重命名同步全库引用（正文 wikilink 改写、侧车 links/edges 与 pool 迁移，KP id 不随文件名变，新名冲突拒绝） | `file-tree.js`；`document.py:697-780` + `storage/path_cascade.py` |
 | 历史 | E15, E16, E17 | 源码编辑器多行粘贴换行丢失修复；快照式撤销/重做（输入/Enter/合并删除/粘贴，Ctrl+Z/Y）；新建文件缺 `.md` 后缀自动补齐 | `git log -S E16` |
 | 历史 | B01, B02, B03, B04, B05, B06, B07, B08, U01, U02, U03, U06, U07, U10, U11, U12 | Bug 批次全部修复；UI/UX 批次修复 | `git log -S U12` |
@@ -194,7 +189,7 @@ T01–T03 已按规则 8.4 出表（见 §10）。
 
 ### 10.3–10.5 明细已出表（2026-10-22 P2）
 
-> **10.3 首轮台账对账明细** / **10.4 已废弃条目存档（AG97、AG75 原文 + 作废理由；10.4.2 = 窗口化家族 24 条，task-90）** / **10.5 §13 中 27 条 ✅ 批量出表索引**，均已**逐字**迁入 [design/ledger-archive-2026.md](design/ledger-archive-2026.md)；本区只保留上方批索引，原文可按标题 `grep -n` 反查。
+> **10.3 首轮台账对账明细** / **10.4 已废弃条目存档（AG97、AG75 原文 + 作废理由；10.4.2 = 窗口化家族 24 条，task-90）** / **10.5 §13 中 27 条 ✅ 批量出表索引** / **10.7 §10 早期归档索引（2026-08~09-05，task-135）**，均已**逐字**迁入 [design/ledger-archive-2026.md](design/ledger-archive-2026.md)；本区只保留上方批索引，原文可按标题 `grep -n` 反查。
 > **10.4.1 已闭环归档（E25–E30 / E32 / DOC01，2026-10-22）**：用户复报批次 6 条（Ctrl+V 图片 / 换行滚动跟随 / 样式尾随空格 / `>` 后空格 / 英文词后空格 / Ctrl+X 重现）、E32（转化丢 `srcLine/srcLineEnd` 修复）、DOC01（台账治理）均已移出 §5.1 活动表，原文 + 证据见 [design/ledger-archive-2026.md §10.4.1](design/ledger-archive-2026.md)。**E24/E31（阻塞/待裁决）与 DOC02（残余）不在归档区。**
 ***
 
@@ -337,11 +332,11 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 | AG56 | 回话二级折叠（只剩最后一段摘要）+ 发送区… | ⏳ | design §2 |
 | AG57 | AG54 真机出网验证（人授权「打开开关验… | ✅→§10.5 | design §2 |
 | AG58 | 末轮用量行"又没了"的修复（重载/重启后仍在）+ 「思考过程」小三角 + 预览链接可复制 | 🔄·K2 | design §2 |
-| AG59 | **脚本工作区（agent 写、人点「运行」）v1**：库内 `.memoria/agent/scratch/` + 模型面四把工具 + 五条面板 RPC + 对话栏「工作区」面板 + `scratch/run` 审计 + 三个设置键 | 🔄·K2 | design §2 |
+| AG59 | **脚本工作区（agent 写、人点「运行」）v1**：库内 `.memoria/agent/scratch/` + 模型面四把工具 + 五条面板 RPC + 对话栏「工作区」面板 + `scratch/run` 审计 + 三个设置键 | ⛔ 已并入 ed5964c9 拆除 | design §2 |
 | AG60 | **N 线插件化·第一片：域名名单**（`fetch_allow_domains` / `fetch_deny_domains` + 逐跳校验 + `WEB_BLOCKED_DOMAIN` + 设置页两行输入 + 归一化回显） | ⛔ 已并入 AG61（2026-10-22 合并裁决；正文保留供追溯，不再维护） | design §2 |
 | AG61 | **N 线插件化·第二片：样板声明 + 工具级能力闸（= 库级启停）+ 库级参数 schema 第一例（域名名单搬进能力面板）** | 🔄·K2 | design §2 |
 | AG62 | **N 线技能包：skill 的「内置只读根」+ 首个随包技能** **`web-research`（N 线联网工作法）** | 🔄·K2 | design §2 |
-| AG63 | **脚本工作区三键的设置界面**（`script_interpreter` / `script_use_bundled` / `script_timeout_s`）+ RPC `agent_script_settings`（收掉 AG59 的"暂无界面"） | 🔄·K2 | design §2 |
+| AG63 | **脚本工作区三键的设置界面**（`script_interpreter` / `script_use_bundled` / `script_timeout_s`）+ RPC `agent_script_settings`（收掉 AG59 的"暂无界面"） | ⛔ 已并入 ed5964c9 拆除 | design §2 |
 | AG64 | **预览池的智能替换**（评分 + 老化 + 后台预渲染的入场闸）+ 设置「性能」版块的权重 / 公式 / 恢复默认 | 🔄·K2 | design §2 |
 | AG65 | **预览池门槛可配 + 现场读数**（真机反馈跟进，AG64 的修正） | 🔄·K2 | design §2 |
 | AG66 | **板块：预览渲染管线**（刷新分档 / 缓存形态 / 增量渲染 / 预测式预加载）—— **待评审，未施工** | ⏳ | design §2 |
@@ -387,7 +382,8 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 > **2026-10-25 task-90 状态校准**：① 24 条窗口化家族 → `⛔→§10.4.2`（见 [design/ledger-archive-2026.md §10.4.2](design/ledger-archive-2026.md)）；② AG03/AG08/AG11/AG89 由 `✅·K2` **降回 `🔄·K2`**（矛盾修正：无真机验收证据，按规则 2 不得标 ✅）；③ 复核明细与逐条证据见 `artifacts/agent/verify/todo/0.4.7-task-90-ledger.md`；④ 剩余 K2 条目等 task-91~112 判定后由 task-94 收口。
 
 > **AG106 明细（2026-10-25 补，task-134）**：后端 `6336728a`(10-18) 已交付 `ui.py:2792 agent_attach_resource` / `kb.py:6065 read_resource` / `resources.py::extract_text`；前端 `1fe97fa7`(10-19 20:16) 首次接线但落在 IIFE 门面 `return` 之后 ⇒ **出生即死**（10-19~10-25 共 6 天：用户拖文档一律红框「只支持图片」，后端 0 文件、无 chip）；§13 此前**没有任何一行**记录该功能。修复 `4d210c45`(task-134)；真机 before/after：`artifacts/agent/verify/todo/0.4.7-dead-code-audit/realmachine/`（`drop-before.png` 红框 → `drop-after.png`：①无报错 ②后端落盘 ③chip ④请求体含 read_resource ⑤发送后清空 ⑥移除按钮生效）。
-> **落点约定（2026-10-25 补，task-134 实证）**：UI 追加块必须落在 IIFE 门面 `return {` **之前**；`return` 之后的顶层语句**永不执行**（只有 function 声明会 hoist，且 hoist 会把问题掩盖成“看起来在”）。约定史：`8f2e88f6` 首版就有门面 return ⇒ “`})();` 之前”从来 ≠ “`return` 之前”；`2f9a88f9`(09-19) 起的正确写法被 11 commit / 19 块遵守；`1fe97fa7`(10-19) 首次写成错误变体 ⇒ 文档资源附件块出生即死 6 天。
+
+> **2026-10-25 task-135 台账修正（AG59/AG63）**：两行的 **UI 部分已于 2026-10-09 `ed5964c9` 设计性拆除**（`refactor(agent): 第三期 拆掉 UI 脚本工作区（保留四把工具与工作区位置）`）—— 状态改 `⛔ 已并入 ed5964c9 拆除`，**原文逐字保留**。**保留**：后端 `scratch.py` + 四把工具（`tools/kb.py`）+ 工作区位置 `.memoria/agent/scratch/`；**拆除**：五条面板 RPC + 对话栏「工作区」面板 + 三键设置界面（`scratch-settings.js` / `agent_script_settings` / `agent_scratch` 全仓 0 命中）。**替代**：AG59「人点运行」诉求由**消息内代码块「运行」按钮**承接（`agent-panel.js:6669-6678` 落点注释块；Q1 拍板保留）。**AG59/AG63 的 UI 部分不再恢复**（恢复属功能决策，需人裁决）。> **落点约定（2026-10-25 补，task-134 实证）**：UI 追加块必须落在 IIFE 门面 `return {` **之前**；`return` 之后的顶层语句**永不执行**（只有 function 声明会 hoist，且 hoist 会把问题掩盖成“看起来在”）。约定史：`8f2e88f6` 首版就有门面 return ⇒ “`})();` 之前”从来 ≠ “`return` 之前”；`2f9a88f9`(09-19) 起的正确写法被 11 commit / 19 块遵守；`1fe97fa7`(10-19) 首次写成错误变体 ⇒ 文档资源附件块出生即死 6 天。
 
 ***
 
