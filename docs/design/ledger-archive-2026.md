@@ -155,3 +155,50 @@
 | 2026-09-03 | — | 演示截图迁出 docs → `resources/screenshots/`（git mv 保历史，README 双语引用 14 处同步）；新增 `conventions/readme-i18n.md`（README 双语 + 截图收录维护规范） | `conventions/readme-i18n.md` |
 | 2026-09-03/04 | i18n ④ | 语言系统 i18n（中英语言包）：`i18n.js` + zh-CN/en 包 + 设置→显示即时切换；「检查」链路与全量界面文案迁移（`menu.*`/`edit.block.*`/`cfg.*`/`app.*`/`preview.*` 等键族），app.js 候选清零；后端检查消息 code+params 本地化 | [conventions/i18n.md](conventions/i18n.md) 修订记录；`i18n-inventory.md` 候选 0 行 |
 | 2026-09-05 | — | 0.3.0 导入体系（M0–M7 全 ☑）：统一导入向导（三源卡→预览→冲突决策→复制反馈 JSON/MD→结果）+ Agent 整理提示词事实源；GUI 真机回归（三类源 × 新建/幂等/冲突全 ✓）；导入工具栏并入「文件」下拉 | [import-plan.md](reference/import-plan.md)；[import-spec.md](reference/import-spec.md) |
+
+### 10.8 §10 归档索引（2026-09-09/10 ~ 2026-09-14；0.4.7 后腾体积，2026-10-25）
+
+> **移出原因**：`docs/todo.md` 体积逼近 64 KB（**实测**余量 1,908 B），本次需更新 §14 为已发布并新增 §15（0.4.8 范围）。按 [docs-management.md §4.2](../conventions/docs-management.md)「超限归档到 design，台账只留索引」。下表 5 行逐字保留。
+
+| 日期 | ID 列表 | 一行汇总 | 证据锚 |
+| --- | --- | --- | --- |
+| 2026-09-09/10 | A1, A2, A3, A4, A5, A6, A7, A8, B1, B4, B5 | §12.A 一致性/注册内核整段收口：sidecar 镜像 + `file` 字段 + 校验 + 级联、manifest 基线/差分/幂等移动、pending 路径同步、图片注册表、KP range 双端定位 heal、词法索引后台化、原子写、终点锚 `forward_only` 漏洞修复；§12.B 文件重命名加固、autosave/flush/脏标记、KP 创建/更新提速（pending 改 JSON + 单文件同步） | `results/kp-confirm-2026-09-09.json`；`range/locator.py:45`；CHANGELOG 0.3.1 |
+| 2026-09-09/10 | C1, C2, C3, C5, D1, D2 | §12.C 视图/静默刷新：文件树重映射刷新、KP 面板静默刷新、预览范围带静默重绘（`markRangeQuiet`）、调度内核 G3 落地（`scheduler.js`）；§12.D 渲染：图片缩略图渲染修复、预览颜色 hover/选区 | `scheduler_vm_test.js`；CHANGELOG 0.3.1 |
+| 2026-09-09/10 | E1, E2, E4, E5, E6, E7, E8, E9, F01, F02, F03 | §12.E 测试/文档/规范：rename-test 库与生成脚本、图片路径规范同步、docs 修订登记、KP 创建链路 L2 归因、保存路径回退归因、G4 M6a/M3/M6b 施工与真机门禁；§12.F 开放发现 F01–F03 存在性确认，后续由 G5.1–G5.3 后台化/CLI 补全承接 | `results/durable-flush-2026-09-09.json`；`results/g4-gate-summary-2026-09-09.json` |
+| 2026-09-14 | C01, C05, C07, L02, S01, E05, E12, I01, E9, E3（部分）, i18n ④ | 首轮台账对账：11 条「已收口但仍开放」条目收口（代码与产物早已闭环），明细见 §10.3 | 见 §10.3 证据清单 |
+| 2026-09-14 | — | 「文件」菜单 3 项修复：菜单顺序改为 `打开/导入/导出 ─── 创建 Trae 智能体/新窗口/打开最近` 并去掉末尾分隔线；「打开最近」按状态分流；按已知路径装载漏 `set_kb_path` 的隐性缺陷。**未覆盖边界**：已开着别的库时点「打开最近」（会起新进程，该分支仅经代码审查） | `index.html:49-59`、`app.js:534-566,12152-12161`；`git log -S openKbAt` |
+
+### 10.9 0.4.7 §14.2/§14.3/§14.5 原文归档（发布后腾体积，2026-10-25）
+
+> **移出原因**：`docs/todo.md` 更新 §14 为已发布并新增 §15（0.4.8 范围）后体积超限（**实测** 68,265 B > 65,536 B）；按 [docs-management.md §4.2](../conventions/docs-management.md)「超限归档到 design，台账只留索引」。**以下三节原文逐字保留**，§14 只留标题与指针。
+
+### 14.2 逐条证据与可验证关闭条件
+
+| 任务板 | 证据现状（可复核） | 可验证关闭条件 | 写域 |
+| --- | --- | --- | --- |
+| `task-90` | K4a 窗口化 2026-09-25 已回退（AG97；`app.js` L1725/1942/2460-2499 行内注释）；§13 仍留 AG71–AG96 家族 + 18 条 `✅·K2` 矛盾 | 窗口化家族逐条判定表 + §10.4 归档 + 矛盾清零 + `check_todo_size.py` PASS | `docs/todo.md`、`docs/design/ledger-archive-2026.md` |
+| `task-91` | compaction 已实现（`compaction.py` 0.8/0.16；`ask._compact_if_needed`；`/compact`），但 UI 无占用显示（`agent-panel.js:745` 仅 token 数），仓库无真机压缩样本 | 占用随对话增长 + 压缩前后 UI 可见差异 + 真机长会话/`/compact` 证据 | `agent-panel.js`、`app.css`、`ask.py`、`compaction.py`、i18n |
+| `task-92` | AG21 正文自述「无 L4 实回合」；UI「能力插件」（`i18n/zh-CN.js:1655`）vs 文档 capabilities/plugin/skill；真实文档在 `docs/design/agent-skills.md` | 术语映射表 + 全仓统一（i18n 双语+文档）+ AG21 真机实回合证据（或如实降级） | `docs/design/agent-{plugin-design,capabilities,skills}.md`、`agent-panel.js`、i18n |
+| `task-93` | `src/**` grep「响应式/responsive/收缩文件树」**零命中**；仅有 `applyDockLayout()/CONTENT_MIN_PX` 宽度预算雏形 | 两档视口（1256×774 / 1600×900）实测 + 组合矩阵无溢出 + 12 剧本 12/12 | `app.css`、`app.js`、`agent-panel.js`、`file-tree.js` |
+| `task-112` | 0.4.6 披露：图片块不在选区矩阵、光标像素未断言（`artifacts/release-v0.4.6-body.md` Known issues）；视图模式 `localStorage`（`app.js:20`）因 `private_mode=True` 丢失 | 矩阵补 image 块真机 PASS + 光标位置核验结论；（若批准）3 次重启视图一致 | `scenarios/selection-*`、`app.js`、`presentation/api` |
+| `task-94` | §13 有 39 条 K2 除窗口化外「代码在、真机未闭环」 | 39 条逐条判定+证据 + 收口清单落盘 + §13 行级状态更新 | `docs/todo.md`、`artifacts/agent/verify/todo` |
+
+### 14.3 0.4.6 已带走（对照 `artifacts/release-v0.4.6-body.md` + tag `09a5cbf2`）
+
+- **原 0.4.7 ③④ 已发布**：③ dock 宽度 `a68ab655`（`DOCK_SOFT_MAX_REM=120`）；④ 多级列表 `c09b4a09`/`2eef3e34`/`17c20c62`。
+- **0.4.6 主线**：① 跨块选区四操作 146/146（`task-79`+`task-83`）；② 冷启动 **15.4s→2.4s**（`task-69` P0-a 词法索引缓存 + `task-84` P1 关键路径移出 + `task-69` P1 coalesce）；③ 剪贴板改系统 API（`efedbe75`）；④ `task-75` openFile 静默失效修复（`5cbc737b`）。
+- **事实纠正**：Lead 给的 tag `9851c6d0` 不对；实测 v0.4.6 = **`09a5cbf2`（2026-10-24T16:31:04+08:00）**。0.4.6 未关闭任何 §13 条目（区间内仅 `a68ab655` 触及 agent-panel）。
+- **0.4.6 披露 Known issues**：图片块不在矩阵、光标像素未断言、视图模式重启丢失、页面加载 ~421ms、图谱审计 3×（=task-85）。⇒ 前 3 项进 D4 裁决；后 2 项本版不做。
+
+### 14.5 本版本不做什么（防范围膨胀）
+
+| 不做项 | 理由 |
+| --- | --- |
+| task-86 知识图谱调研 | 人 2026-10-24 明确 0.4.8；task-86 自述不阻塞 0.4.6/0.4.7 |
+| task-85 图谱审计 3×（≈0.6s） | P2；0.4.6 冷启动 2430ms 已达标（task-85 自述 ≤2500ms 降 P2）；性能线非收摊 |
+| AG04 工具与能力包路线图 | ⏳ K3 待评审，大板块（P1–P12） |
+| AG56 二级折叠+发送区 / AG66 预览管线板块 / AG67–AG70 预渲染家族 | 新功能/待评审/需人定优先级 |
+| AG12/AG13/AG14/AG01/AG05/AG06 | 新功能或体验增强 |
+| 页面加载 ~421ms 优化 | 0.4.6 披露 deferred，P3 性能，不属收摊 |
+| 团队基础设施运维债（findings/decision_trail/write_scope/mode_policy） | 见 D5；非产品验收对象，各 owner/机制消化 |
+| `private_mode=False` 视图持久化方案 | 涉隐私/多实例语义，推 0.4.8（D4-B） |
