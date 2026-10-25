@@ -789,6 +789,10 @@
         fontDefault: "默认 {def}px，范围 {min}–{max}px。",
         uiScaleGroup: "界面整体缩放",
         uiScaleNote: "对整个应用界面按比例缩放（等价于浏览器 Ctrl+±）。",
+        contentMinGroup: "文档区宽度",
+        contentMinLabel: "文档区保底宽度（px）",
+        contentMinNote: "文档区最小保留宽度。调大后，窗口变窄时对话栏会更早自动隐藏，把空间让给文档。",
+        contentMinHint: "范围 320–560，默认 {def}；改完立即生效并保存。",
         uiScale: "缩放比例",
         uiScaleHint: "快捷键：Ctrl+= 放大 / Ctrl+- 缩小 / Ctrl+0 复位 100%。",
         resetScale: "复位为 100%",
@@ -1900,6 +1904,8 @@
     compactOverdueHint: "占用已超过压缩阈值。正常会在下一次提问前先压缩；若一直停在这里，说明那次摘要调用失败或被取消（fail-open：提问本身不受影响）。",
     compactTimes: "已压缩 {n} 次",
     compactTimesHint: "本会话已发生的压缩次数（压缩后占用会骤降，那是真实事件，不是显示错误）",
+    compactRingTitle: "字符预算：{chars} / {max} 字符（{percent}%）",
+    compactRingUnknown: "上下文用量未知（旧会话或尚未载入）",
   });
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.role, { system: "系统" });
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.status, {

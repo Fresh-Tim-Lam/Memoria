@@ -129,7 +129,11 @@
     flex-direction: column;
     flex-shrink: 0;
     position: relative;
-    transition: width 0.18s ease, min-width 0.18s ease;
+    /* task-144 ①：展缩动画只动布局宽度（不可避免全文档 reflow），但把侧栏内部
+       布局隔离出来（contain: layout），并把时长从 180ms 收到 120ms + ease-out，
+       减少长文档下每帧重排次数（基线：长文档每周期 5 帧 >33ms；改后测量对比）。 */
+    contain: layout;
+    transition: width 0.12s ease-out, min-width 0.12s ease-out;
 }
 
 /* 左栏（文件树/图谱）整体收起：宽度归零，隐藏内容与拖拽柄 */
@@ -325,7 +329,9 @@
     position: relative;
     /* 展开态**不设** overflow:hidden：拖拽柄在左缘外 3px（见下方 #agent-dock-resizer），
        overflow 会把它裁掉一半、缩小可抓面积（与 #-sidebar 一致，只在折叠态裁） */
-    transition: width 0.18s ease, min-width 0.18s ease;
+    /* task-144 ①：同左栏 —— contain: layout 隔离内部布局 + 120ms ease-out（见 #-sidebar 注释） */
+    contain: layout;
+    transition: width 0.12s ease-out, min-width 0.12s ease-out;
 }
 
 /* 整体收起：宽度归零，隐藏内容与拖拽柄 */
@@ -2150,6 +2156,43 @@ button.-agent-sources-label:hover {
 }
 #status-agent:empty { display: none; }
 #status-agent:hover { text-decoration: underline; text-underline-offset: 0.125rem; }
+/* task-144 ④：上下文占用长文字不再显示在底栏（视觉隐藏，语义保留；数字看圆环 tooltip） */
+#status-agent .-ctx-compact-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── task-144 ④：上下文用量圆环（SVG，零依赖；贴状态栏最右，不再用长文字占底栏） ──
+   · 中性（<80%）：继承状态栏白字；≥80% / 超阈值：警示黄（蓝底用 #ffd75e，与上方 .-stat-warn 同源）
+   · 未知态：半透明灰环（不报错、不瞎报 0%）
+   · title（原生 tooltip）里是完整数字：字符 / 上限（百分比）· 已压缩 N 次 */
+#status-ctx-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    margin-left: 0.5rem;
+    flex: 0 0 auto;
+    cursor: default;
+    color: inherit;
+    opacity: 0.95;
+}
+#status-ctx-ring svg { width: 14px; height: 14px; display: block; overflow: visible; }
+#status-ctx-ring .-ctx-ring-track { stroke: currentColor; opacity: 0.28; }
+#status-ctx-ring .-ctx-ring-value { stroke: currentColor; }
+#status-ctx-ring.-ctx-ring--warn { color: #ffd75e; }
+#status-ctx-ring.-ctx-ring--unknown { color: currentColor; opacity: 0.5; }
+#status-ctx-ring:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; border-radius: 50%; }
+/* 无对话面板（未启用 agent）时不显示 —— 状态栏不因"未知"多一个常驻灰点 */
+#status-ctx-ring.-ctx-ring--hidden { display: none; }
 
 /* 状态栏**最左**的「知识库绝对路径」格（index.html `#status-kb`，由 app.js
    showKbIndicator() 更新；2026-09-18 由顶栏 `#kb-indicator` 移来，同日再由最右
@@ -7365,4 +7408,50 @@ body.-review-manage-open { overflow: hidden; }
 .-agent-think-body.markdown-body .-blank-block,
 .-agent-step.markdown-body .-blank-block {
     display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   task-144 ⑥：窗口恢复体感
+   (a) 最小化→恢复时抑制"收缩→伸展"过渡：恢复首帧加 .-no-transition，稳定后移除
+       （见 app.js 末尾 bootUX；只作用左右侧栏，不动其它过渡）
+   (c) 启动加载感：首屏数据就绪前给 logo 一个轻脉冲 + 顶部 2px 不确定进度条
+       （html.-booting 由 app.js 启动即加，首个文档打开/8s 兜底后移除）
+   ═══════════════════════════════════════════════════════════════════════════ */
+html.-no-transition #-sidebar,
+html.-no-transition #-agent-dock {
+    /* 选择器 (1,1,1) 已高于原 #-sidebar/#-agent-dock 的 (1,0,0)，无需 !important
+       （tests/test_checkbox_dot_style.py 明确禁止在该块用 !important 打架） */
+    transition: none;
+}
+
+html.-booting .logo-icon {
+    animation: memoria-boot-pulse 1.1s ease-in-out infinite;
+    transform-origin: center;
+}
+html.-booting .toolbar-brand .logo {
+    opacity: 0.72;
+}
+html.-booting::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 99999;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--theme-color, #4a9eff), transparent);
+    animation: memoria-boot-bar 1.1s ease-in-out infinite;
+}
+@keyframes memoria-boot-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(0.94); }
+    50% { opacity: 1; transform: scale(1); }
+}
+@keyframes memoria-boot-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    html.-booting .logo-icon,
+    html.-booting::before { animation: none; }
 }

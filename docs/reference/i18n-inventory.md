@@ -17,13 +17,13 @@
 | `src/memoria/ui/static/app/js/review-modal.js` | 15 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/index.html` | 12 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/agent-panel.js` | 6 | ☐ 未迁移 |
+| `src/memoria/ui/static/app/js/app.js` | 2 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/agent-question.js` | 1 | ☐ 未迁移 |
-| `src/memoria/ui/static/app/js/app.js` | 1 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/edit-handler.js` | 1 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/keys-debug.js` | 1 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/net-settings.js` | 1 | ☐ 未迁移 |
 | `src/memoria/ui/static/app/js/plugins-settings.js` | 1 | ☐ 未迁移 |
-| **合计** | **89** | — |
+| **合计** | **90** | — |
 
 ## 逐文件清单
 
@@ -118,20 +118,21 @@
 
 ### src/memoria/ui/static/app/js/agent-panel.js
 
-- L7108: (code === "RESOURCE_TOO_LARGE") return "资源文件过大（上限 20 MiB）";
-- L7109: == "UNSUPPORTED_RESOURCE_TYPE") return "只支持 PDF / Word(.docx) / TXT / Markdown";
-- L7111: String((res && res.message) 丨丨 "") 丨丨 "资源上传失败";
-- L7152: showAttachError("资源文件过大（上限 20 MiB）：" + String(files[i].name 丨丨 ""));
-- L7164: return "（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n" +
-- L7191: showAttachError("不支持的文件类型：" + String(others[0].name 丨丨 "") + "（可拖入图片或 PDF / Word / TXT
+- L7192: (code === "RESOURCE_TOO_LARGE") return "资源文件过大（上限 20 MiB）";
+- L7193: == "UNSUPPORTED_RESOURCE_TYPE") return "只支持 PDF / Word(.docx) / TXT / Markdown";
+- L7195: String((res && res.message) 丨丨 "") 丨丨 "资源上传失败";
+- L7236: showAttachError("资源文件过大（上限 20 MiB）：" + String(files[i].name 丨丨 ""));
+- L7248: return "（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n" +
+- L7275: showAttachError("不支持的文件类型：" + String(others[0].name 丨丨 "") + "（可拖入图片或 PDF / Word / TXT
+
+### src/memoria/ui/static/app/js/app.js
+
+- L8601: cap.textContent = "图";
+- L13922: " 行失败（已插入 " + failedAt + " 行），文档可能不完整");
 
 ### src/memoria/ui/static/app/js/agent-question.js
 
 - L35: : "error", code: "no_bridge", message: "桥不可用" });
-
-### src/memoria/ui/static/app/js/app.js
-
-- L8475: cap.textContent = "图";
 
 ### src/memoria/ui/static/app/js/edit-handler.js
 

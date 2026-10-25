@@ -455,6 +455,39 @@ def _disable_browser_accelerator_keys(window) -> None:
         print(f"[shell] disable_browser_accelerator_keys failed: {exc}", flush=True)
 
 
+def _theme_background_color() -> str:
+    """⑥(b)（task-144）：窗口初始背景色按**已持久化主题**取，减少"最小化→恢复/首帧"的黑屏对比。
+
+    - 主题偏好落盘在 ui-settings.json `layout.theme`（theme-mode.js 的 persist 同款）；
+    - `system` ⇒ 读注册表 AppsUseLightTheme（Windows 系统外观）；
+    - 读不到一律回退深色 #1e1e1e（= memoria.css `--bg-primary`，与现状"黑底"同族，不引入新跳变）。
+    WebView2 首帧本身仍可能有一瞬空白（浏览器固有行为），这里只能保证"窗口底色不透黑"。
+    """
+    mode = "system"
+    try:
+        from memoria.storage.ui_settings import load_ui_settings
+
+        settings = load_ui_settings() or {}
+        layout = settings.get("layout") if isinstance(settings, dict) else None
+        if isinstance(layout, dict) and layout.get("theme") in ("dark", "light", "system"):
+            mode = layout["theme"]
+    except Exception:  # noqa: BLE001
+        pass
+    if mode == "system":
+        try:
+            import winreg
+
+            with winreg.OpenKey(
+                winreg.HKEY_CURRENT_USER,
+                r"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
+            ) as key:
+                light, _ = winreg.QueryValueEx(key, "AppsUseLightTheme")
+            mode = "light" if int(light) else "dark"
+        except Exception:  # noqa: BLE001
+            mode = "dark"
+    return "#ffffff" if mode == "light" else "#1e1e1e"
+
+
 def run() -> None:
     frameless = _frameless_enabled()
     # 本次运行诊断从头记录（发布态落地 Package/frameless-ok.txt）
@@ -471,6 +504,8 @@ def run() -> None:
         raise FileNotFoundError(f"UI 入口不存在: {UI_APP_INDEX}")
     _diag(f"run ui-ready kb={startup_kb}")
 
+    background_color = _theme_background_color()
+    _diag(f"run window-background {background_color}")
     window = webview.create_window(
         title=f"Memoria v{__version__}",
         url=create_app(),
@@ -480,6 +515,8 @@ def run() -> None:
         min_size=(WINDOW_MIN_WIDTH, WINDOW_MIN_HEIGHT),
         frameless=frameless,
         easy_drag=False,
+        # ⑥(b)：窗口底色跟随已持久化主题（默认深色 #1e1e1e，浅色主题 #ffffff）
+        background_color=background_color,
         # pywebview 默认 text_select=False 会注入 body{-webkit-user-select:none}，
         # Chromium 下该样式会阻止 <input type=range> 拖拽（滑块 input 事件不触发），
         # 设置面板的字号/缩放滑块因此无响应；应用 CSS 已自行管理 user-select 策略

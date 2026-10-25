@@ -1,0 +1,74 @@
+{
+  "checks": {
+    "ring_exists_in_status_bar": true,
+    "ring_unknown_state_has_title": true,
+    "ring_no_long_text_in_status_agent": true,
+    "settings_field_present": true,
+    "settings_default_360": true,
+    "settings_save_480_persists": true,
+    "settings_agent_panel_reads_value": true,
+    "settings_clamp_range": true,
+    "settings_restore_360": true,
+    "toggle_still_animates": true,
+    "sidebar_contain_layout": true,
+    "dock_contain_layout": true,
+    "restore_suppresses_transition_temporarily": true,
+    "booting_class_removed_when_ready": true
+  },
+  "ring_unknown": {
+    "exists": true,
+    "inStatusBar": true,
+    "unknown": true,
+    "hasSvg": true,
+    "title": "上下文用量未知（旧会话或尚未载入）",
+    "aria": "上下文用量未知（旧会话或尚未载入）",
+    "statusAgentText": ""
+  },
+  "settings": {
+    "hasField": true,
+    "hasRange320560": true,
+    "hasNote": true,
+    "before": 360,
+    "after480": {
+      "get": 480,
+      "local": 480
+    },
+    "agentGet": 480,
+    "clampedHigh": 560,
+    "clampedLow": 320,
+    "restored": 360,
+    "range": {
+      "min": 320,
+      "max": 560,
+      "step": 10,
+      "def": 360
+    }
+  },
+  "anim": {
+    "dockTransition": "0.12s, 0.12s width, min-width",
+    "sidebarContain": "layout",
+    "dockContain": "layout",
+    "click": true,
+    "distinct": 13,
+    "widths": [
+      1,
+      32,
+      61,
+      89,
+      165,
+      187,
+      208,
+      226,
+      242,
+      257,
+      267,
+      275,
+      280
+    ]
+  },
+  "noTrans": {
+    "during": true,
+    "after": false
+  },
+  "pass": true
+}

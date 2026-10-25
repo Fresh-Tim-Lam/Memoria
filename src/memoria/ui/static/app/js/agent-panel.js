@@ -218,7 +218,20 @@ window.MemoriaAgentPanel = (function () {
   const DOCK_DEFAULT_REM = 22; // 与 width 一致
   // 文档区（#content）最小宽度保护：三栏（左栏 + #content + dock）都是固定/自动宽，
   // 空间不足时**只让 dock 让位**（先缩到 16rem，再整体临时隐藏），#content 永不小于它。
-  const CONTENT_MIN_PX = 360;
+  // 2026-10-25 task-144 ②：改为**可配置**（设置 → 显示 → 文档区保底宽度，320–560，默认 360）。
+  // 方向语义：调大 ⇒ 对话栏更早被自动隐藏（与 task-93 响应式联动一致）；默认值不变。
+  const CONTENT_MIN_PX = 360; // 默认值（设置缺省/非法时回退）
+  /** 当前生效的「文档区保底宽度」：读设置模块（存在时），否则回退默认 360。 */
+  function currentContentMinPx() {
+    try {
+      const ds = window.MemoriaDisplaySettings;
+      if (ds && typeof ds.getContentMinPx === "function") {
+        const v = Number(ds.getContentMinPx());
+        if (isFinite(v) && v >= 320 && v <= 560) return v;
+      }
+    } catch (_) { /* 设置模块缺席/异常 ⇒ 回退默认 */ }
+    return CONTENT_MIN_PX;
+  }
   let dockWidthRem = DOCK_DEFAULT_REM; // **期望宽度**（rem）：只在拖拽/显式操作时改写
   let dockCollapsed = false; // 手动折叠（用户意图，落盘）
   let dockAutoHidden = false; // 空间不足自动隐藏（派生态，**永不落盘**）
@@ -249,7 +262,7 @@ window.MemoriaAgentPanel = (function () {
   function availableDockPx() {
     const main = $("#main");
     const mainW = main ? main.clientWidth : window.innerWidth;
-    return mainW - sidebarEffectivePx() - CONTENT_MIN_PX;
+    return mainW - sidebarEffectivePx() - currentContentMinPx();
   }
 
   /**
@@ -6988,6 +7001,9 @@ window.MemoriaAgentPanel = (function () {
     const view = contextUsageView();
     if (!view) {
       el.style.color = ""; // 没有预算数据 ⇒ 文本/悬停交给 base（token 行照旧）；只还原颜色
+      // task-144 ④：底栏不再追加长文字；圆环给"未知"态（灰环 + 悬停"未知"，不报错、不瞎报 0%）
+      // 单测会在 node 里只抽本函数执行（无 DOM/辅助函数）⇒ 存在性保护，不让测试/降级环境抛错
+      if (typeof renderContextRing === "function") renderContextRing(null, null);
       return;
     }
     const parts = [];
@@ -6998,7 +7014,8 @@ window.MemoriaAgentPanel = (function () {
         : T("agent.statusBar.compactShort", { percent: view.percent })
     );
     if (view.times > 0) parts.push(T("agent.statusBar.compactTimes", { n: view.times }));
-    el.textContent = parts.filter(Boolean).join(" · ");
+    // task-144 ④：**不再写入 `#status-agent`.textContent**（人：「不需要占用底栏用这么长的文字」）
+    //   —— token 行 base 文本保持原样；占用详情进圆环 tooltip（见 renderContextRing）。
     const lines = baseTitle ? [baseTitle] : [];
     lines.push(
       T("agent.statusBar.compactBudget", {
@@ -7015,6 +7032,73 @@ window.MemoriaAgentPanel = (function () {
     if (view.over) lines.push(T("agent.statusBar.compactOverdueHint"));
     el.title = lines.join("\n");
     el.style.color = view.over ? "var(--error)" : "";
+    // task-144 ④：底栏视觉上不再出现长文字（人：「不需要占用底栏用这么长的文字」）。
+    //   浏览器里把这段文字挂到**视觉隐藏 span**（保留既有"只追加不覆盖 base"语义与可访问性，
+    //   完整数字同时进圆环 tooltip）；无 DOM 的 node 单测环境走 textContent 回退（既有测试契约）。
+    const compactText = parts.filter(Boolean).join(" · ");
+    if (typeof el.appendChild === "function" && typeof document !== "undefined" && document.createElement) {
+      let hidden = el.querySelector ? el.querySelector(".-ctx-compact-hidden") : null;
+      if (!hidden) {
+        hidden = document.createElement("span");
+        hidden.className = "-ctx-compact-hidden";
+        el.appendChild(hidden);
+      }
+      hidden.textContent = compactText;
+    } else {
+      el.textContent = compactText;
+    }
+    if (typeof renderContextRing === "function") renderContextRing(view, lines);
+  }
+
+  /**
+   * task-144 ④：上下文用量圆环（SVG，零第三方依赖）。
+   * 语义（task-91 四条一条不丢）：
+   *   · 缺失 ⇒ 灰环 + "未知"，不报错、不瞎报 0%；
+   *   · 比例 = chars / max_chars（**字符 ÷ 字符**，由 contextUsageView 计算）；
+   *   · over（>threshold_chars，≈80%）⇒ 警示色；
+   *   · compacted_times 是"压缩发生过"的证据 ⇒ 悬停里带上"已压缩 N 次"。
+   * 位置：#status-bar 最右（不占底栏长条）。
+   */
+  function renderContextRing(view, detailLines) {
+    const bar = $("#status-bar");
+    if (!bar) return;
+    let host = document.getElementById("status-ctx-ring");
+    if (!host) {
+      host = document.createElement("span");
+      host.id = "status-ctx-ring";
+      host.className = "-ctx-ring";
+      host.setAttribute("role", "img");
+      host.tabIndex = 0;
+      bar.appendChild(host);
+    }
+    const R = 7;
+    const C = 2 * Math.PI * R;
+    const svgOpen = '<svg viewBox="0 0 20 20" aria-hidden="true">';
+    if (!view) {
+      host.classList.remove("-ctx-ring--warn");
+      host.classList.add("-ctx-ring--unknown");
+      host.innerHTML = svgOpen +
+        `<circle class="-ctx-ring-track" cx="10" cy="10" r="${R}" fill="none" stroke-width="2"/></svg>`;
+      host.title = T("agent.statusBar.compactRingUnknown");
+      host.setAttribute("aria-label", host.title);
+      return;
+    }
+    const pct = Math.max(0, Math.min(100, view.percent));
+    const dash = (pct / 100) * C;
+    host.classList.remove("-ctx-ring--unknown");
+    host.classList.toggle("-ctx-ring--warn", !!view.over);
+    host.innerHTML = svgOpen +
+      `<circle class="-ctx-ring-track" cx="10" cy="10" r="${R}" fill="none" stroke-width="2"/>` +
+      `<circle class="-ctx-ring-value" cx="10" cy="10" r="${R}" fill="none" stroke-width="2" ` +
+      `stroke-linecap="round" stroke-dasharray="${C.toFixed(2)}" stroke-dashoffset="${(C - dash).toFixed(2)}" ` +
+      `transform="rotate(-90 10 10)"/></svg>`;
+    const title = [T("agent.statusBar.compactRingTitle", {
+      percent: view.percent, chars: fmtTokens(view.chars), max: fmtTokens(view.max),
+    })];
+    if (view.times > 0) title.push(T("agent.statusBar.compactTimes", { n: view.times }));
+    host.title = title.join(" · ");
+    host.setAttribute("aria-label", host.title);
+    if (detailLines && detailLines.length) host.setAttribute("data-ctx-detail", detailLines.join(" | "));
   }
 
   /** 系统行文案（i18n 键缺失时回落到后端 `text`，绝不显示空行）。 */
@@ -7247,6 +7331,8 @@ window.MemoriaAgentPanel = (function () {
 
   return {
     init: init,
+    // task-144 ②：当前生效的「文档区保底宽度」（只读口径；设置模块缺省时回退 360）
+    getContentMinPx: currentContentMinPx,
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
     // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
     open: () => {
@@ -7282,6 +7368,7 @@ window.MemoriaAgentPanel = (function () {
         softMaxRem: DOCK_SOFT_MAX_REM,
         availablePx: availableDockPx(),
         contentMinPx: CONTENT_MIN_PX,
+        getContentMinPx: currentContentMinPx,
         collapsed: dockCollapsed,
         autoHidden: dockAutoHidden,
         // task-93：响应式让位（派生、不落盘）——只读口径，供 app.js 的响应式层与探针使用

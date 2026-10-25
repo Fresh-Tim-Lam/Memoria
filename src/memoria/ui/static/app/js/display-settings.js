@@ -15,7 +15,12 @@
     fonts: {},
     //: 顶栏 "MEMORIA" 的字体（空 = 跟随正文字体）
     fontBrand: "", backgroundPreload: false, // 顶栏字体 / 后台预加载（2026-09-23 追加，见文件末尾「后台预加载」块）
+    //: 文档区（#content）保底宽度 px（2026-10-25 task-144 ②：用户要可调）。
+    //  调大 ⇒ 三栏空间不足时**对话栏更早让位**（task-93 响应式联动）；默认 360 保持既有体验。
+    contentMinPx: 360,
   };
+  //: `contentMinPx` 允许范围（与 agent-panel 的 CONTENT_MIN_PX 语义一致）。超出范围 ⇒ 拒绝/夹紧。
+  const CONTENT_MIN_RANGE = { min: 320, max: 560, step: 10, def: 360 };
 
   //: 字体名候选（下拉的选项；用户只能从这些里选 —— 人 2026-09-23：「你应该给下拉可选样式而不是输入」）
   const FONT_CHOICES = [
@@ -113,6 +118,7 @@
     if (data && data.previewFontSize !== undefined) out.previewFontSize = data.previewFontSize;
     if (data && data.uiScale !== undefined) out.uiScale = data.uiScale;
     if (data && data.fonts !== undefined) out.fonts = normalizeFonts(data.fonts); if (data && data.backgroundPreload !== undefined) out.backgroundPreload = !!data.backgroundPreload;
+    if (data && data.contentMinPx !== undefined) out.contentMinPx = clamp(data.contentMinPx, CONTENT_MIN_RANGE.min, CONTENT_MIN_RANGE.max);
     if (data) for (const k of PERF_KEYS) if (data[k] !== undefined) out[k] = k === "perfAdmission" ? !!data[k] : clampPerf(k, data[k]); // 2026-09-24 追加：预览池智能替换的权重（见文件末尾「性能版块」块）
     if (data && data.fontBrand !== undefined) {
       out.fontBrand = typeof data.fontBrand === "string" ? data.fontBrand.trim() : "";
@@ -130,6 +136,8 @@
     if (fs !== null) merged.previewFontSize = Math.round(fs);
     const sc = clamp(merged.uiScale, SCALE_MIN, SCALE_MAX);
     if (sc !== null) merged.uiScale = round1(sc);
+    const cmin = clamp(merged.contentMinPx, CONTENT_MIN_RANGE.min, CONTENT_MIN_RANGE.max);
+    merged.contentMinPx = cmin === null ? CONTENT_MIN_RANGE.def : Math.round(cmin);
     merged.fonts = normalizeFonts(merged.fonts);
     merged.fontBrand = typeof merged.fontBrand === "string" ? merged.fontBrand.trim() : "";
     return pickKnown(merged);
@@ -174,11 +182,20 @@
     else root.style.removeProperty("--font-brand");
   }
 
+  //: 上一次已生效的「文档区保底宽度」—— 只在**用户改动**时通知布局重算（启动首帧不额外重排）。
+  let _lastContentMinPx = null;
+
   function applyAll() {
     const s = load();
     applyFontSize(s.previewFontSize);
     applyUiScale(s.uiScale);
     applyFonts(s); announcePreload(s.backgroundPreload); announcePerfPolicy(s); // 2026-09-23 追加：把「后台预加载」开关同步给 app.js 的预览预渲染调度器（见文件末尾「后台预加载」块）
+    // 2026-10-25 task-144 ②：文档区保底宽度变了 ⇒ 三栏预算变化 ⇒ 让响应式/dock 重新布局
+    // （agent-panel 在 resize 事件里重算 availableDockPx，task-93 的假想几何/迟滞逻辑不变）。
+    if (_lastContentMinPx !== null && _lastContentMinPx !== s.contentMinPx) {
+      try { window.dispatchEvent(new Event("resize")); } catch (_) { /* ignore */ }
+    }
+    _lastContentMinPx = s.contentMinPx;
   }
 
   function scheduleDiskSave() {
@@ -290,6 +307,11 @@
         ${fontSelect('data-display-setting="fontBrand"', s.fontBrand, T("settings.display.fontBrandDefault"))}
       </label>
       <p class="-muted -settings-note">${T("settings.display.fontBrandNote")}</p>
+    </section>
+    <section class="-settings-section">
+      <h3 class="-settings-heading">${T("settings.display.contentMinGroup")}</h3>
+      ${rangeField("contentMinPx", T("settings.display.contentMinLabel"), CONTENT_MIN_RANGE.min, CONTENT_MIN_RANGE.max, CONTENT_MIN_RANGE.step, s.contentMinPx, T("settings.display.contentMinNote"))}
+      <p class="-muted -settings-note">${T("settings.display.contentMinHint", { def: CONTENT_MIN_RANGE.def })}</p>
     </section>
     <section class="-settings-section">
       <h3 class="-settings-heading">${T("settings.display.uiScaleGroup")}</h3>
@@ -446,6 +468,7 @@
 
   global.MemoriaDisplaySettings = {
     DEFAULTS,
+    CONTENT_MIN_RANGE,
     load,
     save,
     applyAll,
@@ -454,6 +477,11 @@
     resetUiScale,
     renderSettingsBody,
     bindSettingsForm,
+    /** 当前生效的「文档区保底宽度」px（task-144 ②；agent-panel 动态读取，默认 360）。 */
+    getContentMinPx() {
+      const v = clamp(load().contentMinPx, CONTENT_MIN_RANGE.min, CONTENT_MIN_RANGE.max);
+      return v === null ? CONTENT_MIN_RANGE.def : Math.round(v);
+    },
   };
 
   // ══════════════════════════════════════════════════════════════════════════════

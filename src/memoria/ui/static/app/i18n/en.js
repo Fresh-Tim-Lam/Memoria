@@ -790,6 +790,10 @@
         fontDefault: "Default {def}px, range {min}–{max}px.",
         uiScaleGroup: "UI scaling",
         uiScaleNote: "Scales the whole app UI (equivalent to browser Ctrl+±).",
+        contentMinGroup: "Document width",
+        contentMinLabel: "Minimum document width (px)",
+        contentMinNote: "Minimum width kept for the document area. Larger values hide the agent dock earlier when the window gets narrow.",
+        contentMinHint: "Range 320–560, default {def}. Applies and saves immediately.",
         uiScale: "Zoom",
         uiScaleHint: "Shortcuts: Ctrl+= zoom in / Ctrl+- zoom out / Ctrl+0 reset to 100%.",
         resetScale: "Reset to 100%",
@@ -2006,6 +2010,8 @@
     compactOverdueHint: "Usage is past the compaction threshold. Normally older turns are compacted before the next question; staying here means that summarization call failed or was cancelled (fail-open: asking still works).",
     compactTimes: "Compacted {n} time(s)",
     compactTimesHint: "Compactions that happened in this session (usage dropping right after one is a real event, not a display bug)",
+    compactRingTitle: "Character budget: {chars} / {max} chars ({percent}%)",
+    compactRingUnknown: "Context usage unknown (old session or not loaded yet)",
   });
   Object.assign(g.MEMORIA_LOCALES["en"].agent.role, { system: "System" });
   Object.assign(g.MEMORIA_LOCALES["en"].agent.status, {

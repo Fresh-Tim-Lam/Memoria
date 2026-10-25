@@ -19475,3 +19475,40 @@ async function call(fn, ...args) {
 
   window.MemoriaPositionMemory = { remember: remember, restoreForOpen: restoreForOpen };
 })();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   task-144 ⑥：窗口恢复体感（a 抑制恢复动画 / c 启动加载感）
+   · (a) 最小化→恢复：WebView2 恢复首帧会重新布局，右栏会重放"收缩→伸展"过渡
+         ⇒ 恢复时给 <html> 加 .-no-transition（CSS 只关左右侧栏的 width transition），
+         240ms 后移除；用户主动操作不受影响。
+   · (c) 首屏数据就绪前：<html> 保持 .-booting（logo 轻脉冲 + 顶部进度条，见 app.css），
+         首个文档打开后移除；8s 兜底防"永远转圈"。
+   ═══════════════════════════════════════════════════════════════════════════ */
+(function memoriaBootUX() {
+  var root = document.documentElement;
+  if (!root) return;
+  // (c) 启动加载态
+  root.classList.add("-booting");
+  var bootStart = Date.now();
+  var bootTimer = setInterval(function () {
+    var ready = (window.state && window.state.currentPath) || (Date.now() - bootStart > 8000);
+    if (ready) {
+      clearInterval(bootTimer);
+      root.classList.remove("-booting");
+    }
+  }, 120);
+  // (a) 恢复时抑制过渡（只在"窗口从不可见/失焦回来"时，用户主动操作不抑制）
+  var suppressTimer = 0;
+  function suppressRestoreTransitions() {
+    root.classList.add("-no-transition");
+    if (suppressTimer) clearTimeout(suppressTimer);
+    suppressTimer = setTimeout(function () {
+      suppressTimer = 0;
+      root.classList.remove("-no-transition");
+    }, 240);
+  }
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden) suppressRestoreTransitions();
+  });
+  window.addEventListener("focus", suppressRestoreTransitions);
+})();
