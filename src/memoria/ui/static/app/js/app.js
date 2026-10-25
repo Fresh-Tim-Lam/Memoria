@@ -7654,6 +7654,132 @@ async function call(fn, ...args) {
     markDirty();
   }
 
+  // ── task-150：源码区剪切（Ctrl+X）—— **完全接管** ─────────────────────────────
+  //  为什么必须接管：源码区每行是**独立 contenteditable 根**（`.-line-content`）。真机实测（WebView2）：
+  //   · 单行选区：原生 cut 可用；
+  //   · 跨行选区：原生 cut **只删除第一个根内**的那部分，而剪贴板却拿到（近似）全文
+  //     ⇒ 用户看到"剪贴板有、文档只少了一截"，属**静默部分删除/内容残留**（比完全失效更坏）；
+  //   · 整行跨行选区：原生序列化还会丢空行（块边界被吞）。
+  //  接管后不变量：① 剪贴板 = 序列化选区（LF，与文档模型一致）；② 删除走源码编辑管线，`_srcPushBefore`
+  //  只打一次 ⇒ **单个撤销单元**；③ 写剪贴板失败 ⇒ **可见报错且不删内容**（静默吞掉是最坏失败）。
+  /** 行内字符偏移（支持 range 端点是元素节点的情况；text 节点走既有 `offsetWithinLine`） */
+  function _srcColInLine(node, offset, contentEl) {
+    if (!node) return 0;
+    if (node.nodeType === Node.TEXT_NODE) return offsetWithinLine(node, offset, contentEl);
+    try {
+      const pre = document.createRange();
+      pre.setStart(contentEl, 0);
+      pre.setEnd(node, offset || 0);
+      return pre.toString().length;
+    } catch (_) {
+      return 0;
+    }
+  }
+  /** 行纯文本：剔除分栏"假光标"等视觉元素（与 `collectEditorBody` 同口径） */
+  function _srcLinePlainText(contentEl) {
+    if (!contentEl) return "";
+    if (!contentEl.querySelector(".-sync-cursor")) return contentEl.textContent || "";
+    const clone = contentEl.cloneNode(true);
+    clone.querySelectorAll(".-sync-cursor").forEach((n) => n.remove());
+    return clone.textContent || "";
+  }
+  /** 读取当前源码选区 → 剪切计划；null = 无选区/不在源码区（交还原生，不做任何接管） */
+  function _srcSelectionPlan() {
+    const editor = $("#editor");
+    const sel = window.getSelection();
+    if (!editor || !sel || !sel.rangeCount) return null;
+    const range = sel.getRangeAt(0);
+    if (range.collapsed) return null;
+    if (!editor.contains(range.startContainer) || !editor.contains(range.endContainer)) return null;
+    const startLineEl = closestLineEl(range.startContainer);
+    const endLineEl = closestLineEl(range.endContainer);
+    if (!startLineEl || !endLineEl) return null;
+    // 归一化成文档顺序（反向选区也要正确）
+    const forward = !!(startLineEl.compareDocumentPosition(endLineEl) & Node.DOCUMENT_POSITION_FOLLOWING);
+    const loEl = forward ? startLineEl : endLineEl;
+    const hiEl = forward ? endLineEl : startLineEl;
+    const loContent = loEl.querySelector(".-line-content");
+    const hiContent = hiEl.querySelector(".-line-content");
+    if (!loContent || !hiContent) return null;
+    const loOff = _srcColInLine(forward ? range.startContainer : range.endContainer,
+      forward ? range.startOffset : range.endOffset, loContent);
+    const hiOff = _srcColInLine(forward ? range.endContainer : range.startContainer,
+      forward ? range.endOffset : range.startOffset, hiContent);
+    const loText = _srcLinePlainText(loContent);
+    const hiText = _srcLinePlainText(hiContent);
+    if (loEl === hiEl) {
+      const s = Math.max(0, Math.min(loOff, hiOff));
+      const e = Math.max(s, loOff, hiOff);
+      return {
+        kind: "single", loEl: loEl, hiEl: hiEl, loContent: loContent, hiContent: hiContent,
+        loOff: s, hiOff: e, loText: loText, hiText: hiText,
+        text: loText.slice(s, e), range: range.cloneRange(),
+      };
+    }
+    const midText = [];
+    let el = loEl.nextElementSibling;
+    while (el && el !== hiEl) {
+      const c = el.querySelector(".-line-content");
+      midText.push(c ? _srcLinePlainText(c) : "");
+      el = el.nextElementSibling;
+    }
+    const text = loText.slice(loOff) + "\n" + midText.map((m) => m + "\n").join("") + hiText.slice(0, hiOff);
+    return {
+      kind: "cross", loEl: loEl, hiEl: hiEl, loContent: loContent, hiContent: hiContent,
+      loOff: loOff, hiOff: hiOff, loText: loText, hiText: hiText, midText: midText, text: text,
+    };
+  }
+  /** 按计划删除选区（只改编辑器 DOM；撤销/渲染/滚动由调用方收尾） */
+  function _srcApplyCutPlan(plan) {
+    if (plan.kind === "single") {
+      try { plan.range.deleteContents(); } catch (_) { /* 极端情况：继续走下方 normalize */ }
+      const content = plan.loContent;
+      try { content.normalize(); } catch (_) { /* noop */ }
+      if (!content.textContent) content.innerHTML = "<br>";
+      focusLineContent(content, plan.loOff);
+      return { content: content };
+    }
+    plan.loContent.textContent = plan.loText.slice(0, plan.loOff) + plan.hiText.slice(plan.hiOff);
+    if (!plan.loContent.textContent) plan.loContent.innerHTML = "<br>";
+    let el = plan.loEl.nextElementSibling;
+    while (el && el !== plan.hiEl) {
+      const next = el.nextElementSibling;
+      el.remove();
+      el = next;
+    }
+    plan.hiEl.remove();
+    renumberSourceLines();
+    focusLineContent(plan.loContent, plan.loOff);
+    return { content: plan.loContent };
+  }
+  /** 执行剪切：**先写剪贴板**（失败 ⇒ 可见报错且不删），成功才删（单撤销单元） */
+  async function _srcCutExecute(plan) {
+    let ok = false;
+    try { ok = await writeClipboardText(plan.text); } catch (_) { ok = false; }
+    if (!ok) {
+      // 可见报错（双通道：底栏红字 + 顶部浮层）。静态原则：绝不"以为剪切成功、却没有可粘贴内容"。
+      const msg = T("srcEdit.cutClipboardFailed");
+      try { setStatusError(msg); } catch (_e1) {
+        try { showFlashError(msg); } catch (_e2) { /* 极端兜底：下面的 syncLog 仍会留下痕迹 */ }
+      }
+      syncLog("srcCut: 写剪贴板失败 ⇒ 不删除内容（已可见报错）");
+      return { ok: false };
+    }
+    _srcPushBefore();
+    _srcCoalesceAt = 0;
+    const res = _srcApplyCutPlan(plan);
+    _srcAfterEdit();
+    const pane = $("#editor-pane");
+    const sel = window.getSelection();
+    if (pane && sel && sel.rangeCount && res.content.contains(sel.getRangeAt(0).startContainer)) {
+      _keepCaretVisible(pane, sel.getRangeAt(0), res.content.closest(".-line") || res.content);
+    }
+    scheduleRenderSync();
+    markDirty();
+    syncLog("srcCut: 完成 (" + plan.kind + ", 剪贴板写入成功, 单撤销单元)");
+    return { ok: true, content: res.content };
+  }
+
   /** 源码区编辑报告：记录到同步日志（源码编辑暂不并入预览区撤销栈） */
   function editReport(kind, line, offset, op, text) {
     syncLog("srcEdit:", op, "line=" + line, "offset=" + offset, "text=" + JSON.stringify((text || "").slice(0, 40)));
@@ -7997,6 +8123,16 @@ async function call(fn, ...args) {
       if (!lineEl) return;
       const line = +(lineEl.dataset.line || 0);
       if (!line) return;
+
+      // task-150：源码区 Ctrl+X —— **完全接管**（原生 cut 在跨 contenteditable 根选区上只删首根）。
+      //   无选区时交还原生（不会删任何东西）；有选区时 preventDefault 阻止原生"写一半/删一半"。
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && !e.altKey && e.key.toLowerCase() === "x") {
+        const cutPlan = _srcSelectionPlan();
+        if (!cutPlan) return;
+        e.preventDefault();
+        _srcCutExecute(cutPlan).catch((err) => syncLog("srcCut: 异常 " + ((err && err.message) || err)));
+        return;
+      }
 
       // Ctrl+Z / Ctrl+Y / Ctrl+Shift+Z：源码编辑器快照式撤销/重做
       if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === "z" || e.key.toLowerCase() === "y")) {

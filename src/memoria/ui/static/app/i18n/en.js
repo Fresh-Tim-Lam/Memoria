@@ -481,6 +481,9 @@
       noStyle: "No style selected. Click a style button or a color swatch first",
       applyFail: "Failed to apply the style",
     },
+    srcEdit: {
+      cutClipboardFailed: "Cut failed: could not write to the clipboard — nothing was deleted (you can retry).",
+    },
     app: {
       status: {
         ready: "Ready",

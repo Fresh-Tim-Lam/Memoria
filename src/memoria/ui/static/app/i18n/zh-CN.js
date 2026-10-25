@@ -481,6 +481,9 @@
       noStyle: "未选择任何样式，请先点击样式按钮或色块",
       applyFail: "样式应用失败",
     },
+    srcEdit: {
+      cutClipboardFailed: "剪切失败：未能写入剪贴板，内容未删除（可重试）",
+    },
     app: {
       status: {
         ready: "就绪",

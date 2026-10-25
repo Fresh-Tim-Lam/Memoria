@@ -1,0 +1,479 @@
+{
+  "startedAt": "2026-10-25T15:39:38.708Z",
+  "cdp": "http://127.0.0.1:9585",
+  "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t150_42300_141940069\\kb",
+  "fixMode": false,
+  "target": {
+    "id": "2DF19E88684072CA8EC2B883B6198F0B",
+    "url": "http://127.0.0.1:4596/"
+  },
+  "cases": [
+    {
+      "id": "S1",
+      "title": "源码区 · 单行剪切",
+      "area": "source",
+      "op": "cut",
+      "sel": {
+        "lineA": 3,
+        "colA": 6,
+        "lineB": 3,
+        "colB": 18
+      },
+      "steps": {
+        "clipboard": true,
+        "domLines": true,
+        "body": true,
+        "disk": true,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": true,
+      "failures": [],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "A-001 这一段有足够",
+        "collapsed": false,
+        "mode": "source",
+        "startLine": 3,
+        "endLine": 3
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n第2行：AA长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AA长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "A-001 这一段有足够",
+      "clipRaw": "A-001 这一段有足够",
+      "clipExact": true,
+      "clipNormalized": true,
+      "diskWaitMs": 0,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    },
+    {
+      "id": "S2",
+      "title": "源码区 · 跨行剪切",
+      "area": "source",
+      "op": "cut",
+      "sel": {
+        "lineA": 3,
+        "colA": 10,
+        "lineB": 5,
+        "colB": 6
+      },
+      "steps": {
+        "selectRange": true,
+        "clipboard": true,
+        "domLines": false,
+        "body": false,
+        "disk": false,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": false,
+      "failures": [
+        "domLines: {\"index\":2,\"got\":\"第2行：AAA-00\",\"exp\":\"第2行：AAA-00C-003 第四行内容。\"}",
+        "body: {\"got\":\"# cut 用例（task-150）\\n\\n第2行：AAA-00\\n第3行：BBB-002 这一段也有足够长的文字。\\n第4行：…\",\"exp\":\"# cut 用例（task-150）\\n\\n第2行：AAA-00C-003 第四行内容。\\n第5行：DDD-004 第五行内容…\"}",
+        "disk: {\"gotBytes\":283,\"expBytes\":213,\"gotTail\":\"efbc89e380820d0a\",\"expTail\":\"efbc89e380820d0a\"}"
+      ],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "1 这一段有足够长的文字用于单行选区测试。",
+        "collapsed": false,
+        "mode": "source",
+        "startLine": 3,
+        "endLine": 5
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-00\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-00",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "1 这一段有足够长的文字用于单行选区测试。\r\n第3行：BBB-002 这一段也有足够长的文字。\r\n第4行：CC",
+      "clipRaw": "1 这一段有足够长的文字用于单行选区测试。\r\n第3行：BBB-002 这一段也有足够长的文字。\r\n第4行：CC",
+      "clipExact": false,
+      "clipNormalized": true,
+      "diskWaitMs": 15056,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    },
+    {
+      "id": "S3",
+      "title": "源码区 · 单行复制",
+      "area": "source",
+      "op": "copy",
+      "sel": {
+        "lineA": 4,
+        "colA": 6,
+        "lineB": 4,
+        "colB": 15
+      },
+      "steps": {
+        "clipboard": true,
+        "domLines": true,
+        "body": true,
+        "disk": true,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": true,
+      "failures": [],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "B-002 这一段",
+        "collapsed": false,
+        "mode": "source",
+        "startLine": 4,
+        "endLine": 4
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "B-002 这一段",
+      "clipRaw": "B-002 这一段",
+      "clipExact": true,
+      "clipNormalized": true,
+      "diskWaitMs": 0,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    },
+    {
+      "id": "S4",
+      "title": "源码区 · 跨行复制",
+      "area": "source",
+      "op": "copy",
+      "sel": {
+        "lineA": 4,
+        "colA": 6,
+        "lineB": 6,
+        "colB": 5
+      },
+      "steps": {
+        "selectRange": true,
+        "clipboard": true,
+        "domLines": true,
+        "body": true,
+        "disk": true,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": true,
+      "failures": [],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "B-002 这一段也有足够长的文字。",
+        "collapsed": false,
+        "mode": "source",
+        "startLine": 4,
+        "endLine": 6
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "B-002 这一段也有足够长的文字。\r\n第4行：CCC-003 第四行内容。\r\n第5行：D",
+      "clipRaw": "B-002 这一段也有足够长的文字。\r\n第4行：CCC-003 第四行内容。\r\n第5行：D",
+      "clipExact": false,
+      "clipNormalized": true,
+      "diskWaitMs": 0,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    },
+    {
+      "id": "S5",
+      "title": "源码区 · 整行跨行剪切（行3行首→行4行尾）",
+      "area": "source",
+      "op": "cut",
+      "sel": {
+        "lineA": 3,
+        "colA": 0,
+        "lineB": 4,
+        "colB": 24
+      },
+      "steps": {
+        "selectRange": true,
+        "clipboard": true,
+        "domLines": false,
+        "body": false,
+        "disk": false,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": false,
+      "failures": [
+        "domLines: {\"index\":3,\"got\":\"第3行：BBB-002 这一段也有足够长的文字。\",\"exp\":\"第4行：CCC-003 第四行内容。\"}",
+        "body: {\"got\":\"# cut 用例（task-150）\\n\\n\\n第3行：BBB-002 这一段也有足够长的文字。\\n第4行：CCC-003 第四…\",\"exp\":\"# cut 用例（task-150）\\n\\n\\n第4行：CCC-003 第四行内容。\\n第5行：DDD-004 第五行内容。\\n第…\"}",
+        "disk: {\"gotBytes\":267,\"expBytes\":211,\"gotTail\":\"efbc89e380820d0a\",\"expTail\":\"efbc89e380820d0a\"}"
+      ],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+        "collapsed": false,
+        "mode": "source",
+        "startLine": 3,
+        "endLine": 4
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\r\n第3行：BBB-002 这一段也有足够长的文字。",
+      "clipRaw": "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\r\n第3行：BBB-002 这一段也有足够长的文字。",
+      "clipExact": false,
+      "clipNormalized": true,
+      "diskWaitMs": 15049,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    },
+    {
+      "id": "P1",
+      "title": "预览区 · 跨块剪切（对照）",
+      "area": "preview",
+      "op": "cut",
+      "sel": {
+        "type": "preview-cross",
+        "colA": 4,
+        "colB": 8
+      },
+      "steps": {
+        "clipboard": true,
+        "previewBodyChanged": true,
+        "undo": true,
+        "noResurrect": true
+      },
+      "ok": true,
+      "failures": [],
+      "pre": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      },
+      "clipBefore": "___T150_SENTINEL___",
+      "selInfo": {
+        "ok": true,
+        "text": "AAA-001 这一段有足够长的文字用于单行选区测试。\n\n第3行：BBB-",
+        "collapsed": false,
+        "mode": "split"
+      },
+      "after": {
+        "body": "# cut 用例（task-150）\n\n第2行：002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ],
+        "pending": false
+      },
+      "clipAfter": "AAA-001 这一段有足够长的文字用于单行选区测试。\n\n第3行：BBB-",
+      "clipRaw": "AAA-001 这一段有足够长的文字用于单行选区测试。\n\n第3行：BBB-",
+      "clipExact": false,
+      "clipNormalized": false,
+      "afterUndo": {
+        "body": "# cut 用例（task-150）\n\n第2行：AAA-001 这一段有足够长的文字用于单行选区测试。\n第3行：BBB-002 这一段也有足够长的文字。\n第4行：CCC-003 第四行内容。\n第5行：DDD-004 第五行内容。\n第6行：EEE-005 第六行内容。\n第7行：FFF-006 第七行内容（末行，带尾换行）。\n",
+        "lines": [
+          "# cut 用例（task-150）",
+          "",
+          "第2行：AAA-001 这一段有足够长的文字用于单行选区测试。",
+          "第3行：BBB-002 这一段也有足够长的文字。",
+          "第4行：CCC-003 第四行内容。",
+          "第5行：DDD-004 第五行内容。",
+          "第6行：EEE-005 第六行内容。",
+          "第7行：FFF-006 第七行内容（末行，带尾换行）。"
+        ]
+      }
+    }
+  ],
+  "env": {
+    "writeClipboardText": true,
+    "editMode": true
+  },
+  "finishedAt": "2026-10-25T15:40:34.864Z",
+  "failures": 6,
+  "ok": false
+}
