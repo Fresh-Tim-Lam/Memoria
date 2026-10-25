@@ -1,0 +1,90 @@
+{
+  "artifactSha256": "0b8a43a31d113f095ef68114d42edebf6b837600143ea74555b96575f043ce70",
+  "discriminability": {
+    "candidate_2_5x": {
+      "constraint": "半径步长 ≥ max(3.0px, 20%·r)",
+      "note": "3px = 保守下限，需 A/B 判读验证；真实阈值可能更低（2px）或更高（4px）",
+      "r_values": [
+        6.0,
+        9.0,
+        12.0,
+        15.0
+      ],
+      "spacing_px": 3.0,
+      "tiers": 4
+    },
+    "constraint_note": "3px/20% 是保守经验值，必须 A/B 判读验证（本脚本只给上界估计）",
+    "current_mapping": {
+      "constraint": "半径步长 ≥ max(3.0px, 20%·r)",
+      "note": "3px = 保守下限，需 A/B 判读验证；真实阈值可能更低（2px）或更高（4px）",
+      "r_values": [
+        6.0,
+        9.0
+      ],
+      "spacing_px": 3.0,
+      "tiers": 2
+    }
+  },
+  "head": "ff0c374c0caf25b92020f9048858461506a8a0ea",
+  "measured_at": "2026-10-25T20:36:05.951553+08:00",
+  "node_size": {
+    "2d_degree_scale_factor": 0.5,
+    "2d_galaxy_gate": true,
+    "2d_radius_delta_px": 3.0,
+    "2d_radius_range": [
+      6.0,
+      9.0
+    ],
+    "2d_scope_galaxy_only": true,
+    "3d_has_degree_color_only": true,
+    "3d_has_degree_radius_scale": false,
+    "base_radius_2d": 6.0,
+    "base_radius_3d": 6.0
+  },
+  "other_channels": {
+    "3d_depth_opacity": true,
+    "3d_distance_scaling": false,
+    "3d_fog": false,
+    "edge_color_by_type": true,
+    "edge_color_keys": [
+      "contain",
+      "reference",
+      "extend"
+    ],
+    "label_max_len": 8,
+    "label_mode_default": "name_short",
+    "label_modes_available": [
+      [
+        "name_short",
+        "true"
+      ],
+      [
+        "id",
+        "true"
+      ],
+      [
+        "name",
+        "true"
+      ],
+      [
+        "smart",
+        "false"
+      ]
+    ],
+    "label_smart_available": false,
+    "node_color_by_degree": true,
+    "node_color_scope_galaxy_only": true,
+    "node_shape_variants": false
+  },
+  "schema": "kgviz-coding-census/v1",
+  "telemetry": {
+    "emit_edgeClick": false,
+    "emit_label_hover": false,
+    "emit_nodeClick": true,
+    "emit_node_hover": true,
+    "emit_zoom": false,
+    "graph_dwell_tracked": false,
+    "has_graph_stats": false,
+    "has_nodeClick_handler": true
+  }
+}

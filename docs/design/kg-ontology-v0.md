@@ -95,13 +95,37 @@ live 引用  必须带 worktree manifest sha（如 52cc2ca0…）+ 时间
 强制格式   (语料 sha, 测量源, 时间) 三元组 —— 缺一即 E1 无效
 ```
 
-### 5.2 口径代号（D-KG-02，C4 结案）
+### 5.2 口径代号（D-KG-02，C4 结案；**2026-10-25 20:40 更正**）
+
+> **⚠️ 更正（2026-10-25T20:40，来自 KGViz 研讨会 Phase 1 [arch-contract] 的发现，Lead 已核实）**
+>
+> 我原裁决把 404 vs 454 归因为"快照不同 / 口径不同"，**这是不完整的**。真实原因是**两条后端路径**：
+> ```
+> src/memoria/services/document.py#L2124-L2132  get_graph_data() → collect_graph_data()   ⇒ 404 边
+> src/memoria/services/document.py#L2134-L2141  build_kb()       → build_knowledge_base() ⇒ 454 边
+> ⇒ 【前端只走 get_graph_data / collect_graph_data 那条】
+> ```
+> Lead 已 independently 核实（`collector.py:44` 与 `document.py:2134` 是两个不同函数）。
+> **「100% reference」在两条路径上都成立，所以原结论不变**；但**绝对数字的分歧根因要改**：
+> 不是"时刻不同"，而是**"函数不同"**。
+> **进一步推论**：若某设计依赖 454 那套边集，它与前端看到的 404 套**不是同一份数据** ——
+> 这类"两条路径看不同世界"的问题，与 D-KG-12 的「图谱↔agent 未打通」是同一类架构缺陷。
+
 ```
 479        links 总数（task-86 快照）    ⚠️ 曾被误当 edges，不得再作边数引用
-454        edges（task-86 快照）         ✅ 有效，非 live
+454        edges（kb_build 路径 / task-86 快照）  ⚠️ 前端看不到这套
 408        edges（build cache 10-23）     ❌ 无效
-429 / 404  links / edges（live 10-25）   ✅ 须带 manifest sha
-160 / 154  links / edges（HEAD 冻结）     ✅ 权威
+429 / 404  links / edges（**collect_graph_data 路径**，前端实际用的）  ✅ 须带 manifest sha
+160 / 154  links / edges（HEAD 冻结语料，口径待与上面两条对齐后再定）
+```
+
+### 5.2b 节点字段现状（KGViz 研讨会 Phase 1 实测，影响"节点大小"类设计）
+```
+collector.py#L61-L70 产出的 node 字段（经 entry_to_dict 展开）共 9 个：
+  id / name / label / description / file / kp_id / start_line / end_line / range_ok
+⇒ 【没有 degree，没有任何视觉驱动字段】
+⇒ 度数现在由前端 _galaxyStats() 现算（graph-view-2d.js#L546-553），
+   且【只在 graphStyle === "galaxy" 时使用】；默认风格是 force ⇒ 度数算了却没用
 ```
 
 ### 5.3 指标裁决（D-KG-07）

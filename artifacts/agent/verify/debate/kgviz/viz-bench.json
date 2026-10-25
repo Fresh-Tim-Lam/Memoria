@@ -1,0 +1,166 @@
+{
+  "real": {
+    "nodes": 133,
+    "links": 404,
+    "groups": 14,
+    "has2d": true,
+    "has3d": true,
+    "container2d": {
+      "w": 0,
+      "h": 580
+    },
+    "view2d": {
+      "w": 260,
+      "h": 580,
+      "active": true,
+      "forceRadius6": 0.62
+    },
+    "nodeRadiusCost": {
+      "r=4": 0.63,
+      "r=6": 0.63,
+      "r=9": 0.56,
+      "r=12": 0.65,
+      "galaxy_r6": 1.53
+    },
+    "container3d": {
+      "w": 0,
+      "h": 0
+    },
+    "view3d": {
+      "active": true,
+      "nodes": 0,
+      "labels": 0,
+      "halos": 0,
+      "edges": 0,
+      "render": {
+        "calls": 0,
+        "triangles": 0,
+        "geometries": 0,
+        "textures": 0
+      },
+      "renderMs": 0.05,
+      "syncPositionsMs": 0
+    }
+  },
+  "synth2d": {
+    "N=300/uniform_nodes_only": 0.2,
+    "N=300/varied_nodes_only": 0.31,
+    "N=300/uniform_with_labels": 0.76,
+    "N=300/varied_with_labels": 0.7,
+    "N=800/uniform_nodes_only": 0.44,
+    "N=800/varied_nodes_only": 0.43,
+    "N=800/uniform_with_labels": 1.57,
+    "N=800/varied_with_labels": 1.45,
+    "N=1500/uniform_nodes_only": 0.86,
+    "N=1500/varied_nodes_only": 0.91,
+    "N=1500/uniform_with_labels": 2.82,
+    "N=1500/varied_with_labels": 2.91,
+    "N=3000/uniform_nodes_only": 1.64,
+    "N=3000/varied_nodes_only": 1.7,
+    "N=3000/uniform_with_labels": 7.07,
+    "N=3000/varied_with_labels": 6.89
+  },
+  "real3d": {
+    "nodes": 133,
+    "links": 404,
+    "groups": 14,
+    "has2d": true,
+    "has3d": true,
+    "container2d": {
+      "w": 0,
+      "h": 0
+    },
+    "view2d": {
+      "w": 1,
+      "h": 1,
+      "active": false,
+      "forceRadius6": 0
+    },
+    "nodeRadiusCost": {
+      "r=4": 0,
+      "r=6": 0,
+      "r=9": 0,
+      "r=12": 0,
+      "galaxy_r6": 0
+    },
+    "container3d": {
+      "w": 260,
+      "h": 509
+    },
+    "view3d": {
+      "active": true,
+      "nodes": 133,
+      "labels": 133,
+      "halos": 0,
+      "edges": 404,
+      "render": {
+        "calls": 634,
+        "triangles": 40360,
+        "geometries": 407,
+        "textures": 116
+      },
+      "renderMs": 0.86,
+      "syncPositionsMs": 0.02,
+      "depth": {
+        "fov": 50,
+        "cameraPos": [
+          -273.3042362073213,
+          0.9658282490731267,
+          1820.4504437670798
+        ],
+        "nodeDistanceMin": 1374.88,
+        "nodeDistanceMax": 2447.01,
+        "nodeDistanceP50": 1912.43,
+        "apparentRadiusRatioMax": 1.78
+      }
+    }
+  },
+  "synth3d": {
+    "sharedGeomSharedMat": {
+      "msPerFrame": 1.15,
+      "drawCalls": 1000,
+      "triangles": 352000,
+      "geometries": 1,
+      "textures": 0
+    },
+    "sharedGeomPerNodeMat": {
+      "msPerFrame": 1.52,
+      "drawCalls": 1000,
+      "triangles": 352000,
+      "geometries": 1,
+      "textures": 0
+    },
+    "instancedMesh": {
+      "msPerFrame": 0.03,
+      "drawCalls": 1,
+      "triangles": 352000,
+      "geometries": 1,
+      "textures": 0
+    },
+    "labelSprites1000": {
+      "msPerFrame": 1.38,
+      "drawCalls": 1000,
+      "triangles": 2000,
+      "geometries": 2,
+      "textures": 1
+    },
+    "edges1600_individualLines": {
+      "msPerFrame": 1.71,
+      "drawCalls": 1600,
+      "triangles": 0,
+      "geometries": 1602,
+      "textures": 1
+    },
+    "edges1600_mergedLineSegments": {
+      "msPerFrame": 0.01,
+      "drawCalls": 1,
+      "triangles": 0,
+      "geometries": 1603,
+      "textures": 1
+    },
+    "edgeUpdatePerFrame1600": {
+      "individualGeomsMs": 0.02,
+      "mergedBufferMs": 0.01
+    }
+  }
+}
