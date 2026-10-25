@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 """跨块选区矩阵探针运行器（task-79）。
 
 做什么：
@@ -149,7 +149,28 @@ graph TD
 POSTMM hotel4 india4
 
 P9 juliet4 kilo4
+
+PIMG1 lima5 mike5
+
+![IMG1](./sel-img-alpha.png)
+
+MIDIMG november5 oscar5
+
+![IMG2](./sel-img-beta.png)
+
+POSTIMG papa5 quebec5
 """
+
+# 0.4.7 task-112（D4=B）：image 组语料需要真实图片文件（KB 根相对路径；harness `/files/` 路由按 KB 根服务）。
+# 1×1 透明 PNG；只新增 image 组，**不改**前 8 类块的任何语料/顺序（历史 146 口径可比）。
+FIXTURE_IMAGES = {
+    "sel-img-alpha.png": (
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    ),
+    "sel-img-beta.png": (
+        "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+    ),
+}
 
 
 def _free_port() -> int:
@@ -178,6 +199,14 @@ def build_fixture_kb() -> Path:
     data = FIXTURE_MD.replace("\r\n", "\n")
     if not doc.is_file() or doc.read_text(encoding="utf-8") != data:
         doc.write_text(data, encoding="utf-8", newline="\n")
+    # image 组所需的两个真实图片文件（幂等写；只新增，不改前 8 类语料）
+    import base64 as _b64
+
+    for _name, _b64s in FIXTURE_IMAGES.items():
+        _p = FIXTURE_DIR / _name
+        _bytes = _b64.b64decode(_b64s)
+        if not _p.is_file() or _p.read_bytes() != _bytes:
+            _p.write_bytes(_bytes)
     readme = FIXTURE_DIR / "README.md"
     if not readme.is_file():
         readme.write_text(
@@ -209,6 +238,8 @@ CHECK_ZH = {
     "domNoGhost": "重渲不回魂",
     "renderStable": "重渲不改源码",
     "singleUndo": "单次撤销复原",
+    "imagesGone": "选中图片块已整体删除",
+    "imagesKept": "未选图片块保留",
     "clipboard": "剪贴板正确",
     "copyNoop": "复制不改文档",
     "failureNotice": "失败有可见提示",
@@ -247,7 +278,7 @@ def build_md(raw: dict, label: str, sha: str) -> str:
     L.append("")
     L.append("- 时间：%s" % datetime.now(timezone.utc).isoformat())
     L.append("- commit：`%s`" % sha)
-    L.append("- 语料：`artifacts/_selection_kb/selection-matrix.md`（8 类块 + 全局唯一词；不可编辑块用 PRE/MID/POST 布局）")
+    L.append("- 语料：`artifacts/_selection_kb/selection-matrix.md`（9 类块 + 全局唯一词；不可编辑块用 PRE/MID/POST 布局，image 组为 0.4.7 task-112 新增）")
     L.append("- 矩阵定义：`scripts/benchmark/surface/scenarios/selection-matrix.json`")
     L.append("- 驱动：`scripts/benchmark/surface/scenarios/selection-driver.mjs`（CDP 真实键鼠；cut 走产品同源 beforeinput）")
     L.append("- 模式：%s；浏览器：%s" % (meta.get("mode", "?"), meta.get("browser", "?")))
@@ -263,7 +294,7 @@ def build_md(raw: dict, label: str, sha: str) -> str:
     ops = [("copy", "复制"), ("cut", "剪切"), ("delete", "删除"), ("pasteReplace", "粘贴替换")]
     L.append("| 块类型 | " + " | ".join(z[1] for z in ops) + " |")
     L.append("|---|" + "---|" * len(ops))
-    order = ["paragraph", "heading", "list", "blockquote", "code", "table", "math", "mermaid"]
+    order = ["paragraph", "heading", "list", "blockquote", "code", "table", "math", "mermaid", "image"]
     seen = set()
     for tk in order + sorted({k[0] for k in agg} - set(order)):
         seen.add(tk)

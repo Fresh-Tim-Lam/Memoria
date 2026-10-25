@@ -250,6 +250,9 @@ function pageHelpers() {
       er.selectNodeContents(el);
       if (containsRange(range, er)) {
         coveredBlocks.push(elIdx);
+        // 0.4.7 task-112：image 块是原子块（源码行只有 `![alt](src)`，不含可复制文本）
+        // ⇒ 不计入词集覆盖；其「整体删除/保留」由 image 专项断言负责。
+        if (el.classList && el.classList.contains('-image-block')) continue;
         var toks = blockSrcTokens(elIdx);
         for (var t = 0; t < toks.length; t++) addTok(deleted, toks[t], 1);
         continue;
@@ -280,6 +283,28 @@ function pageHelpers() {
   function domTokens() {
     var pv = previewEl();
     return pv ? tokensOf(pv.innerText || pv.textContent || '') : {};
+  }
+
+  /** 源码里的图片引用 alt（按出现顺序）——用于 image 组「原子块整体删除」断言。 */
+  function imageAltsSource() {
+    var out = [], m;
+    var re = /!\[([^\]]*)\]\(/g;
+    var body = bodyText();
+    while ((m = re.exec(body)) !== null) out.push(m[1]);
+    return out;
+  }
+  /** 预览 DOM 里的图片块（`.-image-block` 内 img）：alt + 块序号。 */
+  function imageAltsDom() {
+    var pv = previewEl();
+    if (!pv) return [];
+    var out = [];
+    var imgs = pv.querySelectorAll('.-image-block img');
+    for (var i = 0; i < imgs.length; i++) {
+      var el = imgs[i];
+      var b = el.closest ? el.closest('.-src-block') : null;
+      out.push({ alt: el.getAttribute('alt') || '', blockIndex: b ? blockIdx(b) : null });
+    }
+    return out;
   }
 
   /** 强制整篇重渲（回魂检测）：调 MemoriaApp.renderPreview(state.doc)，完成标志走 window.__RENDER_DONE。 */
@@ -443,6 +468,50 @@ function pageHelpers() {
     ]);
   }
 
+  /**
+   * 真机 attach 时的后端剪贴板读写（0.4.7 task-112 量具修正）。
+   *
+   * 产品 `writeClipboardText()` **优先走后端 RPC `clipboard_set_text`**（`app.js:626-657`；
+   * WebView2 下 navigator 可能因未聚焦/权限失败）⇒ 真机 cut 路径**不会**调用
+   * `navigator.clipboard.writeText`，旧 spy 抓不到 ⇒ 剪贴板断言假失败。
+   * 这里在 `window.__SEL_LIVE === true`（attach 真机）时才启用后端回读/写入；
+   * headless harness 无该 RPC、该标志也为 false ⇒ 仍走原路径，历史 146 口径不变。
+   */
+  function backendClipApi() {
+    // 0.4.7 task-112：**不依赖 live 标志** —— headless harness 的假桥也会把 `/rpc` 代理到 UIAPI，
+    // 因此 `clipboard_get_text` 在两种模式下都可可用；产品写入路径（backend）本来就优先。
+    try {
+      var a = window.pywebview && window.pywebview.api;
+      if (a && typeof a.clipboard_get_text === 'function') return a;
+    } catch (_) { /* noop */ }
+    return null;
+  }
+  function readClipboardBackend() {
+    var a = backendClipApi();
+    if (!a) return Promise.resolve('NO-BACKEND');
+    return Promise.resolve(a.clipboard_get_text()).then(
+      function (r) {
+        if (!r || r.status !== 'ok') return 'EMPTY';
+        return 'OK:' + String(r.text == null ? '' : r.text);
+      },
+      function (e) { return 'REJ:' + ((e && e.message) || e); });
+  }
+
+  /**
+   * 0.4.7 task-112：在 copy/cut 用例前把系统剪贴板写成**唯一哨兵**。
+   * 这样后端回读只有在"产品确实写了"时才会得到真实内容；否则读到的是上一次用例/别的进程的
+   * 陈旧剪贴板（实测踩到：cut 未写时后端回读读到 cursor 探针留下的旧文本 ⇒ 假 PASS/假 FAIL）。
+   */
+  function prepareClipboardSentinel() {
+    var a = backendClipApi();
+    var s = 'SEL_MATRIX_SENTINEL_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+    window.__SEL_SENTINEL = s;
+    if (!a || typeof a.clipboard_set_text !== 'function') return Promise.resolve('NO-BACKEND:' + s);
+    return Promise.resolve(a.clipboard_set_text(s)).then(
+      function (r) { return (r && r.status === 'ok' && r.written) ? 'OK:' + s : 'FAIL:' + s; },
+      function () { return 'FAIL:' + s; });
+  }
+
   function writeClipboard(text) {
     var pv = previewEl();
     function fallback(err) {
@@ -464,6 +533,13 @@ function pageHelpers() {
       } catch (e2) {
         return 'failed:' + ((e2 && e2.message) || e2);
       }
+    }
+    // 真机：优先后端写（与产品同一条路径；避免 navigator 权限/聚焦问题）
+    var be = backendClipApi();
+    if (be && typeof be.clipboard_set_text === 'function') {
+      return Promise.resolve(be.clipboard_set_text(String(text == null ? '' : text))).then(
+        function (r) { return (r && r.status === 'ok' && r.written) ? 'backend' : fallback(new Error('backend-write-failed')); },
+        function (e) { return fallback(e); });
     }
     try {
       if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
@@ -523,6 +599,11 @@ function pageHelpers() {
     copySelection: copySelection,
     syntheticPaste: syntheticPaste,
     readClipboard: readClipboard,
+    readClipboardBackend: readClipboardBackend,
+    prepareClipboardSentinel: prepareClipboardSentinel,
+    sentinel: function () { return window.__SEL_SENTINEL || null; },
+    imageAltsSource: imageAltsSource,
+    imageAltsDom: imageAltsDom,
     debugSelect: debugSelect,
     clip: function () { return window.__CLIP; },
     notice: noticeText,
@@ -778,7 +859,7 @@ async function editCommand(cdp, { key, code, vk, command }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // 主流程
 // ─────────────────────────────────────────────────────────────────────────────
-async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }) {
+async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin, live }) {
   const cases = [];
   const consoleLines = [];
   const setup = {};
@@ -800,6 +881,8 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
   } catch { /* 收不到日志也继续 */ }
 
   await cdp.evalJS(`(${pageHelpers.toString()})()`);
+  // 0.4.7 task-112：真机 attach 时启用后端剪贴板回读（headless 保持 false ⇒ 历史口径不变）
+  await cdp.evalJS('window.__SEL_LIVE = ' + JSON.stringify(live === true));
   await cdp.evalJS('window.__SEL.installSpies()');
 
   // 剪贴板权限（headless Edge 默认拒绝 readText/writeText；grant 后 copy/paste 回读才可用）
@@ -903,6 +986,10 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       await cdp.evalJS('window.__SEL.forceEditMode()');
       await settle(cdp);
       await cdp.evalJS('window.__SEL.resetClip()');
+      // copy/cut 前置哨兵：确保后端回读只认「本用例产品写入」的内容（防读到陈旧系统剪贴板）
+      if (cs.op === 'copy' || cs.op === 'cut') {
+        await cdp.evalJS('window.__SEL.prepareClipboardSentinel()').catch(() => null);
+      }
       const preBody = await cdp.evalJS('window.__SEL.body()');
       // 粘贴用例：剪贴板必须在**建立选区之前**写好（写剪贴板的 textarea 兜底会抢走选区）
       let pasteText = null, clipWrite = null;
@@ -969,6 +1056,8 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       // 操作前 DOM 词集：用于判定「可见被选文字」（MathJax/mermaid 的公式与图内文字
       // 在纯文本剪贴板里本来就不存在；断言不该要求剪贴板包含它们）
       const domToksBefore = await cdp.evalJS('window.__SEL.domTokens()');
+      // image 组（0.4.7 task-112）：操作前记录图片块（alt + 块序号），操作后断言原子块整体删除/保留
+      const imagesBefore = await cdp.evalJS('window.__SEL.imageAltsDom()').catch(() => []);
       let expectPost = subCounts(preTokens, cov.deleted);
       const deletedCount = Object.keys(cov.deleted).length;
 
@@ -1027,6 +1116,9 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
       const noticeCalls = await cdp.evalJS('window.__SEL.noticeAll()');
       const flashes = await cdp.evalJS('window.__SEL.flashTexts()');
       const domToksAfterOp = await cdp.evalJS('window.__SEL.domTokens()');
+      // image 组快照必须**在撤销之前**取（后面的「单次撤销复原」会把文档恢复成 preBody）
+      const imageAltsAfterOp = await cdp.evalJS('window.__SEL.imageAltsSource()').catch(() => []);
+      const imageDomAfterOp = await cdp.evalJS('window.__SEL.imageAltsDom()').catch(() => []);
       rec.preBody = preBody; rec.postBody = postBody; rec.notice = notice; rec.noticeCalls = noticeCalls;
       rec.flashes = flashes;
       rec.opNote = opNote;
@@ -1152,6 +1244,45 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
         clipText = clipPastes.length ? clipPastes[clipPastes.length - 1] : null;
         clipSource = 'pasteEvent';
       }
+      // 0.4.7 task-112：产品 cut 走**后端** `clipboard_set_text`（HEAD 起），旧 writeText spy 抓不到；
+      // 因此 cut 在两种模式下都用后端回读（copy 仍用原生 copyEvent/readText，避免读到**上一次的**系统剪贴板）。
+      // copy 在真机也可能因窗口未前台读不到 readText/copyEvent；后端回读可作**兜底**
+      // （哨兵保证只认"本次 Ctrl+C 确实写进系统剪贴板"的内容，不会把陈旧内容当成功）。
+      if (cs.op === 'copy' && (!clipText || String(clipText).trim() === '')) {
+        const sentinel = await cdp.evalJS('window.__SEL.sentinel()').catch(() => null);
+        for (let attempt = 0; attempt < 4; attempt++) {
+          await sleep(attempt === 0 ? 150 : 120);
+          const be = await cdp.evalJS('window.__SEL.readClipboardBackend()').catch(() => null);
+          if (typeof be !== 'string' || be.indexOf('OK:') !== 0) continue;
+          const txt = be.slice(3);
+          if (txt && (!sentinel || txt !== sentinel)) {
+            clipText = txt;
+            clipSource = 'backend-clipboard';
+            break;
+          }
+        }
+      }
+      if (cs.op === 'cut' && (!clipText || String(clipText).trim() === '')) {
+        // 产品 cut 的后端剪贴板写入是**异步 RPC**（writeClipboardText await call(...)）：
+        // DOM 已变不代表剪贴板已写完 ⇒ 轮询回读，直到不是哨兵/非空（最多 ~1s）。
+        const sentinel = await cdp.evalJS('window.__SEL.sentinel()').catch(() => null);
+        let be = null;
+        for (let attempt = 0; attempt < 8; attempt++) {
+          await sleep(attempt === 0 ? 250 : 120);
+          be = await cdp.evalJS('window.__SEL.readClipboardBackend()').catch(() => null);
+          if (typeof be !== 'string' || be.indexOf('OK:') !== 0) continue;
+          const txt = be.slice(3);
+          if (txt && (!sentinel || txt !== sentinel)) {
+            clipText = txt;
+            clipSource = 'backend-clipboard';
+            break;
+          }
+        }
+        if (clipText == null || String(clipText).trim() === '') {
+          opNote += ' backendClip=' + String(be).slice(0, 40) +
+            (sentinel && typeof be === 'string' && be.slice(3) === sentinel ? '(sentinel⇒未必写入)' : '');
+        }
+      }
       if (cs.op === 'copy' || cs.op === 'cut') {
         let clipTok = {};
         if (clipText) clipTok = await cdp.evalJS(`window.__SEL.tokensOf(${JSON.stringify(String(clipText))})`);
@@ -1169,6 +1300,33 @@ async function runMatrix(cdp, ix, { matrix, file, only, onlyOps, label, origin }
         rec.checks.clipboard = clipPastes.length > 0 && norm(clipText) === norm(rec.pasteText);
       } else {
         rec.checks.clipboard = true;   // 删除不涉及剪贴板
+      }
+
+      // ── 断言 5：image 组 = 原子块（0.4.7 task-112 D4=B）────────────────────────
+      // 图片块 DOM 无文本节点（alt 是属性），词集断言覆盖不到 ⇒ 单独断言：
+      //   · cut/delete/pasteReplace：选区**整体覆盖**的图片块必须从源码与重渲 DOM 同时消失
+      //   · copy：图片块保持不变（文档不改）
+      //   · 未被选区覆盖的图片块必须保留
+      const selImgs = (imagesBefore || []).filter((x) => cov.coveredBlocks.indexOf(x.blockIndex) >= 0);
+      const keepImgs = (imagesBefore || []).filter((x) => cov.coveredBlocks.indexOf(x.blockIndex) < 0);
+      const isImageCase = String(cs.type || '').startsWith('image') || String(cs.id || '').startsWith('image-');
+      if (isImageCase && (selImgs.length || keepImgs.length)) {
+        const srcAltsAfter = imageAltsAfterOp || [];
+        const domAltsAfter = (imageDomAfterOp || []).map((x) => x.alt);
+        const srcSet = new Set(srcAltsAfter);
+        const domSet = new Set(domAltsAfter);
+        const opRemoves = cs.op !== 'copy';
+        if (selImgs.length) {
+          rec.checks.imagesGone = opRemoves
+            ? selImgs.every((x) => !srcSet.has(x.alt) && !domSet.has(x.alt))
+            : selImgs.every((x) => srcSet.has(x.alt));
+        }
+        if (keepImgs.length) rec.checks.imagesKept = keepImgs.every((x) => srcSet.has(x.alt));
+        rec.imageMeta = {
+          op: cs.op, coveredBlocks: cov.coveredBlocks,
+          selected: selImgs.map((x) => x.alt), kept: keepImgs.map((x) => x.alt),
+          srcAfter: srcAltsAfter, domAfter: domAltsAfter,
+        };
       }
 
       rec.logs = consoleLines.slice(logStart).slice(-14);
@@ -1211,6 +1369,7 @@ async function main() {
       matrix, file, only: args.only && args.only !== true ? args.only : '',
       onlyOps: args['only-ops'] && args['only-ops'] !== true ? args['only-ops'] : '',
       label, origin,
+      live: !!env.live,
     });
     const passed = cases.filter((c) => c.pass).length;
     return {

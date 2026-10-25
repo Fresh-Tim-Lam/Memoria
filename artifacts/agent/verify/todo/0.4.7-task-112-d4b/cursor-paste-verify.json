@@ -1,0 +1,157 @@
+{
+  "pasteText": "PASTE_ONE alpha\nPASTE_TWO beta\nPASTE_THREE gamma",
+  "checks": {
+    "source_caret_line_is_last_inserted_line": true,
+    "source_caret_offset_is_last_line_len": true,
+    "source_caret_text_ends_with_last_line": true,
+    "source_body_has_all_3_lines": true,
+    "source_source_paste_prevented": true,
+    "source_pixel_dx_le2": true,
+    "source_pixel_dy_le2": true,
+    "preview_body_has_all_3_lines": false,
+    "preview_paste_prevented": true,
+    "preview_caret_block_ends_with_last_line": false,
+    "preview_pixel_dx_le2": false,
+    "preview_pixel_dy_le2": false,
+    "real_source_paste_prevented_default": true,
+    "real_source_caret_line": false,
+    "real_source_caret_offset": false,
+    "real_source_body_has_3_lines": false,
+    "real_source_3lines_separate": false,
+    "real_source_pixel_dx_le2": false,
+    "real_source_pixel_dy_le2": false,
+    "real_preview_body_has_3_lines": false,
+    "real_preview_3lines_separate": false,
+    "real_preview_caret_block_ends_with_last": false,
+    "real_preview_pixel_dx_le2": false,
+    "real_preview_pixel_dy_le2": false
+  },
+  "evidence": {},
+  "source_before": {
+    "line": 3,
+    "len": 19,
+    "text": "ALPHA one two three"
+  },
+  "source_dispatch": {
+    "dispatched": true,
+    "prevented": true
+  },
+  "source_after": {
+    "caretLine": 5,
+    "caretOff": 17,
+    "caretText": "PASTE_THREE gamma",
+    "caretRect": {
+      "left": 167.859375,
+      "right": 175.5625,
+      "top": 178,
+      "bottom": 195,
+      "height": 17
+    },
+    "expectedRect": {
+      "left": 44.703125,
+      "right": 175.5625,
+      "top": 178,
+      "bottom": 195,
+      "height": 17
+    },
+    "bodyHasAll": true,
+    "bodyLines": [
+      "PASTE_TWO beta",
+      "PASTE_THREE gamma"
+    ]
+  },
+  "source_shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-112-d4b\\shots\\source_after_multiline_paste.png",
+  "preview_before": {
+    "text": "ALPHA one two three",
+    "len": 19
+  },
+  "preview_dispatch": {
+    "ok": true,
+    "prevented": true
+  },
+  "preview_after": {
+    "caretBlockText": "",
+    "caretOff": 0,
+    "caretRect": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "height": 0
+    },
+    "expectedRect": null,
+    "bodyHasAll": false,
+    "bodyPrevLines": []
+  },
+  "preview_shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-112-d4b\\shots\\preview_after_multiline_paste.png",
+  "real_source_point": {
+    "line": 3,
+    "len": 33,
+    "x": 910,
+    "y": 145
+  },
+  "real_source_setclip": null,
+  "real_source_clipreadback": {
+    "status": "ok",
+    "text": "REALSRC_ONE aaa\nREALSRC_TWO bbb\nREALSRC_THREE ccc",
+    "read_status": "ok",
+    "source": "system"
+  },
+  "real_source_after": {
+    "caretLine": null,
+    "caretOff": 0,
+    "caretText": null,
+    "caretRect": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "height": 0
+    },
+    "expectedRect": null,
+    "bodyHasAll": false,
+    "bodyRealLines": []
+  },
+  "real_source_paste_events": 1,
+  "real_source_shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-112-d4b\\shots\\real_source_after_ctrl_v.png",
+  "real_preview_point": {
+    "x": 144,
+    "y": 296,
+    "text": "BETA four five six"
+  },
+  "real_preview_setclip": null,
+  "real_preview_clipreadback": {
+    "status": "ok",
+    "text": "REALPREV_ONE ddd\nREALPREV_TWO eee\nREALPREV_THREE fff",
+    "read_status": "ok",
+    "source": "system"
+  },
+  "real_preview_after": {
+    "caretBlockText": "",
+    "caretOff": 0,
+    "caretRect": {
+      "left": 0,
+      "right": 0,
+      "top": 0,
+      "bottom": 0,
+      "height": 0
+    },
+    "expectedRect": null,
+    "bodyHasAll": false,
+    "bodyRealPrevLines": [
+      "BETA four five sixREALPREV_ONE ddd"
+    ]
+  },
+  "real_preview_paste_events": 1,
+  "real_preview_shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\0.4.7-task-112-d4b\\shots\\real_preview_after_ctrl_v.png",
+  "pixel": {
+    "source_synthetic": {
+      "dx": 0.0,
+      "dy": 0
+    },
+    "preview_synthetic": null,
+    "source_real": null,
+    "preview_real": null
+  },
+  "pass": false
+}

@@ -76,6 +76,16 @@
         {"span": "span2same", "from": {"marker": "PREMM", "word": "delta4", "edge": "start"}, "to": {"marker": "POSTMM", "word": "india4", "edge": "end"}},
         {"span": "span3mix", "from": {"marker": "MIDM", "word": "zulu3", "edge": "start"}, "to": {"marker": "MIDMM", "word": "foxtrot4", "edge": "start"}}
       ]
+    },
+    {
+      "id": "image",
+      "type": "image",
+      "note": "0.4.7 task-112（D4=B）：图片块是原子块（DOM 为 .-src-block.-image-block，内含 img[alt]），端点与 code/table 同法落在两侧可编辑段落。span1=跨 IMG1；span2same=跨 IMG1+IMG2；span3mix=段落..IMG1..IMG2 混合。断言额外要求：选中图片块整体从源码/重渲 DOM 消失、未选图片块保留。",
+      "spans": [
+        {"span": "span1", "from": {"marker": "PIMG1", "word": "lima5", "edge": "start"}, "to": {"marker": "MIDIMG", "word": "november5", "edge": "start"}},
+        {"span": "span2same", "from": {"marker": "PIMG1", "word": "lima5", "edge": "start"}, "to": {"marker": "POSTIMG", "word": "papa5", "edge": "end"}},
+        {"span": "span3mix", "from": {"marker": "P9", "word": "juliet4", "edge": "start"}, "to": {"marker": "POSTIMG", "word": "quebec5", "edge": "end"}}
+      ]
     }
   ],
   "sameBlock": [
