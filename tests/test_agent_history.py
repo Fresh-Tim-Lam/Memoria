@@ -45,6 +45,7 @@ from memoria.services.agent.session.history import (
     MAX_HISTORY_MESSAGES,
     build_history,
     conversation_messages,
+    session_context_usage,
     summarize_session,
     summarize_session_file,
 )
@@ -619,4 +620,146 @@ def test_conversation_view_omits_usage_without_loop_end(kb: Path) -> None:
     view = conversation_messages(str(kb), session_id)
     assert [item["role"] for item in view] == ["user", "assistant"]
     assert "usage" not in view[1]
+
+
+# —— 2026-10-25 新增（0.4.7-task-91）：压缩可观测 + 字符预算占用（历史口径，非 token）——
+
+
+def _append_compacted_session(kb: Path, session_id: str, *, big: str = "旧内容") -> int:
+    """写一个「一轮旧对话 + compaction 覆盖它 + 一轮新对话」的会话，返回摘要字符数。"""
+    store = SessionStore(str(kb), session_id)
+    store.append("user/message", {"text": big})  # seq 0
+    store.append("assistant/message", {"content": big, "tool_calls": []})  # seq 1
+    summary = "摘要" * 10
+    store.append(
+        "compaction",
+        {"summary": summary, "shadowed": [0, 1], "shadowed_chars": len(big) * 2, "model": "fake-model"},
+    )
+    store.append("user/message", {"text": "第二问"})
+    store.append("assistant/message", {"content": "第二答", "tool_calls": []})
+    return len(summary)
+
+
+def test_compaction_rows_are_opt_in_and_keep_their_position(kb: Path) -> None:
+    """根因（task-91）：`conversation_messages()` 过去没有 `compaction` 分支 ⇒ 压缩摘要只进
+    `build_history()`（喂 LLM），渲染视图永远看不到「压缩发生过」。
+
+    `include_compaction` **默认必须 False**：`reference.py:312` 复用它做会话引用投影，
+    默认出 `system` 记录会把系统行混进引用内容（`reference.py:316-318` 照抄 `role`/`text`）。
+    """
+    session_id = "session-compact-view-0001"
+    summary_chars = _append_compacted_session(kb, session_id)
+
+    default_view = conversation_messages(str(kb), session_id)
+    assert [item["role"] for item in default_view] == ["user", "assistant", "user", "assistant"], (
+        "默认 False ⇒ 压缩事件照旧被排除（既有 reference/build_snapshot 口径逐字节不变）"
+    )
+    assert all("kind" not in item for item in default_view)
+
+    view = conversation_messages(str(kb), session_id, include_compaction=True)
+    assert [item["role"] for item in view] == ["user", "assistant", "system", "user", "assistant"]
+    system = view[2]
+    assert system["kind"] == "compaction"
+    assert system["covered"] == 2, "covered = 被该次压缩覆盖的事件条数"
+    assert system["summary_chars"] == summary_chars
+    assert isinstance(system["seq"], int), "系统行也带 seq（回放/引用定位口径一致）"
+    # 只增 system 行：其余记录与默认路径逐字段相同（不是"重新拼一遍"）
+    assert [item for item in view if item["role"] != "system"] == default_view
+
+
+def test_invalid_compaction_is_not_projected(kb: Path) -> None:
+    """空摘要 / 空 `shadowed` 的压缩记录**不投影**（与 `_compaction_plan()` 的有效性判据一致，
+    否则会出现「回放看到压缩、摘要其实没生效」的假象）。"""
+    session_id = "session-compact-view-0002"
+    store = SessionStore(str(kb), session_id)
+    store.append("user/message", {"text": "问"})
+    store.append("assistant/message", {"content": "答", "tool_calls": []})
+    store.append("compaction", {"summary": "", "shadowed": [0, 1]})
+    store.append("compaction", {"summary": "有摘要", "shadowed": []})
+
+    view = conversation_messages(str(kb), session_id, include_compaction=True)
+    assert [item["role"] for item in view] == ["user", "assistant"]
+
+
+def test_session_context_usage_is_the_same_metric_as_compaction(kb: Path) -> None:
+    """占用百分比的**分子必须复用 `history_chars(build_history(...))`** —— 与压缩判定同一个实现
+    （Lead 2026-10-25 硬要求：各写一份会出现「UI 说 62% 但实际已触发压缩」）。
+    分子分母**都是字符**，不需要任何 token 换算。"""
+    from memoria.services.agent.compaction import compact_threshold_chars, history_chars
+
+    session_id = "session-context-usage-0001"
+    summary_chars = _append_compacted_session(kb, session_id)
+
+    usage = session_context_usage(str(kb), session_id)
+    assert usage["chars"] == history_chars(build_history(str(kb), session_id)), (
+        "同口径断言：必须逐值等于压缩判定的那个实现算出来的字符数"
+    )
+    assert usage["max_chars"] == MAX_HISTORY_CHARS == 32_000
+    assert usage["threshold_chars"] == compact_threshold_chars() == int(MAX_HISTORY_CHARS * 0.8) == 25_600
+    assert usage["compacted_times"] == 1
+    # 摘要 20 字 + 两轮新对话 ⇒ 既非 0，也远小于压缩前的原文（说明走的是**压缩后**有效视图）
+    assert 0 < usage["chars"] < usage["max_chars"]
+    assert summary_chars == 20
+
+    # 不存在的会话 ⇒ 全零（不是异常）
+    assert session_context_usage(str(kb), "session-does-not-exist") == {
+        "chars": 0,
+        "max_chars": MAX_HISTORY_CHARS,
+        "threshold_chars": compact_threshold_chars(),
+        "compacted_times": 0,
+    }
+
+
+def test_context_usage_counts_post_compaction_chars_not_raw_events(kb: Path) -> None:
+    """压缩过的会话必须按**压缩后**的有效视图计量：用原始事件累加会虚高，
+    UI 就会在已经压缩过之后还显示 >80%。"""
+    from memoria.services.agent.compaction import history_chars
+
+    session_id = "session-context-usage-0002"
+    big = "旧" * 5_000  # 压缩前 5000 字/条
+    _append_compacted_session(kb, session_id, big=big)
+
+    usage = session_context_usage(str(kb), session_id)
+    history = build_history(str(kb), session_id)
+    assert usage["chars"] == history_chars(history)
+    assert usage["chars"] < len(big) * 2, "必须比压缩前原文小（走的是压缩后有效视图）"
+    assert [role_of(message) for message in history] == ["user", "user", "assistant"], (
+        "`build_history` 回放：摘要替换掉旧一轮 ⇒ user(摘要框) + 新一轮 user/assistant"
+    )
+
+
+def test_agent_session_load_exposes_context_usage(
+    kb: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """RPC 面（只增字段）：`agent_session_load` 带回 `context_usage` 与 `system` 压缩行；
+    会话 id / messages 等既有键**不变**。"""
+    from memoria.presentation.api.ui import UIAPI
+    from memoria.services.agent.compaction import compact_threshold_chars, history_chars
+
+    monkeypatch.setenv("MEMORIA_CONFIG_DIR", str(tmp_path / "cfg"))
+    session_id = "session-context-usage-0003"
+    _append_compacted_session(kb, session_id)
+    api = UIAPI(kb_path=str(kb))
+
+    res = api.agent_session_load(session_id)
+    assert res["status"] == "ok"
+    assert res["session_id"] == session_id
+    assert [item["role"] for item in res["messages"]] == [
+        "user",
+        "assistant",
+        "system",
+        "user",
+        "assistant",
+    ], "渲染视图带回压缩行（可回放）"
+    assert res["messages"][2]["kind"] == "compaction"
+
+    cu = res["context_usage"]
+    assert cu["chars"] == history_chars(build_history(str(kb), session_id))
+    assert cu["max_chars"] == MAX_HISTORY_CHARS
+    assert cu["threshold_chars"] == compact_threshold_chars()
+    assert cu["compacted_times"] == 1
+
+    # 未知会话仍是结构化错误（不因新字段改变错误面）
+    missing = api.agent_session_load("session-does-not-exist")
+    assert missing["status"] == "error" and missing["code"] == "unknown_session"
 

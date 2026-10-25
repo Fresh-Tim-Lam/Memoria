@@ -1206,3 +1206,130 @@ def test_history_load_restores_the_last_turn_usage() -> None:
     assert src.count("restoreTurnUsage(); // 2026-09-24") == 1, "调用点只有一处（载入会话）"
 
 
+# —— 2026-10-25 新增（0.4.7-task-91）：字符预算占用 + 压缩系统行（前端离线）——
+
+
+def test_context_usage_percent_is_characters_over_characters() -> None:
+    """占用 % 的**分子分母都是字符**（后端 `history.session_context_usage()`：
+    `history_chars(build_history()) / MAX_HISTORY_CHARS`）。前端只做除法，**绝不**掺 token。
+
+    跑真源码 `contextUsageView()`（不在 Python 侧重写一遍 → 防并行事实源）。
+    """
+    fn = extract_function("contextUsageView")
+    script = (
+        fn
+        + "\nvar contextUsage = {chars: 19800, max_chars: 32000, threshold_chars: 25600, compacted_times: 2};"
+        + "\nvar a = contextUsageView();"
+        + "\ncontextUsage = {chars: 26000, max_chars: 32000, threshold_chars: 25600, compacted_times: 0};"
+        + "\nvar b = contextUsageView();"
+        + "\ncontextUsage = null;"
+        + "\nvar c = contextUsageView();"
+        + "\nconsole.log(JSON.stringify([a, b, c]));"
+    )
+    a, b, c = node_eval(script)
+    assert a["percent"] == 62, "19800/32000 ⇒ 62%（例：19.8k / 32k 字符）"
+    assert a["over"] is False and a["times"] == 2
+    assert b["percent"] == 81 and b["over"] is True, ">25_600 字符（80% 阈值）⇒ 必须标记 overdue"
+    assert c is None, "无数据 ⇒ null（不瞎报 0%）"
+
+
+def test_compact_budget_copy_is_isolated_from_the_token_line() -> None:
+    """关闭条件 2：文案必须明确「字符预算」，**不得**写「上下文 62%」（会被读成 token 占用）。
+    token 行（`agent.statusBar.line/span`）保持独立、不被覆盖。"""
+    src = panel_source()
+    # 分子分母同域：只出现 `chars / max_chars` 这一种除法
+    assert "percent = Math.round((chars / cu.max_chars) * 100)" in src
+    assert "token" not in extract_function("contextUsageView"), "百分比计算绝不掺 token"
+    # 只**追加**、不覆盖 base 的 token 文本：先读 baseText 再拼接
+    apply_fn = src[src.index("function applyContextUsageToStatus") :]
+    assert "const baseText = el.textContent || \"\";" in apply_fn
+    assert "if (baseText) parts.push(baseText);" in apply_fn
+    # 系统行只拦 role === "system"，其余记录走原渲染链
+    assert 'if (rec && rec.role === "system") return systemMessageEl(rec);' in src
+
+    app_dir = PANEL.parents[1]
+    keys = (
+        "compactShort",
+        "compactBudget",
+        "compactThreshold",
+        "compactOverdue",
+        "compactOverdueHint",
+        "compactTimes",
+        "compactTimesHint",
+    )
+    for lang in ("zh-CN", "en"):
+        text = (app_dir / "i18n" / f"{lang}.js").read_text(encoding="utf-8")
+        for key in keys:
+            assert f"{key}:" in text, f"{lang}.js 缺键 {key}"
+        assert "compactSystem:" in text, f"{lang}.js 缺系统行文案"
+        assert "system:" in text, f"{lang}.js 缺 agent.role.system"
+    zh = (app_dir / "i18n" / "zh-CN.js").read_text(encoding="utf-8")
+    assert 'compactShort: "压缩预算 {percent}%"' in zh, "中文必须写「字符预算」而不是「上下文」"
+    assert "上下文 {percent}%" not in zh
+    en = (app_dir / "i18n" / "en.js").read_text(encoding="utf-8")
+    assert "character budget" in en or "Compact budget" in en
+
+
+def test_session_load_wires_context_usage_and_system_rows() -> None:
+    """接线断言：`agent_session_load` 的响应被收下（`context_usage`）、`role:"system"` 不被并成助手气泡。"""
+    src = panel_source()
+    assert 'role: rec.role === "user" ? "user" : rec.role === "system" ? "system" : "assistant",' in src
+    assert 'compact: rec.kind === "compaction"' in src
+    assert "if (res && res.status === \"ok\") setContextUsage(res.context_usage);" in src
+    assert src.count("setContextUsage(res.context_usage)") == 2, "载入会话 + 每轮结束（复用同一次 RPC）各一处"
+    # 系统行也是 `messages[]` 的一员（保持 messages ↔ 气泡 1:1，data-msg-index 定位纪律）
+    assert "function systemMessageEl(rec)" in src
+    assert "wrap.dataset.msgIndex = String(idx);" in src
+
+
+def test_compact_budget_never_clobbers_the_token_segment() -> None:
+    """状态格 = token 段 + **追加**字符预算段：base 写的 token 文本必须原样保留；
+    >阈值 ⇒ 红字 overdue；数据未知 ⇒ 不动 base（只还原颜色）。跑真源码 `applyContextUsageToStatus()`。"""
+    script = (
+        "var contextUsage = null;"
+        "var el = {textContent: '', title: '', style: {}};"
+        "var BASE = '\u21918.7k \u2193233 \u00b7 \u547d\u4e2d 62%';"
+        "function $(sel) { return el; }"
+        "function T(key, p) { return key + ':' + JSON.stringify(p || {}); }"
+        "function fmtTokens(n) { return String(n); }"
+        "function resetBase() { el.textContent = BASE; el.title = 'line1'; }"  # 模拟 base renderStatusUsage 每次先整串重写
+        + extract_function("contextUsageView")
+        + extract_function("applyContextUsageToStatus")
+        + "\ncontextUsage = {chars: 19800, max_chars: 32000, threshold_chars: 25600, compacted_times: 2};"
+        + "\nresetBase(); applyContextUsageToStatus();"
+        + "\nvar r1 = {text: el.textContent, title: el.title, color: el.style.color};"
+        + "\ncontextUsage = {chars: 26000, max_chars: 32000, threshold_chars: 25600, compacted_times: 0};"
+        + "\nresetBase(); applyContextUsageToStatus();"
+        + "\nvar r2 = {text: el.textContent, title: el.title, color: el.style.color};"
+        + "\ncontextUsage = null;"
+        + "\nresetBase(); applyContextUsageToStatus();"
+        + "\nvar r3 = {text: el.textContent, title: el.title, color: el.style.color};"
+        + "\nconsole.log(JSON.stringify([r1, r2, r3]));"
+    )
+    r1, r2, r3 = node_eval(script)
+    assert r1["text"].startswith("\u21918.7k \u2193233 \u00b7 \u547d\u4e2d 62%"), "token 段必须原样保留（只追加）"
+    assert "compactShort" in r1["text"] and "compactTimes" in r1["text"]
+    assert "compactBudget" in r1["title"] and "compactThreshold" in r1["title"]
+    assert r1["color"] == "", "未超阈值不染色"
+    assert "compactOverdue" in r2["text"], ">80% ⇒ 「该压缩还没压缩」"
+    assert r2["color"] == "var(--error)", ">阈值必须变色"
+    assert r3["text"] == "\u21918.7k \u2193233 \u00b7 \u547d\u4e2d 62%" and r3["color"] == "", (
+        "数据未知 ⇒ 不动 base 文本（不瞎报 0%）"
+    )
+
+
+def test_compaction_system_row_text_falls_back_safely() -> None:
+    """系统行文案优先 i18n（带 covered / 摘要字符数）；键缺失时回落后端 `text`，绝不空行。"""
+    script = (
+        "function T(key, p) { return key + ':' + JSON.stringify(p || {}); }"
+        "function fmtTokens(n) { return String(n); }"
+        + extract_function("systemRowText")
+        + "\nvar a = systemRowText({role: 'system', compact: {covered: 3, summaryChars: 1200}, text: 'fallback'}, );"
+        + "\nvar b = systemRowText({role: 'system', text: 'fallback'});"
+        + "\nconsole.log(JSON.stringify([a, b]));"
+    )
+    a, b = node_eval(script)
+    assert "compactSystem" in a and "1200" in a and '"covered":3' in a
+    assert b == "fallback"
+
+
