@@ -51,9 +51,11 @@ KB_WRITE: dict[str, Any] = {
     "name": "写能力（建点 / 改点 / 连边 / 文件增删改）",
     "provides": {
         "tools": [
-            {"tool_id": "kb.kp.create", "gate": "always"},
-            {"tool_id": "kb.kp.update", "gate": "kb_has_sidecar"},
-            {"tool_id": "kb.link.attach", "gate": "always", "constrain": {"type": {"enum_from": "graph.edge_types.EDGE_TYPES"}}},
+            # v0.5.0-S4（2026-10-25）：`gate` / `constrain` 已移出 v1 ⇒ fixture 不再写它们
+            # （出现即 `removed_field` 错误，见 test_gate_field_is_removed_*）
+            {"tool_id": "kb.kp.create"},
+            {"tool_id": "kb.kp.update"},
+            {"tool_id": "kb.link.attach"},
         ]
     },
     "permissions": {
@@ -83,8 +85,11 @@ def test_the_v1_exemplar_loads_verbatim() -> None:
     assert errors == [] and declaration is not None
     assert declaration.id == "kb-write" and declaration.writable is True
     assert [tool.tool_id for tool in declaration.tools] == ["kb.kp.create", "kb.kp.update", "kb.link.attach"]
-    assert declaration.tools[1].gate == "kb_has_sidecar"
-    assert declaration.tools[2].constrain == {"type": {"enum_from": "graph.edge_types.EDGE_TYPES"}}
+    # v0.5.0-S4：`gate`/`constrain` 已移出 v1 契约 ⇒ 声明对象上不再有这两个属性
+    # （这不是"放松断言"：原来断言"字段值被正确解析"，现在断言"字段已不存在"，
+    #   两者都在钉住同一件事——v1 契约里包含/不包含什么。）
+    assert not hasattr(declaration.tools[1], "gate")
+    assert not hasattr(declaration.tools[2], "constrain")
     assert declaration.approval == {"read": "auto", "write": "confirm"}
     # 声明的 `tool_id` 一律能落到**核心原语**（插件自己不写盘）
     assert [tool.primitive for tool in declaration.tools] == ["confirm_kp_range", "update_kp", "apply_link_instances"]
@@ -130,16 +135,28 @@ def test_empty_tools_is_rejected() -> None:
     assert declaration is None and "bad_field" in codes(errors)
 
 
-def test_bad_gate_value_is_rejected() -> None:
-    raw = decl(provides={"tools": [{"tool_id": "kb.kp.create", "gate": "sometimes"}]})
-    declaration, _w, errors = parse_declaration(raw, source="builtin")
-    assert declaration is None and "bad_field" in codes(errors)
+def test_gate_field_is_removed_and_rejected() -> None:
+    """v0.5.0-S4：`gate` 已移出 v1 ⇒ **任何取值**（含历史上合法的 `always`）都报 `removed_field`。
+
+    判别力：把 `plugins.REMOVED_TOOL_FIELDS` 里的 `gate` 去掉（＝把字段改回 v1），本测试必须变红。
+    """
+    for value in ("always", "kb_has_sidecar", "sometimes"):
+        raw = decl(provides={"tools": [{"tool_id": "kb.kp.create", "gate": value}]})
+        declaration, _w, errors = parse_declaration(raw, source="builtin")
+        assert declaration is None, f"gate={value!r} 仍被接受 ⇒ 字段没真正移出 v1"
+        assert "removed_field" in codes(errors), f"gate={value!r} 的拒绝码不是 removed_field：{codes(errors)}"
 
 
-def test_gate_defaults_to_always() -> None:
+def test_tools_without_gate_load_and_have_no_gate_attribute() -> None:
+    """`gate` 缺席是**唯一合法形态**：声明照常装载，且工具对象上不存在 `gate` 属性。
+
+    （原 `test_gate_defaults_to_always` 守的是"默认值 always"；字段移出后，
+      "默认值"这件事本身不存在了 —— 现在守的是"缺席即合法 + 属性确实不存在"。）
+    """
     raw = decl(provides={"tools": [{"tool_id": "kb.kp.create"}]})
     declaration, _w, errors = parse_declaration(raw, source="builtin")
-    assert errors == [] and declaration is not None and declaration.tools[0].gate == "always"
+    assert errors == [] and declaration is not None
+    assert not hasattr(declaration.tools[0], "gate")
 
 
 def test_catalog_covers_every_code_primitive() -> None:

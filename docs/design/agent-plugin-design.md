@@ -18,13 +18,28 @@
 |---|---|---|---|---|
 | `id` | ✅ | 装载器：按 `id` 与库级 `enabled[]` 求交集与启用位（§2.2）；审计：每条 `capability/*` 带插件 id；冲突判定：两个声明同 `id` | **有据**：插件模块的稳定标识 `export const name`（`dsh-src/packages/fs/tool-fs/src/index.ts:19`）＋组合树条目 `id`（patch 以 `id` 定位，`dsh-src/apps/cli/src/profile-boot.ts:173`） | 英文 kebab-case、唯一；重复 ⇒ **装载失败**（不静默取其一） |
 | `name` | ⬜ | 库级启停 / 插件列表面板的**人读标签**（`id` 是机器标识，不可替代）；§2.2 第 ③ 步"一条可见告警"指名插件 | **有据**：上游确有"发现 UI 用的展示标签"形态 —— `PresetSpec.name`（注释原文 "display label a client shows"，`dsh-src/packages/interaction/permission-presets/src/index.ts:62-71`）、`CommandDefinition.description`（"used in discovery UI"，`dsh-src/packages/interaction/commands/src/index.ts:66-67`） | 非空字符串；缺省回落 `id` |
-| `provides.tools[]`（`tool_id` 必填；`constrain` / `gate` 可选） | ✅ | 装载器：`tool_id`（**必须**取自核心原语目录）+ 按 `gate` 决定该**领域动词**是否出现在模型可见工具面；**编译器 / `validate_plan`**：`constrain` 是参数收紧的唯一来源（§2.1.1 / §2.3.4，如边类型枚举取自 `graph.edge_types.EDGE_TYPES`）。**该工具只产出 plan、不落盘**（§2.3.3） | **本地自定**：上游**没有**"包声明工具清单"这种声明面 —— 工具是 `apply()` 里**运行时**注册的 `ctx.tools.register(definition)`（`dsh-src/packages/core/tools/src/index.ts:1043`）。仅**取值语义**对齐上游 `ToolSchema`（`name`/`description`/`parameters`，`dsh-src/packages/core/tools/src/schema.ts:483-498`；构造走 `defineTool` `:545`） | `tool_id` 不在原语目录 → **拒绝装载**；同一 `tool_id` 的同一动作类被两个插件声明 ⇒ 装载失败（§2.2） |
+| `provides.tools[]`（`tool_id` 必填；**`impl` 可选**，S4 扩展层） | ✅ | **两种形态**：①目录映射 —— `tool_id` **必须**取自核心原语目录（`TOOL_CATALOG`/`NET_CATALOG`），落盘实现由核心原语承担；②**扩展工具（S4）** —— `tool_id` 以 `ext.` 命名空间开头 + `impl` 声明启动方式 ⇒ 实现在**插件自己的代码**里，核心只加一个通用适配器。**该工具只产出 plan、不落盘**（§2.3.3） | **本地自定**：上游**没有**"包声明工具清单"这种声明面 —— 工具是 `apply()` 里**运行时**注册的 `ctx.tools.register(definition)`（`dsh-src/packages/core/tools/src/index.ts:1043`）。仅**取值语义**对齐上游 `ToolSchema`（`name`/`description`/`parameters`，`dsh-src/packages/core/tools/src/schema.ts:483-498`；构造走 `defineTool` `:545`） | 目录映射：`tool_id` 不在原语目录 → **拒绝装载**；扩展形态：`ext.` 命名空间 + `impl.kind == "stdio"` + `read_only: true`（v1）+ 命令非空 + 超时/输出有界；同一 `tool_id` 被两个插件声明 ⇒ 装载失败（§2.2） |
 | `permissions.read` | ✅ | 装载器：声明的 `tool_id` 动作类必须落在声明面内（`read` 之外的 `tool_id` 一律拒）；§2.4 矩阵与 UI 展示"该插件可读范围" | **本地自定**：上游没有 per-plugin 读写 glob，只有**执行器级**档位 `SandboxMode = 'read-only'｜'workspace-write'｜'danger-full-access'`（`dsh-src/packages/sandbox/sandbox/src/index.ts:29`） | 相对库根的 glob；归一后落在库根外一律 Deny |
 | `permissions.write` | ✅（有写动作类时非空） | **§2.4 apply 入口的路径校验读它**（glob + `os.path.realpath` 前缀校验 ⇒ 越界即拒，§2.3.1 第 3 条）；装载器：空 ⇒ 该插件不可写 | **本地自定**；语义对应上游 `workspace-write` 档且 workspace = 库根（§2.7 的"本地发明"口径不变） | 非空才可写；逐条 glob 做前缀校验；`.memoria/agent/sessions/**` 与 `.memoria/agent/backups/**` 不在白名单 |
 | `approval` | ✅ | 审批策略在工具**分发前**读它（`services/agent/approvals.py:109-115`；即 §2.3 第 3 步"逐条确认"）；§10 P9 决定它能否被库级覆写 | 字段**本地自定**：上游审批是**运行时**询问 waterfall `approval/request`（`dsh-src/packages/interaction/user-approval/src/types.ts:85-89`），档位是**会话级** `ApprovalPolicy = 'ask'｜'never'`（`dsh-src/packages/interaction/user-approval/src/index.ts:60`）—— **没有**"插件按动作类声明档"的形态。**仅词汇对齐**：`ApprovalOutcome`（`allowed-once`/`rejected`/`cancelled`/`unavailable`，不可用即 fail-closed，`types.ts:32`） | **必须显式声明**，按动作类分档：`auto` / `confirm` / `never`。**安全下限：`permissions` 含 `write` ⇒ `approval` 不得为 `auto`**（硬校验，见 §10 P9）；v1 **不含 `exec` 字段** ⇒ **引入 `exec` 时该下限随之扩到 `exec`** |
 
-> `provides.tools[]` 的两个子字段 `constrain` / `gate` 属**判断项、可再收紧**（是否留在 v1 见 §4）。
+> **v0.5.0-S4（2026-10-25）移出 v1 的字段**（R-R1 / R-R2；曾是"判断项"，现已有裁决）：
+> `provides.tools[]` 的 `gate` 与 `constrain`，以及 `tool_schema_ref` / `budget`（`provides.tools[]`）、顶层 `lifecycle`。
+> **裁决依据（全部实测/grep）**：
+> 1. `gate`：全仓 15 处声明**全部是 `"always"`**（3 个随版本分发的内置声明 13+1+1 处，均为内联写法）⇒ **非恒 always 覆盖率 0%**；
+>    且**行为实测**——无 sidecar 的库上 `kb_overview`/`validate_kb`/`audit_references`/`read_document` 全部**正常工作**（只是结果为空）
+>    ⇒ 隐藏这些工具是**减少能力，不是减少噪音** ⇒ `gate` 的隐藏语义没有正当理由。
+> 2. `constrain`：`plugins.py` 之外**0 消费者**（旧注释声称"应用点在 `validate_plan`"是**假的**，`plan.py` 0 命中）。
+> 3. `tool_schema_ref` / `budget` / `lifecycle`：**连解析都没有**（此前只进 `unknown_field` warning）。
+> **行为**：遇到它们 ⇒ `removed_field` **错误**（响亮失败，附迁移文案）；**其它未知字段仍按「只增不改」容忍为 warning**。
+> **复评触发条件**（任一条出现时回来重议）：
+> - `gate`：出现**第二个工具面投影维度**的真实需求（例如按库状态隐藏确有失败风险的整族工具），且能证明该族工具在该状态下**必然失败**；
+> - `constrain`：出现**参数收紧**的真实消费者（当前 `validate_plan` 不读它，若要做应先实现求值点再谈字段）；
+> - `tool_schema_ref` / `budget` / `lifecycle`：出现真实消费者（`file:line` 点名）。
+>
 > 字段之外还有**一条铁律**（模块侧反复引用，见 [agent-capabilities.md §2.1/§2.2](./agent-capabilities.md)）：**插件目录内不含可执行代码**（无 `.py` / `.js` / 脚本），只含**声明 JSON + 只读资源**。
+> ⚠️ **该铁律只约束"目录映射"形态**；S4 的**扩展工具**形态（`impl`）**明确允许**插件自带可执行代码 ——
+> 因为那正是"第三方加工具"的必要条件，且它的边界在 §6.1 单独声明（**不是沙箱**）。
 
 **字段演进（一）：删除 `kind`（2026-09-20）**：本契约**已删除 `kind` 字段**（原取值 `read` / `write` / `network` / `skill` / `host`）。用户口径原话：「那就不要写这个 kind 的字段，我们慢慢攒插件，后面才能知道有没有必要保留这个字段，以及怎么划分」——即**暂不引入分类维度**，等**复评触发条件：攒够 3–5 个真实插件**时再决定"有没有必要、按什么划分"。`kind` 原本承担的两件事就地改为：① **默认 `approval` 档**：**不由分类推导**，改为 `approval` **必须显式声明**（按动作类）+ 上表的安全下限（`permissions` 含 `write`/`exec` ⇒ 不得 `auto`）；② **UI 分组**：**暂不由契约决定** —— **UI 先按插件来源目录/名单分组**（内置 `resources/agent-capabilities/**` vs 用户 `<kb>/.memoria/agent/skills/**`），是否需要分类维度等上述复评后再定。
 
@@ -37,9 +52,9 @@
   "name": "写能力（建点 / 改点 / 连边 / 文件增删改）",
   "provides": {
     "tools": [
-      { "tool_id": "kb.kp.create",   "gate": "always" },
-      { "tool_id": "kb.kp.update",   "gate": "kb_has_sidecar" },
-      { "tool_id": "kb.link.create", "gate": "always", "constrain": { "type": { "enum_from": "graph.edge_types.EDGE_TYPES" } } }
+      { "tool_id": "kb.kp.create" },
+      { "tool_id": "kb.kp.update" },
+      { "tool_id": "kb.link.create" }
     ]
   },
   "permissions": {
@@ -49,6 +64,31 @@
   "approval": { "read": "auto", "write": "confirm" }
 }
 ```
+
+**扩展工具实样（S4 第三层：第三方不改核心即加工具）** —— 见 `artifacts/agent/verify/todo/s4_sample_plugin/` 的可运行样例：
+
+```jsonc
+{
+  "v": 1,
+  "id": "kb-stats",                       // 插件 id：kebab-case
+  "name": "知识库统计（样例插件）",
+  "provides": { "tools": [
+    { "tool_id": "ext.kb_stats",          // 必须 ext. 命名空间（内置名保留）
+      "impl": {
+        "kind": "stdio",                  // v1 唯一形态：stdin 一行 JSON 请求 / stdout 一行 JSON 结果
+        "command": ["python", "<插件目录>/kb_stats_tool.py"],
+        "timeout_s": 20,                  // 0.1..120；**真强制**（超时杀子进程）
+        "description": "统计库里的 md 篇数/行数/标题行数",
+        "input_schema": { "type": "object", "properties": { "glob": { "type": "string" } } }
+        // read_only 省略 = true；v1 拒绝 false（写必须走内置 propose_write）
+      } }
+  ] },
+  "permissions": { "read": ["**"], "write": [] },
+  "approval": { "read": "auto", "write": "confirm" }
+}
+```
+> **默认关闭**：扩展工具只有在**库级注册表** `<kb>/.memoria/agent/capabilities.json` 里被显式启用（`{"enabled":[{"id":"kb-stats","on":true}]}`）后才出现在工具面。
+> 无注册表 ⇒ 一个扩展工具都不投影（39 把内置工具的名字与顺序**完全不变**，有断言钉住）。
 
 > `v` 是**声明文件的信封版本**（"只增不改"，语义对齐 [AGENTS.md §3](../../AGENTS.md) 的事件信封与 §10 P12 的 plan 版本口径），**不占**上表字段位。上方「暂缓字段」里的键**不写进声明文件**。
 
@@ -84,6 +124,7 @@
 | `emits` | 审计事件名今天由**核心**写（`capability/proposal`｜`apply`｜`reject`｜`backup`｜`undo`，§2.3 / §2.3.2），插件不产生自有事件 ⇒ 没有"按声明过滤"的消费者 | 出现**插件自有**事件名（第三方插件的领域事件）且核心的追加通道需要按声明白名单过滤时 |
 | `verify` | v1 的自证是**模块级**：§2.6 四道安全门 + 证据锚落 `artifacts/agent/verify/**`；只有一个内置插件时 per-plugin 单测/harness 路径是空转 | 出现第 2–3 个插件（各自需自证）或要做**第三方插件准入**评审时；须同时定"缺失是否拒载" |
 | `provenance` | 唯一内置插件 `kb-write` 的移植面已写在 §2.7 与根 `THIRD_PARTY_NOTICES.md`，per-plugin 字段冗余 | 出现真正 `ported-from-dsh@<pin>` 的第二方插件时；须与根 `THIRD_PARTY_NOTICES.md` 联动校验 |
+| `provides.tools[].gate` / `provides.tools[].constrain` / `provides.tools[].tool_schema_ref` / `provides.tools[].budget` / 顶层 `lifecycle` | **v0.5.0-S4（2026-10-25）移出**：`gate` 全仓 15 处声明**全是 `always`**（非恒覆盖率 0%）且无 sidecar 库上相关工具**照样能用**（隐藏=减少能力）；`constrain` 在 `plugins.py` 之外 0 消费者（旧注释的"应用点在 validate_plan"是假的）；另三个连解析都没有 | **`gate`**：出现第二个工具面投影维度的真实需求，且能证明该族工具在目标库状态下**必然失败**；**`constrain`**：出现参数收紧的真实消费者（须先实现求值点）；**`tool_schema_ref`/`budget`/`lifecycle`**：出现 `file:line` 点名的真实消费者。命中任一 ⇒ 按 §1 准入规则重过一遍 |
 | `unload` | v1 只有 `restart` 一种可能（没有热卸载消费者） | 出现热卸载需求（H 线常驻插件 / 前端挂载点）**且**给出卸载用例时 |
 | `enabled`（库级开关） | **契约层冗余**：库级启停已由 `<kb>/.memoria/agent/capabilities.json` 的 `enabled[]` **条目存在性**承担（§2.2）；上游同样落在**条目级**（`dsh-src/apps/cli/src/profile-boot.ts:173` 的 `{ id, disabled: true }` patch） | 同一 `id` 需要按作用域（目录/会话）多份启用记录，或需要"随版本分发但默认关"的第三态时 |
 
@@ -109,7 +150,7 @@
 | # | 问题 | 可选项 |
 |---|---|---|
 | Q1 | `name` 是否保留（去掉即**5 字段**） | ① 保留（人读标签；缺省回落 `id`）② 去掉（`id` 足够，UI 标签用 `id` / 来源目录） |
-| Q2 | `constrain` / `gate` 是否留在 v1 | ① 都留（写模块今天就用：`enum_from` 收紧参数、`gate` 门控可见性）② 都移出（进 §2 暂缓清单，等第二个消费者）③ 只留其一 |
+| Q2 | `constrain` / `gate` 是否留在 v1 | **✅ 已裁决（v0.5.0-S4，2026-10-25）：② 都移出**（`gate` 非恒覆盖率 0% + 无 sidecar 库上相关工具照样能用；`constrain` 零求值点）。详见 §1 字段表下方与 §2 暂缓字段表 |
 | Q3 | 首批 op 个数（[§10 P8](./agent-capabilities.md)） | ① 三个（`upsert_kp` + `attach_links` + `detach_links`）② 五个（再加 `set_kp_range` + `rename_kp`）③ 一个（只有 `upsert_kp`） |
 | Q4 | `approval` 覆写口径（[§10 P9](./agent-capabilities.md)） | ① 不可覆写（库级只接受启停位与 `config` 值；审批档是安全不变量）② 可覆写（需醒目告警 + 额外审计；与装载期硬校验的冲突待解） |
 | Q5 | 备份保留口径（[§10 P10](./agent-capabilities.md)） | ① 写前快照 + 会话内撤销 + 每会话 5 批 / 每库 64 MiB（FIFO，最新批次永不淘汰）② 完整历史（可撤任意批次，存储线性增长）③ 仅审计重放（不保证逐字节） |
@@ -381,3 +422,56 @@
 **已知环境噪声（2026-09-22 已收口）**：`_write_body` 的 `os.replace` 偶发 `WinError 5`
 （外部 AV / 索引器瞬时持锁；`_write_body` 自身无句柄泄漏：`with` + flush + fsync → close → replace）。
 现全仓写路径（含侧车 `atomic_yaml` / KP 级联 / 图片注册表）统一走 `replace_with_retry`（`atomic_write.py`）。
+
+---
+
+## 10. 扩展工具（S4 第三层）：第三方**不改核心**即加工具
+
+> **来源**：用户原话「让 memoria 有拓展能力」。此前第三方想加工具**只能改 `registry.py` 本体** ——
+> 那不是扩展点，是改核心。本节是第三层声明面（第一层 = 声明面 `plugins.py`，第二层 = 核心原语目录）。
+
+### 10.1 形态（`provides.tools[].impl`，v1 只支持 `stdio`）
+
+```jsonc
+{ "tool_id": "ext.kb_stats",
+  "impl": { "kind": "stdio", "command": ["python", "<插件目录>/kb_stats_tool.py"],
+            "timeout_s": 20, "description": "...", "input_schema": { "type": "object" } } }
+```
+
+- **进程协议**：stdin 一行 JSON `{"v":1,"tool":"<name>","arguments":{...},"kb_path":"<abs>"}`
+  → stdout 一行 JSON `{"text":"...","error":false,"code":null,"anchors":[...]}`（也容忍纯文本输出）；
+- **核心侧只有一个通用适配器**：`tools/registry.py::make_subprocess_tool()` —— **不含任何具体工具名**；
+
+### 10.2 准入规则（装载期硬校验）
+
+| 规则 | 非法 ⇒ |
+|---|---|
+| `tool_id` **必须** `ext.` 命名空间（内置名保留，冲突即拒） | `bad_tool_id` |
+| `impl.kind` ∈ `{"stdio"}` | `bad_field` |
+| `impl.command` 非空字符串数组、无空项 | `bad_field` |
+| `impl.timeout_s` ∈ [0.1, 120]（默认 20）**真强制**（超时杀子进程） | `bad_field` |
+| **v1 只读**：`read_only` 省略或 `true`；`false` ⇒ 拒 | `ext_write_not_allowed` |
+| 输出上限 **256 KiB**（超出截断 + 标记）**真强制** | 运行时截断 |
+
+### 10.3 🔴 边界声明（**原文照抄，不许软化**）
+
+```
+扩展工具是【用户显式安装的任意代码】，不是沙箱；
+`read_only` 仅参与审批档判定，不构成执行强制；
+要受 W1–W4 保护，必须走内置 propose_write 链路，而不是在扩展工具里直接写文件。
+```
+
+**推论（必须一起写清）**：子进程完全可以自己 `open(path, "w")` 写文件 —— **那条路径在 W1 写者链之外**，
+W1（入口唯一）/ W2（读后写）/ W3（写前备份）**都不保护**它。
+⇒ **不能**说"扩展工具不新增写者"；准确说法是"**扩展工具在 W1 写者链之外**"。
+
+### 10.4 工具面稳定性
+
+- **默认关闭**：只有库级注册表 `<kb>/.memoria/agent/capabilities.json` 显式启用（`on: true`）才投影；
+- **无插件/未启用 ⇒ 39 把内置工具的名字、顺序、`read_only` 逐项不变**（`s4_sample_plugin/check.py` 有断言）；
+- 启用后 = 39 + N，前 39 把完全不变（扩展工具一律追加在尾部）。
+
+### 10.5 版本兼容
+
+- `impl` 是**新增可选字段**：旧声明（无 `impl`）行为不变；旧版本读新声明 ⇒ 未知子字段 warning（不会崩）；
+- `ext.` 命名空间一旦引入不再改；`kind` 新增取值只能追加（`stdio` 是 v1 唯一实现）。

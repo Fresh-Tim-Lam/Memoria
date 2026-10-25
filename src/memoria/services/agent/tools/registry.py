@@ -23,7 +23,8 @@ from __future__ import annotations
 
 import json
 import logging
-from collections.abc import Callable, Iterable, Mapping
+import subprocess
+from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
@@ -307,3 +308,98 @@ class ToolRegistry:
         if not isinstance(output, ToolOutput):
             output = ToolOutput(text=str(output))
         return ToolResult(call.id, tool.name, output)
+
+# ── S4 扩展层：声明式扩展工具的**唯一**通用适配器（不含任何具体工具名）──────────
+# 出处：`plugins.py::ToolImpl` 的声明（`provides.tools[].impl`）+ `tools/kb.py::_plugin_extension_tools`。
+#
+# ## 边界（必须与 plugins.ToolImpl 的 docstring 一致，不许软化）
+# 扩展工具 = **用户显式安装的任意代码，不是沙箱**：`read_only` 只是审批提示，
+# 子进程可以自己写文件 —— 那条路径在 **W1 写者链之外**（W1/W2/W3 都不保护）。
+#
+# ## 协议（v1，`kind: "stdio"`）
+# stdin  ← 一行 JSON：`{"v": 1, "tool": "<name>", "arguments": {...}, "kb_path": "<绝对路径>"}`
+# stdout → 一行 JSON：`{"text": "...", "error": false, "code": null, "anchors": [{"file": "...", "line": 1}]}`
+# 也容忍"纯文本输出"（无 JSON 时整段当 text）。stderr 只用于失败诊断。
+EXT_TOOL_TIMEOUT_CODE = "EXT_TOOL_TIMEOUT"
+EXT_TOOL_FAILED_CODE = "EXT_TOOL_FAILED"
+EXT_TOOL_OUTPUT_MAX_BYTES = 256 * 1024
+
+
+def make_subprocess_tool(
+    *,
+    name: str,
+    description: str,
+    parameters: Mapping[str, Any],
+    command: Sequence[str],
+    kb_path: str,
+    timeout_s: float = 20.0,
+    read_only: bool = True,
+) -> Tool:
+    """把一个**声明式扩展工具**（`impl.kind == "stdio"`）包成普通 `Tool`。
+
+    **只加这一个适配器**：具体工具名/参数都不进本文件（第三方代码在它自己的包里）。
+    超时与输出上限在这里**真强制**（不是只写进 schema）。
+    """
+    argv = tuple(str(part) for part in command)
+
+    def _handler(arguments: Mapping[str, Any]) -> ToolOutput:
+        request = {"v": 1, "tool": name, "arguments": dict(arguments or {}), "kb_path": kb_path}
+        try:
+            proc = subprocess.run(
+                list(argv),
+                input=json.dumps(request, ensure_ascii=False),
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                timeout=float(timeout_s),
+                cwd=kb_path,
+            )
+        except subprocess.TimeoutExpired:
+            return ToolOutput(
+                text=error_text(f"{name}: 扩展工具超时（>{timeout_s:g}s，已终止子进程）", EXT_TOOL_TIMEOUT_CODE),
+                error=True,
+                code=EXT_TOOL_TIMEOUT_CODE,
+            )
+        except OSError as exc:
+            return ToolOutput(
+                text=error_text(f"{name}: 扩展工具无法启动（{exc}）", EXT_TOOL_FAILED_CODE),
+                error=True,
+                code=EXT_TOOL_FAILED_CODE,
+            )
+
+        stdout = proc.stdout or ""
+        raw_bytes = stdout.encode("utf-8")
+        truncated = len(raw_bytes) > EXT_TOOL_OUTPUT_MAX_BYTES
+        if truncated:
+            stdout = raw_bytes[:EXT_TOOL_OUTPUT_MAX_BYTES].decode("utf-8", "ignore")
+            stdout += f"\n…（输出超过 {EXT_TOOL_OUTPUT_MAX_BYTES} 字节上限，已截断）"
+
+        stripped = stdout.strip()
+        payload: Mapping[str, Any] | None = None
+        if stripped:
+            try:
+                loaded = json.loads(stripped.splitlines()[-1])
+                payload = loaded if isinstance(loaded, Mapping) else None
+            except json.JSONDecodeError:
+                payload = None
+
+        if payload is None:
+            if proc.returncode != 0:
+                detail = (proc.stderr or "").strip()[-500:]
+                return ToolOutput(
+                    text=error_text(f"{name}: 扩展工具退出码 {proc.returncode} —— {detail or '无 stderr'}", EXT_TOOL_FAILED_CODE),
+                    error=True,
+                    code=EXT_TOOL_FAILED_CODE,
+                )
+            return ToolOutput(text=stripped or f"{name}: （无输出）")
+
+        text = str(payload.get("text") or "")
+        if truncated:
+            text += "\n…（输出已截断）"
+        anchors_raw = payload.get("anchors") or []
+        anchors = tuple(row for row in anchors_raw if isinstance(row, Mapping))
+        is_error = bool(payload.get("error"))
+        code = str(payload.get("code") or "") or None
+        return ToolOutput(text=text, error=is_error, code=code if is_error else None, anchors=anchors)
+
+    return Tool(name=name, description=description, parameters=dict(parameters or {}), handler=_handler, read_only=read_only)

@@ -488,6 +488,51 @@ def _search_session_history(kb_path: str, query: str, limit: int) -> ToolOutput:
     return ToolOutput(text="\n".join(lines))
 
 
+def _plugin_extension_tools(kb_path: str) -> tuple[Tool, ...]:
+    """S4 第三层：把**声明式扩展工具**（`plugins.ToolImpl`）投影成普通 `Tool`。
+
+    **默认关闭**：只有库级注册表（`<kb>/.memoria/agent/capabilities.json`）存在、且该插件被显式启用时，
+    它的扩展工具才出现在工具面（与 `ActivePlugins.op_available()` 的启用位语义对齐）。
+    无插件 / 未启用 / 装载出错 ⇒ **返回空** ⇒ 39 把内置工具的名字与顺序**完全不变**。
+
+    边界（与 `plugins.ToolImpl` docstring 一致，不许软化）：扩展工具是**用户显式安装的任意代码**，
+    不是沙箱；`read_only` 只参与审批档判定，**不构成执行强制** —— 它若自己写文件，
+    那条路径在 **W1 写者链之外**（W1/W2/W3 都不保护）。
+    """
+    from memoria.services.agent import plugins as _plugins
+    from memoria.services.agent.tools.registry import make_subprocess_tool
+
+    try:
+        active = _plugins.active_plugins(kb_path)
+    except Exception:  # noqa: BLE001 —— 扩展层故障不得拖垮工具面（核心 39 把照常）
+        logger.warning("[agent-tools] 扩展工具装载失败（已忽略）：%s", kb_path, exc_info=True)
+        return ()
+    # `getattr` 而非直接取属性：测试会用 `SimpleNamespace(enforced=…, tool_ids=…)` 桩替换
+    # `active_plugins`（不带 `registry_present`）—— 扩展层不能因此把工具面构建搞崩。
+    if not getattr(active, "registry_present", False):
+        return ()  # 默认关闭：没有库级注册表 ⇒ 一个扩展工具都不投影
+    out: list[Tool] = []
+    seen: set[str] = set()
+    for decl in active.declarations:
+        for tool in decl.tools:
+            impl = tool.impl
+            if impl is None or tool.tool_id in seen:
+                continue
+            seen.add(tool.tool_id)
+            out.append(
+                make_subprocess_tool(
+                    name=tool.tool_id,
+                    description=impl.description or f"扩展工具（插件 {decl.id}）",
+                    parameters=dict(impl.input_schema) or {"type": "object", "properties": {}},
+                    command=impl.command,
+                    kb_path=kb_path,
+                    timeout_s=impl.timeout_s,
+                    read_only=impl.read_only,
+                )
+            )
+    return tuple(out)
+
+
 def build_kb_tools(
     kb_path: str, *, top_k: int = DEFAULT_TOP_K, session_id: str | None = None, service: Any = None
 ) -> tuple[Tool, ...]:
@@ -675,7 +720,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id),
+        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_plugin_extension_tools(root),
     )
 
 

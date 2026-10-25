@@ -1,0 +1,43 @@
+{
+  "v": 1,
+  "id": "kb-stats",
+  "name": "知识库统计（样例插件）",
+  "provides": {
+    "tools": [
+      {
+        "tool_id": "ext.kb_stats",
+        "impl": {
+          "kind": "stdio",
+          "command": ["__PYTHON__", "__TOOL_DIR__/kb_stats_tool.py"],
+          "timeout_s": 20,
+          "description": "统计库里的 md 篇数 / 行数 / 标题行数",
+          "input_schema": {
+            "type": "object",
+            "properties": {"glob": {"type": "string", "description": "可选：文件匹配（当前仅记录）"}},
+            "additionalProperties": false
+          }
+        }
+      },
+      {
+        "tool_id": "ext.slow",
+        "impl": {
+          "kind": "stdio",
+          "command": ["__PYTHON__", "__TOOL_DIR__/slow_tool.py"],
+          "timeout_s": 1,
+          "description": "测试用：故意超时"
+        }
+      },
+      {
+        "tool_id": "ext.big",
+        "impl": {
+          "kind": "stdio",
+          "command": ["__PYTHON__", "__TOOL_DIR__/big_tool.py"],
+          "timeout_s": 20,
+          "description": "测试用：故意输出 512KiB"
+        }
+      }
+    ]
+  },
+  "permissions": {"read": ["**"], "write": []},
+  "approval": {"read": "auto", "write": "confirm"}
+}

@@ -24,8 +24,14 @@
 | `user` | `config/plugins/<id>/plugin.json` | **用户导入**（拖拽 zip 落位后所在处）；本模块只读，落位与解包属导入器 |
 
 > **未做（如实）**：zip 导入 / 解包 / 签名与路径穿越防护属**导入器**（下一步），本模块只认"已经落好位的目录"；
-> `gate` 的求值（`kb_has_sidecar` 之类）与 `constrain` 的应用点分别在工具门控与 `validate_plan`（§2.1.1 / §2.3.4），
-> 不在本模块；`config` 的**值位**保留但不校验（v1 无参数 schema，§2）。
+> **v0.5.0-S4 移出 v1 的字段**（**从未被求值**，故不构成能力删减）：
+> `provides.tools[]` 的 `gate`（全仓 0 条声明用它、默认 `always` ⇒ 非恒覆盖率 0%）与 `constrain`
+> （`plugins.py` 之外 0 消费者；旧注释声称它在 `validate_plan` 求值，**是假的**，plan.py 0 命中）、
+> `tool_schema_ref` / `budget`（连解析都没有）、顶层 `lifecycle`（同上）。
+> ⇒ 遇到它们报 `removed_field`（响亮失败）；**其它未知字段仍按「只增不改」容忍为 warning**。
+> `config` 的**值位**保留但不校验（v1 无参数 schema，§2）。
+> **扩展层（S4 新增）**：`provides.tools[]` 支持 `impl` 声明形态 ⇒ 第三方**不改核心**即可加工具；
+> 但扩展工具是**用户显式安装的任意代码，不是沙箱** —— 见 `ToolImpl` docstring 的边界声明。
 """
 
 from __future__ import annotations
@@ -40,13 +46,17 @@ from typing import Any
 __all__ = [
     "APPROVAL_VALUES",
     "DECL_VERSION",
-    "GATE_VALUES",
+    "EXT_KINDS",
+    "EXT_TOOL_PREFIX",
     "PLUGIN_ID_RE",
+    "REMOVED_TOP_FIELDS",
+    "REMOVED_TOOL_FIELDS",
     "TOOL_CATALOG",
     "ActivePlugins", "OP_TOOL_IDS", "active_plugins", "builtin_dir", "capability_note", "user_dir",
     "LoadResult",
     "PluginDeclaration",
     "ToolDeclaration",
+    "ToolImpl",
     "kb_enablement",
     "load_declarations",
     "parse_declaration",
@@ -62,8 +72,69 @@ PLUGIN_ID_RE = re.compile(r"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$")
 #: `approval` 的取值（§1 字段表；词汇对齐上游 `ApprovalOutcome` 的 fail-closed 口径，§3 第 4 条）。
 APPROVAL_VALUES = ("auto", "confirm", "never")
 
-#: `gate` 的取值（§1 `provides.tools[]`；"该动作类是否出现在模型可见工具面"）。
-GATE_VALUES = ("always", "kb_has_sidecar")
+#: **v0.5.0-S4 移出 v1 的字段**（R-R1/R-R2）：命中 ⇒ `removed_field` **错误**（响亮），
+#: 而其它未知字段仍只 warning（「只增不改」的容错边界保持不变）。
+#: 依据：`gate` 全仓 0 条声明（默认 `always` ⇒ 非恒覆盖率 0%）且无 sidecar 库上相关工具**照样能用**
+#: （隐藏=减少能力）；`constrain` 在 `plugins.py` 之外 0 消费者；另三个字段连解析都没有。
+REMOVED_TOOL_FIELDS = ("gate", "constrain", "tool_schema_ref", "budget")
+REMOVED_TOP_FIELDS = ("lifecycle",)
+
+#: **扩展工具（S4 第三层）**：`provides.tools[].impl` 的声明形态。
+#: v1 只支持 `stdio`：命令从 stdin 读一行 JSON 请求、向 stdout 写一行 JSON 结果。
+EXT_TOOL_PREFIX = "ext."
+EXT_KINDS = ("stdio",)
+EXT_TOOL_ID_RE = re.compile(r"^ext\.[a-z][a-z0-9_.-]{1,63}$")
+EXT_TIMEOUT_DEFAULT_S = 20.0
+EXT_TIMEOUT_MAX_S = 120.0
+#: 扩展工具 stdout 上限（超出即截断并标记；防一次性把上下文灌爆）。
+EXT_OUTPUT_MAX_BYTES = 256 * 1024
+
+
+@dataclass(frozen=True, slots=True)
+class ToolImpl:
+    """扩展工具的**实现声明**（第三方代码在它自己的包里；本模块只登记"怎么启动它"）。
+
+    ## 🔴 边界声明（必须写进契约文档与样例 README，措辞不许软化）
+
+    **扩展工具是【用户显式安装的任意代码】，不是沙箱。**
+    - `read_only` 只参与**审批档判定**（`approvals.write_is_risky` 那一路），**不构成执行强制**；
+    - 子进程完全可以自己 `open(path, "w")` 写文件 —— 那条路径**在 W1 写者链之外**，
+      W1（入口唯一）/W2（读后写）/W3（写前备份）**都不保护**它；
+    - **要受 W1–W4 保护，必须走内置 `propose_write` 链路**，而不是在扩展工具里直接写文件。
+
+    ⇒ 因此本模块**不能**声称"扩展工具不新增写者"。准确说法是"**扩展工具在 W1 写者链之外**"。
+    """
+
+    kind: str
+    command: tuple[str, ...]
+    timeout_s: float = EXT_TIMEOUT_DEFAULT_S
+    input_schema: Mapping[str, Any] = field(default_factory=dict)
+    description: str = ""
+    read_only: bool = True
+
+
+@dataclass(frozen=True, slots=True)
+class ToolDeclaration:
+    """一条工具声明（`provides.tools[]` 的一项）。
+
+    两种形态（互斥）：
+    - **目录映射**（v1 既有）：`tool_id` 取自核心原语目录（`TOOL_CATALOG` / `NET_CATALOG`），
+      落盘实现由核心原语承担；插件只声明"我要这个动作类"。
+    - **扩展工具（S4）**：`tool_id` 以 `ext.` 命名空间开头 + `impl` 声明启动方式 ⇒
+      实现在**插件自己的代码**里，核心只加一个通用适配器（`registry.make_subprocess_tool`）。
+    """
+
+    tool_id: str
+    impl: ToolImpl | None = None
+
+    @property
+    def primitive(self) -> str:
+        """该 `tool_id` 对应的**核心原语名**（仅目录映射形态）。
+
+        2026-09-24：**出网族（`net.*`）没有落盘原语** —— 它在 `NET_CATALOG` 里指向实现入口
+        （`web.WebClient.search` / `.fetch`）。两张表**并集**才是"合法 `tool_id`"的全集。
+        """
+        return TOOL_CATALOG.get(self.tool_id) or NET_CATALOG[self.tool_id]
 
 #: **核心原语目录**（§1：`tool_id` 的取值目录；不在此表 ⇒ 拒绝装载）。
 #: 左 = 声明里的 `tool_id`（`docs/design/agent-capabilities.md` §「M3 首批写原语目录」的**权威命名**），
@@ -111,25 +182,6 @@ USER_PLUGINS_DIRNAME = os.path.join("plugins")
 
 #: 库级注册表文件名（§1 库级实样）。
 KB_REGISTRY_NAME = "capabilities.json"
-
-
-@dataclass(frozen=True, slots=True)
-class ToolDeclaration:
-    """一条工具声明（`provides.tools[]` 的一项）。"""
-
-    tool_id: str
-    gate: str = "always"
-    constrain: Mapping[str, Any] = field(default_factory=dict)
-
-    @property
-    def primitive(self) -> str:
-        """该 `tool_id` 对应的**核心原语名**（落盘实现；插件自己不写盘）。
-
-        2026-09-24：**出网族（`net.*`）没有落盘原语** —— 它在 `NET_CATALOG` 里指向实现入口
-        （`web.WebClient.search` / `.fetch`）。两张表**并集**才是"合法 `tool_id`"的全集（见文件尾
-        「出网原语目录」块）。
-        """
-        return TOOL_CATALOG.get(self.tool_id) or NET_CATALOG[self.tool_id]
 
 
 @dataclass(frozen=True, slots=True)
@@ -187,6 +239,90 @@ def _check_glob(value: Any, *, field_name: str, plugin_id: str, path: str, error
     return out
 
 
+def _parse_tool_impl(
+    raw: Any,
+    *,
+    plugin_id: str,
+    tool_id: str,
+    path: str,
+    errors: list[dict],
+    warnings: list[dict],
+) -> ToolImpl | None:
+    """解析 `provides.tools[].impl`（扩展工具形态，S4 第三层）。任一处非法 ⇒ 返回 `None` 并记 error。"""
+    ok = True
+    if not EXT_TOOL_ID_RE.match(tool_id):
+        errors.append(
+            _issue(
+                "bad_tool_id",
+                plugin_id,
+                f"扩展工具的 `tool_id` 必须以 `ext.` 命名空间开头（全小写、点分/kebab）：{tool_id!r}",
+                path,
+            )
+        )
+        ok = False
+    if not isinstance(raw, Mapping):
+        errors.append(_issue("bad_field", plugin_id, "`impl` 必须是对象", path))
+        return None
+    kind = str(raw.get("kind") or "")
+    if kind not in EXT_KINDS:
+        errors.append(
+            _issue("bad_field", plugin_id, f"`impl.kind` 非法：{kind!r}（v1 仅支持：{', '.join(EXT_KINDS)}）", path)
+        )
+        ok = False
+    command_raw = raw.get("command")
+    command: tuple[str, ...] = ()
+    if not isinstance(command_raw, Sequence) or isinstance(command_raw, (str, bytes)) or not command_raw:
+        errors.append(_issue("bad_field", plugin_id, "`impl.command` 必须是非空字符串数组（含可执行文件）", path))
+        ok = False
+    else:
+        command = tuple(str(part) for part in command_raw)
+        if any(not part.strip() for part in command):
+            errors.append(_issue("bad_field", plugin_id, "`impl.command` 不能含空字符串", path))
+            ok = False
+    timeout_raw = raw.get("timeout_s", EXT_TIMEOUT_DEFAULT_S)
+    try:
+        timeout_s = float(timeout_raw)
+    except (TypeError, ValueError):
+        errors.append(_issue("bad_field", plugin_id, f"`impl.timeout_s` 必须是数字：{timeout_raw!r}", path))
+        timeout_s = EXT_TIMEOUT_DEFAULT_S
+        ok = False
+    if not (0.1 <= timeout_s <= EXT_TIMEOUT_MAX_S):
+        errors.append(
+            _issue("bad_field", plugin_id, f"`impl.timeout_s` 必须在 0.1..{EXT_TIMEOUT_MAX_S:.0f} 秒：{timeout_s}", path)
+        )
+        ok = False
+    schema_raw = raw.get("input_schema") or {}
+    if not isinstance(schema_raw, Mapping):
+        errors.append(_issue("bad_field", plugin_id, "`impl.input_schema` 必须是对象（JSON Schema）", path))
+        ok = False
+        schema_raw = {}
+    # **v1 只允许只读扩展工具**：写能力必须走内置 propose_write 链路（W1–W4 的保护在这条链上）。
+    if raw.get("read_only", True) is not True:
+        errors.append(
+            _issue(
+                "ext_write_not_allowed",
+                plugin_id,
+                "扩展工具在 v1 只能是只读（`read_only: true`）：写能力必须走内置 `propose_write` 链路，"
+                "否则会绕过 W1–W4（且子进程本就不是沙箱）",
+                path,
+            )
+        )
+        ok = False
+    for sub in raw:
+        if sub not in ("kind", "command", "timeout_s", "input_schema", "description", "read_only"):
+            warnings.append(_issue("unknown_field", plugin_id, f"`impl` 未知子字段 `{sub}`（已忽略）", path))
+    if not ok:
+        return None
+    return ToolImpl(
+        kind=kind,
+        command=command,
+        timeout_s=timeout_s,
+        input_schema=dict(schema_raw),
+        description=str(raw.get("description") or ""),
+        read_only=True,
+    )
+
+
 def parse_declaration(raw: Any, *, source: str, path: str = "") -> tuple[PluginDeclaration | None, list[dict], list[dict]]:
     """把一份声明 JSON 解析并校验成 `PluginDeclaration`。
 
@@ -207,6 +343,15 @@ def parse_declaration(raw: Any, *, source: str, path: str = "") -> tuple[PluginD
             warnings.append(
                 _issue("deferred_field", plugin_id, f"`{key}` 是 §2 暂缓字段，不该写进声明文件（已忽略）", path)
             )
+        elif key in REMOVED_TOP_FIELDS:
+            errors.append(
+                _issue(
+                    "removed_field",
+                    plugin_id,
+                    f"顶层 `{key}` 已在 v0.5.0 移出 v1（从未有消费者；确需请先提需求让核心实现消费者）",
+                    path,
+                )
+            )
         elif key not in ("v", "id", "name", "provides", "permissions", "approval"):
             warnings.append(_issue("unknown_field", plugin_id, f"未知字段 `{key}`（已忽略，按「只增不改」容忍）", path))
     if not PLUGIN_ID_RE.match(plugin_id):
@@ -223,6 +368,29 @@ def parse_declaration(raw: Any, *, source: str, path: str = "") -> tuple[PluginD
                 errors.append(_issue("bad_field", plugin_id, "`provides.tools[]` 每项必须是对象", path))
                 continue
             tool_id = str(item.get("tool_id") or "")
+            # v0.5.0-S4：移出 v1 的字段 ⇒ 响亮失败（其它未知字段仍只 warning）
+            if any(removed in item for removed in REMOVED_TOOL_FIELDS):
+                for removed in REMOVED_TOOL_FIELDS:
+                    if removed in item:
+                        errors.append(
+                            _issue(
+                                "removed_field",
+                                plugin_id,
+                                f"`provides.tools[].{removed}` 已在 v0.5.0 移出 v1"
+                                "（它从未被求值，删掉即可；确需该能力请先提需求让核心实现求值点）",
+                                path,
+                            )
+                        )
+                continue
+            impl_raw = item.get("impl")
+            if impl_raw is not None:
+                # 扩展工具形态（S4 第三层）：实现在插件自己的代码里，核心只加一个通用适配器
+                impl = _parse_tool_impl(
+                    impl_raw, plugin_id=plugin_id, tool_id=tool_id, path=path, errors=errors, warnings=warnings
+                )
+                if impl is not None:
+                    tools.append(ToolDeclaration(tool_id=tool_id, impl=impl))
+                continue
             if tool_id in PLANNED_TOOLS:
                 errors.append(
                     _issue(
@@ -244,18 +412,10 @@ def parse_declaration(raw: Any, *, source: str, path: str = "") -> tuple[PluginD
                     )
                 )
                 continue
-            gate = str(item.get("gate") or "always")
-            if gate not in GATE_VALUES:
-                errors.append(_issue("bad_field", plugin_id, f"`gate` 取值非法：{gate!r}（可选：{', '.join(GATE_VALUES)}）", path))
-                continue
-            constrain = item.get("constrain") or {}
-            if not isinstance(constrain, Mapping):
-                errors.append(_issue("bad_field", plugin_id, "`constrain` 必须是对象", path))
-                continue
             for sub in item:
-                if sub not in ("tool_id", "gate", "constrain"):
+                if sub not in ("tool_id", "impl"):
                     warnings.append(_issue("unknown_field", plugin_id, f"`provides.tools[]` 未知子字段 `{sub}`（已忽略）", path))
-            tools.append(ToolDeclaration(tool_id=tool_id, gate=gate, constrain=dict(constrain)))
+            tools.append(ToolDeclaration(tool_id=tool_id))
 
     permissions = raw.get("permissions") if isinstance(raw.get("permissions"), Mapping) else {}
     read = _check_glob(permissions.get("read", []), field_name="permissions.read", plugin_id=plugin_id, path=path, errors=errors)
