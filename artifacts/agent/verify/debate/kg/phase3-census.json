@@ -1,0 +1,186 @@
+{
+  "artifactSha256": "923b67bbf002972267054f50a68b441966ed340471db080829ca6b62f5a4da4b",
+  "calibers": {
+    "K1_graph_edges": "graph_data.edges 长度（collect_graph_data 权威输出）",
+    "K2_links": "sidecar links[] 条目数（链接数，非边数）",
+    "K3_link_instances": "links[].instances 行级展开数（每处出现一条）",
+    "K4_explicit_edges": "sidecar edges[] 条目数（纯边，无 link）",
+    "K5_target_edges": "links[].target_edges 目标级覆盖条目数",
+    "K6_yaml_edge_type_occurrences": "sidecar yaml 文本里 edge_type 字符串出现次数"
+  },
+  "head": "758f7aa1494c09c81e623f3769280e20c65ce380",
+  "kbs": [
+    {
+      "K1_by_derived": {
+        "False": 2,
+        "True": 402
+      },
+      "K1_by_origin": {
+        "link": 402,
+        "sidecar_edge": 2
+      },
+      "K1_by_type": {
+        "reference": 404
+      },
+      "K1_graph_edges": 404,
+      "K1_nodes": 133,
+      "K1_self_loops": 0,
+      "K2_link_types": {
+        "reference": 429
+      },
+      "K2_links": 429,
+      "K3_link_instances": 605,
+      "K4_explicit_edges": 2,
+      "K4_explicit_types": {
+        "reference": 2
+      },
+      "K5_target_edges": 43,
+      "K6_yaml_edge_type_occurrences": 472,
+      "corpus_file_count": 544,
+      "corpus_sha256": "c3b1753d271f71c6eb8c580298e4bd3ed73ad7e893889f174b0d019a091482cb",
+      "kb": "docs/example/AAA_Vocab",
+      "md_files": 295,
+      "sidecar_load_errors": 0
+    },
+    {
+      "K1_by_derived": {
+        "True": 44
+      },
+      "K1_by_origin": {
+        "link": 23,
+        "range": 21
+      },
+      "K1_by_type": {
+        "contain": 21,
+        "reference": 23
+      },
+      "K1_graph_edges": 44,
+      "K1_nodes": 49,
+      "K1_self_loops": 0,
+      "K2_link_types": {
+        "reference": 22
+      },
+      "K2_links": 22,
+      "K3_link_instances": 25,
+      "K4_explicit_edges": 0,
+      "K4_explicit_types": {},
+      "K5_target_edges": 0,
+      "K6_yaml_edge_type_occurrences": 22,
+      "corpus_file_count": 15,
+      "corpus_sha256": "b8143b5de2f3f449ed8b3c5ea3c9c0a147456dc362888908a3bc2238a94228ca",
+      "kb": "docs/example/行政法",
+      "md_files": 9,
+      "sidecar_load_errors": 0
+    },
+    {
+      "K1_by_derived": {
+        "False": 1,
+        "True": 82
+      },
+      "K1_by_origin": {
+        "link": 54,
+        "range": 28,
+        "sidecar_edge": 1
+      },
+      "K1_by_type": {
+        "contain": 28,
+        "extend": 11,
+        "reference": 44
+      },
+      "K1_graph_edges": 83,
+      "K1_nodes": 55,
+      "K1_self_loops": 0,
+      "K2_link_types": {
+        "extend": 11,
+        "reference": 31
+      },
+      "K2_links": 42,
+      "K3_link_instances": 51,
+      "K4_explicit_edges": 1,
+      "K4_explicit_types": {
+        "reference": 1
+      },
+      "K5_target_edges": 7,
+      "K6_yaml_edge_type_occurrences": 49,
+      "corpus_file_count": 48,
+      "corpus_sha256": "5f915836f81cc6970d03d7b67d96918787cbf1db538f407923ccec5d11c562dd",
+      "kb": "docs/example/examples",
+      "md_files": 28,
+      "sidecar_load_errors": 0
+    },
+    {
+      "K1_by_derived": {
+        "True": 73
+      },
+      "K1_by_origin": {
+        "link": 73
+      },
+      "K1_by_type": {
+        "extend": 11,
+        "reference": 62
+      },
+      "K1_graph_edges": 73,
+      "K1_nodes": 35,
+      "K1_self_loops": 0,
+      "K2_link_types": {
+        "extend": 9,
+        "reference": 55
+      },
+      "K2_links": 64,
+      "K3_link_instances": 77,
+      "K4_explicit_edges": 0,
+      "K4_explicit_types": {},
+      "K5_target_edges": 0,
+      "K6_yaml_edge_type_occurrences": 64,
+      "corpus_file_count": 25,
+      "corpus_sha256": "983d958ddfc5e90e841b913aa29587173ab9adde76a0566f37b2806494c73cc3",
+      "kb": "docs/example/showcase",
+      "md_files": 14,
+      "sidecar_load_errors": 0
+    },
+    {
+      "K1_by_derived": {
+        "True": 9
+      },
+      "K1_by_origin": {
+        "link": 6,
+        "range": 3
+      },
+      "K1_by_type": {
+        "contain": 3,
+        "extend": 1,
+        "reference": 5
+      },
+      "K1_graph_edges": 9,
+      "K1_nodes": 20,
+      "K1_self_loops": 0,
+      "K2_link_types": {
+        "extend": 1,
+        "reference": 11
+      },
+      "K2_links": 12,
+      "K3_link_instances": 15,
+      "K4_explicit_edges": 0,
+      "K4_explicit_types": {},
+      "K5_target_edges": 12,
+      "K6_yaml_edge_type_occurrences": 24,
+      "corpus_file_count": 56,
+      "corpus_sha256": "412953ab3766c597587d66f1a75d33a62c3b101b0d0d71c7dc46d1dded9c7eb3",
+      "kb": "docs/example/AAA_KnowledgeBase",
+      "md_files": 38,
+      "sidecar_load_errors": 0
+    }
+  ],
+  "measured_at": "2026-10-25T20:19:19.517780+08:00",
+  "note": "同一份数据、六种『边』口径 ⇒ 解释 C4 的 479/408/404 分歧",
+  "schema": "kg-edge-census/v1",
+  "sealed": {
+    "MEMORIA_CONFIG_DIR": true,
+    "repeats": 2,
+    "sigs": [
+      "059904e61cfed4e5131c92fd0034e5ae5282c5db0aea3e124c6fd9caf889d0c2",
+      "059904e61cfed4e5131c92fd0034e5ae5282c5db0aea3e124c6fd9caf889d0c2"
+    ],
+    "stable": true
+  }
+}

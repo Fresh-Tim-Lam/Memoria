@@ -1,0 +1,399 @@
+{
+  "freeze_protocol": {
+    "archive_sha256": "051deb7895c861857111947272016f0c4871ae0a1af906592e9eb30765795deb",
+    "corpus": "git archive HEAD docs/example",
+    "head_manifest_files": 182,
+    "head_manifest_sha256": "e12edfad133fe52dfceb2520f0110d363589c260de0f032bcc2e44b417d7849c",
+    "manifest_excludes": [
+      ".memoria/agent/",
+      ".memoria/build/",
+      ".memoria/cache/",
+      "__pycache__/"
+    ],
+    "manifest_includes": "*.md + .memoria/sidecars/**",
+    "measurement_source": "memoria.graph.collector.collect_graph_data() 现场调用",
+    "not_measurement_source": ".memoria/build/graph.json（旧 cache）",
+    "worktree_manifest_files": 923,
+    "worktree_manifest_sha256": "52cc2ca05c4690bbcd3364c91bd44687c9b76edd5af21ff3ae969f3fb4c09d91"
+  },
+  "head_corpus": {
+    "AAA_Vocab": {
+      "avg_degree": 5.049180327868853,
+      "avg_in_degree": 2.525,
+      "edges": 154,
+      "edges_by_origin": {
+        "link": 152,
+        "sidecar_edge": 2
+      },
+      "edges_by_type": {
+        "reference": 154
+      },
+      "edges_per_link": 0.963,
+      "explicit_edge_types": {
+        "reference": 2
+      },
+      "explicit_edges": 2,
+      "link_edges": 152,
+      "links": 160,
+      "links_raw_edge_type": {
+        "reference": 160
+      },
+      "links_with_line_instances": 160,
+      "max_in_degree": 12,
+      "md_files": 83,
+      "nodes": 61
+    },
+    "rename-test": {
+      "avg_degree": 2.8,
+      "avg_in_degree": 1.4,
+      "edges": 7,
+      "edges_by_origin": {
+        "link": 7
+      },
+      "edges_by_type": {
+        "reference": 7
+      },
+      "edges_per_link": 0.875,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 7,
+      "links": 8,
+      "links_raw_edge_type": {
+        "reference": 8
+      },
+      "links_with_line_instances": 8,
+      "max_in_degree": 3,
+      "md_files": 5,
+      "nodes": 5
+    },
+    "showcase": {
+      "avg_degree": 4.171428571428572,
+      "avg_in_degree": 2.086,
+      "edges": 73,
+      "edges_by_origin": {
+        "link": 73
+      },
+      "edges_by_type": {
+        "extend": 11,
+        "reference": 62
+      },
+      "edges_per_link": 1.141,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 73,
+      "links": 64,
+      "links_raw_edge_type": {
+        "extend": 9,
+        "reference": 55
+      },
+      "links_with_line_instances": 64,
+      "max_in_degree": 7,
+      "md_files": 10,
+      "nodes": 35
+    }
+  },
+  "measured_at": "2026-10-25T20:20:39",
+  "schema": "kg-corpus-freeze/v1",
+  "stale_build_snapshot": {
+    "by_origin": {
+      "link": 406,
+      "sidecar_edge": 2
+    },
+    "by_type": {
+      "reference": 408
+    },
+    "edges": 408,
+    "mtime": "2026-10-23T09:43:34",
+    "nodes": 121,
+    "path": "docs/example/AAA_Vocab/.memoria/build/graph.json",
+    "warning": "旧生成物 cache，不是语料事实；B 的 121/408 即来自此文件"
+  },
+  "worktree_now": {
+    "AAA_KnowledgeBase": {
+      "avg_degree": 0.9,
+      "avg_in_degree": 0.45,
+      "edges": 9,
+      "edges_by_origin": {
+        "link": 6,
+        "range": 3
+      },
+      "edges_by_type": {
+        "contain": 3,
+        "extend": 1,
+        "reference": 5
+      },
+      "edges_per_link": 0.75,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 6,
+      "links": 12,
+      "links_raw_edge_type": {
+        "extend": 1,
+        "reference": 11
+      },
+      "links_with_line_instances": 12,
+      "max_in_degree": 2,
+      "md_files": 34,
+      "nodes": 20
+    },
+    "AAA_Vocab": {
+      "avg_degree": 6.075187969924812,
+      "avg_in_degree": 3.038,
+      "edges": 404,
+      "edges_by_origin": {
+        "link": 402,
+        "sidecar_edge": 2
+      },
+      "edges_by_type": {
+        "reference": 404
+      },
+      "edges_per_link": 0.942,
+      "explicit_edge_types": {
+        "reference": 2
+      },
+      "explicit_edges": 2,
+      "link_edges": 402,
+      "links": 429,
+      "links_raw_edge_type": {
+        "reference": 429
+      },
+      "links_with_line_instances": 429,
+      "max_in_degree": 18,
+      "md_files": 181,
+      "nodes": 133
+    },
+    "empty": {
+      "avg_degree": 2.0,
+      "avg_in_degree": 1.0,
+      "edges": 2,
+      "edges_by_origin": {
+        "link": 2
+      },
+      "edges_by_type": {
+        "reference": 2
+      },
+      "edges_per_link": 1.0,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 2,
+      "links": 2,
+      "links_raw_edge_type": {
+        "reference": 2
+      },
+      "links_with_line_instances": 2,
+      "max_in_degree": 1,
+      "md_files": 2,
+      "nodes": 2
+    },
+    "example-boonie": {
+      "avg_degree": 6.0,
+      "avg_in_degree": 3.0,
+      "edges": 45,
+      "edges_by_origin": {
+        "link": 45
+      },
+      "edges_by_type": {
+        "reference": 45
+      },
+      "edges_per_link": 0.9,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 45,
+      "links": 50,
+      "links_raw_edge_type": {
+        "reference": 50
+      },
+      "links_with_line_instances": 50,
+      "max_in_degree": 14,
+      "md_files": 7,
+      "nodes": 15
+    },
+    "example-english-kb": {
+      "avg_degree": 1.15,
+      "avg_in_degree": 0.575,
+      "edges": 23,
+      "edges_by_origin": {
+        "link": 23
+      },
+      "edges_by_type": {
+        "reference": 23
+      },
+      "edges_per_link": 1.211,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 23,
+      "links": 19,
+      "links_raw_edge_type": {
+        "reference": 19
+      },
+      "links_with_line_instances": 19,
+      "max_in_degree": 2,
+      "md_files": 9,
+      "nodes": 40
+    },
+    "examples": {
+      "avg_degree": 3.018181818181818,
+      "avg_in_degree": 1.509,
+      "edges": 83,
+      "edges_by_origin": {
+        "link": 54,
+        "range": 28,
+        "sidecar_edge": 1
+      },
+      "edges_by_type": {
+        "contain": 28,
+        "extend": 11,
+        "reference": 44
+      },
+      "edges_per_link": 1.976,
+      "explicit_edge_types": {
+        "reference": 1
+      },
+      "explicit_edges": 1,
+      "link_edges": 54,
+      "links": 42,
+      "links_raw_edge_type": {
+        "extend": 11,
+        "reference": 31
+      },
+      "links_with_line_instances": 42,
+      "max_in_degree": 12,
+      "md_files": 27,
+      "nodes": 55
+    },
+    "rename-test": {
+      "avg_degree": 2.8,
+      "avg_in_degree": 1.4,
+      "edges": 7,
+      "edges_by_origin": {
+        "link": 7
+      },
+      "edges_by_type": {
+        "reference": 7
+      },
+      "edges_per_link": 0.875,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 7,
+      "links": 8,
+      "links_raw_edge_type": {
+        "reference": 8
+      },
+      "links_with_line_instances": 8,
+      "max_in_degree": 3,
+      "md_files": 5,
+      "nodes": 5
+    },
+    "rich-content-test": {
+      "avg_degree": 0.0,
+      "avg_in_degree": 0.0,
+      "edges": 0,
+      "edges_by_origin": {},
+      "edges_by_type": {},
+      "edges_per_link": null,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 0,
+      "links": 0,
+      "links_raw_edge_type": {},
+      "links_with_line_instances": 0,
+      "max_in_degree": 0,
+      "md_files": 8,
+      "nodes": 0
+    },
+    "showcase": {
+      "avg_degree": 4.171428571428572,
+      "avg_in_degree": 2.086,
+      "edges": 73,
+      "edges_by_origin": {
+        "link": 73
+      },
+      "edges_by_type": {
+        "extend": 11,
+        "reference": 62
+      },
+      "edges_per_link": 1.141,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 73,
+      "links": 64,
+      "links_raw_edge_type": {
+        "extend": 9,
+        "reference": 55
+      },
+      "links_with_line_instances": 64,
+      "max_in_degree": 7,
+      "md_files": 10,
+      "nodes": 35
+    },
+    "人工智能导论知识点汇总": {
+      "avg_degree": 0.6666666666666666,
+      "avg_in_degree": 0.333,
+      "edges": 1,
+      "edges_by_origin": {
+        "range": 1
+      },
+      "edges_by_type": {
+        "contain": 1
+      },
+      "edges_per_link": null,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 0,
+      "links": 0,
+      "links_raw_edge_type": {},
+      "links_with_line_instances": 0,
+      "max_in_degree": 1,
+      "md_files": 18,
+      "nodes": 3
+    },
+    "导入test": {
+      "avg_degree": 0.24489795918367346,
+      "avg_in_degree": 0.122,
+      "edges": 6,
+      "edges_by_origin": {
+        "link": 6
+      },
+      "edges_by_type": {
+        "reference": 6
+      },
+      "edges_per_link": 1.0,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 6,
+      "links": 6,
+      "links_raw_edge_type": {
+        "reference": 6
+      },
+      "links_with_line_instances": 6,
+      "max_in_degree": 1,
+      "md_files": 5,
+      "nodes": 49
+    },
+    "行政法": {
+      "avg_degree": 1.7959183673469388,
+      "avg_in_degree": 0.898,
+      "edges": 44,
+      "edges_by_origin": {
+        "link": 23,
+        "range": 21
+      },
+      "edges_by_type": {
+        "contain": 21,
+        "reference": 23
+      },
+      "edges_per_link": 2.0,
+      "explicit_edge_types": {},
+      "explicit_edges": 0,
+      "link_edges": 23,
+      "links": 22,
+      "links_raw_edge_type": {
+        "reference": 22
+      },
+      "links_with_line_instances": 22,
+      "max_in_degree": 5,
+      "md_files": 5,
+      "nodes": 49
+    }
+  }
+}
