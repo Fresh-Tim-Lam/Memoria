@@ -16382,6 +16382,7 @@ async function call(fn, ...args) {
     if (!sidebar) return;
     const w = _clampSidebarWidth(px);
     sidebar.style.width = w + "px";
+    _sidebarExpectedWidth = w; // 响应式假想几何用「期望宽」（折叠时也记得用户想要的宽度）
     if (!persist) return;
     try { localStorage.setItem("-sidebar-width", String(w)); } catch (e) { /* ignore */ }
     call("save_ui_settings", { layout: { sidebarWidth: w } }).catch(() => {});
@@ -16416,6 +16417,7 @@ async function call(fn, ...args) {
       if (!dragging) return;
       dragging = false;
       applySidebarWidth(parseInt(sidebar.style.width, 10), true);
+      applyResponsiveLayout("sidebar-width-commit");
     });
   }
 
@@ -16425,22 +16427,38 @@ async function call(fn, ...args) {
   let _sideCollapseTimer = null;
   let _sidebarCollapsed = localStorage.getItem("-sidebar-collapsed") === "1";
 
+  // ── 响应式布局派生状态（0.4.7 D3=A；**全部不落盘**）────────────────────────
+  // 与"用户意图"严格分开：_sidebarCollapsed 是用户意图（落盘），以下是派生态（永不落盘）。
+  let _sidebarAutoCollapsed = false;     // 因「两栏都想开 + 文档区不够」被自动折叠
+  let _sidebarExpectedWidth = 280;       // 假想几何用：用户期望左栏宽（折叠时也记得）
+  let _responsiveEngaged = false;        // 迟滞态：是否处于联动区（进入 720 / 退出 760）
+  let _responsivePreviewEngaged = false; // ② 分屏→预览 的迟滞态
+  let _autoViewModeFrom = null;          // 响应式切走前的 viewMode（null = 没切过）
+  let _autoViewModeTo = null;            // 响应式切到的 viewMode
+  let _lastPanelExpanded = null;         // 最近由用户展开的面板：'dock' | 'sidebar' | null
+  let _responsiveRaf = 0;
+  const _responsiveStats = { passes: 0, changes: 0, transitions: [] };
+  const RESPONSIVE_CONTENT_PX = 720;     // 进入阈值：假想文档区宽 < 720 ⇒ 触发联动
+  const RESPONSIVE_EXIT_PX = 760;        // 退出阈值（迟滞 40px，防边界抖动）
+
   /** 顶栏左栏按钮的文案/可按压态（语言切换后也走这里刷新，避免残留旧语言 title） */
   function _syncSidebarToggleBtn() {
     const btn = $("#btn-toggle-sidebar");
     if (!btn) return;
-    btn.title = T(_sidebarCollapsed ? "side.expandTitle" : "side.collapseTitle");
+    // 生效折叠态 = 用户手动折叠 OR 响应式派生折叠（后者不落盘，见 applyResponsiveLayout）
+    const eff = _sidebarCollapsed || _sidebarAutoCollapsed;
+    btn.title = T(eff ? "side.expandTitle" : "side.collapseTitle");
     btn.setAttribute("aria-label", btn.title);
     // aria-pressed = 当前是否展开（与右栏 `#btn-agent` 同一口径）
-    btn.setAttribute("aria-pressed", String(!_sidebarCollapsed));
+    btn.setAttribute("aria-pressed", String(!eff));
   }
 
-  function _applySidebarCollapsed() {
+  function _renderSidebarCollapsed(persist) {
     const sidebar = $("#-sidebar");
     if (!sidebar) return;
-    sidebar.classList.toggle("-sidebar--collapsed", _sidebarCollapsed);
+    sidebar.classList.toggle("-sidebar--collapsed", _sidebarCollapsed || _sidebarAutoCollapsed);
     _syncSidebarToggleBtn();
-    localStorage.setItem("-sidebar-collapsed", _sidebarCollapsed ? "1" : "0");
+    if (persist) localStorage.setItem("-sidebar-collapsed", _sidebarCollapsed ? "1" : "0");
     clearTimeout(_sideCollapseTimer);
     // 等宽度过渡结束后让图谱画布/布局重新量算
     _sideCollapseTimer = setTimeout(() => {
@@ -16449,15 +16467,247 @@ async function call(fn, ...args) {
     }, 220);
   }
 
+  function _applySidebarCollapsed() {
+    _renderSidebarCollapsed(true);
+  }
+
   function setupSidebarCollapse() {
     const btn = $("#btn-toggle-sidebar");
     if (!btn) return;
     btn.addEventListener("click", () => {
+      // 自动折叠态下的点击 = 「请展开这一栏」：清派生折叠，让另一面板让位（规则③）
+      if (_sidebarAutoCollapsed) {
+        _sidebarAutoCollapsed = false;
+        _sidebarCollapsed = false;
+        _lastPanelExpanded = "sidebar";
+        _renderSidebarCollapsed(true);
+        applyResponsiveLayout("user-expand-sidebar");
+        return;
+      }
       _sidebarCollapsed = !_sidebarCollapsed;
-      _applySidebarCollapsed();
+      _lastPanelExpanded = _sidebarCollapsed ? null : "sidebar";
+      _renderSidebarCollapsed(true);
+      applyResponsiveLayout("user-toggle-sidebar");
     });
     window.MemoriaI18n?.addRefresh?.(_syncSidebarToggleBtn);
     _applySidebarCollapsed();
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 响应式布局（2026-10-25，0.4.7 D3=A：按原话自动联动 + 保守阈值 720px）
+  //
+  // 人裁决：文档区 `#content` 宽 < 720px 时才触发；**每次按窗口状态算、不记忆**。
+  // 三条联动（人原话）：
+  //   ① dock 展开      → 收缩文件树（折叠左栏；派生态，不落盘）
+  //   ② 文件树已折叠 + 分屏 → 切预览（skipSave，记原 mode；dock 未展开时不强制切）
+  //   ③ 文件树同理：展开文件树 → 收起 dock（响应式隐藏，不落盘）
+  //
+  // ★ 防振荡（本层最关键的约束）：
+  //   判据用「**假想几何**」= `#main` 内宽 − 左栏**期望**宽 − dock **期望**宽 ——
+  //   它假设两栏都展开，**不随折叠/隐藏而变化** ⇒ 不会出现
+  //   "折了左栏→变宽→条件不成立→还原→又变窄→再折" 的自否定循环。
+  //   **不主动还原**：只有窗口变宽到假想文档区 ≥ 760（迟滞退出）或用户展开另一面板时才还原。
+  //   另用迟滞：进入 720 / 退出 760（边界抖动不会反复切换）。
+  //
+  // ★ 不覆盖用户手调：dockWidthRem / layout.sidebarWidth / 用户 _sidebarCollapsed 一律只读；
+  //   本层只改"可见性派生态"，窗口变宽自动还原。
+  // ══════════════════════════════════════════════════════════════════════════
+
+  /** 假想几何：假设左右两栏都按**期望宽**展开时，文档区能有多少 px（折叠后该值不变）。 */
+  function _responsiveMetrics() {
+    const main = $("#main");
+    const mainW = main ? main.clientWidth : window.innerWidth;
+    // ★ 用「期望宽」而不是 DOM 当前宽：折叠动画（0.18s）期间 DOM 宽会在 280→0 之间变化，
+    //   若拿它算假想几何，判据会在动画帧里来回跨阈值 ⇒ 这正是要避免的自我否定/闪烁。
+    //   `_sidebarExpectedWidth` 只在用户拖拽/磁盘 hydrate 时更新（applySidebarWidth），
+    //   自动折叠不碰它 ⇒ 假想几何在折叠前后**恒定**。
+    const sidebarExpected = _sidebarExpectedWidth || 280;
+    const dockState = window.MemoriaAgentPanel?.getDockState?.() || null;
+    const dockExpected = dockState
+      ? Math.round(Number(dockState.expectedRem) * Number(dockState.unit || 16))
+      : 352;
+    return {
+      mainW,
+      sidebarExpected,
+      dockExpected,
+      // 假想文档区宽（关键判据；折叠/隐藏都不变）
+      hypothetical: mainW - sidebarExpected - dockExpected,
+      dockState,
+    };
+  }
+
+  function _responsiveRestoreAuto() {
+    let changed = false;
+    if (_sidebarAutoCollapsed) {
+      _sidebarAutoCollapsed = false;
+      _renderSidebarCollapsed(false); // 不落盘
+      changed = true;
+    }
+    if (window.MemoriaAgentPanel?.getDockState?.()?.responsiveHidden) {
+      window.MemoriaAgentPanel.setDockResponsiveHidden(false);
+      changed = true;
+    }
+    return changed;
+  }
+
+  /** ② 分屏→预览（含迟滞；dock 未展开时不强制切）。返回是否发生了派生切换。 */
+  function _responsiveSyncPreview(m, dockIntent, sidebarIntent) {
+    const sidebarUsable = sidebarIntent && !_sidebarAutoCollapsed;
+    const widthWithDockOnly = m.mainW - m.dockExpected; // 左栏折叠后的**实际**文档区宽
+    let need = false;
+    if (!sidebarUsable && dockIntent) {
+      need = _responsivePreviewEngaged
+        ? widthWithDockOnly < RESPONSIVE_EXIT_PX
+        : widthWithDockOnly < RESPONSIVE_CONTENT_PX;
+    }
+    _responsivePreviewEngaged = need;
+    let changed = false;
+    if (need && !_autoViewModeFrom) {
+      if (state.viewMode === "split") {
+        _autoViewModeFrom = "split";
+        _autoViewModeTo = "preview";
+        setViewMode("preview", { skipSave: true }); // 不写 localStorage["-view"]
+        changed = true;
+      }
+    } else if (!need && _autoViewModeFrom) {
+      // 只有用户没手动改过视图时才还原（用户改过 = 他的选择优先）
+      if (state.viewMode === _autoViewModeTo) setViewMode(_autoViewModeFrom, { skipSave: true });
+      _autoViewModeFrom = null;
+      _autoViewModeTo = null;
+      changed = true;
+    }
+    return changed;
+  }
+
+  function _applyResponsiveNow(reason) {
+    _responsiveStats.passes += 1;
+    const panel = window.MemoriaAgentPanel;
+    const m = _responsiveMetrics();
+    const dockState = m.dockState;
+    // 「用户意图」而非「当前可见性」：折叠/自动隐藏/响应隐藏都不算用户想展开
+    const dockIntent = dockState ? !dockState.collapsed : true;
+    const sidebarIntent = !_sidebarCollapsed;
+    const bothIntent = dockIntent && sidebarIntent;
+
+    // 迟滞：只有「两栏都想开」才有联动；进入 720 / 退出 760
+    _responsiveEngaged = bothIntent
+      ? _responsiveEngaged
+        ? m.hypothetical < RESPONSIVE_EXIT_PX
+        : m.hypothetical < RESPONSIVE_CONTENT_PX
+      : false;
+
+    let changed = false;
+    if (!bothIntent) {
+      changed = _responsiveRestoreAuto() || changed;
+    } else if (_responsiveEngaged) {
+      if (_lastPanelExpanded === "sidebar") {
+        // ③ 用户刚展开左栏 ⇒ dock 让位（响应式隐藏，不落盘）
+        if (!dockState?.responsiveHidden) {
+          panel?.setDockResponsiveHidden?.(true);
+          changed = true;
+        }
+        if (_sidebarAutoCollapsed) {
+          _sidebarAutoCollapsed = false;
+          _renderSidebarCollapsed(false);
+          changed = true;
+        }
+      } else {
+        // ① 用户刚展开 dock（或启动兜底）⇒ 折叠左栏（派生，不落盘）
+        if (!_sidebarAutoCollapsed) {
+          _sidebarAutoCollapsed = true;
+          _renderSidebarCollapsed(false);
+          changed = true;
+        }
+        if (dockState?.responsiveHidden) {
+          panel?.setDockResponsiveHidden?.(false);
+          changed = true;
+        }
+      }
+    } else {
+      // 宽屏（假想文档区 ≥ 退出阈值 760）：恢复所有派生改动（迟滞带内 720~760 才"保持现状"）
+      changed = _responsiveRestoreAuto() || changed;
+    }
+
+    changed = _responsiveSyncPreview(m, dockIntent, sidebarIntent) || changed;
+    if (changed) {
+      _responsiveStats.changes += 1;
+      _responsiveStats.transitions.push({
+        reason: reason || "",
+        hypothetical: m.hypothetical,
+        sidebarAuto: _sidebarAutoCollapsed,
+        dockResponsiveHidden: !!panel?.getDockState?.()?.responsiveHidden,
+        viewMode: state.viewMode,
+      });
+      if (_responsiveStats.transitions.length > 50) _responsiveStats.transitions.shift();
+    }
+  }
+
+  /** rAF 合流入口：所有触发（resize / ResizeObserver / 面板事件 / 用户操作）都走这里。 */
+  function applyResponsiveLayout(reason) {
+    cancelAnimationFrame(_responsiveRaf);
+    _responsiveRaf = requestAnimationFrame(() => {
+      _responsiveRaf = 0;
+      _applyResponsiveNow(reason || "raf");
+    });
+  }
+
+  /**
+   * dock 展开请求（agent-panel 在"空间不足被拒"时调用）：若有左栏可让位，
+   * 把左栏折叠成派生态（不落盘）并返回 true；否则 false（调用方保留原提示）。
+   */
+  function requestDockSpace() {
+    const m = _responsiveMetrics();
+    if (m.hypothetical >= RESPONSIVE_CONTENT_PX) return false; // 假想宽度够，无需让位
+    if (_sidebarCollapsed) return false; // 左栏已按用户意图收起，仍不够 ⇒ 交给 dock 自身降级
+    _lastPanelExpanded = "dock";
+    _sidebarAutoCollapsed = true;
+    _renderSidebarCollapsed(false);
+    applyResponsiveLayout("request-dock-space");
+    return true;
+  }
+
+  function getResponsiveState() {
+    const m = _responsiveMetrics();
+    return {
+      contentPx: m.hypothetical,
+      enterPx: RESPONSIVE_CONTENT_PX,
+      exitPx: RESPONSIVE_EXIT_PX,
+      engaged: _responsiveEngaged,
+      sidebarAutoCollapsed: _sidebarAutoCollapsed,
+      sidebarUserCollapsed: _sidebarCollapsed,
+      sidebarExpectedPx: m.sidebarExpected,
+      dockExpectedPx: m.dockExpected,
+      dockResponsiveHidden: !!m.dockState?.responsiveHidden,
+      viewMode: state.viewMode,
+      autoViewFrom: _autoViewModeFrom,
+      autoViewTo: _autoViewModeTo,
+      lastPanelExpanded: _lastPanelExpanded,
+      stats: {
+        passes: _responsiveStats.passes,
+        changes: _responsiveStats.changes,
+        transitions: _responsiveStats.transitions.slice(-12),
+      },
+    };
+  }
+
+  function setupResponsiveLayout() {
+    const sidebar = $("#-sidebar");
+    if (sidebar && !_sidebarExpectedWidth) _sidebarExpectedWidth = Math.round(sidebar.getBoundingClientRect().width) || 280;
+    window.addEventListener("resize", () => applyResponsiveLayout("window-resize"));
+    if (typeof ResizeObserver !== "undefined") {
+      const main = $("#main");
+      if (main) new ResizeObserver(() => applyResponsiveLayout("main-ro")).observe(main);
+    }
+    // 面板侧的用户操作/布局变化（dock 展开/折叠、拖完宽）通过自定义事件通知本层
+    window.addEventListener("memoria:panels-changed", (ev) => {
+      const d = ev && ev.detail ? ev.detail : {};
+      if (d.expanded) _lastPanelExpanded = d.panel || "dock";
+      applyResponsiveLayout("panel:" + (d.reason || d.panel || "change"));
+    });
+    // 首帧 + 等 dock 面板 init / layout hydrate 落定后再算一次
+    applyResponsiveLayout("startup");
+    setTimeout(() => applyResponsiveLayout("startup-late"), 0);
+    setTimeout(() => applyResponsiveLayout("startup-late2"), 260);
   }
 
   function esc(s) {
@@ -16841,6 +17091,7 @@ async function call(fn, ...args) {
     setupSplitScrollSync();
     setupSidebarResize();
     setupSidebarCollapse();
+    setupResponsiveLayout();
     setupKpModalResize();
     document.querySelectorAll("[data-sidebar-tab]").forEach((btn) => {
       btn.addEventListener("click", () => setSidebarTab(btn.dataset.sidebarTab));
@@ -17108,6 +17359,12 @@ async function call(fn, ...args) {
     renderStatusStats,
     normRelPath,
     remapOpenTabsAfterPathRepair, getViewTopSrcLine: _getViewTopSrcLine, scrollToSrcLine: _scrollToSrcLine,
+    // ── 响应式布局（0.4.7 D3=A）───────────────────────────────────────
+    // 任务-93：`applyResponsiveLayout()` 可被探针手动触发（生产由 resize/RO/面板事件驱动）；
+    // `getResponsiveState()` 只读；`requestDockSpace()` 供 agent-panel 在"dock 展开被拒"时请求左栏让位。
+    applyResponsiveLayout,
+    getResponsiveState,
+    requestDockSpace,
   };
 
   window.MemoriaBridge?.onReady?.(() => {

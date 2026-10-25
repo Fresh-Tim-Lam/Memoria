@@ -118,12 +118,12 @@
 
 ### src/memoria/ui/static/app/js/agent-panel.js
 
-- L7144: (code === "RESOURCE_TOO_LARGE") return "资源文件过大（上限 20 MiB）";
-- L7145: == "UNSUPPORTED_RESOURCE_TYPE") return "只支持 PDF / Word(.docx) / TXT / Markdown";
-- L7147: String((res && res.message) 丨丨 "") 丨丨 "资源上传失败";
-- L7188: showAttachError("资源文件过大（上限 20 MiB）：" + String(files[i].name 丨丨 ""));
-- L7200: return "（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n" +
-- L7227: showAttachError("不支持的文件类型：" + String(others[0].name 丨丨 "") + "（可拖入图片或 PDF / Word / TXT
+- L7108: (code === "RESOURCE_TOO_LARGE") return "资源文件过大（上限 20 MiB）";
+- L7109: == "UNSUPPORTED_RESOURCE_TYPE") return "只支持 PDF / Word(.docx) / TXT / Markdown";
+- L7111: String((res && res.message) 丨丨 "") 丨丨 "资源上传失败";
+- L7152: showAttachError("资源文件过大（上限 20 MiB）：" + String(files[i].name 丨丨 ""));
+- L7164: return "（用户拖入了以下资料文件，请用 read_resource 工具按需读取其内容）\n" +
+- L7191: showAttachError("不支持的文件类型：" + String(others[0].name 丨丨 "") + "（可拖入图片或 PDF / Word / TXT
 
 ### src/memoria/ui/static/app/js/agent-question.js
 

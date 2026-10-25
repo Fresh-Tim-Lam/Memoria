@@ -222,6 +222,9 @@ window.MemoriaAgentPanel = (function () {
   let dockWidthRem = DOCK_DEFAULT_REM; // **期望宽度**（rem）：只在拖拽/显式操作时改写
   let dockCollapsed = false; // 手动折叠（用户意图，落盘）
   let dockAutoHidden = false; // 空间不足自动隐藏（派生态，**永不落盘**）
+  // 响应式布局（0.4.7 D3=A / task-93）：由 app.js 的 applyResponsiveLayout() 写入的**派生**隐藏
+  // （"左栏/文档区更优先，dock 让位"）。与 autoHidden 一样**永不落盘**，窗口变宽即自动还原。
+  let dockResponsiveHidden = false;
 
   /** 根字号（rem→px 换算基准；受显示设置 uiScale 影响）。 */
   function rootFontSize() {
@@ -260,7 +263,7 @@ window.MemoriaAgentPanel = (function () {
     const dock = $("#-agent-dock");
     const toolbarBtn = $("#btn-agent");
     if (dock) dock.classList.toggle("-agent-dock--collapsed", dockCollapsed);
-    const hidden = dockCollapsed || dockAutoHidden;
+    const hidden = dockCollapsed || dockAutoHidden || dockResponsiveHidden;
     if (toolbarBtn) toolbarBtn.setAttribute("aria-pressed", String(!hidden));
   }
 
@@ -279,7 +282,7 @@ window.MemoriaAgentPanel = (function () {
     const unit = rootFontSize();
     let effectiveRem = 0;
     dockAutoHidden = false;
-    if (!dockCollapsed) {
+    if (!dockCollapsed && !dockResponsiveHidden) {
       // 0.4.7：上限只由「可用宽」决定（不再有 34rem 硬顶）；DOCK_SOFT_MAX_REM 仅防荒谬值
       const cappedPx = Math.min(DOCK_SOFT_MAX_REM * unit, availableDockPx());
       if (cappedPx >= DOCK_MIN_REM * unit) {
@@ -289,17 +292,20 @@ window.MemoriaAgentPanel = (function () {
       }
     }
     dock.classList.toggle("-agent-dock--auto-hidden", dockAutoHidden);
+    // 响应式让位（task-93）：视觉同"自动隐藏"，但语义是"别的面板更优先"，
+    // 展开请求应走"请求左栏让位"（见 setDockCollapsed），而不是直接闪"空间不足"。
+    dock.classList.toggle("-agent-dock--responsive-hidden", dockResponsiveHidden);
     // 折叠/自动隐藏都交由 CSS（两者都是 width:0 !important）；隐藏期间保留内联值不清，
     // 展开时再由本函数按新的 available 重算覆盖。
-    if (!dockCollapsed && !dockAutoHidden) {
+    if (!dockCollapsed && !dockAutoHidden && !dockResponsiveHidden) {
       dock.style.width = Math.round(effectiveRem * 100) / 100 + "rem";
     }
     applyDockCollapsed();
   }
 
-  /** 手动切换（两个入口共用）：隐藏态（手动折叠**或**空间不足）点击 = 请求展开。 */
+  /** 手动切换（两个入口共用）：隐藏态（手动折叠 / 空间不足 / 响应式让位）点击 = 请求展开。 */
   function toggleDock() {
-    setDockCollapsed(!(dockCollapsed || dockAutoHidden), true);
+    setDockCollapsed(!(dockCollapsed || dockAutoHidden || dockResponsiveHidden), true);
   }
 
   /**
@@ -432,17 +438,30 @@ window.MemoriaAgentPanel = (function () {
       if (!dragging) return;
       dragging = false;
       saveDockLayout({ agentDockWidth: dockWidthRem }); // 只有松手才写盘（照左栏做法）
+      // task-93：拖完宽通知响应式层重算（用户手调宽度会改变"假想文档区宽"）
+      try {
+        window.dispatchEvent(
+          new CustomEvent("memoria:panels-changed", {
+            detail: { panel: "dock", reason: "dock-width-commit", expanded: !(dockCollapsed || dockAutoHidden || dockResponsiveHidden) },
+          })
+        );
+      } catch (_e) { /* 非浏览器环境忽略 */ }
     });
   }
 
   function setDockCollapsed(collapsed, persist) {
     const want = !!collapsed;
-    // 空间不足自动隐藏时的「展开」请求：**不允许挤压文档区** ⇒ 保持隐藏并提示先折叠左栏。
-    // 不写盘、也不改 dockCollapsed，故窗口变宽后仍会自动回到期望宽度，无需用户再点。
-    if (!want && dockAutoHidden) {
-      showFlashInfo(T("agent.dockNoSpace"));
-      return;
+    // 空间不足（自身降级）或响应式让位时的「展开」请求：先请求左栏让位（规则可回退、
+    // 不挤压文档区）；左栏已收起 / 无可让位 ⇒ 保持原提示，不强行展开。
+    if (!want && (dockAutoHidden || dockResponsiveHidden)) {
+      const ok = window.MemoriaApp?.requestDockSpace?.();
+      if (!ok) {
+        showFlashInfo(T("agent.dockNoSpace"));
+        return;
+      }
+      dockResponsiveHidden = false;
     }
+    if (!want) dockResponsiveHidden = false; // 用户明确要求展开 ⇒ 清掉派生隐藏
     const wasCollapsed = dockCollapsed;
     dockCollapsed = want;
     applyDockLayout();
@@ -452,6 +471,34 @@ window.MemoriaAgentPanel = (function () {
       refreshConfig();
       refreshHistory().then(() => restoreLastSession());
     }
+    // task-93：通知 app.js 的响应式层（"最近由用户展开的面板"+ 重新算假想几何）
+    try {
+      window.dispatchEvent(
+        new CustomEvent("memoria:panels-changed", {
+          detail: {
+            panel: "dock",
+            expanded: !(dockCollapsed || dockAutoHidden || dockResponsiveHidden),
+            collapsed: dockCollapsed,
+            reason: "setDockCollapsed",
+          },
+        })
+      );
+    } catch (_e) { /* 非浏览器环境忽略 */ }
+  }
+
+  /**
+   * task-93：响应式让位开关（由 app.js 的 applyResponsiveLayout() 调用；**派生、不落盘**）。
+   * true ⇒ 视觉隐藏；false ⇒ 按新的可用宽恢复。
+   */
+  function setDockResponsiveHidden(hidden) {
+    const want = !!hidden;
+    if (dockResponsiveHidden === want) {
+      applyDockLayout();
+      return dockResponsiveHidden;
+    }
+    dockResponsiveHidden = want;
+    applyDockLayout();
+    return dockResponsiveHidden;
   }
 
   /** 启动时同步停靠栏宽度/折叠态（磁盘优先；无磁盘值则用 CSS 默认 22rem / 展开）。 */
@@ -7203,7 +7250,7 @@ window.MemoriaAgentPanel = (function () {
     // 展开并刷新配置（旧版是「点开左栏对话页签」）；
     // 空间不足时不强行展开（setDockCollapsed 会保持隐藏并提示），保持"不挤压文档区"
     open: () => {
-      if (dockCollapsed || dockAutoHidden) setDockCollapsed(false, true);
+      if (dockCollapsed || dockAutoHidden || dockResponsiveHidden) setDockCollapsed(false, true);
       else {
         refreshConfig();
         refreshHistory().then(() => restoreLastSession());
@@ -7228,6 +7275,7 @@ window.MemoriaAgentPanel = (function () {
       const unit = rootFontSize();
       return {
         expectedRem: dockWidthRem,
+        expectedPx: Math.round(dockWidthRem * unit),
         effectiveWidthPx: dock ? Math.round(dock.getBoundingClientRect().width) : 0,
         unit,
         minRem: DOCK_MIN_REM,
@@ -7236,6 +7284,9 @@ window.MemoriaAgentPanel = (function () {
         contentMinPx: CONTENT_MIN_PX,
         collapsed: dockCollapsed,
         autoHidden: dockAutoHidden,
+        // task-93：响应式让位（派生、不落盘）——只读口径，供 app.js 的响应式层与探针使用
+        responsiveHidden: dockResponsiveHidden,
+        visible: !(dockCollapsed || dockAutoHidden || dockResponsiveHidden),
       };
     },
     setDockWidthForTest: function (rem) {
@@ -7243,6 +7294,8 @@ window.MemoriaAgentPanel = (function () {
       applyDockLayout();
       return true;
     },
+    // task-93：响应式让位开关（app.js 的 applyResponsiveLayout() 调用；派生状态，永不落盘）
+    setDockResponsiveHidden: setDockResponsiveHidden,
   };
 
   /**

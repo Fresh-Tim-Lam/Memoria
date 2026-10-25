@@ -346,6 +346,20 @@
     display: none;
 }
 
+/* **响应式让位**（2026-10-25 task-93，0.4.7 D3=A）：视觉与自动隐藏一致，但语义不同 ——
+   由 app.js 的 applyResponsiveLayout() 在「两栏都想开 + 假想文档区宽 < 720px」时施加，
+   把宽度让给文档区。**同样是派生态、不落盘**；展开请求会先走「请求左栏让位」，
+   而不是直接闪"空间不足"（见 js/agent-panel.js setDockCollapsed）。 */
+#-agent-dock.-agent-dock--responsive-hidden {
+    width: 0 !important;
+    min-width: 0;
+    border-left: none;
+    overflow: hidden;
+}
+#-agent-dock.-agent-dock--responsive-hidden #agent-dock-resizer {
+    display: none;
+}
+
 /* 拖拽柄：贴左缘外侧（与 #sidebar-resizer 镜像，方向相反） */
 #agent-dock-resizer {
     position: absolute;
