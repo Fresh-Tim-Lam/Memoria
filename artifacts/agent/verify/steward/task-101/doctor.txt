@@ -1,0 +1,14 @@
+﻿# work_record.py doctor（数据源自查）
+
+> 生成 2026-10-24T19:42:02+08:00；只读，不修复。FAIL ⇒ 退出码 1（不静默空）。
+
+- [OK] **git**：main@3cd7a13f
+- [OK] **snapshot**：101 任务 / 10 成员；exportedAt=2026-10-24T19:34:19+08:00（8m 前）
+- [OK] **dispatch_log**：35 条，latest=2026-10-24T18:09:31+08:00
+- [OK] **agents**：team/agents.json ok（10 名成员）
+- [WARN] **decisions**：team/decisions.jsonl 不存在（task-102/task-99 未落地）⇒ decision 查询返回 NOT_ESTABLISHED，不是「无决策」
+- [OK] **memory**：team/memory ok（2 张卡）
+- [WARN] **trajectory**：team/trajectory 不存在（task-95 未落地）⇒ risk 只覆盖 git 子集
+- [INFO] **snapshot_task_fields**：tasks[] 101 条，含 evidence 13 条；无 description/createdAt/updatedAt（设计 G2，靠 live 任务板补）
+
+RESULT: PASS（FAIL=0，WARN=2）

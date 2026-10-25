@@ -1,0 +1,37 @@
+﻿python : FAIL: 拒绝写入非法派发记录（fail-closed）：
+At line:4 char:1
++ python scripts/agent/dispatch_log.py --selftest 2>&1 | Out-File "$dir ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL: 拒绝写入非法派发记录（fail-closed）：:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  - phase=done 必须带 --report <产物路径>；若确实无可验证产物，必须用 --no-report-reason 显式说明（禁止静默留空）
+FAIL: 拒绝写入非法派发记录（fail-closed）：
+  - corrects 只允许出现在 phase=backfill 记录里
+FAIL: 拒绝写入非法派发记录（fail-closed）：
+  - corrects.new 必填（更正后的路径/值）
+FAIL: 拒绝写入非法派发记录（fail-closed）：
+  - phase=spawn 必须显式 --mode {mechanical|standard|deep|creator}（AGENTS.md §0.5 L9：不传 mode 会被静默默认为 standard = 没做决策）；若确实无法
+判断，用 --mode-explicit false 显式留下「未决定」痕迹（modeExplicit=false，不伪造 mode）
+FAIL: 拒绝写入非法派发记录（fail-closed）：
+  - --mode 与 --mode-explicit false 自相矛盾（既然选了模式就不能声明未决定）
+{"ts": "2026-10-24T20:22:10+08:00", "actor": "lead", "phase": "done", "target": "x", "no_report_reason": "纯会话操作，无磁盘产物"}
+{"ts": "2026-10-24T20:22:10+08:00", "actor": "lead", "phase": "backfill", "target": "x", "corrects": {"line": 3, "field": "report", "new": "team/dispatch-log.jsonl"}}
+{"ts": "2026-10-24T20:22:10+08:00", "actor": "lead", "phase": "spawn", "target": "worker", "task": "task-107", "mode": "mechanical", "modeExplicit": true}
+{"ts": "2026-10-24T20:22:10+08:00", "actor": "lead", "phase": "spawn", "target": "undecided", "modeExplicit": false}
+PASS: 37 条派发记录, latest=2026-10-24T19:57:46+08:00, path=D:\AAA_Jupyter\Memoria\team\dispatch-log.jsonl；mode 可判定 0/14
+  - [WARN] {'check': 'mode_missing', 'line': 9, 'target': 'team-curator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 11, 'target': 'team-curator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 13, 'target': 'curator-r3', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 19, 'target': 'team-plugin-creator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 21, 'target': 'p0-selection', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 22, 'target': 'measurement-debt', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 24, 'target': 'boot-probe', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 25, 'target': 'boot-fix-backend', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 28, 'target': 'team-plugin-creator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 29, 'target': 'todo-owner', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 30, 'target': 'team-plugin-creator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 33, 'target': 'steward', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 36, 'target': 'team-plugin-creator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+  - [WARN] {'check': 'mode_missing', 'line': 37, 'target': 'team-plugin-creator', 'detail': 'spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）'}
+PASS: dispatch_log.py selftest（红 9 类：缺文件/过期/坏JSON/缺字段/done无report被拒/corrects滥用被拒/默认路径回归/spawn无mode被拒/mode自相矛盾被拒；绿：成对记录、显式豁免、合法更正、spawn带mode落盘、显式未决定留痕；mode 覆盖计数与 warnings 可见）

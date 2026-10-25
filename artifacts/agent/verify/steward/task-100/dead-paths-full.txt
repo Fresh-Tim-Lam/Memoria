@@ -1,0 +1,19 @@
+# dead_path_edit 12 个「全仓无引用」候选（task-100 机检输出；供 Lead/人裁决：加 @entry / 归档 / 删除）
+
+| # | 文件 | 最近改动提交 | 外部引用 | 文档引用 | 代码引用 |
+|---|---|---|---|---|---|
+| 1 | `scripts/benchmark/maintenance/executor_coalesce_assert.py` | 26fa9bc6 10-24 12:03 perf(p1): validate_kb 异步入口去重（coalesce_running），避免启动+静默检查重复跑全库审计 (task-69 P1) | 0 | 0 | 0 |
+| 2 | `scripts/benchmark/maintenance/lexical_index_cache_bench.py` | 14290c3b 10-24 11:59 perf(services): lexical index 进程内缓存，修复启动 293 组标签重复解析 11.4s (task-69 P0-a) | 0 | 0 | 0 |
+| 3 | `scripts/benchmark/surface/run_block_count.py` | 9bdb1211 10-23 15:25 fix(render): 嵌套子列表不再被当成独立块 —— 修复 2eef3e34 引入的 -src-block 污染 | 0 | 0 | 0 |
+| 4 | `scripts/benchmark/maintenance/nested_list_edit_test.mjs` | 842a08ba 10-23 14:20 fix(source-gen): srcLine 失真保护 + 编辑路径契约（0.4.7 任务 4，N4 前置） | 0 | 0 | 0 |
+| 5 | `scripts/benchmark/maintenance/nested_list_test.mjs` | c09b4a09 10-23 14:06 feat(parser): 多级列表 —— 栈式建树 + 递归回写（0.4.7 任务 4，N1+N2） | 0 | 0 | 0 |
+| 6 | `scripts/benchmark/maintenance/_bugc_doc_check.js` | 80b93415 10-23 12:59 fix(parser): 列表末尾的空行还给 blank_line，并在 source-gen 按 itemSrcLine 重建项间空行（Bug C） | 0 | 0 | 0 |
+| 7 | `scripts/benchmark/surface/perf_tail_ab.mjs` | b92c58a7 10-23 01:07 test(perf): W3.3 批尾布局同 build 交错 A/B + 独立高度漂移 + L5 落点归因探针 | 0 | 0 | 0 |
+| 8 | `scripts/benchmark/surface/perf_tail_drift.mjs` | b92c58a7 10-23 01:07 test(perf): W3.3 批尾布局同 build 交错 A/B + 独立高度漂移 + L5 落点归因探针 | 0 | 0 | 0 |
+| 9 | `scripts/benchmark/surface/perf_tail_edit_l5.mjs` | b92c58a7 10-23 01:07 test(perf): W3.3 批尾布局同 build 交错 A/B + 独立高度漂移 + L5 落点归因探针 | 0 | 0 | 0 |
+| 10 | `scripts/benchmark/surface/selcol_ask_probe.mjs` | 81ae5fb8 10-21 18:47 chore(bench): 补交 3 个遗留测量工具（P6 前的回滚点补全） | 0 | 0 | 0 |
+| 11 | `scripts/benchmark/surface/make_link_fixture.py` | b4d03227 10-21 18:47 chore: 补齐阶段 2 期间未提交的我们自己的产物（P6 前建立回滚点） | 0 | 0 | 0 |
+| 12 | `scripts/benchmark/surface/realapp_humanlike.mjs` | 1ba90d88 10-20 11:49 test(realapp): 真机度量落地并定基线——A 26.5ms/B 1434ms/C 1292ms，证实无头读数无效 | 0 | 0 | 0 |
+
+判定口径：外部引用 = `git grep -l -F <basename> HEAD` 命中文件数（排除自身）；
+文档引用 = 命中文件在 docs/ 下；代码引用 = 其余（scripts/src/team 等）。三列全 0 ⇒ 无任何外部入口。

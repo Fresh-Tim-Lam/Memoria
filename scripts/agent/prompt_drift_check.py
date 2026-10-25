@@ -768,10 +768,8 @@ def check_version_stamps(ctx: Ctx) -> None:
     if not spec_version:
         ctx.add(check, FAIL, "kb_agent.py 中没有 SPEC_VERSION", KB_AGENT_REL)
         return
-    for src_name, _dst in info.get("FILE_MAP") or ():
-        if not str(src_name).endswith(".md"):
-            continue
-        rel = f"resources/agent-prompts/{src_name}"
+    for rel in prompt_doc_rels(ctx):
+        src_name = rel.rsplit("/", 1)[-1]
         text = ctx.read(rel)
         if text is None:
             continue
@@ -804,8 +802,9 @@ def check_version_stamps(ctx: Ctx) -> None:
                 ctx.add(
                     check,
                     FAIL,
-                    "依赖已变更，提示词可能脱节（复核相关断言后重签指纹）："
-                    f"{dep_path} 记录 @{dep_digest}，当前 @{current}",
+                    "依赖已变更，提示词可能脱节：先跑 `--recheck-deps` 复核相关断言，"
+                    "再按 `--resign <文件> --dep <依赖> --note <复核说明>` 逐条重签指纹。"
+                    f" {dep_path} 记录 @{dep_digest}，当前 @{current}",
                     rel,
                 )
     if kit_version and spec_version and not kit_version:
@@ -821,6 +820,8 @@ def _git_commit_date(repo: Path, rel: str) -> date | None:
             ["git", "-C", str(repo), "log", "-1", "--format=%cs", "--", rel],
             capture_output=True,
             text=True,
+            encoding="utf-8",  # Windows 默认 cp1252 解码会在非 ASCII 输出上抛 UnicodeDecodeError
+            errors="replace",
             timeout=15,
         )
         if out.returncode == 0 and out.stdout.strip():
@@ -832,11 +833,7 @@ def _git_commit_date(repo: Path, rel: str) -> date | None:
 
 def check_staleness(ctx: Ctx, now: date, stale_days: int = STALE_DAYS_DEFAULT) -> None:
     check = "staleness"
-    info = ctx.kb_agent
-    for src_name, _dst in info.get("FILE_MAP") or ():
-        if not str(src_name).endswith(".md"):
-            continue
-        rel = f"resources/agent-prompts/{src_name}"
+    for rel in prompt_doc_rels(ctx):
         text = ctx.read(rel)
         if text is None:
             continue
@@ -921,6 +918,186 @@ def _emit(findings: list[Finding], as_json: bool) -> None:
         f"\n汇总：FAIL={summary[FAIL]} WARN={summary[WARN]} INFO={summary[INFO]} 合计 {summary['findings']} 条"
     )
     print("结论：提示词与代码一致（无 FAIL）" if summary[FAIL] == 0 else "结论：存在 FAIL，提示词已漂移，须修")
+
+
+# ══════════════════════════════════════════════════════════════════════
+# 重签流程：--recheck-deps（只读清单）/ --resign（逐条确认 + 留痕）
+# ══════════════════════════════════════════════════════════════════════
+RECHECK_LOG_REL = "artifacts/agent/verify/todo/prompt-drift-recheck-log.jsonl"
+
+
+def _git(repo: Path, *args: str) -> str:
+    try:
+        out = subprocess.run(
+            ["git", "-C", str(repo), *args],
+            capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=20,
+        )
+        return out.stdout.strip() if out.returncode == 0 else ""
+    except (OSError, subprocess.SubprocessError):
+        return ""
+
+
+def collect_dep_changes(ctx: Ctx) -> list[dict]:
+    """每个提示词文档的依赖指纹状态（记录值 vs 当前值）。"""
+    rows: list[dict] = []
+    for rel in prompt_doc_rels(ctx):
+        text = ctx.read(rel) or ""
+        head = "\n".join(text.splitlines()[:14])
+        deps, _raw = ctx.deps_of(head)
+        entries = []
+        for dep_path, recorded in deps:
+            target = ctx.repo / dep_path
+            current = _sha12(target) if target.is_file() else None
+            changed = current is None or not current.startswith(recorded or "~")
+            entries.append(
+                {"path": dep_path, "recorded": recorded, "current": current, "changed": changed}
+            )
+        rows.append({"file": rel, "deps": entries})
+    return rows
+
+
+def recheck_report(repo: Path) -> int:
+    """只读：列出依赖变更 + git 证据 + 该提示词要复核的小节清单 + 精确重签命令。"""
+    ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
+    rows = collect_dep_changes(ctx)
+    changed_total = sum(1 for row in rows for entry in row["deps"] if entry["changed"])
+    print(f"提示词依赖指纹复核清单（{date.today().isoformat()}）")
+    print(f"提示词文档 {len(rows)} 个；变更依赖 {changed_total} 条\n")
+    if changed_total == 0:
+        print("全部依赖指纹一致，无需重签。")
+        return 0
+    for row in rows:
+        changed = [entry for entry in row["deps"] if entry["changed"]]
+        if not changed:
+            continue
+        print(f"[CHANGED] {row['file']}")
+        for entry in changed:
+            print(
+                f"  · {entry['path']}  记录 @{entry['recorded'] or '(缺失)'} → 当前 @{entry['current'] or '(文件缺失)'}"
+            )
+            log = _git(repo, "log", "-3", "--format=%h %cs %s", "--", entry["path"])
+            if log:
+                for line in log.splitlines():
+                    print(f"      最近提交：{line}")
+            diff = _git(repo, "diff", "--stat", "--", entry["path"])
+            if diff:
+                print(f"      未提交改动：{diff.splitlines()[-1].strip()}")
+        text = ctx.read(row["file"]) or ""
+        sections = re.findall(r"^#{1,3}\s+(.+)$", text, re.M)
+        print("  ▸ 要逐条复核的断言所在小节（读这些小节，确认与代码新行为一致）：")
+        for title in sections[:12]:
+            print(f"      #{title.strip()}")
+        print("  ▸ 重签（只签你**真的复核过**的依赖；漏签仍会红）：")
+        dep_args = " ".join(f"--dep {entry['path']}" for entry in changed)
+        print(
+            f"      python scripts/agent/prompt_drift_check.py --resign {row['file']} "
+            f"{dep_args} --note \"复核了哪些断言（≥10 字）\""
+        )
+        print()
+    print("规则：不允许跳过复核直接改指纹；--resign 会把 from→to 与 note 追加到")
+    print(f"      {RECHECK_LOG_REL}")
+    return 0
+
+
+def _rewrite_deps_header(text: str, new_digests: dict[str, str]) -> str:
+    lines = text.splitlines(keepends=True)
+    out: list[str] = []
+    for line in lines:
+        match = DEPS_MD.search(line)
+        if match:
+            entries: list[str] = []
+            for raw in match.group(1).split(","):
+                item = raw.strip()
+                if not item:
+                    continue
+                path = item.rsplit("@", 1)[0].strip() if "@" in item else item
+                digest = new_digests.get(path, item.rsplit("@", 1)[1] if "@" in item else "")
+                entries.append(f"{path}@{digest}")
+            out.append(f"<!-- spec-deps: {', '.join(entries)} -->\n")
+            continue
+        out.append(line)
+    return "".join(out)
+
+
+def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: str | None) -> int:
+    """逐条确认后重签指定依赖指纹；写追加审计日志；重签后立即重跑检查。"""
+    ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
+    rel = rel.replace("\\", "/").strip()
+    valid = set(prompt_doc_rels(ctx))
+    if rel not in valid:
+        print(f"用法错误：{rel} 不是受管的提示词文档。可选：{', '.join(sorted(valid))}", file=sys.stderr)
+        return 2
+    text = ctx.read(rel)
+    if text is None:
+        print(f"用法错误：读不到 {rel}", file=sys.stderr)
+        return 2
+    head = "\n".join(text.splitlines()[:14])
+    deps, _raw = ctx.deps_of(head)
+    if not deps:
+        print(f"用法错误：{rel} 没有 spec-deps 头，无法重签", file=sys.stderr)
+        return 2
+    declared = {path for path, _digest in deps}
+    current = {path: _sha12(ctx.repo / path) for path in declared if (ctx.repo / path).is_file()}
+    changed = {
+        path
+        for path, digest in deps
+        if path not in current or not current[path].startswith(digest or "~")
+    }
+    if not changed:
+        print(f"{rel} 的依赖指纹已一致，无需重签。")
+        return 0
+    requested = {p.replace("\\", "/").strip() for p in dep_paths}
+    unknown = requested - declared
+    if unknown:
+        print(f"用法错误：--dep 里的路径不在 {rel} 的 spec-deps 中：{sorted(unknown)}", file=sys.stderr)
+        return 2
+    missing = changed - requested
+    if missing:
+        print(
+            "拒绝重签：以下变更依赖未被逐条确认（--dep 逐个列出你复核过的）："
+            + ", ".join(sorted(missing)),
+            file=sys.stderr,
+        )
+        return 2
+    if len((note or "").strip()) < 10:
+        print("拒绝重签：--note 必须写 ≥10 字的复核说明（写清复核了哪些断言）", file=sys.stderr)
+        return 2
+    new_digests = dict(current)
+    updated = _rewrite_deps_header(text, new_digests)
+    reviewed = reviewed_on or date.today().isoformat()
+    try:
+        date.fromisoformat(reviewed)
+    except ValueError:
+        print(f"用法错误：--reviewed-on 不是合法日期：{reviewed}", file=sys.stderr)
+        return 2
+    updated = REVIEWED.sub(
+        lambda m: m.group(0).replace(m.group(1) or m.group(2), reviewed), updated, count=1
+    )
+    if not REVIEWED.search("\n".join(updated.splitlines()[:14])):
+        print(f"用法错误：{rel} 没有 reviewed-on 头，无法重签", file=sys.stderr)
+        return 2
+    # newline="\n"：Windows 默认文本写会把 \n 翻成 \r\n ⇒ 重签一次会把整份提示词的换行全改掉
+    (ctx.repo / rel).write_text(updated, encoding="utf-8", newline="\n")
+
+    log_path = ctx.repo / RECHECK_LOG_REL
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    record = {
+        "ts": datetime.now(timezone.utc).isoformat(),
+        "file": rel,
+        "reviewed_on": reviewed,
+        "deps": [
+            {"path": path, "from": dict(deps).get(path, ""), "to": current.get(path, "")}
+            for path in sorted(requested)
+        ],
+        "note": note.strip(),
+    }
+    with log_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(record, ensure_ascii=False) + "\n")
+    print(f"已重签 {len(requested)} 条依赖；复核记录追加到 {RECHECK_LOG_REL}")
+    print("重跑检查：\n")
+    findings = run_checks(ctx)
+    _emit(findings, as_json=False)
+    return 1 if any(f.severity == FAIL for f in findings) else 0
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -1028,7 +1205,7 @@ Tool(name="search_kb", description="x")
 
 def _write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
+    path.write_text(content, encoding="utf-8", newline="\n")
 
 
 def _fixture_repo(tmp: Path, *, edge_hash: str | None = None, build_hash: str | None = None) -> Path:
@@ -1177,6 +1354,66 @@ def selftest() -> int:
             failures.append("red:C5 陈旧告警未报 WARN")
             print("  FAIL red:C5 陈旧告警")
 
+        # ── 重签流程：--recheck-deps 报告 / 拒绝无 note / 拒绝漏列依赖 / 正确重签后变绿 ──
+        import contextlib
+        import io as _io
+
+        repo = _fixture_repo(tmp / "resign")
+        with (repo / GREEN_BUILD_PATH).open("a", encoding="utf-8") as handle:
+            handle.write("\n# changed-again\n")
+        rel = "resources/agent-prompts/kb-spec.zh-CN.md"
+        buffer = _io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = recheck_report(repo)
+        report_text = buffer.getvalue()
+        if code == 0 and "CHANGED" in report_text and GREEN_BUILD_PATH in report_text:
+            print("  PASS resign:--recheck-deps 列出变更")
+        else:
+            failures.append("resign:--recheck-deps 未列出变更依赖")
+            print("  FAIL resign:--recheck-deps 未列出变更依赖")
+
+        code = main(["--repo", str(repo), "--resign", rel, "--note", "复核了边剥离断言，确认一致"])
+        if code == 2:
+            print("  PASS resign:拒绝漏列依赖")
+        else:
+            failures.append(f"resign:漏列依赖未被拒（exit={code}）")
+            print("  FAIL resign:漏列依赖未被拒")
+
+        code = main(
+            ["--repo", str(repo), "--resign", rel, "--dep", GREEN_BUILD_PATH, "--note", "短"]
+        )
+        if code == 2:
+            print("  PASS resign:拒绝过短 note")
+        else:
+            failures.append(f"resign:过短 note 未被拒（exit={code}）")
+            print("  FAIL resign:过短 note 未被拒")
+
+        code = main(
+            [
+                "--repo",
+                str(repo),
+                "--resign",
+                rel,
+                "--dep",
+                GREEN_BUILD_PATH,
+                "--note",
+                "逐条复核 §4 剥离语义与 §8 常见坑，构建行为未变",
+            ]
+        )
+        log_path = repo / RECHECK_LOG_REL
+        resigned_bytes = (repo / rel).read_bytes()
+        lf_preserved = b"\r\n" not in resigned_bytes
+        if (
+            code == 0
+            and not any(f.severity == FAIL for f in _findings_for(repo))
+            and log_path.is_file()
+            and lf_preserved
+        ):
+            print("  PASS resign:正确重签后变绿且留痕（换行保持 LF）")
+        else:
+            failures.append("resign:正确重签后未变绿/未写日志/换行被改成 CRLF")
+            print("  FAIL resign:正确重签后未变绿或未写日志或换行被改")
+
         # ── 绿：限定词豁免（遗留写法说明不算教）──
         assert_green(_findings_for(base), "green:legacy-note-allowed")
     finally:
@@ -1218,7 +1455,12 @@ def main(argv: list[str] | None = None) -> int:
             pass
     parser = argparse.ArgumentParser(
         description="Memoria 知识库 Agent 提示词漂移机检（task-151）",
-        epilog="退出码：0 无 FAIL / 1 有 FAIL / 2 用法错误",
+        epilog=(
+            "退出码：0 无 FAIL / 1 有 FAIL / 2 用法错误。"
+            " 依赖指纹变更后的标准动作：先 --recheck-deps 看清单，"
+            "再 --resign <文件> --dep <依赖> --note <复核说明> 逐条重签。"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     parser.add_argument("--repo", default=None, help="仓库根目录（默认脚本上两级）")
     parser.add_argument("--json", action="store_true", help="输出 JSON")
@@ -1227,6 +1469,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--stale-days", type=int, default=STALE_DAYS_DEFAULT, help="陈旧阈值天数（默认 90）")
     parser.add_argument("--strict", action="store_true", help="WARN 也算失败（默认只 FAIL 退出 1）")
     parser.add_argument("--print-deps", nargs="+", default=None, help="打印依赖文件当前 sha12（维护头部指纹用）")
+    parser.add_argument(
+        "--recheck-deps",
+        action="store_true",
+        help="只读：列出所有提示词的依赖变更 + git 证据 + 要复核的小节 + 重签命令",
+    )
+    parser.add_argument("--resign", default=None, metavar="PROMPT_FILE", help="按逐条确认重签该提示词文件的依赖指纹")
+    parser.add_argument("--dep", action="append", default=[], help="--resign 时逐条确认的依赖路径（可重复）")
+    parser.add_argument("--note", default="", help="--resign 的复核说明（≥10 字，写入审计日志）")
+    parser.add_argument("--reviewed-on", default=None, help="--resign 的复核日期（缺省今天，YYYY-MM-DD）")
     args = parser.parse_args(argv)
 
     repo = Path(args.repo).resolve() if args.repo else ROOT
@@ -1235,6 +1486,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     if args.print_deps:
         return _print_deps(repo, args.print_deps)
+    if args.recheck_deps:
+        return recheck_report(repo)
+    if args.resign:
+        return resign(repo, args.resign, args.dep, args.note, args.reviewed_on)
     if args.selftest:
         return selftest()
     if not (repo / KB_AGENT_REL).is_file():

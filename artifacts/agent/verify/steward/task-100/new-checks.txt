@@ -1,0 +1,20 @@
+﻿
+> [WARN] dead_path_edit: 近 7 天改了 12 个「全仓无引用」文件（checked_count=121，扫描 121 个 basename，一次批量 git grep）：scripts/benchmark/mai
+ntenance/executor_coalesce_assert.py; scripts/benchmark/maintenance/lexical_index_cache_bench.py; scripts/benchmark/sur
+face/run_block_count.py; scripts/benchmark/maintenance/nested_list_edit_test.mjs; scripts/benchmark/maintenance/nested_
+list_test.mjs; scripts/benchmark/maintenance/_bugc_doc_check.js; scripts/benchmark/surface/perf_tail_ab.mjs; scripts/be
+nchmark/surface/perf_tail_drift.mjs; scripts/benchmark/surface/perf_tail_edit_l5.mjs; scripts/benchmark/surface/selcol_
+ask_probe.mjs; scripts/benchmark/surface/make_link_fixture.py; scripts/benchmark/surface/realapp_humanlike.mjs —— 先确认它们
+在**生产/测试路径**上再改（lessons L0.3；对照：改了 p5perf_workload2.mjs 才发现它无入口）
+          证据：git grep -n -I -F -e <basename>... HEAD
+> [WARN] mode_policy: 12 条 spawn 记录**全部缺 mode 字段**（dispatch-log 尚未记录模式）⇒ 无法判定是否做过模式决策，**不静默判绿**。修法：dispatch_log.py 增加 -
+-mode 参数，spawn 时记录 mode（L9：不传 mode = 静默默认 standard）（checked_count=12，with_mode=0）
+          证据：team/dispatch-log.jsonl:phase=spawn 无 mode 字段（字段实测：ts/actor/phase/target/task/desc/source）
+> [WARN] plan_consulted: 版本 0.4.7 的实施提交 a68ab655（10-23 13:19）早于台账计划落盘 10-23 22:52（docs/todo.md） —— 违反 AGENTS.md §0.5 L8
+（版本级规划须先由 todo-owner 产出并写进 docs/todo.md；首月 WARN，之后 FAIL；checked_count=1）
+          证据：git:a68ab655e7024148b1752304bc37c6fb65eb2217 vs docs/todo.md -S'0.4.7'
+> [WARN] role_registration: 快照 exportedAt=2026-10-24T11:34:19.214Z 早于 org.md mtime=2026-10-24T11:37:41.965063+00:00 ⇒ 快
+照不可能反映注册修改，须重导出快照后再审计（checked_count=27）
+          证据：team/team-board-snapshot.json:exportedAt vs docs/guides/agent-team-org.md mtime
+
+

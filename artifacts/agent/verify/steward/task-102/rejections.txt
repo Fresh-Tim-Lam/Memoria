@@ -1,0 +1,20 @@
+﻿=== 红1：缺 alternatives 且无 no_alternative_reason ===
+FAIL: 拒绝写入非法决策记录（fail-closed）：
+  - alternatives 为空且无 no_alternative_reason（决策缺少被放弃项）
+  - alternatives 必须是非空数组（或省略并给 no_alternative_reason）
+  - A2：决策时间晚于证据 10 分钟以上 ⇒ 必须 reconstructed:true（事后补录不得伪装当场）
+exit=2
+=== 红2：ts 倒流 ===
+FAIL: 拒绝写入非法决策记录（fail-closed）：
+  - ts 早于上一条记录（append-only 时间倒流 ⇒ 疑似改写历史）
+  - A1：决策时间早于证据存在时间（不可能当场引用尚未存在的证据）
+exit=2
+=== 红3：evidence 指向不存在文件 ===
+FAIL: 拒绝写入非法决策记录（fail-closed）：
+  - evidence[0] 不可解析：文件不存在：docs/not-exist-xyz.md
+exit=2
+=== 红4：id 重复 ===
+FAIL: 拒绝写入非法决策记录（fail-closed）：
+  - id 重复：dec-20261024-e7cb6c7a
+  - A2：决策时间晚于证据 10 分钟以上 ⇒ 必须 reconstructed:true（事后补录不得伪装当场）
+exit=2

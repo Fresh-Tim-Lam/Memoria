@@ -280,3 +280,120 @@ prompt refreshed: True（含 spec-version: 1.1.0）
 | 不碰 `docs/example/AAA_Vocab/**` | 只读查看；未写 |
 
 **关键 KPI 自检**：下次若有人改了 `edge_types.py`/`kb_build.py`/`render-core.js`/`fsrs.py`/`kb_agent.py` 等被声明为依赖的文件而没复核提示词 ⇒ **C4 必红 exit 1**；若有人把提示词里的工具名改成不存在的 ⇒ **C2 必红**；若有人重新教 `#extend` ⇒ **C3 必红**。这三把尺子都已在当前仓库上**真跑红过**，不是推断。
+
+---
+
+## 9. task-152 追加：门禁接线 + organize 纳入维护 + 指纹重签流程（2026-10-25）
+
+> 本节**取代** §7 第 4/5 条（organize 已维护；team_audit 已接线）。
+
+### 9.1 ① `team_audit.py` 接线（已落地并实测）
+
+**位置**：`scripts/agent/team_audit.py` 新增 `check_prompt_drift(ctx)`，在 `run_checks()` 末尾（`deliberation_quality` 之后、排序之前）调用；检查类名 `prompt_drift`，与既有 11 类并列。
+
+**行为（"门禁死了必须看得见"）**：
+
+| 场景 | 行为 |
+|---|---|
+| 非 Memoria 仓库（无 `src/memoria/services/kb_agent.py`，如 team_audit 自测 fixture） | INFO「不适用」（避免误伤 selftest） |
+| 门禁脚本缺失 | **FAIL**「门禁脚本缺失……静默跳过等于门禁失效」 |
+| 子进程异常 / 超时 / exit 非 0/1 | **FAIL**（带 stderr 摘要） |
+| 子进程**无输出**（stdout 为空/None） | **FAIL**「提示词漂移机检无输出」 |
+| 输出不可解析（非 JSON / 非法 UTF-8） | **FAIL** |
+| `exit=0` 但 `summary.FAIL>0`（自相矛盾） | **FAIL** |
+| 子进程 findings 严重度未知/非法 | **FAIL**（门禁输出不可信） |
+| 正常 | 逐条转发 C1–C5 的 FAIL/WARN/INFO |
+
+**Windows cp1252 解码 bug（Lead 复现的那个）**：
+- 根因：`subprocess.run(..., text=True)` 在 Windows 用 locale 编码（cp1252）解码子进程输出；`prompt_drift_check.py` 输出中文 JSON ⇒ 读取线程 `UnicodeDecodeError` ⇒ `proc.stdout=None` ⇒ `json.loads(None)` **整个 team_audit 崩溃**（不是 FAIL，是 crash）。
+- 修复：`encoding="utf-8", errors="replace"`（显式）+ 前置 `if not proc.stdout: FAIL` 判空 + `json.loads` 捕获 `(TypeError, JSONDecodeError)`。
+- **实测（临时替换脚本/删除脚本，跑完恢复并字节校验）**：
+
+```
+A 正常态                         exit=1 crash=False（唯一 FAIL=steward 收据，见 §9.4）
+B 子进程 exit=2 且中文 stderr     exit=1 crash=False  [FAIL] prompt_drift: 提示词漂移机检执行失败（exit=2）：中文错误：退出 2
+C 子进程无输出                   exit=1 crash=False  [FAIL] prompt_drift: 提示词漂移机检无输出（exit=1）
+D 非法 UTF-8 stdout              exit=1 crash=False  [FAIL] prompt_drift: 提示词漂移机检输出不可解析
+E 脚本缺失                       exit=1 crash=False  [FAIL] prompt_drift: 门禁脚本缺失
+T1 故意教 [[kp-id#extend]]       exit=1 crash=False  [FAIL] prompt_drift: [forbidden_syntax] …（汇总 FAIL 1→2）
+T2 恢复（字节 SHA 相等）          回到 FAIL=1
+```
+
+**全仓 `subprocess.run(text=True)` Windows 编码扫描（18 处缺 encoding）**：
+- 门禁链路（`team_audit` / `prompt_drift_check`）已 **0 处**：`team_audit.py:286/3206/2825`、`prompt_drift_check.py:819/929` 全部显式 utf-8。
+- 其余 18 处在**基准/实验脚本**（不在门禁路径），分类：
+  - 内容可能含中文（建议 owner 排查）：`scripts/graph_layout_benchmark.py:35`、`scripts/benchmark/graph/anchor_render_baseline.py:30,154`、`scripts/benchmark/maintenance/compare_ab.py:30`、`scripts/benchmark/surface/run_interaction.py:212`、`scripts/benchmark/surface/run_perf_ops.py:157`、`scripts/benchmark/surface/run_baseline.py:153`、`scripts/benchmark/surface/run_fidelity.py:93`、`scripts/benchmark/usage/report_usage.py:45`
+  - 纯 ASCII 输出（git rev-parse/tag/taskkill，风险低）：`release_preflight.py:187/551/620`、`anchor_render_baseline.py:30`、`compare_ab.py:26`、`run_l1.py:31`、`_t79_run.py:56/123/128`、`decide.py:567`、`run_fidelity.py:93`
+  - **建议**：给 benchmark owner 一个 grep 守卫（`text=True` 必带 `encoding=`），或后续统一封装 `run_text()`；本轮不改他域文件。
+
+### 9.2 ② `organize.zh-CN.md` 纳入维护（审计 + 修复 + 指纹锁）
+
+审计发现（旧版 2026-09-08，对照 `import_engine.py` / `import-format.md`）：
+
+| ID | 脱节（旧行） | 代码事实 | 严重度 | 修法（新版） |
+|---|---|---|---|---|
+| G1 | 旧 L201-207「逐个输出完整 `.md` 文件，用代码块包裹并标注文件名」 | 导入引擎只吃**单个平面 `.txt`，段由独占行 `---` 分隔**（`import_engine.py:66-110 parse_flat_file`；`import-format.md` §基本结构）；UI 文件选择器也只收 `.txt/.md` 文件 | **高**（agent 按旧格式输出 → 用户无法导入） | 输出格式改为「一个平面文件、多段 `---` 分隔、放一个代码块」 |
+| G2 | 缺 `path` 字段 | 导入支持 frontmatter `path` 多级目录（`import_engine.py:188,429`；`import-format.md` v2；role-a 手册已写） | 中 | frontmatter 表补 `path`（可选，仅导入指令） |
+| G3 | 旧 §4 给了 reference/extend/contain 三类型 + 输出「链接关系表 边类型」，**未说导入不消费边类型** | 导入生成 sidecar `edges: []`，正文 `[[id]]` 由构建按默认 `reference` 建边（`import_engine.py:514-574`）；`[[id#type]]` 不在平面格式内（且构建会剥离，见 kb-spec §4） | **中**（agent 以为表格能改图谱） | 明确"边类型只用于人工确认/后续维护；导入后默认 reference；extend 需入库后 sidecar `edges[]`"；补"链接表不是生效依据" |
+| G4 | 字段表未标必填/一致性约束 | `description`/`concepts` 必填、`concepts[].name` 必须与正文标题完全一致（`import_engine.py:222-226`、`_match_heading`） | 低 | 字段表标注必填 + name 一致性 |
+| G5 | 图片属性只举例 `width/align` | 真实白名单 `width/height/align/name-size/name`（`render-core.js:346`） | 低 | 补全白名单 |
+| G6 | 无版本戳/依赖指纹 | 该文件是**程序内整理提示词单一事实源**，却被 47 天无人维护 | 中 | 头部加 `spec-version:1.1.0` + `spec-deps`（import_engine/import_plan/import-format/render-core/preview-formats/kb_agent）+ `reviewed-on` |
+
+**纳入机检**：`prompt_doc_rels()` 现在 = 分发 md + `APP_INTERNAL_ASSETS`（organize）；C2/C3/C4/C5 全部覆盖它。**先证红**：纳入后立即出现 3 条 `version_stamp` FAIL（无戳/无 deps/无 reviewed-on），补齐后绿。
+
+### 9.3 ③ 指纹重签流程（`--recheck-deps` / `--resign`，写进 `--help` 与脚本头）
+
+**问题**：C4 让"代码一改就红"；下一个人只会把数字改掉让它变绿（橡皮图章）。
+
+**设计（逐条确认 + 留痕 + 拒绝一把全签）**：
+
+```bash
+# 1) 只读清单：每个提示词的变更依赖 + git 最近提交/未提交 diff + 该文件要复核的小节 + 精确重签命令
+python scripts/agent/prompt_drift_check.py --recheck-deps
+
+# 2) 重签：必须逐条 --dep 列出本次真的复核过的依赖，并写 ≥10 字 note
+python scripts/agent/prompt_drift_check.py --resign resources/agent-prompts/kb-spec.zh-CN.md \
+    --dep src/memoria/graph/kb_build.py --note "复核 §4 剥离语义与 §8 常见坑，构建行为未变"
+```
+
+**拒绝规则（脚本强制，不可绕过）**：
+- `--resign` 的文件不在受管提示词清单 ⇒ exit 2；
+- 无 `spec-deps` 头 / 无 `reviewed-on` 头 ⇒ exit 2；
+- **漏列任一"已变更"依赖** ⇒ exit 2（杜绝"一把全签"）；
+- `--dep` 指向未声明的依赖 ⇒ exit 2；
+- `note` < 10 字 ⇒ exit 2；
+- 成功后：重写头部指纹与 reviewed-on → **追加**一条 from→to + note 到 `artifacts/agent/verify/todo/prompt-drift-recheck-log.jsonl` → **立即重跑检查**并返回其结论。
+- **换行保持 LF**：`--resign` 用 `newline="\n"` 写回（Windows 默认文本写会把 `\n` 翻成 `\r\n`，重签一次会把整份提示词的换行全改 ⇒ 制造假 diff）；selftest 增加"重签后字节里无 `\r\n`"断言。
+- `--selftest` 已新增 4 个重签 fixture：报告列出变更 / 漏列被拒 / 短 note 被拒 / 正确重签后变绿且留痕（含 LF 保持）。
+
+**为什么这样能防橡皮图章**：① 必须逐个依赖点名（漏一个仍红）；② 必须写复核说明并永久留痕（可见"只改数字不写理由"）；③ 重签后自动重跑，仍有其它 FAIL 时不会假绿；④ 清单里直接给出该提示词的小节标题，逼 owner 读断言而不是只读 hash。
+
+### 9.4 残余 / 未决（如实）
+
+1. **`team_audit` FAIL=1 仅来自 `steward_self_audit`**：因本轮修改了 `scripts/agent/team_audit.py`（sha 从 `ee806e3a…` → `4c697128…`），按 org.md §2.6 B3 设计**必须由 steward 重读四标准并写新收据**。**我没有动 `team/steward/**`**（非我写域，且伪造收据=把红线变绿）。Lead 已确认会派 steward 跑新一轮审计；**steward 收据刷新后预期 FAIL=0**。
+2. **`prompt_drift` 自身 FAIL=0**：`team_audit` 的该检查项只有 INFORMational 未归类 token（4 条），无 FAIL/WARN。
+3. 其余 18 处 benchmark/实验脚本的 Windows 编码隐患：见 §9.1（建议 owner 分批收口，不在本任务写域）。
+
+### 9.5 task-152 验收对照
+
+| 条件 | 证据 |
+|---|---|
+| 接线：故意脱节 ⇒ FAIL 增加（实测） | §9.1 T1：`prompt_drift` FAIL 出现，汇总 FAIL 1→2；恢复后回 1（字节 SHA 相等） |
+| 接线：正常 ⇒ 不误伤 | `prompt_drift` 0 FAIL/WARN（仅 INFO）；总 FAIL 只剩 steward 收据（§9.4） |
+| 接线：脚本崩溃 ⇒ 报 FAIL 不静默 | §9.1 B/C/D/E 四种（exit=2 / 无输出 / 非法 UTF-8 / 缺失）全部 `crash=False` + 对应 FAIL |
+| organize 审计 + 修复 + 戳 + 指纹 | §9.2；先红后绿（3 条 version_stamp FAIL → 0） |
+| 重签流程文档化 + 命令可跑 | §9.3；`--recheck-deps` 实测 exit 0（4 个文档 0 变更）；`--resign` fixture 4 例 PASS |
+| `pytest -q tests` 不降（基线 1475） | 见 §9.6 |
+| `node --check` / `i18n_selftest` | 见 §9.6 |
+| `team_audit` FAIL=0 | **未达**：仅 `steward_self_audit`（B3 设计，等 steward 重签；非本任务缺陷，见 §9.4） |
+
+### 9.6 本轮全量回归（2026-10-25）
+
+- `pytest -q tests` = **1475 passed / 0 failed**（与 task-151 基线一致，未降）；
+- `node --check` × 全部 `src/memoria/ui/static/app/js/**/*.js` = **0 失败**；
+- `node scripts/i18n_selftest.js` = **PASS**；
+- `python scripts/agent/prompt_drift_check.py` = **exit 0（FAIL=0/WARN=0/INFO=4）**；
+- `python scripts/agent/prompt_drift_check.py --selftest` = **PASS（含 4 个重签 fixture）**；
+- `python scripts/agent/team_audit.py` = **FAIL=1**（唯一 `steward_self_audit`，见 §9.4；`prompt_drift` 项 0 FAIL）；
+  当前 `scripts/agent/team_audit.py` sha12 = `4c697128255f`（与 steward r3 收据 `ee806e3af079` 不同 ⇒ 待 steward 新轮重签）。
+

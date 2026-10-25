@@ -1,0 +1,100 @@
+﻿{
+  "ok": true,
+  "path": "D:\\AAA_Jupyter\\Memoria\\team\\dispatch-log.jsonl",
+  "count": 37,
+  "bad_lines": [],
+  "latest": "2026-10-24T19:57:46+08:00",
+  "max_age_days": 7,
+  "problems": [],
+  "warnings": [
+    {
+      "check": "mode_missing",
+      "line": 9,
+      "target": "team-curator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 11,
+      "target": "team-curator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 13,
+      "target": "curator-r3",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 19,
+      "target": "team-plugin-creator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 21,
+      "target": "p0-selection",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 22,
+      "target": "measurement-debt",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 24,
+      "target": "boot-probe",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 25,
+      "target": "boot-fix-backend",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 28,
+      "target": "team-plugin-creator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 29,
+      "target": "todo-owner",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 30,
+      "target": "team-plugin-creator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 33,
+      "target": "steward",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 36,
+      "target": "team-plugin-creator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    },
+    {
+      "check": "mode_missing",
+      "line": 37,
+      "target": "team-plugin-creator",
+      "detail": "spawn 缺 mode 字段（历史记录无法判定是否做过模式决策；新记录必须 --mode，或用 --mode-explicit false 显式留痕）"
+    }
+  ],
+  "mode_coverage": {
+    "spawn": 14,
+    "judgeable": 0,
+    "unknown": 14
+  }
+}

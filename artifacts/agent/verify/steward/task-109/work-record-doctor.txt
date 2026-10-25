@@ -1,0 +1,14 @@
+﻿# work_record.py doctor（数据源自查）
+
+> 生成 2026-10-24T20:43:28+08:00；只读，不修复。FAIL ⇒ 退出码 1（不静默空）。
+
+- [OK] **git**：main@d95712e3
+- [OK] **snapshot**：105 任务 / 10 成员；exportedAt=2026-10-24T20:11:53+08:00（32m 前）
+- [OK] **dispatch_log**：37 条，latest=2026-10-24T19:57:46+08:00
+- [OK] **agents**：team/agents.json ok（10 名成员）
+- [OK] **decisions**：3 条决策，索引校验 bad=0
+- [OK] **memory**：team/memory ok（7 张卡）
+- [WARN] **trajectory**：team/trajectory 不存在（task-95 未落地）⇒ risk 只覆盖 git 子集
+- [INFO] **snapshot_task_fields**：tasks[] 105 条，含 evidence 20 条；无 description/createdAt/updatedAt（设计 G2，靠 live 任务板补）
+
+RESULT: PASS（FAIL=0，WARN=1）

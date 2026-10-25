@@ -287,6 +287,8 @@ def _git_head_commit_time(repo: Path):
             ["git", "-C", str(repo), "log", "-1", "--format=%ct"],
             capture_output=True,
             text=True,
+            encoding="utf-8",  # Windows 默认 cp1252 解码：非 ASCII 输出会抛 UnicodeDecodeError
+            errors="replace",
             timeout=10,
             check=False,
         )
@@ -2797,6 +2799,88 @@ def check_deliberation_quality(ctx: AuditContext) -> None:
                 f"{ctx.rel(base)}")
 
 
+# ---------------------------------------------------------------------------
+# prompt_drift（task-151/152）：知识库 Agent 提示词 vs 代码行为
+# ---------------------------------------------------------------------------
+PROMPT_DRIFT_SCRIPT = "scripts/agent/prompt_drift_check.py"
+
+
+def check_prompt_drift(ctx: AuditContext) -> None:
+    """把 prompt_drift_check.py 变成跑不掉的门禁（子进程消费其 --json）。
+
+    设计口径（task-152）：**门禁失败必须可见**。脚本缺失/崩溃/超时/输出不可解析/
+    自相矛盾一律 FAIL，**绝不静默跳过**——静默跳过等于门禁失效。
+    只在真实 Memoria 仓库跑：team_audit 自测用的 fixture 仓库没有 `kb_agent.py`，
+    视为"不适用"（INFO），避免误伤 selftest。
+    """
+    check = "prompt_drift"
+    script = ctx.repo / PROMPT_DRIFT_SCRIPT
+    if not (ctx.repo / "src/memoria/services/kb_agent.py").is_file():
+        ctx.add(check, INFO, "非 Memoria 仓库（无 kb_agent.py），提示词漂移检查不适用", ctx.rel(ctx.repo))
+        return
+    if not script.is_file():
+        ctx.add(check, FAIL,
+                f"门禁脚本缺失：{ctx.rel(script)}（静默跳过等于门禁失效，请恢复该文件）",
+                ctx.rel(script))
+        return
+    try:
+        proc = subprocess.run(
+            [sys.executable, str(script), "--repo", str(ctx.repo), "--json"],
+            capture_output=True, text=True, encoding="utf-8", errors="replace",
+            timeout=180, check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        ctx.add(check, FAIL,
+                f"提示词漂移机检执行失败（{type(exc).__name__}）：{exc}",
+                ctx.rel(script))
+        return
+    if proc.returncode not in (0, 1):
+        detail = ((proc.stderr or "") or (proc.stdout or "")).strip()[:400]
+        ctx.add(check, FAIL,
+                f"提示词漂移机检执行失败（exit={proc.returncode}）：{detail or '无输出'}",
+                ctx.rel(script))
+        return
+    if not proc.stdout:
+        detail = (proc.stderr or "").strip()[:300]
+        ctx.add(check, FAIL,
+                f"提示词漂移机检无输出（exit={proc.returncode}）：{detail or '无 stderr'}",
+                ctx.rel(script))
+        return
+    try:
+        payload = json.loads(proc.stdout)
+    except (TypeError, json.JSONDecodeError) as exc:
+        detail = (proc.stderr or "").strip()[:300]
+        ctx.add(check, FAIL, f"提示词漂移机检输出不可解析：{exc}；stderr={detail or '无'}",
+                ctx.rel(script))
+        return
+    items = payload.get("findings") or []
+    summary = payload.get("summary") or {}
+    try:
+        fail_count = int(summary.get("FAIL") or 0)
+    except (TypeError, ValueError):
+        fail_count = -1
+    if fail_count < 0:
+        ctx.add(check, FAIL, "提示词漂移机检 summary.FAIL 非整数（输出不可信）", ctx.rel(script))
+        return
+    if proc.returncode == 0 and fail_count > 0:
+        ctx.add(check, FAIL,
+                f"提示词漂移机检自相矛盾：exit=0 但 summary.FAIL={fail_count}（门禁不可信）",
+                ctx.rel(script))
+    for item in items:
+        if not isinstance(item, dict):
+            ctx.add(check, FAIL, f"提示词漂移机检返回非法 finding：{item!r}", ctx.rel(script))
+            continue
+        sev = str(item.get("severity") or "").upper()
+        if sev not in (FAIL, WARN, INFO):
+            ctx.add(check, FAIL,
+                    f"提示词漂移机检返回未知严重度 {item.get('severity')!r}（门禁输出不可信）",
+                    ctx.rel(script))
+            continue
+        ctx.add(check, sev,
+                f"[{item.get('check')}] {item.get('message')}",
+                str(item.get("evidence") or ctx.rel(script)))
+
+
 def _read_jsonl_safe(path: Path) -> tuple[list[dict], list[dict]]:
     rows: list[dict] = []
     bad: list[dict] = []
@@ -2845,6 +2929,8 @@ def run_checks(ctx: AuditContext) -> list:
     check_steward_self_audit(ctx)
     # task-116：辩论过程机检（PROTOCOL.md §1-§4 的机检化；dq1-dq6 FAIL，dq7-dq10 宽限 WARN）
     check_deliberation_quality(ctx)
+    # task-152：知识库 Agent 提示词漂移（prompt_drift_check.py 的门禁接线；脚本缺失/崩溃也 FAIL）
+    check_prompt_drift(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
@@ -3126,7 +3212,7 @@ def selftest() -> int:
             if env_extra:
                 env.update(env_extra)
             subprocess.run(["git", "-C", str(repo), *args], capture_output=True,
-                           text=True, check=False, env=env)
+                           text=True, encoding="utf-8", errors="replace", check=False, env=env)
 
         def _init_git(repo):
             repo.mkdir(parents=True, exist_ok=True)

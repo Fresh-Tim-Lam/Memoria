@@ -1,0 +1,11 @@
+﻿=== mode_policy 对「2 条历史缺 mode + 2 条新记录显式 mode」的判定 ===
+[WARN] 2/4 条 spawn 记录缺 mode 字段（legacy-1, legacy-2）⇒ 无法判定是否做了模式决策（静默默认 standard；checked_count=4）
+         证据：C:/Users/LAMTIM~1/AppData/Local/Temp/mode-policy-demo-b_7zpolz/dispatch-log.jsonl:phase=spawn 缺 mode
+[INFO] mode_policy 统计：checked_count=4，with_mode=2，缺显式标记=0
+         证据：C:/Users/LAMTIM~1/AppData/Local/Temp/mode-policy-demo-b_7zpolz/dispatch-log.jsonl:phase=spawn
+
+=== dispatch_log.py check 的 mode_coverage ===
+{"spawn": 4, "judgeable": 2, "unknown": 2}
+warnings=2（应只命中 2 条历史行）
+  - line 1 legacy-1：mode_missing
+  - line 2 legacy-2：mode_missing

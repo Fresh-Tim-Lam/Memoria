@@ -1,0 +1,6 @@
+﻿checks: ['artifact_refs', 'commit_hygiene', 'contract_drift', 'dead_path_edit', 'dispatch_release', 'lessons_stale', 'mode_policy', 'plan_consulted', 'role_evidence', 'role_registration', 'roster', 'silent_failure', 'snapshot_health', 'stall', 'write_scope']
+summary: {'findings': 63, 'FAIL': 0, 'WARN': 53, 'INFO': 10}
+WARN dead_path_edit | 近 7 天改了 12 个「全仓无引用」文件（checked_count=121，扫描 121 个 basename，一次批量 git grep）：scripts/benchmark/maintenance/executor_coalesce_assert.py; scripts/benchmark/maintenanc
+WARN mode_policy | 12 条 spawn 记录**全部缺 mode 字段**（dispatch-log 尚未记录模式）⇒ 无法判定是否做过模式决策，**不静默判绿**。修法：dispatch_log.py 增加 --mode 参数，spawn 时记录 mode（L9：不传 mode = 静默默认 standard）（checked_cou
+WARN plan_consulted | 版本 0.4.7 的实施提交 a68ab655（10-23 13:19）早于台账计划落盘 10-23 22:52（docs/todo.md） —— 违反 AGENTS.md §0.5 L8（版本级规划须先由 todo-owner 产出并写进 docs/todo.md；首月 WARN，之后 FAIL；checked_co
+WARN role_registration | 快照 exportedAt=2026-10-24T11:34:19.214Z 早于 org.md mtime=2026-10-24T11:37:41.965063+00:00 ⇒ 快照不可能反映注册修改，须重导出快照后再审计（checked_count=27）

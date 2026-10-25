@@ -1,0 +1,456 @@
+﻿{
+  "schema": "team-audit/v1",
+  "generatedAt": "2026-10-24T16:58:47.148909+00:00",
+  "summary": {
+    "findings": 74,
+    "FAIL": 2,
+    "WARN": 50,
+    "INFO": 22
+  },
+  "findings": [
+    {
+      "check": "deliberation_quality",
+      "severity": "FAIL",
+      "message": "dq6：2 个辩论产物未被 git 跟踪（J6'：append-only 无强制力）：['artifacts/agent/verify/debate/position/agent-arch-position.md', 'artifacts/agent/verify/debate/position/lead-source-verification.json']",
+      "evidence": "git ls-files -- artifacts/agent/verify/debate"
+    },
+    {
+      "check": "steward_self_audit",
+      "severity": "FAIL",
+      "message": "标准已变而收据未更新（用缓存标准审计）：`scripts/agent/team_audit.py` 磁盘 2d87dc6a0952… vs 收据 e6f16ef17200… ⇒ 必须重读标准并重写收据",
+      "evidence": "team/steward/audit-2026-10-24-r2/standards_read.json vs scripts/agent/team_audit.py"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/team-board-snapshot.json（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/team-audit-20261020-2123.md:8; artifacts/agent/verify/team-audit-20261020-2123.md:20 等 5 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/verify/E30-run_interaction.out/.err（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/E30-report.md:81"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/verify/heap-post3-nodevtools.json.gz（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/task70-heap-report.md:182"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/verify/heap-tagged2.json.gz（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/task70-heap-report.md:183"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/verify/p6a-userapp-snapshots（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/p6a-report.md:139"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/agent/verify/p（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/task49-safe-kill-and-s11-report.md:215"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：artifacts/baseline/p5_perf_frozen/matrix_kb（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/config-isolation-report.md:129"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/design/README.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/design-audit-2026-10-19.md:160; artifacts/agent/verify/doc-system-audit-report.md:49"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/design/README（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/todo-split-plan-2026-10-22.md:74; artifacts/agent/verify/todo-split-plan-2026-10-22.md:89 等 3 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/design/changelog-log.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/doc-system-audit-report.md:41"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/design/todo-archive.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/todo-split-plan-2026-10-22.md:109"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/error_log_format.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/config-isolation-report.md:98; artifacts/agent/verify/p2b-links-report.md:131 等 9 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/essay_review_format.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/ast-loss-quantification-report.md:117"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/format.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/ast-loss-quantification-report.md:118"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/guides/agent-skills.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/agent-0.4.7-collection-audit-2026-10-24.md:167"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/prompt.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/ast-loss-quantification-report.md:119"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/ref/ppt/ocr.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/config-isolation-report.md:99; artifacts/agent/verify/p6-closure-stage-report.md:78 等 5 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/skills/（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/doc-system-audit-report.md:61"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/tmp/design-audit-2026-10-19.md（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/doc-system-audit-report.md:5; artifacts/agent/verify/team-audit-20261020-2123.md:78"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：docs/tmp/（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/design-audit-2026-10-19.md:169; artifacts/agent/verify/doc-system-audit-report.md:61 等 3 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：scripts/benchmark/maintenance/executor_coalesce_assert.py（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/boot-p1-backend-report.md:44; artifacts/agent/verify/boot-p1-backend-report.md:48"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：scripts/benchmark/maintenance/lexical_index_cache_bench.py（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/boot-p0a-lexical-cache-report.md:85"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：scripts/benchmark/surface/selcol_ask_probe.mjs（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/selection-columns-realapp-report.md:183"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：src/memoria/ui/static/app/js/renderer.js（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/p2-callsite-path-map-draft.md:226; artifacts/agent/verify/p6c-report.md:39 等 3 处"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：src/memoria/ui/static/app/js/surface/legacy-surface.js（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/p6c-report.md:33"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "WARN",
+      "message": "报告提及的仓库路径不存在：tests/test_preview_window.py（可能是一次性/已清理产物或历史路径，需人工判读）",
+      "evidence": "artifacts/agent/verify/_todo-before-groupC.md:421; artifacts/agent/verify/_todo-before-groupD.md:430 等 4 处"
+    },
+    {
+      "check": "commit_hygiene",
+      "severity": "WARN",
+      "message": "近 3 天有 10 个 «文件×日» 组合被改 ≥3 次（未收敛信号，非缺陷本身）：src/memoria/ui/static/app/js/app.js @2026-10-22 ✕35; src/memoria/ui/static/app/js/app.js @2026-10-23 ✕10; src/memoria/ui/static/app/js/app.js @2026-10-24 ✕6; src/memoria/ui/static/app/css/app.css @2026-10-22 ✕5; src/memoria/__version__.py @2026-10-22 ✕4",
+      "evidence": "git -C . log --since='3 days ago' --name-only --format=@@%ad --date=format:%Y-%m-%d"
+    },
+    {
+      "check": "commit_hygiene",
+      "severity": "WARN",
+      "message": "近 3 天有 4 个提交自认是「自修/回退/说明与代码不符」⇒ 前一版在提交时未被发现有问题（Q3 自修链）：9bdb1211(2026-10-23); 45e84be2(2026-10-23); d40e5fc8(2026-10-23); 2f4918aa(2026-10-22)",
+      "evidence": "git -C . log --since='3 days ago' --format=%h%x09%s | 正则 修复.{0,16}引入|我引入|被我.{0,8}(破坏|覆盖|回退)|回退了|覆…"
+    },
+    {
+      "check": "commit_hygiene",
+      "severity": "WARN",
+      "message": "近 3 天有 7 个 `feat(` 提交改了 src/** 却未在同一提交内附测试/探针（该特性的不变量缺位，门禁无法验它）：2eef3e34(2026-10-23); 613a3936(2026-10-22); 8753793d(2026-10-22); 9bb55aa5(2026-10-22); 13e64144(2026-10-22)…",
+      "evidence": "git -C . log --since='3 days ago' --name-only --format=@@%H|%ad|%s"
+    },
+    {
+      "check": "decision_trail",
+      "severity": "WARN",
+      "message": "近 14 天 43 个 T1/T3 触发提交中 37 个缺决策 trailer（f3002190(10-24 19:48，T1-组织资产/规范，缺Decision,Why); 3cd7a13f(10-24 19:37，T1-组织资产/规范，缺Decision,Why); b1f6d56e(10-24 19:34，T1-组织资产/规范，缺Decision,Why); b313fbeb(10-24 18:16，T1-组织资产/规范，缺Decision,Why); 5302bfe0(10-24 18:09，T1-组织资产/规范，缺Decision,Why); 09b0eaa3(10-24 17:58，T1-组织资产/规范，缺Decision,Why)…）—— 违反 lead-dispatch-rules §6.5 / AGENTS.md §0.5 L10（首两周宽限：WARN；机检口径是可判定子集：T3=版本/Package/发布/回退，T1=组织资产/规范；T2 判断类不可机检）",
+      "evidence": "git:f30021901d; git:3cd7a13f19; git:b1f6d56eca; git:b313fbeb8a; git:5302bfe011; git:09b0eaa3b2; git:785de5c5e7; git:de27855aee; git:09a5cbf215; git:5bf540735f"
+    },
+    {
+      "check": "deliberation_quality",
+      "severity": "WARN",
+      "message": "dq5：工具实现类冻结项 sha 已漂移（scripts/agent/team_audit.py）—— 属实现演化，不阻断裁决；建议 v1.1 把 tooling 与 decision standards 分离（见 PROTOCOL-v1.1-PROPOSAL §7）",
+      "evidence": "artifacts/agent/verify/debate/freeze-v2.json:standards[role=机检实现]"
+    },
+    {
+      "check": "deliberation_quality",
+      "severity": "WARN",
+      "message": "dq8：无 artifacts/agent/verify/debate/evidence_ledger.jsonl —— 同源去重（E2）无法机检；F-6 适用范围待 v1.1 裁决",
+      "evidence": "missing file: artifacts/agent/verify/debate/evidence_ledger.jsonl"
+    },
+    {
+      "check": "deliberation_quality",
+      "severity": "WARN",
+      "message": "dq9：没有任何提案含 coverage 三表（checked/not_examined/out_of_scope）——协议辩论阶段提案早于 P2，无输入；架构辩论起强制（F-6 相关）",
+      "evidence": "artifacts/agent/verify/debate/protocol-proposals"
+    },
+    {
+      "check": "mode_policy",
+      "severity": "WARN",
+      "message": "15/16 条 spawn 记录缺 mode 字段（team-curator, team-curator, curator-r3, team-plugin-creator, p0-selection, measurement-debt）⇒ 无法判定是否做了模式决策（静默默认 standard；checked_count=16）",
+      "evidence": "team/dispatch-log.jsonl:phase=spawn 缺 mode"
+    },
+    {
+      "check": "plan_consulted",
+      "severity": "WARN",
+      "message": "版本 0.4.7 的实施提交 a68ab655（10-23 13:19）早于台账计划落盘 10-23 22:52（docs/todo.md） —— 违反 AGENTS.md §0.5 L8（版本级规划须先由 todo-owner 产出并写进 docs/todo.md；首月 WARN，之后 FAIL；checked_count=1）",
+      "evidence": "git:a68ab655e7024148b1752304bc37c6fb65eb2217 vs docs/todo.md -S'0.4.7'"
+    },
+    {
+      "check": "roster",
+      "severity": "WARN",
+      "message": "`steward` 同时出现在 retired 与 members —— 名字复用/角色换代？（若为换代请在 org.md 标注代次；若为退役未生效请检查花名册）",
+      "evidence": "team/team-board-snapshot.json:retired vs :members"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "dispatch-log 行序与时间不同向（S5：1 处倒序，追加顺序≠事件顺序）",
+      "evidence": "team/dispatch-log.jsonl: 第 9 行 @2026-10-23T08:20:50+00:00 早于第 8 行 @2026-10-23T08:22:12+00:00"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "done 未绑定产物，但已显式声明豁免（S1-exempt）：DSH 仓库变更未提交，报告在会话消息中（待 DSH commit 后补路径）",
+      "evidence": "team/dispatch-log.jsonl:20 actor=team-plugin-creator task=team-plugin-r1r9"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "done 未绑定产物，但已显式声明豁免（S1-exempt）：报告在 artifacts/agent/verify/boot-roots-cause-analysis.md（artifacts 被 gitignore）",
+      "evidence": "team/dispatch-log.jsonl:26 actor=boot-probe task=task-69-measure"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "派发未闭环（S4）：spawn `p0-selection` 已超过 6h 无对应 done/retire（静默失踪风险）",
+      "evidence": "team/dispatch-log.jsonl:21 task=task-79"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "派发未闭环（S4）：spawn `team-plugin-creator` 已超过 6h 无对应 done/retire（静默失踪风险）",
+      "evidence": "team/dispatch-log.jsonl:28 task=task-87"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "派发未闭环（S4）：spawn `team-plugin-creator` 已超过 6h 无对应 done/retire（静默失踪风险）",
+      "evidence": "team/dispatch-log.jsonl:30 task=task-89"
+    },
+    {
+      "check": "silent_failure",
+      "severity": "WARN",
+      "message": "派发闭环时间不可信（S6）：`team-curator` 从 spawn 到 done 仅 1s（< 60s）⇒ 该 done 的 ts 是补记/估计值，不能用于「是否按时完成」的判断",
+      "evidence": "team/dispatch-log.jsonl:12"
+    },
+    {
+      "check": "snapshot_health",
+      "severity": "WARN",
+      "message": "快照可能过期：导出后 HEAD 又有新提交（快照内容可能已落后于任务板实况）",
+      "evidence": "team/team-board-snapshot.json:exportedAt=2026-10-24T16:20:42.610Z < HEAD@2026-10-24T16:58:26+00:00"
+    },
+    {
+      "check": "snapshot_health",
+      "severity": "WARN",
+      "message": "快照可能过期：导出后 artifacts/agent/verify 有新产物落盘",
+      "evidence": "team/team-board-snapshot.json:exportedAt=2026-10-24T16:20:42.610Z < artifacts/agent/verify@2026-10-24T16:58:30.503428+00:00"
+    },
+    {
+      "check": "stall",
+      "severity": "WARN",
+      "message": "未完成任务有 1/107 条没有 owner 字段（无人认领 ⇒ 没人会被 stall 检查覆盖）：task-85",
+      "evidence": "team/team-board-snapshot.json:tasks[].owner 缺失"
+    },
+    {
+      "check": "write_scope",
+      "severity": "WARN",
+      "message": "task-85 与 task-91 写域重叠：src/memoria/services/agent/ask.py（串行化风险，advisory）",
+      "evidence": "team/team-board-snapshot.json:tasks[task-85].writeScopes ∩ tasks[task-91].writeScopes = src/memoria/services/agent/ask.py"
+    },
+    {
+      "check": "write_scope",
+      "severity": "WARN",
+      "message": "task-85 与 task-91 写域重叠：src/memoria/services/agent/compaction.py（串行化风险，advisory）",
+      "evidence": "team/team-board-snapshot.json:tasks[task-85].writeScopes ∩ tasks[task-91].writeScopes = src/memoria/services/agent/compaction.py"
+    },
+    {
+      "check": "write_scope",
+      "severity": "WARN",
+      "message": "task-85 与 task-92 写域重叠：src/memoria/services/agent（串行化风险，advisory）",
+      "evidence": "team/team-board-snapshot.json:tasks[task-85].writeScopes ∩ tasks[task-92].writeScopes = src/memoria/services/agent"
+    },
+    {
+      "check": "write_scope",
+      "severity": "WARN",
+      "message": "task-86 与 task-94 写域重叠：artifacts/agent/verify（串行化风险，advisory）",
+      "evidence": "team/team-board-snapshot.json:tasks[task-86].writeScopes ∩ tasks[task-94].writeScopes = artifacts/agent/verify"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "INFO",
+      "message": "另有 15 个缺失引用出现在「历史/计划/临时/被审计点名缺失」语境中：artifacts/_interaction_kb_renderperf-task19_38856, artifacts/_kp_shift_kb/, artifacts/agent/events.jsonl, artifacts/agent/verify/.__probe.md, artifacts/agent/verify/_pytest_tmp, config/ui-settings.json.tmp…",
+      "evidence": "artifacts/agent/verify/*.md"
+    },
+    {
+      "check": "artifact_refs",
+      "severity": "INFO",
+      "message": "扫描 139 份报告、921 条路径引用；交付声明缺失 0 个、非声明缺失 26 个、语境豁免 15 个",
+      "evidence": "artifacts/agent/verify/*.md"
+    },
+    {
+      "check": "contract_drift",
+      "severity": "INFO",
+      "message": "契约 9 个角色的声明机制均能在磁盘指到现实（event_stream/通道/名册对账一致）",
+      "evidence": "team/agents.json + scripts/agent/dispatch_log.py"
+    },
+    {
+      "check": "dead_path_edit",
+      "severity": "INFO",
+      "message": "近 7 天改动的 123 个 src/scripts 文件均能在仓内找到至少一处引用（或文件头带 @entry 入口标记 0 个；checked_count=123）",
+      "evidence": "git grep -n -I -F -e <basename>... HEAD"
+    },
+    {
+      "check": "decision_trail",
+      "severity": "INFO",
+      "message": "decision_trail 抽取到 6 个带合规 trailer 的决策提交（可索引；只读报告，不写 decisions.jsonl）：6dced77a→(无 Decision-Id)：退役第二代 steward（force + 理由）而不是给 task-97 回填; 17dc8b85→(无 Decision-Id)：把插件 dispatch 审计接入项目自己的 dispatch-log，并同步 ; f82974d9→(无 Decision-Id)：收据 sha 改用 LF 归一化内容 sha，而非工作区原始字节…",
+      "evidence": "git:6dced77a96; git:17dc8b85f4; git:f82974d91b; git:d95712e332; git:4bbd768556; git:eb803b1ca0"
+    },
+    {
+      "check": "deliberation_quality",
+      "severity": "INFO",
+      "message": "dq10：无 deferred 状态（26 条裁决中 0 条待收敛）",
+      "evidence": "artifacts/agent/verify/debate/ruling/rulings.jsonl"
+    },
+    {
+      "check": "dispatch_release",
+      "severity": "INFO",
+      "message": "H2 tag v0.4.6 之后还有 35 个 commit（tag 指向 09a5cbf2）",
+      "evidence": "git tag / HEAD"
+    },
+    {
+      "check": "lessons_stale",
+      "severity": "INFO",
+      "message": "教训库健康：29 条判据，0.2 天前更新",
+      "evidence": "docs/guides/agent-team-lessons.md"
+    },
+    {
+      "check": "mode_policy",
+      "severity": "INFO",
+      "message": "mode_policy 统计：checked_count=16，with_mode=1，显式未决定=0，缺显式标记=0",
+      "evidence": "team/dispatch-log.jsonl:phase=spawn"
+    },
+    {
+      "check": "model_policy",
+      "severity": "INFO",
+      "message": "9 名成员模型均为 deepseek-flash（checked_count=9，exemptions=0）",
+      "evidence": "team/team-board-snapshot.json:members[].model"
+    },
+    {
+      "check": "role_evidence",
+      "severity": "INFO",
+      "message": "agents.json active 角色 9 个，均有 14 天证据：lead(dispatch-log, team-board owner); render-perf(team-board owner); sync-mapper(team-board owner); arch-contract(dispatch-log, team-board owner); doc-consistency(team-board owner); metrics-baseline(dispatch-log, team-board owner); todo-owner(dispatch-log, team-board owner); team-plugin-creator(dispatch-log, team-board owner); steward(dispatch-log, team-board owner, 产物 2026-10-24)",
+      "evidence": "team/agents.json:agents + team/dispatch-log.jsonl"
+    },
+    {
+      "check": "role_registration",
+      "severity": "INFO",
+      "message": "角色注册三方一致：agents.json 8 / org.md 8 / 快照 8 个 id，且快照晚于注册修改（checked_count=24）",
+      "evidence": "team/agents.json + docs/guides/agent-team-org.md + team/team-board-snapshot.json:members"
+    },
+    {
+      "check": "roster",
+      "severity": "INFO",
+      "message": "org.md §2 解析到 5 个领域 Owner：render-perf, sync-mapper, arch-contract, doc-consistency, metrics-baseline",
+      "evidence": "docs/guides/agent-team-org.md:§2"
+    },
+    {
+      "check": "roster",
+      "severity": "INFO",
+      "message": "org.md §2.2 解析到 3 个非领域常驻：steward, team-plugin-creator, todo-owner",
+      "evidence": "docs/guides/agent-team-org.md:§2.2"
+    },
+    {
+      "check": "snapshot_health",
+      "severity": "INFO",
+      "message": "快照 exportedAt=2026-10-24T16:20:42.610Z，成员 9 名，任务 107 条，已退役 18 个",
+      "evidence": "team/team-board-snapshot.json"
+    },
+    {
+      "check": "stall",
+      "severity": "INFO",
+      "message": "快照中没有 in_progress 任务",
+      "evidence": "team/team-board-snapshot.json:tasks"
+    },
+    {
+      "check": "stall",
+      "severity": "INFO",
+      "message": "未完成任务 7 条已认领（有 owner 字段）",
+      "evidence": "team/team-board-snapshot.json:tasks"
+    },
+    {
+      "check": "write_scope",
+      "severity": "INFO",
+      "message": "task-86 与 task-110 写域重叠：artifacts/agent/verify/steward（共享产出根 vs 子路径：不同子目录不证明冲突（§1.2b））",
+      "evidence": "team/team-board-snapshot.json:tasks[task-86].writeScopes ∩ tasks[task-110].writeScopes = artifacts/agent/verify/steward"
+    },
+    {
+      "check": "write_scope",
+      "severity": "INFO",
+      "message": "task-86 与 task-90 写域重叠：docs/design/agent-panel-batches.md（共享产出根 vs 子路径：不同子目录不证明冲突（§1.2b））",
+      "evidence": "team/team-board-snapshot.json:tasks[task-86].writeScopes ∩ tasks[task-90].writeScopes = docs/design/agent-panel-batches.md"
+    },
+    {
+      "check": "write_scope",
+      "severity": "INFO",
+      "message": "task-86 与 task-90 写域重叠：docs/design/ledger-archive-2026.md（共享产出根 vs 子路径：不同子目录不证明冲突（§1.2b））",
+      "evidence": "team/team-board-snapshot.json:tasks[task-86].writeScopes ∩ tasks[task-90].writeScopes = docs/design/ledger-archive-2026.md"
+    },
+    {
+      "check": "write_scope",
+      "severity": "INFO",
+      "message": "task-94 与 task-110 写域重叠：artifacts/agent/verify/steward（共享产出根 vs 子路径：不同子目录不证明冲突（§1.2b））",
+      "evidence": "team/team-board-snapshot.json:tasks[task-94].writeScopes ∩ tasks[task-110].writeScopes = artifacts/agent/verify/steward"
+    },
+    {
+      "check": "write_scope",
+      "severity": "INFO",
+      "message": "write_scope 分级统计（§1.2b）：WARN 级 4 条（真重叠/同子目录），INFO 级 4 条（共享产出根 vs 子路径，假重叠）",
+      "evidence": "team/team-board-snapshot.json:tasks[].writeScopes"
+    }
+  ]
+}

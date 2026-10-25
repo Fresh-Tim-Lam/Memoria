@@ -1,0 +1,11 @@
+=== 负例1：篡改 standards_read 的 AGENTS.md sha256（模拟「用缓存标准审计」）===
+audit exit=1; summary={'findings': 63, 'FAIL': 1, 'WARN': 49, 'INFO': 13}
+[FAIL] 标准已变而收据未更新（用缓存标准审计）：`AGENTS.md` 磁盘 6c87fe55077c… vs 收据 000000000000… ⇒ 必须重读标准并重写收据
+
+=== 负例2：插入 rule_ref 不可解析且非 proposal 的 finding ===
+audit exit=1; summary={'findings': 63, 'FAIL': 1, 'WARN': 49, 'INFO': 13}
+[FAIL] finding #14（SF-20261024-999）的 rule_ref 不可解析（Rule-Ref 指向的文件不存在：docs/guides/not-exist.md）—— 把偏好当规范（org.md §2.6 B4）
+
+=== 恢复后（期望：steward_self_audit = INFO，audit exit=0）===
+audit exit=0; summary={'findings': 63, 'FAIL': 0, 'WARN': 49, 'INFO': 14}
+[INFO] 最近审计 audit-2026-10-24 可机审通过：standards 4/4 sha256 匹配；findings 13 条（rule_ref 可解析/或 proposal）；blind_spots 已写

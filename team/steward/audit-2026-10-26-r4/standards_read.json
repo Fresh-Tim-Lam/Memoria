@@ -1,0 +1,68 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-26T00:09:22+08:00",
+  "round": "r4",
+  "tool": "team_audit.py@4c697128255f",
+  "git_base": "f2a415c5",
+  "worktree_dirty_standards": [
+    "scripts/agent/team_audit.py",
+    "scripts/agent/prompt_drift_check.py"
+  ],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "sha_mode": "raw-worktree-bytes（当前 steward_self_audit 口径；task-110 修后应改 LF 归一化）",
+      "read_at": "2026-10-26T00:09:22+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（含 §1.2b/§1.3b/§5.4/§6.5）",
+      "sha256": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+      "sha_mode": "raw-worktree-bytes（当前 steward_self_audit 口径；task-110 修后应改 LF 归一化）",
+      "read_at": "2026-10-26T00:09:22+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "sha_mode": "raw-worktree-bytes（当前 steward_self_audit 口径；task-110 修后应改 LF 归一化）",
+      "read_at": "2026-10-26T00:09:22+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单 + --determinism + deliberation_quality + prompt_drift 接线",
+      "sha256": "4c697128255fc6edf449534e1c395d1153fccc1b94ddbc2b93faf16dbbea43fe",
+      "sha_mode": "raw-worktree-bytes（当前 steward_self_audit 口径；task-110 修后应改 LF 归一化）",
+      "read_at": "2026-10-26T00:09:22+08:00"
+    },
+    {
+      "path": "scripts/agent/prompt_drift_check.py",
+      "sections": "C1-C5 检查 + --json/--selftest/--recheck-deps/--resign 接口",
+      "sha256": "6cbc9f8687e3a4d8aa206a81162745843625c3c71d106bd578fcc7e98d04f1d0",
+      "sha_mode": "raw-worktree-bytes（当前 steward_self_audit 口径；task-110 修后应改 LF 归一化）",
+      "read_at": "2026-10-26T00:09:22+08:00"
+    }
+  ],
+  "prompt_drift_standalone": {
+    "command": "python scripts/agent/prompt_drift_check.py --json",
+    "exit": 0,
+    "summary": {
+      "findings": 4,
+      "FAIL": 0,
+      "WARN": 0,
+      "INFO": 4
+    }
+  },
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "PASS（除 generatedAt 外逐字节一致；r4 前跑 sha 43c475c1…，compared_findings=81）"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "session 正文（按设计不读，只作证据引用）"
+  ]
+}

@@ -1,0 +1,55 @@
+﻿# 风险动作清单（since=2026-10-17T19:42:04+08:00；Phase 0 = git 可观测子集）
+
+> 生成 2026-10-24T19:42:06+08:00；R0/R1 命中 9 条；统计 {'R0': 3, 'R1': 6, 'T2': 43, 'T3': 6}
+> 这是**清单**不是判决：每条都需人工/对抗复核（steward 不阻断，设计 §3.3 B2）。
+> 口径：R0/R1 引用 `agent-team-lessons.md §7`；T2/T3 是**决策记录义务候选**（设计 §2.3.6），不是风险判决。
+
+## 1. R0/R1 风险动作（9 条，展示 ≤40）
+- **[R1]** 10-24 16:31 `git:09a5cbf215` —— 改版本/打包资产：src/memoria/__version__.py
+  - rule_ref：AGENTS.md#§0.5 L5；docs/guides/lead-dispatch-rules.md#4；发版/打包类单向门，需人授权并按 L5 先给回滚方案
+- **[R0]** 10-23 00:48 `reflog:56690378aa` —— reset: moving to HEAD
+  - rule_ref：docs/guides/agent-team-lessons.md#§7；reflog 是本地证据：可能是无害切换，需人工确认是否作用于 src/** 或未提交工作
+- **[R0]** 10-23 00:48 `reflog:56690378aa` —— reset: moving to 56690378
+  - rule_ref：docs/guides/agent-team-lessons.md#§7；reflog 是本地证据：可能是无害切换，需人工确认是否作用于 src/** 或未提交工作
+- **[R1]** 10-22 15:18 `git:2958f696e3` —— 改版本/打包资产：src/memoria/__version__.py
+  - rule_ref：AGENTS.md#§0.5 L5；docs/guides/lead-dispatch-rules.md#4；发版/打包类单向门，需人授权并按 L5 先给回滚方案
+- **[R1]** 10-22 14:05 `git:793a70be3c` —— 改版本/打包资产：src/memoria/__version__.py
+  - rule_ref：AGENTS.md#§0.5 L5；docs/guides/lead-dispatch-rules.md#4；发版/打包类单向门，需人授权并按 L5 先给回滚方案
+- **[R1]** 10-22 11:40 `git:37f29436b2` —— 改版本/打包资产：src/memoria/__version__.py
+  - rule_ref：AGENTS.md#§0.5 L5；docs/guides/lead-dispatch-rules.md#4；发版/打包类单向门，需人授权并按 L5 先给回滚方案
+- **[R1]** 10-22 09:00 `git:4278d2bef5` —— 改版本/打包资产：src/memoria/__version__.py
+  - rule_ref：AGENTS.md#§0.5 L5；docs/guides/lead-dispatch-rules.md#4；发版/打包类单向门，需人授权并按 L5 先给回滚方案
+- **[R0]** 10-20 22:33 `reflog:86a29dda5e` —— reset: moving to HEAD~1
+  - rule_ref：docs/guides/agent-team-lessons.md#§7；reflog 是本地证据：可能是无害切换，需人工确认是否作用于 src/** 或未提交工作
+- **[R1]** 10-18 23:28 `git:6336728a4b` —— 改 pyproject.toml（可能含 version 行；需人工确认）
+  - rule_ref：AGENTS.md#§0.5 L4；docs/guides/lead-dispatch-rules.md#4；版本文件属人权限（L4）；若仅改依赖需在报告中说明
+
+## 2. 单向门候选 T2（删除 ≥20 行，43 条，按删除量降序展示 ≤10）
+- 这些**不是**风险动作本身，而是「该提交应带 Decision/Why」的触发（设计 §2.3.6 T2）；
+  `removed>added` 另是「陈旧缓冲区覆盖」信号（lessons §7），需停手核对 diff。
+- 10-22 00:51 `git:d078c3e3c0` 删除 525 / 新增 69 行，6 个文件；**removed>added（疑似陈旧缓冲区覆盖）** —— refactor(surface): P6d——删除 renderer.js（514 行），renderRange 迁入 render-core
+- 10-21 23:29 `git:aeeb65e38d` 删除 383 / 新增 866 行，10 个文件 —— fix(bench): KB 守卫接入 8 个真机脚本（L6 补齐）+ 修 3 个"守卫不生效"自身缺陷
+- 10-19 20:01 `git:6dd912325c` 删除 382 / 新增 392 行，2 个文件 —— docs: 拆 docs-management 590KB 流水到 documentation-changelog + 体检报告归位 artifacts
+- 10-22 00:34 `git:92291681b0` 删除 326 / 新增 37 行，6 个文件；**removed>added（疑似陈旧缓冲区覆盖）** —— refactor(surface): P6c——删除 legacy 插头（switchTo('legacy') 显式失败，非静默）
+- 10-22 20:14 `git:ec37d0056b` 删除 198 / 新增 343 行，1 个文件 —— docs(todo): 2026-10-22 裁决 #1-#9 执行 + DOC01 台账治理登记
+- 10-23 21:29 `git:ae36046c91` 删除 164 / 新增 1617 行，11 个文件 —— feat(team): Curator 第二轮审计 + Lead 收口裁决（快照重导出 / §9 冲突 / roster 口径）
+- 10-23 22:12 `git:1d4d9b8e8f` 删除 157 / 新增 1912 行，12 个文件 —— feat(team): 第三轮复盘 —— 机检 6→9 类（修 2 处假绿）+ 组织纠偏退役 4 名 + 插件改进规格
+- 10-21 22:44 `git:045bbb6e62` 删除 116 / 新增 109 行，5 个文件；**removed>added（疑似陈旧缓冲区覆盖）** —— feat(surface): P6b——3 个临时开窗摘除（依赖注入代替全局 window 门面）+ 修测试非密封
+- 10-24 17:07 `git:de27855aee` 删除 114 / 新增 480 行，3 个文件 —— refactor(team): 团队修理 —— v4-pro 全部退役 + agents.json v4 登记现实 + 5 条任务收口
+- 10-22 20:19 `git:7926d256d4` 删除 114 / 新增 114 行，1 个文件 —— docs(todo): P5-B 去填充（全表紧凑化+分隔行规范化；逐单元格 strip 等价校验；20+连续空格 98->0）
+- …另有 33 条（--full / --json 展开）
+
+## 3. 回退/自修候选 T3（6 条，展示 ≤5）
+- 同样不是风险判决：T3 触发「必须写 Decision/Why/Alternatives」的决策记录义务。
+- 10-23 15:25 `git:9bdb1211d6` —— fix(render): 嵌套子列表不再被当成独立块 —— 修复 2eef3e34 引入的 -src-block 污染
+- 10-23 02:44 `git:d40e5fc83d` —— docs(plan): 事故 —— app.js 被陈旧缓冲区覆盖静默回退了 17ee05d9(task-78)；已从 HEAD 恢复；记录 numstat 删除>插入 作为强异常信号
+- 10-23 02:16 `git:d4890d8068` —— docs(plan): W3.2 收口 —— 归因(MathJax 单批 typeset)成立；两条修法 a 证伪/b 未验证；脚手架全部回退；转 task-78
+- 10-23 02:14 `git:e2170535fd` —— docs(plan): W3.2 修法被证伪 —— 缩小 typeset 批上限 A/B 负收益（p90 1.098→1.185，max 8.3→103）；脚手架已回退
+- 10-22 15:42 `git:8831a5495e` —— Revert "perf(lazy): 统一 rAF 工作循环 —— 消除「物化/排版两个 setTimeout 队列互相排队」"
+- …另有 1 条（--full 展开）
+
+## 4. 覆盖盲区（显式，不静默）
+- trajectory 未落地（task-95 未完成）⇒ 只能覆盖 git 可观测子集；`write_without_read` / `gate_fail_continue` 两类风险目前完全不可见
+- force push / 无提交的 checkout 在 git log 中不可见（reflog 仅本地、非权威）；需远端审计或插件轨迹
+- R0/R1 的对抗复核到期（A5）需决策索引（task-102）落地后才能机检
+
