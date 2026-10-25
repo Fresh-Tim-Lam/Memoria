@@ -1,0 +1,105 @@
+{
+  "artifactSha256": "0d32ed36fb5f7e626993afa74924024bce8d977f2fb6e4a168eb31be0353bb8d",
+  "assertions": [
+    {
+      "detail": "tools=['outline', 'section', 'snippet', 'propose_write']",
+      "falsifier": "出现直写工具 ⇒ 绕过唯一写者链",
+      "name": "W1 MCP 边界只有 4 把工具，无任何直写工具",
+      "ok": true
+    },
+    {
+      "detail": "isError=True, code=FS_NOT_OBSERVED",
+      "falsifier": "未读也放行 ⇒ W2 在边界失效",
+      "name": "W2 未读就写（无 handle）⇒ FS_NOT_OBSERVED",
+      "ok": true
+    },
+    {
+      "detail": "snippet_handle=None, code=FS_NOT_OBSERVED",
+      "falsifier": "snippet 给了 handle ⇒ 模型可靠 grep 获得写权限，W2 直接失效",
+      "name": "W2(④) snippet 不签发 handle ⇒ 之后写入仍 FS_NOT_OBSERVED",
+      "ok": true
+    },
+    {
+      "detail": "code=WRITE_GATE_BYPASS",
+      "falsifier": "",
+      "name": "W2 伪造 handle ⇒ WRITE_GATE_BYPASS",
+      "ok": true
+    },
+    {
+      "detail": "h1=<HANDLE>… h2=<HANDLE>… len=46, 不同=True",
+      "falsifier": "两次同值 ⇒ 是确定性哈希/递增 id，可预测",
+      "name": "W2(⑥) read_handle 不可猜测：两次读同一文件 token 不同、长度足够、urlsafe",
+      "ok": true
+    },
+    {
+      "detail": "lookup1=True, lookup2=True",
+      "falsifier": "",
+      "name": "W2(⑥) 两个 handle 同时有效（不是单次即焚）",
+      "ok": true
+    },
+    {
+      "detail": "code=FS_STALE_VERSION",
+      "falsifier": "sha 变了还放行 ⇒ 写到旧内容上",
+      "name": "W2 读后被外部改 ⇒ FS_STALE_VERSION",
+      "ok": true
+    },
+    {
+      "detail": "code=backup_failed, sha不变=True",
+      "falsifier": "备份失败仍写入 ⇒ W3 在边界失效",
+      "name": "W3 备份失败 ⇒ 零写入（MCP 边界）",
+      "ok": true
+    },
+    {
+      "detail": "code=APPROVAL_REQUIRED",
+      "falsifier": "auto 放过 ⇒ 外部可自行降档",
+      "name": "W4 外部调用 approval=auto 且能力有写权限 ⇒ APPROVAL_REQUIRED",
+      "ok": true
+    },
+    {
+      "detail": "len=3, first_evicted=True",
+      "falsifier": "无上限 ⇒ 长期运行内存泄漏",
+      "name": "W2(⑤) handle 表有容量上限（1024 默认 / 测试用 3）：第 1 个被 LRU 淘汰",
+      "ok": true
+    },
+    {
+      "detail": "code=WRITE_GATE_BYPASS",
+      "falsifier": "",
+      "name": "W2(⑤) 被淘汰的 handle 再用 ⇒ WRITE_GATE_BYPASS（不静默）",
+      "ok": true
+    },
+    {
+      "detail": "ttl=0.01s, expired=True",
+      "falsifier": "永不过期 ⇒ 长时间运行可被重放",
+      "name": "W2(⑤) handle 有 TTL：过期后 lookup 为 None",
+      "ok": true
+    },
+    {
+      "detail": "keys=['count', 'file', 'kind', 'read_handle']",
+      "falsifier": "",
+      "name": "E2E outline（跨进程）返回 handle",
+      "ok": true
+    },
+    {
+      "detail": "isError=None, txid=<TXID>, 备份目录=True, preview_rows=1",
+      "falsifier": "没有 preview/txid/备份 ⇒ 跨进程客户端无法给人看、也无法撤销",
+      "name": "E2E 跨进程 outline→section→propose_write：写入生效 + txid + preview + undo_available",
+      "ok": true
+    },
+    {
+      "detail": "undo=ok, 逐字节=True",
+      "falsifier": "",
+      "name": "E2E 撤销：restore_batch 逐字节回 pre-image",
+      "ok": true
+    },
+    {
+      "detail": "旧handle=WRITE_GATE_BYPASS, 重读后写=ok",
+      "falsifier": "旧 handle 仍可用 ⇒ 跨进程状态被错误地持久化",
+      "name": "无状态：重启后旧 handle 无效 ⇒ WRITE_GATE_BYPASS；重读后可写",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "protocol_version": "2026-07-28",
+  "schema": "mcp-binding-acceptance/v1",
+  "w2_handle_design": "server-minted read_handle (SEP-2567) bound to (kb, rel, sha256); TTL+LRU; secrets token"
+}

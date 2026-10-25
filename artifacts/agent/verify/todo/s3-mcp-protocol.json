@@ -1,0 +1,104 @@
+{
+  "artifactSha256": "226075ffcc4de4c282e5c4ea3f9e22e66c9ad7e860555dbbf00166dd48ea41cf",
+  "assertions": [
+    {
+      "detail": "missing=[], resultType=complete",
+      "falsifier": "缺 required ⇒ 本 server 会判不合规（DiscoverResult 是 spec MUST）",
+      "name": "MCP server/discover 结果含全部 required 字段",
+      "ok": true
+    },
+    {
+      "detail": "missing=[], tools=['outline', 'section', 'snippet', 'propose_write'], bad=[]",
+      "falsifier": "",
+      "name": "MCP tools/list 结果含 required 且每个 tool 有 name/description/inputSchema",
+      "ok": true
+    },
+    {
+      "detail": "missing=[], keys=['_meta', 'content', 'resultType', 'structuredContent']",
+      "falsifier": "",
+      "name": "MCP tools/call 结果含 required（content/resultType）",
+      "ok": true
+    },
+    {
+      "detail": "删 ttlMs→['ttlMs'], 删 resultType→['resultType']",
+      "falsifier": "删了还判合规 ⇒ 自校验是装饰（永远绿）",
+      "name": "schema 自校验有判别力（删 ttlMs / resultType ⇒ 必须判缺失）",
+      "ok": true
+    },
+    {
+      "detail": "error=-32601",
+      "falsifier": "",
+      "name": "未实现的方法 ⇒ -32601（不假装支持）",
+      "ok": true
+    },
+    {
+      "detail": "error=-32022",
+      "falsifier": "",
+      "name": "缺 _meta.protocolVersion ⇒ -32022",
+      "ok": true
+    },
+    {
+      "detail": "error=-32022, msg=不支持的协议版本：'2025-11-25'（本 server 支持：2026-07-28）。本 server 不提供 2",
+      "falsifier": "旧版本被接受 ⇒ 两套握手语义并存",
+      "name": "旧协议版本 ⇒ -32022（不做 initialize 静默降级）",
+      "ok": true
+    },
+    {
+      "detail": "error=-32700",
+      "falsifier": "",
+      "name": "非 JSON 一行 ⇒ -32700（newline-delimited 时分帧不崩）",
+      "ok": true
+    },
+    {
+      "detail": "names=['outline', 'section', 'snippet', 'propose_write']",
+      "falsifier": "出现直写工具 ⇒ W1 入口唯一在 MCP 边界失效",
+      "name": "工具面只有 4 把且**无直写工具**",
+      "ok": true
+    },
+    {
+      "detail": "tokens_estimated=544（budget 1450）",
+      "falsifier": "超预算 ⇒ 违背'最小工具集'的立项前提",
+      "name": "schema 预算 ≤1450 tok（N1：35 工具≈4,349 的 1/3）",
+      "ok": true
+    }
+  ],
+  "passed": true,
+  "protocol_version": "2026-07-28",
+  "required_from_official_schema": {
+    "CallToolResult": [
+      "content",
+      "resultType"
+    ],
+    "DiscoverResult": [
+      "cacheScope",
+      "capabilities",
+      "resultType",
+      "supportedVersions",
+      "ttlMs"
+    ],
+    "ListToolsResult": [
+      "cacheScope",
+      "resultType",
+      "tools",
+      "ttlMs"
+    ]
+  },
+  "schema": "mcp-protocol-acceptance/v1",
+  "schema_budget_tokens": 1450,
+  "schema_tokens_estimated": 544,
+  "transcript": [
+    {
+      "method": "server/discover",
+      "ok": true
+    },
+    {
+      "method": "tools/list",
+      "ok": true
+    },
+    {
+      "method": "tools/call",
+      "ok": true
+    }
+  ],
+  "transport": "stdio / newline-delimited JSON-RPC 2.0"
+}

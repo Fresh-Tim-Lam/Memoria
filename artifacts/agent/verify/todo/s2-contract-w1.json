@@ -1,0 +1,57 @@
+{
+  "artifactSha256": "d020cf7ef6ac0ccf819e49c0ad06a0618afc45a50f086e3b5ea46b36dba8b0c4",
+  "assertions": [
+    {
+      "detail": "raised=apply_plan() missing 1 required keyword-only argument: 'origin'",
+      "falsifier": "漏传被默认接受 ⇒ fail-open 仍在",
+      "name": "W1 漏传 origin ⇒ TypeError（不是默认成 human）",
+      "ok": true
+    },
+    {
+      "detail": "status=error, code=WRITE_ORIGIN_REQUIRED",
+      "falsifier": "空/未知 origin 被接受 ⇒ 等于没声明",
+      "name": "W1 origin='' ⇒ WRITE_ORIGIN_REQUIRED",
+      "ok": true
+    },
+    {
+      "detail": "status=error, code=WRITE_ORIGIN_REQUIRED",
+      "falsifier": "空/未知 origin 被接受 ⇒ 等于没声明",
+      "name": "W1 origin='robot' ⇒ WRITE_ORIGIN_REQUIRED",
+      "ok": true
+    },
+    {
+      "detail": "status=ok, code=None, 落盘=True",
+      "falsifier": "拒了人类确认卡路径 ⇒ R-S2-5 教训重演",
+      "name": "W1 人类路径（origin=human，无令牌）⇒ 允许且真落盘",
+      "ok": true
+    },
+    {
+      "detail": "status=error, code=WRITE_GATE_BYPASS, snapshot_calls=0, 落盘=False",
+      "falsifier": "放行 / 已建备份 / 已落盘 ⇒ W1 形同虚设",
+      "name": "W1 agent 无令牌 ⇒ WRITE_GATE_BYPASS，且备份未创建、未落盘",
+      "ok": true
+    },
+    {
+      "detail": "status=ok, code=None, token=True",
+      "falsifier": "",
+      "name": "W1 正门（读后 + 有效令牌 + origin=agent）⇒ 成功落盘",
+      "ok": true
+    },
+    {
+      "detail": "status=error, code=WRITE_GATE_BYPASS",
+      "falsifier": "重放成功 ⇒ 令牌不是一次性",
+      "name": "W1 令牌一次性（重放同令牌 ⇒ WRITE_GATE_BYPASS）",
+      "ok": true
+    },
+    {
+      "detail": "status=error, codes=['missing_field']",
+      "falsifier": "缺 txid 仍写入 ⇒ 审计/撤销键失锚",
+      "name": "W1(R-S2-4) 计划缺 txid ⇒ 计划层拒（missing_field）",
+      "ok": true
+    }
+  ],
+  "honest_boundary": "origin 是调用点自述，不是可信身份；进程内无法区分 human 与撒谎的 human",
+  "mechanism": "apply_plan(origin: str) 必填 + agent 路径一次性清关令牌（observation.issue_clearance）",
+  "passed": true,
+  "schema": "contract-w1/v2"
+}

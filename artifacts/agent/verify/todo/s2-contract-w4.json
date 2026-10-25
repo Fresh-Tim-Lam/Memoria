@@ -1,0 +1,42 @@
+{
+  "artifactSha256": "e5429a6289ff4a4a08fe5af09af6af5cf5b748138ee72c47de0f4f7b667dc68b",
+  "assertions": [
+    {
+      "detail": "raised=APPROVAL_REQUIRED, capability=kb.write, permissions.write=['**']",
+      "falsifier": "auto 放过 ⇒ 核心写能力没有声明位，与插件的不对称仍在",
+      "name": "W4 核心写能力 + approval=auto ⇒ APPROVAL_REQUIRED（运行时/分发前）",
+      "ok": true
+    },
+    {
+      "detail": "raised=False",
+      "falsifier": "",
+      "name": "W4 核心写能力 + approval=confirm ⇒ 放行（条件性规则）",
+      "ok": true
+    },
+    {
+      "detail": "kinds=['bad_field', 'approval_too_loose'], hit=['`permissions.write` 非空 ⇒ `approval.write` 不得为 `auto`（§1 安全下限；插件无法自行降档）']",
+      "falsifier": "装载期放过 ⇒ 插件可以自行降档",
+      "name": "W4 插件 permissions.write 非空 + approval.write=auto ⇒ 装载期 errors",
+      "ok": true
+    },
+    {
+      "detail": "kinds=['bad_field']",
+      "falsifier": "",
+      "name": "W4 同插件 approval.write=confirm ⇒ 不触发该规则（证明是条件判定）",
+      "ok": true
+    }
+  ],
+  "levels": {
+    "core_write": "运行时判定（approvals.WRITE_CAPABILITY.require_approval）",
+    "plugin": "装载期硬拒（plugins.parse_declaration）"
+  },
+  "not_in_risky_ops": [
+    "delete_file",
+    "delete_kp",
+    "move_file",
+    "rename_file",
+    "rename_kp"
+  ],
+  "passed": true,
+  "schema": "contract-w4/v1"
+}

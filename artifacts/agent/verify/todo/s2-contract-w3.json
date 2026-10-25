@@ -1,0 +1,26 @@
+{
+  "artifactSha256": "807f20df7d67b2b09ccb024a779dd8a791699066a296edc000de3998cd9e677a",
+  "assertions": [
+    {
+      "detail": "status=error, code=backup_failed, 备份调用=1, sha不变=True",
+      "falsifier": "备份失败仍写入 ⇒ W3 的'失败即整批不写'不成立",
+      "name": "W3 备份失败 ⇒ 零写入（文件 sha 不变）",
+      "ok": true
+    },
+    {
+      "detail": "apply=ok, 写入生效=True, undo=ok, 逐字节=True",
+      "falsifier": "撤销后 sha 不同 ⇒ 撤销链没有真正回到 pre-image",
+      "name": "W3 写后 restore_batch() ⇒ 逐字节回 pre-image",
+      "ok": true
+    },
+    {
+      "detail": "pre-image 路径存在=True",
+      "falsifier": "没有 pre-image ⇒ 备份发生在写之后（无法回滚）",
+      "name": "W3 备份批次里含写前 pre-image（证明备份在写之前）",
+      "ok": true
+    }
+  ],
+  "mechanism": "apply_plan 第一步 backup.snapshot_pre_images；失败零写入；restore_batch 逐字节回滚",
+  "passed": true,
+  "schema": "contract-w3/v1"
+}
