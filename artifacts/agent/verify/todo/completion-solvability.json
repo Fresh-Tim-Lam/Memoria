@@ -1,0 +1,302 @@
+{
+  "artifactSha256": "be02b388a23b422feb4baccafd251d61cada71dfdc9d3580d86f23a48b22cb07",
+  "by_type": {
+    "T1_in_section_edit": {
+      "A_ok": 4,
+      "B_ok": 4,
+      "n": 4
+    },
+    "T2_cross_section_enum": {
+      "A_ok": 4,
+      "B_ok": 4,
+      "n": 4
+    },
+    "T3_duplicate_heading": {
+      "A_ok": 1,
+      "B_ok": 1,
+      "n": 1
+    },
+    "T4_fulltext_count": {
+      "A_ok": 3,
+      "B_ok": 3,
+      "n": 3
+    }
+  },
+  "kb_dirs": [
+    "docs/example/AAA_KnowledgeBase",
+    "docs/example/人工智能导论知识点汇总",
+    "docs/example/行政法"
+  ],
+  "nature": "PROXY：不调用模型；机判「任务在该读面下是否结构可完成」。**这是可完成性（solvability），不是完成率（completion rate）**",
+  "per_task": [
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_min_calls": 2,
+      "B_needs_disambiguation": false,
+      "B_section_covers": true,
+      "B_section_header": "DeepLearning/ELU.md 「0. 论文来源」(L3-11，h2，9 行)\n\n## 0. 论文来源\n\n| 项目 | 内容 |\n|------|------|\n| **标题** | Fast",
+      "B_solvable": true,
+      "B_via": "outline+section",
+      "anchor_text": "|------|------|",
+      "answer": {
+        "heading": "0. 论文来源",
+        "line": 6
+      },
+      "doc_bytes": 8692,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/ELU.md:T1_in_section_edit",
+      "type": "T1_in_section_edit"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_min_calls": 2,
+      "B_needs_disambiguation": false,
+      "B_section_covers": true,
+      "B_section_header": "DeepLearning/LayerNorm&BactchNorm.md 「0. 论文来源」(L3-8，h2，6 行)\n\n## 0. 论文来源\n\n| 方法 | 论文 | 作者 | 发表 |\n|----",
+      "B_solvable": true,
+      "B_via": "outline+section",
+      "anchor_text": "| 方法 | 论文 | 作者 | 发表 |",
+      "answer": {
+        "heading": "0. 论文来源",
+        "line": 5
+      },
+      "doc_bytes": 10247,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/LayerNorm&BactchNorm.md:T1_in_section_edit",
+      "type": "T1_in_section_edit"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_min_calls": 2,
+      "B_needs_disambiguation": false,
+      "B_section_covers": true,
+      "B_section_header": "EvolutionaryReforcementLearning/CEMRL.md 「0. 论文来源」(L3-11，h2，9 行)\n\n## 0. 论文来源\n\n| 项目 | 内容 |\n|------|--",
+      "B_solvable": true,
+      "B_via": "outline+section",
+      "anchor_text": "|------|------|",
+      "answer": {
+        "heading": "0. 论文来源",
+        "line": 6
+      },
+      "doc_bytes": 13821,
+      "id": "docs/example/AAA_KnowledgeBase/EvolutionaryReforcementLearning/CEMRL.md:T1_in_section_edit",
+      "type": "T1_in_section_edit"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_min_calls": 2,
+      "B_needs_disambiguation": false,
+      "B_section_covers": true,
+      "B_section_header": "EvolutionaryReforcementLearning/ERL-Re^2-appendix.md 「先看宏观架构：两套系统，共享一个“底座”」(L3-18，h2，16 行)\n\n## 先看宏观架",
+      "B_solvable": true,
+      "B_via": "outline+section",
+      "anchor_text": "ERL-Re² 的所有智能体（EA 种群 + RL 智能体）都共用同一个结构：",
+      "answer": {
+        "heading": "先看宏观架构：两套系统，共享一个“底座”",
+        "line": 5
+      },
+      "doc_bytes": 12233,
+      "id": "docs/example/AAA_KnowledgeBase/EvolutionaryReforcementLearning/ERL-Re^2-appendix.md:T1_in_section_edit",
+      "type": "T1_in_section_edit"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 250/441 处（pattern='函数'）\n\n.memoria/agent/fsrs.py\nLine 283:     纯函数、确定性：相同输入必得相同输出。\n\n.memoria/build/graph.json\nLine 160",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_outline_covers": "7/7",
+      "B_section_only_calls": 8,
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "sections": [
+          "0. 论文来源",
+          "1. 算法概述",
+          "2. 数学定义",
+          "3. ELU输出均值接近零的证明",
+          "4. 核心优势",
+          "5. 与主流激活函数的对比",
+          "6. 参数选择与使用建议"
+        ],
+        "word": "函数"
+      },
+      "answer_size": 7,
+      "doc_bytes": 8692,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/ELU.md:T2_cross_section_enum",
+      "type": "T2_cross_section_enum"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 106 处（pattern='维度'）\n\n.memoria/agent/sessions/session-20261009T022356Z-baf77070.jsonl\nLine 29: {\"v\": 1, \"seq\": 27, \"ti",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_outline_covers": "5/5",
+      "B_section_only_calls": 6,
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "sections": [
+          "1. 算法概述",
+          "2. 数学定义",
+          "3. 详细对比示例",
+          "5. 适用场景对比",
+          "6. 核心差异总结"
+        ],
+        "word": "维度"
+      },
+      "answer_size": 5,
+      "doc_bytes": 10247,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/LayerNorm&BactchNorm.md:T2_cross_section_enum",
+      "type": "T2_cross_section_enum"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 108 处（pattern='采样'）\n\n.memoria/cache/lexical/index.json\nLine 87:       \"body_excerpt\": \"> **论文 vs 源代码差异**：论文 Table 5 给",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_outline_covers": "5/5",
+      "B_section_only_calls": 6,
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "sections": [
+          "1. 算法概述",
+          "2. 背景知识",
+          "3. CEM-RL算法",
+          "5. 与ERL的深度对比",
+          "6. 消融与分析"
+        ],
+        "word": "采样"
+      },
+      "answer_size": 5,
+      "doc_bytes": 13821,
+      "id": "docs/example/AAA_KnowledgeBase/EvolutionaryReforcementLearning/CEMRL.md:T2_cross_section_enum",
+      "type": "T2_cross_section_enum"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 67 处（pattern='智能体'）\n\n.memoria/agent/README.md\nLine 1: # .memoria/agent — 知识库智能体目录\nLine 3: > 用途：本目录存放**供 Trae 智能体使用**的",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_outline_covers": "6/6",
+      "B_section_only_calls": 7,
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "sections": [
+          "一句话总结",
+          "三、两套系统是怎么“互动”的？",
+          "二、RL 智能体是怎么更新的？",
+          "五、完整流程图（直观看清楚）",
+          "先看宏观架构：两套系统，共享一个“底座”",
+          "四、公共底座 $Z_\\phi$ 是怎么更新的？"
+        ],
+        "word": "智能体"
+      },
+      "answer_size": 6,
+      "doc_bytes": 12233,
+      "id": "docs/example/AAA_KnowledgeBase/EvolutionaryReforcementLearning/ERL-Re^2-appendix.md:T2_cross_section_enum",
+      "type": "T2_cross_section_enum"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_min_calls": 3,
+      "B_needs_disambiguation": true,
+      "B_needs_outline": true,
+      "B_requires_extra_info": "需 near_line/path 才能消歧（模型必须先知道目标在第几处）",
+      "B_section_header": "Error: 标题 '证明' 有 2 个同名候选，无法唯一确定（C3：不取首个）；候选=L11[定理], L143[矩阵视角证明：不同多项式，点值向量必不同] (AMBIGUOUS_SECTION)",
+      "B_solvable": true,
+      "B_via": "outline+section×2(消歧)",
+      "answer": {
+        "heading": "证明",
+        "occurrences": 2
+      },
+      "doc_bytes": 7119,
+      "id": "docs/example/AAA_KnowledgeBase/Mathemetical_Modeling/FFT-appendix.md:T3_duplicate_heading",
+      "type": "T3_duplicate_heading"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 1 处（pattern='激活函数完'）\n\nDeepLearning/ELU.md\nLine 1: # ELU激活函数完整报告\n（1 个文件超过 4 MiB 未扫描；7 个二进制文件已跳过）",
+      "B_if_section_only": false,
+      "B_if_section_only_why": "section 单次只返回一节，数全文需 outline+逐节 N 次调用",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_path": "grep(pattern) 一次统计",
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "count": 1,
+        "pattern": "激活函数完"
+      },
+      "doc_bytes": 8692,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/ELU.md:T4_fulltext_count",
+      "type": "T4_fulltext_count"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 1 处（pattern='完整对比报'）\n\nDeepLearning/LayerNorm&BactchNorm.md\nLine 1: # LayerNorm 与 BatchNorm 完整对比报告\n（1 个文件超过 4 MiB 未扫描；",
+      "B_if_section_only": false,
+      "B_if_section_only_why": "section 单次只返回一节，数全文需 outline+逐节 N 次调用",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_path": "grep(pattern) 一次统计",
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "count": 1,
+        "pattern": "完整对比报"
+      },
+      "doc_bytes": 10247,
+      "id": "docs/example/AAA_KnowledgeBase/DeepLearning/LayerNorm&BactchNorm.md:T4_fulltext_count",
+      "type": "T4_fulltext_count"
+    },
+    {
+      "A_min_calls": 1,
+      "A_solvable": true,
+      "B_grep_head": "命中 1 处（pattern='结合进化方'）\n\nEvolutionaryReforcementLearning/CEMRL.md\nLine 1: # CEM-RL：结合进化方法与梯度方法的策略搜索\n（1 个文件超过 4 MiB 未扫描；7",
+      "B_if_section_only": false,
+      "B_if_section_only_why": "section 单次只返回一节，数全文需 outline+逐节 N 次调用",
+      "B_min_calls": 1,
+      "B_needs_disambiguation": false,
+      "B_path": "grep(pattern) 一次统计",
+      "B_solvable": true,
+      "B_via": "grep",
+      "answer": {
+        "count": 1,
+        "pattern": "结合进化方"
+      },
+      "doc_bytes": 13821,
+      "id": "docs/example/AAA_KnowledgeBase/EvolutionaryReforcementLearning/CEMRL.md:T4_fulltext_count",
+      "type": "T4_fulltext_count"
+    }
+  ],
+  "schema": "completion-solvability/v1",
+  "sealed": {
+    "MEMORIA_CONFIG_DIR": true,
+    "repeats": 3,
+    "sigs": [
+      "0506d51eb00ed005251731b0738056eeda8726500f54b014b0430412c1cf7c98",
+      "0506d51eb00ed005251731b0738056eeda8726500f54b014b0430412c1cf7c98"
+    ],
+    "stable": true
+  },
+  "totals": {
+    "A_rate": 1.0,
+    "A_solvable": 12,
+    "B_needs_disambiguation": 1,
+    "B_rate": 1.0,
+    "B_solvable": 12,
+    "n_tasks": 12
+  },
+  "why_not_A_level": "无 API key + 既有脚本全为 PROXY ⇒ 无法产真实完成率；本报告降级为 B 级并明确标注"
+}
