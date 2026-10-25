@@ -15438,6 +15438,36 @@ async function call(fn, ...args) {
   }
 
   /**
+   * **源码区跳转滚动**（2026-10-25 task-140）：与预览侧同一套不变量。
+   *   I1 目标行区间任意部分已可见 ⇒ 不动；I2 完全不可见 ⇒ 居中（不是顶对齐）。
+   * 旧实现在 `highlightRange` / `highlightRangeWithError` 里用 `block:"start"`，
+   * 与预览侧同病：把目标**首行**顶到编辑区顶部，且已可见时也硬滚。
+   * @param {number} startLine 1-based 首行
+   * @param {number} endLine 1-based 末行（含）
+   */
+  function _scrollSourceRangeIntoViewCentered(startLine, endLine) {
+    const pane = document.getElementById("editor-pane");
+    if (!pane) return;
+    const firstEl = document.getElementById("line-" + startLine);
+    const lastEl = document.getElementById("line-" + endLine) || firstEl;
+    if (!firstEl || !lastEl) return;
+    const pr = pane.getBoundingClientRect();
+    const fr = firstEl.getBoundingClientRect();
+    const lr = lastEl.getBoundingClientRect();
+    // 相对视口：负数=在视口上方
+    const top = fr.top - pr.top;
+    const bottom = lr.bottom - pr.top;
+    const vh = pane.clientHeight;
+    const EPS = 1;
+    // I1：任意部分可见 ⇒ 不动
+    if (Math.min(bottom, vh) - Math.max(top, 0) > EPS) return;
+    // I2：居中；目标比视口高时顶边贴齐
+    const h = lr.bottom - fr.top;
+    const targetTop = vh > h ? (vh - h) / 2 : 0;
+    pane.scrollTop += top - targetTop;
+  }
+
+  /**
    * 只标记 KP 范围：不滚动、不闪烁、不自动消失。
    * 用于「修改范围 / 创建知识点」等**用户正在看屏幕上内容**的场合——
    * 这些场景只需要把范围标出来，滚动+闪烁会打断阅读/输入（与跳转语义区分）。
@@ -15467,7 +15497,7 @@ async function call(fn, ...args) {
       }
     }
     if (scrollSource && firstSource) {
-      firstSource.scrollIntoView({ block: "start", behavior: "smooth" });
+      _scrollSourceRangeIntoViewCentered(startLine, endLine);
     }
 
     if (state.viewMode !== "source") {
@@ -15502,7 +15532,7 @@ async function call(fn, ...args) {
       }
     }
     if (scrollSource && firstSource) {
-      firstSource.scrollIntoView({ block: "start", behavior: "smooth" });
+      _scrollSourceRangeIntoViewCentered(startLine, endLine);
     }
 
     if (state.viewMode !== "source") {
@@ -15552,6 +15582,30 @@ async function call(fn, ...args) {
     };
   }
 
+  /** 目标范围相对**滚动视口**（`#preview-pane`）的矩形。
+   *  2026-10-25（task-140）：`layoutPreviewRangeBand` 原先只返回 `first` 元素，把已经算好的
+   *  top/bottom 并集**丢掉了**——而"目标占了视口哪一块"正是跳转滚动唯一需要的不变量。
+   *  现在直接用 `layoutPreviewRangeBand` 返回的几何（`{top, bottom}`，相对 `#preview`），
+   *  换算到 `#preview-pane` 视口坐标（`#preview` 有 1.5rem/48px padding，不能直接当视口）。 */
+  function previewRangeViewportRect(preview, laid) {
+    if (!preview || !laid) return null;
+    const pane = document.getElementById("preview-pane");
+    if (!pane) return null;
+    // `laid.top/bottom` 相对 `#preview` 的 border-box；`#preview` 自身随 pane 滚动 ⇒
+    // 只需把 `#preview` 顶边换成 pane 视口顶边。
+    const pr = preview.getBoundingClientRect();
+    const paneR = pane.getBoundingClientRect();
+    const offset = pr.top - paneR.top;      // 当前 `#preview` 顶边相对视口顶（通常为负=已滚过）
+    const top = laid.top + offset;
+    const bottom = laid.bottom + offset;
+    return {
+      top: top,
+      bottom: bottom,
+      height: Math.max(0, bottom - top),
+      viewportH: pane.clientHeight,
+    };
+  }
+
   function layoutPreviewRangeBand(preview, startLine, endLine) {
     const matches = [...preview.querySelectorAll("[data--src-line]")].filter((el) =>
       previewElOverlapsRange(el, startLine, endLine)
@@ -15580,7 +15634,11 @@ async function call(fn, ...args) {
       first = matches[0];
     }
 
-    if (!Number.isFinite(top) || bottom <= top) return first;
+    if (!Number.isFinite(top) || bottom <= top) {
+      // 单行/零高目标（例如点击一个空行块的 band 高度为 0）：仍要给出几何，否则跳转无法居中。
+      if (!Number.isFinite(top)) return { first: first, band: null, top: 0, bottom: 0 };
+      return { first: first, band: null, top: top, bottom: Math.max(bottom, top) };
+    }
 
     let band = document.getElementById("-preview-range-band");
     if (!band) {
@@ -15593,7 +15651,9 @@ async function call(fn, ...args) {
 
     band.style.top = `${Math.max(0, top)}px`;
     band.style.height = `${bottom - top}px`; band.dataset.srcRange = startLine + "-" + endLine; // 记下行区间 ⇒ 布局后移时由「预览带跟随布局」重定位（见 app.js 末尾块）
-    return first;
+    // 2026-10-25 task-140：**同时返回几何**（top/bottom 相对 `#preview`）。
+    // 旧签名只返回 `first`，把这里已经算好的并集丢掉了 —— 那是跳转唯一需要的不变量。
+    return { first: first, band: band, top: top, bottom: bottom };
   }
 
   function highlightPreviewRange(startLine, endLine, opts) {
@@ -15603,27 +15663,101 @@ async function call(fn, ...args) {
     if (opts?.flash !== false) {
       clearPreviewHighlights();
     }
-    const first = layoutPreviewRangeBand(preview, startLine, endLine);
+    const laid = layoutPreviewRangeBand(preview, startLine, endLine);
+    const first = laid && laid.first;
     const band = document.getElementById("-preview-range-band");
     if (band) {
       band.classList.toggle("error", !!opts?.error);
     }
     if (opts?.scroll && first) {
-      first.scrollIntoView({ block: "start", behavior: "smooth" });
-      _reanchorJumpScroll(startLine, endLine);   // AG104：`scrollIntoView` 那一刻**异步排版还没落**（MathJax 排队跑、懒加载图片还是 0 高）⇒ 落点会漂，落定后再校一次
+      _jumpScrollToRange(preview, laid);
+      _reanchorJumpScroll(startLine, endLine);   // AG104：排版在跳转后才落定 ⇒ 之后只补偏移（不再重设落点）
     }
   }
 
-  /** **跳转落点的二次校准**（2026-09-25 AG104；人：「**现在预览区域知识点跳转定位位置又不准了**」）。
-   *  病根：`highlightPreviewRange` 里那次 `scrollIntoView` 发生在**布局还没最终定形**的时候 —— MathJax 是"排队跑、
-   *  不 await"的（公式一排版，行高就变），懒加载图片在未加载前是 0 高 ⇒ 目标块之后再结算一次高度，落点就漂了
-   *  （表现出来就是"跳过去差一截"）。⇒ 在 ~350 ms / ~1.4 s 各**再对准一次**（这次用 `behavior:"auto"`，瞬移）。
+  /**
+   * **跳转滚动落点**（2026-10-25 task-140 重写）。
+   *
+   * 不变量（这才是函数该保证的东西）：
+   *   I1 用户已经能看到目标（哪怕只露出一部分）⇒ **一个像素都不动**。
+   *      人原话：「如果正在显示的内容已经有目标的部分区域（至少），仍然进行了滚动定位 … 不需要滚动定位」。
+   *   I2 完全看不见目标 ⇒ 把目标**整体居中**（`block:"center"` 的语义），而不是顶到顶部。
+   *   I3 记录"居中后目标顶边应处的视口偏移"，供二次校准**只补差值**用；绝不在这里或那里重设落点。
+   *
+   * 旧实现用 `first.scrollIntoView({block:"start"})`：
+   *   ① 不看可见性 ⇒ 已可见也滚（违反 I1）；
+   *   ② `start` = 顶对齐 ⇒ 居中后又被拉到顶部（违反 I2）；
+   *   ③ 因为①+②叠加，视觉上永远是"往下挪一点"（人说的"固定从上往下滚的模式"）。
+   * @returns {{scrolled:boolean, reason:string}}
+   */
+  function _jumpScrollToRange(preview, laid) {
+    const pane = document.getElementById("preview-pane");
+    if (!pane) return { scrolled: false, reason: "no-pane" };
+    const rect = previewRangeViewportRect(preview, laid);
+    if (!rect) return { scrolled: false, reason: "no-rect" };
+
+    // I1：任意部分可见 ⇒ 不动。（人明确要求"至少部分区域"即满足）
+    const EPS = 1;   // 亚像素容差：允许 1px 边界误差算"已见"
+    const visibleTop = Math.max(rect.top, 0);
+    const visibleBottom = Math.min(rect.bottom, rect.viewportH);
+    if (visibleBottom - visibleTop > EPS) {
+      log("SCROLL", "jump: target already visible (visible=" + Math.round(visibleBottom - visibleTop) +
+        "px of " + Math.round(rect.height) + ") → no scroll");
+      // 仍记录期望偏移：此时期望 = 目标当前偏移（保持用户所见，不做居中）
+      _jumpExpectedOffset = null;   // null = "本次不居中，校准只需保证不漂"
+      return { scrolled: false, reason: "already-visible" };
+    }
+
+    // I2：完全不可见 ⇒ 居中。目标比视口还高时退化为"顶边贴齐视口顶"（否则居中会让目标顶跑到视口上方）。
+    const targetTop = rect.viewportH > rect.height
+      ? Math.max(0, (rect.viewportH - rect.height) / 2)
+      : 0;
+    const delta = rect.top - targetTop;   // >0 说明目标在视口下方（需向下滚）
+    if (Math.abs(delta) < 1) {
+      _jumpExpectedOffset = targetTop;
+      return { scrolled: false, reason: "already-centered" };
+    }
+    _jumpExpectedOffset = targetTop;
+    _lastJumpPane = pane;
+    pane.scrollTop += delta;
+    log("SCROLL", "jump: center target delta=" + Math.round(delta) +
+      " (rect.top=" + Math.round(rect.top) + " h=" + Math.round(rect.height) +
+      " vp=" + rect.viewportH + " expected=" + Math.round(targetTop) + ")");
+    return { scrolled: true, reason: "centered" };
+  }
+
+  /** 首次滚动后目标顶边应处的视口偏移（px）；null = 本次未居中（目标本已可见）。 */
+  var _jumpExpectedOffset = null;
+  /** 首次滚动操作的那个滚动容器，供二次校准确认"还是同一个视口"。 */
+  var _lastJumpPane = null;
+
+  /** **跳转落点的二次校准**（AG104 原意 + 2026-10-25 task-140 重写）。
+   *
+   *  **原意（保留）**：`highlightPreviewRange` 那次滚动发生在**布局还没最终定形**时 —— MathJax 是"排队跑、
+   *  不 await"的（公式一排版，行高就变），懒加载图片在未加载前是 0 高 ⇒ 目标之后再结算一次高度，落点就漂了
+   *  （表现出来就是"跳过去差一截"）。
+   *
+   *  **旧实现错在哪（task-140 人反馈）**：它把"补偏移"做成了"重设落点" ——
+   *  在 350 ms / 1400 ms 又各调一次 `scrollIntoView({block:"start"})`，
+   *  于是①过一小会被拉到顶部（人：「过一小会就把目标的开始行对齐到编辑区域的顶部，错误」）、
+   *  ②已在视口内的目标也被强行滚动。
+   *
+   *  **新不变量**：二次校准**只修正漂移，绝不重新决定落点**。
+   *   · 目标仍完整可见 ⇒ 什么都不做（排版变化没影响可见性，用户看到的不需要动）
+   *   · 目标不可见且有期望偏移（本次是居中跳过来的）⇒ 只补 `当前偏移 - 期望偏移` 的差值
+   *   · 本次跳转时目标本就可见（`_jumpExpectedOffset === null`）⇒ 什么都不做（用户视野优先）
+   *   · 用户已滚动过（既有 guard）⇒ 放弃
+   *   · **绝不**调用 `scrollIntoView`
+   *
    *  **绝不跟人抢滚动条**：一旦检测到用户自己滚轮/点击/触摸/按键（窗口期内任意一次），立刻放弃校正。 */
   var _jumpAnchorGuard = null;
   function _reanchorJumpScroll(startLine, endLine) {
     try {
       var pane = document.getElementById("preview-pane");
       if (!pane) return;
+      // 本次跳转没居中（目标本已可见）⇒ 不做任何校准（I1：已可见不打扰）
+      if (_jumpExpectedOffset === null || _lastJumpPane !== pane) return;
+      var expected = _jumpExpectedOffset;
       var g = { cancelled: false };
       _jumpAnchorGuard = g;   // 新一轮跳转 ⇒ 顶掉上一轮的守卫
       var mark = function () { g.cancelled = true; };
@@ -15635,8 +15769,22 @@ async function call(fn, ...args) {
           if (g.cancelled || _jumpAnchorGuard !== g) return;
           var pv = document.getElementById("preview");
           if (!pv) return;
-          var first = layoutPreviewRangeBand(pv, startLine, endLine);
-          if (first) first.scrollIntoView({ block: "start", behavior: "auto" });
+          var laid = layoutPreviewRangeBand(pv, startLine, endLine);   // 刷新 band 几何（排版可能已变）
+          if (!laid || !laid.first) return;
+          var rect = previewRangeViewportRect(pv, laid);
+          if (!rect) return;
+          // 目标整体已可见（哪怕排版让它挪了位置）⇒ 不动
+          if (rect.top >= 0 && rect.bottom <= rect.viewportH) {
+            log("SCROLL", "reanchor(" + delay + "ms): fully visible → no adjust");
+            return;
+          }
+          // 只补差值：把目标顶边拉回期望偏移，不重设落点、不居中、不顶对齐
+          var drift = rect.top - expected;
+          if (Math.abs(drift) < 1) return;
+          pane.scrollTop += drift;
+          log("SCROLL", "reanchor(" + delay + "ms): drift=" + Math.round(drift) +
+            " → scrollTop+=" + Math.round(drift) + " (rect.top=" + Math.round(rect.top) +
+            " expected=" + Math.round(expected) + ")");
         }, delay);
       };
       tick(350); tick(1400);

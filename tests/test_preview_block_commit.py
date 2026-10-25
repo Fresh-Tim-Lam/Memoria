@@ -160,12 +160,22 @@ def test_preview_typing_is_native_first_and_the_jump_re_anchors() -> None:
     assert js.count("_cancelBlockRepaint();") >= 2, "结构性提交两处（commitRange / splitParagraph）要取消挂起的重渲"
     assert "flushRepaint: _flushBlockRepaint," in js
     assert 'window.MemoriaEditSync.flushRepaint();' in js, "暂存进缓存前先 flush（否则池里存的是没归一的 DOM）"
-    # B · 跳转落点二次校准
+    # B · 跳转落点二次校准（AG104 原意保留；2026-10-25 task-140 重写为「只补偏移不重设落点」）
     assert "function _reanchorJumpScroll(startLine, endLine) {" in js
     assert "_reanchorJumpScroll(startLine, endLine);" in js, "必须由 `highlightPreviewRange` 那次滚动触发"
     assert '["wheel", "mousedown", "touchstart", "keydown"].forEach(function (ev) {' in js, "用户一动就放弃校正"
-    assert 'first.scrollIntoView({ block: "start", behavior: "auto" });' in js
+    # AG104 的原目标（修排版漂移）仍在：350/1400ms 两次校准
     assert "tick(350); tick(1400);" in js
+    # ★ task-140：二次校准**只补偏移**，绝不再 scrollIntoView 重设落点。
+    #   旧实现 `first.scrollIntoView({block:"start"})` 把人明确认可过的"居中"落点又拉回顶部
+    #   （人：「过一小会就把目标的开始行对齐到编辑区域的顶部，错误」）⇒ 该行必须不存在。
+    assert 'first.scrollIntoView({ block: "start", behavior: "auto" });' not in js, \
+        "二次校准不得重设落点（task-140）"
+    assert "pane.scrollTop += drift;" in js, "二次校准只补漂移差值"
+    # ★ task-140：首次滚动也必须居中 + 已可见不滚，不得再用 block:"start"
+    assert "function _jumpScrollToRange(" in js
+    assert "already-visible" in js and "centered" in js
+    assert 'scrollIntoView({ block: "start"' not in js, "跳转域内不得再出现顶对齐（task-140）"
 
 
 def test_the_typing_path_stays_block_level_and_is_not_touched() -> None:

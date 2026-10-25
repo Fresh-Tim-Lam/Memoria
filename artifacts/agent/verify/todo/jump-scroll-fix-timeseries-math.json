@@ -1,0 +1,2858 @@
+{
+  "startedAt": "2026-10-25T11:36:38.980Z",
+  "cdp": "http://127.0.0.1:9571",
+  "target": {
+    "id": "60D8BEBCAC23C1D040A5A13F8FE99707",
+    "url": "http://127.0.0.1:33731/"
+  },
+  "triedTargets": [],
+  "allTargets": [
+    {
+      "id": "60D8BEBCAC23C1D040A5A13F8FE99707",
+      "type": "page",
+      "url": "http://127.0.0.1:33731/"
+    }
+  ],
+  "path": "docs/jump-math.md",
+  "rounds": 3,
+  "boot": {
+    "hasApp": "object",
+    "hasSurface": true,
+    "hasReveal": true,
+    "hasOpenFile": true,
+    "viewMode": "preview",
+    "currentPath": "docs/jump-long.md",
+    "docNull": false,
+    "docBlocks": null,
+    "previewChildren": 1,
+    "paneVp": 707,
+    "readyState": "complete"
+  },
+  "renderSettled": "267|6737|12|6737",
+  "mathSettle": "math-settled",
+  "precond": {
+    "placeholders": 0,
+    "docBlocks": -1,
+    "domBlocks": 267,
+    "mjx": 12,
+    "vp": 707,
+    "maxScroll": 6030,
+    "lazyHook": false
+  },
+  "probeVersion": 3,
+  "plan": {
+    "doc": "docs/jump-math.md",
+    "viewMode": "preview",
+    "blocks": 267,
+    "candidates": 133,
+    "vp": 707,
+    "maxScroll": 6030,
+    "A": {
+      "start": 123,
+      "end": 125,
+      "h": 35.2,
+      "baseScrollTop": 3015
+    },
+    "B": {
+      "start": 35,
+      "end": 35,
+      "h": 23.8,
+      "baseScrollTop": 0
+    },
+    "C": {
+      "start": 123,
+      "end": 125,
+      "h": 35.2,
+      "topAbs": 2847,
+      "bottomAbs": 2883
+    }
+  },
+  "runs": [
+    {
+      "kind": "A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -503,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 28,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 116,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 256,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 366,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 504,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 703,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 902,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1102,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1403,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1602,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2002,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "B",
+      "target": {
+        "start": 35,
+        "end": 35
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 0,
+        "targetTop": 822.1,
+        "targetBottom": 845.9,
+        "targetHeight": 23.8,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": true,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1
+      },
+      "final": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1,
+        "bandBottom": 364.9
+      },
+      "expect": {
+        "centeredBandTop": 341.6,
+        "centeredScrollTop": 480.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "down",
+        "scrollDelta": 481,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 30,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 107,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 266,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 360,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 516,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 703,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 907,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1106,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1407,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1606,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 2006,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4
+      },
+      "final": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4,
+        "bandBottom": 724.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 28,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 263,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 358,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 514,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 702,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 907,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1107,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1407,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1606,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 2007,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "C-top",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "targetBottom": 17.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.6
+      },
+      "post0": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6
+      },
+      "final": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6,
+        "bandBottom": 17.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 29,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 109,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 264,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 358,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 511,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 713,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 906,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1103,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1406,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1606,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 2006,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "DRIFT",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": true,
+      "driftSpacerPx": 400,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2912,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -103,
+        "driftAfter350": 0,
+        "changedAt": [
+          359
+        ],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 27,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 103,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 264,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 359,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 512,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 716,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 902,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1104,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1404,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1602,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2004,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "OLDSIM-A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4,
+        "bandTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "up",
+        "scrollDelta": -168,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 25,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": 0.4
+        },
+        {
+          "t": 109,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 251,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 361,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 516,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 716,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 901,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1107,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1401,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1601,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2005,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "OLDSIM-C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "down",
+        "scrollDelta": 689,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 25,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 107,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 264,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 358,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 514,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 716,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 904,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1104,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1401,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1605,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2009,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 1
+    },
+    {
+      "kind": "A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -503,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 27,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 108,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 263,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 356,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 511,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 715,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 903,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1107,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1402,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1604,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2003,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "B",
+      "target": {
+        "start": 35,
+        "end": 35
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 0,
+        "targetTop": 822.1,
+        "targetBottom": 845.9,
+        "targetHeight": 23.8,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": true,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1
+      },
+      "final": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1,
+        "bandBottom": 364.9
+      },
+      "expect": {
+        "centeredBandTop": 341.6,
+        "centeredScrollTop": 480.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "down",
+        "scrollDelta": 481,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 28,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 108,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 265,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 359,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 515,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 703,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 902,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1108,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1406,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1607,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 2010,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4
+      },
+      "final": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4,
+        "bandBottom": 724.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 27,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 108,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 263,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 358,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 513,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 715,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 902,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1103,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1403,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1603,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 2003,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "C-top",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "targetBottom": 17.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.6
+      },
+      "post0": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6
+      },
+      "final": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6,
+        "bandBottom": 17.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 28,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 107,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 264,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 358,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 512,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 715,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 902,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1105,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1408,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1602,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 2008,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "DRIFT",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": true,
+      "driftSpacerPx": 400,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2912,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -103,
+        "driftAfter350": 0,
+        "changedAt": [
+          361
+        ],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 28,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 108,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 265,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 361,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 512,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 715,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 908,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1103,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1409,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1608,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2005,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "OLDSIM-A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4,
+        "bandTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "up",
+        "scrollDelta": -168,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 26,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": 0.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 262,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 354,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 510,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 713,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 913,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1113,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1409,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1612,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2003,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "OLDSIM-C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "down",
+        "scrollDelta": 689,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 26,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 108,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 264,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 357,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 514,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 716,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 901,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1103,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1415,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1615,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2008,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 2
+    },
+    {
+      "kind": "A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -503,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 27,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 264,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 358,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 516,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 705,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 905,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1105,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1406,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1605,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2005,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "B",
+      "target": {
+        "start": 35,
+        "end": 35
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 0,
+        "targetTop": 822.1,
+        "targetBottom": 845.9,
+        "targetHeight": 23.8,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": true,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1
+      },
+      "final": {
+        "scrollTop": 481,
+        "targetTop": 341.1,
+        "bandTop": 341.1,
+        "bandBottom": 364.9
+      },
+      "expect": {
+        "centeredBandTop": 341.6,
+        "centeredScrollTop": 480.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "down",
+        "scrollDelta": 481,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 27,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 107,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 264,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 358,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 511,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 714,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 902,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1107,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1405,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 1606,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        },
+        {
+          "t": 2006,
+          "scrollTop": 481,
+          "targetTop": 341.1,
+          "bandTop": 341.1
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4
+      },
+      "final": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "bandTop": 689.4,
+        "bandBottom": 724.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 30,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 264,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 359,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 515,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 717,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 908,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1109,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1408,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 1607,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        },
+        {
+          "t": 2008,
+          "scrollTop": 2158,
+          "targetTop": 689.4,
+          "bandTop": 689.4
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "C-top",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "targetBottom": 17.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.6
+      },
+      "post0": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6
+      },
+      "final": {
+        "scrollTop": 2865,
+        "targetTop": -17.6,
+        "bandTop": -17.6,
+        "bandBottom": 17.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": false,
+        "direction": "none",
+        "scrollDelta": 0,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": false
+      },
+      "samples": [
+        {
+          "t": 29,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 108,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 262,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 355,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 510,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 713,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 910,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1110,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1410,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 1610,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        },
+        {
+          "t": 2005,
+          "scrollTop": 2865,
+          "targetTop": -17.6,
+          "bandTop": -17.6
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "DRIFT",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": true,
+      "driftSpacerPx": 400,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2512,
+        "targetTop": 335.4,
+        "bandTop": 335.4
+      },
+      "final": {
+        "scrollTop": 2912,
+        "targetTop": 335.4,
+        "bandTop": 335.4,
+        "bandBottom": 370.6
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": true,
+        "topAligned": false,
+        "direction": "up",
+        "scrollDelta": -103,
+        "driftAfter350": 0,
+        "changedAt": [
+          356
+        ],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 30,
+          "scrollTop": 2512,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 261,
+          "scrollTop": 2512,
+          "targetTop": 735.4,
+          "bandTop": 735.4
+        },
+        {
+          "t": 356,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 506,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 712,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 907,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1107,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1409,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 1607,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        },
+        {
+          "t": 2007,
+          "scrollTop": 2912,
+          "targetTop": 335.4,
+          "bandTop": 335.4
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "OLDSIM-A",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 3015,
+        "targetTop": -167.6,
+        "targetBottom": -132.4,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": true,
+        "fullyBelow": false,
+        "visiblePx": 0
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4,
+        "bandTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "up",
+        "scrollDelta": -168,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 26,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": 0.4
+        },
+        {
+          "t": 107,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 262,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 355,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 511,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 715,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 905,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1107,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1402,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1605,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2009,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 3
+    },
+    {
+      "kind": "OLDSIM-C-bottom",
+      "target": {
+        "start": 123,
+        "end": 125
+      },
+      "driftInjected": false,
+      "driftSpacerPx": 0,
+      "pre": {
+        "scrollTop": 2158,
+        "targetTop": 689.4,
+        "targetBottom": 724.6,
+        "targetHeight": 35.2,
+        "vp": 707,
+        "fullyAbove": false,
+        "fullyBelow": false,
+        "visiblePx": 17.600000000000023
+      },
+      "post0": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "final": {
+        "scrollTop": 2847,
+        "targetTop": 0.4
+      },
+      "expect": {
+        "centeredBandTop": 335.9,
+        "centeredScrollTop": 2511.5,
+        "topAlignedBandTop": 0
+      },
+      "judge": {
+        "centered": false,
+        "topAligned": true,
+        "direction": "down",
+        "scrollDelta": 689,
+        "driftAfter350": 0,
+        "changedAt": [],
+        "movedWhenAlreadyVisible": null
+      },
+      "samples": [
+        {
+          "t": 26,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 109,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 265,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 356,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 511,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 712,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 915,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1101,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1413,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 1614,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        },
+        {
+          "t": 2004,
+          "scrollTop": 2847,
+          "targetTop": 0.4,
+          "bandTop": null
+        }
+      ],
+      "round": 3
+    }
+  ],
+  "finishedAt": "2026-10-25T11:37:31.656Z",
+  "summary": [
+    {
+      "kind": "A",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        0,
+        0,
+        0
+      ],
+      "finalScrollTop": [
+        2512,
+        2512,
+        2512
+      ],
+      "finalTargetTop": [
+        335.4,
+        335.4,
+        335.4
+      ],
+      "finalBandTop": [
+        335.4,
+        335.4,
+        335.4
+      ],
+      "centered": [
+        true,
+        true,
+        true
+      ],
+      "topAligned": [
+        false,
+        false,
+        false
+      ],
+      "direction": [
+        "up",
+        "up",
+        "up"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "B",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        0,
+        0,
+        0
+      ],
+      "finalScrollTop": [
+        481,
+        481,
+        481
+      ],
+      "finalTargetTop": [
+        341.1,
+        341.1,
+        341.1
+      ],
+      "finalBandTop": [
+        341.1,
+        341.1,
+        341.1
+      ],
+      "centered": [
+        true,
+        true,
+        true
+      ],
+      "topAligned": [
+        false,
+        false,
+        false
+      ],
+      "direction": [
+        "down",
+        "down",
+        "down"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "C-bottom",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        17.6,
+        17.6,
+        17.6
+      ],
+      "finalScrollTop": [
+        2158,
+        2158,
+        2158
+      ],
+      "finalTargetTop": [
+        689.4,
+        689.4,
+        689.4
+      ],
+      "finalBandTop": [
+        689.4,
+        689.4,
+        689.4
+      ],
+      "centered": [
+        false,
+        false,
+        false
+      ],
+      "topAligned": [
+        false,
+        false,
+        false
+      ],
+      "direction": [
+        "none",
+        "none",
+        "none"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "C-top",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        17.6,
+        17.6,
+        17.6
+      ],
+      "finalScrollTop": [
+        2865,
+        2865,
+        2865
+      ],
+      "finalTargetTop": [
+        -17.6,
+        -17.6,
+        -17.6
+      ],
+      "finalBandTop": [
+        -17.6,
+        -17.6,
+        -17.6
+      ],
+      "centered": [
+        false,
+        false,
+        false
+      ],
+      "topAligned": [
+        false,
+        false,
+        false
+      ],
+      "direction": [
+        "none",
+        "none",
+        "none"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "DRIFT",
+      "n": 3,
+      "driftInjected": [
+        true,
+        true,
+        true
+      ],
+      "preVisiblePx": [
+        0,
+        0,
+        0
+      ],
+      "finalScrollTop": [
+        2912,
+        2912,
+        2912
+      ],
+      "finalTargetTop": [
+        335.4,
+        335.4,
+        335.4
+      ],
+      "finalBandTop": [
+        335.4,
+        335.4,
+        335.4
+      ],
+      "centered": [
+        true,
+        true,
+        true
+      ],
+      "topAligned": [
+        false,
+        false,
+        false
+      ],
+      "direction": [
+        "up",
+        "up",
+        "up"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [
+          359
+        ],
+        [
+          361
+        ],
+        [
+          356
+        ]
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "OLDSIM-A",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        0,
+        0,
+        0
+      ],
+      "finalScrollTop": [
+        2847,
+        2847,
+        2847
+      ],
+      "finalTargetTop": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "finalBandTop": [
+        null,
+        null,
+        null
+      ],
+      "centered": [
+        false,
+        false,
+        false
+      ],
+      "topAligned": [
+        true,
+        true,
+        true
+      ],
+      "direction": [
+        "up",
+        "up",
+        "up"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    },
+    {
+      "kind": "OLDSIM-C-bottom",
+      "n": 3,
+      "driftInjected": [
+        false,
+        false,
+        false
+      ],
+      "preVisiblePx": [
+        17.6,
+        17.6,
+        17.6
+      ],
+      "finalScrollTop": [
+        2847,
+        2847,
+        2847
+      ],
+      "finalTargetTop": [
+        0.4,
+        0.4,
+        0.4
+      ],
+      "finalBandTop": [
+        null,
+        null,
+        null
+      ],
+      "centered": [
+        false,
+        false,
+        false
+      ],
+      "topAligned": [
+        true,
+        true,
+        true
+      ],
+      "direction": [
+        "down",
+        "down",
+        "down"
+      ],
+      "driftAfter350": [
+        0,
+        0,
+        0
+      ],
+      "changedAt": [
+        [],
+        [],
+        []
+      ],
+      "consistent": {
+        "targetTopRange": 0,
+        "driftRange": 0,
+        "ok": true
+      }
+    }
+  ]
+}
