@@ -126,7 +126,13 @@
       clone.querySelectorAll(".-sync-cursor").forEach((n) => n.remove());
       return clone.textContent ?? "";
     }).join("\n");
-    const out = _restoreDocTailNL(body);
+    // task-147（R0）：DOM 复算 `body` **恒等于 canonical 去掉最后一个尾换行**
+    //   （后端 `lines = body.splitlines()` 恰好丢掉末尾那一项），所以"是否补 1 位"只看真源标记，
+    //   **不能**再用 `!b.endsWith("\n")` —— 文件尾为 `\n\n` / `\n\n\n` 时 body 仍以 `\n` 结尾，
+    //   会被误判成"已有尾换行"而少补 1 位 ⇒ 保存即永久丢 1 字节（R-01 未覆盖边界）。
+    //   ⚠️ 不要合并 `_restoreDocTailNL`：它的另外两处调用（7697/11825 快照恢复）输入是**完整 body**，
+    //   那里"已带尾换行就跳过"是对的，改成无条件补会**多**一个换行。
+    const out = _docEndsWithNL() ? body + "\n" : body;
     syncLog("collectEditorBody: 收集到", lines.length, "行, 总长度", out.length, "(tailNL=", _docEndsWithNL(), ")");
     return out;
   }

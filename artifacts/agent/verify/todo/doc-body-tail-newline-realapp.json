@@ -1,0 +1,206 @@
+{
+  "startedAt": "2026-10-25T12:43:06.801Z",
+  "cdp": "http://127.0.0.1:9583",
+  "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t147_48828_1187896854\\kb",
+  "target": {
+    "id": "5A2CF7DA5DD6E77D11BE97BC354DAFDA",
+    "url": "http://127.0.0.1:31303/"
+  },
+  "docs": [
+    {
+      "docsKey": "none",
+      "file": "docs/tail-none.md",
+      "tail": "\"\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1564,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1555,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 303
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1588,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 313,
+        "expBytes": 313
+      }
+    },
+    {
+      "docsKey": "nl",
+      "file": "docs/tail-nl.md",
+      "tail": "\"\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1559,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 305
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1560,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1555,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 305
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 315,
+        "expBytes": 315
+      }
+    },
+    {
+      "docsKey": "blank",
+      "file": "docs/tail-blank.md",
+      "tail": "\"\\n\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1552,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 306
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1557,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 305
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1553,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 306
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 317,
+        "expBytes": 317
+      }
+    },
+    {
+      "docsKey": "blank2",
+      "file": "docs/tail-blank2.md",
+      "tail": "\"\\n\\n\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1562,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 307
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1553,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 306
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1560,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 307
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 319,
+        "expBytes": 319
+      }
+    }
+  ],
+  "finishedAt": "2026-10-25T12:43:26.277Z",
+  "failures": 0,
+  "ok": true
+}

@@ -1,0 +1,242 @@
+{
+  "startedAt": "2026-10-25T12:39:55.461Z",
+  "cdp": "http://127.0.0.1:9583",
+  "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t147_16972_368630668\\kb",
+  "target": {
+    "id": "AF08E14B11D8EA9FB7456CF3460CAA7B",
+    "url": "http://127.0.0.1:58335/"
+  },
+  "docs": [
+    {
+      "docsKey": "none",
+      "file": "docs/tail-none.md",
+      "tail": "\"\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1553,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1572,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 303
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1568,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 313,
+        "expBytes": 313
+      }
+    },
+    {
+      "docsKey": "nl",
+      "file": "docs/tail-nl.md",
+      "tail": "\"\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1558,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 305
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1569,
+          "diskWaitMs": 0,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 304
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": true,
+          "domMatch": true,
+          "idleMs": 1558,
+          "diskWaitMs": 1,
+          "diskEqual": true,
+          "memoryBodyEqual": true,
+          "memoryBytes": 305
+        }
+      ],
+      "ok": true,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": true,
+        "diskEqual": true,
+        "diskBytes": 315,
+        "expBytes": 315
+      }
+    },
+    {
+      "docsKey": "blank",
+      "file": "docs/tail-blank.md",
+      "tail": "\"\\n\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1572,
+          "diskWaitMs": 20076,
+          "diskEqual": false,
+          "gotBytes": 314,
+          "expBytes": 316,
+          "gotTailHex": "303038e380820d0a",
+          "expTailHex": "38e380820d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 305,
+          "memoryTail": "\"EE-008。\\n\"",
+          "expTail": "\"E-008。\\n\\n\""
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1564,
+          "diskWaitMs": 20085,
+          "diskEqual": false,
+          "gotBytes": 313,
+          "expBytes": 315,
+          "gotTailHex": "303038e380820d0a",
+          "expTailHex": "38e380820d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 304,
+          "memoryTail": "\"EE-008。\\n\"",
+          "expTail": "\"E-008。\\n\\n\""
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1565,
+          "diskWaitMs": 20078,
+          "diskEqual": false,
+          "gotBytes": 315,
+          "expBytes": 317,
+          "gotTailHex": "303038e380820d0a",
+          "expTailHex": "38e380820d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 305,
+          "memoryTail": "\"EE-008。\\n\"",
+          "expTail": "\"E-008。\\n\\n\""
+        }
+      ],
+      "ok": false,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": false,
+        "diskEqual": false,
+        "diskBytes": 315,
+        "expBytes": 317
+      }
+    },
+    {
+      "docsKey": "blank2",
+      "file": "docs/tail-blank2.md",
+      "tail": "\"\\n\\n\\n\"",
+      "steps": [
+        {
+          "op": "insert",
+          "desc": "第 6 行行尾插入 Q（native 编辑）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1566,
+          "diskWaitMs": 20072,
+          "diskEqual": false,
+          "gotBytes": 316,
+          "expBytes": 318,
+          "gotTailHex": "38e380820d0a0d0a",
+          "expTailHex": "80820d0a0d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 306,
+          "memoryTail": "\"E-008。\\n\\n\"",
+          "expTail": "\"-008。\\n\\n\\n\""
+        },
+        {
+          "op": "delete",
+          "desc": "第 6 行行尾 Backspace（native 删除 1 字符）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1560,
+          "diskWaitMs": 20037,
+          "diskEqual": false,
+          "gotBytes": 315,
+          "expBytes": 317,
+          "gotTailHex": "38e380820d0a0d0a",
+          "expTailHex": "80820d0a0d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 305,
+          "memoryTail": "\"E-008。\\n\\n\"",
+          "expTail": "\"-008。\\n\\n\\n\""
+        },
+        {
+          "op": "split",
+          "desc": "第 7 行第 3 列回车（结构编辑：拆成两行）",
+          "ok": false,
+          "domMatch": true,
+          "idleMs": 1569,
+          "diskWaitMs": 20071,
+          "diskEqual": false,
+          "gotBytes": 317,
+          "expBytes": 319,
+          "gotTailHex": "38e380820d0a0d0a",
+          "expTailHex": "80820d0a0d0a0d0a",
+          "memoryBodyEqual": false,
+          "memoryBytes": 306,
+          "memoryTail": "\"E-008。\\n\\n\"",
+          "expTail": "\"-008。\\n\\n\\n\""
+        }
+      ],
+      "ok": false,
+      "reason": null,
+      "reopen": {
+        "bodyEqual": false,
+        "diskEqual": false,
+        "diskBytes": 317,
+        "expBytes": 319
+      }
+    }
+  ],
+  "finishedAt": "2026-10-25T12:42:55.521Z",
+  "failures": 14,
+  "ok": false
+}
