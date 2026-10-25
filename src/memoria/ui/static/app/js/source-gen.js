@@ -69,16 +69,40 @@ window.MemoriaSourceGen = (function () {
 
       case T.BLOCKQUOTE:
         // E28（2026-10-22）：旧实现恒写 `"> " + 正文`，把 `>` / `>a` 统一成 `> ` / `> a`
-        //   ⇒ 每次往返**凭空插入一个空格**，而「`>` 后的空格是标记语法还是用户内容」
-        //   在回写后无从分辨。parser 现在把每行原始前缀记进 `block.prefixes`
-        //   （与 children 等长），这里按原样回写 ⇒ `>`、`> `、`>a`、`> a`、`>> ` 均逐字节还原。
+        //   ⇒ 每次往返**凭空插入一个空格**。parser 现在把每行原始前缀记进 `block.prefixes`，
+        //   这里按原样回写 ⇒ `>`、`> `、`>a`、`> a`、`>> ` 均逐字节还原。
+        // ★ task-155（一期）：一个 child 可能**跨多行**（引用内列表）。旧实现按
+        //   `children.length === prefixes.length` 逐个 child 拼一行 ⇒ 多行 child 的第二行起
+        //   **丢失 `> ` 前缀**（实测 `"> - a\n- b"`，保存即静默写坏文件）。现在按每个 child 的
+        //   `srcLine/srcLineEnd` 行跨度逐行取前缀；无跨度（旧 AST/编辑新建）时退回顺序游标。
         var qKids = block.children || [];
-        if (!qKids.length) return "> ";   // 空引用块：仍回写 `> `（历史行为，且可表达「`>` + 一个空格 + 空正文」）
-        var qPrefixes = block.prefixes;
-        var qUsePrefixes = Array.isArray(qPrefixes) && qPrefixes.length === qKids.length;
-        return qKids.map(function (b, qIdx) {
-          return (qUsePrefixes ? _quotePrefixOf(qPrefixes[qIdx]) : "> ") + generateBlock(b);
-        }).join("\n");
+        if (!qKids.length) return "> ";   // 空引用块：仍回写 `> `（历史行为）
+        var qPrefixes = Array.isArray(block.prefixes) ? block.prefixes : null;
+        var qBlockStart = block.srcLine > 0 ? block.srcLine : 1;
+        // 旧 AST/外部构造（children 无 srcLine 跨度）：保留历史防御语义 ——
+        //   prefixes 与 children **等长才逐个子块取**，否则整体退回默认 "> "（F3 契约）。
+        //   有跨度时（parser 产出，含跨行 list）才按"行"取前缀（task-155 新语义）。
+        var qHasSpans = false;
+        for (var qs = 0; qs < qKids.length; qs++) {
+          if (qKids[qs] && qKids[qs].srcLine > 0) { qHasSpans = true; break; }
+        }
+        var qLegacyDefault = !qHasSpans && !(qPrefixes && qPrefixes.length === qKids.length);
+        var qCursor = 0;                 // 相对引用块起始的行偏移（0-based）
+        var qOut = [];
+        for (var qi = 0; qi < qKids.length; qi++) {
+          var qChild = qKids[qi];
+          var qGenLines = (generateBlock(qChild) || "").split("\n");
+          var qRel = (qChild.srcLine > 0 && qChild.srcLineEnd >= qChild.srcLine)
+            ? (qChild.srcLine - qBlockStart)
+            : qCursor;
+          for (var gk = 0; gk < qGenLines.length; gk++) {
+            var pIdx = qRel + gk;
+            var rawPfx = (!qLegacyDefault && qPrefixes && qPrefixes[pIdx] != null) ? qPrefixes[pIdx] : "> ";
+            qOut.push(_quotePrefixOf(rawPfx) + qGenLines[gk]);
+          }
+          qCursor = qRel + qGenLines.length;
+        }
+        return qOut.join("\n");
 
       case T.LIST:
         // ★ 2026-10-23 Bug C：松散列表的**项间空行**必须逐字节重建。

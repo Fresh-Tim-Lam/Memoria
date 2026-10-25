@@ -518,7 +518,22 @@
           /* ignore */
         }
         if (pending && !moved) {
-          this.engine._emit("nodeClick", { node: this.engine.getNode(pending.id) });
+          // KG-v0 D-KG-07 埋点①：nodeClick 事件补 `edge_id`。
+          //
+          // 为什么需要它：`nodeClick` 过去只带 `{node}`，**没有任何边级标识**
+          // ⇒ 「这条边被点过吗」这个问题在数据上无解（不是"没设计指标"，
+          //    是"指标所需数据从未采集"）。这里把与目标节点相连的**边标识**一并带上，
+          //    让下游能按边计数。
+          //
+          // ## 隐私边界（必须保持，见 KG-v0 D-KG-07）
+          // 只记**交互标识**：`node.id` / `edge_id` / `edge_type` / `origin`。
+          // **不记文档正文、不记用户输入、不落盘、不建用户画像**。
+          // 本文件只负责把标识放进事件，是否统计由消费者决定。
+          const clicked = this.engine.getNode(pending.id);
+          this.engine._emit("nodeClick", {
+            node: clicked,
+            edge_id: this._edgeIdForNode(pending.id),
+          });
         }
         if (!this.remoteHoverId) {
           const hit = this._pickNode(sx, sy);
@@ -538,6 +553,31 @@
           this.engine._emit("hover", { node: null });
         }
       });
+    }
+
+    /**
+     * 与某节点相连的第一条边的标识（KG-v0 D-KG-07 埋点①）。
+     *
+     * **只是标识，不含内容**：返回 `{ id, source, target, type, origin }`，
+     * 全部来自 `engine.links`（图数据），不读文档正文、不落盘、不建画像。
+     * 找不到边 ⇒ `null`（孤立节点是合法状态，不要因此丢事件）。
+     */
+    _edgeIdForNode(nodeId) {
+      if (!nodeId) return null;
+      for (const l of this.engine.links || []) {
+        const s = typeof l.source === "object" ? l.source?.id : l.source;
+        const t = typeof l.target === "object" ? l.target?.id : l.target;
+        if (s === nodeId || t === nodeId) {
+          return {
+            id: l.id || `${s}->${t}`,
+            source: s,
+            target: t,
+            type: l.type || l.edge_type || null,
+            origin: l.origin || null,
+          };
+        }
+      }
+      return null;
     }
 
     _galaxyStats() {

@@ -1,6 +1,6 @@
 <!-- spec-version: 1.1.0 -->
-<!-- spec-deps: src/memoria/services/import_engine.py@565b1564c0b2, src/memoria/services/import_plan.py@fa9bf5a8425e, docs/conventions/import-format.md@9a8e7d0dee79, src/memoria/ui/static/app/js/surface/render-core.js@79484c296b72, docs/reference/preview-formats.md@0b066f6b4310, src/memoria/services/kb_agent.py@0d816956b4d0 -->
-<!-- reviewed-on: 2026-10-25 -->
+<!-- spec-deps: src/memoria/services/import_engine.py@565b1564c0b2, src/memoria/services/import_plan.py@fa9bf5a8425e, docs/conventions/import-format.md@9a8e7d0dee79, src/memoria/ui/static/app/js/surface/render-core.js@5da5dd0f33c2, docs/reference/preview-formats.md@0b066f6b4310, src/memoria/services/kb_agent.py@0d816956b4d0 -->
+<!-- reviewed-on: 2026-10-26 -->
 # 任务
 
 你是一个知识文件整理助手。用户会提供一份或多份原始知识文本，你需要将其整理为 **Memoria 平面导入文件**（单个 `.txt`，`---` 分隔多段），以便导入 Memoria 系统。

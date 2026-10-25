@@ -36,7 +36,13 @@ import re
 from collections.abc import Mapping, Sequence
 from typing import Any
 
-from memoria.graph.edge_types import EDGE_EXTEND, EDGE_REFERENCE, normalize_link_edge_type
+from memoria.graph.edge_types import (
+    DERIVE_ONLY_EDGE_TYPES,
+    EDGE_EXTEND,
+    EDGE_REFERENCE,
+    EDGE_TYPES,
+    normalize_link_edge_type,
+)
 from memoria.range.constants import SNIPPET_MAX_LEN
 from memoria.range.locator import resolve_range
 from memoria.services.agent.body_edit import (
@@ -183,8 +189,14 @@ PATH_MOVING_OPS: tuple[str, ...] = (OP_MOVE_FILE, OP_RENAME_FILE, OP_DELETE_FILE
 #: 事务 id 形态（`<YYYYMMDD>T<HHMMSS>Z-<n>`；与 §2.3.2 的备份目录 `<txid>` 同格式同来源）
 TXID_RE = re.compile(r"^\d{8}T\d{6}Z-\d+$")
 
-#: 可由 plan 声明的边类型（`contain` 不由 plan 写 —— 它由"知识点包含关系"派生）
-PLAN_EDGE_TYPES = frozenset({EDGE_REFERENCE, EDGE_EXTEND})
+#: 可由 plan 声明的边类型 = **全部边类型 − 只能派生的那些**（KG-v0 D-KG-04①）。
+#:
+#: 关键：本常量**从 `edge_types.EDGE_TYPES` 算出来**，不是手抄的第二份清单。
+#: 历史缺陷是把这里写成 `frozenset({EDGE_REFERENCE, EDGE_EXTEND})` —— 与 `EDGE_TYPES`
+#: （3 种，含 `contain`）构成"同一个语义两套允许集合"的不对称。
+#: D-KG-04① 明确：去 agent 参数不能消除该不对称（它就在这个常量里，被下方原值白名单用作校验），
+#: 唯一解法是让关系**定义化**。`tests/test_kg_contract_consistency.py` 恒等断言锁住它。
+PLAN_EDGE_TYPES = frozenset(EDGE_TYPES - DERIVE_ONLY_EDGE_TYPES)
 
 
 def base_versions(kb_path: str, rel_paths: Sequence[str]) -> dict[str, str]:

@@ -479,23 +479,49 @@ window.MemoriaParser = (function () {
       }
 
       // ── 引用 ──
+      // ★ task-155（一期）：引用块内支持**块级列表**（GFM `> - item`）。
+      //   做法：把连续引用行的前缀剥掉得到「内层源码行」，用 parseBlocks 子解析
+      //   （复用既有列表解析：有序/无序、嵌套缩进、松散列表空行）。
+      //   · list 子块：保留（一个 list 可跨多行），并把它的行号从"切片相对"换算成**绝对**；
+      //   · 其它子块（段落/空行/标题…）：**逐行还原成段落**，保持 task-155 之前的引用语义
+      //     （每行一段），避免 `> # x` / `> ---` 等在本期被悄悄改成块级语义。
+      //   子块上的 `srcLine/srcLineEnd`（1-based 绝对闭区间）是 SourceGen 前缀回写与 mapper
+      //   列号映射的**单一事实源**（一期核心：多行 child 不再"1 child = 1 行"）。
       if (tokens.length > 0 && tokens[0].type === "blockquote_prefix") {
-        // 连续引用行：每行解析为一个独立段落，保留完整内联结构（高亮/加粗/颜色等）。
-        // 若按文本拼接，[[\h:...]] / ** 等标记会被当作纯文本丢失。
-        var qBlocks = [];
-        // E28（2026-10-22）：逐行记下**原始**前缀（`>` / `> ` / `>\t`），
-        // SourceGen 据此无损回写；否则 `>`→`> `、`>a`→`> a`，每次往返凭空插入空格。
+        var qStripped = [];
         var qPrefixes = [];
         while (i < endLine) {
           var qt = lexer.tokenize(lines[i]);
           if (qt.length === 0 || qt[0].type !== "blockquote_prefix") break;
           qPrefixes.push(qt[0].value);
-          qBlocks.push(AST.paragraph(parseInline(qt.slice(1))));
+          qStripped.push(lines[i].slice(qt[0].value.length));
           i++;
         }
-        if (qBlocks.length) {
-          var qBlock = AST.blockquote(qBlocks);
-          qBlock.prefixes = qPrefixes; // 与 children 等长；SourceGen 长度不匹配时退回默认 "> "
+        if (qStripped.length) {
+          var qChildren = [];
+          var qSub = parseBlocks(qStripped, 0, qStripped.length);
+          for (var qbi = 0; qbi < qSub.length; qbi++) {
+            var qb = qSub[qbi];
+            if (qb.type === "list") {
+              // list 跨多行：srcLine/srcLineEnd 由"切片内相对(1-based)"换成"绝对(1-based)"
+              qb.srcLine = lineNum + qb.srcLine;
+              qb.srcLineEnd = lineNum + qb.srcLineEnd;
+              qChildren.push(qb);
+              continue;
+            }
+            // 其它块：逐行还原为段落（与旧行为逐字节一致）
+            var qbFrom = qb.srcLine - 1;
+            var qbTo = qb.srcLineEnd - 1;
+            for (var qln = qbFrom; qln <= qbTo; qln++) {
+              var qRaw = qStripped[qln] == null ? "" : qStripped[qln];
+              var qP = AST.paragraph(parseInline(lexer.tokenize(qRaw)));
+              qP.srcLine = lineNum + qln + 1;
+              qP.srcLineEnd = qP.srcLine;
+              qChildren.push(qP);
+            }
+          }
+          var qBlock = AST.blockquote(qChildren);
+          qBlock.prefixes = qPrefixes; // 与"引用行"等长（1:1），SourceGen 逐字节回写
           emit(blocks, qBlock, lineNum, i);
         }
         continue;

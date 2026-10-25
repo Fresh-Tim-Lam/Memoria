@@ -345,6 +345,111 @@ window.MemoriaMapper = (function () {
     return 2;
   }
 
+  // ── task-155（一期）：引用块的行跨度/前缀宽度/引用内列表映射 ──────────────
+  /** 引用块内某源码行（0-based 绝对）的**真实前缀宽度**。
+   *  E28 允许 `>` / `> ` / `>> ` / `>\t` 等前缀；旧实现恒用 2（`"> "`）⇒
+   *  `>abc`（实际内容起点 1）与 `>> abc`（实际 3）都偏 1 列。修复依据 = `block.prefixes`。 */
+  function _quotePfxLenAt(block, lineIdx0) {
+    var p = block && block.prefixes;
+    var base = (block && block.srcLine > 0) ? block.srcLine - 1 : 0;
+    var i = lineIdx0 - base;
+    if (Array.isArray(p) && i >= 0 && i < p.length && typeof p[i] === "string" && p[i].length) {
+      return p[i].length;
+    }
+    return 2; // 旧 AST（无 prefixes）：退回历史口径
+  }
+
+  /** 引用内列表：由源码行反推 item 下标（item.srcLine 是"引用切片内相对 1-based"） */
+  function _quoteListItemIndex(block, list, lineIdx0) {
+    var qBase = (block && block.srcLine > 0) ? block.srcLine - 1 : 0;
+    var items = (list && list.items) || [];
+    var best = -1;
+    for (var i2 = 0; i2 < items.length; i2++) {
+      var it = items[i2];
+      if (it && it.srcLine > 0) {
+        var abs = qBase + it.srcLine - 1;
+        if (abs === lineIdx0) return i2;
+        if (abs <= lineIdx0) best = i2;
+      }
+    }
+    if (best >= 0) return best;
+    var rel = lineIdx0 - (list.srcLine > 0 ? list.srcLine - 1 : qBase);
+    if (rel < 0) rel = 0;
+    if (rel >= items.length) rel = items.length - 1;
+    return rel;
+  }
+
+  /** 在 inline 节点树里定位（与 findInlineAtSrcCol 同口径，但路径前缀已给定） */
+  function _quoteInlineAt(node, srcCol, path) {
+    if (!node) return null;
+    if (node.type === T.TEXT) {
+      if (srcCol >= 0 && srcCol <= node.content.length) {
+        return { blockIndex: -1, nodePath: path, offset: srcCol };
+      }
+      return null;
+    }
+    var kids = node.children || [];
+    if (!kids.length) return { blockIndex: -1, nodePath: path, offset: srcCol };
+    var pos = inlinePrefixLen(node);
+    for (var i3 = 0; i3 < kids.length; i3++) {
+      var sl = inlineSourceLen(kids[i3]);
+      if (srcCol >= pos && srcCol < pos + sl) {
+        return _quoteInlineAt(kids[i3], srcCol - pos, path.concat(i3));
+      }
+      pos += sl;
+    }
+    return { blockIndex: -1, nodePath: path, offset: srcCol };
+  }
+
+  /** 引用内列表：AST 坐标 → 源码行列（path[0]=itemIdx，其后为 item 内 inline 路径） */
+  function _quoteListAstToSrc(block, list, path, offset, lineBase0) {
+    var items = list.items || [];
+    var itemIdx = (path && path.length) ? path[0] : 0;
+    if (itemIdx >= items.length) itemIdx = Math.max(0, items.length - 1);
+    var item = items[itemIdx] || null;
+    var itemLine = (item && item.srcLine > 0) ? lineBase0 + item.srcLine - 1 : lineBase0 + itemIdx;
+    var qPfx = _quotePfxLenAt(block, itemLine);
+    var col = qPfx + listPrefixLen(list, itemIdx);
+    if (!item) return { line: itemLine, col: col + offset };
+    var inlinePath = (path || []).slice(1);
+    var qInline = item.children || [];
+    if (!inlinePath.length) return { line: itemLine, col: col + offset };
+    var node = qInline[inlinePath[0]];
+    if (!node) return { line: itemLine, col: col };
+    for (var p2 = 0; p2 < inlinePath[0]; p2++) col += inlineSourceLen(qInline[p2]);
+    col += inlinePrefixLen(node);
+    for (var d2 = 1; d2 < inlinePath.length; d2++) {
+      var idx2 = inlinePath[d2];
+      if (!node.children || idx2 >= node.children.length) break;
+      for (var k2 = 0; k2 < idx2; k2++) col += inlineSourceLen(node.children[k2]);
+      node = node.children[idx2];
+      col += inlinePrefixLen(node);
+    }
+    return { line: itemLine, col: col + offset };
+  }
+
+  /** 引用内列表：源码行列 → AST 坐标（nodePath 含 blockquote child 下标） */
+  function _quoteListSrcToAst(block, list, childIdx, lineIdx0, col, qPfx, blockIndex) {
+    var items = list.items || [];
+    var itemIdx = _quoteListItemIndex(block, list, lineIdx0);
+    var colInItem = col - qPfx - listPrefixLen(list, itemIdx);
+    if (colInItem < 0) colInItem = 0;
+    var item = items[itemIdx];
+    var qInline = (item && item.children) || [];
+    if (!qInline.length) return { blockIndex: blockIndex, nodePath: [childIdx, itemIdx], offset: 0 };
+    var pos = 0;
+    for (var j3 = 0; j3 < qInline.length; j3++) {
+      var sl3 = inlineSourceLen(qInline[j3]);
+      if (colInItem >= pos && colInItem < pos + sl3) {
+        var inner3 = _quoteInlineAt(qInline[j3], colInItem - pos, [childIdx, itemIdx, j3]);
+        if (inner3) { inner3.blockIndex = blockIndex; return inner3; }
+        return { blockIndex: blockIndex, nodePath: [childIdx, itemIdx, j3], offset: 0 };
+      }
+      pos += sl3;
+    }
+    return { blockIndex: blockIndex, nodePath: [childIdx, itemIdx, qInline.length - 1], offset: 0 };
+  }
+
   /**
    * 源码行/列 → AST 坐标
    * @param {number} line — 0-based 源码行号
@@ -397,34 +502,45 @@ window.MemoriaMapper = (function () {
       return { blockIndex: blockIndex, nodePath: [], offset: col };
     }
 
-    // BLOCKQUOTE block: block.children 是块级段落（每行一个），nodePath[0] 为段落索引
+    // BLOCKQUOTE block（task-155 一期）：children 可能是**跨多行**的块级 list；
+    //   行归属用每个 child 的 `srcLine/srcLineEnd`（parser 落的绝对行区间），
+    //   前缀宽度用 `block.prefixes` 真实长度（修 `>` / `>> ` 的既有 off-by-one）。
     if (block.type === T.BLOCKQUOTE) {
-      var qLineIdx = line - lineCount; // 该行在 block 内的偏移（block 起始行 = lineCount）
-      if (qLineIdx < 0 || qLineIdx >= (block.children || []).length) {
-        return { blockIndex: blockIndex, nodePath: [], offset: 0 };
+      var qKids2 = block.children || [];
+      if (!qKids2.length) return { blockIndex: blockIndex, nodePath: [], offset: 0 };
+      var qBase2 = block.srcLine > 0 ? block.srcLine - 1 : lineCount;
+      var qSel = -1;
+      for (var qc = 0; qc < qKids2.length; qc++) {
+        var qk = qKids2[qc];
+        var qs = qk && qk.srcLine > 0 ? qk.srcLine - 1 : qBase2 + qc;
+        var qe = (qk && qk.srcLine > 0 && qk.srcLineEnd >= qk.srcLine) ? qk.srcLineEnd - 1 : qs;
+        if (line >= qs && line <= qe) { qSel = qc; break; }
       }
-      var qBlock = block.children[qLineIdx];
-      var qInline = (qBlock && qBlock.children) || [];
-      if (!qInline.length) {
-        return { blockIndex: blockIndex, nodePath: [qLineIdx], offset: 0 };
+      if (qSel < 0) return { blockIndex: blockIndex, nodePath: [], offset: 0 };
+      var qCh = qKids2[qSel];
+      var qPfx = _quotePfxLenAt(block, line);
+      if (qCh.type === T.LIST) {
+        return _quoteListSrcToAst(block, qCh, qSel, line, col, qPfx, blockIndex);
       }
-      var qSrcCol = col - blockPrefixLen(block); // 去掉 "> " 前缀
-      if (qSrcCol < 0) qSrcCol = 0;
-      var qpos = 0;
-      for (var qj = 0; qj < qInline.length; qj++) {
-        var qnode = qInline[qj];
-        var qlen = inlineSourceLen(qnode);
-        if (qSrcCol >= qpos && qSrcCol < qpos + qlen) {
-          var qinner = findInlineAtSrcCol(qnode, qSrcCol - qpos, [qLineIdx].concat(qj));
-          if (qinner) {
-            qinner.blockIndex = blockIndex;
-            return qinner;
+      var qInline2 = (qCh && qCh.children) || [];
+      if (!qInline2.length) return { blockIndex: blockIndex, nodePath: [qSel], offset: 0 };
+      var qSrcCol2 = col - qPfx; // 去掉该行**真实**前缀
+      if (qSrcCol2 < 0) qSrcCol2 = 0;
+      var qpos2 = 0;
+      for (var qj3 = 0; qj3 < qInline2.length; qj3++) {
+        var qnode2 = qInline2[qj3];
+        var qlen2 = inlineSourceLen(qnode2);
+        if (qSrcCol2 >= qpos2 && qSrcCol2 < qpos2 + qlen2) {
+          var qinner2 = findInlineAtSrcCol(qnode2, qSrcCol2 - qpos2, [qSel].concat(qj3));
+          if (qinner2) {
+            qinner2.blockIndex = blockIndex;
+            return qinner2;
           }
-          return { blockIndex: blockIndex, nodePath: [qLineIdx].concat(qj), offset: 0 };
+          return { blockIndex: blockIndex, nodePath: [qSel].concat(qj3), offset: 0 };
         }
-        qpos += qlen;
+        qpos2 += qlen2;
       }
-      return { blockIndex: blockIndex, nodePath: [qLineIdx, qInline.length - 1], offset: 0 };
+      return { blockIndex: blockIndex, nodePath: [qSel, qInline2.length - 1], offset: 0 };
     }
 
     var srcCol = col;
@@ -545,33 +661,38 @@ window.MemoriaMapper = (function () {
       return { line: line, col: liCol };
     }
 
-    // BLOCKQUOTE block: nodePath[0] 为段落索引，每个段落占一行（前缀 "> "）
+    // BLOCKQUOTE block（task-155 一期）：行跨度 + 真实前缀宽度；children 可为跨行 list
     if (block.type === T.BLOCKQUOTE) {
+      var qKids3 = block.children || [];
+      var qBaseLine = block.srcLine > 0 ? block.srcLine - 1 : line;
+      if (!qKids3.length) return { line: qBaseLine, col: _quotePfxLenAt(block, qBaseLine) };
       if (!nodePath || nodePath.length === 0) {
-        return { line: line, col: 2 };
+        return { line: qBaseLine, col: _quotePfxLenAt(block, qBaseLine) };
       }
       var qIdx = nodePath[0];
-      if (qIdx >= (block.children || []).length) return { line: line, col: 2 };
-      line += qIdx;
-      var qBlock = block.children[qIdx];
-      var qInline = (qBlock && qBlock.children) || [];
-      if (nodePath.length === 1) {
-        return { line: line, col: 2 + offset };
+      if (qIdx >= qKids3.length) return { line: qBaseLine, col: _quotePfxLenAt(block, qBaseLine) };
+      var qCh3 = qKids3[qIdx];
+      var qChildLine = (qCh3 && qCh3.srcLine > 0) ? qCh3.srcLine - 1 : qBaseLine + qIdx;
+      if (qCh3 && qCh3.type === T.LIST) {
+        return _quoteListAstToSrc(block, qCh3, nodePath.slice(1), offset, qChildLine);
       }
-      var qNode = qInline[nodePath[1]];
-      if (!qNode) return { line: line, col: 2 };
-      var qCol = 2;
-      for (var qp = 0; qp < nodePath[1]; qp++) qCol += inlineSourceLen(qInline[qp]);
-      qCol += inlinePrefixLen(qNode);
-      for (var qj2 = 2; qj2 < nodePath.length; qj2++) {
-        var qidx = nodePath[qj2];
-        if (!qNode.children || qidx >= qNode.children.length) break;
-        for (var qk = 0; qk < qidx; qk++) qCol += inlineSourceLen(qNode.children[qk]);
-        qNode = qNode.children[qidx];
-        qCol += inlinePrefixLen(qNode);
+      var qPfx3 = _quotePfxLenAt(block, qChildLine);
+      var qInline3 = (qCh3 && qCh3.children) || [];
+      var qPath3 = nodePath.slice(1);
+      if (!qPath3.length) return { line: qChildLine, col: qPfx3 + offset };
+      var qNode3 = qInline3[qPath3[0]];
+      if (!qNode3) return { line: qChildLine, col: qPfx3 };
+      var qCol3 = qPfx3;
+      for (var qp3 = 0; qp3 < qPath3[0]; qp3++) qCol3 += inlineSourceLen(qInline3[qp3]);
+      qCol3 += inlinePrefixLen(qNode3);
+      for (var qd3 = 1; qd3 < qPath3.length; qd3++) {
+        var qidx3 = qPath3[qd3];
+        if (!qNode3.children || qidx3 >= qNode3.children.length) break;
+        for (var qk3 = 0; qk3 < qidx3; qk3++) qCol3 += inlineSourceLen(qNode3.children[qk3]);
+        qNode3 = qNode3.children[qidx3];
+        qCol3 += inlinePrefixLen(qNode3);
       }
-      qCol += offset;
-      return { line: line, col: qCol };
+      return { line: qChildLine, col: qCol3 + offset };
     }
 
     // 计算 col (非 LIST block)

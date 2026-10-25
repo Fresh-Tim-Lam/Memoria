@@ -9,6 +9,98 @@
     return !!(e && e.buttons);
   }
 
+  // ── 图交互埋点（KG-v0 D-KG-07）──────────────────────────────────────────────
+  //
+  // ## 为什么有这个（裁决原文）
+  // 「不是没设计指标，是指标所需数据从未采集」——
+  // `nodeClick` 早就有事件（`graph-view-2d.js`）、消费者（`onGraphNodeClick`）和
+  // 来源标记（`source:"graph"`），但**标记从未被统计消费**，且 `edge_id` 从未被记录。
+  // 于是「这条边到底有没有用」在数据上无法回答，任何关于边价值的讨论都建在沙上。
+  //
+  // ## 隐私边界（硬约束，改动前先读）
+  // **只记交互标识**：`node_id` / `kp_id` / 边标识（id/source/target/type/origin）/
+  // 来源 / 时间戳（毫秒）。
+  // **绝不记**：文档正文、用户输入、选区内容、任何可直接识别个人的信息。
+  // **不落盘、不跨会话、不上报服务端、不建用户画像** —— 纯内存计数器，页面刷新即清零。
+  // 这是「埋点」不是「遥测」：数据不出页面，只用于回答"点过没有"。
+  const _graphInteractions = {
+    nodes: new Map(),
+    edges: new Map(),
+    bySource: new Map(),
+    total: 0,
+  };
+
+  /**
+   * 记录一次图交互（**只记标识，不记内容**，见上方隐私边界）。
+   * @param {string} kind 交互种类（当前只有 "nodeClick"）
+   * @param {object} node 图节点（只取 id / kp_id）
+   * @param {object|null} edgeId 边标识（来自 `_edgeIdForNode`，可为 null）
+   */
+  function recordGraphInteraction(kind, node, edgeId) {
+    const ts = Date.now();
+    _graphInteractions.total += 1;
+    const src = "graph";
+    _graphInteractions.bySource.set(src, (_graphInteractions.bySource.get(src) || 0) + 1);
+
+    const nodeId = node && (node.id || node.kp_id);
+    if (nodeId) {
+      const cur = _graphInteractions.nodes.get(nodeId) || {
+        count: 0,
+        firstTs: ts,
+        lastTs: ts,
+        kp_id: node.kp_id || null,
+      };
+      cur.count += 1;
+      cur.lastTs = ts;
+      _graphInteractions.nodes.set(nodeId, cur);
+    }
+
+    if (edgeId && edgeId.id) {
+      const cur = _graphInteractions.edges.get(edgeId.id) || {
+        count: 0,
+        firstTs: ts,
+        lastTs: ts,
+        type: edgeId.type || null,
+        origin: edgeId.origin || null,
+        source: edgeId.source || null,
+        target: edgeId.target || null,
+      };
+      cur.count += 1;
+      cur.lastTs = ts;
+      _graphInteractions.edges.set(edgeId.id, cur);
+    }
+  }
+
+  /** 可读统计（验收/调试用）：只含标识与计数，无任何文档内容。 */
+  function graphInteractionStats() {
+    return {
+      total: _graphInteractions.total,
+      nodes: [..._graphInteractions.nodes.entries()].map(([id, v]) => Object.assign({ node_id: id }, v)),
+      edges: [..._graphInteractions.edges.entries()].map(([id, v]) => Object.assign({ edge_id: id }, v)),
+      bySource: [..._graphInteractions.bySource.entries()].map(([s, c]) => ({ source: s, count: c })),
+    };
+  }
+
+  /** 扁平快照（便于 dump / 断言）：`{total, nodeHits, edgeHits, edgeIds}`。 */
+  function graphInteractionSnapshot() {
+    const s = graphInteractionStats();
+    return {
+      total: s.total,
+      nodeHits: s.nodes.length,
+      edgeHits: s.edges.length,
+      edgeIds: s.edges.map((e) => e.edge_id),
+      edgeTypes: s.edges.map((e) => e.type),
+    };
+  }
+
+  /** 清零（测试用；正常使用中页面刷新即清零，不需要手动调用）。 */
+  function resetGraphInteractions() {
+    _graphInteractions.nodes.clear();
+    _graphInteractions.edges.clear();
+    _graphInteractions.bySource.clear();
+    _graphInteractions.total = 0;
+  }
+
   let state = {
     kbPath: "",
     files: [],
@@ -171,6 +263,14 @@
   try {
     // 只读诊断（真机验证/回归用；不参与渲染）：证明"恢复分支真的执行"，而不只是"看起来没跳"
     window.__memoriaEditScrollStats = function () { return JSON.parse(JSON.stringify(_editScrollStats)); };
+  } catch (_) { /* noop */ }
+
+  try {
+    // KG-v0 D-KG-07 埋点③：图交互计数的**只读**查询口（验收/调试用）。
+    // 只暴露标识与计数；不含任何文档内容；不落盘、不上报（见上方隐私边界）。
+    window.__memoriaGraphInteractionStats = graphInteractionStats;
+    window.__memoriaGraphInteractionSnapshot = graphInteractionSnapshot;
+    window.__memoriaGraphInteractionReset = resetGraphInteractions;
   } catch (_) { /* noop */ }
 
   /** 采「预览视口顶部第一个可见块」＝锚点（srcLine + 它相对视口顶的偏移）。 */
@@ -1441,7 +1541,14 @@ async function call(fn, ...args) {
         viewOpts
       );
     }
-    const onGraphNodeClick = ({ node }) => {
+    const onGraphNodeClick = ({ node, edge_id }) => {
+      // KG-v0 D-KG-07 埋点②：图节点点击**计数消费**（此前 `source:"graph"` 标记从未被统计）。
+      //
+      // ## 隐私边界（KG-v0 D-KG-07，必须保持）
+      // 只记**交互标识**：节点 id / 边标识 / 来源 / 时间戳。
+      // **不记文档正文、不记用户输入、不落盘、不跨会话、不建用户画像** —— 纯内存计数器，
+      // 页面刷新即清零。它的唯一用途是回答「这条边/这个节点被点过吗」。
+      recordGraphInteraction("nodeClick", node, edge_id);
       if (!node?.file) return;
       jumpToTarget(
         {

@@ -1,6 +1,6 @@
 <!-- spec-version: 1.1.0 -->
-<!-- spec-deps: src/memoria/graph/edge_types.py@6229550973e9, src/memoria/graph/kb_build.py@993495fcf892, src/memoria/services/link_md.py@82b6d65f44fd, src/memoria/storage/sidecar_validate.py@1649dcff8f71, src/memoria/services/kp_resolver.py@298e86263376, src/memoria/services/agent/file_ops.py@1f812209d12d, src/memoria/ui/static/app/js/surface/render-core.js@79484c296b72, src/memoria/services/kb_agent.py@0d816956b4d0, resources/agent-prompts/fsrs.py@07271eac4613, docs/reference/preview-formats.md@0b066f6b4310 -->
-<!-- reviewed-on: 2026-10-25 -->
+<!-- spec-deps: src/memoria/graph/edge_types.py@dc7c3af6ad7e, src/memoria/graph/kb_build.py@993495fcf892, src/memoria/services/link_md.py@82b6d65f44fd, src/memoria/storage/sidecar_validate.py@1649dcff8f71, src/memoria/services/kp_resolver.py@298e86263376, src/memoria/services/agent/file_ops.py@1f812209d12d, src/memoria/ui/static/app/js/surface/render-core.js@5da5dd0f33c2, src/memoria/services/kb_agent.py@0d816956b4d0, resources/agent-prompts/fsrs.py@07271eac4613, docs/reference/preview-formats.md@0b066f6b4310 -->
+<!-- reviewed-on: 2026-10-26 -->
 # 知识库编撰与维护规范（KB Spec）
 
 > 用途：**知识库内容的事实标准**——KP 与元数据、sidecar 结构、链接与边、文档与目录、图片路径、撰写与整理规则、复习调度、收尾自检。

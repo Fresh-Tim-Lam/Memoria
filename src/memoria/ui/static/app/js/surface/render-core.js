@@ -395,11 +395,46 @@ window.MemoriaRenderCore = (function () {
     blockquote: function (block, blockIndex) {
       var el = _newBlockEl("blockquote", "", blockIndex);
       if (block.children) {
-        // 内层段落渲染为普通 <p>（**不带** -src-block / data--block-index），
-        // 与 renderer.js 同理：否则 domToAst 会定位到内层段落、多段落索引相同。
+        // 内层内容渲染为普通元素（**不带** -src-block / data--block-index）：
+        // 与 renderer.js 同理，否则 domToAst 会定位到内层段落、多段落索引相同。
+        // ★ task-155（一期）：引用块内可以出现**块级列表**（`> - item`）。内层列表不是独立块，
+        //   所以不能用 `_newBlockEl`（那会虚增块数、污染惰性门禁的 blockCount）；这里单独递归建
+        //   `<ul>/<ol>`，嵌套子列表挂在对应 `<li>` 里（与顶层列表同一套惯用结构）。
+        function buildQuoteInnerList(listNode) {
+          var tag = listNode.ordered ? "ol" : "ul";
+          var listEl = document.createElement(tag);
+          listEl.className = "-src-list -quote-list";
+          if (listNode.ordered && listNode.start > 1) listEl.setAttribute("start", String(listNode.start));
+          var items = listNode.items || [];
+          for (var ii = 0; ii < items.length; ii++) {
+            var item = items[ii];
+            if (!item) continue;
+            var li = document.createElement("li");
+            renderInlineList(item.children, li);
+            if ((!item.children || item.children.length === 0) &&
+                !(item.list && item.list.items && item.list.items.length)) {
+              li.innerHTML = "<br>";
+            }
+            if (item.list && item.list.items && item.list.items.length) {
+              li.appendChild(buildQuoteInnerList(item.list));
+            }
+            listEl.appendChild(li);
+          }
+          return listEl;
+        }
         for (var qi = 0; qi < block.children.length; qi++) {
           var inner = block.children[qi];
           if (!inner) continue;
+          if (inner.type === "list") {
+            el.appendChild(buildQuoteInnerList(inner));
+            continue;
+          }
+          if (inner.type === "blank_line") {
+            var blankEl = document.createElement("p");
+            blankEl.innerHTML = "<br>";
+            el.appendChild(blankEl);
+            continue;
+          }
           var qEl = document.createElement("p");
           renderInlineList(inner.children, qEl);
           if (!inner.children || inner.children.length === 0) qEl.innerHTML = "<br>";

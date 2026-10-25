@@ -69,6 +69,51 @@ src/memoria/__version__.py
 python -c "import sys; sys.path.insert(0,'packaging'); import build; print(build._read_version())"
 ```
 
+## 4.1 测量证据约束：三元组（硬规则，2026-10-26 起）
+
+> **依据**：`docs/design/kg-ontology-v0.md` §5.1（裁决 **D-KG-01**，最高优先）。
+> **适用范围**：任何**边/节点/图谱规模的量化断言**（`edges=…`、`N 条边`、`N 个节点`、
+> 类型占比等），出现在设计文档、验收报告、release body、提交信息里都算。
+
+### 规则
+
+```
+强制格式   (语料 sha, 测量源, 时间) 三元组 —— 缺一即 E1 无效
+```
+
+| 成分 | 说明 |
+|---|---|
+| **语料 sha** | 被测量的语料必须有可复算的哈希。仓库语料用 `git archive HEAD docs/example` 的 sha256；live worktree 必须附带 `manifest sha` |
+| **测量源** | 明确的函数/脚本（如 `collect_graph_data()` / `build_knowledge_base()`）。**不得**引用 `.memoria/build/**` 等可再生缓存 |
+| **时间** | ISO 时间戳（`YYYY-MM-DDTHH:MM:SS`） |
+
+### 为什么这是硬规则（不是形式主义）
+
+v0.5.0 的 KG 辩论里，四家对**同一个库**报出 479 / 454 / 408 / 404 / 429 五个数字：
+
+- `479` 是 **links 数**却被当成边数；
+- `408` 来自 **2026-10-23 的 `.memoria/build/graph.json` 旧缓存**（未被 git 跟踪）；
+- `454` 是 `build_knowledge_base()` 路径；`404` 是 `collect_graph_data()` 路径（**前端实际用的那条**）。
+
+没有三元组，这些数字**无法复核、无法相减、无法裁决**。
+`PROTOCOL.md` E4.3 已裁「跨口径不可相减」—— 而口径要先能标识，才谈得上"是否相同"。
+
+### 机检
+
+```powershell
+# 生成冻结语料的三元组 + 各库测量值
+python scripts/benchmark/maintenance/kg_corpus_freeze.py --json out/kg-freeze.json
+
+# 校验某个文档里的量化断言是否都带三元组（exit 1 = 有缺项）
+python scripts/benchmark/maintenance/kg_evidence_check.py docs/design/xxx.md
+
+# 自证检查器有判别力（带三元组⇒过 / 缺三元组⇒判红）
+python scripts/benchmark/maintenance/kg_evidence_check.py --self-test
+```
+
+> `kg_evidence_check.py` 用**邻近窗口**（默认前后 12 行）寻找三元组成分，
+> 因为三元组通常写成小节说明/表格头；要求同行会把规范写法也判红（那是尺子坏了，不是证据坏了）。
+
 ## 5. 版本消费链路
 
 ### 运行时（UI 显示）
