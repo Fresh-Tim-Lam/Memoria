@@ -146,7 +146,7 @@ def test_apply_plan_rejects_when_file_changed_after_preview(kb: Path, api: UIAPI
     res = apply_plan(
         str(kb),
         _plan(),
-        session_id=SESSION,
+        origin="human", session_id=SESSION,
         base_versions=preview["base_versions"],
         service=api._svc,
     )
@@ -163,7 +163,7 @@ def test_apply_plan_proceeds_when_versions_match(kb: Path, api: UIAPI) -> None:
     res = apply_plan(
         str(kb),
         _plan(),
-        session_id=SESSION,
+        origin="human", session_id=SESSION,
         base_versions=preview["base_versions"],
         service=api._svc,
     )

@@ -219,3 +219,49 @@ class GuardedPolicy:
         if not write_is_risky(request):
             return ALLOWED_ONCE
         return AskPolicy(self._answerer).decide(request)
+
+
+# ── 核心写能力的「权限声明位」（R-S2-3 / R-S2-9，2026-10-25）──────────────────
+# 为什么落在**审批域**（而不是新模块）：这条规则本来就是"审批档的安全下限"，
+# `plugins.py:294-299` 早已对**插件声明**执行同一判定；缺的只是**核心写能力**的同款声明位。
+# R-S2-9 已裁「不建 service_contract.py」——需求是真的，但落点应是审批域，不是新 facade。
+CODE_APPROVAL_REQUIRED = "APPROVAL_REQUIRED"
+
+
+class ContractViolation(Exception):
+    """审批档被违反（**分发前**抛出；绝不落盘）。`code` 稳定。"""
+
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(message)
+        self.code = code
+        self.message = message
+
+
+@dataclass(frozen=True, slots=True)
+class WriteCapability:
+    """一个**写能力**的权限声明。`permissions_write` 非空 ⇒ `approval` 不得为 `auto`。
+
+    **保护等级差异（R-S2-10，必须写进契约文档）**：
+    - **插件声明**：`plugins.py` 在**装载期**硬拒（`approval.write == auto` 且 write 非空 ⇒ 插件装载失败）；
+    - **核心写能力**：本类在**运行时**（分发前）判定 —— 因为核心能力没有"装载期"这个钩子。
+    两者**不是同一等级的保证**：前者"装不进去"，后者"每次调用前问一次"。
+    """
+
+    name: str
+    permissions_write: tuple[str, ...] = ()
+    approval_min: str = "confirm"
+
+    def require_approval(self, approval: str) -> None:
+        mode = str(approval or "").strip().lower()
+        if mode not in ("auto", "confirm", "never"):
+            raise ContractViolation(CODE_APPROVAL_REQUIRED, f"未知审批档：{approval!r}（auto/confirm/never）")
+        if self.permissions_write and mode == "auto":
+            raise ContractViolation(
+                CODE_APPROVAL_REQUIRED,
+                f"能力 {self.name} 声明了 permissions.write={list(self.permissions_write)} ⇒ "
+                "approval 不得为 auto（安全下限；与插件装载期规则同款，但等级不同：这里运行时判定）",
+            )
+
+
+#: 核心写能力：`propose_write`（改库内任意 md / sidecar；`**` = 库内全路径，不越库）。
+WRITE_CAPABILITY = WriteCapability(name="kb.write", permissions_write=("**",), approval_min="confirm")

@@ -115,3 +115,35 @@
 {"ts":"2026-10-24T17:43:03.750Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
 {"ts": "2026-10-25T01:43:19+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-120", "desc": "R-S1B-4: heading=None静默返sections[0]是生产缺陷必须修；R-S1B-5撤回我那条裁决"}
 {"ts": "2026-10-25T01:43:19+08:00", "actor": "lead", "phase": "spawn", "target": "steward", "task": "task-127", "desc": "静默默认缺陷机检方案提案（T1/T2/T3，只提案不实现）", "mode": "mechanical", "modeExplicit": true}
+{"ts":"2026-10-24T17:43:25.514Z","actor":"lead","phase":"message","target":"steward","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:45:00.168Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:45:14.055Z","actor":"agent-arch","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:45:32.401Z","actor":"steward","phase":"done","target":"steward","task":"task-127","outcome":"pass","report":"artifacts/agent/verify/debate/PROPOSAL-silent-default-check.md","evidence":"artifacts/agent/verify/debate/PROPOSAL-silent-default-check.md","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:45:42.883Z","actor":"steward","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:49:31+08:00", "actor": "lead", "phase": "done", "target": "steward", "task": "task-127", "desc": "静默默认机检提案：三型全指不到条款判得对；采纳kill criteria；暂不升L11", "outcome": "pass", "report": "artifacts/agent/verify/debate/PROPOSAL-silent-default-check.md"}
+{"ts":"2026-10-24T17:50:23.335Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:50:30.150Z","actor":"arch-contract","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:50:58.145Z","actor":"lead","phase":"done","target":"agent-arch","task":"task-120","outcome":"pass","report":"artifacts/agent/verify/todo/s1-granularity-report.md","evidence":"artifacts/agent/verify/todo/s1-granularity-report.md,artifacts/agent/verify/todo/s1-granularity-acceptance.md,artifacts/agent/verify/todo/s1a-read-api.json,artifacts/agent/verify/todo/s1a-granularity-ab.json,artifacts/agent/verify/todo/s1b-replace-section.json,artifacts/agent/verify/todo/s1c-headings-census.json,artifacts/agent/verify/todo/s1c-kp-end-impact.json,artifacts/agent/verify/todo/s1b-4-red-before-fix.txt,src/memoria/services/agent/section_index.py","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:51:09.857Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:51:14+08:00", "actor": "lead", "phase": "done", "target": "arch-contract", "task": "task-120", "desc": "S1独立验收通过；独立否定回退A/B证据并补0.20%触发表面积数据", "outcome": "pass", "report": "artifacts/agent/verify/todo/s1-granularity-acceptance.md"}
+{"ts": "2026-10-25T01:51:14+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-121", "desc": "S2进程内契约层T1-T4+写安全W1-W4（R-L2硬需求）；注意gate/constrain死字段"}
+{"ts":"2026-10-24T17:52:45.397Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:53:28.103Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T17:57:37.763Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T01:57:45+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-121", "desc": "R-S2-1接缝缺陷P1(粒度读不喂W2观察表)+R-S2-2(W1没人调≠调不了)+R-S2-3不对称保护；要求读写混合重跑A/B"}
+{"ts":"2026-10-24T17:59:44.695Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:02:23.045Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:02:38.563Z","actor":"lead","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:03:33.012Z","actor":"agent-arch","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:04:04.051Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T02:04:11+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-121", "desc": "R-S2-4..7：批准b-lite清关令牌(tamper-evident)+读侧facade不做+W2闸是入口级非应用级"}
+{"ts": "2026-10-25T02:04:11+08:00", "actor": "lead", "phase": "spawn", "target": "arch-contract", "task": "task-128", "desc": "提前审S2契约文档初稿（facade消费者/收私有够不够硬/W4不对称）", "mode": "deep", "modeExplicit": true}
+{"ts":"2026-10-24T18:05:25.596Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:06:09.602Z","actor":"lead","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:06:18.368Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:07:30.484Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}
+{"ts": "2026-10-25T02:07:42+08:00", "actor": "lead", "phase": "message", "target": "agent-arch", "task": "task-121", "desc": "P0：origin必填但两处调用点未改⇒31测试红；R-S2-12/R-S2-13"}
+{"ts":"2026-10-24T18:07:49.320Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:08:33.237Z","actor":"lead","phase":"message","target":"arch-contract","source":"dsh-agent-team"}
+{"ts":"2026-10-24T18:08:50.435Z","actor":"arch-contract","phase":"message","target":"lead","source":"dsh-agent-team"}
+{"ts":"2026-10-25T01:14:15.926Z","actor":"lead","phase":"message","target":"agent-arch","source":"dsh-agent-team"}

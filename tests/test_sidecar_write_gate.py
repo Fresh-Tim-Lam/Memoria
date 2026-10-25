@@ -144,7 +144,7 @@ def test_batch_repairs_several_broken_kps_in_one_pass(kb: Path, service: Documen
     }
     compiled = compile_plan(str(kb), plan, service=service)
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
+        str(kb), plan, origin="human", session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
     )
     assert done["status"] == "ok", f"整批必须过（真机在这里全批失败）：{done}"
 
@@ -178,7 +178,7 @@ def test_body_edit_not_blocked_by_an_existing_kp_defect(kb: Path, service: Docum
     }
     compiled = compile_plan(str(kb), plan, service=service)
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
+        str(kb), plan, origin="human", session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
     )
     assert done["status"] == "ok", f"正文改动必须放行：{done}"
     assert "第一段（精简）。" in (kb / "notes" / "a.md").read_text(encoding="utf-8"), "正文真改了"

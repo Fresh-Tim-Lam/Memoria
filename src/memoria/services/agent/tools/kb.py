@@ -73,7 +73,12 @@ MAX_ISSUES_IN_REPORT = 20
 KB_TOOL_NAMES = (
     "search_kb", "read_document", "read_kp", "kb_overview",
     "validate_kb", "search_sessions",
-    "glob", "grep", "read_image", "skill",
+    "glob", "grep", "read_image",
+    # S1a 三级读粒度（task-120）：**顺序必须与 build_kb_tools() 的拼接顺序一致**
+    # （`read_image` 之后、`*_skill_tools` 之前）—— 本表与实现漂移会被
+    # tests/test_agent_tools_read.py::test_new_read_tools_registered_and_read_only 抓到。
+    "outline", "section", "snippet",
+    "skill",
     "session_event_search", "session_trace", "session_event_trace", "session_event_read",
     "resolve_reference",
     "audit_references", "propose_write", "ask_user_question", "web_search", "fetch_url",
@@ -670,7 +675,7 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_granular_read_tools(root, session_id),
+        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id),
     )
 
 
@@ -3136,6 +3141,7 @@ def _propose_write(
     *,
     session_id: str | None = None,
     service: Any = None,
+    gate_token: str | None = None,
 ) -> ToolOutput:
     """校验 + dry-run 之后**直接落盘**（写前自动备份、失败零写入），并把回执排给前端。
 
@@ -3161,6 +3167,9 @@ def _propose_write(
         "v": PLAN_VERSION,
         "txid": _next_txid(kb_path, str(session_id or "").strip() or AUTO_SESSION_ID, time.gmtime()),
         "intent": intent,
+        # W1（R-S2-6）：标记本批来自 **agent 入口**（`propose_write`）。`apply_plan` 见到它就必须
+        # 校验一次性清关令牌 —— 这是"入口级闸"在应用层的可检测影子，不是权限证书。
+        "origin": "agent",
         "ops": ops,
     }
     checker = _ValidationService(kb_path)  # 只借它的 check_kp_id 做校验（局部名，勿与写入用的 service 混淆）
@@ -3199,6 +3208,8 @@ def _propose_write(
         base_versions=preview.get("base_versions"),
         auto=True,
         service=service,
+        origin="agent",
+        gate_token=gate_token,
     )
     _PROPOSALS.setdefault(os.path.abspath(kb_path), []).append(
         {"plan": plan, "preview": preview, "result": result, "session_id": sid}
@@ -3261,7 +3272,20 @@ def _write_proposal_tools(
         blocked = _observation_block(kb_path, session_id, arguments)
         if blocked is not None:
             return blocked
-        return _propose_write(kb_path, arguments, session_id=session_id, service=service)
+        # W1（R-S2-6）：过闸即签发**一次性清关令牌** —— `apply_plan` 只对携带有效令牌的
+        # `origin=agent` 写入放行，从而让"跳过 propose_write 直接调 apply_plan"在任何写盘之前失败。
+        from memoria.services.agent import observation as _obs
+
+        token = _obs.issue_clearance(kb_path, session_id, arguments.get("ops") or [])
+        if token is None:  # 理论上不可达（上面刚过闸）；防御性：按未读即写拒
+            return ToolOutput(
+                text=error_text(f"{PROPOSE_TOOL_NAME}: 读后写闸未放行，本批不写", _obs.CODE_NOT_OBSERVED),
+                error=True,
+                code=_obs.CODE_NOT_OBSERVED,
+            )
+        return _propose_write(
+            kb_path, arguments, session_id=session_id, service=service, gate_token=token
+        )
 
     return (
         Tool(

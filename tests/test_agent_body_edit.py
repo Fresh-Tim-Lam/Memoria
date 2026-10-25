@@ -266,7 +266,7 @@ def test_apply_body_edit_writes_only_that_line_and_undo_restores(kb: Path, servi
     done = apply_plan(
         str(kb),
         plan,
-        session_id=SESSION,
+        origin="human", session_id=SESSION,
         txid=TXID,
         base_versions=compiled["base_versions"],
         service=service,
@@ -285,7 +285,7 @@ def test_apply_delete_and_insert_lines(kb: Path, service: DocumentService) -> No
         {"op": "delete_lines", "op_id": "o2", "file": "notes/a.md", "range": {"start": 5, "end": 5}, "expect": "末尾一行。"},
         {"op": "insert_lines", "op_id": "o1", "file": "notes/a.md", "after": 1, "expect": "# A 文档", "text": "新增一段。"},
     )
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T101501Z-02", service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid="20260921T101501Z-02", service=service)
     assert done["status"] == "ok", done
     text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert text == "# A 文档\n新增一段。\n\n注意力机制是核心。\n\n"
@@ -301,7 +301,7 @@ def test_apply_uses_the_batch_view_line_numbers(kb: Path, service: DocumentServi
         {"op": "insert_lines", "op_id": "o1", "file": "notes/a.md", "after": 1, "expect": "# A 文档", "text": "新增一段。"},
         {"op": "delete_lines", "op_id": "o2", "file": "notes/a.md", "range": {"start": 6, "end": 6}, "expect": "末尾一行。"},
     )
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T101503Z-01", service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid="20260921T101503Z-01", service=service)
     assert done["status"] == "ok", done
     text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert text == "# A 文档\n新增一段。\n\n注意力机制是核心。\n\n"
@@ -316,7 +316,7 @@ def test_apply_body_edit_rejects_stale_expect(kb: Path, service: DocumentService
     after = _sha(path)
 
     res = apply_plan(
-        str(kb), plan, session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
+        str(kb), plan, origin="human", session_id=SESSION, txid=TXID, base_versions=compiled["base_versions"], service=service
     )
     assert res["status"] == "error" and res["code"] == "stale_write"
     assert _sha(path) == after
@@ -398,7 +398,7 @@ def test_upsert_block_rebuilds_code_fence(tmp_path: Path) -> None:
     assert [row["before"] for row in entry["diff"] if row["before"] is not None] == ["```python", "print(1)", "```"]
 
     done = apply_plan(
-        str(root), plan, session_id=SESSION, txid="20260921T101502Z-03", service=service
+        str(root), plan, origin="human", session_id=SESSION, txid="20260921T101502Z-03", service=service
     )
     assert done["status"] == "ok", done
     text = (root / "notes" / "c.md").read_text(encoding="utf-8")
@@ -427,7 +427,7 @@ def test_upsert_block_math_and_mermaid(tmp_path: Path) -> None:
             "content": "E = mc^2",
         }
     )
-    assert apply_plan(str(root), plan, session_id=SESSION, txid="20260921T101503Z-04", service=service)["status"] == "ok"
+    assert apply_plan(str(root), plan, origin="human", session_id=SESSION, txid="20260921T101503Z-04", service=service)["status"] == "ok"
     assert "$$\nE = mc^2\n$$" in (root / "notes" / "c.md").read_text(encoding="utf-8")
 
     mroot = _kb_with(tmp_path, MERMAID_MD)  # 同一 fixture 目录下的另一个库
@@ -443,7 +443,7 @@ def test_upsert_block_math_and_mermaid(tmp_path: Path) -> None:
             "content": "graph LR\nX-->Y",
         }
     )
-    assert apply_plan(str(mroot), plan, session_id=SESSION, txid="20260921T101504Z-05", service=service)["status"] == "ok"
+    assert apply_plan(str(mroot), plan, origin="human", session_id=SESSION, txid="20260921T101504Z-05", service=service)["status"] == "ok"
     text = (mroot / "notes" / "c.md").read_text(encoding="utf-8")
     assert "```mermaid\ngraph LR\nX-->Y\n```" in text  # 语言标记由程序保留（不用模型重复写）
 
@@ -521,7 +521,7 @@ def test_expect_can_address_a_leading_empty_line(tmp_path: Path) -> None:
     )
     checked = validate_plan(str(root), plan, service=service)
     assert checked["status"] == "ok", checked
-    done = apply_plan(str(root), plan, session_id=SESSION, txid="20260921T101505Z-06", service=service)
+    done = apply_plan(str(root), plan, origin="human", session_id=SESSION, txid="20260921T101505Z-06", service=service)
     assert done["status"] == "ok", done
     assert (root / "notes" / "c.md").read_text(encoding="utf-8") == body
 

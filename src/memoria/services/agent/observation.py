@@ -44,7 +44,10 @@ __all__ = [
     "CODE_STALE_VERSION",
     "AUTO_OWNER",
     "clear",
+    "clear_clearances",
+    "consume_clearance",
     "gate_ops",
+    "issue_clearance",
     "record_absent",
     "record_read",
     "session_owner",
@@ -64,6 +67,13 @@ _lock = threading.RLock()
 #: （= 上游"观察态不跨会话存活，resume 后须重读"）。条数随会话数增长，但每个会话只记它读过的文件，
 #: 桌面端一个进程里会话数有限 ⇒ 不做淘汰（与 `approval_bridge` 同性质的运行期状态）。
 _STATE: dict[tuple[str, str], dict[str, tuple[bool, str]]] = {}
+
+#: **清关令牌（R-S2-1/W1，2026-10-25）**：`库根` → `{token: True}`（单次使用，消费即删）。
+#: 为什么需要：W2 闸在 `propose_write` **入口**，而 `apply_plan` 是模块公开函数 ——
+#: 「没人从别处调」不等于「别处调不了」（Python 进程内拦不住 import）。本表让"声称 `origin=agent`
+#: 却没经过闸"的路径**在任何写盘之前**被拒（`WRITE_GATE_BYPASS`），而不是靠约定。
+#: 诚实边界：进程内无法阻止 monkeypatch/伪造；真正"绕不过"要等进程边界（S3 MCP）。
+_CLEARANCES: dict[str, set[str]] = {}
 
 
 def session_owner(session_id: str | None) -> str:
@@ -188,3 +198,48 @@ def gate_ops(
                 "按新的行号与原文重提这一批（别照着记忆改）。",
             )
     return None
+
+
+# ── 清关令牌（W1：让"跳过 propose_write 的写入"在写盘前被拒，而非靠约定）──────────
+CODE_GATE_BYPASS = "WRITE_GATE_BYPASS"
+
+
+def issue_clearance(
+    kb_path: str,
+    session_id: str | None,
+    ops: Iterable[Mapping[str, Any]],
+    *,
+    current_version=None,
+) -> str | None:
+    """写入口专用：**先过闸再签发**一次性令牌。闸不过 ⇒ `None`（调用方据此拒绝整批）。
+
+    令牌不是"权限证书"，而是"这一批确实过了 W2 闸"的**单批凭据**：
+    `apply_plan` 会消费它（单次使用）后才允许 `origin=agent` 的写入落盘。
+    """
+    import secrets
+
+    if gate_ops(kb_path, session_id, ops, current_version=current_version) is not None:
+        return None
+    token = f"clr-{secrets.token_hex(16)}"
+    with _lock:
+        _CLEARANCES.setdefault(_key(kb_path, session_owner(session_id))[0], set()).add(token)
+    return token
+
+
+def consume_clearance(kb_path: str, session_id: str | None, token: str | None) -> bool:
+    """消费令牌（单次）：在**任何写盘之前**调用；无效/缺失/已用过 ⇒ `False`。"""
+    raw = str(token or "").strip()
+    if not raw:
+        return False
+    with _lock:
+        bucket = _CLEARANCES.get(os.path.abspath(kb_path or ""))
+        if not bucket or raw not in bucket:
+            return False
+        bucket.discard(raw)
+        return True
+
+
+def clear_clearances(kb_path: str) -> None:
+    """清掉某库的全部未消费令牌（测试/换库用）。"""
+    with _lock:
+        _CLEARANCES.pop(os.path.abspath(kb_path or ""), None)

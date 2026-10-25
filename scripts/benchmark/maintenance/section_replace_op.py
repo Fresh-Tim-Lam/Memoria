@@ -34,6 +34,12 @@ import uuid
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, os.path.join(REPO, "src"))
 
+# ── 密封性（R-S1A-3）：`DocumentService.__post_init__` 会调 `remember_last_kb_path()`
+# 写**全局** UI 设置（`config/ui-settings.json`）；app 运行时该文件被占用 ⇒ PermissionError。
+# 把 config 目录重定向到临时目录，测量才能密封可复跑，且**不改全局配置**。
+_SEALED_CONFIG_DIR = tempfile.mkdtemp(prefix="memoria-cfg-")
+os.environ.setdefault("MEMORIA_CONFIG_DIR", _SEALED_CONFIG_DIR)
+
 from memoria.services.agent import apply as apply_mod  # noqa: E402
 from memoria.services.agent import backup as backup_mod  # noqa: E402
 from memoria.services.agent.plan import (  # noqa: E402

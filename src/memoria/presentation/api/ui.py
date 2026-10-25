@@ -1664,6 +1664,7 @@ class UIAPI:
                 session_id=sid,
                 base_versions=base_versions if isinstance(base_versions, dict) else None,
                 service=service,
+                origin="human",
             )
         except (OSError, ValueError) as e:
             return {"status": "error", "code": "apply_failed", "message": str(e), "session_id": sid}

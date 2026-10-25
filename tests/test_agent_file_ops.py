@@ -97,7 +97,7 @@ def test_create_file_round_trip_and_undo(kb: Path, service: DocumentService) -> 
     assert [call["primitive"] for call in compiled["calls"]] == ["create_file"]
 
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid="20260921T200000Z-01",
+        str(kb), plan, origin="human", session_id=SESSION, txid="20260921T200000Z-01",
         base_versions=compiled["base_versions"], service=service,
     )
     assert done["status"] == "ok", done
@@ -147,7 +147,7 @@ def test_rename_plan_lists_cascade_and_apply_undo_restores_bytes(kb: Path, servi
     assert "notes/注意力.md" in compiled["files"]
 
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid="20260921T200001Z-02",
+        str(kb), plan, origin="human", session_id=SESSION, txid="20260921T200001Z-02",
         base_versions=compiled["base_versions"], service=service,
     )
     assert done["status"] == "ok", done
@@ -218,7 +218,7 @@ def test_create_file_may_share_a_batch_with_kp_and_links(kb: Path, service: Docu
     )
     checked = validate_plan(str(kb), plan, service=service)
     assert checked["status"] == "ok", checked
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid=txid, service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid=txid, service=service)
     assert done["status"] == "ok", done
     assert (kb / "notes" / "新文档.md").is_file()
     assert "[[注意力机制]]" in (kb / "notes" / "a.md").read_text(encoding="utf-8")
@@ -308,7 +308,7 @@ def test_delete_allowed_once_the_same_batch_drops_the_reference(kb: Path, servic
     assert [call["primitive"] for call in compiled["calls"]] == ["edit_body", "delete_file"]
 
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid=txid,
+        str(kb), plan, origin="human", session_id=SESSION, txid=txid,
         base_versions=compiled["base_versions"], service=service,
     )
     assert done["status"] == "ok", done
@@ -432,7 +432,7 @@ def test_move_moves_md_and_sidecar_and_undo_restores_bytes(kb: Path, service: Do
     assert [call["primitive"] for call in compiled["calls"]] == ["move_file"]
 
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid=txid,
+        str(kb), plan, origin="human", session_id=SESSION, txid=txid,
         base_versions=compiled["base_versions"], service=service,
     )
     assert done["status"] == "ok", done
@@ -453,7 +453,7 @@ def test_move_auto_creates_the_target_dir(kb: Path, service: DocumentService) ->
     """目标目录不存在 ⇒ 自动建（与 `create_file` 的"父目录自动建"同口径）。"""
     assert not (kb / "notes" / "deep" / "nested").exists()
     plan = _plan({"op": "move_file", "op_id": "o1", "file": "notes/a.md", "to_dir": "notes/deep/nested"})
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260922T210001Z-01", service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid="20260922T210001Z-01", service=service)
     assert done["status"] == "ok", done
     assert (kb / "notes" / "deep" / "nested" / "a.md").is_file()
 
@@ -486,7 +486,7 @@ def test_move_allows_root_relative_refs(kb: Path, service: DocumentService) -> N
     )
     plan = _plan({"op": "move_file", "op_id": "o1", "file": "notes/a.md", "to_dir": "notes/phrases"})
     assert validate_plan(str(kb), plan, service=service)["status"] == "ok"
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260922T210002Z-01", service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid="20260922T210002Z-01", service=service)
     assert done["status"] == "ok", done
     assert (kb / "notes" / "phrases" / "a.md").is_file()
 
@@ -500,7 +500,7 @@ def test_move_may_repeat_in_one_batch_but_later_ops_are_rejected(kb: Path, servi
     checked = validate_plan(str(kb), two_moves, service=service)
     assert checked["status"] == "ok", checked
     done = apply_plan(
-        str(kb), two_moves, session_id=SESSION, txid="20260922T210003Z-01", service=service
+        str(kb), two_moves, origin="human", session_id=SESSION, txid="20260922T210003Z-01", service=service
     )
     assert done["status"] == "ok", done
     assert (kb / "notes" / "phrases" / "a.md").is_file()
@@ -557,7 +557,7 @@ def test_move_file_treats_root_spellings_as_library_root(
     assert move_plan(str(kb), "notes/b.md", to_dir)["ok"] is True, "计划期必须放行"
 
     done = apply_plan(
-        str(kb), plan, session_id=SESSION, txid="20260921T200002Z-01",
+        str(kb), plan, origin="human", session_id=SESSION, txid="20260921T200002Z-01",
         base_versions=compiled["base_versions"], service=service,
     )
     assert done["status"] == "ok", done
@@ -600,7 +600,7 @@ def test_insert_image_ref_writes_one_line_and_undo_restores(kb: Path, service: D
     added = [row["after"] for row in entry["diff"] if row["after"] is not None]
     assert added == ['![结构图](<.memoria/images/结构图.png> "width=300,align=center")']
 
-    done = apply_plan(str(kb), plan, session_id=SESSION, txid="20260921T200002Z-03", service=service)
+    done = apply_plan(str(kb), plan, origin="human", session_id=SESSION, txid="20260921T200002Z-03", service=service)
     assert done["status"] == "ok", done
     text = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert '![结构图](<.memoria/images/结构图.png> "width=300,align=center")' in text

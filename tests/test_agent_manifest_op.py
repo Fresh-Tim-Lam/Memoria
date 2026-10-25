@@ -105,7 +105,7 @@ def _apply(kb: Path, service: DocumentService, plan: dict) -> dict:
     compiled = compile_plan(str(kb), plan, service=service)
     assert compiled["status"] == "ok", compiled
     return apply_plan(
-        str(kb), plan, session_id=SESSION, txid=TXID,
+        str(kb), plan, origin="human", session_id=SESSION, txid=TXID,
         base_versions=compiled["base_versions"], service=service,
     )
 

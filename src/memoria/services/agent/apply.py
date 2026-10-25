@@ -58,6 +58,10 @@ from memoria.storage.manifest import manifest_path
 from memoria.storage.pending import pending_path
 from memoria.storage.sidecar import sidecar_path_for
 
+#: 写入来源未声明/非法（R-S2-8）。`apply_plan` 的 `origin` 是**必填参数**，
+#: 漏传在签名层就是 `TypeError`；本码用于"传了但取值非法"（`""` / 未知值）。
+CODE_WRITE_ORIGIN_REQUIRED = "WRITE_ORIGIN_REQUIRED"
+
 
 class _ApplyError(RuntimeError):
     """某个原语返回非 ok ⇒ 触发整批回滚。"""
@@ -527,12 +531,14 @@ def apply_plan(
     plan: Any,
     *,
     session_id: str,
+    origin: str,
     txid: str | None = None,
     base_versions: dict | None = None,
     plugin: str | None = None,
     tool_id: str | None = None,
     service: Any = None,
     auto: bool = False,
+    gate_token: str | None = None,
 ) -> dict:
     """执行整批（all-or-nothing）。返回 `{status, txid, dir, applied[], files, warnings}`。
 
@@ -541,11 +547,51 @@ def apply_plan(
 
     `auto`（2026-09-21 追加，可选）：本次写入是**没有人工闸门**的（agent 工具调用内直接落盘，
     见设计 §4 Q7）。只影响返回与审计里的标注（`auto: true`），不改变任何写入语义。
+
+    `origin`（**必填，R-S2-8**）：`"agent"`（经 `propose_write`，必须携带 W2 清关令牌）或
+    `"human"`（人类确认卡路径，`ui.agent_plan_apply`）。**为什么不放在 plan 字段里**：
+    plan 由前端构造、经 `agent_plan_apply` 传回，属**不可信输入** —— 不写该字段就能绕过
+    （arch-contract 2026-10-25 实测 fail-open）。函数参数由**调用点**决定，漏传在签名层即
+    `TypeError`；取值非法 ⇒ 拒（**不默认成 human**）。
     """
     from memoria.services.document import DocumentService
 
     service = service or DocumentService(kb_path=kb_path)
     auto_flag = bool(auto)
+    # **W1：写入来源必须显式声明**（R-S2-8，2026-10-25）。`origin` 是**函数参数**而不是 plan 字段：
+    # plan 是不可信输入（前端构造 → agent_plan_apply 传回），不写字段就能绕过 —— arch-contract 实测 fail-open。
+    # 现在：漏传 ⇒ Python 签名层 `TypeError`；取值非法 ⇒ 在这里拒（**不默认成 human**）。
+    origin_mode = str(origin or "").strip().lower()
+    if origin_mode not in ("agent", "human"):
+        return {
+            "status": "error",
+            "code": CODE_WRITE_ORIGIN_REQUIRED,
+            "message": (
+                f"未知写入来源 origin={origin!r} —— 必须在调用点显式声明 `origin=\"agent\"`"
+                "（经 propose_write）或 `origin=\"human\"`（人类确认卡路径）；不会默认成 human。"
+            ),
+            "applied": [],
+            "files": [],
+            "txid": str(txid or "").strip(),
+        }
+    # **W1：agent 写入必须携带 W2 清关令牌**（R-S2-1/W1）。
+    # 声称 agent 却没有令牌 ⇒ 在**任何备份与写盘之前**拒，让"绕过 propose_write"会失败
+    # （诚实边界：进程内拦不住 monkeypatch，真正的强制边界在进程边界/S3）。
+    if origin_mode == "agent":
+        from memoria.services.agent import observation
+
+        if not observation.consume_clearance(kb_path, session_id, gate_token):
+            return {
+                "status": "error",
+                "code": observation.CODE_GATE_BYPASS,
+                "message": (
+                    "写入声称来自 agent（plan.origin=agent），但没有有效的清关令牌 —— "
+                    "说明它没有经过 `propose_write` 的读后写闸。请走 `propose_write` 提交这一批。"
+                ),
+                "applied": [],
+                "files": [],
+                "txid": str(txid or "").strip(),
+            }
     # **写冲突保护（§9）**：调用方给了"用户看过的那一版"（`preview_plan()` 返回的 `base_versions`）
     # ⇒ **先比版本再谈 plan**：文件都变了，报"plan 非法"是误导（真实原因是内容过期）。
     if base_versions:

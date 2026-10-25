@@ -74,7 +74,7 @@ def _cap_types(kb: Path, session_id: str = SESSION) -> list[str]:
 
 def test_apply_success_and_rejection_are_audited(kb: Path, api: UIAPI) -> None:
     """落地成功 ⇒ `capability/apply{status:ok}`；被版本保护拒绝 ⇒ 同样留痕（不同 status/code）。"""
-    ok = apply_plan(str(kb), _plan(), session_id=SESSION, service=api._svc)
+    ok = apply_plan(str(kb), _plan(), origin="human", session_id=SESSION, service=api._svc)
     assert ok["status"] == "ok" and ok["audit"]["status"] == "ok", ok
     assert _cap_types(kb) == ["capability/apply"]
     events = [e for e in _events(kb) if e["type"] == "capability/apply"]
@@ -82,7 +82,7 @@ def test_apply_success_and_rejection_are_audited(kb: Path, api: UIAPI) -> None:
     assert events[0]["data"]["dir"] and events[0]["data"]["applied"]
 
     stale = apply_plan(
-        str(kb), _plan(), session_id=SESSION, base_versions={"notes/a.md": "deadbeef"}, service=api._svc
+        str(kb), _plan(), origin="human", session_id=SESSION, base_versions={"notes/a.md": "deadbeef"}, service=api._svc
     )
     assert stale["code"] == "stale_write" and stale["audit"]["status"] == "ok"
     last = _events(kb)[-1]
@@ -91,7 +91,7 @@ def test_apply_success_and_rejection_are_audited(kb: Path, api: UIAPI) -> None:
 
 def test_undo_is_audited(kb: Path, api: UIAPI) -> None:
     """撤销也留痕（`capability/undo`，带 txid 与逐文件动作）。"""
-    assert apply_plan(str(kb), _plan(), session_id=SESSION, service=api._svc)["status"] == "ok"
+    assert apply_plan(str(kb), _plan(), origin="human", session_id=SESSION, service=api._svc)["status"] == "ok"
     undone = restore_batch(str(kb), SESSION, TXID)
     assert undone["status"] == "ok" and undone["audit"]["status"] == "ok"
     events = [e for e in _events(kb) if e["type"] == "capability/undo"]
@@ -106,7 +106,7 @@ def test_apply_internal_rollback_does_not_fake_an_undo(kb: Path, api: UIAPI, mon
         return {"status": "error", "message": "注入的失败"}
 
     monkeypatch.setattr(DocumentService, "confirm_kp_range", _boom)
-    res = apply_plan(str(kb), _plan(), session_id=SESSION, service=api._svc)
+    res = apply_plan(str(kb), _plan(), origin="human", session_id=SESSION, service=api._svc)
     assert res["status"] == "error" and res["code"] == "apply_failed", res
     types = _cap_types(kb)
     assert types == ["capability/apply"] and "capability/undo" not in types
@@ -144,7 +144,7 @@ def test_recover_after_write_clears_cache_and_validates(kb: Path) -> None:
 
 def test_preview_detach_links_now_gives_body_diff(kb: Path, api: UIAPI) -> None:
     """`detach_links` 的 dry-run 不再只是"将作用于哪些行"，而是给出**行级 before/after**。"""
-    assert apply_plan(str(kb), _plan(), session_id=SESSION, service=api._svc)["status"] == "ok"
+    assert apply_plan(str(kb), _plan(), origin="human", session_id=SESSION, service=api._svc)["status"] == "ok"
     attach = {
         "v": 1,
         "txid": "20260920T021101Z-08",
@@ -159,7 +159,7 @@ def test_preview_detach_links_now_gives_body_diff(kb: Path, api: UIAPI) -> None:
             }
         ],
     }
-    res = apply_plan(str(kb), attach, session_id=SESSION, service=api._svc)
+    res = apply_plan(str(kb), attach, origin="human", session_id=SESSION, service=api._svc)
     assert res["status"] == "ok", res
 
     detach = {

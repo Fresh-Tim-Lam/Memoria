@@ -23,6 +23,11 @@ falseHeadingInFrontmatter(0) / duplicateTextCount(33) / h1(279) / levelDist。
 其余落点必须在 `PENDING_UNIFICATION` 白名单里（= 已登记的债，不允许**新增**）——
 出现白名单外的新落点 ⇒ FAIL。这样"债不增长"是被机器钉住的，而不是靠记性。
 
+**范围澄清（arch-contract 验收时指出，防未来误读）**：本机检**只扫 `.py`**。
+前端渲染层的 heading 正则（`ui/static/app/js/{lexer,markdown-preview,app,math-normalize}.js` 等）
+**不在本机检范围内** —— 它们是渲染层解析，不是 section 寻址语义，且 task-120 写域不含前端；
+"全仓无第二套 heading 正则"这句话的**准确口径**是「**Python 写路径**已统一，其余为已登记债」。
+
 ## 用法
 
     python scripts/benchmark/maintenance/section_headings_census.py            # 断言 + 人类可读
@@ -39,9 +44,16 @@ import json
 import os
 import re
 import sys
+import tempfile
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
 sys.path.insert(0, os.path.join(REPO, "src"))
+
+# ── 密封性（R-S1A-3）：`DocumentService.__post_init__` 会调 `remember_last_kb_path()`
+# 写**全局** UI 设置（`config/ui-settings.json`）；app 运行时该文件被占用 ⇒ PermissionError。
+# 把 config 目录重定向到临时目录，测量才能密封可复跑，且**不改全局配置**。
+_SEALED_CONFIG_DIR = tempfile.mkdtemp(prefix="memoria-cfg-")
+os.environ.setdefault("MEMORIA_CONFIG_DIR", _SEALED_CONFIG_DIR)
 
 from memoria.services.heading_proposals import (  # noqa: E402
     HEADING_LEVEL_MAX,

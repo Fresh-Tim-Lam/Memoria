@@ -204,7 +204,7 @@ def test_journal_and_post_files_are_valid_json(kb: Path) -> None:
 
 
 def _two_batches(kb: Path) -> None:
-    """造两批连续的写入（第二批的 pre-image 就是第一批写后的盘面），并按 `apply_plan()` 的做法固化起点。"""
+    """造两批连续的写入（第二批的 pre-image 就是第一批写后的盘面），并按 `apply_plan(, origin="human")` 的做法固化起点。"""
     a = kb / "notes" / "a.md"
     snapshot_pre_images(str(kb), SESSION, _txid(1), ["notes/a.md"])
     ensure_origin(str(kb), SESSION, _txid(1), ["notes/a.md"])  # 起点 = 第一批的 pre-image（对话开始前）
@@ -326,7 +326,7 @@ def test_force_session_constant_matches_the_file_version_one() -> None:
 
 
 def _write_batch(kb: Path, n: int, text: str, rel: str = "notes/a.md") -> str:
-    """按 `apply_plan()` 的做法造一批（并压栈）：pre-image → 固化起点 → 改盘 → post → 写后镜像 → 压栈。
+    """按 `apply_plan(, origin="human")` 的做法造一批（并压栈）：pre-image → 固化起点 → 改盘 → post → 写后镜像 → 压栈。
 
     返回该批 txid。需要造"当时没存写后镜像"的旧批次时，直接手写这几步、跳过 `snapshot_after_images()`。
     """

@@ -99,7 +99,7 @@ def _attach(**extra: Any) -> dict[str, Any]:
 def test_apply_upsert_kp_then_attach_links(kb: Path, service: DocumentService) -> None:
     """① 建点：sidecar 落地、md 不动、post.json 落盘、全库一致；同 id 再跑 = 更新（不重复）。"""
     md_before = _sha(kb / "notes" / "a.md")
-    first = apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)
+    first = apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)
     assert first["status"] == "ok", first
     assert first["backup"]["files"] and first["post_images"] is True
     assert (Path(first["dir"]) / "post.json").is_file()
@@ -109,7 +109,7 @@ def test_apply_upsert_kp_then_attach_links(kb: Path, service: DocumentService) -
     assert [kp["id"] for kp in sidecar["knowledge_points"]] == ["attention"]
     assert service.validate_kb()["errors"] == 0
 
-    again = apply_plan(str(kb), _plan(_upsert(), txid="20260920T021101Z-08"), session_id=SESSION, service=service)
+    again = apply_plan(str(kb), _plan(_upsert(), txid="20260920T021101Z-08"), origin="human", session_id=SESSION, service=service)
     assert again["status"] == "ok"
     assert [kp["id"] for kp in _sidecar(kb)["knowledge_points"]] == ["attention"]  # 幂等：仍只有一个
 
@@ -123,8 +123,8 @@ def test_apply_upsert_kp_then_attach_links(kb: Path, service: DocumentService) -
 
 def test_apply_attach_links_wraps_and_is_idempotent(kb: Path, service: DocumentService) -> None:
     """② 挂链接：正文包裹成 `[[锚文本]]`、sidecar 记路由；重复执行**不二次包裹**。"""
-    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
-    first = apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), session_id=SESSION, service=service)
+    assert apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)["status"] == "ok"
+    first = apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), origin="human", session_id=SESSION, service=service)
     assert first["status"] == "ok", first
 
     body = (kb / "notes" / "a.md").read_text(encoding="utf-8")
@@ -138,7 +138,7 @@ def test_apply_attach_links_wraps_and_is_idempotent(kb: Path, service: DocumentS
     assert {inst["line"] for inst in link["instances"]} == {3}
     assert service.validate_kb()["errors"] == 0
 
-    second = apply_plan(str(kb), _plan(_attach(), txid="20260920T021102Z-09"), session_id=SESSION, service=service)
+    second = apply_plan(str(kb), _plan(_attach(), txid="20260920T021102Z-09"), origin="human", session_id=SESSION, service=service)
     assert second["status"] == "ok", second
     body2 = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert body2.count("[[注意力机制]]") == 1  # 幂等：已挂接处不二次包裹
@@ -150,11 +150,11 @@ def test_attach_links_col_precision(kb: Path, service: DocumentService) -> None:
 
     第 3 行有两个「注意力机制」：C1 与 C10 —— 这正是"只给行号"区分不了的那种情况。
     """
-    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
+    assert apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)["status"] == "ok"
     first = apply_plan(
         str(kb),
         _plan(_attach(occurrences=[{"line": 3, "col": 1}]), txid="20260920T021101Z-08"),
-        session_id=SESSION,
+        origin="human", session_id=SESSION,
         service=service,
     )
     assert first["status"] == "ok", first
@@ -164,11 +164,11 @@ def test_attach_links_col_precision(kb: Path, service: DocumentService) -> None:
 
 def test_attach_links_col_precision_second_occurrence(kb: Path, service: DocumentService) -> None:
     """同一行改钉**第二处**（C10）⇒ 包的就是第二处（证明列号真的生效，不是碰巧）。"""
-    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
+    assert apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)["status"] == "ok"
     res = apply_plan(
         str(kb),
         _plan(_attach(occurrences=[{"line": 3, "col": 10}]), txid="20260920T021101Z-08"),
-        session_id=SESSION,
+        origin="human", session_id=SESSION,
         service=service,
     )
     assert res["status"] == "ok", res
@@ -181,8 +181,8 @@ def test_attach_links_without_col_falls_back_to_line_granularity(kb: Path, servi
 
     这条是"人机 UI 旧路径"的等价口径：`apply_link_instances()` 不传 `selected_spans` 时一字未变。
     """
-    assert apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)["status"] == "ok"
-    res = apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), session_id=SESSION, service=service)
+    assert apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)["status"] == "ok"
+    res = apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), origin="human", session_id=SESSION, service=service)
     assert res["status"] == "ok", res
     body = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert body.count("[[注意力机制]]") == 1  # 一行两处出现 ⇒ 只包一处
@@ -191,8 +191,8 @@ def test_attach_links_without_col_falls_back_to_line_granularity(kb: Path, servi
 
 def test_apply_detach_links_unwraps_and_excludes(kb: Path, service: DocumentService) -> None:
     """③ 解挂：正文回到纯文本、该行进 sidecar 的 `excluded`（路由保留）。"""
-    apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)
-    apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), session_id=SESSION, service=service)
+    apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)
+    apply_plan(str(kb), _plan(_attach(), txid="20260920T021101Z-08"), origin="human", session_id=SESSION, service=service)
     detach = {
         "op": "detach_links",
         "op_id": "o3",
@@ -201,7 +201,7 @@ def test_apply_detach_links_unwraps_and_excludes(kb: Path, service: DocumentServ
         "occurrences": [{"line": 3}],
         "mode": "detach",
     }
-    res = apply_plan(str(kb), _plan(detach, txid="20260920T021102Z-09"), session_id=SESSION, service=service)
+    res = apply_plan(str(kb), _plan(detach, txid="20260920T021102Z-09"), origin="human", session_id=SESSION, service=service)
     assert res["status"] == "ok", res
     body = (kb / "notes" / "a.md").read_text(encoding="utf-8")
     assert "[[" not in body
@@ -226,7 +226,7 @@ def test_apply_rolls_back_whole_batch_when_a_primitive_fails(
     sidecar_path = Path(sidecar_path_for(str(kb / "notes" / "a.md"), str(kb)))
     sidecar_before = _sha(sidecar_path)
 
-    res = apply_plan(str(kb), _plan(_upsert(), _attach()), session_id=SESSION, service=service)
+    res = apply_plan(str(kb), _plan(_upsert(), _attach()), origin="human", session_id=SESSION, service=service)
     assert res["status"] == "error" and res["code"] == "apply_failed"
     assert res["rolled_back"] is True
     assert res["failed"]["primitive"] == "apply_link_instances"
@@ -246,7 +246,7 @@ def test_apply_writes_nothing_when_backup_fails(
         lambda *_a, **_k: {"status": "error", "code": "batch_too_large", "message": "注入的备份失败"},
     )
     md_before = _sha(kb / "notes" / "a.md")
-    res = apply_plan(str(kb), _plan(_upsert()), session_id=SESSION, service=service)
+    res = apply_plan(str(kb), _plan(_upsert()), origin="human", session_id=SESSION, service=service)
     assert res["status"] == "error" and res["code"] == "batch_too_large"
     assert res["applied"] == []
     assert _sha(kb / "notes" / "a.md") == md_before
@@ -273,7 +273,7 @@ def test_compile_plan_orders_calls_and_lists_affected_files(kb: Path, service: D
 def test_apply_rejects_invalid_plan_without_touching_disk(kb: Path, service: DocumentService) -> None:
     """⑦ 非法 plan：既不写盘，**也不建备份**（校验发生在 pre-image 之前）。"""
     before = {p: _sha(p) for p in kb.rglob("*") if p.is_file()}
-    res = apply_plan(str(kb), _plan({"op": "delete_everything", "op_id": "x", "file": "notes/a.md"}), session_id=SESSION, service=service)
+    res = apply_plan(str(kb), _plan({"op": "delete_everything", "op_id": "x", "file": "notes/a.md"}), origin="human", session_id=SESSION, service=service)
     assert res["status"] == "error" and res["code"] == "invalid_plan"
     assert not Path(backup.backups_root(str(kb))).exists()
     assert {p: _sha(p) for p in kb.rglob("*") if p.is_file()} == before
