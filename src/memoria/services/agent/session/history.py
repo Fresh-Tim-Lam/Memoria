@@ -507,7 +507,7 @@ def summarize_session_file(
     }
 
 
-def conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]:
+def _conversation_messages(kb_path: str, session_id: str) -> list[dict[str, Any]]:
     """会话的**渲染视图**（`agent_session_load` 用）：`[{role, text, anchors?, process?}]`（`process` = 本轮过程行，见 `turn_process.py`；无过程内容时不出现该键）。
 
     与 `build_history()` 的差别（供 UI 恢复气泡，故不按 LLM 协议形状）：
@@ -637,4 +637,134 @@ def _usage(event: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(value, Mapping):
         return {}
     return {str(key): value[key] for key in value}
+
+
+# ── 压缩事件的渲染投影 + 上下文占用（2026-10-25，0.4.7-task-91）────────────────────────
+# 整段追加在文件末尾 ⇒ 上方所有 `<文件>:<行号>` 锚点**零漂移**（含 `conversation_messages`
+# 那几处被文档引用的 520-523 / 532 / 545）。
+#
+# 为什么需要（根因，不是"UI 没显示"）：渲染视图过去只认 user/assistant/loop/end/tool 四类事件，
+# `compaction` 落盘后在这里**静默落空** ⇒ 压缩摘要只进 `build_history()`（喂 LLM），
+# 面板走 `agent_session_load` 的回放视图拿不到任何压缩信号，于是"压缩从未被观测到"。
+# 本段只做**只读派生**（不改任何写入语义，`ask.py` 一字不动）。
+#
+# 实现策略（零漂移的关键）：公开入口 `conversation_messages()` **不就地改原函数**，而是在
+# 文件末尾做一层薄包装 —— 默认路径直接返回 `_conversation_messages()` 的**同一个对象**，
+# 所以"默认逐字节不变"由结构保证（而不是靠 `if` 分支别写错）。`include_compaction=True` 时
+# 才把 `compaction` 记录按 seq 顺序**插到原位置**（= 上一轮气泡之后、下一轮用户气泡之前）。
+#
+# 另一件事：**占用百分比**的分子分母必须同域（都是字符）——
+# 阈值 = `MAX_HISTORY_CHARS × COMPACT_THRESHOLD_RATIO`（`compaction.compact_threshold_chars()`），
+# 当前量 = `compaction.history_chars(build_history(...))`（与压缩判定**同一实现**、同一口径）。
+# 绝不能用 token 去比字符预算（中英 token/字符比差 2–4 倍，硬算比不显示更糟）。
+#
+# `__all__` 也在这里追加（而非插到上方常量区）：插一行会把下方所有行号推位，正是本段要避免的。
+
+__all__ += ["session_context_usage"]
+
+
+def _compaction_record(event: Mapping[str, Any]) -> dict[str, Any] | None:
+    """`compaction` 事件 → 渲染视图的一条 `system` 记录（无效记录 ⇒ `None`）。
+
+    有效性判据与 `_compaction_plan()` 一致（空 `shadowed` / 空摘要 = 无效，忽略）——
+    两处若不一致就会出现「回放看到压缩、但摘要其实没生效」的假象。
+    """
+    data = _data(event)
+    raw = data.get("shadowed")
+    seqs = (
+        [seq for seq in raw if isinstance(seq, int)]
+        if isinstance(raw, Sequence) and not isinstance(raw, (str, bytes))
+        else []
+    )
+    summary = str(data.get("summary") or "").strip()
+    if not seqs or not summary:
+        return None
+    return {
+        "role": Role.SYSTEM.value,
+        "kind": "compaction",
+        "seq": event.get("seq"),
+        "covered": len(seqs),
+        "summary_chars": len(summary),
+        # 兜底文案（前端优先用 i18n 键本地化；键缺失时至少不显示空行）
+        "text": f"已压缩 {len(seqs)} 条旧消息（摘要 {len(summary)} 字符）",
+    }
+
+
+def _insert_compaction_rows(
+    view: list[dict[str, Any]], kb_path: str, session_id: str
+) -> list[dict[str, Any]]:
+    """把压缩系统行按 **seq 原位置**插进渲染视图（无有效记录 ⇒ 原样返回，不复制）。
+
+    位置口径：`ask.py` 在追加本轮 `user/message` **之前**落 `compaction` ⇒ 该记录落在
+    「上一轮气泡之后、下一轮用户气泡之前」。视图记录都带 `seq`，故"第一个 seq 更大的记录之前"
+    就是对原位置的精确复现（含会话末尾的尾部压缩：插到末尾）。
+    """
+    rows = [
+        (event.get("seq"), record)
+        for event in _conversation_events(kb_path, session_id)
+        if event.get("type") == COMPACTION
+        for record in [_compaction_record(event)]
+        if record is not None
+    ]
+    ordered = sorted(((seq, row) for seq, row in rows if isinstance(seq, int)), key=lambda pair: pair[0])
+    if not ordered:
+        return view
+    out = list(view)
+    for seq, record in ordered:
+        insert_at = len(out)
+        for index, item in enumerate(out):
+            item_seq = item.get("seq")
+            if isinstance(item_seq, int) and item_seq > seq:
+                insert_at = index
+                break
+        out.insert(insert_at, record)
+    return out
+
+
+def conversation_messages(
+    kb_path: str, session_id: str, *, include_compaction: bool = False
+) -> list[dict[str, Any]]:
+    """会话的**渲染视图**（`agent_session_load` 用）—— `_conversation_messages()` 的公开入口。
+
+    **`include_compaction`（2026-10-25，task-91）**：默认 `False` ⇒ 原样返回
+    `_conversation_messages()` 的结果（与既有调用方 `reference.py:312` 的会话引用投影
+    **逐字节不变**，同一对象）；`True` 时额外把落盘的 `compaction` 事件投影成
+    `role:"system"` 记录（`kind:"compaction"`、`seq`、`covered` = 被覆盖事件数、
+    `summary_chars`、`text` 兜底文案），并**按原位置**插入。
+    """
+    view = _conversation_messages(kb_path, session_id)
+    if not include_compaction:
+        return view
+    return _insert_compaction_rows(view, kb_path, session_id)
+
+
+def session_context_usage(kb_path: str, session_id: str) -> dict[str, Any]:
+    """会话的**上下文占用**（纯只读派生，`agent_session_load` 附带返回）。
+
+    返回 `{chars, max_chars, threshold_chars, compacted_times}`，口径与压缩判定**逐值同源**：
+
+    - `chars` = `history_chars(build_history(kb_path, session_id))` —— **必须**走
+      `build_history`（它先应用已落盘的 `compaction` / `compaction.prune` 覆盖），再交给
+      `compaction.history_chars()`（与 `ask._compact_if_needed()` 判断阈值用的是**同一个函数**）。
+      用原始事件累加会得到"压缩前"的虚高值，UI 会在已经压缩过之后还显示 >80%。
+    - `max_chars` = `MAX_HISTORY_CHARS`（32_000 字符）；
+    - `threshold_chars` = `compaction.compact_threshold_chars()`（= max × 0.8 = 25_600）——
+      占用 % = `chars / max_chars`，**分子分母都是字符**，不需要任何 token 换算；
+    - `compacted_times` = `compaction` 事件条数（"压缩发生过"最直接的证据）。
+
+    只读：不写盘、不改事件。会话不存在时 `chars=0`、`compacted_times=0`（`build_history` 返回空）。
+    会读两遍会话文件（`build_history` 一遍、数压缩事件一遍）：这是**口径一致**的代价——
+    绝不为省一次读盘而另写一份字符累加（那正是本任务要消除的漂移源）。
+    """
+    # 延迟导入：`compaction` 在模块层依赖本模块的事件常量，反向只能延迟（避免循环导入）
+    from memoria.services.agent.compaction import compact_threshold_chars, history_chars
+
+    history = build_history(kb_path, session_id)
+    events = _conversation_events(kb_path, session_id)
+    return {
+        "chars": history_chars(history),
+        "max_chars": MAX_HISTORY_CHARS,
+        "threshold_chars": compact_threshold_chars(),
+        "compacted_times": sum(1 for event in events if event.get("type") == COMPACTION),
+    }
 

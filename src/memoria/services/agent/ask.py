@@ -58,6 +58,7 @@ from memoria.services.agent.compaction import (
     CompactionError,
     compact_threshold_chars,
     event_chars,
+    history_chars as _history_chars,  # 2026-10-25：度量实现上移到 compaction（唯一实现，供 UI 复用同口径）；本地别名保持下方调用点零改动
     select_span,
     summarize_span,
 )
@@ -184,16 +185,6 @@ def build_loop(
         on_event=_chained_event(session, on_event),
         cancel=cancel,
     )
-
-
-def _history_chars(messages: Sequence[Message]) -> int:
-    """消息序列的字符量（与 `compaction.event_chars()` 同口径：正文 + 工具调用名与参数）。"""
-    total = 0
-    for message in messages:
-        total += len(message.content or "")
-        for call in message.tool_calls or ():
-            total += len(call.arguments or "") + len(call.name or "")
-    return total
 
 
 def _compact_if_needed(

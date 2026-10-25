@@ -1373,7 +1373,7 @@ class UIAPI:
     def agent_session_load(self, session_id: str, kb_path: str | None = None) -> dict:
         """载入一个会话的渲染视图（**只读**，不写盘）。
 
-        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant", text, anchors?, process?, usage?, reasoning?, images?}]}`（`process` = 该轮过程行：更早助手正文/思考/工具行，无过程内容时不出现该键；`usage` = 该轮的 token 用量，取自 `loop/end.usage`，**没落过就不出现该键** —— 面板据此在重载/重启后仍能显示末条回话的用量行，见 `history.py` 末尾「逐轮 token 用量回放」）。
+        返回 `{status:"ok", session_id, messages:[{role:"user"|"assistant"|"system", text, anchors?, process?, usage?, reasoning?, images?, kind?, covered?, summary_chars?}], context_usage?}`（`process` = 该轮过程行：更早助手正文/思考/工具行，无过程内容时不出现该键；`usage` = 该轮的 token 用量，取自 `loop/end.usage`，**没落过就不出现该键** —— 面板据此在重载/重启后仍能显示末条回话的用量行，见 `history.py` 末尾「逐轮 token 用量回放」；**2026-10-25（task-91）只增**：`role:"system"` = 压缩事件回放行，`context_usage` = 字符预算占用 `{chars, max_chars, threshold_chars, compacted_times}`（只读派生，口径与压缩判定同源，见 `history.session_context_usage()`；缺席/`null` ⇒ 未知，前端必须容忍）。
         锚点归属：按轮汇总该轮 `tool/result.anchors`，去重后挂在该轮 assistant 气泡上
         （口径见 `services/agent/session/history.py::conversation_messages`）。
         未知/非法会话 ⇒ `{status:"error", code:"unknown_session", message}`。
@@ -1393,10 +1393,10 @@ class UIAPI:
         if not os.path.isfile(path):
             return {"status": "error", "code": "unknown_session", "message": f"会话不存在：{sid}"}
         try:
-            messages = conversation_messages(kb, sid)
+            messages = conversation_messages(kb, sid, include_compaction=True)
         except (OSError, ValueError) as e:
             return {"status": "error", "code": "session_failed", "message": str(e)}
-        return {"status": "ok", "session_id": sid, "messages": messages}
+        return {"status": "ok", "session_id": sid, "messages": messages, "context_usage": _agent_context_usage(kb, sid)}
 
     def agent_session_delete(self, session_id: str, kb_path: str | None = None) -> dict:
         """删除一个会话文件（M1 收尾新增）：**本产品首次允许写知识库**。
@@ -2886,5 +2886,27 @@ UIAPI.review_feedback_reply = review_feedback_reply
 # 系统剪贴板（2026-10-24）：绕开 WebView2 clipboard 权限弹窗与瞬时用户激活限制
 UIAPI.clipboard_get_text = _clipboard_get_text
 UIAPI.clipboard_set_text = _clipboard_set_text
+
+
+# ── 2026-10-25 追加（0.4.7-task-91）：`agent_session_load` 的**字符预算占用**派生 ──────────
+# 落点纪律：整段追加在**文件末尾**（所有 `ui.py:<行号>` 锚点之后）⇒ 既有文档锚点零漂移。
+#
+# 口径（唯一事实源在服务层，不在这里算）：`history.session_context_usage()` =
+# `history_chars(build_history(kb, sid))` / `MAX_HISTORY_CHARS(32_000 字符)`；阈值 =
+# `compaction.compact_threshold_chars()`（= ×0.8 = 25_600）。**分子分母都是字符**，
+# 与 token 用量（`loop/end.usage` → 面板 `agent.statusBar.*`）是**两条独立口径**，绝不混算。
+#
+# 为什么放在这里（而不是写进方法体）：方法体在 `agent_session_load()` docstring 之后，
+# 往里加行会把 `agent_usage_stats` / `agent_session_delete` / `agent_session_rename` 等
+# **下方符号**整体推位，打破 `tests/test_doc_anchors.py` 的 `<文件>:<行号>` 锚点校验
+# （本任务首版就因此红过 3 条）。故：方法体改动压到 0 行净增，派生逻辑挪到文件末尾。
+def _agent_context_usage(kb: str, session_id: str) -> dict | None:
+    """字符预算占用（只读）；读盘/形状异常 ⇒ `None`（前端按"未知"降级，绝不因此让载入失败）。"""
+    try:
+        from memoria.services.agent.session import session_context_usage
+
+        return session_context_usage(kb, session_id)
+    except (OSError, ValueError):
+        return None
 
 

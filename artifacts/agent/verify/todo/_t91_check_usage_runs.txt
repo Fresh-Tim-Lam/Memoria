@@ -1,0 +1,35 @@
+﻿# 0.4.7-task-91 验收脚本连跑 3 次（纪律：'每次都绿'不能代替'sha 稳定'）
+# 脚本: artifacts/agent/verify/todo/_t91_check_usage.py
+# 日期: 2026-10-25（最终态：history.py 零漂移重构 + ui.py 零净行增之后）
+
+== run 1 == sha256=769D4915D0E6DF40F1F89B679822158B8A202B3E082229FCB3AB07840F9DFC88
+[1] PASS py_compile (__init__.py,ask.py,compaction.py,history.py,ui.py)
+[2] PASS history_chars 唯一实现 ask._history_chars is compaction.history_chars = True
+[3] PASS conversation_messages 默认排除压缩 roles=user,assistant,user,assistant
+[4] PASS include_compaction 原位置投影 roles=user,assistant,system,user,assistant, covered=2
+[5] PASS context_usage 同口径 chars=163 expected=163
+[6] PASS 字符/字符 同域 chars=163 max=32000 threshold=25600 times=1 percent=1%
+[7] PASS 按压缩后视图计量 chars=163 < raw=10000
+PASS=7 FAIL=0
+
+== run 2 == sha256=769D4915D0E6DF40F1F89B679822158B8A202B3E082229FCB3AB07840F9DFC88
+[1] PASS py_compile (__init__.py,ask.py,compaction.py,history.py,ui.py)
+[2] PASS history_chars 唯一实现 ask._history_chars is compaction.history_chars = True
+[3] PASS conversation_messages 默认排除压缩 roles=user,assistant,user,assistant
+[4] PASS include_compaction 原位置投影 roles=user,assistant,system,user,assistant, covered=2
+[5] PASS context_usage 同口径 chars=163 expected=163
+[6] PASS 字符/字符 同域 chars=163 max=32000 threshold=25600 times=1 percent=1%
+[7] PASS 按压缩后视图计量 chars=163 < raw=10000
+PASS=7 FAIL=0
+
+== run 3 == sha256=769D4915D0E6DF40F1F89B679822158B8A202B3E082229FCB3AB07840F9DFC88
+[1] PASS py_compile (__init__.py,ask.py,compaction.py,history.py,ui.py)
+[2] PASS history_chars 唯一实现 ask._history_chars is compaction.history_chars = True
+[3] PASS conversation_messages 默认排除压缩 roles=user,assistant,user,assistant
+[4] PASS include_compaction 原位置投影 roles=user,assistant,system,user,assistant, covered=2
+[5] PASS context_usage 同口径 chars=163 expected=163
+[6] PASS 字符/字符 同域 chars=163 max=32000 threshold=25600 times=1 percent=1%
+[7] PASS 按压缩后视图计量 chars=163 < raw=10000
+PASS=7 FAIL=0
+
+unique_sha256_count=1

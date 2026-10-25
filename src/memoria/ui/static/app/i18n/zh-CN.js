@@ -1,4 +1,4 @@
-﻿// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
+// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
 // 由 docs/conventions/i18n.md 管理；界面文案必须走 MemoriaI18n.t('key')。
 (function (g) {
   "use strict";
@@ -1881,5 +1881,24 @@
     deleteDirBody: "确定删除文件夹「{name}」？\n\n将删除该文件夹及其中的全部文件，不可撤销。",
     deleteDirFail: "删除文件夹失败",
     deletedDir: "已删除文件夹",
+  });
+  // ===== 2026-10-25 追加：**字符预算占用 + 压缩可观测**（0.4.7-task-91）=====
+  // 口径（后端唯一事实源）：`history.session_context_usage()` = `history_chars(build_history())` /
+  // `MAX_HISTORY_CHARS(32k 字符)`，阈值 = ×0.8（=80% 时压缩）。**分子分母都是字符**，与 token 用量
+  // （`agent.statusBar.line` / `span`，provider 侧 token）**刻意分开**：
+  // 文案一律写「字符」，绝不写「上下文 62%」——那会被读成 token 占用。
+  // 走"文件末尾 `Object.assign`"⇒ 上方所有 `zh-CN.js:<行号>` 锚点零漂移。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.statusBar, {
+    compactShort: "压缩预算 {percent}%",
+    compactBudget: "压缩预算 {percent}%（{chars} / {max} 字符）",
+    compactThreshold: "阈值 {percent}%（占字符预算；到点自动压缩早前对话）",
+    compactOverdue: "压缩预算 {percent}% · 该压缩还没压缩",
+    compactOverdueHint: "占用已超过压缩阈值。正常会在下一次提问前先压缩；若一直停在这里，说明那次摘要调用失败或被取消（fail-open：提问本身不受影响）。",
+    compactTimes: "已压缩 {n} 次",
+    compactTimesHint: "本会话已发生的压缩次数（压缩后占用会骤降，那是真实事件，不是显示错误）",
+  });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.role, { system: "系统" });
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.status, {
+    compactSystem: "已压缩 {covered} 条旧消息（摘要 {chars} 字符）· 其后对话按摘要继续",
   });
 })(typeof window !== "undefined" ? window : globalThis);

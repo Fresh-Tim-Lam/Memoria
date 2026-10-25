@@ -1,4 +1,4 @@
-﻿// English language pack —— Memoria i18n.
+// English language pack —— Memoria i18n.
 // Managed by docs/conventions/i18n.md. Fallback to "zh-CN" for any missing key.
 (function (g) {
   "use strict";
@@ -1988,5 +1988,24 @@
     deleteDirBody: "Delete folder \u201c{name}\u201d?\n\nThis deletes the folder and every file inside it, and cannot be undone.",
     deleteDirFail: "Failed to delete folder",
     deletedDir: "Folder deleted",
+  });
+  // ===== 2026-10-25 appended: **character-budget usage + compaction observability** (0.4.7-task-91) =====
+  // Same source of truth as the backend (`history.session_context_usage()`): numerator and denominator are
+  // both CHARACTERS (`history_chars(build_history())` over `MAX_HISTORY_CHARS`); the threshold is x0.8.
+  // Kept deliberately separate from the token line (`agent.statusBar.line` / `span`): the copy always says
+  // "character budget" and never "context 62%", which would read as token usage.
+  // End-of-file Object.assign => all earlier `en.js:<line>` anchors stay put.
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.statusBar, {
+    compactShort: "Compact budget {percent}%",
+    compactBudget: "Compact budget {percent}% ({chars} / {max} chars)",
+    compactThreshold: "Threshold {percent}% of the character budget (older turns get compacted at that point)",
+    compactOverdue: "Compact budget {percent}% · compaction overdue",
+    compactOverdueHint: "Usage is past the compaction threshold. Normally older turns are compacted before the next question; staying here means that summarization call failed or was cancelled (fail-open: asking still works).",
+    compactTimes: "Compacted {n} time(s)",
+    compactTimesHint: "Compactions that happened in this session (usage dropping right after one is a real event, not a display bug)",
+  });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.role, { system: "System" });
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.status, {
+    compactSystem: "Compacted {covered} older messages (summary: {chars} chars) · later turns continue from the summary",
   });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -96,6 +96,7 @@ __all__ = [
     "compact_threshold_chars",
     "event_chars",
     "frame_summary",
+    "history_chars",
     "retain_chars",
     "select_span",
     "summarize_span",
@@ -188,6 +189,25 @@ class SummaryCall:
 def compact_threshold_chars(max_chars: int = MAX_HISTORY_CHARS) -> int:
     """触发压缩的字符阈值（`max_chars * COMPACT_THRESHOLD_RATIO`）。"""
     return int(max(0, max_chars) * COMPACT_THRESHOLD_RATIO)
+
+
+def history_chars(messages: Sequence[Message]) -> int:
+    """消息序列的字符量（与 `event_chars()` **同口径**：正文 + 工具调用名与参数）。
+
+    **这是"当前上下文占用字符数"的唯一实现**（2026-10-25 从 `ask._history_chars` 上移至此）。
+    为什么必须唯一：`ask._compact_if_needed()` 用它判断是否到达压缩阈值；UI 的「压缩预算 %」
+    也必须用它算分子 —— 两处若各写一份 `sum(len(...))`，一旦口径漂移就会出现
+    **「UI 说 62% 但实际已触发压缩」**，比不显示更糟（Lead 2026-10-25 硬要求）。
+
+    上移而非复制：`ask.py` 改为从这里导入同名函数，判定逻辑与行为零变化；
+    本模块已 import `Message`，不新增依赖，也不改变任何既有 import 方向。
+    """
+    total = 0
+    for message in messages:
+        total += len(message.content or "")
+        for call in message.tool_calls or ():
+            total += len(call.arguments or "") + len(call.name or "")
+    return total
 
 
 def retain_chars(max_chars: int = MAX_HISTORY_CHARS) -> int:
