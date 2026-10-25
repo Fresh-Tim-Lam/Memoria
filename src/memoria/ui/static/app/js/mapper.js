@@ -313,6 +313,9 @@ window.MemoriaMapper = (function () {
    */
   function listItemPrefixLen(item, itemIdx) {
     var idx = (typeof itemIdx === "number" && isFinite(itemIdx) && itemIdx >= 0) ? Math.floor(itemIdx) : 0;
+    // task-157：有序项有真实手写序号（item.number）时，宽度按它算 —— 松散列表里可能存在
+    //   `10,11,3,4` 这种"手工继续编号"，按 start+idx 会把 `3.` 算成 `12.` 的宽度（偏 1 列）。
+    if (item && item.number > 0) return String(item.number).length + 2;
     // 行内带 `ordered` 标记的 item（非 parser 标准产物，防御性支持）
     if (item && item.ordered === false) return 2;
     // 位于 LIST 上（parser 标准结构：item 自身不带 ordered/start）
@@ -333,6 +336,8 @@ window.MemoriaMapper = (function () {
     var idx = (typeof itemIdx === "number" && isFinite(itemIdx) && itemIdx > 0) ? Math.floor(itemIdx) : 0;
     var item = (listBlock.items && listBlock.items[idx]) || null;
     if (item) {
+      // task-157：有序项优先用真实手写序号宽度（见 listItemPrefixLen 注释）
+      if (item.number > 0) return String(item.number).length + 2;
       // item 自带 ordered 标记时以其为准（防御性）；否则用列表头
       if (typeof item.ordered !== "boolean" && typeof listBlock.ordered === "boolean") {
         return listBlock.ordered ? String((listBlock.start || 1) + idx).length + 2 : 2;

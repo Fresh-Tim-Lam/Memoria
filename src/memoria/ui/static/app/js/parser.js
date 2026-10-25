@@ -638,6 +638,8 @@ window.MemoriaParser = (function () {
             var item = AST.listItem(parseInline(cIt.content), {
               srcLine: cIt.srcLine,
               indent: cIt.indentRaw,
+              // task-157：有序项的真实手写序号（source-gen 逐字节回写用）
+              number: cIt.ordered ? parseInt(cIt.marker, 10) : null,
             });
 
             if (level === 0) {

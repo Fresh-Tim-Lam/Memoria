@@ -148,9 +148,33 @@ window.MemoriaSourceGen = (function () {
         }
         var srcLineTrusted = _monotonic && _lines.length > 0;
 
+        /** 有序列表编号基数（task-157）：AST list 存了 `start`（parser 取自首项真实序号，
+         *  `1.` 时为 null）⇒ 必须用 `start + idx` 而不是 `idx + 1`，否则任何非 1 起编号的
+         *  列表在"编辑后整块回写"（`spliceBlockSource` → `generateBlock` → 保存）时被静默
+         *  改成 1./2.（真机 R0 已证）。嵌套子列表同样按各自 `node.start`。 */
+        function listBaseNumber(node) {
+          var s = node && node.start;
+          return (typeof s === "number" && s > 0) ? s : 1;
+        }
+
+        /** 该层是否所有有序项都带真实手写序号（task-157）。
+         *  是 ⇒ 逐项回写（支持 `10,11,3,4` 这种手工继续编号 / 编辑后未触碰的旧项）；
+         *  否 ⇒ 该层整层退回 `base+idx`（结构编辑新建的 item 没有 number，保持旧的"重新编号"语义）。 */
+        function canUseItemNumbers(node) {
+          if (!node || !node.ordered) return false;
+          var its = node.items || [];
+          if (!its.length) return false;
+          for (var ni = 0; ni < its.length; ni++) {
+            if (!its[ni] || !(its[ni].number > 0)) return false;
+          }
+          return true;
+        }
+
         function genListLines(node, fallbackIndent, state) {
           var lines = [];
           var items = (node && node.items) || [];
+          var base = listBaseNumber(node);
+          var useNumbers = canUseItemNumbers(node);
           for (var idx = 0; idx < items.length; idx++) {
             var item = items[idx];
             var myLine = srcLineTrusted ? item.srcLine : 0;
@@ -158,7 +182,7 @@ window.MemoriaSourceGen = (function () {
               for (var g2 = 0; g2 < myLine - state.cursorLine - 1; g2++) lines.push("");
             }
             var indent2 = item.indent != null ? item.indent : fallbackIndent;
-            var prefix2 = node.ordered ? (idx + 1) + ". " : "- ";
+            var prefix2 = node.ordered ? (useNumbers ? item.number : (base + idx)) + ". " : "- ";
             lines.push(indent2 + prefix2 + generateInlineList(item.children));
             if (myLine) state.cursorLine = myLine;
             if (item.list && item.list.items && item.list.items.length) {
@@ -178,12 +202,14 @@ window.MemoriaSourceGen = (function () {
           var anyIndent = out.some(function (l) { return /^[ \t]/.test(l); });
           if (!anyIndent && !srcLineTrusted) {
             var out2 = [];
+            var legacyBase = listBaseNumber(block);
+            var legacyUseNumbers = canUseItemNumbers(block);
             (block.items || []).forEach(function (item, idx) {
               if (hasItemLines && idx > 0) {
                 var gap = (srcLines[idx] || 0) - (srcLines[idx - 1] || 0) - 1;
                 for (var g = 0; g < gap; g++) out2.push("");
               }
-              var prefix = block.ordered ? (idx + 1) + ". " : "- ";
+              var prefix = block.ordered ? (legacyUseNumbers ? item.number : (legacyBase + idx)) + ". " : "- ";
               out2.push(prefix + generateInlineList(item.children));
               if (item.list && item.list.items && item.list.items.length) {
                 var sub2 = genListLines(item.list, "  ", { cursorLine: 0 });

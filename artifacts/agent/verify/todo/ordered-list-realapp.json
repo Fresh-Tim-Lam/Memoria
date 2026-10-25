@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-10-25T16:43:56.706Z",
+  "target": {
+    "id": "E422572585271840C1C2D9981EDC55DA",
+    "url": "http://127.0.0.1:18275/"
+  },
+  "pristineTail": [
+    "# ordered start probe",
+    "",
+    "10. ten",
+    "11. eleven",
+    "",
+    "3. three",
+    "4. four",
+    "",
+    "> 前言段落（同一引用块内的普通段落）",
+    "> 10. qten",
+    "> 11. qeleven",
+    ""
+  ],
+  "steps": {
+    "A": {
+      "focus": {
+        "ok": true,
+        "line": 3,
+        "text": "10. ten"
+      },
+      "diskAfter": "# ordered start probe\r\n\r\n10. tenX\r\n11. eleven\r\n\r\n3. three\r\n4. four\r\n\r\n> 前言段落（同一引用块内的普通段落）\r\n> 10. qten\r\n> 11. qeleven\r\n",
+      "stateBodyAfter": "# ordered start probe\n\n10. tenX\n11. eleven\n\n3. three\n4. four\n\n> 前言段落（同一引用块内的普通段落）\n> 10. qten\n> 11. qeleven\n",
+      "numberPreserved": true
+    },
+    "B": {
+      "editMode": true,
+      "focus": {
+        "ok": true,
+        "text": "ten",
+        "isLi": true,
+        "blockIndex": "2"
+      },
+      "diskAfter": "# ordered start probe\r\n\r\n10. tenY\r\n11. eleven\r\n\r\n3. three\r\n4. four\r\n\r\n> 前言段落（同一引用块内的普通段落）\r\n> 10. qten\r\n> 11. qeleven\r\n",
+      "stateBodyAfter": "# ordered start probe\n\n10. tenY\n11. eleven\n\n3. three\n4. four\n\n> 前言段落（同一引用块内的普通段落）\n> 10. qten\n> 11. qeleven\n",
+      "numberPreserved": true,
+      "renumbered": false
+    },
+    "C": {
+      "focus": {
+        "ok": true,
+        "text": "前言段落（同一引用块内的普通段落）",
+        "isLi": false,
+        "blockIndex": "4"
+      },
+      "diskAfter": "# ordered start probe\r\n\r\n10. ten\r\n11. eleven\r\n\r\n3. three\r\n4. four\r\n\r\n> 前言段落W（同一引用块内的普通段落）\r\n> 10. qten\r\n> 11. qeleven\r\n",
+      "stateBodyAfter": "# ordered start probe\n\n10. ten\n11. eleven\n\n3. three\n4. four\n\n> 前言段落W（同一引用块内的普通段落）\n> 10. qten\n> 11. qeleven\n",
+      "quoteNumberPreserved": true,
+      "quoteRenumbered": false
+    }
+  },
+  "finishedAt": "2026-10-25T16:44:03.840Z"
+}

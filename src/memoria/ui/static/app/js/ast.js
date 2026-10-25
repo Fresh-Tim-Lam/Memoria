@@ -248,6 +248,11 @@ window.MemoriaAST = (function () {
       if (extra.list) node.list = extra.list;
       if (extra.srcLine) node.srcLine = extra.srcLine;
       if (extra.indent != null) node.indent = String(extra.indent);
+      // task-157：有序项的**真实手写序号**（parser 从 marker 取）。用于逐字节回写：
+      //   CommonMark 只保证 start，但用户文档里存在"手工继续编号"（10,11,3,4 同一松散列表），
+      //   以及编辑后未触碰的旧项；只有逐项 number 才能无损还原。
+      //   结构编辑（插入/删除）重建的新 item 没有 number ⇒ source-gen 整层回退 base+idx。
+      if (extra.number != null) node.number = extra.number;
     }
     return node;
   }
