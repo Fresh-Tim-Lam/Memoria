@@ -87,6 +87,7 @@ import sys
 import tempfile
 import urllib.error
 import urllib.request
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -629,107 +630,97 @@ def _load_format_gate_module():
     return module
 
 
-def _find_release_zip(root: Path, tag: str) -> Path | None:
-    """找发版产物 zip（优先 canonical 命名）。"""
-    candidates = [
-        root / "artifacts" / f"Memoria-{tag}-win64-lite.zip",
-        root / "artifacts" / f"Memoria-{tag}-lite.zip",
-        root / "artifacts" / f"Memoria-{tag}-win64.zip",
+def _find_release_zips(root: Path, tag: str) -> list[Path]:
+    """找发版产物 zip（canonical 命名；full 与 lite 都要校验）。"""
+    art = root / "artifacts"
+    names = [
+        f"Memoria-{tag}-win64.zip",
+        f"Memoria-{tag}-win64-lite.zip",
+        f"Memoria-{tag}-lite.zip",  # 历史漂移命名，仍校验但 ASSETS-COUNT 会 WARN
     ]
-    for c in candidates:
-        if c.is_file():
-            return c
-    return None
+    return [art / n for n in names if (art / n).is_file()]
+
+
+def _manifest_path_for_zip(zip_path: Path) -> Path:
+    """清单与 zip 同目录：`<zip 名去掉 .zip>.manifest.json`。"""
+    return zip_path.with_name(zip_path.stem + ".manifest.json")
 
 
 def eval_format_gate(tag: str, root: Path, phase: str) -> dict:
-    """FORMAT-GATE：发布包**格式与完整性**（task-181 接入点）。
+    """FORMAT-GATE：校验**发布 zip**（不是 Package/ 目录）——task-181/185。
 
-    ## 为什么必须接进流程（Lead 的裁决理由）
+    ## 设计纠正（2026-10-27，人的要求）
 
-    这个门禁写好后曾是**独立脚本、没人调用** —— 那正是今晚反复出现的失败形态：
-    「gate 写好了但从不在真实流程里跑」（前例：99.2% 门禁永不触发、prompt_drift 静默放行）。
-    ⇒ 接进 `--phase post` 与 `--verify-published`，让它**真的能拦住发布**。
+    「我本地需要在 Package 真实测试，真实的 key 你能发布的时候去掉吗」
+    ⇒ `Package/` 是人的本地测试构建（可以有真实 key）；
+    ⇒ 发布物是 zip ⇒ 门禁**只校验 zip**，绝不扫描 Package/（扫它必然误报）。
 
     ## 为什么接在 post 而不是 pre
 
-    - `--phase pre`：Package/ 与 zip 可能还没构建 ⇒ 只能校验"预期"，校验不到真实产物；
-    - `--phase post`（tag 已 push、建 Release 之前）：**产物已就绪** ⇒ 校验的是真实的包。
+    - pre：zip 可能还没打 ⇒ 校不到真实发布物；
+    - post（tag 已 push、建 Release 之前）：两个 zip 都已就绪 ⇒ 逐一校验。
 
     ## 不做什么（诚实边界）
 
-    本项校验**格式与完整性**（结构 / 双向哈希 / 版本一致 / zip 卫生）。
+    只校验格式与完整性（结构 / 双向哈希 / 版本 / zip 卫生 / 私有配置与 key 扫描）。
     **不含数字签名** ⇒ 无法察觉"有意篡改 + 重算清单"。
     """
     gate = _load_format_gate_module()
-
-    package = root / "Package"
-    if not package.is_dir():
+    zips = _find_release_zips(root, tag)
+    if not zips:
+        if phase in ("post", "release"):
+            return {
+                "id": "FORMAT-GATE",
+                "level": "FAIL",
+                "detail": (
+                    f"artifacts/ 下未找到 {tag} 的发布 zip（Memoria-{tag}-win64.zip / "
+                    f"-win64-lite.zip）⇒ 发布前必须先生成 zip 并过格式门禁（见 "
+                    f"packaging/make_release_zip.py）"
+                ),
+            }
         return {
             "id": "FORMAT-GATE",
             "level": "SKIP",
-            "detail": f"Package/ 不存在（{package}）⇒ 无法校验真实产物。SKIP 不算通过",
+            "detail": f"本地 artifacts/ 无 {tag} 发布 zip ⇒ 无法校验（SKIP 不算通过）",
         }
 
-    # 判据：Package/ 里是否有**实际构建产物**（不只是 VERSION 之类的骨架）。
-    # 为什么需要这一层：fixture / 尚未构建的场景里 Package/ 可能存在但为空壳，
-    # 直接报"缺清单"会把"还没构建"误判成"格式错误"。
-    # 但**一旦有真实产物**（exe / lib / resources 任一），就必须有清单 —— 那时缺清单是真 FAIL。
-    has_built_artifacts = any(
-        (package / name).exists() for name in ("Memoria.exe", "lib", "resources")
-    )
-    if not has_built_artifacts:
-        return {
-            "id": "FORMAT-GATE",
-            "level": "SKIP",
-            "detail": (
-                f"Package/ 内没有构建产物（未见 Memoria.exe / lib / resources）⇒ 不校验。"
-                f"SKIP 不算通过"
-            ),
-        }
+    failures: list[str] = []
+    checked: list[str] = []
+    for zip_path in zips:
+        manifest_path = _manifest_path_for_zip(zip_path)
+        if not manifest_path.is_file():
+            failures.append(
+                f"{zip_path.name}: 缺少清单 {manifest_path.name}"
+                f"（先跑 release_manifest.py --zip {zip_path.name} --version {tag_version(tag)}）"
+            )
+            continue
+        try:
+            result = gate.run_checks(
+                zip_path=zip_path,
+                manifest_path=manifest_path,
+                expect_version=tag_version(tag),
+            )
+        except Exception as exc:  # noqa: BLE001 - 门禁自身异常必须报 FAIL
+            failures.append(f"{zip_path.name}: 门禁执行异常 {type(exc).__name__}: {exc}")
+            continue
+        if result.failures:
+            shown = result.failures[:6]
+            failures.extend(f"{zip_path.name}: {item}" for item in shown)
+            if len(result.failures) > len(shown):
+                failures.append(f"{zip_path.name}: …共 {len(result.failures)} 项")
+        else:
+            checked.append(zip_path.name)
 
-    zip_path = _find_release_zip(root, tag)
-    manifest_path = package / "release-manifest.json"
-
-    # 清单可能还没生成 ⇒ 明确报出来（而不是静默跳过）
-    if not manifest_path.is_file():
-        return {
-            "id": "FORMAT-GATE",
-            "level": "FAIL",
-            "detail": (
-                f"缺少 Package/release-manifest.json ⇒ 无法校验包格式。"
-                f"先跑：python scripts/agent/release_manifest.py --package Package --version {tag_version(tag)}"
-            ),
-        }
-
-    try:
-        result = gate.run_checks(
-            package=package,
-            zip_path=zip_path,
-            manifest_path=manifest_path,
-            expect_version=tag_version(tag),
-        )
-    except Exception as exc:  # noqa: BLE001 - 门禁自身异常必须报 FAIL，不能静默
+    if failures:
         return {
             "id": "FORMAT-GATE",
             "level": "FAIL",
-            "detail": f"格式门禁执行异常（不得当作通过）：{type(exc).__name__}: {exc}",
+            "detail": "发布 zip 格式/完整性不符，拒绝发布：" + "；".join(failures[:8]),
         }
-
-    if not result.failures:
-        extra = f"；zip={zip_path.name}" if zip_path is not None else "；未找到发布 zip（只校验了目录）"
-        return {
-            "id": "FORMAT-GATE",
-            "level": "PASS",
-            "detail": f"已校验包结构与完整性（不含数字签名）：Package/{extra}",
-        }
-
-    shown = "；".join(result.failures[:6])
-    more = f"…（共 {len(result.failures)} 项）" if len(result.failures) > 6 else ""
     return {
         "id": "FORMAT-GATE",
-        "level": "FAIL",
-        "detail": f"包格式/完整性不符，拒绝发布：{shown}{more}",
+        "level": "PASS",
+        "detail": f"已校验 {len(checked)} 个发布 zip 的结构与完整性（不含数字签名）：{checked}",
     }
 
 
@@ -755,43 +746,59 @@ def eval_published_asset(tag: str, root: Path, release_meta: dict | None) -> dic
         return {"id": "PUBLISHED-ASSET", "level": "SKIP",
                 "detail": "无 Release JSON ⇒ 无法核对线上资产。SKIP 不算通过"}
 
-    manifest_path = root / "Package" / "release-manifest.json"
-    if not manifest_path.is_file():
+    # 清单来源 = 本地发布 zip 的清单（与 zip 同目录的 *.manifest.json）；旧位置 Package/ 仅兼容
+    manifests: list[tuple[Path, dict]] = []
+    for path in sorted((root / "artifacts").glob("*.manifest.json")):
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if isinstance(data, dict):
+            manifests.append((path, data))
+    legacy = root / "Package" / "release-manifest.json"
+    if legacy.is_file():
+        try:
+            data = json.loads(legacy.read_text(encoding="utf-8"))
+            if isinstance(data, dict):
+                manifests.append((legacy, data))
+        except (OSError, json.JSONDecodeError):
+            pass
+    if not manifests:
         return {"id": "PUBLISHED-ASSET", "level": "SKIP",
-                "detail": "本地无 Package/release-manifest.json ⇒ 没有可比对的登记值。"
-                          "SKIP 不算通过"}
-
-    try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        return {"id": "PUBLISHED-ASSET", "level": "FAIL",
-                "detail": f"本地清单无法解析：{exc}"}
-
-    declared = (manifest.get("asset") or {})
-    declared_name = declared.get("name")
-    declared_bytes = declared.get("bytes")
+                "detail": "本地无 zip 清单（artifacts/*.manifest.json 或 Package/release-manifest.json）"
+                          "⇒ 没有可比对的登记值。SKIP 不算通过"}
 
     assets = release_meta.get("assets") or []
     online = {str(a.get("name", "")): a for a in assets}
-
-    if not declared_name:
-        return {"id": "PUBLISHED-ASSET", "level": "SKIP",
-                "detail": "本地清单未登记 asset.name ⇒ 无法比对。SKIP 不算通过"}
-
-    if declared_name not in online:
-        return {"id": "PUBLISHED-ASSET", "level": "WARN",
-                "detail": f"线上未见名为 {declared_name!r} 的资产（线上有 {sorted(online)}）"
-                          f" —— 可能发布用了不同命名，请人工确认"}
-
-    actual = online[declared_name].get("size")
-    if declared_bytes and actual and actual != declared_bytes:
+    compared: list[str] = []
+    problems: list[str] = []
+    for path, manifest in manifests:
+        declared = manifest.get("asset") or {}
+        name = declared.get("name")
+        if not name or name not in online:
+            continue
+        compared.append(name)
+        actual = online[name]
+        online_size = actual.get("size")
+        declared_bytes = declared.get("bytes")
+        if declared_bytes and online_size and online_size != declared_bytes:
+            problems.append(
+                f"线上资产 {name} 大小 {online_size} 字节 ≠ 本地清单登记 {declared_bytes} 字节"
+            )
+        declared_sha = declared.get("sha256")
+        online_digest = str(actual.get("digest") or "")
+        if declared_sha and online_digest.startswith("sha256:"):
+            if online_digest.split(":", 1)[1] != declared_sha:
+                problems.append(f"线上资产 {name} 的 sha256 与本地清单登记不一致")
+    if problems:
         return {"id": "PUBLISHED-ASSET", "level": "FAIL",
-                "detail": f"线上资产 {declared_name} 大小 {actual} 字节 ≠ 本地清单登记 "
-                          f"{declared_bytes} 字节 ⇒ 上传的可能不是同一份产物"}
-
+                "detail": "；".join(problems) + " ⇒ 上传的可能不是同一份产物"}
+    if not compared:
+        return {"id": "PUBLISHED-ASSET", "level": "WARN",
+                "detail": f"本地清单的资产名不在线上（线上有 {sorted(online)}）"
+                          f" —— 可能发布用了不同命名，请人工确认"}
     return {"id": "PUBLISHED-ASSET", "level": "PASS",
-            "detail": f"线上资产 {declared_name} 与本地清单登记一致"
-                      f"（{actual or declared_bytes} 字节；仅比对大小，不含内容哈希）"}
+            "detail": f"线上资产与本地 zip 清单一致：{compared}（大小 + 可用时的 sha256）"}
 
 
 def _repo_slug(root: Path) -> str:
@@ -1060,6 +1067,42 @@ never counted as passed.
 """
 
 
+def _write_fixture_release_artifacts(root: Path, *, version: str = "9.9.9") -> None:
+    """在 fixture 仓库里造两个干净发布 zip + 清单（FORMAT-GATE 现在是 zip 对象）。
+
+    为什么 fixture 必须有真实 zip：release 模式的 phase=post 会跑 FORMAT-GATE；
+    没有产物 zip 时新门禁按设计报 FAIL（"发布前必须先生成 zip"），会把合规基线误判红。
+    """
+    gate = _load_format_gate_module()
+    mf = gate.mf
+    art = root / "artifacts"
+    art.mkdir(parents=True, exist_ok=True)
+    base = {
+        "Memoria.exe": b"MZ fixture",
+        "VERSION": version.encode(),
+        "manifest.json": b'{"version": "9.9.9"}',
+        "lib/a.py": b"print(1)\n",
+        "resources/b.txt": b"hello\n",
+        "config/README.txt": b"config in LOCALAPPDATA\n",
+    }
+    for name, with_hf in [
+        (f"Memoria-v{version}-win64.zip", True),
+        (f"Memoria-v{version}-win64-lite.zip", False),
+    ]:
+        zpath = art / name
+        with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as zf:
+            for rel, data in base.items():
+                zf.writestr(rel, data)
+            if with_hf:
+                zf.writestr("hf/m.bin", b"model")
+        manifest = mf.build_manifest_from_zip(
+            zip_path=zpath, version=version, asset_name=name, asset_path=zpath
+        )
+        zpath.with_name(zpath.stem + ".manifest.json").write_bytes(
+            mf.canonical_bytes(manifest)
+        )
+
+
 def _fixture_env(tmp: Path, note_row: str | None = SELFTEST_NOTE_ROW) -> dict:
     """建一个最小临时仓库（含 origin bare remote）+ 合规正文/审查/发布数据。
 
@@ -1087,6 +1130,7 @@ def _fixture_env(tmp: Path, note_row: str | None = SELFTEST_NOTE_ROW) -> dict:
     bare = tmp / "origin.git"
     subprocess.run(["git", "init", "--bare", "-q", str(bare)], capture_output=True, timeout=30)
     git("remote", "add", "origin", str(bare))
+    _write_fixture_release_artifacts(root)
 
     review_dir = tmp / "supervisor"
     review_dir.mkdir()
@@ -1339,94 +1383,134 @@ def selftest_release() -> list[tuple[str, bool]]:
     return results
 
 
-def _make_fixture_package(root: Path, *, broken: str = "") -> None:
-    """造一个 FORMAT-GATE fixture 用的 Package。`broken` 指定怎么弄坏它。
+def _fmt_entries(version: str = "9.9.9") -> dict[str, bytes]:
+    """FORMAT-GATE fixture 的最小合规 zip 条目（full/lite 共有部分）。"""
+    return {
+        "Memoria.exe": b"MZ fixture",
+        "VERSION": version.encode(),
+        "manifest.json": b'{"version": "9.9.9"}',
+        "lib/a.py": b"print(1)\n",
+        "resources/b.txt": b"hello\n",
+        "config/README.txt": b"config in LOCALAPPDATA\n",
+    }
 
-    broken ∈ {"", "missing-entry", "extra-file"}。
-    """
-    pkg = root / "Package"
-    for d in ("lib", "resources", "config", "hf"):
-        (pkg / d).mkdir(parents=True, exist_ok=True)
-    (pkg / "Memoria.exe").write_bytes(b"MZ fixture")
-    (pkg / "VERSION").write_text("9.9.9\n", encoding="utf-8")
-    (pkg / "manifest.json").write_text('{"version": "9.9.9"}', encoding="utf-8")
-    (pkg / "lib" / "a.py").write_text("print(1)\n", encoding="utf-8")
-    (pkg / "resources" / "b.txt").write_text("hello\n", encoding="utf-8")
-    (pkg / "config" / "ui-settings.json").write_text("{}\n", encoding="utf-8")
 
-    if broken == "missing-entry":
-        # 删掉一个必含顶层条目
-        shutil.rmtree(pkg / "resources")
+def _write_fmt_zip(root: Path, name: str, entries: dict[str, bytes]) -> Path:
+    art = root / "artifacts"
+    art.mkdir(parents=True, exist_ok=True)
+    zpath = art / name
+    with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as zf:
+        for rel, data in entries.items():
+            zf.writestr(rel, data)
+    return zpath
 
-    # 先生成清单（此时还没塞"未声明文件"）
+
+def _write_fmt_manifest(zpath: Path, version: str = "9.9.9") -> Path:
     gate = _load_format_gate_module()
-    manifest_mod = gate.mf
-    manifest = manifest_mod.build_manifest(
-        package_root=pkg, version="9.9.9", asset_name="x.zip"
+    mf = gate.mf
+    manifest = mf.build_manifest_from_zip(
+        zip_path=zpath, version=version, asset_name=zpath.name, asset_path=zpath
     )
-    (pkg / "release-manifest.json").write_bytes(manifest_mod.canonical_bytes(manifest))
-
-    # 清单生成**之后**再塞未声明文件 ⇒ 才会被双向校验抓到
-    if broken == "extra-file":
-        (pkg / "lib" / "smuggled.py").write_text("evil\n", encoding="utf-8")
+    mpath = zpath.with_name(zpath.stem + ".manifest.json")
+    mpath.write_bytes(mf.canonical_bytes(manifest))
+    return mpath
 
 
 def _selftest_format_gate(tmp: Path) -> list[tuple[str, bool]]:
-    """FORMAT-GATE 的必绿 / 必红 fixture（task-181）。"""
+    """FORMAT-GATE 的必绿 / 必红 fixture（task-181/185；对象 = 发布 zip）。"""
     results: list[tuple[str, bool]] = []
 
-    # ③-1 必绿：结构合规的包 ⇒ PASS
+    # ③-1 必绿：两个干净 zip（full + lite）⇒ PASS
     good = tmp / "fmt-good"
-    good.mkdir()
-    _make_fixture_package(good)
+    good.mkdir(parents=True)
+    for name, with_hf in [
+        ("Memoria-v9.9.9-win64.zip", True),
+        ("Memoria-v9.9.9-win64-lite.zip", False),
+    ]:
+        entries = _fmt_entries()
+        if with_hf:
+            entries["hf/m.bin"] = b"model"
+        _write_fmt_manifest(_write_fmt_zip(good, name, entries))
     r = eval_format_gate("v9.9.9", good, "post")
-    results.append(("③ FORMAT-GATE 合规包 ⇒ PASS", r["level"] == "PASS"))
+    results.append(
+        ("③ FORMAT-GATE 干净 zip（full+lite）⇒ PASS",
+         r["level"] == "PASS" and "2 个" in r["detail"])
+    )
 
-    # ③-2 必红：缺一个必含条目 ⇒ FAIL，且 detail 提到它
+    # ③-2 必红：缺必含条目（lib/）⇒ FAIL
     bad1 = tmp / "fmt-missing"
-    bad1.mkdir()
-    _make_fixture_package(bad1, broken="missing-entry")
+    bad1.mkdir(parents=True)
+    entries = {k: v for k, v in _fmt_entries().items() if not k.startswith("lib/")}
+    _write_fmt_manifest(_write_fmt_zip(bad1, "Memoria-v9.9.9-win64.zip", entries))
     r = eval_format_gate("v9.9.9", bad1, "post")
-    results.append(("③ FORMAT-GATE 缺必含条目 ⇒ FAIL",
-                    r["level"] == "FAIL" and "resources" in r["detail"]))
+    results.append(
+        ("③ FORMAT-GATE 缺必含条目 ⇒ FAIL",
+         r["level"] == "FAIL" and "lib" in r["detail"])
+    )
 
-    # ③-3 必红：多一个未声明文件 ⇒ FAIL
+    # ③-3 必红：清单生成后再塞未声明文件 ⇒ FAIL（双向校验抓到夹带）
     bad2 = tmp / "fmt-extra"
-    bad2.mkdir()
-    _make_fixture_package(bad2, broken="extra-file")
+    bad2.mkdir(parents=True)
+    zpath = _write_fmt_zip(bad2, "Memoria-v9.9.9-win64.zip", _fmt_entries())
+    _write_fmt_manifest(zpath)
+    with zipfile.ZipFile(zpath, "a") as zf:
+        zf.writestr("resources/evil.txt", b"evil\n")
     r = eval_format_gate("v9.9.9", bad2, "post")
-    results.append(("③ FORMAT-GATE 多未声明文件 ⇒ FAIL",
-                    r["level"] == "FAIL" and "smuggled" in r["detail"]))
+    results.append(
+        ("③ FORMAT-GATE 多未声明文件 ⇒ FAIL",
+         r["level"] == "FAIL" and "evil" in r["detail"])
+    )
 
-    # ③-4 必红：有产物但缺清单 ⇒ FAIL（不能静默 SKIP）
+    # ③-4 必红：zip 里含私有 config + 真实 key 形态 ⇒ FAIL（v0.4.9 事故形态）
+    bad3 = tmp / "fmt-leak"
+    bad3.mkdir(parents=True)
+    entries = dict(_fmt_entries())
+    entries["config/agent.json"] = b'{"api_key": "sk-FAKEabcdefghijklmnop1234"}'
+    _write_fmt_manifest(_write_fmt_zip(bad3, "Memoria-v9.9.9-win64.zip", entries))
+    r = eval_format_gate("v9.9.9", bad3, "post")
+    results.append(
+        ("③ FORMAT-GATE 私有 config/API key ⇒ FAIL",
+         r["level"] == "FAIL" and ("config" in r["detail"] or "API key" in r["detail"]))
+    )
+
+    # ③-5 必红：有 zip 但缺清单 ⇒ FAIL（不静默 SKIP）
     nospec = tmp / "fmt-nomanifest"
-    nospec.mkdir()
-    _make_fixture_package(nospec)
-    (nospec / "Package" / "release-manifest.json").unlink()
+    nospec.mkdir(parents=True)
+    _write_fmt_zip(nospec, "Memoria-v9.9.9-win64.zip", _fmt_entries())
     r = eval_format_gate("v9.9.9", nospec, "post")
-    results.append(("③ FORMAT-GATE 有产物缺清单 ⇒ FAIL（不静默 SKIP）",
-                    r["level"] == "FAIL" and "release-manifest" in r["detail"]))
+    results.append(
+        ("③ FORMAT-GATE 有 zip 缺清单 ⇒ FAIL（不静默 SKIP）",
+         r["level"] == "FAIL" and "清单" in r["detail"])
+    )
 
-    # ③-5 必 SKIP：空壳 Package（只有 VERSION，无产物）⇒ SKIP（不误判为格式错）
-    empty = tmp / "fmt-empty"
-    (empty / "Package").mkdir(parents=True)
-    (empty / "Package" / "VERSION").write_text("9.9.9\n", encoding="utf-8")
-    r = eval_format_gate("v9.9.9", empty, "post")
-    results.append(("③ FORMAT-GATE 空壳 Package ⇒ SKIP（不误判）", r["level"] == "SKIP"))
+    # ③-6 无 zip：post ⇒ FAIL（发布前必须先生成）；audit ⇒ SKIP（本机没产物不算错）
+    nozip = tmp / "fmt-nozip"
+    (nozip / "artifacts").mkdir(parents=True)
+    r_post = eval_format_gate("v9.9.9", nozip, "post")
+    r_audit = eval_format_gate("v9.9.9", nozip, "audit")
+    results.append(
+        ("③ FORMAT-GATE 无 zip：post FAIL / audit SKIP",
+         r_post["level"] == "FAIL" and r_audit["level"] == "SKIP")
+    )
 
-    # ③-6 失败必须汇聚成整体 exit 1：summary.ok 必须 False
-    cfg = {
-        "tag": "v9.9.9", "title": SELFTEST_TITLE, "body": SELFTEST_BODY,
-        "root": bad1, "review_dir": tmp / "no-review", "mode": "release",
-        "phase": "post", "offline": True, "release_meta": None,
-        "require_review": False,
-    }
+    # ③-7 失败必须汇聚成整体 exit 1：summary.ok=False 且 failed 含 FORMAT-GATE
+    env_dir = tmp / "fmt-summary-env"
+    env_dir.mkdir(parents=True)
+    env = _fixture_env(env_dir)
+    root = env["root"]
+    shutil.rmtree(root / "artifacts")
+    entries = {k: v for k, v in _fmt_entries().items() if not k.startswith("lib/")}
+    _write_fmt_manifest(_write_fmt_zip(root, "Memoria-v9.9.9-win64.zip", entries))
+    cfg = _cfg(env, phase="post")
     checks, _metrics = run_release_checks(cfg)
     summary = summarize(checks)
-    results.append(("③ FORMAT-GATE FAIL ⇒ 整体 summary.ok=False（会 exit 1）",
-                    summary["ok"] is False and "FORMAT-GATE" in summary["failed"]))
+    results.append(
+        ("③ FORMAT-GATE FAIL ⇒ 整体 summary.ok=False（会 exit 1）",
+         summary["ok"] is False and "FORMAT-GATE" in summary["failed"])
+    )
 
     return results
+
 
 
 def selftest() -> int:

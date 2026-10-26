@@ -1,9 +1,19 @@
-# 发布包格式保证（v0 · task-181）
+# 发布包格式保证（v0 · task-181/185）
 
-> **作者**：arch-contract。
+> **作者**：arch-contract。**2026-10-27 设计纠正**：release-manager（按人的要求）。
 > **来源**：人的裁决 ——
 > 「算了不管了，给厕所上锁，**保证发布包格式**就好了」
 > （此前评估过 Ed25519 签名/公钥固定/信任链，被明确放弃；本方案**不含任何密码学**）
+
+> ## ⚠️ 2026-10-27 设计纠正（必读，推翻下文"Package 目录"口径）
+>
+> 人的原话：「我本地需要在 Package 真实测试，真实的 key 你能发布的时候去掉吗」
+>
+> - **发布物是 zip，不是 `Package/` 目录。** `Package/` 是人的本地测试构建，里面可以有真实 API key。
+> - ⇒ **清单从 zip 条目生成**；**门禁只校验 zip**；敏感内容扫描**只扫 zip**，绝不扫 `Package/`
+>   （扫 Package 必然误报人的测试 key）。
+> - 打包时从 zip **剥离** `config/` 私有文件（zip 内只允许 `config/README.txt`）。
+> - 下文 §3.1「顶层预期集合」已按此更新；任何以 Package 目录为门禁对象的实现都是**旧口径**。
 
 ---
 
@@ -51,9 +61,10 @@
 
 | 文件 | 作用 |
 |---|---|
-| `src/memoria/services/verify/manifest.py` | 清单构建 + A–D 四类校验 + 客户端入口 `verify_package()` |
-| `scripts/agent/release_manifest.py` | 生成 `release-manifest.json` |
-| `scripts/agent/release_format_gate.py` | 发布门禁（任一不过 ⇒ `exit 1`） |
+| `src/memoria/services/verify/manifest.py` | 清单构建（**从 zip**）+ A–E 校验 + 客户端入口 `verify_package()` |
+| `scripts/agent/release_manifest.py` | 从**发布 zip** 生成 `<zip 名>.manifest.json`（清单唯一来源） |
+| `scripts/agent/release_format_gate.py` | 发布门禁：校验**一个 zip**（A–E，任一不过 ⇒ `exit 1`） |
+| `packaging/make_release_zip.py` | 从 `Package/` 打 zip：**剥离私有 config**（只留 `config/README.txt`；lite 去 `hf/`）+ 生成清单 + 自检 |
 | `docs/design/release-format.md` | 本文档 |
 
 ### 2.1 清单格式
@@ -86,26 +97,34 @@ review 时看到的是**真实差异**，而不是被键序、空格、CRLF 差�
 
 ---
 
-## 3. 发布门禁检查项（A–E）
+## 3. 发布门禁检查项（A–E，对象 = 发布 zip）
 
 | 项 | 内容 |
 |---|---|
-| **A 结构** | 顶层恰为 `required ∪ optional`；必含齐全；禁止条目不得存在 |
-| **B 双向** | 清单每个文件在包中存在且 sha256/bytes 一致；**包内每个文件都被声明**（无夹带） |
-| **C 一致** | `VERSION` == `manifest.version` == `--expect-version`（release 标题版本） |
+| **A 结构** | zip 顶层恰为 `required ∪ optional`；必含齐全；禁止条目不得存在；`config/` 只允许 `config/README.txt` |
+| **B 双向** | 清单每个文件在 zip 中存在且 sha256/bytes 一致；**zip 内每个文件都被声明**（无夹带） |
+| **C 一致** | zip 内 `VERSION` == `manifest.version` == `--expect-version`（release 标题版本） |
 | **D zip 卫生** | 无同名重复条目 / 无路径穿越 / 条目集合==清单 / 无 EOCD 后尾随数据 |
-| **E** | 任一条不满足 ⇒ **`exit 1`**（硬失败，不许降级 WARN） |
+| **E 敏感内容** | zip 内含私有配置条目（`config/agent.json`、`config/ui-settings.json`）或内容命中 `sk-…` / `"api_key": "<长值>"` ⇒ 失败（只报路径，不打印内容） |
+| **F** | 任一条不满足 ⇒ **`exit 1`**（硬失败，不许降级 WARN） |
 
-### 3.1 顶层预期集合（按实测定）
+### 3.1 顶层预期集合（按实测 + 2026-10-27 设计纠正）
 
-**必含**：`Memoria.exe`、`VERSION`、`manifest.json`、`lib/`、`resources/`、`config/`、`hf/`
-**可选**：`README.txt`、`Memoria.exe.config`、`release-manifest.json`
+**必含**：`Memoria.exe`、`VERSION`、`manifest.json`、`lib/`、`resources/`
+（full / lite 两种发布形态都必然有）
+**可选**：`config/`、`hf/`、`README.txt`、`Memoria.exe.config`、`release-manifest.json`
+（`hf/` 仅 full 有；`config/` 内只允许 `README.txt`）
 **禁止**：`logs/`、`cache/`、`__pycache__/`、`.git/`、`.gitkeep`、`frameless-ok.txt`、`window-diag.txt`
+**禁止条目（路径级）**：`config/agent.json`、`config/ui-settings.json`
 
-> **依据**：在真实 `Package/`（复制到 `%TEMP%`，只读）上跑门禁，**实际抓到**后三项非预期条目 ——
-> 它们是运行时诊断日志（内含本机绝对路径与窗口坐标）与占位文件。
-> 处理方式是**把它们列为禁止项**，而**不是**放宽预期集合去容纳它们
-> （那等于把运行残留合法化，下次还会混进发布包）。
+> **依据**：
+> - 在真实 `Package/` 上跑门禁（2026-10-26）**实际抓到**运行时诊断日志（内含本机绝对路径与窗口坐标）
+>   与占位文件 ⇒ 把它们列为禁止项，而不是放宽预期集合去容纳（那等于把残留合法化）。
+> - **2026-10-27 事故**：v0.4.9 两个公开 zip 含 `config/agent.json`（真实 API key）。
+>   根因是"清单从 Package 目录生成 + 门禁校验 Package 目录" ⇒ 私有文件被合法化进清单。
+>   ⇒ 现在清单从 zip 生成、门禁只校验 zip、打包时剥离私有 config、并新增 E 敏感内容扫描。
+> - 扫描**不**无差别匹配字面量 `api_key`：应用自身设置代码会引用该键名（zip 的 `lib/**` 内），
+>   无差别扫会误报所有版本 ⇒ 用 `sk-…`、JSON 赋值形态、私有配置条目三个判据。
 
 ### 3.2 退出码契约（org.md B3-e）
 

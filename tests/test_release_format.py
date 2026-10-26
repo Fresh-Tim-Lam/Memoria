@@ -28,7 +28,7 @@ from memoria.services.verify import manifest as mf
 
 
 def _make_package(root: Path) -> None:
-    """造一个结构合规的最小包。"""
+    """造一个结构合规的最小包（**config/ 只放 README**：私有配置绝不进 zip）。"""
     for d in ("lib", "resources", "config", "hf"):
         (root / d).mkdir(parents=True, exist_ok=True)
     (root / "Memoria.exe").write_bytes(b"MZ fake exe")
@@ -38,7 +38,7 @@ def _make_package(root: Path) -> None:
     )
     (root / "lib" / "a.py").write_text("print(1)\n", encoding="utf-8")
     (root / "resources" / "b.txt").write_text("hello\n", encoding="utf-8")
-    (root / "config" / "ui-settings.json").write_text("{}\n", encoding="utf-8")
+    (root / "config" / "README.txt").write_text("config lives in LOCALAPPDATA\n", encoding="utf-8")
 
 
 @pytest.fixture()
@@ -366,3 +366,177 @@ def test_canonical_bytes_survives_crlf_source() -> None:
     obj = {"k": "值"}
     crlf = json.dumps(obj, ensure_ascii=False).replace("\n", "\r\n")
     assert mf.canonical_bytes(json.loads(crlf)) == mf.canonical_bytes(obj)
+
+
+# ── 2026-10-27 设计纠正（task-185）：清单/门禁对象是 **zip**，不是 Package/ ──
+#
+# 人的要求：「我本地需要在 Package 真实测试，真实的 key 你能发布的时候去掉吗」
+# ⇒ Package/ 可以有真实 key（故意的）；zip 必须干净；清单从 zip 条目生成；门禁只扫 zip。
+
+
+def _load_gate_module():
+    import importlib.util
+
+    path = Path(__file__).resolve().parents[1] / "scripts" / "agent" / "release_format_gate.py"
+    spec = importlib.util.spec_from_file_location("_test_release_format_gate", path)
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _zip_from(pkg: Path, out: Path, *, extra: dict[str, bytes] | None = None,
+              drop: set[str] | None = None, skip_hf: bool = False) -> Path:
+    drop = drop or set()
+    extra = extra or {}
+    with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
+        for path in mf._iter_package_files(pkg):
+            rel = mf.rel_posix(path, pkg)
+            if rel in drop or rel in extra or (skip_hf and rel.startswith("hf/")):
+                continue
+            zf.write(path, rel)
+        for name, data in extra.items():
+            zf.writestr(name, data)
+    return out
+
+
+def test_manifest_from_zip_lists_exact_entries(pkg: Path, tmp_path: Path) -> None:
+    """清单必须从 zip 条目生成：条目集合与哈希都和 zip 一致。"""
+    z = _zip_from(pkg, tmp_path / "a.zip")
+    manifest = mf.build_manifest_from_zip(
+        zip_path=z, version="0.4.10", asset_name="a.zip", asset_path=z
+    )
+    with zipfile.ZipFile(z) as zf:
+        names = {i.filename for i in zf.infolist() if not i.is_dir()}
+    assert {f["path"] for f in manifest["files"]} == names
+    assert manifest["version"] == "0.4.10"
+    assert manifest["asset"]["sha256"] == mf.sha256_file(z)
+    assert isinstance(manifest["layout"]["forbidden_entries"], list)
+
+
+def test_zip_layout_rejects_private_config(pkg: Path, tmp_path: Path) -> None:
+    """zip 的 config/ 只允许 README.txt：含 agent.json ⇒ A 结构失败。"""
+    z = _zip_from(pkg, tmp_path / "leak.zip", extra={"config/agent.json": b'{"api_key":"x"}'})
+    manifest = mf.build_manifest_from_zip(zip_path=z, version="0.4.10")
+    result = mf.verify_zip_layout(zip_path=z, manifest=manifest)
+    assert not result.ok
+    assert any("config" in f for f in result.failures), result.failures
+
+
+def test_scan_zip_sensitive_detects_sk_key(pkg: Path, tmp_path: Path) -> None:
+    """zip 内任意文件含 `sk-…` 形态 ⇒ 构建/发布必须失败。"""
+    z = _zip_from(pkg, tmp_path / "key.zip", extra={"resources/b.txt": b"key=sk-FAKEabcdefghijklmnop1234\n"})
+    result = mf.scan_zip_sensitive(zip_path=z)
+    assert not result.ok
+    assert any("API key" in f for f in result.failures), result.failures
+
+
+def test_scan_zip_sensitive_detects_api_key_assignment(pkg: Path, tmp_path: Path) -> None:
+    """JSON 里出现 `"api_key": "<长值>"` ⇒ 失败（不打印内容）。"""
+    z = _zip_from(
+        pkg, tmp_path / "json.zip",
+        extra={"lib/agent.json": b'{"base_url":"https://x","api_key":"abcdef1234567890"}'},
+    )
+    result = mf.scan_zip_sensitive(zip_path=z)
+    assert not result.ok
+    assert any("API key" in f for f in result.failures), result.failures
+
+
+def test_scan_zip_sensitive_allows_plain_setting_name(pkg: Path, tmp_path: Path) -> None:
+    """应用代码里引用配置键名 `api_key`（无赋值/无 sk-）不得误报。
+
+    为什么不能无差别扫字面量 `api_key`：应用自身设置代码大量引用这个键名
+    （`src/memoria/services/agent/llm/config.py` 等），无差别扫会误报所有版本。
+    """
+    z = _zip_from(
+        pkg, tmp_path / "code.zip",
+        extra={"lib/settings.py": b"def get(self):\n    return self._data['api_key']\n"},
+    )
+    result = mf.scan_zip_sensitive(zip_path=z)
+    assert result.ok, result.failures
+
+
+def test_gate_accepts_clean_full_and_lite_zips(pkg: Path, tmp_path: Path) -> None:
+    """full（含 hf）与 lite（无 hf）两种干净 zip 都应通过门禁。"""
+    gate = _load_gate_module()
+    full = _zip_from(pkg, tmp_path / "Memoria-v0.4.10-win64.zip")
+    lite = _zip_from(pkg, tmp_path / "Memoria-v0.4.10-win64-lite.zip", skip_hf=True)
+    for z in (full, lite):
+        manifest = mf.build_manifest_from_zip(
+            zip_path=z, version="0.4.10", asset_name=z.name, asset_path=z
+        )
+        mpath = z.with_name(z.stem + ".manifest.json")
+        mpath.write_bytes(mf.canonical_bytes(manifest))
+        result = gate.run_checks(zip_path=z, manifest_path=mpath, expect_version="0.4.10")
+        assert result.ok, (z.name, result.failures)
+
+
+def test_gate_rejects_key_injected_zip(pkg: Path, tmp_path: Path) -> None:
+    """**证红**：人为把含真 key 的 config/agent.json 塞进 zip ⇒ 门禁必须 FAIL。"""
+    gate = _load_gate_module()
+    z = _zip_from(
+        pkg, tmp_path / "Memoria-v0.4.10-win64.zip",
+        extra={"config/agent.json": b'{"api_key":"sk-FAKEabcdefghijklmnop1234"}'},
+    )
+    manifest = mf.build_manifest_from_zip(
+        zip_path=z, version="0.4.10", asset_name=z.name, asset_path=z
+    )
+    mpath = z.with_name(z.stem + ".manifest.json")
+    mpath.write_bytes(mf.canonical_bytes(manifest))
+    result = gate.run_checks(zip_path=z, manifest_path=mpath, expect_version="0.4.10")
+    assert not result.ok
+    assert any("config" in f or "API key" in f for f in result.failures), result.failures
+
+
+def test_packer_strips_private_config_but_package_keeps_it(tmp_path: Path) -> None:
+    """**证红/证绿两条**（task-185 ⑤）：
+
+    · Package/config 里放真 key，正常打包 ⇒ zip 内无它、扫描通过（人的本地测试不被破坏）；
+    · 人为把它塞进 zip ⇒ 门禁 FAIL。
+    """
+    import subprocess
+    import sys
+
+    repo = Path(__file__).resolve().parents[1]
+    pkg = tmp_path / "Package"
+    _make_package(pkg)
+    (pkg / "config" / "agent.json").write_text(
+        json.dumps({"api_key": "sk-FAKEabcdefghijklmnop1234"}), encoding="utf-8"
+    )
+    out = tmp_path / "artifacts" / "Memoria-v0.4.10-win64-lite.zip"
+    proc = subprocess.run(
+        [sys.executable, str(repo / "packaging" / "make_release_zip.py"),
+         "--package", str(pkg), "--variant", "lite", "--version", "0.4.10",
+         "--out", str(out)],
+        cwd=repo, capture_output=True, text=True, encoding="utf-8", errors="replace",
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    with zipfile.ZipFile(out) as zf:
+        names = set(zf.namelist())
+    assert "config/agent.json" not in names, "私有配置不得进 zip"
+    assert "config/ui-settings.json" not in names
+    assert (pkg / "config" / "agent.json").is_file(), "打包不得删除人的本地测试 key"
+
+    gate = _load_gate_module()
+    manifest = json.loads(out.with_name(out.stem + ".manifest.json").read_text(encoding="utf-8"))
+    assert gate.run_checks(
+        zip_path=out, manifest_path=out.with_name(out.stem + ".manifest.json"),
+        expect_version="0.4.10",
+    ).ok
+    assert mf.scan_zip_sensitive(zip_path=out).ok
+
+    # 人为把私有文件塞进 zip ⇒ 必红
+    bad = tmp_path / "bad.zip"
+    with zipfile.ZipFile(out) as src, zipfile.ZipFile(bad, "w") as dst:
+        for info in src.infolist():
+            dst.writestr(info, src.read(info.filename))
+        dst.writestr("config/agent.json", (pkg / "config" / "agent.json").read_bytes())
+    bad_manifest = mf.build_manifest_from_zip(
+        zip_path=bad, version="0.4.10", asset_name=bad.name, asset_path=bad
+    )
+    bad_mpath = bad.with_name(bad.stem + ".manifest.json")
+    bad_mpath.write_bytes(mf.canonical_bytes(bad_manifest))
+    result = gate.run_checks(zip_path=bad, manifest_path=bad_mpath, expect_version="0.4.10")
+    assert not result.ok
+    assert any("config" in f or "API key" in f for f in result.failures), result.failures
+

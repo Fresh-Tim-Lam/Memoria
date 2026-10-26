@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import zipfile
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -42,18 +43,22 @@ MANIFEST_SCHEMA = "memoria-release-manifest/v1"
 MANIFEST_NAME = "release-manifest.json"
 
 #: 发布包**顶层必须**存在的条目（目录以 `/` 结尾）。
+#:
+#: 2026-10-27 设计纠正（人的要求）：发布物是 **zip**，`Package/` 只是人的本地测试构建目录。
+#: 因此「必含」只保留两种发布形态（full / lite）都必然有的条目；
+#: `hf/`（仅 full 有）与 `config/`（仅 README 允许）移入可选集合。
 REQUIRED_TOP_LEVEL: tuple[str, ...] = (
     "Memoria.exe",
     "VERSION",
     "manifest.json",
     "lib/",
     "resources/",
-    "config/",
-    "hf/",
 )
 
 #: 允许存在但不是必须的顶层条目。
 OPTIONAL_TOP_LEVEL: tuple[str, ...] = (
+    "config/",
+    "hf/",
     "README.txt",
     "Memoria.exe.config",
     MANIFEST_NAME,
@@ -75,6 +80,26 @@ FORBIDDEN_TOP_LEVEL: tuple[str, ...] = (
     "frameless-ok.txt",
     "window-diag.txt",
 )
+
+#: **禁止出现在 zip 内的具体条目路径**（人的私有配置，绝不随包）。
+#: 2026-10-26 事故：v0.4.9 两个公开资产把这两个文件打进了 zip，其中含真实 API key。
+FORBIDDEN_ENTRY_PATHS: tuple[str, ...] = (
+    "config/agent.json",
+    "config/ui-settings.json",
+)
+
+#: zip 内 `config/` 目录**唯一**允许的条目（说明配置文件在 %LOCALAPPDATA%）。
+CONFIG_ALLOWED_ENTRY = "config/README.txt"
+
+#: 敏感内容扫描：真实 key 形态 / JSON 里的 api_key 赋值（**只打印命中文件，不打印内容**）。
+#:
+#: 为什么不能对全部文件无差别扫字面量 `api_key`：应用自身代码/文档会引用这个配置键名
+#: （例如设置页读写 `api_key`），无差别扫描会误报几乎所有版本 ⇒ 用「赋值形态」+ `sk-` 前缀。
+SECRET_PATTERNS: tuple[re.Pattern[bytes], ...] = (
+    re.compile(rb"sk-[A-Za-z0-9_\-]{16,}"),
+    re.compile(rb'"api_key"\s*:\s*"[A-Za-z0-9_\-]{12,}"'),
+)
+
 
 #: 计算哈希时跳过的顶层目录（运行动态产物，不属于"包内容"）。
 HASH_SKIP_TOP_LEVEL: tuple[str, ...] = ("logs", "cache", "__pycache__")
@@ -422,9 +447,26 @@ def verify_package(
     result = CheckResult.pass_()
 
     if target.is_file():
-        # zip 形态：结构卫生 + 逐条目内容哈希
+        # zip 形态：结构（顶层 + config 白名单）+ zip 卫生 + 逐条目内容哈希 + 敏感内容扫描。
+        # 客户端按【清单声明的 layout】校验（旧清单 layout 为空时跳过顶层检查），
+        # 发布门禁则用代码常量做权威结构校验（见 release_format_gate）。
+        layout = manifest.get("layout") or {}
+        mreq = tuple(layout.get("required") or ())
+        if mreq:
+            result.extend(
+                verify_zip_layout(
+                    zip_path=target,
+                    manifest=manifest,
+                    expected_required=mreq,
+                    expected_optional=tuple(layout.get("optional") or ()) or None,
+                    expected_forbidden=tuple(layout.get("forbidden") or ()) or None,
+                )
+            )
+        else:
+            result.extend(verify_zip_layout(zip_path=target, manifest=manifest, check_top_level=False))
         result.extend(verify_zip(zip_path=target, manifest=manifest))
         result.extend(_verify_zip_content_hashes(zip_path=target, manifest=manifest))
+        result.extend(scan_zip_sensitive(zip_path=target))
 
         if check_asset_bytes:
             asset = manifest.get("asset") or {}
@@ -483,3 +525,166 @@ def _verify_zip_content_hashes(*, zip_path: Path, manifest: dict[str, Any]) -> C
             f"zip 结构损坏或已被改写（无法读取条目内容）：{exc} ⇒ 请重新下载"
         )
     return CheckResult.pass_() if not failures else CheckResult.fail(*failures)
+
+
+# ── 2026-10-27 设计纠正：清单与门禁的对象是【zip】，不是 Package/ 目录 ──────────
+#
+# 人的要求：「我本地需要在 Package 真实测试，真实的 key 你能发布的时候去掉吗」
+# ⇒ `Package/` 是人的本地测试构建（可以有真实 key）；发布物是 zip。
+# ⇒ 清单必须从 zip 生成；门禁必须校验 zip；敏感内容扫描【只扫 zip】，绝不许扫 Package/。
+
+
+def _zip_file_names(zf: zipfile.ZipFile) -> list[str]:
+    return [info.filename for info in zf.infolist() if not info.is_dir()]
+
+
+def _top_level_present(names: Iterable[str]) -> set[str]:
+    present: set[str] = set()
+    for name in names:
+        first = name.split("/", 1)[0]
+        present.add(first + "/" if "/" in name else first)
+    return present
+
+
+def build_manifest_from_zip(
+    *,
+    zip_path: Path,
+    version: str,
+    asset_name: str = "",
+    asset_path: Path | None = None,
+    built_at: str | None = None,
+) -> dict[str, Any]:
+    """从 **zip 条目**生成完整性清单（发布门禁的唯一清单来源）。
+
+    为什么不是从 `Package/` 生成：`Package/` 是人的本地测试构建目录，
+    里面可以有真实 API key / 本机设置；发布物是 zip，清单只应描述 zip 里有什么。
+    """
+    files: list[dict[str, Any]] = []
+    with zipfile.ZipFile(zip_path) as zf:
+        for info in sorted(zf.infolist(), key=lambda i: i.filename):
+            if info.is_dir():
+                continue
+            digest = hashlib.sha256()
+            size = 0
+            with zf.open(info) as fh:
+                for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+                    digest.update(chunk)
+                    size += len(chunk)
+            files.append({"path": info.filename, "sha256": digest.hexdigest(), "bytes": size})
+
+    asset: dict[str, Any] = {"name": asset_name or zip_path.name, "bytes": 0}
+    if asset_path is not None and asset_path.is_file():
+        asset["bytes"] = asset_path.stat().st_size
+        asset["sha256"] = sha256_file(asset_path)
+
+    return {
+        "schema": MANIFEST_SCHEMA,
+        "format_version": 1,
+        "version": version,
+        "built_at": built_at or datetime.now(timezone.utc).isoformat(),
+        "source": "zip",
+        "asset": asset,
+        "layout": {
+            "required": list(REQUIRED_TOP_LEVEL),
+            "optional": list(OPTIONAL_TOP_LEVEL),
+            "forbidden": list(FORBIDDEN_TOP_LEVEL),
+            "forbidden_entries": list(FORBIDDEN_ENTRY_PATHS),
+            "config_allowed": CONFIG_ALLOWED_ENTRY,
+        },
+        "files": files,
+    }
+
+
+def verify_zip_layout(
+    *,
+    zip_path: Path,
+    manifest: dict[str, Any] | None = None,
+    expected_required: Iterable[str] | None = None,
+    expected_optional: Iterable[str] | None = None,
+    expected_forbidden: Iterable[str] | None = None,
+    check_top_level: bool = True,
+) -> CheckResult:
+    """zip 形态的 A 结构校验：顶层 required/optional/forbidden + `config/` 白名单。
+
+    发布门禁用**代码常量**（权威）；客户端 `verify_package()` 可传清单声明的布局
+    （清单不是签名，但用于客户端时允许按清单校验，兼容旧清单）。
+    """
+    failures: list[str] = []
+    try:
+        with zipfile.ZipFile(zip_path) as zf:
+            names = _zip_file_names(zf)
+    except zipfile.BadZipFile as exc:
+        return CheckResult.fail(f"zip 结构损坏或无法读取：{exc}")
+
+    if check_top_level:
+        present = _top_level_present(names)
+        required = set(expected_required) if expected_required is not None else set(REQUIRED_TOP_LEVEL)
+        optional = set(expected_optional) if expected_optional is not None else set(OPTIONAL_TOP_LEVEL)
+        forbidden = (
+            set(expected_forbidden) if expected_forbidden is not None else set(FORBIDDEN_TOP_LEVEL)
+        )
+        missing = sorted(required - present)
+        if missing:
+            failures.append(f"zip 缺少必含顶层条目：{missing}")
+        bad = sorted(present & forbidden)
+        if bad:
+            failures.append(f"zip 包含禁止的顶层条目：{bad}")
+        unexpected = sorted(present - required - optional - forbidden)
+        if unexpected:
+            failures.append(f"zip 存在未声明的顶层条目：{unexpected}")
+
+    # `config/` 只允许 CONFIG_ALLOWED_ENTRY（人的私有配置绝不随包）
+    bad_config = sorted(
+        n for n in names if n.startswith("config/") and n != CONFIG_ALLOWED_ENTRY
+    )
+    if bad_config:
+        failures.append(f"zip 的 config/ 含私有文件（只允许 {CONFIG_ALLOWED_ENTRY}）：{bad_config}")
+
+    if manifest is not None and check_top_level:
+        declared = set((manifest.get("layout") or {}).get("required") or [])
+        expected = set(expected_required) if expected_required is not None else set(REQUIRED_TOP_LEVEL)
+        if declared and declared != expected:
+            failures.append(
+                f"manifest.layout.required 与代码契约不一致：声明={sorted(declared)} 契约={sorted(expected)}"
+            )
+    return CheckResult.pass_() if not failures else CheckResult.fail(*failures)
+
+
+def _scan_stream_for_secrets(fh) -> bool:
+    """流式扫描一个 zip 条目内容，命中 `SECRET_PATTERNS` 即返回 True（不保存内容）。"""
+    prev = b""
+    for chunk in iter(lambda: fh.read(1024 * 1024), b""):
+        window = prev + chunk
+        for pat in SECRET_PATTERNS:
+            if pat.search(window):
+                return True
+        prev = chunk[-128:]
+    return False
+
+
+def scan_zip_sensitive(*, zip_path: Path) -> CheckResult:
+    """扫描 **zip** 内的敏感内容：私有配置条目 / 真实 key 形态。
+
+    ⚠️ **只允许扫 zip**：`Package/` 是人的本地测试构建，真实 key 在那里是**故意的**；
+    扫 Package/ 必然误报（人的测试 key 就在那）。扫描结果只报文件路径，**不打印内容**。
+    """
+    failures: list[str] = []
+    try:
+        with zipfile.ZipFile(zip_path) as zf:
+            for info in zf.infolist():
+                if info.is_dir():
+                    continue
+                name = info.filename
+                if name in FORBIDDEN_ENTRY_PATHS:
+                    failures.append(f"zip 含私有配置条目（不得随包）：{name}")
+                    continue
+                try:
+                    with zf.open(info) as fh:
+                        if _scan_stream_for_secrets(fh):
+                            failures.append(f"zip 条目内容疑似包含 API key：{name}（内容不打印）")
+                except (RuntimeError, zipfile.BadZipFile) as exc:  # 加密/损坏条目
+                    failures.append(f"zip 条目无法读取（疑似损坏）：{name}（{type(exc).__name__}）")
+    except zipfile.BadZipFile as exc:
+        failures.append(f"zip 结构损坏或无法读取：{exc}")
+    return CheckResult.pass_() if not failures else CheckResult.fail(*failures)
+
