@@ -270,9 +270,17 @@
 
     // 行号：从 DOM 的 data--src-line 获取（由 stampBlockLines 精确计算）
     // astToSrc 的 line 对 frontmatter/多行 block 计算不准确
-    var srcLine = srcPos.line;  // 0-based fallback
+    var srcLine = srcPos.line;  // 0-based；astToSrc 已对引用块按 child/item 行跨度算准
+    // ★ task-156：引用块的 `data--src-line` 只是**块首行**，用它覆盖会把引用内第 2 段及以后
+    //   全都算成首行（配合旧 domToAst 缺陷会把编辑落到第 1 段）。引用块信任 astToSrc 的行。
+    var _curBlock = null;
+    try {
+      _curBlock = (window.state && window.state.doc && window.state.doc.blocks)
+        ? window.state.doc.blocks[astPos.blockIndex] : null;
+    } catch (e) { _curBlock = null; }
+    var _isQuoteBlock = !!(_curBlock && _curBlock.type === "blockquote");
     var blockEl = document.querySelector('.-src-block[data--block-index="' + astPos.blockIndex + '"]');
-    if (blockEl) {
+    if (blockEl && !_isQuoteBlock) {
       var dl = parseInt(blockEl.getAttribute("data--src-line"), 10);
       if (!isNaN(dl)) srcLine = dl - 1;  // 转为 0-based
     }

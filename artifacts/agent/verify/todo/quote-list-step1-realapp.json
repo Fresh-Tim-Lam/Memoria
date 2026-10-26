@@ -1,0 +1,316 @@
+{
+  "startedAt": "2026-10-26T00:42:04.293Z",
+  "target": {
+    "id": "E5B98E37FAC74921F27BC8BCBB55091B",
+    "url": "http://127.0.0.1:54714/"
+  },
+  "pristineQuote": [
+    "> 前言段落一",
+    "> - q1 ten",
+    "> - q2 eleven",
+    "> 后记段落二",
+    "> - q3 twelve",
+    "> 尾段段落三",
+    "> 纯段落引用（对照组）"
+  ],
+  "steps": {
+    "A": {
+      "focus": {
+        "ok": true,
+        "text": "前言段落一",
+        "isLi": false
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一A\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一A",
+        "> - q1 ten",
+        "> - q2 eleven",
+        "> 后记段落二",
+        "> - q3 twelve",
+        "> 尾段段落三",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 0,
+          "before": "> 前言段落一",
+          "after": "> 前言段落一A"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一A\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "split",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一A\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 2,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一A</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul><p>尾段段落三</p>",
+        "editMode": true
+      }
+    },
+    "B": {
+      "focus": {
+        "ok": true,
+        "text": "q1 ten",
+        "isLi": true
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 tenB\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一",
+        "> - q1 tenB",
+        "> - q2 eleven",
+        "> 后记段落二",
+        "> - q3 twelve",
+        "> 尾段段落三",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 1,
+          "before": "> - q1 ten",
+          "after": "> - q1 tenB"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 tenB\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "split",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 tenB\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 2,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 tenB</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul><p>尾段段落三</p>",
+        "editMode": true
+      }
+    },
+    "C": {
+      "focus": {
+        "ok": true,
+        "text": "后记段落二",
+        "isLi": false
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二C\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一",
+        "> - q1 ten",
+        "> - q2 eleven",
+        "> 后记段落二C",
+        "> - q3 twelve",
+        "> 尾段段落三",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 3,
+          "before": "> 后记段落二",
+          "after": "> 后记段落二C"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二C\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "split",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二C\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 2,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二C</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul><p>尾段段落三</p>",
+        "editMode": true
+      }
+    },
+    "C3": {
+      "focus": {
+        "ok": true,
+        "text": "尾段段落三",
+        "isLi": false
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三C3\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一",
+        "> - q1 ten",
+        "> - q2 eleven",
+        "> 后记段落二",
+        "> - q3 twelve",
+        "> 尾段段落三C3",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 5,
+          "before": "> 尾段段落三",
+          "after": "> 尾段段落三C3"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三C3\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "split",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三C3\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 2,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul><p>尾段段落三C3</p>",
+        "editMode": true
+      }
+    },
+    "D": {
+      "sel": {
+        "ok": true,
+        "from": "q1 ten",
+        "to": "q2 eleven"
+      },
+      "after": {
+        "diskChanged": true,
+        "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q1 tenq2 eleven\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+        "quoteLinesAfter": [
+          "> 前言段落一",
+          "> - q1 ten",
+          "> - q1 tenq2 eleven",
+          "> - q3 twelve",
+          "> 尾段段落三",
+          "> 纯段落引用（对照组）"
+        ],
+        "changedCount": 5,
+        "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q1 tenq2 eleven\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "preview": {
+          "currentPath": "docs/q.md",
+          "viewMode": "split",
+          "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q1 tenq2 eleven\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+          "quoteUL": 1,
+          "quoteLI": 3,
+          "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q1 tenq2 eleven</li><li>q3 twelve</li></ul><p>尾段段落三</p>",
+          "editMode": true
+        }
+      }
+    },
+    "E": {
+      "focus1": {
+        "ok": true,
+        "line": 3,
+        "text": "> 前言段落一"
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一S\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一S",
+        "> - q1 ten",
+        "> - q2 eleven",
+        "> 后记段落二",
+        "> - q3 twelve",
+        "> 尾段段落三",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 0,
+          "before": "> 前言段落一",
+          "after": "> 前言段落一S"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一S\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "source",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一S\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 1,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q1 tenq2 eleven</li><li>q3 twelve</li></ul><p>尾段段落三</p>",
+        "editMode": true
+      }
+    },
+    "E2": {
+      "focus2": {
+        "ok": true,
+        "line": 4,
+        "text": "> - q1 ten"
+      },
+      "saved": true,
+      "diskChanged": true,
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 tenT\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "quoteLinesAfter": [
+        "> 前言段落一",
+        "> - q1 tenT",
+        "> - q2 eleven",
+        "> 后记段落二",
+        "> - q3 twelve",
+        "> 尾段段落三",
+        "> 纯段落引用（对照组）"
+      ],
+      "changedLines": [
+        {
+          "i": 1,
+          "before": "> - q1 ten",
+          "after": "> - q1 tenT"
+        }
+      ],
+      "changedCount": 1,
+      "targetLineChanged": true,
+      "quoteIdentical": false,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 tenT\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+      "preview": {
+        "currentPath": "docs/q.md",
+        "viewMode": "source",
+        "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 tenT\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "quoteUL": 1,
+        "quoteLI": 3,
+        "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q1 tenq2 eleven</li><li>q3 twelve</li></ul><p>尾段段落三</p>",
+        "editMode": true
+      }
+    },
+    "F": {
+      "focusPara": {
+        "ok": true,
+        "text": "前言段落一",
+        "isLi": false
+      },
+      "after": {
+        "diskChanged": false,
+        "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+        "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+        "preview": {
+          "currentPath": "docs/q.md",
+          "viewMode": "split",
+          "body": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n",
+          "quoteUL": 2,
+          "quoteLI": 3,
+          "quoteHTML": "<p>前言段落一</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul><p>尾段段落三</p>",
+          "editMode": true
+        }
+      }
+    },
+    "F2": {
+      "focusLi": {
+        "ok": true,
+        "text": "q2 eleven",
+        "isLi": true
+      },
+      "after": {
+        "diskChanged": false,
+        "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n> 尾段段落三\r\n\r\n> 纯段落引用（对照组）\r\n",
+        "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n> 尾段段落三\n\n> 纯段落引用（对照组）\n"
+      }
+    }
+  },
+  "finishedAt": "2026-10-26T00:42:24.145Z"
+}

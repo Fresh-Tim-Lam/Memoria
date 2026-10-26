@@ -12110,6 +12110,109 @@ async function call(fn, ...args) {
       lastGroup = null;
     }
 
+    // ── task-156 二期 Step0：编辑路径 / 行区间 helper（所有改动的单一口径）──
+    // 一期新形状：blockquote.children 可以是**跨多行**的 list；nodePath 有两种语义
+    //   paragraph child → [childIdx, …inline]
+    //   list child      → [childIdx, itemIdx, …inline]
+    // 每个 child 落 srcLine/srcLineEnd（绝对 1-based）⇒ 行区间换算只允许走这里。
+
+    /** _segPos：块内"段/项"序位（用于判断选区是否跨段/跨项）。
+     *  引用块段落 → childIdx 序位；引用内 list → childIdx+itemIdx 序位（列表项更细）；其它块 → nodePath[0]。 */
+    function _segPos(block, cursor) {
+      var p = (cursor && cursor.nodePath) || [];
+      if (block && block.type === "blockquote") {
+        var qi = p.length ? p[0] : -1;
+        if (qi < 0) return -1;
+        var child = block.children && block.children[qi];
+        if (child && child.type === "list") {
+          var ii = p.length > 1 ? p[1] : 0;
+          return qi * 100000 + ii + 1;
+        }
+        return qi * 100000;
+      }
+      return p.length ? p[0] : -1;
+    }
+
+    /**
+     * block 内第 childIdx 个 child 的源码行区间（0-based 闭区间，供 commitRange 用）。
+     * 依据一期 child.srcLine/srcLineEnd；旧 AST（外部构造、无跨度）退回"1 child = 1 行"。
+     * @returns {{startLine:number,endLine:number}|null}
+     */
+    function _childLineRange(blockIndex, childIdx) {
+      var rng = _blockLineMap && _blockLineMap[blockIndex];
+      var block = _doc && _doc.blocks && _doc.blocks[blockIndex];
+      if (!rng || !block) return null;
+      var kids = block.children || [];
+      var child = (childIdx >= 0 && childIdx < kids.length) ? kids[childIdx] : null;
+      if (!child) return null;   // 越界 ⇒ 不猜（旧 AST 兜底只对**存在**的 child 生效）
+      var base = rng.startLine;
+      var off = childIdx >= 0 ? childIdx : 0;
+      var blockStart = block.srcLine > 0 ? block.srcLine : 1;
+      if (child && child.srcLine > 0) {
+        var s = base + (child.srcLine - blockStart);
+        var e = (child.srcLineEnd >= child.srcLine) ? base + (child.srcLineEnd - blockStart) : s;
+        return { startLine: s, endLine: e >= s ? e : s };
+      }
+      return { startLine: base + off, endLine: base + off };
+    }
+
+    /** 引用块内 list child 的第 itemIdx 项的源码行（0-based）。
+     *  一期 parser 里 item.srcLine 是"引用切片内相对 1-based"，而 child 首行 = _childLineRange.startLine。 */
+    function _quoteItemLineRange(blockIndex, childIdx, itemIdx) {
+      var cr = _childLineRange(blockIndex, childIdx);
+      var block = _doc && _doc.blocks && _doc.blocks[blockIndex];
+      var child = block && block.children && block.children[childIdx];
+      var item = child && child.items && child.items[itemIdx];
+      if (!cr || !item) return null;
+      var first = cr.startLine;
+      if (item.srcLine > 0) {
+        var ln = first + (item.srcLine - 1);
+        return { startLine: ln, endLine: ln };
+      }
+      return { startLine: first + itemIdx, endLine: first + itemIdx };
+    }
+
+    /**
+     * 统一解析编辑光标 nodePath → 容器/子块/列表项/行内根。
+     * @returns {{kind:"quote"|"list"|"block", childIdx:number|null, child:object|null,
+     *            itemIdx:number|null, item:object|null,
+     *            inlineRoot:Array, inlinePath:number[]}|null}
+     */
+    function _parseEditPath(block, nodePath) {
+      var path = nodePath || [];
+      if (!block) return null;
+      if (block.type === "blockquote") {
+        if (!path.length) return null;
+        var qi = path[0];
+        var child = block.children && block.children[qi];
+        if (!child) return null;
+        if (child.type === "list") {
+          if (path.length < 2) {
+            return { kind: "quote", childIdx: qi, child: child, itemIdx: null, item: null,
+                     inlineRoot: [], inlinePath: [] };
+          }
+          var ii = path[1];
+          var item = child.items && child.items[ii];
+          if (!item) return null;
+          return { kind: "quote", childIdx: qi, child: child, itemIdx: ii, item: item,
+                   inlineRoot: item.children || [], inlinePath: path.slice(2) };
+        }
+        return { kind: "quote", childIdx: qi, child: child, itemIdx: null, item: null,
+                 inlineRoot: child.children || [], inlinePath: path.slice(1) };
+      }
+      if (block.type === "list") {
+        if (!path.length) return null;
+        var li = path[0];
+        var lit = block.items && block.items[li];
+        if (!lit) return null;
+        return { kind: "list", childIdx: null, child: null, itemIdx: li, item: lit,
+                 inlineRoot: lit.children || [], inlinePath: path.slice(1) };
+      }
+      return { kind: "block", childIdx: null, child: null, itemIdx: null, item: null,
+               inlineRoot: block.children || [], inlinePath: path };
+    }
+    // ── end: edit path helpers ──
+
     // ── 结构标记自动转换（# / ## / - / * / + / 1. 等）──
 
     /** 检测段落源码行是否构成块级标记，返回 {type, level?, ordered?} 或 null */
@@ -12144,8 +12247,18 @@ async function call(fn, ...args) {
       // E28：引用块的 children 是**块级段落**（每行一个，与 parser 一致），
       // 光标必须落到第一段内部（nodePath[0] = 段落索引），否则会指向 blockquote
       // 本身 ⇒ 后续 insertText 会把 text 直接挂到 blockquote.children 上（坏 AST）。
+      // ★ task-156：一期后 children 也可能是**跨多行 list** ⇒ 光标必须再下钻到
+      //   item（nodePath=[childIdx, itemIdx, …]），绝不能指向 list 块本身。
       if (block.type === "blockquote") {
-        var qPara = block.children && block.children[0];
+        var qKids0 = block.children || [];
+        if (!qKids0.length) return { nodePath: [0], offset: 0 };
+        var qChild0 = qKids0[0];
+        if (qChild0 && qChild0.type === "list") {
+          var qItem0 = qChild0.items && qChild0.items[0];
+          var qip0 = qItem0 ? firstTextPath(qItem0.children || []) : null;
+          return { nodePath: qip0 ? [0, 0].concat(qip0.path) : [0, 0], offset: 0 };
+        }
+        var qPara = qChild0;
         var qfp = qPara ? firstTextPath(qPara.children || []) : null;
         return { nodePath: qfp ? [0].concat(qfp.path) : [0], offset: 0 };
       }
@@ -12230,19 +12343,30 @@ async function call(fn, ...args) {
       var inlineHost = block;
       var inlinePath = (cursor.nodePath || []).slice();
       var quoteIdx = -1;
+      var quoteItemIdx = -1;
       if (block.type === "blockquote") {
         quoteIdx = inlinePath.length ? inlinePath[0] : 0;
-        var qPara = (block.children || [])[quoteIdx];
-        if (!qPara || qPara.type !== "paragraph") {
-          // 空引用块 / 结构异常：补一个空段落，与 parser 的 `AST.blockquote([AST.paragraph([])])` 同形
-          qPara = A.paragraph([]);
+        var qChild = (block.children || [])[quoteIdx];
+        if (!qChild) {
+          // 空引用块：补一个空段落，与 parser 的 `AST.blockquote([AST.paragraph([])])` 同形
+          qChild = A.paragraph([]);
           if (!block.children) block.children = [];
-          block.children[quoteIdx] = qPara;
+          block.children[quoteIdx] = qChild;
           inlinePath = [quoteIdx];
           cursor.nodePath = inlinePath.slice();
         }
-        inlineHost = qPara;
-        inlinePath = inlinePath.slice(1);
+        if (qChild.type === "list") {
+          // task-156：引用内列表 —— 写入目标必须是**item.children**。
+          // 旧实现会把 list child 当段落覆盖成一段文字（list 整块丢失，随后 commit 写盘）⇒ R0。
+          quoteItemIdx = inlinePath.length > 1 ? inlinePath[1] : 0;
+          var qItem = qChild.items && qChild.items[quoteItemIdx];
+          if (!qItem) return false;
+          inlineHost = qItem;
+          inlinePath = inlinePath.slice(2);
+        } else {
+          inlineHost = qChild;
+          inlinePath = inlinePath.slice(1);
+        }
       }
       if (inlinePath.length) {
         node = A.getNodeAt(inlineHost, inlinePath);
@@ -12261,9 +12385,9 @@ async function call(fn, ...args) {
           item.children = [node];
           cursor.nodePath = [itemIdx, 0];
         } else if (block.type === "blockquote") {
-          // ★ 只写进引用内段落的 children，绝不写进 blockquote.children
+          // ★ 只写进引用内段落 / 列表项的 children，绝不写进 blockquote.children 或 list 块
           inlineHost.children = [node];
-          cursor.nodePath = [quoteIdx, 0];
+          cursor.nodePath = quoteItemIdx >= 0 ? [quoteIdx, quoteItemIdx, 0] : [quoteIdx, 0];
         } else {
           block.children = [node];
           cursor.nodePath = [0];
@@ -13392,8 +13516,9 @@ async function call(fn, ...args) {
       // 同一 block 内跨「段/项」：只有 blockquote / list 是"多段容器"，其它类型同块 = 同一 inline 树
       var sameBlockSpan = false;
       if (start.blockIndex === end.blockIndex) {
-        var sSeg = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : -1;
-        var eSeg = (end.nodePath && end.nodePath.length) ? end.nodePath[0] : -1;
+        // task-156：引用内 list 的"段"是 item（原实现用 nodePath[0]=child 判不出跨 item）
+        var sSeg = _segPos(startBlock0, start);
+        var eSeg = _segPos(startBlock0, end);
         if (startBlock0.type === "blockquote" || startBlock0.type === "list") {
           if (sSeg < 0 || eSeg <= sSeg) return false;
           sameBlockSpan = true;
@@ -13441,7 +13566,15 @@ async function call(fn, ...args) {
           var qi = path.length ? path[0] : 0;
           var inner = block.children && block.children[qi];
           if (!inner) return null;
-          return { children: inner.children || [], path: path.slice(1) };
+          if (inner.type === "list") {
+            // task-156：引用内列表 ⇒ 下钻到 item（否则把 list 当 inline 容器 = 丢项）
+            var qii = path.length > 1 ? path[1] : 0;
+            var qItem = inner.items && inner.items[qii];
+            if (!qItem) return null;
+            return { children: qItem.children || [], path: path.slice(2),
+                     quoteChild: inner, quoteItemIdx: qii };
+          }
+          return { children: inner.children || [], path: path.slice(1), quoteChild: inner };
         }
         return { children: block.children || [], path: path };
       }
@@ -13469,8 +13602,13 @@ async function call(fn, ...args) {
       } else if (startBlock.type === "heading") {
         newBlock = A.heading(startBlock.level, joined);
       } else if (startBlock.type === "blockquote") {
-        // stage3：合并结果留在引用块内（与用户直觉一致：删除后剩余文字仍在原引用里）
-        newBlock = A.blockquote([A.paragraph(joined)]);
+        // stage3/task-156：合并结果留在引用块内；**保留被编辑 child 的形态**：
+        //   段落 child → 单段引用；list child → 单 item 列表（否则整块 list 被压成一段 = 丢项）
+        var qStartChild = sc && sc.quoteChild;
+        var qInner = (qStartChild && qStartChild.type === "list")
+          ? A.list(qStartChild.ordered, [A.listItem(joined)])
+          : A.paragraph(joined);
+        newBlock = A.blockquote([qInner]);
       } else {
         newBlock = A.paragraph(joined);
       }
@@ -13492,11 +13630,27 @@ async function call(fn, ...args) {
         // ★ stage3：引用块「一段 = 一行」（parser 逐行产出 paragraph，prefixes 等长）
         //   ⇒ 段索引 nodePath[0] 就是块内行偏移。没有这条映射时只能整块粒度删除，
         //   会把末段之后未被选中的引用内容一起删掉。
+        // task-156：引用块行区间必须按 child 的**真实行跨度**（list child 可跨多行），
+        //   旧实现 `blm.startLine + nodePath[0]` 只在"1 child = 1 行"时成立。
         if (startBlock.type === "blockquote") {
-          startLine = blm[start.blockIndex].startLine + ((start.nodePath && start.nodePath[0]) || 0);
+          var sChildIdx = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : -1;
+          var sChild = sChildIdx >= 0 ? (startBlock.children || [])[sChildIdx] : null;
+          var sRange = _childLineRange(start.blockIndex, sChildIdx);
+          if (sRange) startLine = sRange.startLine;
+          if (sChild && sChild.type === "list" && start.nodePath.length > 1) {
+            var sItemRange = _quoteItemLineRange(start.blockIndex, sChildIdx, start.nodePath[1]);
+            if (sItemRange) startLine = sItemRange.startLine;
+          }
         }
         if (endBlock.type === "blockquote") {
-          endLine = blm[end.blockIndex].startLine + ((end.nodePath && end.nodePath[0]) || 0);
+          var eChildIdx = (end.nodePath && end.nodePath.length) ? end.nodePath[0] : -1;
+          var eChild = eChildIdx >= 0 ? (endBlock.children || [])[eChildIdx] : null;
+          var eRange = _childLineRange(end.blockIndex, eChildIdx);
+          if (eRange) endLine = eRange.endLine;
+          if (eChild && eChild.type === "list" && end.nodePath.length > 1) {
+            var eItemRange = _quoteItemLineRange(end.blockIndex, eChildIdx, end.nodePath[1]);
+            if (eItemRange) endLine = eItemRange.endLine;
+          }
         }
       } else {
         var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
@@ -13510,7 +13664,11 @@ async function call(fn, ...args) {
       // 新光标：合并处（before 末尾）。首块为列表/引用时合并结果只剩一个 item / 一个内部段落，
       // 路径需带 item / 段落前缀
       var cursorPrefix = (startBlock.type === "list" && before.length) ? [0]
-        : (startBlock.type === "blockquote" ? [0] : []);
+        : (startBlock.type === "blockquote"
+            ? ((sc && sc.quoteChild && sc.quoteChild.type === "list")
+                ? [((start.nodePath && start.nodePath[0]) || 0), 0]
+                : [((start.nodePath && start.nodePath[0]) || 0)])
+            : []);
       var beforeLen = renderedLenOfNodes(before);
       var cursorRel = joined.length ? renderedOffsetToPath(joined, beforeLen) : null;
       var newCursor = cursorRel
@@ -13568,12 +13726,19 @@ async function call(fn, ...args) {
      * 用于 stage4 删除合并块与 stage5 粘贴替换的首/尾块。
      * 原子块（表格/代码/公式/mermaid）在这里**降级为段落**：它们不能承载内联文本。
      */
-    function _blockLike(kindBlock, inlineNodes) {
+    function _blockLike(kindBlock, inlineNodes, shapeChild) {
       var nodes = inlineNodes || [];
       if (!kindBlock) return A.paragraph(nodes);
       if (kindBlock.type === "list") return A.list(kindBlock.ordered, [A.listItem(nodes)]);
       if (kindBlock.type === "heading") return A.heading(kindBlock.level, nodes);
-      if (kindBlock.type === "blockquote") return A.blockquote([A.paragraph(nodes)]);
+      if (kindBlock.type === "blockquote") {
+        // task-156：被编辑的引用 child 是 list 时，结果必须仍是"引用 + 单 item 列表"，
+        //   否则删除/粘贴会把整块 list 压成一段 = 丢项（静默数据损坏）。
+        if (shapeChild && shapeChild.type === "list") {
+          return A.blockquote([A.list(shapeChild.ordered, [A.listItem(nodes)])]);
+        }
+        return A.blockquote([A.paragraph(nodes)]);
+      }
       return A.paragraph(nodes);
     }
 
@@ -13709,7 +13874,14 @@ async function call(fn, ...args) {
           var qi = path.length ? path[0] : 0;
           var inner = block.children && block.children[qi];
           if (!inner) return null;
-          return { children: inner.children || [], path: path.slice(1) };
+          if (inner.type === "list") {
+            var qii = path.length > 1 ? path[1] : 0;
+            var qItem = inner.items && inner.items[qii];
+            if (!qItem) return null;
+            return { children: qItem.children || [], path: path.slice(2),
+                     quoteChild: inner, quoteItemIdx: qii };
+          }
+          return { children: inner.children || [], path: path.slice(1), quoteChild: inner };
         }
         return { children: block.children || [], path: path };
       }
@@ -13735,11 +13907,11 @@ async function call(fn, ...args) {
       var blocks = [];
       if (lines.length === 1) {
         var mergedOne = mergeAdjacentInline(sp.left.concat([A.text(lines[0])], ep.right));
-        blocks.push(_blockLike(startBlock, mergedOne));
+        blocks.push(_blockLike(startBlock, mergedOne, sc && sc.quoteChild));
       } else {
-        blocks.push(_blockLike(startBlock, sp.left.concat([A.text(lines[0])])));
+        blocks.push(_blockLike(startBlock, sp.left.concat([A.text(lines[0])]), sc && sc.quoteChild));
         if (lines.length > 2) blocks = blocks.concat(_parsePastedBlocks(lines.slice(1, lines.length - 1).join("\n")));
-        blocks.push(_blockLike(endBlock, [A.text(lines[lines.length - 1])].concat(ep.right)));
+        blocks.push(_blockLike(endBlock, [A.text(lines[lines.length - 1])].concat(ep.right), ec && ec.quoteChild));
       }
       var newLines = _blocksToSrcLines(blocks);
 
@@ -13751,8 +13923,27 @@ async function call(fn, ...args) {
         endLine = (endBlock.type === "list")
           ? (blm[end.blockIndex].startLine + (end.listItemIndex || 0))
           : blm[end.blockIndex].endLine;
-        if (startBlock.type === "blockquote") startLine = blm[start.blockIndex].startLine + ((start.nodePath && start.nodePath[0]) || 0);
-        if (endBlock.type === "blockquote") endLine = blm[end.blockIndex].startLine + ((end.nodePath && end.nodePath[0]) || 0);
+        // task-156：引用块行区间按 child 真实跨度（list child 可跨多行）
+        if (startBlock.type === "blockquote") {
+          var rsChildIdx = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : -1;
+          var rsChild = rsChildIdx >= 0 ? (startBlock.children || [])[rsChildIdx] : null;
+          var rsRange = _childLineRange(start.blockIndex, rsChildIdx);
+          if (rsRange) startLine = rsRange.startLine;
+          if (rsChild && rsChild.type === "list" && start.nodePath.length > 1) {
+            var rsItem = _quoteItemLineRange(start.blockIndex, rsChildIdx, start.nodePath[1]);
+            if (rsItem) startLine = rsItem.startLine;
+          }
+        }
+        if (endBlock.type === "blockquote") {
+          var reChildIdx = (end.nodePath && end.nodePath.length) ? end.nodePath[0] : -1;
+          var reChild = reChildIdx >= 0 ? (endBlock.children || [])[reChildIdx] : null;
+          var reRange = _childLineRange(end.blockIndex, reChildIdx);
+          if (reRange) endLine = reRange.endLine;
+          if (reChild && reChild.type === "list" && end.nodePath.length > 1) {
+            var reItem = _quoteItemLineRange(end.blockIndex, reChildIdx, end.nodePath[1]);
+            if (reItem) endLine = reItem.endLine;
+          }
+        }
       } else {
         var startSrc = M.astToSrc(start.blockIndex, start.nodePath || [], start.offset);
         var endSrc = M.astToSrc(end.blockIndex, end.nodePath || [], end.offset);
@@ -13764,7 +13955,16 @@ async function call(fn, ...args) {
 
       // 光标：粘贴内容末尾
       var tailIdx = start.blockIndex + blocks.length - 1;
-      var prefix = (startBlock.type === "list" || startBlock.type === "blockquote") ? [0] : [];
+      // task-156：引用内列表 ⇒ 结果落在 [childIdx, itemIdx]；引用内段落 ⇒ [childIdx]
+      var prefix;
+      if (startBlock.type === "list") {
+        prefix = [0];
+      } else if (startBlock.type === "blockquote") {
+        var pChildIdx = (start.nodePath && start.nodePath.length) ? start.nodePath[0] : 0;
+        prefix = (sc && sc.quoteChild && sc.quoteChild.type === "list") ? [pChildIdx, 0] : [pChildIdx];
+      } else {
+        prefix = [];
+      }
       var cursor;
       if (lines.length === 1) {
         var joinedOne = mergeAdjacentInline(sp.left.concat([A.text(lines[0])], ep.right));

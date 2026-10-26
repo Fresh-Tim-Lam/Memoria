@@ -902,6 +902,43 @@ window.MemoriaMapper = (function () {
       };
     }
 
+    // BLOCKQUOTE block（task-156）：children 是**块级段/列表** ⇒ 必须按 child 边界映射。
+    //   旧实现把 children 当 inline 数组、用整块 textContent 偏移 ⇒ 任何 child>0 的位置
+    //   （第 2 段 / 引用内列表项）都被映射回 child0 ⇒ 预览编辑会覆盖第 1 段并写盘
+    //   （既有 R0，见 artifacts/agent/verify/todo/blockquote-list-phase2.md §9）。
+    if (block.type === T.BLOCKQUOTE) {
+      if (!block.children || block.children.length === 0) {
+        return { blockIndex: blockIndex, nodePath: [], offset: domOffset };
+      }
+      var qTarget = _resolveQuoteDomTarget(block, blockEl, domNode);
+      if (!qTarget) return { blockIndex: blockIndex, nodePath: [0], offset: 0 };
+      var qChild = block.children[qTarget.childIdx];
+      var qPreferEnd = (domOffset > 0);
+      if (qChild.type === "list") {
+        var qItem = qTarget.item || (qChild.items && qChild.items[0]);
+        if (!qItem) return { blockIndex: blockIndex, nodePath: [qTarget.childIdx, 0], offset: 0 };
+        var qContainer = qTarget.liEl || qTarget.childEl;
+        var qOff = _domRenderedOffsetIn(qContainer, domNode, domOffset);
+        var qRes = renderedToSrcCol({ children: qItem.children || [] }, qOff, qPreferEnd);
+        if (!qRes) return { blockIndex: blockIndex, nodePath: [qTarget.childIdx, qTarget.itemIdx], offset: 0 };
+        var qPath = findNodePathInList(qItem.children || [], qRes.targetNode);
+        return {
+          blockIndex: blockIndex,
+          nodePath: [qTarget.childIdx, qTarget.itemIdx].concat(qPath || [0]),
+          offset: qRes.leafOffset,
+        };
+      }
+      var qOffP = _domRenderedOffsetIn(qTarget.childEl, domNode, domOffset);
+      var qResP = renderedToSrcCol({ children: qChild.children || [] }, qOffP, qPreferEnd);
+      if (!qResP) return { blockIndex: blockIndex, nodePath: [qTarget.childIdx], offset: 0 };
+      var qPathP = findNodePathInList(qChild.children || [], qResP.targetNode);
+      return {
+        blockIndex: blockIndex,
+        nodePath: [qTarget.childIdx].concat(qPathP || [0]),
+        offset: qResP.leafOffset,
+      };
+    }
+
     // 简单 block（无 inline children）
     if (!block.children || block.children.length === 0) {
       return { blockIndex: blockIndex, nodePath: [], offset: domOffset };
@@ -1077,6 +1114,97 @@ window.MemoriaMapper = (function () {
   }
 
   /**
+   * 在**任意容器元素**内计算「光标 → 渲染文本偏移」（与 domToAst 主路径同一口径）。
+   * 为什么抽出：task-156 引用块的每个 child（段落 / 列表）要各自作为容器算偏移，
+   * 不能再用整个引用块的 textContent 偏移（那会把第 2 段及以后都映射回第 1 段）。
+   */
+  function _domRenderedOffsetIn(container, domNode, domOffset) {
+    var textNodes = [];
+    collectTextNodes(container, textNodes);
+    var renderedOffset = 0;
+    if (domNode.nodeType === 3) {
+      var found = false;
+      var pendingMath = null;
+      for (var i = 0; i < textNodes.length; i++) {
+        var tn = textNodes[i];
+        var mEl = nearestMathAncestor(tn);
+        if (mEl) {
+          if (mEl !== pendingMath) { renderedOffset += mathAtomLen(mEl); pendingMath = mEl; }
+          continue;
+        }
+        pendingMath = null;
+        if (tn === domNode) { renderedOffset += domOffset; found = true; break; }
+        renderedOffset += tn.textContent.length;
+      }
+      return found ? renderedOffset : 0;
+    }
+    var pendingMath2 = null;
+    for (var j = 0; j < textNodes.length; j++) {
+      var tj = textNodes[j];
+      if (domNode.contains(tj)) break;
+      var mEl2 = nearestMathAncestor(tj);
+      if (mEl2) {
+        if (mEl2 !== pendingMath2) { renderedOffset += mathAtomLen(mEl2); pendingMath2 = mEl2; }
+        continue;
+      }
+      pendingMath2 = null;
+      renderedOffset += tj.textContent.length;
+    }
+    if (_isAtomElement(domNode)) {
+      if (domOffset > 0) renderedOffset += atomLenForDom(domNode);
+    } else {
+      var childCount = domNode.childNodes ? domNode.childNodes.length : 0;
+      for (var c = 0; c < domOffset && c < childCount; c++) {
+        var child = domNode.childNodes[c];
+        renderedOffset += (child.nodeType === 1 && _isAtomElement(child)) ? atomLenForDom(child) : nodeTextLen(child);
+      }
+    }
+    return renderedOffset;
+  }
+
+  /**
+   * task-156：把引用块内 DOM 光标解析为「直接 child + 列表项」。
+   * 只按 DOM 真实父子关系定位（与 block.children 顺序天然同构），不猜偏移。
+   * @returns {{childIdx:number, childEl:Element, itemIdx:number, item:object|null, liEl?:Element}|null}
+   *   `itemIdx = -1` 表示该 child 不是列表。
+   */
+  function _resolveQuoteDomTarget(block, blockEl, domNode) {
+    var childEl = domNode;
+    while (childEl && childEl.parentElement && childEl.parentElement !== blockEl) childEl = childEl.parentElement;
+    if (!childEl || childEl.parentElement !== blockEl) return null;
+    var kids = blockEl.children || [];
+    var childIdx = -1;
+    for (var i = 0; i < kids.length; i++) {
+      if (kids[i] === childEl) { childIdx = i; break; }
+    }
+    if (childIdx < 0) return null;
+    var blockChild = block.children && block.children[childIdx];
+    if (!blockChild) return null;
+    if (blockChild.type !== "list") {
+      return { childIdx: childIdx, childEl: childEl, itemIdx: -1, item: null };
+    }
+    var liEl = domNode;
+    while (liEl && liEl !== childEl) {
+      if (liEl.tagName === "LI") break;
+      liEl = liEl.parentElement;
+    }
+    if (!liEl || liEl.tagName !== "LI") {
+      return { childIdx: childIdx, childEl: childEl, itemIdx: 0,
+               item: (blockChild.items && blockChild.items[0]) || null };
+    }
+    // 复用既有递归解析（支持嵌套；nodePath 仍取顶层 item 下标 —— 与顶层 LIST 口径一致）
+    var resolved = resolveListItem(blockChild, childEl, liEl);
+    return {
+      childIdx: childIdx,
+      childEl: childEl,
+      itemIdx: resolved ? resolved.topIndex : 0,
+      item: resolved ? resolved.item : ((blockChild.items && blockChild.items[0]) || null),
+      liEl: liEl,
+      listPath: resolved ? resolved.listPath : null,
+    };
+  }
+
+  /**
    * AST 坐标 → DOM Range
    * @param {number} blockIndex
    * @param {number[]} nodePath
@@ -1109,6 +1237,35 @@ window.MemoriaMapper = (function () {
       var range = _rangeAtRenderedOffset(liEl, renderedOffset, atomSide);
       if (window.log) window.log("MAP", "astToDom block=" + blockIndex + " item=" + itemIdx + " path=[" + (relPath || []).join(",") + "] off=" + offset + " atomSide=" + atomSide + " rendered=" + renderedOffset + " -> " + _describeRange(range));
       return range;
+    }
+
+    // BLOCKQUOTE block（task-156）：按 child 边界重建 Range（与 domToAst 对称）
+    if (block.type === T.BLOCKQUOTE) {
+      var qKids2 = block.children || [];
+      if (!qKids2.length) return _rangeInContainer(blockEl, 0);
+      var qIdx2 = (nodePath && nodePath.length) ? nodePath[0] : 0;
+      if (qIdx2 >= qKids2.length) return _rangeInContainer(blockEl, 0);
+      var qChild2 = qKids2[qIdx2];
+      var qChildEl = (blockEl.children && blockEl.children[qIdx2]) || null;
+      if (!qChildEl) return _rangeInContainer(blockEl, 0);
+      if (qChild2.type === "list") {
+        var qItemIdx2 = (nodePath && nodePath.length > 1) ? nodePath[1] : 0;
+        var qLis = [];
+        for (var qli = 0; qli < qChildEl.children.length; qli++) {
+          if (qChildEl.children[qli].tagName === "LI") qLis.push(qChildEl.children[qli]);
+        }
+        var qLi = qLis[qItemIdx2];
+        var qItem2 = qChild2.items && qChild2.items[qItemIdx2];
+        if (!qLi || !qItem2) return _rangeInContainer(blockEl, 0);
+        var qRelPath2 = (nodePath || []).slice(2);
+        var qRendered2 = _renderedOffsetInInline(qItem2.children || [], qRelPath2, offset);
+        var qAtom2 = _atomSideOfPath(qItem2.children || [], qRelPath2, offset);
+        return _rangeAtRenderedOffset(qLi, qRendered2, qAtom2);
+      }
+      var qRelP = (nodePath || []).slice(1);
+      var qRenderedP = _renderedOffsetInInline(qChild2.children || [], qRelP, offset);
+      var qAtomP = _atomSideOfPath(qChild2.children || [], qRelP, offset);
+      return _rangeAtRenderedOffset(qChildEl, qRenderedP, qAtomP);
     }
 
     // 简单 block（无 inline children，如 BLANK_LINE / IMAGE）

@@ -1,0 +1,110 @@
+{
+  "startedAt": "2026-10-26T00:40:27.052Z",
+  "target": {
+    "id": "B319812EFCA79FBBF9F0CF8A7F05007E"
+  },
+  "pristine": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n\r\n> 纯段落引用（对照组）\r\n",
+  "steps": {
+    "C": {
+      "focus": {
+        "ok": true,
+        "text": "后记段落二",
+        "isLi": false
+      },
+      "diskChanged": true,
+      "waitMs": 1580,
+      "stateBody": "# 引用内列表 step1 探针\n\n> Z\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n\n> 纯段落引用（对照组）\n",
+      "diskQuoteDiff": {
+        "before": [
+          "> 前言段落一",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "after": [
+          "> Z",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "identical": false
+      },
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> Z\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "reopen": {
+        "body": "# 引用内列表 step1 探针\n\n> Z\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n\n> 纯段落引用（对照组）\n",
+        "currentPath": "docs/q.md",
+        "quoteHTML": "<p>Z</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul>"
+      }
+    },
+    "B": {
+      "focus": {
+        "ok": true,
+        "text": "q1 ten",
+        "isLi": true
+      },
+      "diskChanged": true,
+      "waitMs": 1576,
+      "stateBody": "# 引用内列表 step1 探针\n\n> Y\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n\n> 纯段落引用（对照组）\n",
+      "diskQuoteDiff": {
+        "before": [
+          "> 前言段落一",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "after": [
+          "> Y",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "identical": false
+      },
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> Y\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n\r\n> 纯段落引用（对照组）\r\n",
+      "reopen": {
+        "body": "# 引用内列表 step1 探针\n\n> Y\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n\n> 纯段落引用（对照组）\n",
+        "currentPath": "docs/q.md",
+        "quoteHTML": "<p>Y</p><ul class=\"-src-list -quote-list\"><li>q1 ten</li><li>q2 eleven</li></ul><p>后记段落二</p><ul class=\"-src-list -quote-list\"><li>q3 twelve</li></ul>"
+      }
+    },
+    "A": {
+      "focus": {
+        "ok": true,
+        "text": "前言段落一",
+        "isLi": false
+      },
+      "diskChanged": true,
+      "waitMs": 1565,
+      "stateBody": "# 引用内列表 step1 探针\n\n> 前言段落一A\n> - q1 ten\n> - q2 eleven\n> 后记段落二\n> - q3 twelve\n\n> 纯段落引用（对照组）\n",
+      "diskQuoteDiff": {
+        "before": [
+          "> 前言段落一",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "after": [
+          "> 前言段落一A",
+          "> - q1 ten",
+          "> - q2 eleven",
+          "> 后记段落二",
+          "> - q3 twelve",
+          "> 纯段落引用（对照组）"
+        ],
+        "identical": false
+      },
+      "disk": "# 引用内列表 step1 探针\r\n\r\n> 前言段落一A\r\n> - q1 ten\r\n> - q2 eleven\r\n> 后记段落二\r\n> - q3 twelve\r\n\r\n> 纯段落引用（对照组）\r\n"
+    }
+  },
+  "finishedAt": "2026-10-26T00:40:36.115Z"
+}
