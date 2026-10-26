@@ -14,9 +14,23 @@
 | 语法 | 含义 | 示例 |
 |------|------|------|
 | `[[id]]` | 知识点链接 | `[[mdp]]` |
-| `[[id#type]]` | 带边类型的链接 | `[[mdp#prerequisite]]` |
 | `[[id\|text]]` | 带显示文本的链接 | `[[mdp\|马尔可夫决策过程]]` |
-| `[[id#type\|text]]` | 完整形式 | `[[mdp#prerequisite\|前置知识]]` |
+
+> **⚠️ 边类型不写在正文里（2026-10-26 订正）**
+>
+> 曾经的 `[[id#type]]` / `[[id#type|text]]`（如 `[[mdp#prerequisite]]`）是**遗留写法，已废弃，不要用**：
+> 构建时 `strip_known_wikilink_edge_hints()` 会把这个片段**从正文剥离并回写文件** ⇒ **静默修改用户正文**：
+> 实测 `[[d#extend]]` 会被剥成 `[[d]]`（遗留写法，勿用）。副作用还不止改正文：预览期该链会断开；链接不在任何 KP range 内时，
+> 类型根本进不了 sidecar ⇒ **正文被改而类型也丢了**。
+>
+> **正确写法**：边类型只写 **sidecar**（`<文件>.memoria.yaml`）的 `links[].edge_type` / `edges[].type`，
+> 正文保持纯 `[[id]]` / `[[id|text]]`。权威依据见 `src/memoria/graph/edge_types.py:3-5`
+> （"sidecar `links[].edge_type` / `edges[].type`：唯一权威来源；正文 `[[target]]` 不含 `#类型`"）。
+>
+> - 可用类型：`reference`（引用/相关）、`extend`（扩展/下游）、`contain`（父子，**由标题层级自动派生，禁止手标**）。
+> - 遗留片段映射（仅供迁移读入 sidecar，**不是推荐写法**）：`#prerequisite` / `#analogy` / `#ref` → `reference`；
+>   `#extend` → `extend`；`#contain` → `contain`（`WIKILINK_HINT_ALIASES`，`edge_types.py:41-48`）。
+> - `#heading-anchor` 这类**非类型**片段不属于本规则（原样保留，见 `is_wikilink_edge_type_fragment()`）。
 
 ### 荧光笔 `\h`
 

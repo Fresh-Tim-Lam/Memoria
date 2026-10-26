@@ -111,6 +111,13 @@
 - **KP 建立**：`id`（英文 slug，全局唯一）、`name`（与正文标题一致）、`tags`、`aliases`（如「强哥」→「光头强」）、`description`、`range{start,end}`（snippet 必须能在正文**精确匹配**，`end` 非空行）。
 - **跳转与链接**：正文写 `[[id]]` / `[[id|显示文本]]` / `[[id#extend]]`；`contain` 边由标题层级自动生成，**不手标**；悬空链接按虚链保留（不建空文件）。
 - **边与关系**：`reference`（引用）／`extend`（下游）写在正文或 sidecar `edges[]`；改完由 Memoria「构建」同步 sidecar `links[]`。
+
+> **⚠️ 已废弃（2026-10-26）：上两条中「正文写 `[[id#extend]]`」「写在正文或 sidecar」的正文写法已不可用。**
+> 该写法会被构建剥离并**回写正文**（`strip_known_wikilink_edge_hints()`，`src/memoria/services/link_md.py:27`；
+> 回写点 `src/memoria/graph/kb_build.py:293-300`），即**静默修改用户正文**；且类型并非在所有情形下都能
+> 落进 sidecar。**现行口径**：正文只写 `[[id]]` / `[[id|显示文本]]`，边类型**只**写 sidecar
+> `links[].edge_type` / `edges[].type`（唯一权威来源，见 `src/memoria/graph/edge_types.py:3-5`）。
+> *本节为 2026-10 上旬的历史设计记录，原文保留不改，以本警示为准。*
 - **文件组织**：按主题规划目录与文件名（英文 kebab-case，正文标题中文）；避免根目录散落。
 
 **Ask First 清单**（停下问用户）：新建 md 文件、改 KP id / 重命名文件（全库级联）、删除文件或 KP、跨目录移动、批量重组、任何影响 `.memoria` 语义一致性的操作。
