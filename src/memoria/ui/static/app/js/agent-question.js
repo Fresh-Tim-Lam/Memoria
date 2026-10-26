@@ -102,9 +102,9 @@
     return (
       '<label class="-agent-question-opt">' +
       `<input type="${type}"${name} data-q-index="${index}" data-opt value="${esc(option.label)}">` +
-      `<span class="-agent-question-opt-label">${esc(option.label)}</span>` +
+      `<span class="-agent-question-opt-label" title="${esc(option.label)}">${esc(option.label)}</span>` +
       (option.description
-        ? `<span class="-agent-question-opt-desc -muted">${esc(option.description)}</span>`
+        ? `<span class="-agent-question-opt-desc -muted" title="${esc(option.description)}">${esc(option.description)}</span>`
         : "") +
       "</label>"
     );

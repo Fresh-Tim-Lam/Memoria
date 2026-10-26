@@ -6549,18 +6549,52 @@ html *::-webkit-scrollbar-thumb:active {
 }
 .-agent-question-opts { display: flex; flex-direction: column; gap: 0.25rem; }
 .-agent-question-opt {
-    display: flex;
-    align-items: baseline;
-    gap: 0.375rem;
+    /* task-162：永远纵向堆叠（选项名一行 / 解释独立一行 2 行 clamp）。
+       原来 label 与 desc 横向 flex 分栏：窄栏时 label 先吃掉宽度 ⇒ desc 可用宽度趋 0
+       ⇒ 解释逐字换行把单行高度撑到 1000px+（改前 260px 宽 10 选项实测卡片 14624px）。 */
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    column-gap: 0.375rem;
+    row-gap: 0.125rem;
     padding: 0.25rem 0.375rem;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.75rem;
     color: var(--text-primary);
 }
+.-agent-question-opt > input {
+    margin: 0;
+    align-self: center;
+}
 .-agent-question-opt:hover { background: var(--bg-hover); }
-.-agent-question-opt-label { flex: 0 0 auto; }
-.-agent-question-opt-desc { flex: 1 1 auto; min-width: 0; font-size: 0.6875rem; line-height: 1.4; }
+.-agent-question-opt-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+.-agent-question-opt-desc {
+    grid-column: 1 / -1;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    max-height: calc(2 * 1.4em);
+    word-break: break-word;
+}
+/* 完整解释（键盘可达）：聚焦 或 已选中 时展开该条，其余仍保持 2 行；不额外占空间 */
+.-agent-question-opt:focus-within .-agent-question-opt-desc,
+.-agent-question-opt:has(input:checked) .-agent-question-opt-desc {
+    display: block;
+    -webkit-line-clamp: unset;
+    max-height: none;
+    overflow: visible;
+}
 .-agent-question-custom {
     font: inherit;
     font-size: 0.75rem;
