@@ -134,9 +134,27 @@ Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Packa
 
 > **两份清单都不打 `Package\config\`**：`build.py` 的 `_RELEASE_PRESERVE_DIRS` 会跨构建保留**开发机自己**的
 > `ui-settings.json`（含 `last_kb_path`、`recent_kbs` 等本机私人路径），整目录打包会把维护者的本机设置分发出去。
-> `config/` 本就由首次运行按需创建（`storage/ui_settings.py::save_ui_settings` 会 `mkdir(parents=True)`），
 > 无需随包。`Package/config/` 仅为本地 `run_release.cmd` 保留。
 > 用显式清单而非 `Package\*`，同理是为了不把 `.gitkeep`、`crash.log`、`logs/` 等运行时残留带进包。
+>
+> **⚠️ 用户态已移出安装目录（task-160 / 0.4.10 起，必读）**
+>
+> 上面的 "`config/` 由首次运行按需创建" 只对**安装目录内的旧位置**成立。
+> **0.4.10 起，用户态（`ui-settings.json` / `agent.json`）默认落在**
+> `%LOCALAPPDATA%\Memoria\config\`（解析函数 `memoria.util.user_state.user_config_dir()`）：
+>
+> | 位置 | 谁用 | 换包（解压覆盖/换目录）时 |
+> |---|---|---|
+> | `%LOCALAPPDATA%\Memoria\config\` | **最终用户**（默认落点） | **完全不动** ⇒ 配置、API key、最近库列表都保留 |
+> | `<install_root>\config\`（旧位置） | 仅**兼容读取**（一次性迁移源） | 会被覆盖；迁移**只复制不删**，残留副本可作备份但**不再被读取** |
+> | `Package\config\`（构建机） | `run_release.cmd` 本地运行 | 不随包分发（见上） |
+>
+> - 优先级：`MEMORIA_CONFIG_DIR` / `MEMORIA_AGENT_CONFIG` > `%LOCALAPPDATA%\Memoria\config`。
+> - **取 `%LOCALAPPDATA%` 而非 `%APPDATA%`**：`ui-settings` 存的是**绝对路径 + 窗口位置**（漫游到别的机器全失效），
+>   `agent.json` 含 **API key**（漫游会把凭据复制到多台机器，扩大泄露面）。两者都是"机器本地状态"。
+> - **迁移三条不变量**：旧有新无 ⇒ 迁移；两边都有 ⇒ **以新位置为准，绝不覆盖**；
+>   迁移失败 ⇒ 用默认值 + 记 warn（**不回落到旧目录读**，否则用户的修改会被旧值静默覆盖）。
+> - 真机验证：`artifacts/agent/verify/todo/user-state-relocation-swap-sim.py`（伪安装目录 → 删掉 → 再启动，配置仍在）。
 >
 > **`Memoria.exe.config` 不可省**：它是 .NET 应用配置，缺了则 zip 解压出的文件带 Mark-of-the-Web 时
 > pythonnet 起不来（P06）。`packaging/build.py` 的 `_verify_release_bundle()` 会在构建末尾校验其存在。

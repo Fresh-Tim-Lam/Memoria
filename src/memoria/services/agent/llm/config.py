@@ -32,6 +32,7 @@ import json
 import logging
 import os
 import re
+import shutil
 from collections.abc import Mapping
 from dataclasses import dataclass
 from pathlib import Path
@@ -207,7 +208,23 @@ class AgentConfig:
 
 
 def config_file_path(env: Mapping[str, str] | None = None) -> Path:
-    """本地 JSON 配置路径（`MEMORIA_AGENT_CONFIG` > `MEMORIA_CONFIG_DIR` > 仓库根 `config/`）。"""
+    """本地 JSON 配置路径（`MEMORIA_AGENT_CONFIG` > `MEMORIA_CONFIG_DIR` > 用户目录）。
+
+    ## task-160：默认落点从「安装目录/config」搬到**用户目录**
+
+    旧实现的默认值是 `Path(__file__).resolve().parents[5] / "config"` ——
+    在发布包里就是 `<install_root>/config/agent.json`。后果：用户解压覆盖新发行包时
+    这个文件被整个覆盖 ⇒ **LLM 配置（含 API key、出网闸、域名名单）丢失**。
+
+    另外 `parents[5]` 依赖打包后的目录深度，与 `install_root()`（= exe 所在目录）
+    **不一定相同**；这里统一走 `user_config_dir()`，两个概念不再各算一套。
+
+    ## 迁移（一次性，只复制不删）
+
+    新位置没有、旧位置（`<install_root>/config/agent.json`）有时，复制过来。
+    新位置已有 ⇒ **绝不覆盖**（用户在新区改过的值更新）。
+    任何异常都吞掉——配置读不出来会走默认值，但不能让应用起不来。
+    """
     environ: Mapping[str, str] = os.environ if env is None else env
     override = environ.get(ENV_CONFIG_FILE)
     if override:
@@ -215,8 +232,46 @@ def config_file_path(env: Mapping[str, str] | None = None) -> Path:
     config_dir = environ.get(ENV_CONFIG_DIR)
     if config_dir:
         return Path(config_dir) / CONFIG_FILENAME
-    # src/memoria/services/agent/llm/config.py → 上溯到仓库根
-    return Path(__file__).resolve().parents[5] / "config" / CONFIG_FILENAME
+
+    from memoria.app.runtime import install_root
+    from memoria.util.user_state import user_config_dir
+
+    target = user_config_dir() / CONFIG_FILENAME
+    _migrate_agent_config_from_install_dir(target, Path(install_root()) / "config" / CONFIG_FILENAME, environ)
+    return target
+
+
+def _migrate_agent_config_from_install_dir(
+    target: Path,
+    legacy: Path,
+    environ: Mapping[str, str],
+) -> None:
+    """把旧安装目录的 `agent.json` 一次性复制到用户目录（task-160）。
+
+    **只复制不删**：旧文件可能是用户唯一备份（清 `%LOCALAPPDATA%` 后还能救）。
+    旧文件不再被读取（新位置已有即跳过），所以残留不会造成新旧打架。
+
+    三条不变量：
+    1. 新位置已有 ⇒ 不覆盖（用户在新区改过的是最新的）；
+    2. 旧位置无 ⇒ 什么都不做；
+    3. 异常一律吞掉并记日志（迁移失败不得影响启动）。
+    """
+    if environ.get(ENV_CONFIG_DIR) or environ.get(ENV_CONFIG_FILE):
+        return  # 显式指定时不迁移
+    try:
+        if target.is_file():
+            return  # 不变量 1
+        if not legacy.is_file():
+            return  # 不变量 2
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(legacy, target)  # 只复制，不删源
+        logger.info(
+            "agent.json 已从旧安装目录迁移到用户目录：%s → %s（旧文件保留未删）",
+            legacy,
+            target,
+        )
+    except Exception as exc:  # noqa: BLE001 - 迁移绝不能影响启动
+        logger.warning("agent.json 迁移失败（不影响启动，使用默认配置）：%s", exc)
 
 
 def _read_file_config(path: Path) -> dict[str, Any]:

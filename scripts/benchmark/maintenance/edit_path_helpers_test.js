@@ -142,15 +142,15 @@ function fixture() {
   const { doc, lineMap } = fixture();
   const S = makeSandbox(doc, lineMap);
   const it0 = S._quoteItemLineRange(0, 1, 0);
-  ok("C1 item0（切片相对 1）→ 行 10", it0 && it0.startLine === 10 && it0.endLine === 10, it0);
+  ok("C1 item0（切片相对 1）⇒ 块首行9 + 0 = 9", it0 && it0.startLine === 9 && it0.endLine === 9, it0);
   const it1 = S._quoteItemLineRange(0, 1, 1);
-  ok("C2 item1（相对 2）→ 行 11", it1 && it1.startLine === 11, it1);
+  ok("C2 item1（相对 2）⇒ 9 + 1 = 10", it1 && it1.startLine === 10, it1);
   const it2 = S._quoteItemLineRange(0, 1, 2);
-  ok("C3 松散列表 item2（相对 4，跳过空行）→ 行 13", it2 && it2.startLine === 13, it2);
+  ok("C3 松散列表 item2（相对 4）⇒ 9 + 3 = 12", it2 && it2.startLine === 12, it2);
   const it3 = S._quoteItemLineRange(0, 1, 3);
-  ok("C4 无 srcLine 的项兜底：first + itemIdx = 13", it3 && it3.startLine === 13, it3);
+  ok("C4 无 srcLine 的项兜底：child 首行10 + itemIdx3 = 13", it3 && it3.startLine === 13, it3);
   const nested = S._quoteItemLineRange(0, 1, 4);
-  ok("C5 嵌套 list 的父项（相对 6）→ 行 15", nested && nested.startLine === 15, nested);
+  ok("C5 嵌套 list 的父项（相对 6）⇒ 9 + 5 = 14", nested && nested.startLine === 14, nested);
   ok("C6 越界 item ⇒ null", S._quoteItemLineRange(0, 1, 99) === null);
 }
 
