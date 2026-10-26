@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Memoria 图谱布局层 — 原生 2D 力导向（仅 x/y）
  */
 (function (global) {
@@ -29,17 +29,37 @@
     return map;
   }
 
+  // ── KGViz D-KGV-07：确定性布局种子 ────────────────────────────────────────
+  // 同一语料 + 同一种子 ⇒ 每次初始化坐标字节级一致；换种子 ⇒ 坐标不同。
+  // **不改任何力导向参数**（alpha/decay/斥力/链接距离/迭代数全部原样），只替换随机源。
+  const DEFAULT_LAYOUT_SEED = 0x9e3779b9;
+
+  function makeLayoutRng(seed) {
+    if (global.MemoriaGraphSeed?.createSeededRandom) {
+      return global.MemoriaGraphSeed.createSeededRandom(seed);
+    }
+    // 独立可用的 fallback（layout 模块单测 / 无 engine 加载时）
+    let a = seed >>> 0;
+    return function fallbackRandom() {
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
   function spreadRadiusForCount(n, spreadFactor) {
     const sf = spreadFactor || DEFAULTS.spreadFactor;
     return Math.max(72, Math.sqrt(Math.max(1, n)) * 140 * sf);
   }
 
-  function initialPositions2D(nodes, radius) {
+  function initialPositions2D(nodes, radius, rand) {
+    rand = rand || makeLayoutRng(DEFAULT_LAYOUT_SEED);
     const n = nodes.length;
     if (!n) return [];
     return nodes.map((node, i) => {
-      const angle = (2 * Math.PI * i) / n + (Math.random() - 0.5) * 0.2;
-      const r = radius * (0.55 + Math.random() * 0.45);
+      const angle = (2 * Math.PI * i) / n + (rand() - 0.5) * 0.2;
+      const r = radius * (0.55 + rand() * 0.45);
       return {
         ...node,
         x: Math.cos(angle) * r,
@@ -50,11 +70,12 @@
     });
   }
 
-  function initialPositionsForGroups(allNodes, groupsMeta, spreadFactor, groupSpacing) {
+  function initialPositionsForGroups(allNodes, groupsMeta, spreadFactor, groupSpacing, rand) {
+    rand = rand || makeLayoutRng(DEFAULT_LAYOUT_SEED);
     const nodeById = new Map(allNodes.map((n) => [n.id, n]));
     const groupList = groupsMeta?.groups || [];
     if (!groupList.length) {
-      return initialPositions2D(allNodes, spreadRadiusForCount(allNodes.length, spreadFactor));
+      return initialPositions2D(allNodes, spreadRadiusForCount(allNodes.length, spreadFactor), rand);
     }
     const cols = Math.max(1, Math.ceil(Math.sqrt(groupList.length)));
     const rows = Math.ceil(groupList.length / cols);
@@ -65,7 +86,7 @@
       const subset = g.nodeIds.map((id) => nodeById.get(id)).filter(Boolean);
       if (!subset.length) return;
       const radius = spreadRadiusForCount(subset.length, spreadFactor);
-      const local = initialPositions2D(subset, radius);
+      const local = initialPositions2D(subset, radius, rand);
       const col = gi % cols;
       const row = Math.floor(gi / cols);
       const ox = (col - (cols - 1) / 2) * spacing;
@@ -88,7 +109,8 @@
    * 锚点留在原点后，节点只受"向原点中心力 + 节点间排斥"支配：连通群靠内部连边抱团、
    * 被跨群排斥推开，没有连边的孤立节点被挤到外围散落 —— 排斥保证不重叠，中心力保证不跑出图外。
    */
-  function initialPositionsScattered(allNodes, groupsMeta, spreadFactor, groupSpacing) {
+  function initialPositionsScattered(allNodes, groupsMeta, spreadFactor, groupSpacing, rand) {
+    rand = rand || makeLayoutRng(DEFAULT_LAYOUT_SEED);
     const nodeById = new Map(allNodes.map((n) => [n.id, n]));
     const groupList = (groupsMeta?.groups || []).filter((g) =>
       g.nodeIds.some((id) => nodeById.has(id))
@@ -96,7 +118,8 @@
     if (!groupList.length) {
       return initialPositions2D(
         allNodes,
-        spreadRadiusForCount(allNodes.length, spreadFactor)
+        spreadRadiusForCount(allNodes.length, spreadFactor),
+        rand
       );
     }
     // 群心散布半径：群越多撒得越开，免得一开始就叠成一坨
@@ -110,11 +133,12 @@
       if (!subset.length) continue;
       const local = initialPositions2D(
         subset,
-        spreadRadiusForCount(subset.length, spreadFactor)
+        spreadRadiusForCount(subset.length, spreadFactor),
+        rand
       );
       // 极坐标随机取点：半径乘 sqrt 才是圆盘内均匀，否则会往圆心堆
-      const angle = Math.random() * Math.PI * 2;
-      const r = cloud * Math.sqrt(Math.random());
+      const angle = rand() * Math.PI * 2;
+      const r = cloud * Math.sqrt(rand());
       const ox = Math.cos(angle) * r;
       const oy = Math.sin(angle) * r;
       for (const n of local) {
@@ -137,6 +161,25 @@
       this.raf = null;
       this._listeners = Object.create(null);
       this._dragId = null;
+      // D-KGV-07：种子可注入（options.layoutSeed），默认固定；每次 loadFromEngine 重置 RNG 序列
+      this._seed = ((options && options.layoutSeed) ?? DEFAULT_LAYOUT_SEED) >>> 0;
+      this._rng = makeLayoutRng(this._seed);
+      this._rand = () => this._rng();
+    }
+
+    /** D-KGV-07：设置布局种子（v0 默认固定；测试/未来设置项用）。relayout=false 时只改后续初始化。 */
+    setSeed(seed, opts = {}) {
+      const n = Number(seed);
+      this._seed = Number.isFinite(n) ? n >>> 0 : DEFAULT_LAYOUT_SEED;
+      this._rng = makeLayoutRng(this._seed);
+      if (opts.relayout !== false && this._engineNodes?.length) {
+        this.loadFromEngine(this._engineNodes, this._engineLinks, this._lastLoadOpts || {});
+      }
+      return this._seed;
+    }
+
+    getSeed() {
+      return this._seed >>> 0;
     }
 
     on(event, fn) {
@@ -189,6 +232,9 @@
       this._engineNodes = nodes;
       this._engineLinks = links;
       this._lastLoadOpts = { ...opts };
+      // D-KGV-07：每次初始化都把 RNG 重置到本布局种子，第二次初始化得到完全相同的起手坐标
+      this._rng = makeLayoutRng(this._seed);
+      this._rand = () => this._rng();
       this._groupMode =
         opts.groupId === global.MemoriaGraphGroups?.ALL_GROUP_ID || !opts.groupId
           ? "all"
@@ -218,11 +264,11 @@
         const spacing = opts.groupSpacing ?? this.opts.groupSpacing;
         this.nodes =
           this._distMode === "scatter"
-            ? initialPositionsScattered(layoutNodes, opts.groups, sf, spacing)
-            : initialPositionsForGroups(layoutNodes, opts.groups, sf, spacing);
+            ? initialPositionsScattered(layoutNodes, opts.groups, sf, spacing, this._rand)
+            : initialPositionsForGroups(layoutNodes, opts.groups, sf, spacing, this._rand);
       } else {
         const radius = spreadRadiusForCount(layoutNodes.length, sf);
-        this.nodes = initialPositions2D(layoutNodes, radius);
+        this.nodes = initialPositions2D(layoutNodes, radius, this._rand);
       }
 
       const idx = nodeIndex(this.nodes);
@@ -341,8 +387,9 @@
           let dy = nodes[j].y - nodes[i].y;
           let dist2 = dx * dx + dy * dy;
           if (dist2 < 1) {
-            dx = (Math.random() - 0.5) * 0.01;
-            dy = (Math.random() - 0.5) * 0.01;
+            // D-KGV-07：近重合守卫也用本布局种子（不再用 Math.random ⇒ 同种子可复现）
+            dx = (this._rand() - 0.5) * 0.01;
+            dy = (this._rand() - 0.5) * 0.01;
             dist2 = dx * dx + dy * dy;
           }
           const dist = Math.sqrt(dist2);

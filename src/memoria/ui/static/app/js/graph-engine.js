@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Memoria GraphEngine — 数据层 + 事件（与 Shell / 渲染解耦）
  */
 (function (global) {
@@ -103,6 +103,33 @@
     return links;
   }
 
+  // ── KGViz D-KGV-07：布局确定性种子（2D/3D 共用；非力导向参数，只替换随机源）───────
+  // 同一语料 + 同一种子 ⇒ 初始化坐标字节级一致；换种子 ⇒ 坐标不同（证明随机性仍在）。
+  // 默认固定种子；`setLayoutSeed` 仅供测试/未来设置项暴露（v0 不做 UI）。
+  const DEFAULT_LAYOUT_SEED = 0x9e3779b9;
+
+  /** mulberry32：32-bit 确定性 PRNG，返回 [0,1) 浮点。 */
+  function createSeededRandom(seed) {
+    let a = seed >>> 0;
+    return function seededRandom() {
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /** FNV-1a 32-bit 字符串哈希（用于从语料身份派生种子；v0 默认不用，保留给设置项/测试）。 */
+  function hashStringToSeed(str) {
+    let h = 0x811c9dc5;
+    const s = String(str || "");
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 0x01000193);
+    }
+    return h >>> 0;
+  }
+
   class MemoriaGraphEngine {
     constructor() {
       this.nodes = [];
@@ -111,6 +138,7 @@
       this._listeners = Object.create(null);
       this._degreeMap = new Map();
       this._degreeDistinct = [];
+      this._layoutSeed = DEFAULT_LAYOUT_SEED;
     }
 
     on(event, fn) {
@@ -198,6 +226,17 @@
       return sizingRangeForBase(baseRadius);
     }
 
+    /** 当前布局种子（D-KGV-07）；默认固定，测试/设置可用 setLayoutSeed 覆盖 */
+    layoutSeed() {
+      return this._layoutSeed >>> 0;
+    }
+
+    setLayoutSeed(seed) {
+      const n = Number(seed);
+      this._layoutSeed = Number.isFinite(n) ? n >>> 0 : DEFAULT_LAYOUT_SEED;
+      return this._layoutSeed;
+    }
+
     getOutgoingLinks(nodeId) {
       return this.links.filter((l) => l.source === nodeId);
     }
@@ -220,5 +259,11 @@
     distinctSortedDegrees,
     normalizedRankT,
     radiusForDegree,
+  };
+  // D-KGV-07：布局确定性种子纯函数（layout-2d/3d 各自注入；机检直接用）
+  global.MemoriaGraphSeed = {
+    DEFAULT_LAYOUT_SEED,
+    createSeededRandom,
+    hashStringToSeed,
   };
 })(typeof window !== "undefined" ? window : globalThis);
