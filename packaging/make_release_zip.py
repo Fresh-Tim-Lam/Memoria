@@ -47,6 +47,19 @@ sys.path.insert(0, str(REPO / "src"))
 
 from memoria.services.verify import manifest as mf  # noqa: E402
 
+def _force_utf8_stdio():
+    """Windows 旧代码页（cp1252/cp936）下 print 非 ASCII 会 UnicodeEncodeError ⇒ 假红。
+    统一把 stdout/stderr 设为 UTF-8（errors=replace），保证门禁不会因为控制台编码崩掉。"""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+
+_force_utf8_stdio()
+
+
 #: 顶层目录 / 文件黑名单（无论变体都不进 zip）。
 EXCLUDE_TOP_DIRS = frozenset({"logs", "cache", "__pycache__", ".git"})
 EXCLUDE_TOP_FILES = frozenset(
@@ -140,14 +153,14 @@ def main() -> int:
         out.unlink(missing_ok=True)  # 半成品不得留下
         print(f"== 打包自检 FAIL（{len(result.failures)} 项）== zip 已删除", file=sys.stderr)
         for item in result.failures:
-            print(f"  ✗ {item}", file=sys.stderr)
+            print(f"  [FAIL] {item}", file=sys.stderr)
         return 1
 
     if not args.no_manifest:
         manifest_path = out.with_name(out.stem + ".manifest.json")
         manifest_path.write_bytes(mf.canonical_bytes(manifest))
-        print(f"✓ 清单：{manifest_path}（{len(manifest['files'])} 条目，来源 zip）")
-    print(f"✓ 发布 zip：{out}")
+        print(f"[OK] 清单：{manifest_path}（{len(manifest['files'])} 条目，来源 zip）")
+    print(f"[OK] 发布 zip：{out}")
     print(f"  变体：{args.variant}  版本：{version}  条目：{count}")
     print(f"  资产 sha256：{manifest['asset'].get('sha256')}")
     print("  已校验包结构与完整性（不含数字签名）；私有 config 未随包。")

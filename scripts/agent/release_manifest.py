@@ -44,6 +44,19 @@ sys.path.insert(0, str(REPO / "src"))
 
 from memoria.services.verify import manifest as mf  # noqa: E402
 
+def _force_utf8_stdio():
+    """Windows 旧代码页（cp1252/cp936）下 print 非 ASCII 会 UnicodeEncodeError ⇒ 假红。
+    统一把 stdout/stderr 设为 UTF-8（errors=replace），保证门禁不会因为控制台编码崩掉。"""
+    for stream in (sys.stdout, sys.stderr):
+        try:
+            stream.reconfigure(encoding="utf-8", errors="replace")
+        except (AttributeError, ValueError):
+            pass
+
+
+_force_utf8_stdio()
+
+
 
 def _read_zip_version(zip_path: Path) -> str | None:
     try:
@@ -90,7 +103,7 @@ def main() -> int:
     out = Path(args.out) if args.out else zip_path.with_name(zip_path.stem + ".manifest.json")
     out.write_bytes(mf.canonical_bytes(manifest))
 
-    print(f"✓ 已生成 {out}")
+    print(f"[OK] 已生成 {out}")
     print(f"  文件数：{len(manifest['files'])}（来源：zip 条目，不是 Package/ 目录）")
     print(f"  版本：{manifest['version']}")
     a = manifest["asset"]
