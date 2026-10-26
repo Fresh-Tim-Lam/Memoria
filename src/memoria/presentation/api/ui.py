@@ -2910,3 +2910,44 @@ def _agent_context_usage(kb: str, session_id: str) -> dict | None:
         return None
 
 
+# ── 2026-10-26 追加（0.4.10 task-178）：KGViz 埋点 E1/E2 的两条 RPC ───────────────
+# 落点纪律：整段追加在文件末尾（所有既有 `ui.py:<行号>` 锚点之后）⇒ 文档锚点零漂移。
+# 设计：`docs/design/kg-visualization-v0.md §5`（D-KGV-08）；只记拓扑/事件事实，不记映射产出。
+# 安全：存储走 task-160 的用户态目录（`%LOCALAPPDATA%\Memoria\config\graph-telemetry.jsonl`），
+#       本地 append-only、不联网；写失败一律静默降级（T-tel-7），不打断用户操作。
+def _graph_telemetry_record(self, events=None, context=None) -> dict:
+    """录入 1..N 条 E1/E2 事件（append-only）。永不抛错：异常 ⇒ status=degraded。"""
+    try:
+        from memoria.storage.graph_telemetry import record_events
+
+        return record_events(events, context)
+    except Exception as exc:  # noqa: BLE001 - 埋点失败不得影响主功能
+        return {
+            "status": "degraded",
+            "appended": 0,
+            "write_failures": 1,
+            "error": f"{type(exc).__name__}: {exc}"[:300],
+        }
+
+
+UIAPI.record_graph_telemetry = _graph_telemetry_record
+
+
+def _graph_telemetry_summary(self) -> dict:
+    """只读汇总：nodeRadius 改过几次/从多少到多少 + graphStyle 启用分布。"""
+    try:
+        from memoria.storage.graph_telemetry import summary
+
+        return summary()
+    except Exception as exc:  # noqa: BLE001
+        return {
+            "status": "degraded",
+            "events_total": 0,
+            "error": f"{type(exc).__name__}: {exc}"[:300],
+        }
+
+
+UIAPI.get_graph_telemetry_summary = _graph_telemetry_summary
+
+
+

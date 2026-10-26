@@ -219,16 +219,19 @@
   }
 
   function save(partial) {
-    const next = { ...load(), ...partial };
+    const before = load();
+    const next = { ...before, ...partial };
     writeLocalGraph(next);
     diskPrefs = diskPrefs || {};
     diskPrefs.graph = { ...(diskPrefs.graph || {}), ...next };
     scheduleDiskSave();
     notifyChange();
+    _recordGraphTelemetry(before, next);
     return next;
   }
 
   function reset() {
+    const before = load();
     localStorage.removeItem(STORAGE_KEY);
     if (diskPrefs) diskPrefs.graph = { ...DEFAULTS };
     for (const tab of Object.keys(SPLIT_DEFAULTS)) {
@@ -238,6 +241,7 @@
     if (global.MemoriaCheckSettings) global.MemoriaCheckSettings.reset();
     scheduleDiskSave();
     notifyChange();
+    _recordGraphTelemetry(before, { ...DEFAULTS });
     return { ...DEFAULTS };
   }
 
@@ -1121,4 +1125,107 @@
       { passive: false }
     );
   })();
+  // ══════════════════════════════════════════════════════════════════════════════
+  // 2026-10-26 追加（0.4.10 task-178）：KGViz 埋点 E1/E2 的前端采集（设计 §5 / D-KGV-08）
+  //   · E1 nodeRadius 变化 / E2 graphStyle 切换，附 style/zoom/语料上下文；
+  //   · 只记【拓扑/事件事实】，明确不采 node_radius_px（映射产出）与 labelHover 逐事件；
+  //   · 同一轮滑动/快速切换在 250ms 内**合并成一条**（from=最初值，to=最终值），
+  //     避免把滑块的每个 input 像素都记成一次"用户改变"；
+  //   · 落盘走后端 RPC `record_graph_telemetry`（用户态目录 append-only、本地、不上传）；
+  //   · ★ T-tel-7：任何异常（含 RPC 不存在/写失败）都静默吞掉，绝不打断用户操作。
+  // 为什么追加在文件末尾：上方所有 `graph-settings.js:<行号>` 文档锚点零漂移。
+  let _telPending = null;
+  let _telTimer = null;
+  const TEL_COALESCE_MS = 250;
+
+  function _recordGraphTelemetry(before, after) {
+    try {
+      // 其它设置项变化不产生埋点：先做零成本早退（T-tel-6：默认不采集时零开销）
+      if (before.nodeRadius === after.nodeRadius && before.graphStyle === after.graphStyle) return;
+      if (!_telPending) _telPending = Object.create(null);
+      const ts = Date.now();
+      if (before.nodeRadius !== after.nodeRadius) {
+        const p = _telPending.E1 || (_telPending.E1 = { from: before.nodeRadius, ts });
+        p.to = after.nodeRadius;
+      }
+      if (before.graphStyle !== after.graphStyle) {
+        const p = _telPending.E2 || (_telPending.E2 = { from: before.graphStyle, ts });
+        p.to = after.graphStyle;
+      }
+      if (!_telPending.E1 && !_telPending.E2) return;
+      if (_telTimer) clearTimeout(_telTimer);
+      _telTimer = setTimeout(() => _flushGraphTelemetry(), TEL_COALESCE_MS);
+    } catch (_) {
+      /* 埋点绝不打断设置保存 */
+    }
+  }
+
+  function _telemetryContext() {
+    const st = global.state || {};
+    let zoom = null;
+    let zoomKind = null;
+    const v2 = st.graphView2d;
+    const v3 = st.graphView3d;
+    if (v2 && v2.transform && Number.isFinite(v2.transform.k)) {
+      zoom = Number(v2.transform.k.toFixed(6));
+      zoomKind = "2d-scale";
+    } else if (v3 && v3.camera && typeof v3.camera.position.length === "function") {
+      zoom = Number(v3.camera.position.length().toFixed(3));
+      zoomKind = "3d-camera-distance";
+    }
+    const engine = st.graphEngine;
+    return {
+      kb_path: typeof st.kbPath === "string" ? st.kbPath : null,
+      node_count: engine && Array.isArray(engine.nodes) ? engine.nodes.length : null,
+      edge_count: engine && Array.isArray(engine.links) ? engine.links.length : null,
+      style: load().graphStyle,
+      zoom,
+      zoom_kind: zoomKind,
+    };
+  }
+
+  /** 立即把挂起事件发给后端；失败静默（T-tel-7）。返回本次事件数（测试/可观测用）。 */
+  function _flushGraphTelemetry() {
+    if (_telTimer) {
+      clearTimeout(_telTimer);
+      _telTimer = null;
+    }
+    const pending = _telPending;
+    _telPending = null;
+    if (!pending) return 0;
+    const events = [];
+    try {
+      const ts = Date.now();
+      if (pending.E1 && pending.E1.from !== pending.E1.to) {
+        events.push({
+          event: "nodeRadius_change",
+          ts: pending.E1.ts || ts,
+          from: pending.E1.from,
+          to: pending.E1.to,
+        });
+      }
+      if (pending.E2 && pending.E2.from !== pending.E2.to) {
+        events.push({
+          event: "graphStyle_change",
+          ts: pending.E2.ts || ts,
+          from: pending.E2.from,
+          to: pending.E2.to,
+        });
+      }
+      if (!events.length) return 0;
+      const api = global.pywebview && global.pywebview.api;
+      if (!api || typeof api.record_graph_telemetry !== "function") return 0;
+      const ctx = _telemetryContext();
+      Promise.resolve(api.record_graph_telemetry(events, ctx)).catch(() => {});
+      return events.length;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  global.MemoriaGraphTelemetry = {
+    flush: _flushGraphTelemetry,
+    pending: () => _telPending,
+    coalesceMs: TEL_COALESCE_MS,
+  };
 })(typeof window !== "undefined" ? window : globalThis);
