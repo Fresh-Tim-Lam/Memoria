@@ -1,0 +1,1621 @@
+{
+  "PLAN_DECISION": {
+    "manifest_is_the_identity": true,
+    "plan_1_feasible": false,
+    "plan_1_reason": "干净 HEAD 只有 61 节点/154 边，无法重建 133/404",
+    "plan_adopted": "方案 2 + 强化：完整 manifest 作为唯一身份，并明确标注不可从 git 复现"
+  },
+  "artifact_sha256": "87bb4081fd81f96209117a124e9b830c82405be767089f89942e14a7825629dc",
+  "corpus_paths": {
+    "definition": "docs/example/AAA_Vocab 下：所有非 docs/ 的 .md（= KP 源文件，1 文件 1 KP） + .memoria/sidecars/**/*.yaml（链接/边声明） + .memoria/manifest.yaml；排除 docs/**（库说明文档，实测 48 个 md 不产节点）、.memoria/agent/**（运行时）、__pycache__/build/cache",
+    "excluded_docs_reason": "docs/** 下 48 个 md 实测不产生任何 KP 节点（是库说明文档），纳入会使 manifest 随无关文档漂移",
+    "primary": "docs/example/AAA_Vocab"
+  },
+  "purpose": "kgviz Phase 4/5 前置：给辩论核心数字（133 节点 / 404 边）一个可辩护的身份",
+  "refrozen_at": "2026-10-26T20:01:29.135074+08:00",
+  "schema": "kgviz-corpus-refreeze/v1",
+  "①_commit": {
+    "dirty": true,
+    "head": "d9341bd1b676787209b4a90adc1b61471138ce84",
+    "head_short": "d9341bd1",
+    "worktree_changes_in_kb": 241,
+    "worktree_changes_total": 536
+  },
+  "②_corpus_paths": {
+    "absolute": "D:\\AAA_Jupyter\\Memoria\\docs/example/AAA_Vocab",
+    "primary": "docs/example/AAA_Vocab"
+  },
+  "③_manifest": {
+    "by_ext": {
+      ".md": 158,
+      ".yaml": 136
+    },
+    "file_count": 294,
+    "files": [
+      {
+        "path": ".memoria/manifest.yaml",
+        "sha256": "236a48932bdb0c8a5aabe2644d97390e72526973b59919a547a13e9c7be6fc7f",
+        "size": 49044
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/alike-postpositive.memoria.yaml",
+        "sha256": "9bfce7b8a4f56ab69d421e4f82469762bde0956a6063369cf82ec73de4e7b49c",
+        "size": 1092
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/at-its-most.memoria.yaml",
+        "sha256": "082cb312b47910f2c4df4ef7495c22113ff3835023646d6ddf772ed094c0e484",
+        "size": 1097
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/cannot-be-overestimated.memoria.yaml",
+        "sha256": "d82514c8cf10444c731f30c3341e14cface17f519542cef541389e47a7bd196e",
+        "size": 1415
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/concerned-postpositive.memoria.yaml",
+        "sha256": "1320da5c4498e4fee8b57c72acd58e4999b9c6b97f1b949dda6497d88c244d53",
+        "size": 876
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/concessive-inversion.memoria.yaml",
+        "sha256": "6ed697e7801f39fb48e8adf4c29df8eb942b8ad679ab13985406ff20f67007cf",
+        "size": 2299
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/conditional-inversion.memoria.yaml",
+        "sha256": "80b49d662e4b0a17c64fc4ab0b848e35d3c67448e35bba0849f40af902e3b851",
+        "size": 988
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/contrast-linkers.memoria.yaml",
+        "sha256": "18a24d066b7ddc8eab018c62131e2ffe4dbae084c474fe69b49615994eaa9f28",
+        "size": 1804
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/credit-vs-attribute.memoria.yaml",
+        "sha256": "5e78b57650bd493b9d9c6cf05fdc139f6d0658b3c9a47f4f7dde3cd4d12e62b2",
+        "size": 1368
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/enumeration-linkers.memoria.yaml",
+        "sha256": "be0eabcf0e4cd3bb02b319b48abb3625cfc1165e5bb8804d39cd7bb4ab8c1390",
+        "size": 1836
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/feedback-hedging.memoria.yaml",
+        "sha256": "f3c48852145475cfa3b136bd7d49843163f361717fbf325e5fe81fd50bab4644",
+        "size": 1198
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/herein-lies-inversion.memoria.yaml",
+        "sha256": "fd6da522616bf6a56ca00d2a804ad23cd32abbf13bba559df688f4b0d4cc938e",
+        "size": 1148
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/impart-instil-cultivate.memoria.yaml",
+        "sha256": "ed2cb42b16765987037846a625293e347e2223d77a30d5d7a3ec857905efa2bb",
+        "size": 1238
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/in-ways-that.memoria.yaml",
+        "sha256": "18d55cf174fbe361218a29ee168f93e357507e2c1931f370e34dcbc5d2a8ce59",
+        "size": 1135
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/modal-perfect.memoria.yaml",
+        "sha256": "04560347a6ceca2714fa9e57ab3af37c2d57ef1ac3db3042bbb528a8efcd74b2",
+        "size": 1013
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/not-the-least-bit.memoria.yaml",
+        "sha256": "a25aeed18bd66ec433c97098c48db1070b856537846ee54af0a41aefc37baeab",
+        "size": 1547
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/see-witness-time-subject.memoria.yaml",
+        "sha256": "8a847fff8a3592dee0cdc4e24ccce060d91da0d0d9ed91aecd5dafdb56703027",
+        "size": 1307
+      },
+      {
+        "path": ".memoria/sidecars/expressions/patterns/take-it-out-on-sb.memoria.yaml",
+        "sha256": "5c947304402bb28ddac60fb1e50290b1bd18c70cdd64b6e3f8b3a81a4ad1b4af",
+        "size": 666
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/a-real-head-scratcher.memoria.yaml",
+        "sha256": "3ce9538364c8ca01b279321a613ae4c7360bf13aee97db11fae5d8840062f9bd",
+        "size": 1119
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/absorb-the-essence-and-drop-the-dross.memoria.yaml",
+        "sha256": "7783bb4c1ef6b7096187e7dd255f3f8160bee8ca05620c89d1fd68e98db4c10e",
+        "size": 1486
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/at-every-turn.memoria.yaml",
+        "sha256": "a19b51c8bd09365474264c81bbf05f40e4359b93d39b61dcf523628027d35b78",
+        "size": 1342
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/bite-off-more-than-you-can-chew.memoria.yaml",
+        "sha256": "7154df6bef4b0ddd33c922241ae98f4544dabe3617bdd1d8b1eb0ec730d5d861",
+        "size": 1105
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/budget-cuts.memoria.yaml",
+        "sha256": "e633f2bf1e62146a811b247e90b5e3cbe7b6d01d3e366a3c66fb3f20915bc7c3",
+        "size": 805
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/bump-along.memoria.yaml",
+        "sha256": "3adc5f28b005fb01b54e8e9edb7d9261d4b33377efff82b17ec095bd11d9aa2b",
+        "size": 1595
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/catch-your-breath.memoria.yaml",
+        "sha256": "8e087d0c6ae55f6451d44917e4e2750c6e405e5d7f2b9c171bae3a0b177f440f",
+        "size": 1001
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/commonly-referred-to-as.memoria.yaml",
+        "sha256": "0b25dacdcc0e96da2384d031a65e3a3efb176a7851f96177bf9c1e70473fb6e9",
+        "size": 626
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/dispel-prejudice-and-hostility.memoria.yaml",
+        "sha256": "313ca7eb6dd1fa05a4df75c0ff385f00716edc001ca251f5b6d27a8bee0ceeb6",
+        "size": 1231
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/embrace-exotic-culture.memoria.yaml",
+        "sha256": "dbbc205483cac0340f4bb43c16518020f177129ea59fb7bf6ad9fdfd352eaff4",
+        "size": 1607
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/fast-paced-plot.memoria.yaml",
+        "sha256": "e2e67aa8521e4ebd0eb5d8b0a8739ffdca8eaa4b2d9a12de6c6f065baad38f71",
+        "size": 996
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/flee-the-nest.memoria.yaml",
+        "sha256": "fa81a0b4ec959f2f6c36a3d33aa3c8dd8a9a5d74880b028c70dda30f5ec0a194",
+        "size": 920
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/go-back-a-long-way.memoria.yaml",
+        "sha256": "b2d47945c271648fb4eb130ada6731e7492eceec952868aa83c125cb0e7dc796",
+        "size": 991
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/hustle-and-bustle.memoria.yaml",
+        "sha256": "6dafad3640433a7f4706990de94a5228be5515ea36fdcde355d5c55d2f2d8718",
+        "size": 918
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/income-from.memoria.yaml",
+        "sha256": "f1185ea5f04b9bcbabc92947a80d7d6ecf2deb59574bc7d00e77a9efd5515dc3",
+        "size": 732
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/off-the-rack.memoria.yaml",
+        "sha256": "e8535f5d604fc765d8aace5a577b7134d10e78073fad2ec8447aaf35ab92971d",
+        "size": 947
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/on-the-fence.memoria.yaml",
+        "sha256": "e0e61a39aff5315300cc5f0c518e6c08cf5b354ea5900b7c8fd3c8f65967f05d",
+        "size": 1073
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/patch-things-up.memoria.yaml",
+        "sha256": "17e680d2f50d11c3d746acbbf4c54317311b48b1192ab1de3793a06114cc6432",
+        "size": 435
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/play-an-indispensable-role-in.memoria.yaml",
+        "sha256": "afa1825b972f0922d2c22b1bf6c073bf04dd2c85025b0463f73353adbdf92d4c",
+        "size": 625
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/put-pressure-on.memoria.yaml",
+        "sha256": "814da4dd6703bdf51ce609a1fd0ac622e20447cc11790a49f9efa25c1ec172c2",
+        "size": 1282
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/queue-for-ages.memoria.yaml",
+        "sha256": "2a4b63bc7031cb7de5c5f8238a892b1ff3d7154f4dda9777ea6728769088b060",
+        "size": 1129
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/rain-or-shine.memoria.yaml",
+        "sha256": "14abac9c17a9d15e7355e18e1eac63fd2fba2de5569021747d8aa83d3f043f83",
+        "size": 1311
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/resonate-with.memoria.yaml",
+        "sha256": "de6222ec767e4a585c9eb449930d4957826b0591fc576f3e0b56ea77730e71d8",
+        "size": 1104
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/rumour-has-it.memoria.yaml",
+        "sha256": "12da240f6e1258db9ff9e89336c15028836b9f771054fbc336495380783d035b",
+        "size": 1228
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/step-back-in-time.memoria.yaml",
+        "sha256": "f26b378568773adf3ff07f6735d0d5dc5f0e86a00d695f5e306e751439bfd3b4",
+        "size": 1256
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/take-sb-at-their-word.memoria.yaml",
+        "sha256": "3cf7d8e18fb0e2a8a1843c3c7b5de119aeb8c6a402be8b40814be663e7a42981",
+        "size": 1471
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/time-honored-tradition.memoria.yaml",
+        "sha256": "202f0dfef2c3a5d4bfa4c80219f19324aa646f6bbf574a70be3b241c09cf319a",
+        "size": 970
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/twist-ending.memoria.yaml",
+        "sha256": "914bc7497c9ca6882199f1296ad6bb8f1a8b98b4658f5508fe72053be8c25caa",
+        "size": 1025
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/ways-to-say-you-like-something.memoria.yaml",
+        "sha256": "bb51cf42ae5ad248c7fb4a32d9e3317fe94c90f92fe0978c4bf11cbade57c30a",
+        "size": 932
+      },
+      {
+        "path": ".memoria/sidecars/expressions/phrases/what-of.memoria.yaml",
+        "sha256": "b31ca49be8d83dc0da4a6e8ddae00d5e0af95cc81eaa4bf47a453152b87ae488",
+        "size": 1044
+      },
+      {
+        "path": ".memoria/sidecars/expressions/words/exercise.memoria.yaml",
+        "sha256": "6ea99177e63f7f5560efbaddc1baccc9b20242f49c23fae66940dea12e0e437d",
+        "size": 913
+      },
+      {
+        "path": ".memoria/sidecars/expressions/words/get.memoria.yaml",
+        "sha256": "ea8e7e933d8e5e95350952c675013f1b7407ff0ded16e72d711ac015446f1721",
+        "size": 785
+      },
+      {
+        "path": ".memoria/sidecars/expressions/words/go.memoria.yaml",
+        "sha256": "d41d207f215b6c28237a6c84619de645b22327c8701257974bda64060926d6af",
+        "size": 1059
+      },
+      {
+        "path": ".memoria/sidecars/reading/rebranding-art-museums.memoria.yaml",
+        "sha256": "45c25244f5a8a4f269d99247f54f7d780dc60b949dc3c72e8519c1259d7cc9e3",
+        "size": 3865
+      },
+      {
+        "path": ".memoria/sidecars/skills/op-ed-skeleton.memoria.yaml",
+        "sha256": "6a510e96138de6a71b3b3c1801888603da61c1ae0ea9e0f4c61774276f571971",
+        "size": 682
+      },
+      {
+        "path": ".memoria/sidecars/skills/point-vs-example.memoria.yaml",
+        "sha256": "7607bffba8cadcedb7bf789f4830fd5507a322564ad5f7046733123b776f5f2b",
+        "size": 2311
+      },
+      {
+        "path": ".memoria/sidecars/speaking/part2/experience_1.memoria.yaml",
+        "sha256": "5b2aab6401988b47a25eb0946d47f3158388d77ac3aafc21adecb1500039d401",
+        "size": 3323
+      },
+      {
+        "path": ".memoria/sidecars/speaking/part2/experience_2.memoria.yaml",
+        "sha256": "7179f06f4bcf5a95d8ba0bc5ceefe4ce698cbf33bc5e71550be1683a9716d790",
+        "size": 3115
+      },
+      {
+        "path": ".memoria/sidecars/speaking/part2/experience_3.memoria.yaml",
+        "sha256": "b5e3be2643234f942b637b62bb1fb271d1d8ea23b96f2da4d962440c303aa4e7",
+        "size": 3525
+      },
+      {
+        "path": ".memoria/sidecars/speaking/stories/dorm-power-cut.memoria.yaml",
+        "sha256": "a0dbe3b411a014281e319fcb99f658bb9ac1e8e6d03265cbe3e2ab755116e1ef",
+        "size": 897
+      },
+      {
+        "path": ".memoria/sidecars/theme/describing-heat.memoria.yaml",
+        "sha256": "285721b895defa9176a0c66a396cdf2766410b4ce7446d35b0adc1b57a8ffd07",
+        "size": 1634
+      },
+      {
+        "path": ".memoria/sidecars/vocab/apparatus.memoria.yaml",
+        "sha256": "9e808ca5dce8f4ff93e347252375ec2ffe6d40013ed5cd4ff6bf4d7f8e40d161",
+        "size": 663
+      },
+      {
+        "path": ".memoria/sidecars/vocab/appendage.memoria.yaml",
+        "sha256": "c6d3110172f94af30c2373f6f4c4832ffffba3e1219dccb65f1640fc549ad6d1",
+        "size": 799
+      },
+      {
+        "path": ".memoria/sidecars/vocab/assimilation.memoria.yaml",
+        "sha256": "685c8833ca5db0a58871f4da41b48eee2d1a7811377bf9c789c896eed21701ca",
+        "size": 1758
+      },
+      {
+        "path": ".memoria/sidecars/vocab/attic.memoria.yaml",
+        "sha256": "2e5afdddb7422505fb9f5d35986b494d5f2765019dc705ecae238f0d5205bd54",
+        "size": 459
+      },
+      {
+        "path": ".memoria/sidecars/vocab/blend.memoria.yaml",
+        "sha256": "a4adbafff728739ee05738e9f3ae287767bedeb389f75fe973ba10406bd9e01f",
+        "size": 1228
+      },
+      {
+        "path": ".memoria/sidecars/vocab/breathtaking.memoria.yaml",
+        "sha256": "3c38bd984f47042e343479906c32afe631033957e41df0376576e9c120fdc9ec",
+        "size": 742
+      },
+      {
+        "path": ".memoria/sidecars/vocab/bungalow.memoria.yaml",
+        "sha256": "a6ccf5f33d6a73d5610f7c9d3686eb1d47f580ff060eafa9476ef8e511ac1d09",
+        "size": 851
+      },
+      {
+        "path": ".memoria/sidecars/vocab/ceiling.memoria.yaml",
+        "sha256": "4815c3afacff4b09853b7c62ab70c8b74dad9902a414fe328e75eee48d148e1e",
+        "size": 382
+      },
+      {
+        "path": ".memoria/sidecars/vocab/clear-cut.memoria.yaml",
+        "sha256": "0349efa6bd3bd1d891dbd35ba5fb3626d5ad56edcb48787246c4013516abb064",
+        "size": 1312
+      },
+      {
+        "path": ".memoria/sidecars/vocab/coma.memoria.yaml",
+        "sha256": "a81a05923ccba96b5a8b24aecc293f617b4b3fd5d0b63f3805b9430ba46ac507",
+        "size": 338
+      },
+      {
+        "path": ".memoria/sidecars/vocab/commendable.memoria.yaml",
+        "sha256": "f85efe6a653ce3f5b7883db8e4a863e9c8c0f4fe69dd8d9d980506bd56a49336",
+        "size": 919
+      },
+      {
+        "path": ".memoria/sidecars/vocab/conceive.memoria.yaml",
+        "sha256": "6a7ccded8cb02f81a037aa0dc26cc3b356c13cd5d186e934fb4b405f948a0c45",
+        "size": 377
+      },
+      {
+        "path": ".memoria/sidecars/vocab/cricket.memoria.yaml",
+        "sha256": "517c462093afcffd06ecd7a4d26d0c715b33e2ff7f31a612b68edf7e1ab58eae",
+        "size": 1122
+      },
+      {
+        "path": ".memoria/sidecars/vocab/crotch.memoria.yaml",
+        "sha256": "1ddaafde45e5c5ebbf53c15dc765a84518f2e00284df1007d64e8983493326c1",
+        "size": 378
+      },
+      {
+        "path": ".memoria/sidecars/vocab/curator.memoria.yaml",
+        "sha256": "52dedfb31c3fa5259ddc248149799e95bdd77f90d6aba4efb7a99e09568e7c63",
+        "size": 930
+      },
+      {
+        "path": ".memoria/sidecars/vocab/curb.memoria.yaml",
+        "sha256": "3e32ec586445617732c7122fa84e6f9e3b7d23a47a9b7715d229b5f4d55dde97",
+        "size": 1223
+      },
+      {
+        "path": ".memoria/sidecars/vocab/cynical.memoria.yaml",
+        "sha256": "90c0dc7cb21caccbafa0d6c0197fe76214a02627345faaee93ef06c8b738beed",
+        "size": 381
+      },
+      {
+        "path": ".memoria/sidecars/vocab/delinquency.memoria.yaml",
+        "sha256": "d8561611575aad3647b39c4ac595d01266bfef6c641f6435c3b0e61d165566dd",
+        "size": 1348
+      },
+      {
+        "path": ".memoria/sidecars/vocab/desensitise.memoria.yaml",
+        "sha256": "f60caa6cf6de13738bf9dddc49172342ba9ae1050cf07d5f2c05872f2790db7d",
+        "size": 398
+      },
+      {
+        "path": ".memoria/sidecars/vocab/deterrent.memoria.yaml",
+        "sha256": "e1125bccb45424b9f0770c7cf9dba2639f901247ae056fbfd68070c390d6a365",
+        "size": 806
+      },
+      {
+        "path": ".memoria/sidecars/vocab/dignitary.memoria.yaml",
+        "sha256": "ae95a7b570b77bf2ef89314ad88c01e1f358d349128c0e01dcad2c6b0ec98b0a",
+        "size": 845
+      },
+      {
+        "path": ".memoria/sidecars/vocab/dilapidated.memoria.yaml",
+        "sha256": "0cd4e50461f1d623fd4e34b891bf722870bd0cb1385b736cd932c1f6ca6911df",
+        "size": 1400
+      },
+      {
+        "path": ".memoria/sidecars/vocab/exacerbate.memoria.yaml",
+        "sha256": "c5d5f6a2b35c1bf9b585df193abaee776a7103c262d291f146de5fa524713ce3",
+        "size": 1135
+      },
+      {
+        "path": ".memoria/sidecars/vocab/exclusively.memoria.yaml",
+        "sha256": "0203c74e46a5ffc10fd6d8ab937eb8f27ffc77dc5d798c374705ac8666af7059",
+        "size": 842
+      },
+      {
+        "path": ".memoria/sidecars/vocab/favourable.memoria.yaml",
+        "sha256": "48974bd70da932bfed5fd43e318ebb7fe39b1dd2a1fc43e1687b8d22b583acc1",
+        "size": 1573
+      },
+      {
+        "path": ".memoria/sidecars/vocab/feminism.memoria.yaml",
+        "sha256": "ede31d3528a49d09b39bba7d1b7bbd6445be040c9f3b8a34e4958f7a042198af",
+        "size": 1054
+      },
+      {
+        "path": ".memoria/sidecars/vocab/flail.memoria.yaml",
+        "sha256": "5598b55bd9d074748ac2df99262e46f54a108a5fb99f0749a83d36d8d7f6541f",
+        "size": 2015
+      },
+      {
+        "path": ".memoria/sidecars/vocab/gadget.memoria.yaml",
+        "sha256": "c13166b9b16d8c7a2aadad5aba703e1eecf369fb598a0a5d20629024d8cb9726",
+        "size": 837
+      },
+      {
+        "path": ".memoria/sidecars/vocab/heritage.memoria.yaml",
+        "sha256": "4ffed8d47ed81247305da3e95418cd53d18c67b0c889357fb4b181159bb24215",
+        "size": 1073
+      },
+      {
+        "path": ".memoria/sidecars/vocab/humanitarian.memoria.yaml",
+        "sha256": "f265182892729a476841f319faff657a2d760eee26585863ed30564e98d916bf",
+        "size": 952
+      },
+      {
+        "path": ".memoria/sidecars/vocab/hurl.memoria.yaml",
+        "sha256": "2d17e71360469465c81fedd74c8aa1c3024ef4de68a3f0b19a7a4bd08ae82f6e",
+        "size": 594
+      },
+      {
+        "path": ".memoria/sidecars/vocab/imperative.memoria.yaml",
+        "sha256": "9d3e7830219e58fac6d05131c7bae54ba1930e1ea4ec96fbd034d3bda40b537c",
+        "size": 798
+      },
+      {
+        "path": ".memoria/sidecars/vocab/incision.memoria.yaml",
+        "sha256": "55427dc0eecfe1c8ff0f3d39e0088b28da4de04a55c06fad90ee1692838d8600",
+        "size": 1054
+      },
+      {
+        "path": ".memoria/sidecars/vocab/indulge.memoria.yaml",
+        "sha256": "d8061e2ac9a23666a6ab1bcd75e133d9068cf9e2966b6ee7e6c98e850ef0579f",
+        "size": 1451
+      },
+      {
+        "path": ".memoria/sidecars/vocab/intriguing.memoria.yaml",
+        "sha256": "672b4b8f6901d3e384170b75ba07b5fba3d3dd2a8ff32c044f228e4fabd5b397",
+        "size": 980
+      },
+      {
+        "path": ".memoria/sidecars/vocab/juvenile.memoria.yaml",
+        "sha256": "e6e9adee25d09ad969b7f2da7ed52d2fe0af95b0f0ca2cc5b67f0b7bceb1ae93",
+        "size": 1119
+      },
+      {
+        "path": ".memoria/sidecars/vocab/lavender.memoria.yaml",
+        "sha256": "437293f437d3c2d2dff6bb8e3ef8fb0fb3e86a5831e2292c2af9c92595a8c45d",
+        "size": 1077
+      },
+      {
+        "path": ".memoria/sidecars/vocab/leaven.memoria.yaml",
+        "sha256": "06411856bc4460f5657bded7eb9238c81ad1e7daf3a6aacea72eb5d3fd2b0d1b",
+        "size": 874
+      },
+      {
+        "path": ".memoria/sidecars/vocab/legacy.memoria.yaml",
+        "sha256": "2c60615d9468ef4d67eb817817a80caab3533a4e7d1666800bee4a3e8cd9ccec",
+        "size": 587
+      },
+      {
+        "path": ".memoria/sidecars/vocab/lush.memoria.yaml",
+        "sha256": "93a6eae725523c51066f987c5ba540db99a9c488a19dd3f81c4275eb69663974",
+        "size": 1339
+      },
+      {
+        "path": ".memoria/sidecars/vocab/mainstay.memoria.yaml",
+        "sha256": "d613f3ed54e6f413fa4f86845c66c922f2e139068f664f4b0bfc0073701b3d6d",
+        "size": 914
+      },
+      {
+        "path": ".memoria/sidecars/vocab/mainstream.memoria.yaml",
+        "sha256": "e236e5169f85f2992d56e07d8607402531be0bef5895f2d5ff901e64e37e88fd",
+        "size": 1428
+      },
+      {
+        "path": ".memoria/sidecars/vocab/mangle.memoria.yaml",
+        "sha256": "3743f35800e24e258cbfe07e25ee43e863a1065f1bd461c29624abbc6a7671aa",
+        "size": 1049
+      },
+      {
+        "path": ".memoria/sidecars/vocab/oasis.memoria.yaml",
+        "sha256": "98c3d62823533a40dd2f154a5f6a69641d96fc5ece8855a479fd857102624242",
+        "size": 1176
+      },
+      {
+        "path": ".memoria/sidecars/vocab/ooze.memoria.yaml",
+        "sha256": "aaa6ebeca79a11a3d69dad051a23602f049cdefb71ec5c4d002d2f380870eec4",
+        "size": 990
+      },
+      {
+        "path": ".memoria/sidecars/vocab/perilous.memoria.yaml",
+        "sha256": "3fb9b27807b6311c102e62c9cf1c3451f92879f06e42c3759928440a99ae2faa",
+        "size": 2381
+      },
+      {
+        "path": ".memoria/sidecars/vocab/picturesque.memoria.yaml",
+        "sha256": "eedf36cee25502da8ecb750b0a74b82ec4d376b2ec09c6382f183a72f5cb5e09",
+        "size": 1488
+      },
+      {
+        "path": ".memoria/sidecars/vocab/plummet.memoria.yaml",
+        "sha256": "9c62ca17c4e33a09d3062d234c47637946cf013d4faa45cce02b11cc736ddcd5",
+        "size": 1404
+      },
+      {
+        "path": ".memoria/sidecars/vocab/promising.memoria.yaml",
+        "sha256": "f03560dad845885f80204001863b32030acdddc2297a919cf674221ba3f50bf2",
+        "size": 1712
+      },
+      {
+        "path": ".memoria/sidecars/vocab/quote.memoria.yaml",
+        "sha256": "feea3c90a10bea96ae1b11224e42eaf5e68469cd5dd60777c9631e86181c81cf",
+        "size": 1010
+      },
+      {
+        "path": ".memoria/sidecars/vocab/reassuring.memoria.yaml",
+        "sha256": "ca2403ac6ed4db870bfa18a0888bce8d4555e9c6eb795f1c47c21495b05d01c1",
+        "size": 1499
+      },
+      {
+        "path": ".memoria/sidecars/vocab/rebel.memoria.yaml",
+        "sha256": "0efac73545e897b67b8210ef1c83a28dd4229f3b6f7743e89fa5e18a0e9061aa",
+        "size": 920
+      },
+      {
+        "path": ".memoria/sidecars/vocab/remuneration.memoria.yaml",
+        "sha256": "25a08d8071cbc395998c66828a2fc9ff11890c962db584d3f395da77ea74a693",
+        "size": 866
+      },
+      {
+        "path": ".memoria/sidecars/vocab/renovation.memoria.yaml",
+        "sha256": "40e3f10725c57bbfe72841e127c08d1ec36df169c7cb12c23a96a3a8f5c97142",
+        "size": 1063
+      },
+      {
+        "path": ".memoria/sidecars/vocab/resilience.memoria.yaml",
+        "sha256": "47ea686067fb6366961305d874ae637de68951c466f6ee0c75363e0c268fe164",
+        "size": 1183
+      },
+      {
+        "path": ".memoria/sidecars/vocab/rewarding.memoria.yaml",
+        "sha256": "b9b542d5ce63a71badd78ca33d153e0e81f1674456635615e55c6b79fdd301e0",
+        "size": 1877
+      },
+      {
+        "path": ".memoria/sidecars/vocab/rocket.memoria.yaml",
+        "sha256": "7627f10103936eb6042a7547b752dd42a4ffaba8e7b720c8093d1b181ad9672a",
+        "size": 1058
+      },
+      {
+        "path": ".memoria/sidecars/vocab/rote.memoria.yaml",
+        "sha256": "8c029d8516365f07c6436b1edff706df8e6caef0371c32bd3f758fe5bfbc1261",
+        "size": 1230
+      },
+      {
+        "path": ".memoria/sidecars/vocab/scorch.memoria.yaml",
+        "sha256": "e47e0f57a12253e8bb11e1c4836939ae0c6c3deede9b8d3c77c87fef4bbb29b2",
+        "size": 1299
+      },
+      {
+        "path": ".memoria/sidecars/vocab/secluded.memoria.yaml",
+        "sha256": "503fe5181d8aa81df1d58b1710019082be67836dc18f74354a827836c327efa8",
+        "size": 913
+      },
+      {
+        "path": ".memoria/sidecars/vocab/smack.memoria.yaml",
+        "sha256": "bf2eb102edd610f63ddea28f083be1a9430610822a8dfbabe24269f21a04a853",
+        "size": 374
+      },
+      {
+        "path": ".memoria/sidecars/vocab/speculation.memoria.yaml",
+        "sha256": "d9dedd57119dd62bfd8d0cf3206ff6fc69c4ae7cf3e9fa6e34fd8516a078c838",
+        "size": 2011
+      },
+      {
+        "path": ".memoria/sidecars/vocab/spin.memoria.yaml",
+        "sha256": "361ca19bd556b7e4b99a647ee17c747951a6d469d40226e709d1fe7056336561",
+        "size": 370
+      },
+      {
+        "path": ".memoria/sidecars/vocab/sprint.memoria.yaml",
+        "sha256": "663817af3239036ca6b7f781fd1ca6925f749877d5640e23961e751c08fb74f2",
+        "size": 1242
+      },
+      {
+        "path": ".memoria/sidecars/vocab/stench.memoria.yaml",
+        "sha256": "b86915f439603007c1669c78234c2a3b371936223252688b8d641cb57dd138d2",
+        "size": 1640
+      },
+      {
+        "path": ".memoria/sidecars/vocab/story-roles.memoria.yaml",
+        "sha256": "50b528abf2e22c749ba5bebca8d42ea060321b55fdc10bc20a182c4e489b53cc",
+        "size": 1053
+      },
+      {
+        "path": ".memoria/sidecars/vocab/supplant.memoria.yaml",
+        "sha256": "06fdc5b0ad908f71f627ba7d64d661775b23822e6ae08587152055d9c17f08f5",
+        "size": 911
+      },
+      {
+        "path": ".memoria/sidecars/vocab/sweep.memoria.yaml",
+        "sha256": "4fb75d26cc7099ac66327886bdf72513ee25247f66aff204b858bf7f367fc2e0",
+        "size": 866
+      },
+      {
+        "path": ".memoria/sidecars/vocab/testament.memoria.yaml",
+        "sha256": "d0d9f7203debb2ea2d8698fb7c20e93ce0fd9d23e1fab8ba5f705341c4cdf268",
+        "size": 980
+      },
+      {
+        "path": ".memoria/sidecars/vocab/troubled.memoria.yaml",
+        "sha256": "23b813052a9a5083147ff32465ac8d4d152a596deb36e8bf2d560bb8b5631655",
+        "size": 1685
+      },
+      {
+        "path": ".memoria/sidecars/vocab/utilitarian.memoria.yaml",
+        "sha256": "b01c1495b6369c0af7d59f011cba8128a66737185a0dde4b757b1c60a1b7fbd7",
+        "size": 1251
+      },
+      {
+        "path": ".memoria/sidecars/vocab/vanity.memoria.yaml",
+        "sha256": "fe2d48465a7bfc65c74bf1f38e6aa5ee14ccb329fcab46f1a959a3c18eb93ee1",
+        "size": 385
+      },
+      {
+        "path": ".memoria/sidecars/writing/part1/1.memoria.yaml",
+        "sha256": "d5022c302383d38b6c2fc80c358c8735f44999ef83e9964230643a0dbd3f758e",
+        "size": 1069
+      },
+      {
+        "path": ".memoria/sidecars/writing/part1/2.memoria.yaml",
+        "sha256": "8df5b60be52f034d00e52bb15dea81eb989ef4f14d1c6eaef67a28b7ff08b0ff",
+        "size": 1223
+      },
+      {
+        "path": ".memoria/sidecars/writing/part2/income-equality-impact.memoria.yaml",
+        "sha256": "17838370c211ef026ed2f3dd5b4263cea6e9020b80a0c1e904154b3d82a8599d",
+        "size": 1088
+      },
+      {
+        "path": ".memoria/sidecars/writing/part2/international-tourism-adv-disadv.memoria.yaml",
+        "sha256": "d8ac5430a4fafe9003b796f5f4c126907db02f7e06d43607c873d9354c5edb10",
+        "size": 1275
+      },
+      {
+        "path": ".memoria/sidecars/writing/part2/media-crime-details.memoria.yaml",
+        "sha256": "1d6739ea6cc07093dcd26c578613250d9b34fba0061fd747e6aa9592f6425046",
+        "size": 576
+      },
+      {
+        "path": "expressions/patterns/alike-postpositive.md",
+        "sha256": "3e3d3d75651386a299d4881e22ebe7b37b0076635dc0d2362e8c182fdbd0c4ef",
+        "size": 7463
+      },
+      {
+        "path": "expressions/patterns/at-its-most.md",
+        "sha256": "663e28a106518ca8a8a92d51bdb136bb85ffb4c0f5dfb81702e782be78b29128",
+        "size": 7768
+      },
+      {
+        "path": "expressions/patterns/cannot-be-overestimated.md",
+        "sha256": "5e700703e2365e5215d62b22a6820a53417a420a559d1d42ad5d1bf5f3a3d1e6",
+        "size": 18816
+      },
+      {
+        "path": "expressions/patterns/concerned-postpositive.md",
+        "sha256": "1ecd5777c18652c998401fc67f7033b0566b357c13f71768fad7e1d683e9b2a0",
+        "size": 5612
+      },
+      {
+        "path": "expressions/patterns/concessive-inversion.md",
+        "sha256": "0404351cd531bbc9aceb3eed821900fb319d2fbff8832ea5c43f94dc5fb7a2bd",
+        "size": 10936
+      },
+      {
+        "path": "expressions/patterns/conditional-inversion.md",
+        "sha256": "d8723d2a6c22eba61defda501f0eed5ab713b3e2323ca1da5fd03e1386af8521",
+        "size": 12666
+      },
+      {
+        "path": "expressions/patterns/contrast-linkers.md",
+        "sha256": "b45e7aeb43097eadf295da43019a86a390572b8397b1576f3293354f472835df",
+        "size": 13600
+      },
+      {
+        "path": "expressions/patterns/credit-vs-attribute.md",
+        "sha256": "8d926f59965786e89e6a851d88bf79266dd6cbd91e35606d81222a8c9b1d6a93",
+        "size": 20574
+      },
+      {
+        "path": "expressions/patterns/enumeration-linkers.md",
+        "sha256": "9af9809973cb78eecaa6d945bee24cf06671c4bc47ade1e795dd1478e9b79886",
+        "size": 18991
+      },
+      {
+        "path": "expressions/patterns/feedback-hedging.md",
+        "sha256": "85a7f2cf0a5ebb00a6c57278a5c4bab8d13deb5152145cae865f092cf51fed4d",
+        "size": 14332
+      },
+      {
+        "path": "expressions/patterns/herein-lies-inversion.md",
+        "sha256": "78c50cdb77275b59dc2b494ed16271e957405fa933b62b6c75e8f8a549e280e4",
+        "size": 8351
+      },
+      {
+        "path": "expressions/patterns/impart-instil-cultivate.md",
+        "sha256": "b7b3651b98687541507ee9c60734ae4ceba04479a471a4bab7a38b62c6d2eb60",
+        "size": 18848
+      },
+      {
+        "path": "expressions/patterns/in-ways-that.md",
+        "sha256": "c79d3f2f9532b1a91098b4197924f4cc5d82bafababf71886a74017330559915",
+        "size": 7943
+      },
+      {
+        "path": "expressions/patterns/modal-perfect.md",
+        "sha256": "fbf0e85bac5c8a345e8870b4adcbbd75f28e840461f840d493af142608e8b0a2",
+        "size": 14102
+      },
+      {
+        "path": "expressions/patterns/not-the-least-bit.md",
+        "sha256": "27800d43f61e30e5056309df17ace06edd4369298789767487743b8f894bdb53",
+        "size": 16830
+      },
+      {
+        "path": "expressions/patterns/see-witness-time-subject.md",
+        "sha256": "f121845ce3f3cd56a5c0cc0a35c46a177e6029e49e5ec8665d90f725a6ef6522",
+        "size": 15040
+      },
+      {
+        "path": "expressions/patterns/take-it-out-on-sb.md",
+        "sha256": "2fd457002890aea03721615ffca48db8691acedbe9e724b85b57e3a02fd99f86",
+        "size": 13501
+      },
+      {
+        "path": "expressions/phrases/a-real-head-scratcher.md",
+        "sha256": "b1b01167162a1d2962827041cb4ca2f98ddd005eed87701b0bab15f6db7992e7",
+        "size": 10837
+      },
+      {
+        "path": "expressions/phrases/absorb-the-essence-and-drop-the-dross.md",
+        "sha256": "8c9ad6fc039943adb1bb84cbdc872a034957927cb80a39ce72b938c72e137bdf",
+        "size": 17504
+      },
+      {
+        "path": "expressions/phrases/at-every-turn.md",
+        "sha256": "269a9680be95288e91f514caaed3a5e93df7d1efc7258a3c265f81c51c989e39",
+        "size": 10626
+      },
+      {
+        "path": "expressions/phrases/bite-off-more-than-you-can-chew.md",
+        "sha256": "8e9a5bdad5fa27b7271a29feb748f55b9353e63d3eb4cb570b60a979ab0ab597",
+        "size": 14378
+      },
+      {
+        "path": "expressions/phrases/budget-cuts.md",
+        "sha256": "7124f7f4bff8b679c7ce103249c782775ef41befb11d9e0ae6f435e05d33ce49",
+        "size": 8447
+      },
+      {
+        "path": "expressions/phrases/bump-along.md",
+        "sha256": "d9a6b119ebb69a453a6263f36590ea7594ceb68b702734f4e3325827e5ca0eba",
+        "size": 9508
+      },
+      {
+        "path": "expressions/phrases/catch-your-breath.md",
+        "sha256": "1744b055f487e8d123182a382188b349c746f6c10ccc5f56de5ee656fddfe2cb",
+        "size": 11474
+      },
+      {
+        "path": "expressions/phrases/commonly-referred-to-as.md",
+        "sha256": "9b7908871fb71fc989d1fb5d1d0163730d1a4a5877ba1e6c50d3b429170896d0",
+        "size": 1271
+      },
+      {
+        "path": "expressions/phrases/dispel-prejudice-and-hostility.md",
+        "sha256": "d3164a76f1dc5e8004a5693ff1dc98c7c62a49efab9979ffcbcbb40668fc17f8",
+        "size": 15615
+      },
+      {
+        "path": "expressions/phrases/embrace-exotic-culture.md",
+        "sha256": "90b9b16fe0a932f91ba7112056cd43fd01d1de9025e42a6432f26f1997e3b5a9",
+        "size": 16881
+      },
+      {
+        "path": "expressions/phrases/fast-paced-plot.md",
+        "sha256": "39fb088213e8d3db0338919f11316af57d5abac6c09b9bf9e892fcc0992430b9",
+        "size": 10396
+      },
+      {
+        "path": "expressions/phrases/flee-the-nest.md",
+        "sha256": "b7864a9cffc742b12c75d4a0fbbf7f8afda1c565c66be4bf3597b7cfe9f18a26",
+        "size": 8104
+      },
+      {
+        "path": "expressions/phrases/go-back-a-long-way.md",
+        "sha256": "0d7c5533bd581bf48173e247cae75741d51d080f42835ae4e146ad289fd94fae",
+        "size": 14125
+      },
+      {
+        "path": "expressions/phrases/hustle-and-bustle.md",
+        "sha256": "cba66fc850f59c7a99f5511a9756bb945ce4379e7b16584aea6fe90687c303a6",
+        "size": 6704
+      },
+      {
+        "path": "expressions/phrases/income-from.md",
+        "sha256": "e940fb63507f903bd964a10b2b6885a294a096d1bcdc3103743d4b0d302ea164",
+        "size": 1245
+      },
+      {
+        "path": "expressions/phrases/off-the-rack.md",
+        "sha256": "b4e0f24a782cbc9e881675974c50012a086f77f7e6644b502871939e4e7a00dc",
+        "size": 7851
+      },
+      {
+        "path": "expressions/phrases/on-the-fence.md",
+        "sha256": "bef9cb65238c7babcd77fef20b8c7f6808b9225629d53366e5856f4ea5301d6a",
+        "size": 11342
+      },
+      {
+        "path": "expressions/phrases/patch-things-up.md",
+        "sha256": "85e30f3bea3dd60fedc59d7a0232e774e68639560829d3d8d29db7ca9b2d8d5c",
+        "size": 11646
+      },
+      {
+        "path": "expressions/phrases/play-an-indispensable-role-in.md",
+        "sha256": "328a03df5174fde0d6271b5b97e63a1613c58caaf624ee1e87d2684e5823eca2",
+        "size": 1079
+      },
+      {
+        "path": "expressions/phrases/put-pressure-on.md",
+        "sha256": "cd34989f7c5ab744f2bf573bf25509e409ea53fbaa229226b09dbeb73b3747a4",
+        "size": 11195
+      },
+      {
+        "path": "expressions/phrases/queue-for-ages.md",
+        "sha256": "b5621e0240e0e25f407e22277e0ac5515f20046c786c67df508dc06eaf24361d",
+        "size": 9144
+      },
+      {
+        "path": "expressions/phrases/rain-or-shine.md",
+        "sha256": "4e92b8f4fdc05e897cc61a27b83e436ecd468214afed866c00bb5a6333c1a72f",
+        "size": 9179
+      },
+      {
+        "path": "expressions/phrases/resonate-with.md",
+        "sha256": "f2935714431917ed2abd891057ec32fe424ae39e63dbf7425a2c72f736217678",
+        "size": 11227
+      },
+      {
+        "path": "expressions/phrases/rumour-has-it.md",
+        "sha256": "840363486c69e95068365742015d5f2a2dcb94c4879c840125cee798bcbc6bd4",
+        "size": 15700
+      },
+      {
+        "path": "expressions/phrases/step-back-in-time.md",
+        "sha256": "9d3b4c5cb22c0c6cf1edbfb82eb3e3c55f2651e6bb2730c388b09f64f2c89dde",
+        "size": 9703
+      },
+      {
+        "path": "expressions/phrases/take-sb-at-their-word.md",
+        "sha256": "bca51dbccacdf7f91c40195f610fa57cea4d60f9a0ec05febfaae70df2be0dbb",
+        "size": 19858
+      },
+      {
+        "path": "expressions/phrases/time-honored-tradition.md",
+        "sha256": "0465fe353cadc9edd5c68ec989f4c512f88f3a2e36d46c1277c0292cbb41844d",
+        "size": 1889
+      },
+      {
+        "path": "expressions/phrases/twist-ending.md",
+        "sha256": "a41e5cf7e01af72501ee4aad1ccc8209b83175ca18cd517e463ae6dcab37b073",
+        "size": 9704
+      },
+      {
+        "path": "expressions/phrases/ways-to-say-you-like-something.md",
+        "sha256": "7289510bd3f0e41f012954f3fb6ef533c3dff6077d7d6646d26ebfc9d94631b5",
+        "size": 15375
+      },
+      {
+        "path": "expressions/phrases/what-of.md",
+        "sha256": "fed1e890fb5a3d663be24be25ee6d5c94bd4900d56113eb0f817af926e19a1c3",
+        "size": 7279
+      },
+      {
+        "path": "expressions/words/exercise.md",
+        "sha256": "d3f7610b531c5e49a8eae186a2b92bcac9ecfc7e3e5654261f89b0e6da94c8a5",
+        "size": 7768
+      },
+      {
+        "path": "expressions/words/get.md",
+        "sha256": "f5a105804d04318edc0b15f8d64a2ded42f8130ef8ca3ff387dfc6218b484fe5",
+        "size": 10670
+      },
+      {
+        "path": "expressions/words/go.md",
+        "sha256": "3d2b3c0ac92afb6f33164a54d43cd98175fd623ff956b1ef23d27251c95afad7",
+        "size": 8963
+      },
+      {
+        "path": "plan/exam-2026-11-07.md",
+        "sha256": "10e8c04118558b63da018785657ffbb44f51c5b27b00e953f5dcfe90d65f9c57",
+        "size": 7340
+      },
+      {
+        "path": "prompts/IELTS-vocab.md",
+        "sha256": "a52446057a664fa2553e8a1b95bbada1f49f49e3a31899475ea3d04c6b2b8086",
+        "size": 3686
+      },
+      {
+        "path": "reading/rebranding-art-museums.md",
+        "sha256": "d11ca2b815f66433c00c38286548cefd2f16a465b954dece35e595a13bb4a7c7",
+        "size": 10143
+      },
+      {
+        "path": "skills/op-ed-skeleton.md",
+        "sha256": "a9a7f60f801c4afd4f365066af62f061a9234d6090941596a4c7903ee944680b",
+        "size": 3758
+      },
+      {
+        "path": "skills/point-vs-example.md",
+        "sha256": "587759e6dc67a0c39805bfe216ea7f7db8530b059fafbbd97ae800a504d091d2",
+        "size": 9913
+      },
+      {
+        "path": "speaking/part2/experience_1.md",
+        "sha256": "41290bcee56e5b75c2dde0b3713d5da7e75a1951b1db04dc8d08c28d3f7067b1",
+        "size": 20871
+      },
+      {
+        "path": "speaking/part2/experience_2.md",
+        "sha256": "d401641283fd4ee033b376f5a898e917aa487866a60dbb10112b10affb804888",
+        "size": 22248
+      },
+      {
+        "path": "speaking/part2/experience_3.md",
+        "sha256": "93a34406bc85d84a03c4062f37bcf9960c698f3a3d6bbb028c101758252fd85b",
+        "size": 29518
+      },
+      {
+        "path": "speaking/part2/question-bank.md",
+        "sha256": "eeca72d2fac254d5d7207a33f6bf3ed7761eb4e178a1080654b115922ed99f62",
+        "size": 12331
+      },
+      {
+        "path": "speaking/stories/dorm-power-cut.md",
+        "sha256": "949ffe323f775f9256fcc61e49d22f5490e7b694a231aa6b2ca0ee38b05df923",
+        "size": 4610
+      },
+      {
+        "path": "theme/describing-heat.md",
+        "sha256": "1038dc53d17d14328ef3f31bcab0d91ea8d00705c2eb6f3e30dbc56a8e4ba993",
+        "size": 6410
+      },
+      {
+        "path": "vocab/apparatus.md",
+        "sha256": "b754ab51433ecbd5b751e5f6718d998cd9d2ab834f67df5b972912ca319e3198",
+        "size": 11441
+      },
+      {
+        "path": "vocab/appendage.md",
+        "sha256": "7ab38a695365af81e6028465add6504a87e30e95c87222c3ffc387c6b94d4168",
+        "size": 5869
+      },
+      {
+        "path": "vocab/assimilation.md",
+        "sha256": "be46f541400a427bc2c3b4a9df47ab29f79c238a485130801eab18f25c345c79",
+        "size": 14092
+      },
+      {
+        "path": "vocab/attic.md",
+        "sha256": "3e836e8002f68b42ecfec0eb16a56a7d7dcbfe136ac976a7c6e15e56f262e8ae",
+        "size": 13912
+      },
+      {
+        "path": "vocab/blend.md",
+        "sha256": "c89c53fdfe81746db94f625bb4c537984842e34e8f0c5dc696ac01d90ff8195b",
+        "size": 7121
+      },
+      {
+        "path": "vocab/breathtaking.md",
+        "sha256": "761658fed7c4660b267553b773e5b92a1220dc2de5886f83605700d5b01ab3c6",
+        "size": 6699
+      },
+      {
+        "path": "vocab/bungalow.md",
+        "sha256": "2a9b15207a868c6bd3a47adbb927f8e4be1f71eb78f6534aac2085c8ec20fdb4",
+        "size": 11343
+      },
+      {
+        "path": "vocab/ceiling.md",
+        "sha256": "9f03ef6c0cd3384650f7adc87f686ae8f1a51ae6e8cc2e60fd08b097a243ecf0",
+        "size": 13387
+      },
+      {
+        "path": "vocab/clear-cut.md",
+        "sha256": "b5db69059a8bc7657137ccf80b26fd0e743217c5e2af5f3bfc326fccea936751",
+        "size": 14282
+      },
+      {
+        "path": "vocab/coma.md",
+        "sha256": "3fd20169fbaf6eeeb35a8aac6fde097985aa3a7b8e7b5086cf62d23d9706416c",
+        "size": 10737
+      },
+      {
+        "path": "vocab/commendable.md",
+        "sha256": "84495f339b7bb4d5483d40437ee39703a70e2c7d34e9e0cf646c943c4068c18c",
+        "size": 7666
+      },
+      {
+        "path": "vocab/conceive.md",
+        "sha256": "38c799dba5a9bc2d19ed52d08d5f6949265df347f08ac98f9c738a567dcbcf97",
+        "size": 11738
+      },
+      {
+        "path": "vocab/cricket.md",
+        "sha256": "7671c6cdfd0ad4255ee635efdb6a72dbb7f7ee81983b433c01b17e803ef02556",
+        "size": 12844
+      },
+      {
+        "path": "vocab/crotch.md",
+        "sha256": "52215e6bddd381e7502b12a32985e37baa69e9e7fcf3fa5355045b13cae82b78",
+        "size": 10404
+      },
+      {
+        "path": "vocab/curator.md",
+        "sha256": "92222e43823c7a1e27eda21b9e7f50ed1cf809edcf4d5986342cac9b5c1487a5",
+        "size": 8031
+      },
+      {
+        "path": "vocab/curb.md",
+        "sha256": "924925a4bcf88357b3f8520da3dbfd956b5cbd465b3c22b819bd6dadcd3279cb",
+        "size": 10998
+      },
+      {
+        "path": "vocab/cynical.md",
+        "sha256": "1a5db7cc915583d0b8224231113270aab145ac859870b1d57fd9a6434da302fa",
+        "size": 11586
+      },
+      {
+        "path": "vocab/delinquency.md",
+        "sha256": "b7dea0f458e25753d3c073962345459574317527805a144e6067b607ce7d4f85",
+        "size": 11910
+      },
+      {
+        "path": "vocab/desensitise.md",
+        "sha256": "85b22dcfcdad788edd6eba44b3de6bb21afef0a0588c6013ab1e0f68abc8c662",
+        "size": 11449
+      },
+      {
+        "path": "vocab/deterrent.md",
+        "sha256": "b4fbbc1311aa388fd8bdb086d12c28612524396fd11508e5ddc3ad65e21cefe6",
+        "size": 10086
+      },
+      {
+        "path": "vocab/dignitary.md",
+        "sha256": "2552a5430c19bb2f57f706bb82bbbfd356cd1cda5c50dc18f261a8edf7ecaf34",
+        "size": 8533
+      },
+      {
+        "path": "vocab/dilapidated.md",
+        "sha256": "f0ac1d8493f56716e2089362554382453a2421264e34a5267c2e94ef18f36276",
+        "size": 9199
+      },
+      {
+        "path": "vocab/exacerbate.md",
+        "sha256": "0cc91bbc1c67807afcbc9ea6b63b3678f299b9459bd0706f6019b8acfd611b3e",
+        "size": 12289
+      },
+      {
+        "path": "vocab/exclusively.md",
+        "sha256": "c25f59039ea602e8c473a19b3267439bd7fdb9c7bd9d3d4cca2da2c37edb0526",
+        "size": 14666
+      },
+      {
+        "path": "vocab/favourable.md",
+        "sha256": "9119a7b567344a65ed66be4f743eede8a2caf0cf2b098d45c48ab7ed0d77e12c",
+        "size": 10928
+      },
+      {
+        "path": "vocab/feminism.md",
+        "sha256": "3405e5b29c4d0bc03748ebff6df0c1cf91649a466310a3f72d9f0517e0c82fca",
+        "size": 16136
+      },
+      {
+        "path": "vocab/flail.md",
+        "sha256": "ab8975a22463a4721ec95df0b0a6ac3456d9ea7487f7a04183d136473283063a",
+        "size": 12852
+      },
+      {
+        "path": "vocab/gadget.md",
+        "sha256": "47e6faa2b0ee31ad2e2835ba7f7007c68d2474a1e6c6144b194b32a20b4fb6ff",
+        "size": 9911
+      },
+      {
+        "path": "vocab/heritage.md",
+        "sha256": "eee5f06eb75fae021a92166583cef9c2b16c8b73db860633c000e23a0a890091",
+        "size": 8040
+      },
+      {
+        "path": "vocab/high-rise.md",
+        "sha256": "8d7ff734d1e923a0918527023c92c32a7a9cd8ccbc9eaa4a43180fa86393c293",
+        "size": 11880
+      },
+      {
+        "path": "vocab/humanitarian.md",
+        "sha256": "7b3192e7b1a075926c7b0fd6dd637390fc154384c751d4b291ebb93f740cbb8c",
+        "size": 8657
+      },
+      {
+        "path": "vocab/hurl.md",
+        "sha256": "f8dbae72b3846475f8f8d32cc218409547b6f0c890a2e4e9d1ac3087a233fc9f",
+        "size": 6615
+      },
+      {
+        "path": "vocab/imperative.md",
+        "sha256": "1e0875c03668a9600e76e8bf99238a81fa9302b72d2755fde18a2d6c1bc53647",
+        "size": 10074
+      },
+      {
+        "path": "vocab/incision.md",
+        "sha256": "cf7d82d950ec7c5683ae51cbfb8432e4d885e3353e9a4b56f610ad4b72b5bc08",
+        "size": 12844
+      },
+      {
+        "path": "vocab/indulge.md",
+        "sha256": "4e3e443604858cb131862b359d807eeb6bb1d86462573e8cefc62144db5ee987",
+        "size": 12081
+      },
+      {
+        "path": "vocab/intriguing.md",
+        "sha256": "b9ef43e1bd9391a5fd27e3163105ccea7c893b918a287ea591cd8de22fd2b3fd",
+        "size": 8825
+      },
+      {
+        "path": "vocab/juvenile.md",
+        "sha256": "43b8547f8d613c9b0a2355cc962c3ee6e5e5126199a5c82558c21a31e7b7b16d",
+        "size": 11076
+      },
+      {
+        "path": "vocab/lavender.md",
+        "sha256": "ec770e2fd84ac4f3f3a3ee8c31c7ca041903e9ca4dca78e1f7d1aae41b686f9c",
+        "size": 12877
+      },
+      {
+        "path": "vocab/leaven.md",
+        "sha256": "454c1697a28119235b5cbdccd37272781588be2be091842854235a2c5ccbe5d9",
+        "size": 8218
+      },
+      {
+        "path": "vocab/legacy.md",
+        "sha256": "52a0ff65121bfa2e8f8e02394d39f61118cb9c46f227714c99dabe264708a0c2",
+        "size": 6699
+      },
+      {
+        "path": "vocab/lush.md",
+        "sha256": "a14d592039de133b280f9daeaa13331ad6797f134d8fb82017f0c9ccb9356ddc",
+        "size": 9232
+      },
+      {
+        "path": "vocab/mainstay.md",
+        "sha256": "19b399939046ff83166395c70325ecf7e38572d701a9c4ed28ddea3cda1f2beb",
+        "size": 8069
+      },
+      {
+        "path": "vocab/mainstream.md",
+        "sha256": "8ee06c9acb35ca570548f925c1900abcb784421b0a374c6b9ac6309da0663526",
+        "size": 12117
+      },
+      {
+        "path": "vocab/mangle.md",
+        "sha256": "f453c17a8805cfdc7943f13cf53410293ad9b3cd071824ed1a247cb5f3638cb2",
+        "size": 11979
+      },
+      {
+        "path": "vocab/oasis.md",
+        "sha256": "18bd476065b73c67fe5ca74a3fa1869d100a3766411b793c66fd346dcd550e7f",
+        "size": 6828
+      },
+      {
+        "path": "vocab/ooze.md",
+        "sha256": "2b8af54a72ddc667b23f9d5379fe0d16ec9e2f0c7555cd0418cb354773178f92",
+        "size": 12199
+      },
+      {
+        "path": "vocab/perilous.md",
+        "sha256": "bc673f2949d0252178323926f8ee21e3a158db2927d3942d0375b0987c7182e1",
+        "size": 17033
+      },
+      {
+        "path": "vocab/picturesque.md",
+        "sha256": "0a433bf0ff93f48d67bef5ccc2b6ef49e0f1b359fe834131fe94fa6a725fd866",
+        "size": 6804
+      },
+      {
+        "path": "vocab/plummet.md",
+        "sha256": "26681640ee0adca786f1705e70acef6718e935cb64942f70f452e988a4b67765",
+        "size": 12559
+      },
+      {
+        "path": "vocab/promising.md",
+        "sha256": "bc0c8211056095c6ac8a2996eea6767cde63aac1b1132184de1d94d3d760e7b6",
+        "size": 10526
+      },
+      {
+        "path": "vocab/quote.md",
+        "sha256": "fe3de06c6c73aa9939dc4446e0cb8ff5263009a0649705c9b30bc6250e5510b0",
+        "size": 13803
+      },
+      {
+        "path": "vocab/reassuring.md",
+        "sha256": "700317d06946a4a82dba7a9ec793ca4d4c7c6debf8bbe3ba2c03463ddf02e8bd",
+        "size": 17145
+      },
+      {
+        "path": "vocab/rebel.md",
+        "sha256": "abd5e68717b84fcb6393556d40aa07efe3ffa111bf249696b0a5362456f6a11a",
+        "size": 10916
+      },
+      {
+        "path": "vocab/remuneration.md",
+        "sha256": "5e7ce1089a6bcb267fbb37e1ab702ade50f9bc8410951b108039029325b7452c",
+        "size": 7705
+      },
+      {
+        "path": "vocab/renovation.md",
+        "sha256": "8b058910ac21dd9521fdb6259d8e8f9f52eead4c3d06d6b411e2ac73a56688f1",
+        "size": 6912
+      },
+      {
+        "path": "vocab/resilience.md",
+        "sha256": "51db3fa8993e139410e22a805817804f6de64ef9c63cb94edbc67b9f597b282f",
+        "size": 14429
+      },
+      {
+        "path": "vocab/rewarding.md",
+        "sha256": "72338a4e0ba31a03516f2625b0fc868be9d06fe499b5d6ca539617ca9c533607",
+        "size": 13832
+      },
+      {
+        "path": "vocab/rocket.md",
+        "sha256": "8a5eb0cf3af09aaba95db5f49bae03f53b91d92df6c5e5b988d870272ad8b832",
+        "size": 10143
+      },
+      {
+        "path": "vocab/rote.md",
+        "sha256": "c845f008be026b8321abb619ee20197c0378a96dc9ff05d8b0ce8dd85ec4871d",
+        "size": 13231
+      },
+      {
+        "path": "vocab/scorch.md",
+        "sha256": "55f225c7b19a20b79d74120053a5b7f8a1305ca0b5b1ba619824e9265ef44bac",
+        "size": 11701
+      },
+      {
+        "path": "vocab/secluded.md",
+        "sha256": "f8add6bd5ab4a129b0274b0a9f974a449af5c4ccac36450658d6af0b11756dd2",
+        "size": 6547
+      },
+      {
+        "path": "vocab/smack.md",
+        "sha256": "f59881c128eeda96f7b0699b57c9a59d031dd89cea9d625f5e8d9816c7c441d3",
+        "size": 10896
+      },
+      {
+        "path": "vocab/speculation.md",
+        "sha256": "33fe1886ffc7675f6f9acad766c34b957dd7c34e97bdcdeafdd3a343bf9b3966",
+        "size": 18138
+      },
+      {
+        "path": "vocab/spin.md",
+        "sha256": "d6fcc276fdae3384d0a44fa800d4980c105ac0d36af17039594e3dc2486f3fe3",
+        "size": 12880
+      },
+      {
+        "path": "vocab/sprint.md",
+        "sha256": "ca34d6ba180ad8d93f87ecf7ba9007bec2f68a0420bb78e07f176d2fe518a115",
+        "size": 9396
+      },
+      {
+        "path": "vocab/stench.md",
+        "sha256": "7f41f2e1a524a4e530932cc5303b381e4ccd506075ecb1491ea81daebb95abc2",
+        "size": 11986
+      },
+      {
+        "path": "vocab/story-roles.md",
+        "sha256": "08311cc0a4c66296824c3213a7953ec1fc8fc64bee014e21152142b0d874b1bf",
+        "size": 10952
+      },
+      {
+        "path": "vocab/supplant.md",
+        "sha256": "df4d9911bb7fd6bd0e07630aacb27072158b657fbda93c1591cf2bdc81a6532c",
+        "size": 7657
+      },
+      {
+        "path": "vocab/sweep.md",
+        "sha256": "18ba18afeb096bdb54bab7992c62e7be3b1757522c2fdeb444c799c43dcd83de",
+        "size": 7753
+      },
+      {
+        "path": "vocab/testament.md",
+        "sha256": "f8cbb6851ee7a600163c21e289fa51691c28ff2da23491dfe33588c76c86889c",
+        "size": 13161
+      },
+      {
+        "path": "vocab/troubled.md",
+        "sha256": "0d192e62a8067068d59d841c3cd23a59f4b530773779b45992349e1bdca50430",
+        "size": 10924
+      },
+      {
+        "path": "vocab/utilitarian.md",
+        "sha256": "cdc9280a083961c3ce32769b0d0d84b09bc81e183bae90b1b6a6744c9e460fa5",
+        "size": 15702
+      },
+      {
+        "path": "vocab/vanity.md",
+        "sha256": "d01cb6e0c80aec1114230bf8a39c08828edb4b6c05fe4d854873981a4731dffb",
+        "size": 12274
+      },
+      {
+        "path": "writing/SimonClass/L1-Intro.md",
+        "sha256": "daedcebcb14daab0b284e078450807f3f582892cc1fdf2a4c4aca583a6f3d924",
+        "size": 663
+      },
+      {
+        "path": "writing/SimonClass/L10-Intro.md",
+        "sha256": "2ab194f4a50596c84adc2fe8644c3991447e0597f8e8507a79dc46366f3b30aa",
+        "size": 394
+      },
+      {
+        "path": "writing/SimonClass/L11-Part2Introductions.md",
+        "sha256": "e827d9830648df3e879abb35bd7f7631a903fea5e34fd69bc347e4f04c55b46e",
+        "size": 10163
+      },
+      {
+        "path": "writing/SimonClass/L12-Part2MainBody.md",
+        "sha256": "875d8f2528c9b8827112035b89c26467f6810edf211a9f60dff5e5a98e712aba",
+        "size": 3537
+      },
+      {
+        "path": "writing/SimonClass/L13-Part2Conclusion.md",
+        "sha256": "7e53f56f352b5d5eff27902ce20f522fdcac9ad90b73d18fb39032ccd399f083",
+        "size": 2897
+      },
+      {
+        "path": "writing/SimonClass/L14-Planning.md",
+        "sha256": "70b67824689bb06ed8f9a6906792557223f029b79430bb70293edad0b4c52ee3",
+        "size": 1301
+      },
+      {
+        "path": "writing/SimonClass/L15-Opinion.md",
+        "sha256": "59e30adb97cf97423aa7b21787f7d39e1d2eb41329e861a2adafa697862d9659",
+        "size": 6522
+      },
+      {
+        "path": "writing/SimonClass/L16-Discussion.md",
+        "sha256": "46b7a9796ddd83d5d59b30fd154ca2a254d66b714236a9b93dd37f39d0c6adc2",
+        "size": 8523
+      },
+      {
+        "path": "writing/SimonClass/L18-Problem&Solution.md",
+        "sha256": "5db511bc74ba9f1d3ddf5d109e6061fcf39e879125de837b55ef057258df2a8a",
+        "size": 8999
+      },
+      {
+        "path": "writing/SimonClass/L19-2-Part-Question.md",
+        "sha256": "7c897b269f5e10049bbc949a2aaa580c10d4929d28df373603002455f42d11c9",
+        "size": 13760
+      },
+      {
+        "path": "writing/SimonClass/L2-LineGraph.md",
+        "sha256": "c5f9785c0ef881b1c57e85b54c9afc63c96d0dde8fa8dc88de700ddcf2bb9cd4",
+        "size": 6648
+      },
+      {
+        "path": "writing/SimonClass/L20-Agree-Disagree.md",
+        "sha256": "37708f462d2164376aadddf64406f143d1c958c575f429a7686e28f86963d3f7",
+        "size": 11757
+      },
+      {
+        "path": "writing/SimonClass/L3-BarCharts.md",
+        "sha256": "ffe2dd1bbbaf63c34ede64c3e5c8981ce6f6705be20e4851807278a503edb73f",
+        "size": 3239
+      },
+      {
+        "path": "writing/SimonClass/L4-PieChart.md",
+        "sha256": "7ba856ce8d612d2539f36bfc91feb588cf12e4c2d1bff918594e33fbe56ffea6",
+        "size": 4002
+      },
+      {
+        "path": "writing/SimonClass/L5-Table.md",
+        "sha256": "ff0d85862bdf2aa01ee9b7266d6f351c78cc13c30015104df082ea6708b01d27",
+        "size": 5967
+      },
+      {
+        "path": "writing/SimonClass/L6-TwoCharts.md",
+        "sha256": "0a3b0513044d2df6abf1982ef46083f5f31fffd13e2fe80c1a390791202ca377",
+        "size": 6649
+      },
+      {
+        "path": "writing/SimonClass/L7-ProcessDiagram.md",
+        "sha256": "04ed2faa6f9d60e24ae73311f8572afce970deae41f631a80130cecea2b2bf70",
+        "size": 9474
+      },
+      {
+        "path": "writing/SimonClass/L8-ComparisonDiagrams.md",
+        "sha256": "7fd1ba0b2751352f793b3b99e243b7fd05a3b45a30e92ceda93a5826ae4fd722",
+        "size": 5410
+      },
+      {
+        "path": "writing/SimonClass/L9-Part1Summary.md",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "size": 0
+      },
+      {
+        "path": "writing/part1/1.md",
+        "sha256": "c72b354f0140a9157d03cc77489755a34b9c02ab077b17a494e82000a786f234",
+        "size": 13624
+      },
+      {
+        "path": "writing/part1/2.md",
+        "sha256": "63022d1914f444b29a4f3d932e9c132f8f508e8a81576d65ce0db05028dda388",
+        "size": 16759
+      },
+      {
+        "path": "writing/part2/income-equality-impact.md",
+        "sha256": "17478edc2bf7765e6fc2caaf84b2a3416694282d54ecb65b6a4e44ff083f8ddc",
+        "size": 36528
+      },
+      {
+        "path": "writing/part2/international-tourism-adv-disadv.md",
+        "sha256": "779e0a8471724db41240097cf77329e9f913a3d5e7261b659b5cbe406b643610",
+        "size": 42422
+      },
+      {
+        "path": "writing/part2/media-crime-details.md",
+        "sha256": "8cad0b32b2bf794ad09ffc846a9f03616614d41490475dd88c047a8fb2d53beb",
+        "size": 17939
+      }
+    ],
+    "manifest_sha256": "a6866c46cab71c43ee88e5c37db2addc50aec064a5965425d071d4469648dc15"
+  },
+  "③b_md_classification": {
+    "md_total": 158,
+    "md_with_kp": 134,
+    "md_without_kp": 24,
+    "md_without_kp_list": [
+      "plan/exam-2026-11-07.md",
+      "prompts/IELTS-vocab.md",
+      "reading/rebranding-art-museums.md",
+      "speaking/part2/question-bank.md",
+      "vocab/high-rise.md",
+      "writing/SimonClass/L1-Intro.md",
+      "writing/SimonClass/L10-Intro.md",
+      "writing/SimonClass/L11-Part2Introductions.md",
+      "writing/SimonClass/L12-Part2MainBody.md",
+      "writing/SimonClass/L13-Part2Conclusion.md",
+      "writing/SimonClass/L14-Planning.md",
+      "writing/SimonClass/L15-Opinion.md",
+      "writing/SimonClass/L16-Discussion.md",
+      "writing/SimonClass/L18-Problem&Solution.md",
+      "writing/SimonClass/L19-2-Part-Question.md",
+      "writing/SimonClass/L2-LineGraph.md",
+      "writing/SimonClass/L20-Agree-Disagree.md",
+      "writing/SimonClass/L3-BarCharts.md",
+      "writing/SimonClass/L4-PieChart.md",
+      "writing/SimonClass/L5-Table.md",
+      "writing/SimonClass/L6-TwoCharts.md",
+      "writing/SimonClass/L7-ProcessDiagram.md",
+      "writing/SimonClass/L8-ComparisonDiagrams.md",
+      "writing/SimonClass/L9-Part1Summary.md"
+    ],
+    "note": "「1 文件 1 KP」只对 md_with_kp 成立；md_without_kp 是库内笔记/计划/题库，不产生节点，但属于语料（改动会影响 build/检索），故纳入 manifest"
+  },
+  "④_graph_census": {
+    "debate_number": {
+      "edges": 404,
+      "nodes": 133,
+      "note": "辩论引用值；本次实测工作区为 134/404 ⇒ 差 1 节点，因工作区仍在变动"
+    },
+    "measured_on": "workspace",
+    "recompute_script": "ev:file:scripts/benchmark/maintenance/kgviz_corpus_refreeze.py#graph_census（调用 memoria.graph.collector.collect_graph_data）",
+    "values": {
+      "avg_degree": 6.03,
+      "by_origin": {
+        "link": 402,
+        "sidecar_edge": 2
+      },
+      "by_type": {
+        "reference": 404
+      },
+      "edges": 404,
+      "max_degree": 25,
+      "nodes": 134,
+      "zero_degree_nodes": 14
+    }
+  },
+  "⑤_build_state": {
+    "build_artifacts": [
+      {
+        "mtime": "2026-10-23T09:43:34.427054+08:00",
+        "name": "graph.json",
+        "size": 152009
+      },
+      {
+        "mtime": "2026-10-23T09:43:34.428606+08:00",
+        "name": "graph_audit.json",
+        "size": 14044
+      },
+      {
+        "mtime": "2026-10-23T09:43:34.430123+08:00",
+        "name": "report.json",
+        "size": 25057
+      }
+    ],
+    "build_dir_exists": true,
+    "build_side_effect_evidence": {
+      "implication": "kb_build 是破坏性迁移，不是只读路径；同一副本 build 前后 collector 边数会变",
+      "kb_build_writes_md": "ev:file:src/memoria/graph/kb_build.py#L293-L298（strip_known_wikilink_edge_hints 后 open(full,'w') 写回源 md）",
+      "kb_build_writes_sidecar": "ev:file:src/memoria/graph/kb_build.py#L312（save_sidecar_for_md 写回 sidecar）"
+    },
+    "post_build": true
+  },
+  "⑥_git_reproducibility": {
+    "can_reproduce_from_git": false,
+    "clean_head_export": {
+      "census": {
+        "avg_degree": 5.05,
+        "by_origin": {
+          "link": 152,
+          "sidecar_edge": 2
+        },
+        "by_type": {
+          "reference": 154
+        },
+        "edges": 154,
+        "max_degree": 19,
+        "nodes": 61,
+        "zero_degree_nodes": 9
+      },
+      "extracted_to": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\gitarch_m2gxbury\\x\\docs\\example\\AAA_Vocab"
+    },
+    "reasons": [
+      "干净 HEAD 导出（61 节点 / 154 边） ≠ 辩论语料（工作区 134 / 404）",
+      "工作区含 407 个未跟踪文件、241 个 docs/example 变更（用户 app 实时编辑）",
+      ".memoria/build 产物存在 ⇒ 该副本已被 kb_build 迁移过（post-build）",
+      "用户 live app（Memoria.exe）可能持续写入，工作区语料是活的"
+    ],
+    "verdict": "不能从 git 复现",
+    "what_it_depends_on": [
+      "工作区 241 项未提交变更（md 50 处 + sidecar 33 处被 build 改写）",
+      "407 个未跟踪文件（含 73 个新增 sidecar）",
+      ".memoria/build 前/后状态（kb_build 一次性迁移副作用）"
+    ]
+  }
+}

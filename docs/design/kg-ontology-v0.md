@@ -87,12 +87,18 @@ src/memoria/ui/static/app/js/app.js:5575          （缺边级归属）
 ### 5.1 语料冻结（D-KG-01，最高优先）
 ```
 语料       git archive HEAD docs/example
-语料 sha   051deb7895c86185…   文件清单 sha e12edfad…（182 文件）
+语料身份   ⚠️ 旧「语料 sha 051deb78…/182 文件」【已失效，禁止再用】
+           （2026-10-26 实测：该 sha 无法对应任何可从 git 复现的状态）
 测量源     现场 collect_graph_data()
 严禁       .memoria/build/graph.json（可再生缓存，非事实源）
 排除       .memoria/{agent,build,cache}
 live 引用  必须带 worktree manifest sha（如 52cc2ca0…）+ 时间
-强制格式   (语料 sha, 测量源, 时间) 三元组 —— 缺一即 E1 无效
+强制格式   (HEAD sha, manifest_sha256, 测量时间) 三元组 —— 缺一即 E1 无效
+           ⚠️ 判「语料是否一致」看 manifest_sha256，不看 artifact_sha256（后者含时间戳）
+           ⚠️ 当前语料【不可从 git 复现】：git archive HEAD docs/example = 61 节点/154 边，
+              工作区 AAA_Vocab = 134 节点/404 边；方案1（构造可复现语料）实测不可行
+              ⇒ manifest_sha256 是唯一身份；工作区一变即永久失效且无法回滚
+              冻结值：HEAD d9341bd1（dirty）/ manifest a6866c46cab71c43… / 294 文件 / 134 节点 404 边
 ```
 
 ### 5.2 口径代号（D-KG-02，C4 结案；**2026-10-25 20:40 更正**）
@@ -110,6 +116,15 @@ live 引用  必须带 worktree manifest sha（如 52cc2ca0…）+ 时间
 > 不是"时刻不同"，而是**"函数不同"**。
 > **进一步推论**：若某设计依赖 454 那套边集，它与前端看到的 404 套**不是同一份数据** ——
 > 这类"两条路径看不同世界"的问题，与 D-KG-12 的「图谱↔agent 未打通」是同一类架构缺陷。
+>
+> **⚠️ 残差 A（2026-10-26，D-KGV-10）：`kb_build` 是【破坏性迁移】，上面"两条只读路径"的说法低估了它**
+> ```
+> kb_build.py#L293-298  strip_known_wikilink_edge_hints 后 open(full,"w") 【真的写回源 md】
+> kb_build.py#L312     save_sidecar_for_md 【真的写回 sidecar】
+> 同一临时副本实测：build 前 collector 404 边 → build 后 collector 454 边
+> ⇒ 「404 vs 454」含 build 对源数据的一次性迁移副作用，不只是"函数不同"
+> ```
+> ⇒ **任何边/degree 测量必须记录 build 状态（pre_build / post_build + build sha）**，否则数字不可比。
 
 ```
 479        links 总数（task-86 快照）    ⚠️ 曾被误当 edges，不得再作边数引用
@@ -131,7 +146,10 @@ collector.py#L61-L70 产出的 node 字段（经 entry_to_dict 展开）共 9 �
 ### 5.3 指标裁决（D-KG-07）
 ```
 主验收       可视图元数 ≤10
-negative gate 最大分组占比（99.2% 能可靠判"没修好"；不能当验收）
+negative gate 最大分组占比（【实测 >80% 触发】；不能当验收）
+              ⚠️ 残差 B（D-KGV-11）：原写「99.2%」是【过期数字】（来源：更早语料），
+                 当前可复现语料实测 HEAD 81.97% / live 89.55% ⇒ 99.2% 阈值【永远不会触发】
+                 = gate 不存在 ⇒ 已改为 80%
 撤回          M-05「边利用率 ≥15%」—— 无来源，撤回
 替换          「只建基线，不设阈值，下版本比自身趋势」
 token         【效率轴】，不是有效性轴
