@@ -7914,3 +7914,27 @@ body.-agent-input-resizing { cursor: ns-resize; user-select: none; }
 #agent-ctx-ring:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; border-radius: 50%; }
 /* 兼容旧版残留：环不再挂底栏；若旧节点残留则隐藏（升级/复用页面时不留双环） */
 #status-bar #status-ctx-ring { display: none; }
+
+/* ===== 2026-10-26 task-183 追加：缓存命中率移到输入框下方（与上下文圆环同一行）=====
+   人：「为什么上下文占用『cached』还是显示在底栏而不是做到会话栏的底部」。
+   归类：缓存命中率 + 上下文占用圆环 = 「本次会话资源状况」⇒ 同一行、输入框下方（左侧圆环、右侧文字）。
+   布局全靠这里，不改 task-169 的既有行规则（本块末尾追加 ⇒ 既有 `app.css:<行号>` 锚点零漂移）。
+   · `order`：无论 DOM 谁先创建，视觉上恒为「圆环在左、命中率在右」；
+   · 窄面板（260px 级）缩到极限时文字走省略号，不换行、不挤压圆环；
+   · 字号/颜色与它原来所在的 `.-agent-statusbar` 一致（11px / --text-secondary）⇒ 移动前后观感连续。 */
+.-agent-ctx-ring-row { gap: 0.5rem; }
+.-agent-cache-hit {
+    order: 1;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    cursor: help;
+}
+.-agent-cache-hit:hover { color: var(--text-primary); }
+#agent-ctx-ring { order: 0; }

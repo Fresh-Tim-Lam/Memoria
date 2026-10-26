@@ -1,0 +1,4 @@
+{"v": 1, "type": "session/header", "data": {"id": "task183-cache-probe", "created_at": 1793029302789, "kb_path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\agent-panel-cache-indicator\\kb", "agent": "memoria-agent-loop"}}
+{"v": 1, "seq": 1, "time": 1793029302789, "type": "user/message", "data": {"text": "缓存命中率探针：这一轮用了多少缓存？"}}
+{"v": 1, "seq": 2, "time": 1793029302789, "type": "assistant/message", "data": {"content": "这是 task-183 探针会话的固定回答（用于验证在输入框下方悬停可见 hit/miss/rate 口径）。"}}
+{"v": 1, "seq": 3, "time": 1793029302789, "type": "loop/end", "data": {"stop_reason": "final-answer", "usage": {"prompt_tokens": 100, "completion_tokens": 10, "total_tokens": 110, "cache_read_tokens": 60, "cache_miss_tokens": 40, "estimated": false}}}

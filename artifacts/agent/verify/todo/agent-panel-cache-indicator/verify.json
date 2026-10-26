@@ -1,0 +1,792 @@
+{
+  "generated_at": "2026-10-26T15:47:34.057Z",
+  "port": 9623,
+  "target_url": "http://127.0.0.1:39463/",
+  "app": "memoria.app.desktop (pywebview/WebView2, MEMORIA_MODE=dev)",
+  "kb_fixture": "artifacts/agent/verify/todo/agent-panel-cache-indicator/kb (tests/probe-kb copy + fixture session)",
+  "checks": [
+    {
+      "id": "T1-状态条无命中率文本",
+      "ok": true,
+      "detail": "#agent-statusbar 文本 = \"模型 deepseek-chat · 网络 · —\"",
+      "data": null
+    },
+    {
+      "id": "T1-命中率不是\"藏\"在状态条里",
+      "ok": true,
+      "detail": "cache 父节点 = #agent-ctx-ring-row；在状态条内 = false",
+      "data": null
+    },
+    {
+      "id": "T1-旧槽位无残留节点",
+      "ok": true,
+      "detail": "状态条事实串里没有旧的命中率槽节点",
+      "data": null
+    },
+    {
+      "id": "T4-事实串 3 项且无空段/多余分隔符",
+      "ok": true,
+      "detail": "facts = \"模型 deepseek-chat · 网络 · —\"（3 项 / 空段 0 / 分隔符 2）",
+      "data": null
+    },
+    {
+      "id": "T2-缓存格在输入框下方且在 composer 内",
+      "ok": true,
+      "detail": "cache.top=743.61 / input.bottom=727.61 / 在 composer 内=true",
+      "data": null
+    },
+    {
+      "id": "T2-缓存格与圆环包围盒不相交",
+      "ok": true,
+      "detail": "ring={\"x\":1162.98,\"y\":744.3,\"w\":14,\"h\":14,\"top\":744.3,\"bottom\":758.3,\"left\":1162.98,\"right\":1176.98} cache={\"x\":1184.98,\"y\":743.61,\"w\":69.02,\"h\":15.39,\"top\":743.61,\"bottom\":759,\"left\":1184.98,\"right\":1254}",
+      "data": null
+    },
+    {
+      "id": "T2-圆环在左、命中率在右",
+      "ok": true,
+      "detail": "ring.right=1176.98 <= cache.left=1184.98；order(cache)=1/order(ring)=0",
+      "data": null
+    },
+    {
+      "id": "T2-不与发送按钮行重叠",
+      "ok": true,
+      "detail": "actions={\"x\":923,\"y\":765,\"w\":331,\"h\":26,\"top\":765,\"bottom\":791,\"left\":923,\"right\":1254}",
+      "data": null
+    },
+    {
+      "id": "T2-字号与状态条一致（11px 次要色）",
+      "ok": true,
+      "detail": "font-size=11px color=rgb(133, 133, 133)",
+      "data": null
+    },
+    {
+      "id": "T3-无会话时明说未知且不瞎报 0%",
+      "ok": true,
+      "detail": "初始 title = [\"缓存：未知（端点未上报，或为本次改动之前的旧会话）\",\"缓存命中率 —\"]",
+      "data": null
+    },
+    {
+      "id": "T3-悬停明细含 hit/miss/rate 完整口径",
+      "ok": true,
+      "detail": "会话 task183-cache-probe（列表 1 条）载入后 title = [\"缓存：命中 60 / 未命中 40 / 命中率 60%\",\"缓存命中率 60%\"]",
+      "data": null
+    },
+    {
+      "id": "T3-载入会话后状态条仍无命中率",
+      "ok": true,
+      "detail": "状态条 = \"模型 deepseek-chat · 网络 · —\"",
+      "data": null
+    },
+    {
+      "id": "T3-aria-label 与可见文本一致",
+      "ok": true,
+      "detail": "aria=\"缓存命中率 60%\" text=\"缓存命中率 60%\"",
+      "data": null
+    },
+    {
+      "id": "T5-把手真的调高了输入框",
+      "ok": true,
+      "detail": "input height 52.59375 -> 133",
+      "data": null
+    },
+    {
+      "id": "T5-调高后仍跟随且不重叠",
+      "ok": true,
+      "detail": "input.bottom=727.61 cache.top=743.61",
+      "data": null
+    },
+    {
+      "id": "T5-调低后仍跟随且不重叠",
+      "ok": true,
+      "detail": "input height 133 -> 44",
+      "data": null
+    },
+    {
+      "id": "T5-缓存格未被输入框/发送按钮遮挡",
+      "ok": true,
+      "detail": "cache.bottom=759 <= actions.top=765",
+      "data": null
+    },
+    {
+      "id": "T6-260px 不重叠/不换行/不溢出/在面板内",
+      "ok": true,
+      "detail": "dock=260.0px cache={\"x\":1175.13,\"y\":743.61,\"w\":78.88,\"h\":15.39,\"top\":743.61,\"bottom\":759,\"left\":1175.13,\"right\":1254} 单行=true 不重叠=true 不溢出=true 在面板内=true",
+      "data": null
+    },
+    {
+      "id": "T6-520px 不重叠/不换行/不溢出/在面板内",
+      "ok": true,
+      "detail": "dock=520.0px cache={\"x\":1175.13,\"y\":743.61,\"w\":78.88,\"h\":15.39,\"top\":743.61,\"bottom\":759,\"left\":1175.13,\"right\":1254} 单行=true 不重叠=true 不溢出=true 在面板内=true",
+      "data": null
+    }
+  ],
+  "snapshots": {
+    "t1": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 —",
+      "cacheTitle": "缓存：未知（端点未上报，或为本次改动之前的旧会话）\n缓存命中率 —",
+      "cacheAria": "缓存命中率 —",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1184.98,
+        "y": 743.61,
+        "w": 69.02,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1184.98,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1162.98,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1162.98,
+        "right": 1176.98
+      },
+      "inputRect": {
+        "x": 923,
+        "y": 675.02,
+        "w": 331,
+        "h": 52.59,
+        "top": 675.02,
+        "bottom": 727.61,
+        "left": 923,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 923,
+        "y": 743.61,
+        "w": 331,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 923,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 913,
+        "y": 644.63,
+        "w": 351,
+        "h": 154.38,
+        "top": 644.63,
+        "bottom": 799,
+        "left": 913,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 923,
+        "y": 765,
+        "w": 331,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 923,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 331,
+        "clientWidth": 331
+      },
+      "dockWidth": 352,
+      "inputHeight": 52.59375,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    },
+    "t3": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 60%",
+      "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+      "cacheAria": "缓存命中率 60%",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1175.13,
+        "y": 743.61,
+        "w": 78.88,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1175.13,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1153.13,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1153.13,
+        "right": 1167.13
+      },
+      "inputRect": {
+        "x": 923,
+        "y": 675.02,
+        "w": 331,
+        "h": 52.59,
+        "top": 675.02,
+        "bottom": 727.61,
+        "left": 923,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 923,
+        "y": 743.61,
+        "w": 331,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 923,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 913,
+        "y": 644.63,
+        "w": 351,
+        "h": 154.38,
+        "top": 644.63,
+        "bottom": 799,
+        "left": 913,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 923,
+        "y": 765,
+        "w": 331,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 923,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 331,
+        "clientWidth": 331
+      },
+      "dockWidth": 352,
+      "inputHeight": 52.59375,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    },
+    "t5a": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 60%",
+      "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+      "cacheAria": "缓存命中率 60%",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1175.13,
+        "y": 743.61,
+        "w": 78.88,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1175.13,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1153.13,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1153.13,
+        "right": 1167.13
+      },
+      "inputRect": {
+        "x": 923,
+        "y": 594.61,
+        "w": 331,
+        "h": 133,
+        "top": 594.61,
+        "bottom": 727.61,
+        "left": 923,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 923,
+        "y": 743.61,
+        "w": 331,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 923,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 913,
+        "y": 564.22,
+        "w": 351,
+        "h": 234.78,
+        "top": 564.22,
+        "bottom": 799,
+        "left": 913,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 923,
+        "y": 765,
+        "w": 331,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 923,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 331,
+        "clientWidth": 331
+      },
+      "dockWidth": 352,
+      "inputHeight": 133,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    },
+    "t5b": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 60%",
+      "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+      "cacheAria": "缓存命中率 60%",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1175.13,
+        "y": 743.61,
+        "w": 78.88,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1175.13,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1153.13,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1153.13,
+        "right": 1167.13
+      },
+      "inputRect": {
+        "x": 923,
+        "y": 683.61,
+        "w": 331,
+        "h": 44,
+        "top": 683.61,
+        "bottom": 727.61,
+        "left": 923,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 923,
+        "y": 743.61,
+        "w": 331,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 923,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 913,
+        "y": 653.22,
+        "w": 351,
+        "h": 145.78,
+        "top": 653.22,
+        "bottom": 799,
+        "left": 913,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 923,
+        "y": 765,
+        "w": 331,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 923,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 331,
+        "clientWidth": 331
+      },
+      "dockWidth": 352,
+      "inputHeight": 44,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    },
+    "t6_260": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 60%",
+      "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+      "cacheAria": "缓存命中率 60%",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1175.13,
+        "y": 743.61,
+        "w": 78.88,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1175.13,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1153.13,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1153.13,
+        "right": 1167.13
+      },
+      "inputRect": {
+        "x": 1015,
+        "y": 683.61,
+        "w": 239,
+        "h": 44,
+        "top": 683.61,
+        "bottom": 727.61,
+        "left": 1015,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 1015,
+        "y": 743.61,
+        "w": 239,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1015,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 1005,
+        "y": 653.22,
+        "w": 259,
+        "h": 145.78,
+        "top": 653.22,
+        "bottom": 799,
+        "left": 1005,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 1015,
+        "y": 765,
+        "w": 239,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 1015,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 239,
+        "clientWidth": 239
+      },
+      "dockWidth": 260,
+      "inputHeight": 44,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    },
+    "t6_520": {
+      "barText": "模型 deepseek-chat · 网络 · —",
+      "factsText": "模型 deepseek-chat · 网络 · —",
+      "factsSegments": [
+        "模型 deepseek-chat",
+        "网络",
+        "—"
+      ],
+      "factsEmptySegments": 0,
+      "separatorCount": 2,
+      "cacheInStatusbar": false,
+      "cacheText": "缓存命中率 60%",
+      "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+      "cacheAria": "缓存命中率 60%",
+      "cacheParentId": "agent-ctx-ring-row",
+      "rowParentIsComposer": true,
+      "cacheInComposer": true,
+      "cacheRect": {
+        "x": 1175.13,
+        "y": 743.61,
+        "w": 78.88,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 1175.13,
+        "right": 1254
+      },
+      "ringRect": {
+        "x": 1153.13,
+        "y": 744.3,
+        "w": 14,
+        "h": 14,
+        "top": 744.3,
+        "bottom": 758.3,
+        "left": 1153.13,
+        "right": 1167.13
+      },
+      "inputRect": {
+        "x": 755,
+        "y": 683.61,
+        "w": 499,
+        "h": 44,
+        "top": 683.61,
+        "bottom": 727.61,
+        "left": 755,
+        "right": 1254
+      },
+      "rowRect": {
+        "x": 755,
+        "y": 743.61,
+        "w": 499,
+        "h": 15.39,
+        "top": 743.61,
+        "bottom": 759,
+        "left": 755,
+        "right": 1254
+      },
+      "composerRect": {
+        "x": 745,
+        "y": 653.22,
+        "w": 519,
+        "h": 145.78,
+        "top": 653.22,
+        "bottom": 799,
+        "left": 745,
+        "right": 1264
+      },
+      "actionsRect": {
+        "x": 755,
+        "y": 765,
+        "w": 499,
+        "h": 26,
+        "top": 765,
+        "bottom": 791,
+        "left": 755,
+        "right": 1254
+      },
+      "cacheStyle": {
+        "fontSize": "11px",
+        "color": "rgb(133, 133, 133)",
+        "whiteSpace": "nowrap",
+        "overflow": "hidden",
+        "textOverflow": "ellipsis",
+        "order": "1"
+      },
+      "ringOrder": "0",
+      "rowScroll": {
+        "scrollWidth": 499,
+        "clientWidth": 499
+      },
+      "dockWidth": 520,
+      "inputHeight": 44,
+      "hasMemoriaAgentPanel": true,
+      "historyRows": 1
+    }
+  },
+  "final": {
+    "barText": "模型 deepseek-chat · 网络 · —",
+    "factsText": "模型 deepseek-chat · 网络 · —",
+    "factsSegments": [
+      "模型 deepseek-chat",
+      "网络",
+      "—"
+    ],
+    "factsEmptySegments": 0,
+    "separatorCount": 2,
+    "cacheInStatusbar": false,
+    "cacheText": "缓存命中率 60%",
+    "cacheTitle": "缓存：命中 60 / 未命中 40 / 命中率 60%\n缓存命中率 60%",
+    "cacheAria": "缓存命中率 60%",
+    "cacheParentId": "agent-ctx-ring-row",
+    "rowParentIsComposer": true,
+    "cacheInComposer": true,
+    "cacheRect": {
+      "x": 1175.13,
+      "y": 743.61,
+      "w": 78.88,
+      "h": 15.39,
+      "top": 743.61,
+      "bottom": 759,
+      "left": 1175.13,
+      "right": 1254
+    },
+    "ringRect": {
+      "x": 1153.13,
+      "y": 744.3,
+      "w": 14,
+      "h": 14,
+      "top": 744.3,
+      "bottom": 758.3,
+      "left": 1153.13,
+      "right": 1167.13
+    },
+    "inputRect": {
+      "x": 755,
+      "y": 683.61,
+      "w": 499,
+      "h": 44,
+      "top": 683.61,
+      "bottom": 727.61,
+      "left": 755,
+      "right": 1254
+    },
+    "rowRect": {
+      "x": 755,
+      "y": 743.61,
+      "w": 499,
+      "h": 15.39,
+      "top": 743.61,
+      "bottom": 759,
+      "left": 755,
+      "right": 1254
+    },
+    "composerRect": {
+      "x": 745,
+      "y": 653.22,
+      "w": 519,
+      "h": 145.78,
+      "top": 653.22,
+      "bottom": 799,
+      "left": 745,
+      "right": 1264
+    },
+    "actionsRect": {
+      "x": 755,
+      "y": 765,
+      "w": 499,
+      "h": 26,
+      "top": 765,
+      "bottom": 791,
+      "left": 755,
+      "right": 1254
+    },
+    "cacheStyle": {
+      "fontSize": "11px",
+      "color": "rgb(133, 133, 133)",
+      "whiteSpace": "nowrap",
+      "overflow": "hidden",
+      "textOverflow": "ellipsis",
+      "order": "1"
+    },
+    "ringOrder": "0",
+    "rowScroll": {
+      "scrollWidth": 499,
+      "clientWidth": 499
+    },
+    "dockWidth": 520,
+    "inputHeight": 44,
+    "hasMemoriaAgentPanel": true,
+    "historyRows": 1
+  },
+  "passed": 19,
+  "failed": 0
+}

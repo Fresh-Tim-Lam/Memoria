@@ -1956,16 +1956,16 @@ window.MemoriaAgentPanel = (function () {
     const model = String(cfg.model || "") || T("agent.model.none");
     // 网络：开时显示「网络」并**上绿**，关时显示既有的「断网」并**上红**（颜色由 CSS 的 `data-on` 决定）
     const net = cfg.enabled ? T("agent.net.label") : T("agent.model.netOff");
-    // 第四槽（2026-09-19 由「历史（N 轮）」改为**本会话缓存命中率**）：数字来自只读 RPC
-    // `agent_usage_stats(session_id)` 的 `summary.hit_rate`（口径同底部 `#status-agent`；未知即 `—`）
-    const rate = hitRatePercent();
+    // task-183（2026-10-26）：原第四槽「本会话缓存命中率」已移到**输入框下方**（与上下文圆环同一行）。
+    //   理由：它和上下文占用属于同一类"本次会话资源状况"，人要求都收在会话栏底部。
+    //   状态条这里**不留空槽**：数组从 4 项减到 3 项，`join(" · ")` 不会留尾巴。
     const tone = balanceTone(); // 余额的**对数连续色**（"" ⇒ 不染色：未知余额/取不到主题色）
     facts.innerHTML = [
       T("agent.settings.model") + " <b>" + esc(model) + "</b>",
       '<span class="-agent-statusbar-net" data-on="' + (cfg.enabled ? "1" : "0") + '">' + esc(net) + "</span>",
       // 余额槽（2026-09-19 取代原「会话 id」槽）：串由后端产出（`¥110.00`／`—`）⇒ 无需新增 i18n 键；悬停浮层**不再用原生 `title`**（该槽每次重绘都被换掉、悬停总被打断 ⇒ 原生提示弹不出来），改为**常驻的自绘浮层**（`#agent-costtip`，见文件末的成本块），此处只用 `aria-describedby` 指过去。金额文字另有**对数连续色**（越少越红、越多越绿，¥10 = 红端；算法见文件末 `balanceTone()`）。
       ('<span class="-agent-statusbar-balance"' + (tone ? ' style="color:' + tone + '"' : "") + ' aria-describedby="agent-costtip">' + esc(balanceText || "—") + "</span>"),
-      esc(T("agent.statusBar.hitRate", { rate: rate || "—" })),
+      // （task-183）缓存命中率不在状态条 —— 见文件末尾「缓存命中率移到输入框下方」块
     ].join(" · ");
   }
 
@@ -7492,6 +7492,108 @@ window.MemoriaAgentPanel = (function () {
     });
   })();
 
+  // ═══ task-183（2026-10-26）：本会话「缓存命中率」移到输入框下方（与上下文圆环同一行）════════
+  // 人原话：「为什么上下文占用『cached』还是显示在底栏而不是做到会话栏的底部」。
+  // 归类：缓存命中率与上下文占用圆环都是「本次会话的资源状况」⇒ 同区、同行、都在输入框下方。
+  //
+  // 实现纪律（**零行漂移**，沿用本文件既有"包装而非改行"模式）：
+  //   ① 状态条第 4 槽已原位换成注释（`renderStatusBar` 数组 4→3 项，不留空槽/尾巴）；
+  //   ② 本块**追加在文件末尾**：新建 `#agent-cache-hit` 挂进 `#agent-ctx-ring-row`（task-169 的圆环行），
+  //      并用两个包装器在「状态条/用量重绘/语言切换」后刷新它 —— 既有行号锚点不受影响；
+  //   ③ 圆环本身一行未改（`renderContextRing` 仍是唯一渲染者；本块只复用同一行容器）。
+
+  /**
+   * 缓存命中率浮层明细（**纯函数**，便于 node 单测；不读 DOM）。
+   *
+   * @param u        本轮 usage（`lastUsage`；可空）
+   * @param session  本会话累计（`sessionUsage`；可空）
+   * @param rateText 会话级命中率百分比串（`hitRatePercent()`；未知传 ""）
+   * 口径与底部 `#status-agent` 完全一致（`agent.statusBar.cache/sessionCache/cacheUnknown`），
+   * 即「命中 / 未命中 / 命中率」，未知就写"未知"，**绝不瞎报 0%**。
+   */
+  function cacheHitDetailLines(u, session, rateText) {
+    const lines = [];
+    if (!u || !u.total_tokens) {
+      lines.push(T("agent.statusBar.cacheUnknown"));
+    } else {
+      const prompt = u.prompt_tokens || 0;
+      const hit = usageInt(u.cache_read_tokens);
+      const miss = usageInt(u.cache_miss_tokens);
+      const rate = hitRateText(hit, prompt);
+      lines.push(
+        hit === null
+          ? T("agent.statusBar.cacheUnknown")
+          : T("agent.statusBar.cache", {
+            hit: hit,
+            miss: miss === null ? "—" : miss,
+            rate: rate || "—",
+          })
+      );
+    }
+    if (session && session.hit_known > 0) {
+      lines.push(T("agent.statusBar.sessionCache", {
+        hit: session.cache_hit,
+        miss: session.miss_known > 0 ? session.cache_miss : "—",
+        rate: hitRateText(session.cache_hit, session.hit_denom) || "—",
+      }));
+    }
+    // 会话级命中率（只读 RPC `agent_usage_stats` 的 summary.hit_rate）—— 与移动前状态条同源
+    lines.push(T("agent.statusBar.hitRate", { rate: rateText || "—" }));
+    return lines;
+  }
+
+  /** 圆环所在行（与 `renderContextRing` 同一容器；两侧同 id 幂等，谁先到谁建）。 */
+  function ensureCacheRow() {
+    const composer = document.querySelector(".-agent-composer");
+    if (!composer) return null;
+    let row = document.getElementById("agent-ctx-ring-row");
+    if (!row) {
+      row = document.createElement("div");
+      row.id = "agent-ctx-ring-row";
+      row.className = "-agent-ctx-ring-row";
+      const actions = composer.querySelector(".-agent-composer-actions");
+      if (actions && actions.parentNode === composer) composer.insertBefore(row, actions);
+      else composer.appendChild(row);
+    }
+    return row;
+  }
+
+  /**
+   * 把「缓存命中率」画进输入框下方那一行（与圆环并列；CSS `order` 保证圆环在左、文字在右）。
+   * 文本 = 既有键 `agent.statusBar.hitRate`（未知即 `—`）；悬停 title = 完整明细（命中/未命中/命中率）。
+   */
+  function renderCacheHit() {
+    const row = ensureCacheRow();
+    if (!row) return;
+    let el = document.getElementById("agent-cache-hit");
+    if (!el) {
+      el = document.createElement("span");
+      el.id = "agent-cache-hit";
+      el.className = "-agent-cache-hit";
+      row.appendChild(el);
+    }
+    const rate = hitRatePercent();
+    el.textContent = T("agent.statusBar.hitRate", { rate: rate || "—" });
+    el.title = cacheHitDetailLines(lastUsage, sessionUsage, rate || "").join("\n");
+    el.setAttribute("aria-label", el.textContent);
+    el.setAttribute("data-cache-rate", rate || "");
+  }
+
+  // 包装（本块最后包装 ⇒ 包住此前所有包装；成本/余额/状态点/语言切换都经这两个入口刷新）
+  const baseRenderStatusBarTask183 = renderStatusBar;
+  renderStatusBar = function () {
+    baseRenderStatusBarTask183.apply(null, arguments);
+    renderCacheHit();
+  };
+  const baseRenderStatusUsageTask183 = renderStatusUsage;
+  renderStatusUsage = function () {
+    baseRenderStatusUsageTask183.apply(null, arguments);
+    renderCacheHit();
+  };
+
+  // 初次挂载（模块求值时 DOM 已就绪；尚无会话 ⇒ 显示「缓存命中率 —」，与移动前状态条一致）
+  renderCacheHit();
+
   return {
     init: init,
     // task-144 ②：当前生效的「文档区保底宽度」（只读口径；设置模块缺省时回退 360）
@@ -7592,5 +7694,6 @@ window.MemoriaAgentPanel = (function () {
     if (String((row && row.name) || "") !== "ask_user_question") return String((row && row.detail) || "");
     return askRecordText((row && row.detail) || "");
   }
+
 
 })();
