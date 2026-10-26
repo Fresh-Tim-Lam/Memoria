@@ -796,7 +796,7 @@
         contentMinGroup: "Document width",
         contentMinLabel: "Minimum document width (px)",
         contentMinNote: "Minimum width kept for the document area. Larger values hide the agent dock earlier when the window gets narrow.",
-        contentMinHint: "Range 320–560, default {def}. Applies and saves immediately.",
+        contentMinHint: "Range 180–560, default {def}. Applies and saves immediately.",
         uiScale: "Zoom",
         uiScaleHint: "Shortcuts: Ctrl+= zoom in / Ctrl+- zoom out / Ctrl+0 reset to 100%.",
         resetScale: "Reset to 100%",

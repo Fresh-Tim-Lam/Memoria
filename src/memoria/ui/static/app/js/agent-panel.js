@@ -218,7 +218,8 @@ window.MemoriaAgentPanel = (function () {
   const DOCK_DEFAULT_REM = 22; // 与 width 一致
   // 文档区（#content）最小宽度保护：三栏（左栏 + #content + dock）都是固定/自动宽，
   // 空间不足时**只让 dock 让位**（先缩到 16rem，再整体临时隐藏），#content 永不小于它。
-  // 2026-10-25 task-144 ②：改为**可配置**（设置 → 显示 → 文档区保底宽度，320–560，默认 360）。
+  // 2026-10-25 task-144 ②：改为**可配置**（设置 → 显示 → 文档区保底宽度，默认 360）。
+  // 2026-10-26（人）：下限 320 → 180。⚠️ 这里与 display-settings.js 的 CONTENT_MIN_RANGE 必须同口径。
   // 方向语义：调大 ⇒ 对话栏更早被自动隐藏（与 task-93 响应式联动一致）；默认值不变。
   const CONTENT_MIN_PX = 360; // 默认值（设置缺省/非法时回退）
   /** 当前生效的「文档区保底宽度」：读设置模块（存在时），否则回退默认 360。 */
@@ -227,7 +228,7 @@ window.MemoriaAgentPanel = (function () {
       const ds = window.MemoriaDisplaySettings;
       if (ds && typeof ds.getContentMinPx === "function") {
         const v = Number(ds.getContentMinPx());
-        if (isFinite(v) && v >= 320 && v <= 560) return v;
+        if (isFinite(v) && v >= 180 && v <= 560) return v;
       }
     } catch (_) { /* 设置模块缺席/异常 ⇒ 回退默认 */ }
     return CONTENT_MIN_PX;

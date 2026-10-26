@@ -20,7 +20,9 @@
     contentMinPx: 360,
   };
   //: `contentMinPx` 允许范围（与 agent-panel 的 CONTENT_MIN_PX 语义一致）。超出范围 ⇒ 拒绝/夹紧。
-  const CONTENT_MIN_RANGE = { min: 320, max: 560, step: 10, def: 360 };
+  //  2026-10-26（人）：下限 320 → 180（窄屏/小窗口下希望文档区能更窄）。
+  //  ⚠️ 改这里必须同步 `agent-panel.js` 的 `currentContentMinPx()` 夹紧上下限与 i18n 的 contentMinHint 文案。
+  const CONTENT_MIN_RANGE = { min: 180, max: 560, step: 10, def: 360 };
 
   //: 字体名候选（下拉的选项；用户只能从这些里选 —— 人 2026-09-23：「你应该给下拉可选样式而不是输入」）
   const FONT_CHOICES = [

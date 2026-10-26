@@ -795,7 +795,7 @@
         contentMinGroup: "文档区宽度",
         contentMinLabel: "文档区保底宽度（px）",
         contentMinNote: "文档区最小保留宽度。调大后，窗口变窄时对话栏会更早自动隐藏，把空间让给文档。",
-        contentMinHint: "范围 320–560，默认 {def}；改完立即生效并保存。",
+        contentMinHint: "范围 180–560，默认 {def}；改完立即生效并保存。",
         uiScale: "缩放比例",
         uiScaleHint: "快捷键：Ctrl+= 放大 / Ctrl+- 缩小 / Ctrl+0 复位 100%。",
         resetScale: "复位为 100%",
