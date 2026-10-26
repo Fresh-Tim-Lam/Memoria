@@ -1,0 +1,125 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-26T19:02:52+08:00",
+  "round": "r8",
+  "tool": "team_audit.py@4874493dfac3",
+  "git_base": "f03bbd44",
+  "worktree_dirty_standards": [
+    "scripts/agent/team_audit.py"
+  ],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T19:02:52+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（B-danger-1 v2；§1.2b/§1.3b/§5.4/§6.5）",
+      "sha256": "169c15ed1f43f0e4fdb11bffee4ad0545a9a1f91b6e2163628c7465812023b6d",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T19:02:52+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T19:02:52+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单 + --determinism + --sha-explain + deliberation_quality + prompt_drift 接线（NOT_RUN→FAIL）",
+      "sha256": "4874493dfac350a85bb6852f1898fa1e968c110a6d3aac77d455ae8cadb33fee",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T19:02:52+08:00"
+    },
+    {
+      "path": "scripts/agent/prompt_drift_check.py",
+      "sections": "C1-C5 接口 + NOT_RUN 语义 + exit 0/1/2/3 + --recheck-deps/--resign",
+      "sha256": "75a2563c40e44728911225826dc5888a4cd048f287e9da54cc325114d4279834",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T19:02:52+08:00"
+    }
+  ],
+  "prompt_drift_standalone": {
+    "command": "python scripts/agent/prompt_drift_check.py --json",
+    "exit": 0,
+    "summary": {
+      "findings": 6,
+      "FAIL": 0,
+      "NOT_RUN": 0,
+      "WARN": 0,
+      "INFO": 6,
+      "status": "ok",
+      "not_run": []
+    }
+  },
+  "freeze_refreeze_check": {
+    "command": "python scripts/agent/freeze_refreeze.py --check",
+    "exit": 1,
+    "note": "**预期 DRIFT 1：docs/guides/lead-dispatch-rules.md 为决策标准（716712d4→169c15ed）** ⇒ dq5 会 FAIL，需 Lead 重签 freeze-v2（--apply 仍待 L12，只能人工按 standards_updated 追加）。 r8 只负责 steward 收据，不替 Lead 改冻结物。",
+    "output_head": [
+      "freeze 检查：D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\freeze-v2.json",
+      "sha 口径：team_audit.content_sha256（LF 归一化，与 dq5 共用）",
+      "",
+      "MATCH   AGENTS.md  [Lead 派发不变量 L1-L10]",
+      "MATCH   docs/guides/lead-dispatch-rules.md  [派发细则]",
+      "MATCH   docs/guides/agent-team-lessons.md  [教训台账]",
+      "MATCH   docs/guides/agent-team-org.md  [组织与角色章程]",
+      "DRIFT   scripts/agent/team_audit.py  [机检实现]  ← 记录 @beec3c714c84… 当前 @4874493dfac3… （tooling：dq5 只 WARN）",
+      "",
+      "汇总：5 项；MATCH=4，DRIFT=1（决策标准 0 / tooling 1）"
+    ]
+  },
+  "external_checks": {
+    "note": "两份新机检脚本仍**不纳入 STEWARD_STANDARDS**（观察期，SF-049 裁定）；此处仅留基线证据。",
+    "check_ui_contract": {
+      "exit": 0,
+      "counts": {
+        "new_fail": 0,
+        "new_warn": 3,
+        "baseline_fail": 210,
+        "baseline_warn": 59,
+        "fixed": 2,
+        "by_rule": {
+          "C2.FAIL": 176,
+          "C2.WARN": 7,
+          "C3.FAIL": 21,
+          "C3.WARN": 31,
+          "C4.WARN": 2,
+          "C5.WARN": 3,
+          "C7.FAIL": 13,
+          "C7.WARN": 19
+        }
+      },
+      "json": "artifacts/agent/verify/steward/r8/ui-contract.json"
+    },
+    "test_guard_check": {
+      "exit": 0,
+      "counts": {
+        "total_source_asserts": 404,
+        "over_symbol_count": 6,
+        "long_count": 13
+      },
+      "json": "artifacts/agent/verify/steward/r8/test-guard.json"
+    }
+  },
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "﻿PASS: audit determinism（2 次运行除 generatedAt 外逐字节一致；sha256=ee6b389dae935db7…，compared_findings=86）"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "docs/conventions/ui-contract.md 全文（只核接口/基线/退出码，未审 C1-C7 判据语义）",
+    "session 正文（按设计不读，只作证据引用）"
+  ],
+  "post_sign_verification": {
+    "note": "r8 绑定的是 SF-052 实现**未提交**的工作区字节（team_audit.py=4874493d…，dispatch_log.py=87d4eb03…）；实现已完整（selftest 含 3 条 l1_task_before_spawn 必红 fixture + 已注册 run_checks），文件稳定 60s+ 且 determinism PASS。若实现者提交时字节不变，r8 持续有效；若提交前再改，按 B3 需 r9。",
+    "head_at_sign": "f03bbd44"
+  }
+}
