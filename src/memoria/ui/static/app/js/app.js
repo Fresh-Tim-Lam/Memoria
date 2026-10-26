@@ -118,7 +118,10 @@
     kpHighlightClearTimer: null,
     linkTargetSet: null,
     linkPicker: null,
-    linkPopover: null,   // task-145：链接点击浮层（无模态遮罩）
+    linkPanel: null,     // task-161：链接浮动面板（可拖动/折叠/单文档区）
+    linkPanelPrefs: null,
+    _linkPanelSaveTimer: null,
+    _linkPanelSaveChain: null,
     openTabs: [],
     configTab: "kp",
     configModalOpts: {},
@@ -7038,187 +7041,516 @@ async function call(fn, ...args) {
     }
   }
 
-  // ── task-145：链接点击「小窗优先」──────────────────────────────────────────────
-  // 所有可解析链接点击都先出链接旁圆角浮层（无全屏遮罩、不挡全文）：
-  //   候选=1 ⇒ 直接一张卡片；候选>1 ⇒ 候选列表 +「全部打开」。
-  // 卡片：①名称 ②解释（description；缺则区域首行摘要；再缺明确「无描述」）
-  //       ③区域内联预览（限高 12 行、可滚动） ④「拉到编辑区」按钮。
-  // 「拉到编辑区」= 既有 jumpToTarget（打开文件并定位该区域），浮层同时消失；**不是**插入引用。
-  // 数据：resolve_links 给 name/file/start/end；description/区域正文用二次 RPC load_document 补齐（缓存，不猜）。
-  const LINK_POP_PREVIEW_LINES = 12;   // 卡片最多显示行数
-  const LINK_POP_FETCH_LINES = 32;     // 二次 RPC 最多取多少行（防超长）
+  // ── task-161：链接面板 v2（可拖动/折叠浮动面板；默认预览可切源码；候选在面板内切换）──
+  // 设计来源：人要求「小窗太小、要能移动；默认预览可调模式；多链接在小窗内部选；
+  //   不要占地方；**只能有一个文档显示区域**」。
+  //  - 尺寸默认 520×420（CSS min/max 夹 360×260 ~ 720×640），标题栏拖动，双击标题栏复位；
+  //  - 位置/尺寸/模式持久化到 ui-settings 的 `linkPanel` 键（走 save_ui_settings 统一入口，
+  //    用户态已在 %LOCALAPPDATA%\\Memoria\\config，**不新写路径**）；
+  //  - 默认 preview（MemoriaMarkdownPreview.renderHtml），可切 source（原始 markdown 等宽只读）；
+  //  - 多候选：标题栏「‹ 名称 2/3 ›」在**同一个文档区**换内容，禁止并列两个文档区；
+  //  - [−] 折叠为窄条（只留标题栏）；[×] / Esc / 点外部关闭；
+  //  - 「拉到编辑区」= jumpToTarget（打开+定位），面板先消失；语义不扩大。
+  const LINK_PANEL_W = 520;
+  const LINK_PANEL_H = 420;
+  const LINK_PANEL_MIN_W = 360;
+  const LINK_PANEL_MIN_H = 260;
+  const LINK_PANEL_MAX_W = 720;
+  const LINK_PANEL_MAX_H = 640;
+  const LINK_PANEL_REGION_MAX_LINES = 400;
 
-  function linkPopT(key, params) {
-    return T("cfg.linkPop." + key, params);
+  function linkPanelT(key, params) {
+    return T("cfg.linkPanel." + key, params);
   }
 
-  function _linkPopCandidateName(c) {
-    return c?.name || c?.kp_id || c?.requested_id || c?.file || linkPopT("unknownName");
+  function _linkPanelName(c) {
+    return c?.name || c?.kp_id || c?.requested_id || c?.file || linkPanelT("unknownName");
   }
 
-  function _linkPopOutside(e) {
-    const pop = state.linkPopover;
-    if (!pop) return;
+  function _linkPanelClampRect(rect) {
+    const vw = window.innerWidth || 1280;
+    const vh = window.innerHeight || 800;
+    const w = Math.max(LINK_PANEL_MIN_W, Math.min(LINK_PANEL_MAX_W, Number(rect.w) || LINK_PANEL_W));
+    const h = Math.max(LINK_PANEL_MIN_H, Math.min(LINK_PANEL_MAX_H, Number(rect.h) || LINK_PANEL_H));
+    const x = Math.min(Math.max(0, Number(rect.x) || 0), Math.max(0, vw - Math.min(w, vw)));
+    const y = Math.min(Math.max(0, Number(rect.y) || 0), Math.max(0, vh - 48));
+    return { x: Math.round(x), y: Math.round(y), w: Math.round(w), h: Math.round(h) };
+  }
+
+  /** 首次出现位置：贴近被点链接但不遮挡它（优先右侧/下方；放不下则翻边并夹回视口） */
+  function _linkPanelDefaultRect(anchorEl) {
+    const vw = window.innerWidth || 1280;
+    const vh = window.innerHeight || 800;
+    const w = Math.min(LINK_PANEL_W, vw - 16);
+    const h = Math.min(LINK_PANEL_H, vh - 16);
+    let x = Math.round((vw - w) / 2);
+    let y = Math.round((vh - h) / 2);
+    if (anchorEl && anchorEl.getBoundingClientRect) {
+      const r = anchorEl.getBoundingClientRect();
+      x = Math.round(r.right + 12);
+      y = Math.round(r.top - 8);
+      if (x + w > vw - 8) x = Math.round(r.left - w - 12);
+      if (x < 8) x = 8;
+      if (y + h > vh - 8) y = Math.round(Math.max(8, vh - h - 8));
+      if (y < 8) y = 8;
+    }
+    return _linkPanelClampRect({ x, y, w, h });
+  }
+
+  /** 读取持久化（ui-settings 统一入口；缓存一份） */
+  async function _linkPanelPrefsRead() {
+    if (state.linkPanelPrefs) return state.linkPanelPrefs;
+    try {
+      const res = await call("get_ui_settings");
+      const s = res && res.status === "ok" ? res.settings : null;
+      const raw = s && typeof s.linkPanel === "object" ? s.linkPanel : {};
+      state.linkPanelPrefs = {
+        x: Number.isFinite(Number(raw.x)) ? Number(raw.x) : null,
+        y: Number.isFinite(Number(raw.y)) ? Number(raw.y) : null,
+        w: Number.isFinite(Number(raw.w)) ? Number(raw.w) : null,
+        h: Number.isFinite(Number(raw.h)) ? Number(raw.h) : null,
+        mode: raw.mode === "source" ? "source" : "preview",
+        pinned: raw.pinned === true,
+      };
+    } catch (_) {
+      state.linkPanelPrefs = { x: null, y: null, w: null, h: null, mode: "preview", pinned: false };
+    }
+    return state.linkPanelPrefs;
+  }
+
+  /** 持久化（串行 + 300ms 去抖；只写 ui-settings.linkPanel，不碰其它键） */
+  function _linkPanelPersist(patch) {
+    const pop = state.linkPanel;
+    const base = pop ? { x: pop.x, y: pop.y, w: pop.w, h: pop.h, mode: pop.mode, pinned: !!pop.pinned } : {};
+    const next = Object.assign(base, patch || {});
+    state.linkPanelPrefs = Object.assign(state.linkPanelPrefs || {}, next);
+    clearTimeout(state._linkPanelSaveTimer);
+    state._linkPanelSaveTimer = setTimeout(() => {
+      const payload = { linkPanel: Object.assign({}, next) };
+      state._linkPanelSaveChain = (state._linkPanelSaveChain || Promise.resolve())
+        .then(() => call("save_ui_settings", payload))
+        .catch(() => {});
+    }, 300);
+  }
+
+  function _linkPanelFocusables(el) {
+    return Array.from(el.querySelectorAll(
+      'button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )).filter((n) => n.offsetParent !== null || n === el);
+  }
+
+  function _linkPanelOutside(e) {
+    const pop = state.linkPanel;
+    if (!pop || pop.pinned) return;   // 已钉住：主界面交互不关闭（Esc/× 仍可关）
     const t = e.target;
     if ((pop.el && pop.el.contains(t)) || t === pop.anchorEl ||
         (pop.anchorEl && pop.anchorEl.contains && pop.anchorEl.contains(t))) return;
-    closeLinkPopover();
+    closeLinkPanel({ focusBack: false });
   }
 
-  function _linkPopKeydown(e) {
-    const pop = state.linkPopover;
-    if (!pop) return;
+  function _linkPanelKeydown(e) {
+    const pop = state.linkPanel;
+    if (!pop || !pop.el) return;
     if (e.key === "Escape") {
       e.preventDefault();
       e.stopPropagation();
-      closeLinkPopover({ focusBack: true });
+      closeLinkPanel({ focusBack: true });
       return;
     }
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      e.preventDefault();
-      e.stopPropagation();
-      linkPopSetActive(pop.active + (e.key === "ArrowDown" ? 1 : -1), true);
+    // focus trap（可驻留面板）：Tab 在面板内部循环，不逃出；Esc 关闭可逃
+    if (e.key === "Tab") {
+      const f = _linkPanelFocusables(pop.el);
+      if (f.length) {
+        e.preventDefault();
+        const idx = f.indexOf(document.activeElement);
+        const next = e.shiftKey ? (idx <= 0 ? f.length - 1 : idx - 1) : (idx >= f.length - 1 ? 0 : idx + 1);
+        try { f[next].focus(); } catch (_) { /* noop */ }
+      }
       return;
     }
-    if (e.key === "Enter") {
-      if (e.target && String(e.target.tagName || "").toUpperCase() === "BUTTON") return;
-      e.preventDefault();
-      e.stopPropagation();
-      linkPopActivate(pop.active);
+    // 标题栏键盘移动（拖动的键盘可达替代；双击标题栏 = 复位）
+    const titlebar = pop.el.querySelector(".-link-panel-titlebar");
+    if (titlebar && (document.activeElement === titlebar || titlebar.contains(document.activeElement))) {
+      const step = e.shiftKey ? 48 : 16;
+      let dx = 0, dy = 0;
+      if (e.key === "ArrowLeft") dx = -step;
+      else if (e.key === "ArrowRight") dx = step;
+      else if (e.key === "ArrowUp") dy = -step;
+      else if (e.key === "ArrowDown") dy = step;
+      if (dx || dy) {
+        e.preventDefault();
+        e.stopPropagation();
+        pop.x += dx;
+        pop.y += dy;
+        _linkPanelApplyRect(pop, { persist: true });
+      }
     }
   }
 
-  function _linkPopReposition() {
-    const pop = state.linkPopover;
-    if (!pop || !pop.el || !pop.anchorEl) return;
-    _linkPopPosition(pop);
-  }
-
-  /** 定位：优先链接下方左对齐；不够位则翻上方；四边夹在视口内（无遮罩 ⇒ 必须不挡触发点） */
-  function _linkPopPosition(pop) {
-    const el = pop.el;
-    const anchor = pop.anchorEl;
-    if (!el || !anchor) return;
-    const r = anchor.getBoundingClientRect();
-    const pw = el.offsetWidth || 360;
-    const ph = el.offsetHeight || 240;
-    const vw = window.innerWidth || 1280;
-    const vh = window.innerHeight || 800;
-    const gap = 8;
-    const margin = 8;
-    let left = Math.min(Math.max(margin, r.left), Math.max(margin, vw - pw - margin));
-    let top = r.bottom + gap;
-    if (top + ph > vh - margin) {
-      const above = r.top - gap - ph;
-      top = above >= margin ? above : Math.max(margin, vh - ph - margin);
-    }
-    el.style.left = Math.round(left) + "px";
-    el.style.top = Math.round(top) + "px";
-    el.style.visibility = "";
-  }
-
-  function linkPopSetActive(idx, focus) {
-    const pop = state.linkPopover;
+  function _linkPanelApplyRect(pop, opts = {}) {
     if (!pop || !pop.el) return;
-    const cards = Array.from(pop.el.querySelectorAll(".-link-pop-card"));
-    if (!cards.length) return;
-    const clamped = Math.max(0, Math.min(cards.length - 1, Number(idx) || 0));
-    pop.active = clamped;
-    cards.forEach((card, i) => card.classList.toggle("-active", i === clamped));
-    const card = cards[clamped];
-    try { card.scrollIntoView({ block: "nearest" }); } catch (_) { /* noop */ }
-    if (focus) {
-      try { card.focus({ preventScroll: true }); } catch (_) { try { card.focus(); } catch (__) { /* noop */ } }
-    }
+    const r = _linkPanelClampRect({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
+    pop.x = r.x; pop.y = r.y; pop.w = r.w; pop.h = r.h;
+    pop.el.style.left = pop.x + "px";
+    pop.el.style.top = pop.y + "px";
+    pop.el.style.width = pop.w + "px";
+    if (!pop.collapsed) pop.el.style.height = pop.h + "px";
+    if (opts.persist) _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
   }
 
-  function linkPopApply(pop, idx, data) {
-    if (state.linkPopover !== pop || !pop.el) return;
-    const card = pop.el.querySelectorAll(".-link-pop-card")[idx];
-    if (!card) return;
-    const descEl = card.querySelector("[data-link-pop-desc]");
-    const preEl = card.querySelector("[data-link-pop-preview]");
-    const truncEl = card.querySelector("[data-link-pop-trunc]");
-    if (descEl) descEl.textContent = data.desc || linkPopT("noDesc");
-    if (preEl) preEl.textContent = data.preview || linkPopT("noRegion");
-    if (truncEl) truncEl.textContent = data.truncated ? " · " + data.truncated : "";
+  function _linkPanelStartDrag(pop, e) {
+    if (e.button !== 0 || e.target.closest("button, select, input")) return;
+    e.preventDefault();
+    const startX = e.clientX, startY = e.clientY;
+    const x0 = pop.x, y0 = pop.y;
+    pop.el.classList.add("-dragging");
+    function onMove(ev) {
+      pop.x = x0 + (ev.clientX - startX);
+      pop.y = y0 + (ev.clientY - startY);
+      _linkPanelApplyRect(pop, { persist: false });
+    }
+    function onUp() {
+      window.removeEventListener("pointermove", onMove, true);
+      window.removeEventListener("pointerup", onUp, true);
+      window.removeEventListener("pointercancel", onUp, true);
+      pop.el.classList.remove("-dragging");
+      _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
+    }
+    window.addEventListener("pointermove", onMove, true);
+    window.addEventListener("pointerup", onUp, true);
+    window.addEventListener("pointercancel", onUp, true);
   }
 
-  async function linkPopLoadDoc(pop, file) {
-    if (!pop.docCache.has(file)) {
-      pop.docCache.set(file, call("load_document", file).catch(() => null));
+  function _linkPanelResetRect(pop) {
+    pop.x = _linkPanelDefaultRect(pop.anchorEl).x;
+    pop.y = _linkPanelDefaultRect(pop.anchorEl).y;
+    pop.w = LINK_PANEL_W;
+    pop.h = LINK_PANEL_H;
+    pop.collapsed = false;
+    if (pop.el) {
+      pop.el.classList.remove("-collapsed");
+      const cb = pop.el.querySelector("[data-panel-collapse]");
+      if (cb) cb.textContent = "−";
     }
-    return pop.docCache.get(file);
+    _linkPanelApplyRect(pop, { persist: true });
   }
 
-  /** 补齐：description（KP）+ 区域正文（start_line..end_line） */
-  async function linkPopEnrich(pop, idx) {
-    const c = pop.candidates[idx];
-    if (!c) return;
-    if (!c.file) {
-      linkPopApply(pop, idx, { desc: linkPopT("noDesc"), preview: linkPopT("noRegion"), truncated: "" });
-      return;
+  function _linkPanelSetMode(pop, mode) {
+    pop.mode = mode === "source" ? "source" : "preview";
+    if (pop.el) {
+      pop.el.querySelectorAll("[data-panel-mode]").forEach((b) => {
+        b.classList.toggle("-active", b.dataset.panelMode === pop.mode);
+        b.setAttribute("aria-pressed", b.dataset.panelMode === pop.mode ? "true" : "false");
+      });
     }
-    const doc = await linkPopLoadDoc(pop, c.file);
-    if (state.linkPopover !== pop) return;
-    if (!doc || doc.status !== "ok") {
-      linkPopApply(pop, idx, { desc: linkPopT("noDesc"), preview: linkPopT("previewUnavailable"), truncated: "" });
-      return;
+    _linkPanelPersist({ mode: pop.mode });
+    _linkPanelRenderDoc(pop);
+  }
+
+  function _linkPanelCandidate(pop) {
+    return (pop.candidates || [])[pop.index] || null;
+  }
+
+  /** 候选类型（三态 + 未解析）：让"纯引用"与"坏了"不再长得一样。 */
+  function _linkPanelType(c) {
+    if (!c || !c.file) return { key: "unresolved", label: linkPanelT("typeUnresolved"), cls: "-badge-warn" };
+    if (!c.kp_id) return { key: "reference", label: linkPanelT("typeReference"), cls: "-badge-ref" };
+    if (c.range_ok) return { key: "kp", label: linkPanelT("typeKp"), cls: "-badge-kp" };
+    return { key: "rangeMissing", label: linkPanelT("typeRangeMissing"), cls: "-badge-warn" };
+  }
+
+  function _linkPanelMetaText(c) {
+    const file = c && c.file ? c.file : linkPanelT("unresolvedFile");
+    let range = linkPanelT("wholeFile");
+    if (c && c.kp_id && c.range_ok && c.start_line && c.end_line) {
+      range = "L" + c.start_line + "–" + c.end_line;
     }
-    const kp = (doc.knowledge_points || []).find((k) => k && k.id === c.kp_id) || null;
-    const lines = Array.isArray(doc.lines) ? doc.lines : String(doc.body || "").split("\n");
-    let region = [];
-    let total = 0;
-    if (c.start_line && c.end_line && c.end_line >= c.start_line) {
-      const s = Math.max(0, Number(c.start_line) - 1);
-      const e = Math.min(lines.length, Number(c.end_line));
-      total = Math.max(0, e - s);
-      region = lines.slice(s, Math.min(e, s + LINK_POP_FETCH_LINES));
+    return linkPanelT("meta", { file: file, range: range });
+  }
+
+  /** 按【文件】去重批量 load_document（同一文件多个 KP 只发一次）；返回 Promise */
+  function _linkPanelEnrichAll(pop) {
+    const files = [];
+    for (const c of pop.candidates) {
+      if (c && c.file && files.indexOf(c.file) < 0) files.push(c.file);
     }
-    const previewLines = region.slice(0, LINK_POP_PREVIEW_LINES);
-    const firstLine = region.map((l) => String(l || "").trim()).find(Boolean) || "";
-    const desc = String(kp?.description || "").trim() ||
-      (firstLine ? firstLine.slice(0, 120) : "") ||
-      linkPopT("noDesc");
-    const truncated = total > LINK_POP_PREVIEW_LINES
-      ? linkPopT("truncated", { shown: Math.min(total, LINK_POP_PREVIEW_LINES), total })
+    pop.rpcFiles = files.slice();
+    if (!files.length) { _linkPanelUpdateList(pop); return Promise.resolve(); }
+    return Promise.all(files.map((f) => _linkPanelLoadDoc(pop, f))).then(() => {
+      if (state.linkPanel === pop) _linkPanelUpdateList(pop);
+    }).catch(() => {});
+  }
+
+  /** 列表行：类型徽标 + name + description(2 行) + tags(chips，≤3 +N) */
+  function _linkPanelListRow(pop, c, idx) {
+    const type = _linkPanelType(c);
+    const name = esc(_linkPanelName(c));
+    const doc = (c && c.file && pop.docCacheReady) ? (pop.docCacheReady.get(c.file) || null) : null;
+    let desc = linkPanelT("loading");
+    let tagsHtml = "";
+    if (doc && doc.status === "ok") {
+      const kp = (doc.knowledge_points || []).find((k) => k && k.id === c.kp_id) || null;
+      desc = String(kp?.description || "").trim() || linkPanelT("noDesc");
+      const tags = Array.isArray(kp?.tags) ? kp.tags.filter(Boolean) : [];
+      if (tags.length) {
+        const shown = tags.slice(0, 3);
+        tagsHtml = '<span class="-link-panel-tags">' +
+          shown.map((tag) => `<span class="-link-panel-tag">${esc(String(tag))}</span>`).join("") +
+          (tags.length > 3 ? `<span class="-link-panel-tag -more">+${tags.length - 3}</span>` : "") +
+          "</span>";
+      }
+    } else if (!c || !c.file) {
+      desc = linkPanelT("noDesc");
+    }
+    return `<button type="button" class="-link-panel-row${idx === pop.index ? " -selected" : ""}" role="option"` +
+      ` aria-selected="${idx === pop.index}" data-panel-row="${idx}">` +
+      `<span class="-link-panel-badge ${type.cls}">${esc(type.label)}</span>` +
+      `<span class="-link-panel-row-name">${name}</span>` +
+      `<span class="-link-panel-row-desc -muted">${esc(desc)}</span>` +
+      `${tagsHtml}</button>`;
+  }
+
+  function _linkPanelUpdateList(pop) {
+    if (!pop || !pop.el) return;
+    const listEl = pop.el.querySelector("[data-panel-list]");
+    if (!listEl) return;
+    // docCache 保存 Promise；列表渲染需要已完成的 doc ⇒ 用 docCacheReady 记录
+    pop.docCacheReady = pop.docCacheReady || new Map();
+    listEl.innerHTML = pop.candidates.length > 1
+      ? pop.candidates.map((c, i) => _linkPanelListRow(pop, c, i)).join("")
       : "";
-    linkPopApply(pop, idx, {
-      desc: desc,
-      preview: previewLines.length ? previewLines.join("\n") : linkPopT("noRegion"),
-      truncated: truncated,
+    listEl.querySelectorAll("[data-panel-row]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        _linkPanelSelect(pop, Number(btn.dataset.panelRow));
+      });
     });
   }
 
-  function linkPopActivate(idx) {
-    const pop = state.linkPopover;
-    if (!pop) return;
-    const c = pop.candidates[Math.max(0, Math.min(pop.candidates.length - 1, Number(idx) || 0))];
-    if (!c || !c.file) return;
-    closeLinkPopover({ noFocus: true });
-    jumpToTarget(c, { source: "link" });
+  function _linkPanelSelect(pop, idx) {
+    const next = Math.max(0, Math.min(pop.candidates.length - 1, Number(idx) || 0));
+    if (next === pop.index) return;
+    pop.index = next;
+    _linkPanelUpdateHeader(pop);
+    _linkPanelUpdateList(pop);
+    _linkPanelRenderDoc(pop);
   }
 
-  async function linkPopOpenAll() {
-    const pop = state.linkPopover;
-    if (!pop) return;
+  /** 钉住图标：16×16 内联 SVG（零依赖 + currentColor + stroke 1.3，与既有图标同规格）。
+   *  未钉住 = 空心；已钉住 = 钉座 fill=currentColor + 主题强调色（CSS）。 */
+  const LINK_PANEL_PIN_SVG = '<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">' +
+    '<path d="M4.4 2.5h7.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path d="M6.2 3.1v4.2M9.8 3.1v4.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path class="-pin-base" d="M4.4 7.1h7.2l-1.05 2.4H5.45z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
+    '<path d="M8 9.6v4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+    '</svg>';
+
+  function _linkPanelUpdatePin(pop) {
+    if (!pop || !pop.el) return;
+    const btn = pop.el.querySelector("[data-panel-pin]");
+    if (!btn) return;
+    btn.setAttribute("aria-pressed", pop.pinned ? "true" : "false");
+    const label = pop.pinned ? linkPanelT("unpin") : linkPanelT("pin");
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+  }
+
+  function _linkPanelTogglePin(pop) {
+    pop.pinned = !pop.pinned;
+    _linkPanelUpdatePin(pop);
+    _linkPanelPersist({ pinned: pop.pinned });
+  }
+
+  function _linkPanelUpdateHeader(pop) {
+    const c = _linkPanelCandidate(pop);
+    if (!pop.el) return;
+    const multi = pop.candidates.length > 1;
+    const nameEl = pop.el.querySelector("[data-panel-name]");
+    if (nameEl) {
+      nameEl.textContent = c ? _linkPanelName(c) : "";
+      nameEl.hidden = multi;
+    }
+    const countEl = pop.el.querySelector("[data-panel-count]");
+    if (countEl) {
+      countEl.textContent = multi ? linkPanelT("linkCount", { n: pop.candidates.length }) : "";
+      countEl.hidden = !multi;
+    }
+    const list = pop.el.querySelector("[data-panel-list]");
+    if (list) {
+      list.hidden = !multi;
+      list.querySelectorAll("[data-panel-row]").forEach((row) => {
+        const on = Number(row.dataset.panelRow) === pop.index;
+        row.classList.toggle("-selected", on);
+        row.setAttribute("aria-selected", on ? "true" : "false");
+      });
+    }
+    const body = pop.el.querySelector(".-link-panel-body");
+    if (body) body.classList.toggle("-with-list", multi);
+    const allBtn = pop.el.querySelector("[data-panel-open-all]");
+    if (allBtn) {
+      allBtn.textContent = linkPanelT("openAll", { n: pop.candidates.length });
+      allBtn.hidden = !multi;
+    }
+  }
+
+  function _linkPanelSetMeta(pop, metaText) {
+    if (!pop.el) return;
+    const el = pop.el.querySelector("[data-panel-meta]");
+    if (el) el.textContent = metaText || "";
+  }
+
+  async function _linkPanelLoadDoc(pop, file) {
+    if (!file) return null;
+    if (!pop.docCache.has(file)) {
+      pop.docCache.set(file, call("load_document", file).catch(() => null));
+    }
+    const doc = await pop.docCache.get(file);
+    if (!pop.docCacheReady) pop.docCacheReady = new Map();
+    pop.docCacheReady.set(file, doc);
+    return doc;
+  }
+
+  /** 取候选的区域行（无 range 时返回空） */
+  function _linkPanelRegion(doc, c) {
+    if (!doc || !c || !c.start_line || !c.end_line || c.end_line < c.start_line) return { lines: [], total: 0 };
+    const lines = Array.isArray(doc.lines) ? doc.lines : String(doc.body || "").split("\n");
+    const s = Math.max(0, Number(c.start_line) - 1);
+    const e = Math.min(lines.length, Number(c.end_line));
+    const total = Math.max(0, e - s);
+    const slice = lines.slice(s, Math.min(e, s + LINK_PANEL_REGION_MAX_LINES));
+    return { lines: slice, total: total };
+  }
+
+  function _linkPanelRenderPreview(pop, docEl, regionText, doc) {
+    if (!docEl) return;
+    const MP = window.MemoriaMarkdownPreview;
+    if (!MP || typeof MP.renderHtml !== "function") {
+      docEl.innerHTML = `<pre class="-link-panel-pre">${esc(regionText)}</pre>`;
+      return;
+    }
+    const c = _linkPanelCandidate(pop);
+    try {
+      docEl.innerHTML = MP.renderHtml(regionText, {
+        knownTargets: state.linkTargetSet,
+        linkOverrides: doc?.link_overrides || null,
+        sidecarLinks: (doc?.sidecar && doc.sidecar.links) || null,
+      });
+    } catch (_) {
+      docEl.innerHTML = `<pre class="-link-panel-pre">${esc(regionText)}</pre>`;
+    }
+  }
+
+  async function _linkPanelRenderDoc(pop) {
+    if (!pop || state.linkPanel !== pop || !pop.el) return;
+    const docEl = pop.el.querySelector("[data-panel-doc]");
+    if (!docEl) return;
+    const gen = (pop.renderGen = (pop.renderGen || 0) + 1);
+    const c = _linkPanelCandidate(pop);
+    const file = c && c.file ? c.file : "";
+    _linkPanelSetMeta(pop, _linkPanelMetaText(c));
+    const pullBtn = pop.el.querySelector("[data-panel-pull]");
+    if (pullBtn) pullBtn.disabled = !file;
+    if (!file) {
+      docEl.innerHTML = `<div class="-link-panel-placeholder -muted">${esc(linkPanelT("unresolvedFile"))}</div>`;
+      return;
+    }
+    // 先用缓存；没有就 loading 后加载
+    const cached = pop.docCache.get(file);
+    let doc = null;
+    if (cached) {
+      try { doc = await cached; } catch (_) { doc = null; }
+    } else {
+      docEl.innerHTML = `<div class="-link-panel-placeholder -muted">${esc(linkPanelT("loading"))}</div>`;
+      doc = await _linkPanelLoadDoc(pop, file);
+      if (state.linkPanel !== pop || !pop.el) return;
+    }
+    if (pop.renderGen !== gen) return;   // 已切到别的候选 ⇒ 丢弃旧结果
+    const region = _linkPanelRegion(doc, c);
+    const truncated = region.total > region.lines.length
+      ? linkPanelT("truncated", { shown: region.lines.length, total: region.total })
+      : "";
+    if (!region.lines.length) {
+      // 纯文件引用 / 区域缺失：显示文件头（read-only，源码/预览两模式都显示文件内容），底栏已标「整文件」
+      const lines = (Array.isArray(doc && doc.lines) ? doc.lines : String((doc && doc.body) || "").split("\n"));
+      const head = lines.slice(0, LINK_PANEL_REGION_MAX_LINES);
+      if (!head.join("").trim()) {
+        docEl.innerHTML = `<div class="-link-panel-placeholder -muted">${esc(linkPanelT("noRegion"))}</div>`;
+        return;
+      }
+      if (pop.mode === "source") {
+        docEl.innerHTML = `<pre class="-link-panel-pre">${esc(head.join("\n"))}</pre>`;
+      } else {
+        _linkPanelRenderPreview(pop, docEl, head.join("\n"), doc);
+      }
+      if (lines.length > head.length) {
+        const t = document.createElement("div");
+        t.className = "-link-panel-trunc -muted";
+        t.textContent = linkPanelT("truncated", { shown: head.length, total: lines.length });
+        docEl.appendChild(t);
+      }
+      return;
+    }
+    if (pop.mode === "source") {
+      const src = region.lines.join("\n");
+      docEl.innerHTML = `<pre class="-link-panel-pre">${esc(src)}</pre>` +
+        (truncated ? `<div class="-link-panel-trunc -muted">${esc(truncated)}</div>` : "");
+      return;
+    }
+    _linkPanelRenderPreview(pop, docEl, region.lines.join("\n"), doc);
+    if (truncated) {
+      const t = document.createElement("div");
+      t.className = "-link-panel-trunc -muted";
+      t.textContent = truncated;
+      docEl.appendChild(t);
+    }
+  }
+
+  async function _linkPanelOpenAll(pop) {
     const items = (pop.candidates || []).filter((c) => c && c.file);
     if (!items.length) return;
-    closeLinkPopover({ noFocus: true });
+    closeLinkPanel({ noFocus: true });
     for (let i = 0; i < items.length; i++) ensureOpenTab(items[i], { pending: i > 0 });
     renderTabs();
     await jumpToTarget(items[0], { source: "link", skipTabUpsert: true });
   }
 
-  function closeLinkPopover(opts = {}) {
-    const pop = state.linkPopover;
+  function _linkPanelPull(pop) {
+    const c = _linkPanelCandidate(pop);
+    if (!c || !c.file) return;
+    closeLinkPanel({ noFocus: true });
+    jumpToTarget(c, { source: "link" });
+  }
+
+  function _linkPanelToggleCollapse(pop) {
+    pop.collapsed = !pop.collapsed;
+    if (!pop.el) return;
+    pop.el.classList.toggle("-collapsed", pop.collapsed);
+    const btn = pop.el.querySelector("[data-panel-collapse]");
+    if (btn) {
+      btn.textContent = pop.collapsed ? "+" : "−";
+      btn.setAttribute("aria-label", pop.collapsed ? linkPanelT("expand") : linkPanelT("collapse"));
+      btn.setAttribute("title", pop.collapsed ? linkPanelT("expand") : linkPanelT("collapse"));
+    }
+    if (pop.collapsed) {
+      pop.el.style.height = "";
+    } else {
+      _linkPanelApplyRect(pop, { persist: false });
+    }
+  }
+
+  function closeLinkPanel(opts = {}) {
+    const pop = state.linkPanel;
     if (!pop) return;
+    if (pop.el) {
+      try { pop.el.style.height = ""; } catch (_) { /* noop */ }
+    }
+    _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h, mode: pop.mode });
     if (pop.el && pop.el.parentNode) pop.el.parentNode.removeChild(pop.el);
     if (pop.anchorEl && pop.anchorEl.setAttribute) pop.anchorEl.setAttribute("aria-expanded", "false");
-    document.removeEventListener("mousedown", _linkPopOutside, true);
-    document.removeEventListener("keydown", _linkPopKeydown, true);
-    window.removeEventListener("resize", _linkPopReposition, true);
-    state.linkPopover = null;
+    document.removeEventListener("mousedown", _linkPanelOutside, true);
+    document.removeEventListener("keydown", _linkPanelKeydown, true);
+    window.removeEventListener("pointerup", _linkPanelOnWindowUp, true);
+    state.linkPanel = null;
     if (opts.focusBack && pop.anchorEl && pop.anchorEl.isConnected) {
       try { pop.anchorEl.focus(); } catch (_) { /* noop */ }
     } else if (!opts.noFocus && pop.opener && pop.opener !== document.body &&
@@ -7227,87 +7559,148 @@ async function call(fn, ...args) {
     }
   }
 
-  /** 链接点击统一入口：单候选也先出浮层（task-145 核心变化） */
-  function showLinkPopover(anchorEl, title, candidates) {
+  function _linkPanelOnWindowUp() {
+    const pop = state.linkPanel;
+    if (!pop || !pop.el || pop.collapsed) return;
+    const r = pop.el.getBoundingClientRect();
+    const w = Math.round(r.width), h = Math.round(r.height);
+    if (w !== pop.w || h !== pop.h) {
+      pop.w = w; pop.h = h;
+      _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
+    }
+  }
+
+  /** 链接点击统一入口：单/多候选都先出**可拖动面板**（task-161 v2） */
+  async function showLinkPanel(anchorEl, title, candidates) {
     const list = (candidates || []).filter(Boolean);
     if (!list.length || !anchorEl) return;
-    if (state.linkPopover && state.linkPopover.anchorEl === anchorEl) {
-      closeLinkPopover({ focusBack: true });
+    if (state.linkPanel && state.linkPanel.anchorEl === anchorEl) {
+      closeLinkPanel({ focusBack: true });
       return;
     }
-    closeLinkPopover({ noFocus: true });
+    // 已钉住 ⇒ 复用同一面板换内容：不新开、不重定位、保持几何/模式/钉住态
+    if (state.linkPanel && state.linkPanel.pinned && state.linkPanel.el) {
+      const p0 = state.linkPanel;
+      if (p0.anchorEl && p0.anchorEl.setAttribute) p0.anchorEl.setAttribute("aria-expanded", "false");
+      p0.anchorEl = anchorEl;
+      p0.title = title || "";
+      p0.candidates = list;
+      p0.index = 0;
+      if (anchorEl.setAttribute) anchorEl.setAttribute("aria-expanded", "true");
+      if (p0.el.setAttribute) p0.el.setAttribute("aria-label", linkPanelT("ariaLabel", { title: title || "" }));
+      _linkPanelUpdateHeader(p0);
+      _linkPanelUpdateList(p0);
+      _linkPanelEnrichAll(p0);
+      await _linkPanelRenderDoc(p0);
+      return;
+    }
+    closeLinkPanel({ noFocus: true });
+    const prefs = await _linkPanelPrefsRead();
+    if (state.linkPanel) closeLinkPanel({ noFocus: true });
+
+    const hasSavedPos = prefs.x != null && prefs.y != null;
+    const defaultRect = _linkPanelDefaultRect(anchorEl);
+    const rect = hasSavedPos
+      ? _linkPanelClampRect({
+          x: prefs.x, y: prefs.y,
+          w: prefs.w != null ? prefs.w : defaultRect.w,
+          h: prefs.h != null ? prefs.h : defaultRect.h,
+        })
+      : defaultRect;
     const pop = {
-      anchorEl,
-      title: title || "",
-      candidates: list,
-      active: 0,
-      docCache: new Map(),
-      el: null,
-      opener: document.activeElement,
+      anchorEl, title: title || "", candidates: list, index: 0,
+      mode: prefs.mode || "preview", collapsed: false,
+      pinned: prefs.pinned === true,
+      x: rect.x, y: rect.y, w: rect.w, h: rect.h,
+      docCache: new Map(), el: null, opener: document.activeElement,
     };
-    state.linkPopover = pop;
+    state.linkPanel = pop;
+
     const multi = list.length > 1;
-    const cards = list.map((c, i) => {
-      const name = _linkPopCandidateName(c);
-      const unresolved = !c.file;
-      const range = (c.start_line && c.end_line) ? ` · L${c.start_line}–${c.end_line}` : "";
-      const fileMeta = esc(c.file || linkPopT("unresolvedFile"));
-      return `<div class="-link-pop-card" role="menuitem" tabindex="-1" data-idx="${i}" aria-label="${esc(name)}">` +
-        `<div class="-link-pop-name">${esc(name)}</div>` +
-        `<div class="-link-pop-desc -muted" data-link-pop-desc>${esc(linkPopT("loading"))}</div>` +
-        `<pre class="-link-pop-preview" data-link-pop-preview aria-label="${esc(linkPopT("previewAria"))}">${esc(linkPopT("loading"))}</pre>` +
-        `<div class="-link-pop-meta -muted"><span>${fileMeta}${range}</span><span data-link-pop-trunc></span></div>` +
-        `<div class="-link-pop-actions"><button type="button" class="-btn primary -btn--sm" data-link-pop-pull data-idx="${i}"` +
-        `${unresolved ? " disabled" : ""}>${esc(linkPopT("pull"))}</button></div>` +
-        `</div>`;
-    }).join("");
-    const header = multi
-      ? `<div class="-link-pop-header"><span class="-link-pop-title">${esc(title || "")}</span>` +
-        `<span class="-link-pop-count -muted">${esc(linkPopT("count", { n: list.length }))}</span></div>`
-      : "";
-    const footer = multi
-      ? `<div class="-link-pop-footer"><button type="button" class="-btn secondary -btn--sm" data-link-pop-all>` +
-        `${esc(linkPopT("openAll", { n: list.length }))}</button></div>`
-      : "";
+    const titlebar = `<div class="-link-panel-titlebar" tabindex="0" title="${esc(linkPanelT("dragHint"))}" data-drag-handle>` +
+      `<button type="button" class="-icon-btn -link-panel-pin" data-panel-pin aria-pressed="${pop.pinned ? "true" : "false"}" aria-label="${esc(linkPanelT(pop.pinned ? "unpin" : "pin"))}" title="${esc(linkPanelT(pop.pinned ? "unpin" : "pin"))}">${LINK_PANEL_PIN_SVG}</button>` +
+      `<span class="-link-panel-name" data-panel-name${multi ? " hidden" : ""}></span>` +
+      `<span class="-link-panel-count-label" data-panel-count${multi ? "" : " hidden"}></span>` +
+      `<span class="-link-panel-spacer"></span>` +
+      `<div class="-link-panel-modes" role="group" aria-label="${esc(linkPanelT("modeLabel"))}">` +
+      `<button type="button" class="-btn secondary -btn--sm${pop.mode === "preview" ? " -active" : ""}" data-panel-mode="preview" aria-pressed="${pop.mode === "preview"}">${esc(linkPanelT("preview"))}</button>` +
+      `<button type="button" class="-btn secondary -btn--sm${pop.mode === "source" ? " -active" : ""}" data-panel-mode="source" aria-pressed="${pop.mode === "source"}">${esc(linkPanelT("source"))}</button>` +
+      `</div>` +
+      `<button type="button" class="-btn secondary -btn--sm" data-panel-open-all${multi ? "" : " hidden"}>${esc(linkPanelT("openAll", { n: list.length }))}</button>` +
+      `<button type="button" class="-icon-btn" data-panel-collapse aria-label="${esc(linkPanelT("collapse"))}" title="${esc(linkPanelT("collapse"))}">−</button>` +
+      `<button type="button" class="-icon-btn" data-panel-close aria-label="${esc(linkPanelT("close"))}" title="${esc(linkPanelT("close"))}">×</button>` +
+      `</div>`;
+    const body = `<div class="-link-panel-body${multi ? " -with-list" : ""}">` +
+      `<div class="-link-panel-list" data-panel-list role="listbox" aria-label="${esc(linkPanelT("listAria"))}"${multi ? "" : " hidden"}></div>` +
+      `<div class="-link-panel-doc" data-panel-doc role="document"></div></div>`;
+    const status = `<div class="-link-panel-status"><span class="-link-panel-meta -muted" data-panel-meta></span>` +
+      `<button type="button" class="-btn primary -btn--sm" data-panel-pull>${esc(linkPanelT("pull"))}</button></div>`;
     const el = document.createElement("div");
-    el.id = "link-popover";
-    el.className = "-link-popover";
-    el.setAttribute("role", "menu");
-    el.setAttribute("aria-label", linkPopT("menuLabel", { title: title || "" }));
-    el.style.visibility = "hidden";
-    el.innerHTML = header + `<div class="-link-pop-list">${cards}</div>` + footer;
-    document.body.appendChild(el);
+    el.id = "link-panel";
+    el.className = "-link-panel";
+    el.setAttribute("role", "dialog");
+    el.setAttribute("aria-modal", "false");
+    el.setAttribute("aria-label", linkPanelT("ariaLabel", { title: title || "" }));
+    el.innerHTML = titlebar + body + status;
     pop.el = el;
+    document.body.appendChild(el);
+    _linkPanelApplyRect(pop, { persist: false });
+
+    // 标题栏：拖动 / 双击复位 / 键盘移动
+    const tb = el.querySelector(".-link-panel-titlebar") || el.querySelector("[data-drag-handle]");
+    if (tb) {
+      tb.addEventListener("pointerdown", (e) => _linkPanelStartDrag(pop, e));
+      tb.addEventListener("dblclick", (e) => {
+        if (e.target.closest("button")) return;
+        e.preventDefault();
+        _linkPanelResetRect(pop);
+      });
+    }
+    // 列表键盘：↑↓ 移动选择、Enter = 当前项「拉到编辑区」（与面板内其它键盘共用一套）
+    const listEl = el.querySelector("[data-panel-list]");
+    if (listEl) {
+      listEl.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          e.preventDefault();
+          e.stopPropagation();
+          _linkPanelSelect(pop, pop.index + (e.key === "ArrowDown" ? 1 : -1));
+        } else if (e.key === "Enter") {
+          e.preventDefault();
+          e.stopPropagation();
+          _linkPanelPull(pop);
+        }
+      });
+    }
+    el.querySelectorAll("[data-panel-mode]").forEach((btn) => {
+      btn.addEventListener("click", () => _linkPanelSetMode(pop, btn.dataset.panelMode));
+    });
+    const pinBtn = el.querySelector("[data-panel-pin]");
+    if (pinBtn) pinBtn.addEventListener("click", () => _linkPanelTogglePin(pop));
+    _linkPanelUpdatePin(pop);
+    const allBtn = el.querySelector("[data-panel-open-all]");
+    if (allBtn) allBtn.addEventListener("click", () => _linkPanelOpenAll(pop));
+    el.querySelector("[data-panel-collapse]").addEventListener("click", () => _linkPanelToggleCollapse(pop));
+    el.querySelector("[data-panel-close]").addEventListener("click", () => closeLinkPanel({ focusBack: true }));
+    el.querySelector("[data-panel-pull]").addEventListener("click", () => _linkPanelPull(pop));
     el.addEventListener("mousedown", (e) => e.stopPropagation());
     el.addEventListener("focusout", (e) => {
-      if (!state.linkPopover || state.linkPopover !== pop) return;
+      if (state.linkPanel !== pop) return;
+      if (pop.pinned) return;   // 已钉住：焦点离开不关闭
       const to = e.relatedTarget;
       if (to && (el.contains(to) || to === anchorEl)) return;
-      if (to) closeLinkPopover();
+      if (to) closeLinkPanel();
     });
-    el.querySelectorAll(".-link-pop-card").forEach((card) => {
-      card.addEventListener("click", (e) => {
-        if (e.target.closest("[data-link-pop-pull]")) return;
-        linkPopActivate(Number(card.dataset.idx));
-      });
-      card.addEventListener("focus", () => linkPopSetActive(Number(card.dataset.idx), false));
-    });
-    el.querySelectorAll("[data-link-pop-pull]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        linkPopActivate(Number(btn.dataset.idx));
-      });
-    });
-    const allBtn = el.querySelector("[data-link-pop-all]");
-    if (allBtn) allBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); linkPopOpenAll(); });
     if (anchorEl.setAttribute) anchorEl.setAttribute("aria-expanded", "true");
-    _linkPopPosition(pop);
-    document.addEventListener("mousedown", _linkPopOutside, true);
-    document.addEventListener("keydown", _linkPopKeydown, true);
-    window.addEventListener("resize", _linkPopReposition, true);
-    linkPopSetActive(0, true);
-    list.forEach((c, i) => { linkPopEnrich(pop, i); });
+    document.addEventListener("mousedown", _linkPanelOutside, true);
+    document.addEventListener("keydown", _linkPanelKeydown, true);
+    window.addEventListener("pointerup", _linkPanelOnWindowUp, true);
+
+    _linkPanelUpdateHeader(pop);
+    _linkPanelUpdateList(pop);
+    _linkPanelEnrichAll(pop);
+    await _linkPanelRenderDoc(pop);
+    // 初始焦点：标题栏（可键盘移动/复位；Tab 进面板内部循环）
+    try { tb && tb.focus({ preventScroll: true }); } catch (_) { try { tb && tb.focus(); } catch (__) { /* noop */ } }
   }
 
   async function onMemoriaLinkClick(el, ev) {
@@ -7319,8 +7712,8 @@ async function call(fn, ...args) {
       await openLinkEditorFromElement(el);
       return;
     }
-    // task-145 快速通道（**待确认**）：Ctrl/Cmd+点击 = 直接跳转，跳过浮层。
-    // 理由：高频连续跳转时的低风险逃生口；普通点击仍 100% 先出浮层。
+    // task-145 快速通道（Lead 裁决保留）：Ctrl/Cmd+点击 = 直接跳转，跳过面板。
+    // 普通点击仍 100% 先出面板（task-161 v2 保持该核心变化）。
     const quickSkip = !!(ev && (ev.ctrlKey || ev.metaKey));
     const title = el.textContent?.trim() || target;
     try {
@@ -7358,12 +7751,12 @@ async function call(fn, ...args) {
         return;
       }
       if (quickSkip && candidates.length === 1) {
-        closeLinkPopover({ noFocus: true });
+        if (!(state.linkPanel && state.linkPanel.pinned)) closeLinkPanel({ noFocus: true });
         await jumpToTarget(candidates[0], { source: "link" });
         return;
       }
-      // ★ 核心变化：单候选也先出浮层（不再直接跳转）
-      showLinkPopover(el, title, candidates);
+      // ★ 核心变化（task-145 起）：单候选也先出面板；task-161 v2 = 可拖动浮动面板
+      await showLinkPanel(el, title, candidates);
     } catch (e) {
       setStatus(T("cfg.linkClick.failed", { target }), String(e.message || e));
     }

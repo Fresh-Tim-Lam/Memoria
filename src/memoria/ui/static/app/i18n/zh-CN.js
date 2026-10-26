@@ -1914,21 +1914,37 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.status, {
     compactSystem: "已压缩 {covered} 条旧消息（摘要 {chars} 字符）· 其后对话按摘要继续",
   });
-  // task-145：链接点击浮层（小窗优先）
+  // task-161：链接面板 v2（可拖动/折叠/单文档区）
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].cfg, {
-    linkPop: {
-      menuLabel: "链接目标：{title}",
-      count: "{n} 个目标",
-      loading: "加载中…",
-      noDesc: "无描述",
-      noRegion: "（无区域正文）",
-      previewUnavailable: "（预览不可用）",
-      pull: "拉到编辑区",
+    linkPanel: {
+      ariaLabel: "链接目标：{title}",
+      preview: "预览",
+      source: "源码",
+      modeLabel: "显示模式",
+      prev: "上一个目标",
+      next: "下一个目标",
       openAll: "全部打开（{n}）",
+      collapse: "折叠",
+      expand: "展开",
+      close: "关闭",
+      pull: "拉到编辑区",
+      loading: "加载中…",
+      noRegion: "（无区域正文）",
+      unresolvedFile: "（未解析到文件）",
       truncated: "已截断：显示前 {shown} 行 / 共 {total} 行",
       unknownName: "未命名目标",
-      unresolvedFile: "（未解析到文件）",
-      previewAria: "区域正文预览",
+      pin: "钉住",
+      linkCount: "{n} 个链接",
+      typeKp: "知识点",
+      typeReference: "纯文件引用",
+      typeRangeMissing: "区域缺失",
+      typeUnresolved: "未解析",
+      listAria: "链接候选列表",
+      noDesc: "无描述",
+      wholeFile: "整文件",
+      meta: "{file} · {range}",
+      unpin: "取消钉住",
+      dragHint: "拖动标题栏移动；双击标题栏复位；方向键可微调",
     },
   });
 })(typeof window !== "undefined" ? window : globalThis);

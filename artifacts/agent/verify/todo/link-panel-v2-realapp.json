@@ -1,0 +1,2722 @@
+{
+  "startedAt": "2026-10-26T08:36:06.010Z",
+  "steps": {
+    "P1": {
+      "click": {
+        "ok": true,
+        "x": 574,
+        "y": 200
+      },
+      "timeline": [
+        {
+          "t": 200,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 400,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 600,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 800,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 1000,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 1200,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 1400,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 1600,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 1800,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 2000,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 2200,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 2400,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 2600,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 2800,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 3000,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 3200,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 3400,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 3600,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 3800,
+          "has": true,
+          "stacks": []
+        },
+        {
+          "t": 4000,
+          "has": true,
+          "stacks": []
+        }
+      ],
+      "early": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "preview",
+        "docCount": 1,
+        "previewHtml": "<h1 class=\"-src-block\">目标文档</h1>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第一行：这是被拉取到编辑区的区域正文。</p>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第二行：用于验证区域预览只取该知识点范围。</p>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第三行：区域结束标记。</p>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "已为知识库补写 Trae 智能体工具包（5 个文件）",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "events": [
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[boot] fallback: no persisted last file"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766294.45,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "bootAutoOpen",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 990,
+                  "columnNumber": 16
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[boot] fallback: heuristic docs/a.md"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766294.527,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "bootAutoOpen",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 1005,
+                  "columnNumber": 14
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.299] [UNDO] resetHistory undo=0 redo=0"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766300,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "hlog",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 12023,
+                  "columnNumber": 14
+                },
+                {
+                  "functionName": "resetHistory",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 12778,
+                  "columnNumber": 6
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2163,
+                  "columnNumber": 29
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[SYNC]"
+              },
+              {
+                "type": "string",
+                "value": "collectEditorBody: 收集到"
+              },
+              {
+                "type": "number",
+                "value": 7,
+                "description": "7"
+              },
+              {
+                "type": "string",
+                "value": "行, 总长度"
+              },
+              {
+                "type": "number",
+                "value": 139,
+                "description": "139"
+              },
+              {
+                "type": "string",
+                "value": "(tailNL="
+              },
+              {
+                "type": "boolean",
+                "value": true
+              },
+              {
+                "type": "string",
+                "value": ")"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766300.807,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "syncLog",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 180,
+                  "columnNumber": 53
+                },
+                {
+                  "functionName": "collectEditorBody",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 231,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "srcResetUndo",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 8632,
+                  "columnNumber": 19
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2182,
+                  "columnNumber": 4
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.316] [render] currentFileDir=docs/  currentPath=docs/a.md"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766316.247,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "renderPreview",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2719,
+                  "columnNumber": 6
+                },
+                {
+                  "functionName": "setViewMode",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2415,
+                  "columnNumber": 12
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2195,
+                  "columnNumber": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.316] [lazy] pipeline epoch→2 (render:doc-change)"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766316.432,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "_lazyPipelineReset",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 10594,
+                  "columnNumber": 10
+                },
+                {
+                  "functionName": "renderPreview",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2738,
+                  "columnNumber": 55
+                },
+                {
+                  "functionName": "setViewMode",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2415,
+                  "columnNumber": 12
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2195,
+                  "columnNumber": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.318] [lazy] lazy materialize OFF (full render): blocks=8 threshold=200 hook=unset"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766318.708,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "renderPreview",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2784,
+                  "columnNumber": 8
+                },
+                {
+                  "functionName": "setViewMode",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2415,
+                  "columnNumber": 12
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2195,
+                  "columnNumber": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.319] [STAMP] mapped 8/8 blocks ⇒ BlockIndex (reset)"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766319.211,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "stampBlockLines",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2686,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "renderPreview",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2793,
+                  "columnNumber": 6
+                },
+                {
+                  "functionName": "setViewMode",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2415,
+                  "columnNumber": 12
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2195,
+                  "columnNumber": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.319] [F1] rendered 8 blocks in 2.3ms"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766319.447,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "renderPreview",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2803,
+                  "columnNumber": 6
+                },
+                {
+                  "functionName": "setViewMode",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2415,
+                  "columnNumber": 12
+                },
+                {
+                  "functionName": "openFile",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 2195,
+                  "columnNumber": 32
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] 入队 post_boot:post_boot:C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb #1 prio=3 queue=1"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766324.561,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "schedule",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 304,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "schedulePostBootDerivedWork",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 1130,
+                  "columnNumber": 19
+                },
+                {
+                  "functionName": "initKb",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 1066,
+                  "columnNumber": 8
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] post_boot 入队 #1（图谱+校验移出首屏）"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766324.694,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "note",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 150,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "schedulePostBootDerivedWork",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 1138,
+                  "columnNumber": 14
+                },
+                {
+                  "functionName": "initKb",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 1066,
+                  "columnNumber": 8
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] 执行 post_boot:post_boot:C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb #1 prio=3"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766325.269,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "_runUnit",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 445,
+                  "columnNumber": 6
+                },
+                {
+                  "functionName": "runFrame",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 659,
+                  "columnNumber": 24
+                },
+                {
+                  "functionName": "",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 183,
+                  "columnNumber": 8
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[kb-agent] 已补写/刷新:"
+              },
+              {
+                "type": "string",
+                "value": "README.md, prompt.zh-CN.md, kb-spec.zh-CN.md, fsrs.py, preview-formats.md"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766335.342,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "ensure",
+                  "scriptId": "56",
+                  "url": "http://127.0.0.1:3018/app/js/kb-agent.js?v=1793003764",
+                  "lineNumber": 87,
+                  "columnNumber": 16
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.760] [MAP] domToAst block=2 dom=text#单目标@2 seg=[-src-block#单链接：:4,hit:2] renderedOffset=6 -> \"wiki_link\""
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766761.294,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "domToAst",
+                  "scriptId": "34",
+                  "url": "http://127.0.0.1:3018/app/js/mapper.js?v=1793003764",
+                  "lineNumber": 1026,
+                  "columnNumber": 27
+                },
+                {
+                  "functionName": "getPreviewCursor",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 257,
+                  "columnNumber": 19
+                },
+                {
+                  "functionName": "syncFromSelection",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 499,
+                  "columnNumber": 14
+                },
+                {
+                  "functionName": "",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 1260,
+                  "columnNumber": 31
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.761] [CTX] SRC L3 C18 [et-kp|单目|标|]] 应出单候选]"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766761.633,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "logCursorContext",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 581,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "syncFromSelection",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 501,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 1260,
+                  "columnNumber": 31
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.761] [CTX] PV  blk2 C6 [单链接：单目|标| 应出单候选面板]"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766761.669,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "logCursorContext",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 582,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "syncFromSelection",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 501,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 1260,
+                  "columnNumber": 31
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[16:36:06.761] [EH] click: L3 C18 (block 2)"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003766761.785,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "51",
+                  "url": "http://127.0.0.1:3018/app/js/app.js?v=1793003764",
+                  "lineNumber": 9322,
+                  "columnNumber": 99
+                },
+                {
+                  "functionName": "syncFromSelection",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 524,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "",
+                  "scriptId": "38",
+                  "url": "http://127.0.0.1:3018/app/js/edit-handler.js?v=1793003764",
+                  "lineNumber": 1260,
+                  "columnNumber": 31
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] kb_check 已提交后台作业 #eb0e0064920d"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003767291.689,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "note",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 150,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "submitAsyncValidate",
+                  "scriptId": "55",
+                  "url": "http://127.0.0.1:3018/app/js/kb-check.js?v=1793003764",
+                  "lineNumber": 210,
+                  "columnNumber": 13
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] kb_check 完成（后台作业 #eb0e0064920d，80.3ms）"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003767698.2,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "note",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 150,
+                  "columnNumber": 4
+                },
+                {
+                  "functionName": "submitAsyncValidate",
+                  "scriptId": "55",
+                  "url": "http://127.0.0.1:3018/app/js/kb-check.js?v=1793003764",
+                  "lineNumber": 234,
+                  "columnNumber": 17
+                }
+              ]
+            }
+          }
+        },
+        {
+          "method": "Runtime.consoleAPICalled",
+          "params": {
+            "type": "log",
+            "args": [
+              {
+                "type": "string",
+                "value": "[job] 完成 post_boot:post_boot:C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb #1"
+              }
+            ],
+            "executionContextId": 2,
+            "timestamp": 1793003767698.303,
+            "stackTrace": {
+              "callFrames": [
+                {
+                  "functionName": "log",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 141,
+                  "columnNumber": 31
+                },
+                {
+                  "functionName": "_runUnit",
+                  "scriptId": "45",
+                  "url": "http://127.0.0.1:3018/app/js/scheduler.js?v=1793003764",
+                  "lineNumber": 485,
+                  "columnNumber": 6
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "after": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "preview",
+        "docCount": 1,
+        "previewHtml": "<h1 class=\"-src-block\">目标文档</h1>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第一行：这是被拉取到编辑区的区域正文。</p>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第二行：用于验证区域预览只取该知识点范围。</p>\n<div class=\"-src-block -blank-block\"><br></div>\n<p class=\"-src-block\">目标知识点第三行：区域结束标记。</p>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "已为知识库补写 Trae 智能体工具包（5 个文件）",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P1-single-preview.png"
+    },
+    "P2": {
+      "clickSource": {
+        "ok": true,
+        "x": 953,
+        "y": 201,
+        "left": 933,
+        "top": 191,
+        "w": 40,
+        "h": 21
+      },
+      "afterSource": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-btn secondary -btn--sm -active",
+        "titlebarFocused": false,
+        "status": "已为知识库补写 Trae 智能体工具包（5 个文件）",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P2-source-mode.png",
+      "afterReopen": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      }
+    },
+    "P3": {
+      "click": {
+        "ok": true,
+        "x": 574,
+        "y": 247
+      },
+      "beforeSwitch": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "true"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "false"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "clickRow1": {
+        "ok": true,
+        "x": 708,
+        "y": 382,
+        "left": 614,
+        "top": 331,
+        "w": 187,
+        "h": 102
+      },
+      "afterSwitch": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "第二知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\">## 第二个知识点\n\n第二个知识点第一行：与 target-kp 同文件，用于验证按文件去重。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L9–11",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 1,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "true"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "false"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/target.md · L9–11"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P3-candidate-list.png",
+      "clickRef": {
+        "ok": true,
+        "x": 708,
+        "y": 535,
+        "left": 614,
+        "top": 502,
+        "w": 187,
+        "h": 67
+      },
+      "afterReference": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "plain-note",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 纯文件引用目标\n\n这个文件没有任何知识点（sidecar 无 KP）。\n链接指向它时，候选类型应为「纯文件引用」：kp_id=None、整文件预览、仍可拉到编辑区。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/plain-note.md · 整文件",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 1,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "true"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "false"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/plain-note.md · 整文件"
+      },
+      "refShot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P3-pure-reference-selected.png",
+      "clickMissing": {
+        "ok": true,
+        "x": 708,
+        "y": 518,
+        "left": 614,
+        "top": 467,
+        "w": 187,
+        "h": 102
+      },
+      "afterMissing": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "name": "区域缺失知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 区域缺失目标\n\n这个文件有一个知识点，但它的 range snippet 在正文中不存在。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/broken-range.md · 整文件",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 1,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "true"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/broken-range.md · 整文件"
+      }
+    },
+    "P4": {
+      "beforeDrag": {
+        "x": 607,
+        "y": 183,
+        "w": 520,
+        "h": 420
+      },
+      "afterDrag": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420
+        },
+        "name": "区域缺失知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 区域缺失目标\n\n这个文件有一个知识点，但它的 range snippet 在正文中不存在。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/broken-range.md · 整文件",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 1,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "true"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/broken-range.md · 整文件"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P4-dragged.png",
+      "afterReopen": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "settings": {
+        "last_kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+        "recent_kbs": [
+          "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb"
+        ],
+        "boot": {
+          "lastPathByKb": {
+            "e51bb89b": {
+              "kb": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+              "path": "docs/a.md"
+            }
+          }
+        },
+        "linkPanel": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420,
+          "mode": "source",
+          "pinned": false
+        }
+      }
+    },
+    "P5": {
+      "afterReload": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "settings": {
+        "last_kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+        "recent_kbs": [
+          "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb"
+        ],
+        "boot": {
+          "lastPathByKb": {
+            "e51bb89b": {
+              "kb": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+              "path": "docs/a.md"
+            }
+          }
+        },
+        "linkPanel": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420,
+          "mode": "source",
+          "pinned": false
+        }
+      }
+    },
+    "P6": {
+      "collapsed": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": true,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 37
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-icon-btn",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P6-collapsed.png",
+      "expanded": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 520,
+          "h": 420
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-icon-btn",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      }
+    },
+    "P7": {
+      "before": {
+        "x": 707,
+        "y": 263,
+        "w": 520,
+        "h": 420
+      },
+      "afterResize": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 707,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 1,
+        "activeEl": "-icon-btn",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "settings": {
+        "last_kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+        "recent_kbs": [
+          "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb"
+        ],
+        "boot": {
+          "lastPathByKb": {
+            "e51bb89b": {
+              "kb": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t161_38492_423824409\\kb",
+              "path": "docs/a.md"
+            }
+          }
+        },
+        "linkPanel": {
+          "x": 707,
+          "y": 263,
+          "w": 580,
+          "h": 464,
+          "mode": "source",
+          "pinned": false
+        }
+      }
+    },
+    "P8": {
+      "afterEsc": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 1,
+        "activeEl": "-wikilink memoria-link -link-resolved is-graph-link-focus",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "afterOutside": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 1,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "ctrlClick": {
+        "ok": true,
+        "x": 574,
+        "y": 200
+      },
+      "afterCtrlClick": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 2,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "已跳转 · 目标知识点",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "clickPull": {
+        "ok": true,
+        "x": 1217,
+        "y": 710,
+        "left": 1180,
+        "top": 699,
+        "w": 73,
+        "h": 21
+      },
+      "afterPull": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 2,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "已跳转 · 目标知识点",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "broken": {
+        "ok": true,
+        "x": 566,
+        "y": 317
+      },
+      "afterBroken": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": true,
+        "modalVisible": true,
+        "ariaExpanded": "false",
+        "openTabs": 2,
+        "activeEl": "-wikilink memoria-link -link-broken memoria-broken-link",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "afterTabs": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": null,
+        "openTabs": 2,
+        "activeEl": "-icon-btn",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "true"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "false"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/target.md · L1–7"
+      }
+    },
+    "P9": {
+      "initial": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "false",
+        "pinFill": "none",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "clickPin": {
+        "ok": true,
+        "x": 704,
+        "y": 281,
+        "left": 693,
+        "top": 270,
+        "w": 22,
+        "h": 22
+      },
+      "afterPin": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "-icon-btn -link-panel-pin",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "afterOutside": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "BODY",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "afterEditorClick": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "-line-content",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P9-pinned-after-outside.png",
+      "afterEsc": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 2,
+        "activeEl": "-wikilink memoria-link -link-resolved",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      }
+    },
+    "P10": {
+      "reopened": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "afterSwitchLink": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 2,
+        "activeEl": "-wikilink memoria-link -link-resolved is-graph-link-focus",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 5,
+        "listRows": [
+          {
+            "badge": "知识点",
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "tags": [
+              "目标",
+              "区域预览",
+              "标签三",
+              "+1"
+            ],
+            "selected": "true"
+          },
+          {
+            "badge": "知识点",
+            "name": "第二知识点",
+            "desc": "同文件第二个知识点，用于验证按文件去重。",
+            "tags": [
+              "第二"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "知识点",
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "tags": [
+              "对照"
+            ],
+            "selected": "false"
+          },
+          {
+            "badge": "纯文件引用",
+            "name": "plain-note",
+            "desc": "无描述",
+            "tags": [],
+            "selected": "false"
+          },
+          {
+            "badge": "区域缺失",
+            "name": "区域缺失知识点",
+            "desc": "有 KP 但 range snippet 不存在（构造样本）。",
+            "tags": [
+              "构造"
+            ],
+            "selected": "false"
+          }
+        ],
+        "rpcFiles": [
+          "docs/target.md",
+          "docs/other.md",
+          "docs/plain-note.md",
+          "docs/broken-range.md"
+        ],
+        "countLabel": "5 个链接",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "sameRect": true,
+      "pinStillPressed": true,
+      "samePanel": true,
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-v2-screens\\P10-pinned-switch-link.png"
+    },
+    "P11": {
+      "afterClose": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 2,
+        "activeEl": "-wikilink memoria-link -link-resolved",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      },
+      "reopened": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": true,
+        "collapsed": false,
+        "rect": {
+          "x": 684,
+          "y": 263,
+          "w": 580,
+          "h": 464
+        },
+        "name": "目标知识点",
+        "counter": "",
+        "modeActive": "source",
+        "docCount": 1,
+        "previewHtml": "<pre class=\"-link-panel-pre\"># 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。</pre>",
+        "bodyVisible": true,
+        "statusVisible": true,
+        "meta": "docs/target.md · L1–7",
+        "pullVisible": true,
+        "navVisible": false,
+        "openAllVisible": true,
+        "role": "dialog",
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "true",
+        "openTabs": 2,
+        "activeEl": "-link-panel-titlebar",
+        "titlebarFocused": true,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": "true",
+        "pinFill": "rgb(0, 122, 204)",
+        "panelCount": 1,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": [
+          "docs/target.md"
+        ],
+        "countLabel": "",
+        "metaKb": "docs/target.md · L1–7"
+      },
+      "afterEsc": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "panelVisible": false,
+        "collapsed": null,
+        "rect": null,
+        "name": "",
+        "counter": "",
+        "modeActive": null,
+        "docCount": 0,
+        "previewHtml": "",
+        "bodyVisible": false,
+        "statusVisible": false,
+        "meta": "",
+        "pullVisible": false,
+        "navVisible": false,
+        "openAllVisible": false,
+        "role": null,
+        "backdropVisible": false,
+        "modalVisible": false,
+        "ariaExpanded": "false",
+        "openTabs": 2,
+        "activeEl": "-wikilink memoria-link -link-resolved is-graph-link-focus",
+        "titlebarFocused": false,
+        "status": "docs/a.md",
+        "previewErr": null,
+        "pinPressed": null,
+        "pinFill": null,
+        "panelCount": 0,
+        "listCount": 0,
+        "listRows": [],
+        "rpcFiles": null,
+        "countLabel": null,
+        "metaKb": null
+      }
+    }
+  },
+  "target": {
+    "id": "A26F0B9FB24003319E2E40F3229FBF79"
+  },
+  "finishedAt": "2026-10-26T08:36:44.843Z"
+}

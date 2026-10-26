@@ -2020,21 +2020,37 @@
   Object.assign(g.MEMORIA_LOCALES["en"].agent.status, {
     compactSystem: "Compacted {covered} older messages (summary: {chars} chars) · later turns continue from the summary",
   });
-  // task-145: link click popover (popover-first)
+  // task-161: link panel v2 (draggable/collapsible, single document area)
   Object.assign(g.MEMORIA_LOCALES["en"].cfg, {
-    linkPop: {
-      menuLabel: "Link target: {title}",
-      count: "{n} targets",
-      loading: "Loading…",
-      noDesc: "No description",
-      noRegion: "(No region text)",
-      previewUnavailable: "(Preview unavailable)",
-      pull: "Pull to editor",
+    linkPanel: {
+      ariaLabel: "Link target: {title}",
+      preview: "Preview",
+      source: "Source",
+      modeLabel: "Display mode",
+      prev: "Previous target",
+      next: "Next target",
       openAll: "Open all ({n})",
+      collapse: "Collapse",
+      expand: "Expand",
+      close: "Close",
+      pull: "Pull to editor",
+      loading: "Loading…",
+      noRegion: "(No region text)",
+      unresolvedFile: "(Unresolved file)",
       truncated: "Truncated: showing first {shown} of {total} lines",
       unknownName: "Unnamed target",
-      unresolvedFile: "(Unresolved file)",
-      previewAria: "Region preview",
+      pin: "Pin",
+      linkCount: "{n} links",
+      typeKp: "Knowledge point",
+      typeReference: "File reference",
+      typeRangeMissing: "Range missing",
+      typeUnresolved: "Unresolved",
+      listAria: "Link candidates",
+      noDesc: "No description",
+      wholeFile: "Whole file",
+      meta: "{file} · {range}",
+      unpin: "Unpin",
+      dragHint: "Drag title bar to move; double-click to reset; arrow keys to nudge",
     },
   });
 })(typeof window !== "undefined" ? window : globalThis);
