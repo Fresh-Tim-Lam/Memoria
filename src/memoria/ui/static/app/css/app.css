@@ -7494,7 +7494,8 @@ html.-booting::before {
 
 /* ── task-161：链接面板 v2（可拖动浮动面板；无 backdrop）────────────────────────
    结构：标题栏（拖动把手+候选切换+预览/源码+全部打开+折叠+关闭）/ 单一文档区 / 状态栏。
-   默认 520×420，CSS min/max 夹 360×260~720×640；resize:both 提供右下角缩放把手；
+   默认 520×420，CSS min/max 夹 360×260~720×640；8 方向缩放手由 .-link-panel-rs 提供
+   （task-168：**不再使用原生 resize:both**，否则会与自定义把手双把手冲突）；
    position:fixed + z-index 900（模态 1000 之下），不占布局空间。 */
 .-link-panel {
     position: fixed;
@@ -7509,7 +7510,6 @@ html.-booting::before {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    resize: both;
     background: var(--bg-secondary);
     color: var(--text-primary);
     border: 0.5px solid var(--border);
@@ -7524,7 +7524,7 @@ html.-booting::before {
 .-link-panel.-collapsed {
     height: auto;
     min-height: 0;
-    resize: none;
+    /* task-168：折叠态不可缩放（把手在 .-collapsed 下隐藏；JS 也会直接忽略） */
 }
 .-link-panel.-collapsed .-link-panel-body,
 .-link-panel.-collapsed .-link-panel-status {
@@ -7788,4 +7788,51 @@ html.-booting::before {
     font-weight: 600;
     color: var(--text-bright);
     white-space: nowrap;
+}
+
+/* task-168：8 方向缩放手（透明命中区 ≥8px；hover/拖拽时薄边高亮 + 方向 cursor）
+   参照 window-chrome.js 的 -win-resize-*（同一套 edge 命名与 cursor），但把命中区从 5px 提到 8px。
+   把手放在面板边缘**内侧**，不使用原生 resize（已从 .-link-panel 移除 resize:both）。 */
+.-link-panel-rs {
+    position: absolute;
+    z-index: 3;
+    background: transparent;
+    touch-action: none;
+}
+.-link-panel-rs:hover,
+.-link-panel-rs.-active {
+    background: var(--theme-color, #4c8dff);
+    opacity: 0.35;
+    border-radius: 3px;
+}
+.-link-panel-rs--n {
+    top: 0; left: 0.75rem; right: 0.75rem; height: 8px;
+    cursor: ns-resize;
+}
+.-link-panel-rs--s {
+    bottom: 0; left: 0.75rem; right: 0.75rem; height: 8px;
+    cursor: ns-resize;
+}
+.-link-panel-rs--e {
+    top: 0.75rem; right: 0; bottom: 0.75rem; width: 8px;
+    cursor: ew-resize;
+}
+.-link-panel-rs--w {
+    top: 0.75rem; left: 0; bottom: 0.75rem; width: 8px;
+    cursor: ew-resize;
+}
+.-link-panel-rs--ne, .-link-panel-rs--nw,
+.-link-panel-rs--se, .-link-panel-rs--sw {
+    width: 14px;
+    height: 14px;
+    z-index: 4;
+}
+.-link-panel-rs--ne { top: 0; right: 0; cursor: nesw-resize; }
+.-link-panel-rs--nw { top: 0; left: 0; cursor: nwse-resize; }
+.-link-panel-rs--se { bottom: 0; right: 0; cursor: nwse-resize; }
+.-link-panel-rs--sw { bottom: 0; left: 0; cursor: nesw-resize; }
+.-link-panel.-collapsed .-link-panel-rs { display: none; }
+.-link-panel.-resizing,
+.-link-panel.-resizing * {
+    user-select: none;
 }

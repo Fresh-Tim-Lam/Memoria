@@ -1,0 +1,213 @@
+{
+  "doc": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+  "phases": {
+    "A_afterSwitch": {
+      "path": "README.md",
+      "docVersion": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "race": {
+        "inputAt": 1793007859119,
+        "firedAt": 1793007860647
+      },
+      "disk_sha_B": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "versionMatchesDisk": true
+    },
+    "A_thenSaveB": {
+      "conflict": [],
+      "version": "9f051e061003958446d9177315dd9f1a2e6c73376e4e86046ef665dab7940b81",
+      "disk_sha_B": "9f051e061003958446d9177315dd9f1a2e6c73376e4e86046ef665dab7940b81"
+    },
+    "B_trueConflict": {
+      "conflict": [
+        {
+          "t": 1793007868939,
+          "title": "文件已被改动",
+          "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        }
+      ],
+      "dialogForceBtnPresent": true,
+      "saveStale": 1,
+      "version": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "disk_sha": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720"
+    },
+    "C_rounds": [
+      {
+        "round": 1,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f",
+        "versionMatchesDisk": true
+      },
+      {
+        "round": 2,
+        "kind": "line-start",
+        "disk_before": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f",
+        "disk_after": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603",
+        "versionMatchesDisk": true
+      },
+      {
+        "round": 3,
+        "kind": "line-start",
+        "disk_before": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603",
+        "disk_after": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e",
+        "versionMatchesDisk": true
+      },
+      {
+        "round": 4,
+        "kind": "line-start",
+        "disk_before": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e",
+        "disk_after": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662",
+        "versionMatchesDisk": true
+      },
+      {
+        "round": 5,
+        "kind": "line-start",
+        "disk_before": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662",
+        "disk_after": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7",
+        "versionMatchesDisk": true
+      },
+      {
+        "round": 6,
+        "kind": "gutter-click-then-edit",
+        "disk_before": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7",
+        "disk_after": "1eff7fe879d1420771fcb3feccbe06569fb7222aff2fcda38866d9ae11a40ef1",
+        "versionMatchesDisk": true
+      }
+    ],
+    "C_conflict": [
+      {
+        "t": 1793007868939,
+        "title": "文件已被改动",
+        "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      }
+    ]
+  },
+  "saves": 9,
+  "install": {
+    "ok": true
+  },
+  "saves_log": [
+    {
+      "kind": "save",
+      "t": 1793007860725,
+      "durMs": 92,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "7d5808d3629a8e5f4785899dbdbaf216e9480b2ebd65215353e0128563c6e772",
+      "force": false,
+      "docVersionBefore": "7d5808d3629a8e5f4785899dbdbaf216e9480b2ebd65215353e0128563c6e772",
+      "status": "ok",
+      "version": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "docVersionAfter": "7d5808d3629a8e5f4785899dbdbaf216e9480b2ebd65215353e0128563c6e772"
+    },
+    {
+      "kind": "save",
+      "t": 1793007864451,
+      "durMs": 17,
+      "inflightBefore": 0,
+      "relPath": "README.md",
+      "baseVersion": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "force": false,
+      "docVersionBefore": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "status": "ok",
+      "version": "9f051e061003958446d9177315dd9f1a2e6c73376e4e86046ef665dab7940b81",
+      "docVersionAfter": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056"
+    },
+    {
+      "kind": "save",
+      "t": 1793007868939,
+      "durMs": 5,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    },
+    {
+      "kind": "save",
+      "t": 1793007874883,
+      "durMs": 100,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "force": false,
+      "docVersionBefore": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "status": "ok",
+      "version": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f",
+      "docVersionAfter": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720"
+    },
+    {
+      "kind": "save",
+      "t": 1793007877781,
+      "durMs": 101,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f",
+      "force": false,
+      "docVersionBefore": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f",
+      "status": "ok",
+      "version": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603",
+      "docVersionAfter": "5f30f74034660dced1d3bd2351741c9a9830b888231e9f2756f173fa291fd11f"
+    },
+    {
+      "kind": "save",
+      "t": 1793007880704,
+      "durMs": 91,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603",
+      "force": false,
+      "docVersionBefore": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603",
+      "status": "ok",
+      "version": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e",
+      "docVersionAfter": "a5fc9ddaf0485136eb6ded0b9bc8f196c4657123d106236576bd75912e958603"
+    },
+    {
+      "kind": "save",
+      "t": 1793007883572,
+      "durMs": 92,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e",
+      "force": false,
+      "docVersionBefore": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e",
+      "status": "ok",
+      "version": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662",
+      "docVersionAfter": "a2633901b5581311d4b95f84e2365998e2c853170ac98a86bc2518afe7e5170e"
+    },
+    {
+      "kind": "save",
+      "t": 1793007886482,
+      "durMs": 90,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662",
+      "force": false,
+      "docVersionBefore": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662",
+      "status": "ok",
+      "version": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7",
+      "docVersionAfter": "331eee0f41cdcb72d2e7f9f09c45792e8fe72337a06d44df634bc95b16ec1662"
+    },
+    {
+      "kind": "save",
+      "t": 1793007889802,
+      "durMs": 90,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7",
+      "force": false,
+      "docVersionBefore": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7",
+      "status": "ok",
+      "version": "1eff7fe879d1420771fcb3feccbe06569fb7222aff2fcda38866d9ae11a40ef1",
+      "docVersionAfter": "566c82b833d142d5569eb4cb055cac064efde27f74ef7b98816e499693013ca7"
+    }
+  ],
+  "docVersionFinal": "1eff7fe879d1420771fcb3feccbe06569fb7222aff2fcda38866d9ae11a40ef1",
+  "disk_sha_final": "1eff7fe879d1420771fcb3feccbe06569fb7222aff2fcda38866d9ae11a40ef1",
+  "versionMatchesDiskFinal": true
+}

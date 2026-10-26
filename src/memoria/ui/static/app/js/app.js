@@ -393,37 +393,96 @@
     }, RENDER_DEBOUNCE_MS);
   }
 
-  /** 将当前内存内容写回磁盘（始终从源码编辑器收集，保证 markdown 格式完整） */
+  /* ── task-164：保存的「版本归属」与「串行化」（误报 stale_write 的真因修复）───────────────
+     真因（真机复现，见 artifacts/agent/verify/todo/stale-write-false-positive/）：
+       文件 A 的自动保存还在飞时切到文件 B，A 的响应回来后在旧代码里**无条件**
+       `state.doc.version = res.version` —— 当时 state.doc 已经是 B ⇒ A 的版本被写进 B 的
+       version。B 下一次保存拿 A 的 version 当 base_version ⇒ 后端比对盘上 B 的 sha 不等
+       ⇒ 弹「文件已被改动」——但**没有任何外部写者**（正是人报的误报）。
+     三道修法（都不放松真冲突判据，真报仍由后端 sha 比对 + 对话框负责）：
+       ① 保存前记住 (savePath, saveDoc)；响应回来后**只有仍是同一文档**才回写 version；
+       ② 同一时刻最多一个 save_document 在飞（串行化；后到的保存等前一个完成再用最新 version）；
+       ③ 自伤识别：stale 的 `current_version` 若是我方写过的版本 ⇒ 不是外部写者 ⇒
+          校正版本并自动重试（有上限），不弹框；外部写者的版本必然不在集合里 ⇒ 照旧弹框。 */
+  let _saveInFlight = null;
+  let _selfHealCount = 0;
+  const _writtenVersions = new Map(); // path -> [最近我方写出的 version…]
+  function _noteWrittenVersion(path, version) {
+    if (!path || !version) return;
+    const arr = _writtenVersions.get(path) || [];
+    if (!arr.includes(version)) {
+      arr.push(version);
+      if (arr.length > 20) arr.splice(0, arr.length - 20);
+      _writtenVersions.set(path, arr);
+    }
+  }
+  function _wasWrittenByUs(path, version) {
+    if (!path || !version) return false;
+    const arr = _writtenVersions.get(path);
+    return !!(arr && arr.includes(version));
+  }
+  window.__memoriaNoteWrittenVersion = _noteWrittenVersion; // 供 IIFE 外的强制保存分支登记
+
+  /** 将当前内存内容写回磁盘（串行化外壳：见上方 ① ② ③） */
   async function syncToDisk() {
+    if (_saveInFlight) {
+      try { await _saveInFlight; } catch (_e) { /* 上一次失败由它自己的分支处理 */ }
+      if (!_dirty) return; // 上一次保存已覆盖全部编辑
+    }
+    const p = _syncToDiskOnce();
+    _saveInFlight = p.finally(() => { if (_saveInFlight === p) _saveInFlight = null; });
+    return _saveInFlight;
+  }
+
+  async function _syncToDiskOnce() {
     syncLog("syncToDisk: dirty=", _dirty, "path=", state.currentPath);
     if (!state.currentPath || !_dirty || window.MemoriaWriteGuard?.deferIfBusy?.(markDirty)) {
       syncLog("syncToDisk: 跳过 (无路径或无修改)");
       return;
     }
+    const savePath = state.currentPath;
+    const saveDoc = state.doc;
     const body = collectEditorBody();
     if (body === null) { syncLog("syncToDisk: body 为 null，跳过"); return; }
     _dirty = false;
-    syncLog("syncToDisk: 写入文件", state.currentPath, ", body长度", body.length, ", 前80字:", body.substring(0, 80));
+    syncLog("syncToDisk: 写入文件", savePath, ", body长度", body.length, ", 前80字:", body.substring(0, 80));
     try {
-      const res = await call("save_document", state.currentPath, body, state.doc?.version || "");
+      const res = await call("save_document", savePath, body, saveDoc?.version || "");
       if (res.status !== "ok") {
-        window.MemoriaWriteGuard?.onSaveFailed?.(res, state.currentPath, body) || console.warn("[SYNC] 保存失败:", res.message);
-      } else {
-        if (state.doc && res.version) state.doc.version = res.version; syncLog("syncToDisk: 保存成功"); _previewCacheDrop(state.currentPath); // 2026-09-23 性能：写盘成功 ⇒ 该路径的预览缓存按新版本作废（下次切走时再存）
-        if (res.cleanedImages && res.cleanedImages.length) {
-          showFlashInfo(
-            T("img.cleanup.doneList", {
-              n: res.cleanedImages.length,
-              files: res.cleanedImages.join(T("img.listSep")),
-            })
-          );
+        // ③ 自伤识别（只认「盘上版本 = 我方写过的版本」；外部写者的 sha 不在集合里）
+        if (res.code === "stale_write" && _wasWrittenByUs(savePath, res.current_version) && _selfHealCount < 2) {
+          _selfHealCount += 1;
+          if (state.currentPath === savePath && state.doc === saveDoc) state.doc.version = res.current_version;
+          syncLog("syncToDisk: 自伤 stale（current_version 是我方写出的）⇒ 校正 version 并重试", _selfHealCount);
+          _dirty = true;
+          setTimeout(() => { syncToDisk(); }, 0);
+          return;
         }
-        // M6b：每次保存后用 load_document 的权威解析静默校正列表与 state.doc（hover 数据源）。
-        // 早期只在 ranges_resynced>0 时刷新，而多数换行/删行后端判为“无变化”导致必须手动刷新才同步。
-        _silentRefreshKpPanel();
-        // 自动保存后 ~3s 防抖兜底 fsync（G4 M6a：写缓存→稍后刷盘）
-        scheduleDurableFlush();
+        window.MemoriaWriteGuard?.onSaveFailed?.(res, savePath, body) || console.warn("[SYNC] 保存失败:", res.message);
+        return;
       }
+      // ① 只在仍是同一文档时回写 version（防止跨文件污染 → 下一次保存拿错 base_version）
+      _selfHealCount = 0;
+      _noteWrittenVersion(savePath, res.version);
+      if (state.currentPath === savePath && state.doc === saveDoc && res.version) {
+        state.doc.version = res.version;
+      } else if (res.version) {
+        syncLog("syncToDisk: 保存完成但文档已切换，不回写 version（防跨文件污染）");
+      }
+      syncLog("syncToDisk: 保存成功"); _previewCacheDrop(savePath); // 2026-09-23 性能：写盘成功 ⇒ 该路径的预览缓存按新版本作废（下次切走时再存）
+      if (res.cleanedImages && res.cleanedImages.length) {
+        showFlashInfo(
+          T("img.cleanup.doneList", {
+            n: res.cleanedImages.length,
+            files: res.cleanedImages.join(T("img.listSep")),
+          })
+        );
+      }
+      // M6b：每次保存后用 load_document 的权威解析静默校正列表与 state.doc（hover 数据源）。
+      // 早期只在 ranges_resynced>0 时刷新，而多数换行/删行后端判为“无变化”导致必须手动刷新才同步。
+      if (state.currentPath === savePath) _silentRefreshKpPanel();
+      // 自动保存后 ~3s 防抖兜底 fsync（G4 M6a：写缓存→稍后刷盘）
+      scheduleDurableFlush();
     } catch (e) {
       console.warn("[SYNC] 保存异常:", e);
     }
@@ -7336,6 +7395,12 @@ async function call(fn, ...args) {
     _linkPanelRenderDoc(pop);
   }
 
+  /** task-168：8 方向缩放手（透明命中区，几何在 CSS；与 window-chrome.js 的 -win-resize-* 同思路）。 */
+  const LINK_PANEL_RESIZE_EDGES = ["n", "s", "e", "w", "ne", "nw", "se", "sw"];
+  const LINK_PANEL_RESIZE_HANDLES = LINK_PANEL_RESIZE_EDGES.map(
+    (d) => `<div class="-link-panel-rs -link-panel-rs--${d}" data-panel-resize="${d}" aria-hidden="true"></div>`
+  ).join("");
+
   /** 钉住图标：16×16 内联 SVG（零依赖 + currentColor + stroke 1.3，与既有图标同规格）。
    *  未钉住 = 空心；已钉住 = 钉座 fill=currentColor + 主题强调色（CSS）。 */
   const LINK_PANEL_PIN_SVG = '<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">' +
@@ -7536,6 +7601,61 @@ async function call(fn, ...args) {
     }
   }
 
+  /** 8 方向缩放：pointerdown 起手 → window pointermove 实时；左/上边同时移动 left/top。
+   *  尺寸夹在 LINK_PANEL_MIN/MAX（与 CSS min/max 一致），不抖动；折叠态直接忽略。 */
+  function _linkPanelStartResize(pop, e, dir) {
+    if (!pop || !pop.el || pop.collapsed) return;
+    if (e.button !== 0 && e.pointerType !== "touch") return;
+    if (!dir) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const handle = e.currentTarget || e.target;
+    const start = {
+      x: pop.x, y: pop.y, w: pop.w, h: pop.h,
+      cx: e.clientX, cy: e.clientY,
+    };
+    pop.el.classList.add("-resizing");
+    if (handle && handle.classList) handle.classList.add("-active");
+    try { if (handle && handle.setPointerCapture && e.pointerId != null) handle.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
+    function onMove(ev) {
+      const dx = (Number(ev.clientX) || 0) - start.cx;
+      const dy = (Number(ev.clientY) || 0) - start.cy;
+      _linkPanelResizeTo(pop, start, dir, dx, dy);
+    }
+    function onUp() {
+      window.removeEventListener("pointermove", onMove, true);
+      window.removeEventListener("pointerup", onUp, true);
+      window.removeEventListener("pointercancel", onUp, true);
+      if (pop.el) pop.el.classList.remove("-resizing");
+      if (handle && handle.classList) handle.classList.remove("-active");
+      _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
+    }
+    window.addEventListener("pointermove", onMove, true);
+    window.addEventListener("pointerup", onUp, true);
+    window.addEventListener("pointercancel", onUp, true);
+  }
+
+  function _linkPanelResizeTo(pop, start, dir, dx, dy) {
+    const vw = window.innerWidth || 1280;
+    let x = start.x, y = start.y;
+    let w = start.w, h = start.h;
+    if (dir.includes("e")) w = start.w + dx;
+    if (dir.includes("w")) w = start.w - dx;
+    if (dir.includes("s")) h = start.h + dy;
+    if (dir.includes("n")) h = start.h - dy;
+    w = Math.max(LINK_PANEL_MIN_W, Math.min(LINK_PANEL_MAX_W, Math.round(w)));
+    h = Math.max(LINK_PANEL_MIN_H, Math.min(LINK_PANEL_MAX_H, Math.round(h)));
+    // 关键：从左边 / 上边拉伸时，左/上坐标同步移动（视觉上边被拖动，而不是只有右边在动）
+    if (dir.includes("w")) x = Math.round(start.x + start.w - w);
+    if (dir.includes("n")) y = Math.round(start.y + start.h - h);
+    // 不把面板左/上拖出视口（右/下沿用既有 y 夹紧口径；面板尺寸 max 720×640 < 视口）
+    if (x < 0) x = 0;
+    if (y < 0) y = 0;
+    if (x > vw - w) x = Math.max(0, vw - w);
+    pop.x = x; pop.y = y; pop.w = w; pop.h = h;
+    _linkPanelApplyRect(pop, { persist: false });
+  }
+
   function closeLinkPanel(opts = {}) {
     const pop = state.linkPanel;
     if (!pop) return;
@@ -7547,24 +7667,12 @@ async function call(fn, ...args) {
     if (pop.anchorEl && pop.anchorEl.setAttribute) pop.anchorEl.setAttribute("aria-expanded", "false");
     document.removeEventListener("mousedown", _linkPanelOutside, true);
     document.removeEventListener("keydown", _linkPanelKeydown, true);
-    window.removeEventListener("pointerup", _linkPanelOnWindowUp, true);
     state.linkPanel = null;
     if (opts.focusBack && pop.anchorEl && pop.anchorEl.isConnected) {
       try { pop.anchorEl.focus(); } catch (_) { /* noop */ }
     } else if (!opts.noFocus && pop.opener && pop.opener !== document.body &&
                pop.opener.isConnected && typeof pop.opener.focus === "function") {
       try { pop.opener.focus(); } catch (_) { /* noop */ }
-    }
-  }
-
-  function _linkPanelOnWindowUp() {
-    const pop = state.linkPanel;
-    if (!pop || !pop.el || pop.collapsed) return;
-    const r = pop.el.getBoundingClientRect();
-    const w = Math.round(r.width), h = Math.round(r.height);
-    if (w !== pop.w || h !== pop.h) {
-      pop.w = w; pop.h = h;
-      _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h });
     }
   }
 
@@ -7639,7 +7747,7 @@ async function call(fn, ...args) {
     el.setAttribute("role", "dialog");
     el.setAttribute("aria-modal", "false");
     el.setAttribute("aria-label", linkPanelT("ariaLabel", { title: title || "" }));
-    el.innerHTML = titlebar + body + status;
+    el.innerHTML = titlebar + body + status + LINK_PANEL_RESIZE_HANDLES;
     pop.el = el;
     document.body.appendChild(el);
     _linkPanelApplyRect(pop, { persist: false });
@@ -7680,6 +7788,9 @@ async function call(fn, ...args) {
     el.querySelector("[data-panel-collapse]").addEventListener("click", () => _linkPanelToggleCollapse(pop));
     el.querySelector("[data-panel-close]").addEventListener("click", () => closeLinkPanel({ focusBack: true }));
     el.querySelector("[data-panel-pull]").addEventListener("click", () => _linkPanelPull(pop));
+    el.querySelectorAll("[data-panel-resize]").forEach((h) => {
+      h.addEventListener("pointerdown", (e) => _linkPanelStartResize(pop, e, h.dataset.panelResize));
+    });
     el.addEventListener("mousedown", (e) => e.stopPropagation());
     el.addEventListener("focusout", (e) => {
       if (state.linkPanel !== pop) return;
@@ -7691,7 +7802,6 @@ async function call(fn, ...args) {
     if (anchorEl.setAttribute) anchorEl.setAttribute("aria-expanded", "true");
     document.addEventListener("mousedown", _linkPanelOutside, true);
     document.addEventListener("keydown", _linkPanelKeydown, true);
-    window.addEventListener("pointerup", _linkPanelOnWindowUp, true);
 
     _linkPanelUpdateHeader(pop);
     _linkPanelUpdateList(pop);
@@ -20790,7 +20900,9 @@ async function call(fn, ...args) {
       const r = await A().call?.("save_document", path, body, "", true);  // force ⇒ 后端先备份再覆盖
       const st = A().state;
       if (r && r.status === "ok") {
-        if (st && st.doc) st.doc.version = r.version || "";
+        // task-164：version 只能写回它所属的那个文档（与 syncToDisk 同一条纪律）
+        window.__memoriaNoteWrittenVersion?.(path, r.version);
+        if (st && st.doc && st.currentPath === path) st.doc.version = r.version || "";
         A().setStatus?.(T("writeConflict.forced"), path);
       } else {
         A().showFlashError?.(T("writeConflict.forceFail"), (r && r.message) || "");

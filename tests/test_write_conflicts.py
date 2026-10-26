@@ -186,9 +186,11 @@ _CONFLICT_KEYS = ("title", "body", "reload", "force", "later", "reloaded", "forc
 def test_frontend_wires_version_token_and_conflict_dialog() -> None:
     """`app.js`：保存带版本 + 成功后滚动基线 + `stale_write` 走三选一 + apply 忙位让路。"""
     src = _APP_JS.read_text(encoding="utf-8")
-    assert 'call("save_document", state.currentPath, body, state.doc?.version || "")' in src
-    assert "if (state.doc && res.version) state.doc.version = res.version;" in src
-    assert "window.MemoriaWriteGuard?.onSaveFailed?.(res, state.currentPath, body)" in src
+    # task-164：保存用 (savePath, saveDoc) 快照；version 只回写给所属文档（修跨文件污染误报）
+    assert 'call("save_document", savePath, body, saveDoc?.version || "")' in src
+    assert "state.currentPath === savePath && state.doc === saveDoc" in src
+    assert "if (state.doc && res.version) state.doc.version = res.version;" not in src
+    assert "window.MemoriaWriteGuard?.onSaveFailed?.(res, savePath, body)" in src
     assert "window.MemoriaWriteGuard?.deferIfBusy?.(markDirty)" in src
 
     block = src[src.index("(function memoriaWriteGuard()") :]

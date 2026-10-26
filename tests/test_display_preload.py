@@ -129,8 +129,8 @@ def test_every_invalidation_trigger_is_wired() -> None:
     js = _app()
     # ① 本地编辑
     assert "_dirty = true; _previewCacheDrop(state.currentPath); _previewDomKey = null;" in js
-    # ② 写盘成功（syncToDisk）
-    assert 'syncLog("syncToDisk: 保存成功"); _previewCacheDrop(state.currentPath);' in js
+    # ② 写盘成功（syncToDisk）—— task-164：用保存时快照的 savePath（version/缓存只对所属文档）
+    assert 'syncLog("syncToDisk: 保存成功"); _previewCacheDrop(savePath);' in js
     # ③ 视图模式变更
     assert "if (prevMode !== mode) { _previewCacheDrop(state.currentPath); _previewDomKey = null;" in js
     # ④ 关闭页签

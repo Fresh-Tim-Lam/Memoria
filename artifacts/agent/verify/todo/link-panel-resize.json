@@ -1,0 +1,735 @@
+{
+  "startedAt": "2026-10-26T09:44:37.459Z",
+  "steps": {
+    "default": {
+      "panelVisible": true,
+      "rect": {
+        "x": 607,
+        "y": 183,
+        "w": 520,
+        "h": 420
+      },
+      "nativeResize": "none",
+      "handleCount": 8,
+      "handles": [
+        {
+          "dir": "n",
+          "cursor": "ns-resize",
+          "w": 494,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "s",
+          "cursor": "ns-resize",
+          "w": 494,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "e",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 394,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "w",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 394,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "ne",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "nw",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "se",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "sw",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        }
+      ],
+      "collapsed": false,
+      "currentPath": "docs/a.md",
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\default-handles-invisible.png"
+    },
+    "hoverW": {
+      "hover": true,
+      "bg": "rgb(0, 122, 204)",
+      "opacity": "0.35",
+      "cursor": "ew-resize",
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\hover-w-edge.png"
+    },
+    "directions": [
+      {
+        "dir": "e",
+        "dx": 80,
+        "dy": 0,
+        "expect": "w+80",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 607,
+          "y": 183,
+          "w": 600,
+          "h": 420
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": false,
+          "xChanged": false,
+          "yChanged": false,
+          "e": true,
+          "w": null,
+          "s": null,
+          "n": null,
+          "ne": null,
+          "nw": null,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "w",
+        "dx": -80,
+        "dy": 0,
+        "expect": "x-80,w+80",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 527,
+          "y": 183,
+          "w": 600,
+          "h": 420
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": false,
+          "xChanged": true,
+          "yChanged": false,
+          "e": null,
+          "w": true,
+          "s": null,
+          "n": null,
+          "ne": null,
+          "nw": null,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "s",
+        "dx": 0,
+        "dy": 60,
+        "expect": "h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": false,
+          "heightChanged": true,
+          "xChanged": false,
+          "yChanged": false,
+          "e": null,
+          "w": null,
+          "s": true,
+          "n": null,
+          "ne": null,
+          "nw": null,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "n",
+        "dx": 0,
+        "dy": -60,
+        "expect": "y-60,h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 607,
+          "y": 123,
+          "w": 520,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": false,
+          "heightChanged": true,
+          "xChanged": false,
+          "yChanged": true,
+          "e": null,
+          "w": null,
+          "s": null,
+          "n": true,
+          "ne": null,
+          "nw": null,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "ne",
+        "dx": 80,
+        "dy": -60,
+        "expect": "w+80,y-60,h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 607,
+          "y": 123,
+          "w": 600,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": true,
+          "xChanged": false,
+          "yChanged": true,
+          "e": null,
+          "w": null,
+          "s": null,
+          "n": null,
+          "ne": true,
+          "nw": null,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "nw",
+        "dx": -80,
+        "dy": -60,
+        "expect": "x-80,w+80,y-60,h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 527,
+          "y": 123,
+          "w": 600,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": true,
+          "xChanged": true,
+          "yChanged": true,
+          "e": null,
+          "w": null,
+          "s": null,
+          "n": null,
+          "ne": null,
+          "nw": true,
+          "se": null,
+          "sw": null
+        }
+      },
+      {
+        "dir": "se",
+        "dx": 80,
+        "dy": 60,
+        "expect": "w+80,h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 607,
+          "y": 183,
+          "w": 600,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": true,
+          "xChanged": false,
+          "yChanged": false,
+          "e": null,
+          "w": null,
+          "s": null,
+          "n": null,
+          "ne": null,
+          "nw": null,
+          "se": true,
+          "sw": null
+        }
+      },
+      {
+        "dir": "sw",
+        "dx": -80,
+        "dy": 60,
+        "expect": "x-80,w+80,h+60",
+        "before": {
+          "x": 607,
+          "y": 183,
+          "w": 520,
+          "h": 420
+        },
+        "after": {
+          "x": 527,
+          "y": 183,
+          "w": 600,
+          "h": 480
+        },
+        "ok": true,
+        "checks": {
+          "widthChanged": true,
+          "heightChanged": true,
+          "xChanged": true,
+          "yChanged": false,
+          "e": null,
+          "w": null,
+          "s": null,
+          "n": null,
+          "ne": null,
+          "nw": null,
+          "se": null,
+          "sw": true
+        }
+      }
+    ],
+    "clampMax": {
+      "width1": 520,
+      "width2": 520,
+      "resizing1": false,
+      "resizing2": false,
+      "styleW1": "520px",
+      "styleW2": "520px",
+      "dbg": null
+    },
+    "clampMaxSettled": {
+      "w": 720
+    },
+    "clampMin": {
+      "w": 520
+    },
+    "clampMinSettled": {
+      "w": 360
+    },
+    "persistResize": {
+      "ok": true,
+      "rect": {
+        "x": 607,
+        "y": 183,
+        "w": 600,
+        "h": 480
+      }
+    },
+    "persistBeforeClose": {
+      "x": 607,
+      "y": 183,
+      "w": 600,
+      "h": 480
+    },
+    "settingsBeforeClose": {
+      "last_kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb",
+      "recent_kbs": [
+        "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb"
+      ],
+      "boot": {
+        "lastPathByKb": {
+          "a88b735c": {
+            "kb": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb",
+            "path": "docs/a.md"
+          }
+        }
+      },
+      "linkPanel": {
+        "x": 607,
+        "y": 183,
+        "w": 600,
+        "h": 480,
+        "mode": "preview",
+        "pinned": false
+      }
+    },
+    "shotResizedSE": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\resized-se.png",
+    "settingsAfterResize": {
+      "last_kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb",
+      "recent_kbs": [
+        "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb"
+      ],
+      "boot": {
+        "lastPathByKb": {
+          "a88b735c": {
+            "kb": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_t168_2032_1371581735\\kb",
+            "path": "docs/a.md"
+          }
+        }
+      },
+      "linkPanel": {
+        "x": 607,
+        "y": 183,
+        "w": 600,
+        "h": 480,
+        "mode": "preview",
+        "pinned": false
+      }
+    },
+    "persistAfterReopen": {
+      "x": 607,
+      "y": 183,
+      "w": 600,
+      "h": 480
+    },
+    "persistOk": true,
+    "westResize": {
+      "ok": true,
+      "rect": {
+        "x": 607,
+        "y": 183,
+        "w": 520,
+        "h": 420
+      }
+    },
+    "afterWest": {
+      "panelVisible": true,
+      "rect": {
+        "x": 527,
+        "y": 183,
+        "w": 600,
+        "h": 420
+      },
+      "nativeResize": "none",
+      "handleCount": 8,
+      "handles": [
+        {
+          "dir": "n",
+          "cursor": "ns-resize",
+          "w": 574,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "s",
+          "cursor": "ns-resize",
+          "w": 574,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "e",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 394,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "w",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 394,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "ne",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "nw",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "se",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "sw",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        }
+      ],
+      "collapsed": false,
+      "currentPath": "docs/a.md"
+    },
+    "shotWest": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\resized-from-west.png",
+    "southResize": {
+      "ok": true,
+      "rect": {
+        "x": 527,
+        "y": 183,
+        "w": 600,
+        "h": 420
+      }
+    },
+    "afterSouth": {
+      "panelVisible": true,
+      "rect": {
+        "x": 527,
+        "y": 183,
+        "w": 600,
+        "h": 480
+      },
+      "nativeResize": "none",
+      "handleCount": 8,
+      "handles": [
+        {
+          "dir": "n",
+          "cursor": "ns-resize",
+          "w": 574,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "s",
+          "cursor": "ns-resize",
+          "w": 574,
+          "h": 8,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "e",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 454,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "w",
+          "cursor": "ew-resize",
+          "w": 8,
+          "h": 454,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "ne",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "nw",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "se",
+          "cursor": "nwse-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        },
+        {
+          "dir": "sw",
+          "cursor": "nesw-resize",
+          "w": 14,
+          "h": 14,
+          "display": "block",
+          "bg": "rgba(0, 0, 0, 0)",
+          "hover": false
+        }
+      ],
+      "collapsed": false,
+      "currentPath": "docs/a.md"
+    },
+    "shotSouth": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\resized-from-south.png",
+    "collapsed": {
+      "rect": {
+        "x": 527,
+        "y": 183,
+        "w": 600,
+        "h": 37
+      },
+      "handles": [
+        {
+          "dir": "n",
+          "display": "none"
+        },
+        {
+          "dir": "s",
+          "display": "none"
+        },
+        {
+          "dir": "e",
+          "display": "none"
+        },
+        {
+          "dir": "w",
+          "display": "none"
+        },
+        {
+          "dir": "ne",
+          "display": "none"
+        },
+        {
+          "dir": "nw",
+          "display": "none"
+        },
+        {
+          "dir": "se",
+          "display": "none"
+        },
+        {
+          "dir": "sw",
+          "display": "none"
+        }
+      ],
+      "resizeAttempt": {
+        "ok": true,
+        "rect": {
+          "x": 527,
+          "y": 183,
+          "w": 600,
+          "h": 37
+        }
+      },
+      "afterRect": {
+        "x": 527,
+        "y": 183,
+        "w": 600,
+        "h": 37
+      },
+      "unchanged": true,
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-panel-resize-screens\\collapsed-no-handles.png"
+    },
+    "titleDrag": {
+      "ok": true,
+      "rect": {
+        "x": 607,
+        "y": 183,
+        "w": 520,
+        "h": 420
+      }
+    },
+    "titleDragAfter": {
+      "x": 667,
+      "y": 223,
+      "w": 520,
+      "h": 420
+    },
+    "afterDblclickReset": {
+      "x": 607,
+      "y": 183,
+      "w": 520,
+      "h": 420
+    },
+    "arrowKey": {
+      "before": {
+        "x": 607
+      },
+      "active": "-link-panel-titlebar",
+      "titlebarFocused": true,
+      "defaultPrevented": true,
+      "afterX": 623
+    }
+  },
+  "finishedAt": "2026-10-26T09:44:55.349Z"
+}

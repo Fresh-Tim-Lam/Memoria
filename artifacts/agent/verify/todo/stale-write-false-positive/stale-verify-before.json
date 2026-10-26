@@ -1,0 +1,242 @@
+{
+  "doc": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+  "phases": {
+    "A_afterSwitch": {
+      "path": "README.md",
+      "docVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "race": {
+        "inputAt": 1793007915280,
+        "firedAt": 1793007916800
+      },
+      "disk_sha_B": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "versionMatchesDisk": false
+    },
+    "A_thenSaveB": {
+      "conflict": [
+        {
+          "t": 1793007921185,
+          "title": "文件已被改动",
+          "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        }
+      ],
+      "version": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "disk_sha_B": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056"
+    },
+    "B_trueConflict": {
+      "conflict": [
+        {
+          "t": 1793007921185,
+          "title": "文件已被改动",
+          "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        },
+        {
+          "t": 1793007922795,
+          "title": "文件已被改动",
+          "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        },
+        {
+          "t": 1793007923426,
+          "title": "文件已被改动",
+          "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        },
+        {
+          "t": 1793007923427,
+          "title": "文件已被改动",
+          "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+        }
+      ],
+      "dialogForceBtnPresent": false,
+      "saveStale": 1,
+      "version": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "disk_sha": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720"
+    },
+    "C_rounds": [
+      {
+        "round": 1,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      },
+      {
+        "round": 2,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      },
+      {
+        "round": 3,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      },
+      {
+        "round": 4,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      },
+      {
+        "round": 5,
+        "kind": "line-start",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      },
+      {
+        "round": 6,
+        "kind": "gutter-click-then-edit",
+        "disk_before": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "disk_after": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+        "versionMatchesDisk": false
+      }
+    ],
+    "C_conflict": [
+      {
+        "t": 1793007921185,
+        "title": "文件已被改动",
+        "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007922795,
+        "title": "文件已被改动",
+        "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007923426,
+        "title": "文件已被改动",
+        "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007923427,
+        "title": "文件已被改动",
+        "body": "README.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007932421,
+        "title": "文件已被改动",
+        "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007938373,
+        "title": "文件已被改动",
+        "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007944768,
+        "title": "文件已被改动",
+        "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      },
+      {
+        "t": 1793007948484,
+        "title": "文件已被改动",
+        "body": "教材/03_第3章_软件需求获取与结构化分析方法.md 在磁盘上已被其它窗口或智能体修改；你的这次编辑基于旧版本，尚未写入。"
+      }
+    ]
+  },
+  "saves": 6,
+  "install": {
+    "ok": true
+  },
+  "saves_log": [
+    {
+      "kind": "save",
+      "t": 1793007917189,
+      "durMs": 389,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "7d5808d3629a8e5f4785899dbdbaf216e9480b2ebd65215353e0128563c6e772",
+      "force": false,
+      "docVersionBefore": "7d5808d3629a8e5f4785899dbdbaf216e9480b2ebd65215353e0128563c6e772",
+      "status": "ok",
+      "version": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "docVersionAfter": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056"
+    },
+    {
+      "kind": "save",
+      "t": 1793007921184,
+      "durMs": 13,
+      "inflightBefore": 0,
+      "relPath": "README.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "825f9a4fd8c4724be2ebea307831a9373f3a951a6e4793fdb17265519c1c0056",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    },
+    {
+      "kind": "save",
+      "t": 1793007932421,
+      "durMs": 5,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    },
+    {
+      "kind": "save",
+      "t": 1793007938373,
+      "durMs": 6,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    },
+    {
+      "kind": "save",
+      "t": 1793007944768,
+      "durMs": 10,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    },
+    {
+      "kind": "save",
+      "t": 1793007948484,
+      "durMs": 8,
+      "inflightBefore": 0,
+      "relPath": "教材/03_第3章_软件需求获取与结构化分析方法.md",
+      "baseVersion": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "force": false,
+      "docVersionBefore": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "status": "error",
+      "code": "stale_write",
+      "expected": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "current": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+      "docVersionAfter": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+      "message": "文件已被其它窗口或智能体修改：本次保存基于过期版本，未写入"
+    }
+  ],
+  "docVersionFinal": "2e19476e66b62b2f3108ca0d448485305281c6101e6a28afa1b2fbff0cd8040b",
+  "disk_sha_final": "d29db97db629d059e3b8f060f921c7160ed01862aefa5ac52897210332e0b720",
+  "versionMatchesDiskFinal": false
+}
