@@ -5,6 +5,7 @@
 > 状态标记：✅ 已收口 / 🔄 进行中 / ⏳ 待做 / 💡 方向性（需再规格化）/ 🔴 Bug / ⬇️ 最低优先级。
 > 2026-09-16 按规则 8 压缩至预算内：开发流水账出表（i18n 迁移明细见 [conventions/i18n.md](conventions/i18n.md) 修订记录；拆分与文档登记见 [docs-management.md](conventions/docs-management.md)；版本级变更见 [version.md §7](conventions/version.md)）；旧文末两段用户粘贴的 bug 记录按规则 8.3 归位（E22 补复现记录、新增 E23）。
 > 2026-09-19 按规则 8.2 再清理（表头逐日追述与 §10.4 流水账出表；新增 §13 AG12–AG16）。
+> **索引化（2026-10-26，人批准）**：本文件是**索引**——只允许 标题 / 状态 / 一行摘要 / 详情链接；详细内容只在 `docs/todo/` 附件（活跃详情）或 `docs/design/` 归档（已收口）。**引用本文件必须用 §-锚点或任务 ID，禁止用行号**。
 > **维护约定（2026-10-22，裁决 #9 固化）**：§10 归档区（§10.3 明细 / §10.4 作废存档 / **§10.5 索引表**）中的 ID **允许与正文重复**；做「编号唯一」自检时**必须排除 `## 10.` 段**（否则 §10.5 的 27 条 ✅ 索引会被误报为重复）。**活动区（§0–§9、§11–§13）内编号仍必须唯一**；**索引表不是证据** —— 证据锚与「未取证 / 下一步」一律以原条目行为准。
 
 ***
@@ -17,7 +18,7 @@
 - 🔄 app.js 拆分瘦身：已抽 5 个子系统 js（file-tree / import-flow / toolbar-search / image-tools / kb-check），app.js ≈16.8k 行 @2026-10-22（实测 16,845 行；`js/**` 共 62 个模块 —— 当时记的「~10.9k 行 / 5 个子系统」已随迭代腐化，故改为带日期快照）；界面文案候选清零（i18n-inventory 空清单）。下一步：editor-styles 层抽取（`FT_MENU_ID` 浮层引用仍在 app.js）；真机回归待用户执行。K1
 - 🔄 **P06 打包态在他人机器启动崩溃**（根因 = **Mark-of-the-Web**；修复 = 随包 `Memoria.exe.config`（`loadFromRemoteSources`）+ 失败可读弹窗 + 交付面说明；v0.3.4 已重新构建并替换资产）。K2（待在报错机器复验，见 §8 P06 详情）
 - ✅ **task-140 跳转滚动定位三处不符** → 已修（`039e815f`）：删 `block:"start"` + 已可见不滚 + 二次校准只补偏移；真机三场景 + OLD-SIM 对照（`artifacts/agent/verify/todo/jump-scroll-fix.md`）。K4a
-- 🔄 **task-141 长文档预览跳开头** → 进行中（sync-mapper，`blocked_by task-140` 已解除）：先证红 + 时间序列定位。K1
+- ✅ **task-141 长文档预览跳开头** → 已修（`51e1c755`；证据矩阵 `d2c22695` 15/15 + 3 轮一致）：惰性物化空态把 scrollTop 夹到 0。K4a
 
 ***
 
@@ -208,189 +209,84 @@ T01–T03 已按规则 8.4 出表（见 §10）。
 
 ## 12. 知识库与维护机制 · 施工总表（2026-09-09 建立）
 
-> 目的：把「知识库数据一致性 + 维护作业」类机制/任务统一登记为施工总表。设计取向（2026-09-09 用户确立）：**借鉴操作系统手段把维护当「任务/作业」组织** —— 调度内核（优先级/去重/idle/epoch 陈旧丢弃/flush）、写盘分级（缓存+原子替换+延迟批量 fsync 屏障）、后台化与合并、切文件/关库/退出为屏障点。
-> **触发点约束（2026-09-10 用户确立）**：维护动作只允许两类触发点 —— **后台（自动、不阻塞交互）** 或 **用户显式**（打开库/刷新/构建/点击）；**交互热路径禁止任何同步重活**。任务立项与评审均以此作业化/屏障语义为考量。详见 [maintenance-jobs.md](design/maintenance-jobs.md)。
+> **索引（2026-10-26 索引化）**：本表只留索引；**详情（施工总表原文/节区注记）**→ [todo/12-build-table.md](todo/12-build-table.md)。状态事实源 = 本表；A/D/F 收口与 G 认领表归档 = [design/ledger-archive-2026.md](design/ledger-archive-2026.md) §10.6；验证方法论 = [design/maintenance-benchmark.md §9](design/maintenance-benchmark.md)。
+> 统计：活跃行 **7**（B2/B3/B6/B7/B8/C4/E3）；A/D/F 已收口出表；G 已归档；H 待裁决建议条款（见附件 #h）；遗留两处（见附件 #residual）。
 
-### A. 一致性 / 注册内核
+| # | 任务 | 状态 | 详情 |
+| --- | --- | --- | --- |
+| B2 | 文件夹重命名 `dir_rename`（整树移动 + 逐文件级联） | 🔄 K2 | [详](todo/12-build-table.md#b2) |
+| B3 | F2 快捷键（文件/文件夹，捕获阶段 + 仅拦可见弹窗） | 🔄 K2 | [详](todo/12-build-table.md#b3) |
+| B6 | md 相对路径链接在目录重命名时自动改写 | ❌ 已知边界 | [详](todo/12-build-table.md#b6) |
+| B7 | 导出知识库包（bundle） | ⏳ K3 | [详](todo/12-build-table.md#b7) |
+| B8 | 构建 `build_kb` 末尾 `openFile(同路径, {skipNav:true})` 跳过 `flushDurableBar… | 🔴 K1 | [详](todo/12-build-table.md#b8) |
+| C4 | 图谱**增量更新**（增量在布局与数据层，非帧绘制；原「局部刷… | ⏳ K1 | [详](todo/12-build-table.md#c4) |
+| E3 | design：export-plan / maintenance-jobs / durable-flush（草稿，2026-09-09 复核… | ⏳ K3 | [详](todo/12-build-table.md#e3) |
 
-A1–A8 整段收口（sidecar 镜像/校验/级联、manifest 基线差分、pending 路径同步、图片注册表、KP range 双端定位 heal、词法索引后台化、原子写、`forward_only` 终点锚修复），已按规则 8.4 出表，见 §10。
-
-### B. 操作 / 作业
-
-| # | 任务 | 现状 |
-| --- | --- | --- |
-| B2 | 文件夹重命名 `dir_rename`（整树移动 + 逐文件级联） | 🔄 K2 待真机验收（代码与 RPC 齐备，partial 级联失败已上屏；无验收落盘） |
-| B3 | F2 快捷键（文件/文件夹，捕获阶段 + 仅拦可见弹窗） | 🔄 K2 待真机验收（`file-tree.js:438-463` 齐备，无验收落盘） |
-| B6 | md 相对路径链接在目录重命名时自动改写 | ❌ 已知边界（待扩展）：`document.py:697-780` 仅物理移动 + `apply_path_move`，`storage/path_cascade.py` 全函数不触碰 md 正文 |
-| B7 | 导出知识库包（bundle） | ⏳ K3 待评审：design 草稿在案（[export-plan.md](design/export-plan.md) §8 四个打开问题未拍板）；无实现（无 `export_execute`；`index.html:60` 导出菜单仍 disabled） |
-| B8 | 构建 `build_kb` 末尾 `openFile(同路径, {skipNav:true})` 跳过 `flushDurableBarrier` → 构建期间**未落盘编辑**（<1.5s autosave 窗口）可能被磁盘内容覆盖 | 🔴 K1 ⚠️ 待运行时确认（静态取证：`app.js` buildKb 末尾 openFile 的 flush 分支被 skipNav 跳过；来源 agent-guide/06 §7） |
-
-### C. 视图 / 静默刷新
-
-| # | 任务 | 现状 |
-| --- | --- | --- |
-| C4 | 图谱**增量更新**（增量在布局与数据层，非帧绘制；原「局部刷新」表述已修正） | ⏳ K1：G4 拆分后续项，方案 S1–S4 见 `results/g4-gate-summary-2026-09-09.json`；`applyDelta` 零命中，`graph-engine.js:62` 仍整体替换 |
-
-### D. 渲染 / 显示
-
-D1、D2 已收口，见 §10。
-
-### E. 测试 / 文档 / 规范
-
-| # | 任务 | 现状 |
-| --- | --- | --- |
-| E3 | design：export-plan / maintenance-jobs / durable-flush（草稿，2026-09-09 复核恢复 export-plan；durable-flush 为 G4 M6a 设计） | ⏳ K3 待评审：durable-flush 已评审锁定（`durable-flush.md:3,82-88`）；export-plan 与 maintenance-jobs 仍未拍板 |
-
-### F. §2.5 开放发现 · 待评估补录（2026-09-09 代码复核，均确认存在）
-
-F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02（路径漂移检测/修复 `detect_path_moves`/`repair_path_cascade`）、F03（图片引用诊断/修复 `diagnose_image_refs`/`fix_unregistered_image_refs`）均已确认存在并出表（见 §10）；三者后续由 G5.1–G5.3 的后台化/调度化/CLI 补全承接。
-
-### G. 团队任务板 12 条无主任务：认领与顺序（2026-10-23，todo-owner）
-
-> **判定纪律（2026-10-23 新增，Lead 纠正）**：判「过期/已完成」**必须两条都查** —— ① 任务书点名的产物是否存在；② 全仓搜**功能等价物**（换名/换实现也算）。只查 ① 会系统性高估「过期」数量（task-61 即假阴性：任务书点名的 `nav-interactions.json`/`run_nav.py` 不存在，但实交付是 `nav_entries.mjs`）。
-> **2026-10-25 移出**：原 12 行认领表与处置汇总已归档 → [design/ledger-archive-2026.md §10.6](design/ledger-archive-2026.md)（原文逐字；腾出版面给 task-134「出生即死」台账与建议条款）。
-### H. 待裁决 · 建议新增条款（L10：只建议、不落检查）
-
-> 【**建议新增条款（待裁决）**】UI 追加块必须有 **JS 运行时冒烟**
-> **问题**：`assert "xxx" in src` / `node --check` / `pytest` 都只能证明**文本存在与语法合法**，不能证明**代码在 IIFE 里可达**。本轮实证（task-134）：文档资源附件块 headless 全绿（`pytest 1474 passed`、`node --check` 静默、源码断言通过），但**真机从未生效**（拖文档报「只支持图片」，6 天无人发现）。
-> **候选做法**：**A** 只对「IIFE 门面 `return` 之后」做静态可达性审计（轻、可自动化；`audit_deadcode.py` 已实证 59 个 JS 全扫可行，输出 `issues` 列表）｜**B** 加真机/JS 运行时冒烟（重，需 Electron 环境）｜**C** 只做文档约定 + code review 清单（最轻）。
-> **现状**：A 已由 task-134 的 `audit_deadcode.py` 实证可行（59 个 JS 全扫、`issues: []`）；B 的成本需另估。
-> **2026-10-25 Lead 裁决（已回填）**：**不落 A 作为门禁** —— 依 L10，指不到现行条款的发现只能建议新增；`audit_deadcode.py` **允许作为诊断工具手动跑（不进 CI/门禁）**；是否落成条款仍待**人**裁决。
-> **待裁决**：选 A / B / C / 不做。按 L10：只建议、不擅自变成检查；落成机检须人裁决。
-
-### 验证机制分配（2026-09-09）
-
-> 该表属**施工期验证方法论**（"每项用什么手段验、通过标准是什么"），按规则 8.3 已移到 [design/maintenance-benchmark.md §9](design/maintenance-benchmark.md)（原地不再维护副本）；通用基线（`py_compile` / `node --check` / i18n `rows=0` 等）以 [AGENTS.md §2.2](../../AGENTS.md) 的验证阶梯为准。
-
-**§12 遗留（非门禁项）**：打开库 `sync_kb_pending` 全库扫描 \~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。
-
-***
+> 节区注记：引言/触发点约束 `#intro`｜A 一致性内核（已收口出表）`#a`｜D 渲染（已收口）`#d`｜F §2.5 开放发现 `#f`｜G 团队任务板（已归档）`#g`｜H 待裁决建议条款 `#h`｜验证机制分配 `#verify`｜§12 遗留 `#residual`
 
 ## 13. 应用内对话（Agent 面板）
 
-> **2026-10-22 P1（Lead 裁决）**：本表只留**索引**（ID / 主题 / 状态 / 原文指针）；AG01–AG105 的逐条叙述正文（做法 / 证据 / 未取证·下一步）**逐字存档**于 [design/agent-panel-batches.md §2](design/agent-panel-batches.md)，可 `grep -n` 反查。**状态事实源 = 本表；证据/未取证事实源 = design 存档**。
-> 历史：AG01–AG57 的早期批次叙述于 2026-09-24 已移入 design（同上文件）；本表 `·K2` = 代码完成·真机验收未闭环（规则 2）；`→§10.5` = 已出表索引；`⛔` = 已并入/作废（AG60 已并入 AG61；AG97/AG75 见 §10.4）。
+> **索引（2026-10-26 索引化）**：本表只留索引（ID/主题/状态/详情）；**详情（AG 行原文 + 注记）**→ [todo/13-agent-panel.md](todo/13-agent-panel.md)。状态事实源 = 本表；历史批次叙述 = [design/agent-panel-batches.md](design/agent-panel-batches.md)。
+> 统计：106 行 = 活跃索引 **52**（✅10 / 🔄·K2 30 / 🔄 3 / ⏳7 / 💡1 / ⚠️1）+ 已归档 ✅→§10.5 **27** + 已作废 ⛔ **27**。
 
-| ID | 主题 | 状态 | 原文 |
+| ID | 主题 | 状态 | 详情 |
 | --- | --- | --- | --- |
-| AG01 | 引用 agent 回复内容再追问（选中某条… | 💡 | design §2 |
-| AG02 | 助手气泡渲染 Markdown + 文件:… | ✅→§10.5 | design §2 |
-| AG03 | dsh M2 session-refere… | 🔄·K2 | design §2 |
-| AG04 | 工具与能力包路线图（写/联网/skill/… | ⏳ | design §2 |
-| AG05 | 状态栏/状态 bar（点绿/红 + 模型/… | 🔄 | design §2 |
-| AG06 | UI 视觉语言对照（借 dsh 观感）：A… | 🔄 | design §2 |
-| AG07 | 引用/锚点合法性（空格路径/非 md/全角… | ⏳ | design §2 |
-| AG08 | 面板看不到模型 thinking ＋其展开… | 🔄·K2 | design §2 |
-| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄·K2 | design §2 |
-| AG10 | dock 整理：会话选择迁到左栏「历史」页… | 🔄·K2 | design §2 |
-| AG11 | 流式逐行渲染（面板侧中间缓冲；代码块/公式… | 🔄·K2 | design §2 |
-| AG12 | 图片渲染支持：在流式管线里渲染模型输出的图… | ⏳ | design §2 |
-| AG13 | 思考不落盘 ⇒ 重载旧会话/刷新看不到历史… | ⏳ | design §2 |
-| AG14 | 会话重命名（title.py 补 user… | ⏳ | design §2 |
-| AG15 | 每轮 token 用量行：最后一轮助手气泡… | 🔄·K2 | design §2 |
-| AG16 | 状态 bar 刷新间隔可配：设置 → 对话… | 🔄·K2 | design §2 |
-| AG17 | 「生成中…Ns」下沉末条助手气泡尾 + 状… | 🔄·K2 | design §2 |
-| AG18 | 「读后写守卫」+ 审批审计事件 + nev… | 🔄·K2 | design §2 |
-| AG19 | delete\_file op（写面 §7 … | 🔄·K2 | design §2 |
-| AG20 | 修（真机反馈）：同批「先 create\_f… | 🔄·K2 | design §2 |
-| AG21 | 技能（skill）规则面落地：吃上游 pa… | 🔄·K2 | design §2 |
-| AG22 | 补 move\_file op（跨目录搬整篇… | 🔄·K2 | design §2 |
-| AG23 | 斜杠命令最小面（上游 interactio… | 🔄·K2 | design §2 |
-| AG24 | 能力插件「声明面」落地（S1 开篇）：se… | 🔄·K2 | design §2 |
-| AG25 | tool/call 落盘位次对齐上游（"先… | 🔄·K2 | design §2 |
-| AG26 | skill 的 /name 用户手势补齐（… | 🔄·K2 | design §2 |
-| AG27 | sidecar 结构 op 三件套 | 🔄·K2 | design §2 |
-| AG28 | 修「字样式命令被当成 wikilink」（… | 🔄·K2 | design §2 |
-| AG29 | 库级 op rebuild\_manifes… | 🔄·K2 | design §2 |
-| AG30 | propose\_write 失败取证 + … | ✅→§10.5 | design §2 |
-| AG31 | 修 move\_file 的 to\_dir … | ✅→§10.5 | design §2 |
-| AG32 | 文件树图标两态（已配置元数据 / 未配置）… | ✅→§10.5 | design §2 |
-| AG33 | 思考改「按步多段」+ 摘要行移出圆角气泡 | ✅→§10.5 | design §2 |
-| AG34 | 追 WinError 5（拒绝访问）根因：… | ✅→§10.5 | design §2 |
-| AG35 | 思考行三处小改：撤摘要文字 / 正文一律走… | ✅→§10.5 | design §2 |
-| AG36 | 思考气泡「展开」只变高一点 | ✅→§10.5 | design §2 |
-| AG37 | 文件树缩进「折角」紧贴行首字形 | ✅→§10.5 | design §2 |
-| AG38 | 订正 AG37：折角「往右延长」，文件图标… | ✅→§10.5 | design §2 |
-| AG39 | 文件树连接线第三版：折角退役、仿 Trae… | 🔄 K1（2026-10-22 补：原状态为 `<br />` 占位；按正文如实补 —— 正文自述「未做（如实）」且未声明落地，故不标 ✅） | design §2 |
-| AG40 | 竖导轨归中：线穿过母文件夹三角的中心 | ✅→§10.5 | design §2 |
-| AG41 | 能力插件契约接线：让声明面真正生效（act… | ✅→§10.5 | design §2 |
-| AG42 | 能力插件面板（设置 →「能力」页签） | ✅→§10.5 | design §2 |
-| AG43 | 勾选框统一改「圆点」（未选中 = 空心圆，… | ✅→§10.5 | design §2 |
-| AG44 | 向用户提问（ask\_user\_questi… | ✅→§10.5 | design §2 |
-| AG45 | 单选与多选同一套圆点：模式只由 span … | ✅→§10.5 | design §2 |
-| AG46 | 圆点尺寸缩到原来的 0.8 | ✅→§10.5 | design §2 |
-| AG47 | 行内 文字 的配色对齐上游 | ✅→§10.5 | design §2 |
-| AG48 | 设置弹窗页签条可滚动（滚条隐藏）+ 「能力… | ✅→§10.5 | design §2 |
-| AG49 | 设置 →「显示」→「文字」新增字体类型（按… | ✅→§10.5 | design §2 |
-| AG50 | 设置区「可折叠子版块」推广到六个页签 + … | ✅→§10.5 | design §2 |
-| AG51 | 大知识库里「切一个 md 文件要 9–10… | ✅→§10.5 | design §2 |
-| AG52 | 对话栏拖入图片 → 模型真的能看图（图像输… | ✅→§10.5 | design §2 |
-| AG53 | 页签切换提速：预览 DOM 缓存 + 后台… | ✅→§10.5 | design §2 |
-| AG54 | N 线联网搜索（web\_search / … | ✅→§10.5 | design §2 |
-| AG55 | 待答卡答完收起 + 工具行只显示「问→答」… | ✅→§10.5 | design §2 |
-| AG56 | 回话二级折叠（只剩最后一段摘要）+ 发送区… | ⏳ | design §2 |
-| AG57 | AG54 真机出网验证（人授权「打开开关验… | ✅→§10.5 | design §2 |
-| AG58 | 末轮用量行"又没了"的修复（重载/重启后仍在）+ 「思考过程」小三角 + 预览链接可复制 | 🔄·K2 | design §2 |
-| AG59 | **脚本工作区（agent 写、人点「运行」）v1**：库内 `.memoria/agent/scratch/` + 模型面四把工具 + 五条面板 RPC + 对话栏「工作区」面板 + `scratch/run` 审计 + 三个设置键 | ⛔ 已并入 ed5964c9 拆除 | design §2 |
-| AG60 | **N 线插件化·第一片：域名名单**（`fetch_allow_domains` / `fetch_deny_domains` + 逐跳校验 + `WEB_BLOCKED_DOMAIN` + 设置页两行输入 + 归一化回显） | ⛔ 已并入 AG61（2026-10-22 合并裁决；正文保留供追溯，不再维护） | design §2 |
-| AG61 | **N 线插件化·第二片：样板声明 + 工具级能力闸（= 库级启停）+ 库级参数 schema 第一例（域名名单搬进能力面板）** | 🔄·K2 | design §2 |
-| AG62 | **N 线技能包：skill 的「内置只读根」+ 首个随包技能** **`web-research`（N 线联网工作法）** | 🔄·K2 | design §2 |
-| AG63 | **脚本工作区三键的设置界面**（`script_interpreter` / `script_use_bundled` / `script_timeout_s`）+ RPC `agent_script_settings`（收掉 AG59 的"暂无界面"） | ⛔ 已并入 ed5964c9 拆除 | design §2 |
-| AG64 | **预览池的智能替换**（评分 + 老化 + 后台预渲染的入场闸）+ 设置「性能」版块的权重 / 公式 / 恢复默认 | 🔄·K2 | design §2 |
-| AG65 | **预览池门槛可配 + 现场读数**（真机反馈跟进，AG64 的修正） | 🔄·K2 | design §2 |
-| AG66 | **板块：预览渲染管线**（刷新分档 / 缓存形态 / 增量渲染 / 预测式预加载）—— **待评审，未施工** | ⏳ | design §2 |
-| AG67 | **K1'a + K1'b 落地：双重预渲染的**第二层\*\*（基于知识点的智能预渲染预测 = 文件层马尔可夫链 + KP 骨架）\*\* | 🔄·K2 | design §2 |
-| AG68 | **真机读数判定（"静态化能否提速"）+ 命中恢复分段计时** | 🔄·K2 | design §2 |
-| AG69 | **第四次～第六次真机读数归因定形 +** **`static`** **两处修正 + K2（离屏跳过）落地** | 🔄·K2 | design §2 |
-| AG70 | **第七次真机读数：④ 没打中靶子 + 读数头条口径修正 + 预渲染别抢用户那一帧** | 🔄·K2 | design §2 |
-| AG71 | **K4a 落地：预览窗口化渲染**（只把"看得到的那一窗"放进 DOM）+ K2（`content-visibility`）判死删除 | ⛔→§10.4.2 | design §2 |
-| AG72 | **K4a 首次真机读数（冷渲染）⇒ 修掉窗口化自身两处强制全量布局陷阱 + 补冷路径读数** | ⛔→§10.4.2 | design §2 |
-| AG73 | **K4a 命中读数：窗口化被证实生效；那 1.3 s 是 MathJax 排整篇 ⇒ 排队时机改到"窗口定 + 第一帧之后"** | ⛔→§10.4.2 | design §2 |
-| AG74 | **MathJax 挪位生效（脚本 1343 → 314 ms）；但暴露"预渲染取消缺口" ⇒ 切完后仍被一次 \~1 s 长任务冻住（含滚轮）** | ⛔→§10.4.2 | design §2 |
-| AG76 | **跳转优先于"恢复上次位置"**（真因）+ **窗口化调试读数**（人明确要日志）+ 滚轮兜底 | ⛔→§10.4.2 | design §2 |
-| AG77 | **实测抓出：窗口化一直没接管**（读数 `窗口 -1–-1/0` + 日志只有 `anchorLine`）⇒ 每个早退分支留证 + 探针改模块级 | ⛔→§10.4.2 | design §2 |
-| AG78 | **读数自证"滚轮没坏" + 日志纪律修正**（滚轮只计数不进环形缓冲；加两个挤不掉的字段 `接管 N 次 / 上次跳过`） | ⛔→§10.4.2 | design §2 |
-| AG79 | **实测抓到根因：人一直在编辑模式 ⇒ 窗口化按设计早退（AG77 的日志立功）⇒ 改为"编辑模式也窗口化"+ 两条安全阀** | ⛔→§10.4.2 | design §2 |
-| AG80 | **真根因（叠加）：槽位表按** **`#preview`** **直接子节点摊 ⇒ 只摊出 1 个 ⇒ 被** **`MIN_SLOTS`** **挡下；改为按"块元素"摊 + 走各自父节点搬** | ⛔→§10.4.2 | design §2 |
-| AG81 | **窗口化终于跑通**（脚本 311 · 画面 352 ms）⇒ 随即抓出**自转**（`_cover` 重入 + 无迟滞）⇒ 防重入 + 迟滞 | ⛔→§10.4.2 | design §2 |
-| AG82 | **K4a 交付确认（人：「完全流畅，这个方案很好」）+ 修"切模式位置漂移/回开头"** | ⛔→§10.4.2 | design §2 |
-| AG83 | **编辑导致回开头**（真因：`renderPreview` 先清 DOM）+ 逐条排查"其它回开头的口子"（顺手补掉漏掉的一处 `claimScroll` 守卫） | ⛔→§10.4.2 | design §2 |
-| AG84 | **编辑回车"上下闪动"**（真因：重渲染先插"渲染中"占位行 ⇒ 整篇高度塌成一行、滚动被夹到 0，\~700 ms 后才补回）⇒ 同文档重渲染**不清屏** | ⛔→§10.4.2 | design §2 |
-| AG85 | **编辑路径专用读数**（等待 / 全量重渲染 / 接管 / 补链接 / 排版）—— 为"回车卡顿"集中优化取证 | ⛔→§10.4.2 | design §2 |
-| AG86 | **日志抓到真 bug（旧槽位表** **`replaceChild`** **抛错 ⇒ 那次整篇没接管）+ 渲染再切五段**（解析/建 DOM/打行号/mermaid/MathJax 启动） | ⛔→§10.4.2 | design §2 |
-| AG87 | **读数自抹修复 + 定位并跳过"整篇 mermaid"**（真机 `postRender 26679 → 58698`，即 27 s / 59 s 的头号嫌疑） | ⛔→§10.4.2 | design §2 |
-| AG88 | **读数让"编辑"这条链的真相浮出**（编辑**不走窗口化**）+ 修两处读数缺陷（键名印出 / 分段被覆盖） | ⛔→§10.4.2 | design §2 |
-| AG89 | **读数证明"33 s 不在渲染流水线里"**（全程仅 100 ms）⇒ 把 `renderPreview` **之前**那一段也切开（新增阶段 `viewIn` / `viewPre`）；`pendingOff` 未治好上飘 | 🔄·K2 | design §2 |
-| AG90 | **补"位置漂移"读数**（人圈定）—— 渲染前/后 `scrollTop`、会话累计、补偿量、锚点行与块内偏移 | ⛔→§10.4.2 | design §2 |
-| AG91 | **我引入的致命 bug：`drift`** **别名写在** **`dbg`** **之前 ⇒ 加载期 TypeError ⇒ 整个窗口化没挂上**（真机"不能跳转、不能滚动"）+ **按人要求上控制台日志** | ⛔→§10.4.2 | design §2 |
-| AG92 | **窗口化只做"加载过渡"，加载完成即交还老逻辑**（人拍板的口径；直接回答"为什么窗口化加载了一秒多还不能有全量加载的编辑效果"） | ⛔→§10.4.2 | design §2 |
-| AG93 | **跳转这一趟完全不窗口化**（人：「跳转之后就卡死，滚不动」）+ 四处"漏气"一次补齐 | ⛔→§10.4.2 | design §2 |
-| AG94 | **回滚 AG93：跳转**照旧窗口化\*\*，只拿掉"过渡物化"\*\*（人：「连滚轮都滚不动」+ 真机日志定案） | ⛔→§10.4.2 | design §2 |
-| AG95 | **真机日志定出真 bug：整场会话没有一条** **`attach?`** —— `pendingLoad` 只由"暂存成功"置位 ⇒ **换文件被当成"同文档"** ⇒ 窗口化整场没生效 | ⛔→§10.4.2 | design §2 |
-| AG96 | **逃生门（设置「窗口化渲染」开关）+ 焊死两个"卡住"死结 + 诊断全改 error 级** | ⛔→§10.4.2 | design §2 |
-| AG100 | **修「行首退格合并后预览只剩前半段」（我 AG98 引入的 AST↔DOM 错位）** | ✅·K4 | design §2 |
-| AG105 | **切模式锚点回归修复 + 输入不再"先源码后预览"**（人：「从预览区域切换分栏等其他模式仍有位置漂移」；「是先在源码区域输入的…现在仍然是输入等一会才有反应」） | ✅·K4 | design §2 |
-| AG103 | **原生优先：预览区打字不再"每键重渲那一块"**（人指出"南辕北辙"） | ✅·K4 | design §2 |
-| AG104 | **跳转落点二次校准**（人：「知识点跳转定位位置又不准了」） | ✅·K4 | design §2 |
-| AG102 | **按键热路径再瘦身：跳过 O(文档) 重算 + 诊断埋点默认关**（人：「输入内容仍然等好一会才显示」） | ✅·K4 | design §2 |
-| AG101 | **编辑热路径瘦身：源码面板/后处理都只动改动的那几行·那一块** | ✅·K4 | design §2 |
-| AG99 | **清掉窗口化残留 + MathJax 排队回旧口径**（收尾） | ✅·K4a | design §2 |
-| AG98 | **预览区编辑一律块级提交：结构性编辑不再整篇重渲**（人指出病根） | ✅·K4 | design §2 |
-| AG106 | 文档资源附件（拖 PDF/Word/TXT/MD 进对话栏） | ✅ 0.4.7 修复（task-134/`4d210c45`；后端 `6336728a` 交付，前端 `1fe97fa7` 出生即死 10-19~10-25） | design §2 |
-| AG107 | Release 标题/双语/造价段违反已文档化规范（v0.4.7/v0.4.8 两版 + 0.5.0〔已撤回〕） | ✅ 已修：`e030dc1d`+`b5c7ee5a`（机检必红 32/32）+ 3 个 body 重写双语 | version.md §7 |
-| AG108 | 资产命名漂移：`-lite.zip`（v0.4.7/v0.4.8；0.5.0 撤回前用的是 canonical；canonical=`-win64-lite.zip`） | ⚠️ 留档：已发布资产不改名；新发布用 canonical；机检 `-lite` 仅 WARN | operations.md §5.1 |
+| AG01 | 引用 agent 回复内容再追问（选中某条… | 💡 | [详](todo/13-agent-panel.md#ag01) |
+| AG03 | dsh M2 session-refere… | 🔄·K2 | [详](todo/13-agent-panel.md#ag03) |
+| AG04 | 工具与能力包路线图（写/联网/skill/… | ⏳ | [详](todo/13-agent-panel.md#ag04) |
+| AG05 | 状态栏/状态 bar（点绿/红 + 模型/… | 🔄 | [详](todo/13-agent-panel.md#ag05) |
+| AG06 | UI 视觉语言对照（借 dsh 观感）：A… | 🔄 | [详](todo/13-agent-panel.md#ag06) |
+| AG07 | 引用/锚点合法性（空格路径/非 md/全角… | ⏳ | [详](todo/13-agent-panel.md#ag07) |
+| AG08 | 面板看不到模型 thinking ＋其展开… | 🔄·K2 | [详](todo/13-agent-panel.md#ag08) |
+| AG09 | 设置里的「字号」同时控制对话面板字号 | 🔄·K2 | [详](todo/13-agent-panel.md#ag09) |
+| AG10 | dock 整理：会话选择迁到左栏「历史」页… | 🔄·K2 | [详](todo/13-agent-panel.md#ag10) |
+| AG11 | 流式逐行渲染（面板侧中间缓冲；代码块/公式… | 🔄·K2 | [详](todo/13-agent-panel.md#ag11) |
+| AG12 | 图片渲染支持：在流式管线里渲染模型输出的图… | ⏳ | [详](todo/13-agent-panel.md#ag12) |
+| AG13 | 思考不落盘 ⇒ 重载旧会话/刷新看不到历史… | ⏳ | [详](todo/13-agent-panel.md#ag13) |
+| AG14 | 会话重命名（title.py 补 user… | ⏳ | [详](todo/13-agent-panel.md#ag14) |
+| AG15 | 每轮 token 用量行：最后一轮助手气泡… | 🔄·K2 | [详](todo/13-agent-panel.md#ag15) |
+| AG16 | 状态 bar 刷新间隔可配：设置 → 对话… | 🔄·K2 | [详](todo/13-agent-panel.md#ag16) |
+| AG17 | 「生成中…Ns」下沉末条助手气泡尾 + 状… | 🔄·K2 | [详](todo/13-agent-panel.md#ag17) |
+| AG18 | 「读后写守卫」+ 审批审计事件 + nev… | 🔄·K2 | [详](todo/13-agent-panel.md#ag18) |
+| AG19 | delete\_file op（写面 §7 … | 🔄·K2 | [详](todo/13-agent-panel.md#ag19) |
+| AG20 | 修（真机反馈）：同批「先 create\_f… | 🔄·K2 | [详](todo/13-agent-panel.md#ag20) |
+| AG21 | 技能（skill）规则面落地：吃上游 pa… | 🔄·K2 | [详](todo/13-agent-panel.md#ag21) |
+| AG22 | 补 move\_file op（跨目录搬整篇… | 🔄·K2 | [详](todo/13-agent-panel.md#ag22) |
+| AG23 | 斜杠命令最小面（上游 interactio… | 🔄·K2 | [详](todo/13-agent-panel.md#ag23) |
+| AG24 | 能力插件「声明面」落地（S1 开篇）：se… | 🔄·K2 | [详](todo/13-agent-panel.md#ag24) |
+| AG25 | tool/call 落盘位次对齐上游（"先… | 🔄·K2 | [详](todo/13-agent-panel.md#ag25) |
+| AG26 | skill 的 /name 用户手势补齐（… | 🔄·K2 | [详](todo/13-agent-panel.md#ag26) |
+| AG27 | sidecar 结构 op 三件套 | 🔄·K2 | [详](todo/13-agent-panel.md#ag27) |
+| AG28 | 修「字样式命令被当成 wikilink」（… | 🔄·K2 | [详](todo/13-agent-panel.md#ag28) |
+| AG29 | 库级 op rebuild\_manifes… | 🔄·K2 | [详](todo/13-agent-panel.md#ag29) |
+| AG39 | 文件树连接线第三版：折角退役、仿 Trae… | 🔄 | [详](todo/13-agent-panel.md#ag39) |
+| AG56 | 回话二级折叠（只剩最后一段摘要）+ 发送区… | ⏳ | [详](todo/13-agent-panel.md#ag56) |
+| AG58 | 末轮用量行"又没了"的修复（重载/重启后仍在）+ 「思考过程」小… | 🔄·K2 | [详](todo/13-agent-panel.md#ag58) |
+| AG61 | **N 线插件化·第二片：样板声明 + 工具级能力闸（= 库级启停）+ … | 🔄·K2 | [详](todo/13-agent-panel.md#ag61) |
+| AG62 | **N 线技能包：skill 的「内置只读根」+ 首个随包技能** **`web-researc… | 🔄·K2 | [详](todo/13-agent-panel.md#ag62) |
+| AG64 | **预览池的智能替换**（评分 + 老化 + 后台预渲染的入场闸）+ 设… | 🔄·K2 | [详](todo/13-agent-panel.md#ag64) |
+| AG65 | **预览池门槛可配 + 现场读数**（真机反馈跟进，AG64 的修正） | 🔄·K2 | [详](todo/13-agent-panel.md#ag65) |
+| AG66 | **板块：预览渲染管线**（刷新分档 / 缓存形态 / 增量渲染 / 预测… | ⏳ | [详](todo/13-agent-panel.md#ag66) |
+| AG67 | **K1'a + K1'b 落地：双重预渲染的**第二层\*\*（基于知识点的智能预… | 🔄·K2 | [详](todo/13-agent-panel.md#ag67) |
+| AG68 | **真机读数判定（"静态化能否提速"）+ 命中恢复分段计时** | 🔄·K2 | [详](todo/13-agent-panel.md#ag68) |
+| AG69 | **第四次～第六次真机读数归因定形 +** **`static`** **两处修正 + K2… | 🔄·K2 | [详](todo/13-agent-panel.md#ag69) |
+| AG70 | **第七次真机读数：④ 没打中靶子 + 读数头条口径修正 + 预渲染… | 🔄·K2 | [详](todo/13-agent-panel.md#ag70) |
+| AG89 | **读数证明"33 s 不在渲染流水线里"**（全程仅 100 ms）⇒ 把 `renderPr… | 🔄·K2 | [详](todo/13-agent-panel.md#ag89) |
+| AG100 | **修「行首退格合并后预览只剩前半段」（我 AG98 引入的 AST↔DOM … | ✅ | [详](todo/13-agent-panel.md#ag100) |
+| AG105 | **切模式锚点回归修复 + 输入不再"先源码后预览"**（人：「从预… | ✅ | [详](todo/13-agent-panel.md#ag105) |
+| AG103 | **原生优先：预览区打字不再"每键重渲那一块"**（人指出"南辕北… | ✅ | [详](todo/13-agent-panel.md#ag103) |
+| AG104 | **跳转落点二次校准**（人：「知识点跳转定位位置又不准了」） | ✅ | [详](todo/13-agent-panel.md#ag104) |
+| AG102 | **按键热路径再瘦身：跳过 O(文档) 重算 + 诊断埋点默认关**（人… | ✅ | [详](todo/13-agent-panel.md#ag102) |
+| AG101 | **编辑热路径瘦身：源码面板/后处理都只动改动的那几行·那一块** | ✅ | [详](todo/13-agent-panel.md#ag101) |
+| AG99 | **清掉窗口化残留 + MathJax 排队回旧口径**（收尾） | ✅ | [详](todo/13-agent-panel.md#ag99) |
+| AG98 | **预览区编辑一律块级提交：结构性编辑不再整篇重渲**（人指出… | ✅ | [详](todo/13-agent-panel.md#ag98) |
+| AG106 | 文档资源附件（拖 PDF/Word/TXT/MD 进对话栏） | ✅ | [详](todo/13-agent-panel.md#ag106) |
+| AG107 | Release 标题/双语/造价段违反已文档化规范（v0.4.7/v0.4.8 两版 + 0.5.0… | ✅ | [详](todo/13-agent-panel.md#ag107) |
+| AG108 | 资产命名漂移：`-lite.zip`（v0.4.7/v0.4.8；0.5.0 撤回前用的是 canonical… | ⚠️ 留档 | [详](todo/13-agent-panel.md#ag108) |
+| — | 27 条已完成归档（§10.5） | ✅→§10.5 | [全部](todo/13-agent-panel.md#archived) |
+| — | 27 条已作废/已并入（AG59/60/63/71–96 等） | ⛔ | [全部](todo/13-agent-panel.md#voided) |
 
-> **2026-10-25 task-90 状态校准**：① 24 条窗口化家族 → `⛔→§10.4.2`（见 [design/ledger-archive-2026.md §10.4.2](design/ledger-archive-2026.md)）；② AG03/AG08/AG11/AG89 由 `✅·K2` **降回 `🔄·K2`**（矛盾修正：无真机验收证据，按规则 2 不得标 ✅）；③ 复核明细与逐条证据见 `artifacts/agent/verify/todo/0.4.7-task-90-ledger.md`；④ 剩余 K2 条目等 task-91~112 判定后由 task-94 收口。
-
-> **AG106 明细（2026-10-25 补，task-134）**：后端 `6336728a`(10-18) 已交付 `ui.py:2792 agent_attach_resource` / `kb.py:6065 read_resource` / `resources.py::extract_text`；前端 `1fe97fa7`(10-19 20:16) 首次接线但落在 IIFE 门面 `return` 之后 ⇒ **出生即死**（10-19~10-25 共 6 天：用户拖文档一律红框「只支持图片」，后端 0 文件、无 chip）；§13 此前**没有任何一行**记录该功能。修复 `4d210c45`(task-134)；真机 before/after：`artifacts/agent/verify/todo/0.4.7-dead-code-audit/realmachine/`（`drop-before.png` 红框 → `drop-after.png`：①无报错 ②后端落盘 ③chip ④请求体含 read_resource ⑤发送后清空 ⑥移除按钮生效）。
-
-> **2026-10-25 task-135 台账修正（AG59/AG63）**：两行的 **UI 部分已于 2026-10-09 `ed5964c9` 设计性拆除**（`refactor(agent): 第三期 拆掉 UI 脚本工作区（保留四把工具与工作区位置）`）—— 状态改 `⛔ 已并入 ed5964c9 拆除`，**原文逐字保留**。**保留**：后端 `scratch.py` + 四把工具（`tools/kb.py`）+ 工作区位置 `.memoria/agent/scratch/`；**拆除**：五条面板 RPC + 对话栏「工作区」面板 + 三键设置界面（`scratch-settings.js` / `agent_script_settings` / `agent_scratch` 全仓 0 命中）。**替代**：AG59「人点运行」诉求由**消息内代码块「运行」按钮**承接（`agent-panel.js:6669-6678` 落点注释块；Q1 拍板保留）。**AG59/AG63 的 UI 部分不再恢复**（恢复属功能决策，需人裁决）。> **落点约定（2026-10-25 补，task-134 实证）**：UI 追加块必须落在 IIFE 门面 `return {` **之前**；`return` 之后的顶层语句**永不执行**（只有 function 声明会 hoist，且 hoist 会把问题掩盖成“看起来在”）。约定史：`8f2e88f6` 首版就有门面 return ⇒ “`})();` 之前”从来 ≠ “`return` 之前”；`2f9a88f9`(09-19) 起的正确写法被 11 commit / 19 块遵守；`1fe97fa7`(10-19) 首次写成错误变体 ⇒ 文档资源附件块出生即死 6 天。
-
-> **2026-10-25 task-94 K2 收口判定**：§13 剩余 K2 **31 条（实测）**逐条判定 = **A 0 / B 1 / C 30 / D 0**；AG07 降 `⏳`（路线已定未施工），其余 30 条保持 `🔄·K2`（代码在、真机未闭环，**不升 ✅**）；明细见 `artifacts/agent/verify/agent-k2-triage-2026-10-25.md`。
-
-> **2026-10-25 台账补录（AG107/AG108，Lead 自认违例，如实记录）**：
-> - **AG107（release 规范违例）**：`version.md:124` 早已规定「Release 标题只允许 `Memoria vX.Y.Z`」，但 v0.4.7/v0.4.8 两版 + 0.5.0（已撤回）都写了副标题；另造价段缺量级与统计口径、正文非双语。**根因**：规范只写在文档里、靠"记得住"= 随机数。**修法**：`e030dc1d` 规范升三条硬规则 + `b5c7ee5a` 做成机检（必红 32/32）+ 3 个 release body 重写为双语。**留下机制**：release_preflight 不通过就发不出去。
-> - **AG108（资产命名漂移）**：v0.3.x–v0.4.6 canonical 是 `-win64-lite.zip`，v0.4.7 起漂成 `-lite.zip`。**根因**：打包时只看最近自己的命名习惯照抄，没回头对照 `operations.md` 表。**处置**：canonical 保持 `-win64-lite.zip`；**已发布资产不改名**（外部链接/用户已存路径）；`operations.md §5.1` + `release-copy.md` 记漂移；机检 ASSETS-COUNT 两种都收、`-lite` 只 WARN；**新发布一律 canonical**。***
+> 注记（2026-10-25 task-94 K2 判定 / AG106/AG107/AG108 补录 / 2026-10-25 台账补录）→ [附件#notes](todo/13-agent-panel.md#notes)
 
 ## 14. 0.4.7 收摊计划（2026-10-25 刷新，todo-owner；交人审）
 
@@ -521,3 +417,9 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 **L10 说明（证据→建议）**：本条不是凭感觉加项——fixture 完整（14 次工具调用 + 13 条裁决可复核）；建议做成插件工具（`team_debate`）而不是再写文档规范。
 **P2-1 事实（不美化）**：teammate 工具表挂载 schedule 四件套=**是**，调用=**全部被拒**；`schedule_create`/`schedule_delete` 同样被拒；**会话类型级禁止，换 preset/升级 v4 均无效** ⇒ 监督角色只能走 P2-0（Lead 代持）+ B（契约门禁）。
 **不做什么**：不把团队插件塞进 0.4.8/0.4.9/0.5.0；不因本项改产品发布节奏；不恢复「teammate 自触发」（已证不可行）。
+
+***
+
+## 18. 0.5.x 导出/导入板块（2026-10-26 人定方向；Q1/Q2/Q3 已裁决）
+
+> 计划全文（P0 12 项 / 4 批 / 四组矩阵验收 / 人裁决）见 [design/export-import-0.5.md](design/export-import-0.5.md) §7–§12。**Q1 都要**：两皮肤（a Memoria 只读=默认 / b 纯文本）× 两形态（单 html / 文件夹）= **四组组合都做**，正交不设限；**Q2 省电=待测**（未测不得作卖点）；**Q3 v1 只导出**、导入延后。批次：B1 内核+文件夹+a → B2 单html+多选全选 → B3 纯文本皮肤 → B4 矩阵回归；v1.1 只延后高级体验，不延后组合。
