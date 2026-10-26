@@ -246,32 +246,76 @@ def _migrate_agent_config_from_install_dir(
     legacy: Path,
     environ: Mapping[str, str],
 ) -> None:
-    """把旧安装目录的 `agent.json` 一次性复制到用户目录（task-160）。
+    """把旧安装目录的 `agent.json` 与用户目录**按 mtime 逐键合并**（task-160 + task-179）。
 
-    **只复制不删**：旧文件可能是用户唯一备份（清 `%LOCALAPPDATA%` 后还能救）。
-    旧文件不再被读取（新位置已有即跳过），所以残留不会造成新旧打架。
+    ## 合并策略（task-179 起：per-key + mtime 较新者胜）
 
-    三条不变量：
-    1. 新位置已有 ⇒ 不覆盖（用户在新区改过的是最新的）；
-    2. 旧位置无 ⇒ 什么都不做；
-    3. 异常一律吞掉并记日志（迁移失败不得影响启动）。
+    早期实现是「新位置有文件 ⇒ 直接 return」，后果是：
+    用户升级后，旧构建在安装目录里改过的 `api_key` 等设置**静默丢失**。
+    实测 2026-10-26：安装目录 `agent.json` 是 18:13（api_key=sk-18eb75f7…），
+    用户态是 09-24（api_key=sk-7ac67dbd…）⇒ 18:13 那次改动被丢弃。
+
+    ## 为什么必须 per-key 而不是整文件覆盖
+
+    实测两份 `agent.json` 的键集合**不同**：
+    ```
+    安装目录 : api_key, base_url, model, status_refresh_ms, timeout_s
+    用户态   : api_key, base_url, enabled, model, script_use_bundled,
+               status_refresh_ms, timeout_s, transcript_mode
+    ```
+    ⇒ 整文件覆盖会抹掉用户态独有的 `enabled` / `script_use_bundled` / `transcript_mode`。
+
+    ## 只复制不删 + 异常吞掉
+
+    旧文件始终保留（可能是用户唯一备份）；任何异常只记 warn，不影响启动。
     """
     if environ.get(ENV_CONFIG_DIR) or environ.get(ENV_CONFIG_FILE):
         return  # 显式指定时不迁移
     try:
-        if target.is_file():
-            return  # 不变量 1
         if not legacy.is_file():
-            return  # 不变量 2
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(legacy, target)  # 只复制，不删源
+            return  # 旧位置无 ⇒ 无迁移
+
+        from memoria.util.user_state import file_mtime, merge_by_mtime
+
+        if not target.is_file():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(legacy, target)  # 只复制，不删源
+            logger.info(
+                "agent.json 已从旧安装目录迁移到用户目录：%s → %s（旧文件保留未删）",
+                legacy,
+                target,
+            )
+            return
+
+        # ── 两侧都有 ⇒ per-key 合并 ────────────────────────────────────
+        try:
+            current = json.loads(target.read_text(encoding="utf-8-sig"))
+            incoming = json.loads(legacy.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError) as exc:
+            logger.warning("agent.json 合并跳过（解析失败，保留用户态现有内容）：%s", exc)
+            return
+        if not isinstance(current, dict) or not isinstance(incoming, dict):
+            logger.warning("agent.json 合并跳过（顶层不是对象，保留用户态现有内容）")
+            return
+
+        merged, adopted = merge_by_mtime(
+            current=current,
+            incoming=incoming,
+            current_mtime=file_mtime(target),
+            incoming_mtime=file_mtime(legacy),
+        )
+        if merged == current:
+            return  # 无变化 ⇒ 不写盘
+        tmp = target.with_name(target.name + ".migrate-tmp")
+        tmp.write_text(json.dumps(merged, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        os.replace(tmp, target)
         logger.info(
-            "agent.json 已从旧安装目录迁移到用户目录：%s → %s（旧文件保留未删）",
-            legacy,
-            target,
+            "agent.json 合并完成：从旧安装目录采纳 %d 项 %s（旧文件保留未删）",
+            len(adopted),
+            adopted,
         )
     except Exception as exc:  # noqa: BLE001 - 迁移绝不能影响启动
-        logger.warning("agent.json 迁移失败（不影响启动，使用默认配置）：%s", exc)
+        logger.warning("agent.json 迁移失败（不影响启动，使用现有配置）：%s", exc)
 
 
 def _read_file_config(path: Path) -> dict[str, Any]:

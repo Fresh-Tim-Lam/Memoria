@@ -48,39 +48,78 @@ def settings_path() -> Path:
 def _migrate_from_install_dir(target: Path) -> None:
     """把**旧安装目录**里的 `ui-settings.json` 一次性搬到用户目录（task-160）。
 
-    ## 只复制不删（`shutil.copy2`，不 `unlink` 源文件）
+    ## 合并策略（task-179 起：**per-key + mtime 较新者胜**）
+
+    早期实现是「新位置有文件 ⇒ 直接 return」（不看 mtime），后果是：
+    用户升级后，旧构建在安装目录里改过的设置（API key / 主题 / 窗口位置）**静默丢失**。
+    实测 2026-10-26：安装目录 `ui-settings.json` 是 19:41，用户态是前一天 01:28 ⇒ 该更新被丢弃。
+
+    现在：逐键合并，冲突键取 **mtime 较新**的一方；mtime 相等/不可判 ⇒ **保守保留用户态**；
+    任一侧独有的键一律保留（并集）。详见 `memoria.util.user_state.merge_by_mtime`。
+
+    ## 只复制不删
 
     旧位置可能是用户**唯一的备份**：若将来用户清了 `%LOCALAPPDATA%`，
-    安装目录里的那份还在，还能救回来。代价是旧位置残留一份可能过期的副本
-    —— 但它**不再被读取**（下次启动会因新位置已存在而跳过迁移），
-    所以不会造成"新旧两份互相打架"，只是可能在旧发行包里看到一个陈旧文件。
+    安装目录里的那份还在，还能救回来。迁移**只改用户态文件的内容**，**不删不动**旧文件。
 
-    ## 三条不变量（关闭条件 2）
+    ## 异常一律吞掉
 
-    1. **新位置已有 ⇒ 绝不覆盖**（用户在新区改过的配置是更新的，不能回滚成旧值）；
-    2. 旧位置无 ⇒ 什么都不做（走默认值）；
-    3. **任何异常都吞掉**（记日志后返回）—— 迁移是"锦上添花"，
-       它失败不能让应用起不来；此时 `settings_path()` 已指向新位置，
-       读不到就是空配置（默认值），**不会**回落去读旧目录，
-       因为回落会让"用户在新区改过的值"被旧值取代（违反不变量 1）。
+    迁移是"锦上添花"，失败不能让应用起不来；此时按用户态现有内容（或默认值）继续。
     """
     if os.environ.get("MEMORIA_CONFIG_DIR"):
         return  # 显式指定目录时不迁移（测试/便携模式）
     try:
-        if target.is_file():
-            return  # 不变量 1：新位置已有 ⇒ 以新为准，不覆盖
         legacy = _install_config_dir() / _SETTINGS_FILE
         if not legacy.is_file():
-            return  # 不变量 2：旧位置无 ⇒ 无迁移
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(legacy, target)  # 只复制，不删源
+            return  # 旧位置无 ⇒ 无迁移
+
+        from memoria.util.user_state import file_mtime, merge_by_mtime
+
+        if not target.is_file():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(legacy, target)  # 只复制，不删源
+            logger.info(
+                "ui-settings 已从旧安装目录迁移到用户目录：%s → %s（旧文件保留未删）",
+                legacy,
+                target,
+            )
+            return
+
+        # ── 两侧都有 ⇒ per-key 合并 ────────────────────────────────────
+        try:
+            current = json.loads(target.read_text(encoding="utf-8-sig"))
+            incoming = json.loads(legacy.read_text(encoding="utf-8-sig"))
+        except (OSError, json.JSONDecodeError) as exc:
+            logger.warning("ui-settings 合并跳过（解析失败，保留用户态现有内容）：%s", exc)
+            return
+        if not isinstance(current, dict) or not isinstance(incoming, dict):
+            logger.warning("ui-settings 合并跳过（顶层不是对象，保留用户态现有内容）")
+            return
+
+        merged, adopted = merge_by_mtime(
+            current=current,
+            incoming=incoming,
+            current_mtime=file_mtime(target),
+            incoming_mtime=file_mtime(legacy),
+        )
+        if merged == current:
+            return  # 无变化 ⇒ 不写盘（避免无谓 churn）
+        _write_json_atomic(target, merged)
         logger.info(
-            "ui-settings 已从旧安装目录迁移到用户目录：%s → %s（旧文件保留未删）",
-            legacy,
-            target,
+            "ui-settings 合并完成：从旧安装目录采纳 %d 项 %s（旧文件保留未删）",
+            len(adopted),
+            adopted,
         )
     except Exception as exc:  # noqa: BLE001 - 迁移绝不能影响启动
-        logger.warning("ui-settings 迁移失败（不影响启动，使用默认值）：%s", exc)
+        logger.warning("ui-settings 迁移失败（不影响启动，使用现有值）：%s", exc)
+
+
+def _write_json_atomic(path: Path, data: dict[str, Any]) -> None:
+    """原子写（tmp + os.replace），避免半程崩溃留下损坏的配置文件。"""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".migrate-tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
 
 
 def _migrate_legacy_settings(target: Path) -> None:

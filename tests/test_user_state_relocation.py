@@ -119,13 +119,17 @@ def test_migrates_agent_config_from_install_dir(isolated) -> None:
 # ── ③【最关键】两边都有 ⇒ 以新位置为准，不覆盖 ─────────────────────────────
 
 
-def test_both_exist_new_wins_for_ui_settings(isolated) -> None:
-    """**两边都有时，绝不把用户在新区改过的配置回滚成旧值。**
+def test_both_exist_equal_mtime_keeps_user_value(isolated) -> None:
+    """`ui-settings`：两边都有且 **mtime 相同** ⇒ 保守保留用户态（不覆盖）。
 
-    这是本任务最容易写错的地方：如果迁移逻辑写成"旧位置存在就复制过去"，
-    用户在新版里改的设置会在下次启动时被旧安装目录的陈旧值覆盖，
-    而且**用户看不出发生了什么**（改了设置，重启就变了）。
+    ⚠️ **本用例在 task-179 改写过前提**：
+    task-160 的契约是「两边都有 ⇒ 以用户态为准」，task-179 改成
+    「两边都有 ⇒ **mtime 较新者胜**；mtime 相等/不可判 ⇒ 保守保留用户态」。
+    所以这里**显式把两边 mtime 设成相等**，才是在测新契约下的"保守"分支；
+    否则后写入的一方 mtime 更新，会（正确地）胜出 —— 那是 T-mig-1/2 覆盖的行为。
     """
+    import os as _os
+
     user_dir, install_dir = isolated
     user_file = user_dir / "ui-settings.json"
     user_file.parent.mkdir(parents=True, exist_ok=True)
@@ -135,17 +139,27 @@ def test_both_exist_new_wins_for_ui_settings(isolated) -> None:
     old.parent.mkdir(parents=True, exist_ok=True)
     old.write_text(json.dumps({"last_kb_path": "/OLD/kb"}), encoding="utf-8")
 
+    # 显式相等 mtime ⇒ 走"保守保留用户态"分支
+    same = 1_700_000_000.0
+    _os.utime(user_file, (same, same))
+    _os.utime(old, (same, same))
+
     data = ui_settings.load_ui_settings()
 
-    assert data["last_kb_path"] == "/NEW/kb", "两边都有时必须以新位置为准（不得被旧值覆盖）"
-    # 新文件内容必须**原封不动**（不只是读的时候对）
+    assert data["last_kb_path"] == "/NEW/kb", "mtime 相等 ⇒ 保守保留用户态"
     assert json.loads(user_file.read_text(encoding="utf-8"))["last_kb_path"] == "/NEW/kb"
     # 旧文件也不能被改动
     assert json.loads(old.read_text(encoding="utf-8"))["last_kb_path"] == "/OLD/kb"
 
 
-def test_both_exist_new_wins_for_agent_config(isolated) -> None:
-    """`agent.json`：两边都有 ⇒ 以用户目录为准（不覆盖）。"""
+def test_both_exist_equal_mtime_keeps_user_agent_config(isolated) -> None:
+    """`agent.json`：两边都有且 mtime 相同 ⇒ 保守保留用户目录的值。
+
+    ⚠️ 同 `test_both_exist_equal_mtime_keeps_user_value`：task-179 改了契约，
+    "mtime 较新者胜"由 T-mig-1/2 覆盖；本用例守"相等 ⇒ 保守"这一分支。
+    """
+    import os as _os
+
     user_dir, install_dir = isolated
     new_file = user_dir / llm_config.CONFIG_FILENAME
     new_file.parent.mkdir(parents=True, exist_ok=True)
@@ -155,11 +169,15 @@ def test_both_exist_new_wins_for_agent_config(isolated) -> None:
     old.parent.mkdir(parents=True, exist_ok=True)
     old.write_text(json.dumps({"provider": "OLD-provider"}), encoding="utf-8")
 
+    same = 1_700_000_000.0
+    _os.utime(new_file, (same, same))
+    _os.utime(old, (same, same))
+
     path = llm_config.config_file_path(env={})
 
     assert path == new_file
     assert json.loads(path.read_text(encoding="utf-8"))["provider"] == "NEW-provider", (
-        "两边都有时必须以用户目录为准（不得被旧安装目录的值覆盖）"
+        "mtime 相等 ⇒ 保守保留用户目录的值"
     )
     # 旧文件不得被改动
     assert json.loads(old.read_text(encoding="utf-8"))["provider"] == "OLD-provider"

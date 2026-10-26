@@ -59,3 +59,78 @@ def user_config_dir() -> Path:
     if local:
         return Path(local) / APP_DIR_NAME / CONFIG_DIR_NAME
     return Path.home() / ".memoria" / CONFIG_DIR_NAME
+
+
+# ── 用户态合并策略（task-179：按 mtime 较新者胜，per-key）─────────────────────
+
+
+def file_mtime(path: Path) -> float | None:
+    """文件的 mtime（秒）；读取失败/不存在 ⇒ `None`（**不要用 0 代替** —— 0 会假装"很旧"）。"""
+    try:
+        return path.stat().st_mtime
+    except OSError:
+        return None
+
+
+def merge_by_mtime(
+    *,
+    current: dict,
+    incoming: dict,
+    current_mtime: float | None,
+    incoming_mtime: float | None,
+) -> tuple[dict, list[str]]:
+    """**per-key** 合并两份配置，同键冲突时取 mtime 较新的一方。
+
+    ## 为什么是 per-key 而不是 per-file（实测依据）
+
+    真实两份 `agent.json` 的**键集合不同**：
+
+    ```
+    安装目录 : api_key, base_url, model, status_refresh_ms, timeout_s
+    用户态   : api_key, base_url, enabled, model, script_use_bundled,
+               status_refresh_ms, timeout_s, transcript_mode
+    ```
+
+    ⇒ 若按**整文件覆盖**，安装目录那份更新就会把用户态独有的
+    `enabled` / `script_use_bundled` / `transcript_mode` **全部抹掉** —— 比原缺陷更糟。
+
+    ## 三条规则
+
+    1. **只在一侧存在的键** ⇒ 一律保留（并集）。这是"不丢东西"的底线。
+    2. **两侧都有且值相同** ⇒ 保留原值（**不因 mtime 不同而改写**，避免无谓写盘/churn）。
+    3. **两侧都有但值不同** ⇒ 取 **mtime 较新**的一侧；mtime 相等或不可判 ⇒ **保守保留 current**
+       （不冒险用可能更旧的值覆盖用户当前的设置）。
+
+    ## 返回
+
+    `(merged, adopted_keys)` —— `adopted_keys` 是**从 incoming 采纳的键名**，
+    供调用方写可观测日志（"采纳了哪边、几项"）。
+    """
+    merged = dict(current)
+    adopted: list[str] = []
+
+    # incoming 更新 ⇒ 冲突键取 incoming；否则保持 current（含相等/不可判）
+    incoming_newer = (
+        incoming_mtime is not None
+        and current_mtime is not None
+        and incoming_mtime > current_mtime
+    )
+
+    all_keys = list(current.keys()) + [k for k in incoming.keys() if k not in current]
+    for key in all_keys:
+        in_cur = key in current
+        in_inc = key in incoming
+        if in_cur and not in_inc:
+            continue  # 规则 1：用户态独有 ⇒ 保留
+        if in_inc and not in_cur:
+            merged[key] = incoming[key]  # 规则 1：补入
+            adopted.append(key)
+            continue
+        if current[key] == incoming[key]:
+            continue  # 规则 2：值相同 ⇒ 不动
+        if incoming_newer:
+            merged[key] = incoming[key]  # 规则 3：incoming 更新
+            adopted.append(key)
+        # 否则保守保留 current
+
+    return merged, adopted
