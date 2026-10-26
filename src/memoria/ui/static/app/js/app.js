@@ -7339,10 +7339,8 @@ async function call(fn, ...args) {
   /** 钉住图标：16×16 内联 SVG（零依赖 + currentColor + stroke 1.3，与既有图标同规格）。
    *  未钉住 = 空心；已钉住 = 钉座 fill=currentColor + 主题强调色（CSS）。 */
   const LINK_PANEL_PIN_SVG = '<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" focusable="false">' +
-    '<path d="M4.4 2.5h7.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
-    '<path d="M6.2 3.1v4.2M9.8 3.1v4.2" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
-    '<path class="-pin-base" d="M4.4 7.1h7.2l-1.05 2.4H5.45z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
-    '<path d="M8 9.6v4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>' +
+    '<path class="-pin-shape" d="M4 2.4h8v1.6H9.6v3.4c0 1.3 1 2.3 2.3 2.3v1.5H9.1v3.2L8 15.8l-1.1-1.4v-3.2H4.1v-1.5c1.3 0 2.3-1 2.3-2.3V4H4z" ' +
+    'fill="currentColor" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>' +
     '</svg>';
 
   function _linkPanelUpdatePin(pop) {

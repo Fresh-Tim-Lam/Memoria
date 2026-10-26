@@ -7636,7 +7636,7 @@ html.-booting::before {
     font-size: 0.6875rem;
 }
 
-/* task-161：钉住按钮 —— 未钉住=空心描边；已钉住=钉座 fill=currentColor + 主题强调色 */
+/* task-161：钉住按钮 —— 未钉住=浅填充+描边（13px 下轮廓不塌）；已钉住=实心+主题强调色 */
 .-link-panel-pin {
     display: inline-flex;
     align-items: center;
@@ -7652,8 +7652,11 @@ html.-booting::before {
 .-link-panel-pin[aria-pressed="true"] {
     color: var(--theme-color, #4c8dff);
 }
-.-link-panel-pin[aria-pressed="true"] .-pin-base {
-    fill: currentColor;
+.-link-panel-pin .-pin-shape {
+    fill-opacity: 0.22;
+}
+.-link-panel-pin[aria-pressed="true"] .-pin-shape {
+    fill-opacity: 1;
 }
 
 /* task-161 追加：多候选 = 左列表 + 右单一文档区（候选=1 仍无列表） */
