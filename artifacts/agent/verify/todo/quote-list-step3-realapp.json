@@ -1,0 +1,240 @@
+{
+  "startedAt": "2026-10-26T01:17:00.550Z",
+  "target": {
+    "id": "0CFCE5792883FF3D468AC5FF963E48A6"
+  },
+  "pristine": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat eleven\r\n",
+  "steps": {
+    "K1": {
+      "focus": {
+        "ok": true,
+        "text": "ten",
+        "isLi": true
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2370,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. \r\n> 11. eleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat eleven\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. \r\n> 11. eleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat eleven\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 10. ten",
+        "> 11. ",
+        "> 11. eleven",
+        "> 12. twelve",
+        "",
+        "10. flat ten",
+        "11. flat eleven",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 10. ten",
+        "> 11. ",
+        "> 11. eleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "10. flat ten",
+        "11. flat eleven"
+      ],
+      "lineCount": 10,
+      "pristineLineCount": 9,
+      "untouchedPreserved": true
+    },
+    "K2": {
+      "focus": {
+        "ok": true,
+        "text": "flat ten",
+        "isLi": true
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2386,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat ten\r\n2. \r\n3. flat eleven\r\n\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat ten\r\n2. \r\n3. flat eleven\r\n\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve",
+        "",
+        "1. flat ten",
+        "2. ",
+        "3. flat eleven",
+        "",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "1. flat ten",
+        "2. ",
+        "3. flat eleven"
+      ],
+      "lineCount": 11,
+      "pristineLineCount": 9,
+      "untouchedPreserved": false
+    },
+    "K3": {
+      "sel": {
+        "ok": true,
+        "from": "flat ten",
+        "to": "flat eleven"
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2371,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat tenflat eleven\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat tenflat eleven\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve",
+        "",
+        "1. flat tenflat eleven",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "1. flat tenflat eleven"
+      ],
+      "lineCount": 8,
+      "pristineLineCount": 9
+    },
+    "K4": {
+      "focus": {
+        "ok": true,
+        "text": "flat ten",
+        "isLi": true
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2367,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat tenX\r\n2. Y\r\n3. flat eleven\r\n\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n1. flat tenX\r\n2. Y\r\n3. flat eleven\r\n\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve",
+        "",
+        "1. flat tenX",
+        "2. Y",
+        "3. flat eleven",
+        "",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "1. flat tenX",
+        "2. Y",
+        "3. flat eleven"
+      ],
+      "lineCount": 11,
+      "pristineLineCount": 9,
+      "ok": true
+    },
+    "K5": {
+      "sel": {
+        "ok": true,
+        "from": "ten",
+        "to": "eleven"
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2366,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 1. teneleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat eleven\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 1. teneleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat eleven\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 1. teneleven",
+        "> 12. twelve",
+        "",
+        "10. flat ten",
+        "11. flat eleven",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 1. teneleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "10. flat ten",
+        "11. flat eleven"
+      ],
+      "lineCount": 8,
+      "pristineLineCount": 9
+    },
+    "K6": {
+      "focus": {
+        "ok": true,
+        "line": 9,
+        "text": "11. flat eleven"
+      },
+      "wait": {
+        "changed": true,
+        "waitMs": 2358,
+        "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat elevenS\r\n"
+      },
+      "disk": "# 有序列表保号 step3 探针\r\n\r\n> 前言\r\n> 10. ten\r\n> 11. eleven\r\n> 12. twelve\r\n\r\n10. flat ten\r\n11. flat elevenS\r\n",
+      "lines": [
+        "# 有序列表保号 step3 探针",
+        "",
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve",
+        "",
+        "10. flat ten",
+        "11. flat elevenS",
+        ""
+      ],
+      "quoteLines": [
+        "> 前言",
+        "> 10. ten",
+        "> 11. eleven",
+        "> 12. twelve"
+      ],
+      "flatLines": [
+        "10. flat ten",
+        "11. flat elevenS"
+      ],
+      "lineCount": 9,
+      "pristineLineCount": 9,
+      "otherLinesUnchanged": true
+    }
+  },
+  "finishedAt": "2026-10-26T01:17:19.836Z"
+}

@@ -13065,9 +13065,14 @@ async function call(fn, ...args) {
             return false;
           }
         }
+        // Step3：左半沿用原项序号；右半新项 = 原号+1（有序时）；**其余项保持自己的 number**
+        var _splitSrcItem = block.items[itemIdx];
+        var _splitRightNo = (block.ordered && _splitSrcItem && _splitSrcItem.number > 0)
+          ? _splitSrcItem.number + 1 : null;
         var newItems = block.items.slice(0, itemIdx + 1);
-        newItems[itemIdx] = A.listItem(sp2.left);
-        newItems = newItems.concat([A.listItem(sp2.right)], block.items.slice(itemIdx + 1));
+        newItems[itemIdx] = _listItemWithNumber(_splitSrcItem, sp2.left);
+        newItems = newItems.concat([_listItemWithNumber(_splitSrcItem, sp2.right, _splitRightNo)],
+          block.items.slice(itemIdx + 1));
         newSrcLines = G.generateBlock(A.list(block.ordered, newItems)).split("\n");
         var fp2 = firstTextPath(sp2.right);
         newCursor = { blockIndex: blockIndex, nodePath: fp2 ? [itemIdx + 1].concat(fp2.path) : [itemIdx + 1], offset: 0 };
@@ -13815,15 +13820,21 @@ async function call(fn, ...args) {
       // 全部删空则退化为空行
       var newBlock;
       if (startBlock.type === "list" && before.length) {
-        newBlock = A.list(startBlock.ordered, [A.listItem(joined)]);
+        // Step3：合并结果沿用起始项的序号
+        var _delStartItemIdx = (start.listItemIndex != null)
+          ? start.listItemIndex : ((start.nodePath && start.nodePath[0]) || 0);
+        var _delStartItem = (startBlock.items && startBlock.items[_delStartItemIdx]) || null;
+        newBlock = A.list(startBlock.ordered, [_listItemWithNumber(_delStartItem, joined)]);
       } else if (startBlock.type === "heading") {
         newBlock = A.heading(startBlock.level, joined);
       } else if (startBlock.type === "blockquote") {
         // stage3/task-156：合并结果留在引用块内；**保留被编辑 child 的形态**：
         //   段落 child → 单段引用；list child → 单 item 列表（否则整块 list 被压成一段 = 丢项）
         var qStartChild = sc && sc.quoteChild;
+        var qStartItem = (qStartChild && qStartChild.type === "list" && sc && sc.quoteItemIdx != null)
+          ? ((qStartChild.items || [])[sc.quoteItemIdx] || null) : null;
         var qInner = (qStartChild && qStartChild.type === "list")
-          ? A.list(qStartChild.ordered, [A.listItem(joined)])
+          ? A.list(qStartChild.ordered, [_listItemWithNumber(qStartItem, joined)])
           : A.paragraph(joined);
         newBlock = A.blockquote([qInner]);
       } else {
@@ -13939,20 +13950,42 @@ async function call(fn, ...args) {
     }
 
     /**
+     * task-156 Step3：重建列表项时**继承原项的手写序号**（有序）与缩进。
+     * 目的：Enter 拆项 / 选区删除合并 / 粘贴替换时，**未触碰的其它项行逐字节不变**
+     *   （task-157 的保真契约）——而不是整层回退 base+idx 把用户序号全部重排。
+     *  · 原项有序且 number>0 ⇒ 沿用；`numberOverride` 用于"拆出的右半新项"= 原号+1。
+     *  · 无序项 / 旧 AST（无 number）⇒ 不设 number，让 source-gen 走既有兜底。
+     */
+    function _listItemWithNumber(srcItem, children, numberOverride) {
+      var item = A.listItem(children || []);
+      if (srcItem) {
+        if (srcItem.indent != null) item.indent = String(srcItem.indent);
+        if (numberOverride != null && numberOverride > 0) item.number = numberOverride;
+        else if (srcItem.number > 0) item.number = srcItem.number;
+      } else if (numberOverride != null && numberOverride > 0) {
+        item.number = numberOverride;
+      }
+      return item;
+    }
+
+    /**
      * 以「首块类型」造一个块（列表→单 item 列表 / 引用→单段引用 / 标题→同级别标题 / 其它→段落）。
      * 用于 stage4 删除合并块与 stage5 粘贴替换的首/尾块。
      * 原子块（表格/代码/公式/mermaid）在这里**降级为段落**：它们不能承载内联文本。
      */
-    function _blockLike(kindBlock, inlineNodes, shapeChild) {
+    function _blockLike(kindBlock, inlineNodes, shapeChild, srcItem) {
       var nodes = inlineNodes || [];
       if (!kindBlock) return A.paragraph(nodes);
-      if (kindBlock.type === "list") return A.list(kindBlock.ordered, [A.listItem(nodes)]);
+      if (kindBlock.type === "list") {
+        // Step3：被替换的那个 item 若有序，合并结果沿用它的手写序号（未触碰项不变）
+        return A.list(kindBlock.ordered, [_listItemWithNumber(srcItem, nodes)]);
+      }
       if (kindBlock.type === "heading") return A.heading(kindBlock.level, nodes);
       if (kindBlock.type === "blockquote") {
         // task-156：被编辑的引用 child 是 list 时，结果必须仍是"引用 + 单 item 列表"，
         //   否则删除/粘贴会把整块 list 压成一段 = 丢项（静默数据损坏）。
         if (shapeChild && shapeChild.type === "list") {
-          return A.blockquote([A.list(shapeChild.ordered, [A.listItem(nodes)])]);
+          return A.blockquote([A.list(shapeChild.ordered, [_listItemWithNumber(srcItem, nodes)])]);
         }
         return A.blockquote([A.paragraph(nodes)]);
       }
@@ -14104,6 +14137,21 @@ async function call(fn, ...args) {
       }
       var sc = inlineCtx(startBlock, start);
       var ec = inlineCtx(endBlock, end);
+      // Step3：取"被替换的原列表项"（有序项要在合并结果里继承其手写序号）
+      function _srcItemOf(block0, cur, qChild) {
+        if (!block0 || !cur) return null;
+        if (block0.type === "list") {
+          var ii = (cur.listItemIndex != null) ? cur.listItemIndex : ((cur.nodePath && cur.nodePath[0]) || 0);
+          return (block0.items && block0.items[ii]) || null;
+        }
+        if (block0.type === "blockquote" && qChild && qChild.type === "list") {
+          var qii = (cur.nodePath && cur.nodePath.length > 1) ? cur.nodePath[1] : 0;
+          return (qChild.items && qChild.items[qii]) || null;
+        }
+        return null;
+      }
+      var _startSrcItem = _srcItemOf(startBlock, start, sc && sc.quoteChild);
+      var _endSrcItem = _srcItemOf(endBlock, end, ec && ec.quoteChild);
       var sp = sc ? splitInlineAtEdge(sc.children, sc.path, start.offset) : null;
       var ep = ec ? splitInlineAtEdge(ec.children, ec.path, end.offset) : null;
       if (!sp || !ep) {
@@ -14124,11 +14172,11 @@ async function call(fn, ...args) {
       var blocks = [];
       if (lines.length === 1) {
         var mergedOne = mergeAdjacentInline(sp.left.concat([A.text(lines[0])], ep.right));
-        blocks.push(_blockLike(startBlock, mergedOne, sc && sc.quoteChild));
+        blocks.push(_blockLike(startBlock, mergedOne, sc && sc.quoteChild, _startSrcItem));
       } else {
-        blocks.push(_blockLike(startBlock, sp.left.concat([A.text(lines[0])]), sc && sc.quoteChild));
+        blocks.push(_blockLike(startBlock, sp.left.concat([A.text(lines[0])]), sc && sc.quoteChild, _startSrcItem));
         if (lines.length > 2) blocks = blocks.concat(_parsePastedBlocks(lines.slice(1, lines.length - 1).join("\n")));
-        blocks.push(_blockLike(endBlock, [A.text(lines[lines.length - 1])].concat(ep.right), ec && ec.quoteChild));
+        blocks.push(_blockLike(endBlock, [A.text(lines[lines.length - 1])].concat(ep.right), ec && ec.quoteChild, _endSrcItem));
       }
       var newLines = _blocksToSrcLines(blocks);
 
