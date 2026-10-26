@@ -90,6 +90,20 @@ def strip_comments(text: str) -> str:
     return re.sub(r"/\*.*?\*/", repl, text, flags=re.S)
 
 
+def strip_js_comments(text: str) -> str:
+    """剥 JS 注释（先块注释再行注释；保留换行/偏移）—— 用于 C4 这类"按代码字面量"检查。
+
+    必须剥：注释里会**提到**常量名与数字（如 `保底 CONTENT_MIN_PX=360` 的说明），
+    不剥会把注释误报成第二个事实源。
+    """
+    clean = strip_comments(text)
+
+    def repl_line(m: re.Match) -> str:
+        return re.sub(r"[^\n]", " ", m.group(0))
+
+    return re.sub(r"//[^\n]*", repl_line, clean)
+
+
 def norm_ws(text: str) -> str:
     return re.sub(r"\s+", " ", text or "").strip()
 
@@ -355,41 +369,82 @@ def check_c4(contract: dict, js_texts: dict) -> list:
             out.append(Finding("C4", "FAIL", ssot_file, 0, rid,
                                "契约登记了事实源文件，但它不在扫描集里（或不存在）", "", rid))
             continue
-        m = re.search(entry["ssot_regex"], ssot_text, re.S)
+        m = re.search(entry["ssot_regex"], strip_js_comments(ssot_text), re.S)
         if not m:
             out.append(Finding("C4", "FAIL", ssot_file, 0, rid,
-                               "事实源里找不到登记的 `%s` 定义" % rid, "", rid))
+                               "事实源里找不到登记的 `%s` 定义（正则可能已过期）" % rid, "", rid))
             continue
-        ssot_pair = _groups_to_nums(m)
+        ssot_map = _named_nums(m)
+        ssot_pair = tuple(ssot_map[k] for k in ssot_map) if ssot_map else _groups_to_nums(m)
         for guard in entry.get("guards", []):
             gfile = guard["file"]
             gtext = js_texts.get(gfile)
             if gtext is None:
                 out.append(Finding("C4", "FAIL", gfile, 0, rid, "契约登记的守卫文件不存在", "", rid))
                 continue
-            gidx = LineIndex(gtext)
+            gclean = strip_js_comments(gtext)
+            gidx = LineIndex(gclean)
             found_any = False
-            for gm in re.finditer(guard["regex"], gtext, re.S):
+            for gm in re.finditer(guard["regex"], gclean, re.S):
                 found_any = True
-                pair = _groups_to_nums(gm)
+                gmap = _named_nums(gm)
                 line = gidx.line(gm.start())
-                if pair != ssot_pair:
-                    out.append(
-                        Finding("C4", "FAIL", gfile, line, rid,
-                                "双源范围已漂移：事实源 %s=%s，此处=%s ⇒ 只改一处会静默失效"
-                                % (ssot_file, ssot_pair, pair),
-                                rid, repr(pair), extra="drift")
-                    )
+                if gmap and ssot_map:
+                    # 命名组口径：逐字段比对（min/max/def/step…），只比守卫声明了的字段
+                    diffs = {k: (ssot_map.get(k), v) for k, v in gmap.items()
+                             if k in ssot_map and ssot_map.get(k) != v}
+                    shown = ", ".join("%s(事实源 %s / 此处 %s)" % (k, ssot_map.get(k), v)
+                                      for k, (_, v) in diffs.items()) or "一致"
+                    if diffs:
+                        out.append(
+                            Finding("C4", "FAIL", gfile, line, rid,
+                                    "双源字段已漂移：%s 与事实源 %s 不一致：%s ⇒ 只改一处会静默失效"
+                                    % (rid, ssot_file, shown),
+                                    rid, repr(diffs), extra="drift." + ".".join(sorted(diffs)))
+                        )
+                    else:
+                        out.append(
+                            Finding("C4", "WARN", gfile, line, rid,
+                                    "同一范围/默认值在 %s 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）"
+                                    % ssot_file,
+                                    rid, repr(gmap), extra="duplicate")
+                        )
                 else:
-                    out.append(
-                        Finding("C4", "WARN", gfile, line, rid,
-                                "同一范围在 %s 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）"
-                                % ssot_file,
-                                rid, repr(pair), extra="duplicate")
-                    )
+                    pair = _groups_to_nums(gm)
+                    if pair != ssot_pair:
+                        out.append(
+                            Finding("C4", "FAIL", gfile, line, rid,
+                                    "双源范围已漂移：事实源 %s=%s，此处=%s ⇒ 只改一处会静默失效"
+                                    % (ssot_file, ssot_pair, pair),
+                                    rid, repr(pair), extra="drift")
+                        )
+                    else:
+                        out.append(
+                            Finding("C4", "WARN", gfile, line, rid,
+                                    "同一范围在 %s 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）"
+                                    % ssot_file,
+                                    rid, repr(pair), extra="duplicate")
+                        )
             if not found_any and guard.get("required", True):
                 out.append(Finding("C4", "WARN", gfile, 0, rid,
                                    "契约登记的守卫写法已不存在（实现可能已改，需同步契约）", "", rid))
+    return out
+
+
+def _named_nums(m: re.Match) -> dict:
+    """取命名捕获组里的数值（int/float）。没有命名组则返回 {}（回退到位置元组比较）。"""
+    out = {}
+    try:
+        groups = m.groupdict()
+    except (AttributeError, IndexError):
+        return out
+    for k, v in groups.items():
+        if v is None:
+            continue
+        try:
+            out[k] = float(v) if "." in v else int(v)
+        except ValueError:
+            continue
     return out
 
 
@@ -935,8 +990,11 @@ FIXTURE_CONTRACT = {
     },
     "range-ssot": {"ranges": [
         {"id": "R1", "ssot_file": "app/js/fixture-ssot.js",
-         "ssot_regex": r"RANGE\s*=\s*\{\s*min:\s*(\d+),\s*max:\s*(\d+)",
-         "guards": [{"file": "app/js/fixture-guard.js", "regex": r"v\s*>=\s*(\d+)\s*&&\s*v\s*<=\s*(\d+)"}]},
+         "ssot_regex": r"RANGE\s*=\s*\{[^}]*?\bmin:\s*(?P<min>\d+)[^}]*?\bmax:\s*(?P<max>\d+)[^}]*?\bdef:\s*(?P<def>\d+)",
+         "guards": [
+             {"file": "app/js/fixture-guard.js", "regex": r"v\s*>=\s*(?P<min>\d+)\s*&&\s*v\s*<=\s*(?P<max>\d+)"},
+             {"file": "app/js/fixture-guard.js", "regex": r"CONTENT_MIN_PX\s*=\s*(?P<def>\d+)"},
+         ]},
     ]},
     "z-index-registry": {"layers": [
         {"id": "base", "z": 1, "selector_contains": ["-fixture-z1"], "file": "app/css/app.css"},
@@ -1000,9 +1058,16 @@ FIXTURE_LIGHT = textwrap.dedent(
     """
 )
 
-FIXTURE_SSOT = "const RANGE = { min: 180, max: 560 };\n"
-FIXTURE_GUARD_BAD = "function f(v) { if (v >= 320 && v <= 560) return v; }\n"
-FIXTURE_GUARD_OK = "function f(v) { if (v >= 180 && v <= 560) return v; }\n"
+FIXTURE_SSOT = "const RANGE = { min: 180, max: 560, def: 360 };\n"
+FIXTURE_GUARD_BAD = "function f(v) { if (v >= 320 && v <= 560) return v; }\nconst CONTENT_MIN_PX = 360;\n"
+FIXTURE_GUARD_OK = "function f(v) { if (v >= 180 && v <= 560) return v; }\nconst CONTENT_MIN_PX = 360;\n"
+FIXTURE_GUARD_DEF_BAD = "function f(v) { if (v >= 180 && v <= 560) return v; }\nconst CONTENT_MIN_PX = 320;\n"
+#: 注释里**提到**同一常量名与不同数字（真实仓里 agent-panel.js:67 就是这种说明注释）
+FIXTURE_GUARD_WITH_COMMENT = (
+    FIXTURE_GUARD_OK
+    + "// 保底 CONTENT_MIN_PX=999，守卫写法 v >= 999 只是示意\n"
+    + "/* 块注释：RANGE = { min: 1, max: 2 } 也只是示意 */\n"
+)
 
 FIXTURE_ICON = textwrap.dedent(
     """
@@ -1070,8 +1135,7 @@ def cmd_selftest() -> int:
         ("C3 必红：圆角离档", has("C3", "app.css", "border-radius")),
         ("C3 WARN：间距离栅格", has("C3", "app.css", "padding", severity="WARN")),
         ("C4 必红：双源范围漂移", has("C4", "fixture-guard.js", "漂移")),
-        ("C5 必红：未登记 z-index", has("C5", "app.css", "9999")),
-        ("C6 必红：13px 多段细描边", has("C6", "fixture-icon.js", "坍缩")),
+        ("C5 必红：未登记 z-index", has("C5", "app.css", "9999")),        ("C6 必红：13px 多段细描边", has("C6", "fixture-icon.js", "坍缩")),
         ("C6 绿：单闭合轮廓+浅填充不报", not any(f["rule"] == "C6" and f["severity"] == "FAIL" and "fixture-good" in f["detail"] for f in findings)),
         ("C6 状态差异可机检", not any(f["rule"] == "C6" and "状态间 opacity" in f["detail"] for f in findings)),
         ("C6 可发现性（aria/title）", not any(f["rule"] == "C6" and "aria-label" in f["detail"] for f in findings)),
@@ -1084,8 +1148,31 @@ def cmd_selftest() -> int:
     ok_files["app/js/fixture-guard.js"] = FIXTURE_GUARD_OK
     ok_findings = _collect_fixture(FIXTURE_CONTRACT, ok_files)
     checks.append(
-        ("C4 阳性对照：同口径时不再红（只报双源 WARN）",
+        ("C4 阳性对照：全字段同口径时不再红（只报双源 WARN）",
          not any(f["rule"] == "C4" and f["severity"] == "FAIL" for f in ok_findings))
+    )
+    # 字段级：默认值 def 单独漂移也必须红（C4 覆盖面补强）
+    def_bad_files = dict(_fixture_files())
+    def_bad_files["app/js/fixture-guard.js"] = FIXTURE_GUARD_DEF_BAD
+    def_bad_findings = _collect_fixture(FIXTURE_CONTRACT, def_bad_files)
+    checks.append(
+        ("C4 必红：默认值 def 漂移（字段级）",
+         any(f["rule"] == "C4" and f["severity"] == "FAIL" and "def" in f["detail"]
+             for f in def_bad_findings))
+    )
+    checks.append(
+        ("C4 阳性对照：def 漂移时 min/max 守卫仍报一致（不误报）",
+         any(f["rule"] == "C4" and f["severity"] == "WARN" and f["prop"] == "R1"
+             for f in def_bad_findings))
+    )
+    # 注释不误报（真实仓 agent-panel.js:67 的说明注释里就写了 CONTENT_MIN_PX=360）
+    comment_files = dict(_fixture_files())
+    comment_files["app/js/fixture-guard.js"] = FIXTURE_GUARD_WITH_COMMENT
+    comment_findings = _collect_fixture(FIXTURE_CONTRACT, comment_files)
+    checks.append(
+        ("C4 阳性对照：注释里的常量名/数字不算第二事实源",
+         not any(f["rule"] == "C4" and f["severity"] == "FAIL" for f in comment_findings)
+         and len([f for f in comment_findings if f["rule"] == "C4"]) == 2)
     )
     # 负向对照：没有图标/marker 时不误报
     clean_icon = "const X = 1;\n"

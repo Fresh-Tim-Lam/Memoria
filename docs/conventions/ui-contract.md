@@ -98,8 +98,9 @@
 
 ### C4 禁止同一范围/常量双源
 
-- **规则**：同一 `{min,max}`（如 `contentMinPx` 的 180–560）只允许一个事实源；其它文件若必须写守卫，必须**同口径**并由机检对齐。
+- **规则**：同一范围/默认值（`{min,max,def,step}`）只允许一个事实源；其它文件若必须写守卫，必须**同口径**并由机检**逐字段**对齐（命名捕获组：`min`/`max`/`def` 已覆盖）。
 - **实证**：2026-10-26 `contentMinPx` 下限 320→180 只改了 `display-settings.js` 时，`agent-panel.js` 的 `v >= 320 && v <= 560` 会把设置静默打回 360 —— 用户看到"拖了不生效"且无报错。这正是 C4 存在的原因。
+- **覆盖面**：`min`/`max`（范围守卫）+ `def`（默认值守卫，`agent-panel.js` 的 `CONTENT_MIN_PX = 360`）；新增字段只需在契约登记块里加命名组与守卫，不需要改脚本。
 - **机检**：C4（口径漂移 = FAIL；当前一致但双写 = WARN，等收口到单一导出）。
 
 ### C5 z-index 必须登记
@@ -321,7 +322,7 @@
 
 ```bash
 python scripts/check_ui_contract.py                 # 对基线跑；新增 FAIL ⇒ 退出码 1
-python scripts/check_ui_contract.py --selftest      # 19 条内置 fixture 自测（每条约束必红 + 正例必绿）
+python scripts/check_ui_contract.py --selftest      # 22 条内置 fixture 自测（每条约束必红 + 正例必绿 + 3 条阳性/阴性对照）
 python scripts/check_ui_contract.py --json artifacts/agent/verify/ui/ui-contract-report.json
 python scripts/check_ui_contract.py --token-table   # 生成 §1 的 token 清单
 python scripts/check_ui_contract.py --update-baseline   # 重落基线（只允许变小；变大需 --force）
@@ -339,11 +340,11 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
 | C1 `!important` | **0**（37 条声明已逐条登记豁免） | 0 | 全部属"收口旧规则/无障碍/内联覆盖"三类，理由见 `important-exemptions` |
 | C2 硬编码颜色 | **176** | 7 | 状态色回退值、链接/选区高亮、按钮实心色、调色板；中性 alpha 阴影 7 条 WARN |
 | C3 魔法 px | **21** | 30 | 字号 px 8 条 + 圆角离档 13 条；间距 WARN 30 条（1/3/5/7/11/13px） |
-| C4 双源范围 | 0 | **1** | `agent-panel.js:231` 与 `display-settings.js` 同口径（180/560），仍是两份 |
+| C4 双源范围 | 0 | **2** | `min/max`（`agent-panel.js:231`）与 `def`（`agent-panel.js:224` 的 `CONTENT_MIN_PX`）各一条；均与 `display-settings.js` 同口径，待 JS 侧收口 |
 | C5 z-index | **0**（36 条声明全部登记） | 3 | C10 已知层级债务（登记在案） |
 | C6 图标 | **0** | 0 | 4 个登记项（3 个动态构建器只核对登记）；13px 结构判据已由 fixture 证明能红 |
 | C7 token 一致性 | **13** | 19 | `--bg`×5（未定义无兜底，真 bug）、`--border-subtle`×3、`--text-muted`×5；WARN 含 `--theme-color` 浅色未覆盖 |
-| **合计** | **210** | **60** | 存量 270 条；**新增即红**，不要求一次清零 |
+| **合计** | **210** | **61** | 存量 271 条；**新增即红**，不要求一次清零 |
 
 > 完整逐条 `file:line` 见 `artifacts/agent/verify/ui/ui-contract-baseline.json`；人读摘要见同目录 `ui-contract-baseline.md`。
 > C7 的真缺陷已由真机 computed-style 探针实测确认（`artifacts/agent/verify/ui/theme_probe.mjs` → `theme-probe.json`），不是"读代码推断"。
@@ -388,11 +389,12 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
     {
       "id": "contentMinPx",
       "ssot_file": "app/js/display-settings.js",
-      "ssot_regex": "CONTENT_MIN_RANGE\\s*=\\s*\\{\\s*min:\\s*(\\d+),\\s*max:\\s*(\\d+)",
+      "ssot_regex": "CONTENT_MIN_RANGE\\s*=\\s*\\{[^}]*?\\bmin:\\s*(?P<min>\\d+)[^}]*?\\bmax:\\s*(?P<max>\\d+)[^}]*?\\bdef:\\s*(?P<def>\\d+)",
       "guards": [
-        {"file": "app/js/agent-panel.js", "regex": "v\\s*>=\\s*(\\d+)\\s*&&\\s*v\\s*<=\\s*(\\d+)"}
+        {"file": "app/js/agent-panel.js", "regex": "v\\s*>=\\s*(?P<min>\\d+)\\s*&&\\s*v\\s*<=\\s*(?P<max>\\d+)"},
+        {"file": "app/js/agent-panel.js", "regex": "CONTENT_MIN_PX\\s*=\\s*(?P<def>\\d+)"}
       ],
-      "note": "2026-10-26 实证：下限 320→180 只改 display-settings.js 时，agent-panel.js 的旧守卫会把值静默打回默认 360。守卫与事实源必须同口径；最终应收口为跨模块单一导出。"
+      "note": "2026-10-26 实证：下限 320→180 只改 display-settings.js 时，agent-panel.js 的旧守卫会把值静默打回默认 360。守卫与事实源必须同口径；最终应收口为跨模块单一导出。C4 用**命名捕获组逐字段**比对（min/max/def 都覆盖；step 暂无外部守卫）。"
     }
   ]
 }
@@ -415,7 +417,7 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
 ### 7.2 其他登记
 
 - **C10 弹窗层级**：见 §4 relations（已登记债务）。
-- **`contentMinPx` 的 `def` 也是双源**：`display-settings.js` 的 `CONTENT_MIN_RANGE.def = 360` 与 `agent-panel.js` 的 `CONTENT_MIN_PX` 各自一份 —— C4 目前只对 `{min,max}` 建了守卫，`def` 待收口时一并处理。
+- **`contentMinPx` 的双源覆盖面**：`min/max` 由范围守卫覆盖、`def` 由默认值守卫（`CONTENT_MIN_PX = 360`）覆盖；机检用命名捕获组逐字段比对（2026-10-26 补强）。**代码侧收口到单一导出**由 JS 域 Owner 执行，本契约只负责"一旦漂移立刻红"。
 - **图标定义表审查**（`file-tree.js` 的文件类型图标 20+ 枚）尚未逐项过 13px 判据，属后续批次。
 
 ---
@@ -425,4 +427,5 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
 | 日期 | 变更 | 证据/产物 |
 |---|---|---|
 | 2026-10-26 | v1 生效：C1–C7 约束 + `scripts/check_ui_contract.py`（19 条 selftest）+ 现状基线 + z-index 登记表（36 条声明全登记）+ 内联 SVG 规格（含 13px 判据） | `artifacts/agent/verify/ui/ui-contract-baseline.json`、`ui-owner-inaugural.md` |
+| 2026-10-26 | C4 检测面补强 v1.1：改用**命名捕获组逐字段**比对（min/max/def；step 预留）；新增 `def` 守卫（`CONTENT_MIN_PX = 360`）；**剥 JS 注释**后再匹配（避免 agent-panel.js:67 说明注释被误报为第二事实源）；selftest 19→**22 条** | `scripts/check_ui_contract.py`、`ui-contract-baseline.json`（C4 WARN 1→2） |
 | 2026-10-26 | 主题缺口 G1/G2 **真机实测定性**（Edge headless + 真实 CSS + computed style；含阳性对照组）：G1 = 真缺陷（深色 6 处 muted 文字退化为正文色、2 处淡线变亮线），G2 = 双别名漂移 | `artifacts/agent/verify/ui/theme_probe.mjs`、`theme-probe.json`、`theme-probe-{dark,light}.png` |
