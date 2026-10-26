@@ -262,6 +262,29 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 > 若将来发现某类文件因 BOM 差异导致假红，再显式加归一化并在本条款记录理由。
 > 读取端与写入端必须**同一函数**（`content_sha256`），否则只改一边会立刻全红。
 
+> **B3-e 门禁脚本的退出码契约（2026-10-26，PD-1 教训 · **条款先于检查**）**
+>
+> **任何被门禁调用的脚本，必须把"执行了但失败"与"根本没执行"分开，且 `status ↔ exit` 一一对应。**
+>
+> ```
+> 0 = 全部检查已执行且无 FAIL
+> 1 = 有 FAIL（检查执行了，结论是失败）
+> 2 = 有检查未能执行（NOT_RUN）——【不得判绿】
+> 3 = 用法错误
+> ```
+> `--json` 必须同时给出 `summary.status ∈ {ok, fail, not_run}` 与 `not_run[]`；
+> 调用方（`team_audit.*`）必须：① 对 `not_run` / exit 2 判 **FAIL**；
+> ② 校验 `status ↔ exit` 一致；③ 校验 `summary` 计数与 findings 实际条数一致；
+> ④ 未知严重度判 FAIL（不静默忽略）。
+>
+> **why（这是 PD-1）**：`prompt_drift_check.py` 初版把"依赖不可读致 C3 跳过"记为 WARN
+> ⇒ `FAIL=0 / exit=0` ⇒ **门禁仍绿**。这正是 L6「看起来成功其实没做」：
+> 判据建好了，但判据跑不了时静默放行。**修法是让"没跑"可见，不是"改对就完"**。
+>
+> **适用边界**：`not_applicable`（本阶段不适用）与 `not_run`（本该跑但没跑成）**必须分开**，
+> 且 `not_applicable` 只能来自**冻结声明的 applicability**，不能由脚本自行决定跳过。
+> 现存 `dq7–dq10` 两类语义混用 WARN 表达 ⇒ 待 protocol v1.1 统一（已知债务，已登记）。
+
 **B4 finding 生命周期**
 `FAIL` ⇒ 24h 内建任务；`WARN` ⇒ 进 `findings.jsonl`（有强制 disposition，open>14d 报警）；
 同一问题 **7 天内第二次**才建任务。

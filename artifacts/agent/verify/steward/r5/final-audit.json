@@ -1,11 +1,11 @@
 ﻿{
   "schema": "team-audit/v1",
-  "generatedAt": "2026-10-26T00:41:59.706920+00:00",
+  "generatedAt": "2026-10-26T00:42:47.154004+00:00",
   "summary": {
-    "findings": 82,
-    "FAIL": 2,
-    "WARN": 53,
-    "INFO": 27
+    "findings": 81,
+    "FAIL": 1,
+    "WARN": 54,
+    "INFO": 26
   },
   "findings": [
     {
@@ -13,12 +13,6 @@
       "severity": "FAIL",
       "message": "dq5：冻结收据不完整/不匹配（F1/F2'）——标准 sha 不匹配（LF 归一化）：docs/guides/agent-team-org.md",
       "evidence": "artifacts/agent/verify/debate/freeze-v2.json + artifacts/agent/verify/debate/PINNED-PROPOSALS.json"
-    },
-    {
-      "check": "deliberation_quality",
-      "severity": "FAIL",
-      "message": "dq6：1 个辩论产物未被 git 跟踪（J6'：append-only 无强制力）：['artifacts/agent/verify/debate/kgviz/PHASE2-UNION.md']",
-      "evidence": "git ls-files -- artifacts/agent/verify/debate"
     },
     {
       "check": "artifact_refs",
@@ -197,8 +191,8 @@
     {
       "check": "decision_trail",
       "severity": "WARN",
-      "message": "近 14 天 50 个 T1/T3 触发提交中 44 个缺决策 trailer（225110bb(10-25 22:39，T3-不可回退(R1)，缺Decision,Why,Alternatives); 10033073(10-25 20:01，T3-不可回退(R1)，缺Decision,Why,Alternatives); 8067cde6(10-25 18:52，T3-不可回退(R1)，缺Decision,Why,Alternatives); 093dac0e(10-25 18:23，T3-不可回退(R1)，缺Decision,Why,Alternatives); d88e4cba(10-25 17:46，T3-不可回退(R1)，缺Decision,Why,Alternatives); 1239da8c(10-25 12:54，T3-不可回退(R1)，缺Decision,Why,Alternatives)…）—— 违反 lead-dispatch-rules §6.5 / AGENTS.md §0.5 L10（首两周宽限：WARN；机检口径是可判定子集：T3=版本/Package/发布/回退，T1=组织资产/规范；T2 判断类不可机检）",
-      "evidence": "git:225110bbbc; git:10033073f9; git:8067cde691; git:093dac0e4a; git:d88e4cba69; git:1239da8cde; git:c7c5fb396e; git:f30021901d; git:3cd7a13f19; git:b1f6d56eca"
+      "message": "近 14 天 51 个 T1/T3 触发提交中 45 个缺决策 trailer（ce9add0d(10-26 08:42，T1-组织资产/规范，缺Decision,Why); 225110bb(10-25 22:39，T3-不可回退(R1)，缺Decision,Why,Alternatives); 10033073(10-25 20:01，T3-不可回退(R1)，缺Decision,Why,Alternatives); 8067cde6(10-25 18:52，T3-不可回退(R1)，缺Decision,Why,Alternatives); 093dac0e(10-25 18:23，T3-不可回退(R1)，缺Decision,Why,Alternatives); d88e4cba(10-25 17:46，T3-不可回退(R1)，缺Decision,Why,Alternatives)…）—— 违反 lead-dispatch-rules §6.5 / AGENTS.md §0.5 L10（首两周宽限：WARN；机检口径是可判定子集：T3=版本/Package/发布/回退，T1=组织资产/规范；T2 判断类不可机检）",
+      "evidence": "git:ce9add0d94; git:225110bbbc; git:10033073f9; git:8067cde691; git:093dac0e4a; git:d88e4cba69; git:1239da8cde; git:c7c5fb396e; git:f30021901d; git:3cd7a13f19"
     },
     {
       "check": "deliberation_quality",
@@ -229,6 +223,12 @@
       "severity": "WARN",
       "message": "版本 0.4.7 的实施提交 a68ab655（10-23 13:19）早于台账计划落盘 10-23 22:52（docs/todo.md） —— 违反 AGENTS.md §0.5 L8（版本级规划须先由 todo-owner 产出并写进 docs/todo.md；首月 WARN，之后 FAIL；checked_count=1）",
       "evidence": "git:a68ab655e7024148b1752304bc37c6fb65eb2217 vs docs/todo.md -S'0.4.7'"
+    },
+    {
+      "check": "role_registration",
+      "severity": "WARN",
+      "message": "快照 exportedAt=2026-10-24T16:20:42.610Z 早于 org.md mtime=2026-10-26T00:41:49.552564+00:00 ⇒ 快照不可能反映注册修改，须重导出快照后再审计（checked_count=24）",
+      "evidence": "team/team-board-snapshot.json:exportedAt vs docs/guides/agent-team-org.md mtime"
     },
     {
       "check": "roster",
@@ -300,7 +300,7 @@
       "check": "snapshot_health",
       "severity": "WARN",
       "message": "快照可能过期：导出后 HEAD 又有新提交（快照内容可能已落后于任务板实况）",
-      "evidence": "team/team-board-snapshot.json:exportedAt=2026-10-24T16:20:42.610Z < HEAD@2026-10-25T16:48:24+00:00"
+      "evidence": "team/team-board-snapshot.json:exportedAt=2026-10-24T16:20:42.610Z < HEAD@2026-10-26T00:42:04+00:00"
     },
     {
       "check": "snapshot_health",
@@ -377,7 +377,7 @@
     {
       "check": "dispatch_release",
       "severity": "INFO",
-      "message": "H2 tag v0.4.9 之后还有 7 个 commit（tag 指向 4cdcb3a1）",
+      "message": "H2 tag v0.4.9 之后还有 8 个 commit（tag 指向 4cdcb3a1）",
       "evidence": "git tag / HEAD"
     },
     {
@@ -427,12 +427,6 @@
       "severity": "INFO",
       "message": "agents.json active 角色 9 个，均有 14 天证据：lead(dispatch-log, team-board owner); render-perf(dispatch-log, team-board owner); sync-mapper(dispatch-log, team-board owner); arch-contract(dispatch-log, team-board owner); doc-consistency(dispatch-log, team-board owner); metrics-baseline(dispatch-log, team-board owner); todo-owner(dispatch-log, team-board owner); team-plugin-creator(dispatch-log, team-board owner); steward(dispatch-log, team-board owner, 产物 2026-10-26)",
       "evidence": "team/agents.json:agents + team/dispatch-log.jsonl"
-    },
-    {
-      "check": "role_registration",
-      "severity": "INFO",
-      "message": "角色注册三方一致：agents.json 8 / org.md 8 / 快照 8 个 id，且快照晚于注册修改（checked_count=24）",
-      "evidence": "team/agents.json + docs/guides/agent-team-org.md + team/team-board-snapshot.json:members"
     },
     {
       "check": "roster",

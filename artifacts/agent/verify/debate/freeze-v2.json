@@ -29,12 +29,12 @@
     },
     {
       "path": "docs/guides/agent-team-org.md",
-      "sha256_lf": "8432576bf4624b4be9142fb8259a56366bfabe6363738a7472aafae3aebfa111",
+      "sha256_lf": "a9a1ca033028a80a1961c881209261f6ebe5c3d1ded7ec5a98ec8dfb0ebe9190",
       "role": "组织与角色章程"
     },
     {
       "path": "scripts/agent/team_audit.py",
-      "sha256_lf": "d8f6a7d7f9b722a03207c7448e1f4bc974234da0806ea4abb8c876f10a34bc74",
+      "sha256_lf": "beec3c714c8440ee9b476dd6c06159a80a35d01965e94eb4215f5bf17f13eb41",
       "role": "机检实现"
     }
   ],
@@ -73,6 +73,26 @@
       ],
       "rule_ref": "docs/guides/agent-team-org.md §2.6 B3/B3-b/B3-c/B3-d",
       "note": "本次更新不是为了让门禁变绿而改收据：org.md 的改动本身有 L10 决策记录（commit ce9add0d），此处只是把冻结收据对齐到新标准，并留下可审计的变更缘由。设计缺口：freeze 机制没有 --refreeze 命令，只能人工更新，建议后续补。"
+    },
+    {
+      "at": "2026-10-26T09:10:34.043299+08:00",
+      "by": "lead",
+      "reason": "task-158 后新增 org.md §2.6 B3-e（门禁脚本退出码契约，PD-1 教训）",
+      "commit_before": "ae858b8c",
+      "changed": [
+        {
+          "path": "docs/guides/agent-team-org.md",
+          "from": "8432576bf4624b4be9142fb8259a56366bfabe6363738a7472aafae3aebfa111",
+          "to": "a9a1ca033028a80a1961c881209261f6ebe5c3d1ded7ec5a98ec8dfb0ebe9190"
+        },
+        {
+          "path": "scripts/agent/team_audit.py",
+          "from": "d8f6a7d7f9b722a03207c7448e1f4bc974234da0806ea4abb8c876f10a34bc74",
+          "to": "beec3c714c8440ee9b476dd6c06159a80a35d01965e94eb4215f5bf17f13eb41"
+        }
+      ],
+      "rule_ref": "docs/guides/agent-team-org.md §2.6 B3-e",
+      "note": "B3-e 是把 PD-1 的个别修复上升为通用条款：任何 gate 脚本必须 status↔exit 一一对应，NOT_RUN 不得判绿。现在有两道门禁（team_audit 11 类 + prompt_drift C1-C5）都遵守此契约。"
     }
   ]
 }
