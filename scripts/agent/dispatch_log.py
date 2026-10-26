@@ -66,6 +66,12 @@ DEFAULT_LOG = REPO_ROOT / "team" / "dispatch-log.jsonl"   # 2026-10-23 迁入版
 # as a flat literal list, and an inline comment gets mistaken for a list item.
 PHASES = ("spawn", "message", "done", "retire", "backfill", "preflight", "reassign", "contract")
 REQUIRED_FIELDS = ("ts", "actor", "phase")
+# AGENTS.md §0.5 L1 / lead-dispatch-rules §1：spawn 前必须先建任务。
+# 新写入在 append 前 fail-closed（phase=spawn 必须带 --task）；历史行只 WARN，
+# 否则 append-only 日志会被"补历史"的需求逼着改历史行。
+SPAWN_REQUIRED_FIELDS = ("task",)
+# 历史行 WARN 的截止点：此时间之前的 spawn 缺 task 只告警；之后（含插件直写的行）视为违规。
+L1_TASK_ENFORCE_FROM = "2026-10-27T00:00:00+08:00"
 # task-107：DSH 四档（源码 tool-agent-team/src/index.ts:448 mode 默认 standard）；路由表见 §1.3b
 VALID_MODES = ("mechanical", "standard", "deep", "creator")
 MAX_AGE_DAYS = 7
@@ -151,6 +157,10 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
             elif mode is not None and explicit is not True:
                 warnings.append({"check": "mode_not_explicit", "line": lineno, "target": entry.get("target"),
                                  "detail": "有 mode 但 modeExplicit 不是 true（无法证明是显式决策）"})
+        if phase == "spawn" and not entry.get("task"):
+            warnings.append({"check": "task_missing", "line": lineno, "target": entry.get("target"),
+                             "detail": "spawn 缺 task 字段（历史记录无法证明先建任务；新记录必须 --task，"
+                                       "machine check 见 team_audit.py::l1_task_before_spawn）"})
     latest = None
     stamps = [ts for ts in (parse_ts(str(entry.get("ts", ""))) for entry in entries) if ts is not None]
     if stamps:
@@ -176,6 +186,7 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
         elif entry.get("mode") is None and entry.get("modeExplicit") is False:
             judgeable += 1  # 显式「未决定」也是一种可判定状态（不伪造 mode）
     mode_known = judgeable
+    spawn_with_task = sum(1 for entry in entries if entry.get("phase") == "spawn" and entry.get("task"))
     return {
         "ok": not problems,
         "path": str(path),
@@ -187,6 +198,8 @@ def check(path: Path, max_age_days: int = MAX_AGE_DAYS) -> dict:
         "warnings": warnings,
         "mode_coverage": {"spawn": spawn_count, "judgeable": mode_known,
                           "unknown": spawn_count - mode_known},
+        "task_coverage": {"spawn": spawn_count, "with_task": spawn_with_task,
+                          "missing": spawn_count - spawn_with_task},
     }
 
 
@@ -268,6 +281,11 @@ def validate_entry(entry: dict) -> list[str]:
             problems.append("corrects.line 必须是 >=1 的整数（要更正的历史行号）")
         if not fix.get("new"):
             problems.append("corrects.new 必填（更正后的路径/值）")
+    if phase == "spawn" and not entry.get("task"):
+        problems.append(
+            "phase=spawn 必须带 --task <任务 id>（AGENTS.md §0.5 L1：spawn 前必须先建任务；"
+            "历史行只告警，新行硬拒绝）"
+        )
     if phase not in PHASES:
         problems.append(f"phase={phase!r} 不在 {PHASES}")
     return problems
@@ -352,7 +370,7 @@ def selftest() -> int:
         expect("spawn-mode-fields-written", bool(mode_rows) and mode_rows[0].get("mode") == "mechanical"
                and mode_rows[0].get("modeExplicit") is True)
         code = main(["append", "--actor", "lead", "--target", "undecided", "--phase", "spawn",
-                     "--mode-explicit", "false", "--log", str(mode_path)])
+                     "--task", "task-107", "--mode-explicit", "false", "--log", str(mode_path)])
         expect("spawn-explicit-undecided-allowed", code == 0)
         # 历史行（直接 append_entry，模拟 task-107 之前的旧记录）⇒ 必须只 WARN 不阻断
         append_entry(mode_path, {"ts": now_iso(), "actor": "lead", "phase": "spawn", "target": "legacy"})
@@ -363,8 +381,29 @@ def selftest() -> int:
         expect("mode-check-warns-legacy-row", any(w["check"] == "mode_missing" for w in mode_report["warnings"]))
         expect("mode-warnings-do-not-break-ok", mode_report["ok"] is True)
         code = main(["append", "--actor", "lead", "--target", "conflict", "--phase", "spawn",
-                     "--mode", "standard", "--mode-explicit", "false", "--log", str(mode_path)])
+                     "--task", "task-107", "--mode", "standard", "--mode-explicit", "false",
+                     "--log", str(mode_path)])
         expect("mode-contradiction-must-be-rejected", code == 2)
+
+        # 红 10（L1）：spawn 不带 --task => append 必须被拒；带 --task 必须落盘
+        task_path = Path(tmp) / "task.jsonl"
+        code = main(["append", "--actor", "lead", "--target", "worker", "--phase", "spawn",
+                     "--mode", "mechanical", "--log", str(task_path)])
+        expect("spawn-without-task-must-be-rejected", code == 2)
+        expect("rejected-spawn-task-must-not-be-written", not task_path.exists())
+        code = main(["append", "--actor", "lead", "--target", "worker", "--phase", "spawn",
+                     "--mode", "mechanical", "--task", "task-107", "--log", str(task_path)])
+        expect("spawn-with-task-must-pass", code == 0)
+        task_rows = [json.loads(line) for line in task_path.read_text(encoding="utf-8").splitlines()
+                     if line.strip()]
+        expect("spawn-task-field-written", bool(task_rows) and task_rows[0].get("task") == "task-107")
+        # 历史行（append_entry 直写，模拟本规则之前）=> 只 WARN，不改变 ok；coverage 必须可数
+        append_entry(task_path, {"ts": now_iso(), "actor": "lead", "phase": "spawn", "target": "legacy"})
+        task_report = check(task_path, max_age_days=36500)
+        expect("legacy-missing-task-only-warns", task_report["ok"] is True
+               and any(w["check"] == "task_missing" for w in task_report["warnings"]))
+        expect("task-coverage-counted", task_report["task_coverage"]
+               == {"spawn": 2, "with_task": 1, "missing": 1})
 
         # 红 7（回归守卫）：子命令 --log 的 default=None 曾把默认路径吃掉 ⇒ Path(None) TypeError。
         #   断言「不给 --log 也必须能拿到非空路径」：用真实默认值构造一次 check（只读，不写）。
@@ -395,7 +434,7 @@ def main(argv: list[str] | None = None) -> int:
                               help="日志路径（也可放在子命令前；两者等价）")
     append_parser.add_argument("--target", required=True, help="被派发/接收的 agent")
     append_parser.add_argument("--phase", required=True, choices=PHASES, help="派发阶段")
-    append_parser.add_argument("--task", help="关联任务 id（如 task-80）")
+    append_parser.add_argument("--task", help="关联任务 id（如 task-80）；phase=spawn 必填（L1）")
     append_parser.add_argument("--desc", help="一句话说明")
     append_parser.add_argument("--outcome", help="done 阶段的结论（pass/fail/blocked）")
     append_parser.add_argument("--report", help="产出物路径（报告/提交）")

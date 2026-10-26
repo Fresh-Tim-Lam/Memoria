@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 20 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
+覆盖 21 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -57,6 +57,10 @@
                      dq1 证据身份可解析 / dq2 rejected 必带 UEH / dq3 falsifiers / dq4 claim→evidence /
                      dq5 freeze+PINNED sha / dq6 辩论产物 git tracked ⇒ FAIL；
                      dq7 objection_ids / dq8 同源组 / dq9 coverage 三表 / dq10 deferred 超期 ⇒ WARN（两周后 FAIL）。
+19. l1_task_before_spawn: **spawn 前必须先建任务**（AGENTS.md §0.5 L1 / lead-dispatch-rules §1；SF-052 新增）。
+                     spawn 行必须有 task；task 必须在台账（快照/轨迹/日志非 spawn 行）存在；
+                     若能取到 task 创建时间（team/trajectory 的 team_task_create 事件），spawn 早于创建 ⇒ FAIL；
+                     取不到 ⇒ 退化为「只校验存在」，并显式报退化条数（不静默判绿）。
 
 用法
 ----
@@ -117,6 +121,13 @@ HOTSPOT_MIN_COMMITS = 3
 PLAN_WINDOW_DAYS = 14            # plan_consulted：版本级实施/计划时序比对窗口
 DEAD_PATH_WINDOW_DAYS = 7        # dead_path_edit：改动文件回溯窗口
 MODE_POLICY_WINDOW_DAYS = 14     # mode_policy：spawn 记录回溯窗口
+# task-xxx（SF-052 / L1）：spawn 必须关联已创建的任务。历史行（append-only）只 WARN，
+# 此时间点之后（含 DSH 插件直写的行）缺 task 视为违规。
+L1_TASK_ENFORCE_FROM = "2026-10-27T00:00:00+08:00"
+L1_TASK_WINDOW_DAYS = 30          # l1_task_before_spawn：只看近 N 天的 spawn（历史噪声折叠）
+# DSH 插件直写的 spawn 行（source=dsh-agent-team）不含 task（插件不知道任务）⇒
+# 它必须与 Lead 手工写的、带 --task 的 spawn 行配对；窗口内同 target 视为同一次派发。
+L1_SPAWN_PAIR_WINDOW_MINUTES = 10
 MAX_DEAD_PATH_FILES = 300        # dead_path_edit：单次最多检查的文件数（一次批量 git grep，成本可控）
 DEFAULT_VERSION_FILE = "src/memoria/__version__.py"
 TODO_DOC = "docs/todo.md"
@@ -2050,6 +2061,282 @@ def check_dead_path_edit(ctx: AuditContext) -> None:
                 "git grep -n -I -F -e <basename>... HEAD")
 
 
+def _l1_task_creation_times(repo: Path) -> tuple[dict, dict]:
+    """从 team/trajectory/**/<task>.jsonl 提取 task 创建时间（team_task_create 成功事件）。
+
+    返回 (creation: {task_id: aware datetime}, source: {task_id: 相对路径})。
+    `team/trajectory` 由 DSH Agent Teams 插件的轨迹机制物化；它只覆盖「已物化」的任务，
+    因此调用方必须把不可得的情况当作**退化**显式报告，不能当作通过。
+    """
+    creation: dict = {}
+    source: dict = {}
+    root = repo / "team" / "trajectory"
+    if not root.is_dir():
+        return creation, source
+    for path in sorted(root.glob("*/*.jsonl")):
+        try:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for raw in text.splitlines():
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                event = json.loads(raw)
+            except json.JSONDecodeError:
+                continue
+            if not isinstance(event, dict):
+                continue
+            if event.get("kind") != "claim" or event.get("target") != "team_task_create":
+                continue
+            if event.get("result") != "ok":
+                continue
+            task = event.get("task")
+            stamp = _parse_iso(str(event.get("ts") or ""))
+            if not isinstance(task, str) or not task or stamp is None:
+                continue
+            if task not in creation or stamp < creation[task]:
+                creation[task] = stamp
+                try:
+                    source[task] = path.relative_to(repo).as_posix()
+                except ValueError:
+                    source[task] = path.as_posix()
+    return creation, source
+
+
+def _l1_known_tasks(ctx: AuditContext, rows: list[dict]) -> set[str]:
+    """台账里能证明「存在」的 task id 集合。
+
+    来源：任务板快照（tasks + completedRecent）、轨迹文件（文件名即 task id）、
+    dispatch-log 中**非 spawn** 行的 task 引用（spawn 行自身不能自证存在）。
+    """
+    known: set[str] = set()
+    snapshot = ctx.snapshot_path
+    if snapshot.is_file():
+        try:
+            data = json.loads(_read_text(snapshot))
+        except (OSError, json.JSONDecodeError):
+            data = {}
+        for key in ("tasks", "completedRecent"):
+            for item in (data.get(key) or []) if isinstance(data, dict) else []:
+                if isinstance(item, dict) and isinstance(item.get("id"), str):
+                    known.add(item["id"])
+    root = ctx.repo / "team" / "trajectory"
+    if root.is_dir():
+        for path in root.glob("*/*.jsonl"):
+            known.add(path.stem)
+    for row in rows:
+        if row.get("phase") == "spawn":
+            continue
+        task = row.get("task")
+        if isinstance(task, str) and task:
+            known.add(task)
+    return known
+
+
+def check_l1_task_before_spawn(ctx: AuditContext) -> None:
+    """L1 可机检：spawn 之前必须已建任务（AGENTS.md §0.5 L1 / lead-dispatch-rules §1）。
+
+    两种 spawn 行必须分开处理：
+      - **手工派发行**（dispatch_log.py 写入，带 task）：直接按 task 校验。
+      - **插件审计行**（`source: "dsh-agent-team"`，插件不知道 task 所以不可能带）：
+        必须与一个「同 target 且时间相近」的手工派发行配对，用后者的 task 校验；
+        配不上 ⇒ 该次 spawn 没有可核验的任务依据（L1 违规：spawn 前没建任务或没记派发）。
+
+    判据（历史行 append-only ⇒ 只 WARN；L1_TASK_ENFORCE_FROM 之后 ⇒ FAIL）：
+      1. 手工 spawn 行缺 task（新行本应由 dispatch_log.py 硬拒绝，这里兜住插件/绕过路径）。
+      2. 任务必须能在台账中找到（快照 / 轨迹 / 非 spawn 日志行）。
+      3. 能取到 task 创建时间（轨迹 team_task_create 成功事件）时：spawn 早于创建 ⇒ 先 spawn 后建 task。
+      4. 取不到创建时间 ⇒ 只校验存在，并显式报退化条数（不静默判绿）。
+    """
+    check = "l1_task_before_spawn"
+    path = ctx.dispatch_path
+    if not path.is_file():
+        ctx.add(check, WARN, f"输入不足：{ctx.rel(path)} 不存在，无法检查 L1（spawn 前是否已建任务）",
+                f"missing file: {ctx.rel(path)}")
+        return
+    rows = _read_dispatch_rows(path)
+    spawns = [row for row in rows if row.get("phase") == "spawn"]
+    if not spawns:
+        ctx.add(check, WARN, "dispatch-log 无 spawn 记录：L1 检查输入为 0（**不得视为通过**）",
+                f"{ctx.rel(path)}:phase=spawn")
+        return
+
+    cutoff = _parse_iso(L1_TASK_ENFORCE_FROM)
+    known = _l1_known_tasks(ctx, rows)
+    creation, source = _l1_task_creation_times(ctx.repo)
+    window = timedelta(minutes=L1_SPAWN_PAIR_WINDOW_MINUTES)
+
+    def is_auto(row: dict) -> bool:
+        return row.get("source") == "dsh-agent-team"
+
+    def is_new(row: dict) -> bool:
+        stamp = _parse_iso(str(row.get("ts") or ""))
+        return cutoff is not None and stamp is not None and stamp >= cutoff
+
+    manual_rows = [row for row in spawns if not is_auto(row)]
+    auto_rows = [row for row in spawns if is_auto(row)]
+
+    # 手工派发行中「带 task 且可作配对依据」的那些
+    declared = [row for row in manual_rows if isinstance(row.get("task"), str) and row.get("task")]
+    consumed: set[int] = set()
+
+    def pair_for(row: dict) -> dict | None:
+        stamp = _parse_iso(str(row.get("ts") or ""))
+        best = None
+        best_delta = None
+        for candidate in declared:
+            if id(candidate) in consumed or candidate.get("target") != row.get("target"):
+                continue
+            candidate_stamp = _parse_iso(str(candidate.get("ts") or ""))
+            if stamp is None or candidate_stamp is None:
+                continue
+            delta = abs(candidate_stamp - stamp)
+            if delta > window:
+                continue
+            if best_delta is None or delta < best_delta:
+                best = candidate
+                best_delta = delta
+        if best is not None:
+            consumed.add(id(best))
+        return best
+
+    missing_new: list[dict] = []
+    missing_old: list[dict] = []
+    unpaired_new: list[dict] = []
+    unpaired_old: list[dict] = []
+    unknown_tasks: list[dict] = []
+    unknown_old: list[dict] = []
+    violated: list[tuple] = []
+    violated_old: list[tuple] = []
+    ordered = 0
+    degraded = 0
+    paired_count = 0
+
+    def judge(row: dict, task: str, spawn_stamp) -> None:
+        nonlocal ordered, degraded
+        if task not in known:
+            (unknown_tasks if is_new(row) else unknown_old).append(row)
+            return
+        if task in creation and spawn_stamp is not None:
+            if spawn_stamp < creation[task]:
+                (violated if is_new(row) else violated_old).append(
+                    (row, task, creation[task], source.get(task, "")))
+            else:
+                ordered += 1
+        else:
+            degraded += 1
+
+    # 1) 先给插件审计行找配对（配对会消费手工行，避免同一事件被重复计数）
+    pairs: list[tuple[dict, dict]] = []
+    for row in auto_rows:
+        partner = pair_for(row)
+        if partner is None:
+            (unpaired_new if is_new(row) else unpaired_old).append(row)
+            continue
+        pairs.append((row, partner))
+
+    # 2) 手工派发行：缺 task 的按 L1 分类；已被插件行配对消费的跳过（由配对行判一次）
+    for row in manual_rows:
+        task = row.get("task")
+        if not isinstance(task, str) or not task:
+            if is_new(row):
+                missing_new.append(row)
+            else:
+                missing_old.append(row)
+            continue
+        if id(row) in consumed:
+            continue
+        judge(row, task, _parse_iso(str(row.get("ts") or "")))
+
+    # 3) 已配对事件：用插件行的真实 spawn 时刻 + 手工行的 task 判一次
+    for row, partner in pairs:
+        paired_count += 1
+        spawn_stamp = _parse_iso(str(row.get("ts") or ""))
+        partner_stamp = _parse_iso(str(partner.get("ts") or ""))
+        if partner_stamp is not None and spawn_stamp is not None:
+            spawn_stamp = min(spawn_stamp, partner_stamp)
+        judge(row, str(partner.get("task")), spawn_stamp)
+
+    if missing_new:
+        samples = ", ".join(
+            f"line={row.get('_line')} target={row.get('target')} ts={row.get('ts')}"
+            for row in missing_new[:5])
+        ctx.add(check, FAIL,
+                f"L1 违规：{len(missing_new)} 条手工 spawn 缺 task 字段"
+                f"（{L1_TASK_ENFORCE_FROM} 起强制 --task；样本：{samples}）",
+                f"{ctx.rel(path)}:phase=spawn")
+    if missing_old:
+        samples = ", ".join(
+            f"line={row.get('_line')} target={row.get('target')} ts={row.get('ts')}"
+            for row in missing_old[:5])
+        ctx.add(check, WARN,
+                f"历史遗留：{len(missing_old)} 条 {L1_TASK_ENFORCE_FROM} 之前的手工 spawn 缺 task"
+                f"（迁移期只告警；样本：{samples}）",
+                f"{ctx.rel(path)}:phase=spawn（历史行）")
+    if unpaired_new:
+        samples = ", ".join(
+            f"line={row.get('_line')} target={row.get('target')} ts={row.get('ts')}"
+            for row in unpaired_new[:5])
+        ctx.add(check, FAIL,
+                f"L1 违规：{len(unpaired_new)} 条插件 spawn 没有配对的带 task 派发行"
+                f"（同 target ±{L1_SPAWN_PAIR_WINDOW_MINUTES} 分钟内找不到 --task 记录 ⇒ "
+                f"spawn 前未建任务/未记派发；样本：{samples}）",
+                f"{ctx.rel(path)}:source=dsh-agent-team vs 手工 spawn 行")
+    if unpaired_old:
+        samples = ", ".join(
+            f"line={row.get('_line')} target={row.get('target')} ts={row.get('ts')}"
+            for row in unpaired_old[:5])
+        ctx.add(check, WARN,
+                f"历史遗留：{len(unpaired_old)} 条 {L1_TASK_ENFORCE_FROM} 之前的插件 spawn 无配对派发行"
+                f"（只告警；样本：{samples}）",
+                f"{ctx.rel(path)}:source=dsh-agent-team（历史行）")
+    if unknown_tasks:
+        ids = ", ".join(sorted({str(row.get("task")) for row in unknown_tasks})[:10])
+        samples = ", ".join(
+            f"line={row.get('_line')} target={row.get('target')} task={row.get('task')}"
+            for row in unknown_tasks[:5])
+        ctx.add(check, FAIL,
+                f"L1 违规：{len(unknown_tasks)} 条 spawn 引用的 task 在台账中不存在（先建任务才可派发）：{ids}"
+                f"；样本：{samples}",
+                f"{ctx.rel(path)}:phase=spawn vs 快照/轨迹/日志")
+    if unknown_old:
+        ids = ", ".join(sorted({str(row.get("task")) for row in unknown_old})[:10])
+        ctx.add(check, WARN,
+                f"历史遗留：{len(unknown_old)} 条 {L1_TASK_ENFORCE_FROM} 之前的 spawn 引用的 task"
+                f"在台账中找不到（早期 id 可能已滚动淘汰；只告警）：{ids}",
+                f"{ctx.rel(path)}:phase=spawn（历史行）")
+    if violated:
+        samples = "; ".join(
+            f"task={task} spawn={row.get('ts')} created={created.isoformat()}（{src}）"
+            for row, task, created, src in violated[:5])
+        ctx.add(check, FAIL,
+                f"L1 违规：{len(violated)} 条 spawn 早于 task 创建时间（先 spawn 后建 task）：{samples}",
+                f"{ctx.rel(path)}:phase=spawn vs team/trajectory/**/team_task_create")
+    if violated_old:
+        samples = "; ".join(
+            f"task={task} spawn={row.get('ts')} created={created.isoformat()}（{src}）"
+            for row, task, created, src in violated_old[:5])
+        ctx.add(check, WARN,
+                f"历史遗留：{len(violated_old)} 条 {L1_TASK_ENFORCE_FROM} 之前的 spawn 早于 task 创建时间"
+                f"（真实发生过「先 spawn 后建 task」，只告警供复盘）：{samples}",
+                f"{ctx.rel(path)}:phase=spawn（历史行） vs team/trajectory")
+    if degraded:
+        ctx.add(check, WARN,
+                f"退化校验：{degraded}/{len(spawns)} 条 spawn 只能校验 task 存在、无法校验先后"
+                f"（无 task 创建时间证据——轨迹未物化该任务；覆盖 spawn={len(spawns)} "
+                f"ordering_verified={ordered} degraded={degraded}）",
+                f"{ctx.rel(path)}:phase=spawn vs team/trajectory")
+    ctx.add(check, INFO,
+            f"L1 统计：spawn={len(spawns)}（手工={len(manual_rows)} 插件={len(auto_rows)} "
+            f"配对={paired_count}）ordering_verified={ordered} degraded={degraded} "
+            f"历史缺 task={len(missing_old)} 新行缺 task={len(missing_new)} "
+            f"未配对（历史={len(unpaired_old)} 新={len(unpaired_new)}）"
+            f"task 不存在={len(unknown_tasks)} 先 spawn 后建 task={len(violated)}（历史={len(violated_old)}）",
+            f"{ctx.rel(path)}:phase=spawn")
+
+
 def check_mode_policy(ctx: AuditContext) -> None:
     """spawn 是否显式做了模式决策（AGENTS.md §0.5 L9）。
 
@@ -3002,6 +3289,8 @@ def run_checks(ctx: AuditContext) -> list:
     check_role_registration(ctx, data)
     check_dead_path_edit(ctx)
     check_mode_policy(ctx)
+    # SF-052：L1「先建任务再 spawn」可机检（历史行 WARN、新行 FAIL、创建时间不可得显式退化）
+    check_l1_task_before_spawn(ctx)
     # task-103 新增（P1）：决策记录义务 / 模型策略 / steward 自身可机审
     check_decision_trail(ctx)
     check_model_policy(ctx, data)
@@ -3205,7 +3494,9 @@ def selftest() -> int:
                 {"target": "alpha", "role": "teammate", "status": "inactive", "model": "deepseek-flash"},
                 {"target": "team-curator", "role": "teammate", "status": "inactive", "model": "deepseek-flash"},
             ],
-            "retired": [], "inactiveOwners": ["alpha", "team-curator"], "tasks": [],
+            "retired": [], "inactiveOwners": ["alpha", "team-curator"],
+            "tasks": [{"id": "t-9", "status": "completed", "owner": "curator",
+                       "writeScopes": [], "blockedBy": [], "revision": 2}],
         }, ensure_ascii=False, indent=2))
         _write(green / "team/agents.json", json.dumps({
             "schema_version": 2,
@@ -3226,12 +3517,16 @@ def selftest() -> int:
         _write(green / "team/dispatch-log.jsonl", "\n".join([
             # task-100：mode_policy 绿路径要求 spawn 显式记录 mode（L9）；否则绿 fixture 会出 WARN
             json.dumps({"ts": "2099-01-01T00:00:00+08:00", "actor": "lead",
-                        "phase": "spawn", "target": "curator",
+                        "phase": "spawn", "target": "curator", "task": "t-9",
                         "mode": "mechanical", "modeExplicit": True}, ensure_ascii=False),
             json.dumps({"ts": "2099-01-01T00:01:00+08:00", "actor": "curator",
                         "phase": "done", "target": "lead",
                         "report": "artifacts/agent/verify/ok-report.md"}, ensure_ascii=False),
         ]) + "\n")
+        _write(green / "team/trajectory/lead/t-9.jsonl",
+               json.dumps({"ts": "2098-12-31T23:59:00+08:00", "member": "lead", "task": "t-9",
+                           "kind": "claim", "target": "team_task_create",
+                           "result": "ok"}, ensure_ascii=False) + "\n")
         _write(green / "scripts/agent/dispatch_log.py",
                'PHASES = ("spawn", "message", "done", "retire", "backfill")\n'
                'REQUIRED_FIELDS = ("ts", "actor", "phase")\n')
@@ -3434,10 +3729,115 @@ def selftest() -> int:
             failures.append("mode_policy 绿 fixture 误报：" + "; ".join(
                 f"{f.check}:{f.message}" for f in mode_green_findings if f.severity in (FAIL, WARN)))
 
+        # 4b) l1_task_before_spawn：红 = 缺 task / task 不存在 / spawn 早于 task 创建；绿 = 创建早于 spawn
+        #     ts 必须晚于 L1_TASK_ENFORCE_FROM，否则「缺 task」只会落进历史 WARN 分支
+        future_stamp = (now + timedelta(days=2)).isoformat(timespec="seconds")
+        l1_red = tmp / "l1-red"
+        _write(l1_red / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn", "target": "no-task",
+                        "mode": "mechanical", "modeExplicit": True}, ensure_ascii=False),
+        ]) + "\n")
+        l1_red_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_red))
+        expect(l1_red_findings, "l1_task_before_spawn", FAIL, "缺 task")
+
+        l1_missing = tmp / "l1-missing"
+        _write(l1_missing / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn", "target": "ghost-task",
+                        "task": "task-999", "mode": "mechanical", "modeExplicit": True},
+                       ensure_ascii=False),
+        ]) + "\n")
+        l1_missing_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_missing))
+        expect(l1_missing_findings, "l1_task_before_spawn", FAIL, "不存在")
+
+        # 核心判据：构造「先 spawn 后建 task」的假日志（轨迹里创建时间晚于 spawn）⇒ 必须红
+        l1_order = tmp / "l1-order"
+        # 创建时间必须晚于 spawn 的 future_stamp（+2 天）才构成「先 spawn 后建 task」
+        later = (now + timedelta(days=2, minutes=10)).isoformat(timespec="seconds")
+        _write(l1_order / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn", "target": "late-task",
+                        "task": "t-1", "mode": "mechanical", "modeExplicit": True},
+                       ensure_ascii=False),
+        ]) + "\n")
+        _write(l1_order / "team/team-board-snapshot.json", json.dumps({
+            "schema": "team-board-snapshot/v1", "exportedAt": "2099-01-01T00:00:00+08:00",
+            "limit": {"maxMembers": 16, "currentMembers": 2},
+            "members": [{"target": "lead", "role": "lead", "status": "running"}],
+            "retired": [], "inactiveOwners": [],
+            "tasks": [{"id": "t-1", "status": "in_progress", "owner": "lead", "writeScopes": []}],
+        }, ensure_ascii=False, indent=2))
+        _write(l1_order / "team/trajectory/lead/t-1.jsonl", json.dumps({
+            "ts": later, "member": "lead", "task": "t-1", "kind": "claim",
+            "target": "team_task_create", "result": "ok"}, ensure_ascii=False) + "\n")
+        l1_order_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_order))
+        expect(l1_order_findings, "l1_task_before_spawn", FAIL, "早于 task 创建")
+
+        # 插件审计行（source=dsh-agent-team）本身不带 task：红 = 无配对派发行；绿 = 有配对且创建早于 spawn
+        l1_auto_red = tmp / "l1-auto-red"
+        _write(l1_auto_red / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn",
+                        "target": "auto-only", "source": "dsh-agent-team"},
+                       ensure_ascii=False),
+        ]) + "\n")
+        l1_auto_red_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_auto_red))
+        expect(l1_auto_red_findings, "l1_task_before_spawn", FAIL, "没有配对")
+
+        l1_auto_green = tmp / "l1-auto-green"
+        _write(l1_auto_green / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn",
+                        "target": "auto-paired", "source": "dsh-agent-team"},
+                       ensure_ascii=False),
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn",
+                        "target": "auto-paired", "task": "t-1", "mode": "mechanical",
+                        "modeExplicit": True}, ensure_ascii=False),
+        ]) + "\n")
+        _write(l1_auto_green / "team/team-board-snapshot.json", json.dumps({
+            "schema": "team-board-snapshot/v1", "exportedAt": "2099-01-01T00:00:00+08:00",
+            "limit": {"maxMembers": 16, "currentMembers": 2},
+            "members": [{"target": "lead", "role": "lead", "status": "running"}],
+            "retired": [], "inactiveOwners": [],
+            "tasks": [{"id": "t-1", "status": "in_progress", "owner": "lead", "writeScopes": []}],
+        }, ensure_ascii=False, indent=2))
+        auto_earlier = (now + timedelta(days=2, minutes=-5)).isoformat(timespec="seconds")
+        _write(l1_auto_green / "team/trajectory/lead/t-1.jsonl", json.dumps({
+            "ts": auto_earlier, "member": "lead", "task": "t-1", "kind": "claim",
+            "target": "team_task_create", "result": "ok"}, ensure_ascii=False) + "\n")
+        l1_auto_green_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_auto_green))
+        if any(f.check == "l1_task_before_spawn" and f.severity in (FAIL, WARN)
+               for f in l1_auto_green_findings):
+            failures.append("l1_task_before_spawn 插件配对绿 fixture 误报：" + "; ".join(
+                f"{f.severity}:{f.message}" for f in l1_auto_green_findings
+                if f.check == "l1_task_before_spawn" and f.severity in (FAIL, WARN)))
+
+        # 绿：task 存在且创建事件早于 spawn ⇒ 不得 FAIL/WARN（只允许 INFO 统计）
+        l1_green = tmp / "l1-green"
+        earlier = (now + timedelta(days=2, minutes=-10)).isoformat(timespec="seconds")
+        _write(l1_green / DEFAULT_DISPATCH_LOG, "\n".join([
+            json.dumps({"ts": future_stamp, "actor": "lead", "phase": "spawn", "target": "ok-task",
+                        "task": "t-1", "mode": "mechanical", "modeExplicit": True},
+                       ensure_ascii=False),
+        ]) + "\n")
+        _write(l1_green / "team/team-board-snapshot.json", json.dumps({
+            "schema": "team-board-snapshot/v1", "exportedAt": "2099-01-01T00:00:00+08:00",
+            "limit": {"maxMembers": 16, "currentMembers": 2},
+            "members": [{"target": "lead", "role": "lead", "status": "running"}],
+            "retired": [], "inactiveOwners": [],
+            "tasks": [{"id": "t-1", "status": "in_progress", "owner": "lead", "writeScopes": []}],
+        }, ensure_ascii=False, indent=2))
+        _write(l1_green / "team/trajectory/lead/t-1.jsonl", json.dumps({
+            "ts": earlier, "member": "lead", "task": "t-1", "kind": "claim",
+            "target": "team_task_create", "result": "ok"}, ensure_ascii=False) + "\n")
+        l1_green_findings = _isolated(check_l1_task_before_spawn, _ctx(l1_green))
+        if any(f.check == "l1_task_before_spawn" and f.severity in (FAIL, WARN)
+               for f in l1_green_findings):
+            failures.append("l1_task_before_spawn 绿 fixture 误报：" + "; ".join(
+                f"{f.severity}:{f.message}" for f in l1_green_findings
+                if f.check == "l1_task_before_spawn" and f.severity in (FAIL, WARN)))
+
         # 5) 四个新检查必须已注册进 run_checks（否则上面单测绿、生产不跑 = 假绿）
         registered = {f.check for f in run_checks(_ctx(roles_green))}
         for name in ("plan_consulted", "role_registration", "dead_path_edit", "mode_policy",
-                     "decision_trail", "model_policy", "steward_self_audit", "deliberation_quality"):
+                     "decision_trail", "model_policy", "steward_self_audit", "deliberation_quality",
+                     "l1_task_before_spawn"):
             if name not in registered:
                 failures.append(f"run_checks 未注册新检查：{name}")
 
@@ -3764,7 +4164,9 @@ def selftest() -> int:
               "mode_policy 区分「显式未决定」）各自必红/必绿 fixture 通过；"
               "task-116 辩论过程机检 deliberation_quality：dq1-dq6 六条 FAIL 判据各自必红 fixture + 绿 fixture 不误报，"
               "dq7-dq10 宽限 WARN 已注册；"
-              "task-110 收据 sha 口径 = LF 归一化内容 sha（LF/CRLF 版本等价性 + 旧「原始 CRLF 字节 sha」必红 fixture 通过）。")
+              "task-110 收据 sha 口径 = LF 归一化内容 sha（LF/CRLF 版本等价性 + 旧「原始 CRLF 字节 sha」必红 fixture 通过）；"
+              "SF-052 l1_task_before_spawn：缺 task / task 不存在 / 先 spawn 后建 task 三种红 fixture 必红，"
+              "创建早于 spawn 的绿 fixture 不误报，且已注册进 run_checks。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
