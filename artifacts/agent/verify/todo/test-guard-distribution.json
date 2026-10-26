@@ -1,0 +1,173 @@
+{
+  "measured_at": "2026-10-26T18:21:27",
+  "schema": "test-guard-check/v2",
+  "criteria": {
+    "primary": "symbol_count > 2（押了超过契约点的细节）",
+    "auxiliary": "literal length >= 100（仅用于报告排序，不单独判违规）"
+  },
+  "max_symbols": 2,
+  "len_threshold": 100,
+  "total_source_asserts": 404,
+  "over_symbol_asserts": [
+    {
+      "file": "tests/test_preview_cache_policy.py",
+      "line": 251,
+      "symbols": [
+        "meta",
+        "hits",
+        "lastOpenAt",
+        "loadMs",
+        "agingStamp"
+      ],
+      "symbol_count": 5,
+      "length": 82,
+      "literal": "meta = { hits: 0, lastOpenAt: Date.now(), loadMs: 0, agingStamp: _previewEvicts };"
+    },
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 102,
+      "symbols": [
+        "_notifyRenderSettled",
+        "_preloadPruneStale",
+        "_preloadSchedule",
+        "_markPreviewDomCurrent"
+      ],
+      "symbol_count": 4,
+      "length": 94,
+      "literal": "_notifyRenderSettled(); _preloadPruneStale(); _preloadSchedule(); _markPreviewDomCurrent(doc);"
+    },
+    {
+      "file": "tests/test_agent_panel_token.py",
+      "line": 108,
+      "symbols": [
+        "line",
+        "col",
+        "lineStart",
+        "off"
+      ],
+      "symbol_count": 4,
+      "length": 58,
+      "literal": "return { line: line, col: off + 1, lineStart: off === 0 };"
+    },
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 86,
+      "symbols": [
+        "_docVersionOf",
+        "_bodyFingerprint",
+        "_previewSourceBody"
+      ],
+      "symbol_count": 3,
+      "length": 99,
+      "literal": "if (entry.version !== _docVersionOf(doc) || entry.fp !== _bodyFingerprint(_previewSourceBody(doc)))"
+    },
+    {
+      "file": "tests/test_preview_cache_policy.py",
+      "line": 286,
+      "symbols": [
+        "applyFonts",
+        "announcePreload",
+        "announcePerfPolicy"
+      ],
+      "symbol_count": 3,
+      "length": 75,
+      "literal": "applyFonts(s); announcePreload(s.backgroundPreload); announcePerfPolicy(s);"
+    },
+    {
+      "file": "tests/test_preview_block_commit.py",
+      "line": 130,
+      "symbols": [
+        "start",
+        "oldCount",
+        "newCount"
+      ],
+      "symbol_count": 3,
+      "length": 71,
+      "literal": "return { start: start, oldCount: oldCount, newCount: newLines.length };"
+    }
+  ],
+  "over_symbol_count": 6,
+  "long_asserts": [
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 205,
+      "length": 331,
+      "literal": "if (window.MathJax?.typesetPromise) { const _orgH = _switchAbs; const _runMathH = function () { if (token !== state.prev"
+    },
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 160,
+      "length": 164,
+      "literal": "if (typeof window.requestIdleCallback === \"function\") _preloadIdle = window.requestIdleCallback(fire, { timeout: 4000 })"
+    },
+    {
+      "file": "tests/test_nav_predictor.py",
+      "line": 185,
+      "length": 150,
+      "literal": "const base = { push: STACK.push, openFileFromTree: STACK.openFileFromTree, navBack: STACK.navBack, navForward: STACK.nav"
+    },
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 164,
+      "length": 146,
+      "literal": "_preloadIdle = -1; if (window.requestAnimationFrame) window.requestAnimationFrame(function () { window.requestAnimationF"
+    },
+    {
+      "file": "tests/test_agent_panel_token.py",
+      "line": 1158,
+      "length": 143,
+      "literal": "</label><label class=\"-agent-field\"><span data-i18n=\"agent.settings.transcriptLabel\">对话显示</span><select id=\"agent-transc"
+    },
+    {
+      "file": "tests/test_agent_panel_token.py",
+      "line": 544,
+      "length": 137,
+      "literal": "detail: String((call && call.name) === \"ask_user_question\" ? askRecordText((call && call.message) || \"\") : (call && call"
+    },
+    {
+      "file": "tests/test_preview_cache_policy.py",
+      "line": 285,
+      "length": 131,
+      "literal": "if (data) for (const k of PERF_KEYS) if (data[k] !== undefined) out[k] = k === \"perfAdmission\" ? !!data[k] : clampPerf(k"
+    },
+    {
+      "file": "tests/test_agent_panel_token.py",
+      "line": 1179,
+      "length": 119,
+      "literal": "if (row && row.kind === \"step\" && typeof row.reasoning === \"string\" && row.reasoning.trim()) parts.push(row.reasoning);"
+    },
+    {
+      "file": "tests/test_display_fonts.py",
+      "line": 100,
+      "length": 111,
+      "literal": "select[data-display-font-lang],\n    select[data-display-setting=\"fontBrand\"] {\n        appearance: base-select;"
+    },
+    {
+      "file": "tests/test_preview_block_commit.py",
+      "line": 81,
+      "length": 107,
+      "literal": "var NEC = 'mjx-container, pre, code, table, svg, .-mermaid-container, .-mermaid-error, .-lightbox-overlay';"
+    },
+    {
+      "file": "tests/test_agent_panel_token.py",
+      "line": 1198,
+      "length": 103,
+      "literal": "const owner = last && last.role === \"assistant\" && last.usage && last.usage.total_tokens ? last : null;"
+    },
+    {
+      "file": "tests/test_display_preload.py",
+      "line": 54,
+      "length": 101,
+      "literal": "let val = el.type === \"checkbox\" ? !!el.checked : el.type === \"number\" ? Number(el.value) : el.value;"
+    },
+    {
+      "file": "tests/test_preview_block_commit.py",
+      "line": 129,
+      "length": 100,
+      "literal": "if (!patchEditorLines(startLine, endLine - startLine + 1, newLines.length)) renderEditor(state.doc);"
+    }
+  ],
+  "long_count": 13,
+  "broken_guards": [],
+  "broken_count": 0
+}
