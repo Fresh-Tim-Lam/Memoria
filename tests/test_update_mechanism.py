@@ -126,6 +126,9 @@ def test_parse_release_assets_and_version_compare():
 
 
 def test_manual_check_then_auto_uses_cache(monkeypatch, tmp_path):
+    # 钉住 current_version：本用例的语义是"存在更新版本"，不能随仓库版本 bump 而反转。
+    # （0.4.9 → 0.4.10 bump 时该用例曾因"最新版=当前版"而红：测试不应耦合仓库版本号。）
+
     monkeypatch.setattr(upd, "_outbound_enabled", lambda: True)
     state = tmp_path / "update-state.json"
     calls = []
@@ -134,14 +137,18 @@ def test_manual_check_then_auto_uses_cache(monkeypatch, tmp_path):
         calls.append(url)
         return _release()
 
-    res = upd.check_for_update(manual=True, http_get=first, state_file=state)
+    res = upd.check_for_update(
+        manual=True, http_get=first, state_file=state, current_version="0.4.9"
+    )
     assert res["status"] == "ok" and res["cached"] is False
     assert res["update_available"] is True and len(calls) == 1
 
     def must_not_call(url):
         raise AssertionError("24h 内自动检查不应再请求")
 
-    cached = upd.check_for_update(manual=False, http_get=must_not_call, state_file=state)
+    cached = upd.check_for_update(
+        manual=False, http_get=must_not_call, state_file=state, current_version="0.4.9"
+    )
     assert cached["status"] == "ok" and cached["cached"] is True
     assert cached["latest_version"] == "0.4.10"
 
