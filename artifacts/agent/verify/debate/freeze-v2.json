@@ -19,7 +19,7 @@
     },
     {
       "path": "docs/guides/lead-dispatch-rules.md",
-      "sha256_lf": "716712d40314276faca64af132613d3dac448b84a7916eb402c70f145e5421db",
+      "sha256_lf": "169c15ed1f43f0e4fdb11bffee4ad0545a9a1f91b6e2163628c7465812023b6d",
       "role": "派发细则"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
   "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
-  "standards_frozen_at": "2026-10-26T18:30:45.888509+08:00",
+  "standards_frozen_at": "2026-10-26T18:52:04.313914+08:00",
   "standards_updated": [
     {
       "at": "2026-10-26T08:43:23.585821+08:00",
@@ -104,6 +104,19 @@
           "path": "docs/guides/lead-dispatch-rules.md",
           "from": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
           "to": "716712d40314276faca64af132613d3dac448b84a7916eb402c70f145e5421db"
+        }
+      ]
+    },
+    {
+      "at": "2026-10-26T18:52:04.313914+08:00",
+      "by": "lead",
+      "commit_before": null,
+      "reason": "B-danger-1 v2 细化（补共享/独占定义、10 类禁止命令、留证格式、R1 例外流程、强制力诚实标注）",
+      "changed": [
+        {
+          "path": "docs/guides/lead-dispatch-rules.md",
+          "from": "716712d40314276faca64af132613d3dac448b84a7916eb402c70f145e5421db",
+          "to": "169c15ed1f43f0e4fdb11bffee4ad0545a9a1f91b6e2163628c7465812023b6d"
         }
       ]
     }
