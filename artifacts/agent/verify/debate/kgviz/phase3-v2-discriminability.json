@@ -1,0 +1,385 @@
+{
+  "SCOPE_DISCLOSURE": {
+    "CANNOT_PROVE": [
+      "人类是否可辨 —— 需真人判读实验，本脚本不能替代",
+      "3px / 4px 阈值的正确性 —— 仍是经验值"
+    ],
+    "CAN_PROVE": [
+      "各方案的相邻档像素差 / 面积比（物理量，可复跑）",
+      "各方案是否自洽（是否符合自己声明的阈值）",
+      "B 的 12 档相邻半径差是否 <2px（若是，『12 档可辨』物理上不成立）"
+    ],
+    "CRITICAL_DISTINCTION": "渲染后像素差 ≠ 人类可辨；本文件只给前者"
+  },
+  "artifactSha256": "5bd0db9eaab1cc4c2533881562bfb31dcef4e7af8b0fe6ba7c179b01751556d6",
+  "head": "01a2d3c86c3edc814edfb48e4534a6ae4997c0ac",
+  "measured_at": "2026-10-26T19:37:36.153066+08:00",
+  "render_margin": {
+    "available": true,
+    "rows": [
+      {
+        "measured_d_px": 9,
+        "nominal_d": 8.0,
+        "nominal_r": 4.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 11,
+        "nominal_d": 10.0,
+        "nominal_r": 5.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 13,
+        "nominal_d": 12.0,
+        "nominal_r": 6.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 17,
+        "nominal_d": 16.0,
+        "nominal_r": 8.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 19,
+        "nominal_d": 18.0,
+        "nominal_r": 9.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 21,
+        "nominal_d": 20.0,
+        "nominal_r": 10.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 25,
+        "nominal_d": 24.0,
+        "nominal_r": 12.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 31,
+        "nominal_d": 30.0,
+        "nominal_r": 15.0,
+        "overflow_px": 1.0
+      },
+      {
+        "measured_d_px": 37,
+        "nominal_d": 36.0,
+        "nominal_r": 18.0,
+        "overflow_px": 1.0
+      }
+    ],
+    "supersample": 4
+  },
+  "schema": "kgviz-discriminability/v1",
+  "schemes": {
+    "A": {
+      "analysis": {
+        "checks": [
+          {
+            "delta": 2.0,
+            "needed": 2.0,
+            "pair": "4.0→6.0",
+            "pass": true
+          },
+          {
+            "delta": 2.0,
+            "needed": 2.0,
+            "pair": "6.0→8.0",
+            "pass": true
+          },
+          {
+            "delta": 2.0,
+            "needed": 2.0,
+            "pair": "8.0→10.0",
+            "pass": true
+          },
+          {
+            "delta": 2.0,
+            "needed": 2.0,
+            "pair": "10.0→12.0",
+            "pass": true
+          }
+        ],
+        "metrics": {
+          "adjacent": [
+            {
+              "area_delta_pct": 125.0,
+              "area_ratio": 2.25,
+              "diameter_delta_px": 4.0,
+              "from_r": 4.0,
+              "radius_delta_px": 2.0,
+              "to_r": 6.0
+            },
+            {
+              "area_delta_pct": 77.8,
+              "area_ratio": 1.778,
+              "diameter_delta_px": 4.0,
+              "from_r": 6.0,
+              "radius_delta_px": 2.0,
+              "to_r": 8.0
+            },
+            {
+              "area_delta_pct": 56.3,
+              "area_ratio": 1.562,
+              "diameter_delta_px": 4.0,
+              "from_r": 8.0,
+              "radius_delta_px": 2.0,
+              "to_r": 10.0
+            },
+            {
+              "area_delta_pct": 44.0,
+              "area_ratio": 1.44,
+              "diameter_delta_px": 4.0,
+              "from_r": 10.0,
+              "radius_delta_px": 2.0,
+              "to_r": 12.0
+            }
+          ],
+          "radii": [
+            4.0,
+            6.0,
+            8.0,
+            10.0,
+            12.0
+          ],
+          "tiers": 5
+        },
+        "scheme": "A",
+        "self_consistent": true
+      },
+      "params": {
+        "claimed_tiers": 5,
+        "ev": "ev:file:artifacts/agent/verify/debate/kgviz/PROPOSAL-render-perf.md#L39",
+        "radii_px": [
+          4.0,
+          6.0,
+          8.0,
+          10.0,
+          12.0
+        ],
+        "source": "PROPOSAL-render-perf.md#L39,L69-L70（A）",
+        "threshold_px": 2.0,
+        "threshold_stmt": "直径差 ≥4px（半径差 2px）"
+      }
+    },
+    "B": {
+      "analysis": {
+        "max_radius_delta_px": 3.92,
+        "metrics": {
+          "adjacent": [
+            {
+              "area_delta_pct": 218.3,
+              "area_ratio": 3.183,
+              "diameter_delta_px": 7.84,
+              "from_r": 5.0,
+              "radius_delta_px": 3.92,
+              "to_r": 8.92
+            },
+            {
+              "area_delta_pct": 39.6,
+              "area_ratio": 1.396,
+              "diameter_delta_px": 3.24,
+              "from_r": 8.92,
+              "radius_delta_px": 1.62,
+              "to_r": 10.54
+            },
+            {
+              "area_delta_pct": 25.1,
+              "area_ratio": 1.251,
+              "diameter_delta_px": 2.5,
+              "from_r": 10.54,
+              "radius_delta_px": 1.25,
+              "to_r": 11.79
+            },
+            {
+              "area_delta_pct": 18.6,
+              "area_ratio": 1.186,
+              "diameter_delta_px": 2.1,
+              "from_r": 11.79,
+              "radius_delta_px": 1.05,
+              "to_r": 12.84
+            },
+            {
+              "area_delta_pct": 14.8,
+              "area_ratio": 1.148,
+              "diameter_delta_px": 1.84,
+              "from_r": 12.84,
+              "radius_delta_px": 0.92,
+              "to_r": 13.76
+            },
+            {
+              "area_delta_pct": 12.6,
+              "area_ratio": 1.126,
+              "diameter_delta_px": 1.68,
+              "from_r": 13.76,
+              "radius_delta_px": 0.84,
+              "to_r": 14.6
+            },
+            {
+              "area_delta_pct": 10.8,
+              "area_ratio": 1.108,
+              "diameter_delta_px": 1.54,
+              "from_r": 14.6,
+              "radius_delta_px": 0.77,
+              "to_r": 15.37
+            },
+            {
+              "area_delta_pct": 9.6,
+              "area_ratio": 1.096,
+              "diameter_delta_px": 1.44,
+              "from_r": 15.37,
+              "radius_delta_px": 0.72,
+              "to_r": 16.09
+            },
+            {
+              "area_delta_pct": 8.5,
+              "area_ratio": 1.085,
+              "diameter_delta_px": 1.34,
+              "from_r": 16.09,
+              "radius_delta_px": 0.67,
+              "to_r": 16.76
+            },
+            {
+              "area_delta_pct": 7.8,
+              "area_ratio": 1.078,
+              "diameter_delta_px": 1.28,
+              "from_r": 16.76,
+              "radius_delta_px": 0.64,
+              "to_r": 17.4
+            },
+            {
+              "area_delta_pct": 7.0,
+              "area_ratio": 1.07,
+              "diameter_delta_px": 1.2,
+              "from_r": 17.4,
+              "radius_delta_px": 0.6,
+              "to_r": 18.0
+            }
+          ],
+          "radii": [
+            5.0,
+            8.92,
+            10.54,
+            11.79,
+            12.84,
+            13.76,
+            14.6,
+            15.37,
+            16.09,
+            16.76,
+            17.4,
+            18.0
+          ],
+          "tiers": 12
+        },
+        "min_area_ratio": 1.07,
+        "min_radius_delta_px": 0.6,
+        "note": "若 B 的 12 档相邻半径差大多 <2px，则这些档在物理上接近，『12 档可辨』不成立；但换算成实际数据桶后又可能极少同时出现在近似度区间",
+        "radii_12buckets": [
+          5.0,
+          8.92,
+          10.54,
+          11.79,
+          12.84,
+          13.76,
+          14.6,
+          15.37,
+          16.09,
+          16.76,
+          17.4,
+          18.0
+        ],
+        "scheme": "B",
+        "under_2px_count": 10,
+        "under_3px_count": 10
+      },
+      "params": {
+        "claimed_tiers": "12 (degree) / 13 (content)",
+        "ev": "ev:file:artifacts/agent/verify/debate/kgviz/PROPOSAL-todo-owner.md#L62",
+        "note": "原文『实测桶：degree 12 档、内容 13 档』——这是【数据分桶数】，不是可辨档数",
+        "r_max": 18.0,
+        "r_min": 5.0,
+        "radii_expr": "r = 5 + 13*sqrt(t), t=(p-0.10)/0.80",
+        "source": "PROPOSAL-todo-owner.md#L60-L62（B）"
+      }
+    },
+    "C": {
+      "analysis": {
+        "checks": [
+          {
+            "delta": 3.0,
+            "needed": 3.0,
+            "pair": "6.0→9.0",
+            "pass": true
+          },
+          {
+            "delta": 3.0,
+            "needed": 3.0,
+            "pair": "9.0→12.0",
+            "pass": true
+          },
+          {
+            "delta": 3.0,
+            "needed": 3.0,
+            "pair": "12.0→15.0",
+            "pass": true
+          }
+        ],
+        "metrics": {
+          "adjacent": [
+            {
+              "area_delta_pct": 125.0,
+              "area_ratio": 2.25,
+              "diameter_delta_px": 6.0,
+              "from_r": 6.0,
+              "radius_delta_px": 3.0,
+              "to_r": 9.0
+            },
+            {
+              "area_delta_pct": 77.8,
+              "area_ratio": 1.778,
+              "diameter_delta_px": 6.0,
+              "from_r": 9.0,
+              "radius_delta_px": 3.0,
+              "to_r": 12.0
+            },
+            {
+              "area_delta_pct": 56.2,
+              "area_ratio": 1.562,
+              "diameter_delta_px": 6.0,
+              "from_r": 12.0,
+              "radius_delta_px": 3.0,
+              "to_r": 15.0
+            }
+          ],
+          "radii": [
+            6.0,
+            9.0,
+            12.0,
+            15.0
+          ],
+          "tiers": 4
+        },
+        "scheme": "C",
+        "self_consistent": true
+      },
+      "params": {
+        "claimed_tiers": 4,
+        "ev": "ev:file:artifacts/agent/verify/debate/kgviz/PROPOSAL-metrics-baseline.md#L~§3.3",
+        "radii_px": [
+          6.0,
+          9.0,
+          12.0,
+          15.0
+        ],
+        "source": "PROPOSAL-metrics-baseline.md（C）",
+        "threshold_px": 3.0,
+        "threshold_stmt": "相邻档半径差 ≥ max(3.0px, 20%·r)"
+      }
+    }
+  }
+}
