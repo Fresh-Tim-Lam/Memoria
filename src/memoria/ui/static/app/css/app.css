@@ -642,8 +642,8 @@ button.-agent-sources-label:hover {
 }
 .-agent-input {
     min-height: 2.75rem;
-    max-height: 10rem;
-    resize: vertical;
+    max-height: 60vh; /* task-169：高度由显式把手 + JS 夹紧（min-height ~ 60% 视口），不再用原生 resize */
+    resize: none;     /* task-169：去掉原生小把手（人：「只调高，宽自适应」，原生把手不可见） */
     padding: 0.3125rem 8px;
     font-family: inherit;
     font-size: var(--agent-font-size, 0.8125rem); /* 2026-09-19：输入框与消息正文同字号（同一令牌，见 `.-agent-msg`） */
@@ -7836,3 +7836,73 @@ html.-booting::before {
 .-link-panel.-resizing * {
     user-select: none;
 }
+
+/* ===== task-169：会话输入框「显式高度把手」+ 上下文用量圆环移到输入框下方 =====
+   人：「会话输入框只需要调整高，因为宽是自适应」「上下文占用的样式不要显示在底栏，
+   应该显示在输入框底下」
+   · 原生 resize 小把手已去掉（resize:none）；本把手由 agent-panel.js 惰性创建，
+     位置 = 输入框下边缘（与框同宽），命中区 10px，hover/focus/拖拽时高亮并显示 ns-resize；
+   · 只调高（宽度恒 100%）：高度夹在 min-height ~ 60% 视口之间（JS 夹紧，见 setupComposerResize）；
+   · 圆环移到 .-agent-composer 内、输入框下方的一行（.-agent-ctx-ring-row），底栏不再挂环；
+     环的四种态（未知灰环 / chars÷chars / over 警示 / 悬停含已压缩次数）与原来完全一致。
+   追加在文件末尾 ⇒ 既有 app.css:<行> 锚点零漂移。 */
+.-agent-input-resize {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    flex: 0 0 auto;
+    margin: -4px 0 -2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: ns-resize;
+    touch-action: none;
+    border-radius: 4px;
+}
+.-agent-input-resize::before {
+    content: "";
+    width: 36px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    opacity: 0.7;
+    transition: background var(--motion-fast, 120ms) ease, opacity var(--motion-fast, 120ms) ease;
+}
+.-agent-input-resize:hover::before,
+.-agent-input-resize:focus-visible::before,
+.-agent-input-resize.-dragging::before {
+    background: var(--theme-color);
+    opacity: 1;
+}
+.-agent-input-resize:focus-visible { outline: none; }
+.-agent-input-resize.-dragging { user-select: none; }
+body.-agent-input-resizing { cursor: ns-resize; user-select: none; }
+
+/* 上下文用量圆环（task-144 ④ 的语义原样迁到输入框下方；尺寸 14px 不放大，避免抢输入焦点） */
+.-agent-ctx-ring-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 14px;
+    flex: 0 0 auto;
+}
+#agent-ctx-ring {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+    cursor: default;
+    color: var(--text-secondary);
+    opacity: 0.95;
+}
+#agent-ctx-ring svg { width: 14px; height: 14px; display: block; overflow: visible; }
+#agent-ctx-ring .-ctx-ring-track { stroke: currentColor; opacity: 0.28; }
+#agent-ctx-ring .-ctx-ring-value { stroke: currentColor; }
+#agent-ctx-ring.-ctx-ring--warn { color: #ffd75e; }
+#agent-ctx-ring.-ctx-ring--unknown { color: currentColor; opacity: 0.5; }
+#agent-ctx-ring:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; border-radius: 50%; }
+/* 兼容旧版残留：环不再挂底栏；若旧节点残留则隐藏（升级/复用页面时不留双环） */
+#status-bar #status-ctx-ring { display: none; }

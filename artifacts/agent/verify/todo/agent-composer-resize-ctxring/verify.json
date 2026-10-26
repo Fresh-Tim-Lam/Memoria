@@ -1,0 +1,158 @@
+{
+  "phases": {
+    "initial": {
+      "input": {
+        "x": 923,
+        "y": 676.40625,
+        "w": 331,
+        "h": 52.59375,
+        "resize": "none",
+        "maxH": "492.6px",
+        "minH": "44px",
+        "styleHeight": ""
+      },
+      "handle": {
+        "x": 923,
+        "y": 731,
+        "w": 331,
+        "h": 10,
+        "cursor": "ns-resize",
+        "parentClass": "-agent-composer",
+        "afterInput": true,
+        "title": "拖动调整输入框高度（只调高，宽度自适应；↑/↓ 键可微调）"
+      },
+      "ring": {
+        "x": 1240,
+        "y": 745,
+        "w": 14,
+        "h": 14,
+        "parentId": "agent-ctx-ring-row",
+        "cls": "-ctx-ring -ctx-ring--unknown",
+        "title": "上下文用量未知（旧会话或尚未载入）",
+        "aria": "上下文用量未知（旧会话或尚未载入）"
+      },
+      "row": {
+        "y": 745,
+        "h": 14
+      },
+      "ringInStatusBar": false,
+      "legacyRingInStatusBar": false,
+      "statusAgentPresent": true,
+      "statusAgentText": "",
+      "statusAgentTitle": ""
+    },
+    "dockVisible": true,
+    "A1_drag": {
+      "before": {
+        "x": 923,
+        "y": 676.40625,
+        "w": 331,
+        "h": 52.59375,
+        "resize": "none",
+        "maxH": "492.6px",
+        "minH": "44px",
+        "styleHeight": ""
+      },
+      "after": {
+        "x": 923,
+        "y": 566,
+        "w": 331,
+        "h": 163,
+        "resize": "none",
+        "maxH": "492.6px",
+        "minH": "44px",
+        "styleHeight": "163px"
+      },
+      "handleAfter": {
+        "x": 923,
+        "y": 731,
+        "w": 331,
+        "h": 10,
+        "cursor": "ns-resize",
+        "parentClass": "-agent-composer",
+        "afterInput": true,
+        "title": "拖动调整输入框高度（只调高，宽度自适应；↑/↓ 键可微调）"
+      }
+    },
+    "A1_settings_agent": {
+      "composerHeightPx": 163
+    },
+    "A1_only_height": true,
+    "A2_keyboard": {
+      "before": 163,
+      "after": 211
+    },
+    "B_ring_states": {
+      "unknown": {
+        "cls": "-ctx-ring -ctx-ring--unknown",
+        "title": "上下文用量未知（旧会话或尚未载入）",
+        "aria": "上下文用量未知（旧会话或尚未载入）",
+        "x": 1240,
+        "y": 745,
+        "w": 14,
+        "h": 14,
+        "inComposer": true,
+        "belowInput": true,
+        "statusBarHasRing": false
+      },
+      "normal": {
+        "cls": "-ctx-ring",
+        "title": "字符预算：19.8k / 32k 字符（62%）",
+        "aria": "字符预算：19.8k / 32k 字符（62%）",
+        "x": 1240,
+        "y": 745,
+        "w": 14,
+        "h": 14,
+        "inComposer": true,
+        "belowInput": true,
+        "statusBarHasRing": false
+      },
+      "over": {
+        "cls": "-ctx-ring -ctx-ring--warn",
+        "title": "字符预算：26k / 32k 字符（81%）",
+        "aria": "字符预算：26k / 32k 字符（81%）",
+        "x": 1240,
+        "y": 745,
+        "w": 14,
+        "h": 14,
+        "inComposer": true,
+        "belowInput": true,
+        "statusBarHasRing": false
+      },
+      "compacted": {
+        "cls": "-ctx-ring",
+        "title": "字符预算：12k / 32k 字符（38%） · 已压缩 3 次",
+        "aria": "字符预算：12k / 32k 字符（38%） · 已压缩 3 次",
+        "x": 1240,
+        "y": 745,
+        "w": 14,
+        "h": 14,
+        "inComposer": true,
+        "belowInput": true,
+        "statusBarHasRing": false
+      }
+    },
+    "B_status_agent_has_token_or_title": {
+      "text": "",
+      "title": ""
+    },
+    "B_ring_after_resize": {
+      "x": 1240,
+      "y": 745,
+      "w": 14,
+      "h": 14,
+      "parentId": "agent-ctx-ring-row",
+      "cls": "-ctx-ring",
+      "title": "字符预算：12k / 32k 字符（38%） · 已压缩 3 次",
+      "aria": "字符预算：12k / 32k 字符（38%） · 已压缩 3 次"
+    },
+    "A3_restart": {
+      "persistedHeight": 211,
+      "before": 211,
+      "after": 211,
+      "styleHeight": "211px",
+      "matches": true
+    }
+  },
+  "persistedHeightBeforeRestart": 211
+}

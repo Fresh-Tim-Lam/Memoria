@@ -1947,4 +1947,8 @@
       dragHint: "拖动标题栏移动；双击标题栏复位；方向键可微调",
     },
   });
+  // task-169：会话输入框显式高度把手（去掉原生 resize）
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.input, {
+    resizeHint: "拖动调整输入框高度（只调高，宽度自适应；↑/↓ 键可微调）",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

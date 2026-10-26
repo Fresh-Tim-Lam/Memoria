@@ -2053,4 +2053,8 @@
       dragHint: "Drag title bar to move; double-click to reset; arrow keys to nudge",
     },
   });
+  // task-169: explicit composer height handle (native resize removed)
+  Object.assign(g.MEMORIA_LOCALES["en"].agent.input, {
+    resizeHint: "Drag to resize the input height (height only, width is responsive; ArrowUp/Down to nudge)",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

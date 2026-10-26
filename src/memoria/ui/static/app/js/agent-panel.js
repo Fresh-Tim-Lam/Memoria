@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 应用内对话面板（**右侧独立停靠栏** `#-agent-dock`，M1 首版曾挂在左栏第 4 页签）。
  *
  * 自包含：DOM/事件绑定全部由本模块 init() 完成，不依赖 app.js 的 bindEvents：
@@ -461,6 +461,136 @@ window.MemoriaAgentPanel = (function () {
         );
       } catch (_e) { /* 非浏览器环境忽略 */ }
     });
+  }
+
+  // ── task-169：会话输入框「显式高度把手」（只调高、宽自适应、高度记住）──────────
+  //  人原话：「会话输入框只需要调整高，因为宽是自适应」；原生 `resize: vertical` 的右下角小把手
+  //  几乎看不见 ⇒ 去掉原生 resize，改成本把手（紧贴输入框下边缘、与框同宽、命中区 10px）。
+  //  拖拽映射：底部把手**向上拖 = 变高**（composer 底边锚定，框向上长），向下拖 = 变矮；
+  //  高度夹在 min-height ~ 60% 视口之间；松手/键盘调节后写入 ui_settings.agent.composerHeightPx。
+  const COMPOSER_HEIGHT_MIN_PX = 44; // 与 CSS min-height 2.75rem@16px 对齐；运行时以 computed 为准
+  const COMPOSER_HEIGHT_MAX_RATIO = 0.6; // 上限 = 60% 视口高度（人要求「有上下夹」）
+
+  function composerHeightBounds(input) {
+    let min = COMPOSER_HEIGHT_MIN_PX;
+    try {
+      const cs = window.getComputedStyle ? window.getComputedStyle(input) : null;
+      const m = cs ? parseFloat(cs.minHeight) : NaN;
+      if (isFinite(m) && m > 0) min = Math.round(m);
+    } catch (_e) { /* 非浏览器环境：用常量 */ }
+    const vh = window.innerHeight || 720;
+    const max = Math.max(min, Math.round(vh * COMPOSER_HEIGHT_MAX_RATIO));
+    return { min, max };
+  }
+
+  /** 应用高度（带上下夹）；返回真正生效的 px。 */
+  function applyComposerHeight(px, input) {
+    if (!input) return 0;
+    const b = composerHeightBounds(input);
+    const h = Math.max(b.min, Math.min(b.max, Math.round(Number(px) || 0)));
+    input.style.height = h + "px";
+    // chips 镜像层按 input 内容盒重算；非浏览器/降级环境没有该函数 ⇒ 跳过
+    if (typeof syncComposerChips === "function") {
+      try { syncComposerChips(); } catch (_e) { /* 非关键 */ }
+    }
+    return h;
+  }
+
+  /** 写盘：只改 ui_settings 顶层 `agent` 段里的 composerHeightPx（不碰 layout） */
+  async function persistComposerHeight(px) {
+    const h = Math.round(Number(px) || 0);
+    if (!(h > 0)) return;
+    try {
+      const agent = await readAgentPrefs();
+      agent.composerHeightPx = h;
+      await call("save_ui_settings", { agent: agent });
+    } catch (_e) { /* 非桌面环境：保持内存态 */ }
+  }
+
+  // 写盘防抖：拖拽/键盘会连续产生高度；只有停手后的“最新高度”值得落盘。
+  // 直接每次 await persist ⇒ 多次 read-modify-write 会乱序（先发后到）把旧高度写成最终值。
+  let _composerHeightPersistTimer = null;
+  function schedulePersistComposerHeight(px) {
+    const h = Math.round(Number(px) || 0);
+    if (!(h > 0)) return;
+    clearTimeout(_composerHeightPersistTimer);
+    _composerHeightPersistTimer = setTimeout(() => {
+      _composerHeightPersistTimer = null;
+      persistComposerHeight(h);
+    }, 300);
+  }
+
+  async function hydrateComposerHeight(input) {
+    if (!input) return;
+    try {
+      const agent = await readAgentPrefs();
+      const h = Number(agent.composerHeightPx);
+      if (isFinite(h) && h > 0) applyComposerHeight(h, input);
+    } catch (_e) { /* ignore */ }
+  }
+
+  function setupComposerResize() {
+    const input = $("#agent-input");
+    if (!input) return;
+    const composer = input.closest ? input.closest(".-agent-composer") : null;
+    if (!composer) return;
+    let handle = document.getElementById("agent-input-resize");
+    if (!handle) {
+      handle = document.createElement("div");
+      handle.id = "agent-input-resize";
+      handle.className = "-agent-input-resize";
+      handle.setAttribute("role", "separator");
+      handle.setAttribute("aria-orientation", "horizontal");
+      handle.tabIndex = 0;
+      composer.insertBefore(handle, input.nextSibling); // 下边缘把手：紧贴输入框下方
+    }
+    const hint = T("agent.input.resizeHint");
+    handle.title = hint;
+    handle.setAttribute("aria-label", hint);
+    let drag = null;
+    const onDown = (e) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      drag = { startY: e.clientY, startH: input.offsetHeight || 0 };
+      handle.classList.add("-dragging");
+      document.body.classList.add("-agent-input-resizing");
+      try { handle.setPointerCapture(e.pointerId); } catch (_e) { /* 老环境无 pointer capture */ }
+      // preventDefault 会阻止浏览器默认的“点哪聚焦哪” ⇒ 显式聚焦，保证 ↑/↓ 键可微调（可达性）
+      try { if (typeof handle.focus === "function") handle.focus({ preventScroll: true }); } catch (_e) { /* noop */ }
+      e.preventDefault();
+    };
+    const onMove = (e) => {
+      if (!drag) return;
+      // 底部把手向上拖 = 变高（composer 底边锚定，框向上长）；向下拖 = 变矮
+      const b = composerHeightBounds(input);
+      applyComposerHeight(drag.startH - (e.clientY - drag.startY), input);
+      void b; // 夹紧在 applyComposerHeight 内完成
+    };
+    const finish = (e) => {
+      if (!drag) return;
+      drag = null;
+      handle.classList.remove("-dragging");
+      document.body.classList.remove("-agent-input-resizing");
+      try { handle.releasePointerCapture(e.pointerId); } catch (_e) { /* noop */ }
+      schedulePersistComposerHeight(input.offsetHeight);
+    };
+    handle.addEventListener("pointerdown", onDown);
+    handle.addEventListener("pointermove", onMove);
+    handle.addEventListener("pointerup", finish);
+    handle.addEventListener("pointercancel", finish);
+    // 键盘可访问：↑/↓ 每次 24px（同样受上下夹）
+    handle.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      const b = composerHeightBounds(input);
+      const cur = input.offsetHeight || b.min;
+      const next = applyComposerHeight(cur + (e.key === "ArrowUp" ? 24 : -24), input);
+      schedulePersistComposerHeight(next);
+    });
+    // 视口高度变化：既有高度可能超过新的 60% 上限 ⇒ 重新夹紧（不写盘，避免 resize 抖动刷盘）
+    window.addEventListener("resize", () => {
+      if (input.style.height) applyComposerHeight(input.offsetHeight, input);
+    });
+    hydrateComposerHeight(input);
   }
 
   function setDockCollapsed(collapsed, persist) {
@@ -1514,6 +1644,7 @@ window.MemoriaAgentPanel = (function () {
     const toolbarBtn = $("#btn-agent");
     if (toolbarBtn) toolbarBtn.addEventListener("click", () => toggleDock());
     setupDockResize();
+    setupComposerResize(); // task-169：输入框显式高度把手（去掉原生 resize）
     // 重算生效宽度的触发时机全部收敛到「几何变化」：视口（含 uiScale 改根字号后的
     // 显式 resize 事件）+ 左栏宽度拖拽/折叠展开（#-sidebar 宽变）+ dock 自身。
     // 用 ResizeObserver 盯 #main / #-sidebar 比到 app.js 各处挂钩子侵入更小；
@@ -7052,26 +7183,39 @@ window.MemoriaAgentPanel = (function () {
   }
 
   /**
-   * task-144 ④：上下文用量圆环（SVG，零第三方依赖）。
+   * 上下文用量圆环（SVG，零第三方依赖）。
    * 语义（task-91 四条一条不丢）：
    *   · 缺失 ⇒ 灰环 + "未知"，不报错、不瞎报 0%；
    *   · 比例 = chars / max_chars（**字符 ÷ 字符**，由 contextUsageView 计算）；
    *   · over（>threshold_chars，≈80%）⇒ 警示色；
    *   · compacted_times 是"压缩发生过"的证据 ⇒ 悬停里带上"已压缩 N 次"。
-   * 位置：#status-bar 最右（不占底栏长条）。
+   * 位置（task-169，人要求）：**输入框下方**的一行（`.-agent-composer` 内、发送按钮行之前），
+   *   不再挂 `#status-bar`；底栏 token 口径由 base renderStatusUsage 原样保留。
    */
   function renderContextRing(view, detailLines) {
-    const bar = $("#status-bar");
-    if (!bar) return;
-    let host = document.getElementById("status-ctx-ring");
+    const composer = document.querySelector(".-agent-composer");
+    if (!composer) return;
+    let row = document.getElementById("agent-ctx-ring-row");
+    if (!row) {
+      row = document.createElement("div");
+      row.id = "agent-ctx-ring-row";
+      row.className = "-agent-ctx-ring-row";
+      const actions = composer.querySelector(".-agent-composer-actions");
+      if (actions && actions.parentNode === composer) composer.insertBefore(row, actions);
+      else composer.appendChild(row);
+    }
+    let host = document.getElementById("agent-ctx-ring");
     if (!host) {
       host = document.createElement("span");
-      host.id = "status-ctx-ring";
+      host.id = "agent-ctx-ring";
       host.className = "-ctx-ring";
       host.setAttribute("role", "img");
       host.tabIndex = 0;
-      bar.appendChild(host);
+      row.appendChild(host);
     }
+    // 旧版环若残留（底栏 #status-ctx-ring）⇒ 移除，避免双环/底栏残留空壳
+    const legacy = document.getElementById("status-ctx-ring");
+    if (legacy && legacy.parentNode) legacy.parentNode.removeChild(legacy);
     const R = 7;
     const C = 2 * Math.PI * R;
     const svgOpen = '<svg viewBox="0 0 20 20" aria-hidden="true">';
@@ -7384,6 +7528,12 @@ window.MemoriaAgentPanel = (function () {
     },
     // task-93：响应式让位开关（app.js 的 applyResponsiveLayout() 调用；派生状态，永不落盘）
     setDockResponsiveHidden: setDockResponsiveHidden,
+    // task-169 诊断出口（**仅供探针**，生产路径不调用）：把圆环渲染成指定四种态之一，
+    //   供真机验证「迁移到输入框下方后语义未丢」（未知 / 正常 / over / 含已压缩次数）。
+    renderContextRingForTest: function (view) {
+      renderContextRing(view || null, view ? ["probe"] : null);
+      return true;
+    },
   };
 
   /**
