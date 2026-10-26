@@ -797,6 +797,14 @@ button.-agent-sources-label:hover {
     font-size: 0.625rem;
 }
 
+/* KGViz D-KGV-03：degree 绝对原值必须比其它 meta 更醒目（连续大小是相对量，原值才是事实） */
+.-graph-hint-degree {
+    color: var(--text-primary);
+    font-size: 0.625rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
 .-graph-hint-desc {
     line-height: 1.35;
     margin-top: 0.125rem;

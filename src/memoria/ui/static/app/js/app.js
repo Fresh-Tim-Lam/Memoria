@@ -8136,7 +8136,12 @@ async function call(fn, ...args) {
     const hint = activeGraphHint();
     if (!hint || !node) return;
     if (window.MemoriaGraphLabels) {
-      hint.innerHTML = MemoriaGraphLabels.resolveNodeHoverHtml(node);
+      // KGViz D-KGV-03：连续分位大小是相对量 ⇒ tooltip 必须显示 degree 绝对原值（中英双语）
+      const engine = state.graphEngine;
+      const deg = engine && typeof engine.degreeOf === "function" ? engine.degreeOf(node.id) : null;
+      const degreeText =
+        typeof deg === "number" && Number.isFinite(deg) ? T("graph.hover.degree", { n: deg }) : "";
+      hint.innerHTML = MemoriaGraphLabels.resolveNodeHoverHtml(node, { degreeText });
     } else {
       hint.textContent = `${node.name || node.label || node.id} · ${node.file || ""}`;
     }

@@ -1047,6 +1047,10 @@
         preview3d: "左键旋转 · 滚轮缩放 · 悬停节点查看详情",
         preview2d: "悬停节点查看完整信息",
       },
+      // KGViz D-KGV-03：连续分位大小是相对量 ⇒ tooltip 必须显示 degree 绝对原值
+      hover: {
+        degree: "连接数 {n}",
+      },
       group: {
         allLabel: "全部",
         allTitle: "全部节点群（横向瀑布流）",

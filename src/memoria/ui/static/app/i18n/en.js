@@ -1131,6 +1131,10 @@
         preview3d: "Left-drag to rotate \u00b7 scroll to zoom \u00b7 hover a node for details",
         preview2d: "Hover a node to see full info",
       },
+      // KGViz D-KGV-03: continuous percentile size is relative ⇒ tooltip MUST show absolute degree
+      hover: {
+        degree: "Connections: {n}",
+      },
       group: {
         allLabel: "All",
         allTitle: "All node clusters (horizontal strip)",

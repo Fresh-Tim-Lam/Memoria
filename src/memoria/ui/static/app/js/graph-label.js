@@ -39,13 +39,22 @@
     return truncate(raw, settings.labelMaxLen);
   }
 
-  function resolveNodeHoverHtml(node) {
+  /**
+   * 悬停详情 HTML。
+   * KGViz D-KGV-03 附加约束：连续分位大小是「相对量」，会让人把排名读成重要 ⇒
+   * 【必须】同时显示 degree 绝对原值（由调用方传入已本地化的 `degreeText`，本模块不依赖 i18n）。
+   */
+  function resolveNodeHoverHtml(node, opts) {
     if (!node) return "";
     const name = node.name || node.label || node.id || "—";
     const id = node.id || "—";
     const file = node.file || "—";
     const desc = (node.description || "").trim();
+    const degreeText = opts && typeof opts.degreeText === "string" ? opts.degreeText.trim() : "";
     let html = `<span class="-graph-hint-title">${escapeHtml(name)}</span>`;
+    if (degreeText) {
+      html += `<span class="-graph-hint-degree">${escapeHtml(degreeText)}</span>`;
+    }
     html += `<span class="-graph-hint-meta">ID · ${escapeHtml(id)}</span>`;
     html += `<span class="-graph-hint-meta">${escapeHtml(file)}</span>`;
     if (desc) {

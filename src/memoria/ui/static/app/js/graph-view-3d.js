@@ -426,12 +426,13 @@
 
       for (const n of this.layout.nodes) {
         let baseColor = n.range_ok === false ? H.nodeMuted : H.node;
-        let scale = 1;
+        // D-KGV-04：3D 节点【等大】（size 不编码 degree；透视 1.78× ⇒ 大小不可解释）。
+        //               重要性/度数仍用颜色（galaxy 分支）编码；scale 恒为 1。
+        const scale = 1;
         let ratio = 0;
         if (gStats) {
           ratio = gStats.max ? (gStats.deg.get(n.id) || 0) / gStats.max : 0;
           baseColor = galaxyColor3D(ratio);
-          scale = 1 + ratio * 0.4;
         }
         const mat = new THREE.MeshStandardMaterial({
           color: baseColor,

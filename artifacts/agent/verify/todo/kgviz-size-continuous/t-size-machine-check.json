@@ -1,0 +1,79 @@
+{
+  "schema": "kgviz-t-size-machine-check/v1",
+  "generatedAt": "2026-10-26T20:55:38+0800",
+  "fixtureDistinctDegrees": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25
+  ],
+  "T-size-2": {
+    "name": "单调性（radius 随 degree 单调不减，无反转）",
+    "pass": true,
+    "detail": "25 个 distinct degree 逐对检查无反转"
+  },
+  "T-size-3": {
+    "name": "连续性（distinct 半径数 == distinct degree 数；平台段占比 ≤5%）",
+    "pass": true,
+    "distinctDegrees": 25,
+    "distinctRadii": 25,
+    "plateau": {
+      "ratio": 0,
+      "flat": 0,
+      "total": 24
+    },
+    "redFixture": {
+      "description": "把连续映射偷偷改成 3 档（t→0/0.5/1）",
+      "distinctRadii": 3,
+      "distinctDegrees": 25,
+      "plateau": {
+        "ratio": 0.9166666666666666,
+        "flat": 22,
+        "total": 24
+      },
+      "pass_distinct": false,
+      "pass_plateau": false,
+      "detectedAsBucketed": true,
+      "proven": true
+    }
+  },
+  "T-size-4": {
+    "name": "范围（基准 6 ⇒ [4.50,9.90]±0.5；随用户 nodeRadius 缩放）",
+    "pass": true,
+    "min": 4.5,
+    "max": 9.899999999999999,
+    "base6": {
+      "min": 4.5,
+      "max": 9.899999999999999
+    },
+    "base4": {
+      "min": 3,
+      "max": 6.6
+    },
+    "base12": {
+      "min": 9,
+      "max": 19.799999999999997
+    }
+  }
+}

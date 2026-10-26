@@ -417,16 +417,27 @@
       return { x: (sx - x) / k, y: (sy - y) / k };
     }
 
+    /** KGViz D-KGV-13：单节点视觉半径（连续分位；无 engine/降级时回退常量） */
+    _radiusForNode(id, baseRadius) {
+      const engine = this.engine;
+      if (engine && typeof engine.radiusForNode === "function") {
+        return engine.radiusForNode(id, baseRadius);
+      }
+      return baseRadius;
+    }
+
     _pickNode(sx, sy) {
       const { x, y } = this._screenToWorld(sx, sy);
-      const r = this.opts.nodeRadius + 6;
       let best = null;
-      let bestD = r * r;
+      let bestD = Infinity;
       for (const n of this.simNodes) {
         const dx = n.x - x;
         const dy = n.y - y;
         const d2 = dx * dx + dy * dy;
-        if (d2 <= bestD) {
+        // KGViz D-KGV-13：命中半径随节点视觉半径增长（大节点边缘必须可点中）
+        const r = Math.max(this.opts.nodeRadius + 6, this._radiusForNode(n.id, this.opts.nodeRadius) + 2);
+        const hit = r * r;
+        if (d2 <= hit && d2 < bestD) {
           bestD = d2;
           best = n;
         }
@@ -630,7 +641,10 @@
         } else if (extActive) {
           active = ext.sourceIds.has(link.source) && ext.targetIds.has(link.target);
         }
-        const padR = opts.nodeRadius + (active ? 2 : 0);
+        // KGViz D-KGV-13：连线端点让位按【两端各自半径】的最大值（连续大小后节点不再同半径）
+        const rs = this._radiusForNode(link.source, opts.nodeRadius);
+        const rt = this._radiusForNode(link.target, opts.nodeRadius);
+        const padR = Math.max(rs, rt) + (active ? 2 : 0);
         let alpha = 0.45;
         if (active) alpha = 0.95;
         else if (extActive || hover) alpha = 0.14;
@@ -668,8 +682,10 @@
         const isFocus = isHover || isExtSource || isExtTarget;
         let ratio = 0;
         if (gStats) ratio = gStats.max ? (gStats.deg.get(n.id) || 0) / gStats.max : 0;
-        let r = opts.nodeRadius + (isHover || isExtSource ? 3 : isExtTarget ? 2 : 0);
-        if (gStats) r = r * (1 + ratio * 0.5);
+        // KGViz D-KGV-13：2D 节点半径 = 连续分位映射（4.5–9.9px @ base 6；无档位、不取整）
+        // hover/focus 的 +3/+2px 是【交互态加成】，不改数据映射本身。
+        const baseR = this._radiusForNode(n.id, opts.nodeRadius);
+        let r = baseR + (isHover || isExtSource ? 3 : isExtTarget ? 2 : 0);
         let fill;
         let halo = 0;
         if (isHover || isExtSource) fill = C.nodeHover;
