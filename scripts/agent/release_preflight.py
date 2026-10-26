@@ -612,6 +612,188 @@ def eval_assets(tag: str, release_meta: dict | None, offline: bool) -> dict:
     return {"id": "ASSETS-COUNT", "level": level, "detail": detail}
 
 
+def _load_format_gate_module():
+    """按**文件路径**加载 `release_format_gate.py`。
+
+    `scripts/` 没有 `__init__.py`（不是 Python 包）⇒ 包导入会 ModuleNotFoundError。
+    独立成函数便于 selftest 注入 fixture（`monkeypatch` 或直接替换本函数）。
+    """
+    import importlib.util
+
+    path = Path(__file__).resolve().parent / "release_format_gate.py"
+    spec = importlib.util.spec_from_file_location("_memoria_release_format_gate", path)
+    if spec is None or spec.loader is None:  # pragma: no cover - 环境异常
+        raise ImportError(f"无法加载 {path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _find_release_zip(root: Path, tag: str) -> Path | None:
+    """找发版产物 zip（优先 canonical 命名）。"""
+    candidates = [
+        root / "artifacts" / f"Memoria-{tag}-win64-lite.zip",
+        root / "artifacts" / f"Memoria-{tag}-lite.zip",
+        root / "artifacts" / f"Memoria-{tag}-win64.zip",
+    ]
+    for c in candidates:
+        if c.is_file():
+            return c
+    return None
+
+
+def eval_format_gate(tag: str, root: Path, phase: str) -> dict:
+    """FORMAT-GATE：发布包**格式与完整性**（task-181 接入点）。
+
+    ## 为什么必须接进流程（Lead 的裁决理由）
+
+    这个门禁写好后曾是**独立脚本、没人调用** —— 那正是今晚反复出现的失败形态：
+    「gate 写好了但从不在真实流程里跑」（前例：99.2% 门禁永不触发、prompt_drift 静默放行）。
+    ⇒ 接进 `--phase post` 与 `--verify-published`，让它**真的能拦住发布**。
+
+    ## 为什么接在 post 而不是 pre
+
+    - `--phase pre`：Package/ 与 zip 可能还没构建 ⇒ 只能校验"预期"，校验不到真实产物；
+    - `--phase post`（tag 已 push、建 Release 之前）：**产物已就绪** ⇒ 校验的是真实的包。
+
+    ## 不做什么（诚实边界）
+
+    本项校验**格式与完整性**（结构 / 双向哈希 / 版本一致 / zip 卫生）。
+    **不含数字签名** ⇒ 无法察觉"有意篡改 + 重算清单"。
+    """
+    gate = _load_format_gate_module()
+
+    package = root / "Package"
+    if not package.is_dir():
+        return {
+            "id": "FORMAT-GATE",
+            "level": "SKIP",
+            "detail": f"Package/ 不存在（{package}）⇒ 无法校验真实产物。SKIP 不算通过",
+        }
+
+    # 判据：Package/ 里是否有**实际构建产物**（不只是 VERSION 之类的骨架）。
+    # 为什么需要这一层：fixture / 尚未构建的场景里 Package/ 可能存在但为空壳，
+    # 直接报"缺清单"会把"还没构建"误判成"格式错误"。
+    # 但**一旦有真实产物**（exe / lib / resources 任一），就必须有清单 —— 那时缺清单是真 FAIL。
+    has_built_artifacts = any(
+        (package / name).exists() for name in ("Memoria.exe", "lib", "resources")
+    )
+    if not has_built_artifacts:
+        return {
+            "id": "FORMAT-GATE",
+            "level": "SKIP",
+            "detail": (
+                f"Package/ 内没有构建产物（未见 Memoria.exe / lib / resources）⇒ 不校验。"
+                f"SKIP 不算通过"
+            ),
+        }
+
+    zip_path = _find_release_zip(root, tag)
+    manifest_path = package / "release-manifest.json"
+
+    # 清单可能还没生成 ⇒ 明确报出来（而不是静默跳过）
+    if not manifest_path.is_file():
+        return {
+            "id": "FORMAT-GATE",
+            "level": "FAIL",
+            "detail": (
+                f"缺少 Package/release-manifest.json ⇒ 无法校验包格式。"
+                f"先跑：python scripts/agent/release_manifest.py --package Package --version {tag_version(tag)}"
+            ),
+        }
+
+    try:
+        result = gate.run_checks(
+            package=package,
+            zip_path=zip_path,
+            manifest_path=manifest_path,
+            expect_version=tag_version(tag),
+        )
+    except Exception as exc:  # noqa: BLE001 - 门禁自身异常必须报 FAIL，不能静默
+        return {
+            "id": "FORMAT-GATE",
+            "level": "FAIL",
+            "detail": f"格式门禁执行异常（不得当作通过）：{type(exc).__name__}: {exc}",
+        }
+
+    if not result.failures:
+        extra = f"；zip={zip_path.name}" if zip_path is not None else "；未找到发布 zip（只校验了目录）"
+        return {
+            "id": "FORMAT-GATE",
+            "level": "PASS",
+            "detail": f"已校验包结构与完整性（不含数字签名）：Package/{extra}",
+        }
+
+    shown = "；".join(result.failures[:6])
+    more = f"…（共 {len(result.failures)} 项）" if len(result.failures) > 6 else ""
+    return {
+        "id": "FORMAT-GATE",
+        "level": "FAIL",
+        "detail": f"包格式/完整性不符，拒绝发布：{shown}{more}",
+    }
+
+
+def eval_published_asset(tag: str, root: Path, release_meta: dict | None) -> dict:
+    """PUBLISHED-ASSET：**线上实际发布资产**与本地清单登记的是否一致（task-181，仅 audit）。
+
+    ## 为什么需要这一项（与 FORMAT-GATE 的分工）
+
+    - `FORMAT-GATE`：校验**本地构建产物**（Package/ 与生成的 zip）结构与完整性；
+    - `PUBLISHED-ASSET`：校验**线上真的挂出来的那个 asset** ——
+      GitHub Release JSON 里给出的 `size` 与本地清单 `asset.bytes` 是否一致。
+
+    ⇒ 两者合起来才闭环：「本地产物合规」+「线上挂的确实是那份产物」。
+    若只有前者，一种失败形态是"本地合规但上传错了文件"，此时没人能发现。
+
+    ## 诚实边界
+
+    本项比对的是**大小**（GitHub API 提供的字段），不做内容哈希 ——
+    因为 GitHub Release JSON 不提供 asset 的 sha256。因此它只能抓到
+    "上传了明显不同的文件"，抓不到"大小相同但内容不同"。**不含数字签名**。
+    """
+    if release_meta is None:
+        return {"id": "PUBLISHED-ASSET", "level": "SKIP",
+                "detail": "无 Release JSON ⇒ 无法核对线上资产。SKIP 不算通过"}
+
+    manifest_path = root / "Package" / "release-manifest.json"
+    if not manifest_path.is_file():
+        return {"id": "PUBLISHED-ASSET", "level": "SKIP",
+                "detail": "本地无 Package/release-manifest.json ⇒ 没有可比对的登记值。"
+                          "SKIP 不算通过"}
+
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return {"id": "PUBLISHED-ASSET", "level": "FAIL",
+                "detail": f"本地清单无法解析：{exc}"}
+
+    declared = (manifest.get("asset") or {})
+    declared_name = declared.get("name")
+    declared_bytes = declared.get("bytes")
+
+    assets = release_meta.get("assets") or []
+    online = {str(a.get("name", "")): a for a in assets}
+
+    if not declared_name:
+        return {"id": "PUBLISHED-ASSET", "level": "SKIP",
+                "detail": "本地清单未登记 asset.name ⇒ 无法比对。SKIP 不算通过"}
+
+    if declared_name not in online:
+        return {"id": "PUBLISHED-ASSET", "level": "WARN",
+                "detail": f"线上未见名为 {declared_name!r} 的资产（线上有 {sorted(online)}）"
+                          f" —— 可能发布用了不同命名，请人工确认"}
+
+    actual = online[declared_name].get("size")
+    if declared_bytes and actual and actual != declared_bytes:
+        return {"id": "PUBLISHED-ASSET", "level": "FAIL",
+                "detail": f"线上资产 {declared_name} 大小 {actual} 字节 ≠ 本地清单登记 "
+                          f"{declared_bytes} 字节 ⇒ 上传的可能不是同一份产物"}
+
+    return {"id": "PUBLISHED-ASSET", "level": "PASS",
+            "detail": f"线上资产 {declared_name} 与本地清单登记一致"
+                      f"（{actual or declared_bytes} 字节；仅比对大小，不含内容哈希）"}
+
+
 def _repo_slug(root: Path) -> str:
     try:
         proc = subprocess.run(["git", "remote", "get-url", "origin"], cwd=root,
@@ -754,6 +936,15 @@ def run_release_checks(cfg: dict) -> tuple[list[dict], dict]:
         checks.append(eval_version_note_published(tag, root))
     checks.append(eval_tag_remote(tag, root, cfg.get("offline", False),
                                   cfg.get("phase", "post"), cfg.get("release_meta")))
+
+    # 检查 8 FORMAT-GATE（task-181）：发布包格式与完整性。
+    # 接在 post/audit 而不是 pre —— pre 时产物可能还没构建，校验不到真实包。
+    # audit（--verify-published）也走这里：校验**构建产物**的结构与完整性。
+    # 线上 asset 的字节/哈希由 ASSETS-COUNT + 下面的 PUBLISHED-ASSET 覆盖。
+    if cfg.get("phase", "post") == "post" or mode == "audit":
+        checks.append(eval_format_gate(tag, root, cfg.get("phase", "post")))
+        if mode == "audit":
+            checks.append(eval_published_asset(tag, root, cfg.get("release_meta")))
 
     if mode == "release":
         # 复用 ① 的 review artifact 检查（语义不变）；剔除被 ② 取代的两项
@@ -1138,8 +1329,103 @@ def selftest_release() -> list[tuple[str, bool]]:
         results.append(("② FAIL 时 summary.ok=False", r["summary"]["ok"] is False))
         results.append(("② FAIL 时 failed 列表含 TITLE-EXACT",
                         r["summary"]["failed"] == ["TITLE-EXACT"]))
+
+        # ── ③ FORMAT-GATE（task-181）：必绿 / 必红 fixture ──
+        # 为什么要在 selftest 里造真实包结构：这条门禁最容易"写了但从不在流程里跑"，
+        # 所以它自己必须有必红 fixture 证明它能拦住东西。
+        results += _selftest_format_gate(tmp)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+    return results
+
+
+def _make_fixture_package(root: Path, *, broken: str = "") -> None:
+    """造一个 FORMAT-GATE fixture 用的 Package。`broken` 指定怎么弄坏它。
+
+    broken ∈ {"", "missing-entry", "extra-file"}。
+    """
+    pkg = root / "Package"
+    for d in ("lib", "resources", "config", "hf"):
+        (pkg / d).mkdir(parents=True, exist_ok=True)
+    (pkg / "Memoria.exe").write_bytes(b"MZ fixture")
+    (pkg / "VERSION").write_text("9.9.9\n", encoding="utf-8")
+    (pkg / "manifest.json").write_text('{"version": "9.9.9"}', encoding="utf-8")
+    (pkg / "lib" / "a.py").write_text("print(1)\n", encoding="utf-8")
+    (pkg / "resources" / "b.txt").write_text("hello\n", encoding="utf-8")
+    (pkg / "config" / "ui-settings.json").write_text("{}\n", encoding="utf-8")
+
+    if broken == "missing-entry":
+        # 删掉一个必含顶层条目
+        shutil.rmtree(pkg / "resources")
+
+    # 先生成清单（此时还没塞"未声明文件"）
+    gate = _load_format_gate_module()
+    manifest_mod = gate.mf
+    manifest = manifest_mod.build_manifest(
+        package_root=pkg, version="9.9.9", asset_name="x.zip"
+    )
+    (pkg / "release-manifest.json").write_bytes(manifest_mod.canonical_bytes(manifest))
+
+    # 清单生成**之后**再塞未声明文件 ⇒ 才会被双向校验抓到
+    if broken == "extra-file":
+        (pkg / "lib" / "smuggled.py").write_text("evil\n", encoding="utf-8")
+
+
+def _selftest_format_gate(tmp: Path) -> list[tuple[str, bool]]:
+    """FORMAT-GATE 的必绿 / 必红 fixture（task-181）。"""
+    results: list[tuple[str, bool]] = []
+
+    # ③-1 必绿：结构合规的包 ⇒ PASS
+    good = tmp / "fmt-good"
+    good.mkdir()
+    _make_fixture_package(good)
+    r = eval_format_gate("v9.9.9", good, "post")
+    results.append(("③ FORMAT-GATE 合规包 ⇒ PASS", r["level"] == "PASS"))
+
+    # ③-2 必红：缺一个必含条目 ⇒ FAIL，且 detail 提到它
+    bad1 = tmp / "fmt-missing"
+    bad1.mkdir()
+    _make_fixture_package(bad1, broken="missing-entry")
+    r = eval_format_gate("v9.9.9", bad1, "post")
+    results.append(("③ FORMAT-GATE 缺必含条目 ⇒ FAIL",
+                    r["level"] == "FAIL" and "resources" in r["detail"]))
+
+    # ③-3 必红：多一个未声明文件 ⇒ FAIL
+    bad2 = tmp / "fmt-extra"
+    bad2.mkdir()
+    _make_fixture_package(bad2, broken="extra-file")
+    r = eval_format_gate("v9.9.9", bad2, "post")
+    results.append(("③ FORMAT-GATE 多未声明文件 ⇒ FAIL",
+                    r["level"] == "FAIL" and "smuggled" in r["detail"]))
+
+    # ③-4 必红：有产物但缺清单 ⇒ FAIL（不能静默 SKIP）
+    nospec = tmp / "fmt-nomanifest"
+    nospec.mkdir()
+    _make_fixture_package(nospec)
+    (nospec / "Package" / "release-manifest.json").unlink()
+    r = eval_format_gate("v9.9.9", nospec, "post")
+    results.append(("③ FORMAT-GATE 有产物缺清单 ⇒ FAIL（不静默 SKIP）",
+                    r["level"] == "FAIL" and "release-manifest" in r["detail"]))
+
+    # ③-5 必 SKIP：空壳 Package（只有 VERSION，无产物）⇒ SKIP（不误判为格式错）
+    empty = tmp / "fmt-empty"
+    (empty / "Package").mkdir(parents=True)
+    (empty / "Package" / "VERSION").write_text("9.9.9\n", encoding="utf-8")
+    r = eval_format_gate("v9.9.9", empty, "post")
+    results.append(("③ FORMAT-GATE 空壳 Package ⇒ SKIP（不误判）", r["level"] == "SKIP"))
+
+    # ③-6 失败必须汇聚成整体 exit 1：summary.ok 必须 False
+    cfg = {
+        "tag": "v9.9.9", "title": SELFTEST_TITLE, "body": SELFTEST_BODY,
+        "root": bad1, "review_dir": tmp / "no-review", "mode": "release",
+        "phase": "post", "offline": True, "release_meta": None,
+        "require_review": False,
+    }
+    checks, _metrics = run_release_checks(cfg)
+    summary = summarize(checks)
+    results.append(("③ FORMAT-GATE FAIL ⇒ 整体 summary.ok=False（会 exit 1）",
+                    summary["ok"] is False and "FORMAT-GATE" in summary["failed"]))
+
     return results
 
 
@@ -1179,7 +1465,10 @@ def _legacy_main(args: argparse.Namespace) -> int:
 
 def _load_release_json(path: str) -> dict:
     try:
-        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        # `utf-8-sig`：GitHub 下载的 JSON、或 Windows 下 `Set-Content -Encoding UTF8`
+        # 生成的 JSON 都可能带 BOM；用 `utf-8` 读会报
+        # `Unexpected UTF-8 BOM (decode using utf-8-sig)`（实测踩到）。
+        data = json.loads(Path(path).read_text(encoding="utf-8-sig"))
     except (OSError, ValueError) as exc:
         raise SystemExit(f"用法错误：--release-json 读取失败：{exc}") from exc
     if not isinstance(data, dict):
