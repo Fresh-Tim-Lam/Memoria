@@ -1,0 +1,656 @@
+{
+  "cases": [
+    {
+      "baseline_max": 6,
+      "case": "state",
+      "driver": {
+        "case": "state",
+        "child_report": {
+          "console_hwnd": 1902764,
+          "console_output_cp": 65001,
+          "console_process_ids": [
+            38404,
+            27284,
+            53304,
+            37168,
+            32728
+          ],
+          "cwd": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria-audit-kb-c1pl1pkf",
+          "isatty": {
+            "stdin": true,
+            "stdout": false
+          },
+          "pid": 38404,
+          "ppid": 27284,
+          "python": "D:\\Python\\python.exe",
+          "stdio": {
+            "stderr": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 672
+            },
+            "stdin": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 2,
+              "handle": 648
+            },
+            "stdout": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 356
+            }
+          }
+        },
+        "child_report_path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\console-flash-fix\\audit\\runs\\child-legacy-state-53304.json",
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            53304,
+            37168,
+            32728
+          ],
+          "pid": 53304
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "legacy",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 46
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested",
+      "driver": {
+        "case": "nested",
+        "child_report_path": null,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            11056,
+            37168,
+            32728
+          ],
+          "pid": 11056
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "ERROR: Input redirection is not supported, exiting the process immediately.\r\n",
+          "stdout": "NESTED-CMD-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "legacy",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 14
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested_py",
+      "driver": {
+        "case": "nested_py",
+        "child_report_path": null,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            44788,
+            37168,
+            32728
+          ],
+          "pid": 44788
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "NESTED-PY-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "legacy",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 51
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "state",
+      "driver": {
+        "case": "state",
+        "child_report": {
+          "console_hwnd": 0,
+          "console_output_cp": 437,
+          "console_process_ids": [
+            19140,
+            15368
+          ],
+          "cwd": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria-audit-kb-8mgmfcfi",
+          "isatty": {
+            "stdin": true,
+            "stdout": false
+          },
+          "pid": 19140,
+          "ppid": 15368,
+          "python": "D:\\Python\\python.exe",
+          "stdio": {
+            "stderr": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 756
+            },
+            "stdin": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 2,
+              "handle": 732
+            },
+            "stdout": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 748
+            }
+          }
+        },
+        "child_report_path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\console-flash-fix\\audit\\runs\\child-fixed-state-38252.json",
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            38252,
+            37168,
+            32728
+          ],
+          "pid": 38252
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 42
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested",
+      "driver": {
+        "case": "nested",
+        "child_report_path": null,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            46392,
+            37168,
+            32728
+          ],
+          "pid": 46392
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "ERROR: Input redirection is not supported, exiting the process immediately.\r\n",
+          "stdout": "NESTED-CMD-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 14
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested_py",
+      "driver": {
+        "case": "nested_py",
+        "child_report_path": null,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 1902764,
+          "console_process_ids": [
+            35812,
+            37168,
+            32728
+          ],
+          "pid": 35812
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "NESTED-PY-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 51
+      },
+      "parent_exe": "D:\\Python\\python.exe",
+      "parent_has_console": true
+    },
+    {
+      "baseline_max": 6,
+      "case": "state",
+      "driver": {
+        "case": "state",
+        "child_report": {
+          "console_hwnd": 788680,
+          "console_output_cp": 437,
+          "console_process_ids": [
+            9604,
+            23152
+          ],
+          "cwd": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria-audit-kb-ou6lq7ut",
+          "isatty": {
+            "stdin": true,
+            "stdout": false
+          },
+          "pid": 9604,
+          "ppid": 23152,
+          "python": "D:\\Python\\python.exe",
+          "stdio": {
+            "stderr": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 732
+            },
+            "stdin": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 2,
+              "handle": 720
+            },
+            "stdout": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 704
+            }
+          }
+        },
+        "child_report_path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\console-flash-fix\\audit\\runs\\child-legacy-state-15812.json",
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 15812
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 1,
+      "mode": "legacy",
+      "new_console_windows": [
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 385.6,
+          "hwnd": "0xa90dea",
+          "pid": 42496,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        },
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 603.0,
+          "hwnd": "0xc08c8",
+          "pid": 23152,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        }
+      ],
+      "observation": {
+        "max_console_windows_absolute": 7,
+        "sample_interval_s": 0.05,
+        "samples": 44
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested",
+      "driver": {
+        "case": "nested",
+        "child_report_path": null,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 42204
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "ERROR: Input redirection is not supported, exiting the process immediately.\r\n",
+          "stdout": "NESTED-CMD-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 1,
+      "mode": "legacy",
+      "new_console_windows": [
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 496.0,
+          "hwnd": "0xd08c8",
+          "pid": 51092,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        },
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 715.4,
+          "hwnd": "0x10605fe",
+          "pid": 11416,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        }
+      ],
+      "observation": {
+        "max_console_windows_absolute": 7,
+        "sample_interval_s": 0.05,
+        "samples": 17
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested_py",
+      "driver": {
+        "case": "nested_py",
+        "child_report_path": null,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 5092
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "NESTED-PY-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 1,
+      "mode": "legacy",
+      "new_console_windows": [
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 493.9,
+          "hwnd": "0xf08c8",
+          "pid": 43328,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        },
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 774.1,
+          "hwnd": "0x1108c8",
+          "pid": 40852,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        }
+      ],
+      "observation": {
+        "max_console_windows_absolute": 7,
+        "sample_interval_s": 0.05,
+        "samples": 57
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    },
+    {
+      "baseline_max": 6,
+      "case": "state",
+      "driver": {
+        "case": "state",
+        "child_report": {
+          "console_hwnd": 0,
+          "console_output_cp": 437,
+          "console_process_ids": [
+            52480,
+            51544
+          ],
+          "cwd": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria-audit-kb-h0uw0ozk",
+          "isatty": {
+            "stdin": true,
+            "stdout": false
+          },
+          "pid": 52480,
+          "ppid": 51544,
+          "python": "D:\\Python\\python.exe",
+          "stdio": {
+            "stderr": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 604
+            },
+            "stdin": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 2,
+              "handle": 600
+            },
+            "stdout": {
+              "console_mode": null,
+              "console_mode_ok": false,
+              "file_type": 3,
+              "handle": 716
+            }
+          }
+        },
+        "child_report_path": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\console-flash-fix\\audit\\runs\\child-fixed-state-24784.json",
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 24784
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 45
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested",
+      "driver": {
+        "case": "nested",
+        "child_report_path": null,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 48420
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "ERROR: Input redirection is not supported, exiting the process immediately.\r\n",
+          "stdout": "NESTED-CMD-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 17
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    },
+    {
+      "baseline_max": 6,
+      "case": "nested_py",
+      "driver": {
+        "case": "nested_py",
+        "child_report_path": null,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_console": {
+          "console_hwnd": 0,
+          "console_process_ids": [],
+          "pid": 51240
+        },
+        "result": {
+          "exitCode": 0,
+          "interpreterKind": "powershell",
+          "stderr": "",
+          "stdout": "NESTED-PY-OK\r\n",
+          "timedOut": false
+        }
+      },
+      "max_new_console_windows": 0,
+      "mode": "fixed",
+      "new_console_windows": [],
+      "observation": {
+        "max_console_windows_absolute": 6,
+        "sample_interval_s": 0.05,
+        "samples": 55
+      },
+      "parent_exe": "D:\\Python\\pythonw.exe",
+      "parent_has_console": false
+    }
+  ],
+  "micro_tests": {
+    "combined_flags": {
+      "creationflags": "0x8000200",
+      "returncode": 0,
+      "stdout": "COMBO-OK",
+      "verdict": "OK：两 flags 可按位或叠加，子进程正常执行、stdout 可读"
+    },
+    "duplicate_creationflags": {
+      "error": "subprocess.run() got multiple values for keyword argument 'creationflags'",
+      "verdict": "LOUD FAIL：重复关键字在调用点直接 TypeError（不会被静默忽略）"
+    },
+    "gui_child": {
+      "marker_written": true,
+      "returncode": 0,
+      "verdict": "OK：GUI 子进程不受 CREATE_NO_WINDOW 影响（文档：对非控制台应用忽略）"
+    },
+    "output_visibility": {
+      "fixed": {
+        "console_buffer_available": false,
+        "marker": "VIS-MARKER-FIXED-16187",
+        "marker_found_in_parent_console": false
+      },
+      "legacy": {
+        "console_buffer_available": false,
+        "marker": "VIS-MARKER-LEGACY-16659",
+        "marker_found_in_parent_console": false
+      }
+    }
+  },
+  "python": "D:\\Python\\python.exe",
+  "pythonw": "D:\\Python\\pythonw.exe",
+  "repo": "D:\\AAA_Jupyter\\Memoria",
+  "schema": "console-flash-semantic-audit/v1",
+  "time": "2026-10-26T15:40:16+0800"
+}

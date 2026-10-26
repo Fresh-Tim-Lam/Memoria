@@ -11,6 +11,17 @@
 - **DPI**：任何窗口创建前必须抬升进程 DPI 感知（desktop.py `_set_dpi_awareness`），否则高缩放下系统对话框（文件夹选择等）满屏。
 - **Windows 编码**：frozen/windowed 下 stdout/stderr 为 cp1252，直接 print 中文崩溃；一律走容错流（`_SafeStream`）/ `_log()` 容错 helper，harness 启动时 reconfigure 为 UTF-8。
 - **QWebEngineView**（pyqt6 壳）必须 `PreventContextMenu`，避免与前端自定义右键菜单冲突。
+- **子进程控制台窗口（task-159）**：Windows 下产品路径启动任何控制台子进程**必须**用
+  `memoria.util.proc.no_window_kwargs()`（`**` 展开；**禁止**调用点手写 `creationflags=`，重复关键字会
+  `TypeError`），保证发行版（GUI 无控制台父进程）不再闪窗。语义要点：
+  `CREATE_NO_WINDOW` 实测是「**有 console 但无窗口**」（`GetConsoleWindow()==0`，但 CP/进程列表/
+  std 句柄可用，且 std 句柄继承父）——**不是"没有 console"**（微软文档字面易误解）；
+  **孙进程继承这个无窗口 console** ⇒ `git`/`python` 等孙进程也不闪。未来组合 flags：
+  `CREATE_NO_WINDOW | CREATE_NEW_PROCESS_GROUP` 可叠加，**禁止**与 `CREATE_NEW_CONSOLE`/
+  `DETACHED_PROCESS` 组合；`GenerateConsoleCtrlEvent` 触达不到隔离后的子进程（现行取消走
+  `taskkill /F /T`）。证据：`artifacts/agent/verify/todo/console-flash-fix.md` +
+  `console-flash-semantic-audit.md`；实现与详细口径见 `src/memoria/util/proc.py` 模块 docstring；
+  防回归：`tests/test_console_no_window.py` 静态扫描所有 `subprocess.Popen/run` 调用点。
 
 ## 2. 编辑与渲染
 
