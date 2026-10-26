@@ -1,0 +1,22 @@
+﻿edge alias sample: contain | strip_active: True
+
+### A-control：`range.fake_snake_field`（应 FAIL）
+  *[FAIL] symbol_reference: 点分字段里有代码中不存在的符号：fake_snake_field（原文 range.fake_snake_field）
+  => 含 'fake_snake_field': True
+
+### A-camel：`range.fakeCamelField`（当前实现无 finding？）
+  findings: <none>
+  => 含 'fakeCamelField': False
+
+### B-control：推荐 [[...#alias]]（应 FAIL）
+  *[FAIL] forbidden_syntax: 提示词把会被构建剥离的语法当推荐写法教：[[某知识点#contain]]（代码会把它迁移后从正文删除；要标边类型请写 sidecar edges[]）
+  => 含 '会被构建剥离': True
+
+### B-限定词绕过：推荐语法 + 同句无关'不要'（应 FAIL，实际？）
+  findings: <none>
+  => 含 '会被构建剥离': False
+
+### C-输入不可读时（应视为'未执行'，当前只 WARN）
+  *[WARN] forbidden_syntax: 无法从 edge_types.py 读取边类型片段集合，跳过
+  => 含 '无法从 edge_types.py 读取': True
+  summary: {'findings': 1, 'FAIL': 0, 'WARN': 1, 'INFO': 0} => exit code would be 0
