@@ -485,7 +485,7 @@
       } else if (res.version) {
         syncLog("syncToDisk: 保存完成但文档已切换，不回写 version（防跨文件污染）");
       }
-      syncLog("syncToDisk: 保存成功"); _previewCacheDrop(savePath); // 2026-09-23 性能：写盘成功 ⇒ 该路径的预览缓存按新版本作废（下次切走时再存）
+      syncLog("syncToDisk: 保存成功"); _previewCacheDrop(savePath); // 2026-09-23 性能：写盘成功 ⇒ 该路径的预览缓存按新版本作废（下次切走时再存） window.MemoriaSplashTrace?.noteSave?.(savePath);
       if (res.cleanedImages && res.cleanedImages.length) {
         showFlashInfo(
           T("img.cleanup.doneList", {
@@ -2356,7 +2356,7 @@ async function call(fn, ...args) {
         parts.push(T("app.stat.warnings", { n: sv.warnings.length }));
       stats += T("app.stat.sidecar", { parts: parts.join(" ") });
     }
-    setStatus(relPath, stats);
+    setStatus(relPath, stats); window.MemoriaSplashTrace?.noteOpen?.(relPath);
     syncGraphAuditStatusBar(stats);
     updateGraphAuditHint();
     window.MemoriaToolbarSearch?.syncScope?.(); _markPhase("tail"); _lastSwitch.ms = Math.round(performance.now() - _t0Switch); _previewCacheNoteLoad(_lastSwitch.ms); // 2026-09-24 追加：把本次**冷加载**耗时交给池（切走时挂到该条画像上）；`tail` 前一步先落表 ⇒ 阶段表给出的就是"从点击到状态栏收尾"的完整账

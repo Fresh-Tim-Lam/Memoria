@@ -110,6 +110,7 @@ const SNAP = `(() => {
       everShown: !!s.everShown, firstShownAt: s.firstShownAt || 0, fadeStartAt: s.fadeStartAt || 0,
       removedAt: s.removedAt || 0, mode: s.mode || '', reducedMotion: !!s.reducedMotion,
       fadeReason: s.fadeReason || '', audioStarted: !!s.audioStarted, audioBlocked: s.audioBlocked || 0,
+      theme: s.theme || '', traceCount: s.traceCount || 0, traceText: s.traceText || '',
       errors: (s.errors || []).slice(-5),
     },
     prefs: window.MemoriaSplash ? window.MemoriaSplash.getPrefs() : null,
@@ -319,6 +320,65 @@ async function main() {
     results.snapshots.external = s.externalResources;
     check('T-splash-7 无任何外部网络请求（只有本机静态资源）', s.externalResources.length === 0,
       `外部资源=${JSON.stringify(s.externalResources.slice(0, 10))}`);
+
+    // ── T-splash-9 主题感知：亮色主题蒙层（人反馈：白底蒙层怎么办）──────────────
+    await ev(`(() => { try { localStorage.setItem('-theme-mode', 'light'); } catch (e) {} return true; })()`);
+    const t9 = await reloadWith({ clearSession: true });
+    try { await waitFor(`document.getElementById('memoria-splash')`, '亮色主题蒙层出现', 6000); } catch { /* noop */ }
+    s = await ev(SNAP);
+    const lightTheme = await ev(`document.documentElement.getAttribute('data-theme')`);
+    const lightBrandColor = await ev(`(() => { const b = document.querySelector('.-memoria-splash__brand'); return b ? getComputedStyle(b).color : null; })()`);
+    const canvasAnim = await ev(`(() => { const c = document.querySelector('.-memoria-splash__canvas'); return c ? getComputedStyle(c).animationName : null; })()`);
+    results.snapshots.light_theme = { snap: s, dataTheme: lightTheme, brandColor: lightBrandColor, canvasAnimation: canvasAnim };
+    const lightShot = await shot('shot-light-theme-splash.png');
+    check('T-splash-9a 亮色主题蒙层：主题标识/统计正确',
+      lightTheme === 'light' && s.stats.theme === 'light' && !!s.hasEl,
+      `data-theme=${lightTheme} stats.theme=${s.stats.theme} 截图=${lightShot}`);
+    check('T-splash-9b 亮色主题品牌字仍可读（用 --text-bright，非白字白底）',
+      !!lightBrandColor && /^rgb\(\s*0\s*,\s*0\s*,\s*0\s*\)/.test(lightBrandColor),
+      `brand color=${lightBrandColor}`);
+    check('T-splash-9c 星点不是静态（画布挂 漂移+闪烁 CSS 动画）',
+      !!canvasAnim && canvasAnim.indexOf('memoria-splash-drift') >= 0 && canvasAnim.indexOf('memoria-splash-twinkle') >= 0,
+      `animationName=${canvasAnim}`);
+    try { await waitFor(`!document.getElementById('memoria-splash')`, '亮色蒙层移除', 6000); } catch { /* noop */ }
+    await removeScripts(t9.scriptIds);
+    await ev(`(() => { try { localStorage.setItem('-theme-mode', 'dark'); } catch (e) {} return true; })()`);
+
+    // ── T-splash-10 使用痕迹星图（人反馈：星点要体现使用痕迹）────────────────────
+    // 真实调用链：冷启动自动打开的文档已经过 app.js 的 noteOpen 埋点 ⇒ 星图至少有 1 颗
+    await waitFor(`!document.documentElement.classList.contains('-booting')`, '启动完成（等待星图埋点）', 15000);
+    await sleep(400);
+    const realTraceCount = await ev(`window.MemoriaSplash ? window.MemoriaSplash.getTraceCount() : -1`);
+    results.snapshots.real_traces = await ev(`window.MemoriaSplashTrace ? window.MemoriaSplashTrace.snapshot() : null`);
+    check('T-splash-10a 打开笔记会被记成一颗星（app.js 同线埋点真实生效）',
+      Number(realTraceCount) >= 1, `打开过的笔记星数=${realTraceCount}`);
+    await ev(`(() => {
+      const now = Date.now();
+      const stars = [
+        { p: 'docs/bright-now.md', n: 6, t: now - 3600 * 1000, e: 3 },
+        { p: 'docs/week-ago.md', n: 3, t: now - 3 * 86400 * 1000, e: 1 },
+        { p: 'docs/long-ago.md', n: 1, t: now - 40 * 86400 * 1000, e: 0 },
+      ];
+      try { localStorage.setItem('memoria.splash.stars.v1', JSON.stringify({ v: 1, stars: stars, updated: now })); } catch (e) {}
+      return true;
+    })()`);
+    const t10 = await reloadWith({ clearSession: true });
+    try { await waitFor(`document.getElementById('memoria-splash')`, '带星图的蒙层出现', 6000); } catch { /* noop */ }
+    s = await ev(SNAP);
+    const traceCount = await ev(`window.MemoriaSplash ? window.MemoriaSplash.getTraceCount() : -1`);
+    const traceText = await ev(`(document.getElementById('memoria-splash-traces') || {}).textContent || ''`);
+    results.snapshots.traces = { snap: s, traceCount, traceText, traceTextStats: s.stats.traceText };
+    const traceShot = await shot('shot-usage-traces.png');
+    check('T-splash-10b 蒙层读取并绘制使用痕迹星图（3 颗已知星）',
+      Number(traceCount) === 3 && s.stats.traceCount === 3 && s.stats.mode === 'canvas',
+      `traceCount=${traceCount} stats.traceCount=${s.stats.traceCount} mode=${s.stats.mode} 截图=${traceShot}`);
+    check('T-splash-10c 蒙层文案点明"使用痕迹"（已点亮 N 颗星）',
+      /3/.test(traceText) && /星|star/i.test(traceText),
+      `traces 文案="${traceText}"（stats=${s.stats.traceText}）`);
+    try { await waitFor(`!document.getElementById('memoria-splash')`, '带星图蒙层移除', 6000); } catch { /* noop */ }
+    await removeScripts(t10.scriptIds);
+    // 恢复为空星图，避免污染后续（隔离 config 每次会重建，这里只是顺手）
+    await ev(`(() => { try { window.MemoriaSplashTrace && window.MemoriaSplashTrace.clear(); } catch (e) {} return true; })()`);
 
     await shot('shot-final.png');
   } finally {

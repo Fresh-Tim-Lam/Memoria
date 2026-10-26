@@ -2132,4 +2132,9 @@
       },
     },
   });
+  // ═════ appended 2026-10-27 task-186 v2: usage-trace starfield copy ═════
+  Object.assign(g.MEMORIA_LOCALES["en"].splash, {
+    traces: "{n} stars lit · notes you've visited",
+    tracesEmpty: "Your star map lights up as you use it",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

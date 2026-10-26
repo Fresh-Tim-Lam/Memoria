@@ -2026,4 +2026,9 @@
       },
     },
   });
+  // ═════ 2026-10-27 task-186 v2：使用痕迹星图文案 ═════
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].splash, {
+    traces: "已点亮 {n} 颗星 · 你走过的笔记",
+    tracesEmpty: "你的星图会随使用点亮",
+  });
 })(typeof window !== "undefined" ? window : globalThis);

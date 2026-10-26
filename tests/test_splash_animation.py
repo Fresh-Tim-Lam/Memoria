@@ -183,9 +183,93 @@ def test_audio_failure_is_silent_and_counted():
 def test_splash_css_never_uses_important():
     """整块 splash 样式（文件末尾追加区）**代码里**不许出现 `!important`（注释里讲反例不算）。"""
     css = CSS.read_text(encoding="utf-8")
-    region = css[css.index("task-186 追加：启动蒙层"):]
+    region = css[css.index("2026-10-27 task-186 追加"):]
+    region = region[region.index("*/") + 2:]  # 从注释块之后开始，避免把块头注释算进来
     code = re.sub(r"/\*.*?\*/", "", region, flags=re.S)
     assert "!important" not in code, "splash 样式里出现 !important（请用特异性/层级/CSS 变量解决）"
+
+
+def test_theme_aware_background_uses_theme_color_not_fixed_blue_space():
+    """背景跟随应用主题：暗色中性深灰 + 亮色中性浅灰，主色光晕/星点用 `--theme-color`（人反馈）。"""
+    css = CSS.read_text(encoding="utf-8")
+    region = css[css.index("2026-10-27 task-186 追加"):]
+    assert 'html[data-theme="light"] .-memoria-splash {' in region, "亮色主题缺蒙层底色"
+    assert "var(--theme-color)" in region, "主色调必须取主题色 token"
+    assert "color-mix(in srgb, var(--theme-color)" in region, "主题色光晕应基于 token 混合"
+    # 不再有固定"蓝色太空"色：旧实现的深蓝底/蓝紫星云不应残留
+    for legacy in ("#0b1026", "#070a18", "rgba(84, 124, 255", "rgba(176, 92, 255", "rgba(36, 204, 222"):
+        assert legacy not in region, f"仍残留固定蓝色调：{legacy}"
+    assert "--splash-star" in region, "静态星点颜色应可随主题切换"
+
+    src = splash_src()
+    assert "splashTheme" in src and "data-theme" in src, "JS 应读取应用主题"
+    assert 'light ? "#0066bf" : "#007acc"' in src, "读不到 token 时的主题色兜底也要跟随深/浅主题"
+
+
+def test_star_points_are_animated_not_static():
+    """星点不是静态：漂移 + 闪烁 + 流星是常驻 CSS 动画（reduced-motion 时由媒体查询关掉）。"""
+    css = CSS.read_text(encoding="utf-8")
+    region = css[css.index("2026-10-27 task-186 追加"):]
+    assert "@keyframes memoria-splash-drift" in region
+    assert "@keyframes memoria-splash-twinkle" in region
+    assert "@keyframes memoria-splash-meteor" in region
+    canvas = region[region.index(".-memoria-splash__canvas {"):]
+    canvas = canvas[: canvas.index("}")]
+    assert "memoria-splash-drift" in canvas and "memoria-splash-twinkle" in canvas, "画布必须挂漂移+闪烁动画"
+    # 动画周期要"看得出来"（旧实现 26s 太慢，冷启动只展示 <1s 时看起来是静态）
+    assert "8.5s" in canvas and "3.6s" in canvas
+
+
+def test_usage_traces_are_recorded_and_drawn():
+    """星点体现"使用痕迹"：打开/编辑过的笔记 → localStorage 星图 → 蒙层按哈希位置点亮。"""
+    src = splash_src()
+    assert 'var TRACES_LS_KEY = "memoria.splash.stars.v1"' in src
+    assert "function traceRecord(" in src and "function traceLoad(" in src
+    assert "global.MemoriaSplashTrace" in src and "noteOpen:" in src and "noteSave:" in src
+    assert "function tracePoint(" in src and "function traceTier(" in src
+    assert "TRACES_MAX = 240" in src
+    # 画布确实画了使用痕迹星 + 星轨
+    paint = extract_function(src, "paintStars")
+    assert "tracePoint" in paint and "traceTier" in paint and "star.p" in paint
+    assert "ordered" in paint and "strokeStyle" in paint, "应画出星轨连线"
+    # app.js 在"打开成功/保存成功"处同线埋点（零行漂移）
+    app = (ROOT / "src" / "memoria" / "ui" / "static" / "app" / "js" / "app.js").read_text(encoding="utf-8")
+    assert "MemoriaSplashTrace?.noteOpen?.(relPath)" in app
+    assert "MemoriaSplashTrace?.noteSave?.(savePath)" in app
+    # 文案（中英）
+    for path in (ZH, EN):
+        text = path.read_text(encoding="utf-8")
+        assert "traces:" in text and "tracesEmpty:" in text, f"{path.name} 缺星图文案"
+
+
+def test_trace_helpers_are_pure_and_stable():
+    """星位稳定（同路径每次同处）+ 亮度按"最近程度"分层 + 容量/得分可测（node 实跑）。"""
+    src = splash_src()
+    script = (
+        "var TRACES_MAX = 240;\nvar now = 1700000000000;\n"
+        + extract_function(src, "hash32")
+        + "\n" + extract_function(src, "tracePoint")
+        + "\n" + extract_function(src, "traceScore")
+        + "\n" + extract_function(src, "traceTier")
+        + """
+const p1 = tracePoint("docs/a.md", 0, 1000, 800);
+const p2 = tracePoint("docs/a.md", 0, 1000, 800);
+const p3 = tracePoint("docs/b.md", 0, 1000, 800);
+const tier = (ageDays) => traceTier({p:"x", n:1, t: now - ageDays*86400000}, now);
+const out = {
+  stable: p1.x === p2.x && p1.y === p2.y,
+  different: p1.x !== p3.x || p1.y !== p3.y,
+  inBounds: p1.x >= 0 && p1.x <= 1000 && p1.y >= 0 && p1.y <= 800,
+  tiers: [tier(0.1), tier(3), tier(10), tier(100)],
+  scoreRecentHigh: traceScore({p:"a", n:2, t: now - 86400000}, now) > traceScore({p:"b", n:2, t: now - 90*86400000}, now),
+  scoreFreqWins: traceScore({p:"a", n:10, t: now - 90*86400000}, now) > traceScore({p:"b", n:2, t: now - 90*86400000}, now),
+};
+console.log(JSON.stringify(out));"""
+    )
+    out = node_eval(script)
+    assert out["stable"] is True and out["different"] is True and out["inBounds"] is True
+    assert out["tiers"] == [3, 2, 1, 0], out["tiers"]
+    assert out["scoreRecentHigh"] is True and out["scoreFreqWins"] is True
 
 
 def test_no_external_assets_or_network_in_splash():
@@ -262,7 +346,8 @@ def test_real_app_evidence_exists():
     data = json.loads(verify.read_text(encoding="utf-8"))
     assert data.get("failed") == 0, f"真机探针有失败项：{data.get('failed')}"
     ids = " ".join(c["id"] for c in data.get("checks", []))
-    for tag in ("T-splash-1", "T-splash-3", "T-splash-4", "T-splash-5", "T-splash-6", "T-splash-7"):
+    for tag in ("T-splash-1", "T-splash-3", "T-splash-4", "T-splash-5", "T-splash-6", "T-splash-7",
+                "T-splash-9", "T-splash-10"):
         assert tag in ids, f"真机证据缺 {tag}"
     before = ART / "measures-before" / "summary.json"
     after = ART / "measures-after" / "summary.json"

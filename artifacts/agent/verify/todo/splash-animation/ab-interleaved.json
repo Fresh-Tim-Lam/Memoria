@@ -1,123 +1,83 @@
 {
-  "rounds": 5,
+  "rounds": 3,
   "method": "interleaved A/B (same window; alternates order each round)",
   "metric": "process start t0 -> html.-booting removed (existing marquee end)",
   "on": {
-    "n": 5,
-    "median": 3242,
-    "min": 2264,
-    "max": 3379,
+    "n": 3,
+    "median": 2254,
+    "min": 2233,
+    "max": 2321,
     "all": [
-      2264,
-      3379,
-      3242,
-      3175,
-      3379
+      2321,
+      2254,
+      2233
     ]
   },
   "off": {
-    "n": 5,
-    "median": 3281,
-    "min": 2158,
-    "max": 3663,
+    "n": 3,
+    "median": 2306,
+    "min": 2299,
+    "max": 2777,
     "all": [
-      2158,
-      3389,
-      3281,
-      3225,
-      3663
+      2306,
+      2299,
+      2777
     ]
   },
-  "delta_ms": -39,
+  "delta_ms": -52,
   "trials": [
     {
       "round": 1,
       "variant": "on",
       "label": "ab-on-1",
-      "median_ms": 2264,
+      "median_ms": 2321,
       "all_ms": [
-        2264
+        2321
       ]
     },
     {
       "round": 1,
       "variant": "off",
       "label": "ab-off-1",
-      "median_ms": 2158,
+      "median_ms": 2306,
       "all_ms": [
-        2158
+        2306
       ]
     },
     {
       "round": 2,
       "variant": "off",
       "label": "ab-off-2",
-      "median_ms": 3389,
+      "median_ms": 2299,
       "all_ms": [
-        3389
+        2299
       ]
     },
     {
       "round": 2,
       "variant": "on",
       "label": "ab-on-2",
-      "median_ms": 3379,
+      "median_ms": 2254,
       "all_ms": [
-        3379
+        2254
       ]
     },
     {
       "round": 3,
       "variant": "on",
       "label": "ab-on-3",
-      "median_ms": 3242,
+      "median_ms": 2233,
       "all_ms": [
-        3242
+        2233
       ]
     },
     {
       "round": 3,
       "variant": "off",
       "label": "ab-off-3",
-      "median_ms": 3281,
+      "median_ms": 2777,
       "all_ms": [
-        3281
-      ]
-    },
-    {
-      "round": 4,
-      "variant": "off",
-      "label": "ab-off-4",
-      "median_ms": 3225,
-      "all_ms": [
-        3225
-      ]
-    },
-    {
-      "round": 4,
-      "variant": "on",
-      "label": "ab-on-4",
-      "median_ms": 3175,
-      "all_ms": [
-        3175
-      ]
-    },
-    {
-      "round": 5,
-      "variant": "on",
-      "label": "ab-on-5",
-      "median_ms": 3379,
-      "all_ms": [
-        3379
-      ]
-    },
-    {
-      "round": 5,
-      "variant": "off",
-      "label": "ab-off-5",
-      "median_ms": 3663,
-      "all_ms": [
-        3663
+        2777
       ]
     }
   ]

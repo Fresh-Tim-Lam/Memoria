@@ -81,3 +81,61 @@ new-Item ... # 结果：ab-interleaved.json
 - **未 commit**；`index.html` 的 +1 行 script 接线已在 §0 显式申报（新模块加载的必要条件）。
 - A/B 测量脚本会临时改 `index.html`/`splash.js` —— 全部自带恢复断言；**不要在别的门禁并发时跑**（已把这条教训写进脚本注释与 §1②）。
 - 遗留可选项（本次未做，等 Lead/人拍板）：`splash.js` 目前 ~730 行内联于单文件；若将来要"可换皮肤/多套动画"，再拆 assets（当前刻意零资源、零请求）。
+
+---
+
+# v2（2026-10-27）：人反馈「不要蓝色 / 主题色 / 白主题怎么办 / 星点要动且体现使用痕迹」
+
+## 人原话
+> 「加载蒙皮的背景不要蓝色，可以给一点渐变，主色调是设置里面的主题色；你有思考白色主题加载动画该咋办你可以找人调研；另外我希望黑色蒙皮的星空的星点不是静态，而是能够体现用户使用痕迹的，这一点你也可以找人研讨」
+
+## 做了什么
+
+### ① 背景：从"固定蓝色太空"改成"主题中性渐变 + 主题色光晕"
+- 暗色：中性深灰渐变 `#17181a → #101113 → #0a0b0c`（不再是 navy 蓝底），叠加主题色光晕
+  `color-mix(in srgb, var(--theme-color) 14%/10%/7%, transparent)`（带 `rgba(0,122,204,…)` 兜底声明，旧 WebEngine 也能看）。
+- 亮色：`#fbfcfd → #f3f5f8 → #e9edf2` + 同款主题色光晕（更淡，14%→亮色 opacity 0.5）+ 一层浅色雾提升星点对比。
+- **主色 = 主题色**：光晕、使用痕迹星、星轨、流星、品牌字辉光全部取 `var(--theme-color)`，不再出现固定蓝色调
+  （测试断言：区域里 `#0b1026/#070a18/rgba(84,124,255` 等旧色必须不存在）。
+- 全部走既有 token + `color-mix`，不新增颜色常量；`!important` 仍为 0（靠 `html` 前缀特异性）。
+
+### ② 白色（浅色）主题的蒙层
+- 品牌字用 `--text-bright`（浅色主题 = #000）⇒ 截图实测 `rgb(0,0,0)`，不是"白字白底"。
+- 星点颜色改由 `--splash-star` 变量控制（暗色 `rgba(232,238,250,.85)`、浅色 `rgba(46,58,84,.55)`）。
+- 浅色背景上"星点"改用主题色 + 深灰，并在天空中部加了一团极淡白雾 ⇒ 有星空感、又不脏。
+- 证据：`shot-light-theme-splash.png`（真机、`data-theme=light`）。
+
+### ③ 星点不静态（原来 26s 漂移在 <1s 的蒙层里看起来是静止的）
+- 画布挂两个常驻 CSS 动画：`memoria-splash-drift 8.5s`（漂移）+ `memoria-splash-twinkle 3.6s`（闪烁）；
+  另有 `memoria-splash-meteor 5.2s` 流星（主题色）。
+- reduced-motion 下三个动画全部关闭（媒体查询 + JS 不启动动画双保险），只留静态蒙层 + 文字（原 T-splash-3 不变）。
+
+### ④ "使用痕迹"星图（星点 = 你打开/编辑过的笔记）
+- 数据：`localStorage["memoria.splash.stars.v1"] = {v:1, stars:[{p:相对路径, n:打开次数, t:最近时间, e:编辑次数}], updated}`，
+  容量 **240**（按 `traceScore = n*0.4 + 最近度*2 + e*0.3` 淘汰）；**只在本机、只存路径/次数/时间，不含正文、不上报**。
+- 绘制：每篇笔记 = 一颗星，位置 = 路径稳定哈希（同一篇每次都在同一处，用户能"养出"自己的星座）；
+  亮度/大小按最近程度四档（<1 天 / <7 天 / <30 天 / 更久）；最近的星带主题色柔光；按使用时间连成淡淡"星轨"。
+- 文案：「已点亮 {n} 颗星 · 你走过的笔记」；首次使用无痕迹 ⇒「你的星图会随使用点亮」（中英都加了键）。
+- 记录：`app.js` 在**打开成功**（`setStatus(relPath, stats)` 同一行追加）与**保存成功**（同一行追加）调用
+  `MemoriaSplashTrace.noteOpen/noteSave` ⇒ **零行漂移**、失败静默，绝不影响打开/保存。
+- 首次冷启动验证：自动打开的文档已写入 1 颗星（探针 T-splash-10a `打开过的笔记星数=1`）。
+
+## 验收（真机探针 v2：**21 PASS / 0 FAIL**）
+| 新增 | 结果 | 证据 |
+|---|---|---|
+| T-splash-9 亮色主题蒙层 | ✅ | `data-theme=light`、`stats.theme=light`、品牌字 `rgb(0,0,0)`、`shot-light-theme-splash.png` |
+| T-splash-9c 星点非静态 | ✅ | 画布 `animationName = memoria-splash-drift, memoria-splash-twinkle` |
+| T-splash-10 使用痕迹 | ✅ | 真实埋点：`打开过的笔记星数=1`；注入 3 颗已知星后 `traceCount=3`、文案「已点亮 3 颗星 · 你走过的笔记」、`shot-usage-traces.png` |
+| T-splash-2 复测（v2 后） | ✅ | 交错 A/B 3 轮：on 2233/2254/2321 vs off 2299/2306/2777 ⇒ **delta −52ms**（不慢于改前） |
+| 门禁 | ✅ | 全仓 pytest **1649 passed / 0 failed**；node 0；i18n PASS；team_audit FAIL=0；12 剧本 12/12 |
+
+## 关于"找人调研/研讨"
+本会话是 teammate（subagent 层级），**不能再 spawn subagent（depth 限制）**，因此没有另找成员；
+我按仓库既有 token/样式纪律自己做了取舍，并把可复核的判据都写进了测试与截图。若需要第二意见，
+建议由 Lead 派另一个成员做一次"浅色主题 + 星图数据模型"的对抗复核。
+
+## v2 改动文件（仍未 commit）
+`src/memoria/ui/static/app/js/splash.js`（主题/星图/文案）、`app/css/app.css`（v2 主题渐变块）、
+`app/i18n/zh-CN.js` / `en.js`（traces 文案）、`app/js/app.js`（2 处**同行**埋点，零行漂移）、
+`tests/test_splash_animation.py`（+4 条：主题/动态/痕迹/纯函数），
+`artifacts/agent/verify/todo/splash-animation/{probe_splash.mjs,verify.json,ab-interleaved.json,shot-*.png,REPORT.md}`。

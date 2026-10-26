@@ -1,22 +1,25 @@
 {
-  "generated_at": "2026-10-26T16:23:51.080Z",
-  "port": 9900,
-  "target_url": "http://127.0.0.1:65271/",
+  "generated_at": "2026-10-26T16:34:23.485Z",
+  "port": 9940,
+  "target_url": "http://127.0.0.1:3664/",
   "checks": [
     {
       "id": "T-splash-1a 冷启动确实出现过蒙层",
       "ok": true,
-      "detail": "everShown=true firstShownAt=1793031830650 fadeStart=1793031831498 removedAt=1793031831825 淡出原因=ready",
+      "detail": "everShown=true firstShownAt=1793032463367 fadeStart=1793032464308 removedAt=1793032464632 淡出原因=ready",
       "data": {
         "everShown": true,
-        "firstShownAt": 1793031830650,
-        "fadeStartAt": 1793031831498,
-        "removedAt": 1793031831825,
+        "firstShownAt": 1793032463367,
+        "fadeStartAt": 1793032464308,
+        "removedAt": 1793032464632,
         "mode": "canvas",
         "reducedMotion": false,
         "fadeReason": "ready",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 0,
+        "traceText": "你的星图会随使用点亮",
         "errors": []
       }
     },
@@ -29,7 +32,7 @@
     {
       "id": "T-splash-1c 真实就绪后淡出（fadeReason=ready/cap，且不早于就绪）",
       "ok": true,
-      "detail": "fadeReason=ready 停留=848ms",
+      "detail": "fadeReason=ready 停留=941ms",
       "data": null
     },
     {
@@ -107,11 +110,47 @@
       "ok": true,
       "detail": "外部资源=[]",
       "data": null
+    },
+    {
+      "id": "T-splash-9a 亮色主题蒙层：主题标识/统计正确",
+      "ok": true,
+      "detail": "data-theme=light stats.theme=light 截图=shot-light-theme-splash.png",
+      "data": null
+    },
+    {
+      "id": "T-splash-9b 亮色主题品牌字仍可读（用 --text-bright，非白字白底）",
+      "ok": true,
+      "detail": "brand color=rgb(0, 0, 0)",
+      "data": null
+    },
+    {
+      "id": "T-splash-9c 星点不是静态（画布挂 漂移+闪烁 CSS 动画）",
+      "ok": true,
+      "detail": "animationName=memoria-splash-drift, memoria-splash-twinkle",
+      "data": null
+    },
+    {
+      "id": "T-splash-10a 打开笔记会被记成一颗星（app.js 同线埋点真实生效）",
+      "ok": true,
+      "detail": "打开过的笔记星数=1",
+      "data": null
+    },
+    {
+      "id": "T-splash-10b 蒙层读取并绘制使用痕迹星图（3 颗已知星）",
+      "ok": true,
+      "detail": "traceCount=3 stats.traceCount=3 mode=canvas 截图=shot-usage-traces.png",
+      "data": null
+    },
+    {
+      "id": "T-splash-10c 蒙层文案点明\"使用痕迹\"（已点亮 N 颗星）",
+      "ok": true,
+      "detail": "traces 文案=\"已点亮 3 颗星 · 你走过的笔记\"（stats=已点亮 3 颗星 · 你走过的笔记）",
+      "data": null
     }
   ],
   "snapshots": {
     "cold_attached": {
-      "now": 1793031831091,
+      "now": 1793032464013,
       "hasEl": true,
       "className": "-memoria-splash",
       "pointerEvents": "auto",
@@ -128,7 +167,7 @@
       "canvasVisible": true,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031830650,
+        "firstShownAt": 1793032463367,
         "fadeStartAt": 0,
         "removedAt": 0,
         "mode": "canvas",
@@ -136,6 +175,9 @@
         "fadeReason": "",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 0,
+        "traceText": "你的星图会随使用点亮",
         "errors": []
       },
       "prefs": {
@@ -149,7 +191,7 @@
       "settingsVolume": null
     },
     "cold_after": {
-      "now": 1793031831828,
+      "now": 1793032464672,
       "hasEl": false,
       "className": null,
       "pointerEvents": null,
@@ -163,14 +205,17 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031830650,
-        "fadeStartAt": 1793031831498,
-        "removedAt": 1793031831825,
+        "firstShownAt": 1793032463367,
+        "fadeStartAt": 1793032464308,
+        "removedAt": 1793032464632,
         "mode": "canvas",
         "reducedMotion": false,
         "fadeReason": "ready",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 0,
+        "traceText": "你的星图会随使用点亮",
         "errors": []
       },
       "prefs": {
@@ -184,7 +229,7 @@
       "settingsVolume": null
     },
     "reload_no_splash": {
-      "now": 1793031832888,
+      "now": 1793032465698,
       "hasEl": false,
       "className": null,
       "pointerEvents": null,
@@ -206,6 +251,9 @@
         "fadeReason": "",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "",
+        "traceCount": 0,
+        "traceText": "",
         "errors": []
       },
       "prefs": {
@@ -219,7 +267,7 @@
       "settingsVolume": null
     },
     "reduced_motion": {
-      "now": 1793031833323,
+      "now": 1793032466090,
       "hasEl": true,
       "className": "-memoria-splash -memoria-splash--static",
       "pointerEvents": "auto",
@@ -236,7 +284,7 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031832945,
+        "firstShownAt": 1793032465753,
         "fadeStartAt": 0,
         "removedAt": 0,
         "mode": "static",
@@ -244,6 +292,9 @@
         "fadeReason": "",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 1,
+        "traceText": "已点亮 1 颗星 · 你走过的笔记",
         "errors": []
       },
       "prefs": {
@@ -257,7 +308,7 @@
       "settingsVolume": null
     },
     "force_static": {
-      "now": 1793031834214,
+      "now": 1793032466768,
       "hasEl": true,
       "className": "-memoria-splash -memoria-splash--static",
       "pointerEvents": "auto",
@@ -274,7 +325,7 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031833802,
+        "firstShownAt": 1793032466420,
         "fadeStartAt": 0,
         "removedAt": 0,
         "mode": "static",
@@ -282,6 +333,9 @@
         "fadeReason": "",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 1,
+        "traceText": "已点亮 1 颗星 · 你走过的笔记",
         "errors": []
       },
       "prefs": {
@@ -295,7 +349,7 @@
       "settingsVolume": null
     },
     "settings_default": {
-      "now": 1793031835120,
+      "now": 1793032467592,
       "hasEl": false,
       "className": null,
       "pointerEvents": null,
@@ -309,14 +363,17 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031833802,
-        "fadeStartAt": 1793031834584,
-        "removedAt": 1793031834584,
+        "firstShownAt": 1793032466420,
+        "fadeStartAt": 1793032467040,
+        "removedAt": 1793032467040,
         "mode": "static",
         "reducedMotion": false,
         "fadeReason": "ready",
         "audioStarted": false,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 1,
+        "traceText": "已点亮 1 颗星 · 你走过的笔记",
         "errors": []
       },
       "prefs": {
@@ -330,7 +387,7 @@
       "settingsVolume": "35"
     },
     "settings_enabled": {
-      "now": 1793031837171,
+      "now": 1793032469579,
       "hasEl": false,
       "className": null,
       "pointerEvents": null,
@@ -344,14 +401,17 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031833802,
-        "fadeStartAt": 1793031834584,
-        "removedAt": 1793031834584,
+        "firstShownAt": 1793032466420,
+        "fadeStartAt": 1793032467040,
+        "removedAt": 1793032467040,
         "mode": "static",
         "reducedMotion": false,
         "fadeReason": "ready",
         "audioStarted": true,
         "audioBlocked": 0,
+        "theme": "dark",
+        "traceCount": 1,
+        "traceText": "已点亮 1 颗星 · 你走过的笔记",
         "errors": []
       },
       "prefs": {
@@ -369,7 +429,7 @@
       "volume": 0.8
     },
     "audio_blocked": {
-      "now": 1793031839837,
+      "now": 1793032472171,
       "hasEl": false,
       "className": null,
       "pointerEvents": null,
@@ -383,14 +443,17 @@
       "canvasVisible": false,
       "stats": {
         "everShown": true,
-        "firstShownAt": 1793031838465,
-        "fadeStartAt": 1793031838981,
-        "removedAt": 1793031839301,
+        "firstShownAt": 1793032470842,
+        "fadeStartAt": 1793032471335,
+        "removedAt": 1793032471657,
         "mode": "canvas",
         "reducedMotion": false,
         "fadeReason": "ready",
         "audioStarted": false,
         "audioBlocked": 1,
+        "theme": "dark",
+        "traceCount": 1,
+        "traceText": "已点亮 1 颗星 · 你走过的笔记",
         "errors": []
       },
       "prefs": {
@@ -403,9 +466,113 @@
       "settingsSound": null,
       "settingsVolume": null
     },
-    "external": []
+    "external": [],
+    "light_theme": {
+      "snap": {
+        "now": 1793032472533,
+        "hasEl": true,
+        "className": "-memoria-splash",
+        "pointerEvents": "auto",
+        "opacity": "1",
+        "zIndex": "2147483000",
+        "brandText": "Memoria",
+        "brandAnimation": "memoria-splash-breathe",
+        "brandRect": {
+          "w": 216.3,
+          "h": 51
+        },
+        "hintText": "正在唤醒星海…",
+        "canvasDisplay": "block",
+        "canvasVisible": true,
+        "stats": {
+          "everShown": true,
+          "firstShownAt": 1793032472220,
+          "fadeStartAt": 0,
+          "removedAt": 0,
+          "mode": "canvas",
+          "reducedMotion": false,
+          "fadeReason": "",
+          "audioStarted": true,
+          "audioBlocked": 0,
+          "theme": "light",
+          "traceCount": 1,
+          "traceText": "已点亮 1 颗星 · 你走过的笔记",
+          "errors": []
+        },
+        "prefs": {
+          "sound": true,
+          "volume": 0.8
+        },
+        "flashError": false,
+        "booting": true,
+        "externalResources": [],
+        "settingsSound": null,
+        "settingsVolume": null
+      },
+      "dataTheme": "light",
+      "brandColor": "rgb(0, 0, 0)",
+      "canvasAnimation": "memoria-splash-drift, memoria-splash-twinkle"
+    },
+    "real_traces": {
+      "v": 1,
+      "stars": [
+        {
+          "p": "README.md",
+          "n": 7,
+          "t": 1793032472806,
+          "e": 0
+        }
+      ],
+      "updated": 1793032472806
+    },
+    "traces": {
+      "snap": {
+        "now": 1793032473984,
+        "hasEl": true,
+        "className": "-memoria-splash",
+        "pointerEvents": "auto",
+        "opacity": "1",
+        "zIndex": "2147483000",
+        "brandText": "Memoria",
+        "brandAnimation": "memoria-splash-breathe",
+        "brandRect": {
+          "w": 216.3,
+          "h": 51
+        },
+        "hintText": "正在唤醒星海…",
+        "canvasDisplay": "block",
+        "canvasVisible": true,
+        "stats": {
+          "everShown": true,
+          "firstShownAt": 1793032473647,
+          "fadeStartAt": 0,
+          "removedAt": 0,
+          "mode": "canvas",
+          "reducedMotion": false,
+          "fadeReason": "",
+          "audioStarted": true,
+          "audioBlocked": 0,
+          "theme": "dark",
+          "traceCount": 3,
+          "traceText": "已点亮 3 颗星 · 你走过的笔记",
+          "errors": []
+        },
+        "prefs": {
+          "sound": true,
+          "volume": 0.8
+        },
+        "flashError": false,
+        "booting": true,
+        "externalResources": [],
+        "settingsSound": null,
+        "settingsVolume": null
+      },
+      "traceCount": 3,
+      "traceText": "已点亮 3 颗星 · 你走过的笔记",
+      "traceTextStats": "已点亮 3 颗星 · 你走过的笔记"
+    }
   },
   "exceptions": [],
-  "passed": 15,
+  "passed": 21,
   "failed": 0
 }

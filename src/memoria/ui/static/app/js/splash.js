@@ -37,6 +37,8 @@
   var SAFETY_MS = 5000;     // 绝对兜底：任何情况下蒙层都要消失
   var SESSION_KEY = "memoria.splash.seen";
   var PREFS_LS_KEY = "memoria.splash.prefs";
+  var TRACES_LS_KEY = "memoria.splash.stars.v1";   // 本地"使用痕迹"星图（只在本机，不上报）
+  var TRACES_MAX = 240;                            // 星图容量上限（超出按"使用得分"淘汰）
   var DEFAULT_PREFS = { sound: false, volume: 0.35 };  // ★ 默认静音（硬约束）
   var AUDIO_DURATION_MS = 2400;  // ≤3s
   var I18N_WAIT_MS = 2500;       // 等 i18n 引擎就绪的上限（超时用内置兜底文案）
@@ -49,6 +51,8 @@
     fadeStartAt: 0,
     removedAt: 0,
     mode: "idle",            // canvas | static | idle
+    theme: "",               // dark | light（蒙层跟随应用主题）
+    traceCount: 0,           // 本次蒙层绘制的"使用痕迹"星数
     reducedMotion: false,
     fadeReason: "",          // ready | cap | safety | error
     audioStarted: false,
@@ -205,7 +209,112 @@
     }
   }
 
-  // ── 蒙层 DOM ────────────────────────────────────────────────────────────────
+  // ── 主题感知（蒙层跟随应用的 dark/light 与主题色；data-theme 由 <head> 内联脚本先于 body 设定）
+  // 背景不用固定"蓝色太空"：暗色 = 中性深灰渐变 + 主题色光晕；亮色 = 中性浅灰渐变 + 主题色光晕。
+  function splashTheme() {
+    var root = DOC.documentElement;
+    var light = false;
+    try { light = root.getAttribute("data-theme") === "light"; } catch (e) { /* noop */ }
+    var cs = null;
+    try { cs = global.getComputedStyle ? global.getComputedStyle(root) : null; } catch (e) { /* noop */ }
+    function readVar(name, fallback) {
+      try {
+        var v = cs ? cs.getPropertyValue(name).trim() : "";
+        return v || fallback;
+      } catch (e) { return fallback; }
+    }
+    return {
+      name: light ? "light" : "dark",
+      accent: readVar("--theme-color", light ? "#0066bf" : "#007acc"),
+      text: readVar("--text-primary", light ? "#2f2f2f" : "#cccccc"),
+      secondary: readVar("--text-secondary", light ? "#6b6b6b" : "#858585"),
+      bg: readVar("--bg-primary", light ? "#ffffff" : "#1e1e1e"),
+    };
+  }
+
+  /** `#rrggbb` → `[r,g,b]`；非法输入返回 null（画布上做 alpha 合成用）。 */
+  function hexToRgb(hex) {
+    var m = /^#([0-9a-f]{6})$/i.exec(String(hex || "").trim());
+    if (!m) return null;
+    var n = parseInt(m[1], 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+
+  // ── 使用痕迹星图（localStorage；只存"相对路径 + 次数 + 时间"，不上报、不含正文）──
+  function traceLoad() {
+    try {
+      var raw = global.localStorage && global.localStorage.getItem(TRACES_LS_KEY);
+      var obj = raw ? JSON.parse(raw) : null;
+      if (obj && Array.isArray(obj.stars)) return obj;
+    } catch (e) { /* 隐私模式/坏数据 ⇒ 空星图 */ }
+    return { v: 1, stars: [], updated: 0 };
+  }
+
+  function traceSave(obj) {
+    try { if (global.localStorage) global.localStorage.setItem(TRACES_LS_KEY, JSON.stringify(obj)); } catch (e) { /* noop */ }
+  }
+
+  /** 使用得分：最近 + 频繁 + 编辑过的笔记更亮（用于容量淘汰与亮度分层，纯函数）。 */
+  function traceScore(star, now) {
+    if (!star) return 0;
+    var ts = typeof star.t === "number" ? star.t : 0;
+    var ageDays = ts ? Math.max(0, (now - ts) / 86400000) : 9999;
+    var recent = Math.max(0, 1 - ageDays / 60);     // 60 天内线性衰减
+    return (star.n || 1) * 0.4 + recent * 2 + (star.e || 0) * 0.3;
+  }
+
+  /** 记录一次使用痕迹（打开/保存笔记）；`kind`: "open" | "save"。 */
+  function traceRecord(path, kind) {
+    var p = String(path || "").trim();
+    if (!p) return;
+    var now = Date.now();
+    var db = traceLoad();
+    var row = null;
+    for (var i = 0; i < db.stars.length; i++) {
+      if (db.stars[i] && db.stars[i].p === p) { row = db.stars[i]; break; }
+    }
+    if (!row) { row = { p: p, n: 0, t: 0, e: 0 }; db.stars.push(row); }
+    row.n = (row.n || 0) + 1;
+    row.t = now;
+    if (kind === "save") row.e = (row.e || 0) + 1;
+    db.stars.sort(function (a, b) { return traceScore(b, now) - traceScore(a, now); });
+    if (db.stars.length > TRACES_MAX) db.stars = db.stars.slice(0, TRACES_MAX);
+    db.updated = now;
+    traceSave(db);
+  }
+
+  /** 星位 = 路径的稳定哈希 ⇒ 同一篇笔记每次都在同一处亮起（用户能养出自己的星图）。 */
+  function hash32(str) {
+    var h = 2166136261;
+    var s = String(str || "");
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function tracePoint(path, idx, w, h) {
+    var a = hash32(String(path));
+    var b = hash32(String(path) + "|y|" + (idx || 0));
+    return {
+      x: ((a % 10000) / 10000) * w,
+      y: ((b % 10000) / 10000) * h,
+    };
+  }
+
+  /** 亮度/尺寸分层：<1 天最亮、<7 天次之、<30 天暗一档、更久最暗（纯函数，node 可测）。 */
+  function traceTier(star, now) {
+    var ts = star && typeof star.t === "number" ? star.t : 0;
+    if (!ts) return 0;
+    var ageDays = Math.max(0, (now - ts) / 86400000);
+    if (ageDays < 1) return 3;
+    if (ageDays < 7) return 2;
+    if (ageDays < 30) return 1;
+    return 0;
+  }
+
+    // ── 蒙层 DOM ────────────────────────────────────────────────────────────────
   function buildOverlay(staticMode) {
     var root = DOC.createElement("div");
     root.id = "memoria-splash";
@@ -220,11 +329,6 @@
     canvas.setAttribute("aria-hidden", "true");
     sky.appendChild(canvas);
 
-    var nebula = DOC.createElement("div");
-    nebula.className = "-memoria-splash__nebula";
-    nebula.setAttribute("aria-hidden", "true");
-    sky.appendChild(nebula);
-
     var meteor = DOC.createElement("div");
     meteor.className = "-memoria-splash__meteor";
     meteor.setAttribute("aria-hidden", "true");
@@ -238,14 +342,20 @@
     hint.className = "-memoria-splash__hint";
     hint.id = "memoria-splash-hint";
     hint.textContent = "Memoria";
+    // "使用痕迹"说明行：已点亮 N 颗星（星点 = 打开/编辑过的笔记）
+    var traces = DOC.createElement("div");
+    traces.className = "-memoria-splash__traces";
+    traces.id = "memoria-splash-traces";
+    traces.textContent = "";
     inner.appendChild(brand);
     inner.appendChild(hint);
+    inner.appendChild(traces);
     inner.appendChild(meteor);
 
     root.appendChild(sky);
     root.appendChild(inner);
     DOC.body.appendChild(root);
-    return { root: root, canvas: canvas, hint: hint };
+    return { root: root, canvas: canvas, hint: hint, traces: traces };
   }
 
   function setHintText() {
@@ -256,6 +366,19 @@
     var sub = T("splash.subtle");
     if (sub) hint.setAttribute("data-subtle", sub);
     state.overlay.setAttribute("aria-label", (T("splash.a11y") || "Memoria") + " " + text);
+    setTracesText();
+  }
+
+  /** "已点亮 N 颗星 · 你走过的笔记"（首次使用无痕迹时给一句引导，而不是空着）。 */
+  function setTracesText() {
+    var el = state.overlay && state.overlay.querySelector("#memoria-splash-traces");
+    if (!el) return;
+    var n = stats.traceCount || 0;
+    var text = n > 0
+      ? (T("splash.traces", { n: n }) || ("已点亮 " + n + " 颗星 · 你走过的笔记"))
+      : (T("splash.tracesEmpty") || "你的星图会随使用点亮");
+    el.textContent = text;
+    stats.traceText = text;
   }
 
   // ── 星河（Canvas 2D 一次性绘制 + CSS 动画；**零 rAF**）────────────────────────────
@@ -277,46 +400,106 @@
   var STARFIELD_DPR = 0.6;      // 蒙层星点是"氛围"不是内容：0.6 倍分辨率（省纹理上传/光栅化，星点略柔反而更像星云）
   var STARFIELD_WIDTH_RATIO = 1.16; // 画布比视口宽 16%（给 CSS 缓慢漂移留余量，不露边）
 
-  /** 把星星画到给定 canvas（只画一次；窗口 resize 时重画一次，开销可忽略）。 */
-  function paintStars(canvas, seedOffset) {
+  /** 把星星画到给定 canvas（只画一次；窗口 resize 时重画一次，开销可忽略）。
+   *
+   *  两层内容：
+   *   ① 背景星野（装饰，主题中性色；暗色偏白、亮色偏深灰，**不再用固定蓝色调**）；
+   *   ② 使用痕迹星（数据来自 localStorage：用户打开/编辑过的笔记）——
+   *      位置 = 路径稳定哈希（同一篇笔记每次同一处），亮度/大小 = 最近程度，颜色 = 主题色，
+   *      并按时间顺序连成淡淡的"星轨"（用户走过的路径）。
+   */
+  function paintStars(canvas) {
     var ctx = canvas.getContext("2d");
     if (!ctx) return false;
+    var theme = state.theme || splashTheme();
+    var traces = state.traces || traceLoad();
+    var now = Date.now();
+    var light = theme.name === "light";
     var w = Math.round((global.innerWidth || 1280) * STARFIELD_WIDTH_RATIO);
     var h = Math.round(global.innerHeight || 860);
     canvas.width = Math.max(1, w * STARFIELD_DPR);
     canvas.height = Math.max(1, h * STARFIELD_DPR);
     ctx.setTransform(STARFIELD_DPR, 0, 0, STARFIELD_DPR, 0, 0);
     ctx.clearRect(0, 0, w, h);
-    // 银河带：两条极淡的斜向渐变（比逐帧画便宜得多，观感接近）
-    var band = ctx.createLinearGradient(0, h * 0.1, w, h * 0.8);
-    band.addColorStop(0, "rgba(120,150,255,0.00)");
-    band.addColorStop(0.35, "rgba(140,170,255,0.10)");
-    band.addColorStop(0.55, "rgba(190,160,255,0.08)");
-    band.addColorStop(0.8, "rgba(120,190,255,0.06)");
-    band.addColorStop(1, "rgba(120,150,255,0.00)");
+
+    // ① 银河带：只用中性色（暗：白雾；亮：深灰雾），主色调交给 CSS 的主题色光晕
+    var band = ctx.createLinearGradient(0, h * 0.1, w, h * 0.82);
+    if (light) {
+      band.addColorStop(0, "rgba(60,70,90,0.00)");
+      band.addColorStop(0.4, "rgba(60,70,90,0.045)");
+      band.addColorStop(0.6, "rgba(40,50,70,0.035)");
+      band.addColorStop(1, "rgba(60,70,90,0.00)");
+    } else {
+      band.addColorStop(0, "rgba(255,255,255,0.00)");
+      band.addColorStop(0.4, "rgba(235,240,250,0.075)");
+      band.addColorStop(0.6, "rgba(210,220,240,0.055)");
+      band.addColorStop(1, "rgba(255,255,255,0.00)");
+    }
     ctx.fillStyle = band;
-    ctx.fillRect(0, h * 0.08, w, h * 0.72);
-    // 星点：随机但按深度分层（亮星少、暗星多）
-    var count = Math.round(Math.min(220, Math.max(90, (w * h) / 12000)));
+    ctx.fillRect(0, h * 0.08, w, h * 0.74);
+
+    // ① 背景星野
+    var count = Math.round(Math.min(200, Math.max(80, (w * h) / 14000)));
     for (var i = 0; i < count; i++) {
       var x = Math.random() * w;
       var y = Math.random() * h;
       var depth = Math.random();
-      var r = depth > 0.93 ? 1.5 : depth > 0.72 ? 1.0 : 0.6;
-      var alpha = 0.22 + depth * 0.72;
-      var tint = depth > 0.8 ? "210,228,255" : depth > 0.4 ? "235,240,255" : "190,205,255";
+      var r = depth > 0.93 ? 1.4 : depth > 0.72 ? 0.95 : 0.55;
+      var alpha = (0.16 + depth * 0.55);
+      var rgb = light ? "55,68,95" : "230,238,252";
       ctx.beginPath();
-      ctx.fillStyle = "rgba(" + tint + "," + alpha.toFixed(3) + ")";
+      ctx.fillStyle = "rgba(" + rgb + "," + alpha.toFixed(3) + ")";
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
-      if (depth > 0.96) {
-        // 极少数亮星给一点柔光（一次性画，不影响后续帧）
-        var glow = ctx.createRadialGradient(x, y, 0, x, y, 6);
-        glow.addColorStop(0, "rgba(220,235,255,0.55)");
-        glow.addColorStop(1, "rgba(220,235,255,0)");
-        ctx.fillStyle = glow;
+    }
+
+    // ② 使用痕迹星（按使用得分从大到小，最多 240）
+    var stars = (traces && traces.stars) || [];
+    if (stars.length) {
+      var accent = hexToRgb(theme.accent) || [0, 122, 204];
+      var accentA = accent[0] + "," + accent[1] + "," + accent[2];
+      var ordered = stars.slice().sort(function (a, b) { return traceScore(b, now) - traceScore(a, now); });
+      // 星轨：按"最近使用时间"顺序连接（只连相距不太远的，避免乱线）
+      var byTime = ordered.slice().sort(function (a, b) { return (a.t || 0) - (b.t || 0); }).slice(-80);
+      var pts = [];
+      for (var k = 0; k < byTime.length; k++) {
+        var pt = tracePoint(byTime[k].p, k, w, h);
+        pt.t = byTime[k].t || 0;
+        pts.push(pt);
+      }
+      ctx.lineWidth = 1;
+      for (var k2 = 1; k2 < pts.length; k2++) {
+        var dx = pts[k2].x - pts[k2 - 1].x;
+        var dy = pts[k2].y - pts[k2 - 1].y;
+        if (dx * dx + dy * dy > Math.pow(w * 0.22, 2)) continue;
+        ctx.strokeStyle = "rgba(" + accentA + ",0.10)";
         ctx.beginPath();
-        ctx.arc(x, y, 6, 0, Math.PI * 2);
+        ctx.moveTo(pts[k2 - 1].x, pts[k2 - 1].y);
+        ctx.lineTo(pts[k2].x, pts[k2].y);
+        ctx.stroke();
+      }
+      // 星点本体
+      for (var j = 0; j < ordered.length; j++) {
+        var star = ordered[j];
+        var tier = traceTier(star, now);              // 0..3（越新越亮）
+        var pt2 = tracePoint(star.p, j, w, h);
+        var size = 0.95 + tier * 0.45 + Math.min(1.2, (star.n || 1) * 0.05);
+        var alpha2 = [0.30, 0.42, 0.62, 0.92][tier];
+        // 最近的星星带主题色柔光（越新越明显）
+        if (tier >= 2) {
+          var glowR = 4.2 + tier * 2.2;
+          var glow = ctx.createRadialGradient(pt2.x, pt2.y, 0, pt2.x, pt2.y, glowR);
+          glow.addColorStop(0, "rgba(" + accentA + "," + (0.26 + tier * 0.10).toFixed(2) + ")");
+          glow.addColorStop(1, "rgba(" + accentA + ",0)");
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(pt2.x, pt2.y, glowR, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.beginPath();
+        var core = tier >= 2 ? accentA : (light ? "80,95,120" : "235,240,252");
+        ctx.fillStyle = "rgba(" + core + "," + alpha2.toFixed(2) + ")";
+        ctx.arc(pt2.x, pt2.y, size, 0, Math.PI * 2);
         ctx.fill();
       }
     }
@@ -334,6 +517,7 @@
       // 单层画布（双层版本纹理上传翻倍，实测冷启动 +124ms；闪烁改由 CSS 对同一画布做 opacity 呼吸）
       if (!paintStars(canvas)) throw new Error("2d context unavailable");
       stats.mode = "canvas";
+      stats.traceCount = (state.traces && state.traces.stars ? state.traces.stars.length : 0);
       // 只在窗口尺寸变化时重画（启动路径上不会触发）
       var resizeTimer = 0;
       global.addEventListener("resize", function () {
@@ -343,7 +527,10 @@
           resizeTimer = 0;
           if (state.fading || state.removed) return;
           try {
+            state.theme = splashTheme();
+            state.traces = traceLoad();
             paintStars(canvas);
+            setTracesText();
           } catch (e) { recordError("resize-paint", e); }
         }, 250);
       }, { passive: true });
@@ -588,6 +775,10 @@
       loadPrefsFast();
       stats.reducedMotion = reducedMotion();
       var staticMode = stats.reducedMotion;
+      state.theme = splashTheme();
+      stats.theme = state.theme.name;
+      state.traces = traceLoad();
+      stats.traceCount = state.traces && state.traces.stars ? state.traces.stars.length : 0;
       var built = buildOverlay(staticMode);
       state.overlay = built.root;
       state.canvas = built.canvas;
@@ -721,7 +912,16 @@
     setVolume: function (v) { state.prefs.volume = Math.max(0, Math.min(1, Number(v) || 0)); savePrefsFast(); writePrefsToDisk(); },
     playPreview: function () { return playChime({ volume: state.prefs.volume }); },
     fade: function (reason) { fadeOut(reason || "manual"); },
+    getTraceCount: function () { return (traceLoad().stars || []).length; },
+    getTraces: function () { return traceLoad(); },
     _internals: {
+      TRACES_LS_KEY: TRACES_LS_KEY,
+      TRACES_MAX: TRACES_MAX,
+      traceScore: traceScore,
+      traceTier: traceTier,
+      tracePoint: tracePoint,
+      hash32: hash32,
+      hexToRgb: hexToRgb,
       CAP_MS: CAP_MS,
       FADE_MS: FADE_MS,
       SAFETY_MS: SAFETY_MS,
@@ -733,6 +933,13 @@
     },
   };
   global.MemoriaSplash = MemoriaSplash;
+  // 使用痕迹记录器（app.js 在"打开成功/保存成功"处同一行调用；失败静默，绝不影响打开/保存）
+  global.MemoriaSplashTrace = {
+    noteOpen: function (path) { try { traceRecord(path, "open"); } catch (e) { /* noop */ } },
+    noteSave: function (path) { try { traceRecord(path, "save"); } catch (e) { /* noop */ } },
+    clear: function () { try { traceSave({ v: 1, stars: [], updated: Date.now() }); } catch (e) { /* noop */ } },
+    snapshot: function () { return traceLoad(); },
+  };
 
   // ── 启动 ────────────────────────────────────────────────────────────────────
   // 脚本在 <body> 早期、app.js 之前加载 ⇒ 蒙层先于应用首帧出现（应用窗口只在 load 后显示）。
