@@ -1,0 +1,51 @@
+﻿{
+  "schema": "prompt-drift/v1",
+  "generatedAt": "2026-10-26T01:06:56.472031+00:00",
+  "summary": {
+    "findings": 6,
+    "FAIL": 0,
+    "NOT_RUN": 0,
+    "WARN": 0,
+    "INFO": 6,
+    "status": "ok",
+    "not_run": []
+  },
+  "findings": [
+    {
+      "check": "distribution_integrity",
+      "severity": "INFO",
+      "message": "隐藏分发路径探测命中已核验文件（非 KB 分发路径）：packaging/build.py（理由：打包态整目录随包（不是 KB 分发路径；KB 分发仍由 FILE_MAP 白名单决定））",
+      "evidence": "packaging/build.py"
+    },
+    {
+      "check": "distribution_integrity",
+      "severity": "INFO",
+      "message": "隐藏分发路径探测命中已核验文件（非 KB 分发路径）：scripts/agent/prompt_drift_check.py（理由：本检查脚本自身（自引用误报））",
+      "evidence": "scripts/agent/prompt_drift_check.py"
+    },
+    {
+      "check": "symbol_reference",
+      "severity": "INFO",
+      "message": "有 10 个反引号 token 未归类（未做存在性校验）：MachineLearning/Basics, ___, bayes-rule, concepts, decision-tree, description, edges, frontmatter, id, path",
+      "evidence": "resources/agent-prompts/organize.zh-CN.md"
+    },
+    {
+      "check": "symbol_reference",
+      "severity": "INFO",
+      "message": "有 15 个反引号 token 未归类（未做存在性校验）：aliases, bayes-rule, description, edges, end, id, instances, kp_id#2, links, log, range, subdir/topic-c.md",
+      "evidence": "resources/agent-prompts/kb-spec.zh-CN.md"
+    },
+    {
+      "check": "symbol_reference",
+      "severity": "INFO",
+      "message": "有 2 个反引号 token 未归类（未做存在性校验）：log, range",
+      "evidence": "resources/agent-prompts/kb-agent.zh-CN.md"
+    },
+    {
+      "check": "symbol_reference",
+      "severity": "INFO",
+      "message": "有 6 个反引号 token 未归类（未做存在性校验）：attachments/, backups/, description, scratch/, sessions/, skills/",
+      "evidence": "resources/agent-prompts/kb-agent-readme.md"
+    }
+  ]
+}

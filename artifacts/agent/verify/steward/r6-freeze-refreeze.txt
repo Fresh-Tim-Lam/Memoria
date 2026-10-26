@@ -1,0 +1,38 @@
+﻿freeze 检查：D:\AAA_Jupyter\Memoria\artifacts\agent\verify\debate\freeze-v2.json
+sha 口径：team_audit.content_sha256（LF 归一化，与 dq5 共用）
+
+MATCH   AGENTS.md  [Lead 派发不变量 L1-L10]
+MATCH   docs/guides/lead-dispatch-rules.md  [派发细则]
+MATCH   docs/guides/agent-team-lessons.md  [教训台账]
+MATCH   docs/guides/agent-team-org.md  [组织与角色章程]
+DRIFT   scripts/agent/team_audit.py  [机检实现]  ← 记录 @d8f6a7d7f9b7… 当前 @beec3c714c84… （tooling：dq5 只 WARN）
+
+汇总：5 项；MATCH=4，DRIFT=1（决策标准 0 / tooling 1）
+结论：存在漂移，需 refreeze（append-only 记录）——
+  1) 先补条款 L12（冻结物更新）并获人批准；
+  2) 批准后用 --apply 追加 standards_updated[]（本脚本当前未实现，见文件头注释）；
+  3) refreeze 后受影响的 steward 审计收据必须重读重签（B3），并记 baseline_mutation 结论。
+
+建议的 standards_updated 条目（仅打印，不写盘）：
+{
+  "at": "<UTC ISO8601>",
+  "by": "<lead>",
+  "reason": "<≥10 字：为什么冻结标准变了>",
+  "rule_ref": "<可解析条款，如 docs/guides/agent-team-org.md#2.6>",
+  "commit": "<sha 或省略>",
+  "changed": [
+    {
+      "path": "scripts/agent/team_audit.py",
+      "from": "d8f6a7d7f9b722a03207c7448e1f4bc974234da0806ea4abb8c876f10a34bc74",
+      "to": "beec3c714c8440ee9b476dd6c06159a80a35d01965e94eb4215f5bf17f13eb41",
+      "role": "机检实现",
+      "tooling": true
+    }
+  ],
+  "baseline_mutation": {
+    "reopen": [],
+    "declared_by": "lead",
+    "why_not_reopen": "<结论>"
+  },
+  "tool": "freeze_refreeze.py@1.0.0"
+}
