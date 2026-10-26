@@ -14,6 +14,7 @@
 
 ## 0. 对话被压缩后（**强制重读本节**）
 
+> ⚠️ **危险动作强制边界见 §B-danger-1**（紧接 §1 之后）：共享工作区禁止 checkout/reset/restore 等破坏性回滚。
 上下文压缩会**确定性地丢掉**：完整规范、任务板细节、未完成事项的因果。
 压缩摘要能保留事实，但**不保留约束**。所以压缩后立刻做这 4 件：
 
@@ -92,6 +93,87 @@ p0-selection / boot-probe 都是【先 spawn 后补任务】⇒ 违反 1.1
 `v4-pro` 本轮 3 个成员最终全部退役（成本高、收益未证明更高）。
 
 ---
+
+
+## B-danger-1 禁止对共享工作区做破坏性回滚（2026-10-26；v2 细化 2026-10-26）
+
+> 依据：`steward` SF-20261026-054 审计 v1 指出 5 个问题（命令清单不全 / 无强制力 / 共享未定义 /
+> 留证格式未定义 / 位置可发现性差）。v2 逐条补齐。**强制力诚实标注见本节末**。
+
+### 1. 共享 vs 独占（默认为共享）
+```
+【默认】工作区是共享的 —— 任何成员都可能正在编辑任何文件。
+
+【独占】唯一可机检的条件：文件位于【独立 worktree】内。
+  · worktree 内默认为独占，前提是【路径唯一】（按「成员+任务」命名，如 %TEMP%/wt-<member>-<task>）
+  · 若同一 worktree 被多人共用 ⇒ 仍按共享处理，并显式声明使用期
+  · 判定只看「是否独立 worktree 路径（+唯一性）」⇒ 拦截器也只认这一条
+
+【为什么删掉了 v2 原稿的「git status 干净 + Lead 授予 exclusive_paths」这条】
+  · `git status` 【看不到编辑器未保存 buffer】⇒ "干净"不等于"没人在改"
+  · `exclusive_paths` 在 dispatch-log 里【没有这个字段/校验】⇒ 写了也没有机检
+  ⇒ 留着它就是「看起来有闸」的假保护（正是 PD-1 的形态）
+
+【共享区要独占怎么办】⇒ 降级为【派发纪律】，不是机检条件：
+  Lead 在派发时明确声明该文件归谁、其他成员不得碰（可在 dispatch-log 记 declared_owner 备查），
+  但【不作为 guard 判定依据】—— guard 对共享区一律 deny。
+```
+### 2. 禁止命令清单（对共享工作区）
+```
+git checkout -- <path>          git checkout .           git checkout <ref> -- <path>
+git restore（含 --source / --staged / --worktree）
+git reset --hard | --merge
+git clean -f*（-f / -fd / -fx …）
+git stash drop | clear
+git apply -R
+git update-index --assume-unchanged | --skip-worktree   ← 隐藏改动，比删更隐蔽
+git worktree remove --force                              ← 会丢 worktree 内未提交改动
+```
+⇒ 这些都会丢弃未提交改动，且未提交改动**不进 git** ⇒ 丢了就是**永久丢，无历史可回滚**。
+
+### 3. 对照实验（pre/post、A/B 基线对比）的一律做法
+```
+· `git worktree add <path> <ref>` 起独立工作树，或
+· 复制到 %TEMP% 的独立副本里做（不得用于提交）
+```
+
+### 4. 留证格式（"留证据"必须可复核，不能只说"备份了"）
+```
+· worktree 方案：记录 `git worktree list --porcelain` 输出
+· 副本方案：文件列表 + 每个文件的 sha256 + 复制时间
+· 落点：`artifacts/agent/verify/**`，或 dispatch-log `phase=experiment`
+· 副本目录不得用于提交
+```
+
+### 5. R1 例外流程（确实需要临时回滚验证时）
+```
+【谁可执行】仅 **Lead** 可发起 R1 例外；成员需要 Lead 授权后才可执行，
+            且必须在 dispatch-log 留痕（未留痕即视为违规）。
+【记录内容】dispatch-log `phase=risk` + 完整命令 + 理由 + 执行前 sha256 快照
+【事后】做差集核对，并把核对结论【写回同一条 dispatch-log 记录】；
+        若丢了他人改动 ⇒ 按 R1 事故上报（不得静默重写）
+```
+### 6. 实例
+```
+2026-10-26 render-perf 为做 pre/post 对照，在共享工作区 `git checkout -- app.js` 约 90 秒，
+当时 sync-mapper 正在同一文件做 task-168 ⇒ 差点丢掉未提交改动（核对后未丢，属运气非方法）。
+```
+
+### 7. 同族约束
+```
+本条与 L2（R1 操作 Lead 亲跑）、L5（不可逆操作先给回滚方案）同源 ——
+共享工作区的未提交改动同样是【不可逆资产】。
+```
+
+### ⚠️ 强制力诚实标注（重要，不得省略）
+```
+`git checkout -- <file>` 【不写 reflog】⇒ 事后不可取证，git 历史抓不到。
+⇒ 在工具层拦截落地前，本条【不得宣称已有机检保护】，它目前只防"无意"。
+⇒ 工具层方案见 `artifacts/agent/verify/steward/PROPOSAL-workspace-destructive-guard.md`
+   （v1 shell 层 deny + 审计；v2 工作区完整性哨兵，覆盖 python 子进程 / alias 等绕过）
+⇒ 落地后本节应更新为"已机检保护"并注明拦截器版本。
+```
+
 
 ## 2. 要 `team_task_create` 时
 
@@ -244,74 +326,11 @@ steward 抽查该 commit 完整 message：既无 43ms 也无 P0-b
 |---|---|
 | 2026-10-24 | 首版。来自 0.4.6 一天的实施复盘：靠记忆的规则全漏（writeScope / 远端 tag / 版本权限），靠工具强制的零漏 |
 
+### B-danger-1 v2.1（2026-10-26，据 steward SF-056 审计 4 点）
 
----
-
-## B-danger-1 禁止对共享工作区做破坏性回滚（2026-10-26；v2 细化 2026-10-26）
-
-> 依据：`steward` SF-20261026-054 审计 v1 指出 5 个问题（命令清单不全 / 无强制力 / 共享未定义 /
-> 留证格式未定义 / 位置可发现性差）。v2 逐条补齐。**强制力诚实标注见本节末**。
-
-### 1. 共享 vs 独占（默认为共享）
-```
-【默认】工作区是共享的 —— 任何成员都可能正在编辑任何文件。
-【独占】只在两种条件下成立：
-  (a) `git status --porcelain -- <path>` 为空（目标文件无他人未提交改动）
-      【且】Lead 在 dispatch-log 显式授予（`exclusive_paths`）
-  (b) 该文件位于独立 worktree 内（worktree 天然独占）
-⇒ 除这两种，一律按共享处理；"看起来没人改"不构成独占。
-```
-
-### 2. 禁止命令清单（对共享工作区）
-```
-git checkout -- <path>          git checkout .           git checkout <ref> -- <path>
-git restore（含 --source / --staged / --worktree）
-git reset --hard | --merge
-git clean -f*（-f / -fd / -fx …）
-git stash drop | clear
-git apply -R
-git update-index --assume-unchanged | --skip-worktree   ← 隐藏改动，比删更隐蔽
-git worktree remove --force                              ← 会丢 worktree 内未提交改动
-```
-⇒ 这些都会丢弃未提交改动，且未提交改动**不进 git** ⇒ 丢了就是**永久丢，无历史可回滚**。
-
-### 3. 对照实验（pre/post、A/B 基线对比）的一律做法
-```
-· `git worktree add <path> <ref>` 起独立工作树，或
-· 复制到 %TEMP% 的独立副本里做（不得用于提交）
-```
-
-### 4. 留证格式（"留证据"必须可复核，不能只说"备份了"）
-```
-· worktree 方案：记录 `git worktree list --porcelain` 输出
-· 副本方案：文件列表 + 每个文件的 sha256 + 复制时间
-· 落点：`artifacts/agent/verify/**`，或 dispatch-log `phase=experiment`
-· 副本目录不得用于提交
-```
-
-### 5. R1 例外流程（确实需要临时回滚验证时）
-```
-dispatch-log `phase=risk` + 完整命令 + 理由 + 执行前 sha256 快照
-⇒ 执行后做差集核对；若丢了他人改动，按 R1 事故上报（不得静默重写）
-```
-
-### 6. 实例
-```
-2026-10-26 render-perf 为做 pre/post 对照，在共享工作区 `git checkout -- app.js` 约 90 秒，
-当时 sync-mapper 正在同一文件做 task-168 ⇒ 差点丢掉未提交改动（核对后未丢，属运气非方法）。
-```
-
-### 7. 同族约束
-```
-本条与 L2（R1 操作 Lead 亲跑）、L5（不可逆操作先给回滚方案）同源 ——
-共享工作区的未提交改动同样是【不可逆资产】。
-```
-
-### ⚠️ 强制力诚实标注（重要，不得省略）
-```
-`git checkout -- <file>` 【不写 reflog】⇒ 事后不可取证，git 历史抓不到。
-⇒ 在工具层拦截落地前，本条【不得宣称已有机检保护】，它目前只防"无意"。
-⇒ 工具层方案见 `artifacts/agent/verify/steward/PROPOSAL-workspace-destructive-guard.md`
-   （v1 shell 层 deny + 审计；v2 工作区完整性哨兵，覆盖 python 子进程 / alias 等绕过）
-⇒ 落地后本节应更新为"已机检保护"并注明拦截器版本。
-```
+| 项 | 修正 |
+|---|---|
+| ① worktree「天然独占」过强 | 改为「默认独占 + 路径唯一（成员+任务）；共用则按共享处理并显式声明」 |
+| ② 删除独占条件 (a) | `git status` 看不到未保存 buffer；`exclusive_paths` 无字段/校验 ⇒ 留着是「看起来有闸」的假保护。共享区独占降级为**派发纪律**，guard 只认独立 worktree |
+| ③ R1 例外未写「谁可执行」 | 写明：仅 Lead 可发起；成员需 Lead 授权 + dispatch-log 留痕；差集结论写回同一记录 |
+| ④ 位置可发现性差 | 已从文件末尾移到 **§1 之后**，并在 §0 加醒目指针 |
