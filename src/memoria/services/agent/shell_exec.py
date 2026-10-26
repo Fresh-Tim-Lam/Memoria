@@ -51,6 +51,8 @@ import threading
 import time
 from typing import Any
 
+from memoria.util.proc import no_window_kwargs
+
 __all__ = [
     "CODE_BAD_REQUEST",
     "CODE_CWD_OUTSIDE",
@@ -160,6 +162,7 @@ def _probe_version(exe: str, args: list[str]) -> str:
             stderr=subprocess.PIPE,
             env=_child_env(),
             timeout=20,
+            **no_window_kwargs(),
         )
     except (OSError, subprocess.SubprocessError):
         return ""
@@ -275,6 +278,7 @@ def _terminate_tree(proc: subprocess.Popen) -> None:
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
                 timeout=10,
+                **no_window_kwargs(),
             )
         except (OSError, subprocess.SubprocessError):
             pass
@@ -327,6 +331,7 @@ def run_command(
                 stdin=subprocess.DEVNULL,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
+                **no_window_kwargs(),
             )
         except OSError as exc:
             raise ShellExecError(f"启动命令失败：{exc}", CODE_SPAWN_FAILED) from exc

@@ -30,6 +30,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from memoria.services.agent.llm.types import ToolCall, ToolSchema
+from memoria.util.proc import no_window_kwargs
 
 if TYPE_CHECKING:  # 仅类型引用：运行期不导入审批模块，避免与 approvals 形成环
     from memoria.services.agent.approvals import ApprovalPolicy
@@ -389,6 +390,7 @@ def make_subprocess_tool(
                 encoding="utf-8",
                 timeout=float(timeout_s),
                 cwd=kb_path,
+                **no_window_kwargs(),
             )
         except subprocess.TimeoutExpired:
             return ToolOutput(

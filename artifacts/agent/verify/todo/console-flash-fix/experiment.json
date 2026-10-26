@@ -1,0 +1,1116 @@
+{
+  "positive_control": {
+    "baseline_console_windows": {
+      "hwnds": [
+        "0x1100f02",
+        "0x1c0ff0",
+        "0x20384",
+        "0x5211b0",
+        "0x960e22",
+        "0xd00eea"
+      ],
+      "max": 6,
+      "min": 6,
+      "rows": [
+        {
+          "class": "Windows.UI.Core.CoreWindow",
+          "exe": "systemsettings.exe",
+          "hwnd": "0x960e22",
+          "pid": 51232,
+          "title": "设置"
+        },
+        {
+          "class": "Windows.UI.Core.CoreWindow",
+          "exe": "textinputhost.exe",
+          "hwnd": "0x20384",
+          "pid": 14792,
+          "title": "Windows 输入体验"
+        },
+        {
+          "class": "PseudoConsoleWindow",
+          "exe": "powershell.exe",
+          "hwnd": "0x1c0ff0",
+          "pid": 48572,
+          "title": ""
+        },
+        {
+          "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+          "exe": "windowsterminal.exe",
+          "hwnd": "0xd00eea",
+          "pid": 44200,
+          "title": "管理员: Windows PowerShell"
+        },
+        {
+          "class": "PseudoConsoleWindow",
+          "exe": "powershell.exe",
+          "hwnd": "0x1100f02",
+          "pid": 39268,
+          "title": ""
+        },
+        {
+          "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+          "exe": "windowsterminal.exe",
+          "hwnd": "0x5211b0",
+          "pid": 44200,
+          "title": "管理员: Windows PowerShell"
+        }
+      ],
+      "samples": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ]
+    },
+    "kind": "positive_control_raw_powershell_no_flags",
+    "observation": {
+      "exit_code": 0,
+      "max_console_windows_absolute": 7,
+      "max_new_console_windows": 1,
+      "new_console_windows": [
+        {
+          "class": "ConsoleWindowClass",
+          "exe": "powershell.exe",
+          "first_seen_ms": 261.0,
+          "hwnd": "0x430f46",
+          "pid": 15756,
+          "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+        }
+      ],
+      "sample_interval_s": 0.05,
+      "sample_tail": [
+        {
+          "count": 7,
+          "new_count": 1,
+          "t_ms": 3344.9
+        },
+        {
+          "count": 7,
+          "new_count": 1,
+          "t_ms": 3401.7
+        },
+        {
+          "count": 7,
+          "new_count": 1,
+          "t_ms": 3458.8
+        },
+        {
+          "count": 6,
+          "new_count": 0,
+          "t_ms": 3515.6
+        },
+        {
+          "count": 6,
+          "new_count": 0,
+          "t_ms": 3573.1
+        }
+      ],
+      "samples": 68
+    },
+    "verdict_new_console_window_seen": true
+  },
+  "python": "D:\\Python\\python.exe",
+  "pythonw": "D:\\Python\\pythonw.exe",
+  "repo": "D:\\AAA_Jupyter\\Memoria",
+  "runs": [
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:27:35+0800",
+        "frozen": false,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3781.0,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1785.7,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 6102.9,
+      "mode": "legacy",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 8,
+        "max_new_console_windows": 2,
+        "new_console_windows": [
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 523.1,
+            "hwnd": "0xcc00ac",
+            "pid": 3588,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 864.6,
+            "hwnd": "0xcd00ac",
+            "pid": 48340,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 4349.6,
+            "hwnd": "0xce00ac",
+            "pid": 51252,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "taskkill.exe",
+            "first_seen_ms": 5375.3,
+            "hwnd": "0x8609a6",
+            "pid": 39176,
+            "title": "C:\\WINDOWS\\SYSTEM32\\taskkill.exe"
+          }
+        ],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 8,
+            "new_count": 2,
+            "t_ms": 5817.7
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5874.4
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5928.9
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5982.3
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 6041.2
+          }
+        ],
+        "samples": 112
+      },
+      "parent_has_console": false,
+      "run_id": "legacy-1",
+      "verdict_new_console_window_seen": true
+    },
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:27:41+0800",
+        "frozen": false,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3549.9,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1745.6,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 5702.2,
+      "mode": "fixed",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 6,
+        "max_new_console_windows": 0,
+        "new_console_windows": [],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5421.9
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5475.1
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5529.6
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5582.8
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5636.8
+          }
+        ],
+        "samples": 106
+      },
+      "parent_has_console": false,
+      "run_id": "fixed-1",
+      "verdict_new_console_window_seen": false
+    },
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:27:47+0800",
+        "frozen": false,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3683.5,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1800.4,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 6005.2,
+      "mode": "legacy",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 8,
+        "max_new_console_windows": 2,
+        "new_console_windows": [
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 435.3,
+            "hwnd": "0x590dea",
+            "pid": 43900,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 704.0,
+            "hwnd": "0xe005fe",
+            "pid": 46664,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 4267.3,
+            "hwnd": "0x5b0dea",
+            "pid": 50392,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "taskkill.exe",
+            "first_seen_ms": 5297.9,
+            "hwnd": "0xcf00ac",
+            "pid": 23560,
+            "title": "C:\\WINDOWS\\SYSTEM32\\taskkill.exe"
+          }
+        ],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 8,
+            "new_count": 2,
+            "t_ms": 5725.8
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5782.0
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5838.2
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5891.5
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5945.3
+          }
+        ],
+        "samples": 111
+      },
+      "parent_has_console": false,
+      "run_id": "legacy-2",
+      "verdict_new_console_window_seen": true
+    },
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:27:53+0800",
+        "frozen": false,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3529.4,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1705.8,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 5666.8,
+      "mode": "fixed",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 6,
+        "max_new_console_windows": 0,
+        "new_console_windows": [],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5395.8
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5449.1
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5502.0
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5555.9
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5609.3
+          }
+        ],
+        "samples": 106
+      },
+      "parent_has_console": false,
+      "run_id": "fixed-2",
+      "verdict_new_console_window_seen": false
+    },
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:27:59+0800",
+        "frozen": false,
+        "mode": "legacy",
+        "no_window_kwargs": {},
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3669.6,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1824.5,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 5977.2,
+      "mode": "legacy",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 8,
+        "max_new_console_windows": 2,
+        "new_console_windows": [
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 432.4,
+            "hwnd": "0xe01032",
+            "pid": 26160,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 647.5,
+            "hwnd": "0x3c09f4",
+            "pid": 3748,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "powershell.exe",
+            "first_seen_ms": 4249.5,
+            "hwnd": "0xd500ac",
+            "pid": 42332,
+            "title": "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.EXE"
+          },
+          {
+            "class": "ConsoleWindowClass",
+            "exe": "taskkill.exe",
+            "first_seen_ms": 5216.4,
+            "hwnd": "0xa40d5c",
+            "pid": 32840,
+            "title": "C:\\WINDOWS\\SYSTEM32\\taskkill.exe"
+          }
+        ],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 8,
+            "new_count": 2,
+            "t_ms": 5697.0
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5750.5
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5805.6
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5862.1
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5918.8
+          }
+        ],
+        "samples": 111
+      },
+      "parent_has_console": false,
+      "run_id": "legacy-3",
+      "verdict_new_console_window_seen": true
+    },
+    {
+      "baseline_console_windows": {
+        "hwnds": [
+          "0x1100f02",
+          "0x1c0ff0",
+          "0x20384",
+          "0x5211b0",
+          "0x960e22",
+          "0xd00eea"
+        ],
+        "max": 6,
+        "min": 6,
+        "rows": [
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "systemsettings.exe",
+            "hwnd": "0x960e22",
+            "pid": 51232,
+            "title": "设置"
+          },
+          {
+            "class": "Windows.UI.Core.CoreWindow",
+            "exe": "textinputhost.exe",
+            "hwnd": "0x20384",
+            "pid": 14792,
+            "title": "Windows 输入体验"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1c0ff0",
+            "pid": 48572,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0xd00eea",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          },
+          {
+            "class": "PseudoConsoleWindow",
+            "exe": "powershell.exe",
+            "hwnd": "0x1100f02",
+            "pid": 39268,
+            "title": ""
+          },
+          {
+            "class": "CASCADIA_HOSTING_WINDOW_CLASS",
+            "exe": "windowsterminal.exe",
+            "hwnd": "0x5211b0",
+            "pid": 44200,
+            "title": "管理员: Windows PowerShell"
+          }
+        ],
+        "samples": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ]
+      },
+      "driver_result": {
+        "finished_at": "2026-10-26T15:28:06+0800",
+        "frozen": false,
+        "mode": "fixed",
+        "no_window_kwargs": {
+          "creationflags": 134217728
+        },
+        "parent_has_console": false,
+        "python": "D:\\Python\\pythonw.exe",
+        "results": {
+          "cmd": {
+            "exitCode": 0,
+            "stdout": "CMD-OK\r\n",
+            "timedOut": false
+          },
+          "normal": {
+            "durationMs": 3620.3,
+            "exitCode": 0,
+            "interpreterKind": "powershell",
+            "stderr": "",
+            "stdout": "PROBE-OK\r\n",
+            "timedOut": false
+          },
+          "timeout": {
+            "durationMs": 1752.9,
+            "exitCode": 1,
+            "timedOut": true
+          }
+        }
+      },
+      "elapsed_ms": 5841.5,
+      "mode": "fixed",
+      "observation": {
+        "exit_code": 0,
+        "max_console_windows_absolute": 6,
+        "max_new_console_windows": 0,
+        "new_console_windows": [],
+        "sample_interval_s": 0.05,
+        "sample_tail": [
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5568.3
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5621.0
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5675.5
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5728.4
+          },
+          {
+            "count": 6,
+            "new_count": 0,
+            "t_ms": 5781.8
+          }
+        ],
+        "samples": 109
+      },
+      "parent_has_console": false,
+      "run_id": "fixed-3",
+      "verdict_new_console_window_seen": false
+    }
+  ],
+  "schema": "console-flash-experiment/v1",
+  "summary_fixed": {
+    "any_new_window_seen": false,
+    "cmd_stdout_ok": [
+      true,
+      true,
+      true
+    ],
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "max_new_console_windows_each_run": [
+      0,
+      0,
+      0
+    ],
+    "runs": 3,
+    "stdout_ok": [
+      true,
+      true,
+      true
+    ],
+    "timeout_timedOut": [
+      true,
+      true,
+      true
+    ]
+  },
+  "summary_legacy": {
+    "any_new_window_seen": true,
+    "cmd_stdout_ok": [
+      true,
+      true,
+      true
+    ],
+    "exit_codes": [
+      0,
+      0,
+      0
+    ],
+    "max_new_console_windows_each_run": [
+      2,
+      2,
+      2
+    ],
+    "runs": 3,
+    "stdout_ok": [
+      true,
+      true,
+      true
+    ],
+    "timeout_timedOut": [
+      true,
+      true,
+      true
+    ]
+  },
+  "time": "2026-10-26T15:27:24+0800"
+}

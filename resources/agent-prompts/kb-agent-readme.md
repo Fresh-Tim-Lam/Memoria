@@ -1,6 +1,6 @@
 <!-- spec-version: 1.1.0 -->
-<!-- spec-deps: src/memoria/services/kb_agent.py@0d816956b4d0, src/memoria/services/agent/skills.py@55330f5f7273, src/memoria/services/agent/plugins.py@ffe87c142190, src/memoria/services/agent/session/store.py@004ecb69fbdb, src/memoria/services/agent/backup.py@277a859ddeec, src/memoria/services/agent/scratch.py@d3d631b6e66d, src/memoria/services/agent/attachments.py@d53bf89398bc, src/memoria/services/agent/apply.py@d8b6445f4d5b -->
-<!-- reviewed-on: 2026-10-25 -->
+<!-- spec-deps: src/memoria/services/kb_agent.py@0d816956b4d0, src/memoria/services/agent/skills.py@55330f5f7273, src/memoria/services/agent/plugins.py@ffe87c142190, src/memoria/services/agent/session/store.py@004ecb69fbdb, src/memoria/services/agent/backup.py@277a859ddeec, src/memoria/services/agent/scratch.py@d8cdd24403b8, src/memoria/services/agent/attachments.py@d53bf89398bc, src/memoria/services/agent/apply.py@d8b6445f4d5b -->
+<!-- reviewed-on: 2026-10-26 -->
 # .memoria/agent — 知识库智能体目录
 agent名称：Memoria KB Agent
 > 用途：本目录存放**供 Trae 智能体使用**的知识库工具包，由 Memoria 生成与升级。

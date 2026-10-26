@@ -6,6 +6,8 @@ import os
 import sys
 from pathlib import Path
 
+from memoria.util.proc import no_window_kwargs
+
 
 def is_frozen() -> bool:
     return bool(getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"))
@@ -126,6 +128,7 @@ def spawn_window(kb_path: str | None) -> dict:
             cmd,
             env=env,
             cwd=str(install_root()),
+            **no_window_kwargs(),
         )
         return {"status": "ok"}
     except Exception as e:  # noqa: BLE001

@@ -47,6 +47,8 @@ import time
 from collections.abc import Mapping, Sequence
 from typing import Any
 
+from memoria.util.proc import no_window_kwargs
+
 __all__ = [
     "BUNDLED_DIR_NAME",
     "CODE_BAD_PATH",
@@ -385,6 +387,7 @@ def run_script(
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
+            **no_window_kwargs(),
         )
     except OSError as exc:
         raise ScratchError(f"启动脚本失败：{exc}", CODE_RUN_FAILED) from exc

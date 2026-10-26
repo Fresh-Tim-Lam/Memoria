@@ -4773,6 +4773,7 @@ def _review_run_fsrs(kb_path: str, argv: list[str]) -> tuple[dict | None, str | 
     import subprocess
 
     from memoria.services.agent import scratch as scratch_mod
+    from memoria.util.proc import no_window_kwargs
 
     script = os.path.join(kb_path, ".memoria", "agent", "fsrs.py")
     if not os.path.isfile(script):
@@ -4793,6 +4794,7 @@ def _review_run_fsrs(kb_path: str, argv: list[str]) -> tuple[dict | None, str | 
             errors="replace",
             timeout=60,
             env=scratch_mod._child_env(kb_path),  # 复用工作区的环境白名单（不泄漏密钥）
+            **no_window_kwargs(),
         )
     except (OSError, subprocess.SubprocessError) as exc:
         return None, f"调用 fsrs.py 失败：{exc}"
