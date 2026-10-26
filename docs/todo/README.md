@@ -15,7 +15,23 @@
 
 ## 现役文件
 
-| 文件 | 对应 todo 章节 | 搬迁日期 | 说明 |
+| 文件 | 对应 todo 章节 | 搬迁日期 | 大小 |
 | --- | --- | --- | --- |
-| [13-agent-panel.md](13-agent-panel.md) | §13 应用内对话（Agent 面板） | 2026-10-26 | AG01–AG108 行原文 + 注记（逐字）；行级锚点 `#ag01`… |
-| [12-build-table.md](12-build-table.md) | §12 知识库与维护机制·施工总表 | 2026-10-26 | 施工总表原文 + 节区注记（逐字）；行级锚点 `#b2`…`#e3`、节区 `#intro`…`#residual` |
+| [00-focus.md](00-focus.md) | §0 当前进行中（焦点） | 2026-10-26 | 2251 B |
+| [01-config-window.md](01-config-window.md) | §1 配置窗口 | 2026-10-26 | 2253 B |
+| [02-links.md](02-links.md) | §2 链接系统 | 2026-10-26 | 1234 B |
+| [03-search.md](03-search.md) | §3 检索引擎 | 2026-10-26 | 1507 B |
+| [04-graph.md](04-graph.md) | §4 图谱 | 2026-10-26 | 1714 B |
+| [05-editor.md](05-editor.md) | §5 编辑器/富文本 | 2026-10-26 | 7631 B |
+| [06-file-tree.md](06-file-tree.md) | §6 文件树管理 | 2026-10-26 | 1126 B |
+| [07-import-media.md](07-import-media.md) | §7 导入与媒体 | 2026-10-26 | 1619 B |
+| [08-shell-release.md](08-shell-release.md) | §8 壳与发布 | 2026-10-26 | 2587 B |
+| [09-learning-products.md](09-learning-products.md) | §9 学习产品（V2+） | 2026-10-26 | 1487 B |
+| [11-notes.md](11-notes.md) | §11 备注/散记 | 2026-10-26 | 1747 B |
+| [ideas.md](ideas.md) | 全项目（人的需求原始台账） | 2026-10-27 | 28 条人提出需求/想法 + 1 条补充裁决；状态/去向/时间 |
+| [12-build-table.md](12-build-table.md) | §12 知识库与维护机制·施工总表 | 2026-10-26 | 7822 B |
+| [13-agent-panel.md](13-agent-panel.md) | §13 应用内对话（Agent 面板） | 2026-10-26 | 21828 B |
+| [14-plan-047.md](14-plan-047.md) | §14 0.4.7 收摊计划 | 2026-10-26 | 6926 B |
+| [15-plan-048.md](15-plan-048.md) | §15 0.4.8 范围 | 2026-10-26 | 2899 B |
+| [16-arch-refactor.md](16-arch-refactor.md) | §16 架构重构 S1–S5（已撤回） | 2026-10-26 | 2653 B |
+| [17-team-plugin.md](17-team-plugin.md) | §17 团队插件完善项 | 2026-10-26 | 3722 B |
