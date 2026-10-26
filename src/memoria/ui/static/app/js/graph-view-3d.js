@@ -702,6 +702,14 @@
         if (!this.active) return;
         this._syncPositions();
         if (this._controls) this._controls.update();
+        // KGViz D-KGV-06（3D）：相机拉近/拉远跨越阈值时重算标签 LOD（不是逐帧颜色重算）
+        if (this.camera) {
+          const camDist = this.camera.position.length();
+          if (Math.abs(camDist - (this._labelLodCamDist || 0)) > 40) {
+            this._labelLodCamDist = camDist;
+            this._applyHighlight();
+          }
+        }
         this._updateHover();
         this._tickPulse();
         this._render();
@@ -838,6 +846,39 @@
         ? new Set(this.engine.getOutgoingLinks(hover).map((l) => l.target))
         : null;
 
+      // KGViz D-KGV-06（3D 版）：标签 LOD —— 默认只显示度数最高的 N 个 + hover/高亮；
+      // 相机拉近（<900）或显式 labelLod=false 时全部显示。避让的屏幕空间碰撞检测在 2D 实现，
+      // 3D 标签是 sprite（世界坐标锚定，重排会破坏锚点），v0 用"优先级裁剪"处理密度。
+      const labelLod = this.opts.labelLod !== false;
+      const labelTopN = Number.isFinite(this.opts.labelTopN) ? this.opts.labelTopN : 10;
+      const camDist = this.camera ? this.camera.position.length() : 0;
+      const showAllLabels = !labelLod || camDist < 900;
+      const labelVisibleIds = new Set();
+      if (showAllLabels) {
+        for (const id of this._labelSprites.keys()) labelVisibleIds.add(id);
+      } else {
+        const degs = [...this._labelSprites.keys()].map((id) => ({
+          id,
+          d: this.engine && typeof this.engine.degreeOf === "function" ? this.engine.degreeOf(id) : 0,
+        }));
+        degs.sort((a, b) => b.d - a.d || String(a.id).localeCompare(String(b.id)));
+        for (const row of degs.slice(0, Math.max(1, labelTopN))) labelVisibleIds.add(row.id);
+        if (hover) labelVisibleIds.add(hover);
+        if (extActive) {
+          for (const id of ext.sourceIds) labelVisibleIds.add(id);
+          for (const id of ext.targetIds) labelVisibleIds.add(id);
+        }
+      }
+      this._labelLodStats = {
+        lod: labelLod,
+        showAll: showAllLabels,
+        camDist: +camDist.toFixed(1),
+        visible: labelVisibleIds.size,
+        hidden: Math.max(0, this._labelSprites.size - labelVisibleIds.size),
+      };
+      this._labelLodCamDist = camDist;
+      this._labelLodVisibleIds = labelVisibleIds;
+
       const H = themeHex();
       for (const [id, mesh] of this._nodeMeshes) {
         const isHover = id === hover;
@@ -897,6 +938,7 @@
         }
         const label = this._labelSprites.get(id);
         if (label) {
+          label.visible = labelVisibleIds.has(id);
           const node = this.engine.getNode(id);
           const colorHex = labelColorHex(isHover, isTarget, node?.range_ok);
           const opacity =

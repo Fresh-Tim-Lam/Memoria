@@ -674,6 +674,7 @@
         }
       }
 
+      const labelItems = [];
       for (const n of this.simNodes) {
         const isHover = n.id === hover;
         const isExtSource = extActive && ext.sourceIds.has(n.id);
@@ -713,9 +714,93 @@
           ctx.lineWidth = 2;
           ctx.stroke();
         }
-        drawNodeLabel(ctx, n, r, opts, isHover || isExtSource, isTarget, C);
+        labelItems.push({ n, r, isHover: isHover || isExtSource, isTarget });
       }
 
+      ctx.restore();
+      // KGViz D-KGV-06：标签在【屏幕空间】绘制 + 碰撞避让（标签不随缩放变成 1px，也不淹没图形）
+      this._drawVisibleLabels(ctx, labelItems, opts, C);
+    }
+
+    /** 标签宽度缓存（字体固定 10px；同一文本只测一次） */
+    _measureLabelWidth(ctx, text) {
+      if (!this._labelWidthCache) this._labelWidthCache = new Map();
+      let w = this._labelWidthCache.get(text);
+      if (w == null) {
+        ctx.font = "10px system-ui, sans-serif";
+        w = ctx.measureText(text).width;
+        this._labelWidthCache.set(text, w);
+      }
+      return w;
+    }
+
+    /**
+     * D-KGV-06：可见标签 = 度数高的 priority + 碰撞检测后的非重叠集合。
+     * 关闭 `opts.labelLod === false` 时退回"全部显示"（T-label-5 可回退 / 必红 fixture）。
+     */
+    _drawVisibleLabels(ctx, items, opts, C) {
+      if (!items.length) {
+        this._visibleLabelIds = new Set();
+        this._labelBoxes = new Map();
+        return;
+      }
+      const k = this.transform.k;
+      const tx = this.transform.x;
+      const ty = this.transform.y;
+      const lod = opts.labelLod !== false;
+      const hovered = this.hoverId || this.remoteHoverId || null;
+      const labelItems = items.map((it) => ({
+        id: it.n.id,
+        text: displayLabelForNode(it.n, opts),
+        x: it.n.x * k + tx,
+        y: it.n.y * k + ty,
+        r: it.r * k,
+        degree: this.engine && typeof this.engine.degreeOf === "function"
+          ? this.engine.degreeOf(it.n.id)
+          : 0,
+        _it: it,
+      }));
+      let layout = null;
+      if (global.MemoriaGraphLabels?.layoutNodeLabels) {
+        layout = global.MemoriaGraphLabels.layoutNodeLabels(labelItems, {
+          fontSize: 10,
+          labelHeight: 12,
+          topN: opts.labelTopN ?? 10,
+          hoverIds: hovered ? [hovered] : [],
+          lod,
+          measureText: (t) => this._measureLabelWidth(ctx, t),
+        });
+      }
+      this._visibleLabelIds = layout ? layout.visibleIds : new Set(labelItems.map((i) => i.id));
+      this._labelBoxes = layout ? layout.boxes : new Map();
+      this._labelLodStats = layout
+        ? {
+            visible: layout.visibleCount,
+            hidden: layout.hiddenIds.length,
+            hiddenIds: layout.hiddenIds.slice(),
+            overlap: layout.overlapCount,
+            lod,
+          }
+        : { visible: labelItems.length, hidden: 0, hiddenIds: [], overlap: null, lod };
+      ctx.save();
+      ctx.font = "10px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.lineWidth = 3;
+      ctx.lineJoin = "round";
+      for (const item of labelItems) {
+        const box = this._labelBoxes.get(item.id);
+        if (!box) continue;
+        const it = item._it;
+        let fill = C.label;
+        if (it.isHover) fill = C.nodeHover;
+        else if (it.isTarget) fill = C.nodeTarget;
+        else if (it.n.range_ok === false) fill = C.labelInvalid;
+        ctx.strokeStyle = C.halo;
+        ctx.strokeText(item.text, box.cx, box.cy);
+        ctx.fillStyle = fill;
+        ctx.fillText(item.text, box.cx, box.cy);
+      }
       ctx.restore();
     }
   }
