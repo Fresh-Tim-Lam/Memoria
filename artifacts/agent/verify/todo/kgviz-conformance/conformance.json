@@ -1,0 +1,78 @@
+{
+  "schema": "kgviz-design-conformance/v1",
+  "doc": "docs/design/kg-visualization-v0.md",
+  "head": "61689413",
+  "summary": {
+    "total": 13,
+    "implemented": 12,
+    "missing": 0,
+    "human_gated": 1
+  },
+  "rows": [
+    {
+      "clause": "§1 连续尺寸映射（radiusForNode / MemoriaGraphSizing）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-engine.js: MemoriaGraphSizing=True radiusForNode=True; 范围 4.50/9.90=False/False"
+    },
+    {
+      "clause": "§1 t(d)=distinct-degree 归一化 rank",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-engine.js normalizedRankT=True（旧名 percentileRankT 残留=0）"
+    },
+    {
+      "clause": "§1.5 tooltip 显示 degree 绝对原值",
+      "verdict": "IMPLEMENTED",
+      "evidence": "-graph-hint-degree 类名出现=True；graph-label.js degreeText=True；css 定义=True"
+    },
+    {
+      "clause": "§2 3D 节点等大（mesh scale=1）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-view-3d.js 'const scale = 1;' 出现 2 次（期望 ≥2：初始重建 + halo re-sync）"
+    },
+    {
+      "clause": "§2/D-KGV-16 3D 光晕不随 degree",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-view-3d.js 有 D-KGV-16 注释=True；残留 '1 + ratio' 公式=False"
+    },
+    {
+      "clause": "§3 标签 LOD/避让（layoutNodeLabels）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-label.js layoutNodeLabels=True；labelLod 开关=True"
+    },
+    {
+      "clause": "§4 确定性种子（2D 与 3D）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-engine.js MemoriaGraphSeed=True；layout 内 Math.random() 调用 2d=0 3d=0（期望 0）"
+    },
+    {
+      "clause": "§5 埋点 E1/E2",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph_telemetry.py 存在=True；nodeRadius_change=True graphStyle_change=True 禁采 node_radius_px=False"
+    },
+    {
+      "clause": "§6 毛球态判定（D-KGV-09）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph-*.js 中 hairball/毛球/最大分组占比 判定逻辑=True"
+    },
+    {
+      "clause": "§7 语料身份三元组（manifest_sha256 + head + measured_at）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "graph_telemetry.py manifest_sha256=True head=True measured_at=True"
+    },
+    {
+      "clause": "§8 T-size-2/3/4 机检",
+      "verdict": "IMPLEMENTED",
+      "evidence": "tests/test_kgviz_size_continuous.py T-size 命中=True"
+    },
+    {
+      "clause": "§8 T-double 机检（D-KGV-15）",
+      "verdict": "IMPLEMENTED",
+      "evidence": "全 tests/ 中 t_double/T-double 命中=True"
+    },
+    {
+      "clause": "§8 T-size-1 / T-label / T-depth（真人判读）",
+      "verdict": "HUMAN_GATED",
+      "evidence": "设计文档 U-KGV-5 已登记需人参与；无自动化实现属预期"
+    }
+  ]
+}

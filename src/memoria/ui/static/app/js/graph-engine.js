@@ -200,6 +200,18 @@
         links: this.links,
         groups: this.groups,
       });
+      // KGViz D-KGV-09（§6）：毛球态判定 —— 复用前端 Union-Find 分组，零新增字段。
+      // 结果挂在 engine 上并发出 `hairball` 事件，供未来 UI 提示消费（当前暂无 UI 消费方）。
+      if (global.MemoriaGraphHairball) {
+        this.hairball = global.MemoriaGraphHairball.computeHairball(
+          this.nodes,
+          this.links,
+          this.groups
+        );
+        this._emit("hairball", this.hairball);
+      } else {
+        this.hairball = null;
+      }
       return this;
     }
 
@@ -237,6 +249,11 @@
       return this._layoutSeed;
     }
 
+    /** 毛球态判定结果（D-KGV-09；loadPayload 后可用；无 groups 扩展时 null） */
+    hairballReport() {
+      return this.hairball || null;
+    }
+
     getOutgoingLinks(nodeId) {
       return this.links.filter((l) => l.source === nodeId);
     }
@@ -246,8 +263,134 @@
     }
   }
 
+  // ── KGViz D-KGV-15（§8 T-double）：视觉通道编码声明 + 可机检「双编码冲突」 ──────
+  // 判定口径（冻结）：同变量 + 同方向 = 冗余强化 ⇒ PASS；不同变量或方向相反 ⇒ 冲突。
+  // 声明必须与生产渲染公式一致（tests/test_kgviz_hairball_tdouble.py 有静态断言 +
+  // 真机相关性测量双重校验；改公式必须同步改这里，否则 T-double 会报/漏报）。
+  const VISUAL_CHANNELS = Object.freeze([
+    {
+      id: "2d.nodeRadius",
+      surface: "2d",
+      channel: "size",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-2d.js#_radiusForNode / engine.radiusForNode（连续分位，degree 越大半径越大）",
+    },
+    {
+      id: "2d.galaxyColor",
+      surface: "2d",
+      channel: "color",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-2d.js#galaxyNodeColor2D(ratio)：ratio 越大越亮",
+    },
+    {
+      id: "2d.galaxyHalo",
+      surface: "2d",
+      channel: "brightness",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-2d.js#halo = 0.14 + ratio * 0.3（galaxy 分支）",
+    },
+    {
+      id: "3d.nodeRadius",
+      surface: "3d",
+      channel: "size",
+      variable: null,
+      direction: 0,
+      source: "graph-view-3d.js#_rebuildGraph 节点 scale 恒 1（D-KGV-04：3D 等大）",
+    },
+    {
+      id: "3d.galaxyColor",
+      surface: "3d",
+      channel: "color",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-3d.js#galaxyColor3D(ratio)",
+    },
+    {
+      id: "3d.galaxyEmissive",
+      surface: "3d",
+      channel: "brightness",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-3d.js#emissiveIntensity = 0.25 + ratio * 0.45",
+    },
+    {
+      id: "3d.galaxyHalo",
+      surface: "3d",
+      channel: "brightness",
+      variable: "degree",
+      direction: 1,
+      source: "graph-view-3d.js#halo.material.opacity = boost opacity（半径不随 degree 变，D-KGV-16）",
+    },
+  ]);
+
+  /**
+   * 按 D-KGV-15 检查双编码：同 surface 内每个变量只能有一个方向。
+   * @param {Array} channels 通道声明（默认 VISUAL_CHANNELS）
+   * @returns {{pass:boolean, conflicts:Array, bySurface:object, encodedVariables:string[]}}
+   */
+  function checkVisualEncoding(channels) {
+    const list = (channels || VISUAL_CHANNELS).filter((c) => c && typeof c === "object");
+    const bySurface = Object.create(null);
+    const conflicts = [];
+    for (const ch of list) {
+      if (ch.variable == null) continue; // 该通道不编码变量（如 3D 等大半径）⇒ 不参与冲突
+      const surface = String(ch.surface || "unknown");
+      const bucket = bySurface[surface] || (bySurface[surface] = Object.create(null));
+      const prev = bucket[ch.variable];
+      if (prev) {
+        const dirA = Math.sign(Number(prev.direction) || 0);
+        const dirB = Math.sign(Number(ch.direction) || 0);
+        if (dirA !== dirB && dirA !== 0 && dirB !== 0) {
+          conflicts.push({
+            surface,
+            variable: ch.variable,
+            channels: [prev.id, ch.id],
+            reason: "opposite_direction",
+          });
+        }
+      } else {
+        bucket[ch.variable] = ch;
+      }
+    }
+    // 不同变量：同一 surface 里存在 ≥2 个非 null 变量 ⇒ 检查它们是否同时"同向/冲突"
+    for (const surface of Object.keys(bySurface)) {
+      const vars = Object.keys(bySurface[surface]);
+      if (vars.length > 1) {
+        for (let i = 0; i < vars.length; i++) {
+          for (let j = i + 1; j < vars.length; j++) {
+            conflicts.push({
+              surface,
+              variable: vars[i],
+              otherVariable: vars[j],
+              channels: [bySurface[surface][vars[i]].id, bySurface[surface][vars[j]].id],
+              reason: "different_variables",
+            });
+          }
+        }
+      }
+    }
+    const encodedVariables = [
+      ...new Set(list.filter((c) => c.variable != null).map((c) => String(c.variable))),
+    ];
+    return {
+      pass: conflicts.length === 0,
+      conflicts,
+      bySurface,
+      encodedVariables,
+      channels: list.map((c) => ({ id: c.id, surface: c.surface, variable: c.variable, direction: c.direction })),
+    };
+  }
+
   global.MemoriaGraphEngine = MemoriaGraphEngine;
   global.MemoriaGraphEdgeColors = EDGE_COLORS;
+  // T-double 机检出口（声明 + 检查）
+  global.MemoriaGraphVisualChannels = {
+    CHANNELS: VISUAL_CHANNELS,
+    check: checkVisualEncoding,
+  };
   // 纯函数出口（机检 T-size-2/3/4 直接用；生产由 engine 实例方法调用）
   global.MemoriaGraphSizing = {
     SIZE_RATIO_MIN,

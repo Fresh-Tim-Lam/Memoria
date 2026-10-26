@@ -1,0 +1,125 @@
+{
+  "env": {
+    "kb": "D:\\AAA_Jupyter\\Memoria\\docs\\example\\AAA_Vocab",
+    "port": 9721
+  },
+  "hairball_real": {
+    "isHairball": true,
+    "rule": "max_group_share >= threshold",
+    "threshold": 0.8,
+    "metrics": {
+      "nodeCount": 134,
+      "edgeCount": 404,
+      "componentCount": 15,
+      "maxGroupSize": 120,
+      "maxGroupShare": 0.8955,
+      "labels": 134,
+      "edgesPerNode": 3.015,
+      "avgDegree": 6.03,
+      "zeroDegreeCount": 14
+    },
+    "calibration": {
+      "measuredAt": "2026-10-27",
+      "hairball": [
+        {
+          "corpus": "docs/example/AAA_Vocab (worktree, post_build)",
+          "nodes": 134,
+          "edges": 404,
+          "maxGroupShare": 0.8955
+        },
+        {
+          "corpus": "docs/example/AAA_Vocab (HEAD archive)",
+          "nodes": 61,
+          "edges": 154,
+          "maxGroupShare": 0.8197
+        }
+      ],
+      "good": [
+        {
+          "corpus": "synthetic 6 groups × 5 nodes",
+          "nodes": 30,
+          "edges": 24,
+          "maxGroupShare": 0.1667
+        },
+        {
+          "corpus": "artifacts/baseline-kb/数字通信原理 (sparse)",
+          "nodes": 329,
+          "edges": 36,
+          "maxGroupShare": 0.0274
+        }
+      ],
+      "derivation": "threshold = min(hairball measured 0.8197) - 0.0197 margin = 0.80"
+    },
+    "engineMethod": true
+  },
+  "hairball_synthetic": {
+    "good": {
+      "is": false,
+      "maxShare": 0.0833,
+      "threshold": 0.8
+    },
+    "hairball": {
+      "is": true,
+      "maxShare": 1
+    },
+    "eventEmitted": true
+  },
+  "tdouble_static": {
+    "pass": true,
+    "conflicts": [],
+    "encodedVariables": [
+      "degree"
+    ],
+    "channels": [
+      {
+        "id": "2d.nodeRadius",
+        "surface": "2d",
+        "variable": "degree",
+        "direction": 1
+      },
+      {
+        "id": "2d.galaxyColor",
+        "surface": "2d",
+        "variable": "degree",
+        "direction": 1
+      },
+      {
+        "id": "2d.galaxyHalo",
+        "surface": "2d",
+        "variable": "degree",
+        "direction": 1
+      },
+      {
+        "id": "3d.nodeRadius",
+        "surface": "3d",
+        "variable": null,
+        "direction": 0
+      },
+      {
+        "id": "3d.galaxyColor",
+        "surface": "3d",
+        "variable": "degree",
+        "direction": 1
+      },
+      {
+        "id": "3d.galaxyEmissive",
+        "surface": "3d",
+        "variable": "degree",
+        "direction": 1
+      },
+      {
+        "id": "3d.galaxyHalo",
+        "surface": "3d",
+        "variable": "degree",
+        "direction": 1
+      }
+    ]
+  },
+  "tdouble_real": {
+    "sampleSize": 0,
+    "corrDegreeRadius": null,
+    "corrDegreeLuminance": null,
+    "rows": [],
+    "graphStyle": "galaxy"
+  }
+}
