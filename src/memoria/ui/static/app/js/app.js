@@ -118,6 +118,7 @@
     kpHighlightClearTimer: null,
     linkTargetSet: null,
     linkPicker: null,
+    linkPopover: null,   // task-145：链接点击浮层（无模态遮罩）
     openTabs: [],
     configTab: "kp",
     configModalOpts: {},
@@ -7037,7 +7038,279 @@ async function call(fn, ...args) {
     }
   }
 
-  async function onMemoriaLinkClick(el) {
+  // ── task-145：链接点击「小窗优先」──────────────────────────────────────────────
+  // 所有可解析链接点击都先出链接旁圆角浮层（无全屏遮罩、不挡全文）：
+  //   候选=1 ⇒ 直接一张卡片；候选>1 ⇒ 候选列表 +「全部打开」。
+  // 卡片：①名称 ②解释（description；缺则区域首行摘要；再缺明确「无描述」）
+  //       ③区域内联预览（限高 12 行、可滚动） ④「拉到编辑区」按钮。
+  // 「拉到编辑区」= 既有 jumpToTarget（打开文件并定位该区域），浮层同时消失；**不是**插入引用。
+  // 数据：resolve_links 给 name/file/start/end；description/区域正文用二次 RPC load_document 补齐（缓存，不猜）。
+  const LINK_POP_PREVIEW_LINES = 12;   // 卡片最多显示行数
+  const LINK_POP_FETCH_LINES = 32;     // 二次 RPC 最多取多少行（防超长）
+
+  function linkPopT(key, params) {
+    return T("cfg.linkPop." + key, params);
+  }
+
+  function _linkPopCandidateName(c) {
+    return c?.name || c?.kp_id || c?.requested_id || c?.file || linkPopT("unknownName");
+  }
+
+  function _linkPopOutside(e) {
+    const pop = state.linkPopover;
+    if (!pop) return;
+    const t = e.target;
+    if ((pop.el && pop.el.contains(t)) || t === pop.anchorEl ||
+        (pop.anchorEl && pop.anchorEl.contains && pop.anchorEl.contains(t))) return;
+    closeLinkPopover();
+  }
+
+  function _linkPopKeydown(e) {
+    const pop = state.linkPopover;
+    if (!pop) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      e.stopPropagation();
+      closeLinkPopover({ focusBack: true });
+      return;
+    }
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      e.stopPropagation();
+      linkPopSetActive(pop.active + (e.key === "ArrowDown" ? 1 : -1), true);
+      return;
+    }
+    if (e.key === "Enter") {
+      if (e.target && String(e.target.tagName || "").toUpperCase() === "BUTTON") return;
+      e.preventDefault();
+      e.stopPropagation();
+      linkPopActivate(pop.active);
+    }
+  }
+
+  function _linkPopReposition() {
+    const pop = state.linkPopover;
+    if (!pop || !pop.el || !pop.anchorEl) return;
+    _linkPopPosition(pop);
+  }
+
+  /** 定位：优先链接下方左对齐；不够位则翻上方；四边夹在视口内（无遮罩 ⇒ 必须不挡触发点） */
+  function _linkPopPosition(pop) {
+    const el = pop.el;
+    const anchor = pop.anchorEl;
+    if (!el || !anchor) return;
+    const r = anchor.getBoundingClientRect();
+    const pw = el.offsetWidth || 360;
+    const ph = el.offsetHeight || 240;
+    const vw = window.innerWidth || 1280;
+    const vh = window.innerHeight || 800;
+    const gap = 8;
+    const margin = 8;
+    let left = Math.min(Math.max(margin, r.left), Math.max(margin, vw - pw - margin));
+    let top = r.bottom + gap;
+    if (top + ph > vh - margin) {
+      const above = r.top - gap - ph;
+      top = above >= margin ? above : Math.max(margin, vh - ph - margin);
+    }
+    el.style.left = Math.round(left) + "px";
+    el.style.top = Math.round(top) + "px";
+    el.style.visibility = "";
+  }
+
+  function linkPopSetActive(idx, focus) {
+    const pop = state.linkPopover;
+    if (!pop || !pop.el) return;
+    const cards = Array.from(pop.el.querySelectorAll(".-link-pop-card"));
+    if (!cards.length) return;
+    const clamped = Math.max(0, Math.min(cards.length - 1, Number(idx) || 0));
+    pop.active = clamped;
+    cards.forEach((card, i) => card.classList.toggle("-active", i === clamped));
+    const card = cards[clamped];
+    try { card.scrollIntoView({ block: "nearest" }); } catch (_) { /* noop */ }
+    if (focus) {
+      try { card.focus({ preventScroll: true }); } catch (_) { try { card.focus(); } catch (__) { /* noop */ } }
+    }
+  }
+
+  function linkPopApply(pop, idx, data) {
+    if (state.linkPopover !== pop || !pop.el) return;
+    const card = pop.el.querySelectorAll(".-link-pop-card")[idx];
+    if (!card) return;
+    const descEl = card.querySelector("[data-link-pop-desc]");
+    const preEl = card.querySelector("[data-link-pop-preview]");
+    const truncEl = card.querySelector("[data-link-pop-trunc]");
+    if (descEl) descEl.textContent = data.desc || linkPopT("noDesc");
+    if (preEl) preEl.textContent = data.preview || linkPopT("noRegion");
+    if (truncEl) truncEl.textContent = data.truncated ? " · " + data.truncated : "";
+  }
+
+  async function linkPopLoadDoc(pop, file) {
+    if (!pop.docCache.has(file)) {
+      pop.docCache.set(file, call("load_document", file).catch(() => null));
+    }
+    return pop.docCache.get(file);
+  }
+
+  /** 补齐：description（KP）+ 区域正文（start_line..end_line） */
+  async function linkPopEnrich(pop, idx) {
+    const c = pop.candidates[idx];
+    if (!c) return;
+    if (!c.file) {
+      linkPopApply(pop, idx, { desc: linkPopT("noDesc"), preview: linkPopT("noRegion"), truncated: "" });
+      return;
+    }
+    const doc = await linkPopLoadDoc(pop, c.file);
+    if (state.linkPopover !== pop) return;
+    if (!doc || doc.status !== "ok") {
+      linkPopApply(pop, idx, { desc: linkPopT("noDesc"), preview: linkPopT("previewUnavailable"), truncated: "" });
+      return;
+    }
+    const kp = (doc.knowledge_points || []).find((k) => k && k.id === c.kp_id) || null;
+    const lines = Array.isArray(doc.lines) ? doc.lines : String(doc.body || "").split("\n");
+    let region = [];
+    let total = 0;
+    if (c.start_line && c.end_line && c.end_line >= c.start_line) {
+      const s = Math.max(0, Number(c.start_line) - 1);
+      const e = Math.min(lines.length, Number(c.end_line));
+      total = Math.max(0, e - s);
+      region = lines.slice(s, Math.min(e, s + LINK_POP_FETCH_LINES));
+    }
+    const previewLines = region.slice(0, LINK_POP_PREVIEW_LINES);
+    const firstLine = region.map((l) => String(l || "").trim()).find(Boolean) || "";
+    const desc = String(kp?.description || "").trim() ||
+      (firstLine ? firstLine.slice(0, 120) : "") ||
+      linkPopT("noDesc");
+    const truncated = total > LINK_POP_PREVIEW_LINES
+      ? linkPopT("truncated", { shown: Math.min(total, LINK_POP_PREVIEW_LINES), total })
+      : "";
+    linkPopApply(pop, idx, {
+      desc: desc,
+      preview: previewLines.length ? previewLines.join("\n") : linkPopT("noRegion"),
+      truncated: truncated,
+    });
+  }
+
+  function linkPopActivate(idx) {
+    const pop = state.linkPopover;
+    if (!pop) return;
+    const c = pop.candidates[Math.max(0, Math.min(pop.candidates.length - 1, Number(idx) || 0))];
+    if (!c || !c.file) return;
+    closeLinkPopover({ noFocus: true });
+    jumpToTarget(c, { source: "link" });
+  }
+
+  async function linkPopOpenAll() {
+    const pop = state.linkPopover;
+    if (!pop) return;
+    const items = (pop.candidates || []).filter((c) => c && c.file);
+    if (!items.length) return;
+    closeLinkPopover({ noFocus: true });
+    for (let i = 0; i < items.length; i++) ensureOpenTab(items[i], { pending: i > 0 });
+    renderTabs();
+    await jumpToTarget(items[0], { source: "link", skipTabUpsert: true });
+  }
+
+  function closeLinkPopover(opts = {}) {
+    const pop = state.linkPopover;
+    if (!pop) return;
+    if (pop.el && pop.el.parentNode) pop.el.parentNode.removeChild(pop.el);
+    if (pop.anchorEl && pop.anchorEl.setAttribute) pop.anchorEl.setAttribute("aria-expanded", "false");
+    document.removeEventListener("mousedown", _linkPopOutside, true);
+    document.removeEventListener("keydown", _linkPopKeydown, true);
+    window.removeEventListener("resize", _linkPopReposition, true);
+    state.linkPopover = null;
+    if (opts.focusBack && pop.anchorEl && pop.anchorEl.isConnected) {
+      try { pop.anchorEl.focus(); } catch (_) { /* noop */ }
+    } else if (!opts.noFocus && pop.opener && pop.opener !== document.body &&
+               pop.opener.isConnected && typeof pop.opener.focus === "function") {
+      try { pop.opener.focus(); } catch (_) { /* noop */ }
+    }
+  }
+
+  /** 链接点击统一入口：单候选也先出浮层（task-145 核心变化） */
+  function showLinkPopover(anchorEl, title, candidates) {
+    const list = (candidates || []).filter(Boolean);
+    if (!list.length || !anchorEl) return;
+    if (state.linkPopover && state.linkPopover.anchorEl === anchorEl) {
+      closeLinkPopover({ focusBack: true });
+      return;
+    }
+    closeLinkPopover({ noFocus: true });
+    const pop = {
+      anchorEl,
+      title: title || "",
+      candidates: list,
+      active: 0,
+      docCache: new Map(),
+      el: null,
+      opener: document.activeElement,
+    };
+    state.linkPopover = pop;
+    const multi = list.length > 1;
+    const cards = list.map((c, i) => {
+      const name = _linkPopCandidateName(c);
+      const unresolved = !c.file;
+      const range = (c.start_line && c.end_line) ? ` · L${c.start_line}–${c.end_line}` : "";
+      const fileMeta = esc(c.file || linkPopT("unresolvedFile"));
+      return `<div class="-link-pop-card" role="menuitem" tabindex="-1" data-idx="${i}" aria-label="${esc(name)}">` +
+        `<div class="-link-pop-name">${esc(name)}</div>` +
+        `<div class="-link-pop-desc -muted" data-link-pop-desc>${esc(linkPopT("loading"))}</div>` +
+        `<pre class="-link-pop-preview" data-link-pop-preview aria-label="${esc(linkPopT("previewAria"))}">${esc(linkPopT("loading"))}</pre>` +
+        `<div class="-link-pop-meta -muted"><span>${fileMeta}${range}</span><span data-link-pop-trunc></span></div>` +
+        `<div class="-link-pop-actions"><button type="button" class="-btn primary -btn--sm" data-link-pop-pull data-idx="${i}"` +
+        `${unresolved ? " disabled" : ""}>${esc(linkPopT("pull"))}</button></div>` +
+        `</div>`;
+    }).join("");
+    const header = multi
+      ? `<div class="-link-pop-header"><span class="-link-pop-title">${esc(title || "")}</span>` +
+        `<span class="-link-pop-count -muted">${esc(linkPopT("count", { n: list.length }))}</span></div>`
+      : "";
+    const footer = multi
+      ? `<div class="-link-pop-footer"><button type="button" class="-btn secondary -btn--sm" data-link-pop-all>` +
+        `${esc(linkPopT("openAll", { n: list.length }))}</button></div>`
+      : "";
+    const el = document.createElement("div");
+    el.id = "link-popover";
+    el.className = "-link-popover";
+    el.setAttribute("role", "menu");
+    el.setAttribute("aria-label", linkPopT("menuLabel", { title: title || "" }));
+    el.style.visibility = "hidden";
+    el.innerHTML = header + `<div class="-link-pop-list">${cards}</div>` + footer;
+    document.body.appendChild(el);
+    pop.el = el;
+    el.addEventListener("mousedown", (e) => e.stopPropagation());
+    el.addEventListener("focusout", (e) => {
+      if (!state.linkPopover || state.linkPopover !== pop) return;
+      const to = e.relatedTarget;
+      if (to && (el.contains(to) || to === anchorEl)) return;
+      if (to) closeLinkPopover();
+    });
+    el.querySelectorAll(".-link-pop-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("[data-link-pop-pull]")) return;
+        linkPopActivate(Number(card.dataset.idx));
+      });
+      card.addEventListener("focus", () => linkPopSetActive(Number(card.dataset.idx), false));
+    });
+    el.querySelectorAll("[data-link-pop-pull]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        linkPopActivate(Number(btn.dataset.idx));
+      });
+    });
+    const allBtn = el.querySelector("[data-link-pop-all]");
+    if (allBtn) allBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); linkPopOpenAll(); });
+    if (anchorEl.setAttribute) anchorEl.setAttribute("aria-expanded", "true");
+    _linkPopPosition(pop);
+    document.addEventListener("mousedown", _linkPopOutside, true);
+    document.addEventListener("keydown", _linkPopKeydown, true);
+    window.addEventListener("resize", _linkPopReposition, true);
+    linkPopSetActive(0, true);
+    list.forEach((c, i) => { linkPopEnrich(pop, i); });
+  }
+
+  async function onMemoriaLinkClick(el, ev) {
     if (_brush) return; // 画笔模式下不跳转，避免涂抹时误触链接
     const target = el.dataset.linkTarget;
     const type = el.dataset.linkType || "";
@@ -7046,8 +7319,13 @@ async function call(fn, ...args) {
       await openLinkEditorFromElement(el);
       return;
     }
+    // task-145 快速通道（**待确认**）：Ctrl/Cmd+点击 = 直接跳转，跳过浮层。
+    // 理由：高频连续跳转时的低风险逃生口；普通点击仍 100% 先出浮层。
+    const quickSkip = !!(ev && (ev.ctrlKey || ev.metaKey));
+    const title = el.textContent?.trim() || target;
     try {
       const multiRaw = el.dataset.linkTargets;
+      let candidates = [];
       if (multiRaw) {
         let ids;
         try {
@@ -7057,49 +7335,35 @@ async function call(fn, ...args) {
         }
         const res = await call("resolve_links", ids);
         if (res.status === "not_found" || res.status === "error") {
-          setStatus(
-            res.message || T("cfg.linkClick.unresolvable"),
-            T("cfg.linkClick.unbound")
-          );
+          setStatus(res.message || T("cfg.linkClick.unresolvable"), T("cfg.linkClick.unbound"));
           return;
         }
-        const candidates = res.candidates || [];
-        if (candidates.length === 1) {
-          await jumpToTarget(candidates[0], { source: "link" });
-          return;
-        }
-        showLinkPicker(
-          el.textContent?.trim() || target,
-          candidates
-        );
-        return;
-      }
-      const routeIds = state.doc?.link_overrides?.[target];
-      if (routeIds?.length === 1) {
-        const res = await call("resolve_link", routeIds[0]);
-        if (res.status === "ok" && res.candidates?.[0]) {
-          await jumpToTarget(res.candidates[0], { source: "link" });
-          return;
+        candidates = res.candidates || [];
+      } else {
+        const routeIds = state.doc?.link_overrides?.[target];
+        if (routeIds?.length) {
+          const res = await call("resolve_links", routeIds);
+          candidates = res.candidates || [];
+        } else {
+          const res = await call("resolve_link", target);
+          if (res.status === "not_found" || res.status === "error") {
+            setStatus(res.message || T("cfg.linkClick.notFound", { target }), T("cfg.linkClick.unbound"));
+            return;
+          }
+          candidates = res.candidates || [];
         }
       }
-      const res = await call("resolve_link", target);
-      if (res.status === "not_found" || res.status === "error") {
-        setStatus(
-          res.message || T("cfg.linkClick.notFound", { target }),
-          T("cfg.linkClick.unbound")
-        );
-        return;
-      }
-      if (res.status === "ambiguous") {
-        showLinkPicker(target, res.candidates || []);
-        return;
-      }
-      const candidate = (res.candidates || [])[0];
-      if (!candidate) {
+      if (!candidates.length) {
         setStatus(T("cfg.linkClick.notFound", { target }), T("cfg.linkClick.unbound"));
         return;
       }
-      await jumpToTarget(candidate, { source: "link" });
+      if (quickSkip && candidates.length === 1) {
+        closeLinkPopover({ noFocus: true });
+        await jumpToTarget(candidates[0], { source: "link" });
+        return;
+      }
+      // ★ 核心变化：单候选也先出浮层（不再直接跳转）
+      showLinkPopover(el, title, candidates);
     } catch (e) {
       setStatus(T("cfg.linkClick.failed", { target }), String(e.message || e));
     }
@@ -7267,7 +7531,7 @@ async function call(fn, ...args) {
       el.setAttribute("data--bound", "1");
       el.addEventListener("click", (e) => {
         e.preventDefault();
-        onMemoriaLinkClick(el);
+        onMemoriaLinkClick(el, e);
       });
       el.addEventListener("mouseenter", (e) => {
         if (shouldSuppressHoverHighlight(e)) return;

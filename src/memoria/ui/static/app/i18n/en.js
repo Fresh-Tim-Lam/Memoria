@@ -2020,4 +2020,21 @@
   Object.assign(g.MEMORIA_LOCALES["en"].agent.status, {
     compactSystem: "Compacted {covered} older messages (summary: {chars} chars) · later turns continue from the summary",
   });
+  // task-145: link click popover (popover-first)
+  Object.assign(g.MEMORIA_LOCALES["en"].cfg, {
+    linkPop: {
+      menuLabel: "Link target: {title}",
+      count: "{n} targets",
+      loading: "Loading…",
+      noDesc: "No description",
+      noRegion: "(No region text)",
+      previewUnavailable: "(Preview unavailable)",
+      pull: "Pull to editor",
+      openAll: "Open all ({n})",
+      truncated: "Truncated: showing first {shown} of {total} lines",
+      unknownName: "Unnamed target",
+      unresolvedFile: "(Unresolved file)",
+      previewAria: "Region preview",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -7455,3 +7455,119 @@ html.-booting::before {
     html.-booting .logo-icon,
     html.-booting::before { animation: none; }
 }
+
+/* ── task-145：链接点击「小窗优先」浮层（无全屏遮罩）────────────────────────────
+   设计：z-index 900 ⇒ 在预览/工具栏之上、模态框(1000)之下；无 backdrop；圆角 12px；
+   卡片可键盘 ↑↓ 移动、Enter = 拉到编辑区、Esc 关闭；预览限高 12 行可滚动。 */
+.-link-popover {
+    position: fixed;
+    z-index: 900;
+    width: min(420px, calc(100vw - 16px));
+    max-height: min(70vh, 560px);
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-float);
+    font-size: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.-link-pop-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 2px 6px 4px;
+    border-bottom: 0.5px solid var(--border);
+}
+.-link-pop-title {
+    font-weight: 600;
+    color: var(--text-bright);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-link-pop-count {
+    flex: none;
+    font-size: 0.6875rem;
+}
+.-link-pop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.-link-pop-card {
+    position: relative;
+    padding: 8px 10px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-tertiary, var(--bg-secondary));
+    cursor: pointer;
+    outline: none;
+}
+.-link-pop-card:hover,
+.-link-pop-card.-active {
+    border-color: var(--theme-color, var(--border));
+    box-shadow: 0 0 0 1px var(--theme-color, transparent) inset;
+}
+.-link-pop-name {
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-link-pop-desc {
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.-link-pop-preview {
+    margin: 0 0 6px;
+    padding: 6px 8px;
+    max-height: calc(12 * 1.45em);
+    overflow: auto;
+    box-sizing: border-box;
+    background: var(--bg-primary, rgba(0, 0, 0, 0.18));
+    color: var(--text-primary);
+    border: 0.5px solid var(--border-subtle, var(--border));
+    border-radius: 6px;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.6875rem;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.-link-pop-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.6875rem;
+    margin-bottom: 6px;
+    overflow: hidden;
+}
+.-link-pop-meta span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.-link-pop-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+.-link-pop-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 4px;
+    border-top: 0.5px solid var(--border);
+}

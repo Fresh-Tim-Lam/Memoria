@@ -1914,4 +1914,21 @@
   Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent.status, {
     compactSystem: "已压缩 {covered} 条旧消息（摘要 {chars} 字符）· 其后对话按摘要继续",
   });
+  // task-145：链接点击浮层（小窗优先）
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].cfg, {
+    linkPop: {
+      menuLabel: "链接目标：{title}",
+      count: "{n} 个目标",
+      loading: "加载中…",
+      noDesc: "无描述",
+      noRegion: "（无区域正文）",
+      previewUnavailable: "（预览不可用）",
+      pull: "拉到编辑区",
+      openAll: "全部打开（{n}）",
+      truncated: "已截断：显示前 {shown} 行 / 共 {total} 行",
+      unknownName: "未命名目标",
+      unresolvedFile: "（未解析到文件）",
+      previewAria: "区域正文预览",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

@@ -1,0 +1,254 @@
+{
+  "startedAt": "2026-10-26T08:01:07.946Z",
+  "target": {
+    "id": "DCAED28140199E85DF127054440FD838"
+  },
+  "steps": {
+    "S1": {
+      "click": {
+        "ok": true,
+        "x": 574,
+        "y": 200
+      },
+      "afterClick": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "viewMode": "split",
+        "popVisible": true,
+        "popCards": 1,
+        "popCardTexts": [
+          {
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "preview": "# 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。",
+            "hasPull": true,
+            "pullText": "拉到编辑区"
+          }
+        ],
+        "hasAll": false,
+        "popRole": "menu",
+        "menuitemCount": 1,
+        "backdropVisible": false,
+        "linksBound": 3,
+        "linksTotal": 3,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 1,
+        "ariaExpanded": "true"
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-popover-screens\\S1-single-popover.png"
+    },
+    "S2": {
+      "afterEsc": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 3,
+        "linksTotal": 3,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 1,
+        "ariaExpanded": "false"
+      }
+    },
+    "S3": {
+      "click": {
+        "ok": true,
+        "x": 574,
+        "y": 247
+      },
+      "afterClick": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "viewMode": "split",
+        "popVisible": true,
+        "popCards": 2,
+        "popCardTexts": [
+          {
+            "name": "目标知识点",
+            "desc": "这是目标知识点的 description（来自侧车）。",
+            "preview": "# 目标文档\n\n目标知识点第一行：这是被拉取到编辑区的区域正文。\n\n目标知识点第二行：用于验证区域预览只取该知识点范围。\n\n目标知识点第三行：区域结束标记。",
+            "hasPull": true,
+            "pullText": "拉到编辑区"
+          },
+          {
+            "name": "另一知识点",
+            "desc": "这是另一知识点的 description。",
+            "preview": "# 另一目标文档\n\n另一个知识点第一行：多目标候选之一。\n\n另一个知识点第二行：用于多候选列表预览。",
+            "hasPull": true,
+            "pullText": "拉到编辑区"
+          }
+        ],
+        "hasAll": true,
+        "popRole": "menu",
+        "menuitemCount": 2,
+        "backdropVisible": false,
+        "linksBound": 3,
+        "linksTotal": 3,
+        "hasContextMenuApi": true,
+        "allText": "全部打开（2）",
+        "modalVisible": false,
+        "tabs": 1,
+        "ariaExpanded": null
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-popover-screens\\S3-multi-popover.png"
+    },
+    "S4": {
+      "click": {
+        "ok": true,
+        "x": 917,
+        "y": 514
+      },
+      "afterPull": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 0,
+        "linksTotal": 0,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 2,
+        "ariaExpanded": null
+      },
+      "shot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\todo\\link-popover-screens\\S4-after-pull.png"
+    },
+    "S5": {
+      "clickAll": {
+        "ok": true,
+        "x": 919,
+        "y": 760
+      },
+      "afterAll": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 0,
+        "linksTotal": 0,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 3,
+        "ariaExpanded": null
+      }
+    },
+    "S6": {
+      "afterOutside": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 3,
+        "linksTotal": 3,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 3,
+        "ariaExpanded": "false"
+      }
+    },
+    "S7": {
+      "afterEnter": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 0,
+        "linksTotal": 0,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 3,
+        "ariaExpanded": null
+      }
+    },
+    "S8": {
+      "click": {
+        "ok": true,
+        "x": 574,
+        "y": 200
+      },
+      "afterCtrlClick": {
+        "currentPath": "docs/target.md",
+        "activeKpId": "target-kp",
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": false,
+        "linksBound": 0,
+        "linksTotal": 0,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": false,
+        "tabs": 3,
+        "ariaExpanded": null
+      }
+    },
+    "S9": {
+      "click": {
+        "ok": true,
+        "x": 566,
+        "y": 293
+      },
+      "afterClick": {
+        "currentPath": "docs/a.md",
+        "activeKpId": null,
+        "viewMode": "split",
+        "popVisible": false,
+        "popCards": 0,
+        "popCardTexts": [],
+        "hasAll": false,
+        "popRole": null,
+        "menuitemCount": 0,
+        "backdropVisible": true,
+        "linksBound": 3,
+        "linksTotal": 3,
+        "hasContextMenuApi": true,
+        "allText": "",
+        "modalVisible": true,
+        "tabs": 3,
+        "ariaExpanded": "false"
+      }
+    }
+  },
+  "finishedAt": "2026-10-26T08:01:19.021Z"
+}

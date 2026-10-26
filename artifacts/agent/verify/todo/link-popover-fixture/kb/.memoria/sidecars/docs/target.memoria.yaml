@@ -1,0 +1,15 @@
+schema_version: 1
+file: docs/target.md
+knowledge_points:
+- id: target-kp
+  name: 目标知识点
+  description: 这是目标知识点的 description（来自侧车）。
+  range:
+    start:
+      snippet: '# 目标文档'
+      line_hint: 1
+    end:
+      snippet: '目标知识点第三行：区域结束标记。'
+      line_hint: 5
+links: []
+edges: []
