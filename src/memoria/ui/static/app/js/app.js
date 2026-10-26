@@ -263,6 +263,13 @@
   //    E3 用户一旦自己滚预览 ⇒ 立刻放弃校准（不跟人抢滚动条）。
   var _editScrollGen = 0;          // 编辑代际：新一轮源码编辑 ⇒ 旧校准链立即失效
   var _editScrollGuard = null;     // 当前校准链守卫（用户滚动/新编辑会置 cancelled）
+  // task-170：源码编辑触发的预览整篇重渲期间，禁掉分栏「预览→源码」反向同步。
+  //   根因：重渲会先把 preview 清空/插入「渲染中」（浏览器把 preview scrollTop 夹到 0），
+  //   再由 `_restorePreviewScrollAnchor` 写回旧位置 —— 这两次**程序化**滚动都会发 scroll 事件，
+  //   `_onSplitPaneScroll("preview")` 误当成用户滚动，于是 `_scrollToSrcLine("source", 预览顶行)`
+  //   把源码区拽到「当前块顶部」，每敲一个字重复一次。这里只挡重渲窗口，非编辑态跟随滚动不受影响。
+  //   用计数而不是 boolean：`_renderPreviewKeepScroll` 可能重入/排队，旧一轮收尾不能替新一轮提前解除。
+  var _previewRenderInFlight = 0;
   var _editScrollStats = { restores: 0, restoredByAnchor: 0, restoredByPixel: 0, reanchors: 0, reanchorNoop: 0 };
   try {
     // 只读诊断（真机验证/回归用；不参与渲染）：证明"恢复分支真的执行"，而不只是"看起来没跳"
@@ -316,7 +323,11 @@
           const delta = el.getBoundingClientRect().top - pvTop - anchor.offset;
           _editScrollStats.restores++;
           _editScrollStats.restoredByAnchor++;
-          if (Math.abs(delta) >= 1) pane.scrollTop += delta;   // 只补差值（不是重设落点）
+          if (Math.abs(delta) >= 1) {
+            pane.scrollTop += delta;   // 只补差值（不是重设落点）
+            // task-170：这是程序化滚动，不是用户滚动 —— 标记回声，避免被分栏同步误判后去拽源码区
+            try { _markSplitEcho("preview", pane); } catch (_) { /* noop */ }
+          }
           return true;
         }
       }
@@ -324,6 +335,7 @@
     _editScrollStats.restores++;
     _editScrollStats.restoredByPixel++;
     pane.scrollTop = anchor.scrollTop;   // 兜底：极端情况下找不到锚点元素
+    try { _markSplitEcho("preview", pane); } catch (_) { /* noop */ }   // task-170：程序化恢复 ≠ 用户滚动
     return false;
   }
 
@@ -361,6 +373,7 @@
           const drift = target.getBoundingClientRect().top - pvTop - anchor.offset;
           if (Math.abs(drift) < 1) { _editScrollStats.reanchorNoop++; return; }
           pp.scrollTop += drift;   // 只补偏移
+          try { _markSplitEcho("preview", pp); } catch (_) { /* noop */ }   // task-170：漂移补偿也是程序化滚动
           _editScrollStats.reanchors++;
           log("SCROLL", "edit-reanchor(" + ms + "ms): drift=" + Math.round(drift));
         } catch (_) { /* noop */ }
@@ -373,6 +386,7 @@
    *  兜底（`repaintPreview` → `renderPreview`）同样会整篇重渲，同样会在惰性文档上丢滚动位置。 */
   async function _renderPreviewKeepScroll(options) {
     const anchor = _capturePreviewScrollAnchor();
+    _previewRenderInFlight++;   // task-170：整篇重渲窗口内禁止预览→源码反向同步
     try {
       return await renderPreview(state.doc, options);
     } finally {
@@ -380,6 +394,8 @@
         _restorePreviewScrollAnchor(anchor);
         _scheduleEditScrollReanchor(anchor);
       }
+      // 恢复/清空产生的 scroll 事件在本任务之后才派发 ⇒ 多等两帧再放开（计数配对递减）
+      requestAnimationFrame(() => requestAnimationFrame(() => { _previewRenderInFlight = Math.max(0, _previewRenderInFlight - 1); }));
     }
   }
 
@@ -2375,6 +2391,9 @@ async function call(fn, ...args) {
 
   function _onSplitPaneScroll(mode, pane) {
     if (state.viewMode !== "split" || splitSyncLock) return;
+    // task-170（根因）：源码编辑触发的预览整篇重渲里，preview 会被清空（clamp 到 0）再恢复锚点，
+    //   这些**程序化** scroll 事件不是用户滚动；若在此反向同步，会把源码区拽到「预览顶行=当前块顶部」。
+    if (_previewRenderInFlight > 0) return;
     if (_consumeSplitEcho(mode, pane)) return;   // 刚被程序化滚动的回声 → 丢弃，不反向同步
     splitSyncLock = true;
     const line = _getViewTopSrcLine(mode);
