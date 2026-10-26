@@ -59,6 +59,13 @@
        审计模式改从 tag 提交的 git 对象核验已跟踪的两处（Package/VERSION 未入库，显式说明）
      * 检查 6 TAG-REMOTE：`--phase post`（默认）要求远端 tag 存在；`--phase pre` 要求不存在；
        `--offline` ⇒ SKIP（不计为通过）；ls-remote 不可用且联网时回退 GitHub API refs
+     * 检查 7 VERSION-NOTE-PUBLISHED（**仅 `--verify-published`**，release-manager 2026-10-26，
+       task-167）：`version.md §1「说明」行` 的「最近已发布 = X.Y.Z」必须 == 本次 tag 版本；
+       解析失败（行缺失/措辞改变/无版本号）⇒ **FAIL**（不是 WARN、不是 SKIP，防静默失效）；
+       读**工作区** version.md（人实际读到的那份），不读 tag 提交（v0.4.9 tag 提交里写的是 0.4.8，
+       正是本次要抓的错误）。
+       接入点理由：只有 `--verify-published` 阶段同时拿到「真实 tag + 真实发布状态 + 发布后的文档」；
+       pre/post 发生在发布过程中，此时「最近已发布」按定义还是上一版，断言必然误红。
    - supervisor review：release 模式默认 **WARN**（`--require-review` 升级 FAIL；legacy 模式仍 FAIL）。
      **目标状态是硬 FAIL**；翻转条件 = supervisor 角色投入运行 + 至少 1 份合格 review artifact
      （见 version.md §6 第 0 步）。翻转后默认 FAIL，`--allow-missing-review` 才降级。
@@ -243,6 +250,11 @@ COST_EN_HEAD = re.compile(r"^##\s+Cost \(Agent compute\)\s*$", re.M)
 H2_LINE = re.compile(r"^##\s+")
 VERSION_ROW = re.compile(
     r"\|\s*当前版本\s*\|\s*\**([0-9]+\.[0-9]+\.[0-9]+(?:[-+][0-9A-Za-z.\-]+)?)\**\s*\|")
+# version.md §1「说明」行：| 说明 | 最近已发布 = **0.4.9**（…） |
+# 只认「说明」行里的「最近已发布」短语；解析失败按 FAIL（不许静默跳过）。
+NOTE_ROW = re.compile(r"^\|\s*说明\s*\|\s*(.*?)\s*\|\s*$", re.M)
+NOTE_PUBLISHED = re.compile(
+    r"最近已发布\s*[=＝:：]\s*\**\s*v?(\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.\-]+)?)")
 MAGNITUDE = re.compile(r"(人民币|元|CNY|USD|RMB|花费)")
 BASIS = re.compile(r"(统计口径|合并统计)")
 STRUCTURE = re.compile(r"(成本结构|cost structure)", re.I)
@@ -449,6 +461,60 @@ def _parse_docs_version(text: str | None) -> str | None:
         return None
     m = VERSION_ROW.search(text)
     return m.group(1) if m else None
+
+
+def _parse_docs_note_version(text: str | None) -> tuple[str | None, str | None, str | None]:
+    """解析 version.md §1「说明」行的「最近已发布 = X.Y.Z」。
+
+    返回 (version, 行原文, 失败原因)：
+      - version 非 None ⇒ 解析成功（失败原因为 None）；
+      - version 为 None ⇒ 解析失败（失败原因说明缺什么，供 detail 直接展示）。
+
+    设计要点（task-167）：**解析失败必须能被上层判 FAIL**——否则下次有人改措辞，
+    这条断言就静默失效，等于没有。因此这里不返回"跳过/未知"，只返回"解析到/为什么解析不到"。
+    """
+    if not text:
+        return None, None, "version.md 缺失或读不到"
+    row_m = NOTE_ROW.search(text)
+    if not row_m:
+        return None, None, "找不到「说明」行（期望表格行 `| 说明 | 最近已发布 = X.Y.Z（…） |`）"
+    row = row_m.group(1).strip()
+    m = NOTE_PUBLISHED.search(row)
+    if not m:
+        return None, row, ("「说明」行里无法解析「最近已发布 = X.Y.Z」"
+                           "（需保留该短语与版本号；措辞改变会被判 FAIL 而不是跳过）")
+    return m.group(1), row, None
+
+
+def eval_version_note_published(tag: str, root: Path) -> dict:
+    """检查 7（仅审计模式）：version.md「说明」行的最近已发布版本 == 本次 tag 版本。
+
+    为什么读**工作区** version.md 而不是 tag 提交里的版本：
+      v0.4.9 的 tag 提交里「说明」行写的是「最近已发布 = 0.4.8」——那正是今天被发现的错误。
+      若读 tag 提交，等于把"发布当时就错的文档"当作正确基准，会放过本次要抓的缺陷。
+      工作区 version.md 才是人（todo-owner）实际读到、会据此排期的那份文档。
+    """
+    try:
+        tv = tag_version(tag)
+    except ValueError as exc:
+        return {"id": "VERSION-NOTE-PUBLISHED", "level": "FAIL", "detail": str(exc)}
+
+    docs_path = root / "docs" / "conventions" / "version.md"
+    text = _read_text(docs_path)
+    doc_v, row, why = _parse_docs_note_version(text)
+    if doc_v is None:
+        snippet = f"；行原文：{row[:160]!r}" if row else ""
+        return {"id": "VERSION-NOTE-PUBLISHED", "level": "FAIL",
+                "detail": f"{why}{snippet}。解析失败按 FAIL 处理（防格式漂移后静默跳过）；"
+                          f"本次 tag={tag}"}
+    if doc_v != tv:
+        return {"id": "VERSION-NOTE-PUBLISHED", "level": "FAIL",
+                "detail": f"version.md §1「说明」行写 最近已发布 = {doc_v!r}，"
+                          f"但本次 tag = {tag!r}（版本 {tv!r}）——文档与实际发布不一致，"
+                          f"会误导排期/核对；请先把「说明」行更新为 {tv}"
+                          f"（行原文：{row[:160]!r}）"}
+    return {"id": "VERSION-NOTE-PUBLISHED", "level": "PASS",
+            "detail": f"version.md §1「说明」行：最近已发布 = {doc_v!r} == tag {tag!r}"}
 
 
 def _git_show(root: Path, ref: str, rel_path: str) -> str | None:
@@ -683,6 +749,9 @@ def run_release_checks(cfg: dict) -> tuple[list[dict], dict]:
     checks += eval_cost(body)
     checks.append(eval_assets(tag, cfg.get("release_meta"), cfg.get("offline", False)))
     checks.append(eval_version_three_way(tag, root, mode))
+    if mode == "audit":
+        # 检查 7 只在发布后审计跑：见 eval_version_note_published / 报告「接入点理由」
+        checks.append(eval_version_note_published(tag, root))
     checks.append(eval_tag_remote(tag, root, cfg.get("offline", False),
                                   cfg.get("phase", "post"), cfg.get("release_meta")))
 
@@ -748,6 +817,24 @@ def _print_checks(header: str, checks: list[dict], metrics: dict | None, as_json
 
 SELFTEST_TAG = "v9.9.9"
 SELFTEST_TITLE = "Memoria v9.9.9"
+SELFTEST_NOTE_ROW = "| 说明 | 最近已发布 = **9.9.9**（2026-10-25，tag `v9.9.9` → `deadbeef`） |"
+
+
+def _fixture_version_md(note_row: str | None, current: str = "9.9.9") -> str:
+    """构造最小 version.md（§1 表格）；note_row=None ⇒ 故意不写「说明」行。"""
+    lines = [
+        "# 版本规范",
+        "",
+        "## 1. 当前版本",
+        "",
+        "| 项 | 值 |",
+        "|----|----|",
+        f"| 当前版本 | **{current}** |",
+    ]
+    if note_row is not None:
+        lines.append(note_row)
+    lines += ["| 版本阶段 | 0.x（未稳定，接口可变更） |"]
+    return "\n".join(lines) + "\n"
 SELFTEST_BODY = """# Memoria v9.9.9
 
 ## English
@@ -782,8 +869,11 @@ never counted as passed.
 """
 
 
-def _fixture_env(tmp: Path) -> dict:
-    """建一个最小临时仓库（含 origin bare remote）+ 合规正文/审查/发布数据。"""
+def _fixture_env(tmp: Path, note_row: str | None = SELFTEST_NOTE_ROW) -> dict:
+    """建一个最小临时仓库（含 origin bare remote）+ 合规正文/审查/发布数据。
+
+    note_row：version.md §1「说明」行内容；None ⇒ 不写该行（用于"无法解析必红" fixture）。
+    """
     root = tmp / "repo"
     (root / "src" / "memoria").mkdir(parents=True)
     (root / "docs" / "conventions").mkdir(parents=True)
@@ -791,8 +881,7 @@ def _fixture_env(tmp: Path) -> dict:
     (root / "src" / "memoria" / "__version__.py").write_text(
         '__version__ = "9.9.9"\n', encoding="utf-8")
     (root / "docs" / "conventions" / "version.md").write_text(
-        "# 版本规范\n\n## 1. 当前版本\n\n| 项 | 值 |\n|----|----|\n"
-        "| 当前版本 | **9.9.9** |\n", encoding="utf-8")
+        _fixture_version_md(note_row), encoding="utf-8")
     (root / "Package" / "VERSION").write_text("9.9.9\n", encoding="utf-8")
 
     def git(*args: str, cwd: Path = root) -> subprocess.CompletedProcess:
@@ -982,6 +1071,68 @@ def selftest_release() -> list[tuple[str, bool]]:
                         r["levels"].get("TAG-REMOTE") == "SKIP"
                         and r["levels"].get("TAG-REMOTE") != "PASS"))
 
+        # ── 检查 7：version.md「说明」行 vs tag（仅 audit/verify-published 模式） ──
+        def audit_levels(env_: dict, **overrides) -> dict:
+            return levels(_cfg(env_, mode="audit", require_review=False, **overrides))
+
+        def write_note(env_: dict, note_row: str | None) -> None:
+            (env_["root"] / "docs" / "conventions" / "version.md").write_text(
+                _fixture_version_md(note_row), encoding="utf-8")
+
+        r = audit_levels(env)
+        results.append(("② 检查7 正常态（说明行=tag）必绿",
+                        r["levels"].get("VERSION-NOTE-PUBLISHED") == "PASS"
+                        and r["summary"]["ok"]))
+
+        # 发布模式不跑该检查（只在 verify-published 阶段有意义）
+        results.append(("② 检查7 发布模式不含该检查",
+                        "VERSION-NOTE-PUBLISHED" not in levels(_cfg(env))["levels"]))
+
+        # 说明行写旧版本、tag 更新 ⇒ 必红（复现今天真实错误：tag v0.4.9、说明写 0.4.8）
+        write_note(env, "| 说明 | 最近已发布 = **9.9.8**（旧版本 fixture） |")
+        r = audit_levels(env)
+        note = next(c for c in r["checks"] if c["id"] == "VERSION-NOTE-PUBLISHED")
+        results.append(("② 检查7 说明行写旧版本必红",
+                        note["level"] == "FAIL" and not r["summary"]["ok"]))
+        results.append(("② 检查7 必红 detail 同时给出两侧实际值",
+                        "9.9.8" in note["detail"] and "v9.9.9" in note["detail"]))
+        write_note(env, SELFTEST_NOTE_ROW)
+        results.append(("② 检查7 不一致后还原必绿",
+                        audit_levels(env)["levels"].get("VERSION-NOTE-PUBLISHED") == "PASS"))
+
+        # 说明行格式改成无法解析 ⇒ 必红（不许静默跳过）
+        write_note(env, "| 说明 | 最近发布：见变更记录 |")
+        r = audit_levels(env)
+        note = next(c for c in r["checks"] if c["id"] == "VERSION-NOTE-PUBLISHED")
+        results.append(("② 检查7 说明行不可解析必红",
+                        note["level"] == "FAIL" and not r["summary"]["ok"]))
+        results.append(("② 检查7 不可解析 detail 明确写「无法解析」",
+                        "无法解析" in note["detail"]))
+        write_note(env, SELFTEST_NOTE_ROW)
+        results.append(("② 检查7 不可解析后还原必绿",
+                        audit_levels(env)["levels"].get("VERSION-NOTE-PUBLISHED") == "PASS"))
+
+        # 整行缺失 ⇒ 必红（不是跳过）
+        env_missing = _fixture_env(tmp / "env-note-missing", note_row=None)
+        _push_tag(env_missing)
+        r = audit_levels(env_missing)
+        note = next(c for c in r["checks"] if c["id"] == "VERSION-NOTE-PUBLISHED")
+        results.append(("② 检查7 缺「说明」行必红",
+                        note["level"] == "FAIL" and "找不到" in note["detail"]))
+
+        # 读的是【工作区】文档而不是 tag 提交：tag 提交里写旧版本、工作区修正后必须绿
+        env_stale_commit = _fixture_env(
+            tmp / "env-note-stale-commit",
+            note_row="| 说明 | 最近已发布 = **9.9.8**（tag 提交里是旧值） |")
+        _push_tag(env_stale_commit)
+        r = audit_levels(env_stale_commit)
+        results.append(("② 检查7 基线（tag 提交旧值）必红",
+                        r["levels"].get("VERSION-NOTE-PUBLISHED") == "FAIL"))
+        write_note(env_stale_commit, SELFTEST_NOTE_ROW)  # 只改工作区、不 commit/tag
+        r = audit_levels(env_stale_commit)
+        results.append(("② 检查7 只修工作区即可绿（证明读工作区，不读 tag 提交）",
+                        r["levels"].get("VERSION-NOTE-PUBLISHED") == "PASS"))
+
         # ── 输出格式/退出码：失败汇总必须 ok=False ──
         r = levels(_cfg(env, title="Memoria v9.9.9 —— x"))
         results.append(("② FAIL 时 summary.ok=False", r["summary"]["ok"] is False))
@@ -1139,9 +1290,11 @@ def main(argv: list[str]) -> int:
         checks.append(eval_assets(tag, meta, args.offline))
         checks = sorted(checks, key=lambda c: ["TITLE-EXACT", "BODY-BILINGUAL", "COST-SECTION",
                                                 "ASSETS-COUNT", "VERSION-THREE-WAY",
+                                                "VERSION-NOTE-PUBLISHED",
                                                 "TAG-REMOTE", "TAG-NOT-EXISTS"].index(c["id"])
                         if c["id"] in ["TITLE-EXACT", "BODY-BILINGUAL", "COST-SECTION",
                                        "ASSETS-COUNT", "VERSION-THREE-WAY",
+                                       "VERSION-NOTE-PUBLISHED",
                                        "TAG-REMOTE", "TAG-NOT-EXISTS"] else 99)
     return _print_checks(f"发版前置检查（release 模式，phase={args.phase}）：tag={tag}",
                          checks, metrics, args.json,
