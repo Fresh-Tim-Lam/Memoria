@@ -1,0 +1,120 @@
+{
+  "env": {
+    "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_p3_corpus",
+    "configDir": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t178\\config",
+    "telemetryFile": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t178\\config\\graph-telemetry.jsonl"
+  },
+  "front_end": {
+    "hasSave": true,
+    "hasTelemetry": true,
+    "coalesceMs": 250,
+    "apiHasRecord": true,
+    "apiHasSummary": true
+  },
+  "after_e1a": {
+    "lineCount": 1,
+    "last": {
+      "v": 1,
+      "ts": 1793025932133,
+      "ts_utc": "2026-10-26T14:45:32.387+00:00",
+      "event": "nodeRadius_change",
+      "from": 6,
+      "to": 8,
+      "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+      "node_count": 134,
+      "edge_count": 404,
+      "style": "force",
+      "zoom": 0.138258,
+      "zoom_kind": "2d-scale",
+      "corpus": {
+        "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+        "manifest_sha256": "236a48932bdb0c8a5aabe2644d97390e72526973b59919a547a13e9c7be6fc7f",
+        "head": null,
+        "measured_at": "2026-10-26T14:45:32.459+00:00"
+      }
+    }
+  },
+  "after_e1b": {
+    "lineCount": 2,
+    "last": {
+      "v": 1,
+      "ts": 1793025933085,
+      "ts_utc": "2026-10-26T14:45:33.335+00:00",
+      "event": "nodeRadius_change",
+      "from": 8,
+      "to": 10,
+      "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+      "node_count": 134,
+      "edge_count": 404,
+      "style": "force",
+      "zoom": 0.138258,
+      "zoom_kind": "2d-scale",
+      "corpus": {
+        "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+        "manifest_sha256": "236a48932bdb0c8a5aabe2644d97390e72526973b59919a547a13e9c7be6fc7f",
+        "head": null,
+        "measured_at": "2026-10-26T14:45:32.459+00:00"
+      }
+    }
+  },
+  "after_e2": {
+    "lineCount": 3,
+    "last": {
+      "v": 1,
+      "ts": 1793025934040,
+      "ts_utc": "2026-10-26T14:45:34.291+00:00",
+      "event": "graphStyle_change",
+      "from": "force",
+      "to": "galaxy",
+      "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+      "node_count": 134,
+      "edge_count": 404,
+      "style": "galaxy",
+      "zoom": 0.138258,
+      "zoom_kind": "2d-scale",
+      "corpus": {
+        "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+        "manifest_sha256": "236a48932bdb0c8a5aabe2644d97390e72526973b59919a547a13e9c7be6fc7f",
+        "head": null,
+        "measured_at": "2026-10-26T14:45:32.459+00:00"
+      }
+    }
+  },
+  "summary_rpc": {
+    "status": "ok",
+    "events_total": 3,
+    "e1_count": 2,
+    "e1_transitions": {
+      "6->8": 1,
+      "8->10": 1
+    },
+    "e2_count": 1,
+    "e2_distribution": {
+      "galaxy": 1
+    },
+    "bad_lines": 0,
+    "write_failures": 0,
+    "path": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t178\\config\\graph-telemetry.jsonl"
+  },
+  "silent_failure": {
+    "saveOk": true,
+    "pageErrors": 0,
+    "before": null,
+    "lineCountAfterFailure": 3,
+    "noExtraLine": true
+  },
+  "file": {
+    "lines": 5,
+    "badLines": 0,
+    "underUserStateDir": true,
+    "allHaveContext": true,
+    "contextSample": {
+      "kb_path": "C:\\Users\\Lam Tim\\AppData\\Local\\Temp\\memoria_p3_corpus",
+      "manifest_sha256": "236a48932bdb0c8a5aabe2644d97390e72526973b59919a547a13e9c7be6fc7f",
+      "head": null,
+      "measured_at": "2026-10-26T14:45:32.459+00:00"
+    },
+    "bytes": 2524
+  },
+  "append_only_prefix": true
+}
