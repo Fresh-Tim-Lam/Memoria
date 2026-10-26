@@ -1,0 +1,17 @@
+exit=0
+subcommands=['due', 'init', 'grade']
+compute_next_state=True
+
+usage: fsrs.py [-h] [--selftest] {due,init,grade} ...
+
+Memoria FSRS-5 确定性间隔重复调度（标准库实现，无第三方依赖、不联网）
+
+positional arguments:
+  {due,init,grade}
+    due             列出到期卡片
+    init            为新卡建立初始状态
+    grade           施加一次评分
+
+options:
+  -h, --help        show this help message and exit
+  --selftest        运行内置断言自检

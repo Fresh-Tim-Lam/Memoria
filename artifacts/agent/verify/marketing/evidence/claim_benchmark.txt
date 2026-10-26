@@ -1,0 +1,17 @@
+== docs/design/graph-benchmark.md（基线/结果）==
+> ⚠️ **2026-09-16 修正**：原先拍的是"目标档 `frame_ms` p95 下降 ≥40%"。§5.2 实测目标档是 **3958ms/帧**（star 单群 9108ms），
+| star | 5000 | 4999 | 5000 | **1515.5** | 9093.1 | 14.8 | **9108.5** | **0.11 fps** | 89993 |
+2. **成本由最大连通分量决定**：同为 5000 节点，`partitioned`（最大群 40）**420ms** vs `star`（单群 5000）**9108ms** —— 差 **22×**。
+| **star** | **5000** | 6 → **1** | **9108.5 → 681.7** | **9252.5 → 710.3** | **−92.3%** |
+
+== docs/conventions/version.md（0.4.6 冷启动，节选）==
+...、frontmatter 继续拒绝并给可见提示）；粘贴替换改为**单次 commitRange**（单撤销，无"删了没粘上"半成品态）。矩阵 146/146 PASS（8 类块 × 3 跨度 × 4 操作 × 5 类断言）。② **冷启动 15.4s → 2.4s（−84%）** —— 根因不是打开文件，而是打开之前的图谱分组标签：293 个分组逐组调 `ensure_lexical_index`，**无进程内缓存**，每次重新 json.load 4.4MB ⇒ 11.4s；加 (mtime,size) 双失效缓存后 **279× 加速（13259ms...
+
+== scripts/benchmark/graph/results/ 原始产物 ==
+render-after-d1_346e5f95.md
+render-baseline-target_346e5f95.md
+render-baseline_346e5f95.md
+
+== README.md 中对应行 ==
+| 5,000-node star graph, full frame | **9108 ms → 41.5 ms** (~212×, ≈23 fps); load **136 s → 0.35 s** | measured at **v0.3.4**; baseline + results in [graph-benchmark.md](docs/design/graph-benchmark.md) and raw artifacts in `scripts/benchmark/graph/results/` |
+| Cold start | **15.4 s → 2.4 s (−84%)** | measured at **v0.4.6**; protocol in [benchmark-measurement-protocol.md](docs/design/benchmark-measurement-protocol.md) |

@@ -1,0 +1,6 @@
+DEFAULT_PRESET = auto-approval
+manual-approval: approval='ask' desc=每次写入都等你确认后才落盘。
+auto-approval: approval='auto' desc=常规写入自动放行；含删除类改动时仍会问你一次。
+all-access: approval='allow-all' desc=任何工具调用都不再询问（仍写前备份、可整批撤销）。
+DEFAULT_POLICY = DefaultApprovalPolicy
+RISKY_OPS in approvals.py: delete_file

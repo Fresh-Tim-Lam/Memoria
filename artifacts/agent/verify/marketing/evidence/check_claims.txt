@@ -1,0 +1,65 @@
+仓库根：D:\AAA_Jupyter\Memoria
+
+  PASS version: __version__.py 可解析
+  PASS version: README.md badge 与 __version__ 一致
+  PASS version: README.md 正文当前版本与 __version__ 一致
+  PASS version: README.cn.md badge 与 __version__ 一致
+  PASS version: README.cn.md 正文当前版本与 __version__ 一致
+  PASS tag: 规范文档存在且含三步机检
+  PASS metadata: 文件存在
+  PASS metadata: description(en) 非空且 ≤350 字符
+  PASS metadata: description(zh) 非空且 ≤350 字符
+  PASS metadata: topics 数量在 10–20
+  PASS metadata: topics 均为小写连字符
+  PASS screenshots: resources/screenshots 存在且有 8 张 demo-*.png
+  PASS screenshots: README.md 引用 8 张且全部存在
+  PASS screenshots: README.cn.md 引用 8 张且全部存在
+  PASS claims: 文件存在且含状态词表
+  PASS claims: 断言条目 ≥ 20
+  PASS claims: README.md 链到 claims.md
+  PASS claims: README.md 未出现禁止词条
+  PASS claims: README.cn.md 链到 claims.md
+  PASS claims: README.cn.md 未出现禁止词条
+  PASS graph: 本体冻结文档含「agent 侧从不读边」
+  PASS graph: 本体冻结文档含「完全不读边」
+  PASS graph: 本体裁决含「必须先证明它能改变一个 agent 决策」
+  PASS graph: 可视化文档 FROZEN
+  PASS graph: 可视化文档含人裁决 75%~165%
+  PASS graph: 可视化文档含「连续」裁决
+  PASS graph: README(en) 标注 design intent
+  PASS graph: README(zh) 标注设计理念
+  PASS graph: README(en) 未把图谱写成已实现 agent 检索
+  PASS benchmark: graph-benchmark 含 9108ms 基线
+  PASS benchmark: graph-benchmark 含 41.5ms 结果
+  PASS benchmark: version.md 含冷启动 15.4→2.4s
+  PASS benchmark: 原始产物 render-*.md 存在
+  PASS benchmark: README.md 的性能数字带版本/口径标注
+  PASS benchmark: README.cn.md 的性能数字带版本/口径标注
+  PASS agent: 读/审计/复习工具名存在
+  PASS agent: 链接写原语 attach_links/detach_links 存在
+  PASS agent: kb.link.create 纯边原语存在
+  PASS agent: MCP 暴露 4 把工具（outline/section/snippet/propose_write）
+  PASS agent: 默认审批档 = auto-approval
+  PASS agent: 三档语义（manual/auto/all-access）
+  PASS agent: 风险 op 才问（delete_file/rename_file 在 RISKY_OPS）
+  PASS agent: README.md 写清默认为自动审批档
+  PASS agent: README.cn.md 写清默认为自动审批档
+  PASS fsrs: 子命令 due/init/grade 存在
+  PASS fsrs: compute_next_state 存在
+  PASS review: 交接文档存在（FSRS 边界三条）
+  PASS privacy: 本地图谱埋点声明「不上传」
+  PASS privacy: 本地图谱埋点无网络调用
+  PASS privacy: 更新模块声明出网关闭⇒零请求
+  PASS privacy: 更新模块明确不做数字签名
+  PASS privacy: 出网开关默认语义有文档（缺省视为开）
+  PASS privacy: README.md 写明「不是数字签名」/出网开关
+  PASS privacy: README.cn.md 写明「不是数字签名」/出网开关
+  PASS links: README.md 相对链接/图片全部存在
+  PASS links: README.cn.md 相对链接/图片全部存在
+  PASS i18n: README.md 链到 README.cn.md
+  PASS i18n: README.cn.md 链到 README.md
+  PASS tests: README 写「1,600+」而非固定精确数
+  PASS tests: pytest 通过且当前数量 ≥1,600
+
+汇总：PASS=60 FAIL=0 合计 60 项
+结论：可机检断言全部有证据；禁止词条未出现
