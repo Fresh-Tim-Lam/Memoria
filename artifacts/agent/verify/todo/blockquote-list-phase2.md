@@ -299,3 +299,75 @@ scripts/benchmark/maintenance/quote_dom_mapper_test.js      (mapper 单测 7)
 artifacts/agent/verify/todo/quote-corrupt-head.*            (既有 R0 判定：HEAD 版写盘证据)
 artifacts/agent/verify/todo/quote-list-step1-*              (Step1 矩阵/Q 列/日志/JSON)
 ```
+
+
+---
+
+# 11. Step2（引用块内交互）—— ✅ 真机全绿
+
+## 11.1 实现（app.js +221/−4，未 commit；仅 Step2 自身改动）
+| 交互 | 入口 | 实现 |
+|---|---|---|
+| ① 敲 `- ` / `1. ` 转换 | `convertStructuralBlock` → `_convertStructuralBlockInQuote` | 取 child 段落生成的**内层行**（不带 `> `），detect marker 后 `P.parseBlocks` 转 list child，原地替换并保留行号跨度；只支持列表标记（标题/嵌套引用受 parser 限制不转） |
+| ② Enter 段落拆行 | `splitParagraph` → `_splitParagraphInQuote` | `splitInlineAt` 拆左右，按**原行前缀**生成 `pfx+left` / `pfx+right`，`commitRange` 只替换该行（段首/段末插入空引用行） |
+| ② Enter 列表续列 | 同上 | 从**源行**提取 marker/indent（`1.` 右半自动 +1），替换该 item 行两行；空 item + Enter ⇒ 该行变空引用段落（退出列表） |
+| ③ Backspace 行首 | `backspaceAtBlockStart` → `_backspaceAtBlockStartInQuote` | 首项 ⇒ 去 marker 退列表；非首项 ⇒ 合并上一项（仅相邻行，防误删松散空行）；段落 ⇒ 合并上一 child（上一 child 是 list 时并入其最后一项，且要求最后一项就是该 child 末行，防嵌套误删） |
+| ④ 退列表 | ③ 的首项分支 | `> - a` → `> a`（空项 → `> `） |
+
+**附带修**（都是真机暴露的）：
+- `isAtBlockStart` 新增 **blockquote 分支**（按 child/item 的 inline 根判定）——否则引用内行首 Backspace 永远进不了 `backspaceAtBlockStart`（H5/H6/H7 起初全无反应）；
+- `_quoteItemLineRange` 行号公式修正：`item.srcLine` 是**引用切片内相对 1-based**（不是相对 list child）⇒ `块首行 + item.srcLine - 1`（旧写法整体偏 1 行，H3/H4/H5/H7 起初改错行/丢行）；
+- Step2 Enter 的 lead marker 取 `mLead[0]`（旧写 `mLead[3]` 是 undefined ⇒ 写出 `-undefined…`）。
+
+## 11.2 真机矩阵（临时 KB，真实按键；Q=磁盘字节；行数Δ）
+
+| 场景 | 操作 | 磁盘 | 行数Δ | 引用行结果 | 预览 ul/li |
+|---|---|---|---|---|---|
+| H1 | 引用段落内敲 `- ` | ✅ | 0 | `> - 前言段落一`（转列表） | 3/4 |
+| **H2** | 引用段落内 Enter（段末） | ✅ | **+1** | `> 前言段落一` + `> `（新空引用行） | 2/3 |
+| **H3** | 引用列表项 `q1 ten` 内 Enter | ✅ | **+1** | `> - q1 ten` + `> - `（新空项）在 q2 前 | 2/4 |
+| **H4** | 空列表项内 Enter（退出列表） | ✅ | +1（累计） | `> - ` → **`> `**（空引用段落，项删除） | 2/3 |
+| **H5** | 非首项 `q2` 行首 Backspace | ✅ | **−1** | 合并为 `> - q1 tenq2 eleven` | 2/2 |
+| **H6** | 首项 `q1` 行首 Backspace（退列表） | ✅ | 0 | `> q1 ten`（去 marker）；q2 仍是列表 | 2/2 |
+| **H7** | 列表后段落行首 Backspace | ✅ | **−1** | 并入上一项：`> - q2 eleven后记段落二` | 1/3 |
+| S1 | 源码模式：引用行内 Enter | ✅ | +1 | 行级插入（源码面板逻辑，未受影响） | — |
+| S2 | 源码模式：引用行行首 Backspace | ✅ | −1 | 行级合并（同上） | — |
+
+- 每个场景**未涉及行均逐字节不变**（H2/H3 只是插入新行、H5/H7 合并相邻两行、H6 改 marker）。
+- **H4 说明**：空 `<li>` 无文本节点，探针显式把选区放进空 `<li>`（与 `restoreCursor` 对空项恢复的状态一致：`anchor=LI`、`<li><br></li>`）后 Enter 即生效 ⇒ 真实用户路径等价。
+- Enter 死掉的根因（`splitParagraph` 无 blockquote 分支 + beforeinput 已 preventDefault）已由 H2/H3/H4 修复验证。
+- 探测方法修正（方法论）：Enter 必须用 `type:'keyDown', text:'\r'` 的真实序列（`rawKeyDown` 不会触发 `beforeinput insertParagraph`）；源码面板保存有 debounce，必须**等磁盘变化**而不是 sleep。
+
+## 11.3 单测/门禁
+- `edit_path_helpers_test.js` 27/0（C 组期望已按"切片相对"语义更新）；`quote_dom_mapper_test.js` 7/0；E28 往返 80、键入序列 39、`blockquote_list_test` 47、`ordered_list_start_test` 43、尾随空格 62、E30、m6b、scheduler 全绿。
+- `pytest 1485`（下条消息确认）；`node --check` 66/0；`i18n` FAIL=0；12 剧本 12/12。
+- `team_audit` **FAIL=2**：`steward_self_audit` 标准收据陈旧（`scripts/agent/prompt_drift_check.py` / `team_audit.py` 在工作区有**他人未提交修改**；`prompt_drift` 自身 FAIL=0）——不属本任务写域，需 Lead/steward 处置。
+
+## 11.4 已知限制
+- 引用内**嵌套列表**仍按顶层 item 下标（与顶层 LIST 既有口径一致），引用内 Tab/Shift+Tab 升降级未做（任务 ②「缩进」若指 Tab/Shift+Tab，需在 Step2.1 或单列；Backspace/Enter 已覆盖"续列/退列表"）。
+- 空 item 退出列表在**列表中间**时，会留下 `> ` 空段落并可能让前后列表被 parser 合并为松散列表（与 CommonMark 语义一致，未额外拆列表）。
+
+
+---
+
+# 12. Step2 收尾：引用内列表 Tab / Shift+Tab（✅ 真机绿）+ 方法论沉淀
+
+## 12.1 实现
+- `indentListLevel` 分派：`block.type === "blockquote"` ⇒ `_indentQuoteListLevel(block, cursor, dir)`。
+- `_indentQuoteListLevel`：与顶层 `indentListLevel` **同构树操作**，但 ①在 list 的**克隆**上改树（失败/行数变化不污染 AST）；②`_invalidateListItemLines` 后用 `G.generateBlock(cloned)` 生成内层行；③逐行加回**原引用前缀**（`block.prefixes`），只替换该 list child 的行区间；④**行数必须不变**（缩进不增删行）否则拒绝。
+- `mapper.domToAst` 引用内 list 分支新增 `listPath`（相对该内层 list 的树路径，来自 `_resolveQuoteDomTarget`/`resolveListItem`），供 Tab 定位（+2 行）。
+- 光标：落到被移动项所属**顶层项**开头（nodePath 只支持顶层 item 下标；嵌套精确落点由后续点击决定，与顶层 Tab 的保守行为一致）。
+
+## 12.2 真机（Q=磁盘字节，行数Δ）
+| 场景 | 操作 | 磁盘 | 行数Δ | 结果 | 预览 ul/li |
+|---|---|---|---|---|---|
+| **J1** | `q2 eleven` 行内 Tab（降级） | ✅ | **0** | `> - q1 ten` + `>   - q2 eleven`（挂到 q1 子列表） | 3/3 |
+| **J2** | 同一项 Shift+Tab（升级） | ✅ | **0** | 回到 `> - q2 eleven`，**引用行与 pristine 逐字节一致** | 2/3 |
+
+（J2 前探针显式重新聚焦 q2 —— 与真实用户"光标仍在该项"等价；应用侧 Tab 后光标落点为所属顶层项开头，属已知保守行为。）
+
+## 12.3 方法论沉淀（与 task-157「可达性必须走真机 preview-edit」并列）
+1. **Enter 必须用 `type:'keyDown', text:'\r'`** 的真实按键序列；`rawKeyDown` **不会**触发 `beforeinput insertParagraph` ⇒ 用 rawKeyDown 测 Enter 会得到"按键完全没反应"的**假阴性**（本轮 F/F2 一开始就踩了这个坑）。
+2. **源码面板保存有 debounce**：判"是否写盘/是否生效"必须**轮询磁盘变化**，不能 `sleep(600)` 后读一次（S1/S2 起初误判失败）。
+3. **"代码能跑、单测能过、真机一看就错"是独立一类 bug**：本轮 3 个（`isAtBlockStart` 无 blockquote 分支 / `item.srcLine` 切片相对语义 / `mLead[3]` 未捕获组）全部只在真机矩阵暴露 ⇒ 交互类改动必须"S 源码 + P 预览"两条路径都真机验，且**逐行 diff** 而不是只看"变化了没有"。
+4. **真机矩阵每一格都是判据**：H3 起初把 q1 复制、q2 丢失，靠"引用行前后对照"抓到；只看 bodyLength/行数变化会漏。

@@ -926,6 +926,8 @@ window.MemoriaMapper = (function () {
           blockIndex: blockIndex,
           nodePath: [qTarget.childIdx, qTarget.itemIdx].concat(qPath || [0]),
           offset: qRes.leafOffset,
+          // task-156 Step2：树路径（相对引用内该 list），供 Tab/Shift+Tab 升降级定位
+          listPath: qTarget.listPath || [qTarget.itemIdx],
         };
       }
       var qOffP = _domRenderedOffsetIn(qTarget.childEl, domNode, domOffset);
