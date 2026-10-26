@@ -7938,3 +7938,178 @@ body.-agent-input-resizing { cursor: ns-resize; user-select: none; }
 }
 .-agent-cache-hit:hover { color: var(--text-primary); }
 #agent-ctx-ring { order: 0; }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   2026-10-27 task-186 追加：启动蒙层（星河）+ 设置项样式（本块只在文件末尾追加，
+   不推位既有 `app.css:<行号>` 文档锚点）。行为/生命周期见 `js/splash.js` 顶部注释。
+   · 层本身 fixed + 最高 z-index，覆盖整个应用窗口（含外框）；淡出 320ms 后由 JS 移除。
+   · 淡出开始即 `pointer-events:none`（由 JS 写内联），不挡用户输入。
+   · `.-memoria-splash--static`：无 Canvas / prefers-reduced-motion 时的**纯 CSS 静态星空**，
+     绝不白屏（这里用多重 radial-gradient 造星点，零图片零请求）。
+   · reduced-motion 时 CSS 动画/过渡全部禁用（与 JS 不启动 rAF 双保险）。
+   ═══════════════════════════════════════════════════════════════════════════════ */
+.-memoria-splash {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(120% 90% at 50% 0%, #0b1026 0%, #070a18 46%, #03040a 100%);
+    opacity: 1;
+    transition: opacity 320ms ease;
+    contain: strict;
+    user-select: none;
+    cursor: default;
+}
+.-memoria-splash--leaving { opacity: 0; }
+.-memoria-splash__sky { position: absolute; inset: 0; }
+/* 画布 = 视口 1.16 倍宽（余量给"缓慢漂移"），**单层 + 0.6 倍分辨率**：
+   一次性绘制后只走 CSS 动画 ⇒ 启动主线程零占用；低分辨率省掉绝大部分纹理上传/光栅化
+   （实测：双层 1.4×DPR1 版本让冷启动中位数 +124ms；瘦身后降到测量噪声内）。 */
+.-memoria-splash__canvas {
+    position: absolute;
+    top: 0;
+    left: -8%;
+    width: 116%;
+    height: 100%;
+    display: block;
+    opacity: 0.9;
+    animation: memoria-splash-drift 26s ease-in-out infinite alternate,
+               memoria-splash-twinkle 5.6s ease-in-out infinite;
+}
+.-memoria-splash__nebula {
+    position: absolute;
+    inset: -10%;
+    background:
+        radial-gradient(58% 42% at 28% 22%, rgba(84, 124, 255, 0.17), transparent 70%),
+        radial-gradient(52% 38% at 74% 34%, rgba(176, 92, 255, 0.13), transparent 70%),
+        radial-gradient(66% 52% at 50% 84%, rgba(36, 204, 222, 0.10), transparent 75%);
+}
+/* 纯 CSS 静态星空（无 canvas 时的降级；canvas 正常时不可见） */
+.-memoria-splash--static .-memoria-splash__canvas { display: none; }
+.-memoria-splash--static .-memoria-splash__sky::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(1.2px 1.2px at 12% 18%, rgba(255, 255, 255, 0.85), transparent 60%),
+        radial-gradient(1px 1px at 32% 42%, rgba(200, 220, 255, 0.8), transparent 60%),
+        radial-gradient(1.4px 1.4px at 58% 22%, rgba(255, 255, 255, 0.9), transparent 60%),
+        radial-gradient(1px 1px at 72% 58%, rgba(190, 210, 255, 0.75), transparent 60%),
+        radial-gradient(1.6px 1.6px at 86% 30%, rgba(255, 255, 255, 0.85), transparent 60%),
+        radial-gradient(1px 1px at 18% 74%, rgba(210, 230, 255, 0.7), transparent 60%),
+        radial-gradient(1.2px 1.2px at 44% 86%, rgba(255, 255, 255, 0.8), transparent 60%),
+        radial-gradient(1px 1px at 66% 80%, rgba(200, 220, 255, 0.7), transparent 60%),
+        radial-gradient(1.3px 1.3px at 92% 76%, rgba(255, 255, 255, 0.8), transparent 60%);
+    opacity: 0.75;
+}
+.-memoria-splash__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    text-align: center;
+}
+.-memoria-splash__brand {
+    font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: #eaf2ff;
+    text-shadow: 0 0 18px rgba(120, 170, 255, 0.55), 0 0 46px rgba(90, 130, 255, 0.28);
+    animation: memoria-splash-breathe 3.4s ease-in-out infinite;
+}
+.-memoria-splash__hint {
+    font-size: 0.8125rem;
+    letter-spacing: 0.08em;
+    color: rgba(200, 220, 255, 0.72);
+    min-height: 1.2em;
+}
+.-memoria-splash__hint::after {
+    content: "";
+    display: inline-block;
+    width: 2.6em;
+    height: 1px;
+    margin-left: 0.5em;
+    vertical-align: middle;
+    background: linear-gradient(90deg, rgba(160, 200, 255, 0), rgba(200, 225, 255, 0.9), rgba(160, 200, 255, 0));
+    animation: memoria-splash-shimmer 2.2s ease-in-out infinite;
+}
+.-memoria-splash__meteor {
+    position: absolute;
+    top: 18%;
+    left: 8%;
+    width: 130px;
+    height: 1.5px;
+    background: linear-gradient(90deg, rgba(190, 220, 255, 0), rgba(235, 245, 255, 0.95));
+    box-shadow: 0 0 6px rgba(160, 200, 255, 0.55);
+    transform: rotate(28deg);
+    opacity: 0;
+    animation: memoria-splash-meteor 5.6s ease-in 1.2s infinite;
+}
+@keyframes memoria-splash-nebula {
+    from { transform: scale(1) translate3d(0, 0, 0); opacity: 0.85; }
+    to { transform: scale(1.06) translate3d(-1.5%, 1%, 0); opacity: 1; }
+}
+@keyframes memoria-splash-breathe {
+    0%, 100% { opacity: 0.92; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-2px); }
+}
+@keyframes memoria-splash-shimmer {
+    0%, 100% { opacity: 0.25; transform: translateX(-2px); }
+    50% { opacity: 1; transform: translateX(2px); }
+}
+@keyframes memoria-splash-drift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-7%, 1.2%, 0); }
+}
+@keyframes memoria-splash-twinkle {
+    0%, 100% { opacity: 0.30; }
+    50% { opacity: 0.85; }
+}
+@keyframes memoria-splash-meteor {
+    0% { opacity: 0; transform: rotate(28deg) translate3d(0, 0, 0) scaleX(0.35); }
+    3% { opacity: 1; }
+    11% { opacity: 0.9; }
+    16% { opacity: 0; transform: rotate(28deg) translate3d(280px, 150px, 0) scaleX(1); }
+    100% { opacity: 0; transform: rotate(28deg) translate3d(280px, 150px, 0) scaleX(1); }
+}
+/* ★ 无障碍基线：reduced-motion ⇒ 无动画、无流星、无画布（只留静态蒙层 + 文字）
+   注意：**不用 `!important`**（仓库样式纪律：靠特异性取胜，见 tests/test_checkbox_dot_style.py）。
+   `html .-memoria-splash *` = (0,1,1)，高于基础类选择器 (0,1,0) ⇒ 天然覆盖，日后也仍可被覆盖。 */
+@media (prefers-reduced-motion: reduce) {
+    html .-memoria-splash,
+    html .-memoria-splash * {
+        animation: none;
+        transition: none;
+    }
+    html .-memoria-splash .-memoria-splash__meteor { display: none; }
+    html .-memoria-splash .-memoria-splash__canvas { display: none; }
+}
+/* 设置面板里新增的「启动动画」小行（挂在既有「显示」页签的 -settings-section 骨架里） */
+#memoria-splash-settings { margin-top: 0.5rem; }
+#memoria-splash-settings .-splash-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.3rem 0;
+}
+#memoria-splash-settings .-splash-row-label {
+    flex: 0 0 auto;
+    min-width: 7rem;
+    color: var(--text-primary);
+    font-size: 0.8125rem;
+}
+#memoria-splash-settings .-splash-toggle { flex: 0 0 auto; cursor: pointer; }
+#memoria-splash-settings .-splash-range { flex: 1 1 auto; max-width: 16rem; cursor: pointer; }
+#memoria-splash-settings .-splash-volume-value {
+    flex: 0 0 auto;
+    min-width: 2.5rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+}

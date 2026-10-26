@@ -1,0 +1,124 @@
+{
+  "rounds": 5,
+  "method": "interleaved A/B (same window; alternates order each round)",
+  "metric": "process start t0 -> html.-booting removed (existing marquee end)",
+  "on": {
+    "n": 5,
+    "median": 3242,
+    "min": 2264,
+    "max": 3379,
+    "all": [
+      2264,
+      3379,
+      3242,
+      3175,
+      3379
+    ]
+  },
+  "off": {
+    "n": 5,
+    "median": 3281,
+    "min": 2158,
+    "max": 3663,
+    "all": [
+      2158,
+      3389,
+      3281,
+      3225,
+      3663
+    ]
+  },
+  "delta_ms": -39,
+  "trials": [
+    {
+      "round": 1,
+      "variant": "on",
+      "label": "ab-on-1",
+      "median_ms": 2264,
+      "all_ms": [
+        2264
+      ]
+    },
+    {
+      "round": 1,
+      "variant": "off",
+      "label": "ab-off-1",
+      "median_ms": 2158,
+      "all_ms": [
+        2158
+      ]
+    },
+    {
+      "round": 2,
+      "variant": "off",
+      "label": "ab-off-2",
+      "median_ms": 3389,
+      "all_ms": [
+        3389
+      ]
+    },
+    {
+      "round": 2,
+      "variant": "on",
+      "label": "ab-on-2",
+      "median_ms": 3379,
+      "all_ms": [
+        3379
+      ]
+    },
+    {
+      "round": 3,
+      "variant": "on",
+      "label": "ab-on-3",
+      "median_ms": 3242,
+      "all_ms": [
+        3242
+      ]
+    },
+    {
+      "round": 3,
+      "variant": "off",
+      "label": "ab-off-3",
+      "median_ms": 3281,
+      "all_ms": [
+        3281
+      ]
+    },
+    {
+      "round": 4,
+      "variant": "off",
+      "label": "ab-off-4",
+      "median_ms": 3225,
+      "all_ms": [
+        3225
+      ]
+    },
+    {
+      "round": 4,
+      "variant": "on",
+      "label": "ab-on-4",
+      "median_ms": 3175,
+      "all_ms": [
+        3175
+      ]
+    },
+    {
+      "round": 5,
+      "variant": "on",
+      "label": "ab-on-5",
+      "median_ms": 3379,
+      "all_ms": [
+        3379
+      ]
+    },
+    {
+      "round": 5,
+      "variant": "off",
+      "label": "ab-off-5",
+      "median_ms": 3663,
+      "all_ms": [
+        3663
+      ]
+    }
+  ]
+}

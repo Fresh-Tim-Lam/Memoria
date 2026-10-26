@@ -1,0 +1,248 @@
+{
+  "schema": "probe-cases/1",
+  "kb": "tests/probe-kb",
+  "contract": "docs/design/view-surface-contract.md#5（契约测试清单 C1–C12）",
+  "coordinate": "文本坐标：块 = { match|equals|heading, text }（块 id 由实现生成，无法预先写死，故用语义匹配）；块内位置 = { block, path[], offset }；整篇位置 = { line }（1-based 源码行）。不使用像素或 DOM 节点。",
+  "notes": [
+    "期望值来自「真源文本 + 行为契约」，不来自「与 legacy 一致」（见 preview-render-refactor.md §1.10 B）。",
+    "cases[] 可被 pytest / 浏览器脚本消费：每条 steps[] 是一条可复现序列，expect{} 是行为断言。",
+    "同一脚本应在 LegacySurface 与 NewSurface 上各跑一遍（C11）。"
+  ],
+  "cases": [
+    {
+      "id": "sel_id_stability",
+      "covers": ["C1"],
+      "target": { "file": "corpus/02-inline-edges.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/02-inline-edges.md" },
+        { "do": "snapshotBlockIds", "store": "before", "scope": "all" },
+        { "do": "applyEdit", "kind": "insertText",
+          "at": { "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" }, "path": [], "offset": 0 },
+          "text": "X", "cause": "user" },
+        { "do": "snapshotBlockIds", "store": "after", "scope": "all" }
+      ],
+      "expect": {
+        "invariant": "I3 / C1",
+        "assert": "除被编辑块外，before 与 after 中相同逻辑块的 id 逐一相等（下标位移不得改变 id）"
+      }
+    },
+    {
+      "id": "sel_text_fidelity",
+      "covers": ["C2"],
+      "target": { "file": "corpus/01-ime-zh.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/01-ime-zh.md" },
+        { "do": "flush" },
+        { "do": "save", "unit": "block" }
+      ],
+      "expect": {
+        "invariant": "I2 / C2",
+        "assert": "磁盘文件与打开前逐字节相同（无编辑、无 round-trip 改写）"
+      }
+    },
+    {
+      "id": "sel_typing_ascii",
+      "covers": ["C3", "C4"],
+      "target": { "file": "corpus/02-inline-edges.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/02-inline-edges.md" },
+        { "do": "focusBlock", "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" } },
+        { "do": "insertText", "at": { "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" }, "path": [], "offset": 0 }, "text": "abc", "cause": "user", "label": "块首" },
+        { "do": "insertText", "at": { "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" }, "path": [], "offset": 3 }, "text": "abc", "cause": "user", "label": "块中" },
+        { "do": "insertText", "at": { "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" }, "path": [], "offset": 6 }, "text": "abc", "cause": "user", "label": "块尾" },
+        { "do": "flush" }
+      ],
+      "expect": {
+        "invariant": "C3 / C4",
+        "assert": "每次按键当帧读 DOM 已含该字符；flush 后真源逐字包含 abc；getSrcRangeForSelection() 坐标与 DOM 一致"
+      }
+    },
+    {
+      "id": "sel_typing_ime",
+      "covers": ["C3", "C4"],
+      "target": { "file": "corpus/01-ime-zh.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/01-ime-zh.md" },
+        { "do": "focusBlock", "block": { "match": "contains", "text": "在此处切换到中文输入法" } },
+        { "do": "composition", "phase": "start", "at": { "block": { "match": "contains", "text": "在此处切换到中文输入法" }, "path": [], "offset": 0 } },
+        { "do": "composition", "phase": "update", "text": "ceshi" },
+        { "do": "composition", "phase": "end", "text": "测试", "cause": "ime" },
+        { "do": "flush" }
+      ],
+      "expect": {
+        "invariant": "C3 / C4（IME 路径）",
+        "assert": "组合期间不触发块级重渲；compositionend 后真源逐字出现「测试」"
+      }
+    },
+    {
+      "id": "sel_enter_backspace",
+      "covers": ["C2", "C4"],
+      "target": { "file": "corpus/03-block-boundaries.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/03-block-boundaries.md" },
+        { "do": "applyEdit", "kind": "mergeBlock", "count": 3, "cause": "user", "label": "第二段行首退格 ×3",
+          "at": { "block": { "match": "contains", "text": "这是第二段" }, "path": [], "offset": 0 } },
+        { "do": "applyEdit", "kind": "splitBlock", "count": 3, "cause": "user", "label": "第一段行尾回车 ×3",
+          "at": { "block": { "match": "contains", "text": "这是第一段" }, "path": [], "offset": "end" } },
+        { "do": "flush" }
+      ],
+      "expect": {
+        "invariant": "C2 / C4",
+        "assert": "合并/拆分后的真源逐字正确（段合并成一行、段在光标处拆为新块），且与原始文本仅差被操作字符"
+      }
+    },
+    {
+      "id": "sel_block_edit",
+      "covers": ["C5", "C8"],
+      "target": { "file": "corpus/04-non-editable.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/04-non-editable.md" },
+        { "do": "doubleClick", "block": { "match": "contains", "text": "def add(a, b):" } },
+        { "do": "editBlockLine", "line": "    return result", "to": "    return result  # edited", "cause": "user" },
+        { "do": "key", "key": "Escape" },
+        { "do": "flush" }
+      ],
+      "expect": {
+        "invariant": "C5 / 冻结规则（§3.4）",
+        "assert": "编辑期间即使发生块级重渲，textarea 仍留在文档中且内容不丢；Esc 后真源含 '# edited'"
+      }
+    },
+    {
+      "id": "sel_jump_head_mid_tail",
+      "covers": ["C6"],
+      "target": { "file": "corpus/06-links-and-kp.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/06-links-and-kp.md" },
+        { "do": "revealRange", "to": { "block": { "heading": "目标-头" } }, "opts": { "scroll": true, "flash": true } },
+        { "do": "readFirstScreenBlock", "store": "head" },
+        { "do": "revealRange", "to": { "block": { "heading": "目标-中" } }, "opts": { "scroll": true, "flash": true } },
+        { "do": "readFirstScreenBlock", "store": "mid" },
+        { "do": "revealRange", "to": { "block": { "heading": "目标-尾" } }, "opts": { "scroll": true, "flash": true } },
+        { "do": "readFirstScreenBlock", "store": "tail" }
+      ],
+      "expect": {
+        "invariant": "C6",
+        "assert": "每个目标：首屏第一块的 srcStart ≤ L ≤ srcEnd（±1 行），L 为目标标题所在源码行"
+      }
+    },
+    {
+      "id": "sel_switch_mode",
+      "covers": ["C7"],
+      "target": { "file": "corpus/01-ime-zh.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/01-ime-zh.md" },
+        { "do": "scrollToBlock", "block": { "match": "contains", "text": "中英混排的句子" } },
+        { "do": "getScrollAnchor", "store": "anchor0" },
+        { "do": "setMode", "mode": "preview" },
+        { "do": "getScrollAnchor", "store": "anchor1" },
+        { "do": "setMode", "mode": "split" },
+        { "do": "getScrollAnchor", "store": "anchor2" },
+        { "do": "setMode", "mode": "source" },
+        { "do": "getScrollAnchor", "store": "anchor3" },
+        { "do": "setMode", "mode": "preview" },
+        { "do": "getScrollAnchor", "store": "anchor4" }
+      ],
+      "expect": {
+        "invariant": "C7 / F6",
+        "assert": "anchor0..anchor4 的源码行号一致（切模式锚点不漂）"
+      }
+    },
+    {
+      "id": "sel_interaction_alive",
+      "covers": ["C8"],
+      "target": { "files": ["corpus/05-images.md", "corpus/06-links-and-kp.md"] },
+      "steps": [
+        { "do": "openFile", "file": "corpus/06-links-and-kp.md" },
+        { "do": "forceRerenderAndScroll", "cycles": 20 },
+        { "do": "click", "block": { "match": "contains", "text": "[[alpha]]" }, "expect": "wikilink 激活回调 onLinkActivate" },
+        { "do": "openFile", "file": "corpus/05-images.md" },
+        { "do": "doubleClick", "block": { "match": "contains", "text": "probe-01.png" } },
+        { "do": "assertBand", "block": { "match": "contains", "text": "probe-02.png" } }
+      ],
+      "expect": {
+        "invariant": "C8",
+        "assert": "任意重渲/复用/视口移动后：wikilink 仍可点、图片仍可双击进块编辑、KP 高亮 band 仍按块身份定位正确"
+      }
+    },
+    {
+      "id": "sel_scroll_stress",
+      "covers": ["C9"],
+      "target": { "file": "scale/scale-5k.md" },
+      "steps": [
+        { "do": "openFile", "file": "scale/scale-5k.md" },
+        { "do": "scroll", "times": 200, "insertCharEvery": 20, "char": "z",
+          "at": { "block": { "match": "contains", "text": "跳转示例" }, "path": [], "offset": "end" } },
+        { "do": "collectLongTasks", "store": "longtasks" }
+      ],
+      "expect": {
+        "invariant": "C9（性能预算）",
+        "assert": "滚动 200 次无长任务 > 50 ms；编辑不卡；按键 → 更新真源 ≤ 16 ms；flush() 无待办时 ≤ 0.1 ms"
+      }
+    },
+    {
+      "id": "sel_two_consumers",
+      "covers": ["C10"],
+      "target": { "file": "corpus/01-ime-zh.md" },
+      "steps": [
+        { "do": "renderAll", "consumer": "preview", "file": "corpus/01-ime-zh.md" },
+        { "do": "appendChunk", "consumer": "bubble", "file": "corpus/01-ime-zh.md", "chunkMode": "byBlock" },
+        { "do": "compareBlockSequence", "a": "preview", "b": "bubble" }
+      ],
+      "expect": {
+        "invariant": "I1 / C10",
+        "assert": "两消费者的块序列一致，且每块文本内容逐字相同"
+      }
+    },
+    {
+      "id": "sel_plug_parity",
+      "covers": ["C11"],
+      "target": { "files": ["corpus/*.md", "scale/scale-1k.md"] },
+      "steps": [
+        { "do": "runScriptOn", "surface": "legacy", "cases": ["sel_typing_ascii", "sel_enter_backspace", "sel_jump_head_mid_tail", "sel_switch_mode", "sel_undo_redo"] },
+        { "do": "runScriptOn", "surface": "new", "cases": ["sel_typing_ascii", "sel_enter_backspace", "sel_jump_head_mid_tail", "sel_switch_mode", "sel_undo_redo"] },
+        { "do": "diff", "a": "legacy", "b": "new" }
+      ],
+      "expect": {
+        "invariant": "C11",
+        "assert": "同一脚本在 legacy 与 new 上：逐字文本 + 落点行号一致；不一致处标给人裁决，不以老实现为准"
+      }
+    },
+    {
+      "id": "sel_switch_lossless",
+      "covers": ["C12"],
+      "target": { "file": "corpus/01-ime-zh.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/01-ime-zh.md" },
+        { "do": "setCursor", "at": { "block": { "match": "contains", "text": "拼音中途切换" }, "path": [], "offset": 5 } },
+        { "do": "setMode", "mode": "split" },
+        { "do": "getScrollAnchor", "store": "anchor0" },
+        { "do": "getCursor", "store": "cursor0" },
+        { "do": "switchTo", "surface": "new" },
+        { "do": "switchTo", "surface": "legacy" },
+        { "do": "getScrollAnchor", "store": "anchor1" },
+        { "do": "getCursor", "store": "cursor1" }
+      ],
+      "expect": {
+        "invariant": "C12 / §4.2 交接契约",
+        "assert": "文本/光标/锚点回到原处（anchor0==anchor1、cursor0==cursor1）；任一步失败则回滚到老插头并 onDegraded('switch-failed')"
+      }
+    },
+    {
+      "id": "sel_undo_redo",
+      "covers": ["C2"],
+      "target": { "file": "corpus/02-inline-edges.md" },
+      "steps": [
+        { "do": "openFile", "file": "corpus/02-inline-edges.md" },
+        { "do": "insertText", "at": { "block": { "match": "contains", "text": "这是加粗之前可以打字的一句" }, "path": [], "offset": 0 }, "text": "0123456789", "cause": "user" },
+        { "do": "flush" },
+        { "do": "undo", "times": 3 },
+        { "do": "redo", "times": 3 },
+        { "do": "flush" }
+      ],
+      "expect": {
+        "invariant": "C2 / 快照语义（F2）",
+        "assert": "undo×3 后真源比打完后短；redo×3 后真源回到 undo 前状态，逐字一致"
+      }
+    }
+  ]
+}

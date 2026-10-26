@@ -1,0 +1,411 @@
+{
+  "generated_at": "2026-10-26T16:23:51.080Z",
+  "port": 9900,
+  "target_url": "http://127.0.0.1:65271/",
+  "checks": [
+    {
+      "id": "T-splash-1a 冷启动确实出现过蒙层",
+      "ok": true,
+      "detail": "everShown=true firstShownAt=1793031830650 fadeStart=1793031831498 removedAt=1793031831825 淡出原因=ready",
+      "data": {
+        "everShown": true,
+        "firstShownAt": 1793031830650,
+        "fadeStartAt": 1793031831498,
+        "removedAt": 1793031831825,
+        "mode": "canvas",
+        "reducedMotion": false,
+        "fadeReason": "ready",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      }
+    },
+    {
+      "id": "T-splash-1b attach 当下是否为\"仍在显示\"（尾巴也算）",
+      "ok": true,
+      "detail": "是：冷启动截图 shot-cold-splash.png",
+      "data": null
+    },
+    {
+      "id": "T-splash-1c 真实就绪后淡出（fadeReason=ready/cap，且不早于就绪）",
+      "ok": true,
+      "detail": "fadeReason=ready 停留=848ms",
+      "data": null
+    },
+    {
+      "id": "T-splash-1d 刷新（同窗口会话）不再出现蒙层",
+      "ok": true,
+      "detail": "hasEl=false everShown=false（sessionStorage 标记生效）",
+      "data": null
+    },
+    {
+      "id": "T-splash-3a reduced-motion：蒙层为静态（无 canvas 动画、无 CSS 动画）",
+      "ok": true,
+      "detail": "mode=static reducedMotion=true canvasDisplay=none brandAnimation=none",
+      "data": {
+        "screenshot": "shot-reduced-motion-static.png"
+      }
+    },
+    {
+      "id": "T-splash-3b reduced-motion 下仍有静态蒙层 + 文字（不是白屏）",
+      "ok": true,
+      "detail": "brand=\"Memoria\" rect={\"w\":216.3,\"h\":51} hint=\"正在唤醒星海…\"",
+      "data": null
+    },
+    {
+      "id": "T-splash-6 Canvas 不可用 ⇒ 降级静态蒙层、不白屏",
+      "ok": true,
+      "detail": "mode=static canvasDisplay=none brand=\"Memoria\" hint=\"正在唤醒星海…\"",
+      "data": {
+        "screenshot": "shot-force-static-fallback.png"
+      }
+    },
+    {
+      "id": "T-splash-4a 音效默认【关】且音量默认 35%",
+      "ok": true,
+      "detail": "checkbox=false volume=35",
+      "data": null
+    },
+    {
+      "id": "T-splash-4b 开启后确实发声（AudioContext 成功 running）",
+      "ok": true,
+      "detail": "audioStarted=true audioBlocked=0 errors=[]",
+      "data": null
+    },
+    {
+      "id": "T-splash-4c 音量可调（80%）",
+      "ok": true,
+      "detail": "volume=80 读数=80%",
+      "data": null
+    },
+    {
+      "id": "T-splash-4d 设置持久化到既有 ui_settings 的 splash 段",
+      "ok": true,
+      "detail": "ui_settings.splash = {\"sound\":true,\"volume\":0.8}",
+      "data": null
+    },
+    {
+      "id": "T-splash-4e 刷新后偏好仍生效（sound=true / volume=80%）",
+      "ok": true,
+      "detail": "prefs={\"sound\":true,\"volume\":0.8}",
+      "data": null
+    },
+    {
+      "id": "T-splash-5a 音频失败被静默跳过（计数可观测、无未捕获异常）",
+      "ok": true,
+      "detail": "audioBlocked=1 audioStarted=false exceptions=[]",
+      "data": null
+    },
+    {
+      "id": "T-splash-5b 音频失败不影响启动（-booting 已按既有逻辑移除 + 无报错弹窗）",
+      "ok": true,
+      "detail": "booting=false flashError=false",
+      "data": null
+    },
+    {
+      "id": "T-splash-7 无任何外部网络请求（只有本机静态资源）",
+      "ok": true,
+      "detail": "外部资源=[]",
+      "data": null
+    }
+  ],
+  "snapshots": {
+    "cold_attached": {
+      "now": 1793031831091,
+      "hasEl": true,
+      "className": "-memoria-splash",
+      "pointerEvents": "auto",
+      "opacity": "1",
+      "zIndex": "2147483000",
+      "brandText": "Memoria",
+      "brandAnimation": "memoria-splash-breathe",
+      "brandRect": {
+        "w": 216.3,
+        "h": 51
+      },
+      "hintText": "正在唤醒星海…",
+      "canvasDisplay": "block",
+      "canvasVisible": true,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031830650,
+        "fadeStartAt": 0,
+        "removedAt": 0,
+        "mode": "canvas",
+        "reducedMotion": false,
+        "fadeReason": "",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": true,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "cold_after": {
+      "now": 1793031831828,
+      "hasEl": false,
+      "className": null,
+      "pointerEvents": null,
+      "opacity": null,
+      "zIndex": null,
+      "brandText": null,
+      "brandAnimation": null,
+      "brandRect": null,
+      "hintText": null,
+      "canvasDisplay": null,
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031830650,
+        "fadeStartAt": 1793031831498,
+        "removedAt": 1793031831825,
+        "mode": "canvas",
+        "reducedMotion": false,
+        "fadeReason": "ready",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": false,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "reload_no_splash": {
+      "now": 1793031832888,
+      "hasEl": false,
+      "className": null,
+      "pointerEvents": null,
+      "opacity": null,
+      "zIndex": null,
+      "brandText": null,
+      "brandAnimation": null,
+      "brandRect": null,
+      "hintText": null,
+      "canvasDisplay": null,
+      "canvasVisible": false,
+      "stats": {
+        "everShown": false,
+        "firstShownAt": 0,
+        "fadeStartAt": 0,
+        "removedAt": 0,
+        "mode": "idle",
+        "reducedMotion": false,
+        "fadeReason": "",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": false,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "reduced_motion": {
+      "now": 1793031833323,
+      "hasEl": true,
+      "className": "-memoria-splash -memoria-splash--static",
+      "pointerEvents": "auto",
+      "opacity": "1",
+      "zIndex": "2147483000",
+      "brandText": "Memoria",
+      "brandAnimation": "none",
+      "brandRect": {
+        "w": 216.3,
+        "h": 51
+      },
+      "hintText": "正在唤醒星海…",
+      "canvasDisplay": "none",
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031832945,
+        "fadeStartAt": 0,
+        "removedAt": 0,
+        "mode": "static",
+        "reducedMotion": true,
+        "fadeReason": "",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": true,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "force_static": {
+      "now": 1793031834214,
+      "hasEl": true,
+      "className": "-memoria-splash -memoria-splash--static",
+      "pointerEvents": "auto",
+      "opacity": "1",
+      "zIndex": "2147483000",
+      "brandText": "Memoria",
+      "brandAnimation": "memoria-splash-breathe",
+      "brandRect": {
+        "w": 216.3,
+        "h": 51
+      },
+      "hintText": "正在唤醒星海…",
+      "canvasDisplay": "none",
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031833802,
+        "fadeStartAt": 0,
+        "removedAt": 0,
+        "mode": "static",
+        "reducedMotion": false,
+        "fadeReason": "",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": true,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "settings_default": {
+      "now": 1793031835120,
+      "hasEl": false,
+      "className": null,
+      "pointerEvents": null,
+      "opacity": null,
+      "zIndex": null,
+      "brandText": null,
+      "brandAnimation": null,
+      "brandRect": null,
+      "hintText": null,
+      "canvasDisplay": null,
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031833802,
+        "fadeStartAt": 1793031834584,
+        "removedAt": 1793031834584,
+        "mode": "static",
+        "reducedMotion": false,
+        "fadeReason": "ready",
+        "audioStarted": false,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": false,
+        "volume": 0.35
+      },
+      "flashError": false,
+      "booting": false,
+      "externalResources": [],
+      "settingsSound": false,
+      "settingsVolume": "35"
+    },
+    "settings_enabled": {
+      "now": 1793031837171,
+      "hasEl": false,
+      "className": null,
+      "pointerEvents": null,
+      "opacity": null,
+      "zIndex": null,
+      "brandText": null,
+      "brandAnimation": null,
+      "brandRect": null,
+      "hintText": null,
+      "canvasDisplay": null,
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031833802,
+        "fadeStartAt": 1793031834584,
+        "removedAt": 1793031834584,
+        "mode": "static",
+        "reducedMotion": false,
+        "fadeReason": "ready",
+        "audioStarted": true,
+        "audioBlocked": 0,
+        "errors": []
+      },
+      "prefs": {
+        "sound": true,
+        "volume": 0.8
+      },
+      "flashError": false,
+      "booting": false,
+      "externalResources": [],
+      "settingsSound": true,
+      "settingsVolume": "80"
+    },
+    "persisted": {
+      "sound": true,
+      "volume": 0.8
+    },
+    "audio_blocked": {
+      "now": 1793031839837,
+      "hasEl": false,
+      "className": null,
+      "pointerEvents": null,
+      "opacity": null,
+      "zIndex": null,
+      "brandText": null,
+      "brandAnimation": null,
+      "brandRect": null,
+      "hintText": null,
+      "canvasDisplay": null,
+      "canvasVisible": false,
+      "stats": {
+        "everShown": true,
+        "firstShownAt": 1793031838465,
+        "fadeStartAt": 1793031838981,
+        "removedAt": 1793031839301,
+        "mode": "canvas",
+        "reducedMotion": false,
+        "fadeReason": "ready",
+        "audioStarted": false,
+        "audioBlocked": 1,
+        "errors": []
+      },
+      "prefs": {
+        "sound": true,
+        "volume": 0.8
+      },
+      "flashError": false,
+      "booting": false,
+      "externalResources": [],
+      "settingsSound": null,
+      "settingsVolume": null
+    },
+    "external": []
+  },
+  "exceptions": [],
+  "passed": 15,
+  "failed": 0
+}

@@ -442,6 +442,9 @@
     </div>
   </div>
 
+  <!-- task-186：启动蒙层（星河）+ 空灵音效。放在应用脚本之前 ⇒ 蒙层先于应用首帧出现；
+       模块置空/失败时 `splash.js` 自身保证不阻塞（见其顶部四条硬约束）。 -->
+  <script src="/app/js/splash.js"></script>
   <script src="/app/lib/three.min.js"></script>
   <script src="/app/lib/OrbitControls.js"></script>
   <script src="/app/js/graph-label.js"></script>

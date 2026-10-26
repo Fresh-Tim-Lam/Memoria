@@ -2011,4 +2011,19 @@
       badgeTitle: "有可用更新（设置 → 更新）",
     },
   });
+  // ═════ 2026-10-27 task-186 追加：启动蒙层（星河）+ 空灵音效文案 ═════
+  // 走"文件末尾 Object.assign"惯例 ⇒ 不推位上方任何 `zh-CN.js:<行号>` 文档锚点。
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"], {
+    splash: {
+      loading: "正在唤醒星海…",
+      subtle: "准备就绪即自动淡出",
+      a11y: "Memoria 正在启动",
+      settings: {
+        title: "启动动画",
+        sound: "空灵音效",
+        volume: "音量",
+        note: "默认静音。开启后下次冷启动会播放一段约 2.4 秒的合成和声（无音频文件、零网络请求）；开启「减少动态效果」时只显示静态蒙层。",
+      },
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

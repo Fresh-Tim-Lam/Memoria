@@ -1,0 +1,37 @@
+{
+  "valid": false,
+  "t0": 1793031618364,
+  "port": 9837,
+  "attached_at": 1793031620576,
+  "url": "http://127.0.0.1:35941/",
+  "installed": {
+    "installedAt": 1793031620591,
+    "removedAt": 0,
+    "wasBootingAtInstall": false
+  },
+  "was_booting_at_install": false,
+  "removed_at": 0,
+  "perf": {
+    "domContentLoadedEnd": 846.6,
+    "loadEnd": 849.9,
+    "responseEnd": 141.6,
+    "paints": [
+      {
+        "name": "first-paint",
+        "startTime": 604
+      },
+      {
+        "name": "first-contentful-paint",
+        "startTime": 604
+      }
+    ],
+    "nowAtMeasure": 20144.6,
+    "timeOrigin": 1793031620459.3
+  },
+  "boot_ms": null,
+  "invalid_reason": "attach 时 -booting 已消失（无法测到真实起点）",
+  "external_resources": [],
+  "splash": {
+    "present": false
+  }
+}

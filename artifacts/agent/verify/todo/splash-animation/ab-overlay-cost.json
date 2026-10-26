@@ -1,0 +1,78 @@
+{
+  "rounds": 5,
+  "full": {
+    "n": 5,
+    "median": 2215,
+    "all": [
+      2240,
+      2215,
+      2271,
+      2214,
+      2209
+    ]
+  },
+  "nofx": {
+    "n": 5,
+    "median": 2091,
+    "all": [
+      2098,
+      2066,
+      2082,
+      2122,
+      2091
+    ]
+  },
+  "delta_overlay_ms": 124,
+  "trials": [
+    {
+      "round": 1,
+      "variant": "full",
+      "median_ms": 2240
+    },
+    {
+      "round": 1,
+      "variant": "nofx",
+      "median_ms": 2098
+    },
+    {
+      "round": 2,
+      "variant": "nofx",
+      "median_ms": 2066
+    },
+    {
+      "round": 2,
+      "variant": "full",
+      "median_ms": 2215
+    },
+    {
+      "round": 3,
+      "variant": "full",
+      "median_ms": 2271
+    },
+    {
+      "round": 3,
+      "variant": "nofx",
+      "median_ms": 2082
+    },
+    {
+      "round": 4,
+      "variant": "nofx",
+      "median_ms": 2122
+    },
+    {
+      "round": 4,
+      "variant": "full",
+      "median_ms": 2214
+    },
+    {
+      "round": 5,
+      "variant": "full",
+      "median_ms": 2209
+    },
+    {
+      "round": 5,
+      "variant": "nofx",
+      "median_ms": 2091
+    }
+  ]
+}

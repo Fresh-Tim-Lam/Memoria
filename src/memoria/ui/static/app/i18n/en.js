@@ -2117,4 +2117,19 @@
       badgeTitle: "Update available (Settings → Updates)",
     },
   });
+  // ═════ appended 2026-10-27 task-186: startup overlay (starfield) + ethereal sound copy ═════
+  // Same "Object.assign at the very end of the file" convention ⇒ every `en.js:<line>` anchor stays put.
+  Object.assign(g.MEMORIA_LOCALES["en"], {
+    splash: {
+      loading: "Waking the starfield…",
+      subtle: "Fades out as soon as Memoria is ready",
+      a11y: "Memoria is starting",
+      settings: {
+        title: "Startup animation",
+        sound: "Ethereal sound",
+        volume: "Volume",
+        note: "Muted by default. When enabled, a synthesized ~2.4s chord plays on the next cold start (no audio file, zero network requests); with reduced motion only the static overlay is shown.",
+      },
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);
