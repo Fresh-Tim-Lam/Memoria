@@ -184,7 +184,10 @@ python scripts/agent/release_preflight.py --tag vx.y.z --verify-published
 ### 第 1–5 步
 
 1. 修改 `src/memoria/__version__.py` 为 `"x.y.z"`（唯一一处）
-2. 更新本文件「当前版本」与「变更记录」表
+2. 更新本文件「当前版本」「变更记录」表，**以及 §1 的「说明」行**
+   （`说明` 行须写 `最近已发布 = 新版本号`。`--verify-published` 的 `VERSION-NOTE-PUBLISHED`
+   会校验它与本次 tag **严格相等** ⇒ 漏更新会在 0c 直接 FAIL。该检查 2026-10-26 新增：
+   此前这一行**无任何机检**，且已真实误导过一次排期）
 3. 构建发布：`packaging\build_release.cmd --no-clean`
 4. 验证：
    - `Package\VERSION` 内容 = `x.y.z`
