@@ -76,7 +76,8 @@ The gate already paid for itself during implementation: it found three runtime l
 
 - The update check and download were validated on a real WebView2 app against a **mock** GitHub Releases endpoint; the live GitHub release path has not been exercised end to end yet.
 - The release format gate verifies structure and integrity only; without signatures it cannot detect deliberate tampering with recomputed hashes (documented and reflected in the UI wording).
-- KG node-size decision U-KGV-2 is still open: when you change the base `nodeRadius` away from 6, the 75 %–165 % range currently scales with the new base; keeping a fixed 6 px base remains an alternative.
+- KG node-size decision U-KGV-2 is still open:
+- **Three KG acceptance checks are human-gated and were not run in this release**: node-size ends distinguishable (T-size-1), label readability around 80% (T-label), and the 3D depth-misreading check (T-depth). The automated ones (T-size-2/3/4, T-census, T-stable) are in the test suite; these three need a person and are tracked as U-KGV-5 instead of being marked done. when you change the base `nodeRadius` away from 6, the 75 %–165 % range currently scales with the new base; keeping a fixed 6 px base remains an alternative.
 - The R0 fixes were byte-verified on the reported edit paths; other edit paths were not exhaustively fuzzed.
 
 ### Download
@@ -174,7 +175,8 @@ v0 设计是四方独立提案 → 交叉异议 → 逐条裁决后冻结的，�
 
 - 检查更新与下载是在**真机 WebView2 + mock GitHub Releases 服务**上验证的；**尚未对真实 GitHub 发布路径做端到端验证**。
 - 发布包格式门禁只校验结构与完整性；没有签名，无法发现「替换并重算哈希」的有意篡改（已在文档与 UI 文案中如实标注）。
-- KG 节点大小有一个未决项 U-KGV-2：当你把基准 `nodeRadius` 调离 6 时，75 %–165 % 区间目前随新基准缩放；「固定以 6 px 为基准」仍是备选。
+- KG 节点大小有一个未决项 U-KGV-2：
+- **KG 有三项验收需要真人判读，本轮未做**：节点大小两端可辨（T-size-1）、标签可读性约 80%（T-label）、3D 深度误读检查（T-depth）。可机检的（T-size-2/3/4、T-census、T-stable）都已在测试里；这三项需要人参与，登记为 U-KGV-5，而不是标记为已完成。当你把基准 `nodeRadius` 调离 6 时，75 %–165 % 区间目前随新基准缩放；「固定以 6 px 为基准」仍是备选。
 - R0 修复在已报告的编辑路径上做了逐字节验证；其他编辑路径未做穷举 fuzz。
 
 ### 下载
