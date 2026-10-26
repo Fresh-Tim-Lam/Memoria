@@ -1,0 +1,338 @@
+{
+  "generated_at": "2026-10-26T09:40:39.424Z",
+  "source": "node artifacts/agent/verify/ui/theme_probe.mjs",
+  "real_css": [
+    "theme/memoria.css",
+    "theme/light.css",
+    "app/css/app.css",
+    "theme/mermaid.css"
+  ],
+  "vars": {
+    "dark": {
+      "--border-subtle": "(undefined)",
+      "--text-muted": "(undefined)",
+      "--border-sep": "#303030",
+      "--border": "#3c3c3c",
+      "--text-primary": "#cccccc",
+      "--theme-color": "#007acc",
+      "--accent": "#007acc"
+    },
+    "light": {
+      "--border-subtle": "#e8e8e8",
+      "--text-muted": "#8a8a8a",
+      "--border-sep": "#e8e8e8",
+      "--border": "#d6d6d6",
+      "--text-primary": "#2f2f2f",
+      "--theme-color": "#007acc",
+      "--accent": "#0066bf"
+    }
+  },
+  "body": {
+    "dark": {
+      "color": "rgb(204, 204, 204)",
+      "background": "rgb(30, 30, 30)"
+    },
+    "light": {
+      "color": "rgb(47, 47, 47)",
+      "background": "rgb(255, 255, 255)"
+    }
+  },
+  "rows": {
+    "dark": [
+      {
+        "id": "E1-import-section-title@179",
+        "token": "--border-subtle",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(133, 133, 133)",
+        "borderTopWidth": "0px",
+        "color": "rgb(133, 133, 133)",
+        "fontSize": "11px",
+        "control": false
+      },
+      {
+        "id": "E2-suggest-score--muted@1644",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "13px",
+        "control": false
+      },
+      {
+        "id": "E3-search-section-label@1659",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E4-search-section-label-border@1660",
+        "token": "--border-subtle",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E5-toolbar-search-scope-btn@2507",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E6-link-match-section@2904",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "13px",
+        "control": false
+      },
+      {
+        "id": "E7-link-match-check-placeholder@2879",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(204, 204, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "12px",
+        "control": false
+      },
+      {
+        "id": "CONTROL-defined-token",
+        "token": "--border-sep",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(48, 48, 48)",
+        "borderTopWidth": "1px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "13px",
+        "control": true
+      },
+      {
+        "id": "CONTROL-literal-color",
+        "token": "(literal)",
+        "expectedProp": "color",
+        "value": "rgb(1, 2, 3)",
+        "borderTopWidth": "0px",
+        "color": "rgb(1, 2, 3)",
+        "fontSize": "13px",
+        "control": true
+      },
+      {
+        "id": "E8-theme-color@7789",
+        "token": "--theme-color",
+        "expectedProp": "backgroundColor",
+        "value": "rgb(0, 122, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(204, 204, 204)",
+        "fontSize": "13px",
+        "control": false
+      }
+    ],
+    "light": [
+      {
+        "id": "E1-import-section-title@179",
+        "token": "--border-subtle",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(232, 232, 232)",
+        "borderTopWidth": "1px",
+        "color": "rgb(107, 107, 107)",
+        "fontSize": "11px",
+        "control": false
+      },
+      {
+        "id": "E2-suggest-score--muted@1644",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(138, 138, 138)",
+        "borderTopWidth": "0px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "13px",
+        "control": false
+      },
+      {
+        "id": "E3-search-section-label@1659",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(138, 138, 138)",
+        "borderTopWidth": "1px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E4-search-section-label-border@1660",
+        "token": "--border-subtle",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(232, 232, 232)",
+        "borderTopWidth": "1px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E5-toolbar-search-scope-btn@2507",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(138, 138, 138)",
+        "borderTopWidth": "0px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "10px",
+        "control": false
+      },
+      {
+        "id": "E6-link-match-section@2904",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(138, 138, 138)",
+        "borderTopWidth": "0px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "13px",
+        "control": false
+      },
+      {
+        "id": "E7-link-match-check-placeholder@2879",
+        "token": "--text-muted",
+        "expectedProp": "color",
+        "value": "rgb(138, 138, 138)",
+        "borderTopWidth": "0px",
+        "color": "rgb(138, 138, 138)",
+        "fontSize": "12px",
+        "control": false
+      },
+      {
+        "id": "CONTROL-defined-token",
+        "token": "--border-sep",
+        "expectedProp": "borderTopColor",
+        "value": "rgb(232, 232, 232)",
+        "borderTopWidth": "1px",
+        "color": "rgb(47, 47, 47)",
+        "fontSize": "13px",
+        "control": true
+      },
+      {
+        "id": "CONTROL-literal-color",
+        "token": "(literal)",
+        "expectedProp": "color",
+        "value": "rgb(1, 2, 3)",
+        "borderTopWidth": "0px",
+        "color": "rgb(1, 2, 3)",
+        "fontSize": "13px",
+        "control": true
+      },
+      {
+        "id": "E8-theme-color@7789",
+        "token": "--theme-color",
+        "expectedProp": "backgroundColor",
+        "value": "rgb(0, 122, 204)",
+        "borderTopWidth": "0px",
+        "color": "rgb(47, 47, 47)",
+        "fontSize": "13px",
+        "control": false
+      }
+    ]
+  },
+  "verdict": [
+    {
+      "id": "E1-import-section-title@179",
+      "token": "--border-subtle",
+      "prop": "border-top",
+      "dark": "rgb(133, 133, 133)",
+      "light": "rgb(232, 232, 232)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --border-subtle 未定义 ⇒ borderTopColor=rgb(133, 133, 133)（非期望 token 值）；浅色 = rgb(232, 232, 232)"
+    },
+    {
+      "id": "E2-suggest-score--muted@1644",
+      "token": "--text-muted",
+      "prop": "color",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(138, 138, 138)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --text-muted 未定义 ⇒ color 落到 rgb(204, 204, 204)（= 正文/继承色 rgb(204, 204, 204)），声明在 computed-value 阶段失效；浅色同元素 = rgb(138, 138, 138)（token 已定义）"
+    },
+    {
+      "id": "E3-search-section-label@1659",
+      "token": "--text-muted",
+      "prop": "color",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(138, 138, 138)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --text-muted 未定义 ⇒ color 落到 rgb(204, 204, 204)（= 正文/继承色 rgb(204, 204, 204)），声明在 computed-value 阶段失效；浅色同元素 = rgb(138, 138, 138)（token 已定义）"
+    },
+    {
+      "id": "E4-search-section-label-border@1660",
+      "token": "--border-subtle",
+      "prop": "border-top",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(232, 232, 232)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --border-subtle 未定义 ⇒ borderTopColor=rgb(204, 204, 204)（非期望 token 值）；浅色 = rgb(232, 232, 232)"
+    },
+    {
+      "id": "E5-toolbar-search-scope-btn@2507",
+      "token": "--text-muted",
+      "prop": "color",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(138, 138, 138)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --text-muted 未定义 ⇒ color 落到 rgb(204, 204, 204)（= 正文/继承色 rgb(204, 204, 204)），声明在 computed-value 阶段失效；浅色同元素 = rgb(138, 138, 138)（token 已定义）"
+    },
+    {
+      "id": "E6-link-match-section@2904",
+      "token": "--text-muted",
+      "prop": "color",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(138, 138, 138)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --text-muted 未定义 ⇒ color 落到 rgb(204, 204, 204)（= 正文/继承色 rgb(204, 204, 204)），声明在 computed-value 阶段失效；浅色同元素 = rgb(138, 138, 138)（token 已定义）"
+    },
+    {
+      "id": "E7-link-match-check-placeholder@2879",
+      "token": "--text-muted",
+      "prop": "color",
+      "dark": "rgb(204, 204, 204)",
+      "light": "rgb(138, 138, 138)",
+      "status": "REAL-DEFECT",
+      "why": "深色 --text-muted 未定义 ⇒ color 落到 rgb(204, 204, 204)（= 正文/继承色 rgb(204, 204, 204)），声明在 computed-value 阶段失效；浅色同元素 = rgb(138, 138, 138)（token 已定义）"
+    },
+    {
+      "id": "CONTROL-defined-token",
+      "token": "--border-sep",
+      "prop": "border-top",
+      "dark": "rgb(48, 48, 48)",
+      "light": "rgb(232, 232, 232)",
+      "status": "CONTROL",
+      "why": "对照：深色 borderTopColor=rgb(48, 48, 48) / 浅色 rgb(232, 232, 232)"
+    },
+    {
+      "id": "CONTROL-literal-color",
+      "token": "(literal)",
+      "prop": "color",
+      "dark": "rgb(1, 2, 3)",
+      "light": "rgb(1, 2, 3)",
+      "status": "CONTROL",
+      "why": "对照：深色 color=rgb(1, 2, 3) / 浅色 rgb(1, 2, 3)"
+    },
+    {
+      "id": "E8-theme-color@7789",
+      "token": "--theme-color",
+      "prop": "background",
+      "dark": "rgb(0, 122, 204)",
+      "light": "rgb(0, 122, 204)",
+      "status": "THEME-ALIAS-DRIFT",
+      "why": "深色 theme=#007acc/accent=#007acc；浅色 theme=#007acc/accent=#0066bf"
+    }
+  ]
+}
