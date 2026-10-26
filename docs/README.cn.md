@@ -15,7 +15,9 @@
 | `conventions/` | 契约性规范（人机都必须遵守的规则） | [README.md](conventions/README.md)（规范清单） |
 | `guides/` | 操作指引（how-to：怎么做某事） | [README.md](guides/README.md) |
 | `reference/` | 参考说明（understand：架构、术语、硬约束、功能机制） | [README.md](reference/README.md) |
-| `design/` | 设计文档与决策记录 | system-design.md、dicussion.md、designV0.md 等 |
+| `design/` | 设计文档与决策记录 | system-design.md、dicussion.md、designV0.md 等；**知识图谱本体**：[kg-ontology-v0.md](design/kg-ontology-v0.md)（13 条裁决，FROZEN 2026-10-25）、[kg-visualization-v0.md](design/kg-visualization-v0.md)（可视化 v0 冻结设计，FROZEN 2026-10-26）；**发布包格式契约**：[release-format.md](design/release-format.md) |
+| `marketing/` | 对外表述与发版 SOP（README / Release / 仓库页的事实来源） | [claims.md](marketing/claims.md)（**断言—证据表**：每条能力声明必须先登记并指向可核验证据）、[repo-metadata.md](marketing/repo-metadata.md)（GitHub「About」/ topics / 社交预览 / 截图素材文案）、[tag-release-spec.md](marketing/tag-release-spec.md)（打 tag 与建 Release 的可勾选 SOP） |
+| `todo/` | 台账附件（活跃详情；由 `todo.md` 索引化拆出） | [README.md](todo/README.md)（每节一份 `<NN>-<slug>.md`） |
 | `sessions/` | 历史对话记录（承接上下文，原 agents/） | 各会话文档 |
 | `example/` | 示例知识库容器：showcase/（官方展示，入库）与 import-test/（夹具，入库）；其余本地样例与个人库仅存本地 |
 | `refs/` | 开发参考资料 | [README.md](refs/README.md) |
