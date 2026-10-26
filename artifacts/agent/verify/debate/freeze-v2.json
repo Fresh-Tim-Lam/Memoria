@@ -19,7 +19,7 @@
     },
     {
       "path": "docs/guides/lead-dispatch-rules.md",
-      "sha256_lf": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+      "sha256_lf": "716712d40314276faca64af132613d3dac448b84a7916eb402c70f145e5421db",
       "role": "派发细则"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
   "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
-  "standards_frozen_at": "2026-10-25T00:52:37+08:00",
+  "standards_frozen_at": "2026-10-26T18:30:45.888509+08:00",
   "standards_updated": [
     {
       "at": "2026-10-26T08:43:23.585821+08:00",
@@ -93,6 +93,19 @@
       ],
       "rule_ref": "docs/guides/agent-team-org.md §2.6 B3-e",
       "note": "B3-e 是把 PD-1 的个别修复上升为通用条款：任何 gate 脚本必须 status↔exit 一一对应，NOT_RUN 不得判绿。现在有两道门禁（team_audit 11 类 + prompt_drift C1-C5）都遵守此契约。"
+    },
+    {
+      "at": "2026-10-26T18:30:45.888509+08:00",
+      "by": "lead",
+      "reason": "新增 B-danger-1 条款（禁止对他人可见工作区执行 checkout/reset；对照实验用 git worktree 或 %TEMP% 副本）",
+      "commit_before": null,
+      "changed": [
+        {
+          "path": "docs/guides/lead-dispatch-rules.md",
+          "from": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+          "to": "716712d40314276faca64af132613d3dac448b84a7916eb402c70f145e5421db"
+        }
+      ]
     }
   ]
 }
