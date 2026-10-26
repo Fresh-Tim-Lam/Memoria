@@ -18,6 +18,10 @@
     --success: #4ec9b0;
     --error: #f14c4c;
     --warning: #ce9178;
+    /* 2026-10-26：状态色"强档"——用于需要在小尺寸元素上明确可辨的警示（如上下文占用圆环 over 态）。
+       `--warning` 是文本级警示色（tan），在 14px 圆环上不够醒目 ⇒ 单独一档，深浅成对。
+       来源：ui-designer 审计提出 `--warn-strong`；此处按现有命名习惯叫 `--warning-strong`。 */
+    --warning-strong: #ffd75e;
     --theme-color: #007acc;
     /* 顶栏：灰底 + 比底色更深的搜索框（浅色主题里搜索框比底色更浅） */
     --bg-toolbar: #3c3c3c;

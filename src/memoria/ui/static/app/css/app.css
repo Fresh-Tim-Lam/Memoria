@@ -7863,7 +7863,7 @@ html.-booting::before {
     content: "";
     width: 36px;
     height: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
     background: var(--border);
     opacity: 0.7;
     transition: background var(--motion-fast, 120ms) ease, opacity var(--motion-fast, 120ms) ease;
@@ -7901,7 +7901,7 @@ body.-agent-input-resizing { cursor: ns-resize; user-select: none; }
 #agent-ctx-ring svg { width: 14px; height: 14px; display: block; overflow: visible; }
 #agent-ctx-ring .-ctx-ring-track { stroke: currentColor; opacity: 0.28; }
 #agent-ctx-ring .-ctx-ring-value { stroke: currentColor; }
-#agent-ctx-ring.-ctx-ring--warn { color: #ffd75e; }
+#agent-ctx-ring.-ctx-ring--warn { color: var(--warning-strong); }
 #agent-ctx-ring.-ctx-ring--unknown { color: currentColor; opacity: 0.5; }
 #agent-ctx-ring:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; border-radius: 50%; }
 /* 兼容旧版残留：环不再挂底栏；若旧节点残留则隐藏（升级/复用页面时不留双环） */

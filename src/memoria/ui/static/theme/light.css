@@ -29,6 +29,9 @@ html[data-theme="light"] {
     --success: #107c41;
     --error: #cd3131;
     --warning: #a86400;
+    /* 2026-10-26：状态色"强档"深浅成对（深色 #ffd75e / 浅色 #a86400 同 --warning）。
+       浅色主题下深黄在浅底上对比不足 ⇒ 强档沿用深琥珀，保证 14px 圆环可辨。 */
+    --warning-strong: #a86400;
 
     /* 之前缺失的颜色 token（浅色取值）；顶栏是**可见的灰**，搜索框比它更白 */
     --bg-toolbar: #e7e7e7;
