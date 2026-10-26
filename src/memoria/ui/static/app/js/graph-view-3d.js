@@ -648,7 +648,9 @@
       for (const [id, halo] of this._haloSprites) {
         const mesh = this._nodeMeshes.get(id);
         const ratio = mesh?.userData?.gRatio || 0;
-        const scale = 1 + ratio * 0.4;
+        // D-KGV-16：3D 光晕半径【不随 degree 变化】—— 否则"光晕大=度数大"会绕过
+        // "3D 不做大小编码"的裁决（判据是用户是否感知到尺寸差异，不是 mesh.scale===1）。
+        const scale = 1;
         halo.userData.baseOpacity = glow * (0.35 + ratio * 0.55);
         halo.userData.baseScale = r * (4 + scale * 3 + glow * 2);
       }

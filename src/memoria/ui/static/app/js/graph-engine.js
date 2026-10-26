@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Memoria GraphEngine — 数据层 + 事件（与 Shell / 渲染解耦）
  */
 (function (global) {
@@ -63,7 +63,7 @@
    * · 单调不减； · min degree ⇒ t=0，max degree ⇒ t=1（最厚节点可达 R_MAX）；
    * · 同 degree ⇒ 同 t（正确行为，不是分桶）； · 不取整、不量化 ⇒ 无档位。
    */
-  function percentileRankT(degree, distinctSorted) {
+  function normalizedRankT(degree, distinctSorted) {
     const arr = distinctSorted || [];
     const k = arr.length;
     if (k <= 1) return 0;
@@ -81,7 +81,7 @@
   /** 连续尺寸映射：degree → 半径 px（未取整，保留浮点连续性） */
   function radiusForDegree(degree, distinctSorted, baseRadius) {
     const range = sizingRangeForBase(baseRadius);
-    const t = percentileRankT(degree, distinctSorted);
+    const t = normalizedRankT(degree, distinctSorted);
     return range.min + (range.max - range.min) * t;
   }
 
@@ -218,7 +218,7 @@
     sizingRangeForBase,
     computeUndirectedDegrees,
     distinctSortedDegrees,
-    percentileRankT,
+    normalizedRankT,
     radiusForDegree,
   };
 })(typeof window !== "undefined" ? window : globalThis);

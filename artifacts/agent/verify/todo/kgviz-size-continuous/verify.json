@@ -79,10 +79,10 @@
     "meshes": 134,
     "allScaleOne": true,
     "distinctGeometries": 1,
-    "nodeGeoUuid": "2F8DFDD7-8726-4940-A1B8-CE4F039D646C",
+    "nodeGeoUuid": "0A0A877A-9AB3-4B3F-B3AD-2CBB87D14DAA",
     "camera": {
       "fov": 50,
-      "z": 1810
+      "z": 1814.8
     },
     "sampleScales": [
       [
@@ -110,7 +110,89 @@
         1,
         1
       ]
-    ]
+    ],
+    "galaxy": {
+      "active": true,
+      "graphStyle": "galaxy",
+      "meshes": 134,
+      "halos": 134,
+      "distinctHaloWorldSizes": 1,
+      "haloWorldSize": 41.82,
+      "distinctMeshWorldSizes": 1,
+      "meshWorldSize": 5.1,
+      "haloScreenPxDependentOnDegree": {
+        "corrDegreeHaloWorld": 0
+      },
+      "sameDepthPair": {
+        "hi": {
+          "id": "perilous",
+          "degree": 25,
+          "distPx": 1896.7,
+          "meshPx": 1.468,
+          "haloPx": 12.034,
+          "haloWorld": 41.81999999999999
+        },
+        "lo": {
+          "id": "attic",
+          "degree": 0,
+          "distPx": 1899.7,
+          "meshPx": 1.465,
+          "haloPx": 12.015,
+          "haloWorld": 41.81999999999999
+        },
+        "distDiffPx": 3
+      },
+      "rows": [
+        {
+          "id": "perilous",
+          "degree": 25,
+          "distPx": 1896.7,
+          "meshPx": 1.468,
+          "haloPx": 12.034,
+          "haloWorld": 41.81999999999999
+        },
+        {
+          "id": "concessive-inversion",
+          "degree": 24,
+          "distPx": 1918.1,
+          "meshPx": 1.451,
+          "haloPx": 11.899,
+          "haloWorld": 41.81999999999999
+        },
+        {
+          "id": "missed-train-plan-change",
+          "degree": 20,
+          "distPx": 1814.7,
+          "meshPx": 1.534,
+          "haloPx": 12.578,
+          "haloWorld": 41.81999999999999
+        },
+        {
+          "id": "heritage",
+          "degree": 18,
+          "distPx": 1717.4,
+          "meshPx": 1.621,
+          "haloPx": 13.29,
+          "haloWorld": 41.81999999999999
+        },
+        {
+          "id": "rewarding",
+          "degree": 17,
+          "distPx": 1986.1,
+          "meshPx": 1.401,
+          "haloPx": 11.492,
+          "haloWorld": 41.81999999999999
+        },
+        {
+          "id": "good-news-flight-transfer",
+          "degree": 16,
+          "distPx": 2105.8,
+          "meshPx": 1.322,
+          "haloPx": 10.839,
+          "haloWorld": 41.81999999999999
+        }
+      ]
+    }
   },
   "corpus": {
     "kb": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_p3_corpus",

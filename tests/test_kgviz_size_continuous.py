@@ -43,7 +43,7 @@ vm.runInContext(fs.readFileSync("{engine}", "utf8"), sandbox);
 const S = sandbox.MemoriaGraphSizing;
 const distinct = {json.dumps(FIXTURE_DISTINCT_DEGREES)};
 const radius = distinct.map((d) => S.radiusForDegree(d, distinct, 6));
-const t = distinct.map((d) => S.percentileRankT(d, distinct));
+const t = distinct.map((d) => S.normalizedRankT(d, distinct));
 const range = S.sizingRangeForBase(6);
 const range4 = S.sizingRangeForBase(4);
 const range12 = S.sizingRangeForBase(12);
@@ -164,6 +164,26 @@ def test_3d_nodes_are_equal_size_no_degree_scaling():
     assert "const scale = 1;" in block, "D-KGV-04：3D 节点必须等大（scale=1）"
     assert "scale = 1 + ratio * 0.4;" not in block, "3D 仍在用 degree 改节点大小（违反 D-KGV-04）"
     assert "mesh.scale.set(scale, scale, scale);" in block
+
+
+def test_3d_halo_radius_does_not_depend_on_degree():
+    """D-KGV-16：3D galaxy 光晕半径也必须不随 degree 变（否则绕过"3D 不做大小"的裁决）。"""
+    src = VIEW3D.read_text(encoding="utf-8")
+
+    def method_block(name: str) -> str:
+        start = src.index(name + "() {")
+        tail = src[start + 1:]
+        nxt = tail.find("\n    _")
+        return tail[: nxt if nxt > 0 else len(tail)]
+
+    glow = method_block("_syncHaloGlow")
+    assert "const scale = 1;" in glow, "光晕半径仍在随 degree 变化（D-KGV-16）"
+    assert "scale = 1 + ratio * 0.4;" not in glow
+    assert "halo.userData.baseScale = r * (4 + scale * 3 + glow * 2);" in glow
+
+    rebuild = method_block("_rebuildGraph")
+    assert "const hs = r * (4 + scale * 3 + glow * 2);" in rebuild
+    assert "ratio" not in rebuild.split("const hs")[1].split(";")[0], "光晕 hs 仍含 ratio"
 
 
 def test_tooltip_shows_absolute_degree_bilingual():

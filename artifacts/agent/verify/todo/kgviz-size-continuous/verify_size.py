@@ -52,7 +52,7 @@ vm.runInContext(fs.readFileSync("{engine}", "utf8"), sandbox);
 const S = sandbox.MemoriaGraphSizing;
 const distinct = {json.dumps(FIXTURE_DISTINCT)};
 const radii = distinct.map((d) => S.radiusForDegree(d, distinct, 6));
-const t = distinct.map((d) => S.percentileRankT(d, distinct));
+const t = distinct.map((d) => S.normalizedRankT(d, distinct));
 const rng = S.sizingRangeForBase(6);
 const span = rng.max - rng.min;
 const bucketed = t.map((tv) => rng.min + span * (Math.min(2, Math.floor(tv * 3)) / 2));
@@ -294,6 +294,57 @@ def real_check() -> dict:
                    sampleScales: scales.slice(0, 5) };
         })()""")
         shot("03_graph3d_equal_size.png", '[data-sidebar-view="graph3d"]')
+
+        # 3b) D-KGV-16：切 galaxy 风格（唯一有 halo 的风格），测「不同 degree 节点表观尺寸一致」
+        res["three_d"]["galaxy"] = ev("""(() => {
+          const v = window.state.graphView3d; if (!v) return { error: 'no-3d-view' };
+          v.applyOptions({ graphStyle: 'galaxy' });
+          return { switched: v.opts.graphStyle };
+        })()""")
+        time.sleep(1.5)
+        res["three_d"]["galaxy"] = ev("""(() => {
+          const v = window.state.graphView3d; if (!v || !v._nodeMeshes) return null;
+          const engine = window.state.graphEngine;
+          const meshes = [...v._nodeMeshes.values()];
+          const halos = [...(v._haloSprites ? v._haloSprites.values() : [])];
+          const cam = v.camera;
+          const canvasH = v.renderer && v.renderer.domElement ? v.renderer.domElement.clientHeight : 0;
+          const focal = canvasH / (2 * Math.tan((cam.fov * Math.PI / 180) / 2));
+          const dist = (m) => Math.hypot(m.position.x - cam.position.x, m.position.y - cam.position.y, m.position.z - cam.position.z);
+          const degOf = (id) => engine.degreeOf(id);
+          const meshWorld = (m) => (v._nodeGeo && v._nodeGeo.parameters ? v._nodeGeo.parameters.radius : 0) * m.scale.x;
+          const haloWorld = (id) => { const h = v._haloSprites.get(id); return h && h.userData ? h.userData.baseScale : null; };
+          const haloWorlds = [...new Set(meshes.map(m => (haloWorld(m.userData.nodeId) || 0).toFixed(6)))].map(Number);
+          const meshWorlds = [...new Set(meshes.map(m => meshWorld(m).toFixed(6)))].map(Number);
+          const rows = meshes.map(m => { const d = dist(m); const hw = haloWorld(m.userData.nodeId);
+            return { id: m.userData.nodeId, degree: degOf(m.userData.nodeId), distPx: +d.toFixed(1),
+                     meshPx: +((meshWorld(m) / d) * focal).toFixed(3),
+                     haloPx: +(((hw || 0) / d) * focal).toFixed(3), haloWorld: hw }; });
+          // 选一对「深度几乎相同」的高/低 degree 节点（控制透视），比较表观 halo 直径
+          rows.sort((a,b)=>a.distPx-b.distPx);
+          const byDeg = [...rows].sort((a,b)=>b.degree-a.degree);
+          const hi = byDeg[0], lo = byDeg[byDeg.length-1];
+          let pair = null, best = Infinity;
+          for (const h of byDeg.slice(0, 8)) for (const l of byDeg.slice(-8)) {
+            if (h.degree <= l.degree) continue;
+            const dd = Math.abs(h.distPx - l.distPx);
+            if (dd < best) { best = dd; pair = { hi: h, lo: l, distDiffPx: +dd.toFixed(1) }; }
+          }
+          // 度数 vs 光晕世界尺寸的相关性（应=0：统一值）
+          const xs = rows.map(r=>r.degree), ys = rows.map(r=>r.haloWorld);
+          const mx = xs.reduce((a,b)=>a+b,0)/xs.length, my = ys.reduce((a,b)=>a+b,0)/ys.length;
+          const cov = xs.reduce((s,x,i)=>s+(x-mx)*(ys[i]-my),0);
+          const sx = Math.sqrt(xs.reduce((s,x)=>s+(x-mx)**2,0)), sy = Math.sqrt(ys.reduce((s,y)=>s+(y-my)**2,0));
+          return {
+            active: !!v.active, graphStyle: v.opts.graphStyle, meshes: meshes.length, halos: halos.length,
+            distinctHaloWorldSizes: haloWorlds.length, haloWorldSize: haloWorlds[0] || null,
+            distinctMeshWorldSizes: meshWorlds.length, meshWorldSize: meshWorlds[0] || null,
+            haloScreenPxDependentOnDegree: { corrDegreeHaloWorld: sx && sy ? +(cov/(sx*sy)).toFixed(6) : null },
+            sameDepthPair: pair, rows: rows.sort((a,b)=>b.degree-a.degree).slice(0,6),
+          };
+        })()""")
+        shot("04_graph3d_galaxy_halo_equal.png", '[data-sidebar-view="graph3d"]')
+
 
         # 恢复 2D tab（避免影响用户/后续截图）
         ev("(function(){var b=document.querySelector('[data-sidebar-tab=\\\"graph2d\\\"]'); if(b) b.click(); return true;})()")

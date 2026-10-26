@@ -1,8 +1,11 @@
-# task-175 — KG 节点大小「连续变化」落地（v0 冻结设计 A/B/C）
+﻿# task-175 — KG 节点大小「连续变化」落地（v0 冻结设计 A/B/C）
 
 > **基线**：HEAD `3bdcb64f`（开工时）；本任务只改下面列出的前端文件 + 测试 + artifacts，未 commit。
 > **设计依据（只读）**：`docs/design/kg-visualization-v0.md` §1（D-KGV-13 / 人裁决②：连续、不设挡位）、§8（T-size-2/3/4）；`USER-RULING-continuous-size.md`；`USER-RULING-node-size-range.md`（75%–165%）。
 > **纪律**：未改 `docs/design/**`、`docs/example/**`、`Package/**`、`src/memoria/services/**`；未 revert 他人改动。
+>
+> **补丁（Lead 复核后）**：按 D-KGV-14 把 `percentileRankT` 重命名为 **`normalizedRankT`**（命名与语义一致）；按 D-KGV-16 把 **3D galaxy 光晕半径**也改成不随 degree 变化（并新增「同深度高/低 degree 节点表观尺寸一致」实测 + 结构机检）；D-KGV-15 明确 galaxy 颜色+大小属「同变量冗余编码」= 允许，故不改 galaxy 2D。
+
 
 ---
 
@@ -13,11 +16,11 @@
 | 关闭条件 | 结果 |
 |---|---|
 | 1. 2D 连续变化（≥5 个不同 degree 半径两两不同且单调） | ✅ 实测 21 个 distinct 半径 == 21 distinct degree，单调无反转 |
-| 2. 3D 仍等大（实测） | ✅ 134 meshes `allScaleOne=true`，`distinctGeometries=1` |
+| 2. 3D 仍等大（实测） | ✅ 134 meshes `allScaleOne=true`，`distinctGeometries=1`；**D-KGV-16 补丁后 galaxy 光晕世界尺寸也唯一（41.82，134/134 同值）**，同深度高/低 degree 节点表观 halo 直径差 **0.16%**（见 §4.5） |
 | 3. tooltip 显示 degree 原值（中英双语，截图） | ✅ zh「连接数 25」/ en「Connections: 25」，截图 02/02b |
 | 4. T-size-2/3/4 机检 + T-size-3 必红 fixture | ✅ 见 §3；必红 fixture：3 个 distinct 半径 vs 25 distinct degree、平台段 **91.67%** ⇒ 被检出 |
-| 5. 真机截图 | ✅ 见 §4（5 张） |
-| 6. 门禁 | ✅ pytest **1534 passed**（基线 1526 + 8 新测）/ node 0 fail / i18n PASS / team_audit FAIL=0 / 12 剧本 12/12 |
+| 5. 真机截图 | ✅ 见 §4（6 张，含 galaxy 3D 光晕等大） |
+| 6. 门禁 | ✅ pytest **1535 passed**（基线 1526 + 9 新测，含 D-KGV-16 光晕机检）/ node 0 fail / i18n PASS / team_audit FAIL=0 / 12 剧本 12/12 |
 | 7. 报告 + 截图 + 机检 JSON | ✅ 本文件 + `shots/` + `t-size-machine-check.json` + `verify.json` |
 
 ---
@@ -33,7 +36,8 @@ t(d) = (#distinct degree 值 < d) / (K-1)，K = 当前语料 distinct degree 数
 ```
 
 - **纯函数**在 `src/memoria/ui/static/app/js/graph-engine.js` 新增并导出 `MemoriaGraphSizing`：
-  `sizingRangeForBase / computeUndirectedDegrees / distinctSortedDegrees / percentileRankT / radiusForDegree`；
+  `sizingRangeForBase / computeUndirectedDegrees / distinctSortedDegrees / **normalizedRankT** / radiusForDegree`
+  （D-KGV-14 补丁：原 `percentileRankT` 已重命名 —— 它语义是 distinct-degree 归一化 rank，不是 ECDF）；
 - `MemoriaGraphEngine.loadPayload` 一次 O(N+E) 建 `_degreeMap + _degreeDistinct`；实例方法 `degreeOf / degreeDistinct / radiusForNode / sizingRange`；
 - `graph-view-2d.js`：
   - 节点半径 = `_radiusForNode(n.id, opts.nodeRadius)`（**不再** `opts.nodeRadius` 常量；**删除** galaxy 旧的比例再乘 `r*(1+ratio*0.5)`，避免双重缩放）；
@@ -41,7 +45,7 @@ t(d) = (#distinct degree 值 < d) / (K-1)，K = 当前语料 distinct degree 数
   - 命中半径改为 `max(opts.nodeRadius+6, radiusForNode+2)`（大节点边缘可点中，不回归交互）；
 - `graph-view-3d.js`：`_rebuildGraph` 中节点 `scale` 恒为 **1**（设计 D-KGV-04：3D 等大）；**颜色/光晕仍按 galaxy 规则编码**（重要性用颜色，不用大小）。
 
-**t(d) 的实现口径（必须披露）**：设计写「t = percentile-rank」，但纯 ECDF（`#(d'≤d)/N`）在并列多时会**永远达不到 1**（max 节点 t<1 ⇒ 达不到 R_MAX），且并列质量会形成平台。因此实现取 **distinct degree 的归一化 rank**：同 degree 同半径（设计 §1.4 正确行为）、min→4.5 / max→9.9、distinct 半径 == distinct degree。若 Phase 4 要改为纯 ECDF，只需改 `percentileRankT` 一个函数——但 **T-size-4 会因 max<9.9 失败**，故当前口径与设计 §1.2/§1.3 的目标（最厚节点可达 R_MAX、无平台）自洽。
+**t(d) 的实现口径（必须披露）**：设计写「t = percentile-rank」，但纯 ECDF（`#(d'≤d)/N`）在并列多时会**永远达不到 1**（max 节点 t<1 ⇒ 达不到 R_MAX），且并列质量会形成平台。因此实现取 **distinct degree 的归一化 rank**：同 degree 同半径（设计 §1.4 正确行为）、min→4.5 / max→9.9、distinct 半径 == distinct degree。若 Phase 4 要改为纯 ECDF，只需改 `normalizedRankT` 一个函数——但 **T-size-4 会因 max<9.9 失败**，故当前口径与设计 §1.2/§1.3 的目标（最厚节点可达 R_MAX、无平台）自洽。
 
 **U-KGV-2 实际行为（记录）**：`nodeRadius` 设置 4–12 时按比例缩放：
 ```
@@ -149,8 +153,22 @@ shots/01_graph2d_continuous_size.png          全图（连续大小已生效）
 shots/01b_graph2d_zoomed_size_visible.png     放大后：不同节点大小肉眼可见（k≈3.2）
 shots/02_tooltip_degree_zh.png                中文 tooltip「连接数 25」
 shots/02b_tooltip_degree_en.png               英文 tooltip「Connections: 25」
-shots/03_graph3d_equal_size.png               3D 等大
+shots/03_graph3d_equal_size.png               3D 等大（force 风格）
+shots/04_graph3d_galaxy_halo_equal.png        galaxy 风格：光晕半径也等大（D-KGV-16 实测）
 ```
+
+### 4.5 3D galaxy 光晕等大（D-KGV-16 补丁，真机实测）
+```
+graphStyle=galaxy  active=true  meshes=134  halos=134
+distinctHaloWorldSizes = 1   haloWorldSize = 41.82   ← 134 个光晕世界尺寸全部相同
+distinctMeshWorldSizes = 1   meshWorldSize = 5.10
+corr(degree, haloWorld) = 0.000000                  ← 光晕尺寸与 degree 零相关
+同深度配对（控制透视）：perilous degree=25 dist=1896.7 → haloPx=12.034
+                        attic    degree=0  dist=1899.7 → haloPx=12.015
+                        深度仅差 3px，表观 halo 直径差 = 0.16%  ⇒ 用户无法从光晕大小读回 degree
+```
+**修复前**（`_syncHaloGlow` 的 `scale = 1 + ratio*0.4`）同一 galaxy 内光晕世界尺寸会随 degree 从 41.82 变到 **47.94（+14.6%）** —— 正是「mesh 等大但用户仍看到度数大的更大」的绕过路径；现已消失。
+**新增机检**：`tests/test_kgviz_size_continuous.py::test_3d_halo_radius_does_not_depend_on_degree`（结构断言 `_syncHaloGlow`/`_rebuildGraph` 的 halo 尺寸不含 ratio）。
 
 ---
 
@@ -158,11 +176,11 @@ shots/03_graph3d_equal_size.png               3D 等大
 
 | 门禁 | 结果 |
 |---|---|
-| `pytest -q`（基线 1526） | **1534 passed / 0 failed**（113.7s；1526 + 新增 8 条） |
+| `pytest -q`（基线 1526） | **1535 passed / 0 failed**（134.3s；1526 + 新增 9 条，含 D-KGV-16 光晕机检） |
 | `node --check` 全部前端 js | **0 fail** |
 | `i18n_selftest.js` | **PASS，exit 0** |
 | `scripts/agent/team_audit.py` | **FAIL=0**（86 条：WARN 56 / INFO 30，均既有） |
-| 12 交互剧本 | **12/12，failed=0**（29.3s，`scripts/benchmark/surface/results/raw-interaction-t175-final_3bdcb64f.json`） |
+| 12 交互剧本 | **12/12，failed=0**（28.7s，`scripts/benchmark/surface/results/raw-interaction-t175c-final_39a6b42a.json`） |
 
 ---
 
@@ -170,10 +188,10 @@ shots/03_graph3d_equal_size.png               3D 等大
 
 | # | 项 | 说明 |
 |---|---|---|
-| R1 | **galaxy 风格仍是「颜色 + 大小」双编码** | 本任务按设计「2D 用大小、3D 等大」实现，未改 galaxy 颜色；T-double 检查项会报告这个冲突。是否二选一需要 Phase 4 后续裁决（设计文档写了 T-double，但本轮任务只到 A/B/C） |
-| R2 | **3D galaxy 光晕仍随 degree 变化** | 节点 mesh 已等大（scale=1）；光晕 `_syncHaloGlow` 的 opacity/尺寸仍由 ratio 驱动（装饰性发光，不是节点大小）。若要求绝对等大含光晕，可另派一行改动 |
+| R1 | ~~galaxy 双编码冲突~~ → **已裁决** | D-KGV-15：颜色+大小都编码 degree = 同变量冗余编码，**允许**；不改 galaxy（T-double 应只检查「不同变量/方向相反」） |
+| R2 | ~~3D galaxy 光晕随 degree 变~~ → **已修复并实测** | D-KGV-16：光晕半径不随 degree 变；见 §4.5（世界尺寸唯一、相关 0、同深度差 0.16%）。**光晕 opacity 仍随 degree**（亮度/颜色通道，不是尺寸；D-KGV-15 允许颜色编码 degree） |
 | R3 | **标签 LOD/避让 / 布局种子 / 埋点** | 明确不在本任务（Lead 已另派）；本任务没有顺手改 |
-| R4 | **t(d) 口径** | 见 §1：用 distinct-degree 归一化 rank（非纯 ECDF）。理由与失败后果已写；若 Phase 4 要纯 ECDF，需重算 T-size-4 预期 |
+| R4 | **t(d) 口径** | D-KGV-14 已把「distinct-degree 归一化 rank」冻结为正确口径；函数已从 `percentileRankT` 重命名为 `normalizedRankT`（命名与语义一致） |
 | R5 | **语料身份** | 真机验证用工作区现场语料（134/404，manifest `583ed4ed…`）；该语料**不可从 git 复现**（设计 §7 已声明），本次已记录，不改变结论 |
 | R6 | **用户设置 4–12 缩放** | 按「随基准缩放」实现；若人希望固定 4.5–9.9 不随设置变，需改 `sizingRangeForBase` 一处（U-KGV-2） |
 
